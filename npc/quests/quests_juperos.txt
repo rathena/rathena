@@ -3,7 +3,7 @@
 //===== By ===================================================
 //= MasterOfMuppets
 //===== Version ==============================================
-//= 1.
+//= 1.5
 //===== Compatible With ======================================
 //= eAthena SVN
 //===== Description ==========================================
@@ -19,6 +19,7 @@
 //= 1.3a Adjusted the elevafor timer. (132000 -> 142000) [L0ne_W0lf]
 //= 1.3b Minor updates to juperos elevator NPCs. [L0ne_W0lf]
 //= 1.4 Fixed Elevator not working after failing once. [L0ne_W0lf]
+//= 1.5 Lots of Fixes, missing stopnpctimers, cleanup. [Zephyrus]
 //============================================================
 
 yuno_in04,190,125,4	script	Scholar	700,{
@@ -1755,14 +1756,13 @@ juperos_01,215,127,4	script	Machine Statue	844,{
 // Jupers Core access Story Event
 //============================================================
 //============================================================
-// 3rd Floor Entrance Guards
+// 1rd Floor -> 2nd Floor
 //============================================================
 juperos_01,100,91,0	script	jupe_goto#1	-1,2,2,{
 	end;
 
 OnTouch:
-	attachrid getcharid(3);
-	initnpctimer;
+	initnpctimer "jupe_goto#1",1;
 	mes "^777777["+ strcharinfo(0) +"]^000000";
 	mes "This light...";
 	mes "It feels like...";
@@ -1776,27 +1776,25 @@ OnTouch:
 		mes "It feels like";
 		mes "I'm floating...";
 		specialeffect2 348; // EF_LIGHTSPHERE
-		next;
+		close2;
 		stopnpctimer;
 		warp "juperos_02",128,278;
-		close;
 	case 2:
 		mes "^777777["+ strcharinfo(0) +"]^000000";
 		mes "N-No! This is";
 		mes "wrong! Something";
 		mes "weird's happening!";
 		mes "I gotta get away!";
-		next;
-		warp "juperos_01",96,91;
+		close2;
 		stopnpctimer;
-		close;
+		warp "juperos_01",96,91;
 	}
-	close;
+	end;
 
 OnTimer10000:
+	stopnpctimer;
 	warp "juperos_02",128,278;
-	enablenpc "jupe_goto#2";
-	disablenpc "jupe_goto#1";
+	donpcevent "jupe_goto#2::OnEnable";
 	end;
 }
 
@@ -1807,6 +1805,7 @@ OnInit:
 
 OnEnable:
 	enablenpc "jupe_goto#2";
+	disablenpc "jupe_goto#1";
 	initnpctimer;
 	end;
 
@@ -1819,6 +1818,10 @@ OnTimer2000:
 	disablenpc "jupe_goto#2";
 	end;
 }
+
+//============================================================
+// 2nd Floor 
+//============================================================
 
 juperos_02,97,70,0	script	3F Gate Switch#jupe	-1,{
 OnInit:
@@ -1839,6 +1842,7 @@ OnTimer5000:
 	monster "juperos_02",24,275,"1st Gate Switch",1674,1,"3F Gate Switch#jupe::OnMyMobDead";
 	monster "juperos_02",240,29,"2nd Gate Switch",1674,1,"3F Gate Switch#jupe::OnMyMobDead";
 	monster "juperos_02",282,183,"3rd Gate Switch",1674,1,"3F Gate Switch#jupe::OnMyMobDead";
+	stopnpctimer;
 	end;
 
 OnMyMobDead:
@@ -1932,6 +1936,7 @@ OnTimer621000:
 
 OnTimer1200000:
 	donpcevent "3F Gate Switch#jupe::OnEnable";
+	stopnpctimer;
 	end;
 
 OnTouch:
@@ -2044,6 +2049,7 @@ Onstop_timer:
 	end;
 
 OnTimer22500:
+	stopnpctimer;
 	enablenpc "#hole#1-1";
 	disablenpc "Red Alarm#1-1";
 	end;
@@ -2066,6 +2072,7 @@ OnTouch:
 	end;
 
 OnTimer22500:
+	stopnpctimer;
 	disablenpc "Warp#1-1";
 	end;
 }
@@ -2076,10 +2083,11 @@ OnInit:
 	end;
 
 OnTouch:
-	set $@JupreArea1InUse,1;
 	donpcevent "Red Alarm On#1-1::OnEnable";
 	disablenpc "Red Alarm#1-1";
 	donpcevent "#hole#1-1::Onstop_timer";
+	set $@JupreArea1InUse,1;
+	disablenpc "#hole#1-1";
 	end;
 }
 
@@ -2101,7 +2109,6 @@ OnTimer3000:
 	mapannounce "jupe_area1","I do not intend to stop you.",bc_map,"0xFF0000";
 	soundeffectall "jupe_warning.wav",0,"jupe_area1";
 	soundeffectall "jupe_warning.wav",0,"jupe_area1";
-	disablenpc "#hole#1-1";
 	end;
 
 OnTimer5000:
@@ -2117,6 +2124,7 @@ OnTimer8000:
 	disablenpc "Red Alarm On#1-1";
 	soundeffectall "jupe_warning.wav",0,"jupe_area1";
 	soundeffectall "jupe_warning.wav",0,"jupe_area1";
+	stopnpctimer;
 	end;
 }
 
@@ -2125,7 +2133,8 @@ OnInit:
 	disablenpc "Monster1#1-1";
 	end;
 
-Onreset:
+OnDisable:
+	disablenpc "Monster1#1-1";
 	killmonster "jupe_area1","Monster1#1-1::OnMyMobDead";
 	end;
 
@@ -2149,8 +2158,9 @@ OnTimer300000:
 	end;
 
 OnTimer300002:
-	disablenpc "Monster1#1-1";
 	enablenpc "#hole#1-1";
+	stopnpctimer;
+	donpcevent "Monster1#1-1::OnDisable";
 	end;
 
 OnMyMobDead:
@@ -2168,7 +2178,8 @@ OnInit:
 	disablenpc "Monster2#1-1";
 	end;
 
-Onreset:
+OnDisable:
+	disablenpc "Monster2#1-1";
 	killmonster "jupe_area1","Monster2#1-1::OnMyMobDead";
 	end;
 
@@ -2204,13 +2215,12 @@ OnTimer7000:
 
 OnTimer300000:
 	mapannounce "jupe_area1","Bwahaha! You're only good at running away!",bc_map,"0xFF0000";
-	disablenpc "Monster2#1-1";
-	enablenpc "#hole#1-1";
-	disablenpc "Red Alarm#1-1";
 	set $@JupreArea1InUse,0;
 	end;
 
 OnTimer300002:
+	enablenpc "#hole#1-1";
+	stopnpctimer;
 	donpcevent "Monster2#1-1::OnDisable";
 	end;
 
@@ -2220,7 +2230,6 @@ OnMyMobDead:
 		mapannounce "jupe_area1","Zzzzt. Zzzzt..... ",bc_map,"0xFF0000";
 		disablenpc "Monster2#1-1";
 		enablenpc "#hole#1-1";
-		disablenpc "Red Alarm#1-1";
 		set $@JupreArea1InUse,0;
 		stopnpctimer;
 	}
@@ -2334,6 +2343,7 @@ Onstop_timer:
 	end;
 
 OnTimer22500:
+	stopnpctimer;
 	enablenpc "#hole#1-2";
 	disablenpc "Red Alarm#1-2";
 	end;
@@ -2389,7 +2399,6 @@ OnTimer1000:
 
 OnTimer3000:
 	mapannounce "jupe_area1","Yes. Run... Right into my hands!",bc_map,"0xFF0000";
-	disablenpc "#hole#1-2";
 	end;
 
 OnTimer5000:
@@ -2403,6 +2412,7 @@ OnTimer7000:
 
 OnTimer8000:
 	disablenpc "Red Alarm On#1-2";
+	stopnpctimer;
 	end;
 }
 
@@ -2411,7 +2421,8 @@ OnInit:
 	disablenpc "Monster1#1-2";
 	end;
 
-Onreset:
+OnDisable:
+	disablenpc "Monster1#1-2";
 	killmonster "jupe_area1","Monster1#1-2::OnMyMobDead";
 	end;
 
@@ -2435,8 +2446,9 @@ OnTimer300000:
 	end;
 
 OnTimer300002:
-	disablenpc "Monster1#1-2";
 	enablenpc "#hole#1-2";
+	stopnpctimer;
+	donpcevent "Monster1#1-2::OnDisable";
 	end;
 
 OnMyMobDead:
@@ -2454,11 +2466,13 @@ OnInit:
 	disablenpc "Monster2#1-2";
 	end;
 
-Onreset:
+OnDisable:
+	disablenpc "Monster2#1-2";
 	killmonster "jupe_area1","Monster2#1-2::OnMyMobDead";
 	end;
 
 OnEnable:
+	enablenpc "Monster2#1-2";
 	initnpctimer;
 	end;
 
@@ -2472,7 +2486,6 @@ OnTimer4000:
 
 OnTimer6000:
 	mapannounce "jupe_area1","I was called Vesper Newton. Hahah, they called me a mad man back then.",bc_map,"0xFF0000";
-	enablenpc "Monster2#1-2";
 	set .MyMobs,13;
 	monster "jupe_area1",30,152,"Security Guard",1669,1,"Monster2#1-2::OnMyMobDead";
 	monster "jupe_area1",31,152,"Security Guard",1675,1,"Monster2#1-2::OnMyMobDead";
@@ -2491,13 +2504,12 @@ OnTimer6000:
 
 OnTimer300000:
 	mapannounce "jupe_area1","...Not yet.",bc_map,"0xFF0000";
-	disablenpc "Monster2#1-2";
-	enablenpc "#hole#1-2";
-	disablenpc "Red Alarm#1-2";
 	set $@JupreArea1InUse,0;
 	end;
 
 OnTimer300002:
+	enablenpc "#hole#1-2";
+	stopnpctimer;
 	donpcevent "Monster2#1-2::OnDisable";
 	end;
 
@@ -2507,7 +2519,6 @@ OnMyMobDead:
 		mapannounce "jupe_area1","Not yet!",bc_map,"0xFF0000";
 		disablenpc "Monster2#1-2";
 		enablenpc "#hole#1-2";
-		disablenpc "Red Alarm#1-2";
 		set $@JupreArea1InUse,0;
 		stopnpctimer;
 	}
@@ -2619,6 +2630,7 @@ Onstop_timer:
 	end;
 
 OnTimer22500:
+	stopnpctimer;
 	enablenpc "#hole#1-3";
 	disablenpc "Red Alarm#1-3";
 	end;
@@ -2674,7 +2686,6 @@ OnTimer1000:
 
 OnTimer3000:
 	mapannounce "jupe_area1","They're not really for protection.",bc_map,"0xFF0000";
-	disablenpc "#hole#1-3";
 	end;
 
 OnTimer5000:
@@ -2688,6 +2699,7 @@ OnTimer7000:
 
 OnTimer8000:
 	disablenpc "Red Alarm On#1-3";
+	stopnpctimer;
 	end;
 }
 
@@ -2696,7 +2708,8 @@ OnInit:
 	disablenpc "Monster1#1-3";
 	end;
 
-Onreset:
+OnDisable:
+	disablenpc "Monster1#1-3";
 	killmonster "jupe_area1","Monster1#1-3::OnMyMobDead";
 	end;
 
@@ -2720,7 +2733,7 @@ OnTimer300000:
 	end;
 
 OnTimer300002:
-	disablenpc "Monster1#1-3";
+	donpcevent "Monster1#1-3::OnDisable";
 	enablenpc "#hole#1-3";
 	end;
 
@@ -2739,12 +2752,14 @@ OnInit:
 	disablenpc "Monster2#1-3";
 	end;
 
-Onreset:
+OnDisable:
+	disablenpc "Monster2#1-3";
 	killmonster "jupe_area1","Monster2#1-3::OnMyMobDead";
 	end;
 
 OnEnable:
 	initnpctimer;
+	enablenpc "Monster2#1-3";
 	end;
 
 OnTimer2000:
@@ -2757,7 +2772,6 @@ OnTimer5000:
 
 OnTimer8000:
 	mapannounce "jupe_area1","You're wrong! Welcome to Hell!",bc_map,"0xFF0000";
-	enablenpc "Monster2#1-3";
 	set .MyMobs,15;
 	monster "jupe_area1",42,64,"Security Guard",1669,1,"Monster2#1-3::OnMyMobDead";
 	monster "jupe_area1",43,64,"Security Guard",1675,1,"Monster2#1-3::OnMyMobDead";
@@ -2778,13 +2792,12 @@ OnTimer8000:
 
 OnTimer300000:
 	mapannounce "jupe_area1","Do you still have your courage? Come. Prove it.",bc_map,"0xFF0000";
-	disablenpc "Monster2#1-3";
-	enablenpc "#hole#1-3";
-	disablenpc "Red Alarm#1-3";
 	set $@JupreArea1InUse,0;
 	end;
 
 OnTimer300002:
+	enablenpc "#hole#1-3";
+	stopnpctimer;
 	donpcevent "Monster2#1-3::OnDisable";
 	end;
 
@@ -2794,13 +2807,12 @@ OnMyMobDead:
 		mapannounce "jupe_area1","Do you still have your courage? Come. Prove it.",bc_map,"0xFF0000";
 		disablenpc "Monster2#1-3";
 		enablenpc "#hole#1-3";
-		disablenpc "Red Alarm#1-3";
 		set $@JupreArea1InUse,0;
 		stopnpctimer;
 	}
 	end;
 }
-	
+
 //============================================================
 // Security Checkpoint 1-4
 //============================================================
@@ -2907,6 +2919,7 @@ Onstop_timer:
 	end;
 
 OnTimer5000:
+	stopnpctimer;
 	enablenpc "#hole#1-4";
 	disablenpc "Red Alarm#1-4";
 	end;
@@ -2966,7 +2979,6 @@ OnTimer1000:
 
 OnTimer3000:
 	mapannounce "jupe_area1","If you hear this, I wish you will be the one...",bc_map,"0xFF0000";
-	disablenpc "#hole#1-4";
 	end;
 
 OnTimer5000:
@@ -2979,6 +2991,7 @@ OnTimer7000:
 	end;
 
 OnTimer8000:
+	stopnpctimer;
 	disablenpc "Red Alarm On#1-4";
 	end;
 }
@@ -2988,7 +3001,8 @@ OnInit:
 	disablenpc "Monster1#1-4";
 	end;
 
-Onreset:
+OnDisable:
+	disablenpc "Monster1#1-4";
 	killmonster "jupe_area1","Monster1#1-4::OnMyMobDead";
 	end;
 
@@ -3012,8 +3026,9 @@ OnTimer300000:
 	end;
 
 OnTimer300002:
-	disablenpc "Monster1#1-4";
+	stopnpctimer;
 	enablenpc "#hole#1-4";
+	donpcevent "Monster1#1-4::OnDisable";
 	end;
 
 OnMyMobDead:
@@ -3031,11 +3046,13 @@ OnInit:
 	disablenpc "Monster2#1-4";
 	end;
 
-Onreset:
+OnDisable:
 	killmonster "jupe_area1","Monster2#1-4::OnMyMobDead";
+	disablenpc "Monster2#1-4";
 	end;
 
 OnEnable:
+	enablenpc "Monster2#1-4";
 	initnpctimer;
 	end;
 
@@ -3049,7 +3066,6 @@ OnTimer4000:
 
 OnTimer6000:
 	mapannounce "jupe_area1","I will be waiting for you!",bc_map,"0xFF0000";
-	enablenpc "Monster2#1-4";
 	set .MyMobs,10;
 	monster "jupe_area1",104,161,"Security Guard",1675,1,"Monster2#1-4::OnMyMobDead";
 	monster "jupe_area1",108,161,"Security Guard",1669,1,"Monster2#1-4::OnMyMobDead";
@@ -3064,15 +3080,13 @@ OnTimer6000:
 	end;
 
 OnTimer300000:
-	mapannounce "jupe_area1","It's funny... Isn't it?",bc_map,"0xFF0000";
-	disablenpc "Monster2#1-4";
-	enablenpc "#hole#1-4";
-	disablenpc "Red Alarm#1-4";
 	set $@JupreArea1InUse,0;
+	mapannounce "jupe_area1","It's funny... Isn't it?",bc_map,"0xFF0000";
 	end;
 
 OnTimer300002:
-	disablenpc "Monster2#1-4";
+	enablenpc "#hole#1-4";
+	donpcevent "Monster2#1-4::OnDisable";
 	end;
 
 OnMyMobDead:
@@ -3081,7 +3095,6 @@ OnMyMobDead:
 		mapannounce "jupe_area1","It's funny... Isn't it?",bc_map,"0xFF0000";
 		disablenpc "Monster2#1-4";
 		enablenpc "#hole#1-4";
-		disablenpc "Red Alarm#1-4";
 		set $@JupreArea1InUse,0;
 		stopnpctimer;
 	}
@@ -3098,6 +3111,7 @@ jupe_area1,112,162,0	script	Lever#ufe	844,{
 	next;
 	switch(select("Pull.:Cancel.")) {
 	case 1:
+		if($@JupreArea1InUse == 1) close;
 		initnpctimer;
 		donpcevent "LeverWarp#ufe::OnEnable";
 		disablenpc "Lever#ufe";
@@ -3111,21 +3125,14 @@ jupe_area1,112,162,0	script	Lever#ufe	844,{
 	}
 	close;
 
-Onstop_timer:
-	stopnpctimer;
-	end;
-
 OnTimer3000:
 	enablenpc "Lever#ufe";
+	stopnpctimer;
 	end;
 }
 
 jupe_area1,117,157,0	script	LeverWarp#ufe	139,2,2,{
 OnInit:
-	disablenpc "LeverWarp#ufe";
-	end;
-
-Onreset:
 	disablenpc "LeverWarp#ufe";
 	end;
 
@@ -3141,6 +3148,7 @@ OnTouch:
 	end;
 
 OnTimer3000:
+	stopnpctimer;
 	disablenpc "LeverWarp#ufe";
 	end;
 }
@@ -3150,7 +3158,7 @@ OnTimer3000:
 //============================================================
 jupe_area2,74,224,0	script	#hole#2-1	844,{
 	cutin "1",2;
-	if ($@JupreArea1InUse2 == 1) {
+	if ($@JupreArea2InUse == 1) {
 		mes "^3355FFThis seems like";
 		mes "some kind of device";
 		mes "that will allow you to";
@@ -3164,7 +3172,7 @@ jupe_area2,74,224,0	script	#hole#2-1	844,{
 	}
 	else if (countitem(7356) > 0 || countitem(7359) > 0 || countitem(7357) > 0 || countitem(7358) > 0) {
 		mes "^3355FFThis seems like";
-		mes "some akind of device";
+		mes "some kind of device";
 		mes "that will allow you to";
 		mes "pass to the other side.";
 		mes "There's a slot where you";
@@ -3181,7 +3189,7 @@ jupe_area2,74,224,0	script	#hole#2-1	844,{
 				specialeffect 159; //"#hole#2-1" EF_TOPRANK
 				cutin "1-1",2;
 				next;
-				if ($@JupreArea1InUse2 == 1) {
+				if ($@JupreArea2InUse == 1) {
 					mes "^3355FFNothing happens.";
 					mes "Perhaps an alarm or";
 					mes "some other safety measure";
@@ -3250,6 +3258,7 @@ Onstop_timer:
 	end;
 
 OnTimer22500:
+	stopnpctimer;
 	enablenpc "#hole#2-1";
 	disablenpc "Red Alarm#2-1";
 	end;
@@ -3272,6 +3281,7 @@ OnTouch:
 	end;
 
 OnTimer22500:
+	stopnpctimer;
 	disablenpc "Warp#2-1";
 	end;
 }
@@ -3282,10 +3292,11 @@ OnInit:
 	end;
 
 OnTouch:
-	set $@JupreArea1InUse2,1;
 	donpcevent "Red Alarm On#2-1::OnEnable";
 	disablenpc "Red Alarm#2-1";
 	donpcevent "#hole#2-1::Onstop_timer";
+	set $@JupreArea2InUse,1;
+	disablenpc "#hole#2-1";
 	end;
 }
 
@@ -3307,7 +3318,6 @@ OnTimer3000:
 	mapannounce "jupe_area2","I do not intend to stop you.",bc_map,"0xFF0000";
 	soundeffectall "jupe_warning.wav",0,"jupe_area2";
 	soundeffectall "jupe_warning.wav",0,"jupe_area2";
-	disablenpc "#hole#2-1";
 	end;
 
 OnTimer5000:
@@ -3323,6 +3333,7 @@ OnTimer8000:
 	disablenpc "Red Alarm On#2-1";
 	soundeffectall "jupe_warning.wav",0,"jupe_area2";
 	soundeffectall "jupe_warning.wav",0,"jupe_area2";
+	stopnpctimer;
 	end;
 }
 
@@ -3331,7 +3342,8 @@ OnInit:
 	disablenpc "Monster1#2-1";
 	end;
 
-Onreset:
+OnDisable:
+	disablenpc "Monster1#2-1";
 	killmonster "jupe_area2","Monster1#2-1::OnMyMobDead";
 	end;
 
@@ -3351,12 +3363,13 @@ OnEnable:
 
 OnTimer300000:
 	mapannounce "jupe_area2","Do you realize this is a hallucination?",bc_map,"0xFF0000";
-	set $@JupreArea1InUse2,0;
+	set $@JupreArea2InUse,0;
 	end;
 
 OnTimer300002:
-	disablenpc "Monster1#2-1";
 	enablenpc "#hole#2-1";
+	stopnpctimer;
+	donpcevent "Monster1#2-1::OnDisable";
 	end;
 
 OnMyMobDead:
@@ -3374,7 +3387,8 @@ OnInit:
 	disablenpc "Monster2#2-1";
 	end;
 
-Onreset:
+OnDisable:
+	disablenpc "Monster2#2-1";
 	killmonster "jupe_area2","Monster2#2-1::OnMyMobDead";
 	end;
 
@@ -3410,13 +3424,12 @@ OnTimer7000:
 
 OnTimer300000:
 	mapannounce "jupe_area2","Bwahaha! You're only good at running away!",bc_map,"0xFF0000";
-	disablenpc "Monster2#2-1";
-	enablenpc "#hole#2-1";
-	disablenpc "Red Alarm#2-1";
-	set $@JupreArea1InUse2,0;
+	set $@JupreArea2InUse,0;
 	end;
 
 OnTimer300002:
+	enablenpc "#hole#2-1";
+	stopnpctimer;
 	donpcevent "Monster2#2-1::OnDisable";
 	end;
 
@@ -3426,8 +3439,7 @@ OnMyMobDead:
 		mapannounce "jupe_area2","Zzzzt. Zzzzt..... ",bc_map,"0xFF0000";
 		disablenpc "Monster2#2-1";
 		enablenpc "#hole#2-1";
-		disablenpc "Red Alarm#2-1";
-		set $@JupreArea1InUse2,0;
+		set $@JupreArea2InUse,0;
 		stopnpctimer;
 	}
 	end;
@@ -3438,7 +3450,7 @@ OnMyMobDead:
 //============================================================
 jupe_area2,138,238,0	script	#hole#2-2	844,{
 	cutin "2",2;
-	if ($@JupreArea1InUse2 == 1) {
+	if ($@JupreArea2InUse == 1) {
 		mes "^3355FFThis seems like";
 		mes "some kind of device";
 		mes "that will allow you to";
@@ -3469,7 +3481,7 @@ jupe_area2,138,238,0	script	#hole#2-2	844,{
 				specialeffect 159; //"#hole#2-2" EF_TOPRANK
 				cutin "2-1",2;
 				next;
-				if ($@JupreArea1InUse2 == 1) {
+				if ($@JupreArea2InUse == 1) {
 					mes "^3355FFNothing happens.";
 					mes "Perhaps an alarm or";
 					mes "some other safety measure";
@@ -3540,6 +3552,7 @@ Onstop_timer:
 	end;
 
 OnTimer22500:
+	stopnpctimer;
 	enablenpc "#hole#2-2";
 	disablenpc "Red Alarm#2-2";
 	end;
@@ -3572,7 +3585,7 @@ OnInit:
 	end;
 
 OnTouch:
-	set $@JupreArea1InUse2,1;
+	set $@JupreArea2InUse,1;
 	donpcevent "Red Alarm On#2-2::OnEnable";
 	disablenpc "Red Alarm#2-2";
 	disablenpc "#hole#2-2";
@@ -3595,7 +3608,6 @@ OnTimer1000:
 
 OnTimer3000:
 	mapannounce "jupe_area2","Yes. Run... Right into my hands!",bc_map,"0xFF0000";
-	disablenpc "#hole#2-2";
 	end;
 
 OnTimer5000:
@@ -3609,6 +3621,7 @@ OnTimer7000:
 
 OnTimer8000:
 	disablenpc "Red Alarm On#2-2";
+	stopnpctimer;
 	end;
 }
 
@@ -3617,7 +3630,8 @@ OnInit:
 	disablenpc "Monster1#2-2";
 	end;
 
-Onreset:
+OnDisable:
+	disablenpc "Monster1#2-2";
 	killmonster "jupe_area2","Monster1#2-2::OnMyMobDead";
 	end;
 
@@ -3637,12 +3651,13 @@ OnEnable:
 
 OnTimer300000:
 	mapannounce "jupe_area2","I can't believe how cowardly you really are...",bc_map,"0xFF0000";
-	set $@JupreArea1InUse2,0;
+	set $@JupreArea2InUse,0;
 	end;
 
 OnTimer300002:
-	disablenpc "Monster1#2-2";
 	enablenpc "#hole#2-2";
+	stopnpctimer;
+	donpcevent "Monster1#2-2::OnDisable";
 	end;
 
 OnMyMobDead:
@@ -3660,11 +3675,13 @@ OnInit:
 	disablenpc "Monster2#2-2";
 	end;
 
-Onreset:
+OnDisable:
+	disablenpc "Monster2#2-2";
 	killmonster "jupe_area2","Monster2#2-2::OnMyMobDead";
 	end;
 
 OnEnable:
+	enablenpc "Monster2#2-2";
 	initnpctimer;
 	end;
 
@@ -3678,7 +3695,6 @@ OnTimer4000:
 
 OnTimer6000:
 	mapannounce "jupe_area2","I was called Vesper Newton. Hahah, they called me a mad man back then.",bc_map,"0xFF0000";
-	enablenpc "Monster2#2-2";
 	set .MyMobs,13;
 	monster "jupe_area2",126,156,"Security Guard",1675,1,"Monster2#2-2::OnMyMobDead";
 	monster "jupe_area2",127,156,"Security Guard",1669,1,"Monster2#2-2::OnMyMobDead";
@@ -3697,13 +3713,12 @@ OnTimer6000:
 
 OnTimer300000:
 	mapannounce "jupe_area2","...Not yet.",bc_map,"0xFF0000";
-	disablenpc "Monster2#2-2";
-	enablenpc "#hole#2-2";
-	disablenpc "Red Alarm#2-2";
-	set $@JupreArea1InUse2,0;
+	set $@JupreArea2InUse,0;
 	end;
 
 OnTimer300002:
+	enablenpc "#hole#2-2";
+	stopnpctimer;
 	donpcevent "Monster2#2-2::OnDisable";
 	end;
 
@@ -3713,8 +3728,7 @@ OnMyMobDead:
 		mapannounce "jupe_area2","Not yet!",bc_map,"0xFF0000";
 		disablenpc "Monster2#2-2";
 		enablenpc "#hole#2-2";
-		disablenpc "Red Alarm#2-2";
-		set $@JupreArea1InUse2,0;
+		set $@JupreArea2InUse,0;
 		stopnpctimer;
 	}
 	end;
@@ -3725,7 +3739,7 @@ OnMyMobDead:
 //============================================================
 jupe_area2,127,146,0	script	#hole#2-3	844,{
 	cutin "3",2;
-	if ($@JupreArea1InUse2 == 1) {
+	if ($@JupreArea2InUse == 1) {
 		mes "^3355FFThis seems like";
 		mes "some kind of device";
 		mes "that will allow you to";
@@ -3756,7 +3770,7 @@ jupe_area2,127,146,0	script	#hole#2-3	844,{
 				specialeffect 159; //"#hole#2-3" EF_TOPRANK
 				cutin "3-1",2;
 				next;
-				if ($@JupreArea1InUse2 == 1) {
+				if ($@JupreArea2InUse == 1) {
 					mes "^3355FFNothing happens.";
 					mes "Perhaps an alarm or";
 					mes "some other safety measure";
@@ -3825,6 +3839,7 @@ Onstop_timer:
 	end;
 
 OnTimer22500:
+	stopnpctimer;
 	enablenpc "#hole#2-3";
 	disablenpc "Red Alarm#2-3";
 	end;
@@ -3857,7 +3872,7 @@ OnInit:
 	end;
 
 OnTouch:
-	set $@JupreArea1InUse2,1;
+	set $@JupreArea2InUse,1;
 	donpcevent "Red Alarm On#2-3::OnEnable";
 	disablenpc "Red Alarm#2-3";
 	disablenpc "#hole#2-3";
@@ -3894,6 +3909,7 @@ OnTimer7000:
 
 OnTimer8000:
 	disablenpc "Red Alarm On#2-3";
+	stopnpctimer;
 	end;
 }
 
@@ -3902,7 +3918,8 @@ OnInit:
 	disablenpc "Monster1#2-3";
 	end;
 
-Onreset:
+OnDisable:
+	disablenpc "Monster1#2-3";
 	killmonster "jupe_area2","Monster1#2-3::OnMyMobDead";
 	end;
 
@@ -3922,11 +3939,11 @@ OnEnable:
 
 OnTimer300000:
 	mapannounce "jupe_area2","Zzzzt...Zzzzt....",bc_map,"0xFF0000";
-	set $@JupreArea1InUse2,0;
+	set $@JupreArea2InUse,0;
 	end;
 
 OnTimer300002:
-	disablenpc "Monster1#2-3";
+	donpcevent "Monster1#2-3::OnDisable";
 	enablenpc "#hole#2-3";
 	end;
 
@@ -3945,12 +3962,14 @@ OnInit:
 	disablenpc "Monster2#2-3";
 	end;
 
-Onreset:
+OnDisable:
+	disablenpc "Monster2#2-3";
 	killmonster "jupe_area2","Monster2#2-3::OnMyMobDead";
 	end;
 
 OnEnable:
 	initnpctimer;
+	enablenpc "Monster2#2-3";
 	end;
 
 OnTimer2000:
@@ -3963,7 +3982,6 @@ OnTimer5000:
 
 OnTimer8000:
 	mapannounce "jupe_area2","You're wrong! Welcome to Hell!",bc_map,"0xFF0000";
-	enablenpc "Monster2#2-3";
 	set .MyMobs,16;
 	monster "jupe_area2",114,64,"Security Guard",1675,1,"Monster2#2-3::OnMyMobDead";
 	monster "jupe_area2",115,64,"Security Guard",1669,1,"Monster2#2-3::OnMyMobDead";
@@ -3985,13 +4003,12 @@ OnTimer8000:
 
 OnTimer300000:
 	mapannounce "jupe_area2","Do you still have your courage? Come. Prove it.",bc_map,"0xFF0000";
-	disablenpc "Monster2#2-3";
-	enablenpc "#hole#2-3";
-	disablenpc "Red Alarm#2-3";
-	set $@JupreArea1InUse2,0;
+	set $@JupreArea2InUse,0;
 	end;
 
 OnTimer300002:
+	enablenpc "#hole#2-3";
+	stopnpctimer;
 	donpcevent "Monster2#2-3::OnDisable";
 	end;
 
@@ -4001,8 +4018,7 @@ OnMyMobDead:
 		mapannounce "jupe_area2","Do you still have your courage? Come. Prove it.",bc_map,"0xFF0000";
 		disablenpc "Monster2#2-3";
 		enablenpc "#hole#2-3";
-		disablenpc "Red Alarm#2-3";
-		set $@JupreArea1InUse2,0;
+		set $@JupreArea2InUse,0;
 		stopnpctimer;
 	}
 	end;
@@ -4013,7 +4029,7 @@ OnMyMobDead:
 //============================================================
 jupe_area2,113,49,0	script	#hole#2-4	844,{
 	cutin "4",2;
-	if ($@JupreArea1InUse2 == 1) {
+	if ($@JupreArea2InUse == 1) {
 		mes "^3355FFThis seems like";
 		mes "some kind of device";
 		mes "that will allow you to";
@@ -4044,7 +4060,7 @@ jupe_area2,113,49,0	script	#hole#2-4	844,{
 				specialeffect 159; //"#hole#2-4" EF_TOPRANK
 				cutin "4-1",2;
 				next;
-				if ($@JupreArea1InUse2 == 1) {
+				if ($@JupreArea2InUse == 1) {
 					mes "^3355FFNothing happens.";
 					mes "Perhaps an alarm or";
 					mes "some other safety measure";
@@ -4114,6 +4130,7 @@ Onstop_timer:
 	end;
 
 OnTimer5000:
+	stopnpctimer;
 	enablenpc "#hole#2-4";
 	disablenpc "Red Alarm#2-4";
 	end;
@@ -4150,7 +4167,7 @@ OnEnable:
 	end;
 
 OnTouch:
-	set $@JupreArea1InUse2,1;
+	set $@JupreArea2InUse,1;
 	donpcevent "Red Alarm On#2-4::OnEnable";
 	disablenpc "Red Alarm#2-4";
 	disablenpc "#hole#2-4";
@@ -4173,7 +4190,6 @@ OnTimer1000:
 
 OnTimer3000:
 	mapannounce "jupe_area2","If you hear this, I wish you will be the one...",bc_map,"0xFF0000";
-	disablenpc "#hole#2-4";
 	end;
 
 OnTimer5000:
@@ -4186,6 +4202,7 @@ OnTimer7000:
 	end;
 
 OnTimer8000:
+	stopnpctimer;
 	disablenpc "Red Alarm On#2-4";
 	end;
 }
@@ -4195,7 +4212,8 @@ OnInit:
 	disablenpc "Monster1#2-4";
 	end;
 
-Onreset:
+OnDisable:
+	disablenpc "Monster1#2-4";
 	killmonster "jupe_area2","Monster1#2-4::OnMyMobDead";
 	end;
 
@@ -4215,12 +4233,13 @@ OnEnable:
 
 OnTimer300000:
 	mapannounce "jupe_area2","Zzzzt...Zzzzt....",bc_map,"0xFF0000";
-	set $@JupreArea1InUse2,0;
+	set $@JupreArea2InUse,0;
 	end;
 
 OnTimer300002:
-	disablenpc "Monster1#2-4";
+	stopnpctimer;
 	enablenpc "#hole#2-4";
+	donpcevent "Monster1#2-4::OnDisable";
 	end;
 
 OnMyMobDead:
@@ -4238,11 +4257,13 @@ OnInit:
 	disablenpc "Monster2#2-4";
 	end;
 
-Onreset:
+OnDisable:
 	killmonster "jupe_area2","Monster2#2-4::OnMyMobDead";
+	disablenpc "Monster2#2-4";
 	end;
 
 OnEnable:
+	enablenpc "Monster2#2-4";
 	initnpctimer;
 	end;
 
@@ -4256,7 +4277,6 @@ OnTimer4000:
 
 OnTimer6000:
 	mapannounce "jupe_area2","I will be waiting for you!",bc_map,"0xFF0000";
-	enablenpc "Monster2#2-4";
 	set .MyMobs,12;
 	monster "jupe_area2",63,161,"Security Guard",1675,1,"Monster2#2-4::OnMyMobDead";
 	monster "jupe_area2",61,161,"Security Guard",1669,1,"Monster2#2-4::OnMyMobDead";
@@ -4273,15 +4293,13 @@ OnTimer6000:
 	end;
 
 OnTimer300000:
+	set $@JupreArea2InUse,0;
 	mapannounce "jupe_area2","It's funny... Isn't it?",bc_map,"0xFF0000";
-	disablenpc "Monster2#2-4";
-	enablenpc "#hole#2-4";
-	disablenpc "Red Alarm#2-4";
-	set $@JupreArea1InUse2,0;
 	end;
 
 OnTimer300002:
-	disablenpc "Monster2#2-4";
+	enablenpc "#hole#2-4";
+	donpcevent "Monster2#2-4::OnDisable";
 	end;
 
 OnMyMobDead:
@@ -4290,8 +4308,7 @@ OnMyMobDead:
 		mapannounce "jupe_area2","It's funny... Isn't it?",bc_map,"0xFF0000";
 		disablenpc "Monster2#2-4";
 		enablenpc "#hole#2-4";
-		disablenpc "Red Alarm#2-4";
-		set $@JupreArea1InUse2,0;
+		set $@JupreArea2InUse,0;
 		stopnpctimer;
 	}
 	end;
@@ -4307,6 +4324,7 @@ jupe_area2,51,162,0	script	Lever#ufe2	844,{
 	next;
 	switch(select("Pull.:Cancel.")) {
 	case 1:
+		if($@JupreArea2InUse == 1) close;
 		initnpctimer;
 		donpcevent "LeverWarp#ufe2::OnEnable";
 		disablenpc "Lever#ufe2";
@@ -4320,21 +4338,14 @@ jupe_area2,51,162,0	script	Lever#ufe2	844,{
 	}
 	close;
 
-Onstop_timer:
-	stopnpctimer;
-	end;
-
 OnTimer3000:
 	enablenpc "Lever#ufe2";
+	stopnpctimer;
 	end;
 }
 
 jupe_area2,46,157,0	script	LeverWarp#ufe2	139,2,2,{
 OnInit:
-	disablenpc "LeverWarp#ufe2";
-	end;
-
-Onreset:
 	disablenpc "LeverWarp#ufe2";
 	end;
 
@@ -4350,6 +4361,7 @@ OnTouch:
 	end;
 
 OnTimer3000:
+	stopnpctimer;
 	disablenpc "LeverWarp#ufe2";
 	end;
 }
@@ -4504,6 +4516,7 @@ OnTimer23000:
 
 OnTimer27000:
 	mapannounce "jupe_ele_r","Look! And remember!",bc_map,"0xFF0000";
+	stopnpctimer;
 	end;
 }
 
@@ -4570,7 +4583,7 @@ OnTimer2600:
 
 OnTimer120000:
 	mapannounce "jupe_ele_r","It is disappointing to see that you are too weak to even defeat a hallucination...",bc_map,"0x66FF00";
-	donpcevent "Switch#ufe::OnEnable";
+	enablenpc "Switch#ufe";
 	disablenpc "Switch On#ufe";
 	donpcevent "Annihilation#ufe::OnEnable";
 	set $@JupeElevatorInUse,0;
@@ -4584,7 +4597,6 @@ OnTimer120005:
 OnMyMobDead:
 	set .MyMobs,.MyMobs-1;
 	if (.MyMobs < 1) {
-		set $@JupeElevatorInUse,0;
 		donpcevent "Elevator Safety#ufe::OnEnable";
 		stopnpctimer;
 	}
@@ -4622,7 +4634,7 @@ OnInit:
 	end;
 
 OnEnable:
-	disablenpc "Annihilation#ufe";
+	enablenpc "Annihilation#ufe";
 	initnpctimer;
 	end;
 
@@ -4632,10 +4644,6 @@ OnTouch:
 
 OnTimer1000:
 	mapwarp "jupe_ele_r", "jupe_gate",49,138;
-	end;
-
-OnTimer1100:
-	enablenpc "Annihilation#ufe";
 	end;
 
 OnTimer1600:
@@ -4676,6 +4684,7 @@ OnTimer1000:
 	end;
 
 OnTimer10000:
+	stopnpctimer;
 	disablenpc "Elevator On#ufe";
 	end;
 }
@@ -4694,7 +4703,6 @@ OnDisable:
 
 OnTimer59000:
 	if (getmapusers("jupe_ele") == 0) {
-		set $@JupeElevatorInUse2,5;
 		killmonsterall "jupe_ele";
 		donpcevent "Guard-1#ufe::OnDisable";
 		donpcevent "Guard-2#ufe::OnDisable";
@@ -4767,10 +4775,6 @@ OnDisable:
 	stopnpctimer;
 	end;
 
-Onreset:
-	killmonsterall "jupe_ele";
-	end;
-
 OnTimer2000:
 	mapannounce "jupe_ele","I admire your patience.",bc_map,"0xFF0000";
 	end;
@@ -4793,11 +4797,11 @@ OnTimer12000:
 	monster "jupe_ele",38,53,"Guard",1669,1,"Guard-1#ufe::OnMyMobDead";
 	monster "jupe_ele",45,53,"Guard",1675,1,"Guard-1#ufe::OnMyMobDead";
 	monster "jupe_ele",48,51,"Guard",1669,1,"Guard-1#ufe::OnMyMobDead";
+	set $@JupeElevatorInUse2,1;
 	end;
 
 OnTimer30000:
-	if ($@JupeElevatorInUse2 == 0) {
-		set $@JupeElevatorInUse2,1;
+	if ($@JupeElevatorInUse2 == 1) {
 		donpcevent "Guard-2#ufe::OnEnable";
 		stopnpctimer;
 	}
@@ -4806,20 +4810,12 @@ OnTimer30000:
 OnMyMobDead:
 	set .MyMobs,.MyMobs-1;
 	if (.MyMobs < 1) {
-		if ($@JupeElevatorInUse2 == 0) {
-			set $@JupeElevatorInUse2,1;
+		if ($@JupeElevatorInUse2 == 1) {
 			donpcevent "Guard-2#ufe::OnEnable";
 			stopnpctimer;
-		}
-		else if ($@JupeElevatorInUse2 == 4) {
-			if (getvariableofnpc(.MyMobs,"Guard-1#ufe") < 1) {
-				if (getvariableofnpc(.MyMobs,"Guard-3#ufe") < 1) {
-					if (getvariableofnpc(.MyMobs,"Guard-2#ufe") < 1) {
-						donpcevent "GuardEnd#ufe::OnEnable";
-						stopnpctimer;
-					}
-				}
-			}
+		} else if ($@JupeElevatorInUse2 == 4 && getvariableofnpc(.MyMobs,"Guard-2#ufe") < 1 && getvariableofnpc(.MyMobs,"Guard-3#ufe") < 1 && getvariableofnpc(.MyMobs,"Guard-4#ufe") < 1) {
+			donpcevent "GuardEnd#ufe::OnEnable";
+			stopnpctimer;
 		}
 	}
 	end;
@@ -4832,10 +4828,6 @@ OnEnable:
 
 OnDisable:
 	stopnpctimer;
-	end;
-
-Onreset:
-	killmonsterall "jupe_ele";
 	end;
 
 OnTimer2000:
@@ -4864,11 +4856,11 @@ OnTimer12000:
 	monster "jupe_ele",38,53,"Guard",1669,1,"Guard-2#ufe::OnMyMobDead";
 	monster "jupe_ele",45,53,"Guard",1683,1,"Guard-2#ufe::OnMyMobDead";
 	monster "jupe_ele",48,51,"Guard",1669,1,"Guard-2#ufe::OnMyMobDead";
+	set $@JupeElevatorInUse2,2;
 	end;
 
 OnTimer30000:
-	if ($@JupeElevatorInUse2 == 1) {
-		set $@JupeElevatorInUse2,2;
+	if ($@JupeElevatorInUse2 == 2) {
 		donpcevent "Guard-3#ufe::OnEnable";
 		stopnpctimer;
 	}
@@ -4877,20 +4869,12 @@ OnTimer30000:
 OnMyMobDead:
 	set .MyMobs,.MyMobs-1;
 	if (.MyMobs < 1) {
-		if ($@JupeElevatorInUse2 == 1) {
-			set $@JupeElevatorInUse2,2;
+		if ($@JupeElevatorInUse2 == 2) {
 			donpcevent "Guard-3#ufe::OnEnable";
 			stopnpctimer;
-		}
-		else if ($@JupeElevatorInUse2 == 4) {
-			if (getvariableofnpc(.MyMobs,"Guard-4#ufe") < 1) {
-				if (getvariableofnpc(.MyMobs,"Guard-3#ufe") < 1) {
-					if (getvariableofnpc(.MyMobs,"Guard-1#ufe") < 1) {
-						donpcevent "GuardEnd#ufe::OnEnable";
-						stopnpctimer;
-					}
-				}
-			}
+		} else if ($@JupeElevatorInUse2 == 4 && getvariableofnpc(.MyMobs,"Guard-1#ufe") < 1 && getvariableofnpc(.MyMobs,"Guard-3#ufe") < 1 && getvariableofnpc(.MyMobs,"Guard-4#ufe") < 1) {
+			donpcevent "GuardEnd#ufe::OnEnable";
+			stopnpctimer;
 		}
 	}
 	end;
@@ -4903,10 +4887,6 @@ OnEnable:
 
 OnDisable:
 	stopnpctimer;
-	end;
-
-Onreset:
-	killmonsterall "jupe_ele";
 	end;
 
 OnTimer2000:
@@ -4931,11 +4911,11 @@ OnTimer12000:
 	monster "jupe_ele",38,53,"Guard",1683,1,"Guard-3#ufe::OnMyMobDead";
 	monster "jupe_ele",45,53,"Guard",1675,1,"Guard-3#ufe::OnMyMobDead";
 	monster "jupe_ele",48,51,"Guard",1669,1,"Guard-3#ufe::OnMyMobDead";
+	set $@JupeElevatorInUse2,3;
 	end;
 
 OnTimer30000:
-	if ($@JupeElevatorInUse2 == 2) {
-		set $@JupeElevatorInUse2,3;
+	if ($@JupeElevatorInUse2 == 3) {
 		donpcevent "Guard-4#ufe::OnEnable";
 		stopnpctimer;
 	}
@@ -4944,20 +4924,13 @@ OnTimer30000:
 OnMyMobDead:
 	set .MyMobs,.MyMobs-1;
 	if (.MyMobs < 1) {
-		if ($@JupeElevatorInUse2 == 2) {
-			set $@JupeElevatorInUse2,3;
+		if ($@JupeElevatorInUse2 == 3) {
 			donpcevent "Guard-4#ufe::OnEnable";
 			stopnpctimer;
 		}
-		else if ($@JupeElevatorInUse2 == 4) {
-			if (getvariableofnpc(.MyMobs,"Guard-4#ufe") < 1) {
-				if (getvariableofnpc(.MyMobs,"Guard-2#ufe") < 1) {
-					if (getvariableofnpc(.MyMobs,"Guard-1#ufe") < 1) {
-						donpcevent "GuardEnd#ufe::OnEnable";
-						stopnpctimer;
-					}
-				}
-			}
+		else if ($@JupeElevatorInUse2 == 4 && getvariableofnpc(.MyMobs,"Guard-1#ufe") < 1 && getvariableofnpc(.MyMobs,"Guard-2#ufe") < 1 && getvariableofnpc(.MyMobs,"Guard-4#ufe") < 1) {
+			donpcevent "GuardEnd#ufe::OnEnable";
+			stopnpctimer;
 		}
 	}
 	end;
@@ -4972,10 +4945,6 @@ OnDisable:
 	stopnpctimer;
 	end;
 
-Onreset:
-	killmonsterall "jupe_ele";
-	end;
-
 OnTimer2000:
 	mapannounce "jupe_ele","Do not forget. That which limits you is nothing but yourself.",bc_map,"0xFF0000";
 	end;
@@ -4985,7 +4954,6 @@ OnTimer5000:
 	end;
 
 OnTimer8000:
-	set $@JupeElevatorInUse2,4;
 	set .MyMobs,8;
 	monster "jupe_ele",48,44,"Guard",1684,1,"Guard-4#ufe::OnMyMobDead";
 	monster "jupe_ele",45,42,"Guard",1669,1,"Guard-4#ufe::OnMyMobDead";
@@ -4995,18 +4963,16 @@ OnTimer8000:
 	monster "jupe_ele",38,53,"Guard",1669,1,"Guard-4#ufe::OnMyMobDead";
 	monster "jupe_ele",45,53,"Guard",1683,1,"Guard-4#ufe::OnMyMobDead";
 	monster "jupe_ele",48,51,"Guard",1675,1,"Guard-4#ufe::OnMyMobDead";
+	set $@JupeElevatorInUse2,4;
 	end;
 
 OnMyMobDead:
 	set .MyMobs,.MyMobs-1;
-	if (getvariableofnpc(.MyMobs,"Guard-1#ufe") < 1) {
-		if (getvariableofnpc(.MyMobs,"Guard-2#ufe") < 1) {
-			if (getvariableofnpc(.MyMobs,"Guard-3#ufe") < 1) {
-				if (getvariableofnpc(.MyMobs,"Guard-4#ufe") < 1) {
-					donpcevent "GuardEnd#ufe::OnEnable";
-					stopnpctimer;
-				}
-			}
+	if (.MyMobs < 1) {
+		if(getvariableofnpc(.MyMobs,"Guard-1#ufe") < 1 && getvariableofnpc(.MyMobs,"Guard-2#ufe") < 1 && getvariableofnpc(.MyMobs,"Guard-3#ufe") < 1)
+		{
+			donpcevent "GuardEnd#ufe::OnEnable";
+			stopnpctimer;
 		}
 	}
 	end;
@@ -5064,14 +5030,11 @@ OnTimer25000:
 	end;
 
 OnTimer26000:
-	donpcevent "GuardEnd#ufe::OnDisable";
-	disablenpc "4F Enter#ufe";
-	donpcevent "TimeOut#ufe::OnDisable";
 	set $@JupeElevatorInUse2,0;
 	set $@JupeElevatorInUse,0;
 	disablenpc "Switch On#ufe";
 	enablenpc "Switch#ufe";
-	stopnpctimer;
+	donpcevent "GuardEnd#ufe::OnDisable";
 }
 
 jupe_ele,41,33,0	script	4F Enter#ufe	45,4,4,{
@@ -5091,7 +5054,7 @@ jupe_gate,50,173,0	script	gate#start	-1,2,3,{
 	end;
 
 OnTouch:
-	initnpctimer;
+	initnpctimer "gate#start",1;
 	mes "^3355FFIt's a Warp Portal";
 	mes "that will teleport you";
 	mes "to the previous floor.^000000";
@@ -5099,18 +5062,16 @@ OnTouch:
 	switch(select("Use it.:Ignore it.")) {
 	case 1:
 		specialeffect2 348; // EF_LIGHTSPHERE
-		next;
+		close2;
 		stopnpctimer;
 		warp "juperos_02",130,142;
-		close;
 	case 2:
 		mes "[" + strcharinfo(0) + "]";
 		mes "Not now!";
 		mes "I can't leave yet!";
-		next;
-		warp "jupe_gate",50,168;
+		close2;
 		stopnpctimer;
-		close;
+		warp "jupe_gate",50,168;
 	}
 	end;
 
