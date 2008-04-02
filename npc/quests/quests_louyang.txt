@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Evera and The eAthena Dev Team
 //===== Current Version: ===================================== 
-//= 1.8
+//= 1.9
 //===== Compatible With: ===================================== 
 //= eAthena 1.0
 //===== Description: ========================================= 
@@ -28,7 +28,8 @@
 //=	quest progress from the old scripts.
 //= 1.7 Added missing checkweights. And corrected [L0ne_W0lf]
 //=	a typo in Poison King quest.
-//= 1.8 Bug fixes. (bugreport:1025 bugreport:1062) [L0ne_Wplf]
+//= 1.8 Bug fixes. (bugreport:1025 bugreport:1062) [L0ne_W0lf]
+//= 1.9 Bug fixes/Typos. [Paradox924X]
 //============================================================ 
 
 // Soup Quest
@@ -374,7 +375,7 @@ OnTouch:
 				mes "^3131FFYou have failed^000000";
 				mes "^3131FFto steal the pot.^000000";
 				set ch_tre,1;
-				warp "lou_yang",280,161;
+				warp "louyang",280,161;
 				close;
 			}
 		}
@@ -389,7 +390,7 @@ OnTouch:
 				mes "^3131FFYou have failed^000000";
 				mes "^3131FFto steal the pot.^000000";
 				set ch_tre,1;
-				warp "lou_yang",280,161;
+				warp "louyang",280,161;
 				close;
 			}
 		}
@@ -404,7 +405,7 @@ OnTouch:
 				mes "^3131FFYou have failed^000000";
 				mes "^3131FFto steal the pot.^000000";
 				set ch_tre,1;
-				warp "lou_yang",280,161;
+				warp "louyang",280,161;
 				close;
 			}
 		}
@@ -423,7 +424,7 @@ OnTouch:
 				mes "^3131FFYou have failed^000000";
 				mes "^3131FFto steal the pot.^000000";
 				set ch_tre,1;
-				warp "lou_yang",280,161;
+				warp "louyang",280,161;
 				close;
 			}
 		}

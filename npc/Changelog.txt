@@ -1,5 +1,7 @@
 Date		Added
 ======
+2008/04/01
+	* Fixed Bugs/Typos in quests_louyang.txt [Paradox924X]
 2008/03/27
 	* Fixed typos and misplaced names in valkyrie.txt and 2006_headgear.txt [Lupus]
 2008/03/25
