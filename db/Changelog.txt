@@ -43,6 +43,8 @@
 	2385 Recuvative_Armor		Should trigger HP/SP return with magical kills as well.
 
 =======================
+2008/04/02
+	* Rev. 12460 Updated Anubis drops to official. [L0ne_W0lf]
 2008/03/27
 	* Added constants for the cell checking script function [ultramage]
 2008/03/23
