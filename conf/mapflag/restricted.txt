@@ -31,13 +31,13 @@ force_1-3	mapflag	restricted	3
 prt_are_in	mapflag	restricted	3
 
 //WoE:SE Maps
-//schg_cas01	mapflag	restricted	4
-//schg_cas02	mapflag	restricted	4
-//schg_cas03	mapflag	restricted	4
-//schg_cas04	mapflag	restricted	4
-//schg_cas05	mapflag	restricted	4
-//arug_cas01	mapflag	restricted	4
-//arug_cas02	mapflag	restricted	4
-//arug_cas03	mapflag	restricted	4
-//arug_cas04	mapflag	restricted	4
-//arug_cas05	mapflag	restricted	4
+schg_cas01	mapflag	restricted	4
+schg_cas02	mapflag	restricted	4
+schg_cas03	mapflag	restricted	4
+schg_cas04	mapflag	restricted	4
+schg_cas05	mapflag	restricted	4
+arug_cas01	mapflag	restricted	4
+arug_cas02	mapflag	restricted	4
+arug_cas03	mapflag	restricted	4
+arug_cas04	mapflag	restricted	4
+arug_cas05	mapflag	restricted	4

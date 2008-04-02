@@ -1,5 +1,7 @@
 Date	Added
 
+2008/04/02
+	* Rev. 12462 Uncommented restricted map entryies for WoESE maps. [L0ne_W0lf]
 2008/03/07
 	* Added config settings mob_active_time and boss_active_time, what they do
 	  is specify a duration during which monsters will keep running their active

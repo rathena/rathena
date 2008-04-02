@@ -60,3 +60,7 @@
 //Zone 3 - Izlude Battle Arena
 219,128 //Snatch
 26,128	//Teleport
+
+//Zone 4 - WoE:SE
+264,256 //Snap
+426,256 //High Jump

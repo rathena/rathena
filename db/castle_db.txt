@@ -22,12 +22,17 @@
 17,prtg_cas03,Fadhgridh,Agit_Pt03,1			// kRO : Lazrigees
 18,prtg_cas04,Skoegul,Agit_Pt04,1			// kRO : Squagul
 19,prtg_cas05,Gondul,Agit_Pt05,1			// kRO : Guindull
-20,nguild_alde,Novice Castle 1,Agit_N01,2
-21,nguild_gef,Novice Castle 2,Agit_N02,2
-22,nguild_pay,Novice Castle 3,Agit_N03,2
-23,nguild_prt,Novice Castle 4,Agit_N04,2
-//24,schg_cas01,Schwaltzvalt Castle,Agit_sc01,1			// kRO : Schwaltzvalt Castle
-//25,schg_cas02,Schwaltzvalt Castle,Agit_sc02,1			// kRO : Schwaltzvalt Castle
-//26,schg_cas03,Schwaltzvalt Castle,Agit_sc03,1			// kRO : Schwaltzvalt Castle
-//27,schg_cas04,Schwaltzvalt Castle,Agit_sc04,1			// kRO : Schwaltzvalt Castle
-//28,schg_cas05,Schwaltzvalt Castle,Agit_sc05,1			// kRO : Schwaltzvalt Castle
+20,nguild_alde,Earth,Agit_N01,2
+21,nguild_gef,Air,Agit_N02,2
+22,nguild_pay,Water,Agit_N03,2
+23,nguild_prt,Fire,Agit_N04,2
+24,schg_cas01,Himinn,Agit_Sc01,1			// kRO : Himinn
+25,schg_cas02,Andlangr,Agit_Sc02,1			// kRO : Andlangr
+26,schg_cas03,Viblainn,Agit_Sc03,1			// kRO : Viblainn
+27,schg_cas04,Hljod,Agit_Sc04,1			// kRO : Hljod
+28,schg_cas05,Skidbladnir,Agit_Sc05,1			// kRO : Skidbladnir
+29,arug_cas01,Mardol,Agit_Ar01,1			// kRO : Mardol
+30,arug_cas02,Cyr,Agit_Ar02,1			// kRO : Cyr
+31,arug_cas03,Horn,Agit_Ar03,1			// kRO : Horn
+32,arug_cas04,Gefn,Agit_Ar04,1			// kRO : Gefn
+33,arug_cas05,Bandis,Agit_Ar05,1			// kRO : Bandis

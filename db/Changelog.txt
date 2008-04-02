@@ -44,6 +44,8 @@
 
 =======================
 2008/04/02
+	* Rev. 12462 Added new castles to castle database. [L0ne_W0lf]
+	* Added new restriction for new castle maps to skill_nocast_db.
 	* Rev. 12460 Updated Anubis drops to official. [L0ne_W0lf]
 2008/03/27
 	* Added constants for the cell checking script function [ultramage]

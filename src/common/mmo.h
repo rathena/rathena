@@ -47,7 +47,7 @@
 #define MAX_GUILDEXPULSION 32
 #define MAX_GUILDALLIANCE 16
 #define MAX_GUILDSKILL	15 // increased max guild skills because of new skills [Sara-chan]
-#define MAX_GUILDCASTLE 29	// increased to include novice castles [Valaris]
+#define MAX_GUILDCASTLE 34	// Updated to include new entries for WoE:SE. [L0ne_W0lf]
 #define MAX_GUILDLEVEL 50
 #define MAX_GUARDIANS 8	//Local max per castle. [Skotlex]
 
