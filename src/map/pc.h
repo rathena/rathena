@@ -348,6 +348,11 @@ struct map_session_data {
 		int index, amount, zeny;
 		struct mail_data inbox;
 	} mail;
+
+	// temporary debug [flaviojs]
+	const char* debug_file;
+	int debug_line;
+	const char* debug_func;
 };
 
 
