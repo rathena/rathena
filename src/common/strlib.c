@@ -541,7 +541,7 @@ int sv_parse(const char* str, int len, int startoff, char delim, int* out_pos, i
 /// 
 /// out_fields can be NULL.
 /// Fields that don't fit in out_fields are not nul-terminated.
-/// Extra entries in out_fields are filled with the end of line (empty string).
+/// Extra entries in out_fields are filled with the end of the last field (empty string).
 /// 
 /// @param str String to parse
 /// @param len Length of the string
@@ -556,36 +556,39 @@ int sv_split(char* str, int len, int startoff, char delim, char** out_fields, in
 	int pos[1024];
 	int i;
 	int done;
-	char* eol;
+	char* end;
 	int ret = sv_parse(str, len, startoff, delim, pos, ARRAYLENGTH(pos), opt);
 
 	if( ret == -1 || out_fields == NULL || nfields <= 0 )
 		return ret; // nothing to do
 
 	// next line
-	eol = str + pos[1];
-	if( eol[0] == '\0' )
+	end = str + pos[1];
+	if( end[0] == '\0' )
 	{
-		*out_fields = eol;
+		*out_fields = end;
 	}
-	else if( (opt&SV_TERMINATE_LF) && eol[0] == '\n' )
+	else if( (opt&SV_TERMINATE_LF) && end[0] == '\n' )
 	{
-		eol[0] = '\0';
-		*out_fields = eol + 1;
+		if( !(opt&SV_KEEP_TERMINATOR) )
+			end[0] = '\0';
+		*out_fields = end + 1;
 	}
-	else if( (opt&SV_TERMINATE_CRLF) && eol[0] == '\r' && eol[1] == '\n' )
+	else if( (opt&SV_TERMINATE_CRLF) && end[0] == '\r' && end[1] == '\n' )
 	{
-		eol[0] = eol[1] = '\0';
-		*out_fields = eol + 2;
+		if( !(opt&SV_KEEP_TERMINATOR) )
+			end[0] = end[1] = '\0';
+		*out_fields = end + 2;
 	}
-	else if( (opt&SV_TERMINATE_LF) && eol[0] == '\r' )
+	else if( (opt&SV_TERMINATE_LF) && end[0] == '\r' )
 	{
-		eol[0] = '\0';
-		*out_fields = eol + 1;
+		if( !(opt&SV_KEEP_TERMINATOR) )
+			end[0] = '\0';
+		*out_fields = end + 1;
 	}
 	else
 	{
-		ShowError("sv_split: unknown line delimiter 0x02%x.\n", (unsigned char)eol[0]);
+		ShowError("sv_split: unknown line delimiter 0x02%x.\n", (unsigned char)end[0]);
 		return -1;// error
 	}
 	++out_fields;
@@ -599,7 +602,8 @@ int sv_split(char* str, int len, int startoff, char delim, char** out_fields, in
 		if( i < ARRAYLENGTH(pos) )
 		{// split field
 			*out_fields = str + pos[i];
-			str[pos[i+1]] = '\0';
+			end = str + pos[i+1];
+			*end = '\0';
 			// next field
 			i += 2;
 			++done;
@@ -614,7 +618,7 @@ int sv_split(char* str, int len, int startoff, char delim, char** out_fields, in
 	}
 	// remaining fields
 	for( i = 0; i < nfields; ++i )
-		out_fields[i] = eol;
+		out_fields[i] = end;
 	return ret;
 }
 

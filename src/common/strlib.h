@@ -48,7 +48,7 @@ int strline(const char* str, size_t pos);
 
 
 
-/// Bitfield determining the behaviour of sv_parse.
+/// Bitfield determining the behaviour of sv_parse and sv_split.
 typedef enum e_svopt
 {
 	// default: no escapes and no line terminator
@@ -59,6 +59,8 @@ typedef enum e_svopt
 	SV_TERMINATE_LF = 2,
 	SV_TERMINATE_CRLF = 4,
 	SV_TERMINATE_CR = 8,
+	// If sv_split keeps the end of line terminator, instead of replacing with '\0'
+	SV_KEEP_TERMINATOR = 16
 } e_svopt;
 
 /// Other escape sequences supported by the C compiler.
