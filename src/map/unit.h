@@ -114,7 +114,8 @@ int unit_fixdamage(struct block_list *src,struct block_list *target,unsigned int
 struct unit_data* unit_bl2ud(struct block_list *bl);
 void unit_remove_map_pc(struct map_session_data *sd, int clrtype);
 void unit_free_pc(struct map_session_data *sd);
-int unit_remove_map(struct block_list *bl, int clrtype);
+#define unit_remove_map(bl,clrtype) unit_remove_map_(bl,clrtype,__FILE__,__LINE__,__func__)
+int unit_remove_map_(struct block_list *bl, int clrtype, const char* file, int line, const char* func);
 int unit_free(struct block_list *bl, int clrtype);
 int unit_changeviewsize(struct block_list *bl,short size);
 

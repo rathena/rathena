@@ -1577,7 +1577,7 @@ int unit_changeviewsize(struct block_list *bl,short size)
  * Otherwise it is assumed bl is being warped.
  * On-Kill specific stuff is not performed here, look at status_damage for that.
  *------------------------------------------*/
-int unit_remove_map(struct block_list *bl, int clrtype)
+int unit_remove_map_(struct block_list *bl, int clrtype, const char* file, int line, const char* func)
 {
 	struct unit_data *ud = unit_bl2ud(bl);
 	struct status_change *sc = status_get_sc(bl);
@@ -1691,17 +1691,29 @@ int unit_remove_map(struct block_list *bl, int clrtype)
 
 		if( map[bl->m].users <= 0 || sd->state.debug_remove_map )
 		{// this is only place where map users is decreased, if the mobs were removed too soon then this function was executed too many times [FlavioJS]
+			if( sd->debug_file == NULL || !(sd->state.debug_remove_map) )
+			{
+				sd->debug_file = "";
+				sd->debug_line = 0;
+				sd->debug_func = "";
+			}
 			ShowDebug("unit_remove_map: unexpected state when removing player AID/CID:%d/%d"
 				" (active=%d connect_new=%d rewarp=%d changemap=%d debug_remove_map=%d)"
-				" from map=%s (users=%d). Please report this!!!\n",
+				" from map=%s (users=%d)."
+				" Previous call from %s:%d(%s), current call from %s:%d(%s)."
+				" Please report this!!!\n",
 				sd->status.account_id, sd->status.char_id,
 				sd->state.active, sd->state.connect_new, sd->state.rewarp, sd->state.changemap, sd->state.debug_remove_map,
-				map[bl->m].name, map[bl->m].users);
+				map[bl->m].name, map[bl->m].users,
+				sd->debug_file, sd->debug_line, sd->debug_func, file, line, func);
 		}
 		else
 		if (--map[bl->m].users == 0 && battle_config.dynamic_mobs)	//[Skotlex]
 			map_removemobs(bl->m);
 		sd->state.debug_remove_map = 1; // temporary state to track double remove_map's [FlavioJS]
+		sd->debug_file = file;
+		sd->debug_line = line;
+		sd->debug_func = func;
 
 		break;
 	}
