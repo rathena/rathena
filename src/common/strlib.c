@@ -367,14 +367,13 @@ int strline(const char* str, size_t pos)
 
 /////////////////////////////////////////////////////////////////////
 /// Parses a delim-separated string.
-/// Starts parsing at startoff and fills the out_pos array with the start and 
-/// end positions in the string of the line and fields (that fit the array).
-/// Returns the number of fields or -1 if an error occurs.
+/// Starts parsing at startoff and fills the pos array with position pairs.
+/// out_pos[0] and out_pos[1] are the start and end of line.
+/// Other position pairs are the start and end of fields.
+/// Returns the number of fields found or -1 if an error occurs.
 /// 
 /// out_pos can be NULL.
-/// Positions out_pos[0] and out_pos[1] are for the line start and end 
-/// positions. If a line terminator is found, the end position is placed there.
-/// The next values of the array are the start and end positions of the fields.
+/// If a line terminator is found, the end position is placed there.
 /// out_pos[2] and out_pos[3] for the first field, out_pos[4] and out_pos[5] 
 /// for the seconds field and so on.
 /// Unfilled positions are set to -1.
@@ -386,7 +385,7 @@ int strline(const char* str, size_t pos)
 /// @param out_pos Array of resulting positions
 /// @param npos Size of the pos array
 /// @param opt Options that determine the parsing behaviour
-/// @return Number of fields in the string or -1 if an error occured
+/// @return Number of fields found in the string or -1 if an error occured
 int sv_parse(const char* str, int len, int startoff, char delim, int* out_pos, int npos, enum e_svopt opt)
 {
 	int i;
@@ -531,6 +530,92 @@ int sv_parse(const char* str, int len, int startoff, char delim, int* out_pos, i
 #undef SET_FIELD_END
 
 	return count;
+}
+
+/// Splits a delim-separated string.
+/// WARNING: this function modifies the input string
+/// Starts splitting at startoff and fills the out_fields array.
+/// out_fields[0] is the start of the next line.
+/// Other entries are the start of fields (nul-teminated).
+/// Returns the number of fields found or -1 if an error occurs.
+/// 
+/// out_fields can be NULL.
+/// Fields that don't fit in out_fields are not nul-terminated.
+/// Extra entries in out_fields are filled with the end of line (empty string).
+/// 
+/// @param str String to parse
+/// @param len Length of the string
+/// @param startoff Where to start parsing
+/// @param delim Field delimiter
+/// @param out_fields Array of resulting fields
+/// @param nfields Size of the field array
+/// @param opt Options that determine the parsing behaviour
+/// @return Number of fields found in the string or -1 if an error occured
+int sv_split(char* str, int len, int startoff, char delim, char** out_fields, int nfields, enum e_svopt opt)
+{
+	int pos[1024];
+	int i;
+	int done;
+	char* eol;
+	int ret = sv_parse(str, len, startoff, delim, pos, ARRAYLENGTH(pos), opt);
+
+	if( ret == -1 || out_fields == NULL || nfields <= 0 )
+		return ret; // nothing to do
+
+	// next line
+	eol = str + pos[1];
+	if( eol[0] == '\0' )
+	{
+		*out_fields = eol;
+	}
+	else if( (opt&SV_TERMINATE_LF) && eol[0] == '\n' )
+	{
+		eol[0] = '\0';
+		*out_fields = eol + 1;
+	}
+	else if( (opt&SV_TERMINATE_CRLF) && eol[0] == '\r' && eol[1] == '\n' )
+	{
+		eol[0] = eol[1] = '\0';
+		*out_fields = eol + 2;
+	}
+	else if( (opt&SV_TERMINATE_LF) && eol[0] == '\r' )
+	{
+		eol[0] = '\0';
+		*out_fields = eol + 1;
+	}
+	else
+	{
+		ShowError("sv_split: unknown line delimiter 0x02%x.\n", (unsigned char)eol[0]);
+		return -1;// error
+	}
+	++out_fields;
+	--nfields;
+
+	// fields
+	i = 2;
+	done = 0;
+	while( done < ret && nfields > 0 )
+	{
+		if( i < ARRAYLENGTH(pos) )
+		{// split field
+			*out_fields = str + pos[i];
+			str[pos[i+1]] = '\0';
+			// next field
+			i += 2;
+			++done;
+			++out_fields;
+			--nfields;
+		}
+		else
+		{// get more fields
+			sv_parse(str, len, pos[i-1] + 1, delim, pos, ARRAYLENGTH(pos), opt);
+			i = 2;
+		}
+	}
+	// remaining fields
+	for( i = 0; i < nfields; ++i )
+		out_fields[i] = eol;
+	return ret;
 }
 
 /// Escapes src to out_dest according to the format of the C compiler.

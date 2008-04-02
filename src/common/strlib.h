@@ -65,10 +65,19 @@ typedef enum e_svopt
 #define SV_ESCAPE_C_SUPPORTED "abtnvfr\?\"'\\"
 
 /// Parses a delim-separated string.
-/// Starts parsing at startoff and fills the pos array with the start and end 
-/// positions in the string of the line and fields (that fit the array).
-/// Returns the number of fields or -1 if an error occurs.
+/// Starts parsing at startoff and fills the pos array with position pairs.
+/// out_pos[0] and out_pos[1] are the start and end of line.
+/// Other position pairs are the start and end of fields.
+/// Returns the number of fields found or -1 if an error occurs.
 int sv_parse(const char* str, int len, int startoff, char delim, int* out_pos, int npos, enum e_svopt opt);
+
+/// Splits a delim-separated string.
+/// WARNING: this function modifies the input string
+/// Starts splitting at startoff and fills the out_fields array.
+/// out_fields[0] is the start of the next line.
+/// Other entries are the start of fields (nul-teminated).
+/// Returns the number of fields found or -1 if an error occurs.
+int sv_split(char* str, int len, int startoff, char delim, char** out_fields, int nfields, enum e_svopt opt);
 
 /// Escapes src to out_dest according to the format of the C compiler.
 /// Returns the length of the escaped string.
