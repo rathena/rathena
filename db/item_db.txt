@@ -826,7 +826,7 @@
 1622,Hypnotist's_Staff_,Hypnotist's Staff,4,,10,500,70,,1,2,0x00000001,7,2,2,3,30,1,10,{ bonus bInt,1; bonus bMatkRate,25; },{},{}
 1623,Mighty_Staff_C,Refined Mighty Staff,4,,10,700,165,,1,0,0x00818314,7,2,2,3,1,0,10,{ bonus bStr,10; bonus bInt,4; bonus bMatkRate,20; bonus bSPDrainValue,-1; },{},{}
 1624,Lich_Bone_Wand,Lich's Bone Wand,4,,10,800,60,,1,2,0x00018314,2,2,2,3,70,1,10,{ bonus bInt,1; bonus bDex,1; bonus bAtkEle,Ele_Undead; bonus bMatkRate,20; bonus3 bAutoSpellWhenHit,677,5,10+(getrefine()/1000); if(getrefine()>=9){ bonus bMatkRate,3; bonus bMaxSP,300; } },{},{}
-1625,Healing_Staff,Recovery Staff,4,,10,400,10,,1,0,0x00008110,7,2,2,3,55,1,10,{ bonus bAtkEle,Ele_Holy; bonus bMatkRate,15; bonus2 bSkillHeal,28,(getrefine()*20)/10+2*(getrefine()>9); bonus2 bSkillHeal,70,(getrefine()*15)/10+2*(getrefine()>9); },{},{}
+1625,Healing_Staff,Recovery Staff,4,,10,400,10,,1,0,0x00008110,7,2,2,3,55,1,10,{ bonus bAtkEle,Ele_Holy; bonus bMatkRate,15; bonus2 bSkillHeal,28,(getrefine()*15)/10+2*(getrefine()>9); bonus2 bSkillHeal,70,(getrefine()*15)/10+2*(getrefine()>9); },{},{}
 1626,Piercing_Staff,Staff of Piercing,4,,10,500,80,,1,0,0x00018314,2,2,2,3,70,1,10,{ bonus bInt,4; bonus bMatkRate,15; bonus bIgnoreMdefRate,10+getrefine(); },{},{}
 1627,Staffy,Staffy,4,,10,0,120,,1,0,0x00818315,7,2,2,1,1,0,10,{ bonus bMatkRate,15; bonus2 bAddRace,RC_Boss,50; bonus2 bAddRace,RC_NonBoss,50; },{},{}
 1628,Survival_Rod_C,Refined Survivor's Rod,4,,0,0,71,,1,0,0x00818314,7,2,2,3,1,0,10,{ bonus bDex,4; bonus bMatkRate,20; bonus bMaxHP,500; },{},{}

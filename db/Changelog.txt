@@ -44,6 +44,9 @@
 
 =======================
 2008/04/03
+	* Rev. 12469 Reverted the healing staff update. [L0ne_W0lf]
+	- The discrepancies in Aegis  and eA seem to like in meditatio.
+	* Updated War of Emeprium SE Sword guardian stats.
 	* Rev. 12468 updated Healing_Staff heal boosting effect. [L0ne_W0lf]
 2008/04/02
 	* Rev. 12462 Added new castles to castle database. [L0ne_W0lf]
