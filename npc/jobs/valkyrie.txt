@@ -149,7 +149,7 @@ valkyrie,48,86,4	script	Valkyrie#	811,{
 			if(ADVJOB == Job_Paladin2) set ADVJOB,Job_Paladin;
 			jobchange Job_Novice_High;
 			resetlvl(1);
-			set MISC_QUEST,MISC_QUEST ^ 1024; <-reset Skill Reset Event
+			set MISC_QUEST,MISC_QUEST | 1024; //<-reset Skill Reset Event
 			skill 142,1,0;
 			skill 143,1,0;
 			next;
