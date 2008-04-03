@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 
-//= 1.9
+//= 2.0
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -25,6 +25,8 @@
 //= 1.8 Re-made the Doll Quest, now with official dialogs. [DZeroX]
 //= 1.8a Removed .GATs [Lupus]
 //= 1.9 Updated Turtle Quest to official. [L0ne_W0lf]
+//= 2.0 Turtle Island quest now clears TURTLE var and set 
+//= MISC_QUEST bit (MISC_QUEST & 65536) [Lupus]
 //============================================================ 
 
 
@@ -949,7 +951,8 @@ alberta_in,23,104,4	script	Grandpa Turtle#tur	120,{
 		mes "I may not know much, but I won't talk to anyone motivated solely by greed. Go home!";
 		close;
 	case 2:
-		if (TURTLE > 0) {
+		if ((MISC_QUEST & 65536) || TURTLE) {
+			if(MISC_QUEST & 65536) set TURTLE,0; //now clear the var
 			mes "[Grandpa Turtle]";
 			mes "Well...";
 			mes "If you go to eastern side of the Alberta port, you should find an old ferryboatman.";
@@ -987,7 +990,7 @@ alberta_in,23,104,4	script	Grandpa Turtle#tur	120,{
 }
 
 alberta,247,122,4	script	Sailor#tur	709,{
-	if (TURTLE > 0) {
+	if (TURTLE) {
 		mes "[Gotanblue]";
 		mes "Heh...";
 		mes "Your eyes...";
@@ -1221,7 +1224,7 @@ alberta_in,18,102,4	script	Letter#tur	111,{
 }
 
 alberta,248,93,4	script	Voyage log#tur	111,{
-	if (rand(1,2) == 1) {
+	if (rand(2)) {
 		mes "[Voyage log]";
 		mes "03:20 am";
 		mes "There's no light from the stars tonight, and we can't even see a hundred meters ahead of us. The men seem to feel something bad in the air.";
@@ -1419,21 +1422,20 @@ tur_dun01,160,81,4	script	Skull Stone#tur	111,{
 		mes "^3355FFthe stone opened and^000000";
 		mes "^3355FFsome items popped out!!^000000";
 		next;
+		set MISC_QUEST,MISC_QUEST | 65536;
+		set TURTLE,0;
 		switch(rand(1,3)) {
 		case 1:
-			set TURTLE,20;
 			getitem 532,5; //Banana_Juice
 			mes "^3355FFYou've gained^000000";
 			mes "^3355FF5 Banana Juice^000000";
 			close;
 		case 2:
-			set TURTLE,20;
 			getitem 513,5; //Banana
 			mes "^3355FFYou've gained^000000";
 			mes "^3355FF5 Banana^000000";
 			close;
 		case 3:
-			set TURTLE,20;
 			getitem 513,5; //Banana
 			getitem 532,5; //Banana_Juice
 			mes "^3355FFYou've gained^000000";
@@ -1600,63 +1602,55 @@ tur_dun02,49,158,4	script	Turtle Pillar#tur	111,{
 		next;
 		mes "^3355FFThere are many items^000000";
 		mes "^3355FFunder the pillar...^000000";
+		set MISC_QUEST,MISC_QUEST | 65536;
+		set TURTLE,0;
 		switch(rand(1,10)) {
 		case 1:
-			set TURTLE,20;
 			getitem 702,1; //Animal_Blood
 			mes "^3355FFYou've gained ^000000";
 			mes "^3355FFAnimal Gore.^000000";
 			close;
 		case 2:
-			set TURTLE,20;
 			getitem 716,1; //Red_Gemstone
 			mes "^3355FFYou've gained^000000";
 			mes "^3355FFa Red Gemstone.^000000";
 			close;
 		case 3:
-			set TURTLE,20;
 			getitem 734,1; //Red_Frame
 			mes "^3355FFYou've gained^000000";
 			mes "^3355FFa Red Frame^000000";
 			close;
 		case 4:
-			set TURTLE,20;
 			getitem 10019,1; //Red_Muffler
 			mes "^3355FFYou've gained^000000";
 			mes "^3355FFRed Scarf.^000000";
 			close;
 		case 5:
-			set TURTLE,20;
 			getitem 725,1; //Red_Jewel
 			mes "^3355FFYou've gained^000000";
 			mes "^3355FFa Sardonyx.^000000";
 			close;
 		case 6:
-			set TURTLE,20;
 			getitem 716,1; //Red_Gemstone
 			mes "^3355FFYou've gained^000000";
 			mes "^3355FFa Red Gemstone.^000000";
 			close;
 		case 7:
-			set TURTLE,20;
 			getitem 716,1; //Red_Gemstone
 			mes "^3355FFYou've gained^000000";
 			mes "^3355FFa Red Gemstone.^000000";
 			close;
 		case 8:
-			set TURTLE,20;
 			getitem 716,1; //Red_Gemstone
 			mes "^3355FFYou've gained^000000";
 			mes "^3355FFa Red Gemstone.^000000";
 			close;
 		case 9:
-			set TURTLE,20;
 			getitem 716,1; //Red_Gemstone
 			mes "^3355FFYou've gained^000000";
 			mes "^3355FFa Red Gemstone.^000000";
 			close;
 		case 10:
-			set TURTLE,20;
 			getitem 725,1; //Red_Jewel
 			mes "^3355FFYou've gained^000000";
 			mes "^3355FFa Sardonyx.^000000";
@@ -1836,31 +1830,29 @@ tur_dun04,113,178,4	script	Turtle Statue#tur	111,{
 		mes "metal plate. You pull";
 		mes "it open like a drawer.^000000";
 		next;
+		set MISC_QUEST,MISC_QUEST | 65536;
+		set TURTLE,0;
 		if (rand(1,20) == 7) {
 			switch(rand(1,4)) {
 			case 1:
-				set TURTLE,20;
 				getitem 644,1; //Gift_Box
 				mes "^3355FFInside the drawer,";
 				mes "is a Gift Box. This";
 				mes "Gift Box is now yours.^000000";
 				close;
 			case 2:
-				set TURTLE,20;
 				getitem 616,1; //Old_Card_Album
 				mes "^3355FFInside the drawer,";
 				mes "is an Old Card Album.";
 				mes "It is now yours to keep.^000000";
 				close;
 			case 3:
-				set TURTLE,20;
 				getitem 617,1; //Old_Violet_Box
 				mes "^3355FFInside the drawer,";
 				mes "is an Old Purple Box.";
 				mes "It is now yours to keep.^000000";
 				close;
 			case 4:
-				set TURTLE,20;
 				getitem 617,1; //Old_Violet_Box
 				mes "^3355FFInside the drawer,";
 				mes "is an Old Purple Box.";
@@ -1868,7 +1860,6 @@ tur_dun04,113,178,4	script	Turtle Statue#tur	111,{
 				close;
 			}
 		}
-		set TURTLE,20;
 		getitem 604,1; //Branch_Of_Dead_Tree
 		mes "^3355FFInside the drawer,";
 		mes "is a Dead Branch.";

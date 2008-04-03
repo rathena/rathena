@@ -104,6 +104,11 @@ Info:		Reward: 1 yggdrasil leaf.
 How to set: 	set MISC_QUEST,MISC_QUEST | 32768;
 How to check: 	if(MISC_QUEST & 32768){}
 
+Quest: 		Access to the Turtle Island
+Info:		Reward: ~1 OCA, OVB, GB,  .
+How to set: 	set MISC_QUEST,MISC_QUEST | 65536;
+How to check: 	if(MISC_QUEST & 65536){}
+
 --------------------------------------------------------------
 Variable: MISC_QUEST2
 

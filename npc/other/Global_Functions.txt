@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Lupus, kobra_k88
 //===== Current Version: ===================================== 
-//= 2.11
+//= 2.12
 //===== Compatible With: ===================================== 
 //= eAthena 1.0
 //===== Description: ========================================= 
@@ -34,6 +34,7 @@
 //= 2.10 Added F_CheckMaxCount to check count of carrid items. [L0ne_w0lf]
 //= 2.10a Removed function F_CheckMaxCount. Not needed. [L0ne_W0lf]
 //= 2.11 Updated function Job_Change to jobchange based on Upper value. [Paradox924X]
+//= 2.12 Added more unused vars to F_ClearGarbage [Lupus]
 //============================================================ 
 
 
@@ -83,11 +84,16 @@ function	script	F_ClearJobVar	{
 
 function	script	F_ClearGarbage	{
 	// Clear outdated global VARS
-	//Shinkskas Quest garbage
-	if(Shinokas_Quest > 7){
-		set ein_scientist,0;
-		set ein_stuff,0;
-	}
+	//Clear TURTLE var if the Turtle Islans Quest is already done
+		if(TURTLE==20) set MISC_QUEST,MISC_QUEST | 65536;
+		if(MISC_QUEST & 65536) set TURTLE,0; //now clear the var if the quest is over
+	//Clear previously saved Quest Skills (now it isn't used)
+		set ADV_QSK,0;
+		set ADV_QSK2,0;
+	//Old Seset Skill Event used to use RES_SKILL var
+		set RES_SKILL,0;
+	//Here you put outdated variables from your outdated EVENTS
+	//e.g. Is XMAS done? Add the EVENT var clearing code here.
 	return;
 }
 
@@ -102,83 +108,6 @@ function	script	Job_Change	{
 	jobchange getarg(0),Upper; //Jobchange based on Upper
 	logmes "CLASS CHANGE: " +strcharinfo(0)+ " become a "+jobname(Class);
 	return;
-}
-
-
-//////////////////////////////////////////////////////////////////////////////////
-// FOT BACKWISE COMPATIBILITY: Functions used to check a players job class
-// HOW TO USE:
-// i.e. We need all holy classes but monks
-// if ( callfunc("Is_Holy_Class") && callfunc("Is_Monk")==0 ) goto L_Start;
-//////////////////////////////////////////////////////////////////////////////////
-
-//////////////////////////////////////////////////////////////////////////////////
-// returns 1 if the player is either Aco,Monk,Priest,Aco High,High Priest,
-// Champion, 0 otherwise
-//////////////////////////////////////////////////////////////////////////////////
-
-function	script	Is_Holy_Class	{
-	return ( BaseJob==Job_Acolyte || BaseJob==Job_Priest || BaseJob==Job_Monk );
-}
-
-
-//////////////////////////////////////////////////////////////////////////////////
-// returns 1 if the player is either Archer,Hunter,Bard,Dancer,Archer High,Sniper,
-// Clown,Gypsy, 0 otherwise
-//////////////////////////////////////////////////////////////////////////////////
-
-function	script	Is_Bow_Class	{
-	return ( BaseJob==Job_Archer || BaseJob==Job_Hunter || BaseJob==Job_Bard || BaseJob==Job_Dancer );
-}
-
-
-//////////////////////////////////////////////////////////////////////////////////
-// returns 1 if the player is either Mage,Wizard,Sage,Mage High,High Wizard,
-// Professor, 0 otherwise
-//////////////////////////////////////////////////////////////////////////////////
-
-function	script	Is_Magic_Class	{
-	return ( BaseJob==Job_Mage || BaseJob==Job_Wizard || BaseJob==Job_Sage );
-}
-
-
-//////////////////////////////////////////////////////////////////////////////////
-// returns 1 if the player is either Merc,Blacksmith,Alchemist,Merc High,
-// Whitesmith,Creator, 0 otherwise
-//////////////////////////////////////////////////////////////////////////////////
-
-function	script	Is_Merc_Class	{
-	return ( BaseJob==Job_Merchant || BaseJob==Job_Blacksmith || BaseJob==Job_Alchemist );
-}
-
-
-//////////////////////////////////////////////////////////////////////////////////
-// returns 1 if the player is either Thief,Assassin,Rogue,Thief High, Assassin Cross
-// Stalker, 0 otherwise
-//////////////////////////////////////////////////////////////////////////////////
-
-function	script	Is_Thief_Class	{
-	return ( BaseJob==Job_Thief || BaseJob==Job_Assassin || BaseJob==Job_Rogue );
-}
-
-
-//////////////////////////////////////////////////////////////////////////////////
-// returns 1 if the player is either Swordy,Knight,Crusader,Swordy High,
-// Lord Knight,Paladin, 0 otherwise
-//////////////////////////////////////////////////////////////////////////////////
-
-function	script	Is_Sword_Class	{
-	return ( BaseJob==Job_Swordman || BaseJob==Job_Knight || BaseJob==Job_Knight2 || BaseJob==Job_Crusader || BaseJob==Job_Crusader2 );
-}
-
-
-//////////////////////////////////////////////////////////////////////////////////
-// returns 1 if the player is either Taekwon, Star Gladiator,Soul Linker, 0 otherwise
-// these classes can't be adopted nor reborn ()
-//////////////////////////////////////////////////////////////////////////////////
-
-function	script	Is_Taekwon_Class	{
-	return ( Class==Job_Taekwon || Class==Job_Star_Gladiator || Class==Job_Star_Gladiator2 || Class==Job_Soul_Linker );
 }
 
 

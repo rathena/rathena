@@ -1,5 +1,9 @@
 Date		Added
 ======
+2008/04/03
+	* Fixed and removed unused variables from valkyrie.txt [Lupus]
+	- Now Turtle Island Quest uses MISC_QUEST & 65536 and clears TURTLE var
+	- Added more vars to ClearGrabage function: Global_Functions.txt
 2008/04/01
 	* Fixed Bugs/Typos in quests_louyang.txt [Paradox924X]
 2008/03/27
