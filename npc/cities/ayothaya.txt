@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= MasterOfMuppets
 //===== Current Version: =====================================
-//= 1.6
+//= 1.7
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -11,6 +11,7 @@
 //= Ayotaya Town Script
 //===== Additional Comments: ================================= 
 //= 1.6 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
+//= 1.7 Fixed character's anme bugs [Lupus]
 //============================================================ 
 
 // Ayothaya Transportation NPC
@@ -141,7 +142,7 @@ ayothaya,171,152,5	script	Girl#Lalitha	838,{
 		mes "You know, like the dresses and jewelry that ladies wear in other countries, whether or not the men are good looking, what kind of songs you have, what kind of girls that guys over there like...";
 		emotion e_what;
 		next;
-		mes "[" + name + "]";
+		mes "[" +strcharinfo(0)+ "]";
 		mes ".........";
 		next;
 		mes "[Lalitha]";
@@ -170,7 +171,7 @@ ayothaya,171,152,5	script	Girl#Lalitha	838,{
 		mes "my Black Knight is~";
 		emotion e_lv;
 		next;
-		mes "["+ name +"]";
+		mes "["+strcharinfo(0)+"]";
 		mes "Don't you mean...";
 		mes "Knight in shining armor";
 		mes "riding a white horse?";

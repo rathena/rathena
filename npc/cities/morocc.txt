@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88; L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 2.0
+//= 2.0a
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -22,6 +22,7 @@
 //= 1.8 Rescripted to Aegis 10.3 Standards. [L0ne_W0lf]
 //= 1.9 Removed duplicate NPC, changed temp char vars to temp npc. [L0ne_W0;f]
 //= 2.0 Fixed bad NPC header data to comply with rev. 11603. [L0ne_W0lf]
+//= 2.0a Fixed outdated info about Milk [Lupus]
 //============================================================
 
 // Morroc
@@ -450,13 +451,13 @@ morocc,180,155,4	script	Dimitri#moc	49,{
 		close;
 	case 3:
 		mes "[Dimitri]";
-		mes "Sometimes 'Milk' comes out of 'PecoPeco's Egg.' Now...";
+		mes "Sometimes 'Empty Bottle' comes out of 'PecoPeco's Egg.' Now...";
 		next;
 		mes "[Dimitri]";
 		mes "I may not be a man of science, but how is that even possible?";
 		next;
 		mes "[Dimitri]";
-		mes "I mean, did the Milk come prepackaged with the egg, or did it get in there somehow?";
+		mes "I mean, did the Empty Bottle come prepackaged with the egg, or did it get in there somehow?";
 		close;
 	}
 }
