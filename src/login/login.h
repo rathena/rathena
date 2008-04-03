@@ -82,8 +82,8 @@ struct mmo_account {
 	uint32 state; // packet 0x006a value + 1 (0: compte OK)
 	char email[40]; // e-mail (by default: a@a.com)
 	char error_message[20]; // Message of error code #6 = Your are Prohibited to log in until %s (packet 0x006a)
-	time_t ban_until_time; // # of seconds 1/1/1970 (timestamp): ban time limit of the account (0 = no ban)
-	time_t connect_until_time; // # of seconds 1/1/1970 (timestamp): Validity limit of the account (0 = unlimited)
+	time_t unban_time; // # of seconds 1/1/1970 (timestamp): ban time limit of the account (0 = no ban)
+	time_t expiration_time; // # of seconds 1/1/1970 (timestamp): Validity limit of the account (0 = unlimited)
 	char last_ip[16]; // save of last IP of connection
 	char memo[255]; // a memo field
 	int account_reg2_num;

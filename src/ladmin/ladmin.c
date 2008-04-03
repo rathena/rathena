@@ -1419,13 +1419,13 @@ int banaddaccount(char* param)
 int bansetaccountsub(char* name, char* date, char* time)
 {
 	int year, month, day, hour, minute, second;
-	time_t ban_until_time; // # of seconds 1/1/1970 (timestamp): ban time limit of the account (0 = no ban)
+	time_t unban_time; // # of seconds 1/1/1970 (timestamp): ban time limit of the account (0 = no ban)
 	struct tm *tmtime;
 	WFIFOHEAD(login_fd,30);
 
 	year = month = day = hour = minute = second = 0;
-	ban_until_time = 0;
-	tmtime = localtime(&ban_until_time); // initialize
+	unban_time = 0;
+	tmtime = localtime(&unban_time); // initialize
 
 	if (verify_accountname(name) == 0) {
 		return 102;
@@ -1449,7 +1449,7 @@ int bansetaccountsub(char* name, char* date, char* time)
 	}
 
 	if (atoi(date) == 0) {
-		ban_until_time = 0;
+		unban_time = 0;
 	} else {
 		if (year < 70) {
 			year = year + 100;
@@ -1526,8 +1526,8 @@ int bansetaccountsub(char* name, char* date, char* time)
 		tmtime->tm_min = minute;
 		tmtime->tm_sec = second;
 		tmtime->tm_isdst = -1; // -1: no winter/summer time modification
-		ban_until_time = mktime(tmtime);
-		if (ban_until_time == -1) {
+		unban_time = mktime(tmtime);
+		if (unban_time == -1) {
 			if (defaultlanguage == 'F') {
 				ShowMessage("Date incorrecte.\n");
 				ShowMessage("Entrez une date et une heure svp (format: aaaa/mm/jj hh:mm:ss).\n");
@@ -1551,7 +1551,7 @@ int bansetaccountsub(char* name, char* date, char* time)
 
 	WFIFOW(login_fd,0) = 0x794a;
 	memcpy(WFIFOP(login_fd,2), name, 24);
-	WFIFOL(login_fd,26) = (int)ban_until_time;
+	WFIFOL(login_fd,26) = (int)unban_time;
 	WFIFOSET(login_fd,30);
 	bytes_to_read = 1;
 
@@ -2799,7 +2799,7 @@ int timesetaccount(char* param)
 {
 	char name[1023], date[1023], time[1023];
 	int year, month, day, hour, minute, second;
-	time_t connect_until_time; // # of seconds 1/1/1970 (timestamp): Validity limit of the account (0 = unlimited)
+	time_t expiration_time; // # of seconds 1/1/1970 (timestamp): Validity limit of the account (0 = unlimited)
 	struct tm *tmtime;
 	WFIFOHEAD(login_fd,30);
 
@@ -2807,8 +2807,8 @@ int timesetaccount(char* param)
 	memset(date, '\0', sizeof(date));
 	memset(time, '\0', sizeof(time));
 	year = month = day = hour = minute = second = 0;
-	connect_until_time = 0;
-	tmtime = localtime(&connect_until_time); // initialize
+	expiration_time = 0;
+	tmtime = localtime(&expiration_time); // initialize
 
 	if (sscanf(param, "\"%[^\"]\" %s %[^\r\n]", name, date, time) < 2 && // if date = 0, time can be void
 	    sscanf(param, "'%[^']' %s %[^\r\n]", name, date, time) < 2 && // if date = 0, time can be void
@@ -2852,7 +2852,7 @@ int timesetaccount(char* param)
 	}
 
 	if (atoi(date) == 0) {
-		connect_until_time = 0;
+		expiration_time = 0;
 	} else {
 		if (year < 70) {
 			year = year + 100;
@@ -2929,8 +2929,8 @@ int timesetaccount(char* param)
 		tmtime->tm_min = minute;
 		tmtime->tm_sec = second;
 		tmtime->tm_isdst = -1; // -1: no winter/summer time modification
-		connect_until_time = mktime(tmtime);
-		if (connect_until_time == -1) {
+		expiration_time = mktime(tmtime);
+		if (expiration_time == -1) {
 			if (defaultlanguage == 'F') {
 				ShowMessage("Date incorrecte.\n");
 				ShowMessage("Ajoutez 0 ou une date et une heure svp (format: 0 ou aaaa/mm/jj hh:mm:ss).\n");
@@ -2952,7 +2952,7 @@ int timesetaccount(char* param)
 
 	WFIFOW(login_fd,0) = 0x7948;
 	memcpy(WFIFOP(login_fd,2), name, 24);
-	WFIFOL(login_fd,26) = (int)connect_until_time;
+	WFIFOL(login_fd,26) = (int)expiration_time;
 	WFIFOSET(login_fd,30);
 	bytes_to_read = 1;
 
@@ -4014,8 +4014,8 @@ int parse_fromlogin(int fd)
 				return 0;
 		  {
 			char userid[24], error_message[20], lastlogin[24], last_ip[16], email[40], memo[255];
-			time_t ban_until_time; // # of seconds 1/1/1970 (timestamp): ban time limit of the account (0 = no ban)
-			time_t connect_until_time; // # of seconds 1/1/1970 (timestamp): Validity limit of the account (0 = unlimited)
+			time_t unban_time; // # of seconds 1/1/1970 (timestamp): ban time limit of the account (0 = no ban)
+			time_t expiration_time; // # of seconds 1/1/1970 (timestamp): Validity limit of the account (0 = unlimited)
 			memcpy(userid, RFIFOP(fd,7), sizeof(userid));
 			userid[sizeof(userid)-1] = '\0';
 			memcpy(error_message, RFIFOP(fd,40), sizeof(error_message));
@@ -4026,8 +4026,8 @@ int parse_fromlogin(int fd)
 			last_ip[sizeof(last_ip)-1] = '\0';
 			memcpy(email, RFIFOP(fd,100), sizeof(email));
 			email[sizeof(email)-1] = '\0';
-			connect_until_time = (time_t)RFIFOL(fd,140);
-			ban_until_time = (time_t)RFIFOL(fd,144);
+			expiration_time = (time_t)RFIFOL(fd,140);
+			unban_time = (time_t)RFIFOL(fd,144);
 			memset(memo, '\0', sizeof(memo));
 			strncpy(memo, (const char*)RFIFOP(fd,150), RFIFOW(fd,148));
 			id = RFIFOL(fd,2);
@@ -4121,11 +4121,11 @@ int parse_fromlogin(int fd)
 					break;
 				}
 				if (defaultlanguage == 'F') {
-					if (ban_until_time == 0) {
+					if (unban_time == 0) {
 						ShowMessage(" Banissement: non banni.\n");
 					} else {
 						char tmpstr[128];
-						strftime(tmpstr, 24, date_format, localtime(&ban_until_time));
+						strftime(tmpstr, 24, date_format, localtime(&unban_time));
 						ShowMessage(" Banissement: jusqu'au %s.\n", tmpstr);
 					}
 					if (RFIFOL(fd,32) > 1)
@@ -4133,19 +4133,19 @@ int parse_fromlogin(int fd)
 					else
 						ShowMessage(" Compteur: %d connexion.\n", (int)RFIFOL(fd,32));
 					ShowMessage(" Dernière connexion le: %s (ip: %s)\n", lastlogin, last_ip);
-					if (connect_until_time == 0) {
+					if (expiration_time == 0) {
 						ShowMessage(" Limite de validité: illimité.\n");
 					} else {
 						char tmpstr[128];
-						strftime(tmpstr, 24, date_format, localtime(&connect_until_time));
+						strftime(tmpstr, 24, date_format, localtime(&expiration_time));
 						ShowMessage(" Limite de validité: jusqu'au %s.\n", tmpstr);
 					}
 				} else {
-					if (ban_until_time == 0) {
+					if (unban_time == 0) {
 						ShowMessage(" Banishment: not banished.\n");
 					} else {
 						char tmpstr[128];
-						strftime(tmpstr, 24, date_format, localtime(&ban_until_time));
+						strftime(tmpstr, 24, date_format, localtime(&unban_time));
 						ShowMessage(" Banishment: until %s.\n", tmpstr);
 					}
 					if (RFIFOL(fd,32) > 1)
@@ -4153,11 +4153,11 @@ int parse_fromlogin(int fd)
 					else
 						ShowMessage(" Count:  %d connection.\n", (int)RFIFOL(fd,32));
 					ShowMessage(" Last connection at: %s (ip: %s)\n", lastlogin, last_ip);
-					if (connect_until_time == 0) {
+					if (expiration_time == 0) {
 						ShowMessage(" Validity limit: unlimited.\n");
 					} else {
 						char tmpstr[128];
-						strftime(tmpstr, 24, date_format, localtime(&connect_until_time));
+						strftime(tmpstr, 24, date_format, localtime(&expiration_time));
 						ShowMessage(" Validity limit: until %s.\n", tmpstr);
 					}
 				}

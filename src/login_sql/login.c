@@ -390,7 +390,7 @@ int mmo_auth_new(struct mmo_account* account)
 	unsigned int tick = gettick();
 
 	char md5buf[32+1];
-	time_t connect_until = 0;
+	time_t expiration_time = 0;
 	SqlStmt* stmt;
 	int result = 0;
 
@@ -417,12 +417,12 @@ int mmo_auth_new(struct mmo_account* account)
 		return result;// error or incorrect user
 
 	if( login_config.start_limited_time != -1 )
-		connect_until = time(NULL) + login_config.start_limited_time;
+		expiration_time = time(NULL) + login_config.start_limited_time;
 
 	// insert new entry into db
 	//TODO: error checking
 	stmt = SqlStmt_Malloc(sql_handle);
-	SqlStmt_Prepare(stmt, "INSERT INTO `%s` (`%s`, `%s`, `sex`, `email`, `connect_until`) VALUES (?, ?, '%c', 'a@a.com', '%d')", login_db, login_db_userid, login_db_user_pass, account->sex, connect_until);
+	SqlStmt_Prepare(stmt, "INSERT INTO `%s` (`%s`, `%s`, `sex`, `email`, `expiration_time`) VALUES (?, ?, '%c', 'a@a.com', '%d')", login_db, login_db_userid, login_db_user_pass, account->sex, expiration_time);
 	SqlStmt_BindParam(stmt, 0, SQLDT_STRING, account->userid, strnlen(account->userid, NAME_LENGTH));
 	if( login_config.use_md5_passwds )
 	{
@@ -452,10 +452,10 @@ int mmo_auth_new(struct mmo_account* account)
 //-----------------------------------------------------
 int mmo_auth(struct login_session_data* sd)
 {
-	time_t ban_until_time;
+	time_t unban_time;
 	char esc_userid[NAME_LENGTH*2+1];// escaped username
 	char user_password[256], password[256];
-	long connect_until;
+	long expiration_time;
 	int state;
 	size_t len;
 	char* data;
@@ -524,7 +524,7 @@ int mmo_auth(struct login_session_data* sd)
 
 	// retrieve login entry for the specified username
 	if( SQL_ERROR == Sql_Query(sql_handle,
-		"SELECT `%s`,`%s`,`lastlogin`,`sex`,`connect_until`,`ban_until`,`state`,`%s` FROM `%s` WHERE `%s`= %s '%s'",
+		"SELECT `%s`,`%s`,`lastlogin`,`sex`,`expiration_time`,`unban_time`,`state`,`%s` FROM `%s` WHERE `%s`= %s '%s'",
 		login_db_account_id, login_db_user_pass, login_db_level,
 		login_db, login_db_userid, (login_config.case_sensitive ? "BINARY" : ""), esc_userid) )
 		Sql_ShowDebug(sql_handle);
@@ -542,8 +542,8 @@ int mmo_auth(struct login_session_data* sd)
 	Sql_GetData(sql_handle, 1, &data, &len); safestrncpy(password, data, sizeof(password));
 	Sql_GetData(sql_handle, 2, &data, NULL); safestrncpy(sd->lastlogin, data, sizeof(sd->lastlogin));
 	Sql_GetData(sql_handle, 3, &data, NULL); sd->sex = *data;
-	Sql_GetData(sql_handle, 4, &data, NULL); connect_until = atol(data);
-	Sql_GetData(sql_handle, 5, &data, NULL); ban_until_time = atol(data);
+	Sql_GetData(sql_handle, 4, &data, NULL); expiration_time = atol(data);
+	Sql_GetData(sql_handle, 5, &data, NULL); unban_time = atol(data);
 	Sql_GetData(sql_handle, 6, &data, NULL); state = atoi(data);
 	Sql_GetData(sql_handle, 7, &data, NULL); sd->level = atoi(data);
 	if( len > sizeof(password) - 1 )
@@ -565,10 +565,10 @@ int mmo_auth(struct login_session_data* sd)
 		return 1; // 1 = Incorrect Password
 	}
 
-	if( connect_until != 0 && connect_until < time(NULL) )
+	if( expiration_time != 0 && expiration_time < time(NULL) )
 		return 2; // 2 = This ID is expired
 
-	if( ban_until_time != 0 && ban_until_time > time(NULL) )
+	if( unban_time != 0 && unban_time > time(NULL) )
 		return 6; // 6 = Your are Prohibited to log in until %s
 
 	if( state )
@@ -583,7 +583,7 @@ int mmo_auth(struct login_session_data* sd)
 	if( sd->sex != 'S' && sd->account_id < START_ACCOUNT_NUM )
 		ShowWarning("Account %s has account id %d! Account IDs must be over %d to work properly!\n", sd->userid, sd->account_id, START_ACCOUNT_NUM);
 
-	if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `lastlogin` = NOW(), `logincount`=`logincount`+1, `last_ip`='%s', `ban_until`='0', `state`='0' WHERE `%s` = '%d'",
+	if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `lastlogin` = NOW(), `logincount`=`logincount`+1, `last_ip`='%s', `unban_time`='0', `state`='0' WHERE `%s` = '%d'",
 		login_db, ip, login_db_account_id, sd->account_id) )
 		Sql_ShowDebug(sql_handle);
 
@@ -682,14 +682,14 @@ int parse_fromchar(int fd)
 				node->sex        == sex &&
 				node->ip         == ip_ )
 			{// found
-				uint32 connect_until_time;
+				uint32 expiration_time;
 				char email[40];
 
 				// each auth entry can only be used once
 				idb_remove(auth_db, account_id);
 
 				// retrieve email and account expiration time
-				if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `email`,`connect_until` FROM `%s` WHERE `%s`='%d'", login_db, login_db_account_id, account_id) )
+				if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `email`,`expiration_time` FROM `%s` WHERE `%s`='%d'", login_db, login_db_account_id, account_id) )
 					Sql_ShowDebug(sql_handle);
 				if( SQL_SUCCESS == Sql_NextRow(sql_handle) )
 				{
@@ -697,7 +697,7 @@ int parse_fromchar(int fd)
 					size_t len = 0;
 
 					Sql_GetData(sql_handle, 0, &data, &len); safestrncpy(email, data, sizeof(email));
-					Sql_GetData(sql_handle, 1, &data, NULL); connect_until_time = (uint32)strtoul(data, NULL, 10);
+					Sql_GetData(sql_handle, 1, &data, NULL); expiration_time = (uint32)strtoul(data, NULL, 10);
 					if( len > sizeof(email) )
 						ShowDebug("parse_fromchar:0x2712: email is too long (len=%u,maxlen=%u)\n", len, sizeof(email));
 
@@ -706,7 +706,7 @@ int parse_fromchar(int fd)
 				else
 				{
 					memset(email, 0, sizeof(email));
-					connect_until_time = 0;
+					expiration_time = 0;
 				}
 
 				// send ack
@@ -717,7 +717,7 @@ int parse_fromchar(int fd)
 				WFIFOL(fd,10) = login_id2;
 				WFIFOB(fd,14) = 0;
 				memcpy(WFIFOP(fd,15), email, 40);
-				WFIFOL(fd,55) = connect_until_time;
+				WFIFOL(fd,55) = expiration_time;
 				WFIFOSET(fd,59);
 			}
 			else
@@ -759,13 +759,13 @@ int parse_fromchar(int fd)
 			if( RFIFOREST(fd) < 6 )
 				return 0;
 		{
-			uint32 connect_until_time = 0;
+			uint32 expiration_time = 0;
 			char email[40] = "";
 
 			int account_id = RFIFOL(fd,2);
 			RFIFOSKIP(fd,6);
 
-			if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `email`,`connect_until` FROM `%s` WHERE `%s`='%d'", login_db, login_db_account_id, account_id) )
+			if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `email`,`expiration_time` FROM `%s` WHERE `%s`='%d'", login_db, login_db_account_id, account_id) )
 				Sql_ShowDebug(sql_handle);
 			else if( SQL_SUCCESS == Sql_NextRow(sql_handle) )
 			{
@@ -776,7 +776,7 @@ int parse_fromchar(int fd)
 				safestrncpy(email, data, sizeof(email));
 
 				Sql_GetData(sql_handle, 1, &data, NULL);
-				connect_until_time = (uint32)strtoul(data, NULL, 10);
+				expiration_time = (uint32)strtoul(data, NULL, 10);
 
 				Sql_FreeResult(sql_handle);
 			}
@@ -785,7 +785,7 @@ int parse_fromchar(int fd)
 			WFIFOW(fd,0) = 0x2717;
 			WFIFOL(fd,2) = account_id;
 			safestrncpy((char*)WFIFOP(fd,6), email, 40);
-			WFIFOL(fd,46) = connect_until_time;
+			WFIFOL(fd,46) = expiration_time;
 			WFIFOSET(fd,50);
 		}
 		break;
@@ -893,7 +893,7 @@ int parse_fromchar(int fd)
 			int sec = (short)RFIFOW(fd,16);
 			RFIFOSKIP(fd,18);
 
-			if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `ban_until` FROM `%s` WHERE `%s` = '%d'", login_db, login_db_account_id, account_id) )
+			if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `unban_time` FROM `%s` WHERE `%s` = '%d'", login_db, login_db_account_id, account_id) )
 				Sql_ShowDebug(sql_handle);
 			else if( SQL_SUCCESS == Sql_NextRow(sql_handle) )
 			{
@@ -928,7 +928,7 @@ int parse_fromchar(int fd)
 						charif_sendallwos(-1, buf, 11);
 					}
 					ShowNotice("Account: %d Banned until: %lu\n", account_id, (unsigned long)timestamp);
-					if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `ban_until` = '%lu' WHERE `%s` = '%d'", login_db, (unsigned long)timestamp, login_db_account_id, account_id) )
+					if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `unban_time` = '%lu' WHERE `%s` = '%d'", login_db, (unsigned long)timestamp, login_db_account_id, account_id) )
 						Sql_ShowDebug(sql_handle);
 				}
 			}
@@ -1019,11 +1019,11 @@ int parse_fromchar(int fd)
 			int account_id = RFIFOL(fd,2);
 			RFIFOSKIP(fd,6);
 
-			if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `ban_until` FROM `%s` WHERE `%s` = '%d'", login_db, login_db_account_id, account_id) )
+			if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `unban_time` FROM `%s` WHERE `%s` = '%d'", login_db, login_db_account_id, account_id) )
 				Sql_ShowDebug(sql_handle);
 			else if( Sql_NumRows(sql_handle) > 0 )
 			{// Found a match
-				if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `ban_until` = '0' WHERE `%s` = '%d'", login_db, login_db_account_id, account_id) )
+				if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `unban_time` = '0' WHERE `%s` = '%d'", login_db, login_db_account_id, account_id) )
 					Sql_ShowDebug(sql_handle);
 			}
 		}
@@ -1375,18 +1375,18 @@ void login_auth_failed(struct login_session_data* sd, int result)
 		memset(WFIFOP(fd,3), '\0', 20);
 	else
 	{// 6 = Your are Prohibited to log in until %s
-		if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `ban_until` FROM `%s` WHERE `%s` = %s '%s'", login_db, login_db_userid, (login_config.case_sensitive ? "BINARY" : ""), esc_userid) )
+		if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `unban_time` FROM `%s` WHERE `%s` = %s '%s'", login_db, login_db_userid, (login_config.case_sensitive ? "BINARY" : ""), esc_userid) )
 			Sql_ShowDebug(sql_handle);
 		else if( SQL_SUCCESS == Sql_NextRow(sql_handle) )
 		{
 			char* data;
-			time_t ban_until_time;
+			time_t unban_time;
 
 			Sql_GetData(sql_handle, 0, &data, NULL);
-			ban_until_time = (time_t)strtoul(data, NULL, 10);
+			unban_time = (time_t)strtoul(data, NULL, 10);
 			Sql_FreeResult(sql_handle);
 
-			strftime((char*)WFIFOP(fd,3), 20, login_config.date_format, localtime(&ban_until_time));
+			strftime((char*)WFIFOP(fd,3), 20, login_config.date_format, localtime(&unban_time));
 		}
 	}
 	WFIFOSET(fd,23);

@@ -92,7 +92,7 @@ int convert_login(void)
 	FILE *fp;
 	int account_id, logincount, user_level, state, n, i;
 	char line[2048], userid[2048], pass[2048], lastlogin[2048], sex, email[2048], error_message[2048], last_ip[2048], memo[2048];
-	int ban_until_time, connect_until_time;
+	int unban_time, expiration_time;
 	char dummy[2048];
 
 	mysql_handle = Sql_Malloc();
@@ -117,7 +117,7 @@ int convert_login(void)
 
 		i = sscanf(line, "%d\t%[^\t]\t%[^\t]\t%[^\t]\t%c\t%d\t%d\t%[^\t]\t%[^\t]\t%d\t%[^\t]\t%[^\t]\t%d\t%[^\r\n]%n",
 			&account_id, userid, pass, lastlogin, &sex, &logincount, &state,
-			email, error_message, &connect_until_time, last_ip, memo, &ban_until_time, dummy, &n);
+			email, error_message, &expiration_time, last_ip, memo, &unban_time, dummy, &n);
 
 		if (i < 13) {
 			ShowWarning("Skipping incompatible data on line %d\n", line_counter);
@@ -133,10 +133,10 @@ int convert_login(void)
 		stmt = SqlStmt_Malloc(mysql_handle);
 		if( SQL_ERROR == SqlStmt_Prepare(stmt, 
 			"REPLACE INTO `login` "
-			"(`account_id`, `userid`, `user_pass`, `lastlogin`, `sex`, `logincount`, `email`, `level`, `error_message`, `connect_until`, `last_ip`, `memo`, `ban_until`, `state`) "
+			"(`account_id`, `userid`, `user_pass`, `lastlogin`, `sex`, `logincount`, `email`, `level`, `error_message`, `expiration_time`, `last_ip`, `memo`, `unban_time`, `state`) "
 			"VALUES "
 			"(%d, ?, ?, '%s', '%c', %d, '%s', %d, '%s', %d, '%s', '%s', %d, %d)",
-			account_id, lastlogin, sex, logincount, email, user_level, error_message, connect_until_time, last_ip, memo, ban_until_time, state)
+			account_id, lastlogin, sex, logincount, email, user_level, error_message, expiration_time, last_ip, memo, unban_time, state)
 		||	SQL_ERROR == SqlStmt_BindParam(stmt, 0, SQLDT_STRING, userid, strnlen(userid, 255))
 		||	SQL_ERROR == SqlStmt_BindParam(stmt, 1, SQLDT_STRING, pass, strnlen(pass, 32))
 		||	SQL_ERROR == SqlStmt_Execute(stmt) )

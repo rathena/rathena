@@ -724,7 +724,7 @@ int pc_isequip(struct map_session_data *sd,int n)
  * session idに問題無し
  * char鯖から送られてきたステ?タスを設定
  *------------------------------------------*/
-bool pc_authok(struct map_session_data *sd, int login_id2, time_t connect_until_time, struct mmo_charstatus *st)
+bool pc_authok(struct map_session_data *sd, int login_id2, time_t expiration_time, struct mmo_charstatus *st)
 {
 	int i;
 	unsigned long tick = gettick();
@@ -849,9 +849,9 @@ bool pc_authok(struct map_session_data *sd, int login_id2, time_t connect_until_
 	}
 
 	// message of the limited time of the account
-	if (connect_until_time != 0) { // don't display if it's unlimited or unknow value
+	if (expiration_time != 0) { // don't display if it's unlimited or unknow value
 		char tmpstr[1024];
-		strftime(tmpstr, sizeof(tmpstr) - 1, msg_txt(501), localtime(&connect_until_time)); // "Your account time limit is: %d-%m-%Y %H:%M:%S."
+		strftime(tmpstr, sizeof(tmpstr) - 1, msg_txt(501), localtime(&expiration_time)); // "Your account time limit is: %d-%m-%Y %H:%M:%S."
 		clif_wis_message(sd->fd, wisp_server_name, tmpstr, strlen(tmpstr)+1);
 	}
 

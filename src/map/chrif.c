@@ -523,7 +523,7 @@ void chrif_authreq(struct map_session_data *sd)
 		node->char_id == sd->status.char_id &&
 		node->login_id1 == sd->login_id1)
 	{	//auth ok
-		if (!pc_authok(sd, node->login_id2, node->connect_until_time, node->char_dat))
+		if (!pc_authok(sd, node->login_id2, node->expiration_time, node->char_dat))
 			chrif_auth_delete(node->account_id, node->char_id, ST_LOGIN);
 		else {
 			//char_dat no longer needed, but player auth is not completed yet.
@@ -594,7 +594,7 @@ void chrif_authok(int fd)
 	node->account_id=account_id;
 	node->char_id=char_id;
 	node->login_id1=RFIFOL(fd, 8);
-	node->connect_until_time=RFIFOL(fd, 12);
+	node->expiration_time=RFIFOL(fd, 12);
 	node->login_id2=RFIFOL(fd, 16);
 	memcpy(node->char_dat,status,sizeof(struct mmo_charstatus));
 	node->node_created=gettick();

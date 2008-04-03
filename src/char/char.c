@@ -108,7 +108,7 @@ struct char_session_data {
 	int account_id, login_id1, login_id2, sex;
 	int found_char[MAX_CHARS]; // ids of chars on this account
 	char email[40]; // e-mail (default: a@a.com) by [Yor]
-	time_t connect_until_time; // # of seconds 1/1/1970 (timestamp): Validity limit of the account (0 = unlimited)
+	time_t expiration_time; // # of seconds 1/1/1970 (timestamp): Validity limit of the account (0 = unlimited)
 };
 
 #define AUTH_FIFO_SIZE 256
@@ -117,7 +117,7 @@ struct {
 	uint32 ip;
 	int delflag;
 	int sex;
-	time_t connect_until_time; // # of seconds 1/1/1970 (timestamp): Validity limit of the account (0 = unlimited)
+	time_t expiration_time; // # of seconds 1/1/1970 (timestamp): Validity limit of the account (0 = unlimited)
 } auth_fifo[AUTH_FIFO_SIZE];
 int auth_fifo_pos = 0;
 
@@ -2017,7 +2017,7 @@ int parse_fromlogin(int fd)
 			int login_id2 = RFIFOL(fd,10);
 			bool result = RFIFOB(fd,14);
 			const char* email = (const char*)RFIFOP(fd,15);
-			time_t connect_until = (time_t)RFIFOL(fd,55);
+			time_t expiration_time = (time_t)RFIFOL(fd,55);
 
 			// find the session with this account id
 			ARR_FIND( 0, fd_max, i, session[i] && (sd = (struct char_session_data*)session[i]->session_data) &&
@@ -2033,7 +2033,7 @@ int parse_fromlogin(int fd)
 					memcpy(sd->email, email, 40);
 					if (e_mail_check(sd->email) == 0)
 						strncpy(sd->email, "a@a.com", 40); // default e-mail
-					sd->connect_until_time = connect_until;
+					sd->expiration_time = expiration_time;
 					char_auth_ok(i, sd);
 				}
 			}
@@ -2051,7 +2051,7 @@ int parse_fromlogin(int fd)
 						memcpy(sd->email, RFIFOP(fd,6), 40);
 						if (e_mail_check(sd->email) == 0)
 							strncpy(sd->email, "a@a.com", 40); // default e-mail
-						sd->connect_until_time = (time_t)RFIFOL(fd,46);
+						sd->expiration_time = (time_t)RFIFOL(fd,46);
 						break;
 					}
 				}
@@ -2809,7 +2809,7 @@ int parse_frommap(int fd)
 			auth_fifo[auth_fifo_pos].login_id1 = RFIFOL(fd,6);
 			auth_fifo[auth_fifo_pos].login_id2 = RFIFOL(fd,10);
 			auth_fifo[auth_fifo_pos].delflag = 2;
-			auth_fifo[auth_fifo_pos].connect_until_time = 0; // unlimited/unknown time by default (not display in map-server)
+			auth_fifo[auth_fifo_pos].expiration_time = 0; // unlimited/unknown time by default (not display in map-server)
 			auth_fifo[auth_fifo_pos].ip = ntohl(RFIFOL(fd,14));
 			auth_fifo_pos++;
 			WFIFOHEAD(fd,7);
@@ -2854,7 +2854,7 @@ int parse_frommap(int fd)
 				WFIFOL(map_fd,4) = RFIFOL(fd,2); //Account ID
 				WFIFOL(map_fd,8) = RFIFOL(fd,6); //Login1
 				WFIFOL(map_fd,16) = RFIFOL(fd,10); //Login2
-				WFIFOL(map_fd,12) = (unsigned long)0; //TODO: connect_until_time, how do I figure it out right now?
+				WFIFOL(map_fd,12) = (unsigned long)0; //TODO: expiration_time, how do I figure it out right now?
 				memcpy(WFIFOP(map_fd,20), char_data, sizeof(struct mmo_charstatus));
 				WFIFOSET(map_fd, WFIFOW(map_fd,2));
 
@@ -3250,7 +3250,7 @@ int parse_char(int fd)
 			CREATE(session[fd]->session_data, struct char_session_data, 1);
 			sd = (struct char_session_data*)session[fd]->session_data;
 			strncpy(sd->email, "no mail", 40); // put here a mail without '@' to refuse deletion if we don't receive the e-mail
-			sd->connect_until_time = 0; // unknown or unlimited (not displaying on map-server)
+			sd->expiration_time = 0; // unknown or unlimited (not displaying on map-server)
 			sd->account_id = account_id;
 			sd->login_id1 = login_id1;
 			sd->login_id2 = login_id2;
@@ -3392,7 +3392,7 @@ int parse_char(int fd)
 			auth_fifo[auth_fifo_pos].login_id2 = sd->login_id2;
 			auth_fifo[auth_fifo_pos].delflag = 0;
 			auth_fifo[auth_fifo_pos].sex = sd->sex;
-			auth_fifo[auth_fifo_pos].connect_until_time = sd->connect_until_time;
+			auth_fifo[auth_fifo_pos].expiration_time = sd->expiration_time;
 			auth_fifo[auth_fifo_pos].ip = session[fd]->client_addr;
 
 			//Send NEW auth packet [Kevin]
@@ -3416,7 +3416,7 @@ int parse_char(int fd)
 			WFIFOL(map_fd,4) = auth_fifo[auth_fifo_pos].account_id;
 			WFIFOL(map_fd,8) = auth_fifo[auth_fifo_pos].login_id1;
 			WFIFOL(map_fd,16) = auth_fifo[auth_fifo_pos].login_id2;
-			WFIFOL(map_fd,12) = (unsigned long)auth_fifo[auth_fifo_pos].connect_until_time;
+			WFIFOL(map_fd,12) = (unsigned long)auth_fifo[auth_fifo_pos].expiration_time;
 			memcpy(WFIFOP(map_fd,20), cd, sizeof(struct mmo_charstatus));
 			WFIFOSET(map_fd, WFIFOW(map_fd,2));
 

@@ -338,7 +338,7 @@ int mmo_auth_tostr(char* str, struct mmo_account* p)
 	str_p += sprintf(str_p, "%d\t%s\t%s\t%s\t%c\t%d\t%u\t%s\t%s\t%ld\t%s\t%s\t%ld\t",
 	                 p->account_id, p->userid, p->pass, p->lastlogin, p->sex,
 	                 p->logincount, p->state, p->email, p->error_message,
-	                 (long)p->connect_until_time, p->last_ip, p->memo, (long)p->ban_until_time);
+	                 (long)p->expiration_time, p->last_ip, p->memo, (long)p->unban_time);
 
 	for(i = 0; i < p->account_reg2_num; i++)
 		if (p->account_reg2[i].str[0])
@@ -358,8 +358,8 @@ int mmo_auth_init(void)
 	int logincount, n;
 	uint32 i, j;
 	char line[2048], *p, userid[2048], pass[2048], lastlogin[2048], sex, email[2048], error_message[2048], last_ip[2048], memo[2048];
-	long ban_until_time;
-	long connect_until_time;
+	long unban_time;
+	long expiration_time;
 	char str[2048];
 	char v[2048];
 	int GM_count = 0;
@@ -393,11 +393,11 @@ int mmo_auth_init(void)
 		if (((i = sscanf(line, "%d\t%[^\t]\t%[^\t]\t%[^\t]\t%c\t%d\t%u\t"
 		                 "%[^\t]\t%[^\t]\t%ld\t%[^\t]\t%[^\t]\t%ld%n",
 		    &account_id, userid, pass, lastlogin, &sex, &logincount, &state,
-		    email, error_message, &connect_until_time, last_ip, memo, &ban_until_time, &n)) == 13 && line[n] == '\t') ||
+		    email, error_message, &expiration_time, last_ip, memo, &unban_time, &n)) == 13 && line[n] == '\t') ||
 		    ((i = sscanf(line, "%d\t%[^\t]\t%[^\t]\t%[^\t]\t%c\t%d\t%u\t"
 		                 "%[^\t]\t%[^\t]\t%ld\t%[^\t]\t%[^\t]%n",
 		    &account_id, userid, pass, lastlogin, &sex, &logincount, &state,
-		    email, error_message, &connect_until_time, last_ip, memo, &n)) == 12 && line[n] == '\t')) {
+		    email, error_message, &expiration_time, last_ip, memo, &n)) == 12 && line[n] == '\t')) {
 			n = n + 1;
 
 			// Some checks
@@ -470,11 +470,11 @@ int mmo_auth_init(void)
 			}
 
 			if (i == 13)
-				auth_dat[auth_num].ban_until_time = (time_t)ban_until_time;
+				auth_dat[auth_num].unban_time = (time_t)unban_time;
 			else
-				auth_dat[auth_num].ban_until_time = 0;
+				auth_dat[auth_num].unban_time = 0;
 
-			auth_dat[auth_num].connect_until_time = (time_t)connect_until_time;
+			auth_dat[auth_num].expiration_time = (time_t)expiration_time;
 
 			last_ip[15] = '\0';
 			remove_control_chars(last_ip);
@@ -575,8 +575,8 @@ int mmo_auth_init(void)
 			// Initialization of new data
 			strncpy(auth_dat[auth_num].email, "a@a.com", 40);
 			strncpy(auth_dat[auth_num].error_message, "-", 20);
-			auth_dat[auth_num].ban_until_time = 0;
-			auth_dat[auth_num].connect_until_time = 0;
+			auth_dat[auth_num].unban_time = 0;
+			auth_dat[auth_num].expiration_time = 0;
 			strncpy(auth_dat[auth_num].last_ip, "-", 16);
 			strncpy(auth_dat[auth_num].memo, "-", 255);
 
@@ -848,7 +848,7 @@ int mmo_auth_new(struct mmo_account* account)
 	static int num_regs = 0; // registration counter
 	unsigned int tick = gettick();
 
-	time_t connect_until = 0;
+	time_t expiration_time = 0;
 	unsigned int i = auth_num;
 
 	// check if the account doesn't exist already
@@ -889,10 +889,10 @@ int mmo_auth_new(struct mmo_account* account)
 	auth_dat[i].state = 0;
 	safestrncpy(auth_dat[i].email, e_mail_check(account->email) ? account->email : "a@a.com", sizeof(auth_dat[i].email));
 	safestrncpy(auth_dat[i].error_message, "-", sizeof(auth_dat[i].error_message));
-	auth_dat[i].ban_until_time = 0;
+	auth_dat[i].unban_time = 0;
 	if( login_config.start_limited_time != -1 )
-		connect_until = time(NULL) + login_config.start_limited_time;
-	auth_dat[i].connect_until_time = connect_until;
+		expiration_time = time(NULL) + login_config.start_limited_time;
+	auth_dat[i].expiration_time = expiration_time;
 	strncpy(auth_dat[i].last_ip, "-", 16);
 	strncpy(auth_dat[i].memo, "-", 255);
 	auth_dat[i].account_reg2_num = 0;
@@ -1013,15 +1013,15 @@ int mmo_auth(struct login_session_data* sd)
 		return 1; // 1 = Incorrect Password
 	}
 
-	if( auth_dat[i].connect_until_time != 0 && auth_dat[i].connect_until_time < time(NULL) )
+	if( auth_dat[i].expiration_time != 0 && auth_dat[i].expiration_time < time(NULL) )
 	{
 		ShowNotice("Connection refused (account: %s, pass: %s, expired ID, ip: %s)\n", sd->userid, sd->passwd, ip);
 		return 2; // 2 = This ID is expired
 	}
 
-	if( auth_dat[i].ban_until_time != 0 && auth_dat[i].ban_until_time > time(NULL) )
+	if( auth_dat[i].unban_time != 0 && auth_dat[i].unban_time > time(NULL) )
 	{
-		strftime(tmpstr, 20, login_config.date_format, localtime(&auth_dat[i].ban_until_time));
+		strftime(tmpstr, 20, login_config.date_format, localtime(&auth_dat[i].unban_time));
 		tmpstr[19] = '\0';
 		ShowNotice("Connection refused (account: %s, pass: %s, banned until %s, ip: %s)\n", sd->userid, sd->passwd, tmpstr, ip);
 		return 6; // 6 = Your are Prohibited to log in until %s
@@ -1050,7 +1050,7 @@ int mmo_auth(struct login_session_data* sd)
 
 	safestrncpy(auth_dat[i].lastlogin, tmpstr, sizeof(auth_dat[i].lastlogin));
 	safestrncpy(auth_dat[i].last_ip, ip, sizeof(auth_dat[i].last_ip));
-	auth_dat[i].ban_until_time = 0;
+	auth_dat[i].unban_time = 0;
 	auth_dat[i].logincount++;
 
 	// Save until for change ip/time of auth is not very useful => limited save for that
@@ -1146,7 +1146,7 @@ int parse_fromchar(int fd)
 				node->sex        == sex &&
 				node->ip         == ip_ )
 			{// found
-				uint32 connect_until_time;
+				uint32 expiration_time;
 				char email[40];
 				unsigned int k;
 
@@ -1160,12 +1160,12 @@ int parse_fromchar(int fd)
 				if( k < auth_num )
 				{
 					strcpy(email, auth_dat[k].email);
-					connect_until_time = (uint32)auth_dat[k].connect_until_time;
+					expiration_time = (uint32)auth_dat[k].expiration_time;
 				}
 				else
 				{
 					memset(email, 0, sizeof(email));
-					connect_until_time = 0;
+					expiration_time = 0;
 				}
 
 				// send ack
@@ -1176,7 +1176,7 @@ int parse_fromchar(int fd)
 				WFIFOL(fd,10) = login_id2;
 				WFIFOB(fd,14) = 0;
 				memcpy(WFIFOP(fd,15), email, 40);
-				WFIFOL(fd,55) = connect_until_time;
+				WFIFOL(fd,55) = expiration_time;
 				WFIFOSET(fd,59);
 			}
 			else
@@ -1243,7 +1243,7 @@ int parse_fromchar(int fd)
 			if( RFIFOREST(fd) < 6 )
 				return 0;
 		{
-			uint32 connect_until_time = 0;
+			uint32 expiration_time = 0;
 			char email[40] = "";
 
 			int account_id = RFIFOL(fd,2);
@@ -1255,14 +1255,14 @@ int parse_fromchar(int fd)
 			else
 			{
 				safestrncpy(email, auth_dat[i].email, sizeof(email));
-				connect_until_time = (uint32)auth_dat[i].connect_until_time;
+				expiration_time = (uint32)auth_dat[i].expiration_time;
 			}
 
 			WFIFOHEAD(fd,50);
 			WFIFOW(fd,0) = 0x2717;
 			WFIFOL(fd,2) = account_id;
 			safestrncpy((char*)WFIFOP(fd,6), email, 40);
-			WFIFOL(fd,46) = connect_until_time;
+			WFIFOL(fd,46) = expiration_time;
 			WFIFOSET(fd,50);
 		}
 		break;
@@ -1368,10 +1368,10 @@ int parse_fromchar(int fd)
 			{
 				time_t timestamp;
 				struct tm *tmtime;
-				if (auth_dat[i].ban_until_time == 0 || auth_dat[i].ban_until_time < time(NULL))
+				if (auth_dat[i].unban_time == 0 || auth_dat[i].unban_time < time(NULL))
 					timestamp = time(NULL);
 				else
-					timestamp = auth_dat[i].ban_until_time;
+					timestamp = auth_dat[i].unban_time;
 				tmtime = localtime(&timestamp);
 				tmtime->tm_year = tmtime->tm_year + year;
 				tmtime->tm_mon = tmtime->tm_mon + month;
@@ -1401,7 +1401,7 @@ int parse_fromchar(int fd)
 					if( j < AUTH_FIFO_SIZE )
 						auth_fifo[j].login_id1++; // to avoid reconnection error when come back from map-server (char-server will ask again the authentication)
 */
-					auth_dat[i].ban_until_time = timestamp;
+					auth_dat[i].unban_time = timestamp;
 					// Save
 					mmo_auth_sync();
 				}
@@ -1494,11 +1494,11 @@ int parse_fromchar(int fd)
 			if( i == auth_num )
 				ShowNotice("Char-server '%s': Error of UnBan request (account: %d not found, ip: %s).\n", server[id].name, account_id, ip);
 			else
-			if( auth_dat[i].ban_until_time == 0 )
+			if( auth_dat[i].unban_time == 0 )
 				ShowNotice("Char-server '%s': Error of UnBan request (account: %d, no change for unban date, ip: %s).\n", server[id].name, account_id, ip);
 			else
 			{
-				auth_dat[i].ban_until_time = 0;
+				auth_dat[i].unban_time = 0;
 				ShowNotice("Char-server '%s': UnBan request (account: %d, ip: %s).\n", server[id].name, account_id, ip);
 			}
 		}
@@ -1753,8 +1753,8 @@ void login_auth_failed(struct login_session_data* sd, int result)
 	{// 6 = Your are Prohibited to log in until %s
 		char tmpstr[20];
 		int i = search_account_index(sd->userid);
-		time_t ban_until_time = ( i >= 0 ) ? auth_dat[i].ban_until_time : 0;
-		strftime(tmpstr, 20, login_config.date_format, localtime(&ban_until_time));
+		time_t unban_time = ( i >= 0 ) ? auth_dat[i].unban_time : 0;
+		strftime(tmpstr, 20, login_config.date_format, localtime(&unban_time));
 		safestrncpy((char*)WFIFOP(fd,3), tmpstr, 20); // ban timestamp goes here
 	}
 	WFIFOSET(fd,23);
