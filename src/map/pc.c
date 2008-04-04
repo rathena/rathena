@@ -3596,7 +3596,7 @@ int pc_setpos(struct map_session_data* sd, unsigned short mapindex, int x, int y
 		chrif_changemapserver(sd, ip, (short)port);
 
 		//Free session data from this map server [Kevin]
-		unit_free_pc(node->sd);
+		unit_free_pc(sd);
 
 		return 0;
 	}
