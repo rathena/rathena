@@ -1335,11 +1335,6 @@ int parse_fromchar(int fd)
 					WBUFB(buf,6) = 0; // 0: change of state, 1: ban
 					WBUFL(buf,7) = state; // status or final date of a banishment
 					charif_sendallwos(-1, buf, 11);
-/*
-					ARR_FIND( 0, AUTH_FIFO_SIZE, j, auth_fifo[j].account_id == account_id );
-					if( j < AUTH_FIFO_SIZE )
-						auth_fifo[j].login_id1++; // to avoid reconnection error when come back from map-server (char-server will ask again the authentication)
-*/
 				}
 				auth_dat[i].state = state;
 				// Save
@@ -1396,11 +1391,6 @@ int parse_fromchar(int fd)
 					WBUFB(buf,6) = 1; // 0: change of status, 1: ban
 					WBUFL(buf,7) = (unsigned int)timestamp; // status or final date of a banishment
 					charif_sendallwos(-1, buf, 11);
-/*
-					ARR_FIND( 0, AUTH_FIFO_SIZE, j, auth_fifo[j].account_id == account_id );
-					if( j < AUTH_FIFO_SIZE )
-						auth_fifo[j].login_id1++; // to avoid reconnection error when come back from map-server (char-server will ask again the authentication)
-*/
 					auth_dat[i].unban_time = timestamp;
 					// Save
 					mmo_auth_sync();
@@ -1430,11 +1420,6 @@ int parse_fromchar(int fd)
 				auth_dat[i].sex = sex;
 
 				ShowNotice("Char-server '%s': Sex change (account: %d, new sex %c, ip: %s).\n", server[id].name, account_id, sex, ip);
-/*
-				ARR_FIND( 0, AUTH_FIFO_SIZE, j, auth_fifo[j].account_id == account_id );
-				if( j < AUTH_FIFO_SIZE )
-					auth_fifo[j].login_id1++; // to avoid reconnection error when come back from map-server (char-server will ask again the authentication)
-*/
 				WBUFW(buf,0) = 0x2723;
 				WBUFL(buf,2) = account_id;
 				WBUFB(buf,6) = sex_str2num(sex);

@@ -267,11 +267,6 @@ int parse_admin(int fd)
 							WBUFB(buf,6) = 0; // 0: change of statut, 1: ban
 							WBUFL(buf,7) = statut; // status or final date of a banishment
 							charif_sendallwos(-1, buf, 11);
-/*
-							for(j = 0; j < AUTH_FIFO_SIZE; j++)
-								if (auth_fifo[j].account_id == auth_dat[i].account_id)
-									auth_fifo[j].login_id1++; // to avoid reconnection error when come back from map-server (char-server will ask again the authentication)
-*/
 						}
 						auth_dat[i].state = statut;
 						memcpy(auth_dat[i].error_message, error_message, 20);
@@ -362,11 +357,6 @@ int parse_admin(int fd)
 						if (auth_dat[i].sex != ((sex == 'S' || sex == 's') ? 2 : (sex == 'M' || sex == 'm'))) {
 							unsigned char buf[16];
 							WFIFOL(fd,2) = auth_dat[i].account_id;
-/*
-							for(j = 0; j < AUTH_FIFO_SIZE; j++)
-								if (auth_fifo[j].account_id == auth_dat[i].account_id)
-									auth_fifo[j].login_id1++; // to avoid reconnection error when come back from map-server (char-server will ask again the authentication)
-*/
 							auth_dat[i].sex = (sex == 'S' || sex == 's') ? 2 : (sex == 'M' || sex == 'm');
 							ShowNotice("'ladmin': Modification of a sex (account: %s, new sex: %c, ip: %s)\n", auth_dat[i].userid, sex, ip);
 							mmo_auth_sync();
@@ -636,11 +626,6 @@ int parse_admin(int fd)
 							WBUFB(buf,6) = 1; // 0: change of statut, 1: ban
 							WBUFL(buf,7) = (unsigned int)timestamp; // status or final date of a banishment
 							charif_sendallwos(-1, buf, 11);
-/*
-							for(j = 0; j < AUTH_FIFO_SIZE; j++)
-								if (auth_fifo[j].account_id == auth_dat[i].account_id)
-									auth_fifo[j].login_id1++; // to avoid reconnection error when come back from map-server (char-server will ask again the authentication)
-*/
 						}
 						auth_dat[i].unban_time = timestamp;
 						mmo_auth_sync();
@@ -696,13 +681,6 @@ int parse_admin(int fd)
 								WBUFB(buf,6) = 1; // 0: change of statut, 1: ban
 								WBUFL(buf,7) = (unsigned int)timestamp; // status or final date of a banishment
 								charif_sendallwos(-1, buf, 11);
-/*
-								for(j = 0; j < AUTH_FIFO_SIZE; j++)
-									if (auth_fifo[j].account_id == auth_dat[i].account_id) {
-										auth_fifo[j].login_id1++; // to avoid reconnection error when come back from map-server (char-server will ask again the authentication)
-										break;
-									}
-*/
 							}
 							auth_dat[i].unban_time = timestamp;
 							mmo_auth_sync();
