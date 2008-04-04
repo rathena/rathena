@@ -1,6 +1,7 @@
 Date		Added
 ======
 2008/04/04
+	* Rev. 12472 Updated NIflheim Town and Quest NPCs. [L0ne_W0lf]
 	* Rev. 12471 Updated Schwaltzvalt guild warp points. [L0ne_W0lf]
 	* Added the warp points for the Arunafeltz guild maps.
 2008/04/03
