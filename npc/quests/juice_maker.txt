@@ -206,7 +206,7 @@ payon_in03,188,146,5	script	Marx Hansen#juice	86,{
 				set .@juice,533;
 				break;
 			case 5:
-				mes "[Merchant Marx Hansen]"											;
+				mes "[Merchant Marx Hansen]";
 				mes "Well then...";
 				mes "See you next time.";
 				close;
@@ -235,13 +235,13 @@ payon_in03,188,146,5	script	Marx Hansen#juice	86,{
 				while(1) {
 					input .@input;
 					if (.@input == 0) {
-						mes "[Merchant Marx Hansen]"																									;
+						mes "[Merchant Marx Hansen]";
 						mes "Well then...";
 						mes "Come again.";
 						close;
 					}
 					else if (.@input > 100) {
-						mes "[Merchant Marx Hansen]"																									;
+						mes "[Merchant Marx Hansen]";
 						mes "More than 100 bottles is impossible. Choose a different amount.";
 						next;
 					}
@@ -293,10 +293,10 @@ payon_in03,188,146,5	script	Marx Hansen#juice	86,{
 			mes "Apple x 1 ea, Empty Bottle x 1 ea, 3 zeny.";
 			mes "";
 			mes "^E3CF57- Banana Juice -^000000";
-			mes "Banana x 1 ea, Empty Bottle x 1 ea, 3 zeny."					;
+			mes "Banana x 1 ea, Empty Bottle x 1 ea, 3 zeny.";
 			mes "";
 			mes "^ED9121- Carrot Juice -^000000";
-			mes "Carrot x 1 ea, Empty Bottle x 1 ea, 3 zeny."										;
+			mes "Carrot x 1 ea, Empty Bottle x 1 ea, 3 zeny.";
 			mes "";
 			mes "^CC00FF- Grape Juice -^000000";
 			mes "Grape x 1 ea, Empty Bottle x 1 ea, 3 zeny.";
