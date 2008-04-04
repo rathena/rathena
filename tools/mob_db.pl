@@ -67,7 +67,7 @@ CREATE TABLE `mob_db` (
   `DropCardid` smallint(9) unsigned NOT NULL default '0',
   `DropCardper` smallint(9) unsigned NOT NULL default '0',
   PRIMARY KEY  (`ID`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM;
 ";
 printf("%s\n",$create_table);
 while ($ligne=<STDIN>)

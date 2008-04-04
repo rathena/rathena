@@ -63,7 +63,7 @@ CREATE TABLE `mob_db2` (
   `DropCardid` smallint(9) unsigned NOT NULL default '0',
   `DropCardper` smallint(9) unsigned NOT NULL default '0',
   PRIMARY KEY  (`ID`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM;
 
 #  Monsters Additional Database
 # 

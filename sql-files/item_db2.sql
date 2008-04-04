@@ -27,7 +27,7 @@ CREATE TABLE `item_db2` (
   `equip_script` text,
   `unequip_script` text,
   PRIMARY KEY  (`id`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM;
 
 #  Items Additional Database - Custom Items go here
 # 

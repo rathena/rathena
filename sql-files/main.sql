@@ -45,7 +45,7 @@ CREATE TABLE `cart_inventory` (
   `card3` int(11) NOT NULL default '0',
   PRIMARY KEY  (`id`),
   KEY `char_id` (`char_id`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM;
 
 --
 -- Table structure for table `char`
@@ -129,7 +129,7 @@ CREATE TABLE `charlog` (
   `luk` int(11) unsigned NOT NULL default '0',
   `hair` tinyint(4) NOT NULL default '0',
   `hair_color` int(11) NOT NULL default '0'
-) TYPE=MyISAM; 
+) ENGINE=MyISAM; 
 
 --
 -- Table structure for table `friends`
@@ -141,7 +141,7 @@ CREATE TABLE `friends` (
   `friend_account` int(11) NOT NULL default '0',
   `friend_id` int(11) NOT NULL default '0',
   KEY  `char_id` (`char_id`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM;
 
 --
 -- Table structure for table `hotkey`
@@ -156,7 +156,7 @@ CREATE TABLE `hotkey` (
 	`skill_lvl` TINYINT(4) unsigned NOT NULL default '0',
 	PRIMARY KEY (`char_id`,`hotkey`),
 	INDEX (`char_id`)
-) TYPE=MYISAM;
+) ENGINE=MyISAM;
 
 --
 -- Table structure for table `global_reg_value`
@@ -172,7 +172,7 @@ CREATE TABLE `global_reg_value` (
   PRIMARY KEY  (`char_id`,`str`,`account_id`),
   KEY `account_id` (`account_id`),
   KEY `char_id` (`char_id`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM;
 
 --
 -- Table structure for table `guild`
@@ -199,7 +199,7 @@ CREATE TABLE `guild` (
   PRIMARY KEY  (`guild_id`,`char_id`),
   UNIQUE KEY `guild_id` (`guild_id`),
   KEY `char_id` (`char_id`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM;
 
 --
 -- Table structure for table `guild_alliance`
@@ -213,7 +213,7 @@ CREATE TABLE `guild_alliance` (
   `name` varchar(24) NOT NULL default '',
   PRIMARY KEY  (`guild_id`,`alliance_id`),
   KEY `alliance_id` (`alliance_id`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM;
 
 --
 -- Table structure for table `guild_castle`
@@ -249,7 +249,7 @@ CREATE TABLE `guild_castle` (
   `gHP7` int(11) unsigned NOT NULL default '0',
   PRIMARY KEY  (`castle_id`),
   KEY `guild_id` (`guild_id`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM;
 
 --
 -- Table structure for table `guild_expulsion`
@@ -262,7 +262,7 @@ CREATE TABLE `guild_expulsion` (
   `name` varchar(24) NOT NULL default '',
   `mes` varchar(40) NOT NULL default '',
   PRIMARY KEY  (`guild_id`,`name`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM;
 
 --
 -- Table structure for table `guild_member`
@@ -285,7 +285,7 @@ CREATE TABLE `guild_member` (
   `name` varchar(24) NOT NULL default '',
   PRIMARY KEY  (`guild_id`,`char_id`),
   KEY `char_id` (`char_id`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM;
 
 --
 -- Table structure for table `guild_position`
@@ -300,7 +300,7 @@ CREATE TABLE `guild_position` (
   `exp_mode` tinyint(11) unsigned NOT NULL default '0',
   PRIMARY KEY  (`guild_id`,`position`),
   KEY `guild_id` (`guild_id`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM;
 
 --
 -- Table structure for table `guild_skill`
@@ -312,7 +312,7 @@ CREATE TABLE `guild_skill` (
   `id` smallint(11) unsigned NOT NULL default '0',
   `lv` tinyint(11) unsigned NOT NULL default '0',
   PRIMARY KEY  (`guild_id`,`id`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM;
 
 --
 -- Table structure for table `guild_storage`
@@ -334,7 +334,7 @@ CREATE TABLE `guild_storage` (
   `card3` smallint(11) NOT NULL default '0',
   PRIMARY KEY  (`id`),
   KEY `guild_id` (`guild_id`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM;
 
 --
 -- Table structure for table `homunculus`
@@ -365,7 +365,7 @@ CREATE TABLE `homunculus` (
   `rename_flag` tinyint(2) NOT NULL default '0',
   `vaporize` tinyint(2) NOT NULL default '0',
   PRIMARY KEY  (`homun_id`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM;
 
 -- 
 -- Table structure for table `interlog`
@@ -375,7 +375,7 @@ DROP TABLE IF EXISTS `interlog`;
 CREATE TABLE `interlog` (
   `time` datetime NOT NULL default '0000-00-00 00:00:00',
   `log` varchar(255) NOT NULL default ''
-) TYPE=MyISAM; 
+) ENGINE=MyISAM; 
 
 --
 -- Table structure for table `inventory`
@@ -397,7 +397,7 @@ CREATE TABLE `inventory` (
   `card3` smallint(11) NOT NULL default '0',
   PRIMARY KEY  (`id`),
   KEY `char_id` (`char_id`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM;
 
 --
 -- Table structure for table `ipbanlist`
@@ -410,7 +410,7 @@ CREATE TABLE `ipbanlist` (
   `rtime` datetime NOT NULL default '0000-00-00 00:00:00',
   `reason` varchar(255) NOT NULL default '',
   KEY (`list`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM;
 
 --
 -- Table structure for table `login`
@@ -452,7 +452,7 @@ CREATE TABLE `mapreg` (
   `value` varchar(255) NOT NULL,
   KEY `varname` (`varname`),
   KEY `index` (`index`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM;
 
 --
 -- Table structure for table `sc_data`
@@ -470,7 +470,7 @@ CREATE TABLE `sc_data` (
   `val4` int(11) NOT NULL default '0',
   KEY (`account_id`),
   KEY (`char_id`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM;
 
 --
 -- Table structure for table `loginlog`
@@ -484,7 +484,7 @@ CREATE TABLE `loginlog` (
   `rcode` tinyint(4) NOT NULL default '0',
   `log` varchar(255) NOT NULL default '',
   INDEX (`ip`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM;
 
 --
 -- Table structure for table `mail`
@@ -527,7 +527,7 @@ CREATE TABLE `memo` (
   `y` smallint(4) unsigned NOT NULL default '0',
   PRIMARY KEY  (`memo_id`),
   KEY `char_id` (`char_id`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM;
 
 --
 -- Table structure for table `party`
@@ -542,7 +542,7 @@ CREATE TABLE `party` (
   `leader_id` int(11) unsigned NOT NULL default '0',
   `leader_char` int(11) unsigned NOT NULL default '0',
   PRIMARY KEY  (`party_id`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM;
 
 --
 -- Table structure for table `pet`
@@ -563,7 +563,7 @@ CREATE TABLE `pet` (
   `rename_flag` tinyint(4) unsigned NOT NULL default '0',
   `incuvate` int(11) unsigned NOT NULL default '0',
   PRIMARY KEY  (`pet_id`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM;
 
 --
 -- Table structure for table `ragsrvinfo`
@@ -577,7 +577,7 @@ CREATE TABLE `ragsrvinfo` (
   `jexp` int(11) unsigned NOT NULL default '0',
   `drop` int(11) unsigned NOT NULL default '0',
   `motd` varchar(255) NOT NULL default ''
-) TYPE=MyISAM;
+) ENGINE=MyISAM;
 
 --
 -- Table structure for table `skill`
@@ -590,7 +590,7 @@ CREATE TABLE `skill` (
   `lv` tinyint(4) unsigned NOT NULL default '0',
   PRIMARY KEY  (`char_id`,`id`),
   KEY `char_id` (`char_id`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM;
 
 --
 -- Table structure for table `skill_homunculus`
@@ -603,7 +603,7 @@ CREATE TABLE `skill_homunculus` (
   `lv` smallint(6) NOT NULL,
   PRIMARY KEY  (`homun_id`,`id`),
   KEY `homun_id` (`homun_id`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM;
 
 --
 -- Table structure for table `sstatus`
@@ -614,7 +614,7 @@ CREATE TABLE `sstatus` (
   `index` tinyint(4) unsigned NOT NULL default '0',
   `name` varchar(255) NOT NULL default '',
   `user` int(11) unsigned NOT NULL default '0'
-) TYPE=MyISAM;
+) ENGINE=MyISAM;
 
 --
 -- Table structure for table `storage`
@@ -636,4 +636,4 @@ CREATE TABLE `storage` (
   `card3` smallint(11) NOT NULL default '0',
   PRIMARY KEY  (`id`),
   KEY `account_id` (`account_id`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM;

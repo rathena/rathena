@@ -7,4 +7,4 @@ CREATE TABLE `hotkey` (
 	`skill_lvl` TINYINT(4) unsigned NOT NULL default '0',
 	PRIMARY KEY (`char_id`,`hotkey`),
 	INDEX (`char_id`)
-) TYPE=MYISAM;
+) ENGINE=MYISAM;

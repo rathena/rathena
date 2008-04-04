@@ -19,7 +19,7 @@ CREATE TABLE `picklog` (
   `map` varchar(11) NOT NULL default '',
   PRIMARY KEY  (`id`),
   INDEX (`type`)
-) TYPE=MyISAM AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 #ZenyLog types (M)onsters,(T)rade,(V)ending Sell/Buy,(S)hop Sell/Buy,(N)PC Change amount,(A)dministrators
 #Database: log
@@ -34,7 +34,7 @@ CREATE TABLE `zenylog` (
   `map` varchar(11) NOT NULL default '',
   PRIMARY KEY  (`id`),
   INDEX (`type`)
-) TYPE=MyISAM AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 #Database: log
 #Table: branchlog
@@ -48,7 +48,7 @@ CREATE TABLE `branchlog` (
   PRIMARY KEY  (`branch_id`),
   INDEX (`account_id`),
   INDEX (`char_id`)
-) TYPE=MyISAM AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 #Database: log
 #Table: mvplog
@@ -61,7 +61,7 @@ CREATE TABLE `mvplog` (
   `mvpexp` mediumint(9) NOT NULL default '0',
   `map` varchar(11) NOT NULL default '',
   PRIMARY KEY  (`mvp_id`)
-) TYPE=MyISAM AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 #Database: log
 #Table: atcommandlog
@@ -76,7 +76,7 @@ CREATE TABLE `atcommandlog` (
   PRIMARY KEY  (`atcommand_id`),
   INDEX (`account_id`),
   INDEX (`char_id`)
-) TYPE=MyISAM AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 #Database: log
 #Table: npclog
@@ -91,7 +91,7 @@ CREATE TABLE `npclog` (
   PRIMARY KEY  (`npc_id`),
   INDEX (`account_id`),
   INDEX (`char_id`)
-) TYPE=MyISAM AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 #ChatLog types Gl(O)bal,(W)hisper,(P)arty,(G)uild,(M)ain chat
 #Database: log
@@ -111,4 +111,4 @@ CREATE TABLE `chatlog` (
   PRIMARY KEY  (`id`),
   INDEX (`src_accountid`),
   INDEX (`src_charid`)
-) TYPE=MyISAM AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM AUTO_INCREMENT=1 ;
