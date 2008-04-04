@@ -1838,12 +1838,11 @@ int unit_free(struct block_list *bl, int clrtype)
 			sd->regstr = NULL;
 			sd->regstr_num = 0;
 		}
+
+		//Tell the script to end, not delete it, it will free itself when necessary [Kevin]
 		if (sd->st) {
-			if (sd->st->stack)
-				script_free_stack (sd->st->stack);
-			aFree(sd->st);
-			sd->st = NULL;
-			sd->npc_id = 0;
+			sd->st->rid = 0;
+			sd->st->state = 2;
 		}
 	} else if( bl->type == BL_PET ) {
 		struct pet_data *pd = (struct pet_data*)bl;

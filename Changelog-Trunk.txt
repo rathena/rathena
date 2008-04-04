@@ -4,6 +4,9 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2008/04/04
+	* Update to Auth Glitch fix: moved unit_free_pc back to where it was
+	- and updated it so unit_free_pc just tells the script to end
+	- (not hard delete). (r12481) [Kevin]
 	* Updated mob_db.sql to latest.
 	* Fixed a little bug in Kevin's commit (r12473) [Toms]
 	* Bug fixes for Auth Glitch and Map server crash through script warp when

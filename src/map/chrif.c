@@ -400,9 +400,6 @@ int chrif_changemapserverack(int account_id, int login_id1, int login_id2, int c
 	} else
 		clif_changemapserver(node->sd, map_index, x, y, ntohl(ip), ntohs(port));
 
-	//Free session data from this map server [Kevin]
-	unit_free_pc(node->sd);
-
 	//Player has been saved already, remove him from memory. [Skotlex]
 	chrif_auth_delete(account_id, char_id, ST_MAPCHANGE);
 
