@@ -3594,9 +3594,7 @@ int pc_setpos(struct map_session_data* sd, unsigned short mapindex, int x, int y
 		pc_clean_skilltree(sd);
 		chrif_save(sd,2);
 		chrif_changemapserver(sd, ip, (short)port);
-		//It is important to invoke remove_map separately from unit_free before
-		//saving so that the data saved corresponds to that AFTER warping.
-		unit_free_pc(sd);
+
 		return 0;
 	}
 

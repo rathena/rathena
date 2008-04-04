@@ -233,7 +233,7 @@ void set_char_online(int map_id, int char_id, int account_id)
 	}
 
 	character = (struct online_char_data*)idb_ensure(online_char_db, account_id, create_online_char_data);
-	if (online_check && character->char_id != -1 && character->server > -1 && character->server != map_id)
+	if (online_check && character->char_id != -1 && character->server > -1 && character->server != map_id && map_id != -3)
 	{
 		//char == 99 <- Character logging in, so someone has logged in while one
 		//char is still on map-server, so kick him out, but don't print "error"
@@ -294,12 +294,16 @@ void set_char_offline(int char_id, int account_id)
 	{	//We don't free yet to avoid aCalloc/aFree spamming during char change. [Skotlex]
 		if( character->server > -1 )
 			server[character->server].users--;
-		
-		character->char_id = -1;
-		character->server = -1;
+
 		if(character->waiting_disconnect != -1){
 			delete_timer(character->waiting_disconnect, chardb_waiting_disconnect);
 			character->waiting_disconnect = -1;
+		}
+
+		//If user is NOT at char screen, delete entry [Kevin]
+		if(character->char_id != -1)
+		{
+			idb_remove(online_char_db, account_id);
 		}
 	}
 	
@@ -2394,6 +2398,10 @@ int parse_frommap(int fd)
 			auth_fifo[auth_fifo_pos].expiration_time = 0; // unlimited/unknown time by default (not display in map-server)
 			auth_fifo[auth_fifo_pos].ip = ntohl(RFIFOL(fd,14));
 			auth_fifo_pos++;
+
+			//Set char to "@ char select" in online db [Kevin]
+			set_char_online(-3, 99, RFIFOL(fd,2));
+
 			WFIFOHEAD(fd,7);
 			WFIFOW(fd,0) = 0x2b03;
 			WFIFOL(fd,2) = RFIFOL(fd,2);
@@ -2827,7 +2835,8 @@ int parse_char(int fd)
 		{	// already authed client
 			struct online_char_data* data = (struct online_char_data*)idb_get(online_char_db, sd->account_id);
 			if( data == NULL || data->server == -1) //If it is not in any server, send it offline. [Skotlex]
-				set_char_offline(99,sd->account_id);
+													//send -1 as char id (99 means at char select) [Kevin]
+				set_char_offline(-1,sd->account_id);
 			if( data != NULL && data->fd == fd)
 				data->fd = -1;
 		}

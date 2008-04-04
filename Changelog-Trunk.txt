@@ -3,6 +3,15 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2008/04/04
+	* Bug fixes for Auth Glitch and Map server crash through script warp when
+	- changing map servers.
+	* When char receives the request to go back to char selection it sets
+	- the character as "at char select" in the online_char_db, and
+	- set_char_offline now deletes the entry in the online_char_db unless
+	- the user is at the character screen (to prevent unecessary callocs/frees.
+	* Script warp was just a simple misplacement of a free statement, freeing the
+	- users session data before the scripting subsystem was finished with it. [Kevin]
 2008/04/03
 	* More login server work
 	- Renamed 'connect_until_time' to 'expiration_time'
