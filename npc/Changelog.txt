@@ -1,5 +1,8 @@
 Date		Added
 ======
+2008/04/04
+	* Rev. 12471 Updated Schwaltzvalt guild warp points. [L0ne_W0lf]
+	* Added the warp points for the Arunafeltz guild maps.
 2008/04/03
 	* Fixed and removed unused variables from valkyrie.txt [Lupus]
 	- Now Turtle Island Quest uses MISC_QUEST & 65536 and clears TURTLE var

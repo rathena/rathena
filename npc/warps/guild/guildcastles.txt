@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Athena (1.0)
 //===== Current Version: =====================================
-//= 2.4b
+//= 2.5
 //===== Compatible With: =====================================
 //= Any Athena Version
 //===== Description: =========================================
@@ -21,6 +21,7 @@
 //=	castle 1, 4 and 5 entrances are questionable, and will be updated
 //=	as I get more information.
 //= 2.4b Corrected Warp points for Juno castles 1, 4 and 5. [L0ne_W0lf]
+//= 2.5 Updated Schwaltzvalt warps and added Arunafeltz. [L0ne_W0lf]
 //============================================================
 
 
@@ -401,22 +402,50 @@ prtg_cas05,58,7,0	warp	prtg506	1,1,prtg_cas05,253,290
 prtg_cas05,66,225,0	warp	prtg503	1,1,prtg_cas05,260,92
 prtg_cas05,76,242,0	warp	prtg502	1,1,prtg_cas05,288,13
 
-//Episode 12: WoE:SE
-//Schwaltzvalt Guild Castles Map Connection
-yuno,23,127,0	warp	schg001	1,1,sch_gld,260,92
-sch_gld,355,89,0	warp	schg002	1,1,yuno,26,127
+// Episode 12: WoE:SE
+// Schwaltzvalt Guild Castles Map Connection
+// Original Coordinates were on a non-walkable cell.
+// Will update when we get the mapcache rebuilt.
+yuno,22,126,0	warp	schg001	1,1,sch_gld,351,89
+sch_gld,354,89,0	warp	schg002	1,1,yuno,25,126
 
-//Schwaltzvalt Castles Map
-sch_gld,293,91,0	warp	schg101	1,1,schg_cas01,119,8
-schg_cas01,119,5,0	warp	schg102	1,1,sch_gld,293,95
-sch_gld,288,256,0	warp	schg201	1,1,schg_cas02,340,73
-schg_cas02,340,69,0	warp	schg202	1,1,sch_gld,288,253
-sch_gld,98,182,0	warp	schg301	1,1,schg_cas03,338,332
-schg_cas03,338,335,0	warp	schg302	1,1,sch_gld,98,187
-sch_gld,138,96,0	warp	schg401	1,1,schg_cas04,119,8
-schg_cas04,119,5,0	warp	schg402	1,1,sch_gld,138,93
-sch_gld,63,315,0	warp	schg501	1,1,schg_cas05,119,8
-schg_cas05,119,5,0	warp	schg502	1,1,sch_gld,69,315
+// Schwaltzvalt Castle Maps
+schg_cas01,119,4,0	warp	schg101	1,1,sch_gld,293,100
+sch_gld,293,90,0	warp	schg102	1,1,schg_cas01,119,8
+schg_cas01,275,240,0	warp	schg103	1,1,schg_cas01,120,7
+schg_cas02,339,73,0	warp	schg201	1,1,sch_gld,288,252
+sch_gld,288,258,0	warp	schg202	1,1,schg_cas02,339,78
+schg_cas02,101,301,0	warp	schg203	1,1,schg_cas02,340,78
+schg_cas03,337,336,0	warp	schg301	1,1,sch_gld,97,196
+sch_gld,97,183,0	warp	schg302	1,1,schg_cas03,337,330
+schg_cas03,57,9,0	warp	schg303	1,1,schg_cas03,337,330
+schg_cas04,119,4,0	warp	schg401	1,1,sch_gld,137,90
+sch_gld,137,98,0	warp	schg402	1,1,schg_cas04,119,8
+schg_cas04,275,240,0	warp	schg403	1,1,schg_cas04,120,7
+schg_cas05,119,4,0	warp	schg501	1,1,sch_gld,71,315
+sch_gld,65,315,0	warp	schg502	1,1,schg_cas05,119,8
+schg_cas05,275,240,0	warp	schg503	1,1,schg_cas05,120,7
+
+// Arunafeltz Map Guild Castles Map Connection
+ve_fild02,191,21,0	warp	arug001	1,1,aru_gld,195,360
+aru_gld,195,363,0	warp	arug002	1,1,ve_fild02,191,24
+
+// Arunafeltz Castle Maps
+arug_cas01,281,93,0	warp	arug101	1,1,aru_gld,158,272
+aru_gld,155,274,0	warp	arug102	1,1,arug_cas01,275,93
+arug_cas01,127,357,0	warp	arug103	1,1,arug_cas01,275,93
+arug_cas02,139,25,0	warp	arug201	1,1,aru_gld,83,47
+aru_gld,78,47,0	warp	arug202	1,1,arug_cas02,139,31
+arug_cas02,393,324,0	warp	arug203	1,1,arug_cas02,139,31
+arug_cas03,141,40,0	warp	arug301	1,1,aru_gld,68,155
+aru_gld,68,150,0	warp	arug302	1,1,arug_cas03,141,45
+arug_cas03,321,52,0	warp	arug303	1,1,arug_cas03,141,45
+arug_cas04,141,40,0	warp	arug401	1,1,aru_gld,299,345
+aru_gld,289,347,0	warp	arug402	1,1,arug_cas04,141,45
+arug_cas04,321,52,0	warp	arug403	1,1,arug_cas04,141,45
+arug_cas05,141,40,0	warp	arug501	1,1,aru_gld,292,107
+aru_gld,287,107,0	warp	arug502	1,1,arug_cas05,141,45
+arug_cas05,321,52,0	warp	arug503	1,1,arug_cas05,141,45
 
 //==================  4 Novices Guild Castles =============================
 //Novices Guild: Al de Baran Guild Castles Map
