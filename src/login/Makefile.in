@@ -10,7 +10,7 @@ COMMON_H = ../common/core.h ../common/socket.h ../common/timer.h ../common/mmo.h
 	../common/grfio.h ../common/mapindex.h \
 	../common/ers.h ../common/md5calc.h
 
-LOGIN_OBJ = obj_txt/login_txt.o obj_txt/admin.o
+LOGIN_OBJ = obj_txt/login.o obj_txt/login_txt.o obj_txt/admin.o
 LOGIN_H = login.h
 
 @SET_MAKE@

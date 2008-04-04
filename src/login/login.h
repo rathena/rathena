@@ -91,5 +91,21 @@ struct mmo_account {
 	struct global_reg account_reg2[ACCOUNT_REG2_NUM]; // account script variables (stored on login server)
 };
 
+struct auth_node {
+
+	int account_id;
+	uint32 login_id1;
+	uint32 login_id2;
+	uint32 ip;
+	char sex;
+};
+
+struct online_login_data {
+
+	int account_id;
+	int waiting_disconnect;
+	int char_server;
+};
+
 
 #endif /* _LOGIN_H_ */
