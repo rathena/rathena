@@ -52,7 +52,7 @@ unsigned int new_reg_tick = 0;
 
 
 // data handling (TXT)
-char account_filename[1024] = "save/account.txt";
+char account_txt[1024] = "save/account.txt";
 
 // account database
 struct mmo_account* auth_dat = NULL;
@@ -368,9 +368,9 @@ int mmo_auth_init(void)
 	auth_max = 256;
 	CREATE(auth_dat, struct mmo_account, auth_max);
 
-	if ((fp = fopen(account_filename, "r")) == NULL) {
+	if ((fp = fopen(account_txt, "r")) == NULL) {
 		// no account file -> no account -> no login, including char-server (ERROR)
-		ShowError(CL_RED"mmmo_auth_init: Accounts file [%s] not found."CL_RESET"\n", account_filename);
+		ShowError(CL_RED"mmmo_auth_init: Accounts file [%s] not found."CL_RESET"\n", account_txt);
 		return 0;
 	}
 
@@ -617,12 +617,12 @@ int mmo_auth_init(void)
 	fclose(fp);
 
 	if( auth_num == 0 )
-		ShowNotice("mmo_auth_init: No account found in %s.\n", account_filename);
+		ShowNotice("mmo_auth_init: No account found in %s.\n", account_txt);
 	else
 	if( auth_num == 1 )
-		ShowStatus("mmo_auth_init: 1 account read in %s,\n", account_filename);
+		ShowStatus("mmo_auth_init: 1 account read in %s,\n", account_txt);
 	else
-		ShowStatus("mmo_auth_init: %d accounts read in %s,\n", auth_num, account_filename);
+		ShowStatus("mmo_auth_init: %d accounts read in %s,\n", auth_num, account_txt);
 
 	if( GM_count == 0 )
 		ShowStatus("               of which is no GM account, and \n");
@@ -671,7 +671,7 @@ void mmo_auth_sync(void)
 	}
 
 	// Data save
-	if ((fp = lock_fopen(account_filename, &lock)) == NULL) {
+	if ((fp = lock_fopen(account_txt, &lock)) == NULL) {
 		//if (id) aFree(id);
 		DELETE_BUFFER(id);
 		return;
@@ -699,7 +699,7 @@ void mmo_auth_sync(void)
 	}
 	fprintf(fp, "%d\t%%newid%%\n", account_id_count);
 
-	lock_fclose(fp, account_filename, &lock);
+	lock_fclose(fp, account_txt, &lock);
 
 	// set new counter to minimum number of auth before save
 	auth_before_save_file = auth_num / AUTH_SAVE_FILE_DIVIDER; // Re-initialise counter. We have save.
@@ -2137,10 +2137,8 @@ int login_config_read(const char* cfgName)
 			admin_pass[sizeof(admin_pass)-1] = '\0';
 		} else if (strcmpi(w1, "admin_allowed_ip") == 0)
 			admin_allowed_ip = host2ip(w2);
-		else if (strcmpi(w1, "account_filename") == 0) {
-			memset(account_filename, 0, sizeof(account_filename));
-			strncpy(account_filename, w2, sizeof(account_filename));
-			account_filename[sizeof(account_filename)-1] = '\0';
+		else if (strcmpi(w1, "account_txt") == 0) {
+			safestrncpy(account_txt, w2, sizeof(account_txt));
 		} else if (strcmpi(w1, "gm_account_filename") == 0) {
 			memset(GM_account_filename, 0, sizeof(GM_account_filename));
 			strncpy(GM_account_filename, w2, sizeof(GM_account_filename));

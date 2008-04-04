@@ -208,11 +208,11 @@
 			Name="login_sql"
 			>
 			<File
-				RelativePath="..\src\login_sql\login.c"
+				RelativePath="..\src\login\login_sql.c"
 				>
 			</File>
 			<File
-				RelativePath="..\src\login_sql\login.h"
+				RelativePath="..\src\login\login.h"
 				>
 			</File>
 		</Filter>

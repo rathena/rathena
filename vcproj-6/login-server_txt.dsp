@@ -191,7 +191,7 @@ SOURCE=..\src\login\admin.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\src\login\login.c
+SOURCE=..\src\login\login_txt.c
 # End Source File
 # Begin Source File
 

@@ -151,7 +151,7 @@
 				RelativePath="..\src\login\admin.c">
 			</File>
 			<File
-				RelativePath="..\src\login\login.c">
+				RelativePath="..\src\login\login_txt.c">
 			</File>
 			<File
 				RelativePath="..\src\login\login.h">

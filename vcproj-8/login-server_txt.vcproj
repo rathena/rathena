@@ -208,7 +208,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\src\login\login.c"
+				RelativePath="..\src\login\login_txt.c"
 				>
 			</File>
 			<File

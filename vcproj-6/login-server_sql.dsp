@@ -199,11 +199,11 @@ SOURCE=..\src\common\version.h
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=..\src\login_sql\login.c
+SOURCE=..\src\login\login_sql.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\src\login_sql\login.h
+SOURCE=..\src\login\login.h
 # End Source File
 # End Group
 # End Target
