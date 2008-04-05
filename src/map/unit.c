@@ -432,7 +432,11 @@ int unit_run(struct block_list *bl)
 	if(to_x == bl->x && to_y == bl->y) {
 		//If you can't run forward, you must be next to a wall, so bounce back. [Skotlex]
 		clif_status_change(bl, SI_BUMP, 1);
+
+		//Set running to 0 beforehand so status_change_end knows not to enable spurt [Kevin]
+		unit_bl2ud(bl)->state.running = 0;
 		status_change_end(bl,SC_RUN,-1);
+
 		skill_blown(bl,bl,skill_get_blewcount(TK_RUN,lv),unit_getdir(bl),0);
 		clif_fixpos(bl); //Why is a clif_slide (skill_blown) AND a fixpos needed? Ask Aegis.
 		clif_status_change(bl, SI_BUMP, 0);
@@ -448,7 +452,11 @@ int unit_run(struct block_list *bl)
 	if (i==0) {
 		// copy-paste from above
 		clif_status_change(bl, SI_BUMP, 1);
+
+		//Set running to 0 beforehand so status_change_end knows not to enable spurt [Kevin]
+		unit_bl2ud(bl)->state.running = 0;
 		status_change_end(bl,SC_RUN,-1);
+
 		skill_blown(bl,bl,skill_get_blewcount(TK_RUN,lv),unit_getdir(bl),0);
 		clif_fixpos(bl);
 		clif_status_change(bl, SI_BUMP, 0);

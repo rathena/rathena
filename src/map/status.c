@@ -6305,12 +6305,15 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 		case SC_RUN:
 		{
 			struct unit_data *ud = unit_bl2ud(bl);
+			bool begin_spurt = true;
 			if (ud) {
+				if(!ud->state.running)
+					begin_spurt = false;
 				ud->state.running = 0;
 				if (ud->walktimer != -1)
 					unit_stop_walking(bl,1);
 			}
-			if (sce->val1 >= 7 &&
+			if (begin_spurt && sce->val1 >= 7 &&
 				DIFF_TICK(gettick(), sce->val4) <= 1000 &&
 				(!sd || (sd->weapontype1 == 0 && sd->weapontype2 == 0))
 			)
