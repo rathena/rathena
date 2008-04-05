@@ -6708,7 +6708,7 @@ void clif_wedding_effect(struct block_list *bl)
 	clif_send(buf, packet_len(0x1ea), bl, AREA);
 }
 /*==========================================
- * ‚ ‚È‚½‚Éˆ§‚¢‚½‚¢g—p–¼‘O‹©‚Ñ
+ * ‚ ‚È‚½‚Éˆ§‚¢‚½‚¢g—p–¼‘O‹©‚Ñ
  *------------------------------------------
 
 void clif_callpartner(struct map_session_data *sd)
@@ -10294,7 +10294,11 @@ void clif_parse_CatchPet(int fd, struct map_session_data *sd)
 void clif_parse_SelectEgg(int fd, struct map_session_data *sd)
 {
 	if (sd->menuskill_id != SA_TAMINGMONSTER || sd->menuskill_val != -1)
+	{
+		//Forged packet, disconnect them [Kevin]
+		clif_authfail_fd(fd, 0);
 		return;
+	}
 	pet_select_egg(sd,RFIFOW(fd,2)-2);
 	sd->menuskill_val = sd->menuskill_id = 0;
 }
