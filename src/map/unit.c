@@ -660,9 +660,10 @@ int unit_stop_walking(struct block_list *bl,int type)
 	if(bl->type == BL_PET && type&~0xff)
 		ud->canmove_tick = gettick() + (type>>8);
 
-	//Don't stop running because of dmg, just apply the instant stop then keep running [Kevin]
-	//if (ud->state.running)
-	//	status_change_end(bl, SC_RUN, -1);
+	//Readded, the check in unit_set_walkdelay means dmg during running won't fall through to this place in code [Kevin]
+    if (ud->state.running) 
+      status_change_end(bl, SC_RUN, -1); 
+
 	return 1;
 }
 
