@@ -1,5 +1,7 @@
 Date		Added
 ======
+2008/04/05
+	* Rev. 12495 Further updates to Zhed's Veins addition. [L0ne_W0lf]
 2008/04/04
 	* Rev. 12472 Updated NIflheim Town and Quest NPCs. [L0ne_W0lf]
 	* Rev. 12471 Updated Schwaltzvalt guild warp points. [L0ne_W0lf]

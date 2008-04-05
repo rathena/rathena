@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 2.4
+//= 2.4a
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -49,6 +49,7 @@
 //= 2.2a Corrected a Typo error ";;". [Samuray22]
 //= 2.3 Added Zhed's portion of Thor Volcano Base Quest. (euRO) [L0ne_W0lf]
 //= 2.4 Updated Zhed's Thor Vol. Base addition dialog to iRO's. [L0ne_W0lf]
+//= 2.4a Further updates to Zhed's Veins addition. [L0ne_W0lf]
 //============================================================ 
 
 // Lost Child Quest (Prerequisite to High Priest quest)
@@ -5304,19 +5305,12 @@ ra_temin,277,159,3	script	High Priest Zhed#rachel	932,{
 					mes "checking out for now?";
 					next;
 					if (select("Yes:No") == 2) {
-						//Bah, missed this dialog.
 						mes "[High Priest Zhed]";
-						mes "Why did you change your";
-						mes "mind about protecting the";
-						mes "peace between the two";
-						mes "countries?";
-						next;
-						mes "[High Priest Zhed]";
-						mes "Regardless, I think you";
-						mes "should know where the";
-						mes "geologist lives, so that";
-						mes "you can go see him if you";
-						mes "change your mind again.";
+						mes "Well you never know";
+						mes "until you ask. Besides,";
+						mes "I don't know if there's";
+						mes "any way to sneak?";
+						mes "into the Thor Volcano Camp...";
 						next;
 					}
 					mes "[High Priest Zhed]";
@@ -5333,7 +5327,7 @@ ra_temin,277,159,3	script	High Priest Zhed#rachel	932,{
 					end;
 				}
 				else {
-					//Also missed
+					//Also missed, no way to "drop" file folder.
 					mes "["+strcharinfo(0)+"]";
 					mes "Now where did I put that File Folder?";
 					close2;
