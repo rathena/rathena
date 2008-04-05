@@ -32,8 +32,10 @@
 //= 1.7 Updated functions, got rid of the various gotos. [L0ne_W0lf]
 //=	Castles can be conquered as long as they un-owned.
 //= 1.8 Fixed Guardian data being overwritten when castle ownership changes. [L0ne_W0lf]
-//	Data will only be saved for guardians if you have the Guaridan Research.
-//	It works this way to deal with a bug on ownership change.
+//=	Data will only be saved for guardians if you have the Guaridan Research.
+//=	It works this way to deal with a bug on ownership change.
+//= 1.9 Due to compunded stupidity in the way these scripts were written [L0ne_W0lf]
+//=	I have recommented out the official behavior for unaquired castles.
 //============================================================
 
 
@@ -181,7 +183,7 @@ function	script	F_AgitEnd	{
 	GvgOff .@map$;
 	// Disable the following if statment to keep empty
 	// castles from being aquired after after WoE ends.
-	if (GetCastleData(.@map$,1) == 0) return;
+	//if (GetCastleData(.@map$,1) == 0) return;
 	MapRespawnGuildID .@map$,GetCastleData(.@map$,1),4;
 	KillMonster .@map$,"Agit_"+.@castle$+"::OnAgitBreak";
 	end;
