@@ -420,6 +420,11 @@ int unit_run(struct block_list *bl)
 	{
 		if(!map_getcell(bl->m,to_x+dir_x,to_y+dir_y,CELL_CHKPASS))
 			break;
+
+		//if sprinting and there's a PC/Mob/NPC, block the path [Kevin]
+		if(sc->data[SC_RUN] && map_count_oncell(bl->m, to_x+dir_x, to_y+dir_y, BL_PC|BL_MOB|BL_NPC))
+			break;
+			
 		to_x += dir_x;
 		to_y += dir_y;
 	}
