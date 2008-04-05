@@ -4257,7 +4257,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			}
 			
 			clif_skill_nodamage(src,bl,TK_HIGHJUMP,skilllv,1);
-			if(map_count_oncell(src->m,x,y,BL_PC|BL_NPC|BL_MOB)) {
+			if(map_count_oncell(src->m,x,y,BL_PC|BL_NPC|BL_MOB) && map_getcell(src->m,x,y,CELL_CHKREACH)) {
 				clif_slide(src,x,y);
 				unit_movepos(src, x, y, 1, 0);
 			}
