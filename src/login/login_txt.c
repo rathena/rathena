@@ -1722,9 +1722,6 @@ int parse_login(int fd)
 				return 0;
 		{
 			char server_name[20];
-#ifndef TXT_ONLY
-			char esc_server_name[20*2+1];
-#endif
 			char message[256];
 			uint32 server_ip;
 			uint16 server_port;
@@ -1770,12 +1767,6 @@ int parse_login(int fd)
 
 				// send GM account to char-server
 				send_GM_accounts(fd);
-
-#ifndef TXT_ONLY
-				Sql_EscapeStringLen(sql_handle, esc_server_name, server_name, strnlen(server_name, 20));
-				if( SQL_ERROR == Sql_Query(sql_handle, "REPLACE INTO `sstatus`(`index`,`name`,`user`) VALUES ( '%d', '%s', '%d')", sd->account_id, esc_server_name, 0) )
-					Sql_ShowDebug(sql_handle);
-#endif
 			}
 			else
 			{

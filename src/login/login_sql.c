@@ -239,17 +239,6 @@ void mmo_db_close(void)
 {
 	int i;
 
-	for( i = 0; i < MAX_SERVERS; ++i )
-	{
-		int fd = server[i].fd;
-		if( session_isValid(fd) )
-		{// Clean only data related to servers we are connected to. [Skotlex]
-			if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `sstatus` WHERE `index` = '%d'", i) )
-				Sql_ShowDebug(sql_handle);
-			do_close(fd);
-		}
-	}
-
 	Sql_Free(sql_handle);
 	sql_handle = NULL;
 	ShowStatus("close DB connect....\n");
@@ -490,8 +479,6 @@ int parse_fromchar(int fd)
 	{
 		ShowStatus("Char-server '%s' has disconnected.\n", server[id].name);
 		online_db->foreach(online_db, online_db_setoffline, id); //Set all chars from this char server to offline.
-		if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `sstatus` WHERE `index`='%d'", id) )
-			Sql_ShowDebug(sql_handle);
 		memset(&server[id], 0, sizeof(struct mmo_char_server));
 		server[id].fd = -1;
 		do_close(fd);
@@ -605,8 +592,6 @@ int parse_fromchar(int fd)
 				ShowStatus("set users %s : %d\n", server[id].name, users);
 
 				server[id].users = users;
-				if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `sstatus` SET `user` = '%d' WHERE `index` = '%d'", server[id].users, id) )
-					Sql_ShowDebug(sql_handle);
 			}
 		}
 		break;
@@ -1351,9 +1336,6 @@ int parse_login(int fd)
 				return 0;
 		{
 			char server_name[20];
-#ifndef TXT_ONLY
-			char esc_server_name[20*2+1];
-#endif
 			char message[256];
 			uint32 server_ip;
 			uint16 server_port;
@@ -1399,12 +1381,6 @@ int parse_login(int fd)
 
 				// send GM account to char-server
 				send_GM_accounts(fd);
-
-#ifndef TXT_ONLY
-				Sql_EscapeStringLen(sql_handle, esc_server_name, server_name, strnlen(server_name, 20));
-				if( SQL_ERROR == Sql_Query(sql_handle, "REPLACE INTO `sstatus`(`index`,`name`,`user`) VALUES ( '%d', '%s', '%d')", sd->account_id, esc_server_name, 0) )
-					Sql_ShowDebug(sql_handle);
-#endif
 			}
 			else
 			{
