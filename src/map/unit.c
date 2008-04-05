@@ -748,6 +748,27 @@ int unit_can_move(struct block_list *bl)
 	return 1;
 }
 
+
+/*==========================================
+ * Resume running after a walk delay
+ *------------------------------------------*/
+
+int unit_resume_running(int tid,unsigned int tick,int id,int data)
+{
+
+	struct unit_data *ud = (struct unit_data *)data;
+	TBL_PC * sd = map_id2sd(id);
+
+	clif_skill_nodamage(ud->bl,ud->bl,TK_RUN,ud->skilllv,
+			sc_start4(ud->bl,status_skill2sc(TK_RUN),100,ud->skilllv,unit_getdir(ud->bl),0,0,0));
+
+	if (sd) clif_walkok(sd);
+
+	return 0;
+
+}
+
+
 /*==========================================
  * Applies walk delay to character, considering that 
  * if type is 0, this is a damage induced delay: if previous delay is active, do not change it.
@@ -772,9 +793,17 @@ int unit_set_walkdelay(struct block_list *bl, unsigned int tick, int delay, int 
 		{	//Minimal delay (walk-delay) disabled. Just stop walking.
 			unit_stop_walking(bl,0);
 		} else {
-			unit_stop_walking(bl,2);
-			if(ud->target)
-				add_timer(ud->canmove_tick+1, unit_walktobl_sub, bl->id, ud->target);
+			//Resume running after can move again [Kevin]
+			if(ud->state.running)
+			{
+				add_timer(ud->canmove_tick, unit_resume_running, bl->id, (int)ud);
+			}
+			else
+			{
+				unit_stop_walking(bl,2);
+				if(ud->target)
+					add_timer(ud->canmove_tick+1, unit_walktobl_sub, bl->id, ud->target);
+			}
 		}
 	}
 	return 1;
