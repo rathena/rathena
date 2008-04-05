@@ -7915,7 +7915,8 @@ int skill_check_condition(struct map_session_data* sd, short skill, short lv, in
 		if (sc && sc->data[SC_SPIRIT] && sc->data[SC_SPIRIT]->val2 == SL_STAR)
 			break;
 		//Auron insists we should implement SP consumption when you are not Soul Linked. [Skotlex]
-		if(sp>0 && type&1)
+		//Only invoke on skill begin cast (instant cast skill). [Kevin]
+		if(sp>0 && !type)
 		{ 
 			if (status->sp < (unsigned int)sp)
 				clif_skill_fail(sd,skill,1,0);
