@@ -197,10 +197,6 @@ SOURCE=..\src\login\login.c
 
 SOURCE=..\src\login\login.h
 # End Source File
-# Begin Source File
-
-SOURCE=..\src\login\login_txt.c
-# End Source File
 # End Group
 # End Target
 # End Project

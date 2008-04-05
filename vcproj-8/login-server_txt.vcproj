@@ -208,15 +208,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\src\login\login.h"
-				>
-			</File>
-			<File
 				RelativePath="..\src\login\login.c"
 				>
 			</File>
 			<File
-				RelativePath="..\src\login\login_txt.c"
+				RelativePath="..\src\login\login.h"
 				>
 			</File>
 		</Filter>

@@ -1,6 +1,3 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
-// For more information, see LICENCE in the main folder
-
 #include "../common/cbasetypes.h"
 #include "../common/mmo.h"
 #include "../common/core.h"

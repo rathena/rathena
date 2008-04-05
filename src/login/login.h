@@ -7,7 +7,6 @@
 #include "../common/mmo.h" // NAME_LENGTH
 
 #define LOGIN_CONF_NAME "conf/login_athena.conf"
-#define INTER_CONF_NAME "conf/inter_athena.conf"
 #define LAN_CONF_NAME "conf/subnet_athena.conf"
 
 // supported encryption types: 1- passwordencrypt, 2- passwordencrypt2, 3- both
@@ -39,9 +38,9 @@ struct mmo_char_server {
 	int fd;
 	uint32 ip;
 	uint16 port;
-	uint16 users;       // user count on this server
-	uint16 maintenance; // in maintenance mode?
-	uint16 new_;        // should display as 'new'?
+	uint16 users;		// user count on this server
+	uint16 maintenance;	// in maintenance mode?
+	uint16 new_;		// allows creating new chars?
 };
 
 struct Login_Config {
@@ -54,19 +53,19 @@ struct Login_Config {
 	bool console;                                   // console input system enabled?
 	bool new_account_flag;                          // autoregistration via _M/_F ?
 	int start_limited_time;                         // new account expiration time (-1: unlimited)
-	bool case_sensitive;                            // are logins case sensitive ?
+//	bool case_sensitive;                            // are logins case sensitive ?
 	bool use_md5_passwds;                           // work with password hashes instead of plaintext passwords?
-	bool login_gm_read;                             // should the login server handle info about gm accounts?
+//	bool login_gm_read;                             // should the login server handle info about gm accounts?
 	int min_level_to_connect;                       // minimum level of player/GM (0: player, 1-99: GM) to connect
 	bool online_check;                              // reject incoming players that are already registered as online ?
 	bool check_client_version;                      // check the clientversion set in the clientinfo ?
 	int client_version_to_connect;                  // the client version needed to connect (if checking is enabled)
 
-	bool ipban;                                     // perform IP blocking (via contents of `ipbanlist`) ?
-	bool dynamic_pass_failure_ban;                  // automatic IP blocking due to failed login attemps ?
-	unsigned int dynamic_pass_failure_ban_interval; // how far to scan the loginlog for password failures
-	unsigned int dynamic_pass_failure_ban_limit;    // number of failures needed to trigger the ipban
-	unsigned int dynamic_pass_failure_ban_duration; // duration of the ipban
+//	bool ipban;                                     // perform IP blocking (via contents of `ipbanlist`) ?
+//	bool dynamic_pass_failure_ban;                  // automatic IP blocking due to failed login attemps ?
+//	unsigned int dynamic_pass_failure_ban_interval; // how far to scan the loginlog for password failures
+//	unsigned int dynamic_pass_failure_ban_limit;    // number of failures needed to trigger the ipban
+//	unsigned int dynamic_pass_failure_ban_duration; // duration of the ipban
 	bool use_dnsbl;                                 // dns blacklist blocking ?
 	char dnsbl_servs[1024];                         // comma-separated list of dnsbl servers
 
@@ -89,22 +88,6 @@ struct mmo_account {
 	char memo[255]; // a memo field
 	int account_reg2_num;
 	struct global_reg account_reg2[ACCOUNT_REG2_NUM]; // account script variables (stored on login server)
-};
-
-struct auth_node {
-
-	int account_id;
-	uint32 login_id1;
-	uint32 login_id2;
-	uint32 ip;
-	char sex;
-};
-
-struct online_login_data {
-
-	int account_id;
-	int waiting_disconnect;
-	int char_server;
 };
 
 
