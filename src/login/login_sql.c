@@ -150,6 +150,29 @@ void send_GM_accounts(int fd)
 }
 
 /*=============================================
+ * Records an event in the login log
+ *---------------------------------------------*/
+void login_log(uint32 ip, const char* username, int rcode, const char* message)
+{
+	char esc_username[NAME_LENGTH*2+1];
+	char esc_message[255*2+1];
+	int retcode;
+
+	if( !login_config.log_login )
+		return;
+
+	Sql_EscapeStringLen(sql_handle, esc_username, username, strnlen(username, NAME_LENGTH));
+	Sql_EscapeStringLen(sql_handle, esc_message, message, strnlen(message, 255));
+
+	retcode = Sql_Query(sql_handle,
+		"INSERT INTO `%s`(`time`,`ip`,`user`,`rcode`,`log`) VALUES (NOW(), '%u', '%s', '%d', '%s')",
+		loginlog_db, ip, esc_username, rcode, message);
+
+	if( retcode != SQL_SUCCESS )
+		Sql_ShowDebug(sql_handle);
+}
+
+/*=============================================
  * Does a mysql_ping to all connection handles
  *---------------------------------------------*/
 int login_sql_ping(int tid, unsigned int tick, int id, int data) 
@@ -179,7 +202,7 @@ int sql_ping_init(void)
 }
 
 //-----------------------------------------------------
-// Read Account database - mysql db
+// Initialize database connection
 //-----------------------------------------------------
 int mmo_auth_init(void)
 {
@@ -203,9 +226,6 @@ int mmo_auth_init(void)
 	if( default_codepage[0] != '\0' && SQL_ERROR == Sql_SetEncoding(sql_handle, default_codepage) )
 		Sql_ShowDebug(sql_handle);
 
-	if( login_config.log_login && SQL_ERROR == Sql_Query(sql_handle, "INSERT DELAYED INTO `%s` (`time`,`ip`,`user`,`rcode`,`log`) VALUES (NOW(), '0', 'lserver','100','login server started')", loginlog_db) )
-		Sql_ShowDebug(sql_handle);
-
 	sql_ping_init();
 
 	return 0;
@@ -217,15 +237,11 @@ int mmo_auth_init(void)
 //-----------------------------------------------------
 void mmo_db_close(void)
 {
-	int i, fd;
-
-	//set log.
-	if( login_config.log_login && SQL_ERROR == Sql_Query(sql_handle, "INSERT DELAYED INTO `%s`(`time`,`ip`,`user`,`rcode`,`log`) VALUES (NOW(), '0', 'lserver','100', 'login server shutdown')", loginlog_db) )
-		Sql_ShowDebug(sql_handle);
+	int i;
 
 	for( i = 0; i < MAX_SERVERS; ++i )
 	{
-		fd = server[i].fd;
+		int fd = server[i].fd;
 		if( session_isValid(fd) )
 		{// Clean only data related to servers we are connected to. [Skotlex]
 			if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `sstatus` WHERE `index` = '%d'", i) )
@@ -233,11 +249,10 @@ void mmo_db_close(void)
 			do_close(fd);
 		}
 	}
+
 	Sql_Free(sql_handle);
 	sql_handle = NULL;
 	ShowStatus("close DB connect....\n");
-	if( login_fd > 0 )
-		do_close(login_fd);
 }
 
 
@@ -495,12 +510,8 @@ int parse_fromchar(int fd)
 
 		case 0x2709: // request from map-server via char-server to reload GM accounts
 			RFIFOSKIP(fd,2);
-			ShowStatus("Char-server '%s': Request to re-load GM configuration file (ip: %s).\n", server[id].name, ip);
-			if( login_config.log_login )
-			{
-				if( SQL_ERROR == Sql_Query(sql_handle, "INSERT DELAYED INTO `%s`(`time`,`ip`,`user`,`log`) VALUES (NOW(), '%u', '%s', 'GM reload request')", loginlog_db, ipl, server[id].name) )
-					Sql_ShowDebug(sql_handle);
-			}
+			ShowStatus("Char-server '%s': Request to re-load GM database (ip: %s).\n", server[id].name, ip);
+			login_log(ipl, server[id].name, 0, "GM reload request");
 			read_gm_account();
 			// send GM accounts to all char-servers
 			send_GM_accounts(-1);
@@ -1008,9 +1019,8 @@ int login_ip_ban_check(uint32 ip)
 
 	// ip ban ok.
 	ShowInfo("Packet from banned ip : %u.%u.%u.%u\n", CONVIP(ip));
+	login_log(ip, "unknown", -3, "ip banned");
 
-	if( login_config.log_login && SQL_ERROR == Sql_Query(sql_handle, "INSERT DELAYED INTO `%s`(`time`,`ip`,`user`,`rcode`,`log`) VALUES (NOW(), '%u', 'unknown','-3', 'ip banned')", loginlog_db, ip) )
-		Sql_ShowDebug(sql_handle);
 	return 1;
 }
 
@@ -1019,13 +1029,10 @@ void login_auth_ok(struct login_session_data* sd)
 	int fd = sd->fd;
 	uint32 ip = session[fd]->client_addr;
 
-	char esc_userid[NAME_LENGTH*2+1];
 	uint8 server_num, n;
 	uint32 subnet_char_ip;
 	struct auth_node* node;
 	int i;
-
-	Sql_EscapeStringLen(sql_handle, esc_userid, sd->userid, strlen(sd->userid));
 
 	if( sd->level < login_config.min_level_to_connect )
 	{
@@ -1084,8 +1091,7 @@ void login_auth_ok(struct login_session_data* sd)
 		}
 	}
 
-	if( login_config.log_login && SQL_ERROR == Sql_Query(sql_handle, "INSERT DELAYED INTO `%s`(`time`,`ip`,`user`,`rcode`,`log`) VALUES (NOW(), '%u', '%s','100', 'login ok')", loginlog_db, ip, esc_userid) )
-		Sql_ShowDebug(sql_handle);
+	login_log(ip, sd->userid, 100, "login ok");
 
 	if( sd->level > 0 )
 		ShowStatus("Connection of the GM (level:%d) account '%s' accepted.\n", sd->level, sd->userid);
@@ -1176,8 +1182,7 @@ void login_auth_failed(struct login_session_data* sd, int result)
 		default : error = "Unknown Error."; break;
 		}
 
-		if( SQL_ERROR == Sql_Query(sql_handle, "INSERT DELAYED INTO `%s`(`time`,`ip`,`user`,`rcode`,`log`) VALUES (NOW(), '%u', '%s', '%d','login failed : %s')", loginlog_db, ip, esc_userid, result, error) )
-			Sql_ShowDebug(sql_handle);
+		login_log(ip, sd->userid, result, error);
 	}
 
 	if( result == 1 && login_config.dynamic_pass_failure_ban && login_config.log_login ) // failed password
@@ -1345,9 +1350,11 @@ int parse_login(int fd)
 			if (RFIFOREST(fd) < 86)
 				return 0;
 		{
-			char esc_userid[NAME_LENGTH*2+1];
 			char server_name[20];
+#ifndef TXT_ONLY
 			char esc_server_name[20*2+1];
+#endif
+			char message[256];
 			uint32 server_ip;
 			uint16 server_port;
 			uint16 maintenance;
@@ -1364,14 +1371,9 @@ int parse_login(int fd)
 			new_ = RFIFOW(fd,84);
 			RFIFOSKIP(fd,86);
 
-			Sql_EscapeStringLen(sql_handle, esc_server_name, server_name, strnlen(server_name, 20));
-			Sql_EscapeStringLen(sql_handle, esc_userid, sd->userid, strnlen(sd->userid, NAME_LENGTH));
-
-			ShowInfo("Connection request of the char-server '%s' @ %d.%d.%d.%d:%d (account: '%s', pass: '%s', ip: '%s')\n", server_name, CONVIP(server_ip), server_port, sd->userid, sd->passwd, ip);
-
-			if( login_config.log_login && SQL_ERROR == Sql_Query(sql_handle, "INSERT DELAYED INTO `%s`(`time`,`ip`,`user`,`rcode`,`log`) VALUES (NOW(), '%u', '%s@%s','100', 'charserver - %s@%u.%u.%u.%u:%d')",
-				loginlog_db, ipl, esc_userid, esc_server_name, esc_server_name, CONVIP(server_ip), server_port) )
-				Sql_ShowDebug(sql_handle);
+			ShowInfo("Connection request of the char-server '%s' @ %u.%u.%u.%u:%u (account: '%s', pass: '%s', ip: '%s')\n", server_name, CONVIP(server_ip), server_port, sd->userid, sd->passwd, ip);
+			sprintf(message, "charserver - %s@%u.%u.%u.%u:%u", server_name, CONVIP(server_ip), server_port);
+			login_log(ipl, sd->userid, 100, message);
 
 			result = mmo_auth(sd);
 			if( result == -1 && sd->sex == 'S' && sd->account_id < MAX_SERVERS && server[sd->account_id].fd == -1 )
@@ -1398,8 +1400,11 @@ int parse_login(int fd)
 				// send GM account to char-server
 				send_GM_accounts(fd);
 
+#ifndef TXT_ONLY
+				Sql_EscapeStringLen(sql_handle, esc_server_name, server_name, strnlen(server_name, 20));
 				if( SQL_ERROR == Sql_Query(sql_handle, "REPLACE INTO `sstatus`(`index`,`name`,`user`) VALUES ( '%d', '%s', '%d')", sd->account_id, esc_server_name, 0) )
 					Sql_ShowDebug(sql_handle);
+#endif
 			}
 			else
 			{

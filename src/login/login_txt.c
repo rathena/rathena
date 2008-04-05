@@ -28,6 +28,7 @@ char GM_account_filename[1024] = "conf/GM_account.txt";
 long creation_time_GM_account_file; // tracks the last-changed timestamp of the gm accounts file
 int gm_account_filename_check_timer = 15; // Timer to check if GM_account file has been changed and reload GM account automaticaly (in seconds; default: 15)
 
+char login_log_filename[1024] = "log/login.log";
 
 // data handling (TXT)
 char account_txt[1024] = "save/account.txt";
@@ -697,6 +698,36 @@ int check_GM_file(int tid, unsigned int tick, int id, int data)
 	return 0;
 }
 
+/*=============================================
+ * Records an event in the login log
+ *---------------------------------------------*/
+void login_log(uint32 ip, const char* username, int rcode, const char* message)
+{
+	FILE* log_fp;
+
+	if( !login_config.log_login )
+		return;
+	
+	log_fp = fopen(login_log_filename, "a");
+	if( log_fp != NULL )
+	{
+		char esc_username[NAME_LENGTH*4+1];
+		char esc_message[255*4+1];
+		time_t raw_time;
+		char str_time[24];
+
+		sv_escape_c(esc_username, username, NAME_LENGTH, NULL);
+		sv_escape_c(esc_message, message, 255, NULL);
+
+		time(&raw_time);
+		strftime(str_time, 24, login_config.date_format, localtime(&raw_time));
+		str_time[23] = '\0';
+
+		fprintf(log_fp, "%s\t%u\t%s\t%d\t%s\n", str_time, ip, esc_username, rcode, esc_message);
+
+		fclose(log_fp);
+	}
+}
 
 //-------------------------------------
 // Make new account
@@ -962,7 +993,8 @@ int parse_fromchar(int fd)
 
 		case 0x2709: // request from map-server via char-server to reload GM accounts
 			RFIFOSKIP(fd,2);
-			ShowStatus("Char-server '%s': Request to re-load GM configuration file (ip: %s).\n", server[id].name, ip);
+			ShowStatus("Char-server '%s': Request to re-load GM database (ip: %s).\n", server[id].name, ip);
+			login_log(ipl, server[id].name, 0, "GM reload request");
 			read_gm_account();
 			// send GM accounts to all char-servers
 			send_GM_accounts(-1);
@@ -1506,6 +1538,8 @@ void login_auth_ok(struct login_session_data* sd)
 		}
 	}
 
+	login_log(ip, sd->userid, 100, "login ok");
+
 	if( sd->level > 0 )
 		ShowStatus("Connection of the GM (level:%d) account '%s' accepted.\n", sd->level, sd->userid);
 	else
@@ -1561,6 +1595,9 @@ void login_auth_ok(struct login_session_data* sd)
 void login_auth_failed(struct login_session_data* sd, int result)
 {
 	int fd = sd->fd;
+	uint32 ip = session[fd]->client_addr;
+
+	login_log(ip, sd->userid, result, "login failed");
 
 	WFIFOHEAD(fd,23);
 	WFIFOW(fd,0) = 0x6a;
@@ -1685,25 +1722,29 @@ int parse_login(int fd)
 				return 0;
 		{
 			char server_name[20];
+#ifndef TXT_ONLY
+			char esc_server_name[20*2+1];
+#endif
+			char message[256];
 			uint32 server_ip;
 			uint16 server_port;
 			uint16 maintenance;
 			uint16 new_;
 
-			safestrncpy(sd->userid, (char*)RFIFOP(fd,2), NAME_LENGTH); //remove_control_chars(account.userid);
-			safestrncpy(sd->passwd, (char*)RFIFOP(fd,26), NAME_LENGTH); //remove_control_chars(account.passwd);
+			safestrncpy(sd->userid, (char*)RFIFOP(fd,2), NAME_LENGTH);
+			safestrncpy(sd->passwd, (char*)RFIFOP(fd,26), NAME_LENGTH);
 			sd->passwdenc = 0;
 			sd->version = login_config.client_version_to_connect; // hack to skip version check
-
 			server_ip = ntohl(RFIFOL(fd,54));
 			server_port = ntohs(RFIFOW(fd,58));
-
-			safestrncpy(server_name, (char*)RFIFOP(fd,60), 20); remove_control_chars(server_name);
+			safestrncpy(server_name, (char*)RFIFOP(fd,60), 20);
 			maintenance = RFIFOW(fd,82);
 			new_ = RFIFOW(fd,84);
 			RFIFOSKIP(fd,86);
 
 			ShowInfo("Connection request of the char-server '%s' @ %d.%d.%d.%d:%d (account: '%s', pass: '%s', ip: '%s')\n", server_name, CONVIP(server_ip), server_port, sd->userid, sd->passwd, ip);
+			sprintf(message, "charserver - %s@%u.%u.%u.%u:%u", server_name, CONVIP(server_ip), server_port);
+			login_log(ipl, sd->userid, 100, message);
 
 			result = mmo_auth(sd);
 			if( result == -1 && sd->sex == 'S' && sd->account_id < MAX_SERVERS && server[sd->account_id].fd == -1 )
@@ -1729,6 +1770,12 @@ int parse_login(int fd)
 
 				// send GM account to char-server
 				send_GM_accounts(fd);
+
+#ifndef TXT_ONLY
+				Sql_EscapeStringLen(sql_handle, esc_server_name, server_name, strnlen(server_name, 20));
+				if( SQL_ERROR == Sql_Query(sql_handle, "REPLACE INTO `sstatus`(`index`,`name`,`user`) VALUES ( '%d', '%s', '%d')", sd->account_id, esc_server_name, 0) )
+					Sql_ShowDebug(sql_handle);
+#endif
 			}
 			else
 			{

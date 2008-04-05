@@ -22,6 +22,7 @@ extern struct gm_account* gm_account_db;
 int read_gm_account(void);
 int mmo_auth_init(void);
 int parse_login(int fd);
+void login_log(uint32 ip, const char* username, int rcode, const char* message);
 
 #ifdef TXT_ONLY
 	extern struct mmo_account* auth_dat;
@@ -35,6 +36,7 @@ int parse_login(int fd);
 	extern char account_txt[1024];
 	extern char GM_account_filename[1024];
 	extern int gm_account_filename_check_timer;
+	extern char login_log_filename[1024];
 #else
 	void mmo_db_close(void);
 	void sql_config_read(const char* cfgName);
@@ -396,6 +398,8 @@ int login_config_read(const char* cfgName)
 			login_config.log_login = (bool)config_switch(w2);
 
 #ifdef TXT_ONLY
+		else if(!strcmpi(w1, "login_log_filename") == 0)
+			safestrncpy(login_log_filename, w2, sizeof(login_log_filename));
 		else if(!strcmpi(w1, "admin_state") == 0)
 			admin_state = (bool)config_switch(w2);
 		else if(!strcmpi(w1, "admin_pass") == 0)
@@ -466,6 +470,8 @@ int login_config_read(const char* cfgName)
 void do_final(void)
 {
 	int i, fd;
+
+	login_log(0, "login server", 100, "login server shutdown");
 	ShowStatus("Terminating...\n");
 
 #ifdef TXT_ONLY
@@ -585,6 +591,7 @@ int do_init(int argc, char** argv)
 	login_fd = make_listen_bind(login_config.login_ip, login_config.login_port);
 
 	ShowStatus("The login-server is "CL_GREEN"ready"CL_RESET" (Server is listening on the port %u).\n\n", login_config.login_port);
+	login_log(0, "login server", 100, "login server started");
 
 	return 0;
 }
