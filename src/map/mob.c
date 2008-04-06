@@ -2166,7 +2166,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		(!map[m].flag.nobaseexp || !map[m].flag.nojobexp) //Gives Exp
 	) { //Experience calculation.
 		int bonus = 100; //Bonus on top of your share (common to all attackers).
-		if (md->sc.data[SC_RICHMANKIM])
+		if (md->sc.data[SC_RICHMANKIM] && !status_get_mode(&md->bl)&MD_BOSS)
 			bonus += md->sc.data[SC_RICHMANKIM]->val2;
 		if(sd) {
 			temp = status_get_class(&md->bl);
