@@ -8,7 +8,7 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 	- (Speed potion not included).
 	* Sprint, Fusion, and Increase AGI now stack independently.
 	- The others still don't take affect if you have any of these three. (r12508) [Kevin]
-	* Mind Sensing no longer gives an xp bonus on bosses. (r12507) [Kevin]
+	* Mental Sensing no longer gives an xp bonus on bosses. (r12507) [Kevin]
 	* Changed Union/Increase AGI stack fix (it should work now). (r12506) [Kevin]
 	* Fixed seven wind not allowing ghost/shadow. (r12505) [Kevin]
 	* Added Moscovia to the list of @go destinations [Toms]
