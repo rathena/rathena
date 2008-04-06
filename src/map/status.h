@@ -291,6 +291,7 @@ typedef enum sc_type {
 	SC_ARMOR_RESIST,
 	SC_SPCOST_RATE,
 	SC_COMMONSC_RESIST,
+	SC_SEVENWIND,
 	SC_MAX, //Automatically updated max, used in for's to check we are within bounds.
 } sc_type;
 

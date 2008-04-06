@@ -3249,6 +3249,9 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		}
 		clif_skill_nodamage(src,bl,skillid,skilllv,
 			sc_start(bl,type,100,skilllv,skill_get_time(skillid,skilllv)));
+
+		sc_start(bl,SC_SEVENWIND,100,skilllv,skill_get_time(skillid,skilllv));
+			
 		break;
 
 	case PR_KYRIE:
