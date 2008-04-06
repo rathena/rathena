@@ -2178,6 +2178,7 @@ int atcommand_go(const int fd, struct map_session_data* sd, const char* command,
 		{ MAP_HUGEL,        96, 145 }, // 22=Hugel
 		{ MAP_RACHEL,      130, 110 }, // 23=Rachel
 		{ MAP_VEINS,       216, 123 }, // 24=Veins
+		{ MAP_MOSCOVIA,    223, 184 }, // 25=Moscovia
 	};
  
 	nullpo_retr(-1, sd);
@@ -2205,7 +2206,7 @@ int atcommand_go(const int fd, struct map_session_data* sd, const char* command,
 		clif_displaymessage(fd, " 15=Novice Grounds  16=Prison      17=Jawaii");
 		clif_displaymessage(fd, " 18=Ayothaya        19=Einbroch    20=Lighthalzen");
 		clif_displaymessage(fd, " 21=Einbech         22=Hugel       23=Rachel");
-		clif_displaymessage(fd, " 24=Veins");
+		clif_displaymessage(fd, " 24=Veins           25=Moscovia");
 		return -1;
 	}
 
@@ -2277,6 +2278,8 @@ int atcommand_go(const int fd, struct map_session_data* sd, const char* command,
 		town = 23;
 	} else if (strncmp(map_name, "veins", 3) == 0) {
 		town = 24;
+	} else if (strncmp(map_name, "moscovia", 3) == 0) {
+		town = 25;
 	}
 
 	if (town >= 0 && town < ARRAYLENGTH(data))
