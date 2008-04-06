@@ -3721,18 +3721,14 @@ static unsigned short status_calc_speed(struct block_list *bl, struct status_cha
 
 		if(sc->data[SC_RUN])
 			speed -= speed * 50/100;
+		else if(sc->data[SC_INCREASEAGI] && sc->data[SC_FUSION])
+			speed -= speed * 50/100;
 		else if(sc->data[SC_SPEEDUP0])
 			speed -= speed * 25/100;
 		else if(sc->data[SC_INCREASEAGI])
 			speed -= speed * 25/100;
 		else if(sc->data[SC_FUSION])
-		{
 			speed -= speed * 25/100;
-
-			//Union and Increase AGI should stack [Kevin]
-			if(sc->data[SC_INCREASEAGI])
-				speed -= speed * 25/100;
-		}
 		else if(sc->data[SC_CARTBOOST])
 			speed -= speed * 20/100;
 		else if(sc->data[SC_BERSERK])
