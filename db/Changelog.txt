@@ -44,7 +44,7 @@
 
 =======================
 2008/04/05
-	* TK_HIGHJUMP requirements changed from move_enable to none. [Kevin]
+	* TK_HIGHJUMP/TK_JUMPKICK requirements changed from move_enable to none. [Kevin]
 2008/04/03
 	* Rev. 12470 Implemented 11.3 monster skills update. [L0ne_W0lf]
 	- Removed teleport and Snatch from level 99 Biolab monsters.
