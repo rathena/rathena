@@ -3701,7 +3701,10 @@ static signed short status_calc_mdef2(struct block_list *bl, struct status_chang
 
 static unsigned short status_calc_speed(struct block_list *bl, struct status_change *sc, int speed)
 {
+
+	//Default speed coming in means there's no speed_rate adjustments. 
 	int new_speed = speed;
+	bool default_speed = (speed == 100);
 
 	if(!sc || !sc->count)
 		return cap_value(speed,10,USHRT_MAX);
@@ -3715,7 +3718,7 @@ static unsigned short status_calc_speed(struct block_list *bl, struct status_cha
 		new_speed += 300;
 
 	if(!sc->data[SC_GATLINGFEVER])
-	{	//These two stack with everything (but only one of them)
+	{	//These two stack with everything (but only one of either)
 		if(sc->data[SC_SPEEDUP1])
 			new_speed -= new_speed * 50/100;
 		else if(sc->data[SC_AVOID])
@@ -3732,10 +3735,12 @@ static unsigned short status_calc_speed(struct block_list *bl, struct status_cha
 			new_speed -= new_speed * 25/100;
 
 
+
 		//These only apply if you don't have increase agi and/or fusion and/or sprint
 		if(speed == new_speed)
 		{
-			if(sc->data[SC_SPEEDUP0])
+			//Don't allow buff from non speed potion consumables to stack with equips!
+			if(sc->data[SC_SPEEDUP0] && default_speed)
 				new_speed -= new_speed * 25/100;
 			else if(sc->data[SC_CARTBOOST])
 				new_speed -= new_speed * 20/100;
