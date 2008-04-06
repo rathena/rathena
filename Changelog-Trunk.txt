@@ -4,6 +4,7 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2008/04/06
+	* Fixed seven wind not allowing ghost/shadow. (r12505) [Kevin]
 	* Added Moscovia to the list of @go destinations [Toms]
 2008/04/05
 	* Unequip should no longer remove any buff from seven wind. (r12503) [Kevin]

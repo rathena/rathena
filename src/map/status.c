@@ -319,7 +319,9 @@ void initChangeTables(void)
 	set_sc( TK_READYCOUNTER      , SC_READYCOUNTER    , SI_READYCOUNTER    , SCB_NONE );
 	set_sc( TK_DODGE             , SC_DODGE           , SI_DODGE           , SCB_NONE );
 	set_sc( TK_SPTIME            , SC_TKREST          , SI_TKREST          , SCB_NONE );
-	add_sc( TK_SEVENWIND         , SC_SEVENWIND );
+	add_sc( TK_SEVENWIND         , SC_SEVENWIND ); 
+	set_sc( TK_SEVENWIND         , SC_GHOSTWEAPON     , SI_GHOSTWEAPON     , SCB_ATK_ELE ); 
+	set_sc( TK_SEVENWIND         , SC_SHADOWWEAPON    , SI_SHADOWWEAPON    , SCB_ATK_ELE ); 
 	set_sc( SG_SUN_WARM          , SC_WARM            , SI_WARM            , SCB_NONE );
 	add_sc( SG_MOON_WARM         , SC_WARM            );
 	add_sc( SG_STAR_WARM         , SC_WARM            );
