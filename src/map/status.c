@@ -3701,41 +3701,54 @@ static signed short status_calc_mdef2(struct block_list *bl, struct status_chang
 
 static unsigned short status_calc_speed(struct block_list *bl, struct status_change *sc, int speed)
 {
+	int new_speed = speed;
+
 	if(!sc || !sc->count)
 		return cap_value(speed,10,USHRT_MAX);
 
 	// Fixed reductions
 	if(sc->data[SC_CURSE])
-		speed += 450;
+		new_speed += 450;
 	if(sc->data[SC_SWOO])
-		speed += 450; //Let's use Curse's slow down momentarily (exact value unknown)
+		new_speed += 450; //Let's use Curse's slow down momentarily (exact value unknown)
 	if(sc->data[SC_WEDDING])
-		speed += 300;
+		new_speed += 300;
 
 	if(!sc->data[SC_GATLINGFEVER])
-	{	//% increases (they don't stack, with a few exceptions)
+	{	//These two stack with everything (but only one of them)
 		if(sc->data[SC_SPEEDUP1])
-			speed -= speed * 50/100;
+			new_speed -= new_speed * 50/100;
 		else if(sc->data[SC_AVOID])
-			speed -= speed * sc->data[SC_AVOID]->val2/100;
+			new_speed -= new_speed * sc->data[SC_AVOID]->val2/100;
 
+		speed = new_speed;
+
+		//These stack independently
 		if(sc->data[SC_RUN])
-			speed -= speed * 50/100;
-		else if(sc->data[SC_INCREASEAGI] && sc->data[SC_FUSION])
-			speed -= speed * 50/100;
-		else if(sc->data[SC_SPEEDUP0])
-			speed -= speed * 25/100;
-		else if(sc->data[SC_INCREASEAGI])
-			speed -= speed * 25/100;
-		else if(sc->data[SC_FUSION])
-			speed -= speed * 25/100;
-		else if(sc->data[SC_CARTBOOST])
-			speed -= speed * 20/100;
-		else if(sc->data[SC_BERSERK])
-			speed -= speed * 20/100;
-		else if(sc->data[SC_WINDWALK])
-			speed -= speed * sc->data[SC_WINDWALK]->val3/100;
+			new_speed -= new_speed * 50/100;
+		if(sc->data[SC_INCREASEAGI])
+			new_speed -= new_speed * 25/100;
+		if(sc->data[SC_FUSION])
+			new_speed -= new_speed * 25/100;
+
+
+		//These only apply if you don't have increase agi and/or fusion and/or sprint
+		if(speed == new_speed)
+		{
+			if(sc->data[SC_SPEEDUP0])
+				new_speed -= new_speed * 25/100;
+			else if(sc->data[SC_CARTBOOST])
+				new_speed -= new_speed * 20/100;
+			else if(sc->data[SC_BERSERK])
+				new_speed -= new_speed * 20/100;
+			else if(sc->data[SC_WINDWALK])
+				new_speed -= new_speed * sc->data[SC_WINDWALK]->val3/100;
+		}
+
 	}
+
+	speed = new_speed;
+
 	//% reductions	 (they stack)
 	if(sc->data[SC_DANCING] && sc->data[SC_DANCING]->val3&0xFFFF)
 		speed += speed*(sc->data[SC_DANCING]->val3&0xFFFF)/100;

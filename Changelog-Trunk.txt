@@ -4,6 +4,8 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2008/04/06
+	* Sprint, Fusion, and Increase AGI now stack independently.
+	- The others still don't take affect if you have any of these three. (r12508) [Kevin]
 	* Mind Sensing no longer gives an xp bonus on bosses. (r12507) [Kevin]
 	* Changed Union/Increase AGI stack fix (it should work now). (r12506) [Kevin]
 	* Fixed seven wind not allowing ghost/shadow. (r12505) [Kevin]
