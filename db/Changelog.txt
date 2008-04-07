@@ -43,7 +43,9 @@
 	2385 Recuvative_Armor		Should trigger HP/SP return with magical kills as well.
 
 =======================
-2008/04/05
+2008/04/07
+	* Limited number of wizard icewalls to 5 (iRO). [Kevin]
+2008/04/06
 	* Rev. 12515 Dur, I'm bored. Added place-holders for Mercenary skills. [L0ne_W0lf]
 	- These skills are NOT usable. They're semi-filled in. Don't even try.
 2008/04/05

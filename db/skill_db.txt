@@ -128,7 +128,7 @@
 84,9,8,1,4,0,0,10,3:4:5:6:7:8:9:10:11:12,yes,0,0,0,magic,2:3:3:4:4:5:5:6:6:7,	WZ_JUPITEL,Jupitel Thunder
 85,9,8,2,4,0,0,10,-10,yes,0,0,0,magic,0,		WZ_VERMILION,Lord of Vermilion
 86,9,8,1,1,0,0,5,1,yes,0,0,0,magic,0,		WZ_WATERBALL,Water Ball
-87,9,6,2,1,0,0,10,1,yes,0,0,0,magic,0,		WZ_ICEWALL,Ice Wall
+87,9,6,2,1,0,0,10,1,yes,0,0,5,magic,0,		WZ_ICEWALL,Ice Wall
 88,0,6,4,1,0x2,2,10,1,yes,0,0,0,magic,0,		WZ_FROSTNOVA,Frost Nova
 89,9,6,2,1,0,0,10,1,yes,0,0,0,magic,2,		WZ_STORMGUST,Storm Gust
 90,9,8,1,2,0,0,5,1:2:3:4:5,yes,0,0,0,magic,0,	WZ_EARTHSPIKE,Earth Spike
