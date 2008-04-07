@@ -3068,7 +3068,8 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 				{
 					case HT_REMOVETRAP:
 					case AC_SHOWER:
-					case WZ_HEAVENDRIVE:
+					case WZ_SIGHTRASHER:
+					case WZ_SIGHTBLASTER:
 						state |= BCT_ENEMY;
 						strip_enemy = 0;
 						break;

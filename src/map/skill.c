@@ -1624,10 +1624,13 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 			clif_skillinfoblock(tsd);
 		}
 	}
-	if (skillid != WZ_HEAVENDRIVE && bl->type == BL_SKILL && damage > 0) {
+	if (skillid != WZ_SIGHTRASHER && 
+		skillid != WZ_SIGHTBLASTER && 
+		skillid != AC_SHOWER &&
+		bl->type == BL_SKILL && damage > 0) {
 		struct skill_unit* su = (struct skill_unit*)bl;
 		if (su->group && skill_get_inf2(su->group->skill_id)&INF2_TRAP)
-			damage = 0; //Only Heaven's drive may damage traps. [Skotlex]
+			damage = 0; //Sight rasher, blaster, and arrow shower may dmg traps. [Kevin]
 	}
 
 	if (dmg.dmg_lv == ATK_DEF && (type = skill_get_walkdelay(skillid, skilllv)) > 0)
@@ -3632,7 +3635,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		status_change_end(src,SC_SIGHT,-1);
 		clif_skill_nodamage(src,bl,skillid,skilllv,1);
 		map_foreachinrange(skill_area_sub,src,
-			skill_get_splash(skillid, skilllv),splash_target(src),
+			skill_get_splash(skillid, skilllv),BL_CHAR|BL_SKILL,
 			src,skillid,skilllv,tick, flag|BCT_ENEMY|1,
 			skill_castend_damage_id);
 		break;
