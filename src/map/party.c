@@ -114,6 +114,12 @@ int party_create(struct map_session_data *sd,char *name,int item,int item2)
 		return 0; // "already in a party"
 	}
 
+	if(strlen(name) < 2)
+	{
+		clif_party_created(sd, 1);
+		return 0;
+	}
+
 	//Temporarily set to -1 so cannot be spam invited
 	sd->status.party_id = -1;
 
@@ -132,8 +138,6 @@ void party_created(int account_id,int char_id,int fail,int party_id,char *name)
 
 	if (!sd || sd->status.char_id != char_id)
 	{	//Character logged off before creation ack?
-		if(sd)
-			sd->status.party_id = 0;
 		if (!fail) //break up party since player could not be added to it.
 			intif_party_leave(party_id,account_id,char_id);
 		return;

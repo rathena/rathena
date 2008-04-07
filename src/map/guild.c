@@ -402,7 +402,7 @@ int guild_create(struct map_session_data *sd,char *name)
 {
 	nullpo_retr(0, sd);
 
-	if(sd->status.guild_id)
+	if(sd->status.guild_id || strlen(name) < 2)
 	{
 		clif_guild_created(sd,1);	// ‚·‚Å‚ÉŠ‘®‚µ‚Ä‚¢‚é
 		return 0;

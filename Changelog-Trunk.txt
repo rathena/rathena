@@ -3,6 +3,8 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2008/04/07
+	* Party/guild names can no longer be less then 2 characters long. (r12521) [Kevin]
 2008/04/06
 	* Fixed a case where a dangling pointer was formed when a person was
 	- invited to a party immediately after creating their own. (r12518) [Kevin]
