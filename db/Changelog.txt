@@ -44,6 +44,9 @@
 
 =======================
 2008/04/05
+	* Rev. 12515 Dur, I'm bored. Added place-holders for Mercenary skills. [L0ne_W0lf]
+	- These skills are NOT usable. They're semi-filled in. Don't even try.
+2008/04/05
 	* TK_HIGHJUMP/TK_JUMPKICK requirements changed from move_enable to none. [Kevin]
 2008/04/03
 	* Rev. 12470 Implemented 11.3 monster skills update. [L0ne_W0lf]
