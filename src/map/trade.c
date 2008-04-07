@@ -200,13 +200,13 @@ int impossible_trade_check(struct map_session_data *sd)
 			// if we block people
 			if (battle_config.ban_hack_trade < 0) {
 				chrif_char_ask_name(-1, sd->status.name, 1, 0, 0, 0, 0, 0, 0); // type: 1 - block
-				clif_setwaitclose(sd->fd); // forced to disconnect because of the hack
+				set_eof(sd->fd); // forced to disconnect because of the hack
 				// message about the ban
 				sprintf(message_to_gm, msg_txt(540)); //  This player has been definitivly blocked.
 			// if we ban people
 			} else if (battle_config.ban_hack_trade > 0) {
 				chrif_char_ask_name(-1, sd->status.name, 2, 0, 0, 0, 0, battle_config.ban_hack_trade, 0); // type: 2 - ban (year, month, day, hour, minute, second)
-				clif_setwaitclose(sd->fd); // forced to disconnect because of the hack
+				set_eof(sd->fd); // forced to disconnect because of the hack
 				// message about the ban
 				sprintf(message_to_gm, msg_txt(507), battle_config.ban_hack_trade); //  This player has been banned for %d minute(s).
 			} else

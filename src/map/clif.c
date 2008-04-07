@@ -535,7 +535,7 @@ int clif_authfail_fd(int fd, int type)
 	WFIFOW(fd,0) = 0x81;
 	WFIFOB(fd,2) = type;
 	WFIFOSET(fd,packet_len(0x81));
-	clif_setwaitclose(fd);
+	set_eof(fd);
 	return 0;
 }
 
@@ -1314,31 +1314,6 @@ void clif_quitsave(int fd,struct map_session_data *sd)
 		sd->fd = 0;
 		add_timer(gettick() + 10000, clif_delayquit, sd->bl.id, 0);
 	}
-}
-
-/*==========================================
- *
- *------------------------------------------*/
-static int clif_waitclose(int tid, unsigned int tick, int id, int data)
-{
-	if (session[id] && session[id]->func_parse == clif_parse) //Avoid disconnecting non-players, as pointed out by End of Exam [Skotlex]
-		set_eof(id);
-
-	return 0;
-}
-
-/*==========================================
- *
- *------------------------------------------*/
-void clif_setwaitclose(int fd)
-{
-
-	// if player is not already in the game (double connection probably)
-	if (session[fd]->session_data == NULL) {
-		// limited timer, just to send information.
-		add_timer(gettick() + 1000, clif_waitclose, fd, 0);
-	} else
-		add_timer(gettick() + 5000, clif_waitclose, fd, 0);
 }
 
 /*==========================================
@@ -6876,19 +6851,6 @@ void clif_GM_silence(struct map_session_data* sd, struct map_session_data* tsd, 
 }
 
 /*==========================================
- *
- *------------------------------------------*/
-int clif_timedout(struct map_session_data *sd)
-{
-	nullpo_retr(0, sd);
-
-	ShowInfo("%sCharacter with Account ID '"CL_WHITE"%d"CL_RESET"' timed out.\n", (pc_isGM(sd))?"GM ":"", sd->bl.id);
-	clif_authfail_fd(sd->fd,3); // Even if player is not on we still send anyway
-	clif_setwaitclose(sd->fd); // Set session to EOF
-	return 0;
-}
-
-/*==========================================
  * Wis‹‘”Û‹–‰Â‰ž“š
  *------------------------------------------*/
 int clif_wisexin(struct map_session_data *sd,int type,int flag)
@@ -7526,7 +7488,7 @@ static bool clif_process_message(struct map_session_data* sd, int format, char**
 		{
 			//Hacked message, or infamous "client desynch" issue where they pick one char while loading another.
 			ShowWarning("clif_process_message: Player '%s' sent a message using an incorrect name! Forcing a relog...\n", sd->status.name);
-			clif_setwaitclose(fd); // Just kick them out to correct it.
+			set_eof(fd); // Just kick them out to correct it.
 			return false;
 		}
 
@@ -7692,7 +7654,7 @@ void clif_parse_WantToConnection(int fd, TBL_PC* sd)
 		WFIFOW(fd,0) = 0x6a;
 		WFIFOB(fd,2) = 5; // Your Game's EXE file is not the latest version
 		WFIFOSET(fd,packet_len(0x6a));
-		clif_setwaitclose(fd);
+		set_eof(fd);
 		return;
 	}
 
@@ -7704,7 +7666,7 @@ void clif_parse_WantToConnection(int fd, TBL_PC* sd)
 		WFIFOW(fd,0) = 0x6a;
 		WFIFOB(fd,2) = 3; // Rejected by server
 		WFIFOSET(fd,packet_len(0x6a));
-		clif_setwaitclose(fd);
+		set_eof(fd);
 		return;
 	}
 
@@ -8097,7 +8059,7 @@ void clif_parse_QuitGame(int fd, struct map_session_data *sd)
 	if (!sd->sc.data[SC_CLOAKING] && !sd->sc.data[SC_HIDING] &&
 		(!battle_config.prevent_logout || DIFF_TICK(gettick(), sd->canlog_tick) > battle_config.prevent_logout)
 	) {
-		clif_setwaitclose(fd);
+		set_eof(fd);
 		WFIFOW(fd,2)=0;
 	} else {
 		WFIFOW(fd,2)=1;
@@ -12215,7 +12177,7 @@ int clif_parse(int fd)
 			WFIFOB(fd,2) = 3; // Rejected from Server
 			WFIFOSET(fd,packet_len(0x6a));
 			RFIFOSKIP(fd, RFIFOREST(fd));
-			clif_setwaitclose(fd);
+			set_eof(fd);
 			return 0;
 		}
 	}
@@ -12730,7 +12692,6 @@ int do_init_clif(void)
 		exit(EXIT_FAILURE);
 	}
 
-	add_timer_func_list(clif_waitclose, "clif_waitclose");
 	add_timer_func_list(clif_clearunit_delayed_sub, "clif_clearunit_delayed_sub");
 	add_timer_func_list(clif_delayquit, "clif_delayquit");
 	return 0;

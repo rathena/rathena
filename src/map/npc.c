@@ -1266,7 +1266,7 @@ int npc_selllist(struct map_session_data* sd, int n, unsigned short* item_list)
 		//any item as deleted even though a few were sold. In such a case, we
 		//have no recourse but to kick them out so their inventory will refresh
 		//correctly on relog. [Skotlex]
-		if (i) clif_setwaitclose(sd->fd);
+		if (i) set_eof(sd->fd);
 		return 1;
 	}
 	return 0;

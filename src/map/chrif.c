@@ -830,7 +830,7 @@ int chrif_changedsex(int fd)
 		sd->login_id1++; // change identify, because if player come back in char within the 5 seconds, he can change its characters
 							  // do same modify in login-server for the account, but no in char-server (it ask again login_id1 to login, and don't remember it)
 		clif_displaymessage(sd->fd, "Your sex has been changed (need disconnection by the server)...");
-		clif_setwaitclose(sd->fd); // forced to disconnect for the change
+		set_eof(sd->fd); // forced to disconnect for the change
 	}
 	return 0;
 }
@@ -912,7 +912,7 @@ int chrif_accountdeletion(int fd)
 		if (sd != NULL) {
 			sd->login_id1++; // change identify, because if player come back in char within the 5 seconds, he can change its characters
 			clif_displaymessage(sd->fd, "Your account has been deleted (disconnection)...");
-			clif_setwaitclose(sd->fd); // forced to disconnect for the change
+			set_eof(sd->fd); // forced to disconnect for the change
 		}
 	} else {
 		if (sd != NULL)
@@ -967,7 +967,7 @@ int chrif_accountban(int fd)
 		clif_displaymessage(sd->fd, tmpstr);
 	}
 
-	clif_setwaitclose(sd->fd); // forced to disconnect for the change
+	set_eof(sd->fd); // forced to disconnect for the change
 	return 0;
 }
 
