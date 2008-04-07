@@ -2348,7 +2348,8 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 		
 		if (skill_num == NPC_EARTHQUAKE)
 		{	//Adds atk2 to the damage, should be influenced by number of hits and skill-ratio, but not mdef reductions. [Skotlex]
-			ad.damage+= sstatus->rhw.atk2*skillratio/100;
+			//Also divide the extra bonuses from atk2 based on the number in range [Kevin]
+			ad.damage+= (sstatus->rhw.atk2*skillratio/100)/mflag;
 		}
 
 		if(ad.damage<1)
