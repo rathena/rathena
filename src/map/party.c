@@ -114,6 +114,9 @@ int party_create(struct map_session_data *sd,char *name,int item,int item2)
 		return 0; // "already in a party"
 	}
 
+	//Temporarily set to -1 so cannot be spam invited
+	sd->status.party_id = -1;
+
 	party_fill_member(&leader, sd);
 	leader.leader = 1;
 
@@ -129,6 +132,8 @@ void party_created(int account_id,int char_id,int fail,int party_id,char *name)
 
 	if (!sd || sd->status.char_id != char_id)
 	{	//Character logged off before creation ack?
+		if(sd)
+			sd->status.party_id = 0;
 		if (!fail) //break up party since player could not be added to it.
 			intif_party_leave(party_id,account_id,char_id);
 		return;
@@ -139,6 +144,7 @@ void party_created(int account_id,int char_id,int fail,int party_id,char *name)
 		clif_party_created(sd,0); //Success message
 		//We don't do any further work here because the char-server sends a party info packet right after creating the party.
 	} else {
+		sd->status.party_id = 0;
 		clif_party_created(sd,1); // "party name already exists"
 	}
 }
@@ -299,7 +305,7 @@ int party_invite(struct map_session_data *sd,struct map_session_data *tsd)
 		return 0;
 	}
 
-	if( tsd->status.party_id>0 || tsd->party_invite>0 ){
+	if( tsd->status.party_id!=0 || tsd->party_invite>0){
 		clif_party_inviteack(sd,tsd->status.name,0);
 		return 0;
 	}
