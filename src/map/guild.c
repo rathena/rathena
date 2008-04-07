@@ -1103,7 +1103,48 @@ int guild_emblem_changed(int len,int guild_id,int emblem_id,const char *data)
 			sd->guild_emblem_id=emblem_id;
 			clif_guild_belonginfo(sd,g);
 			clif_guild_emblem(sd,g);
+			clif_guild_emblem_area(&sd->bl);
 		}
+	}
+	{// update guardians (mobs)
+		DBIterator* iter = db_iterator(castle_db);
+		struct guild_castle* gc;
+		for( gc = (struct guild_castle*)dbi_first(iter) ; dbi_exists(iter); gc = (struct guild_castle*)dbi_next(iter) )
+		{
+			if( gc->guild_id != guild_id )
+				continue;
+			// update permanent guardians
+			for( i = 0; i < ARRAYLENGTH(gc->guardian); ++i )
+			{
+				TBL_MOB* md = (gc->guardian[i].id ? map_id2md(gc->guardian[i].id) : NULL);
+				if( md == NULL || md->guardian_data == NULL )
+					continue;
+				md->guardian_data->emblem_id = emblem_id;
+				clif_guild_emblem_area(&md->bl);
+			}
+			// update temporary guardians
+			for( i = 0; i < gc->temp_guardians_max; ++i )
+			{
+				TBL_MOB* md = (gc->temp_guardians[i] ? map_id2md(gc->temp_guardians[i]) : NULL);
+				if( md == NULL || md->guardian_data == NULL )
+					continue;
+				md->guardian_data->emblem_id = emblem_id;
+				clif_guild_emblem_area(&md->bl);
+			}
+		}
+		dbi_destroy(iter);
+	}
+	{// update npcs (flags or other npcs that used flagemblem to attach to this guild)
+		// TODO this is not efficient [FlavioJS]
+		struct s_mapiterator* iter = mapit_geteachnpc();
+		TBL_NPC* nd;
+		for( nd = (TBL_NPC*)mapit_first(iter) ; mapit_exists(iter); nd = (TBL_NPC*)mapit_next(iter) )
+		{
+			if( nd->subtype != SCRIPT || nd->u.scr.guild_id != guild_id )
+				continue;
+			clif_guild_emblem_area(&nd->bl);
+		}
+		mapit_free(iter);
 	}
 	return 0;
 }
@@ -1909,10 +1950,19 @@ static int guild_expcache_db_final(DBKey key,void *data,va_list ap)
 	return 0;
 }
 
+static int guild_castle_db_final(DBKey key, void* data,va_list ap)
+{
+	struct guild_castle* gc = (struct guild_castle*)data;
+	if( gc->temp_guardians )
+		aFree(gc->temp_guardians);
+	aFree(data);
+	return 0;
+}
+
 void do_init_guild(void)
 {
 	guild_db=idb_alloc(DB_OPT_RELEASE_DATA);
-	castle_db=idb_alloc(DB_OPT_RELEASE_DATA);
+	castle_db=idb_alloc(DB_OPT_BASE);
 	guild_expcache_db=idb_alloc(DB_OPT_BASE);
 	guild_infoevent_db=idb_alloc(DB_OPT_BASE);
 	expcache_ers = ers_new(sizeof(struct guild_expcache)); 
@@ -1932,7 +1982,7 @@ void do_init_guild(void)
 void do_final_guild(void)
 {
 	guild_db->destroy(guild_db,NULL);
-	castle_db->destroy(castle_db,NULL);
+	castle_db->destroy(castle_db,guild_castle_db_final);
 	guild_expcache_db->destroy(guild_expcache_db,guild_expcache_db_final);
 	guild_infoevent_db->destroy(guild_infoevent_db,guild_infoevent_db_final);
 	guild_castleinfoevent_db->destroy(guild_castleinfoevent_db,guild_infoevent_db_final);

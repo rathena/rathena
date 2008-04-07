@@ -4,7 +4,7 @@
 //= A reference manual for the eAthena scripting language.
 //= Commands are sorted depending on their functionality.
 //===== Version ===========================================
-//= 3.18.20080327
+//= 3.19.20080407
 //=========================================================
 //= 1.0 - First release, filled will as much info as I could
 //=       remember or figure out, most likely there are errors,
@@ -108,6 +108,8 @@
 //=       Corrected cashshop description. (#FREEPOINTS->#KAFRAPOINTS) [L0ne_W0lf]
 //= 3.18.20080327
 //=       Added documentation for the 'checkcell' command [ultramage]
+//= 3.19.20080407
+//=       Extended the behaviour of 'guardian'. [FlavioJS]
 //=========================================================
 
 This document is a reference manual for all the scripting commands and functions 
@@ -5514,12 +5516,17 @@ returns a guild id:
 
 ---------------------------------------
 
-*guardian "<map name>",<x>,<y>,"<name to show>",<mob id>,<amount>{,"<event label>"}{,<guardian index>};
+*guardian("<map name>",<x>,<y>,"<name to show>",<mob id>,<amount>{,"<event label>"}{,<guardian index>})
 
 This command is roughly equivalent to 'monster', but is meant to be used with 
 castle guardian monsters and will only work with them. It will set the guardian 
 characteristics up according to the castle's investment values and otherwise 
 set the things up that only castle guardians need.
+
+Since trunk r12524:
+Returns the id of the mob or 0 if an error occurred.
+When 'guardian index' isn't supplied it produces a temporary guardian.
+Temporary guardians are not saved with the castle and can't be accessed by guardianinfo.
 
 ---------------------------------------
 

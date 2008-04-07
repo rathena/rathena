@@ -677,6 +677,7 @@ static int mob_spawn_guardian_sub(int tid,unsigned int tick,int id,int data)
 	struct block_list* bl = map_id2bl(id);
 	struct mob_data* md; 
 	struct guild* g;
+	int guardup_lv;
 
 	if (bl == NULL) //It is possible mob was already removed from map when the castle has no owner. [Skotlex]
 		return 0;
@@ -703,7 +704,7 @@ static int mob_spawn_guardian_sub(int tid,unsigned int tick,int id,int data)
 				guild_castledatasave(md->guardian_data->castle->castle_id, 1, 0);
 			}
 		} else {
-			if (md->guardian_data->castle->guardian[md->guardian_data->number].visible)
+			if( md->guardian_data->number >= 0 && md->guardian_data->number < MAX_GUARDIANS && md->guardian_data->castle->guardian[md->guardian_data->number].visible )
 			{	//Safe removal of guardian.
 				md->guardian_data->castle->guardian[md->guardian_data->number].visible = 0;
 				guild_castledatasave(md->guardian_data->castle->castle_id, 10+md->guardian_data->number,0);
@@ -712,10 +713,11 @@ static int mob_spawn_guardian_sub(int tid,unsigned int tick,int id,int data)
 		}
 		return 0;
 	}
+	guardup_lv = guild_checkskill(g,GD_GUARDUP);
 	md->guardian_data->emblem_id = g->emblem_id;
-	memcpy (md->guardian_data->guild_name, g->name, NAME_LENGTH);
-	md->guardian_data->guardup_lv = guild_checkskill(g,GD_GUARDUP);
-	if(md->guardian_data->guardup_lv)
+	memcpy(md->guardian_data->guild_name, g->name, NAME_LENGTH);
+	md->guardian_data->guardup_lv = guardup_lv;
+	if( guardup_lv )
 		status_calc_mob(md, 0); //Give bonuses.
 	return 0;
 }
@@ -723,7 +725,7 @@ static int mob_spawn_guardian_sub(int tid,unsigned int tick,int id,int data)
 /*==========================================
  * Summoning Guardians [Valaris]
  *------------------------------------------*/
-int mob_spawn_guardian(const char* mapname, short x, short y, const char* mobname, int class_, const char* event, int guardian)
+int mob_spawn_guardian(const char* mapname, short x, short y, const char* mobname, int class_, const char* event, int guardian, bool has_index)
 {
 	struct mob_data *md=NULL;
 	struct spawn_data data;
@@ -749,7 +751,11 @@ int mob_spawn_guardian(const char* mapname, short x, short y, const char* mobnam
 
 	data.class_ = class_;
 
-	if(guardian < 0 || guardian >= MAX_GUARDIANS)
+	if( !has_index )
+	{
+		guardian = -1;
+	}
+	else if( guardian < 0 || guardian >= MAX_GUARDIANS )
 	{
 		ShowError("mob_spawn_guardian: Invalid guardian index %d for guardian %d (castle map %s)\n", guardian, class_, map[m].name);
 		return 0;
@@ -778,7 +784,7 @@ int mob_spawn_guardian(const char* mapname, short x, short y, const char* mobnam
 	else
 		g = guild_search(gc->guild_id);
 
-	if (gc->guardian[guardian].id)
+	if( has_index && gc->guardian[guardian].id )
   	{	//Check if guardian already exists, refuse to spawn if so.
 		struct mob_data *md2 = (TBL_MOB*)map_id2bl(gc->guardian[guardian].id);
 		if (md2 && md2->bl.type == BL_MOB &&
@@ -794,7 +800,21 @@ int mob_spawn_guardian(const char* mapname, short x, short y, const char* mobnam
 	md->guardian_data->number = guardian;
 	md->guardian_data->guild_id = gc->guild_id;
 	md->guardian_data->castle = gc;
-	gc->guardian[guardian].id = md->bl.id;
+	if( has_index )
+	{// permanent guardian
+		gc->guardian[guardian].id = md->bl.id;
+	}
+	else
+	{// temporary guardian
+		int i;
+		ARR_FIND(0, gc->temp_guardians_max, i, gc->temp_guardians[i] == 0);
+		if( i == gc->temp_guardians_max )
+		{
+			++(gc->temp_guardians_max);
+			RECREATE(gc->temp_guardians, int, gc->temp_guardians_max);
+		}
+		gc->temp_guardians[i] = md->bl.id;
+	}
 	if (g)
 	{
 		md->guardian_data->emblem_id = g->emblem_id;
@@ -2077,7 +2097,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 
 	status = &md->status;
 		
-	if(md->guardian_data && md->guardian_data->number < MAX_GUARDIANS)
+	if( md->guardian_data && md->guardian_data->number >= 0 && md->guardian_data->number < MAX_GUARDIANS )
 		guild_castledatasave(md->guardian_data->castle->castle_id, 10+md->guardian_data->number,0);
 
 	md->state.skillstate = MSS_DEAD;	
@@ -2588,7 +2608,7 @@ int mob_guardian_guildchange(struct block_list *bl,va_list ap)
 			md->guardian_data->emblem_id = 0;
 			md->guardian_data->guild_name[0] = '\0';
 		} else {
-			if (md->guardian_data->castle->guardian[md->guardian_data->number].visible)
+			if( md->guardian_data->number >= 0 && md->guardian_data->number < MAX_GUARDIANS && md->guardian_data->castle->guardian[md->guardian_data->number].visible )
 			{	//Safe removal of guardian.
 				md->guardian_data->castle->guardian[md->guardian_data->number].visible = 0;
 				guild_castledatasave(md->guardian_data->castle->castle_id, 10+md->guardian_data->number,0);
@@ -2602,8 +2622,11 @@ int mob_guardian_guildchange(struct block_list *bl,va_list ap)
 	if (g == NULL)
 	{	//Properly remove guardian info from Castle data.
 		ShowError("mob_guardian_guildchange: New Guild (id %d) does not exists!\n", md->guardian_data->guild_id);
-		md->guardian_data->castle->guardian[md->guardian_data->number].visible = 0;
-		guild_castledatasave(md->guardian_data->castle->castle_id, 10+md->guardian_data->number,0);
+		if( md->guardian_data->number >= 0 && md->guardian_data->number < MAX_GUARDIANS )
+		{
+			md->guardian_data->castle->guardian[md->guardian_data->number].visible = 0;
+			guild_castledatasave(md->guardian_data->castle->castle_id, 10+md->guardian_data->number,0);
+		}
 		unit_free(&md->bl,0);
 		return 0;
 	}

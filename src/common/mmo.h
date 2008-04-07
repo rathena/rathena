@@ -425,6 +425,8 @@ struct guild_castle {
 		unsigned visible : 1;
 		int id; // object id
 	} guardian[MAX_GUARDIANS];
+	int* temp_guardians; // ids of temporary guardians (mobs)
+	int temp_guardians_max;
 };
 
 // for Brandish Spear calculations

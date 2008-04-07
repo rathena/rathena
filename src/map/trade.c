@@ -2,6 +2,7 @@
 // For more information, see LICENCE in the main folder
 
 #include "../common/nullpo.h"
+#include "../common/socket.h"
 #include "clif.h"
 #include "itemdb.h"
 #include "map.h"

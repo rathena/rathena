@@ -4,7 +4,20 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2008/04/07
+	* Made script command 'flagemblem' and guild_emblem_change send an update 
+	  of the emblem_id to the players in the area.
+	- known bug: ui components that are displaying the emblem at the time 
+	  (emblem in flag npc and emblem over head in gvg maps) are not updated,
+	  but putting the mouse over the target shows the new emblem
+	* Modified script command 'guardian':
+	- returns the id of the guardian
+	- if guardian index isn't supplied, it generates a temporary guardian
+	* Implemented support for temporary guardians (not saved with castle).
+	* Added missing includes from r12520. [FlavioJS]
 	* Party/guild names can no longer be less then 2 characters long. (r12521) [Kevin]
+	* Removed the 'wait close' timer that closed a session's socket after 5 seconds.
+	  This was causing random disconnects when logging in. (bugreport:1330) 
+	* Improved the Mental Sensing fix from r12507 to not start the status at all, instead of starting it and ignoring it later on.  [ultramage]
 2008/04/06
 	* Fixed a case where a dangling pointer was formed when a person was
 	- invited to a party immediately after creating their own. (r12518) [Kevin]

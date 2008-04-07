@@ -6327,6 +6327,22 @@ int clif_guild_emblem(struct map_session_data *sd,struct guild *g)
 	return 0;
 }
 
+/// Sends update of the guild id/emblem id to everyone in the area.
+void clif_guild_emblem_area(struct block_list* bl)
+{
+	char buf[12];
+
+	nullpo_retv(bl);
+
+	// TODO this packet doesn't force the update of ui components that have the emblem visible
+	//      (emblem in the flag npcs and emblem over the head in agit maps) [FlavioJS]
+	WBUFW(buf,0) = 0x1B4;
+	WBUFL(buf,2) = bl->id;
+	WBUFL(buf,6) = status_get_guild_id(bl);
+	WBUFW(buf,10) = status_get_emblem_id(bl);
+	clif_send(buf, 12, bl, AREA_WOS);
+}
+
 /*==========================================
  * Send guild skills
  *------------------------------------------*/

@@ -1950,10 +1950,20 @@ int unit_free(struct block_list *bl, int clrtype)
 			aFree(md->lootitem);
 			md->lootitem=NULL;
 		}
-		if(md->guardian_data)
+		if( md->guardian_data )
 		{
-			if (md->guardian_data->number < MAX_GUARDIANS)
-				md->guardian_data->castle->guardian[md->guardian_data->number].id = 0;
+			struct guild_castle* gc = md->guardian_data->castle;
+			if( md->guardian_data->number >= 0 && md->guardian_data->number < MAX_GUARDIANS )
+			{
+				gc->guardian[md->guardian_data->number].id = 0;
+			}
+			else
+			{
+				int i;
+				ARR_FIND(0, gc->temp_guardians_max, i, gc->temp_guardians[i] == md->bl.id);
+				if( i < gc->temp_guardians_max )
+					gc->temp_guardians[i] = 0;
+			}
 			aFree(md->guardian_data);
 			md->guardian_data = NULL;
 		}

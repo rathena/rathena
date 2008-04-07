@@ -307,6 +307,7 @@ int clif_guild_expulsion(struct map_session_data *sd,const char *name,const char
 int clif_guild_positionchanged(struct guild *g,int idx);
 int clif_guild_memberpositionchanged(struct guild *g,int idx);
 int clif_guild_emblem(struct map_session_data *sd,struct guild *g);
+void clif_guild_emblem_area(struct block_list* bl);
 int clif_guild_notice(struct map_session_data *sd,struct guild *g);
 int clif_guild_message(struct guild *g,int account_id,const char *mes,int len);
 int clif_guild_skillup(struct map_session_data *sd,int skill_num,int lv);

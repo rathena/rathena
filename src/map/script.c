@@ -9165,14 +9165,30 @@ BUILDIN_FUNC(agitcheck)
 	return 0;
 }
 
+/// Sets the guild_id of this npc.
+///
+/// flagemblem <guild_id>;
 BUILDIN_FUNC(flagemblem)
 {
+	TBL_NPC* nd;
 	int g_id=script_getnum(st,2);
 
 	if(g_id < 0) return 0;
 
-//	ShowMessage("Script.c: [FlagEmblem] GuildID=%d, Emblem=%d.\n", g->guild_id, g->emblem_id);
-	((struct npc_data *)map_id2bl(st->oid))->u.scr.guild_id = g_id;
+	nd = (TBL_NPC*)map_id2nd(st->oid);
+	if( nd == NULL )
+	{
+		ShowError("script:flagemblem: npc %d not found\n", st->oid);
+	}
+	else if( nd->subtype != SCRIPT )
+	{
+		ShowError("script:flagemblem: unexpected subtype %d for npc %d '%s'\n", nd->subtype, st->oid, nd->exname);
+	}
+	else
+	{
+		nd->u.scr.guild_id = g_id;
+		clif_guild_emblem_area(&nd->bl);
+	}
 	return 0;
 }
 
@@ -9743,13 +9759,14 @@ BUILDIN_FUNC(strmobinfo)
 
 /*==========================================
  * Summon guardians [Valaris]
- * guardian "<map name>",<x>,<y>,"<name to show>",<mob id>,{,"<event label>"}{,<guardian index>};
+ * guardian("<map name>",<x>,<y>,"<name to show>",<mob id>{,"<event label>"}{,<guardian index>}) -> <id>
  *------------------------------------------*/
 BUILDIN_FUNC(guardian)
 {
 	int class_=0,x=0,y=0,guardian=0;
 	const char *str,*map,*evt="";
 	struct script_data *data;
+	bool has_index = false;
 
 	map	  =script_getstr(st,2);
 	x	  =script_getnum(st,3);
@@ -9761,6 +9778,7 @@ BUILDIN_FUNC(guardian)
 	{// "<event label>",<guardian index>
 		evt=script_getstr(st,7);
 		guardian=script_getnum(st,8);
+		has_index = true;
 	} else if( script_hasdata(st,7) ){
 		data=script_getdata(st,7);
 		get_val(st,data);
@@ -9770,6 +9788,7 @@ BUILDIN_FUNC(guardian)
 		} else if( data_isint(data) )
 		{// <guardian index>
 			guardian=script_getnum(st,7);
+			has_index = true;
 		} else {
 			ShowError("script:guardian: invalid data type for argument #6 (from 1)\n");
 			script_reportdata(data);
@@ -9778,7 +9797,7 @@ BUILDIN_FUNC(guardian)
 	}
 
 	check_event(st, evt);
-	mob_spawn_guardian(map,x,y,str,class_,evt,guardian);
+	script_pushint(st, mob_spawn_guardian(map,x,y,str,class_,evt,guardian,has_index));
 
 	return 0;
 }

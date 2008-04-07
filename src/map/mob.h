@@ -227,7 +227,7 @@ void mob_barricade_destroy(short m, const char *event);
 void mob_barricade_get(struct map_session_data *sd);
 void mod_barricade_clearall(void);
 
-int mob_spawn_guardian(const char* mapname, short x, short y, const char* mobname, int class_, const char* event, int guardian);	// Spawning Guardians [Valaris]
+int mob_spawn_guardian(const char* mapname, short x, short y, const char* mobname, int class_, const char* event, int guardian, bool has_index);	// Spawning Guardians [Valaris]
 int mob_guardian_guildchange(struct block_list *bl,va_list ap); //Change Guardian's ownership. [Skotlex]
 
 int mob_randomwalk(struct mob_data *md,unsigned int tick);

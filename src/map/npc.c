@@ -10,6 +10,7 @@
 #include "../common/utils.h"
 #include "../common/ers.h"
 #include "../common/db.h"
+#include "../common/socket.h"
 #include "map.h"
 #include "log.h"
 #include "clif.h"
