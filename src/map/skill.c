@@ -4952,7 +4952,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		} else if (status_get_guild_id(src)) {
 			clif_skill_nodamage(src,bl,skillid,skilllv,1);
 			map_foreachinrange(skill_area_sub, src,
-				skill_get_splash(skillid, skilllv), BL_CHAR,
+				skill_get_splash(skillid, skilllv), BL_PC,
 				src,skillid,skilllv,tick, flag|BCT_GUILD|1,
 				skill_castend_nodamage_id);
 			if (sd)
@@ -4966,7 +4966,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		} else if (status_get_guild_id(src)) {
 			clif_skill_nodamage(src,bl,skillid,skilllv,1);
 			map_foreachinrange(skill_area_sub, src,
-				skill_get_splash(skillid, skilllv), BL_CHAR,
+				skill_get_splash(skillid, skilllv), BL_PC,
 				src,skillid,skilllv,tick, flag|BCT_GUILD|1,
 				skill_castend_nodamage_id);
 			if (sd)
@@ -4980,7 +4980,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		} else if (status_get_guild_id(src)) {
 			clif_skill_nodamage(src,bl,skillid,skilllv,1);
 			map_foreachinrange(skill_area_sub, src,
-				skill_get_splash(skillid, skilllv), BL_CHAR,
+				skill_get_splash(skillid, skilllv), BL_PC,
 				src,skillid,skilllv,tick, flag|BCT_GUILD|1,
 				skill_castend_nodamage_id);
 			if (sd)
