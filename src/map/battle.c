@@ -3070,6 +3070,7 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 					case AC_SHOWER:
 					case WZ_SIGHTRASHER:
 					case WZ_SIGHTBLASTER:
+					case SM_MAGNUM:
 						state |= BCT_ENEMY;
 						strip_enemy = 0;
 						break;

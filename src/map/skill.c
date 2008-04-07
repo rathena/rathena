@@ -1627,6 +1627,7 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 	if (skillid != WZ_SIGHTRASHER && 
 		skillid != WZ_SIGHTBLASTER && 
 		skillid != AC_SHOWER &&
+		skillid != SM_MAGNUM &&
 		bl->type == BL_SKILL && damage > 0) {
 		struct skill_unit* su = (struct skill_unit*)bl;
 		if (su->group && skill_get_inf2(su->group->skill_id)&INF2_TRAP)
@@ -3264,7 +3265,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	//Passive Magnum, should had been casted on yourself.
 	case SM_MAGNUM:
 		skill_area_temp[1] = 0;
-		map_foreachinrange(skill_area_sub, src, skill_get_splash(skillid, skilllv), splash_target(src),
+		map_foreachinrange(skill_area_sub, src, skill_get_splash(skillid, skilllv), BL_SKILL|BL_CHAR,
 			src,skillid,skilllv,tick, flag|BCT_ENEMY|1, skill_castend_damage_id);
 		clif_skill_nodamage (src,src,skillid,skilllv,1);
 		//Initiate 10% of your damage becomes fire element.
