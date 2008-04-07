@@ -2197,6 +2197,9 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 
 	if (skillid && skill_get_type(skillid) == BF_MAGIC && status_isimmune(bl) == 100)
 	{	//GTB makes all targetted magic display miss with a single bolt.
+		sc_type sct = status_skill2sc(skillid);
+		if(sct != SC_NONE)
+			status_change_end(bl, sct, -1);
 		clif_skill_damage(src, bl, tick, status_get_amotion(src), status_get_dmotion(bl), 0, 1, skillid, skilllv, skill_get_hit(skillid));
 		return 1;
 	}
