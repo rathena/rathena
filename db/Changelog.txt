@@ -44,6 +44,8 @@
 
 =======================
 2008/04/07
+	* Rev. 12528 Reverted the Ice Wall change (r12526.) [L0ne_W0lf]
+	- Increased the range of Ganbantein to 16, as tested on iRO.
 	* Limited number of wizard icewalls to 5 (iRO). [Kevin]
 2008/04/06
 	* Rev. 12515 Dur, I'm bored. Added place-holders for Mercenary skills. [L0ne_W0lf]
