@@ -4818,7 +4818,6 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			case SC_QUAGMIRE:
 			case SC_DECREASEAGI:
 			case SC_PROVOKE:
-			case SC_ROKISWEIL:
 			case SC_COMA:
 			case SC_GRAVITATION:
 			case SC_SUITON:
@@ -4826,6 +4825,8 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			case SC_STRIPSHIELD:
 			case SC_STRIPARMOR:
 			case SC_STRIPHELM:
+			case SC_RICHMANKIM:
+			case SC_ROKISWEIL:
 				return 0;
 		}
 	}
