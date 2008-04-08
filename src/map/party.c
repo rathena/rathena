@@ -8,6 +8,7 @@
 #include "../common/malloc.h"
 #include "../common/showmsg.h"
 #include "../common/utils.h"
+#include "../common/strlib.h"
 
 #include "party.h"
 #include "atcommand.h"	//msg_txt()
@@ -108,13 +109,14 @@ struct party_data* party_searchname(const char* str)
 int party_create(struct map_session_data *sd,char *name,int item,int item2)
 {
 	struct party_member leader;
+	char * tname = aStrdup(name);
 
 	if(sd->status.party_id) {
 		clif_party_created(sd,2);
 		return 0; // "already in a party"
 	}
 
-	if(strlen(name) < 2)
+	if(strlen(trim(tname)) < 2)
 	{
 		clif_party_created(sd, 1);
 		return 0;
@@ -127,6 +129,7 @@ int party_create(struct map_session_data *sd,char *name,int item,int item2)
 	leader.leader = 1;
 
 	intif_create_party(&leader,name,item,item2);
+	aFree(tname);
 	return 0;
 }
 

@@ -400,9 +400,10 @@ int guild_send_dot_remove(struct map_session_data *sd)
 // 作成要求
 int guild_create(struct map_session_data *sd,char *name)
 {
+	char *tname = aStrdup(name);
 	nullpo_retr(0, sd);
 
-	if(sd->status.guild_id || strlen(name) < 2)
+	if(sd->status.guild_id || strlen(trim(tname)) < 2)
 	{
 		clif_guild_created(sd,1);	// すでに所属している
 		return 0;
@@ -415,6 +416,7 @@ int guild_create(struct map_session_data *sd,char *name)
 		return 1;
 	}
 	clif_guild_created(sd,3);	// エンペリウムがいない
+	aFree(tname);
 	return 0;
 }
 
