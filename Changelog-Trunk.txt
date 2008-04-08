@@ -3,6 +3,9 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2008/04/08
+	* Modified PACKETVER for recent clients to use a YYYYMMDD date format
+	  instead of a simple sequence number (allows adding versions inbetween)
 2008/04/07
 	* Rev. 12529 Updated MAX_GUARDIANS to support an insane amount of guardians. [L0ne_W0lf]
 	* Immunity to magic now makes you immune to the SC effect as well. (r12527) [Kevin]

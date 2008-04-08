@@ -757,7 +757,7 @@ static int clif_set_unit_idle(struct block_list* bl, unsigned char* buffer, bool
 		WBUFW(buf,0) = spawn?0x22b:0x22a;
 #endif
 
-#if PACKETVER >= 9
+#if PACKETVER >= 20071106
 	if (type) {
 		// shift payload 1 byte to the right for mob packets
 		WBUFB(buf,2) = 0; // padding?
@@ -865,7 +865,7 @@ static int clif_set_unit_walking(struct block_list* bl, struct unit_data* ud, un
 	WBUFW(buf, 0) = 0x22c;
 #endif
 
-#if PACKETVER >= 9
+#if PACKETVER >= 20071106
 	WBUFB(buf, 2) = 0; // padding?
 	offset++;
 	buf = WBUFP(buf,offset);
@@ -922,7 +922,7 @@ static int clif_set_unit_walking(struct block_list* bl, struct unit_data* ud, un
 //Used for spawn/walk packets, where the ID offset changes for packetver >=9
 static void clif_setdisguise(struct block_list *bl, unsigned char *buf,int len)
 {
-#if PACKETVER >= 9
+#if PACKETVER >= 20071106
 	WBUFL(buf,3)=-bl->id;
 #else
 	WBUFL(buf,2)=-bl->id;
@@ -1527,7 +1527,7 @@ void clif_sendfakenpc(struct map_session_data *sd, int npcid)
 	buf = WFIFOP(fd,0);
 	memset(WBUFP(buf,0), 0, packet_len(0x78));
 	WBUFW(buf,0)=0x78;
-#if PACKETVER >=9
+#if PACKETVER >= 20071106
 	WBUFB(buf,2) = 0; //Unknown bit
 	buf = WFIFOP(fd,1);
 #endif
@@ -7715,7 +7715,7 @@ void clif_parse_WantToConnection(int fd, TBL_PC* sd)
 
 	pc_setnewpc(sd, account_id, char_id, login_id1, client_tick, sex, fd);
 
-#if PACKETVER < 8
+#if PACKETVER < 20070521
 	WFIFOHEAD(fd,4);
 	WFIFOL(fd,0) = sd->bl.id;
 	WFIFOSET(fd,4);
@@ -7907,7 +7907,7 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 			clif_status_load(&sd->bl, SI_NIGHT, 1);
 		}
 
-#if PACKETVER >= 9
+#if PACKETVER >= 20070918
 		clif_equipcheckbox(sd);
 #endif
 
@@ -12330,7 +12330,7 @@ static int packetdb_readdb(void)
 	    0,  0,  0,  0, 55, 17,  3, 37,  46, -1, 23, -1,  3,108,  3,  2,
 #if PACKETVER < 2
 	    3, 28, 19, 11,  3, -1,  9,  5,  52, 51, 56, 58, 41,  2,  6,  6,
-#elif PACKETVER < 9	// 78-7b 亀島以降 lv99エフェクト用
+#elif PACKETVER < 20071106	// 78-7b 亀島以降 lv99エフェクト用
 	    3, 28, 19, 11,  3, -1,  9,  5,  54, 53, 58, 60, 41,  2,  6,  6,
 #else // change in 0x78 and 0x7c
 	    3, 28, 19, 11,  3, -1,  9,  5,  55, 53, 58, 60, 42,  2,  6,  6,
@@ -12372,7 +12372,7 @@ static int packetdb_readdb(void)
 	//#0x0200
 	   26, -1, 26, 10, 18, 26, 11, 34,  14, 36, 10,  0,  0, -1, 32, 10, // 0x20c change to 0 (was 19)
 	   22,  0, 26, 26, 42,  6,  6,  2,   2,282,282, 10, 10, -1, -1, 66,
-#if PACKETVER < 9
+#if PACKETVER < 20071106
 	   10, -1, -1,  8, 10,  2,282, 18,  18, 15, 58, 57, 64,  5, 71,  5,
 #else // 0x22c changed
 	   10, -1, -1,  8, 10,  2,282, 18,  18, 15, 58, 57, 65,  5, 71,  5,

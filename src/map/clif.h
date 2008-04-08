@@ -26,18 +26,19 @@ struct guild;
 #include <stdarg.h>
 
 // server->client protocol version
-// v0 - pre-?
-// v1 - ?                  - 0x196
-// v2 - ?                  - 0x78, 0x79
-// v3 - ?                  - 0x1c8, 0x1c9, 0x1de
-// v4 - ?                  - 0x1d7, 0x1d8, 0x1d9, 0x1da
-// v5 - 2003-12-18aSakexe+ - 0x1ee, 0x1ef, 0x1f0
-// v6 - 2004-03-02aSakexe+ - 0x1f4, 0x1f5
-// v7 - 2005-04-11aSakexe+ - 0x229, 0x22a, 0x22b, 0x22c
-// v8 - 2007-05-21aSakexe+ - 0x283
-// v9 - 2007-11-06aSakexe+ - 0x78, 0x7c, 0x22c
+//        0 - pre-?
+//        1 - ?                  - 0x196
+//        2 - ?                  - 0x78, 0x79
+//        3 - ?                  - 0x1c8, 0x1c9, 0x1de
+//        4 - ?                  - 0x1d7, 0x1d8, 0x1d9, 0x1da
+//        5 - 2003-12-18aSakexe+ - 0x1ee, 0x1ef, 0x1f0
+//        6 - 2004-03-02aSakexe+ - 0x1f4, 0x1f5
+//        7 - 2005-04-11aSakexe+ - 0x229, 0x22a, 0x22b, 0x22c
+// 20070521 - 2007-05-21aSakexe+ - 0x283
+// 20070918 - 2007-09-18aSakexe+ - 0x2d6, 0x2d7, 0x2d8, 0x2d9, 0x2da
+// 20071106 - 2007-11-06aSakexe+ - 0x78, 0x7c, 0x22c
 #ifndef PACKETVER
-	#define PACKETVER	9
+	#define PACKETVER	20071106
 #endif
 
 // packet DB
