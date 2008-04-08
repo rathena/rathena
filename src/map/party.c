@@ -113,12 +113,14 @@ int party_create(struct map_session_data *sd,char *name,int item,int item2)
 
 	if(sd->status.party_id) {
 		clif_party_created(sd,2);
+		aFree(tname);
 		return 0; // "already in a party"
 	}
 
 	if(strlen(trim(tname)) < 2)
 	{
 		clif_party_created(sd, 1);
+		aFree(tname);
 		return 0;
 	}
 

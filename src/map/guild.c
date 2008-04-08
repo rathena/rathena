@@ -406,6 +406,7 @@ int guild_create(struct map_session_data *sd,char *name)
 	if(sd->status.guild_id || strlen(trim(tname)) < 2)
 	{
 		clif_guild_created(sd,1);	// ‚·‚Å‚ÉŠ‘®‚µ‚Ä‚¢‚é
+		aFree(tname);
 		return 0;
 	}
 	if(!battle_config.guild_emperium_check || pc_search_inventory(sd,714) >= 0) {
@@ -413,6 +414,7 @@ int guild_create(struct map_session_data *sd,char *name)
 		guild_makemember(&m,sd);
 		m.position=0;
 		intif_guild_create(name,&m);
+		aFree(tname);
 		return 1;
 	}
 	clif_guild_created(sd,3);	// ƒGƒ“ƒyƒŠƒEƒ€‚ª‚¢‚È‚¢
