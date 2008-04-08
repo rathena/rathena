@@ -3704,7 +3704,7 @@ static unsigned short status_calc_speed(struct block_list *bl, struct status_cha
 
 	//Default speed coming in means there's no speed_rate adjustments. 
 	int new_speed = speed;
-	bool default_speed = (speed == 100);
+	bool default_speed = (speed == DEFAULT_WALK_SPEED);
 
 	if(!sc || !sc->count)
 		return cap_value(speed,10,USHRT_MAX);
