@@ -4,6 +4,7 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2008/04/07
+	* Rev. 12529 Updated MAX_GUARDIANS to support an insane amount of guardians. [L0ne_W0lf]
 	* Immunity to magic now makes you immune to the SC effect as well. (r12527) [Kevin]
 	* Made script command 'flagemblem' and guild_emblem_change send an update 
 	  of the emblem_id to the players in the area.
