@@ -3662,7 +3662,7 @@ static const struct _battle_data {
 	{ "vending_tax",                        &battle_config.vending_tax,                     0,      0,      10000,          },
 	{ "day_duration",                       &battle_config.day_duration,                    0,      0,      INT_MAX,        },
 	{ "night_duration",                     &battle_config.night_duration,                  0,      0,      INT_MAX,        },
-	{ "mob_remove_delay",                   &battle_config.mob_remove_delay,                60000,  15000,  INT_MAX,        },
+	{ "mob_remove_delay",                   &battle_config.mob_remove_delay,                60000,  1000,   INT_MAX,        },
 	{ "mob_active_time",                    &battle_config.mob_active_time,                 0,      0,      INT_MAX,        },
 	{ "boss_active_time",                   &battle_config.boss_active_time,                0,      0,      INT_MAX,        },
 	{ "sg_miracle_skill_duration",          &battle_config.sg_miracle_skill_duration,       3600000, 0,     INT_MAX,        },

@@ -35,7 +35,8 @@ struct guild;
 //        6 - 2004-03-02aSakexe+ - 0x1f4, 0x1f5
 //        7 - 2005-04-11aSakexe+ - 0x229, 0x22a, 0x22b, 0x22c
 // 20070521 - 2007-05-21aSakexe+ - 0x283
-// 20070918 - 2007-09-18aSakexe+ - 0x2d6, 0x2d7, 0x2d8, 0x2d9, 0x2da
+// 20070821 - 2007-08-21aSakexe+ - 0x2c5
+// 20070918 - 2007-09-18aSakexe+ - 0x2d7, 0x2d9, 0x2da
 // 20071106 - 2007-11-06aSakexe+ - 0x78, 0x7c, 0x22c
 #ifndef PACKETVER
 	#define PACKETVER	20071106
