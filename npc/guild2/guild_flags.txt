@@ -1,0 +1,95 @@
+//===== eAthena Script =======================================
+//= War of Emperium Second Edition
+//===== By: ==================================================
+//= L0ne_W0lf
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= eAthena SVN
+//===== Description: =========================================
+//= WoE SE Guild Flags in Juno and Rachel
+//===== Additional Comments: =================================
+//= 1.0 First Version [L0ne_W0lf]
+//============================================================
+
+// Juno
+yuno,109,167,5	script	Himinn	722,{
+	end;
+
+OnRecvCastlesc01:
+	FlagEmblem GetCastleData("schg_cas01",1);
+	end;
+}
+
+yuno,110,171,5	script	Andlangr	722,{
+	end;
+
+OnRecvCastlesc02:
+	FlagEmblem GetCastleData("schg_cas02",1);
+	end;
+}
+
+yuno,111,175,5	script	Viblainn	722,{
+	end;
+
+OnRecvCastlesc03:
+	FlagEmblem GetCastleData("schg_cas03",1);
+	end;
+}
+
+yuno,112,179,5	script	Hljod	722,{
+	end;
+
+OnRecvCastlesc04:
+	FlagEmblem GetCastleData("schg_cas04",1);
+	end;
+}
+
+yuno,114,183,5	script	Skidbladnir	722,{
+	end;
+
+OnRecvCastlesc05:
+	FlagEmblem GetCastleData("schg_cas05",1);
+	end;
+}
+
+// Arunafeltz
+rachel,124,120,3	script	Mardol	722,{
+	end;
+
+OnRecvCastlear01:
+	FlagEmblem GetCastleData("arug_cas01",1);
+	end;
+}
+
+rachel,136,120,5	script	Cyr	722,{
+	end;
+
+OnRecvCastlear02:
+	FlagEmblem GetCastleData("arug_cas02",1);
+	end;
+}
+
+rachel,138,126,6	script	Horn	722,{
+	end;
+
+OnRecvCastlear03:
+	FlagEmblem GetCastleData("arug_cas03",1);
+	end;
+}
+
+rachel,135,131,7	script	Gefn	722,{
+	end;
+
+OnRecvCastlear04:
+	FlagEmblem GetCastleData("arug_cas04",1);
+	end;
+}
+
+rachel,124,130,1	script	Banadis	722,{
+	end;
+
+OnRecvCastlear05:
+	FlagEmblem GetCastleData("arug_cas05",1);
+	end;
+}

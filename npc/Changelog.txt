@@ -1,5 +1,7 @@
 Date		Added
 ======
+2008/04/07
+	* Rev. 12530 Added new town guild flags in Rachel and Juno. (update 1/3) [L0ne_W0lf]
 2008/04/05
 	* Rev. 12496 I hate the guild castle scripts. Reverted a change. [L0ne_W0lf]
 	* Rev. 12495 Further updates to Zhed's Veins addition. [L0ne_W0lf]
