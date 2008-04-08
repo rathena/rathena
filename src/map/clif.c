@@ -5980,7 +5980,12 @@ int clif_mvp_exp(struct map_session_data *sd, unsigned int exp)
 }
 
 /*==========================================
- * ギルド作成可否通知
+ * Guild creation result
+ * R 0167 <flag>.B
+ * flag = 0 -> "Guild has been created."
+ * flag = 1 -> "You are already in a Guild."
+ * flag = 2 -> "That Guild Name already exists."
+ * flag = 3 -> "You need the neccessary item to create a Guild."
  *------------------------------------------*/
 int clif_guild_created(struct map_session_data *sd,int flag)
 {
@@ -9696,7 +9701,10 @@ void clif_parse_StoragePassword(int fd, struct map_session_data *sd)
  *------------------------------------------*/
 void clif_parse_CreateParty(int fd, struct map_session_data *sd)
 {
-	if(map[sd->bl.m].flag.partylock)
+	char* name = (char*)RFIFOP(fd,2);
+	name[NAME_LENGTH-1] = '\0';
+
+	if( map[sd->bl.m].flag.partylock )
 	{// Party locked.
 		clif_displaymessage(fd, msg_txt(227));
 		return;
@@ -9707,15 +9715,17 @@ void clif_parse_CreateParty(int fd, struct map_session_data *sd)
 		return;
 	}
 
-	party_create(sd,(char*)RFIFOP(fd,2),0,0);
+	party_create(sd,name,0,0);
 }
 
-/*==========================================
- * パーティを作る
- *------------------------------------------*/
 void clif_parse_CreateParty2(int fd, struct map_session_data *sd)
 {
-	if(map[sd->bl.m].flag.partylock)
+	char* name = (char*)RFIFOP(fd,2);
+	int item1 = RFIFOB(fd,26);
+	int item2 = RFIFOB(fd,27);
+	name[NAME_LENGTH-1] = '\0';
+
+	if( map[sd->bl.m].flag.partylock )
 	{// Party locked.
 		clif_displaymessage(fd, msg_txt(227));
 		return;
@@ -9726,7 +9736,7 @@ void clif_parse_CreateParty2(int fd, struct map_session_data *sd)
 		return;
 	}
 
-	party_create(sd,(char*)RFIFOP(fd,2),RFIFOB(fd,26),RFIFOB(fd,27));
+	party_create(sd,name,item1,item2);
 }
 
 /*==========================================
@@ -9951,16 +9961,21 @@ void clif_parse_OpenVending(int fd, struct map_session_data* sd)
 }
 
 /*==========================================
- * ギルドを作る
+ * Guild creation request
+ * S 0165 <account id>.L <guild name>.24S
  *------------------------------------------*/
 void clif_parse_CreateGuild(int fd,struct map_session_data *sd)
 {
+	char* name = (char*)RFIFOP(fd,6);
+	name[NAME_LENGTH-1] = '\0';
+
 	if(map[sd->bl.m].flag.guildlock)
 	{	//Guild locked.
 		clif_displaymessage(fd, msg_txt(228));
 		return;
 	}
-	guild_create(sd, (char*)RFIFOP(fd,6));
+
+	guild_create(sd, name);
 }
 
 /*==========================================

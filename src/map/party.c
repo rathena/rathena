@@ -110,16 +110,16 @@ int party_create(struct map_session_data *sd,char *name,int item,int item2)
 {
 	struct party_member leader;
 	char tname[NAME_LENGTH];
-	safestrncpy(tname, name, NAME_LENGTH);
 
-	if(sd->status.party_id) {
-		clif_party_created(sd,2);
-		return 0; // "already in a party"
+	safestrncpy(tname, name, NAME_LENGTH);
+	if( strlen(trim(tname)) == 0 )
+	{// empty name
+		return 0;
 	}
 
-	if(strlen(trim(tname)) == 0)
-	{
-		clif_party_created(sd, 1);
+	if( sd->status.party_id )
+	{// already in a party
+		clif_party_created(sd,2);
 		return 0;
 	}
 

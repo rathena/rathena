@@ -44,7 +44,7 @@ int guild_getposition(struct guild *g, struct map_session_data *sd);
 unsigned int guild_payexp(struct map_session_data *sd,unsigned int exp);
 int guild_getexp(struct map_session_data *sd,int exp); // [Celest]
 
-int guild_create(struct map_session_data *sd,char *name);
+int guild_create(struct map_session_data *sd, const char *name);
 int guild_created(int account_id,int guild_id);
 int guild_request_info(int guild_id);
 int guild_recv_noinfo(int guild_id);

@@ -397,28 +397,31 @@ int guild_send_dot_remove(struct map_session_data *sd)
 }
 //------------------------------------------------------------------------
 
-// 作成要求
-int guild_create(struct map_session_data *sd,char *name)
+int guild_create(struct map_session_data *sd, const char *name)
 {
 	char tname[NAME_LENGTH];
+	struct guild_member m;
 	nullpo_retr(0, sd);
 
 	safestrncpy(tname, name, NAME_LENGTH);
+	if( strlen(trim(tname)) == 0 )
+		return 0; // empty name
 
-	if(sd->status.guild_id || strlen(trim(tname)) == 0)
-	{
-		clif_guild_created(sd,1);	// すでに所属している
+	if( sd->status.guild_id )
+	{// already in a guild
+		clif_guild_created(sd,1);
 		return 0;
 	}
-	if(!battle_config.guild_emperium_check || pc_search_inventory(sd,714) >= 0) {
-		struct guild_member m;
-		guild_makemember(&m,sd);
-		m.position=0;
-		intif_guild_create(name,&m);
-		return 1;
+	if( battle_config.guild_emperium_check && pc_search_inventory(sd,714) == -1 )
+	{// item required
+		clif_guild_created(sd,3);
+		return 0;
 	}
-	clif_guild_created(sd,3);	// エンペリウムがいない
-	return 0;
+
+	guild_makemember(&m,sd);
+	m.position=0;
+	intif_guild_create(name,&m);
+	return 1;
 }
 
 // 作成可否
