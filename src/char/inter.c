@@ -8,6 +8,7 @@
 #include "../common/malloc.h"
 #include "../common/lock.h"
 #include "../common/showmsg.h"
+#include "../common/strlib.h"
 #include "char.h"
 #include "inter.h"
 #include "int_party.h"
@@ -480,13 +481,12 @@ static struct WisData* mapif_create_whisper(int fd, char* src, char* dst, char* 
 }
 
 // Wisp/page request to send
-int mapif_parse_WisRequest(int fd) {
+int mapif_parse_WisRequest(int fd)
+{
 	struct mmo_charstatus* char_status;
 	struct WisData* wd;
 	char name[NAME_LENGTH];
 	int fd2;
-
-	RFIFOHEAD(fd);
 
 	if (RFIFOW(fd,2)-52 >= sizeof(wd->msg)) {
 		ShowWarning("inter: Wis message size too long.\n");
@@ -496,8 +496,8 @@ int mapif_parse_WisRequest(int fd) {
 		return 0;
 	}
 
-	memcpy(name, RFIFOP(fd,28), NAME_LENGTH); //Received name may be too large and not contain \0! [Skotlex]
-	name[NAME_LENGTH-1]= '\0';
+	safestrncpy(name, (char*)RFIFOP(fd,28), NAME_LENGTH); //Received name may be too large and not contain \0! [Skotlex]
+
 	// search if character exists before to ask all map-servers
 	char_status = search_character_byname(name);
 	if (char_status == NULL)

@@ -643,8 +643,8 @@ int mapif_parse_WisRequest(int fd)
 		ShowError("inter: Wis message doesn't exist.\n");
 		return 0;
 	}
-	memcpy(name, RFIFOP(fd,28), NAME_LENGTH); //Received name may be too large and not contain \0! [Skotlex]
-	name[NAME_LENGTH-1]= '\0';
+	
+	safestrncpy(name, (char*)RFIFOP(fd,28), NAME_LENGTH); //Received name may be too large and not contain \0! [Skotlex]
 
 	Sql_EscapeStringLen(sql_handle, esc_name, name, strnlen(name, NAME_LENGTH));
 	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `name` FROM `%s` WHERE `name`='%s'", char_db, esc_name) )

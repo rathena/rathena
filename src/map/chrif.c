@@ -111,12 +111,14 @@ struct auth_node* chrif_search(int account_id)
 	return (struct auth_node*)idb_get(auth_db, account_id);
 }
 
-struct auth_node* chrif_auth_check(int account_id, int char_id, enum sd_state state) {
+struct auth_node* chrif_auth_check(int account_id, int char_id, enum sd_state state)
+{
 	struct auth_node *node = chrif_search(account_id);
 	return (node && node->char_id == char_id && node->state == state)?node:NULL;
 }
 
-bool chrif_auth_delete(int account_id, int char_id, enum sd_state state) {
+bool chrif_auth_delete(int account_id, int char_id, enum sd_state state)
+{
 	struct auth_node *node;
 	if ((node=chrif_auth_check(account_id, char_id, state)))
 	{

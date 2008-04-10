@@ -1152,15 +1152,6 @@ int parse_fromchar(int fd)
 
 				//ShowStatus("Char-server '%s': authentication of the account %d accepted (ip: %s).\n", server[id].name, account_id, ip);
 
-				struct online_login_data* od = (struct online_login_data*)idb_get(online_db, account_id);
-
-				//Leave info in online data DB [Kevin]
-				if(od->waiting_disconnect != -1)
-				{
-					delete_timer(od->waiting_disconnect, waiting_disconnect_timer);
-					od->waiting_disconnect = -1;
-				}
-
 				// each auth entry can only be used once
 				idb_remove(auth_db, account_id);
 
