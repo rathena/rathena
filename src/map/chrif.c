@@ -163,6 +163,7 @@ static bool chrif_auth_logout(TBL_PC* sd, enum sd_state state)
 	if(sd->fd && state == ST_LOGOUT)
   	{	//Disassociate player, and free it after saving ack returns. [Skotlex]
 		//fd info must not be lost for ST_MAPCHANGE as a final packet needs to be sent to the player.
+		chrif_char_offline(sd);
 		if (session[sd->fd])
 			session[sd->fd]->session_data = NULL;
 		sd->fd = 0;
@@ -527,16 +528,18 @@ void chrif_authreq(struct map_session_data *sd)
 		node->login_id1 == sd->login_id1)
 	{	//auth ok
 		if (!pc_authok(sd, node->login_id2, node->expiration_time, node->char_dat))
+			chrif_char_offline(sd); //Set client offline
 			chrif_auth_delete(node->account_id, node->char_id, ST_LOGIN);
 		else {
 			//char_dat no longer needed, but player auth is not completed yet.
 			aFree(node->char_dat);
 			node->char_dat = NULL;
 			node->sd = sd;
+			chrif_char_online(sd); //Set client online
 		}
 	} else { //auth failed
 		pc_authfail(sd);
-		chrif_char_offline(sd); //Set him offline, the char server likely has it set as online already.
+		chrif_char_offline(sd); //Set client offline
 		chrif_auth_delete(sd->status.account_id, sd->status.char_id, ST_LOGIN);
 	}
 	return;
@@ -576,11 +579,14 @@ void chrif_authok(int fd)
 				node->login_id1 == RFIFOL(fd, 8))
 			{ //Auth Ok
 				if (pc_authok(sd, RFIFOL(fd, 16), RFIFOL(fd, 12), status))
+				{
+					chrif_char_online(sd);
 					return;
+				}
 			} else { //Auth Failed
 				pc_authfail(sd);
-				chrif_char_offline(sd); //Set him offline, the char server likely has it set as online already.
 			}
+			chrif_char_offline(sd); //Set client offline
 			chrif_auth_delete(account_id, char_id, ST_LOGIN);
 			return;
 		}
@@ -619,6 +625,7 @@ int auth_db_cleanup_sub(DBKey key,void *data,va_list ap)
 		default:
 			//Clear data. any connected players should have timed out by now.
 			ShowInfo("auth_db: Node (state %s) timed out for %d:%d\n", states[node->state], node->account_id, node->char_id);
+			chrif_char_offline(node->sd);
 			chrif_auth_delete(node->account_id, node->char_id, node->state);
 			break;
 		}

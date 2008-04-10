@@ -3171,7 +3171,6 @@ int parse_char(int fd)
 			node->ip = ipl;
 			idb_put(auth_db, sd->account_id, node);
 
-			set_char_online(i, char_dat.char_id, char_dat.account_id);
 		}
 		break;
 
