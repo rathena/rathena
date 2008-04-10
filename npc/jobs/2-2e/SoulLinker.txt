@@ -316,7 +316,7 @@ morocc_in,174,30,6	script	Kid#link1	716,{
 			mes "your eyes and relax.";
 			mes "We'll go back into the";
 			mes "depths of your mind.";
-			close;
+			close2;
 			warp "job_soul",30,30;
 			end;
 		}
