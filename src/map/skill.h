@@ -98,7 +98,7 @@ struct skill_name_db {
 };
 
 #define MAX_SKILL_UNIT_LAYOUT	50
-#define MAX_SQUARE_LAYOUT		20	// 11*11のユニット配置が最大
+#define MAX_SQUARE_LAYOUT		5	// 11*11のユニット配置が最大
 #define MAX_SKILL_UNIT_COUNT ((MAX_SQUARE_LAYOUT*2+1)*(MAX_SQUARE_LAYOUT*2+1))
 struct s_skill_unit_layout {
 	int count;
