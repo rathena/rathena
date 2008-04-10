@@ -170,18 +170,18 @@
 668,Handsei,Red Envelope,2,0,,20,,,,,0xFFFFFFFF,7,2,,,,,,{ set Zeny,Zeny+rand(1000,10000); },{},{}
 669,Rice_Cake_Soup,Rice-Cake Soup,0,500,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal -100,-100; },{},{}
 // Coins
-670,Gold_Coin_Moneybag,Bag of Gold Coins,2,100000,,400,,,,,0xFFFFFFFF,7,3,,,,,,{},{},{}
-671,Gold_Coin,Gold Coin,2,10000,,40,,,,,0xFFFFFFFF,7,3,,,,,,{},{},{}
-672,Copper_Coin_Moneybag,Bag of Bronze Coins,2,1000,,400,,,,,0xFFFFFFFF,7,3,,,,,,{},{},{}
-673,Copper_Coin,Bronze Coin,2,100,,40,,,,,0xFFFFFFFF,7,3,,,,,,{},{},{}
-674,Mithril_Coin,Mithril Coin,2,5000,,40,,,,,0xFFFFFFFF,7,3,,,,,,{},{},{}
-675,Silver_Coin,Silver Coin,2,5000,,40,,,,,0xFFFFFFFF,7,3,,,,,,{},{},{}
-676,Silver_Coin_Moneybag,Bag of Silver Coins,2,50000,,400,,,,,0xFFFFFFFF,7,3,,,,,,{},{},{}
-677,White_Gold_Coin,Platinum Coin,2,2000,,40,,,,,0xFFFFFFFF,7,3,,,,,,{},{},{}
+670,Gold_Coin_Moneybag,Bag of Gold Coins,3,100000,,400,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+671,Gold_Coin,Gold Coin,3,10000,,40,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+672,Copper_Coin_Moneybag,Bag of Bronze Coins,3,1000,,400,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+673,Copper_Coin,Bronze Coin,3,100,,40,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+674,Mithril_Coin,Mithril Coin,3,5000,,40,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+675,Silver_Coin,Silver Coin,3,5000,,40,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+676,Silver_Coin_Moneybag,Bag of Silver Coins,3,50000,,400,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+677,White_Gold_Coin,Platinum Coin,3,2000,,40,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 678,Poison_Bottle,Poison Bottle,0,5000,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ if(Class == Job_Assassin_Cross) { sc_start SC_DPoison,60000,0; sc_start SC_ASPDPOTION2,60000,0; } else percentheal -100,-100; },{},{}
 679,Gold_Pill,Pilule,0,5000,,300,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 50,50; },{},{}
 680,Magical_Carnation,Magic Carnation,0,,0,1000,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 0,20; },{},{}
-681,Memory_Of_Wedding,Sweet Memory of Marriage,2,50000,,10,,,,,0xFFFFFFFF,7,3,,,,,,{ if (getpartnerid()) sc_start SC_WEDDING,600000,0; },{},{}
+681,Memory_Of_Wedding,Sweet Memory of Marriage,2,50000,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ if (getpartnerid()) sc_start SC_WEDDING,600000,0; },{},{}
 // ATK/MATK Potions
 682,Realgar_Wine,Distilled Fighting Spirit,0,,0,100,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_ATKPOTION,60000,30; },{},{}
 683,Exorcize_Herb,Herb of Incantation,0,,0,50,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_MATKPOTION,60000,30; },{},{}
