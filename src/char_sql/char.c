@@ -2940,7 +2940,7 @@ int parse_char(int fd)
 		{	// already authed client
 			struct online_char_data* data = (struct online_char_data*)idb_get(online_char_db, sd->account_id);
 			if( data == NULL || data->server == -1) //If it is not in any server, send it offline. [Skotlex]
-													//send -1 as char id (99 means at char select) [Kevin]
+				//send -1 as char id (99 means at char select) [Kevin]
 				set_char_offline(-1,sd->account_id);
 			if( data != NULL && data->fd == fd)
 				data->fd = -1;

@@ -49,7 +49,7 @@
 #define MAX_GUILDSKILL	15 // increased max guild skills because of new skills [Sara-chan]
 #define MAX_GUILDCASTLE 34	// Updated to include new entries for WoE:SE. [L0ne_W0lf]
 #define MAX_GUILDLEVEL 50
-#define MAX_GUARDIANS 46	//Local max per castle. [Skotlex]
+#define MAX_GUARDIANS 8	//Local max per castle. [Skotlex]
 #define MAX_QUEST 25 //Max quests for a PC
 #define MAX_QUEST_OBJECTIVES 3 //Max quest objectives for a quest
 

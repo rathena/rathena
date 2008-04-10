@@ -6439,6 +6439,16 @@ struct skill_unit_group* skill_unitsetting (struct block_list *src, short skilli
 		case WZ_ICEWALL:
 			val1 = (skilllv <= 1) ? 500 : 200 + 200*skilllv;
 			break;
+		case HT_LANDMINE:
+		case HT_ANKLESNARE:
+		case HT_SHOCKWAVE:
+		case HT_SANDMAN:
+		case HT_FLASHER:
+		case HT_FREEZINGTRAP:
+		case HT_TALKIEBOX:
+		case HT_SKIDTRAP:
+			val1 = 3500;
+			break;
 		case GS_DESPERADO:
 			val1 = abs(layout->dx[i]);
 			val2 = abs(layout->dy[i]);
@@ -7274,12 +7284,22 @@ int skill_unit_ondamaged (struct skill_unit *src, struct block_list *bl, int dam
 	nullpo_retr(0, src);
 	nullpo_retr(0, sg=src->group);
 
-	if (skill_get_inf2(sg->skill_id)&INF2_TRAP && damage > 0)
-		skill_delunitgroup(NULL,sg);
-	else 
-	switch(sg->unit_id){
+	switch( sg->unit_id )
+	{
+	case UNT_SKIDTRAP:
+	case UNT_LANDMINE:
+	case UNT_SHOCKWAVE:
+	case UNT_SANDMAN:
+	case UNT_FLASHER:
+	case UNT_FREEZINGTRAP:
+	case UNT_TALKIEBOX:
+	case UNT_ANKLESNARE:
 	case UNT_ICEWALL:
 		src->val1-=damage;
+		break;
+	case UNT_BLASTMINE:
+	case UNT_CLAYMORETRAP:
+		skill_blown(bl, &src->bl, 2, -1, 0);
 		break;
 	default:
 		damage = 0;
@@ -8133,15 +8153,15 @@ int skill_check_condition(struct map_session_data* sd, short skill, short lv, in
 				continue;// no item
 			if( itemid_isgemstone(itemid[i]) && skill != HW_GANBANTEIN )
 			{
-				if (sd->special_state.no_gemstone)
+				if( sd->special_state.no_gemstone )
 				{	//Make it substract 1 gem rather than skipping the cost.
-					if (--amount[i] < 1)
+					if( --amount[i] < 1 )
 						continue;
 				}
 				if(sc && sc->data[SC_INTOABYSS])
 				{
 					if( skill != SA_ABRACADABRA )
-					continue;
+						continue;
 					else if( --amount[i] < 1 )
 						amount[i] = 1; // Hocus Pocus allways use at least 1 gem
 				}
@@ -9098,7 +9118,7 @@ static int skill_trap_splash (struct block_list *bl, va_list ap)
 int skill_enchant_elemental_end (struct block_list *bl, int type)
 {
 	struct status_change *sc;
-	const	enum sc_type scs[] = { SC_ENCPOISON, SC_ASPERSIO, SC_FIREWEAPON, SC_WATERWEAPON, SC_WINDWEAPON, SC_EARTHWEAPON, SC_SHADOWWEAPON, SC_GHOSTWEAPON, SC_ENCHANTARMS };
+	const enum sc_type scs[] = { SC_ENCPOISON, SC_ASPERSIO, SC_FIREWEAPON, SC_WATERWEAPON, SC_WINDWEAPON, SC_EARTHWEAPON, SC_SHADOWWEAPON, SC_GHOSTWEAPON, SC_ENCHANTARMS };
 	int i;
 	nullpo_retr(0, bl);
 	nullpo_retr(0, sc= status_get_sc(bl));
