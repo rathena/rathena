@@ -604,7 +604,7 @@
 667,0,6,4,0,0x3,2:5:8:11:14,5,1,no,0,0x2,0,none,0,	NPC_WIDECONFUSE,Wide Confusion
 668,0,6,4,0,0x3,2:5:8:11:14,5,1,no,0,0x2,0,none,0,	NPC_WIDESLEEP,Wide Sleep
 669,0,6,4,3,0x3,5,1,1,no,0,0x2,0,magic,0,	NPC_WIDESIGHT,Wide Sight
-670,9,6,2,7,0x21,0,10,1,no,0,0x2,0,magic,0,	NPC_EVILLAND,Evil Land
+670,9,6,2,7,0x91,0,10,1,no,0,0x2,0,magic,0,	NPC_EVILLAND,Evil Land
 671,0,6,4,0,0x1,0,5,1,no,0,0x2,0,magic,0,	NPC_MAGICMIRROR,Magic Mirror
 672,0,6,4,0,0x3,2:5:8:11:14,5,1,no,0,0x2,0,none,0,	NPC_SLOWCAST,Slow Cast
 673,-9,6,1,-1,0,0,5,1,no,0,0x2,0,weapon,0,	NPC_CRITICALWOUND,Critical Wounds

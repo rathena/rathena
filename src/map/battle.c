@@ -2177,9 +2177,6 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 			case PR_SANCTUARY:
 				ad.damage = (skill_lv>6)?388:skill_lv*50;
 				break;
-			case NPC_EVILLAND:
-				ad.damage = (skill_lv>6)?666:skill_lv*100;
-				break;
 			case ALL_RESURRECTION:
 			case PR_TURNUNDEAD:
 				//Undead check is on skill_castend_damageid code.
@@ -2551,6 +2548,9 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 	case HW_GRAVITATION:
 		md.damage = 200+200*skill_lv;
 		md.dmotion = 0; //No flinch animation.
+		break;
+	case NPC_EVILLAND:
+		md.damage = (skill_lv>6)?666:skill_lv*100;
 		break;
 	}
 
