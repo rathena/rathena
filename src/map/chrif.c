@@ -528,8 +528,10 @@ void chrif_authreq(struct map_session_data *sd)
 		node->login_id1 == sd->login_id1)
 	{	//auth ok
 		if (!pc_authok(sd, node->login_id2, node->expiration_time, node->char_dat))
+		{
 			chrif_char_offline(sd); //Set client offline
 			chrif_auth_delete(node->account_id, node->char_id, ST_LOGIN);
+		}
 		else {
 			//char_dat no longer needed, but player auth is not completed yet.
 			aFree(node->char_dat);
