@@ -627,7 +627,7 @@ int auth_db_cleanup_sub(DBKey key,void *data,va_list ap)
 		default:
 			//Clear data. any connected players should have timed out by now.
 			ShowInfo("auth_db: Node (state %s) timed out for %d:%d\n", states[node->state], node->account_id, node->char_id);
-			chrif_char_offline(node->sd);
+			chrif_char_offline_nsd(node->account_id, node->char_id);
 			chrif_auth_delete(node->account_id, node->char_id, node->state);
 			break;
 		}
@@ -1259,6 +1259,18 @@ int chrif_char_offline(struct map_session_data *sd)
 	WFIFOW(char_fd,0) = 0x2b17;
 	WFIFOL(char_fd,2) = sd->status.char_id;
 	WFIFOL(char_fd,6) = sd->status.account_id;
+	WFIFOSET(char_fd,10);
+
+	return 0;
+}
+int chrif_char_offline_nsd(int account_id, int char_id)
+{
+	chrif_check(-1);
+
+	WFIFOHEAD(char_fd,10);
+	WFIFOW(char_fd,0) = 0x2b17;
+	WFIFOL(char_fd,2) = char_id;
+	WFIFOL(char_fd,6) = account_id;
 	WFIFOSET(char_fd,10);
 
 	return 0;
