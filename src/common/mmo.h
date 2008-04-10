@@ -271,6 +271,7 @@ struct mmo_charstatus {
 	struct point last_point,save_point,memo_point[MAX_MEMOPOINTS];
 	struct item inventory[MAX_INVENTORY],cart[MAX_CART];
 	struct skill skill[MAX_SKILL];
+	int num_quests;
 	struct quest quest_log[MAX_QUEST];
 
 	struct s_friend friends[MAX_FRIENDS]; //New friend system [Skotlex]
