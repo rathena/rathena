@@ -14,6 +14,7 @@
 #include "status.h" // OPTION_*, struct weapon_atk
 #include "unit.h" // unit_stop_attack(), unit_stop_walking()
 #include "vending.h" // struct s_vending
+#include "mob.h"
 
 #define MAX_PC_BONUS 10
 
@@ -348,6 +349,10 @@ struct map_session_data {
 		int index, amount, zeny;
 		struct mail_data inbox;
 	} mail;
+
+	//Quest log system [Kevin]
+	int num_quests;
+	struct quest quest_log[MAX_QUEST];
 
 	// temporary debug [flaviojs]
 	const char* debug_file;

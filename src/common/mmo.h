@@ -50,6 +50,8 @@
 #define MAX_GUILDCASTLE 34	// Updated to include new entries for WoE:SE. [L0ne_W0lf]
 #define MAX_GUILDLEVEL 50
 #define MAX_GUARDIANS 46	//Local max per castle. [Skotlex]
+#define MAX_QUEST 25 //Max quests for a PC
+#define MAX_QUEST_OBJECTIVES 3 //Max quest objectives for a quest
 
 #define MIN_HAIR_STYLE battle_config.min_hair_style
 #define MAX_HAIR_STYLE battle_config.max_hair_style
@@ -121,6 +123,27 @@ enum item_types {
 	IT_AMMO,    //10
 	IT_DELAYCONSUME,//11
 	IT_MAX 
+};
+
+
+//Questlog system [Kevin]
+typedef enum quest_state { Q_NONE, Q_ACTIVE, Q_INACTIVE } quest_state;
+
+struct quest_objective {
+
+	char * name;
+	int count;
+
+};
+
+struct quest {
+
+	int quest_id;
+	quest_state state;
+	int num_objectives;
+	int time;
+	struct quest_objective objectives[MAX_QUEST_OBJECTIVES];
+
 };
 
 struct item {
@@ -248,6 +271,7 @@ struct mmo_charstatus {
 	struct point last_point,save_point,memo_point[MAX_MEMOPOINTS];
 	struct item inventory[MAX_INVENTORY],cart[MAX_CART];
 	struct skill skill[MAX_SKILL];
+	struct quest quest_log[MAX_QUEST];
 
 	struct s_friend friends[MAX_FRIENDS]; //New friend system [Skotlex]
 #ifdef HOTKEY_SAVING
