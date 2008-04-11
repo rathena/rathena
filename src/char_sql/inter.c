@@ -552,17 +552,6 @@ int mapif_send_gmaccounts()
 	return 0;
 }
 
-//Sends the current max account/char id to map server [Skotlex]
-void mapif_send_maxid(int account_id, int char_id)
-{
-	unsigned char buf[12];
-
-	WBUFW(buf,0) = 0x2b07;
-	WBUFL(buf,2) = account_id;
-	WBUFL(buf,6) = char_id;
-	mapif_sendall(buf, 10);
-}
-
 //Request to kick char from a certain map server. [Skotlex]
 int mapif_disconnectplayer(int fd, int account_id, int char_id, int reason)
 {

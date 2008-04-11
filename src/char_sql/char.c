@@ -117,8 +117,6 @@ int save_log = 0; //Have the logs be off by default when converting
 int save_log = 1;
 #endif
 
-//These are used to aid the map server in identifying valid clients. [Skotlex]
-static int max_account_id = DEFAULT_MAX_ACCOUNT_ID, max_char_id = DEFAULT_MAX_CHAR_ID;
 static int online_check = 1; //If one, it won't let players connect when their account is already registered online and will send the relevant map server a kick user request. [Skotlex]
 
 // Advanced subnet check [LuzZza]
@@ -221,15 +219,6 @@ void set_char_online(int map_id, int char_id, int account_id)
 	if ( char_id != 99 ) {
 		if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `online`='1' WHERE `char_id`='%d'", char_db, char_id) )
 			Sql_ShowDebug(sql_handle);
-
-		if (max_account_id < account_id || max_char_id < char_id)
-		{	//Notify map-server of the new max IDs [Skotlex]
-			if (account_id > max_account_id)
-				max_account_id = account_id;
-			if (char_id > max_char_id)
-				max_char_id = char_id;
-			mapif_send_maxid(max_account_id, max_char_id);
-		}
 	}
 
 	character = (struct online_char_data*)idb_ensure(online_char_db, account_id, create_online_char_data);
@@ -2318,9 +2307,6 @@ int parse_frommap(int fd)
 						id, j, CONVIP(server[id].ip), server[id].port);
 			ShowStatus("Map-server %d loading complete.\n", id);
 			
-			if (max_account_id != DEFAULT_MAX_ACCOUNT_ID || max_char_id != DEFAULT_MAX_CHAR_ID)
-				mapif_send_maxid(max_account_id, max_char_id); //Send the current max ids to the server to keep in sync [Skotlex]
-
 			// send name for wisp to player
 			WFIFOHEAD(fd, 3 + NAME_LENGTH);
 			WFIFOW(fd,0) = 0x2afb;

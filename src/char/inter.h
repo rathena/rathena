@@ -11,7 +11,6 @@ void inter_final(void);
 int inter_save(void);
 int inter_parse_frommap(int fd);
 int inter_mapif_init(int fd);
-void mapif_send_maxid(int, int);
 int mapif_disconnectplayer(int fd, int account_id, int char_id, int reason);
 
 int inter_check_length(int fd,int length);

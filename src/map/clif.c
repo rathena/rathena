@@ -92,11 +92,6 @@ static uint32 bind_ip = INADDR_ANY;
 static uint16 map_port = 5121;
 int map_fd;
 
-//These two will be used to verify the incoming player's validity.
-//It helps identify their client packet version correctly. [Skotlex]
-static int max_account_id = DEFAULT_MAX_ACCOUNT_ID;
-static int max_char_id = DEFAULT_MAX_CHAR_ID;
-
 int clif_parse (int fd);
 
 /*==========================================
@@ -538,15 +533,6 @@ int clif_authfail_fd(int fd, int type)
 	WFIFOSET(fd,packet_len(0x81));
 	set_eof(fd);
 	return 0;
-}
-
-/*==========================================
- * Used to know which is the max valid account/char id [Skotlex]
- *------------------------------------------*/
-void clif_updatemaxid(int account_id, int char_id)
-{
-	max_account_id = account_id;
-	max_char_id = char_id;
 }
 
 /*==========================================
@@ -7617,9 +7603,9 @@ static int clif_guess_PacketVer(int fd, int get_previous, int *error)
 #define CHECK_PACKET_VER() \
 	if( cmd != clif_config.connect_cmd[packet_ver] || packet_len != packet_db[packet_ver][cmd].len )\
 		;/* not wanttoconnection or wrong length */\
-	else if( (value=(int)RFIFOL(fd, packet_db[packet_ver][cmd].pos[0])) < START_ACCOUNT_NUM || value > max_account_id )\
+	else if( (value=(int)RFIFOL(fd, packet_db[packet_ver][cmd].pos[0])) < START_ACCOUNT_NUM || value > END_ACCOUNT_NUM )\
 	{ SET_ERROR(2); }/* invalid account_id */\
-	else if( (value=(int)RFIFOL(fd, packet_db[packet_ver][cmd].pos[1])) <= 0 || value > max_char_id )\
+	else if( (value=(int)RFIFOL(fd, packet_db[packet_ver][cmd].pos[1])) <= 0 )\
 	{ SET_ERROR(3); }/* invalid char_id */\
 	/*                   RFIFOL(fd, packet_db[packet_ver][cmd].pos[2]) - don't care about login_id1 */\
 	/*                   RFIFOL(fd, packet_db[packet_ver][cmd].pos[3]) - don't care about client_tick */\
