@@ -1,5 +1,7 @@
 Date		Added
 ======
+2008/04/10
+	* Rev. 12567 Fixed setcell range of first barricade in Juno Castle 2. [L0ne_W0lf]
 2008/04/07
 	* Rev. 12531 Added the Schwaltzvalt Guild Castles 1-5. (update 3/3) [L0ne_W0lf]
 	* Rev. 12531 Added the Arunafeltz Guild Castles 1-5. (update 2/3) [L0ne_W0lf]
