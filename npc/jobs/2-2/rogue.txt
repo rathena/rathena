@@ -928,7 +928,7 @@ S_Req:
 
 
 S_CheckItems:
-	if (Zeny > 99999 || countitem(getarg(0)) >= getarg(1) || countitem(getarg(2)) >= getarg(3) || countitem(getarg(4)) >= getarg(5) || countitem(getarg(6)) >= getarg(7)) {
+	if (Zeny > 99999 && countitem(getarg(0)) >= getarg(1) && countitem(getarg(2)) >= getarg(3) && countitem(getarg(4)) >= getarg(5) && countitem(getarg(6)) >= getarg(7)) {
 		mes "[Mr. Smith]";
 		mes "Okay, we've got the application fee, ^FF000010,000 zeny^000000, "+getarg(1)+" "+getitemname(getarg(0))+", "+getarg(3)+" "+getitemname(getarg(2))+", "+getarg(5)+" "+getitemname(getarg(4))+" and "+getarg(7)+" "+getitemname(getarg(6))+"...";
 		set zeny,zeny-10000;
