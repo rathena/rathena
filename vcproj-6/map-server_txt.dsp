@@ -421,6 +421,14 @@ SOURCE=..\src\map\unit.h
 
 SOURCE=..\src\map\vending.h
 # End Source File
+# Begin Source File
+
+SOURCE=..\src\map\quest.c
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\map\quest.h
+# End Source File
 # End Group
 # Begin Group "zlib"
 

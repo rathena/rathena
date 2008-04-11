@@ -437,6 +437,14 @@
 				RelativePath="..\src\map\vending.h"
 				>
 			</File>
+			<File
+				RelativePath="..\src\map\quest.c"
+				>
+			</File>
+			<File
+				RelativePath="..\src\map\quest.h"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="zlib"

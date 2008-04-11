@@ -20,6 +20,7 @@
 #include "status.h"
 #include "mercenary.h"
 #include "chrif.h"
+#include "quest.h"
 
 #include <stdio.h>
 #include <stdlib.h>

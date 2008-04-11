@@ -37,6 +37,7 @@
 #include "irc.h"
 #include "clif.h"
 #include "mail.h"
+#include "quest.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -7968,8 +7969,7 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 		mail_clear(sd);
 #endif
 
-	//Send quest log [Kevin]
-	clif_send_questlog(sd);
+	quest_pc_login(sd);
 
 	if(map[sd->bl.m].flag.loadevent) // Lance
 		npc_script_event(sd, NPCE_LOADMAP);

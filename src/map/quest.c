@@ -1,0 +1,137 @@
+// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// For more information, see LICENCE in the main folder
+
+#include "../common/cbasetypes.h"
+#include "../common/socket.h"
+#include "../common/timer.h"
+#include "../common/malloc.h"
+#include "../common/version.h"
+#include "../common/nullpo.h"
+#include "../common/showmsg.h"
+#include "../common/strlib.h"
+#include "../common/utils.h"
+
+#include "map.h"
+#include "chrif.h"
+#include "pc.h"
+#include "npc.h"
+#include "itemdb.h"
+#include "script.h"
+#include "intif.h"
+#include "battle.h"
+#include "mob.h"
+#include "party.h"
+#include "unit.h"
+#include "log.h"
+#include "clif.h"
+#include "quest.h"
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <stdarg.h>
+#include <time.h>
+
+//Send quest info on login
+int quest_pc_login(TBL_PC * sd)
+{
+	clif_send_questlog(sd);
+	clif_send_questlog_info(sd);
+	return 0;
+}
+
+struct quest * quest_make(int id, time_t time, int num_objs, struct quest_objective ** qo_arr)
+{
+	return NULL;
+}
+
+int quest_add(TBL_PC * sd, struct quest * qd)
+{
+
+	int i;
+
+	//Search to see if this quest exists
+	ARR_FIND(0, MAX_QUEST, i, sd->quest_log[i].quest_id == qd->quest_id);
+
+	//Already have this quest
+	if(i!=MAX_QUEST)
+		return 1;
+
+	//Find empty quest log spot
+	ARR_FIND(0, MAX_QUEST, i, sd->quest_log[i].quest_id == 0);
+
+	//Quest log is full
+	if(i == MAX_QUEST)
+		return -1;
+
+	//Copy over quest data
+	memcpy(&sd->quest_log[i], qd, sizeof(struct quest));
+	sd->num_quests++;
+
+	//Notify client
+	clif_send_quest_info(sd, &sd->quest_log[i]);
+
+	return 0;
+
+}
+
+int quest_delete(TBL_PC * sd, int quest_id)
+{
+
+	int i;
+
+	//Search for quest
+	ARR_FIND(0, MAX_QUEST, i, sd->quest_log[i].quest_id == quest_id);
+
+	//Quest not found
+	if(i != MAX_QUEST)
+		return -1;
+
+	//Zero quest
+	memset(&sd->quest_log[i], 0, sizeof(struct quest));
+
+	//Notify client
+	clif_send_quest_delete(sd, quest_id);
+
+	return 0;
+
+}
+
+int quest_update_objective(TBL_PC * sd, int quest_id, int objective_num, struct quest_objective qod)
+{
+
+	int i;
+
+	//Search for quest
+	ARR_FIND(0, MAX_QUEST, i, sd->quest_log[i].quest_id == quest_id);
+
+	//Quest not found
+	if(i != MAX_QUEST)
+		return -1;
+
+	memcpy(sd->quest_log[i].objectives[objective_num].name, qod.name, NAME_LENGTH);
+	sd->quest_log[i].objectives[objective_num].count = qod.count;
+
+	//Notify client
+	clif_send_quest_info(sd, &sd->quest_log[i]);
+
+	return 0;
+
+}
+
+int quest_load_info(TBL_PC * sd, struct mmo_charstatus * st)
+{
+	sd->num_quests = st->num_quests;
+	memcpy(sd->quest_log, st->quest_log, sizeof(st->quest_log));
+
+	return 0;
+}
+
+int quest_make_savedata(TBL_PC * sd)
+{
+	sd->status.num_quests = sd->num_quests;
+	memcpy(sd->status.quest_log, sd->quest_log, sizeof(sd->quest_log));
+
+	return 0;
+}
+

@@ -32,6 +32,7 @@
 #include "status.h" // struct status_data
 #include "vending.h" // vending_closevending()
 #include "pc.h"
+#include "quest.h"
 
 #ifndef TXT_ONLY // mail system [Valaris]
 #include "mail.h"
@@ -372,6 +373,8 @@ int pc_makesavestatus(struct map_session_data *sd)
 		else
 			memcpy(&sd->status.last_point,&sd->status.save_point,sizeof(sd->status.last_point));
 	}
+
+	quest_make_savedata(sd);
 	return 0;
 }
 
@@ -862,6 +865,9 @@ bool pc_authok(struct map_session_data *sd, int login_id2, time_t expiration_tim
 		strcpy(tmpstr, msg_txt(500)); // Actually, it's the night...
 		clif_wis_message(sd->fd, wisp_server_name, tmpstr, strlen(tmpstr)+1);
 	}
+
+	//Get quest data out of char dat
+	quest_load_info(sd, st);
 
 	// Request all registries (auth is considered completed whence they arrive)
 	intif_request_registry(sd,7);
