@@ -1216,7 +1216,7 @@ int mmo_char_fromsql(int char_id, struct mmo_charstatus* p, bool load_everything
 			memcpy(&p->quest_log[i].objectives[j], &tmp_quest_obj, sizeof(tmp_quest_obj));
 		p->quest_log[i].num_objectives = j+1;
 	}
-	p->num_quests = i+1;
+	p->num_quests = i;
 	strcat(t_msg, " quests");
 
 	SqlStmt_Free(stmt2);

@@ -164,7 +164,6 @@ static bool chrif_auth_logout(TBL_PC* sd, enum sd_state state)
 	if(sd->fd && state == ST_LOGOUT)
   	{	//Disassociate player, and free it after saving ack returns. [Skotlex]
 		//fd info must not be lost for ST_MAPCHANGE as a final packet needs to be sent to the player.
-		chrif_char_offline(sd);
 		if (session[sd->fd])
 			session[sd->fd]->session_data = NULL;
 		sd->fd = 0;

@@ -35,6 +35,10 @@
 //Send quest info on login
 int quest_pc_login(TBL_PC * sd)
 {
+
+	if(sd->num_quests == 0)
+		return 1;
+
 	clif_send_questlog(sd);
 	clif_send_questlog_info(sd);
 	return 0;
