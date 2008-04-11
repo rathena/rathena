@@ -1,9 +1,10 @@
 //===== eAthena Script =======================================
 //= Hugel City
 //===== By: ==================================================
-//= vicious_pucca, Poki#3, erKURITA, Munin
+//= vicious_pucca, Poki#3, erKURITA, Munin, and everybody in the
+//= comments
 //===== Current Version: =====================================
-//= 1.2
+//= 1.4
 //===== Compatible With: =====================================
 //= eAthena 1.0
 //===== Description: =========================================
@@ -22,6 +23,7 @@
 //=	just using up memory. [erKURITA]
 //= 1.2 Added a few NPCs scripted by Munin and fixed up format a little [Playtester]
 //= 1.3 Moved some quests-related NPCs to proper file. [SinSloth]
+//= 1.4 Optimized the Party Supplies Shop [DZeroX]
 //============================================================
 
 //---------------------------------------------------------------------------
@@ -39,6 +41,7 @@ hugel,189,143,5	script	Young Man	898,{
 	mes "Would filling my tummy";
 	mes "with air work the same way?";
 	close;
+	
 }
 
 
@@ -60,6 +63,7 @@ hugel,126,151,3	script	Emily	90,{
 	mes "out by the people that live here.";
 	mes "Don't you think that sounds weird?";
 	close;
+	
 }
  
 //Mudie
@@ -89,6 +93,7 @@ hugel,85,93,3	script	Mudie	866,{
 	mes "ask one of the Eckar brothers.";
 	mes "I hope you enjoy our little town~";
 	close;
+	
 }
 
 //Kayplas
@@ -102,6 +107,7 @@ hugel,86,165,5	script	Kayplas	896,{
 	mes "to buy me one. It doesn't";
 	mes "look too expensive, does it?";
 	close;
+	
 }
 
 //Lisa
@@ -122,6 +128,7 @@ hugel,71,197,3	script	Lisa	90,{
 	mes "I wanna go out and";
 	mes "live in the big city~";
 	close;
+	
 }
 
 //Old Nikki 
@@ -142,6 +149,7 @@ hugel,169,112,5	script	Old Nikki	892,{
 	mes "as old as us. Well, have";
 	mes "a nice day, adventurer~";
 	close;
+	
 }
 
 //Bismarc
@@ -164,6 +172,7 @@ hugel,168,183,5	script	Bismarc	118,{
 	mes "antidote gonna";
 	mes "get here?!";
 	close;
+	
 }
 
 hugel,175,115,5	script	Marius	897,{
@@ -183,6 +192,7 @@ hugel,175,115,5	script	Marius	897,{
 	mes "you how strong I am! Let's";
 	mes "wrestle or something, kid~";
 	close;
+	
 }
 
 //-------------------------------------------------------------------------
@@ -206,6 +216,7 @@ hu_in01,111,386,4	script	Chris	86,{
 	mes "then I suggest buying";
 	mes "some in a bigger city.";
 	close;
+	
 }
 
 //Rachel
@@ -219,6 +230,7 @@ hu_in01,365,170,5	script	Rachel	793,{
 	mes "feel so fuzzy and comfortable,";
 	mes "and it's so relaxing!";
 	close;
+	
 }
 
 //--------------------------------------------------------------
@@ -237,27 +249,26 @@ hu_in01,23,311,4	script	Party Supplies Shop	898,{
 	mes "at 500 zeny.";
 	next;
 	menu "Buy",L_Buy,"Cancel",L_Cancel;
-
-	L_Buy:
-		if (Zeny < 500) goto L_NEnoughZ;
-
-		set Zeny,Zeny-500;
-		getitem 12018,5;
-		mes "[Shopkeeper]";
-		mes "Here you go!";
-		mes "Have fun with them!";
-		close;
-
-	L_NEnoughZ:
-		mes "[Shopkeeper]";
-		mes "I am sorry, but you don't have";
-		mes "enough money~";
-		close;
-
-	L_Cancel:
-		mes "[Shopkeeper]";
-		mes "Thank you, please come again.";
-		close;
+	switch (select("Buy:Cancel")) {
+		case 1:
+			if (Zeny < 500) { 
+				mes "[Shopkeeper]";
+				mes "I am sorry, but you don't have";
+				mes "enough money~";
+				close;
+			}
+			set Zeny,Zeny-500;
+			getitem 12018,5;
+			mes "[Shopkeeper]";
+			mes "Here you go!";
+			mes "Have fun with them!";
+			close;
+		case 2:
+			mes "[Shopkeeper]";
+			mes "Thank you, please come again.";
+			close;
+	}
+		
 }
 
 hu_in01,18,94,0	script	A Part-Timer#1	49,{
@@ -286,6 +297,7 @@ hu_in01,18,94,0	script	A Part-Timer#1	49,{
 	mes "can't really pay you, but it's";
 	mes "a great chance to explore~";
 	close;
+	
 }
 
 hu_in01,26,77,4	script	A Part-Timer#2	50,{
@@ -295,6 +307,7 @@ hu_in01,26,77,4	script	A Part-Timer#2	50,{
 	mes "in his task of organizing";
 	mes "files and books.^000000";
 	close;
+	
 }
 
 //Should be moved later on to Bulletin Boards.txt

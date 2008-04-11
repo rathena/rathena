@@ -1,7 +1,7 @@
 //===== eAthena Script ======================================= 
 //= Einbech Town
 //===== By: ================================================== 
-//= Muad_dib
+//= Muad_Dib
 //===== Current Version: ===================================== 
 //= 1.4
 //===== Compatible With: ===================================== 
@@ -22,6 +22,7 @@
 //= 1.2 Removed Duplicates [Silent]
 //= 1.3 Implemented the Lover's quest. [MasterOfMuppets]
 //= 1.4 Moved quests to quests/quests_ein.txt [Evera]
+//= 1.5 Optimized some of the NPCs and fixed some typos [DZeroX]
 //============================================================
 
 
@@ -82,7 +83,7 @@ L_WHAT:
 	mes "business, you should";
 	mes "know what you're up against.";
 	mes "Did you have any questions";
-	mes "about the monsters arround";
+	mes "about the monsters around";
 	mes "here, young lady?";
 	next;
 	menu "I told you, I'm a dude...!",-;
@@ -96,13 +97,12 @@ L_WHAT:
 	next;
 	mes "[Shena]";
 	mes "So dearie,";
-	mes "wich monster";
+	mes "which monster";
 	mes "would you like";
 	mes "to hear about?";
 L_MENU:
 	next;
 	menu "Metaling",L_METALING,"Mineral",L_MINERAL,"Pitman",L_PITMAN,"Waste Stove",L_WASTE,"Quit",-;
-
 	mes "[Shena]";
 	mes "Alright then.";
 	mes "Have a good";
@@ -175,7 +175,7 @@ L_MINERAL:
 	mes "[Shena]";
 	mes "It's rumored that they";
 	mes "are grown in a dark cave";
-	mes "in wich something inside";
+	mes "in which something inside";
 	mes "has some sort of malicious";
 	mes "influence over them.";
 	next;
@@ -190,7 +190,7 @@ L_MINERAL:
 	mes "[Shena]";
 	mes "Are there any";
 	mes "other mosnters";
-	mes "arround here that";
+	mes "around here that";
 	mes "you'd want to learn";
 	mes "more about?";
 	goto L_MENU;
@@ -201,7 +201,7 @@ L_PITMAN:
 	mes "old and rusted mine cars.";
 	mes "For some reason, they can't";
 	mes "leave this world so they just";
-	mes "wander arround the mines.";
+	mes "wander around the mines.";
 	next;
 	mes "[Shena]";
 	mes "If you can defeat";
@@ -212,7 +212,7 @@ L_PITMAN:
 	next;
 	mes "[Shena]";
 	mes "Did you want";
-	mes "to asl me about";
+	mes "to ask me about";
 	mes "any other of the";
 	mes "local monsters?";
 	goto L_MENU;
@@ -244,7 +244,7 @@ L_WASTE:
 	mes "as technology advanced and";
 	mes "they became obsolete, they were";
 	mes "discarded like pieces of trash.";
-	mes "This twisted their harts to ^FF0000evil^000000.";
+	mes "This twisted their hearts to ^FF0000evil^000000.";
 	next;
 	mes "[Shena]";
 	mes "Waste Stoves will usually";
@@ -395,30 +395,31 @@ einbech,39,215,6	script	Train Station Staff	852,{
 	mes "200 zeny. Would";
 	mes "you like to ride?";
 	next;
-	menu "Yes.",L_YES,"No.",-;
-
-	mes "[Staff]";
-	mes "Please enjoy";
-	mes "your stay here";
-	mes "in Einbech.";
-	close;
-L_YES:
-	if(Zeny < 200)goto L_ZENY;
-	mes "[Staff]";
-	mes "Thank you and";
-	mes "we hope you enjoy";
-	mes "the ride. All aboard!";
-	next;
-	set Zeny,Zeny - 200;
-	warp "einbroch",226,276;
-	end;
-L_ZENY:
-	mes "[Staff]";
-	mes "I'm sorry,";
-	mes "but you don't";
-	mes "have enough zeny";
-	mes "to pay the train fare.";
-	close;
+	switch (select("Yes:No")) {
+		case 1:
+			if(Zeny < 200) {
+				mes "[Staff]";
+				mes "I'm sorry,";
+				mes "but you don't";
+				mes "have enough zeny";
+				mes "to pay the train fare.";
+				close;
+			}
+			mes "[Staff]";
+			mes "Thank you and";
+			mes "we hope you enjoy";
+			mes "the ride. All aboard!";
+			close2;
+			set Zeny,Zeny - 200;
+			warp "einbroch",226,276;
+			end;
+		case 2:
+			mes "[Staff]";
+			mes "Please enjoy";
+			mes "your stay here";
+			mes "in Einbech.";
+			close;
+	}
 }
 
 einbech,157,215,4	script	Train Station Manager	852,{
@@ -526,128 +527,132 @@ einbech,148,242,5	script	Jung	855,{
 	mes "the monsters in that place so";
 	mes "that you'll be better prepared.";
 	next;
-	menu "Sure, why not?",L_TELL,"No, thanks.",-;
-	mes "[Jung]";
-	mes "I understand if you're";
-	mes "kind of in a hurry. Still,";
-	mes "if you're pretty new around";
-	mes "here, you should learn as";
-	mes "much as you can before";
-	mes "entering any dungeons.";
-	next;
-	mes "[Jung]";
-	mes "Alright then,";
-	mes "be safe on your";
-	mes "adventures, alright?";
-	close;
-L_TELL:
-	mes "[Jung]";
-	mes "Let's see. Ah, the monsters that";
-	mes "are unique to the Mine Dungeon";
-	mes "are Noxious, Venomous, Porcellio";
-	mes "and Obsidian. Wich one do you";
-	mes "want to know more about?";
-	next;
-	menu "Noxious and Venomous",-,"Porcellio",L_PORCELLIO,"Obsidian",L_OBSIDIAN;
-	mes "[Jung]";
-	mes "You know, no one seems";
-	mes "to know where Noxious and";
-	mes "Venomous have come form.";
-	mes "It's like they appeared out of";
-	mes "nowhere when Einbroch";
-	mes "started to industrialise.";
-	next;
-	mes "[Jung]";
-	mes "Now that I think about it,";
-	mes "I don't think they're naturally";
-	mes "created monsters. They have";
-	mes "this fixed look of despair and";
-	mes "suffering and tend to act like they";
-	mes "want their enemies to kill them.";
-	next;
-	mes "[Jung]";
-	mes "Still, you'd better be careful!";
-	mes "Careful! Nocious and Venomous";
-	mes "are stealthy monsters that can";
-	mes "glide quietly through the air";
-	mes "and attack you before";
-	mes "you even notice...";
-	next;
-	mes "[Jung]";
-	mes "You should know that";
-	mes "Noxious is Ghost property";
-	mes "and Venomous is Poison.";
-	mes "Both are medium sized,";
-	mes "formless monsters.";
-	next;
-	mes "[Jung]";
-	mes "Both of them drop Apple,";
-	mes "Dust Pollutant, Toxic Gas,";
-	mes "Poisonous Powder, Bacillus,";
-	mes "Mold Powder and Anodyne.";
-	next;
-	mes "[Jung]";
-	mes "That's all for now.";
-	mes "Feel free to ask me";
-	mes "if you have any questions";
-	mes "about monsters in the Mine";
-	mes "Dungeon. Be safe, adventurer.";
-	close;
-L_PORCELLIO:
-	mes "[Jung]";
-	mes "Porcellio is an insect that";
-	mes "lives in caves and drinks water";
-	mes "dripped from stalactites. It's";
-	mes "different from Ungoliant since";
-	mes "it likes to be near different";
-	mes "kinds of minerals and ores.";
-	next;
-	mes "[Jung]";
-	mes "Porcellio drops Jubilee,";
-	mes "Insect Leg, Single Cell,";
-	mes "Moss of Morning Dew, Neon";
-	mes "Liquid and a few other things";
-	mes "I can't quite remember.";
-	next;
-	mes "[Jung]";
-	mes "Lastly, Porcellio is an";
-	mes "Earth property monster.";
-	mes "That's all I know about it.";
-	mes "But if you want to know more";
-	mes "about some monster in the";
-	mes "Mine Dungeon, feel free to ask.";
-	close;
-L_OBSIDIAN:
-	mes "[Jung]";
-	mes "Do you know about the";
-	mes "belief that underground";
-	mes "minerlas that contain huge";
-	mes "amounts of energy actually";
-	mes "have souls? Obsidian is";
-	mes "one of these living rocks.";
-	next;
-	mes "[Jung]";
-	mes "Supposedly, just a piece of an";
-	mes "Obsidian in a Jung Processor has";
-	mes "enough energy to light up the night";
-	mes "sky. Unfortunately, it's impossible";
-	mes "to capture one alive and hunting";
-	mes "them isn't so easy.";
-	next;
-	mes "[Jung]";
-	mes "Obsidian is a small,";
-	mes "shapeless monster that";
-	mes "drops Clear Jewel, Piece of";
-	mes "Black Crystal, Coal, Elunium,";
-	mes "Iron and Steel.";
-	next;
-	mes "[Jung]";
-	mes "That's all for Obsidian.";
-	mes "If you have any questions";
-	mes "about other monsters living";
-	mes "in the Mine Dungeon, feel";
-	mes "free to ask me.";
-	close;
+	switch (select("Sure, why not?:No, thanks")) {
+		case 1:
+			mes "[Jung]";
+			mes "Let's see. Ah, the monsters that";
+			mes "are unique to the Mine Dungeon";
+			mes "are Noxious, Venomous, Porcellio";
+			mes "and Obsidian. Which one do you";
+			mes "want to know more about?";
+			next;
+			switch (select("Noxious and Venomous:Porcellio:Obsidian")) {
+				case 1:
+					mes "[Jung]";
+					mes "You know, no one seems";
+					mes "to know where Noxious and";
+					mes "Venomous have come form.";
+					mes "It's like they appeared out of";
+					mes "nowhere when Einbroch";
+					mes "started to industrialise.";
+					next;
+					mes "[Jung]";
+					mes "Now that I think about it,";
+					mes "I don't think they're naturally";
+					mes "created monsters. They have";
+					mes "this fixed look of despair and";
+					mes "suffering and tend to act like they";
+					mes "want their enemies to kill them.";
+					next;
+					mes "[Jung]";
+					mes "Still, you'd better be careful!";
+					mes "Careful! Nocious and Venomous";
+					mes "are stealthy monsters that can";
+					mes "glide quietly through the air";
+					mes "and attack you before";
+					mes "you even notice...";
+					next;
+					mes "[Jung]";
+					mes "You should know that";
+					mes "Noxious is Ghost property";
+					mes "and Venomous is Poison.";
+					mes "Both are medium sized,";
+					mes "formless monsters.";
+					next;
+					mes "[Jung]";
+					mes "Both of them drop Apple,";
+					mes "Dust Pollutant, Toxic Gas,";
+					mes "Poisonous Powder, Bacillus,";
+					mes "Mold Powder and Anodyne.";
+					next;
+					mes "[Jung]";
+					mes "That's all for now.";
+					mes "Feel free to ask me";
+					mes "if you have any questions";
+					mes "about monsters in the Mine";
+					mes "Dungeon. Be safe, adventurer.";
+					close;
+				case 2:
+					mes "[Jung]";
+					mes "Porcellio is an insect that";
+					mes "lives in caves and drinks water";
+					mes "dripped from stalactites. It's";
+					mes "different from Ungoliant since";
+					mes "it likes to be near different";
+					mes "kinds of minerals and ores.";
+					next;
+					mes "[Jung]";
+					mes "Porcellio drops Jubilee,";
+					mes "Insect Leg, Single Cell,";
+					mes "Moss of Morning Dew, Neon";
+					mes "Liquid and a few other things";
+					mes "I can't quite remember.";
+					next;
+					mes "[Jung]";
+					mes "Lastly, Porcellio is an";
+					mes "Earth property monster.";
+					mes "That's all I know about it.";
+					mes "But if you want to know more";
+					mes "about some monster in the";
+					mes "Mine Dungeon, feel free to ask.";
+					close;
+				case 3:
+					mes "[Jung]";
+					mes "Do you know about the";
+					mes "belief that underground";
+					mes "minerlas that contain huge";
+					mes "amounts of energy actually";
+					mes "have souls? Obsidian is";
+					mes "one of these living rocks.";
+					next;
+					mes "[Jung]";
+					mes "Supposedly, just a piece of an";
+					mes "Obsidian in a Jung Processor has";
+					mes "enough energy to light up the night";
+					mes "sky. Unfortunately, it's impossible";
+					mes "to capture one alive and hunting";
+					mes "them isn't so easy.";
+					next;
+					mes "[Jung]";
+					mes "Obsidian is a small,";
+					mes "shapeless monster that";
+					mes "drops Clear Jewel, Piece of";
+					mes "Black Crystal, Coal, Elunium,";
+					mes "Iron and Steel.";
+					next;
+					mes "[Jung]";
+					mes "That's all for Obsidian.";
+					mes "If you have any questions";
+					mes "about other monsters living";
+					mes "in the Mine Dungeon, feel";
+					mes "free to ask me.";
+					close;
+			}
+		case 2:
+			mes "[Jung]";
+			mes "I understand if you're";
+			mes "kind of in a hurry. Still,";
+			mes "if you're pretty new around";
+			mes "here, you should learn as";
+			mes "much as you can before";
+			mes "entering any dungeons.";
+			next;
+			mes "[Jung]";
+			mes "Alright then,";
+			mes "be safe on your";
+			mes "adventures, alright?";
+			close;	
+	}
 }
 
 einbech,148,246,5	script	Franz	851,{
@@ -664,141 +669,145 @@ einbech,148,246,5	script	Franz	851,{
 	mes "around here? Let's chat for a bit";
 	mes "and maybe you'll learn something.";
 	next;
-	menu "Okay, fine.",L_OKAY,"No, thanks.",-;
-	mes "[Franz]";
-	mes "Oh, okay.";
-	mes "You're busy and have";
-	mes "things to do, I understand.";
-	mes "You probably have to head";
-	mes "off somewhere right away.";
-	mes "Right. Got it.";
-	next;
-	mes "[Franz]";
-	mes "I...";
-	mes "I've got stuff";
-	mes "I should be working";
-	mes "on. Yes. So very busy.";
-	close;
-L_OKAY:
-	mes "[Franz]";
-	mes "Ooh, have you heard";
-	mes "about the creature in the";
-	mes "Mine Dungeon or what's";
-	mes "happened in town recently?";
-	mes "Which would you like to";
-	mes "know more about?";
-	next;
-	menu "Creature of Mine Dungeon",L_CREATURE,"Town Incident",-;
-	mes "[Franz]";
-	mes "In Einbroch, there was";
-	mes "a short lived teddy bear";
-	mes "fad. However, a series of";
-	mes "mysterious accidents and";
-	mes "murders where entire families";
-	mes "were killed also occured.";
-	next;
-	mes "[Franz]";
-	mes "It turns out that every family";
-	mes "that had been murdered had";
-	mes "bought one of these teddy bears.";
-	mes "There were even rumors that these";
-	mes "teddy bears were comming to life.";
-	next;
-	mes "[Franz]";
-	mes "After an investigation, the";
-	mes "authorities learned that all the";
-	mes "merchants who sold these bears";
-	mes "had purchased them from the";
-	mes "same wholesaler, an outsider";
-	mes "noone knew anything about.";
-	next;
-	mes "[Franz]";
-	mes "Since the teddy bears were";
-	mes "clearly not made to be mere,";
-	mes "harmless toys, troops were";
-	mes "sent to secure all the teddy";
-	mes "bears and dispose of them";
-	mes "outside of town.";
-	next;
-	mes "[Franz]";
-	mes "But as soon as the teddy";
-	mes "bears were set outside of";
-	mes "town, they sprang to life and";
-	mes "started rioting! This is clear";
-	mes "proof that these bears are";
-	mes "controlled by some evil force.";	
-	next;
-	mes "[Franz]";
-	mes "Now those aggressive teddy";
-	mes "bears are scattered all over";
-	mes "the place and the government";
-	mes "has classified them as monsters.";
-	mes "Kill with extreme prejudice!";
- 	next;
-	mes "[Franz]";
-	mes "According to adventurers";
-	mes "who have caught these bears,";
-	mes "they're small, neutral monsters";
-	mes "which drop Honey, Screw, Well-baked";
-	mes "Cookie and Oridecon Hammer.";
-	next;
-	mes "[Franz]";
-	mes "That's all I know";
-	mes "about it. Watch out";
-	mes "for those bears if you";
-	mes "go exploring, okay? They";
-	mes "may be cute, but they're";
-	mes "known to be extremely vicious!";
-	close;
-L_CREATURE:
-	mes "[Franz]";
-	mes "The creature I'm talking about is";
-	mes "Ungoliant, which also called the";
-	mes "Master of the Caves around here.";
-	mes "It's said to live deep in the caves";
-	mes "where it giards peculiar ores and";
-	mes "minerals with strange powers.";
-	next;
-	mes "[Franz]";
-	mes "At first I thought it was";
-	mes "just an old fairy tale, but it";
-	mes "actually started appearing";
-	mes "again about ten years ago";
-	mes "when the tunnel cave-ins";
-	mes "started to happen.";
-	next;
-	mes "[Franz]";
-	mes "As sightings of Ungoliant";
-	mes "increased, more and more";
-	mes "tunnel cave-ins occured.";
-	mes "I guess the miners have";
-	mes "inadvertently intruded";
-	mes "into it's territory.";
-	next;
-	mes "[Franz]";
-	mes "According to legend,";
-	mes "ancient giants snuck into";
-	mes "a mine to steal coal from";
-	mes "humans. But they made too";
-	mes "much noise while they were";
-	mes "digging and awoke Ungoliant.";
-	next;
-	mes "[Franz]";
-	mes "When the miners went to work";
-	mes "the next morning, they found the";
-	mes "bloodied bodies of those giants.";
-	mes "After that, people have feared";
-	mes "the threat that Ungoliant poses";
-	mes "to anyone entering the mines.";
-	next;
-	mes "[Franz]";
-	mes "Now, an adventurer that";
-	mes "managed to kill an Ungoliant";
-	mes "has told me that it drops Ant's";
-	mes "Jaw, Colorful Shell, Very Hard";
-	mes "Shell, Long Leg, Neon Liquid";
-	mes "and Zircon.";
-	close;
+	switch (select("Okay, fine:No thanks")) {
+		case 1:
+			mes "[Franz]";
+			mes "Ooh, have you heard";
+			mes "about the creature in the";
+			mes "Mine Dungeon or what's";
+			mes "happened in town recently?";
+			mes "Which would you like to";
+			mes "know more about?";
+			next;
+			switch (select("Creature of the Mine Dungeon:Town Incident")) {
+				case 1:
+					mes "[Franz]";
+					mes "The creature I'm talking about is";
+					mes "Ungoliant, which also called the";
+					mes "Master of the Caves around here.";
+					mes "It's said to live deep in the caves";
+					mes "where it guards peculiar ores and";
+					mes "minerals with strange powers.";
+					next;
+					mes "[Franz]";
+					mes "At first I thought it was";
+					mes "just an old fairy tale, but it";
+					mes "actually started appearing";
+					mes "again about ten years ago";
+					mes "when the tunnel cave-ins";
+					mes "started to happen.";
+					next;
+					mes "[Franz]";
+					mes "As sightings of Ungoliant";
+					mes "increased, more and more";
+					mes "tunnel cave-ins occured.";
+					mes "I guess the miners have";
+					mes "inadvertently intruded";
+					mes "into it's territory.";
+					next;
+					mes "[Franz]";
+					mes "According to legend,";
+					mes "ancient giants snuck into";
+					mes "a mine to steal coal from";
+					mes "humans. But they made too";
+					mes "much noise while they were";
+					mes "digging and awoke Ungoliant.";
+					next;
+					mes "[Franz]";
+					mes "When the miners went to work";
+					mes "the next morning, they found the";
+					mes "bloodied bodies of those giants.";
+					mes "After that, people have feared";
+					mes "the threat that Ungoliant poses";
+					mes "to anyone entering the mines.";
+					next;
+					mes "[Franz]";
+					mes "Now, an adventurer that";
+					mes "managed to kill an Ungoliant";
+					mes "has told me that it drops Ant's";
+					mes "Jaw, Colorful Shell, Very Hard";
+					mes "Shell, Long Leg, Neon Liquid";
+					mes "and Zircon.";
+					close;
+				case 2:
+					mes "[Franz]";
+					mes "In Einbroch, there was";
+					mes "a short lived teddy bear";
+					mes "fad. However, a series of";
+					mes "mysterious accidents and";
+					mes "murders where entire families";
+					mes "were killed also occured.";
+					next;
+					mes "[Franz]";
+					mes "It turns out that every family";
+					mes "that had been murdered had";
+					mes "bought one of these teddy bears.";
+					mes "There were even rumors that these";
+					mes "teddy bears were comming to life.";
+					next;
+					mes "[Franz]";
+					mes "After an investigation, the";
+					mes "authorities learned that all the";
+					mes "merchants who sold these bears";
+					mes "had purchased them from the";
+					mes "same wholesaler, an outsider";
+					mes "no one knew anything about.";
+					next;
+					mes "[Franz]";
+					mes "Since the teddy bears were";
+					mes "clearly not made to be mere,";
+					mes "harmless toys, troops were";
+					mes "sent to secure all the teddy";
+					mes "bears and dispose of them";
+					mes "outside of town.";
+					next;
+					mes "[Franz]";
+					mes "But as soon as the teddy";
+					mes "bears were set outside of";
+					mes "town, they sprang to life and";
+					mes "started rioting! This is clear";
+					mes "proof that these bears are";
+					mes "controlled by some evil force.";	
+					next;
+					mes "[Franz]";
+					mes "Now those aggressive teddy";
+					mes "bears are scattered all over";
+					mes "the place and the government";
+					mes "has classified them as monsters.";
+					mes "Kill with extreme prejudice!";
+				 	next;
+					mes "[Franz]";
+					mes "According to adventurers";
+					mes "who have caught these bears,";
+					mes "they're small, neutral monsters";
+					mes "which drop Honey, Screw, Well-baked";
+					mes "Cookie and Oridecon Hammer.";
+					next;
+					mes "[Franz]";
+					mes "That's all I know";
+					mes "about it. Watch out";
+					mes "for those bears if you";
+					mes "go exploring, okay? They";
+					mes "may be cute, but they're";
+					mes "known to be extremely vicious!";
+					close;
+				}
+			case 2:
+				mes "[Franz]";
+				mes "Oh, okay.";
+				mes "You're busy and have";
+				mes "things to do, I understand.";
+				mes "You probably have to head";
+				mes "off somewhere right away.";
+				mes "Right. Got it.";
+				next;
+				mes "[Franz]";
+				mes "I...";
+				mes "I've got stuff";
+				mes "I should be working";
+				mes "on. Yes. So very busy.";
+				close;
+	}
 }
 
 einbech,151,168,4	script	Tollaf	854,{
@@ -905,51 +914,53 @@ einbech,172,113,4	script	Nemuk	855,{
 	mes "What do you think";
 	mes "of Einbech?";
 	next;
-	menu "It's fine.",L_FINE,"It looks tough to live here.",-;
-	mes "[Nemuk]";
-	mes "I thought so.";
-	mes "Well, I appologize if";
-	mes "I put you on the spot.";
-	next;
-	mes "[Nemuk]";
-	mes "Everyone here has been";
-	mes "having a tough time just";
-	mes "living day to day for as long";
-	mes "as I can remember. It's like";
-	mes "things never seem to get any";
-	mes "better, no matter what we do.";
-	next;
-	mes "[Nemuk]";
-	mes "I really want to leave,";
-	mes "but it's just an empty";
-	mes "wish. My body is trapped";
-	mes "here while my heart longs";
-	mes "for a much better life. *Sigh*";
-	mes "Is it hopeless? What can I do?";
-	close;
-L_FINE:
-	mes "[Nemuk]";
-	mes "Huh...?";
-	mes "I'm not sure what";
-	mes "you've seen, but I'm";
-	mes "surprised to hear you";
-	mes "say something like that.";
-	next;
-	mes "[Nemuk]";
-	mes "It's been ten years since";
-	mes "I've started to think about";
-	mes "moving out. However, I'm still";
-	mes "debating it. Now, if I were rich,";
-	mes "I'd leave in no time, but it's hard";
-	mes "getting the money to move out.";
-	next;
-	mes "[Nemuk]";
-	mes "*Sigh...*";
-	mes "Maybe if I had been";
-	mes "and adventurer when I was";
-	mes "younger, I wouldn't have";
-	mes "these problems today...";
-	close;
+	switch (select("It's fine:It looks tough to live here")) {
+		case 1:
+			mes "[Nemuk]";
+			mes "Huh...?";
+			mes "I'm not sure what";
+			mes "you've seen, but I'm";
+			mes "surprised to hear you";
+			mes "say something like that.";
+			next;
+			mes "[Nemuk]";
+			mes "It's been ten years since";
+			mes "I've started to think about";
+			mes "moving out. However, I'm still";
+			mes "debating it. Now, if I were rich,";
+			mes "I'd leave in no time, but it's hard";
+			mes "getting the money to move out.";
+			next;
+			mes "[Nemuk]";
+			mes "*Sigh...*";
+			mes "Maybe if I had been";
+			mes "and adventurer when I was";
+			mes "younger, I wouldn't have";
+			mes "these problems today...";
+			close;
+		case 2:
+			mes "[Nemuk]";
+			mes "I thought so.";
+			mes "Well, I appologize if";
+			mes "I put you on the spot.";
+			next;
+			mes "[Nemuk]";
+			mes "Everyone here has been";
+			mes "having a tough time just";
+			mes "living day to day for as long";
+			mes "as I can remember. It's like";
+			mes "things never seem to get any";
+			mes "better, no matter what we do.";
+			next;
+			mes "[Nemuk]";
+			mes "I really want to leave,";
+			mes "but it's just an empty";
+			mes "wish. My body is trapped";
+			mes "here while my heart longs";
+			mes "for a much better life. *Sigh*";
+			mes "Is it hopeless? What can I do?";
+			close;
+	}
 }
 
 ein_in01,281,85,2	script	Drunken Man#01	849,{

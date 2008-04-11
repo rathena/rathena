@@ -1,7 +1,7 @@
 //===== eAthena Script ======================================= 
 //= Einbroch Town
 //===== By: ================================================== 
-//= Nexon
+//= Everybody mentioned in the comments
 //===== Current Version: ===================================== 
 //= 1.4
 //===== Compatible With: ===================================== 
@@ -27,6 +27,7 @@
 //= 1.3 Added (finally) the Garrison quest npc [erKURITA]
 //= 1.4 Implemented the polution script. [MasterOfMuppets]
 //= 1.5 Updated Hotel Employee to work with Airship Ticket Quest [Samuray22]
+//= 1.6 Optimized several NPCs [DZeroX]
 //============================================================
 
 
@@ -206,32 +207,33 @@ einbroch,175,196,5	script	Morei	854,{
 	mes "Would you like to go";
 	mes "back to ground level?";
 	next;
-	menu "Yes.",s_Goback,"No.",-;
-
-	mes "[Morei]";
-	mes "I see.";
-	mes "I hope you";
-	mes "enjoy your time";
-	mes "in Einbroch Tower.";
-	close;
-s_Goback:
-	mes "[Morei]";
-	mes "I see.";
-	mes "Let me lead you";
-	mes "to the ground floor.";
-	mes "Thank you for using";
-	mes "our services.";
-	close2;
-	switch(rand(3)){
-	case 0:
-		warp "einbroch",218,196;
-		end;
-	case 1:
-		warp "einbroch",178,172;
-		end;
-	case 2:
-		warp "einbroch",172,228;
-		end;
+	switch (select("Yes:No")) {
+		case 1:
+			mes "[Morei]";
+			mes "I see.";
+			mes "Let me lead you";
+			mes "to the ground floor.";
+			mes "Thank you for using";
+			mes "our services.";
+			close2;
+			switch(rand(1,3)){
+				case 1:
+					warp "einbroch",218,196;
+					end;
+				case 2:
+					warp "einbroch",178,172;
+					end;
+				case 3:
+					warp "einbroch",172,228;
+					end;
+			}
+		case 2:
+			mes "[Morei]";
+			mes "I see.";
+			mes "I hope you";
+			mes "enjoy your time";
+			mes "in Einbroch Tower.";
+			close;
 	}
 
 OnHide:
@@ -372,45 +374,46 @@ einbroch,232,272,3	script	Train Station Staff#01::EinbrochTrain	852,{
 	mes "to Einbech line is 200 zeny.";
 	mes "Would you like to buy a ticket?";
 	next;
-	menu "Yes.",s_Yes,"No.",-,"About the Enviroment...",s_Enviroment;
-
-	mes "[Staff]";
-	mes "Very well, then.";
-	mes "Please enjoy your";
-	mes "stay in Einbroch.";
-	close;
-s_Yes:
-	mes "[Staff]";
-	if(Zeny < 200){
-		mes "I'm sorry but you";
-		mes "do not have enough";
-		mes "money to pay the fee.";
-		close;
+	switch (select("Yes:No:About the Environment...")) {
+		case 1:
+			mes "[Staff]";
+			if (Zeny < 200){
+				mes "I'm sorry but you";
+				mes "do not have enough";
+				mes "money to pay the fee.";
+				close;
+			}
+			set Zeny,Zeny - 200;
+			mes "Thank you";
+			mes "very much.";
+			mes "Have a safe trip.";
+			mes "^111111*Ahem*^000000 All aboard!";
+			close2;
+			warp "einbech",43,215;
+			end;
+		case 2:
+			mes "[Staff]";
+			mes "Very well, then.";
+			mes "Please enjoy your";
+			mes "stay in Einbroch.";
+			close;
+		case 3:
+			mes "[Staff]";
+			mes "Einbroch is infamous for";
+			mes "its air pollution, no doubt";
+			mes "caused by the industrial";
+			mes "facilities located here.";
+			mes "it's really horrible...";
+			next;
+			mes "[Staff]";
+			mes "Sometimes the air pollution";
+			mes "gets so bad that it becomes";
+			mes "hard to breathe. If you hear";
+			mes "the Einbroch Smog Alert, you";
+			mes "should find shelter immediately!";
+			close;
 	}
-	set Zeny,Zeny - 200;
-	mes "Thank you";
-	mes "very much.";
-	mes "Have a safe trip.";
-	mes "^111111*Ahem*^000000 All aboard!";
-	close2;
-	warp "einbech",43,215;
-	end;
-s_Enviroment:
-	mes "[Staff]";
-	mes "Einbroch is infamous for";
-	mes "its air pollution, no doubt";
-	mes "caused by the industrial";
-	mes "facilities located here.";
-	mes "it's really horrible...";
-	next;
-	mes "[Staff]";
-	mes "Sometimes the air pollution";
-	mes "gets so bad that it becomes";
-	mes "hard to breathe. If you hear";
-	mes "the Einbroch Smog Alert, you";
-	mes "should find shelter immediately!";
-	close;
-
+	
 OnHide:
 	specialeffect 16;
 	end;
@@ -670,7 +673,7 @@ ein_in01,68,209,4	script	Khashurantze	852,{
 	mes "special authority in order";
 	mes "to enter this place. I'll have";
 	mes "to ask you to leave right now.";
-	if(EinFactory > 0){
+	if (EinFactory > 0){
 		next;
 		mes "[Khashurantze]";
 		mes "Oh? Mr. Zelmeto asked you to help out?";
@@ -906,7 +909,7 @@ ein_in01,206,224,2	script	Hotel Employee	855,{
 	mes "standards in cleanliness,";
 	mes "service and convenience~";
 	next;
-	if(kain_ticket == 5) {
+	if (kain_ticket == 5) {
 		mes "[Hotel Employee]";
 		mes "Are you looking";
 		mes "for Mr. Defru Ark?";
@@ -918,42 +921,41 @@ ein_in01,206,224,2	script	Hotel Employee	855,{
 		mes "in Room 201.";
 		close;
 	}
-	menu "Save",s_Save,"Take Rest- 5,000 zeny",s_Rest,"Cancel",-;
-	mes "[Hotel Employee]";
-	mes "Thank you and";
-	mes "please come again~";
-	close;
-
-s_Save:
-	savepoint "ein_in01",199,224;
-	mes "[Hotel Employee]";
-	mes "Your Respawn Point";
-	mes "has been saved here";
-	mes "in the Einbroch Hotel.";
-	mes "Thank you, and please";
-	mes "come again.";
-	next;
-	mes "[Hotel Employee]";
-	mes "Have a good day.";
-	close;
-
-s_Rest:
-	mes "[Hotel Employee]";
-	if(Zeny < 5000){
-		mes "I'm sorry but";
-		mes "you don't seem";
-		mes "to have enough zeny.";
-		close;
+	switch (select("Save:Rest - 5,000 zeny:Cancel")) {
+		case 1:
+			savepoint "ein_in01",199,224;
+			mes "[Hotel Employee]";
+			mes "Your Respawn Point";
+			mes "has been saved here";
+			mes "in the Einbroch Hotel.";
+			mes "Thank you, and please";
+			mes "come again.";
+			next;
+			mes "[Hotel Employee]";
+			mes "Have a good day.";
+			close;
+		case 2:
+			mes "[Hotel Employee]";
+			if (Zeny < 5000){
+				mes "I'm sorry but";
+				mes "you don't seem";
+				mes "to have enough zeny.";
+				close;
+			}
+			mes "Thank you.";
+			mes "Please enjoy";
+			mes "your rest~";
+			close2;
+			set zeny,zeny - 5000;
+			warp "ein_in01",272,167;
+			percentheal 100,100;
+			end;
+		case 3:
+			mes "[Hotel Employee]";
+			mes "Thank you and";
+			mes "please come again~";
+			close;
 	}
-	mes "Thank you.";
-	mes "Please enjoy";
-	mes "your rest~";
-	close2;
-	set zeny,zeny - 5000;
-	warp "ein_in01",272,167;
-	percentheal 100,100;
-	end;
-
 }
 
 ein_in01,21,147,4	script	Megass	853,3,3,{

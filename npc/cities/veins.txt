@@ -7,7 +7,7 @@
 //===== Compatible With: =====================================
 //= Any eAthena Version; RO Episode 11.2
 //===== Description: =========================================
-//= [Aegis COnversion]
+//= [Aegis Conversion]
 //= Veins Town Npcs
 //===== Additional Comments: =================================
 //= 1.0 First version [L0ne_W0lf]
