@@ -44,11 +44,6 @@ int quest_pc_login(TBL_PC * sd)
 	return 0;
 }
 
-struct quest * quest_make(int id, time_t time, int num_objs, struct quest_objective ** qo_arr)
-{
-	return NULL;
-}
-
 int quest_add(TBL_PC * sd, struct quest * qd)
 {
 
@@ -101,7 +96,7 @@ int quest_delete(TBL_PC * sd, int quest_id)
 
 }
 
-int quest_update_objective(TBL_PC * sd, int quest_id, int objective_num, struct quest_objective qod)
+int quest_update_objective(TBL_PC * sd, int quest_id, int objective_num, const char * name, int count)
 {
 
 	int i;
@@ -113,14 +108,20 @@ int quest_update_objective(TBL_PC * sd, int quest_id, int objective_num, struct 
 	if(i != MAX_QUEST)
 		return -1;
 
-	memcpy(sd->quest_log[i].objectives[objective_num].name, qod.name, NAME_LENGTH);
-	sd->quest_log[i].objectives[objective_num].count = qod.count;
+	memcpy(&sd->quest_log[i].objectives[objective_num].name, name, NAME_LENGTH);
+	sd->quest_log[i].objectives[objective_num].count = count;
 
 	//Notify client
 	clif_send_quest_info(sd, &sd->quest_log[i]);
 
 	return 0;
 
+}
+
+int quest_update_status(TBL_PC * sd, int quest_id, bool status)
+{
+
+	return 0;
 }
 
 int quest_load_info(TBL_PC * sd, struct mmo_charstatus * st)

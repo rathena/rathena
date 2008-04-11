@@ -127,11 +127,11 @@ enum item_types {
 
 
 //Questlog system [Kevin]
-typedef enum quest_state { Q_NONE, Q_ACTIVE, Q_INACTIVE } quest_state;
+typedef enum quest_state { Q_INACTIVE, Q_ACTIVE } quest_state;
 
 struct quest_objective {
 
-	char * name;
+	char name[NAME_LENGTH];
 	int count;
 
 };

@@ -43,6 +43,7 @@
 #include "pet.h"
 #include "mail.h"
 #include "script.h"
+#include "quest.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -13044,6 +13045,78 @@ BUILDIN_FUNC(setcell)
 	return 0;
 }
 
+/******************
+Questlog script commands
+*******************/
+
+BUILDIN_FUNC(getquest)
+{
+
+	TBL_PC * sd = script_rid2sd(st);
+	struct quest qd;
+	int i, count = 0;
+	char * temp;
+
+	memset(&qd, 0, sizeof(struct quest));
+
+	qd.quest_id = script_getnum(st, 2);
+	qd.time = script_getnum(st, 3);
+	qd.state = Q_ACTIVE;
+	
+	for(i=0; i<(script_lastdata(st)-3) && (i/2) < MAX_QUEST_OBJECTIVES; i+=2)
+	{
+		temp = (char*)script_getstr(st, i+4);
+		memcpy(&qd.objectives[i/2].name, temp, NAME_LENGTH);
+		temp = NULL;
+		qd.objectives[i/2].count = script_getnum(st, i+5);
+		count++;
+	}
+
+	qd.num_objectives = count;
+
+	quest_add(sd, &qd);
+
+	return 0;
+
+}
+
+BUILDIN_FUNC(deletequest)
+{
+
+	TBL_PC * sd = script_rid2sd(st);
+	int qid = script_getnum(st, 2);
+
+	quest_delete(sd, qid);
+	return 0;
+
+}
+
+BUILDIN_FUNC(setquestobjective)
+{
+
+	TBL_PC * sd = script_rid2sd(st);
+	int qid = script_getnum(st, 2);
+	int num = script_getnum(st, 3);
+	const char * str = script_getstr(st, 4);
+	int count = script_getnum(st, 5);
+
+	quest_update_objective(sd, qid, num, str, count);
+
+	return 0;
+}
+
+BUILDIN_FUNC(setqueststatus)
+{
+
+	TBL_PC * sd = script_rid2sd(st);
+	int qid = script_getnum(st, 2);
+	bool active = script_getnum(st, 3)?true:false;
+
+	quest_update_status(sd, qid, active);
+
+	return 0;
+}
+
 
 // declarations that were supposed to be exported from npc_chat.c
 #ifdef PCRE_SUPPORT
@@ -13388,5 +13461,9 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(openauction,""),
 	BUILDIN_DEF(checkcell,"siii"),
 	BUILDIN_DEF(setcell,"siiiiii"),
+	BUILDIN_DEF(getquest, "ii*"),
+	BUILDIN_DEF(deletequest, "i"),
+	BUILDIN_DEF(setquestobjective, "iisi"),
+	BUILDIN_DEF(setqueststatus, "ii"),
 	{NULL,NULL,NULL},
 };

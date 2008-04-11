@@ -59,6 +59,7 @@ char hotkey_db[256] = "hotkey";
 char quest_db[256] = "quest";
 char quest_obj_db[256] = "quest_objective";
 
+//#undef TXT_SQL_CONVERT
 #ifndef TXT_SQL_CONVERT
 static DBMap* char_db_; // int char_id -> struct mmo_charstatus*
 
@@ -679,6 +680,7 @@ int mmo_char_tosql(int char_id, struct mmo_charstatus* p)
 	StringBuf_Init(&buf2);
 	StringBuf_Clear(&buf);
 	StringBuf_Clear(&buf2);
+	diff = 0;
 	StringBuf_Printf(&buf, "REPLACE INTO `%s` (`char_id`, `quest_id`, `state`) VALUES ", quest_db);
 	for(i=0; i<MAX_QUEST; i++)
 	{
@@ -691,7 +693,8 @@ int mmo_char_tosql(int char_id, struct mmo_charstatus* p)
 			diff = 1;
 
 			StringBuf_Printf(&buf2, "REPLACE INTO `%s` (`quest_id`, `num`, `name`, `count`) VALUES ", quest_obj_db);
-			for(j=0; j<MAX_QUEST_OBJECTIVES; j++)
+			count = 0;
+			for(j=0; j<p->quest_log[i].num_objectives; j++)
 			{
 
 				if(p->quest_log[i].objectives[j].name)
@@ -705,7 +708,7 @@ int mmo_char_tosql(int char_id, struct mmo_charstatus* p)
 				}
 			}
 
-			if(diff) {
+			if(count) {
 				if( SQL_ERROR == Sql_QueryStr(sql_handle, StringBuf_Value(&buf2)) )
 					Sql_ShowDebug(sql_handle);
 			}
@@ -716,7 +719,7 @@ int mmo_char_tosql(int char_id, struct mmo_charstatus* p)
 		if( SQL_ERROR == Sql_QueryStr(sql_handle, StringBuf_Value(&buf)) )
 			Sql_ShowDebug(sql_handle);
 		else
-			strcat(save_status, " hotkeys");
+			strcat(save_status, " quests");
 	}
 
 	StringBuf_Destroy(&buf2);
@@ -1206,15 +1209,15 @@ int mmo_char_fromsql(int char_id, struct mmo_charstatus* p, bool load_everything
 
 		//`quest_objectives`
 		if( SQL_ERROR == SqlStmt_Prepare(stmt2, "SELECT q.`count`, q.`name` FROM `%s` q", quest_obj_db)
-		||	SQL_ERROR == SqlStmt_BindParam(stmt2, 0, SQLDT_INT, &char_id, 0)
+		||	SQL_ERROR == SqlStmt_BindParam(stmt2, 0, SQLDT_INT, &tmp_quest.quest_id, 0)
 		||	SQL_ERROR == SqlStmt_Execute(stmt2)
 		||	SQL_ERROR == SqlStmt_BindColumn(stmt2, 0, SQLDT_INT,    &tmp_quest_obj.count, 0, NULL, NULL)
-		||	SQL_ERROR == SqlStmt_BindColumn(stmt2, 1, SQLDT_STRING, &tmp_quest_obj.name, 0, NULL, NULL) )
+		||	SQL_ERROR == SqlStmt_BindColumn(stmt2, 1, SQLDT_STRING, &tmp_quest_obj.name, NAME_LENGTH, NULL, NULL) )
 			SqlStmt_ShowDebug(stmt2);
 
 		for( j = 0; j < MAX_QUEST_OBJECTIVES && SQL_SUCCESS == SqlStmt_NextRow(stmt2); ++j )
 			memcpy(&p->quest_log[i].objectives[j], &tmp_quest_obj, sizeof(tmp_quest_obj));
-		p->quest_log[i].num_objectives = j+1;
+		p->quest_log[i].num_objectives = j;
 	}
 	p->num_quests = i;
 	strcat(t_msg, " quests");
