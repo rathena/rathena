@@ -9593,14 +9593,11 @@ int skill_unit_timer_sub (struct block_list* bl, va_list ap)
 			break;
 
 			case UNT_ANKLESNARE:
-				if( group->val2 > 0 ) { // used trap
-					struct block_list *target = map_id2bl(group->val2);
-					if(target)
-						status_change_end(target,SC_ANKLE,-1);
+				if( group->val2 > 0 ) {
+					// Used Trap don't returns back to item
 					skill_delunit(unit);
 					break;
 				}
-				// else fall through
 			case UNT_SKIDTRAP:
 			case UNT_LANDMINE:
 			case UNT_SHOCKWAVE:
@@ -9610,9 +9607,9 @@ int skill_unit_timer_sub (struct block_list* bl, va_list ap)
 			case UNT_CLAYMORETRAP:
 			case UNT_TALKIEBOX:
 			{
-				struct block_list* src = map_id2bl(group->src_id);
-				if( src && src->type == BL_PC )
-				{	// revert unit back into a trap
+				struct block_list* src;
+				if( unit->val1 > 0 && (src = map_id2bl(group->src_id)) != NULL && src->type == BL_PC )
+				{ // revert unit back into a trap
 					struct item item_tmp;
 					memset(&item_tmp,0,sizeof(item_tmp));
 					item_tmp.nameid = ITEMID_TRAP;
@@ -9666,7 +9663,24 @@ int skill_unit_timer_sub (struct block_list* bl, va_list ap)
 				unit->val1 -= SKILLUNITTIMER_INTERVAL/20; // trap's hp
 				if( unit->val1 <= 0 && unit->limit + group->tick > tick + 700 )
 					unit->limit = DIFF_TICK(tick+700,group->tick);
-			break;
+				break;
+			case UNT_SKIDTRAP:
+			case UNT_LANDMINE:
+			case UNT_SHOCKWAVE:
+			case UNT_SANDMAN:
+			case UNT_FLASHER:
+			case UNT_FREEZINGTRAP:
+			case UNT_TALKIEBOX:
+			case UNT_ANKLESNARE:
+				if( unit->val1 <= 0 ) {
+					if( group->unit_id == UNT_ANKLESNARE && group->val2 > 0 )
+						skill_delunit(unit);
+					else {
+						group->unit_id = UNT_USED_TRAPS;
+						group->limit = DIFF_TICK(tick, group->tick) + 1500;
+					}
+				}
+				break;
 			case UNT_TATAMIGAESHI:
 				if( unit->range >= 0 )
 				{	//Disable processed cell.
@@ -9677,7 +9691,7 @@ int skill_unit_timer_sub (struct block_list* bl, va_list ap)
 						group->bl_flag= BL_NUL;
 					}
 				}
-			break;
+				break;
 		}
 	}
 
