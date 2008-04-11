@@ -422,7 +422,7 @@ int mmo_auth_new(struct mmo_account* account)
 	// insert new entry into db
 	//TODO: error checking
 	stmt = SqlStmt_Malloc(sql_handle);
-	SqlStmt_Prepare(stmt, "INSERT INTO `%s` (`%s`, `%s`, `sex`, `email`, `expiration_time`) VALUES (?, ?, '%c', 'a@a.com', '%d')", login_db, login_db_userid, login_db_user_pass, account->sex, expiration_time);
+	SqlStmt_Prepare(stmt, "INSERT INTO `%s` (`%s`, `%s`, `sex`, `email`, `connect_until`) VALUES (?, ?, '%c', 'a@a.com', '%d')", login_db, login_db_userid, login_db_user_pass, account->sex, expiration_time);
 	SqlStmt_BindParam(stmt, 0, SQLDT_STRING, account->userid, strnlen(account->userid, NAME_LENGTH));
 	if( login_config.use_md5_passwds )
 	{
@@ -524,7 +524,7 @@ int mmo_auth(struct login_session_data* sd)
 
 	// retrieve login entry for the specified username
 	if( SQL_ERROR == Sql_Query(sql_handle,
-		"SELECT `%s`,`%s`,`lastlogin`,`sex`,`expiration_time`,`unban_time`,`state`,`%s` FROM `%s` WHERE `%s`= %s '%s'",
+		"SELECT `%s`,`%s`,`lastlogin`,`sex`,`connect_until`,`ban_until`,`state`,`%s` FROM `%s` WHERE `%s`= %s '%s'",
 		login_db_account_id, login_db_user_pass, login_db_level,
 		login_db, login_db_userid, (login_config.case_sensitive ? "BINARY" : ""), esc_userid) )
 		Sql_ShowDebug(sql_handle);
@@ -583,7 +583,7 @@ int mmo_auth(struct login_session_data* sd)
 	if( sd->sex != 'S' && sd->account_id < START_ACCOUNT_NUM )
 		ShowWarning("Account %s has account id %d! Account IDs must be over %d to work properly!\n", sd->userid, sd->account_id, START_ACCOUNT_NUM);
 
-	if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `lastlogin` = NOW(), `logincount`=`logincount`+1, `last_ip`='%s', `unban_time`='0', `state`='0' WHERE `%s` = '%d'",
+	if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `lastlogin` = NOW(), `logincount`=`logincount`+1, `last_ip`='%s', `ban_until`='0', `state`='0' WHERE `%s` = '%d'",
 		login_db, ip, login_db_account_id, sd->account_id) )
 		Sql_ShowDebug(sql_handle);
 
@@ -689,7 +689,7 @@ int parse_fromchar(int fd)
 				idb_remove(auth_db, account_id);
 
 				// retrieve email and account expiration time
-				if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `email`,`expiration_time` FROM `%s` WHERE `%s`='%d'", login_db, login_db_account_id, account_id) )
+				if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `email`,`connect_until` FROM `%s` WHERE `%s`='%d'", login_db, login_db_account_id, account_id) )
 					Sql_ShowDebug(sql_handle);
 				if( SQL_SUCCESS == Sql_NextRow(sql_handle) )
 				{
@@ -765,7 +765,7 @@ int parse_fromchar(int fd)
 			int account_id = RFIFOL(fd,2);
 			RFIFOSKIP(fd,6);
 
-			if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `email`,`expiration_time` FROM `%s` WHERE `%s`='%d'", login_db, login_db_account_id, account_id) )
+			if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `email`,`connect_until` FROM `%s` WHERE `%s`='%d'", login_db, login_db_account_id, account_id) )
 				Sql_ShowDebug(sql_handle);
 			else if( SQL_SUCCESS == Sql_NextRow(sql_handle) )
 			{
@@ -928,7 +928,7 @@ int parse_fromchar(int fd)
 						charif_sendallwos(-1, buf, 11);
 					}
 					ShowNotice("Account: %d Banned until: %lu\n", account_id, (unsigned long)timestamp);
-					if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `unban_time` = '%lu' WHERE `%s` = '%d'", login_db, (unsigned long)timestamp, login_db_account_id, account_id) )
+					if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `ban_until` = '%lu' WHERE `%s` = '%d'", login_db, (unsigned long)timestamp, login_db_account_id, account_id) )
 						Sql_ShowDebug(sql_handle);
 				}
 			}
@@ -1019,11 +1019,11 @@ int parse_fromchar(int fd)
 			int account_id = RFIFOL(fd,2);
 			RFIFOSKIP(fd,6);
 
-			if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `unban_time` FROM `%s` WHERE `%s` = '%d'", login_db, login_db_account_id, account_id) )
+			if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `ban_until` FROM `%s` WHERE `%s` = '%d'", login_db, login_db_account_id, account_id) )
 				Sql_ShowDebug(sql_handle);
 			else if( Sql_NumRows(sql_handle) > 0 )
 			{// Found a match
-				if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `unban_time` = '0' WHERE `%s` = '%d'", login_db, login_db_account_id, account_id) )
+				if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `ban_until` = '0' WHERE `%s` = '%d'", login_db, login_db_account_id, account_id) )
 					Sql_ShowDebug(sql_handle);
 			}
 		}
@@ -1375,7 +1375,7 @@ void login_auth_failed(struct login_session_data* sd, int result)
 		memset(WFIFOP(fd,3), '\0', 20);
 	else
 	{// 6 = Your are Prohibited to log in until %s
-		if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `unban_time` FROM `%s` WHERE `%s` = %s '%s'", login_db, login_db_userid, (login_config.case_sensitive ? "BINARY" : ""), esc_userid) )
+		if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `ban_until` FROM `%s` WHERE `%s` = %s '%s'", login_db, login_db_userid, (login_config.case_sensitive ? "BINARY" : ""), esc_userid) )
 			Sql_ShowDebug(sql_handle);
 		else if( SQL_SUCCESS == Sql_NextRow(sql_handle) )
 		{
