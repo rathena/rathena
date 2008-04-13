@@ -587,7 +587,8 @@ CREATE TABLE `quest_objective` (
   `count` mediumint(8) unsigned NOT NULL default '0',
   `name` varchar(255) NOT NULL default '',
   `num` tinyint(3) unsigned NOT NULL,
-  PRIMARY KEY  USING BTREE (`quest_id`,`num`)
+  `char_id` int(10) unsigned NOT NULL,
+  PRIMARY KEY  USING BTREE (`quest_id`,`num`,`char_id`)
 ) ENGINE=MyISAM;
 
 --
