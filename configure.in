@@ -37,6 +37,20 @@ AC_ARG_ENABLE(
 
 
 #
+# packetver
+#
+AC_ARG_ENABLE(
+	[packetver],
+	AC_HELP_STRING(
+		[--enable-packetver=ARG],
+		[Sets the PACKETVER define of the map-server. (see src/map/clif.h)]
+	),
+	[enable_packetver="$enableval"],
+	[enable_packetver=""]
+)
+
+
+#
 # mapregsql
 #
 AC_ARG_ENABLE(
@@ -139,7 +153,8 @@ AC_ARG_WITH(
 	[zlib],
 	AC_HELP_STRING(
 		[--with-zlib=DIR],
-		[root directory path of zlib installation (defaults to /usr/local or /usr if not found in /usr/local)]
+		[root directory path of zlib installation (defaults to /usr/local or /usr if not found in /usr/local).
+		 Assumes that the header files are in DIR/include and the library files are in DIR/lib]
 	),
 	[
 		test -n "$withval" && ZLIB_HOME="$withval"
@@ -273,6 +288,14 @@ esac
 
 
 #
+# Packetver
+#
+if test -n "$enable_packetver" ; then
+	CFLAGS="$CFLAGS -DPACKETVER=$enable_packetver"
+fi
+
+
+#
 # Mapregsql
 #
 if test "$enable_mapregsql" = "yes" ; then
@@ -284,7 +307,7 @@ fi
 # Debug
 #
 if test "$enable_debug" = "yes" ; then
-	CFLAGS="$CFLAGS -DDEBUG"
+	CFLAGS="$CFLAGS -g -DDEBUG"
 fi
 
 

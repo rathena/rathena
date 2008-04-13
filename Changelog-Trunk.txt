@@ -4,6 +4,11 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2008/04/13
+	* Changes to the configure script: [FlavioJS]
+	- clarified how --with-zlib is used
+	- added --enable-packetver to set the PACKETVER define (used often enough 
+	  to get it's own option, but unnecessary since it can be set with CFLAGS)
+	- added -g compiler option to --enable-debug
 	* Changed LOG_ALL definition to really log everything [Toms]
 2008/04/12
 	* Login will no longer set character offline when going from map
