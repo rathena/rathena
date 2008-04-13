@@ -2838,12 +2838,16 @@ int parse_frommap(int fd)
 			//Tell the new map server about this player using Kevin's new auth packet. [Skotlex]
 			if (map_fd >= 0 && session[map_fd] && char_data) 
 			{	//Send the map server the auth of this player.
+				struct auth_node* node;
+
 				//Update the "last map" as this is where the player must be spawned on the new map server.
 				char_data->last_point.map = RFIFOW(fd,18);
 				char_data->last_point.x = RFIFOW(fd,20);
 				char_data->last_point.y = RFIFOW(fd,22);
 				char_data->sex = RFIFOB(fd,30);
 
+#if 0
+				// the map-server must request it [FlavioJS]
 				WFIFOHEAD(map_fd, 20 + sizeof(struct mmo_charstatus));
 				WFIFOW(map_fd,0) = 0x2afd;
 				WFIFOW(map_fd,2) = 20 + sizeof(struct mmo_charstatus);
@@ -2853,6 +2857,18 @@ int parse_frommap(int fd)
 				WFIFOL(map_fd,12) = (unsigned long)0; //TODO: expiration_time, how do I figure it out right now?
 				memcpy(WFIFOP(map_fd,20), char_data, sizeof(struct mmo_charstatus));
 				WFIFOSET(map_fd, WFIFOW(map_fd,2));
+#endif
+
+				// create temporary auth entry
+				CREATE(node, struct auth_node, 1);
+				node->account_id = RFIFOL(fd,2);
+				node->char_id = RFIFOL(fd,14);
+				node->login_id1 = RFIFOL(fd,6);
+				node->login_id2 = RFIFOL(fd,10);
+				node->sex = RFIFOB(fd,30);
+				node->expiration_time = 0; // FIXME
+				node->ip = ntohl(RFIFOL(fd,31));
+				idb_put(auth_db, RFIFOL(fd,2), node);
 
 				data = (struct online_char_data*)idb_ensure(online_char_db, RFIFOL(fd,2), create_online_char_data);
 				data->char_id = char_data->char_id;
@@ -3109,6 +3125,63 @@ int parse_frommap(int fd)
 			WFIFOW(fd,0) = 0x2b24;
 			WFIFOSET(fd,2);
 			RFIFOSKIP(fd,2);
+		break;
+
+		case 0x2b26: // auth request from map-server
+			if (RFIFOREST(fd) < 19)
+				return 0;
+
+		{
+			int account_id;
+			int char_id;
+			int login_id1;
+			char sex;
+			uint32 ip;
+			struct auth_node* node;
+			struct mmo_charstatus* cd;
+
+			account_id = RFIFOL(fd,2);
+			char_id    = RFIFOL(fd,6);
+			login_id1  = RFIFOL(fd,10);
+			sex        = RFIFOB(fd,14);
+			ip         = ntohl(RFIFOL(fd,15));
+			RFIFOSKIP(fd,19);
+
+			node = (struct auth_node*)idb_get(auth_db, account_id);
+			cd = search_character(account_id, char_id);
+			if( node != NULL && cd != NULL &&
+				node->account_id == account_id &&
+				node->char_id == char_id &&
+				node->login_id1 == login_id1 &&
+				node->sex == sex &&
+				node->ip == ip )
+			{// auth ok
+				WFIFOHEAD(fd,20 + sizeof(struct mmo_charstatus));
+				WFIFOW(fd,0) = 0x2afd;
+				WFIFOW(fd,2) = 20 + sizeof(struct mmo_charstatus);
+				WFIFOL(fd,4) = account_id;
+				WFIFOL(fd,8) = login_id1;
+				WFIFOL(fd,12) = (uint32)node->expiration_time; // FIXME: will wrap to negative after "19-Jan-2038, 03:14:07 AM GMT"
+				WFIFOL(fd,16) = node->login_id2;
+				memcpy(WFIFOP(fd,20), cd, sizeof(struct mmo_charstatus));
+				WFIFOSET(fd, WFIFOW(fd,2));
+
+				// only use the auth once and mark user online
+				idb_remove(auth_db, account_id);
+				set_char_online(id, account_id, char_id);
+			}
+			else
+			{// auth failed
+				WFIFOHEAD(fd,19);
+				WFIFOW(fd,0) = 0x2b27;
+				WFIFOL(fd,2) = account_id;
+				WFIFOL(fd,6) = char_id;
+				WFIFOL(fd,10) = login_id1;
+				WFIFOB(fd,14) = sex;
+				WFIFOL(fd,15) = htonl(ip);
+				WFIFOSET(fd,19);
+			}
+		}
 		break;
 
 		case 0x2736: // ip address update
@@ -3398,6 +3471,8 @@ int parse_char(int fd)
 
 			ShowInfo("Character selection '%s' (account: %d, slot: %d).\n", cd->name, sd->account_id, ch);
 
+#if 0
+			// The server must request it [FlavioJS]
 			//Send auth ok to map server
 			WFIFOHEAD(map_fd,20 + sizeof(struct mmo_charstatus));
 			WFIFOW(map_fd,0) = 0x2afd;
@@ -3408,6 +3483,7 @@ int parse_char(int fd)
 			WFIFOL(map_fd,12) = (unsigned long)sd->expiration_time;
 			memcpy(WFIFOP(map_fd,20), cd, sizeof(struct mmo_charstatus));
 			WFIFOSET(map_fd, WFIFOW(map_fd,2));
+#endif
 
 			// create temporary auth entry
 			CREATE(node, struct auth_node, 1);
