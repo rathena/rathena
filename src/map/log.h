@@ -25,17 +25,20 @@ int log_mvpdrop(struct map_session_data *sd, int monster_id, int *log_mvp);
 int log_config_read(char *cfgName);
 
 typedef enum log_what {
-	LOG_ALL                 = 0xFFF,
-	LOG_TRADES              = 0x002,
-	LOG_VENDING             = 0x004,
-	LOG_PLAYER_ITEMS        = 0x008, // dropped/picked
-	LOG_MONSTER_ITEMS       = 0x010, // dropped/looted
-	LOG_NPC_TRANSACTIONS    = 0x020, // npc shops?
-	LOG_SCRIPT_TRANSACTIONS = 0x040,
-	LOG_STOLEN_ITEMS        = 0x080, // stolen from mobs
-	LOG_USED_ITEMS          = 0x100, // used by player
-	LOG_MVP_PRIZE           = 0x200,
-	LOG_COMMAND_ITEMS       = 0x400  // created/deleted through @/# commands
+	LOG_ALL                 = 0xFFFF,
+	LOG_TRADES              = 0x0002,
+	LOG_VENDING             = 0x0004,
+	LOG_PLAYER_ITEMS        = 0x0008, // dropped/picked
+	LOG_MONSTER_ITEMS       = 0x0010, // dropped/looted
+	LOG_NPC_TRANSACTIONS    = 0x0020, // npc shops?
+	LOG_SCRIPT_TRANSACTIONS = 0x0040,
+	LOG_STOLEN_ITEMS        = 0x0080, // stolen from mobs
+	LOG_USED_ITEMS          = 0x0100, // used by player
+	LOG_MVP_PRIZE           = 0x0200,
+	LOG_COMMAND_ITEMS       = 0x0400, // created/deleted through @/# commands
+	LOG_STORAGE_ITEMS	= 0x0800, // placed/retrieved from storage
+	LOG_GSTORAGE_ITEMS	= 0x1000, // placed/retrieved from guild storage
+	LOG_MAILS		= 0x2000  // mail system transactions
 } log_what;
 
 extern struct Log_Config {
