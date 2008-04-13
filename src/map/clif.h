@@ -5,7 +5,7 @@
 #define _CLIF_H_
 
 #include "../common/cbasetypes.h"
-//#include "../common/mmo.h"
+#include "../common/mmo.h"
 struct storage;
 struct guild_storage;
 //#include "map.h"
