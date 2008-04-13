@@ -59,6 +59,7 @@ char hotkey_db[256] = "hotkey";
 char quest_db[256] = "quest";
 char quest_obj_db[256] = "quest_objective";
 
+//If your code editor is having problems syntax highlighting this file, uncomment this and RECOMMENT IT BEFORE COMPILING
 //#undef TXT_SQL_CONVERT
 #ifndef TXT_SQL_CONVERT
 static DBMap* char_db_; // int char_id -> struct mmo_charstatus*
@@ -296,7 +297,7 @@ void set_char_offline(int char_id, int account_id)
 		}
 	}
 	
-	if (login_fd > 0 && !session[login_fd]->flag.eof)
+	if (login_fd > 0 && !session[login_fd]->flag.eof && (character->fd != -1 && character->char_id != -1))
 	{
 		WFIFOHEAD(login_fd,6);
 		WFIFOW(login_fd,0) = 0x272c;
