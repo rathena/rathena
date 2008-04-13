@@ -402,6 +402,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\src\char_sql\int_quest.c"
+				>
+			</File>
+			<File
+				RelativePath="..\src\char_sql\int_quest.h"
+				>
+			</File>
+			<File
 				RelativePath="..\src\char_sql\inter.c"
 				>
 			</File>

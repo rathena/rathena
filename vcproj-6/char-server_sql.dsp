@@ -251,6 +251,14 @@ SOURCE=..\src\char_sql\int_storage.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\src\char_sql\int_quest.c
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\char_sql\int_quest.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\src\char_sql\inter.c
 # End Source File
 # Begin Source File

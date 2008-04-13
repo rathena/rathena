@@ -25,6 +25,7 @@
 #include "log.h"
 #include "clif.h"
 #include "quest.h"
+#include "intif.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -67,11 +68,44 @@ int quest_add(TBL_PC * sd, struct quest * qd)
 	memcpy(&sd->quest_log[i], qd, sizeof(struct quest));
 	sd->num_quests++;
 
-	//Notify client
-	clif_send_quest_info(sd, &sd->quest_log[i]);
+	//Notify inter server
+	intif_quest_add(sd->status.char_id, qd);
 
 	return 0;
 
+}
+
+int quest_add_ack(int char_id, int quest_id, int success)
+{
+	int i;
+	TBL_PC * sd = map_charid2sd(char_id);
+
+	///Player no longer on map
+	if(!sd)
+		return -1;
+
+	//Search for quest
+	ARR_FIND(0, MAX_QUEST, i, sd->quest_log[i].quest_id == quest_id);
+
+	//Quest not found, shouldn't happen?
+	if(i == MAX_QUEST)
+		return -1;
+
+	if(success)
+	{
+		//Notify client
+		clif_send_quest_info(sd, &sd->quest_log[i]);
+	}
+	else
+	{
+		ShowError("Quest %d for character %d could not be added!\n", quest_id, char_id);
+
+		//Zero quest
+		memset(&sd->quest_log[i], 0, sizeof(struct quest));
+		sd->num_quests--;
+	}
+
+	return 0;
 }
 
 int quest_delete(TBL_PC * sd, int quest_id)
@@ -83,14 +117,47 @@ int quest_delete(TBL_PC * sd, int quest_id)
 	ARR_FIND(0, MAX_QUEST, i, sd->quest_log[i].quest_id == quest_id);
 
 	//Quest not found
-	if(i != MAX_QUEST)
+	if(i == MAX_QUEST)
 		return -1;
 
-	//Zero quest
-	memset(&sd->quest_log[i], 0, sizeof(struct quest));
+	intif_quest_delete(sd->status.char_id, quest_id);
 
-	//Notify client
-	clif_send_quest_delete(sd, quest_id);
+	return 0;
+
+}
+
+int quest_delete_ack(int char_id, int quest_id, int success)
+{
+
+	int i;
+	TBL_PC * sd = map_charid2sd(char_id);
+
+	///Player no longer on map
+	if(!sd)
+		return -1;
+
+	//Search for quest
+	ARR_FIND(0, MAX_QUEST, i, sd->quest_log[i].quest_id == quest_id);
+
+	//Quest not found
+	if(i == MAX_QUEST)
+		return -1;
+
+	if(success)
+	{
+
+		//Zero quest
+		memset(&sd->quest_log[i], 0, sizeof(struct quest));
+		sd->num_quests--;
+
+		//Notify client
+		clif_send_quest_delete(sd, quest_id);
+
+		return 1;
+
+	}
+	else
+		ShowError("Quest %d for character %d could not be deleted!\n", quest_id, char_id);
 
 	return 0;
 

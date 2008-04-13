@@ -20,6 +20,7 @@
 #include "atcommand.h"
 #include "mercenary.h" //albator
 #include "mail.h"
+#include "quest.h"
 
 #include <sys/types.h>
 #include <stdio.h>
@@ -36,7 +37,7 @@ static const int packet_len_table[]={
 	10,-1,15, 0, 79,19, 7,-1,  0,-1,-1,-1, 14,67,186,-1, //0x3830
 	 9, 9,-1,14,  0, 0, 0, 0, -1,74,-1,11, 11,-1,  0, 0, //0x3840
 	-1,-1, 7, 7,  7,11, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0, //0x3850  Auctions [Zephyrus]
-	 0, 0, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0,
+	 0,11,11, 0,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0, //0x3860  Quests [Kevin]
 	 0, 0, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0,
 	11,-1, 7, 3,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0, //0x3880
 	-1,-1, 7, 3,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0, //0x3890  Homunculus [albator]
@@ -1398,7 +1399,58 @@ int intif_parse_DeleteHomunculusOk(int fd)
 	return 0;
 }
 
+/**************************************
+
+QUESTLOG SYSTEM FUNCTIONS
+
+***************************************/
+
+int intif_parse_questDelete(int fd)
+{
+	quest_delete_ack(RFIFOL(fd, 2), RFIFOL(fd, 6), RFIFOB(fd, 10));
+	return 0;
+}
+
+int intif_quest_delete(int char_id, int quest_id)
+{
+	if(CheckForCharServer())
+		return 0;
+
+	WFIFOHEAD(inter_fd, 10);
+	WFIFOW(inter_fd,0) = 0x3062;
+	WFIFOL(inter_fd,2) = char_id;
+	WFIFOL(inter_fd,6) = quest_id;
+	WFIFOSET(inter_fd, 10);
+
+	return 0;
+}
+
+int intif_parse_questAdd(int fd)
+{
+	quest_add_ack(RFIFOL(fd, 2), RFIFOL(fd, 6), RFIFOB(fd, 10));
+	return 0;
+}
+
+int intif_quest_add(int char_id, struct quest * qd)
+{
+
+	int sSize = sizeof(struct quest);
+
+	if(CheckForCharServer())
+		return 0;
+
+	WFIFOHEAD(inter_fd, sSize + 8);
+	WFIFOW(inter_fd,0) = 0x3061;
+	WFIFOW(inter_fd,2) = sSize + 8;
+	WFIFOL(inter_fd,4) = char_id;
+	memcpy(WFIFOP(inter_fd,8), qd, sSize);
+	WFIFOSET(inter_fd,  sSize + 8);
+
+	return 0;
+}
+
 #ifndef TXT_ONLY
+
 /*==========================================
  * MAIL SYSTEM
  * By Zephyrus
@@ -1938,6 +1990,11 @@ int intif_parse(int fd)
 	case 0x3841:	intif_parse_GuildCastleDataSave(fd); break;
 	case 0x3842:	intif_parse_GuildCastleAllDataLoad(fd); break;
 	case 0x3843:	intif_parse_GuildMasterChanged(fd); break;
+
+	//Quest system
+	case 0x3861:	intif_parse_questAdd(fd); break;
+	case 0x3862:	intif_parse_questDelete(fd); break;
+
 #ifndef TXT_ONLY
 // Mail System
 	case 0x3848:	intif_parse_Mail_inboxreceived(fd); break;

@@ -431,7 +431,7 @@ int mmo_char_tosql(int char_id, struct mmo_charstatus* p)
 	int diff = 0;
 	char save_status[128]; //For displaying save information. [Skotlex]
 	struct mmo_charstatus *cp;
-	StringBuf buf, buf2;
+	StringBuf buf;
 
 	if (char_id!=p->char_id) return 0;
 
@@ -643,76 +643,6 @@ int mmo_char_tosql(int char_id, struct mmo_charstatus* p)
 		else //Friend list cleared.
 			strcat(save_status, " friends");
 	}
-
-	StringBuf_Clear(&buf);
-	StringBuf_Printf(&buf, "REPLACE INTO `%s` (`char_id`, `quest_id`, `state`) VALUES ", quest_db);
-	for(i=0; i<MAX_QUEST; i++)
-	{
-
-		if(p->quest_log[i].quest_id)
-		{
-			if(diff)
-				StringBuf_AppendStr(&buf, ",");
-			StringBuf_Printf(&buf, "('%d', '%d', '%d')", p->char_id, p->quest_log[i].quest_id, p->quest_log[i].state);
-			diff = 1;
-		}
-
-	}
-
-	if(diff) {
-		if( SQL_ERROR == Sql_QueryStr(sql_handle, StringBuf_Value(&buf)) )
-			Sql_ShowDebug(sql_handle);
-		else
-			strcat(save_status, " hotkeys");
-	}
-
-	//save quests
-	StringBuf_Init(&buf2);
-	StringBuf_Clear(&buf);
-	StringBuf_Clear(&buf2);
-	diff = 0;
-	StringBuf_Printf(&buf, "REPLACE INTO `%s` (`char_id`, `quest_id`, `state`) VALUES ", quest_db);
-	for(i=0; i<MAX_QUEST; i++)
-	{
-
-		if(p->quest_log[i].quest_id)
-		{
-			if(diff)
-				StringBuf_AppendStr(&buf, ",");
-			StringBuf_Printf(&buf, "('%d', '%d', '%d')", p->char_id, p->quest_log[i].quest_id, p->quest_log[i].state);
-			diff = 1;
-
-			StringBuf_Printf(&buf2, "REPLACE INTO `%s` (`quest_id`, `num`, `name`, `count`) VALUES ", quest_obj_db);
-			count = 0;
-			for(j=0; j<p->quest_log[i].num_objectives; j++)
-			{
-
-				if(p->quest_log[i].objectives[j].name)
-				{
-
-					if(count)
-						StringBuf_AppendStr(&buf2, ",");
-					StringBuf_Printf(&buf2, "('%d', '%d', '%s', '%d')", p->quest_log[i].quest_id, j, p->quest_log[i].objectives[j].name, p->quest_log[i].objectives[j].count);
-					count = 1;
-
-				}
-			}
-
-			if(count) {
-				if( SQL_ERROR == Sql_QueryStr(sql_handle, StringBuf_Value(&buf2)) )
-					Sql_ShowDebug(sql_handle);
-			}
-		}
-	}
-
-	if(diff) {
-		if( SQL_ERROR == Sql_QueryStr(sql_handle, StringBuf_Value(&buf)) )
-			Sql_ShowDebug(sql_handle);
-		else
-			strcat(save_status, " quests");
-	}
-
-	StringBuf_Destroy(&buf2);
 
 #ifdef HOTKEY_SAVING
 	// hotkeys
