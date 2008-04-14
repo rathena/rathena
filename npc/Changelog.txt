@@ -1,6 +1,7 @@
 Date		Added
 ======
 2008/04/14
+	* Rev. 12594 Fixed bugreport:1337, bugreport:1355, bugreport:1361, and bugreport:1362.  [L0ne_W0lf]
 	* Rev. 12588 Fixed minor dialogue bug at archer.txt [Lupus]
 	* Rev. 12587 Fixed design flaw in card remover script. [L0ne_W0lf]
 2008/04/10

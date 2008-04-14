@@ -4,7 +4,7 @@
 //= vicious_pucca, Poki#3, erKURITA, Munin, and everybody in the
 //= comments
 //===== Current Version: =====================================
-//= 1.4
+//= 1.5
 //===== Compatible With: =====================================
 //= eAthena 1.0
 //===== Description: =========================================
@@ -24,6 +24,7 @@
 //= 1.2 Added a few NPCs scripted by Munin and fixed up format a little [Playtester]
 //= 1.3 Moved some quests-related NPCs to proper file. [SinSloth]
 //= 1.4 Optimized the Party Supplies Shop [DZeroX]
+//= 1.5 Fixed Party Supplies Shop. [L0ne_W0lf]
 //============================================================
 
 //---------------------------------------------------------------------------
@@ -248,7 +249,6 @@ hu_in01,23,311,4	script	Party Supplies Shop	898,{
 	mes "We can provide you with 5 of them";
 	mes "at 500 zeny.";
 	next;
-	menu "Buy",L_Buy,"Cancel",L_Cancel;
 	switch (select("Buy:Cancel")) {
 		case 1:
 			if (Zeny < 500) { 

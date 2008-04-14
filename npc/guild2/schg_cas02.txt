@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
-//= 1.1
+//= 1.2
 //===== Compatible With: =====================================
 //= eAthena SVN
 //===== Description: =========================================
@@ -11,6 +11,7 @@
 //===== Additional Comments: =================================
 //= 1.0 First Version [L0ne_W0lf]
 //= 1.1 Fixed setcell range of first barricade. [L0ne_W0lf]
+//= 1.2 Fixed first Barricade being desotryable. [L0ne_W0lf]
 //============================================================
 
 schg_cas02,1,1,0	script	Manager#sch02_02	111,{
@@ -1162,10 +1163,10 @@ schg_cas02,2,1,0	script	#sch02_RL00	-1,{
 OnEnable:
 	setcell "schg_cas02",290,98,290,105,cell_walkable,0;
 	setcell "schg_cas02",290,98,290,105,cell_shootable,0;
-	guardian "schg_cas02",290,98," ",1905,"#sch02_RL00::OnBarrierDestroyed"; //24;
-	guardian "schg_cas02",290,100," ",1905,"#sch02_RL00::OnBarrierDestroyed"; //25;
-	guardian "schg_cas02",290,102," ",1905,"#sch02_RL00::OnBarrierDestroyed"; //26;
-	guardian "schg_cas02",290,104," ",1905,"#sch02_RL00::OnBarrierDestroyed"; //27;
+	guardian "schg_cas02",289,98," ",1905,"#sch02_RL00::OnBarrierDestroyed"; //24;
+	guardian "schg_cas02",289,100," ",1905,"#sch02_RL00::OnBarrierDestroyed"; //25;
+	guardian "schg_cas02",289,102," ",1905,"#sch02_RL00::OnBarrierDestroyed"; //26;
+	guardian "schg_cas02",289,104," ",1905,"#sch02_RL00::OnBarrierDestroyed"; //27;
 	end;
 
 OnDisable:
