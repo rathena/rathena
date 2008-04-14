@@ -120,6 +120,40 @@ AC_ARG_WITH(
 
 
 #
+# Manual MYSQL_CFLAGS (optional)
+#
+AC_ARG_WITH(
+	[MYSQL_CFLAGS],
+	AC_HELP_STRING(
+		[--with-MYSQL_CFLAGS=ARG],
+		[specify MYSQL_CFLAGS manually (instead of using "mysql_config --include")]
+	),
+	[
+		manual_MYSQL_CFLAGS="yes"
+		MYSQL_CFLAGS="$withval"
+	],
+	[manual_MYSQL_CFLAGS="no"]
+)
+
+
+#
+# Manual MYSQL_LIBS (optional)
+#
+AC_ARG_WITH(
+	[MYSQL_LIBS],
+	AC_HELP_STRING(
+		[--with-MYSQL_LIBS=ARG],
+		[specify MYSQL_LIBS manually (instead of using "mysql_config --libs")]
+	),
+	[
+		manual_MYSQL_LIBS="yes"
+		MYSQL_LIBS="$withval"
+	],
+	[manual_MYSQL_LIBS="no"]
+)
+
+
+#
 # Enable/disable PCRE and optionally specify the path (optional library)
 #
 AC_ARG_WITH(
@@ -337,11 +371,11 @@ AC_CHECK_LIB([rt], [clock_gettime])
 #
 # MySQL library (optional)
 #
-MYSQL_VERSION=""
-MYSQL_CFLAGS=""
-MYSQL_LIBS=""
 
 if test "$want_mysql" = "no" ; then
+	MYSQL_VERSION=""
+	MYSQL_CFLAGS=""
+	MYSQL_LIBS=""
 	AC_MSG_NOTICE([ignoring MySQL (optional)])
 else
 	if test -z "$MYSQL_CONFIG_HOME"; then
@@ -350,16 +384,23 @@ else
 
 	if test "$MYSQL_CONFIG_HOME" != "no" ; then
 		MYSQL_VERSION="`$MYSQL_CONFIG_HOME --version`"
-		MYSQL_CFLAGS="`$MYSQL_CONFIG_HOME --include`"
-		MYSQL_LIBS="`$MYSQL_CONFIG_HOME --libs`"
-
-		MYSQL_OLD_LDFLAGS="$LDFLAGS" ; LDFLAGS="$LDFLAGS $MYSQL_LIBS"
-		MYSQL_OLD_CPPFLAGS="$CPPFLAGS" ; CPPFLAGS="$CPPFLAGS $MYSQL_CFLAGS"
-		AC_CHECK_LIB([mysqlclient], [mysql_init], [HAVE_MYSQL="yes"], [])
-		AC_CHECK_HEADER([mysql.h], [], [HAVE_MYSQL=""])
-		CPPFLAGS="$MYSQL_OLD_CPPFLAGS"
-		LDFLAGS="$MYSQL_OLD_LDFLAGS"
+		if test "$manual_MYSQL_CFLAGS" = "no" ; then
+			MYSQL_CFLAGS="`$MYSQL_CONFIG_HOME --include`"
+		fi
+		if test "$manual_MYSQL_LIBS" = "no" ; then
+			MYSQL_LIBS="`$MYSQL_CONFIG_HOME --libs`"
+		fi
+	else
+		MYSQL_VERSION="unknown"
 	fi
+
+	MYSQL_OLD_LDFLAGS="$LDFLAGS" ; LDFLAGS="$LDFLAGS $MYSQL_LIBS"
+	MYSQL_OLD_CPPFLAGS="$CPPFLAGS" ; CPPFLAGS="$CPPFLAGS $MYSQL_CFLAGS"
+	AC_CHECK_LIB([mysqlclient], [mysql_init], [HAVE_MYSQL="yes"], [])
+	AC_CHECK_HEADER([mysql.h], [], [HAVE_MYSQL=""])
+	CPPFLAGS="$MYSQL_OLD_CPPFLAGS"
+	LDFLAGS="$MYSQL_OLD_LDFLAGS"
+
 	AC_MSG_CHECKING([MySQL library (optional)])
 	if test "$HAVE_MYSQL" = "yes" ; then
 		AC_MSG_RESULT([yes ($MYSQL_VERSION)])
