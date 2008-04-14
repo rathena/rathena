@@ -78,6 +78,18 @@ SLOT10:
 CARDNUMCHECK:
 	if(getequipcardcnt(@part) == 0) goto DENYCARDCOUNT;
 	set @cardcount,getequipcardcnt(@part);
+
+	// Ensure there is room for the items.
+	if (!checkweight(1202,(@cardcount+1))) { 
+		mes "^3355FFJust a minute!";
+		mes "I can't offer any of my";
+		mes "services to you because";
+		mes "you're carrying too much";
+		mes "stuff. Put your extra items in";
+		mes "Kafra Storage and come again~";
+		close;
+	}
+
 	if(@cardcount > 1) goto CARDNUMMULTIMSG;
 	mes "[Wise Old Woman]";
 	mes "This item has " + @cardcount + " card compounded on it. To perform my magic, I will need 225000 zeny, a ^0000FFStar Crumb^000000, and a ^0000FFYellow Gemstone^000000.";
