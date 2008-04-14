@@ -297,7 +297,7 @@ void set_char_offline(int char_id, int account_id)
 		}
 	}
 	
-	if (login_fd > 0 && !session[login_fd]->flag.eof && character->char_id != -1)
+	if (login_fd > 0 && !session[login_fd]->flag.eof && (character == NULL || character->char_id != -1))
 	{
 		WFIFOHEAD(login_fd,6);
 		WFIFOW(login_fd,0) = 0x272c;
