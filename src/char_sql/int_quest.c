@@ -69,8 +69,7 @@ int mapif_quests_fromsql(int char_id, struct quest questlog[])
 		questlog[i].num_objectives = j;
 
 	}
-		
-
+	SqlStmt_Free(stmt);
 	return count;
 }
 
