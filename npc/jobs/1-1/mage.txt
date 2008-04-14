@@ -139,7 +139,7 @@ geffen_in,164,124,4	script	Mage Guildsman	123,{
 		if (getskilllv(1) < 9) {
 			mes "Oh, what a bummer. You haven't met the requirements yet.";
 			next;
-			mes "[Mage Guildman]";
+			mes "[Mage Guildsman]";
 			mes "Go back and reach Novice Job level 9 first. Don't forget that you also have to learn all of the Basic Skills before you come back.";
 			close;
 		}
