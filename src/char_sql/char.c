@@ -392,7 +392,7 @@ void read_gm_account(void)
 	GM_num = 0;
 
 	if( SQL_ERROR == Sql_Query(lsql_handle, "SELECT `%s`,`%s` FROM `%s` WHERE `%s`>='%d'", login_db_account_id, login_db_level, login_db, login_db_level, lowest_gm_level) )
-		Sql_ShowDebug(sql_handle);
+		Sql_ShowDebug(lsql_handle);
 
 	if( Sql_NumRows(lsql_handle) > 0 )
 	{
