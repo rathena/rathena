@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88; L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.7
+//= 1.7a
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -19,6 +19,7 @@
 //= 1.7 Rescripted to Aegis 10.3 stadards. [L0ne_W0lf]
 //=	Arrow reward is now equal to the type sof trunks brought.
 //=	No longer uses function "F_ToHigh"
+//= 1.7a Fixed minor dialogue bug at Grade==25 [Lupus]
 //============================================================ 
 
 payon_in02,64,71,4	script	Archer Guildsman#archer	85,{
@@ -174,7 +175,7 @@ payon_in02,64,71,4	script	Archer Guildsman#archer	85,{
 					mes "More than 30! Nice job!";
 					mes "Congratulations!";
 				}
-				else if (.@total_archer > 25) {
+				else {
 					mes "*Sigh* Well, you just barely passed... Anyway, well done.";
 				}
 			}
