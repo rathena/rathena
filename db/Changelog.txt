@@ -43,6 +43,8 @@
 	2385 Recuvative_Armor		Should trigger HP/SP return with magical kills as well.
 
 =======================
+2008/04/14
+	* Rev. 125955 Fixed bugreport:1353, bugreport:1356, and bugreport:1365.  [L0ne_W0lf]
 2008/04/10
 	* Rev. 12550 Evil Land will always as a 3x3 animation. [L0ne_W0lf]
 	* Rev. 12548 Updated skill "Evil Land" (skill_db, skill_unit_db) [L0ne_W0lf]

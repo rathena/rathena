@@ -2122,8 +2122,8 @@
 5241,Blue_Wizardry_Hat,Blue Mage Hat,5,,10,300,,1,,0,0x810204,7,2,256,,0,1,285,{ bonus bInt,2; bonus bMaxSP,150; },{},{}
 5242,Yellow_Wizardry_Hat,Yellow Mage Hat,5,,10,300,,1,,0,0x810204,7,2,256,,0,1,286,{ bonus bInt,2; bonus bMaxSP,150; },{},{}
 5243,Chullos,Ear Muffs Hat,5,,10,800,,2,,1,0xFFFFFFFF,7,2,768,,0,1,287,{ bonus2 bResEff,Eff_Freeze,1000; },{},{}
-5244,Elven_Blinker,Elven Blinker,5,,10,200,,1,,0,0xFFFFFFFF,7,2,512,,0,0,73,{ bonus2 bResEff,Eff_Blind,10000; },{},{}
-5245,Elven_Sunglasses,Elven Sunglasses,5,,10,200,,1,,0,0xFFFFFFFF,7,2,512,,0,0,73,{ bonus2 bResEff,Eff_Blind,500; },{},{}
+5244,Elven_Blinker,Elven Blinker,5,,10,200,,1,,0,0xFFFFFFFF,7,2,512,,0,0,288,{ bonus2 bResEff,Eff_Blind,10000; },{},{}
+5245,Elven_Sunglasses,Elven Sunglasses,5,,10,200,,1,,0,0xFFFFFFFF,7,2,512,,0,0,289,{ bonus2 bResEff,Eff_Blind,500; },{},{}
 5246,Angel_Helm,Angel Helm,5,,10,0,,3,,0,0xFFFFFFFF,7,2,256,,0,0,290,{ bonus bAgi,1; bonus bLuk,1; bonus bMdef,3; bonus2 bSubRace,RC_Demon,5; },{},{}
 5247,Evil_Helm,Evil Helm,5,,10,0,,4,,0,0xFFFFFFFF,7,2,256,,0,0,291,{ bonus bAgi,1; bonus bLuk,1; bonus bMdef,3; bonus2 bSubRace,RC_Demon,5; },{},{}
 5248,Robot_Blinker,Robot Blinker,5,,10,200,,1,,0,0xFFFFFFFF,7,2,512,,0,0,82,{ bonus2 bResEff,Eff_Blind,10000; },{},{}
@@ -2207,8 +2207,8 @@
 5326,Masquerade_C,Refined Masquerade,5,,0,0,,1,,0,0xFFFFFFFE,7,2,512,,1,0,78,{ bonus2 bAddRace,RC_DemiHuman,3; },{},{}
 5327,Orc_Hero_Helm_C,Refined Helmet of Orc Hero,5,,0,0,,10,,0,0xFFFFFFFE,7,2,768,,1,0,178,{ bonus bStr,5; bonus bVit,3; },{},{}
 5328,Devil's_Wing,Refined Wing of Diablo,5,,0,0,,2,,0,0xFFFFFFFF,7,2,256,,1,0,129,{ bonus bStr,1;},{},{}
-5329,Dark_Blindfold_C,Refined Dark_Blinder,5,,0,0,,1,,0,0xFFFFFFFE,7,2,512,,1,0,187,{ bonus2 bResEff,Eff_Blind,10000; bonus2 bResEff,Eff_Stun,500; },{},{}
-5330,Drooping_Kitty_C,Refined Drooping_Cat,5,,0,0,,6,,0,0xFFFFFFFE,7,2,256,,1,0,142,{ bonus bMDef,15; bonus2 bResEff,Eff_Curse,4000; bonus2 bResEff,Eff_Curse,1000; },{},{}
+5329,Dark_Blindfold_C,Refined Dark Blinder,5,,0,0,,1,,0,0xFFFFFFFE,7,2,512,,1,0,187,{ bonus2 bResEff,Eff_Blind,10000; bonus2 bResEff,Eff_Stun,500; },{},{}
+5330,Drooping_Kitty_C,Refined Drooping Cat,5,,0,0,,6,,0,0xFFFFFFFE,7,2,256,,1,0,142,{ bonus bMDef,15; bonus2 bResEff,Eff_Curse,4000; bonus2 bResEff,Eff_Curse,1000; },{},{}
 5331,Corsair_C,Refined Corsair,5,,10,500,,10,,0,0xFFFFFFFE,7,2,256,,1,0,105,{ bonus bVit,3; bonus bInt,3; },{},{}
 5332,Loki_Mask,Loki Mask,5,,10,200,,0,,0,0xFFFFFFFF,7,2,513,,1,0,346,{ bonus bFlee2,3; },{},{}
 //5333,Radio_Antenna,Antenna,5,,,1500,,2,,0,0xFFFFFFFF,7,2,256,,60,0,347,{ bonus bMdef,3; skill 20,1; },{},{}
@@ -4090,7 +4090,7 @@
 13886,Silence_Card_Box,Silence Card Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 4057,4; },{},{}
 13887,Blind_Card_Box,Blind Card Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 4020,4; },{},{}
 13888,Chaos_Card_Box,Chaos Card Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 4104,4; },{},{}
-13899,Elunium_Box_,Elunium Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 985,10; },{},{}
+13889,Elunium_Box_,Elunium Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 985,10; },{},{}
 13890,Oridecon_Box_,Oridecon Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 984,10; },{},{}
 13891,Fire_Converter_Box,Fire Converter Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 12114,10; },{},{}
 13892,Water_Converter_Box,Water Converter Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 12115,10; },{},{}
