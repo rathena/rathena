@@ -374,7 +374,6 @@ int pc_makesavestatus(struct map_session_data *sd)
 			memcpy(&sd->status.last_point,&sd->status.save_point,sizeof(sd->status.last_point));
 	}
 
-	quest_make_savedata(sd);
 	return 0;
 }
 
@@ -866,9 +865,6 @@ bool pc_authok(struct map_session_data *sd, int login_id2, time_t expiration_tim
 		clif_wis_message(sd->fd, wisp_server_name, tmpstr, strlen(tmpstr)+1);
 	}
 
-	//Get quest data out of char dat
-	quest_load_info(sd, st);
-
 	// Request all registries (auth is considered completed whence they arrive)
 	intif_request_registry(sd,7);
 	return true;
@@ -981,6 +977,8 @@ int pc_reg_received(struct map_session_data *sd)
 #ifndef TXT_ONLY
 	intif_Mail_requestinbox(sd->status.char_id, 0); // MAIL SYSTEM - Request Mail Inbox
 #endif
+
+	intif_request_questlog(sd);
 
 	if (!sd->state.connect_new && sd->fd)
 	{	//Character already loaded map! Gotta trigger LoadEndAck manually.

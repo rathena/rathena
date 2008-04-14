@@ -76,6 +76,7 @@ int intif_homunculus_requestsave(int account_id, struct s_homunculus* sh);
 int intif_homunculus_requestdelete(int homun_id);
 
 /******QUEST SYTEM*******/
+int intif_request_questlog(struct map_session_data * sd);
 int intif_quest_delete(int char_id, int quest_id);
 int intif_quest_add(int char_id, struct quest * qd);
 

@@ -37,7 +37,7 @@ static const int packet_len_table[]={
 	10,-1,15, 0, 79,19, 7,-1,  0,-1,-1,-1, 14,67,186,-1, //0x3830
 	 9, 9,-1,14,  0, 0, 0, 0, -1,74,-1,11, 11,-1,  0, 0, //0x3840
 	-1,-1, 7, 7,  7,11, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0, //0x3850  Auctions [Zephyrus]
-	 0,11,11, 0,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0, //0x3860  Quests [Kevin]
+	-1,11,11, 0,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0, //0x3860  Quests [Kevin]
 	 0, 0, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0,
 	11,-1, 7, 3,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0, //0x3880
 	-1,-1, 7, 3,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0, //0x3890  Homunculus [albator]
@@ -1405,6 +1405,36 @@ QUESTLOG SYSTEM FUNCTIONS
 
 ***************************************/
 
+int intif_request_questlog(TBL_PC *sd)
+{
+	WFIFOHEAD(inter_fd,6);
+	WFIFOW(inter_fd,0) = 0x3060;
+	WFIFOL(inter_fd,2) = sd->status.char_id;
+	WFIFOSET(inter_fd,6);
+	return 0;
+}
+
+int intif_parse_questlog(int fd)
+{
+
+	int num_quests = (RFIFOB(fd, 2)-8)/sizeof(struct quest);
+	int char_id = RFIFOL(fd, 4);
+	int i;
+	TBL_PC * sd = map_charid2sd(char_id);
+
+	//User not online anymore
+	if(!sd)
+		return 0;
+
+	for(i=0; i<num_quests; i++)
+	{
+		memcpy(&sd->quest_log[i], RFIFOP(fd, i*sizeof(struct quest)+8), sizeof(struct quest));
+	}
+	sd->num_quests = num_quests;
+
+	return 0;
+}
+
 int intif_parse_questDelete(int fd)
 {
 	quest_delete_ack(RFIFOL(fd, 2), RFIFOL(fd, 6), RFIFOB(fd, 10));
@@ -1434,17 +1464,15 @@ int intif_parse_questAdd(int fd)
 int intif_quest_add(int char_id, struct quest * qd)
 {
 
-	int sSize = sizeof(struct quest);
-
 	if(CheckForCharServer())
 		return 0;
 
-	WFIFOHEAD(inter_fd, sSize + 8);
+	WFIFOHEAD(inter_fd, sizeof(struct quest) + 8);
 	WFIFOW(inter_fd,0) = 0x3061;
-	WFIFOW(inter_fd,2) = sSize + 8;
+	WFIFOW(inter_fd,2) = sizeof(struct quest) + 8;
 	WFIFOL(inter_fd,4) = char_id;
-	memcpy(WFIFOP(inter_fd,8), qd, sSize);
-	WFIFOSET(inter_fd,  sSize + 8);
+	memcpy(WFIFOP(inter_fd,8), qd, sizeof(struct quest));
+	WFIFOSET(inter_fd,  WFIFOW(inter_fd,2));
 
 	return 0;
 }
@@ -1992,6 +2020,7 @@ int intif_parse(int fd)
 	case 0x3843:	intif_parse_GuildMasterChanged(fd); break;
 
 	//Quest system
+	case 0x3860:	intif_parse_questlog(fd); break;
 	case 0x3861:	intif_parse_questAdd(fd); break;
 	case 0x3862:	intif_parse_questDelete(fd); break;
 

@@ -190,20 +190,3 @@ int quest_update_status(TBL_PC * sd, int quest_id, bool status)
 
 	return 0;
 }
-
-int quest_load_info(TBL_PC * sd, struct mmo_charstatus * st)
-{
-	sd->num_quests = st->num_quests;
-	memcpy(sd->quest_log, st->quest_log, sizeof(st->quest_log));
-
-	return 0;
-}
-
-int quest_make_savedata(TBL_PC * sd)
-{
-	sd->status.num_quests = sd->num_quests;
-	memcpy(sd->status.quest_log, sd->quest_log, sizeof(sd->quest_log));
-
-	return 0;
-}
-

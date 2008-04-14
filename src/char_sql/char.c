@@ -902,7 +902,7 @@ int mmo_char_fromsql(int char_id, struct mmo_charstatus* p, bool load_everything
 	char t_msg[128] = "";
 	struct mmo_charstatus* cp;
 	StringBuf buf;
-	SqlStmt* stmt, *stmt2;
+	SqlStmt* stmt;
 	char last_map[MAP_NAME_LENGTH_EXT];
 	char save_map[MAP_NAME_LENGTH_EXT];
 	char point_map[MAP_NAME_LENGTH_EXT];
@@ -1111,38 +1111,6 @@ int mmo_char_fromsql(int char_id, struct mmo_charstatus* p, bool load_everything
 	for( i = 0; i < MAX_FRIENDS && SQL_SUCCESS == SqlStmt_NextRow(stmt); ++i )
 		memcpy(&p->friends[i], &tmp_friend, sizeof(tmp_friend));
 	strcat(t_msg, " friends");
-
-	//read quests
-	//`quests` (`quest_id`, `char_id`, `state`)
-	if( SQL_ERROR == SqlStmt_Prepare(stmt, "SELECT q.`quest_id`, q.`state` FROM `%s` q", quest_db)
-	||	SQL_ERROR == SqlStmt_BindParam(stmt, 0, SQLDT_INT, &char_id, 0)
-	||	SQL_ERROR == SqlStmt_Execute(stmt)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 0, SQLDT_INT,    &tmp_quest.quest_id, 0, NULL, NULL)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 1, SQLDT_INT,	   &tmp_quest.state, 0, NULL, NULL) )
-		SqlStmt_ShowDebug(stmt);
-
-	stmt2 = SqlStmt_Malloc(sql_handle);
-
-	for( i = 0; i < MAX_QUEST && SQL_SUCCESS == SqlStmt_NextRow(stmt); ++i )
-	{
-		memcpy(&p->quest_log[i], &tmp_quest, sizeof(tmp_quest));
-
-		//`quest_objectives`
-		if( SQL_ERROR == SqlStmt_Prepare(stmt2, "SELECT q.`count`, q.`name` FROM `%s` q", quest_obj_db)
-		||	SQL_ERROR == SqlStmt_BindParam(stmt2, 0, SQLDT_INT, &tmp_quest.quest_id, 0)
-		||	SQL_ERROR == SqlStmt_Execute(stmt2)
-		||	SQL_ERROR == SqlStmt_BindColumn(stmt2, 0, SQLDT_INT,    &tmp_quest_obj.count, 0, NULL, NULL)
-		||	SQL_ERROR == SqlStmt_BindColumn(stmt2, 1, SQLDT_STRING, &tmp_quest_obj.name, NAME_LENGTH, NULL, NULL) )
-			SqlStmt_ShowDebug(stmt2);
-
-		for( j = 0; j < MAX_QUEST_OBJECTIVES && SQL_SUCCESS == SqlStmt_NextRow(stmt2); ++j )
-			memcpy(&p->quest_log[i].objectives[j], &tmp_quest_obj, sizeof(tmp_quest_obj));
-		p->quest_log[i].num_objectives = j;
-	}
-	p->num_quests = i;
-	strcat(t_msg, " quests");
-
-	SqlStmt_Free(stmt2);
 
 #ifdef HOTKEY_SAVING
 	//read hotkeys

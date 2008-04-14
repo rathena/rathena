@@ -600,7 +600,6 @@ void chrif_authok(int fd)
 			{ //Auth Ok
 				if (pc_authok(sd, login_id2, expiration_time, status))
 				{
-					chrif_char_online(sd);
 					return;
 				}
 			} else { //Auth Failed

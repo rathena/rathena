@@ -17,7 +17,61 @@
 #include <string.h>
 #include <stdlib.h>
 
+//Load entire questlog for a character
+int mapif_quests_fromsql(int char_id, struct quest questlog[])
+{
 
+	int count, i, j, num;
+	struct quest tmp_quest;
+	struct quest_objective tmp_quest_objective;
+	SqlStmt * stmt;
+
+	stmt = SqlStmt_Malloc(sql_handle);
+	if( stmt == NULL )
+	{
+		SqlStmt_ShowDebug(stmt);
+		return 0;
+	}
+
+	if( SQL_ERROR == SqlStmt_Prepare(stmt, "SELECT `quest_id`, `state` FROM `%s` WHERE `char_id`=? LIMIT %d", quest_db, MAX_QUEST)
+	||	SQL_ERROR == SqlStmt_BindParam(stmt, 0, SQLDT_INT, &char_id, 0)
+	||	SQL_ERROR == SqlStmt_Execute(stmt)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 0, SQLDT_INT,    &tmp_quest.quest_id, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 1, SQLDT_INT,    &tmp_quest.state, 0, NULL, NULL) )
+	//||	SQL_ERROR == SqlStmt_BindColumn(stmt, 2, SQLDT_INT,    &tmp_quest.time, 0, NULL, NULL)
+		SqlStmt_ShowDebug(stmt);
+
+	for( i = 0; i < MAX_QUEST && SQL_SUCCESS == SqlStmt_NextRow(stmt); ++i )
+	{
+		memcpy(&questlog[i], &tmp_quest, sizeof(tmp_quest));
+	}
+	count = i;
+
+	for( i = 0; i < count; ++i )
+	{
+
+		if( SQL_ERROR == SqlStmt_Prepare(stmt, "SELECT `num`, `name`, `count` FROM `%s` WHERE `char_id`=? AND `quest_id`=? LIMIT %d", quest_obj_db, MAX_QUEST_OBJECTIVES)
+		||	SQL_ERROR == SqlStmt_BindParam(stmt, 0, SQLDT_INT, &char_id, 0)
+		||	SQL_ERROR == SqlStmt_BindParam(stmt, 1, SQLDT_INT, &questlog[i].quest_id, 0)
+		||	SQL_ERROR == SqlStmt_Execute(stmt)
+		||	SQL_ERROR == SqlStmt_BindColumn(stmt, 0, SQLDT_INT,    &num, 0, NULL, NULL)
+		||	SQL_ERROR == SqlStmt_BindColumn(stmt, 1, SQLDT_STRING, &tmp_quest_objective.name, NAME_LENGTH, NULL, NULL)
+		||	SQL_ERROR == SqlStmt_BindColumn(stmt, 2, SQLDT_INT,    &tmp_quest_objective.count, 0, NULL, NULL) )
+			SqlStmt_ShowDebug(stmt);
+
+		for( j = 0; j < MAX_QUEST && SQL_SUCCESS == SqlStmt_NextRow(stmt); ++j )
+		{
+			memcpy(&questlog[i].objectives[num], &tmp_quest_objective, sizeof(struct quest_objective));
+		}
+		questlog[i].num_objectives = j;
+
+	}
+		
+
+	return count;
+}
+
+//Delete a quest
 int mapif_parse_quest_delete(int fd)
 {
 
@@ -48,7 +102,7 @@ int mapif_parse_quest_delete(int fd)
 
 }
 
-
+//Add a quest to a questlog
 int mapif_parse_quest_add(int fd)
 {
 
@@ -97,11 +151,48 @@ int mapif_parse_quest_add(int fd)
 
 }
 
+//Send questlog to map server
+int mapif_send_quests(int fd, int char_id)
+{
+
+	struct quest tmp_questlog[MAX_QUEST];
+	int num_quests, i;
+
+	for(i=0; i<MAX_QUEST; i++)
+	{
+		memset(&tmp_questlog[i], 0, sizeof(struct quest));
+	}
+
+	num_quests = mapif_quests_fromsql(char_id, tmp_questlog);
+
+	WFIFOHEAD(fd,num_quests*sizeof(struct quest)+8);
+	WFIFOW(fd,0) = 0x3860;
+	WFIFOW(fd,2) = num_quests*sizeof(struct quest)+8;
+	WFIFOL(fd,4) = char_id;
+
+	for(i=0; i<num_quests; i++)
+	{
+		memcpy(WFIFOP(fd,i*sizeof(struct quest)+8), &tmp_questlog[i], sizeof(struct quest));
+	}
+
+	WFIFOSET(fd,num_quests*sizeof(struct quest)+8);
+
+	return 0;
+}
+
+//Map server requesting a character's quest log
+int mapif_parse_loadquestrequest(int fd)
+{
+	mapif_send_quests(fd, RFIFOL(fd,2));
+	return 0;
+}
+
 int inter_quest_parse_frommap(int fd)
 {
 
 	switch(RFIFOW(fd,0))
 	{
+		case 0x3060: mapif_parse_loadquestrequest(fd); break;
 		case 0x3061: mapif_parse_quest_add(fd); break;
 		case 0x3062: mapif_parse_quest_delete(fd); break;
 		default:
