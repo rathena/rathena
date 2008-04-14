@@ -426,7 +426,7 @@ static void* create_charstatus(DBKey key, va_list args)
 
 int mmo_char_tosql(int char_id, struct mmo_charstatus* p)
 {
-	int i = 0, j;
+	int i = 0;
 	int count = 0;
 	int diff = 0;
 	char save_status[128]; //For displaying save information. [Skotlex]
@@ -910,8 +910,6 @@ int mmo_char_fromsql(int char_id, struct mmo_charstatus* p, bool load_everything
 	struct item tmp_item;
 	struct skill tmp_skill;
 	struct s_friend tmp_friend;
-	struct quest tmp_quest;
-	struct quest_objective tmp_quest_obj;
 #ifdef HOTKEY_SAVING
 	struct hotkey tmp_hotkey;
 	int hotkey_num;

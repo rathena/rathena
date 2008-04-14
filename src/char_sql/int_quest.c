@@ -33,6 +33,9 @@ int mapif_quests_fromsql(int char_id, struct quest questlog[])
 		return 0;
 	}
 
+	memset(&tmp_quest, 0, sizeof(struct quest));
+	memset(&tmp_quest_objective, 0, sizeof(struct quest_objective));
+
 	if( SQL_ERROR == SqlStmt_Prepare(stmt, "SELECT `quest_id`, `state` FROM `%s` WHERE `char_id`=? LIMIT %d", quest_db, MAX_QUEST)
 	||	SQL_ERROR == SqlStmt_BindParam(stmt, 0, SQLDT_INT, &char_id, 0)
 	||	SQL_ERROR == SqlStmt_Execute(stmt)
