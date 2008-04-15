@@ -2250,7 +2250,7 @@ schg_cas03,88,90,3	script	Steward#sch03	55,{
 		mes "this infidel away from here!";
 		mes "I will always be loyal to the";
 		mes "master of this stronghold,";
-		MES "the one and only^FF0000" + getguildmaster(.@GID) + "^000000.";
+		mes "the one and only^FF0000" + getguildmaster(.@GID) + "^000000.";
 		close;
 	}
 	mes "[ Steward ]";

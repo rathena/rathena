@@ -2260,7 +2260,7 @@ arug_cas04,328,98,3	script	Steward#aru04	55,{
 		mes "this infidel away from here!";
 		mes "I will always be loyal to the";
 		mes "master of this stronghold,";
-		MES "the one and only^FF0000" + getguildmaster(.@GID) + "^000000.";
+		mes "the one and only^FF0000" + getguildmaster(.@GID) + "^000000.";
 		close;
 	}
 	mes "[ Steward ]";
