@@ -19,6 +19,7 @@
 #include "intif.h"
 #include "itemdb.h"
 #include "log.h"
+#include "mail.h"
 #include "map.h"
 #include "path.h"
 #include "mercenary.h" // merc_is_hom_active()
@@ -33,10 +34,6 @@
 #include "vending.h" // vending_closevending()
 #include "pc.h"
 #include "quest.h"
-
-#ifndef TXT_ONLY // mail system [Valaris]
-#include "mail.h"
-#endif
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -494,23 +491,19 @@ int pc_setequipindex(struct map_session_data *sd)
 			for(j=0;j<EQI_MAX;j++)
 				if(sd->status.inventory[i].equip & equip_pos[j])
 					sd->equip_index[j] = i;
-			if(sd->status.inventory[i].equip & EQP_HAND_R) {
+
+			if(sd->status.inventory[i].equip & EQP_HAND_R)
+			{
 				if(sd->inventory_data[i])
 					sd->weapontype1 = sd->inventory_data[i]->look;
 				else
 					sd->weapontype1 = 0;
 			}
-			if(sd->status.inventory[i].equip & EQP_HAND_L) {
-				if(sd->inventory_data[i]) {
-					if(sd->inventory_data[i]->type == 4) {
-						if(sd->status.inventory[i].equip == EQP_HAND_L)
-							sd->weapontype2 = sd->inventory_data[i]->look;
-						else
-							sd->weapontype2 = 0;
-					}
-					else
-						sd->weapontype2 = 0;
-				}
+
+			if( sd->status.inventory[i].equip & EQP_HAND_L )
+			{
+				if( sd->inventory_data[i] && sd->inventory_data[i]->type == 4 )
+					sd->weapontype2 = sd->inventory_data[i]->look;
 				else
 					sd->weapontype2 = 0;
 			}
@@ -521,7 +514,8 @@ int pc_setequipindex(struct map_session_data *sd)
 	return 0;
 }
 
-static int pc_isAllowedCardOn(struct map_session_data *sd,int s,int eqindex,int flag)  {
+static int pc_isAllowedCardOn(struct map_session_data *sd,int s,int eqindex,int flag)
+{
 	int i;
 	struct item *item = &sd->status.inventory[eqindex];
 	struct item_data *data;
@@ -529,14 +523,8 @@ static int pc_isAllowedCardOn(struct map_session_data *sd,int s,int eqindex,int 
 	if (itemdb_isspecial(item->card[0]))
 		return 1;
 	
-	for (i=0;i<s;i++)	{
-		if (item->card[i] &&
-			(data = itemdb_exists(item->card[i])) &&
-			data->flag.no_equip&flag
-		)
-			return 0;
-	}
-	return 1;              
+	ARR_FIND( 0, s, i, item->card[i] && (data = itemdb_exists(item->card[i])) != NULL && data->flag.no_equip&flag );
+	return( i < s ) ? 0 : 1;
 }
 
 bool pc_isequipped(struct map_session_data *sd, int nameid)
@@ -3283,32 +3271,34 @@ int pc_cart_additem(struct map_session_data *sd,struct item *item_data,int amoun
 		return 1;
 
 	i=MAX_CART;
-	if(itemdb_isstackable2(data)){
-		for(i=0;i<MAX_CART;i++){
-			if(sd->status.cart[i].nameid==item_data->nameid &&
-				sd->status.cart[i].card[0] == item_data->card[0] && sd->status.cart[i].card[1] == item_data->card[1] &&
-				sd->status.cart[i].card[2] == item_data->card[2] && sd->status.cart[i].card[3] == item_data->card[3]){
-				if(sd->status.cart[i].amount+amount > MAX_AMOUNT)
-					return 1;
-				sd->status.cart[i].amount+=amount;
-				clif_cart_additem(sd,i,amount,0);
-				break;
-			}
-		}
+	if(itemdb_isstackable2(data))
+	{
+		ARR_FIND( 0, MAX_CART, i,
+			sd->status.cart[i].nameid == item_data->nameid &&
+			sd->status.cart[i].card[0] == item_data->card[0] && sd->status.cart[i].card[1] == item_data->card[1] &&
+			sd->status.cart[i].card[2] == item_data->card[2] && sd->status.cart[i].card[3] == item_data->card[3] );
+	};
+
+	if( i < MAX_CART )
+	{// item already in cart, stack it
+		if(sd->status.cart[i].amount+amount > MAX_AMOUNT)
+			return 1; // no room
+
+		sd->status.cart[i].amount+=amount;
+		clif_cart_additem(sd,i,amount,0);
 	}
-	if(i >= MAX_CART){
-		for(i=0;i<MAX_CART;i++){
-			if(sd->status.cart[i].nameid==0){
-				memcpy(&sd->status.cart[i],item_data,sizeof(sd->status.cart[0]));
-				sd->status.cart[i].amount=amount;
-				sd->cart_num++;
-				clif_cart_additem(sd,i,amount,0);
-				break;
-			}
-		}
-		if(i >= MAX_CART)
-			return 1;
+	else
+	{// item not stackable or not present, add it
+		ARR_FIND( 0, MAX_CART, i, sd->status.cart[i].nameid == 0 );
+		if( i == MAX_CART )
+			return 1; // no room
+
+		memcpy(&sd->status.cart[i],item_data,sizeof(sd->status.cart[0]));
+		sd->status.cart[i].amount=amount;
+		sd->cart_num++;
+		clif_cart_additem(sd,i,amount,0);
 	}
+
 	sd->cart_weight += w;
 	clif_updatestatus(sd,SP_CARTINFO);
 
@@ -3343,7 +3333,8 @@ int pc_cart_delitem(struct map_session_data *sd,int n,int amount,int type)
 /*==========================================
  * カ?トへアイテム移動
  *------------------------------------------*/
-int pc_putitemtocart(struct map_session_data *sd,int idx,int amount) {
+int pc_putitemtocart(struct map_session_data *sd,int idx,int amount)
+{
 	struct item *item_data;
 
 	nullpo_retr(0, sd);
@@ -5078,32 +5069,6 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 		}
 	}
 
-	// PK/Karma system code (not enabled yet) [celest]
-	/*
-	if(sd->status.karma > 0) {
-		int eq_num=0,eq_n[MAX_INVENTORY];
-		memset(eq_n,0,sizeof(eq_n));
-		for(i=0;i<MAX_INVENTORY;i++){
-			int k;
-			for(k=0;k<MAX_INVENTORY;k++){
-				if(eq_n[k] <= 0){
-					eq_n[k]=i;
-					break;
-				}
-			}
-			eq_num++;
-		}
-		if(eq_num > 0){
-			int n = eq_n[rand()%eq_num];
-			if(rand()%10000 < sd->status.karma){
-				if(sd->status.inventory[n].equip)
-					pc_unequipitem(sd,n,0);
-				pc_dropitem(sd,n,1);
-			}
-		}
-	}
-	*/
-
 	if(battle_config.bone_drop==2
 		|| (battle_config.bone_drop==1 && map[sd->bl.m].flag.pvp))
 	{
@@ -5182,7 +5147,8 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 		}
 	}
 
-	if(map[sd->bl.m].flag.pvp_nightmaredrop){ // Moved this outside so it works when PVP isn't enabled and during pk mode [Ancyker]
+	if(map[sd->bl.m].flag.pvp_nightmaredrop)
+	{ // Moved this outside so it works when PVP isn't enabled and during pk mode [Ancyker]
 		for(j=0;j<MAX_DROP_PER_MAP;j++){
 			int id = map[sd->bl.m].drop_list[j].drop_id;
 			int type = map[sd->bl.m].drop_list[j].drop_type;
@@ -5196,13 +5162,12 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 					int k;
 					if( (type == 1 && !sd->status.inventory[i].equip)
 						|| (type == 2 && sd->status.inventory[i].equip)
-						||  type == 3){
-						for(k=0;k<MAX_INVENTORY;k++){
-							if(eq_n[k] <= 0){
-								eq_n[k]=i;
-								break;
-							}
-						}
+						||  type == 3)
+					{
+						ARR_FIND( 0, MAX_INVENTORY, k, eq_n[k] <= 0 );
+						if( k < MAX_INVENTORY )
+							eq_n[k] = i;
+
 						eq_num++;
 					}
 				}
@@ -6848,16 +6813,6 @@ int pc_divorce(struct map_session_data *sd)
  *------------------------------------------*/
 struct map_session_data *pc_get_partner(struct map_session_data *sd)
 {
-	//struct map_session_data *p_sd = NULL;
-	//char *nick;
-	//if(sd == NULL || !pc_ismarried(sd))
-	//	return NULL;
-	//nick=map_charid2nick(sd->status.partner_id);
-	//if (nick==NULL)
-	//	return NULL;
-	//if((p_sd=map_nick2sd(nick)) == NULL )
-	//	return NULL;
-
 	if (sd && pc_ismarried(sd))
 		// charid2sd returns NULL if not found
 		return map_charid2sd(sd->status.partner_id);
@@ -7302,18 +7257,15 @@ int pc_split_atoui(char* str, unsigned int* val, char sep, int max)
 	return i;
 }
 
-//
-// 初期化物
-//
 /*==========================================
- * 設定ファイル?み?む
- * exp.txt 必要??値
- * job_db1.txt 重量,hp,sp,攻?速度
- * job_db2.txt job能力値ボ?ナス
- * skill_tree.txt 各職?のスキルツリ?
- * attr_fix.txt ?性修正テ?ブル
- * size_fix.txt サイズ補正テ?ブル
- * refine_db.txt 精?デ?タテ?ブル
+ * DB reading.
+ * exp.txt        - required experience values
+ * job_db1.txt    - weight, hp, sp, aspd
+ * job_db2.txt    - job level stat bonuses
+ * skill_tree.txt - skill tree for every class
+ * attr_fix.txt   - elemental adjustment table
+ * size_fix.txt   - size adjustment table for weapons
+ * refine_db.txt  - refining data table
  *------------------------------------------*/
 int pc_readdb(void)
 {
@@ -7436,8 +7388,8 @@ int pc_readdb(void)
 			continue;
 		idx = pc_class2idx(idx);
 		k = atoi(split[1]); //This is to avoid adding two lines for the same skill. [Skotlex]
-		for(j = 0; j < MAX_SKILL_TREE && skill_tree[idx][j].id && skill_tree[idx][j].id != k; j++);
-		if (j == MAX_SKILL_TREE)
+		ARR_FIND( 0, MAX_SKILL_TREE, j, skill_tree[idx][j].id == 0 || skill_tree[idx][j].id == k );
+		if( j == MAX_SKILL_TREE )
 		{
 			ShowWarning("Unable to load skill %d into job %d's tree. Maximum number of skills per class has been reached.\n", k, atoi(split[0]));
 			continue;

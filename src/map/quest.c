@@ -172,7 +172,7 @@ int quest_update_objective(TBL_PC * sd, int quest_id, int objective_num, const c
 	ARR_FIND(0, MAX_QUEST, i, sd->quest_log[i].quest_id == quest_id);
 
 	//Quest not found
-	if(i != MAX_QUEST)
+	if(i == MAX_QUEST)
 		return -1;
 
 	memcpy(&sd->quest_log[i].objectives[objective_num].name, name, NAME_LENGTH);

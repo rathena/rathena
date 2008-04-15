@@ -5674,8 +5674,8 @@ int atcommand_displayskill(const int fd, struct map_session_data* sd, const char
 int atcommand_skilltree(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
 	struct map_session_data *pl_sd = NULL;
-	int skillnum, skillidx = -1;
-	int meets = 1, j, c=0;
+	int skillnum;
+	int meets, j, c=0;
 	char target[NAME_LENGTH], *tbl;
 	struct skill_tree_entry *ent;
 	nullpo_retr(-1, sd);
@@ -5696,37 +5696,33 @@ int atcommand_skilltree(const int fd, struct map_session_data* sd, const char* c
 
 	tbl = job_name(c);
 
-	sprintf(atcmd_output, "Player is using %s skill tree (%d basic points)",
-	tbl, pc_checkskill(pl_sd, 1));
+	sprintf(atcmd_output, "Player is using %s skill tree (%d basic points)", tbl, pc_checkskill(pl_sd, 1));
 	clif_displaymessage(fd, atcmd_output);
 
-	for (j = 0; skill_tree[c][j].id != 0; j++) {
-		if (skill_tree[c][j].id == skillnum) {
-			skillidx = j;
-			break;
-		}
-	}
-
-	if (skillidx == -1) {
+	ARR_FIND( 0, MAX_SKILL_TREE, j, skill_tree[c][j].id == 0 || skill_tree[c][j].id == skillnum );
+	if( j == MAX_SKILL_TREE || skill_tree[c][j].id == 0 )
+	{
 		sprintf(atcmd_output, "I do not believe the player can use that skill");
 		clif_displaymessage(fd, atcmd_output);
 		return 0;
 	}
 
-	ent = &skill_tree[c][skillidx];
+	ent = &skill_tree[c][j];
 
+	meets = 1;
 	for(j=0;j<5;j++)
+	{
 		if( ent->need[j].id && pc_checkskill(sd,ent->need[j].id) < ent->need[j].lv)
 		{
 			sprintf(atcmd_output, "player requires level %d of skill %s", ent->need[j].lv, skill_db[ent->need[j].id].desc);
 			clif_displaymessage(fd, atcmd_output);
 			meets = 0;
 		}
-
-		if (meets == 1) {
-			sprintf(atcmd_output, "I believe the player meets all the requirements for that skill");
-			clif_displaymessage(fd, atcmd_output);
-		}
+	}
+	if (meets == 1) {
+		sprintf(atcmd_output, "I believe the player meets all the requirements for that skill");
+		clif_displaymessage(fd, atcmd_output);
+	}
 
 	return 0;
 }

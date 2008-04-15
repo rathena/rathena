@@ -60,7 +60,7 @@
 //49,Improve Dodge,1,0
 50,Steal,2,5000
 51,Hiding,2,5000
-52,Envenom,1,5000,
+52,Envenom,1,5000
 53,Detoxify,1,5000
 
 54,Resurrection,1,5000

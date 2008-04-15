@@ -16,6 +16,7 @@ struct status_change_entry;
 #define MAX_SKILL_PRODUCE_DB	150
 #define MAX_PRODUCE_RESOURCE	12
 #define MAX_SKILL_ARROW_DB		150
+#define MAX_ARROW_RESOURCE		5
 #define MAX_SKILL_ABRA_DB		350
 
 #define MAX_SKILL_LEVEL 100
@@ -186,7 +187,7 @@ extern struct s_skill_produce_db skill_produce_db[MAX_SKILL_PRODUCE_DB];
 // 矢作成デ?タベ?ス
 struct s_skill_arrow_db {
 	int nameid, trigger;
-	int cre_id[5],cre_amount[5];
+	int cre_id[MAX_ARROW_RESOURCE],cre_amount[MAX_ARROW_RESOURCE];
 };
 extern struct s_skill_arrow_db skill_arrow_db[MAX_SKILL_ARROW_DB];
 
@@ -685,7 +686,7 @@ enum s_skill {
 	BA_MUSICALLESSON,
 	BA_MUSICALSTRIKE,
 	BA_DISSONANCE,
-	BA_FROSTJOKE,
+	BA_FROSTJOKER,
 	BA_WHISTLE,
 	BA_ASSASSINCROSS,
 	BA_POEMBRAGI,

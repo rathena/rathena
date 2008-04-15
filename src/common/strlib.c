@@ -786,6 +786,86 @@ size_t sv_unescape_c(char* out_dest, const char* src, size_t len)
 	return j;
 }
 
+/// Opens and parses a file containing delim-separated columns, feeding them to the specified callback function row by row.
+/// Tracks the progress of the operation (current line number, number of successfully processed rows).
+/// Returns 'true' if it was able to process the specified file, or 'false' if it could not be read.
+///
+/// @param directory Directory
+/// @param filename File to process
+/// @param delim Field delimiter
+/// @param mincols Minimum number of columns of a valid row
+/// @param maxcols Maximum number of columns of a valid row
+/// @param parseproc User-supplied row processing function
+/// @return true on success, false if file could not be opened
+bool sv_readdb(const char* directory, const char* filename, char delim, int mincols, int maxcols, int maxrows, bool (*parseproc)(char* fields[], int columns, int current))
+{
+	FILE* fp;
+	int lines = 0;
+	int entries = 0;
+	char* fields[64]; // room for 63 fields ([0] is reserved)
+	int columns;
+	char path[1024], line[1024];
+
+	if( maxcols > ARRAYLENGTH(fields)-1 )
+	{
+		ShowError("sv_readdb: Insufficient column storage in parser for file \"%s\" (want %d, have only %d). Increase the capacity in the source code please.\n", path, maxcols, ARRAYLENGTH(fields)-1);
+		return false;
+	}
+
+	// open file
+	snprintf(path, sizeof(path), "%s/%s", directory, filename);
+	fp = fopen(path, "r");
+	if( fp == NULL )
+	{
+		ShowError("sv_readdb: can't read %s\n", path);
+		return false;
+	}
+
+	// process rows one by one
+	while( fgets(line, sizeof(line), fp) )
+	{
+		lines++;
+		if( line[0] == '/' && line[1] == '/' )
+			continue;
+		//TODO: strip trailing // comment
+		//TODO: strip trailing whitespace
+		if( line[0] == '\0' || line[0] == '\n' )
+			continue;
+
+		columns = sv_split(line, strlen(line), 0, delim, fields, ARRAYLENGTH(fields), SV_NOESCAPE_NOTERMINATE);
+
+		if( columns < mincols )
+		{
+			ShowError("sv_readdb: Insufficient columns in line %d of \"%s\" (found %d, need at least %d).\n", lines, path, columns, mincols);
+			continue; // not enough columns
+		}
+		if( columns > maxcols )
+		{
+			ShowError("sv_readdb: Too many columns in line %d of \"%s\" (found %d, maximum is %d).\n", lines, path, columns, maxcols );
+			continue; // too many columns
+		}
+		if( entries == maxrows )
+		{
+			ShowError("sv_readdb: Reached the maximum allowed number of entries (%d) when parsing file \"%s\".\n", maxrows, path);
+			break;
+		}
+
+		// parse this row
+		if( !parseproc(fields+1, columns, entries) )
+		{
+			ShowError("sv_readdb: Could not process contents of line %d of \"%s\".\n", lines, path);
+			continue; // invalid row contents
+		}
+
+		// success!
+		entries++;
+	}
+
+	fclose(fp);
+	ShowStatus("Done reading '"CL_WHITE"%d"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n", entries, path);
+
+	return true;
+}
 
 
 /////////////////////////////////////////////////////////////////////

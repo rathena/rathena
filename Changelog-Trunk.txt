@@ -4,6 +4,11 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2008/04/15
+	* Corrected some invalid syntax in skill_db.txt (wrong usage of commas)
+	* Renamed BA_FROSTJOKE to BA_FROSTJOKER (aegis server-side name)
+	* Implemented a generic framework for parsing delimited db files
+	- allows specifying min/max column ranges and max number of rows to read
+	* Cleaned up pc.c a bit [ultramage]
 	* Updated item_db.sql to latest [Toms]
 2008/04/14
 	* Fixed a possible crash in char_sql. (since r12575, later modified in r12590). [FlavioJS]

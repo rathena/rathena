@@ -147,11 +147,14 @@ int	skill_get_unit_layout_type( int id ,int lv ){ skill_get (skill_db[id].unit_l
 
 int skill_tree_get_max(int id, int b_class)
 {
-	int i, skillid;
+	int i;
 	b_class = pc_class2idx(b_class);
-	for(i=0;(skillid=skill_tree[b_class][i].id)>0;i++)
-		if (id == skillid) return skill_tree[b_class][i].max;
-	return skill_get_max (id);
+
+	ARR_FIND( 0, MAX_SKILL_TREE, i, skill_tree[b_class][i].id == 0 || skill_tree[b_class][i].id == id );
+	if( i < MAX_SKILL_TREE && skill_tree[b_class][i].id == id )
+		return skill_tree[b_class][i].max;
+	else
+		return skill_get_max(id);
 }
 
 int skill_castend_damage_id( struct block_list* src, struct block_list *bl,int skillid,int skilllv,unsigned int tick,int flag );
@@ -616,7 +619,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 		sc_start(bl,SC_BLIND,(10+3*skilllv),skilllv,skill_get_time2(skillid,skilllv));
 		break;
 
-	case BA_FROSTJOKE:
+	case BA_FROSTJOKER:
 		sc_start(bl,SC_FREEZE,(15+5*skilllv),skilllv,skill_get_time2(skillid,skilllv));
 		break;
 
@@ -2057,7 +2060,7 @@ static int skill_timerskill (int tid, unsigned int tick, int id, int data)
 							unit_warp(target, -1, x, y, 3);
 					}
 					break;
-				case BA_FROSTJOKE:
+				case BA_FROSTJOKER:
 				case DC_SCREAM:
 					range= skill_get_splash(skl->skill_id, skl->skill_lv);
 					map_foreachinarea(skill_frostjoke_scream,skl->map,skl->x-range,skl->y-range,
@@ -3787,7 +3790,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		}
 		break;
 
-	case BA_FROSTJOKE:
+	case BA_FROSTJOKER:
 	case DC_SCREAM:
 		clif_skill_nodamage(src,bl,skillid,skilllv,1);
 		skill_addtimerskill(src,tick+2000,bl->id,src->x,src->y,skillid,skilllv,0,flag);
@@ -10726,77 +10729,13 @@ void skill_init_unit_layout (void)
  * skill_db.txt
  * skill_require_db.txt
  * skill_cast_db.txt
+ * skill_castnodex_db.txt
+ * skill_nocast_db.txt
  * skill_unit_db.txt
  * produce_db.txt 
  * create_arrow_db.txt
  * abra_db.txt
- * skill_castnodex_db.txt
- * skill_nocast_db.txt
  *------------------------------------------*/
-/// Opens and parses a CSV file into columns, feeding them to the specified callback function row by row.
-/// Tracks the progress of the operation (file position, number of successfully processed rows).
-/// Returns 'true' if it was able to process the specified file, or 'false' if it could not be read.
-static bool skill_read_csvdb( const char* directory, const char* filename, int mincolumns, bool (*parseproc)(char* split[], int columns, int current) )
-{
-	FILE* fp;
-	int lines = 0;
-	int entries = 0;
-	char path[1024], line[1024];
-
-	// open file
-	snprintf(path, sizeof(path), "%s/%s", directory, filename);
-	fp = fopen(path,"r");
-	if( fp == NULL )
-	{
-		ShowError("skill_read_db: can't read %s\n", path);
-		return false;
-	}
-
-	// process rows one by one
-	while( fgets(line, sizeof(line), fp) )
-	{
-		char* split[50];
-		int columns;
-
-		lines++;
-		if( line[0] == '/' && line[1] == '/' )
-			continue;
-		//TODO: strip trailing // comment
-		//TODO: strip trailing whitespace
-		if( line[0] == '\0' || line[0] == '\n' )
-			continue;
-
-		memset(split,0,sizeof(split));
-		columns = skill_split_str(line,split,ARRAYLENGTH(split));
-		if( columns < 2 ) // FIXME: assumes db has at least 2 mandatory columns
-			continue; // empty line
-		if( columns < mincolumns )
-		{
-			ShowError("skill_read_csvdb: Insufficient columns in line %d of \"%s\" (found %d, need at least %d).\n", lines, path, columns, mincolumns);
-			continue; // not enough columns
-		}
-		if( columns > ARRAYLENGTH(split) )
-		{
-			ShowError("skill_read_csvdb: Too many columns in line %d of \"%s\" (found %d, capacity %d). Increase the capacity in the source code please.\n", lines, path, columns, ARRAYLENGTH(split) );
-			continue; // source code problem
-		}
-
-		// parse this row
-		if( !parseproc(split, columns, entries) )
-		{
-			ShowError("skill_read_csvdb: Could not process contents of line %d of \"%s\".\n", lines, path);
-			continue; // invalid row contents?
-		}
-
-		// success!
-		entries++;
-	}
-
-	fclose(fp);
-	ShowStatus("Done reading '"CL_WHITE"%d"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n", entries, path);
-
-	return true;
-}
 
 static bool skill_parse_row_skilldb(char* split[], int columns, int current)
 {// id,range,hit,inf,element,nk,splash,max,list_num,castcancel,cast_defence_rate,inf2,maxcount,skill_type,blow_count,name,description
@@ -10938,6 +10877,32 @@ static bool skill_parse_row_castdb(char* split[], int columns, int current)
 	return true;
 }
 
+static bool skill_parse_row_castnodexdb(char* split[], int columns, int current)
+{// Skill id,Cast,Delay (optional)
+	int i = atoi(split[0]);
+	i = skill_get_index(i);
+	if( !i ) // invalid skill id
+		return false;
+	
+	skill_split_atoi(split[1],skill_db[i].castnodex);
+	if( split[2] ) // optional column
+		skill_split_atoi(split[2],skill_db[i].delaynodex);
+
+	return true;
+}
+
+static bool skill_parse_row_nocastdb(char* split[], int columns, int current)
+{// SkillID,Flag
+	int i = atoi(split[0]);
+	i = skill_get_index(i);
+	if( !i ) // invalid skill id
+		return false;
+
+	skill_db[i].nocast |= atoi(split[1]);
+
+	return true;
+}
+
 static bool skill_parse_row_unitdb(char* split[], int columns, int current)
 {// ID,unit ID,unit ID 2,layout,range,interval,target,flag
 	int i = atoi(split[0]);
@@ -10985,8 +10950,6 @@ static bool skill_parse_row_producedb(char* split[], int columns, int current)
 	int i = atoi(split[0]);
 	if( !i )
 		return false;
-	if( current == MAX_SKILL_PRODUCE_DB )
-		return false;
 
 	skill_produce_db[current].nameid = i;
 	skill_produce_db[current].itemlv = atoi(split[1]);
@@ -10999,9 +10962,6 @@ static bool skill_parse_row_producedb(char* split[], int columns, int current)
 		skill_produce_db[current].mat_amount[y] = atoi(split[x+1]);
 	}
 
-	if( current == MAX_SKILL_PRODUCE_DB-1 )
-		ShowWarning("Reached the max number of produce_db entries (%d), consider raising the value of MAX_SKILL_PRODUCE_DB and recompile.\n", MAX_SKILL_PRODUCE_DB);
-
 	return true;
 }
 
@@ -11012,18 +10972,14 @@ static bool skill_parse_row_createarrowdb(char* split[], int columns, int curren
 	int i = atoi(split[0]);
 	if( !i )
 		return false;
-	if( current == MAX_SKILL_ARROW_DB )
-		return false;
 
 	skill_arrow_db[current].nameid = i;
 	
-	for( x = 1, y = 0; x+1 < columns && split[x] && split[x+1] && y < 5; x += 2, y++ )
+	for( x = 1, y = 0; x+1 < columns && split[x] && split[x+1] && y < MAX_ARROW_RESOURCE; x += 2, y++ )
 	{
 		skill_arrow_db[current].cre_id[y] = atoi(split[x]);
 		skill_arrow_db[current].cre_amount[y] = atoi(split[x+1]);
 	}
-
-	//TODO?: add capacity warning here
 
 	return true;
 }
@@ -11042,45 +10998,14 @@ static bool skill_parse_row_abradb(char* split[], int columns, int current)
 		return false;
 	}
 
-	if( current == MAX_SKILL_ABRA_DB )
-		return false;
-	
 	skill_abra_db[current].skillid = i;
 	skill_abra_db[current].req_lv = atoi(split[2]);
 	skill_abra_db[current].per = atoi(split[3]);
 
-	//TODO?: add capacity warning here
-
 	return true;
 }
 
-static bool skill_parse_row_castnodexdb(char* split[], int columns, int current)
-{// Skill id,Cast,Delay (optional)
-	int i = atoi(split[0]);
-	i = skill_get_index(i);
-	if( !i ) // invalid skill id
-		return false;
-	
-	skill_split_atoi(split[1],skill_db[i].castnodex);
-	if( split[2] ) // optional column
-		skill_split_atoi(split[2],skill_db[i].delaynodex);
-
-	return true;
-}
-
-static bool skill_parse_row_nocastdb(char* split[], int columns, int current)
-{// SkillID,Flag
-	int i = atoi(split[0]);
-	i = skill_get_index(i);
-	if( !i ) // invalid skill id
-		return false;
-
-	skill_db[i].nocast |= atoi(split[1]);
-
-	return true;
-}
-
-int skill_readdb(void)
+static void skill_readdb(void)
 {
 	// init skill db structures
 	memset(skill_db,0,sizeof(skill_db));
@@ -11089,20 +11014,18 @@ int skill_readdb(void)
 	memset(skill_abra_db,0,sizeof(skill_abra_db));
 	
 	// load skill databases
-	skill_read_csvdb(db_path, "skill_db.txt", 17, skill_parse_row_skilldb);
 	safestrncpy(skill_db[0].name, "UNKNOWN_SKILL", sizeof(skill_db[0].name));
 	safestrncpy(skill_db[0].desc, "Unknown Skill", sizeof(skill_db[0].desc));
-	skill_read_csvdb(db_path, "skill_require_db.txt", 17, skill_parse_row_requiredb);
-	skill_read_csvdb(db_path, "skill_cast_db.txt", 6, skill_parse_row_castdb);
-	skill_read_csvdb(db_path, "skill_unit_db.txt", 8, skill_parse_row_unitdb);
+	sv_readdb(db_path, "skill_db.txt"          , ',',  17, 17, MAX_SKILL_DB, skill_parse_row_skilldb);
+	sv_readdb(db_path, "skill_require_db.txt"  , ',',  32, 32, MAX_SKILL_DB, skill_parse_row_requiredb);
+	sv_readdb(db_path, "skill_cast_db.txt"     , ',',   6,  6, MAX_SKILL_DB, skill_parse_row_castdb);
+	sv_readdb(db_path, "skill_castnodex_db.txt", ',',   2,  3, MAX_SKILL_DB, skill_parse_row_castnodexdb);
+	sv_readdb(db_path, "skill_nocast_db.txt"   , ',',   2,  2, MAX_SKILL_DB, skill_parse_row_nocastdb);
+	sv_readdb(db_path, "skill_unit_db.txt"     , ',',   8,  8, MAX_SKILL_DB, skill_parse_row_unitdb);
 	skill_init_unit_layout();
-	skill_read_csvdb(db_path, "produce_db.txt", 4, skill_parse_row_producedb);
-	skill_read_csvdb(db_path, "create_arrow_db.txt", 1+2, skill_parse_row_createarrowdb);
-	skill_read_csvdb(db_path, "abra_db.txt", 4, skill_parse_row_abradb);
-	skill_read_csvdb(db_path, "skill_castnodex_db.txt", 2, skill_parse_row_castnodexdb);
-	skill_read_csvdb(db_path, "skill_nocast_db.txt", 2, skill_parse_row_nocastdb);
-	
-	return 0;
+	sv_readdb(db_path, "produce_db.txt"        , ',',   4,  4+2*MAX_PRODUCE_RESOURCE, MAX_SKILL_PRODUCE_DB, skill_parse_row_producedb);
+	sv_readdb(db_path, "create_arrow_db.txt"   , ',', 1+2,  1+2*MAX_ARROW_RESOURCE, MAX_SKILL_ARROW_DB, skill_parse_row_createarrowdb);
+	sv_readdb(db_path, "abra_db.txt"           , ',',   4,  4, MAX_SKILL_ABRA_DB, skill_parse_row_abradb);
 }
 
 void skill_reload (void)
