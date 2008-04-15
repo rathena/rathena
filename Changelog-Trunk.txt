@@ -4,6 +4,8 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2008/04/15
+	* Use the same code for script commands getitem & getitem2 as @item to avoid
+	  bug in bugreport:1324 (non-stackable items are stacked) [Toms]
 	* Removed all _ in the second name in item_db.txt and updated item_db.sql [Toms]
 	* Added a forward declaration of the struct quest instead of including mmo.h [Toms]
 	* Corrected some invalid syntax in skill_db.txt (wrong usage of commas)

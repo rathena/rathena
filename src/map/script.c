@@ -5310,7 +5310,7 @@ BUILDIN_FUNC(checkweight)
  *------------------------------------------*/
 BUILDIN_FUNC(getitem)
 {
-	int nameid,amount,flag = 0;
+	int nameid,amount,get_count,i,flag = 0;
 	struct item it;
 	TBL_PC *sd;
 	struct script_data *data;
@@ -5362,13 +5362,27 @@ BUILDIN_FUNC(getitem)
 	}
 	if( sd == NULL ) // no target
 		return 0;
-	if( pet_create_egg(sd, nameid) )
-		amount = 1; //This is a pet!
-	else if( (flag=pc_additem(sd,&it,amount)) ){
-		clif_additem(sd,0,0,flag);
-		if( pc_candrop(sd,&it) )
-			map_addflooritem(&it,amount,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0);
-	}
+
+
+        //Check if it's stackable.
+	if (!itemdb_isstackable(nameid))
+		get_count = 1;
+	else
+		get_count = amount;
+
+	for (i = 0; i < amount; i += get_count)
+	{
+		// if not pet egg
+		if (!pet_create_egg(sd, nameid))
+		{
+			if ((flag = pc_additem(sd, &it, get_count)))
+			{
+				clif_additem(sd, 0, 0, flag);
+				if( pc_candrop(sd,&it) )
+					map_addflooritem(&it,get_count,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0);
+			}
+                }
+        }
 
 	//Logs items, got from (N)PC scripts [Lupus]
 	if(log_config.enable_logs&LOG_SCRIPT_TRANSACTIONS)
@@ -5382,7 +5396,7 @@ BUILDIN_FUNC(getitem)
  *------------------------------------------*/
 BUILDIN_FUNC(getitem2)
 {
-	int nameid,amount,flag = 0;
+	int nameid,amount,get_count,i,flag = 0;
 	int iden,ref,attr,c1,c2,c3,c4;
 	struct item_data *item_data;
 	struct item item_tmp;
@@ -5451,9 +5465,25 @@ BUILDIN_FUNC(getitem2)
 		item_tmp.card[1]=c2;
 		item_tmp.card[2]=c3;
 		item_tmp.card[3]=c4;
-		if((flag = pc_additem(sd,&item_tmp,amount))) {
-			clif_additem(sd,0,0,flag);
-			map_addflooritem(&item_tmp,amount,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0);
+
+		//Check if it's stackable.
+		if (!itemdb_isstackable(nameid))
+			get_count = 1;
+		else
+			get_count = amount;
+
+		for (i = 0; i < amount; i += get_count)
+		{
+			// if not pet egg
+			if (!pet_create_egg(sd, nameid))
+			{
+				if ((flag = pc_additem(sd, &item_tmp, get_count)))
+				{
+					clif_additem(sd, 0, 0, flag);
+					if( pc_candrop(sd,&item_tmp) )
+						map_addflooritem(&item_tmp,get_count,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0);
+				}
+			}
 		}
 
 		//Logs items, got from (N)PC scripts [Lupus]
