@@ -5,7 +5,7 @@
 #define _CLIF_H_
 
 #include "../common/cbasetypes.h"
-#include "../common/mmo.h"
+//#include "../common/mmo.h"
 struct storage;
 struct guild_storage;
 //#include "map.h"
@@ -23,6 +23,7 @@ struct s_vending;
 struct party;
 struct party_data;
 struct guild;
+struct quest;
 #include <stdarg.h>
 
 // server->client protocol version
