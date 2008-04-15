@@ -1,5 +1,7 @@
 Date		Added
 ======
+2008/04/15
+	* Rev. 12602 Rescripted Eye of Hellion quest, all quest progress is lost. [L0ne_W0lf]
 2008/04/14
 	* Rev. 12594 Fixed bugreport:1337, bugreport:1355, bugreport:1361, and bugreport:1362.  [L0ne_W0lf]
 	* Rev. 12588 Fixed minor dialogue bug at archer.txt [Lupus]
