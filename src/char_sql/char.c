@@ -263,8 +263,7 @@ void set_char_offline(int char_id, int account_id)
 {
 	struct online_char_data* character;
 
-	//FIXME: usage of 'magic constant'; this needs to go! [ultramage]
-	if ( char_id == 99 )
+	if ( char_id == -1 )
 	{
 		if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `online`='0' WHERE `account_id`='%d'", char_db, account_id) )
 			Sql_ShowDebug(sql_handle);
@@ -297,7 +296,7 @@ void set_char_offline(int char_id, int account_id)
 		}
 	}
 	
-	if (login_fd > 0 && !session[login_fd]->flag.eof && (character == NULL || character->char_id != -1))
+	if (login_fd > 0 && !session[login_fd]->flag.eof && (char_id == -1 || character == NULL || character->char_id != -1))
 	{
 		WFIFOHEAD(login_fd,6);
 		WFIFOW(login_fd,0) = 0x272c;
@@ -1930,7 +1929,7 @@ int parse_fromlogin(int fd)
 						set_eof(i);
 					}
 					else //Shouldn't happen, but just in case.
-						set_char_offline(99, aid);
+						set_char_offline(-1, aid);
 				}
 			}
 		}
@@ -2917,7 +2916,6 @@ int parse_char(int fd)
 		{	// already authed client
 			struct online_char_data* data = (struct online_char_data*)idb_get(online_char_db, sd->account_id);
 			if( data == NULL || data->server == -1) //If it is not in any server, send it offline. [Skotlex]
-				//send -1 as char id (99 means at char select) [Kevin]
 				set_char_offline(-1,sd->account_id);
 			if( data != NULL && data->fd == fd)
 				data->fd = -1;

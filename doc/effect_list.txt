@@ -3,15 +3,16 @@
 //===== By ================================================
 //= Valaris, Spira, Au{R}oN, Tharis, HiddenDragon
 //===== Version ===========================================
-//= 1.6
+//= 1.7
 //=========================================================
 //= 1.0 - Formatted to the standard
-//= 1.1 - New Effects, up to 2007/05/07 Sakexe [Au{R}oN]
-//= 1.2 - New Effects, up to 2007/07/12 Sakexe [Au{R}oN]
-//= 1.3 - New Effects, up to 2007/08/01 Sakexe [Au{R}oN]
-//= 1.4 - New Effects, up to 2007/09/11 Sakexe [Au{R}oN]
-//= 1.5 - New Effects, up to 2007/10/02 Sakexe [Au{R}oN]
-//= 1.6 - New Effects, up to 2008/01/02 Sakexe [Au{R}oN]
+//= 1.1 - New Effects, up to 2007/05/07 Sakexe. [Au{R}oN]
+//= 1.2 - New Effects, up to 2007/07/12 Sakexe. [Au{R}oN]
+//= 1.3 - New Effects, up to 2007/08/01 Sakexe. [Au{R}oN]
+//= 1.4 - New Effects, up to 2007/09/11 Sakexe. [Au{R}oN]
+//= 1.5 - New Effects, up to 2007/10/02 Sakexe. [Au{R}oN]
+//= 1.6 - New Effects, up to 2008/01/02 Sakexe. [Au{R}oN]
+//= 1.7 - New Effects, up to 2008/03/26 Sakexe. [Au{R}oN]
 //===== Description =======================================
 //= A list of client-side effects sorted by their ID
 //=========================================================
@@ -721,4 +722,7 @@ number	description
 694.	The Semi-Green Sun
 695.	Something Like Green DiscoDance Light.
 696.	The same of 690 and 691 but Blue/Purple.
-697+.	No More Effects From 2008/01/22 Sakexe
+697.	(Nothing)
+698.	(Nothing)
+699.	Fall of powder from the sky and raise of some leaf.
+700+.	No More Effects From 2008/03/26 Sakexe.

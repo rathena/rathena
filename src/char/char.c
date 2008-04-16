@@ -241,15 +241,19 @@ void set_char_offline(int char_id, int account_id)
 		if( character->server > -1 )
 			server[character->server].users--;
 		
-		character->char_id = -1;
-		character->server = -1;
 		if(character->waiting_disconnect != -1){
 			delete_timer(character->waiting_disconnect, chardb_waiting_disconnect);
 			character->waiting_disconnect = -1;
 		}
+
+		//If user is NOT at char screen, delete entry [Kevin]
+		if(character->char_id != -1)
+		{
+			idb_remove(online_char_db, account_id);
+		}
 	}
 	
-	if (login_fd > 0 && !session[login_fd]->flag.eof)
+	if (login_fd > 0 && !session[login_fd]->flag.eof && (char_id == -1 || character == NULL || character->char_id != -1))
 	{
 		WFIFOHEAD(login_fd,6);
 		WFIFOW(login_fd,0) = 0x272c;
@@ -2335,7 +2339,7 @@ int parse_fromlogin(int fd)
 						set_eof(i);
 					}
 					else //Shouldn't happen, but just in case.
-						set_char_offline(99, aid);
+						set_char_offline(-1, aid);
 				}
 			}
 		}

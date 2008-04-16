@@ -7952,7 +7952,7 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 	}
 	
 #ifndef TXT_ONLY
-		mail_clear(sd);
+	mail_clear(sd);
 #endif
 
 	quest_pc_login(sd);
