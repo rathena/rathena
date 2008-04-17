@@ -832,7 +832,7 @@ bool sv_readdb(const char* directory, const char* filename, char delim, int minc
 		if( line[0] == '\0' || line[0] == '\n' )
 			continue;
 
-		columns = sv_split(line, strlen(line), 0, delim, fields, ARRAYLENGTH(fields), SV_NOESCAPE_NOTERMINATE);
+		columns = sv_split(line, strlen(line), 0, delim, fields, ARRAYLENGTH(fields), (e_svopt)(SV_TERMINATE_LF|SV_TERMINATE_CRLF));
 
 		if( columns < mincols )
 		{
