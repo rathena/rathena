@@ -9,6 +9,7 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 	  item_avail in the shop (the real one was added in inventory).
 	* Implemented config setting 'vending_over_max', to let people configure
 	  the behavior of vending items over the MAX_ZENY limit [ultramage]
+	* Fixed mapserv crash, thanks to Konard [Lupus]
 2008/04/15
 	* Use the same code for script commands getitem & getitem2 as @item to avoid
 	  bug in bugreport:1324 (non-stackable items are stacked) [Toms]
