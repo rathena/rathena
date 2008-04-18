@@ -105,6 +105,12 @@ void vending_purchasereq(struct map_session_data* sd, int id, const uint8* data,
 			clif_buyvending(sd, idx, amount, 1); // you don't have enough zeny
 			return;
 		}
+		if( z + (double)vsd->status.zeny > (double)MAX_ZENY && !battle_config.vending_over_max )
+		{
+			clif_buyvending(sd, idx, vsd->vending[j].amount, 4); // too much zeny = overflow
+			return;
+
+		}
 		w += itemdb_weight(vsd->status.cart[idx].nameid) * amount;
 		if( w + sd->weight > sd->max_weight )
 		{

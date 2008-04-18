@@ -268,6 +268,7 @@ extern struct Battle_Config
 	int mob_warp;
 	int dead_branch_active;
 	int vending_max_value;
+	int vending_over_max;
 	int vending_tax;
 	int show_steal_in_same_party;
 	int party_share_type;

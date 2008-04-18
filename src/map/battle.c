@@ -3503,6 +3503,7 @@ static const struct _battle_data {
 	{ "mob_warp",                           &battle_config.mob_warp,                        0,      0,      1|2|4,          },
 	{ "dead_branch_active",                 &battle_config.dead_branch_active,              1,      0,      1,              },
 	{ "vending_max_value",                  &battle_config.vending_max_value,               10000000, 1,    MAX_ZENY,       },
+	{ "vending_over_max",                   &battle_config.vending_over_max,                1,      0,      1,              },
 	{ "show_steal_in_same_party",           &battle_config.show_steal_in_same_party,        0,      0,      1,              },
 	{ "party_hp_mode",                      &battle_config.party_hp_mode,                   0,      0,      1,              },
 	{ "show_party_share_picker",            &battle_config.party_show_share_picker,         0,      0,      1,              },
