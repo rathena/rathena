@@ -1106,18 +1106,18 @@ int npc_buylist(struct map_session_data* sd, int n, unsigned short* item_list)
 	if (nd->master_nd) //Script-based shops.
 		return npc_buylist_sub(sd,n,item_list,nd->master_nd);
 
-	if (nd->subtype!=SHOP)
+	if (nd->subtype != SHOP)
 		return 3;
 
-	for(i=0,w=0,z=0;i<n;i++) {
-		for(j=0;nd->u.shop.shop_item[j].nameid;j++) {
+	for(i=0,w=0,z=0; i < n; i++) {
+		for(j=0; nd->u.shop.shop_item[j].nameid; j++) {
 			if (nd->u.shop.shop_item[j].nameid==item_list[i*2+1] || //Normal items
 				itemdb_viewid(nd->u.shop.shop_item[j].nameid)==item_list[i*2+1]) //item_avail replacement
 				break;
 		}
-		if (nd->u.shop.shop_item[j].nameid==0)
+		if (nd->u.shop.shop_item[j].nameid == 0)
 			return 3;
-		
+
 		if (!itemdb_isstackable(nd->u.shop.shop_item[j].nameid) && item_list[i*2] > 1)
 		{	//Exploit? You can't buy more than 1 of equipment types o.O
 			ShowWarning("Player %s (%d:%d) sent a hexed packet trying to buy %d of nonstackable item %d!\n",
@@ -1130,24 +1130,29 @@ int npc_buylist(struct map_session_data* sd, int n, unsigned short* item_list)
 			z+=(double)pc_modifybuyvalue(sd,nd->u.shop.shop_item[j].value) * item_list[i*2];
 		itemamount+=item_list[i*2];
 
-		switch(pc_checkadditem(sd,item_list[i*2+1],item_list[i*2])) {
-		case ADDITEM_EXIST:
-			break;
-		case ADDITEM_NEW:
-			new_++;
-			break;
-		case ADDITEM_OVERAMOUNT:
-			return 2;
+		switch(pc_checkadditem(sd,nd->u.shop.shop_item[j].nameid,item_list[i*2])) {
+			case ADDITEM_EXIST:
+				break;
+
+			case ADDITEM_NEW:
+				new_++;
+				break;
+
+			case ADDITEM_OVERAMOUNT:
+				return 2;
 		}
 
-		w+=itemdb_weight(item_list[i*2+1]) * item_list[i*2];
+		w += itemdb_weight(nd->u.shop.shop_item[j].nameid) * item_list[i*2];
+
+		if (nd->u.shop.shop_item[j].nameid != item_list[i*2+1])
+			item_list[i*2+1] = nd->u.shop.shop_item[j].nameid; // item_avail replacement
 	}
 	if (z > (double)sd->status.zeny)
-		return 1;	// zenyïsë´
+		return 1;	// Not enough Zeny
 	if (w+sd->weight > sd->max_weight)
-		return 2;	// èdó í¥âﬂ
-	if (pc_inventoryblank(sd)<new_)
-		return 3;	// éÌóﬁêîí¥âﬂ
+		return 2;	// Too heavy
+	if (pc_inventoryblank(sd) < new_)
+		return 3;	// Not enough space to store items
 
 	//Logs (S)hopping Zeny [Lupus]
 	if(log_config.zeny > 0 )
@@ -1155,7 +1160,7 @@ int npc_buylist(struct map_session_data* sd, int n, unsigned short* item_list)
 	//Logs
 
 	pc_payzeny(sd,(int)z);
-	for(i=0;i<n;i++) {
+	for(i=0; i<n; i++) {
 		struct item item_tmp;
 
 		memset(&item_tmp,0,sizeof(item_tmp));
@@ -2029,12 +2034,18 @@ void npc_setcells(struct npc_data* nd)
 	int m = nd->bl.m, x = nd->bl.x, y = nd->bl.y, xs, ys;
 	int i,j;
 
-	if (nd->subtype == WARP) {
-		xs = nd->u.warp.xs;
-		ys = nd->u.warp.ys;
-	} else {
-		xs = nd->u.scr.xs;
-		ys = nd->u.scr.ys;
+	switch(nd->subtype)
+	{
+		case WARP:
+			xs = nd->u.warp.xs;
+			ys = nd->u.warp.ys;
+			break;
+		case SCRIPT:
+			xs = nd->u.scr.xs;
+			ys = nd->u.scr.ys;
+			break;
+                default:
+			return; // Other types doesn't have touch area
 	}
 
 	if (m < 0 || xs < 0 || ys < 0)

@@ -4,6 +4,9 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2008/04/18
+	* Fixed a bug when unloading a npc near a shop.
+	* Fixed npc_buylist not giving/checking the good item when it was an
+	  item_avail in the shop (the real one was added in inventory).
 	* Implemented config setting 'vending_over_max', to let people configure
 	  the behavior of vending items over the MAX_ZENY limit [ultramage]
 2008/04/15
