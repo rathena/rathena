@@ -7605,26 +7605,32 @@ BUILDIN_FUNC(initnpctimer)
 	{	//Two arguments: NPC name and attach flag.
 		nd = npc_name2id(script_getstr(st, 2));
 		flag = script_getnum(st,3);
-	} else
-	if( script_hasdata(st,2) )
+	}
+	else if( script_hasdata(st,2) )
 	{	//Check if argument is numeric (flag) or string (npc name)
 		struct script_data *data;
 		data = script_getdata(st,2);
 		get_val(st,data);
 		if( data_isstring(data) ) //NPC name
-			nd = npc_name2id(script_getstr(st, 2));
-		else if( data_isint(data) ) {	//Flag
+			nd = npc_name2id(conv_str(st, data));
+		else if( data_isint(data) ) //Flag
+		{
 			nd = (struct npc_data *)map_id2bl(st->oid);
-			flag = script_getnum(st,3);
-		} else {
+			flag = conv_num(st,data);
+		}
+		else
+		{
 			ShowError("initnpctimer: invalid argument type #1 (needs be int or string)).\n");
 			return 1;
 		}
-	} else
+	}
+	else
 		nd=(struct npc_data *)map_id2bl(st->oid);
 
-	if (!nd) return 0;
-	if (flag) { //Attach
+	if (!nd)
+		return 0;
+	if (flag) //Attach
+	{
 		TBL_PC* sd = script_rid2sd(st);
 		if( sd == NULL )
 			return 0;
@@ -7646,26 +7652,32 @@ BUILDIN_FUNC(startnpctimer)
 	{	//Two arguments: NPC name and attach flag.
 		nd = npc_name2id(script_getstr(st, 2));
 		flag = script_getnum(st,3);
-	} else
-	if( script_hasdata(st,2) )
+	}
+	else if( script_hasdata(st,2) )
 	{	//Check if argument is numeric (flag) or string (npc name)
 		struct script_data *data;
 		data = script_getdata(st,2);
 		get_val(st,data);
 		if( data_isstring(data) ) //NPC name
-			nd = npc_name2id(script_getstr(st, 2));
-		else if( data_isint(data) ) {	//Flag
+			nd = npc_name2id(conv_str(st, data));
+		else if( data_isint(data) ) //Flag
+		{
 			nd = (struct npc_data *)map_id2bl(st->oid);
-			flag = script_getnum(st,3);
-		} else {
-			ShowError("startnpctimer: invalid argument type #1 (needs be int or string)).\n");
+			flag = conv_num(st,data);
+		}
+		else
+		{
+			ShowError("initnpctimer: invalid argument type #1 (needs be int or string)).\n");
 			return 1;
 		}
-	} else
+	}
+	else
 		nd=(struct npc_data *)map_id2bl(st->oid);
 
-	if (!nd) return 0;
-	if (flag) { //Attach
+	if (!nd)
+		return 0;
+	if (flag) //Attach
+	{
 		TBL_PC* sd = script_rid2sd(st);
 		if( sd == NULL )
 			return 0;
@@ -7686,25 +7698,30 @@ BUILDIN_FUNC(stopnpctimer)
 	{	//Two arguments: NPC name and attach flag.
 		nd = npc_name2id(script_getstr(st, 2));
 		flag = script_getnum(st,3);
-	} else
-	if( script_hasdata(st,2) )
+	}
+	else if( script_hasdata(st,2) )
 	{	//Check if argument is numeric (flag) or string (npc name)
 		struct script_data *data;
 		data = script_getdata(st,2);
 		get_val(st,data);
 		if( data_isstring(data) ) //NPC name
-			nd = npc_name2id(script_getstr(st, 2));
-		else if( data_isint(data) ) {	//Flag
+			nd = npc_name2id(conv_str(st, data));
+		else if( data_isint(data) ) //Flag
+		{
 			nd = (struct npc_data *)map_id2bl(st->oid);
-			flag = script_getnum(st,3);
-		} else {
-			ShowError("stopnpctimer: invalid argument type #1 (needs be int or string)).\n");
+			flag = conv_num(st,data);
+		}
+		else
+		{
+			ShowError("initnpctimer: invalid argument type #1 (needs be int or string)).\n");
 			return 1;
 		}
-	} else
+	}
+	else
 		nd=(struct npc_data *)map_id2bl(st->oid);
 
-	if (!nd) return 0;
+	if (!nd)
+		return 0;
 	if (flag) //Detach
 		nd->u.scr.rid = 0;
 
