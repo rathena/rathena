@@ -4915,7 +4915,7 @@ void pc_respawn(struct map_session_data* sd, uint8 clrtype)
 static int pc_respawn_timer(int tid,unsigned int tick,int id,int data)
 {
 	struct map_session_data *sd = map_id2sd(id);
-	if( sd != NULL)
+	if( sd != NULL )
 		pc_respawn(sd,0);
 
 	return 0;
