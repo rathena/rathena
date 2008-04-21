@@ -4936,17 +4936,6 @@ void pc_damage(struct map_session_data *sd,struct block_list *src,unsigned int h
 
 	clif_updatestatus(sd,SP_HP);
 
-	if (sd->battle_status.hp<sd->battle_status.max_hp>>2)
-	{	//25% HP left effects.
-		int i=0;
-		for(i = 0; i < 5; i++)
-		if (sd->devotion[i]){
-			struct map_session_data *devsd = map_id2sd(sd->devotion[i]);
-			if (devsd) status_change_end(&devsd->bl,SC_DEVOTION,-1);
-			sd->devotion[i] = 0;
-		}
-	}
-
 	if(!src || src == &sd->bl)
 		return;
 	
@@ -4959,11 +4948,18 @@ void pc_damage(struct map_session_data *sd,struct block_list *src,unsigned int h
 
 int pc_dead(struct map_session_data *sd,struct block_list *src)
 {
-	int i=0,j=0;
+	int i=0,j=0,k=0;
 	unsigned int tick = gettick();
 		
 	if(sd->vender_id)
 		vending_closevending(sd);
+
+	for(k = 0; k < 5; k++)
+	if (sd->devotion[k]){
+		struct map_session_data *devsd = map_id2sd(sd->devotion[k]);
+		if (devsd) status_change_end(&devsd->bl,SC_DEVOTION,-1);
+		sd->devotion[k] = 0;
+	}
 
 	if(sd->status.pet_id > 0 && sd->pd)
 	{
