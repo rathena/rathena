@@ -1,6 +1,7 @@
 Date		Added
 ======
 2008/04/21
+	* Rev. 12629 Fixed yet another WoE SE Bug (Juno castle 3) [L0ne_W0lf]
 	* Rev. 12628 Fixed another WoE SE Bug. (wrong target for donpcevent) [L0ne_W0lf]
 	* Rev. 12627 Fixes to WoE SE Juno castles 1, 2, and 3. (copy/paste issues) [L0ne_W0lf]
 	* Rev. 12624 Fixed bugreport:1390, bugreport:1394, bugreport:1396. [L0ne_W0lf]
