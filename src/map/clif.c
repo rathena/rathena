@@ -654,7 +654,7 @@ int clif_clearunit_area(struct block_list* bl, uint8 type)
 	return 0;
 }
 
-static int clif_clearunit_delayed_sub(int tid, unsigned int tick, int id, int data)
+static int clif_clearunit_delayed_sub(int tid, unsigned int tick, int id, intptr data)
 {
 	struct block_list *bl = (struct block_list *)id;
 	clif_clearunit_area(bl, 0);
@@ -1276,7 +1276,7 @@ void clif_move(struct unit_data *ud)
 /*==========================================
  * Delays the map_quit of a player after they are disconnected. [Skotlex]
  *------------------------------------------*/
-static int clif_delayquit(int tid, unsigned int tick, int id, int data)
+static int clif_delayquit(int tid, unsigned int tick, int id, intptr data)
 {
 	struct map_session_data *sd = NULL;
 

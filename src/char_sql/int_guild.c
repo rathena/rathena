@@ -47,7 +47,7 @@ int mapif_guild_info(int fd,struct guild *g);
 int guild_break_sub(int key,void *data,va_list ap);
 int inter_guild_tosql(struct guild *g,int flag);
 
-static int guild_save_timer(int tid, unsigned int tick, int id, int data)
+static int guild_save_timer(int tid, unsigned int tick, int id, intptr data)
 {
 	static int last_id = 0; //To know in which guild we were.
 	int state = 0; //0: Have not reached last guild. 1: Reached last guild, ready for save. 2: Some guild saved, don't do further saving.

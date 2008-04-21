@@ -150,7 +150,7 @@ struct delay_damage {
 	unsigned short attack_type;
 };
 
-int battle_delay_damage_sub (int tid, unsigned int tick, int id, int data)
+int battle_delay_damage_sub(int tid, unsigned int tick, int id, intptr data)
 {
 	struct delay_damage *dat = (struct delay_damage *)data;
 	struct block_list *target = map_id2bl(dat->target);

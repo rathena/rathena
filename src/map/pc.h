@@ -639,7 +639,7 @@ int pc_cleareventtimer(struct map_session_data *sd);
 int pc_addeventtimercount(struct map_session_data *sd,const char *name,int tick);
 
 int pc_calc_pvprank(struct map_session_data *sd);
-int pc_calc_pvprank_timer(int tid,unsigned int tick,int id,int data);
+int pc_calc_pvprank_timer(int tid, unsigned int tick, int id, intptr data);
 
 int pc_ismarried(struct map_session_data *sd);
 int pc_marriage(struct map_session_data *sd,struct map_session_data *dstsd);
@@ -705,8 +705,8 @@ enum {ADDITEM_EXIST,ADDITEM_NEW,ADDITEM_OVERAMOUNT};
 // timer for night.day
 extern int day_timer_tid;
 extern int night_timer_tid;
-int map_day_timer(int,unsigned int,int,int); // by [yor]
-int map_night_timer(int,unsigned int,int,int); // by [yor]
+int map_day_timer(int tid, unsigned int tick, int id, intptr data); // by [yor]
+int map_night_timer(int tid, unsigned int tick, int id, intptr data); // by [yor]
 
 //Duel functions // [LuzZza]
 int duel_create(struct map_session_data* sd, const unsigned int maxpl);

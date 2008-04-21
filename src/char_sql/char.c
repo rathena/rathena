@@ -199,7 +199,7 @@ struct online_char_data {
 };
 
 static DBMap* online_char_db; // int account_id -> struct online_char_data*
-static int chardb_waiting_disconnect(int tid, unsigned int tick, int id, int data);
+static int chardb_waiting_disconnect(int tid, unsigned int tick, int id, intptr data);
 
 static void* create_online_char_data(DBKey key, va_list args)
 {
@@ -1647,7 +1647,7 @@ static void char_auth_ok(int fd, struct char_session_data *sd)
 	mmo_char_send006b(fd, sd);
 }
 
-int send_accounts_tologin(int tid, unsigned int tick, int id, int data);
+int send_accounts_tologin(int tid, unsigned int tick, int id, intptr data);
 
 int parse_fromlogin(int fd)
 {
@@ -3423,7 +3423,7 @@ int mapif_send(int fd, unsigned char *buf, unsigned int len)
 	return 0;
 }
 
-int broadcast_user_count(int tid, unsigned int tick, int id, int data)
+int broadcast_user_count(int tid, unsigned int tick, int id, intptr data)
 {
 	uint8 buf[6];
 	int users = count_users();
@@ -3466,7 +3466,7 @@ static int send_accounts_tologin_sub(DBKey key, void* data, va_list ap)
 	return 0;
 }
 
-int send_accounts_tologin(int tid, unsigned int tick, int id, int data)
+int send_accounts_tologin(int tid, unsigned int tick, int id, intptr data)
 {
 	if (login_fd > 0 && session[login_fd])
 	{
@@ -3484,7 +3484,7 @@ int send_accounts_tologin(int tid, unsigned int tick, int id, int data)
 	return 0;
 }
 
-int check_connect_login_server(int tid, unsigned int tick, int id, int data)
+int check_connect_login_server(int tid, unsigned int tick, int id, intptr data)
 {
 	if (login_fd > 0 && session[login_fd] != NULL)
 		return 0;
@@ -3517,7 +3517,7 @@ int check_connect_login_server(int tid, unsigned int tick, int id, int data)
 }
 
 // sends a ping packet to login server (will receive pong 0x2718)
-int ping_login_server(int tid, unsigned int tick, int id, int data)
+int ping_login_server(int tid, unsigned int tick, int id, intptr data)
 {
 	if (login_fd > 0 && session[login_fd] != NULL)
 	{
@@ -3532,7 +3532,7 @@ int ping_login_server(int tid, unsigned int tick, int id, int data)
 //Invoked 15 seconds after mapif_disconnectplayer in case the map server doesn't
 //replies/disconnect the player we tried to kick. [Skotlex]
 //------------------------------------------------
-static int chardb_waiting_disconnect(int tid, unsigned int tick, int id, int data)
+static int chardb_waiting_disconnect(int tid, unsigned int tick, int id, intptr data)
 {
 	struct online_char_data* character;
 	if ((character = (struct online_char_data*)idb_get(online_char_db, id)) != NULL && character->waiting_disconnect == tid)
@@ -3556,7 +3556,7 @@ static int online_data_cleanup_sub(DBKey key, void *data, va_list ap)
 	return 0;
 }
 
-static int online_data_cleanup(int tid, unsigned int tick, int id, int data)
+static int online_data_cleanup(int tid, unsigned int tick, int id, intptr data)
 {
 	online_char_db->foreach(online_char_db, online_data_cleanup_sub);
 	return 0;

@@ -47,7 +47,7 @@ IRC_SI *irc_si=NULL;
 struct channel_data cd;
 int last_cd_user=0;
 
-int irc_connect_timer(int tid, unsigned int tick, int id, int data)
+int irc_connect_timer(int tid, unsigned int tick, int id, intptr data)
 {
 	if(irc_si && session[irc_si->fd])
 		return 0;
@@ -148,7 +148,7 @@ int irc_parse(int fd)
 	return 0;
 }
 
-int irc_keepalive_timer(int tid, unsigned int tick, int id, int data)
+int irc_keepalive_timer(int tid, unsigned int tick, int id, intptr data)
 {
 	char send_string[128];
 	sprintf(send_string,"PRIVMSG %s : ", irc_nick);

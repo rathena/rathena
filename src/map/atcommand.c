@@ -6970,13 +6970,13 @@ int atcommand_mobinfo(const int fd, struct map_session_data* sd, const char* com
 * @showmobs by KarLaeda
 * => For 5 sec displays the mobs on minimap
 *------------------------------------------*/
-int atshowmobs_timer(int tid, unsigned int tick, int id, int data)
+int atshowmobs_timer(int tid, unsigned int tick, int id, intptr data)
 {
 	struct map_session_data* sd = map_id2sd(id);
 	if( sd == NULL )
 		return 0;
 
-	clif_viewpoint(sd, 1, 2, 0, 0, data, 0xFFFFFF);
+	clif_viewpoint(sd, 1, 2, 0, 0, (int)data, 0xFFFFFF);
 	return 1;
 }
 static int atshowmobs_sub(struct block_list *bl,va_list ap)

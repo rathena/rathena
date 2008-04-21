@@ -907,7 +907,7 @@ static int connect_check_(uint32 ip)
 
 /// Timer function.
 /// Deletes old connection history records.
-static int connect_check_clear(int tid, unsigned int tick, int id, int data)
+static int connect_check_clear(int tid, unsigned int tick, int id, intptr data)
 {
 	int i;
 	int clear = 0;

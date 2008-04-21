@@ -4234,7 +4234,7 @@ int Connect_login_server(void)
 }
 
 // sends a ping packet to login server (will receive pong 0x2718)
-int ping_login_server(int tid, unsigned int tick, int id, int data)
+int ping_login_server(int tid, unsigned int tick, int id, intptr data)
 {
 	if (login_fd > 0 && session[login_fd] != NULL)
 	{

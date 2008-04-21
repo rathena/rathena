@@ -65,9 +65,9 @@ struct{
 #define GUILD_SAVE_INTERVAL 300000
 int guild_save_timer = -1;
 
-int guild_payexp_timer(int tid,unsigned int tick,int id,int data);
-int guild_save_sub(int tid,unsigned int tick,int id,int data);
-static int guild_send_xy_timer(int tid,unsigned int tick,int id,int data);
+int guild_payexp_timer(int tid, unsigned int tick, int id, intptr data);
+int guild_save_sub(int tid, unsigned int tick, int id, intptr data);
+static int guild_send_xy_timer(int tid, unsigned int tick, int id, intptr data);
 
 /*==========================================
  * Retrieves and validates the sd pointer for this guild member [Skotlex]
@@ -355,7 +355,7 @@ int guild_payexp_timer_sub(DBKey dataid, void *data, va_list ap)
 	return 0;
 }
 
-int guild_payexp_timer(int tid, unsigned int tick, int id, int data)
+int guild_payexp_timer(int tid, unsigned int tick, int id, intptr data)
 {
 	guild_expcache_db->clear(guild_expcache_db,guild_payexp_timer_sub);
 	return 0;
@@ -383,7 +383,7 @@ int guild_send_xy_timer_sub(DBKey key,void *data,va_list ap)
 }
 
 //Code from party_send_xy_timer [Skotlex]
-static int guild_send_xy_timer(int tid,unsigned int tick,int id,int data)
+static int guild_send_xy_timer(int tid, unsigned int tick, int id, intptr data)
 {
 	guild_db->foreach(guild_db,guild_send_xy_timer_sub,tick);
 	return 0;
@@ -1899,7 +1899,7 @@ int guild_agit_end(void)
 	return 0;
 }
 
-int guild_save_sub(int tid,unsigned int tick,int id,int data)
+int guild_save_sub(int tid, unsigned int tick, int id, intptr data)
 {
 	static int Gid[MAX_GUILDCASTLE]; // previous owning guild
 	struct guild_castle *gc;

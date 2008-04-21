@@ -302,7 +302,7 @@ int npc_event_doall_id(const char* name, int rid)
 /*==========================================
  * 時計イベント実行
  *------------------------------------------*/
-int npc_event_do_clock(int tid, unsigned int tick, int id, int data)
+int npc_event_do_clock(int tid, unsigned int tick, int id, intptr data)
 {
 	static struct tm ev_tm_b; // tracks previous execution time
 	time_t timer;
@@ -397,7 +397,7 @@ struct timer_event_data {
 /*==========================================
  * タイマーイベント実行
  *------------------------------------------*/
-int npc_timerevent(int tid, unsigned int tick, int id, int data)
+int npc_timerevent(int tid, unsigned int tick, int id, intptr data)
 {
 	int next,t,old_rid,old_timer;
 	unsigned int old_tick;

@@ -56,7 +56,7 @@ int send_users_tochar(void);
 int chrif_char_online(struct map_session_data *sd);
 int chrif_changesex(struct map_session_data *sd);
 int chrif_chardisconnect(struct map_session_data *sd);
-int check_connect_char_server(int tid, unsigned int tick, int id, int data);
+int check_connect_char_server(int tid, unsigned int tick, int id, intptr data);
 int chrif_divorce(int partner_id1, int partner_id2);
 
 int do_final_chrif(void);

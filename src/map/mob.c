@@ -76,7 +76,7 @@ static DBMap* barricade_db;
  * Local prototype declaration   (only required thing)
  *------------------------------------------*/
 static int mob_makedummymobdb(int);
-static int mob_spawn_guardian_sub(int,unsigned int,int,int);
+static int mob_spawn_guardian_sub(int tid, unsigned int tick, int id, intptr data);
 int mobskill_use(struct mob_data *md,unsigned int tick,int event);
 int mob_skillid2skillidx(int class_,int skillid);
 
@@ -672,7 +672,7 @@ void mod_barricade_clearall(void)
 /*==========================================
  * Set a Guardian's guild data [Skotlex]
  *------------------------------------------*/
-static int mob_spawn_guardian_sub(int tid,unsigned int tick,int id,int data)
+static int mob_spawn_guardian_sub(int tid, unsigned int tick, int id, intptr data)
 {	//Needed because the guild_data may not be available at guardian spawn time.
 	struct block_list* bl = map_id2bl(id);
 	struct mob_data* md; 
@@ -690,11 +690,11 @@ static int mob_spawn_guardian_sub(int tid,unsigned int tick,int id,int data)
 	
 	md = (struct mob_data*)bl;
 	nullpo_retr(0, md->guardian_data);
-	g = guild_search(data);
+	g = guild_search((int)data);
 
 	if (g == NULL)
 	{	//Liberate castle, if the guild is not found this is an error! [Skotlex]
-		ShowError("mob_spawn_guardian_sub: Couldn't load guild %d!\n",data);
+		ShowError("mob_spawn_guardian_sub: Couldn't load guild %d!\n", (int)data);
 		if (md->class_ == MOBID_EMPERIUM)
 		{	//Not sure this is the best way, but otherwise we'd be invoking this for ALL guardians spawned later on.
 			md->guardian_data->guild_id = 0;
@@ -887,9 +887,9 @@ int mob_linksearch(struct block_list *bl,va_list ap)
 /*==========================================
  * mob spawn with delay (timer function)
  *------------------------------------------*/
-static int mob_delayspawn(int tid, unsigned int tick, int m, int n)
+static int mob_delayspawn(int tid, unsigned int tick, int id, intptr data)
 {
-	struct block_list *bl = map_id2bl(m);
+	struct block_list *bl = map_id2bl(id);
 	if (bl && bl->type == BL_MOB)
 		mob_spawn((TBL_MOB*)bl);
 	return 0;
@@ -1751,7 +1751,7 @@ static int mob_ai_sub_lazy(DBKey key,void * data,va_list ap)
 /*==========================================
  * Negligent processing for mob outside PC field of view   (interval timer function)
  *------------------------------------------*/
-static int mob_ai_lazy(int tid,unsigned int tick,int id,int data)
+static int mob_ai_lazy(int tid, unsigned int tick, int id, intptr data)
 {
 	map_foreachmob(mob_ai_sub_lazy,tick);
 	return 0;
@@ -1760,7 +1760,7 @@ static int mob_ai_lazy(int tid,unsigned int tick,int id,int data)
 /*==========================================
  * Serious processing for mob in PC field of view   (interval timer function)
  *------------------------------------------*/
-static int mob_ai_hard(int tid,unsigned int tick,int id,int data)
+static int mob_ai_hard(int tid, unsigned int tick, int id, intptr data)
 {
 
 	if (battle_config.mob_ai&0x20)
@@ -1799,7 +1799,7 @@ static struct item_drop* mob_setlootitem(struct item* item)
 /*==========================================
  * item drop with delay (timer function)
  *------------------------------------------*/
-static int mob_delay_item_drop(int tid, unsigned int tick, int id, int data)
+static int mob_delay_item_drop(int tid, unsigned int tick, int id, intptr data)
 {
 	struct item_drop_list *list;
 	struct item_drop *ditem, *ditem_prev;
@@ -1858,7 +1858,7 @@ static void mob_item_drop(struct mob_data *md, struct item_drop_list *dlist, str
 	dlist->item = ditem;
 }
 
-int mob_timer_delete(int tid, unsigned int tick, int id, int data)
+int mob_timer_delete(int tid, unsigned int tick, int id, intptr data)
 {
 	struct block_list *bl=map_id2bl(id);
 	nullpo_retr(0, bl);
@@ -1927,12 +1927,12 @@ int mob_deleteslave(struct mob_data *md)
 	return 0;
 }
 // Mob respawning through KAIZEL or NPC_REBIRTH [Skotlex]
-int mob_respawn(int tid, unsigned int tick, int id,int data )
+int mob_respawn(int tid, unsigned int tick, int id, intptr data)
 {
 	struct block_list *bl = map_id2bl(id);
 
 	if(!bl) return 0;
-	status_revive(bl, data, 0);
+	status_revive(bl, (uint8)data, 0);
 	return 1;
 }
 

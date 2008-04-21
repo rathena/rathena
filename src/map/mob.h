@@ -251,7 +251,7 @@ void mob_clear_spawninfo();
 int do_init_mob(void);
 int do_final_mob(void);
 
-int mob_timer_delete(int tid, unsigned int tick, int id, int data);
+int mob_timer_delete(int tid, unsigned int tick, int id, intptr data);
 int mob_deleteslave(struct mob_data *md);
 
 int mob_random_class (int *value, size_t count);

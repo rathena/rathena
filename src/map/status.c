@@ -6714,7 +6714,7 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 	return 1;
 }
 
-int kaahi_heal_timer(int tid, unsigned int tick, int id, int data)
+int kaahi_heal_timer(int tid, unsigned int tick, int id, intptr data)
 {
 	struct block_list *bl;
 	struct status_change *sc;
@@ -6751,7 +6751,7 @@ int kaahi_heal_timer(int tid, unsigned int tick, int id, int data)
 /*==========================================
  * ステータス異常終了タイマー
  *------------------------------------------*/
-int status_change_timer(int tid, unsigned int tick, int id, int data)
+int status_change_timer(int tid, unsigned int tick, int id, intptr data)
 {
 	enum sc_type type = (sc_type)data;
 	struct block_list *bl;
@@ -7426,7 +7426,7 @@ static int status_natural_heal(DBKey key,void * data,va_list ap)
 }
 
 //Natural heal main timer.
-static int status_natural_heal_timer(int tid,unsigned int tick,int id,int data)
+static int status_natural_heal_timer(int tid, unsigned int tick, int id, intptr data)
 {
 	natural_heal_diff_tick = DIFF_TICK(tick,natural_heal_prev_tick);
 	map_foreachiddb(status_natural_heal);

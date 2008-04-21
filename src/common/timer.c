@@ -239,7 +239,7 @@ static int acquire_timer(void)
 
 /// Starts a new timer that is deleted once it expires (single-use).
 /// Returns the timer's id.
-int add_timer(unsigned int tick, TimerFunc func, int id, int data)
+int add_timer(unsigned int tick, TimerFunc func, int id, intptr data)
 {
 	int tid;
 	
@@ -257,7 +257,7 @@ int add_timer(unsigned int tick, TimerFunc func, int id, int data)
 
 /// Starts a new timer that automatically restarts itself (infinite loop until manually removed).
 /// Returns the timer's id, or -1 if it fails.
-int add_timer_interval(unsigned int tick, TimerFunc func, int id, int data, int interval)
+int add_timer_interval(unsigned int tick, TimerFunc func, int id, intptr data, int interval)
 {
 	int tid;
 

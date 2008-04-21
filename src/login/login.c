@@ -104,7 +104,7 @@ struct online_login_data {
 };
 
 static DBMap* online_db; // int account_id -> struct online_login_data*
-static int waiting_disconnect_timer(int tid, unsigned int tick, int id, int data);
+static int waiting_disconnect_timer(int tid, unsigned int tick, int id, intptr data);
 
 static void* create_online_user(DBKey key, va_list args)
 {
@@ -145,7 +145,7 @@ void remove_online_user(int account_id)
 	idb_remove(online_db, account_id);
 }
 
-static int waiting_disconnect_timer(int tid, unsigned int tick, int id, int data)
+static int waiting_disconnect_timer(int tid, unsigned int tick, int id, intptr data)
 {
 	struct online_login_data* p = (struct online_login_data*)idb_get(online_db, id);
 	if( p != NULL && p->waiting_disconnect == tid && p->account_id == id )
@@ -723,7 +723,7 @@ void mmo_auth_sync(void)
 //       immediatly and set  the minimum of
 //       authentications to its initialization value.
 //-----------------------------------------------------
-int check_auth_sync(int tid, unsigned int tick, int id, int data)
+int check_auth_sync(int tid, unsigned int tick, int id, intptr data)
 {
 	// we only save if necessary:
 	// we have do some authentications without do saving
@@ -737,7 +737,7 @@ int check_auth_sync(int tid, unsigned int tick, int id, int data)
 //-----------------------------------------------------
 // periodic ip address synchronization
 //-----------------------------------------------------
-static int sync_ip_addresses(int tid, unsigned int tick, int id, int data)
+static int sync_ip_addresses(int tid, unsigned int tick, int id, intptr data)
 {
 	uint8 buf[2];
 	ShowInfo("IP Sync in progress...\n");
@@ -784,7 +784,7 @@ void send_GM_accounts(int fd)
 //-----------------------------------------------------
 // Check if GM file account have been changed
 //-----------------------------------------------------
-int check_GM_file(int tid, unsigned int tick, int id, int data)
+int check_GM_file(int tid, unsigned int tick, int id, intptr data)
 {
 	struct stat file_stat;
 	long new_time;
@@ -2032,7 +2032,7 @@ static int online_data_cleanup_sub(DBKey key, void *data, va_list ap)
 	return 0;
 }
 
-static int online_data_cleanup(int tid, unsigned int tick, int id, int data)
+static int online_data_cleanup(int tid, unsigned int tick, int id, intptr data)
 {
 	online_db->foreach(online_db, online_data_cleanup_sub);
 	return 0;

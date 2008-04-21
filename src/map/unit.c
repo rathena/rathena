@@ -46,8 +46,8 @@ struct unit_data* unit_bl2ud(struct block_list *bl)
 	return NULL;
 }
 
-static int unit_attack_timer(int tid,unsigned int tick,int id,int data);
-static int unit_walktoxy_timer(int tid,unsigned int tick,int id,int data);
+static int unit_attack_timer(int tid, unsigned int tick, int id, intptr data);
+static int unit_walktoxy_timer(int tid, unsigned int tick, int id, intptr data);
 
 int unit_walktoxy_sub(struct block_list *bl)
 {
@@ -101,7 +101,7 @@ int unit_walktoxy_sub(struct block_list *bl)
 	return 1;
 }
 
-static int unit_walktoxy_timer(int tid,unsigned int tick,int id,int data)
+static int unit_walktoxy_timer(int tid, unsigned int tick, int id, intptr data)
 {
 	int i;
 	int x,y,dx,dy;
@@ -254,13 +254,13 @@ static int unit_walktoxy_timer(int tid,unsigned int tick,int id,int data)
 	return 0;
 }
 
-static int unit_delay_walktoxy_timer(int tid, unsigned int tick, int id, int data)
+static int unit_delay_walktoxy_timer(int tid, unsigned int tick, int id, intptr data)
 {
 	struct block_list *bl = map_id2bl(id);
 
 	if (!bl || bl->prev == NULL)
 		return 0;
-	unit_walktoxy(bl, data>>16, data&0xffff, 0);
+	unit_walktoxy(bl, (short)((data>>16)&0xffff), (short)(data&0xffff), 0);
 	return 1;
 }
 
@@ -318,7 +318,7 @@ int unit_walktoxy( struct block_list *bl, short x, short y, int flag)
 	if((bl)->type == BL_MOB && (flag)) \
 		((TBL_MOB*)(bl))->state.skillstate = ((TBL_MOB*)(bl))->state.aggressive?MSS_FOLLOW:MSS_RUSH;
 
-static int unit_walktobl_sub(int tid,unsigned int tick,int id,int data)
+static int unit_walktobl_sub(int tid, unsigned int tick, int id, intptr data)
 {
 	struct block_list *bl = map_id2bl(id);
 	struct unit_data *ud = bl?unit_bl2ud(bl):NULL;
@@ -762,7 +762,7 @@ int unit_can_move(struct block_list *bl)
  * Resume running after a walk delay
  *------------------------------------------*/
 
-int unit_resume_running(int tid,unsigned int tick,int id,int data)
+int unit_resume_running(int tid, unsigned int tick, int id, intptr data)
 {
 
 	struct unit_data *ud = (struct unit_data *)data;
@@ -1192,7 +1192,7 @@ int unit_skilluse_pos2( struct block_list *src, short skill_x, short skill_y, sh
 	return 1;
 }
 
-static int unit_attack_timer(int tid,unsigned int tick,int id,int data);
+static int unit_attack_timer(int tid, unsigned int tick, int id, intptr data);
 
 int unit_stop_attack(struct block_list *bl)
 {
@@ -1476,7 +1476,7 @@ static int unit_attack_timer_sub(struct block_list* src, int tid, unsigned int t
 	return 1;
 }
 
-static int unit_attack_timer(int tid,unsigned int tick,int id,int data)
+static int unit_attack_timer(int tid, unsigned int tick, int id, intptr data)
 {
 	struct block_list *bl;
 	bl = map_id2bl(id);

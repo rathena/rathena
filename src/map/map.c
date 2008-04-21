@@ -250,7 +250,7 @@ int map_freeblock_unlock (void)
 // この関数は、do_timer() のトップレベルから呼ばれるので、
 // block_free_lock を直接いじっても支障無いはず。
 
-int map_freeblock_timer (int tid, unsigned int tick, int id, int data)
+int map_freeblock_timer(int tid, unsigned int tick, int id, intptr data)
 {
 	if (block_free_lock > 0) {
 		ShowError("map_freeblock_timer: block_free_lock(%d) is invalid.\n", block_free_lock);
@@ -1249,7 +1249,7 @@ void map_foreachobject(int (*func)(struct block_list*,va_list),int type,...)
  * 後者は、map_clearflooritem(id)へ
  * map.h?で#defineしてある
  *------------------------------------------*/
-int map_clearflooritem_timer(int tid,unsigned int tick,int id,int data)
+int map_clearflooritem_timer(int tid, unsigned int tick, int id, intptr data)
 {
 	struct flooritem_data *fitem=NULL;
 
@@ -1996,7 +1996,7 @@ int map_removemobs_sub(struct block_list *bl, va_list ap)
 	return 1;
 }
 
-int map_removemobs_timer(int tid, unsigned int tick, int id, int data)
+int map_removemobs_timer(int tid, unsigned int tick, int id, intptr data)
 {
 	int count;
 	const int m = id;
@@ -2960,7 +2960,7 @@ int log_sql_init(void)
 /*=============================================
  * Does a mysql_ping to all connection handles
  *---------------------------------------------*/
-int map_sql_ping(int tid, unsigned int tick, int id, int data) 
+int map_sql_ping(int tid, unsigned int tick, int id, intptr data) 
 {
 	ShowInfo("Pinging SQL server to keep connection alive...\n");
 	Sql_Ping(mmysql_handle);

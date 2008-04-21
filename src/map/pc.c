@@ -115,7 +115,7 @@ int pc_set_gm_level(int account_id, int level)
 	return 0;
 }
 
-static int pc_invincible_timer(int tid,unsigned int tick,int id,int data)
+static int pc_invincible_timer(int tid, unsigned int tick, int id, intptr data)
 {
 	struct map_session_data *sd;
 
@@ -153,7 +153,7 @@ void pc_delinvincibletimer(struct map_session_data* sd)
 	}
 }
 
-static int pc_spiritball_timer(int tid,unsigned int tick,int id,int data)
+static int pc_spiritball_timer(int tid, unsigned int tick, int id, intptr data)
 {
 	struct map_session_data *sd;
 
@@ -4124,7 +4124,7 @@ char* job_name(int class_)
 	}
 }
 
-int pc_follow_timer(int tid,unsigned int tick,int id,int data)
+int pc_follow_timer(int tid, unsigned int tick, int id, intptr data)
 {
 	struct map_session_data *sd;
 	struct block_list *tbl;
@@ -4912,7 +4912,7 @@ void pc_respawn(struct map_session_data* sd, uint8 clrtype)
 		clif_resurrection(&sd->bl, 1); //If warping fails, send a normal stand up packet.
 }
 
-static int pc_respawn_timer(int tid,unsigned int tick,int id,int data)
+static int pc_respawn_timer(int tid, unsigned int tick, int id, intptr data)
 {
 	struct map_session_data *sd = map_id2sd(id);
 	if( sd != NULL )
@@ -6231,7 +6231,7 @@ int pc_setregistry_str(struct map_session_data *sd,char *reg,const char *val,int
 /*==========================================
  * イベントタイマ??理
  *------------------------------------------*/
-static int pc_eventtimer(int tid,unsigned int tick,int id,int data)
+static int pc_eventtimer(int tid, unsigned int tick, int id, intptr data)
 {
 	struct map_session_data *sd=map_id2sd(id);
 	char *p = (char *)data;
@@ -6721,7 +6721,7 @@ int pc_calc_pvprank(struct map_session_data *sd)
 /*==========================================
  * PVP順位計算(timer)
  *------------------------------------------*/
-int pc_calc_pvprank_timer(int tid,unsigned int tick,int id,int data)
+int pc_calc_pvprank_timer(int tid, unsigned int tick, int id, intptr data)
 {
 	struct map_session_data *sd=NULL;
 
@@ -6917,7 +6917,7 @@ int pc_setsavepoint(struct map_session_data *sd, short mapindex,int x,int y)
 /*==========================================
  * 自動セ?ブ (timer??)
  *------------------------------------------*/
-int pc_autosave(int tid,unsigned int tick,int id,int data)
+int pc_autosave(int tid, unsigned int tick, int id, intptr data)
 {
 	int interval;
 	struct s_mapiterator* iter;
@@ -6985,7 +6985,7 @@ static int pc_daynight_timer_sub(struct map_session_data *sd,va_list ap)
  * timer to do the day [Yor]
  * data: 0 = called by timer, 1 = gmcommand/script
  *------------------------------------------------*/
-int map_day_timer(int tid, unsigned int tick, int id, int data)
+int map_day_timer(int tid, unsigned int tick, int id, intptr data)
 {
 	char tmp_soutput[1024];
 
@@ -7006,7 +7006,7 @@ int map_day_timer(int tid, unsigned int tick, int id, int data)
  * timer to do the night [Yor]
  * data: 0 = called by timer, 1 = gmcommand/script
  *------------------------------------------------*/
-int map_night_timer(int tid, unsigned int tick, int id, int data)
+int map_night_timer(int tid, unsigned int tick, int id, intptr data)
 {
 	char tmp_soutput[1024];
 

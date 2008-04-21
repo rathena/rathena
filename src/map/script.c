@@ -3013,7 +3013,7 @@ struct linkdb_node* script_erase_sleepdb(struct linkdb_node *n)
 /*==========================================
  * sleep用タイマー関数
  *------------------------------------------*/
-int run_script_timer(int tid, unsigned int tick, int id, int data)
+int run_script_timer(int tid, unsigned int tick, int id, intptr data)
 {
 	struct script_state *st     = (struct script_state *)data;
 	struct linkdb_node *node    = (struct linkdb_node *)sleep_db;
@@ -3453,7 +3453,7 @@ static int script_save_mapreg(void)
 	mapreg_dirty=0;
 	return 0;
 }
-static int script_autosave_mapreg(int tid,unsigned int tick,int id,int data)
+static int script_autosave_mapreg(int tid, unsigned int tick, int id, intptr data)
 {
 	if(mapreg_dirty)
 		if (script_save_mapreg() == -1)

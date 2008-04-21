@@ -249,8 +249,8 @@ const char*	skill_get_name( int id ); 	// [Skotlex]
 const char*	skill_get_desc( int id ); 	// [Skotlex]
 
 int skill_isammotype(struct map_session_data *sd, int skill);
-int skill_castend_id( int tid, unsigned int tick, int id,int data );
-int skill_castend_pos( int tid, unsigned int tick, int id,int data );
+int skill_castend_id(int tid, unsigned int tick, int id, intptr data);
+int skill_castend_pos(int tid, unsigned int tick, int id, intptr data);
 int skill_castend_map( struct map_session_data *sd,short skill_num, const char *map);
 
 int skill_cleartimerskill(struct block_list *src);
