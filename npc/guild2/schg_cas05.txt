@@ -3,13 +3,14 @@
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
-//= 1.0
+//= 1.1
 //===== Compatible With: =====================================
 //= eAthena SVN
 //===== Description: =========================================
 //= WoE SE Schwaltzvalt Castle 5
 //===== Additional Comments: =================================
 //= 1.0 First Version [L0ne_W0lf]
+//= 1.1 Swaped an end for a close in eco investing. [L0ne_W0lf]
 //============================================================
 
 schg_cas05,1,1,0	script	Manager#sch05_02	111,{
@@ -2359,7 +2360,7 @@ schg_cas05,247,305,3	script	Steward#sch05	55,{
 				mes "you do not have enough";
 				mes "zeny to make an investment";
 				mes "for the guild today.";
-				end;
+				close;
 			}
 			set zeny,zeny-.@eco_invest;
 			SetCastleData "schg_cas05",4,GetCastleData("schg_cas05",4)+1;

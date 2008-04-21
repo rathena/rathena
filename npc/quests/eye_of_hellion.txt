@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= MasterOfMuppets
 //===== Current Version: =====================================
-//= 1.5
+//= 1.6
 //===== Compatible With: =====================================
 //= eAthena SVN
 //===== Description: =========================================
@@ -17,6 +17,7 @@
 //= 1.5 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
 //=	Tracking variable is not backwards compatable meaning
 //=     you can again repeat this quest from the start.
+//= 1.6 Fixed issue with #prt_key-1-1. [L0ne_W0lf]
 //============================================================
 
 morocc_in,116,101,3	script	Old Scholar Tyus#hellion	735,3,3,{
@@ -1094,7 +1095,7 @@ prontera,223,82,0	script	#prt_key-1	111,{
 	close;
 }
 
-prontera,45,67,0	script	 #prt_key-1-1	-1,1,1,{
+prontera,45,67,0	script	 #prt_key-1-1	139,1,1,{
 OnTouch:
 	if (HELLIONQ == 40 || HELLIONQ == 41) {
 		mes "[" + strcharinfo(0) + "]";

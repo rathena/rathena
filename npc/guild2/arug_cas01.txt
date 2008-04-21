@@ -3,13 +3,15 @@
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
-//= 1.0
+//= 1.1
 //===== Compatible With: =====================================
 //= eAthena SVN
 //===== Description: =========================================
 //= WoE SE Arunafeltz Castle 1
 //===== Additional Comments: =================================
 //= 1.0 First Version [L0ne_W0lf]
+//= 1.1 Swaped an end for a close in eco investing. [L0ne_W0lf]
+//-	Fixed improper label used in guaridan stone.
 //============================================================
 
 arug_cas01,1,1,0	script	Manager#aru01_02	111,{
@@ -541,11 +543,11 @@ Onreset:
 
 arug_cas01,1,3,0	script	#aru01_df01	-1,{
 OnEnable:
-	guardian "arug_cas01",210,234,"1st Guardian Stone",1907,"#aru01_df01::OnGuardianDied"; //22;
+	guardian "arug_cas01",210,234,"1st Guardian Stone",1907,"#aru01_df01::OnGuardianStoneDied"; //22;
 	end;
 
 OnDisable:
-	killmonster "arug_cas01","#aru01_df01::OnGuardianDied";
+	killmonster "arug_cas01","#aru01_df01::OnGuardianStoneDied";
 	setarray $agit_ar01[0],1; //Global Variable
 	stopnpctimer;
 	end;
@@ -2355,7 +2357,7 @@ arug_cas01,92,380,3	script	Steward#aru01	55,{
 				mes "you do not have enough";
 				mes "zeny to make an investment";
 				mes "for the guild today.";
-				end;
+				close;
 			}
 			set zeny,zeny-.@eco_invest;
 			SetCastleData "arug_cas01",4,GetCastleData("arug_cas01",4)+1;
