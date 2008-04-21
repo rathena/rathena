@@ -8506,17 +8506,7 @@ BUILDIN_FUNC(changesex)
 	TBL_PC *sd = NULL;
 	sd = script_rid2sd(st);
 
-	if (sd->status.sex == 0) {
-		sd->status.sex = 1;
-		if ((sd->class_&MAPID_UPPERMASK) == MAPID_BARDDANCER)
-			sd->status.class_ -= 1;
-	} else if (sd->status.sex == 1) {
-		sd->status.sex = 0;
-		if ((sd->class_&MAPID_UPPERMASK) == MAPID_BARDDANCER)
-			sd->status.class_ += 1;
-	}
-	chrif_char_ask_name(-1, sd->status.name, 5, 0, 0, 0, 0, 0, 0); // type: 5 - changesex
-	chrif_save(sd,0);
+	chrif_changesex(sd);
 	return 0;
 }
 

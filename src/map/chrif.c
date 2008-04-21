@@ -786,7 +786,11 @@ int chrif_changesex(struct map_session_data *sd)
 	WFIFOSET(char_fd,44);
 
 	clif_displaymessage(sd->fd, "Need disconnection to perform change-sex request...");
-	map_quit(sd);
+
+	if (sd->fd)
+		clif_authfail_fd(sd->fd, 15);
+	else
+		map_quit(sd);
 	return 0;
 }
 

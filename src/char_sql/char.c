@@ -2599,7 +2599,7 @@ int parse_frommap(int fd)
 			Sql_FreeResult(sql_handle);
 
 			// send answer if a player ask, not if the server ask
-			if( acc != -1 ) {
+			if( acc != -1 && type != 5) { // Don't send answer for changesex
 				WFIFOHEAD(fd,34);
 				WFIFOW(fd, 0) = 0x2b0f;
 				WFIFOL(fd, 2) = acc;
