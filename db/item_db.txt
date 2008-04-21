@@ -2013,7 +2013,7 @@
 5132,Angeling_Hat,Angeling Hat,5,20,,700,,2,,0,0xFFFFFFFF,7,2,256,,0,0,204,{ bonus2 bSubRace,RC_DemiHuman,10; },{},{}
 5133,Sheep_Hat,Sheep Hat,5,20,,150,,1,,0,0x00008110,7,2,256,,0,0,205,{ bonus bShortWeaponDamageReturn,5; },{},{}
 5134,Pumpkin_Hat,Pumpkin-Head,5,20,,200,,2,,0,0xFFFFFFFF,7,2,256,,0,1,206,{},{},{}
-5135,Cyclops_Visor,Cyclop's Eye,5,0,,200,,0,,0,0xFFFFFFFE,7,0,512,,75,0,207,{ bonus bMaxSP,50; },{},{}
+5135,Cyclops_Visor,Cyclop's Eye,5,0,,200,,0,,0,0xFFFFFFFE,7,2,512,,75,0,207,{ bonus bMaxSP,50; },{},{}
 5136,Santa's_Hat_,Louise's Santa Hat,5,20,,100,,3,,0,0xFFFFFFFF,7,2,256,,0,1,20,{ bonus bMdef,1; bonus bLuk,1; bonus3 bAutoSpellWhenHit,75,5,50; bonus3 bAutoSpellWhenHit,34,10,50; },{},{}
 5137,Alice_Doll,Alice Doll,5,20,,500,,0,,1,0xFFFFFFFE,7,2,256,,30,0,208,{ bonus bStr,1; bonus2 bAddRace,RC_DemiHuman,10; bonus2 bAddEff2,Eff_Sleep,10; },{},{}
 5138,Magic_Eyes,Magic Eyes,5,20,,300,,1,,0,0x00810204,7,2,256,,30,1,209,{ bonus bMdef,5; bonus bCastrate,-10; bonus bUseSPrate,20; },{},{}
@@ -2076,7 +2076,7 @@
 5195,Ribbon_Red,Red Ribbon,5,800,,100,,1,,1,0xFFFFFFFF,7,0,256,,0,1,246,{ bonus bMdef,3; },{},{}
 5196,Ribbon_Orange,Orange Ribbon,5,800,,100,,1,,1,0xFFFFFFFF,7,0,256,,0,1,247,{ bonus bMdef,3; },{},{}
 5197,Ribbon_White,White Ribbon,5,800,,100,,1,,1,0xFFFFFFFF,7,0,256,,0,1,248,{ bonus bMdef,3; },{},{}
-5198,Drooping_Bunny,Drooping Bunny,5,10,,100,,1,,0,0xFFFFFFFF,7,0,256,,0,1,249,{ bonus bDex,1; bonus bFlee,2; },{},{}
+5198,Drooping_Bunny,Drooping Bunny,5,10,,100,,1,,0,0xFFFFFFFF,7,2,256,,0,1,249,{ bonus bDex,1; bonus bFlee,2; },{},{}
 5199,Baseball_Cap_I,Baseball Cap,5,0,,200,,3,,0,0xFFFFFFFF,7,2,256,,0,1,216,{},{},{}
 5200,Coppola,Coppola,5,10,,300,,0,,0,0xFFFFFFFF,7,2,256,,0,1,252,{},{},{}
 5201,Party_Hat_B,2nd Anniversary Party Hat,5,20,,300,,3,,0,0xFFFFFFFF,7,2,256,,0,1,144,{ end; bonus bAllStats,3; },{},{}
@@ -3778,7 +3778,7 @@
 13566,Weapon_Card_Pet_Egg_Scroll3,Weapon Card Pet Egg Scroll,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 13567,Armor_Card_Pet_Egg_Scroll2,Armor Card Pet Egg Scroll,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 13568,Accy_Card_Pet_Egg_Scroll2,Accy Card Pet Egg Scroll,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-13569,PVP_Tle_Scroll_Box,PVP Mobile Scroll Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14528,1; },{},{}
+13569,PVP_Tele_Scroll_Box,PVP Mobile Scroll Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14528,1; },{},{}
 13570,Giant_Fly_Wing_Box50,Giant Fly Wing 50ea Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 12212,50; },{},{}
 13571,Giant_Fly_Wing_Box100,Giant Fly Wing 100ea Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 12212,100; },{},{}
 13572,Dex_DIsh_Box30,Hwergelmir's Tonic 30ea Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 12205,30; },{},{}
@@ -4096,9 +4096,9 @@
 13892,Water_Converter_Box,Water Converter Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 12115,10; },{},{}
 13893,Wind_Converter_Box,Wind Converter Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 12117,10; },{},{}
 13894,Earth_Converter_Box,Earth Converter Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 12116,10; },{},{}
-13902,Fish_Head_Box,Chick Hat Box,2,,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 5380,1; },{},{}
-13903,Santa_Poring_Box,Chick Hat Box,2,,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 5381,1; },{},{}
-13904,Bell_Ribbon_Box,Chick Hat Box,2,,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 5382,1; },{},{}
+13902,Fish_Head_Box,Fish Head Box,2,,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 5380,1; },{},{}
+13903,Santa_Poring_Box,Santa Poring Box,2,,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 5381,1; },{},{}
+13904,Bell_Ribbon_Box,Bell Ribbon Box,2,,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 5382,1; },{},{}
 14508,Zeny_Pet_Egg_Scroll,Zeny Pet Egg Scroll,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 14509,Light_Center_Pot,Light Concentration Potion,2,,,20,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_ASPDPOTION0,1800000,0; },{},{}
 14510,Light_Awakening_Pot,Light Awakening Potion,2,,,20,,,,,0xFFF7FEEF,7,2,,,40,,,{ sc_start SC_ASPDPOTION1,1800000,0; },{},{}
@@ -4121,7 +4121,7 @@
 14527,Dun_Tele_Scroll1,Dungeon Teleport Scroll,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ callfunc "F_CashDungeon"; },{},{}
 14528,PVP_Tele_Scroll,PVP Teleport Scroll,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 14529,Greed_Scroll,Greed Scroll,11,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 1013,1; },{},{}
-14530,FLee_30_Scroll,Evasion Scroll,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_INCFLEE,1800000,30; },{},{}
+14530,Flee_30_Scroll,Evasion Scroll,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_INCFLEE,1800000,30; },{},{}
 14531,Accuracy_30_Scroll,Concentration Power Scroll,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_INCHIT,1800000,30; },{},{}
 14532,Battle_Manual25,Field Manual 25%,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_EXPBOOST,1800000,25; },{},{}
 14533,Battle_Manual100,Field Manual 100%,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_EXPBOOST,1800000,100; },{},{}
