@@ -13,6 +13,7 @@
 //= 1.1 Swaped an end for a close in eco investing. [L0ne_W0lf]
 //= 1.2 Fixed 3rd Control Device wasting supplies. [L0ne_W0lf]
 //=	Also fixed donpcevent calling wrong NPC.
+//= 1.2a Fixed another donpcevent calling the wrong NPC. [L0ne_W0lf]
 //============================================================
 
 schg_cas03,1,1,0	script	manager#sch03_02	111,{
@@ -538,7 +539,7 @@ OnGuardianDied:
 
 Onreset:
 	stopnpctimer;
-	killmonster "schg_cas03","#sch02_gard03::OnGuardianDied";
+	killmonster "schg_cas03","#sch03_gard03::OnGuardianDied";
 	end;
 }
 
