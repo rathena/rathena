@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
-//= 1.3
+//= 1.4
 //===== Compatible With: =====================================
 //= eAthena SVN
 //===== Description: =========================================
@@ -13,6 +13,7 @@
 //= 1.1 Fixed setcell range of first barricade. [L0ne_W0lf]
 //= 1.2 Fixed first Barricade being desotryable. [L0ne_W0lf]
 //= 1.3 Swaped an end for a close in eco investing. [L0ne_W0lf]
+//= 1.4 Fixed 3rd Control Device wasting supplies. [L0ne_W0lf]
 //============================================================
 
 schg_cas02,1,1,0	script	Manager#sch02_02	111,{
@@ -1925,7 +1926,7 @@ schg_cas02,159,143,0	script	Control Device03#sch02	111,{
 							delitem 999,10; //Steel
 							delitem 1011,10; //Emveretarcon
 							delitem 984,5; //Oridecon
-							close;
+							close2;
 							donpcevent "#sch02_RL03::OnEnable";
 							disablenpc "Control Device03#sch02";
 							mapannounce "schg_cas02","The 3rd Fortress Gate has been reconstructed!!",bc_map,"0x00ff00";

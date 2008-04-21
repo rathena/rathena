@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
-//= 1.1
+//= 1.2
 //===== Compatible With: =====================================
 //= eAthena SVN
 //===== Description: =========================================
@@ -11,6 +11,8 @@
 //===== Additional Comments: =================================
 //= 1.0 First Version [L0ne_W0lf]
 //= 1.1 Swaped an end for a close in eco investing. [L0ne_W0lf]
+//= 1.2 Fixed 3rd Control Device wasting supplies. [L0ne_W0lf]
+//=	Also fixed donpcevent calling wrong NPC.
 //============================================================
 
 schg_cas03,1,1,0	script	manager#sch03_02	111,{
@@ -1922,7 +1924,7 @@ schg_cas03,273,205,0	script	control device03#sch03	111,{
 							delitem 999,10; //Steel
 							delitem 1011,10; //Emveretarcon
 							delitem 984,5; //Oridecon
-							close;
+							close2;
 							donpcevent "#sch03_RL03::OnEnable";
 							disablenpc "control device03#sch03";
 							mapannounce "schg_cas03","The 3rd Fortress Gate has been reconstructed!",bc_map,"0x00ff00";
@@ -2626,23 +2628,23 @@ OnStartArena:
 	set .msg,2;
 	if (.msg == 1) {
 		announce "Fortress [" + GetCastleName("schg_cas03") + "]'s 'Nithafjoll' was captured by [" + getguildname(.@gid) + "] Guild.",bc_all;
-		donpcevent "Manager#sch01_02::Onstart";
+		donpcevent "Manager#sch03_02::Onstart";
 	}
 	else if (.msg == 2) {
 		announce "The [" + getguildname(.@gid) + "] conquered the [Nithafjoll 3] stronghold of "+GetCastleName("schg_cas03"),bc_all;
 		mapannounce "schg_cas03","The emperium has been shattered!",bc_map,"0x00FF00";
 		if (agitcheck()) {
-			donpcevent "Manager#sch01_02::Onreset";
+			donpcevent "Manager#sch03_02::Onreset";
 			initnpctimer;
 		}
 		else {
-			donpcevent "Manager#sch01_02::Onreset";
+			donpcevent "Manager#sch03_02::Onreset";
 			stopnpctimer;
 		}
 	}
 	else if (.msg == 0) {
 		announce "Fortress [" + GetCastleName("schg_cas03") + "]'s 'Nithafjoll' was captured by [" + getguildname(.@gid) + "] Guild.",bc_all;
-		donpcevent "Manager#sch01_02::Onreset";
+		donpcevent "Manager#sch03_02::Onreset";
 		stopnpctimer;
 		end;
 	}

@@ -1,6 +1,7 @@
 Date		Added
 ======
 2008/04/21
+	* Rev. 12627 Fixes to WoE SE Juno castles 1, 2, and 3. (copy/paste issues) [L0ne_W0lf]
 	* Rev. 12624 Fixed bugreport:1390, bugreport:1394, bugreport:1396. [L0ne_W0lf]
 2008/04/15
 	* Rev. 12602 Rescripted Eye of Hellion quest, all quest progress is lost. [L0ne_W0lf]

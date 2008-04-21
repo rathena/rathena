@@ -11,6 +11,7 @@
 //===== Additional Comments: =================================
 //= 1.0 First Version [L0ne_W0lf]
 //= 1.1 Swaped an end for a close in eco investing. [L0ne_W0lf]
+//= 1.2 Fixed take-over lowering schg_cas04's eco. [L0ne_W0lf]
 //============================================================
 
 schg_cas01,1,1,0	script	Manager#sch01_02	111,{
@@ -2620,7 +2621,7 @@ OnStartArena:
 	// Lower castle Economy
 	set .@Economy,GetCastleData("schg_cas01",2) - 5;
 	if (.@Economy < 0) set .@Economy, 0;
-	SetCastleData "schg_cas04", 2, .@Economy;
+	SetCastleData "schg_cas01", 2, .@Economy;
 	// Lower Castle Defence
 	set .@Defence,GetCastleData("schg_cas01",3) - 5;
 	if (.@Defence < 0) set .@Defence, 0;
