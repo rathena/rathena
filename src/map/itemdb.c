@@ -1018,7 +1018,17 @@ static int itemdb_final_sub(DBKey key,void *data,va_list ap)
 
 void itemdb_reload(void)
 {
-	//Just read, the function takes care of freeing scripts.
+
+	int i;
+
+	for( i = 0; i < ARRAYLENGTH(itemdb_array); ++i )
+		if( itemdb_array[i] )
+			destroy_item_data(itemdb_array[i], 1);
+
+	itemdb_other->clear(itemdb_other, itemdb_final_sub);
+
+	memset(itemdb_array, 0, sizeof(itemdb_array));
+
 	itemdb_read();
 }
 
