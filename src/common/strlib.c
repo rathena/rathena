@@ -829,7 +829,7 @@ bool sv_readdb(const char* directory, const char* filename, char delim, int minc
 			continue;
 		//TODO: strip trailing // comment
 		//TODO: strip trailing whitespace
-		if( line[0] == '\0' || line[0] == '\n' )
+		if( line[0] == '\0' || line[0] == '\n' || line[0] == '\r')
 			continue;
 
 		columns = sv_split(line, strlen(line), 0, delim, fields, ARRAYLENGTH(fields), (e_svopt)(SV_TERMINATE_LF|SV_TERMINATE_CRLF));
