@@ -118,8 +118,7 @@ enum script_parse_options {
 };
 
 const char* skip_space(const char* p);
-const char* script_print_line(const char* p, const char* mark, int line);
-void script_error(const char *src,const char *file,int start_line, const char *error_msg, const char *error_pos);
+void script_error(const char* src, const char* file, int start_line, const char* error_msg, const char* error_pos);
 
 struct script_code* parse_script(const char* src,const char* file,int line,int options);
 void run_script_sub(struct script_code *rootscript,int pos,int rid,int oid, char* file, int lineno);

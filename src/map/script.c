@@ -1828,31 +1828,32 @@ static void read_constdb(void)
 /*==========================================
  * エラー表示
  *------------------------------------------*/
-const char* script_print_line( const char *p, const char *mark, int line )
+static const char* script_print_line(StringBuf* buf, const char* p, const char* mark, int line)
 {
 	int i;
 	if( p == NULL || !p[0] ) return NULL;
 	if( line < 0 ) 
-		ShowMessage("*% 5d : ", -line);
+		StringBuf_Printf(buf, "*% 5d : ", -line);
 	else
-		ShowMessage(" % 5d : ", line);
+		StringBuf_Printf(buf, " % 5d : ", line);
 	for(i=0;p[i] && p[i] != '\n';i++){
 		if(p + i != mark)
-			ShowMessage("%c",p[i]);
+			StringBuf_Printf(buf, "%c", p[i]);
 		else
-			ShowMessage("\'%c\'",p[i]);
+			StringBuf_Printf(buf, "\'%c\'", p[i]);
 	}
-	ShowMessage("\n");
+	StringBuf_AppendStr(buf, "\n");
 	return p+i+(p[i] == '\n' ? 1 : 0);
 }
 
-void script_error(const char *src,const char *file,int start_line, const char *error_msg, const char *error_pos)
+void script_error(const char* src, const char* file, int start_line, const char* error_msg, const char* error_pos)
 {
 	// エラーが発生した行を求める
 	int j;
 	int line = start_line;
 	const char *p;
 	const char *linestart[5] = { NULL, NULL, NULL, NULL, NULL };
+	StringBuf buf;
 
 	for(p=src;p && *p;line++){
 		const char *lineend=strchr(p,'\n');
@@ -1866,16 +1867,19 @@ void script_error(const char *src,const char *file,int start_line, const char *e
 		p=lineend+1;
 	}
 
-	ShowMessage("\a\n");
-	ShowMessage("script error on %s line %d\n", file, line);
-	ShowMessage("    %s\n", error_msg);
+	StringBuf_Init(&buf);
+	StringBuf_AppendStr(&buf, "\a\n");
+	StringBuf_Printf(&buf, "script error on %s line %d\n", file, line);
+	StringBuf_Printf(&buf, "    %s\n", error_msg);
 	for(j = 0; j < 5; j++ ) {
-		script_print_line( linestart[j], NULL, line + j - 5);
+		script_print_line(&buf, linestart[j], NULL, line + j - 5);
 	}
-	p = script_print_line( p, error_pos, -line);
+	p = script_print_line(&buf, p, error_pos, -line);
 	for(j = 0; j < 5; j++) {
-		p = script_print_line( p, NULL, line + j + 1 );
+		p = script_print_line(&buf, p, NULL, line + j + 1 );
 	}
+	ShowError("%s", StringBuf_Value(&buf));
+	StringBuf_Destroy(&buf);
 }
 
 /*==========================================
