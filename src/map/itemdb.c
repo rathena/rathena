@@ -689,7 +689,7 @@ static int itemdb_gendercheck(struct item_data *id)
 /*==========================================
  * processes one itemdb entry
  *------------------------------------------*/
-static bool itemdb_parse_dbrow(char** str, const char* source, int line, int scriptopt)
+static bool itemdb_parse_dbrow(char** str, const char* source, int line, int scriptopt, int db)
 {
 	/*
 		+----+--------------+---------------+------+-----------+------------+--------+--------+---------+-------+-------+------------+-------------+---------------+-----------------+--------------+-------------+------------+------+--------+--------------+----------------+
@@ -712,6 +712,9 @@ static bool itemdb_parse_dbrow(char** str, const char* source, int line, int scr
 	id = itemdb_load(nameid);
 	safestrncpy(id->name, str[1], sizeof(id->name));
 	safestrncpy(id->jname, str[2], sizeof(id->jname));
+
+	if(db == 1)
+		id->flag.db2 = 1;
 
 	id->type = atoi(str[3]);
 	if (id->type == IT_DELAYCONSUME)
@@ -900,8 +903,7 @@ static int itemdb_readdb(void)
 			}
 			str[21] = p;
 
-
-			if (!itemdb_parse_dbrow(str, path, lines, 0))
+			if (!itemdb_parse_dbrow(str, path, lines, 0, fi))
 				continue;
 
 			count++;
@@ -948,7 +950,7 @@ static int itemdb_read_sqldb(void)
 				if( str[i] == NULL ) str[i] = dummy; // get rid of NULL columns
 			}
 
-			if (!itemdb_parse_dbrow(str, item_db_name[fi], lines, SCRIPT_IGNORE_EXTERNAL_BRACKETS))
+			if (!itemdb_parse_dbrow(str, item_db_name[fi], lines, SCRIPT_IGNORE_EXTERNAL_BRACKETS, fi))
 				continue;
 			++count;
 		}
@@ -1016,6 +1018,16 @@ static int itemdb_final_sub(DBKey key,void *data,va_list ap)
 	return 0;
 }
 
+static int itemdb_reload_sub(DBKey key,void *data,va_list ap)
+{
+	struct item_data *id = (struct item_data *)data;
+
+	if( id != &dummy_item  && id->flag.db2)
+		destroy_item_data(id, 1);
+
+	return 0;
+}
+
 void itemdb_reload(void)
 {
 
@@ -1023,11 +1035,13 @@ void itemdb_reload(void)
 
 	for( i = 0; i < ARRAYLENGTH(itemdb_array); ++i )
 		if( itemdb_array[i] )
-			destroy_item_data(itemdb_array[i], 1);
+			if( itemdb_array[i]->flag.db2 )
+			{
+				destroy_item_data(itemdb_array[i], 1);
+				memset(itemdb_array[i], 0, sizeof(struct item_data));
+			}
 
-	itemdb_other->clear(itemdb_other, itemdb_final_sub);
-
-	memset(itemdb_array, 0, sizeof(itemdb_array));
+	itemdb_other->clear(itemdb_other, itemdb_reload_sub);
 
 	itemdb_read();
 }
