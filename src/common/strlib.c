@@ -740,20 +740,21 @@ size_t sv_unescape_c(char* out_dest, const char* src, size_t len)
 						ShowWarning("sv_unescape_c: hex escape sequence out of range\n");
 						inrange = 0;
 					}
-					c = (c<<8)|low2hex[(unsigned char)src[i++]];// hex digit
-				}while( i >= len || !ISXDIGIT(src[i]) );
+					c = (c<<4)|low2hex[(unsigned char)src[i]];// hex digit
+					++i;
+				}while( i < len && ISXDIGIT(src[i]) );
 				out_dest[j++] = (char)c;
 			}
 			else if( src[i] == '0' || src[i] == '1' || src[i] == '2' || src[i] == '3' )
 			{// octal escape sequence (255=0377)
 				unsigned char c = src[i]-'0';
 				++i;// '0', '1', '2' or '3'
-				if( i < len && src[i] >= '0' && src[i] <= '9' )
+				if( i < len && src[i] >= '0' && src[i] <= '7' )
 				{
 					c = (c<<3)|(src[i]-'0');
 					++i;// octal digit
 				}
-				if( i < len && src[i] >= '0' && src[i] <= '9' )
+				if( i < len && src[i] >= '0' && src[i] <= '7' )
 				{
 					c = (c<<3)|(src[i]-'0');
 					++i;// octal digit
@@ -763,7 +764,7 @@ size_t sv_unescape_c(char* out_dest, const char* src, size_t len)
 			else
 			{// other escape sequence
 				if( strchr(SV_ESCAPE_C_SUPPORTED, src[i]) == NULL )
-					ShowWarning("sv_parse: unknown escape sequence \\%c\n", src[i]);
+					ShowWarning("sv_unescape_c: unknown escape sequence \\%c\n", src[i]);
 				switch( src[i] )
 				{
 				case 'a': out_dest[j++] = '\a'; break;
@@ -785,6 +786,38 @@ size_t sv_unescape_c(char* out_dest, const char* src, size_t len)
 	out_dest[j] = 0;
 	return j;
 }
+
+/// Skips a C escape sequence (starting with '\\').
+const char* skip_escaped_c(const char* p)
+{
+	if( p && *p == '\\' )
+	{
+		++p;
+		switch( *p )
+		{
+		case 'x':// hexadecimal
+			++p;
+			while( ISXDIGIT(*p) )
+				++p;
+			break;
+		case '0':
+		case '1':
+		case '2':
+		case '3':// octal
+			++p;
+			if( *p >= '0' && *p <= '7' )
+				++p;
+			if( *p >= '0' && *p <= '7' )
+				++p;
+			break;
+		default:
+			if( *p && strchr(SV_ESCAPE_C_SUPPORTED, *p) )
+				++p;
+		}
+	}
+	return p;
+}
+
 
 /// Opens and parses a file containing delim-separated columns, feeding them to the specified callback function row by row.
 /// Tracks the progress of the operation (current line number, number of successfully processed rows).

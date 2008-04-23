@@ -4,6 +4,9 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2008/04/23
+	* Fixed script strings not being handled properly (only skipped the \).
+	* Added skip_escaped_c to strlib.c/h.
+	* Fixed sv_unescape_c not handling hex/octal escapes properly.
 	* Script parse errors displayed with one ShowError instead of several ShowMessage's. [FlavioJS]
 2008/04/22
 	* Changed itemdb_reload to clear the database before reloading, so it is possible

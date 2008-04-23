@@ -921,7 +921,16 @@ const char* parse_simpleexpr(const char *p)
 		p++;
 		while( *p && *p != '"' ){
 			if( (unsigned char)p[-1] <= 0x7e && *p == '\\' )
-				p++;
+			{
+				char buf[8];
+				size_t len = skip_escaped_c(p) - p;
+				size_t n = sv_unescape_c(buf, p, len);
+				if( n != 1 )
+					ShowDebug("parse_simpleexpr: unexpected length %d after unescape (\"%.*s\" -> %.*s)\n", (int)n, (int)len, p, (int)n, buf);
+				p += len;
+				add_scriptb(*buf);
+				continue;
+			}
 			else if( *p == '\n' )
 				disp_error_message("parse_simpleexpr: unexpected newline @ string",p);
 			add_scriptb(*p++);

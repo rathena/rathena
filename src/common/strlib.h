@@ -91,6 +91,9 @@ size_t sv_escape_c(char* out_dest, const char* src, size_t len, const char* esca
 /// out_dest should be len+1 in size and can be the same buffer as src.
 size_t sv_unescape_c(char* out_dest, const char* src, size_t len);
 
+/// Skips a C escape sequence (starting with '\\').
+const char* skip_escaped_c(const char* p);
+
 /// Opens and parses a file containing delim-separated columns, feeding them to the specified callback function row by row.
 /// Tracks the progress of the operation (current line number, number of successfully processed rows).
 /// Returns 'true' if it was able to process the specified file, or 'false' if it could not be read.
