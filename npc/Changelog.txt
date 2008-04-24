@@ -1,6 +1,7 @@
 Date		Added
 ======
-2008/04/22
+2008/04/24
+	* Rev. 12646 Fixed hugel_bingo making an unneeded infinite loop bugreport:1349 [Toms]
 	* Rev. 12645 Corrected a typo error ";;" bugreport:919 [Toms]
 2008/04/21
 	* Rev. 12629 Fixed yet another WoE SE Bug (Juno castle 3) [L0ne_W0lf]

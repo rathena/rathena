@@ -43,6 +43,8 @@
 	2385 Recuvative_Armor		Should trigger HP/SP return with magical kills as well.
 
 =======================
+2008/04/24
+	* Rev. 12646 Partially fixed bugreport:1285 (item 13697) [Toms]
 2008/04/21
 	* Rev. 12625 Further fixed bugreport:1371.  [L0ne_W0lf]
 2008/04/14

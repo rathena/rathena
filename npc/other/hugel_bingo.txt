@@ -192,13 +192,13 @@ OnTimer2000:
 OnTimer5000:
 	mapannounce "que_bingo","Eukran: Now, let the game begin!",1,0xFFAB54;
 	setarray $@bingoarray[0],1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25;
+	set .@max_index, 24;
 	for(set .@i,0; .@i < 25; set .@i,.@i +1)
 	{
-L_Roll:
-		set $@bingo0,rand(0,24);
-		setarray $bingo[.@i],$@bingoarray[$@bingo0];
-		if(!$bingo[.@i]) goto L_Roll;
-		cleararray $@bingoarray[$@bingo0],0,1;
+		set $@bingo0,rand(0,.@max_index);
+		set $bingo[.@i],$@bingoarray[$@bingo0];
+		set $@bingoarray[$@bingo0], $@bingoarray[.@max_index];
+		set .@max_index, .@max_index - 1;
 	}
 	end;
 	
