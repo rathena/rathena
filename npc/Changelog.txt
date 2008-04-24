@@ -1,5 +1,7 @@
 Date		Added
 ======
+2008/04/22
+	* Rev. 12645 Corrected a typo error ";;" bugreport:919 [Toms]
 2008/04/21
 	* Rev. 12629 Fixed yet another WoE SE Bug (Juno castle 3) [L0ne_W0lf]
 	* Rev. 12628 Fixed another WoE SE Bug. (wrong target for donpcevent) [L0ne_W0lf]

@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.4
+//= 1.4a
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -34,6 +34,7 @@
 //= 1.3 Fixed two typos small in Asbar. [L0ne_W0lf]
 //= 1.3a More fixes to some of the Base quest NPCs. [L0ne_W0lf]
 //= 1.4 Added missing checkweights. [L0ne_W0lf]
+//= 1.4a Corrected a typo error ";;". [Toms]
 //============================================================ 
 
 // Stone Quest
@@ -2391,7 +2392,7 @@ morocc,297,154,0	script	Thin-Faced Bard#sch	51,{
 	mes "I'm just a lookalike that's";
 	mes "been planted here in case";
 	mes "his hoodlum buddies come";
-	mes "here to find him. You know?";;
+	mes "here to find him. You know?";
 	next;
 	mes "[Bard]";
 	mes "Yeah... This is a pretty";
