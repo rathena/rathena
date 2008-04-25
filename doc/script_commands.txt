@@ -110,6 +110,9 @@
 //=       Added documentation for the 'checkcell' command [ultramage]
 //= 3.19.20080407
 //=       Extended the behaviour of 'guardian'. [FlavioJS]
+//= 3.20.20080425
+//=	      Corrected 'getitem', 'getitem2' & 'delitem2' (charid instead of accountid) [Toms]
+//=	      Modified 'delitem' (added optional accountid parameter) [Toms]
 //=========================================================
 
 This document is a reference manual for all the scripting commands and functions 
@@ -3656,8 +3659,8 @@ you can look at, this may help you create a Stylist of your own:
 \\
 ---------------------------------------
 
-*getitem <item id>,<amount>{,<character ID>};
-*getitem "<item name>",<amount>{,<character ID>};
+*getitem <item id>,<amount>{,<account ID>};
+*getitem "<item name>",<amount>{,<account ID>};
 
 This command will give a specific amount of specified items to the target 
 character. If the character is not online, nothing will happen.
@@ -3699,8 +3702,8 @@ quite a few item scripts. For more examples check just about any official script
 
 ---------------------------------------
 
-*getitem2 <item id>,<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<character ID>};
-*getitem2 "<Item name>",<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<character ID>};
+*getitem2 <item id>,<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<account ID>};
+*getitem2 "<Item name>",<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<account ID>};
 
 This command will give an amount of specified items to the invoking character. 
 If an optional character ID is specified, and that character is currently 
@@ -3844,8 +3847,8 @@ If the map name is given as "this", the map the invoking character is on will be
 
 ---------------------------------------
 
-*delitem <item id>,<amount>;
-*delitem "<item name>",<amount>;
+*delitem <item id>,<amount>{,<account ID>};
+*delitem "<item name>",<amount>{,<account ID>};
 
 This command will take a specified amount of items from the invoking character. 
 As all the item commands, this one uses the ID of the item found inside 
@@ -3866,8 +3869,8 @@ database. If the name is not found, nothing will be deleted.
 
 ---------------------------------------
 
-*delitem2 <item id>,<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<character ID>};
-*delitem2 "<Item name>",<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<character ID>};
+*delitem2 <item id>,<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<account ID>};
+*delitem2 "<Item name>",<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<account ID>};
 
 This command will take a specified amount of items from the invoking character. 
 Check 'getitem2' to understand its expanded parameters.

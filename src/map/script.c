@@ -5366,18 +5366,16 @@ BUILDIN_FUNC(getitem)
 		it.identify=1;
 	else
 		it.identify=itemdb_isidentified(nameid);
+
 	if( script_hasdata(st,4) )
-	{// <character ID>
-		sd=map_id2sd(script_getnum(st,4));
-	} else
-	{// attached player
-		sd=script_rid2sd(st);
-	}
+		sd=map_id2sd(script_getnum(st,4)); // <Account ID>
+	else
+		sd=script_rid2sd(st); // Attached player
+
 	if( sd == NULL ) // no target
 		return 0;
 
-
-        //Check if it's stackable.
+	//Check if it's stackable.
 	if (!itemdb_isstackable(nameid))
 		get_count = 1;
 	else
@@ -5416,8 +5414,12 @@ BUILDIN_FUNC(getitem2)
 	TBL_PC *sd;
 	struct script_data *data;
 
-	sd = script_rid2sd(st);
-	if( sd == NULL )
+	if( script_hasdata(st,11) )
+		sd=map_id2sd(script_getnum(st,11)); // <Account ID>
+	else
+		sd=script_rid2sd(st); // Attached player
+
+	if( sd == NULL ) // no target
 		return 0;
 
 	data=script_getdata(st,2);
@@ -5440,10 +5442,6 @@ BUILDIN_FUNC(getitem2)
 	c2=script_getnum(st,8);
 	c3=script_getnum(st,9);
 	c4=script_getnum(st,10);
-	if( script_hasdata(st,11) ) //アイテムを指定したIDに渡す
-		sd=map_id2sd(script_getnum(st,11));
-	if(sd == NULL) //アイテムを渡す相手がいなかったらお帰り
-		return 0;
 
 	if(nameid<0) { // ランダム
 		nameid=itemdb_searchrandomid(-nameid);
@@ -5657,8 +5655,12 @@ BUILDIN_FUNC(delitem)
 	TBL_PC *sd;
 	struct script_data *data;
 
-	sd = script_rid2sd(st);
-	if( sd == NULL )
+	if( script_hasdata(st,4) )
+		sd=map_id2sd(script_getnum(st,4)); // <Account ID>
+	else
+		sd=script_rid2sd(st); // Attached player
+
+	if( sd == NULL ) // no target
 		return 0;
 
 	data=script_getdata(st,2);
@@ -5763,8 +5765,12 @@ BUILDIN_FUNC(delitem2)
 	TBL_PC *sd;
 	struct script_data *data;
 
-	sd = script_rid2sd(st);
-	if( sd == NULL )
+	if( script_hasdata(st,11) )
+		sd=map_id2sd(script_getnum(st,11)); // <Account ID>
+	else
+		sd=script_rid2sd(st); // Attached player
+
+	if( sd == NULL ) // no target
 		return 0;
 
 	data=script_getdata(st,2);
