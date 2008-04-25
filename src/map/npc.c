@@ -1672,7 +1672,7 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 			break;
 		}
 
-		if( (id = itemdb_search(nameid)) == NULL )
+		if( (id = itemdb_exists(nameid)) == NULL )
 		{
 			ShowError("npc_parse_shop: Invalid sell item in file '%s', line '%d'. Ignoring the rest of the line...\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", filepath, strline(buffer,start-buffer), w1, w2, w3, w4);
 			break;
