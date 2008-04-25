@@ -4,6 +4,7 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2008/04/25
+	* Updated item_db.sql to latest
 	* Fixed bugreport:1223 (Invalid Items In Shops Are Processed Incorrectly)
 	* Modified delitem/delitem2 to have the same behaviour as getitem/getitem2 (optional
 	  account_id parameter) bugreport:1035
