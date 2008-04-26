@@ -516,7 +516,7 @@ void chrif_authreq(struct map_session_data *sd)
 	struct auth_node *node= chrif_search(sd->bl.id);
 
 	if(!node) {
-		//data from char server has not arrived yet.
+		//request data from char server and store current auth info
 		WFIFOHEAD(char_fd,19);
 		WFIFOW(char_fd,0) = 0x2b26;
 		WFIFOL(char_fd,2) = sd->status.account_id;
@@ -527,30 +527,10 @@ void chrif_authreq(struct map_session_data *sd)
 		WFIFOSET(char_fd,19);
 		chrif_sd_to_auth(sd, ST_LOGIN);
 		return;
-	}
-
-	if(node->state == ST_LOGIN &&
-		node->char_dat &&
-		node->account_id == sd->status.account_id &&
-		node->char_id == sd->status.char_id &&
-		node->login_id1 == sd->login_id1)
-	{	//auth ok
-		if (!pc_authok(sd, node->login_id2, node->expiration_time, node->char_dat))
-		{
-			chrif_char_offline(sd); //Set client offline
-			chrif_auth_delete(node->account_id, node->char_id, ST_LOGIN);
-		}
-		else {
-			//char_dat no longer needed, but player auth is not completed yet.
-			aFree(node->char_dat);
-			node->char_dat = NULL;
-			node->sd = sd;
-			chrif_char_online(sd); //Set client online
-		}
-	} else { //auth failed
+	} else {	//char already online? kick connect request and tell char server that this person is online
+					//This case shouldn't happen in an ideal system
 		pc_authfail(sd);
-		chrif_char_offline(sd); //Set client offline
-		chrif_auth_delete(sd->status.account_id, sd->status.char_id, ST_LOGIN);
+		chrif_char_online(sd);
 	}
 	return;
 }
@@ -613,20 +593,6 @@ void chrif_authok(int fd)
 		//discard the older one and keep the new one.
 		chrif_auth_delete(node->account_id, node->char_id, ST_LOGIN);
 	}
-
-	// Awaiting for client to connect.
-	node = ers_alloc(auth_db_ers, struct auth_node);
-	memset(node, 0, sizeof(struct auth_node));
-	node->char_dat = (struct mmo_charstatus *) aMalloc(sizeof(struct mmo_charstatus));
-
-	node->account_id=account_id;
-	node->char_id=char_id;
-	node->login_id1=login_id1;
-	node->expiration_time=expiration_time;
-	node->login_id2=login_id2;
-	memcpy(node->char_dat,status,sizeof(struct mmo_charstatus));
-	node->node_created=gettick();
-	idb_put(auth_db, account_id, node);
 }
 
 // client authentication failed
@@ -658,6 +624,8 @@ void chrif_authfail(int fd)
 	}
 }
 
+
+//This can still happen (client times out while waiting for char to confirm auth data)
 int auth_db_cleanup_sub(DBKey key,void *data,va_list ap)
 {
 	struct auth_node *node=(struct auth_node*)data;

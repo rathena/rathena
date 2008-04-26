@@ -213,9 +213,37 @@ static void* create_online_char_data(DBKey key, va_list args)
 	return character;
 }
 
+void set_char_charselect(int account_id)
+{
+	struct online_char_data* character;
+
+	character = (struct online_char_data*)idb_ensure(online_char_db, account_id, create_online_char_data);
+
+	if( character->server > -1 )
+		server[character->server].users--;
+
+	character->char_id = -1;
+	character->server = -1;
+
+	if(character->waiting_disconnect != -1) {
+		delete_timer(character->waiting_disconnect, chardb_waiting_disconnect);
+		character->waiting_disconnect = -1;
+	}
+
+	if (login_fd > 0 && !session[login_fd]->flag.eof)
+	{
+		WFIFOHEAD(login_fd,6);
+		WFIFOW(login_fd,0) = 0x272c;
+		WFIFOL(login_fd,2) = account_id;
+		WFIFOSET(login_fd,6);
+	}
+
+}
+
 void set_char_online(int map_id, int char_id, int account_id)
 {
 	struct online_char_data* character;
+	struct mmo_charstatus *cp;
 	
 	if ( char_id != 99 ) {
 		if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `online`='1' WHERE `char_id`='%d'", char_db, char_id) )
@@ -223,19 +251,13 @@ void set_char_online(int map_id, int char_id, int account_id)
 	}
 
 	character = (struct online_char_data*)idb_ensure(online_char_db, account_id, create_online_char_data);
-	if (online_check && character->char_id != -1 && character->server > -1 && character->server != map_id && map_id != -3)
+	if (online_check && character->char_id != -1 && character->server > -1 && character->server != map_id)
 	{
-		//char == 99 <- Character logging in, so someone has logged in while one
-		//char is still on map-server, so kick him out, but don't print "error"
-		//as this is normal behaviour. [Skotlex]
-		if (char_id != 99)
-			ShowNotice("set_char_online: Character %d:%d marked in map server %d, but map server %d claims to have (%d:%d) online!\n",
-				character->account_id, character->char_id, character->server, map_id, account_id, char_id);
+		//char == 99 Won't happen anymore, call set_char_charselect to set user "on char server"
+		ShowNotice("set_char_online: Character %d:%d marked in map server %d, but map server %d claims to have (%d:%d) online!\n",
+			character->account_id, character->char_id, character->server, map_id, account_id, char_id);
 		mapif_disconnectplayer(server[character->server].fd, character->account_id, character->char_id, 2);
 	}
-
-	character->char_id = (char_id==99)?-1:char_id;
-	character->server = (char_id==99)?-1:map_id;
 
 	if( character->server > -1 )
 		server[character->server].users++;
@@ -244,12 +266,11 @@ void set_char_online(int map_id, int char_id, int account_id)
 		delete_timer(character->waiting_disconnect, chardb_waiting_disconnect);
 		character->waiting_disconnect = -1;
 	}
-	if (char_id != 99)
-	{	//Set char online in guild cache. If char is in memory, use the guild id on it, otherwise seek it.
-		struct mmo_charstatus *cp;
-		cp = (struct mmo_charstatus*)idb_get(char_db_,char_id);
- 		inter_guild_CharOnline(char_id, cp?cp->guild_id:-1);
-	}
+
+	//Set char online in guild cache. If char is in memory, use the guild id on it, otherwise seek it.
+	cp = (struct mmo_charstatus*)idb_get(char_db_,char_id);
+	inter_guild_CharOnline(char_id, cp?cp->guild_id:-1);
+
 	if (login_fd > 0 && !session[login_fd]->flag.eof)
 	{	
 		WFIFOHEAD(login_fd,6);
@@ -1641,7 +1662,7 @@ static void char_auth_ok(int fd, struct char_session_data *sd)
 	sd->auth = true;
 
 	// set char online on charserver
-	set_char_online(-1, 99, sd->account_id);
+	set_char_charselect(sd->account_id);
 
 	// send characters to player
 	mmo_char_send006b(fd, sd);
@@ -2400,7 +2421,7 @@ int parse_frommap(int fd)
 			idb_put(auth_db, account_id, node);
 
 			//Set char to "@ char select" in online db [Kevin]
-			set_char_online(-3, 99, account_id);
+			set_char_charselect(account_id);
 
 			WFIFOHEAD(fd,7);
 			WFIFOW(fd,0) = 0x2b03;
@@ -3007,6 +3028,7 @@ int parse_char(int fd)
 			FIFOSD_CHECK(3);
 		{
 			struct mmo_charstatus char_dat;
+			struct mmo_charstatus * cp;
 			char* data;
 			int char_id;
 			uint32 subnet_map_ip;
@@ -3029,7 +3051,10 @@ int parse_char(int fd)
 			char_id = atoi(data);
 			Sql_FreeResult(sql_handle);
 			mmo_char_fromsql(char_id, &char_dat, true);
-			char_dat.sex = sd->sex;
+
+			//Have to switch over to the DB instance otherwise data won't propagate [Kevin]
+			cp = (struct mmo_charstatus *)idb_get(char_db_, char_id);
+			cp->sex = sd->sex;
 
 			if (log_char) {
 				char esc_name[NAME_LENGTH*2+1];
@@ -3058,23 +3083,23 @@ int parse_char(int fd)
 					break;
 				}
 				if ((i = search_mapserver((j=mapindex_name2id(MAP_PRONTERA)),-1,-1)) >= 0) {
-					char_dat.last_point.x = 273;
-					char_dat.last_point.y = 354;
+					cp->last_point.x = 273;
+					cp->last_point.y = 354;
 				} else if ((i = search_mapserver((j=mapindex_name2id(MAP_GEFFEN)),-1,-1)) >= 0) {
-					char_dat.last_point.x = 120;
-					char_dat.last_point.y = 100;
+					cp->last_point.x = 120;
+					cp->last_point.y = 100;
 				} else if ((i = search_mapserver((j=mapindex_name2id(MAP_MORROC)),-1,-1)) >= 0) {
-					char_dat.last_point.x = 160;
-					char_dat.last_point.y = 94;
+					cp->last_point.x = 160;
+					cp->last_point.y = 94;
 				} else if ((i = search_mapserver((j=mapindex_name2id(MAP_ALBERTA)),-1,-1)) >= 0) {
-					char_dat.last_point.x = 116;
-					char_dat.last_point.y = 57;
+					cp->last_point.x = 116;
+					cp->last_point.y = 57;
 				} else if ((i = search_mapserver((j=mapindex_name2id(MAP_PAYON)),-1,-1)) >= 0) {
-					char_dat.last_point.x = 87;
-					char_dat.last_point.y = 117;
+					cp->last_point.x = 87;
+					cp->last_point.y = 117;
 				} else if ((i = search_mapserver((j=mapindex_name2id(MAP_IZLUDE)),-1,-1)) >= 0) {
-					char_dat.last_point.x = 94;
-					char_dat.last_point.y = 103;
+					cp->last_point.x = 94;
+					cp->last_point.y = 103;
 				} else {
 					ShowInfo("Connection Closed. No map server available that has a major city, and unable to find map-server for '%s'.\n", mapindex_id2name(char_dat.last_point.map));
 					WFIFOHEAD(fd,3);
@@ -3084,7 +3109,7 @@ int parse_char(int fd)
 					break;
 				}
 				ShowWarning("Unable to find map-server for '%s', sending to major city '%s'.\n", mapindex_id2name(char_dat.last_point.map), mapindex_id2name(j));
-				char_dat.last_point.map = j;
+				cp->last_point.map = j;
 			}
 
 			//Send NEW auth packet [Kevin]
@@ -3105,8 +3130,8 @@ int parse_char(int fd)
 			//Send player to map
 			WFIFOHEAD(fd,28);
 			WFIFOW(fd,0) = 0x71;
-			WFIFOL(fd,2) = char_dat.char_id;
-			mapindex_getmapname_ext(mapindex_id2name(char_dat.last_point.map), (char*)WFIFOP(fd,6));
+			WFIFOL(fd,2) = cp->char_id;
+			mapindex_getmapname_ext(mapindex_id2name(cp->last_point.map), (char*)WFIFOP(fd,6));
 
 			// Advanced subnet check [LuzZza]
 			subnet_map_ip = lan_subnetcheck(ipl);
@@ -3114,24 +3139,10 @@ int parse_char(int fd)
 			WFIFOW(fd,26) = ntows(htons(server[i].port)); // [!] LE byte order here [!]
 			WFIFOSET(fd,28);
 
-#if 0
-			// The server must request it [FlavioJS]
-			//Send auth ok to map server
-			WFIFOHEAD(map_fd,20 + sizeof(struct mmo_charstatus));
-			WFIFOW(map_fd,0) = 0x2afd;
-			WFIFOW(map_fd,2) = 20 + sizeof(struct mmo_charstatus);
-			WFIFOL(map_fd,4) = sd->account_id;
-			WFIFOL(map_fd,8) = sd->login_id1;
-			WFIFOL(map_fd,16) = sd->login_id2;
-			WFIFOL(map_fd,12) = (unsigned long)sd->expiration_time;
-			memcpy(WFIFOP(map_fd,20), &char_dat, sizeof(struct mmo_charstatus));
-			WFIFOSET(map_fd, WFIFOW(map_fd,2));
-#endif
-
 			// create temporary auth entry
 			CREATE(node, struct auth_node, 1);
 			node->account_id = sd->account_id;
-			node->char_id = char_dat.char_id;
+			node->char_id = cp->char_id;
 			node->login_id1 = sd->login_id1;
 			node->login_id2 = sd->login_id2;
 			node->sex = sd->sex;
