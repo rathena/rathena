@@ -17,4 +17,6 @@ int quest_delete_ack(int char_id, int quest_id, int success);
 int quest_update_objective(TBL_PC * sd, int quest_id, int objective_num, const char * name, int count);
 int quest_update_status(TBL_PC * sd, int quest_id, bool status);
 
+bool quest_has_quest(TBL_PC * sd, int quest_id);
+
 #endif

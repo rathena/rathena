@@ -185,6 +185,15 @@ int quest_update_objective(TBL_PC * sd, int quest_id, int objective_num, const c
 
 }
 
+bool quest_has_quest(TBL_PC * sd, int quest_id)
+{
+	int i;
+
+	ARR_FIND(0, MAX_QUEST, i, sd->quest_log[i].quest_id == quest_id);
+
+	return (i != MAX_QUEST);
+}
+
 int quest_update_status(TBL_PC * sd, int quest_id, bool status)
 {
 

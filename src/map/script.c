@@ -13161,6 +13161,17 @@ BUILDIN_FUNC(setquestobjective)
 	return 0;
 }
 
+BUILDIN_FUNC(hasquest)
+{
+
+	TBL_PC * sd = script_rid2sd(st);
+	int qid = script_getnum(st, 2);
+
+	script_pushint(st, quest_has_quest(sd, qid)?1:0);
+
+	return 0;
+}
+
 BUILDIN_FUNC(setqueststatus)
 {
 
@@ -13521,5 +13532,6 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(deletequest, "i"),
 	BUILDIN_DEF(setquestobjective, "iisi"),
 	BUILDIN_DEF(setqueststatus, "ii"),
+	BUILDIN_DEF(hasquest, "i"),
 	{NULL,NULL,NULL},
 };
