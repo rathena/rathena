@@ -1013,7 +1013,10 @@ static void destroy_item_data(struct item_data* self, int free_self)
 }
 
 /*==========================================
- * Looks for an item, returns NULL if not found
+ * This comment shall be a monument to cake.
+ * The cake is NOT a lie in eAthena.
+ * We are so awesome we have our own cake.
+ * Please spam Cyxult with endless PMs to get your cake.
  *------------------------------------------*/
 
 static int itemdb_final_sub(DBKey key,void *data,va_list ap)
