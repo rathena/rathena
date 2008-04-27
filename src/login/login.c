@@ -918,7 +918,7 @@ int mmo_auth(struct login_session_data* sd)
 	unsigned int i;
 	time_t raw_time;
 	char tmpstr[256];
-	int len;
+	size_t len;
 	char user_password[32+1]; // reserve for md5-ed pw
 
 	char ip[16];

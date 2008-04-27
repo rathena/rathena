@@ -2785,17 +2785,17 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 	{
 		sd->state.arrow_atk = (sd->status.weapon == W_BOW || (sd->status.weapon >= W_REVOLVER && sd->status.weapon <= W_GRENADE));
 		if (sd->state.arrow_atk)
-		{	//Recycled damage variable to store index.
-			damage = sd->equip_index[EQI_AMMO];
-			if (damage<0) {
+		{
+			int index = sd->equip_index[EQI_AMMO];
+			if (index<0) {
 				clif_arrow_fail(sd,0);
 				return ATK_NONE;
 			}
 			//Ammo check by Ishizu-chan
-			if (sd->inventory_data[damage])
+			if (sd->inventory_data[index])
 			switch (sd->status.weapon) {
 			case W_BOW:
-				if (sd->inventory_data[damage]->look != A_ARROW) {
+				if (sd->inventory_data[index]->look != A_ARROW) {
 					clif_arrow_fail(sd,0);
 					return ATK_NONE;
 				}
@@ -2804,13 +2804,13 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 			case W_RIFLE:
 			case W_GATLING:
 			case W_SHOTGUN:
-				if (sd->inventory_data[damage]->look != A_BULLET) {
+				if (sd->inventory_data[index]->look != A_BULLET) {
 					clif_arrow_fail(sd,0);
 					return ATK_NONE;
 				}
 			break;
 			case W_GRENADE:
-				if (sd->inventory_data[damage]->look != A_GRENADE) {
+				if (sd->inventory_data[index]->look != A_GRENADE) {
 					clif_arrow_fail(sd,0);
 					return ATK_NONE;
 				}

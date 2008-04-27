@@ -1594,7 +1594,7 @@ int guild_broken(int guild_id,int flag)
 		if( (gc=guild_castle_search(i)) != NULL ){
 			if(gc->guild_id == guild_id){
 				safestrncpy(name, gc->castle_event, 50);
-				npc_event_do("::OnGuildBreak");
+				npc_event_do(strcat(name,"::OnGuildBreak"));
 			}
 		}
 	}

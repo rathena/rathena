@@ -509,7 +509,7 @@ static void block_free(struct block* p)
 	hash_unfill[0] = p;
 }
 
-unsigned int memmgr_usage (void)
+size_t memmgr_usage (void)
 {
 	return memmgr_usage_bytes / 1024;
 }
@@ -665,7 +665,7 @@ bool malloc_verify(void* ptr)
 #endif
 }
 
-unsigned int malloc_usage (void)
+size_t malloc_usage (void)
 {
 #ifdef USE_MEMMGR
 	return memmgr_usage ();

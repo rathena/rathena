@@ -245,7 +245,7 @@ static void ers_obj_free_entry(ERS self, void *entry)
  * @see ERS_impl#size
  * @see ERS_impl::vtable#entry_size
  */
-static uint32 ers_obj_entry_size(ERS self)
+static size_t ers_obj_entry_size(ERS self)
 {
 	ERS_impl obj = (ERS_impl)self;
 
