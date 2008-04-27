@@ -177,7 +177,8 @@ void inter_auctions_fromsql(void)
 	struct item *item;
 	char *data;
 	StringBuf buf;
-	unsigned int tick = gettick(), endtick, now = time(NULL);
+	unsigned int tick = gettick(), endtick;
+	time_t now = time(NULL);
 
 	StringBuf_Init(&buf);
 	StringBuf_AppendStr(&buf, "SELECT `auction_id`,`seller_id`,`seller_name`,`buyer_id`,`buyer_name`,"
@@ -222,7 +223,7 @@ void inter_auctions_fromsql(void)
 		}
 
 		if( auction->timestamp > now )
-			endtick = ((auction->timestamp - now) * 1000) + tick;
+			endtick = ((unsigned int)(auction->timestamp - now) * 1000) + tick;
 		else
 			endtick = tick + 10000; // 10 Second's to process ended auctions
 
