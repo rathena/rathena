@@ -11695,7 +11695,7 @@ void clif_parse_Mail_send(int fd, struct map_session_data *sd)
 	else
 		memset(msg.body, 0x00, MAIL_BODY_LENGTH);
 	
-	msg.timestamp = calc_times();
+	msg.timestamp = time(NULL);
 	if( !intif_Mail_send(sd->status.account_id, &msg) )
 		mail_deliveryfail(sd, &msg);
 

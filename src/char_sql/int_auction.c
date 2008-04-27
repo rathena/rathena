@@ -79,7 +79,7 @@ unsigned int auction_create(struct auction_data *auction)
 	if( !auction )
 		return false;
 
-	auction->timestamp = calc_times() + (auction->hours * 3600);
+	auction->timestamp = time(NULL) + (auction->hours * 3600);
 
 	StringBuf_Init(&buf);
 	StringBuf_Printf(&buf, "INSERT INTO `%s` (`seller_id`,`seller_name`,`buyer_id`,`buyer_name`,`price`,`buynow`,`hours`,`timestamp`,`nameid`,`item_name`,`type`,`refine`,`attribute`", auction_db);
@@ -177,7 +177,7 @@ void inter_auctions_fromsql(void)
 	struct item *item;
 	char *data;
 	StringBuf buf;
-	unsigned int tick = gettick(), endtick, now = calc_times();
+	unsigned int tick = gettick(), endtick, now = time(NULL);
 
 	StringBuf_Init(&buf);
 	StringBuf_AppendStr(&buf, "SELECT `auction_id`,`seller_id`,`seller_name`,`buyer_id`,`buyer_name`,"

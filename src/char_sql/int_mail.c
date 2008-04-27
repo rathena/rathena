@@ -353,7 +353,7 @@ static void mapif_Mail_return(int fd, int char_id, int mail_id)
 			safestrncpy(msg.title, temp_, MAIL_TITLE_LENGTH);
 
 			msg.status = MAIL_NEW;
-			msg.timestamp = calc_times();
+			msg.timestamp = time(NULL);
 
 			new_mail = mail_savemessage(&msg);
 			mapif_Mail_new(&msg);
@@ -438,7 +438,7 @@ void mail_sendmail(int send_id, const char* send_name, int dest_id, const char* 
 	if( item != NULL )
 		memcpy(&msg.item, item, sizeof(struct item));
 
-	msg.timestamp = calc_times();
+	msg.timestamp = time(NULL);
 
 	mail_savemessage(&msg);
 	mapif_Mail_new(&msg);
