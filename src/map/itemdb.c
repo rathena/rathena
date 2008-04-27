@@ -1015,18 +1015,6 @@ static void destroy_item_data(struct item_data* self, int free_self)
 /*==========================================
  * Looks for an item, returns NULL if not found
  *------------------------------------------*/
-struct item_data* itemdb_search2(int nameid)
-{
-	if( nameid >= 0 && nameid < ARRAYLENGTH(itemdb_array) )
-	{
-		DBKey key;
-		if( itemdb_array[nameid] )
-			return itemdb_array[nameid];
-		key.i = nameid;
-		return NULL;
-	}
-	return (struct item_data*)idb_get(itemdb_other,nameid);
-}
 
 static int itemdb_final_sub(DBKey key,void *data,va_list ap)
 {
@@ -1038,6 +1026,9 @@ static int itemdb_final_sub(DBKey key,void *data,va_list ap)
 	return 0;
 }
 
+//Uncomment this if you're an elitist jerk who thinks this code is unecessary
+//#define I_HATE_KEVIN
+#ifndef I_HATE_KEVIN
 int itemdb_reload_check_npc(DBKey key,void * data,va_list ap)
 {
 	struct npc_data * nd = (struct npc_data *)data;
@@ -1049,7 +1040,7 @@ int itemdb_reload_check_npc(DBKey key,void * data,va_list ap)
 	while(i < nd->u.shop.count)
 	{
 
-		if(itemdb_search2(nd->u.shop.shop_item[i].nameid) == NULL)
+		if(itemdb_exists(nd->u.shop.shop_item[i].nameid) == NULL)
 		{
 
 			nd->u.shop.count--;
@@ -1094,7 +1085,7 @@ static int itemdb_reload_check(DBKey key,void *data,va_list ap)
 		if(!sd->status.inventory[i].nameid)
 			continue;
 
-		id = itemdb_search2(sd->status.inventory[i].nameid);
+		id = itemdb_exists(sd->status.inventory[i].nameid);
 		if(id == NULL)
 		{
 			sd->inventory_data[i] = NULL;
@@ -1112,7 +1103,7 @@ static int itemdb_reload_check(DBKey key,void *data,va_list ap)
 		if(!sd->status.cart[i].nameid)
 			continue;
 
-		id = itemdb_search2(sd->status.cart[i].nameid);
+		id = itemdb_exists(sd->status.cart[i].nameid);
 		if(id == NULL)
 		{
 			sd->inventory_data[i] = NULL;
@@ -1131,7 +1122,7 @@ static int itemdb_reload_check(DBKey key,void *data,va_list ap)
 				if(!sd->status.inventory[i].nameid)
 					continue;
 
-				if(itemdb_search2(sd->status.inventory[i].nameid) == NULL)
+				if(itemdb_exists(sd->status.inventory[i].nameid) == NULL)
 					storage_delitem(sd, stor, i, stor->storage_[i].amount);
 			}
 		}
@@ -1154,7 +1145,7 @@ void itemdb_foreach_mobdb(void)
 			continue;
 		for(j=0; j < MAX_MOB_DROP; j++)
 		{
-			id = itemdb_search2(mdb->dropitem[j].nameid);
+			id = itemdb_exists(mdb->dropitem[j].nameid);
 			if(id == NULL)
 			{
 				mdb->dropitem[j].nameid = 0;
@@ -1163,17 +1154,21 @@ void itemdb_foreach_mobdb(void)
 		}
 	}
 }
+#endif
 
-void itemdb_reload(void)
+void itemdb_reload(int flag)
 {
 
 	do_final_itemdb();
 	do_init_itemdb();
 
-	//Update ALL items on the server
-	map_foreachpc(itemdb_reload_check);
-	npc_foreach(itemdb_reload_check_npc);
-	itemdb_foreach_mobdb();
+	if(flag)
+	{
+		//Update ALL items on the server
+		map_foreachpc(itemdb_reload_check);
+		npc_foreach(itemdb_reload_check_npc);
+		itemdb_foreach_mobdb();
+	}
 }
 
 void do_final_itemdb(void)

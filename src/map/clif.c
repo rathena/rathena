@@ -1894,27 +1894,20 @@ void clif_storagelist(struct map_session_data *sd,struct storage *stor)
 		if(stor->storage_[i].nameid<=0)
 			continue;
 		id = itemdb_search(stor->storage_[i].nameid);
-		if(!id)
-		{
-			//Item not found, was probably deleted and then map server reloaded/item db reloaded
-			storage_delitem(sd, stor, i, stor->storage_[i].amount);
-			return;
-		}
-		else
-			if(!itemdb_isstackable2(id))
-			{ //Equippable
-				WBUFW(bufe,ne*20+4)=i+1;
-				clif_item_sub(bufe, ne*20+6, &stor->storage_[i], id, id->equip);
-				clif_addcards(WBUFP(bufe, ne*20+16), &stor->storage_[i]);
-				ne++;
-			} else { //Stackable
-				WBUFW(buf,n*s+4)=i+1;
-				clif_item_sub(buf, n*s+6, &stor->storage_[i], id,-1);
+		if(!itemdb_isstackable2(id))
+		{ //Equippable
+			WBUFW(bufe,ne*20+4)=i+1;
+			clif_item_sub(bufe, ne*20+6, &stor->storage_[i], id, id->equip);
+			clif_addcards(WBUFP(bufe, ne*20+16), &stor->storage_[i]);
+			ne++;
+		} else { //Stackable
+			WBUFW(buf,n*s+4)=i+1;
+			clif_item_sub(buf, n*s+6, &stor->storage_[i], id,-1);
 #if PACKETVER >= 5
-				clif_addcards(WBUFP(buf,n*s+14), &stor->storage_[i]);
+			clif_addcards(WBUFP(buf,n*s+14), &stor->storage_[i]);
 #endif
-				n++;
-			}
+			n++;
+		}
 	}
 	if(n){
 #if PACKETVER < 5

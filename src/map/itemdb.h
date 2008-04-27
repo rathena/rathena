@@ -137,7 +137,7 @@ int itemdb_isidentified(int);
 int itemdb_isstackable(int);
 int itemdb_isstackable2(struct item_data *);
 
-void itemdb_reload(void);
+void itemdb_reload(int flag);
 
 void do_final_itemdb(void);
 int do_init_itemdb(void);

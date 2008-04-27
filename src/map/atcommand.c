@@ -4049,11 +4049,24 @@ int atcommand_partyrecall(const int fd, struct map_session_data* sd, const char*
 int atcommand_reloaditemdb(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
 	nullpo_retr(-1, sd);
-	itemdb_reload();
+	itemdb_reload(0);
 	clif_displaymessage(fd, msg_txt(97)); // Item database reloaded.
 
 	return 0;
 }
+
+/*==========================================
+ *
+ *------------------------------------------*/
+int atcommand_reloaditemdb2(const int fd, struct map_session_data* sd, const char* command, const char* message)
+{
+	nullpo_retr(-1, sd);
+	itemdb_reload(1);
+	clif_displaymessage(fd, msg_txt(97)); // Item database reloaded.
+
+	return 0;
+}
+
 
 /*==========================================
  *
@@ -8373,6 +8386,7 @@ AtCommandInfo atcommand_info[] = {
 	{ "localbroadcast",    40,     atcommand_localbroadcast }, // + /lb and /nlb
 	{ "recallall",         80,     atcommand_recallall },
 	{ "reloaditemdb",      99,     atcommand_reloaditemdb },
+	{ "reloaditemdb2",      99,     atcommand_reloaditemdb2 },
 	{ "reloadmobdb",       99,     atcommand_reloadmobdb },
 	{ "reloadskilldb",     99,     atcommand_reloadskilldb },
 	{ "reloadscript",      99,     atcommand_reloadscript },
