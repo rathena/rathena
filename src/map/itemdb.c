@@ -1115,7 +1115,7 @@ static int itemdb_reload_check(DBKey key,void *data,va_list ap)
 	}
 
 	//Delete storage
-	if(stor = account2storage2(sd->status.account_id))
+	if((stor = account2storage2(sd->status.account_id)))
 	{
 		//If storage isn't found, it will be deleted whenever storage is loaded again
 		if(stor)
