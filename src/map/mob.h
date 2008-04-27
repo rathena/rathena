@@ -83,6 +83,11 @@ struct mob_db {
 	struct spawn_info spawn[10];
 };
 
+typedef struct mob_db s_mob_db;
+extern struct mob_db *mob_db_data[MAX_MOB_DB+1];
+struct mob_db *mob_db(int index);
+extern struct mob_db *mob_dummy;
+
 struct mob_data {
 	struct block_list bl;
 	struct unit_data  ud;

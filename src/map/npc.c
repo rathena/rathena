@@ -150,6 +150,19 @@ struct npc_data* npc_name2id(const char* name)
 	return (struct npc_data *) strdb_get(npcname_db, name);
 }
 
+
+/*==========================================
+ * Run function for each npc
+ *------------------------------------------*/
+
+void npc_foreach(int (*func)(DBKey, void*, va_list), ...)
+{
+	va_list ap;
+	va_start(ap, func);
+	npcname_db->vforeach(npcname_db, func, ap);
+	va_end(ap);
+}
+
 /*==========================================
  * イベントキューのイベント処理
  *------------------------------------------*/

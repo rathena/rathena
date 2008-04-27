@@ -10,6 +10,10 @@
 #include "battle.h" // struct battle_config
 #include "script.h" // item script processing
 #include "pc.h"     // W_MUSICAL, W_WHIP
+#include "storage.h"
+#include "npc.h"
+#include "clif.h"
+#include "mob.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -1008,6 +1012,22 @@ static void destroy_item_data(struct item_data* self, int free_self)
 		aFree(self);
 }
 
+/*==========================================
+ * Looks for an item, returns NULL if not found
+ *------------------------------------------*/
+struct item_data* itemdb_search2(int nameid)
+{
+	if( nameid >= 0 && nameid < ARRAYLENGTH(itemdb_array) )
+	{
+		DBKey key;
+		if( itemdb_array[nameid] )
+			return itemdb_array[nameid];
+		key.i = nameid;
+		return NULL;
+	}
+	return (struct item_data*)idb_get(itemdb_other,nameid);
+}
+
 static int itemdb_final_sub(DBKey key,void *data,va_list ap)
 {
 	struct item_data *id = (struct item_data *)data;
@@ -1018,32 +1038,142 @@ static int itemdb_final_sub(DBKey key,void *data,va_list ap)
 	return 0;
 }
 
-static int itemdb_reload_sub(DBKey key,void *data,va_list ap)
+int itemdb_reload_check_npc(DBKey key,void * data,va_list ap)
 {
-	struct item_data *id = (struct item_data *)data;
+	struct npc_data * nd = (struct npc_data *)data;
+	int offset = 0, i = 0;
 
-	if( id != &dummy_item  && id->flag.db2)
-		destroy_item_data(id, 1);
+	if(nd->subtype != SHOP && nd->subtype != CASHSHOP)
+		return 0;
+
+	while(i < nd->u.shop.count)
+	{
+
+		if(itemdb_search2(nd->u.shop.shop_item[i].nameid) == NULL)
+		{
+
+			nd->u.shop.count--;
+
+			//Shift array to left, overwriting old data
+			for(offset = i; offset+1 < nd->u.shop.count; offset++);
+			{
+				nd->u.shop.shop_item[offset].nameid = nd->u.shop.shop_item[offset+1].nameid;
+				nd->u.shop.shop_item[offset].value = nd->u.shop.shop_item[offset+1].value;
+			}
+
+		}
+		//increment counter if we didn't delete something
+		else
+			i++;
+
+	}
+
+	//Resize array
+	RECREATE(nd->u.shop.shop_item, struct npc_item_list, nd->u.shop.count);
 
 	return 0;
+}
+
+static int itemdb_reload_check(DBKey key,void *data,va_list ap)
+{
+	int i;
+	struct map_session_data *sd = (struct map_session_data *)data;
+	struct storage * stor;
+	struct item_data * id;
+	struct npc_data * nd;
+
+	if(sd->npc_shopid)
+	{
+		nd = (struct npc_data*)map_id2bl(sd->npc_shopid);
+		clif_buylist(sd, nd);
+	}
+
+	//First, handle all items in inventories/equiped, cart, and storage
+	for(i = 0; i < MAX_INVENTORY; i++)
+	{
+		if(!sd->status.inventory[i].nameid)
+			continue;
+
+		id = itemdb_search2(sd->status.inventory[i].nameid);
+		if(id == NULL)
+		{
+			sd->inventory_data[i] = NULL;
+			pc_delitem(sd, i, sd->status.inventory[i].amount, 4);
+		}
+		else
+		{
+			sd->inventory_data[i] = id;
+		}
+	}
+
+	//Delete nonexistant items from cart
+	for(i = 0; i < MAX_CART; i++)
+	{
+		if(!sd->status.cart[i].nameid)
+			continue;
+
+		id = itemdb_search2(sd->status.cart[i].nameid);
+		if(id == NULL)
+		{
+			sd->inventory_data[i] = NULL;
+			pc_cart_delitem(sd, i, sd->status.cart[i].amount, 0);
+		}
+	}
+
+	//Delete storage
+	if(stor = account2storage2(sd->status.account_id))
+	{
+		//If storage isn't found, it will be deleted whenever storage is loaded again
+		if(stor)
+		{
+			for(i = 0; i < MAX_STORAGE; i++)
+			{
+				if(!sd->status.inventory[i].nameid)
+					continue;
+
+				if(itemdb_search2(sd->status.inventory[i].nameid) == NULL)
+					storage_delitem(sd, stor, i, stor->storage_[i].amount);
+			}
+		}
+	}
+
+	return 0;
+}
+
+//Cleanup mob db drop tables
+void itemdb_foreach_mobdb(void)
+{
+	int i = 0, j = 0;
+	struct item_data * id;
+	s_mob_db * mdb;
+
+	for(i=0; i < MAX_MOB_DB; i++)
+	{
+		mdb = mob_db(i);
+		if(mdb == mob_dummy)
+			continue;
+		for(j=0; j < MAX_MOB_DROP; j++)
+		{
+			id = itemdb_search2(mdb->dropitem[j].nameid);
+			if(id == NULL)
+			{
+				mdb->dropitem[j].nameid = 0;
+				mdb->dropitem[j].p = 0;
+			}
+		}
+	}
 }
 
 void itemdb_reload(void)
 {
 
-	int i;
+	do_final_itemdb();
+	do_init_itemdb();
 
-	for( i = 0; i < ARRAYLENGTH(itemdb_array); ++i )
-		if( itemdb_array[i] )
-			if( itemdb_array[i]->flag.db2 )
-			{
-				destroy_item_data(itemdb_array[i], 1);
-				memset(itemdb_array[i], 0, sizeof(struct item_data));
-			}
-
-	itemdb_other->clear(itemdb_other, itemdb_reload_sub);
-
-	itemdb_read();
+	//Update ALL items on the server
+	map_foreachpc(itemdb_reload_check);
+	npc_foreach(itemdb_reload_check_npc);
+	itemdb_foreach_mobdb();
 }
 
 void do_final_itemdb(void)

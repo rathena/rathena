@@ -2965,11 +2965,12 @@ int pc_delitem(struct map_session_data *sd,int n,int amount,int type)
 {
 	nullpo_retr(1, sd);
 
-	if(sd->status.inventory[n].nameid==0 || amount <= 0 || sd->status.inventory[n].amount<amount || sd->inventory_data[n] == NULL)
+	if(sd->status.inventory[n].nameid==0 || amount <= 0 || sd->status.inventory[n].amount<amount || (sd->inventory_data[n] == NULL && ~type&4))
 		return 1;
 
 	sd->status.inventory[n].amount -= amount;
-	sd->weight -= sd->inventory_data[n]->weight*amount ;
+	if(~type&4)
+		sd->weight -= sd->inventory_data[n]->weight*amount ;
 	if(sd->status.inventory[n].amount<=0){
 		if(sd->status.inventory[n].equip)
 			pc_unequipitem(sd,n,3);
