@@ -438,7 +438,6 @@ EQI_HEAD_LOW	10
 
 Eff_Stone	0
 Eff_Freeze	1
-Eff_Stan	2
 Eff_Stun	2
 Eff_Sleep	3
 Eff_Poison	4
