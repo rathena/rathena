@@ -150,19 +150,6 @@ struct npc_data* npc_name2id(const char* name)
 	return (struct npc_data *) strdb_get(npcname_db, name);
 }
 
-
-/*==========================================
- * Run function for each npc
- *------------------------------------------*/
-
-void npc_foreach(int (*func)(DBKey, void*, va_list), ...)
-{
-	va_list ap;
-	va_start(ap, func);
-	npcname_db->vforeach(npcname_db, func, ap);
-	va_end(ap);
-}
-
 /*==========================================
  * イベントキューのイベント処理
  *------------------------------------------*/
@@ -1128,7 +1115,7 @@ int npc_buylist(struct map_session_data* sd, int n, unsigned short* item_list)
 				itemdb_viewid(nd->u.shop.shop_item[j].nameid)==item_list[i*2+1]) //item_avail replacement
 				break;
 		}
-		if (nd->u.shop.shop_item[j].nameid == 0)
+		if (nd->u.shop.shop_item[j].nameid == 0 || !itemdb_exists(nd->u.shop.shop_item[j].nameid))
 			return 3;
 
 		if (!itemdb_isstackable(nd->u.shop.shop_item[j].nameid) && item_list[i*2] > 1)
@@ -1687,8 +1674,9 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 
 		if( (id = itemdb_exists(nameid)) == NULL )
 		{
-			ShowError("npc_parse_shop: Invalid sell item in file '%s', line '%d'. Ignoring the rest of the line...\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", filepath, strline(buffer,start-buffer), w1, w2, w3, w4);
-			break;
+			ShowWarning("npc_parse_shop: Invalid sell item in file '%s', line '%d' (id '%d').\n", filepath, strline(buffer,start-buffer), nameid);
+			p = strchr(p+1,',');
+			continue;
 		}
 
 		if( value < 0 )

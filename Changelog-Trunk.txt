@@ -3,16 +3,6 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
-2008/04/27
-	* Fixed "suggest parentheses around assignment ..." gcc warning [Toms]
-	* Some major changes to @reloaditemdb to allow unloading of any item
-	  while map server is running.
-	- Delete any item from inventory/cart/open storages that went missing
-	  during the reload.
-	- Delete item from any shop that has this item.
-	- Refresh item screen for anyone who has a shop open.
-	- Delete mob db drop table references.
-	- Delete item from storage during load if it isn't in the item db. [Kevin]
 2008/04/26
 	* Added script function hasquest. [Kevin]
 	* Fixed OnGuildBreak. [Kevin]

@@ -34,8 +34,8 @@
 #define UNKNOWN_ITEM_ID 512
 
 struct item_data {
-	char name[ITEM_NAME_LENGTH],jname[ITEM_NAME_LENGTH];
 	int nameid;
+	char name[ITEM_NAME_LENGTH],jname[ITEM_NAME_LENGTH];
 	//Do not add stuff between value_buy and wlv (see how getiteminfo works)
 	int value_buy;
 	int value_sell;
@@ -56,27 +56,24 @@ struct item_data {
 //		some script commands should be revised as well...
 	unsigned int class_base[3];	//Specifies if the base can wear this item (split in 3 indexes per type: 1-1, 2-1, 2-2)
 	unsigned class_upper : 3; //Specifies if the upper-type can equip it (bitfield, 1: normal, 2: upper, 3: baby)
-	unsigned unused : 5;
 	struct {
 		unsigned short chance;
 		int id;
 	} mob[MAX_SEARCH]; //Holds the mobs that have the highest drop rate for this item. [Skotlex]
+	struct script_code *script;	//Default script for everything.
+	struct script_code *equip_script;	//Script executed once when equipping.
+	struct script_code *unequip_script;//Script executed once when unequipping.
 	struct {
 		unsigned available : 1;
 		unsigned value_notdc : 1;
 		unsigned value_notoc : 1;
+		short no_equip;
 		unsigned no_refine : 1;	// [celest]
 		unsigned delay_consume : 1;	// Signifies items that are not consumed immediately upon double-click [Skotlex]
-		unsigned autoequip: 1;
-		unsigned unused:2;
-		unsigned db2: 1; //Items from the custom item database (item_db2)
 		unsigned trade_restriction : 7;	//Item restrictions mask [Skotlex]
-		short no_equip;
+		unsigned autoequip: 1;
 	} flag;
 	short gm_lv_trade_override;	//GM-level to override trade_restriction
-	struct script_code *script;	//Default script for everything.
-	struct script_code *equip_script;	//Script executed once when equipping.
-	struct script_code *unequip_script;//Script executed once when unequipping.
 };
 
 struct item_group {
@@ -137,7 +134,7 @@ int itemdb_isidentified(int);
 int itemdb_isstackable(int);
 int itemdb_isstackable2(struct item_data *);
 
-void itemdb_reload(int flag);
+void itemdb_reload(void);
 
 void do_final_itemdb(void);
 int do_init_itemdb(void);

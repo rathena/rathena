@@ -502,6 +502,7 @@ int pc_reg_received(struct map_session_data *sd);
 
 int pc_isequip(struct map_session_data *sd,int n);
 int pc_equippoint(struct map_session_data *sd,int n);
+int pc_setinventorydata(struct map_session_data *sd);
 
 int pc_checkskill(struct map_session_data *sd,int skill_id);
 int pc_checkallowskill(struct map_session_data *sd);

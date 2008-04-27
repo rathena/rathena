@@ -10,10 +10,6 @@
 #include "battle.h" // struct battle_config
 #include "script.h" // item script processing
 #include "pc.h"     // W_MUSICAL, W_WHIP
-#include "storage.h"
-#include "npc.h"
-#include "clif.h"
-#include "mob.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -693,7 +689,7 @@ static int itemdb_gendercheck(struct item_data *id)
 /*==========================================
  * processes one itemdb entry
  *------------------------------------------*/
-static bool itemdb_parse_dbrow(char** str, const char* source, int line, int scriptopt, int db)
+static bool itemdb_parse_dbrow(char** str, const char* source, int line, int scriptopt)
 {
 	/*
 		+----+--------------+---------------+------+-----------+------------+--------+--------+---------+-------+-------+------------+-------------+---------------+-----------------+--------------+-------------+------------+------+--------+--------------+----------------+
@@ -716,9 +712,6 @@ static bool itemdb_parse_dbrow(char** str, const char* source, int line, int scr
 	id = itemdb_load(nameid);
 	safestrncpy(id->name, str[1], sizeof(id->name));
 	safestrncpy(id->jname, str[2], sizeof(id->jname));
-
-	if(db == 1)
-		id->flag.db2 = 1;
 
 	id->type = atoi(str[3]);
 	if (id->type == IT_DELAYCONSUME)
@@ -907,7 +900,8 @@ static int itemdb_readdb(void)
 			}
 			str[21] = p;
 
-			if (!itemdb_parse_dbrow(str, path, lines, 0, fi))
+
+			if (!itemdb_parse_dbrow(str, path, lines, 0))
 				continue;
 
 			count++;
@@ -954,7 +948,7 @@ static int itemdb_read_sqldb(void)
 				if( str[i] == NULL ) str[i] = dummy; // get rid of NULL columns
 			}
 
-			if (!itemdb_parse_dbrow(str, item_db_name[fi], lines, SCRIPT_IGNORE_EXTERNAL_BRACKETS, fi))
+			if (!itemdb_parse_dbrow(str, item_db_name[fi], lines, SCRIPT_IGNORE_EXTERNAL_BRACKETS))
 				continue;
 			++count;
 		}
@@ -1012,13 +1006,6 @@ static void destroy_item_data(struct item_data* self, int free_self)
 		aFree(self);
 }
 
-/*==========================================
- * This comment shall be a monument to cake.
- * The cake is NOT a lie in eAthena.
- * We are so awesome we have our own cake.
- * Please spam Cyxult with endless PMs to get your cake.
- *------------------------------------------*/
-
 static int itemdb_final_sub(DBKey key,void *data,va_list ap)
 {
 	struct item_data *id = (struct item_data *)data;
@@ -1029,149 +1016,30 @@ static int itemdb_final_sub(DBKey key,void *data,va_list ap)
 	return 0;
 }
 
-//Uncomment this if you're an elitist jerk who thinks this code is unecessary
-//#define I_HATE_KEVIN
-#ifndef I_HATE_KEVIN
-int itemdb_reload_check_npc(DBKey key,void * data,va_list ap)
+void itemdb_reload(void)
 {
-	struct npc_data * nd = (struct npc_data *)data;
-	int offset = 0, i = 0;
+	struct s_mapiterator* iter;
+	struct map_session_data* sd;
 
-	if(nd->subtype != SHOP && nd->subtype != CASHSHOP)
-		return 0;
-
-	while(i < nd->u.shop.count)
-	{
-
-		if(itemdb_exists(nd->u.shop.shop_item[i].nameid) == NULL)
-		{
-
-			nd->u.shop.count--;
-
-			//Shift array to left, overwriting old data
-			for(offset = i; offset+1 < nd->u.shop.count; offset++);
-			{
-				nd->u.shop.shop_item[offset].nameid = nd->u.shop.shop_item[offset+1].nameid;
-				nd->u.shop.shop_item[offset].value = nd->u.shop.shop_item[offset+1].value;
-			}
-
-		}
-		//increment counter if we didn't delete something
-		else
-			i++;
-
-	}
-
-	//Resize array
-	RECREATE(nd->u.shop.shop_item, struct npc_item_list, nd->u.shop.count);
-
-	return 0;
-}
-
-static int itemdb_reload_check(DBKey key,void *data,va_list ap)
-{
 	int i;
-	struct map_session_data *sd = (struct map_session_data *)data;
-	struct storage * stor;
-	struct item_data * id;
-	struct npc_data * nd;
 
-	if(sd->npc_shopid)
-	{
-		nd = (struct npc_data*)map_id2bl(sd->npc_shopid);
-		clif_buylist(sd, nd);
-	}
+	// clear the previous itemdb data
+	for( i = 0; i < ARRAYLENGTH(itemdb_array); ++i )
+		if( itemdb_array[i] )
+			destroy_item_data(itemdb_array[i], 1);
 
-	//First, handle all items in inventories/equiped, cart, and storage
-	for(i = 0; i < MAX_INVENTORY; i++)
-	{
-		if(!sd->status.inventory[i].nameid)
-			continue;
+	itemdb_other->clear(itemdb_other, itemdb_final_sub);
 
-		id = itemdb_exists(sd->status.inventory[i].nameid);
-		if(id == NULL)
-		{
-			sd->inventory_data[i] = NULL;
-			pc_delitem(sd, i, sd->status.inventory[i].amount, 4);
-		}
-		else
-		{
-			sd->inventory_data[i] = id;
-		}
-	}
+	memset(itemdb_array, 0, sizeof(itemdb_array));
 
-	//Delete nonexistant items from cart
-	for(i = 0; i < MAX_CART; i++)
-	{
-		if(!sd->status.cart[i].nameid)
-			continue;
+	// read new data
+	itemdb_read();
 
-		id = itemdb_exists(sd->status.cart[i].nameid);
-		if(id == NULL)
-		{
-			sd->inventory_data[i] = NULL;
-			pc_cart_delitem(sd, i, sd->status.cart[i].amount, 0);
-		}
-	}
-
-	//Delete storage
-	if((stor = account2storage2(sd->status.account_id)))
-	{
-		//If storage isn't found, it will be deleted whenever storage is loaded again
-		if(stor)
-		{
-			for(i = 0; i < MAX_STORAGE; i++)
-			{
-				if(!sd->status.inventory[i].nameid)
-					continue;
-
-				if(itemdb_exists(sd->status.inventory[i].nameid) == NULL)
-					storage_delitem(sd, stor, i, stor->storage_[i].amount);
-			}
-		}
-	}
-
-	return 0;
-}
-
-//Cleanup mob db drop tables
-void itemdb_foreach_mobdb(void)
-{
-	int i = 0, j = 0;
-	struct item_data * id;
-	s_mob_db * mdb;
-
-	for(i=0; i < MAX_MOB_DB; i++)
-	{
-		mdb = mob_db(i);
-		if(mdb == mob_dummy)
-			continue;
-		for(j=0; j < MAX_MOB_DROP; j++)
-		{
-			id = itemdb_exists(mdb->dropitem[j].nameid);
-			if(id == NULL)
-			{
-				mdb->dropitem[j].nameid = 0;
-				mdb->dropitem[j].p = 0;
-			}
-		}
-	}
-}
-#endif
-
-void itemdb_reload(int flag)
-{
-
-	do_final_itemdb();
-	do_init_itemdb();
-
-	if(flag)
-	{
-		//Update ALL items on the server
-		map_foreachpc(itemdb_reload_check);
-		npc_foreach(itemdb_reload_check_npc);
-		itemdb_foreach_mobdb();
-	}
+	// readjust itemdb pointer cache for each player
+	iter = mapit_geteachpc();
+	for( sd = (struct map_session_data*)mapit_first(iter); mapit_exists(iter); sd = (struct map_session_data*)mapit_next(iter) )
+		pc_setinventorydata(sd);
+	mapit_free(iter);
 }
 
 void do_final_itemdb(void)

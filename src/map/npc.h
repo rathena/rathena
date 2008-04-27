@@ -146,8 +146,6 @@ int npc_script_event(struct map_session_data* sd, enum npce_event type);
 
 int npc_cashshop_buy(struct map_session_data *sd, int nameid, int amount, int points);
 
-void npc_foreach(int (*func)(DBKey,void*,va_list), ...);
-
 extern struct npc_data* fake_nd;
 
 #endif /* _NPC_H_ */

@@ -14,7 +14,6 @@ struct map_session_data;
 int storage_storageopen(struct map_session_data *sd);
 int storage_storageadd(struct map_session_data *sd,int index,int amount);
 int storage_storageget(struct map_session_data *sd,int index,int amount);
-int storage_delitem(struct map_session_data *sd,struct storage *stor,int n,int amount);
 int storage_storageaddfromcart(struct map_session_data *sd,int index,int amount);
 int storage_storagegettocart(struct map_session_data *sd,int index,int amount);
 int storage_storageclose(struct map_session_data *sd);

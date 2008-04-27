@@ -224,7 +224,7 @@ static int storage_additem(struct map_session_data *sd,struct storage *stor,stru
 /*==========================================
  * Internal del-item function
  *------------------------------------------*/
-int storage_delitem(struct map_session_data *sd,struct storage *stor,int n,int amount)
+static int storage_delitem(struct map_session_data *sd,struct storage *stor,int n,int amount)
 {
 
 	if(stor->storage_[n].nameid==0 || stor->storage_[n].amount<amount)

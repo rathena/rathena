@@ -2310,12 +2310,15 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		{
 			if (md->db->dropitem[i].nameid <= 0)
 				continue;
+			if (!itemdb_exists(md->db->dropitem[i].nameid))
+				continue;
 			drop_rate = md->db->dropitem[i].p;
 			if (drop_rate <= 0) {
 				if (battle_config.drop_rate0item)
 					continue;
 				drop_rate = 1;
 			}
+
 			// change drops depending on monsters size [Valaris]
 			if(md->special_state.size==1 && drop_rate >= 2)
 				drop_rate/=2;
@@ -2455,6 +2458,8 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 			i = rand() % 3;
 			
 			if(md->db->mvpitem[i].nameid <= 0)
+				continue;
+			if(!itemdb_exists(md->db->mvpitem[i].nameid))
 				continue;
 			
 			temp = md->db->mvpitem[i].p;

@@ -2965,12 +2965,11 @@ int pc_delitem(struct map_session_data *sd,int n,int amount,int type)
 {
 	nullpo_retr(1, sd);
 
-	if(sd->status.inventory[n].nameid==0 || amount <= 0 || sd->status.inventory[n].amount<amount || (sd->inventory_data[n] == NULL && ~type&4))
+	if(sd->status.inventory[n].nameid==0 || amount <= 0 || sd->status.inventory[n].amount<amount || sd->inventory_data[n] == NULL)
 		return 1;
 
 	sd->status.inventory[n].amount -= amount;
-	if(~type&4)
-		sd->weight -= sd->inventory_data[n]->weight*amount ;
+	sd->weight -= sd->inventory_data[n]->weight*amount ;
 	if(sd->status.inventory[n].amount<=0){
 		if(sd->status.inventory[n].equip)
 			pc_unequipitem(sd,n,3);
@@ -3458,7 +3457,7 @@ int pc_steal_item(struct map_session_data *sd,struct block_list *bl, int lv)
 	// Try dropping one item, in the order from first to last possible slot.
 	// Droprate is affected by the skill success rate.
 	for( i = 0; i < MAX_STEAL_DROP; i++ )
-		if( md->db->dropitem[i].nameid > 0 && rand() % 10000 < md->db->dropitem[i].p * rate/100. )
+		if( md->db->dropitem[i].nameid > 0 && itemdb_exists(md->db->dropitem[i].nameid) && rand() % 10000 < md->db->dropitem[i].p * rate/100. )
 			break;
 	if( i == MAX_STEAL_DROP )
 		return 0;
