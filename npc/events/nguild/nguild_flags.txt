@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= kobra_k88
 //===== Current Version: =====================================
-//= 1.2
+//= 1.3
 //===== Compatible With: =====================================
 //= eAthena 0.1+; RO Episode 4+
 //===== Description: =========================================
@@ -12,8 +12,53 @@
 // Based off existing guild scripts.  Do not know if it is accurate.[kobra_k88]
 // 1.1 Inner Flags don't teleport you to your HQ anymore [Lupus]
 // 1.2 updated flags to use the new arguments. [L0ne__W0lf]
+// 1.3 Guild flag function added. [L0ne_W0lf]
 //============================================================
 
+/// Flag Function
+//============================================================
+function	script	F_Flags	{
+	set .@GID, GetCastleData(getarg(1),1);
+	if (getarg(5) == 0) return;
+	if (.@GID == 0) {
+		mes " [ Edict of the Divine Rune Midgard Kingdom ]";
+		mes " ";
+		mes "1. Follow the ordinance of The Divine Rune Midgard Kingdom, ";
+		mes "We declare that";
+		mes "there is no formal master of this castle.";
+		mes " ";
+		mes "2. To the one who can ";
+		mes "overcome all trials";
+		mes "and destroy the Emperium,";
+		mes "the king will endow the one with";
+		mes "ownership of this castle.";
+		return;
+	}
+	else {
+		if (getcharid(2) == .@GID && getarg(4) == 1) {
+			mes "Brave ones...";
+			mes "Do you wish to return to your honorable place?";
+			next;
+			if (select("Return to the guild castle.:Quit.") == 1) {
+				if (getcharid(2) == GetCastleData(getarg(1),1))
+					warp getarg(1),getarg(2),getarg(3);
+			}
+			return;
+		}
+		mes "[ Edict of the Divine Rune Midgard Kingdom ]";
+		mes " ";
+		mes "1. Following the ordinance of the";
+		mes "Divine Rune Midgard Kingdom,";
+		mes "we approve that this place is in";
+		mes "the private possession of ^ff0000" + GetGuildName(.@GID) + "^000000 Guild.";
+		mes " ";
+		mes "2. The guild Master of ^ff0000"+ GetGuildName(.@GID) + "^000000 Guild is";
+		mes "^FF0000" + GetGuildMaster(.@GID) + "^000000";
+		mes "If there is anyone who objects to this,";
+		mes " prove your strength and honor with a steel blade in your hand.";
+		return;
+	}
+}
 
 //============================================================================//
 // 			Castle 1

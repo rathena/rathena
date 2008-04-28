@@ -1,0 +1,167 @@
+//===== eAthena Script =======================================
+//= War of Emperium (Geffen)
+//===== By: ==================================================
+//= L0ne_W0lf
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= eAthena SVN
+//===== Description: =========================================
+//= NPCs that relate to Geffen Guild Castle 3
+//===== Additional Comments: =================================
+//= 1.0 First Version. No longer uses functions. [L0ne_W0lf]
+//============================================================
+
+// Guild Flag (Town)
+//============================================================
+geffen,120,132,8	script	Yesnelph#g3-1::Yesnelph	722,{
+	end;
+
+OnRecvCastleG03:
+	FlagEmblem GetCastleData("gefg_cas03",1);
+	end;
+}
+
+// Guild Flag (Outside Castle)
+//============================================================
+gef_fild13,78,182,4	script	Yesnelph#g3-2::Yesnelph2	722,{
+	set .@GID, GetCastleData("gefg_cas03",1);
+	if (.@GID == 0) {
+		mes " [ Edict of the Divine Rune Midgard Kingdom ]";
+		mes " ";
+		mes "1. Follow the ordinance of The Divine Rune Midgard Kingdom, ";
+		mes "We declare that";
+		mes "there is no formal master of this castle.";
+		mes " ";
+		mes "2. To the one who can ";
+		mes "overcome all trials";
+		mes "and destroy the Emperium,";
+		mes "the king will endow the one with";
+		mes "ownership of this castle.";
+	}
+	else {
+		if (getcharid(2) == .@GID) {
+			mes "Brave ones...";
+			mes "Do you wish to return to your honorable place?";
+			next;
+			if (select("Return to the guild castle.:Quit.") == 1) {
+				if (getcharid(2) == GetCastleData("gefg_cas03",1)) {
+					warp "gefg_cas03",116,89;
+					end;
+				}
+			}
+			close;
+		}
+		mes "[ Edict of the Divine Rune Midgard Kingdom ]";
+		mes " ";
+		mes "1. Following the ordinance of the";
+		mes "Divine Rune Midgard Kingdom,";
+		mes "we approve that this place is in";
+		mes "the private possession of ^ff0000" + GetGuildName(.@GID) + "^000000 Guild.";
+		mes " ";
+		mes "2. The guild Master of ^ff0000"+ GetGuildName(.@GID) + "^000000 Guild is";
+		mes "^FF0000" + GetGuildMaster(.@GID) + "^000000";
+		mes "If there is anyone who objects to this,";
+		mes " prove your strength and honor with a steel blade in your hand.";
+	}
+	close;
+
+OnRecvCastleG03:
+	FlagEmblem GetCastleData("gefg_cas03",1);
+	end;
+}
+
+gef_fild13,87,182,4	duplicate(Yesnelph2)	Yesnelph#g3-3	722
+gef_fild13,73,295,7	duplicate(Yesnelph2)	Yesnelph#g3-4	722
+gef_fild13,113,274,7	duplicate(Yesnelph2)	Yesnelph#g3-5	722
+gef_fild13,144,235,6	duplicate(Yesnelph2)	Yesnelph#g3-6	722
+gef_fild13,144,244,4	duplicate(Yesnelph2)	Yesnelph#g3-7	722
+
+// Guild Flag (Inside Castle)
+//============================================================
+gefg_cas03,122,220,6	script	Yesnelph#g3-8::Yesnelph3	722,{
+	set .@GID, GetCastleData("gefg_cas03",1);
+	if (.@GID == 0) {
+		mes " [ Edict of the Divine Rune Midgard Kingdom ]";
+		mes " ";
+		mes "1. Follow the ordinance of The Divine Rune Midgard Kingdom, ";
+		mes "We declare that";
+		mes "there is no formal master of this castle.";
+		mes " ";
+		mes "2. To the one who can ";
+		mes "overcome all trials";
+		mes "and destroy the Emperium,";
+		mes "the king will endow the one with";
+		mes "ownership of this castle.";
+	}
+	else {
+		mes "[ Edict of the Divine Rune Midgard Kingdom ]";
+		mes " ";
+		mes "1. Following the ordinance of the";
+		mes "Divine Rune Midgard Kingdom,";
+		mes "we approve that this place is in";
+		mes "the private possession of ^ff0000" + GetGuildName(.@GID) + "^000000 Guild.";
+		mes " ";
+		mes "2. The guild Master of ^ff0000"+ GetGuildName(.@GID) + "^000000 Guild is";
+		mes "^FF0000" + GetGuildMaster(.@GID) + "^000000";
+		mes "If there is anyone who objects to this,";
+		mes " prove your strength and honor with a steel blade in your hand.";
+	}
+	close;
+
+OnRecvCastleG03:
+	FlagEmblem GetCastleData("gefg_cas03",1);
+	end;
+}
+
+gefg_cas03,122,229,6	duplicate(Yesnelph3)	Yesnelph#g3-9	722
+gefg_cas03,91,257,7	duplicate(Yesnelph3)	Yesnelph#g3-10	722
+gefg_cas03,52,276,7	duplicate(Yesnelph3)	Yesnelph#g3-11	722
+gefg_cas03,56,164,4	duplicate(Yesnelph3)	Yesnelph#g3-12	722
+gefg_cas03,65,164,4	duplicate(Yesnelph3)	Yesnelph#g3-13	722
+gefg_cas03,37,214,1	duplicate(Yesnelph3)	Yesnelph#g3-14	722
+gefg_cas03,34,208,1	duplicate(Yesnelph3)	Yesnelph#g3-15	722
+
+// AGIT Manager
+//============================================================
+gefg_cas03,245,167,0	duplicate(Gld_Agit_Manager)	Agit#gefg_cas03	-1
+
+// Steward
+//============================================================
+gefg_cas03,106,23,5	duplicate(Gld_Mngr_Template)	Jean#gefg_cas03	55
+
+// Guardians
+//============================================================
+gefg_cas03,106,23,5	duplicate(Gld_Guard_Template)	Guardian#gefg_cas03	-1
+
+// Kafra Staff
+//============================================================
+gefg_cas03,116,89,5	duplicate(Gld_Kafra_Template)	Kafra Staff#gefg_cas03	117
+
+// Master's Room Exit
+//============================================================
+gefg_cas03,275,289,0	script	#switch_G03	111,{
+	mes " ";
+	mes "There's a small lever. Will you pull it? ";
+	next;
+	switch(select("Pull.:Do not.")) {
+	case 1:
+		warp "gefg_cas03",106,24;
+		break;
+	case 2:
+		break;
+	}
+	end;
+}
+
+// Guild Treasure Protection
+//============================================================
+gefg_cas03,271,290,0	duplicate(Gld_Trea_Protect)	ban_warp#gefg_cas03	-1,6,6
+
+// Guild Treasure Spawns
+//============================================================
+gefg_cas03,271,290,0	duplicate(Gld_Trea_Spawn)	Treasure#gefg_cas03	-1
+
+// Guild Dungeon Switch
+//============================================================
+gefg_cas03,221,43,0	duplicate(Gld_Dun_Template)	#gefg_cas03	111

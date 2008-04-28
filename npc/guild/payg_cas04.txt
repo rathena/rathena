@@ -1,0 +1,165 @@
+//===== eAthena Script =======================================
+//= War of Emperium (Payon)
+//===== By: ==================================================
+//= L0ne_W0lf
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= eAthena SVN
+//===== Description: =========================================
+//= NPCs that relate to Payon Guild Castle 4
+//===== Additional Comments: =================================
+//= 1.0 First Version. No longer uses functions. [L0ne_W0lf]
+//============================================================
+
+// Guild Flag (Town)
+//============================================================
+payon,166,169,3	script	Sacred Altar#f4-1::SacredAltar	722,{
+	end;
+
+OnRecvCastlePy04:
+	FlagEmblem GetCastleData("payg_cas04",1);
+	end;
+}
+
+payon,118,322,4	duplicate(SacredAltar)	Sacred Altar#f4-2	722
+
+// Guild Flag (Outside Castle)
+//============================================================
+pay_gld,137,160,0	script	Sacred Altar#f4-3::SacredAltar2	722,{
+	set .@GID, GetCastleData("payg_cas04",1);
+	if (.@GID == 0) {
+		mes " [ Edict of the Divine Rune Midgard Kingdom ]";
+		mes " ";
+		mes "1. Follow the ordinance of The Divine Rune Midgard Kingdom, ";
+		mes "We declare that";
+		mes "there is no formal master of this castle.";
+		mes " ";
+		mes "2. To the one who can ";
+		mes "overcome all trials";
+		mes "and destroy the Emperium,";
+		mes "the king will endow the one with";
+		mes "ownership of this castle.";
+	}
+	else {
+		if (getcharid(2) == .@GID) {
+			mes "Brave ones...";
+			mes "Do you wish to return to your honorable place?";
+			next;
+			if (select("Return to the guild castle.:Quit.") == 1) {
+				if (getcharid(2) == GetCastleData("payg_cas04",1)) {
+					warp "payg_cas04",40,235;
+					end;
+				}
+			}
+			close;
+		}
+		mes "[ Edict of the Divine Rune Midgard Kingdom ]";
+		mes " ";
+		mes "1. Following the ordinance of the";
+		mes "Divine Rune Midgard Kingdom,";
+		mes "we approve that this place is in";
+		mes "the private possession of ^ff0000" + GetGuildName(.@GID) + "^000000 Guild.";
+		mes " ";
+		mes "2. The guild Master of ^ff0000"+ GetGuildName(.@GID) + "^000000 Guild is";
+		mes "^FF0000" + GetGuildMaster(.@GID) + "^000000";
+		mes "If there is anyone who objects to this,";
+		mes " prove your strength and honor with a steel blade in your hand.";
+	}
+	close;
+
+OnRecvCastlePy04:
+	FlagEmblem GetCastleData("payg_cas04",1);
+	end;
+}
+
+pay_gld,143,160,0	duplicate(SacredAltar2)	Sacred Altar#f4-4	722
+pay_gld,133,151,2	duplicate(SacredAltar2)	Sacred Altar#f4-5	722
+pay_gld,153,166,1	duplicate(SacredAltar2)	Sacred Altar#f4-6	722
+
+// Guild Flag (Inside Castle)
+//============================================================
+payg_cas04,255,259,0	script	Sacred Altar#f4-7::SacredAltar3	722,{
+	set .@GID, GetCastleData("payg_cas04",1);
+	if (.@GID == 0) {
+		mes " [ Edict of the Divine Rune Midgard Kingdom ]";
+		mes " ";
+		mes "1. Follow the ordinance of The Divine Rune Midgard Kingdom, ";
+		mes "We declare that";
+		mes "there is no formal master of this castle.";
+		mes " ";
+		mes "2. To the one who can ";
+		mes "overcome all trials";
+		mes "and destroy the Emperium,";
+		mes "the king will endow the one with";
+		mes "ownership of this castle.";
+	}
+	else {
+		mes "[ Edict of the Divine Rune Midgard Kingdom ]";
+		mes " ";
+		mes "1. Following the ordinance of the";
+		mes "Divine Rune Midgard Kingdom,";
+		mes "we approve that this place is in";
+		mes "the private possession of ^ff0000" + GetGuildName(.@GID) + "^000000 Guild.";
+		mes " ";
+		mes "2. The guild Master of ^ff0000"+ GetGuildName(.@GID) + "^000000 Guild is";
+		mes "^FF0000" + GetGuildMaster(.@GID) + "^000000";
+		mes "If there is anyone who objects to this,";
+		mes " prove your strength and honor with a steel blade in your hand.";
+	}
+	close;
+
+OnRecvCastlePy04:
+	FlagEmblem GetCastleData("payg_cas04",1);
+	end;
+}
+
+payg_cas04,248,259,0	duplicate(SacredAltar3)	Sacred Altar#f4-8	722
+payg_cas04,248,168,6	duplicate(SacredAltar3)	Sacred Altar#f4-9	722
+payg_cas04,248,160,6	duplicate(SacredAltar3)	Sacred Altar#f4-10	722
+payg_cas04,232,181,4	duplicate(SacredAltar3)	Sacred Altar#f4-11	722
+payg_cas04,239,181,4	duplicate(SacredAltar3)	Sacred Altar#f4-12	722
+
+// AGIT Manager
+//============================================================
+payg_cas04,271,29,0	duplicate(Gld_Agit_Manager)	Agit#payg_cas04	-1
+
+// Steward
+//============================================================
+payg_cas04,38,284,3	duplicate(Gld_Mngr_Template)	DJ#payg_cas04	55
+
+// Guardians
+//============================================================
+payg_cas04,38,284,3	duplicate(Gld_Guard_Template)	Guardian#payg_cas04	-1
+
+// Kafra Staff
+//============================================================
+payg_cas04,40,235,1	duplicate(Gld_Kafra_Template)	Kafra Staff#payg_cas04	117
+
+// Master's Room Exit
+//============================================================
+payg_cas04,151,47,0	script	#switch_Py04	111,{
+	mes " ";
+	mes "There's a small lever. Will you pull it? ";
+	next;
+	switch(select("Pull.:Do not.")) {
+	case 1:
+		warp "payg_cas04",38,285;
+		break;
+	case 2:
+		break;
+	}
+	end;
+}
+
+// Guild Treasure Protection
+//============================================================
+payg_cas04,147,48,0	duplicate(Gld_Trea_Protect)	ban_warp#payg_cas04	-1,6,6
+
+// Guild Treasure Spawns
+//============================================================
+payg_cas04,147,48,0	duplicate(Gld_Trea_Spawn)	Treasure#payg_cas04	-1
+
+// Guild Dungeon Switch
+//============================================================
+payg_cas04,52,48,0	duplicate(Gld_Dun_Template)	#payg_cas04	111

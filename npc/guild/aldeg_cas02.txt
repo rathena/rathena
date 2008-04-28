@@ -1,0 +1,170 @@
+//===== eAthena Script =======================================
+//= War of Emperium (Al De baran)
+//===== By: ==================================================
+//= L0ne_W0lf
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= eAthena SVN
+//===== Description: =========================================
+//= NPCs that relate to Al De Baran Guild Castle 2
+//===== Additional Comments: =================================
+//= 1.0 First Version. No longer uses functions. [L0ne_W0lf]
+//============================================================
+
+// Guild Flag (Town)
+//============================================================
+aldebaran,149,97,4	script	Hohenschwangau#a2-1::Hohenschwangau	722,{
+	end;
+
+OnRecvCastleA02:
+	FlagEmblem GetCastleData("aldeg_cas02",1);
+	end;
+}
+
+// Guild Flag (Outside Castle)
+//============================================================
+alde_gld,99,251,4	script	Hohenschwangau#a2-2::Hohenschwangau2	722,{
+	set .@GID, GetCastleData("aldeg_cas02",1);
+	if (.@GID == 0) {
+		mes " [ Edict of the Divine Rune Midgard Kingdom ]";
+		mes " ";
+		mes "1. Follow the ordinance of The Divine Rune Midgard Kingdom, ";
+		mes "We declare that";
+		mes "there is no formal master of this castle.";
+		mes " ";
+		mes "2. To the one who can ";
+		mes "overcome all trials";
+		mes "and destroy the Emperium,";
+		mes "the king will endow the one with";
+		mes "ownership of this castle.";
+	}
+	else {
+		if (getcharid(2) == .@GID) {
+			mes "Brave ones...";
+			mes "Do you wish to return to your honorable place?";
+			next;
+			if (select("Return to the guild castle.:Quit.") == 1) {
+				if (getcharid(2) == GetCastleData("aldeg_cas02",1)) {
+					warp "aldeg_cas02",85,72;
+					end;
+				}
+			}
+			close;
+		}
+		mes "[ Edict of the Divine Rune Midgard Kingdom ]";
+		mes " ";
+		mes "1. Following the ordinance of the";
+		mes "Divine Rune Midgard Kingdom,";
+		mes "we approve that this place is in";
+		mes "the private possession of ^ff0000" + GetGuildName(.@GID) + "^000000 Guild.";
+		mes " ";
+		mes "2. The guild Master of ^ff0000"+ GetGuildName(.@GID) + "^000000 Guild is";
+		mes "^FF0000" + GetGuildMaster(.@GID) + "^000000";
+		mes "If there is anyone who objects to this,";
+		mes " prove your strength and honor with a steel blade in your hand.";
+	}
+	close;
+
+OnRecvCastleA02:
+	FlagEmblem GetCastleData("aldeg_cas02",1);
+	end;
+}
+
+alde_gld,99,244,4	duplicate(Hohenschwangau2)	Hohenschwangau#a2-3	722
+
+// Guild Flag (Inside Castle)
+//============================================================
+aldeg_cas02,82,71,2	script	Hohenschwangau#a2-4::Hohenschwangau3	722,{
+	set .@GID, GetCastleData("aldeg_cas02",1);
+	if (.@GID == 0) {
+		mes " [ Edict of the Divine Rune Midgard Kingdom ]";
+		mes " ";
+		mes "1. Follow the ordinance of The Divine Rune Midgard Kingdom, ";
+		mes "We declare that";
+		mes "there is no formal master of this castle.";
+		mes " ";
+		mes "2. To the one who can ";
+		mes "overcome all trials";
+		mes "and destroy the Emperium,";
+		mes "the king will endow the one with";
+		mes "ownership of this castle.";
+	}
+	else {
+		mes "[ Edict of the Divine Rune Midgard Kingdom ]";
+		mes " ";
+		mes "1. Following the ordinance of the";
+		mes "Divine Rune Midgard Kingdom,";
+		mes "we approve that this place is in";
+		mes "the private possession of ^ff0000" + GetGuildName(.@GID) + "^000000 Guild.";
+		mes " ";
+		mes "2. The guild Master of ^ff0000"+ GetGuildName(.@GID) + "^000000 Guild is";
+		mes "^FF0000" + GetGuildMaster(.@GID) + "^000000";
+		mes "If there is anyone who objects to this,";
+		mes " prove your strength and honor with a steel blade in your hand.";
+	}
+	close;
+
+OnRecvCastleA02:
+	FlagEmblem GetCastleData("aldeg_cas02",1);
+	end;
+}
+
+aldeg_cas02,67,30,2	duplicate(Hohenschwangau3)	Hohenschwangau#a2-5	722
+aldeg_cas02,183,140,2	duplicate(Hohenschwangau3)	Hohenschwangau#a2-6	722
+aldeg_cas02,212,152,2	duplicate(Hohenschwangau3)	Hohenschwangau#a2-7	722
+aldeg_cas02,108,39,2	duplicate(Hohenschwangau3)	Hohenschwangau#a2-8	722
+aldeg_cas02,57,213,2	duplicate(Hohenschwangau3)	Hohenschwangau#a2-9	722
+aldeg_cas02,91,181,2	duplicate(Hohenschwangau3)	Hohenschwangau#a2-10	722
+aldeg_cas02,103,53,2	duplicate(Hohenschwangau3)	Hohenschwangau#a2-11	722
+aldeg_cas02,73,53,2	duplicate(Hohenschwangau3)	Hohenschwangau#a2-12	722
+aldeg_cas02,63,41,2	duplicate(Hohenschwangau3)	Hohenschwangau#a2-13	722
+aldeg_cas02,229,6,2	duplicate(Hohenschwangau3)	Hohenschwangau#a2-14	722
+aldeg_cas02,230,40,2	duplicate(Hohenschwangau3)	Hohenschwangau#a2-15	722
+aldeg_cas02,197,40,2	duplicate(Hohenschwangau3)	Hohenschwangau#a2-16	722
+aldeg_cas02,32,213,2	duplicate(Hohenschwangau3)	Hohenschwangau#a2-17	722
+aldeg_cas02,121,29,2	duplicate(Hohenschwangau3)	Hohenschwangau#a2-18	722
+
+// AGIT Manager
+//============================================================
+aldeg_cas02,214,24,0	duplicate(Gld_Agit_Manager)	Agit#aldeg_cas02	-1
+
+// Steward
+//============================================================
+aldeg_cas02,78,74,0	duplicate(Gld_Mngr_Template)	Chenchenlie#aldeg_cas02	55
+
+// Guardians
+//============================================================
+aldeg_cas02,78,74,0	duplicate(Gld_Guard_Template)	Guardian#aldeg_cas02	-1
+
+// Kafra Staff
+//============================================================
+aldeg_cas02,84,74,0	duplicate(Gld_Kafra_Template)	Kafra Staff#aldeg_cas02	117
+
+// Master's Room Exit
+//============================================================
+aldeg_cas02,139,235,0	script	#switch_A02	111,{
+	mes " ";
+	mes "There's a small lever. Will you pull it? ";
+	next;
+	switch(select("Pull.:Do not.")) {
+	case 1:
+		warp "aldeg_cas02",78,75;
+		break;
+	case 2:
+		break;
+	}
+	end;
+}
+
+// Guild Treasure Protection
+//============================================================
+aldeg_cas02,135,230,0	duplicate(Gld_Trea_Protect)	ban_warp#aldeg_cas02	-1,8,8
+
+// Guild Treasure Spawns
+//============================================================
+aldeg_cas02,135,230,0	duplicate(Gld_Trea_Spawn)	Treasure#aldeg_cas02	-1
+
+// Guild Dungeon Switch
+//============================================================
+aldeg_cas02,194,136,0	duplicate(Gld_Dun_Template)	#aldeg_cas02	111

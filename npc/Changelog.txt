@@ -1,6 +1,12 @@
 Date		Added
 ======
 2008/04/26
+	* Rev. 12673 Rewrote the WoE 1.0 from the ground up nearly. [L0ne_W0lf]
+	- Renamed the WoE Time setting NPC to "agit_controller.txt"
+	- System is set up to mimic Aegis, some parts are still lacking.
+	- Documentation on the new system is forth-coming.
+	- Updated Novice WoE scripts to keep them from breaking.
+2008/04/26
 	* Rev. 12654 Fixed escape problem in jobs/novice/novice.txt [Toms]
 2008/04/24
 	* Rev. 12646 Fixed hugel_bingo making an unneeded infinite loop bugreport:1349 [Toms]

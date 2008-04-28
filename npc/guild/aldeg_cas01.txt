@@ -1,0 +1,174 @@
+//===== eAthena Script =======================================
+//= War of Emperium (Al De baran)
+//===== By: ==================================================
+//= L0ne_W0lf
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= eAthena SVN
+//===== Description: =========================================
+//= NPCs that relate to Al De Baran Guild Castle 1
+//===== Additional Comments: =================================
+//= 1.0 First Version. No longer uses functions. [L0ne_W0lf]
+//============================================================
+
+// Guild Flag (Town)
+//============================================================
+aldebaran,152,97,4	script	Neuschwanstein#a1-1	722,{
+	end;
+
+OnRecvCastleA01:
+	FlagEmblem GetCastleData("aldeg_cas01",1);
+	end;
+}
+
+// Guild Flag (Outside Castle)
+//============================================================
+alde_gld,61,87,6	script	Neuschwanstein#a1-2::Neuschwanstein2	722,{
+	set .@GID, GetCastleData("aldeg_cas01",1);
+	if (.@GID == 0) {
+		mes " [ Edict of the Divine Rune Midgard Kingdom ]";
+		mes " ";
+		mes "1. Follow the ordinance of The Divine Rune Midgard Kingdom, ";
+		mes "We declare that";
+		mes "there is no formal master of this castle.";
+		mes " ";
+		mes "2. To the one who can ";
+		mes "overcome all trials";
+		mes "and destroy the Emperium,";
+		mes "the king will endow the one with";
+		mes "ownership of this castle.";
+	}
+	else {
+		if (getcharid(2) == .@GID) {
+			mes "Brave ones...";
+			mes "Do you wish to return to your honorable place?";
+			next;
+			if (select("Return to the guild castle.:Quit.") == 1) {
+				if (getcharid(2) == GetCastleData("aldeg_cas01",1)) {
+					warp "aldeg_cas01",218,170;
+					end;
+				}
+			}
+			close;
+		}
+		mes "[ Edict of the Divine Rune Midgard Kingdom ]";
+		mes " ";
+		mes "1. Following the ordinance of the";
+		mes "Divine Rune Midgard Kingdom,";
+		mes "we approve that this place is in";
+		mes "the private possession of ^ff0000" + GetGuildName(.@GID) + "^000000 Guild.";
+		mes " ";
+		mes "2. The guild Master of ^ff0000"+ GetGuildName(.@GID) + "^000000 Guild is";
+		mes "^FF0000" + GetGuildMaster(.@GID) + "^000000";
+		mes "If there is anyone who objects to this,";
+		mes " prove your strength and honor with a steel blade in your hand.";
+	}
+	close;
+
+OnRecvCastleA01:
+	FlagEmblem GetCastleData("aldeg_cas01",1);
+	end;
+}
+
+alde_gld,61,79,6	duplicate(Neuschwanstein2)	Neuschwanstein#a1-3	722
+alde_gld,45,87,8	duplicate(Neuschwanstein2)	Neuschwanstein#a1-4	722
+alde_gld,51,87,8	duplicate(Neuschwanstein2)	Neuschwanstein#a1-5	722
+
+// Guild Flag (Inside Castle)
+//============================================================
+aldeg_cas01,30,248,4	script	Neuschwanstein#a1-6::Neuschwanstein3	722,{
+	set .@GID, GetCastleData("aldeg_cas01",1);
+	if (.@GID == 0) {
+		mes " [ Edict of the Divine Rune Midgard Kingdom ]";
+		mes " ";
+		mes "1. Follow the ordinance of The Divine Rune Midgard Kingdom, ";
+		mes "We declare that";
+		mes "there is no formal master of this castle.";
+		mes " ";
+		mes "2. To the one who can ";
+		mes "overcome all trials";
+		mes "and destroy the Emperium,";
+		mes "the king will endow the one with";
+		mes "ownership of this castle.";
+	}
+	else {
+		mes "[ Edict of the Divine Rune Midgard Kingdom ]";
+		mes " ";
+		mes "1. Following the ordinance of the";
+		mes "Divine Rune Midgard Kingdom,";
+		mes "we approve that this place is in";
+		mes "the private possession of ^ff0000" + GetGuildName(.@GID) + "^000000 Guild.";
+		mes " ";
+		mes "2. The guild Master of ^ff0000"+ GetGuildName(.@GID) + "^000000 Guild is";
+		mes "^FF0000" + GetGuildMaster(.@GID) + "^000000";
+		mes "If there is anyone who objects to this,";
+		mes " prove your strength and honor with a steel blade in your hand.";
+	}
+	close;
+
+OnRecvCastleA01:
+	FlagEmblem GetCastleData("aldeg_cas01",1);
+	end;
+}
+
+aldeg_cas01,30,246,4	duplicate(Neuschwanstein3)	Neuschwanstein#a1-7	722
+aldeg_cas01,37,248,4	duplicate(Neuschwanstein3)	Neuschwanstein#a1-8	722
+aldeg_cas01,37,246,4	duplicate(Neuschwanstein3)	Neuschwanstein#a1-9	722
+aldeg_cas01,95,80,2	duplicate(Neuschwanstein3)	Neuschwanstein#a1-10	722
+aldeg_cas01,95,59,2	duplicate(Neuschwanstein3)	Neuschwanstein#a1-11	722
+aldeg_cas01,62,75,2	duplicate(Neuschwanstein3)	Neuschwanstein#a1-12	722
+aldeg_cas01,70,75,2	duplicate(Neuschwanstein3)	Neuschwanstein#a1-13	722
+aldeg_cas01,74,75,2	duplicate(Neuschwanstein3)	Neuschwanstein#a1-14	722
+aldeg_cas01,62,64,2	duplicate(Neuschwanstein3)	Neuschwanstein#a1-15	722
+aldeg_cas01,66,64,2	duplicate(Neuschwanstein3)	Neuschwanstein#a1-16	722
+aldeg_cas01,70,64,2	duplicate(Neuschwanstein3)	Neuschwanstein#a1-17	722
+aldeg_cas01,74,64,2	duplicate(Neuschwanstein3)	Neuschwanstein#a1-18	722
+aldeg_cas01,203,150,4	duplicate(Neuschwanstein3)	Neuschwanstein#a1-19	722
+aldeg_cas01,210,150,4	duplicate(Neuschwanstein3)	Neuschwanstein#a1-20	722
+aldeg_cas01,66,75,2	duplicate(Neuschwanstein3)	Neuschwanstein#a1-21	722
+
+// AGIT Manager
+//============================================================
+aldeg_cas01,216,24,0	duplicate(Gld_Agit_Manager)	Agit#aldeg_cas01	-1
+
+// Steward
+//============================================================
+aldeg_cas01,218,175,0	duplicate(Gld_Mngr_Template)	Alfredo#aldeg_cas01	55
+
+
+// Guardians
+//============================================================
+aldeg_cas01,218,175,0	duplicate(Gld_Guard_Template)	Guardian#aldeg_cas01	-1
+
+// Kafra Staff
+//============================================================
+aldeg_cas01,218,170,0	duplicate(Gld_Kafra_Template)	Kafra Staff#aldeg_cas01	117
+
+// Master's Room Exit
+//============================================================
+aldeg_cas01,123,223,0	script	#switch_A01	111,{
+	mes " ";
+	mes "There's a small lever. Will you pull it? ";
+	next;
+	switch(select("Pull.:Do not.")) {
+	case 1:
+		warp "aldeg_cas01",218,176;
+		break;
+	case 2:
+		break;
+	}
+	end;
+}
+
+// Guild Treasure Protection
+//============================================================
+aldeg_cas01,118,223,0	duplicate(Gld_Trea_Protect)	ban_warp#aldeg_cas01	-1,8,8
+
+// Guild Treasure Spawns
+//============================================================
+aldeg_cas01,118,223,0	duplicate(Gld_Trea_Spawn)	Treasure#aldeg_cas01	-1
+
+// Guild Dungeon Switch
+//============================================================
+aldeg_cas01,211,181,0	duplicate(Gld_Dun_Template)	#aldeg_cas01	111

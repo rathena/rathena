@@ -1,0 +1,165 @@
+//===== eAthena Script =======================================
+//= War of Emperium (Payon)
+//===== By: ==================================================
+//= L0ne_W0lf
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= eAthena SVN
+//===== Description: =========================================
+//= NPCs that relate to Payon Guild Castle 3
+//===== Additional Comments: =================================
+//= 1.0 First Version. No longer uses functions. [L0ne_W0lf]
+//============================================================
+
+// Guild Flag (Town)
+//============================================================
+payon,166,177,3	script	Holy Shadow#f3-1::HolyShadow	722,{
+	end;
+
+OnRecvCastlePy03:
+	FlagEmblem GetCastleData("payg_cas03",1);
+	end;
+}
+
+payon,113,322,4	duplicate(HolyShadow)	Holy Shadow#f3-2	722
+
+// Guild Flag (Outside Castle)
+//============================================================
+pay_gld,321,298,2	script	Holy Shadow#f3-3::HolyShadow2	722,{
+	set .@GID, GetCastleData("payg_cas03",1);
+	if (.@GID == 0) {
+		mes " [ Edict of the Divine Rune Midgard Kingdom ]";
+		mes " ";
+		mes "1. Follow the ordinance of The Divine Rune Midgard Kingdom, ";
+		mes "We declare that";
+		mes "there is no formal master of this castle.";
+		mes " ";
+		mes "2. To the one who can ";
+		mes "overcome all trials";
+		mes "and destroy the Emperium,";
+		mes "the king will endow the one with";
+		mes "ownership of this castle.";
+	}
+	else {
+		if (getcharid(2) == .@GID) {
+			mes "Brave ones...";
+			mes "Do you wish to return to your honorable place?";
+			next;
+			if (select("Return to the guild castle.:Quit.") == 1) {
+				if (getcharid(2) == GetCastleData("payg_cas03",1)) {
+					warp "payg_cas03",9,263;
+					end;
+				}
+			}
+			close;
+		}
+		mes "[ Edict of the Divine Rune Midgard Kingdom ]";
+		mes " ";
+		mes "1. Following the ordinance of the";
+		mes "Divine Rune Midgard Kingdom,";
+		mes "we approve that this place is in";
+		mes "the private possession of ^ff0000" + GetGuildName(.@GID) + "^000000 Guild.";
+		mes " ";
+		mes "2. The guild Master of ^ff0000"+ GetGuildName(.@GID) + "^000000 Guild is";
+		mes "^FF0000" + GetGuildMaster(.@GID) + "^000000";
+		mes "If there is anyone who objects to this,";
+		mes " prove your strength and honor with a steel blade in your hand.";
+	}
+	close;
+
+OnRecvCastlePy03:
+	FlagEmblem GetCastleData("payg_cas03",1);
+	end;
+}
+
+pay_gld,321,289,2	duplicate(HolyShadow2)	Holy Shadow#f3-4	722
+pay_gld,327,304,1	duplicate(HolyShadow2)	Holy Shadow#f3-5	722
+pay_gld,333,254,4	duplicate(HolyShadow2)	Holy Shadow#f3-6	722
+
+// Guild Flag (Inside Castle)
+//============================================================
+payg_cas03,236,54,2	script	Holy Shadow#f3-7::HolyShadow3	722,{
+	set .@GID, GetCastleData("payg_cas03",1);
+	if (.@GID == 0) {
+		mes " [ Edict of the Divine Rune Midgard Kingdom ]";
+		mes " ";
+		mes "1. Follow the ordinance of The Divine Rune Midgard Kingdom, ";
+		mes "We declare that";
+		mes "there is no formal master of this castle.";
+		mes " ";
+		mes "2. To the one who can ";
+		mes "overcome all trials";
+		mes "and destroy the Emperium,";
+		mes "the king will endow the one with";
+		mes "ownership of this castle.";
+	}
+	else {
+		mes "[ Edict of the Divine Rune Midgard Kingdom ]";
+		mes " ";
+		mes "1. Following the ordinance of the";
+		mes "Divine Rune Midgard Kingdom,";
+		mes "we approve that this place is in";
+		mes "the private possession of ^ff0000" + GetGuildName(.@GID) + "^000000 Guild.";
+		mes " ";
+		mes "2. The guild Master of ^ff0000"+ GetGuildName(.@GID) + "^000000 Guild is";
+		mes "^FF0000" + GetGuildMaster(.@GID) + "^000000";
+		mes "If there is anyone who objects to this,";
+		mes " prove your strength and honor with a steel blade in your hand.";
+	}
+	close;
+
+OnRecvCastlePy03:
+	FlagEmblem GetCastleData("payg_cas03",1);
+	end;
+}
+
+payg_cas03,236,45,2	duplicate(HolyShadow3)	Holy Shadow#f3-8	722
+payg_cas03,259,66,4	duplicate(HolyShadow3)	Holy Shadow#f3-9	722
+payg_cas03,266,66,4	duplicate(HolyShadow3)	Holy Shadow#f3-10	722
+payg_cas03,34,31,4	duplicate(HolyShadow3)	Holy Shadow#f3-11	722
+payg_cas03,43,31,4	duplicate(HolyShadow3)	Holy Shadow#f3-12	722
+
+// AGIT Manager
+//============================================================
+payg_cas03,269,265,0	duplicate(Gld_Agit_Manager)	Agit#payg_cas03	-1
+
+// Steward
+//============================================================
+payg_cas03,10,277,0	duplicate(Gld_Mngr_Template)	Gheriot#payg_cas03	55
+
+// Guardians
+//============================================================
+payg_cas03,10,277,0	duplicate(Gld_Guard_Template)	Guardian#payg_cas03	-1
+
+// Kafra Staff
+//============================================================
+payg_cas03,9,263,5	duplicate(Gld_Kafra_Template)	Kafra Staff#payg_cas03	117
+
+// Master's Room Exit
+//============================================================
+payg_cas03,163,167,0	script	#switch_Py03	111,{
+	mes " ";
+	mes "There's a small lever. Will you pull it? ";
+	next;
+	switch(select("Pull.:Do not.")) {
+	case 1:
+		warp "payg_cas03",11,278;
+		break;
+	case 2:
+		break;
+	}
+	end;
+}
+
+// Guild Treasure Protection
+//============================================================
+payg_cas03,159,168,0	duplicate(Gld_Trea_Protect)	ban_warp#payg_cas03	-1,6,6
+
+// Guild Treasure Spawns
+//============================================================
+payg_cas03,159,168,0	duplicate(Gld_Trea_Spawn)	Treasure#payg_cas03	-1
+
+// Guild Dungeon Switch
+//============================================================
+payg_cas03,20,44,0	duplicate(Gld_Dun_Template)	#payg_cas03	111

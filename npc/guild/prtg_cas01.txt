@@ -1,0 +1,167 @@
+//===== eAthena Script =======================================
+//= War of Emperium (Prontera)
+//===== By: ==================================================
+//= L0ne_W0lf
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= eAthena SVN
+//===== Description: =========================================
+//= NPCs that relate to Prontera Guild Castle 1
+//===== Additional Comments: =================================
+//= 1.0 First Version. No longer uses functions. [L0ne_W0lf]
+//============================================================
+
+// Guild Flag (Town)
+//============================================================
+prontera,155,190,4	script	Kriemhild#p1-1::Kriemhild	722,{
+	end;
+
+OnRecvCastlePt01:
+	FlagEmblem GetCastleData("prtg_cas01",1);
+	end;
+}
+
+// Guild Flag (Outside Castle)
+//============================================================
+prt_gld,131,60,6	script	Kriemhild#p1-2::Kriemhild2	722,{
+	set .@GID, GetCastleData("prtg_cas01",1);
+	if (.@GID == 0) {
+		mes " [ Edict of the Divine Rune Midgard Kingdom ]";
+		mes " ";
+		mes "1. Follow the ordinance of The Divine Rune Midgard Kingdom, ";
+		mes "We declare that";
+		mes "there is no formal master of this castle.";
+		mes " ";
+		mes "2. To the one who can ";
+		mes "overcome all trials";
+		mes "and destroy the Emperium,";
+		mes "the king will endow the one with";
+		mes "ownership of this castle.";
+	}
+	else {
+		if (getcharid(2) == .@GID) {
+			mes "Brave ones...";
+			mes "Do you wish to return to your honorable place?";
+			next;
+			if (select("Return to the guild castle.:Quit.") == 1) {
+				if (getcharid(2) == GetCastleData("prtg_cas01",1)) {
+					warp "prtg_cas01",97,174;
+					end;
+				}
+			}
+			close;
+		}
+		mes "[ Edict of the Divine Rune Midgard Kingdom ]";
+		mes " ";
+		mes "1. Following the ordinance of the";
+		mes "Divine Rune Midgard Kingdom,";
+		mes "we approve that this place is in";
+		mes "the private possession of ^ff0000" + GetGuildName(.@GID) + "^000000 Guild.";
+		mes " ";
+		mes "2. The guild Master of ^ff0000"+ GetGuildName(.@GID) + "^000000 Guild is";
+		mes "^FF0000" + GetGuildMaster(.@GID) + "^000000";
+		mes "If there is anyone who objects to this,";
+		mes " prove your strength and honor with a steel blade in your hand.";
+	}
+	close;
+
+OnRecvCastlePt01:
+	FlagEmblem GetCastleData("prtg_cas01",1);
+	end;
+}
+
+prt_gld,138,68,6	duplicate(Kriemhild2)	Kriemhild#p1-3	722
+prt_gld,138,60,6	duplicate(Kriemhild2)	Kriemhild#p1-4	722
+prt_gld,135,60,6	duplicate(Kriemhild2)	Kriemhild#p1-5	722
+
+// Guild Flag (Inside Castle)
+//============================================================
+prtg_cas01,58,56,4	script	Kriemhild#p1-4::Kriemhild3	722,{
+	set .@GID, GetCastleData("prtg_cas01",1);
+	if (.@GID == 0) {
+		mes " [ Edict of the Divine Rune Midgard Kingdom ]";
+		mes " ";
+		mes "1. Follow the ordinance of The Divine Rune Midgard Kingdom, ";
+		mes "We declare that";
+		mes "there is no formal master of this castle.";
+		mes " ";
+		mes "2. To the one who can ";
+		mes "overcome all trials";
+		mes "and destroy the Emperium,";
+		mes "the king will endow the one with";
+		mes "ownership of this castle.";
+	}
+	else {
+		mes "[ Edict of the Divine Rune Midgard Kingdom ]";
+		mes " ";
+		mes "1. Following the ordinance of the";
+		mes "Divine Rune Midgard Kingdom,";
+		mes "we approve that this place is in";
+		mes "the private possession of ^ff0000" + GetGuildName(.@GID) + "^000000 Guild.";
+		mes " ";
+		mes "2. The guild Master of ^ff0000"+ GetGuildName(.@GID) + "^000000 Guild is";
+		mes "^FF0000" + GetGuildMaster(.@GID) + "^000000";
+		mes "If there is anyone who objects to this,";
+		mes " prove your strength and honor with a steel blade in your hand.";
+	}
+	close;
+
+OnRecvCastlePt01:
+	FlagEmblem GetCastleData("prtg_cas01",1);
+	end;
+}
+
+prtg_cas01,64,56,4	duplicate(Kriemhild3)	Kriemhild#p1-7	722
+prtg_cas01,76,32,4	duplicate(Kriemhild3)	Kriemhild#p1-8	722
+prtg_cas01,84,32,4	duplicate(Kriemhild3)	Kriemhild#p1-9	722
+prtg_cas01,94,39,4	duplicate(Kriemhild3)	Kriemhild#p1-10	722
+prtg_cas01,94,24,4	duplicate(Kriemhild3)	Kriemhild#p1-11	722
+prtg_cas01,73,14,4	duplicate(Kriemhild3)	Kriemhild#p1-12	722
+prtg_cas01,73,6,4	duplicate(Kriemhild3)	Kriemhild#p1-13	722
+prtg_cas01,55,46,4	duplicate(Kriemhild3)	Kriemhild#p1-14	722
+prtg_cas01,45,46,4	duplicate(Kriemhild3)	Kriemhild#p1-15	722
+
+// AGIT Manager
+//============================================================
+prtg_cas01,197,197,0	duplicate(Gld_Agit_Manager)	Agit#prtg_cas01	-1
+
+// Steward
+//============================================================
+prtg_cas01,112,181,0	duplicate(Gld_Mngr_Template)	Ahvray#prtg_cas01	55
+
+// Guardians
+//============================================================
+prtg_cas01,112,181,0	duplicate(Gld_Guard_Template)	Guardian#prtg_cas01	-1
+
+// Kafra Staff
+//============================================================
+prtg_cas01,96,173,0	duplicate(Gld_Kafra_Template)	Kafra Staff#prtg_cas01	117
+
+// Master's Room Exit
+//============================================================
+prtg_cas01,15,209,0	script	#switch_Pt01	111,{
+	mes " ";
+	mes "There's a small lever. Will you pull it? ";
+	next;
+	switch(select("Pull.:Do not.")) {
+	case 1:
+		warp "prtg_cas01",109,179;
+		break;
+	case 2:
+		break;
+	}
+	end;
+}
+
+// Guild Treasure Protection
+//============================================================
+prtg_cas01,11,208,0	duplicate(Gld_Trea_Protect)	ban_warp#prtg_cas01	-1,6,6
+
+// Guild Treasure Spawns
+//============================================================
+prtg_cas01,11,208,0	duplicate(Gld_Trea_Spawn)	Treasure#prtg_cas01	-1
+
+// Guild Dungeon Switch
+//============================================================
+prtg_cas01,94,200,0	duplicate(Gld_Dun_Template)	#prtg_cas01	111

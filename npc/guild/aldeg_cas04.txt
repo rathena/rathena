@@ -1,0 +1,172 @@
+//===== eAthena Script =======================================
+//= War of Emperium (Al De baran)
+//===== By: ==================================================
+//= L0ne_W0lf
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= eAthena SVN
+//===== Description: =========================================
+//= NPCs that relate to Al De Baran Guild Castle 4
+//===== Additional Comments: =================================
+//= 1.0 First Version. No longer uses functions. [L0ne_W0lf]
+//============================================================
+
+// Guild Flag (Town)
+//============================================================
+aldebaran,131,97,4	script	Wuerzburg#a4-1::Wuerzburg	722,{
+	end;
+
+OnRecvCastleA04:
+	FlagEmblem GetCastleData("aldeg_cas04",1);
+	end;
+}
+
+// Guild Flag (Outside Castle)
+//============================================================
+alde_gld,239,246,2	script	Wuerzburg#a4-2::Wuerzburg2	722,{
+	set .@GID, GetCastleData("aldeg_cas04",1);
+	if (.@GID == 0) {
+		mes " [ Edict of the Divine Rune Midgard Kingdom ]";
+		mes " ";
+		mes "1. Follow the ordinance of The Divine Rune Midgard Kingdom, ";
+		mes "We declare that";
+		mes "there is no formal master of this castle.";
+		mes " ";
+		mes "2. To the one who can ";
+		mes "overcome all trials";
+		mes "and destroy the Emperium,";
+		mes "the king will endow the one with";
+		mes "ownership of this castle.";
+	}
+	else {
+		if (getcharid(2) == .@GID) {
+			mes "Brave ones...";
+			mes "Do you wish to return to your honorable place?";
+			next;
+			if (select("Return to the guild castle.:Quit.") == 1) {
+				if (getcharid(2) == GetCastleData("aldeg_cas04",1)) {
+					warp "aldeg_cas04",45,88;
+					end;
+				}
+			}
+			close;
+		}
+		mes "[ Edict of the Divine Rune Midgard Kingdom ]";
+		mes " ";
+		mes "1. Following the ordinance of the";
+		mes "Divine Rune Midgard Kingdom,";
+		mes "we approve that this place is in";
+		mes "the private possession of ^ff0000" + GetGuildName(.@GID) + "^000000 Guild.";
+		mes " ";
+		mes "2. The guild Master of ^ff0000"+ GetGuildName(.@GID) + "^000000 Guild is";
+		mes "^FF0000" + GetGuildMaster(.@GID) + "^000000";
+		mes "If there is anyone who objects to this,";
+		mes " prove your strength and honor with a steel blade in your hand.";
+	}
+	close;
+
+OnRecvCastleA04:
+	FlagEmblem GetCastleData("aldeg_cas04",1);
+	end;
+}
+
+alde_gld,239,239,2	duplicate(Wuerzburg2)	Wuerzburg#a4-3	722
+
+// Guild Flag (Inside Castle)
+//============================================================
+aldeg_cas04,167,61,2	script	Wuerzburg#a4-4::Wuerzburg3	722,{
+	set .@GID, GetCastleData("aldeg_cas04",1);
+	if (.@GID == 0) {
+		mes " [ Edict of the Divine Rune Midgard Kingdom ]";
+		mes " ";
+		mes "1. Follow the ordinance of The Divine Rune Midgard Kingdom, ";
+		mes "We declare that";
+		mes "there is no formal master of this castle.";
+		mes " ";
+		mes "2. To the one who can ";
+		mes "overcome all trials";
+		mes "and destroy the Emperium,";
+		mes "the king will endow the one with";
+		mes "ownership of this castle.";
+	}
+	else {
+		mes "[ Edict of the Divine Rune Midgard Kingdom ]";
+		mes " ";
+		mes "1. Following the ordinance of the";
+		mes "Divine Rune Midgard Kingdom,";
+		mes "we approve that this place is in";
+		mes "the private possession of ^ff0000" + GetGuildName(.@GID) + "^000000 Guild.";
+		mes " ";
+		mes "2. The guild Master of ^ff0000"+ GetGuildName(.@GID) + "^000000 Guild is";
+		mes "^FF0000" + GetGuildMaster(.@GID) + "^000000";
+		mes "If there is anyone who objects to this,";
+		mes " prove your strength and honor with a steel blade in your hand.";
+	}
+	close;
+
+OnRecvCastleA04:
+	FlagEmblem GetCastleData("aldeg_cas04",1);
+	end;
+}
+
+aldeg_cas04,164,90,2	duplicate(Wuerzburg3)	Wuerzburg#a4-5	722
+aldeg_cas04,129,193,2	duplicate(Wuerzburg3)	Wuerzburg#a4-6	722
+aldeg_cas04,112,206,2	duplicate(Wuerzburg3)	Wuerzburg#a4-7	722
+aldeg_cas04,113,212,2	duplicate(Wuerzburg3)	Wuerzburg#a4-8	722
+aldeg_cas04,77,117,2	duplicate(Wuerzburg3)	Wuerzburg#a4-9	722
+aldeg_cas04,186,42,2	duplicate(Wuerzburg3)	Wuerzburg#a4-10	722
+aldeg_cas04,30,69,2	duplicate(Wuerzburg3)	Wuerzburg#a4-11	722
+aldeg_cas04,55,97,2	duplicate(Wuerzburg3)	Wuerzburg#a4-12	722
+aldeg_cas04,45,98,2	duplicate(Wuerzburg3)	Wuerzburg#a4-13	722
+aldeg_cas04,33,116,2	duplicate(Wuerzburg3)	Wuerzburg#a4-14	722
+aldeg_cas04,130,180,2	duplicate(Wuerzburg3)	Wuerzburg#a4-15	722
+aldeg_cas04,129,193,2	duplicate(Wuerzburg3)	Wuerzburg#a4-16	722
+aldeg_cas04,33,107,2	duplicate(Wuerzburg3)	Wuerzburg#a4-17	722
+aldeg_cas04,133,220,2	duplicate(Wuerzburg3)	Wuerzburg#a4-18	722
+aldeg_cas04,169,22,2	duplicate(Wuerzburg3)	Wuerzburg#a4-19	722
+aldeg_cas04,169,15,2	duplicate(Wuerzburg3)	Wuerzburg#a4-20	722
+
+// AGIT Manager
+//============================================================
+aldeg_cas04,36,218,0	duplicate(Gld_Agit_Manager)	Agit#aldeg_cas04	-1
+
+// Steward
+//============================================================
+aldeg_cas04,67,116,0	duplicate(Gld_Mngr_Template)	Brymhensen#aldeg_cas04	55
+
+// Guardians
+//============================================================
+aldeg_cas04,67,116,0	duplicate(Gld_Guard_Template)	Guardian#aldeg_cas04	-1
+
+// Kafra Staff
+//============================================================
+aldeg_cas04,45,88,0	duplicate(Gld_Kafra_Template)	Kafra Staff#aldeg_cas04	117
+
+// Master's Room Exit
+//============================================================
+aldeg_cas04,83,17,0	script	#switch_A04	111,{
+	mes " ";
+	mes "There's a small lever. Will you pull it? ";
+	next;
+	switch(select("Pull.:Do not.")) {
+	case 1:
+		warp "aldeg_cas04",67,117;
+		break;
+	case 2:
+		break;
+	}
+	end;
+}
+
+// Guild Treasure Protection
+//============================================================
+aldeg_cas04,84,13,0	duplicate(Gld_Trea_Protect)	ban_warp#aldeg_cas04	-1,8,8
+
+// Guild Treasure Spawns
+//============================================================
+aldeg_cas04,84,13,0	duplicate(Gld_Trea_Spawn)	Treasure#aldeg_cas04	-1
+
+// Guild Dungeon Switch
+//============================================================
+aldeg_cas04,38,76,0	duplicate(Gld_Dun_Template)	#aldeg_cas04	111
