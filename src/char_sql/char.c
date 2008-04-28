@@ -245,23 +245,27 @@ void set_char_online(int map_id, int char_id, int account_id)
 	struct online_char_data* character;
 	struct mmo_charstatus *cp;
 	
-	if ( char_id != 99 ) {
-		if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `online`='1' WHERE `char_id`='%d'", char_db, char_id) )
-			Sql_ShowDebug(sql_handle);
-	}
+	//Update DB
+	if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `online`='1' WHERE `char_id`='%d'", char_db, char_id) )
+		Sql_ShowDebug(sql_handle);
 
+	//Check to see for online conflicts
 	character = (struct online_char_data*)idb_ensure(online_char_db, account_id, create_online_char_data);
 	if (online_check && character->char_id != -1 && character->server > -1 && character->server != map_id)
 	{
-		//char == 99 Won't happen anymore, call set_char_charselect to set user "on char server"
 		ShowNotice("set_char_online: Character %d:%d marked in map server %d, but map server %d claims to have (%d:%d) online!\n",
 			character->account_id, character->char_id, character->server, map_id, account_id, char_id);
 		mapif_disconnectplayer(server[character->server].fd, character->account_id, character->char_id, 2);
 	}
 
+	//Update state data
+	character->char_id = char_id;
+	character->server = map_id;
+
 	if( character->server > -1 )
 		server[character->server].users++;
 
+	//Get rid of disconnect timer
 	if(character->waiting_disconnect != -1) {
 		delete_timer(character->waiting_disconnect, chardb_waiting_disconnect);
 		character->waiting_disconnect = -1;
@@ -271,6 +275,7 @@ void set_char_online(int map_id, int char_id, int account_id)
 	cp = (struct mmo_charstatus*)idb_get(char_db_,char_id);
 	inter_guild_CharOnline(char_id, cp?cp->guild_id:-1);
 
+	//Notify login server
 	if (login_fd > 0 && !session[login_fd]->flag.eof)
 	{	
 		WFIFOHEAD(login_fd,6);
