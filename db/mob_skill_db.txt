@@ -3897,9 +3897,9 @@
 1744,Wild Rose@NPC_WINDATTACK,attack,187,1,2000,0,5000,yes,target,always,0,,,,,,
 1745,Constant@NPC_SELFDESTRUCTION,attack,173,1,10000,0,0,no,self,always,0,,,,,,
 1745,Constant@NPC_SELFDESTRUCTION,chase,173,1,2000,0,0,no,self,always,0,,,,,,
-1751,Valkyrie Randgris@NPC_SUMMONSLAVE,attack,196,3,10000,2000,5000,no,self,slavele,1,1765,,,,,
-1751,Valkyrie Randgris@NPC_SUMMONSLAVE,idle,196,3,10000,2000,5000,no,self,slavele,1,1765,,,,,
-1751,Valkyrie Randgris@NPC_SUMMONSLAVE,chase,196,3,10000,2000,5000,no,self,slavele,1,1765,,,,,
+1751,Valkyrie Randgris@NPC_SUMMONSLAVE,attack,196,3,10000,2000,5000,no,self,slavele,1,1891,,,,,
+1751,Valkyrie Randgris@NPC_SUMMONSLAVE,idle,196,3,10000,2000,5000,no,self,slavele,1,1891,,,,,
+1751,Valkyrie Randgris@NPC_SUMMONSLAVE,chase,196,3,10000,2000,5000,no,self,slavele,1,1891,,,,,
 1751,Valkyrie Randgris@NPC_SUMMONSLAVE,idle,196,3,10000,0,0,no,self,onspawn,0,1765,,,,,
 1751,Valkyrie Randgris@NPC_CALLSLAVE,attack,352,1,10000,0,30000,yes,self,always,0,,,,,,
 1751,Valkyrie Randgris@NPC_CALLSLAVE,idle,352,1,10000,0,30000,yes,self,always,0,,,,,,
@@ -4686,3 +4686,12 @@
 1886,Lesavka@WZ_HEAVENDRIVE,chase,91,5,2000,400,6500,no,target,always,0,,,,,,,
 1886,Lesavka@AL_HEAL,idle,28,10,6000,0,5000,no,self,always,0,,,,,,,
 1886,Lesavka@AL_HEAL,attack,28,10,6000,0,5000,no,self,always,0,,,,,,,
+//
+1891,Valkyrie@AL_HEAL,idle,28,11,10000,500,5000,yes,friend,friendhpltmaxrate,60,,,,,,3
+1891,Valkyrie@AL_HEAL,attack,28,11,10000,500,10000,yes,friend,friendhpltmaxrate,60,,,,,,3
+1891,Valkyrie@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
+1891,Valkyrie@AS_SONICBLOW,attack,136,10,2000,0,5000,yes,target,always,0,,,,,,
+1891,Valkyrie@NPC_HOLYATTACK,attack,189,10,2000,500,5000,no,target,always,0,,,,,,
+1891,Valkyrie@KN_BRANDISHSPEAR,attack,57,20,1000,0,5000,yes,target,always,0,,,,,,
+1891,Valkyrie@NPC_ARMORBRAKE,attack,344,10,500,0,5000,yes,target,always,0,,,,,,
+1891,Valkyrie@WZ_JUPITEL,attack,84,28,100,2000,5000,yes,target,always,0,,,,,, 

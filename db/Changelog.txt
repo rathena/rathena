@@ -43,6 +43,8 @@
 	2385 Recuvative_Armor		Should trigger HP/SP return with magical kills as well.
 
 =======================
+2008/04/28
+	* Rev. 12671 Randgris will summon a dropless/expless mob after initial mob. [L0ne_W0lf]
 2008/04/27
 	* Removed a messed up, unnecessary line. [Paradox924X]
 2008/04/24
