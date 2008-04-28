@@ -44,6 +44,7 @@
 
 =======================
 2008/04/28
+	* Rev. 12674 Updated castle DB to be compliant with new WoE scripts. [L0ne_W0lf]
 	* Rev. 12672 Another correction to "Evil Land", fixed damage-effect range. [L0ne_W0lf]
 	* Rev. 12671 Randgris will summon a dropless/expless mob after initial mob. [L0ne_W0lf]
 2008/04/27

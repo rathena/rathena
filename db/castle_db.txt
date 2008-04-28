@@ -2,26 +2,26 @@
 //
 // Structure of Database:
 // CastleID,MapName,CastleName,OnGuildBreakEventName(to abandon captured castles),Flag(reserved)
-0,aldeg_cas01,Neuschwanstein,Agit_A01,1		// kRO : Noisyubantian
-1,aldeg_cas02,Hohenschwangau,Agit_A02,1		// kRO : Hohensyubangawoo
-2,aldeg_cas03,Nuenberg,Agit_A03,1			// kRO : Nyirenverk
-3,aldeg_cas04,Wuerzburg,Agit_A04,1			// kRO : Byirtsburi
-4,aldeg_cas05,Rothenburg,Agit_A05,1		// kRO : Rotenburk
-5,gefg_cas01,Repherion,Agit_G01,1			// kRO : Reprion
-6,gefg_cas02,Eeyolbriggar,Agit_G02,1		// kRO : Yolbriger
-7,gefg_cas03,Yesnelph,Agit_G03,1			// kRO : Isinlife
-8,gefg_cas04,Bergel,Agit_G04,1			// kRO : Berigel
-9,gefg_cas05,Mersetzdeitz,Agit_G05,1		// kRO : Melsedetsu
-10,payg_cas01,Bright Arbor,Agit_Py01,1		// kRO : Mingting
-11,payg_cas02,Scarlet Palace,Agit_Py02,1		// kRO : Tiantan
-12,payg_cas03,Holy Shadow,Agit_Py03,1		// kRO : Fuying
-13,payg_cas04,Sacred Altar,Agit_Py04,1		// kRO : Honglou
-14,payg_cas05,Bamboo Grove Hill,Agit_Py05,1	// kRO : Zhulinxian
-15,prtg_cas01,Kriemhild,Agit_Pt01,1			// kRO : Creamhilt
-16,prtg_cas02,Swanhild,Agit_Pt02,1			// kRO : Sbanhealt
-17,prtg_cas03,Fadhgridh,Agit_Pt03,1			// kRO : Lazrigees
-18,prtg_cas04,Skoegul,Agit_Pt04,1			// kRO : Squagul
-19,prtg_cas05,Gondul,Agit_Pt05,1			// kRO : Guindull
+0,aldeg_cas01,Neuschwanstein,Agit#aldeg_cas01,1		// kRO : Noisyubantian
+1,aldeg_cas02,Hohenschwangau,Agit#aldeg_cas02,1		// kRO : Hohensyubangawoo
+2,aldeg_cas03,Nuenberg,Agit#aldeg_cas03,1			// kRO : Nyirenverk
+3,aldeg_cas04,Wuerzburg,Agit#aldeg_cas04,1			// kRO : Byirtsburi
+4,aldeg_cas05,Rothenburg,Agit#aldeg_cas05,1		// kRO : Rotenburk
+5,gefg_cas01,Repherion,Agit#gefg_cas01,1			// kRO : Reprion
+6,gefg_cas02,Eeyolbriggar,Agit#gefg_cas02,1		// kRO : Yolbriger
+7,gefg_cas03,Yesnelph,Agit#gefg_cas03,1			// kRO : Isinlife
+8,gefg_cas04,Bergel,Agit#gefg_cas04,1			// kRO : Berigel
+9,gefg_cas05,Mersetzdeitz,Agit#gefg_cas05,1		// kRO : Melsedetsu
+10,payg_cas01,Bright Arbor,Agit#payg_cas01,1		// kRO : Mingting
+11,payg_cas02,Scarlet Palace,Agit#payg_cas02,1		// kRO : Tiantan
+12,payg_cas03,Holy Shadow,Agit#payg_cas03,1		// kRO : Fuying
+13,payg_cas04,Sacred Altar,Agit#payg_cas04,1		// kRO : Honglou
+14,payg_cas05,Bamboo Grove Hill,Agit#payg_cas05,1	// kRO : Zhulinxian
+15,prtg_cas01,Kriemhild,Agit#prtg_cas01,1			// kRO : Creamhilt
+16,prtg_cas02,Swanhild,Agit#prtg_cas02,1			// kRO : Sbanhealt
+17,prtg_cas03,Fadhgridh,Agit#prtg_cas03,1			// kRO : Lazrigees
+18,prtg_cas04,Skoegul,Agit#prtg_cas04,1			// kRO : Squagul
+19,prtg_cas05,Gondul,Agit#prtg_cas05,1			// kRO : Guindull
 20,nguild_alde,Earth,Agit_N01,2
 21,nguild_gef,Air,Agit_N02,2
 22,nguild_pay,Water,Agit_N03,2
