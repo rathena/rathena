@@ -94,4 +94,4 @@
 527,0xbc,    , -1, 0,2000,enemy, 0x010	//NJ_TATAMIGAESHI
 535,0xbd,    , -1, 0,  20,enemy, 0x018	//NJ_KAENSIN
 538,0xbb,    ,  1:1:1:2:2:2:3:3:3:4,0,-1,all,0x010	//NJ_SUITON
-670,0xc7,    ,  1, 1:4:7:10:13:16:19:22:25:28,1000,all,   0x008	//NPC_EVILLAND
+670,0xc7,    ,  1, 4:7:10:13:16:19:22:25:28:31,1000,all,0x008	//NPC_EVILLAND
