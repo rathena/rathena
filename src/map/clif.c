@@ -12243,7 +12243,7 @@ void clif_send_quest_status(struct map_session_data * sd, int quest_id, bool act
 	int fd = sd->fd;
 
 	WFIFOHEAD(fd, 7);
-	WFIFOW(fd, 0) = 0x02B4;
+	WFIFOW(fd, 0) = 0x02B6;
 	WFIFOL(fd, 2) = quest_id;
 	WFIFOB(fd, 6) = active?1:0;
 	WFIFOSET(fd, 7);
