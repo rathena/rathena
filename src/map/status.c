@@ -929,16 +929,6 @@ int status_revive(struct block_list *bl, unsigned char per_hp, unsigned char per
 	return 1;
 }
 
-//calculates the base/max ratio as a value between 0->100 (percent), using
-//different approaches to avoid overflows.
-//NOTE: The -1 case (0 max hp) should never trigger!
-char status_calc_life(unsigned int base, unsigned int max)
-{
-	if (!max) return -1;
-	if (max < 10000) return 100*base/max;
-	return base/(max/100);
-}
-
 /*==========================================
  * Checks whether the src can use the skill on the target,
  * taking into account status/option of both source/target. [Skotlex]

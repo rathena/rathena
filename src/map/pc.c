@@ -5082,9 +5082,9 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 	// activate Steel body if a super novice dies at 99+% exp [celest]
 	if ((sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE && !sd->state.snovice_dead_flag)
   	{
-		if ((i=pc_nextbaseexp(sd))<=0)
-			i=sd->status.base_exp;
-		if (i>0 && (j=sd->status.base_exp*1000/i)>=990 && j<1000 && !map_flag_gvg(sd->bl.m))
+		unsigned int next = pc_nextbaseexp(sd);
+		if( next == 0 ) next = pc_thisbaseexp(sd);
+		if( percent(sd->status.base_exp,next) >= 99 && !map_flag_gvg(sd->bl.m) )
 			sd->state.snovice_dead_flag = 1;
 	}
 

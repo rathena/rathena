@@ -221,3 +221,19 @@ uint32 MakeDWord(uint16 word0, uint16 word1)
 		( (uint32)(word0        ) )|
 		( (uint32)(word1 << 0x10) );
 }
+
+
+/// calculates the value of A / B, in percent (rounded down)
+unsigned int percent(const unsigned int A, const unsigned int B)
+{
+	if( B == 0 )
+	{
+		ShowError("percent(): divison by zero!\n");
+		return -1;
+	}
+
+	if( A < UINT_MAX/100 )
+		return 100*A/B;
+	else
+		return A/(B/100);
+}

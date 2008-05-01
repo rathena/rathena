@@ -554,7 +554,7 @@ int pet_catch_process2(struct map_session_data* sd, int target_id)
 		return 1;
 	}
 
-	pet_catch_rate = (pet_db[i].capture + (sd->status.base_level - md->level)*30 + sd->battle_status.luk*20)*(200 - status_calc_life(md->status.hp, md->status.max_hp))/100;
+	pet_catch_rate = (pet_db[i].capture + (sd->status.base_level - md->level)*30 + sd->battle_status.luk*20)*(200 - percent(md->status.hp, md->status.max_hp))/100;
 
 	if(pet_catch_rate < 1) pet_catch_rate = 1;
 	if(battle_config.pet_catch_rate != 100)
@@ -1147,7 +1147,7 @@ int pet_heal_timer(int tid, unsigned int tick, int id, intptr data)
 	struct map_session_data *sd=map_id2sd(id);
 	struct status_data *status;
 	struct pet_data *pd;
-	short rate = 100;
+	unsigned int rate = 100;
 	
 	if(sd==NULL || sd->pd == NULL || sd->pd->s_skill == NULL)
 		return 1;
@@ -1162,8 +1162,8 @@ int pet_heal_timer(int tid, unsigned int tick, int id, intptr data)
 	status = status_get_status_data(&sd->bl);
 	
 	if(pc_isdead(sd) ||
-		(rate = status_calc_life(status->sp, status->max_sp)) > pd->s_skill->sp ||
-		(rate = status_calc_life(status->hp, status->max_hp)) > pd->s_skill->hp ||
+		(rate = percent(status->sp, status->max_sp)) > pd->s_skill->sp ||
+		(rate = percent(status->hp, status->max_hp)) > pd->s_skill->hp ||
 		(rate = (pd->ud.skilltimer != -1)) //Another skill is in effect
 	) {  //Wait (how long? 1 sec for every 10% of remaining)
 		pd->s_skill->timer=add_timer(gettick()+(rate>10?rate:10)*100,pet_heal_timer,sd->bl.id,0);
@@ -1205,8 +1205,8 @@ int pet_skill_support_timer(int tid, unsigned int tick, int id, intptr data)
 	}
 	
 	if(pc_isdead(sd) ||
-		(rate = status_calc_life(status->sp, status->max_sp)) > pd->s_skill->sp ||
-		(rate = status_calc_life(status->hp, status->max_hp)) > pd->s_skill->hp ||
+		(rate = percent(status->sp, status->max_sp)) > pd->s_skill->sp ||
+		(rate = percent(status->hp, status->max_hp)) > pd->s_skill->hp ||
 		(rate = (pd->ud.skilltimer != -1)) //Another skill is in effect
 	) {  //Wait (how long? 1 sec for every 10% of remaining)
 		pd->s_skill->timer=add_timer(tick+(rate>10?rate:10)*100,pet_skill_support_timer,sd->bl.id,0);

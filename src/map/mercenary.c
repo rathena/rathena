@@ -95,7 +95,7 @@ int merc_hom_vaporize(struct map_session_data *sd, int flag)
 	if (status_isdead(&hd->bl))
 		return 0; //Can't vaporize a dead homun.
 
-	if (flag && status_calc_life(hd->battle_status.hp, hd->battle_status.max_hp)< 80)
+	if (flag && percent(hd->battle_status.hp, hd->battle_status.max_hp) < 80)
 		return 0;
 
 	hd->regen.state.block = 3; //Block regen while vaporized.

@@ -7131,7 +7131,7 @@ int clif_charnameack (int fd, struct block_list *bl)
 				if (battle_config.show_mob_info&1)
 					str_p += sprintf(str_p, "HP: %u/%u | ", md->status.hp, md->status.max_hp);
 				if (battle_config.show_mob_info&2)
-					str_p += sprintf(str_p, "HP: %d%% | ", status_calc_life(md->status.hp, md->status.max_hp));
+					str_p += sprintf(str_p, "HP: %d%% | ", percent(md->status.hp, md->status.max_hp));
 				//Even thought mobhp ain't a name, we send it as one so the client
 				//can parse it. [Skotlex]
 				if (str_p != mobhp) {
@@ -8182,8 +8182,10 @@ void clif_parse_GlobalMessage(int fd, struct map_session_data* sd)
 	// check for special supernovice phrase
 	if( (sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE )
 	{
-		int next = pc_nextbaseexp(sd);
-		if( next > 0 && (sd->status.base_exp * 1000 / next)% 100 == 0 ) { // 0%, 10%, 20%, ...
+		unsigned int next = pc_nextbaseexp(sd);
+		if( next == 0 ) next = pc_thisbaseexp(sd);
+		if( percent(sd->status.base_exp, next)% 10 == 0 ) // 0%, 10%, 20%, ...
+		{
 			switch (sd->state.snovice_call_flag) {
 			case 0:
 					if( strstr(message, msg_txt(504)) ) // "Guardian Angel, can you hear my voice? ^^;"
