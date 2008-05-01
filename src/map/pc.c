@@ -5084,7 +5084,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
   	{
 		unsigned int next = pc_nextbaseexp(sd);
 		if( next == 0 ) next = pc_thisbaseexp(sd);
-		if( percent(sd->status.base_exp,next) >= 99 && !map_flag_gvg(sd->bl.m) )
+		if( get_percentage(sd->status.base_exp,next) >= 99 && !map_flag_gvg(sd->bl.m) )
 			sd->state.snovice_dead_flag = 1;
 	}
 

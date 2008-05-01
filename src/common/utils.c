@@ -11,6 +11,7 @@
 #include <stdarg.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h> // floor()
 
 #ifdef WIN32
 	#include <windows.h>
@@ -224,16 +225,23 @@ uint32 MakeDWord(uint16 word0, uint16 word1)
 
 
 /// calculates the value of A / B, in percent (rounded down)
-unsigned int percent(const unsigned int A, const unsigned int B)
+unsigned int get_percentage(const unsigned int A, const unsigned int B)
 {
+	double result;
+
 	if( B == 0 )
 	{
-		ShowError("percent(): divison by zero!\n");
+		ShowError("get_percentage(): divison by zero! (A=%u,B=%u)\n", A, B);
 		return -1;
 	}
 
-	if( A < UINT_MAX/100 )
-		return 100*A/B;
-	else
-		return A/(B/100);
+	result = 100 * ((double)A / (double)B);
+
+	if( result > UINT_MAX )
+	{
+		ShowError("get_percentage(): result percentage too high! (A=%u,B=%u,result=%g)", A, B, result);
+		return UINT_MAX;
+	}
+
+	return (unsigned int)floor(result);
 }
