@@ -1739,43 +1739,93 @@ struct block_list * map_id2bl(int id)
 	return bl;
 }
 
+/// Applies func to all the players in the db.
+/// Stops iterating if func returns -1.
 void map_foreachpc(int (*func)(struct map_session_data* sd, va_list args), ...)
 {
 	DBIterator* iter;
 	struct map_session_data* sd;
-	va_list args, argscopy;
 
-	va_start(args,func);
 	iter = pc_db->iterator(pc_db);
 	for( sd = (struct map_session_data*)iter->first(iter,NULL); iter->exists(iter); sd = (struct map_session_data*)iter->next(iter,NULL) )
 	{
-		va_copy(argscopy,args);
-		func(sd, argscopy);
-		va_end(argscopy);
+		va_list args;
+		int ret;
+
+		va_start(args, func);
+		ret = func(sd, args);
+		va_end(args);
+		if( ret == -1 )
+			break;// stop iterating
 	}
 	iter->destroy(iter);
-	va_end(args);
 }
 
-void map_foreachmob(int (*func)(DBKey,void*,va_list),...)
+/// Applies func to all the mobs in the db.
+/// Stops iterating if func returns -1.
+void map_foreachmob(int (*func)(struct mob_data* md, va_list args), ...)
 {
-	va_list ap;
-	va_start(ap,func);
-	mobid_db->vforeach(mobid_db,func,ap);
-	va_end(ap);
+	DBIterator* iter;
+	struct mob_data* md;
+
+	iter = db_iterator(mobid_db);
+	for( md = (struct mob_data*)dbi_first(iter); dbi_exists(iter); md = (struct mob_data*)dbi_next(iter) )
+	{
+		va_list args;
+		int ret;
+
+		va_start(args, func);
+		ret = func(md, args);
+		va_end(args);
+		if( ret == -1 )
+			break;// stop iterating
+	}
 }
 
-/*==========================================
- * id_db?‚Ì‘S‚Ä‚Éfunc‚ð?s
- *------------------------------------------*/
-int map_foreachiddb(int (*func)(DBKey,void*,va_list),...)
+/// Applies func to all the npcs in the db.
+/// Stops iterating if func returns -1.
+void map_foreachnpc(int (*func)(struct npc_data* nd, va_list args), ...)
 {
-	va_list ap;
+	DBIterator* iter;
+	struct block_list* bl;
 
-	va_start(ap,func);
-	id_db->vforeach(id_db,func,ap);
-	va_end(ap);
-	return 0;
+	iter = db_iterator(id_db);
+	for( bl = (struct block_list*)dbi_first(iter); dbi_exists(iter); bl = (struct block_list*)dbi_next(iter) )
+	{
+		if( bl->type == BL_NPC )
+		{
+			struct npc_data* nd = (struct npc_data*)bl;
+			va_list args;
+			int ret;
+
+			va_start(args, func);
+			ret = func(nd, args);
+			va_end(args);
+			if( ret == -1 )
+				break;// stop iterating
+		}
+	}
+}
+
+/// Applies func to everything in the db.
+/// Stops iterating if func returns -1.
+void map_foreachiddb(int (*func)(struct block_list* bl, va_list args), ...)
+{
+	DBIterator* iter;
+	struct block_list* bl;
+
+	iter = db_iterator(id_db);
+	for( bl = (struct block_list*)dbi_first(iter); dbi_exists(iter); bl = (struct block_list*)dbi_next(iter) )
+	{
+		va_list args;
+		int ret;
+
+		va_start(args, func);
+		ret = func(bl, args);
+		va_end(args);
+		if( ret == -1 )
+			break;// stop iterating
+	}
 }
 
 /// Iterator.

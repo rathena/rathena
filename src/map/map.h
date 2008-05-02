@@ -563,8 +563,9 @@ int map_eraseallipport(void);
 void map_addiddb(struct block_list *);
 void map_deliddb(struct block_list *bl);
 void map_foreachpc(int (*func)(struct map_session_data* sd, va_list args), ...);
-void map_foreachmob(int (*func)(DBKey,void*,va_list),...);
-int map_foreachiddb(int (*)(DBKey,void*,va_list),...);
+void map_foreachmob(int (*func)(struct mob_data* md, va_list args), ...);
+void map_foreachnpc(int (*func)(struct npc_data* bl, va_list args), ...);
+void map_foreachiddb(int (*func)(struct block_list* bl, va_list args), ...);
 struct map_session_data * map_nick2sd(const char*);
 
 /// Bitfield of flags for the iterator.

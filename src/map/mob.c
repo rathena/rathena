@@ -1666,9 +1666,8 @@ static int mob_ai_sub_foreachclient(struct map_session_data *sd,va_list ap)
 /*==========================================
  * Negligent mode MOB AI (PC is not in near)
  *------------------------------------------*/
-static int mob_ai_sub_lazy(DBKey key,void * data,va_list ap)
+static int mob_ai_sub_lazy(struct mob_data *md, va_list args)
 {
-	struct mob_data *md = (struct mob_data *)data;
 	unsigned int tick;
 	int mode;
 
@@ -1677,7 +1676,7 @@ static int mob_ai_sub_lazy(DBKey key,void * data,va_list ap)
 	if(md->bl.prev == NULL)
 		return 0;
 
-	tick=va_arg(ap,unsigned int);
+	tick = va_arg(args,unsigned int);
 
 	if (md->nd || (battle_config.mob_ai&0x20 && map[md->bl.m].users>0))
 		return (int)mob_ai_sub_hard(md, tick);

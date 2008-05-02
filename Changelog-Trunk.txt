@@ -3,12 +3,39 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2008/05/02
+	* Changes to map_foreach* functions: [FlavioJS]
+	- removed the unecessary use of va_copy in map_foreachpc
+	- applied the same function pattern to map_foreachmob and map_foreachiddb
+	- created map_foreachnpc
+	- extended the behaviour of map_foreach* functions to stop iterating when func returns -1
+	* Replaced the very ineffective clif_foreachclient() with map_foreachpc() since they essentially do the same thing (bugreport:1174).
+	* Rewrote map_foreachpc() so that its callback function signature now uses a more natural 'sd' instead of a DBKey/void* pair.
+	* Rewrote atcommand_users() to use a single function, instead of depending on two helper functions and global objects.
+	* Added a custom implementation of the va_copy macro for systems that don't provide it.
+	* Fixed varargs not being used correctly in foreach() calls in db.c (bugreport:551).
+	* Replaced the integers+checking approach in r12679 with usage of floating point arithmetic.
+	* Applied search&replace to use the new name of the function.
+	* Implemented get_percentage() for compact and safe calculation of percentual values.
+	* Fixed integer arithmetic overflows that were occuring in several supernovice checks (bugreport:1135). [ultramage]
 2008/05/01
 	* Updated mob_db.sql to latest [Toms]
 2008/04/30
 	* Rev. 12676 Corrected several effect descriptions. [L0ne_W0lf]
 2008/04/28
 	* Cleaned up char server set online/offline/char select functions. (r12670) [Kevin]
+2008/04/27
+	* Fixing some timestamp type difference warnings...
+	* Removed the calc_times() no-op (bugreport:1289).
+	* Corrected r12662 where a guild break would trigger the OnGuildBreak event for all castles (even of other guilds).
+	* Corrected some x64 compilation warnings in ers/malloc files.
+	* Cleaned up a case of bad variable reuse.
+	* Cleaning up the itemdb reload mess (see r12635, r12643, r12650, r12661, r12662, r12663): [ultramage]
+	- the player data inventory-itemdb index is now refreshed using pc_setinventorydata()
+	- mobdb will no longer initialize with nonexistent items, and mobs will no longer drop them in case of a reload
+	- the clif_buylist() function once again hides invalid npc shop items
+	- it is no longer possible to purchase nonexistent items from a npc shop
+	- npc shop loading will not abort if there is a nonexistent item entry, it will just skip over it 
 2008/04/26
 	* Added script function hasquest. [Kevin]
 	* Fixed OnGuildBreak. [Kevin]
@@ -50,6 +77,12 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 	* Implemented config setting 'vending_over_max', to let people configure
 	  the behavior of vending items over the MAX_ZENY limit [ultramage]
 	* Fixed mapserv crash, thanks to Konard [Lupus]
+2008/04/17
+	* Modified sv_readdb to be able to process non-native line terminators (bugreport:1382) [ultramage]
+2008/04/16
+	* Fixed an issue in r12575 where 'not setting char offline when going from mapserver to charserver' also caused a permanent account lockout if the player pressed 'cancel' in the char select screen.
+	* Merged some recent changes from SQL to TXT, as someone didn't bother to do it.
+	* Ifdefed the quest data request code as SQL-only (this was causing server disconnects whenver someone logged in). [ultramage]
 2008/04/15
 	* Use the same code for script commands getitem & getitem2 as @item to avoid
 	  bug in bugreport:1324 (non-stackable items are stacked) [Toms]
@@ -88,6 +121,7 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 	* Login will no longer set character offline when going from map
 	  to character select. (r12575) [Kevin]
 2008/04/11
+	* The max_account_id packetver detection mechanism will never cause any connection problems ever again. (bugreport:388)
 	* Reverted the `login` table changes from r12464 [ultramage]
 	* Finished most of the quest log code, still bits here and there
 	  but it's ready for testing. (r12558) [Kevin]
@@ -96,6 +130,9 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 	* Client not marked online until map receives auth request from the client
 	- and is approved. Also added some online/offline sets to the auth system
 	- that were being skipped.(r12552) [Kevin]
+	* Modified the charservers to use a DBMap instead of a cyclic array for auth data.
+	* Merged the auth fix from r12473 to TXT as well.
+	* Removed the no-op from r12547. [ultramage]
 	* Rev. 12550 Reverted the change to MAX_SQUARE_LAYOUT. [L0ne_W0lf]
 	* Rev. 12548 Updated NPC skill "Evil Land". More gravity wtfage. [L0ne_W0lf]
 	- Based on visual observation, and experience with it on iRO Sakray.
@@ -105,6 +142,7 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 	* Fixed party invitation ack messages not displaying (bugreport:1308)
 	* Modified PACKETVER for recent clients to use a YYYYMMDD date format
 	  instead of a simple sequence number (allows adding versions inbetween)
+	* Small party/guild creation cleanup. Added packet comments. Removed fake reply packet usage. [ultramage]
 2008/04/07
 	* Rev. 12529 Updated MAX_GUARDIANS to support an insane amount of guardians. [L0ne_W0lf]
 	* Immunity to magic now makes you immune to the SC effect as well. (r12527) [Kevin]
@@ -175,6 +213,8 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 	* Added sv_split to strlib.c/h (similar to sv_parse). [FlavioJS]
 2008/03/31
 	* Fixed ACIDDEMO crash, thanks to Kaato&Konard [Lupus]
+	* Added latest version of dbghelp.dll (from microsoft debugger package), to prevent Windows from loading other, outdated versions.
+	  This caused the dbghelpplug plugin to omit information about structures when producing a backtrace. [ultramage]
 2008/03/30
 	* yet more login server stuff
 	- jA data structure compatibility renaming / adjustments

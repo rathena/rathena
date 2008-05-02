@@ -1311,15 +1311,14 @@ static int npc_unload_ev(DBKey key, void* data, va_list ap)
 	return 0;
 }
 
-static int npc_unload_dup_sub(DBKey key, void* data, va_list ap)
+static int npc_unload_dup_sub(struct npc_data* nd, va_list args)
 {
-	struct npc_data *nd = (struct npc_data *)data;
 	int src_id;
 
-	if(nd->bl.type!=BL_NPC || nd->subtype != SCRIPT)
+	if( nd->subtype != SCRIPT )
 		return 0;
 
-	src_id=va_arg(ap,int);
+	src_id = va_arg(args, int);
 	if (nd->u.scr.src_id == src_id)
 		npc_unload(nd);
 	return 0;
@@ -1328,7 +1327,7 @@ static int npc_unload_dup_sub(DBKey key, void* data, va_list ap)
 //Removes all npcs that are duplicates of the passed one. [Skotlex]
 void npc_unload_duplicates(struct npc_data* nd)
 {
-	map_foreachiddb(npc_unload_dup_sub,nd->bl.id);
+	map_foreachnpc(npc_unload_dup_sub,nd->bl.id);
 }
 
 int npc_unload(struct npc_data* nd)

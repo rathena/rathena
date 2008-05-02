@@ -7228,9 +7228,8 @@ int status_change_clear_buffs (struct block_list* bl, int type)
 
 //Natural regen related stuff.
 static unsigned int natural_heal_prev_tick,natural_heal_diff_tick;
-static int status_natural_heal(DBKey key,void * data,va_list ap)
+static int status_natural_heal(struct block_list* bl, va_list args)
 {
-	struct block_list *bl = (struct block_list*)data;
 	struct regen_data *regen;
 	struct status_data *status;
 	struct status_change *sc;
