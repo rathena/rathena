@@ -1487,10 +1487,16 @@ static unsigned int db_obj_vgetall(DBMap* self, void **buf, unsigned int max, DB
 		node = db->ht[i];
 		while (node) {
 			parent = node->parent;
-			if (!(node->deleted) && match(node->key, node->data, args) == 0) {
-				if (buf && ret < max)
-					buf[ret] = node->data;
-				ret++;
+			if (!(node->deleted))
+			{
+				va_list argscopy;
+				va_copy(argscopy, args);
+				if (match(node->key, node->data, argscopy) == 0) {
+					if (buf && ret < max)
+						buf[ret] = node->data;
+					ret++;
+				}
+				va_end(argscopy);
 			}
 			if (node->left) {
 				node = node->left;
@@ -1597,6 +1603,7 @@ static void *db_obj_vensure(DBMap* self, DBKey key, DBCreateData create, va_list
 	}
 	// Create node if necessary
 	if (node == NULL) {
+		va_list argscopy;
 		if (db->item_count == UINT32_MAX) {
 			ShowError("db_vensure: item_count overflow, aborting item insertion.\n"
 					"Database allocated at %s:%d",
@@ -1633,7 +1640,9 @@ static void *db_obj_vensure(DBMap* self, DBKey key, DBCreateData create, va_list
 		} else {
 			node->key = key;
 		}
-		node->data = create(key, args);
+		va_copy(argscopy, args);
+		node->data = create(key, argscopy);
+		va_end(argscopy);
 	}
 	data = node->data;
 	db->cache = node;
@@ -1860,7 +1869,12 @@ static int db_obj_vforeach(DBMap* self, DBApply func, va_list args)
 		while (node) {
 			parent = node->parent;
 			if (!(node->deleted))
-				sum += func(node->key, node->data, args);
+			{
+				va_list argscopy;
+				va_copy(argscopy, args);
+				sum += func(node->key, node->data, argscopy);
+				va_end(argscopy);
+			}
 			if (node->left) {
 				node = node->left;
 				continue;
@@ -1952,7 +1966,12 @@ static int db_obj_vclear(DBMap* self, DBApply func, va_list args)
 				db_dup_key_free(db, node->key);
 			} else {
 				if (func)
-					sum += func(node->key, node->data, args);
+				{
+					va_list argscopy;
+					va_copy(argscopy, args);
+					sum += func(node->key, node->data, argscopy);
+					va_end(argscopy);
+				}
 				db->release(node->key, node->data, DB_RELEASE_BOTH);
 				node->deleted = 1;
 			}

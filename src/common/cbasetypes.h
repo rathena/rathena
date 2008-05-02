@@ -322,4 +322,15 @@ typedef char bool;
 // length of a static array
 #define ARRAYLENGTH(A) ( sizeof(A)/sizeof((A)[0]) )
 
+//////////////////////////////////////////////////////////////////////////
+// Make sure va_copy exists
+#include <stdarg.h> // va_list, va_copy(?)
+#if !defined(va_copy)
+#if defined(__va_copy)
+#define va_copy __va_copy
+#else
+#define va_copy(dst, src) ((void) memcpy(&(dst), &(src), sizeof(va_list)))
+#endif
+#endif
+
 #endif /* _CBASETYPES_H_ */
