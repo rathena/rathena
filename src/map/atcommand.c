@@ -6447,37 +6447,51 @@ int atcommand_pettalk(const int fd, struct map_session_data* sd, const char* com
 /*==========================================
  * @users - displays the number of players present on each map (percentage)
  *------------------------------------------*/
-
-static DBMap* users_db = NULL; // unsigned int mapindex -> int users
-static int users_all;
-
-static int atcommand_users_sub1(struct map_session_data* sd,va_list va)
-{
-	int users = (int)(uidb_get(users_db,(unsigned int)sd->mapindex)) + 1;
-	users_all++;
-	uidb_put(users_db,(unsigned int)sd->mapindex,(void *)users);
-	return 0;
-}
-
-static int atcommand_users_sub2(DBKey key,void* val,va_list va)
-{
-	char buf[256];
-	struct map_session_data* sd = va_arg(va,struct map_session_data*);
-	sprintf(buf,"%s: %d (%d%%)",mapindex_id2name(key.i),(int)val,(int)val * 100 / users_all);
-	clif_displaymessage(sd->fd,buf);
-	return 0;
-}
-
 int atcommand_users(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
 	char buf[256];
+	DBMap* users_db; // unsigned int mapindex -> int users
+	int users_all;
+
+	users_db = uidb_alloc(DB_OPT_BASE);
 	users_all = 0;
 
-	users_db->clear(users_db, NULL);
-	clif_foreachclient(atcommand_users_sub1);
-	users_db->foreach(users_db,atcommand_users_sub2,sd);
+	// count users on each map
+	{
+		struct s_mapiterator* iter;
+		struct map_session_data* sd;
+
+		iter = mapit_getallusers();
+		for( sd = (struct map_session_data*)mapit_first(iter); mapit_exists(iter); sd = (struct map_session_data*)mapit_next(iter) )
+		{
+			int users = (int)uidb_get(users_db,sd->mapindex) + 1;
+			uidb_put(users_db,(unsigned int)sd->mapindex,(void *)users);
+			users_all++;
+		}
+		mapit_free(iter);
+	}
+
+	// display results for each map
+	{
+		DBIterator* iter;
+		DBKey index;
+		int users;
+
+		iter = users_db->iterator(users_db);
+		for( users = (int)iter->first(iter,&index); iter->exists(iter); users = (int)iter->next(iter,&index) )
+		{
+			sprintf(buf,"%s: %d (%d%%)",mapindex_id2name(index.i),users,users * 100 / users_all);
+			clif_displaymessage(sd->fd,buf);
+		}
+		iter->destroy(iter);
+	}
+
+	// display overall count
 	sprintf(buf,"all: %d",users_all);
 	clif_displaymessage(fd,buf);
+
+	users_db->destroy(users_db,NULL);
+
 	return 0;
 }
 
@@ -7436,8 +7450,7 @@ int atcommand_whodrops(const int fd, struct map_session_data* sd, const char* co
 	}
 	for (i = 0; i < count; i++) {
 		item_data = item_array[i];
-		sprintf(atcmd_output, "Item: '%s'[%d]",
-			item_data->jname,item_data->slot);
+		sprintf(atcmd_output, "Item: '%s'[%d]", item_data->jname,item_data->slot);
 		clif_displaymessage(fd, atcmd_output);
 
 		if (item_data->mob[0].chance == 0) {
@@ -8701,14 +8714,12 @@ int atcommand_config_read(const char* cfgName)
 
 void do_init_atcommand()
 {
-	users_db = uidb_alloc(DB_OPT_BASE);
 	add_timer_func_list(atshowmobs_timer, "atshowmobs_timer");
 	return;
 }
 
 void do_final_atcommand()
 {
-	users_db->destroy(users_db,NULL);
 }
 
 

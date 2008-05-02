@@ -1739,12 +1739,22 @@ struct block_list * map_id2bl(int id)
 	return bl;
 }
 
-void map_foreachpc(int (*func)(DBKey,void*,va_list),...)
+void map_foreachpc(int (*func)(struct map_session_data* sd, va_list args), ...)
 {
-	va_list ap;
-	va_start(ap,func);
-	pc_db->vforeach(pc_db,func,ap);
-	va_end(ap);
+	DBIterator* iter;
+	struct map_session_data* sd;
+	va_list args, argscopy;
+
+	va_start(args,func);
+	iter = pc_db->iterator(pc_db);
+	for( sd = (struct map_session_data*)iter->first(iter,NULL); iter->exists(iter); sd = (struct map_session_data*)iter->next(iter,NULL) )
+	{
+		va_copy(argscopy,args);
+		func(sd, argscopy);
+		va_end(argscopy);
+	}
+	iter->destroy(iter);
+	va_end(args);
 }
 
 void map_foreachmob(int (*func)(DBKey,void*,va_list),...)
@@ -3120,10 +3130,8 @@ void do_final(void)
 	ShowStatus("Successfully terminated.\n");
 }
 
-static int map_abort_sub(DBKey key,void * data,va_list ap)
+static int map_abort_sub(struct map_session_data* sd, va_list ap)
 {
-	struct map_session_data *sd = (TBL_PC*)data;
-
 	chrif_save(sd,1);
 	return 1;
 }

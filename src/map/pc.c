@@ -6996,7 +6996,7 @@ int map_day_timer(int tid, unsigned int tick, int id, intptr data)
 		return 0; //Already day.
 	
 	night_flag = 0; // 0=day, 1=night [Yor]
-	clif_foreachclient(pc_daynight_timer_sub);
+	map_foreachpc(pc_daynight_timer_sub);
 	strcpy(tmp_soutput, (data == 0) ? msg_txt(502) : msg_txt(60)); // The day has arrived!
 	intif_GMmessage(tmp_soutput, strlen(tmp_soutput) + 1, 0);
 	return 0;
@@ -7017,7 +7017,7 @@ int map_night_timer(int tid, unsigned int tick, int id, intptr data)
 		return 0; //Already nigth.
 
 	night_flag = 1; // 0=day, 1=night [Yor]
-	clif_foreachclient(pc_daynight_timer_sub);
+	map_foreachpc(pc_daynight_timer_sub);
 	strcpy(tmp_soutput, (data == 0) ? msg_txt(503) : msg_txt(59)); // The night has fallen...
 	intif_GMmessage(tmp_soutput, strlen(tmp_soutput) + 1, 0);
 	return 0;
@@ -7093,7 +7093,7 @@ int duel_showinfo(const unsigned int did, struct map_session_data* sd)
 			duel_list[did].members_count + duel_list[did].invites_count);
 
 	clif_disp_onlyself(sd, output, strlen(output));
-	clif_foreachclient(duel_showinfo_sub, sd, &p);
+	map_foreachpc(duel_showinfo_sub, sd, &p);
 	return 0;
 }
 
@@ -7155,7 +7155,7 @@ int duel_leave(const unsigned int did, struct map_session_data* sd)
 	duel_list[did].members_count--;
 	
 	if(duel_list[did].members_count == 0) {
-		clif_foreachclient(duel_leave_sub, did); 
+		map_foreachpc(duel_leave_sub, did); 
 		duel_count--;
 	}
 	

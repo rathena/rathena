@@ -9151,12 +9151,11 @@ BUILDIN_FUNC(emotion)
 	return 0;
 }
 
-static int buildin_maprespawnguildid_sub_pc(DBKey key, void *data, va_list ap)
+static int buildin_maprespawnguildid_sub_pc(struct map_session_data* sd, va_list ap)
 {
 	int m=va_arg(ap,int);
 	int g_id=va_arg(ap,int);
 	int flag=va_arg(ap,int);
-	TBL_PC *sd = (TBL_PC*)data;
 
 	if(!sd || sd->bl.m != m)
 		return 0;

@@ -562,7 +562,7 @@ int map_eraseipport(unsigned short map, uint32 ip, uint16 port);
 int map_eraseallipport(void);
 void map_addiddb(struct block_list *);
 void map_deliddb(struct block_list *bl);
-void map_foreachpc(int (*func)(DBKey,void*,va_list),...);
+void map_foreachpc(int (*func)(struct map_session_data* sd, va_list args), ...);
 void map_foreachmob(int (*func)(DBKey,void*,va_list),...);
 int map_foreachiddb(int (*)(DBKey,void*,va_list),...);
 struct map_session_data * map_nick2sd(const char*);

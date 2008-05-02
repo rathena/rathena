@@ -906,7 +906,7 @@ int mapif_parse_WisToGM(int fd)
 	safestrncpy(Wisp_name, (char*)RFIFOP(fd,4), NAME_LENGTH);
 	safestrncpy(message, (char*)RFIFOP(fd,30), mes_len);
 	// information is sended to all online GM
-	clif_foreachclient(mapif_parse_WisToGM_sub, min_gm_level, Wisp_name, message, mes_len);
+	map_foreachpc(mapif_parse_WisToGM_sub, min_gm_level, Wisp_name, message, mes_len);
 
 	if (message != mbuf)
 		aFree(message);

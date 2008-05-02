@@ -1860,7 +1860,7 @@ int unit_free(struct block_list *bl, int clrtype)
 			duel_reject(sd->duel_invite, sd);
 	
 		// Notify friends that this char logged out. [Skotlex]
-		clif_foreachclient(clif_friendslist_toggle_sub, sd->status.account_id, sd->status.char_id, 0);
+		map_foreachpc(clif_friendslist_toggle_sub, sd->status.account_id, sd->status.char_id, 0);
 		party_send_logout(sd);
 		guild_send_memberinfoshort(sd,0);
 		pc_cleareventtimer(sd);

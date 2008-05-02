@@ -161,29 +161,6 @@ uint16 clif_getport(void)
 }
 
 /*==========================================
- * 全てのclientに対してfunc()実行
- *------------------------------------------*/
-int clif_foreachclient(int (*func)(struct map_session_data*, va_list),...) //recoded by sasuke, bug when player count gets higher [Kevin]
-{
-	int i;
-	va_list ap;
-	struct map_session_data *sd;
-
-	va_start(ap,func);
-
-	for(i = 0; i < fd_max; i++) {
-		if ( session[i] && session[i]->func_parse == clif_parse) {
-			sd = (struct map_session_data*)session[i]->session_data;
-			if ( sd && sd->state.active )
-				func(sd, ap);
-		}
-	}
-
-	va_end(ap);
-	return 0;
-}
-
-/*==========================================
  * clif_sendでAREA*指定時用
  *------------------------------------------*/
 int clif_send_sub(struct block_list *bl, va_list ap)
@@ -6339,7 +6316,7 @@ int clif_guild_emblem(struct map_session_data *sd,struct guild *g)
 /// Sends update of the guild id/emblem id to everyone in the area.
 void clif_guild_emblem_area(struct block_list* bl)
 {
-	char buf[12];
+	uint8 buf[12];
 
 	nullpo_retv(bl);
 
@@ -7916,7 +7893,7 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 #endif
 
 		// Notify everyone that this char logged in [Skotlex].
-		clif_foreachclient(clif_friendslist_toggle_sub, sd->status.account_id, sd->status.char_id, 1);
+		map_foreachpc(clif_friendslist_toggle_sub, sd->status.account_id, sd->status.char_id, 1);
 
 		//Login Event
 		npc_script_event(sd, NPCE_LOGIN);

@@ -239,7 +239,7 @@ unsigned int get_percentage(const unsigned int A, const unsigned int B)
 
 	if( result > UINT_MAX )
 	{
-		ShowError("get_percentage(): result percentage too high! (A=%u,B=%u,result=%g)", A, B, result);
+		ShowError("get_percentage(): result percentage too high! (A=%u,B=%u,result=%g)\n", A, B, result);
 		return UINT_MAX;
 	}
 

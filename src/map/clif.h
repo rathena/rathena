@@ -402,7 +402,6 @@ void clif_send_quest_delete(struct map_session_data * sd, int quest_id);
 void clif_send_quest_status(struct map_session_data * sd, int quest_id, bool active);
 
 
-int clif_foreachclient(int (*)(struct map_session_data*,va_list),...);
 int clif_send(const uint8* buf, int len, struct block_list* bl, enum send_target type);
 int do_final_clif(void);
 int do_init_clif(void);

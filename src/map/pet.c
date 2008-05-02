@@ -971,7 +971,7 @@ static int pet_ai_sub_foreachclient(struct map_session_data *sd,va_list ap)
 
 static int pet_ai_hard(int tid, unsigned int tick, int id, intptr data)
 {
-	clif_foreachclient(pet_ai_sub_foreachclient,tick);
+	map_foreachpc(pet_ai_sub_foreachclient,tick);
 
 	return 0;
 }
