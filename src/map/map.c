@@ -1746,7 +1746,7 @@ void map_foreachpc(int (*func)(struct map_session_data* sd, va_list args), ...)
 	DBIterator* iter;
 	struct map_session_data* sd;
 
-	iter = pc_db->iterator(pc_db);
+	iter = db_iterator(pc_db);
 	for( sd = (struct map_session_data*)iter->first(iter,NULL); iter->exists(iter); sd = (struct map_session_data*)iter->next(iter,NULL) )
 	{
 		va_list args;
@@ -1758,7 +1758,7 @@ void map_foreachpc(int (*func)(struct map_session_data* sd, va_list args), ...)
 		if( ret == -1 )
 			break;// stop iterating
 	}
-	iter->destroy(iter);
+	dbi_destroy(iter);
 }
 
 /// Applies func to all the mobs in the db.
@@ -1780,6 +1780,7 @@ void map_foreachmob(int (*func)(struct mob_data* md, va_list args), ...)
 		if( ret == -1 )
 			break;// stop iterating
 	}
+	dbi_destroy(iter);
 }
 
 /// Applies func to all the npcs in the db.
@@ -1805,6 +1806,7 @@ void map_foreachnpc(int (*func)(struct npc_data* nd, va_list args), ...)
 				break;// stop iterating
 		}
 	}
+	dbi_destroy(iter);
 }
 
 /// Applies func to everything in the db.
@@ -1826,6 +1828,7 @@ void map_foreachiddb(int (*func)(struct block_list* bl, va_list args), ...)
 		if( ret == -1 )
 			break;// stop iterating
 	}
+	dbi_destroy(iter);
 }
 
 /// Iterator.
