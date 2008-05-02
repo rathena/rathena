@@ -4,6 +4,7 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2008/05/02
+	* Added backward compatible handling of PACKETVER 8 and 9. (followup to r12539)
 	* Changes to map_foreach* functions: [FlavioJS]
 	- removed the unecessary use of va_copy in map_foreachpc
 	- applied the same function pattern to map_foreachmob and map_foreachiddb
@@ -258,11 +259,20 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 	* changed trunk's default server->client PACKETVER to 9
 2008/03/26
 	* Adjusted eAthena code to compile cleanly in C++ mode.
+2008/03/25
+	* Added proper checks to adoption processing (followup to r12428).
+	* Cleaned up some code / fixed some typos. [ultramage]
 2008/03/24
-	* Reorganized the contents of the mapserver's header files. [ultramage]
+	* Reorganized the contents of the mapserver's header files.
 	- map.h is no longer a generic dumping spot of all the shared structs,
 	  and instead, each such structure now resides in its logical component
 	- map.h now only holds mostly map-related things (needs more cleaning)
+	* Fixed a problem in the new trade window implementation (from r11830) where no trade acknowledgement messages would get sent (bugreport:1217). [ultramage]
+2008/03/22
+	* Cart Termination now bypasses Parrying and Energy Coat (bugreport:476).
+	* Mobs with no respawn information which don't have a master will not get unloaded by the dynamic mobs system.
+	  This prevents script-spawned mobs (bio MVPs, Emperium/Guardians, ...) and dead-branched mobs from disappearing (bugreport:1246).
+	* Added a missing null-pointer check to the timed player pvp/gvg respawn function (mistake in r12232) [ultramage]
 2008/03/21
 	* Added VS9 project files. Thanks to Konard [Lupus]
 	- removed redundant map_getallusers() function
@@ -278,6 +288,26 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 	  Now you can flawlessly run your compiled server with RUN button in
 	  the correct directory. Thanks to Konard [Lupus]
 	- Reverted changes from the project files, due to incompatibility [Lupus]
+2008/03/14
+	* Fixed spawned mob count not being counted properly, causing yet more respawn problems.
+	* extended the "npc_event: event queue is full" error message to also print the name of the event (so that the cause can be tracked down)
+	* removed a strange (and undocumented) event name check for "GM_MONSTER" in the npc event execution code
+	* added effects from recent sakexes to effects list
+	* removed ladmin from vs8 sql builds
+	* added int_auction.c/.h to vs6 and vs7 project files
+	* some small cleanups
+	* Fixed one condition incorrectly modified in r12358, which caused dynamically unloaded mobs to never spawn once they've been unloaded once (bugreport:1178) [ultramage]
+2008/03/13
+	* Replaced some foreach-based functions by their inlined iterator equivalents.
+	* Changed the dynamic mobs system, so that the flag that indicates whether a particular mob can be unloaded is stored in the mob's respawn data structure.
+	* Cleaned up related parts of the source code. 
+	* Fixed one forgotten mob spawning function call causing mobs to duplicate when respawning (followup to r12350) (bugreport:1173) [ultramage]
+2008/03/12
+	* Removed one mob data variable related to dynamic mobs that I found to be redundant.
+	* Changed MAX_MOBSKILL (max. amount of different skill entries per mob) from 50 to 40 to reduce memory consumption a bit more. [ultramage]
+2008/03/11
+	* Replaced one incorrect nullpo check in chat_deletenpcchat().
+	* Replaced clif_countusers() with a more efficient alternative (thanks to the fact that pc_db now only holds fully authed players only). [ultramage]
 2008/03/10
 	* Added missing check to only allow the leader of a party to modify
 	  its exp share settings (bugreport:12) [ultramage]
@@ -369,6 +399,7 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 	* Added $(CUSTOM_CFLAGS) into all Makefile.in to provide any custom defs
 	  directly to all sub make files. How to use:
 	  make CUSTOM_CFLAGS='-DSOME_DEF' sql [Lupus]
+	* Fixed 2 problems in r12223 - incorrect variable used (bugreport:1031) and a missing global function declaration. [ultramage]
 2008/02/21
 	* Added status_calc_life to properly calculate hp/max_hp as a ratio taking
 	  into accounts overflows (and for now also avoids divisions by 0). Applied

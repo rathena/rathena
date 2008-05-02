@@ -42,6 +42,15 @@ struct quest;
 #ifndef PACKETVER
 	#define PACKETVER	20071106
 #endif
+// backward compatible PACKETVER 8 and 9
+#if PACKETVER == 8
+#undef PACKETVER
+#define PACKETVER 20070521
+#endif
+#if PACKETVER == 9
+#undef PACKETVER
+#define PACKETVER 20071106
+#endif
 
 // packet DB
 #define MAX_PACKET_DB		0x300
