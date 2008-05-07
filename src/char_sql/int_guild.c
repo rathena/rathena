@@ -1276,8 +1276,11 @@ int mapif_parse_CreateGuild(int fd,int account_id,char *name,struct guild_member
 	g->position[0].mode=0x11;
 	strcpy(g->position[0].name,"GuildMaster");
 	strcpy(g->position[MAX_GUILDPOSITION-1].name,"Newbie");
-	for(i=1;i<MAX_GUILDPOSITION-1;i++)
+	g->position[0].modified = g->position[MAX_GUILDPOSITION-1].modified = GS_POSITION_MODIFIED;
+	for(i=1;i<MAX_GUILDPOSITION-1;i++) {
 		sprintf(g->position[i].name,"Position %d",i+1);
+		g->position[i].modified = GS_POSITION_MODIFIED;
+	}
 
 	// Initialize guild property
 	g->max_member=16;
