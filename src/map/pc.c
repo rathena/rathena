@@ -302,12 +302,7 @@ int pc_setrestartvalue(struct map_session_data *sd,int type)
 	if (type&1)
 	{	//Normal resurrection
 		status->hp = 1; //Otherwise status_heal may fail if dead.
-		if(sd->state.snovice_dead_flag == 1) { // [Celest]
-			status_heal(&sd->bl, status->max_hp, status->max_sp, 1);
-			sd->state.snovice_dead_flag = 2;
-			sc_start(&sd->bl,status_skill2sc(MO_STEELBODY),100,1,skill_get_time(MO_STEELBODY,1));
-		} else
-			status_heal(&sd->bl, b_status->hp, b_status->sp>status->sp?b_status->sp-status->sp:0, 1);
+		status_heal(&sd->bl, b_status->hp, b_status->sp>status->sp?b_status->sp-status->sp:0, 1);
 	} else { //Just for saving on the char-server (with values as if respawned)
 		sd->status.hp = b_status->hp;
 		sd->status.sp = (status->sp < b_status->sp)?b_status->sp:status->sp;
@@ -2847,7 +2842,7 @@ void pc_getcash(struct map_session_data *sd, int cash, int points)
 	{
 		pc_setaccountreg(sd,"#CASHPOINTS",sd->cashPoints + cash);
 
-		sprintf(output, "Gained %d cash points. Total %d points", points, sd->cashPoints);
+		sprintf(output, "Gained %d cash points. Total %d points", cash, sd->cashPoints);
 		clif_disp_onlyself(sd, output, strlen(output));
 	}
 
@@ -4233,7 +4228,7 @@ int pc_checkbaselevelup(struct map_session_data *sd)
 		sc_start(&sd->bl,status_skill2sc(PR_MAGNIFICAT),100,1,skill_get_time(PR_MAGNIFICAT,1));
 		sc_start(&sd->bl,status_skill2sc(PR_GLORIA),100,1,skill_get_time(PR_GLORIA,1));
 		sc_start(&sd->bl,status_skill2sc(PR_SUFFRAGIUM),100,1,skill_get_time(PR_SUFFRAGIUM,1));
-		if (sd->state.snovice_dead_flag == 2)
+		if (sd->state.snovice_dead_flag)
 			sd->state.snovice_dead_flag = 0; //Reenable steelbody resurrection on dead.
 	} else
 	if((sd->class_&MAPID_UPPERMASK) == MAPID_TAEKWON || (sd->class_&MAPID_UPPERMASK) == MAPID_STAR_GLADIATOR)
@@ -5085,11 +5080,22 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 		unsigned int next = pc_nextbaseexp(sd);
 		if( next == 0 ) next = pc_thisbaseexp(sd);
 		if( get_percentage(sd->status.base_exp,next) >= 99 && !map_flag_gvg(sd->bl.m) )
+		{
 			sd->state.snovice_dead_flag = 1;
+			pc_setstand(sd);
+			status_percent_heal(&sd->bl, 100, 100);
+			clif_resurrection(&sd->bl, 1);
+			if(battle_config.pc_invincible_time)
+				pc_setinvincibletimer(sd, battle_config.pc_invincible_time);
+			sc_start(&sd->bl,status_skill2sc(MO_STEELBODY),100,1,skill_get_time(MO_STEELBODY,1));
+			if(map_flag_gvg(sd->bl.m))
+				pc_respawn_timer(-1, gettick(), sd->bl.id, 0);
+			return 0;
+		}
 	}
 
 	// changed penalty options, added death by player if pk_mode [Valaris]
-	if(battle_config.death_penalty_type && sd->state.snovice_dead_flag != 1
+	if(battle_config.death_penalty_type
 		&& (sd->class_&MAPID_UPPERMASK) != MAPID_NOVICE	// only novices will receive no penalty
 		&& !map[sd->bl.m].flag.noexppenalty && !map_flag_gvg(sd->bl.m)
 		&& !sd->sc.data[SC_BABY] && !sd->sc.data[SC_LIFEINSURANCE])
@@ -5207,44 +5213,13 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 		if( sd->pvp_point < 0 ){
 			sd->pvp_point=0;
 			add_timer(tick+1000, pc_respawn_timer,sd->bl.id,0);
-			return 1;
+			return 1|8;
 		}
 	}
 	//GvG
 	if(map_flag_gvg(sd->bl.m)){
 		add_timer(tick+1000, pc_respawn_timer,sd->bl.id,0);
-		return 1;
-	}
-
-	if (sd->sc.data[SC_KAIZEL])
-	{
-		j = sd->sc.data[SC_KAIZEL]->val1; //Kaizel Lv.
-		i = sd->sc.data[SC_KAIZEL]->val2; //Revive %
-		pc_setstand(sd);
-		status_change_clear(&sd->bl,0);
-		clif_skill_nodamage(&sd->bl,&sd->bl,ALL_RESURRECTION,1,1);
-		if(sd->special_state.restart_full_recover)
-			status_percent_heal(&sd->bl, 100, 100);
-		else
-			status_percent_heal(&sd->bl, i, 0);
-		clif_resurrection(&sd->bl, 1);
-		if(battle_config.pc_invincible_time)
-			pc_setinvincibletimer(sd, battle_config.pc_invincible_time);
-		sc_start(&sd->bl,status_skill2sc(PR_KYRIE),100,10,skill_get_time2(SL_KAIZEL,j));
-		return 0;
-	}
-	if (sd->state.snovice_dead_flag == 1)
-	{
-		pc_setstand(sd);
-		status_change_clear(&sd->bl,0);
-		clif_skill_nodamage(&sd->bl,&sd->bl,ALL_RESURRECTION,1,1);
-		status_percent_heal(&sd->bl, 100, 100);
-		clif_resurrection(&sd->bl, 1);
-		sd->state.snovice_dead_flag = 2;
-		if(battle_config.pc_invincible_time)
-			pc_setinvincibletimer(sd, battle_config.pc_invincible_time);
-		sc_start(&sd->bl,status_skill2sc(MO_STEELBODY),100,1,skill_get_time(MO_STEELBODY,1));
-		return 0;
+		return 1|8;
 	}
 
 	//Reset "can log out" tick.

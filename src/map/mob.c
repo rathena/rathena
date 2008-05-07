@@ -890,7 +890,7 @@ int mob_linksearch(struct block_list *bl,va_list ap)
 static int mob_delayspawn(int tid, unsigned int tick, int id, intptr data)
 {
 	struct block_list *bl = map_id2bl(id);
-	if (bl && bl->type == BL_MOB)
+	if (bl && bl->type == BL_MOB && bl->prev == NULL)
 		mob_spawn((TBL_MOB*)bl);
 	return 0;
 }
@@ -2094,13 +2094,6 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 
 	md->state.skillstate = MSS_DEAD;	
 	mobskill_use(md,tick,-1);	//On Dead skill.
-
-	if (md->sc.data[SC_KAIZEL])
-	{	//Revive in a bit.
-		add_timer(gettick()+3000, mob_respawn, md->bl.id, md->sc.data[SC_KAIZEL]->val2); //% of life to rebirth with
-		map_delblock(&md->bl);
-		return 1; //Return 1 to only clear the object.
-	}
 
 	map_freeblock_lock();
 

@@ -3,6 +3,16 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2008/05/07
+	* Fixed Sense messing up with Spiderweb. [Skotlex]
+	* Added Throw tomahawk to the list of items that do not trigger the
+	  equipment breaking code.
+	* Probably fixed Moonlight petals pushing back the casters.
+	* Infinite Endure won't be passed on to devoted characters.
+	* Infinite Endure is no longer saved on logout.
+	* Added check to avoid gms opening vending shops if they don't have the
+	  required level.
+	* Fixed the flee penalty not applying when you walk into a gvg map.
 2008/05/03
 	* NPC_GUIDEDATTACK is not supposed to bypass pneuma/safetywall [ultramage]
 2008/05/02

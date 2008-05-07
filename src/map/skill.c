@@ -6419,6 +6419,19 @@ struct skill_unit_group* skill_unitsetting (struct block_list *src, short skilli
 			safestrncpy(group->valstr, "Boo!", MESSAGE_SIZE);
 	}
 
+	if (group->state.song_dance) {
+		if(sd){
+			sd->skillid_dance = skillid;
+			sd->skilllv_dance = skilllv;
+		}
+		if (
+			sc_start4(src, SC_DANCING, 100, skillid, (int)group, skilllv,
+				(group->state.song_dance&2?BCT_SELF:0), limit+1000) &&
+			sd && group->state.song_dance&2 && skillid != CG_HERMODE //Hermod is a encore with a warp!
+		)
+			skill_check_pc_partner(sd, skillid, &skilllv, 1, 1);
+	}
+
 	limit = group->limit;
 	for( i = 0; i < layout->count; i++ )
 	{
@@ -6496,18 +6509,6 @@ struct skill_unit_group* skill_unitsetting (struct block_list *src, short skilli
 		return NULL;
 	}
 	
-	if (group->state.song_dance) {
-		if(sd){
-			sd->skillid_dance = skillid;
-			sd->skilllv_dance = skilllv;
-		}
-		if (
-			sc_start4(src, SC_DANCING, 100, skillid, (int)group, skilllv,
-				(group->state.song_dance&2?BCT_SELF:0), limit+1000) &&
-			sd && group->state.song_dance&2 && skillid != CG_HERMODE //Hermod is a encore with a warp!
-		)
-			skill_check_pc_partner(sd, skillid, &skilllv, 1, 1);
-	}
 
 	if (skillid == NJ_TATAMIGAESHI) //Store number of tiles.
 		group->val1 = group->alive_count;

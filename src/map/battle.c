@@ -207,6 +207,19 @@ int battle_delay_damage (unsigned int tick, int amotion, struct block_list *src,
 	
 	return 0;
 }
+
+int battle_attr_ratio(int atk_elem,int def_type, int def_lv)
+{
+	
+	if (atk_elem < 0 || atk_elem >= ELE_MAX)
+		return 100;
+
+	if (def_type < 0 || def_type > ELE_MAX || def_lv < 1 || def_lv > 4)
+		return 100;
+
+	return attr_fix_table[def_lv-1][atk_elem][def_type];
+}
+
 /*==========================================
  * Does attribute fix modifiers. 
  * Added passing of the chars so that the status changes can affect it. [Skotlex]
@@ -2047,8 +2060,8 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 			if (breakrate)
 				skill_break_equip(src, EQP_WEAPON, breakrate, BCT_SELF);
 		}
-		//Cart Termination won't trigger breaking data. Why? No idea, go ask Gravity.
-		if (battle_config.equip_skill_break_rate && skill_num != WS_CARTTERMINATION)
+		//Cart Termination/Tomahawk won't trigger breaking data. Why? No idea, go ask Gravity.
+		if (battle_config.equip_skill_break_rate && skill_num != WS_CARTTERMINATION && skill_num != ITM_TOMAHAWK)
 		{	// Target equipment breaking
 			int breakrate[2] = {0,0}; // weapon = 0, armor = 1
 			if (sd) {	// Break rate from equipment

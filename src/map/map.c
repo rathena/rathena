@@ -1588,6 +1588,8 @@ int map_quit(struct map_session_data *sd)
 			status_change_end(&sd->bl,SC_TRICKDEAD,-1);
 		if(sd->sc.data[SC_GUILDAURA])
 			status_change_end(&sd->bl,SC_GUILDAURA,-1);
+		if(sd->sc.data[SC_ENDURE] && sd->sc.data[SC_ENDURE]->val4)
+			status_change_end(&sd->bl,SC_ENDURE,-1); //No need to save infinite endure.
 		if (battle_config.debuff_on_logout&1) {
 			if(sd->sc.data[SC_ORCISH])
 				status_change_end(&sd->bl,SC_ORCISH,-1);

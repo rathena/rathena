@@ -37,6 +37,7 @@ int battle_calc_return_damage(struct block_list *bl, int damage, int flag);
 
 void battle_drain(struct map_session_data *sd, struct block_list *tbl, int rdamage, int ldamage, int race, int boss);
 
+int battle_attr_ratio(int atk_elem,int def_type, int def_lv);
 int battle_attr_fix(struct block_list *src, struct block_list *target, int damage,int atk_elem,int def_type, int def_lv);
 
 // ダメージ最終計算

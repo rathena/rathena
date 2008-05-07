@@ -4344,9 +4344,9 @@ int clif_skill_estimation(struct map_session_data *sd,struct block_list *dst)
   		+(battle_config.estimation_type&2?status->mdef2:0);
 	WBUFW(buf,18)= status->def_ele;
 	for(i=0;i<9;i++)
-		WBUFB(buf,20+i)= (unsigned char)battle_attr_fix(NULL,dst,100,i+1,status->def_ele, status->ele_lv);
+		WBUFB(buf,20+i)= (unsigned char)battle_attr_ratio(i+1,status->def_ele, status->ele_lv);
 //		The following caps negative attributes to 0 since the client displays them as 255-fix. [Skotlex]
-//		WBUFB(buf,20+i)= (unsigned char)((fix=battle_attr_fix(NULL,dst,100,i+1,status->def_ele, status->ele_lv))<0?0:fix);
+//		WBUFB(buf,20+i)= (unsigned char)((fix=battle_attr_ratio(i+1,status->def_ele, status->ele_lv))<0?0:fix);
 
 	clif_send(buf,packet_len(0x18c),&sd->bl,
 		sd->status.party_id>0?PARTY_SAMEMAP:SELF);
@@ -7813,7 +7813,11 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 	}
 
 	if(map_flag_gvg(sd->bl.m))
+	{
 		clif_set0199(sd,3);
+		if (battle_config.gvg_flee_penalty != 100)
+			status_calc_bl(&sd->bl, SCB_FLEE); //Apply flee penalty
+	}
 
 	// info about nearby objects
 	// must use foreachinarea (CIRCULAR_AREA interferes with foreachinrange)

@@ -599,7 +599,6 @@ int status_damage(struct block_list *src,struct block_list *target,int hp, int s
 	if (!hp && !sp)
 		return 0;
 
-
 	if (target->type == BL_SKILL)
 		return skill_unit_ondamaged((struct skill_unit *)target, src, hp, gettick());
 
@@ -731,7 +730,6 @@ int status_damage(struct block_list *src,struct block_list *target,int hp, int s
 	if (battle_config.clear_unit_ondeath &&
 		battle_config.clear_unit_ondeath&target->type)
 		skill_clear_unitgroup(target);
-	status_change_clear(target,0);
 
 	if(target->type&BL_REGEN)
 	{	//Reset regen ticks.
@@ -744,6 +742,18 @@ int status_damage(struct block_list *src,struct block_list *target,int hp, int s
 				memset(&regen->ssregen->tick, 0, sizeof(regen->ssregen->tick));
 		}
 	}
+   
+	if (!(flag&8) && sc && sc->data[SC_KAIZEL]) { //flag&8 = disable Kaizel
+      int time = skill_get_time2(SL_KAIZEL,sc->data[SC_KAIZEL]->val1);
+		status_revive(target, sc->data[SC_KAIZEL]->val2, 0);
+      status_change_clear(target,0);
+      clif_skill_nodamage(target,target,ALL_RESURRECTION,1,1);
+      sc_start(target,status_skill2sc(PR_KYRIE),100,10,time);
+      return hp+sp;
+	}
+
+	status_change_clear(target,0);
+
 	if(flag&4) //Delete from memory. (also invokes map removal code)
 		unit_free(target,1);
 	else
@@ -5031,12 +5041,13 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			break;
 		case SC_ENDURE:
 			val2 = 7; // Hit-count [Celest]
-			if (!(flag&1) && sd && !map_flag_gvg(bl->m))
-			{
+			if (!(flag&1) && sd && !map_flag_gvg(bl->m) && (type != SC_ENDURE || !val4))
+			{	//See if there are devoted characters, and pass the status to them. [Skotlex]
+				//(but do not pass infinite endure)
 				struct map_session_data *tsd;
 				int i;
 				for (i = 0; i < 5; i++)
-				{	//See if there are devoted characters, and pass the status to them. [Skotlex]
+				{	
 					if (sd->devotion[i] && (tsd = map_id2sd(sd->devotion[i])))
 						status_change_start(&tsd->bl,type,10000,val1,val2,val3,val4,tick,1);
 				}
@@ -6209,6 +6220,8 @@ int status_change_clear(struct block_list* bl, int type)
 		case SC_READYTURN:
 		case SC_DODGE:
 		case SC_JAILED:
+		case SC_EXPBOOST:
+		case SC_ITEMBOOST:
 			continue;
 		}
 
