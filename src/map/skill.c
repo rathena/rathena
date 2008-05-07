@@ -1557,10 +1557,6 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 		}
 	}
 
-	// Cart Revolution and Grimtooth need this weirdo dummy packet for the first target to display correctly
-	if( flag&SD_PREAMBLE )
-		clif_skill_damage(dsrc,bl,tick, dmg.amotion, dmg.dmotion, -30000, dmg.div_, skillid, skilllv, 6);
-
 	//Display damage.
 	switch( skillid )
 	{
@@ -1744,8 +1740,14 @@ int skill_area_sub (struct block_list *bl, va_list ap)
 	func=va_arg(ap,SkillFunc);
 
 	if(battle_check_target(src,bl,flag) > 0)
+	{
+		if (flag&(SD_SPLASH|SD_PREAMBLE)) {
+			if (flag&SD_PREAMBLE && !skill_area_temp[2])
+				clif_skill_damage(src,bl,tick, status_get_amotion(src), 0, -30000, 1, skill_id, skill_lv, 6);
+			skill_area_temp[2]++;
+		}
 		return func(src,bl,skill_id,skill_lv,tick,flag);
-
+	}
 	return 0;
 }
 
@@ -2477,11 +2479,12 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 
 	//Splash attack skills.
 	case AS_GRIMTOOTH:
+	case MC_CARTREVOLUTION:	
+	case NPC_SPLASHATTACK:
+		flag |= SD_PREAMBLE; // a fake packet will be sent for the first target to be hit
 	case AS_SPLASHER:
 	case SM_MAGNUM:
 	case HT_BLITZBEAT:
-	case MC_CARTREVOLUTION:	
-	case NPC_SPLASHATTACK:
 	case AC_SHOWER:	
 	case MG_NAPALMBEAT:
 	case MG_FIREBALL:
@@ -2505,11 +2508,8 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 				sflag |= SD_LEVEL; // -1 will be used in packets instead of the skill level
 			if( skill_area_temp[1] != bl->id && !(skill_get_inf2(skillid)&INF2_NPC_SKILL) )
 				sflag |= SD_ANIMATION; // original target gets no animation (as well as all NPC skills)
-			if( skill_area_temp[2] == 0 && (skillid == AS_GRIMTOOTH || skillid == MC_CARTREVOLUTION || skillid == NPC_SPLASHATTACK) )
-				sflag |= SD_PREAMBLE; // a fake packet will be sent for the first target to be hit
 
 			skill_attack(skill_get_type(skillid), src, src, bl, skillid, skilllv, tick, sflag);
-			skill_area_temp[2]++;
 		}
 		else
 		{
@@ -2527,7 +2527,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 				skill_area_temp[0] = map_foreachinrange(skill_area_sub, bl, (skillid == AS_SPLASHER)?1:skill_get_splash(skillid, skilllv), BL_CHAR, src, skillid, skilllv, tick, BCT_ENEMY, skill_area_sub_count);
 
 			// recursive invocation of skill_castend_damage_id() with flag|1
-			map_foreachinrange(skill_area_sub, bl, skill_get_splash(skillid, skilllv), splash_target(src), src, skillid, skilllv, tick, flag|BCT_ENEMY|1, skill_castend_damage_id);
+			map_foreachinrange(skill_area_sub, bl, skill_get_splash(skillid, skilllv), splash_target(src), src, skillid, skilllv, tick, flag|BCT_ENEMY|SD_SPLASH|1, skill_castend_damage_id);
 
 			//FIXME: move this to skill_additional_effect or some such? [ultramage]
 			if (skillid == SM_MAGNUM) {
@@ -5145,16 +5145,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			const enum sc_type sc[] = { SC_STUN, SC_CURSE, SC_SILENCE, SC_BLEEDING };
 			i = rand()%ARRAYLENGTH(sc);
 			sc_start(bl,sc[i],100,skilllv,skill_get_time2(skillid,i+1));
-		} else {
-			// hacked-together packet (not correct) that shows the animation 
-			clif_skill_damage(src, src, tick, 1, 1, -1, 0, skillid, skilllv, 6);
-			map_foreachinrange(skill_area_sub, bl,
-				skill_get_splash(skillid, skilllv),BL_CHAR,
-				src,skillid,skilllv,tick, flag|BCT_ENEMY|1,
-				skill_castend_nodamage_id);
+			break;
 		}
-		break;
-		
 	case NPC_WIDEBLEEDING:
 	case NPC_WIDECONFUSE:
 	case NPC_WIDECURSE:
@@ -5167,10 +5159,11 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		if (flag&1)
 			sc_start(bl,type,100,skilllv,skill_get_time2(skillid,skilllv));
 		else {
+			skill_area_temp[2] = 0; //For SD_PREAMBLE
 			clif_skill_nodamage(src,bl,skillid,skilllv,1);
 			map_foreachinrange(skill_area_sub, bl,
 				skill_get_splash(skillid, skilllv),BL_CHAR,
-				src,skillid,skilllv,tick, flag|BCT_ENEMY|1,
+				src,skillid,skilllv,tick, flag|BCT_ENEMY|SD_PREAMBLE|1,
 				skill_castend_nodamage_id);
 		}
 		break;

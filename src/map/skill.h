@@ -62,10 +62,11 @@ struct status_change_entry;
 //Walk intervals at which chase-skills are attempted to be triggered.
 #define WALK_SKILL_INTERVAL 5
 
-// Flags passed to skill_attack
-#define SD_LEVEL     0x1000 // will send -1 instead of skill level (affects display of some skills)
-#define SD_ANIMATION 0x2000 // will use '5' instead of the skill's 'type' (this makes skills show an animation)
-#define SD_PREAMBLE  0x4000 // will transmit a 'magic' damage packet (-30000 dmg) for the first target to be hit
+// Flags passed to skill_attack/skill_area_sub
+#define SD_LEVEL     0x1000 // skill_attack will send -1 instead of skill level (affects display of some skills)
+#define SD_ANIMATION 0x2000 // skill_attack will use '5' instead of the skill's 'type' (this makes skills show an animation)
+#define SD_SPLASH    0x4000 // skill_area_sub will count targets in skill_area_temp[2]
+#define SD_PREAMBLE  0x8000 // skill_area_sub will transmit a 'magic' damage packet (-30000 dmg) for the first target selected
 
 // スキルデ?タベ?ス
 struct s_skill_db {
