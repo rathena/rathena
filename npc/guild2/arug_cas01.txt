@@ -11,7 +11,8 @@
 //===== Additional Comments: =================================
 //= 1.0 First Version [L0ne_W0lf]
 //= 1.1 Swaped an end for a close in eco investing. [L0ne_W0lf]
-//-	Fixed improper label used in guaridan stone.
+//=     Fixed improper label used in guaridan stone.
+//= 1.2 Fixed double message in defense investing. [L0ne_W0lf]
 //============================================================
 
 arug_cas01,1,1,0	script	Manager#aru01_02	111,{
@@ -2414,8 +2415,6 @@ arug_cas01,92,380,3	script	Steward#aru01	55,{
 			mes "want to increase our defenses.";
 			close;
 		}
-		next;
-		mes "[ Steward ]";
 		if (GetCastleData("arug_cas01",5) == 0) {
 			mes "We need ^FF0000" + .@def_invest + "^000000";
 			mes "zeny to invest in our";

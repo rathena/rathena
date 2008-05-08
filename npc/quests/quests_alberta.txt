@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 
-//= 2.0
+//= 2.1
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -27,6 +27,7 @@
 //= 1.9 Updated Turtle Quest to official. [L0ne_W0lf]
 //= 2.0 Turtle Island quest now clears TURTLE var and set 
 //= MISC_QUEST bit (MISC_QUEST & 65536) [Lupus]
+//= 2.1 Added missing close. [L0ne_W0lf]
 //============================================================ 
 
 
@@ -1980,6 +1981,7 @@ tur_dun03,105,74,4	script	Mudasamu#tur	119,{
 	mes "I better be paid";
 	mes "overtime for";
 	mes "putting up with this.";
+	close;
 }
 
 tur_dun01,190,115,4	script	Knight#tur	105,{

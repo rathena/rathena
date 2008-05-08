@@ -47,6 +47,7 @@
 //= 3.1 Now uses enable and disable waitingroomevent. [L0ne_W0lf]
 //= 3.2 Fixes a bug where the timer was stopped causing the [L0ne_W0lf]
 //=	test to freeze. (bugreport:1099)
+//= 3.3 Added missing next. [L0ne_W0lf]
 //============================================================ 
 
 // Notices in the old Hunter Guild.
@@ -438,6 +439,7 @@ L_AskQuestions:
 			mes "I want to see you become a Hunter...! Waaah~ I think you'd look great, so please hurry!";
 			close;
 		}
+		next;
 		mes "[Hunter Sherin]";
 		mes "Hmm, I think you're supposed to visit someone else, not me. Like our Guildmaster who's out for business, you know?";
 		next;

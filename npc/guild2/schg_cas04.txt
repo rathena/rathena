@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
-//= 1.1
+//= 1.2
 //===== Compatible With: =====================================
 //= eAthena SVN
 //===== Description: =========================================
@@ -11,6 +11,8 @@
 //===== Additional Comments: =================================
 //= 1.0 First Version [L0ne_W0lf]
 //= 1.1 Swaped an end for a close in eco investing. [L0ne_W0lf]
+//= 1.2 Fixed double message in defense investing. [L0ne_W0lf]
+//=     Corrected a minor typo in the guild steward.
 //============================================================
 
 schg_cas04,1,1,0	script	Manager#sch04_02	111,{
@@ -2261,7 +2263,7 @@ schg_cas04,247,305,3	script	Steward#sch04	55,{
 		mes "this infidel away from here!";
 		mes "I will always be loyal to the";
 		mes "master of this stronghold,";
-		mes "the one and only^FF0000" + getguildmaster(.@GID) + "^000000.";
+		mes "the one and only ^FF0000" + getguildmaster(.@GID) + "^000000.";
 		close;
 	}
 	mes "[ Steward ]";
@@ -2417,8 +2419,6 @@ schg_cas04,247,305,3	script	Steward#sch04	55,{
 			mes "want to increase our defenses.";
 			close;
 		}
-		next;
-		mes "[ Steward ]";
 		if (GetCastleData("schg_cas04",5) == 0) {
 			mes "We need ^FF0000" + .@def_invest + "^000000";
 			mes "zeny to invest in our";

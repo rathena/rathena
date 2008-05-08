@@ -1,6 +1,11 @@
 Date		Added
 ======
 2008/05/08
+	* Rev. 12692 Fixed some of the newer reported bugs. [L0ne_W0lf]
+	- Corrected typo in guild steward (missing space.) (bugreport:1423)
+	- Corrected duplicate messages in WoE 2.0 scripts. (bugreport:1449)
+	- Corrected missing close in turtle island quest (bugreport:1455)
+	- Corrected missing next in hunter job quest. (bugreport:1477)
 	* Rev. 12691 Fixed times-invested not resetting in WoE scripts. [L0ne_W0lf]
 	- Fixed a warning when the standard chest spawn time triggered.
 	- Corrected several flag-in spawn points, (burgerpot:1475)
