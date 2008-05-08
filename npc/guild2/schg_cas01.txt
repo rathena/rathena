@@ -2502,7 +2502,7 @@ schg_cas01,247,305,3	script	Steward#sch01	55,{
 				mes "allow her to stay with us.";
 				close;
 			}
-			disablenpc "Kafra Employee#schg_cas01";
+			disablenpc "Kafra Employee#sch01";
 			SetCastleData "schg_cas01",9,0;
 			mes "[ Steward ]";
 			mes "That Kafra Employee";
