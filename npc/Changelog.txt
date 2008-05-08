@@ -1,5 +1,9 @@
 Date		Added
 ======
+2008/05/08
+	* Rev. 12691 Fixed times-invested not resetting in WoE scripts. [L0ne_W0lf]
+	- Fixed a warning when the standard chest spawn time triggered.
+	- Corrected several flag-in spawn points, (burgerpot:1475)
 2008/04/26
 	* Rev. 12673 Rewrote the WoE 1.0 from the ground up nearly. [L0ne_W0lf]
 	- Renamed the WoE Time setting NPC to "agit_controller.txt"

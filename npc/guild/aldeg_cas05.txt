@@ -3,13 +3,14 @@
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
-//= 1.0
+//= 1.1
 //===== Compatible With: =====================================
 //= eAthena SVN
 //===== Description: =========================================
 //= NPCs that relate to Al De Baran Guild Castle 5
 //===== Additional Comments: =================================
 //= 1.0 First Version. No longer uses functions. [L0ne_W0lf]
+//= 1.1 Corrected flag-in spawn point. [L0ne_W0lf]
 //============================================================
 
 // Guild Flag (Town)
@@ -46,7 +47,7 @@ alde_gld,265,93,6	script	Rothenburg#a5-2::Rothenburg2	722,{
 			next;
 			if (select("Return to the guild castle.:Quit.") == 1) {
 				if (getcharid(2) == GetCastleData("aldeg_cas05",1)) {
-					warp "aldeg_cas05",218,170;
+					warp "aldeg_cas05",31,190;
 					end;
 				}
 			}

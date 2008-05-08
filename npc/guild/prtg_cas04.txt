@@ -10,6 +10,7 @@
 //= NPCs that relate to Prontera Guild Castle 4
 //===== Additional Comments: =================================
 //= 1.0 First Version. No longer uses functions. [L0ne_W0lf]
+//= 1.1 Corrected flag-in spawn point. [L0ne_W0lf]
 //============================================================
 
 // Guild Flag (Town)
@@ -46,7 +47,7 @@ prt_gld,120,243,6	script	Skoegul#p4-2::Skoegul2	722,{
 			next;
 			if (select("Return to the guild castle.:Quit.") == 1) {
 				if (getcharid(2) == GetCastleData("prtg_cas04",1)) {
-					warp "prtg_cas04",259,265;
+					warp "prtg_cas04",258,247;
 					end;
 				}
 			}

@@ -10,6 +10,7 @@
 //= NPCs that relate to Prontera Guild Castle 1
 //===== Additional Comments: =================================
 //= 1.0 First Version. No longer uses functions. [L0ne_W0lf]
+//= 1.1 Corrected flag-in spawn point. [L0ne_W0lf]
 //============================================================
 
 // Guild Flag (Town)
@@ -47,7 +48,7 @@ prt_gld,147,140,4	script	Fadhgridh#p3-2::Fadhgridh2	722,{
 			next;
 			if (select("Return to the guild castle.:Quit.") == 1) {
 				if (getcharid(2) == GetCastleData("prtg_cas03",1)) {
-					warp "prtg_cas03",45,99;
+					warp "prtg_cas03",181,215;
 					end;
 				}
 			}

@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
-//= 1.0
+//= 1.1
 //===== Compatible With: =====================================
 //= eAthena SVN
 //===== Description: =========================================
@@ -33,6 +33,8 @@
 //=   treasure chest spawned.
 //===== Additional Comments: =================================
 //= 1.0 First Version. No longer uses functions. [L0ne_W0lf]
+//= 1.1 Daily investement will now be reset. [L0ne_W0lf]
+//=     Template will no longer try to spawn chests.
 //============================================================
 
 // AGIT Manager Template
@@ -1131,6 +1133,9 @@ OnTouch:
 	end;
 
 OnClock0001:
+	// Do nothing if this script is the template.
+	if (strnpcinfo(1) == "Gld_Trea_Spawn") end;
+	
 	// If there is no owner, do nothing.
 	if (!GetCastleData(strnpcinfo(2),1)) end;
 
@@ -1242,6 +1247,10 @@ OnClock0001:
 	else {
 		end;
 	}
+
+	// Reset daily investment limit.
+	setcastledata strnpcinfo(2),4,0;
+	setcastledata strnpcinfo(2),5,0;
 
 	// Spawn boxes in proper order.
 	for (set .@i,0; .@i <= .@Treasure ; set .@i,.@i+1) {
