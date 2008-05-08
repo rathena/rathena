@@ -1943,6 +1943,9 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 		else	// BF_LONG (there's no other choice)
 			cardfix=cardfix*(100-tsd->long_attack_def_rate)/100;
 
+		if( tsd->sc.data[SC_DEF_RATE] )
+			cardfix=cardfix*(100-tsd->sc.data[SC_DEF_RATE]->val1)/100;
+
 		if (cardfix != 1000)
 			ATK_RATE(cardfix/10);
 	}
@@ -2415,6 +2418,9 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 				cardfix=cardfix*(100-tsd->long_attack_def_rate)/100;
 
 			cardfix=cardfix*(100-tsd->magic_def_rate)/100;
+
+			if( tsd->sc.data[SC_MDEF_RATE] )
+				cardfix=cardfix*(100-tsd->sc.data[SC_MDEF_RATE]->val1)/100;
 
 			if (cardfix != 1000)
 				MATK_RATE(cardfix/10);
@@ -3133,9 +3139,8 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 			if (!(agit_flag && map[m].flag.gvg_castle) && md->guardian_data && md->guardian_data->guild_id)
 				return 0; //Disable guardians/emperiums owned by Guilds on non-woe times.
 
-			if( md->class_ == MOBID_BARRICADEA && md->barricade )
+			if( md->barricade && !md->barricade->killable )
 				return 0;
-
 			break;
 		}
 	}

@@ -449,6 +449,14 @@ void initChangeTables(void)
 	StatusIconChangeTable[SC_ITEMBOOST] = SI_ITEMBOOST;
 	StatusIconChangeTable[SC_LIFEINSURANCE] = SI_LIFEINSURANCE;
 	StatusIconChangeTable[SC_BOSSMAPINFO] = SI_BOSSMAPINFO;
+	StatusIconChangeTable[SC_DEF_RATE] = SI_DEF_RATE;
+	StatusIconChangeTable[SC_MDEF_RATE] = SI_MDEF_RATE;
+	StatusIconChangeTable[SC_INCCRI] = SI_INCCRI;
+	StatusIconChangeTable[SC_INCHEALRATE] = SI_INCHEALRATE;
+	StatusIconChangeTable[SC_HPREGEN] = SI_HPREGEN;
+	StatusIconChangeTable[SC_SPCOST_RATE] = SI_SPCOST_RATE;
+	StatusIconChangeTable[SC_COMMONSC_RESIST] = SI_COMMONSC_RESIST;
+	StatusIconChangeTable[SC_ARMOR_RESIST] = SI_ARMOR_RESIST;
 
 	//Other SC which are not necessarily associated to skills.
 	StatusChangeFlagTable[SC_ASPDPOTION0] = SCB_ASPD;
@@ -479,7 +487,6 @@ void initChangeTables(void)
 	StatusChangeFlagTable[SC_INCATKRATE] |= SCB_BATK|SCB_WATK;
 	StatusChangeFlagTable[SC_INCMATKRATE] |= SCB_MATK;
 	StatusChangeFlagTable[SC_INCDEFRATE] |= SCB_DEF;
-	StatusChangeFlagTable[SC_INCMDEFRATE] |= SCB_MDEF;
 	StatusChangeFlagTable[SC_INCBASEATK] |= SCB_BATK;
 	StatusChangeFlagTable[SC_STRFOOD] |= SCB_STR;
 	StatusChangeFlagTable[SC_AGIFOOD] |= SCB_AGI;
@@ -744,12 +751,12 @@ int status_damage(struct block_list *src,struct block_list *target,int hp, int s
 	}
    
 	if (!(flag&8) && sc && sc->data[SC_KAIZEL]) { //flag&8 = disable Kaizel
-      int time = skill_get_time2(SL_KAIZEL,sc->data[SC_KAIZEL]->val1);
+		int time = skill_get_time2(SL_KAIZEL,sc->data[SC_KAIZEL]->val1);
 		status_revive(target, sc->data[SC_KAIZEL]->val2, 0);
-      status_change_clear(target,0);
-      clif_skill_nodamage(target,target,ALL_RESURRECTION,1,1);
-      sc_start(target,status_skill2sc(PR_KYRIE),100,10,time);
-      return hp+sp;
+		status_change_clear(target,0);
+		clif_skill_nodamage(target,target,ALL_RESURRECTION,1,1);
+		sc_start(target,status_skill2sc(PR_KYRIE),100,10,time);
+		return hp+sp;
 	}
 
 	status_change_clear(target,0);
@@ -3680,8 +3687,6 @@ static signed char status_calc_mdef(struct block_list *bl, struct status_change 
 		mdef += sc->data[SC_ENDURE]->val1;
 	if(sc->data[SC_CONCENTRATION])
 		mdef += 1; //Skill info says it adds a fixed 1 Mdef point.
-	if(sc->data[SC_INCMDEFRATE])
-		mdef += mdef * sc->data[SC_INCMDEFRATE]->val1/100;
 
 	return (signed char)cap_value(mdef,CHAR_MIN,CHAR_MAX);
 }
@@ -4576,7 +4581,7 @@ int status_get_sc_def(struct block_list *bl, enum sc_type type, int rate, int ti
 		if(sd && SC_COMMON_MIN <= type && type <= SC_COMMON_MAX)
 		{
 			if( sd->reseff[type-SC_COMMON_MIN] > 0 )
-			rate -= rate*sd->reseff[type-SC_COMMON_MIN]/10000;
+				rate -= rate*sd->reseff[type-SC_COMMON_MIN]/10000;
 			if( sd->sc.data[SC_COMMONSC_RESIST] )
 				rate -= rate*sd->sc.data[SC_COMMONSC_RESIST]->val1;
 		}
@@ -4639,7 +4644,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 	if( bl->type == BL_MOB )
 	{
 		struct mob_data *md = BL_CAST(BL_MOB,bl);
-		if( (md->class_ == MOBID_EMPERIUM && type != SC_SAFETYWALL && type != SC_PNEUMA) || md->class_ == MOBID_BARRICADEA )
+		if( (md->class_ == MOBID_EMPERIUM && type != SC_SAFETYWALL && type != SC_PNEUMA) || md->barricade )
 			return 0; //Emperium can't be afflicted by status changes
 	}
 

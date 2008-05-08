@@ -283,8 +283,11 @@ int mob_get_random_id(int type, int flag, int lv)
  *------------------------------------------*/
 bool mob_ksprotected (struct block_list *src, struct block_list *target)
 {
-	struct block_list *s_bl;
-	struct map_session_data *sd, *pl_sd;
+	struct block_list *s_bl, *t_bl;
+	struct map_session_data
+		*sd,    // Source
+		*pl_sd, // Owner
+		*t_sd;  // Mob Target
 	struct status_change_entry *sce;
 	struct mob_data *md;
 	unsigned int tick = gettick();
@@ -302,8 +305,14 @@ bool mob_ksprotected (struct block_list *src, struct block_list *target)
 	if( !(sd = BL_CAST(BL_PC,s_bl)) )
 		return false; // Master is not PC
 
+	t_bl = map_id2bl(md->target_id);
+	if( !t_bl || (s_bl = battle_get_master(t_bl)) == NULL )
+		s_bl = t_bl;
+
+	t_sd = BL_CAST(BL_PC,s_bl);
+
 	do {
-		if( map[md->bl.m].flag.allowks || map[md->bl.m].flag.gvg || map[md->bl.m].flag.pvp )
+		if( map[md->bl.m].flag.allowks || map_flag_ks(md->bl.m) )
 			return false; // Ignores GVG, PVP and AllowKS map flags
 
 		if( md->db->mexp || md->master_id )
@@ -312,23 +321,22 @@ bool mob_ksprotected (struct block_list *src, struct block_list *target)
 		if( (sce = md->sc.data[SC_KSPROTECTED]) == NULL )
 			break; // No KS Protected
 
-		if( sd->bl.id == sce->val1 )
-			break; // Same Player
+		if( sd->bl.id == sce->val1 || // Same Owner
+			(sce->val2 == 2 && sd->status.party_id && sd->status.party_id == sce->val3) || // Party KS allowed
+			(sce->val2 == 3 && sd->status.guild_id && sd->status.guild_id == sce->val4) ) // Guild KS allowed
+			break;
 
-		if( !(pl_sd = map_id2sd(sce->val1)) )
-			break; // Owner offline
+		if( t_sd && (
+			(sce->val2 == 1 && sce->val1 != t_sd->bl.id) ||
+			(sce->val2 == 2 && sce->val3 && sce->val3 != t_sd->status.party_id) ||
+			(sce->val2 == 3 && sce->val4 && sce->val4 != t_sd->status.guild_id)) )
+			break;
 
-		if( pl_sd->bl.m != md->bl.m )
-			break; // Protection expires on different map
+		if( (pl_sd = map_id2sd(sce->val1)) == NULL || pl_sd->bl.m != md->bl.m )
+			break;
 
 		if( !pl_sd->state.noks )
 			return false; // No KS Protected, but normal players should be protected too
-
-		if( pl_sd->state.noks == 2 && pl_sd->status.party_id && pl_sd->status.party_id == sd->status.party_id )
-			break; // Party KS allowed
-
-		if( pl_sd->state.noks == 3 && pl_sd->status.guild_id && pl_sd->status.guild_id == sd->status.guild_id )
-			break; // Guild KS allowed
 
 		// Message to KS
 		if( DIFF_TICK(sd->ks_floodprotect_tick, tick) <= 0 )
@@ -351,7 +359,7 @@ bool mob_ksprotected (struct block_list *src, struct block_list *target)
 		return true;
 	} while(0);
 
-	status_change_start(target, SC_KSPROTECTED, 10000, sd->bl.id, 0, 0, 0, battle_config.ksprotection, 0);
+	status_change_start(target, SC_KSPROTECTED, 10000, sd->bl.id, sd->state.noks, sd->status.party_id, sd->status.guild_id, battle_config.ksprotection, 0);
 
 	return false;
 }
@@ -516,27 +524,20 @@ void mob_barricade_nextxy(short x, short y, short dir, int pos, short *x1, short
 		*y1 = y + pos;
 }
 
-short mob_barricade_build(short m, short x, short y, short count, short dir, bool killable, const char* event)
+short mob_barricade_build(short m, short x, short y, const char* mobname, short count, short dir, bool killable, bool walkable, bool shootable, bool odd, const char* event)
 {
 	int i, j;
-	short x1;
-	short y1;
+	short x1, y1;
 	struct mob_data *md;
 	struct barricade_data *barricade;
 
-	if( count <= 0 )
-		return 1;
-
-	if( !event )
-		return 2;
-
-	if( (barricade = (struct barricade_data *)strdb_get(barricade_db,event)) != NULL )
-		return 3; // Already a barricade with event name
-
-	if( map_getcell(m, x, y, CELL_CHKNOREACH) )
-		return 4; // Starting cell problem
+	if( count <= 0 ) return 1;
+	if( !event ) return 2;
+	if( (barricade = (struct barricade_data *)strdb_get(barricade_db,event)) != NULL ) return 3; // Already a barricade with event name
+	if( map_getcell(m, x, y, CELL_CHKNOREACH) ) return 4; // Starting cell problem
 
 	CREATE(barricade, struct barricade_data, 1);
+
 	barricade->dir = dir;
 	barricade->x = x;
 	barricade->y = y;
@@ -544,26 +545,32 @@ short mob_barricade_build(short m, short x, short y, short count, short dir, boo
 	safestrncpy(barricade->npc_event, event, sizeof(barricade->npc_event));
 	barricade->amount = 0;
 	barricade->killable = killable;
-
-	ShowInfo("New Barricade: %s.\n", barricade->npc_event);
-
+	barricade->shootable = shootable;
+	barricade->walkable = walkable;
+	
 	for( i = 0; i < count; i++ )
 	{
 		mob_barricade_nextxy(x, y, dir, i, &x1, &y1);
 
-		if( map_getcell(m, x1, y1, CELL_CHKNOREACH) )
-			break; // Collision
+		if( map_getcell(m, x1, y1, CELL_CHKNOREACH) ) break; // Collision
 
-		if( i % 2 == 0 )
+		if( (odd && i % 2 != 0) || (!odd && i % 2 == 0) )
 		{
 			barricade->amount++;
-			j = mob_once_spawn(NULL, m, x1, y1, "--ja--", killable ? MOBID_BARRICADEB : MOBID_BARRICADEA, 1, "");
-			md = (struct mob_data *)map_id2bl(j);
-			md->barricade = barricade;
+
+			if( map[m].flag.gvg_castle )
+				j = mob_spawn_guardian(map[m].name, x1, y1, mobname, 1905, "", 0, false);
+			else
+				j = mob_once_spawn(NULL, m, x1, y1, mobname, 1905, 1, "");
+
+			if( (md = (struct mob_data *)map_id2bl(j)) != NULL )
+				md->barricade = barricade;
 		}
 
-		map_setgatcell(m, x1, y1, (killable ? 5 : 1));
-		clif_changemapcell(0, m, x1, y1, (killable ? 5 : 1), ALL_SAMEMAP);
+		if( !barricade->walkable ) map_setcell(m, x1, y1, CELL_WALKABLE, false);
+		map_setcell(m, x1, y1, CELL_SHOOTABLE, barricade->shootable);
+
+		clif_changemapcell(0, m, x1, y1, map_getcell(barricade->m, x1, y1, CELL_GETTYPE), ALL_SAMEMAP);
 	}
 
 	barricade->count = i;
@@ -594,15 +601,16 @@ void mob_barricade_get(struct map_session_data *sd)
 		for( i = 0; i < barricade->count; i++ )
 		{
 			mob_barricade_nextxy(barricade->x, barricade->y, barricade->dir, i, &x1, &y1);
-			clif_changemapcell(sd->fd, barricade->m, x1, y1, (barricade->killable ? 5 : 1), SELF);
+			clif_changemapcell(sd->fd, barricade->m, x1, y1, map_getcell(barricade->m, x1, y1, CELL_GETTYPE), SELF);
 		}
 	}
 	iter->destroy(iter);
 }
 
-static void mob_barricade_break(struct barricade_data *barricade)
+static void mob_barricade_break(struct barricade_data *barricade, struct block_list *src)
 {
 	int i;
+	struct map_session_data *sd = NULL;
 	short x1, y1;
 	
 	if( barricade == NULL )
@@ -614,13 +622,29 @@ static void mob_barricade_break(struct barricade_data *barricade)
 	for( i = 0; i < barricade->count; i++ )
 	{
 		mob_barricade_nextxy(barricade->x, barricade->y, barricade->dir, i, &x1, &y1);
-		map_setgatcell(barricade->m, x1, y1, 0);
-		clif_changemapcell(0, barricade->m, x1, y1, 0, ALL_SAMEMAP);
+
+		if( !barricade->walkable ) map_setcell(barricade->m, x1, y1, CELL_WALKABLE, true);
+		map_setcell(barricade->m, x1, y1, CELL_SHOOTABLE, !barricade->shootable);
+		clif_changemapcell(0, barricade->m, x1, y1, map_getcell(barricade->m, x1, y1, CELL_GETTYPE), ALL_SAMEMAP);
 	}
 
-	npc_event_do(barricade->npc_event);
-	map[barricade->m].barricade_num--;
+	if( src )
+		switch( src->type )
+		{
+		case BL_PC:
+			sd = BL_CAST(BL_PC,src);
+			break;
+		case BL_PET:
+			sd = ((TBL_PET*)src)->msd;
+			break;
+		case BL_HOM:
+			sd = ((TBL_HOM*)src)->master;
+			break;
+		}
 
+	if( sd ) npc_event(sd, barricade->npc_event, 0);
+
+	map[barricade->m].barricade_num--;
 	strdb_remove(barricade_db, barricade->npc_event);
 }
 
@@ -660,8 +684,10 @@ void mod_barricade_clearall(void)
 		for( i = 0; i < barricade->count; i++ )
 		{
 			mob_barricade_nextxy(barricade->x, barricade->y, barricade->dir, i, &x1, &y1);
-			map_setgatcell(barricade->m, x1, y1, 0);
-			clif_changemapcell(0, barricade->m, x1, y1, 0, ALL_SAMEMAP);
+
+			if( !barricade->walkable ) map_setcell(barricade->m, x1, y1, CELL_WALKABLE, true);
+			map_setcell(barricade->m, x1, y1, CELL_SHOOTABLE, !barricade->shootable);
+			clif_changemapcell(0, barricade->m, x1, y1, map_getcell(barricade->m, x1, y1, CELL_GETTYPE), ALL_SAMEMAP);
 		}
 	}
 	iter->destroy(iter);
@@ -2532,7 +2558,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 	}
 
 	if( md->barricade != NULL )
-		mob_barricade_break(md->barricade);
+		mob_barricade_break(md->barricade, src);
 
 	if(md->deletetimer!=-1) {
 		delete_timer(md->deletetimer,mob_timer_delete);

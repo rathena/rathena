@@ -222,7 +222,7 @@ int mob_once_spawn(struct map_session_data* sd,int m,short x,short y,const char*
 int mob_once_spawn_area(struct map_session_data* sd,int m,int x0,int y0,int x1,int y1,const char* mobname,int class_,int amount,const char* event);
 
 bool mob_ksprotected (struct block_list *src, struct block_list *target);
-short mob_barricade_build(short m, short x, short y, short count, short dir, bool killable, const char* event);
+short mob_barricade_build(short m, short x, short y, const char* mobname, short count, short dir, bool killable, bool walkable, bool shootable, bool odd, const char* event);
 void mob_barricade_destroy(short m, const char *event);
 void mob_barricade_get(struct map_session_data *sd);
 void mod_barricade_clearall(void);

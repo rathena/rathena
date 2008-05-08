@@ -7920,7 +7920,7 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 
 	if( sd->state.changemap )
 	{// restore information that gets lost on map-change
-		if (night_flag && map[sd->bl.m].flag.nightenabled)
+		if( night_flag && map[sd->bl.m].flag.nightenabled )
 		{	//Display night.
 			if( !sd->state.night )
 			{
@@ -7932,6 +7932,13 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 		{ //Clear night display.
 			sd->state.night = 0;
 			clif_status_load(&sd->bl, SI_NIGHT, 0);
+		}
+
+		if( map[sd->bl.m].flag.allowks && !map_flag_ks(sd->bl.m) )
+		{
+			char output[128];
+			sprintf(output, "[ Kill Steal Protection Disable. KS is allowed in this map ]");
+			clif_announce(&sd->bl, output, strlen(output) + 1, 0x00CC66, 3);
 		}
 
 		mob_barricade_get(sd);

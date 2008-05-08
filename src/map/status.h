@@ -282,7 +282,7 @@ typedef enum sc_type {
 	SC_INCDEF,
 	SC_INCBASEATK,
 	SC_FASTCAST,
-	SC_INCMDEFRATE,
+	SC_MDEF_RATE,
 	SC_HPREGEN,
 	SC_INCHEALRATE,
 	SC_PNEUMA,
@@ -292,6 +292,7 @@ typedef enum sc_type {
 	SC_SPCOST_RATE,
 	SC_COMMONSC_RESIST,
 	SC_SEVENWIND,
+	SC_DEF_RATE,
 	SC_MAX, //Automatically updated max, used in for's to check we are within bounds.
 } sc_type;
 
@@ -456,6 +457,15 @@ enum si_type {
 	//SI_FOODLUK		= 276, //Same as 246
 	SI_SLOWCAST		= 282,
 	SI_CRITICALWOUND	= 286,
+	SI_DEF_RATE		= 290,
+	SI_MDEF_RATE	= 291,
+	SI_INCCRI		= 292,
+	SI_INCHEALRATE	= 293,
+	SI_HPREGEN		= 294,
+	// 295 Sword ?
+	SI_SPCOST_RATE	= 300,
+	SI_COMMONSC_RESIST	= 301,
+	SI_ARMOR_RESIST	= 302,
 };
 
 // JOINTBEAT stackable ailments
