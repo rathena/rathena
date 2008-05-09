@@ -33,6 +33,11 @@
 //Zone 2 - Jail
 601,8 //Fly Wing - not really needed here but ...
 602,8 //Butterfly Wing - also not needed
+12212,8 //Giant Fly Wing
+14582,8
+14583,8
+14584,8
+14585,8
 
 //Zone 3 - Izlude Battle Arena
 601,16 //Fly Wing

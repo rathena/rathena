@@ -53,7 +53,6 @@ comodo,171,137,1	script	Haith#um	92,{
 	mes "[La Ed]";
 	mes "Let's do it~ !!";
 	emotion e_gg;
-	emotion e_gg;
 	next;
 	mes "[Haith]";
 	mes "................";
@@ -1024,7 +1023,7 @@ OnTouch:
 	case 3:
 		//if (rand(1,2) == 2) {
 		//	percentheal -99,0;
-		//	warp "warp "nif_in",69,15;
+		//	warp "nif_in",69,15;
 		//}
 		end;
 	}

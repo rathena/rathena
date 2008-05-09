@@ -6743,7 +6743,7 @@ int pc_divorce(struct map_session_data *sd)
 	struct map_session_data *p_sd;
 	int i;
 
-	if (sd == NULL || !pc_ismarried(sd))
+	if( sd == NULL || !pc_ismarried(sd) )
 		return -1;
 
 	if( !sd->status.partner_id )
@@ -6758,23 +6758,23 @@ int pc_divorce(struct map_session_data *sd)
 		return 0;
 #else
 		ShowError("pc_divorce: p_sd nullpo\n");
-			return -1;
+		return -1;
 #endif
-		}
+	}
 
 	// Both players online, lets do the divorce manually
-		sd->status.partner_id = 0;
-		p_sd->status.partner_id = 0;
+	sd->status.partner_id = 0;
+	p_sd->status.partner_id = 0;
 	for( i = 0; i < MAX_INVENTORY; i++ )
 	{
-			if (sd->status.inventory[i].nameid == WEDDING_RING_M || sd->status.inventory[i].nameid == WEDDING_RING_F)
-				pc_delitem(sd, i, 1, 0);
-			if (p_sd->status.inventory[i].nameid == WEDDING_RING_M || p_sd->status.inventory[i].nameid == WEDDING_RING_F)
-				pc_delitem(p_sd, i, 1, 0);
-		}
+		if( sd->status.inventory[i].nameid == WEDDING_RING_M || sd->status.inventory[i].nameid == WEDDING_RING_F )
+			pc_delitem(sd, i, 1, 0);
+		if( p_sd->status.inventory[i].nameid == WEDDING_RING_M || p_sd->status.inventory[i].nameid == WEDDING_RING_F )
+			pc_delitem(p_sd, i, 1, 0);
+	}
 
-		clif_divorced(sd, p_sd->status.name);
-		clif_divorced(p_sd, sd->status.name);
+	clif_divorced(sd, p_sd->status.name);
+	clif_divorced(p_sd, sd->status.name);
 
 	return 0;
 }

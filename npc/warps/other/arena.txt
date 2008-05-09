@@ -33,7 +33,7 @@ sec_in02,79,180,3	script	#arenacontrol	81,{
 DLGTEMP:
 	input @input_arena;
 	if (@input_arena < 0 || @input_arena > 2000) goto DLGTEMP;	//CHECK
-	if (@input == 0)
+	if (@input_arena == 0)
 	{
 		mes "Error!";
 		close;

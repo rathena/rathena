@@ -76,7 +76,7 @@ unsigned char mail_setitem(struct map_session_data *sd, int idx, int amount)
 			amount = 0;
 
 		sd->mail.zeny = amount;
-		clif_updatestatus(sd, SP_ZENY);
+		// clif_updatestatus(sd, SP_ZENY);
 		return 0;
 	}
 	else

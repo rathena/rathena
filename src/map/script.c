@@ -3385,7 +3385,7 @@ static int script_load_mapreg(void)
 			int s = add_str(varname);
 			int i = index;
 			int v = atoi(value);
-			idb_put(mapreg_db, (i<<24)|s, (void *)v);			
+			idb_put(mapreg_db, (i<<24)|s, (void *)v);
 		}
 	}
 	
