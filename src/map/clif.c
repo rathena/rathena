@@ -3201,8 +3201,9 @@ int clif_storageitemadded(struct map_session_data *sd,struct storage *stor,int i
 
 	nullpo_retr(0, sd);
 	nullpo_retr(0, stor);
-
 	fd=sd->fd;
+
+#if PACKETVER < 5
 	WFIFOHEAD(fd,packet_len(0xf4));
 	WFIFOW(fd,0) =0xf4; // Storage item added
 	WFIFOW(fd,2) =index+1; // index
@@ -3216,6 +3217,22 @@ int clif_storageitemadded(struct map_session_data *sd,struct storage *stor,int i
 	WFIFOB(fd,12)=stor->storage_[index].refine; //refine
 	clif_addcards(WFIFOP(fd,13), &stor->storage_[index]);
 	WFIFOSET(fd,packet_len(0xf4));
+#else
+	WFIFOHEAD(fd,packet_len(0x1c4));
+	WFIFOW(fd,0) =0x1c4; // Storage item added
+	WFIFOW(fd,2) =index+1; // index
+	WFIFOL(fd,4) =amount; // amount
+	if((view = itemdb_viewid(stor->storage_[index].nameid)) > 0)
+		WFIFOW(fd,8) =view;
+	else
+		WFIFOW(fd,8) =stor->storage_[index].nameid; // id
+	WFIFOB(fd,10)=itemdb_type(stor->storage_[index].nameid); //type
+	WFIFOB(fd,11)=stor->storage_[index].identify; //identify flag
+	WFIFOB(fd,12)=stor->storage_[index].attribute; // attribute
+	WFIFOB(fd,13)=stor->storage_[index].refine; //refine
+	clif_addcards(WFIFOP(fd,14), &stor->storage_[index]);
+	WFIFOSET(fd,packet_len(0x1c4));
+#endif
 
 	return 0;
 }
@@ -4348,8 +4365,7 @@ int clif_skill_estimation(struct map_session_data *sd,struct block_list *dst)
 //		The following caps negative attributes to 0 since the client displays them as 255-fix. [Skotlex]
 //		WBUFB(buf,20+i)= (unsigned char)((fix=battle_attr_ratio(i+1,status->def_ele, status->ele_lv))<0?0:fix);
 
-	clif_send(buf,packet_len(0x18c),&sd->bl,
-		sd->status.party_id>0?PARTY_SAMEMAP:SELF);
+	clif_send(buf,packet_len(0x18c),&sd->bl,sd->status.party_id>0?PARTY_SAMEMAP:SELF);
 	return 0;
 }
 /*==========================================
@@ -5002,11 +5018,12 @@ int clif_cart_additem(struct map_session_data *sd,int n,int amount,int fail)
 	nullpo_retr(0, sd);
 
 	fd=sd->fd;
-	WFIFOHEAD(fd,packet_len(0x124));
-	buf=WFIFOP(fd,0);
 	if(n<0 || n>=MAX_CART || sd->status.cart[n].nameid<=0)
 		return 1;
 
+#if PACKETVER < 5
+	WFIFOHEAD(fd,packet_len(0x124));
+	buf=WFIFOP(fd,0);
 	WBUFW(buf,0)=0x124;
 	WBUFW(buf,2)=n+2;
 	WBUFL(buf,4)=amount;
@@ -5019,6 +5036,24 @@ int clif_cart_additem(struct map_session_data *sd,int n,int amount,int fail)
 	WBUFB(buf,12)=sd->status.cart[n].refine;
 	clif_addcards(WBUFP(buf,13), &sd->status.cart[n]);
 	WFIFOSET(fd,packet_len(0x124));
+#else
+	WFIFOHEAD(fd,packet_len(0x1c5));
+	buf=WFIFOP(fd,0);
+	WBUFW(buf,0)=0x1c5;
+	WBUFW(buf,2)=n+2;
+	WBUFL(buf,4)=amount;
+	if((view = itemdb_viewid(sd->status.cart[n].nameid)) > 0)
+		WBUFW(buf,8)=view;
+	else
+		WBUFW(buf,8)=sd->status.cart[n].nameid;
+	WBUFB(buf,10)=itemdb_type(sd->status.cart[n].nameid);
+	WBUFB(buf,11)=sd->status.cart[n].identify;
+	WBUFB(buf,12)=sd->status.cart[n].attribute;
+	WBUFB(buf,13)=sd->status.cart[n].refine;
+	clif_addcards(WBUFP(buf,14), &sd->status.cart[n]);
+	WFIFOSET(fd,packet_len(0x1c5));
+#endif
+
 	return 0;
 }
 
