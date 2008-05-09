@@ -893,7 +893,7 @@ int parse_fromchar(int fd)
 			int sec = (short)RFIFOW(fd,16);
 			RFIFOSKIP(fd,18);
 
-			if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `unban_time` FROM `%s` WHERE `%s` = '%d'", login_db, login_db_account_id, account_id) )
+			if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `ban_until` FROM `%s` WHERE `%s` = '%d'", login_db, login_db_account_id, account_id) )
 				Sql_ShowDebug(sql_handle);
 			else if( SQL_SUCCESS == Sql_NextRow(sql_handle) )
 			{
