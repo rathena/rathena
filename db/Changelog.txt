@@ -43,6 +43,9 @@
 	2385 Recuvative_Armor		Should trigger HP/SP return with magical kills as well.
 
 =======================
+2008/05/11
+	* Rev. 12701 Beelzebub now summons 6 chonchons in addition to hell flies. [L0ne_W0lf]
+	* Tristan 3RD is no longer considered a boss protocol monster.
 2008/04/28
 	* Rev. 12674 Updated castle DB to be compliant with new WoE scripts. [L0ne_W0lf]
 	* Rev. 12672 Another correction to "Evil Land", fixed damage-effect range. [L0ne_W0lf]
