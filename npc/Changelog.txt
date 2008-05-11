@@ -1,5 +1,8 @@
 Date		Added
 ======
+2008/05/11
+	* Rev. 12701 Fixed guild manager charging twice for invest [L0ne_W0lf]
+	- Corrected some treasure room switch sent-to spawns.
 2008/05/08
 	* Rev. 12692 Fixed some of the newer reported bugs. [L0ne_W0lf]
 	- Corrected typo in guild steward (missing space.) (bugreport:1423)

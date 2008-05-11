@@ -3,13 +3,14 @@
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
-//= 1.0
+//= 1.1
 //===== Compatible With: =====================================
 //= eAthena SVN
 //===== Description: =========================================
 //= NPCs that relate to Payon Guild Castle 3
 //===== Additional Comments: =================================
 //= 1.0 First Version. No longer uses functions. [L0ne_W0lf]
+//= 1.1 Corrected treasure room switch coordinates. [L0ne_W0lf]
 //============================================================
 
 // Guild Flag (Town)
@@ -144,7 +145,7 @@ payg_cas03,163,167,0	script	#switch_Py03	111,{
 	next;
 	switch(select("Pull.:Do not.")) {
 	case 1:
-		warp "payg_cas03",11,278;
+		warp "payg_cas03",50,261;
 		break;
 	case 2:
 		break;

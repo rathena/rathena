@@ -136,7 +136,6 @@ aldeg_cas01,216,24,0	duplicate(Gld_Agit_Manager)	Agit#aldeg_cas01	-1
 //============================================================
 aldeg_cas01,218,175,0	duplicate(Gld_Mngr_Template)	Alfredo#aldeg_cas01	55
 
-
 // Guardians
 //============================================================
 aldeg_cas01,218,175,0	duplicate(Gld_Guard_Template)	Guardian#aldeg_cas01	-1

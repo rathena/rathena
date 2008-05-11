@@ -3,13 +3,14 @@
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
-//= 1.0
+//= 1.1
 //===== Compatible With: =====================================
 //= eAthena SVN
 //===== Description: =========================================
 //= NPCs that relate to Geffen Guild Castle 4
 //===== Additional Comments: =================================
 //= 1.0 First Version. No longer uses functions. [L0ne_W0lf]
+//= 1.1 Corrected treasure room switch coordinates. [L0ne_W0lf]
 //============================================================
 
 // Guild Flag (Town)
@@ -142,7 +143,7 @@ gefg_cas04,117,123,0	script	#switch_G04	111,{
 	next;
 	switch(select("Pull.:Do not.")) {
 	case 1:
-		warp "gefg_cas04",73,74;
+		warp "gefg_cas04",73,47;
 		break;
 	case 2:
 		break;

@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
-//= 1.0
+//= 1.2
 //===== Compatible With: =====================================
 //= eAthena SVN
 //===== Description: =========================================
@@ -11,6 +11,7 @@
 //===== Additional Comments: =================================
 //= 1.0 First Version. No longer uses functions. [L0ne_W0lf]
 //= 1.1 Corrected flag-in spawn point. [L0ne_W0lf]
+//= 1.2 Corrected treasure room switch coordinates. [L0ne_W0lf]
 //============================================================
 
 // Guild Flag (Town)
@@ -147,7 +148,7 @@ prtg_cas01,15,209,0	script	#switch_Pt01	111,{
 	next;
 	switch(select("Pull.:Do not.")) {
 	case 1:
-		warp "prtg_cas01",109,179;
+		warp "prtg_cas01",112,183;
 		break;
 	case 2:
 		break;
