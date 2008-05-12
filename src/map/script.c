@@ -3812,8 +3812,10 @@ BUILDIN_FUNC(menu)
 			st->state = END;
 			return 1;
 		}
+
 		StringBuf_Init(&buf);
-		for( i = 2, sd->npc_menu = 0; i < script_lastdata(st); i += 2 )
+		sd->npc_menu = 0;
+		for( i = 2; i < script_lastdata(st); i += 2 )
 		{
 			// menu options
 			text = script_getstr(st, i);
@@ -3909,13 +3911,14 @@ BUILDIN_FUNC(select)
 		struct StringBuf buf;
 
 		StringBuf_Init(&buf);
-		for( i = 2, sd->npc_menu = 0; i <= script_lastdata(st); ++i )
+		sd->npc_menu = 0;
+		for( i = 2; i <= script_lastdata(st); ++i )
 		{
 			text = script_getstr(st, i);
 			if( sd->npc_menu > 0 )
 				StringBuf_AppendStr(&buf, ":");
 			StringBuf_AppendStr(&buf, text);
-			sd ->npc_menu += menu_countoptions(text, 0, NULL);
+			sd->npc_menu += menu_countoptions(text, 0, NULL);
 		}
 
 		st->state = RERUNLINE;
@@ -3969,13 +3972,14 @@ BUILDIN_FUNC(prompt)
 		struct StringBuf buf;
 
 		StringBuf_Init(&buf);
-		for( i = 2, sd->npc_menu = 0; i <= script_lastdata(st); ++i )
+		sd->npc_menu = 0;
+		for( i = 2; i <= script_lastdata(st); ++i )
 		{
 			text = script_getstr(st, i);
 			if( sd->npc_menu > 0 )
 				StringBuf_AppendStr(&buf, ":");
 			StringBuf_AppendStr(&buf, text);
-			sd ->npc_menu += menu_countoptions(text, 0, NULL);
+			sd->npc_menu += menu_countoptions(text, 0, NULL);
 		}
 
 		st->state = RERUNLINE;

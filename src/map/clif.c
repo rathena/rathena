@@ -7948,6 +7948,8 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 	
 		// abort currently running script
 		sd->state.using_fake_npc = 0;
+		sd->state.menu_or_input = 0;
+		sd->npc_menu = 0;
 
 		if(sd->npc_id)
 			npc_event_dequeue(sd);
