@@ -44,6 +44,7 @@
 
 =======================
 2008/05/13
+	* Also applied this change to Charge Attack
 	* Made it possible to use Snap to escape ankle snares and such [ultramage]
 2008/05/11
 	* Rev. 12701 Beelzebub now summons 6 chonchons in addition to hell flies. [L0ne_W0lf]
