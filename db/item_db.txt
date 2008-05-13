@@ -3436,7 +3436,7 @@
 12233,Kvass,Kvass,0,20,,200,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 100,100; },{},{}
 //Valentine's Day Event (2007)
 12234,Cacao99,Fierce Cacao 99%,0,20,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 25,0; },{},{}
-12235,Strawberry_Choco,Strawberry Chocolate,11,20,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 0,5; skilleffect 34,0; sc_start SC_BLESSING,240000,10; },{},{}
+12235,Strawberry_Choco,Strawberry Chocolate,2,20,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 0,5; skilleffect 34,0; sc_start SC_BLESSING,240000,10; },{},{}
 12236,Choco_Tart,Chocolate Tart,11,20,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 5,0; itemskill 33,5; },{},{}
 12237,Choco_Lump,Dollop of Chocolate,2,,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 0,5; sc_start SC_Poison,18000,0; sc_start SC_Bleeding,18000,0; },{},{}
 12238,New_Year_Rice_Cake_1,New Year Rice Cake,0,20,,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}

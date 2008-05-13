@@ -3763,7 +3763,7 @@
 1719,Detale@NPC_DRAGONFEAR,chase,659,5,10000,0,30000,no,self,always,,,,,,,6
 1719,Detale@NPC_DRAGONFEAR,attack,659,5,2000,1000,20000,no,self,myhpltmaxrate,80,,,,,,32
 1719,Detale@NPC_CRITICALSLASH,attack,170,1,500,500,5000,no,target,always,0,,,,,,
-1719,Detales@NPC_FIREBREATH,attack,654,5,500,800,5000,no,self,always,,,,,,,32
+1719,Detales@NPC_FIREBREATH,attack,654,5,500,800,5000,no,target,always,,,,,,,32
 1719,Detale@NPC_DARKBREATH,attack,202,5,500,800,5000,no,target,always,0,,,,,,36
 1719,Detale@NPC_POWERUP,attack,349,5,10000,0,30000,yes,self,myhpltmaxrate,30,,,,,,36
 1719,Detale@NPC_BREAKARMOR,attack,344,10,2000,0,5000,no,target,always,0,,,,,,29
@@ -4056,7 +4056,7 @@
 1768,Gloomundernight@KN_PIERCE,attack,56,10,1000,0,5000,no,target,always,0,,,,,,
 1768,Gloomundernight@NPC_POWERUP,attack,349,5,10000,700,25000,no,self,myhpltmaxrate,30,,,,,,
 1768,Gloomundernight@NPC_POWERUP,attack,349,5,2000,700,50000,no,self,always,0,,,,,,
-1768,Gloom Under Night@NPC_FIREBREATH,chase,654,10,2000,500,10000,no,self,myhpltmaxrate,80,,,,,,
+1768,Gloom Under Night@NPC_FIREBREATH,chase,654,10,2000,500,10000,no,target,myhpltmaxrate,80,,,,,,
 1768,Gloomundernight@SM_MAGNUM,attack,7,20,10000,0,5000,yes,self,attackpcge,2,,,,,,
 1768,Gloomundernight@WZ_SIGHTRASHER,attack,81,20,2000,0,5000,yes,target,always,0,,,,,,
 1768,Gloomundernight@MG_FIREBALL,attack,17,20,1000,500,20000,no,target,always,0,,,,,,
@@ -4379,8 +4379,8 @@
 1832,Ifrit@NPC_CALLSLAVE,idle,352,1,10000,0,30000,yes,self,always,,,,,,,
 1832,Ifrit@ST_FULLSTRIP,attack,476,5,2000,0,5000,yes,target,always,,,,,,,
 1832,Ifrit@AS_SONICBLOW,attack,136,1,2000,0,5000,yes,target,always,,,,,,,
-1832,Ifrit@NPC_FIREBREATH,chase,654,10,2000,500,5000,no,self,myhpltmaxrate,80,,,,,,
-1832,Ifrit@NPC_FIREBREATH,attack,654,10,2000,500,5000,no,self,myhpltmaxrate,80,,,,,,
+1832,Ifrit@NPC_FIREBREATH,chase,654,10,2000,500,5000,no,target,myhpltmaxrate,80,,,,,,
+1832,Ifrit@NPC_FIREBREATH,attack,654,10,2000,500,5000,no,target,myhpltmaxrate,80,,,,,,
 1832,Ifrit@SA_LANDPROTECTOR,attack,288,3,5000,0,5000,yes,target,always,,,,,,,
 1832,Ifrit@WZ_METEOR,attack,83,11,2000,500,5000,no,target,myhpltmaxrate,90,,,,,,
 1832,Ifrit@KN_TWOHANDQUICKEN,attack,60,9,10000,0,100000,yes,self,myhpltmaxrate,30,,,,,,
@@ -4392,8 +4392,8 @@
 1832,Ifrit@WZ_METEOR,idle,83,9,10000,0,5000,yes,target,always,,,,,,,
 1833,Kasa@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
 1833,Kasa@WZ_FIREPILLAR,idle,80,5,10000,500,30000,no,target,always,,,,,,,
-1833,Kasa@NPC_FIREBREATH,chase,654,10,2000,1500,15000,no,self,always,,,,,,,
-1833,Kasa@NPC_FIREBREATH,attack,654,10,2000,1500,15000,no,self,always,,,,,,,
+1833,Kasa@NPC_FIREBREATH,chase,654,10,2000,1500,15000,no,target,always,,,,,,,
+1833,Kasa@NPC_FIREBREATH,attack,654,10,2000,1500,15000,no,target,always,,,,,,,
 1833,Kasa@MG_FIREBALL,idle,17,20,10000,500,10000,no,target,always,,,,,,,
 1833,Kasa@MG_FIREBALL,chase,17,20,10000,500,10000,no,target,always,,,,,,,
 1833,Kasa@MG_FIREBALL,attack,17,20,5000,500,10000,no,target,always,,,,,,,
@@ -4415,8 +4415,8 @@
 1834,Salamander@NPC_WIDEBLEEDING,attack,665,2,10000,500,100000,no,self,myhpltmaxrate,20,,,,,,
 1835,Kasa@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
 1835,Kasa@WZ_FIREPILLAR,idle,80,5,10000,500,30000,no,target,always,,,,,,,
-1835,Kasa@NPC_FIREBREATH,chase,654,10,2000,3000,200000,no,self,always,,,,,,,
-1835,Kasa@NPC_FIREBREATH,attack,654,10,2000,3000,200000,no,self,always,,,,,,,
+1835,Kasa@NPC_FIREBREATH,chase,654,10,2000,3000,200000,no,target,always,,,,,,,
+1835,Kasa@NPC_FIREBREATH,attack,654,10,2000,3000,200000,no,target,always,,,,,,,
 1835,Kasa@MG_FIREBALL,idle,17,20,10000,500,10000,no,target,always,,,,,,,
 1835,Kasa@MG_FIREBALL,chase,17,20,10000,500,10000,no,target,always,,,,,,,
 1835,Kasa@MG_FIREBALL,attack,17,20,5000,500,10000,no,target,always,,,,,,,

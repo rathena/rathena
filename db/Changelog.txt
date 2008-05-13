@@ -44,7 +44,10 @@
 
 =======================
 2008/05/13
-	* Also applied this change to Charge Attack
+	* Rev. 12707 Corrected Fire breath being self-targeted. (bugreport:1503) [L0ne_W0lf]
+	- In addition corrected Chocolate Strawberry having infinite use. (bugreport:1484)
+	- And corrected stats for several Thor volcano monsters. (bugreport:1476)
+	* Also applied this change to Charge Attack [ultramage]
 	* Made it possible to use Snap to escape ankle snares and such [ultramage]
 2008/05/11
 	* Rev. 12701 Beelzebub now summons 6 chonchons in addition to hell flies. [L0ne_W0lf]
