@@ -43,6 +43,8 @@
 	2385 Recuvative_Armor		Should trigger HP/SP return with magical kills as well.
 
 =======================
+2008/05/13
+	* Made it possible to use Snap to escape ankle snares and such [ultramage]
 2008/05/11
 	* Rev. 12701 Beelzebub now summons 6 chonchons in addition to hell flies. [L0ne_W0lf]
 	* Tristan 3RD is no longer considered a boss protocol monster.
