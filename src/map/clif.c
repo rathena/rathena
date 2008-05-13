@@ -5230,7 +5230,7 @@ void clif_openvending(struct map_session_data* sd, int id, struct s_vending* ven
 		WFIFOB(fd,19+i*22) = sd->status.cart[index].identify;
 		WFIFOB(fd,20+i*22) = sd->status.cart[index].attribute;
 		WFIFOB(fd,21+i*22) = sd->status.cart[index].refine;
-		clif_addcards(WFIFOP(fd,22+count*22), &sd->status.cart[index]);
+		clif_addcards(WFIFOP(fd,22+i*22), &sd->status.cart[index]);
 	}
 	WFIFOSET(fd,WFIFOW(fd,2));
 }
