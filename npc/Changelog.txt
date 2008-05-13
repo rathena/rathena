@@ -1,5 +1,8 @@
 Date		Added
 ======
+2008/05/13
+	* Rev. 12708 Fixed a loading flag emblem for Payon 1. [L0ne_W0lf]
+	- Also fixed two typos regarding Guild Steward name.
 2008/05/11
 	* Rev. 12701 Fixed guild manager charging twice for invest [L0ne_W0lf]
 	- Corrected some treasure room switch sent-to spawns.
