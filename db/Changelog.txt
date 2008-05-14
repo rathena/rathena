@@ -43,6 +43,8 @@
 	2385 Recuvative_Armor		Should trigger HP/SP return with magical kills as well.
 
 =======================
+2008/05/14
+	* Rev. 12709 Added Satan Morroc and Morroc Shadow monster stats. [L0ne_W0lf]
 2008/05/13
 	* Rev. 12707 Corrected Fire breath being self-targeted. (bugreport:1503) [L0ne_W0lf]
 	- In addition corrected Chocolate Strawberry having infinite use. (bugreport:1484)
