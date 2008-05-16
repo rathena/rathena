@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
-//= 1.5
+//= 1.6
 //===== Compatible With: =====================================
 //= eAthena SVN
 //===== Description: =========================================
@@ -16,6 +16,7 @@
 //= 1.4 Fixed 3rd Control Device wasting supplies. [L0ne_W0lf]
 //= 1.5 Fixed double message in defense investing. [L0ne_W0lf]
 //=     Corrected a minor typo in the guild steward.
+//= 1.6 Fixed a guardian spawning NPCs. [L0ne_W0lf]
 //============================================================
 
 schg_cas02,1,1,0	script	Manager#sch02_02	111,{
@@ -398,22 +399,22 @@ schg_cas02,1,1,0	script	#sch02_gard01	-1,{
 OnEnable:
 	set .@Defence,GetCastleData("schg_cas02",3);
 	guardian "schg_cas02",326,83,"Guardian Soldier",1899,"#sch02_gard01::OnGuardianDied"; //0;
-	if ((.@Defense > 10) && (.@Defense < 31)) {
+	if ((.@defence > 10) && (.@defence < 31)) {
 		set .MyMobCount,2;
 		guardian "schg_cas02",337,95,"Guardian Soldier",1899,"#sch02_gard01::OnGuardianDied"; //1;
 	}
-	else if ((.@Defense > 30) && (.@Defense < 51)) {
+	else if ((.@defence > 30) && (.@defence < 51)) {
 		set .MyMobCount,3;
 		guardian "schg_cas02",337,95,"Guardian Soldier",1899,"#sch02_gard01::OnGuardianDied"; //1;
 		guardian "schg_cas02",334,119,"Guardian Soldier",1899,"#sch02_gard01::OnGuardianDied"; //2;
 	}
-	else if ((.@Defense > 50) && (.@Defense < 71)) {
+	else if ((.@defence > 50) && (.@defence < 71)) {
 		set .MyMobCount,4;
 		guardian "schg_cas02",337,95,"Guardian Soldier",1899,"#sch02_gard01::OnGuardianDied"; //1;
 		guardian "schg_cas02",334,119,"Guardian Soldier",1899,"#sch02_gard01::OnGuardianDied"; //2;
 		guardian "schg_cas02",296,82,"Guardian Soldier",1899,"#sch02_gard01::OnGuardianDied"; //3;
 	}
-	else if (.@Defense > 70) {
+	else if (.@defence > 70) {
 		set .MyMobCount,5;
 		guardian "schg_cas02",337,95,"Guardian Soldier",1899,"#sch02_gard01::OnGuardianDied"; //1;
 		guardian "schg_cas02",334,119,"Guardian Soldier",1899,"#sch02_gard01::OnGuardianDied"; //2;
@@ -476,22 +477,22 @@ schg_cas02,1,2,0	script	#sch02_gard02	-1,{
 OnEnable:
 	set .@Defence,GetCastleData("schg_cas02",3);
 	guardian "schg_cas02",359,85,"Guardian Soldier",1899,"#sch02_gard02::OnGuardianDied"; //11;
-	if ((.@Defense > 10) && (.@Defense < 31)) {
+	if ((.@defence > 10) && (.@defence < 31)) {
 		set .MyMobCount,2;
 		guardian "schg_cas02",300,119,"Guardian Soldier",1899,"#sch02_gard02::OnGuardianDied"; //12;
 	}
-	else if ((.@Defense > 30) && (.@Defense < 51)) {
+	else if ((.@defence > 30) && (.@defence < 51)) {
 		set .MyMobCount,3;
 		guardian "schg_cas02",300,119,"Guardian Soldier",1899,"#sch02_gard02::OnGuardianDied"; //12;
 		guardian "schg_cas02",337,154,"Guardian Soldier",1899,"#sch02_gard02::OnGuardianDied"; //13;
 	}
-	else if ((.@Defense > 50) && (.@Defense < 71)) {
+	else if ((.@defence > 50) && (.@defence < 71)) {
 		set .MyMobCount,4;
 		guardian "schg_cas02",300,119,"Guardian Soldier",1899,"#sch02_gard02::OnGuardianDied"; //12;
 		guardian "schg_cas02",337,154,"Guardian Soldier",1899,"#sch02_gard02::OnGuardianDied"; //13;
 		guardian "schg_cas02",317,183,"Guardian Soldier",1899,"#sch02_gard02::OnGuardianDied"; //14;
 	}
-	else if (.@Defense > 70) {
+	else if (.@defence > 70) {
 		set .MyMobCount,5;
 		guardian "schg_cas02",300,119,"Guardian Soldier",1899,"#sch02_gard02::OnGuardianDied"; //12;
 		guardian "schg_cas02",337,154,"Guardian Soldier",1899,"#sch02_gard02::OnGuardianDied"; //13;
