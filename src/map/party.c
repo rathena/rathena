@@ -408,7 +408,12 @@ int party_member_added(int party_id,int account_id,int char_id, int flag)
 		return 0;
 	}
 
-	if( flag ) return 0;
+	if( flag )
+	{// failed
+		if( sd2 != NULL )
+			clif_party_inviteack(sd2,sd->status.name,3);
+		return 0;
+	}
 
 	sd->status.party_id = party_id;
 
@@ -420,13 +425,13 @@ int party_member_added(int party_id,int account_id,int char_id, int flag)
 		p->data[i].sd = sd;
 	}
 
-	party_check_conflict(sd);
+	party_check_conflict(sd); //FIXME: is this neccessary?
 	clif_party_member_info(p,sd);
 	clif_party_option(p,sd,0x100);
 	clif_party_info(p,sd);
 
 	if( sd2 != NULL )
-		clif_party_inviteack(sd2,sd->status.name,flag?3:2);
+		clif_party_inviteack(sd2,sd->status.name,2);
 
 	for( i = 0; i < ARRAYLENGTH(p->data); ++i )
 	{// hp of the other party members
@@ -751,14 +756,6 @@ int party_send_xy_timer(int tid, unsigned int tick, int id, intptr data)
 		{
 			struct map_session_data* sd = p->data[i].sd;
 			if( !sd ) continue;
-			if( !malloc_verify(sd) )
-			{
-				ShowError("party_send_xy_timer: party member zombie reference '0x%8.8x'!\n", (uint32)sd);
-				ShowDebug("party info: id='%d', name='%s', member count='%d'\n", p->party.party_id, p->party.name, p->party.count);
-				ShowDebug("member info: charid='%d', name='%s', member no.='%d', online='%d', coords='%s,%d,%d'\n", p->party.member[i].char_id, p->party.member[i].name, i, p->party.member[i].online, mapindex_id2name(p->party.member[i].map), p->data[i].x, p->data[i].y);
-				p->data[i].sd = NULL;
-				continue;
-			}
 
 			if( p->data[i].x != sd->bl.x || p->data[i].y != sd->bl.y )
 			{// perform position update

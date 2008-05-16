@@ -295,7 +295,9 @@ struct map_session_data {
 		int zeny, weight;
 	} deal;
 
-	int party_invite,party_invite_account;
+	bool party_creating; // whether the char is requesting party creation
+	bool party_joining; // whether the char is accepting party invitation
+	int party_invite, party_invite_account; // for handling party invitation (holds party id and account id)
 	int adopt_invite; // Adoption
 
 	int guild_invite,guild_invite_account;

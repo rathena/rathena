@@ -243,24 +243,25 @@ int inter_party_save() {
 	return 0;
 }
 
-// パ?ティ名?索用
-int search_partyname_sub(DBKey key,void *data,va_list ap) {
-	struct party_data *p = (struct party_data *)data,**dst;
-	char *str;
+// Search for the party according to its name
+struct party_data* search_partyname(char *str)
+{
+	struct DBIterator* iter;
+	struct party_data* p;
+	struct party_data* result = NULL;
 
-	str = va_arg(ap, char *);
-	dst = va_arg(ap, struct party_data **);
-	if (strncmpi(p->party.name, str, NAME_LENGTH) == 0)
-		*dst = p;
+	iter = party_db->iterator(party_db);
+	for( p = (struct party_data*)iter->first(iter,NULL); iter->exists(iter); p = (struct party_data*)iter->next(iter,NULL) )
+	{
+		if( strncmpi(p->party.name, str, NAME_LENGTH) == 0 )
+		{
+			result = p;
+			break;
+		}
+	}
+	iter->destroy(iter);
 
-	return 0;
-}
-
-// パ?ティ名?索
-struct party_data* search_partyname(char *str) {
-	struct party_data *p = NULL;
-	party_db->foreach(party_db, search_partyname_sub, str, &p);
-	return p;
+	return result;
 }
 
 // Returns whether this party can keep having exp share or not.
@@ -283,33 +284,28 @@ int party_check_empty(struct party *p) {
 	return 1;
 }
 
-// キャラの競合がないかチェック用
-int party_check_conflict_sub(DBKey key, void *data, va_list ap) {
-	struct party_data *p = (struct party_data *)data;
-	int party_id, account_id, char_id, i;
+// キャラの競合がないかチェック
+int party_check_conflict(int party_id, int account_id, int char_id)
+{
+	DBIterator* iter;
+	struct party_data* p;
+	int i;
 
-	party_id=va_arg(ap, int);
-	account_id=va_arg(ap, int);
-	char_id=va_arg(ap, int);
-	
-	if (p->party.party_id == party_id) //No conflict to check
-		return 0;
+	iter = party_db->iterator(party_db);
+	for( p = (struct party_data*)iter->first(iter,NULL); iter->exists(iter); p = (struct party_data*)iter->next(iter,NULL) )
+	{
+		if (p->party.party_id == party_id) //No conflict to check
+			continue;
 
-	for(i = 0; i < MAX_PARTY; i++) {
-		if(p->party.member[i].account_id == account_id &&
-			p->party.member[i].char_id == char_id)
-	  	{
+		ARR_FIND( 0, MAX_PARTY, i, p->party.member[i].account_id == account_id && p->party.member[i].char_id == char_id );
+		if( i < MAX_PARTY )
+  		{
 			ShowWarning("int_party: party conflict! %d %d %d\n", account_id, party_id, p->party.party_id);
 			mapif_parse_PartyLeave(-1, p->party.party_id, account_id, char_id);
 		}
 	}
+	iter->destroy(iter);
 
-	return 0;
-}
-
-// キャラの競合がないかチェック
-int party_check_conflict(int party_id, int account_id, int char_id) {
-	party_db->foreach(party_db, party_check_conflict_sub, party_id, account_id, char_id);
 	return 0;
 }
 
@@ -317,7 +313,8 @@ int party_check_conflict(int party_id, int account_id, int char_id) {
 // map serverへの通信
 
 // パ?ティ作成可否
-int mapif_party_created(int fd,int account_id, int char_id, struct party *p) {
+int mapif_party_created(int fd,int account_id, int char_id, struct party *p)
+{
 	WFIFOHEAD(fd, 39);
 	WFIFOW(fd,0) = 0x3820;
 	WFIFOL(fd,2) = account_id;
@@ -450,10 +447,12 @@ int mapif_party_message(int party_id, int account_id, char *mes, int len, int sf
 
 
 // パ?ティ
-int mapif_parse_CreateParty(int fd, char *name, int item, int item2, struct party_member *leader) {
+int mapif_parse_CreateParty(int fd, char *name, int item, int item2, struct party_member *leader)
+{
 	struct party_data *p;
 	int i;
 
+	//FIXME: this should be removed once the savefiles can handle all symbols
 	for(i = 0; i < NAME_LENGTH && name[i]; i++) {
 		if (!(name[i] & 0xe0) || name[i] == 0x7f) {
 			ShowInfo("int_party: illegal party name [%s]\n", name);
