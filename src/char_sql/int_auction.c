@@ -50,8 +50,8 @@ void auction_save(struct auction_data *auction)
 		return;
 
 	StringBuf_Init(&buf);
-	StringBuf_Printf(&buf, "UPDATE `%s` SET `seller_id` = '%d', `seller_name` = ?, `buyer_id` = '%d', `buyer_name` = ?, `price` = '%d', `buynow` = '%d', `hours` = '%d', `timestamp` = '%d', `nameid` = '%d', `item_name` = ?, `type` = '%d', `refine` = '%d', `attribute` = '%d'",
-		auction_db, auction->seller_id, auction->buyer_id, auction->price, auction->buynow, auction->hours, auction->timestamp, auction->item.nameid, auction->type, auction->item.refine, auction->item.attribute);
+	StringBuf_Printf(&buf, "UPDATE `%s` SET `seller_id` = '%d', `seller_name` = ?, `buyer_id` = '%d', `buyer_name` = ?, `price` = '%d', `buynow` = '%d', `hours` = '%d', `timestamp` = '%lu', `nameid` = '%d', `item_name` = ?, `type` = '%d', `refine` = '%d', `attribute` = '%d'",
+		auction_db, auction->seller_id, auction->buyer_id, auction->price, auction->buynow, auction->hours, (unsigned long)auction->timestamp, auction->item.nameid, auction->type, auction->item.refine, auction->item.attribute);
 	for( j = 0; j < MAX_SLOTS; j++ )
 		StringBuf_Printf(&buf, ", `card%d` = '%d'", j, auction->item.card[j]);
 	StringBuf_Printf(&buf, " WHERE `auction_id` = '%d'", auction->auction_id);
@@ -85,8 +85,8 @@ unsigned int auction_create(struct auction_data *auction)
 	StringBuf_Printf(&buf, "INSERT INTO `%s` (`seller_id`,`seller_name`,`buyer_id`,`buyer_name`,`price`,`buynow`,`hours`,`timestamp`,`nameid`,`item_name`,`type`,`refine`,`attribute`", auction_db);
 	for( j = 0; j < MAX_SLOTS; j++ )
 		StringBuf_Printf(&buf, ",`card%d`", j);
-	StringBuf_Printf(&buf, ") VALUES ('%d',?,'%d',?,'%d','%d','%d','%d','%d',?,'%d','%d','%d'",
-		auction->seller_id, auction->buyer_id, auction->price, auction->buynow, auction->hours, auction->timestamp, auction->item.nameid, auction->type, auction->item.refine, auction->item.attribute);
+	StringBuf_Printf(&buf, ") VALUES ('%d',?,'%d',?,'%d','%d','%d','%lu','%d',?,'%d','%d','%d'",
+		auction->seller_id, auction->buyer_id, auction->price, auction->buynow, auction->hours, (unsigned long)auction->timestamp, auction->item.nameid, auction->type, auction->item.refine, auction->item.attribute);
 	for( j = 0; j < MAX_SLOTS; j++ )
 		StringBuf_Printf(&buf, ",'%d'", auction->item.card[j]);
 	StringBuf_AppendStr(&buf, ")");
