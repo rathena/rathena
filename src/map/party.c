@@ -117,14 +117,13 @@ int party_create(struct map_session_data *sd,char *name,int item,int item2)
 		return 0;
 	}
 
-	if( sd->status.party_id )
-	{// already in a party
+	if( sd->status.party_id > 0 || sd->party_joining || sd->party_creating )
+	{// already associated with a party
 		clif_party_created(sd,2);
 		return 0;
 	}
 
-	//Temporarily set to -1 so cannot be spam invited
-	sd->status.party_id = -1;
+	sd->party_creating = true;
 
 	party_fill_member(&leader, sd);
 	leader.leader = 1;
@@ -139,21 +138,23 @@ void party_created(int account_id,int char_id,int fail,int party_id,char *name)
 	struct map_session_data *sd;
 	sd=map_id2sd(account_id);
 
-	if (!sd || sd->status.char_id != char_id)
+	if (!sd || sd->status.char_id != char_id || !sd->party_creating )
 	{	//Character logged off before creation ack?
 		if (!fail) //break up party since player could not be added to it.
 			intif_party_leave(party_id,account_id,char_id);
 		return;
 	}
-	
+
+	sd->party_creating = false;
+
 	if( !fail ) {
 		sd->status.party_id = party_id;
 		clif_party_created(sd,0); //Success message
 		//We don't do any further work here because the char-server sends a party info packet right after creating the party.
 	} else {
-		sd->status.party_id = 0;
 		clif_party_created(sd,1); // "party name already exists"
 	}
+
 }
 
 int party_request_info(int party_id)
@@ -312,7 +313,8 @@ int party_invite(struct map_session_data *sd,struct map_session_data *tsd)
 		return 0;
 	}
 
-	if( tsd->status.party_id!=0 || tsd->party_invite>0){
+	if( tsd->status.party_id > 0 || tsd->party_invite > 0 )
+	{// already associated with a party
 		clif_party_inviteack(sd,tsd->status.name,0);
 		return 0;
 	}
@@ -345,8 +347,9 @@ void party_reply_invite(struct map_session_data *sd,int account_id,int flag)
 	struct map_session_data *tsd= map_id2sd(account_id);
 	struct party_member member;
 
-	if( flag == 1 )
-	{// accepted
+	if( flag == 1 && !sd->party_creating && !sd->party_joining )
+	{// accepted and allowed
+		sd->party_joining = true;
 		party_fill_member(&member, sd);
 		intif_party_addmember(sd->party_invite, &member);
 	}
@@ -387,7 +390,7 @@ int party_member_added(int party_id,int account_id,int char_id, int flag)
 	struct party_data *p = party_search(party_id);
 	int i;
 
-	if(sd == NULL || sd->status.char_id != char_id){
+	if(sd == NULL || sd->status.char_id != char_id || !sd->party_joining ) {
 		if (!flag) //Char logged off before being accepted into party.
 			intif_party_leave(party_id,account_id,char_id);
 		return 0;
@@ -395,6 +398,7 @@ int party_member_added(int party_id,int account_id,int char_id, int flag)
 
 	sd2 = map_id2sd(sd->party_invite_account);
 
+	sd->party_joining = false;
 	sd->party_invite = 0;
 	sd->party_invite_account = 0;
 
@@ -747,6 +751,14 @@ int party_send_xy_timer(int tid, unsigned int tick, int id, intptr data)
 		{
 			struct map_session_data* sd = p->data[i].sd;
 			if( !sd ) continue;
+			if( !malloc_verify(sd) )
+			{
+				ShowError("party_send_xy_timer: party member zombie reference '0x%8.8x'!\n", (uint32)sd);
+				ShowDebug("party info: id='%d', name='%s', member count='%d'\n", p->party.party_id, p->party.name, p->party.count);
+				ShowDebug("member info: charid='%d', name='%s', member no.='%d', online='%d', coords='%s,%d,%d'\n", p->party.member[i].char_id, p->party.member[i].name, i, p->party.member[i].online, mapindex_id2name(p->party.member[i].map), p->data[i].x, p->data[i].y);
+				p->data[i].sd = NULL;
+				continue;
+			}
 
 			if( p->data[i].x != sd->bl.x || p->data[i].y != sd->bl.y )
 			{// perform position update
