@@ -43,6 +43,8 @@
 	2385 Recuvative_Armor		Should trigger HP/SP return with magical kills as well.
 
 =======================
+2008/05/19
+	* Fixed Thorny Shield and Survivor's Manteau [Playtester]
 2008/05/14
 	* Rev. 12709 Added Satan Morroc and Morroc Shadow monster stats. [L0ne_W0lf]
 2008/05/13
