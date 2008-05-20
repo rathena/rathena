@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= kobra_k88
 //===== Current Version: =====================================
-//= 1.5
+//= 1.6
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -11,6 +11,7 @@
 //= Quest for skills: Energy Coat
 //===== Additional Comments: ================================= 
 //= 1.5 Rescripted to Aegis 10.3 stadards. [L0ne_W0lf]
+//= 1.6 Fixed a typo in job check. (Bugreport:1531) [L0ne_W0lf]
 //============================================================
 
 geffen_in,151,119,4	script	Great Wizard#qsk_mg	64,{
@@ -93,7 +94,7 @@ geffen_in,151,119,4	script	Great Wizard#qsk_mg	64,{
 		}
 		else {
 			if (countitem(746) > 2 && countitem(730) > 0 && countitem(935) > 4 && countitem(943) > 0) {
-				if ((JobLevel > 34 && BaseJOb == Job_Mage) || BaseJob == Job_Wizard || BaseJob == Job_Sage) {
+				if ((JobLevel > 34 && BaseJob == Job_Mage) || BaseJob == Job_Wizard || BaseJob == Job_Sage) {
 					mes "[BLIZZARDRISS]";
 					mes "Okay, I have received your request.";
 					mes "I will now awaken your hidden energies . .";

@@ -1,5 +1,11 @@
 Date		Added
 ======
+2008/05/20
+	* Rev. 12718 Fixed variable issue with Milk Trader NPC. (bugreport:1523) [L0ne_W0lf]
+	* Fixed typos in the acolyte nad mage skill quests. (bugreport:1531)
+	* Fixed issue with a removing a Keil Hyre cutin. (bugreport:1593) 
+	* Corrected a few oversights in the WoESE scripts.
+	* Added dummy "OnMyMobDead" label to a Niflheim NPC.
 2008/05/16
 	* Rev. 12712 Fixed variable typo in guild scripts. (bugreport:1514) [L0ne_W0lf]
 2008/05/13

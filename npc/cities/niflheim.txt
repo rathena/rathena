@@ -4,7 +4,7 @@
 //= Fyrien, Dizzy, PKGINGO
 //= Official NPCs translated and re-edited by Celest
 //===== Current Version: ===================================== 
-//= 1.4
+//= 1.5
 //===== Compatible With: ===================================== 
 //= [Aegis Conversion]
 //= eAthena SVN; Niflheim Required
@@ -25,6 +25,7 @@
 //= 1.3 Moved Book of Devil and Piano quest to quests/quests_niflheim.txt [Evera]
 //= 1.4 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
 //=	Removed Cursed Spirits as they were custom.
+//= 1.5 Added dummy "OnMyMobDead" event to Cursed Spirit. [L0ne_W0lf]
 //============================================================ 
 
 niflheim,52,147,3	script	Keedz#nif	796,{
@@ -348,4 +349,7 @@ niflheim,350,258,1	script	Cursed Spirit#nif	802,{
 		mes "rush to leave.";
 		close;
 	}
+
+OnMyMobDead:
+	end;
 }

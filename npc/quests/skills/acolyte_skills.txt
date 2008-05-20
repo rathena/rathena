@@ -11,6 +11,7 @@
 //= Quest for skills: Holy Light
 //===== Additional Comments: ================================= 
 //= 1.5 Rescripted to Aegis 10.3 stadards. [L0ne_W0lf]
+//= 1.6 Fixed a typo in job check. (Bugreport:1531) [L0ne_W0lf]
 //============================================================
 
 prt_church,173,23,4	script	Cleric#qsk_al	79,{
@@ -68,7 +69,7 @@ prt_church,173,23,4	script	Cleric#qsk_al	79,{
 		}
 		else {
 			if (countitem(727) > 0 && countitem(991) > 0 && countitem(2608) > 0) {
-				if ((JobLevel > 29 && BaseJob == Job_Acolyte) || BaseJob == Job_MOnk || BaseJob == Job_Priest) {
+				if ((JobLevel > 29 && BaseJob == Job_Acolyte) || BaseJob == Job_Monk || BaseJob == Job_Priest) {
 					mes "[Acolyte Klift]";
 					mes "Your faith has proven worthy";
 					mes "for you to gain the ' Holy Light ' skill.";

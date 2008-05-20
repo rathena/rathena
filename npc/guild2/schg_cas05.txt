@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
-//= 1.3
+//= 1.4
 //===== Compatible With: =====================================
 //= eAthena SVN
 //===== Description: =========================================
@@ -14,6 +14,9 @@
 //= 1.2 Fixed double message in defense investing. [L0ne_W0lf]
 //=     Corrected a minor typo in the guild steward.
 //= 1.3 Fixed a guardian spawning NPCs. [L0ne_W0lf]
+//= 1.4 Fixed investment period not resetting. [L0ne_W0lf]
+//=     Made it so treasure won't spawn if castle is empty.
+//=     Treasure will now be killed before spawning.
 //============================================================
 
 schg_cas05,1,1,0	script	Manager#sch05_02	111,{
@@ -98,14 +101,13 @@ Onchange:
 	end;
 
 OnClock0001:
+	if (!GetCastleData("schg_cas05",1)) end;
+	killmonster "schg_cas05","Manager#sch05_02::OnMyTreasureDied";
 	set .@Treasure,GetCastleData("schg_cas05",2)/5+4;
 	if (.@Treasure) {
 		monster "schg_cas05",388,388,"Treasure Chest",1942,1,"Manager#sch05_02::OnTreasureDied";
-		if (.@Treasure < 2) end;
 		monster "schg_cas05",388,389,"Treasure Chest",1324,1,"Manager#sch05_02::OnTreasureDied";
-		if (.@Treasure < 3) end;
 		monster "schg_cas05",388,390,"Treasure Chest",1942,1,"Manager#sch05_02::OnTreasureDied";
-		if (.@Treasure < 4) end;
 		monster "schg_cas05",387,390,"Treasure Chest",1324,1,"Manager#sch05_02::OnTreasureDied";
 		if (.@Treasure < 5) end;
 		monster "schg_cas05",386,390,"Treasure Chest",1942,1,"Manager#sch05_02::OnTreasureDied";
@@ -148,6 +150,8 @@ OnClock0001:
 		if (.@Treasure < 24) end;
 		monster "schg_cas05",386,386,"Treasure Chest",1324,1,"Manager#sch05_02::OnTreasureDied";
 	}
+	setcastledata "schg_cas05",4,0;
+	setcastledata "schg_cas05",5,0;
 	end;
 
 OnTreasureDied:

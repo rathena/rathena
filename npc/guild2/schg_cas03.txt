@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
-//= 1.5
+//= 1.6
 //===== Compatible With: =====================================
 //= eAthena SVN
 //===== Description: =========================================
@@ -17,10 +17,13 @@
 //= 1.3 Wrong variable used to store castle information. [L0ne_W0lf]
 //= 1.4 Fixed double message in defense investing. [L0ne_W0lf]
 //=     Corrected a minor typo in the guild steward.
-//= 1.3 Fixed a guardian spawning NPCs. [L0ne_W0lf]
+//= 1.5 Fixed a guardian spawning NPCs. [L0ne_W0lf]
+//= 1.6 Fixed investment period not resetting. [L0ne_W0lf]
+//=     Made it so treasure won't spawn if castle is empty.
+//=     Treasure will now be killed before spawning.
 //============================================================
 
-schg_cas03,1,1,0	script	manager#sch03_02	111,{
+schg_cas03,1,1,0	script	Manager#sch03_02	111,{
 	end;
 
 OnInterIfInitOnce:
@@ -102,14 +105,13 @@ Onchange:
 	end;
 
 OnClock0001:
+	if (!GetCastleData("schg_cas03",1)) end;
+	killmonster "schg_cas03","Manager#sch03_02::OnMyTreasureDied";
 	set .@Treasure,GetCastleData("schg_cas03",2)/5+4;
 	if (.@Treasure) {
 		monster "schg_cas03",189,21,"Treasure Chest",1939,1,"Manager#sch03_02::OnTreasureDied";
-		if (.@Treasure < 2) end;
 		monster "schg_cas03",190,21,"Treasure Chest",1324,1,"Manager#sch03_02::OnTreasureDied";
-		if (.@Treasure < 3) end;
 		monster "schg_cas03",191,21,"Treasure Chest",1939,1,"Manager#sch03_02::OnTreasureDied";
-		if (.@Treasure < 4) end;
 		monster "schg_cas03",192,21,"Treasure Chest",1324,1,"Manager#sch03_02::OnTreasureDied";
 		if (.@Treasure < 5) end;
 		monster "schg_cas03",193,21,"Treasure Chest",1939,1,"Manager#sch03_02::OnTreasureDied";
@@ -152,6 +154,8 @@ OnClock0001:
 		if (.@Treasure < 24) end;
 		monster "schg_cas03",194,15,"Treasure Chest",1324,1,"Manager#sch03_02::OnTreasureDied";
 	}
+	setcastledata "schg_cas03",4,0;
+	setcastledata "schg_cas03",5,0;
 	end;
 
 OnTreasureDied:

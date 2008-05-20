@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf (Script), DZeroX (Timer)
 //===== Current Version: ===================================== 
-//= 3.8
+//= 3.9
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -74,6 +74,7 @@
 //=	to after finishing the quest.
 //= 3.7 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
 //= 3.8 Corrected some delitems. (bugreport:690) [Samuray22]
+//= 3.9 Fixed a cutin not being erased. (bugreport:1539) [L0ne_W0lf]
 //============================================================ 
 //============================================================================
 // Kiel Hyre Quest/Robotic Lab Dungeon
@@ -4299,7 +4300,9 @@ kh_mansion,22,28,4	script	Kiel Hyre	903,{
 	if (KielHyreQuest < 46) {
 		mes "[Kiel Hyre]";
 		mes ".........";
-		close;
+		close2;
+		cutin "",255;
+		end;
 	}
 
 	else if (KielHyreQuest == 46) {
