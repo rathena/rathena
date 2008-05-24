@@ -43,6 +43,10 @@
 	2385 Recuvative_Armor		Should trigger HP/SP return with magical kills as well.
 
 =======================
+2008/05/24
+	* Rev. 12719 Fixed Satan Morroc and Injured Satan Morroc stats (bugreport:1546) [L0ne_W0lf]
+	* Fixed a few instances of pneuma being casted on target. (bugreport:1557)
+	* Fixed Desert Twilight increasing damage to demi (bugreport:1559)
 2008/05/19
 	* Fixed Thorny Shield and Survivor's Manteau [Playtester]
 2008/05/14
