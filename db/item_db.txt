@@ -1412,7 +1412,7 @@
 2712,Certificate_TW,Collector's Edition Book,5,,10,300,,0,,1,0xFFFFFFFF,7,2,136,,1,0,0,{ bonus bAgi,3; bonus bVit,3; bonus bLuk,3; },{},{}
 2714,Marvelous_Pandent,Marvelous Pendant,2,,,0,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 2715,Skul_Ring_,Skull Ring,5,10000,,100,,0,,1,0xFFFFFFFF,7,2,136,,0,0,0,{ bonus2 bSubRace,RC_Undead,1; },{},{}
-2716,Librarian_Gloves,Librarian Gloves,5,,,100,,0,,1,0x00812200,7,2,136,,0,0,0,{ bonus MaxSP,20; if (getiteminfo(getequipid(EQI_HAND_R),11) == 15 && isequipped(2717)) bonus bInt,5; bonus bMaxHP,700; bonus bAspdRate,5; },{},{}
+2716,Librarian_Gloves,Librarian Gloves,5,,,100,,0,,1,0x00812200,7,2,136,,0,0,0,{ bonus MaxSP,20; if (getiteminfo(getequipid(EQI_HAND_R),11) == 15 && isequipped(2717)) { bonus bInt,5; bonus bMaxHP,700; bonus bAspdRate,5; } },{},{}
 2717,Pocket_Watch,Pocket Watch,5,,,100,,0,,0,0x00010204,7,2,136,,80,0,0,{},{},{}
 2718,Lunatic_Brooch,Lunatic Brooch,5,,,100,,0,,1,0x00080808,7,2,136,,65,0,0,{},{},{}
 2719,Iron_Wrist,Iron Wrist,5,,10,700,,0,,0,0x000444A2,2,2,136,,50,0,0,{ bonus2 bSkillAtk,5,6; bonus2 bSkillAtk,42,6; },{},{}
@@ -3638,7 +3638,7 @@
 13031,Sword_Breaker_,Swordbreaker,4,,10,1000,70,,1,3,0x028F5EEE,7,2,2,4,36,1,1,{ bonus bBreakWeaponRate,500; },{},{}
 13032,Mail_Breaker_,Mailbreaker,4,,10,1000,70,,1,3,0x028F5EEE,7,2,2,4,36,1,1,{ bonus bBreakArmorRate,500; },{},{}
 13033,Assasin_Dagger_,Assassin Dagger,4,,10,600,140,,1,1,0x00001000,7,2,2,4,36,1,1,{ bonus bMaxHPrate,20; bonus bMaxSPrate,15; bonus bAspdRate,2; bonus bAtkEle,Ele_Dark; },{},{}
-13034,Twilight_Desert,Desert Twilight,4,,,600,130,,1,2,0x00001000,2,2,2,3,70,1,1,{ if (isequipped(13035)) { bonus bMaxSP,20; bonus bMaxHPRate,5; bonus bHit,10; bonus2 bAddSize,2,10; bonusautoscript "{ sc_start SC_INCASPDRATE,7000,100; }",10; } },{},{}
+13034,Twilight_Desert,Desert Twilight,4,,,600,130,,1,2,0x00001000,2,2,2,3,70,1,1,{ if (isequipped(13035)) { bonus bMaxSP,20; bonus bMaxHPRate,5; bonus bHit,10; bonus2 bAddSize,2,30; bonusautoscript "{ sc_start SC_INCASPDRATE,7000,100; }",10; } },{},{}
 13035,Sandstorm,Desert Winds,4,,,600,50,,1,4,0x00001000,2,2,2,2,70,1,1,{},{},{}
 13036,Assassin_Dagger,Assassin Dagger,4,,0,0,120,,1,0,0x029E7CEB,7,2,2,3,80,1,1,{ bonus bStr,1; bonus bAgi,1; bonus2 bAddRace,RC_DemiHuman,75; bonus bUnbreakableWeapon,0; if (Class == Job_Ninja) bonus bMatkRate,15; },{},{}
 13037,Assassin_Dagger_,Assassin Dagger,4,,0,0,120,,1,0,0x029E7CEB,7,2,2,3,80,1,1,{ bonus bStr,1; bonus bAgi,1; bonus2 bAddRace,RC_DemiHuman,75; bonus bUnbreakableWeapon,0; if (Class == Job_Ninja) bonus bMatkRate,15; },{},{}
