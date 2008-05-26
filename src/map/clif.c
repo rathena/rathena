@@ -7570,12 +7570,13 @@ static bool clif_process_message(struct map_session_data* sd, int format, char**
 		ShowWarning("clif_process_message: Player '%s' sent an unterminated message string!\n", sd->status.name);
 		return false;		
 	}
-	if( messagelen > CHAT_SIZE_MAX )
+	if( messagelen > CHAT_SIZE_MAX-1 )
 	{	// messages mustn't be too long
-		// Normally you can only enter CHATBOX_SIZE-1 chars into the chat box, but Frost Joke / Dazzler's text can be longer.
-		// Neither the official client nor server place any restriction on the length of the text in the packet,
-		// but we'll only allow reasonably long strings here. This also makes sure all strings fit into the `chatlog` table.
-		ShowWarning("clif_process_message: Player '%s' sent a message too long ('%.*s')!\n", sd->status.name, CHAT_SIZE_MAX, message);
+		// Normally you can only enter CHATBOX_SIZE-1 letters into the chat box, but Frost Joke / Dazzler's text can be longer.
+		// Also, the physical size of strings that use multibyte encoding can go multiple times over the chatbox capacity.
+		// Neither the official client nor server place any restriction on the length of the data in the packet,
+		// but we'll only allow reasonably long strings here. This also makes sure that they fit into the `chatlog` table.
+		ShowWarning("clif_process_message: Player '%s' sent a message too long ('%.*s')!\n", sd->status.name, CHAT_SIZE_MAX-1, message);
 		return false;
 	}
 
