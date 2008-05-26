@@ -339,6 +339,7 @@ void clif_disp_message(struct block_list* src, const char* mes, int len, enum se
 int clif_GMmessage(struct block_list* bl, const char* mes, int len, int flag);
 void clif_MainChatMessage(const char* message); //luzza
 int clif_announce(struct block_list *bl, const char* mes, int len, unsigned long color, int flag);
+int clif_announce_ex(struct block_list *bl, const char* mes, int len, unsigned long color, int flag, int size);
 int clif_heal(int fd,int type,int val);
 int clif_resurrection(struct block_list *bl,int type);
 void clif_set0199(struct map_session_data* sd, int mode);

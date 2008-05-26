@@ -4550,13 +4550,18 @@ void clif_MainChatMessage(const char* message)
  *------------------------------------------*/
 int clif_announce(struct block_list* bl, const char* mes, int len, unsigned long color, int flag)
 {
+	return clif_announce_ex(bl, mes, len, color, flag, 12);
+}
+
+int clif_announce_ex(struct block_list* bl, const char* mes, int len, unsigned long color, int flag, int size)
+{
 	unsigned char *buf;
 	buf = (unsigned char*)aMallocA((len + 16)*sizeof(unsigned char));
 	WBUFW(buf,0) = 0x1c3;
 	WBUFW(buf,2) = len + 16;
 	WBUFL(buf,4) = color;
 	WBUFW(buf,8) = 0x190; //Font style? Type?
-	WBUFW(buf,10) = 0x0c;  //12? Font size?
+	WBUFW(buf,10) = size;  // Font size
 	WBUFL(buf,12) = 0;	//Unknown!
 	memcpy(WBUFP(buf,16), mes, len);
 	
