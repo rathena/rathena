@@ -270,7 +270,7 @@ int encode_zip(unsigned char* dest, unsigned long* destLen, const unsigned char*
 
 	err = deflate(&stream, Z_FINISH);
 	if (err != Z_STREAM_END) {
-		inflateEnd(&stream);
+		deflateEnd(&stream);
 		return err == Z_OK ? Z_BUF_ERROR : err;
 	}
 	*destLen = stream.total_out;
