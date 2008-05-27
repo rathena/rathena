@@ -723,6 +723,21 @@ e_tower
 4@tower
 5@tower
 6@tower
+mid_camp
+mid_campin
+man_fild01
+man_fild03
+spl_fild02
+spl_fild03
+moc_fild22b
+que_dan01
+que_dan02
+schg_que01
+schg_dun01
+arug_que01
+arug_dun01
+1@orcs
+2@orcs
 
 // Only add maps under this line if they are not standard maps!
 
