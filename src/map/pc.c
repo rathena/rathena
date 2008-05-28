@@ -6331,6 +6331,11 @@ int pc_equipitem(struct map_session_data *sd,int n,int req_pos)
 
 	nullpo_retr(0, sd);
 
+	if( n < 0 || n >= MAX_INVENTORY ) {
+		clif_equipitemack(sd,0,0,0);
+		return 0;
+	}
+
 	id = sd->inventory_data[n];
 	pos = pc_equippoint(sd,n); //With a few exceptions, item should go in all specified slots.
 
@@ -6481,8 +6486,12 @@ int pc_unequipitem(struct map_session_data *sd,int n,int flag)
 	int i;
 	nullpo_retr(0, sd);
 
-// -- moonsoul	(if player is berserk then cannot unequip)
-//
+	if( n < 0 || n >= MAX_INVENTORY ) {
+		clif_unequipitemack(sd,0,0,0);
+		return 0;
+	}
+
+	// if player is berserk then cannot unequip
 	if(!(flag&2) && sd->sc.count && (sd->sc.data[SC_BLADESTOP] || sd->sc.data[SC_BERSERK])){
 		clif_unequipitemack(sd,n,0,0);
 		return 0;
