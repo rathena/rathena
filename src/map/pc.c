@@ -4493,13 +4493,13 @@ int pc_statusup(struct map_session_data *sd,int type)
 	}
 
 	sd->status.status_point-=need;
-	if(need!=pc_need_status_point(sd,type)){
-		clif_updatestatus(sd,type-SP_STR+SP_USTR);
-	}
-	clif_updatestatus(sd,SP_STATUSPOINT);
-	clif_updatestatus(sd,type);
 	status_calc_pc(sd,0);
+
+	if( need != pc_need_status_point(sd,type) )
+		clif_updatestatus(sd,type-SP_STR+SP_USTR);
+	clif_updatestatus(sd,SP_STATUSPOINT);
 	clif_statusupack(sd,type,1,val);
+	clif_updatestatus(sd,type); // send after the 'ack' to override the value
 
 	return 0;
 }

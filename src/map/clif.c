@@ -2612,7 +2612,7 @@ int clif_statusupack(struct map_session_data *sd,int type,int ok,int val)
 	WFIFOW(fd,0)=0xbc;
 	WFIFOW(fd,2)=type;
 	WFIFOB(fd,4)=ok;
-	WFIFOB(fd,5)=val;
+	WFIFOB(fd,5)=cap_value(val,0,UCHAR_MAX);
 	WFIFOSET(fd,packet_len(0xbc));
 
 	return 0;
