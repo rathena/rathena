@@ -1,0 +1,22 @@
+//===== eAthena Script =======================================
+//= Another World Warp Script
+//===== By: ==================================================
+//= L0ne_W0lf
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= Any Athena Version
+//===== Description: =========================================
+//= Warp Points for Another World
+//===== Additional Comments: =================================
+//= 1.0 First Version.
+//============================================================
+
+mid_camp,12,142,0	warp	spl_fild02-1	1,1,spl_fild02,378,144
+spl_fild02,382,144,0	warp	spl_fild02-2	1,1,mid_camp,16,142
+mid_camp,9,216,0	warp	spl_fild02-3	1,1,spl_fild02,378,215
+spl_fild02,382,215,0	warp	spl_fild02-4	1,1,mid_camp,16,216
+spl_fild02,295,5,0	warp	spl_fild02-5	1,1,spl_fild03,205,375
+spl_fild02,97,24,0	warp	spl_fild02-6	1,1,spl_fild03,105,369
+spl_fild03,305,379,0	warp	spl_fild03-1	1,1,spl_fild02,298,9
+spl_fild03,105,373,0	warp	spl_fild03-2	1,1,spl_fild02,97,29
