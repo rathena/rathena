@@ -4514,7 +4514,7 @@ int status_get_sc_def(struct block_list *bl, enum sc_type type, int rate, int ti
 	case SC_ANKLE:
 		if(status->mode&MD_BOSS) // Lasts 5 times less on bosses
 			tick /= 5;
-		sc_def = status->agi;
+		sc_def = status->agi / 2;
 		break;
 	case SC_MAGICMIRROR:
 	case SC_ARMORCHANGE:
@@ -4598,10 +4598,9 @@ int status_get_sc_def(struct block_list *bl, enum sc_type type, int rate, int ti
 		return tick;
 
 	tick -= tick*tick_def/100;
-	// Minimum trap time of 3+0.03*skilllv seconds [celest]
-	// Changed to 3 secs and moved from skill.c [Skotlex]
-	if (type == SC_ANKLE && tick < 3000)
-		tick = 3000;
+	// Changed to 5 seconds according to recent tests [Playtester]
+	if (type == SC_ANKLE && tick < 5000)
+		tick = 5000;
 	return tick<=0?0:tick;
 }
 
