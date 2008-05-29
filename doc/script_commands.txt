@@ -4931,12 +4931,14 @@ complete the effect.
 
 ---------------------------------------
 
+*setnpcdisplay("<npc name>", "<display name>", <class id>, <size>)
 *setnpcdisplay("<npc name>", "<display name>", <class id>)
 *setnpcdisplay("<npc name>", "<display name>")
 *setnpcdisplay("<npc name>", <class id>)
 
 Changes the display name and/or display class of the target npc.
 Returns 0 is successful, 1 if the npc does not exist.
+Size is 0 = norma 1 = small 2 = big.
 
 Since trunk r11779
 

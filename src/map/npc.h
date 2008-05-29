@@ -36,6 +36,8 @@ struct npc_data {
 	int chat_id;
 	unsigned int next_walktime;
 
+	unsigned size : 2;
+
 	void* chatdb; // pointer to a npc_parse struct (see npc_chat.c)
 	enum npc_subtype subtype;
 	union {

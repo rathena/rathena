@@ -1017,7 +1017,7 @@ int clif_spawn(struct block_list *bl)
 			else if(sd->state.size==1)
 				clif_specialeffect(bl,421,AREA);
 		}
-	break;
+		break;
 	case BL_MOB:
 		{
 			TBL_MOB *md = ((TBL_MOB*)bl);
@@ -1026,7 +1026,16 @@ int clif_spawn(struct block_list *bl)
 			else if(md->special_state.size==1)
 				clif_specialeffect(&md->bl,421,AREA);
 		}
-	break;
+		break;
+	case BL_NPC:
+		{
+			TBL_NPC *nd = ((TBL_NPC*)bl);
+			if( nd->size == 2 )
+				clif_specialeffect(&nd->bl,423,AREA);
+			else if( nd->size == 1 )
+				clif_specialeffect(&nd->bl,421,AREA);
+		}
+		break;
 	case BL_PET:
 		if (vd->head_bottom)
 			clif_pet_equip_area((TBL_PET*)bl); // needed to display pet equip properly
@@ -3402,6 +3411,10 @@ void clif_getareachar_unit(struct map_session_data* sd,struct block_list *bl)
 			TBL_NPC* nd = (TBL_NPC*)bl;
 			if( nd->chat_id )
 				clif_dispchat((struct chat_data*)map_id2bl(nd->chat_id),sd->fd);
+			if( nd->size == 2 )
+				clif_specialeffect_single(bl,423,sd->fd);
+			else if( nd->size == 1 )
+				clif_specialeffect_single(bl,421,sd->fd);
 		}
 		break;
 	case BL_MOB:
@@ -9200,8 +9213,6 @@ void clif_parse_UseSkillToId(int fd, struct map_session_data *sd)
 
 	if (skilllv < 1) skilllv = 1; //No clue, I have seen the client do this with guild skills :/ [Skotlex]
 
-	//Whether skill fails or not is irrelevant, the char ain't idle. [Skotlex]
-	sd->idletime = last_tick;
 
 	tmp = skill_get_inf(skillnum);
 	if (tmp&INF_GROUND_SKILL || !tmp)
@@ -9211,6 +9222,9 @@ void clif_parse_UseSkillToId(int fd, struct map_session_data *sd)
 		clif_parse_UseSkillToId_homun(sd->hd, sd, tick, skillnum, skilllv, target_id);
 		return;
 	}
+
+	// Whether skill fails or not is irrelevant, the char ain't idle. [Skotlex]
+	sd->idletime = last_tick;
 
 	if (pc_cant_act(sd))
 		return;

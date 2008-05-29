@@ -11648,6 +11648,7 @@ BUILDIN_FUNC(charisalpha)
 /// Changes the display name and/or display class of the npc.
 /// Returns 0 is successful, 1 if the npc does not exist.
 ///
+/// setnpcdisplay("<npc name>", "<new display name>", <new class id>, <new size>) -> <int>
 /// setnpcdisplay("<npc name>", "<new display name>", <new class id>) -> <int>
 /// setnpcdisplay("<npc name>", "<new display name>") -> <int>
 /// setnpcdisplay("<npc name>", <new class id>) -> <int>
@@ -11655,13 +11656,19 @@ BUILDIN_FUNC(setnpcdisplay)
 {
 	const char* name;
 	const char* newname = NULL;
-	int class_ = -1;
+	int class_ = -1, size = -1;
 	struct script_data* data;
 	struct npc_data* nd;
 
 	name = script_getstr(st,2);
 	data = script_getdata(st,3);
 	get_val(st, data);
+	if( script_hasdata(st,5) )
+	{
+		newname = conv_str(st,data);
+		class_ = script_getnum(st,4);
+		size = script_getnum(st,5);
+	}
 	if( script_hasdata(st,4) )
 	{
 		newname = conv_str(st,data);
@@ -11692,8 +11699,20 @@ BUILDIN_FUNC(setnpcdisplay)
 	// update npc
 	if( newname )
 		npc_setdisplayname(nd, newname);
-	if( class_ != -1 )
+
+	if( size != -1 && size != nd->size )
+		nd->size = size;
+	else
+		size = -1;
+
+	if( class_ != -1 && nd->class_ == class_ )
 		npc_setclass(nd, class_);
+	else if( size != -1 )
+	{ // Required to update the visual size
+		clif_clearunit_area(&nd->bl, 0);
+		clif_spawn(&nd->bl);
+	}
+
 	script_pushint(st,0);
 	return 0;
 }
