@@ -6645,7 +6645,7 @@ int pc_checkitem(struct map_session_data *sd)
 		if(!sd->status.inventory[i].equip)
 			continue;
 
-		if	(sd->status.inventory[i].equip&~pc_equippoint(sd,i)) {
+		if(sd->status.inventory[i].equip&~pc_equippoint(sd,i)) {
 			sd->status.inventory[i].equip=0;
 			calc_flag = 1;
 			continue;

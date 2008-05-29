@@ -4970,6 +4970,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 					return 0;
 			break;
 			case SC_HPREGEN:
+			case SC_SPREGEN:
 			case SC_STUN:
 			case SC_SLEEP:
 			case SC_POISON:
@@ -5291,6 +5292,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			tick = 10000;
 			break;
 		case SC_HPREGEN:
+		case SC_SPREGEN:
 			if( val1 == 0 ) return 0;
 			// val1 = heal percent/amout
 			// val2 = seconds between heals
@@ -6924,15 +6926,17 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr data)
 		break;
 
 	case SC_HPREGEN:
+	case SC_SPREGEN:
 		if( sd && --(sce->val4) >= 0 )
 		{
-			if( status->hp < status->max_hp )
-			{
-				// val1 < 0 = per maxhp %
-				// val1 > 0 = exact amount
-				int hp = (sce->val1 < 0) ? (int)(sd->status.max_hp * -1 * sce->val1 / 100.) : sce->val1 ;
-				status_heal(bl, hp, 0, 2);
-			}
+			// val1 < 0 = per max% | val1 > 0 = exact amount
+			int hp = 0, sp = 0;
+			if( type == SC_HPREGEN && status->hp < status->max_hp )
+				hp = (sce->val1 < 0) ? (int)(sd->status.max_hp * -1 * sce->val1 / 100.) : sce->val1 ;
+			else if( type == SC_SPREGEN && status->sp < status->max_sp )
+				sp = (sce->val1 < 0) ? (int)(sd->status.max_sp * -1 * sce->val1 / 100.) : sce->val1 ;
+
+			status_heal(bl, hp, sp, 2);
 			sc_timer_next((sce->val2 * 1000) + tick, status_change_timer, bl->id, data );
 			return 0;
 		}
