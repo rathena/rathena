@@ -276,11 +276,17 @@ static void mapif_parse_Auction_requestlist(int fd)
 			continue;
 
 		i++;
-		if( i > 5 ) { pages++; i = 0; }
-		if( page != pages ) continue;
+		if( i > 5 )
+		{ // Counting Pages of Total Results (5 Results per Page)
+			pages++;
+			i = 1; // First Result of This Page
+		}
+
+		if( page != pages )
+			continue; // This is not the requested Page
 
 		memcpy(WBUFP(buf, j * len), auction, len);
-		j++;
+		j++; // Found Results
 	}
 	iter->destroy(iter);
 
