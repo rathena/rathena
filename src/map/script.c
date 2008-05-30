@@ -11662,26 +11662,17 @@ BUILDIN_FUNC(setnpcdisplay)
 
 	name = script_getstr(st,2);
 	data = script_getdata(st,3);
-	get_val(st, data);
+
 	if( script_hasdata(st,5) )
-	{
-		newname = conv_str(st,data);
-		class_ = script_getnum(st,4);
 		size = script_getnum(st,5);
-	}
 	if( script_hasdata(st,4) )
-	{
-		newname = conv_str(st,data);
 		class_ = script_getnum(st,4);
-	}
-	else if( data_isstring(data) )
-	{
-		newname = conv_str(st,data);
-	}
+
+	get_val(st, data);
+	if( data_isstring(data) )
+ 		newname = conv_str(st,data);
 	else if( data_isint(data) )
-	{
-		class_ = conv_num(st,data);
-	}
+ 		class_ = conv_num(st,data);
 	else
 	{
 		ShowError("script:setnpcdisplay: expected a string or number\n");
@@ -11705,7 +11696,7 @@ BUILDIN_FUNC(setnpcdisplay)
 	else
 		size = -1;
 
-	if( class_ != -1 && nd->class_ == class_ )
+	if( class_ != -1 && nd->class_ != class_ )
 		npc_setclass(nd, class_);
 	else if( size != -1 )
 	{ // Required to update the visual size
