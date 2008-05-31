@@ -1,6 +1,7 @@
 Date		Added
 ======
 2008/05/31
+	* Rev. 12749 Small update to the novice grounds, by Kisuka. [L0ne_W0lf]
 	* Corrected some typos errors in Gunslinger Quest. (bugreport:1549) [Samuray22]
 	* Corrected some "mes" without the getitemname in Sage Quest. (bugreport:1564)
 	* Deleted Empty Color Tag in Soul Linker Quest. (bugreport:1572)

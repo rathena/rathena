@@ -43,6 +43,9 @@
 	2385 Recuvative_Armor		Should trigger HP/SP return with magical kills as well.
 
 =======================
+2008/05/31
+	* Rev. 12749 Implemented some of the 13.1 equipment (no weapons yet.) [L0ne_W0lf]
+	* Added sprite ID and names for the 13.1 monsters. (no stats)
 2008/05/28
 	* Rev. r12736 Added new maps related to episode 13.1. [L0ne_W0lf]
 2008/05/24

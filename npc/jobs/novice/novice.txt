@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Dr.Evil & MasterOfMuppets
 //===== Current Version: ===================================== 
-//= 1.7c
+//= 1.7d
 //===== Compatible With: ===================================== 
 //= eAthena SVN 3422+(Requires jA Script System)
 //===== Description: ========================================= 
@@ -22,6 +22,7 @@
 //= 1.7a a bit of optimization [Lupus]
 //= 1.7b Corrected a little Typo Error. (bugreport:728) [Samuray22]
 //= 1.7C Corrected another Typo Error. (bugreport:740) [Samuray22]
+//= 1.7D Added confirm character name thing on receptionist. [Kisuka]
 //============================================================ 
 
 //====================================================================
@@ -246,6 +247,17 @@ new_zone01,144,107,2	script	Guard#02	105,{
 //Receptionist
 new_zone02,100,29,4	script	Receptionist#nz	86,{
 	if(Class != Job_Novice || Upper) goto L_Fail;
+	mes "[Training Grounds Receptionist]";
+	mes "Hello, you look to be new here.";
+	mes "What is your name?";
+	next;
+	input .@charname$;
+	if (.@charname$!=strcharinfo(0)) {
+		mes "[Training Grounds Receptionist]";
+		mes "Sorry, but I don't think I heard";
+		mes "you correctly";
+		close;
+	}
 	mes "[Training Grounds Receptionist]";
 	mes "Welcome!";
 	mes "You are at the entrance";
