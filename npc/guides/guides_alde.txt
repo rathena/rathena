@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88; L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.6
+//= 1.6a
 //===== Compatible With: ===================================== 
 //= eAthena 7.15 +
 //===== Description: ========================================= 
@@ -17,6 +17,7 @@
 //= 1.4 Fitted the many lines into 1 or 2, and corrected some typos [erKURITA]
 //= 1.5 Removed Duplicates [Silent]
 //= 1.6 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
+//= 1.6a Changed some "close"s to "close2"s. (bugreport:1597) [Samuray22]
 //============================================================
 
 aldebaran,139,63,4	script	Soldier#alde	105,{
@@ -42,14 +43,14 @@ aldebaran,139,63,4	script	Soldier#alde	105,{
 		mes "^515151+^000000 -> Pub";
 		mes "^3355FF+^000000 -> Item Shop";
 		mes "^FF5555+^000000 -> Alchemist Guild";
-		close;
+		close2;
 		cutin "prt_soldier",255;
 		end;
 	}
 	mes "[Al De Baran Guard]";
 	mes "We are sworn to protect Al De Baran! May the forces of evil always be crushed by the";
 	mes "righteous fist of good!";
-	close;
+	close2;
 	cutin "prt_soldier",255;
 	end;
 }

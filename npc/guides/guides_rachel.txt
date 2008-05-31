@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.2a
+//= 1.2b
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -16,6 +16,7 @@
 //	-Thanks to $ephiroth.
 //= 1.2a Fixed some errors with the loop[Samuray22]
 //	-Thanks to $ephiroth.
+//= 1.2b Deleted a unnecessary "end". [Samuray22]
 //============================================================ 
 
 rachel,138,146,5	script	Rachel Guide	934,{
@@ -112,5 +113,4 @@ rachel,138,146,5	script	Rachel Guide	934,{
 		}
 	}
 	close;
-	end;
 }

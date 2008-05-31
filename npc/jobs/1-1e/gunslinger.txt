@@ -7,7 +7,7 @@
 //= DON'T REMOVE THIS! (by request of him, he provided all
 //= the info regarding the quests and shops.)
 //===== Current Version: ===================================== 
-//= 2.1a
+//= 2.1b
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -27,6 +27,7 @@
 //= his first try [SinSloth] 1.10b - removed .GATs [Lupus]
 //= 2.1 Wise Bull Horn now deletes all items. Thanks to yyCC. [L0ne_W0lf]
 //= 2.1a Corrected a Typo error ";;". [Samuray22]
+//= 2.1b Corrected some typos errors. (bugreport:1549) [Samuray22]
 //============================================================ 
 
 que_ng,152,167,3	script	Master Miller	901,{
@@ -149,7 +150,6 @@ que_ng,152,167,3	script	Master Miller	901,{
 				next;
 				mes "[Master Miller]";
 				mes "Okay, from now on you'll be a Gunslinger.";
-				mes "From now on, you are a gunslinger.";
 				mes "After this, for every moment that you live,";
 				mes "remember can never leave your side";
 				mes "is your gun. We must remember the gun";
@@ -393,7 +393,7 @@ payon,184,65,3	script	The Wise Bull Horn	866,{
 			set GUNS_Q,5;
 			next;
 			mes "[The Wise Bull Horn]";
-			mes "Take this Gift made bye me";
+			mes "Take this Gift made by me";
 			mes "and show it to Dark Fox.";
 			mes "You have my blessings";
 			mes "to become a Gunslinger.";

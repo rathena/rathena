@@ -5,7 +5,7 @@
 //= Unknown Translator (1.0)
 //= Darkchild (1.2)
 //===== Current Version: ===================================== 
-//= 2.5
+//= 2.5a
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -20,6 +20,9 @@
 //= 2.4 Fixes bug with first room monsters not being reset. [L0ne_W0lf]
 //= 2.4a Deleted unused variables. [Samuray22]
 //= 2.5 Updated waiting room. (Removes global var) [L0ne_W0lf]
+//= 2.5a Corrected some "mes"s without the getitemname. (bugreport:1564) [Samuray22]
+//	-Changed an incorrect "!=" to "==". (bugreport:1572) 
+//	-And Small Typo Error
 //============================================================ 
 
 yuno_in02,38,61,5	script	Dean of the Academy#sa	743,{
@@ -203,7 +206,7 @@ yuno_in03,154,35,4	script	Staff of the Academy#a	742,{
 		close;
 	}
 	if (BaseJob != Job_Mage) {
-		if (BaseJob != Job_Sage) {
+		if (BaseJob == Job_Sage) {
 			mes "Oh nice to meet you again, long time no see.";
 			mes "So how's it going with the studying?";
 			next;
@@ -554,10 +557,10 @@ yuno_in03,154,35,4	script	Staff of the Academy#a	742,{
 				next;
 				mes "[Metheus Sylphe]";
 				mes "Please bring the following items to me.";
-				mes .@count[0]+" ^3355FF"+.@item[0]+"^000000";
-				mes .@count[1]+" ^3355FF"+.@item[1]+"^000000";
-				mes .@count[2]+" ^3355FF"+.@item[2]+"^000000";
-				if (SAGE_Q == 3) mes .@count[3]+" ^3355FF"+.@item[3]+"^000000";
+				mes .@count[0]+" ^3355FF"+getitemname(.@item[0])+"^000000";
+				mes .@count[1]+" ^3355FF"+getitemname(.@item[1])+"^000000";
+				mes .@count[2]+" ^3355FF"+getitemname(.@item[2])+"^000000";
+				if (SAGE_Q == 3) mes .@count[3]+" ^3355FF"+getitemname(.@item[3])+"^000000";
 				next;
 				mes "[Metheus Sylphe]";
 				mes "If you bring all of these items, your tuition fee will be reduced from 70,000 zeny to 30,000 zeny.";
@@ -649,7 +652,7 @@ yuno_in03,105,177,5	script	Written Test Professor#s	754,{
 		close;
 	}
 	if (SAGE_Q == 0) {
-		mes "What, do you want to be a sage?";
+		mes "What, do you want to be a Sage?";
 		mes "I can tell by your eyes, hungering for wisdom.";
 		next;
 		mes "[Claytos Verdo]";

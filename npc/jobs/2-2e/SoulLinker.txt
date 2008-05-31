@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Celestria & Samuray22
 //===== Current Version: ===================================== 
-//= 1.3
+//= 1.3a
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -16,7 +16,8 @@
 //= 1.3 Slight updates and fixes to the script. [L0ne_W0lf]
 //=	Removes the use of labels, and corrects other errors.
 //=	Removed the GM-use only NPC from the sec_in map. 
-//=	No longer used a clobal var, uses an NPC var isntead.
+//=	No longer used a global var, uses an NPC var instead.
+//= 1.3a Deleted Empty Color Tag. (bugreport:1572) [Samuray22]
 //============================================================ 
 
 morocc_in,174,30,6	script	Kid#link1	716,{
@@ -129,7 +130,7 @@ morocc_in,174,30,6	script	Kid#link1	716,{
 				mes "spiritually inclined, these";
 				mes "spirits are attracted to you.";
 				mes "With enough training, you can";
-				mes "temporarily imbue the power^FFFFFF ^000000 of these spirits to your allies.";
+				mes "temporarily imbue the power of these spirits to your allies.";
 				next;
 				mes "[Kid]";
 				mes "Now, you can't imbue yourself";

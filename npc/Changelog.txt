@@ -1,5 +1,13 @@
 Date		Added
 ======
+2008/05/31
+	* Corrected some typos errors in Gunslinger Quest. (bugreport:1549) [Samuray22]
+	* Corrected some "mes" without the getitemname in Sage Quest. (bugreport:1564)
+	* Deleted Empty Color Tag in Soul Linker Quest. (bugreport:1572)
+	* Changed an incorrect "!=" to "==" in Sage Quest. (bugreport:1572)
+	  -And Small Typo Error.
+	* Changed some "close"s to "close2"s on Aldebaran Guides. (bugreport:1597)
+	* Deleted a Unnecessary "end" in Rachel Guide.
 2008/05/28
 	* Rev 12740 Added warps points for episode 13.1 maps. [L0ne_W0lf]
 2008/05/20
