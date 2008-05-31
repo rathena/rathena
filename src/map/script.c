@@ -7768,7 +7768,7 @@ BUILDIN_FUNC(getnpctimer)
 	if (!nd || nd->bl.type != BL_NPC)
 	{
 		script_pushint(st,0);
-		ShowError("getnpctimer: Invalid NPC\n");
+		ShowError("getnpctimer: Invalid NPC.\n");
 		return 1;
 	}
 
@@ -7803,7 +7803,15 @@ BUILDIN_FUNC(setnpctimer)
 	else
 		nd=(struct npc_data *)map_id2bl(st->oid);
 
+	if (!nd || nd->bl.type != BL_NPC)
+	{
+		script_pushint(st,1);
+		ShowError("setnpctimer: Invalid NPC.\n");
+		return 1;
+	}
+
 	npc_settimerevent_tick(nd,tick);
+	script_pushint(st,0);
 	return 0;
 }
 
@@ -7816,15 +7824,28 @@ BUILDIN_FUNC(attachnpctimer)
 	struct npc_data *nd;
 
 	nd=(struct npc_data *)map_id2bl(st->oid);
+
+	if (!nd || nd->bl.type != BL_NPC)
+	{
+		script_pushint(st,1);
+		ShowError("setnpctimer: Invalid NPC.\n");
+		return 1;
+	}
+
 	if( script_hasdata(st,2) )
 		sd=map_nick2sd(script_getstr(st,2));
 	else
 		sd = script_rid2sd(st);
 
-	if (sd==NULL)
-		return 0;
+	if (!sd)
+	{
+		script_pushint(st,1);
+		ShowWarning("attachnpctimer: Invalid player.\n");
+		return 1;
+	}
 
 	nd->u.scr.rid = sd->bl.id;
+	script_pushint(st,0);
 	return 0;
 }
 
@@ -7839,7 +7860,15 @@ BUILDIN_FUNC(detachnpctimer)
 	else
 		nd=(struct npc_data *)map_id2bl(st->oid);
 
+	if (!nd || nd->bl.type != BL_NPC)
+	{
+		script_pushint(st,1);
+		ShowError("detachnpctimer: Invalid NPC.\n");
+		return 1;
+	}
+
 	nd->u.scr.rid = 0;
+	script_pushint(st,0);
 	return 0;
 }
 
