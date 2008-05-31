@@ -2282,13 +2282,6 @@ int clif_updatestatus(struct map_session_data *sd,int type)
 	}
 	WFIFOSET(fd,len);
 
-	if( type == SP_SPEED )
-	{
-		char buf[256];
-		sprintf(buf, "Your walk speed is now %d", sd->battle_status.speed);
-		clif_displaymessage(fd, buf);
-	}
-
 	return 0;
 }
 
