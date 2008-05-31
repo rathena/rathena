@@ -1,6 +1,8 @@
 Date		Added
 ======
 2008/05/31
+	* Rev. 12750 Fixed bug in eye of hellion quests (bugreport:1581) [L0ne_W0lf]
+	* Fixed the position of one of the Splendid (spl) warps. (Bugreport:1585)
 	* Rev. 12749 Small update to the novice grounds, by Kisuka. [L0ne_W0lf]
 	* Corrected some typos errors in Gunslinger Quest. (bugreport:1549) [Samuray22]
 	* Corrected some "mes" without the getitemname in Sage Quest. (bugreport:1564)

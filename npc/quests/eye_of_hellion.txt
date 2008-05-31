@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= MasterOfMuppets
 //===== Current Version: =====================================
-//= 1.6
+//= 1.7
 //===== Compatible With: =====================================
 //= eAthena SVN
 //===== Description: =========================================
@@ -18,6 +18,7 @@
 //=	Tracking variable is not backwards compatable meaning
 //=     you can again repeat this quest from the start.
 //= 1.6 Fixed issue with #prt_key-1-1. [L0ne_W0lf]
+//= 1.7 Corrected reminants from aegis conversion. [L0en_w0lf]
 //============================================================
 
 morocc_in,116,101,3	script	Old Scholar Tyus#hellion	735,3,3,{
@@ -665,8 +666,7 @@ morocc_in,116,101,3	script	Old Scholar Tyus#hellion	735,3,3,{
 			mes "You still have the Hellion's Eye.";
 			mes "I can see the pain in your eyes.";
 			mes "Let me lighten your burden. It will be better this way.";
-			set eyes,v[Eye_Of_Hellion];
-			delitem 7337,eyes; //Eye_Of_Hellion
+			delitem 7337,countitem(7337); //Eye_Of_Hellion
 			next;
 			mes "[Sir Chilias'Tyus]";
 			mes "May God bless you.";
@@ -1143,7 +1143,7 @@ OnTouch:
 			mes "didn't get it:^4D4DFF 3847147298^000000.";
 			mes "Don't forget it, adventurer.";
 			next;
-			mes "["+ name +"]";
+			mes "["+ strcharinfo(0) +"]";
 			mes "Wait... What does";
 			mes "this all mean? Won't";
 			mes "you tell me more?";
@@ -1159,7 +1159,7 @@ OnTouch:
 			else if (HELLIONQ == 41)
 				set HELLIONQ,43;
 			next;
-			mes "["+ name +"]";
+			mes "["+ strcharinfo(0) +"]";
 			mes "Holy cow...";
 			mes "This is all";
 			mes "really cloak and";

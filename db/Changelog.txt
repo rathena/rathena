@@ -44,6 +44,8 @@
 
 =======================
 2008/05/31
+	* Rev. 12750 Fixed Slotted Grand cross not enabling TU 3. (bugreport:1563) [L0ne_W0lf]
+	* Fixed assassin robe set checking for the wrong item. (bugreport:1576)
 	* Rev. 12749 Implemented some of the 13.1 equipment (no weapons yet.) [L0ne_W0lf]
 	* Added sprite ID and names for the 13.1 monsters. (no stats)
 2008/05/28

@@ -1,5 +1,5 @@
 //===== eAthena Script =======================================
-//= Another World Warp Script
+//= Manuk Field Warp Script
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
@@ -7,7 +7,7 @@
 //===== Compatible With: =====================================
 //= Any Athena Version
 //===== Description: =========================================
-//= Warp Points for Another World
+//= Warp Points for Manuk Field
 //===== Additional Comments: =================================
 //= 1.0 First Version.
 //============================================================
