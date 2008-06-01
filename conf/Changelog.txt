@@ -1,5 +1,7 @@
 Date	Added
 
+2008/06/01
+	* Added gm_viewequip_min_lv to gm.conf [ultramage]
 2008/05/28
 	* Rev. r12736 Added new maps related to episode 13.1. [L0ne_W0lf]
 2008/04/28

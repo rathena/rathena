@@ -451,6 +451,7 @@ extern struct Battle_Config
 	int ksprotection;
 	int auction_feeperhour;
 	int auction_maximumprice;
+	int gm_viewequip_min_lv;
 } battle_config;
 
 void do_init_battle(void);

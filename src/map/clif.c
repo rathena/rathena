@@ -12158,7 +12158,7 @@ void clif_parse_ViewPlayerEquip(int fd, struct map_session_data* sd)
 	if (!tsd)
 		return;
 
-	if( tsd->status.show_equip )
+	if( tsd->status.show_equip || (battle_config.gm_viewequip_min_lv && pc_isGM(sd) >= battle_config.gm_viewequip_min_lv) )
 		clif_viewequip_ack(sd, tsd);
 	else
 		clif_viewequip_fail(sd);
