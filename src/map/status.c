@@ -502,6 +502,7 @@ void initChangeTables(void)
 	StatusChangeFlagTable[SC_ARMOR_ELEMENT] |= SCB_PC;
 	StatusChangeFlagTable[SC_ARMOR_RESIST] |= SCB_PC;
 	StatusChangeFlagTable[SC_SPCOST_RATE] |= SCB_PC;
+	StatusChangeFlagTable[SC_WALKSPEED] |= SCB_SPEED;
 
 	if (!battle_config.display_hallucination) //Disable Hallucination.
 		StatusIconChangeTable[SC_HALLUCINATION] = SI_BLANK;
@@ -3706,13 +3707,15 @@ static signed short status_calc_mdef2(struct block_list *bl, struct status_chang
 
 static unsigned short status_calc_speed(struct block_list *bl, struct status_change *sc, int speed)
 {
-
 	//Default speed coming in means there's no speed_rate adjustments. 
 	int new_speed = speed;
 	bool default_speed = (speed == DEFAULT_WALK_SPEED);
 
 	if(!sc || !sc->count)
 		return cap_value(speed,10,USHRT_MAX);
+
+	if(sc->data[SC_WALKSPEED])
+		new_speed = sc->data[SC_WALKSPEED]->val1;
 
 	// Fixed reductions
 	if(sc->data[SC_CURSE])
@@ -3738,8 +3741,6 @@ static unsigned short status_calc_speed(struct block_list *bl, struct status_cha
 			new_speed -= new_speed * 25/100;
 		if(sc->data[SC_FUSION])
 			new_speed -= new_speed * 25/100;
-
-
 
 		//These only apply if you don't have increase agi and/or fusion and/or sprint
 		if(speed == new_speed)

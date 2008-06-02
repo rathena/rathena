@@ -183,9 +183,10 @@ static int unit_walktoxy_timer(int tid, unsigned int tick, int id, intptr data)
 					bl->id, sd->status.guild_id, strvit, agidex);
 		}
 	} else if (md) {
-		if(battle_config.mob_warp&1 && map_getcell(bl->m,x,y,CELL_CHKNPC) &&
-			npc_touch_areanpc2(bl)) // Enable mobs to step on warps. [Skotlex]
-	  		return 0;
+		if( map_getcell(bl->m,x,y,CELL_CHKNPC) ) {
+			if( npc_touch_areanpc2(md) ) return 0; // Warped
+		} else
+			md->areanpc_id = 0;
 		if (md->min_chase > md->db->range3) md->min_chase--;
 		//Walk skills are triggered regardless of target due to the idle-walk mob state.
 		//But avoid triggering on stop-walk calls.

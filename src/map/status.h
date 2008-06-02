@@ -294,6 +294,7 @@ typedef enum sc_type {
 	SC_SEVENWIND,
 	SC_DEF_RATE,
 	SC_SPREGEN,
+	SC_WALKSPEED,
 	SC_MAX, //Automatically updated max, used in for's to check we are within bounds.
 } sc_type;
 

@@ -777,35 +777,70 @@ int npc_touch_areanpc(struct map_session_data* sd, int m, int x, int y)
 	return 0;
 }
 
-int npc_touch_areanpc2(struct block_list* bl)
+int npc_touch_areanpc2(struct mob_data *md)
 {
-	int i,m=bl->m;
-	int xs,ys;
+	int i, m = md->bl.m, x = md->bl.x, y = md->bl.y;
+	char eventname[NAME_LENGTH*2+3];
+	struct event_data* ev;
+	int xs, ys;
 
-	for(i=0;i<map[m].npc_num;i++)
+	for( i = 0; i < map[m].npc_num; i++ )
 	{
-		if (map[m].npc[i]->sc.option&OPTION_INVISIBLE)
+		if( map[m].npc[i]->sc.option&OPTION_INVISIBLE )
 			continue;
 
-		if (map[m].npc[i]->subtype!=WARP)
-			continue;
-	
-		xs=map[m].npc[i]->u.warp.xs;
-		ys=map[m].npc[i]->u.warp.ys;
-
-		if( bl->x >= map[m].npc[i]->bl.x-xs && bl->x <= map[m].npc[i]->bl.x+xs
-		&&  bl->y >= map[m].npc[i]->bl.y-ys && bl->y <= map[m].npc[i]->bl.y+ys )
+		switch( map[m].npc[i]->subtype )
+		{
+		case WARP:
+			if( battle_config.mob_warp&1 )
+			{
+				xs = map[m].npc[i]->u.warp.xs;
+				ys = map[m].npc[i]->u.warp.ys;
+			}
+			else
+				continue;
 			break;
-	}
-	if (i==map[m].npc_num)
-		return 0;
-	
-	xs = map_mapindex2mapid(map[m].npc[i]->u.warp.mapindex);
-	if (xs < 0) // Can't warp object between map servers...
-		return 0;
+		case SCRIPT:
+			xs = map[m].npc[i]->u.scr.xs;
+			ys = map[m].npc[i]->u.scr.ys;
+			snprintf(eventname, ARRAYLENGTH(eventname), "%s::OnTouchNPC", map[m].npc[i]->exname);
+			break;
+		default:
+			continue;
+		}
+		if( x >= map[m].npc[i]->bl.x-xs && x <= map[m].npc[i]->bl.x+xs && y >= map[m].npc[i]->bl.y-ys && y <= map[m].npc[i]->bl.y+ys )
+		{
+			if( map[m].npc[i]->subtype == SCRIPT
+				&& ((ev = (struct event_data*)strdb_get(ev_db, eventname)) == NULL || ev->nd == NULL) )
+				continue; // No OnTouchNPC Event found
 
-	if (unit_warp(bl, xs, map[m].npc[i]->u.warp.x,map[m].npc[i]->u.warp.y,0))
-		return 0; //Failed to warp.
+			break;
+		}
+	}
+
+	if( i == map[m].npc_num ) return 0;
+
+	switch( map[m].npc[i]->subtype )
+	{
+		case WARP:
+			xs = map_mapindex2mapid(map[m].npc[i]->u.warp.mapindex);
+			if( xs < 0 )
+				return 0; // Can't warp object between map servers...
+			if( unit_warp(&md->bl, xs, map[m].npc[i]->u.warp.x, map[m].npc[i]->u.warp.y, 0) )
+				return 0; // Failed to warp.
+			break;
+		case SCRIPT:
+		{
+			if( md->areanpc_id == map[m].npc[i]->bl.id )
+				return 0; // Allready touch this NPC
+
+			md->areanpc_id = map[m].npc[i]->bl.id;
+			run_script(ev->nd->u.scr.script, ev->pos, md->bl.id, ev->nd->bl.id);
+
+			return 0;
+			break;
+		}
+	}
 
 	return 1;
 }

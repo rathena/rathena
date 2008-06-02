@@ -125,6 +125,7 @@ struct mob_data {
 	unsigned int tdmg; //Stores total damage given to the mob, for exp calculations. [Skotlex]
 	int level;
 	int target_id,attacked_id;
+	int areanpc_id; //Required in OnTouchNPC (to avoid multiple area touchs)
 
 	unsigned int next_walktime,last_thinktime,last_linktime,last_pcneartime;
 	short move_fail_count;
