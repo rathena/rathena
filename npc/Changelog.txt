@@ -1,5 +1,7 @@
 Date		Added
 ======
+2008/06/03
+	* Rev. 12754 Fixed a typo in schg_cas01 treasure spawning. [L0ne_W0lf]
 2008/05/31
 	* Rev. 12750 Fixed bug in eye of hellion quests (bugreport:1581) [L0ne_W0lf]
 	* Fixed the position of one of the Splendid (spl) warps. (Bugreport:1585)
