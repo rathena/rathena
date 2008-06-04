@@ -777,6 +777,8 @@ int npc_touch_areanpc(struct map_session_data* sd, int m, int x, int y)
 	return 0;
 }
 
+// OnTouch NPC or Warp for Mobs
+// Return 1 if Warped
 int npc_touch_areanpc2(struct mob_data *md)
 {
 	int i, m = md->bl.m, x = md->bl.x, y = md->bl.y;
@@ -791,58 +793,47 @@ int npc_touch_areanpc2(struct mob_data *md)
 
 		switch( map[m].npc[i]->subtype )
 		{
-		case WARP:
-			if( battle_config.mob_warp&1 )
-			{
+			case WARP:
+				if( !battle_config.mob_warp&1 )
+					continue;
 				xs = map[m].npc[i]->u.warp.xs;
 				ys = map[m].npc[i]->u.warp.ys;
-			}
-			else
-				continue;
-			break;
-		case SCRIPT:
-			xs = map[m].npc[i]->u.scr.xs;
-			ys = map[m].npc[i]->u.scr.ys;
-			snprintf(eventname, ARRAYLENGTH(eventname), "%s::OnTouchNPC", map[m].npc[i]->exname);
-			break;
-		default:
-			continue;
+				break;
+			case SCRIPT:
+				xs = map[m].npc[i]->u.scr.xs;
+				ys = map[m].npc[i]->u.scr.ys;
+				break;
+			default:
+				continue; // Keep Searching
 		}
+
 		if( x >= map[m].npc[i]->bl.x-xs && x <= map[m].npc[i]->bl.x+xs && y >= map[m].npc[i]->bl.y-ys && y <= map[m].npc[i]->bl.y+ys )
-		{
-			if( map[m].npc[i]->subtype == SCRIPT
-				&& ((ev = (struct event_data*)strdb_get(ev_db, eventname)) == NULL || ev->nd == NULL) )
-				continue; // No OnTouchNPC Event found
-
-			break;
-		}
-	}
-
-	if( i == map[m].npc_num ) return 0;
-
-	switch( map[m].npc[i]->subtype )
-	{
-		case WARP:
-			xs = map_mapindex2mapid(map[m].npc[i]->u.warp.mapindex);
-			if( xs < 0 )
-				return 0; // Can't warp object between map servers...
-			if( unit_warp(&md->bl, xs, map[m].npc[i]->u.warp.x, map[m].npc[i]->u.warp.y, 0) )
-				return 0; // Failed to warp.
-			break;
-		case SCRIPT:
-		{
-			if( md->areanpc_id == map[m].npc[i]->bl.id )
-				return 0; // Allready touch this NPC
-
-			md->areanpc_id = map[m].npc[i]->bl.id;
-			run_script(ev->nd->u.scr.script, ev->pos, md->bl.id, ev->nd->bl.id);
+		{ // In the npc touch area
+			switch( map[m].npc[i]->subtype )
+			{
+				case WARP:
+					xs = map_mapindex2mapid(map[m].npc[i]->u.warp.mapindex);
+					if( m < 0 )
+						break; // Cannot Warp between map servers
+					if( unit_warp(&md->bl, xs, map[m].npc[i]->u.warp.x, map[m].npc[i]->u.warp.y, 0) == 0 )
+						return 1; // Warped
+					break;
+				case SCRIPT:
+					if( map[m].npc[i]->bl.id == md->areanpc_id )
+						break; // Already touch this NPC
+					snprintf(eventname, ARRAYLENGTH(eventname), "%s::OnTouchNPC", map[m].npc[i]->exname);
+					if( (ev = (struct event_data*)strdb_get(ev_db, eventname)) == NULL || ev->nd == NULL )
+						break; // No OnTouchNPC Event
+					md->areanpc_id = map[m].npc[i]->bl.id;
+					run_script(ev->nd->u.scr.script, ev->pos, md->bl.id, ev->nd->bl.id);
+					break;
+			}
 
 			return 0;
-			break;
 		}
 	}
 
-	return 1;
+	return 0;
 }
 
 //Checks if there are any NPC on-touch objects on the given range.
