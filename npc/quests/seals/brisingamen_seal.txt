@@ -4924,7 +4924,7 @@ prt_fild02,185,269,0	script	#brisindwarf2	111,3,3,{
 				close;
 			}
 		L_Kick:
-			mes "[" + name + "]";
+			mes "[" + strcharinfo(0) + "]";
 			mes "^333333*Cough cough!*";
 			mes "Aaaack!";
 			mes "It's so dusty!";

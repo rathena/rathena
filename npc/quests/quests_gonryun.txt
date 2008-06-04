@@ -2100,7 +2100,7 @@ gon_dun03,62,222,0	script	Strange dead body#gnbs	111,{
 			mes "He probably couldn't take it any longer...^000000";
 			close;
 		}
-		mes "[ ^6699FF" + name + "^000000 ]";
+		mes "[ ^6699FF" + strcharinfo(0) + "^000000 ]";
 		mes "Eew, no!";
 		mes " ";
 		mes "Yucky yucky YUCKY!";

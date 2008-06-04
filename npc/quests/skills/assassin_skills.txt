@@ -115,7 +115,7 @@ in_moc_16,14,27,5	script	Assassin#realman	884,{
 			next;
 			select("New skills?");
 			mes "[Killtin]";
-			mes "That's right, "+name+".";
+			mes "That's right, "+ strcharinfo(0) +".";
 			mes "The first skill specifically";
 			mes "enhances the Sonic Blow";
 			mes "skill, and the second skill";

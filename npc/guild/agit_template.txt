@@ -621,16 +621,7 @@ OnRecvCastle:
 			}
 		}
 		set .@menu$,.@gname$[0]+":"+.@gname$[1]+":"+.@gname$[2]+":"+.@gname$[3]+":"+.@gname$[4]+":"+.@gname$[5]+":"+.@gname$[6]+":"+.@gname$[7];
-		switch(select(.@menu$)) {
-		case 1: set .@GDnum,10; break;
-		case 2: set .@GDnum,11; break;
-		case 3: set .@GDnum,12; break;
-		case 4: set .@GDnum,13; break;
-		case 5: set .@GDnum,14; break;
-		case 6: set .@GDnum,15; break;
-		case 7: set .@GDnum,16; break;
-		case 8: set .@GDnum,17; break;
-		}
+		set .@GDnum,select(.@menu$)+9;
 		mes "[ Steward " + .@name$ + " ]";
 		mes "Will you summon the chosen guardian? 10000 zeny is required to summon.";
 		next;

@@ -35,7 +35,7 @@ alde_alche,27,185,5	script	Alchemist Guildsman#am	744,{
 	}
 	if (BaseJob != Job_Merchant) {
 		if (BaseJob == Job_Alchemist) {
-			mes "Welcome, " + name + ".";
+			mes "Welcome, " + strcharinfo(0) + ".";
 			mes "The Alchemist Union";
 			mes "is busy today, like always.";
 			next;
@@ -177,7 +177,7 @@ alde_alche,27,185,5	script	Alchemist Guildsman#am	744,{
 				set zeny,zeny-50000;
 				mes "[Parmy Gianino]";
 				mes "Let's see.";
-				mes "" + name + "";
+				mes "" + strcharinfo(0);
 				mes "needs to bring...";
 				switch(rand(1,3)) {
 				case 1:
