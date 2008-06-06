@@ -1,5 +1,7 @@
 Date	Added
 
+2008/06/06
+	* Rev. 12761 Added mapflags in preparation for Monster Races. [L0ne_W0lf]
 2008/06/01
 	* Added gm_viewequip_min_lv to gm.conf [ultramage]
 2008/05/28

@@ -54,3 +54,6 @@ turbo_n_16	mapflag	nowarp
 turbo_e_4	mapflag	nowarp
 turbo_e_8	mapflag	nowarp
 turbo_e_16	mapflag	nowarp
+//Monster Races ================
+p_track01	mapflag	nowarp
+p_track02	mapflag	nowarp

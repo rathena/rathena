@@ -287,6 +287,10 @@ turbo_e_4	mapflag	noteleport
 turbo_e_8	mapflag	noteleport
 turbo_e_16	mapflag	noteleport
 
+//Monster Races ================
+p_track01	mapflag	noteleport
+p_track02	mapflag	noteleport
+
 //Battle Fields ==================
 bat_room	mapflag	noteleport
 bat_a01	mapflag	noteleport

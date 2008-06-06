@@ -70,6 +70,10 @@ force_1-2	mapflag	nowarpto
 force_1-3	mapflag	nowarpto
 prt_are_in	mapflag	nowarpto
 
+//Monster Races ================
+p_track01	mapflag	nowarpto
+p_track02	mapflag	nowarpto
+
 //Battle Fields ================
 bat_room	mapflag	nowarpto
 bat_a01	mapflag	nowarpto

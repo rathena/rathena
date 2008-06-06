@@ -1,0 +1,11 @@
+//===== eAthena Script =======================================
+//= Map flags that disable skills on a map
+//===== By: ==================================================
+//= eAthena Dev Team
+//= 1.0 [L0ne_W0lf]
+//===== Current Version: =====================================
+
+//Monster Races ================
+p_track01	mapflag	noskill
+
+p_track02	mapflag	noskill

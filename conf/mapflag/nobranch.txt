@@ -320,6 +320,10 @@ turbo_e_4	mapflag	nobranch
 turbo_e_8	mapflag	nobranch
 turbo_e_16	mapflag	nobranch
 
+//Monster Races ================
+p_track01	mapflag	nobranch
+p_track02	mapflag	nobranch
+
 //Battle Fields ================
 bat_room	mapflag	nobranch
 bat_a01	mapflag	nobranch

@@ -588,6 +588,10 @@ turbo_e_4	mapflag	nomemo
 turbo_e_8	mapflag	nomemo
 turbo_e_16	mapflag	nomemo
 
+//Monster Races ================
+p_track01	mapflag	nomemo
+p_track02	mapflag	nomemo
+
 //Battle Fields ==============
 bat_room	mapflag	nomemo
 bat_a01	mapflag	nomemo
