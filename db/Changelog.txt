@@ -44,6 +44,8 @@
 
 =======================
 2008/06/07
+	* Fixed drain rate and HP regen penalty of 4367,B_Shecil_Card.
+	* Gemini Card adds 50% resist against Stone and Sleep if vit >=80.
 	* Reverted DEX bonus removal from last commit.
 	* Item 5324,Little_Angel_Doll give no dex bonus, fixed chance of triggering autocast.
 	* Fixed Doom slayer stun script according to 11.3 aegis.
