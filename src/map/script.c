@@ -10403,13 +10403,13 @@ BUILDIN_FUNC(soundeffectall)
 		map_foreachinmap(soundeffect_sub, map_mapname2mapid(map), BL_PC, name, type);
 	}
 	else
-	if(script_hasdata(st,9))
+	if(script_hasdata(st,8))
 	{	// specified part of map
-		const char* map = script_getstr(st,5);
-		int x0 = script_getnum(st,6);
-		int y0 = script_getnum(st,7);
-		int x1 = script_getnum(st,8);
-		int y1 = script_getnum(st,9);
+		const char* map = script_getstr(st,4);
+		int x0 = script_getnum(st,5);
+		int y0 = script_getnum(st,6);
+		int x1 = script_getnum(st,7);
+		int y1 = script_getnum(st,8);
 		map_foreachinarea(soundeffect_sub, map_mapname2mapid(map), x0, y0, x1, y1, BL_PC, name, type);
 	}
 	else
