@@ -44,6 +44,9 @@
 
 =======================
 2008/06/07
+	* Fixed 4389,Plasma_Card chance of droping resist potios, should have chance of droping all 4, not 1 out of 4.
+	* Fixed 4407,Randgris_Card chance of autocasting dispell (1->5%).
+	* Fixed 4386,Detale_Card chance of autocasting land protector (5->7%).
 	* Fixed drain rate and HP regen penalty of 4367,B_Shecil_Card.
 	* Gemini Card adds 50% resist against Stone and Sleep if vit >=80.
 	* Reverted DEX bonus removal from last commit.
