@@ -1,5 +1,8 @@
 Date		Added
 ======
+2008/06/07
+	* Bug Report 1624, fixed warp destinationX from 230 to 320. [Brainstorm]
+
 2008/06/03
 	* Rev. 12754 Fixed a typo in schg_cas01 treasure spawning. [L0ne_W0lf]
 	* Changed more "+ name +" to "+ strcharinfo(0) +" in some NPC [Lupus]

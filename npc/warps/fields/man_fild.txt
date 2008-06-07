@@ -1,4 +1,4 @@
-//===== eAthena Script =======================================
+	//===== eAthena Script =======================================
 //= Manuk Field Warp Script
 //===== By: ==================================================
 //= L0ne_W0lf
@@ -13,6 +13,6 @@
 //============================================================
 
 mid_camp,320,139,0	warp	man_fild01-1	1,1,man_fild01,36,238
-man_fild01,44,234,0	warp	man_fild01-2	1,1,mid_camp,230,143
+man_fild01,44,234,0	warp	man_fild01-2	1,1,mid_camp,320,143
 man_fild01,105,56,0	warp	man_fild01-3	1,1,man_fild03,79,363
 man_fild03,79,369,0	warp	man_fild03-1	1,1,man_fild01,105,59
