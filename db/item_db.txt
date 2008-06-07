@@ -2215,7 +2215,7 @@
 //5321,Indonesian_Bandana,Bandana Merah Putih,5,,10,500,,4,,0,0xFFFFFFFF,7,2,256,,0,1,342,{ bonus2 bAddMonsterDropItem,518,100; },{},{}
 //5322,Scarf,Kerchief,5,,10,100,,2,,0,0xFFFFFFFF,7,2,256,,24,0,343,{ bonus bFlee,5; bonus bMdef,2; },{},{}
 5323,Misstrance_Crown,Misstrance Crown,5,,10,0,,10,,0,0xFFFFFFFF,7,2,256,,1,0,165,{ bonus bAllStats,2; },{},{}
-5324,Little_Angel_Doll,Little Angel Doll,5,,10,300,,2,,0,0xFFFFFFFF,7,2,256,,10,0,344,{ bonus4 bAutoSpellWhenHit,254,3,30,0; },{},{}
+5324,Little_Angel_Doll,Little Angel Doll,5,,10,300,,2,,0,0xFFFFFFFF,7,2,256,,10,0,344,{ bonus bDex,3; bonus4 bAutoSpellWhenHit,254,3,30,0; },{},{}
 5325,Robo_Eye,Robo Eye,5,,10,200,,2,,0,0xFFFFFFFF,7,2,512,,10,0,345,{ bonus bAtkRate,3; bonus bMatkRate,3; bonus bDex,1; },{},{}
 5326,Masquerade_C,Refined Masquerade,5,,0,0,,1,,0,0xFFFFFFFE,7,2,512,,1,0,78,{ bonus2 bAddRace,RC_DemiHuman,3; },{},{}
 5327,Orc_Hero_Helm_C,Refined Helmet of Orc Hero,5,,0,0,,10,,0,0xFFFFFFFE,7,2,768,,1,0,178,{ bonus bStr,5; bonus bVit,3; },{},{}

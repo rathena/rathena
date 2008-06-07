@@ -44,6 +44,7 @@
 
 =======================
 2008/06/07
+	* Reverted DEX bonus removal from last commit.
 	* Item 5324,Little_Angel_Doll give no dex bonus, fixed chance of triggering autocast.
 	* Fixed Doom slayer stun script according to 11.3 aegis.
 
