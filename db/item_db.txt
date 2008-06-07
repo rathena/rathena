@@ -2215,7 +2215,7 @@
 //5321,Indonesian_Bandana,Bandana Merah Putih,5,,10,500,,4,,0,0xFFFFFFFF,7,2,256,,0,1,342,{ bonus2 bAddMonsterDropItem,518,100; },{},{}
 //5322,Scarf,Kerchief,5,,10,100,,2,,0,0xFFFFFFFF,7,2,256,,24,0,343,{ bonus bFlee,5; bonus bMdef,2; },{},{}
 5323,Misstrance_Crown,Misstrance Crown,5,,10,0,,10,,0,0xFFFFFFFF,7,2,256,,1,0,165,{ bonus bAllStats,2; },{},{}
-5324,Little_Angel_Doll,Little Angel Doll,5,,10,300,,2,,0,0xFFFFFFFF,7,2,256,,10,0,344,{ bonus bDex,3; bonus4 bAutoSpellWhenHit,254,3,50,0; },{},{}
+5324,Little_Angel_Doll,Little Angel Doll,5,,10,300,,2,,0,0xFFFFFFFF,7,2,256,,10,0,344,{ bonus4 bAutoSpellWhenHit,254,3,30,0; },{},{}
 5325,Robo_Eye,Robo Eye,5,,10,200,,2,,0,0xFFFFFFFF,7,2,512,,10,0,345,{ bonus bAtkRate,3; bonus bMatkRate,3; bonus bDex,1; },{},{}
 5326,Masquerade_C,Refined Masquerade,5,,0,0,,1,,0,0xFFFFFFFE,7,2,512,,1,0,78,{ bonus2 bAddRace,RC_DemiHuman,3; },{},{}
 5327,Orc_Hero_Helm_C,Refined Helmet of Orc Hero,5,,0,0,,10,,0,0xFFFFFFFE,7,2,768,,1,0,178,{ bonus bStr,5; bonus bVit,3; },{},{}
@@ -3476,9 +3476,9 @@
 12263,Comp_Battle_Manual,Battle Manual,2,2,,0,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12264,Comp_Bubble_Gum,Bubble Gum,2,2,,0,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12265,Comp_Insurance,Insurance,2,2,,0,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-12266,Sesame_Pastry_,Sesame Pastry,2,2,,0,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-12267,Honey_Pastry_,Honey Pastry,2,2,,0,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-12268,Rainbow_Cake_,Rainbow Cake,2,2,,0,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12266,Sesame_Pastry_,Sesame Pastry,2,2,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_HitFood,1200000,30; },{},{}
+12267,Honey_Pastry_,Honey Pastry,2,2,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_FleeFood,1200000,30; },{},{}
+12268,Rainbow_Cake_,Rainbow Cake,2,2,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_ATKPOTION,60000,10; },{},{}
 12269,Emergency_Rations,Emergency Rations,0,,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_ATKPOTION,600000,15; },{},{}
 12270,Emergency_Rations_,Emergency Rations,0,,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_MATKPOTION,600000,15; },{},{}
 12271,Military_Rations_A,Military Rations A,0,,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 5,0; },{},{}
