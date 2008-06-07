@@ -5018,7 +5018,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			for(i = 0; i < g->max_member; i++, j++) {
 				if (j>8) j=0;
 				if ((dstsd = g->member[i].sd) != NULL && sd != dstsd) {
-					if (map[dstsd->bl.m].flag.nowarp && !map_flag_gvg(dstsd->bl.m))
+					if (map[dstsd->bl.m].flag.nowarp && !map[dstsd->bl.m].flag.gvg_castle)
 						continue;
 					if(map_getcell(src->m,src->x+dx[j],src->y+dy[j],CELL_CHKNOREACH))
 						dx[j] = dy[j] = 0;
