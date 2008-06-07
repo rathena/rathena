@@ -1272,7 +1272,7 @@
 2512,Novice_Manteau,Novice Manteau,5,50000,,500,,2,,1,0x00000001,7,2,4,,40,1,0,{ bonus2 bSubEle,Ele_Neutral,10; },{},{}
 2513,Celestial_Robe,Heavenly Maiden Robe,5,,10,500,,3,,1,0xFFFFFFFE,7,2,4,,80,1,0,{},{},{}
 2514,Pauldron,Pauldron,5,,10,800,,5,,1,0x000654E2,7,2,4,,80,1,0,{},{},{}
-2515,Wing_Of_Eagle,Eagle Wing,5,20000,,300,,1,,1,0x00810204,7,2,4,,85,1,0,{ if(isequipped(1616)) bonus bSpeedRate,10; },{},{}
+2515,Wing_Of_Eagle,Eagle Wing,5,20000,,300,,1,,1,0x00810204,7,2,4,,85,1,0,{ if(isequipped(1616)) bonus bSpeedRate,25; },{},{}
 2516,Falcon_Robe,Falcon Muffler,5,30000,,400,,3,,0,0xFFFFFFFE,7,2,4,,65,1,0,{ bonus bFlee,15; bonus bFlee2,5; },{},{}
 2517,Vali's_Manteau,Vali's Manteau,5,30000,,600,,4,,0,0xFFFFFFFE,7,2,4,,65,1,0,{ bonus2 bSubEle,Ele_Neutral,15; },{},{}
 2518,Morpheus's_Shawl,Morpheus's Shawl,5,30000,,600,,3,,0,0xFFFFFFFE,7,2,4,,33,1,0,{ bonus bMaxSPrate,10; bonus bMdef,3; },{},{}
@@ -1360,7 +1360,7 @@
 2653,Sacrifice_Ring,Sacrifice Ring,5,,10,100,,0,,0,0xFFFFFFFF,7,2,136,,90,0,0,{},{},{}
 2654,Shinobi's_Sash,Shinobi Sash,5,20000,,300,,1,,0,0x02021040,7,2,136,,30,0,0,{ bonus bStr,1; bonus bAgi,1; bonus bMdef,1; },{},{}
 2655,Bloody_Iron_Ball,Bloodied Shackle Ball,5,50000,,4000,,0,,0,0xFFFFFFFE,7,2,136,,1,0,0,{},{},{}
-2656,Hyper_Changer,Armor Charm,5,20000,,1000,,1,,0,0x000654E2,7,2,136,,1,0,0,{ bonus bMaxHP,50; },{},{}
+2656,Hyper_Changer,Armor Charm,5,20000,,1000,,1,,0,0x000654E2,7,2,136,,1,0,0,{ bonus bMaxHP,50; bonus bDef,1; },{},{}
 2657,Lab_Passport,Laboratory Permit,5,,10,100,,0,,0,0xFFFFFFFF,7,2,136,,1,0,0,{},{},{}
 2658,Nile_Rose_,Nile Rose,5,2,,100,,0,,1,0xFFFFFFFF,7,2,136,,0,0,0,{ bonus bMaxHP,10; },{},{}
 2659,Vesper_Core01,Vesper Core 01,5,,10,100,,1,,0,0x00CFDF80,2,2,136,,1,0,0,{ bonus bMdef,3; bonus bInt,2; bonus bMaxSPrate,5; },{},{}
@@ -1658,7 +1658,7 @@
 4207,Mysteltainn_Card,Mysteltainn Card,6,,10,10,,,,,,,,32,,,,,{ bonus2 bSubSize,0,25; bonus bDef,1; },{},{}
 4208,Miyabi_Ningyo_Card,Miyabi Doll Card,6,,10,10,,,,,,,,64,,,,,{ bonus bMaxSPrate,10; bonus2 bSkillAtk,15,5; },{},{}
 4209,Violy_Card,Violy Card,6,,10,10,,,,,,,,136,,,,,{ bonus3 bAutoSpell,318,1+4*(getskilllv(318)==5),20; },{},{}
-4210,Wander_Man_Card,Wanderer Card,6,,10,10,,,,,,,,4,,,,,{ if(BaseClass == Job_Thief) bonus bFlee,20; if(isequipped(4172,4257,4230,4272) == 0) { bonus3 bAutoSpell,219,1,20; } else { bonus bAgi,5; bonus bStr,5; bonus bAspdRate,5; bonus bSpeedRate,5; bonus2 bSPDrainValue,1,0; if(BaseClass == Job_Thief) bonus bNoGemStone,0; } },{},{}
+4210,Wander_Man_Card,Wanderer Card,6,,10,10,,,,,,,,4,,,,,{ if(BaseClass == Job_Thief) bonus bFlee,20; if(isequipped(4172,4257,4230,4272) == 0) { bonus3 bAutoSpell,219,1,20; } else { bonus bAgi,5; bonus bStr,5; bonus bAspdRate,5; bonus bSpeedRate,25; bonus2 bSPDrainValue,1,0; if(BaseClass == Job_Thief) bonus bNoGemStone,0; } },{},{}
 4211,Vocal_Card,Vocal Card,6,,10,10,,,,,,,,4,,,,,{ bonus bMdef,3; if(isequipped(4021)) bonus bFlee,18; },{},{}
 4212,Bon_Gun_Card,Bongun Card,6,,10,10,,,,,,,,136,,,,,{ bonus3 bAutoSpell,5,1,20; bonus2 bAddSkillBlow,5,5; bonus2 bAddDefClass,1026,-100; },{},{}
 4213,Brilight_Card,Brilight Card,6,,10,10,,,,,,,,16,,,,,{ bonus2 bAddEffWhenHit,Eff_Silence,600; },{},{}
@@ -2016,7 +2016,7 @@
 5122,Magni_Cap,Magni's Cap,5,30000,,1000,,5,,0,0xFFFFFFFE,7,2,256,,65,1,250,{ bonus bStr,2; },{},{}
 5123,Ulle_Cap,Ulle's Cap,5,30000,,500,,3,,1,0xFFFFFFFE,7,2,256,,65,1,254,{ bonus bDex,2; bonus bAgi,1; if(isequipped(2353) && readparam(bDex)>=70) bonus bUseSPrate,-10; },{},{}
 5124,Fricca_Circlet,Frigg's Circlet,5,30000,,300,,3,,0,0xFFFFFFFE,7,2,256,,65,1,251,{ bonus bMdef,10; bonus bInt,2; bonus bMaxSP,50; },{},{}
-5125,Kiss_Of_Angel,Angel's Kiss,5,10000,,300,,3,,1,0x00000001,7,2,256,,50,1,255,{ bonus bSPrecovRate,3; },{},{}
+5125,Kiss_Of_Angel,Angel's Kiss,5,10000,,300,,3,,1,0x00000001,7,2,256,,50,1,255,{ bonus bSPrecovRate,5; },{},{}
 5126,Morpheus's_Hood,Morpheus's Hood,5,30000,,200,,1,,0,0xFFFFFFFE,7,2,256,,33,1,256,{ bonus bInt,2; if(isequipped(2518,2648,2649)) { bonus bInt,5; bonus bMdef,11; bonus bMaxSPrate,20; bonus bNoCastCancel,0; bonus bCastrate,25; } },{},{}
 5127,Morrigane's_Helm,Morrigane's Helm,5,30000,,500,,4,,0,0xFFFFFFFE,7,2,256,,61,1,257,{ bonus bLuk,2; bonus bBaseAtk,3; if(isequipped(2519,2650,2651)) { bonus bStr,2; bonus bLuk,9; bonus bCritical,13; bonus bBaseAtk,18; bonus bFlee2,13; } },{},{}
 5128,Goibne's_Helmet,Goibne's Helm,5,30000,,500,,5,,0,0xFFFFFFFE,7,2,256,,54,1,258,{ bonus bVit,3; bonus bMdef,3; if(isequipped(2354,2419,2520)) { bonus bVit,5; bonus bMaxHPrate,15; bonus bMaxSPrate,5; bonus bDef,5; bonus bMdef,15; bonus2 bSubEle,Ele_Water,10; bonus2 bSubEle,Ele_Earth,10; bonus2 bSubEle,Ele_Fire,10; bonus2 bSubEle,Ele_Wind,10; } },{},{}

@@ -44,6 +44,9 @@
 
 =======================
 2008/06/07
+	* Fixed 4210,Wander_Man_Card and 2515,Wing_Of_Eagle Walk Speed bonus bugreport:1326
+	* Fixed 2656,Hyper_Changer (Armor Charm) not giving +1 DEF.
+	* Fixed 5125,Kiss_Of_Angel sp regen bonus (3->5%).
 	* Fixed 4389,Plasma_Card chance of droping resist potios, should have chance of droping all 4, not 1 out of 4.
 	* Fixed 4407,Randgris_Card chance of autocasting dispell (1->5%).
 	* Fixed 4386,Detale_Card chance of autocasting land protector (5->7%).
