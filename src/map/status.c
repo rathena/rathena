@@ -5922,7 +5922,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			val2 = 5+val1; //Factor by which displayed damage is increased by
 			break;
 		case SC_DOUBLECAST:
-			val2 = 40+10*val1; //Trigger rate
+			val2 = 30+10*val1; //Trigger rate
 			break;
 		case SC_KAIZEL:
 			val2 = 10*val1; //% of life to be revived with
