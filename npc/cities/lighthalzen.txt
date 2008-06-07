@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //=  erKURITA, Au{R}oN (Translated by Alan), $ephiroth
 //===== Current Version: ===================================== 
-//= 1.7a
+//= 1.7b
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -36,6 +36,7 @@
 //= 1.7 Removed Auciton Staff as the offical auction file has been added. [L0ne_W0lf]
 //=	Corrected Lucius so he checks the donation variable. (bugreport:1103) [L0ne_W0lf]
 //= 1.7a Another fix to Lucius. (bugreport:1118) [L0ne_W0lf]
+//= 1.7b Another fix to Lucius (trivial). (bugreport:1125)
 //=============================================================
 
 lighthalzen,198,285,5	script	Jiwon#zen5	862,{
@@ -555,7 +556,7 @@ lighthalzen,182,102,3	script	Lucius#zen5	866,{
 			mes "to cancel, please enter ''0.''";
 			next;
 			input .@input;
-			if (.@input > 30000) {
+			if (.@input > 30000 || .@input < 0) {
 				mes "[Lucius]";
 				mes "Please enter a value";
 				mes "from 1 to 30,000 in";

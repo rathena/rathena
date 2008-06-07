@@ -4,7 +4,7 @@
 //= Darkchild (1.1)
 //= Playtester (1.2)
 //===== Current Version: ===================================== 
-//= 2.2
+//= 2.4
 //===== Compatible With: ===================================== 
 //= eAthena 1.0+
 //===== Description: ========================================= 
@@ -38,6 +38,7 @@
 //= 2.1a Corrected a little Typo error. (bugreport:536 & 537) [Samuray22]
 //= 2.2 Small update to Vein's Inn Master. [L0ne_W0lf]
 //= 2.3 Added Lighthalzen Inn from Lighthalzen town file. [L0ne_W0lf]
+//= 2.4 Fixed Inn Employee#Ahlma warping to same destination as save point, bugreport: 191.
 //============================================================ 
 
 
@@ -52,7 +53,7 @@ prt_in,244,135,2	script	Inn Employee#Sammy	53,{
 prt_in,61,141,2	script	Inn Employee#Ahlma	53,{
 
 	callfunc "F_InnMaid","[Employee Ahlma]","Nenkaras","prt_in",64,136;
-	warp "prt_in",64,136; end;
+	warp "prt_in",60,166; end;
 }
 
 //======================== Alberta ====================================

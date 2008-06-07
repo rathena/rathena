@@ -1,5 +1,8 @@
 Date		Added
 ======
+	* 1.7b Another fix to Lucius (trivial). (bugreport:1125)
+	* Fixed Inn Employee#Ahlma warping to same destination as save point, bugreport: 191.
+
 2008/06/07
 	* Bug Report 1624, fixed warp destinationX from 230 to 320. [Brainstorm]
 
