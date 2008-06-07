@@ -3335,6 +3335,7 @@ int clif_storageclose(struct map_session_data *sd)
  *------------------------------------------*/
 static void clif_getareachar_pc(struct map_session_data* sd,struct map_session_data* dstsd)
 {
+	struct map_session_data* tmpsd;
 	int gmlvl;
 	int i;
 
@@ -3357,12 +3358,15 @@ static void clif_getareachar_pc(struct map_session_data* sd,struct map_session_d
 		)
 		clif_hpmeter_single(sd->fd, dstsd->bl.id, dstsd->battle_status.hp, dstsd->battle_status.max_hp);
 
-	// display links to devoted chars for crusader
+	// display link (sd - dstsd) to sd
 	ARR_FIND( 0, 5, i, sd->devotion[i] == dstsd->bl.id );
 	if( i < 5 ) clif_devotion(sd, sd);
-	// display links to devoted chars for others
+	// display links (dstsd - devotees) to sd
 	ARR_FIND( 0, 5, i, dstsd->devotion[i] > 0 );
 	if( i < 5 ) clif_devotion(dstsd, sd);
+	// display link (dstsd - crusader) to sd
+	if( dstsd->sc.data[SC_DEVOTION] && (tmpsd = map_id2sd(dstsd->sc.data[SC_DEVOTION]->val1)) != NULL )
+		clif_devotion(tmpsd, sd);
 
 	// pvp circle for duel [LuzZza]
 	//if(dstsd->duel_group)
