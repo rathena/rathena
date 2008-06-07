@@ -43,6 +43,9 @@
 	2385 Recuvative_Armor		Should trigger HP/SP return with magical kills as well.
 
 =======================
+2008/06/07
+	* Fixed Doom slayer stun script according to 11.3 aegis.
+
 2008/05/31
 	* Rev. 12750 Fixed Slotted Grand cross not enabling TU 3. (bugreport:1563) [L0ne_W0lf]
 	* Fixed assassin robe set checking for the wrong item. (bugreport:1576)
