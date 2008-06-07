@@ -688,8 +688,8 @@ int pc_isequip(struct map_session_data *sd,int n)
 					case W_DAGGER: //Level 4 Knives are equippable.. this means all knives, I'd guess?
 					case W_1HSWORD: //All 1H swords
 					case W_1HAXE: //All 1H Axes
-					case W_MACE: //All Maces
-					case W_STAFF: //All Staffs
+					case W_MACE: //All 1H Maces
+					case W_STAFF: //All 1H Staves
 						return 1;
 				}
 		}
@@ -1576,8 +1576,8 @@ int pc_bonus(struct map_session_data *sd,int type,int val)
 				case W_BOW:
 				case W_REVOLVER:
 				case W_RIFLE:
-				case W_SHOTGUN:
 				case W_GATLING:
+				case W_SHOTGUN:
 				case W_GRENADE:
 					//Become weapon element.
 					status->rhw.ele=val;
@@ -1640,8 +1640,8 @@ int pc_bonus(struct map_session_data *sd,int type,int val)
 				case W_BOW:
 				case W_REVOLVER:
 				case W_RIFLE:
-				case W_SHOTGUN:
 				case W_GATLING:
+				case W_SHOTGUN:
 				case W_GRENADE:
 					status->rhw.range += val;
 			}

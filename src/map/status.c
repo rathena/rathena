@@ -1236,8 +1236,8 @@ static unsigned short status_base_atk(struct block_list *bl, struct status_data 
 		case W_WHIP:
 		case W_REVOLVER:
 		case W_RIFLE:
-		case W_SHOTGUN:
 		case W_GATLING:
+		case W_SHOTGUN:
 		case W_GRENADE:
 			flag = 1;
 	}
@@ -3852,8 +3852,8 @@ static short status_calc_aspd_rate(struct block_list *bl, struct status_change *
 				case W_BOW:
 				case W_REVOLVER:
 				case W_RIFLE:
-				case W_SHOTGUN:
 				case W_GATLING:
+				case W_SHOTGUN:
 				case W_GRENADE:
 					break;
 				default:

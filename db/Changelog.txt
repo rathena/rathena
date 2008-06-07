@@ -44,6 +44,7 @@
 
 =======================
 2008/06/07
+	* Swapped the Shotgun and Gatling gun columns in job_db1.txt [ultramage]
 	* Fixed 4210,Wander_Man_Card and 2515,Wing_Of_Eagle Walk Speed bonus bugreport:1326
 	* Fixed 2656,Hyper_Changer (Armor Charm) not giving +1 DEF.
 	* Fixed 5125,Kiss_Of_Angel sp regen bonus (3->5%).

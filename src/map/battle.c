@@ -654,6 +654,7 @@ int battle_addmastery(struct map_session_data *sd,struct block_list *target,int 
 				damage += (skill * 3);
 			break;
 		case W_MACE:
+		case W_2HMACE:
 			if((skill = pc_checkskill(sd,PR_MACEMASTERY)) > 0)
 				damage += (skill * 3);
 			break;
@@ -1237,8 +1238,8 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 				switch(sd->status.weapon) {
 					case W_BOW:
 					case W_REVOLVER:
-					case W_SHOTGUN:
 					case W_GATLING:
+					case W_SHOTGUN:
 					case W_GRENADE:
 						break;
 					default:

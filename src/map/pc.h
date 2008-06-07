@@ -378,7 +378,7 @@ enum weapon_type {
 	W_1HAXE,	//6
 	W_2HAXE,	//7
 	W_MACE,	//8
-	W_2HMACE,	//9, unused?
+	W_2HMACE,	//9 (unused)
 	W_STAFF,	//10
 	W_BOW,	//11
 	W_KNUCKLE,	//12	
@@ -388,8 +388,8 @@ enum weapon_type {
 	W_KATAR,	//16
 	W_REVOLVER,	//17
 	W_RIFLE,	//18
-	W_SHOTGUN,	//19
-	W_GATLING,	//20
+	W_GATLING,	//19
+	W_SHOTGUN,	//20
 	W_GRENADE,	//21
 	W_HUUMA,	//22
 	MAX_WEAPON_TYPE,
