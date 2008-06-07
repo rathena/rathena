@@ -1607,6 +1607,9 @@ int map_quit(struct map_session_data *sd)
 				status_change_end(&sd->bl,SC_EXPLOSIONSPIRITS,-1);
 			if(sd->sc.data[SC_REGENERATION] && sd->sc.data[SC_REGENERATION]->val4)
 				status_change_end(&sd->bl,SC_REGENERATION,-1);
+			//TO-DO Probably there are way more NPC_type negative status that are removed
+			if(sd->sc.data[SC_CHANGEUNDEAD])
+				status_change_end(&sd->bl,SC_CHANGEUNDEAD,-1);
 		}
 		if (battle_config.debuff_on_logout&2)
 		{

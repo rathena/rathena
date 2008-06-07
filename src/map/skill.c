@@ -4397,7 +4397,14 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case NPC_CHANGEHOLY:
 	case NPC_CHANGEDARKNESS:
 	case NPC_CHANGETELEKINESIS:
+		clif_skill_nodamage(src,bl,skillid,skilllv,
+			sc_start2(bl, type, 100, skilllv, skill_get_ele(skillid,skilllv), 
+				skill_get_time(skillid, skilllv)));
+		break;
 	case NPC_CHANGEUNDEAD:
+		//This skill should fail if target is wearing bathory/evil druid card [Brainstorm]
+		//TO-DO This is ugly, fix it
+		if(tstatus->def_ele==ELE_UNDEAD || tstatus->def_ele==ELE_DARK) break;
 		clif_skill_nodamage(src,bl,skillid,skilllv,
 			sc_start2(bl, type, 100, skilllv, skill_get_ele(skillid,skilllv), 
 				skill_get_time(skillid, skilllv)));

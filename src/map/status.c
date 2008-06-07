@@ -4840,6 +4840,8 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 	switch (type)
 	{
 	case SC_BLESSING:
+		//TO-DO Blessing and Agi up should do 1 damage against players on Undead Status, even on PvM
+		//but cannot be plagiarized (this requires aegis investigation on packets and official behavior) [Brainstorm]
 		if ((!undead_flag && status->race!=RC_DEMON) || bl->type == BL_PC) {
 			if (sc->data[SC_CURSE])
 				status_change_end(bl,SC_CURSE,-1);
@@ -4956,6 +4958,14 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 		if(sc->data[SC_ADJUSTMENT])
 			status_change_end(bl,SC_ADJUSTMENT,-1);
 		break;
+	//NPC_CHANGEUNDEAD will debuff Blessing and Agi Up
+	case SC_CHANGEUNDEAD:
+		if(sc->data[SC_BLESSING])
+			status_change_end(bl,SC_BLESSING,-1);
+		if(sc->data[SC_INCREASEAGI])
+			status_change_end(bl,SC_INCREASEAGI,-1);
+		break;
+		
 	}
 
 	//Check for overlapping fails
