@@ -1300,29 +1300,30 @@ int skill_blown(struct block_list* src, struct block_list* target, int count, in
 }
 
 
-//Checks if bl should reflect back a spell.
+//Checks if 'bl' should reflect back a spell cast by 'src'.
 //type is the type of magic attack: 0: indirect (aoe), 1: direct (targetted)
-static int skill_magic_reflect(struct block_list *bl, int type)
+static int skill_magic_reflect(struct block_list* src, struct block_list* bl, int type)
 {
 	struct status_change *sc = status_get_sc(bl);
-	struct map_session_data *sd;
-	sd = BL_CAST(BL_PC, bl);
+	struct map_session_data* sd = BL_CAST(BL_PC, bl);
 
-	if(sd && sd->magic_damage_return && type && rand()%100 < sd->magic_damage_return)
+	// item-based reflection
+	if( sd && sd->magic_damage_return && type && rand()%100 < sd->magic_damage_return )
 		return 1;
 
-	if(sc && sc->count)
-	{
-		if(sc->data[SC_MAGICMIRROR] && rand()%100 < sc->data[SC_MAGICMIRROR]->val2)
-			return 1;
+	// status-based reflection
+	if( !sc || sc->count == 0 )
+		return 0;
 
-		if(sc->data[SC_KAITE] && (sd || status_get_lv(bl) <= 80))
-		{	//Works on players or mobs with level under 80.
-			clif_specialeffect(bl, 438, AREA);
-			if (--sc->data[SC_KAITE]->val2 <= 0)
-				status_change_end(bl, SC_KAITE, -1);
-			return 1;
-		}
+	if( sc->data[SC_MAGICMIRROR] && rand()%100 < sc->data[SC_MAGICMIRROR]->val2 )
+		return 1;
+
+	if( sc->data[SC_KAITE] && (src->type == BL_PC || status_get_lv(src) <= 80) )
+	{// Kaite only works against non-players if they are low-level.
+		clif_specialeffect(bl, 438, AREA);
+		if( --sc->data[SC_KAITE]->val2 <= 0 )
+			status_change_end(bl, SC_KAITE, -1);
+		return 1;
 	}
 
 	return 0;
@@ -1403,8 +1404,7 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 	}
 
 	if (attack_type&BF_MAGIC) {
-		if (!(sstatus->mode&MD_BOSS) && (dmg.damage || dmg.damage2) &&
-			skill_magic_reflect(bl, src==dsrc))
+		if( !(sstatus->mode&MD_BOSS) && (dmg.damage || dmg.damage2) && skill_magic_reflect(src, bl, src==dsrc) )
 		{	//Magic reflection, switch caster/target
 			struct block_list *tbl = bl;
 			bl = src;
