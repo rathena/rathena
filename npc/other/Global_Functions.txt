@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Lupus, kobra_k88
 //===== Current Version: ===================================== 
-//= 2.12
+//= 2.13
 //===== Compatible With: ===================================== 
 //= eAthena 1.0
 //===== Description: ========================================= 
@@ -35,6 +35,7 @@
 //= 2.10a Removed function F_CheckMaxCount. Not needed. [L0ne_W0lf]
 //= 2.11 Updated function Job_Change to jobchange based on Upper value. [Paradox924X]
 //= 2.12 Added more unused vars to F_ClearGarbage [Lupus]
+//= 2.13 Added more unused vars to F_ClearGarbage [Lupus]
 //============================================================ 
 
 
@@ -94,6 +95,9 @@ function	script	F_ClearGarbage	{
 		set RES_SKILL,0;
 	//Here you put outdated variables from your outdated EVENTS
 	//e.g. Is XMAS done? Add the EVENT var clearing code here.
+
+	//due to bugs in BS quest:
+	set wizard_m2,0;
 	return;
 }
 

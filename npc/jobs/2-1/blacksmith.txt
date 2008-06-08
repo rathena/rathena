@@ -7,7 +7,7 @@
 //= Optimized and further edited by kobra_k88.
 //= Further bugfixed and tested by Lupus
 //===== Current Version: =====================================
-//= 2.5
+//= 2.6
 //===== Compatible With: =====================================
 //= eAthena  SVN
 //===== Description: =========================================
@@ -36,6 +36,7 @@
 //= 2.4d Fixed an incorrect answer in the quiz. (Trojal) [L0ne_W0lf]
 //= 2.4e Touched up a few issues as pointed out by Ultramage. [L0ne_W0lf]
 //= 2.5 Krongast is in Lighthalzen. (DarkValmir) [L0ne_W0lf]
+//= 2.6 Fixed 4 bugs [Lupus]
 //==============================================================
 
 ein_in01,18,28,4	script	Guildsman#BLS	731,{
@@ -317,7 +318,7 @@ ein_in01,201,27,3	script	Guildsman#alberta	63,{
 			next;
 			if (select("Yes.:Um, can I have some time to prepare?") == 1) {
 L_AskQuestions:
-				if (rand(1)) {
+				if (rand(2)) {
 					mes "[Geschupenschte]";
 					mes "1. Which one of the following regions is matched incorrectly";
 					mes "with its specialty item?";
@@ -527,7 +528,7 @@ L_AskQuestions:
 			mes "Well, to make";
 			mes "this you will need...";
 			next;
-			switch(rand(1,6)) {
+			switch(rand(1,5)) {
 			//Steel, Rotten_Bandage, Blue_Gemstone, Arc_Wand
 			case 1: setarray .@items[0], 999,1, 930,1, 717,2, 1610,1, 4; break;
 			//Sparkling_Dust, Skel_Bone, Zargon, Gladius
@@ -550,14 +551,6 @@ L_AskQuestions:
 			next;
 			mes "[Geschupenschte]";
 			mes "Collecting these items will be your test. Coincidentally, it's also a bit of a good way for me to save money. I'll repeat what you'll need to bring back to me...";
-			next;
-			mes "[Geschupenschte]";
-			mes "^8E6B23"+.@items[1]+" "+getitemname(.@items[0])+"^000000,";
-			mes "^8E6B23"+.@items[3]+" "+getitemname(.@items[2])+"^000000,";
-			mes "^8E6B23"+.@items[5]+" "+getitemname(.@items[4])+"^000000, and";
-			mes "^8E6B23"+.@items[7]+" "+getitemname(.@items[6])+"^000000, the kind";
-			mes "you can buy from";
-			mes "an NPC shop.";
 			next;
 			mes "[Geschupenschte]";
 			mes "Okay~";
@@ -1000,7 +993,7 @@ morocc,27,112,4	script	Wickebine#BLS	725,{
 		mes "Tell him I'm satisfied with the quality of the workmanship.";
 		next;
 		getitem 1073,1; //Merchant_Voucher_1
-		Emotion e_lv;
+		emotion e_lv;
 		mes "[Wickebine]";
 		mes "Here's the receipt.";
 		mes "I think you did";
@@ -1011,7 +1004,7 @@ morocc,27,112,4	script	Wickebine#BLS	725,{
 		end;
 	}
 	else if (BSMITH_Q == 14) {
-		Emotion e_lv;
+		emotion e_lv;
 		cutin "Job_Black_hucke02",2;
 		mes "[Wickebine]";
 		mes "Thanks for the delivery.";
@@ -1037,7 +1030,7 @@ morocc,27,112,4	script	Wickebine#BLS	725,{
 		mes "[Wickebine]";
 		mes "How long does it take for something to ship from Geschupenschte? Usually, the Geffen Blacksmith Guild is pretty prompt...";
 		next;
-		Emotion e_lv;
+		emotion e_lv;
 		mes "[Wickebine]";
 		mes "Ooohh...";
 		mes "This is very";
@@ -1299,7 +1292,7 @@ hugel,168,183,1	script	Bismarc#BLS	118,{
 
 ein_in01,24,41,5	script	Blacksmith Guildsman#moc	726,{
 	if (BSMITH_Q == 16) {
-		Emotion e_hmm;
+		emotion e_hmm;
 		mes "[Mitehmaeeuh]";
 		mes "Oh...so you're the one who wants to be a blacksmith?";
 		mes "Nice, heh heh.";
@@ -1317,8 +1310,7 @@ ein_in01,24,41,5	script	Blacksmith Guildsman#moc	726,{
 			mes "you fail. And I won't";
 			mes "tell you what you missed.";
 			next;
-			set wizard_m2,rand(1,3);
-			set blackss_te,0;
+			set .@blackss_te,0;
 			mes "[Mitehmaeeuh]";
 			mes "Please listen";
 			mes "and answer carefully...";
@@ -1457,7 +1449,7 @@ ein_in01,24,41,5	script	Blacksmith Guildsman#moc	726,{
 			next;
 			mes "[Mitehmaeeuh]";
 			mes "You earned";
-			mes .@blackss_te +" points...";
+			mes ""+ .@blackss_te +" points...";
 			if (.@blackss_te > 70) {
 				mes "Very nice!";
 				mes "Congratulations!";
@@ -1487,7 +1479,7 @@ ein_in01,24,41,5	script	Blacksmith Guildsman#moc	726,{
 		close;
 	}
 	else if (BSMITH_Q == 17) {
-		Emotion e_hmm;
+		emotion e_hmm;
 		mes "[Mitehmaeeuh]";
 		mes "Yeap, you just passed the Blacksmith job test~";
 		next;
@@ -1502,7 +1494,7 @@ ein_in01,24,41,5	script	Blacksmith Guildsman#moc	726,{
 		close;
 	}
 	else {
-		Emotion e_hmm;
+		emotion e_hmm;
 		mes "[Mitehmaeeuh]";
 		mes "I had to deal with the heat when I was in Morroc,";
 		mes "and now I have to deal with the smog in this Einbroch!";

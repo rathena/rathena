@@ -94,7 +94,7 @@ comodo,226,123,5	script	Wandering Bard	741,{
 		cutin "job_bard_aiolo01",2;
 		mes "[Lalo]";
 		if (sex) mes "Hi! Delightful Archer.";
-		else mes "Hello! Beautif ul Archer Lady.";
+		else mes "Hello! Beautiful Archer Lady.";
 		mes "How can a wanderer like me help you?";
 		next;
 		switch(select("You have a nice voice.:Could you sing for me, please?:Nothing.")) {
