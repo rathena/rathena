@@ -43,6 +43,11 @@
 	2385 Recuvative_Armor		Should trigger HP/SP return with magical kills as well.
 
 =======================
+2008/06/08
+	* Added a list of aegis effect constants to be used on scripts, this should help on script conversion.
+		they go up to 377, but for higher values, you can still use the integers found on /doc/effect_list.txt
+	* Added a list of aegis npc name constants to be used on scripts (eA doesnt support this yet).
+
 2008/06/07
 	* Swapped the Shotgun and Gatling gun columns in job_db1.txt [ultramage]
 	* Fixed 4210,Wander_Man_Card and 2515,Wing_Of_Eagle Walk Speed bonus bugreport:1326

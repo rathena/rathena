@@ -182,8 +182,8 @@ number	description
 153.	Increase Concentration
 154.	Refine Success
 155.	Refine Fail
-156.	(Nothing)
-157.	(Nothing)
+156.	jobchange.str not found error
+157.	levelup.str not found error
 158.	Job Level Up
 159.	PvP circle
 160.	PvP Party Circle
