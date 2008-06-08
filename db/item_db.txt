@@ -1360,7 +1360,7 @@
 2653,Sacrifice_Ring,Sacrifice Ring,5,,10,100,,0,,0,0xFFFFFFFF,7,2,136,,90,0,0,{},{},{}
 2654,Shinobi's_Sash,Shinobi Sash,5,20000,,300,,1,,0,0x02021040,7,2,136,,30,0,0,{ bonus bStr,1; bonus bAgi,1; bonus bMdef,1; },{},{}
 2655,Bloody_Iron_Ball,Bloodied Shackle Ball,5,50000,,4000,,0,,0,0xFFFFFFFE,7,2,136,,1,0,0,{},{},{}
-2656,Hyper_Changer,Armor Charm,5,20000,,1000,,1,,0,0x000654E2,7,2,136,,1,0,0,{ bonus bMaxHP,50; bonus bDef,1; },{},{}
+2656,Hyper_Changer,Armor Charm,5,20000,,1000,,1,,0,0x000654E2,7,2,136,,1,0,0,{ bonus bMaxHP,50; },{},{}
 2657,Lab_Passport,Laboratory Permit,5,,10,100,,0,,0,0xFFFFFFFF,7,2,136,,1,0,0,{},{},{}
 2658,Nile_Rose_,Nile Rose,5,2,,100,,0,,1,0xFFFFFFFF,7,2,136,,0,0,0,{ bonus bMaxHP,10; },{},{}
 2659,Vesper_Core01,Vesper Core 01,5,,10,100,,1,,0,0x00CFDF80,2,2,136,,1,0,0,{ bonus bMdef,3; bonus bInt,2; bonus bMaxSPrate,5; },{},{}

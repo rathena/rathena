@@ -44,6 +44,7 @@
 
 =======================
 2008/06/08
+	* Reverted Change on 2656,Hyper_Changer from revision 12776.
 	* 2125,Strong_Shield elemental damage penalties (+20% dmg vs fire, water, wind, earth, holy, dark and ghost).
 	* Fixed 2367,Sniping_Suit Critical bonus from LUK, +1 crit per 10 LUK (before was per 5 LUK).
 	* Fixed 1270,Drill_Katar Full Strip skill level (5->1).
