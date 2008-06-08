@@ -2184,7 +2184,7 @@
 5290,Evolved_Drooping_Bunny,Drooping Bunny,5,,10,100,,1,,0,0xFFFFFFFF,7,2,256,,0,1,249,{ bonus bDex,1; bonus bFlee,2; },{},{}
 5291,Kettle_Hat,Kettle Hat,5,,10,600,,4,,0,0xFFFFFFFF,7,2,256,,30,1,318,{ bonus4 bAutoSpell,286,2,30,0; bonus3 bAutoSpell,86,3,30; },{},{}
 5292,Dragon_Skull,Dragon Skull,5,,10,800,,5,,0,0xFFFFFFFF,7,2,256,,50,1,319,{ bonus2 bSubRace,RC_Dragon,5; },{},{}
-5293,Ramen_Hat,Ramen Hat,5,,10,0,,1,,0,0xFFFFFFFF,7,2,256,,0,1,320,{ bonus bDex,4; bonus3 bAutoSpell,30,1,100; },{},{}
+5293,Ramen_Hat,Ramen Hat,5,,10,0,,1,,0,0xFFFFFFFF,7,2,256,,0,1,320,{ bonus bDex,4; bonus4 bAutoSpellWhenHit,30,1,30; },{},{}
 5294,Whisper_Mask,Whisper Mask,5,,10,0,,0,,0,0xFFFFFFFF,7,2,769,,0,0,321,{ bonus bAgi,3; bonus2 bSubEle,Ele_Ghost,-10; },{},{}
 //5295,Golden_Bandana,Golden Bandana,5,,10,2400,,4,,0,0xFFFFFFFF,7,2,768,,,1,138,{ bonus bMdef,4; },{},{}
 5296,Drooping_Nine_Tail_,Drooping Nine Tail,5,,10,300,,1,,1,0xFFFFFFFF,7,2,256,,0,0,296,{ bonus bAgi,1; bonus bCritical,1; },{},{}

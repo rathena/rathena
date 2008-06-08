@@ -186,7 +186,8 @@ bonus3 bSPDrainValue,n,x,y;		When attacking there is a n% chance to either
 					YOUR sp)
 bonus4 bAutoSpell,x,y,n,i;		n/10% chance to cast skill x of level y when
 					being attacking
-					i: 1=cast on enemy, not on self
+					i: 0=cast on self
+					   1=cast on enemy, not on self
 					   2=use random skill lv in [1..y]
 					   3=1+2 (random lv on enemy)
 bonus4 bAutoSpellWhenHit,x,y,n,i;	n/10% chance to cast skill x of level y when

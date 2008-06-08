@@ -44,6 +44,7 @@
 
 =======================
 2008/06/08
+	* Fixed 5293,Ramen_Hat, should cast AgiDown on enemy at 3% when melee attacked, bugreport:286
 	* Added a list of aegis effect constants to be used on scripts, this should help on script conversion.
 		they go up to 377, but for higher values, you can still use the integers found on /doc/effect_list.txt
 	* Added a list of aegis npc name constants to be used on scripts (eA doesnt support this yet).
