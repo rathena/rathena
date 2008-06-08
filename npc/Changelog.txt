@@ -1,6 +1,7 @@
 Date		Added
 ======
 2008/06/08
+	* Fixed one of Einbroch (east) kafras not displaying a name, bugreport:857
 	* Fixed Engel giving back 7 Sobbing Starlight on failing to refine it, bugreport:1473
 	* Removed duplicated quest warp portal on /warps/dungeons/juperos.txt, bugreport:1486
 	* Fixed a bug on Markie question 5, bugreport:1600 [Brainstorm]

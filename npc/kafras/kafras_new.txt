@@ -3,7 +3,7 @@
 //===== By: =========================
 //= eAthena Dev Team
 //===== Current Version: ===================
-//= 3.0
+//= 3.1
 //===== Compatible With: =====================
 //= eAthena 1.0
 //===== Description: ============================================
@@ -32,6 +32,7 @@
 //= 2.9 Fixed an incorrect savepoint (inside the hotel) the map was wrong.
 //= 3.0 Updated function calls with new arguments. [L0ne_W0lf]
 //=	Added unique Kafra Welcome messages.
+//= 3.1 Fixed one of Einbroch (east) kafras not displaying a name, bugreport:857 [Brainstorm]
 //==========================================================================
 
 // Amatsu ------------------------------------------------------------------
@@ -83,7 +84,7 @@ einbech,181,132,5	script	Kafra Employee#ein3::kaf_einbech	860,{
 }
 
 // Einbroch (North-East) ---------------------------------------------------
-einbroch,242,205,5	script	::kaf_einbroch	860,{
+einbroch,242,205,5	script	Kafra Employee#ein2::kaf_einbroch	860,{
 	cutin "kafra_08",2;
 	mes "[Kafra Employee]";
 	mes "Welcome to the";
