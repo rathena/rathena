@@ -392,6 +392,7 @@ enum weapon_type {
 	W_SHOTGUN,	//20
 	W_GRENADE,	//21
 	W_HUUMA,	//22
+	W_2HSTAFF,	//23
 	MAX_WEAPON_TYPE,
 	// dual-wield constants
 	W_DOUBLE_DD, // 2 daggers

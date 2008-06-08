@@ -1,7 +1,7 @@
 // Database for size fix for weapon damage.
 
 //Columns: Weapon type, Rows: Target size.
-//Bare Fist,Knife,1H Sword, 2H Sword,1H Spear, 2H Spears, 1H Axe, 2H Axe, Mace, ?, Staff, Bow, Knuckle, Musical Instrument, Whip, Book, Katar, Revolver, Rifle, Shotgun, Gatling Gun, Grenade Launcher, Fuuma Shuriken
-100,100, 75, 75, 75, 75, 50, 50, 75,100,100,100,100, 75, 75,100, 75,100,100,100,100,100,100,	// Size: Small
-100, 75,100, 75, 75, 75, 75, 75,100,100,100,100, 75,100,100,100,100,100,100,100,100,100,100,	// Size: Medium
-100, 50, 75,100,100,100,100,100,100,100,100, 75, 50, 75, 50, 50, 75,100,100,100,100,100,100,	// Size: Large
+//Unarmed, Knife, 1H Sword, 2H Sword, 1H Spear, 2H Spears, 1H Axe, 2H Axe, Mace, 2H Mace, Staff, Bow, Knuckle, Musical Instrument, Whip, Book, Katar, Revolver, Rifle, Shotgun, Gatling Gun, Grenade Launcher, Fuuma Shuriken, 2H Staff
+100,100, 75, 75, 75, 75, 50, 50, 75,100,100,100,100, 75, 75,100, 75,100,100,100,100,100,100,100	// Size: Small
+100, 75,100, 75, 75, 75, 75, 75,100,100,100,100, 75,100,100,100,100,100,100,100,100,100,100,100	// Size: Medium
+100, 50, 75,100,100,100,100,100,100,100,100, 75, 50, 75, 50, 50, 75,100,100,100,100,100,100,100	// Size: Large
