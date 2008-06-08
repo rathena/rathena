@@ -39,6 +39,7 @@
 //= 2.4 Optimized/simplified some poorly written code; fixed wrong quiz answers [ultramage]
 //= 2.5 Updated to fall within proper name restrictions. [L0ne_W0lf]
 //= 2.5a Corrected a Typo error ";;". [Samuray22]
+//= 2.6 Fixed Engel giving back 7 Sobbing Starlight on failing to refine it, bugreport:1473 [Brainstorm]
 //============================================================ 
 //===== Configuration : ======================================
 prontera,1,1,1	script	TheSignConfig	-1,{
@@ -5383,7 +5384,7 @@ L_Refine:
     mes "a failure, bring me back";
     mes "the materials and I'll";
     mes "try again.";
-    getitem 7177,7;
+    getitem 7177,5;
     set signquest,22;
     close;
 
