@@ -44,6 +44,9 @@
 
 =======================
 2008/06/08
+	* Fixed 2532,Mithril_Magic_Cape NPC_ANTIMAGIC autocast chance (2-20%).
+	* Fixed 2426,Shadow_Walk AS_CLOAKING autocast chance (5->10%).
+	* Fixed 2122,Platinum_Shield autocast chance of NPC_MAGICMIRROR (1->15%).
 	* Fixed 5272,Tongue_Mask_ provoke autocast chance (3->5%).
 	* Fixed 5297,Soulless_Wing_ item name and bonus, +1 all stats and +2% sp regen every 10 seconds.
 	* Fixed 5298,Marvelous_Wig_ bonus, -5% neutral dmg, +5% fire dmg, +5% water dmg.
