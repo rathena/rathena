@@ -44,6 +44,12 @@
 
 =======================
 2008/06/08
+	* Fixed 5272,Tongue_Mask_ provoke autocast chance (3->5%).
+	* Fixed 5297,Soulless_Wing_ item name and bonus, +1 all stats and +2% sp regen every 10 seconds.
+	* Fixed 5298,Marvelous_Wig_ bonus, -5% neutral dmg, +5% fire dmg, +5% water dmg.
+	* Fixed 5286,Pecopeco_Hairband walkspeed (5->25%), aspd (10% negative ->5% positive), cast time (25% increase -> 5% decrease).
+	* Fixed 5255,Triple_Poring_Hat autocast chance (2->5%).
+	* Fixed 5291,Kettle_Hat autocast %, should be 1% for both waterball lv2 and deluge lv3.
 	* Fixed 5293,Ramen_Hat, should cast AgiDown on enemy at 3% when melee attacked, bugreport:286
 	* Added a list of aegis effect constants to be used on scripts, this should help on script conversion.
 		they go up to 377, but for higher values, you can still use the integers found on /doc/effect_list.txt
