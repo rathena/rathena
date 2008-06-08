@@ -44,6 +44,14 @@
 
 =======================
 2008/06/08
+	* 2125,Strong_Shield elemental damage penalties (+20% dmg vs fire, water, wind, earth, holy, dark and ghost).
+	* Fixed 2367,Sniping_Suit Critical bonus from LUK, +1 crit per 10 LUK (before was per 5 LUK).
+	* Fixed 1270,Drill_Katar Full Strip skill level (5->1).
+	* Fixed 1175,Altas_Weapon (Atroce Blade) chance of breaking target's weapon (1->5%).
+	* Fixed 1973,Sea_Witch_Foot, should cast lv2 wide silence, not lv1. Also fixed the proper autocast behavior.
+	* Fixed 2000,Destruction_Rod SP use increase (refine*2), Jupitel autocast chance (refine*2 %) only when melee attacked.
+	* Fixed 1564,Encyclopedia critical bonus from LUK, +1 crit per 5 LUK.
+	* Fixed 4363,B_Magaleta_Card Assumptio autocast chance (1->5%).
 	* Fixed 2532,Mithril_Magic_Cape NPC_ANTIMAGIC autocast chance (2-20%).
 	* Fixed 2426,Shadow_Walk AS_CLOAKING autocast chance (5->10%).
 	* Fixed 2122,Platinum_Shield autocast chance of NPC_MAGICMIRROR (1->15%).
