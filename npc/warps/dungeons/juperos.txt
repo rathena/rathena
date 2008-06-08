@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Muad-Dib (1.0)
 //===== Current Version: =====================================
-//= 1.6
+//= 1.7
 //===== Compatible With: =====================================
 //= eAthena with independant npctimer support; RO Episode 8+
 //===== Description: =========================================
@@ -18,44 +18,13 @@
 //= 1.6 Removed area1 and area2 warps. These are event warps. [L0ne_W0lf]
 //=	Added static warps for gate -> area1/2/elevator.
 //= 1.6a COrrected new warps [L0ne_W0lf]
+//= 1.7 Removed duplicated quest warp portal [Brainstorm]
 //============================================================
 	
 yuno_fild07,207,175,0	warp	jupwrp01	1,1,jupe_cave,143,52
 jupe_cave,148,52,0	warp	jupwrp02	1,1,yuno_fild07,212,175
 jupe_cave,26,52,0	warp	jupwrp03	1,1,juperos_01,53,247
 juperos_01,50,250,0	warp	jupwrp04	1,1,jupe_cave,29,52
-
-juperos_01,99,92,1	script	jupwrp05	-1,0,0,{
-OnTouch:
-
-	mes "^666666[" + strcharinfo(0) + "]";
-	mes "^000000This light...";
-	mes "It feels like...";
-	mes "Its warmth is...";
-	mes "Wrapping all over me...";
-	next;
-	menu "Ah, it's so nice...",s_Nice,"No! This is wrong!",-;
-
-	mes "^666666[" + strcharinfo(0) + "]";
-	mes "^000000N-No! This is";
-	mes "wrong! Something";
-	mes "weird's happening!";
-	mes "I gotta get away!";
-	close2;
-	warp "juperos_01",96,91;
-	end;
-
-s_Nice:
-	specialeffect 309;
-	mes "^666666[" + strcharinfo(0) + "]";
-	mes "^000000Ahhhh...";
-	mes "It feels like";
-	mes "I'm floating...";
-	close2;
-	warp "juperos_02",128,278;
-	end;
-
-}
 
 jupe_gate,28,145,0	warp	gate#left1	2,4,jupe_area1,100,222
 jupe_area1,103,222,0	warp	gate#left2	2,4,jupe_gate,31,145
