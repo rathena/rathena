@@ -1466,7 +1466,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 					skillratio += 40*skill_lv-60;
 					break;
 				case SN_SHARPSHOOTING:
-					skillratio += 50*skill_lv;
+					skillratio += 100+50*skill_lv;
 					break;
 				case CG_ARROWVULCAN:
 					skillratio += 100+100*skill_lv;
