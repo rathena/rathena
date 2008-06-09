@@ -3410,7 +3410,7 @@
 12197,Salty_Rice_Cake,Salty Rice Cake,2,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 10,10; },{},{}
 12198,Lucky_Rice_Cake,Lucky Rice Cake,2,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_INCLUK,1200000,21; },{},{}
 12199,Rice_Scroll,Rice Scroll,2,,0,0,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-12200,Event_Cake,Event Cake,2,,10,50,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill,74,3; },{},{}
+12200,Event_Cake,Event Cake,2,,10,50,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 74,3; },{},{}
 12201,Red_Box_,Old Red Box,2,50000,,200,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 // Cash Shop Usable Items
 12202,STR_Dish,Steamed Tongue,0,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_STRFood,1800000, 10; percentheal 15,5; },{},{}
