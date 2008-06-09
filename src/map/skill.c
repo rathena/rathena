@@ -695,7 +695,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 		break;
 
 	case ST_REJECTSWORD:
-		sc_start(bl,SC_AUTOCOUNTER,(skilllv*15),skilllv,skill_get_time2(skillid,skilllv));
+		sc_start(bl,SC_AUTOCOUNTER,(skilllv*15),skilllv,skill_get_time(skillid,skilllv));
 		break;
 
 	case PF_FOGWALL:

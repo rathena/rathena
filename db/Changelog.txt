@@ -44,6 +44,8 @@
 
 =======================
 2008/06/08
+	* Fixed 13007,Jitte and 13008,Jitte_ break chances (5->2%).
+	* Fixed 1535,Hollgrehenn_Hammer break chances without combo (2->1%) and with combo (12->10%), also has no chance of breaking user equip.
 	* Reverted Change on 2656,Hyper_Changer from revision 12776.
 	* 2125,Strong_Shield elemental damage penalties (+20% dmg vs fire, water, wind, earth, holy, dark and ghost).
 	* Fixed 2367,Sniping_Suit Critical bonus from LUK, +1 crit per 10 LUK (before was per 5 LUK).
