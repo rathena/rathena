@@ -32,6 +32,10 @@
 	#ifndef SIOCGIFCONF
 	#include <sys/sockio.h> // SIOCGIFCONF on Solaris, maybe others? [Shinomori]
 	#endif
+
+	#ifdef HAVE_SETRLIMIT
+	#include <sys/resource.h>
+	#endif
 #endif
 
 /////////////////////////////////////////////////////////////////////
@@ -1198,6 +1202,23 @@ void socket_init(void)
 		{
 			ShowError("socket_init: WinSock version mismatch (2.0 or compatible required)!\n");
 			return;
+		}
+	}
+#elif defined(HAVE_SETRLIMIT)
+	{// set socket limit to FD_SETSIZE
+		struct rlimit rlp;
+		if( 0 == getrlimit(RLIMIT_NOFILE, &rlp) )
+		{
+			rlp.rlim_cur = FD_SETSIZE;
+			if( 0 != setrlimit(RLIMIT_NOFILE, &rlp) )
+			{// failed, try setting the maximum too (permission to change system limits is required)
+				rlp.rlim_max = FD_SETSIZE;
+				if( 0 != setrlimit(RLIMIT_NOFILE, &rlp) )
+				{// failed
+					getrlimit(RLIMIT_NOFILE, &rlp);
+					ShowWarning("socket_init: %s - failed to set socket limit to %d (current limit %d).\n", strerror(errno), FD_SETSIZE, (int)rlp.rlim_cur);
+				}
+			}
 		}
 	}
 #endif

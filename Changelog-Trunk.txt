@@ -3,6 +3,8 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2008/06/10
+	* Added experimental code to set the socket limit at runtime. [FlavioJS]
 2008/06/09
 	* Fixed SN_SHARPSHOOTING doing 100% atk less damage than it should, bugreport:1654
 	* Fixed Active Guild skills not working when WoE is OFF, follow up on r12770, bugreport:1653 and bugreport:1637
