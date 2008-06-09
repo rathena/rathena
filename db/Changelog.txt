@@ -43,6 +43,9 @@
 	2385 Recuvative_Armor		Should trigger HP/SP return with magical kills as well.
 
 =======================
+2008/06/09
+	* Fixed 2000,Destruction_Rod being 0.2% per refine instead of 2%.
+
 2008/06/08
 	* Fixed 13007,Jitte and 13008,Jitte_ break chances (5->2%).
 	* Fixed 1535,Hollgrehenn_Hammer break chances without combo (2->1%) and with combo (12->10%), also has no chance of breaking user equip.

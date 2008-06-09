@@ -197,37 +197,47 @@ bonus4 bAutoSpellWhenHit,x,y,n,i;	n/10% chance to cast skill x of level y when
 					i: 1=cast on enemy, not on self
 					   2=use random skill lv in [1..y]
 					   3=1+2 (random lv on enemy)
-bonus5 bAutoSpell,x,y,n,t,i;		n/10% chance to cast skill x of level y when
-					attacking
-					i: 1=cast on enemy, not on self
-					   2=use random skill lv in [1..y]
-					   3=1+2 (random lv on enemy)
+bonus5 bAutoSpell,x,y,n,t,i;		n/10% chance to cast skill x of level y when attacking
 					t: Trigger criteria:
 					   BF_SHORT: Trigger on melee attack
 					   BF_LONG: Trigger on ranged attack
-					   (When neither is specified,
-					   then BF_SHORT+BF_LONG is used.
+					   ( Default: BF_SHORT+BF_LONG )
+					   
 					   BF_WEAPON: Trigger on weapon skills 
 					   BF_MAGIC: Trigger on magic skills 
 					   BF_MISC: Trigger on misc skills
-					   (If none is specified, BF_WEAPON is
-					   used)
+					   ( Default: BF_WEAPON )
+					   
 					   BF_NORMAL: Trigger on normal
-					   attacks. 
+					   attacks.
 					   BF_SKILL: Trigger on skills
-					   (When neither is specified,
-					   BF_SKILL is used if the type is
-					   BF_MISC or BF_MAGIC. BF_NORMAL is
-					   used if the type is BF_WEAPON)
-bonus5 bAutoSpellWhenHit,x,y,n,t,i;	n/10% chance to cast skill x of level y when
-					being hit by a direct attack. Target
-					must be within spell's range to go
-					off.
-					i: 1=cast on enemy, not on self
+					   (Default: BF_SKILL if type is BF_MISC or BF_MAGIC, BF_NORMAL if type is BF_WEAPON)
+					   
+					   i: 1=cast on enemy, not on self
 					   2=use random skill lv in [1..y]
 					   3=1+2 (random lv on enemy)
-					t: Trigger criteria (see bonus5
-					   bAutoSpell)
+					   
+bonus5 bAutoSpellWhenHit,x,y,n,t,i;	n/10% chance to cast skill x of level y when being hit by a direct attack. 
+                    Target must be within spell's range to go
+					off.
+					t: Trigger criteria:
+					   BF_SHORT: Trigger on melee attack
+					   BF_LONG: Trigger on ranged attack
+					   ( Default: BF_SHORT+BF_LONG )
+					   
+					   BF_WEAPON: Trigger on weapon skills 
+					   BF_MAGIC: Trigger on magic skills 
+					   BF_MISC: Trigger on misc skills
+					   ( Default: BF_WEAPON )
+					   
+					   BF_NORMAL: Trigger on normal
+					   attacks.
+					   BF_SKILL: Trigger on skills
+					   (Default: BF_SKILL if type is BF_MISC or BF_MAGIC, BF_NORMAL if type is BF_WEAPON)
+					   
+					   i: 1=cast on enemy, not on self
+					   2=use random skill lv in [1..y]
+					   3=1+2 (random lv on enemy)
 
 //---- 2/22 new card effects ----
 
