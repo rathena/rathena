@@ -7964,7 +7964,7 @@ int skill_check_condition(struct map_session_data* sd, short skill, short lv, in
 	case GD_BATTLEORDER:
 	case GD_REGENERATION:
 	case GD_RESTORE:
-		if (!map_flag_gvg(sd->bl.m)) {
+		if (!map_flag_gvg2(sd->bl.m)) {
 			clif_skill_fail(sd,skill,0,0);
 			return 0;
 		}
