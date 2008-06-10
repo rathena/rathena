@@ -1964,7 +1964,8 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 
 	if(sd && !skill_num && !flag.cri)
 	{	//Check for double attack.
-		if(((skill_lv = pc_checkskill(sd,TF_DOUBLE)) > 0 && sd->weapontype1 == W_DAGGER) || sd->double_rate > 0)
+		if(((skill_lv = pc_checkskill(sd,TF_DOUBLE)) > 0 && sd->weapontype1 == W_DAGGER)
+			||(sd->double_rate > 0 && sd->weapontype1 != W_FIST)) //Will fail bare-handed
 		{	//Success chance is not added, the higher one is used [Skotlex]
 			if (rand()%100 < (5*skill_lv>sd->double_rate?5*skill_lv:sd->double_rate))
 			{
