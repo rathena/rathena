@@ -870,7 +870,7 @@
 1730,Burning_Bow,Burning Bow,4,,10,1400,95,,5,1,0x00020800,7,2,34,3,55,1,11,{ bonus2 bSubEle,Ele_Fire,10; if(isequipped(1752)) bonus bLongAtkRate,25; },{},{}
 1731,Frozen_Bow,Freezing Bow,4,,10,1400,100,,5,1,0x00020800,7,2,34,3,55,1,11,{ bonus2 bAddEff,Eff_Freeze,1000; if(isequipped(1754)) bonus bLongAtkRate,25; },{},{}
 1732,Earth_Bow,Earthen Bow,4,,10,1400,105,,5,1,0x00020800,7,2,34,3,55,1,11,{ bonus2 bAddEff,Eff_Stone,1000; if(isequipped(1756)) bonus bLongAtkRate,25; },{},{}
-1733,Gust_Bow,Gale Bow,4,,10,1400,95,,5,1,0x00020800,7,2,34,3,55,1,11,{ if(readparam(bInt)>40) { bonus3 bAutoSpell,540,5,100; } else bonus3 bAutoSpell,540,5,20; if(isequipped(1755)) bonus bLongAtkRate,25; },{},{}
+1733,Gust_Bow,Gale Bow,4,,10,1400,95,,5,1,0x00020800,7,2,34,3,55,1,11,{ if(readparam(bInt)>40) { bonus3 bAutoSpell,540,5,200; } else bonus3 bAutoSpell,540,5,100; if(isequipped(1755)) bonus bLongAtkRate,25; },{},{}
 1734,Orc_Archer_Bow,Orc Archer's Bow,4,,10,1600,120,,5,0,0x00020800,7,2,34,4,65,1,11,{ bonus2 bAddMonsterDropItem,1753,200; if(isequipped(1753)) bonus bLongAtkRate,50; },{},{}
 1735,Kkakkung,Kkakkung,4,,10,0,120,,5,0,0x000A0848,7,2,34,1,1,0,11,{ bonus2 bAddRace,RC_Boss,50; bonus2 bAddRace,RC_NonBoss,50; },{},{}
 1736,Double_Bound,Double Bound,4,,,900,70,,5,3,0x00000800,2,2,34,3,70,1,11,{ bonus3 bAutoSpell,46,GetSkillLv(46),100; },{},{}
