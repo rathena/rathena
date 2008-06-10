@@ -4125,7 +4125,9 @@
 14224,Quagmire_10_Scroll_Box,Quagmire Scroll 10ea Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14594,10; },{},{}
 14225,Quagmire_30_Scroll_Box,Quagmire Scroll 30ea Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14594,30; },{},{}
 14226,Quagmire_50_Scroll_Box,Quagmire Scroll 50ea Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14594,50; },{},{}
-// **
+//14227#A box containing 1 Staff of Healing.
+14500,Insurance_,Life Insurance,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_LIFEINSURANCE,3600000,0; },{},{}
+//TO-DO: Missing many items here
 14508,Zeny_Pet_Egg_Scroll,Zeny Pet Egg Scroll,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 14509,Light_Center_Pot,Light Concentration Potion,2,,,20,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_ASPDPOTION0,1800000,0; },{},{}
 14510,Light_Awakening_Pot,Light Awakening Potion,2,,,20,,,,,0xFFF7FEEF,7,2,,,40,,,{ sc_start SC_ASPDPOTION1,1800000,0; },{},{}
@@ -4152,11 +4154,11 @@
 14531,Accuracy_30_Scroll,Concentration Power Scroll,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_INCHIT,1800000,30; },{},{}
 14532,Battle_Manual25,Field Manual 25%,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_EXPBOOST,1800000,25; },{},{}
 14533,Battle_Manual100,Field Manual 100%,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_EXPBOOST,1800000,100; },{},{}
-14534,Small_Life_Potion,Small Life Potion,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start4 SC_HPREGEN,600000,-5,5,0,0; },{},{}
-14535,Med_Life_Potion,Medium Life Potion,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start4 SC_HPREGEN,600000,-7,4,0,0; },{},{}
-14536,Abrasive,Abrasive,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_INCCRI,300000,30; },{},{}
-14537,Regeneration_Potion,Regeneration Potion,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_INCHEALRATE,1800000,20; },{},{}
-14538,Glass_of_Illusion,Glass of Illusion,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+14534,Small_Life_Potion,Small Life Potion,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ specialeffect 320; sc_start4 SC_HPREGEN,600000,-5,5,0,0; },{},{}
+14535,Med_Life_Potion,Medium Life Potion,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ specialeffect 320; sc_start4 SC_HPREGEN,600000,-7,4,0,0; },{},{}
+14536,Abrasive,Abrasive,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ specialeffect 182; sc_start SC_INCCRI,300000,30; },{},{}
+14537,Regeneration_Potion,Regeneration Potion,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ specialeffect 348; sc_start SC_INCHEALRATE,1800000,20; },{},{}
+14538,Glass_of_Illusion,Glass of Illusion,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_INCFLEE2,60000,20; },{},{}
 14539,Shadow_Armor_S,Shadow Armor Scroll,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start4 SC_ELEMENTALCHANGE,1800000,1,Ele_Dark,1,0; },{},{}
 14540,Holy_Armor_S,Holy Armor Scroll,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ specialeffect2 91; sc_start4 SC_ELEMENTALCHANGE,1800000,1,Ele_Holy,1,0; },{},{}
 14541,S_Def_Potion,Small Defense Potion,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_DEF_RATE,60000,3; },{},{}
