@@ -652,7 +652,7 @@
 1362,Two_Handed_Axe__,Two-Handed Axe,4,55000,,2500,185,,1,0,0x000444A2,7,2,34,3,30,1,7,{},{},{}
 1363,Brood_Axe,Bloody Axe,4,,10,4000,170,,1,0,0x000444A2,7,2,34,4,44,1,7,{ bonus bStr,10; bonus bSpeedRate,25; },{},{}
 1364,Great_Axe,Great Axe,4,,10,1800,187,,1,0,0x000444A2,7,2,34,4,44,1,7,{ bonus2 bAddSkillBlow,42,5; bonus2 bAddEff,Eff_Stun,1500; },{},{}
-1365,Sabbath,Sabbath,4,,10,2300,120,,1,0,0x000444A2,7,2,34,4,44,1,7,{ bonus bAtkEle,Ele_Dark; bonus2 bWeaponComaRace,RC_Demon,500; bonus2 bCriticalAddRace,RC_Undead,50; },{},{}
+1365,Sabbath,Sabbath,4,,10,2300,120,,1,0,0x000444A2,7,2,34,4,44,1,7,{ bonus bAtkEle,Ele_Dark; bonus2 bWeaponComaRace,RC_Demon,500; bonus2 bCriticalAddRace,RC_Undead,500; },{},{}
 1366,Right_Epsilon,Light Epsilon,4,,10,2300,180,,1,0,0x000444A2,7,2,34,4,44,1,7,{ bonus bAtkEle,Ele_Holy; skill 28,3; bonus2 bAddRace,RC_Demon,3; },{},{}
 1367,Slaughter,Slaughter,4,,10,2500,120,,1,0,0x000444A2,7,2,34,4,44,1,7,{ bonus bAtkEle,Ele_Earth; bonus bIgnoreDefRace,RC_Brute; bonus2 bWeaponComaRace,RC_Brute,400; },{},{}
 1368,Tomahawk,Tomahawk,4,,10,2500,165,,1,0,0x000444A2,7,2,34,4,44,1,7,{ bonus bAtkEle,Ele_Wind; skill 337,1; },{},{}
