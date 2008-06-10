@@ -44,6 +44,9 @@
 
 =======================
 2008/06/09
+	* Fixed 5305,Pirate_Dagger not giving +5 attack power bonus.
+
+2008/06/09
 	* Fixed 1734,Orc_Archer_Bow working with Iron Arrow instead of Steel Arrow. Thanks Muad Dib for reporting.
 	* Fixed 2000,Destruction_Rod being 0.2% per refine instead of 2%.
 
