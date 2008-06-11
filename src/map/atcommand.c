@@ -5894,6 +5894,13 @@ int atcommand_changegm(const int fd, struct map_session_data* sd, const char* co
 		clif_displaymessage(fd, "You need to be a Guild Master to use this command.");
 		return -1;
 	}
+
+	if( map[sd->bl.m].flag.guildlock )
+	{
+		clif_displaymessage(fd, "You cannot change guild leaders on this map.");
+		return -1;
+	}
+
 	if (strlen(message)==0)
 	{
 		clif_displaymessage(fd, "Command usage: @changegm <guildmember name>");
@@ -5926,8 +5933,13 @@ int atcommand_changeleader(const int fd, struct map_session_data* sd, const char
 		return -1;
 	}
 	
-	for (mi = 0; mi < MAX_PARTY && p->data[mi].sd != sd; mi++);
-	
+	if( map[sd->bl.m].flag.partylock )
+	{
+		clif_displaymessage(fd, "You cannot change party leaders on this map.");
+		return -1;
+	}
+
+	ARR_FIND( 0, MAX_PARTY, mi, p->data[mi].sd == sd );
 	if (mi == MAX_PARTY)
 		return -1; //Shouldn't happen
 
