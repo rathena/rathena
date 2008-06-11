@@ -53,7 +53,7 @@ struct quest;
 #endif
 
 // packet DB
-#define MAX_PACKET_DB		0x300
+#define MAX_PACKET_DB		0x400
 #define MAX_PACKET_VER		22
 
 struct s_packet_db {
