@@ -43,7 +43,10 @@
 	2385 Recuvative_Armor		Should trigger HP/SP return with magical kills as well.
 
 =======================
-2008/06/09
+2008/06/11
+	* Fixed items that grant status related skills not removing the status when you unequip it.
+
+2008/06/10
 	* Fixed 1733,Gust_Bow (Gale Bow) autocast chance, 0.2->1% normal, 1->2% if INT > 40.
 	* Fixed Sabbath coma chance against demon monsters (0.5->5%).
 	* Implemented item bonus for 14538,Glass_of_Illusion, +20 perfect dodge for 60 seconds, bugreport:1285
