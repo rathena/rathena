@@ -5,6 +5,8 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 
 2008/06/12
+	* Added check to prevent crashing on logmes with no player attached
+	  (bugreport:1648) [ultramage]
 	* Added support for skill names to script commands: [FlavioJS]
 	- skill, addtoskill, guildskill, getskilllv, getgdskilllv, itemskill, 
 	  petskillattack, petskillattack2, petskillsupport, skilleffect, 

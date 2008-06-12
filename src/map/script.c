@@ -11282,9 +11282,17 @@ BUILDIN_FUNC(getmapxy)
 BUILDIN_FUNC(logmes)
 {
 	const char *str;
-	if (log_config.npc <= 0 ) return 0;
+	TBL_PC* sd;
+
+	if( log_config.npc <= 0 )
+		return 0;
+
+	sd = script_rid2sd(st);
+	if( sd == NULL )
+		return 1;
+
 	str = script_getstr(st,2);
-	log_npc(script_rid2sd(st),str);
+	log_npc(sd,str);
 	return 0;
 }
 
