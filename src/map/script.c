@@ -90,6 +90,9 @@
 /// Pushes a copy of the data in the target index
 #define script_pushcopy(st,i) push_copy((st)->stack, (st)->start + (i))
 
+#define script_isstring(st,i) data_isstring(script_getdata(st,i))
+#define script_isint(st,i) data_isint(script_getdata(st,i))
+
 #define script_getnum(st,val) conv_num(st, script_getdata(st,val))
 #define script_getstr(st,val) conv_str(st, script_getdata(st,val))
 #define script_getref(st,val) ( script_getdata(st,val)->ref )
@@ -6581,11 +6584,11 @@ BUILDIN_FUNC(statusup2)
 BUILDIN_FUNC(bonus)
 {
 	int type;
-	int type2;
-	int type3;
-	int type4;
-	int type5;
-	int val;
+	int val1;
+	int val2 = 0;
+	int val3 = 0;
+	int val4 = 0;
+	int val5 = 0;
 	TBL_PC* sd;
 
 	sd = script_rid2sd(st);
@@ -6593,39 +6596,52 @@ BUILDIN_FUNC(bonus)
 		return 0; // no player attached
 
 	type = script_getnum(st,2);
-	switch( script_lastdata(st) ){
-	case 3:
-		val  = script_getnum(st,3);
-		pc_bonus(sd, type, val);
-		break;
-	case 4:
-		type2 = script_getnum(st,3);
-		val   = script_getnum(st,4);
-		pc_bonus2(sd, type, type2, val);
-		break;
-	case 5:
-		type2 = script_getnum(st,3);
-		type3 = script_getnum(st,4);
-		val   = script_getnum(st,5);
-		pc_bonus3(sd, type, type2, type3, val);
-		break;
-	case 6:
-		type2 = script_getnum(st,3);
-		type3 = script_getnum(st,4);
-		type4 = script_getnum(st,5);
-		val   = script_getnum(st,6);
-		pc_bonus4(sd, type, type2, type3, type4, val);
-		break;
-	case 7:
-		type2 = script_getnum(st,3);
-		type3 = script_getnum(st,4);
-		type4 = script_getnum(st,5);
-		type5 = script_getnum(st,6);
-		val   = script_getnum(st,7);
-		pc_bonus5(sd, type, type2, type3, type4, type5, val);
+	switch( type )
+	{
+	case SP_AUTOSPELL:
+	case SP_AUTOSPELL_WHENHIT:
+	case SP_SKILL_ATK:
+	case SP_SKILL_HEAL:
+	case SP_ADD_SKILL_BLOW:
+	case SP_CASTRATE:
+		// these bonuses support skill names
+		val1 = ( script_isstring(st,3) ? skill_name2id(script_getstr(st,3)) : script_getnum(st,3) );
 		break;
 	default:
-		ShowDebug("buildin_bonus: unexpected number of arguments (%d)\n", (script_lastdata(st) - 2));
+		val1 = script_getnum(st,3);
+		break;
+	}
+
+	switch( script_lastdata(st)-2 )
+	{
+	case 1:
+		pc_bonus(sd, type, val1);
+		break;
+	case 2:	
+		val2 = script_getnum(st,4);
+		pc_bonus2(sd, type, val1, val2);
+		break;
+	case 3:
+		val2 = script_getnum(st,4);
+		val3 = script_getnum(st,5);
+		pc_bonus3(sd, type, val1, val2, val3);
+		break;
+	case 4:
+		val2 = script_getnum(st,4);
+		val3 = script_getnum(st,5);
+		val4 = script_getnum(st,6);
+		pc_bonus4(sd, type, val1, val2, val3, val4);
+		break;
+	case 5:
+		val2 = script_getnum(st,4);
+		val3 = script_getnum(st,5);
+		val4 = script_getnum(st,6);
+		val5 = script_getnum(st,7);
+		pc_bonus5(sd, type, val1, val2, val3, val4, val5);
+		break;
+	default:
+		ShowDebug("buildin_bonus: unexpected number of arguments (%d)\n", (script_lastdata(st) - 1));
+		break;
 	}
 
 	return 0;
@@ -6692,6 +6708,8 @@ BUILDIN_FUNC(bonusautoscript2)
 ///
 /// skill <skill id>,<level>,<flag>
 /// skill <skill id>,<level>
+/// skill "<skill name>",<level>,<flag>
+/// skill "<skill name>",<level>
 BUILDIN_FUNC(skill)
 {
 	int id;
@@ -6703,7 +6721,7 @@ BUILDIN_FUNC(skill)
 	if( sd == NULL )
 		return 0;// no player attached, report source
 
-	id    = script_getnum(st,2);
+	id = ( script_isstring(st,2) ? skill_name2id(script_getstr(st,2)) : script_getnum(st,2) );
 	level = script_getnum(st,3);
 	if( script_hasdata(st,4) )
 		flag = script_getnum(st,4);
@@ -6717,6 +6735,8 @@ BUILDIN_FUNC(skill)
 ///
 /// addtoskill <skill id>,<amount>,<flag>
 /// addtoskill <skill id>,<amount>
+/// addtoskill "<skill name>",<amount>,<flag>
+/// addtoskill "<skill name>",<amount>
 ///
 /// @see skill
 BUILDIN_FUNC(addtoskill)
@@ -6730,7 +6750,7 @@ BUILDIN_FUNC(addtoskill)
 	if( sd == NULL )
 		return 0;// no player attached, report source
 
-	id    = script_getnum(st,2);
+	id = ( script_isstring(st,2) ? skill_name2id(script_getstr(st,2)) : script_getnum(st,2) );
 	level = script_getnum(st,3);
 	if( script_hasdata(st,4) )
 		flag = script_getnum(st,4);
@@ -6742,6 +6762,7 @@ BUILDIN_FUNC(addtoskill)
 /// Increases the level of a guild skill.
 ///
 /// guildskill <skill id>,<amount>;
+/// guildskill "<skill name>",<amount>;
 BUILDIN_FUNC(guildskill)
 {
 	int id;
@@ -6753,7 +6774,7 @@ BUILDIN_FUNC(guildskill)
 	if( sd == NULL )
 		return 0;// no player attached, report source
 
-	id    = script_getnum(st,2);
+	id = ( script_isstring(st,2) ? skill_name2id(script_getstr(st,2)) : script_getnum(st,2) );
 	level = script_getnum(st,3);
 	for( i=0; i < level; i++ )
 		guild_skillup(sd, id);
@@ -6764,6 +6785,7 @@ BUILDIN_FUNC(guildskill)
 /// Returns the level of the player skill.
 ///
 /// getskilllv(<skill id>) -> <level>
+/// getskilllv("<skill name>") -> <level>
 BUILDIN_FUNC(getskilllv)
 {
 	int id;
@@ -6773,7 +6795,7 @@ BUILDIN_FUNC(getskilllv)
 	if( sd == NULL )
 		return 0;// no player attached, report source
 
-	id = script_getnum(st,2);
+	id = ( script_isstring(st,2) ? skill_name2id(script_getstr(st,2)) : script_getnum(st,2) );
 	script_pushint(st, pc_checkskill(sd,id));
 
 	return 0;
@@ -6782,6 +6804,7 @@ BUILDIN_FUNC(getskilllv)
 /// Returns the level of the guild skill.
 ///
 /// getgdskilllv(<guild id>,<skill id>) -> <level>
+/// getgdskilllv(<guild id>,"<skill name>") -> <level>
 BUILDIN_FUNC(getgdskilllv)
 {
 	int guild_id;
@@ -6789,7 +6812,7 @@ BUILDIN_FUNC(getgdskilllv)
 	struct guild* g;
 
 	guild_id = script_getnum(st,2);
-	skill_id = script_getnum(st,3);
+	skill_id = ( script_isstring(st,3) ? skill_name2id(script_getstr(st,3)) : script_getnum(st,3) );
 	g = guild_search(guild_id);
 	if( g == NULL )
 		script_pushint(st, -1);
@@ -7225,16 +7248,20 @@ BUILDIN_FUNC(guildopenstorage)
 /*==========================================
  * アイテムによるスキル発動
  *------------------------------------------*/
+/// itemskill <skill id>,<level>
+/// itemskill "<skill name>",<level>
 BUILDIN_FUNC(itemskill)
 {
-	int id,lv;
-	TBL_PC *sd=script_rid2sd(st);
+	int id;
+	int lv;
+	TBL_PC* sd;
 
-	id=script_getnum(st,2);
-	lv=script_getnum(st,3);
-
-	if(!sd || sd->ud.skilltimer != -1)
+	sd = script_rid2sd(st);
+	if( sd == NULL || sd->ud.skilltimer != INVALID_TIMER )
 		return 0;
+
+	id = ( script_isstring(st,2) ? skill_name2id(script_getstr(st,2)) : script_getnum(st,2) );
+	lv = script_getnum(st,3);
 
 	sd->skillitem=id;
 	sd->skillitemlv=lv;
@@ -10489,6 +10516,8 @@ BUILDIN_FUNC(petheal)
 /*==========================================
  * pet attack skills [Valaris] //Rewritten by [Skotlex]
  *------------------------------------------*/
+/// petskillattack <skill id>,<level>,<rate>,<bonusrate>
+/// petskillattack "<skill name>",<level>,<rate>,<bonusrate>
 BUILDIN_FUNC(petskillattack)
 {
 	struct pet_data *pd;
@@ -10501,7 +10530,7 @@ BUILDIN_FUNC(petskillattack)
 	if (pd->a_skill == NULL)
 		pd->a_skill = (struct pet_skill_attack *)aMalloc(sizeof(struct pet_skill_attack));
 				
-	pd->a_skill->id=script_getnum(st,2);
+	pd->a_skill->id=( script_isstring(st,2) ? skill_name2id(script_getstr(st,2)) : script_getnum(st,2) );
 	pd->a_skill->lv=script_getnum(st,3);
 	pd->a_skill->div_ = 0;
 	pd->a_skill->rate=script_getnum(st,4);
@@ -10513,6 +10542,8 @@ BUILDIN_FUNC(petskillattack)
 /*==========================================
  * pet attack skills [Valaris]
  *------------------------------------------*/
+/// petskillattack2 <skill id>,<level>,<div>,<rate>,<bonusrate>
+/// petskillattack2 "<skill name>",<level>,<div>,<rate>,<bonusrate>
 BUILDIN_FUNC(petskillattack2)
 {
 	struct pet_data *pd;
@@ -10525,7 +10556,7 @@ BUILDIN_FUNC(petskillattack2)
 	if (pd->a_skill == NULL)
 		pd->a_skill = (struct pet_skill_attack *)aMalloc(sizeof(struct pet_skill_attack));
 				
-	pd->a_skill->id=script_getnum(st,2);
+	pd->a_skill->id=( script_isstring(st,2) ? skill_name2id(script_getstr(st,2)) : script_getnum(st,2) );
 	pd->a_skill->lv=script_getnum(st,3);
 	pd->a_skill->div_ = script_getnum(st,4);
 	pd->a_skill->rate=script_getnum(st,5);
@@ -10537,6 +10568,8 @@ BUILDIN_FUNC(petskillattack2)
 /*==========================================
  * pet support skills [Skotlex]
  *------------------------------------------*/
+/// petskillsupport <skill id>,<level>,<delay>,<hp>,<sp>
+/// petskillsupport "<skill name>",<level>,<delay>,<hp>,<sp>
 BUILDIN_FUNC(petskillsupport)
 {
 	struct pet_data *pd;
@@ -10558,7 +10591,7 @@ BUILDIN_FUNC(petskillsupport)
 	} else //init memory
 		pd->s_skill = (struct pet_skill_support *) aMalloc(sizeof(struct pet_skill_support)); 
 	
-	pd->s_skill->id=script_getnum(st,2);
+	pd->s_skill->id=( script_isstring(st,2) ? skill_name2id(script_getstr(st,2)) : script_getnum(st,2) );
 	pd->s_skill->lv=script_getnum(st,3);
 	pd->s_skill->delay=script_getnum(st,4);
 	pd->s_skill->hp=script_getnum(st,5);
@@ -10576,11 +10609,13 @@ BUILDIN_FUNC(petskillsupport)
 /*==========================================
  * Scripted skill effects [Celest]
  *------------------------------------------*/
+/// skilleffect <skill id>,<level>
+/// skilleffect "<skill name>",<level>
 BUILDIN_FUNC(skilleffect)
 {
 	TBL_PC *sd;
 
-	int skillid=script_getnum(st,2);
+	int skillid=( script_isstring(st,2) ? skill_name2id(script_getstr(st,2)) : script_getnum(st,2) );
 	int skilllv=script_getnum(st,3);
 	sd=script_rid2sd(st);
 
@@ -10592,11 +10627,13 @@ BUILDIN_FUNC(skilleffect)
 /*==========================================
  * NPC skill effects [Valaris]
  *------------------------------------------*/
+/// npcskilleffect <skill id>,<level>,<x>,<y>
+/// npcskilleffect "<skill name>",<level>,<x>,<y>
 BUILDIN_FUNC(npcskilleffect)
 {
 	struct block_list *bl= map_id2bl(st->oid);
 
-	int skillid=script_getnum(st,2);
+	int skillid=( script_isstring(st,2) ? skill_name2id(script_getstr(st,2)) : script_getnum(st,2) );
 	int skilllv=script_getnum(st,3);
 	int x=script_getnum(st,4);
 	int y=script_getnum(st,5);
@@ -12871,6 +12908,7 @@ BUILDIN_FUNC(unitemote)
 /// Makes the unit cast the skill on the target or self if no target is specified
 ///
 /// unitskilluseid <unit_id>,<skill_id>,<skill_lv>{,<target_id>};
+/// unitskilluseid <unit_id>,"<skill name>",<skill_lv>{,<target_id>};
 BUILDIN_FUNC(unitskilluseid)
 {
 	int unit_id;
@@ -12880,7 +12918,7 @@ BUILDIN_FUNC(unitskilluseid)
 	struct block_list* bl;
 
 	unit_id  = script_getnum(st,2);
-	skill_id = script_getnum(st,3);
+	skill_id = ( script_isstring(st,3) ? skill_name2id(script_getstr(st,3)) : script_getnum(st,3) );
 	skill_lv = script_getnum(st,4);
 	target_id = ( script_hasdata(st,5) ? script_getnum(st,5) : unit_id );
 
@@ -12894,6 +12932,7 @@ BUILDIN_FUNC(unitskilluseid)
 /// Makes the unit cast the skill on the target position.
 ///
 /// unitskillusepos <unit_id>,<skill_id>,<skill_lv>,<target_x>,<target_y>;
+/// unitskillusepos <unit_id>,"<skill name>",<skill_lv>,<target_x>,<target_y>;
 BUILDIN_FUNC(unitskillusepos)
 {
 	int unit_id;
@@ -12904,7 +12943,7 @@ BUILDIN_FUNC(unitskillusepos)
 	struct block_list* bl;
 
 	unit_id  = script_getnum(st,2);
-	skill_id = script_getnum(st,3);
+	skill_id = ( script_isstring(st,3) ? skill_name2id(script_getstr(st,3)) : script_getnum(st,3) );
 	skill_lv = script_getnum(st,4);
 	skill_x  = script_getnum(st,5);
 	skill_y  = script_getnum(st,6);
@@ -13344,18 +13383,18 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(failedrefitem,"i"),
 	BUILDIN_DEF(statusup,"i"),
 	BUILDIN_DEF(statusup2,"ii"),
-	BUILDIN_DEF(bonus,"ii"),
-	BUILDIN_DEF2(bonus,"bonus2","iii"),
-	BUILDIN_DEF2(bonus,"bonus3","iiii"),
-	BUILDIN_DEF2(bonus,"bonus4","iiiii"),
-	BUILDIN_DEF2(bonus,"bonus5","iiiiii"),
+	BUILDIN_DEF(bonus,"iv"),
+	BUILDIN_DEF2(bonus,"bonus2","ivi"),
+	BUILDIN_DEF2(bonus,"bonus3","ivii"),
+	BUILDIN_DEF2(bonus,"bonus4","iviii"),
+	BUILDIN_DEF2(bonus,"bonus5","iviiii"),
 	BUILDIN_DEF(bonusautoscript,"si?"),
 	BUILDIN_DEF(bonusautoscript2,"si?"),
-	BUILDIN_DEF(skill,"ii?"),
-	BUILDIN_DEF(addtoskill,"ii?"), // [Valaris]
-	BUILDIN_DEF(guildskill,"ii"),
-	BUILDIN_DEF(getskilllv,"i"),
-	BUILDIN_DEF(getgdskilllv,"ii"),
+	BUILDIN_DEF(skill,"vi?"),
+	BUILDIN_DEF(addtoskill,"vi?"), // [Valaris]
+	BUILDIN_DEF(guildskill,"vi"),
+	BUILDIN_DEF(getskilllv,"v"),
+	BUILDIN_DEF(getgdskilllv,"iv"),
 	BUILDIN_DEF(basicskillcheck,""),
 	BUILDIN_DEF(getgmlevel,""),
 	BUILDIN_DEF(end,""),
@@ -13374,7 +13413,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(gettimestr,"si"),
 	BUILDIN_DEF(openstorage,""),
 	BUILDIN_DEF(guildopenstorage,"*"),
-	BUILDIN_DEF(itemskill,"ii"),
+	BUILDIN_DEF(itemskill,"vi"),
 	BUILDIN_DEF(produce,"i"),
 	BUILDIN_DEF(monster,"siisii*"),
 	BUILDIN_DEF(areamonster,"siiiisii*"),
@@ -13481,11 +13520,11 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(petrecovery,"ii"), // [Valaris]
 	BUILDIN_DEF(petloot,"i"), // [Valaris]
 	BUILDIN_DEF(petheal,"iiii"), // [Valaris]
-	BUILDIN_DEF(petskillattack,"iiii"), // [Skotlex]
-	BUILDIN_DEF(petskillattack2,"iiiii"), // [Valaris]
-	BUILDIN_DEF(petskillsupport,"iiiii"), // [Skotlex]
-	BUILDIN_DEF(skilleffect,"ii"), // skill effect [Celest]
-	BUILDIN_DEF(npcskilleffect,"iiii"), // npc skill effect [Valaris]
+	BUILDIN_DEF(petskillattack,"viii"), // [Skotlex]
+	BUILDIN_DEF(petskillattack2,"viiii"), // [Valaris]
+	BUILDIN_DEF(petskillsupport,"viiii"), // [Skotlex]
+	BUILDIN_DEF(skilleffect,"vi"), // skill effect [Celest]
+	BUILDIN_DEF(npcskilleffect,"viii"), // npc skill effect [Valaris]
 	BUILDIN_DEF(specialeffect,"i*"), // npc skill effect [Valaris]
 	BUILDIN_DEF(specialeffect2,"i*"), // skill effect on players[Valaris]
 	BUILDIN_DEF(nude,""), // nude command [Valaris]
@@ -13587,8 +13626,8 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(unitstop,"i"),
 	BUILDIN_DEF(unittalk,"is"),
 	BUILDIN_DEF(unitemote,"ii"),
-	BUILDIN_DEF(unitskilluseid,"iii?"), // originally by Qamera [Celest]
-	BUILDIN_DEF(unitskillusepos,"iiiii"), // [Celest]
+	BUILDIN_DEF(unitskilluseid,"ivi?"), // originally by Qamera [Celest]
+	BUILDIN_DEF(unitskillusepos,"iviii"), // [Celest]
 // <--- [zBuffer] List of mob control commands
 	BUILDIN_DEF(sleep,"i"),
 	BUILDIN_DEF(sleep2,"i"),

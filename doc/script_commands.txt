@@ -4,7 +4,7 @@
 //= A reference manual for the eAthena scripting language.
 //= Commands are sorted depending on their functionality.
 //===== Version ===========================================
-//= 3.19.20080407
+//= 3.21.20080612
 //=========================================================
 //= 1.0 - First release, filled will as much info as I could
 //=       remember or figure out, most likely there are errors,
@@ -111,8 +111,13 @@
 //= 3.19.20080407
 //=       Extended the behaviour of 'guardian'. [FlavioJS]
 //= 3.20.20080425
-//=	      Corrected 'getitem', 'getitem2' & 'delitem2' (charid instead of accountid) [Toms]
-//=	      Modified 'delitem' (added optional accountid parameter) [Toms]
+//=       Corrected 'getitem', 'getitem2' & 'delitem2' (charid instead of accountid) [Toms]
+//=       Modified 'delitem' (added optional accountid parameter) [Toms]
+//= 3.21.20080612
+//=       Script commands extended to support skill names: [FlavioJS]
+//=       skill, addtoskill, guildskill, getskilllv, getgdskilllv, itemskill, 
+//=       petskillattack, petskillattack2, petskillsupport, skilleffect, npcskilleffect,
+//=       unitskilluseid, unitskillusepos, bonus/bonus2/bonus3/bonus4/bonus5
 //=========================================================
 
 This document is a reference manual for all the scripting commands and functions 
@@ -2734,6 +2739,7 @@ anything, obviously.
 ---------------------------------------
 
 *getgdskilllv(<guild id>,<skill id>)
+*getgdskilllv(<guild id>,"<skill name>")
 
 This function returns the level of the skill <skill id> of the guild <guild id>.
 If the guild does not have that skill, 0 is returned.
@@ -2769,6 +2775,7 @@ Example(s):
 ---------------------------------------
 
 *getskilllv(<skill id>)
+*getskilllv("<skill name>")
 
 This function returns the level of the specified skill that the invoking 
 character has. If they don't have the skill, 0 will be returned. The full list 
@@ -3936,6 +3943,7 @@ effect is still in effect).
 ---------------------------------------
 
 *itemskill <skill id>,<skill level>;
+*itemskill "<skill name>",<skill level>;
 
 This is a command meant for item scripts to replicate single-use skills. It will 
 not work properly in NPC scripts a lot of the time because casting a skill is 
@@ -4132,6 +4140,7 @@ any guild.
 ---------------------------------------
 
 *guildskill <skill id>,<level>
+*guildskill "<skill name>",<level>
 
 This command will bump up the specified guild skill by the specified number of 
 levels. This refers to the invoking character and will only work if the invoking 
@@ -4256,6 +4265,7 @@ should be rather obvious.
 ---------------------------------------
 
 *skilleffect <skill id>,<number>;
+*skilleffect "<skill name>",<number>;
 
 This command will display the visual and sound effects of a specified skill (see 
 'db/skill_db.txt' for a full list of skills) on the invoking character's sprite. 
@@ -4278,6 +4288,7 @@ effect displays a floating number, the number given will float up.
 ---------------------------------------
 
 *npcskilleffect <skill id>,<number>,<x>,<y>;
+*npcskilleffect "<skill name>",<number>,<x>,<y>;
 
 This command behaves identically to 'skilleffect', however, the effect will not 
 be centered on the invoking character's sprite, nor on the NPC sprite, if any, 
@@ -4383,7 +4394,9 @@ autoscript).
 ---------------------------------------
 
 *skill <skill id>,<level>{,<flag>};
-*addtoskill <skill id>,<level>{,<flag>}
+*skill "<skill name",<level>{,<flag>};
+*addtoskill <skill id>,<level>{,<flag>};
+*addtoskill "<skill name>",<level>{,<flag>};
 
 These commands will give the invoking character a specified skill. This is also 
 used for item scripts.
@@ -5830,8 +5843,10 @@ Example(s):
 
 ---------------------------------------
 
-*unitskilluseid <GID>,<skill id>,<skill lvl>;
+*unitskilluseid <GID>,<skill id>,<skill lvl>{,<target id>};
+*unitskilluseid <GID>,"<skill name>",<skill lvl>{,<target id>};
 *unitskillusepos <GID>,<skill id>,<skill lvl>,<x>,<y>;
+*unitskillusepos <GID>,"<skill name>",<skill lvl>,<x>,<y>;
 
 This is the replacement of the older commands, these use the same values for
 GID as the other unit* commands (See 'GID').
@@ -6064,6 +6079,7 @@ specified. Pet will store items and return them when the maximum is reached or
 when pet performance is activated.
 
 *petskillsupport <skill id>,<skill level>,<delay>,<percent hp>,<percent sp>;
+*petskillsupport "<skill name>",<skill level>,<delay>,<percent hp>,<percent sp>;
 *petheal <level>,<delay>,<percent hp>,<percent sp>;
 
 This will make the pet use a specified support skill on the owner whenever the 
@@ -6075,7 +6091,9 @@ It's not quite certain who's stats will be used for the skills cast, the
 character's or the pets. Probably, Skotlex can answer that question.
 
 *petskillattack <skill id>,<skill level>,<rate>,<bonusrate>;
+*petskillattack "<skill name>",<skill level>,<rate>,<bonusrate>;
 *petskillattack2 <skill id>,<damage>,<number of attacks>,<rate>,<bonusrate>;
+*petskillattack2 "<skill name>",<damage>,<number of attacks>,<rate>,<bonusrate>;
 
 These two commands will make the pet cast an attack skill on the enemy the pet's 
 owner is currently fighting. Skill IDs and levels are as per 'petskillsupport'. 

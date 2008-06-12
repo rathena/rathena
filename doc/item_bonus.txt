@@ -3,16 +3,20 @@
 //===== By ================================================
 //= Developers
 //===== Version ===========================================
-//= 1.0
+//= 1.1.20080612
 //=========================================================
 //= 1.0 - Standardized doc file
+//= 1.1.20080612 - skill command and bonuses (bAutoSpell, bSkillAtk, 
+//=   bSkillHeal, bAutoSpellWhenHit, bAddSkillBlow, bCastrate) accept 
+//=   skill names [FlavioJS]
+//= 
 //===== Description =======================================
 //= List of script instructions used in item bonuses,
 //= mainly bonus/bonus2/bonus3/bonus4/bonus5 arguments
 //=========================================================
 
 
-skill i,n;				Gives skill #i at level n
+skill i,n;				Gives skill #i at level n (supports skill names)
 
 bonus bStr,n;				STR + n
 bonus bAgi,n;				AGI + n
@@ -114,7 +118,7 @@ bonus2 bAddEff,e,x;			Adds a x/10000 chance to cause effect e to the target when
 							e: Eff_Blind, Eff_Sleep, Eff_Poison, Eff_Freeze, Eff_Silence, Eff_Stan, Eff_Curse, Eff_Confusion, Eff_Stone, Eff_Bleeding
 bonus2 bResEff,e,x;			Adds a x/10000 tolerance to effect e (e.g. x=100 makes 1% tolerance, x=10000 makes 100% tolerance, etc)
 							e: Eff_Blind, Eff_Sleep, Eff_Poison, Eff_Freeze, Eff_Silence, Eff_Stan, Eff_Curse, Eff_Confusion, Eff_Stone, Eff_Bleeding
-bonus2 bCastrate,n,x;			Adjust casting time of skill n by x%
+bonus2 bCastrate,n,x;			Adjust casting time of skill n by x% (supports skill names)
 bonus2 bAddSize,n,x;			+x% physical damage against size n.
 							n: 0=Small  1=Medium  2=Large
 bonus2 bMagicAddSize,n,x;		+x% magical damage against size n.
@@ -168,7 +172,7 @@ bonus3 bAddMonsterDropItem,n,x,y;	When killing monsters from race x with physica
 									10=Boss monster, 11=Other than (normal monster) boss monster
 									if 'x' is negative value, then it's a part of formula
 										chance = -x*(killed_mob_level/10)+1
-bonus3 bAutoSpell,n,x,y;		Auto Spell casting on attack of spell n at level x with y/10% chance.
+bonus3 bAutoSpell,n,x,y;		Auto Spell casting on attack of spell n at level x with y/10% chance. (supports skill names)
 								Skill is casted on target unless it is a self or support (inf = 4/16) skill.
 
 // bAddDamageClass, bAddMagicDamageClass and bAddMonsterDropItem it is setting possible up to 10. Those which exceed 10 are ignored.
@@ -198,15 +202,16 @@ bonus2 bCriticalAddRace,n,r;		Critical + n vs. enemies of race r
 bonus2 bHPRegenRate,n,x;		Gain n HP every x milliseconds
 bonus2 bHPLossRate,n,x;			Lose n HP every x milliseconds
 bonus2 bAddEffWhenHit,n,x;		x/100% chance to cause n state to the enemy when being hit by physical damage
-bonus2 bSkillAtk,n,x;			Increase damage of skill n by x%
-bonus2 bSkillHeal,n,x;			Increase heal amount of skill n by x%
+bonus2 bSkillAtk,n,x;			Increase damage of skill n by x% (supports skill names)
+bonus2 bSkillHeal,n,x;			Increase heal amount of skill n by x% (supports skill names)
 bonus2 bAddDamageByClass,n,x;		When being hit by monster of class n increase damage by x%
 bonus2 bAddRace2,n,x;			Increase damage by x% vs. enemies of race n
 							(Check db/mob_race2_db.txt)
 							y: 0=Don't show damage 1=Show damage
 bonus3 bAutoSpellWhenHit,x,y,n;		n/10% chance to cast skill x of level y on
 								attacker (unless it is a self or support skill) when being hit by a
-								direct attack. Target must be within spell's range to go off.
+								direct attack. (supports skill names)
+								Target must be within spell's range to go off.
 bonus3 bSPDrainRate,n,x,y;		When attacking there is a n% chance to either gain SP equivalent to x% of damage dealt,
 							OR drain the amount of sp from the enemy.
 							y: 0=gain sp  1:drain enemy sp
@@ -214,20 +219,20 @@ bonus3 bSPDrainValue,n,x,y;		When attacking there is a n% chance to either gain 
 							OR drain the amount of sp from the enemy.
 							y:0=gain sp  1:drain enemy sp
 							(Note: setting x to -1 or below will reduce YOUR sp)
-bonus4 bAutoSpell,x,y,n,i;		n/10% chance to cast skill x of level y when attacking
+bonus4 bAutoSpell,x,y,n,i;		n/10% chance to cast skill x of level y when attacking (supports skill names)
 							i:
 								0=cast on self
 								1=cast on enemy, not on self
 								2=use random skill lv in [1..y]
 								3=1+2 (random lv on enemy)
-bonus4 bAutoSpellWhenHit,x,y,n,i;	n/10% chance to cast skill x of level y when being hit by a direct attack. 
+bonus4 bAutoSpellWhenHit,x,y,n,i;	n/10% chance to cast skill x of level y when being hit by a direct attack. (supports skill names)
 									Target must be within spell's range to go off.
 								i:
 									0=cast on self
 									1=cast on enemy, not on self
 									2=use random skill lv in [1..y]
 									3=1+2 (random lv on enemy)
-bonus5 bAutoSpell,x,y,n,t,i;		n/10% chance to cast skill x of level y when attacking
+bonus5 bAutoSpell,x,y,n,t,i;		n/10% chance to cast skill x of level y when attacking (supports skill names)
 					t: Trigger criteria:
 					   BF_SHORT: Trigger on melee attack
 					   BF_LONG: Trigger on ranged attack
@@ -249,9 +254,8 @@ bonus5 bAutoSpell,x,y,n,t,i;		n/10% chance to cast skill x of level y when attac
 					   2=use random skill lv in [1..y]
 					   3=1+2 (random lv on enemy)
 					   
-bonus5 bAutoSpellWhenHit,x,y,n,t,i;	n/10% chance to cast skill x of level y when being hit by a direct attack. 
-                    Target must be within spell's range to go
-					off.
+bonus5 bAutoSpellWhenHit,x,y,n,t,i;	n/10% chance to cast skill x of level y when being hit by a direct attack. (supports skill names)
+                    Target must be within spell's range to go off.
 					t: Trigger criteria:
 					   BF_SHORT: Trigger on melee attack
 					   BF_LONG: Trigger on ranged attack
@@ -324,4 +328,4 @@ bonus2 bWeaponComaRace,x,y;		y/100% chance to cause Coma when attacking a monste
 
 bAddStealRate,n;			n/100% increase to Steal skill success chance
 
-bonus2 bAddSkillBlow,x,y;	Pushback the target by y cells when using skill x
+bonus2 bAddSkillBlow,x,y;	Pushback the target by y cells when using skill x (supports skill names)

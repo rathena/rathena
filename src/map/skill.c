@@ -47,6 +47,7 @@
 static struct eri *skill_unit_ers = NULL; //For handling skill_unit's [Skotlex]
 static struct eri *skill_timer_ers = NULL; //For handling skill_timerskills [Skotlex]
 
+DBMap* skilldb_name2id = NULL;
 struct s_skill_db skill_db[MAX_SKILL_DB];
 struct s_skill_produce_db skill_produce_db[MAX_SKILL_PRODUCE_DB];
 struct s_skill_arrow_db skill_arrow_db[MAX_SKILL_ARROW_DB];
@@ -58,6 +59,15 @@ int icewall_unit_pos;
 
 //Since only mob-casted splash skills can hit ice-walls
 #define splash_target(bl) (bl->type==BL_MOB?BL_SKILL|BL_CHAR:BL_CHAR)
+
+/// Returns the id of the skill, or 0 if not found.
+int skill_name2id(const char* name)
+{
+	if( name == NULL )
+		return 0;
+
+	return (int)strdb_get(skilldb_name2id, name);
+}
 
 /// Maps skill ids to skill db offsets.
 /// Returns the skill's array index, or 0 (Unknown Skill).
@@ -10743,16 +10753,17 @@ void skill_init_unit_layout (void)
 
 static bool skill_parse_row_skilldb(char* split[], int columns, int current)
 {// id,range,hit,inf,element,nk,splash,max,list_num,castcancel,cast_defence_rate,inf2,maxcount,skill_type,blow_count,name,description
-	int i = atoi(split[0]);
-	if( i >= GD_SKILLRANGEMIN && i <= GD_SKILLRANGEMAX ) {
+	int id = atoi(split[0]);
+	int i;
+	if( id >= GD_SKILLRANGEMIN && id <= GD_SKILLRANGEMAX ) {
 		ShowWarning("skill_parse_row_skilldb: Skill id %d is forbidden (interferes with guild skill mapping)!\n");
 		return false;
 	}
-	if( i >= HM_SKILLRANGEMIN && i <= HM_SKILLRANGEMAX ) {
+	if( id >= HM_SKILLRANGEMIN && id <= HM_SKILLRANGEMAX ) {
 		ShowWarning("skill_parse_row_skilldb: Skill id %d is forbidden (interferes with homunculus skill mapping)!\n");
 		return false;
 	}
-	i = skill_get_index(i);
+	i = skill_get_index(id);
 	if( !i ) // invalid skill id
 		return false;
 
@@ -10783,6 +10794,7 @@ static bool skill_parse_row_skilldb(char* split[], int columns, int current)
 	skill_split_atoi(split[14],skill_db[i].blewcount);
 	safestrncpy(skill_db[i].name, trim(split[15]), sizeof(skill_db[i].name));
 	safestrncpy(skill_db[i].desc, trim(split[16]), sizeof(skill_db[i].desc));
+	strdb_put(skilldb_name2id, skill_db[i].name, (void*)id);
 
 	return true;
 }
@@ -11012,6 +11024,7 @@ static bool skill_parse_row_abradb(char* split[], int columns, int current)
 static void skill_readdb(void)
 {
 	// init skill db structures
+	db_clear(skilldb_name2id);
 	memset(skill_db,0,sizeof(skill_db));
 	memset(skill_produce_db,0,sizeof(skill_produce_db));
 	memset(skill_arrow_db,0,sizeof(skill_arrow_db));
@@ -11042,6 +11055,7 @@ void skill_reload (void)
  *------------------------------------------*/
 int do_init_skill (void)
 {
+	skilldb_name2id = strdb_alloc(DB_OPT_DUP_KEY, 0);
 	skill_readdb();
 	
 	skill_unit_ers = ers_new(sizeof(struct skill_unit_group));
@@ -11060,6 +11074,7 @@ int do_init_skill (void)
 
 int do_final_skill(void)
 {
+	db_destroy(skilldb_name2id);
 	ers_destroy(skill_unit_ers);
 	ers_destroy(skill_timer_ers);
 	return 0;
