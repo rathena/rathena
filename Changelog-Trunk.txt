@@ -5,6 +5,7 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 
 2008/06/13
+	* Fixed Evil Land working versus undead element instead of undead race.
 	* Fixed Grandcross and darkgrandcross, should only cause blind against undead race.
 		Also confirmed that ME, evil land, sanctuary, grandcross/DGC and status recovery are versus element, not race.
 	* Removed confusion effect part from AL_CURE, it doesnt work on official anymore.

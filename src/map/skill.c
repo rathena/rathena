@@ -6802,7 +6802,7 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 			break;
 
 		case UNT_EVILLAND:
-			if (!battle_check_undead(tstatus->race, tstatus->def_ele) && tstatus->race!=RC_DEMON)
+			if (tstatus->race!=RC_UNDEAD && tstatus->race!=RC_DEMON)
 			{	//Damage enemies
 				if(battle_check_target(&src->bl,bl,BCT_ENEMY)>0)
 					skill_attack(BF_MISC, ss, &src->bl, bl, sg->skill_id, sg->skill_lv, tick, 0);
