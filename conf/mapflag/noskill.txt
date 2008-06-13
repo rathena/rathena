@@ -7,5 +7,4 @@
 
 //Monster Races ================
 p_track01	mapflag	noskill
-
 p_track02	mapflag	noskill
