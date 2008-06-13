@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= $ephiroth
 //===== Current Version: =====================================
-//= 1.0
+//= 1.2
 //===== Compatible With: =====================================
 //= Any Athena Version
 //===== Description: =========================================
@@ -12,36 +12,36 @@
 //= 1.0 Initial version [$ephiroth]
 //= 1.1 Fixed "Private House" Warps. [Samuray22]
 //	-Thanks to $ephiroth
+//= 1.2 Updated from jA
 //============================================================
 
 // ---[ Mansion ]--- 
-moscovia,224,235,0	warp	moskwarp1001	1,1,mosk_in,96,91
-mosk_in,93,91,0	warp	moskwarp1002	1,1,moscovia,224,232
-mosk_in,100,126,0	warp	moskwarp1003	1,1,mosk_in,21,116
-mosk_in,21,113,0	warp	moskwarp1004	1,1,mosk_in,100,123
+moscovia,256,138,0	warp	moskwarp1001	1,1,mosk_in,96,61
+mosk_in,93,61,0	warp	moskwarp1002	1,1,moscovia,255,140
+mosk_in,99,126,0	warp	moskwarp1003	1,1,mosk_in,21,116
+mosk_in,21,113,0	warp	moskwarp1004	1,1,mosk_in,99,123
 // ---[ Weapon House ]--- 
-moscovia,185,189,0	warp	moskwarp1005	1,1,mosk_in,16,179
-mosk_in,13,179,0	warp	moskwarp1006	1,1,moscovia,188,193
-moscovia,203,171,0	warp	moskwarp1007	1,1,mosk_in,85,179
-mosk_in,88,179,0	warp	moskwarp1008	1,1,moscovia,205,168
+moscovia,185,188,0	warp	moskwarp1005	1,1,mosk_in,15,179
+mosk_in,12,179,0	warp	moskwarp1006	1,1,moscovia,186,191
+moscovia,203,171,0	warp	moskwarp1007	1,1,mosk_in,86,180
+mosk_in,89,180,0	warp	moskwarp1008	1,1,moscovia,204,169
 // ---[ Instrument House / Tool Dealer ]--- 
-moscovia,223,174,0	warp	moskwarp1009	1,1,mosk_in,14,245
-mosk_in,11,245,0	warp	moskwarp1010	1,1,moscovia,220,177
+moscovia,223,174,0	warp	moskwarp1009	1,1,mosk_in,14,246
+mosk_in,11,246,0	warp	moskwarp1010	1,1,moscovia,222,176
 // ---[ Inn ]--- 
-moscovia,229,207,0	warp	moskwarp1011	1,1,mosk_in,141,178
-mosk_in,141,175,0	warp	moskwarp1012	1,1,moscovia,226,204
-mosk_in,150,191,0	warp	moskwarp1013	1,1,mosk_in,206,187
-mosk_in,203,187,0	warp	moskwarp1014	1,1,mosk_in,147,191
+moscovia,229,208,0	warp	moskwarp1011	1,1,mosk_in,142,178
+mosk_in,142,175,0	warp	moskwarp1012	1,1,moscovia,227,207
+mosk_in,150,192,0	warp	moskwarp1013	1,1,mosk_in,204,188
+mosk_in,202,188,0	warp	moskwarp1014	1,1,mosk_in,148,192
 // ---[ Mansion ]--- 
-moscovia,256,138,0	warp	moskwarp1015	1,1,mosk_in,211,114
-mosk_in,211,111,0	warp	moskwarp1016	1,1,moscovia,254,141
-mosk_in,221,128,0	warp	moskwarp1017	1,1,mosk_in,287,120
-mosk_in,287,117,0	warp	moskwarp1018	1,1,mosk_in,221,125
+moscovia,256,179,0	warp	moskwarp1015	1,1,mosk_in,211,114
+mosk_in,211,111,0	warp	moskwarp1016	1,1,moscovia,253,179
+mosk_in,222,128,0	warp	moskwarp1017	1,1,mosk_in,288,118
+mosk_in,288,116,0	warp	moskwarp1018	1,1,mosk_in,222,126
 // ---[ Private House ]--- 
-moscovia,195,80,0	warp	moskwarp1019	1,1,mosk_in,215,40
-mosk_in,215,37,0	warp	moskwarp1020	1,1,moscovia,194,78
-// ---[ Private House ]--- 
-moscovia,205,98,0	warp	moskwarp1021	1,1,mosk_in,213,256
-mosk_in,213,253,0	warp	moskwarp1022	1,1,moscovia,202,96
-mosk_in,219,272,0	warp	moskwarp1023	1,1,mosk_in,151,276
-mosk_in,151,273,0	warp	moskwarp1024	1,1,mosk_in,219,269
+moscovia,205,98,0	warp	moskwarp1021	1,1,mosk_in,214,255
+mosk_in,214,252,0	warp	moskwarp1022	1,1,moscovia,203,96
+mosk_in,220,273,0	warp	moskwarp1023	1,1,mosk_in,152,275
+mosk_in,152,272,0	warp	moskwarp1024	1,1,mosk_in,220,270
+
+mosk_in,215,36,0	warp	moskwarp1025	1,1,mosk_dun02,53,217

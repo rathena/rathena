@@ -4,7 +4,7 @@
 //= Darkchild (1.1)
 //= Playtester (1.2)
 //===== Current Version: ===================================== 
-//= 2.4
+//= 2.5
 //===== Compatible With: ===================================== 
 //= eAthena 1.0+
 //===== Description: ========================================= 
@@ -39,6 +39,7 @@
 //= 2.2 Small update to Vein's Inn Master. [L0ne_W0lf]
 //= 2.3 Added Lighthalzen Inn from Lighthalzen town file. [L0ne_W0lf]
 //= 2.4 Fixed Inn Employee#Ahlma warping to same destination as save point, bugreport: 191.
+//= 2.5 Added Moskovia Gostinitsa (Inn) from jA
 //============================================================ 
 
 
@@ -203,6 +204,39 @@ ve_in,157,219,5	script	Inn Master#Receptionist	709,{
 		close;
 }
 
+//======================== Moscovia ====================================
+mosk_in,135,191,5	script	Hotel Inn#Receptionist	961,{
+	mes "[Hotel Inn]";
+	mes "Good day~";
+	mes "Welcome to the";
+	mes "most comfortable";
+	mes "inn here in Moscovia~";
+	next;
+	menu "Save",Msave, "Take a Rest -> 5000 zeny",Mrent, "Cancel",Mend;
+
+	Msave:
+		mes "[Hotel Inn]";
+		mes "Your respawn point";
+		mes "has been saved in Moscovia.";
+		mes "Enjoy your stay in town~";
+		savepoint "mosk_in",142,189;
+		close;
+	Mrent:
+		mes "[Hotel Inn]";
+		if(Zeny < 5000){
+			mes "I'm sorry, but you don't have enough money to check in.";
+			mes "The service charge is 5,000 zeny.";
+			close;
+		}
+		mes "Enjoy your stay~";
+		close2;
+		set Zeny,Zeny - 5000;
+		percentheal 100,100;
+		warp "mosk_in",215,181;
+
+	Mend:
+		close;
+}
 
 //======================= Inn Function ==============================
 function	script	F_InnMaid	{
