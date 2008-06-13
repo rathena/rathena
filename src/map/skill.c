@@ -3903,8 +3903,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		status_change_end(bl, SC_SILENCE	, -1 );
 		status_change_end(bl, SC_BLIND	, -1 );
 		status_change_end(bl, SC_CONFUSION, -1 );
-		//Confusion on undead won't trigger on undead players.
-		if(!dstsd && battle_check_undead(tstatus->race,tstatus->def_ele))
+		//Confusion status will trigger against undead race.
+		if(tstatus->race==RC_UNDEAD)
 			sc_start(bl, SC_CONFUSION,100,1,skill_get_time2(skillid, skilllv));
 		clif_skill_nodamage(src,bl,skillid,skilllv,1);
 		break;
@@ -6297,7 +6297,7 @@ struct skill_unit_group* skill_unitsetting (struct block_list *src, short skilli
 	case DC_HUMMING:
         val1 = 2*skilllv+status->dex/10; // Hit increase
 		if(sd)
-			val1 += 2*pc_checkskill(sd,DC_DANCINGLESSON);
+			val1 += pc_checkskill(sd,DC_DANCINGLESSON);
 		break;
 	case BA_POEMBRAGI:
 		val1 = 3*skilllv+status->dex/10; // Casting time reduction
@@ -6312,8 +6312,8 @@ struct skill_unit_group* skill_unitsetting (struct block_list *src, short skilli
 		val1 = 30*skilllv+status->dex; // ASPD decrease
 		val2 = 100 -2*skilllv -status->agi/10; // Movement speed adjustment.
 		if(sd){
-			val1 += pc_checkskill(sd,DC_DANCINGLESSON);
-			val2 -= pc_checkskill(sd,DC_DANCINGLESSON);
+			val1 += pc_checkskill(sd,DC_DANCINGLESSON); //TO-DO This is a guessed value
+			val2 -= pc_checkskill(sd,DC_DANCINGLESSON); //TO-DO This is a guessed value
 		}
 		if (val2 < 1) val2 = 1;
 		break;
@@ -6328,11 +6328,11 @@ struct skill_unit_group* skill_unitsetting (struct block_list *src, short skilli
 		}
 		break;
 	case DC_SERVICEFORYOU:
-		val1 = 10+skilllv+(status->int_/10); // MaxSP percent increase
-		val2 = 10+3*skilllv+(status->int_/10); // SP cost reduction
+		val1 = 15+skilllv+(status->int_/10); // MaxSP percent increase TO-DO: this INT bonus value is guessed
+		val2 = 20+3*skilllv+(status->int_/10); // SP cost reduction
 		if(sd){
-			val1 += pc_checkskill(sd,DC_DANCINGLESSON);
-			val2 += pc_checkskill(sd,DC_DANCINGLESSON);
+			val1 += pc_checkskill(sd,DC_DANCINGLESSON); //TO-DO This bonus value is guessed
+			val2 += pc_checkskill(sd,DC_DANCINGLESSON); //TO-DO Should be half this value
 		}
 		break;
 	case BA_ASSASSINCROSS:

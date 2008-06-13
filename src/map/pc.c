@@ -6558,7 +6558,7 @@ int pc_unequipitem(struct map_session_data *sd,int n,int flag)
 		status_calc_pc(sd,0);
 	}
 
-	if(sd->sc.data[SC_SIGNUMCRUCIS] && !battle_check_undead(sd->battle_status.race,sd->battle_status.def_ele))
+	if(sd->sc.data[SC_SIGNUMCRUCIS] && (sd->battle_status.race != RC_UNDEAD))
 		status_change_end(&sd->bl,SC_SIGNUMCRUCIS,-1);
 
 	//OnUnEquip script [Skotlex]

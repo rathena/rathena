@@ -614,7 +614,7 @@ int battle_addmastery(struct map_session_data *sd,struct block_list *target,int 
 	nullpo_retr(0, sd);
 
 	if((skill = pc_checkskill(sd,AL_DEMONBANE)) > 0 &&
-		(battle_check_undead(status->race,status->def_ele) || status->race==RC_DEMON) )
+		(status->race==RC_UNDEAD || status->race==RC_DEMON) )
 		damage += (skill*(int)(3+(sd->status.base_level+1)*0.05));	// submitted by orn
 		//damage += (skill * 3);
 
@@ -1713,7 +1713,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 				vit_def = def2*(def2-15)/150;
 				vit_def = def2/2 + (vit_def>0?rand()%vit_def:0);
 				
-				if((battle_check_undead(sstatus->race,sstatus->def_ele) || sstatus->race==RC_DEMON) &&
+				if((sstatus->race==RC_UNDEAD || sstatus->race==RC_DEMON) &&
 					src->type == BL_MOB && (skill=pc_checkskill(tsd,AL_DP)) > 0)
 					vit_def += skill*(int)(3 +(tsd->status.base_level+1)*0.04);   // submitted by orn
 			} else { //Mob-Pet vit-eq

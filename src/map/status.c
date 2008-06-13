@@ -4672,8 +4672,8 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			return 0; //Cannot override other opt1 status changes. [Skotlex]
 	break;
 	case SC_SIGNUMCRUCIS:
-		//Only affects demons and undead.
-		if(status->race != RC_DEMON && !undead_flag)
+		//Only affects demons and undead races
+		if(status->race!=RC_UNDEAD && status->race!=RC_DEMON)
 			return 0;
 	break;
 	case SC_AETERNA:
@@ -4818,7 +4818,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			 return 0;
 		 switch (type) {
 			case SC_BLESSING:
-			  if (!undead_flag && status->race != RC_DEMON)
+			  if (status->race!=RC_UNDEAD && status->race!=RC_DEMON)
 				  break;
 			case SC_QUAGMIRE:
 			case SC_DECREASEAGI:
@@ -4842,7 +4842,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 	case SC_BLESSING:
 		//TO-DO Blessing and Agi up should do 1 damage against players on Undead Status, even on PvM
 		//but cannot be plagiarized (this requires aegis investigation on packets and official behavior) [Brainstorm]
-		if ((!undead_flag && status->race!=RC_DEMON) || bl->type == BL_PC) {
+		if (status->race!=RC_UNDEAD && status->race!=RC_DEMON) {
 			if (sc->data[SC_CURSE])
 				status_change_end(bl,SC_CURSE,-1);
 			if (sc->data[SC_STONE] && sc->opt1 == OPT1_STONE)
@@ -5717,7 +5717,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			val4 = -1;	//Kaahi Timer.
 			break;
 		case SC_BLESSING:
-			if ((!undead_flag && status->race!=RC_DEMON) || bl->type == BL_PC)
+			if (status->race!=RC_UNDEAD && status->race!=RC_DEMON)
 				val2 = val1;
 			else
 				val2 = 0; //0 -> Half stat.
