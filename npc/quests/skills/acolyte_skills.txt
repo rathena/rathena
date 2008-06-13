@@ -57,7 +57,7 @@ prt_church,173,23,4	script	Cleric#qsk_al	79,{
 		mes "job level.";
 		close;
 	case 2:
-		if (getskilllv(156) == 1) {
+		if (getskilllv("AL_HOLYLIGHT") == 1) {
 			mes "[Acolyte Klift]";
 			mes "Brother, you already possess";
 			mes "the skill of ` Holy Light '.";

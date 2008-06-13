@@ -54,7 +54,7 @@ alberta_in,70,51,5	script	Guarnien	98,{
 		mes "you learned";
 		mes "about Vending?";
 		next;
-		set @chk_vend, getskilllv(41);
+		set @chk_vend, getskilllv("MC_VENDING");
 		if((@chk_vend > 3) && (@chk_vend < 10)){
 			mes "[Guarnien]";
 			mes "Excellent!";
@@ -116,7 +116,7 @@ alberta_in,70,51,5	script	Guarnien	98,{
 		mes "to vend a total of 3 items at one time. Each time you level up the Vending skill, the total number of items you can vend will";
 		mes "increase by one.";
 		next;
-		set @chk_vend, getskilllv(41);
+		set @chk_vend, getskilllv("MC_VENDING");
 		if((@chk_vend > 3) && (@chk_vend < 10)){
 			mes "[Guarnien]";
 			mes "But I see that you must already know that, huh? Well, seeing as you're so clever, I think you've earned this little prize~";
@@ -166,7 +166,7 @@ alberta_in,70,51,5	script	Guarnien	98,{
 		mes "learned Push Cart up";
 		mes "to Level 4 like I asked?";
 		next;
-		set @chk_cart, getskilllv(39);
+		set @chk_cart, getskilllv("MC_PUSHCART");
 		if(@chk_cart > 3 && @chk_cart < 10){
 			mes "[Guarnien]";
 			mes "Well done~";
@@ -221,7 +221,7 @@ alberta_in,70,51,5	script	Guarnien	98,{
 		mes "the level of the Push Cart skill, your movement speed will slowly be restored. With Push Cart Level 10, a PushCart won't slow you";
 		mes "down at all!";
 		next;
-		set @chk_cart, getskilllv(39);
+		set @chk_cart, getskilllv("MC_PUSHCART");
 		if(@chk_cart > 3 && @chk_cart < 10){
 			mes "[Guarnien]";
 			mes "Ah, and I see that you've been focusing on learning Push Cart. Although you might still have a problem with your movement";
@@ -263,7 +263,7 @@ alberta_in,70,51,5	script	Guarnien	98,{
 		mes "with learning that";
 		mes "^871F78Over Charge^000000 skill?";
 		next;
-		set @chk_over, getskilllv(38);
+		set @chk_over, getskilllv("MC_OVERCHARGE");
 		if(@chk_over > 3 && @chk_over < 10){
 			mes "[Guarnien]";
 			mes "Nice work!";
@@ -313,7 +313,7 @@ alberta_in,70,51,5	script	Guarnien	98,{
 		mes "[Guarnien]";
 		mes "Over Charge allows you to sell items to NPC shops for more Zeny. The higher your Over Charge Skill Level, the more Zeny you'll receive for items sold to NPCs.";
 		next;
-		set @chk_over, getskilllv(38);
+		set @chk_over, getskilllv("MC_OVERCHARGE");
 		if(@chk_over > 3 && @chk_over < 10){
 			mes "[Guarnien]";
 			mes "Ah, you've already learned Level 4 Over Charge. Perfect! Let me give you a little reward~";
@@ -422,7 +422,7 @@ alberta_in,70,51,5	script	Guarnien	98,{
 		mes "So, how is it going with learning the Discount skill? Like I always say, if you can't make a bargain, you can't be a Merchant!";
 		next;
 		mes "[Guarnien]";
-		set @chk_disc, getskilllv(37);
+		set @chk_disc, getskilllv("MC_DISCOUNT");
 		if(@chk_disc > 3 && @chk_disc < 10){
 			mes "Ah, you've learned";
 			mes "how to use the Discount skill";
@@ -463,7 +463,7 @@ alberta_in,70,51,5	script	Guarnien	98,{
 		mes "mastered at ^871F78Level 10^000000. The higher the skill level, the less you have to pay for items at NPC shops.";
 		next;
 		mes "[Guarnien]";
-		set @chk_disc, getskilllv(37);
+		set @chk_disc, getskilllv("MC_DISCOUNT");
 		if(@chk_disc > 3 && @chk_disc < 10){
 			mes "Oooh, good work.";
 			mes "I see that you've";
@@ -516,7 +516,7 @@ alberta_in,70,51,5	script	Guarnien	98,{
 		mes "So if you use this skill too often, you might end up bankrupt! So be really careful. Also, as the Skill Level for Mammonite increases, so does the attack strength and Zeny consumption.";
 		next;
 		mes "[Guarnien]";
-		set @chk_mam, getskilllv(42);
+		set @chk_mam, getskilllv("MC_MAMMONITE");
 		if(@chk_mam > 3 && @chk_mam < 10){
 			mes "Ah, I see that you've already tried this skill. How much money have you wasted using Mammonite? Not too much, I hope.";
 			next;
@@ -543,7 +543,7 @@ alberta_in,70,51,5	script	Guarnien	98,{
 		mes "like I asked?";
 		next;
 		mes "[Guarnien]";
-		set @chk_soji, getskilllv(36);
+		set @chk_soji, getskilllv("MC_INCCARRY");
 		if(@chk_soji > 3 && @chk_soji < 10){
 			mes "Ah. I can tell that you have. Not bad! By now you should be able to learn the ^871F78Discount^000000 skill, but I'll teach you about that later.";
 			next;
@@ -556,7 +556,7 @@ alberta_in,70,51,5	script	Guarnien	98,{
 			mes "[Guarnien]";
 			mes "This skill works exactly like a ^871F78Magnifier^000000, so you won't have to spend any Zeny on them. Also, this skill is mastered at ^871F78Level 1^000000.";
 			next;
-			if(getskilllv(40)){
+			if(getskilllv("MC_IDENTIFY")){
 				mes "[Guarnien]";
 				mes "I see in your eyes that you've already learned to appraise items. Haha, although having that knowledge is reward in itself, let me give you something extra!";
 				set tu_merchant, 2;
@@ -584,7 +584,7 @@ alberta_in,70,51,5	script	Guarnien	98,{
 	next;
 	if(select("Sure!:I'll make it on my own!")==1){
 		set tu_merchant, 1;
-		if(getskilllv(36) < 4){
+		if(getskilllv("MC_INCCARRY") < 4){
 			mes "[Guarnien]";
 			if(Sex == 1){
 				mes "Atta boy~!";
@@ -622,7 +622,7 @@ alberta_in,70,51,5	script	Guarnien	98,{
 			next;
 			mes "[Guarnien]";
 			set tu_merchant, 2;
-			if(getskilllv(40)){
+			if(getskilllv("MC_IDENTIFY")){
 				mes "I see in your eyes that you've already learned to appraise items. Haha, although having that knowledge is reward in itself, let me give you something extra!";
 				//misceffect EF_HIT5;
 				getexp 585,43;

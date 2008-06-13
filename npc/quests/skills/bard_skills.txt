@@ -381,7 +381,7 @@ OnTouch:
 morocc_in,169,72,7	script	Spiteful-Looking Bard#bs	741,3,3,{
 	if (BaseJob == Job_Bard) {
 		if (Class == Job_Clown && qskill_bard == 9) {
-			if (getskilllv(1010) != 0) {
+			if (getskilllv("BA_PANGVOICE") != 0) {
 				mes "[Riott]";
 				mes "Geh heh heh~";
 				mes "Been making good use of";
@@ -435,7 +435,7 @@ morocc_in,169,72,7	script	Spiteful-Looking Bard#bs	741,3,3,{
 				mes "confuse people and disrupt";
 				mes "control of their bodies. It's not^FFFFFF ^000000 a fatal skill, but it is effective";
 				mes "in mentally upsetting your enemy. Make very wise use of this skill.";
-				skill 1010,1,0;
+				skill "BA_PANGVOICE",1,0;
 				close;
 			}
 		}
@@ -488,7 +488,7 @@ morocc_in,169,72,7	script	Spiteful-Looking Bard#bs	741,3,3,{
 				mes "spinning, head spinning...!''";
 				specialeffect2 295; // EF_TALK_FROSTJOKE
 				delitem 7277,1; //Munak_Doll
-				skill 1010,1,0;
+				skill "BA_PANGVOICE",1,0;
 				set qskill_bard,9;
 				next;
 				mes "[Riott]";

@@ -137,7 +137,7 @@ aldeba_in,223,167,3	script	Tzerero#sn	709,{
 		next;
 		switch(select("Accept his offer.:Reject his offer.:Listen more carefully.")) {
 		case 1:
-			if (getskilllv(1) < 9) {
+			if (getskilllv("NV_BASIC") < 9) {
 				mes "[Tzerero]";
 				mes "Hmm...But do you truly";
 				mes "appreciate the value of";
@@ -420,7 +420,7 @@ aldebaran,54,238,5	script	Kafra Employee#sn	117,{
 				if (Zeny >= 1899) {
 					set RESRVPTS, RESRVPTS + 190;
 					set zeny,zeny-1900;
-					if (getskilllv(39) > 0) setcart;
+					if (getskilllv("MC_PUSHCART") > 0) setcart;
 					mes "[Kafra Employee]";
 					mes "Thank you for using my service.";
 					mes "Although what I am doing might";

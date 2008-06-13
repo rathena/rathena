@@ -541,7 +541,7 @@ pay_arche,103,165,5	script	Raiden Karus#tu	832,{
 				mes "if you can't aim at your targets, you'd be horrible at archery, right? You gotta have Accuracy!";
 				next;
 				mes "[Raiden Karus]";
-				set @skill_owl, getskilllv(43);
+				set @skill_owl, getskilllv("AC_OWL");
 				if(@skill_owl < 3){
 					set tu_archer01, 6;
 					mes "Now, your first assignment";
@@ -716,7 +716,7 @@ pay_arche,103,165,5	script	Raiden Karus#tu	832,{
 			mes "practice from a distance!";
 			next;
 
-			set @eagle, getskilllv(44);
+			set @eagle, getskilllv("AC_VULTURE");
 			if(@eagle < 3){
 				mes "Alright, Mandagora usually live around Mt. Mjolnir. I can send you to Prontera, so just travel north, then east from there to find";
 				mes "some of them.";
@@ -772,7 +772,7 @@ pay_arche,103,165,5	script	Raiden Karus#tu	832,{
 				next;
 			}
 		} else if(tu_archer01 == 8){
-			set @eagle, getskilllv(44);
+			set @eagle, getskilllv("AC_VULTURE");
 			if(@eagle < 3){
 				mes "Mandagora lives in the area north and east of Prontera. Learn up to Level 3 Vulture's Eye and get acquainted with your attack range.";
 				next;
@@ -823,7 +823,7 @@ pay_arche,103,165,5	script	Raiden Karus#tu	832,{
 			mes "Whaddya think?";
 			mes "Exciting, yes?";
 			next;
-			set @eagle, getskilllv(46);
+			set @eagle, getskilllv("AC_DOUBLE");
 			if(@eagle > 2){
 				mes "["+strcharinfo(0)+"]";
 				mes "I...";

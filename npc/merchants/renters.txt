@@ -44,7 +44,7 @@ prontera,55,350,5	script	Peco Peco Breeder#knt	105,{
 				mes "bankrupt?";
 				close;
 			}
-			else if(getskilllv(63) == 0) {
+			else if(getskilllv("KN_RIDING") == 0) {
 				mes "[Peco Peco Breeder]";
 				mes "I'm sorry, but you're";
 				mes "not eligible for this";
@@ -103,7 +103,7 @@ mes "Welcome, Paladin.";
 				close;
 			}
 
-			else if(getskilllv(63) == 0) {
+			else if(getskilllv("KN_RIDING") == 0) {
 				mes "[Peco Peco Breeder]";
 				mes "You must first learn";
 				mes "to ride a PecoPeco before";
@@ -155,7 +155,7 @@ hu_in01,381,304,5	script	Falcon Breeder#hnt	105,{
 				mes "instead of monsters~";
 				close;
 			}
-			else if(getskilllv(127) == 0) {
+			else if(getskilllv("HT_FALCON") == 0) {
 				mes "[Falcon Breeder]";
 				mes "Gosh~";
 				mes "Go learn how to";

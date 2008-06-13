@@ -300,7 +300,7 @@ L_HEAL_ALL:
 //Function storage: allows access to the storage facility
 //The sent argument is the displaying image, so we can clear it afterwards.
 function	script	F_keStorage	{
-	if(basicskillcheck() > 0 && getskilllv(1) < 6) {
+	if(basicskillcheck() > 0 && getskilllv("NV_BASIC") < 6) {
 		callfunc "F_keIntro", -1, "I am sorry, but you beed basic skill level 6 to use the storage.";
 		return;
 	}
@@ -318,7 +318,7 @@ function	script	F_keStorage	{
 
 //Function G Storage: Allows access to the Guild Storage
 function	script	F_keGuildStorage	{
-	if(basicskillcheck() > 0 && getskilllv(1) < 6) {
+	if(basicskillcheck() > 0 && getskilllv("NV_BASIC") < 6) {
 		callfunc "F_keIntro", -1, "I am sorry, but you beed basic skill level 6 to use the storage.";
 		return;
 	}

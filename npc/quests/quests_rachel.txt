@@ -2954,7 +2954,7 @@ ice_dun02,120,105,3	script	Man Stuck in Ice#cave	924,5,5,{
 		mes "later! Just... Just get";
 		mes "this ice off of me!.";
 		next;
-		if (getskilllv(19) > 0) {
+		if (getskilllv("MG_FIREBOLT") > 0) {
 			misceffect 24;  //EF_FIREBALL
 			mes "^3355FFYou cast Fire Bolt at";
 			mes "the ice..^000000";

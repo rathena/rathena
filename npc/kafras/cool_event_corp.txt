@@ -45,7 +45,7 @@ hugel,88,168,4	script	Cool Event Corp. Staff::CoolEventCorpStaffHugel	874,{
 		end;
 	case 2:
 		mes "[Cool Event Corp. Staff]";
-		if(basicskillcheck() && getskilllv(1) < 6){
+		if(basicskillcheck() && getskilllv("NV_BASIC") < 6){
 			mes "I'm sorry, but you";
 			mes "need the Novice's";
 			mes "Basic Skill Level 6 to";
@@ -92,7 +92,7 @@ hugel,88,168,4	script	Cool Event Corp. Staff::CoolEventCorpStaffHugel	874,{
 			cutin "", 255;
 			end;
 		}
-		if(getskilllv(39) == 0){
+		if(getskilllv("MC_PUSHCART") == 0){
 			mes "You can only rent a cart after";
 			mes "learning the Pushcart Skill.";
 			close2;
@@ -187,7 +187,7 @@ rachel,109,138,5	script	Cool Event Corp. Staff::CoolEventCorpStaffRachel	874,{
 		end;
 	case 2:
 		mes "[Cool Event Corp. Staff]";
-		if(basicskillcheck() && getskilllv(1) < 6){
+		if(basicskillcheck() && getskilllv("NV_BASIC") < 6){
 			mes "I'm sorry, but you";
 			mes "need the Novice's";
 			mes "Basic Skill Level 6 to";
@@ -232,7 +232,7 @@ rachel,109,138,5	script	Cool Event Corp. Staff::CoolEventCorpStaffRachel	874,{
 			cutin "", 255;
 			end;
 		}
-		if(getskilllv(39) == 0){
+		if(getskilllv("MC_PUSHCART") == 0){
 			mes "You can only rent a cart after";
 			mes "learning the Pushcart Skill.";
 			close2;
@@ -327,7 +327,7 @@ veins,208,128,5	script	Cool Event Corp. Staff::CoolEventCorpStaffVeins	874,{
 		end;
 	case 2:
 		mes "[Cool Event Corp. Staff]";
-		if(basicskillcheck() && getskilllv(1) < 6){
+		if(basicskillcheck() && getskilllv("NV_BASIC") < 6){
 			mes "I'm sorry, but you";
 			mes "need the Novice's";
 			mes "Basic Skill Level 6 to";
@@ -372,7 +372,7 @@ veins,208,128,5	script	Cool Event Corp. Staff::CoolEventCorpStaffVeins	874,{
 			cutin "", 255;
 			end;
 		}
-		if(getskilllv(39) == 0){
+		if(getskilllv("MC_PUSHCART") == 0){
 			mes "You can only rent a cart after";
 			mes "learning the Pushcart Skill.";
 			close2;

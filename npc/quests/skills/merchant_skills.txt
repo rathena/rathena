@@ -16,7 +16,7 @@
 
 alberta,83,96,5	script	Necko#qsk_mc	98,7,7,{
 	if (BaseClass == Job_Merchant) {
-		if (getskilllv(155) == 1) {
+		if (getskilllv("MC_LOUD") == 1) {
 			mes "[Necko]";
 			mes "I'm sorry. Necko's store is...";
 			mes "Oh? Who's this?";
@@ -78,7 +78,7 @@ alberta,83,96,5	script	Necko#qsk_mc	98,7,7,{
 				delitem 722,7; //Scarlet_Jewel
 				delitem 532,1; //Banana_Juice
 				delitem 921,50; //Mushroom_Spore
-				skill 155,1,0;
+				skill "MC_LOUD",1,0;
 				mes "[Necko]";
 				mes "You have learned Crazy Uproar!!";
 				mes "Shout as much as you wish!";
@@ -183,7 +183,7 @@ OnTouch:
 
 alberta,119,221,6	script	Charlron#qsk_mc	107,{
 	if (BaseClass == Job_Merchant) {
-		if (getskilllv(154) == 1) {
+		if (getskilllv("MC_CHANGECART") == 1) {
 			mes "[Charlron]";
 			mes "Mmm? I was wondering who was making all";
 			mes "the raucus carrying around a cart.";
@@ -225,7 +225,7 @@ alberta,119,221,6	script	Charlron#qsk_mc	107,{
 					delitem 1019,50; //Wooden_Block
 					delitem 998,10; //Iron
 					delitem 919,20; //Animal's_Skin
-					skill 154,1,0;
+					skill "MC_CHANGECART",1,0;
 					mes "[Charlron]";
 					mes "Congratulations.";
 					mes "You can choose a cart";
@@ -342,7 +342,7 @@ alberta,119,221,6	script	Charlron#qsk_mc	107,{
 
 alberta,232,106,6	script	Gershaun#qsk_mc	57,{
 	if (BaseClass == Job_Merchant) {
-		if (getskilllv(153) == 1) {
+		if (getskilllv("MC_CARTREVOLUTION") == 1) {
 			mes "[Gershaun]";
 			mes "Ah, long time no see!";
 			mes "Ohh, the red marks on your cart.";
@@ -387,7 +387,7 @@ alberta,232,106,6	script	Gershaun#qsk_mc	57,{
 					delitem 938,.@Quantity[2]; //Sticky_Mucus
 					delitem 601,.@Quantity[3]; //Wing_Of_Fly
 					delitem 962,.@Quantity[4]; //Tentacle
-					skill 153,1,0;
+					skill "MC_CARTREVOLUTION",1,0;
 					mes "[Gershaun]";
 					mes "Now you can use Cart Revolution";
 					mes "I expect you to make merchants";

@@ -16,7 +16,7 @@
 
 izlude_in,175,130,2	script	Knight De Thomas#qsk_sm	98,{
 	if (BaseClass == Job_Swordman) {
-		if (SWORD_SK < 1 && getskilllv(144) == 0) {
+		if (SWORD_SK < 1 && getskilllv("SM_MOVINGRECOVERY") == 0) {
 			mes "[De Thomas]";
 			mes "Oh, no! You must have been hurt! Are you ok?";
 			mes "You must have fought hard to get such serious injuries..";
@@ -71,7 +71,7 @@ izlude_in,175,130,2	script	Knight De Thomas#qsk_sm	98,{
 			mes "...";
 			close;
 		}
-		else if (SWORD_SK == 1 && getskilllv(144) == 0) {
+		else if (SWORD_SK == 1 && getskilllv("SM_MOVINGRECOVERY") == 0) {
 			mes "[De Thomas]";
 			mes "Welcome back...";
 			mes "are you ready to learn Body Movin'?";
@@ -88,7 +88,7 @@ izlude_in,175,130,2	script	Knight De Thomas#qsk_sm	98,{
 					next;
 					delitem 713,200; //Empty_Bottle
 					delitem 1058,1; //Wing_Of_Moth
-					skill 144,1,0;
+					skill "SM_MOVINGRECOVERY",1,0;
 					set SWORD_SK,0;
 					mes "[De Thomas]";
 					mes "There you go!";
@@ -152,7 +152,7 @@ izlude_in,175,130,2	script	Knight De Thomas#qsk_sm	98,{
 
 prt_in,75,88,5	script	Leon Von Frich#qsk_sm	85,3,3,{
 	if ((BaseJob == Job_Swordman && JobLevel >= 25) || BaseJob == Job_Knight || BaseJob == Job_Crusader) {
-		if (getskilllv(145) == 1) {
+		if (getskilllv("SM_FATALBLOW") == 1) {
 			mes "[Leon]";
 			mes "Eh?";
 			mes "I was wondering who that was!";
@@ -177,7 +177,7 @@ prt_in,75,88,5	script	Leon Von Frich#qsk_sm	85,3,3,{
 				delitem 532,1; //Banana_Juice
 				delitem 962,30; //Tentacle
 				delitem 526,5; //Royal_Jelly
-				skill 145,1,0;
+				skill "SM_FATALBLOW",1,0;
 				mes "[Leon]";
 				mes "Success!";
 				mes "Go use your new skill to its full potential.";
@@ -312,7 +312,7 @@ OnTouch:
 
 prt_in,94,57,3	script	Juan#qsk_sm	85,{
 	if (BaseClass == Job_Swordman) {
-		if (getskilllv(146) == 1) {
+		if (getskilllv("SM_AUTOBERSERK") == 1) {
 			mes "[Juan]";
 			mes "Mmm? Long time no see!";
 			mes "How are you?";
@@ -351,7 +351,7 @@ prt_in,94,57,3	script	Juan#qsk_sm	85,{
 					delitem 958,10; //Horrendous_Mouth
 					delitem 957,10; //Decayed_Nail
 					delitem 518,10; //Honey
-					skill 146,1,0;
+					skill "SM_AUTOBERSERK",1,0;
 					mes "[Juan]";
 					mes "You have just become a swordsman";
 					mes "that can use Auto Berserk.";

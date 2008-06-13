@@ -272,7 +272,7 @@ function	script	F_KafStor	{
 	}
 
 	// Unable to access Normal Storage (Insufficient Basic Skills)
-	if(basicskillcheck() && getskilllv(1) < 6){
+	if(basicskillcheck() && getskilllv("NV_BASIC") < 6){
 		mes "[Kafra Employee]";
 		// Niflheim Specific Message
 		if (getarg(2) == 1) {

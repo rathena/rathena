@@ -32,7 +32,7 @@ prt_in,85,99,3	script	Knight#kabuto	734,{
 			mes "me your own stories of bravery.";
 			close;
 		}
-		if (KNGT_SK == 9 && getskilllv(1001) == 0) {
+		if (KNGT_SK == 9 && getskilllv("KN_CHARGEATK") == 0) {
 			mes "[Essofeit]";
 			mes "Ah, I see that you've";
 			mes "made tremendous progress";
@@ -62,7 +62,7 @@ prt_in,85,99,3	script	Knight#kabuto	734,{
 			mes "is greater risk to yourself.";
 			mes "For now, it would be best to practice this skill on your own.";
 			set KNGT_SK,10;
-			skill 1001,1,0;
+			skill "KN_CHARGEATK",1,0;
 			next;
 			mes "[Essofeit]";
 			mes "Good luck on your";
@@ -112,7 +112,7 @@ prt_in,85,99,3	script	Knight#kabuto	734,{
 			mes "is greater risk to yourself.";
 			mes "For now, it would be best to practice this skill on your own.";
 			set KNGT_SK,9;
-			skill 1001,1,0;
+			skill "KN_CHARGEATK",1,0;
 			next;
 			mes "[Essofeit]";
 			mes "I hope you make good";

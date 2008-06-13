@@ -15,7 +15,7 @@
 
 morocc,121,109,5	script	Roberto#qsk_ac	88,{
 	if (BaseClass == Job_Archer) {
-		if (getskilllv(147) == 1) {
+		if (getskilllv("AC_MAKINGARROW") == 1) {
 			mes "[Roberto]";
 			mes "Ooh, you're from my home town!";
 			mes "Nice to see you!";
@@ -149,7 +149,7 @@ morocc,121,109,5	script	Roberto#qsk_ac	88,{
 
 payon,103,63,3	script	Jason#qsk_ac	88,3,3,{
 	if (BaseClass == Job_Archer) {
-		if (getskilllv(148) == 1) {
+		if (getskilllv("AC_CHARGEARROW") == 1) {
 			mes "[Jason]";
 			mes "Eh, we meet again.";
 			mes "Ehhhh so weird.";

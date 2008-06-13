@@ -315,11 +315,11 @@ comodo,204,127,5	script	Canell#qsk_dan01	724,{
 				mes "the Charming Wink skill.^000000";
 				set DANCER_SK,9;
 				specialeffect2 253; // EF_ABSORBSPIRITS
-				skill 1011,1,0;
+				skill "DC_WINKCHARM",1,0;
 				close;
 			}
 		}
-		else if (DANCER_SK > 8 && getskilllv(1011)) {
+		else if (DANCER_SK > 8 && getskilllv("DC_WINKCHARM")) {
 			mes "[Canell]";
 			mes "Hm...?";
 			mes "Is there anything";
@@ -338,7 +338,7 @@ comodo,204,127,5	script	Canell#qsk_dan01	724,{
 			close;
 		}
 
-		else if (DANCER_SK == 9 && getskilllv(1011) == 0) {
+		else if (DANCER_SK == 9 && getskilllv("DC_WINKCHARM") == 0) {
 			mes "[Canell]";
 			mes "Hm? Oh, I remember you!";
 			mes "A Gypsy now, I see~ That";
@@ -358,7 +358,7 @@ comodo,204,127,5	script	Canell#qsk_dan01	724,{
 			mes "^3355FFYou have learned the";
 			mes "Charming Wink skill.^000000";
 			specialeffect2 253; // EF_ABSORBSPIRITS
-			skill 1011,1,0;
+			skill "DC_WINKCHARM",1,0;
 			close;
 		}
 	}

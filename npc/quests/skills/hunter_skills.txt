@@ -29,7 +29,7 @@
 payon_in02,54,13,7	script	Albest	55,{
 	mes "[Albest]";
 	if(BaseJob!=Job_Hunter) goto L_hunterno;
-	if(getskilllv(1009)) goto L_alreadyhave;
+	if(getskilllv("HT_PHANTASMIC")) goto L_alreadyhave;
 	if(JobLevel<40) goto L_nojob;
 
 	mes "I can teach you a secret";
@@ -59,7 +59,7 @@ payon_in02,54,13,7	script	Albest	55,{
 	mes "[Albest]";
 	mes "I see you have what you need,";
 	mes "so I'll teach you my talent.";
-	skill 1009,1,0;
+	skill "HT_PHANTASMIC",1,0;
 	close;
 
 L_noitems:

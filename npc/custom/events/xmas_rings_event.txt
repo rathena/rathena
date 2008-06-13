@@ -93,9 +93,9 @@ OnInit:
 //Santa's Hat
 	setitemscript 2236,"{ bonus bMdef,1; bonus bLuk,1; if(isequipped(2636,2637)){if(@xmr == gettime(2))end; set @xmr,gettime(2); misceffect 410; end;} if(isequipped(2636)){if(@xmr == gettime(2))end; set @xmr,gettime(2); misceffect 72;} if(isequipped(2637)){if(@xmr == gettime(2))end; set @xmr,gettime(2); misceffect 338;}}";
 //Gold Xmas Ring
-	setitemscript 2636,"{ bonus bLoseSPWhenUnequip,30; if(isequipped(2236)==0)end; if(getskilllv(28)){skill 51,4+isequipped(2637);}else{skill 28,1+4*isequipped(2637);} }";
+	setitemscript 2636,"{ bonus bLoseSPWhenUnequip,30; if(isequipped(2236)==0)end; if(getskilllv("AL_HEAL")){skill "TF_HIDING",4+isequipped(2637);}else{skill "AL_HEAL",1+4*isequipped(2637);} }";
 //Silver Xmas Ring
-	setitemscript 2637,"{ bonus bDamageWhenUnequip,40; if(isequipped(2236)==0)end; if(getskilllv(26)){skill 40,1;}else{skill 26,1+isequipped(2636);} }";
+	setitemscript 2637,"{ bonus bDamageWhenUnequip,40; if(isequipped(2236)==0)end; if(getskilllv("AL_TELEPORT")){skill "MC_IDENTIFY",1;}else{skill "AL_TELEPORT",1+isequipped(2636);} }";
 	end;
 }
 

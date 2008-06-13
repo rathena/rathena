@@ -80,7 +80,7 @@ L_change:
 		mes "art. It won't be easy, but it will lead you to great strength...";
 		next;
 		if(select("Okay, I will join you.","No, thank you.") == 1) {
-			if(getskilllv(1) < 9) {
+			if(getskilllv("NV_BASIC") < 9) {
 				mes "[Phoenix]";
 				mes "How unfortunate!";
 				mes "You're not yet ready to";

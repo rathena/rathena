@@ -136,12 +136,12 @@ moc_ruins,66,164,4	script	Thief Trainer#T	84,{
 		} else if(tu_thief01 == 2){
 			mes "Okay, let me see your skills. You know you gotta change your battle strategy depending on what skills you have, right? Skills are just as important as stats!";
 			next;
-			set @chk_th_skill1, getskilllv(48);
-			set @chk_th_skill2, getskilllv(49);
-			set @chk_th_skill3, getskilllv(50);
-			set @chk_th_skill4, getskilllv(51);
-			set @chk_th_skill5, getskilllv(52);
-			set @chk_th_skill6, getskilllv(53);
+			set @chk_th_skill1, getskilllv("TF_DOUBLE");
+			set @chk_th_skill2, getskilllv("TF_MISS");
+			set @chk_th_skill3, getskilllv("TF_STEAL");
+			set @chk_th_skill4, getskilllv("TF_HIDING");
+			set @chk_th_skill5, getskilllv("TF_POISON");
+			set @chk_th_skill6, getskilllv("TF_DETOXIFY");
 
 			if(@chk_th_skill1 == 0 && @chk_th_skill2 == 0 && @chk_th_skill3 == 0 && @chk_th_skill4 == 0 && @chk_th_skill5 == 0 && @chk_th_skill6 == 0){
 				mes "[Yierhan]";

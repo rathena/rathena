@@ -581,7 +581,7 @@ Zeny_short_SP:
 
 L_Storage:
 	next;
-	if(basicskillcheck() > 0 && getskilllv(1) < 6) goto L_StorageJBlow;
+	if(basicskillcheck() > 0 && getskilllv("NV_BASIC") < 6) goto L_StorageJBlow;
 	set @fee, $QW_S_PRICE;
 	if ($QW_S_PRICE == 60)&&(BaseJob == Job_Novice) set @fee, 30;
 	if ($QW_S_PRICE == 60)&&(BaseJob != Job_Novice) set @fee, 60;

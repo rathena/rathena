@@ -82,7 +82,7 @@ geffen_in,151,119,4	script	Great Wizard#qsk_mg	64,{
 		mes "There is nothing more to say, are you interested?";
 		close;
 	case 2:
-		if (getskilllv(157) == 1) {
+		if (getskilllv("MG_ENERGYCOAT") == 1) {
 			mes "[BLIZZARDRISS]";
 			mes "It seems that you have ";
 			mes "already mastered this skill.";
@@ -120,7 +120,7 @@ geffen_in,151,119,4	script	Great Wizard#qsk_mg	64,{
 					delitem 730,1; //Crystal_Jewel
 					delitem 935,5; //Shell
 					delitem 943,1; //Solid_Shell
-					skill 157,1,0;
+					skill "MG_ENERGYCOAT",1,0;
 					mes "[BLIZZARDRISS]";
 					mes ". . . . .";
 					mes "It is done. . .";

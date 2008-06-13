@@ -57,7 +57,7 @@ payon,173,141,4	script	Ripped Cabus#GymPass	899,{
 			mes "item carrying muscles.";
 			close;
 		}
-		else if (getskilllv(681) >= 10) {
+		else if (getskilllv("ALL_INCCARRY") >= 10) {
 			mes "[Ripped]";
 			mes "Dude, I don't think we can";
 			mes "build up your item carrying";
@@ -83,7 +83,7 @@ payon,173,141,4	script	Ripped Cabus#GymPass	899,{
 			next;
 			specialeffect2 62;
 			next;
-			skill 681,getskilllv(681)+1,0;
+			skill "ALL_INCCARRY",getskilllv("ALL_INCCARRY")+1,0;
 			delitem 7776,1;
 			set gympassmemory,gympassmemory+1;
 			mes "[Ripped]";
@@ -105,7 +105,7 @@ payon,173,141,4	script	Ripped Cabus#GymPass	899,{
 		mes "get them in shape.";
 		close;
 	case 3:
-		if (getskilllv(681) == 0) {
+		if (getskilllv("ALL_INCCARRY") == 0) {
 			mes "[Ripped]";
 			mes "Uhh...";
 			mes "We didn't work out";

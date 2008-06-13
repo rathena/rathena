@@ -2,6 +2,7 @@ Date		Added
 ======
 
 2008/06/13
+	* Converted getskilllv and skill commands integers to strings. Follow up on r12814
 	* Fixed stripped hairband and blue hairband checking the wrong amount of items, bugreport:1674 [Brainstorm]
 
 2008/06/08

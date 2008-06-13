@@ -15,7 +15,7 @@
 
 in_moc_16,14,27,5	script	Assassin#realman	884,{
 	if (BaseJob == Job_Assassin && ASSN_SK2 == 1) {
-		if (getskilllv(1004) == 0) {
+		if (getskilllv("AS_VENOMKNIFE") == 0) {
 			mes "[Killtin]";
 			mes "Ah yes, that's why you";
 			mes "look so familiar. You're";
@@ -63,7 +63,7 @@ in_moc_16,14,27,5	script	Assassin#realman	884,{
 			mes "skill. Leave me now, and";
 			mes "always fight for the honor";
 			mes "of the Assassin Guild!";
-			skill 1004,1,0;
+			skill "AS_VENOMKNIFE",1,0;
 			close;
 		}
 		else {
@@ -233,7 +233,7 @@ in_moc_16,14,27,5	script	Assassin#realman	884,{
 							mes "Knife pretty easily in battle.";
 							set ASSN_SK2,1;
 							set ASSN_SK,1;
-							skill 1004,1,0;
+							skill "AS_VENOMKNIFE",1,0;
 							next;
 							mes "[Killtin]";
 							mes "Well, that's all I can";
@@ -287,7 +287,7 @@ in_moc_16,14,27,5	script	Assassin#realman	884,{
 
 in_moc_16,23,27,5	script	Assassin#realgirl	885,{
 	if (BaseJob == Job_Assassin && ASSN_SK == 7) {
-		if (getskilllv(1003) == 0) {
+		if (getskilllv("AS_SONICACCEL") == 0) {
 			mes "[Esmille]";
 			mes "Mm? Ah, you've transcended";
 			mes "and become an Assassin Cross";
@@ -302,7 +302,7 @@ in_moc_16,23,27,5	script	Assassin#realgirl	885,{
 			mes "sympathize, and am willing";
 			mes "to teach it to you again.";
 			next;
-			if (getskilllv(136) == 0) {
+			if (getskilllv("AS_SONICBLOW") == 0) {
 				mes "[Esmille]";
 				mes "First, go and learn the";
 				mes "Sonic Blow skill. The skill";
@@ -357,7 +357,7 @@ in_moc_16,23,27,5	script	Assassin#realgirl	885,{
 			mes "Yes, that's it...!";
 			mes "Very well executed.";
 			mes "Good work, "+ strcharinfo(0) +".";
-			skill 1003,1,0;
+			skill "AS_SONICACCEL",1,0;
 			set ASSN_SK,7;
 			next;
 			mes "[Esmille]";
@@ -454,7 +454,7 @@ in_moc_16,23,27,5	script	Assassin#realgirl	885,{
 		mes "Yes, that's it...!";
 		mes "Very well executed.";
 		mes "Good work, "+ strcharinfo(0) +".";
-		skill 1003,1,0;
+		skill "AS_SONICACCEL",1,0;
 		set ASSN_SK,7;
 		next;
 		mes "[Esmille]";
@@ -643,7 +643,7 @@ in_moc_16,23,27,5	script	Assassin#realgirl	885,{
 				mes "But first, there we need to";
 				mes "take care of the prerequisites... ^FFFFFF ^000000";
 				next;
-				if (getskilllv(136) == 0) {
+				if (getskilllv("AS_SONICBLOW") == 0) {
 					mes "[Esmille]";
 					mes "First, go and learn the";
 					mes "Sonic Blow skill. The skill";

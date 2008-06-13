@@ -28,7 +28,7 @@
 yuno_in03,176,24,3	script	Mischna	755,{
 	mes "[Mischna]";
 	if(BaseJob!=Job_Sage) goto L_sageno;
-	if(getskilllv(1007)) goto L_elemental;
+	if(getskilllv("SA_CREATECON")) goto L_elemental;
 
 	mes "I can teach you a new skill";
 	mes "that I discovered, but you";
@@ -61,7 +61,7 @@ yuno_in03,176,24,3	script	Mischna	755,{
 	mes "I see you have what we need,";
 	mes "so I'll teach you this new";
 	mes "talent of mine!";
-	skill 1007,1,0;
+	skill "SA_CREATECON",1,0;
 	next;
 	
 	mes "[Mischna]";
@@ -99,7 +99,8 @@ L_alreadyhave:
 	close;
 			
 L_elemental:
-	if(getskilllv(1008) || getskilllv(1017) || getskilllv(1018) || getskilllv(1019)) goto L_alreadyhave;
+	if(getskilllv("SA_ELEMENTWATER") || getskilllv("SA_ELEMENTGROUND") 
+		|| getskilllv("SA_ELEMENTFIRE") || getskilllv("SA_ELEMENTWIND")) goto L_alreadyhave;
 	
 	mes "I have one more skill that";
 	mes "I can teach you, but you";
@@ -125,24 +126,24 @@ L_elemental:
 		sage_1:
 		if(countitem(991)<20)goto L_sagefail;//Items: Crystal_Blue,
 		delitem 991, 20;		//Items: Crystal_Blue,
-		skill 1008,1,0;
+		skill "SA_ELEMENTWATER",1,0;
 		goto L_alreadyhave;
 
 		sage_2:
 		if(countitem(993)<20)goto L_sagefail;//Items: Green_Live,
 		delitem 993, 20;//Items: Green_Live,
-		skill 1017,1,0;
+		skill "SA_ELEMENTGROUND",1,0;
 		goto L_alreadyhave;
 
 		sage_3:
 		if(countitem(990)<20)goto L_sagefail;//Items: Red_Blood,
 		delitem 990, 20;//Items: Red_Blood,
-		skill 1018,1,0;
+		skill "SA_ELEMENTFIRE",1,0;
 		goto L_alreadyhave;
 
 		sage_4:
 		if(countitem(992)<20)goto L_sagefail;//Items: Wind_of_Verdure,
 		delitem 992, 20;//Items: Wind_of_Verdure,
-		skill 1019,1,0;
+		skill "SA_ELEMENTWIND",1,0;
 		goto L_alreadyhave;
 }

@@ -75,7 +75,7 @@ valkyrie,53,50,3	script	Biochemist#Valkyrie	122,{
 		close;
 	}
 	else {
-		if (Class == Job_Creator && MISC_QUEST & 64 && getskilllv(238) == 0) {
+		if (Class == Job_Creator && MISC_QUEST & 64 && getskilllv("AM_BIOETHICS") == 0) {
 			mes "[Biochemist]";
 			mes "Ah, have you come to";
 			mes "retrieve the memories";

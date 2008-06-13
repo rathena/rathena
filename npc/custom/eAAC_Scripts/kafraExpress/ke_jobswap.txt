@@ -292,7 +292,7 @@ function SF_swapJob {
 			return 0;
 	}
 
-	set @basic, getSkilllv(1);
+	set @basic, getSkilllv("NV_BASIC");
 	set @skillpoint, skillpointcount() -JobLevel -@basic +@newjoblv;	//Preserve holds the final amount of SkillPoints you should have.
 
 	if (@skillpoint < 0) {
@@ -349,7 +349,7 @@ function SF_revertJob {
 	set @thisJobId, Class;
 	set @thisJobLv, JobLevel;
 
-	set @basic, getSkilllv(1);
+	set @basic, getSkilllv("NV_BASIC");
 	resetSkill;
 	set @skill, SkillPoint;
 	if($@kejs_saveDye) {

@@ -43,6 +43,9 @@
 	2385 Recuvative_Armor		Should trigger HP/SP return with magical kills as well.
 
 =======================
+2008/06/13
+	* Converted skill commands integers to strings. Follow up on r12814
+
 2008/06/11
 	* Fixed items that grant status related skills not removing the status when you unequip it.
 

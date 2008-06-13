@@ -15,7 +15,7 @@
 
 geffen,178,72,3	script	Akkie#qsk_bs	726,{
 	if (BaseJob == Job_Blacksmith) {
-		if (BLACK_SK == 7 && getskilllv(1012) == 0) {
+		if (BLACK_SK == 7 && getskilllv("BS_UNFAIRLYTRICK") == 0) {
 			mes "[Akkie]";
 			mes "I see that you've";
 			mes "transcended since the";
@@ -31,7 +31,7 @@ geffen,178,72,3	script	Akkie#qsk_bs	726,{
 			mes "Dubious Salesmanship? You";
 			mes "should be able to use it now...";
 			set BLACK_SK,8;
-			skill 1012,1,0;
+			skill "BS_UNFAIRLYTRICK",1,0;
 			close;
 		}
 		else if (BLACK_SK == 8) {
@@ -371,7 +371,7 @@ geffen,178,72,3	script	Akkie#qsk_bs	726,{
 				mes "this... Isn't it easy? Of course, you can only use this in battle to";
 				mes "reduce Mammonite's zeny cost...";
 				set BLACK_SK,7;
-				skill 1012,1,0;
+				skill "BS_UNFAIRLYTRICK",1,0;
 				next;
 				mes "[Akkie]";
 				mes "Also, 90% of the cost of";
@@ -475,7 +475,7 @@ geffen,178,72,3	script	Akkie#qsk_bs	726,{
 
 geffen,172,52,1	script	Goodman#qsk_bs	826,{
 	if (BaseJob == Job_Blacksmith) {
-		if (BLACK_SK2 == 2 && Upper == 1 && getskilllv(1013) == 0) {
+		if (BLACK_SK2 == 2 && Upper == 1 && getskilllv("BS_GREED") == 0) {
 			mes "[Goodman]";
 			mes "Ah, I see that you have";
 			mes "transcended. It gladdens me";
@@ -490,7 +490,7 @@ geffen,172,52,1	script	Goodman#qsk_bs	826,{
 			mes "just looking at me should";
 			mes "jog the memories you require";
 			mes "to use this skill once again~";
-			skill 1013,1,0;
+			skill "BS_GREED",1,0;
 			set BLACK_SK2,3;
 			close;
 		}
@@ -609,7 +609,7 @@ geffen,172,52,1	script	Goodman#qsk_bs	826,{
 					mes "is different than its name.";
 					mes "Don't forget that, and I hope";
 					mes "you craft true masterpieces.";
-					skill 1013,1,0;
+					skill "BS_GREED",1,0;
 					set BLACK_SK2,2;
 					close;
 				}

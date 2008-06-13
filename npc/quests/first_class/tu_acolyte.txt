@@ -285,7 +285,7 @@ prt_monk,230,106,3	script	Asthe#tu	79,{
 		mes "HEAL !!";
 		unitskilluseid getcharid(3),28,10;
 		set tu_acolyte01, 3;
-		if(getskilllv(28) == 0){
+		if(getskilllv("AL_HEAL") == 0){
 			getexp 0,100;
 			//misceffect EF_CONE;
 		}
@@ -296,7 +296,7 @@ prt_monk,230,106,3	script	Asthe#tu	79,{
 		mes "think? I believe learning the basics is your most important";
 		mes "task for now.";
 		next;
-		if(getskilllv(28) < 3){
+		if(getskilllv("AL_HEAL") < 3){
 			mes "[Asthe]";
 			mes "Well then, learn";
 			mes "the Heal skill up to";
@@ -346,7 +346,7 @@ prt_monk,230,106,3	script	Asthe#tu	79,{
 		}
 		break;
 	case 4:
-		if(getskilllv(28) > 2){
+		if(getskilllv("AL_HEAL") > 2){
 			if(countitem(1504) > 0){
 				mes "Oh my!";
 				mes "Welcome back~";
@@ -1053,12 +1053,12 @@ prt_monk,226,257,6	script	Ill Girl#tu	93,{
 			close; 
 			break;
 		case 2:
-			if(getskilllv(34) == 0) goto L_NONE;
+			if(getskilllv("AL_BLESSING") == 0) goto L_NONE;
 			mes "["+strcharinfo(0)+"]";
 			mes "B...";
 			mes "Blessing!";
 			next;
-			if(rand(100) < getskilllv(34)*10){
+			if(rand(100) < getskilllv("AL_BLESSING")*10){
 				//misceffect EF_BLESSING;
 				mes "["+strcharinfo(0)+"]";
 				mes "I...";
@@ -1083,7 +1083,7 @@ prt_monk,226,257,6	script	Ill Girl#tu	93,{
 			}
 			break;
 		case 3:
-			if(getskilllv(35) == 0) goto L_NONE;
+			if(getskilllv("AL_CURE") == 0) goto L_NONE;
 			mes "["+strcharinfo(0)+"]";
 			mes "C-Cure...!";
 			//misceffect EF_CURE;
@@ -1099,7 +1099,7 @@ prt_monk,226,257,6	script	Ill Girl#tu	93,{
 			close;
 			break;
 		case 5:
-			if(getskilllv(32) == 0) goto L_NONE;
+			if(getskilllv("AL_CRUCIS") == 0) goto L_NONE;
 			mes "["+strcharinfo(0)+"]";
 			mes "S-Signum...";
 			mes "Signum Crucis!";

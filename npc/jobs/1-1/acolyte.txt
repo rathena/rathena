@@ -35,7 +35,7 @@ prt_church,184,41,4	script	Cleric#aco	60,{
 				mes "Ah, I sense you have endured";
 				mes "a past life experience. You must have learned many things before entering Valhalla.";
 				next;
-				if (getskilllv(1) < 9) {
+				if (getskilllv("NV_BASIC") < 9) {
 					mes "[Father Mareusis]";
 					mes "Unfortunately, I don't think you're ready to become an Acolyte yet. Please finish learning all of the Basic Skills first.";
 					next;
@@ -131,7 +131,7 @@ prt_church,184,41,4	script	Cleric#aco	60,{
 		mes "Oh, you've come back. Let me check and see if you are ready to serve God. Let's see...";
 		next;
 		mes "[Father Mareusis]";
-		if (getskilllv(1) < 9) {
+		if (getskilllv("NV_BASIC") < 9) {
 			mes "Good Lord! Haven't you accomplished the Basic Training yet?! It's important that you finish that!";
 			next;
 			mes "[Father Mareusis]";

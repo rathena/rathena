@@ -35,7 +35,7 @@ function	script	F_keRent	{
 	}
 	switch (@kmenu) {
 	case 2: //Cart
-		if (getskilllv(39)==0) {
+		if (getskilllv("MC_PUSHCART")==0) {
 			callfunc "F_keIntro", -1, "Sorry, only those with the skill 'Pushcart' may rent a Cart.";
 		} else 
 		if (checkcart()) {
@@ -49,7 +49,7 @@ function	script	F_keRent	{
 		}
 		break;
 	case 3: //Falcon
-		if (getskilllv(127)==0) {
+		if (getskilllv("HT_FALCON")==0) {
 			callfunc "F_keIntro", -1, "Sorry, only those with the skill 'Falcon Taming' may rent a Falcon.";
 		} else
 		if (checkfalcon()) {
@@ -63,7 +63,7 @@ function	script	F_keRent	{
 		}
 		break;
 	case 4: //pecopeco
-		if (getskilllv(63)==0) {
+		if (getskilllv("KN_RIDING")==0) {
 			callfunc "F_keIntro", -1, "Sorry, only those with the skill 'PecoPeco Riding' may rent a PecoPeco.";
 		} else
 		if (checkriding()) {

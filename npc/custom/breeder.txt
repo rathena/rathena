@@ -33,7 +33,7 @@ L_Cart:
 	close;
 
 L_Cart_Ok:
-	if(getskilllv(39)<1) goto L_Need_Skill;
+	if(getskilllv("MC_PUSHCART")<1) goto L_Need_Skill;
 	setcart;
 	goto L_Quit2;
 
@@ -44,7 +44,7 @@ L_Need_Skill:
 
 L_Falcon:
 	if(BaseJob != Job_Archer && BaseClass == Job_Archer && checkfalcon() == 0) goto L_Falc;
-	if(getskilllv(127)<1) goto L_Need_Skill2;
+	if(getskilllv("HT_FALCON")<1) goto L_Need_Skill2;
 
 	mes "[Universal Rental Npc]";
 	mes "Sorry " + strcharinfo(0) + ", but I only rent falcons to Hunters and Snipers who the ability to handle 'em.";
@@ -61,7 +61,7 @@ L_Need_Skill2:
 
 L_Peco:
 	if (BaseJob != Job_Swordman && BaseClass == Job_Swordman && checkriding() == 0) goto L_Peco_Ok;
-	if(getskilllv(63)<1) goto L_Need_Skill3;
+	if(getskilllv("KN_RIDING")<1) goto L_Need_Skill3;
 
 	mes "[Universal Rental Npc]";
 	mes "Sorry " + strcharinfo(0) + ", but I only rent Pecopecos to Knights and Crusaders who have the ability to handle 'em.";

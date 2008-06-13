@@ -98,7 +98,7 @@ izlude_in,82,163,3	script	Shurank	733,{
 		mes "Magnum Break is ideal for use";
 		mes "when surrounded by foes, but also keep in mind that it also inflicts a little damage on its caster.";
 		next;
-		set @chk_magnum, getskilllv(7);
+		set @chk_magnum, getskilllv("SM_MAGNUM");
 		if(@chk_magnum > 5){
 			mes "[Shurank]";
 			mes "I see that you've been training in the use of Magnum Break. Although it is an awesome skill, it's not for every Swordman. Still, there's no harm in learning it.";
@@ -182,8 +182,8 @@ izlude_in,82,163,3	script	Shurank	733,{
 		mes "One Handed Sword Mastery";
 		mes "increases the damage of Daggers and One Handed Swords while Two Handed Sword Mastery increases the damage of Two Handed Swords.";
 		next;
-		set @chk_hanson, getskilllv(2);
-		set @chk_yangson, getskilllv(3);
+		set @chk_hanson, getskilllv("SM_SWORD");
+		set @chk_yangson, getskilllv("SM_TWOHAND");
 		if((@chk_hanson > 9) || (@chk_yangson > 9)){
 			mes "[Shurank]";
 			mes "Ah, from the way you handle your Sword, I see that you have mastered a Sword Mastery. I'm thoroughly impressed.";
@@ -216,7 +216,7 @@ izlude_in,82,163,3	script	Shurank	733,{
 		mes "training for the Endure";
 		mes "skill coming along?";
 		next;
-		set @chk_endure, getskilllv(8);
+		set @chk_endure, getskilllv("SM_ENDURE");
 		if(@chk_endure > 1){
 			mes "[Shurank]";
 			mes "From that gleen of toughness upon your skin, I see now that I was foolish to ask. Well done~";
@@ -246,7 +246,7 @@ izlude_in,82,163,3	script	Shurank	733,{
 		mes "learned how to use";
 		mes "the Endure skill yet?";
 		next;
-		set @chk_endure, getskilllv(8);
+		set @chk_endure, getskilllv("SM_ENDURE");
 		if((@chk_endure > 0) && (@chk_endure < 2)){
 			mes "[Shurank]";
 			mes "I see that you";
@@ -303,7 +303,7 @@ izlude_in,82,163,3	script	Shurank	733,{
 		mes "all I know about";
 		mes "the Endure skill.";
 		next;
-		set @chk_endure, getskilllv(8);
+		set @chk_endure, getskilllv("SM_ENDURE");
 		if(@chk_endure == 0){
 			mes "[Shurank]";
 			mes "As you've noticed, receiving any damage causes you to reel in pain, stunning you for an instant. Thus, rapidly attacking enemies are dangerous since it's difficult to counter or escape them.";
@@ -370,7 +370,7 @@ izlude_in,82,163,3	script	Shurank	733,{
 		mes "learning more about";
 		mes "the use of the Provoke skill?";
 		next;
-		set @chk_provoke, getskilllv(6);
+		set @chk_provoke, getskilllv("SM_PROVOKE");
 		if((@chk_provoke > 4) && (@chk_provoke < 10)){
 			mes "[Shurank]";
 			mes "Ah, I see that you have a fairly good understanding of the Provoke skill. Let me reward you in this small way for your efforts.";
@@ -408,7 +408,7 @@ izlude_in,82,163,3	script	Shurank	733,{
 		mes "in the use of the Provoke";
 		mes "skill been progressing?";
 		next;
-		set @chk_provoke, getskilllv(6);
+		set @chk_provoke, getskilllv("SM_PROVOKE");
 		if((@chk_provoke > 0) && (@chk_provoke < 5)){
 			mes "[Shurank]";
 			mes "Ah, now I can see that you";
@@ -473,7 +473,7 @@ izlude_in,82,163,3	script	Shurank	733,{
 		mes "Well, now that we taken care";
 		mes "of that, let me continue your instruction on Swordman skills. This time, we'll cover Provoke.";
 		next;
-		set @chk_provoke, getskilllv(6);
+		set @chk_provoke, getskilllv("SM_PROVOKE");
 		if(@chk_provoke == 0){
 			mes "[Shurank]";
 			mes "You haven't";
@@ -613,7 +613,7 @@ izlude_in,82,163,3	script	Shurank	733,{
 		mes "it comes to damage, you must be";
 		mes "able to both take it and dish it out.";
 		next;
-		set @chk_hp, getskilllv(4);
+		set @chk_hp, getskilllv("SM_RECOVERY");
 		if(@chk_hp == 0){
 			mes "[Shurank]";
 			mes "But judging from that";
@@ -669,7 +669,7 @@ izlude_in,82,163,3	script	Shurank	733,{
 		mes "if you want me to acknowledge";
 		mes "you as a fellow Swordman.";
 		next;
-		set @chk_bash, getskilllv(5);
+		set @chk_bash, getskilllv("SM_BASH");
 		if(@chk_bash == 10){
 			mes "[Shurank]";
 			mes "Those calluses...!";
@@ -695,7 +695,7 @@ izlude_in,82,163,3	script	Shurank	733,{
 		mes "Bash. If you want to grow as a Swordman, you will have great";
 		mes "need to master this skill.";
 		next;
-		set @chk_bash, getskilllv(5);
+		set @chk_bash, getskilllv("SM_BASH");
 		if((@chk_bash > 4) && (@chk_bash < 10)){
 			mes "[Shurank]";
 			mes "Hm. It doesn't look like you've gained mastery of Bash, but it seems like you're trying hard.";
@@ -740,7 +740,7 @@ izlude_in,82,163,3	script	Shurank	733,{
 		mes "Have you been learning";
 		mes "the art of using Bash? I fervently believe that the Bash skill is the essense of Swordmanship!";
 		next;
-		set @chk_bash, getskilllv(5);
+		set @chk_bash, getskilllv("SM_BASH");
 		if((@chk_bash > 0) && (@chk_bash < 5)){
 			mes "[Shurank]";
 			mes "I see that you understand";
@@ -830,7 +830,7 @@ izlude_in,82,163,3	script	Shurank	733,{
 		mes "fundamentals, the first of";
 		mes "which is the ^5D478BBash^000000 skill.";
 		next;
-		set @chk_bash, getskilllv(5);
+		set @chk_bash, getskilllv("SM_BASH");
 		if(@chk_bash == 0){
 			mes "[Shurank]";
 			mes "^333333*Gasp*^000000";

@@ -928,7 +928,7 @@ OnGuardianDied:
 		next;
 		switch(select("Use Storage:Use Guild Storage:Use Warp Service:Rent a Cart:Cancel")) {
 		case 1:
-			if (basicskillcheck() && getskilllv(1) < 6) {
+			if (basicskillcheck() && getskilllv("NV_BASIC") < 6) {
 				mes "[Kafra staff]";
 				mes "I am sorry but you have to be at least Novice skill level 6 if you want to use the storage.";
 			}

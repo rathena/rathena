@@ -2637,7 +2637,7 @@ arug_cas02,354,326,3	script	Kafra Employee#aru02	117,{
 		next;
 		switch(select("Use Storage:Use Warp Service:Rent Pushcart:Cancel")) {
 		case 1:
-			if (basicskillcheck() && getskilllv(1) < 6) {
+			if (basicskillcheck() && getskilllv("NV_BASIC") < 6) {
 				mes "[Kafra Employee]";
 				mes "I'm so sorry, but you must";
 				mes "have at least Novice Skill";
