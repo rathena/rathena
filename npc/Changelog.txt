@@ -1,6 +1,9 @@
 Date		Added
 ======
 
+2008/06/13
+	* Fixed stripped hairband and blue hairband checking the wrong amount of items, bugreport:1674 [Brainstorm]
+
 2008/06/08
 	* Fixed 4 bugs: blacksmith.txt. Added a garbage variable to F_ClearGarbage [Lupus]
 	* Fixed one of Einbroch (east) kafras not displaying a name, bugreport:857

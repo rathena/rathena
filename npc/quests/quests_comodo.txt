@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88; L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.5a
+//= 1.5b
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -26,6 +26,7 @@
 //= 1.4 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
 //= 1.5 Rescripted Headgear Quests 1 to Aegis 10.3 Standards. [Samuray22]
 //= 1.5a Fixed a bad countitem. (bugreport:840) [Samuray22]
+//= 1.5b Fixed stripped hairband and blue hairband checking the wrong amount of items, bugreport:1674 [Brainstorm]
 //============================================================ 
 
 // Headgear Quests 1
@@ -51,9 +52,9 @@ comodo,228,159,4	script	Hair Ornament Girl	700,{
 	case 2:
 		callsub L_select,2,2233,1,746,20,0,0,5034; //Bulb Band (1) = Circlet (1) + Glass Bead (20)
 	case 3:
-		callsub L_select,3,1099,1499,0,0,0,0,5049; //Stripe Band (1) = Worn Out Prison Uniform (1500)
+		callsub L_select,3,1099,1500,0,0,0,0,5049; //Stripe Band (1) = Worn Out Prison Uniform (1500)
 	case 4:
-		callsub L_select,4,2211,1,978,1,7003,299,5052; //Blue hair band (1) = Bandana (1) + Cobaltblue Dyestuffs (1) + Anolian Skin (300)
+		callsub L_select,4,2211,1,978,1,7003,300,5052; //Blue hair band (1) = Bandana (1) + Cobaltblue Dyestuffs (1) + Anolian Skin (300)
 	}
 L_select:
 	mes "[Hair Ornament Girl]";
