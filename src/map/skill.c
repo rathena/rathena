@@ -602,7 +602,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 
 	case CR_GRANDCROSS:
 	case NPC_GRANDDARKNESS:
-		if(battle_check_undead(tstatus->race,tstatus->def_ele) || tstatus->race == RC_DEMON)
+		if(tstatus->race == RC_UNDEAD || tstatus->race == RC_DEMON)
 			sc_start(bl,SC_BLIND,100,skilllv,skill_get_time2(skillid,skilllv));
 		break;
 
@@ -713,7 +713,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 			status_change_start(bl,SC_BLIND,10000,skilllv,0,0,0,skill_get_time2(skillid,skilllv),8);
 		break;
 
-	case LK_HEADCRUSH:				/* ヘッドクラッシュ */
+	case LK_HEADCRUSH: //Headcrush has chance of causing Bleeding status, except on demon and undead element
 		if (!(battle_check_undead(tstatus->race, tstatus->def_ele) || tstatus->race == RC_DEMON))
 			sc_start(bl, SC_BLEEDING,50, skilllv, skill_get_time2(skillid,skilllv));
 		break;
@@ -3903,9 +3903,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		status_change_end(bl, SC_SILENCE	, -1 );
 		status_change_end(bl, SC_BLIND	, -1 );
 		status_change_end(bl, SC_CONFUSION, -1 );
-		//Confusion status will trigger against undead race.
-		if(tstatus->race==RC_UNDEAD)
-			sc_start(bl, SC_CONFUSION,100,1,skill_get_time2(skillid, skilllv));
 		clif_skill_nodamage(src,bl,skillid,skilllv,1);
 		break;
 
@@ -3927,7 +3924,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			status_change_end(bl, SC_STUN, -1 );
 		}
 		//Is this equation really right? It looks so... special.
-		if(battle_check_undead(tstatus->race,tstatus->def_ele) )
+		if(battle_check_undead(tstatus->race,tstatus->def_ele))
 		{
 			status_change_start(bl, SC_BLIND,
 				100*(100-(tstatus->int_/2+tstatus->vit/3+tstatus->luk/10)),

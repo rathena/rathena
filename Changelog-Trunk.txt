@@ -5,6 +5,10 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 
 2008/06/13
+	* Fixed Grandcross and darkgrandcross, should only cause blind against undead race.
+		Also confirmed that ME, evil land, sanctuary, grandcross/DGC and status recovery are versus element, not race.
+	* Removed confusion effect part from AL_CURE, it doesnt work on official anymore.
+	* Partial revert of signum crucis modification, it doesnt work against players, but work on ELEMENT undead monsters.
 	* Corrected dc_serviceforyou bonus values based on irowiki (better have fansite info than 100% guessed info).
 	* Fixed dc_humming only recieving half the bonus from dancing lessons.
 	* Fixed some skills working on undead element when they were supposed to work on undead race. [Brainstorm]
