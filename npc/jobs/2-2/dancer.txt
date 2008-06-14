@@ -15,6 +15,7 @@
 //=	No longer uses function "F_BlockHigh"
 //= 3.2a Deleted unused variables. [Samuray22]
 //= 3.3 Updated waiting room. (Removes global var) [L0ne_W0lf]
+//= 3.4 Fixed bad variables, bugreport:1685 [Brainstorm]
 //============================================================
 
 comodo,180,153,4	script	Sonotora#1	90,{
@@ -326,10 +327,10 @@ job_duncer,43,93,4	script	Aile#da	724,{
 			mes "Bring...";
 			mes "^CD688910,000 Zeny^000000,";
 			if (DANC_Q == 2) {
-				mes "^CD6889"+.@count[0]+" "+getitemname(.@items[0])+"^000000,";
-				mes "^CD6889"+.@count[1]+" "+getitemname(.@items[1])+"^000000,";
-				mes "^CD6889"+.@count[2]+" "+getitemname(.@items[2])+"^000000 and";
-				mes "^CD6889"+.@count[3]+" "+getitemname(.@items[3])+"^000000.";
+				mes "^CD6889"+.@count[0]+" "+getitemname(.@item[0])+"^000000,";
+				mes "^CD6889"+.@count[1]+" "+getitemname(.@item[1])+"^000000,";
+				mes "^CD6889"+.@count[2]+" "+getitemname(.@item[2])+"^000000 and";
+				mes "^CD6889"+.@count[3]+" "+getitemname(.@item[3])+"^000000.";
 			}
 			else if (DANC_Q == 3) {
 				mes "^CD6889"+.@count[0]+" "+getitemname(.@item[0])+"^000000 and";
