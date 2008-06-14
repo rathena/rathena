@@ -36,6 +36,7 @@
 //= 2.11 Updated function Job_Change to jobchange based on Upper value. [Paradox924X]
 //= 2.12 Added more unused vars to F_ClearGarbage [Lupus]
 //= 2.13 Added more unused vars to F_ClearGarbage [Lupus]
+//= 2,14 Added old novice variables to F_ClearGarbage. [L0ne_W0lf]
 //============================================================ 
 
 
@@ -98,6 +99,18 @@ function	script	F_ClearGarbage	{
 
 	//due to bugs in BS quest:
 	set wizard_m2,0;
+
+	// Old Novice Ground Variables.
+	set NEW_MES_FLAG0,0;
+	set NEW_MES_FLAG1,0;
+	set NEW_MES_FLAG2,0;
+	set NEW_MES_FLAG3,0;
+	set NEW_MES_FLAG4,0;
+	set NEW_MES_FLAG5,0;
+	set NEW_LVUP0,0;
+	set NEW_LVUP1,0;
+	set NEW_JOBLVUP,0;
+
 	return;
 }
 

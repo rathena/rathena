@@ -1,5 +1,8 @@
 Date	Added
 
+2008/06/14
+	* Rev. 12833 Uncommented all novice map, and added mapflags. [L0ne_W0lf]
+	* Additionally; changed starting map from new_zone to new_1-1.
 2008/06/06
 	* Rev. 12761 Added mapflags in preparation for Monster Races. [L0ne_W0lf]
 2008/06/01

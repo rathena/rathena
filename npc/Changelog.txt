@@ -1,6 +1,15 @@
 Date		Added
 ======
-
+2008/06/14
+	* Rev. 12833 Large update to the novice grounds. Fixed bugreport:1666 [L0ne_W0lf]
+	- Updated notice ground warps to reflect the above map-usage change.
+	- Additionally; NPCs now give EXP (base/job) dependant on your level.
+	- All prior novice ground progress will be lost, and variables cleared.
+	- NPCs give class specific items, but not the soulbound ones, yet.
+	- Added all the old novice training ground vars to F_ClearGarbage
+	- Fixed the mob count for the novice ground maps.
+	* Fixed a bug in some Gunslinger skills, when weapon ids changed [Zephiris]
+	* Little cleanup in and a bug fix in guild2 scripts.
 2008/06/13
 	* Updated moscovia.txt inn.txt mosk_dun.txt shops.txt from jA
 	* Converted getskilllv and skill commands integers to strings. Follow up on r12814

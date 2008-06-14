@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Athena (1.0)
 //===== Current Version: =====================================
-//= 1.8
+//= 2.0
 //===== Compatible With: =====================================
 //= Any Athena Version; RO Version Ep4+
 //===== Description: =========================================
@@ -21,19 +21,20 @@
 //= 1.6 removed swordman quest map warps. They are now contained in the swordman quest. [L0ne_W0lf]
 //= 1.7 Updated some 2-2 job quest related warps. [L0ne_W0lf]
 //= 1.8 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
-//= 1.9 Added Jungslinger and NInja warps. [L0ne_W0lf]
+//= 1.9 Added Gungslinger and NInja warps. [L0ne_W0lf]
+//= 2.0 Updated Novice warps to use correct maps. [L0ne_W0lf]
 //============================================================
 
 
 //==============================================================================
 //Novice
 //==============================================================================
-new_zone01,148,112,0	warp	newwarp6001	2,2,new_zone02,100,9
-new_zone02,100,6,0	warp	newwarp6002	2,2,new_zone01,144,112
-new_zone02,126,106,0	warp	newwarp6003	2,2,new_zone02,160,171
-new_zone02,156,171,0	warp	newwarp6004	2,2,new_zone02,123,106
-new_zone02,73,106,0	warp	newwarp6005	2,2,new_zone02,41,172
-new_zone02,46,172,0	warp	newwarp6006	2,2,new_zone02,78,106
+new_1-1,148,112,0	warp	newwarp6001	2,2,new_1-2,100,9
+new_1-2,100,6,0	warp	newwarp6002	2,2,new_1-1,144,112
+new_1-2,126,106,0	warp	newwarp6003	2,2,new_1-2,160,171
+new_1-2,156,171,0	warp	newwarp6004	2,2,new_1-2,123,106
+new_1-2,73,106,0	warp	newwarp6005	2,2,new_1-2,41,172
+new_1-2,46,172,0	warp	newwarp6006	2,2,new_1-2,78,106
 
 //==============================================================================
 //Thief

@@ -4,6 +4,7 @@
 //= eAthena Dev Team
 //= 1.6a added up to Hugel maps. [Lupus]
 //= 1.6b Added job_knt map. [Samuray22]
+//= 1.7 Added all novice maps. [L0ne_W0lf]
 //===== Current Version: =====================================
 
 
@@ -43,6 +44,26 @@ new_zone01	mapflag	nomemo
 new_zone02	mapflag	nomemo
 new_zone03	mapflag	nomemo
 new_zone04	mapflag	nomemo
+new_1-1	mapflag	nomemo
+new_1-2	mapflag	nomemo
+new_1-3	mapflag	nomemo
+new_1-4	mapflag	nomemo
+new_2-1	mapflag	nomemo
+new_2-2	mapflag	nomemo
+new_2-3	mapflag	nomemo
+new_2-4	mapflag	nomemo
+new_3-1	mapflag	nomemo
+new_3-2	mapflag	nomemo
+new_3-3	mapflag	nomemo
+new_3-4	mapflag	nomemo
+new_4-1	mapflag	nomemo
+new_4-2	mapflag	nomemo
+new_4-3	mapflag	nomemo
+new_4-4	mapflag	nomemo
+new_5-1	mapflag	nomemo
+new_5-2	mapflag	nomemo
+new_5-3	mapflag	nomemo
+new_5-4	mapflag	nomemo
 pay_arche	mapflag	nomemo
 payon_in01	mapflag	nomemo
 payon_in02	mapflag	nomemo

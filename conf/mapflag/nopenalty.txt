@@ -3,6 +3,7 @@
 //===== By: ==================================================
 //= eAthena Dev Team
 //= 1.2 [Lupus]
+//= 1.3 Added all novice maps. [L0ne_W0lf]
 //===== Current Version: =====================================
 
 
@@ -46,6 +47,26 @@ new_zone01	mapflag	nopenalty
 new_zone02	mapflag	nopenalty
 new_zone03	mapflag	nopenalty
 new_zone04	mapflag	nopenalty
+new_1-1	mapflag	nopenalty
+new_1-2	mapflag	nopenalty
+new_1-3	mapflag	nopenalty
+new_1-4	mapflag	nopenalty
+new_2-1	mapflag	nopenalty
+new_2-2	mapflag	nopenalty
+new_2-3	mapflag	nopenalty
+new_2-4	mapflag	nopenalty
+new_3-1	mapflag	nopenalty
+new_3-2	mapflag	nopenalty
+new_3-3	mapflag	nopenalty
+new_3-4	mapflag	nopenalty
+new_4-1	mapflag	nopenalty
+new_4-2	mapflag	nopenalty
+new_4-3	mapflag	nopenalty
+new_4-4	mapflag	nopenalty
+new_5-1	mapflag	nopenalty
+new_5-2	mapflag	nopenalty
+new_5-3	mapflag	nopenalty
+new_5-4	mapflag	nopenalty
 nif_in	mapflag	nopenalty
 pay_arche	mapflag	nopenalty
 payon	mapflag	nopenalty

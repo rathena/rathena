@@ -8,6 +8,7 @@
 //= 1.3 According to the patch, enabled Butterfly wings in the Castles [Lupus]
 //= 1.4 Enabled Butterfly wings on PvP maps. [Skotlex]
 //= 1.4a Added job_knt. [Samuray22]
+//= 1.5 Commented out new_zone entries. [L0ne_W0lf]
 //===== Current Version: =====================================
 
 // Cities ========================
@@ -34,10 +35,10 @@ lou_in02	mapflag	noreturn
 moc_castle	mapflag	noreturn
 morocc_in	mapflag	noreturn
 mosk_in	mapflag	noreturn
-new_zone01	mapflag	noreturn
-new_zone02	mapflag	noreturn
-new_zone03	mapflag	noreturn
-new_zone04	mapflag	noreturn
+//new_zone01	mapflag	noreturn
+//new_zone02	mapflag	noreturn
+//new_zone03	mapflag	noreturn
+//new_zone04	mapflag	noreturn
 nif_in	mapflag	noreturn
 payon_in01	mapflag	noreturn
 payon_in02	mapflag	noreturn
