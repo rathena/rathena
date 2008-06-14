@@ -43,6 +43,9 @@
 	2385 Recuvative_Armor		Should trigger HP/SP return with magical kills as well.
 
 =======================
+2008/06/14
+	* Fixed 5286,Pecopeco_Hairband level requeriment as reported by Lone Wolf.
+
 2008/06/13
 	* Converted skill commands integers to strings. Follow up on r12814
 
