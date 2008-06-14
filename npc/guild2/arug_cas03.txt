@@ -399,7 +399,7 @@ OnInit:
 
 arug_cas03,1,1,0	script	#aru03_gard01	-1,{
 OnEnable:
-	set .@Defence,GetCastleData("arug_cas03",3);
+	set .@defence,GetCastleData("arug_cas03",3);
 	guardian "arug_cas03",130,60,"Guardian",1899,"#aru03_gard01::OnGuardianDied"; //0;
 	if ((.@defence > 10) && (.@defence < 31)) {
 		set .MyMobCount,2;
@@ -477,7 +477,7 @@ Onreset:
 
 arug_cas03,1,2,0	script	#aru03_gard02	-1,{
 OnEnable:
-	set .@Defence,GetCastleData("arug_cas03",3);
+	set .@defence,GetCastleData("arug_cas03",3);
 	guardian "arug_cas03",156,101,"Guardian",1899,"#aru03_gard02::OnGuardianDied"; //11;
 	if ((.@defence > 10) && (.@defence < 31)) {
 		set .MyMobCount,2;

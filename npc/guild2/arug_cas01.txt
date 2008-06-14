@@ -109,7 +109,6 @@ OnClock0001:
 		monster "arug_cas01",251,369,"Treasure Chest",1943,1,"Manager#aru01_02::OnTreasureDied";
 		monster "arug_cas01",251,369,"Treasure Chest",1324,1,"Manager#aru01_02::OnTreasureDied";
 		monster "arug_cas01",253,369,"Treasure Chest",1943,1,"Manager#aru01_02::OnTreasureDied";
-		if (.@Treasure < 4) end;
 		monster "arug_cas01",254,369,"Treasure Chest",1324,1,"Manager#aru01_02::OnTreasureDied";
 		if (.@Treasure < 5) end;
 		monster "arug_cas01",255,368,"Treasure Chest",1943,1,"Manager#aru01_02::OnTreasureDied";
@@ -400,9 +399,9 @@ OnInit:
 
 arug_cas01,1,1,0	script	#aru01_gard01	-1,{
 OnEnable:
-	set .@Defence,GetCastleData("arug_cas01",3);
+	set .@defence,GetCastleData("arug_cas01",3);
 	guardian "arug_cas01",233,83,"Guardian",1899,"#aru01_gard01::OnGuardianDied"; //0;
-	if ((.@Defence > 10) && (.@Defence < 31)) {
+	if ((.@defence > 10) && (.@defence < 31)) {
 		set .MyMobCount,2;
 		guardian "arug_cas01",252,81,"Guardian",1899,"#aru01_gard01::OnGuardianDied"; //1;
 	}
@@ -478,7 +477,7 @@ Onreset:
 
 arug_cas01,1,2,0	script	#aru01_gard02	-1,{
 OnEnable:
-	set .@Defence,GetCastleData("arug_cas01",3);
+	set .@defence,GetCastleData("arug_cas01",3);
 	guardian "arug_cas01",294,210,"Guardian",1899,"#aru01_gard02::OnGuardianDied"; //11;
 	if ((.@defence > 10) && (.@defence < 31)) {
 		set .MyMobCount,2;

@@ -402,7 +402,7 @@ OnInit:
 
 schg_cas03,1,1,0	script	#sch03_gard01	-1,{
 OnEnable:
-	set .@Defence,GetCastleData("schg_cas03",3);
+	set .@defence,GetCastleData("schg_cas03",3);
 	guardian "schg_cas03",323,308,"Guardian",1899,"#sch03_gard01::OnGuardianDied"; //0;
 	if ((.@defence > 10) && (.@defence < 31)) {
 		set .MyMobCount,2;
@@ -480,7 +480,7 @@ Onreset:
 
 schg_cas03,1,2,0	script	#sch03_gard02	-1,{
 OnEnable:
-	set .@Defence,GetCastleData("schg_cas03",3);
+	set .@defence,GetCastleData("schg_cas03",3);
 	guardian "schg_cas03",338,309,"Guardian",1899,"#sch03_gard02::OnGuardianDied"; //11;
 	if ((.@defence > 10) && (.@defence < 31)) {
 		set .MyMobCount,2;
