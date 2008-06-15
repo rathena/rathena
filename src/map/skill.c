@@ -6463,6 +6463,7 @@ struct skill_unit_group* skill_unitsetting (struct block_list *src, short skilli
 			break;
 		case WZ_ICEWALL:
 			val1 = (skilllv <= 1) ? 500 : 200 + 200*skilllv;
+			val2 = map_getcell(src->m, ux, uy, CELL_GETTYPE);
 			break;
 		case HT_LANDMINE:
 		case HT_ANKLESNARE:
