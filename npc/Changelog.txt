@@ -2,6 +2,7 @@ Date		Added
 ======
 2008/06/15
 	* Fixed bad variables on dancer job quest, bugreport:1685 [Brainstorm]
+	* Yet again, updated mosk_dun.txt [Lupus]
 
 2008/06/14
 	* Rev. 12833 Large update to the novice grounds. Fixed bugreport:1666 [L0ne_W0lf]

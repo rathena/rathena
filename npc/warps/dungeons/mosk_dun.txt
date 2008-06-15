@@ -3,21 +3,16 @@
 //===== By: ==================================================
 //= $ephiroth
 //===== Current Version: =====================================
-//= 1.1
+//= 1.2
 //===== Compatible With: =====================================
 //= Any Athena Version
 //===== Description: =========================================
 //= Warp Points for Moscovia Dungeon
 //===== Additional Comments: =================================
 //= 1.0 Initial version [$ephiroth]
-//= 1.1 Updated ftom jA
+//= 1.1, 1.2 Updated from jA [$ephiroth]
 //============================================================
 
 mosk_fild02,190,257,0	warp	moscoviawarp0401	1,1,mosk_dun01,189,45
 mosk_dun02,53,220,0	warp	moscoviawarp0101	1,1,mosk_in,215,41
 mosk_dun01,189,42,0	warp	moscoviawarp0501	1,1,mosk_fild02,190,254
-mosk_dun01,200,272,0	warp	moskwarp4003	1,1,mosk_dun02,163,31
-mosk_dun02,165,28,0	warp	moskwarp4004	1,1,mosk_dun01,200,269
-
-mosk_dun02,266,117,0	warp	moskwarp4005	1,1,mosk_dun03,33,136
-mosk_dun03,30,133,0	warp	moskwarp4006	1,1,mosk_dun02,263,118
