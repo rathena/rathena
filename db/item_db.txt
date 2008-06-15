@@ -1299,7 +1299,7 @@
 2539,Commander's_Manteau,Commander's Manteau,5,,,0,,3,,1,0x0099AB1C,7,2,4,,80,1,0,{ bonus bMaxHP,50; bonus bMdef,1; bonus2 bSubRace,RC_DemiHuman,1; },{},{}
 2540,Sheriff's_Manteau,Sheriff's Manteau,5,,,0,,3,,1,0x01000000,7,2,4,,80,1,0,{ bonus bMaxHP,50; bonus bMdef,1; bonus2 bSubRace,RC_DemiHuman,1; },{},{}
 2541,Aesprika,Aesprika,5,,,400,,5,,0,0xFFFFFFFF,7,2,4,,94,0,0,{ bonus bMdef,5; bonus2 bSubEle,Ele_Neutral,30; bonus2 bSubEle,Ele_Water,30; bonus2 bSubEle,Ele_Earth,30; bonus2 bSubEle,Ele_Fire,30; bonus2 bSubEle,Ele_Wind,30; bonus2 bSubEle,Ele_Poison,30; bonus2 bSubEle,Ele_Holy,30; bonus2 bSubEle,Ele_Dark,30; bonus2 bSubEle,Ele_Ghost,30; bonus2 bSubEle,Ele_Undead,30; bonus bFlee,30; skill "AL_TELEPORT",1; bonus bUnbreakableArmor,0; },{},{}
-2542,Naght_Seiger_Manteau,Naght Seiger Flame Manteau,5,,,0,,4,,1,0xFFFFFFFE,7,2,4,,55,0,0,{ bonus bMaxHPRate,5; bonus bMdef,2; bonus bMatkRate,1; bonus2 bAddEle,Ele_Fire,2; },{},{}
+2542,Naght_Seiger_Manteau,Naght Seiger Flame Manteau,5,,,70,,4,,1,0xFFFFFFFE,7,2,4,,70,0,0,{ bonus bMaxHPRate,5; bonus bMdef,2; bonus bMatkRate,1; bonus2 bAddEle,Ele_Fire,2; },{},{}
 2543,Sylph_Manteau,Sylph Manteau,5,,,0,,9,,0,0xFFFFFFFF,7,2,4,,0,0,0,{ bonus bFlee,13; bonus2 bSubEle,Ele_Neutral,13; bonus bFlee2,1; },{},{}
 2544,Tendril_Lion's_Skin,Tendril Lion's Skin,5,0,,300,,3,,1,0x00CFDF80,2,2,4,,0,1,0,{ bonus2 bSubEle,Ele_Water,5; bonus2 bSubEle,Ele_Earth,5; bonus2 bSubRace,RC_Plant,5; bonus2 bSubRace,RC_Brute,5; },{},{}
 2545,Mushika,Mushika,5,0,,500,,2,,1,0x00008100,2,2,4,,70,1,0,{ bonus3 bAutoSpell,"AL_HEAL",1+9*(getskilllv("AL_HEAL")==10),20; },{},{}
@@ -2258,7 +2258,7 @@
 5369,Dark_Wing,Dark Wing,5,20,,100,,1,,0,0xFFFFFFFE,7,2,256,,0,1,39,{ bonus2 bAddMonsterDropItem,12279,300; },{},{}
 //5370,Orchid_Hairband,Orchid Hairband,5,,,200,,1,,0,0xFFFFFFFF,7,2,256,,0,1,376,{ bonus bInt,1; },{},{}
 5371,Judge_Cap,Judge Cap,5,,,300,,2,,0,0xFFFFFFFF,7,2,256,,0,1,377,{ bonus bLuk,1; bonus bMaxSP,30; },{},{}
-//5372,Koneko_Hat,Koneko Hat,5,,,500,,1,,0,0xFFFFFFFF,7,2,256,,0,1,378,{ bonus bDelayRate,-3; bonus bMatkRate,3; bonus bMaxSPrate,3; bonus bMdef,3; },{},{}
+5372,Koneko_Hat,Koneko Hat,5,,,500,,1,,0,0xFFFFFFFF,7,2,256,,0,1,378,{ bonus bInt,1; bonus bDelayRate,-3; bonus bMatkRate,3; bonus bMaxSPrate,3; bonus bMdef,3; },{},{}
 //5373,Dark_Randgris_Helm,Dark Randgris Helm,5,,,300,,2,,0,0xFFFFFFFF,7,2,768,,0,1,379,{ bonus bDex,4; bonus bMdef,1; },{},{}
 //5374,Baphomet_Horns,Baphomet Horns,5,,,800,,5,,0,0xFFFFFFFF,7,2,256,,0,1,380,{ bonus2 bAddRace,RC_DemiHuman,12; bonus bBaseAtk,JobLevel; },{},{}
 //5375,Orc_Hero_Headdress,Orc Hero Headdress,5,,,900,,5,,1,0xFFFFFFFF,7,2,768,,0,1,381,{ bonus bStr,3; bonus3 bAutoSpellWhenHit,"BS_OVERTHRUST",3,30; },{},{}
@@ -2269,8 +2269,8 @@
 5380,Fish_Head_Hat,Fish Head Hat,5,,,400,,1,,0,0xFFFFFFFF,7,2,256,,0,1,386,{ bonus3 bAutoSpell,"SA_FROSTWEAPON",1,20; },{},{}
 5381,SantaPoring_Cap,SantaPoring Cap,5,,,100,,2,,1,0xFFFFFFFF,7,2,256,,0,0,387,{ bonus bMdef,2; bonus2 bAddEle,Ele_Dark,3; bonus2 bSubEle,Ele_Dark,3; },{},{}
 5382,Bell_Ribbon,Bell Ribbon,5,,,200,,3,,1,0xFFFFFFFF,7,2,256,,0,1,388,{ bonus bVit,1; skill "AL_ANGELUS",1; },{},{ sc_end SC_ANGELUS; }
-5383,Hunter_Cap,Hunter Cap,5,,,250,,3,,1,0xFFFFFFFE,7,2,256,,50,1,389,{ bonus bLuk,1; },{},{}
-//5384,Twin_Pompom_By_JB,Twin Pompom By JB,5,,,100,,1,,0,0xFFFFFFFE,7,2,256,,0,1,390,{ bonus bAllStats,1; skill "WZ_ESTIMATION",1; },{},{}
+5383,Hunter_Cap,Hunter Cap,5,,,250,,3,,1,0xFFFFFFFE,7,2,256,,50,1,389,{ bonus bLuk,1; bonus2 bAddRace,RC_Brute,10; bonus2 bAddRace,RC_DemiHuman,5; },{},{}
+5384,Twin_Pompom_By_JB,Twin Pompom By JB,5,,,100,,1,,0,0xFFFFFFFE,7,2,256,,0,1,390,{ bonus bAllStats,1; skill "WZ_ESTIMATION",1; bonus3 bAutoSpell,"AL_INCAGI",1,500; },{},{}
 //5385,Yoyo_Hat,Yoyo Hat,5,,,300,,1,,0,0xFFFFFFFF,7,2,256,,20,1,391,{ skill "TF_HIDING",1; },{},{ sc_end SC_HIDING; }
 //5386,NewYear_Suit_Hat,New Year Suit Hat,5,,,70,,7,,0,0xFFFFFFFF,7,2,256,,0,0,228,{ bonus bMdef,7; bonus bFlee,7; bonus2 bAddMonsterDropItem,12198,200; },{},{}
 //5387,Nekomimi_Kafra_Headband,Nekomimi Kafra Headband,5,,,200,,1,,1,0xFFFFFFFF,7,2,256,,30,1,392,{ bonus bMdef,5; },{},{}
@@ -2360,9 +2360,9 @@
 7056,Payroll_Of_Kafra,Payment Statement for Kafra Employee,3,1,,50,,,,,,,,,,,,,{},{},{}
 7057,Gallar_Horn,Gjallar,3,1,,500,,,,,,,,,,,,,{},{},{}
 7058,Gullraifnir,Gleipnir,3,1,,500,,,,,,,,,,,,,{},{},{}
-7059,Cargo_Free_Ticket,Free Ticket for Kafra Storage,3,1,,10,,,,,,,,,,,,,{},{},{}
-7060,Warp_Free_Ticket,Free Ticket for Kafra Transportation,3,1,,10,,,,,,,,,,,,,{},{},{}
-7061,Cart_Free_Ticket,Free Ticket for the Cart Service,3,1,,10,,,,,,,,,,,,,{},{},{}
+7059,Cargo_Free_Ticket,Free Ticket for Kafra Storage,3,1,,0,,,,,,,,,,,,,{},{},{}
+7060,Warp_Free_Ticket,Free Ticket for Kafra Transportation,3,1,,0,,,,,,,,,,,,,{},{},{}
+7061,Cart_Free_Ticket,Free Ticket for the Cart Service,3,1,,0,,,,,,,,,,,,,{},{},{}
 7062,Broken_Turtle_Shell,Broken Turtle Shell,3,20,,10,,,,,,,,,,,,,{},{},{}
 7063,Soft_Feather,Soft Feather,3,280,,10,,,,,,,,,,,,,{},{},{}
 7064,Dragon_Fly_Wing,Wing of Dragonfly,3,520,,10,,,,,,,,,,,,,{},{},{}
@@ -3726,7 +3726,7 @@
 13410,Gladiator_Blade,Gladiator Blade,4,0,,0,115,,1,0,0x020654E3,7,2,2,3,80,1,2,{ bonus bStr,1; bonus bAgi,1; bonus2 bAddRace,RC_DemiHuman,75; bonus bUnbreakableWeapon,0; },{},{}
 13411,Gladiator_Blade_,Gladiator Blade,4,0,,0,115,,1,0,0x020654E3,7,2,2,3,80,1,2,{ bonus bStr,1; bonus bAgi,1; bonus2 bAddRace,RC_DemiHuman,75; bonus bMatkRate,10; bonus bUnbreakableWeapon,0; },{},{}
 13412,Naght_Seiger_Twin_Edge,Naght Seiger Twin Edge,4,0,,1500,150,,1,3,0x000654E2,2,2,2,4,75,1,2,{ bonus bAtkEle,Ele_Water; skill "MG_FROSTDIVER",5; },{},{}
-13413,Naght_Seiger_Twin_Edge_,Naght Seiger Twin Edge,4,0,,1500,160,,1,3,0x000654E2,2,2,2,4,75,1,2,{ bonus bAtkEle,Ele_Fire; skill "WZ_METEOR",5; },{},{}
+13413,Naght_Seiger_Twin_Edge_,Naght Seiger Twin Edge,4,0,,1500,160,,1,3,0x000654E2,2,2,2,4,75,1,2,{ bonus bAtkEle,Ele_Fire; skill "WZ_METEOR",3; },{},{}
 // More Cash Shop Items
 13500,Insurance60_Box,Insurance60 Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14500,10; },{},{}
 13501,Assorted_Scroll_Box,Assorted Scroll Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
