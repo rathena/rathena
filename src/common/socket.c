@@ -1204,7 +1204,9 @@ void socket_init(void)
 			return;
 		}
 	}
-#elif defined(HAVE_SETRLIMIT)
+#elif defined(HAVE_SETRLIMIT) && !defined(CYGWIN)
+	// NOTE: getrlimit and setrlimit have bogus behaviour in cygwin.
+	//       "Number of fds is virtually unlimited in cygwin" (sys/param.h)
 	{// set socket limit to FD_SETSIZE
 		struct rlimit rlp;
 		if( 0 == getrlimit(RLIMIT_NOFILE, &rlp) )
@@ -1215,8 +1217,13 @@ void socket_init(void)
 				rlp.rlim_max = FD_SETSIZE;
 				if( 0 != setrlimit(RLIMIT_NOFILE, &rlp) )
 				{// failed
+					// set to maximum allowed
 					getrlimit(RLIMIT_NOFILE, &rlp);
-					ShowWarning("socket_init: %s - failed to set socket limit to %d (current limit %d).\n", strerror(errno), FD_SETSIZE, (int)rlp.rlim_cur);
+					rlp.rlim_cur = rlp.rlim_max;
+					setrlimit(RLIMIT_NOFILE, &rlp);
+					// report limit
+					getrlimit(RLIMIT_NOFILE, &rlp);
+					ShowWarning("socket_init: failed to set socket limit to %d (current limit %d).\n", FD_SETSIZE, (int)rlp.rlim_cur);
 				}
 			}
 		}

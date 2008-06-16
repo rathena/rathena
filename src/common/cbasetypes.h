@@ -33,6 +33,10 @@
 #define MINGW
 #endif
 
+#if (defined(__CYGWIN__) || defined(__CYGWIN32__)) && !defined(CYGWIN)
+#define CYGWIN
+#endif
+
 // __APPLE__ is the only predefined macro on MacOS X
 #if defined(__APPLE__)
 #define __DARWIN__
