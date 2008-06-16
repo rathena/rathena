@@ -43,6 +43,10 @@
 	2385 Recuvative_Armor		Should trigger HP/SP return with magical kills as well.
 
 =======================
+2008/06/17
+	* Added Mobs for the New Orc Dungeon Instance.
+	* Changed Ep. 13.1 Monster to the correct IDs.
+
 2008/06/16
 	* Fixed 1425,Assaulter's_Spear using BaseClass instead of BaseJob, bugreport:1694
 	* Fixed missing capital M on Silver Tiara script.
