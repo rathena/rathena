@@ -43,6 +43,10 @@
 	2385 Recuvative_Armor		Should trigger HP/SP return with magical kills as well.
 
 =======================
+2008/06/16
+	* Fixed 1425,Assaulter's_Spear using BaseClass instead of BaseJob, bugreport:1694
+	* Fixed missing capital M on Silver Tiara script.
+
 2008/06/15
 	* Fixed the next items:
 	- Naght Seiger Twin Edge Fixed Level Meteor Storm to 3.
@@ -51,6 +55,7 @@
 	- Free Ticket for Kafra Storage, Free Ticket for Kafra Transportation, Free Ticket for the Cart Service Weight: 0
 	- Hunter Cap Bonus damage VS Brute and Demi human monster
 	- Koneko Hat Bonus INT + 1
+
 2008/06/14
 	* Fixed 5286,Pecopeco_Hairband level requeriment as reported by Lone Wolf.
 
