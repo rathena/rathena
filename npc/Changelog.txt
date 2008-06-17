@@ -1,6 +1,7 @@
 Date		Added
 ======
 2008/06/17
+	* Rev. 12846 Fixed end timer in Turbo Track Solo mode not enabling warp. (bugreport:1682) [L0ne_W0lf]
 	* Rev. 12845 Corrected bugs in the updated novice grounds. [L0ne_W0lf]
 	- Fixed Entrance Guard clearing vars. (bugreport:1695)
 	- Added Some duplicate NPCs for the combat training.
