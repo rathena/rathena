@@ -35,7 +35,7 @@ extern char mapindex_cfgfile[80];
 #define MAP_RACHEL "rachel"
 #define MAP_VEINS "veins"
 #define MAP_JAIL "sec_pri"
-#define MAP_NOVICE "new_zone01"
+#define MAP_NOVICE "new_1-1"
 #define MAP_MOSCOVIA "moscovia"
 
 const char* mapindex_getmapname(const char* string, char* output);

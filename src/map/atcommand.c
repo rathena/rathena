@@ -2251,7 +2251,7 @@ int atcommand_go(const int fd, struct map_session_data* sd, const char* command,
 		town = 13;
 	} else if (strncmp(map_name, "louyang", 3) == 0) {
 		town = 14;
-	} else if (strncmp(map_name, "new_zone01", 3) == 0 ||
+	} else if (strncmp(map_name, "new_1-1", 3) == 0 ||
 	           strncmp(map_name, "startpoint", 3) == 0 ||
 	           strncmp(map_name, "begining", 3) == 0) {
 		town = 15;
