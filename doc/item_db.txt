@@ -115,8 +115,8 @@ View: For normal items, defines a replacement view-sprite for the item (eg:
 		16: Katars
 		17: Revolvers
 		18: Rifles
-		19: Shotguns
-		20: Gatling guns
+		19: Gatling guns
+		20: Shotguns
 		21: Grenade launchers
 		22: Fuuma Shurikens
 
