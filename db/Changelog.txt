@@ -44,6 +44,7 @@
 
 =======================
 2008/06/17
+	* REALLY swapped the Shotgun/Gatling gun columns in job_db1.txt [ultramage]
 	* Added Mobs for the New Orc Dungeon Instance.
 	* Changed Ep. 13.1 Monster to the correct IDs.
 
