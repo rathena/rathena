@@ -1,9 +1,13 @@
 Date		Added
 ======
+2008/06/17
+	* Rev. 12845 Corrected bugs in the updated novice grounds. [L0ne_W0lf]
+	- Fixed Entrance Guard clearing vars. (bugreport:1695)
+	- Added Some duplicate NPCs for the combat training.
+	- Corrected bug in Hanson's dialog. (bugreport:1703)
 2008/06/15
 	* Fixed bad variables on dancer job quest, bugreport:1685 [Brainstorm]
 	* Yet again, updated mosk_dun.txt [Lupus]
-
 2008/06/14
 	* Rev. 12833 Large update to the novice grounds. Fixed bugreport:1666 [L0ne_W0lf]
 	- Updated notice ground warps to reflect the above map-usage change.

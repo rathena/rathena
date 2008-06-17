@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Dr.Evil & MasterOfMuppets
 //===== Current Version: ===================================== 
-//= 1.8
+//= 1.9
 //===== Compatible With: ===================================== 
 //= eAthena SVN 3422+(Requires jA Script System)
 //===== Description: ========================================= 
@@ -14,6 +14,9 @@
 //= 1.8 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
 //=     NPCs are not backwards compatable, and will remove
 //=     old variables used in the previous novice grounds.
+//= 1.9 Fixed problem with Hanson's dialog. (bugreport:1703) [L0ne_W0lf]
+//=     Fixed Entrance Guard clearing vars. (bugreport:1695)
+//=     Added duplicate NPCs to combat training maps.
 //============================================================ 
 
 // Bulletin Board
@@ -2506,14 +2509,6 @@ new_1-2,38,182,3	script	Entrance Guard#nv	92,{
 			getitem 611,2; //Spectacles
 			getitem 569,300; //Novice_Potion
 			close2;
-			set nov_1st_cos,0;
-			set nov_2nd_cos,0;
-			set nov_3_swordman,0;
-			set nov_3_archer,0;
-			set nov_3_thief,0;
-			set nov_3_magician,0;
-			set nov_3_acolyte,0;
-			set nov_3_merchant,0;
 			savepoint "new_1-2",23,188;
 			warp "new_1-3",96,21;
 			end;
@@ -2619,7 +2614,7 @@ new_1-2,38,182,3	script	Entrance Guard#nv	92,{
 }
 
 //Teleport NPC
-new_1-3,95,30,4	script	Trainer#nv	84,{
+new_1-3,95,30,4	script	Trainer#nv1::NovHoffman	84,{
 	mes "[Hoffman]";
 	mes "Hey there~";
 	mes "I'm here to provide";
@@ -2646,12 +2641,17 @@ new_1-3,95,30,4	script	Trainer#nv	84,{
 		mes "I see, then let me guide";
 		mes "you to a training ground that has stronger monsters. May God be with you...";
 		next;
-		if (rand(2)) {
-			warp "new_2-3",96,21;
+		if (strnpcinfo(2) == "nv1") {
+			if (rand(2)) {
+				warp "new_2-3",96,21;
+			}
+			else {
+				warp "new_3-3",96,21;
+			}
 		}
 		else {
-			warp "new_3-3",96,21;
-		}
+			warp "new_1-3",96,21;
+		}	
 		end;
 	case 2:
 		mes "[Hoffman]";
@@ -2661,11 +2661,21 @@ new_1-3,95,30,4	script	Trainer#nv	84,{
 		mes "be careful, it can get";
 		mes "pretty difficult...";
 		next;
-		if (rand(2)) {
-			warp "new_4-3",96,21;
+		if (strnpcinfo(2) == "nv1" || strnpcinfo(2) == "nv2" || strnpcinfo(2) == "nv3") {
+			if (rand(2)) {
+				warp "new_4-3",96,21;
+			}
+			else {
+				warp "new_5-3",96,21;
+			}
 		}
 		else {
-			warp "new_5-3",96,21;
+			if (rand(2)) {
+				warp "new_2-3",96,21;
+			}
+			else {
+				warp "new_3-3",96,21;
+			}
 		}
 		end;
 	case 3:
@@ -2677,7 +2687,12 @@ new_1-3,95,30,4	script	Trainer#nv	84,{
 	}
 }
 
-new_1-3,96,174,3	script	Test Examiner#nv	85,{
+new_2-3,95,30,4	duplicate(NovHoffman)	Trainer#nv2	84
+new_3-3,95,30,4	duplicate(NovHoffman)	Trainer#nv3	84
+new_4-3,95,30,4	duplicate(NovHoffman)	Trainer#nv4	84
+new_5-3,95,30,4	duplicate(NovHoffman)	Trainer#nv5	84
+
+new_1-3,96,174,3	script	Test Examiner#nv1::NovKeyman	85,{
 	mes "[Keyman]";
 	mes "Good!!";
 	mes "Now you know how to fight";
@@ -2702,6 +2717,11 @@ new_1-3,96,174,3	script	Test Examiner#nv	85,{
 		close;
 	}
 }
+
+new_2-3,96,174,3	duplicate(NovKeyman)	Test Examiner#nv2	85
+new_3-3,96,174,3	duplicate(NovKeyman)	Test Examiner#nv3	85
+new_4-3,96,174,3	duplicate(NovKeyman)	Test Examiner#nv4	85
+new_5-3,96,174,3	duplicate(NovKeyman)	Test Examiner#nv5	85
 
 //Potato Merchant
 new_1-2,28,185,4	shop	Potato Merchant	90,516:15
@@ -3327,7 +3347,7 @@ new_1-4,100,29,1	script	Hanson#nv	46,{
 					warp "izlude_in",74,167;
 					end;
 				case 2:
-					callsub "S_UserJobchoice";
+					callsub S_UserJobchoice;
 					end;
 				}
 			}
@@ -3400,7 +3420,7 @@ new_1-4,100,29,1	script	Hanson#nv	46,{
 					warp "geffen_in",163,98;
 					end;
 				case 2:
-					callsub "S_UserJobchoice";
+					callsub S_UserJobchoice;
 					end;
 				}
 			}
@@ -3471,7 +3491,7 @@ new_1-4,100,29,1	script	Hanson#nv	46,{
 					warp "alberta_in",62,44;
 					end;
 				case 2:
-					callsub "S_UserJobchoice";
+					callsub S_UserJobchoice;
 					end;
 				}
 			}
@@ -3539,7 +3559,7 @@ new_1-4,100,29,1	script	Hanson#nv	46,{
 					warp "moc_ruins",155,44;
 					end;
 				case 2:
-					callsub "S_UserJobchoice";
+					callsub S_UserJobchoice;
 					end;
 				}
 			}
@@ -3608,7 +3628,7 @@ new_1-4,100,29,1	script	Hanson#nv	46,{
 					warp "payon_in02",64,65;
 					end;
 				case 2:
-					callsub "S_UserJobchoice";
+					callsub S_UserJobchoice;
 					end;
 				}
 			}
@@ -3680,7 +3700,7 @@ new_1-4,100,29,1	script	Hanson#nv	46,{
 					warp "prt_church",172,19;
 					end;
 				case 2:
-					callsub "S_UserJobchoice";
+					callsub S_UserJobchoice;
 					end;
 				}
 			}
