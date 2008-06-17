@@ -2177,7 +2177,7 @@
 5283,Chick_Hat,Chick Hat,5,,10,100,,1,,0,0xFFFFFFFF,7,2,256,,10,0,311,{ bonus bLuk,2; bonus bMaxHP,50; bonus bMaxSP,50; bonus bDoubleRate,10; bonus2 bSubRace,RC_DemiHuman,3; bonus2 bSubRace,RC_Brute,3; },{},{}
 5284,Water_Lily_Crown,Water Lily Crown,5,,10,200,,0,,1,0xFFFFFFFF,7,2,256,,20,0,312,{ bonus bDex,1; bonus bAgi,1; bonus bHPrecovRate,5; bonus bSPrecovRate,3; },{},{}
 5285,Vane_Hairpin,Vane Hairpin,5,,10,300,,3,,1,0xFFFFFFFF,7,2,256,,30,0,313,{ bonus bAgi,2; },{},{}
-5286,Pecopeco_Hairband,Pecopeco Hairband,5,,10,0,,3,,0,0xFFFFFFFF,7,2,256,,70,1,314,{ bonus bSpeedRate,25; bonus bAspdRate,5; bonus bCastrate,-5; },{},{}
+5286,Pecopeco_Hairband,Pecopeco Hairband,5,,10,0,,3,,0,0xFFFFFFFF,7,2,256,,70,1,314,{ bonus bSpeedRate,25; bonus bAspdRate,-10; bonus bCastrate,25; },{},{}
 5287,Summer_Hat,Summer Hat,5,,10,200,,1,,1,0xFFFFFFFF,7,2,256,,30,0,315,{ bonus bVit,1; },{},{}
 5288,Red_Glasses,Red Glasses,5,,10,0,,1,,0,0xFFFFFFFF,7,2,512,,0,0,316,{ bonus bInt,1; },{},{}
 5289,Vanilmirth_Hat,Vanilmirth Hat,5,,10,100,,0,,0,0xFFFFFFFF,7,2,256,,30,0,317,{ bonus bUnbreakableArmor,0; bonus3 bAutoSpell,"MG_FIREBOLT",1,10; bonus3 bAutoSpell,"MG_COLDBOLT",1,10; bonus3 bAutoSpell,"MG_LIGHTNINGBOLT",1,10; bonus3 bAutoSpell,"WZ_EARTHSPIKE",1,10; bonus bMdef,5; },{},{}

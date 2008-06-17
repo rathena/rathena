@@ -44,6 +44,7 @@
 
 =======================
 2008/06/17
+	* Rev. 12848 Pecopeco_hairband bonus is again ASPD -10%, Cast Rate -25%. [L0ne_W0lf]
 	* REALLY swapped the Shotgun/Gatling gun columns in job_db1.txt [ultramage]
 	* Added Mobs for the New Orc Dungeon Instance.
 	* Changed Ep. 13.1 Monster to the correct IDs.
