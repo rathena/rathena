@@ -283,7 +283,7 @@ struct TimerData* get_timer(int tid)
 /// Returns 0 on success, < 0 on failure.
 int delete_timer(int tid, TimerFunc func)
 {
-	if( tid <= 0 || tid >= timer_data_num ) {
+	if( tid < 0 || tid >= timer_data_num ) {
 		ShowError("delete_timer error : no such timer %d (%08x(%s))\n", tid, (int)func, search_timer_func_list(func));
 		return -1;
 	}

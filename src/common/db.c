@@ -2052,7 +2052,7 @@ static int db_obj_vdestroy(DBMap* self, DBApply func, va_list args)
 	if (db->free_lock)
 		ShowWarning("db_vdestroy: Database is still in use, %u lock(s) left. Continuing database destruction.\n"
 				"Database allocated at %s:%d\n",
-				db->alloc_file, db->alloc_line, db->free_lock);
+				db->free_lock, db->alloc_file, db->alloc_line);
 
 #ifdef DB_ENABLE_STATS
 	switch (db->type) {
