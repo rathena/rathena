@@ -7059,6 +7059,10 @@ int clif_refresh(struct map_session_data *sd)
 		clif_send_homdata(sd,0,0);
 	map_foreachinrange(clif_getareachar,&sd->bl,AREA_SIZE,BL_ALL,sd);
 	clif_weather_check(sd);
+	if( pc_issit(sd) )
+		clif_sitting(&sd->bl);
+	if( pc_isdead(sd) ) //When you refresh, resend the death packet.
+		clif_clearunit_area(&sd->bl,1);
 
 #ifndef TXT_ONLY
 	mail_clear(sd);
