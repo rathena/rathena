@@ -5,6 +5,8 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2008/06/18
 	* Added a fix for refresh properly displaying dead and sitting players. [SketchyPhoenix]
+	* Fixed basilica behavior not knocking back monsters 2 cells should one attempt to enter the field.
+	* Fixed cash shop not using points to make up the cash difference when purchasing an item.
 2008/06/17
 	* Forgot to commit source modification from r12833 (Updated Novice grounds.) [L0ne_W0lf]
 2008/06/16

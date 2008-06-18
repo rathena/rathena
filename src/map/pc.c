@@ -2816,21 +2816,10 @@ void pc_paycash(struct map_session_data *sd, int price, int points)
 	int cash = price - points;
 	nullpo_retv(sd);
 
-	if( cash > 0 )
-	{
-		pc_setaccountreg(sd,"#CASHPOINTS",sd->cashPoints - cash);
-
-		sprintf(output, "Used %d cash points. %d points remaining.", cash, sd->cashPoints);
-		clif_disp_onlyself(sd, output, strlen(output));
-	}
-
-	if( points > 0 )
-	{
-		pc_setaccountreg(sd,"#KAFRAPOINTS",sd->kafraPoints - points);
-
-		sprintf(output, "Used %d kafra points. %d points remaining.", points, sd->kafraPoints);
-		clif_disp_onlyself(sd, output, strlen(output));
-	}
+	pc_setaccountreg(sd,"#CASHPOINTS",sd->cashPoints - cash);
+	pc_setaccountreg(sd,"#KAFRAPOINTS",sd->kafraPoints - points);
+	sprintf(output, "Used %d kafra points and %d cash points. %d kafra and %d cash points remaining.", points, cash, sd->kafraPoints, sd->cashPoints);
+	clif_disp_onlyself(sd, output, strlen(output));
 }
 
 void pc_getcash(struct map_session_data *sd, int cash, int points)

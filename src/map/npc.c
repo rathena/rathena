@@ -1091,9 +1091,7 @@ int npc_cashshop_buy(struct map_session_data *sd, int nameid, int amount, int po
 	if( points > price )
 		points = price;
 
-	if( sd->cashPoints < price - points )
-		return 6;
-	if( sd->kafraPoints < points )
+	if( (sd->kafraPoints < points) || (sd->cashPoints < price - points) )
 		return 6;
 
 	pc_paycash(sd, price, points);
