@@ -220,7 +220,13 @@ static int unit_walktoxy_timer(int tid, unsigned int tick, int id, intptr data)
 
 	if(i > 0)
 		ud->walktimer = add_timer(tick+i,unit_walktoxy_timer,id,i);
-	else if(ud->state.running) {
+		
+	if (map_getcell(bl->m,x,y,CELL_CHKBASILICA)) {
+		skill_blown(bl,bl,2,unit_getdir(bl),0);
+		clif_fixpos(bl);
+	}
+	
+	if(ud->state.running) {
 		//Keep trying to run.
 		if (!unit_run(bl))
 			ud->state.running = 0;
