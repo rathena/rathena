@@ -3942,6 +3942,9 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				clif_skill_fail(sd,skillid,0,0);
 				break;
 			}
+			if (dstmd && dstmd->class_ == MOBID_EMPERIUM) {
+				break;
+			}
 			clif_skill_nodamage(src,bl,skillid,skilllv,1);
 			clif_skill_estimation((struct map_session_data *)src,bl);
 		}
