@@ -1401,7 +1401,7 @@ int delete_char_sql(int char_id)
 
 	/* remove homunculus */ 
 	if (hom_id)
-		inter_delete_homunculus(hom_id);
+		mapif_homunculus_delete(hom_id);
 
 	/* delete char's friends list */
 	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `char_id` = '%d'", friend_db, char_id) )
