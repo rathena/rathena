@@ -5,6 +5,7 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2008/06/19
 	* Added Sirius_White's fix for sense working on emperium. (bugreport: 1679) [SketchyPhoenix]
+	* Fixed SC_CHANGEUNDEAD behavior: Blessing and Increase AGI deals 1 damage and does not apply buffs to those inflicted by it.
 2008/06/18
 	* Added a fix for refresh properly displaying dead and sitting players. [SketchyPhoenix]
 	* Fixed basilica behavior not knocking back monsters 2 cells should one attempt to enter the field.

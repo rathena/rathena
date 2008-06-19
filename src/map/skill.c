@@ -278,8 +278,11 @@ int skill_calc_heal (struct block_list *src, struct block_list *target, int skil
 }
 
 // Making plagiarize check its own function [Aru]
-int can_copy (struct map_session_data *sd, int skillid)
+int can_copy (struct map_session_data *sd, int skillid, struct block_list* bl)
 {
+	struct status_change* sc;
+	sc = status_get_sc(bl);
+	
 	// Never copy NPC/Wedding Skills
 	if (skill_get_inf2(skillid)&(INF2_NPC_SKILL|INF2_WEDDING_SKILL))
 		return 0;
@@ -293,6 +296,10 @@ int can_copy (struct map_session_data *sd, int skillid)
 			return (sd->status.class_ == JOB_STALKER);
 	}
 
+	//don't copy increase agi or blessing from someone who is inflicted with sc_changeundead
+	if ((skillid == AL_INCAGI || skillid == AL_BLESSING) && sd->sc.data[SC_CHANGEUNDEAD])
+		return 0;
+		
 	return 1;
 }
 
@@ -1465,6 +1472,9 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 	}
 
 	damage = dmg.damage + dmg.damage2;
+	
+	if (skillid == AL_INCAGI || skillid == AL_BLESSING && tsd->sc.data[SC_CHANGEUNDEAD])
+		damage = 1;
 
 	if (damage > 0 && dmg.flag&BF_WEAPON && src != bl && src == dsrc &&
 		skillid != WS_CARTTERMINATION) // FIXME(?): Quick and dirty check, but HSCR does bypass Shield Reflect... so I make it bypass the whole reflect thing [DracoRPG]
@@ -1611,7 +1621,7 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 		&& damage < tsd->status.hp)
 	{	//Updated to not be able to copy skills if the blow will kill you. [Skotlex]
 		if ((!tsd->status.skill[skillid].id || tsd->status.skill[skillid].flag >= 13) &&
-			can_copy(tsd,skillid))	// Split all the check into their own function [Aru]
+			can_copy(tsd,skillid,bl))	// Split all the check into their own function [Aru]
 		{
 			int lv = skilllv;
 			if (tsd->cloneskill_id && tsd->status.skill[tsd->cloneskill_id].flag == 13){
@@ -3293,6 +3303,10 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 
 	case AL_INCAGI:
 	case AL_BLESSING:
+		if (dstsd != NULL && tsc->data[SC_CHANGEUNDEAD]) {
+			skill_attack(BF_MISC,src,src,bl,skillid,skilllv,tick,flag);
+			break;
+		}
 	case PR_SLOWPOISON:
 	case PR_IMPOSITIO:
 	case PR_LEXAETERNA:
