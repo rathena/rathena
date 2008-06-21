@@ -218,13 +218,19 @@ static int unit_walktoxy_timer(int tid, unsigned int tick, int id, intptr data)
 	else
 		i = status_get_speed(bl);
 
+	if (map_getcell(bl->m,x,y,CELL_CHKBASILICA)) {
+		skill_blown(bl,bl,2,unit_getdir(bl),0);
+		clif_fixpos(bl);
+	}
+	
 	if(i > 0)
 		ud->walktimer = add_timer(tick+i,unit_walktoxy_timer,id,i);
 	else if(ud->state.running) {
 		//Keep trying to run.
 		if (!unit_run(bl))
 			ud->state.running = 0;
-	} else if (ud->target) {
+	}
+	else if (ud->target) {
 		//Update target trajectory.
 		struct block_list *tbl = map_id2bl(ud->target);
 		if (!tbl || !status_check_visibility(bl, tbl)) {	//Cancel chase.
@@ -246,7 +252,8 @@ static int unit_walktoxy_timer(int tid, unsigned int tick, int id, intptr data)
 			unit_walktobl(bl, tbl, ud->chaserange, ud->state.walk_easy|(ud->state.attack_continue?2:0));
 			return 0;
 		}
-	} else {	//Stopped walking. Update to_x and to_y to current location [Skotlex]
+	}
+	else {	//Stopped walking. Update to_x and to_y to current location [Skotlex]
 		ud->to_x = bl->x;
 		ud->to_y = bl->y;
 		if(md && md->nd) // Tell the script engine we've finished walking (for AI pathfinding)
