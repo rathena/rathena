@@ -296,8 +296,8 @@ int can_copy (struct map_session_data *sd, int skillid, struct block_list* bl)
 			return (sd->status.class_ == JOB_STALKER);
 	}
 
-	//don't copy increase agi or blessing from someone who is inflicted with sc_changeundead
-	if ((skillid == AL_INCAGI || skillid == AL_BLESSING) && sd->sc.data[SC_CHANGEUNDEAD])
+	//Added so plagarize can't copy agi/bless if you're undead since it damages you
+	if ((skillid == AL_INCAGI || skillid == AL_BLESSING))
 		return 0;
 		
 	return 1;

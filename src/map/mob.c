@@ -2551,6 +2551,9 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 			pc_setglobalreg(mvp_sd,"killerrid",sd?sd->bl.id:0);
 			npc_event(mvp_sd,md->npc_event,0);
 		}
+		else
+			npc_event_do(md->npc_event);
+			
 		md->status.hp = 1;
 	} else if (mvp_sd) {	//lordalfa
 		pc_setglobalreg(mvp_sd,"killedrid",md->class_);
