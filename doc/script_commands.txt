@@ -4,7 +4,7 @@
 //= A reference manual for the eAthena scripting language.
 //= Commands are sorted depending on their functionality.
 //===== Version ===========================================
-//= 3.21.20080612
+//= 3.22.20080622
 //=========================================================
 //= 1.0 - First release, filled will as much info as I could
 //=       remember or figure out, most likely there are errors,
@@ -118,6 +118,8 @@
 //=       skill, addtoskill, guildskill, getskilllv, getgdskilllv, itemskill, 
 //=       petskillattack, petskillattack2, petskillsupport, skilleffect, npcskilleffect,
 //=       unitskilluseid, unitskillusepos, bonus/bonus2/bonus3/bonus4/bonus5
+//= 3.22.20080622
+//=       Extended 'set' to return the variable reference. [FlavioJS]
 //=========================================================
 
 This document is a reference manual for all the scripting commands and functions 
@@ -1107,6 +1109,8 @@ will make @x equal 100.
     
 will compute 1+5/8+9 (which is, surprisingly, 10 - remember, all numbers are 
 integer in this language) and make @x equal it.
+
+Returns the variable reference (since trunk r12870).
 
 ---------------------------------------
 
@@ -4394,7 +4398,7 @@ autoscript).
 ---------------------------------------
 
 *skill <skill id>,<level>{,<flag>};
-*skill "<skill name",<level>{,<flag>};
+*skill "<skill name>",<level>{,<flag>};
 *addtoskill <skill id>,<level>{,<flag>};
 *addtoskill "<skill name>",<level>{,<flag>};
 

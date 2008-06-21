@@ -4673,27 +4673,36 @@ BUILDIN_FUNC(input)
 	return 0;
 }
 
-/*==========================================
- * •Ï”İ’è
- *------------------------------------------*/
+/// Sets the value of a variable.
+/// The value is converted to the type of the variable.
+///
+/// set(<variable>,<value>) -> <variable>
 BUILDIN_FUNC(set)
 {
-	TBL_PC *sd=NULL;
-	int num=st->stack->stack_data[st->start+2].u.num;
-	char *name=str_buf+str_data[num&0x00ffffff].str;
-	char prefix=*name;
-	char postfix=name[strlen(name)-1];
+	TBL_PC* sd = NULL;
+	struct script_data* data;
+	int num;
+	char* name;
+	char prefix;
+	char postfix;
 
-	if( !data_isreference(script_getdata(st,2)) ){
+	data = script_getdata(st,2);
+	if( !data_isreference(data) )
+	{
 		ShowError("script:set: not a variable\n");
 		script_reportdata(script_getdata(st,2));
 		st->state = END;
 		return 1;
 	}
 
-	if(not_server_variable(prefix))
+	num = reference_getuid(data);
+	name = reference_getname(data);
+	prefix = *name;
+	postfix = (*name ? name[strlen(name)-1] : '\0');
+
+	if( not_server_variable(prefix) )
 	{
-		sd=script_rid2sd(st);
+		sd = script_rid2sd(st);
 		if( sd == NULL )
 		{
 			ShowError("script:set: no player attached for player variable '%s'\n", name);
@@ -4701,15 +4710,18 @@ BUILDIN_FUNC(set)
 		}
 	}
 
-	if( postfix=='$' ){
-		// •¶š—ñ
-		const char *str = script_getstr(st,3);
+	if( postfix == '$' )
+	{// string variable
+		const char* str = script_getstr(st,3);
 		set_reg(st,sd,num,name,(void*)str,script_getref(st,2));
-	}else{
-		// ”’l
+	}
+	else
+	{// integer variable
 		int val = script_getnum(st,3);
 		set_reg(st,sd,num,name,(void*)val,script_getref(st,2));
 	}
+	// return a copy of the variable reference
+	script_pushcopy(st,2);
 
 	return 0;
 }
