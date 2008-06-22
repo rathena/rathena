@@ -1325,12 +1325,12 @@
 2618,Matyr's_Flea_Guard,Matyr's Leash,5,2,,100,,1,,0,0xFFFFFFFE,7,2,136,,35,0,0,{ bonus bAgi,1; },{},{}
 2619,Thimble_Of_Archer,Bow Thimble,5,10000,,100,,0,,0,0x00080808,7,2,136,,65,0,0,{ bonus bLongAtkRate,3; },{},{}
 2620,Ring_Of_Rogue,Rogue's Treasure,5,10000,,100,,0,,0,0x02021040,7,2,136,,70,0,0,{ bonus bAddStealRate,1; },{},{}
-2621,Ring_,Ring,5,30000,,100,,0,,1,0xFFFFFFFE,7,2,136,,90,0,0,{ bonus bStr,1; },{},{}
-2622,Earring_,Earring,5,30000,,100,,0,,1,0xFFFFFFFE,7,2,136,,90,0,0,{ bonus bInt,1; },{},{}
-2623,Necklace_,Necklace,5,30000,,100,,0,,1,0xFFFFFFFE,7,2,136,,90,0,0,{ bonus bVit,1; },{},{}
-2624,Glove_,Glove,5,30000,,100,,0,,1,0xFFFFFFFE,7,2,136,,90,0,0,{ bonus bDex,1; },{},{}
-2625,Brooch_,Brooch,5,30000,,100,,0,,1,0xFFFFFFFE,7,2,136,,90,0,0,{ bonus bAgi,1; },{},{}
-2626,Rosary_,Rosary,5,15000,,100,,0,,1,0xFFFFFFFE,7,2,136,,90,0,0,{ bonus bMdef,3; bonus bLuk,1; },{},{}
+2621,Ring_,Ring,5,30000,,200,,0,,1,0xFFFFFFFE,7,2,136,,90,0,0,{ bonus bStr,1; },{},{}
+2622,Earring_,Earring,5,30000,,200,,0,,1,0xFFFFFFFE,7,2,136,,90,0,0,{ bonus bInt,1; },{},{}
+2623,Necklace_,Necklace,5,30000,,200,,0,,1,0xFFFFFFFE,7,2,136,,90,0,0,{ bonus bVit,1; },{},{}
+2624,Glove_,Glove,5,30000,,200,,0,,1,0xFFFFFFFE,7,2,136,,90,0,0,{ bonus bDex,1; },{},{}
+2625,Brooch_,Brooch,5,30000,,200,,0,,1,0xFFFFFFFE,7,2,136,,90,0,0,{ bonus bAgi,1; },{},{}
+2626,Rosary_,Rosary,5,15000,,200,,0,,1,0xFFFFFFFE,7,2,136,,90,0,0,{ bonus bMdef,3; bonus bLuk,1; },{},{}
 2627,Belt,Belt,5,20000,,1200,,0,,1,0xFFFFFFFF,7,2,136,,25,0,0,{},{},{}
 2628,Novice_Armlet,Novice Armlet,5,400,,200,,0,,1,0x00000001,7,2,136,,1,0,0,{ bonus bStr,1; bonus bInt,1; bonus bLuk,1; },{},{}
 2629,Magingiorde,Megingjard,5,,10,8000,,2,,0,0xFFFFFFFF,7,2,136,,94,0,0,{ bonus bStr,40; bonus bMdef,7; },{},{}
@@ -1422,7 +1422,7 @@
 2716,Librarian_Gloves,Librarian Gloves,5,,,100,,0,,1,0x00812200,7,2,136,,0,0,0,{ bonus MaxSP,20; if (getiteminfo(getequipid(EQI_HAND_R),11) == 15 && isequipped(2717)) { bonus bInt,5; bonus bMaxHP,700; bonus bAspdRate,5; } },{},{}
 2717,Pocket_Watch,Pocket Watch,5,,,100,,0,,0,0x00010204,7,2,136,,80,0,0,{},{},{}
 2718,Lunatic_Brooch,Lunatic Brooch,5,,,100,,0,,1,0x00080808,7,2,136,,65,0,0,{},{},{}
-2719,Iron_Wrist,Iron Wrist,5,,10,700,,0,,0,0x000444A2,2,2,136,,50,0,0,{ bonus2 bSkillAtk,"SM_BASH",6; bonus2 bSkillAtk,"MC_MAMMONITE",6; },{},{}
+2719,Iron_Wrist,Iron Wrist,5,,10,700,,1,,0,0x000444A2,2,2,136,,50,0,0,{ bonus2 bSkillAtk,"SM_BASH",6; bonus2 bSkillAtk,"MC_MAMMONITE",6; },{},{}
 2720,Medal_Swordman,Medalion,5,,,0,,1,,0,0x00004082,7,2,136,,70,0,0,{ bonus bAtkRate,5; bonus bMatkRate,5; bonus bHit,10; bonus bMaxHP,500; bonus bMaxSP,50; bonus2 bAddEff,Eff_Stun,100; },{},{}
 2721,Medal_Thief,Medalion,5,,,0,,1,,0,0x00021040,7,2,136,,70,0,0,{ bonus bAtkRate,5; bonus bMatkRate,5; bonus bFlee,10; bonus bMaxHP,300; bonus bMaxSP,80; bonus2 bAddEff,Eff_Poison,100; },{},{}
 2722,Medal_Acolyte,Medalion,5,,,0,,1,,0,0x00008110,7,2,136,,70,0,0,{ bonus bAtkRate,5; bonus bMatkRate,5; bonus bMdef,6; bonus bMaxHP,600; bonus2 bAddEff,Eff_Silence,100; },{},{}
@@ -1623,7 +1623,7 @@
 4172,The_Paper_Card,The Paper Card,6,,10,10,,,,,,,,2,,,,,{ bonus bCritAtkRate,20; bonus2 bSPDrainValue,-1,0; },{},{}
 4173,Demon_Pungus_Card,Demon Pungus Card,6,,10,10,,,,,,,,16,,,,,{ bonus2 bAddEffWhenHit,Eff_Sleep,600; },{},{}
 4174,Deviling_Card,Deviling Card,6,,10,10,,,,,,,,4,,,,,{ bonus2 bSubEle,Ele_Neutral,50; bonus2 bSubEle,Ele_Water,-50; bonus2 bSubEle,Ele_Earth,-50; bonus2 bSubEle,Ele_Fire,-50; bonus2 bSubEle,Ele_Wind,-50; bonus2 bSubEle,Ele_Poison,-50; bonus2 bSubEle,Ele_Holy,-50; bonus2 bSubEle,Ele_Dark,-50; bonus2 bSubEle,Ele_Ghost,-50; bonus2 bSubEle,Ele_Undead,-50; },{},{}
-4175,Poison_Toad_Card,Poisonous Toad Card,6,,10,10,,,,,,,,136,,,,,{ bonus3 bAutoSpell,"TF_POISON",1,20; bonus2 bAddSkillBlow,"TF_POISON",5; },{},{}
+4175,Poison_Toad_Card,Poisonous Toad Card,6,,10,10,,,,,,,,136,,,,,{ bonus3 bAutoSpell,"TF_POISON",1,20; },{},{}
 4176,Dullahan_Card,Dullahan Card,6,,10,10,,,,,,,,2,,,,,{ bonus bCritAtkRate,10; bonus2 bCriticalAddRace,RC_Dragon,7; },{},{}
 4177,Dryad_Card,Dryad Card,6,,10,10,,,,,,,,769,,,,,{ bonus3 bAddMonsterDropItem,993,RC_Plant,100; bonus2 bSubEle,Ele_Earth,10; },{},{}
 4178,Dragon_Tail_Card,Dragon Tail Card,6,,10,10,,,,,,,,4,,,,,{ bonus bAgi,1; bonus bFlee,10; bonus2 bSkillAtk,"AC_DOUBLE",5; bonus2 bSkillAtk,"AC_SHOWER",5; },{},{}
@@ -4207,5 +4207,5 @@
 14584,Red_Butterfly_Wing,Red Butterfly Wing,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ callfunc "F_CashCity",3; },{},{}
 14585,Blue_Butterfly_Wing,Blue Butterfly Wing,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ callfunc "F_CashCity",4; },{},{}
 // **
-14593,Mystical_Amplification_Scroll,Mystical_Amplification_Scroll,11,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill "W_MAGICPOWER",10; },{},{}
+14593,Mystical_Amplification_Scroll,Mystical_Amplification_Scroll,11,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill "HW_MAGICPOWER",10; },{},{}
 14594,Quagmire_scroll,Quagmire scroll,11,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill "WZ_QUAGMIRE",5; },{},{}

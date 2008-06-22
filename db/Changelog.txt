@@ -43,6 +43,9 @@
 	2385 Recuvative_Armor		Should trigger HP/SP return with magical kills as well.
 
 =======================
+2008/06/23
+	* Fixed / updated items to recent kRO 14593,2621-2626,4175,2719 [$ephiroth]
+
 2008/06/17
 	* Rev. 12848 Pecopeco_hairband bonus is again ASPD -10%, Cast Rate -25%. [L0ne_W0lf]
 	* REALLY swapped the Shotgun/Gatling gun columns in job_db1.txt [ultramage]
