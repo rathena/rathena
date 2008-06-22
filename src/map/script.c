@@ -7525,13 +7525,14 @@ BUILDIN_FUNC(killmonsterall)
 	if( (m=map_mapname2mapid(mapname))<0 )
 		return 0;
 	
-	if( script_hasdata(st,3) )
+	if( script_hasdata(st,3) ) {
 		if ( script_getnum(st,3) == 1 ) {
-			map_foreachinmap(buildin_killmonsterall_sub_strip,m,BL_MOB);
+			map_foreachinmap(buildin_killmonsterall_sub,m,BL_MOB);
 			return 0;
 		}
+	}
 		
-	map_foreachinmap(buildin_killmonsterall_sub,
+	map_foreachinmap(buildin_killmonsterall_sub_strip,
 		m,BL_MOB);
 	return 0;
 }
