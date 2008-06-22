@@ -1473,8 +1473,9 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 
 	damage = dmg.damage + dmg.damage2;
 	
-	if (skillid == AL_INCAGI || skillid == AL_BLESSING && tsd->sc.data[SC_CHANGEUNDEAD])
-		damage = 1;
+	if (skillid == AL_INCAGI || skillid == AL_BLESSING)
+		if (tsd->sc.data[SC_CHANGEUNDEAD])
+			damage = 1;
 
 	if (damage > 0 && dmg.flag&BF_WEAPON && src != bl && src == dsrc &&
 		skillid != WS_CARTTERMINATION) // FIXME(?): Quick and dirty check, but HSCR does bypass Shield Reflect... so I make it bypass the whole reflect thing [DracoRPG]
