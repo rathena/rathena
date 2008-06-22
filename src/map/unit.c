@@ -218,7 +218,7 @@ static int unit_walktoxy_timer(int tid, unsigned int tick, int id, intptr data)
 	else
 		i = status_get_speed(bl);
 
-	if (map_getcell(bl->m,x,y,CELL_CHKBASILICA)) {
+	if( md && map_getcell(bl->m,x,y,CELL_CHKBASILICA) ) {
 		skill_blown(bl,bl,2,unit_getdir(bl),0);
 		clif_fixpos(bl);
 	}
@@ -677,9 +677,8 @@ int unit_stop_walking(struct block_list *bl,int type)
 		ud->canmove_tick = gettick() + (type>>8);
 
 	//Readded, the check in unit_set_walkdelay means dmg during running won't fall through to this place in code [Kevin]
-    if (ud->state.running) 
-      status_change_end(bl, SC_RUN, -1); 
-
+	if (ud->state.running)
+		status_change_end(bl, SC_RUN, -1);
 	return 1;
 }
 
