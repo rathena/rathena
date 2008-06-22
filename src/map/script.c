@@ -7500,6 +7500,17 @@ BUILDIN_FUNC(killmonster)
 	return 0;
 }
 
+static int buildin_killmonsterall_sub_strip(struct block_list *bl,va_list ap)
+{ //Strips the event from the mob if it's killed the old method.
+	struct mob_data *md;
+	
+	md = BL_CAST(BL_MOB, bl);
+	if (md->npc_event[0])
+		md->npc_event[0] = 0;
+		
+	status_kill(bl);
+	return 0;
+}
 static int buildin_killmonsterall_sub(struct block_list *bl,va_list ap)
 {
 	status_kill(bl);
@@ -7510,9 +7521,16 @@ BUILDIN_FUNC(killmonsterall)
 	const char *mapname;
 	int m;
 	mapname=script_getstr(st,2);
-
+	
 	if( (m=map_mapname2mapid(mapname))<0 )
 		return 0;
+	
+	if( script_hasdata(st,3) )
+		if ( script_getnum(st,3) == 1 ) {
+			map_foreachinmap(buildin_killmonsterall_sub_strip,m,BL_MOB);
+			return 0;
+		}
+		
 	map_foreachinmap(buildin_killmonsterall_sub,
 		m,BL_MOB);
 	return 0;
@@ -13438,7 +13456,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(monster,"siisii*"),
 	BUILDIN_DEF(areamonster,"siiiisii*"),
 	BUILDIN_DEF(killmonster,"ss"),
-	BUILDIN_DEF(killmonsterall,"s"),
+	BUILDIN_DEF(killmonsterall,"s?"),
 	BUILDIN_DEF(clone,"siisi*"),
 	BUILDIN_DEF(doevent,"s"),
 	BUILDIN_DEF(donpcevent,"s"),
