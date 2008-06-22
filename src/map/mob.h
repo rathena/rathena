@@ -141,6 +141,7 @@ struct mob_data {
 	short skillidx;
 	unsigned int skilldelay[MAX_MOBSKILL];
 	char npc_event[50];
+	int npc_killmonster; //for new killmonster behavior
 };
 
 

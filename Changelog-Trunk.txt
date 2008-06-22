@@ -7,7 +7,7 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 	* Extended script command 'set' to return the variable reference (topic:190602). [FlavioJS]
 	* Fixed a bug where the "OnMyMobDead" event wouldn't trigger if the mob was killed and never attacked. (bugreport:1725) [SketchyPhoenix]
 	* Reworded a comment in can_copy to make more sense.
-	* Modified *killmonsterall to support a new argument that will allow it to kill monsters using the new OnMyMobDead behavior (in order to avoid breaking older scripts).
+	* Modified *killmonster and *killmonsterall to support a new argument that will allow it to kill monsters using the new OnMyMobDead behavior (in order to avoid breaking older scripts) (bugreport:1734)
 2008/06/19
 	* Added Sirius_White's fix for sense working on emperium. (bugreport: 1679) [SketchyPhoenix]
 	* Fixed SC_CHANGEUNDEAD behavior: Blessing and Increase AGI deals 1 damage and does not apply buffs to those inflicted by it.

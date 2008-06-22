@@ -4609,7 +4609,7 @@ For more good examples see just about any official 2-1 or 2-2 job quest script.
 
 ---------------------------------------
 
-*killmonster "<map name>","<event label>";
+*killmonster "<map name>","<event label>"{,<type>};
 
 This command will kill all monsters that were spawned with 'monster' or 
 'addmonster' and have a specified event label attached to them. Commonly used to 
@@ -4620,6 +4620,10 @@ to -1 (like all the monsters summoned with 'monster' or 'areamonster' script
 command, and all monsters summoned with GM commands, but no other ones - that 
 is, all non-permanent monsters) on the specified map will be killed regardless 
 of the event label value.
+
+As of r12876 killmonster now supports an optional argument type. Using 1 for type
+will make the command fire "OnMyMobDead" events from any monsters that do die
+as a result of this command.
 
 ---------------------------------------
 
