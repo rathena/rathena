@@ -108,7 +108,7 @@ CREATE TABLE `char` (
   KEY `guild_id` (`guild_id`),
   KEY `name` (`name`),
   KEY `online` (`online`)
-) TYPE=MyISAM AUTO_INCREMENT=150000; 
+) ENGINE=MyISAM AUTO_INCREMENT=150000; 
 
 --
 -- Table structure for table `charlog`
@@ -434,7 +434,7 @@ CREATE TABLE `login` (
   `state` int(11) unsigned NOT NULL default '0',
   PRIMARY KEY  (`account_id`),
   KEY `name` (`userid`)
-) TYPE=MyISAM AUTO_INCREMENT=2000000; 
+) ENGINE=MyISAM AUTO_INCREMENT=2000000; 
 
 -- added standard accounts for servers, VERY INSECURE!!!
 -- inserted into the table called login which is above
