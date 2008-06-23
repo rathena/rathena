@@ -56,6 +56,7 @@ OnAgitEnd:
 	if (GetCastleData("schg_cas03",1)) {
 		KillMonster "schg_cas03","Steward#sch03::OnStartArena";
 		donpcevent "Manager#sch03_02::Onreset";
+		donpcevent "Steward#sch03::Onstop";
 	}
 	end;
 
@@ -106,7 +107,11 @@ Onchange:
 
 OnClock0001:
 	if (!GetCastleData("schg_cas03",1)) end;
-	killmonster "schg_cas03","Manager#sch03_02::OnMyTreasureDied";
+	killmonster "schg_cas03","Manager#sch03_02::OnTreasureDied";
+
+	setcastledata "schg_cas03",4,0;
+	setcastledata "schg_cas03",5,0;
+
 	set .@Treasure,GetCastleData("schg_cas03",2)/5+4;
 	if (.@Treasure) {
 		monster "schg_cas03",189,21,"Treasure Chest",1939,1,"Manager#sch03_02::OnTreasureDied";
@@ -154,8 +159,6 @@ OnClock0001:
 		if (.@Treasure < 24) end;
 		monster "schg_cas03",194,15,"Treasure Chest",1324,1,"Manager#sch03_02::OnTreasureDied";
 	}
-	setcastledata "schg_cas03",4,0;
-	setcastledata "schg_cas03",5,0;
 	end;
 
 OnTreasureDied:

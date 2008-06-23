@@ -52,6 +52,7 @@ OnAgitEnd:
 	if (GetCastleData("arug_cas04",1)) {
 		KillMonster "arug_cas04","Steward#aru04::OnStartArena";
 		donpcevent "Manager#aru04_02::Onreset";
+		donpcevent "Steward#aru04::Onstop";
 	}
 	end;
 
@@ -102,7 +103,11 @@ Onchange:
 
 OnClock0001:
 	if (!GetCastleData("arug_cas04",1)) end;
-	killmonster "arug_cas04","Manager#aru04_02::OnMyTreasureDied";
+	killmonster "arug_cas04","Manager#aru04_02::OnTreasureDied";
+
+	setcastledata "arug_cas04",4,0;
+	setcastledata "arug_cas04",5,0;
+
 	set .@Treasure,GetCastleData("arug_cas04",2)/5+4;
 	if (.@Treasure) {
 		monster "arug_cas04",291,276,"Treasure Chest",1946,1,"Manager#aru04_02::OnTreasureDied";
@@ -150,8 +155,6 @@ OnClock0001:
 		if (.@Treasure < 24) end;
 		monster "arug_cas04",298,269,"Treasure Chest",1324,1,"Manager#aru04_02::OnTreasureDied";
 	}
-	setcastledata "arug_cas04",4,0;
-	setcastledata "arug_cas04",5,0;
 	end;
 
 OnTreasureDied:

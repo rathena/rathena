@@ -52,6 +52,7 @@ OnAgitEnd:
 	if (GetCastleData("arug_cas01",1)) {
 		KillMonster "arug_cas01","Steward#aru01::OnStartArena";
 		donpcevent "Manager#aru01_02::Onreset";
+		donpcevent "Steward#aru01::Onstop";
 	}
 	end;
 
@@ -102,8 +103,11 @@ Onchange:
 
 OnClock0001:
 	if (!GetCastleData("arug_cas01",1)) end;
-	killmonster "arug_cas01","Manager#aru01_02::OnMyTreasureDied";
-	// Reset daily investment limit.
+	killmonster "arug_cas01","Manager#aru01_02::OnTreasureDied";
+
+	setcastledata "arug_cas01",4,0;
+	setcastledata "arug_cas01",5,0;
+
 	set .@Treasure,GetCastleData("arug_cas01",2)/5+4;
 	if (.@Treasure) {
 		monster "arug_cas01",251,369,"Treasure Chest",1943,1,"Manager#aru01_02::OnTreasureDied";
@@ -151,8 +155,6 @@ OnClock0001:
 		if (.@Treasure < 24) end;
 		monster "arug_cas01",258,364,"Treasure Chest",1324,1,"Manager#aru01_02::OnTreasureDied";
 	}
-	setcastledata "arug_cas01",4,0;
-	setcastledata "arug_cas01",5,0;
 	end;
 
 OnTreasureDied:
