@@ -12,7 +12,7 @@
 
 
 gonryun,180,118,4	script	Iron man#gnp	85,{
-	if (countitem(1201) > 0) {
+	if (checkweight(1201,1) == 0) {
 		mes "- Wait a minute !! -";
 		mes "- Currently you're carrying -";
 		mes "- too many items with you. -";

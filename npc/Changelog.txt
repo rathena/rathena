@@ -1,5 +1,7 @@
 Date		Added
 ======
+2008/06/23
+	* Fixed an incorrect weight check in power arena (bugreport:1716) [SketchyPhoenix]
 2008/06/17
 	* Rev. 12846 Fixed end timer in Turbo Track Solo mode not enabling warp. (bugreport:1682) [L0ne_W0lf]
 	* Rev. 12845 Corrected bugs in the updated novice grounds. [L0ne_W0lf]
