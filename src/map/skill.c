@@ -2447,19 +2447,14 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 		break;
 
 	case NJ_ISSEN:
-		if (sc) {
-		  	if (sc->data[SC_NEN])
-				status_change_end(src,SC_NEN,-1);
-			if (sc->data[SC_HIDING])
-				status_change_end(src,SC_HIDING,-1);
-		}
+		status_change_end(src,SC_NEN,-1);
+		status_change_end(src,SC_HIDING,-1);
+		// fall through
 	case MO_EXTREMITYFIST:
-		if (sc && skillid == MO_EXTREMITYFIST)
+		if( skillid == MO_EXTREMITYFIST )
 		{
-			if (sc->data[SC_EXPLOSIONSPIRITS])
-				status_change_end(src, SC_EXPLOSIONSPIRITS, -1);
-			if (sc->data[SC_BLADESTOP])
-				status_change_end(src,SC_BLADESTOP,-1);
+			status_change_end(src,SC_EXPLOSIONSPIRITS,-1);
+			status_change_end(src,SC_BLADESTOP,-1);
 		}
 		//Client expects you to move to target regardless of distance
 		{

@@ -639,24 +639,16 @@ int status_damage(struct block_list *src,struct block_list *target,int hp, int s
 				}
 				status_change_end(target, SC_DEVOTION, -1);
 			}
-			if (sc->data[SC_FREEZE])
-				status_change_end(target,SC_FREEZE,-1);
 			if (sc->data[SC_STONE] && sc->opt1 == OPT1_STONE)
 				status_change_end(target,SC_STONE,-1);
-			if (sc->data[SC_SLEEP])
-				status_change_end(target,SC_SLEEP,-1);
-			if (sc->data[SC_WINKCHARM])
-				status_change_end(target,SC_WINKCHARM,-1);
-			if (sc->data[SC_CONFUSION])
-				status_change_end(target, SC_CONFUSION, -1);
-			if (sc->data[SC_TRICKDEAD])
-				status_change_end(target, SC_TRICKDEAD, -1);
-			if (sc->data[SC_HIDING])
-				status_change_end(target, SC_HIDING, -1);
-			if (sc->data[SC_CLOAKING])
-				status_change_end(target, SC_CLOAKING, -1);
-			if (sc->data[SC_CHASEWALK])
-				status_change_end(target, SC_CHASEWALK, -1);
+			status_change_end(target,SC_FREEZE,-1);
+			status_change_end(target,SC_SLEEP,-1);
+			status_change_end(target,SC_WINKCHARM,-1);
+			status_change_end(target,SC_CONFUSION,-1);
+			status_change_end(target,SC_TRICKDEAD,-1);
+			status_change_end(target,SC_HIDING,-1);
+			status_change_end(target,SC_CLOAKING,-1);
+			status_change_end(target,SC_CHASEWALK,-1);
 			if ((sce=sc->data[SC_ENDURE]) && !sce->val4) {
 				//Endure count is only reduced by non-players on non-gvg maps.
 				//val4 signals infinite endure. [Skotlex]
@@ -664,8 +656,8 @@ int status_damage(struct block_list *src,struct block_list *target,int hp, int s
 					&& --(sce->val2) < 0)
 					status_change_end(target, SC_ENDURE, -1);
 			}
-			if ((sce=sc->data[SC_GRAVITATION]) &&
-				sce->val3 == BCT_SELF) {
+			if ((sce=sc->data[SC_GRAVITATION]) && sce->val3 == BCT_SELF)
+			{
 				struct skill_unit_group *sg = (struct skill_unit_group *)sce->val4;
 				if (sg) {
 					skill_delunitgroup(target,sg);
@@ -4851,55 +4843,38 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 		}
 		break;
 	case SC_INCREASEAGI:
-		if(sc->data[SC_DECREASEAGI])
-			status_change_end(bl,SC_DECREASEAGI,-1);
+		status_change_end(bl,SC_DECREASEAGI,-1);
 		break;
 	case SC_QUAGMIRE:
-		if(sc->data[SC_CONCENTRATE])
-			status_change_end(bl,SC_CONCENTRATE,-1);
-		if(sc->data[SC_TRUESIGHT])
-			status_change_end(bl,SC_TRUESIGHT,-1);
-		if(sc->data[SC_WINDWALK])
-			status_change_end(bl,SC_WINDWALK,-1);
+		status_change_end(bl,SC_CONCENTRATE,-1);
+		status_change_end(bl,SC_TRUESIGHT,-1);
+		status_change_end(bl,SC_WINDWALK,-1);
 		//Also blocks the ones below...
 	case SC_DECREASEAGI:
-		if(sc->data[SC_CARTBOOST])
-			status_change_end(bl,SC_CARTBOOST,-1);
+		status_change_end(bl,SC_CARTBOOST,-1);
 		//Also blocks the ones below...
 	case SC_DONTFORGETME:
-		if(sc->data[SC_INCREASEAGI])
-			status_change_end(bl,SC_INCREASEAGI,-1);
-		if(sc->data[SC_ADRENALINE])
-			status_change_end(bl,SC_ADRENALINE,-1);
-		if(sc->data[SC_ADRENALINE2])
-			status_change_end(bl,SC_ADRENALINE2,-1);
-		if(sc->data[SC_SPEARQUICKEN])
-			status_change_end(bl,SC_SPEARQUICKEN,-1);
-		if(sc->data[SC_TWOHANDQUICKEN])
-			status_change_end(bl,SC_TWOHANDQUICKEN,-1);
-		if(sc->data[SC_ONEHAND])
-			status_change_end(bl,SC_ONEHAND,-1);
+		status_change_end(bl,SC_INCREASEAGI,-1);
+		status_change_end(bl,SC_ADRENALINE,-1);
+		status_change_end(bl,SC_ADRENALINE2,-1);
+		status_change_end(bl,SC_SPEARQUICKEN,-1);
+		status_change_end(bl,SC_TWOHANDQUICKEN,-1);
+		status_change_end(bl,SC_ONEHAND,-1);
 		break;
 	case SC_ONEHAND:
 	  	//Removes the Aspd potion effect, as reported by Vicious. [Skotlex]
-		if(sc->data[SC_ASPDPOTION0])
-			status_change_end(bl,SC_ASPDPOTION0,-1);
-		if(sc->data[SC_ASPDPOTION1])
-			status_change_end(bl,SC_ASPDPOTION1,-1);
-		if(sc->data[SC_ASPDPOTION2])
-			status_change_end(bl,SC_ASPDPOTION2,-1);
-		if(sc->data[SC_ASPDPOTION3])
-			status_change_end(bl,SC_ASPDPOTION3,-1);
+		status_change_end(bl,SC_ASPDPOTION0,-1);
+		status_change_end(bl,SC_ASPDPOTION1,-1);
+		status_change_end(bl,SC_ASPDPOTION2,-1);
+		status_change_end(bl,SC_ASPDPOTION3,-1);
 		break;
 	case SC_MAXOVERTHRUST:
 	  	//Cancels Normal Overthrust. [Skotlex]
-		if (sc->data[SC_OVERTHRUST])
-			status_change_end(bl, SC_OVERTHRUST, -1);
+		status_change_end(bl, SC_OVERTHRUST, -1);
 		break;
 	case SC_KYRIE:
-		// -- moonsoul (added to undo assumptio status if target has it)
-		if(sc->data[SC_ASSUMPTIO])
-			status_change_end(bl,SC_ASSUMPTIO,-1);
+		//Cancels Assumptio
+		status_change_end(bl,SC_ASSUMPTIO,-1);
 		break;
 	case SC_DELUGE:
 		if (sc->data[SC_FOGWALL] && sc->data[SC_BLIND])
@@ -4910,35 +4885,25 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			status_change_end(bl,SC_GOSPEL,-1);
 		break;
 	case SC_HIDING:
-		if(sc->data[SC_CLOSECONFINE])
-			status_change_end(bl, SC_CLOSECONFINE, -1);
-		if(sc->data[SC_CLOSECONFINE2])
-			status_change_end(bl, SC_CLOSECONFINE2, -1);
+		status_change_end(bl, SC_CLOSECONFINE, -1);
+		status_change_end(bl, SC_CLOSECONFINE2, -1);
 		break;
 	case SC_BERSERK:
 		if(battle_config.berserk_cancels_buffs)
 		{
-			if (sc->data[SC_ONEHAND])
-				status_change_end(bl,SC_ONEHAND,-1);
-			if (sc->data[SC_TWOHANDQUICKEN])
-				status_change_end(bl,SC_TWOHANDQUICKEN,-1);
-			if (sc->data[SC_CONCENTRATION])
-				status_change_end(bl,SC_CONCENTRATION,-1);
-			if (sc->data[SC_PARRYING])
-				status_change_end(bl,SC_PARRYING,-1);
-			if (sc->data[SC_AURABLADE])
-				status_change_end(bl,SC_AURABLADE,-1);
+			status_change_end(bl,SC_ONEHAND,-1);
+			status_change_end(bl,SC_TWOHANDQUICKEN,-1);
+			status_change_end(bl,SC_CONCENTRATION,-1);
+			status_change_end(bl,SC_PARRYING,-1);
+			status_change_end(bl,SC_AURABLADE,-1);
 		}
 		break;
 	case SC_ASSUMPTIO:
-		if(sc->data[SC_KYRIE])
-			status_change_end(bl,SC_KYRIE,-1);
-		if(sc->data[SC_KAITE])
-			status_change_end(bl,SC_KAITE,-1);
+		status_change_end(bl,SC_KYRIE,-1);
+		status_change_end(bl,SC_KAITE,-1);
 		break;
 	case SC_KAITE:
-		if(sc->data[SC_ASSUMPTIO])
-			status_change_end(bl,SC_ASSUMPTIO,-1);
+		status_change_end(bl,SC_ASSUMPTIO,-1);
 		break;
 	case SC_CARTBOOST:
 		if(sc->data[SC_DECREASEAGI])
@@ -4948,23 +4913,18 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 		}
 		break;
 	case SC_FUSION:
-		if(sc->data[SC_SPIRIT])
-			status_change_end(bl,SC_SPIRIT,-1);
+		status_change_end(bl,SC_SPIRIT,-1);
 		break;
 	case SC_ADJUSTMENT:
-		if(sc->data[SC_MADNESSCANCEL])
-			status_change_end(bl,SC_MADNESSCANCEL,-1);
+		status_change_end(bl,SC_MADNESSCANCEL,-1);
 		break;
 	case SC_MADNESSCANCEL:
-		if(sc->data[SC_ADJUSTMENT])
-			status_change_end(bl,SC_ADJUSTMENT,-1);
+		status_change_end(bl,SC_ADJUSTMENT,-1);
 		break;
 	//NPC_CHANGEUNDEAD will debuff Blessing and Agi Up
 	case SC_CHANGEUNDEAD:
-		if(sc->data[SC_BLESSING])
-			status_change_end(bl,SC_BLESSING,-1);
-		if(sc->data[SC_INCREASEAGI])
-			status_change_end(bl,SC_INCREASEAGI,-1);
+		status_change_end(bl,SC_BLESSING,-1);
+		status_change_end(bl,SC_INCREASEAGI,-1);
 		break;
 		
 	}
@@ -5335,8 +5295,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 				val1 = 10;
 			val2 = tick>0?tick:60000; //SP consumption rate.
 			val3 = 0;
-			if (sd && (sd->class_&MAPID_UPPERMASK) == MAPID_ASSASSIN &&
-				(val3=pc_checkskill(sd,TF_MISS))>0)
+			if (sd && (sd->class_&MAPID_UPPERMASK) == MAPID_ASSASSIN && (val3=pc_checkskill(sd,TF_MISS))>0)
 				val3 *= -1; //Substract the Dodge speed bonus.
 			val3+= 70+val1*3; //Speed adjustment without a wall.
 			//With a wall, it is val3 +25.
@@ -6392,14 +6351,10 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 				clif_devotion(md,NULL);
 			}
 			//Remove inherited status [Skotlex]
-			if (sc->data[SC_AUTOGUARD])
-				status_change_end(bl,SC_AUTOGUARD,-1);
-			if (sc->data[SC_DEFENDER])
-				status_change_end(bl,SC_DEFENDER,-1);
-			if (sc->data[SC_REFLECTSHIELD])
-				status_change_end(bl,SC_REFLECTSHIELD,-1);
-			if (sc->data[SC_ENDURE])
-				status_change_end(bl,SC_ENDURE,-1);
+			status_change_end(bl,SC_AUTOGUARD,-1);
+			status_change_end(bl,SC_DEFENDER,-1);
+			status_change_end(bl,SC_REFLECTSHIELD,-1);
+			status_change_end(bl,SC_ENDURE,-1);
 		}
 		break;
 		case SC_BLADESTOP:
@@ -6439,8 +6394,7 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 			if ((sce->val1&0xFFFF) == CG_MOONLIT)
 				clif_status_change(bl,SI_MOONLIT,0);
 
-			if (sc->data[SC_LONGING])
-				status_change_end(bl,SC_LONGING,-1);				
+			status_change_end(bl,SC_LONGING,-1);				
 			break;
 		case SC_NOCHAT:
 			if (sd && sd->status.manner < 0 && tid != -1)
@@ -6844,7 +6798,7 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr data)
 	case SC_HIDING:
 		if(--(sce->val2)>0){
 			
-			if(sce->val2 % sce->val4 == 0 &&!status_charge(bl, 0, 1))
+			if(sce->val2 % sce->val4 == 0 && !status_charge(bl, 0, 1))
 				break; //Fail if it's time to substract SP and there isn't.
 		
 			sc_timer_next(1000+tick, status_change_timer,bl->id, data);
@@ -7137,17 +7091,13 @@ int status_change_timer_sub(struct block_list* bl, va_list ap)
 	{
 	case SC_SIGHT:	/* サイト */
 	case SC_CONCENTRATE:
-		if (tsc) {
-			if (tsc->data[SC_HIDING])
-				status_change_end( bl, SC_HIDING, -1);
-			if (tsc->data[SC_CLOAKING])
-				status_change_end( bl, SC_CLOAKING, -1);
-		}
+		status_change_end(bl, SC_HIDING, -1);
+		status_change_end(bl, SC_CLOAKING, -1);
 		break;
 	case SC_RUWACH:	/* ルアフ */
 		if (tsc && (tsc->data[SC_HIDING] || tsc->data[SC_CLOAKING])) {
-			status_change_end( bl, SC_HIDING, -1);
-			status_change_end( bl, SC_CLOAKING, -1);
+			status_change_end(bl, SC_HIDING, -1);
+			status_change_end(bl, SC_CLOAKING, -1);
 			if(battle_check_target( src, bl, BCT_ENEMY ) > 0)
 				skill_attack(BF_MAGIC,src,src,bl,AL_RUWACH,1,tick,0);
 		}

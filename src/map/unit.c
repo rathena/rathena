@@ -1650,44 +1650,26 @@ int unit_remove_map_(struct block_list *bl, int clrtype, const char* file, int l
 	ud->attackabletime = ud->canmove_tick /*= ud->canact_tick*/ = gettick();
 	
 	if(sc && sc->count ) { //map-change/warp dispells.
-		if(sc->data[SC_BLADESTOP])
-			status_change_end(bl,SC_BLADESTOP,-1);
-		if(sc->data[SC_BASILICA])
-			status_change_end(bl,SC_BASILICA,-1);
-		if(sc->data[SC_ANKLE])
-			status_change_end(bl, SC_ANKLE, -1);
-		if (sc->data[SC_TRICKDEAD])
-			status_change_end(bl, SC_TRICKDEAD, -1);
-		if (sc->data[SC_BLADESTOP])
-			status_change_end(bl,SC_BLADESTOP,-1);
-		if (sc->data[SC_RUN])
-			status_change_end(bl,SC_RUN,-1);
-		if (sc->data[SC_DANCING]) // clear dance effect when warping [Valaris]
-			skill_stop_dancing(bl);
-		if (sc->data[SC_WARM])
-			status_change_end(bl, SC_WARM, -1);
-		if (sc->data[SC_DEVOTION])
-			status_change_end(bl,SC_DEVOTION,-1);
-		if (sc->data[SC_MARIONETTE])
-			status_change_end(bl,SC_MARIONETTE,-1);
-		if (sc->data[SC_MARIONETTE2])
-			status_change_end(bl,SC_MARIONETTE2,-1);
-		if (sc->data[SC_CLOSECONFINE])
-			status_change_end(bl,SC_CLOSECONFINE,-1);
-		if (sc->data[SC_CLOSECONFINE2])
-			status_change_end(bl,SC_CLOSECONFINE2,-1);
-		if (sc->data[SC_HIDING])
-			status_change_end(bl, SC_HIDING, -1);
-		if (sc->data[SC_CLOAKING])
-			status_change_end(bl, SC_CLOAKING, -1);
-		if (sc->data[SC_CHASEWALK])
-			status_change_end(bl, SC_CHASEWALK, -1);
+		status_change_end(bl,SC_BLADESTOP,-1);
+		status_change_end(bl,SC_BASILICA,-1);
+		status_change_end(bl,SC_ANKLE,-1);
+		status_change_end(bl,SC_TRICKDEAD,-1);
+		status_change_end(bl,SC_BLADESTOP,-1);
+		status_change_end(bl,SC_RUN,-1);
+		skill_stop_dancing(bl);
+		status_change_end(bl,SC_WARM,-1);
+		status_change_end(bl,SC_DEVOTION,-1);
+		status_change_end(bl,SC_MARIONETTE,-1);
+		status_change_end(bl,SC_MARIONETTE2,-1);
+		status_change_end(bl,SC_CLOSECONFINE,-1);
+		status_change_end(bl,SC_CLOSECONFINE2,-1);
+		status_change_end(bl,SC_HIDING,-1);
+		status_change_end(bl,SC_CLOAKING,-1);
+		status_change_end(bl,SC_CHASEWALK,-1);
 		if (sc->data[SC_GOSPEL] && sc->data[SC_GOSPEL]->val4 == BCT_SELF)
-			status_change_end(bl, SC_GOSPEL, -1);
-		if (sc->data[SC_CHANGE])
-			status_change_end(bl, SC_CHANGE, -1);
-		if (sc->data[SC_MIRACLE])
-			status_change_end(bl, SC_MIRACLE, -1);
+			status_change_end(bl,SC_GOSPEL,-1);
+		status_change_end(bl,SC_CHANGE,-1);
+		status_change_end(bl,SC_MIRACLE,-1);
 	}
 
 	if (bl->type&BL_CHAR) {
