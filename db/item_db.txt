@@ -3408,15 +3408,15 @@
 12183,Holy_Arrow_Quiver,Holy Arrow Quiver,2,,1,250,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 1772,500; },{},{}
 12184,Mercenary_Red_Potion,Mercenary's Red Potion,2,500,,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12185,Mercenary_Blue_Potion,Mercenary's Blue Potion,2,1000,,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-12186,Red_Box,Old Red Box,2,50000,,200,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-12187,Green_Box,Old Green Box,2,50000,,200,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12186,Red_Box,Old Red Box,2,50000,,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_RedBox),1; },{},{}
+12187,Green_Box,Old Green Box,2,50000,,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_GreenBox),1; },{},{}
 12188,Moon_Snack,Fantastic Moon Snack,2,,10,300,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 50,50; },{},{}
 12189,Red_Box_,Old Red Box,2,50000,,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_RedBox_2),1; },{},{}
 12190,Moon_Cake,Moon Cake,2,,1,300,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12191,Special_Moon_Cake,Special Moon Cake,2,,1,500,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12192,Pumpkin_Pie,Pumpkin Pie,2,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 5,5; },{},{}
 12193,Brizel,Brizel,2,,10,20,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-12194,Present_From_Home,Present from Home,2,,10,200,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12194,Hometown_Gift,Present from Home,2,,10,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_HometownGift),1; },{},{}
 12195,Plain_Rice_Cake,Plain Rice Cake,2,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 0,20; },{},{}
 12196,Hearty_Rice_Cake,Hearty Rice Cake,2,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 50,0; },{},{}
 12197,Salty_Rice_Cake,Salty Rice Cake,2,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 10,10; },{},{}
@@ -3461,16 +3461,16 @@
 12237,Choco_Lump,Dollop of Chocolate,2,,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 0,5; sc_start SC_Poison,18000,0; sc_start SC_Bleeding,18000,0; },{},{}
 12238,New_Year_Rice_Cake_1,New Year Rice Cake,0,20,,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12239,New_Year_Rice_Cake_2,New Year Rice Cake,0,20,,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-12240,Old_Yellow_Box,Old Yellow Box,2,20,,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem rand(5259,5262),1; },{},{}
+12240,Old_Yellow_Box,Old Yellow Box,2,20,,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_YellowBox),1; },{},{}
 12241,M_Center_Potion,Concentration Potion,2,800,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_ASPDPOTION0,1800000,0; },{},{}
 12242,M_Awakening_Potion,Awakening Potion,2,1500,,150,,,,,0xFFF7FEEF,7,2,,,40,,,{ sc_start SC_ASPDPOTION1,1800000,0; },{},{}
 12243,M_Berserk_Potion,Berserk Potion,2,3000,,200,,,,,0x01E646A6,7,2,,,85,,,{ sc_start SC_ASPDPOTION2,1800000,0; },{},{}
-12244,Old_Gift_Box,Old Gift Box,2,,,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem rand(5270,5272),1; },{},{}
+12244,Old_Gift_Box,Old Gift Box,2,,,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_OldGiftBox),1; },{},{}
 //St. Patrick's Day Event (2007)
 12245,Green_Ale_US,Green Ale,0,5000,,500,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 100,0; },{},{}
-12246,Magic_Card_Album,Magic Card Album,2,10000,,50,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12246,Magic_Card_Album,Magic Card Album,2,10000,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_MagicCardAlbum),1; },{},{}
 12247,Halohalo,Halo-Halo,2,2,,100,,,,,0xFFFFFFFF,7,2,,,20,,,{ sc_start SC_INCALLSTATUS,600000,3; },{},{}
-12248,Masquerade_Ball_Box,Fancy Ball Box,2,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 5296,1; getitem 5297,1; getitem 5298,1; },{},{}
+12248,Masquerade_Ball_Box,Fancy Ball Box,2,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_Masquerade),1; },{},{}
 12249,Payroll_Of_Kafra_,Kafra Employee Paystub,2,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12250,Str_Dish_M,Steamed Tongue,2,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_STRFood,3600000,10; percentheal 20,20; },{},{}
 12251,Agi_Dish_M,Steamed Desert Scorpions,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_AGIFood,3600000,10; percentheal 15,5; },{},{}

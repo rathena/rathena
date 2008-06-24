@@ -113,7 +113,7 @@
 21,1003,1	//Coal
 21,1010,1	//Phracon
 21,1011,1	//Emveretarcon
-// taming items
+// Set_Of_Taiming_Item
 22,619,1	//Unripe Apple
 22,620,1	//Orange Juice
 22,621,1	//Bitter Herb
@@ -161,7 +161,7 @@
 22,10018,1	//Monkey Circlet
 22,10019,1	//Red Scarf
 22,10020,1	//Grave Keeper's Sword
-//scrolls
+// Bundle_Of_Magic_Scroll
 23,686,1	//Level 3 Earth Spike
 23,687,1	//Level 5 Earth Spike
 23,688,1	//Level 3 Cold Bolt
@@ -180,7 +180,7 @@
 23,12000,1	//Level 5 Frost Diver
 23,12001,1	//Level 3 Heal
 23,12002,1	//Level 5 Heal
-//quivers
+// Random_Quiver
 24,12004,1	//Quiver
 24,12005,1	//Iron Arrow Quiver
 24,12006,1	//Steel Arrow Quiver
@@ -194,7 +194,7 @@
 24,12014,1	//Immaterial Arrow Quiver
 24,12015,1	//Rusty Arrow Quiver
 24,12183,1	//Holy Arrow Quiver
-//masks
+// Wrapped_Mask
 25,2278,10	//Mr. Smile
 25,2281,10	//Opera Masque
 25,2288,10	//Mr. Scream
@@ -207,7 +207,8 @@
 25,5089,10	//Annoyed Mask
 25,5090,10	//Goblin Leader Mask
 25,5121,1	//Zherlthsh Mask
-//accessory
+25,5176,2	//Hahoe Mask
+// Accessory_Box
 26,2601,10	//Ring
 26,2602,10	//Earring
 26,2603,10	//Necklace
@@ -280,7 +281,7 @@
 35,7398,1	//Lotto Ball 38
 35,7540,1	//Lotto Ball 39
 35,7541,1	//Lotto Ball 40
-// Food Package
+// Food_Package
 36,512,1	//Apple
 36,513,1	//Banana
 36,514,1	//Grape
@@ -347,3 +348,85 @@
 39,644,1	//Gift Box
 39,519,1	//Milk
 39,538,1	//Well-baked Cookie
+// Red_Box
+40,5187,10	//Twin Ribbon
+40,5181,11	//Helm of Darkness
+40,5182,1	//Puppy Hat
+40,5186,11	//Geographer Decoration
+40,5185,11	//Laurel Crown
+40,5183,11	//Nest Hat
+40,5137,11	//Alice Doll
+40,5139,11	//Lotus
+40,5138,11	//Magic Eyes
+40,5140,11	//Kawaii Ribbon
+40,5152,1	//Phoenix Crown
+40,5142,11	//Crescent Helm
+40,5143,12	//Kabuki Mask
+40,5099,12	//Neko Mimi
+// Green_Box
+41,12075,100	//Steamed Tongue
+41,12080,100	//Dragon Breath Cocktail
+41,12085,100	//Immortal Stew
+41,12090,100	//Steamed Desert Scorpions
+41,12095,100	//Hwergelmir's Tonic
+41,12100,100	//Cooked Nine Tail
+41,607,100	//Yggdrasil Berry
+41,608,100	//Yggdrasil Seed
+41,12018,100	//Firecracker
+41,573,100	//Chocolate Drink
+41,5182,1	//Puppy Hat
+// Old_Yellow_Box
+42,5259,1	//Elephant Hat
+42,5260,1	//Cookie Hat
+42,5261,1	//Silver Tiara
+42,5262,1	//Golden Tiara
+// Old_Gift_Box
+43,5271,15	//Phoenix Crown
+43,5272,40	//Smiling Mask
+43,5270,45	//Happy Wig
+// Magic_Card_Album
+44,4047,1	//Ghostring Card
+44,4054,1	//Angeling Card
+44,4163,1	//Gryphon Card
+44,4169,1	//Dark Illusion Card
+44,4174,1	//Deviling Card
+44,4179,10	//Dragon Fly Card
+44,4183,10	//Vagabond Wolf Card
+44,4197,10	//Mastering Card
+44,4198,1	//Maya Purple Card
+44,4203,10	//Mutant Dragonoid Card
+44,4207,1	//Mysteltainn Card
+44,4211,1	//Vocal card
+44,4237,5	//Owl Duke Card
+44,4238,5	//Owl Baron Card
+44,4241,1	//Arc Angeling Card
+44,4250,1	//Executioner Card
+44,4254,1	//Tirfing Card
+44,4266,10	//Eclipse Card
+44,4284,10	//Chepet Card
+44,4285,10	//Choco Card
+44,4290,5	//Cat O' Nine Tails Card
+44,4291,10	//Kobold Leader Card
+44,4300,10	//Chimera Card
+44,4306,10	//Toad Card
+44,4320,1	//Bloody Knight Card
+44,4336,1	//Ungoliant Card
+44,4354,1	//Gemini-S58 Card
+44,4384,1	//Hydro Card
+44,4395,3	//Thanatos Maero Card
+44,4396,3	//Thanatos Odium Card
+44,4397,3	//Thanatos Despero Card
+// Hometown_Gift
+45,12195,1	//Plain Rice Cake
+45,12196,1	//Hearty Rice Cake
+45,12197,1	//Salty Rice Cake
+45,12198,1	//Lucky Rice Cake
+45,12122,1	//Sesame Pastry
+45,12123,1	//Honey Pastry
+45,12124,1	//Rainbow Cake
+45,663,1	//Korean Rice Cake
+// Masquerade_Ball_Box
+46,5296,10	//Drooping Nine Tail
+46,5297,1	//Soul Wing
+46,5298,10	//Dokebi's Wig
+46,5299,10	//Pagdayaw

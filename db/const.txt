@@ -524,6 +524,13 @@ IG_FoodBag	36
 IG_Potion	37
 IG_RedBox_2	38
 IG_BleuBox	39
+IG_RedBox	40
+IG_GreenBox	41
+IG_OldYellowBox	42
+IG_OldGiftBox	43
+IG_MagicCardAlbum	44
+IG_HometownGift	45
+IG_Masquerade	46
 
 SC_ALL -1
 SC_STONE	0

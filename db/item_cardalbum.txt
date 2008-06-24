@@ -48,14 +48,14 @@
 3,4044,3	//Smokie Card
 3,4045,3	//Horn Card
 3,4046,3	//Martin Card
-3,4047,1	//Ghostring Card
+//3,4047,1	//Ghostring Card
 3,4048,3	//Poison Spore Card
 3,4049,3	//Vadon Card
 3,4050,3	//Male Thief Bug Card
 3,4051,3	//Yoyo Card
 3,4052,3	//Elder Willow Card
 3,4053,1	//Vitata Card
-3,4054,1	//Angeling Card
+//3,4054,1	//Angeling Card
 3,4055,3	//Marina Card
 3,4056,3	//Dustiness Card
 3,4057,2	//Metaller Card
