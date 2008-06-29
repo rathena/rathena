@@ -1,5 +1,7 @@
 Date		Added
 ======
+2008/06/30
+	* Added from jA Pre-quest dungeon entrances $ephiroth [Lupus]
 2008/06/23
 	* Fixed an incorrect weight check in power arena (bugreport:1716) [SketchyPhoenix]
 2008/06/17

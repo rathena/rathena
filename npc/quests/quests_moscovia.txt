@@ -1,0 +1,148 @@
+//===== eAthena Script =======================================
+//= Moscovia Town script
+//===== By: ==================================================
+//= $ephiroth
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= Any eAthena Version
+//===== Description: =========================================
+//= Moscovia Town Npcs
+//===== Additional Comments: =================================
+//= 1.0 $ephiroth (from jA) Pre-quest dungeon entrances
+//============================================================
+
+//============================================================
+//= NPC Moscovia Dungeon
+//============================================================
+
+mosk_dun01,207,276,0	script	Stone#mosk1	111,{
+
+	mes "^009900-Square-shaped rocks on the surface";
+	mes "are engraved on the characters.-^000000";
+	next;
+	mes "^3333FF~The person who advances, instead of being hurt.";
+	mes "As for the person who receives courage, returns how long,";
+	mes "it probably is safe.";
+	mes "As for the person who has rash courage advancing.";
+	mes "That's not good to be back.~^000000";
+	next;
+	if (select("Forward:Return") == 1) {
+		mes "-Chose to go-";
+		close2;
+		warp "mosk_dun02",165,30;
+		end;
+	}
+	mes "-Chose to return-";
+	close;
+}	
+
+mosk_dun02,168,28,0	script	Stone#mosk2	111,{
+
+	mes "^009900-Square-shaped rocks on the surface";
+	mes "are engraved on the characters.-^000000";
+	next;
+	mes "^3333FF~The person who advances, instead of being hurt.";
+	mes "Courage is received.";
+	mes "As for the person who returns how long.";
+	mes "it probably is safe.";
+	mes "As for the person who is courage advancing,";
+	mes "That's not good to be back.~^000000";
+	next;
+	if (select("Forward:Return") == 1) {
+		mes "-Chose to go-";
+		close2;
+		warp "mosk_dun01",201,269;
+		end;
+	}
+	mes "-Chose to return-";
+	close;
+}
+
+mosk_dun02,268,117,0	script	Stone#mosk3	111,{
+
+	mes "^009900-Square-shaped rocks on the surface";
+	mes "are engraved on the characters.-^000000";
+	next;
+	mes "^3333FF~The person who advances, instead of dying.";
+	mes "Reputation is received.";
+	mes "The person who returns obtains courage, but";
+	mes "it probably will get injured.";
+	mes "As for the person who has rash courage advancing.";
+	mes "That's not good to be back.~^000000";
+	next;
+	if (select("Forward:Return") == 1) {
+		mes "-Chose to go-";
+		close2;
+		warp "mosk_dun03",32,135;
+		end;
+	}
+	mes "-Chose to return-";
+	close;
+}
+
+mosk_dun03,27,131,0	script	Stone#mosk4	111,{
+
+	mes "^009900-Square-shaped rocks on the surface";
+	mes "are engraved on the characters.-^000000";
+	next;
+	mes "^3333FF~The person who remains, instead of being hurt.";
+	mes "Reputation is received.";
+	mes "As for the person who returns getting large injured,";
+	mes "Courage probably will be learned.";
+	mes "by the return of courage.";
+	mes "As for the person who is courage the return.~^000000";
+	next;
+	if (select("Forward:Return") == 1) {
+		mes "-Fear, chose to return-";
+		close2;
+		warp "mosk_dun02",262,118;
+		end;
+	}
+	mes "-Chose to return-";
+	close;
+}
+
+mosk_dun01,264,191,0	script	Stone#mosk5	111,{
+
+	mes "^009900-Square-shaped rocks on the surface";
+	mes "are engraved on the characters.-^000000";
+	next;
+	mes "^3333FF~The person who advances, instead of dying.";
+	mes "Reputation is received.";
+	mes "As for the person who returns how long,";
+	mes "It probably is safe.";
+	mes "As for the person who does not fear death advancing,";
+	mes "That's not good to be back.~^000000";
+	next;
+	if (select("Forward:Return") == 1) {
+		mes "–Chose to go-";
+		close2;
+		warp "mosk_dun03",117,36;
+		end;
+	}
+	mes "-Chose to return-";
+	close;
+}
+
+mosk_dun03,119,46,0	script	Stone#mosk6	111,{
+
+	mes "^009900-Square-shaped rocks on the surface";
+	mes "are engraved on the characters.-^000000";
+	next;
+	mes "^3333FF~The person who remains, instead of dying.";
+	mes "Reputation is received.";
+	mes "As for the person who returns how long,";
+	mes "It probably is safe.";
+	mes "As for the person who does not fear death the return,";
+	mes "is not a good forward.~^000000";
+	next;
+	if (select("Forward:Return") == 1) {
+		mes "-Fear, chose to return-";
+		close2;
+		warp "mosk_dun01",257,190;
+		end;
+	}
+	mes "-Chose to return-";
+	close;
+}
