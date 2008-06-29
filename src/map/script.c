@@ -12132,23 +12132,25 @@ BUILDIN_FUNC(callshop)
 	if( script_hasdata(st,3) )
 		flag = script_getnum(st,3);
 	nd = npc_name2id(shopname);
-	if (!nd || nd->bl.type!=BL_NPC || nd->subtype!=SHOP) {
+	if( !nd || nd->bl.type != BL_NPC || (nd->subtype != SHOP && nd->subtype != CASHSHOP) )
+	{
 		ShowError("buildin_callshop: Shop [%s] not found (or NPC is not shop type)\n", shopname);
 		script_pushint(st,0);
 		return 1;
 	}
 	
-	switch (flag) {
-		case 1: //Buy window
-			npc_buysellsel(sd,nd->bl.id,0);
-		break;
-		case 2: //Sell window
-			npc_buysellsel(sd,nd->bl.id,1);
-		break;
-		default: //Show menu
-			clif_npcbuysell(sd,nd->bl.id);
-		break;
+	if( nd->subtype == SHOP )
+	{
+		switch( flag )
+		{
+			case 1: npc_buysellsel(sd,nd->bl.id,0); break; //Buy window
+			case 2: npc_buysellsel(sd,nd->bl.id,1); break; //Sell window
+			default: clif_npcbuysell(sd,nd->bl.id); break; //Show menu
+		}
 	}
+	else
+		clif_cashshop_show(sd, nd);
+
 	sd->npc_shopid = nd->bl.id;
 	script_pushint(st,1);
 	return 0;
@@ -13636,7 +13638,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(unequip,"i"), // unequip command [Spectre]
 	BUILDIN_DEF(getstrlen,"s"), //strlen [Valaris]
 	BUILDIN_DEF(charisalpha,"si"), //isalpha [Valaris]
-	BUILDIN_DEF(setnpcdisplay,"sv?"),
+	BUILDIN_DEF(setnpcdisplay,"sv??"),
 	BUILDIN_DEF(compare,"ss"), // Lordalfa - To bring strstr to scripting Engine.
 	BUILDIN_DEF(getiteminfo,"ii"), //[Lupus] returns Items Buy / sell Price, etc info
 	BUILDIN_DEF(setiteminfo,"iii"), //[Lupus] set Items Buy / sell Price, etc info

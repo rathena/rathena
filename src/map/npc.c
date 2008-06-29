@@ -781,7 +781,7 @@ int npc_touch_areanpc(struct map_session_data* sd, int m, int x, int y)
 // Return 1 if Warped
 int npc_touch_areanpc2(struct mob_data *md)
 {
-	int i, m = md->bl.m, x = md->bl.x, y = md->bl.y;
+	int i, m = md->bl.m, x = md->bl.x, y = md->bl.y, id;
 	char eventname[NAME_LENGTH*2+3];
 	struct event_data* ev;
 	int xs, ys;
@@ -825,7 +825,9 @@ int npc_touch_areanpc2(struct mob_data *md)
 					if( (ev = (struct event_data*)strdb_get(ev_db, eventname)) == NULL || ev->nd == NULL )
 						break; // No OnTouchNPC Event
 					md->areanpc_id = map[m].npc[i]->bl.id;
+					id = md->bl.id; // Stores Unique ID
 					run_script(ev->nd->u.scr.script, ev->pos, md->bl.id, ev->nd->bl.id);
+					if( map_id2md(id) == NULL ) return 1; // Not Warped, but killed
 					break;
 			}
 

@@ -545,8 +545,12 @@ short mob_barricade_build(short m, short x, short y, const char* mobname, short 
 	safestrncpy(barricade->npc_event, event, sizeof(barricade->npc_event));
 	barricade->amount = 0;
 	barricade->killable = killable;
-	barricade->shootable = shootable;
-	barricade->walkable = walkable;
+	
+	// A protection just in case setting a walkable - non shootable
+	if( (barricade->walkable = walkable) == true )
+		barricade->shootable = true;
+	else
+		barricade->shootable = shootable;
 	
 	for( i = 0; i < count; i++ )
 	{
@@ -567,8 +571,11 @@ short mob_barricade_build(short m, short x, short y, const char* mobname, short 
 				md->barricade = barricade;
 		}
 
-		if( !barricade->walkable ) map_setcell(m, x1, y1, CELL_WALKABLE, false);
-		map_setcell(m, x1, y1, CELL_SHOOTABLE, barricade->shootable);
+		if( !barricade->walkable )
+		{
+			map_setcell(m, x1, y1, CELL_WALKABLE, false);
+			map_setcell(m, x1, y1, CELL_SHOOTABLE, barricade->shootable);
+		}
 
 		clif_changemapcell(0, m, x1, y1, map_getcell(barricade->m, x1, y1, CELL_GETTYPE), ALL_SAMEMAP);
 	}
@@ -623,8 +630,11 @@ static void mob_barricade_break(struct barricade_data *barricade, struct block_l
 	{
 		mob_barricade_nextxy(barricade->x, barricade->y, barricade->dir, i, &x1, &y1);
 
-		if( !barricade->walkable ) map_setcell(barricade->m, x1, y1, CELL_WALKABLE, true);
-		map_setcell(barricade->m, x1, y1, CELL_SHOOTABLE, !barricade->shootable);
+		if( !barricade->shootable )
+			map_setcell(barricade->m, x1, y1, CELL_SHOOTABLE, true);
+		if( !barricade->walkable )
+			map_setcell(barricade->m, x1, y1, CELL_WALKABLE, true);
+
 		clif_changemapcell(0, barricade->m, x1, y1, map_getcell(barricade->m, x1, y1, CELL_GETTYPE), ALL_SAMEMAP);
 	}
 
@@ -685,8 +695,11 @@ void mod_barricade_clearall(void)
 		{
 			mob_barricade_nextxy(barricade->x, barricade->y, barricade->dir, i, &x1, &y1);
 
-			if( !barricade->walkable ) map_setcell(barricade->m, x1, y1, CELL_WALKABLE, true);
-			map_setcell(barricade->m, x1, y1, CELL_SHOOTABLE, !barricade->shootable);
+			if( !barricade->shootable )
+				map_setcell(barricade->m, x1, y1, CELL_SHOOTABLE, true);
+			if( !barricade->walkable )
+				map_setcell(barricade->m, x1, y1, CELL_WALKABLE, true);
+
 			clif_changemapcell(0, barricade->m, x1, y1, map_getcell(barricade->m, x1, y1, CELL_GETTYPE), ALL_SAMEMAP);
 		}
 	}

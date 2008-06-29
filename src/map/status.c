@@ -6394,7 +6394,7 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 			if ((sce->val1&0xFFFF) == CG_MOONLIT)
 				clif_status_change(bl,SI_MOONLIT,0);
 
-			status_change_end(bl,SC_LONGING,-1);				
+			status_change_end(bl,SC_LONGING,-1);
 			break;
 		case SC_NOCHAT:
 			if (sd && sd->status.manner < 0 && tid != -1)
