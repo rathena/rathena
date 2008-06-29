@@ -1473,9 +1473,8 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 
 	damage = dmg.damage + dmg.damage2;
 	
-	if (skillid == AL_INCAGI || skillid == AL_BLESSING)
-		if (tsd->sc.data[SC_CHANGEUNDEAD])
-			damage = 1;
+	if( (skillid == AL_INCAGI || skillid == AL_BLESSING) && tsd->sc.data[SC_CHANGEUNDEAD] )
+		damage = 1;
 
 	if (damage > 0 && dmg.flag&BF_WEAPON && src != bl && src == dsrc &&
 		skillid != WS_CARTTERMINATION) // FIXME(?): Quick and dirty check, but HSCR does bypass Shield Reflect... so I make it bypass the whole reflect thing [DracoRPG]
@@ -1764,11 +1763,13 @@ int skill_area_sub (struct block_list *bl, va_list ap)
 
 	if(battle_check_target(src,bl,flag) > 0)
 	{
-		if (flag&(SD_SPLASH|SD_PREAMBLE)) {
-			if (flag&SD_PREAMBLE && !skill_area_temp[2])
-				clif_skill_damage(src,bl,tick, status_get_amotion(src), 0, -30000, 1, skill_id, skill_lv, 6);
+		// several splash skills need this initial dummy packet to display correctly
+		if (flag&SD_PREAMBLE && skill_area_temp[2] == 0)
+			clif_skill_damage(src,bl,tick, status_get_amotion(src), 0, -30000, 1, skill_id, skill_lv, 6);
+
+		if (flag&(SD_SPLASH|SD_PREAMBLE))
 			skill_area_temp[2]++;
-		}
+
 		return func(src,bl,skill_id,skill_lv,tick,flag);
 	}
 	return 0;

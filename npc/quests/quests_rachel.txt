@@ -6224,7 +6224,7 @@ ra_temin,170,46,3	script	Panno#rachel	920,{
 		mes "be a shelter from intruders.";
 		next;
 		mes "[Priestess Panno]";
-		mes "My ancester designed the";
+		mes "My ancestor designed the";
 		mes "temple security system to";
 		mes "require a special permit in";
 		mes "order to access the temple";

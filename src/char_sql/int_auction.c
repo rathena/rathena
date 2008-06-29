@@ -12,6 +12,7 @@
 #include "char.h"
 #include "inter.h"
 #include "int_mail.h"
+#include "int_auction.h"
 
 #include <stdio.h>
 #include <string.h>

@@ -2799,7 +2799,7 @@ hu_in01,256,40,3	script	Herico	897,{
 		mes "They have become too powerful to just be considered a big corporation.";
 		next;
 		mes "["+strcharinfo(0)+"]";
-		mes "That was why they found the \"Bio Lab\"";
+		mes "That was why they founded the \"Bio Lab\"";
 		mes "in order to continue with their research without Sage Varmunt.";
 		next;
 		cutin "heri3.bmp",2;
@@ -3501,7 +3501,7 @@ hu_in01,317,312,0	script	Book	111,{
 					next;
 					mes "Date: **month **day";
 					mes "I was told that Rekenber succeeded";
-					mes "in creating a type of machine called ^FF000000Guardian^000000.";
+					mes "in creating a type of machine called ^FF0000Guardian^000000.";
 					mes "I have a bad feeling about that, so I decided to write a journal";
 					mes "starting from today and keep everything in record.";
 					mes "¡¡";

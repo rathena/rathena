@@ -231,14 +231,14 @@ alde_dun01	mapflag	nomemo
 alde_dun02	mapflag	nomemo
 alde_dun03	mapflag	nomemo
 alde_dun04	mapflag	nomemo
-// Anthelll ------------------
+// Anthell -------------------
 anthell01	mapflag	nomemo
 anthell02	mapflag	nomemo
 // Amatsu Dungeon ------------
 ama_dun01	mapflag	nomemo
 ama_dun02	mapflag	nomemo
 ama_dun03	mapflag	nomemo
-// Ayothaya
+// Ayothaya ------------------
 ayo_dun01	mapflag	nomemo
 ayo_dun02	mapflag	nomemo
 // Comodo Beach --------------
@@ -307,7 +307,7 @@ moc_pryd04	mapflag	nomemo
 moc_pryd05	mapflag	nomemo
 moc_pryd06	mapflag	nomemo
 moc_prydb1	mapflag	nomemo
-// Coal Mine(Dead Pitt) ------
+// Coal Mine (Dead Pit) ------
 mjo_dun01	mapflag	nomemo
 mjo_dun02	mapflag	nomemo
 mjo_dun03	mapflag	nomemo

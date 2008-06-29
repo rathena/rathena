@@ -617,7 +617,7 @@
 1268,Wild_Beast_Claw,Wilf Beast Claw,4,,10,1450,160,,1,1,0x00001000,2,2,34,4,55,1,16,{ if(getrefine() >= 9){ bonus3 bAutoSpell,"NPC_CRITICALWOUND",2,100; } else bonus3 bAutoSpell,"NPC_CRITICALWOUND",1,100; },{},{}
 1269,Inverse_Scale,Inverse Scale,4,,10,1500,140,,1,0,0x00001000,2,2,34,4,55,1,16,{ bonus bAtkEle,Ele_Holy; bonus3 bAutoSpell,"NPC_DRAGONFEAR",1,30; },{},{}
 1270,Drill_Katar,Drill Katar,4,,10,1400,110,,1,1,0x00001000,2,2,34,4,55,1,16,{ bonus bHit,30; bonus3 bAutoSpell,"ST_FULLSTRIP",1,150; },{},{}
-1271,Blood_Tears,Blood Tears,4,,10,1700,120,,1,2,0x00001000,2,2,34,4,55,1,16,{ if(getrefine() >= 9){ bonus3 bAutoSpell,665,2,30; } else bonus3 bAutoSpell,"NPC_WIDEBLEEDING",1,30; },{},{}
+1271,Blood_Tears,Blood Tears,4,,10,1700,120,,1,2,0x00001000,2,2,34,4,55,1,16,{ if(getrefine() >= 9){ bonus3 bAutoSpell,"NPC_WIDEBLEEDING",2,30; } else bonus3 bAutoSpell,"NPC_WIDEBLEEDING",1,30; },{},{}
 1272,Scratcher,Scratcher,4,,10,0,120,,1,0,0x00001000,7,2,34,1,1,0,16,{ bonus2 bAddRace,RC_Boss,50; bonus2 bAddRace,RC_NonBoss,50; },{},{}
 1273,Bloody_Roar_C,Refined Bloody Roar,4,,0,0,148,,1,0,0x00001000,7,2,34,4,1,0,16,{ bonus bIgnoreDefRace,RC_DemiHuman; bonus bFlee,-160; bonus bFlee2,-160; },{},{}
 1274,Unholy_Touch_C,Refined Unholy Touch,4,,0,0,179,,1,0,0x00001000,7,2,34,4,1,0,16,{ bonus bAtkEle,Ele_Dark; bonus2 bAddEff,Eff_Curse,500; bonus bCritical,-1; bonus bUnbreakableWeapon,0; },{},{}

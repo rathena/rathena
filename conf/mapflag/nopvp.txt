@@ -1,4 +1,4 @@
-///===== Description: =============================================
+//===== Description: =========================================
 //= pvp	off: Disables Player versus Player mode.
 //= To disable PvP mode on a specific map add the mapname here.
 //= v 1.1a

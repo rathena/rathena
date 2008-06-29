@@ -4312,8 +4312,7 @@ BUILDIN_FUNC(areawarp)
 	else if(!(index=mapindex_name2id(str)))
 		return 0;
 
-	map_foreachinarea(buildin_areawarp_sub,
-		m,x0,y0,x1,y1,BL_PC,	index,x,y );
+	map_foreachinarea(buildin_areawarp_sub, m,x0,y0,x1,y1,BL_PC, index,x,y);
 	return 0;
 }
 
@@ -7558,8 +7557,7 @@ BUILDIN_FUNC(killmonsterall)
 		}
 	}
 		
-	map_foreachinmap(buildin_killmonsterall_sub_strip,
-		m,BL_MOB);
+	map_foreachinmap(buildin_killmonsterall_sub_strip,m,BL_MOB);
 	return 0;
 }
 
@@ -11794,10 +11792,10 @@ BUILDIN_FUNC(setnpcdisplay)
 	name = script_getstr(st,2);
 	data = script_getdata(st,3);
 
-	if( script_hasdata(st,5) )
-		size = script_getnum(st,5);
 	if( script_hasdata(st,4) )
 		class_ = script_getnum(st,4);
+	if( script_hasdata(st,5) )
+		size = script_getnum(st,5);
 
 	get_val(st, data);
 	if( data_isstring(data) )

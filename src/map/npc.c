@@ -2060,16 +2060,16 @@ void npc_setcells(struct npc_data* nd)
 
 	switch(nd->subtype)
 	{
-		case WARP:
-			xs = nd->u.warp.xs;
-			ys = nd->u.warp.ys;
-			break;
-		case SCRIPT:
-			xs = nd->u.scr.xs;
-			ys = nd->u.scr.ys;
-			break;
-                default:
-			return; // Other types doesn't have touch area
+	case WARP:
+		xs = nd->u.warp.xs;
+		ys = nd->u.warp.ys;
+		break;
+	case SCRIPT:
+		xs = nd->u.scr.xs;
+		ys = nd->u.scr.ys;
+		break;
+	default:
+		return; // Other types doesn't have touch area
 	}
 
 	if (m < 0 || xs < 0 || ys < 0)
@@ -2896,7 +2896,7 @@ int npc_reload(void)
 		"\t-'"CL_WHITE"%d"CL_RESET"' Warps\n"
 		"\t-'"CL_WHITE"%d"CL_RESET"' Shops\n"
 		"\t-'"CL_WHITE"%d"CL_RESET"' Scripts\n"
-		"\t-'"CL_WHITE"%d"CL_RESET"' Mob sets\n"
+		"\t-'"CL_WHITE"%d"CL_RESET"' Spawn sets\n"
 		"\t-'"CL_WHITE"%d"CL_RESET"' Mobs Cached\n"
 		"\t-'"CL_WHITE"%d"CL_RESET"' Mobs Not Cached\n",
 		npc_id - npc_new_min, npc_warp, npc_shop, npc_script, npc_mob, npc_cache_mob, npc_delay_mob);
@@ -3007,7 +3007,7 @@ int do_init_npc(void)
 		"\t-'"CL_WHITE"%d"CL_RESET"' Warps\n"
 		"\t-'"CL_WHITE"%d"CL_RESET"' Shops\n"
 		"\t-'"CL_WHITE"%d"CL_RESET"' Scripts\n"
-		"\t-'"CL_WHITE"%d"CL_RESET"' Mob sets\n"
+		"\t-'"CL_WHITE"%d"CL_RESET"' Spawn sets\n"
 		"\t-'"CL_WHITE"%d"CL_RESET"' Mobs Cached\n"
 		"\t-'"CL_WHITE"%d"CL_RESET"' Mobs Not Cached\n",
 		npc_id - START_NPC_NUM, npc_warp, npc_shop, npc_script, npc_mob, npc_cache_mob, npc_delay_mob);

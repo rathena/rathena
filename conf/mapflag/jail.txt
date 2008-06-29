@@ -36,7 +36,7 @@ sec_pri	mapflag	nowarp
 sec_pri	mapflag	noreturn
 
 // Bloody Jail ===========================
-//Uncomment following maps to let your prisoners fight with other prisoners
+//Uncomment following mapflags to let your prisoners fight with other prisoners
 
 // PvP ===================================
 sec_pri	mapflag	pvp

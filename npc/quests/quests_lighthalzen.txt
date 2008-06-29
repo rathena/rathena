@@ -5869,7 +5869,7 @@ lhz_in01,286,226,3	script	Secretary Slierre	831,{
 				mes "experiment. And of course, he";
 				mes "should only be testing on animals.";
 				next;
-				switch( select( "Wolfchev's research is great!","His experiments are suspicius..." ) )
+				switch( select( "Wolfchev's research is great!","His experiments are suspicious..." ) )
 				{		
 					case 1:
 						mes "[Sueii Slierre]";
@@ -7884,7 +7884,7 @@ L_Mission:
 			mes "[Karl]";
 			mes "We've recently learned that";
 			mes "Shinokas managed to access";
-			mes "the Regenschirm  Secret Archive, a lab affiliated with Rekenber.";
+			mes "the Regenschirm Secret Archive, a lab affiliated with Rekenber.";
 			mes "That's how Shinokas was able";
 			mes "to learn so much about them.";
 			next;
@@ -9324,7 +9324,7 @@ lhz_in01,285,169,3	script	Researcher#2	865,{
 		mes "is being monitored, I can't";
 		mes "risk going inside there. You";
 		mes "need to sneak in on your own";
-		mes "when the guards change shifts.It's an old trick, but it works.";
+		mes "when the guards change shifts. It's an old trick, but it works.";
 		next;
 		mes "[Lestin]";
 		mes "My pass will get you inside,";
