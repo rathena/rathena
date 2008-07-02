@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= eAthena Dev Team; L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 2.0
+//= 2.0a
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -32,6 +32,7 @@
 //= 1.8 Fixed metto_q never reaching 2. Made some names more unique. [L0ne_W0lf]
 //= 1.9 Fixed Missing Variables in Metto quest. (bugreport:473) [Samuray22]
 //= 2.0 Added missing checkweights. [L0ne_W0lf]
+//= 2.0a Fixed several typos (bugreport:1786) [akrus]
 //============================================================ 
 
 // Metto Quest
@@ -505,7 +506,7 @@ yuno_in01,103,157,3	script	Bain#juno	98,{
 			next;
 			mes "[Bain]";
 			mes "^FF00001 Mixture^000000, ^FF00005 Mini-Furnace^000000,";
-			mes "^FF00005 Burnt Treee^000000 , ^FF00005 Coal^000000,";
+			mes "^FF00005 Burnt Tree^000000 , ^FF00005 Coal^000000,";
 			mes "^FF00005 Fine Sand^000000, ^FF00003 Rough Elunium^000000,";
 			mes "^FF00003 Rough Oridecon^000000^000000.";
 			next;
@@ -597,7 +598,7 @@ yuno_in01,100,153,7	script	Bajin	47,0,0,{
 		next;
 		mes "[Bajin]";
 		mes "^FF00001 Mixture^000000, ^FF00005 Mini-Furnace^000000,";
-		mes "^FF00005 Burnt Treee^000000 , ^FF00005 Coal^000000,";
+		mes "^FF00005 Burnt Tree^000000 , ^FF00005 Coal^000000,";
 		mes "^FF00005 Fine Sand^000000, ^FF00003 Rough Elunium^000000,";
 		mes "^FF00003 Rough Oridecon^000000^000000.";
 		next;
@@ -637,7 +638,7 @@ yuno_in01,100,153,7	script	Bajin	47,0,0,{
 			next;
 			mes "[Bajin]";
 			mes "^FF00001 Mixture^000000, ^FF00005 Mini-Furnace^000000,";
-			mes "^FF00005 Burnt Treee^000000 , ^FF00005 Coal^000000,";
+			mes "^FF00005 Burnt Tree^000000 , ^FF00005 Coal^000000,";
 			mes "^FF00005 Fine Sand^000000, ^FF00003 Rough Elunium^000000,";
 			mes "^FF00003 Rough Oridecon^000000^000000.";
 			next;

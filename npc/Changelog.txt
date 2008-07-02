@@ -1,5 +1,7 @@
 Date		Added
 ======
+2008/07/02
+	* Fixed: several typos in quests_yuno.txt (bugreport:1786) [akrus]
 2008/06/30
 	* Added from jA Pre-quest dungeon entrances $ephiroth [Lupus]
 2008/06/23
@@ -656,7 +658,7 @@ Date		Added
 	- Thanks to Barron-Monster.
 	* Rev. 10906 Fixed the Kafra Welcome message for guilds. Thanks Barron-Monster. [L0ne_W0lf]
 2007/07/23
-	* Fixed 3º Test in Hunter Job Quest. [Samuray22]
+	* Fixed 3ï¿½ Test in Hunter Job Quest. [Samuray22]
 	-Thanks to ultramage.
 	* Fixed a little bug in "Dandelion Quest" with "Job_Alchemist" changed to "Job_Alchem". [Samuray22]
 	-Thanks to Nobuo
@@ -1546,7 +1548,7 @@ Date		Added
 	* Tried to remove all duplicates (in default NPCs) [Toms]
 	* Removed useless 'npc\other\old' directory, who would need that anyway... [DracoRPG]
 	* Commented out the path to Divorce NPC as Lupus forgot to add it for good [DracoRPG]
-	* Fixed critical syntax errors in the new Valkyrie script, (è_é) @ Lupus [DracoRPG]
+	* Fixed critical syntax errors in the new Valkyrie script, (ï¿½_ï¿½) @ Lupus [DracoRPG]
 	* Improved Bioethics quest & nearby Rekenber Guards [DracoRPG]
 	  - Used isequipped() instead of getequipid() to simplify code (esp. with accessories)
 	  - Rewritten the custom text about Hom. Res. and removed its actual learning
