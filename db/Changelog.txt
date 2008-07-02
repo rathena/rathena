@@ -43,6 +43,8 @@
 	2385 Recuvative_Armor		Should trigger HP/SP return with magical kills as well.
 
 =======================
+	* Fixed 4175,Poison_Toad_Card missing pushback effect, bugreport:1779
+
 2008/06/24
 	* Rev. 12891 Added several new item groups, and updated some existing groups. [L0ne_W0lf]
 	- IG_RedBox, IG_GreenBox, IG_OldYellowBox, IG_OldGiftBox
