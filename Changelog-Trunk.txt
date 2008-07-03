@@ -4,8 +4,11 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2008/07/03
+	* Removed aspd penalty from Free Cast since tests show it's not there,
+	  even though RO sites claim it is
+	* Adjusted Free Cast code so that its walk penalty gets calculated in
+	  status_calc_speed and nowhere else [ultramage]
 	* Fixes regarding bugreport:1727 (undead element/race skill behaviors) follow up on revisions r12820 r12821 and r12822 [Brainstorm]
-
 2008/06/24
 	* Rev. 12891 Increased Item group limit for new item groups. [L0ne_W0lf]
 2008/06/23

@@ -1193,8 +1193,6 @@ int status_check_visibility(struct block_list *src, struct block_list *target)
 	return 1;
 }
 
-void status_calc_bl(struct block_list *bl, unsigned long flag);
-
 // Basic ASPD value
 int status_base_amotion_pc(struct map_session_data* sd, struct status_data* status)
 {
@@ -2741,17 +2739,8 @@ void status_calc_bl_sub_pc(struct map_session_data *sd, unsigned long flag)
 	if(flag&SCB_SPEED) {
 		if(status->speed < battle_config.max_walk_speed)
 			status->speed = battle_config.max_walk_speed;
-
-		if ((skill=pc_checkskill(sd,SA_FREECAST))>0) {
-			//Store casting walk speed for quick restoration. [Skotlex]
-			sd->prev_speed = status->speed * (175-5*skill)/100;
-			if(sd->ud.skilltimer != -1) { //Swap speed.
-				skill = status->speed;
-				status->speed = sd->prev_speed;
-				sd->prev_speed = skill;
-			}
-		}
 	}
+
 	if(flag&(SCB_ASPD|SCB_AGI|SCB_DEX)) {
 		flag|=SCB_ASPD;
 
@@ -2763,18 +2752,7 @@ void status_calc_bl_sub_pc(struct map_session_data *sd, unsigned long flag)
 			skill = skill *status->aspd_rate/1000;
 
 		status->amotion = cap_value(skill,battle_config.max_aspd,2000);
-
 		status->adelay = 2*status->amotion;
-		if ((skill=pc_checkskill(sd,SA_FREECAST))>0) {
-			//Store casting adelay for quick restoration. [Skotlex]
-			sd->prev_adelay = status->adelay*(150-5*skill)/100;
-			if(sd->ud.skilltimer != -1) { //Swap adelay.
-				skill = status->adelay;
-				status->adelay = sd->prev_adelay;
-				sd->prev_adelay = skill;
-			}
-		}
-
 	}
 
 	if(flag&(SCB_AGI|SCB_DSPD)) {
@@ -3699,9 +3677,14 @@ static signed short status_calc_mdef2(struct block_list *bl, struct status_chang
 
 static unsigned short status_calc_speed(struct block_list *bl, struct status_change *sc, int speed)
 {
+	TBL_PC* sd = BL_CAST(BL_PC, bl);
+
 	//Default speed coming in means there's no speed_rate adjustments. 
 	int new_speed = speed;
 	bool default_speed = (speed == DEFAULT_WALK_SPEED);
+
+	if( sd && sd->ud.skilltimer != -1 && pc_checkskill(sd,SA_FREECAST) > 0 )
+		speed = speed * (175 - 5 * pc_checkskill(sd,SA_FREECAST))/100;
 
 	if(!sc || !sc->count)
 		return cap_value(speed,10,USHRT_MAX);
@@ -4013,30 +3996,6 @@ static unsigned short status_calc_mode(struct block_list *bl, struct status_chan
 			mode&=~sc->data[SC_MODECHANGE]->val4; //Del mode
 	}
 	return cap_value(mode,0,USHRT_MAX);
-}
-
-/*==========================================
- * Quick swap of adelay/speed when starting ending SA_FREECAST
- *------------------------------------------*/
-void status_freecast_switch(struct map_session_data *sd)
-{
-	struct status_data *status;
-	unsigned short b_speed,tmp;
-
-	status = &sd->battle_status;
-
-	b_speed = status->speed;
-
-	tmp = status->speed;
-	status->speed = sd->prev_speed;
-	sd->prev_speed = tmp;
-
-	tmp = status->adelay;
-	status->adelay = sd->prev_adelay;
-	sd->prev_adelay = tmp;
-
-	if(b_speed != status->speed)
-		clif_updatestatus(sd,SP_SPEED);
 }
 
 const char* status_get_name(struct block_list *bl)

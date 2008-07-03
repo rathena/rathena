@@ -1086,8 +1086,8 @@ int unit_skilluse_id2(struct block_list *src, int target_id, short skill_num, sh
 
 	if(casttime > 0) {
 		ud->skilltimer = add_timer( tick+casttime, skill_castend_id, src->id, 0 );
-		if(sd && pc_checkskill(sd,SA_FREECAST))
-			status_freecast_switch(sd);
+		if( sd && pc_checkskill(sd,SA_FREECAST) > 0 )
+			status_calc_bl(&sd->bl, SCB_SPEED);
 		else
 			unit_stop_walking(src,1);
 	}
@@ -1187,8 +1187,8 @@ int unit_skilluse_pos2( struct block_list *src, short skill_x, short skill_y, sh
 
 	if(casttime > 0) {
 		ud->skilltimer = add_timer( tick+casttime, skill_castend_pos, src->id, 0 );
-		if(sd && pc_checkskill(sd,SA_FREECAST))
-			status_freecast_switch(sd);
+		if( sd && pc_checkskill(sd,SA_FREECAST) > 0 )
+			status_calc_bl(&sd->bl, SCB_SPEED);
 		else
 			unit_stop_walking(src,1);
 	}
@@ -1520,9 +1520,11 @@ int unit_skillcastcancel(struct block_list *bl,int type)
 			return 0;
 	}
 	
-	ud->canact_tick=tick;
-	if(sd && pc_checkskill(sd,SA_FREECAST))
-		status_freecast_switch(sd);
+	ud->canact_tick = tick;
+	ud->skilltimer = -1;
+
+	if( sd && pc_checkskill(sd,SA_FREECAST) > 0 )
+		status_calc_bl(&sd->bl, SCB_SPEED);
 	
 	if(type&1 && sd)
 		skill = sd->skillid_old;
@@ -1538,7 +1540,6 @@ int unit_skillcastcancel(struct block_list *bl,int type)
 	
 	if(bl->type==BL_MOB) ((TBL_MOB*)bl)->skillidx  = -1;
 
-	ud->skilltimer = -1;
 	clif_skillcastcancel(bl);
 	return 1;
 }

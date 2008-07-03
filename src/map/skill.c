@@ -5241,15 +5241,21 @@ int skill_castend_id(int tid, unsigned int tick, int id, intptr data)
 		return 0;
 	}
 
-	if(ud->skillid != SA_CASTCANCEL ) {
+	if(ud->skillid != SA_CASTCANCEL )
+	{// otherwise handled in unit_skillcastcancel()
 		if( ud->skilltimer != tid ) {
 			ShowError("skill_castend_id: Timer mismatch %d!=%d!\n", ud->skilltimer, tid);
 			ud->skilltimer = -1;
 			return 0;
 		}
-		if( sd && ud->skilltimer != -1 && pc_checkskill(sd,SA_FREECAST))
-			status_freecast_switch(sd);
-		ud->skilltimer=-1;
+
+		if( sd && ud->skilltimer != -1 && pc_checkskill(sd,SA_FREECAST) > 0 )
+		{// restore original walk speed
+			ud->skilltimer = -1;
+			status_calc_bl(&sd->bl, SCB_SPEED);
+		}
+
+		ud->skilltimer = -1;
 	}
 
 	if (ud->skilltarget == id)
@@ -5473,10 +5479,13 @@ int skill_castend_pos(int tid, unsigned int tick, int id, intptr data)
 		return 0;
 	}
 
-	if(sd && ud->skilltimer != -1 && pc_checkskill(sd,SA_FREECAST))
-		status_freecast_switch(sd);
-
+	if( sd && ud->skilltimer != -1 && pc_checkskill(sd,SA_FREECAST) > 0 )
+	{// restore original walk speed
+		ud->skilltimer=-1;
+		status_calc_bl(&sd->bl, SCB_SPEED);
+	}
 	ud->skilltimer=-1;
+
 	do {
 		if(status_isdead(src))
 			break;

@@ -141,7 +141,6 @@ struct map_session_data {
 	int cart_weight,cart_num;
 	int fd;
 	unsigned short mapindex;
-	unsigned short prev_speed,prev_adelay;
 	unsigned char head_dir; //0: Look forward. 1: Look right, 2: Look left.
 	unsigned int client_tick;
 	int npc_id,areanpc_id,npc_shopid;
