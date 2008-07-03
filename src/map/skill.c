@@ -609,7 +609,8 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 
 	case CR_GRANDCROSS:
 	case NPC_GRANDDARKNESS:
-		if(tstatus->race == RC_UNDEAD || tstatus->race == RC_DEMON)
+		//Chance to cause blind status vs demon and undead element, but not against players
+		if(!dstsd && (battle_check_undead(tstatus->race,tstatus->def_ele) || tstatus->race == RC_DEMON))
 			sc_start(bl,SC_BLIND,100,skilllv,skill_get_time2(skillid,skilllv));
 		break;
 
@@ -6817,7 +6818,8 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 			break;
 
 		case UNT_EVILLAND:
-			if (tstatus->race!=RC_UNDEAD && tstatus->race!=RC_DEMON)
+			//Will heal demon and undead element monsters, but not players.
+			if (bl->type != BL_PC && !battle_check_undead(tstatus->race, tstatus->def_ele) && tstatus->race!=RC_DEMON)
 			{	//Damage enemies
 				if(battle_check_target(&src->bl,bl,BCT_ENEMY)>0)
 					skill_attack(BF_MISC, ss, &src->bl, bl, sg->skill_id, sg->skill_lv, tick, 0);
