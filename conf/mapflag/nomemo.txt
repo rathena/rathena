@@ -5,6 +5,7 @@
 //= 1.6a added up to Hugel maps. [Lupus]
 //= 1.6b Added job_knt map. [Samuray22]
 //= 1.7 Added all novice maps. [L0ne_W0lf]
+//= 1.8 Added nameless_i location [Lupus]
 //===== Current Version: =====================================
 
 
@@ -418,6 +419,7 @@ thor_v01	mapflag	nomemo
 thor_v02	mapflag	nomemo
 thor_v03	mapflag	nomemo
 //Cursed Abbey
+nameless_i	mapflag	nomemo
 nameless_n	mapflag	nomemo
 abbey01	mapflag	nomemo
 abbey02	mapflag	nomemo
