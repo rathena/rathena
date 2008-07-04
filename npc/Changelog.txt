@@ -1,6 +1,7 @@
 ﻿Date		Added
 ======
 2008/07/04
+	* Added a missing "case 1:" (bugreport: 1794) [Paradox924X]
 	* Removed extraneous " after #que_godnpc2 NPC name. (bugreport: 1758) [Paradox924X]
 2008/07/02
 	* Fixed: several typos in quests_yuno.txt (bugreport:1786) [akrus]

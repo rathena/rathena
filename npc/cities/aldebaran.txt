@@ -831,6 +831,7 @@ aldeba_in,83,245,4	script	Kafra Service#2alde	116,{
 	mes "We appreciate your continued use of the Kafra Service. Please feel free to ask me if you have any questions.";
 	next;
 	switch(select("How does Kafra Storage work?:How do you teleport people?")) {
+	case 1:
 		mes "[Kafra Blossom]";
 		mes "Well, adventurers like yourself can place items into Kafra Storage, so that you don't have to carry all of your stuff around.";
 		next;
