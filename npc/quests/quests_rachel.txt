@@ -1809,6 +1809,7 @@ ra_in01,235,194,5	script	Katinshuell	931,{
 		mes "in the mood for talking with";
 		mes "anyone. I'm still coping with";
 		mes "breaking up with my girlfriend.";
+		next;
 		mes "[" + strcharinfo(0) + "]";
 		mes "Katinshuell... I get the";
 		mes "feeling that you're hiding";

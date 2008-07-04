@@ -1,6 +1,8 @@
 ﻿Date		Added
 ======
 2008/07/04
+	* Fixed a small typo in Advanced Refiner. (bugreport: 1660) [Paradox924X]
+	* Added a missing "next;" in Bruspetti Quest. (bugreport: 1724) [Paradox924X]
 	* Added a missing "next;" in Einbroch Murder Quest. (bugreport: 1739) [Paradox924X]
 	* Added a missing "case 1:" (bugreport: 1794) [Paradox924X]
 	* Removed extraneous " after #que_godnpc2 NPC name. (bugreport: 1758) [Paradox924X]

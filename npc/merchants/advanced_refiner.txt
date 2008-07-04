@@ -23,7 +23,7 @@
 
 payon,174,138,0	script	Suhnbi#cash	85,{
 	mes "[Suhnbi]";
-	mes "I am the Armsith";
+	mes "I am the Armsmith";
 	mes "I can refine all kinds of weapons,";
 	mes "armor and equipment, so let me";
 	mes "know what you want to refine.";
