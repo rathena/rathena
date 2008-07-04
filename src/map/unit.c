@@ -1521,11 +1521,7 @@ int unit_skillcastcancel(struct block_list *bl,int type)
 	}
 	
 	ud->canact_tick = tick;
-	ud->skilltimer = -1;
 
-	if( sd && pc_checkskill(sd,SA_FREECAST) > 0 )
-		status_calc_bl(&sd->bl, SCB_SPEED);
-	
 	if(type&1 && sd)
 		skill = sd->skillid_old;
 	else
@@ -1537,7 +1533,12 @@ int unit_skillcastcancel(struct block_list *bl,int type)
 		ret=delete_timer( ud->skilltimer, skill_castend_id );
 	if(ret<0)
 		ShowError("delete timer error : skillid : %d\n",ret);
-	
+
+	ud->skilltimer = -1;
+
+	if( sd && pc_checkskill(sd,SA_FREECAST) > 0 )
+		status_calc_bl(&sd->bl, SCB_SPEED);
+
 	if(bl->type==BL_MOB) ((TBL_MOB*)bl)->skillidx  = -1;
 
 	clif_skillcastcancel(bl);
