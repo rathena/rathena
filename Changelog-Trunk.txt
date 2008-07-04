@@ -4,6 +4,8 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2008/07/04
+	* Rev. 12911 Homunculus will no longer auto-vaporize on master death. [L0ne_W0lf]
+	- Added config option to allow for this to be turned on or off.
 	* Added missing 'E' logs to mail system [Lupus]
 2008/07/03
 	* Removed aspd penalty from Free Cast since tests show it's not there,

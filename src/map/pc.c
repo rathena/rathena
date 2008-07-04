@@ -4958,7 +4958,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 			pet_unlocktarget(sd->pd);
 	}
 
-	if(sd->status.hom_id > 0)	//orn
+	if(sd->status.hom_id > 0 && battle_config.homunculus_auto_vapor)	//orn
 		merc_hom_vaporize(sd, 0);
 
 	// Leave duel if you die [LuzZza]
