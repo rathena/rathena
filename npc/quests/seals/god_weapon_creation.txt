@@ -1210,7 +1210,7 @@ que_god01,214,128,0	script	#que_godnpc1	111,{
 
 }
 
-que_god01,215,128,0	script	#que_godnpc2"	111,{
+que_god01,215,128,0	script	#que_godnpc2	111,{
 
 		mes "[Entrance Notice]";
 		mes "Only the quickest human being will possess the power of God.";

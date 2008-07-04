@@ -1,5 +1,7 @@
-Date		Added
+﻿Date		Added
 ======
+2008/07/04
+	* Removed extraneous " after #que_godnpc2 NPC name. (bugreport: 1758) [Paradox924X]
 2008/07/02
 	* Fixed: several typos in quests_yuno.txt (bugreport:1786) [akrus]
 2008/06/30
