@@ -1293,6 +1293,7 @@ L_HOW:
 	mes "Apologize?";
 	mes "The harm is";
 	mes "already done...";
+	next;
 	goto L_CONTINUE2;
 L_THINK:
 	mes "[Buender Hikeman]";
