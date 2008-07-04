@@ -1820,7 +1820,7 @@
 4369,Venatu_Card,Venatu Card,6,,10,10,,,,,,,,16,,,,,{ bonus bLuk,readparam(bAgi)/18; },{},{}
 4370,Dimik_Card,Dimik Card,6,,10,10,,,,,,,,16,,,,,{ bonus bVit,getrefine()-5; },{},{}
 4371,Archdam_Card,Archdam Card,6,,10,10,,,,,,,,16,,,,,{ bonus bBaseAtk,10; bonus bCastrate,20; if(isequipped(4311,4319,4331)) { bonus bInt,1; bonus bStr,1; bonus bDef,2; bonus bSPrecovRate,10; bonus2 bSkillAtk,"PA_SHIELDCHAIN",10; bonus2 bSkillAtk,"PA_SACRIFICE",10; bonus bCastrate,-10; if(BaseJob == Job_Crusader) { bonus bDefEle,Ele_Holy; } } },{},{}
-4372,Bacsojin_Card,Bacsojin Card,6,,10,10,,,,,,,,769,,,,,{ bonus2 bSkillHeal,"AL_HEAL",30; bonus2 bSkillHeal,"AL_SANCTUARY",30; bonus2 bSkillHeal,"AM_POTIONPITCHER",30; bonus bUseSPrate,15; },{},{}
+4372,Bacsojin_Card,Bacsojin Card,6,,10,10,,,,,,,,769,,,,,{ bonus2 bSkillHeal,"AL_HEAL",30; bonus2 bSkillHeal,"PR_SANCTUARY",30; bonus2 bSkillHeal,"AM_POTIONPITCHER",30; bonus bUseSPrate,15; },{},{}
 4373,Chung_E_Card,Chung E Card,6,,10,10,,,,,,,,4,,,,,{ bonus bLuk,getrefine()-5; bonus bCritical,getrefine(); },{},{}
 4374,Apocalips_H_Card,Vesper Card,6,,10,10,,,,,,,,769,,,,,{ bonus bDex,2; bonus2 bIgnoreMdefRate,RC_Boss,30; },{},{}
 4375,Orc_Baby_Card_Card,Orc Baby Card,6,,10,10,,,,,,,,4,,,,,{ if(getrefine()>=9) { bonus2 bSubEle,Ele_Neutral,15; bonus bFlee,15; } else { bonus2 bSubEle,Ele_Neutral,10; bonus bFlee,10; } },{},{}
