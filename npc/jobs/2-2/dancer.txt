@@ -4,7 +4,7 @@
 //= Kalen - Original jAthena
 //= Fredzilla - Converted, Lupus
 //===== Current Version: ===================================== 
-//= 3.3
+//= 3.4
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 

@@ -10134,35 +10134,41 @@ int skill_produce_mix (struct map_session_data *sd, int skill_id, int nameid, in
 			case AM_TWILIGHT1:
 			case AM_TWILIGHT2:
 			case AM_TWILIGHT3:
-				make_per = pc_checkskill(sd,AM_LEARNINGPOTION)*100
+				make_per = pc_checkskill(sd,AM_LEARNINGPOTION)*50
 					+ pc_checkskill(sd,AM_PHARMACY)*300 + sd->status.job_level*20
-					+ status->int_*5 + status->dex*10+status->luk*10;
+					+ (status->int_/2)*10 + status->dex*10+status->luk*10;
+				if(merc_is_hom_active(sd->hd)) {//Player got a homun
+					int skill;
+					if((skill=merc_hom_checkskill(sd->hd,HVAN_INSTRUCT)) > 0) //His homun is a vanil with instruction change
+						make_per += skill*100; //+1% bonus per level
+				}
 				switch(nameid){
 					case 501: // Red Potion
 					case 503: // Yellow Potion
 					case 504: // White Potion
-					case 605: // Anodyne
-					case 606: // Aloevera
-						make_per += 2000;
+						make_per += (1+rand()%100)*10 + 2000;
 						break;
-					case 505: // Blue Potion
-						make_per -= 500;
-						break;
-					case 545: // Condensed Red Potion
-					case 546: // Condensed Yellow Potion
-					case 547: // Condensed White Potion
-						make_per -= 1000;
-					    break;
-				 	case 970: // Alcohol
-						make_per += 1000;
-						break;
-					case 7139: // Glistening Coat
-						make_per -= 1000;
+					case 970: // Alcohol
+						make_per += (1+rand()%100)*10 + 1000;
 						break;
 					case 7135: // Bottle Grenade
 					case 7136: // Acid Bottle
 					case 7137: // Plant Bottle
 					case 7138: // Marine Sphere Bottle
+						make_per += (1+rand()%100)*10;
+						break;
+					case 546: // Condensed Yellow Potion
+						make_per -= (1+rand()%50)*10;
+						break;
+					case 547: // Condensed White Potion
+					case 7139: // Glistening Coat
+						make_per -= (1+rand()%100)*10;
+					    break;
+					//Common items, recieve no bonus or penalty, listed just because they are commonly produced
+					case 505: // Blue Potion
+					case 545: // Condensed Red Potion
+					case 605: // Anodyne
+					case 606: // Aloevera
 					default:
 						break;
 				}
@@ -10200,7 +10206,7 @@ int skill_produce_mix (struct map_session_data *sd, int skill_id, int nameid, in
 	}
 // - Baby Class Penalty = 80% (from adult's chance) ----//
 	if (sd->class_&JOBL_BABY) //if it's a Baby Class
-		make_per = (make_per * 80) / 100; //Lupus
+		make_per = (make_per * 70) / 100; //Baby penalty is 30%
 
 	if(make_per < 1) make_per = 1;
 
