@@ -7473,7 +7473,7 @@ BUILDIN_FUNC(areamonster)
 	char *event=va_arg(ap,char *);
 	int allflag=va_arg(ap,int);
 
-	md->npc_killmonster = 1;
+	md->state.npc_killmonster = 1;
 	
 	if(!allflag){
 		if(strcmp(event,md->npc_event)==0)
@@ -7482,7 +7482,7 @@ BUILDIN_FUNC(areamonster)
 		if(!md->spawn)
 			status_kill(bl);
 	}
-	md->npc_killmonster = 0;
+	md->state.npc_killmonster = 0;
 	return 0;
 }
 static int buildin_killmonster_sub(struct block_list *bl,va_list ap)

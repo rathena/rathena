@@ -112,6 +112,7 @@ struct mob_data {
 		unsigned spotted: 1;
 		unsigned char attacked_count; //For rude attacked.
 		int provoke_flag; // Celest
+		unsigned npc_killmonster: 1; //for new killmonster behavior
 	} state;
 	struct guardian_data* guardian_data; 
 	struct {
@@ -141,7 +142,6 @@ struct mob_data {
 	short skillidx;
 	unsigned int skilldelay[MAX_MOBSKILL];
 	char npc_event[50];
-	int npc_killmonster; //for new killmonster behavior
 };
 
 

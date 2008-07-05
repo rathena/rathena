@@ -2545,7 +2545,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 	if(md->nd)
 		mob_script_callback(md, src, CALLBACK_DEAD);
 	else
-	if(md->npc_event[0] && !md->npc_killmonster)
+	if(md->npc_event[0] && !md->state.npc_killmonster)
 	{
 		md->status.hp = 0; //So that npc_event invoked functions KNOW that I am dead.
 		if(src) 
