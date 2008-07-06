@@ -53,7 +53,6 @@ bonus bFlee,n;				Flee + n
 bonus bFleeRate,n;			Flee + n%
 bonus bFlee2,n;				Perfect Dodge + n
 bonus bFlee2Rate,n;			Perfect Dodge + n%
-bonus bSpeed,n;				Moving speed + n
 bonus bSpeedRate,n;			Moving speed + n% (only the highest among all is applied)
 bonus bSpeedAddRate,n;			Moving speed + n%
 bonus bAspd,n;				Attack speed + n

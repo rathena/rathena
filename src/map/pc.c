@@ -1654,15 +1654,9 @@ int pc_bonus(struct map_session_data *sd,int type,int val)
 			break;
 		}
 		break;
-	case SP_ADD_SPEED:	//Raw increase
-		if(sd->state.lr_flag != 2) {
-			bonus = status->speed - val;
-			status->speed = cap_value(bonus, 0, USHRT_MAX);
-		}
-		break;
 	case SP_SPEED_RATE:	//Non stackable increase
-		if(sd->state.lr_flag != 2 && sd->speed_rate > 100-val)
-			sd->speed_rate = 100-val;
+		if(sd->state.lr_flag != 2)
+			sd->speed_rate = min(sd->speed_rate, -val);
 		break;
 	case SP_SPEED_ADDRATE:	//Stackable increase
 		if(sd->state.lr_flag != 2)

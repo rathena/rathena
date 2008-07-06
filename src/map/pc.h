@@ -247,7 +247,7 @@ struct map_session_data {
 	int break_weapon_rate,break_armor_rate;
 	int crit_atk_rate;
 	int classchange; // [Valaris]
-	int speed_add_rate, aspd_add;
+	int speed_rate, speed_add_rate, aspd_add;
 	unsigned int setitem_hash, setitem_hash2; //Split in 2 because shift operations only work on int ranges. [Skotlex]
 	
 	short splash_range, splash_add_range;
@@ -263,7 +263,7 @@ struct map_session_data {
 
 	int castrate,delayrate,hprate,sprate,dsprate;
 	int atk_rate;
-	int speed_rate,hprecov_rate,sprecov_rate;
+	int hprecov_rate,sprecov_rate;
 	int matk_rate;
 	int critical_rate,hit_rate,flee_rate,flee2_rate,def_rate,def2_rate,mdef_rate,mdef2_rate;
 

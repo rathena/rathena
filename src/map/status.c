@@ -1643,7 +1643,6 @@ int status_calc_pc(struct map_session_data* sd,int first)
 	sd->castrate=100;
 	sd->delayrate=100;
 	sd->dsprate=100;
-	sd->speed_rate = 100;
 	sd->hprecov_rate = 100;
 	sd->sprecov_rate = 100;
 	sd->atk_rate = sd->matk_rate = 100;
@@ -1757,6 +1756,7 @@ int status_calc_pc(struct map_session_data* sd,int first)
 		+ sizeof(sd->break_armor_rate)
 		+ sizeof(sd->crit_atk_rate)
 		+ sizeof(sd->classchange)
+		+ sizeof(sd->speed_rate)
 		+ sizeof(sd->speed_add_rate)
 		+ sizeof(sd->aspd_add)
 		+ sizeof(sd->setitem_hash)
@@ -1939,8 +1939,6 @@ int status_calc_pc(struct map_session_data* sd,int first)
 	sd->double_rate += sd->double_add_rate;
 	sd->perfect_hit += sd->perfect_hit_add;
 	sd->splash_range += sd->splash_add_range;
-	if(sd->speed_add_rate)	
-		sd->speed_rate += sd->speed_add_rate;
 
 	// Damage modifiers from weapon type
 	sd->right_weapon.atkmods[0] = atkmods[0][sd->weapontype1];
@@ -2194,10 +2192,8 @@ int status_calc_pc(struct map_session_data* sd,int first)
 
 // ----- WALKING SPEED CALCULATION -----
 
-	if(sd->speed_rate < 0)
-		sd->speed_rate = 0;
-	if(sd->speed_rate != 100)
-		status->speed = status->speed*sd->speed_rate/100;
+	sd->speed_rate += sd->speed_add_rate;
+	status->speed += status->speed * sd->speed_rate/100;
 
 	// Relative modifiers from passive skills
 	if((sd->class_&MAPID_UPPERMASK) == MAPID_ASSASSIN && (skill=pc_checkskill(sd,TF_MISS))>0)
