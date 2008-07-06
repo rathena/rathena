@@ -202,7 +202,7 @@
 697,Fire_Scroll_2_5,Level 5 Fire Ball,11,2000,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill "MG_FIREBALL",5; },{},{}
 698,Fire_Scroll_3_1,Level 1 Fire Wall,11,1000,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill "MG_FIREWALL",1; },{},{}
 699,Fire_Scroll_3_5,Level 5 Fire Wall,11,2000,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill "MG_FIREWALL",5; },{},{}
-700,Cold_Scroll_2_1,Level 1 Frost Diver,11,1000,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill "MG_FROSTDIVER,",1; },{},{}
+700,Cold_Scroll_2_1,Level 1 Frost Diver,11,1000,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill "MG_FROSTDIVER",1; },{},{}
 // Etc Items
 //===================================================================
 701,Ora_Ora,Ora Ora,3,55000,,200,,,,,,,,,,,,,{},{},{}

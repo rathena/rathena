@@ -43,6 +43,9 @@
 	2385 Recuvative_Armor		Should trigger HP/SP return with magical kills as well.
 
 =======================
+2008/07/06
+	* Fixed 700,Cold_Scroll_2_1 not working, bugreport:1807
+
 2008/07/04
 	* Fixed 4372, Bacsojin Card trying to improve AL_SANCTUARY instead of PR_SANCTUARY. Bugreport: 1793 [Paradox924X]
 2008/07/02
