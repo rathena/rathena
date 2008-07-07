@@ -180,7 +180,6 @@ void initChangeTables(void)
 	add_sc( HT_FREEZINGTRAP      , SC_FREEZE          );
 	set_sc( AS_CLOAKING          , SC_CLOAKING        , SI_CLOAKING        , SCB_CRI|SCB_SPEED );
 	add_sc( AS_SONICBLOW         , SC_STUN            );
-	set_sc( AS_GRIMTOOTH         , SC_SLOWDOWN        , SI_BLANK           , SCB_SPEED );
 	set_sc( AS_ENCHANTPOISON     , SC_ENCPOISON       , SI_ENCPOISON       , SCB_ATK_ELE );
 	set_sc( AS_POISONREACT       , SC_POISONREACT     , SI_POISONREACT     , SCB_NONE );
 	add_sc( AS_VENOMDUST         , SC_POISON          );
