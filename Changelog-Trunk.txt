@@ -5,6 +5,7 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2008/07/07
 	* Removed stop/slowdown effect from Grimtooth (bugreport:1806)
+	* Players autotrading will not be able to recieve whispers (bugreport:1804) [SketchyPhoenix]
 2008/07/06
 	* Slight cleanup of item-based walk speed bonuses [ultramage]
 	- removed bSpeed bonus code (was just disabled until now)

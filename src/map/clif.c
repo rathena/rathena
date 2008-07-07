@@ -8616,7 +8616,16 @@ void clif_parse_WisMessage(int fd, struct map_session_data* sd)
 		clif_wis_end(fd, 2); // 2: ignored by target
 		return;
 	}
-
+	
+	// if player is autotrading
+	if( dstsd->state.autotrade == 1 )
+	{
+		char output[256];
+		sprintf(output, "%s is in autotrade mode and cannot recieve whispered messages.", dstsd->status.name);
+		clif_wis_message(fd, sd->status.name, output, strlen(output) + 1);
+		return;
+	}
+	
 	// notify sender of success
 	clif_wis_end(fd, 0); // 0: success to send wisper
 
