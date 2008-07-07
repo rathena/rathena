@@ -543,12 +543,6 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 		sc_start(bl,SC_STUN,(2*skilllv+10),skilllv,skill_get_time2(skillid,skilllv));
 		break;
 
-	case AS_GRIMTOOTH:
-		status = dstsd?SC_SLOWDOWN:SC_STOP;
-		if (!tsc->data[status])
-			sc_start(bl,status,100,skilllv,skill_get_time2(skillid, skilllv));
-		break;
-
 	case WZ_FIREPILLAR:
 		unit_set_walkdelay(bl, tick, skill_get_time2(skillid, skilllv), 1);
 		break;
