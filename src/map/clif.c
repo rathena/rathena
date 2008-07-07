@@ -8621,7 +8621,7 @@ void clif_parse_WisMessage(int fd, struct map_session_data* sd)
 	if( dstsd->state.autotrade == 1 )
 	{
 		char output[256];
-		sprintf(output, "%s is in autotrade mode and cannot recieve whispered messages.", dstsd->status.name);
+		sprintf(output, "%s is in autotrade mode and cannot receive whispered messages.", dstsd->status.name);
 		clif_wis_message(fd, sd->status.name, output, strlen(output) + 1);
 		return;
 	}
