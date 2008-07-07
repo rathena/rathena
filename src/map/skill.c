@@ -6324,13 +6324,12 @@ struct skill_unit_group* skill_unitsetting (struct block_list *src, short skilli
 		}
 		break;
 	case DC_DONTFORGETME:
-		val1 = 30*skilllv+status->dex; // ASPD decrease
-		val2 = 100 -2*skilllv -status->agi/10; // Movement speed adjustment.
+		val1 = status->dex/10 + 3*skilllv + 5; // ASPD decrease
+		val2 = status->agi/10 + 3*skilllv + 5; // Movement speed adjustment.
 		if(sd){
-			val1 += pc_checkskill(sd,DC_DANCINGLESSON); //TO-DO This is a guessed value
-			val2 -= pc_checkskill(sd,DC_DANCINGLESSON); //TO-DO This is a guessed value
+			val1 += pc_checkskill(sd,DC_DANCINGLESSON);
+			val2 += pc_checkskill(sd,DC_DANCINGLESSON);
 		}
-		if (val2 < 1) val2 = 1;
 		break;
 	case BA_APPLEIDUN:
 		val1 = 5+2*skilllv+status->vit/10; // MaxHP percent increase

@@ -2189,22 +2189,6 @@ int status_calc_pc(struct map_session_data* sd,int first)
 		status->mdef = (signed char)battle_config.max_def;
 	}
 
-// ----- WALKING SPEED CALCULATION -----
-
-	sd->speed_rate += sd->speed_add_rate;
-	status->speed += status->speed * sd->speed_rate/100;
-
-	// Relative modifiers from passive skills
-	if((sd->class_&MAPID_UPPERMASK) == MAPID_ASSASSIN && (skill=pc_checkskill(sd,TF_MISS))>0)
-		status->speed -= status->speed * skill/100;
-	if(pc_isriding(sd) && pc_checkskill(sd,KN_RIDING)>0)
-		status->speed -= status->speed * 25/100;
-	if(pc_iscarton(sd) && (skill=pc_checkskill(sd,MC_PUSHCART))>0)
-		status->speed += status->speed * (100-10*skill)/100;
-
-	if(status->speed < battle_config.max_walk_speed)
-		status->speed = battle_config.max_walk_speed;
-
 // ----- ASPD CALCULATION -----
 // Unlike other stats, ASPD rate modifiers from skills/SCs/items/etc are first all added together, then the final modifier is applied
 
@@ -3673,101 +3657,132 @@ static signed short status_calc_mdef2(struct block_list *bl, struct status_chang
 static unsigned short status_calc_speed(struct block_list *bl, struct status_change *sc, int speed)
 {
 	TBL_PC* sd = BL_CAST(BL_PC, bl);
+	int speed_rate;
 
-	//Default speed coming in means there's no speed_rate adjustments. 
-	int new_speed = speed;
-	bool default_speed = (speed == DEFAULT_WALK_SPEED);
-
-	if( sd && sd->ud.skilltimer != -1 && pc_checkskill(sd,SA_FREECAST) > 0 )
-		speed = speed * (175 - 5 * pc_checkskill(sd,SA_FREECAST))/100;
-
-	if(!sc || !sc->count)
+	if( sc == NULL )
 		return cap_value(speed,10,USHRT_MAX);
 
-	if(sc->data[SC_WALKSPEED])
-		new_speed = sc->data[SC_WALKSPEED]->val1;
+	if( sd && sd->ud.skilltimer != -1 && pc_checkskill(sd,SA_FREECAST) > 0 )
+	{
+		speed_rate = 175 - 5 * pc_checkskill(sd,SA_FREECAST);
+	}
+	else
+	{
+		speed_rate = 100;
 
-	// Fixed reductions
-	if(sc->data[SC_CURSE])
-		new_speed += 450;
-	if(sc->data[SC_SWOO])
-		new_speed += 450; //Let's use Curse's slow down momentarily (exact value unknown)
-	if(sc->data[SC_WEDDING])
-		new_speed += 300;
-
-	if(!sc->data[SC_GATLINGFEVER])
-	{	//These two stack with everything (but only one of either)
-		if(sc->data[SC_SPEEDUP1])
-			new_speed -= new_speed * 50/100;
-		else if(sc->data[SC_AVOID])
-			new_speed -= new_speed * sc->data[SC_AVOID]->val2/100;
-
-		speed = new_speed;
-
-		//These stack independently
-		if(sc->data[SC_RUN])
-			new_speed -= new_speed * 50/100;
-		if(sc->data[SC_INCREASEAGI])
-			new_speed -= new_speed * 25/100;
-		if(sc->data[SC_FUSION])
-			new_speed -= new_speed * 25/100;
-
-		//These only apply if you don't have increase agi and/or fusion and/or sprint
-		if(speed == new_speed)
+		//GetMoveHasteValue2()
 		{
-			//Don't allow buff from non speed potion consumables to stack with equips!
-			if(sc->data[SC_SPEEDUP0] && default_speed)
-				new_speed -= new_speed * 25/100;
-			else if(sc->data[SC_CARTBOOST])
-				new_speed -= new_speed * 20/100;
-			else if(sc->data[SC_BERSERK])
-				new_speed -= new_speed * 20/100;
-			else if(sc->data[SC_WINDWALK])
-				new_speed -= new_speed * sc->data[SC_WINDWALK]->val3/100;
+			int val = 0;
+
+			if( sc->data[SC_FUSION] )
+				val = 25;
+			else
+			if( sd && pc_isriding(sd) )
+				val = 25;
+
+			speed_rate -= val;
 		}
 
+		//GetMoveSlowValue()
+		{
+			int val = 0;
+
+			if( sd && sc->data[SC_HIDING] && pc_checkskill(sd,RG_TUNNELDRIVE) > 0 )
+				val = 120 - 6 * pc_checkskill(sd,RG_TUNNELDRIVE);
+			else
+			if( sd && sc->data[SC_CHASEWALK] && sc->data[SC_CHASEWALK]->val3 < 0 )
+				val = sc->data[SC_CHASEWALK]->val3;
+			else
+			{
+				// Longing for Freedom cancels song/dance penalty
+				if( sc->data[SC_LONGING] )
+					val = max( val, 50 - 10 * sc->data[SC_LONGING]->val1 );
+				else
+				if( sd && sc->data[SC_DANCING] )
+					val = max( val, 500 - (40 + 10 * (sc->data[SC_SPIRIT] && sc->data[SC_SPIRIT]->val2 == SL_BARDDANCER)) * pc_checkskill(sd,(sd->status.sex?BA_MUSICALLESSON:DC_DANCINGLESSON)) );
+
+				if( sc->data[SC_DECREASEAGI] )
+					val = max( val, 25 );
+				if( sc->data[SC_QUAGMIRE] )
+					val = max( val, 50 );
+				if( sc->data[SC_DONTFORGETME] )
+					val = max( val, sc->data[SC_DONTFORGETME]->val3 );
+				if( sc->data[SC_CURSE] )
+					val = max( val, 300 );
+				if( sc->data[SC_CHASEWALK] )
+					val = max( val, sc->data[SC_CHASEWALK]->val3 );
+				if( sc->data[SC_WEDDING] )
+					val = max( val, 100 );
+				if( sc->data[SC_JOINTBEAT] && sc->data[SC_JOINTBEAT]->val2&(BREAK_ANKLE|BREAK_KNEE) )
+					val = max( val, (sc->data[SC_JOINTBEAT]->val2&BREAK_ANKLE ? 50 : 0) + (sc->data[SC_JOINTBEAT]->val2&BREAK_KNEE ? 30 : 0) );
+				if( sc->data[SC_CLOAKING] && (sc->data[SC_CLOAKING]->val4&1) == 0 )
+					val = max( val, sc->data[SC_CLOAKING]->val1 < 3 ? 300 : 30 - 3 * sc->data[SC_CLOAKING]->val1 );
+				if( sc->data[SC_GOSPEL] && sc->data[SC_GOSPEL]->val4 == BCT_ENEMY )
+					val = max( val, 75 );
+				if( sc->data[SC_SLOWDOWN] ) // Slow Potion
+					val = max( val, 100 );
+				if( sc->data[SC_GATLINGFEVER] )
+					val = max( val, 100 );
+				if( sc->data[SC_SUITON] )
+					val = max( val, sc->data[SC_SUITON]->val3 );
+				if( sc->data[SC_SWOO] )
+					val = max( val, 300 );
+
+				if( sd && sd->speed_rate + sd->speed_add_rate > 0 ) // permanent item-based speedup
+					val = max( val, sd->speed_rate + sd->speed_add_rate );
+			}
+
+			speed_rate += val;
+		}
+
+		//GetMoveHasteValue1()
+		{
+			int val = 0;
+
+			if( sc->data[SC_SPEEDUP1] ) //FIXME: used both by NPC_AGIUP and Speed Potion script
+				val = max( val, 50 );
+			if( sc->data[SC_INCREASEAGI] )
+				val = max( val, 25 );
+			if( sc->data[SC_WINDWALK] )
+				val = max( val, 2 * sc->data[SC_WINDWALK]->val1 );
+			if( sc->data[SC_CARTBOOST] )
+				val = max( val, 20 );
+			if( sd && (sd->class_&MAPID_UPPERMASK) == MAPID_ASSASSIN && pc_checkskill(sd,TF_MISS) > 0 )
+				val = max( val, 1 * pc_checkskill(sd,TF_MISS) );
+			if( sc->data[SC_CLOAKING] && (sc->data[SC_CLOAKING]->val4&1) == 1 )
+				val = max( val, sc->data[SC_CLOAKING]->val1 >= 10 ? 25 : 3 * sc->data[SC_CLOAKING]->val1 - 3 );
+			if( sc->data[SC_BERSERK] )
+				val = max( val, 25 );
+			if( sc->data[SC_RUN] )
+				val = max( val, 55 );
+			if( sc->data[SC_AVOID] )
+				val = max( val, 10 * sc->data[SC_AVOID]->val1 );
+
+			//FIXME: official items use a single bonus for this [ultramage]
+			if( sc->data[SC_SPEEDUP0] ) // temporary item-based speedup
+				val = max( val, 25 );
+			if( sd && sd->speed_rate + sd->speed_add_rate < 0 ) // permanent item-based speedup
+				val = max( val, -(sd->speed_rate + sd->speed_add_rate) );
+
+			speed_rate -= val;
+		}
+
+		if( speed_rate < 40 )
+			speed_rate = 40;
 	}
 
-	speed = new_speed;
-
-	//% reductions	 (they stack)
-	if(sc->data[SC_DANCING] && sc->data[SC_DANCING]->val3&0xFFFF)
-		speed += speed*(sc->data[SC_DANCING]->val3&0xFFFF)/100;
-	if(sc->data[SC_DECREASEAGI])
-		speed = speed * 100/75;
-	if(sc->data[SC_STEELBODY])
-		speed = speed * 100/75;
-	if(sc->data[SC_QUAGMIRE])
-		speed = speed * 100/50;
-	if(sc->data[SC_SUITON] && sc->data[SC_SUITON]->val3)
-		speed = speed * 100/sc->data[SC_SUITON]->val3;
-	if(sc->data[SC_DONTFORGETME])
-		speed = speed * 100/sc->data[SC_DONTFORGETME]->val3;
-	if(sc->data[SC_DEFENDER])
-		speed = speed * 100/sc->data[SC_DEFENDER]->val3;
-	if(sc->data[SC_GOSPEL] && sc->data[SC_GOSPEL]->val4 == BCT_ENEMY)
-		speed = speed * 100/75;
-	if(sc->data[SC_JOINTBEAT] && sc->data[SC_JOINTBEAT]->val2&(BREAK_ANKLE|BREAK_KNEE)) {
-		speed = speed * 100/(100
-			- ( sc->data[SC_JOINTBEAT]->val2&BREAK_ANKLE ? 50 : 0 )
-			- ( sc->data[SC_JOINTBEAT]->val2&BREAK_KNEE  ? 30 : 0 ));
+	//GetSpeed()
+	{
+		if( sd && pc_iscarton(sd) )
+			speed += speed * (50 - 5 * pc_checkskill(sd,MC_PUSHCART)) / 100;
+		if( speed_rate != 100 )
+			speed = speed * speed_rate / 100;
+		if( sc->data[SC_STEELBODY] )
+			speed = 200;
+		if( sc->data[SC_DEFENDER] )
+			speed = max(speed, 200);
 	}
-	if(sc->data[SC_CLOAKING])
-		speed = speed * 100 /(
-			(sc->data[SC_CLOAKING]->val4&1?25:0) //Wall speed bonus
-			+sc->data[SC_CLOAKING]->val3); //Normal adjustment bonus->
-	
-	if(sc->data[SC_LONGING])
-		speed = speed * 100/sc->data[SC_LONGING]->val3;
-	if(sc->data[SC_HIDING] && sc->data[SC_HIDING]->val3)
-		speed = speed * 100/sc->data[SC_HIDING]->val3;
-	if(sc->data[SC_CHASEWALK])
-		speed = speed * 100/sc->data[SC_CHASEWALK]->val3;
-	if(sc->data[SC_GATLINGFEVER])
-		speed = speed * 100/75;
-	if(sc->data[SC_SLOWDOWN])
-		speed = speed * 100/75;
-	
+
 	return (short)cap_value(speed,10,USHRT_MAX);
 }
 
@@ -5133,16 +5148,11 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			if (val1 == CG_MOONLIT)
 				clif_status_change(bl,SI_MOONLIT,1);
 			val1|= (val3<<16);
-			val3 = 0; //Tick duration/Speed penalty.
-			//Store walk speed change in lower part of val3
-			if (sd && !(sc->data[SC_SPIRIT] && sc->data[SC_SPIRIT]->val2 == SL_BARDDANCER))
-				val3 = 500-40*pc_checkskill(sd,(sd->status.sex?BA_MUSICALLESSON:DC_DANCINGLESSON));
-			val3|= ((tick/1000)<<16)&0xFFFF0000; //Store tick in upper part of val3
+			val3 = tick/1000; //Tick duration
 			tick = 1000;
 			break;
 		case SC_LONGING:
 			val2 = 500-100*val1; //Aspd penalty.
-			val3 = 50+10*val1; //Walk speed adjustment.
 			break;
 		case SC_EXPLOSIONSPIRITS:
 			val2 = 75 + 25*val1; //Cri bonus
@@ -5231,16 +5241,14 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 		case SC_HIDING:
 			val2 = tick/1000;
 			tick = 1000;
- 			//Store speed penalty on val3.
-			if(sd && (val3 = pc_checkskill(sd,RG_TUNNELDRIVE))>0)
-				val3 = 20 + 6*val3;
+			val3 = 0; // unused, previously speed adjustment
 			val4 = val1+3; //Seconds before SP substraction happen.
 			break;
 		case SC_CHASEWALK:
 			val2 = tick>0?tick:10000; //Interval at which SP is drained.
-			val3 = 65+val1*5; //Speed adjustment.
+			val3 = 35 - 5 * val1; //Speed adjustment.
 			if (sc->data[SC_SPIRIT] && sc->data[SC_SPIRIT]->val2 == SL_ROGUE)
-				val3 += 60;
+				val3 -= 40;
 			val4 = 10+val1*2; //SP cost.
 			if (map_flag_gvg(bl->m)) val4 *= 5;
 			break;
@@ -5248,11 +5256,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			if (!sd) //Monsters should be able to walk with no penalties. [Skotlex]
 				val1 = 10;
 			val2 = tick>0?tick:60000; //SP consumption rate.
-			val3 = 0;
-			if (sd && (sd->class_&MAPID_UPPERMASK) == MAPID_ASSASSIN && (val3=pc_checkskill(sd,TF_MISS))>0)
-				val3 *= -1; //Substract the Dodge speed bonus.
-			val3+= 70+val1*3; //Speed adjustment without a wall.
-			//With a wall, it is val3 +25.
+			val3 = 0; // unused, previously walk speed adjustment
 			//val4&1 signals the presence of a wall.
 			//val4&2 makes cloak not end on normal attacks [Skotlex]
 			//val4&4 makes cloak not end on using skills
@@ -5308,7 +5312,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 				struct map_session_data *tsd;
 				int i;
 				val2 = 5 + 15*val1; //Damage reduction
-				val3 = 65 + 5*val1; //Speed adjustment
+				val3 = 0; // unused, previously speed adjustment
 				val4 = 250 - 50*val1; //Aspd adjustment 
 
 				if (sd)
@@ -5336,7 +5340,6 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 
 		case SC_WINDWALK:
 			val2 = (val1+1)/2; // Flee bonus is 1/1/2/2/3/3/4/4/5/5
-			val3 = 4*val2;	//movement speed % increase is 4 times that
 			break;
 
 		case SC_JOINTBEAT:
@@ -5717,7 +5720,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			val4 = 5+5*val1; //Def reduction.
 			break;
 		case SC_AVOID:
-			val2 = 10*val1; //Speed change rate.
+			//val2 = 10*val1; //Speed change rate.
 			break;
 		case SC_DEFENCE:
 			val2 = 2*val1; //Def bonus
@@ -5870,15 +5873,6 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			break;	
 		case SC_KAAHI:
 			val4 = -1;
-			break;
-		//In case the speed reduction comes loaded incorrectly, prevent division by 0.
-		case SC_DONTFORGETME:
-		case SC_CLOAKING:
-		case SC_LONGING:
-		case SC_HIDING:
-		case SC_CHASEWALK:
-		case SC_DEFENDER:
-			if (!val3) val3 = 100;
 			break;
 	}
 
@@ -6866,11 +6860,8 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr data)
 		{
 			int s = 0;
 			int sp = 1;
-			int counter = (sce->val3)>>16;
-			if (--counter <= 0)
+			if (--sce->val3 <= 0)
 				break;
-			sce->val3&= 0xFFFF; //Remove counter
-			sce->val3|=(counter<<16);//Reset it.
 			switch(sce->val1&0xFFFF){
 				case BD_RICHMANKIM:
 				case BD_DRUMBATTLEFIELD:
@@ -6906,7 +6897,7 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr data)
 					s=10;
 					break;
 			}
-			if (s && (counter%s == 0))
+			if( s != 0 && sce->val3 % s == 0 )
 			{
 				if (sc->data[SC_LONGING])
 					sp*= 3;

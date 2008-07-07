@@ -4,6 +4,32 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2008/07/07
+	* First attempt at implementing the official walk speed system
+	- separated speed modifiers into bonuses, penalties and other statuses
+	- no bonuses stack, instead the maximum is taken
+	- no penalties stack, instead the maximum is taken
+	- Union, Riding and Pushcart are the only other statuses that stack
+	- both bonuses and penalties are linear modifiers of the base walk speed
+	- 'other' statuses are applied after bonuses and penalties
+	* Changed many equations to match official walk speed system
+	- Steel Body now sets a fixed walk speed of 200 (bypassing everything else)
+	- Defender now caps the walk speed to a minimum of 200
+	- Slow Grace now uses official equation for aspd/walk speed decrease
+	- Pushcart's speed penalty is now halved
+	- Free Cast now changes walk speed to a fixed value, bypassing bonuses and penalties
+	- Wedding clothes now have a penalty of +100%, not +200%
+	- rogue's Tunnel Drive and stalker's Chasewalk ignore all penalties
+	- taekwon's Running is now 5% faster
+	- Frenzy is now 5% faster
+	- Gospel's offensive slowdown is now +75% instead of +33%
+	- Quagmire now slows down by +50% instead of +100%
+	- Gatling Fever now slows down by +100% instead of +33%
+	- Cloaking modifier is now a bonus/penalty, depending on presence of wall
+	- Longing for Freedom overrides the song/dance penalty (bugreport:416)
+	- Bard/Dancer Spriit now properly affects song/dance penalty (bugreport:1019)
+	- item-granted speedup no longer stacks with speed bonuses (topic:145019)
+	- removed some status code that pre-calculated speed bonuses/penalties,
+	  to make calculations more localized and less messy (see song/dance code)
 	* Removed stop/slowdown effect from Grimtooth (bugreport:1806)
 	* Players autotrading will not be able to receive whispers (bugreport:1804) [SketchyPhoenix]
 2008/07/06
