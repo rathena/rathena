@@ -2290,9 +2290,14 @@
 5398,Bone_Head,Bone Head,5,0,,1200,,5,,1,0x000444A2,2,2,256,,85,1,401,{ bonus bStr,2; bonus bMdef,5; bonus2 bResEff,Eff_Stun,500; bonus2 bResEff,Eff_Bleeding,500; },{},{}
 5399,Mandragora_Cap,Mandragora Cap,5,0,,3000,,1,,1,0xFFFFFFFF,2,2,256,,85,0,401,{ bonus bVit,3; bonus3 bAutoSpellWhenHit,"DC_SCREAM",5,10; },{},{}
 //5400,Fox_Hat,Fox Mask,5,,10,200,,1,,0,0xFFFFFFFF,7,0,769,,0,1,403,{ bonus bLuk,1; },{},{}
-// Japan - No sprite
+//5401,Black_Glasses,Black Glasses,5,20,,200,,1,,0,0xFFFFFFFF,7,2,512,,70,0,404,{ bonus bInt,1; bonus bMdef,2; },{},{}
+//5402,Naughty_Fairy,Naughty Fairy,5,20,,200,,1,,0,0xFFFFFFFF,7,2,512,,70,0,405,{ bonus bFlee2,3; },{},{}
+//5403,Fish_Mouth,Fish Mouth,5,20,,200,,0,,0,0xFFFFFFFF,7,2,1,,30,0,406,{ bonus2 bAddMonsterDropItem,579,500; bonus2 bAddItemHealRate,579,25; },{},{}
+//5404,Blue_Ribbon,Blue Ribbon,5,,20,100,,1,,1,0xFFFFFFFF,7,2,256,,45,1,407,{ bonus4 bAutoSpellWhenHit,"AC_CONCENTRATION",2,30,0; },{},{}
+//5405,Blue_Bird,Blue Bird,5,,20,200,,0,,0,0xFFFFFFFF,7,2,256,,80,0,408,{ bonus bShortWeaponDamageReturn,1; },{},{}
 //5406,Academy_Freshman_Hat,Academy Freshman Hat,5,,10,200,,1,,0,0xFFFFFFFF,7,0,256,,0,,409,{ bonus bMaxHP,80; bonus bMaxSP,10; },{},{}
 //5407,Academy_Completion_Hat,Academy 1st Stage Completion Hat,5,,10,200,,1,,1,0xFFFFFFFF,7,0,256,,0,,410,{ bonus bMaxSP,30; },{},{}
+//5408,Old_bandana,Old Bandana,5,,10,200,,5,,0,0xFFFFFFFF,7,0,256,,0,,6,{ bonus bInt,2; bonus bMaxSP,50; bonus bCastrate,10; },{},{}
 //5409,Purple_Cowboy_Hat,Purple Cowboy Hat,5,,,500,,4,,0,0xFFFFFFFF,7,2,256,,0,1,411,{ bonus bMaxSP,50; bonus bInt,2; bonus bVit,2; },{},{}
 //5410,Brown_Paper_Bag_Hat,Brown Paper Bag Hat,5,,,200,,6,,0,0xFFFFFFFF,7,2,769,,0,1,412,{ bonus bMaxHP,100; bonus2 bResEff,Eff_Stun,400; bonus2 bSubRace,RC_DemiHuman,4; },{},{}
 //5411,White_Snake_Hat,White Snake Hat,5,,,500,,2,,0,0xFFFFFFFF,7,2,256,,0,1,413,{ bonus bDex,2; },{},{}
@@ -3232,7 +3237,7 @@
 // Speed Potions
 12016,Speed_Up_Potion,Speed Potion,0,,1,100,,,,,0xFFFFFFFF,7,2,,,,,,{ specialeffect 507; sc_start SC_SpeedUp1,5000,0; },{},{}
 12017,Slow_Down_Potion,Slow Potion,0,,1,100,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_SlowDown,5000,0; },{},{}
-12018,Fire_Cracker,Firecracker,2,,1,20,,,,,0xFFFFFFFF,7,2,,,,,,{ misceffect(256); },{},{}
+12018,Fire_Cracker,Firecracker,2,,1,20,,,,,0xFFFFFFFF,7,2,,,,,,{ end; },{},{}
 12019,Holy_Egg,Holy Egg,11,,1,150,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill "ALL_RESURRECTION",2; },{},{}
 12020,Water_Of_Darkness,Cursed Water,11,,1,30,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill "ITEM_ENCHANTARMS",8; },{},{}
 12021,Pork_Belly,Pork,0,,0,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(70,99),0; },{},{}
@@ -4178,11 +4183,11 @@
 14543,S_Mdef_Potion,Small Magic Defense Potion,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_MDEF_RATE,60000,3; },{},{}
 14544,B_Mdef_Potion,Big Magic Defense Potion,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_MDEF_RATE,180000,3; },{},{}
 14545,Battle_Manual_x3,Field Manual 300%,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_EXPBOOST,1800000,300; },{},{}
-14546,Firecracker_Love,Love You Firecracker,2,,1,10,,,,,0xFFFFFFFF,7,2,,,,,,{ misceffect(682); },{},{}
-14547,Firecracker_Wday,White Day Firecracker,2,,1,10,,,,,0xFFFFFFFF,7,2,,,,,,{ misceffect(683); },{},{}
-14548,Firecracker_Vday,Valentine's Day Firecracker,2,,1,10,,,,,0xFFFFFFFF,7,2,,,,,,{ misceffect(684); },{},{}
-14549,Firecracker_Bday,Birthday Firecracker,2,,1,10,,,,,0xFFFFFFFF,7,2,,,,,,{ misceffect(685); },{},{}
-14550,Firecracker_Xmas,Christmas Firecracker,2,,1,10,,,,,0xFFFFFFFF,7,2,,,,,,{ misceffect(686); },{},{}
+14546,Firecracker_Love,Love You Firecracker,2,,1,10,,,,,0xFFFFFFFF,7,2,,,,,,{ end; },{},{}
+14547,Firecracker_Wday,White Day Firecracker,2,,1,10,,,,,0xFFFFFFFF,7,2,,,,,,{ end; },{},{}
+14548,Firecracker_Vday,Valentine's Day Firecracker,2,,1,10,,,,,0xFFFFFFFF,7,2,,,,,,{ end; },{},{}
+14549,Firecracker_Bday,Birthday Firecracker,2,,1,10,,,,,0xFFFFFFFF,7,2,,,,,,{ end; },{},{}
+14550,Firecracker_Xmas,Christmas Firecracker,2,,1,10,,,,,0xFFFFFFFF,7,2,,,,,,{ end; },{},{}
 14551,Str_Dish01_,Fried Grasshopper Legs,0,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_STRFood, 1200000, 1; percentheal 5,0; },{},{}
 14552,Str_Dish02_,Seasoned Sticky Webfoot,0,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_STRFood, 1200000, 2; percentheal 5,0; },{},{}
 14553,Str_Dish03_,Bomber Steak,0,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_STRFood, 1200000, 3; percentheal 5,0; },{},{}

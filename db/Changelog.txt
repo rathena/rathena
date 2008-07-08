@@ -43,6 +43,9 @@
 	2385 Recuvative_Armor		Should trigger HP/SP return with magical kills as well.
 
 =======================
+2008/07/08
+	* Rev. 12924 swapped 'misceffect' usage for 'end', the effect is client-side already. [L0ne_W0lf]
+	* Added a few headgears from $ephiroth. (bugreport:1756)
 2008/07/06
 	* Fixed 700,Cold_Scroll_2_1 not working, bugreport:1807
 
