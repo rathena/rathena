@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= kobra_k88
 //===== Current Version: =====================================
-//= 1.4
+//= 1.5
 //===== Compatible With: =====================================
 //= eAthena 0.1+; RO Episode 4+
 //===== Description: =========================================
@@ -12,6 +12,7 @@
 // Based off existing guild scripts.  Do not know if it is accurate.[kobra_k88]
 //= 1.3 Added code for abandoning captured castles on /breakguild [Lupus]
 //= 1.4 AGIT Functions added, treasure spawning added. [L0ne_W0lf]
+//= 1.5 Emperium should now properly respawn. [L0ne_W0lf]
 //============================================================
 
 
@@ -106,6 +107,7 @@ OnAgitStart:
 	end;
 OnAgitBreak:
 	callfunc "F_AgitBreak","nguild_alde","N01";
+	goto OnAgitEliminate;
 	end;
 OnGuildBreak:
 	callfunc "F_GuildBreak","nguild_alde","N01";
@@ -132,6 +134,7 @@ OnAgitStart:
 	end;
 OnAgitBreak:
 	callfunc "F_AgitBreak","nguild_gef","N02";
+	goto OnAgitEliminate;
 	end;
 OnGuildBreak:
 	callfunc "F_GuildBreak","nguild_gef","N02";
@@ -158,6 +161,7 @@ OnAgitStart:
 	end;
 OnAgitBreak:
 	callfunc "F_AgitBreak","nguild_pay","N03";
+	goto OnAgitEliminate;
 	end;
 OnGuildBreak:
 	callfunc "F_GuildBreak","nguild_pay","N03";
@@ -184,6 +188,7 @@ OnAgitStart:
 	end;
 OnAgitBreak:
 	callfunc "F_AgitBreak","nguild_prt","N04";
+	goto OnAgitEliminate;
 	end;
 OnGuildBreak:
 	callfunc "F_GuildBreak","nguild_prt","N04";

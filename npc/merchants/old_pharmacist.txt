@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= DZeroX
 //===== Current Version: =====================================
-//= 1.2
+//= 1.3
 //===== Compatible With: =====================================
 //= eAthena SVN Trunk
 //===== Description: =========================================
@@ -21,6 +21,7 @@
 //= 1.1a Removed .GATs [Lupus]
 //= 1.1b Fixed a bug in Orange Potion creating. Copy&Pasting = bad. [L0ne_W0lf]
 //= 1.2 Added checkweight, and input min/max values. [L0ne_W0lf]
+//= 1.3 Fixed minor condition check bug. (bugreport:597) [L0ne_W0lf]
 //============================================================
 
 alberta_in,16,28,4	script	Old Pharmacist	61,{
@@ -59,9 +60,10 @@ alberta_in,16,28,4	script	Old Pharmacist	61,{
 						if (countitem(507) < countitem(713)) {
 							set .@max,countitem(507);
 						}
-						if (countitem(508) < countitem(713)) {
+						else if (countitem(508) < countitem(713)) {
 							set .@max,countitem(508);
-						} else {
+						}
+						else {
 							set .@max,countitem(713);
 						}
 						if ((countitem(507) < 1) || (countitem(508) < 1) || (countitem(713) == 0)) {

@@ -1,5 +1,12 @@
 ﻿Date		Added
 ======
+2008/07/08
+	* Rev. 12925 Various fixes to NPCs, from bugreports. [L0ne_W0lf]
+	- Fixed condition error in old pharmacist. (bugreport:597)
+	- Fixed missing function in novice WoE (bugreport:1728)
+	- Fixed a minor errors in dancer quest (bugreport:1766)
+	- Corrected duration of wedding status (bugreport:1775)
+	- Fixed missing function in novice WoE (bugreport:1788)
 2008/07/04
 	* Fixed a small typo in Advanced Refiner. (bugreport: 1660) [Paradox924X]
 	* Added a missing "next;" in Bruspetti Quest. (bugreport: 1724) [Paradox924X]

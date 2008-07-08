@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= kobra_k88
 //===== Current Version: =====================================
-//= 1.1
+//= 1.2
 //===== Compatible With: =====================================
 //= eAthena 0.1+; RO Episode 4+
 //===== Description: =========================================
@@ -19,10 +19,11 @@
 //= 1.0 Based off existing guild scripts.  Do not know if it is accurate.[kobra_k88]
 //= 1.1 Added modified guild manager function. [L0ne_W0lf]
 //= 	Removed guardian summoning.
+//= 1.2 Corrected function name. (bugreport:1728) [L0ne_W0lf]
 //============================================================
 
 //==============================================
-function	script	F_GldManagerN	{
+function	script	F_GldManager	{
 
 	set @GID, GetCastleData(getarg(1),1);
 	mes "[ "+getarg(0)+" ]";
