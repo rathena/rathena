@@ -644,7 +644,7 @@ int unit_warp(struct block_list *bl,short m,short x,short y,int type)
 int unit_stop_walking(struct block_list *bl,int type)
 {
 	struct unit_data *ud;
-	struct TimerData *data;
+	const struct TimerData* td;
 	unsigned int tick;
 	nullpo_retr(0, bl);
 
@@ -654,13 +654,13 @@ int unit_stop_walking(struct block_list *bl,int type)
 	//NOTE: We are using timer data after deleting it because we know the 
 	//delete_timer function does not messes with it. If the function's 
 	//behaviour changes in the future, this code could break!
-	data = get_timer(ud->walktimer);
+	td = get_timer(ud->walktimer);
 	delete_timer(ud->walktimer, unit_walktoxy_timer);
 	ud->walktimer = -1;
 	ud->state.change_walk_target = 0;
 	tick = gettick();
 	if ((type&0x02 && !ud->walkpath.path_pos) //Force moving at least one cell.
-		|| (data && DIFF_TICK(data->tick, tick) <= data->data/2)) //Enough time has passed to cover half-cell
+		|| (td && DIFF_TICK(td->tick, tick) <= td->data/2)) //Enough time has passed to cover half-cell
 	{	
 		ud->walkpath.path_len = ud->walkpath.path_pos+1;
 		unit_walktoxy_timer(-1, tick, bl->id, ud->walkpath.path_pos);

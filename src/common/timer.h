@@ -40,7 +40,7 @@ unsigned int gettick_nocache(void);
 
 int add_timer(unsigned int tick, TimerFunc func, int id, intptr data);
 int add_timer_interval(unsigned int tick, TimerFunc func, int id, intptr data, int interval);
-struct TimerData* get_timer(int tid);
+const struct TimerData* get_timer(int tid);
 int delete_timer(int tid, TimerFunc func);
 
 int addtick_timer(int tid, unsigned int tick);

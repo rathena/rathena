@@ -4787,8 +4787,8 @@ char* txt_time(unsigned int duration)
  *------------------------------------------*/
 int atcommand_servertime(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
-	struct TimerData * timer_data;
-	struct TimerData * timer_data2;
+	const struct TimerData * timer_data;
+	const struct TimerData * timer_data2;
 	time_t time_server;  // variable for number of seconds (used with time() function)
 	struct tm *datetime; // variable for time in structure ->tm_mday, ->tm_sec, ...
 	char temp[256];

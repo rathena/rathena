@@ -511,7 +511,7 @@ int npc_timerevent_start(struct npc_data* nd, int rid)
 int npc_timerevent_stop(struct npc_data* nd)
 {
 	struct map_session_data *sd =NULL;
-	struct TimerData *td = NULL;
+	const struct TimerData *td = NULL;
 	int *tid;
 	nullpo_retr(0, nd);
 	if (nd->u.scr.rid) {
@@ -541,7 +541,7 @@ int npc_timerevent_stop(struct npc_data* nd)
  *------------------------------------------*/
 void npc_timerevent_quit(struct map_session_data* sd)
 {
-	struct TimerData *td;
+	const struct TimerData *td;
 	struct npc_data* nd;
 	struct timer_event_data *ted;
 	if (sd->npc_timer_id == -1)
@@ -1378,7 +1378,7 @@ int npc_unload(struct npc_data* nd)
 	{
 		ev_db->foreach(ev_db,npc_unload_ev,nd->exname); //Clean up all events related.
 		if (nd->u.scr.timerid != -1) {
-			struct TimerData *td = NULL;
+			const struct TimerData *td = NULL;
 			td = get_timer(nd->u.scr.timerid);
 			if (td && td->data) 
 				ers_free(timer_event_ers, (void*)td->data);
