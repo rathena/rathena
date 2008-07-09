@@ -1,5 +1,7 @@
 ﻿Date		Added
 ======
+2008/07/09
+	* Rev. 12828 Fixed using wrong variable in some of the novice grounds saves. [L0ne_W0lf]
 2008/07/08
 	* Rev. 12925 Various fixes to NPCs, from bugreports. [L0ne_W0lf]
 	- Fixed condition error in old pharmacist. (bugreport:597)

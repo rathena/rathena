@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Dr.Evil & MasterOfMuppets
 //===== Current Version: ===================================== 
-//= 1.9
+//= 2.0
 //===== Compatible With: ===================================== 
 //= eAthena SVN 3422+(Requires jA Script System)
 //===== Description: ========================================= 
@@ -17,6 +17,7 @@
 //= 1.9 Fixed problem with Hanson's dialog. (bugreport:1703) [L0ne_W0lf]
 //=     Fixed Entrance Guard clearing vars. (bugreport:1695)
 //=     Added duplicate NPCs to combat training maps.
+//= 2.0 Fixed savepoint not being changed sometimes. [L0ne_W0lf]
 //============================================================ 
 
 // Bulletin Board
@@ -1336,7 +1337,7 @@ new_1-2,118,108,3	script	Kafra Employee#nv1	117,{
 			set nov_3_magician,0;
 			set nov_3_acolyte,0;
 			set nov_3_merchant,0;
-			savepoint .@dest$,.@saveX,.@saveY;
+			savepoint .@mapn$,.@saveX,.@saveY;
 			warp .@mapn$,.@warpX,.@warpY;
 			end;
 		}
@@ -1399,7 +1400,7 @@ new_1-2,118,108,3	script	Kafra Employee#nv1	117,{
 			set nov_3_magician,0;
 			set nov_3_acolyte,0;
 			set nov_3_merchant,0;
-			savepoint .@dest$,.@saveX,.@saveY;
+			savepoint .@mapn$,.@saveX,.@saveY;
 			warp .@mapn$,.@warpX,.@warpY;
 			end;
 		}
