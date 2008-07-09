@@ -17,12 +17,6 @@
 
 #define STORAGE_MEMINC	16
 
-#ifndef TXT_SQL_CONVERT
-// reset by inter_config_read()
-struct storage *storage_pt=NULL;
-struct guild_storage *guild_storage_pt=NULL;
-#endif //TXT_SQL_CONVERT
-
 /// Save guild_storage data to sql
 int storage_tosql(int account_id, struct storage* p)
 {
@@ -140,21 +134,14 @@ int guild_storage_fromsql(int guild_id, struct guild_storage* p)
 // storage data initialize
 int inter_storage_sql_init(void)
 {
-
-	//memory alloc
-	ShowDebug("interserver storage memory initialize....(%d byte)\n",sizeof(struct storage));
-	storage_pt = (struct storage*)aCalloc(sizeof(struct storage), 1);
-	guild_storage_pt = (struct guild_storage*)aCalloc(sizeof(struct guild_storage), 1);
-
 	return 1;
 }
 // storage data finalize
 void inter_storage_sql_final(void)
 {
-	if (storage_pt) aFree(storage_pt);
-	if (guild_storage_pt) aFree(guild_storage_pt);	 
 	return;
 }
+
 // q?f[^?
 int inter_storage_delete(int account_id)
 {
@@ -177,11 +164,10 @@ int mapif_load_storage(int fd,int account_id)
 {
 	//load from DB
 	WFIFOHEAD(fd, sizeof(struct storage)+8);
-	storage_fromsql(account_id, storage_pt);
 	WFIFOW(fd,0)=0x3810;
 	WFIFOW(fd,2)=sizeof(struct storage)+8;
 	WFIFOL(fd,4)=account_id;
-	memcpy(WFIFOP(fd,8),storage_pt,sizeof(struct storage));
+	storage_fromsql(account_id, (struct storage*)WFIFOP(fd,8));
 	WFIFOSET(fd,WFIFOW(fd,2));
 	return 0;
 }
@@ -202,14 +188,12 @@ int mapif_load_guild_storage(int fd,int account_id,int guild_id)
 		Sql_ShowDebug(sql_handle);
 	else if( Sql_NumRows(sql_handle) > 0 )
 	{// guild exists
-		guild_storage_fromsql(guild_id, guild_storage_pt);
-
 		WFIFOHEAD(fd, sizeof(struct guild_storage)+12);
 		WFIFOW(fd,0) = 0x3818;
 		WFIFOW(fd,2) = sizeof(struct guild_storage)+12;
 		WFIFOL(fd,4) = account_id;
 		WFIFOL(fd,8) = guild_id;
-		memcpy(WFIFOP(fd,12), guild_storage_pt, sizeof(struct guild_storage));
+		guild_storage_fromsql(guild_id, (struct guild_storage*)WFIFOP(fd,12));
 		WFIFOSET(fd, WFIFOW(fd,2));
 		return 0;
 	}
@@ -247,16 +231,13 @@ int mapif_parse_LoadStorage(int fd)
 // storage data recive and save
 int mapif_parse_SaveStorage(int fd)
 {
-	int account_id;
-	int len;
-	RFIFOHEAD(fd);
-	account_id=RFIFOL(fd,4);
-	len=RFIFOW(fd,2);
+	int len = RFIFOW(fd,2);
+	int account_id = RFIFOL(fd,4);
+
 	if(sizeof(struct storage)!=len-8){
 		ShowError("inter storage: data size error %d %d\n",sizeof(struct storage),len-8);
 	}else{
-		memcpy(&storage_pt[0],RFIFOP(fd,8),sizeof(struct storage));
-		storage_tosql(account_id, storage_pt);
+		storage_tosql(account_id, (struct storage*)RFIFOP(fd,8));
 		mapif_save_storage_ack(fd,account_id);
 	}
 	return 0;
@@ -289,8 +270,7 @@ int mapif_parse_SaveGuildStorage(int fd)
 		else if( Sql_NumRows(sql_handle) > 0 )
 		{// guild exists
 			Sql_FreeResult(sql_handle);
-			memcpy(guild_storage_pt, RFIFOP(fd,12), sizeof(struct guild_storage));
-			guild_storage_tosql(guild_id, guild_storage_pt);
+			guild_storage_tosql(guild_id, (struct guild_storage*)RFIFOP(fd,12));
 			mapif_save_guild_storage_ack(fd, RFIFOL(fd,4), guild_id, 0);
 			return 0;
 		}
