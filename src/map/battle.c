@@ -2096,7 +2096,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 			if (100*sstatus->hp <= 20*sstatus->max_hp)
 				hp = sstatus->hp;
 		} else
-			hp = 5*hp/1000;
+			hp = 2*hp/100; //2% hp loss per hit
 		status_zap(src, hp, 0);
 	}
 
