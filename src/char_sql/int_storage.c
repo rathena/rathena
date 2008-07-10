@@ -20,7 +20,7 @@
 /// Save guild_storage data to sql
 int storage_tosql(int account_id, struct storage_data* p)
 {
-	memitemdata_to_sql(p->storage_, MAX_STORAGE, account_id, TABLE_STORAGE);
+	memitemdata_to_sql(p->items, MAX_STORAGE, account_id, TABLE_STORAGE);
 	//ShowInfo ("storage save to DB - account: %d\n", account_id);
 	return 0;
 }
@@ -53,7 +53,7 @@ int storage_fromsql(int account_id, struct storage_data* p)
 
 	for( i = 0; i < MAX_STORAGE && SQL_SUCCESS == Sql_NextRow(sql_handle); ++i )
 	{
-		item = &p->storage_[i];
+		item = &p->items[i];
 		Sql_GetData(sql_handle, 0, &data, NULL); item->id = atoi(data);
 		Sql_GetData(sql_handle, 1, &data, NULL); item->nameid = atoi(data);
 		Sql_GetData(sql_handle, 2, &data, NULL); item->amount = atoi(data);

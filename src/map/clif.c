@@ -1883,20 +1883,20 @@ void clif_storagelist(struct map_session_data *sd,struct storage_data *stor)
 	buf = WFIFOP(fd,0);
 	
 	for(i=0,n=0,ne=0;i<MAX_STORAGE;i++){
-		if(stor->storage_[i].nameid<=0)
+		if(stor->items[i].nameid<=0)
 			continue;
-		id = itemdb_search(stor->storage_[i].nameid);
+		id = itemdb_search(stor->items[i].nameid);
 		if(!itemdb_isstackable2(id))
 		{ //Equippable
 			WBUFW(bufe,ne*20+4)=i+1;
-			clif_item_sub(bufe, ne*20+6, &stor->storage_[i], id, id->equip);
-			clif_addcards(WBUFP(bufe, ne*20+16), &stor->storage_[i]);
+			clif_item_sub(bufe, ne*20+6, &stor->items[i], id, id->equip);
+			clif_addcards(WBUFP(bufe, ne*20+16), &stor->items[i]);
 			ne++;
 		} else { //Stackable
 			WBUFW(buf,n*s+4)=i+1;
-			clif_item_sub(buf, n*s+6, &stor->storage_[i], id,-1);
+			clif_item_sub(buf, n*s+6, &stor->items[i], id,-1);
 #if PACKETVER >= 5
-			clif_addcards(WBUFP(buf,n*s+14), &stor->storage_[i]);
+			clif_addcards(WBUFP(buf,n*s+14), &stor->items[i]);
 #endif
 			n++;
 		}
@@ -3217,29 +3217,29 @@ int clif_storageitemadded(struct map_session_data *sd,struct storage_data *stor,
 	WFIFOW(fd,0) =0xf4; // Storage item added
 	WFIFOW(fd,2) =index+1; // index
 	WFIFOL(fd,4) =amount; // amount
-	if((view = itemdb_viewid(stor->storage_[index].nameid)) > 0)
+	if((view = itemdb_viewid(stor->items[index].nameid)) > 0)
 		WFIFOW(fd,8) =view;
 	else
-		WFIFOW(fd,8) =stor->storage_[index].nameid; // id
+		WFIFOW(fd,8) =stor->items[index].nameid; // id
 	WFIFOB(fd,10)=stor->storage_[index].identify; //identify flag
 	WFIFOB(fd,11)=stor->storage_[index].attribute; // attribute
 	WFIFOB(fd,12)=stor->storage_[index].refine; //refine
-	clif_addcards(WFIFOP(fd,13), &stor->storage_[index]);
+	clif_addcards(WFIFOP(fd,13), &stor->items[index]);
 	WFIFOSET(fd,packet_len(0xf4));
 #else
 	WFIFOHEAD(fd,packet_len(0x1c4));
 	WFIFOW(fd,0) =0x1c4; // Storage item added
 	WFIFOW(fd,2) =index+1; // index
 	WFIFOL(fd,4) =amount; // amount
-	if((view = itemdb_viewid(stor->storage_[index].nameid)) > 0)
+	if((view = itemdb_viewid(stor->items[index].nameid)) > 0)
 		WFIFOW(fd,8) =view;
 	else
-		WFIFOW(fd,8) =stor->storage_[index].nameid; // id
-	WFIFOB(fd,10)=itemdb_type(stor->storage_[index].nameid); //type
-	WFIFOB(fd,11)=stor->storage_[index].identify; //identify flag
-	WFIFOB(fd,12)=stor->storage_[index].attribute; // attribute
-	WFIFOB(fd,13)=stor->storage_[index].refine; //refine
-	clif_addcards(WFIFOP(fd,14), &stor->storage_[index]);
+		WFIFOW(fd,8) =stor->items[index].nameid; // id
+	WFIFOB(fd,10)=itemdb_type(stor->items[index].nameid); //type
+	WFIFOB(fd,11)=stor->items[index].identify; //identify flag
+	WFIFOB(fd,12)=stor->items[index].attribute; // attribute
+	WFIFOB(fd,13)=stor->items[index].refine; //refine
+	clif_addcards(WFIFOP(fd,14), &stor->items[index]);
 	WFIFOSET(fd,packet_len(0x1c4));
 #endif
 

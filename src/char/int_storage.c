@@ -35,12 +35,12 @@ int storage_tostr(char *str,struct storage_data *p)
 	str_p += sprintf(str_p,"%d,%d\t",p->account_id,p->storage_amount);
 
 	for(i=0;i<MAX_STORAGE;i++)
-		if( (p->storage_[i].nameid) && (p->storage_[i].amount) ){
+		if( (p->items[i].nameid) && (p->items[i].amount) ){
 			str_p += sprintf(str_p,"%d,%d,%d,%d,%d,%d,%d",
-				p->storage_[i].id,p->storage_[i].nameid,p->storage_[i].amount,p->storage_[i].equip,
-				p->storage_[i].identify,p->storage_[i].refine,p->storage_[i].attribute);
+				p->items[i].id,p->items[i].nameid,p->items[i].amount,p->items[i].equip,
+				p->items[i].identify,p->items[i].refine,p->items[i].attribute);
 			for(j=0; j<MAX_SLOTS; j++)
-				str_p += sprintf(str_p,",%d",p->storage_[i].card[j]);
+				str_p += sprintf(str_p,",%d",p->items[i].card[j]);
 			str_p += sprintf(str_p," ");
 			f++;
 		}
@@ -72,16 +72,16 @@ int storage_fromstr(char *str,struct storage_data *p)
 		if(sscanf(str + next, "%d,%d,%d,%d,%d,%d,%d%[0-9,-]%n",
 		      &tmp_int[0], &tmp_int[1], &tmp_int[2], &tmp_int[3],
 		      &tmp_int[4], &tmp_int[5], &tmp_int[6], tmp_str, &len) == 8) {
-			p->storage_[i].id = tmp_int[0];
-			p->storage_[i].nameid = tmp_int[1];
-			p->storage_[i].amount = tmp_int[2];
-			p->storage_[i].equip = tmp_int[3];
-			p->storage_[i].identify = tmp_int[4];
-			p->storage_[i].refine = tmp_int[5];
-			p->storage_[i].attribute = tmp_int[6];
+			p->items[i].id = tmp_int[0];
+			p->items[i].nameid = tmp_int[1];
+			p->items[i].amount = tmp_int[2];
+			p->items[i].equip = tmp_int[3];
+			p->items[i].identify = tmp_int[4];
+			p->items[i].refine = tmp_int[5];
+			p->items[i].attribute = tmp_int[6];
 			
 			for(j = 0; j < MAX_SLOTS && tmp_str && sscanf(tmp_str, ",%d%[0-9,-]",&tmp_int[0], tmp_str) > 0; j++)
-				p->storage_[i].card[j] = tmp_int[0];
+				p->items[i].card[j] = tmp_int[0];
 			
 			next += len;
 			if (str[next] == ' ')
@@ -323,8 +323,8 @@ int inter_storage_delete(int account_id)
 	if(s) {
 		int i;
 		for(i=0;i<s->storage_amount;i++){
-			if(s->storage_[i].card[0] == (short)0xff00)
-				inter_pet_delete( MakeDWord(s->storage_[i].card[1],s->storage_[i].card[2]) );
+			if(s->items[i].card[0] == (short)0xff00)
+				inter_pet_delete( MakeDWord(s->items[i].card[1],s->items[i].card[2]) );
 		}
 		idb_remove(storage_db,account_id);
 	}

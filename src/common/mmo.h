@@ -334,7 +334,7 @@ struct storage_data {
 	int account_id;
 	short storage_status;
 	short storage_amount;
-	struct item storage_[MAX_STORAGE];
+	struct item items[MAX_STORAGE];
 };
 
 struct guild_storage {

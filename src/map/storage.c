@@ -47,7 +47,7 @@ int storage_comp_item(const void *_i1, const void *_i2)
 void storage_sortitem (struct storage_data *stor)
 {
 	nullpo_retv(stor);
-	qsort(stor->storage_, MAX_STORAGE, sizeof(struct item), storage_comp_item);
+	qsort(stor->items, MAX_STORAGE, sizeof(struct item), storage_comp_item);
 }
 
 void storage_gsortitem (struct guild_storage* gstor)
@@ -193,10 +193,10 @@ static int storage_additem(struct map_session_data *sd,struct storage_data *stor
 	
 	if(itemdb_isstackable2(data)){ //Stackable
 		for(i=0;i<MAX_STORAGE;i++){
-			if( compare_item (&stor->storage_[i], item_data)) {
-				if(amount > MAX_AMOUNT - stor->storage_[i].amount)
+			if( compare_item (&stor->items[i], item_data)) {
+				if(amount > MAX_AMOUNT - stor->items[i].amount)
 					return 1;
-				stor->storage_[i].amount+=amount;
+				stor->items[i].amount+=amount;
 				clif_storageitemadded(sd,stor,i,amount);
 				stor->dirty = 1;
 				if(log_config.enable_logs&0x800)
@@ -206,13 +206,13 @@ static int storage_additem(struct map_session_data *sd,struct storage_data *stor
 		}
 	}
 	//Add item
-	for(i=0;i<MAX_STORAGE && stor->storage_[i].nameid;i++);
+	for(i=0;i<MAX_STORAGE && stor->items[i].nameid;i++);
 	
 	if(i>=MAX_STORAGE)
 		return 1;
 
-	memcpy(&stor->storage_[i],item_data,sizeof(stor->storage_[0]));
-	stor->storage_[i].amount=amount;
+	memcpy(&stor->items[i],item_data,sizeof(stor->items[0]));
+	stor->items[i].amount=amount;
 	stor->storage_amount++;
 	clif_storageitemadded(sd,stor,i,amount);
 	clif_updatestorageamount(sd,stor);
@@ -227,14 +227,14 @@ static int storage_additem(struct map_session_data *sd,struct storage_data *stor
 static int storage_delitem(struct map_session_data *sd,struct storage_data *stor,int n,int amount)
 {
 
-	if(stor->storage_[n].nameid==0 || stor->storage_[n].amount<amount)
+	if(stor->items[n].nameid==0 || stor->items[n].amount<amount)
 		return 1;
 
-	stor->storage_[n].amount-=amount;
+	stor->items[n].amount-=amount;
 	if(log_config.enable_logs&0x800)
-		log_pick_pc(sd, "R", stor->storage_[n].nameid, amount, &stor->storage_[n]);
-	if(stor->storage_[n].amount==0){
-		memset(&stor->storage_[n],0,sizeof(stor->storage_[0]));
+		log_pick_pc(sd, "R", stor->items[n].nameid, amount, &stor->items[n]);
+	if(stor->items[n].amount==0){
+		memset(&stor->items[n],0,sizeof(stor->items[0]));
 		stor->storage_amount--;
 		clif_updatestorageamount(sd,stor);
 	}
@@ -288,13 +288,13 @@ int storage_storageget(struct map_session_data *sd,int index,int amount)
 	if(index<0 || index>=MAX_STORAGE)
 		return 0;
 
-	if(stor->storage_[index].nameid <= 0)
+	if(stor->items[index].nameid <= 0)
 		return 0; //Nothing there
 	
-	if(amount < 1 || amount > stor->storage_[index].amount)
+	if(amount < 1 || amount > stor->items[index].amount)
 		return 0;
 
-	if((flag = pc_additem(sd,&stor->storage_[index],amount)) == 0)
+	if((flag = pc_additem(sd,&stor->items[index],amount)) == 0)
 		storage_delitem(sd,stor,index,amount);
 	else
 		clif_additem(sd,0,0,flag);
@@ -345,13 +345,13 @@ int storage_storagegettocart(struct map_session_data *sd,int index,int amount)
 	if(index< 0 || index>=MAX_STORAGE)
 		return 0;
 	
-	if(stor->storage_[index].nameid <= 0)
+	if(stor->items[index].nameid <= 0)
 		return 0; //Nothing there.
 	
-	if(amount < 1 || amount > stor->storage_[index].amount)
+	if(amount < 1 || amount > stor->items[index].amount)
 		return 0;
 	
-	if(pc_cart_additem(sd,&stor->storage_[index],amount)==0)
+	if(pc_cart_additem(sd,&stor->items[index],amount)==0)
 		storage_delitem(sd,stor,index,amount);
 
 	return 1;
