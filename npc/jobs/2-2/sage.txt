@@ -5,7 +5,7 @@
 //= Unknown Translator (1.0)
 //= Darkchild (1.2)
 //===== Current Version: ===================================== 
-//= 2.5a
+//= 2.6
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -23,6 +23,7 @@
 //= 2.5a Corrected some "mes"s without the getitemname. (bugreport:1564) [Samuray22]
 //	-Changed an incorrect "!=" to "==". (bugreport:1572) 
 //	-And Small Typo Error
+//= 2.6 Fixed Kayron Grik cutin not being removed as reported by jc1991, bugreport:1825 [Brainstorm]
 //============================================================ 
 
 yuno_in02,38,61,5	script	Dean of the Academy#sa	743,{
@@ -64,7 +65,9 @@ yuno_in02,38,61,5	script	Dean of the Academy#sa	743,{
 			mes "However, if you happen to meet a Sage down the road, I hope you will lend him your assistance.";
 			mes "And if you do, he shall repay you in kind...";
 		}
-		close;
+		close2;
+		cutin "job_sage_kayron",255;
+		end;
 	}
 	if (SAGE_Q == 0) {
 		cutin "job_sage_kayron",2;

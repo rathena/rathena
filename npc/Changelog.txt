@@ -1,6 +1,7 @@
 ﻿Date		Added
 ======
 2008/07/10
+	* Fixed a sage job quest cutin not being removed as reported by jc1991, bugreport:1825 [Brainstorm]
 	* Fixed a small bug on mid_camp warps by brianlew, bugreport:1824 [Brainstorm]
 
 2008/07/09
