@@ -1,5 +1,8 @@
 ﻿Date		Added
 ======
+2008/07/10
+	* Fixed a small bug on mid_camp warps by brianlew, bugreport:1824 [Brainstorm]
+
 2008/07/09
 	* Rev. 12828 Fixed using wrong variable in some of the novice grounds saves. [L0ne_W0lf]
 2008/07/08

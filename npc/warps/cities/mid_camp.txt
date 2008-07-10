@@ -10,6 +10,7 @@
 //= Warp Points for Another World
 //===== Additional Comments: =================================
 //= 1.0 First Version.
+//= 1.1 Fixed a small bug by brianlew, bugreport:1824 [Brainstorm]
 //============================================================
 
 moc_fild22b,233,197,0	warp	moc_fild22b1-1	1,1,mid_camp,210,290
@@ -22,8 +23,8 @@ mid_campin,113,113,0	warp	mid_meeting2-1	1,1,mid_campin,164,82
 mid_campin,162,82,0	warp	mid_meeting2-2	1,1,mid_campin,110,113
 mid_campin,113,119,0	warp	mid_meeting3-1	1,1,mid_campin,164,126
 mid_campin,162,126,0	warp	mid_meeting3-2	1,1,mid_campin,110,119
-mid_campin,111,127,0	warp	mid_meeting4-1	1,1,mid_campin,164,126
-mid_campin,162,126,0	warp	mid_meeting4-2	1,1,mid_campin,109,127
+mid_campin,111,127,0	warp	mid_meeting4-1	1,1,mid_campin,164,170
+mid_campin,162,170,0	warp	mid_meeting4-2	1,1,mid_campin,109,127
 mid_campin,93,141,0	warp	mid_meeting5-1	1,1,mid_campin,65,180
 mid_campin,65,178,0	warp	mid_meeting5-2	1,1,mid_campin,93,138
 mid_campin,85,141,0	warp	mid_meeting6-1	1,1,mid_campin,117,180
