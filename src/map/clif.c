@@ -1868,7 +1868,7 @@ void clif_equiplist(struct map_session_data *sd)
 }
 
 //Unified storage function which sends all of the storage (requires two packets, one for equipable items and one for stackable ones. [Skotlex]
-void clif_storagelist(struct map_session_data *sd,struct storage *stor)
+void clif_storagelist(struct map_session_data *sd,struct storage_data *stor)
 {
 	struct item_data *id;
 	int i,n,ne,fd=sd->fd;
@@ -3184,7 +3184,7 @@ void clif_tradecompleted(struct map_session_data* sd, int fail)
 /*==========================================
  * カプラ倉庫のアイテム数を更新
  *------------------------------------------*/
-int clif_updatestorageamount(struct map_session_data *sd,struct storage *stor)
+int clif_updatestorageamount(struct map_session_data *sd,struct storage_data *stor)
 {
 	int fd;
 
@@ -3204,7 +3204,7 @@ int clif_updatestorageamount(struct map_session_data *sd,struct storage *stor)
 /*==========================================
  * カプラ倉庫にアイテムを追加する
  *------------------------------------------*/
-int clif_storageitemadded(struct map_session_data *sd,struct storage *stor,int index,int amount)
+int clif_storageitemadded(struct map_session_data *sd,struct storage_data *stor,int index,int amount)
 {
 	int view,fd;
 

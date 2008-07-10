@@ -4,7 +4,7 @@
 #ifndef _INT_STORAGE_SQL_H_
 #define _INT_STORAGE_SQL_H_
 
-struct storage;
+struct storage_data;
 struct guild_storage;
 
 int inter_storage_sql_init(void);
@@ -15,7 +15,7 @@ int inter_guild_storage_delete(int guild_id);
 int inter_storage_parse_frommap(int fd);
 
 //Exported for use in the TXT-SQL converter.
-int storage_tosql(int account_id,struct storage *p);
+int storage_tosql(int account_id,struct storage_data *p);
 int guild_storage_tosql(int guild_id, struct guild_storage *p);
 
 #endif /* _INT_STORAGE_SQL_H_ */

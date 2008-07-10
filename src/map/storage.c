@@ -44,7 +44,7 @@ int storage_comp_item(const void *_i1, const void *_i2)
 	return i1->nameid - i2->nameid;
 }
  
-void storage_sortitem (struct storage *stor)
+void storage_sortitem (struct storage_data *stor)
 {
 	nullpo_retv(stor);
 	qsort(stor->storage_, MAX_STORAGE, sizeof(struct item), storage_comp_item);
@@ -83,7 +83,7 @@ static int storage_reconnect_sub(DBKey key,void *data,va_list ap)
 	}
 	else
 	{	//Account Storage
-		struct storage* stor = (struct storage*) data;
+		struct storage_data* stor = (struct storage_data*) data;
 		if (stor->dirty && stor->storage_status == 0) //Save closed storages.
 			storage_storage_save(stor->account_id, stor->dirty==2?1:0);
 	}
@@ -99,20 +99,20 @@ void do_reconnect_storage(void)
 
 static void* create_storage(DBKey key, va_list args)
 {
-	struct storage *stor;
-	stor = (struct storage *) aCallocA (sizeof(struct storage), 1);
+	struct storage_data *stor;
+	stor = (struct storage_data *) aCallocA (sizeof(struct storage_data), 1);
 	stor->account_id = key.i;
 	return stor;
 }
-struct storage *account2storage(int account_id)
+struct storage_data *account2storage(int account_id)
 {
-	return (struct storage*)idb_ensure(storage_db,account_id,create_storage);
+	return (struct storage_data*)idb_ensure(storage_db,account_id,create_storage);
 }
 
 // Just to ask storage, without creation
-struct storage *account2storage2(int account_id)
+struct storage_data *account2storage2(int account_id)
 {
-	return (struct storage*)idb_get(storage_db, account_id);
+	return (struct storage_data*)idb_get(storage_db, account_id);
 }
 
 int storage_delete(int account_id)
@@ -129,7 +129,7 @@ int storage_delete(int account_id)
  *------------------------------------------*/
 int storage_storageopen(struct map_session_data *sd)
 {
-	struct storage *stor;
+	struct storage_data *stor;
 	nullpo_retr(0, sd);
 
 	if(sd->state.storage_flag)
@@ -141,7 +141,7 @@ int storage_storageopen(struct map_session_data *sd)
 		return 1;
 	}
 	
-	if((stor = (struct storage*)idb_get(storage_db,sd->status.account_id)) == NULL)
+	if((stor = (struct storage_data*)idb_get(storage_db,sd->status.account_id)) == NULL)
   	{	//Request storage.
 		intif_request_storage(sd->status.account_id);
 		return 2;
@@ -175,7 +175,7 @@ int compare_item(struct item *a, struct item *b)
 /*==========================================
  * Internal add-item function.
  *------------------------------------------*/
-static int storage_additem(struct map_session_data *sd,struct storage *stor,struct item *item_data,int amount)
+static int storage_additem(struct map_session_data *sd,struct storage_data *stor,struct item *item_data,int amount)
 {
 	struct item_data *data;
 	int i;
@@ -224,7 +224,7 @@ static int storage_additem(struct map_session_data *sd,struct storage *stor,stru
 /*==========================================
  * Internal del-item function
  *------------------------------------------*/
-static int storage_delitem(struct map_session_data *sd,struct storage *stor,int n,int amount)
+static int storage_delitem(struct map_session_data *sd,struct storage_data *stor,int n,int amount)
 {
 
 	if(stor->storage_[n].nameid==0 || stor->storage_[n].amount<amount)
@@ -248,7 +248,7 @@ static int storage_delitem(struct map_session_data *sd,struct storage *stor,int 
  *------------------------------------------*/
 int storage_storageadd(struct map_session_data *sd,int index,int amount)
 {
-	struct storage *stor;
+	struct storage_data *stor;
 
 	nullpo_retr(0, sd);
 	nullpo_retr(0, stor=account2storage2(sd->status.account_id));
@@ -278,7 +278,7 @@ int storage_storageadd(struct map_session_data *sd,int index,int amount)
  *------------------------------------------*/
 int storage_storageget(struct map_session_data *sd,int index,int amount)
 {
-	struct storage *stor;
+	struct storage_data *stor;
 	int flag;
 
 	nullpo_retr(0, sd);
@@ -306,7 +306,7 @@ int storage_storageget(struct map_session_data *sd,int index,int amount)
  *------------------------------------------*/
 int storage_storageaddfromcart(struct map_session_data *sd,int index,int amount)
 {
-	struct storage *stor;
+	struct storage_data *stor;
 
 	nullpo_retr(0, sd);
 	nullpo_retr(0, stor=account2storage2(sd->status.account_id));
@@ -334,7 +334,7 @@ int storage_storageaddfromcart(struct map_session_data *sd,int index,int amount)
  *------------------------------------------*/
 int storage_storagegettocart(struct map_session_data *sd,int index,int amount)
 {
-	struct storage *stor;
+	struct storage_data *stor;
 
 	nullpo_retr(0, sd);
 	nullpo_retr(0, stor=account2storage2(sd->status.account_id));
@@ -363,7 +363,7 @@ int storage_storagegettocart(struct map_session_data *sd,int index,int amount)
  *------------------------------------------*/
 int storage_storageclose(struct map_session_data *sd)
 {
-	struct storage *stor;
+	struct storage_data *stor;
 
 	nullpo_retr(0, sd);
 	nullpo_retr(0, stor=account2storage2(sd->status.account_id));
@@ -386,7 +386,7 @@ int storage_storageclose(struct map_session_data *sd)
  *------------------------------------------*/
 int storage_storage_quit(struct map_session_data *sd, int flag)
 {
-	struct storage *stor;
+	struct storage_data *stor;
 
 	nullpo_retr(0, sd);
 	nullpo_retr(0, stor=account2storage2(sd->status.account_id));
@@ -405,7 +405,7 @@ int storage_storage_quit(struct map_session_data *sd, int flag)
 
 void storage_storage_dirty(struct map_session_data *sd)
 {
-	struct storage *stor;
+	struct storage_data *stor;
 
 	stor=account2storage2(sd->status.account_id);
 
@@ -415,7 +415,7 @@ void storage_storage_dirty(struct map_session_data *sd)
 
 int storage_storage_save(int account_id, int final)
 {
-	struct storage *stor;
+	struct storage_data *stor;
 
 	stor=account2storage2(account_id);
 	if(!stor) return 0;
@@ -441,7 +441,7 @@ int storage_storage_save(int account_id, int final)
 //Ack from Char-server indicating the storage was saved. [Skotlex]
 int storage_storage_saved(int account_id)
 {
-	struct storage *stor;
+	struct storage_data *stor;
 	
 	if((stor=account2storage2(account_id)) == NULL)
 		return 0;

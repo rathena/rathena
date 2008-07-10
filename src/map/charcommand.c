@@ -606,7 +606,7 @@ int charcommand_effect(const int fd, struct map_session_data* sd, const char* co
  *------------------------------------------*/
 int charcommand_storagelist(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
-	struct storage *stor;
+	struct storage_data *stor;
 	struct map_session_data *pl_sd;
 	struct item_data *item_data, *item_temp;
 	int i, j, count, counter, counter2;
@@ -1643,7 +1643,7 @@ int charcommand_storage(const int fd, struct map_session_data* sd, const char* c
  *------------------------------------------*/
 int charcommand_guildstorage(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
-	struct storage *stor; //changes from Freya/Yor
+	struct storage_data *stor; //changes from Freya/Yor
 	char character[NAME_LENGTH];
 
 	struct map_session_data *pl_sd;

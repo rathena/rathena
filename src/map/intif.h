@@ -25,7 +25,7 @@ int intif_saveregistry(struct map_session_data *sd, int type);
 int intif_request_registry(struct map_session_data *sd, int flag);
 
 int intif_request_storage(int account_id);
-int intif_send_storage(struct storage *stor);
+int intif_send_storage(struct storage_data *stor);
 int intif_request_guild_storage(int account_id, int guild_id);
 int intif_send_guild_storage(int account_id, struct guild_storage *gstor);
 

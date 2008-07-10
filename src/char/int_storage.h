@@ -4,7 +4,7 @@
 #ifndef _INT_STORAGE_H_
 #define _INT_STORAGE_H_
 
-struct storage;
+struct storage_data;
 struct guild_storage;
 
 int inter_storage_init(void);
@@ -19,7 +19,7 @@ extern char storage_txt[1024];
 extern char guild_storage_txt[1024];
 
 //Exported for use in the TXT-SQL converter.
-int storage_fromstr(char *str,struct storage *p);
+int storage_fromstr(char *str,struct storage_data *p);
 int guild_storage_fromstr(char *str,struct guild_storage *p);
 
 #endif /* _INT_STORAGE_H_ */

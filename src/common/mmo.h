@@ -329,7 +329,7 @@ struct registry {
 	struct global_reg account2[ACCOUNT_REG2_NUM];
 };
 
-struct storage {
+struct storage_data {
 	int dirty;
 	int account_id;
 	short storage_status;

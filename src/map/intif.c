@@ -338,16 +338,16 @@ int intif_request_storage(int account_id)
 	return 0;
 }
 // 倉庫データ送信
-int intif_send_storage(struct storage *stor)
+int intif_send_storage(struct storage_data *stor)
 {
 	if (CheckForCharServer())
 		return 0;
 	nullpo_retr(0, stor);
-	WFIFOHEAD(inter_fd,sizeof(struct storage)+8);
+	WFIFOHEAD(inter_fd,sizeof(struct storage_data)+8);
 	WFIFOW(inter_fd,0) = 0x3011;
-	WFIFOW(inter_fd,2) = sizeof(struct storage)+8;
+	WFIFOW(inter_fd,2) = sizeof(struct storage_data)+8;
 	WFIFOL(inter_fd,4) = stor->account_id;
-	memcpy( WFIFOP(inter_fd,8),stor, sizeof(struct storage) );
+	memcpy( WFIFOP(inter_fd,8),stor, sizeof(struct storage_data) );
 	WFIFOSET(inter_fd,WFIFOW(inter_fd,2));
 	return 0;
 }
@@ -971,7 +971,7 @@ int intif_parse_Registers(int fd)
 // 倉庫データ受信
 int intif_parse_LoadStorage(int fd)
 {
-	struct storage *stor;
+	struct storage_data *stor;
 	struct map_session_data *sd;
 
 	sd=map_id2sd( RFIFOL(fd,4) );
@@ -990,13 +990,13 @@ int intif_parse_LoadStorage(int fd)
 		ShowWarning("intif_parse_LoadStorage: received storage for an already modified non-saved storage! (User %d:%d)\n", sd->status.account_id, sd->status.char_id);
 		return 1;
 	}
-	if (RFIFOW(fd,2)-8 != sizeof(struct storage)) {
-		ShowError("intif_parse_LoadStorage: data size error %d %d\n", RFIFOW(fd,2)-8, sizeof(struct storage));
+	if (RFIFOW(fd,2)-8 != sizeof(struct storage_data)) {
+		ShowError("intif_parse_LoadStorage: data size error %d %d\n", RFIFOW(fd,2)-8, sizeof(struct storage_data));
 		return 1;
 	}
 	if(battle_config.save_log)
 		ShowInfo("intif_openstorage: %d\n",RFIFOL(fd,4) );
-	memcpy(stor,RFIFOP(fd,8),sizeof(struct storage));
+	memcpy(stor,RFIFOP(fd,8),sizeof(struct storage_data));
 	stor->dirty=0;
 	stor->storage_status=1;
 	sd->state.storage_flag = 1;

@@ -1155,7 +1155,7 @@ int atcommand_storage(const int fd, struct map_session_data* sd, const char* com
  *------------------------------------------*/
 int atcommand_guildstorage(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
-	struct storage *stor; //changes from Freya/Yor
+	struct storage_data *stor; //changes from Freya/Yor
 	nullpo_retr(-1, sd);
 
 	if (!sd->status.guild_id) {

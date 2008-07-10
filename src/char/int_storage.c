@@ -28,7 +28,7 @@ static DBMap* storage_db; // int account_id -> struct storage*
 static DBMap* guild_storage_db; // int guild_id -> struct guild_storage*
 
 // 倉庫データを文字列に変換
-int storage_tostr(char *str,struct storage *p)
+int storage_tostr(char *str,struct storage_data *p)
 {
 	int i,j,f=0;
 	char *str_p = str;
@@ -54,7 +54,7 @@ int storage_tostr(char *str,struct storage *p)
 }
 #endif //TXT_SQL_CONVERT
 // 文字列を倉庫データに変換
-int storage_fromstr(char *str,struct storage *p)
+int storage_fromstr(char *str,struct storage_data *p)
 {
 	int tmp_int[256];
 	char tmp_str[256];
@@ -159,17 +159,17 @@ int guild_storage_fromstr(char *str,struct guild_storage *p)
 }
 #ifndef TXT_SQL_CONVERT
 static void* create_storage(DBKey key, va_list args) {
-	struct storage *s;
-	s = (struct storage *) aCalloc(sizeof(struct storage), 1);
+	struct storage_data *s;
+	s = (struct storage_data *) aCalloc(sizeof(struct storage_data), 1);
 	s->account_id=key.i;
 	return s;
 }
 
 // アカウントから倉庫データインデックスを得る（新規倉庫追加可能）
-struct storage *account2storage(int account_id)
+struct storage_data *account2storage(int account_id)
 {
-	struct storage *s;
-	s = (struct storage*)idb_ensure(storage_db, account_id, create_storage);
+	struct storage_data *s;
+	s = (struct storage_data*)idb_ensure(storage_db, account_id, create_storage);
 	return s;
 }
 
@@ -194,7 +194,7 @@ int inter_storage_init()
 {
 	char line[65536];
 	int c=0,tmp_int;
-	struct storage *s;
+	struct storage_data *s;
 	struct guild_storage *gs;
 	FILE *fp;
 
@@ -208,7 +208,7 @@ int inter_storage_init()
 	while(fgets(line, sizeof(line), fp))
 	{
 		sscanf(line,"%d",&tmp_int);
-		s = (struct storage*)aCalloc(sizeof(struct storage), 1);
+		s = (struct storage_data*)aCalloc(sizeof(struct storage_data), 1);
 		if(s==NULL){
 			ShowFatalError("int_storage: out of memory!\n");
 			exit(EXIT_FAILURE);
@@ -268,7 +268,7 @@ int inter_storage_save_sub(DBKey key,void *data,va_list ap)
 {
 	char line[65536];
 	FILE *fp;
-	storage_tostr(line,(struct storage *)data);
+	storage_tostr(line,(struct storage_data *)data);
 	fp=va_arg(ap,FILE *);
 	if(*line)
 		fprintf(fp,"%s\n",line);
@@ -319,7 +319,7 @@ int inter_guild_storage_save()
 // 倉庫データ削除
 int inter_storage_delete(int account_id)
 {
-	struct storage *s = (struct storage*)idb_get(storage_db,account_id);
+	struct storage_data *s = (struct storage_data*)idb_get(storage_db,account_id);
 	if(s) {
 		int i;
 		for(i=0;i<s->storage_amount;i++){
@@ -352,12 +352,12 @@ int inter_guild_storage_delete(int guild_id)
 // 倉庫データの送信
 int mapif_load_storage(int fd,int account_id)
 {
-	struct storage *s=account2storage(account_id);
-        WFIFOHEAD(fd, sizeof(struct storage)+8);
+	struct storage_data *s=account2storage(account_id);
+        WFIFOHEAD(fd, sizeof(struct storage_data)+8);
 	WFIFOW(fd,0)=0x3810;
-	WFIFOW(fd,2)=sizeof(struct storage)+8;
+	WFIFOW(fd,2)=sizeof(struct storage_data)+8;
 	WFIFOL(fd,4)=account_id;
-	memcpy(WFIFOP(fd,8),s,sizeof(struct storage));
+	memcpy(WFIFOP(fd,8),s,sizeof(struct storage_data));
 	WFIFOSET(fd,WFIFOW(fd,2));
 	return 0;
 }
@@ -416,17 +416,17 @@ int mapif_parse_LoadStorage(int fd)
 // 倉庫データ受信＆保存
 int mapif_parse_SaveStorage(int fd)
 {
-	struct storage *s;
+	struct storage_data *s;
 	int account_id, len;
 	RFIFOHEAD(fd);
 	account_id=RFIFOL(fd,4);
 	len=RFIFOW(fd,2);
-	if(sizeof(struct storage)!=len-8){
-		ShowError("inter storage: data size error %d %d\n",sizeof(struct storage),len-8);
+	if(sizeof(struct storage_data)!=len-8){
+		ShowError("inter storage: data size error %d %d\n",sizeof(struct storage_data),len-8);
 	}
 	else {
 		s=account2storage(account_id);
-		memcpy(s,RFIFOP(fd,8),sizeof(struct storage));
+		memcpy(s,RFIFOP(fd,8),sizeof(struct storage_data));
 		mapif_save_storage_ack(fd,account_id);
 	}
 	return 0;

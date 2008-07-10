@@ -18,7 +18,7 @@
 #define STORAGE_MEMINC	16
 
 /// Save guild_storage data to sql
-int storage_tosql(int account_id, struct storage* p)
+int storage_tosql(int account_id, struct storage_data* p)
 {
 	memitemdata_to_sql(p->storage_, MAX_STORAGE, account_id, TABLE_STORAGE);
 	//ShowInfo ("storage save to DB - account: %d\n", account_id);
@@ -27,7 +27,7 @@ int storage_tosql(int account_id, struct storage* p)
 
 #ifndef TXT_SQL_CONVERT
 /// Load guild_storage data to mem
-int storage_fromsql(int account_id, struct storage* p)
+int storage_fromsql(int account_id, struct storage_data* p)
 {
 	StringBuf buf;
 	struct item* item;
@@ -35,7 +35,7 @@ int storage_fromsql(int account_id, struct storage* p)
 	int i;
 	int j;
 
-	memset(p, 0, sizeof(struct storage)); //clean up memory
+	memset(p, 0, sizeof(struct storage_data)); //clean up memory
 	p->storage_amount = 0;
 	p->account_id = account_id;
 
@@ -163,11 +163,11 @@ int inter_guild_storage_delete(int guild_id)
 int mapif_load_storage(int fd,int account_id)
 {
 	//load from DB
-	WFIFOHEAD(fd, sizeof(struct storage)+8);
+	WFIFOHEAD(fd, sizeof(struct storage_data)+8);
 	WFIFOW(fd,0)=0x3810;
-	WFIFOW(fd,2)=sizeof(struct storage)+8;
+	WFIFOW(fd,2)=sizeof(struct storage_data)+8;
 	WFIFOL(fd,4)=account_id;
-	storage_fromsql(account_id, (struct storage*)WFIFOP(fd,8));
+	storage_fromsql(account_id, (struct storage_data*)WFIFOP(fd,8));
 	WFIFOSET(fd,WFIFOW(fd,2));
 	return 0;
 }
@@ -234,10 +234,10 @@ int mapif_parse_SaveStorage(int fd)
 	int len = RFIFOW(fd,2);
 	int account_id = RFIFOL(fd,4);
 
-	if(sizeof(struct storage)!=len-8){
-		ShowError("inter storage: data size error %d %d\n",sizeof(struct storage),len-8);
+	if(sizeof(struct storage_data)!=len-8){
+		ShowError("inter storage: data size error %d %d\n",sizeof(struct storage_data),len-8);
 	}else{
-		storage_tosql(account_id, (struct storage*)RFIFOP(fd,8));
+		storage_tosql(account_id, (struct storage_data*)RFIFOP(fd,8));
 		mapif_save_storage_ack(fd,account_id);
 	}
 	return 0;
