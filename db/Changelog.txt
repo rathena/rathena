@@ -43,6 +43,10 @@
 	2385 Recuvative_Armor		Should trigger HP/SP return with magical kills as well.
 
 =======================
+2008/07/10
+	* Added +10% dmg from satan morroc on items 2537,Lucifer_Manteau and 2729,Lucifer_Ring, bugreport:1780
+	* Fixed 5326,Masquerade_C bonus, bugreport:1820
+
 2008/07/08
 	* Rev. 12924 swapped 'misceffect' usage for 'end', the effect is client-side already. [L0ne_W0lf]
 	* Added a few headgears from $ephiroth. (bugreport:1756)
