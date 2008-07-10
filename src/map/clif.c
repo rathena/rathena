@@ -8874,7 +8874,8 @@ void clif_parse_NpcClicked(int fd,struct map_session_data *sd)
 			clif_parse_ActionRequest_sub(sd, 0x07, bl->id, gettick());
 			break;
 		case BL_NPC:
-			npc_click(sd,(TBL_NPC*)bl);
+			if( bl->m != -1 )// the user can't click floating npcs directly (hack attempt)
+				npc_click(sd,(TBL_NPC*)bl);
 			break;
 	}
 	return;
