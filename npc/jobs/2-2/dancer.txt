@@ -293,9 +293,9 @@ job_duncer,43,93,4	script	Aile#da	724,{
 			setarray .@count[0], 2,5,20,10,1;
 			break;
 		}
-		set .@size, (getarraysize(.@item)-1); 
-		for( set .@i,0 ; .@i <= .@size && countitem(.@item[.@i]) >= .@count[.@i] ; set .@i,.@i+1 );
-		if(.@i == .@size && Zeny > 9999) {  
+		set .@size, getarraysize(.@item);
+		for( set .@i, 0; .@i < .@size && countitem(.@item[.@i]) >= .@count[.@i]; set .@i, .@i + 1 );
+		if( .@i == .@size && Zeny > 9999 ) {
 			cutin "job_dancer_eir02",2;
 			mes "[Aile]";
 			mes "Oh...!";
