@@ -1,6 +1,7 @@
 ﻿Date		Added
 ======
 2008/07/12
+	* Rev. 12400 Updated Refiner function. cleaner, and less dated. [L0ne_W0lf]
 	* Rev. 12399 Added Nameless Island Dungeon quest. [L0ne_W0llf]
 2008/07/10
 	* Fixed a sage job quest cutin not being removed as reported by jc1991, bugreport:1825 [Brainstorm]
