@@ -21,7 +21,7 @@
 //= 1.6 Fixed investment period not resetting. [L0ne_W0lf]
 //=     Made it so treasure won't spawn if castle is empty.
 //=     Treasure will now be killed before spawning.
-/= 1.7 Fixed a typo when disabling a control device. [L0ne_W0lf]
+//= 1.7 Fixed a typo when disabling a control device. [L0ne_W0lf]
 //============================================================
 
 schg_cas03,1,1,0	script	Manager#sch03_02	111,{
