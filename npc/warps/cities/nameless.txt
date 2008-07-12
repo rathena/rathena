@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= $ephiroth
 //===== Current Version: =====================================
-//= 1.2
+//= 1.3
 //===== Compatible With: =====================================
 //= Any Athena Version
 //===== Description: =========================================
@@ -12,108 +12,13 @@
 //= 1.0 Initial version [$ephiroth]
 //= 1.1 Added SinSloth's warper to this file [Playtester]
 //= 1.2 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
+//= 1.3 Removed SinSloth's warper from this file [L0ne_W0lf]
 //============================================================
 
 nameless_n,157,184,0	warp	namelesswarp0401	1,1,abbey01,51,12
-nameless_i,168,257,0	warp	namelesswarp1001	1,1,nameless_in,12,43
-nameless_in,12,40,0	warp	namelesswarp1002	1,1,nameless_i,168,254
 nameless_i,252,130,0	warp	namelesswarp1003	1,1,nameless_in,26,128
 nameless_in,23,128,0	warp	namelesswarp1004	1,1,nameless_i,249,130
 nameless_i,79,256,0	warp	namelesswarp1005	1,1,nameless_in,12,172
 nameless_in,12,169,0	warp	namelesswarp1006	1,1,nameless_i,82,256
 nameless_i,78,94,0	warp	namelesswarp1007	1,1,nameless_in,96,180
 nameless_in,96,177,0	warp	namelesswarp1008	1,1,nameless_i,81,96
-
-ve_fild07,128,131,3	script	Desert Coast Man#na	943,{
-
-	mes "[Desert Coast Sailor]";
-	mes "Hey you! Yes, you!";
-	mes "Have you ever heard";
-	mes "about Nameless Island?...";
-	next;
-	mes "[Desert Coast Sailor]";
-	mes "Shh! Not that loudly!";
-	mes "Rumors say there is an";
-	mes "old monastery... you might";
-	mes "want to take a look at it...";
-	next;
-	mes "[Desert Coast Sailor]";
-	mes "But you know... It is kind";
-	mes "of forbidden to talk about";
-	mes "this place... Sure, going";
-	mes "there is somewhat impossible.";
-	mes "I can lead you there.";
-	next;
-	mes "[Desert Coast Sailor]";
-	mes "10.000 zenys.";
-	mes "And I'll make sure nobody";
-	mes "knows you went there. It looks";
-	mes "like a fair trade, doesn't it?";
-	next;
-	switch( select( "Sure.","Forget it." ) )
-	{
-		case 1:
-			if(Zeny < 10000)
-			{
-				mes "[Desert Coast Sailor]";
-				mes "Did you really think I would";
-				mes "take that much risk for free?";
-				mes "No money, no travel, understood?";
-				close;
-			}
-			mes "[Desert Coast Sailor]";
-			mes "Haha! I knew you truly were";
-			mes "an adventurer! Let's go!";
-			mes "I hope you didn't forget";
-			mes "anything...";
-			set Zeny,Zeny-10000;
-			close2;
-			warp "nameless_n",254,231;
-			end;
-			
-		case 2:
-			mes "[Desert Coast Sailor]";
-			mes "Fine, as you wish.";
-			mes "Remember, don't talk to";
-			mes "anyone about that place,";
-			mes "or you might have problems...";
-			close;
-	}
-}
-
-nameless_n,251,236,3	script	Desert Coast Man	943,{
-
-	mes "[Desert Coast Sailor]";
-	mes "It's not like I care";
-	mes "about you... But please,";
-	mes "be careful, I heard some";
-	mes "screams from the center of";
-	mes "the island...";
-	next;
-	mes "[Desert Coast Sailor]";
-	mes "I'm going back to Veins,";
-	mes "I don't like that place";
-	mes "at all. Do you want to return";
-	mes "with me?";
-	next;
-	switch( select( "Take me far away.","I'll be fine by myself." ) )
-	{
-		case 1:
-			mes "[Desert Coast Sailor]";
-			mes "Okay. I see you are an";
-			mes "adventurer, but at least";
-			mes "you're a wise one.";
-			mes "I don't want to stay here.";
-			close2;
-			warp "ve_fild07",127,135;
-			end;
-			
-		case 2:
-			mes "[Desert Coast Sailor]";
-			mes "That's your problem now.";
-			mes "I don't want to be part";
-			mes "of this expedition.";
-			mes "Take care.";
-			close;
-	}
-}

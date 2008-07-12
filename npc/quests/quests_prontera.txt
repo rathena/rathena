@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88; L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 2.1
+//= 2.2
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -37,6 +37,7 @@
 //= 2.0a Corrected a Typo error ";;". [Samuray22]
 //= 2.0b Corrected a Typo error. (bugreport:950) [Samuray22]
 //= 2.1 Added missing checkweights. [L0ne_W0lf]
+//= 2.2 Added Nameless Island quest addition. [L0ne_W0lf]
 //============================================================ 
 
 // Prontera Culvert
@@ -2736,12 +2737,191 @@ prt_church,185,106,3	script	Father Bamph	60,{
 		close;
 	}
 	else {
-		mes "[Father Bamph]";
-		mes "I'm sorry, but would it";
-		mes "be alright if we talked";
-		mes "later? I have to handle";
-		mes "a very important task now...";
-		close;
+		if (prt_curse == 61) {
+// Begin Nameless Island Access Quest Addition
+			if (aru_monas == 1) {
+				mes "[Father Bamph]";
+				mes "Oh, I've been waiting for";
+				mes "you, adventurer. I'm sorry";
+				mes "for giving you such short";
+				mes "notice, but it seems that";
+				mes "you've grown much stronger";
+				mes "since the last time we met.";
+				next;
+				mes "[Father Bamph]";
+				mes "The Church has received";
+				mes "a request from Prontera";
+				mes "Palace, but we don't have";
+				mes "the resources to handle it.";
+				mes "I believe you'd be well suited";
+				mes "to this task if you'll help us.";
+				next;
+				mes "[Father Bamph]";
+				mes "A man of high rank suddenly";
+				mes "disappeared a while ago.";
+				mes "Although Prontera Palace";
+				mes "asked us to find him, I can";
+				mes "only tell you who he is later.";
+				next;
+				mes "[Father Bamph]";
+				mes "All we know is that he was";
+				mes "last seen in Comodo. Please";
+				mes "speak to our informant, ^6B8E23Larjes^000000,";
+				mes "and he will assist you in your";
+				mes "search for the lost official.";
+				set aru_monas,2;
+				close;
+			}
+			else if (aru_monas == 2 || aru_monas == 3) {
+				mes "[Father Bamph]";
+				mes "Please go to Comodo and";
+				mes "find our informant, ^6B8E23Larjes^000000,";
+				mes "in the Casino. He will help";
+				mes "you in your search for the";
+				mes "official who disappeared.";
+				close;
+			}
+			else if (aru_monas == 4) {
+				mes "[Father Bamph]";
+				mes "Ah, so you found Larjes?";
+				mes "How has your investigation of";
+				mes "that official's disappearance";
+				mes "progressing? I hope that he";
+				mes "is still safe and sound";
+				mes "when you find him.";
+				next;
+				select("Tell him what Larjes said.");
+				mes "[Father Bamph]";
+				mes "I see. We've detected some";
+				mes "disquieting activity from";
+				mes "Arunafeltz lately, but I didn't";
+				mes "think they would make";
+				mes "their move so soon. Hmm...";
+				mes "Give me a moment to think.";
+				set aru_monas,5;
+				close;
+			}
+			else if (aru_monas == 5) {
+				if (rand(1,10) == 10) {
+					mes "[Father Bamph]";
+					mes "Well, I've considered all";
+					mes "possible scenarios. I think";
+					mes "it would work best if you";
+					mes "continue your investigation";
+					mes "on our behalf. That is, if";
+					mes "you're willing to do it.";
+					next;
+					mes "[Father Bamph]";
+					mes "We don't want to provoke";
+					mes "an international conflict";
+					mes "with our official involvement,";
+					mes "but I also can't force you to";
+					mes "work for us. Whether you";
+					mes "can help is your choice.";
+					next;
+					if (select("Let me think about it.:Of course, I'll help.") == 1) {
+						mes "[Father Bamph]";
+						mes "I hope that you decide";
+						mes "to help us. The safety of";
+						mes "our nation depends on the";
+						mes "success of this investigation.";
+						mes "We could really use your help.";
+						close;
+					}
+					mes "[Father Bamph]";
+					mes "Thank you. I'm glad to hear";
+					mes "that you'll help us. You may";
+					mes "take the airship in Izlude to";
+					mes "travel to Arunafeltz, where you";
+					mes "must continue your investigation.";
+					next;
+					mes "[Father Bamph]";
+					mes "I believe that you should";
+					mes "be able to learn more if you";
+					mes "investigate the city of ^9370DBRachel^000000.";
+					mes "Please accept this money";
+					mes "to cover your Airship fee.";
+					mes "Thank you, and good luck.";
+					set zeny,zeny+1500;
+					set aru_monas,6;
+					close;
+				}
+				else {
+					mes "[Father Bamph]";
+					mes "Hmm... What's the best way";
+					mes "for us to handle this? Let";
+					mes "me think about our options.";
+					mes "We can--no. That wouldn't";
+					mes "work. This will be difficult.";
+					close;
+				}
+			}
+			else if (aru_monas == 6) {
+				// Anyone else see the irony in this?
+				mes "[Father Bamph]";
+				mes "You might have problems";
+				mes "in Rachel since the culture";
+				mes "there is much different than";
+				mes "our own. Their ways of doing";
+				mes "things, their government...";
+				mes "Everything is tied to religion.";
+				close;
+			}
+			else if (aru_monas > 6 && aru_monas < 24) {
+				mes "[Father Bamph]";
+				mes "Thank you so much for all";
+				mes "of your hard work. Our agents";
+				mes "will contact you whenever they";
+				mes "uncover any new information.";
+				mes "Remember that no one can";
+				mes "know what we've been doing.";
+				close;
+			}
+			else if (aru_monas == 24) {
+				mes "[Father Bamph]";
+				mes "Thank you for bring us such";
+				mes "important information. With";
+				mes "your help, we were able to";
+				mes "clear a few unsolved cases.";
+				mes "We expected something like";
+				mes "this, but not this soon.";
+				next;
+				mes "[Father Bamph]";
+				mes "I fear that the Royal Court";
+				mes "has been bickering over their";
+				mes "own selfish needs. I pray that";
+				mes "it does not grow worse, devolve";
+				mes "into chaos. ^666666*Sigh*^000000 We'll see...";
+				set aru_monas,25;
+				close;
+			}
+			else if (aru_monas >= 25) {
+				mes "[Father Bamph]";
+				mes "Thank you for bring us such";
+				mes "important information. With";
+				mes "your help, we were able to";
+				mes "clear a few unsolved cases.";
+				mes "We expected something like";
+				mes "this, but not this soon.";
+				next;
+				mes "[Father Bamph]";
+				mes "I fear that the Royal Court";
+				mes "has been bickering over their";
+				mes "own selfish needs. I pray that";
+				mes "it does not grow worse, devolve";
+				mes "into chaos. ^666666*Sigh*^000000 We'll see...";
+				close;
+			}
+// End Nameless Island Access Quest Addition
+			else {
+				mes "[Father Bamph]";
+				mes "I'm sorry, but would it";
+				mes "be alright if we talked";
+				mes "later? I have to handle";
+				mes "a very important task now...";
+				close;
+			}
+		}
 	}
 }
 

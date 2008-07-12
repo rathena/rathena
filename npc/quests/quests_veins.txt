@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.4a
+//= 1.5
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -35,6 +35,7 @@
 //= 1.3a More fixes to some of the Base quest NPCs. [L0ne_W0lf]
 //= 1.4 Added missing checkweights. [L0ne_W0lf]
 //= 1.4a Corrected a typo error ";;". [Toms]
+//= 1.5 Added Nameless Island quest addition. [L0ne_W0lf]
 //============================================================ 
 
 // Stone Quest
@@ -3033,6 +3034,86 @@ veins,327,185,3	script	Kid#camelcamel	944,{
 			close;
 		}
 		else {
+// Start Nameless Island Access Quest Addition
+			if (aru_monas == 15) {
+				mes "[Kid Karyn]";
+				mes "Hi! It's good to see";
+				mes "you again! Kurdi just came";
+				mes "back home from the hospital,";
+				mes "and is getting better everyday!";
+				mes "Ah, and I've been taking care";
+				mes "of her, just like I promised~";
+				next;
+				mes "["+strcharinfo(0)+"";
+				mes "Really? That's good";
+				mes "You should be proud~";
+				next;
+				mes "[Kid Karyn]";
+				mes "^666666*Blush*^000000 Heh heh!";
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "Anyway, I was wondering";
+				mes "if you could help me.";
+				mes "Your dad's a fisherman,";
+				mes "right? Would you mind";
+				mes "asking him if I could";
+				mes "borrow his boat?";
+				next;
+				mes "[Kid Karyn]";
+				mes "Well... Actually...";
+				mes "The pope said that my";
+				mes "dad isn't allowed to use";
+				mes "his boat for a while...";
+				mes "I'm not sure why...";
+				next;
+				mes "[Kid Karyn]";
+				mes "So yeah. Dad's not allowed";
+				mes "to go out to sea right now.";
+				mes "But it should be okay if it's";
+				mes "you, right? Hey, you helped";
+				mes "me, so I hafta help you, right?";
+				next;
+				mes "[Kid Karyn]";
+				mes "My dad is really mad that";
+				mes "he can't use his boat so";
+				mes "maybe we better not tell";
+				mes "him you want to use it. Let's";
+				mes "keep it our secret, okay?";
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "S-sure thing!";
+				next;
+				mes "[Kid Karyn]";
+				mes "Anyway, his boat is the";
+				mes "only one on the south beach";
+				mes "since all the other fishermen";
+				mes "dock theirs boats in other";
+				mes "places. Also, my dad's boat";
+				mes "will rust if no one uses it.";
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "Great! Thanks so much";
+				mes "for your help, Karyn~";
+				mes "I'll be sure to take";
+				mes "good care of your dad's";
+				mes "boat. I only need it for";
+				mes "a little while, anyway.";
+				next;
+				mes "[Kid Karyn]";
+				mes "Heh heh! Thanks!";
+				mes "I'm happy that";
+				mes "I can help you too!";
+				set aru_monas,16;
+				close;
+			}
+			else if (aru_monas > 15) {
+				mes "[Kid Karyn]";
+				mes "Hi! How do you like";
+				mes "fishing on my dad's boat?";
+				mes "Oh, and Kurdi says hi!";
+				close;
+			}
+// End Nameless Island Access Quest Addition.
 			mes "[Kid Karyn]";
 			mes "Hello, hello!";
 			mes "Hey, did you need";

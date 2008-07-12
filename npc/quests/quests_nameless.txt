@@ -1,0 +1,2012 @@
+//===== eAthena Script ======================================= 
+//= Nameless Island Quests
+//===== By: ================================================== 
+//= L0ne_W0lf
+//===== Current Version: ===================================== 
+//= 1.0
+//===== Compatible With: ===================================== 
+//= eAthena SVN
+//===== Description: ========================================= 
+//= Collection of Nameless Island Quests
+//= Nameless Island:
+//= - Quest to gain access to Nameless Island and dungeon.
+//= - Variable in use: aru_monas  (Max: 26)
+//= Peace to the Arunfeltz:
+//= - Variable in use: N/A (Max: N/A)
+//= Z-Gang Quest:
+//= - Variable in use: N/A (Max: N/A)
+//= Rogue Guild Investigation Assistance:
+//= - Variable in use: N/A (Max: N/A)
+//= Maf's Loan:
+//= - Variable in use: N/A (Max: N/A)
+//= Broken Diamond:
+//= - Variable in use: N/A (Max: N/A)
+//= Unlucky Emerald:
+//= - Variable in use: N/A (Max: N/A)
+//===== Additional Comments: ================================= 
+//= 1.0 First version. [L0ne_W0lf]
+//============================================================ 
+
+airplane_01,95,61,3	script	Agent#Aru	899,5,5,{
+	end;
+
+OnInit:
+	hideonnpc "Agent#Aru";
+	end;
+
+OnTouch:	
+	if ((prt_curse == 61) && (rachel_camel == 25) && (aru_monas < 1)) {
+		hideoffnpc "Agent#Aru";
+		mes "[????]";
+		mes "Are you "+strcharinfo(0)+"?";
+		mes "I've been waiting for you.";
+		mes "^6B8E23Priest Bamph^000000 is expecting";
+		mes "your arrival at ^6B8E23Prontera";
+		mes "Church^000000. Please visit him";
+		mes "as soon as you can.";
+		close2;
+		set aru_monas,1;
+		hideonnpc "Agent#Aru";
+	}
+	end;
+}
+
+cmd_in02,174,89,7	script	Ordinary Man#pc1	97,{
+	if (aru_monas < 2) {
+		mes "[Larjes]";
+		mes "Damn it, I lost again!";
+		mes "This game is rigged!";
+		mes "No matter what I try,";
+		mes "I can never seem to win!";
+		mes "But Comodo Hold 'Em";
+		mes "is so... It's so addicting!";
+		close;
+	}
+	else if (aru_monas == 2) {
+		mes "[Larjes]";
+		mes "Argh, I lost at this game";
+		mes "so many times that I've";
+		mes "completely lost track!";
+		mes "I've got to win sometime...";
+		next;
+		select("Excuse me.");
+		mes "[Larjes]";
+		mes "Oh! Uh... Hmm...";
+		mes "How may I help you?";
+		next;
+		select ("^6B8E23Priest Bamph^000000 sent me.");
+		mes "[Larjes]";
+		mes "Oh, I see. I apologize";
+		mes "if my screaming and yelling";
+		mes "made you a bit uncomfortable.";
+		mes "I'm just here to kill some";
+		mes "time... I now see firsthand";
+		mes "that gambling is truly evil!";
+		next;
+		mes "[Larjes]";
+		mes "Er, would you come";
+		mes "over this way? I don't";
+		mes "want anyone else to";
+		mes "overhear us talking.";
+		close2;
+		set aru_monas,3;
+		warp "cmd_in02",110,53;
+		end;
+	}
+	else {
+		mes "[Larjes]";
+		mes "What?! I lost again?";
+		mes "How does... How does";
+		mes "this game even work?!";
+		close;
+	}
+}
+
+cmd_in02,111,52,3	script	Orfinary Man#pc2	97,{
+	if (aru_monas < 3) {
+		mes "[Larjes]";
+		mes "^666666*Sigh...*^000000";
+		mes "This isn't good at all.";
+		mes "I don't know what to do...";
+		close;
+	}
+	else if (aru_monas == 3) {
+		mes "[Larjes]";
+		mes "Good, no one should be";
+		mes "able to hear us from here.";
+		mes "After I sent a message to";
+		mes "the place, I found some";
+		mes "new information that should";
+		mes "really help my investigation.";
+		next;
+		mes "[Larjes]";
+		mes "I learned that two details";
+		mes "about the night when that";
+		mes "high ranking man vanished.";
+		mes "Firstly, he left the guards for";
+		mes "a bit to meet a woman. It's";
+		mes "always a woman, isn't it?";
+		next;
+		mes "[Larjes]";
+		mes "Secondly, after he left to";
+		mes "meet that woman, some other";
+		mes "people came in, and then they";
+		mes "carried some really large";
+		mes "baggage with them when";
+		mes "they left to the west.";
+		next;
+		mes "[Larjes]";
+		mes "Those bags were so big,";
+		mes "it's suspicious. It seems";
+		mes "like some organization has";
+		mes "kidnapped him, and wants to";
+		mes "bring him west for some reason.";
+		next;
+		select("Why to the west?");
+		mes "[Larjes]";
+		mes "This is just a guess, but";
+		mes "I think whoever kidnapped";
+		mes "him are from ^2F4F2FArunafeltz^000000.";
+		mes "I'm prohibited from entering";
+		mes "Arunafeltz so I wasn't able";
+		mes "to investigate any further.";
+		set aru_monas,4;
+		close;
+	}
+	else {
+		mes "[Larjes]";
+		mes "I gambled away";
+		mes "this much money?";
+		mes "How am I gonna pay";
+		mes "off all of this debt?!";
+		close;
+	}
+}
+
+ra_in01,308,59,1	script	Waiter#Aru	930,{
+	if (aru_monas < 7) {
+		mes "[Waiter]";
+		mes "Welcome to";
+		mes "Rachel's Palate, one";
+		mes "of Rachel's finest and";
+		mes "most exquisite restraunts.";
+		if (aru_monas < 6) {
+			close;
+		}
+		if (aru_monas == 6) {
+			mes "[Waiter]";
+			mes "What would you like";
+			mes "to order? Or... If I'm";
+			mes "not mistaken, you're";
+			mes "here for something else?";
+			next;
+			if (select("I'd like to order.:Yes, I've come for another reason.") == 1) {
+				mes "[Waiter]";
+				mes "Sure, no problem.";
+				mes "Did you come alone?";
+				next;
+				select("Yes.");
+				mes "[Waiter]";
+				mes "Right this way.";
+				close2;
+				set aru_monas,7;
+				warp "ra_in01",303,43;
+				end;
+			}
+			mes "[Waiter]";
+			mes "Hm, okay. Well, whatever";
+			mes "it is, I hope you enjoy your";
+			mes "stay at Rachel's Palate.";
+			close;
+		}
+	}
+	mes "[Waiter]";
+	mes "The food in this";
+	mes "restaurant is the";
+	mes "best in Rachel--no,";
+	mes "it is the best in all";
+	mes "of Arunafeltz!";
+	close;
+}
+
+ra_in01,301,50,3	script	Normal-Looking Man	927,{
+	mes "[Normal-Looking Man]";
+	mes "Mmm-Mmm!";
+	mes "I love the food in";
+	mes "this restaurant!";
+	mes "They don't serve";
+	mes "anything this this";
+	mes "good anywhere else!";
+	close;
+}
+
+ra_in01,301,52,3	script	Common-Looking Man	927,{
+	mes "[Common-Looking Man]";
+	mes "The food here isn't bad,";
+	mes "but my favorite restaurants";
+	mes "are over in Hugel. The food";
+	mes "over there is definitely best.";
+	close;
+}
+
+ra_in01,297,50,7	script	Suspicious-Looking Man	926,{
+	mes "[Suspicious-Looking Man]";
+	mes "Each dish has its own";
+	mes "unique taste that you must";
+	mes "learn to relish. Of course,";
+	mes "unhealthy junk food is the";
+	mes "exception to this rule.";
+	close;
+}
+
+ra_in01,301,43,0	script	#Aru_conv	-1,3,3,{
+	end;
+
+OnTouch:
+	if (aru_monas == 7) {
+		mes "[Waiter]";
+		mes "What would you like to order?";
+		mes "Our special today is Fried";
+		mes "Veins Stripe Stickleback";
+		mes "since we received some";
+		mes "high quality fish from Veins";
+		mes "just this morning.";
+		next;
+		select("...Yes, that sounds good.");
+		mes "[Waiter]";
+		mes "Excellent choice.";
+		mes "Just to let you know,";
+		mes "that dish is ^9932CD3,000 zeny^000000.";
+		mes "I'll be right back.";
+		next;
+		mes "^3355FFThe waiter took your";
+		mes "order, and left to go to";
+		mes "the kitchen. You decide to";
+		mes "eavesdrop on the people";
+		mes "talking at the next table";
+		mes "while you're waiting.^000000";
+		next;
+		mes "[Husky Male Voice]";
+		mes "...............................";
+		mes "I really saw it, the greatest";
+		mes "fish in the world! Last time";
+		mes "I went to Veins, I glimpsed";
+		mes "the Veins Golden Stripe";
+		mes "Stickleback! It's true!";
+		next;
+		mes "[Gloomy Male Voice]";
+		mes "So were you able to taste";
+		mes "that Veins Golden Stripe";
+		mes "Stickleback juice?";
+		next;
+		mes "[Average Male Voice]";
+		mes "Aw man, if I did, that";
+		mes "would've been a once";
+		mes "in a lifetime experience!";
+		mes "Veins Golden Stripe";
+		mes "Sticklebacks are only";
+		mes "caught once a decade!";
+		next;
+		mes "[Husky Male Voice]";
+		mes "Oh yeah, that juice is";
+		mes "incredible. My voice even";
+		mes "changed after I drank it!";
+		mes "It was just... So profound.";
+		next;
+		mes "[Average Male Voice]";
+		mes "Oh! So that's why";
+		mes "you sound different.";
+		next;
+		mes "[Gloomy Male Voice]";
+		mes "How did you get to drink";
+		mes "such rare juice? I mean,";
+		mes "there must be tons of people";
+		mes "in line with reservations,";
+		mes "just waiting to drink it!";
+		next;
+		mes "[Husky Male Voice]";
+		mes "I got damn lucky: I went";
+		mes "to this tavern in Veins, and";
+		mes "overheard that ^DB7093a group of";
+		mes "smugglers were arrested";
+		mes "by the guards at the";
+		mes "southeast beach^000000.";
+		next;
+		mes "[Husky Male Voice]";
+		mes "Then I started thinking:";
+		mes "maybe the smugglers were";
+		mes "fishing. So I checked the";
+		mes "beach to see if I could";
+		mes "find their fishing boat.";
+		next;
+		mes "[Average Male Voice]";
+		mes "Man, you must be obsessed";
+		mes "with food. I mean, how else";
+		mes "would you figure out that the";
+		mes "smugglers were illegally";
+		mes "fishing so quickly?";
+		next;
+		mes "[Husky Male Voice]";
+		mes "Ha, I guess you're right!";
+		mes "Anyway, there was only one";
+		mes "fishing boat, and the guards";
+		mes "were inspecting it. I was about";
+		mes "to turn back in disappointment";
+		mes "but then... I saw a fisherman!";
+		next;
+		mes "[Husky Male Voice]";
+		mes "Out of the corner of my eye,";
+		mes "I saw him bringing in his";
+		mes "catch for the day, Veins";
+		mes "Golden Strip Stickleback!";
+		mes "I bought all of his fish";
+		mes "right then and there.";
+		next;
+		mes "[Gloomy Male Voice";
+		mes "Boy, were you lucky.";
+		mes "And you never hestitate";
+		mes "to splurge when it comes";
+		mes "to food, do you? Heh heh~";
+		next;
+		mes "[Husky Male Voice]";
+		mes "Oh, that wasn't even a";
+		mes "splurge. I'm sure you guys";
+		mes "would do the same thing";
+		mes "if you were in my situation.";
+		mes "I'm just grateful that I was";
+		mes "able to taste such rare fish.";
+		next;
+		mes "^3355FF...............................";
+		mes "Then, the men started";
+		mes "to compliment each other.^000000";
+		next;
+		mes "[Waiter]";
+		mes "Ah, here's your Fried";
+		mes "Veins Stripe Stickleback.";
+		mes "Please enjoy your meal.";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "^ff0000Veins^000000, huh? I might want";
+		mes "to check that place one";
+		mes "of these days to see if";
+		mes "I can find more of this fish.";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "Whoa, this fish tastes...";
+		mes "I've never tasted anything";
+		mes "like it! It's almost like";
+		mes "a dessert. God, it's good!";
+		if (Zeny >= 3000) {
+			set Zeny,Zeny-3000;
+		}
+		getitem 12052,4; //Vit_Dish02
+		set aru_monas,8;
+		close;
+	}
+	end;
+}
+
+ve_in,78,314,5	script	Magistrate#Aru	945,{
+	if (aru_monas < 8) {
+		mes "[Al Hamad]";
+		mes "Argh! Why must this";
+		mes "happen to me, especially";
+		mes "just when I'm about to";
+		mes "retire! A-ah! My ulcer...";
+		mes "Just all of a sudden, it--!";
+		close;
+	}
+	else if (aru_monas == 8) {
+		mes "[Al Hamad]";
+		mes "Man, this is probably";
+		mes "the biggest hassle of my";
+		mes "career. Why does this have";
+		mes "to happen now? Retirement";
+		mes "is so close, yet so far.";
+		next;
+		select("Are you in trouble?");
+		mes "[Al Hamad]";
+		mes "Huh? You don't look like";
+		mes "you're from around here.";
+		mes "Listen, I appreciate your";
+		mes "concern, but I'm really not";
+		mes "comfortable talking to complete";
+		mes "strangers about my problems.";
+		set aru_monas,9;
+		close;
+	}
+	else if (aru_monas == 9) {
+		mes "[Al Hamad]";
+		mes "Unless you've got special";
+		mes "business here, you're not";
+		mes "allowed to enter this place.";
+		mes "We're here to keep the public";
+		mes "peace, and letting anyone";
+		mes "in here will cause trouble.";
+		close;
+	}	
+	else if (aru_monas == 10) {
+		mes "[Al Hamad]";
+		mes "I thought I told you";
+		mes "that you weren't allowed";
+		mes "to come in here. Why do";
+		mes "you keep coming back?";
+		next;
+		if (select("I'm sorry.:I want to know about the smugglers.") == 1) {
+			mes "[Al Hamad]";
+			mes "It's fine. Just leave,";
+			mes "and don't come back";
+			mes "unless you've got a";
+			mes "really good reason.";
+			close;
+		}
+		mes "[Al Hamad]";
+		mes "Hey, how'd you find out";
+		mes "about the smugglers? Did";
+		mes "word spread around town?";
+		mes "Well, I'm sorry, but I can't";
+		mes "disclose any details about";
+		mes "an ongoing investigation.";
+		next;
+		mes "[Al Hamad]";
+		mes "^9370DBIf you insist on learning";
+		mes "more, then you'd need to";
+		mes "bring me a written order";
+		mes "from a higher ranking officer.^000000";
+		mes "Oh, and you're prohibited";
+		mes "asking anyone else, so behave.";
+		set aru_monas,11;
+		close;
+	}
+	else if (aru_monas == 11) {
+		mes "[Al Hamad]";
+		mes "I don't blame you for";
+		mes "being curious, but getting";
+		mes "involved when you're not";
+		mes "supposed to will just cause";
+		mes "trouble. Be careful, got it?";
+		close;
+	}
+	else if (aru_monas == 13) {
+		mes "[Al Hamad]";
+		mes "Huh, that's weird. You're not";
+		mes "even a citizen of Arunafeltz,";
+		mes "but somehow you know such";
+		mes "a high ranking priest. Alright,";
+		mes "I guess I can tell you more";
+		mes "about our investigation.";
+		next;
+		mes "[Al Hamad]";
+		mes "I should let you know that";
+		mes "what I tell you might not be";
+		mes "worth all that trouble. This";
+		mes "information probably isn't";
+		mes "as valuable as you think.";
+		next;
+		mes "[Al Hamad]";
+		mes "The smugglers we caught are";
+		mes "the worst kind of scoundrels:";
+		mes "they deal in human trafficking, but we caught them this time when they";
+		mes "were crossing the ocean. Their background info is pretty typical.";
+		next;
+		mes "[Al Hamad]";
+		mes "Let's see... They kidnapped";
+		mes "some man from Comodo.";
+		mes "That's a place in the southwest";
+		mes "part of Rune-Midgarts. Anyway,";
+		mes "the smugglers thought he'd be";
+		mes "wealthy, so they set a trap.";
+		next;
+		mes "[Al Hamad]";
+		mes "They lured him away from his";
+		mes "guards by sending a woman,";
+		mes "but when they captured him,";
+		mes "they found that he was not only";
+		mes "rich, he was also a high ranked";
+		mes "official of Rune-Midgarts.";
+		next;
+		mes "[Al Hamad]";
+		mes "That's when they got sloppy:";
+		mes "they were so scared that the";
+		mes "kingdom's troops might pursue";
+		mes "them that they crossed the";
+		mes "ocean that we patrol. That's";
+		mes "where we caught them.";
+		next;
+		mes "[Al Hamad]";
+		mes "What I don't understand is";
+		mes "why they were so scared.";
+		mes "I mean, they mainly deal";
+		mes "in human trafficking so...";
+		mes "Kidnapping an official isn't";
+		mes "that big a difference, is it?";
+		next;
+		mes "[Al Hamad]";
+		mes "We contacted the temple,";
+		mes "and reported the smugglers,";
+		mes "our investigation, and the";
+		mes "high ranking man from the";
+		mes "Rune-Midgarts kingdom.";
+		next;
+		mes "[Al Hamad]";
+		mes "Then, some people from";
+		mes "the temple interrupted our";
+		mes "investigation, took away the";
+		mes "smugglers before we finished";
+		mes "our interrogations, and we";
+		mes "haven't seen them since.";
+		next;
+		mes "[Al Hamad]";
+		mes "I asked an acquaintance that";
+		mes "works at the temple, but he";
+		mes "doesn't know what's going";
+		mes "on either. The ^32CD32Rune-Midgarts";
+		mes "official^000000 has gone missing too.";
+		mes "It's all very frustrating.";
+		next;
+		mes "[Al Hamad]";
+		mes "That happens to be all";
+		mes "I know. Does this mean";
+		mes "we have to capture the";
+		mes "smugglers again? I don't";
+		mes "know what's going on...";
+		next;
+		mes "[Al Hamad]";
+		mes "Even if I could make headway";
+		mes "into the investigation, I've";
+		mes "been ordered to stop by upper";
+		mes "management. It looks like";
+		mes "this case is more trouble";
+		mes "than it's worth to them?";
+		next;
+		mes "[Al Hamad]";
+		mes "I don't want to be involved";
+		mes "in this anymore. I should be";
+		mes "retired already! If you want to";
+		mes "learn more, your only choice";
+		mes "would be to find out on your";
+		mes "own. Fat chance, right?";
+		set aru_monas,14;
+		close;
+	}
+	else if (aru_monas >= 14) {
+		mes "[Al Hamad]";
+		mes "I've suffered enough";
+		mes "already! Why can't this";
+		mes "case just be done?!";
+		close;
+	}
+}
+
+ve_in,81,296,3	script	Soldier#Aru	946,{
+	if (aru_monas < 9) {
+		mes "[Himus]";
+		mes "Huh. The magistrate";
+		mes "still seems pretty upset";
+		mes "over the case that happened";
+		mes "at least a few months ago...";
+		close;
+	}
+	else if (aru_monas == 9) {
+		mes "[Himus]";
+		mes "Hm? Oh, the magistrate";
+		mes "gave you the brush-off?";
+		mes "Well, he hasn't really been";
+		mes "himself ever since we arrested";
+		mes "those ^32CD32smugglers coming from";
+		mes "the south^000000 a few months ago.";
+		next;
+		mes "[Himus]";
+		mes "Once we reported the arrest";
+		mes "to the temple, the pope's";
+		mes "soldiers came and took the";
+		mes "smugglers away. We have no";
+		mes "clue what happened to them";
+		mes "or where they even are now.";
+		next;
+		mes "[Himus]";
+		mes "It might not seem like";
+		mes "a big deal to you, but";
+		mes "the magistrate is pretty";
+		mes "meticulous, and he hates";
+		mes "it when people interfere";
+		mes "with his job, you know?";
+		next;
+		select("Who are the smugglers?");
+		mes "[Himus]";
+		mes "Well, I don't really know.";
+		mes "Maybe the magistrate would";
+		mes "know if he was able to finish";
+		mes "interrogating the smugglers.";
+		mes "I'm not sure if he did since the smugglers were taken away.";		
+		set aru_monas,10;
+		close;
+	}
+	else if (aru_monas == 10) {
+		mes "[Himus]";
+		mes "The magistrate is about";
+		mes "to retire, so I hope he can";
+		mes "finally quit work and just";
+		mes "forget about this whole";
+		mes "business. He does nothing";
+		mes "but stress out about it!";
+		close;
+	}
+	else {
+		mes "[Himus]";
+		mes "Nice day, isn't it?";
+		close;		
+	}
+}
+
+ra_temple,165,57,5	script	Niren#ss	915,{
+	if (checkweight(907,200) < 0) {
+		mes "^3355FFWait a second!";
+		mes "Right now, you're carrying";
+		mes "too many things with you.";
+		mes "Please come back after";
+		mes "using the Kafra Service";
+		mes "to store some of your items.^000000";
+		close;
+	}
+	cutin "ra_gwoman",2;
+	mes "[High Priestess Niren]";
+	mes "So you wanted to talk to me?";
+	mes "I'm pretty tired right now, but";
+	mes "I can spare a moment or two.";
+	mes "What would you like to ask?";
+	next;
+	switch(select("Ask About Veins Smugglers:As About Zhed")) {
+	case 1:
+		if (aru_monas == 12) {
+			mes "[Niren]";
+			mes "Veins smugglers...";
+			mes "Would you explain";
+			mes "exactly what you mean";
+			mes "by Veins smugglers?";
+			next;
+			mes "[Niren]";
+			mes "Oh, them. Yes, I know";
+			mes "a little bit about them.";
+			mes "I'm afraid that I can't really";
+			mes "disclose certain information";
+			mes "about them since they're";
+			mes "a classified case...";
+			next;
+			mes "[Niren]";
+			mes "I'm afraid that I cannot give you information about them easily";
+			mes "as they mean a lot to us.";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "Actually, I was curious";
+			mes "about who they kidnapped.";
+			next;
+			mes "[Niren]";
+			mes "Oh, well, I suppose";
+			mes "I can tell you more";
+			mes "about their captive.";
+			mes "But first, I'd like to";
+			mes "ask you for a favor.";
+			next;
+			select("Accept:Do Not Refuse");
+			mes "[Niren]";
+			mes "When we realized the";
+			mes "kind of hostage the";
+			mes "smugglers captured, we";
+			mes "didn't know what to do with";
+			mes "him. We've had too many";
+			mes "internal problems to handle...";
+			next;
+			mes "[Niren]";
+			mes "Still, we felt that we";
+			mes "could use him in our plan,";
+			mes "so we held him in a secret";
+			mes "place whose location is only";
+			mes "known to a few people. But";
+			mes "then... We lost all contact.";
+			next;
+			mes "[Niren]";
+			mes "We sent investigators, but";
+			mes "we still have no idea what";
+			mes "happened. All they found was";
+			mes "a message left by one survivor:";
+			mes "''They're all demons.'' The";
+			mes "hostage is probably dead.";
+			next;
+			mes "[Niren]";
+			mes "He may have been a high";
+			mes "ranking official, but we";
+			mes "were too preoccupied";
+			mes "with other matters. In fact,";
+			mes "I haven't gotten the chance";
+			mes "to think of what do with him...";
+			next;
+			mes "[Niren]";
+			mes "I want to ask you to";
+			mes "go to that place, and";
+			mes "figure out what happened";
+			mes "there, and if that high ranking";
+			mes "official from Rune-Midgarts is";
+			mes "still alive. I doubt it, but...";
+			next;
+			mes "[Niren]";
+			mes "The investigators we employ";
+			mes "in our temple usually pale";
+			mes "in comparison to you foreign";
+			mes "adventurers, so I have faith";
+			mes "that you can do it. Still,";
+			mes "it'll be quite dangerous.";
+			next;
+			mes "[Niren]";
+			mes "If you can do this, I'll";
+			mes "tell you the location of";
+			mes "that place: we usually call";
+			mes "it the monastery. It used to";
+			mes "be an actual monastery, but we";
+			mes "use it to hold captives now.";
+			next;
+			mes "[Niren]";
+			mes "I'm sorry, but I can't tell";
+			mes "you anything else about that";
+			mes "old place. It's located to the";
+			mes "southwest of Veins across the";
+			mes "sea. You should be able to find";
+			mes "a boat at South Veins Beach.";
+			next;
+			mes "[Niren]";
+			mes "However... Never mind.";
+			mes "I'd like to help you more,";
+			mes "but I'd be compromising my";
+			mes "position. I'm sorry. Please";
+			mes "come back and tell me if";
+			mes "you learn anything there.";
+			set aru_monas,13;
+			next;
+			mes "[Niren]";
+			mes "I'll send a message to the";
+			mes "magistrate of Veins. If you";
+			mes "talk to him, he'll provide you";
+			mes "with some useful information";
+			mes "for your journey. Good luck.";
+			close2;
+		}
+		else if (aru_monas < 18) {
+			mes "[Niren]";
+			mes "Going to the monastery";
+			mes "isn't the problem: coming";
+			mes "back here alive will probably";
+			mes "be the real challenge for you.";
+			next;
+			mes "[Niren]";
+			mes "We can't send any troops";
+			mes "there until we understand";
+			mes "what they'd be confronting";
+			mes "there. That's why we need";
+			mes "you to investigate the area.";
+			close2;
+		}
+		else if (aru_monas < 25) {
+			mes "[Niren]";
+			mes "Still investigating the";
+			mes "monastery? Perhaps if";
+			mes "you found any records";
+			mes "left behind by one of";
+			mes "the residents over there...";
+			close2;
+		}
+		else if (aru_monas == 25) {
+			if (countitem(7755) < 1) {
+				mes "[Niren]";
+				mes "Still investigating the";
+				mes "monastery? Perhaps if";
+				mes "you found any records";
+				mes "left behind by one of";
+				mes "the residents over there...";
+				close2;
+			}
+			else {
+				mes "[Niren]";
+				mes "You found this journal";
+				mes "in the monastery? Perfect.";
+				mes "Let me read it, and see";
+				mes "what we can learn...";
+				next;
+				mes "[Niren]";
+				mes "Hmm, this sounds really";
+				mes "bad. This is tragic, especially";
+				mes "we kept so many important";
+				mes "people over there. I'll request";
+				mes "to dispatch troops there right";
+				mes "away. Something must be done.";
+				next;
+				mes "[Niren]";
+				mes "There are too many problems";
+				mes "we have to confront now, but";
+				mes "this monastery issue needs";
+				mes "top priority. We won't be able";
+				mes "to handle it if another threat";
+				mes "comes from that place.";
+				delitem 7755,1; //Research_Note
+				set aru_monas,26;
+				getexp 500000,0;
+				close2;
+			}
+		}
+		else {
+			mes "[Niren]";
+			mes "I suppose that Arunafeltz";
+			mes "and Rune-Midgarts will be too";
+			mes "busy with their own internal";
+			mes "issues to commit to war.";
+			mes "High Priest Zhed will be";
+			mes "glad to know about this.";
+			close2;
+		}
+		break;
+	case 2:
+		if (aru_em < 10) {
+			mes "[High Priestess Niren]";
+			mes "I'm sorry...";
+			mes "I really don't want";
+			mes "to think about Zhed";
+			mes "right now. He's just...";
+			close2;
+		}
+		else if (aru_em == 10) {
+			mes "[High Priestess Niren]";
+			mes "You wanted to ask me about";
+			mes "Beken--High Priest Zhed?";
+			mes "I can't do anything for him.";
+			mes "He dug his own grave by";
+			mes "allowing you into the";
+			mes "holy ground, didn't he?";
+			next;
+			mes "[High Priestess Niren]";
+			mes "I thought I warned you";
+			mes "before to stay out of trouble.";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "I'm not here to discuss";
+			mes "that. But I happened to";
+			mes "hear that you're the only";
+			mes "person that can help him now.";
+			next;
+			mes "[High Priestess Niren]";
+			mes "...............................";
+			mes "...............................";
+			mes "...............................";
+			next;
+			mes "[High Priestess Niren]";
+			mes "It's true that Zhed and";
+			mes "I used to work well together,";
+			mes "but we no longer share the";
+			mes "same dream. You'd better find";
+			mes "someone else. Unlike him,";
+			mes "I actually want a war.";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "Weren't you guys friends?";
+			mes "Besides, you don't seem as";
+			mes "aggressive as those other";
+			mes "hard liner priests.";
+			next;
+			mes "[High Priestess Niren]";
+			mes "Aggressive? Hmpf. If you";
+			mes "take a good look at those";
+			mes "moderates, you'll see that";
+			mes "they oppose war, but they're";
+			mes "also totally corrupt. In fact, they committed worse atrocities!";
+			next;
+			mes "[High Priestess Niren]";
+			mes "The moderates conducted";
+			mes "inhumane testing on living";
+			mes "creatures, even humans!";
+			mes "And Zhed and I... Could do";
+			mes "nothing but pray to Freya.";
+			mes "Only war can this this chaos!";
+			next;
+			mes "[High Priestess Niren]";
+			mes "We need to start all";
+			mes "over again. I can't help";
+			mes "Zhed. Please leave...";
+			next;
+			mes "^3355FFIt doesn't look like";
+			mes "you can change High";
+			mes "Priestess Niren's mind.";
+			mes "For now, you'd better talk";
+			mes "to High Priest Zhed.^000000";
+			set aru_em,11;
+			close2;
+		}
+		else if ((aru_em == 11) || (aru_em == 12)) {
+			mes "[High Priestess Niren]";
+			mes "I already told you";
+			mes "how I feel about Zhed.";
+			mes "We were wrong all along...";
+			mes "This time, war is the answer.";
+			close2;
+		}
+		else if (aru_em == 13) {
+			mes "[High Priestess Niren]";
+			mes "I already told you";
+			mes "how I feel about Zhed.";
+			mes "We were wrong all along...";
+			mes "This time, war is the answer.";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "Fine. If you're so sure";
+			mes "of yourself, then you won't";
+			mes "mind reading this letter";
+			mes "from High Priest Zhed.";
+			next;
+			mes "^3355FFNiren angrily grabbed the";
+			mes "letter, ripped the envelope";
+			mes "open, and began to read his";
+			mes "message. Her stern face slowly";
+			mes "softened as she slowly scanned";
+			mes "what Zhed had to tell her.^000000";
+			next;
+			mes "[High Priestess Niren]";
+			mes ".................";
+			mes ".................";
+			mes ".................";
+			next;
+			mes "[High Priestess Niren]";
+			mes "That Zhed... He always";
+			mes "did have a way with words.";
+			mes "I suppose the old saying is";
+			mes "true: the pen truly is mightier";
+			mes "than the sword. *Sigh...*";
+			next;
+			mes "[Sippie]";
+			mes "High Priestess";
+			mes "Niren? Are you okay?";
+			next;
+			mes "[High Priestess Niren]";
+			mes "Oh, I'm fine,";
+			mes "thank you. I guess";
+			mes "I'm just a little tired.";
+			next;
+			mes "[High Priestess Niren]";
+			mes "...............................";
+			mes "I have to admit, there's truth";
+			mes "in what Zhed's saying. We";
+			mes "have a duty to protect our";
+			mes "people, the pope, our holy";
+			mes "ground. But I need to think...";
+			next;
+			mes "[High Priestess Niren]";
+			mes "Would you give me some";
+			mes "time to myself? I'll let you";
+			mes "know once I've made a decision.";
+			set aru_em,14;
+			close2;
+		}
+		else if (aru_em == 14) {
+			if (rand(1,10) == 1) {
+				mes "[High Priestess Niren]";
+				mes "...................";
+				mes "...................";
+				mes "...................";
+				emotion e_dots;
+				next;
+				mes "[Sippie]";
+				mes "High Priestess Niren,";
+				mes "you must be really tired.";
+				mes "You look pale for some reason.";
+				emotion 19;
+				next;
+				mes "[High Priestess Niren]";
+				mes "I do feel rather drained.";
+				mes "I don't know why I've been";
+				mes "holding on to this hatred for";
+				mes "so long. I guess I can finally";
+				mes "just cast it to the winds...";
+				next;
+				mes "[High Priestess Niren]";
+				mes "Adventurer...";
+				mes "What was your name?";
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "My name is "+strcharinfo(0)+".";
+				next;
+				mes "[High Priestess Niren]";
+				mes "Adventurer...";
+				mes "You had the chance to talk";
+				mes "with our pope once, but I doubt";
+				mes "you'll be able to do so again";
+				mes "^3311FFin private^000000. You'll definitely";
+				mes "need our help for that end.";
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "Does this mean that";
+				mes "you've decided to work";
+				mes "with Zhed again?";
+				next;
+				mes "^3355FFNiren quietly nodded";
+				mes "her head, and then";
+				mes "resumed talking.^000000";
+				next;
+				mes "[High Priestess Niren]";
+				mes "I'm still not sure if";
+				mes "I can join him in the long";
+				mes "run. I mean, talking to the";
+				mes "pope might not result in";
+				mes "anything, actually. But";
+				mes "it's still worth a try.";
+				next;
+				mes "[High Priestess Niren]";
+				mes "However, I've never";
+				mes "doubted Zhed's dedication";
+				mes "to Arunafeltz. He deserves";
+				mes "another chance from me.";
+				next;
+				mes "[High Priestess Niren]";
+				mes "Our pope is always surrounded ";
+				mes "by priests and followers sent";
+				mes "by High Priest Vildt. He always";
+				mes "manages to keep his eyes and";
+				mes "ears on her. We need to get";
+				mes "those spies away somehow...";
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "What can we do";
+				mes "about them, then?";
+				next;
+				mes "[High Priestess Niren]";
+				mes "For now, just approach";
+				mes "the pope as if you just";
+				mes "wanted to leisurely chat.";
+				mes "While you're doing that,";
+				mes "try to gather information";
+				mes "from the priests around her.";
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "Sure thing. You";
+				mes "can count on me!";
+				emotion e_no1,1;
+				set aru_em,15;
+				close2;
+			}
+			else {
+				mes "[High Priestess Niren]";
+				mes "Ugh, this is giving me";
+				mes "a headache. There's";
+				mes "too much to consider...";
+				mes "Too much at stake here...";
+				close2;
+			}
+		}
+		else if (aru_em == 15) {
+			mes "[High Priestess Niren]";
+			mes "Just approach the pope";
+			mes "for a chat, and see what";
+			mes "you can learn from the";
+			mes "other priests around her.";
+			close2;
+		}
+		else if (aru_em == 16) {
+			mes "[High Priestess Niren]";
+			mes "How is the pope?";
+			mes "I haven't had the chance";
+			mes "to meet her recently, so...";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "Well, she doesn't seem";
+			mes "very well, just like the";
+			mes "last time I saw her. I didn't";
+			mes "learn anything about all those";
+			mes "priests. Just that they've been";
+			mes "working in the temple non-stop.";
+			next;
+			mes "[High Priestess Niren]";
+			mes "Yes, they've been by her";
+			mes "side twenty-fours a day.";
+			mes "It's been like that for years.";
+			next;
+			emotion e_wah;
+			mes "[Sippie]";
+			mes "Oh, High Priestess Niren,";
+			mes "I love working for you, but";
+			mes "sometimes I wish I could leave";
+			mes "just to see my family. Even";
+			mes "just once a year would be nice.";
+			next;
+			emotion 5;
+			mes "[High Priestess Niren]";
+			mes "...............................";
+			mes "You're absolutely right.";
+			mes "That gives me an idea.";
+			next;
+			emotion 2;
+			mes "[Sippie]";
+			mes "Huh? What is it?";
+			next;
+			mes "[High Priestess Niren]";
+			mes "You all need a vacation.";
+			next;
+			mes "[High Priestess Niren]";
+			mes ""+strcharinfo(0)+".";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "Yes?";
+			next;
+			mes "[High Priestess Niren]";
+			mes "I should reward everyone";
+			mes "in the Sky Garden for their";
+			mes "contribution. However,";
+			mes "they were hired by Vildt,";
+			mes "so I can't directly give them";
+			mes "leave for vacation. Hmm...";
+			next;
+			mes "[High Priestess Niren]";
+			mes "Sippie...";
+			mes "I'll need a pen";
+			mes "and some paper.";
+			next;
+			mes "[Sippie]";
+			mes "Yes, ma'am.";
+			mes "There you go!";
+			cutin "ra_gwoman",255;
+			next;
+			mes "^3355FF*Scribble Scribble*^000000";
+			mes "^3355FF*Scribble Scribble*^000000";
+			mes "^3355FF*Scribble Scribble*^000000";
+			mes "^3355FF*Scribble Scribble*^000000";
+			next;
+			cutin "ra_gwoman",2;
+			mes "[High Priestess Niren]";
+			mes "I administered a blessing";
+			mes "for a child from a native";
+			mes "family, and they were very";
+			mes "grateful since most of the";
+			mes "priests shun the natives.";
+			next;
+			mes "[High Priestess Niren]";
+			mes "It turns out that this";
+			mes "child is gifted at forgery.";
+			mes "She doesn't like being too";
+			mes "close to other people, but";
+			mes "that's beside the point.";
+			mes "Here, take this letter.";
+			next;
+			mes "[High Priestess Niren]";
+			mes "Ah, and take this file that";
+			mes "contains a sample of Vildt's";
+			mes "handwriting. Bring them to";
+			mes "a girl named Ishmael in a";
+			mes "village in North Rachel.";
+			mes "I hope she'll help us...";
+			set aru_em,17;
+			getitem 7343,1; //File02
+			close2;
+		}
+		else if (aru_em == 17) {
+			mes "[High Priestess Niren]";
+			mes "Please deliver my letter";
+			mes "and that file to Ishmael in";
+			mes "North Rachel. Hopefully,";
+			mes "she can use her talents";
+			mes "to help us out.";
+			close2;
+		}
+		else if (aru_em == 19) {
+			if (countitem(7343) > 0) {
+				mes "[High Priestess Niren]";
+				mes "Have you met with Ishmael?";
+				next;
+				mes "^3355FFYou handed Niren the";
+				mes "file forged by Ishmael.^000000";
+				next;
+				emotion e_bzz;
+				mes "[High Priestess Niren]";
+				mes "Perfect! This forgery is";
+				mes "so well done, I'm sure";
+				mes "that even Vildt won't be";
+				mes "know if he wrote it or not.";
+				next;
+				mes "[High Priestess Niren]";
+				mes ""+strcharinfo(0)+"...";
+				mes "I'm going to use this to";
+				mes "send the priests and followers";
+				mes "on vacation. Then me and Zhed";
+				mes "can talk to the pope without";
+				mes "any unecessary interruptions.";
+				next;
+				mes "[High Priestess Niren]";
+				mes "I really don't want to burden";
+				mes "our pope with what Zhed and I";
+				mes "have to say... But that's much";
+				mes "preferable to doing nothing";
+				mes "and experiencing the downfall";
+				mes "of our beloved Arunafeltz.";
+				next;
+				mes "[High Priestess Niren]";
+				mes "Sippie, please";
+				mes "deliver this vacation";
+				mes "approval to the priests and";
+				mes "followers in the Sky Garden.";
+				next;
+				mes "[Sippie]";
+				mes "Yes, ma'am!";
+				next;
+				mes "[High Priestess Niren]";
+				mes ""+strcharinfo(0)+",";
+				mes "please go back to Zhed,";
+				mes "and let him know everything";
+				mes "is ready. Then I want you to";
+				mes "meet us in the ^3131FFSky Garden^000000.";
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "Yes!";
+				next;
+				mes "[High Priestess Niren]";
+				mes "We need to hurry and";
+				mes "do this before High";
+				mes "Priest Vildt realizes";
+				mes "what we are doing.";
+				delitem 7343,1; //File02
+				set aru_em,20;
+				close2;
+			}
+			else {
+				mes "^3131FFYou seem to have";
+				mes "misplaced Ishmael's file.^000000";
+				close2;
+			}
+		}
+		else if ((aru_em == 20) || (aru_em == 21)) {
+			mes "[High Priestess Niren]";
+			mes "Please hurry back";
+			mes "to High Priest Zhed.";
+			close2;
+		}
+		else if (aru_em == 22) {
+			mes "[High Priestess Niren]";
+			mes "I'm so proud of our pope!";
+			mes "Did you hear her wonderful";
+			mes "speech? Well, I should say";
+			mes "those are the words of Freya,";
+			mes "but... Well, you know. Hohoho!";
+			next;
+			mes "[High Priestess Niren]";
+			mes "Our priests may have acted";
+			mes "selfishly, but they are still";
+			mes "committed to Arunafeltz's";
+			mes "welfare. Things should";
+			mes "change for the better now.";
+			next;
+			mes "[High Priestess Niren]";
+			mes "I'm ashamed that I strayed";
+			mes "from the path of peace and";
+			mes "almost endangered my country.";
+			mes "I'm glad Zhed brought me back";
+			mes "my senses. From now on, I'll";
+			mes "repent for my sins with Zhed.";
+			next;
+			mes "[High Priestess Niren]";
+			mes "I hope the goddess can";
+			mes "forgive me. Ah, and you";
+			mes "should know that Zhed is";
+			mes "waiting for you. Why don't";
+			mes "you go see him now?";
+			next;
+			mes "^3355FFNiren softly smiles";
+			mes "at you, and you realize";
+			mes "that it's the first time";
+			mes "that you've seen that";
+			mes "expression on her face.^000000";
+			set aru_em,23;
+			getexp 1000000,0;
+			close2;
+		}
+		else if (aru_em > 21) {
+			mes "[High Priestess Niren]";
+			mes "Thanks to you and";
+			mes "Bekento, I think I've";
+			mes "finally found my way.";
+			close2;
+		}
+		else {
+			mes "[High Priestess Niren]";
+			mes "I'm sorry...";
+			mes "I really don't want";
+			mes "to think about Zhed";
+			mes "right now. He's just...";
+			close2;
+		}
+	}
+	cutin "ra_gwoman",255;
+	end;
+}
+
+ve_in,239,115,1	script	Drunkard#Aru	943,{
+	if (aru_monas < 14) {
+		mes "[Drunkard]";
+		mes "Man, I feel great! Hah hah!";
+		mes "Hey, gimme one more drink!";
+		close;
+	}
+	if (aru_monas == 14) {
+		mes "[Drunkard]";
+		mes "So--*Hic* What I was...";
+		mes "Oog, dizzy... I say sayin',";
+		mes "that guy that ^32CD32snuck out to";
+		mes "sea on a boat^000000? You know";
+		mes "*Hic* why he came back";
+		mes "so early? You won't believe it!";
+		next;
+		mes "[Drunkard]";
+		mes "Hah hah! He--*Hic*";
+		mes "He thought he saw a ^DBDB70ghost^000000!";
+		mes "Bwah hah hah! Oooog... Hey...";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "That's right!";
+		mes "Maybe I should check";
+		mes "on ^32CD32Kurdi's father since";
+		mes "he's a fisherman^000000";
+		set aru_monas,15;
+		close;
+	}
+	else {
+		mes "[Drunkard]";
+		mes "Why?! Why can't I take";
+		mes "my boat out to sea? I hafta";
+		mes "catch fish to make a living!";
+		mes "What, they expect me to starve";
+		mes "to death or something?! Huh?!";
+		close;
+	}
+}
+
+ve_fild07,125,128,0	script	Boat#Aru	111,{
+	if (aru_monas < 16) {
+		mes "^3355FFThis boat seems to ";
+		mes "be in decent condition.";
+		mes "Who could its owner be?^000000";
+		close;
+	}
+	if (aru_monas == 16) {
+		mes "^3355FFThis must be the boat that";
+		mes "Karyn was talking about.";
+		mes "It seems to be in pretty";
+		mes "good shape. Now, the";
+		mes "monastery should be";
+		mes "southwest from here...^000000";
+		next;
+		hideoffnpc "Secret Agent#Aru";
+		next;
+		mes "[Larjes]";
+		mes "Long time no see,";
+		mes ""+strcharinfo(0)+".";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "Larjes!";
+		next;
+		mes "[Larjes]";
+		mes "I had a tough time following";
+		mes "you, you know? I actually";
+		mes "almost lost you once. You";
+		mes "must be wondering why";
+		mes "I'm here. If you'll listen,";
+		mes "I'll explain everything.";
+		next;
+		mes "[Larjes]";
+		mes "According to our investigation, Arunafeltz is definitely involved";
+		mes "in this case. We've been watching you since you're somehow related";
+		mes "to that high ranked official from Arunafeltz. I apologize for that.";
+		next;
+		mes "[Larjes]";
+		mes "This is an international";
+		mes "incident, so to prevent any";
+		mes "intel leaks to Arunafeltz,";
+		mes "we've had to be much stricter";
+		mes "with securing and protecting";
+		mes "all information for this case.";
+		next;
+		mes "[Larjes]";
+		mes "Anyway, I've decided to";
+		mes "reveal myself to you since";
+		mes "I'm the only one that can help";
+		mes "you right now. You're thinking";
+		mes "of using that boat, aren't you?";
+		next;
+		mes "[Larjes]";
+		mes "If you don't have the skills,";
+		mes "knowledge, and preparation";
+		mes "to sail those waters ahead,";
+		mes "you'll probably wreck the";
+		mes "boat. You'll make it if you're lucky but... That's a lot of luck.";
+		next;
+		mes "[Larjes]";
+		mes "I'll help you sail this";
+		mes "boat to get where you're";
+		mes "going. But if you fail, there's";
+		mes "a chance you might have to";
+		mes "sail this boat on your own if I'm not here. So, you ready to go?";
+		next;
+		switch(select("Yes, I'm ready.:Give me more time.")) {
+		case 1:
+			mes "[Larjes]";
+			mes "Alright, let's go.";
+			mes "Hold on to something:";
+			mes "this will probably be";
+			mes "a pretty rocky ride...";
+			set aru_monas,17;
+			close2;
+			hideonnpc "Secret Agent#Aru";
+			warp "nameless_i",257,217;
+			end;
+		case 2:
+			mes "[Larjes]";
+			mes "Alright. Just let me know";
+			mes "whenever you're ready.";
+			close;
+		}
+	}
+	if (aru_monas < 20) {
+		mes "^3355FFThis is the boat that";
+		mes "can take you to the";
+		mes "monastery.^000000";
+		next;
+		switch(select("Go to Monastery:Cancel")) {
+		case 1:
+			mes "^3355FFYou set sail for";
+			mes "the monastery...^000000";
+			close2;
+			warp "nameless_n",257,217;
+			end;
+		case 2:
+			mes "^3355FFYou decide to";
+			mes "stay ashore.^000000";
+			close;
+		}
+	}
+	else {
+		mes "^3355FFThis is the boat that";
+		mes "can take you to the";
+		mes "monastery.^000000";
+		next;
+		switch(select("Go to Monastery:Cancel")) {
+		case 1:
+			mes "^3355FFYou set sail for";
+			mes "the monastery...^000000";
+			close2;
+			warp "nameless_n",257,217;
+			end;
+		case 2:
+			mes "^3355FFYou decide to";
+			mes "stay ashore.^000000";
+			close;
+		}
+	}
+}
+
+ve_fild07,128,130,1	script	Secret Agent#Aru	97,{
+	if (aru_monas == 16) {
+		mes "[Larjes]";
+		mes "Are you ready to go";
+		mes "aboard? I'll help you";
+		mes "sail to that monastery,";
+		mes "but if you fail while you're";
+		mes "there, I might not be here";
+		mes "when you come back.";
+		next;
+		switch(select("Yes, I'm ready.:Give me more time.")) {
+		case 1:
+			mes "[Larjes]";
+			mes "Alright, let's go.";
+			mes "Hold on to something:";
+			mes "this will probably be";
+			mes "a pretty rocky ride...";
+			set aru_monas,17;
+			close2;
+			hideonnpc "Secret Agent#Aru";
+			warp "nameless_i",257,217;
+			end;
+		case 2:
+			mes "[Larjes]";
+			mes "Alright. Just let me know";
+			mes "whenever you're ready.";
+			close;
+		}
+	}
+	end;
+
+OnInit:
+	hideonnpc "Secret Agent#Aru";
+	end;
+}
+
+nameless_i,259,218,3	script	Larjes#Aru	97,{
+	if(aru_monas < 18) {
+		mes "[Larjes]";
+		mes "I don't like this place.";
+		mes "You'd be better be careful";
+		mes "around here with those weird";
+		mes "creatures running around.";
+		close;
+	}
+	mes "[Larjes]";
+	mes "Good, you're back";
+	mes "I know that there's still";
+	mes "things on this island that";
+	mes "you want to investigate,";
+	mes "but did you want to leave";
+	mes "this place for a while?";
+	next;
+	if(select("Yes:No")==1) {
+		mes "[Larjes]";
+		mes "Alight, let's go.";
+		close2;
+		warp "ve_fild07",130,130;
+		end;
+	}
+	mes "[Larjes]";
+	mes "Alright, but becareful.";
+	mes "Those creatures almost";
+	mes "got you once, you know.";
+	close;
+}
+
+nameless_i,212,184,0	script	#aru_clue1	-1,4,2,{
+	end;
+
+OnTouch:
+	if (aru_monas == 17) {
+		mes "^3355FFThe village is totally";
+		mes "silent, as if all life had";
+		mes "abandoned it. You look";
+		mes "around and see that something";
+		mes "was here a few hours ago, but";
+		mes "it's somewhere else now.^000000";
+		next;
+		mes "^3355FFWhatever it was,";
+		mes "it definitely wasn't";
+		mes "human. What kind of";
+		mes "creature could it be?^000000";
+		close;
+	}
+	end;
+}
+
+nameless_in,21,176,0	script	#aru_clue2	-1,2,2,{
+	end;
+
+OnTouch:
+	if (aru_monas == 17) {
+		mes "^3355FFThere are traces of";
+		mes "humans around here,";
+		mes "along with some kind";
+		mes "of creature that you";
+		mes "can't clearly identify.^000000";
+		close;
+	}
+	end;
+}
+
+nameless_i,129,218,0	script	#aru_clue3	-1,4,3,{
+	end;
+
+OnTouch:
+	if (aru_monas == 17) {
+		mes "^3355FFA strange scent strikes";
+		mes "you as you enter this field of";
+		mes "grass. A few ^32CD32animal corpses^3355FF";
+		mes "are strewn around the ground.^000000";
+		close;
+	}
+	end;
+}
+
+nameless_i,127,207,0	script	Dead Crow#Aru	111,{
+	if (aru_monas < 17) { 
+		mes "^3355FFThere is a dead crow on the ground.";
+		close;
+	}
+	else if (aru_monas == 17) {
+		mes "^3355FFThe sight of this ^32CD32dead";
+		mes "crow^3355FF makes you feel";
+		mes "uneasy for some reason.^000000";
+		next;
+		if (select("Ignore:Investigate") == 1) {
+			mes "^3355FFYou decide not to touch";
+			mes "the animal's carcass.^000000";
+			close;
+		}
+		mes "^3355FFYou notice some grass sap";
+		mes "on the crow's beak, so it";
+		mes "must have been nibbling on";
+		mes "some grass. Some feathers";
+		mes "are missing, revealing";
+		mes "scaly, snake-like skin.^000000";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "Wait...";
+		mes "Did this grass...?";
+		next;
+		mes "^3355FFThis grass must be the";
+		mes "main ingredient of the";
+		mes "poison used to kill the";
+		mes "Gaebolg family princes.^000000";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "Looks like I just hit";
+		mes "the jackpot. Huh?";
+		mes "Someone behi--";
+		next;
+		mes "^3355FFA sharp, throbbing pain";
+		mes "assails the back of your";
+		mes "head as you fall into";
+		mes "unconsciousness...^000000";
+		close2;
+		set aru_monas,18;
+		warp "nameless_in",15,60;
+		end;
+	}
+	end;
+}
+
+nameless_i,168,257,0	script	Aru_LockedDoor	45,1,1,{
+	end;
+
+OnTouch:
+	if (aru_monas == 18 || aru_monas == 19) {
+		warp "nameless_in",12,41;
+		end;
+	}
+	mes "^3355FFThe door won't budge:";
+	mes "you can't go through.^000000";
+	close;
+}
+
+nameless_in,15,60,0	script	#Aru_Trigger	-1,1,1,{
+	end;
+
+OnTouch:
+	if (aru_monas == 18) {
+		sc_start SC_Blind,600000,0;
+		mes "That was too close.";
+		mes "For a second there,";
+		mes "I thought I lost you.";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "Larjes...? What...";
+		mes "What happened?";
+		mes "Ugh, my head...";
+		next;
+		mes "[Larjes]";
+		mes "Try not to move for a while.";
+		mes "I had a bad feeling waiting";
+		mes "for you on the boat. Lucky";
+		mes "thing. When I found you,";
+		mes "these strange creatures";
+		mes "were savagely attacking you!";
+		next;
+		sc_end SC_BLIND;
+		mes "[" +strcharinfo(0)+ "]";
+		mes "You saved me?";
+		mes "Thank you. Do you";
+		mes "happen to know what";
+		mes "those creatures were?";
+		next;
+		mes "[Larjes]";
+		mes "No clue. They looked";
+		mes "like humans, but... They";
+		mes "definitely weren't. Once";
+		mes "I killed them, they all";
+		mes "turned into sand.";
+		next;
+		emotion e_omg,1;
+		hideoffnpc "Creature#Aru";
+		emotion e_omg;
+		mes "[Larjes]";
+		mes "?!?!?!!!!!";
+		next;
+		mes "[" +strcharinfo(0)+ "]";
+		mes "!!!!?!?!!!!!!";
+		mes "Isn't... Isnn't that...?";
+		next;
+		mes "[Larjes]";
+		mes "It seems it's just like the";
+		mes "creatures that kidnapped";
+		mes "you, but... I wonder why";
+		mes "he's not attacking us.";
+		next;
+		mes "[" +strcharinfo(0)+ "]";
+		mes "I guess you'll have to go";
+		mes "right up to him and ask.";
+		set aru_monas,19;
+		close;
+	}
+}
+
+nameless_in,13,58,6	script	Larjes#Aru2	97,{
+	mes "[Larjes]";
+	mes "Be careful. That guy";
+	mes "looks pretty dangerous.";
+	close;
+}
+
+nameless_in,13,53,0	script	Creature#Aru	1864,{
+	end;
+
+OnInit:
+	hideonnpc "Creature#Aru";
+	end;
+}
+
+nameless_in,13,53,0	script	#Aru_Trigger2	-1,3,1,{
+	end;
+
+OnTouch:
+	if (aru_monas == 19 || !@mymobcount) {
+		mes "[?????]";
+		mes "Grrr......";
+		close2;
+		hideonnpc "Creature#Aru";
+		set @mymobcount,1;
+		monster "nameless_in",13,53,"Zombie",1864,1,"#Aru_Trigger2::OnMyMobDead";
+		end;
+	}
+	end;
+
+OnMyMobDead:
+	initnpctimer;
+	hideoffnpc "aru_warp";
+	end;
+
+OnTimer100000:
+	stopnpctimer;
+	hideonnpc "aru_warp";
+	end;
+}
+
+nameless_in,12,37,0	script	aru_warp	45,1,1,{
+	end;
+
+OnTouch:
+	if (aru_monas == 19) {
+		set aru_monas,20;
+		warp "nameless_n",168,252;
+		end;
+	}
+
+OnInit:
+	disablenpc "Aru_warp";
+	end;
+}
+
+nameless_n,169,254,0	script	#Aru_Trigger3	-1,3,3,{
+	end;
+
+OnTouch:
+	if(aru_monas == 20) {
+		hideoffnpc "Larjes#Aru3";
+		mes "[" +strcharinfo(0)+ "]";
+		mes "What the hell...!?";
+		next;
+		mes "[Larjes]";
+		mes "So... This is the";
+		mes "island's true nature.";
+		next;
+		mes "[Larjes]";
+		mes "Someone like me won't";
+		mes "survive long in a place";
+		mes "like this. I'm going to wait";
+		mes "for you in the boat. Learn";
+		mes "what you need to learn, and";
+		mes "then come back safe, "+strcharinfo(0)+".";
+		close2;
+		set aru_monas,21;
+		hideonnpc "Larjes#Aru3";
+		end;
+	}
+	end;
+}
+
+nameless_n,166,254,7	script	Larjes#Aru3	97,{
+	end;
+
+OnInit:
+	hideonnpc "Larjes#Aru3";
+	end;
+}
+
+nameless_n,259,218,3	script	Larjes#Boat1	97,{
+	if ((aru_monas == 23) && (countitem(7726))) {
+		mes "[Larjes]";
+		mes "I don't believe it...";
+		mes "That guy was Tristam III?!";
+		mes "This explains a lot, I suppose.";
+		mes "I'll report this along with the";
+		mes "voucher. So Arunafeltz was";
+		mes "behind that poison grass too.";
+		next;
+		mes "[Larjes]";
+		mes "I'm shocked over this";
+		mes "whole debacle. I'm sure";
+		mes "the Rune-Midgarts royal family";
+		mes "will be in an uproar over this.";
+		mes "To think that we're involved";
+		mes "in something this huge...";
+		next;
+		mes "[Larjes]";
+		mes "Anyway, we better get...";
+		mes "This is huge!";
+		set aru_monas,24;
+		delitem 7726,1; //Token_Of_King
+		getexp 1000000,0;
+		close;
+	}
+	mes "[Larjes]";
+	mes "“Did you still want to";
+	mes "investigate the island?";
+	next;
+	if(select("No:yes")==1) {
+		mes "[Larjes]";
+		mes "Alright, let's go.";
+		close2;
+		warp "ve_fild07",130,130;
+		end;
+	}
+	mes "[Larjes]";
+	mes "Alright, but becareful.";
+	mes "Those creatures almost";
+	mes "got you once, you know.";
+	close;
+}
+
+abbey02,224,70,0	script	Book#Aru	111,{
+	if ((aru_monas < 21) || (aru_monas > 21)) {
+		mes "^3355FFThere are old books";
+		mes "scattered all over here.^000000";
+		close;
+	}
+	mes "^3355FFThere's a book stained";
+	mes "with blood amongst all";
+	mes "these old, moldy books.^000000";
+	next;
+	if(select("Examine Book:Ignore")==1) {
+		//OpenBook 7755;
+		set aru_monas,22;
+		getitem 7755,1; // Reasearch_Note
+		close;
+	}
+	mes "^3355FFThat book was probably";
+	mes "worthless to you anyway.^000000";
+	close;
+}
+
+abbey03,232,233,4	script	Man#Aru	956,{
+	if (aru_monas < 22) {
+		mes "^3355FFYou find a man lying on";
+		mes "the floor, wearing torn";
+		mes "yet luxurious clothing.";
+		mes "He doesn't seem to be";
+		mes "breathing at all...^000000.";
+		close;
+	}
+	if (aru_monas == 22) {
+		mes "^3355FFYou find a man lying on";
+		mes "the floor, wearing torn";
+		mes "yet luxurious clothing.";
+		mes "He doesn't seem to be";
+		mes "breathing at all...^000000.";
+		next;
+		mes "^3355FFYou bring your ears more";
+		mes "closely to his mouth: it";
+		mes "seems that he really is";
+		mes "still barely alive.^000000";
+		next;
+		if (select("Touch Him:Ignore Him") == 1) {
+			mes "["+strcharinfo(0)+"]";
+			mes "This man...";
+			mes "He's so familiar";
+			mes "for some reason.";
+			next;
+			mes "^3355FFAs you touch him, the";
+			mes "man suddenly jumps";
+			mes "up with a crazed yowl.^000000";
+			hideonnpc "Man#Aru";
+			monster "abbey03",232,232,"Dead King",1875,1,"#Aru_King::OnMyMobDead";
+			close;
+		}
+		mes "^3355FFYou don't feel";
+		mes "comfortable enough";
+		mes "to touch this man.^000000";
+		close;
+	}
+	if (aru_monas > 22) {
+		mes "^3355FFThis man is dead... Still...^000000";
+		close;
+	}
+}
+abbey03,0,0,0	script	#Aru_King	-1,{
+	end;
+
+OnMyMobDead:
+	initnpctimer;
+	hideoffnpc "Dead Man#Aru";
+	end;
+
+OnDisable:
+OnTimer100000:
+	stopnpctimer;
+	hideonnpc "Dead Man#Aru";
+	hideoffnpc "Man#Aru";
+	end;
+}
+
+abbey03,232,232,4	script	Dead Man#Aru	956,{
+	if (aru_monas == 22) {
+		mes "^3355FFYou have no idea why";
+		mes "this dead man is moving";
+		mes "around, so you decided to";
+		mes "examine him. In his jacket,";
+		mes "you find a shining medal...^000000";
+		set aru_monas,23;
+		getitem 7726,1;
+		donpcevent "#Aru_King::OnDisable";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "This medal...";
+		mes "This means that";
+		mes "this man is...!";
+		close;
+	}
+	end;
+
+OnInit:
+	hideonnpc "Dead Man#Aru";
+	end;
+}
+
+// ??
+ra_temple,168,54,3	script	Sippie#ss	917,{
+	mes "[Sippie]";
+	mes "Now I finally have some";
+	mes "time to take a break.";
+	mes "Too many followers are";
+	mes "crowding High Priestess";
+	mes "Niren, and they're giving";
+	mes "me so much work to do!";
+	if (aru_em < 11) {
+		close;
+	}
+	else if (aru_em == 11) {
+		next;
+		mes "[Sippie]";
+		mes "Excuse me, but are you";
+		mes "a friend of our pope?";
+		mes "I think I saw you talk";
+		mes "to her a while ago...";
+		next;
+		mes "[Sippie]";
+		mes "I don't understand why";
+		mes "High Priestess Niren wants";
+		mes "to go to war. I actually think";
+		mes "that in her heart, she doesn't";
+		mes "want it. She's sweet and kind";
+		mes "once you get to know her.";
+		next;
+		mes "[Sippie]";
+		mes "She loves children...";
+		mes "She's like a mother to";
+		mes "all the kids in Arunafeltz.";
+		mes "She even brought our pope to";
+		mes "Rachel when she was a baby,";
+		mes "raising her like her own child.";
+		next;
+		mes "[Sippie]";
+		mes "If you didn't know she";
+		mes "was our pope, it'd be easy";
+		mes "to mistake her for High";
+		mes "Priestess Niren's daughter.";
+		close;
+	}
+	else {
+		close;
+	}
+}

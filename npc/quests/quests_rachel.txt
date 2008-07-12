@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 2.4a
+//= 2.5
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -50,6 +50,7 @@
 //= 2.3 Added Zhed's portion of Thor Volcano Base Quest. (euRO) [L0ne_W0lf]
 //= 2.4 Updated Zhed's Thor Vol. Base addition dialog to iRO's. [L0ne_W0lf]
 //= 2.4a Further updates to Zhed's Veins addition. [L0ne_W0lf]
+//= 2.5 Added Nameless Island quest addition. [L0ne_W0lf]
 //============================================================ 
 
 // Lost Child Quest (Prerequisite to High Priest quest)
@@ -4923,6 +4924,78 @@ ra_temin,277,159,3	script	High Priest Zhed#rachel	932,{
 	if (MISC_QUEST & 8192) {
 // Start Veins "Thor Volcano Base" Quest Addition
 		if (rachel_camel == 25) {
+// Start Nameless Island Access Quest Addition
+			if (aru_monas == 11) {
+				mes "[High Priest Zhed]";
+				mes "Ah, it's been a while,";
+				mes "hasn't it? You look well,";
+				mes "and I'm doing fine as you";
+				mes "can see. What can I do";
+				mes "for you today, "+strcharinfo(0)+"?";
+				next;
+				if (select("I just wanted to say hi.:Ask About Veins Incident") == 1) {
+					mes "[High Priest Zhed]";
+					mes "As you well know, I'm only";
+					mes "a High Priest in title, and";
+					mes "lost much of my influence";
+					mes "amongst many of the other";
+					mes "priests for my views.";
+					next;
+					mes "[High Priest Zhed]";
+					mes "Still, I have faith that";
+					mes "justice and good will";
+					mes "prevail over the corruption";
+					mes "that plagues our priests,";
+					mes "so long as good people";
+					mes "are willing to act.";
+					close2;
+					cutin "ra_gman",255;
+					end;
+				}
+				mes "[High Priest Zhed]";
+				mes "Veins incident?";
+				mes "I haven't heard of";
+				mes "anything... Well, perhaps";
+				mes "if you'd elaborate, then";
+				mes "I'd understand a bit more.";
+				next;
+				mes "^3355FFYou told High Priest";
+				mes "Zhed about the group of";
+				mes "smugglers arrested in Veins.^000000";
+				next;
+				mes "[High Priest Zhed]";
+				mes "Oh, I think I did hear";
+				mes "something about that earlier";
+				mes "Let's see now... Ah, right";
+				mes "Niren mentioned something";
+				mes "strange about them.";
+				next;
+				mes "[High Priest Zhed]";
+				mes "The smugglers were with";
+				mes "a high ranking official from";
+				mes "the Rune-Midgarts Kingdom,";
+				mes "which is why Niren was so";
+				mes "hesitant to take any action";
+				mes "against them for a while.";
+				next;
+				mes "[High Priest Zhed]";
+				mes "I was too preoccupied with";
+				mes "other matters, and I didn't";
+				mes "think much of it at the time.";
+				mes "Why don't you speak to Niren?";
+				mes "I'm sure that she can tell you";
+				mes "more about what happened.";
+				next;
+				mes "[High Priest Zhed]";
+				mes "If you do decide to";
+				mes "visit Niren, please";
+				mes "send her my regards.";
+				set aru_monas,12;
+				close2;
+				cutin "ra_gman",255;
+				end;
+			}
+// End Nameless Island Access Quest Addition.
 			if (aru_vol == 0) {
 				cutin "ra_gman",2;
 				mes "[High Priest Zhed]";
