@@ -3,6 +3,9 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2008/07/12
+	* Fixed a bad check on NPC_EVILLAND, actually healing players instead of doing damage. [Brainstorm]
+
 2008/07/10
 	* Users can't click floating npcs directly. (quick fix for bugreport:1814) [FlavioJS]
 2008/07/09

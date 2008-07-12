@@ -6821,7 +6821,7 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 
 		case UNT_EVILLAND:
 			//Will heal demon and undead element monsters, but not players.
-			if (bl->type != BL_PC && !battle_check_undead(tstatus->race, tstatus->def_ele) && tstatus->race!=RC_DEMON)
+			if ((bl->type == BL_PC) || (!battle_check_undead(tstatus->race, tstatus->def_ele) && tstatus->race!=RC_DEMON))
 			{	//Damage enemies
 				if(battle_check_target(&src->bl,bl,BCT_ENEMY)>0)
 					skill_attack(BF_MISC, ss, &src->bl, bl, sg->skill_id, sg->skill_lv, tick, 0);
