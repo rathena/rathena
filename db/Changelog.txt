@@ -40,20 +40,23 @@
 	2385 Recuvative_Armor		Should trigger HP/SP return with magical kills as well.
 
 =======================
+2008/07/12
+	* Removed 5283,Chick_Hat bonus against brute monsters. [Brainstorm]
+
 2008/07/10
 	* Added +10% dmg from satan morroc on items 2537,Lucifer_Manteau and 2729,Lucifer_Ring, bugreport:1780
-	* Fixed 5326,Masquerade_C bonus, bugreport:1820
+	* Fixed 5326,Masquerade_C bonus, bugreport:1820 [Brainstorm]
 
 2008/07/08
 	* Rev. 12924 swapped 'misceffect' usage for 'end', the effect is client-side already. [L0ne_W0lf]
 	* Added a few headgears from $ephiroth. (bugreport:1756)
 2008/07/06
-	* Fixed 700,Cold_Scroll_2_1 not working, bugreport:1807
+	* Fixed 700,Cold_Scroll_2_1 not working, bugreport:1807 [Brainstorm]
 
 2008/07/04
 	* Fixed 4372, Bacsojin Card trying to improve AL_SANCTUARY instead of PR_SANCTUARY. Bugreport: 1793 [Paradox924X]
 2008/07/02
-	* Fixed 4175,Poison_Toad_Card missing pushback effect, bugreport:1779
+	* Fixed 4175,Poison_Toad_Card missing pushback effect, bugreport:1779 [Brainstorm]
 
 2008/06/24
 	* Rev. 12891 Added several new item groups, and updated some existing groups. [L0ne_W0lf]
@@ -72,7 +75,7 @@
 
 2008/06/16
 	* Fixed 1425,Assaulter's_Spear using BaseClass instead of BaseJob, bugreport:1694
-	* Fixed missing capital M on Silver Tiara script.
+	* Fixed missing capital M on Silver Tiara script. [Brainstorm]
 
 2008/06/15
 	* Fixed the next items:
@@ -81,16 +84,16 @@
 	- Naght Seiger Flame Manteau Weight: 70 Req: 70
 	- Free Ticket for Kafra Storage, Free Ticket for Kafra Transportation, Free Ticket for the Cart Service Weight: 0
 	- Hunter Cap Bonus damage VS Brute and Demi human monster
-	- Koneko Hat Bonus INT + 1
+	- Koneko Hat Bonus INT + 1 [Brainstorm]
 
 2008/06/14
-	* Fixed 5286,Pecopeco_Hairband level requeriment as reported by Lone Wolf.
+	* Fixed 5286,Pecopeco_Hairband level requeriment as reported by Lone Wolf. [Brainstorm]
 
 2008/06/13
-	* Converted skill commands integers to strings. Follow up on r12814
+	* Converted skill commands integers to strings. Follow up on r12814 [Brainstorm]
 
 2008/06/11
-	* Fixed items that grant status related skills not removing the status when you unequip it.
+	* Fixed items that grant status related skills not removing the status when you unequip it. [Brainstorm]
 
 2008/06/10
 	* Fixed 1733,Gust_Bow (Gale Bow) autocast chance, 0.2->1% normal, 1->2% if INT > 40.
@@ -98,11 +101,11 @@
 	* Implemented item bonus for 14538,Glass_of_Illusion, +20 perfect dodge for 60 seconds, bugreport:1285
 	* Added 14500,Insurance_ (no exp penalty for 60 minutes, used by 13500,Insurance60_Box, bugreport:1285
 	* Implemented visual effects for Small/Medium Life Potion, Abrasive and Regeneration Potion.
-	* Fixed 5305,Pirate_Dagger not giving +5 attack power bonus.
+	* Fixed 5305,Pirate_Dagger not giving +5 attack power bonus. [Brainstorm]
 
 2008/06/09
 	* Fixed 1734,Orc_Archer_Bow working with Iron Arrow instead of Steel Arrow. Thanks Muad Dib for reporting.
-	* Fixed 2000,Destruction_Rod being 0.2% per refine instead of 2%.
+	* Fixed 2000,Destruction_Rod being 0.2% per refine instead of 2%. [Brainstorm]
 
 2008/06/08
 	* Fixed 13007,Jitte and 13008,Jitte_ break chances (5->2%).
@@ -128,7 +131,7 @@
 	* Fixed 5293,Ramen_Hat, should cast AgiDown on enemy at 3% when melee attacked, bugreport:286
 	* Added a list of aegis effect constants to be used on scripts, this should help on script conversion.
 		they go up to 377, but for higher values, you can still use the integers found on /doc/effect_list.txt
-	* Added a list of aegis npc name constants to be used on scripts (eA doesnt support this yet).
+	* Added a list of aegis npc name constants to be used on scripts (eA doesnt support this yet). [Brainstorm]
 
 2008/06/07
 	* Swapped the Shotgun and Gatling gun columns in job_db1.txt [ultramage]
@@ -142,7 +145,7 @@
 	* Gemini Card adds 50% resist against Stone and Sleep if vit >=80.
 	* Reverted DEX bonus removal from last commit.
 	* Item 5324,Little_Angel_Doll give no dex bonus, fixed chance of triggering autocast.
-	* Fixed Doom slayer stun script according to 11.3 aegis.
+	* Fixed Doom slayer stun script according to 11.3 aegis. [Brainstorm]
 
 2008/05/31
 	* Rev. 12750 Fixed Slotted Grand cross not enabling TU 3. (bugreport:1563) [L0ne_W0lf]

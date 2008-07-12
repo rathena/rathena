@@ -2174,7 +2174,7 @@
 5280,Magestic_Goat_C,Refined Majestic Goat,5,,0,0,,5,,0,0xFFFFFFFF,7,2,256,,0,0,41,{ bonus bStr,1; },{},{}
 5281,Deviruchi_Hat_C,Refined Deviruchi Hat,5,,0,0,,2,,0,0xFFFFFFFE,7,2,256,,1,0,123,{ bonus bStr,1; bonus bInt,1; },{},{}
 5282,euRO_Baseball_Cap,Europe Baseball Cap,5,,10,200,,3,,1,0xFFFFFFFF,7,2,256,,0,1,216,{},{},{}
-5283,Chick_Hat,Chick Hat,5,,10,100,,1,,0,0xFFFFFFFF,7,2,256,,10,0,311,{ bonus bLuk,2; bonus bMaxHP,50; bonus bMaxSP,50; bonus bDoubleRate,10; bonus2 bSubRace,RC_DemiHuman,3; bonus2 bSubRace,RC_Brute,3; },{},{}
+5283,Chick_Hat,Chick Hat,5,,10,100,,1,,0,0xFFFFFFFF,7,2,256,,10,0,311,{ bonus bLuk,2; bonus bMaxHP,50; bonus bMaxSP,50; bonus bDoubleRate,10; bonus2 bSubRace,RC_DemiHuman,3; },{},{}
 5284,Water_Lily_Crown,Water Lily Crown,5,,10,200,,0,,1,0xFFFFFFFF,7,2,256,,20,0,312,{ bonus bDex,1; bonus bAgi,1; bonus bHPrecovRate,5; bonus bSPrecovRate,3; },{},{}
 5285,Vane_Hairpin,Vane Hairpin,5,,10,300,,3,,1,0xFFFFFFFF,7,2,256,,30,0,313,{ bonus bAgi,2; },{},{}
 5286,Pecopeco_Hairband,Pecopeco Hairband,5,,10,0,,3,,0,0xFFFFFFFF,7,2,256,,70,1,314,{ bonus bSpeedRate,25; bonus bAspdRate,-10; bonus bCastrate,25; },{},{}
