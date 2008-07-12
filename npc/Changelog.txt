@@ -1,8 +1,9 @@
 ﻿Date		Added
 ======
 2008/07/12
-	* Rev. 12400 Updated Refiner function. cleaner, and less dated. [L0ne_W0lf]
-	* Rev. 12399 Added Nameless Island Dungeon quest. [L0ne_W0llf]
+	* Rev. 12341 Fixed a typo when disabling a control device. [L0ne_W0lf]
+	* Rev. 12340 Updated Refiner function. cleaner, and less dated. [L0ne_W0lf]
+	* Rev. 12339 Added Nameless Island Dungeon quest. [L0ne_W0llf]
 2008/07/10
 	* Fixed a sage job quest cutin not being removed as reported by jc1991, bugreport:1825 [Brainstorm]
 	* Fixed a small bug on mid_camp warps by brianlew, bugreport:1824 [Brainstorm]
