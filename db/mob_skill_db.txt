@@ -4402,6 +4402,7 @@
 1833,Kasa@WZ_METEOR,chase,83,1,5000,1000,10000,no,target,always,,,,,,,
 1833,Kasa@WZ_METEOR,attack,83,1,5000,1000,10000,no,target,always,,,,,,,
 1833,Kasa@HW_GANBANTEIN,attack,483,5,5000,500,5000,no,target,myhpltmaxrate,20,,,,,,
+1833,Kasa@CR_REFLECTSHIELD,attack,252,1,10000,0,100000,no,self,myhpltmaxrate,20,,,,,,
 1834,Salamander@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
 1834,Salamander@MG_FIREBALL,idle,17,5,10000,0,5000,yes,target,always,,,,,,,
 1834,Salamander@MG_FIREBALL,chase,17,5,10000,0,5000,yes,target,always,,,,,,,

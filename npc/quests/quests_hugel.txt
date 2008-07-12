@@ -4603,7 +4603,7 @@ hu_in01,365,170,3	script	Girl#Hu	793,{
 	
 }
 
-hu_in01,377,106,3	script	Pub Granny	891,{
+hu_in01,377,106,3	script	Pub Granny	892,{
 
 	mes "[Pub Granny]";
 	mes "Recently we have many tourists visiting our town.";

@@ -220,20 +220,6 @@ hu_in01,111,386,4	script	Chris	86,{
 	
 }
 
-//Rachel
-//---------------------------------------------------------------------------
-hu_in01,365,170,5	script	Rachel	793,{
-
-	mes "[Rachel]";
-	mes "You know what I love?";
-	mes "Sitting in front of a warm";
-	mes "stove on a cold night. I just";
-	mes "feel so fuzzy and comfortable,";
-	mes "and it's so relaxing!";
-	close;
-	
-}
-
 //--------------------------------------------------------------
 // Party Supplies/Firecracker Seller
 //--------------------------------------------------------------

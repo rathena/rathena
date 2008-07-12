@@ -29,7 +29,7 @@ function	script	F_GldTreas	{
 		// Don't spawn treasures if Castle is empty, or Eco is greater than 100
 		if(GetCastleData(getarg(0),2) > 100 || GetCastleData(getarg(0),1) == 0) return;
 
-		// Only spawn one treasure chest for notice castles.
+		// Only spawn one treasure chest for novice castles.
 		if (compare(getarg(0),"nguild"))
 			set getarg(2),1;
 		else
