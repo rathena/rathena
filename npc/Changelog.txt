@@ -1,6 +1,7 @@
 ﻿Date		Added
 ======
 2008/07/12
+	* Rev. 12342, and 12343. THIS COMMIT IS SOLELY FOR THE PURPOSE OF SHUTTING PEOPLE THE FUCK UP. IN TEH LAST COMMIT PRIOR TO THIS I HAD TOTALLY FORGOTTEN TO ADD AN EXTRA BACKSLASH WHEN MAKING A COMMENT, RESULTING IN AN ERROR IN THE NPC PARSER. THIS ERROR HAS BEEN CORRECTED, AND THE MESSAGE "Whoops." LEFT IN THE CHANGELOG. [L0ne_W0lf]
 	* Rev. 12341 Fixed a typo when disabling a control device. [L0ne_W0lf]
 	* Rev. 12340 Updated Refiner function. cleaner, and less dated. [L0ne_W0lf]
 	* Rev. 12339 Added Nameless Island Dungeon quest. [L0ne_W0llf]
