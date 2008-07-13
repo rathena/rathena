@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88; L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 2.3a
+//= 2.3b
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -40,6 +40,7 @@
 //= 2.2 Added Nameless Island quest addition. [L0ne_W0lf]
 //= 2.3 Bamph will now talk to those who failed the Gaebolg quest. [L0ne_W0lf]
 //= 2.3a Touch up to Bamph fo other fail-points. [L0ne_W0lf]
+//= 2.3b Hopefully the last change needed for Nameless quest. [L0ne_W0lf]
 //============================================================ 
 
 // Prontera Culvert
@@ -2578,7 +2579,7 @@ prt_church,185,106,3	script	Father Bamph	60,{
 		set prt_curse,35;
 		close;
 	}
-	else if (prt_curse > 34 && prt_curse < 40) {
+	else if (prt_curse > 34 && prt_curse < 40 && !aru_monas) {
 		mes "[Father Bamph]";
 		mes "I'm at a loss at what";
 		mes "to do. Sometimes, even";
@@ -2650,7 +2651,7 @@ prt_church,185,106,3	script	Father Bamph	60,{
 		getexp 1600000,0;
 		close;
 	}
-	else if (prt_curse > 43 && prt_curse < 50) {
+	else if (prt_curse > 43 && prt_curse < 50 && !aru_monas) {
 		mes "[Father Bamph]";
 		mes "Have you spoken to";
 		mes "Bonnie Imbullea yet?";

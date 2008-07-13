@@ -1,6 +1,7 @@
 ﻿Date		Added
 ======
 2008/07/13
+	* Rev. 12951 More updates to Father Bamph for nameless quest. [L0ne_W0lf]
 	* Rev. 12949 Some more modifications to the Nameless Access Quest start point.  [L0ne_W0lf]
 	* Rev. 12947 Made it so both success and failure of the gaebolg quest count as completion. [L0ne_W0lf]
 2008/07/12
