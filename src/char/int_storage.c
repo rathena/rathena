@@ -24,19 +24,20 @@ char storage_txt[1024]="save/storage.txt";
 char guild_storage_txt[1024]="save/g_storage.txt";
 
 #ifndef TXT_SQL_CONVERT
-static DBMap* storage_db; // int account_id -> struct storage*
+static DBMap* storage_db; // int account_id -> struct storage_data*
 static DBMap* guild_storage_db; // int guild_id -> struct guild_storage*
 
 // 倉庫データを文字列に変換
-int storage_tostr(char *str,struct storage_data *p)
+int storage_tostr(char* str, struct storage_data* p)
 {
 	int i,j,f=0;
 	char *str_p = str;
 	str_p += sprintf(str_p,"%d,%d\t",p->account_id,p->storage_amount);
 
 	for(i=0;i<MAX_STORAGE;i++)
-		if( (p->items[i].nameid) && (p->items[i].amount) ){
-			str_p += sprintf(str_p,"%d,%d,%d,%d,%d,%d,%d",
+		if( (p->items[i].nameid) && (p->items[i].amount) )
+		{
+			str_p += sprintf(str_p, "%d,%d,%d,%d,%d,%d,%d",
 				p->items[i].id,p->items[i].nameid,p->items[i].amount,p->items[i].equip,
 				p->items[i].identify,p->items[i].refine,p->items[i].attribute);
 			for(j=0; j<MAX_SLOTS; j++)
@@ -50,11 +51,13 @@ int storage_tostr(char *str,struct storage_data *p)
 	*str_p='\0';
 	if(!f)
 		str[0]=0;
+
 	return 0;
 }
 #endif //TXT_SQL_CONVERT
+
 // 文字列を倉庫データに変換
-int storage_fromstr(char *str,struct storage_data *p)
+int storage_fromstr(char* str, struct storage_data* p)
 {
 	int tmp_int[256];
 	char tmp_str[256];
@@ -68,7 +71,8 @@ int storage_fromstr(char *str,struct storage_data *p)
 	if(str[next]=='\n' || str[next]=='\r')
 		return 0;
 	next++;
-	for(i=0;str[next] && str[next]!='\t' && i < MAX_STORAGE;i++){
+	for(i=0;str[next] && str[next]!='\t' && i < MAX_STORAGE;i++)
+	{
 		if(sscanf(str + next, "%d,%d,%d,%d,%d,%d,%d%[0-9,-]%n",
 		      &tmp_int[0], &tmp_int[1], &tmp_int[2], &tmp_int[3],
 		      &tmp_int[4], &tmp_int[5], &tmp_int[6], tmp_str, &len) == 8) {
@@ -93,6 +97,7 @@ int storage_fromstr(char *str,struct storage_data *p)
 		ShowWarning("storage_fromstr: Found a storage line with more items than MAX_STORAGE (%d), remaining items have been discarded!\n", MAX_STORAGE);
 	return 0;
 }
+
 #ifndef TXT_SQL_CONVERT
 int guild_storage_tostr(char *str,struct guild_storage *p)
 {
@@ -119,6 +124,7 @@ int guild_storage_tostr(char *str,struct guild_storage *p)
 	return 0;
 }
 #endif //TXT_SQL_CONVERT
+
 int guild_storage_fromstr(char *str,struct guild_storage *p)
 {
 	int tmp_int[256];
@@ -157,8 +163,10 @@ int guild_storage_fromstr(char *str,struct guild_storage *p)
 		ShowWarning("guild_storage_fromstr: Found a storage line with more items than MAX_GUILD_STORAGE (%d), remaining items have been discarded!\n", MAX_GUILD_STORAGE);
 	return 0;
 }
+
 #ifndef TXT_SQL_CONVERT
-static void* create_storage(DBKey key, va_list args) {
+static void* create_storage(DBKey key, va_list args)
+{
 	struct storage_data *s;
 	s = (struct storage_data *) aCalloc(sizeof(struct storage_data), 1);
 	s->account_id=key.i;
@@ -168,13 +176,11 @@ static void* create_storage(DBKey key, va_list args) {
 // アカウントから倉庫データインデックスを得る（新規倉庫追加可能）
 struct storage_data *account2storage(int account_id)
 {
-	struct storage_data *s;
-	s = (struct storage_data*)idb_ensure(storage_db, account_id, create_storage);
-	return s;
+	return (struct storage_data*)idb_ensure(storage_db, account_id, create_storage);
 }
 
 static void* create_guildstorage(DBKey key, va_list args) {
-	struct guild_storage *gs = NULL;
+	struct guild_storage* gs = NULL;
 	gs = (struct guild_storage *) aCalloc(sizeof(struct guild_storage), 1);
 	gs->guild_id=key.i;
 	return gs;
@@ -182,7 +188,7 @@ static void* create_guildstorage(DBKey key, va_list args) {
 
 struct guild_storage *guild2storage(int guild_id)
 {
-	struct guild_storage *gs = NULL;
+	struct guild_storage* gs = NULL;
 	if(inter_guild_search(guild_id) != NULL)
 		gs = (struct guild_storage*)idb_ensure(guild_storage_db, guild_id, create_guildstorage);
 	return gs;
@@ -213,7 +219,6 @@ int inter_storage_init()
 			ShowFatalError("int_storage: out of memory!\n");
 			exit(EXIT_FAILURE);
 		}
-//		memset(s,0,sizeof(struct storage)); aCalloc does this...
 		s->account_id=tmp_int;
 		if(s->account_id > 0 && storage_fromstr(line,s) == 0) {
 			idb_put(storage_db,s->account_id,s);
@@ -264,54 +269,59 @@ void inter_storage_final() {
 	return;
 }
 
-int inter_storage_save_sub(DBKey key,void *data,va_list ap)
-{
-	char line[65536];
-	FILE *fp;
-	storage_tostr(line,(struct storage_data *)data);
-	fp=va_arg(ap,FILE *);
-	if(*line)
-		fprintf(fp,"%s\n",line);
-	return 0;
-}
 //---------------------------------------------------------
 // 倉庫データを書き込む
 int inter_storage_save()
 {
+	struct DBIterator* iter;
+	struct storage_data* data;
 	FILE *fp;
 	int lock;
 	if( (fp=lock_fopen(storage_txt,&lock))==NULL ){
 		ShowError("int_storage: can't write [%s] !!! data is lost !!!\n",storage_txt);
 		return 1;
 	}
-	storage_db->foreach(storage_db,inter_storage_save_sub,fp);
+
+	iter = storage_db->iterator(storage_db);
+	for( data = (struct storage_data*)iter->first(iter,NULL); iter->exists(iter); data = (struct storage_data*)iter->next(iter,NULL) )
+	{
+		char line[65536];
+		storage_tostr(line,data);
+ 		if(*line)
+ 			fprintf(fp,"%s\n",line);
+ 	}
+	iter->destroy(iter);
+
 	lock_fclose(fp,storage_txt,&lock);
 	return 0;
 }
 
-int inter_guild_storage_save_sub(DBKey key,void *data,va_list ap)
-{
-	char line[65536];
-	FILE *fp;
-	if(inter_guild_search(((struct guild_storage *)data)->guild_id) != NULL) {
-		guild_storage_tostr(line,(struct guild_storage *)data);
-		fp=va_arg(ap,FILE *);
-		if(*line)
-			fprintf(fp,"%s\n",line);
-	}
-	return 0;
-}
 //---------------------------------------------------------
 // 倉庫データを書き込む
 int inter_guild_storage_save()
 {
+	struct DBIterator* iter;
+	struct guild_storage* data;
 	FILE *fp;
 	int  lock;
 	if( (fp=lock_fopen(guild_storage_txt,&lock))==NULL ){
 		ShowError("int_storage: can't write [%s] !!! data is lost !!!\n",guild_storage_txt);
 		return 1;
 	}
-	guild_storage_db->foreach(guild_storage_db,inter_guild_storage_save_sub,fp);
+
+	iter = guild_storage_db->iterator(guild_storage_db);
+	for( data = (struct guild_storage*)iter->first(iter,NULL); iter->exists(iter); data = (struct guild_storage*)iter->next(iter,NULL) )
+	{
+		char line[65536];
+		if(inter_guild_search(data->guild_id) != NULL)
+		{
+			guild_storage_tostr(line,data);
+			if(*line)
+				fprintf(fp,"%s\n",line);
+		}
+	}
+	iter->destroy(iter);
+
 	lock_fclose(fp,guild_storage_txt,&lock);
 	return 0;
 }
@@ -353,7 +363,7 @@ int inter_guild_storage_delete(int guild_id)
 int mapif_load_storage(int fd,int account_id)
 {
 	struct storage_data *s=account2storage(account_id);
-        WFIFOHEAD(fd, sizeof(struct storage_data)+8);
+	WFIFOHEAD(fd, sizeof(struct storage_data)+8);
 	WFIFOW(fd,0)=0x3810;
 	WFIFOW(fd,2)=sizeof(struct storage_data)+8;
 	WFIFOL(fd,4)=account_id;
@@ -364,7 +374,7 @@ int mapif_load_storage(int fd,int account_id)
 // 倉庫データ保存完了送信
 int mapif_save_storage_ack(int fd,int account_id)
 {
-        WFIFOHEAD(fd, 7);
+	WFIFOHEAD(fd,7);
 	WFIFOW(fd,0)=0x3811;
 	WFIFOL(fd,2)=account_id;
 	WFIFOB(fd,6)=0;
@@ -375,7 +385,7 @@ int mapif_save_storage_ack(int fd,int account_id)
 int mapif_load_guild_storage(int fd,int account_id,int guild_id)
 {
 	struct guild_storage *gs=guild2storage(guild_id);
-        WFIFOHEAD(fd, sizeof(struct guild_storage)+12);
+	WFIFOHEAD(fd, sizeof(struct guild_storage)+12);
 	WFIFOW(fd,0)=0x3818;
 	if(gs) {
 		WFIFOW(fd,2)=sizeof(struct guild_storage)+12;
@@ -392,9 +402,10 @@ int mapif_load_guild_storage(int fd,int account_id,int guild_id)
 
 	return 0;
 }
+
 int mapif_save_guild_storage_ack(int fd,int account_id,int guild_id,int fail)
 {
-        WFIFOHEAD(fd, 11);
+	WFIFOHEAD(fd,11);
 	WFIFOW(fd,0)=0x3819;
 	WFIFOL(fd,2)=account_id;
 	WFIFOL(fd,6)=guild_id;
@@ -438,6 +449,7 @@ int mapif_parse_LoadGuildStorage(int fd)
 	mapif_load_guild_storage(fd,RFIFOL(fd,2),RFIFOL(fd,6));
 	return 0;
 }
+
 int mapif_parse_SaveGuildStorage(int fd)
 {
 	struct guild_storage *gs;

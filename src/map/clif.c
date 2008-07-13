@@ -3184,124 +3184,107 @@ void clif_tradecompleted(struct map_session_data* sd, int fail)
 /*==========================================
  * カプラ倉庫のアイテム数を更新
  *------------------------------------------*/
-int clif_updatestorageamount(struct map_session_data *sd,struct storage_data *stor)
+void clif_updatestorageamount(struct map_session_data* sd, int amount)
 {
 	int fd;
 
-	nullpo_retr(0, sd);
-	nullpo_retr(0, stor);
+	nullpo_retv(sd);
 
 	fd=sd->fd;
 	WFIFOHEAD(fd,packet_len(0xf2));
 	WFIFOW(fd,0) = 0xf2;  // update storage amount
-	WFIFOW(fd,2) = stor->storage_amount;  //items
+	WFIFOW(fd,2) = amount;  //items
 	WFIFOW(fd,4) = MAX_STORAGE; //items max
 	WFIFOSET(fd,packet_len(0xf2));
-
-	return 0;
 }
 
 /*==========================================
  * カプラ倉庫にアイテムを追加する
  *------------------------------------------*/
-int clif_storageitemadded(struct map_session_data *sd,struct storage_data *stor,int index,int amount)
+void clif_storageitemadded(struct map_session_data* sd, struct item* i, int index, int amount)
 {
 	int view,fd;
 
-	nullpo_retr(0, sd);
-	nullpo_retr(0, stor);
+	nullpo_retv(sd);
+	nullpo_retv(i);
 	fd=sd->fd;
+	view = itemdb_viewid(i->nameid);
 
 #if PACKETVER < 5
 	WFIFOHEAD(fd,packet_len(0xf4));
-	WFIFOW(fd,0) =0xf4; // Storage item added
-	WFIFOW(fd,2) =index+1; // index
-	WFIFOL(fd,4) =amount; // amount
-	if((view = itemdb_viewid(stor->items[index].nameid)) > 0)
-		WFIFOW(fd,8) =view;
-	else
-		WFIFOW(fd,8) =stor->items[index].nameid; // id
-	WFIFOB(fd,10)=stor->storage_[index].identify; //identify flag
-	WFIFOB(fd,11)=stor->storage_[index].attribute; // attribute
-	WFIFOB(fd,12)=stor->storage_[index].refine; //refine
-	clif_addcards(WFIFOP(fd,13), &stor->items[index]);
+	WFIFOW(fd, 0) = 0xf4; // Storage item added
+	WFIFOW(fd, 2) = index+1; // index
+	WFIFOL(fd, 4) = amount; // amount
+	WFIFOW(fd, 8) = ( view > 0 ) ? view : i->nameid; // id
+	WFIFOB(fd,10) = i->identify; //identify flag
+	WFIFOB(fd,11) = i->attribute; // attribute
+	WFIFOB(fd,12) = i->refine; //refine
+	clif_addcards(WFIFOP(fd,13), i);
 	WFIFOSET(fd,packet_len(0xf4));
 #else
 	WFIFOHEAD(fd,packet_len(0x1c4));
-	WFIFOW(fd,0) =0x1c4; // Storage item added
-	WFIFOW(fd,2) =index+1; // index
-	WFIFOL(fd,4) =amount; // amount
-	if((view = itemdb_viewid(stor->items[index].nameid)) > 0)
-		WFIFOW(fd,8) =view;
-	else
-		WFIFOW(fd,8) =stor->items[index].nameid; // id
-	WFIFOB(fd,10)=itemdb_type(stor->items[index].nameid); //type
-	WFIFOB(fd,11)=stor->items[index].identify; //identify flag
-	WFIFOB(fd,12)=stor->items[index].attribute; // attribute
-	WFIFOB(fd,13)=stor->items[index].refine; //refine
-	clif_addcards(WFIFOP(fd,14), &stor->items[index]);
+	WFIFOW(fd, 0) = 0x1c4; // Storage item added
+	WFIFOW(fd, 2) = index+1; // index
+	WFIFOL(fd, 4) = amount; // amount
+	WFIFOW(fd, 8) = ( view > 0 ) ? view : i->nameid; // id
+	WFIFOB(fd,10) = itemdb_type(i->nameid); //type
+	WFIFOB(fd,11) = i->identify; //identify flag
+	WFIFOB(fd,12) = i->attribute; // attribute
+	WFIFOB(fd,13) = i->refine; //refine
+	clif_addcards(WFIFOP(fd,14), i);
 	WFIFOSET(fd,packet_len(0x1c4));
 #endif
-
-	return 0;
 }
 
 /*==========================================
  *
  *------------------------------------------*/
-int clif_updateguildstorageamount(struct map_session_data *sd,struct guild_storage *stor)
+void clif_updateguildstorageamount(struct map_session_data* sd, int amount)
 {
 	int fd;
 
-	nullpo_retr(0, sd);
-	nullpo_retr(0, stor);
+	nullpo_retv(sd);
 
 	fd=sd->fd;
 	WFIFOHEAD(fd,packet_len(0xf2));
 	WFIFOW(fd,0) = 0xf2;  // update storage amount
-	WFIFOW(fd,2) = stor->storage_amount;  //items
+	WFIFOW(fd,2) = amount;  //items
 	WFIFOW(fd,4) = MAX_GUILD_STORAGE; //items max
 	WFIFOSET(fd,packet_len(0xf2));
-
-	return 0;
 }
 
 /*==========================================
  *
  *------------------------------------------*/
-int clif_guildstorageitemadded(struct map_session_data *sd,struct guild_storage *stor,int index,int amount)
+void clif_guildstorageitemadded(struct map_session_data* sd, struct item* i, int index, int amount)
 {
 	int view,fd;
 
-	nullpo_retr(0, sd);
-	nullpo_retr(0, stor);
-
+	nullpo_retv(sd);
+	nullpo_retv(i);
 	fd=sd->fd;
-	WFIFOHEAD(fd,packet_len(0xf4));
-	WFIFOW(fd,0) =0xf4; // Storage item added
-	WFIFOW(fd,2) =index+1; // index
-	WFIFOL(fd,4) =amount; // amount
-	if((view = itemdb_viewid(stor->storage_[index].nameid)) > 0)
-		WFIFOW(fd,8) =view;
-	else
-		WFIFOW(fd,8) =stor->storage_[index].nameid; // id
-	WFIFOB(fd,10)=stor->storage_[index].identify; //identify flag
-	WFIFOB(fd,11)=stor->storage_[index].attribute; // attribute
-	WFIFOB(fd,12)=stor->storage_[index].refine; //refine
-	clif_addcards(WFIFOP(fd,13), &stor->storage_[index]);
-	WFIFOSET(fd,packet_len(0xf4));
+	view = itemdb_viewid(i->nameid);
 
-	return 0;
+	WFIFOHEAD(fd,packet_len(0xf4));
+	WFIFOW(fd, 0) = 0xf4; // Storage item added
+	WFIFOW(fd, 2) = index+1; // index
+	WFIFOL(fd, 4) = amount; // amount
+	WFIFOW(fd, 8) = ( view > 0 ) ? view : i->nameid; // id
+	WFIFOB(fd,10) = i->identify; //identify flag
+	WFIFOB(fd,11) = i->attribute; // attribute
+	WFIFOB(fd,12) = i->refine; //refine
+	clif_addcards(WFIFOP(fd,13), i);
+	WFIFOSET(fd,packet_len(0xf4));
 }
 
 /*==========================================
  * カプラ倉庫からアイテムを取り去る
  *------------------------------------------*/
-int clif_storageitemremoved(struct map_session_data *sd,int index,int amount)
+void clif_storageitemremoved(struct map_session_data* sd, int index, int amount)
 {
 	int fd;
 
-	nullpo_retr(0, sd);
+	nullpo_retv(sd);
 
 	fd=sd->fd;
 	WFIFOHEAD(fd,packet_len(0xf6));
@@ -3309,25 +3292,21 @@ int clif_storageitemremoved(struct map_session_data *sd,int index,int amount)
 	WFIFOW(fd,2)=index+1;
 	WFIFOL(fd,4)=amount;
 	WFIFOSET(fd,packet_len(0xf6));
-
-	return 0;
 }
 
 /*==========================================
  * カプラ倉庫を閉じる
  *------------------------------------------*/
-int clif_storageclose(struct map_session_data *sd)
+void clif_storageclose(struct map_session_data* sd)
 {
 	int fd;
 
-	nullpo_retr(0, sd);
+	nullpo_retv(sd);
 
 	fd=sd->fd;
 	WFIFOHEAD(fd,packet_len(0xf8));
-	WFIFOW(fd,0)=0xf8; // Storage Closed
+	WFIFOW(fd,0) = 0xf8; // Storage Closed
 	WFIFOSET(fd,packet_len(0xf8));
-
-	return 0;
 }
 
 /*==========================================
@@ -9696,7 +9675,8 @@ void clif_parse_MoveToKafra(int fd, struct map_session_data *sd)
 
 	if (sd->state.storage_flag == 1)
 		storage_storageadd(sd, item_index, item_amount);
-	else if (sd->state.storage_flag == 2)
+	else
+	if (sd->state.storage_flag == 2)
 		storage_guild_storageadd(sd, item_index, item_amount);
 }
 
@@ -9712,7 +9692,8 @@ void clif_parse_MoveFromKafra(int fd,struct map_session_data *sd)
 
 	if (sd->state.storage_flag == 1)
 		storage_storageget(sd, item_index, item_amount);
-	else if(sd->state.storage_flag == 2)
+	else
+	if(sd->state.storage_flag == 2)
 		storage_guild_storageget(sd, item_index, item_amount);
 }
 
@@ -9725,9 +9706,11 @@ void clif_parse_MoveToKafraFromCart(int fd, struct map_session_data *sd)
 		return;
 	if (!pc_iscarton(sd))
 		return;
+
 	if (sd->state.storage_flag == 1)
 		storage_storageaddfromcart(sd, RFIFOW(fd,2) - 2, RFIFOL(fd,4));
-	else if (sd->state.storage_flag == 2)
+	else
+	if (sd->state.storage_flag == 2)
 		storage_guild_storageaddfromcart(sd, RFIFOW(fd,2) - 2, RFIFOL(fd,4));
 }
 
@@ -9740,9 +9723,11 @@ void clif_parse_MoveFromKafraToCart(int fd, struct map_session_data *sd)
 		return;
 	if (!pc_iscarton(sd))
 		return;
+
 	if (sd->state.storage_flag == 1)
 		storage_storagegettocart(sd, RFIFOW(fd,2)-1, RFIFOL(fd,4));
-	else if (sd->state.storage_flag == 2)
+	else
+	if (sd->state.storage_flag == 2)
 		storage_guild_storagegettocart(sd, RFIFOW(fd,2)-1, RFIFOL(fd,4));
 }
 
@@ -9753,7 +9738,8 @@ void clif_parse_CloseKafra(int fd, struct map_session_data *sd)
 {
 	if (sd->state.storage_flag == 1)
 		storage_storageclose(sd);
-	else if (sd->state.storage_flag == 2)
+	else
+	if (sd->state.storage_flag == 2)
 		storage_guild_storageclose(sd);
 }
 

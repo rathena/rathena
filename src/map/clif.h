@@ -192,14 +192,14 @@ void clif_tradecompleted(struct map_session_data* sd, int fail);
 
 // storage
 #include "storage.h"
-void clif_storagelist(struct map_session_data *sd,struct storage_data *stor);
-int clif_updatestorageamount(struct map_session_data *sd,struct storage_data *stor);
-int clif_storageitemadded(struct map_session_data *sd,struct storage_data *stor,int index,int amount);
-int clif_storageitemremoved(struct map_session_data *sd,int index,int amount);
-int clif_storageclose(struct map_session_data *sd);
-void clif_guildstoragelist(struct map_session_data *sd,struct guild_storage *stor);
-int clif_updateguildstorageamount(struct map_session_data *sd,struct guild_storage *stor);
-int clif_guildstorageitemadded(struct map_session_data *sd,struct guild_storage *stor,int index,int amount);
+void clif_storagelist(struct map_session_data* sd, struct storage_data* stor);
+void clif_updatestorageamount(struct map_session_data* sd, int amount);
+void clif_storageitemadded(struct map_session_data* sd, struct item* i, int index, int amount);
+void clif_storageitemremoved(struct map_session_data* sd, int index, int amount);
+void clif_storageclose(struct map_session_data* sd);
+void clif_guildstoragelist(struct map_session_data* sd, struct guild_storage* stor);
+void clif_updateguildstorageamount(struct map_session_data* sd, int amount);
+void clif_guildstorageitemadded(struct map_session_data* sd, struct item* i, int index, int amount);
 
 int clif_insight(struct block_list *,va_list);	// map_forallinmovearea callback
 int clif_outsight(struct block_list *,va_list);	// map_forallinmovearea callback

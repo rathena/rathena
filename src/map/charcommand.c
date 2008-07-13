@@ -3205,7 +3205,7 @@ int charcommand_storeall(const int fd, struct map_session_data* sd, const char* 
 		if (pl_sd->status.inventory[i].amount) {
 			if(pl_sd->status.inventory[i].equip != 0)
 				pc_unequipitem(pl_sd, i, 3);
-			storage_storageadd(pl_sd,  i, sd->status.inventory[i].amount);
+			storage_storageadd(pl_sd, i, sd->status.inventory[i].amount);
 		}
 	}
 	storage_storageclose(pl_sd);

@@ -484,9 +484,11 @@ int chrif_sendmapack(int fd)
 
 	//If there are players online, send them to the char-server. [Skotlex]
 	send_users_tochar();
-	
-	//Re-save any storages that were modified in the disconnection time. [Skotlex]
+
+	//Auth db reconnect handling
 	auth_db->foreach(auth_db,chrif_reconnect);
+
+	//Re-save any storages that were modified in the disconnection time. [Skotlex]
 	do_reconnect_storage();
 
 	return 0;
