@@ -1003,6 +1003,8 @@ int mmo_char_init(void)
 
 		ret = mmo_char_fromstr(line, &char_dat[char_num].status, char_dat[char_num].global, &char_dat[char_num].global_num);
 
+		// load storage
+		storage_load(char_dat[char_num].status.account_id, &char_dat[char_num].status.storage);
 		// Initialize friends list
 		parse_friend_txt(&char_dat[char_num].status);  // Grab friends for the character
 		// Initialize hotkey list
@@ -2774,7 +2776,11 @@ int parse_frommap(int fd)
 					break;
 			}
 			if (i != char_num)
+			{
 				memcpy(&char_dat[i].status, RFIFOP(fd,13), sizeof(struct mmo_charstatus));
+				storage_save(char_dat[i].status.account_id, &char_dat[i].status.storage);
+			}
+
 			if (RFIFOB(fd,12))
 			{	//Flag, set character offline. [Skotlex]
 				set_char_offline(RFIFOL(fd,8),RFIFOL(fd,4));

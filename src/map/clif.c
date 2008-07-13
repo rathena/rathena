@@ -1867,8 +1867,7 @@ void clif_equiplist(struct map_session_data *sd)
 	}
 }
 
-//Unified storage function which sends all of the storage (requires two packets, one for equipable items and one for stackable ones. [Skotlex]
-void clif_storagelist(struct map_session_data *sd,struct storage_data *stor)
+void clif_storagelist(struct map_session_data* sd, struct storage_data* stor)
 {
 	struct item_data *id;
 	int i,n,ne,fd=sd->fd;
@@ -9736,10 +9735,10 @@ void clif_parse_MoveFromKafraToCart(int fd, struct map_session_data *sd)
  *------------------------------------------*/
 void clif_parse_CloseKafra(int fd, struct map_session_data *sd)
 {
-	if (sd->state.storage_flag == 1)
+	if( sd->state.storage_flag == 1 )
 		storage_storageclose(sd);
 	else
-	if (sd->state.storage_flag == 2)
+	if( sd->state.storage_flag == 2 )
 		storage_guild_storageclose(sd);
 }
 

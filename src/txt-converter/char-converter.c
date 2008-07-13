@@ -107,7 +107,7 @@ int convert_init(void)
 	input = getchar();
 	if(input == 'y' || input == 'Y')
 	{
-		struct storage_data storage_;
+		struct storage_data storage;
 		ShowMessage("\n");
 		ShowStatus("Converting Storage Database...\n");
 		if( (fp = fopen(storage_txt,"r")) == NULL )
@@ -121,11 +121,11 @@ int convert_init(void)
 			lineno++;
 			set=sscanf(line,"%d,%d",&tmp_int[0],&tmp_int[1]);
 			if(set==2) {
-				memset(&storage_, 0, sizeof(struct storage_data));
-				storage_.account_id=tmp_int[0];
-				if (storage_fromstr(line,&storage_) == 0) {
+				memset(&storage, 0, sizeof(struct storage_data));
+				storage.account_id = tmp_int[0];
+				if (storage_fromstr(line,&storage) == 0) {
 					count++;
-					storage_tosql(storage_.account_id,&storage_); //to sql. (dump)
+					storage_tosql(storage.account_id,&storage); //to sql. (dump)
 				} else {
 					ShowError("Error parsing storage line [%s] (at %s:%d)\n", line, storage_txt, lineno);
 				}

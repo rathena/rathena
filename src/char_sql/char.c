@@ -17,6 +17,7 @@
 #include "int_guild.h"
 #include "int_homun.h"
 #include "int_party.h"
+#include "int_storage.h"
 #include "char.h"
 
 #include <sys/types.h>
@@ -481,6 +482,13 @@ int mmo_char_tosql(int char_id, struct mmo_charstatus* p)
 	{
 		memitemdata_to_sql(p->cart, MAX_CART, p->char_id, TABLE_CART);
 		strcat(save_status, " cart");
+	}
+
+	//map storage data
+	if( memcmp(p->storage.items, cp->storage.items, sizeof(p->storage.items)) )
+	{
+		memitemdata_to_sql(p->storage.items, MAX_STORAGE, p->account_id, TABLE_STORAGE);
+		strcat(save_status, " storage");
 	}
 
 #ifdef TXT_SQL_CONVERT
@@ -1101,6 +1109,10 @@ int mmo_char_fromsql(int char_id, struct mmo_charstatus* p, bool load_everything
 	for( i = 0; i < MAX_CART && SQL_SUCCESS == SqlStmt_NextRow(stmt); ++i )
 		memcpy(&p->cart[i], &tmp_item, sizeof(tmp_item));
 	strcat(t_msg, " cart");
+
+	//read storage
+	storage_fromsql(p->account_id, &p->storage);
+	strcat(t_msg, " storage");
 
 	//read skill
 	//`skill` (`char_id`, `id`, `lv`)

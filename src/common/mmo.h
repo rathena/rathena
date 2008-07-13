@@ -178,6 +178,20 @@ struct status_change_data {
 	int val1, val2, val3, val4, tick; //Remaining duration.
 };
 
+struct storage_data {
+	int account_id; // used by charserver
+	int storage_amount;
+	struct item items[MAX_STORAGE];
+};
+
+struct guild_storage {
+	int dirty;
+	int guild_id;
+	short storage_status;
+	short storage_amount;
+	struct item storage_[MAX_GUILD_STORAGE];
+};
+
 struct s_pet {
 	int account_id;
 	int char_id;
@@ -264,6 +278,7 @@ struct mmo_charstatus {
 
 	struct point last_point,save_point,memo_point[MAX_MEMOPOINTS];
 	struct item inventory[MAX_INVENTORY],cart[MAX_CART];
+	struct storage_data storage;
 	struct skill skill[MAX_SKILL];
 
 	struct s_friend friends[MAX_FRIENDS]; //New friend system [Skotlex]
@@ -327,22 +342,6 @@ struct registry {
 	struct global_reg account[ACCOUNT_REG_NUM];
 	int account2_num;
 	struct global_reg account2[ACCOUNT_REG2_NUM];
-};
-
-struct storage_data {
-	int dirty;
-	int account_id;
-	short storage_status;
-	short storage_amount;
-	struct item items[MAX_STORAGE];
-};
-
-struct guild_storage {
-	int dirty;
-	int guild_id;
-	short storage_status;
-	short storage_amount;
-	struct item storage_[MAX_GUILD_STORAGE];
 };
 
 struct gm_account {

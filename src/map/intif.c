@@ -32,7 +32,7 @@
 
 static const int packet_len_table[]={
 	-1,-1,27,-1, -1, 0,37, 0,  0, 0, 0, 0,  0, 0,  0, 0, //0x3800-0x380f
-	-1, 7, 0, 0,  0, 0, 0, 0, -1,11, 0, 0,  0, 0,  0, 0, //0x3810
+	 0, 0, 0, 0,  0, 0, 0, 0, -1,11, 0, 0,  0, 0,  0, 0, //0x3810
 	39,-1,15,15, 14,19, 7,-1,  0, 0, 0, 0,  0, 0,  0, 0, //0x3820
 	10,-1,15, 0, 79,19, 7,-1,  0,-1,-1,-1, 14,67,186,-1, //0x3830
 	 9, 9,-1,14,  0, 0, 0, 0, -1,74,-1,11, 11,-1,  0, 0, //0x3840
@@ -323,32 +323,6 @@ int intif_request_registry(struct map_session_data *sd, int flag)
 	WFIFOB(inter_fd,12) = (flag&4?1:0); //Request Char Reg
 	WFIFOSET(inter_fd,13);
 
-	return 0;
-}
-
-// 倉庫データ要求
-int intif_request_storage(int account_id)
-{
-	if (CheckForCharServer())
-		return 0;
-	WFIFOHEAD(inter_fd,6);
-	WFIFOW(inter_fd,0) = 0x3010;
-	WFIFOL(inter_fd,2) = account_id;
-	WFIFOSET(inter_fd,6);
-	return 0;
-}
-// 倉庫データ送信
-int intif_send_storage(struct storage_data *stor)
-{
-	if (CheckForCharServer())
-		return 0;
-	nullpo_retr(0, stor);
-	WFIFOHEAD(inter_fd,sizeof(struct storage_data)+8);
-	WFIFOW(inter_fd,0) = 0x3011;
-	WFIFOW(inter_fd,2) = sizeof(struct storage_data)+8;
-	WFIFOL(inter_fd,4) = stor->account_id;
-	memcpy( WFIFOP(inter_fd,8),stor, sizeof(struct storage_data) );
-	WFIFOSET(inter_fd,WFIFOW(inter_fd,2));
 	return 0;
 }
 
@@ -966,53 +940,6 @@ int intif_parse_Registers(int fd)
 	if (flag && sd->save_reg.global_num > -1 && sd->save_reg.account_num > -1 && sd->save_reg.account2_num > -1)
 		pc_reg_received(sd); //Received all registry values, execute init scripts and what-not. [Skotlex]
 	return 1;
-}
-
-// 倉庫データ受信
-int intif_parse_LoadStorage(int fd)
-{
-	struct storage_data *stor;
-	struct map_session_data *sd;
-
-	sd=map_id2sd( RFIFOL(fd,4) );
-	if(sd==NULL){
-		ShowError("intif_parse_LoadStorage: user not found %d\n",RFIFOL(fd,4));
-		return 1;
-	}
-
-	stor = account2storage( RFIFOL(fd,4));
-
-	if (stor->storage_status == 1) { // Already open.. lets ignore this update
-		ShowWarning("intif_parse_LoadStorage: storage received for a client already open (User %d:%d)\n", sd->status.account_id, sd->status.char_id);
-		return 1;
-	}
-	if (stor->dirty) { // Already have storage, and it has been modified and not saved yet! Exploit! [Skotlex]
-		ShowWarning("intif_parse_LoadStorage: received storage for an already modified non-saved storage! (User %d:%d)\n", sd->status.account_id, sd->status.char_id);
-		return 1;
-	}
-	if (RFIFOW(fd,2)-8 != sizeof(struct storage_data)) {
-		ShowError("intif_parse_LoadStorage: data size error %d %d\n", RFIFOW(fd,2)-8, sizeof(struct storage_data));
-		return 1;
-	}
-	if(battle_config.save_log)
-		ShowInfo("intif_openstorage: %d\n",RFIFOL(fd,4) );
-	memcpy(stor,RFIFOP(fd,8),sizeof(struct storage_data));
-	stor->dirty=0;
-	stor->storage_status=1;
-	sd->state.storage_flag = 1;
-	clif_storagelist(sd,stor);
-	clif_updatestorageamount(sd,stor->storage_amount);
-
-	return 0;
-}
-
-// 倉庫データ送信成功
-int intif_parse_SaveStorage(int fd)
-{
-	if(battle_config.save_log)
-		ShowInfo("intif_savestorage: done %d %d\n",RFIFOL(fd,2),RFIFOB(fd,6) );
-	storage_storage_saved(RFIFOL(fd,2));
-	return 0;
 }
 
 int intif_parse_LoadGuildStorage(int fd)
@@ -1988,8 +1915,6 @@ int intif_parse(int fd)
 	case 0x3803:	mapif_parse_WisToGM(fd); break;
 	case 0x3804:	intif_parse_Registers(fd); break;
 	case 0x3806:	intif_parse_ChangeNameOk(fd); break;
-	case 0x3810:	intif_parse_LoadStorage(fd); break;
-	case 0x3811:	intif_parse_SaveStorage(fd); break;
 	case 0x3818:	intif_parse_LoadGuildStorage(fd); break;
 	case 0x3819:	intif_parse_SaveGuildStorage(fd); break;
 	case 0x3820:	intif_parse_PartyCreated(fd); break;

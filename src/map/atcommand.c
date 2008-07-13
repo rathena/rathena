@@ -1155,7 +1155,6 @@ int atcommand_storage(const int fd, struct map_session_data* sd, const char* com
  *------------------------------------------*/
 int atcommand_guildstorage(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
-	struct storage_data *stor; //changes from Freya/Yor
 	nullpo_retr(-1, sd);
 
 	if (!sd->status.guild_id) {
@@ -1163,18 +1162,19 @@ int atcommand_guildstorage(const int fd, struct map_session_data* sd, const char
 		return -1;
 	}
 
-	if (sd->npc_id || sd->vender_id || sd->state.trading || sd->state.storage_flag)
+	if (sd->npc_id || sd->vender_id || sd->state.trading)
 		return -1;
 
-	if (sd->state.storage_flag) {
+	if (sd->state.storage_flag == 1) {
+		clif_displaymessage(fd, msg_txt(250));
+		return -1;
+	}
+
+	if (sd->state.storage_flag == 2) {
 		clif_displaymessage(fd, msg_txt(251));
 		return -1;
 	}
 
-	if ((stor = account2storage2(sd->status.account_id)) != NULL && stor->storage_status == 1) {
-		clif_displaymessage(fd, msg_txt(251));
-		return -1;
-	}
 	storage_guild_storageopen(sd);
 	clif_displaymessage(fd, "Guild storage opened.");
 	return 0;
@@ -5547,15 +5547,12 @@ int atcommand_storeall(const int fd, struct map_session_data* sd, const char* co
 
 	if (sd->state.storage_flag != 1)
   	{	//Open storage.
-		switch (storage_storageopen(sd)) {
-		case 2: //Try again
-			clif_displaymessage(fd, "run this command again..");
-			return 0;
-		case 1: //Failure
+		if( storage_storageopen(sd) == 1 ) {
 			clif_displaymessage(fd, "You can't open the storage currently.");
 			return -1;
 		}
 	}
+
 	for (i = 0; i < MAX_INVENTORY; i++) {
 		if (sd->status.inventory[i].amount) {
 			if(sd->status.inventory[i].equip != 0)

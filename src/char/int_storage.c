@@ -32,7 +32,7 @@ int storage_tostr(char* str, struct storage_data* p)
 {
 	int i,j,f=0;
 	char *str_p = str;
-	str_p += sprintf(str_p,"%d,%d\t",p->account_id,p->storage_amount);
+	str_p += sprintf(str_p, "%d,%d\t", p->account_id, p->storage_amount);
 
 	for(i=0;i<MAX_STORAGE;i++)
 		if( (p->items[i].nameid) && (p->items[i].amount) )
@@ -176,7 +176,7 @@ static void* create_storage(DBKey key, va_list args)
 // アカウントから倉庫データインデックスを得る（新規倉庫追加可能）
 struct storage_data *account2storage(int account_id)
 {
-	return (struct storage_data*)idb_ensure(storage_db, account_id, create_storage);
+	return (struct storage_data*)idb_get(storage_db, account_id);
 }
 
 static void* create_guildstorage(DBKey key, va_list args) {
@@ -192,6 +192,24 @@ struct guild_storage *guild2storage(int guild_id)
 	if(inter_guild_search(guild_id) != NULL)
 		gs = (struct guild_storage*)idb_ensure(guild_storage_db, guild_id, create_guildstorage);
 	return gs;
+}
+
+// loads storage data into the provided data structure
+bool storage_load(int account_id, struct storage_data* storage)
+{
+	struct storage_data* s = account2storage(account_id);
+	if( s != NULL )
+		memcpy(storage, s, sizeof(struct storage_data));
+	return( s != NULL );
+}
+
+// writes provided data into storage cache
+bool storage_save(int account_id, struct storage_data* storage)
+{
+	struct storage_data* s = account2storage(account_id);
+	if( s != NULL )
+		memcpy(s, storage, sizeof(struct storage_data));
+	return( s != NULL );
 }
 
 //---------------------------------------------------------
@@ -359,29 +377,6 @@ int inter_guild_storage_delete(int guild_id)
 //---------------------------------------------------------
 // map serverへの通信
 
-// 倉庫データの送信
-int mapif_load_storage(int fd,int account_id)
-{
-	struct storage_data *s=account2storage(account_id);
-	WFIFOHEAD(fd, sizeof(struct storage_data)+8);
-	WFIFOW(fd,0)=0x3810;
-	WFIFOW(fd,2)=sizeof(struct storage_data)+8;
-	WFIFOL(fd,4)=account_id;
-	memcpy(WFIFOP(fd,8),s,sizeof(struct storage_data));
-	WFIFOSET(fd,WFIFOW(fd,2));
-	return 0;
-}
-// 倉庫データ保存完了送信
-int mapif_save_storage_ack(int fd,int account_id)
-{
-	WFIFOHEAD(fd,7);
-	WFIFOW(fd,0)=0x3811;
-	WFIFOL(fd,2)=account_id;
-	WFIFOB(fd,6)=0;
-	WFIFOSET(fd,7);
-	return 0;
-}
-
 int mapif_load_guild_storage(int fd,int account_id,int guild_id)
 {
 	struct guild_storage *gs=guild2storage(guild_id);
@@ -416,32 +411,6 @@ int mapif_save_guild_storage_ack(int fd,int account_id,int guild_id,int fail)
 
 //---------------------------------------------------------
 // map serverからの通信
-
-// 倉庫データ要求受信
-int mapif_parse_LoadStorage(int fd)
-{
-	RFIFOHEAD(fd);
-	mapif_load_storage(fd,RFIFOL(fd,2));
-	return 0;
-}
-// 倉庫データ受信＆保存
-int mapif_parse_SaveStorage(int fd)
-{
-	struct storage_data *s;
-	int account_id, len;
-	RFIFOHEAD(fd);
-	account_id=RFIFOL(fd,4);
-	len=RFIFOW(fd,2);
-	if(sizeof(struct storage_data)!=len-8){
-		ShowError("inter storage: data size error %d %d\n",sizeof(struct storage_data),len-8);
-	}
-	else {
-		s=account2storage(account_id);
-		memcpy(s,RFIFOP(fd,8),sizeof(struct storage_data));
-		mapif_save_storage_ack(fd,account_id);
-	}
-	return 0;
-}
 
 int mapif_parse_LoadGuildStorage(int fd)
 {
@@ -481,8 +450,6 @@ int inter_storage_parse_frommap(int fd)
 {
 	RFIFOHEAD(fd);
 	switch(RFIFOW(fd,0)){
-	case 0x3010: mapif_parse_LoadStorage(fd); break;
-	case 0x3011: mapif_parse_SaveStorage(fd); break;
 	case 0x3018: mapif_parse_LoadGuildStorage(fd); break;
 	case 0x3019: mapif_parse_SaveGuildStorage(fd); break;
 	default:

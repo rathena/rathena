@@ -257,11 +257,11 @@ int chrif_save(struct map_session_data *sd, int flag)
 		return -1; //Character is saved on reconnect.
 
 	//For data sync
-	if (sd->state.storage_flag == 1)
-		storage_storage_save(sd->status.account_id, flag);
-	else if (sd->state.storage_flag == 2)
+	if (sd->state.storage_flag == 2)
 		storage_guild_storagesave(sd->status.account_id, sd->status.guild_id, flag);
-	if (flag) sd->state.storage_flag = 0; //Force close it.
+
+	if (flag)
+		sd->state.storage_flag = 0; //Force close it.
 
 	//Saving of registry values. 
 	if (sd->state.reg_dirty&4)

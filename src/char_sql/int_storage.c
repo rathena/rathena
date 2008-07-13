@@ -21,7 +21,6 @@
 int storage_tosql(int account_id, struct storage_data* p)
 {
 	memitemdata_to_sql(p->items, MAX_STORAGE, account_id, TABLE_STORAGE);
-	//ShowInfo ("storage save to DB - account: %d\n", account_id);
 	return 0;
 }
 
@@ -159,29 +158,6 @@ int inter_guild_storage_delete(int guild_id)
 //---------------------------------------------------------
 // packet from map server
 
-// recive packet about storage data
-int mapif_load_storage(int fd,int account_id)
-{
-	//load from DB
-	WFIFOHEAD(fd, sizeof(struct storage_data)+8);
-	WFIFOW(fd,0)=0x3810;
-	WFIFOW(fd,2)=sizeof(struct storage_data)+8;
-	WFIFOL(fd,4)=account_id;
-	storage_fromsql(account_id, (struct storage_data*)WFIFOP(fd,8));
-	WFIFOSET(fd,WFIFOW(fd,2));
-	return 0;
-}
-// send ack to map server which is "storage data save ok."
-int mapif_save_storage_ack(int fd,int account_id)
-{
-	WFIFOHEAD(fd, 7);
-	WFIFOW(fd,0)=0x3811;
-	WFIFOL(fd,2)=account_id;
-	WFIFOB(fd,6)=0;
-	WFIFOSET(fd,7);
-	return 0;
-}
-
 int mapif_load_guild_storage(int fd,int account_id,int guild_id)
 {
 	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `guild_id` FROM `%s` WHERE `guild_id`='%d'", guild_db, guild_id) )
@@ -220,28 +196,6 @@ int mapif_save_guild_storage_ack(int fd,int account_id,int guild_id,int fail)
 
 //---------------------------------------------------------
 // packet from map server
-
-// recive request about storage data
-int mapif_parse_LoadStorage(int fd)
-{
-	RFIFOHEAD(fd);
-	mapif_load_storage(fd,RFIFOL(fd,2));
-	return 0;
-}
-// storage data recive and save
-int mapif_parse_SaveStorage(int fd)
-{
-	int len = RFIFOW(fd,2);
-	int account_id = RFIFOL(fd,4);
-
-	if(sizeof(struct storage_data)!=len-8){
-		ShowError("inter storage: data size error %d %d\n",sizeof(struct storage_data),len-8);
-	}else{
-		storage_tosql(account_id, (struct storage_data*)RFIFOP(fd,8));
-		mapif_save_storage_ack(fd,account_id);
-	}
-	return 0;
-}
 
 int mapif_parse_LoadGuildStorage(int fd)
 {
@@ -285,8 +239,6 @@ int inter_storage_parse_frommap(int fd)
 {
 	RFIFOHEAD(fd);
 	switch(RFIFOW(fd,0)){
-	case 0x3010: mapif_parse_LoadStorage(fd); break;
-	case 0x3011: mapif_parse_SaveStorage(fd); break;
 	case 0x3018: mapif_parse_LoadGuildStorage(fd); break;
 	case 0x3019: mapif_parse_SaveGuildStorage(fd); break;
 	default:

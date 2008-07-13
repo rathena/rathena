@@ -606,10 +606,9 @@ int charcommand_effect(const int fd, struct map_session_data* sd, const char* co
  *------------------------------------------*/
 int charcommand_storagelist(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
-	struct storage_data *stor;
 	struct map_session_data *pl_sd;
 	struct item_data *item_data, *item_temp;
-	int i, j, count, counter, counter2;
+	int i, j, count = 0, counter = 0, counter2 = 0;
 	char character[NAME_LENGTH], output[200], outputtmp[200];
 	nullpo_retr(-1, sd);
 
@@ -634,51 +633,49 @@ int charcommand_storagelist(const int fd, struct map_session_data* sd, const cha
 		return -1;
 	}
 
-	if((stor = account2storage2(pl_sd->status.account_id)) != NULL) {
-		counter = 0;
-		count = 0;
-		for (i = 0; i < MAX_STORAGE; i++) {
-			if (stor->items[i].nameid > 0 && (item_data = itemdb_search(stor->items[i].nameid)) != NULL) {
-				counter = counter + stor->items[i].amount;
-				count++;
-				if (count == 1) {
-					sprintf(output, "------ Storage items list of '%s' ------", pl_sd->status.name);
-					clif_displaymessage(fd, output);
-				}
-				if (stor->items[i].refine)
-					sprintf(output, "%d %s %+d (%s %+d, id: %d)", stor->items[i].amount, item_data->name, stor->items[i].refine, item_data->jname, stor->items[i].refine, stor->items[i].nameid);
-				else
-					sprintf(output, "%d %s (%s, id: %d)", stor->items[i].amount, item_data->name, item_data->jname, stor->items[i].nameid);
+	for (i = 0; i < MAX_STORAGE; i++)
+	{
+		struct item* it = &sd->status.storage.items[i];
+		if( it->nameid > 0 && (item_data = itemdb_search(it->nameid)) != NULL )
+		{
+			counter = counter + it->amount;
+			count++;
+			if (count == 1) {
+				sprintf(output, "------ Storage items list of '%s' ------", pl_sd->status.name);
 				clif_displaymessage(fd, output);
-				memset(output, '\0', sizeof(output));
-				counter2 = 0;
-				for (j = 0; j < item_data->slot; j++) {
-					if (stor->items[i].card[j]) {
-						if ((item_temp = itemdb_search(stor->items[i].card[j])) != NULL) {
-							if (output[0] == '\0')
-								sprintf(outputtmp, " -> (card(s): #%d %s (%s), ", ++counter2, item_temp->name, item_temp->jname);
-							else
-								sprintf(outputtmp, "#%d %s (%s), ", ++counter2, item_temp->name, item_temp->jname);
-							strcat(output, outputtmp);
-						}
+			}
+			if (it->refine)
+				sprintf(output, "%d %s %+d (%s %+d, id: %d)", it->amount, item_data->name, it->refine, item_data->jname, it->refine, it->nameid);
+			else
+				sprintf(output, "%d %s (%s, id: %d)", it->amount, item_data->name, item_data->jname, it->nameid);
+			clif_displaymessage(fd, output);
+
+			memset(output, '\0', sizeof(output));
+			counter2 = 0;
+			for (j = 0; j < item_data->slot; j++) {
+				if (it->card[j]) {
+					if ((item_temp = itemdb_search(it->card[j])) != NULL) {
+						if (output[0] == '\0')
+							sprintf(outputtmp, " -> (card(s): #%d %s (%s), ", ++counter2, item_temp->name, item_temp->jname);
+						else
+							sprintf(outputtmp, "#%d %s (%s), ", ++counter2, item_temp->name, item_temp->jname);
+						strcat(output, outputtmp);
 					}
 				}
-				if (output[0] != '\0') {
-					output[strlen(output) - 2] = ')';
-					output[strlen(output) - 1] = '\0';
-					clif_displaymessage(fd, output);
-				}
+			}
+			if (output[0] != '\0') {
+				output[strlen(output) - 2] = ')';
+				output[strlen(output) - 1] = '\0';
+				clif_displaymessage(fd, output);
 			}
 		}
-		if (count == 0)
-			clif_displaymessage(fd, "No item found in the storage of this player.");
-		else {
-			sprintf(output, "%d item(s) found in %d kind(s) of items.", counter, count);
-			clif_displaymessage(fd, output);
-		}
-	} else {
-		clif_displaymessage(fd, "This player has no storage.");
-		return 0;
+	}
+
+	if (count == 0)
+		clif_displaymessage(fd, "No item found in the storage of this player.");
+	else {
+		sprintf(output, "%d item(s) found in %d kind(s) of items.", counter, count);
+		clif_displaymessage(fd, output);
 	}
 
 	return 0;
@@ -1643,7 +1640,6 @@ int charcommand_storage(const int fd, struct map_session_data* sd, const char* c
  *------------------------------------------*/
 int charcommand_guildstorage(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
-	struct storage_data *stor; //changes from Freya/Yor
 	char character[NAME_LENGTH];
 
 	struct map_session_data *pl_sd;
@@ -1665,23 +1661,20 @@ int charcommand_guildstorage(const int fd, struct map_session_data* sd, const ch
 		return -1;
 	}
 	
-	if (pl_sd->npc_id || pl_sd->vender_id || pl_sd->state.trading || pl_sd->state.storage_flag)
+	if (pl_sd->npc_id || pl_sd->vender_id || pl_sd->state.trading)
 		return -1;
 
-	if (pl_sd->status.guild_id > 0) {
-		if (pl_sd->state.storage_flag) {
-			clif_displaymessage(fd, "Guild storage is currently in use.");
-			return -1;
-		}
-		if ((stor = account2storage2(pl_sd->status.account_id)) != NULL && stor->storage_status == 1) {
-			clif_displaymessage(fd, "Guild storage is currently in use.");
-			return -1;
-		}
-		storage_guild_storageopen(pl_sd);
-	} else {
+	if (pl_sd->status.guild_id == 0) {
 		clif_displaymessage(fd, "Target player is not in a guild.");
 		return -1;
 	}
+
+	if (pl_sd->state.storage_flag) {
+		clif_displaymessage(fd, "Guild storage is currently in use.");
+		return -1;
+	}
+
+	storage_guild_storageopen(pl_sd);
 
 	clif_displaymessage(pl_sd->fd, "Guild storage opened.");
 	if (pl_sd->fd != fd)
@@ -3190,12 +3183,7 @@ int charcommand_storeall(const int fd, struct map_session_data* sd, const char* 
 
 	if (pl_sd->state.storage_flag != 1)
   	{	//Open storage.
-		switch (storage_storageopen(pl_sd)) {
-		case 2: //Try again
-			clif_displaymessage(fd, "Had to open the characters storage window...");
-			clif_displaymessage(fd, "run this command again..");
-			return 0;
-		case 1: //Failure
+		if( storage_storageopen(pl_sd) == 1 ) {
 			clif_displaymessage(fd, "The character currently can't use the storage.");
 			return 1;
 		}

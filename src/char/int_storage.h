@@ -22,4 +22,7 @@ extern char guild_storage_txt[1024];
 int storage_fromstr(char *str,struct storage_data *p);
 int guild_storage_fromstr(char *str,struct guild_storage *p);
 
+bool storage_load(int account_id, struct storage_data* storage);
+bool storage_save(int account_id, struct storage_data* storage);
+
 #endif /* _INT_STORAGE_H_ */
