@@ -10,6 +10,7 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 	- there is no more locking done within storage data
 	- mapservers no longer cache the data (solves muiltimapserver exploit)
 	- loading storage on char select may decrease charserver performance
+	* Added missing picklog case [Konard]
 2008/07/12
 	* Fixed a bad check on NPC_EVILLAND, actually healing players instead of doing damage. [Brainstorm]
 2008/07/10

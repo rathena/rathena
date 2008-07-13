@@ -1047,7 +1047,8 @@ int pet_lootitem_drop(struct pet_data *pd,struct map_session_data *sd)
 				memcpy(&ditem->item_data, it, sizeof(struct item));
 				ditem->next = dlist->item;
 				dlist->item = ditem;
-			}
+			} else
+    			log_pick_pc(sd, "P", it->nameid, it->amount, it);
 		}
 		else {
 			ditem = ers_alloc(item_drop_ers, struct item_drop);
