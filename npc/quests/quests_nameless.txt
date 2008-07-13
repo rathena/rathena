@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.1
+//= 1.1a
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -32,6 +32,7 @@
 //===== Additional Comments: ================================= 
 //= 1.0 First version. [L0ne_W0lf]
 //= 1.1 Made quest accessable to "Failed" gaebolg quest. [L0ne_W0lf]
+//= 1.1a Touch up to other Gaebolg fail-points. [L0ne_W0lf]
 //============================================================ 
 
 airplane_01,95,61,3	script	Agent#Aru	899,5,5,{
@@ -42,7 +43,7 @@ OnInit:
 	end;
 
 OnTouch:	
-	if ((prt_curse == 56 || prt_curse == 61) && (rachel_camel == 25) && (aru_monas < 1)) {
+	if ((prt_curse == 36 || prt_curse == 45 || prt_curse == 56 || prt_curse == 61) && (rachel_camel == 25) && (aru_monas < 1)) {
 		hideoffnpc "Agent#Aru";
 		mes "[????]";
 		mes "Are you "+strcharinfo(0)+"?";
