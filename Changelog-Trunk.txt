@@ -3,6 +3,9 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2008/07/14
+	* Made homunculi have doubled regen rates (they regen twice as fast) defined on battle configs. [Brainstorm]
+
 2008/07/13
 	* Modified storage data loading (bugreport:1425) [ultramage]
 	- storage is now loaded/saved along with character status
