@@ -26,6 +26,7 @@
 #include "skill.h"
 #include "unit.h"
 #include "atcommand.h" // msg_txt()
+#include "log.h"
 
 #include <stdio.h>
 #include <stdlib.h>

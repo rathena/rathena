@@ -7288,7 +7288,7 @@ static int status_natural_heal(struct block_list* bl, va_list args)
 		regen->tick.sp += natural_heal_diff_tick*(regen->rate.sp+bonus);
 
 		// Homun HP regen fix (they should regen as if they were sitting (twice as fast)
-		if(bl->type==BL_HOM) regen->tick.p *=2;
+		if(bl->type==BL_HOM) regen->tick.sp *=2;
 		
 		if(regen->tick.sp >= (unsigned int)battle_config.natural_healsp_interval)
 		{
