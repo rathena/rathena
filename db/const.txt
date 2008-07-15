@@ -527,7 +527,7 @@ IG_BleuBox	39
 IG_RedBox	40
 IG_GreenBox	41
 IG_YellowBox	42
-IG_GiftBox	43
+IG_OldGiftBox	43
 IG_MagicCardAlbum	44
 IG_HometownGift	45
 IG_Masquerade	46
