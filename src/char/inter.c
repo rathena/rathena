@@ -253,8 +253,10 @@ int inter_save(void) {
 	return 0;
 }
 #endif //TXT_SQL_CONVERT
+
 // ‰Šú‰»
-int inter_init_txt(const char *file) {
+int inter_init_txt(const char *file)
+{
 	inter_config_read(file);
 
 #ifndef TXT_SQL_CONVERT
