@@ -25,7 +25,7 @@
 //|	Thursday	= 4
 //| 	Friday		= 5
 //| 	Saturday	= 6
-//| 	Sunday		= 7
+//| 	Sunday		= 0
 //| 
 //| This way, we can check for a desired minute, hour, day, month, etc.
 //| 
