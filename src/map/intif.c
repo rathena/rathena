@@ -467,19 +467,6 @@ int intif_party_message(int party_id,int account_id,const char *mes,int len)
 	WFIFOSET(inter_fd,len+12);
 	return 0;
 }
-// パーティ競合チェック要求
-int intif_party_checkconflict(int party_id,int account_id,int char_id)
-{
-	if (CheckForCharServer())
-		return 0;
-	WFIFOHEAD(inter_fd,10 + NAME_LENGTH);
-	WFIFOW(inter_fd,0)=0x3028;
-	WFIFOL(inter_fd,2)=party_id;
-	WFIFOL(inter_fd,6)=account_id;
-	WFIFOL(inter_fd,10)=char_id;
-	WFIFOSET(inter_fd,14);
-	return 0;
-}
 
 int intif_party_leaderchange(int party_id,int account_id,int char_id)
 {

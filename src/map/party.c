@@ -425,7 +425,6 @@ int party_member_added(int party_id,int account_id,int char_id, int flag)
 		p->data[i].sd = sd;
 	}
 
-	party_check_conflict(sd); //FIXME: is this neccessary?
 	clif_party_member_info(p,sd);
 	clif_party_option(p,sd,0x100);
 	clif_party_info(p,sd);
@@ -680,14 +679,6 @@ int party_recv_message(int party_id,int account_id,const char *mes,int len)
 	if( (p=party_search(party_id))==NULL)
 		return 0;
 	clif_party_message(p,account_id,mes,len);
-	return 0;
-}
-
-int party_check_conflict(struct map_session_data *sd)
-{
-	nullpo_retr(0, sd);
-
-	intif_party_checkconflict(sd->status.party_id,sd->status.account_id,sd->status.char_id);
 	return 0;
 }
 

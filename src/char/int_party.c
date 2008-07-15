@@ -284,31 +284,6 @@ int party_check_empty(struct party *p) {
 	return 1;
 }
 
-// キャラの競合がないかチェック
-int party_check_conflict(int party_id, int account_id, int char_id)
-{
-	DBIterator* iter;
-	struct party_data* p;
-	int i;
-
-	iter = party_db->iterator(party_db);
-	for( p = (struct party_data*)iter->first(iter,NULL); iter->exists(iter); p = (struct party_data*)iter->next(iter,NULL) )
-	{
-		if (p->party.party_id == party_id) //No conflict to check
-			continue;
-
-		ARR_FIND( 0, MAX_PARTY, i, p->party.member[i].account_id == account_id && p->party.member[i].char_id == char_id );
-		if( i < MAX_PARTY )
-  		{
-			ShowWarning("int_party: party conflict! %d %d %d\n", account_id, party_id, p->party.party_id);
-			mapif_parse_PartyLeave(-1, p->party.party_id, account_id, char_id);
-		}
-	}
-	iter->destroy(iter);
-
-	return 0;
-}
-
 //-------------------------------------------------------------------
 // map serverへの通信
 
@@ -671,12 +646,9 @@ int mapif_parse_BreakParty(int fd, int party_id) {
 }
 
 // パ?ティメッセ?ジ送信
-int mapif_parse_PartyMessage(int fd, int party_id, int account_id, char *mes, int len) {
+int mapif_parse_PartyMessage(int fd, int party_id, int account_id, char *mes, int len)
+{
 	return mapif_party_message(party_id, account_id, mes, len, fd);
-}
-// パ?ティチェック要求
-int mapif_parse_PartyCheck(int fd, int party_id, int account_id, int char_id) {
-	return party_check_conflict(party_id, account_id, char_id);
 }
 
 int mapif_parse_PartyLeaderChange(int fd,int party_id,int account_id,int char_id)
@@ -715,7 +687,6 @@ int inter_party_parse_frommap(int fd) {
 	case 0x3025: mapif_parse_PartyChangeMap(fd, RFIFOL(fd,2), RFIFOL(fd,6), RFIFOL(fd,10), RFIFOW(fd,14), RFIFOB(fd,16), RFIFOW(fd,17)); break;
 	case 0x3026: mapif_parse_BreakParty(fd, RFIFOL(fd,2)); break;
 	case 0x3027: mapif_parse_PartyMessage(fd, RFIFOL(fd,4), RFIFOL(fd,8), (char*)RFIFOP(fd,12), RFIFOW(fd,2)-12); break;
-	case 0x3028: mapif_parse_PartyCheck(fd, RFIFOL(fd,2), RFIFOL(fd,6), RFIFOL(fd,10)); break;
 	case 0x3029: mapif_parse_PartyLeaderChange(fd, RFIFOL(fd,2), RFIFOL(fd,6), RFIFOL(fd,10)); break;
 	default:
 		return 0;

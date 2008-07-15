@@ -59,7 +59,6 @@ void party_send_levelup(struct map_session_data *sd);
 int party_send_logout(struct map_session_data *sd);
 int party_send_message(struct map_session_data *sd,const char *mes,int len);
 int party_recv_message(int party_id,int account_id,const char *mes,int len);
-int party_check_conflict(struct map_session_data *sd);
 int party_skill_check(struct map_session_data *sd, int party_id, int skillid, int skilllv);
 int party_send_xy_clear(struct party_data *p);
 int party_exp_share(struct party_data *p,struct block_list *src,unsigned int base_exp,unsigned int job_exp,int zeny);
