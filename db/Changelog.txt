@@ -40,6 +40,9 @@
 	2385 Recuvative_Armor		Should trigger HP/SP return with magical kills as well.
 
 =======================
+2008/07/15
+	* Fixed some bad named gift boxes on constant db, bugreport:1857 [Brainstorm]
+
 2008/07/12
 	* Removed 5283,Chick_Hat bonus against brute monsters. [Brainstorm]
 
