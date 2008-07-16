@@ -4,6 +4,8 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2008/07/16
+	* Added a check to make sure only released timers are acquired from the free list.
+	* Changed TIMER_MAX_INTERVAL to 1 second (was set to 1 minute by mistake). [FlavioJS]
 	* Fixed TK_JUMPKICK, should not jump over objects and cliffs.
 	- This also might fix them being able to jump barricades on WoESE. [Brainstorm]
 	

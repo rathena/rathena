@@ -22,7 +22,7 @@
 // If the server can't handle processing thousands of monsters
 // or many connected clients, please increase TIMER_MIN_INTERVAL.
 #define TIMER_MIN_INTERVAL 50
-#define TIMER_MAX_INTERVAL 60000
+#define TIMER_MAX_INTERVAL 1000
 
 // timers (array)
 static struct TimerData* timer_data	= NULL;
@@ -324,8 +324,8 @@ static int acquire_timer(void)
 	while( free_timer_list_num )
 	{
 		int pos = --free_timer_list_num;
-		if( free_timer_list[pos] < timer_data_num )
-		{
+		if( free_timer_list[pos] < timer_data_num && timer_data[free_timer_list[pos]].type == 0 )
+		{// freed and released
 			tid = free_timer_list[pos];
 			break;
 		}
