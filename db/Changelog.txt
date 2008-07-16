@@ -41,6 +41,8 @@
 
 =======================
 2008/07/15
+	* This shouldnt have been commited, but i did by mistake (bugreport:1861). And since its already here:
+	 - Added custom 12.1 monster skills, these skills will be changed when we get official info about them.
 	* Fixed some bad named gift boxes on constant db, bugreport:1857 [Brainstorm]
 
 2008/07/12

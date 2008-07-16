@@ -140,7 +140,7 @@
 1032,Verit@NPC_POISON,attack,176,2,500,800,5000,no,target,always,0,,,,,,
 1032,Verit@NPC_PROVOCATION,chase,194,1,200,0,5000,yes,target,always,0,,,,,,19
 1033,Elder Willow@MG_FIREBOLT,attack,19,3,500,1500,5000,yes,target,always,0,,,,,,
-1033,Willow@MG_FIREBOLT,chase,19,3,500,1500,5000,yes,target,always,0,,,,,,
+1033,Elder Willow@MG_FIREBOLT,chase,19,3,500,1500,5000,yes,target,always,0,,,,,,
 1033,Elder Willow@NPC_FIREATTACK,attack,186,2,500,500,5000,no,target,always,0,,,,,,6
 1033,Elder Willow@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,0x81,,,,
 1033,Elder Willow@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,7,0x3095,,,,
@@ -4696,8 +4696,8 @@
 1891,Valkyrie@NPC_ARMORBRAKE,attack,344,10,500,0,5000,yes,target,always,0,,,,,,
 1891,Valkyrie@WZ_JUPITEL,attack,84,28,100,2000,5000,yes,target,always,0,,,,,, 
 
-MOB_ID,dummy value (info only),STATE,SKILL_ID,SKILL_LV,rate (10000 = 100%),casttime,delay,cancelable,target,condition type,condition value,val1,val2,val3,val4,val5,emotion
 
+//TO-DO All these skills bellow are custom
 //Satan Morroc by Alar
 1916,Satan Morroc@NPC_POWERUP,attack,349,5,10000,0,30000,yes,self,myhpltmaxrate,60,,,,,,6
 1916,Satan Morroc@NPC_SUMMONSLAVE,idle,196,1,10000,0,10000,yes,self,slavele,0,1922,1923,1924,1925,,
