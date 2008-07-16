@@ -40,6 +40,8 @@
 	2385 Recuvative_Armor		Should trigger HP/SP return with magical kills as well.
 
 =======================
+2008/07/16
+	* Rev. 12966 Updated the Satan Morroc skills (still custom, based on Future Wiki) [L0ne_W0lf]
 2008/07/15
 	* This shouldnt have been commited, but i did by mistake (bugreport:1861). And since its already here:
 	 - Added custom 12.1 monster skills, these skills will be changed when we get official info about them.
