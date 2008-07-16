@@ -2379,7 +2379,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 
 	case TK_JUMPKICK:
 		skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,flag);
-		if (unit_movepos(src, bl->x, bl->y, 0, 0))
+		if (unit_movepos(src, bl->x, bl->y, 1, 1)) //Should not jump over objects and cliffs
 			clif_slide(src,bl->x,bl->y);
 		break;
 
