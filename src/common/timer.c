@@ -436,7 +436,7 @@ int delete_timer(int tid, TimerFunc func)
 		timer_data[tid].type = TIMER_FORCE_REMOVE|TIMER_REMOVE_HEAP;
 	else if( pop_timer_heap(tid) )
 		release_timer(tid);
-	else if( (timer_data[tid].type|TIMER_REMOVE_HEAP) == 0 )
+	else if( (timer_data[tid].type&TIMER_REMOVE_HEAP) == 0 )
 		ShowDebug("delete_timer: failed to remove timer %d (%08x(%s), type=%d)\n", tid, (int)func, search_timer_func_list(func), timer_data[tid].type);
 	return 0;
 }
