@@ -635,7 +635,7 @@ int charcommand_storagelist(const int fd, struct map_session_data* sd, const cha
 
 	for (i = 0; i < MAX_STORAGE; i++)
 	{
-		struct item* it = &sd->status.storage.items[i];
+		struct item* it = &pl_sd->status.storage.items[i];
 		if( it->nameid > 0 && (item_data = itemdb_search(it->nameid)) != NULL )
 		{
 			counter = counter + it->amount;
