@@ -5216,15 +5216,28 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
  *------------------------------------------*/
 int skill_castend_id(int tid, unsigned int tick, int id, intptr data)
 {
-	struct block_list *target, *src = map_id2bl(id);
+	struct block_list* target = NULL;
+	struct block_list* src = NULL;
 	struct map_session_data* sd = NULL;
 	struct homun_data* hd = NULL;	//[orn]
 	struct mob_data* md = NULL;
-	struct unit_data* ud = unit_bl2ud(src);
-	struct status_change *sc = NULL;
+	struct unit_data* ud = NULL;
+	struct status_change* sc = NULL;
 	int inf,inf2,flag=0;
 
-	nullpo_retr(0, ud);
+	src = map_id2bl(id);
+	if( src == NULL )
+	{
+		ShowDebug("skill_castend_id: src == NULL (tid=%d, id=%d)\n", tid, id);
+		return 0;// not found
+	}
+
+	ud = unit_bl2ud(src);
+	if( ud == NULL )
+	{
+		ShowDebug("skill_castend_id: ud == NULL (tid=%d, id=%d)\n", tid, id);
+		return 0;// ???
+	}
 
 	sd = BL_CAST(BL_PC,  src);
 	hd = BL_CAST(BL_HOM, src);

@@ -4,6 +4,7 @@
 #include "../common/cbasetypes.h"
 #include "../common/malloc.h"
 #include "../common/showmsg.h"
+#include "../common/db.h"
 #include "timer.h"
 
 #include <stdio.h>
@@ -145,6 +146,7 @@ unsigned int gettick(void)
  * 	CORE : Timer Heap
  *--------------------------------------*/
 
+// root at index 0
 #define BHEAP_PARENT(pos) ( ((pos) - 1)/2 )
 #define BHEAP_LEFT(pos)   ( (pos)*2 + 1   )
 #define BHEAP_RIGHT(pos)  ( (pos)*2 + 2   )
@@ -166,7 +168,7 @@ void push_timer_heap(int tid)
 		memset(timer_heap + (timer_heap_max - 256), 0, sizeof(int)*256);
 	}
 
-	// add the timer
+	// add the timer at the end
 	pos = timer_heap_num++;
 	timer_heap[pos] = tid;
 	// restore binary heap properties
@@ -187,6 +189,10 @@ bool pop_timer_heap(int tid)
 	int pos;
 
 	// find the timer
+#if 1
+	// trying a simple array search
+	ARR_FIND(0, timer_heap_num, pos, timer_heap[pos] == tid);
+#else
 	pos = 0;
 	while( pos < timer_heap_num )
 	{// search in the order current-left-right
@@ -220,10 +226,11 @@ bool pop_timer_heap(int tid)
 		}
 		pos = right;
 	}
+#endif
 	if( pos >= timer_heap_num )
 		return false;// not found
 
-	// remove timer
+	// remove timer (replace with last one)
 	timer_heap[pos] = timer_heap[--timer_heap_num];
 	// restore binary heap properties
 	while( pos < timer_heap_num )
@@ -231,9 +238,9 @@ bool pop_timer_heap(int tid)
 		int left = BHEAP_LEFT(pos);
 		int right = BHEAP_RIGHT(pos);
 		if( left < timer_heap_num && DIFF_TICK(timer_data[timer_heap[pos]].tick, timer_data[timer_heap[left]].tick) > 0 )
-		{
+		{// left exists and has smaller tick
 			if( right < timer_heap_num && DIFF_TICK(timer_data[timer_heap[left]].tick, timer_data[timer_heap[right]].tick) > 0 )	
-			{
+			{// right exists and has even smaller tick
 				swap(timer_heap[pos], timer_heap[right]);
 				pos = right;
 			}
@@ -244,7 +251,7 @@ bool pop_timer_heap(int tid)
 			}
 		}
 		else if( right < timer_heap_num && DIFF_TICK(timer_data[timer_heap[pos]].tick, timer_data[timer_heap[right]].tick) > 0 )
-		{
+		{// right exists and has smaller tick
 			swap(timer_heap[pos], timer_heap[right]);
 			pos = right;
 		}
@@ -429,6 +436,8 @@ int delete_timer(int tid, TimerFunc func)
 		timer_data[tid].type = TIMER_FORCE_REMOVE|TIMER_REMOVE_HEAP;
 	else if( pop_timer_heap(tid) )
 		release_timer(tid);
+	else if( (timer_data[tid].type|TIMER_REMOVE_HEAP) == 0 )
+		ShowDebug("delete_timer: failed to remove timer %d (%08x(%s), type=%d)\n", tid, (int)func, search_timer_func_list(func), timer_data[tid].type);
 	return 0;
 }
 
@@ -474,7 +483,7 @@ int do_timer(unsigned int tick)
 	// process all timers one by one
 	while( timer_heap_num )
 	{
-		int tid = timer_heap[0]; // first element in heap (=>smallest)
+		int tid = timer_heap[0]; // first element in heap (smallest tick)
 
 		diff = DIFF_TICK(timer_data[tid].tick, tick);
 		if( diff > 0 )
