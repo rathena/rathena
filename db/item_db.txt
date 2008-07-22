@@ -1447,6 +1447,15 @@
 2741,All_In_One_Ring,All In One Ring,5,,,0,,0,,0,0xFFFFFFFF,7,2,136,,0,0,0,{ skill "AL_HEAL",1; skill "AL_TELEPORT",1; bonus bNoCastCancel,0; bonus bAllStats,1; bonus bCastRate,10; },{},{}
 // **
 2751,Academy_of_Badge,Academy of Badge,5,,,100,,0,,0,0xFFFFFFFF,7,2,136,,0,0,0,{ if(BaseLevel < 80) { bonus bMaxHP,400; bonus bMaxSP,200; } },{},{}
+// **
+2765,Novice_Figure,Novice Figure,5,,,100,,0,,0,0xFFFFFFFF,7,2,136,,0,0,0,{ bonus bMaxHP,70; if(Class == Job_Novice) bonus bMaxHP,30;)  },{},{}
+2766,Swordsman_Figure,Swordsman Figure,5,,,0,,0,,0,0xFFFFFFFF,7,2,136,,0,0,0,{ bonus bVit,1; if(Class == Job_Swordman) bonus bDef,2; },{},{}
+2767,Acolyte_Figure,Acolyte Figure,5,,,0,,0,,0,0xFFFFFFFF,7,2,136,,0,0,0,{ bonus bInt,1; if(Class == Job_Acolyte) bonus bMaxSP,50; },{},{}
+2768,Magician_Figure,Magician Figure,5,,,0,,0,,0,0xFFFFFFFF,7,2,136,,0,0,0,{ bonus bInt,1; if(Class == Job_Mage) bonus bSPrecovRate,5; },{},{}
+2769,Archer_Figure,Archer Figure,5,,,0,,0,,0,0xFFFFFFFF,7,2,136,,0,0,0,{ bonus bDex,1; if(Class == Job_Archer) bonus bBaseAtk,10; },{},{}
+2770,Thief_Figure,Thief Figure,5,,,0,,0,,0,0xFFFFFFFF,7,2,136,,0,0,0,{ bonus bAgi,1; if(Class == Job_Thief) bonus bAspdRate,3; },{},{}
+2771,Merchant_Figure,Merchant Figure,5,,,0,,0,,0,0xFFFFFFFF,7,2,136,,0,0,0,{ bonus bStr,1; if(Class == Job_Merchant) bonus bCritical,5; },{},{}
+
 // Cards
 //===================================================================
 4001,Poring_Card,Poring Card,6,,10,10,,,,,,,,16,,,,,{ bonus bLuk,2; bonus bFlee2,1; },{},{}
@@ -1616,7 +1625,7 @@
 4165,Gig_Card,Gig Card,6,,10,10,,,,,,,,2,,,,,{ bonus2 bSPGainRace,RC_Insect,5; },{},{ heal 0,-5; }
 4166,Nightmare_Terror_Card,Nightmare Terror Card,6,,10,10,,,,,,,,16,,,,,{ bonus2 bAddEffWhenHit,Eff_Curse,300+600*(isequipped(4127)); },{},{}
 4167,Neraid_Card,Neraid Card,6,,10,10,,,,,,,,2,,,,,{ bonus2 bSPGainRace,RC_Brute,5; },{},{ heal 0,-5; }
-4168,Dark_Lord_Card,Dark Lord Card,6,,10,10,,,,,,,,64,,,,,{ bonus5 bAutoSpellWhenHit,"WZ_METEOR",5,100,1,BF_SHORT; if(isequipped(4169)) { bonus bMaxHPrate,20; bonus bMaxSPrate,20; } },{},{}
+4168,Dark_Lord_Card,Dark Lord Card,6,,10,10,,,,,,,,64,,,,,{ bonus5 bAutoSpellWhenHit,"WZ_METEOR",5,100,BF_SHORT,1; if(isequipped(4169)) { bonus bMaxHPrate,20; bonus bMaxSPrate,20; } },{},{}
 4169,Dark_Illusion_Card,Dark Illusion Card,6,,10,10,,,,,,,,769,,,,,{ bonus bMaxHPrate,-10; bonus bMaxSPrate,-10; bonus bCastrate,-10-10*isequipped(4168); },{},{}
 4170,Dark_Frame_Card,Dark Frame Card,6,,10,10,,,,,,,,16,,,,,{ bonus2 bAddEffWhenHit,Eff_Stone,600; },{},{}
 4171,Dark_Priest_Card,Dark Priest Card,6,,10,10,,,,,,,,2,,,,,{ bonus2 bSPVanishRate,50,10; if(BaseJob==Job_Sage) bonus bSPGainValue,1; },{},{}
@@ -3448,7 +3457,7 @@
 12217,Aspersio_5_Scroll,LV5 Aspersio Scroll,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ if (countitem(523) > 0) { skilleffect "PR_ASPERSIO",0; sc_start SC_ASPERSIO,180000,5; delitem 523,1; } },{},{}
 12218,Assumptio_5_Scroll,LV5 Assumptio Scroll,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ skilleffect "HP_ASSUMPTIO",0; sc_start SC_ASSUMPTIO,100000,5; },{},{}
 12219,Wind_Walk_10_Scroll,LV10 Windwalk Scroll,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ skilleffect "SN_WINDWALK",0; sc_start SC_WINDWALK,250000,5; },{},{}
-12220,Adrenaline_Scroll,LV5 Adrenaline Scroll,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ skilleffect "BS_ADRENALINE",0; sc_start SC_ADRENALINE,150000,5; },{},{}
+12220,Adrenaline_Scroll,LV5 Adrenaline Scroll,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ if(isequipped(1301,1302,1303)) skilleffect "BS_ADRENALINE",0; sc_start SC_ADRENALINE,150000,5; },{},{}
 12221,Megaphone_,Megaphone,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ input @Megaphone$; announce strcharinfo(0) + ": " + @megaphone$,bc_all,0xFF0000; end; },{},{}
 12225,Sweet_Candy_Cane,Sweet Candy Cane,2,,10,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1245; },{},{}
 12226,Examination1,Examination 1,0,20,,50,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
