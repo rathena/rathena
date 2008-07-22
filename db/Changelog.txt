@@ -41,6 +41,7 @@
 
 =======================
 2008/07/22
+	* Rev. 12982 Implemented stats for Sealed Shine and Endless Tower monsters. [L0ne_W0lf]
 	* Rev. 12981 Finally getting around to fixing a few bug reports [L0ne_W0lf]
 	- Corrected some view IDs for some newer headgears. (bugreport:1842)
 	- 11.3 bows are now equippable by all archer classes. (bugreport:1885)
