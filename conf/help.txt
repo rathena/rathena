@@ -168,11 +168,5 @@
   1:@reject - Rejects an invitation to a duel.
   1:@leave - Leaves a duel.
   1: 
-  1:--- MAIL SYSTEM --- (SQL Only) (Must be enabled)
-  1:@checkmail - Check # of messages.
-  1:@listmail - List all messages.
-  1:@listnewmail - List only new mail.
-  1:@readmail - Read a message.
-  1:@sendmail - Send mail.
-  1:deletemail - Deletes a message.
- 80:@sendprioritymail - Sends priority mail (cannot be deleted until read)
+  1:--- MAIL SYSTEM --- (SQL Only)
+  1:@mail - Open mail box.

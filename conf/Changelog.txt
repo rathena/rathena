@@ -1,5 +1,7 @@
 Date	Added
 
+2008/07/22
+	* Rev. 12981 Removed mail commands that no longer exist from help.txt. [L0ne_W0lf]
 2008/06/14
 	* Rev. 12833 Uncommented all novice map, and added mapflags. [L0ne_W0lf]
 	* Additionally; changed starting map from new_zone to new_1-1.

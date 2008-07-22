@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.5
+//= 1.5a
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -36,6 +36,7 @@
 //= 1.4 Added missing checkweights. [L0ne_W0lf]
 //= 1.4a Corrected a typo error ";;". [Toms]
 //= 1.5 Added Nameless Island quest addition. [L0ne_W0lf]
+//= 1.5a Corrected a couple typos in Nameless Addition. [L0ne_W0lf]
 //============================================================ 
 
 // Stone Quest
@@ -3044,7 +3045,7 @@ veins,327,185,3	script	Kid#camelcamel	944,{
 				mes "Ah, and I've been taking care";
 				mes "of her, just like I promised~";
 				next;
-				mes "["+strcharinfo(0)+"";
+				mes "["+strcharinfo(0)+"]";
 				mes "Really? That's good";
 				mes "You should be proud~";
 				next;
@@ -4315,7 +4316,7 @@ veins,227,127,5	script	Ivory	940,{
 		next;
 		mes "[Organic Soap Maker Ivory]";
 		mes "And um... Don't let";
-		mes "anyone 	else know what";
+		mes "anyone else know what";
 		mes "I use to make this soap.";
 		mes "People won't buy it if they";
 		mes "knew they were washing their";

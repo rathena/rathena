@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Dr.Evil & MasterOfMuppets
 //===== Current Version: ===================================== 
-//= 2.0
+//= 2.1
 //===== Compatible With: ===================================== 
 //= eAthena SVN 3422+(Requires jA Script System)
 //===== Description: ========================================= 
@@ -18,12 +18,13 @@
 //=     Fixed Entrance Guard clearing vars. (bugreport:1695)
 //=     Added duplicate NPCs to combat training maps.
 //= 2.0 Fixed savepoint not being changed sometimes. [L0ne_W0lf]
+//= 2.1 Corrected spacing issue in welcome message. [L0ne_W0lf]
 //============================================================ 
 
 // Bulletin Board
 new_1-1,66,114,4	script	Bulletin Board#nv	111,{
 	mes "^FF0000=================================^000000";
-	mes "^FF0000 ^000000 ^E40CAA[Welcome] ^CC0000to^FF9000Novice^7FFF00 Training^00FF00 Grounds^E40CAA [Welcome] ^FF0000^000000";
+	mes "^FF0000 ^000000 ^E40CAA[Welcome]^CC0000 to ^FF9000Novice^7FFF00 Training ^00FF00Grounds ^E40CAA[Welcome]^FF0000^000000";
 	mes "^FF0000=================================^000000";
 	close;
 }

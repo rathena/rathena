@@ -40,6 +40,10 @@
 	2385 Recuvative_Armor		Should trigger HP/SP return with magical kills as well.
 
 =======================
+2008/07/22
+	* Rev. 12981 Finally getting around to fixing a few bug reports [L0ne_W0lf]
+	- Corrected some view IDs for some newer headgears. (bugreport:1842)
+	- 11.3 bows are now equippable by all archer classes. (bugreport:1885)
 2008/07/16
 	* Rev. 12966 Updated the Satan Morroc skills (still custom, based on Future Wiki) [L0ne_W0lf]
 2008/07/15

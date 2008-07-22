@@ -1,5 +1,10 @@
 ﻿Date		Added
 ======
+2008/07/22
+	* Rev. 12981 Getting around to fixing some script bug. [L0ne_W0lf]
+	- Fixed bugs in the nameless quest, and other npcs. (bugreport:1845)
+	- Fixed some bugs in the WoE:SE control devices. (bugreport:1848)
+	- Fixed minor typo in the novice grounds. (Bugreport:1877)
 2008/07/13
 	* Rev. 12951 More updates to Father Bamph for nameless quest. [L0ne_W0lf]
 	* Rev. 12949 Some more modifications to the Nameless Access Quest start point.  [L0ne_W0lf]

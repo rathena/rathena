@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
-//= 1.4
+//= 1.5
 //===== Compatible With: =====================================
 //= eAthena SVN
 //===== Description: =========================================
@@ -17,6 +17,7 @@
 //= 1.4 Fixed investment period not resetting. [L0ne_W0lf]
 //=     Made it so treasure won't spawn if castle is empty.
 //=     Treasure will now be killed before spawning.
+//= 1.5 Fixed error with control devices. [L0ne_W0lf]
 //============================================================
 
 arug_cas02,1,1,0	script	Manager#aru02_02	111,{
@@ -1703,7 +1704,7 @@ arug_cas02,118,356,0	script	Control Device02#aru02	111,{
 							mapannounce "arug_cas02","The 2nd Fortress Gate has been reconstructed!",bc_map,"0x00ff00";
 							setarray $agit_ar02[3],0; //Global Variable
 							setarray $agit_ar02[2],2; //Global Variable
-							donpcevent "Control Device01#aru02::OnDevice01#aru02_dlrp01";
+							donpcevent "Control Device01#aru02::OnEnable";
 							end;
 						}
 						else {
@@ -1942,7 +1943,7 @@ arug_cas02,56,308,0	script	Control Device03#aru02	111,{
 							mapannounce "arug_cas02","The 3rd Fortress Gate has been reconstructed!",bc_map,"0x00ff00";
 							setarray $agit_ar02[4],0;
 							setarray $agit_ar02[3],2;
-							donpcevent "Control Device02#aru02::OnDevice02#aru02_dlrp02";
+							donpcevent "Control Device02#aru02::OnEnable";
 							end;
 						}
 						else {

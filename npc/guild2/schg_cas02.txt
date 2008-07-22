@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
-//= 1.7
+//= 1.8
 //===== Compatible With: =====================================
 //= eAthena SVN
 //===== Description: =========================================
@@ -20,6 +20,7 @@
 //= 1.7 Fixed investment period not resetting. [L0ne_W0lf]
 //=     Made it so treasure won't spawn if castle is empty.
 //=     Treasure will now be killed before spawning.
+//= 1.8 Fixed error with control devices. [L0ne_W0lf]
 //============================================================
 
 schg_cas02,1,1,0	script	Manager#sch02_02	111,{
@@ -1939,7 +1940,7 @@ schg_cas02,159,143,0	script	Control Device03#sch02	111,{
 							mapannounce "schg_cas02","The 3rd Fortress Gate has been reconstructed!!",bc_map,"0x00ff00";
 							setarray $agit_sc02[4],0;
 							setarray $agit_sc02[3],2;
-							donpcevent "Control Device02#sch02::OnDevice02#sch02_dlrp02";
+							donpcevent "Control Device02#sch02::OnEnable";
 							end;
 						}
 						else {
