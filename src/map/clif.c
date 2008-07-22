@@ -8869,27 +8869,29 @@ void clif_parse_NpcBuySellSelected(int fd,struct map_session_data *sd)
 	npc_buysellsel(sd,RFIFOL(fd,2),RFIFOB(fd,6));
 }
 
-/*==========================================
- *
- *------------------------------------------*/
-void clif_parse_NpcBuyListSend(int fd,struct map_session_data *sd)
+/// Request to buy chosen items from npc shop
+/// S 00c8 <length>.w {<amount>.w <itemid>.w).4b*
+/// R 00ca <result>.b
+/// result = 00 -> "The deal has successfully completed." 
+/// result = 01 -> "You do not have enough zeny."
+/// result = 02 -> "You are over your Weight Limit."
+/// result = 03 -> "Out of the maximum capacity, you have too many items."
+void clif_parse_NpcBuyListSend(int fd, struct map_session_data* sd)
 {
-	int fail=0,n;
-	unsigned short *item_list;
+	int n = (RFIFOW(fd,2)-4) /4;
+	unsigned short* item_list = (unsigned short*)RFIFOP(fd,4);
+	int result;
 
-	n = (RFIFOW(fd,2)-4) /4;
-	item_list = (unsigned short*)RFIFOP(fd,4);
-
-	if (sd->state.trading|| !sd->npc_shopid)
-		fail = 1;
+	if( sd->state.trading || !sd->npc_shopid )
+		result = 1;
 	else
-		fail = npc_buylist(sd,n,item_list);
+		result = npc_buylist(sd,n,item_list);
 
 	sd->npc_shopid = 0; //Clear shop data.
 
 	WFIFOHEAD(fd,packet_len(0xca));
-	WFIFOW(fd,0)=0xca;
-	WFIFOB(fd,2)=fail;
+	WFIFOW(fd,0) = 0xca;
+	WFIFOB(fd,2) = result;
 	WFIFOSET(fd,packet_len(0xca));
 }
 
