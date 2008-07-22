@@ -34,6 +34,7 @@
 //= 1.1 Made quest accessable to "Failed" gaebolg quest. [L0ne_W0lf]
 //= 1.1a Touch up to other Gaebolg fail-points. [L0ne_W0lf]
 //= 1.2 Some final tuning to Nameless Island quest. [Koca]
+
 //============================================================ 
 
 airplane_01,95,61,3	script	Agent#Aru	899,5,5,{
@@ -1464,7 +1465,7 @@ ve_fild07,125,128,0	script	Boat#Aru	111,{
 			mes "^3355FFYou set sail for";
 			mes "the monastery...^000000";
 			close2;
-			warp "nameless_n",257,217;
+			warp "nameless_i",257,217;
 			end;
 		case 2:
 			mes "^3355FFYou decide to";
