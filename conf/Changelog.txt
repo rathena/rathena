@@ -1,5 +1,7 @@
 Date	Added
 
+2008/07/23
+	* Increased max. hairstyle number, 23 -> 25 (bugreport:1773) [ultramage]
 2008/07/22
 	* Rev. 12981 Removed mail commands that no longer exist from help.txt. [L0ne_W0lf]
 2008/06/14
