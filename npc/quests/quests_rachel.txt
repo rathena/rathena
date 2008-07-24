@@ -17,8 +17,6 @@
 //= - Variable in use: rach_vice (max 24)
 //= Ice Necklace Quest:
 //= - iRO uses a different sprite for Urstia, and no cutins.
-//= - Need command to change NPC sprite
-//= - Need Mosnter triggered "OnTouch" event. (OnTouchNPC)
 //= - Variable in use: ice_necklace_q (max 7)
 //= Sanctuary Quest:
 //= - Actually two quests in one. Donation and dungeon quest.
@@ -51,6 +49,7 @@
 //= 2.4 Updated Zhed's Thor Vol. Base addition dialog to iRO's. [L0ne_W0lf]
 //= 2.4a Further updates to Zhed's Veins addition. [L0ne_W0lf]
 //= 2.5 Added Nameless Island quest addition. [L0ne_W0lf]
+//= 2.6 Uncommented ontouchNPC label for Man Stuck in Ice. [L0ne_W0lf] 
 //============================================================ 
 
 // Lost Child Quest (Prerequisite to High Priest quest)
@@ -3239,10 +3238,10 @@ ice_dun02,120,105,3	script	Man Stuck in Ice#cave	924,5,5,{
 OnTouch:
 	end;
 
-//OnTouchNPC: 
-//	emotion e_ang;
-//	emotion e_gg,2; //Emote on monster
-//	end;
+OnTouchNPC: 
+	emotion e_an;
+	//emotion e_gg,1; //Emote on monster - unsupported
+	end;
 
 OnMyMobDead:
 	end;

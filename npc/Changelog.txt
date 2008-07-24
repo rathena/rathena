@@ -1,5 +1,7 @@
 ﻿Date		Added
 ======
+2008/07/24
+	* Rev. 12988 Enabled Ontouchnpc event in a rachel quest. [L0ne_W0lf]
 2008/07/22
 	* Rev. 12984 Another small fix to Nameless island quest. [L0ne_W0lf]
 	* Rev. 12981 Getting around to fixing some script bug. [L0ne_W0lf]
