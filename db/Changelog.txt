@@ -40,6 +40,8 @@
 	2385 Recuvative_Armor		Should trigger HP/SP return with magical kills as well.
 
 =======================
+2008/07/24
+	* Removed an extra ) in Item 2765's script. [Paradox924X]
 2008/07/22
 	* Rev. 12983 Implemented stats for Sealed Shine and Endless Tower monsters. [L0ne_W0lf]
 	* Rev. 12981 Finally getting around to fixing a few bug reports [L0ne_W0lf]

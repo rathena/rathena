@@ -1448,7 +1448,7 @@
 // **
 2751,Academy_of_Badge,Academy of Badge,5,,,100,,0,,0,0xFFFFFFFF,7,2,136,,0,0,0,{ if(BaseLevel < 80) { bonus bMaxHP,400; bonus bMaxSP,200; } },{},{}
 // **
-2765,Novice_Figure,Novice Figure,5,,,100,,0,,0,0xFFFFFFFF,7,2,136,,0,0,0,{ bonus bMaxHP,70; if(Class == Job_Novice) bonus bMaxHP,30;)  },{},{}
+2765,Novice_Figure,Novice Figure,5,,,100,,0,,0,0xFFFFFFFF,7,2,136,,0,0,0,{ bonus bMaxHP,70; if(Class == Job_Novice) bonus bMaxHP,30; },{},{}
 2766,Swordsman_Figure,Swordsman Figure,5,,,0,,0,,0,0xFFFFFFFF,7,2,136,,0,0,0,{ bonus bVit,1; if(Class == Job_Swordman) bonus bDef,2; },{},{}
 2767,Acolyte_Figure,Acolyte Figure,5,,,0,,0,,0,0xFFFFFFFF,7,2,136,,0,0,0,{ bonus bInt,1; if(Class == Job_Acolyte) bonus bMaxSP,50; },{},{}
 2768,Magician_Figure,Magician Figure,5,,,0,,0,,0,0xFFFFFFFF,7,2,136,,0,0,0,{ bonus bInt,1; if(Class == Job_Mage) bonus bSPrecovRate,5; },{},{}
