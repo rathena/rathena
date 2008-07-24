@@ -90,9 +90,9 @@ Onreset:
 	donpcevent "#sch03_RL03::OnDisable";
 	donpcevent "1st Guardian Stone#sch03::OnDisable";
 	donpcevent "2nd Guardian Stone#sch03::OnDisable";
-	donpcevent "control device01#sch03::OnDisable";
-	donpcevent "control device02#sch03::OnDisable";
-	donpcevent "control device03#sch03::OnDisable";
+	donpcevent "Control Device01#sch03::OnDisable";
+	donpcevent "Control Device02#sch03::OnDisable";
+	donpcevent "Control Device03#sch03::OnDisable";
 	if (agitcheck()) {
 		setarray $agit_sc03[0],0,0,1,1,1,0;
 	}
@@ -101,7 +101,7 @@ Onreset:
 Onchange:
 	setarray $agit_sc03[0],2,2,1,1,2,0;
 	monster "schg_cas03",338,202,"Emperium",1288,1,"Steward#sch03::OnStartArena";
-	donpcevent "control device03#sch03::OnEnable";
+	donpcevent "Control Device03#sch03::OnEnable";
 	donpcevent "1st Guardian Stone#sch03::OnEnable";
 	donpcevent "2nd Guardian Stone#sch03::OnEnable";
 	end;
@@ -1061,7 +1061,7 @@ schg_cas03,376,250,0	script	2nd Guardian Stone#sch03	844,{
 								close;
 							}
 							break;
-						case 4:
+						case 3:
 							specialeffect 56; //"2nd Guardian Stone#sch03" EF_BEGINSPELL4
 							mes "^3355FFThe Gemstones must";
 							mes "be arranged in the correct";
@@ -1271,7 +1271,7 @@ OnDisable:
 	end;
 }
 
-schg_cas03,335,298,0	script	control device01#sch03	111,{
+schg_cas03,335,298,0	script	Control Device01#sch03	111,{
 	set .@GID, GetCastleData("schg_cas03",1);
 	if (getcharid(2) == .@GID) {
 		if (strcharinfo(0) == getguildmaster(.@GID)) {
@@ -2070,7 +2070,7 @@ schg_cas03,346,195,0	script	LF-05#schg_cas03	111,{
 		mes "Teleport Service. Please";
 		mes "choose a destination";
 		mes "within the stronghold.^000000";
-		switch(select("Defense area 3-1:Defense area 3-2:Cancel")) {
+		switch(select("Defense Area 3-1:Defense Area 3-2:Cancel")) {
 		case 1:
 			warp "schg_cas03",226,220;
 			end;
