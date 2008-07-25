@@ -3505,7 +3505,7 @@ hu_in01,317,312,0	script	Book	111,{
 					mes "I have a bad feeling about that, so I decided to write a journal";
 					mes "starting from today and keep everything in record.";
 					mes "¡¡";
-					mes "\"^FF000000Guardian^000000\" is an android";
+					mes "\"^FF0000Guardian^000000\" is an android";
 					mes "that was created based on the idea of \"^3131FFGiantes^000000\",";
 					mes "the giant tribe that was said to live in an ancient age.";
 					mes "It is memorized with various commands,";
