@@ -20,6 +20,7 @@
 //= 1.3b Minor updates to juperos elevator NPCs. [L0ne_W0lf]
 //= 1.4 Fixed Elevator not working after failing once. [L0ne_W0lf]
 //= 1.5 Lots of Fixes, missing stopnpctimers, cleanup. [Zephyrus]
+//= 1.6 Added missing close in "Popular Feats" [L0ne_W0lf]
 //============================================================
 
 yuno_in04,190,125,4	script	Scholar	700,{
@@ -1499,6 +1500,7 @@ yuno_in04,102,106,1	script	Popular Feasts	111,{
 			mes "I guess Poring Salad is";
 			mes "the most popular feast";
 			mes "in this entire book.";
+			close;
 
 		case 3:
 			mes "^8B6914...";

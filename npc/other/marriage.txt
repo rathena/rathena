@@ -451,11 +451,11 @@ prt_church,97,102,0	script	Single Army#Prontera	105,{
 	close;
 
 OnInit:
-	disablenpc "Single Army#Prontera";
+	hideonnpc "Single Army#Prontera";
 	end;
 
 OnEnable:
-	enablenpc "Single Army#Prontera";
+	hideoffnpc "Single Army#Prontera";
 	Emotion e_go;
 	end;
 
@@ -473,11 +473,11 @@ prt_church,98,102,0	script	Single Army#Geffen	705,{
 	close;
 
 OnInit:
-	disablenpc "Single Army#Geffen";
+	hideonnpc "Single Army#Geffen";
 	end;
 
 OnEnable:
-	enablenpc "Single Army#Geffen";
+	hideoffnpc "Single Army#Geffen";
 	Emotion e_go;
 	end;
 
@@ -495,11 +495,11 @@ prt_church,99,102,0	script	Single Army#Morocc	707,{
 	close;
 
 OnInit:
-	disablenpc "Single Army#Morocc";
+	hideonnpc "Single Army#Morocc";
 	end;
 
 OnEnable:
-	enablenpc "Single Army#Morocc";
+	hideoffnpc "Single Army#Morocc";
 	Emotion e_go;
 	end;
 
@@ -517,11 +517,11 @@ prt_church,100,102,0	script	Single Army#Payon	708,{
 	close;
 
 OnInit:
-	disablenpc "Single Army#Payon";
+	hideonnpc "Single Army#Payon";
 	end;
 
 OnEnable:
-	enablenpc "Single Army#Payon";
+	hideoffnpc "Single Army#Payon";
 	Emotion e_go;
 	end;
 
@@ -538,11 +538,11 @@ prt_church,101,102,0	script	Single Army#Amatsu	767,{
 	close;
 
 OnInit:
-	disablenpc "Single Army#Amatsu";
+	hideonnpc "Single Army#Amatsu";
 	end;
 
 OnEnable:
-	enablenpc "Single Army#Amatsu";
+	hideoffnpc "Single Army#Amatsu";
 	Emotion e_go;
 	end;
 
@@ -558,11 +558,11 @@ prt_church,102,102,0	script	Single Army#Gonryun	780,{
 	close;
 
 OnInit:
-	disablenpc "Single Army#Gonryun";
+	hideonnpc "Single Army#Gonryun";
 	end;
 
 OnEnable:
-	enablenpc "Single Army#Gonryun";
+	hideoffnpc "Single Army#Gonryun";
 	Emotion e_go;
 	end;
 

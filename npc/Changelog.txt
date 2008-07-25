@@ -1,5 +1,9 @@
 ﻿Date		Added
 ======
+2008/07/25
+	* Rev. 12993 Swapped dis/enable for hideon/off in wedding script. [L0ne_W0lf]
+	* Corrected Slotting NPCs triggering on touch. (bugreport:1916) 
+	* Added a missing close in juperos quest. (bugreport:1918)
 2008/07/24
 	* Rev. 12988 Enabled Ontouchnpc event in a rachel quest. [L0ne_W0lf]
 2008/07/22

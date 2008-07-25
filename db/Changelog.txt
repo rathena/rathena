@@ -40,6 +40,8 @@
 	2385 Recuvative_Armor		Should trigger HP/SP return with magical kills as well.
 
 =======================
+2008/07/25
+	* Rev. 12993 Corrected Luna Bow Bonuses. (bugreport:1919) [L0ne_W0lf]
 2008/07/24
 	* Removed an extra ) in Item 2765's script. [Paradox924X]
 2008/07/22

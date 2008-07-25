@@ -860,7 +860,7 @@
 1720,Bow_Of_Rudra,Rudra Bow,4,,10,1200,150,,5,0,0x000A0808,7,2,34,4,48,1,11,{ bonus bAtkEle,Ele_Holy; bonus bInt,5; skill "AL_CURE",1; skill "AL_HEAL",1; bonus2 bResEff,Eff_Poison,5000; bonus2 bResEff,Eff_Curse,5000; bonus2 bResEff,Eff_Silence,5000; bonus2 bResEff,Eff_Confusion,5000; bonus2 bResEff,Eff_Blind,5000; },{},{}
 1721,Repeting_CrossBow,Repeating Crossbow,4,89000,,2000,95,,9,1,0x00020840,7,2,34,3,65,1,11,{},{},{}
 1722,Balistar,Ballista,4,124000,,3500,145,,5,0,0x00080800,7,2,34,4,77,1,11,{},{},{}
-1723,Luna_Bow,Luna Bow,4,,10,2000,100,,5,2,0x00000800,7,2,34,3,30,1,11,{ bonus bDef,2+3*(getrefine()>9)+(getrefine()>6 && getrefine()<=9); if(isequipped(2718)) bonus bDex,1; bonus bMaxSP,05; bonus bSPrecovRate,10; },{},{}
+1723,Luna_Bow,Luna Bow,4,,10,2000,100,,5,2,0x00000800,7,2,34,3,30,1,11,{ bonus bDef,2+3*(getrefine()>=9)+(getrefine()>6 && getrefine()<9); if(isequipped(2718)) { bonus bDex,1; bonus bMaxSP,50; bonus bSPrecovRate,10; } },{},{}
 1724,Dragon_Wing,Dragon Wing,4,,10,1200,100,,5,0,0x000A0848,7,2,34,4,60,1,11,{ bonus3 bAddMonsterDropItem,1765,RC_Dragon,300; bonus bIgnoreDefRace,RC_Dragon; },{},{}
 1725,Bow_Of_Mintrel,Minstrel Bow,4,,10,1700,120,,5,1,0x00080800,7,2,34,4,70,1,11,{ bonus bInt,2; bonus bSPrecovRate,10; },{},{}
 1726,Hunter_Bow_,Hunter Bow,4,64000,,1500,125,,5,1,0x00000800,7,2,34,3,33,1,11,{},{},{}

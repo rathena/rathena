@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= eAthena dev team
 //===== Current Version: =====================================
-//= 1.4
+//= 1.5
 //===== Compatible With: =====================================
 //= eAthena SVN
 //===== Description: =========================================
@@ -20,6 +20,7 @@
 //= 1.2 Fixed some typos and a nasty bug. [SinSloth]
 //= 1.3 Fixed a wrong item ID with Sphinx Hat. [SinSloth]
 //= 1.4 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
+//= 1.5 Removed Ontouch trigger area from NPCs. [L0ne_W0lf]
 //============================================================
 
 payon,140,151,5	script	Seiyablem	84,{
@@ -401,9 +402,9 @@ function	script	Func_Socket	{
 	}
 }
 
-lhz_in02,281,35,5	duplicate(Seiyablem)	Seiyablem#lhz	84,0,0
-prt_in,33,70,5	duplicate(Seiyablem)	Seiyablem#prt	84,0,0
-morocc,51,41,5	duplicate(Seiyablem)	Seiyablem#moc	84,0,0
+lhz_in02,281,35,5	duplicate(Seiyablem)	Seiyablem#lhz	84
+prt_in,33,70,5	duplicate(Seiyablem)	Seiyablem#prt	84
+morocc,51,41,5	duplicate(Seiyablem)	Seiyablem#moc	84
 
 payon,143,143,7	script	Young Man#socket	97,{
 
@@ -423,6 +424,6 @@ payon,143,143,7	script	Young Man#socket	97,{
 	close;
 }
 
-lhz_in02,269,33,5	duplicate(Young Man#socket)	Young Man#lhz	97,0,0
-prt_in,31,57,1	duplicate(Young Man#socket)	Young Man#prt	97,0,0
-morocc,60,42,3	duplicate(Young Man#socket)	Young Man#moc	97,0,0
+lhz_in02,269,33,5	duplicate(Young Man#socket)	Young Man#lhz	97
+prt_in,31,57,1	duplicate(Young Man#socket)	Young Man#prt	97
+morocc,60,42,3	duplicate(Young Man#socket)	Young Man#moc	97
