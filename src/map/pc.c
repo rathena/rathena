@@ -3528,6 +3528,8 @@ int pc_setpos(struct map_session_data* sd, unsigned short mapindex, int x, int y
 		{ //Cancel some map related stuff.
 			if (sd->sc.data[SC_JAILED])
 				return 1; //You may not get out!
+			if (sd->sc.data[SC_BOSSMAPINFO])
+				status_change_end(&sd->bl,SC_BOSSMAPINFO,-1);
 			if (sd->sc.data[SC_WARM])
 				status_change_end(&sd->bl,SC_WARM,-1);
 			if (sd->sc.data[SC_SUN_COMFORT])

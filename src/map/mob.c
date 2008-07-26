@@ -951,7 +951,7 @@ int mob_setdelayspawn(struct mob_data *md)
 	if (spawntime < 5000) //Min respawn time (is it needed?)
 		spawntime = 5000;
 
-	add_timer(gettick()+spawntime, mob_delayspawn, md->bl.id, 0);
+	md->spawn_timer = add_timer(gettick()+spawntime, mob_delayspawn, md->bl.id, 0);
 	return 0;
 }
 
@@ -1007,6 +1007,7 @@ int mob_spawn (struct mob_data *md)
 	md->attacked_id = 0;
 	md->target_id = 0;
 	md->move_fail_count = 0;
+	md->spawn_timer = -1;
 
 //	md->master_id = 0;
 	md->master_dist = 0;

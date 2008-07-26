@@ -433,6 +433,7 @@ void clif_Auction_close(int fd, unsigned char flag);
 void clif_parse_Auction_cancelreg(int fd, struct map_session_data *sd);
 #endif
 
+void clif_bossmapinfo(int fd, struct mob_data *md, short flag);
 void clif_cashshop_show(struct map_session_data *sd, struct npc_data *nd);
 
 // ADOPTION

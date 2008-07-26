@@ -4586,6 +4586,8 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 	struct view_data *vd;
 	int opt_flag, calc_flag, undead_flag;
 
+	struct mob_data *boss_md = NULL;
+
 	nullpo_retr(0, bl);
 	sc = status_get_sc(bl);
 	status = status_get_status_data(bl);
@@ -4912,6 +4914,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			break;
 			case SC_HPREGEN:
 			case SC_SPREGEN:
+			case SC_BOSSMAPINFO:
 			case SC_STUN:
 			case SC_SLEEP:
 			case SC_POISON:
@@ -5237,6 +5240,22 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			if( (val4 = tick/(val2 * 1000)) < 1 )
 				val4 = 1;
 			tick = val2 * 1000; // val2 = Seconds between heals
+			break;
+		case SC_BOSSMAPINFO:
+			if( sd != NULL )
+			{
+				boss_md = map_getmob_boss(bl->m); // Search for Boss on this Map
+				if( boss_md == NULL || boss_md->bl.prev == NULL )
+				{ // No MVP on this map - MVP is dead
+					clif_bossmapinfo(sd->fd, boss_md, 1);
+					return 0; // No need to start SC
+				}
+
+				val1 = boss_md->bl.id;
+				if( (val4 = tick/1000) < 1 )
+					val4 = 1;
+				tick = 1000;
+			}
 			break;
 		case SC_HIDING:
 			val2 = tick/1000;
@@ -6102,6 +6121,10 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 		if (ud)
 			ud->state.running = unit_run(bl);
 	}
+
+	if( boss_md != NULL )
+		clif_bossmapinfo(sd->fd, boss_md, 0); // First Message
+
 	return 1;
 }
 /*==========================================
@@ -6683,6 +6706,9 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr data)
 	struct status_change *sc;
 	struct status_change_entry *sce;
 
+	struct mob_data *boss_md = NULL;
+	int result;
+
 	bl = map_id2bl(id);
 	if(!bl)
 	{
@@ -6856,6 +6882,19 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr data)
 		}
 		break;
 
+	case SC_BOSSMAPINFO:
+		if( sd && --(sce->val4) >= 0 )
+		{
+			boss_md = map_id2boss(sce->val1);
+			if( boss_md && boss_md->bl.prev != NULL && sd->bl.m == boss_md->bl.m )
+			{
+				clif_bossmapinfo(sd->fd, boss_md, 1); // Update X - Y on minimap
+				sc_timer_next(5000 + tick, status_change_timer, bl->id, data);
+				return 0;
+			}
+		}
+		break;
+
 	case SC_DANCING: //ダンススキルの時間SP消費
 		{
 			int s = 0;
@@ -7007,7 +7046,12 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr data)
 	}
 
 	// default for all non-handled control paths is to end the status
-	return status_change_end( bl,type,tid );
+	result = status_change_end( bl,type,tid );
+	
+	if( sd && boss_md && boss_md->bl.prev == NULL )
+		clif_bossmapinfo(sd->fd, boss_md, 1); // Killed MVP - Show next spawn info
+
+	return result;
 #undef sc_timer_next
 }
 

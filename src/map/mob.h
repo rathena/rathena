@@ -121,6 +121,7 @@ struct mob_data {
 		unsigned flag : 1; //0: Normal. 1: Homunc exp
 	} dmglog[DAMAGELOG_SIZE];
 	struct spawn_data *spawn; //Spawn data.
+	int spawn_timer; //Required for Convex Mirror
 	struct item *lootitem;
 	short class_;
 	unsigned int tdmg; //Stores total damage given to the mob, for exp calculations. [Skotlex]

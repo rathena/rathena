@@ -99,6 +99,7 @@ char *GRF_PATH_FILENAME;
 static DBMap* id_db=NULL; // int id -> struct block_list*
 static DBMap* pc_db=NULL; // int id -> struct map_session_data*
 static DBMap* mobid_db=NULL; // int id -> struct mob_data*
+static DBMap* bossid_db=NULL; // int id -> struct mob_data* (MVP db)
 static DBMap* map_db=NULL; // unsigned int mapindex -> struct map_data*
 static DBMap* nick_db=NULL; // int char_id -> struct charid2nick* (requested names of offline characters)
 static DBMap* charid_db=NULL; // int char_id -> struct map_session_data*
@@ -1525,13 +1526,20 @@ void map_addiddb(struct block_list *bl)
 {
 	nullpo_retv(bl);
 
-	if (bl->type == BL_PC)
+	if( bl->type == BL_PC )
 	{
 		TBL_PC* sd = (TBL_PC*)bl;
 		idb_put(pc_db,sd->bl.id,sd);
 		idb_put(charid_db,sd->status.char_id,sd);
-	} else if (bl->type == BL_MOB)
+	}
+	else if( bl->type == BL_MOB )
+	{
+		struct mob_data* md = BL_CAST(BL_MOB, bl);
 		idb_put(mobid_db,bl->id,bl);
+
+		if( md && (md->db->status.mode&MD_BOSS) && md->db->mexp > 0 )
+			idb_put(bossid_db, bl->id, bl);
+	}
 
 	idb_put(id_db,bl->id,bl);
 }
@@ -1543,13 +1551,17 @@ void map_deliddb(struct block_list *bl)
 {
 	nullpo_retv(bl);
 
-	if (bl->type == BL_PC)
+	if( bl->type == BL_PC )
 	{
 		TBL_PC* sd = (TBL_PC*)bl;
 		idb_remove(pc_db,sd->bl.id);
 		idb_remove(charid_db,sd->status.char_id);
-	} else if (bl->type == BL_MOB)
+	}
+	else if( bl->type == BL_MOB )
+	{
 		idb_remove(mobid_db,bl->id);
+		idb_remove(bossid_db,bl->id);
+	}
 	idb_remove(id_db,bl->id);
 }
 
@@ -1578,6 +1590,8 @@ int map_quit(struct map_session_data *sd)
 	//(changing map-servers invokes unit_free but bypasses map_quit)
 	if(sd->sc.count) {
 		//Status that are not saved...
+		if(sd->sc.data[SC_BOSSMAPINFO])
+			status_change_end(&sd->bl,SC_BOSSMAPINFO,-1);
 		if(sd->sc.data[SC_AUTOTRADE])
 			status_change_end(&sd->bl,SC_AUTOTRADE,-1);
 		if(sd->sc.data[SC_SPURT])
@@ -1742,6 +1756,35 @@ struct block_list * map_id2bl(int id)
 		bl = (struct block_list*)idb_get(id_db,id);
 
 	return bl;
+}
+
+/*==========================================
+ * Convext Mirror
+ *------------------------------------------*/
+struct mob_data * map_getmob_boss(int m)
+{
+	DBIterator* iter;
+	struct mob_data *md = NULL;
+	bool found = false;
+
+	iter = db_iterator(bossid_db);
+	for( md = (struct mob_data*)dbi_first(iter); dbi_exists(iter); md = (struct mob_data*)dbi_next(iter) )
+	{
+		if( md->bl.m != m || !md->spawn )
+			continue;
+
+		found = true;
+		break;
+	}
+	dbi_destroy(iter);
+
+	return (found)? md : NULL;
+}
+
+struct mob_data * map_id2boss(int id)
+{
+	if (id <= 0) return NULL;
+	return (struct mob_data*)idb_get(bossid_db,id);
 }
 
 /// Applies func to all the players in the db.
@@ -3179,6 +3222,7 @@ void do_final(void)
 	id_db->destroy(id_db, NULL);
 	pc_db->destroy(pc_db, NULL);
 	mobid_db->destroy(mobid_db, NULL);
+	bossid_db->destroy(bossid_db, NULL);
 	nick_db->destroy(nick_db, nick_db_final);
 	charid_db->destroy(charid_db, NULL);
 
@@ -3351,6 +3395,7 @@ int do_init(int argc, char *argv[])
 	id_db = idb_alloc(DB_OPT_BASE);
 	pc_db = idb_alloc(DB_OPT_BASE);	//Added for reliable map_id2sd() use. [Skotlex]
 	mobid_db = idb_alloc(DB_OPT_BASE);	//Added to lower the load of the lazy mob ai. [Skotlex]
+	bossid_db = idb_alloc(DB_OPT_BASE); // Used for Convex Mirror quick MVP search
 	map_db = uidb_alloc(DB_OPT_BASE);
 	nick_db = idb_alloc(DB_OPT_BASE);
 	charid_db = idb_alloc(DB_OPT_BASE);

@@ -569,6 +569,8 @@ void map_foreachmob(int (*func)(struct mob_data* md, va_list args), ...);
 void map_foreachnpc(int (*func)(struct npc_data* bl, va_list args), ...);
 void map_foreachiddb(int (*func)(struct block_list* bl, va_list args), ...);
 struct map_session_data * map_nick2sd(const char*);
+struct mob_data * map_getmob_boss(int m);
+struct mob_data * map_id2boss(int id);
 
 /// Bitfield of flags for the iterator.
 enum e_mapitflags

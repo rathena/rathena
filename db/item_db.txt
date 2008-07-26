@@ -3451,7 +3451,7 @@
 12211,Kafra_Card,Kafra Card,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ callfunc "F_CashStore"; },{},{}
 12212,Giant_Fly_Wing,Giant Fly Wing,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ callfunc "F_CashPartyCall"; },{},{}
 12213,Neuralizer,Neuralizer,2,,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ callfunc "F_CashReset"; },{},{}
-12214,Convex_Mirror,Convex Mirror,3,20,,10,,,,,,,,,,,,,{},{},{}
+12214,Convex_Mirror,Convex Mirror,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_BOSSMAPINFO,600000,0;},{},{}
 12215,Blessing_10_Scroll,LV10 Blessing Scroll,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ skilleffect "AL_BLESSING",0; sc_start SC_BLESSING,240000,10; },{},{}
 12216,Inc_Agi_10_Scroll,LV10 Agil Scroll,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ if (Hp > 15) { skilleffect "AL_INCAGI",0; sc_start SC_INCREASEAGI,240000,10; heal -15,0; } },{},{}
 12217,Aspersio_5_Scroll,LV5 Aspersio Scroll,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ if (countitem(523) > 0) { skilleffect "PR_ASPERSIO",0; sc_start SC_ASPERSIO,180000,5; delitem 523,1; } },{},{}

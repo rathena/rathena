@@ -12153,6 +12153,50 @@ void clif_parse_Adopt_reply(int fd, struct map_session_data *sd)
 }
 
 /*==========================================
+ * Convex Mirror
+ * S 0293 <flag>.b <x>.l <y>.l <Hours>.w <Minutes>.w <unknown>.l <monster name>.40B <unknown>.11B
+ *==========================================*/
+void clif_bossmapinfo(int fd, struct mob_data *md, short flag)
+{
+	WFIFOHEAD(fd,70);
+	memset(WFIFOP(fd,0),0,70);
+	WFIFOW(fd,0) = 0x0293;
+
+	if( md != NULL )
+	{
+		if( md->bl.prev != NULL )
+		{ // Boss on This Map
+			if( flag )
+			{
+				WFIFOB(fd,2) = 1;
+				WFIFOL(fd,3) = md->bl.x;
+				WFIFOL(fd,7) = md->bl.y;
+			}
+			else
+				WFIFOB(fd,2) = 2; // First Time
+		}
+		else
+		{ // Boss is Dead
+			const struct TimerData * timer_data = get_timer(md->spawn_timer);
+			unsigned int seconds;
+			int hours, minutes;
+
+			seconds = DIFF_TICK(timer_data->tick, gettick()) / 1000;
+			hours = seconds / (60 * 60);
+			seconds = seconds - (60 * 60 * hours);
+			minutes = seconds / 60;
+
+			WFIFOB(fd,2) = 3;
+			WFIFOW(fd,11) = hours; // Hours
+			WFIFOW(fd,13) = minutes; // Minutes
+		}
+		safestrncpy((char*)WFIFOP(fd,19), md->db->jname, NAME_LENGTH);
+	}
+
+	WFIFOSET(fd,70);
+}
+
+/*==========================================
  * Requesting equip of a player
  *------------------------------------------*/
 void clif_parse_ViewPlayerEquip(int fd, struct map_session_data* sd)
