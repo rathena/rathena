@@ -2,9 +2,10 @@
 // For more information, see LICENCE in the main folder
 
 #include "../common/cbasetypes.h"
+#include "../common/db.h"
 #include "../common/malloc.h"
 #include "../common/showmsg.h"
-#include "../common/db.h"
+#include "../common/utils.h"
 #include "timer.h"
 
 #include <stdio.h>
@@ -26,19 +27,19 @@
 #define TIMER_MAX_INTERVAL 1000
 
 // timers (array)
-static struct TimerData* timer_data	= NULL;
-static int timer_data_max			= 0;
-static int timer_data_num			= 0;
+static struct TimerData* timer_data = NULL;
+static int timer_data_max = 0;
+static int timer_data_num = 0;
 
 // free timers (array)
-static int* free_timer_list		= NULL;
-static int free_timer_list_max	= 0;
-static int free_timer_list_num	= 0;
+static int* free_timer_list = NULL;
+static int free_timer_list_max = 0;
+static int free_timer_list_pos = 0;
 
-// timer heap (binary min heap)
-static int* timer_heap		= NULL;
-static int timer_heap_max	= 0;
-static int timer_heap_num	= 0;
+// timer heap (ordered array of tid's)
+static int timer_heap_num = 0;
+static int timer_heap_max = 0;
+static int* timer_heap = NULL;
 
 // server startup time
 time_t start_time;
@@ -146,14 +147,23 @@ unsigned int gettick(void)
  * 	CORE : Timer Heap
  *--------------------------------------*/
 
-// root at index 0
-#define BHEAP_PARENT(pos) ( ((pos) - 1)/2 )
-#define BHEAP_LEFT(pos)   ( (pos)*2 + 1   )
-#define BHEAP_RIGHT(pos)  ( (pos)*2 + 2   )
+// searches for the target tick's position and stores it in pos (binary search)
+#define HEAP_SEARCH(target,from,to,pos) \
+	do { \
+		int max,pivot; \
+		max = to; \
+		pos = from; \
+		while (pos < max) { \
+			pivot = (pos + max) / 2; \
+			if (DIFF_TICK(target, timer_data[timer_heap[pivot]].tick) < 0) \
+				pos = pivot + 1; \
+			else \
+				max = pivot; \
+		} \
+	} while(0)
 
 /// Adds a timer to the timer_heap
-static
-void push_timer_heap(int tid)
+static void push_timer_heap(int tid)
 {
 	int pos;
 
@@ -168,158 +178,25 @@ void push_timer_heap(int tid)
 		memset(timer_heap + (timer_heap_max - 256), 0, sizeof(int)*256);
 	}
 
-	// add the timer at the end
-	pos = timer_heap_num++;
-	timer_heap[pos] = tid;
-	// restore binary heap properties
-	while( pos > 0 )
+	// do a sorting from higher to lower
+	if( timer_heap_num == 0 || DIFF_TICK(timer_data[tid].tick, timer_data[timer_heap[timer_heap_num - 1]].tick) < 0 )
+		timer_heap[timer_heap_num] = tid; // if lower actual item is higher than new
+	else
 	{
-		int parent = BHEAP_PARENT(pos);
-		if( DIFF_TICK(timer_data[tid].tick, timer_data[timer_heap[parent]].tick) > 0 )
-			break;// done
-		swap(timer_heap[pos], timer_heap[parent]);
-		pos = parent;
+		// searching position
+		HEAP_SEARCH(timer_data[tid].tick,0,timer_heap_num-1,pos);
+		// move elements
+		memmove(&timer_heap[pos + 1], &timer_heap[pos], sizeof(int) * (timer_heap_num - pos));
+		// save new element
+		timer_heap[pos] = tid;
 	}
-}
 
-/// Removes a timer from the timer_heap
-static
-bool pop_timer_heap(int tid)
-{
-	int pos;
-
-	// find the timer
-#if 1
-	// trying a simple array search
-	ARR_FIND(0, timer_heap_num, pos, timer_heap[pos] == tid);
-#else
-	pos = 0;
-	while( pos < timer_heap_num )
-	{// search in the order current-left-right
-		int left = BHEAP_LEFT(pos);
-		int right = BHEAP_RIGHT(pos);
-
-		if( timer_heap[pos] == tid )
-			break;// found the timer
-		if( left < timer_heap_num && DIFF_TICK(timer_data[tid].tick, timer_data[timer_heap[left]].tick) >= 0 )
-		{// try left child
-			pos = left;
-			continue;
-		}
-		if( right < timer_heap_num && DIFF_TICK(timer_data[tid].tick, timer_data[timer_heap[right]].tick) >= 0 )
-		{// try right child
-			pos = right;
-			continue;
-		}
-
-		// back and right
-		while( true )
-		{
-			int parent;
-			if( pos == 0 )
-				return false;// not found
-			parent = BHEAP_PARENT(pos);
-			right = BHEAP_RIGHT(parent);
-			if( pos != right && right < timer_heap_num && DIFF_TICK(timer_data[tid].tick, timer_data[timer_heap[right]].tick) >= 0 )
-				break;// try this right
-			pos = parent;
-		}
-		pos = right;
-	}
-#endif
-	if( pos >= timer_heap_num )
-		return false;// not found
-
-	// remove timer (replace with last one)
-	timer_heap[pos] = timer_heap[--timer_heap_num];
-	// restore binary heap properties
-	while( pos < timer_heap_num )
-	{
-		int left = BHEAP_LEFT(pos);
-		int right = BHEAP_RIGHT(pos);
-		if( left < timer_heap_num && DIFF_TICK(timer_data[timer_heap[pos]].tick, timer_data[timer_heap[left]].tick) > 0 )
-		{// left exists and has smaller tick
-			if( right < timer_heap_num && DIFF_TICK(timer_data[timer_heap[left]].tick, timer_data[timer_heap[right]].tick) > 0 )	
-			{// right exists and has even smaller tick
-				swap(timer_heap[pos], timer_heap[right]);
-				pos = right;
-			}
-			else
-			{
-				swap(timer_heap[pos], timer_heap[left]);
-				pos = left;
-			}
-		}
-		else if( right < timer_heap_num && DIFF_TICK(timer_data[timer_heap[pos]].tick, timer_data[timer_heap[right]].tick) > 0 )
-		{// right exists and has smaller tick
-			swap(timer_heap[pos], timer_heap[right]);
-			pos = right;
-		}
-		else
-		{
-			break;// done
-		}
-	}
-	return true;
+	timer_heap_num++;
 }
 
 /*==========================
  * 	Timer Management
  *--------------------------*/
-
-// diff_tick limits (2*24*60*60*1000 is 2 days ; 2*60*60*1000 is 2 hours)
-#define FUTURE_DIFF_TICK ( INT_MIN + 2*24*60*60*1000 )
-#define MAX_DIFF_TICK ( INT_MAX - 2*60*60*1000 )
-#define MIN_DIFF_TICK ( -2*60*60*1000 )
-#define PAST_DIFF_TICK ( -2*24*60*60*1000 )
-
-/// Adjusts the tick value to a valid tick_diff range.
-/// Returns false if the tick is invalid.
-static
-bool adjust_tick(unsigned int* tick)
-{
-	int diff;
-	
-	if( tick == NULL )
-		return false;
-
-	diff = DIFF_TICK(*tick, gettick());
-	if( diff <= FUTURE_DIFF_TICK || diff > MAX_DIFF_TICK )
-	{
-		ShowWarning("adjust_tick: tick diff too far in the future %d, adjusting to the maximum %d\n", diff, MAX_DIFF_TICK);
-		*tick -= (diff - MAX_DIFF_TICK);
-	}
-	else if( diff < PAST_DIFF_TICK )
-	{
-		return false;
-	}
-	else if( diff < MIN_DIFF_TICK )
-	{
-		ShowWarning("adjust_tick: tick diff too far in the past %d, adjusting to the minimm %d\n", diff, MIN_DIFF_TICK);
-		*tick += (diff - MAX_DIFF_TICK);
-	}
-	return true;
-}
-
-/// Releases a timer.
-static
-void release_timer(int tid)
-{
-	if( timer_data[tid].type == 0 )
-		return;// already released
-
-	memset(&timer_data[tid], 0, sizeof(struct TimerData));
-	if( free_timer_list_num >= free_timer_list_max )
-	{
-		free_timer_list_max += 256;
-		if( free_timer_list )
-			RECREATE(free_timer_list, int, free_timer_list_max);
-		else
-			CREATE(free_timer_list, int, free_timer_list_max);
-		memset(free_timer_list + (free_timer_list_max - 256), 0, sizeof(int)*256);
-	}
-	free_timer_list[free_timer_list_num++] = tid;
-}
 
 /// Returns a free timer id.
 static int acquire_timer(void)
@@ -327,20 +204,18 @@ static int acquire_timer(void)
 	int tid;
 
 	// select a free timer
-	tid = timer_data_num;
-	while( free_timer_list_num )
-	{
-		int pos = --free_timer_list_num;
-		if( free_timer_list[pos] < timer_data_num && timer_data[free_timer_list[pos]].type == 0 )
-		{// freed and released
-			tid = free_timer_list[pos];
-			break;
-		}
-	}
+	if (free_timer_list_pos) {
+		do {
+			tid = free_timer_list[--free_timer_list_pos];
+		} while(tid >= timer_data_num && free_timer_list_pos > 0);
+	} else
+		tid = timer_data_num;
 
 	// check available space
-	if( tid >= timer_data_max )
-	{
+	if( tid >= timer_data_num )
+		for (tid = timer_data_num; tid < timer_data_max && timer_data[tid].type; tid++);
+	if (tid >= timer_data_num && tid >= timer_data_max)
+	{// expand timer array
 		timer_data_max += 256;
 		if( timer_data )
 			RECREATE(timer_data, struct TimerData, timer_data_max);
@@ -360,12 +235,7 @@ static int acquire_timer(void)
 int add_timer(unsigned int tick, TimerFunc func, int id, intptr data)
 {
 	int tid;
-
-	if( !adjust_tick(&tick) )
-	{
-		ShowError("add_timer: tick out of range (tick=%u %08x[%s] id=%d data=%d diff_tick=%d)\n", tick, (int)func, search_timer_func_list(func), id, data, DIFF_TICK(tick, gettick()));
-		return INVALID_TIMER;
-	}
+	
 	tid = acquire_timer();
 	timer_data[tid].tick     = tick;
 	timer_data[tid].func     = func;
@@ -379,7 +249,7 @@ int add_timer(unsigned int tick, TimerFunc func, int id, intptr data)
 }
 
 /// Starts a new timer that automatically restarts itself (infinite loop until manually removed).
-/// Returns the timer's id, or -1 if it fails.
+/// Returns the timer's id, or INVALID_TIMER if it fails.
 int add_timer_interval(unsigned int tick, TimerFunc func, int id, intptr data, int interval)
 {
 	int tid;
@@ -389,12 +259,7 @@ int add_timer_interval(unsigned int tick, TimerFunc func, int id, intptr data, i
 		ShowError("add_timer_interval: invalid interval (tick=%u %08x[%s] id=%d data=%d diff_tick=%d)\n", tick, (int)func, search_timer_func_list(func), id, data, DIFF_TICK(tick, gettick()));
 		return INVALID_TIMER;
 	}
-	if( !adjust_tick(&tick) )
-	{
-		ShowError("add_timer_interval: tick out of range (tick=%u %08x[%s] id=%d data=%d diff_tick=%d)\n", tick, (int)func, search_timer_func_list(func), id, data, DIFF_TICK(tick, gettick()));
-		return INVALID_TIMER;
-	}
-
+	
 	tid = acquire_timer();
 	timer_data[tid].tick     = tick;
 	timer_data[tid].func     = func;
@@ -410,9 +275,7 @@ int add_timer_interval(unsigned int tick, TimerFunc func, int id, intptr data, i
 /// Retrieves internal timer data
 const struct TimerData* get_timer(int tid)
 {
-	if( tid >= 0 && tid < timer_data_num && timer_data[tid].type != 0 )
-		return &timer_data[tid];
-	return NULL;
+	return ( tid >= 0 && tid < timer_data_num ) ? &timer_data[tid] : NULL;
 }
 
 /// Marks a timer specified by 'id' for immediate deletion once it expires.
@@ -420,7 +283,7 @@ const struct TimerData* get_timer(int tid)
 /// Returns 0 on success, < 0 on failure.
 int delete_timer(int tid, TimerFunc func)
 {
-	if( tid < 0 || tid >= timer_data_num || timer_data[tid].type == 0 )
+	if( tid < 0 || tid >= timer_data_num )
 	{
 		ShowError("delete_timer error : no such timer %d (%08x(%s))\n", tid, (int)func, search_timer_func_list(func));
 		return -1;
@@ -431,13 +294,9 @@ int delete_timer(int tid, TimerFunc func)
 		return -2;
 	}
 
-	if( timer_data[tid].type&TIMER_REMOVE_HEAP )
-		// timer func being executed, make sure it's marked for removal when it ends
-		timer_data[tid].type = TIMER_FORCE_REMOVE|TIMER_REMOVE_HEAP;
-	else if( pop_timer_heap(tid) )
-		release_timer(tid);
-	else if( (timer_data[tid].type&TIMER_REMOVE_HEAP) == 0 )
-		ShowDebug("delete_timer: failed to remove timer %d (%08x(%s), type=%d)\n", tid, (int)func, search_timer_func_list(func), timer_data[tid].type);
+	timer_data[tid].func = NULL;
+	timer_data[tid].type = TIMER_ONCE_AUTODEL;
+
 	return 0;
 }
 
@@ -452,25 +311,50 @@ int addtick_timer(int tid, unsigned int tick)
 /// Returns the new tick value, or -1 if it fails.
 int settick_timer(int tid, unsigned int tick)
 {
-	if( tid < 0 || tid >= timer_data_num || timer_data[tid].type == 0 )
-	{
-		ShowError("settick_timer error : no such timer %d\n", tid);
-		return -1;
-	}
-	if( timer_data[tid].tick == tick )
+	int old_pos,pos;
+	unsigned int old_tick;
+	
+	old_tick = timer_data[tid].tick;
+	if( old_tick == tick )
 		return tick;
 
-	if( !adjust_tick(&tick) )
-	{
-		ShowError("settick_timer: tick out of range, leaving timer unmodified (tid=%d tick=%u %08x[%s] diff_tick=%d)\n", tid, tick, (int)timer_data[tid].func, search_timer_func_list(timer_data[tid].func), DIFF_TICK(tick, gettick()));
-		return -1;
+	// search old_tick position
+	HEAP_SEARCH(old_tick,0,timer_heap_num-1,old_pos);
+	while( timer_heap[old_pos] != tid )
+	{// skip timers with the same tick
+		if( old_tick != timer_data[timer_heap[old_pos]].tick )
+		{
+			ShowError("settick_timer: no such timer %d (%08x(%s))\n", tid, (int)timer_data[tid].func, search_timer_func_list(timer_data[tid].func));
+			return -1;
+		}
+		++old_pos;
 	}
-	pop_timer_heap(tid);
-	if( tick == -1 )
-		tick = 0;// -1 is reserved for error
-	timer_data[tid].type &= ~TIMER_REMOVE_HEAP;
+
+	if( DIFF_TICK(tick,timer_data[tid].tick) < 0 )
+	{// Timer is accelerated, shift timer near the end of the heap.
+		if (old_pos == timer_heap_num-1) //Nothing to shift.
+			pos = old_pos;
+		else {
+			HEAP_SEARCH(tick,old_pos+1,timer_heap_num-1,pos);
+			--pos;
+			if (pos != old_pos)
+				memmove(&timer_heap[old_pos], &timer_heap[old_pos+1], (pos-old_pos)*sizeof(int));
+		}
+	} else
+	{// Timer is delayed, shift timer near the beginning of the heap.
+		if (old_pos == 0) //Nothing to shift.
+			pos = old_pos;
+		else {
+			HEAP_SEARCH(tick,0,old_pos-1,pos);
+			++pos;
+			if (pos != old_pos)
+				memmove(&timer_heap[pos+1], &timer_heap[pos], (old_pos-pos)*sizeof(int));
+		}
+	}
+
+	timer_heap[pos] = tid;
 	timer_data[tid].tick = tick;
-	push_timer_heap(tid);
+
 	return tick;
 }
 
@@ -483,13 +367,13 @@ int do_timer(unsigned int tick)
 	// process all timers one by one
 	while( timer_heap_num )
 	{
-		int tid = timer_heap[0]; // first element in heap (smallest tick)
+		int tid = timer_heap[timer_heap_num - 1]; // last element in heap (smallest tick)
 
 		diff = DIFF_TICK(timer_data[tid].tick, tick);
 		if( diff > 0 )
 			break; // no more expired timers to process
 
-		pop_timer_heap(tid);
+		--timer_heap_num; // suppress the actual element from the table
 
 		// mark timer as 'to be removed'
 		timer_data[tid].type |= TIMER_REMOVE_HEAP;
@@ -507,32 +391,34 @@ int do_timer(unsigned int tick)
 		}
 
 		// in the case the function didn't change anything...
-		if( timer_data[tid].type & TIMER_REMOVE_HEAP || timer_data[tid].type == TIMER_FORCE_REMOVE )
+		if( timer_data[tid].type & TIMER_REMOVE_HEAP )
 		{
 			timer_data[tid].type &= ~TIMER_REMOVE_HEAP;
 
 			switch( timer_data[tid].type )
 			{
-			case TIMER_FORCE_REMOVE:
 			case TIMER_ONCE_AUTODEL:
-				release_timer(tid);
-				break;
+				timer_data[tid].type = 0;
+				if (free_timer_list_pos >= free_timer_list_max) {
+					free_timer_list_max += 256;
+					RECREATE(free_timer_list,int,free_timer_list_max);
+					memset(free_timer_list + (free_timer_list_max - 256), 0, 256 * sizeof(int));
+				}
+				free_timer_list[free_timer_list_pos++] = tid;
+			break;
 			case TIMER_INTERVAL:
 				if( DIFF_TICK(timer_data[tid].tick, tick) < -1000 )
 					timer_data[tid].tick = tick + timer_data[tid].interval;
 				else
 					timer_data[tid].tick += timer_data[tid].interval;
+				timer_data[tid].type &= ~TIMER_REMOVE_HEAP;
 				push_timer_heap(tid);
-				break;
+			break;
 			}
 		}
 	}
 
-	if( diff < TIMER_MIN_INTERVAL )
-		return TIMER_MIN_INTERVAL;
-	if( diff > TIMER_MAX_INTERVAL )
-		return TIMER_MAX_INTERVAL;
-	return diff;
+	return cap_value(diff, TIMER_MIN_INTERVAL, TIMER_MAX_INTERVAL);
 }
 
 unsigned long get_uptime(void)

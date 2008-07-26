@@ -15,7 +15,6 @@
 // timer flags
 #define TIMER_ONCE_AUTODEL 0x01
 #define TIMER_INTERVAL     0x02
-#define TIMER_FORCE_REMOVE 0x04
 #define TIMER_REMOVE_HEAP  0x10
 
 // Struct declaration
