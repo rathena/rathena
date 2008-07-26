@@ -3043,7 +3043,7 @@ int run_script_timer(int tid, unsigned int tick, int id, intptr data)
 	while( node && st->sleep.timer != -1 ) {
 		if( (int)node->key == st->oid && ((struct script_state *)node->data)->sleep.timer == st->sleep.timer ) {
 			script_erase_sleepdb(node);
-			st->sleep.timer = -1;
+			st->sleep.timer = INVALID_TIMER;
 			break;
 		}
 		node = node->next;
@@ -9187,7 +9187,7 @@ static int buildin_pvpoff_sub(struct block_list *bl,va_list ap)
 	clif_pvpset(sd, 0, 0, 2);
 	if (sd->pvp_timer != -1) {
 		delete_timer(sd->pvp_timer, pc_calc_pvprank_timer);
-		sd->pvp_timer = -1;
+		sd->pvp_timer = INVALID_TIMER;
 	}
 	return 0;
 }
@@ -10244,9 +10244,9 @@ BUILDIN_FUNC(petskillbonus)
 
 	// wait for timer to start
 	if (battle_config.pet_equip_required && pd->pet.equip == 0)
-		pd->bonus->timer=-1;
+		pd->bonus->timer = INVALID_TIMER;
 	else
-		pd->bonus->timer=add_timer(gettick()+pd->bonus->delay*1000, pet_skill_bonus_timer, sd->bl.id, 0);
+		pd->bonus->timer = add_timer(gettick()+pd->bonus->delay*1000, pet_skill_bonus_timer, sd->bl.id, 0);
 
 	return 0;
 }
@@ -10521,9 +10521,9 @@ BUILDIN_FUNC(petrecovery)
 	} else //Init
 		pd->recovery = (struct pet_recovery *)aMalloc(sizeof(struct pet_recovery));
 		
-	pd->recovery->type=(sc_type)script_getnum(st,2);
-	pd->recovery->delay=script_getnum(st,3);
-	pd->recovery->timer=-1;
+	pd->recovery->type = (sc_type)script_getnum(st,2);
+	pd->recovery->delay = script_getnum(st,3);
+	pd->recovery->timer = INVALID_TIMER;
 
 	return 0;
 }
@@ -10561,9 +10561,9 @@ BUILDIN_FUNC(petheal)
 
 	//Use delay as initial offset to avoid skill/heal exploits
 	if (battle_config.pet_equip_required && pd->pet.equip == 0)
-		pd->s_skill->timer=-1;
+		pd->s_skill->timer = INVALID_TIMER;
 	else
-		pd->s_skill->timer=add_timer(gettick()+pd->s_skill->delay*1000,pet_heal_timer,sd->bl.id,0);
+		pd->s_skill->timer = add_timer(gettick()+pd->s_skill->delay*1000,pet_heal_timer,sd->bl.id,0);
 
 	return 0;
 }
@@ -10654,9 +10654,9 @@ BUILDIN_FUNC(petskillsupport)
 
 	//Use delay as initial offset to avoid skill/heal exploits
 	if (battle_config.pet_equip_required && pd->pet.equip == 0)
-		pd->s_skill->timer=-1;
+		pd->s_skill->timer = INVALID_TIMER;
 	else
-		pd->s_skill->timer=add_timer(gettick()+pd->s_skill->delay*1000,pet_skill_support_timer,sd->bl.id,0);
+		pd->s_skill->timer = add_timer(gettick()+pd->s_skill->delay*1000,pet_skill_support_timer,sd->bl.id,0);
 
 	return 0;
 }
@@ -13114,7 +13114,7 @@ BUILDIN_FUNC(awake)
 
 			delete_timer(tst->sleep.timer, run_script_timer);
 			node = script_erase_sleepdb(node);
-			tst->sleep.timer = -1;
+			tst->sleep.timer = INVALID_TIMER;
 			tst->sleep.tick = 0;
 			run_script_main(tst);
 		}

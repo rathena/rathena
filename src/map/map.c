@@ -2070,7 +2070,7 @@ void map_spawnmobs(int m)
 	if (map[m].mob_delete_timer != -1)
 	{	//Mobs have not been removed yet [Skotlex]
 		delete_timer(map[m].mob_delete_timer, map_removemobs_timer);
-		map[m].mob_delete_timer = -1;
+		map[m].mob_delete_timer = INVALID_TIMER;
 		return;
 	}
 	for(i=0; i<MAX_MOB_LIST_PER_MAP; i++)
@@ -2122,7 +2122,7 @@ int map_removemobs_timer(int tid, unsigned int tick, int id, intptr data)
 		ShowError("map_removemobs_timer mismatch: %d != %d (map %s)\n",map[m].mob_delete_timer, tid, map[m].name);
 		return 0;
 	}
-	map[m].mob_delete_timer = -1;
+	map[m].mob_delete_timer = INVALID_TIMER;
 	if (map[m].users > 0) //Map not empty!
 		return 1;
 
@@ -2738,7 +2738,7 @@ int map_readallmaps (void)
 
 		map[i].m = i;
 		memset(map[i].moblist, 0, sizeof(map[i].moblist));	//Initialize moblist [Skotlex]
-		map[i].mob_delete_timer = -1;	//Initialize timer [Skotlex]
+		map[i].mob_delete_timer = INVALID_TIMER;	//Initialize timer [Skotlex]
 		if(battle_config.pk_mode)
 			map[i].flag.pvp = 1; // make all maps pvp for pk_mode [Valaris]
 

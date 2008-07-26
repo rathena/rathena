@@ -5244,7 +5244,7 @@ int skill_castend_id(int tid, unsigned int tick, int id, intptr data)
 	md = BL_CAST(BL_MOB, src);
 
 	if( src->prev == NULL ) {
-		ud->skilltimer = -1;
+		ud->skilltimer = INVALID_TIMER;
 		return 0;
 	}
 
@@ -5252,17 +5252,17 @@ int skill_castend_id(int tid, unsigned int tick, int id, intptr data)
 	{// otherwise handled in unit_skillcastcancel()
 		if( ud->skilltimer != tid ) {
 			ShowError("skill_castend_id: Timer mismatch %d!=%d!\n", ud->skilltimer, tid);
-			ud->skilltimer = -1;
+			ud->skilltimer = INVALID_TIMER;
 			return 0;
 		}
 
 		if( sd && ud->skilltimer != -1 && pc_checkskill(sd,SA_FREECAST) > 0 )
 		{// restore original walk speed
-			ud->skilltimer = -1;
+			ud->skilltimer = INVALID_TIMER;
 			status_calc_bl(&sd->bl, SCB_SPEED);
 		}
 
-		ud->skilltimer = -1;
+		ud->skilltimer = INVALID_TIMER;
 	}
 
 	if (ud->skilltarget == id)
@@ -5475,23 +5475,23 @@ int skill_castend_pos(int tid, unsigned int tick, int id, intptr data)
 	md = BL_CAST(BL_MOB, src);
 
 	if( src->prev == NULL ) {
-		ud->skilltimer = -1;
+		ud->skilltimer = INVALID_TIMER;
 		return 0;
 	}
 	
 	if( ud->skilltimer != tid )
 	{
 		ShowError("skill_castend_pos: Timer mismatch %d!=%d\n", ud->skilltimer, tid);
-		ud->skilltimer = -1;
+		ud->skilltimer = INVALID_TIMER;
 		return 0;
 	}
 
 	if( sd && ud->skilltimer != -1 && pc_checkskill(sd,SA_FREECAST) > 0 )
 	{// restore original walk speed
-		ud->skilltimer=-1;
+		ud->skilltimer = INVALID_TIMER;
 		status_calc_bl(&sd->bl, SCB_SPEED);
 	}
-	ud->skilltimer=-1;
+	ud->skilltimer = INVALID_TIMER;
 
 	do {
 		if(status_isdead(src))
@@ -7822,12 +7822,13 @@ int skill_check_condition(struct map_session_data* sd, short skill, short lv, in
 				return 0; //Can't repeat previous combo skill.				
 			}
 			break;
-		} else 
-		if(sc->data[SC_COMBO]->val1 == skill)
-			break; //Combo ready.
-		//Cancel combo wait.
-		unit_cancel_combo(&sd->bl);
-		return 0;
+		}
+		if(sc->data[SC_COMBO]->val1 != skill)
+		{	//Cancel combo wait.
+			unit_cancel_combo(&sd->bl);
+			return 0;
+		}
+		break; //Combo ready.
 	case BD_ADAPTATION:
 		{
 			int time;

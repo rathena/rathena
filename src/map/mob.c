@@ -228,7 +228,7 @@ struct mob_data* mob_spawn_dataset(struct spawn_data *data)
 
 	if(md->db->status.mode&MD_LOOTER)
 		md->lootitem = (struct item *)aCalloc(LOOTITEM_SIZE,sizeof(struct item));
-	md->deletetimer = -1;
+	md->deletetimer = INVALID_TIMER;
 	md->skillidx = -1;
 	status_set_viewdata(&md->bl, md->class_);
 	status_change_init(&md->bl);
@@ -1007,7 +1007,7 @@ int mob_spawn (struct mob_data *md)
 	md->attacked_id = 0;
 	md->target_id = 0;
 	md->move_fail_count = 0;
-	md->spawn_timer = -1;
+	md->spawn_timer = INVALID_TIMER;
 
 //	md->master_id = 0;
 	md->master_dist = 0;
@@ -1903,8 +1903,8 @@ int mob_timer_delete(int tid, unsigned int tick, int id, intptr data)
 	nullpo_retr(0, bl);
 	if (bl->type != BL_MOB)
 		return 0; //??
-//for Alchemist CANNIBALIZE [Lupus]
-	((TBL_MOB*)bl)->deletetimer = -1;
+	//for Alchemist CANNIBALIZE [Lupus]
+	((TBL_MOB*)bl)->deletetimer = INVALID_TIMER;
 	unit_free(bl,3);
 	return 0;
 }
@@ -2579,7 +2579,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 
 	if(md->deletetimer!=-1) {
 		delete_timer(md->deletetimer,mob_timer_delete);
-		md->deletetimer=-1;
+		md->deletetimer = INVALID_TIMER;
 	}
 
 	mob_deleteslave(md);

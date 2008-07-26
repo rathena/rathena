@@ -151,7 +151,7 @@ static int auction_end_timer(int tid, unsigned int tick, int id, intptr data)
 		
 		ShowInfo("Auction End: id %u.\n", auction->auction_id);
 
-		auction->auction_end_timer = -1;
+		auction->auction_end_timer = INVALID_TIMER;
 		auction_delete(auction);
 	}
 

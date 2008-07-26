@@ -1924,7 +1924,7 @@ static int atcommand_pvpoff_sub(struct block_list *bl,va_list ap)
 	clif_pvpset(sd, 0, 0, 2);
 	if (sd->pvp_timer != -1) {
 		delete_timer(sd->pvp_timer, pc_calc_pvprank_timer);
-		sd->pvp_timer = -1;
+		sd->pvp_timer = INVALID_TIMER;
 	}
 	return 0;
 }

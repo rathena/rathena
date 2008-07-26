@@ -63,7 +63,7 @@ struct{
 
 // timer for auto saving guild data during WoE
 #define GUILD_SAVE_INTERVAL 300000
-int guild_save_timer = -1;
+int guild_save_timer = INVALID_TIMER;
 
 int guild_payexp_timer(int tid, unsigned int tick, int id, intptr data);
 int guild_save_sub(int tid, unsigned int tick, int id, intptr data);

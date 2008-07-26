@@ -246,7 +246,7 @@ static int pet_hungry(int tid, unsigned int tick, int id, intptr data)
 		ShowError("pet_hungry_timer %d != %d\n",pd->pet_hungry_timer,tid);
 		return 0;
 	}
-	pd->pet_hungry_timer = -1;
+	pd->pet_hungry_timer = INVALID_TIMER;
 
 	if (pd->pet.intimate <= 0)
 		return 1; //You lost the pet already, the rest is irrelevant.
@@ -303,7 +303,7 @@ int pet_hungry_timer_delete(struct pet_data *pd)
 	nullpo_retr(0, pd);
 	if(pd->pet_hungry_timer != -1) {
 		delete_timer(pd->pet_hungry_timer,pet_hungry);
-		pd->pet_hungry_timer = -1;
+		pd->pet_hungry_timer = INVALID_TIMER;
 	}
 
 	return 1;
@@ -751,12 +751,12 @@ static int pet_unequipitem(struct map_session_data *sd, struct pet_data *pd)
 				delete_timer(pd->s_skill->timer, pet_skill_support_timer);
 			else
 				delete_timer(pd->s_skill->timer, pet_heal_timer);
-			pd->s_skill->timer = -1;
+			pd->s_skill->timer = INVALID_TIMER;
 		}
 		if (pd->bonus && pd->bonus->timer != -1)
 		{
 			delete_timer(pd->bonus->timer, pet_skill_bonus_timer);
-			pd->bonus->timer = -1;
+			pd->bonus->timer = INVALID_TIMER;
 		}
 	}
 
@@ -1088,7 +1088,7 @@ int pet_skill_bonus_timer(int tid, unsigned int tick, int id, intptr data)
 
 	if(pd->bonus->timer != tid) {
 		ShowError("pet_skill_bonus_timer %d != %d\n",pd->bonus->timer,tid);
-		pd->bonus->timer = -1;
+		pd->bonus->timer = INVALID_TIMER;
 		return 0;
 	}
 	
@@ -1100,7 +1100,7 @@ int pet_skill_bonus_timer(int tid, unsigned int tick, int id, intptr data)
 		bonus = 1;
 		timer = pd->bonus->duration*1000;	// the duration for pet bonuses to be in effect
 	} else { //Lost pet...
-		pd->bonus->timer = -1;
+		pd->bonus->timer = INVALID_TIMER;
 		return 0;
 	}
 
@@ -1139,7 +1139,7 @@ int pet_recovery_timer(int tid, unsigned int tick, int id, intptr data)
 		clif_emotion(&pd->bl, 33);
 	}
 
-	pd->recovery->timer = -1;
+	pd->recovery->timer = INVALID_TIMER;
 	
 	return 0;
 }

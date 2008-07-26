@@ -124,7 +124,7 @@ static int unit_walktoxy_timer(int tid, unsigned int tick, int id, intptr data)
 		ShowError("unit_walk_timer mismatch %d != %d\n",ud->walktimer,tid);
 		return 0;
 	}
-	ud->walktimer=-1;
+	ud->walktimer = INVALID_TIMER;
 	if( bl->prev == NULL ) return 0; // block_list ‚©‚ç”²‚¯‚Ä‚¢‚é‚Ì‚ÅˆÚ“®’âŽ~‚·‚é
 
 	if(ud->walkpath.path_pos>=ud->walkpath.path_len)
@@ -156,9 +156,9 @@ static int unit_walktoxy_timer(int tid, unsigned int tick, int id, intptr data)
 	if (bl->x != x || bl->y != y || ud->walktimer != -1)
 		return 0; //map_moveblock has altered the object beyond what we expected (moved/warped it)
 
-	ud->walktimer = 1;
+	ud->walktimer = 1; //FIXME: why '1'? [ultramage]
 	map_foreachinmovearea(clif_insight, bl, AREA_SIZE, -dx, -dy, sd?BL_ALL:BL_PC, bl);
-	ud->walktimer = -1;
+	ud->walktimer = INVALID_TIMER;
 	
 	if(sd) {
 		if(map_getcell(bl->m,x,y,CELL_CHKNPC)) {
@@ -315,7 +315,7 @@ int unit_walktoxy( struct block_list *bl, short x, short y, int flag)
 
 	if(ud->attacktimer != -1) {
 		delete_timer( ud->attacktimer, unit_attack_timer );
-		ud->attacktimer = -1;
+		ud->attacktimer = INVALID_TIMER;
 	}
 
 	return unit_walktoxy_sub(bl);
@@ -391,7 +391,7 @@ int unit_walktobl(struct block_list *bl, struct block_list *tbl, int range, int 
 
 	if(ud->attacktimer != -1) {
 		delete_timer( ud->attacktimer, unit_attack_timer );
-		ud->attacktimer = -1;
+		ud->attacktimer = INVALID_TIMER;
 	}
 
 	if (unit_walktoxy_sub(bl)) {
@@ -512,9 +512,9 @@ int unit_movepos(struct block_list *bl, short dst_x, short dst_y, int easy, bool
 
 	map_moveblock(bl, dst_x, dst_y, gettick());
 	
-	ud->walktimer = 1;
+	ud->walktimer = 1; //FIXME: why '1'? [ultramage]
 	map_foreachinmovearea(clif_insight, bl, AREA_SIZE, -dx, -dy, sd?BL_ALL:BL_PC, bl);
-	ud->walktimer = -1;
+	ud->walktimer = INVALID_TIMER;
 		
 	if(sd) {
 		if(map_getcell(bl->m,bl->x,bl->y,CELL_CHKNPC)) {
@@ -656,7 +656,7 @@ int unit_stop_walking(struct block_list *bl,int type)
 	//behaviour changes in the future, this code could break!
 	td = get_timer(ud->walktimer);
 	delete_timer(ud->walktimer, unit_walktoxy_timer);
-	ud->walktimer = -1;
+	ud->walktimer = INVALID_TIMER;
 	ud->state.change_walk_target = 0;
 	tick = gettick();
 	if ((type&0x02 && !ud->walkpath.path_pos) //Force moving at least one cell.
@@ -1193,7 +1193,7 @@ int unit_skilluse_pos2( struct block_list *src, short skill_x, short skill_y, sh
 			unit_stop_walking(src,1);
 	}
 	else {
-		ud->skilltimer = -1;
+		ud->skilltimer = INVALID_TIMER;
 		skill_castend_pos(ud->skilltimer,tick,src->id,0);
 	}
 	return 1;
@@ -1210,7 +1210,7 @@ int unit_stop_attack(struct block_list *bl)
 		return 0;
 
 	delete_timer( ud->attacktimer, unit_attack_timer );
-	ud->attacktimer = -1;
+	ud->attacktimer = INVALID_TIMER;
 	ud->target = 0;
 	return 0;
 }
@@ -1384,7 +1384,7 @@ static int unit_attack_timer_sub(struct block_list* src, int tid, unsigned int t
 	}
 	sd = BL_CAST(BL_PC, src);
 	md = BL_CAST(BL_MOB, src);
-	ud->attacktimer=-1;
+	ud->attacktimer = INVALID_TIMER;
 	target=map_id2bl(ud->target);
 
 	if(src == NULL || src->prev == NULL || target==NULL || target->prev == NULL)
@@ -1534,7 +1534,7 @@ int unit_skillcastcancel(struct block_list *bl,int type)
 	if(ret<0)
 		ShowError("delete timer error : skillid : %d\n",ret);
 
-	ud->skilltimer = -1;
+	ud->skilltimer = INVALID_TIMER;
 
 	if( sd && pc_checkskill(sd,SA_FREECAST) > 0 )
 		status_calc_bl(&sd->bl, SCB_SPEED);
@@ -1711,7 +1711,7 @@ int unit_remove_map_(struct block_list *bl, int clrtype, const char* file, int l
 
 		if(sd->pvp_timer!=-1) {
 			delete_timer(sd->pvp_timer,pc_calc_pvprank_timer);
-			sd->pvp_timer = -1;
+			sd->pvp_timer = INVALID_TIMER;
 			sd->pvp_rank = 0;
 		}
 		if(sd->duel_group > 0)
@@ -1935,7 +1935,7 @@ int unit_free(struct block_list *bl, int clrtype)
 		struct mob_data *md = (struct mob_data*)bl;
 		if(md->deletetimer!=-1) {
 			delete_timer(md->deletetimer,mob_timer_delete);
-			md->deletetimer=-1;
+			md->deletetimer = INVALID_TIMER;
 		}
 		if(md->lootitem) {
 			aFree(md->lootitem);

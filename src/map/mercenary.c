@@ -496,7 +496,7 @@ static int merc_hom_hungry(int tid, unsigned int tick, int id, intptr data)
 		return 0;
 	}
 
-	hd->hungry_timer = -1;
+	hd->hungry_timer = INVALID_TIMER;
 	
 	hd->homunculus.hunger-- ;
 	if(hd->homunculus.hunger <= 10) {
@@ -525,7 +525,7 @@ int merc_hom_hungry_timer_delete(struct homun_data *hd)
 	nullpo_retr(0, hd);
 	if(hd->hungry_timer != -1) {
 		delete_timer(hd->hungry_timer,merc_hom_hungry);
-		hd->hungry_timer = -1;
+		hd->hungry_timer = INVALID_TIMER;
 	}
 	return 1;
 }
@@ -634,7 +634,7 @@ int merc_hom_alloc(struct map_session_data *sd, struct s_homunculus *hom)
 	map_addiddb(&hd->bl);
 	status_calc_homunculus(hd,1);
 
-	hd->hungry_timer = -1;
+	hd->hungry_timer = INVALID_TIMER;
 	return 0;
 }
 

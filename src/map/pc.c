@@ -126,7 +126,7 @@ static int pc_invincible_timer(int tid, unsigned int tick, int id, intptr data)
 		ShowError("invincible_timer %d != %d\n",sd->invincible_timer,tid);
 		return 0;
 	}
-	sd->invincible_timer=-1;
+	sd->invincible_timer = INVALID_TIMER;
 	skill_unit_move(&sd->bl,tick,1);
 
 	return 0;
@@ -734,10 +734,10 @@ bool pc_authok(struct map_session_data *sd, int login_id2, time_t expiration_tim
 	if(!sd->status.hp) pc_setdead(sd);
 	sd->state.connect_new = 1;
 
-	sd->followtimer = -1; // [MouseJstr]
-	sd->invincible_timer = -1;
+	sd->followtimer = INVALID_TIMER; // [MouseJstr]
+	sd->invincible_timer = INVALID_TIMER;
 	sd->npc_timer_id = -1;
-	sd->pvp_timer = -1;
+	sd->pvp_timer = INVALID_TIMER;
 	
 	sd->canuseitem_tick = tick;
 	sd->cantalk_tick = tick;
@@ -4114,11 +4114,11 @@ int pc_follow_timer(int tid, unsigned int tick, int id, intptr data)
 
 	if (sd->followtimer != tid){
 		ShowError("pc_follow_timer %d != %d\n",sd->followtimer,tid);
-		sd->followtimer = -1;
+		sd->followtimer = INVALID_TIMER;
 		return 0;
 	}
 
-	sd->followtimer = -1;
+	sd->followtimer = INVALID_TIMER;
 	if (pc_isdead(sd))
 		return 0;
 
@@ -4149,9 +4149,9 @@ int pc_stop_following (struct map_session_data *sd)
 {
 	nullpo_retr(0, sd);
 
-	if (sd->followtimer != -1) {
+	if (sd->followtimer != INVALID_TIMER) {
 		delete_timer(sd->followtimer,pc_follow_timer);
-		sd->followtimer = -1;
+		sd->followtimer = INVALID_TIMER;
 	}
 	sd->followtarget = -1;
 
@@ -6697,7 +6697,7 @@ int pc_calc_pvprank_timer(int tid, unsigned int tick, int id, intptr data)
 	sd=map_id2sd(id);
 	if(sd==NULL)
 		return 0;
-	sd->pvp_timer = -1;
+	sd->pvp_timer = INVALID_TIMER;
 	if( pc_calc_pvprank(sd) > 0 )
 		sd->pvp_timer = add_timer(gettick()+PVP_CALCRANK_INTERVAL,pc_calc_pvprank_timer,id,data);
 	return 0;
