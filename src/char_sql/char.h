@@ -6,7 +6,6 @@
 
 struct mmo_charstatus;
 
-#define START_CHAR_NUM 150000
 #define MAX_MAP_SERVERS 30
 
 #define DEFAULT_AUTOSAVE_INTERVAL 300*1000
@@ -63,13 +62,6 @@ extern char quest_db[256];
 extern char quest_obj_db[256];
 
 extern int db_use_sqldbs; // added for sql item_db read for char server [Valaris]
-
-extern char login_db_level[32];
-extern char login_db_account_id[32];
-
-extern int lowest_gm_level;
-extern int GM_num;
-extern struct gm_account *gm_account;
 
 extern int guild_exp_rate;
 extern int log_inter;

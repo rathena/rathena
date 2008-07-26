@@ -421,17 +421,15 @@ CREATE TABLE `login` (
   `account_id` int(11) unsigned NOT NULL auto_increment,
   `userid` varchar(23) NOT NULL default '',
   `user_pass` varchar(32) NOT NULL default '',
-  `lastlogin` datetime NOT NULL default '0000-00-00 00:00:00',
   `sex` enum('M','F','S') NOT NULL default 'M',
-  `logincount` mediumint(9) unsigned NOT NULL default '0',
   `email` varchar(39) NOT NULL default '',
   `level` tinyint(3) NOT NULL default '0',
-  `error_message` smallint(11) unsigned NOT NULL default '0',
-  `connect_until` int(11) unsigned NOT NULL default '0',
-  `last_ip` varchar(100) NOT NULL default '',
-  `memo` smallint(11) unsigned NOT NULL default '0',
-  `ban_until` int(11) unsigned NOT NULL default '0',
   `state` int(11) unsigned NOT NULL default '0',
+  `unban_time` int(11) unsigned NOT NULL default '0',
+  `expiration_time` int(11) unsigned NOT NULL default '0',
+  `logincount` mediumint(9) unsigned NOT NULL default '0',
+  `lastlogin` datetime NOT NULL default '0000-00-00 00:00:00',
+  `last_ip` varchar(100) NOT NULL default '',
   PRIMARY KEY  (`account_id`),
   KEY `name` (`userid`)
 ) ENGINE=MyISAM AUTO_INCREMENT=2000000; 
@@ -470,20 +468,6 @@ CREATE TABLE `sc_data` (
   `val4` int(11) NOT NULL default '0',
   KEY (`account_id`),
   KEY (`char_id`)
-) ENGINE=MyISAM;
-
---
--- Table structure for table `loginlog`
---
-
-DROP TABLE IF EXISTS `loginlog`;
-CREATE TABLE `loginlog` (
-  `time` datetime NOT NULL default '0000-00-00 00:00:00',
-  `ip` int(10) unsigned NOT NULL default '0',
-  `user` varchar(23) NOT NULL default '',
-  `rcode` tinyint(4) NOT NULL default '0',
-  `log` varchar(255) NOT NULL default '',
-  INDEX (`ip`)
 ) ENGINE=MyISAM;
 
 --

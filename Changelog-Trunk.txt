@@ -3,6 +3,33 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2008/07/27
+	* Changed the way GM levels are handled
+	- removed conf/gm_account.txt
+	- added the gm level column to the txt savefile (after 'email' column)
+	- gm level information is now transferred along with account data
+	* Merged the /loginmerge branch [ultramage]
+	- the login server storage, ipban and logging systems have been abstracted
+	  and now provide a common interface; the rest has been merged into a
+	  single login server core (no more login/login_sql duplicity)
+	- storage systems are now added via compiler options (WITH_SQL / WITH_TXT)
+	- multiple storage engines can be compiled in at the same time,
+	  and the config option account.engine defines which one will be used.
+	- due to MySQL autoincrement limitations, accounts with id '0' will not
+	  be supported; account IDs from this point on should start from '1'.
+	- login_log() functions now again record IP addresses in dotted format,
+	  not as 4-byte integers (undo from r6868).
+	- removed config options that defined column names in the login table
+	- removed `memo` and `error message` columns from login db/savefile
+	- moved `loginlog` table to the logs database
+	- added sql files upgrade_svn12975.sql and upgrade_svn12975_log.sql
+	- due to changes to the login table layout, I added an !optional! sql
+	  file (upgrade_svn12975_view.sql) that will provide a certain degree
+	  of backwards compatibility with existing software;
+	  read the instructions inside carefully!
+	- moved third-party includes/libs to a separate directory
+	- updated project files / makefiles
+
 2008/07/20
 	* Simplified the search in pop_timer_heap and added more debug info to help 
 	  determine the source condition of timer errors. (bugreport:1860)

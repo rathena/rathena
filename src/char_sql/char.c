@@ -69,12 +69,6 @@ char db_path[1024] = "db";
 
 int db_use_sqldbs;
 
-char login_db[256] = "login";
-char login_db_account_id[32] = "account_id";
-char login_db_level[32] = "level";
-
-int lowest_gm_level = 1;
-
 struct mmo_map_server {
 	int fd;
 	uint32 ip;
@@ -135,6 +129,7 @@ struct char_session_data {
 	int found_char[MAX_CHARS]; // ids of chars on this account
 	char email[40]; // e-mail (default: a@a.com) by [Yor]
 	time_t expiration_time; // # of seconds 1/1/1970 (timestamp): Validity limit of the account (0 = unlimited)
+	int gmlevel;
 };
 
 int char_num, char_max;
@@ -164,10 +159,6 @@ unsigned int save_flag = 0;
 // Initial position (it's possible to set it in conf file)
 struct point start_point = { 0, 53, 111 };
 
-bool char_gm_read = false;
-struct gm_account *gm_account = NULL;
-int GM_num = 0;
-
 int console = 0;
 
 //-----------------------------------------------------
@@ -183,6 +174,7 @@ struct auth_node {
 	uint32 ip;
 	int sex;
 	time_t expiration_time; // # of seconds 1/1/1970 (timestamp): Validity limit of the account (0 = unlimited)
+	int gmlevel;
 };
 
 static DBMap* auth_db; // int account_id -> struct auth_node*
@@ -392,53 +384,6 @@ void set_all_offline_sql(void)
 		Sql_ShowDebug(sql_handle);
 	if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `connect_member` = '0'", guild_db) )
 		Sql_ShowDebug(sql_handle);
-}
-
-//----------------------------------------------------------------------
-// Determine if an account (id) is a GM account
-// and returns its level (or 0 if it isn't a GM account or if not found)
-//----------------------------------------------------------------------
-int isGM(int account_id)
-{
-	int i;
-
-	for(i = 0; i < GM_num; i++)
-		if (gm_account[i].account_id == account_id)
-			return gm_account[i].level;
-	return 0;
-}
-
-void read_gm_account(void)
-{
-	if(!char_gm_read)
-		return;
-	
-	if (gm_account != NULL)
-		aFree(gm_account);
-	GM_num = 0;
-
-	if( SQL_ERROR == Sql_Query(lsql_handle, "SELECT `%s`,`%s` FROM `%s` WHERE `%s`>='%d'", login_db_account_id, login_db_level, login_db, login_db_level, lowest_gm_level) )
-		Sql_ShowDebug(lsql_handle);
-
-	if( Sql_NumRows(lsql_handle) > 0 )
-	{
-		char* data;
-
-		CREATE(gm_account, struct gm_account, (size_t)Sql_NumRows(lsql_handle));
-		while( SQL_SUCCESS == Sql_NextRow(lsql_handle) )
-		{
-			// account_id
-			Sql_GetData(lsql_handle, 0, &data, NULL);
-			gm_account[GM_num].account_id = atoi(data);
-			// account_id
-			Sql_GetData(lsql_handle, 1, &data, NULL);
-			gm_account[GM_num].level = atoi(data);
-			++GM_num;
-		}
-	}
-	Sql_FreeResult(lsql_handle);
-
-	mapif_send_gmaccounts();
 }
 
 static void* create_charstatus(DBKey key, va_list args)
@@ -1636,7 +1581,7 @@ int char_family(int pl1, int pl2, int pl3)
 static void char_auth_ok(int fd, struct char_session_data *sd)
 {
 	struct online_char_data* character;
-	if (max_connect_user && count_users() >= max_connect_user && isGM(sd->account_id) < gm_allow_level)
+	if (max_connect_user && count_users() >= max_connect_user && sd->gmlevel < gm_allow_level)
 	{
 		// refuse connection (over populated)
 		WFIFOW(fd,0) = 0x6c;
@@ -1742,7 +1687,7 @@ int parse_fromlogin(int fd)
 
 		// acknowledgement of account authentication request
 		case 0x2713:
-			if (RFIFOREST(fd) < 59)
+			if (RFIFOREST(fd) < 60)
 				return 0;
 		{
 			int account_id = RFIFOL(fd,2);
@@ -1751,6 +1696,7 @@ int parse_fromlogin(int fd)
 			bool result = RFIFOB(fd,14);
 			const char* email = (const char*)RFIFOP(fd,15);
 			time_t expiration_time = (time_t)RFIFOL(fd,55);
+			int gmlevel = RFIFOB(fd,59);
 
 			// find the session with this account id
 			ARR_FIND( 0, fd_max, i, session[i] && (sd = (struct char_session_data*)session[i]->session_data) &&
@@ -1765,16 +1711,17 @@ int parse_fromlogin(int fd)
 				} else { // success
 					memcpy(sd->email, email, 40);
 					sd->expiration_time = expiration_time;
+					sd->gmlevel = gmlevel;
 					char_auth_ok(i, sd);
 				}
 			}
 		}
-			RFIFOSKIP(fd,59);
+			RFIFOSKIP(fd,60);
 		break;
 
 		// acknowledgement of e-mail/limited time request
 		case 0x2717:
-			if (RFIFOREST(fd) < 50)
+			if (RFIFOREST(fd) < 51)
 				return 0;
 
 			// find the session with this account id
@@ -1783,8 +1730,9 @@ int parse_fromlogin(int fd)
 			{
 				memcpy(sd->email, RFIFOP(fd,6), 40);
 				sd->expiration_time = (time_t)RFIFOL(fd,46);
+				sd->gmlevel = RFIFOB(fd,50);
 			}
-			RFIFOSKIP(fd,50);
+			RFIFOSKIP(fd,51);
 		break;
 
 		// login-server alive packet
@@ -1881,7 +1829,7 @@ int parse_fromlogin(int fd)
 				return 0;
 
 		{	//Receive account_reg2 registry, forward to map servers.
-			unsigned char buf[ACCOUNT_REG2_NUM*(256+32+2)+16];
+			unsigned char buf[13+ACCOUNT_REG2_NUM*sizeof(struct global_reg)];
 			memcpy(buf,RFIFOP(fd,0), RFIFOW(fd,2));
 			WBUFW(buf,0) = 0x3804; //Map server can now receive all kinds of reg values with the same packet. [Skotlex]
 			mapif_sendall(buf, WBUFW(buf,2));
@@ -1908,33 +1856,6 @@ int parse_fromlogin(int fd)
 				set_eof(i);
 
 			RFIFOSKIP(fd,11);
-		break;
-
-		// gm account information from login server
-		case 0x2732:
-			if (RFIFOREST(fd) < 4 || RFIFOREST(fd) < RFIFOW(fd,2))
-				return 0;
-
-			if(!char_gm_read) {
-				unsigned char buf[32000]; //FIXME: this will crash
-				if (gm_account != NULL)
-					aFree(gm_account);
-				gm_account = (struct gm_account*)aCalloc(sizeof(struct gm_account) * ((RFIFOW(fd,2) - 4) / 5), 1);
-				GM_num = 0;
-				for (i = 4; i < RFIFOW(fd,2); i = i + 5) {
-					gm_account[GM_num].account_id = RFIFOL(fd,i);
-					gm_account[GM_num].level = (int)RFIFOB(fd,i+4);
-					//printf("GM account: %d -> level %d\n", gm_account[GM_num].account_id, gm_account[GM_num].level);
-					GM_num++;
-				}
-				ShowStatus("From login-server: receiving information of %d GM accounts.\n", GM_num);
-				// send new gm acccounts level to map-servers
-				memcpy(buf, RFIFOP(fd,0), RFIFOW(fd,2));
-				WBUFW(buf,0) = 0x2b15;
-				mapif_sendall(buf, RFIFOW(fd,2));
-			}
-
-			RFIFOSKIP(fd,RFIFOW(fd,2));
 		break;
 
 		// Login server request to kick a character out. [Skotlex]
@@ -2214,18 +2135,6 @@ int parse_frommap(int fd)
 		switch(RFIFOW(fd, 0))
 		{
 
-		case 0x2af7: // request from map-server to reload GM accounts. Transmission to login-server
-			if(char_gm_read) //Re-read gm accounts.
-				read_gm_account();
-			//Send to login request to reload gm accounts.
-			else if (login_fd > 0) { // don't send request if no login-server
-				WFIFOHEAD(login_fd,2);
-				WFIFOW(login_fd,0) = 0x2709;
-				WFIFOSET(login_fd,2);
-			}
-			RFIFOSKIP(fd,2);
-		break;
-
 		case 0x2afa: // Receiving map names list from the map-server
 			if (RFIFOREST(fd) < 4 || RFIFOREST(fd) < RFIFOW(fd,2))
 				return 0;
@@ -2434,7 +2343,8 @@ int parse_frommap(int fd)
 			node->login_id2 = login_id2;
 			//node->sex = 0;
 			node->ip = ntohl(ip);
-			node->expiration_time = 0; // unlimited/unknown time by default (not display in map-server)
+			//node->expiration_time = 0; // unlimited/unknown time by default (not display in map-server)
+			//node->gmlevel = 0;
 			idb_put(auth_db, account_id, node);
 
 			//Set char to "@ char select" in online db [Kevin]
@@ -2467,7 +2377,7 @@ int parse_frommap(int fd)
 				mmo_char_fromsql(RFIFOL(fd,14), &char_dat, true);
 				char_data = (struct mmo_charstatus*)uidb_get(char_db_,RFIFOL(fd,14));
 			}
-			//Tell the new map server about this player using Kevin's new auth packet. [Skotlex]
+
 			if (map_fd >= 0 && session[map_fd] && char_data) 
 			{	//Send the map server the auth of this player.
 				struct auth_node* node;
@@ -2477,19 +2387,6 @@ int parse_frommap(int fd)
 				char_data->last_point.x = RFIFOW(fd,20);
 				char_data->last_point.y = RFIFOW(fd,22);
 				char_data->sex = RFIFOB(fd,30);
-
-#if 0
-				// the map-server must request it [FlavioJS]
-				WFIFOHEAD(map_fd, 20 + sizeof(struct mmo_charstatus));
-				WFIFOW(map_fd,0) = 0x2afd;
-				WFIFOW(map_fd,2) = 20 + sizeof(struct mmo_charstatus);
-				WFIFOL(map_fd,4) = RFIFOL(fd,2); //Account ID
-				WFIFOL(map_fd,8) = RFIFOL(fd,6); //Login1
-				WFIFOL(map_fd,16) = RFIFOL(fd,10); //Login2
-				WFIFOL(map_fd,12) = (unsigned long)0; //TODO: expiration_time, how do I figure it out right now?
-				memcpy(WFIFOP(map_fd,20), char_data, sizeof(struct mmo_charstatus));
-				WFIFOSET(map_fd, WFIFOW(map_fd,2));
-#endif
 
 				// create temporary auth entry
 				CREATE(node, struct auth_node, 1);
@@ -2588,9 +2485,10 @@ int parse_frommap(int fd)
 
 				if( login_fd <= 0 )
 					result = 3; // 3-login-server offline
-				else
-				if( acc != -1 && isGM(acc) < isGM(account_id) )
-					result = 2; // 2-gm level too low
+				//FIXME: need to move this check to login server [ultramage]
+//				else
+//				if( acc != -1 && isGM(acc) < isGM(account_id) )
+//					result = 2; // 2-gm level too low
 				else
 				switch( type ) {
 				case 1: // block
@@ -2838,14 +2736,15 @@ int parse_frommap(int fd)
 			{// auth ok
 				cd->sex = sex;
 
-				WFIFOHEAD(fd,20 + sizeof(struct mmo_charstatus));
+				WFIFOHEAD(fd,24 + sizeof(struct mmo_charstatus));
 				WFIFOW(fd,0) = 0x2afd;
-				WFIFOW(fd,2) = 20 + sizeof(struct mmo_charstatus);
+				WFIFOW(fd,2) = 24 + sizeof(struct mmo_charstatus);
 				WFIFOL(fd,4) = account_id;
-				WFIFOL(fd,8) = login_id1;
-				WFIFOL(fd,12) = (uint32)node->expiration_time; // FIXME: will wrap to negative after "19-Jan-2038, 03:14:07 AM GMT"
-				WFIFOL(fd,16) = node->login_id2;
-				memcpy(WFIFOP(fd,20), cd, sizeof(struct mmo_charstatus));
+				WFIFOL(fd,8) = node->login_id1;
+				WFIFOL(fd,12) = node->login_id2;
+				WFIFOL(fd,16) = (uint32)node->expiration_time; // FIXME: will wrap to negative after "19-Jan-2038, 03:14:07 AM GMT"
+				WFIFOL(fd,20) = node->gmlevel;
+				memcpy(WFIFOP(fd,24), cd, sizeof(struct mmo_charstatus));
 				WFIFOSET(fd, WFIFOW(fd,2));
 
 				// only use the auth once and mark user online
@@ -2996,7 +2895,6 @@ int parse_char(int fd)
 			
 			CREATE(session[fd]->session_data, struct char_session_data, 1);
 			sd = (struct char_session_data*)session[fd]->session_data;
-			sd->expiration_time = 0; // unknown or unlimited (not displaying on map-server)
 			sd->account_id = account_id;
 			sd->login_id1 = login_id1;
 			sd->login_id2 = login_id2;
@@ -3149,8 +3047,6 @@ int parse_char(int fd)
 			WFIFOW(fd,0) = 0x71;
 			WFIFOL(fd,2) = cp->char_id;
 			mapindex_getmapname_ext(mapindex_id2name(cp->last_point.map), (char*)WFIFOP(fd,6));
-
-			// Advanced subnet check [LuzZza]
 			subnet_map_ip = lan_subnetcheck(ipl);
 			WFIFOL(fd,22) = htonl((subnet_map_ip) ? subnet_map_ip : server[i].ip);
 			WFIFOW(fd,26) = ntows(htons(server[i].port)); // [!] LE byte order here [!]
@@ -3164,6 +3060,7 @@ int parse_char(int fd)
 			node->login_id2 = sd->login_id2;
 			node->sex = sd->sex;
 			node->expiration_time = sd->expiration_time;
+			node->gmlevel = sd->gmlevel;
 			node->ip = ipl;
 			idb_put(auth_db, sd->account_id, node);
 
@@ -3324,15 +3221,6 @@ int parse_char(int fd)
 				session[fd]->flag.server = 1;
 				realloc_fifo(fd, FIFOSIZE_SERVERLINK, FIFOSIZE_SERVERLINK);
 				char_mapif_init(fd);
-				// send gm acccounts level to map-servers
-				WFIFOHEAD(fd,4+5*GM_num); 
-				WFIFOW(fd,0) = 0x2b15;
-				for(i = 0; i < GM_num; i++) {
-					WFIFOL(fd,4+5*i) = gm_account[i].account_id;
-					WFIFOB(fd,4+5*i+4) = (unsigned char)gm_account[i].level;
-				}
-				WFIFOW(fd,2) = 4+5*GM_num;
-				WFIFOSET(fd,WFIFOW(fd,2));
 			}
 			
 			RFIFOSKIP(fd,60);
@@ -3669,21 +3557,6 @@ void sql_config_read(const char* cfgName)
 
 		if(!strcmpi(w1,"char_db"))
 			strcpy(char_db,w2);
-#ifndef TXT_SQL_CONVERT
-		else if(!strcmpi(w1,"gm_read_method"))
-			char_gm_read = config_switch(w2);
-		//custom columns for login database
-		else if(!strcmpi(w1,"login_db"))
-			strcpy(login_db,w2);
-		else if(!strcmpi(w1,"login_db_level"))
-			strcpy(login_db_level,w2);
-		else if(!strcmpi(w1,"login_db_account_id"))
-			strcpy(login_db_account_id,w2);
-		else if(!strcmpi(w1,"lowest_gm_level")) {
-			lowest_gm_level = atoi(w2);
-			ShowStatus("set lowest_gm_level : %s\n", w2);
-		}
-#endif
 		else if(!strcmpi(w1,"scdata_db"))
 			strcpy(scdata_db,w2);
 		else if(!strcmpi(w1,"cart_db"))
@@ -3920,11 +3793,6 @@ void do_final(void)
 	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `ragsrvinfo") )
 		Sql_ShowDebug(sql_handle);
 
-	if(gm_account)  {
-		aFree(gm_account);
-		gm_account = 0;
-	}
-
 	if (login_fd > 0)
 		do_close(login_fd);
 	if (char_fd > 0)
@@ -3934,8 +3802,6 @@ void do_final(void)
 	auth_db->destroy(auth_db, NULL);
 
 	Sql_Free(sql_handle);
-	if( lsql_handle )
-		Sql_Free(lsql_handle);
 
 	ShowInfo("ok! all done...\n");
 }
@@ -3986,8 +3852,6 @@ int do_init(int argc, char **argv)
 	online_char_db = idb_alloc(DB_OPT_RELEASE_DATA);
 	mmo_char_sql_init();
 	char_read_fame_list(); //Read fame lists.
-	if(char_gm_read)
-		read_gm_account();
 	ShowInfo("char server initialized.\n");
 
 	set_defaultparse(parse_char);

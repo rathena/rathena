@@ -90,6 +90,7 @@
 //Limits to avoid ID collision with other game objects
 #define START_ACCOUNT_NUM 2000000
 #define END_ACCOUNT_NUM 100000000
+#define START_CHAR_NUM 150000
 
 //Base Homun skill.
 #define HM_SKILLBASE 8001
@@ -342,11 +343,6 @@ struct registry {
 	struct global_reg account[ACCOUNT_REG_NUM];
 	int account2_num;
 	struct global_reg account2[ACCOUNT_REG2_NUM];
-};
-
-struct gm_account {
-	int account_id;
-	int level;
 };
 
 struct party_member {

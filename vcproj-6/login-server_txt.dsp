@@ -38,14 +38,14 @@ RSC=rc.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
-# ADD CPP /nologo /W2 /GX /O2 /I "..\src\common" /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_WIN32" /D "TXT_ONLY" /D "__WIN32" /D FD_SETSIZE=4096 /D "DB_MANUAL_CAST_TO_UNION" /Fp"tmp/login_txt/login-server_txt.pch" /YX /Fo"tmp/login_txt/" /Fd"tmp/login_txt/" /FD /c
+# ADD CPP /nologo /W2 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_WIN32" /D "__WIN32" /D FD_SETSIZE=4096 /D "DB_MANUAL_CAST_TO_UNION" /D "WITH_TXT" /D "ACCOUNTDB_ENGINE_0=rj" /Fp"tmp/login_txt/login-server_txt.pch" /YX /Fo"tmp/login_txt/" /Fd"tmp/login_txt/" /FD /c
 # ADD BASE RSC /l 0x409
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
-# ADD LINK32 WSOCK32.lib zdll.lib ws2_32.lib /nologo /subsystem:console /pdb:"tmp/login_txt/login-server_txt.pdb" /machine:I386 /out:"../login-server_txt.exe" /libpath:"../lib"
+# ADD LINK32 WSOCK32.lib ws2_32.lib /nologo /subsystem:console /pdb:"tmp/login_txt/login-server_txt.pdb" /machine:I386 /out:"../login-server_txt.exe"
 # SUBTRACT LINK32 /pdb:none
 # Begin Target
 
@@ -187,7 +187,27 @@ SOURCE=..\src\common\version.h
 # PROP Default_Filter ""
 # Begin Source File
 
+SOURCE=..\src\login\account.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\login\account_rj.c
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\login\account_txt.c
+# End Source File
+# Begin Source File
+
 SOURCE=..\src\login\admin.c
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\login\ipban.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\login\ipban_txt.c
 # End Source File
 # Begin Source File
 
@@ -196,6 +216,14 @@ SOURCE=..\src\login\login.c
 # Begin Source File
 
 SOURCE=..\src\login\login.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\login\loginlog.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\login\loginlog_txt.h
 # End Source File
 # End Group
 # End Target

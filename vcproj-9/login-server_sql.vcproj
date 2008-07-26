@@ -42,8 +42,8 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\src\common;..\src\zlib;..\src\mysql"
-				PreprocessorDefinitions="WIN32;_WIN32;__WIN32;_DEBUG;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;FD_SETSIZE=4096;DB_MANUAL_CAST_TO_UNION"
+				AdditionalIncludeDirectories="..\3rdparty\mysql\include"
+				PreprocessorDefinitions="WIN32;_WIN32;__WIN32;_DEBUG;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;FD_SETSIZE=4096;DB_MANUAL_CAST_TO_UNION;WITH_SQL"
 				GeneratePreprocessedFile="0"
 				MinimalRebuild="true"
 				ExceptionHandling="0"
@@ -68,10 +68,10 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="libcmtd.lib oldnames.lib ws2_32.lib libmysql.lib zdll.lib"
+				AdditionalDependencies="libcmtd.lib oldnames.lib ws2_32.lib libmysql.lib"
 				OutputFile="$(OutDir)\$(ProjectName).exe"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="..\lib"
+				AdditionalLibraryDirectories="..\3rdparty\mysql\lib"
 				IgnoreAllDefaultLibraries="true"
 				IgnoreDefaultLibraryNames=""
 				GenerateDebugInformation="true"
@@ -136,8 +136,8 @@
 				OmitFramePointers="true"
 				EnableFiberSafeOptimizations="true"
 				WholeProgramOptimization="true"
-				AdditionalIncludeDirectories="..\src\common;..\src\zlib;..\src\mysql"
-				PreprocessorDefinitions="WIN32;_WIN32;__WIN32;NDEBUG;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;FD_SETSIZE=4096;DB_MANUAL_CAST_TO_UNION"
+				AdditionalIncludeDirectories="..\3rdparty\mysql\include"
+				PreprocessorDefinitions="WIN32;_WIN32;__WIN32;NDEBUG;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;FD_SETSIZE=4096;DB_MANUAL_CAST_TO_UNION;WITH_SQL"
 				StringPooling="true"
 				RuntimeLibrary="0"
 				DefaultCharIsUnsigned="false"
@@ -160,10 +160,10 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="libcmt.lib oldnames.lib ws2_32.lib libmysql.lib zdll.lib"
+				AdditionalDependencies="libcmt.lib oldnames.lib ws2_32.lib libmysql.lib"
 				OutputFile="$(OutDir)\$(ProjectName).exe"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="..\lib"
+				AdditionalLibraryDirectories="..\3rdparty\mysql\lib"
 				IgnoreAllDefaultLibraries="true"
 				IgnoreDefaultLibraryNames=""
 				GenerateDebugInformation="true"
@@ -206,11 +206,39 @@
 			Name="login_sql"
 			>
 			<File
-				RelativePath="..\src\login_sql\login.c"
+				RelativePath="..\src\login\account.h"
 				>
 			</File>
 			<File
-				RelativePath="..\src\login_sql\login.h"
+				RelativePath="..\src\login\account_sql.c"
+				>
+			</File>
+			<File
+				RelativePath="..\src\login\admin.c"
+				>
+			</File>
+			<File
+				RelativePath="..\src\login\ipban.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\login\ipban_sql.c"
+				>
+			</File>
+			<File
+				RelativePath="..\src\login\login.c"
+				>
+			</File>
+			<File
+				RelativePath="..\src\login\login.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\login\loginlog.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\login\loginlog_sql.c"
 				>
 			</File>
 		</Filter>

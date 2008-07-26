@@ -141,6 +141,7 @@ extern struct Battle_Config
 	int monster_max_aspd;
 	int view_range_rate;
 	int chase_range_rate;
+	int lowest_gm_level;
 	int atc_gmonly;
 	int atc_spawn_quantity_limit;
 	int atc_slave_clone_limit;

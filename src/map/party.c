@@ -28,7 +28,6 @@
 
 
 static DBMap* party_db; // int party_id -> struct party_data*
-int party_share_level = 10;
 int party_send_xy_timer(int tid, unsigned int tick, int id, intptr data);
 
 /*==========================================

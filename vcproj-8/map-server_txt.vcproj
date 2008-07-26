@@ -41,7 +41,7 @@
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/wd4018&#x0D;&#x0A;/wd4100"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\src\common;..\src\zlib"
+				AdditionalIncludeDirectories="..\3rdparty\zlib\include;..\3rdparty\pcre\include"
 				PreprocessorDefinitions="WIN32;_WIN32;__WIN32;_DEBUG;PCRE_SUPPORT;TXT_ONLY;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;FD_SETSIZE=4096;DB_MANUAL_CAST_TO_UNION"
 				GeneratePreprocessedFile="0"
 				MinimalRebuild="true"
@@ -71,7 +71,7 @@
 				AdditionalDependencies="libcmtd.lib oldnames.lib ws2_32.lib zdll.lib pcre.lib"
 				OutputFile="$(OutDir)\map-server.exe"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="..\lib"
+				AdditionalLibraryDirectories="..\3rdparty\zlib\lib;..\3rdparty\pcre\lib"
 				IgnoreAllDefaultLibraries="true"
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile="$(OutDir)\map-server.pdb"
@@ -136,7 +136,7 @@
 				OmitFramePointers="true"
 				EnableFiberSafeOptimizations="true"
 				WholeProgramOptimization="true"
-				AdditionalIncludeDirectories="..\src\common;..\src\zlib"
+				AdditionalIncludeDirectories="..\3rdparty\zlib\include;..\3rdparty\pcre\include"
 				PreprocessorDefinitions="WIN32;_WIN32;__WIN32;NDEBUG;PCRE_SUPPORT;TXT_ONLY;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;FD_SETSIZE=4096;DB_MANUAL_CAST_TO_UNION"
 				StringPooling="true"
 				RuntimeLibrary="0"
@@ -162,7 +162,7 @@
 				AdditionalDependencies="libcmt.lib oldnames.lib ws2_32.lib zdll.lib pcre.lib"
 				OutputFile="$(OutDir)\map-server.exe"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="..\lib"
+				AdditionalLibraryDirectories="..\3rdparty\zlib\lib;..\3rdparty\pcre\lib"
 				IgnoreAllDefaultLibraries="true"
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile="$(OutDir)\map-server.pdb"
@@ -370,15 +370,19 @@
 				>
 			</File>
 			<File
-				RelativePath="..\src\map\pcre.h"
-				>
-			</File>
-			<File
 				RelativePath="..\src\map\pet.c"
 				>
 			</File>
 			<File
 				RelativePath="..\src\map\pet.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\map\quest.c"
+				>
+			</File>
+			<File
+				RelativePath="..\src\map\quest.h"
 				>
 			</File>
 			<File
@@ -435,26 +439,6 @@
 			</File>
 			<File
 				RelativePath="..\src\map\vending.h"
-				>
-			</File>
-			<File
-				RelativePath="..\src\map\quest.c"
-				>
-			</File>
-			<File
-				RelativePath="..\src\map\quest.h"
-				>
-			</File>
-		</Filter>
-		<Filter
-			Name="zlib"
-			>
-			<File
-				RelativePath="..\src\zlib\zconf.h"
-				>
-			</File>
-			<File
-				RelativePath="..\src\zlib\zlib.h"
 				>
 			</File>
 		</Filter>

@@ -42,7 +42,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\src\common;..\src\zlib;..\src\mysql"
+				AdditionalIncludeDirectories="..\3rdparty\mysql\include"
 				PreprocessorDefinitions="WIN32;_WIN32;__WIN32;_DEBUG;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;FD_SETSIZE=4096;DB_MANUAL_CAST_TO_UNION;MINICORE;TXT_SQL_CONVERT"
 				GeneratePreprocessedFile="0"
 				MinimalRebuild="true"
@@ -67,10 +67,10 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="libcmtd.lib oldnames.lib ws2_32.lib libmysql.lib zdll.lib"
+				AdditionalDependencies="libcmtd.lib oldnames.lib ws2_32.lib libmysql.lib"
 				OutputFile="$(OutDir)\login-converter.exe"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="..\lib"
+				AdditionalLibraryDirectories="..\3rdparty\mysql\lib"
 				IgnoreAllDefaultLibraries="true"
 				IgnoreDefaultLibraryNames=""
 				GenerateDebugInformation="true"
@@ -135,7 +135,7 @@
 				OmitFramePointers="true"
 				EnableFiberSafeOptimizations="true"
 				WholeProgramOptimization="true"
-				AdditionalIncludeDirectories="..\src\common;..\src\zlib;..\src\mysql"
+				AdditionalIncludeDirectories="..\3rdparty\mysql\include"
 				PreprocessorDefinitions="WIN32;_WIN32;__WIN32;NDEBUG;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;FD_SETSIZE=4096;DB_MANUAL_CAST_TO_UNION;MINICORE;TXT_SQL_CONVERT"
 				StringPooling="true"
 				RuntimeLibrary="0"
@@ -158,10 +158,10 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="libcmt.lib oldnames.lib ws2_32.lib libmysql.lib zdll.lib"
+				AdditionalDependencies="libcmt.lib oldnames.lib ws2_32.lib libmysql.lib"
 				OutputFile="$(OutDir)\login-converter.exe"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="..\lib"
+				AdditionalLibraryDirectories="..\3rdparty\mysql\lib"
 				IgnoreAllDefaultLibraries="true"
 				IgnoreDefaultLibraryNames=""
 				GenerateDebugInformation="true"
@@ -228,6 +228,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\src\common\lock.c"
+				>
+			</File>
+			<File
+				RelativePath="..\src\common\lock.h"
+				>
+			</File>
+			<File
 				RelativePath="..\src\common\malloc.c"
 				>
 			</File>
@@ -259,7 +267,27 @@
 				RelativePath="..\src\common\strlib.h"
 				>
 			</File>
+			<File
+				RelativePath="..\src\common\timer.c"
+				>
+			</File>
+			<File
+				RelativePath="..\src\common\timer.h"
+				>
+			</File>
 		</Filter>
+		<File
+			RelativePath="..\src\login\account.h"
+			>
+		</File>
+		<File
+			RelativePath="..\src\login\account_sql.c"
+			>
+		</File>
+		<File
+			RelativePath="..\src\login\account_txt.c"
+			>
+		</File>
 		<File
 			RelativePath="..\src\txt-converter\login-converter.c"
 			>

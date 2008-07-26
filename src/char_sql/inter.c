@@ -28,7 +28,6 @@
 
 
 Sql* sql_handle = NULL;
-Sql* lsql_handle = NULL;
 
 int char_server_port = 3306;
 char char_server_ip[32] = "127.0.0.1";
@@ -36,12 +35,6 @@ char char_server_id[32] = "ragnarok";
 char char_server_pw[32] = "ragnarok";
 char char_server_db[32] = "ragnarok";
 char default_codepage[32] = ""; //Feature by irmin.
-
-int login_server_port = 3306;
-char login_server_ip[32] = "127.0.0.1";
-char login_server_id[32] = "ragnarok";
-char login_server_pw[32] = "ragnarok";
-char login_server_db[32] = "ragnarok";
 
 #ifndef TXT_SQL_CONVERT
 
@@ -70,8 +63,6 @@ struct WisData {
 };
 static DBMap* wis_db = NULL; // int wis_id -> struct WisData*
 static int wis_dellist[WISDELLIST_MAX], wis_delnum;
-
-int inter_sql_test (void);
 
 #endif //TXT_SQL_CONVERT
 //--------------------------------------------------------
@@ -237,29 +228,6 @@ static int inter_config_read(const char* cfgName)
 			strcpy(default_codepage,w2);
 			ShowStatus ("set default_codepage : %s\n", w2);
 		}
-		//Logins information to be read from the inter_athena.conf
-		//for character deletion (checks email in the loginDB)
-		else
-		if(!strcmpi(w1,"login_server_ip")) {
-			strcpy(login_server_ip, w2);
-			ShowStatus ("set login_server_ip : %s\n", w2);
-		} else
-		if(!strcmpi(w1,"login_server_port")) {
-			login_server_port = atoi(w2);
-			ShowStatus ("set login_server_port : %s\n", w2);
-		} else
-		if(!strcmpi(w1,"login_server_id")) {
-			strcpy(login_server_id, w2);
-			ShowStatus ("set login_server_id : %s\n", w2);
-		} else
-		if(!strcmpi(w1,"login_server_pw")) {
-			strcpy(login_server_pw, w2);
-			ShowStatus ("set login_server_pw : %s\n", w2);
-		} else
-		if(!strcmpi(w1,"login_server_db")) {
-			strcpy(login_server_db, w2);
-			ShowStatus ("set login_server_db : %s\n", w2);
-		}
 #ifndef TXT_SQL_CONVERT
 		else if(!strcmpi(w1,"party_share_level"))
 			party_share_level = atoi(w2);
@@ -297,38 +265,6 @@ int inter_log(char* fmt, ...)
 	return 0;
 }
 
-/*=============================================
- * Does a mysql_ping to all connection handles
- *---------------------------------------------*/
-int inter_sql_ping(int tid, unsigned int tick, int id, intptr data) 
-{
-	ShowInfo("Pinging SQL server to keep connection alive...\n");
-	Sql_Ping(sql_handle);
-	if( char_gm_read )
-		Sql_Ping(lsql_handle);
-	return 0;
-}
-
-
-int sql_ping_init(void)
-{
-	uint32 connection_timeout, connection_ping_interval;
-
-	// set a default value first
-	connection_timeout = 28800; // 8 hours
-
-	// ask the mysql server for the timeout value
-	if( SQL_SUCCESS == Sql_GetTimeout(sql_handle, &connection_timeout) && connection_timeout < 60 )
-		connection_timeout = 60;
-
-	// establish keepalive
-	connection_ping_interval = connection_timeout - 30; // 30-second reserve
-	add_timer_func_list(inter_sql_ping, "inter_sql_ping");
-	add_timer_interval(gettick() + connection_ping_interval*1000, inter_sql_ping, 0, 0, connection_ping_interval*1000);
-
-	return 0;
-}
-
 #endif //TXT_SQL_CONVERT
 
 // initialize
@@ -348,34 +284,10 @@ int inter_init_sql(const char *file)
 		Sql_Free(sql_handle);
 		exit(EXIT_FAILURE);
 	}
-#ifndef TXT_SQL_CONVERT
-	else if (inter_sql_test()) {
-		ShowStatus("Connect Success! (Character Server)\n");
-	}
 
-	if(char_gm_read) {
-		lsql_handle = Sql_Malloc();
-		ShowInfo("Connect Character DB server.... (login server)\n");
-		if( SQL_ERROR == Sql_Connect(lsql_handle, login_server_id, login_server_pw, login_server_ip, (uint16)login_server_port, login_server_db) )
-		{
-			Sql_ShowDebug(lsql_handle);
-			Sql_Free(lsql_handle);
-			Sql_Free(sql_handle);
-			exit(EXIT_FAILURE);
-		}
-		else
-		{
-			ShowStatus ("Connect Success! (Login Server)\n");
-		}
-	}
-#endif //TXT_SQL_CONVERT
 	if( *default_codepage ) {
 		if( SQL_ERROR == Sql_SetEncoding(sql_handle, default_codepage) )
 			Sql_ShowDebug(sql_handle);
-#ifndef TXT_SQL_CONVERT
-		if( char_gm_read && SQL_ERROR == Sql_SetEncoding(lsql_handle, default_codepage) )
-			Sql_ShowDebug(lsql_handle);
-#endif //TXT_SQL_CONVERT
 	}
 
 #ifndef TXT_SQL_CONVERT
@@ -389,45 +301,10 @@ int inter_init_sql(const char *file)
 	inter_mail_sql_init();
 	inter_auction_sql_init();
 
-	sql_ping_init();
 #endif //TXT_SQL_CONVERT
 	return 0;
 }
 #ifndef TXT_SQL_CONVERT
-
-int inter_sql_test (void)
-{
-	const char fields[][24] = {
-		"father",	// version 1363
-		"fame",		// version 1491
-	};	
-	char buf[1024] = "";
-	char* p;
-	size_t len;
-	int i;
-
-	if( SQL_ERROR == Sql_GetColumnNames(sql_handle, char_db, buf, sizeof(buf), '\n') )
-		Sql_ShowDebug(sql_handle);
-
-	// check DB strings
-	for( i = 0; i < ARRAYLENGTH(fields); ++i )
-	{
-		len = strlen(fields[i]);
-		p = strstr(buf, fields[i]);
-		while( p != NULL && p[len] != '\n' )
-			p = strstr(p, fields[i]);
-		if( p == NULL )
-		{
-			ShowSQL ("Field `%s` not be found in `%s`. Consider updating your database!\n", fields[i], char_db);
-			if( lsql_handle )
-				Sql_Free(lsql_handle);
-			Sql_Free(sql_handle);
-			exit(EXIT_FAILURE);
-		}
-	}
-
-	return 1;
-}
 
 // finalize
 void inter_final(void)
@@ -530,26 +407,6 @@ int mapif_account_reg_reply(int fd,int account_id,int char_id, int type)
 			ShowWarning("Too many acc regs for %d:%d, not all values were loaded.\n", account_id, char_id);
 	}
 	WFIFOSET(fd,WFIFOW(fd,2));
-	return 0;
-}
-
-int mapif_send_gmaccounts()
-{
-	int i, len = 4;
-	unsigned char buf[32000];
-
-	// forward the gm accounts to the map server
-	len = 4;
-	WBUFW(buf,0) = 0x2b15;
-				
-	for(i = 0; i < GM_num; i++) {
-		WBUFL(buf,len) = gm_account[i].account_id;
-		WBUFB(buf,len+4) = (uint8)gm_account[i].level;
-		len += 5;
-	}
-	WBUFW(buf,2) = len;
-	mapif_sendall(buf, len);
-
 	return 0;
 }
 
@@ -815,6 +672,26 @@ int mapif_parse_NameChangeRequest(int fd)
 }
 
 //--------------------------------------------------------
+
+/// Returns the length of the next complete packet to process,
+/// or 0 if no complete packet exists in the queue.
+///
+/// @param length The minimum allowed length, or -1 for dynamic lookup
+int inter_check_length(int fd, int length)
+{
+	if( length == -1 )
+	{// variable-length packet
+		if( RFIFOREST(fd) < 4 )
+			return 0;
+		length = RFIFOW(fd,2);
+	}
+
+	if( (int)RFIFOREST(fd) < length )
+		return 0;
+
+	return length;
+}
+
 int inter_parse_frommap(int fd)
 {
 	int cmd;
@@ -855,18 +732,4 @@ int inter_parse_frommap(int fd)
 	return 1;
 }
 
-// RFIFO check
-int inter_check_length(int fd, int length)
-{
-	if(length == -1) {	// v-len packet
-		if(RFIFOREST(fd) < 4)	// packet not yet
-			return 0;
-		length = RFIFOW(fd, 2);
-	}
-
-	if((int)RFIFOREST(fd) < length)	// packet not yet
-		return 0;
-
-	return length;
-}
 #endif //TXT_SQL_CONVERT

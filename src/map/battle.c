@@ -3395,6 +3395,7 @@ static const struct _battle_data {
 	{ "guild_max_castles",                  &battle_config.guild_max_castles,               0,      0,      INT_MAX,        },
 	{ "guild_skill_relog_delay",            &battle_config.guild_skill_relog_delay,         0,      0,      1,              },
 	{ "emergency_call",                     &battle_config.emergency_call,                  11,     0,      31,             },
+	{ "lowest_gm_level",                    &battle_config.lowest_gm_level,                 1,      0,      99,             },
 	{ "atcommand_gm_only",                  &battle_config.atc_gmonly,                      0,      0,      1,              },
 	{ "atcommand_spawn_quantity_limit",     &battle_config.atc_spawn_quantity_limit,        100,    0,      INT_MAX,        },
 	{ "atcommand_slave_clone_limit",        &battle_config.atc_slave_clone_limit,           25,     0,      INT_MAX,        },

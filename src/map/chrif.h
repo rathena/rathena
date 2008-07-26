@@ -44,7 +44,6 @@ int chrif_changemapserver(struct map_session_data* sd, uint32 ip, uint16 port);
 int chrif_searchcharid(int char_id);
 int chrif_changeemail(int id, const char *actual_email, const char *new_email);
 int chrif_char_ask_name(int acc, const char* character_name, unsigned short operation_type, int year, int month, int day, int hour, int minute, int second);
-int chrif_reloadGMdb(void);
 int chrif_updatefamelist(struct map_session_data *sd);
 int chrif_buildfamelist(void);
 int chrif_save_scdata(struct map_session_data *sd);

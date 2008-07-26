@@ -1,5 +1,13 @@
 Date	Added
 
+2008/07/27
+	* Conf file adjustments for the loginmerge branch
+	- added new login and ipban db config options to login_athena.conf
+	- login database options are no longer in inter_athena.conf!
+	- moved setting 'lowest_gm_level' from inter_athena.conf to battle/gm.conf
+	- removed setting 'gm_read_method'
+	- removed options for setting `login` table column names
+	- deleted file GM_account.txt, now the savefile is used for this
 2008/07/23
 	* Increased max. hairstyle number, 23 -> 25 (bugreport:1773) [ultramage]
 2008/07/22

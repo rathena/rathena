@@ -43,10 +43,10 @@ common_sql: $(COMMON_SQL_DEPENDS)
 	@$(MAKE) -C src/common sql
 
 login: common
-	@$(MAKE) -C src/login
+	@$(MAKE) -C src/login txt
 
 login_sql: $(LOGIN_SQL_DEPENDS)
-	@$(MAKE) -C src/login_sql
+	@$(MAKE) -C src/login sql
 
 char: common
 	@$(MAKE) -C src/char
@@ -93,7 +93,6 @@ save:
 clean:
 	@$(MAKE) -C src/common $@
 	@$(MAKE) -C src/login $@
-	@$(MAKE) -C src/login_sql $@
 	@$(MAKE) -C src/char $@
 	@$(MAKE) -C src/char_sql $@
 	@$(MAKE) -C src/map $@

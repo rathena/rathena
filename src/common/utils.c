@@ -77,7 +77,7 @@ static char* checkpath(char *path, const char *srcpath)
 
 void findfile(const char *p, const char *pat, void (func)(const char*))
 {	
-	WIN32_FIND_DATA FindFileData;
+	WIN32_FIND_DATAA FindFileData;
 	HANDLE hFind;
 	char tmppath[MAX_PATH+1];
 	
@@ -90,7 +90,7 @@ void findfile(const char *p, const char *pat, void (func)(const char*))
 	else
 		strcat(tmppath, "*");
 	
-	hFind = FindFirstFile(tmppath, &FindFileData);
+	hFind = FindFirstFileA(tmppath, &FindFileData);
 	if (hFind != INVALID_HANDLE_VALUE)
 	{
 		do
@@ -111,7 +111,7 @@ void findfile(const char *p, const char *pat, void (func)(const char*))
 			{
 				findfile(tmppath, pat, func);
 			}
-		}while (FindNextFile(hFind, &FindFileData) != 0);
+		}while (FindNextFileA(hFind, &FindFileData) != 0);
 		FindClose(hFind);
 	}
 	return;

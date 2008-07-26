@@ -1,19 +1,16 @@
+20080409
 // Accounts file: here are saved all information about the accounts.
-// Structure: ID, account name, password, last login time, sex, # of logins, state, email, error message for state 7, validity time, last (accepted) login ip, memo field, ban timestamp, repeated(register text, register value)
-// Some explanations:
-//   account name    : between 4 to 23 char for a normal account (standard client can't send less than 4 char).
-//   account password: between 4 to 23 char
+// Structure: account ID, username, password, sex, email, level, state, unban time, expiration time, # of logins, last login time, last (accepted) login ip, repeated(register key, register value)
+// where:
 //   sex             : M or F for normal accounts, S for server accounts
+//   level           : this account's gm level
 //   state           : 0: account is ok, 1 to 256: error code of packet 0x006a + 1
-//   email           : between 3 to 39 char (a@a.com is like no email)
-//   error message   : text for the state 7: 'Your are Prohibited to login until <text>'. Max 19 char
-//   valitidy time   : 0: unlimited account, <other value>: date calculated by addition of 1/1/1970 + value (number of seconds since the 1/1/1970)
-//   memo field      : max 254 char
-//   ban time        : 0: no ban, <other value>: banned until the date: date calculated by addition of 1/1/1970 + value (number of seconds since the 1/1/1970)
-0	s1	p1	2004-10-25 01:12:04.147	S	2	0	a@a.com	-	0	127.0.0.1	-	0	
-1	s2	p2	-	S	0	0	a@a.com	-	0	-	-	0	
-2	s3	p3	-	S	0	0	a@a.com	-	0	-	-	0	
-3	s4	p4	-	S	0	0	a@a.com	-	0	-	-	0	
-4	s5	p5	-	S	0	0	a@a.com	-	0	-	-	0	
-2000001	Test	Test	-	M	0	0	a@a.com	-	0	-	-	0	
+//   unban time      : 0: no ban, <other value>: banned until the date (unix timestamp)
+//   expiration time : 0: unlimited account, <other value>: account expires on the date (unix timestamp)
+1	s1	p1	S	a@a.com	0	0	0	0	0	-	-	
+2	s2	p2	S	a@a.com	0	0	0	0	0	-	-	
+3	s3	p3	S	a@a.com	0	0	0	0	0	-	-	
+4	s4	p4	S	a@a.com	0	0	0	0	0	-	-	
+5	s5	p5	S	a@a.com	0	0	0	0	0	-	-	
+2000001	Test	Test	M	a@a.com	0	0	0	0	0	-	-	
 2000002	%newid%

@@ -19,8 +19,8 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\src\common;..\src\zlib;..\src\mysql"
-				PreprocessorDefinitions="WIN32;_WIN32;__WIN32;_DEBUG;FD_SETSIZE=4096;DB_MANUAL_CAST_TO_UNION"
+				AdditionalIncludeDirectories="..\3rdparty\mysql\include"
+				PreprocessorDefinitions="WIN32;_WIN32;__WIN32;_DEBUG;FD_SETSIZE=4096;DB_MANUAL_CAST_TO_UNION;WITH_SQL"
 				GeneratePreprocessedFile="0"
 				MinimalRebuild="TRUE"
 				ExceptionHandling="FALSE"
@@ -38,10 +38,10 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="msvcrtd.lib oldnames.lib ws2_32.lib libmysql.lib zdll.lib"
+				AdditionalDependencies="msvcrtd.lib oldnames.lib ws2_32.lib libmysql.lib"
 				OutputFile="$(OutDir)\login-server_sql.exe"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="..\lib"
+				AdditionalLibraryDirectories="..\3rdparty\mysql\lib"
 				IgnoreAllDefaultLibraries="TRUE"
 				GenerateDebugInformation="TRUE"
 				ProgramDatabaseFile="$(OutDir)\$(ProjectName).pdb"
@@ -87,8 +87,8 @@
 				EnableFiberSafeOptimizations="TRUE"
 				OptimizeForProcessor="2"
 				OptimizeForWindowsApplication="TRUE"
-				AdditionalIncludeDirectories="..\src\common;..\src\zlib;..\src\mysql"
-				PreprocessorDefinitions="WIN32;_WIN32;__WIN32;NDEBUG;FD_SETSIZE=4096;DB_MANUAL_CAST_TO_UNION"
+				AdditionalIncludeDirectories="..\3rdparty\mysql\include"
+				PreprocessorDefinitions="WIN32;_WIN32;__WIN32;NDEBUG;FD_SETSIZE=4096;DB_MANUAL_CAST_TO_UNION;WITH_SQL"
 				StringPooling="TRUE"
 				RuntimeLibrary="3"
 				DefaultCharIsUnsigned="FALSE"
@@ -103,10 +103,10 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="msvcrt.lib oldnames.lib ws2_32.lib libmysql.lib zdll.lib"
+				AdditionalDependencies="msvcrt.lib oldnames.lib ws2_32.lib libmysql.lib"
 				OutputFile="$(OutDir)\login-server_sql.exe"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="..\lib"
+				AdditionalLibraryDirectories="..\3rdparty\mysql\lib"
 				IgnoreAllDefaultLibraries="TRUE"
 				IgnoreDefaultLibraryNames=""
 				GenerateDebugInformation="TRUE"
@@ -145,10 +145,31 @@
 			Name="login_sql"
 			Filter="">
 			<File
-				RelativePath="..\src\login_sql\login.c">
+				RelativePath="..\src\login\account.h">
 			</File>
 			<File
-				RelativePath="..\src\login_sql\login.h">
+				RelativePath="..\src\login\account_sql.c">
+			</File>
+			<File
+				RelativePath="..\src\login\admin.c">
+			</File>
+			<File
+				RelativePath="..\src\login\ipban.h">
+			</File>
+			<File
+				RelativePath="..\src\login\ipban_sql.c">
+			</File>
+			<File
+				RelativePath="..\src\login\login.c">
+			</File>
+			<File
+				RelativePath="..\src\login\login.h">
+			</File>
+			<File
+				RelativePath="..\src\login\loginlog.h">
+			</File>
+			<File
+				RelativePath="..\src\login\loginlog_sql.c">
 			</File>
 		</Filter>
 		<Filter

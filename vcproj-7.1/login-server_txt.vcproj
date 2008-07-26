@@ -19,8 +19,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\src\common;..\src\zlib"
-				PreprocessorDefinitions="WIN32;_WIN32;__WIN32;_DEBUG;TXT_ONLY;FD_SETSIZE=4096;DB_MANUAL_CAST_TO_UNION"
+				PreprocessorDefinitions="WIN32;_WIN32;__WIN32;_DEBUG;FD_SETSIZE=4096;DB_MANUAL_CAST_TO_UNION;WITH_TXT;ACCOUNTDB_ENGINE_0=rj"
 				GeneratePreprocessedFile="0"
 				MinimalRebuild="TRUE"
 				ExceptionHandling="FALSE"
@@ -43,11 +42,11 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="msvcrtd.lib oldnames.lib ws2_32.lib zdll.lib"
+				AdditionalDependencies="msvcrtd.lib oldnames.lib ws2_32.lib"
 				ShowProgress="0"
 				OutputFile="$(OutDir)\login-server.exe"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="..\lib"
+				AdditionalLibraryDirectories=""
 				IgnoreAllDefaultLibraries="TRUE"
 				GenerateDebugInformation="TRUE"
 				ProgramDatabaseFile="$(OutDir)\login-server.pdb"
@@ -93,8 +92,7 @@
 				EnableFiberSafeOptimizations="TRUE"
 				OptimizeForProcessor="2"
 				OptimizeForWindowsApplication="TRUE"
-				AdditionalIncludeDirectories="..\src\common;..\src\zlib"
-				PreprocessorDefinitions="WIN32;_WIN32;__WIN32;NDEBUG;TXT_ONLY;FD_SETSIZE=4096;DB_MANUAL_CAST_TO_UNION"
+				PreprocessorDefinitions="WIN32;_WIN32;__WIN32;NDEBUG;FD_SETSIZE=4096;DB_MANUAL_CAST_TO_UNION;WITH_TXT;ACCOUNTDB_ENGINE_0=rj"
 				StringPooling="TRUE"
 				RuntimeLibrary="3"
 				DefaultCharIsUnsigned="FALSE"
@@ -107,10 +105,10 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="msvcrt.lib oldnames.lib ws2_32.lib zdll.lib"
+				AdditionalDependencies="msvcrt.lib oldnames.lib ws2_32.lib"
 				OutputFile="$(OutDir)\login-server.exe"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="..\lib"
+				AdditionalLibraryDirectories=""
 				IgnoreAllDefaultLibraries="TRUE"
 				GenerateDebugInformation="TRUE"
 				ProgramDatabaseFile="$(OutDir)\login-server.pdb"
@@ -148,13 +146,34 @@
 			Name="login_txt"
 			Filter="">
 			<File
+				RelativePath="..\src\login\account.h">
+			</File>
+			<File
+				RelativePath="..\src\login\account_rj.c">
+			</File>
+			<File
+				RelativePath="..\src\login\account_txt.c">
+			</File>
+			<File
 				RelativePath="..\src\login\admin.c">
+			</File>
+			<File
+				RelativePath="..\src\login\ipban.h">
+			</File>
+			<File
+				RelativePath="..\src\login\ipban_txt.c">
 			</File>
 			<File
 				RelativePath="..\src\login\login.c">
 			</File>
 			<File
 				RelativePath="..\src\login\login.h">
+			</File>
+			<File
+				RelativePath="..\src\login\loginlog.h">
+			</File>
+			<File
+				RelativePath="..\src\login\loginlog_txt.c">
 			</File>
 		</Filter>
 		<Filter

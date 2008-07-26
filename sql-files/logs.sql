@@ -113,3 +113,15 @@ CREATE TABLE `chatlog` (
   INDEX (`src_accountid`),
   INDEX (`src_charid`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
+
+#Database: log
+#Table: loginlog
+CREATE TABLE `loginlog` (
+  `time` datetime NOT NULL default '0000-00-00 00:00:00',
+  `ip` varchar(15) NOT NULL default '',
+  `user` varchar(23) NOT NULL default '',
+  `rcode` tinyint(4) NOT NULL default '0',
+  `log` varchar(255) NOT NULL default '',
+  INDEX (`ip`)
+) ENGINE=MyISAM ;
+

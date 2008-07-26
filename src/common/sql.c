@@ -5,6 +5,7 @@
 #include "../common/malloc.h"
 #include "../common/showmsg.h"
 #include "../common/strlib.h"
+#include "../common/timer.h"
 #include "sql.h"
 
 #ifdef WIN32
@@ -24,6 +25,7 @@ struct Sql
 	MYSQL_RES* result;
 	MYSQL_ROW row;
 	unsigned long* lengths;
+	int keepalive;
 };
 
 
@@ -73,6 +75,8 @@ Sql* Sql_Malloc(void)
 
 
 
+static int Sql_P_Keepalive(Sql* self);
+
 /// Establishes a connection.
 int Sql_Connect(Sql* self, const char* user, const char* passwd, const char* host, uint16 port, const char* db)
 {
@@ -85,6 +89,14 @@ int Sql_Connect(Sql* self, const char* user, const char* passwd, const char* hos
 		ShowSQL("%s\n", mysql_error(&self->handle));
 		return SQL_ERROR;
 	}
+
+	self->keepalive = Sql_P_Keepalive(self);
+	if( self->keepalive == INVALID_TIMER )
+	{
+		ShowSQL("Failed to establish keepalive for DB connection!\n");
+		return SQL_ERROR;
+	}
+
 	return SQL_SUCCESS;
 }
 
@@ -158,6 +170,44 @@ int Sql_Ping(Sql* self)
 	if( self && mysql_ping(&self->handle) == 0 )
 		return SQL_SUCCESS;
 	return SQL_ERROR;
+}
+
+
+
+/// Wrapper function for Sql_Ping.
+///
+/// @private
+static int Sql_P_KeepaliveTimer(int tid, unsigned int tick, int id, intptr data)
+{
+	Sql* self = (Sql*)data;
+	ShowInfo("Pinging SQL server to keep connection alive...\n");
+	Sql_Ping(self);
+	return 0;
+}
+
+
+
+/// Establishes keepalive (periodic ping) on the connection.
+///
+/// @return the keepalive timer id, or INVALID_TIMER
+/// @private
+static int Sql_P_Keepalive(Sql* self)
+{
+	uint32 timeout, ping_interval;
+
+	// set a default value first
+	timeout = 28800; // 8 hours
+
+	// request the timeout value from the mysql server
+	Sql_GetTimeout(self, &timeout);
+
+	if( timeout < 60 )
+		timeout = 60;
+
+	// establish keepalive
+	ping_interval = timeout - 30; // 30-second reserve
+	//add_timer_func_list(Sql_P_KeepaliveTimer, "Sql_P_KeepaliveTimer");
+	return add_timer_interval(gettick() + ping_interval*1000, Sql_P_KeepaliveTimer, 0, (int)self, ping_interval*1000);
 }
 
 
@@ -356,6 +406,7 @@ void Sql_Free(Sql* self)
 	{
 		Sql_FreeResult(self);
 		StringBuf_Destroy(&self->buf);
+		delete_timer(self->keepalive, Sql_P_KeepaliveTimer);
 		aFree(self);
 	}
 }

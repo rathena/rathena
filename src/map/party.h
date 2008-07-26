@@ -31,8 +31,6 @@ struct party_data {
 };
 
 
-extern int party_share_level;
-
 void do_init_party(void);
 void do_final_party(void);
 struct party_data* party_search(int party_id);

@@ -633,7 +633,6 @@ typedef struct homun_data       TBL_HOM;
 	( ((bl) == (struct block_list*)NULL || (bl)->type != (type_)) ? (T ## type_ *)NULL : (T ## type_ *)(bl) )
 
 
-extern int lowest_gm_level;
 extern char main_chat_nick[16];
 
 #ifndef TXT_ONLY

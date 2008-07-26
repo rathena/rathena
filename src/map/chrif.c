@@ -36,7 +36,7 @@ static const int packet_len_table[0x3d] = { // U - used, F - free
 	60, 3,-1,27,10,-1, 6,-1,	// 2af8-2aff: U->2af8, U->2af9, U->2afa, U->2afb, U->2afc, U->2afd, U->2afe, U->2aff
 	 6,-1,18, 7,-1,35,30,-1,	// 2b00-2b07: U->2b00, U->2b01, U->2b02, U->2b03, U->2b04, U->2b05, U->2b06, F->2b07
 	 6,30,-1,-1,86, 7,44,34,	// 2b08-2b0f: U->2b08, U->2b09, F->2b0a, F->2b0b, U->2b0c, U->2b0d, U->2b0e, U->2b0f
-	11,10,10, 6,11,-1,266,10,	// 2b10-2b17: U->2b10, U->2b11, U->2b12, U->2b13, U->2b14, U->2b15, U->2b16, U->2b17
+	11,10,10, 6,11,-1,266,10,	// 2b10-2b17: U->2b10, U->2b11, U->2b12, U->2b13, U->2b14, F->2b15, U->2b16, U->2b17
 	 2,10, 2,-1,-1,-1, 2, 7,	// 2b18-2b1f: U->2b18, U->2b19, U->2b1a, U->2b1b, U->2b1c, U->2b1d, U->2b1e, U->2b1f
 	-1,10, 8, 2, 2,14,19,19,	// 2b20-2b27: U->2b20, U->2b21, U->2b22, U->2b23, U->2b24, U->2b25, U->2b26, U->2b27
 };
@@ -71,7 +71,7 @@ static const int packet_len_table[0x3d] = { // U - used, F - free
 //2b12: Incoming, chrif_divorceack -> 'divorce chars
 //2b13: Incoming, chrif_accountdeletion -> 'Delete acc XX, if the player is on, kick ....'
 //2b14: Incoming, chrif_accountban -> 'not sure: kick the player with message XY'
-//2b15: Incoming, chrif_recvgmaccounts -> 'receive gm accs from charserver (seems to be incomplete !)'
+//2b15: FREE
 //2b16: Outgoing, chrif_ragsrvinfo -> 'sends motd / rates ....'
 //2b17: Outgoing, chrif_char_offline -> 'tell the charserver that the char is now offline'
 //2b18: Outgoing, chrif_char_reset_offline -> 'set all players OFF!'
@@ -512,56 +512,58 @@ int chrif_scdata_request(int account_id, int char_id)
 }
 
 /*==========================================
- * new auth system [Kevin]
+ * Request auth confirmation
  *------------------------------------------*/
 void chrif_authreq(struct map_session_data *sd)
 {
 	struct auth_node *node= chrif_search(sd->bl.id);
 
-	if(!node) {
-		//request data from char server and store current auth info
-		WFIFOHEAD(char_fd,19);
-		WFIFOW(char_fd,0) = 0x2b26;
-		WFIFOL(char_fd,2) = sd->status.account_id;
-		WFIFOL(char_fd,6) = sd->status.char_id;
-		WFIFOL(char_fd,10) = sd->login_id1;
-		WFIFOB(char_fd,14) = sd->status.sex;
-		WFIFOL(char_fd,15) = htonl(session[sd->fd]->client_addr);
-		WFIFOSET(char_fd,19);
-		chrif_sd_to_auth(sd, ST_LOGIN);
+	if( node != NULL )
+	{
+		set_eof(sd->fd);
 		return;
-	} else {	//char already online? kick connect request and tell char server that this person is online
-					//This case shouldn't happen in an ideal system
-		pc_authfail(sd);
-		chrif_char_online(sd);
 	}
-	return;
+
+	WFIFOHEAD(char_fd,19);
+	WFIFOW(char_fd,0) = 0x2b26;
+	WFIFOL(char_fd,2) = sd->status.account_id;
+	WFIFOL(char_fd,6) = sd->status.char_id;
+	WFIFOL(char_fd,10) = sd->login_id1;
+	WFIFOB(char_fd,14) = sd->status.sex;
+	WFIFOL(char_fd,15) = htonl(session[sd->fd]->client_addr);
+	WFIFOSET(char_fd,19);
+	chrif_sd_to_auth(sd, ST_LOGIN);
 }
 
-//character selected, insert into auth db
+/*==========================================
+ * Auth confirmation ack
+ *------------------------------------------*/
 void chrif_authok(int fd)
 {
 	int account_id;
 	uint32 login_id1;
-	time_t expiration_time;
 	uint32 login_id2;
+	time_t expiration_time;
+	int gmlevel;
 	struct mmo_charstatus* status;
 	int char_id;
 	struct auth_node *node;
 	TBL_PC* sd;
 
 	//Check if both servers agree on the struct's size
-	if( RFIFOW(fd,2) - 20 != sizeof(struct mmo_charstatus) )
+	if( RFIFOW(fd,2) - 24 != sizeof(struct mmo_charstatus) )
 	{
-		ShowError("chrif_authok: Data size mismatch! %d != %d\n", RFIFOW(fd,2) - 20, sizeof(struct mmo_charstatus));
+		ShowError("chrif_authok: Data size mismatch! %d != %d\n", RFIFOW(fd,2) - 24, sizeof(struct mmo_charstatus));
 		return;
 	}
 
 	account_id = RFIFOL(fd,4);
 	login_id1 = RFIFOL(fd,8);
-	expiration_time = (time_t)(int32)RFIFOL(fd,12);
-	login_id2 = RFIFOL(fd,16);
-	status = (struct mmo_charstatus*)RFIFOP(fd,20);
+	login_id2 = RFIFOL(fd,12);
+	expiration_time = (time_t)(int32)RFIFOL(fd,16);
+	gmlevel = RFIFOL(fd,20);
+	status = (struct mmo_charstatus*)RFIFOP(fd,24);
+
 	char_id = status->char_id;
 
 	//Check if we don't already have player data in our server
@@ -569,33 +571,35 @@ void chrif_authok(int fd)
 	if ((sd = map_id2sd(account_id)) != NULL)
 		return;
 	
-	if ((node = chrif_search(account_id)))
-	{	//Is the character already awaiting authorization?
-		if (node->state != ST_LOGIN)
-			return; //character in logout phase, do not touch that data.
-		if (node->sd)
-		{
-			sd = node->sd;
-			if(node->char_dat == NULL &&
-				node->account_id == account_id &&
-				node->char_id == char_id &&
-				node->login_id1 == login_id1 )
-			{ //Auth Ok
-				if (pc_authok(sd, login_id2, expiration_time, status))
-				{
-					return;
-				}
-			} else { //Auth Failed
-				pc_authfail(sd);
-			}
-			chrif_char_offline(sd); //Set client offline
-			chrif_auth_delete(account_id, char_id, ST_LOGIN);
-			return;
-		}
+	if ((node = chrif_search(account_id)) == NULL)
+		return; // should not happen
+
+	if (node->state != ST_LOGIN)
+		return; //character in logout phase, do not touch that data.
+
+	if (node->sd == NULL)
+	{
+		/*
 		//When we receive double login info and the client has not connected yet,
 		//discard the older one and keep the new one.
 		chrif_auth_delete(node->account_id, node->char_id, ST_LOGIN);
+		*/
+		return; // should not happen
 	}
+
+	sd = node->sd;
+	if(node->char_dat == NULL &&
+		node->account_id == account_id &&
+		node->char_id == char_id &&
+		node->login_id1 == login_id1 )
+	{ //Auth Ok
+		if (pc_authok(sd, login_id2, expiration_time, gmlevel, status))
+			return;
+	} else { //Auth Failed
+		pc_authfail(sd);
+	}
+	chrif_char_offline(sd); //Set him offline, the char server likely has it set as online already.
+	chrif_auth_delete(account_id, char_id, ST_LOGIN);
 }
 
 // client authentication failed
@@ -1036,30 +1040,6 @@ int chrif_disconnectplayer(int fd)
 }
 
 /*==========================================
- * Request to reload GM accounts and their levels: send to char-server by [Yor]
- *------------------------------------------*/
-int chrif_reloadGMdb(void)
-{
-	chrif_check(-1);
-
-	WFIFOHEAD(char_fd,2);
-	WFIFOW(char_fd,0) = 0x2af7;
-	WFIFOSET(char_fd,2);
-
-	return 0;
-}
-
-/*==========================================
- * Receiving GM accounts and their levels from char-server by [Yor]
- *------------------------------------------*/
-int chrif_recvgmaccounts(int fd)
-{
-	int nAccounts = pc_read_gm_account(fd);
-	ShowInfo("From login-server: receiving information of '"CL_WHITE"%d"CL_RESET"' GM accounts.\n", nAccounts);
-	return 0;
-}
-
-/*==========================================
  * Request/Receive top 10 Fame character list
  *------------------------------------------*/
 
@@ -1454,7 +1434,6 @@ int chrif_parse(int fd)
 		case 0x2b12: chrif_divorceack(RFIFOL(fd,2), RFIFOL(fd,6)); break;
 		case 0x2b13: chrif_accountdeletion(fd); break;
 		case 0x2b14: chrif_accountban(fd); break;
-		case 0x2b15: chrif_recvgmaccounts(fd); break;
 		case 0x2b1b: chrif_recvfamelist(fd); break;
 		case 0x2b1d: chrif_load_scdata(fd); break;
 		case 0x2b1e: chrif_update_ip(fd); break;

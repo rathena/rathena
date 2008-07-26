@@ -10,36 +10,71 @@ COMMON_H = ../common/core.h ../common/socket.h ../common/timer.h ../common/mmo.h
 	../common/grfio.h ../common/mapindex.h \
 	../common/ers.h ../common/md5calc.h
 
-LOGIN_OBJ = obj_txt/login.o obj_txt/admin.o
-LOGIN_H = login.h
+COMMON_SQL_OBJ = ../common/obj_sql/sql.o
+COMMON_SQL_H = ../common/sql.h
+
+LOGIN_OBJ = login.o admin.o
+LOGIN_TXT_OBJ = $(LOGIN_OBJ:%=obj_txt/%) \
+	obj_txt/account_txt.o obj_txt/ipban_txt.o obj_txt/loginlog_txt.o
+LOGIN_SQL_OBJ = $(LOGIN_OBJ:%=obj_sql/%) \
+	obj_sql/account_sql.o obj_sql/ipban_sql.o obj_sql/loginlog_sql.o
+LOGIN_H = login.h account.h ipban.h loginlog.h
+
+HAVE_MYSQL=@HAVE_MYSQL@
+ifeq ($(HAVE_MYSQL),yes)
+	LOGIN_SERVER_SQL_DEPENDS=obj_sql $(LOGIN_SQL_OBJ) $(COMMON_OBJ) $(COMMON_SQL_OBJ)
+else
+	LOGIN_SERVER_SQL_DEPENDS=needs_mysql
+endif
 
 @SET_MAKE@
 
 #####################################################################
-.PHONY : all login-server clean help
+.PHONY :all txt sql clean help
 
-all: login-server
+all: txt sql
 
-login-server: obj_txt $(LOGIN_OBJ) $(COMMON_OBJ)
-	@CC@ @LDFLAGS@ -o ../../login-server@EXEEXT@ $(LOGIN_OBJ) $(COMMON_OBJ) @LIBS@ 
+txt: obj_txt login-server
+
+sql: obj_sql login-server_sql
 
 clean:
-	rm -rf *.o obj_txt ../../login-server@EXEEXT@
+	rm -rf *.o obj_txt obj_sql ../../login-server@EXEEXT@ ../../login-server_sql@EXEEXT@
 
 help:
-	@echo "possible targets are 'login-server' 'all' 'clean' 'help'"
-	@echo "'login-server'  - login server (TXT version)"
-	@echo "'all'           - builds all above targets"
-	@echo "'clean'         - cleans builds and objects"
-	@echo "'help'          - outputs this message"
+	@echo "possible targets are 'sql' 'txt' 'all' 'clean' 'help'"
+	@echo "'sql'       - login server (SQL version)"
+	@echo "'txt'       - login server (TXT version)"
+	@echo "'all'       - builds all above targets"
+	@echo "'clean'     - cleans builds and objects"
+	@echo "'help'      - outputs this message"
 
 #####################################################################
 
-obj_txt:
-	-mkdir obj_txt
+needs_mysql:
+	@echo "MySQL not found or disabled by the configure script"
+	@exit 1
 
+# object directories
+obj_txt:
+	test -d obj_txt || mkdir obj_txt
+
+obj_sql:
+	test -d obj_sql || mkdir obj_sql
+
+#executables
+login-server: $(LOGIN_TXT_OBJ) $(COMMON_OBJ)
+	@CC@ @LDFLAGS@ -o ../../login-server@EXEEXT@ $(LOGIN_TXT_OBJ) $(COMMON_OBJ) @LIBS@ 
+
+login-server_sql: $(LOGIN_SERVER_SQL_DEPENDS)
+	@CC@ @LDFLAGS@ -o ../../login-server_sql@EXEEXT@ $(LOGIN_SQL_OBJ) $(COMMON_OBJ) $(COMMON_SQL_OBJ) @LIBS@ @MYSQL_LIBS@
+
+# login object files
 obj_txt/%.o: %.c $(LOGIN_H) $(COMMON_H)
-	@CC@ @CFLAGS@ $(CUSTOM_CFLAGS) -DTXT_ONLY @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
+	@CC@ @CFLAGS@ $(CUSTOM_CFLAGS) -DWITH_TXT @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
+
+obj_sql/%.o: %.c $(LOGIN_H) $(COMMON_H)
+	@CC@ @CFLAGS@ $(CUSTOM_CFLAGS) -DWITH_SQL @MYSQL_CFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
 
 # missing common object files
 ../common/obj_all/%.o:

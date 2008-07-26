@@ -70,7 +70,7 @@ void trade_traderequest(struct map_session_data *sd, struct map_session_data *ta
 	} 
 	
 	//Fixed. Only real GMs can request trade from far away! [Lupus] 
-	if (level < lowest_gm_level && (sd->bl.m != target_sd->bl.m ||
+	if (level < battle_config.lowest_gm_level && (sd->bl.m != target_sd->bl.m ||
 		!check_distance_bl(&sd->bl, &target_sd->bl, TRADE_DISTANCE)
 	)) {
 		clif_tradestart(sd, 0); // too far
@@ -127,7 +127,7 @@ void trade_tradeack(struct map_session_data *sd, int type)
 		return; //If client didn't send accept, it's a broken packet?
 
 	//Copied here as well since the original character could had warped.
-	if (pc_isGM(tsd) < lowest_gm_level && (sd->bl.m != tsd->bl.m ||
+	if (pc_isGM(tsd) < battle_config.lowest_gm_level && (sd->bl.m != tsd->bl.m ||
 		!check_distance_bl(&sd->bl, &tsd->bl, TRADE_DISTANCE)
 	)) {
 		clif_tradestart(sd, 0); // too far

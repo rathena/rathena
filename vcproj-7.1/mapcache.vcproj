@@ -19,7 +19,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\src\common;..\src\zlib"
+				AdditionalIncludeDirectories="..\3rdparty\zlib\include"
 				PreprocessorDefinitions="WIN32;_WIN32;__WIN32;_DEBUG"
 				MinimalRebuild="TRUE"
 				ExceptionHandling="FALSE"
@@ -40,7 +40,7 @@
 				AdditionalDependencies="msvcrtd.lib oldnames.lib zdll.lib"
 				OutputFile="$(OutDir)\mapcache.exe"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="..\lib"
+				AdditionalLibraryDirectories="..\3rdparty\zlib\lib"
 				IgnoreAllDefaultLibraries="TRUE"
 				GenerateDebugInformation="TRUE"
 				ProgramDatabaseFile="$(OutDir)\$(ProjectName).pdb"
@@ -86,7 +86,7 @@
 				EnableFiberSafeOptimizations="TRUE"
 				OptimizeForProcessor="2"
 				OptimizeForWindowsApplication="TRUE"
-				AdditionalIncludeDirectories="..\src\common;..\src\zlib"
+				AdditionalIncludeDirectories="..\3rdparty\zlib\include"
 				PreprocessorDefinitions="WIN32;_WIN32;__WIN32;NDEBUG"
 				StringPooling="TRUE"
 				RuntimeLibrary="3"
@@ -103,7 +103,7 @@
 				AdditionalDependencies="msvcrt.lib oldnames.lib zdll.lib"
 				OutputFile="$(OutDir)\mapcache.exe"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="..\lib"
+				AdditionalLibraryDirectories="..\3rdparty\zlib\lib"
 				IgnoreAllDefaultLibraries="TRUE"
 				GenerateDebugInformation="TRUE"
 				ProgramDatabaseFile="$(OutDir)\$(ProjectName).pdb"
@@ -148,16 +148,6 @@
 			</File>
 			<File
 				RelativePath="..\src\tool\mapcache.c">
-			</File>
-		</Filter>
-		<Filter
-			Name="zlib"
-			Filter="">
-			<File
-				RelativePath="..\src\zlib\zconf.h">
-			</File>
-			<File
-				RelativePath="..\src\zlib\zlib.h">
 			</File>
 		</Filter>
 	</Files>

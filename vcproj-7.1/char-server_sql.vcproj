@@ -20,7 +20,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\src\common;..\src\zlib;..\src\mysql"
+				AdditionalIncludeDirectories="..\3rdparty\mysql\include"
 				PreprocessorDefinitions="WIN32;_WIN32;__WIN32;_DEBUG;FD_SETSIZE=4096;DB_MANUAL_CAST_TO_UNION"
 				GeneratePreprocessedFile="0"
 				MinimalRebuild="TRUE"
@@ -39,10 +39,10 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="msvcrtd.lib oldnames.lib ws2_32.lib libmysql.lib zdll.lib"
+				AdditionalDependencies="msvcrtd.lib oldnames.lib ws2_32.lib libmysql.lib"
 				OutputFile="$(OutDir)\char-server_sql.exe"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="..\lib"
+				AdditionalLibraryDirectories="..\3rdparty\mysql\lib"
 				IgnoreAllDefaultLibraries="TRUE"
 				GenerateDebugInformation="TRUE"
 				ProgramDatabaseFile="$(OutDir)\$(ProjectName).pdb"
@@ -88,7 +88,7 @@
 				EnableFiberSafeOptimizations="TRUE"
 				OptimizeForProcessor="2"
 				OptimizeForWindowsApplication="TRUE"
-				AdditionalIncludeDirectories="..\src\common;..\src\zlib;..\src\mysql"
+				AdditionalIncludeDirectories="..\3rdparty\mysql\include"
 				PreprocessorDefinitions="WIN32;_WIN32;__WIN32;NDEBUG;FD_SETSIZE=4096;DB_MANUAL_CAST_TO_UNION"
 				StringPooling="TRUE"
 				RuntimeLibrary="3"
@@ -102,10 +102,10 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="msvcrt.lib oldnames.lib ws2_32.lib libmysql.lib zdll.lib"
+				AdditionalDependencies="msvcrt.lib oldnames.lib ws2_32.lib libmysql.lib"
 				OutputFile="$(OutDir)\char-server_sql.exe"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="..\lib"
+				AdditionalLibraryDirectories="..\3rdparty\mysql\lib"
 				IgnoreAllDefaultLibraries="TRUE"
 				IgnoreDefaultLibraryNames=""
 				GenerateDebugInformation="TRUE"
@@ -186,16 +186,16 @@
 				RelativePath="..\src\char_sql\int_pet.h">
 			</File>
 			<File
-				RelativePath="..\src\char_sql\int_storage.c">
-			</File>
-			<File
-				RelativePath="..\src\char_sql\int_storage.h">
-			</File>
-			<File
 				RelativePath="..\src\char_sql\int_quest.c">
 			</File>
 			<File
 				RelativePath="..\src\char_sql\int_quest.h">
+			</File>
+			<File
+				RelativePath="..\src\char_sql\int_storage.c">
+			</File>
+			<File
+				RelativePath="..\src\char_sql\int_storage.h">
 			</File>
 			<File
 				RelativePath="..\src\char_sql\inter.c">

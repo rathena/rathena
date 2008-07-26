@@ -7,7 +7,7 @@ AC_PREREQ([2.59])
 AC_CONFIG_SRCDIR([src/common/cbasetypes.h])
 AC_CONFIG_FILES([Makefile src/common/Makefile])
 AC_CONFIG_FILES([src/char/Makefile src/login/Makefile src/ladmin/Makefile])
-AC_CONFIG_FILES([src/char_sql/Makefile src/login_sql/Makefile src/txt-converter/Makefile])
+AC_CONFIG_FILES([src/char_sql/Makefile src/txt-converter/Makefile])
 AC_CONFIG_FILES([src/map/Makefile src/plugins/Makefile src/tool/Makefile])
 
 
@@ -78,7 +78,7 @@ AC_ARG_ENABLE(
 	[debug],
 	AC_HELP_STRING(
 		[--enable-debug],
-		[Compiles in debug mode. (disabled by default)]
+		[Compiles extra debug code. (disabled by default)]
 	),
 	[
 		enable_debug="$enableval"

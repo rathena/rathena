@@ -1,3 +1,6 @@
+// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// For more information, see LICENCE in the main folder
+
 #include "../common/cbasetypes.h"
 #include "../common/mmo.h"
 #include "../common/core.h"
@@ -10,6 +13,7 @@
 #include "../common/version.h"
 #include "../common/md5calc.h"
 #include "../common/lock.h"
+#include "account.h"
 #include "login.h"
 
 #include <stdio.h>
@@ -17,31 +21,72 @@
 #include <string.h>
 #include <sys/stat.h> // for stat/lstat/fstat
 
-extern struct Login_Config login_config;
-
 #define MAX_SERVERS 30
 extern struct mmo_char_server server[MAX_SERVERS];
-extern struct mmo_account* auth_dat;
-extern uint32 auth_num;
-extern int account_id_count;
-extern char GM_account_filename[1024];
+extern AccountDB* accounts;
 
 int charif_sendallwos(int sfd, unsigned char *buf, unsigned int len);
-int search_account_index(char* account_name);
-int mmo_auth_new(struct mmo_account* account);
-void mmo_auth_sync(void);
-int mmo_auth_tostr(char* str, struct mmo_account* p);
-int read_gm_account(void);
-void send_GM_accounts(int fd);
-int isGM(int account_id);
+bool check_password(const char* md5key, int passwdenc, const char* passwd, const char* refpass);
+int mmo_auth_new(const char* userid, const char* pass, const char sex, const char* last_ip);
+int parse_admin(int fd);
+
+
+bool ladmin_auth(struct login_session_data* sd, const char* ip)
+{
+	bool result = false;
+
+	if( str2ip(ip) != host2ip(login_config.admin_allowed_host) )
+		ShowNotice("'ladmin'-login: Connection in administration mode REFUSED - IP isn't authorised (ip: %s).\n", ip);
+	else
+	if( !login_config.admin_state )
+		ShowNotice("'ladmin'-login: Connection in administration mode REFUSED - remote administration is disabled (ip: %s)\n", ip);
+	else
+	if( !check_password(sd->md5key, sd->passwdenc, sd->passwd, login_config.admin_pass) )
+		ShowNotice("'ladmin'-login: Connection in administration mode REFUSED - invalid password (ip: %s)\n", ip);
+	else
+	{
+		ShowNotice("'ladmin'-login: Connection in administration mode accepted (ip: %s)\n", ip);
+		session[sd->fd]->func_parse = parse_admin;
+		result = true;
+	}
+
+	return result;
+}
 
 //---------------------------------------
 // Packet parsing for administation login
+//
+// List of supported operations:
+// 0x7530 - request server version (response: 0x7531)
+// 0x7938 - request server list (response: 0x7939)
+// 0x7920 - request entire list of accounts (response: 0x7921)
+// 0x794e - request message broadcast (response: 0x794f + 0x2726)
+
+// 0x7930 - request account creation (response: 0x7931)
+// 0x7932 - request account deletion (response: 0x7933 + 0x2730)
+
+// 0x7934 - request account password modification (response: 0x7935)
+// 0x7936 - request account state modification (response: 0x7937 + 0x2731)
+// 0x793a - request password check (response: 0x793b)
+// 0x793c - request account sex modification (response: 0x793d + 0x2723)
+// 0x793e - request account gm-level modification (response: 0x793f)
+// 0x7940 - request account email modification (response: 0x7941)
+// 0x7942 - request account memo modification (response: 0x7943)
+// 0x7948 - request account expiration-time modification - absolute (response: 0x7949)
+// 0x7950 - request account expiration-time modification - relative (response: 0x7951)
+// 0x794a - request account unban-time modification - absolute (response: 0x794b + 0x2731)
+// 0x794c - request account unban-time modification - relative (response: 0x794d + 0x2731)
+
+// 0x7944 - request account id lookup by name (response: 0x7945)
+// 0x7946 - request account name lookup by id (response: 0x7947)
+// 0x7952 - request account information lookup by name (response: 0x7953)
+// 0x7954 - request account information lookup by id (response: 0x7953)
 //---------------------------------------
 int parse_admin(int fd)
 {
 	unsigned int i, j;
 	char* account_name;
+	struct mmo_account acc;
 
 	uint32 ipl = session[fd]->client_addr;
 	char ip[16];
@@ -75,7 +120,7 @@ int parse_admin(int fd)
 			WFIFOSET(fd,10);
 			RFIFOSKIP(fd,2);
 			break;
-
+/*
 		case 0x7920:	// Request of an accounts list
 			if (RFIFOREST(fd) < 10)
 				return 0;
@@ -130,158 +175,145 @@ int parse_admin(int fd)
 				DELETE_BUFFER(id);
 			}
 			break;
-
+*/
 		case 0x7930:	// Request for an account creation
 			if (RFIFOREST(fd) < 91)
 				return 0;
-			{
-				struct mmo_account ma;
-				safestrncpy(ma.userid, (char*)RFIFOP(fd, 2), NAME_LENGTH);
-				safestrncpy(ma.pass,   (char*)RFIFOP(fd,26), NAME_LENGTH);
-				safestrncpy(ma.email,  (char*)RFIFOP(fd,51), 40);
-				memcpy(ma.lastlogin, "-", 2);
-				ma.sex = RFIFOB(fd,50);
-				RFIFOSKIP(fd,91);
+		{
+			struct mmo_account ma;
+			safestrncpy(ma.userid, (char*)RFIFOP(fd, 2), sizeof(ma.userid));
+			safestrncpy(ma.pass, (char*)RFIFOP(fd,26), sizeof(ma.pass));
+			ma.sex = RFIFOB(fd,50);
+			safestrncpy(ma.email, (char*)RFIFOP(fd,51), sizeof(ma.email));
+			safestrncpy(ma.lastlogin, "-", sizeof(ma.lastlogin));
 
-				WFIFOW(fd,0) = 0x7931;
-				WFIFOL(fd,2) = 0xffffffff; // invalid account id
-				safestrncpy((char*)WFIFOP(fd,6), ma.userid, 24);
-				if (strlen(ma.userid) < 4 || strlen(ma.pass) < 4) {
-					ShowNotice("'ladmin': Attempt to create an invalid account (account or pass is too short, ip: %s)\n", ip);
-				} else if (ma.sex != 'F' && ma.sex != 'M') {
-					ShowNotice("'ladmin': Attempt to create an invalid account (account: %s, received pass: %s, invalid sex, ip: %s)\n", ma.userid, ma.pass, ip);
-				} else if (account_id_count > END_ACCOUNT_NUM) {
-					ShowNotice("'ladmin': Attempt to create an account, but there is no more available id number (account: %s, pass: %s, sex: %c, ip: %s)\n", ma.userid, ma.pass, ma.sex, ip);
-				} else {
-					remove_control_chars(ma.userid);
-					remove_control_chars(ma.pass);
-					remove_control_chars(ma.email);
-					ARR_FIND( 0, auth_num, i, strncmp(auth_dat[i].userid, ma.userid, 24) == 0 );
-					if( i < auth_num )
-						ShowNotice("'ladmin': Attempt to create an already existing account (account: %s, pass: %s, received pass: %s, ip: %s)\n", auth_dat[i].userid, auth_dat[i].pass, ma.pass, ip);
-					else
-					{
-						int new_id;
-						new_id = mmo_auth_new(&ma);
-						ShowNotice("'ladmin': Account creation (account: %s (id: %d), pass: %s, sex: %c, email: %s, ip: %s)\n", ma.userid, new_id, ma.pass, ma.sex, auth_dat[i].email, ip);
-						WFIFOL(fd,2) = new_id;
-						mmo_auth_sync();
-					}
-				}
-				WFIFOSET(fd,30);
-			}
+			ShowNotice("'ladmin': Account creation request (account: %s pass: %s, sex: %c, email: %s, ip: %s)\n", ma.userid, ma.pass, ma.sex, ma.email, ip);
+
+			WFIFOW(fd,0) = 0x7931;
+			WFIFOL(fd,2) = mmo_auth_new(ma.userid, ma.pass, ma.sex, ip);
+			safestrncpy((char*)WFIFOP(fd,6), ma.userid, 24);
+			WFIFOSET(fd,30);
+		}
+			RFIFOSKIP(fd,91);
 			break;
-
+/*
 		case 0x7932:	// Request for an account deletion
 			if (RFIFOREST(fd) < 26)
 				return 0;
-			WFIFOW(fd,0) = 0x7933;
-			WFIFOL(fd,2) = 0xFFFFFFFF;
-			account_name = (char*)RFIFOP(fd,2);
+		{
+			struct mmo_account acc;
+
+			char* account_name = (char*)RFIFOP(fd,2);
 			account_name[23] = '\0';
-			remove_control_chars(account_name);
-			i = search_account_index(account_name);
-			if (i != -1) {
+
+			WFIFOW(fd,0) = 0x7933;
+
+			if( accounts->load_str(accounts, &acc, account_name) )
+			{
 				// Char-server is notified of deletion (for characters deletion).
 				unsigned char buf[65535];
 				WBUFW(buf,0) = 0x2730;
-				WBUFL(buf,2) = auth_dat[i].account_id;
+				WBUFL(buf,2) = acc.account_id;
 				charif_sendallwos(-1, buf, 6);
+
 				// send answer
-				memcpy(WFIFOP(fd,6), auth_dat[i].userid, 24);
-				WFIFOL(fd,2) = auth_dat[i].account_id;
-				// save deleted account in log file
-				ShowNotice("'ladmin': Account deletion (account: %s, id: %d, ip: %s) - saved in next line:\n", auth_dat[i].userid, auth_dat[i].account_id, ip);
-				mmo_auth_tostr((char*)buf, &auth_dat[i]);
-				ShowNotice("%s\n", buf);
+				memcpy(WFIFOP(fd,6), acc.userid, 24);
+				WFIFOL(fd,2) = acc.account_id;
+
 				// delete account
-				memset(auth_dat[i].userid, '\0', sizeof(auth_dat[i].userid));
+				memset(acc.userid, '\0', sizeof(acc.userid));
 				auth_dat[i].account_id = -1;
 				mmo_auth_sync();
 			} else {
+				WFIFOL(fd,2) = -1;
 				memcpy(WFIFOP(fd,6), account_name, 24);
 				ShowNotice("'ladmin': Attempt to delete an unknown account (account: %s, ip: %s)\n", account_name, ip);
 			}
 			WFIFOSET(fd,30);
+		}
 			RFIFOSKIP(fd,26);
 			break;
-
+*/
 		case 0x7934:	// Request to change a password
 			if (RFIFOREST(fd) < 50)
 				return 0;
-			WFIFOW(fd,0) = 0x7935;
-			WFIFOL(fd,2) = 0xFFFFFFFF; /// WTF??? an unsigned being set to a -1
-			account_name = (char*)RFIFOP(fd,2);
+		{
+			struct mmo_account acc;
+
+			char* account_name = (char*)RFIFOP(fd,2);
 			account_name[23] = '\0';
-			remove_control_chars(account_name);
-			i = search_account_index(account_name);
-			if (i != -1) {
-				memcpy(WFIFOP(fd,6), auth_dat[i].userid, 24);
-				memcpy(auth_dat[i].pass, RFIFOP(fd,26), 24);
-				auth_dat[i].pass[23] = '\0';
-				remove_control_chars(auth_dat[i].pass);
-				WFIFOL(fd,2) = auth_dat[i].account_id;
-				ShowNotice("'ladmin': Modification of a password (account: %s, new password: %s, ip: %s)\n", auth_dat[i].userid, auth_dat[i].pass, ip);
-				mmo_auth_sync();
-			} else {
-				memcpy(WFIFOP(fd,6), account_name, 24);
+
+			WFIFOW(fd,0) = 0x7935;
+
+			if( accounts->load_str(accounts, &acc, account_name) )
+			{
+				WFIFOL(fd,2) = acc.account_id;
+				safestrncpy((char*)WFIFOP(fd,6), acc.userid, 24);
+				safestrncpy(acc.pass, (char*)RFIFOP(fd,26), 24);
+				ShowNotice("'ladmin': Modification of a password (account: %s, new password: %s, ip: %s)\n", acc.userid, acc.pass, ip);
+
+				accounts->save(accounts, &acc);
+			}
+			else
+			{
+				WFIFOL(fd,2) = -1;
+				safestrncpy((char*)WFIFOP(fd,6), account_name, 24);
 				ShowNotice("'ladmin': Attempt to modify the password of an unknown account (account: %s, ip: %s)\n", account_name, ip);
 			}
+
 			WFIFOSET(fd,30);
+		}
 			RFIFOSKIP(fd,50);
 			break;
 
 		case 0x7936:	// Request to modify a state
 			if (RFIFOREST(fd) < 50)
 				return 0;
+		{
+			struct mmo_account acc;
+
+			char* account_name = (char*)RFIFOP(fd,2);
+			uint32 state = RFIFOL(fd,26);
+			account_name[23] = '\0';
+
+			WFIFOW(fd,0) = 0x7937;
+
+			if( accounts->load_str(accounts, &acc, account_name) )
 			{
-				char error_message[20];
-				uint32 statut;
-				WFIFOW(fd,0) = 0x7937;
-				WFIFOL(fd,2) = 0xFFFFFFFF; // WTF???
-				account_name = (char*)RFIFOP(fd,2);
-				account_name[23] = '\0';
-				remove_control_chars(account_name);
-				statut = RFIFOL(fd,26);
-				memcpy(error_message, RFIFOP(fd,30), 20);
-				error_message[19] = '\0';
-				remove_control_chars(error_message);
-				if (statut != 7 || error_message[0] == '\0') { // 7: // 6 = Your are Prohibited to log in until %s
-					strcpy(error_message, "-");
-				}
-				i = search_account_index(account_name);
-				if (i != -1) {
-					memcpy(WFIFOP(fd,6), auth_dat[i].userid, 24);
-					WFIFOL(fd,2) = auth_dat[i].account_id;
-					if (auth_dat[i].state == statut && strcmp(auth_dat[i].error_message, error_message) == 0)
-						ShowNotice("'ladmin': Modification of a state, but the state of the account is already the good state (account: %s, received state: %d, ip: %s)\n", account_name, statut, ip);
-					else {
-						if (statut == 7)
-							ShowNotice("'ladmin': Modification of a state (account: %s, new state: %d - prohibited to login until '%s', ip: %s)\n", auth_dat[i].userid, statut, error_message, ip);
-						else
-							ShowNotice("'ladmin': Modification of a state (account: %s, new state: %d, ip: %s)\n", auth_dat[i].userid, statut, ip);
-						if (auth_dat[i].state == 0) {
-							unsigned char buf[16];
-							WBUFW(buf,0) = 0x2731;
-							WBUFL(buf,2) = auth_dat[i].account_id;
-							WBUFB(buf,6) = 0; // 0: change of statut, 1: ban
-							WBUFL(buf,7) = statut; // status or final date of a banishment
-							charif_sendallwos(-1, buf, 11);
-						}
-						auth_dat[i].state = statut;
-						memcpy(auth_dat[i].error_message, error_message, 20);
-						mmo_auth_sync();
+				memcpy(WFIFOP(fd,6), acc.userid, 24);
+				WFIFOL(fd,2) = acc.account_id;
+
+				if (acc.state == state)
+					ShowNotice("'ladmin': Modification of a state, but the state of the account already has this value (account: %s, received state: %d, ip: %s)\n", account_name, state, ip);
+				else
+				{
+					ShowNotice("'ladmin': Modification of a state (account: %s, new state: %d, ip: %s)\n", acc.userid, state, ip);
+
+					if (acc.state == 0) {
+						unsigned char buf[16];
+						WBUFW(buf,0) = 0x2731;
+						WBUFL(buf,2) = acc.account_id;
+						WBUFB(buf,6) = 0; // 0: change of statut, 1: ban
+						WBUFL(buf,7) = state; // status or final date of a banishment
+						charif_sendallwos(-1, buf, 11);
 					}
-				} else {
-					memcpy(WFIFOP(fd,6), account_name, 24);
-					ShowNotice("'ladmin': Attempt to modify the state of an unknown account (account: %s, received state: %d, ip: %s)\n", account_name, statut, ip);
+					acc.state = state;
+					accounts->save(accounts, &acc);
 				}
-				WFIFOL(fd,30) = statut;
 			}
+			else
+			{
+				ShowNotice("'ladmin': Attempt to modify the state of an unknown account (account: %s, received state: %d, ip: %s)\n", account_name, state, ip);
+				WFIFOL(fd,2) = -1;
+				memcpy(WFIFOP(fd,6), account_name, 24);
+			}
+
+			WFIFOL(fd,30) = state;
 			WFIFOSET(fd,34);
+		}
 			RFIFOSKIP(fd,50);
 			break;
-
+/*
 		case 0x7938:	// Request for servers list and # of online players
 		{		
 			uint8 server_num = 0;
@@ -312,18 +344,18 @@ int parse_admin(int fd)
 			account_name = (char*)RFIFOP(fd,2);
 			account_name[23] = '\0';
 			remove_control_chars(account_name);
-			i = search_account_index(account_name);
-			if (i != -1) {
+			if( accounts->load_str(accounts, &acc, account_name) )
+			{
 				char pass[25];
 				memcpy(WFIFOP(fd,6), auth_dat[i].userid, 24);
 				memcpy(pass, RFIFOP(fd,26), 24);
 				pass[24] = '\0';
 				remove_control_chars(pass);
-				if (strcmp(auth_dat[i].pass, pass) == 0) {
-					WFIFOL(fd,2) = auth_dat[i].account_id;
-					ShowNotice("'ladmin': Check of password OK (account: %s, password: %s, ip: %s)\n", auth_dat[i].userid, auth_dat[i].pass, ip);
+				if (strcmp(acc.pass, pass) == 0) {
+					WFIFOL(fd,2) = acc.account_id;
+					ShowNotice("'ladmin': Check of password OK (account: %s, password: %s, ip: %s)\n", acc.userid, acc.pass, ip);
 				} else {
-					ShowNotice("'ladmin': Failure of password check (account: %s, proposed pass: %s, ip: %s)\n", auth_dat[i].userid, pass, ip);
+					ShowNotice("'ladmin': Failure of password check (account: %s, proposed pass: %s, ip: %s)\n", acc.userid, pass, ip);
 				}
 			} else {
 				memcpy(WFIFOP(fd,6), account_name, 24);
@@ -337,7 +369,7 @@ int parse_admin(int fd)
 			if (RFIFOREST(fd) < 27)
 				return 0;
 			WFIFOW(fd,0) = 0x793d;
-			WFIFOL(fd,2) = 0xFFFFFFFF; // WTF???
+			WFIFOL(fd,2) = 0xFFFFFFFF; // -1
 			account_name = (char*)RFIFOP(fd,2);
 			account_name[23] = '\0';
 			remove_control_chars(account_name);
@@ -351,22 +383,25 @@ int parse_admin(int fd)
 					else
 						ShowNotice("'ladmin': Attempt to give an invalid sex (account: %s, received sex: 'control char', ip: %s)\n", account_name, ip);
 				} else {
-					i = search_account_index(account_name);
-					if (i != -1) {
-						memcpy(WFIFOP(fd,6), auth_dat[i].userid, 24);
-						if (auth_dat[i].sex != ((sex == 'S' || sex == 's') ? 2 : (sex == 'M' || sex == 'm'))) {
+					if( accounts->load_str(accounts, &acc, account_name) )
+					{
+						memcpy(WFIFOP(fd,6), acc.userid, 24);
+						if (acc.sex != sex)
+						{
 							unsigned char buf[16];
-							WFIFOL(fd,2) = auth_dat[i].account_id;
-							auth_dat[i].sex = (sex == 'S' || sex == 's') ? 2 : (sex == 'M' || sex == 'm');
-							ShowNotice("'ladmin': Modification of a sex (account: %s, new sex: %c, ip: %s)\n", auth_dat[i].userid, sex, ip);
-							mmo_auth_sync();
+							ShowNotice("'ladmin': Modification of a sex (account: %s, new sex: %c, ip: %s)\n", acc.userid, sex, ip);
+
+							WFIFOL(fd,2) = acc.account_id;
+							acc.sex = sex;
+							accounts->save(accounts, &acc);
+
 							// send to all char-server the change
 							WBUFW(buf,0) = 0x2723;
-							WBUFL(buf,2) = auth_dat[i].account_id;
-							WBUFB(buf,6) = auth_dat[i].sex;
+							WBUFL(buf,2) = acc.account_id;
+							WBUFB(buf,6) = acc.sex;
 							charif_sendallwos(-1, buf, 7);
 						} else {
-							ShowNotice("'ladmin': Modification of a sex, but the sex is already the good sex (account: %s, sex: %c, ip: %s)\n", auth_dat[i].userid, sex, ip);
+							ShowNotice("'ladmin': Modification of a sex, but the sex is already the good sex (account: %s, sex: %c, ip: %s)\n", acc.userid, sex, ip);
 						}
 					} else {
 						ShowNotice("'ladmin': Attempt to modify the sex of an unknown account (account: %s, received sex: %c, ip: %s)\n", account_name, sex, ip);
@@ -381,82 +416,31 @@ int parse_admin(int fd)
 			if (RFIFOREST(fd) < 27)
 				return 0;
 			WFIFOW(fd,0) = 0x793f;
-			WFIFOL(fd,2) = 0xFFFFFFFF; // WTF???
+			WFIFOL(fd,2) = 0xFFFFFFFF; // -1
 			account_name = (char*)RFIFOP(fd,2);
 			account_name[23] = '\0';
 			remove_control_chars(account_name);
 			memcpy(WFIFOP(fd,6), account_name, 24);
+		{
+			char new_gm_level;
+			new_gm_level = RFIFOB(fd,26);
+			if( new_gm_level < 0 || new_gm_level > 99 )
+				ShowNotice("'ladmin': Attempt to give an invalid GM level (account: %s, received GM level: %d, ip: %s)\n", account_name, (int)new_gm_level, ip);
+			else
+			if( !accounts->load_str(accounts, &acc, account_name) )
+				ShowNotice("'ladmin': Attempt to modify the GM level of an unknown account (account: %s, received GM level: %d, ip: %s)\n", account_name, (int)new_gm_level, ip);
+			else
 			{
-				char new_gm_level;
-				new_gm_level = RFIFOB(fd,26);
-				if (new_gm_level < 0 || new_gm_level > 99) {
-					ShowNotice("'ladmin': Attempt to give an invalid GM level (account: %s, received GM level: %d, ip: %s)\n", account_name, (int)new_gm_level, ip);
-				} else {
-					i = search_account_index(account_name);
-					if (i != -1) {
-						int acc = auth_dat[i].account_id;
-						memcpy(WFIFOP(fd,6), auth_dat[i].userid, 24);
-						if (isGM(acc) != new_gm_level) {
-							// modification of the file
-							FILE *fp, *fp2;
-							int lock;
-							char line[512];
-							int GM_account, GM_level;
-							int modify_flag;
-							char tmpstr[24];
-							time_t raw_time;
-							if ((fp2 = lock_fopen(GM_account_filename, &lock)) != NULL) {
-								if ((fp = fopen(GM_account_filename, "r")) != NULL) {
-									time(&raw_time);
-									strftime(tmpstr, 23, login_config.date_format, localtime(&raw_time));
-									modify_flag = 0;
-									// read/write GM file
-									while(fgets(line, sizeof(line), fp))
-									{
-										while(line[0] != '\0' && (line[strlen(line)-1] == '\n' || line[strlen(line)-1] == '\r'))
-											line[strlen(line)-1] = '\0'; // TODO: remove this
-										if ((line[0] == '/' && line[1] == '/') || line[0] == '\0')
-											fprintf(fp2, "%s\n", line);
-										else {
-											if (sscanf(line, "%d %d", &GM_account, &GM_level) != 2 && sscanf(line, "%d: %d", &GM_account, &GM_level) != 2)
-												fprintf(fp2, "%s\n", line);
-											else if (GM_account != acc)
-												fprintf(fp2, "%s\n", line);
-											else if (new_gm_level < 1) {
-												fprintf(fp2, "// %s: 'ladmin' GM level removed on account %d '%s' (previous level: %d)\n//%d %d\n", tmpstr, acc, auth_dat[i].userid, GM_level, acc, new_gm_level);
-												modify_flag = 1;
-											} else {
-												fprintf(fp2, "// %s: 'ladmin' GM level on account %d '%s' (previous level: %d)\n%d %d\n", tmpstr, acc, auth_dat[i].userid, GM_level, acc, new_gm_level);
-												modify_flag = 1;
-											}
-										}
-									}
-									if (modify_flag == 0)
-										fprintf(fp2, "// %s: 'ladmin' GM level on account %d '%s' (previous level: 0)\n%d %d\n", tmpstr, acc, auth_dat[i].userid, acc, new_gm_level);
-									fclose(fp);
-								} else {
-									ShowNotice("'ladmin': Attempt to modify of a GM level - impossible to read GM accounts file (account: %s (%d), received GM level: %d, ip: %s)\n", auth_dat[i].userid, acc, (int)new_gm_level, ip);
-								}
-								if (lock_fclose(fp2, GM_account_filename, &lock) == 0) {
-									WFIFOL(fd,2) = acc;
-									ShowNotice("'ladmin': Modification of a GM level (account: %s (%d), new GM level: %d, ip: %s)\n", auth_dat[i].userid, acc, (int)new_gm_level, ip);
-									// read and send new GM informations
-									read_gm_account();
-									send_GM_accounts(-1);
-								} else {
-									ShowNotice("'ladmin': Attempt to modify of a GM level - impossible to write GM accounts file (account: %s (%d), received GM level: %d, ip: %s)\n", auth_dat[i].userid, acc, (int)new_gm_level, ip);
-								}
-							} else {
-								ShowNotice("'ladmin': Attempt to modify of a GM level - impossible to write GM accounts file (account: %s (%d), received GM level: %d, ip: %s)\n", auth_dat[i].userid, acc, (int)new_gm_level, ip);
-							}
-						} else {
-							ShowNotice("'ladmin': Attempt to modify of a GM level, but the GM level is already the good GM level (account: %s (%d), GM level: %d, ip: %s)\n", auth_dat[i].userid, acc, (int)new_gm_level, ip);
-						}
-					} else {
-						ShowNotice("'ladmin': Attempt to modify the GM level of an unknown account (account: %s, received GM level: %d, ip: %s)\n", account_name, (int)new_gm_level, ip);
-					}
+				memcpy(WFIFOP(fd,6), acc.userid, 24);
+
+				if (isGM(acc.account_id) == new_gm_level)
+					ShowNotice("'ladmin': Attempt to modify of a GM level, but the GM level is already the good GM level (account: %s (%d), GM level: %d, ip: %s)\n", acc.userid, acc.account_id, (int)new_gm_level, ip);
+				else
+				{
+					//TODO: change level
 				}
 			}
+		}
 			WFIFOSET(fd,30);
 			RFIFOSKIP(fd,27);
 			break;
@@ -739,57 +723,12 @@ int parse_admin(int fd)
 		case 0x7950:	// Request to change the validity limite (timestamp) (relative change)
 			if (RFIFOREST(fd) < 38)
 				return 0;
-			{
-				time_t timestamp;
-				struct tm *tmtime;
-				char tmpstr[2048];
-				char tmpstr2[2048];
-				WFIFOW(fd,0) = 0x7951;
-				WFIFOL(fd,2) = 0xFFFFFFFF; // WTF???
-				account_name = (char*)RFIFOP(fd,2);
-				account_name[23] = '\0';
-				remove_control_chars(account_name);
-				i = search_account_index(account_name);
-				if (i != -1) {
-					WFIFOL(fd,2) = auth_dat[i].account_id;
-					memcpy(WFIFOP(fd,6), auth_dat[i].userid, 24);
-					timestamp = auth_dat[i].expiration_time;
-					if (timestamp == 0 || timestamp < time(NULL))
-						timestamp = time(NULL);
-					tmtime = localtime(&timestamp);
-					tmtime->tm_year = tmtime->tm_year + (short)RFIFOW(fd,26);
-					tmtime->tm_mon = tmtime->tm_mon + (short)RFIFOW(fd,28);
-					tmtime->tm_mday = tmtime->tm_mday + (short)RFIFOW(fd,30);
-					tmtime->tm_hour = tmtime->tm_hour + (short)RFIFOW(fd,32);
-					tmtime->tm_min = tmtime->tm_min + (short)RFIFOW(fd,34);
-					tmtime->tm_sec = tmtime->tm_sec + (short)RFIFOW(fd,36);
-					timestamp = mktime(tmtime);
-					if (timestamp != -1) {
-						strftime(tmpstr, 24, login_config.date_format, localtime(&auth_dat[i].expiration_time));
-						strftime(tmpstr2, 24, login_config.date_format, localtime(&timestamp));
-						ShowNotice("'ladmin': Adjustment of a validity limit (account: %s, %d (%s) + (%+d y %+d m %+d d %+d h %+d mn %+d s) -> new validity: %d (%s), ip: %s)\n", auth_dat[i].userid, auth_dat[i].expiration_time, (auth_dat[i].expiration_time == 0 ? "unlimited" : tmpstr), (short)RFIFOW(fd,26), (short)RFIFOW(fd,28), (short)RFIFOW(fd,30), (short)RFIFOW(fd,32), (short)RFIFOW(fd,34), (short)RFIFOW(fd,36), timestamp, (timestamp == 0 ? "unlimited" : tmpstr2), ip);
-						auth_dat[i].expiration_time = timestamp;
-						mmo_auth_sync();
-						WFIFOL(fd,30) = (unsigned long)auth_dat[i].expiration_time;
-					} else {
-						strftime(tmpstr, 24, login_config.date_format, localtime(&auth_dat[i].expiration_time));
-						ShowNotice("'ladmin': Impossible to adjust a validity limit (account: %s, %d (%s) + (%+d y %+d m %+d d %+d h %+d mn %+d s) -> ???, ip: %s)\n", auth_dat[i].userid, auth_dat[i].expiration_time, (auth_dat[i].expiration_time == 0 ? "unlimited" : tmpstr), (short)RFIFOW(fd,26), (short)RFIFOW(fd,28), (short)RFIFOW(fd,30), (short)RFIFOW(fd,32), (short)RFIFOW(fd,34), (short)RFIFOW(fd,36), ip);
-						WFIFOL(fd,30) = 0;
-					}
-				} else {
-					memcpy(WFIFOP(fd,6), account_name, 24);
-					ShowNotice("'ladmin': Attempt to adjust the validity limit of an unknown account (account: %s, ip: %s)\n", account_name, ip);
-					WFIFOL(fd,30) = 0;
-				}
-			}
-			WFIFOSET(fd,34);
-			RFIFOSKIP(fd,38);
-			break;
-
-		case 0x7952:	// Request about informations of an account (by account name)
-			if (RFIFOREST(fd) < 26)
-				return 0;
-			WFIFOW(fd,0) = 0x7953;
+		{
+			time_t timestamp;
+			struct tm *tmtime;
+			char tmpstr[2048];
+			char tmpstr2[2048];
+			WFIFOW(fd,0) = 0x7951;
 			WFIFOL(fd,2) = 0xFFFFFFFF; // WTF???
 			account_name = (char*)RFIFOP(fd,2);
 			account_name[23] = '\0';
@@ -797,75 +736,118 @@ int parse_admin(int fd)
 			i = search_account_index(account_name);
 			if (i != -1) {
 				WFIFOL(fd,2) = auth_dat[i].account_id;
-				WFIFOB(fd,6) = (unsigned char)isGM(auth_dat[i].account_id);
-				memcpy(WFIFOP(fd,7), auth_dat[i].userid, 24);
-				WFIFOB(fd,31) = auth_dat[i].sex;
-				WFIFOL(fd,32) = auth_dat[i].logincount;
-				WFIFOL(fd,36) = auth_dat[i].state;
-				memcpy(WFIFOP(fd,40), auth_dat[i].error_message, 20);
-				memcpy(WFIFOP(fd,60), auth_dat[i].lastlogin, 24);
-				memcpy(WFIFOP(fd,84), auth_dat[i].last_ip, 16);
-				memcpy(WFIFOP(fd,100), auth_dat[i].email, 40);
-				WFIFOL(fd,140) = (unsigned long)auth_dat[i].expiration_time;
-				WFIFOL(fd,144) = (unsigned long)auth_dat[i].unban_time;
-				WFIFOW(fd,148) = (uint16)strlen(auth_dat[i].memo);
-				if (auth_dat[i].memo[0]) {
-					memcpy(WFIFOP(fd,150), auth_dat[i].memo, strlen(auth_dat[i].memo));
+				memcpy(WFIFOP(fd,6), auth_dat[i].userid, 24);
+				timestamp = auth_dat[i].expiration_time;
+				if (timestamp == 0 || timestamp < time(NULL))
+					timestamp = time(NULL);
+				tmtime = localtime(&timestamp);
+				tmtime->tm_year = tmtime->tm_year + (short)RFIFOW(fd,26);
+				tmtime->tm_mon = tmtime->tm_mon + (short)RFIFOW(fd,28);
+				tmtime->tm_mday = tmtime->tm_mday + (short)RFIFOW(fd,30);
+				tmtime->tm_hour = tmtime->tm_hour + (short)RFIFOW(fd,32);
+				tmtime->tm_min = tmtime->tm_min + (short)RFIFOW(fd,34);
+				tmtime->tm_sec = tmtime->tm_sec + (short)RFIFOW(fd,36);
+				timestamp = mktime(tmtime);
+				if (timestamp != -1) {
+					strftime(tmpstr, 24, login_config.date_format, localtime(&auth_dat[i].expiration_time));
+					strftime(tmpstr2, 24, login_config.date_format, localtime(&timestamp));
+					ShowNotice("'ladmin': Adjustment of a validity limit (account: %s, %d (%s) + (%+d y %+d m %+d d %+d h %+d mn %+d s) -> new validity: %d (%s), ip: %s)\n", auth_dat[i].userid, auth_dat[i].expiration_time, (auth_dat[i].expiration_time == 0 ? "unlimited" : tmpstr), (short)RFIFOW(fd,26), (short)RFIFOW(fd,28), (short)RFIFOW(fd,30), (short)RFIFOW(fd,32), (short)RFIFOW(fd,34), (short)RFIFOW(fd,36), timestamp, (timestamp == 0 ? "unlimited" : tmpstr2), ip);
+					auth_dat[i].expiration_time = timestamp;
+					mmo_auth_sync();
+					WFIFOL(fd,30) = (unsigned long)auth_dat[i].expiration_time;
+				} else {
+					strftime(tmpstr, 24, login_config.date_format, localtime(&auth_dat[i].expiration_time));
+					ShowNotice("'ladmin': Impossible to adjust a validity limit (account: %s, %d (%s) + (%+d y %+d m %+d d %+d h %+d mn %+d s) -> ???, ip: %s)\n", auth_dat[i].userid, auth_dat[i].expiration_time, (auth_dat[i].expiration_time == 0 ? "unlimited" : tmpstr), (short)RFIFOW(fd,26), (short)RFIFOW(fd,28), (short)RFIFOW(fd,30), (short)RFIFOW(fd,32), (short)RFIFOW(fd,34), (short)RFIFOW(fd,36), ip);
+					WFIFOL(fd,30) = 0;
 				}
-				ShowNotice("'ladmin': Sending information of an account (request by the name; account: %s, id: %d, ip: %s)\n", auth_dat[i].userid, auth_dat[i].account_id, ip);
-				WFIFOSET(fd,150+strlen(auth_dat[i].memo));
 			} else {
-				memcpy(WFIFOP(fd,7), account_name, 24);
-				WFIFOW(fd,148) = 0;
-				ShowNotice("'ladmin': Attempt to obtain information (by the name) of an unknown account (account: %s, ip: %s)\n", account_name, ip);
-				WFIFOSET(fd,150);
+				memcpy(WFIFOP(fd,6), account_name, 24);
+				ShowNotice("'ladmin': Attempt to adjust the validity limit of an unknown account (account: %s, ip: %s)\n", account_name, ip);
+				WFIFOL(fd,30) = 0;
 			}
+
+			WFIFOSET(fd,34);
+		}
+			RFIFOSKIP(fd,38);
+			break;
+*/
+		case 0x7952:	// Request about informations of an account (by account name)
+			if (RFIFOREST(fd) < 26)
+				return 0;
+		{
+			struct mmo_account acc;
+
+			WFIFOW(fd,0) = 0x7953;
+
+			account_name = (char*)RFIFOP(fd,2);
+			account_name[23] = '\0';
+
+			if( accounts->load_str(accounts, &acc, account_name) )
+			{
+				ShowNotice("'ladmin': Sending information of an account (request by the name; account: %s, id: %d, ip: %s)\n", acc.userid, acc.account_id, ip);
+				WFIFOL(fd,2) = acc.account_id;
+				WFIFOB(fd,6) = acc.level;
+				safestrncpy((char*)WFIFOP(fd,7), acc.userid, 24);
+				WFIFOB(fd,31) = acc.sex;
+				WFIFOL(fd,32) = acc.logincount;
+				WFIFOL(fd,36) = acc.state;
+				safestrncpy((char*)WFIFOP(fd,40), "-", 20); // error message (removed)
+				safestrncpy((char*)WFIFOP(fd,60), acc.lastlogin, 24);
+				safestrncpy((char*)WFIFOP(fd,84), acc.last_ip, 16);
+				safestrncpy((char*)WFIFOP(fd,100), acc.email, 40);
+				WFIFOL(fd,140) = (unsigned long)acc.expiration_time;
+				WFIFOL(fd,144) = (unsigned long)acc.unban_time;
+				WFIFOW(fd,148) = 0; // previously, this was strlen(memo), and memo went afterwards
+			}
+			else
+			{
+				ShowNotice("'ladmin': Attempt to obtain information (by the name) of an unknown account (account: %s, ip: %s)\n", account_name, ip);
+				WFIFOL(fd,2) = -1;
+				safestrncpy((char*)WFIFOP(fd,7), account_name, 24); // not found
+			}
+
+			WFIFOSET(fd,150);
+		}
 			RFIFOSKIP(fd,26);
 			break;
 
 		case 0x7954:	// Request about information of an account (by account id)
 			if (RFIFOREST(fd) < 6)
 				return 0;
-			WFIFOW(fd,0) = 0x7953;
-			WFIFOL(fd,2) = RFIFOL(fd,2);
-			memset(WFIFOP(fd,7), '\0', 24);
-			for(i = 0; i < auth_num; i++) {
-				if (auth_dat[i].account_id == (int)RFIFOL(fd,2)) {
-					ShowNotice("'ladmin': Sending information of an account (request by the id; account: %s, id: %d, ip: %s)\n", auth_dat[i].userid, RFIFOL(fd,2), ip);
-					WFIFOB(fd,6) = (unsigned char)isGM(auth_dat[i].account_id);
-					memcpy(WFIFOP(fd,7), auth_dat[i].userid, 24);
-					WFIFOB(fd,31) = auth_dat[i].sex;
-					WFIFOL(fd,32) = auth_dat[i].logincount;
-					WFIFOL(fd,36) = auth_dat[i].state;
-					memcpy(WFIFOP(fd,40), auth_dat[i].error_message, 20);
-					memcpy(WFIFOP(fd,60), auth_dat[i].lastlogin, 24);
-					memcpy(WFIFOP(fd,84), auth_dat[i].last_ip, 16);
-					memcpy(WFIFOP(fd,100), auth_dat[i].email, 40);
-					WFIFOL(fd,140) = (unsigned long)auth_dat[i].expiration_time;
-					WFIFOL(fd,144) = (unsigned long)auth_dat[i].unban_time;
-					WFIFOW(fd,148) = (uint16)strlen(auth_dat[i].memo);
-					if (auth_dat[i].memo[0]) {
-						memcpy(WFIFOP(fd,150), auth_dat[i].memo, strlen(auth_dat[i].memo));
-					}
-					WFIFOSET(fd,150+strlen(auth_dat[i].memo));
-					break;
-				}
-			}
-			if (i == auth_num) {
-				ShowNotice("'ladmin': Attempt to obtain information (by the id) of an unknown account (id: %d, ip: %s)\n", RFIFOL(fd,2), ip);
-				strncpy((char*)WFIFOP(fd,7), "", 24);
-				WFIFOW(fd,148) = 0;
-				WFIFOSET(fd,150);
-			}
-			RFIFOSKIP(fd,6);
-			break;
+		{
+			struct mmo_account acc;
 
-		case 0x7955:	// Request to reload GM file (no answer)
-			ShowStatus("'ladmin': Request to re-load GM configuration file (ip: %s).\n", ip);
-			read_gm_account();
-			// send GM accounts to all char-servers
-			send_GM_accounts(-1);
-			RFIFOSKIP(fd,2);
+			int account_id = RFIFOL(fd,2);
+
+			WFIFOHEAD(fd,150);
+			WFIFOW(fd,0) = 0x7953;
+			WFIFOL(fd,2) = account_id;
+
+			if( accounts->load_num(accounts, &acc, account_id) )
+			{
+				ShowNotice("'ladmin': Sending information of an account (request by the id; account: %s, id: %d, ip: %s)\n", acc.userid, account_id, ip);
+				WFIFOB(fd,6) = acc.level;
+				safestrncpy((char*)WFIFOP(fd,7), acc.userid, 24);
+				WFIFOB(fd,31) = acc.sex;
+				WFIFOL(fd,32) = acc.logincount;
+				WFIFOL(fd,36) = acc.state;
+				safestrncpy((char*)WFIFOP(fd,40), "-", 20); // error message (removed)
+				safestrncpy((char*)WFIFOP(fd,60), acc.lastlogin, 24);
+				safestrncpy((char*)WFIFOP(fd,84), acc.last_ip, 16);
+				safestrncpy((char*)WFIFOP(fd,100), acc.email, 40);
+				WFIFOL(fd,140) = (unsigned long)acc.expiration_time;
+				WFIFOL(fd,144) = (unsigned long)acc.unban_time;
+				WFIFOW(fd,148) = 0; // previously, this was strlen(memo), and memo went afterwards
+			}
+			else
+			{
+				ShowNotice("'ladmin': Attempt to obtain information (by the id) of an unknown account (id: %d, ip: %s)\n", account_id, ip);
+				safestrncpy((char*)WFIFOP(fd,7), "", 24); // not found
+			}
+
+			WFIFOSET(fd,150);
+		}
+			RFIFOSKIP(fd,6);
 			break;
 
 		default:

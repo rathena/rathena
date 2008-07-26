@@ -79,8 +79,6 @@ Sql* logmysql_handle;
 
 #endif /* not TXT_ONLY */
 
-int lowest_gm_level = 1;
-
 // This param using for sending mainchat
 // messages like whispers to this nick. [LuzZza]
 char main_chat_nick[16] = "Main";
@@ -2955,13 +2953,8 @@ int inter_config_read(char *cfgName)
 		i=sscanf(line,"%[^:]: %[^\r\n]",w1,w2);
 		if(i!=2)
 			continue;
-		if(strcmpi(w1,"party_share_level")==0){
-			party_share_level = config_switch(w2);
-		} else if(strcmpi(w1,"lowest_gm_level")==0){
-			lowest_gm_level = atoi(w2);
-		
-		/* Main chat nick [LuzZza] */
-		} else if(strcmpi(w1, "main_chat_nick")==0){
+
+		if(strcmpi(w1, "main_chat_nick")==0){
 			strcpy(main_chat_nick, w2);
 			
 	#ifndef TXT_ONLY
@@ -3068,37 +3061,6 @@ int log_sql_init(void)
 	return 0;
 }
 
-/*=============================================
- * Does a mysql_ping to all connection handles
- *---------------------------------------------*/
-int map_sql_ping(int tid, unsigned int tick, int id, intptr data) 
-{
-	ShowInfo("Pinging SQL server to keep connection alive...\n");
-	Sql_Ping(mmysql_handle);
-	if (log_config.sql_logs)
-		Sql_Ping(logmysql_handle);
-	return 0;
-}
-
-int sql_ping_init(void)
-{
-	uint32 connection_timeout, connection_ping_interval;
-
-	// set a default value
-	connection_timeout = 28800; // 8 hours
-
-	// ask the mysql server for the timeout value
-	Sql_GetTimeout(mmysql_handle, &connection_timeout);
-	if (connection_timeout < 60)
-		connection_timeout = 60;
-
-	// establish keepalive
-	connection_ping_interval = connection_timeout - 30; // 30-second reserve
-	add_timer_func_list(map_sql_ping, "map_sql_ping");
-	add_timer_interval(gettick() + connection_ping_interval*1000, map_sql_ping, 0, 0, connection_ping_interval*1000);
-
-	return 0;
-}
 #endif /* not TXT_ONLY */
 
 int map_db_final(DBKey k,void *d,va_list ap)
@@ -3436,8 +3398,6 @@ int do_init(int argc, char *argv[])
 #ifndef TXT_ONLY /* mail system [Valaris] */
 	if (log_config.sql_logs)
 		log_sql_init();
-
-	sql_ping_init();
 #endif /* not TXT_ONLY */
 
 	npc_event_do_oninit();	// npcのOnInitイベント?行

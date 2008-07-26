@@ -650,6 +650,25 @@ int mapif_parse_NameChangeRequest(int fd)
 
 //--------------------------------------------------------
 
+/// Returns the length of the next complete packet to process,
+/// or 0 if no complete packet exists in the queue.
+///
+/// @param length The minimum allowed length, or -1 for dynamic lookup
+int inter_check_length(int fd, int length)
+{
+	if( length == -1 )
+	{// variable-length packet
+		if( RFIFOREST(fd) < 4 )
+			return 0;
+		length = RFIFOW(fd,2);
+	}
+
+	if( (int)RFIFOREST(fd) < length )
+		return 0;
+
+	return length;
+}
+
 // map server からの通信（１パケットのみ解析すること）
 // エラーなら0(false)、処理できたなら1、
 // パケット長が足りなければ2をかえさなければならない
@@ -695,19 +714,4 @@ int inter_parse_frommap(int fd) {
 	return 1;
 }
 
-// RFIFOのパケット長確認
-// 必要パケット長があればパケット長、まだ足りなければ0
-int inter_check_length(int fd, int length) {
-	if (length == -1) {	// 可変パケット長
-		RFIFOHEAD(fd);
-		if (RFIFOREST(fd) < 4)	// パケット長が未着
-			return 0;
-		length = RFIFOW(fd,2);
-	}
-
-	if ((int)RFIFOREST(fd) < length)	// パケットが未着
-		return 0;
-
-	return length;
-}
 #endif //TXT_SQL_CONVERT

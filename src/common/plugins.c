@@ -287,7 +287,7 @@ char *DLL_ERROR(void)
 {
 	static char dllbuf[80];
 	DWORD dw = GetLastError();
-	FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM, NULL, dw, 0, dllbuf, 80, NULL);
+	FormatMessageA(FORMAT_MESSAGE_FROM_SYSTEM, NULL, dw, 0, dllbuf, 80, NULL);
 	return dllbuf;
 }
 #endif
