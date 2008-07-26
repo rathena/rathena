@@ -1,5 +1,7 @@
 ﻿Date		Added
 ======
+2008/07/26
+	* Rev. 12995 Slight change to the nameless island quest. [L0ne_W0lf]
 2008/07/25
 	* Rev. 12994 Should fix any more issues in Nameless access quest. [L0ne_W0lf]
 	* Rev. 12993 Swapped dis/enable for hideon/off in wedding script. [L0ne_W0lf]
