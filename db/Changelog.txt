@@ -40,6 +40,9 @@
 	2385 Recuvative_Armor		Should trigger HP/SP return with magical kills as well.
 
 =======================
+2008/07/27
+	* Rev. 13004 Added values to skill_cast_db for mercenary skills. [L0ne_W0lf]
+	- These skills are NOT implemented. Place holders only.
 2008/07/25
 	* Rev. 12993 Corrected Luna Bow Bonuses. (bugreport:1919) [L0ne_W0lf]
 2008/07/24
