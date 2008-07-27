@@ -191,10 +191,6 @@ SOURCE=..\src\login\account.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\src\login\account_rj.c
-# End Source File
-# Begin Source File
-
 SOURCE=..\src\login\account_txt.c
 # End Source File
 # Begin Source File

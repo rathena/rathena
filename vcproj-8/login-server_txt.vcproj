@@ -206,10 +206,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\src\login\account_rj.c"
-				>
-			</File>
-			<File
 				RelativePath="..\src\login\account_txt.c"
 				>
 			</File>
