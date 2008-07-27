@@ -41,6 +41,8 @@
 
 =======================
 2008/07/27
+	* Rev. 13006 Added values to skill_require_db for mercenary skills. [L0ne_W0lf]
+	* Added values to skill_unit_db for mercenary ground skills.
 	* Rev. 13004 Added values to skill_cast_db for mercenary skills. [L0ne_W0lf]
 	- These skills are NOT implemented. Place holders only.
 2008/07/25
