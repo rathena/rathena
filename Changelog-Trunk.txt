@@ -4,6 +4,7 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2008/07/27
+	* Fixed md5 passwords not working
 	* Possibly corrected a guild saving problem (bugreport:1908)
 	* Removed some leftover code that shouldn't have been merged [ultramage]
 	* Fixed a memory leak in mmo_auth_tosql (extra sql statement being allocated).

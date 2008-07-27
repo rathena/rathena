@@ -21,7 +21,7 @@ struct login_session_data {
 	char sex;
 
 	char userid[NAME_LENGTH];
-	char passwd[NAME_LENGTH];
+	char passwd[32+1]; // 23+1 for plaintext, 32+1 for md5-ed passwords
 	int passwdenc;
 	char md5key[20];
 	uint16 md5keylen;
