@@ -1,6 +1,8 @@
 Date	Added
 
 2008/07/27
+	* Removed the unused login and txt->sql options in inter_athena.conf
+	* Renamed config option log_db to log_db_db in inter_athena.conf
 	* Conf file adjustments for the loginmerge branch
 	- added new login and ipban db config options to login_athena.conf
 	- login database options are no longer in inter_athena.conf!

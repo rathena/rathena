@@ -74,7 +74,7 @@ char log_db_ip[32] = "127.0.0.1";
 int log_db_port = 3306;
 char log_db_id[32] = "ragnarok";
 char log_db_pw[32] = "ragnarok";
-char log_db[32] = "log";
+char log_db_db[32] = "log";
 Sql* logmysql_handle;
 
 #endif /* not TXT_ONLY */
@@ -2984,18 +2984,16 @@ int inter_config_read(char *cfgName)
 		} else if(strcmpi(w1,"use_sql_db")==0){
 			db_use_sqldbs = config_switch(w2);
 			ShowStatus ("Using SQL dbs: %s\n",w2);
-		} else if(strcmpi(w1,"log_db")==0) {
-			strcpy(log_db, w2);
 		} else if(strcmpi(w1,"log_db_ip")==0) {
 			strcpy(log_db_ip, w2);
-		} else if(strcmpi(w1,"log_db")==0) {
-			strcpy(log_db, w2);
 		} else if(strcmpi(w1,"log_db_id")==0) {
 			strcpy(log_db_id, w2);
 		} else if(strcmpi(w1,"log_db_pw")==0) {
 			strcpy(log_db_pw, w2);
 		} else if(strcmpi(w1,"log_db_port")==0) {
 			log_db_port = atoi(w2);
+		} else if(strcmpi(w1,"log_db_db")==0) {
+			strcpy(log_db_db, w2);
 	#endif
 		//support the import command, just like any other config
 		} else if(strcmpi(w1,"import")==0){
@@ -3049,10 +3047,10 @@ int log_sql_init(void)
 	// log db connection
 	logmysql_handle = Sql_Malloc();
 
-	ShowInfo(""CL_WHITE"[SQL]"CL_RESET": Connecting to the Log Database "CL_WHITE"%s"CL_RESET" At "CL_WHITE"%s"CL_RESET"...\n",log_db,log_db_ip);
-	if ( SQL_ERROR == Sql_Connect(logmysql_handle, log_db_id, log_db_pw, log_db_ip, log_db_port, log_db) )
+	ShowInfo(""CL_WHITE"[SQL]"CL_RESET": Connecting to the Log Database "CL_WHITE"%s"CL_RESET" At "CL_WHITE"%s"CL_RESET"...\n",log_db_db,log_db_ip);
+	if ( SQL_ERROR == Sql_Connect(logmysql_handle, log_db_id, log_db_pw, log_db_ip, log_db_port, log_db_db) )
 		exit(EXIT_FAILURE);
-	ShowStatus(""CL_WHITE"[SQL]"CL_RESET": Successfully '"CL_GREEN"connected"CL_RESET"' to Database '"CL_WHITE"%s"CL_RESET"'.\n", log_db);
+	ShowStatus(""CL_WHITE"[SQL]"CL_RESET": Successfully '"CL_GREEN"connected"CL_RESET"' to Database '"CL_WHITE"%s"CL_RESET"'.\n", log_db_db);
 
 	if( strlen(default_codepage) > 0 )
 		if ( SQL_ERROR == Sql_SetEncoding(logmysql_handle, default_codepage) )
