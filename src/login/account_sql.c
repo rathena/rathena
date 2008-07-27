@@ -125,6 +125,7 @@ static void account_db_sql_destroy(AccountDB* self)
 
 	Sql_Free(db->accounts);
 	db->accounts = NULL;
+	aFree(db);
 }
 
 /// Gets a property from this database.

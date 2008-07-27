@@ -81,6 +81,9 @@ bool loginlog_config_read(const char* key, const char* value)
 	if( strcmpi(key, "log_db_pw") == 0 )
 		safestrncpy(log_db_pw, value, sizeof(log_db_pw));
 	else
+	if( strcmpi(key, "log_db_db") == 0 )
+		safestrncpy(log_db_db, value, sizeof(log_db_db));
+	else
 	if( strcmpi(key, "log_db") == 0 )
 		safestrncpy(log_db, value, sizeof(log_db));
 	else
