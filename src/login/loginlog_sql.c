@@ -68,22 +68,22 @@ bool loginlog_final(void)
 
 bool loginlog_config_read(const char* key, const char* value)
 {
-	if( strcmpi(key, "log_db_hostname") == 0 )
+	if( strcmpi(key, "log_db_ip") == 0 )
 		safestrncpy(log_db_hostname, value, sizeof(log_db_hostname));
 	else
 	if( strcmpi(key, "log_db_port") == 0 )
 		log_db_port = (uint16)strtoul(value, NULL, 10);
 	else
-	if( strcmpi(key, "log_db_username") == 0 )
+	if( strcmpi(key, "log_db_id") == 0 )
 		safestrncpy(log_db_username, value, sizeof(log_db_username));
 	else
-	if( strcmpi(key, "log_db_password") == 0 )
+	if( strcmpi(key, "log_db_pw") == 0 )
 		safestrncpy(log_db_password, value, sizeof(log_db_password));
 	else
-	if( strcmpi(key, "log_db_database") == 0 )
+	if( strcmpi(key, "log_db_db") == 0 )
 		safestrncpy(log_db_database, value, sizeof(log_db_database));
 	else
-	if( strcmpi(key, "loginlog_table") == 0 )
+	if( strcmpi(key, "loginlog_db") == 0 )
 		safestrncpy(loginlog_table, value, sizeof(loginlog_table));
 	else
 		return false;
