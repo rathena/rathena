@@ -4,6 +4,9 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2008/07/29
+	* Fixed Sql object not initializing default values properly.
+	  Fixed Sql_Free producing timer deallocation errors when called
+	  without first establishing a database connection.
 	* Corrected upgrade_svn12975_view.sql not assigning default values
 	  to the two dummy columns; please drop the view and re-run the script.
 2008/07/27

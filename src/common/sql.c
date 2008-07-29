@@ -67,9 +67,14 @@ struct SqlStmt
 Sql* Sql_Malloc(void)
 {
 	Sql* self;
+
 	CREATE(self, Sql, 1);
 	mysql_init(&self->handle);
 	StringBuf_Init(&self->buf);
+	self->lengths = NULL;
+	self->result = NULL;
+	self->keepalive = INVALID_TIMER;
+
 	return self;
 }
 
@@ -406,7 +411,7 @@ void Sql_Free(Sql* self)
 	{
 		Sql_FreeResult(self);
 		StringBuf_Destroy(&self->buf);
-		delete_timer(self->keepalive, Sql_P_KeepaliveTimer);
+		if( self->keepalive != INVALID_TIMER ) delete_timer(self->keepalive, Sql_P_KeepaliveTimer);
 		aFree(self);
 	}
 }
