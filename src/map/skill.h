@@ -349,7 +349,7 @@ enum {
 	ST_WATER,
 };
 
-enum s_skill {
+enum e_skill {
 	NV_BASIC = 1,
 
 	SM_SWORD,

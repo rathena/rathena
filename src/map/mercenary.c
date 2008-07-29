@@ -836,7 +836,7 @@ int merc_hom_shuffle(struct homun_data *hd)
 	struct map_session_data *sd;
 	int lv, i, skillpts;
 	unsigned int exp;
-	struct skill b_skill[MAX_HOMUNSKILL];
+	struct s_skill b_skill[MAX_HOMUNSKILL];
 
 	if (!merc_is_hom_active(hd))
 		return 0;

@@ -30,7 +30,7 @@
 #define MAX_ZENY 1000000000
 #define MAX_FAME 1000000000
 #define MAX_CART 100
-#define MAX_SKILL 1100 // Bumped to 1100 for new quest skills, will need to further increase one day... [DracoRPG]
+#define MAX_SKILL 1020
 #define GLOBAL_REG_NUM 96
 #define ACCOUNT_REG_NUM 64
 #define ACCOUNT_REG2_NUM 16
@@ -104,6 +104,10 @@
 #define MAIL_TITLE_LENGTH 40
 #define MAIL_BODY_LENGTH 200
 
+//Mercenary System
+#define MC_SKILLBASE 8201
+#define MAX_MERCSKILL 37
+
 enum item_types {
 	IT_HEALING = 0,
 	IT_UNKNOWN, //1
@@ -157,7 +161,7 @@ struct point {
 	short x,y;
 };
 
-struct skill {
+struct s_skill {
 	unsigned short id,lv,flag;
 };
 
@@ -216,7 +220,7 @@ struct s_homunculus {	//[orn]
 	int hp,max_hp,sp,max_sp;
 	unsigned int intimacy;	//[orn]
 	short hunger;
-	struct skill hskill[MAX_HOMUNSKILL]; //albator
+	struct s_skill hskill[MAX_HOMUNSKILL]; //albator
 	short skillpts;
 	short level;
 	unsigned int exp;
@@ -280,7 +284,7 @@ struct mmo_charstatus {
 	struct point last_point,save_point,memo_point[MAX_MEMOPOINTS];
 	struct item inventory[MAX_INVENTORY],cart[MAX_CART];
 	struct storage_data storage;
-	struct skill skill[MAX_SKILL];
+	struct s_skill skill[MAX_SKILL];
 
 	struct s_friend friends[MAX_FRIENDS]; //New friend system [Skotlex]
 #ifdef HOTKEY_SAVING

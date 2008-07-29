@@ -38,11 +38,14 @@
 
 
 #define SKILLUNITTIMER_INTERVAL	100
-//Guild Skills are shifted to these to make them stick into the skill array.
+
+// ranges reserved for mapping skill ids to skilldb offsets
 #define GD_SKILLRANGEMIN 900
 #define GD_SKILLRANGEMAX GD_SKILLRANGEMIN+MAX_GUILDSKILL
 #define HM_SKILLRANGEMIN 800
 #define HM_SKILLRANGEMAX HM_SKILLRANGEMIN+MAX_HOMUNSKILL
+#define MC_SKILLRANGEMIN 700
+#define MC_SKILLRANGEMAX MC_SKILLRANGEMIN+MAX_MERCSKILL
 
 static struct eri *skill_unit_ers = NULL; //For handling skill_unit's [Skotlex]
 static struct eri *skill_timer_ers = NULL; //For handling skill_timerskills [Skotlex]
@@ -73,17 +76,23 @@ int skill_name2id(const char* name)
 /// Returns the skill's array index, or 0 (Unknown Skill).
 int skill_get_index( int id )
 {
-	// avoid ranges reserved for mapping guild/homun skills
-	if( id >= GD_SKILLRANGEMIN && id <= GD_SKILLRANGEMAX )
-		return 0;
-	if( id >= HM_SKILLRANGEMIN && id <= HM_SKILLRANGEMAX )
+	// avoid ranges reserved for mapping guild/homun/mercenary skills
+	if( id >= GD_SKILLRANGEMIN && id <= GD_SKILLRANGEMAX
+	||  id >= HM_SKILLRANGEMIN && id <= HM_SKILLRANGEMAX
+	||  id >= MC_SKILLRANGEMIN && id <= MC_SKILLRANGEMAX )
 		return 0;
 
-	// map skill number to skill id
+	// map skill id to skill db index
 	if( id >= GD_SKILLBASE )
 		id = GD_SKILLRANGEMIN + id - GD_SKILLBASE;
+	else
 	if( id >= HM_SKILLBASE )
 		id = HM_SKILLRANGEMIN + id - HM_SKILLBASE;
+	else
+	if( id >= MC_SKILLBASE )
+		id = MC_SKILLRANGEMIN + id - MC_SKILLBASE;
+	else
+		; // identity
 
 	// validate result
 	if( id <= 0 || id >= MAX_SKILL_DB )
@@ -10791,14 +10800,14 @@ static bool skill_parse_row_skilldb(char* split[], int columns, int current)
 {// id,range,hit,inf,element,nk,splash,max,list_num,castcancel,cast_defence_rate,inf2,maxcount,skill_type,blow_count,name,description
 	int id = atoi(split[0]);
 	int i;
-	if( id >= GD_SKILLRANGEMIN && id <= GD_SKILLRANGEMAX ) {
-		ShowWarning("skill_parse_row_skilldb: Skill id %d is forbidden (interferes with guild skill mapping)!\n");
+	if( id >= GD_SKILLRANGEMIN && id <= GD_SKILLRANGEMAX
+	||  id >= HM_SKILLRANGEMIN && id <= HM_SKILLRANGEMAX
+	||  id >= MC_SKILLRANGEMIN && id <= MC_SKILLRANGEMAX )
+	{
+		ShowWarning("skill_parse_row_skilldb: Skill id %d is forbidden (interferes with guild/homun/mercenary skill mapping)!\n");
 		return false;
 	}
-	if( id >= HM_SKILLRANGEMIN && id <= HM_SKILLRANGEMAX ) {
-		ShowWarning("skill_parse_row_skilldb: Skill id %d is forbidden (interferes with homunculus skill mapping)!\n");
-		return false;
-	}
+
 	i = skill_get_index(id);
 	if( !i ) // invalid skill id
 		return false;

@@ -886,7 +886,7 @@ int mmo_char_fromsql(int char_id, struct mmo_charstatus* p, bool load_everything
 	char point_map[MAP_NAME_LENGTH_EXT];
 	struct point tmp_point;
 	struct item tmp_item;
-	struct skill tmp_skill;
+	struct s_skill tmp_skill;
 	struct s_friend tmp_friend;
 #ifdef HOTKEY_SAVING
 	struct hotkey tmp_hotkey;

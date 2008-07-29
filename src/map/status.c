@@ -1595,7 +1595,7 @@ int status_calc_pc(struct map_session_data* sd,int first)
 	static int calculating = 0; //Check for recursive call preemption. [Skotlex]
 	struct status_data b_status, *status;
 	const struct status_change *sc = &sd->sc;
-	struct skill b_skill[MAX_SKILL];
+	struct s_skill b_skill[MAX_SKILL];
 
 	int b_weight,b_max_weight;
 	int i,index;
