@@ -4545,7 +4545,7 @@ int status_get_sc_def(struct block_list *bl, enum sc_type type, int rate, int ti
 			if( sd->reseff[type-SC_COMMON_MIN] > 0 )
 				rate -= rate*sd->reseff[type-SC_COMMON_MIN]/10000;
 			if( sd->sc.data[SC_COMMONSC_RESIST] )
-				rate -= rate*sd->sc.data[SC_COMMONSC_RESIST]->val1;
+				rate -= rate*sd->sc.data[SC_COMMONSC_RESIST]->val1/100;
 		}
 	}
 	if (!(rand()%10000 < rate))
