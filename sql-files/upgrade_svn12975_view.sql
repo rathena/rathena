@@ -8,8 +8,8 @@
 START TRANSACTION;
 
 -- create dummy columns, needed to make the view insertable
-ALTER TABLE `login` ADD `error_message` SMALLINT UNSIGNED NOT NULL;
-ALTER TABLE `login` ADD `memo` SMALLINT UNSIGNED NOT NULL;
+ALTER TABLE `login` ADD `error_message` SMALLINT UNSIGNED NOT NULL DEFAULT '0';
+ALTER TABLE `login` ADD `memo` SMALLINT UNSIGNED NOT NULL DEFAULT '0';
 
 -- create the view
 CREATE VIEW `login_view` ( `account_id`, `userid`, `user_pass`, `lastlogin`, `sex`, `logincount`, `email`, `level`, `error_message`, `connect_until`, `last_ip`, `memo`, `ban_until`, `state` ) AS SELECT `account_id`, `userid`, `user_pass`, `lastlogin`, `sex`, `logincount`, `email`, `level`, `error_message`, `expiration_time`, `last_ip`, `memo`, `unban_time`, `state` FROM `login`;
