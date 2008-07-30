@@ -127,13 +127,13 @@ static bool account_db_txt_init(AccountDB* self)
 		if( line[0] == '/' && line[1] == '/' )
 			continue;
 
-		if( sscanf(line, "%d%n", &v, &n) == 1 && line[n] == '\n' )
+		if( sscanf(line, "%d%n", &v, &n) == 1 && (line[n] == '\n' || line[n] == '\r') )
 		{// format version definition
 			version = v;
 			continue;
 		}
 
-		if( sscanf(line, "%d\t%%newid%%%n", &account_id, &n) == 1 && line[n] == '\n' )
+		if( sscanf(line, "%d\t%%newid%%%n", &account_id, &n) == 1 && (line[n] == '\n' || line[n] == '\r') )
 		{// auto-increment
 			if( account_id > db->next_account_id )
 				db->next_account_id = account_id;
@@ -451,7 +451,7 @@ static bool mmo_auth_fromstr(struct mmo_account* a, char* str, unsigned int vers
 	memset(a, 0x00, sizeof(struct mmo_account));
 
 	// extract tab-separated columns from line
-	count = sv_split(str, strlen(str), 0, '\t', fields, ARRAYLENGTH(fields), SV_NOESCAPE_NOTERMINATE);
+	count = sv_split(str, strlen(str), 0, '\t', fields, ARRAYLENGTH(fields), (e_svopt)(SV_TERMINATE_LF|SV_TERMINATE_CRLF));
 
 	if( version == ACCOUNT_TXT_DB_VERSION && count == 13 )
 	{
