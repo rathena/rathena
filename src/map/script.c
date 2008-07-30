@@ -1,7 +1,6 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-//#define DEBUG_FUNCIN
 //#define DEBUG_DISP
 //#define DEBUG_DISASM
 //#define DEBUG_RUN
@@ -171,13 +170,14 @@ static struct str_data_struct {
 	int next;
 } *str_data = NULL;
 int str_num=LABEL_START,str_data_size;
+
 // Using a prime number for SCRIPT_HASH_SIZE should give better distributions
 #define SCRIPT_HASH_SIZE 1021
 int str_hash[SCRIPT_HASH_SIZE];
+// Specifies which string hashing method to use
 //#define SCRIPT_HASH_DJB2
-#define SCRIPT_HASH_SDBM
-//#define SCRIPT_HASH_ELF
-//#define SCRIPT_HASH_PJW
+//#define SCRIPT_HASH_SDBM
+#define SCRIPT_HASH_ELF
 
 static DBMap* mapreg_db=NULL; // int var_id -> int value
 static DBMap* mapregstr_db=NULL; // int var_id -> char* value
@@ -480,53 +480,39 @@ static void check_event(struct script_state *st, const char *evt)
 }
 
 /*==========================================
- * 文字列のハッシュを計算
+ * Hashes the input string
  *------------------------------------------*/
-#define calc_hash(x) (calc_hash2(x)%SCRIPT_HASH_SIZE)
-static unsigned int calc_hash2(const char* p)
+static unsigned int calc_hash(const char* p)
 {
+	unsigned int h;
+
 #if defined(SCRIPT_HASH_DJB2)
-	unsigned int h = 5381;
+	h = 5381;
 	while( *p ) // hash*33 + c
 		h = ( h << 5 ) + h + ((unsigned char)TOLOWER(*p++));
-	return h;
 #elif defined(SCRIPT_HASH_SDBM)
-	unsigned int h = 0;
-	while( *p )
+	h = 0;
+	while( *p ) // hash*65599 + c
 		h = ( h << 6 ) + ( h << 16 ) - h + ((unsigned char)TOLOWER(*p++));
-	return h;
-#elif defined(SCRIPT_HASH_ELF)
-	unsigned int h = 0;
-	unsigned int g;
-	while( *p ){ // UNIX ELF hash
-		h = ( h << 4 ) + ((unsigned char)TOLOWER(*p++));
-		g = h & 0xF0000000;
-		if( g )
-			h ^= g >> 24;
-		h &= ~g;
-	}
-	return h;
-#elif defined(SCRIPT_HASH_PJW)
-	unsigned int h = 0;
-	unsigned int g;
+#elif defined(SCRIPT_HASH_ELF) // UNIX ELF hash
+	h = 0;
 	while( *p ){
+		unsigned int g;
 		h = ( h << 4 ) + ((unsigned char)TOLOWER(*p++));
 		g = h & 0xF0000000;
 		if( g )
 		{
-			h ^= g>>24;
-			h ^= g;
+			h ^= g >> 24;
+			h &= ~g;
 		}
 	}
-	return h;
-#else
-	unsigned int h = 0;
-	while( *p ){
-		h = ( h << 1 ) + ( h >> 3 ) + ( h >> 5 ) + ( h >> 8 );
-		h += (unsigned char)TOLOWER(*p++);
-	}
-	return h;
+#else // athena hash
+	h = 0;
+	while( *p )
+		h = ( h << 1 ) + ( h >> 3 ) + ( h >> 5 ) + ( h >> 8 ) + (unsigned char)TOLOWER(*p++);
 #endif
+
+	return h % SCRIPT_HASH_SIZE;
 }
 
 /*==========================================
@@ -890,10 +876,6 @@ const char* parse_simpleexpr(const char *p)
 	int i;
 	p=skip_space(p);
 
-#ifdef DEBUG_FUNCIN
-	if(battle_config.etc_log)
-		ShowDebug("parse_simpleexpr %s\n",p);
-#endif
 	if(*p==';' || *p==',')
 		disp_error_message("parse_simpleexpr: unexpected expr end",p);
 	if(*p=='('){
@@ -969,10 +951,6 @@ const char* parse_simpleexpr(const char *p)
 
 	}
 
-#ifdef DEBUG_FUNCIN
-	if(battle_config.etc_log)
-		ShowDebug("parse_simpleexpr end %s\n",p);
-#endif
 	return p;
 }
 
@@ -984,10 +962,6 @@ const char* parse_subexpr(const char* p,int limit)
 	int op,opl,len;
 	const char* tmpp;
 
-#ifdef DEBUG_FUNCIN
-	if(battle_config.etc_log)
-		ShowDebug("parse_subexpr %s\n",p);
-#endif
 	p=skip_space(p);
 
 	if(*p=='-'){
@@ -1038,10 +1012,7 @@ const char* parse_subexpr(const char* p,int limit)
 		add_scriptc(op);
 		p=skip_space(p);
 	}
-#ifdef DEBUG_FUNCIN
-	if(battle_config.etc_log)
-		ShowDebug("parse_subexpr end %s\n",p);
-#endif
+
 	return p;  /* return first untreated operator */
 }
 
@@ -1050,20 +1021,12 @@ const char* parse_subexpr(const char* p,int limit)
  *------------------------------------------*/
 const char* parse_expr(const char *p)
 {
-#ifdef DEBUG_FUNCIN
-	if(battle_config.etc_log)
-		ShowDebug("parse_expr %s\n",p);
-#endif
 	switch(*p){
 	case ')': case ';': case ':': case '[': case ']':
 	case '}':
 		disp_error_message("parse_expr: unexpected char",p);
 	}
 	p=parse_subexpr(p,-1);
-#ifdef DEBUG_FUNCIN
-	if(battle_config.etc_log)
-		ShowDebug("parse_expr end %s\n",p);
-#endif
 	return p;
 }
 
@@ -1073,7 +1036,6 @@ const char* parse_expr(const char *p)
 const char* parse_line(const char* p)
 {
 	const char* p2;
-
 
 	p=skip_space(p);
 	if(*p==';') {
@@ -3550,12 +3512,11 @@ int do_final_script()
 
 			ShowNotice("Dumping script str hash information to hash_dump.txt\n");
 			memset(count, 0, sizeof(count));
-			fprintf(fp,"num : calced_val -> hash : data_name\n");
+			fprintf(fp,"num : hash : data_name\n");
 			fprintf(fp,"---------------------------------------------------------------\n");
 			for(i=LABEL_START; i<str_num; i++) {
-				unsigned int h2=calc_hash2(str_buf+str_data[i].str);
-				unsigned int h =h2%SCRIPT_HASH_SIZE;
-				fprintf(fp,"%04d: %10u ->  %3u : %s\n",i,h2,h,str_buf+str_data[i].str);
+				unsigned int h = calc_hash(str_buf+str_data[i].str);
+				fprintf(fp,"%04d : %4u : %s\n",i,h,str_buf+str_data[i].str);
 				++count[h];
 			}
 			fprintf(fp,"--------------------\n\n");
