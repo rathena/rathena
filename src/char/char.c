@@ -988,8 +988,6 @@ int mmo_char_init(void)
 
 		ret = mmo_char_fromstr(line, &char_dat[char_num].status, char_dat[char_num].global, &char_dat[char_num].global_num);
 
-		// load storage
-		storage_load(char_dat[char_num].status.account_id, &char_dat[char_num].status.storage);
 		// Initialize friends list
 		parse_friend_txt(&char_dat[char_num].status);  // Grab friends for the character
 		// Initialize hotkey list
@@ -2718,12 +2716,9 @@ int parse_frommap(int fd)
 		case 0x2b01: // Receive character data from map-server for saving
 			if (RFIFOREST(fd) < 4 || RFIFOREST(fd) < RFIFOW(fd,2))
 				return 0;
-			for(i = 0; i < char_num; i++) {
-				if (char_dat[i].status.account_id == RFIFOL(fd,4) &&
-				    char_dat[i].status.char_id == RFIFOL(fd,8))
-					break;
-			}
-			if (i != char_num)
+
+			ARR_FIND( 0, char_num, i, char_dat[i].status.account_id == RFIFOL(fd,4) && char_dat[i].status.char_id == RFIFOL(fd,8) );
+			if( i < char_num )
 			{
 				memcpy(&char_dat[i].status, RFIFOP(fd,13), sizeof(struct mmo_charstatus));
 				storage_save(char_dat[i].status.account_id, &char_dat[i].status.storage);
@@ -3112,6 +3107,7 @@ int parse_frommap(int fd)
 				WFIFOL(fd,12) = node->login_id2;
 				WFIFOL(fd,16) = (uint32)node->expiration_time; // FIXME: will wrap to negative after "19-Jan-2038, 03:14:07 AM GMT"
 				WFIFOL(fd,20) = node->gmlevel;
+				storage_load(cd->account_id, &cd->storage); //FIXME: storage is used as a temp buffer here
 				memcpy(WFIFOP(fd,24), cd, sizeof(struct mmo_charstatus));
 				WFIFOSET(fd, WFIFOW(fd,2));
 
