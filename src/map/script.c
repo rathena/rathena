@@ -39,7 +39,6 @@
 #include "charcommand.h"
 #include "log.h"
 #include "unit.h"
-#include "irc.h"
 #include "pet.h"
 #include "mail.h"
 #include "script.h"
@@ -4595,8 +4594,6 @@ BUILDIN_FUNC(jobchange)
 			return 0;
 
 		pc_jobchange(sd, job, upper);
-		if(use_irc && irc_announce_jobchange_flag)
-			irc_announce_jobchange(sd);
 	}
 
 	return 0;

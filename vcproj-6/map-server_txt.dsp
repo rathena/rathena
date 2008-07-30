@@ -227,10 +227,6 @@ SOURCE=..\src\map\intif.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\src\map\irc.c
-# End Source File
-# Begin Source File
-
 SOURCE=..\src\map\itemdb.c
 # End Source File
 # Begin Source File
@@ -344,10 +340,6 @@ SOURCE=..\src\map\guild.h
 # Begin Source File
 
 SOURCE=..\src\map\intif.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\src\map\irc.h
 # End Source File
 # Begin Source File
 

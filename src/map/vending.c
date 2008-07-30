@@ -16,8 +16,6 @@
 #include "battle.h"
 #include "log.h"
 
-#include "irc.h"
-
 #include <stdio.h>
 #include <string.h>
 
@@ -31,9 +29,6 @@ void vending_closevending(struct map_session_data* sd)
 
 	sd->vender_id = 0;
 	clif_closevendingboard(&sd->bl,0);
-
-	if( use_irc && irc_announce_shop_flag )
-		irc_announce_shop(sd,0);
 }
 
 /*==========================================
@@ -297,7 +292,4 @@ void vending_openvending(struct map_session_data* sd, const char* message, bool 
 	pc_stop_walking(sd,1);
 	clif_openvending(sd,sd->vender_id,sd->vending);
 	clif_showvendingboard(&sd->bl,message,0);
-
-	if( use_irc && irc_announce_shop_flag )
-		irc_announce_shop(sd,1);
 }

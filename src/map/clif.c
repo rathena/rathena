@@ -34,7 +34,6 @@
 #include "pet.h"
 #include "mercenary.h"	//[orn]
 #include "log.h"
-#include "irc.h"
 #include "clif.h"
 #include "mail.h"
 #include "quest.h"
@@ -4488,9 +4487,6 @@ int clif_GMmessage(struct block_list* bl, const char* mes, int len, int flag)
 	          (flag == 3) ? SELF :
 	          ALL_CLIENT);
 	if(buf) aFree(buf);
-
-	if(use_irc && irc_announce_flag && !flag)
-		irc_announce(mes);
 
 	return 0;
 }

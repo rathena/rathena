@@ -31,7 +31,6 @@
 #include "script.h"
 #include "atcommand.h"
 #include "date.h"
-#include "irc.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -2474,9 +2473,6 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		}
 		
 		mexp = (unsigned int)cap_value(exp, 1, UINT_MAX);
-
-		if(use_irc && irc_announce_mvp_flag)
-			irc_announce_mvp(mvp_sd,md);
 
 		clif_mvp_effect(mvp_sd);
 		clif_mvp_exp(mvp_sd,mexp);

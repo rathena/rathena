@@ -38,7 +38,6 @@
 #include "atcommand.h"
 #include "charcommand.h"
 #include "log.h"
-#include "irc.h"
 #ifndef TXT_ONLY
 #include "mail.h"
 #endif
@@ -3161,8 +3160,6 @@ void do_final(void)
 	do_final_skill();
 	do_final_status();
 	do_final_unit();
-	if(use_irc)
-		do_final_irc();
 	
 	map_db->destroy(map_db, map_db_final);
 	
@@ -3323,7 +3320,6 @@ int do_init(int argc, char *argv[])
 	}
 
 	map_config_read(MAP_CONF_NAME);
-	irc_read_conf(IRC_CONF); // [Zido]
 	chrif_checkdefaultlogin();
 
 	if (!map_ip_set || !char_ip_set) {
@@ -3375,8 +3371,6 @@ int do_init(int argc, char *argv[])
 	add_timer_func_list(map_removemobs_timer, "map_removemobs_timer");
 	add_timer_interval(gettick()+1000, map_freeblock_timer, 0, 0, 60*1000);
 
-	if(use_irc)
-		do_init_irc();
 	do_init_atcommand();
 	do_init_battle();
 	do_init_chrif();

@@ -203,12 +203,6 @@
 				RelativePath="..\src\map\intif.h">
 			</File>
 			<File
-				RelativePath="..\src\map\irc.c">
-			</File>
-			<File
-				RelativePath="..\src\map\irc.h">
-			</File>
-			<File
 				RelativePath="..\src\map\itemdb.c">
 			</File>
 			<File
