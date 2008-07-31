@@ -78,13 +78,15 @@ AC_ARG_ENABLE(
 	[debug],
 	AC_HELP_STRING(
 		[--enable-debug],
-		[Compiles extra debug code. (disabled by default)]
+		[Compiles extra debug code. (disabled by default)],
+		[(available options: yes, no, gdb)]
 	),
 	[
 		enable_debug="$enableval"
 		case $enableval in
-			no);;
-			yes);;
+			"no");;
+			"yes");;
+			"gdb");;
 			*) AC_MSG_ERROR([[invalid argument --enable-debug=$enableval... stopping]]);;
 		esac
 	],
@@ -347,9 +349,17 @@ fi
 #
 # Debug
 #
-if test "$enable_debug" = "yes" ; then
-	CFLAGS="$CFLAGS -g -DDEBUG"
-fi
+case $enable_debug in
+	"no")
+		# default value
+		;;
+	"yes")
+		CFLAGS="$CFLAGS -g -DDEBUG"
+		;;
+	"gdb")
+		CFLAGS="$CFLAGS -ggdb -DDEBUG"
+		;;
+esac
 
 
 #
