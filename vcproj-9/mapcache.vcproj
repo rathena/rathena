@@ -158,7 +158,7 @@
 				AdditionalDependencies="libcmt.lib oldnames.lib zdll.lib"
 				OutputFile="$(OutDir)\mapcache.exe"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="..\lib"
+				AdditionalLibraryDirectories="..\3rdparty\zlib\lib"
 				IgnoreAllDefaultLibraries="true"
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile="$(OutDir)\$(ProjectName).pdb"
