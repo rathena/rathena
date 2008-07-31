@@ -4783,7 +4783,6 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			case SC_BLESSING:
 			  if (!undead_flag && status->race!=RC_DEMON)
 				  break;
-			case SC_QUAGMIRE:
 			case SC_DECREASEAGI:
 			case SC_PROVOKE:
 			case SC_COMA:
