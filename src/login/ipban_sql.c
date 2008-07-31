@@ -133,7 +133,7 @@ bool ipban_config_read(const char* key, const char* value)
 	if( strcmpi(key, "log_db_pw") == 0 )
 		safestrncpy(log_db_password, value, sizeof(log_db_password));
 	else
-	if( strcmpi(key, "log_db") == 0 )
+	if( strcmpi(key, "log_db_db") == 0 )
 		safestrncpy(log_db_database, value, sizeof(log_db_database));
 	else
 	if( strcmpi(key, "loginlog_db") == 0 )
