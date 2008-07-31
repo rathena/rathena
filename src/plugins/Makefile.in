@@ -50,7 +50,7 @@ gui@DLLEXT@: ../../plugins/gui.conf
 upnp@DLLEXT@: ../../plugins/upnp.conf
 
 sig@DLLEXT@: sig.c $(COMMON_OBJ)
-	@CC@ @CFLAGS@ $(CUSTOM_CFLAGS) @CPPFLAGS@ @LDFLAGS@ -shared -o ../../plugins/$@ $< $(COMMON_OBJ)
+	@CC@ @CFLAGS@ @CPPFLAGS@ @LDFLAGS@ -shared -o ../../plugins/$@ $< $(COMMON_OBJ)
 
 ../../plugins/%.conf: %.txt
 	cp -r $< $@

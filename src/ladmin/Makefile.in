@@ -35,7 +35,7 @@ obj_all:
 	-mkdir obj_all
 
 obj_all/%.o: %.c $(LADMIN_H) $(COMMON_H)
-	@CC@ @CFLAGS@ $(CUSTOM_CFLAGS) @LDFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
+	@CC@ @CFLAGS@ @LDFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
 
 # missing common object files
 ../common/obj_all/%.o:

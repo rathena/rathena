@@ -90,10 +90,10 @@ map-server_sql: obj_sql $(MAP_SQL_OBJ) $(COMMON_OBJ) $(COMMON_SQL_OBJ)
 
 # map object files
 obj_txt/%.o: %.c $(MAP_H) $(COMMON_H)
-	@CC@ @CFLAGS@ $(PCRE_CFLAGS) $(CUSTOM_CFLAGS) -DTXT_ONLY @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
+	@CC@ @CFLAGS@ $(PCRE_CFLAGS) -DTXT_ONLY @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
 
 obj_sql/%.o: %.c $(MAP_H) $(COMMON_H) $(COMMON_SQL_H)
-	@CC@ @CFLAGS@ $(PCRE_CFLAGS) $(CUSTOM_CFLAGS) @MYSQL_CFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
+	@CC@ @CFLAGS@ $(PCRE_CFLAGS) @MYSQL_CFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
 
 # missing common object files
 ../common/obj_all/%.o:

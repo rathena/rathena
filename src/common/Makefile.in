@@ -60,13 +60,13 @@ common_sql: obj_sql $(COMMON_SQL_OBJ)
 
 
 obj_all/%.o: %.c $(COMMON_H)
-	@CC@ @CFLAGS@ $(CUSTOM_CFLAGS) @LDFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
+	@CC@ @CFLAGS@ @LDFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
 
 obj_all/mini%.o: %.c $(COMMON_H)
-	@CC@ @CFLAGS@ $(CUSTOM_CFLAGS) -DMINICORE @LDFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
+	@CC@ @CFLAGS@ -DMINICORE @LDFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
 
 obj_sql/%.o: %.c $(COMMON_H) $(COMMON_SQL_H)
-	@CC@ @CFLAGS@ $(CUSTOM_CFLAGS) @MYSQL_CFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
+	@CC@ @CFLAGS@ @MYSQL_CFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
 
 
 HAVESVN = $(shell which svnversion)

@@ -71,10 +71,10 @@ login-server_sql: $(LOGIN_SERVER_SQL_DEPENDS)
 
 # login object files
 obj_txt/%.o: %.c $(LOGIN_H) $(COMMON_H)
-	@CC@ @CFLAGS@ $(CUSTOM_CFLAGS) -DWITH_TXT @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
+	@CC@ @CFLAGS@ -DWITH_TXT @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
 
 obj_sql/%.o: %.c $(LOGIN_H) $(COMMON_H)
-	@CC@ @CFLAGS@ $(CUSTOM_CFLAGS) -DWITH_SQL @MYSQL_CFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
+	@CC@ @CFLAGS@ -DWITH_SQL @MYSQL_CFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
 
 # missing common object files
 ../common/obj_all/%.o:
