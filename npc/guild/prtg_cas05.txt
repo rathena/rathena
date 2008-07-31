@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
-//= 1.2
+//= 1.3
 //===== Compatible With: =====================================
 //= eAthena SVN
 //===== Description: =========================================
@@ -12,6 +12,7 @@
 //= 1.0 First Version. No longer uses functions. [L0ne_W0lf]
 //= 1.1 Corrected flag-in spawn point. [L0ne_W0lf]
 //= 1.2 Corrected treasure room switch coordinates. [L0ne_W0lf]
+//= 1.3 Removed dialog from interior flags. [L0ne_W0lf]
 //============================================================
 
 // Guild Flag (Town)
@@ -80,34 +81,7 @@ prt_gld,197,236,2	duplicate(Gondul2)	Gondul#p5-5	722
 // Guild Flag (Inside Castle)
 //============================================================
 prtg_cas05,19,247,4	script	Gondul#p5-6::Gondul3	722,{
-	set .@GID, GetCastleData("prtg_cas05",1);
-	if (.@GID == 0) {
-		mes " [ Edict of the Divine Rune Midgard Kingdom ]";
-		mes " ";
-		mes "1. Follow the ordinance of The Divine Rune Midgard Kingdom, ";
-		mes "We declare that";
-		mes "there is no formal master of this castle.";
-		mes " ";
-		mes "2. To the one who can ";
-		mes "overcome all trials";
-		mes "and destroy the Emperium,";
-		mes "the king will endow the one with";
-		mes "ownership of this castle.";
-	}
-	else {
-		mes "[ Edict of the Divine Rune Midgard Kingdom ]";
-		mes " ";
-		mes "1. Following the ordinance of the";
-		mes "Divine Rune Midgard Kingdom,";
-		mes "we approve that this place is in";
-		mes "the private possession of ^ff0000" + GetGuildName(.@GID) + "^000000 Guild.";
-		mes " ";
-		mes "2. The guild Master of ^ff0000"+ GetGuildName(.@GID) + "^000000 Guild is";
-		mes "^FF0000" + GetGuildMaster(.@GID) + "^000000";
-		mes "If there is anyone who objects to this,";
-		mes " prove your strength and honor with a steel blade in your hand.";
-	}
-	close;
+	end;
 
 OnRecvCastlePt05:
 	FlagEmblem GetCastleData("prtg_cas05",1);

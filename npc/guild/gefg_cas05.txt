@@ -3,13 +3,14 @@
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
-//= 1.0
+//= 1.1
 //===== Compatible With: =====================================
 //= eAthena SVN
 //===== Description: =========================================
 //= NPCs that relate to Geffen Guild Castle 5
 //===== Additional Comments: =================================
 //= 1.0 First Version. No longer uses functions. [L0ne_W0lf]
+//= 1.1 Removed dialog from interior flags. [L0ne_W0lf]
 //============================================================
 
 // Guild Flag (Town)
@@ -47,6 +48,7 @@ gef_fild13,302,87,7	script	Mersetzdeitz#g5-2::Mersetzdeitz2	722,{
 			if (select("Return to the guild castle.:Quit.") == 1) {
 				if (getcharid(2) == GetCastleData("gefg_cas05",1)) {
 					warp "gefg_cas05",61,52;
+					//warp "gefg_cas05",168,31;
 					end;
 				}
 			}
@@ -78,34 +80,7 @@ gef_fild13,26,147,2	duplicate(Mersetzdeitz2)	Mersetzdeitz#g5-5	722
 // Guild Flag (Inside Castle)
 //============================================================
 gefg_cas05,77,185,7	script	Mersetzdeitz#g5-5::Mersetzdeitz3	722,{
-	set .@GID, GetCastleData("gefg_cas05",1);
-	if (.@GID == 0) {
-		mes " [ Edict of the Divine Rune Midgard Kingdom ]";
-		mes " ";
-		mes "1. Follow the ordinance of The Divine Rune Midgard Kingdom, ";
-		mes "We declare that";
-		mes "there is no formal master of this castle.";
-		mes " ";
-		mes "2. To the one who can ";
-		mes "overcome all trials";
-		mes "and destroy the Emperium,";
-		mes "the king will endow the one with";
-		mes "ownership of this castle.";
-	}
-	else {
-		mes "[ Edict of the Divine Rune Midgard Kingdom ]";
-		mes " ";
-		mes "1. Following the ordinance of the";
-		mes "Divine Rune Midgard Kingdom,";
-		mes "we approve that this place is in";
-		mes "the private possession of ^ff0000" + GetGuildName(.@GID) + "^000000 Guild.";
-		mes " ";
-		mes "2. The guild Master of ^ff0000"+ GetGuildName(.@GID) + "^000000 Guild is";
-		mes "^FF0000" + GetGuildMaster(.@GID) + "^000000";
-		mes "If there is anyone who objects to this,";
-		mes " prove your strength and honor with a steel blade in your hand.";
-	}
-	close;
+	end;
 
 OnRecvCastleG05:
 	FlagEmblem GetCastleData("gefg_cas05",1);

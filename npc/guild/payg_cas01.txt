@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
-//= 1.1
+//= 1.2
 //===== Compatible With: =====================================
 //= eAthena SVN
 //===== Description: =========================================
@@ -11,6 +11,8 @@
 //===== Additional Comments: =================================
 //= 1.0 First Version. No longer uses functions. [L0ne_W0lf]
 //= 1.1 Corrected flag-in spawn point. [L0ne_W0lf]
+//= 1.2 Removed dialog from interior flags. [L0ne_W0lf]
+//=     Fixed position of Guild dungeon switch.
 //============================================================
 
 // Guild Flag (Town)
@@ -50,6 +52,7 @@ pay_gld,125,236,4	script	Bright Arbor#f1-3::BrightArbor2	722,{
 			if (select("Return to the guild castle.:Quit.") == 1) {
 				if (getcharid(2) == GetCastleData("payg_cas01",1)) {
 					warp "payg_cas01",212,108;
+					//warp "payg_cas01",54 144;
 					end;
 				}
 			}
@@ -81,34 +84,7 @@ pay_gld,91,239,2	duplicate(BrightArbor2)	Bright Arbor#f1-6	722
 // Guild Flag (Inside Castle)
 //============================================================
 payg_cas01,238,67,4	script	Bright Arbor#f1-7::BrightArbor3	722,{
-	set .@GID, GetCastleData("payg_cas01",1);
-	if (.@GID == 0) {
-		mes " [ Edict of the Divine Rune Midgard Kingdom ]";
-		mes " ";
-		mes "1. Follow the ordinance of The Divine Rune Midgard Kingdom, ";
-		mes "We declare that";
-		mes "there is no formal master of this castle.";
-		mes " ";
-		mes "2. To the one who can ";
-		mes "overcome all trials";
-		mes "and destroy the Emperium,";
-		mes "the king will endow the one with";
-		mes "ownership of this castle.";
-	}
-	else {
-		mes "[ Edict of the Divine Rune Midgard Kingdom ]";
-		mes " ";
-		mes "1. Following the ordinance of the";
-		mes "Divine Rune Midgard Kingdom,";
-		mes "we approve that this place is in";
-		mes "the private possession of ^ff0000" + GetGuildName(.@GID) + "^000000 Guild.";
-		mes " ";
-		mes "2. The guild Master of ^ff0000"+ GetGuildName(.@GID) + "^000000 Guild is";
-		mes "^FF0000" + GetGuildMaster(.@GID) + "^000000";
-		mes "If there is anyone who objects to this,";
-		mes " prove your strength and honor with a steel blade in your hand.";
-	}
-	close;
+	end;
 
 OnRecvCastlePy01:
 	FlagEmblem GetCastleData("payg_cas01",1);
@@ -163,4 +139,4 @@ payg_cas01,291,8,0	duplicate(Gld_Trea_Spawn)	Treasure#payg_cas01	-1
 
 // Guild Dungeon Switch
 //============================================================
-payg_cas01,78,84,0	duplicate(Gld_Dun_Template)	#payg_cas01	111
+payg_cas01,101,25,0	duplicate(Gld_Dun_Template)	#payg_cas01	111

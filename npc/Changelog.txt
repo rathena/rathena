@@ -1,5 +1,10 @@
 ﻿Date		Added
 ======
+2008/07/31
+	* Rev. 13026 Added iRO Repeatable EXP quests care of Kisuka. [L0ne_W0lf]
+	* Updated guild scripts, removed interior flag dialog.
+	* Applied some Payon 1 script fixes from bugreport:1941.
+	* Cost is now doubled when investing a second time in eco or defence.
 2008/07/26
 	* Rev. 12995 Slight change to the nameless island quest. [L0ne_W0lf]
 2008/07/25
