@@ -3209,9 +3209,7 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 			TBL_MOB*md = (TBL_MOB*)s_bl;
 			if (!(agit_flag && map[m].flag.gvg_castle) && md->guardian_data && md->guardian_data->guild_id)
 				return 0; //Disable guardians/emperium owned by Guilds on non-woe times.
-			if(md->state.killer/* || !(battle_config.mob_ai&0x400)*/)
-				state |= BCT_ENEMY; //By default everyone hates mobs.
-			else
+
 			{	//Smart enemy criteria.
 				if (!md->special_state.ai) { //Normal mobs.
 					if (t_bl->type == BL_MOB && !((TBL_MOB*)t_bl)->special_state.ai)

@@ -403,15 +403,6 @@ int npc_chat_sub(struct block_list* bl, va_list ap)
 	return 0;
 }
 
-int mob_chat_sub(struct block_list* bl, va_list ap)
-{
-	struct mob_data *md = (struct mob_data *)bl;
-	if(md->nd)
-		npc_chat_sub(&md->nd->bl, ap);
-	
-	return 0;
-}
-
 // Various script builtins used to support these functions
 
 int buildin_defpattern(struct script_state* st)

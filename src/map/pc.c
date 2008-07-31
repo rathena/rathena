@@ -4968,8 +4968,6 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 			status_calc_mob(md, 0);
 			status_percent_heal(src,10,0);
 		}
-		if(md->nd)
-			mob_script_callback(md, &sd->bl, CALLBACK_KILL);
 	}
 	break;
 	case BL_PET: //Pass on to master...

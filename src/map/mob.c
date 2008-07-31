@@ -1114,9 +1114,6 @@ static int mob_ai_sub_hard_activesearch(struct block_list *bl,va_list ap)
 	if(battle_check_target(&md->bl,bl,BCT_ENEMY)<=0)
 		return 0;
 
-	if(md->nd && mob_script_callback(md, bl, CALLBACK_DETECT))
-		return 1; // We have script handling the work.
-
 	switch (bl->type)
 	{
 	case BL_PC:
@@ -1298,8 +1295,6 @@ static int mob_ai_sub_hard_slavemob(struct mob_data *md,unsigned int tick)
 					tbl = NULL;
 			}
 			if (tbl && status_check_skilluse(&md->bl, tbl, 0, 0)) {
-				if(md->nd)
-					mob_script_callback(md, bl, CALLBACK_ASSIST);
 				md->target_id=tbl->id;
 				md->min_chase=md->db->range3+distance_bl(&md->bl, tbl);
 				if(md->min_chase>MAX_MINCHASE)
@@ -1320,9 +1315,6 @@ static int mob_ai_sub_hard_slavemob(struct mob_data *md,unsigned int tick)
 int mob_unlocktarget(struct mob_data *md, unsigned int tick)
 {
 	nullpo_retr(0, md);
-
-	if(md->nd)
-		mob_script_callback(md, map_id2bl(md->target_id), CALLBACK_UNLOCK);
 
 	switch (md->state.skillstate) {
 	case MSS_WALK:
@@ -1368,7 +1360,6 @@ int mob_randomwalk(struct mob_data *md,unsigned int tick)
 	nullpo_retr(0, md);
 
 	if(DIFF_TICK(md->next_walktime,tick)>0 ||
-	   md->state.no_random_walk ||
 	   !unit_can_move(&md->bl) ||
 	   !(status_get_mode(&md->bl)&MD_CANMOVE))
 		return 0;
@@ -1717,7 +1708,7 @@ static int mob_ai_sub_lazy(struct mob_data *md, va_list args)
 
 	tick = va_arg(args,unsigned int);
 
-	if (md->nd || (battle_config.mob_ai&0x20 && map[md->bl.m].users>0))
+	if (battle_config.mob_ai&0x20 && map[md->bl.m].users>0)
 		return (int)mob_ai_sub_hard(md, tick);
 
 	if (md->bl.prev==NULL || md->status.hp == 0)
@@ -1908,34 +1899,6 @@ int mob_timer_delete(int tid, unsigned int tick, int id, intptr data)
 	return 0;
 }
 
-int mob_convertslave_sub(struct block_list *bl,va_list ap)
-{
-	struct mob_data *md, *md2 = NULL;
-
-	nullpo_retr(0, bl);
-	nullpo_retr(0, ap);
-	nullpo_retr(0, md = (struct mob_data *)bl);
-
-	md2=va_arg(ap,TBL_MOB *);
-
-	if(md->master_id > 0 && md->master_id == md2->bl.id){
-		md->state.killer = md2->state.killer;
-		md->special_state.ai = md2->special_state.ai;
-		md->nd = md2->nd;
-		md->callback_flag = md2->callback_flag;
-	}
-
-	return 0;
-}
-
-int mob_convertslave(struct mob_data *md)
-{
-	nullpo_retr(0, md);
-
-	map_foreachinmap(mob_convertslave_sub, md->bl.m, BL_MOB, md);
-	return 0;
-}
-
 /*==========================================
  *
  *------------------------------------------*/
@@ -2091,9 +2054,6 @@ void mob_damage(struct mob_data *md, struct block_list *src, int damage)
 	
 	if (!src)
 		return;
-	
-	if(md->nd)
-		mob_script_callback(md, src, CALLBACK_ATTACK);
 	
 	if(md->special_state.ai==2/* && md->master_id == src->id*/)
 	{	//LOne WOlf explained that ANYONE can trigger the marine countdown skill. [Skotlex]
@@ -2533,15 +2493,6 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 	  	//Emperium destroyed by script. Discard mvp character. [Skotlex]
 		mvp_sd = NULL;
 
-	if(src && src->type == BL_MOB){
-		struct mob_data *smd = (struct mob_data *)src;
-		if(smd->nd)
-			mob_script_callback(smd, &md->bl, CALLBACK_KILL);
-	}
-
-	if(md->nd)
-		mob_script_callback(md, src, CALLBACK_DEAD);
-	else
 	if(md->npc_event[0] && !md->state.npc_killmonster)
 	{
 		md->status.hp = 0; //So that npc_event invoked functions KNOW that I am dead.
@@ -2584,11 +2535,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 
 	if(pcdb_checkid(md->vd->class_))
 	{	//Player mobs are not removed automatically by the client.
-		if(md->nd){
-			md->vd->dead_sit = 1;
-			return 1; // Let the dead body stay there.. we have something to do with it :D
-		} else
-			clif_clearunit_delayed(&md->bl, tick+3000);
+		clif_clearunit_delayed(&md->bl, tick+3000);
 	}
 
 	if(!md->spawn) //Tell status_damage to remove it from memory.
@@ -2608,10 +2555,7 @@ void mob_revive(struct mob_data *md, unsigned int hp)
 	md->last_pcneartime = 0;
 	if (!md->bl.prev)
 		map_addblock(&md->bl);
-	if(pcdb_checkid(md->vd->class_) && md->nd)
-		md->vd->dead_sit = 0;
-	else
-		clif_spawn(&md->bl);
+	clif_spawn(&md->bl);
 	skill_unit_move(&md->bl,tick,1);
 	mobskill_use(md, tick, MSC_SPAWN);
 	if (battle_config.show_mob_info&3)
@@ -2883,10 +2827,7 @@ int mob_summonslave(struct mob_data *md2,int *value,int amount,int skill_id)
 		md= mob_spawn_dataset(&data);
 		if(skill_id == NPC_SUMMONSLAVE){
 			md->master_id=md2->bl.id;
-			md->state.killer = md2->state.killer;
 			md->special_state.ai = md2->special_state.ai;
-			md->nd = md2->nd;
-			md->callback_flag = md2->callback_flag;
 		}
 		mob_spawn(md);
 		
@@ -3457,26 +3398,6 @@ int mob_clone_delete(int class_)
 		&& mob_db_data[class_]!=NULL) {
 		aFree(mob_db_data[class_]);
 		mob_db_data[class_]=NULL;
-		return 1;
-	}
-	return 0;
-}
-
-int mob_script_callback(struct mob_data *md, struct block_list *target, short action_type)
-{
-	// DEBUG: Uncomment these if errors occur. ---
-	// nullpo_retr(md, 0);
-	// nullpo_retr(md->nd, 0);
-	// -------------------------------------------
-	if(md->callback_flag&action_type){
-		int regkey = add_str(".ai_action");
-		linkdb_replace(&md->nd->u.scr.script->script_vars,(void *)regkey, (void *)(int)action_type);
-		if(target){
-			linkdb_replace(&md->nd->u.scr.script->script_vars,(void *)(regkey+(1<<24)), (void *)(int)target->type);
-			linkdb_replace(&md->nd->u.scr.script->script_vars,(void *)(regkey+(2<<24)), (void *)target->id);
-		}
-		linkdb_replace(&md->nd->u.scr.script->script_vars,(void *)(regkey+(3<<24)), (void *)md->bl.id);
-		run_script(md->nd->u.scr.script, 0, 0, md->nd->bl.id);
 		return 1;
 	}
 	return 0;

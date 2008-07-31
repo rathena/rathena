@@ -256,8 +256,6 @@ static int unit_walktoxy_timer(int tid, unsigned int tick, int id, intptr data)
 	else {	//Stopped walking. Update to_x and to_y to current location [Skotlex]
 		ud->to_x = bl->x;
 		ud->to_y = bl->y;
-		if(md && md->nd) // Tell the script engine we've finished walking (for AI pathfinding)
-			mob_script_callback(md, NULL, CALLBACK_WALKACK);
 	}
 	return 0;
 }
@@ -630,11 +628,6 @@ int unit_warp(struct block_list *bl,short m,short x,short y,int type)
 	clif_spawn(bl);
 	skill_unit_move(bl,gettick(),1);
 
-	if(bl->type == BL_MOB){
-		TBL_MOB *md = (TBL_MOB *)bl;
-		if(md->nd) // Tell the script engine we've warped
-			mob_script_callback(md, NULL, CALLBACK_WARPACK);
-	}
 	return 0;
 }
 

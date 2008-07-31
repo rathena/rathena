@@ -8200,9 +8200,8 @@ void clif_parse_GlobalMessage(int fd, struct map_session_data* sd)
 	WFIFOSET(fd, WFIFOW(fd,2));
 
 #ifdef PCRE_SUPPORT
-	// trigger listening mobs/npcs
+	// trigger listening npcs
 	map_foreachinrange(npc_chat_sub, &sd->bl, AREA_SIZE, BL_NPC, text, textlen, &sd->bl);
-	map_foreachinrange(mob_chat_sub, &sd->bl, AREA_SIZE, BL_MOB, text, textlen, &sd->bl);
 #endif
 
 	// check for special supernovice phrase
@@ -8841,8 +8840,7 @@ void clif_parse_NpcClicked(int fd,struct map_session_data *sd)
 	if (!bl) return;
 	switch (bl->type) {
 		case BL_MOB:
-			if (!((TBL_MOB *)bl)->nd || !mob_script_callback((TBL_MOB *)bl, &sd->bl, CALLBACK_NPCCLICK))
-				clif_parse_ActionRequest_sub(sd, 0x07, bl->id, gettick());
+			clif_parse_ActionRequest_sub(sd, 0x07, bl->id, gettick());
 			break;
 		case BL_PC:
 			clif_parse_ActionRequest_sub(sd, 0x07, bl->id, gettick());

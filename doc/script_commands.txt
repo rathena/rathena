@@ -4728,78 +4728,6 @@ the homunculus must not be the last evolution and
 the homunculus must be on at least 91000/100000 intimacy with it's owner.
 
 ---------------------------------------
-------------------------------------------------
-//===========================================\\
-||         Mob Control Suit Commands         ||
-\\===========================================//
-------------------------------------------------
-
----------------------------------------
-
-* mobspawn (<monster name>,<monster ID>,<mapname>,<x>,<y>)
-* mobRemove <GID>;
-
-This is used to spawn a monster and return it's Game ID, to be used
-in the unit/mobcontrol commands.
-
-Note, I will use the stuff here in the examples for the unitcontrol.
-
-Example(s):
-
-//Spawns a poring named poi poi and put's it's GID in .GID.
-	set .GID,mobspawn("Poi Poi",1002,"prontera",160,180);
-//would kill our poring.
-	mobRemove .GID;
-
----------------------------------------
-
-* getmobdata (<GID>,<arrayname>)
-* setmobdata <GID>,<parameter>,<new value>;
-
-This is used to get and set special data related to the monster.
-With getmobdata, the array given will be filled with the current data. In setmobdata
-the indexes in the array would be used to set that data on the monster. 
-Parameters (indexes) are:
-
-0 = class (big, small, normal)			7  = y						14 = hair style		21 = weapon
-1 = level					8  = speed					15 = hair color		22 = shield (again)
-2 = HP						9  = mode (see doc/mob_db_mode_list.txt)	16 = head gear bottom	23 = looking dir
-3 = max HP					10 = special AI state (?)			17 = head gear middle	24 = killer state (1 or 0)
-4 = master ID (aid of the master, summon)	11 = SC option					18 = head gear top	25 = callback flag
-5 = map index					12 = sex					19 = cloth color	26 = no random walk (1 or 0)
-6 = x						13 = class (Monster ID, Job ID)			20 = shield		
-
-Example(s):
-
-//this will set all the mobdata in the @array variable. (@array[1] being level, @array[13] class etc)
-	getmobdata .GID,@array;
-	
-//set the max hp of our poring to 1000.
-	setmobdata .GID,3,1000;
-
----------------------------------------
-
-* mobassist <GID>,<target id>;
-This will make the monster assist the Target ID as if it was a summon of it.
-Example(s):
-
-/this will make our poring assist the current attached player! >:3
-	mobassist .GID,getcharid(3);
-
----------------------------------------
-
-* mobattach <GID>{,"<NPC Name>"};
-
-GID is the GID of a monster, NPC or account id. The NPC running or
-he NPC name given is used to attach the monster.
-
-By attaching a monster, the NPC to which it is attached is ran on special actions by the monster.
-The system will set specific data in the .ai_action variable array on the NPC invoked.
-The special AI actions types are set in the .ai_action at place AI_ACTION_TAR_TYPE
-
-More AI_ vars are set in const.txt, and you can also look at sample/monstercontroller.cpp:
-
----------------------------------------
 
 * unitwalk <GID>,<x>,<y>;
 * unitwalk <GID>,<mapid>;
@@ -4831,13 +4759,6 @@ Example(s):
 Okay, these commands should be fairly self explaining.
 For the emotions, you can look in db/const.txt for prefixes with e_
 
----------------------------------------
-
-------------------------------------------------
-//===========================================\\
-||      End of Mob Control Suit Commands     ||
-\\===========================================//
-------------------------------------------------
 ---------------------------------------
 
 *disablenpc "<NPC object name>";

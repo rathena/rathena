@@ -35,19 +35,6 @@
 #define MOB_CLONE_START (MAX_MOB_DB-999)
 #define MOB_CLONE_END MAX_MOB_DB
 
-// Scripted Mob AI Constants
-#define CALLBACK_NPCCLICK	0x100
-#define CALLBACK_ATTACK		0x80
-#define CALLBACK_DETECT		0x40
-#define CALLBACK_DEAD		0x20
-#define	CALLBACK_ASSIST		0x10
-#define CALLBACK_KILL		0x08
-#define CALLBACK_UNLOCK		0x04
-#define CALLBACK_WALKACK	0x02
-#define CALLBACK_WARPACK	0x01
-
-int mob_script_callback(struct mob_data *md, struct block_list *target, short action_type);
-
 struct mob_skill {
 	short state;
 	short skill_id,skill_lv;
@@ -107,8 +94,6 @@ struct mob_data {
 		unsigned steal_coin_flag : 1;
 		unsigned soul_change_flag : 1; // Celest
 		unsigned alchemist: 1;
-		unsigned no_random_walk: 1;
-		unsigned killer: 1;
 		unsigned spotted: 1;
 		unsigned char attacked_count; //For rude attacked.
 		int provoke_flag; // Celest
@@ -137,9 +122,6 @@ struct mob_data {
 	int deletetimer;
 	int master_id,master_dist;
 
-	struct npc_data *nd;
-	unsigned short callback_flag;
-	
 	short skillidx;
 	unsigned int skilldelay[MAX_MOBSKILL];
 	char npc_event[50];
@@ -269,7 +251,6 @@ int mobskill_castend_id( int tid, unsigned int tick, int id,int data );
 int mobskill_castend_pos( int tid, unsigned int tick, int id,int data );
 int mob_summonslave(struct mob_data *md2,int *value,int amount,int skill_id);
 int mob_countslave(struct block_list *bl);
-int mob_convertslave(struct mob_data *md);
 
 int mob_is_clone(int class_);
 

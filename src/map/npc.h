@@ -80,7 +80,6 @@ struct npc_data {
 
 #ifdef PCRE_SUPPORT
 void npc_chat_finalize(struct npc_data* nd);
-int mob_chat_sub(struct block_list* bl, va_list ap);
 #endif
 
 //Script NPC events.
