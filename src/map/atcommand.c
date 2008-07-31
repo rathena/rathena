@@ -6038,14 +6038,9 @@ int atcommand_autoloot(const int fd, struct map_session_data* sd, const char* co
 	}else
 		clif_displaymessage(fd, "Autoloot is now off.");
 
-	if (sd->state.autoloot && sd->state.autolootid) {
-		// Autolootitem should be turned off
-		sd->state.autolootid = 0;
-		clif_displaymessage(fd, "Autolootitem is now off.");
-	}
-
 	return 0;
 }
+
 /*==========================================
  * @autolootitem
  *------------------------------------------*/
@@ -6077,12 +6072,6 @@ int atcommand_autolootitem(const int fd, struct map_session_data* sd, const char
 	sprintf(atcmd_output, "Autolooting Item: '%s'/'%s' {%d}",
 		item_data->name, item_data->jname, item_data->nameid);
 	clif_displaymessage(fd, atcmd_output);
-
-	if (sd->state.autolootid && sd->state.autoloot) {
-		// Autoloot should be turned off
-		sd->state.autoloot = 0;
-		clif_displaymessage(fd, "Autoloot is now off (cannot be actitaved together).");
-	}
 
 	return 0;
 }
