@@ -1870,7 +1870,7 @@ int unit_free(struct block_list *bl, int clrtype)
 		//Tell the script to end, not delete it, it will free itself when necessary [Kevin]
 		if (sd->st) {
 			sd->st->rid = 0;
-			sd->st->state = 2;
+			sd->st->state = END;
 		}
 	} else if( bl->type == BL_PET ) {
 		struct pet_data *pd = (struct pet_data*)bl;

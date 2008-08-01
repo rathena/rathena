@@ -7,10 +7,10 @@
 //   state           : 0: account is ok, 1 to 256: error code of packet 0x006a + 1
 //   unban time      : 0: no ban, <other value>: banned until the date (unix timestamp)
 //   expiration time : 0: unlimited account, <other value>: account expires on the date (unix timestamp)
-1	s1	p1	S	a@a.com	0	0	0	0	0	-	-	
-2	s2	p2	S	a@a.com	0	0	0	0	0	-	-	
-3	s3	p3	S	a@a.com	0	0	0	0	0	-	-	
-4	s4	p4	S	a@a.com	0	0	0	0	0	-	-	
-5	s5	p5	S	a@a.com	0	0	0	0	0	-	-	
-2000001	Test	Test	M	a@a.com	0	0	0	0	0	-	-	
+1	s1	p1	S	a@a.com	0	0	0	0	0	0000-00-00 00:00:00	-	
+2	s2	p2	S	a@a.com	0	0	0	0	0	0000-00-00 00:00:00	-	
+3	s3	p3	S	a@a.com	0	0	0	0	0	0000-00-00 00:00:00	-	
+4	s4	p4	S	a@a.com	0	0	0	0	0	0000-00-00 00:00:00	-	
+5	s5	p5	S	a@a.com	0	0	0	0	0	0000-00-00 00:00:00	-	
+2000001	Test	Test	M	a@a.com	0	0	0	0	0	0000-00-00 00:00:00	-	
 2000002	%newid%

@@ -41,7 +41,6 @@ int mapif_quests_fromsql(int char_id, struct quest questlog[])
 	||	SQL_ERROR == SqlStmt_Execute(stmt)
 	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 0, SQLDT_INT,    &tmp_quest.quest_id, 0, NULL, NULL)
 	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 1, SQLDT_INT,    &tmp_quest.state, 0, NULL, NULL) )
-	//||	SQL_ERROR == SqlStmt_BindColumn(stmt, 2, SQLDT_INT,    &tmp_quest.time, 0, NULL, NULL)
 		SqlStmt_ShowDebug(stmt);
 
 	for( i = 0; i < MAX_QUEST && SQL_SUCCESS == SqlStmt_NextRow(stmt); ++i )

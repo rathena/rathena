@@ -4,8 +4,9 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2008/08/01
+	* Removed unused guardian hp columns from the castles table in main.sql.
+	* Corrected incorrect use of the datetime column in the `login` table. [ultramage]
 	* Quagmire now will affect boss monsters, but more info is required to code the debuff exceptions properly. [Brainstorm]
-
 2008/07/31
 	* Fixed: added 'E'-type zenylogs in sql table (bugreport:1957) [akrus]
 	- added sql file upgrade_svn13025_log.sql

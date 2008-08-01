@@ -10220,7 +10220,7 @@ int skill_produce_mix (struct map_session_data *sd, int skill_id, int nameid, in
 		if(battle_config.wp_rate != 100)
 			make_per = make_per * battle_config.wp_rate / 100;
 	}
-// - Baby Class Penalty = 80% (from adult's chance) ----//
+
 	if (sd->class_&JOBL_BABY) //if it's a Baby Class
 		make_per = (make_per * 70) / 100; //Baby penalty is 30%
 

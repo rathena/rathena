@@ -2067,11 +2067,6 @@ struct script_code* parse_script(const char *src,const char *file,int line,int o
 	return code;
 }
 
-//
-// Script state
-//
-enum {RUN = 0,STOP,END,RERUNLINE,GOTO,RETFUNC};
-
 /// Returns the player attached to this script, identified by the rid.
 /// If there is no player attached, the script is terminated.
 TBL_PC *script_rid2sd(struct script_state *st)

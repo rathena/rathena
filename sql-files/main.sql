@@ -239,14 +239,6 @@ CREATE TABLE `guild_castle` (
   `visibleG5` int(11) unsigned NOT NULL default '0',
   `visibleG6` int(11) unsigned NOT NULL default '0',
   `visibleG7` int(11) unsigned NOT NULL default '0',
-  `gHP0` int(11) unsigned NOT NULL default '0',
-  `ghP1` int(11) unsigned NOT NULL default '0',
-  `gHP2` int(11) unsigned NOT NULL default '0',
-  `gHP3` int(11) unsigned NOT NULL default '0',
-  `gHP4` int(11) unsigned NOT NULL default '0',
-  `gHP5` int(11) unsigned NOT NULL default '0',
-  `gHP6` int(11) unsigned NOT NULL default '0',
-  `gHP7` int(11) unsigned NOT NULL default '0',
   PRIMARY KEY  (`castle_id`),
   KEY `guild_id` (`guild_id`)
 ) ENGINE=MyISAM;

@@ -90,10 +90,17 @@ struct script_stack {
 	struct linkdb_node **var_function;	// ŠÖ”ˆË‘¶•Ï”
 };
 
+
+//
+// Script state
+//
+enum e_script_state { RUN,STOP,END,RERUNLINE,GOTO,RETFUNC };
+
 struct script_state {
 	struct script_stack* stack;
 	int start,end;
-	int pos,state;
+	int pos;
+	enum e_script_state state;
 	int rid,oid;
 	struct script_code *script, *scriptroot;
 	struct sleep_data {
