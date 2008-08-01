@@ -7160,7 +7160,7 @@ int clif_charnameack (int fd, struct block_list *bl)
 //		break;
 		return 0;
 	default:
-		ShowError("clif_parse_GetCharNameRequest : bad type %d(%d)\n", bl->type, bl->id);
+		ShowError("clif_charnameack: bad type %d(%d)\n", bl->type, bl->id);
 		return 0;
 	}
 
@@ -8120,40 +8120,37 @@ void clif_parse_QuitGame(int fd, struct map_session_data *sd)
 	WFIFOSET(fd,packet_len(0x18b));
 }
 
-/*==========================================
- *
- *------------------------------------------*/
+/// Requesting unit's name
+/// S 0094 <object id>.l
 void clif_parse_GetCharNameRequest(int fd, struct map_session_data *sd)
 {
-	int account_id;
+	int id = RFIFOL(fd,packet_db[sd->packet_ver][RFIFOW(fd,0)].pos[0]);
 	struct block_list* bl;
 	struct status_change *sc;
 	
-	account_id = RFIFOL(fd,packet_db[sd->packet_ver][RFIFOW(fd,0)].pos[0]);
+	if( id < 0 && -id == sd->bl.id ) // for disguises [Valaris]
+		id = sd->bl.id;
 
-	if(account_id<0 && -account_id == sd->bl.id) // for disguises [Valaris]
-		account_id= sd->bl.id;
+	bl = map_id2bl(id);
+	if( bl == NULL )
+		return;	// Lagged clients could request names of already gone mobs/players. [Skotlex]
 
-	bl = map_id2bl(account_id);
-	//Is this possible? Lagged clients could request names of already gone mobs/players. [Skotlex]
-	if (!bl) return;
-
+	// 'see people in GM hide' cheat detection
+	/* disabled due to false positives (network lag + request name of char that's about to hide = race condition)
 	sc = status_get_sc(bl);
 	if (sc && sc->option&OPTION_INVISIBLE && !disguised(bl) &&
 		bl->type != BL_NPC && //Skip hidden NPCs which can be seen using Maya Purple
 		pc_isGM(sd) < battle_config.hack_info_GM_level
 	) {
-		//GM characters (with client side GM enabled are able to see invisible stuff) [Lance]
-		//Asked name of invisible player, this shouldn't be possible!
-		//Possible bot? Thanks to veider and qspirit
-		//FIXME: Still isn't perfected as clients keep asking for this on legitimate situations.
 		char gm_msg[256];
-		sprintf(gm_msg, "Hack on NameRequest: character '%s' (account: %d) requested the name of an invisible target.\n", sd->status.name, sd->status.account_id);
+		sprintf(gm_msg, "Hack on NameRequest: character '%s' (account: %d) requested the name of an invisible target (id: %d).\n", sd->status.name, sd->status.account_id, id);
 		ShowWarning(gm_msg);
-		 // information is sended to all online GM
+		// information is sent to all online GMs
 		intif_wis_message_to_gm(wisp_server_name, battle_config.hack_info_GM_level, gm_msg);
 		return;
 	}
+	*/
+
 	clif_charnameack(fd, bl);
 }
 
