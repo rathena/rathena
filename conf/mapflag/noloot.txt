@@ -4,22 +4,23 @@
 //= eAthena Dev Team
 //= 1.2 [Lupus] 1.3 [massdriller] 1.4 Lupus 1.5 Lorky
 //= 1.6 Added Lighthalzen (due to quests) [Lupus]
+//= 1.7 Commented out entries. (Quests are official) [L0ne_W0lf]
 //============================================================
 
 // Location for Job's Quests
-job_sword1	mapflag	noloot
-in_moc_16	mapflag	noloot
-job_hunte	mapflag	noloot
-job_knt	mapflag	noloot
-job_prist	mapflag	noloot
-job_wiz	mapflag	noloot
-job_cru	mapflag	noloot
-monk_test	mapflag	noloot
-in_rogue	mapflag	noloot
-job_sage	mapflag	noloot
-job_soul	mapflag	noloot
-job_star	mapflag	noloot
-que_ng	mapflag	noloot
+//job_sword1	mapflag	noloot
+//in_moc_16	mapflag	noloot
+//job_hunte	mapflag	noloot
+//job_knt	mapflag	noloot
+//job_prist	mapflag	noloot
+//job_wiz	mapflag	noloot
+//job_cru	mapflag	noloot
+//monk_test	mapflag	noloot
+//in_rogue	mapflag	noloot
+//job_sage	mapflag	noloot
+//job_soul	mapflag	noloot
+//job_star	mapflag	noloot
+//que_ng	mapflag	noloot
 
 //Thieves have to gather some mushrooms. So they need loot
 //job_thief1	mapflag	noloot

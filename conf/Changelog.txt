@@ -1,5 +1,13 @@
 Date	Added
 
+2008/08/01
+	* Rev. 13033 Mapflag updates. Will need to do a complete rewrite eventually. [L0ne_W0lf]
+	- Removed several noicewall limitations from interior maps mostly.
+	- Removed several noreturn limitations from interior maps mostly.
+	- Removed nobranch limitations from PVP (yoyo and nightmare) maps.
+	- Removed nopenalty flag from nightmare PVP maps.
+	- Commented out all noloot and noexp mapflag entries.
+	- Added a few more noskill entries for some maps.
 2008/07/27
 	* Removed the unused login and txt->sql options in inter_athena.conf
 	* Renamed config option log_db to log_db_db in inter_athena.conf

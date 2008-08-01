@@ -4,20 +4,21 @@
 //= eAthena Dev Team
 //= 1.2 [Lupus] 1.3 [massdriller] 1.4 Lupus 1.5 Lorky
 //= 1.6 Added Lighthalzen (due to quests) [Lupus]
+//= 1.7 Commented out entries. (Quests are official) [L0ne_W0lf]
 //============================================================
 
 // Location for Job's Quests
-job_thief1	mapflag	noexp
-job_sword1	mapflag	noexp
-in_moc_16	mapflag	noexp
-job_hunte	mapflag	noexp
-job_knt	mapflag	noexp
-job_prist	mapflag	noexp
-job_wiz	mapflag	noexp
-job_cru	mapflag	noexp
-monk_test	mapflag	noexp
-in_rogue	mapflag	noexp
-job_sage	mapflag	noexp
-job_soul	mapflag	noexp
-job_star	mapflag	noexp
-que_ng	mapflag	noexp
+//job_thief1	mapflag	noexp
+//job_sword1	mapflag	noexp
+//in_moc_16	mapflag	noexp
+//job_hunte	mapflag	noexp
+//job_knt	mapflag	noexp
+//job_prist	mapflag	noexp
+//job_wiz	mapflag	noexp
+//job_cru	mapflag	noexp
+//monk_test	mapflag	noexp
+//in_rogue	mapflag	noexp
+//job_sage	mapflag	noexp
+//job_soul	mapflag	noexp
+//job_star	mapflag	noexp
+//que_ng	mapflag	noexp

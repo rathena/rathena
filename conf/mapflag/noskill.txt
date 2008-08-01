@@ -3,8 +3,22 @@
 //===== By: ==================================================
 //= eAthena Dev Team
 //= 1.0 [L0ne_W0lf]
+//= 1.1 Added additional maps. [L0ne_W0lf]
 //===== Current Version: =====================================
 
-//Monster Races ================
+//Prontera Arena ===============
+prt_are_in	mapflag	noskill
+
+//The Sign Quest ===============
+himinn	mapflag	noskill
+
+// Quiz Maps ===================
+quiz_00	mapflag	noskill
+quiz_01	mapflag	noskill
+quiz_02	mapflag	noskill
+quiz_test	mapflag	noskill
+
+//Hugel Minigames ==============
+que_bingo	mapflag	noskill
 p_track01	mapflag	noskill
 p_track02	mapflag	noskill
