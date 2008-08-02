@@ -14,8 +14,9 @@
 #define ITEMID_RED_GEMSTONE 716
 #define ITEMID_BLUE_GEMSTONE 717
 #define itemid_isgemstone(id) ( (id) >= ITEMID_YELLOW_GEMSTONE && (id) <= ITEMID_BLUE_GEMSTONE )
-
 #define ITEMID_TRAP 1065
+#define ITEMID_STONE 7049
+#define ITEMID_SKULL_ 7420
 
 //The only item group required by the code to be known. See const.txt for the full list.
 #define IG_FINDINGORE 6

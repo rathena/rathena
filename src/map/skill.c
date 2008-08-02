@@ -4041,7 +4041,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			clif_skill_nodamage(src,bl,skillid,skilllv,1);
 			memset(&item_tmp,0,sizeof(item_tmp));
 			memset(&tbl,0,sizeof(tbl)); // [MouseJstr]
-			item_tmp.nameid = 7049;
+			item_tmp.nameid = ITEMID_STONE;
 			item_tmp.identify = 1;
 			tbl.id = 0;
 			clif_takeitem(&sd->bl,&tbl);

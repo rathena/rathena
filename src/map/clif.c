@@ -8126,7 +8126,7 @@ void clif_parse_GetCharNameRequest(int fd, struct map_session_data *sd)
 {
 	int id = RFIFOL(fd,packet_db[sd->packet_ver][RFIFOW(fd,0)].pos[0]);
 	struct block_list* bl;
-	struct status_change *sc;
+	//struct status_change *sc;
 	
 	if( id < 0 && -id == sd->bl.id ) // for disguises [Valaris]
 		id = sd->bl.id;

@@ -5019,7 +5019,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 	{
 		struct item item_tmp;
 		memset(&item_tmp,0,sizeof(item_tmp));
-		item_tmp.nameid=7420; //PVP Skull item ID
+		item_tmp.nameid=ITEMID_SKULL_;
 		item_tmp.identify=1;
 		item_tmp.card[0]=CARD0_CREATE;
 		item_tmp.card[1]=0;
