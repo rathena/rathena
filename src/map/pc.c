@@ -31,7 +31,6 @@
 #include "script.h" // script_config
 #include "skill.h"
 #include "status.h" // struct status_data
-#include "vending.h" // vending_closevending()
 #include "pc.h"
 #include "quest.h"
 
@@ -4902,9 +4901,6 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 	int i=0,j=0,k=0;
 	unsigned int tick = gettick();
 		
-	if(sd->vender_id)
-		vending_closevending(sd);
-
 	for(k = 0; k < 5; k++)
 	if (sd->devotion[k]){
 		struct map_session_data *devsd = map_id2sd(sd->devotion[k]);
