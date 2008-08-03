@@ -6999,7 +6999,7 @@ OnInit:
 OnTouch:
 
 	if (KielHyreQuest >= 46)
-		warp "kh_kiehl02",50,6;
+		warp "kh_kiehl02",50,7;
 	else
 		warp "kh_kiehl01",166,183;
 	end;
