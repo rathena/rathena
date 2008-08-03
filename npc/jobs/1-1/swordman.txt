@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88; L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 2.0
+//= 2.1
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -33,11 +33,12 @@
 //= 1.9 Dialog is official, but the Script is now custom as far as maps go. [L0ne_W0lf]
 //= 1.9b Fixed usage of wrong jobchange func messing up baby classes [ultramage]
 //= 2.0 Corrected NPC names to fall within proper resctrictions. [L0ne_W0lf]
+//= 2.1 Fixed mistake in condition check. [L0ne_W0lf]
 //============================================================ 
 
 izlude_in,74,172,4	script	Swordman#swd_1	119,{
 	if (Upper == 1) {
-		if (Class == Job_Novice_High && ADVJOB == Job_Lord_Knight || ADVJOB == Job_Paladin) {
+		if (Class == Job_Novice_High && (ADVJOB == Job_Lord_Knight || ADVJOB == Job_Paladin)) {
 			mes "[Swordman]";
 			mes "It...";
 			mes "Can't be...";

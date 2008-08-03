@@ -1,6 +1,7 @@
 ﻿Date		Added
 ======
 2008/08/03
+	* Rev. 13038 Fixed some condition checks in archer, mage, and swordie, jobs. [L0ne_W0lf]
 	* Rev. 13037 Implemnted Hugel Monster Races. [L0ne_W0lf]
 2008/07/31
 	* Rev. 13026 Added iRO Repeatable EXP quests care of Kisuka. [L0ne_W0lf]
