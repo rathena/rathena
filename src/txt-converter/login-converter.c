@@ -1,9 +1,6 @@
 // (c) eAthena Dev Team - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#define WITH_TXT
-#define WITH_SQL
-
 #include "../common/cbasetypes.h"
 #include "../common/mmo.h" // struct mmo_account
 #include "../common/core.h"

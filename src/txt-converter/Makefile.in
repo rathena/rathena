@@ -1,29 +1,77 @@
-
-LOGIN_CONVERTER_OBJ = obj_login/login-converter.o ../common/obj_all/minicore.o \
-	../common/obj_all/malloc.o ../common/obj_all/strlib.o ../common/obj_all/showmsg.o \
-	../common/obj_all/utils.o ../common/obj_all/ers.o ../common/obj_all/db.o \
+LOGIN_CONVERTER_OBJ = \
+	obj_login/login-converter.o \
+	../login/obj_txt/account_txt.o \
+	../login/obj_sql/account_sql.o \
+	../common/obj_all/minicore.o \
+	../common/obj_all/db.o \
+	../common/obj_all/ers.o \
+	../common/obj_all/lock.o \
+	../common/obj_all/malloc.o \
+	../common/obj_all/showmsg.o \
+	../common/obj_all/strlib.o \
+	../common/obj_all/timer.o \
 	../common/obj_sql/sql.o
-LOGIN_CONVERTER_H = ../common/cbasetypes.h ../common/mmo.h ../common/core.h \
-	../common/malloc.h ../common/strlib.h ../common/showmsg.h \
-	../common/utils.h ../common/ers.h ../common/db.h \
+LOGIN_CONVERTER_H = \
+	../login/account.h \
+	../common/cbasetypes.h \
+	../common/mmo.h \
+	../common/core.h \
+	../common/db.h \
+	../common/ers.h \
+	../common/lock.h \
+	../common/malloc.h \
+	../common/showmsg.h \
+	../common/strlib.h \
+	../common/timer.h \
 	../common/sql.h
 
-CHAR_CONVERTER_OBJ = obj_char/char-converter.o \
-	obj_char/txt-char.o obj_char/txt-int_pet.o obj_char/txt-int_storage.o obj_char/txt-inter.o \
-	obj_char/txt-int_party.o obj_char/txt-int_guild.o \
-	obj_char/sql-char.o obj_char/sql-int_pet.o obj_char/sql-int_storage.o \
-	obj_char/sql-inter.o obj_char/sql-int_party.o obj_char/sql-int_guild.o \
+CHAR_CONVERTER_OBJ = \
+	obj_char/char-converter.o \
+	obj_char/txt-char.o \
+	obj_char/txt-int_pet.o \
+	obj_char/txt-int_storage.o \
+	obj_char/txt-inter.o \
+	obj_char/txt-int_party.o \
+	obj_char/txt-int_guild.o \
+	obj_char/sql-char.o \
+	obj_char/sql-int_pet.o \
+	obj_char/sql-int_storage.o \
+	obj_char/sql-inter.o \
+	obj_char/sql-int_party.o \
+	obj_char/sql-int_guild.o \
 	../common/obj_all/minicore.o \
-	../common/obj_all/malloc.o ../common/obj_all/strlib.o ../common/obj_all/showmsg.o \
-	../common/obj_all/utils.o ../common/obj_all/ers.o ../common/obj_all/mapindex.o \
+	../common/obj_all/malloc.o \
+	../common/obj_all/strlib.o \
+	../common/obj_all/showmsg.o \
+	../common/obj_all/utils.o \
+	../common/obj_all/timer.o \
+	../common/obj_all/ers.o \
+	../common/obj_all/mapindex.o \
 	../common/obj_sql/sql.o
-CHAR_CONVERTER_H = ../char/char.h ../char/int_pet.h ../char/int_storage.h ../char/inter.h \
-	../char/int_party.h ../char/int_guild.h \
-	../char_sql/char.h ../char_sql/int_pet.h ../char_sql/int_storage.h \
-	../char_sql/inter.h ../char_sql/int_party.h ../char_sql/int_guild.h \
-	../common/cbasetypes.h ../common/mmo.h ../common/core.h \
-	../common/malloc.h ../common/strlib.h ../common/showmsg.h \
-	../common/utils.h ../common/ers.h ../common/mapindex.h \
+
+CHAR_CONVERTER_H = \
+	../char/char.h \
+	../char/int_pet.h \
+	../char/int_storage.h \
+	../char/inter.h \
+	../char/int_party.h \
+	../char/int_guild.h \
+	../char_sql/char.h \
+	../char_sql/int_pet.h \
+	../char_sql/int_storage.h \
+	../char_sql/inter.h \
+	../char_sql/int_party.h \
+	../char_sql/int_guild.h \
+	../common/cbasetypes.h \
+	../common/mmo.h \
+	../common/core.h \
+	../common/malloc.h \
+	../common/strlib.h \
+	../common/showmsg.h \
+	../common/timer.h \
+	../common/utils.h \
+	../common/ers.h \
+	../common/mapindex.h \
 	../common/sql.h
 
 HAVE_MYSQL=@HAVE_MYSQL@
@@ -72,7 +120,7 @@ obj_char:
 	-mkdir obj_char
 
 obj_login/%.o: %.c $(LOGIN_CONVERTER_H)
-	@CC@ @CFLAGS@ @MYSQL_CFLAGS@ @CPPFLAGS@ -DTXT_SQL_CONVERT -c $(OUTPUT_OPTION) $<
+	@CC@ @CFLAGS@ @MYSQL_CFLAGS@ @CPPFLAGS@ -DWITH_TXT -DWITH_SQL -c $(OUTPUT_OPTION) $<
 
 obj_char/%.o: %.c $(CHAR_CONVERTER_H)
 	@CC@ @CFLAGS@ @MYSQL_CFLAGS@ @CPPFLAGS@ -DTXT_SQL_CONVERT -c $(OUTPUT_OPTION) $<
@@ -89,3 +137,10 @@ obj_char/sql-%.o: ../char_sql/%.c $(CHAR_CONVERTER_H)
 
 ../common/obj_sql/%.o:
 	@$(MAKE) -C ../common sql
+
+# missing login server files
+../login/obj_txt/%.o:
+	@$(MAKE) -C ../login txt
+
+../login/obj_sql/%.o:
+	@$(MAKE) -C ../login sql

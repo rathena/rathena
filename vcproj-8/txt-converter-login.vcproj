@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8.00"
+	Version="8,00"
 	Name="txt-converter-login"
 	ProjectGUID="{D356871D-58E1-450B-967A-E9E9646175AF}"
 	RootNamespace="txt-converter-login"
@@ -52,7 +52,6 @@
 				DefaultCharIsUnsigned="false"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
-				Detect64BitPortabilityProblems="false"
 				DebugInformationFormat="4"
 				CompileAs="1"
 			/>
@@ -95,9 +94,6 @@
 			/>
 			<Tool
 				Name="VCAppVerifierTool"
-			/>
-			<Tool
-				Name="VCWebDeploymentTool"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
@@ -145,7 +141,6 @@
 				PrecompiledHeaderThrough=""
 				PrecompiledHeaderFile=""
 				WarningLevel="3"
-				Detect64BitPortabilityProblems="false"
 				DebugInformationFormat="3"
 				CompileAs="1"
 			/>
@@ -171,7 +166,6 @@
 				SubSystem="1"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
-				OptimizeForWindows98="1"
 				LinkTimeCodeGeneration="1"
 				TargetMachine="1"
 			/>
@@ -192,9 +186,6 @@
 			/>
 			<Tool
 				Name="VCAppVerifierTool"
-			/>
-			<Tool
-				Name="VCWebDeploymentTool"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
@@ -232,6 +223,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\src\common\lock.c"
+				>
+			</File>
+			<File
+				RelativePath="..\src\common\lock.h"
+				>
+			</File>
+			<File
 				RelativePath="..\src\common\malloc.c"
 				>
 			</File>
@@ -263,7 +262,27 @@
 				RelativePath="..\src\common\strlib.h"
 				>
 			</File>
+			<File
+				RelativePath="..\src\common\timer.c"
+				>
+			</File>
+			<File
+				RelativePath="..\src\common\timer.h"
+				>
+			</File>
 		</Filter>
+		<File
+			RelativePath="..\src\login\account.h"
+			>
+		</File>
+		<File
+			RelativePath="..\src\login\account_sql.c"
+			>
+		</File>
+		<File
+			RelativePath="..\src\login\account_txt.c"
+			>
+		</File>
 		<File
 			RelativePath="..\src\txt-converter\login-converter.c"
 			>
