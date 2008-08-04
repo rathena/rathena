@@ -2081,7 +2081,8 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 	unsigned int mvp_damage, tick = gettick();
 	unsigned short flaghom = 1; // [Zephyrus] Does the mob only received damage from homunculus?
 
-	if(src && src->type == BL_PC) {
+	if(src && src->type == BL_PC)
+	{
 		sd = (struct map_session_data *)src;
 		mvp_sd = sd;
 	}
@@ -2091,8 +2092,11 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 	if( md->guardian_data && md->guardian_data->number >= 0 && md->guardian_data->number < MAX_GUARDIANS )
 		guild_castledatasave(md->guardian_data->castle->castle_id, 10+md->guardian_data->number,0);
 
-	md->state.skillstate = MSS_DEAD;	
-	mobskill_use(md,tick,-1);	//On Dead skill.
+	if( src )
+	{ // Use Dead skill only if not killed by Script or Command
+		md->state.skillstate = MSS_DEAD;	
+		mobskill_use(md,tick,-1);
+	}
 
 	map_freeblock_lock();
 
@@ -2278,14 +2282,12 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 
 	} //End EXP giving.
 	
-	if (!(type&1) &&
-		!map[m].flag.nomobloot &&
-		(
-		 	!md->special_state.ai || //Non special mob
-			battle_config.alchemist_summon_reward == 2 || //All summoned give drops
-			(md->special_state.ai==2 && battle_config.alchemist_summon_reward == 1) //Marine Sphere Drops items.
-		)
-	) {	//item drop
+	if( !(type&1) && !map[m].flag.nomobloot && !md->state.rebirth && (
+		!md->special_state.ai || //Non special mob
+		battle_config.alchemist_summon_reward == 2 || //All summoned give drops
+		(md->special_state.ai==2 && battle_config.alchemist_summon_reward == 1) //Marine Sphere Drops items.
+		) )
+	{ // Item Drop
 		struct item_drop_list *dlist = ers_alloc(item_drop_list_ers, struct item_drop_list);
 		struct item_drop *ditem;
 		int drop_rate;
@@ -2493,32 +2495,38 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 	  	//Emperium destroyed by script. Discard mvp character. [Skotlex]
 		mvp_sd = NULL;
 
-	if(md->npc_event[0] && !md->state.npc_killmonster)
-	{
-		md->status.hp = 0; //So that npc_event invoked functions KNOW that I am dead.
-		if(src) 
-		switch (src->type) {
-		case BL_PET:
-			sd = ((TBL_PET*)src)->msd;
-			break;
-		case BL_HOM:
-			sd = ((TBL_HOM*)src)->master;
-			break;
+	if( !md->sc.data[SC_KAIZEL] )
+	{ // Only trigger event on final kill
+		if( md->npc_event[0] && !md->state.npc_killmonster )
+		{
+			md->status.hp = 0; //So that npc_event invoked functions KNOW that I am dead.
+			if( src )
+				switch( src->type )
+				{
+					case BL_PET: sd = ((TBL_PET*)src)->msd; break;
+					case BL_HOM: sd = ((TBL_HOM*)src)->master; break;
+				}
+
+			if( sd && battle_config.mob_npc_event_type )
+			{
+				pc_setglobalreg(sd,"killerrid",sd->bl.id);
+				npc_event(sd,md->npc_event,0);
+			}
+			else if( mvp_sd )
+			{
+				pc_setglobalreg(mvp_sd,"killerrid",sd?sd->bl.id:0);
+				npc_event(mvp_sd,md->npc_event,0);
+			}
+			else
+				npc_event_do(md->npc_event);
+
+			md->status.hp = 1;
 		}
-		if(sd && battle_config.mob_npc_event_type) {
-			pc_setglobalreg(sd,"killerrid",sd->bl.id);
-			npc_event(sd,md->npc_event,0);
-		} else if(mvp_sd) {
-			pc_setglobalreg(mvp_sd,"killerrid",sd?sd->bl.id:0);
-			npc_event(mvp_sd,md->npc_event,0);
+		else if( mvp_sd )
+		{
+			pc_setglobalreg(mvp_sd,"killedrid",md->class_);
+			npc_script_event(mvp_sd, NPCE_KILLNPC); // PCKillNPC [Lance]
 		}
-		else
-			npc_event_do(md->npc_event);
-			
-		md->status.hp = 1;
-	} else if (mvp_sd) {	//lordalfa
-		pc_setglobalreg(mvp_sd,"killedrid",md->class_);
-		npc_script_event(mvp_sd, NPCE_KILLNPC); // PCKillNPC [Lance]
 	}
 
 	if( md->barricade != NULL )
@@ -2534,9 +2542,8 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 	map_freeblock_unlock();
 
 	if(pcdb_checkid(md->vd->class_))
-	{	//Player mobs are not removed automatically by the client.
+		//Player mobs are not removed automatically by the client.
 		clif_clearunit_delayed(&md->bl, tick+3000);
-	}
 
 	if(!md->spawn) //Tell status_damage to remove it from memory.
 		return 5; // Note: Actually, it's 4. Oh well...

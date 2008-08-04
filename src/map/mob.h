@@ -98,6 +98,7 @@ struct mob_data {
 		unsigned char attacked_count; //For rude attacked.
 		int provoke_flag; // Celest
 		unsigned npc_killmonster: 1; //for new killmonster behavior
+		unsigned rebirth: 1; // NPC_Rebirth used
 	} state;
 	struct guardian_data* guardian_data; 
 	struct {
