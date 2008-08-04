@@ -3794,7 +3794,7 @@ void do_final(void)
 
 	mapindex_final();
 
-	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `ragsrvinfo") )
+	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `ragsrvinfo`") )
 		Sql_ShowDebug(sql_handle);
 
 	if (login_fd > 0)
