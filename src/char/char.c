@@ -3113,7 +3113,7 @@ int parse_frommap(int fd)
 
 				// only use the auth once and mark user online
 				idb_remove(auth_db, account_id);
-				set_char_online(id, account_id, char_id);
+				set_char_online(id, char_id, account_id);
 			}
 			else
 			{// auth failed
