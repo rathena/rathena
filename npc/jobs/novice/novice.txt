@@ -2089,7 +2089,6 @@ new_1-2,184,172,1	script	Understandings of Skills	47,{
 					mes "I, Leo, am very impressed.";
 					next;
 					break;
-					break;
 				}
 			}
 			mes "[Leo Handerson]";
