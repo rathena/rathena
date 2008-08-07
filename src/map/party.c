@@ -287,7 +287,16 @@ int party_invite(struct map_session_data *sd,struct map_session_data *tsd)
 	nullpo_retr(0, sd);
 	if (p==NULL)
 		return 0;
-
+	
+	if ( (pc_isGM(sd) && !pc_isGM(tsd) && !battle_config.gm_can_party && pc_isGM(sd) < battle_config.gm_cant_party_max_lv)
+		|| ( !pc_isGM(sd) && pc_isGM(tsd) && !battle_config.gm_can_party ) )
+	{
+		//GMs can't invite non GMs to the party if not above the invite trust level
+		//Likewise, as long as gm_can_party is off, players can't invite GMs.
+		clif_displaymessage(sd->fd, msg_txt(81));
+		return 0;
+	}
+	
 	if(tsd==NULL) {	//TODO: Find the correct reply packet.
 		clif_displaymessage(sd->fd, msg_txt(3));
 		return 0;
