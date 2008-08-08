@@ -1,6 +1,7 @@
 ﻿Date		Added
 ======
 2008/08/08
+	* Rev. 103053 Removed unofficial inn maid from Alberta. [L0en_W0lf]
 	* Rev. 13052 Slew up NPC bug fixes and other updates. [L0ne_W0lf]
 	- Corrected item checking in Dancer job quest. (buggreport:1987)
 	- Fixed infinite dialog in novice grounds. (buggreport:1998)

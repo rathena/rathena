@@ -4,7 +4,7 @@
 //= Darkchild (1.1)
 //= Playtester (1.2)
 //===== Current Version: ===================================== 
-//= 2.5
+//= 2.6
 //===== Compatible With: ===================================== 
 //= eAthena 1.0+
 //===== Description: ========================================= 
@@ -40,6 +40,7 @@
 //= 2.3 Added Lighthalzen Inn from Lighthalzen town file. [L0ne_W0lf]
 //= 2.4 Fixed Inn Employee#Ahlma warping to same destination as save point, bugreport: 191.
 //= 2.5 Added Moskovia Gostinitsa (Inn) from jA
+//= 2.6 Updated Alberta inn to official. [L0ne_W0lf]
 //============================================================ 
 
 
@@ -58,17 +59,10 @@ prt_in,61,141,2	script	Inn Employee#Ahlma	53,{
 }
 
 //======================== Alberta ====================================
-// North --------------------------
-alberta_in,32,142,5	script	Inn Maid#Moira	53,{
+alberta_in,32,142,3	script	Inn Employee#Moira	53,{
 
-	callfunc "F_InnMaid","[Moira]","North Inn","alberta_in",26,138;
+	callfunc "F_InnMaid","[Employee Jennie]","'Fisherman Inn'!","alberta_in",26,142;
 	warp "alberta_in",18,188; end;
-}
-// South -----------------------------
-alberta_in,55,142,8	script	Inn Maid#Tina	53,{
-
-	callfunc "F_InnMaid","[Tina]","South Inn","alberta_in",60,140;
-	warp "alberta_in",68,188; end;
 }
 
 //====================== Geffen ======================================
