@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Darkchild
 //===== Current Version: ===================================== 
-//= 2.0
+//= 2.1
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -14,10 +14,11 @@
 //===== Additional Comments: ================================= 
 //= 1.9 Rescripted to the Aegis 10.3 Standars. [Samuray22]
 //= 2.0 Rescripted again, this time using an iRO base. [L0ne_W0lf]
+//= 2.1 Swapped use of baseclass for basejob. [L0ne_W0lf]
 //============================================================ 
 
 aldeba_in,223,167,3	script	Tzerero#sn	709,{
-	if (BaseClass == Job_SuperNovice) {
+	if (BaseJob == Job_SuperNovice) {
 		mes "[Tzerero]";
 		mes "I trust that you are enjoying";
 		mes "life as a Super Novice? Ah,";
@@ -102,7 +103,7 @@ aldeba_in,223,167,3	script	Tzerero#sn	709,{
 		mes "^FF000030 Resin^000000.";
 		close;
 	}
-	if (BaseClass == Job_Novice && upper != 1) {
+	if (BaseJob == Job_Novice && upper != 1) {
 		mes "[Tzerero]";
 		mes "...Hmm?";
 		mes "Stop.";
@@ -269,7 +270,7 @@ aldeba_in,223,167,3	script	Tzerero#sn	709,{
 		}
 	}
 	else {
-		if (BaseClass == Job_SuperNovice) {
+		if (BaseJob == Job_SuperNovice) {
 			mes "[Tzerero]";
 			mes "How do you like living";
 			mes "life simply as a Super";

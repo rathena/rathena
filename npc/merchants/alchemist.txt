@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= eAthena Team
 //===== Current Version: ===================================== 
-//= 1.5
+//= 1.6
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -15,6 +15,7 @@
 //= 1.3 Deleted Elemental Potions Guide due to original quest [Lupus]
 //= 1.4 Alchemists can now purchase 2000 Medicine Bowls at once. [SinSloth]
 //= 1.5 Updated to Aegis 10.3 Standards. [L0ne_W0lf]
+//= 1.6 Corrected canceling purchase. [L0ne_W0lf]
 //============================================================ 
 
 alde_alche,24,188,3	script	Guild Dealer	740,{
@@ -149,7 +150,7 @@ S_SellManual:
 	mes ""+getitemname(getarg(0))+"?";
 	mes "That'll be "+getarg(1)+" zeny.";
 	next;
-	switch(select("Purchase.:Quit.")) {
+	if (select("Purchase.:Quit.") == 1) {
 		set zeny,zeny-getarg(1);
 		getitem getarg(0),1;
 		mes "[Gever Al Sharp]";

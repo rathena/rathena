@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Dr.Evil & MasterOfMuppets
 //===== Current Version: ===================================== 
-//= 2.1
+//= 2.2
 //===== Compatible With: ===================================== 
 //= eAthena SVN 3422+(Requires jA Script System)
 //===== Description: ========================================= 
@@ -19,6 +19,7 @@
 //=     Added duplicate NPCs to combat training maps.
 //= 2.0 Fixed savepoint not being changed sometimes. [L0ne_W0lf]
 //= 2.1 Corrected spacing issue in welcome message. [L0ne_W0lf]
+//= 2.2 Corrected Leo's endless dialog. [L0ne_W0lf]
 //============================================================ 
 
 // Bulletin Board
@@ -2088,8 +2089,9 @@ new_1-2,184,172,1	script	Understandings of Skills	47,{
 					mes "as you are cute~!";
 					mes "I, Leo, am very impressed.";
 					next;
-					break;
+					set .@end,1;
 				}
+				if (.@end) break;
 			}
 			mes "[Leo Handerson]";
 			mes "Do you wish to";

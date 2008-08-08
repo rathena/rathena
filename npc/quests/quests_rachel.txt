@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 2.5
+//= 2.7
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -49,7 +49,8 @@
 //= 2.4 Updated Zhed's Thor Vol. Base addition dialog to iRO's. [L0ne_W0lf]
 //= 2.4a Further updates to Zhed's Veins addition. [L0ne_W0lf]
 //= 2.5 Added Nameless Island quest addition. [L0ne_W0lf]
-//= 2.6 Uncommented ontouchNPC label for Man Stuck in Ice. [L0ne_W0lf] 
+//= 2.6 Uncommented ontouchNPC label for Man Stuck in Ice. [L0ne_W0lf]
+//= 2.7 Corrected overlaping warp coordinates. [L0ne_W0lf]
 //============================================================ 
 
 // Lost Child Quest (Prerequisite to High Priest quest)
@@ -3797,7 +3798,7 @@ OnTimer60000:
 	end;
 }
 
-ice_dun03,150,132,0	script	#ice_4f_1	45,2,2,{
+ice_dun03,150,137,0	script	#ice_4f_1	45,2,2,{
 OnTouch:
 	warp "ice_dun04",33,144;
 	end;

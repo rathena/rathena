@@ -4,7 +4,7 @@
 //= Kalen - Original jAthena
 //= Fredzilla - Converted, Lupus
 //===== Current Version: ===================================== 
-//= 3.5
+//= 3.6
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -17,6 +17,7 @@
 //= 3.3 Updated waiting room. (Removes global var) [L0ne_W0lf]
 //= 3.4 Fixed bad variables, bugreport:1685 [Brainstorm]
 //= 3.5 Minor corrections to script. (bugreport:1766) [L0ne_W0lf]
+//= 3.6 Applied Correction bug with for loop. [L0ne_W0lf]
 //============================================================
 
 comodo,180,153,4	script	Sonotora#1	90,{
@@ -294,7 +295,11 @@ job_duncer,43,93,4	script	Aile#da	724,{
 			break;
 		}
 		set .@size, getarraysize(.@item);
-		for( set .@i, 0; .@i < .@size && countitem(.@item[.@i]) >= .@count[.@i]; set .@i, .@i + 1 );
+		for( set .@i, 0; .@i < .@size; set .@i,.@i+1 ) {
+			if( countitem(.@item[.@i]) < .@count[.@i] ) {
+				break;
+			}
+		}
 		if( .@i == .@size && Zeny > 9999 ) {
 			cutin "job_dancer_eir02",2;
 			mes "[Aile]";

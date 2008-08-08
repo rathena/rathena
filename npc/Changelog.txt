@@ -1,5 +1,13 @@
 ﻿Date		Added
 ======
+2008/08/08
+	* Rev. 13052 Slew up NPC bug fixes and other updates. [L0ne_W0lf]
+	- Corrected item checking in Dancer job quest. (buggreport:1987)
+	- Fixed infinite dialog in novice grounds. (buggreport:1998)
+	- Fixed overlapping warps in ice dungeon.  (buggreport:2009)
+	- Corrected super novice script checks. (buggreport:2016)
+	- Corrected bug in alchemist dealer. (bugreport:2020)
+	- Commented out message board NPCs.
 2008/08/03
 	* Fixed an NPC in Kiel Hyre Quest warping onto the exit warp for final room. [Paradox924X]
 	* Rev. 13038 Fixed some condition checks in archer, mage, and swordie, jobs. [L0ne_W0lf]
