@@ -9846,25 +9846,11 @@ void clif_parse_PartyInvite2(int fd, struct map_session_data *sd)
  *------------------------------------------*/
 void clif_parse_ReplyPartyInvite(int fd,struct map_session_data *sd)
 {
-	if( battle_config.basic_skill_check && pc_checkskill(sd,NV_BASIC) < 5 )
-	{
-		party_reply_invite(sd,RFIFOL(fd,2),-1);
-		clif_skill_fail(sd,1,0,4);
-		return;
-	}
-
 	party_reply_invite(sd,RFIFOL(fd,2),RFIFOL(fd,6));
 }
 
 void clif_parse_ReplyPartyInvite2(int fd,struct map_session_data *sd)
 {
-	if( battle_config.basic_skill_check && pc_checkskill(sd,NV_BASIC) < 5 )
-	{
-		party_reply_invite(sd,RFIFOL(fd,2),-1);
-		clif_skill_fail(sd,1,0,4);
-		return;
-	}
-
 	party_reply_invite(sd,RFIFOL(fd,2),RFIFOB(fd,6));
 }
 
