@@ -1,5 +1,7 @@
 Date	Added
 
+2008/08/10
+	* Removed duplicate gef_cas mapflags [Yommy]
 2008/08/01
 	* Rev. 13033 Mapflag updates. Will need to do a complete rewrite eventually. [L0ne_W0lf]
 	- Removed several noicewall limitations from interior maps mostly.

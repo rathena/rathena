@@ -37,6 +37,7 @@
 //= 2.4e Touched up a few issues as pointed out by Ultramage. [L0ne_W0lf]
 //= 2.5 Krongast is in Lighthalzen. (DarkValmir) [L0ne_W0lf]
 //= 2.6 Fixed 4 bugs [Lupus]
+//= 2.6a Typo fix [Yommy]
 //==============================================================
 
 ein_in01,18,28,4	script	Guildsman#BLS	731,{
@@ -90,7 +91,7 @@ ein_in01,18,28,4	script	Guildsman#BLS	731,{
 		mes "Oh, are you interested in having a weapon forged? I'm sorry to disappoint you, but I actually have a lot of business to attend to.";
 		close;
 	}
-	else if (Baselass == Job_Archer) {
+	else if (BaseClass == Job_Archer) {
 		mes "[Altiregen]";
 		mes "Oh...";
 		mes "There's not much we can offer you here. And you can't really help out around here unless you know how to make stuff...";
@@ -101,7 +102,7 @@ ein_in01,18,28,4	script	Guildsman#BLS	731,{
 		mes "Oh? What's a magic user doing here? I'm surprised. Usually this kind of rough work is beneath you intellectual types.";
 		close;
 	}
-	else if (Baseclass == Job_Acolyte) {
+	else if (BaseClass == Job_Acolyte) {
 		mes "[Altiregen]";
 		mes "Oh! Am I correct in assuming you're a member of the Clergy? Would you please bless me before you leave!";
 		close;

@@ -6,6 +6,7 @@
 //= 1.6b Added job_knt map. [Samuray22]
 //= 1.7 Added all novice maps. [L0ne_W0lf]
 //= 1.8 Added nameless_i location [Lupus]
+//= 1.8a Removed duplicate gef_cas nomemo mapflags [Yommy]
 //===== Current Version: =====================================
 
 
@@ -449,11 +450,6 @@ prtg_cas02	mapflag	nomemo
 prtg_cas03	mapflag	nomemo
 prtg_cas04	mapflag	nomemo
 prtg_cas05	mapflag	nomemo
-gefg_cas01	mapflag	nomemo
-gefg_cas02	mapflag	nomemo
-gefg_cas03	mapflag	nomemo
-gefg_cas04	mapflag	nomemo
-gefg_cas05	mapflag	nomemo
 nguild_alde	mapflag	nomemo
 nguild_gef	mapflag	nomemo
 nguild_pay	mapflag	nomemo

@@ -11,9 +11,10 @@
 //= Quests for skills: Charming Wink
 //===== Additional Comments: ================================= 
 //= 1.4 Rescripted to Aegis 10.3 stadards. [L0ne_W0lf]
+//= 1.4a Changed NPC location [Yommy]
 //============================================================
 
-comodo,204,127,5	script	Canell#qsk_dan01	724,{
+comodo,204,172,5	script	Canell#qsk_dan01	724,{
 	if (BaseJob == Job_Dancer && JobLevel > 39) {
 		if (DANCER_SK == 0) {
 			mes "[Canell]";
