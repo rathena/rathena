@@ -3787,7 +3787,7 @@ static unsigned short status_calc_speed(struct block_list *bl, struct status_cha
 		if( sc->data[SC_DEFENDER] )
 			speed = max(speed, 200);
 		if( sc->data[SC_WALKSPEED] ) // ChangeSpeed
-			speed = speed * sc->data[SC_WALKSPEED]->val1;
+			speed = speed * 100 / sc->data[SC_WALKSPEED]->val1;
 	}
 
 	return (short)cap_value(speed,10,USHRT_MAX);
