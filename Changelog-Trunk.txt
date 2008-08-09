@@ -3,6 +3,10 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2008/08/09
+	* Fixed login printing raw passwdenc passwords to console (bugreport:826) [ultramage]
+	- added strlib function bin2hex()
+	- cleaned up the md5calc interface a bit
 2008/08/07
 	* Added another GM trust config for party invitations (bugreport:2004) [SketchyPhoenix]
 2008/08/04

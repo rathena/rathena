@@ -46,6 +46,10 @@ int safesnprintf(char* buf, size_t sz, const char* fmt, ...);
 /// Lines start at 1.
 int strline(const char* str, size_t pos);
 
+/// Produces the hexadecimal representation of the given input.
+/// The output buffer must be at least count*2+1 in size.
+/// Returns true on success, false on failure.
+bool bin2hex(char* output, unsigned char* input, size_t count);
 
 
 /// Bitfield determining the behaviour of sv_parse and sv_split.

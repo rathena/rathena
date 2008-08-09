@@ -230,12 +230,12 @@ static int sync_ip_addresses(int tid, unsigned int tick, int id, intptr data)
 //-----------------------------------------------------
 bool check_encrypted(const char* str1, const char* str2, const char* passwd)
 {
-	char md5str[64], md5bin[32];
+	char tmpstr[64+1], md5str[32+1];
 
-	safesnprintf(md5str, sizeof(md5str), "%s%s", str1, str2);
-	MD5_String2binary(md5str, md5bin);
+	safesnprintf(tmpstr, sizeof(tmpstr), "%s%s", str1, str2);
+	MD5_String(tmpstr, md5str);
 
-	return (0==memcmp(passwd, md5bin, 16));
+	return (0==strcmp(passwd, md5str));
 }
 
 bool check_password(const char* md5key, int passwdenc, const char* passwd, const char* refpass)
@@ -1316,8 +1316,8 @@ int parse_login(int fd)
 			}
 			else
 			{
-				ShowStatus("Request for connection (encryption mode) of %s (ip: %s).\n", sd->userid, ip);
-				memcpy(sd->passwd, passwd, 16); sd->passwd[16] = '\0'; // raw binary data here!
+				ShowStatus("Request for connection (passwdenc mode) of %s (ip: %s).\n", sd->userid, ip);
+				bin2hex(sd->passwd, (unsigned char*)passwd, 16); // raw binary data here!
 				sd->passwdenc = PASSWORDENC;
 			}
 

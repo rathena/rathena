@@ -141,27 +141,22 @@ static void MD5_Round_Calculate(const unsigned char *block,
    memset(pX, 0, sizeof(X));
 }
 
-//-------------------------------------------------------------------
-// The function for the exteriors
-
-/** output is the coded binary in the character sequence which wants to code string. */
-void MD5_String2binary(const char * string, char * output)
+static void MD5_String2binary(const char * string, unsigned char * output)
 {
 //var
    /*8bit*/
    unsigned char padding_message[64]; //Extended message   512bit 64byte
-   unsigned char *pstring;             //The position of string in the present scanning notes is held.
+   unsigned char *pstring;            //The position of string in the present scanning notes is held.
 
-//   unsigned char digest[16];
    /*32bit*/
-   unsigned int string_byte_len,    //The byte chief of string is held.
-                   string_bit_len,     //The bit length of string is held.
-                   copy_len,           //The number of bytes which is used by 1-3 and which remained
-                   msg_digest[4];      //Message digest   128bit 4byte
+   unsigned int string_byte_len,     //The byte chief of string is held.
+                string_bit_len,      //The bit length of string is held.
+                copy_len,            //The number of bytes which is used by 1-3 and which remained
+                msg_digest[4];       //Message digest   128bit 4byte
    unsigned int *A = &msg_digest[0], //The message digest in accordance with RFC (reference)
-                   *B = &msg_digest[1],
-                   *C = &msg_digest[2],
-                   *D = &msg_digest[3];
+                *B = &msg_digest[1],
+                *C = &msg_digest[2],
+                *D = &msg_digest[3];
 	int i;
 
 //prog
@@ -193,7 +188,6 @@ void MD5_String2binary(const char * string, char * output)
        memset(padding_message, 0, 56); //56 bytes is newly fill uped with 0.
    }
 
-
    //Step 2.Append Length (the information on length is added)
    string_bit_len = string_byte_len * 8;             //From the byte chief to bit length (32 bytes of low rank)
    memcpy(&padding_message[56], &string_bit_len, 4); //32 bytes of low rank is set.
@@ -208,26 +202,26 @@ void MD5_String2binary(const char * string, char * output)
    //Step 4.Process Message in 16-Word Blocks (calculation of MD5)
    MD5_Round_Calculate(padding_message, A,B,C,D);
 
-
    //Step 5.Output (output)
    memcpy(output,msg_digest,16);
-//   memcpy (digest, msg_digest, and 16);  //8 byte*4 < - 32byte conversion   A function called Encode as used in the field of RFC
-/*   sprintf(output,
-           "%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x",
-           digest[ 0], digest[ 1], digest[ 2], digest[ 3],
-           digest[ 4], digest[ 5], digest[ 6], digest[ 7],
-           digest[ 8], digest[ 9], digest[10], digest[11],
-           digest[12], digest[13], digest[14], digest[15]);*/
+}
+
+//-------------------------------------------------------------------
+// The function for the exteriors
+
+/** output is the coded binary in the character sequence which wants to code string. */
+void MD5_Binary(const char * string, unsigned char * output)
+{
+	MD5_String2binary(string,output);
 }
 
 /** output is the coded character sequence in the character sequence which wants to code string. */
 void MD5_String(const char * string, char * output)
 {
-   unsigned char digest[16];
+	unsigned char digest[16];
 
-	MD5_String2binary(string,(char*)digest);
-	sprintf(output,
-		"%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x",
+	MD5_String2binary(string,digest);
+	sprintf(output,	"%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x",
 		digest[ 0], digest[ 1], digest[ 2], digest[ 3],
 		digest[ 4], digest[ 5], digest[ 6], digest[ 7],
 		digest[ 8], digest[ 9], digest[10], digest[11],

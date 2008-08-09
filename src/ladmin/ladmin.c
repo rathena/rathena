@@ -2343,7 +2343,7 @@ int parse_fromlogin(int fd)
 				strncpy(md5str, loginserveradminpassword, sizeof(loginserveradminpassword));
 				strcat(md5str, (const char*)RFIFOP(fd,4));
 			}
-			MD5_String2binary(md5str, md5bin);
+			MD5_Binary(md5str, md5bin);
 			WFIFOW(login_fd,0) = 0x7918; // Request for administation login (encrypted password)
 			WFIFOW(login_fd,2) = passenc; // Encrypted type
 			memcpy(WFIFOP(login_fd,4), md5bin, 16);
