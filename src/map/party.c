@@ -285,8 +285,12 @@ int party_invite(struct map_session_data *sd,struct map_session_data *tsd)
 	int i,flag=0;
 	
 	nullpo_retr(0, sd);
-	if (p==NULL)
+	if( p == NULL )
 		return 0;
+	if( tsd == NULL) {	//TODO: Find the correct reply packet.
+		clif_displaymessage(sd->fd, msg_txt(3));
+		return 0;
+	}
 	
 	if ( (pc_isGM(sd) && !pc_isGM(tsd) && !battle_config.gm_can_party && pc_isGM(sd) < battle_config.gm_cant_party_max_lv)
 		|| ( !pc_isGM(sd) && pc_isGM(tsd) && !battle_config.gm_can_party ) )
@@ -297,10 +301,6 @@ int party_invite(struct map_session_data *sd,struct map_session_data *tsd)
 		return 0;
 	}
 	
-	if(tsd==NULL) {	//TODO: Find the correct reply packet.
-		clif_displaymessage(sd->fd, msg_txt(3));
-		return 0;
-	}
 	//Only leader can invite.
 	ARR_FIND(0, MAX_PARTY, i, p->data[i].sd == sd);
 	if (i == MAX_PARTY || !p->party.member[i].leader)
