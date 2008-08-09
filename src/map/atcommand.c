@@ -8226,6 +8226,8 @@ int atcommand_ksprotection(const int fd, struct map_session_data *sd, const char
 			sd->state.noks = 3;
 			sprintf(atcmd_output, "[ K.S Protection Active - Option: Guild ]");
 		}
+		else
+			sprintf(atcmd_output, "Usage: @noks <self|party|guild>");
 	}
 
 	clif_displaymessage(fd, atcmd_output);
