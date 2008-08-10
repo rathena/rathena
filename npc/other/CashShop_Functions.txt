@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.1
+//= 1.2
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -18,6 +18,7 @@
 //= 1.1 Updated Dungeon Teleport Scroll. [L0ne_W0lf]
 //=     Added Town Teleport Scroll Function
 //=     Added Seige Teleport Scroll Function
+//= 1.2 Updated the dungeon teleport scroll menu. [L0ne_w0lf]
 //============================================================ 
 
 // Kafra Card
@@ -78,7 +79,7 @@ function	script	F_CashReset	{
 //   due to lack of information.
 // - No arguments.
 function	script	F_CashDungeon	{
-	switch(select("Nogg Road:Mjolnir Dead Pit:Umbala Dungeon:Payon Caves:Toy Factory:Glast Heim Prison:Louyang Dungeon:Kunlun Dungeon:Izlude Undersea Tunnel:Turtle Island:Clocktower 3F:Clocktower B3F:Glast Heim Sewers 2F:Sphinx Dungeon 4F:Pyramid Dungeon 4F:Prontera Culverts 3F:Amatsu Dungeon 1F:Somatology Laboratory 1F:Ayotaya Dungeon 2F"))
+	switch(select("Nogg Road:Mjolnir Dead Pit:Umbala Dungeon:Einbroch Mine Dungeon:Payon Dungeon:Toy Dungeon:Glast Heim Underprison:Louyang Dungeon:Hermit's Checkers:Izlude Dungeon:Turtle Island Dungeon:Clock Tower B3f:Clock Tower 3f:Glast Heim Culvert 2f:Sphinx Dungeon 4f:Inside Pyramid 4f:Prontera Culvert 3f:Amatsu Dungeon 1f (Tatami Maze):Somatology Laboratory 1st floor:Ayothya Ancient Shrine 2nd floor"))
 	{
 	case 1: warp "mag_dun01",125,71; end;	// Nogg Road
 	case 2: warp "mjo_dun02",80,297; end;	// Mjolnir Dead Pit
