@@ -3816,7 +3816,7 @@
 13154,Rolling_Stone,Rolling Stone,4,12000,,900,135,,9,1,0x01000000,7,2,34,1,14,1,20,{ bonus bSplashRange,1; },{},{}
 13155,Black_Rose,Black Rose,4,32000,,900,180,,9,1,0x01000000,7,2,34,2,35,1,20,{ bonus bSplashRange,1; },{},{}
 13156,Gate_Keeper,Gate Keeper,4,56000,,1000,210,,9,0,0x01000000,7,2,34,2,24,1,20,{ bonus bSplashRange,1; bonus3 bAutoSpell,"GS_SPREADATTACK",6,50; },{},{}
-13157,Drifter,Drifter,4,80000,,2300,50,,9,1,0x01000000,7,2,34,2,55,1,20,{},{},{}
+13157,Drifter,Drifter,4,80000,,2300,50,,9,1,0x01000000,7,2,34,2,55,1,19,{},{},{}
 13158,Butcher,Butcher,4,130000,,2500,75,,9,0,0x01000000,7,2,34,3,68,1,19,{ bonus2 bCriticalAddRace,RC_Brute,10; },{},{}
 13159,Butcher_,Butcher,4,130000,,2500,75,,9,1,0x01000000,7,2,34,3,68,1,19,{ bonus2 bCriticalAddRace,RC_Brute,10; },{},{}
 13160,Destroyer,Destroyer,4,110000,,1200,220,,9,0,0x01000000,7,2,34,2,52,1,21,{ bonus bBreakArmorRate,200; },{},{}
