@@ -40,6 +40,8 @@
 	2385 Recuvative_Armor		Should trigger HP/SP return with magical kills as well.
 
 =======================
+2008/08/10
+	* Item 13157 changed to Gatling type (bugreport:1913) [Yommy]
 2008/07/27
 	* Rev. 13006 Added values to skill_require_db for mercenary skills. [L0ne_W0lf]
 	* Added values to skill_unit_db for mercenary ground skills.

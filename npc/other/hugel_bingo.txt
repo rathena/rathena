@@ -16,6 +16,7 @@
 //= preventing players from launching another. [SinSloth]
 //= 1.4 - Fixed a minor bug added in the last revision. [SinSloth]
 //= 1.5 - Applied a fix to players locations which were not rotating properly. [SinSloth]
+//= 1.6-  Removed nescesity to win to proceed with quest [Yommy]
 //============================================================
 
 que_bingo,48,84,5	script	Bingo Waiting Room	124,{
@@ -883,7 +884,7 @@ OnInit:
 	end;
 
 OnTouch:
-	if(strcharinfo(0) == $@bingowinner$ && hg_ma1 == 6) warp "que_bingo",45,186;
+	if(hg_ma1 == 6) warp "que_bingo",45,186;
 	else warp "que_bingo",40,121;
 	end;
 }
