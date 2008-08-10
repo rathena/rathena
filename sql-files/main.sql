@@ -2,8 +2,7 @@
 -- Table structure for table `auction`
 --
 
-DROP TABLE IF EXISTS `auction`;
-CREATE TABLE `auction` (
+CREATE TABLE IF NOT EXISTS `auction` (
   `auction_id` bigint(20) unsigned NOT NULL auto_increment,
   `seller_id` int(11) unsigned NOT NULL default '0',
   `seller_name` varchar(30) NOT NULL default '',
@@ -29,8 +28,7 @@ CREATE TABLE `auction` (
 -- Table structure for table `cart_inventory`
 --
 
-DROP TABLE IF EXISTS `cart_inventory`;
-CREATE TABLE `cart_inventory` (
+CREATE TABLE IF NOT EXISTS `cart_inventory` (
   `id` int(11) NOT NULL auto_increment,
   `char_id` int(11) NOT NULL default '0',
   `nameid` int(11) NOT NULL default '0',
@@ -51,8 +49,7 @@ CREATE TABLE `cart_inventory` (
 -- Table structure for table `char`
 --
 
-DROP TABLE IF EXISTS `char`;
-CREATE TABLE `char` (
+CREATE TABLE IF NOT EXISTS `char` (
   `char_id` int(11) unsigned NOT NULL auto_increment,
   `account_id` int(11) unsigned NOT NULL default '0',
   `char_num` tinyint(1) NOT NULL default '0',
@@ -114,8 +111,7 @@ CREATE TABLE `char` (
 -- Table structure for table `charlog`
 --
 
-DROP TABLE IF EXISTS `charlog`;
-CREATE TABLE `charlog` (
+CREATE TABLE IF NOT EXISTS `charlog` (
   `time` datetime NOT NULL default '0000-00-00 00:00:00',
   `char_msg` varchar(255) NOT NULL default 'char select',
   `account_id` int(11) NOT NULL default '0',
@@ -135,8 +131,7 @@ CREATE TABLE `charlog` (
 -- Table structure for table `friends`
 --
 
-DROP TABLE IF EXISTS `friends`;
-CREATE TABLE `friends` (
+CREATE TABLE IF NOT EXISTS `friends` (
   `char_id` int(11) NOT NULL default '0',
   `friend_account` int(11) NOT NULL default '0',
   `friend_id` int(11) NOT NULL default '0',
@@ -147,8 +142,7 @@ CREATE TABLE `friends` (
 -- Table structure for table `hotkey`
 --
 
-DROP TABLE IF EXISTS `hotkey`;
-CREATE TABLE `hotkey` (
+CREATE TABLE IF NOT EXISTS `hotkey` (
 	`char_id` INT(11) NOT NULL,
 	`hotkey` TINYINT(2) unsigned NOT NULL,
 	`type` TINYINT(1) unsigned NOT NULL default '0',
@@ -162,8 +156,7 @@ CREATE TABLE `hotkey` (
 -- Table structure for table `global_reg_value`
 --
 
-DROP TABLE IF EXISTS `global_reg_value`;
-CREATE TABLE `global_reg_value` (
+CREATE TABLE IF NOT EXISTS `global_reg_value` (
   `char_id` int(11) unsigned NOT NULL default '0',
   `str` varchar(255) NOT NULL default '',
   `value` varchar(255) NOT NULL default '0',
@@ -178,8 +171,7 @@ CREATE TABLE `global_reg_value` (
 -- Table structure for table `guild`
 --
 
-DROP TABLE IF EXISTS `guild`;
-CREATE TABLE `guild` (
+CREATE TABLE IF NOT EXISTS `guild` (
   `guild_id` int(11) unsigned NOT NULL auto_increment,
   `name` varchar(24) NOT NULL default '',
   `char_id` int(11) unsigned NOT NULL default '0',
@@ -205,8 +197,7 @@ CREATE TABLE `guild` (
 -- Table structure for table `guild_alliance`
 --
 
-DROP TABLE IF EXISTS `guild_alliance`;
-CREATE TABLE `guild_alliance` (
+CREATE TABLE IF NOT EXISTS `guild_alliance` (
   `guild_id` int(11) unsigned NOT NULL default '0',
   `opposition` int(11) unsigned NOT NULL default '0',
   `alliance_id` int(11) unsigned NOT NULL default '0',
@@ -219,8 +210,7 @@ CREATE TABLE `guild_alliance` (
 -- Table structure for table `guild_castle`
 --
 
-DROP TABLE IF EXISTS `guild_castle`;
-CREATE TABLE `guild_castle` (
+CREATE TABLE IF NOT EXISTS `guild_castle` (
   `castle_id` int(11) unsigned NOT NULL default '0',
   `guild_id` int(11) unsigned NOT NULL default '0',
   `economy` int(11) unsigned NOT NULL default '0',
@@ -247,8 +237,7 @@ CREATE TABLE `guild_castle` (
 -- Table structure for table `guild_expulsion`
 --
 
-DROP TABLE IF EXISTS `guild_expulsion`;
-CREATE TABLE `guild_expulsion` (
+CREATE TABLE IF NOT EXISTS `guild_expulsion` (
   `guild_id` int(11) unsigned NOT NULL default '0',
   `account_id` int(11) unsigned NOT NULL default '0',
   `name` varchar(24) NOT NULL default '',
@@ -260,8 +249,7 @@ CREATE TABLE `guild_expulsion` (
 -- Table structure for table `guild_member`
 --
 
-DROP TABLE IF EXISTS `guild_member`;
-CREATE TABLE `guild_member` (
+CREATE TABLE IF NOT EXISTS `guild_member` (
   `guild_id` int(11) unsigned NOT NULL default '0',
   `account_id` int(11) unsigned NOT NULL default '0',
   `char_id` int(11) unsigned NOT NULL default '0',
@@ -283,8 +271,7 @@ CREATE TABLE `guild_member` (
 -- Table structure for table `guild_position`
 --
 
-DROP TABLE IF EXISTS `guild_position`;
-CREATE TABLE `guild_position` (
+CREATE TABLE IF NOT EXISTS `guild_position` (
   `guild_id` int(9) unsigned NOT NULL default '0',
   `position` tinyint(6) unsigned NOT NULL default '0',
   `name` varchar(24) NOT NULL default '',
@@ -298,8 +285,7 @@ CREATE TABLE `guild_position` (
 -- Table structure for table `guild_skill`
 --
 
-DROP TABLE IF EXISTS `guild_skill`;
-CREATE TABLE `guild_skill` (
+CREATE TABLE IF NOT EXISTS `guild_skill` (
   `guild_id` int(11) unsigned NOT NULL default '0',
   `id` smallint(11) unsigned NOT NULL default '0',
   `lv` tinyint(11) unsigned NOT NULL default '0',
@@ -310,8 +296,7 @@ CREATE TABLE `guild_skill` (
 -- Table structure for table `guild_storage`
 --
 
-DROP TABLE IF EXISTS `guild_storage`;
-CREATE TABLE `guild_storage` (
+CREATE TABLE IF NOT EXISTS `guild_storage` (
   `id` int(10) unsigned NOT NULL auto_increment,
   `guild_id` int(11) unsigned NOT NULL default '0',
   `nameid` int(11) unsigned NOT NULL default '0',
@@ -332,8 +317,7 @@ CREATE TABLE `guild_storage` (
 -- Table structure for table `homunculus`
 --
 
-DROP TABLE IF EXISTS `homunculus`;
-CREATE TABLE `homunculus` (
+CREATE TABLE IF NOT EXISTS `homunculus` (
   `homun_id` int(11) NOT NULL auto_increment,
   `char_id` int(11) NOT NULL,
   `class` mediumint(9) unsigned NOT NULL default '0',
@@ -363,8 +347,7 @@ CREATE TABLE `homunculus` (
 -- Table structure for table `interlog`
 --
 
-DROP TABLE IF EXISTS `interlog`;
-CREATE TABLE `interlog` (
+CREATE TABLE IF NOT EXISTS `interlog` (
   `time` datetime NOT NULL default '0000-00-00 00:00:00',
   `log` varchar(255) NOT NULL default ''
 ) ENGINE=MyISAM; 
@@ -373,8 +356,7 @@ CREATE TABLE `interlog` (
 -- Table structure for table `inventory`
 --
 
-DROP TABLE IF EXISTS `inventory`;
-CREATE TABLE `inventory` (
+CREATE TABLE IF NOT EXISTS `inventory` (
   `id` int(11) unsigned NOT NULL auto_increment,
   `char_id` int(11) unsigned NOT NULL default '0',
   `nameid` int(11) unsigned NOT NULL default '0',
@@ -395,8 +377,7 @@ CREATE TABLE `inventory` (
 -- Table structure for table `ipbanlist`
 --
 
-DROP TABLE IF EXISTS `ipbanlist`;
-CREATE TABLE `ipbanlist` (
+CREATE TABLE IF NOT EXISTS `ipbanlist` (
   `list` varchar(255) NOT NULL default '',
   `btime` datetime NOT NULL default '0000-00-00 00:00:00',
   `rtime` datetime NOT NULL default '0000-00-00 00:00:00',
@@ -408,8 +389,7 @@ CREATE TABLE `ipbanlist` (
 -- Table structure for table `login`
 --
 
-DROP TABLE IF EXISTS `login`;
-CREATE TABLE `login` (
+CREATE TABLE IF NOT EXISTS `login` (
   `account_id` int(11) unsigned NOT NULL auto_increment,
   `userid` varchar(23) NOT NULL default '',
   `user_pass` varchar(32) NOT NULL default '',
@@ -435,8 +415,7 @@ INSERT INTO `login` (`account_id`, `userid`, `user_pass`, `sex`, `email`) VALUES
 -- Table structure for table `mapreg`
 --
 
-DROP TABLE IF EXISTS `mapreg`;
-CREATE TABLE `mapreg` (
+CREATE TABLE IF NOT EXISTS `mapreg` (
   `varname` varchar(32) NOT NULL,
   `index` int(11) unsigned NOT NULL default '0',
   `value` varchar(255) NOT NULL,
@@ -448,8 +427,7 @@ CREATE TABLE `mapreg` (
 -- Table structure for table `sc_data`
 --
 
-DROP TABLE IF EXISTS `sc_data`;
-CREATE TABLE `sc_data` (
+CREATE TABLE IF NOT EXISTS `sc_data` (
   `account_id` int(11) unsigned NOT NULL,
   `char_id` int(11) unsigned NOT NULL,
   `type` smallint(11) unsigned NOT NULL,
@@ -466,8 +444,7 @@ CREATE TABLE `sc_data` (
 -- Table structure for table `mail`
 --
 
-DROP TABLE IF EXISTS `mail`;
-CREATE TABLE `mail` (
+CREATE TABLE IF NOT EXISTS `mail` (
   `id` bigint(20) unsigned NOT NULL auto_increment,
   `send_name` varchar(30) NOT NULL default '',
   `send_id` int(11) unsigned NOT NULL default '0',
@@ -494,8 +471,7 @@ CREATE TABLE `mail` (
 -- Table structure for table `memo`
 --
 
-DROP TABLE IF EXISTS `memo`;
-CREATE TABLE `memo` (
+CREATE TABLE IF NOT EXISTS `memo` (
   `memo_id` int(11) unsigned NOT NULL auto_increment,
   `char_id` int(11) unsigned NOT NULL default '0',
   `map` varchar(11) NOT NULL default '',
@@ -509,8 +485,7 @@ CREATE TABLE `memo` (
 -- Table structure for table `party`
 --
 
-DROP TABLE IF EXISTS `party`;
-CREATE TABLE `party` (
+CREATE TABLE IF NOT EXISTS `party` (
   `party_id` int(11) unsigned NOT NULL auto_increment,
   `name` varchar(24) NOT NULL default '',
   `exp` tinyint(11) unsigned NOT NULL default '0',
@@ -524,8 +499,7 @@ CREATE TABLE `party` (
 -- Table structure for table `pet`
 --
 
-DROP TABLE IF EXISTS `pet`;
-CREATE TABLE `pet` (
+CREATE TABLE IF NOT EXISTS `pet` (
   `pet_id` int(11) unsigned NOT NULL auto_increment,
   `class` mediumint(9) unsigned NOT NULL default '0',
   `name` varchar(24) NOT NULL default '',
@@ -545,8 +519,7 @@ CREATE TABLE `pet` (
 -- Table structure for table `quest`
 --
 
-DROP TABLE IF EXISTS `quest`;
-CREATE TABLE `quest` (
+CREATE TABLE IF NOT EXISTS `quest` (
   `char_id` int(11) unsigned NOT NULL default '0',
   `quest_id` int(10) unsigned NOT NULL,
   `state` enum('1','0') NOT NULL default '0',
@@ -557,8 +530,7 @@ CREATE TABLE `quest` (
 -- Table structure for table `quest_mob`
 --
 
-DROP TABLE IF EXISTS `quest_objective`;
-CREATE TABLE `quest_objective` (
+CREATE TABLE IF NOT EXISTS `quest_objective` (
   `quest_id` int(11) unsigned NOT NULL,
   `count` mediumint(8) unsigned NOT NULL default '0',
   `name` varchar(255) NOT NULL default '',
@@ -571,8 +543,7 @@ CREATE TABLE `quest_objective` (
 -- Table structure for table `ragsrvinfo`
 --
 
-DROP TABLE IF EXISTS `ragsrvinfo`;
-CREATE TABLE `ragsrvinfo` (
+CREATE TABLE IF NOT EXISTS `ragsrvinfo` (
   `index` int(11) NOT NULL default '0',
   `name` varchar(255) NOT NULL default '',
   `exp` int(11) unsigned NOT NULL default '0',
@@ -585,8 +556,7 @@ CREATE TABLE `ragsrvinfo` (
 -- Table structure for table `skill`
 --
 
-DROP TABLE IF EXISTS `skill`;
-CREATE TABLE `skill` (
+CREATE TABLE IF NOT EXISTS `skill` (
   `char_id` int(11) unsigned NOT NULL default '0',
   `id` smallint(11) unsigned NOT NULL default '0',
   `lv` tinyint(4) unsigned NOT NULL default '0',
@@ -598,8 +568,7 @@ CREATE TABLE `skill` (
 -- Table structure for table `skill_homunculus`
 --
 
-DROP TABLE IF EXISTS `skill_homunculus`;
-CREATE TABLE `skill_homunculus` (
+CREATE TABLE IF NOT EXISTS `skill_homunculus` (
   `homun_id` int(11) NOT NULL,
   `id` int(11) NOT NULL,
   `lv` smallint(6) NOT NULL,
@@ -611,8 +580,7 @@ CREATE TABLE `skill_homunculus` (
 -- Table structure for table `sstatus`
 --
 
-DROP TABLE IF EXISTS `sstatus`;
-CREATE TABLE `sstatus` (
+CREATE TABLE IF NOT EXISTS `sstatus` (
   `index` tinyint(4) unsigned NOT NULL default '0',
   `name` varchar(255) NOT NULL default '',
   `user` int(11) unsigned NOT NULL default '0'
@@ -622,8 +590,7 @@ CREATE TABLE `sstatus` (
 -- Table structure for table `storage`
 --
 
-DROP TABLE IF EXISTS `storage`;
-CREATE TABLE `storage` (
+CREATE TABLE IF NOT EXISTS `storage` (
   `id` int(11) unsigned NOT NULL auto_increment,
   `account_id` int(11) unsigned NOT NULL default '0',
   `nameid` int(11) unsigned NOT NULL default '0',
