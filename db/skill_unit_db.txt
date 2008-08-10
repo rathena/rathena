@@ -25,10 +25,10 @@
 //
 
  12,0x7e,    ,  0, 0,  -1,all,   0x003	//MG_SAFETYWALL
- 18,0x7f,    , -1, 0,  20,enemy, 0x018	//MG_FIREWALL
+ 18,0x7f,    , -1, 0,  20,enemy, 0x010	//MG_FIREWALL
  21,0x86,    ,  0, 2,1000,enemy, 0x018	//MG_THUNDERSTORM
  25,0x85,    ,  1, 0,  -1,all,   0x003	//AL_PNEUMA
- 27,0x81,0x80,  0, 0,  -1,all,   0x006	//AL_WARP
+ 27,0x81,0x80,  0, 0,  -1,all,   0x00E	//AL_WARP
  47,0x86,    ,  0, 2,1000,enemy, 0x080	//AC_SHOWER
  70,0x83,    , -1, 1,1000,all,   0x018	//PR_SANCTUARY
  79,0x84,    , -1, 1,3000,enemy, 0x018	//PR_MAGNUS
@@ -91,8 +91,8 @@
 488,0xb9,    ,  3, 0,  -1,all,   0x200	//CG_HERMODE
 516,0xba,    ,  3, 0, 100,enemy, 0x000	//GS_DESPERADO
 521,0xbe,    ,  0, 1,1000,enemy, 0x000	//GS_GROUNDDRIFT
-527,0xbc,    , -1, 0,2000,enemy, 0x010	//NJ_TATAMIGAESHI
-535,0xbd,    , -1, 0,  20,enemy, 0x018	//NJ_KAENSIN
+527,0xbc,    , -1, 0,2000,enemy, 0x018	//NJ_TATAMIGAESHI
+535,0xbd,    , -1, 0,  20,enemy, 0x010	//NJ_KAENSIN
 538,0xbb,    ,  1:1:1:2:2:2:3:3:3:4,0,-1,all,0x010	//NJ_SUITON
 670,0xc7,    ,  1, 4:7:10:13:16:19:22:25:28:31,1000,all,0x008	//NPC_EVILLAND
 //8209,0x90,    ,  0, 1,1000,enemy, 0x002	//MA_SKIDTRAP

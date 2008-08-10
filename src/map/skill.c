@@ -6586,8 +6586,7 @@ static int skill_unit_onplace (struct skill_unit *src, struct block_list *bl, un
 	nullpo_retr(0, sg=src->group);
 	nullpo_retr(0, ss=map_id2bl(sg->src_id));
 
-	if (skill_get_type(sg->skill_id) == BF_MAGIC && map_getcell(bl->m, bl->x, bl->y, CELL_CHKLANDPROTECTOR)
-			&& !skill_get_inf2(sg->skill_id) == INF2_TRAP) //Traps work on top of land protector, magical or not [Brain]
+	if( skill_get_type(sg->skill_id) == BF_MAGIC && map_getcell(bl->m, bl->x, bl->y, CELL_CHKLANDPROTECTOR) && sg->skill_id != SA_LANDPROTECTOR )
 		return 0; //AoE skills are ineffective. [Skotlex]
 	
 	sc = status_get_sc(bl);
