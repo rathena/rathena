@@ -3,6 +3,7 @@
 2008/08/10
 	* Fixed: several typos (bugreport:2029 bugreport:2023) [Yommy]
 	* Fixed: hugel bingo quest (bugreport:1556) [Yommy]
+	* Fixed copy paste error in monster race (bugreport:2035) [Yommy]
 2008/08/08
 	* Rev. 13053 Removed unofficial inn maid from Alberta. [L0ne_W0lf]
 	* Rev. 13052 Slew up NPC bug fixes and other updates. [L0ne_W0lf]

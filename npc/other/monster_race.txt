@@ -1252,7 +1252,7 @@ OnTimer2000:
 	end;
 
 OnTimer6000:
-	mapannounce "p_track01","If you wagered on Monster 1 in this race, talk to the Medal Distributor to receive your prize!",bc_map,"0x33FF66";
+	mapannounce "p_track01","If you wagered on Monster 2 in this race, talk to the Medal Distributor to receive your prize!",bc_map,"0x33FF66";
 	end;
 
 OnTimer8000:
@@ -1304,7 +1304,7 @@ OnTimer2000:
 	end;
 
 OnTimer6000:
-	mapannounce "p_track01","If you wagered on Monster 1 in this race, talk to the Medal Distributor to receive your prize!",bc_map,"0x33FF66";
+	mapannounce "p_track01","If you wagered on Monster 3 in this race, talk to the Medal Distributor to receive your prize!",bc_map,"0x33FF66";
 	end;
 
 OnTimer8000:
@@ -1356,7 +1356,7 @@ OnTimer2000:
 	end;
 
 OnTimer6000:
-	mapannounce "p_track01","If you wagered on Monster 1 in this race, talk to the Medal Distributor to receive your prize!",bc_map,"0x33FF66";
+	mapannounce "p_track01","If you wagered on Monster 4 in this race, talk to the Medal Distributor to receive your prize!",bc_map,"0x33FF66";
 	end;
 
 OnTimer8000:
@@ -1408,7 +1408,7 @@ OnTimer2000:
 	end;
 
 OnTimer6000:
-	mapannounce "p_track01","If you wagered on Monster 1 in this race, talk to the Medal Distributor to receive your prize!",bc_map,"0x33FF66";
+	mapannounce "p_track01","If you wagered on Monster 5 in this race, talk to the Medal Distributor to receive your prize!",bc_map,"0x33FF66";
 	end;
 
 OnTimer8000:
@@ -1460,7 +1460,7 @@ OnTimer2000:
 	end;
 
 OnTimer6000:
-	mapannounce "p_track01","If you wagered on Monster 1 in this race, talk to the Medal Distributor to receive your prize!",bc_map,"0x33FF66";
+	mapannounce "p_track01","If you wagered on Monster 6 in this race, talk to the Medal Distributor to receive your prize!",bc_map,"0x33FF66";
 	end;
 
 OnTimer8000:
