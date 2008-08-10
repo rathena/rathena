@@ -117,7 +117,7 @@
 73,9,6,16,0,0x1,0,10,1,yes,0,0,0,magic,0,	PR_KYRIE,Kyrie Eleison
 74,0,6,4,0,0x3,-1,5,1,yes,0,0,0,magic,0,		PR_MAGNIFICAT,Magnificat
 75,0,6,4,0,0x3,-1,5,1,yes,0,0,0,magic,0,		PR_GLORIA,Gloria
-76,5,6,1,0,0x1,0:0:0:0:0:0:0:0:0:0:-1,10,0,yes,0,0,0,magic,0,	PR_LEXDIVINA,Lex Divina
+76,5,6,1,0,0x1,0,10,0,yes,0,0,0,magic,0,	PR_LEXDIVINA,Lex Divina
 77,5,6,1,6,0x28,0,10,1,yes,0,0,0,magic,0,	PR_TURNUNDEAD,Turn Undead
 78,9,6,1,0,0x1,0,1,0,yes,0,0,0,magic,0,		PR_LEXAETERNA,Lex Aeterna
 79,9,8,2,6,0,0,10,1:2:3:4:5:6:7:8:9:10,yes,0,0,0,magic,0,	PR_MAGNUS,Magnus Exorcismus
@@ -587,6 +587,7 @@
 543,0,6,4,0,0x1,0,5,1,yes,0,0,0,none,0,		NJ_NEN,Soul
 544,-5,6,1,0,0x40,0,10,1,no,0,0,0,weapon,0,	NJ_ISSEN,Final Strike
 
+// Additional NPC Skills (Episode 11.3)
 653,0,8,4,0,0x6,5:7:9:11:13:5:7:9:11:13,10,3,no,0,0x2,0,magic,0,	NPC_EARTHQUAKE,Earthquake
 654,9,6,1,3,0,5,10,1,no,0,0x2,14,weapon,0,	NPC_FIREBREATH,Fire Breath
 655,9,6,1,1,0,5,10,1,no,0,0x2,14,weapon,0,	NPC_ICEBREATH,Ice Breath
@@ -618,6 +619,24 @@
 
 // Cash Shop Skill
 681,0,0,0,0,0,0,10,0,no,0,0x1,0,none,0,		ALL_INCCARRY,Increase Weight Limit R
+
+// Additional NPC skill (Episode 12)
+//682,0,0,0,0,0,0,9,0,no,0,0,0,none,0,		NPC_TALK,Talk
+//683,0,0,0,0,0,0,9,0,no,0,0,0,none,0,		NPC_HELLPOWER,Hell Power
+//684,0,0,0,0,0,0,9,0,no,0,0,0,none,0,		NPC_WIDEHELLDIGNITY,Hell Dignity
+//685,0,0,0,0,0,0,9,0,no,0,0,0,none,0,		NPC_INVINCIBLE,Incinvible
+//686,0,0,0,0,0,0,9,0,no,0,0,0,none,0,		NPC_INVINCIBLEOFF,Invincible off
+//687,0,0,0,0,0,0,9,0,no,0,0,0,none,0,		NPC_ALLHEAL,Full Heal
+
+// Additional Skill (??)
+//688,0,0,0,0,0,0,9,0,no,0,0,0,none,0,		GM_SANDMAN,GM Sandman
+//689,0,0,0,0,0,0,9,0,no,0,0,0,none,0,		CASH_BLESSING,Blessing
+//690,0,0,0,0,0,0,9,0,no,0,0,0,none,0,		CASH_INCAGI,Increase Agi
+//691,0,0,0,0,0,0,9,0,no,0,0,0,none,0,		CASH_ASSUMPTIO,Assumpito
+//692,0,0,0,0,0,0,9,0,no,0,0,0,none,0,		ALL_CATCRY,Cat Cry
+//693,0,0,0,0,0,0,9,0,no,0,0,0,none,0,		ALL_PARTYFLEE,Party Flee
+//694,0,0,0,0,0,0,9,0,no,0,0,0,none,0,		ALL_ANGEL_PROTECT,Angel's Protection
+//695,0,0,0,0,0,0,9,0,no,0,0,0,none,0,		ALL_SUMMERNIGHTDREAM,Summer Night Dream
 
 1001,9,6,1,-1,0,0,1,1,no,0,0x1,0,weapon,0,	KN_CHARGEATK,Charge Attack
 1002,0,6,4,0,0x1,0,1,0,no,0,0x1,0,weapon,2,	CR_SHRINK,Shrink
@@ -657,43 +676,43 @@
 8016,4,6,4,-1,0xD2,4,3,1,no,0,0,0,misc,0,        HVAN_EXPLOSION,Bio Explosion
 
 // Mercenary Skill Place holders
-//8201,0,0,0,0,0,0,10,0,no,0,0,0,weapon,0,	MS_BASH,Bash
-//8202,0,0,0,0,0x2,0,10,0,no,0,0,0,weapon,0,	MS_MAGNUM,Magnum_Break
-//8203,0,0,0,0,0x2,0,10,0,no,0,0,0,weapon,0,	MS_BOWLINGBASH,Bowling_Bash
-//8204,0,0,0,0,0x1,0,10,0,no,0,0,0,weapon,0,	MS_PARRYING,Parry
-//8205,0,0,0,0,0,0,10,0,no,0,0,0,weapon,0,	MS_REFLECTSHIELD,Shield_Reflect
-//8206,0,0,0,0,0x1,0,1,0,no,0,0,0,weapon,0,	MS_BERSERK,Frenzy
-//8207,-9,0,0,0,0,0,10,0,no,0,0,0,weapon,0,	MA_DOUBLE,Double_Strafe
-//8208,-9,0,0,0,0x2,0,10,0,no,0,0,0,weapon,0,	MA_SHOWER,Arrow_Shower
-//8209,0,0,0,0,0x1,0,5,0,no,0,0,0,misc,0,	MA_SKIDTRAP,Skid_Trap
-//8210,0,0,0,0,0x40,0,5,0,no,0,0,0,misc,0,	MA_LANDMINE,Land_Mine
-//8211,0,0,0,0,0x3,0,5,0,no,0,0,0,misc,0,	MA_SANDMAN,Sandman
-//8212,0,0,0,0,0x42,0,5,0,no,0,0,0,weapon,0,	MA_FREEZINGTRAP,Freezing_Trap
-//8213,0,0,0,0,0x1,0,1,0,no,0,0,0,misc,0,	MA_REMOVETRAP,Remove_Trap
-//8214,0,0,0,0,0x2,0,1,0,no,0,0,0,weapon,0,	MA_CHARGEARROW,Arrow_Repel
-//8215,0,0,0,0,0,0,10,0,no,0,0,0,weapon,0,	MA_SHARPSHOOTING,Focused_Arrow_Strike
-//8216,0,0,0,0,0,0,10,0,no,0,0,0,weapon,0,	ML_PIERCE,Pierce
-//8217,0,0,0,0,0x1,0,10,0,no,0,0,0,weapon,0,	ML_BRANDISH,Brandish_Spear
-//8218,5,0,0,0,0x20,0,5,0,no,0,0,0,weapon,0,	ML_SPIRALPIERCE,Spiral_Pierce
-//8219,0,0,0,0,0x1,0,1,0,no,0,0,0,weapon,0,	ML_DEFENDER,Defending_Aura
-//8220,0,0,0,0,0x1,0,10,0,no,0,0,0,weapon,0,	ML_AUTOGUARD,Guard
-//8221,0,0,0,0,0x1,0,10,0,no,0,0,0,none,0,	ML_DEVOTION,Sacrifice
-//8222,0,0,0,0,0x3,0,5,0,no,0,0,0,magic,0,	MER_MAGNIFICAT,Magnificat
-//8223,0,0,0,0,0x1,0,10,0,no,0,0,0,weapon,0,	MER_QUICKEN,Two-Hand_Quicken
-//8224,0,0,0,0,0x3,0,1,0,no,0,0,0,magic,0,	MER_SIGHT,Sight
+//8201,-1,6,1,-1,0,0,10,1,no,0,0,0,weapon,0,	MS_BASH,Bash
+//8202,0,6,4,3,0x2,2,10,1,no,0,0,0,weapon,2,	MS_MAGNUM,Magnum_Break
+//8203,-2,6,1,-1,0x2,1,10,1,no,33,0,0,weapon,1,	MS_BOWLINGBASH,Bowling_Bash
+//8204,0,6,4,0,0x1,0,10,1,no,0,0,0,weapon,0,	MS_PARRYING,Parry
+//8205,0,6,4,0,0,0,10,1,no,0,0,0,weapon,0,	MS_REFLECTSHIELD,Shield_Reflect
+//8206,0,6,4,0,0x1,0,1,1,no,0,0,0,weapon,0,	MS_BERSERK,Frenzy
+//8207,-9,8,1,-1,0,0,10,2,no,0,0,0,weapon,0,	MA_DOUBLE,Double_Strafe
+//8208,-9,6,2,-1,0x2,2,10,1,no,0,0,0,weapon,2,	MA_SHOWER,Arrow_Shower
+//8209,3,6,2,0,0x1,0,5,1,no,0,0x80,0,misc,6:7:8:9:10,	MA_SKIDTRAP,Skid_Trap
+//8210,3,6,2,2,0x40,0,5,1,no,0,0x80,0,misc,0,	MA_LANDMINE,Land_Mine
+//8211,3,6,2,0,0x3,2,5,1,no,0,0x80,0,misc,0,	MA_SANDMAN,Sandman
+//8212,3,6,2,1,0x42,1,5,1,no,0,0x80,0,weapon,0,	MA_FREEZINGTRAP,Freezing_Trap
+//8213,2,6,32,0,0x1,0,1,1,no,0,0,0,misc,0,	MA_REMOVETRAP,Remove_Trap
+//8214,-9,6,1,-1,0x2,0,1,1,no,0,0x1,0,weapon,6,	MA_CHARGEARROW,Arrow_Repel
+//8215,4,8,1,-1,0,2,5,1,yes,0,0,14,weapon,0,	MA_SHARPSHOOTING,Focused_Arrow_Strike
+//8216,-2,8,1,-1,0,0,10,3,no,0,0,0,weapon,0,	ML_PIERCE,Pierce
+//8217,-2,6,1,-1,0x1,0,10,1,no,33,0,0,weapon,3,	ML_BRANDISH,Brandish_Spear
+//8218,5,8,1,-1,0x20,0,5,5,no,0,0,0,weapon,0,	ML_SPIRALPIERCE,Spiral_Pierce
+//8219,0,6,4,0,0x1,0,5,1,no,0,0,0,weapon,0,	ML_DEFENDER,Defending_Aura
+//8220,0,6,4,0,0x1,0,10,1,no,0,0,0,weapon,0,	ML_AUTOGUARD,Guard
+//8221,7:8:9:10:11,6,16,0,0x1,0,5,1,yes,0,0x600,0,none,0,	ML_DEVOTION,Sacrifice
+//8222,0,6,4,0,0x3,-1,5,1,yes,0,0,0,magic,0,	MER_MAGNIFICAT,Magnificat
+//8223,0,6,4,0,0x1,0,10,1,no,0,0,0,weapon,0,	MER_QUICKEN,Two-Hand_Quicken
+//8224,0,6,4,3,0x3,3,1,1,yes,0,0,0,magic,0,	MER_SIGHT,Sight
 //8225,0,0,0,0,0x1,0,5,0,no,0,0,0,weapon,0,	MER_CRASH,Crash
 //8226,0,0,0,0,0x1,0,1,0,no,0,0,0,magic,0,	MER_REGAIN,Regain
 //8227,0,0,0,0,0x1,0,1,0,no,0,0,0,magic,0,	MER_TENDER,Tender
 //8228,0,0,0,0,0x1,0,1,0,no,0,0,0,magic,0,	MER_BENEDICTION,Benediction
 //8229,0,0,0,0,0x1,0,1,0,no,0,0,0,magic,0,	MER_RECUPERATE,Recuperate
 //8230,0,0,0,0,0x1,0,1,0,no,0,0,0,magic,0,	MER_MENTALCURE,Mental_Cure
-//8231,0,0,0,0,0,0,1,0,no,0,0,0,magic,0,	MER_COMPRESS,Compress
-//8232,0,0,0,0,0,0,10,0,no,0,0,0,none,0,	MER_PROVOKE,Provoke
-//8233,0,0,0,0,0x1,0,1,0,no,0,0,0,weapon,0,	MER_AUTOBERSERK,Berserk
-//8234,0,0,0,0,0x1,0,10,0,no,0,0,0,magic,0,	MER_DECAGI,Decrease_AGI
+//8231,0,0,0,0,0x1,0,1,0,no,0,0,0,magic,0,	MER_COMPRESS,Compress
+//8232,9,6,1,0,1,0,10,1,no,0,0,0,none,0,	MER_PROVOKE,Provoke
+//8233,0,6,4,0,0x1,0,1,1,no,0,0x1,0,weapon,0,	MER_AUTOBERSERK,Berserk
+//8234,9,6,1,0,0x1,0,10,1,yes,0,0,0,magic,0,	MER_DECAGI,Decrease_AGI
 //8235,0,0,0,0,0,0,1,0,no,0,0,0,none,0,		MER_SCAPEGOAT,Scapegoat
-//8236,0,0,0,0,0x1,0,10,0,no,0,0,0,magic,0,	MER_LEXDIVINA,Lex_Divina
-//8237,0,0,0,0,0x1,0,1,0,no,0,0,0,magic,0,	MER_ESTIMATION,Sense
+//8236,5,6,1,0,0x1,0,10,0,yes,0,0,0,magic,0,	MER_LEXDIVINA,Lex_Divina
+//8237,9,6,1,0,0x1,0,1,1,yes,0,0,0,magic,0,	MER_ESTIMATION,Sense
 
 10000,0,0,0,0,0,0,1,0,no,0,0x10,0,none,0,        GD_APPROVAL,Official Guild Approval
 10001,0,0,0,0,0,0,1,0,no,0,0x10,0,none,0,        GD_KAFRACONTRACT,Kafra Contract
@@ -710,3 +729,4 @@
 10012,0,0,4,0,0x3,15,1,0,yes,0,0x10,0,none,0,    GD_RESTORE,Restoration
 10013,0,0,4,0,0x3,0,1,0,yes,0,0x10,0,none,0,     GD_EMERGENCYCALL,Urgent Call
 10014,0,0,0,0,0,0,1,0,no,0,0x10,0,none,0,        GD_DEVELOPMENT,Permanent Development
+//10015,0,0,0,0,0,0,1,0,no,0,0x10,0,none,0,        GD_ITEMEMERGENCYCALL,Unknown Skill

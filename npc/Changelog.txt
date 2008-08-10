@@ -1,6 +1,7 @@
 ﻿Date		Added
 ======
 2008/08/10
+	* Rev. 13065 Updated Cashshop functions. [L0ne_W0lf]
 	* Fixed: several typos (bugreport:2029 bugreport:2023) [Yommy]
 	* Fixed: hugel bingo quest (bugreport:1556) [Yommy]
 	* Fixed copy paste error in monster race (bugreport:2035) [Yommy]

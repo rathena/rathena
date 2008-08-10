@@ -30,8 +30,6 @@
 2644,123,100	// The_Sign_
 7314,123,100	// The_Sign
 7025,91,100	// Lucifer's_Lament
-7527,122,100	// Life_Book
-12142,122,100	// Magic_Book
 
 // "2nd Anniversary Event" items
 // "Eye of Hellion" items
@@ -89,7 +87,7 @@
 7499,123,100	// Family_Portrait
 7500,123,100	// Elysia_Portrait
 7501,123,100	// Kyll_Hyre_Letter2
-7502,123,100	// Pieco_Memo_Of_James
+7502,123,100	// Piece_Memo_Of_James
 7503,123,100	// Man_Portrait
 7504,123,100	// Toy_Motor
 7505,123,100	// Toy_Key
@@ -117,6 +115,10 @@
 // * Friendship Quest(?) Items
 7351,123,100	// Friend's_Diary
 
+// ??? Indonesian Event
+7527,122,100	// Life_Book
+12142,122,100	// Magic_Book
+
 // "2006 USA 3rd Anniversary" related items
 7530,123,100	// Travel_Brochure_01
 7531,123,100	// Travel_Brochure_02
@@ -139,13 +141,13 @@
 // Brazillian Event items
 7547,115,100	// Soccer_Ball
 7548,115,100	// Soccer_Shoes
-7549,115,100	// Braziianl_Flag
+7549,115,100	// Brazilian_Flag
 7550,115,100	// Ticket01
 7551,115,100	// Ticket02
 7552,115,100	// Ticket03
 
 // Taiwan Besark's Day Event items
-7553,115,100	// Lotus
+7553,115,100	// Lotus_Flower
 7554,115,100	// Striped_Candle
 7555,115,100	// Green_Incense
 
@@ -163,9 +165,9 @@
 5156,91,100	// Flu_Mask_F
 
 // Indonesia Jewel Event items
-7575,115,100	// Red-coloured_Gem
-7576,115,100	// Blue-coloured_Gem
-7577,115,100	// Yellow-coloured_Gem
+7575,115,100	// Red_Jewel_
+7576,115,100	// Blue_Jewel_
+7577,115,100	// Golden_Jewel_
 
 // Rachel Quest items
 // * Aruna First (Katullanux quest)
@@ -185,12 +187,12 @@
 //7580,115,100	// Black_Marble
 
 // Taiwan 4th Anniversary Memorial items
-7583,115,100	// Evil_Heart
+7583,115,100	// Evil_Mind
 7584,115,100	// Guard's_1st_Proof
 7585,115,100	// Guard's_2nd_Proof
 7586,115,100	// Guard's_3rd_Proof
 7587,115,100	// Guard's_4th_Proof
-2673,123,100	// Warrior_Radiating_Ring
+2673,123,100	// Shining_Ring
 1533,123,100	// Warrior's_Balmung
 13020,123,100	// Warrior's_Balmung_
 
@@ -202,14 +204,13 @@
 5201,115,100	// Party_Hat_B
 
 // 2006 Indonesia Honor Ring item 
-2674,123,100	// Ring_Of_Honor
+2674,123,100	// Honor_Ring
 
 // 2006 Korean Harvest Moon Day Event item
 12199,123,100	// Rice_Scroll
 
 // 2006 Indonesia Event
-//These two items have not been implemented in eathena.
-7614,115,100	// Wrapping_Paper
+7614,115,100	// Special_Packing_Paper
 7618,115,100	// Monster_Crystal
 2676,123,100	// Hunter_Earring
 
@@ -259,17 +260,260 @@
 12221,91,100	// Megaphone_
 7619,91,100	// Enriched_Elunium
 7620,91,100	// Enriched_Oridecon
-7621,91,100	// Token_of_Siegfried
-//12923,73,100	// Pet_Egg_Scroll_Box
-//12924,73,100	// Pet_Egg_Scroll_Box
-//12925,91,100	// Pet_Egg_Scroll
-//12926,91,100	// Pet_Egg_Scroll
-//12929,73,100	// Pet_Egg_Scroll_Box
-//12930,73,100	// Pet_Egg_Scroll_Box
-//12931,73,100	// Pet_Egg_Scroll_Box
-//12932,91,100	// Pet_Egg_Scroll
-//12933,91,100	// Pet_Egg_Scroll
-//12934,91,100	// Pet_Egg_Scroll
+7621,91,100	// Token_Of_Siegfried
+5227,91,100	// Red_Deviruchi_Cap
+5228,91,100	// White_Deviruchi_Cap
+5229,91,100	// Gray_Deviruchi_Cap
+5230,91,100	// White_Drooping_Kitty
+5231,91,100	// Gray_Drooping_Kitty
+5232,91,100	// Pink_Drooping_Kitty
+5233,91,100	// Blue_Drooping_Kitty
+5234,91,100	// Yellow_Drooping_Kitty
+5235,91,100	// Gray_Fur_Hat
+5236,91,100	// Blue_Fur_Hat
+5237,91,100	// Pink_Fur_Hat
+5238,91,100	// Red_Wizardry_Hat
+5239,91,100	// White_Wizardry_Hat
+5240,91,100	// Gray_Wizardry_Hat
+5241,91,100	// Blue_Wizardry_Hat
+5242,91,100	// Yellow_Wizardry_Hat
+12983,73,100	// Pet_Egg_Scroll_Box6
+12984,73,100	// Pet_Egg_Scroll_Box7
+12985,73,100	// Pet_Egg_Scroll_Box8
+12986,73,100	// Pet_Egg_Scroll_Box9
+12987,73,100	// Pet_Egg_Scroll_Box10
+12988,73,100	// Pet_Egg_Scroll_Box11
+12989,91,100	// Pet_Egg_Scroll6
+12990,91,100	// Pet_Egg_Scroll7
+12991,91,100	// Pet_Egg_Scroll8
+12992,91,100	// Pet_Egg_Scroll9
+12993,91,100	// Pet_Egg_Scroll10
+12994,91,100	// Pet_Egg_Scroll11
+12923,73,100	// Pet_Egg_Scroll_Box1
+12924,73,100	// Pet_Egg_Scroll_Box2
+12925,91,100	// Pet_Egg_Scroll1
+12926,91,100	// Pet_Egg_Scroll2
+12929,73,100	// Pet_Egg_Scroll_Box3
+12930,73,100	// Pet_Egg_Scroll_Box4
+12931,73,100	// Pet_Egg_Scroll_Box5
+12932,91,100	// Pet_Egg_Scroll3
+12933,91,100	// Pet_Egg_Scroll4
+12934,91,100	// Pet_Egg_Scroll5
+12935,89,100	// Infiltrator_Box
+12936,89,100	// Muramasa_Box
+12940,89,100	// Kaiser_Knuckle_Box
+12941,89,100	// Pole_Axe_Box
+12942,89,100	// Mighty_Staff_Box
+12943,89,100	// Right_Epsilon_Box
+12944,89,100	// Balistar_Box
+12945,89,100	// Diary_Of_Great_Sage_Box
+12951,89,100	// Elven_Ears_Box
+12952,89,100	// Steel_Flower_Box
+12953,89,100	// Critical_Ring_Box
+12954,89,100	// Earring_Box
+12955,89,100	// Ring_Box
+12956,89,100	// Necklace_Box
+12957,89,100	// Glove_Box
+2686,123,100	// Elven_Ears_C
+2687,123,100	// Steel_Flower_C
+2688,123,100	// Critical_Ring_C
+2689,123,100	// Earring_C
+2690,123,100	// Ring_C
+2691,123,100	// Necklace_C
+2692,123,100	// Glove_C
+1173,123,100	// Muramasa_C
+1267,123,100	// Infiltrator_C
+1372,123,100	// Right_Epsilon_C
+1419,123,100	// Pole_Axe_C
+1563,123,100	// Diary_Of_Great_Sage_C
+1623,123,100	// Mighty_Staff_C
+1728,123,100	// Balistar_C
+1817,123,100	// Kaiser_Knuckle_C
+
+// Mercenary scrolls
+12153,115,100	// Bow_Mercenary_Scroll1
+12154,115,100	// Bow_Mercenary_Scroll2
+12155,115,100	// Bow_Mercenary_Scroll3
+12156,115,100	// Bow_Mercenary_Scroll4
+12157,115,100	// Bow_Mercenary_Scroll5
+12158,115,100	// Bow_Mercenary_Scroll6
+12159,115,100	// Bow_Mercenary_Scroll7
+12160,115,100	// Bow_Mercenary_Scroll8
+12161,115,100	// Bow_Mercenary_Scroll9
+12162,115,100	// Bow_Mercenary_Scroll10
+12163,115,100	// SwordMercenary_Scroll1
+12164,115,100	// SwordMercenary_Scroll2
+12165,115,100	// SwordMercenary_Scroll3
+12166,115,100	// SwordMercenary_Scroll4
+12167,115,100	// SwordMercenary_Scroll5
+12168,115,100	// SwordMercenary_Scroll6
+12169,115,100	// SwordMercenary_Scroll7
+12170,115,100	// SwordMercenary_Scroll8
+12171,115,100	// SwordMercenary_Scroll9
+12172,115,100	// SwordMercenary_Scroll10
+12173,115,100	// SpearMercenary_Scroll1
+12174,115,100	// SpearMercenary_Scroll2
+12175,115,100	// SpearMercenary_Scroll3
+12176,115,100	// SpearMercenary_Scroll4
+12177,115,100	// SpearMercenary_Scroll5
+12178,115,100	// SpearMercenary_Scroll6
+12179,115,100	// SpearMercenary_Scroll7
+12180,115,100	// SpearMercenary_Scroll8
+12181,115,100	// SpearMercenary_Scroll9
+12182,115,100	// SpearMercenary_Scroll10
+
+// Indonesian ???
+5368,91,100	// White_Wing
+5369,91,100	// Dark_Wing
+
+// Indonesian ???
+//5812,123,100	// ???
+
+// Indonesia 4 Annual Events
+2368,83,100	// Golden_Armor
+2427,83,100	// Golden_Shoes
+2704,83,100	// Golden_Accessory
+2705,83,100	// Golden_Accessory2
+5295,83,100	// Golden_Bandana
+7863,83,100	// GOLD_ID4
+
+// Thailand Event-Environment Day Items
+7865,115,100	// Gold_Pouch
+7866,115,100	// Certificate
+
+// "11.2 Quest items"
+// * "Thor Volcano Base" items
+7759,123,100	// Geology_Report
+
+// USA 4th Anniversary Event Items
+7875,83,100	// Pirate_Box
+5305,91,100	// Pirate_Dagger
+
+// Battle Badge
+7773,115,100	// War_Badge
+
+// Moscovia Quest Items -----
+7876,115,100	// Gold_Key
+7877,115,100	// Red_Ring
+7878,115,100	// Lusalka_Hair
+7879,115,100	// Golden_Thread
+7880,115,100	// Babayaga_Silver_Spoon
+7881,115,100	// Book_Of_Magic
+7882,115,100	// Pointed_Branch
+7883,115,100	// Reed_Pipe
+2429,115,100	// Iron_Shoes_01
+2430,115,100	// Iron_Shoes_02
+
+// Indonesian Red Bandana Hair Band
+5320,91,100	// Champion_Wreath
+
+// Malaysia/Singapore Event Items
+7884,91,100	// Jade_Plate
+7885,91,100	// Sacred_Arrow
+5805,91,100	// Victorious_Coronet
+2708,91,100	// Chinese_Handicraft
+12704,91,100	// Elixir_Of_Life
+12705,91,100	// Noble_Nameplate
+
+// Compensation Items Coupon
+7784,91,100	// Fawner_Coupon_1
+7785,91,100	// Fawner_Coupon_2
+7786,91,100	// Fawner_Coupon_3
+7787,91,100	// Fawner_Coupon_4
+7788,91,100	// Fawner_Coupon_5
+7789,91,100	// Fawner_Coupon_6
+7790,91,100	// Fawner_Coupon_7
+7791,91,100	// Fawner_Coupon_8
+
+// Fate Crow Quest Items
+7794,91,100	// Fate_Of_Crow
+
+// Russian Golden Apple Event Items
+7793,91,100	// Golden_Apple
+7800,91,100	// Golden_Apple_
+5322,91,100	// Scarf
+
+// Taiwan Medicine of Fantasy
+12259,123,100	// Miracle_Medicine
+12261,123,100	// Secret_Medicine
+
+// 2007 Summer Event Items
+7801,115,100	// Girl_Fan_Letter
+7802,115,100	// Autograph_Book
+
+// Sakray Test items
+5323,91,100	// Misstrance_Crown
+2370,91,100	// Used_Mage_Coat
+2127,91,100	// Secular_Mission
+2534,91,100	// Ruffler
+2431,91,100	// Valley_Shoes
+13029,91,100	// Prinsense_Knife
+13406,91,100	// Edger
+1536,91,100	// Good_Morning_Star
+1423,91,100	// Pole_XO
+1921,91,100	// Gun_Moon_Gom
+1975,91,100	// Queen_Is_Whip
+1566,91,100	// Diary_Of_Great_Basil
+1627,91,100	// Staffy
+1177,91,100	// Muramasn
+1272,91,100	// Scratcher
+1735,91,100	// Kkakkung
+
+// Taiwan ???
+13765,123,100	// Certificate_TW_Box
+//2713,123,100	// Accomplishment_Certificate
+
+// Satan Morroc
+7820,123,100	// Morroc_Skin
+
+// Vietnam Independence Day
+5806,91,100	// Poem_Natalie_Hat
+
+// PC-Cafe Authoritative Badge
+12262,123,100	// Inspector_Certificate_
+
+12263,91,100	// Comp_Battle_Manual
+12264,91,100	// Comp_Bubble_Gum
+12265,91,100	// Comp_Insurance
+
+// Morocc Continental Guard Certificate
+7826,123,100	// Continental_Guard_Paper
+
+// Harvest Moon Day PC Items
+12266,123,100	// Sesame_Pastry_
+12267,123,100	// Honey_Pastry_
+12268,123,100	// Rainbow_Cake_
+
+// Satan Morocc (Episode 12)
+2730,83,100	// Morroc_Seal
+2731,83,100	// Morroc_Charm_Stone
+2732,83,100	// Morroc_Ring
+
+// Philippines April Packages
+//13994,91,100	// Speed_Potion_Box(5)
+//13995,91,100	// Speed_Potion_Box(10)
+//13996,91,100	// Big_Bun_Box(100)
+//13997,91,100	// Big_Bun_Box(500)
+//13998,91,100	// Giant_Fly_Wing_Box(500)
+//13999,91,100	// Pill_Box(100)
+//14000,91,100	// Pill_Box(500)
+//14001,91,100	// Recruit_Siege_Supply_Box
+//14002,91,100	// Veteran_Siege_Supply_Box
+//14003,91,100	// Elite_Siege_Supply_Box
+//11503,91,100	// Siege_White_Potion
+//11504,91,100	// Siege_Blue_Potion
+
+// Phillipian Headgears
+//13918,91,100	// Evolved_Drooping_Cat_Box
+//13919,91,100	// Evolved_Majestic_Goat_Box
+//13920,91,100	// Evolved_Devil's_Headband_Box
+//13921,91,100	// Evolved_Pipes_Cigarettes_Box
+//13922,91,100	// Evolved_Rabbits_Headband_Box
+//13923,91,100	// Helm_Of_Darkness_Box
+//13924,91,100	// Evolved_Helmet_Of_Orc_Hero_Box
+
+// ???
+//6024,72,100	// ???
 
 // "St. Patrick's Day (2008)" Quest related items
 //7720,123,100	// Gold_Coin
