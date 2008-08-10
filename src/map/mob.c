@@ -2542,8 +2542,9 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 	map_freeblock_unlock();
 
 	if(pcdb_checkid(md->vd->class_))
-		//Player mobs are not removed automatically by the client.
+	{	//Player mobs are not removed automatically by the client.
 		clif_clearunit_delayed(&md->bl, tick+3000);
+	}
 
 	if(!md->spawn) //Tell status_damage to remove it from memory.
 		return 5; // Note: Actually, it's 4. Oh well...

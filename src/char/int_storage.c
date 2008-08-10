@@ -165,14 +165,6 @@ int guild_storage_fromstr(char *str,struct guild_storage *p)
 }
 
 #ifndef TXT_SQL_CONVERT
-static void* create_storage(DBKey key, va_list args)
-{
-	struct storage_data *s;
-	s = (struct storage_data *) aCalloc(sizeof(struct storage_data), 1);
-	s->account_id=key.i;
-	return s;
-}
-
 // アカウントから倉庫データインデックスを得る（新規倉庫追加可能）
 struct storage_data *account2storage(int account_id)
 {

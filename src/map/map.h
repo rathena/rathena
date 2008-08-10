@@ -648,7 +648,6 @@ extern char item_db_db[32];
 extern char item_db2_db[32];
 extern char mob_db_db[32];
 extern char mob_db2_db[32];
-extern char char_db[32];
 
 #endif /* not TXT_ONLY */
 

@@ -66,8 +66,6 @@ char item_db2_db[32] = "item_db2";
 char mob_db_db[32] = "mob_db";
 char mob_db2_db[32] = "mob_db2";
 
-char char_db[32] = "char";
-
 // log database
 char log_db_ip[32] = "127.0.0.1";
 int log_db_port = 3306;
@@ -2837,107 +2835,135 @@ int parse_console(char* buf)
  *------------------------------------------*/
 int map_config_read(char *cfgName)
 {
-	char line[1024], w1[1024], w2[1024], *ptr;
+	char line[1024], w1[1024], w2[1024];
 	FILE *fp;
 
 	fp = fopen(cfgName,"r");
-	if (fp == NULL) {
+	if( fp == NULL )
+	{
 		ShowError("Map configuration file not found at: %s\n", cfgName);
 		return 1;
 	}
-	while(fgets(line, sizeof(line), fp))
+
+	while( fgets(line, sizeof(line), fp) )
 	{
-		if (line[0] == '/' && line[1] == '/')
+		char* ptr;
+
+		if( line[0] == '/' && line[1] == '/' )
+			continue;
+		if( (ptr = strstr(line, "//")) != NULL )
+			*ptr = '\n'; //Strip comments
+		if( sscanf(line, "%[^:]: %[^\t\r\n]", w1, w2) < 2 )
 			continue;
 
-		if ((ptr = strstr(line, "//")) != NULL)
-			*ptr = '\n'; //Strip comments
-
-		if (sscanf(line, "%[^:]: %[^\t\r\n]", w1, w2) == 2) {
-			//Strip trailing spaces
-			ptr = w2 + strlen(w2);
-			while (--ptr >= w2 && *ptr == ' ');
-			ptr++;
-			*ptr = '\0';
+		//Strip trailing spaces
+		ptr = w2 + strlen(w2);
+		while (--ptr >= w2 && *ptr == ' ');
+		ptr++;
+		*ptr = '\0';
 			
-			if(strcmpi(w1,"timestamp_format")==0){
-				strncpy(timestamp_format, w2, 20);
-			} else if(strcmpi(w1,"stdout_with_ansisequence")==0){
-				stdout_with_ansisequence = config_switch(w2);
-			} else if(strcmpi(w1,"console_silent")==0){
-				ShowInfo("Console Silent Setting: %d\n", atoi(w2));
-				msg_silent = atoi(w2);
-			} else if (strcmpi(w1, "userid")==0){
-				chrif_setuserid(w2);
-			} else if (strcmpi(w1, "passwd") == 0) {
-				chrif_setpasswd(w2);
-			} else if (strcmpi(w1, "char_ip") == 0) {
-				char_ip_set = chrif_setip(w2);
-			} else if (strcmpi(w1, "char_port") == 0) {
-				chrif_setport(atoi(w2));
-			} else if (strcmpi(w1, "map_ip") == 0) {
-				map_ip_set = clif_setip(w2);
-			} else if (strcmpi(w1, "bind_ip") == 0) {
-				clif_setbindip(w2);
-			} else if (strcmpi(w1, "map_port") == 0) {
-				clif_setport(atoi(w2));
-				map_port = (atoi(w2));
-			} else if (strcmpi(w1, "map") == 0) {
-				map_addmap(w2);
-			} else if (strcmpi(w1, "delmap") == 0) {
-				map_delmap(w2);
-			} else if (strcmpi(w1, "npc") == 0) {
-				npc_addsrcfile(w2);
-			} else if (strcmpi(w1, "delnpc") == 0) {
-				npc_delsrcfile(w2);
-			} else if (strcmpi(w1, "autosave_time") == 0) {
-				autosave_interval = atoi(w2);
-				if (autosave_interval < 1) //Revert to default saving.
-					autosave_interval = DEFAULT_AUTOSAVE_INTERVAL;
-				else
-					autosave_interval *= 1000; //Pass from sec to ms
-			} else if (strcmpi(w1, "minsave_time") == 0) {
-				minsave_interval= atoi(w2);
-				if (minsave_interval < 1)
-					minsave_interval = 1;
-			} else if (strcmpi(w1, "save_settings") == 0) {
-				save_settings = atoi(w2);
-			} else if (strcmpi(w1, "motd_txt") == 0) {
-				strcpy(motd_txt, w2);
-			} else if (strcmpi(w1, "help_txt") == 0) {
-				strcpy(help_txt, w2);
-			} else if (strcmpi(w1, "help2_txt") == 0) {
-				strcpy(help2_txt, w2);
-			} else if (strcmpi(w1, "charhelp_txt") == 0) {
-				strcpy(charhelp_txt, w2);
-			} else if (strcmpi(w1, "mapreg_txt") == 0) {
-				strcpy(mapreg_txt, w2);
-			} else if(strcmpi(w1,"map_cache_file") == 0) {
-				strncpy(map_cache_file,w2,255);
-			} else if(strcmpi(w1,"db_path") == 0) {
-				strncpy(db_path,w2,255);
-			} else if (strcmpi(w1, "console") == 0) {
-				console = config_switch(w2);
-				if (console)
-					ShowNotice("Console Commands are enabled.\n");
-			} else if (strcmpi(w1, "enable_spy") == 0) {
-				enable_spy = config_switch(w2);
-			} else if (strcmpi(w1, "use_grf") == 0) {
-				enable_grf = config_switch(w2);
-			} else if (strcmpi(w1, "import") == 0) {
-				map_config_read(w2);
-			} else
-				ShowWarning("Unknown setting '%s' in file %s\n", w1, cfgName);
-		}
+		if(strcmpi(w1,"timestamp_format")==0)
+			strncpy(timestamp_format, w2, 20);
+		else 
+		if(strcmpi(w1,"stdout_with_ansisequence")==0)
+			stdout_with_ansisequence = config_switch(w2);
+		else
+		if(strcmpi(w1,"console_silent")==0) {
+			ShowInfo("Console Silent Setting: %d\n", atoi(w2));
+			msg_silent = atoi(w2);
+		} else
+		if (strcmpi(w1, "userid")==0)
+			chrif_setuserid(w2);
+		else
+		if (strcmpi(w1, "passwd") == 0)
+			chrif_setpasswd(w2);
+		else
+		if (strcmpi(w1, "char_ip") == 0)
+			char_ip_set = chrif_setip(w2);
+		else
+		if (strcmpi(w1, "char_port") == 0)
+			chrif_setport(atoi(w2));
+		else
+		if (strcmpi(w1, "map_ip") == 0)
+			map_ip_set = clif_setip(w2);
+		else
+		if (strcmpi(w1, "bind_ip") == 0)
+			clif_setbindip(w2);
+		else
+		if (strcmpi(w1, "map_port") == 0) {
+			clif_setport(atoi(w2));
+			map_port = (atoi(w2));
+		} else
+		if (strcmpi(w1, "map") == 0)
+			map_addmap(w2);
+		else
+		if (strcmpi(w1, "delmap") == 0)
+			map_delmap(w2);
+		else
+		if (strcmpi(w1, "npc") == 0)
+			npc_addsrcfile(w2);
+		else
+		if (strcmpi(w1, "delnpc") == 0)
+			npc_delsrcfile(w2);
+		else if (strcmpi(w1, "autosave_time") == 0) {
+			autosave_interval = atoi(w2);
+			if (autosave_interval < 1) //Revert to default saving.
+				autosave_interval = DEFAULT_AUTOSAVE_INTERVAL;
+			else
+				autosave_interval *= 1000; //Pass from sec to ms
+		} else
+		if (strcmpi(w1, "minsave_time") == 0) {
+			minsave_interval= atoi(w2);
+			if (minsave_interval < 1)
+				minsave_interval = 1;
+		} else
+		if (strcmpi(w1, "save_settings") == 0)
+			save_settings = atoi(w2);
+		else
+		if (strcmpi(w1, "motd_txt") == 0)
+			strcpy(motd_txt, w2);
+		else
+		if (strcmpi(w1, "help_txt") == 0)
+			strcpy(help_txt, w2);
+		else
+		if (strcmpi(w1, "help2_txt") == 0)
+			strcpy(help2_txt, w2);
+		else
+		if (strcmpi(w1, "charhelp_txt") == 0)
+			strcpy(charhelp_txt, w2);
+		else
+		if (strcmpi(w1, "mapreg_txt") == 0)
+			strcpy(mapreg_txt, w2);
+		else
+		if(strcmpi(w1,"map_cache_file") == 0)
+			strncpy(map_cache_file,w2,255);
+		else
+		if(strcmpi(w1,"db_path") == 0)
+			strncpy(db_path,w2,255);
+		else
+		if (strcmpi(w1, "console") == 0) {
+			console = config_switch(w2);
+			if (console)
+				ShowNotice("Console Commands are enabled.\n");
+		} else
+		if (strcmpi(w1, "enable_spy") == 0)
+			enable_spy = config_switch(w2);
+		else
+		if (strcmpi(w1, "use_grf") == 0)
+			enable_grf = config_switch(w2);
+		else
+		if (strcmpi(w1, "import") == 0)
+			map_config_read(w2);
+		else
+			ShowWarning("Unknown setting '%s' in file %s\n", w1, cfgName);
 	}
-	fclose(fp);
 
+	fclose(fp);
 	return 0;
 }
 
 int inter_config_read(char *cfgName)
 {
-	int i;
 	char line[1024],w1[1024],w2[1024];
 	FILE *fp;
 
@@ -2950,55 +2976,68 @@ int inter_config_read(char *cfgName)
 	{
 		if(line[0] == '/' && line[1] == '/')
 			continue;
-		i=sscanf(line,"%[^:]: %[^\r\n]",w1,w2);
-		if(i!=2)
+		if( sscanf(line,"%[^:]: %[^\r\n]",w1,w2) < 2 )
 			continue;
 
-		if(strcmpi(w1, "main_chat_nick")==0){
+		if(strcmpi(w1, "main_chat_nick")==0)
 			strcpy(main_chat_nick, w2);
 			
 	#ifndef TXT_ONLY
-		} else if(strcmpi(w1,"item_db_db")==0){
+		else
+		if(strcmpi(w1,"item_db_db")==0)
 			strcpy(item_db_db,w2);
-		} else if(strcmpi(w1,"mob_db_db")==0){
+		else
+		if(strcmpi(w1,"mob_db_db")==0)
 			strcpy(mob_db_db,w2);
-		} else if(strcmpi(w1,"item_db2_db")==0){
+		else
+		if(strcmpi(w1,"item_db2_db")==0)
 			strcpy(item_db2_db,w2);
-		} else if(strcmpi(w1,"mob_db2_db")==0){
+		else
+		if(strcmpi(w1,"mob_db2_db")==0)
 			strcpy(mob_db2_db,w2);
-		} else if (strcmpi(w1, "char_db") == 0) {
-			strcpy(char_db, w2);
+		else
 		//Map Server SQL DB
-		} else if(strcmpi(w1,"map_server_ip")==0){
+		if(strcmpi(w1,"map_server_ip")==0)
 			strcpy(map_server_ip, w2);
-		} else if(strcmpi(w1,"map_server_port")==0){
+		else
+		if(strcmpi(w1,"map_server_port")==0)
 			map_server_port=atoi(w2);
-		} else if(strcmpi(w1,"map_server_id")==0){
+		else
+		if(strcmpi(w1,"map_server_id")==0)
 			strcpy(map_server_id, w2);
-		} else if(strcmpi(w1,"map_server_pw")==0){
+		else
+		if(strcmpi(w1,"map_server_pw")==0)
 			strcpy(map_server_pw, w2);
-		} else if(strcmpi(w1,"map_server_db")==0){
+		else
+		if(strcmpi(w1,"map_server_db")==0)
 			strcpy(map_server_db, w2);
-		} else if(strcmpi(w1,"default_codepage")==0){
+		else
+		if(strcmpi(w1,"default_codepage")==0)
 			strcpy(default_codepage, w2);
-		} else if(strcmpi(w1,"use_sql_db")==0){
+		else
+		if(strcmpi(w1,"use_sql_db")==0) {
 			db_use_sqldbs = config_switch(w2);
 			ShowStatus ("Using SQL dbs: %s\n",w2);
-		} else if(strcmpi(w1,"log_db_ip")==0) {
+		} else
+		if(strcmpi(w1,"log_db_ip")==0)
 			strcpy(log_db_ip, w2);
-		} else if(strcmpi(w1,"log_db_id")==0) {
+		else
+		if(strcmpi(w1,"log_db_id")==0)
 			strcpy(log_db_id, w2);
-		} else if(strcmpi(w1,"log_db_pw")==0) {
+		else
+		if(strcmpi(w1,"log_db_pw")==0)
 			strcpy(log_db_pw, w2);
-		} else if(strcmpi(w1,"log_db_port")==0) {
+		else
+		if(strcmpi(w1,"log_db_port")==0)
 			log_db_port = atoi(w2);
-		} else if(strcmpi(w1,"log_db_db")==0) {
+		else
+		if(strcmpi(w1,"log_db_db")==0)
 			strcpy(log_db_db, w2);
 	#endif
 		//support the import command, just like any other config
-		} else if(strcmpi(w1,"import")==0){
+		else
+		if(strcmpi(w1,"import")==0)
 			inter_config_read(w2);
-		}
 	}
 	fclose(fp);
 
