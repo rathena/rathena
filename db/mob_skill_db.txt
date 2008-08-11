@@ -2942,6 +2942,7 @@
 1639,Kathryne Keyron@WZ_EARTHSPIKE,attack,90,5,3000,0,10000,yes,target,always,0,,,,,,
 1639,Kathryne Keyron@WZ_HEAVENDRIVE,chase,91,5,3000,0,10000,yes,target,always,0,,,,,,
 1639,Kathryne Keyron@WZ_HEAVENDRIVE,attack,91,5,3000,0,10000,yes,target,always,0,,,,,,
+1640,Lord Knight Seyren@NPC_SELFDESTRUCTION,attack,173,1,2000,2000,0,no,self,myhpltmaxrate,3,,,,,,
 1640,Lord Knight Seyren@KN_SPEARBOOMERANG,idle,59,5,10000,0,0,yes,randomtarget,always,0,,,,,,6
 1640,Lord Knight Seyren@LK_SPIRALPIERCE,chase,397,5,2000,0,5000,yes,target,myhpltmaxrate,60,,,,,,
 1640,Lord Knight Seyren@LK_SPIRALPIERCE,attack,397,5,2000,0,5000,yes,target,myhpltmaxrate,60,,,,,,
@@ -3318,6 +3319,7 @@
 1658,Egnigem Cenia@NPC_EMOTION,idle,197,1,10000,0,5000,yes,self,skillused,28,15,,,,,
 1658,Egnigem Cenia@NPC_EMOTION,attack,197,1,10000,0,5000,yes,self,skillused,28,15,,,,,
 1658,Egnigem Cenia@NPC_EMOTION,chase,197,1,10000,0,5000,yes,self,skillused,28,15,,,,,
+1658,Egnigem Cenia@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
 1659,Wickebine Tres@TF_POISON,attack,52,9,500,1000,5000,no,target,always,0,,,,,,
 1659,Wickebine Tres@TF_POISON,attack,52,9,10000,1000,1000,no,target,skillused,52,,,,,,
 1659,Wickebine Tres@TF_THROWSTONE,chase,152,1,4000,0,3000,yes,target,always,0,,,,,,
@@ -4695,6 +4697,17 @@
 1891,Valkyrie@KN_BRANDISHSPEAR,attack,57,20,1000,0,5000,yes,target,always,0,,,,,,
 1891,Valkyrie@NPC_ARMORBRAKE,attack,344,10,500,0,5000,yes,target,always,0,,,,,,
 1891,Valkyrie@WZ_JUPITEL,attack,84,28,100,2000,5000,yes,target,always,0,,,,,, 
+
+1894,Pouring@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,0,,,,,,
+1894,Pouring@AL_TELEPORT,idle,26,1,5000,0,5000,yes,self,rudeattacked,0,,,,,,
+1894,Pouring@AL_TELEPORT,walk,26,1,5000,0,5000,yes,self,rudeattacked,0,,,,,,
+1894,Pouring@WZ_STORMGUST,chase,89,10,2000,0,5000,no,target,always,0,,,,,,
+1894,Pouring@WZ_STORMGUST,attack,89,10,2000,0,5000,no,target,always,0,,,,,,
+1894,Pouring@WZ_WATERBALL,attack,86,10,10000,500,5000,no,target,always,0,,,,,,
+1894,Pouring@WZ_WATERBALL,chase,86,10,10000,500,5000,no,target,always,0,,,,,,
+
+1904,Bomb Poring@NPC_SELFDESTRUCTION,attack,173,2,10000,3000,0,no,self,always,0,,,,,,
+1904,Bomb Poring@NPC_SELFDESTRUCTION,chase,173,2,10000,3000,0,no,self,always,0,,,,,,
 
 // Satan Morroc (Based on information from Future Wiki)
 1916,Satan Morroc@AL_PNEUMA,idle,25,1,10000,0,1000,yes,target,longrangeattacked,0,,,,,,

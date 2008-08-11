@@ -41,6 +41,10 @@
 
 =======================
 2008/08/11
+	* Rev. 13070 Corrections and fixes to the mob Skill DB. [L0ne_W0lf]
+	- Readded the skill "Self destruct" to G_SEYREN
+	- B_YGNIZEM Will again teleport on rude attacks.
+	- Added Pouring and Bombporing skills.
 	* Rev. 13069 Corrected Flame Skull Card, rate os 5% not 50%. This is what happens when your value types are inconsistent. [L0ne_W0lf]
 2008/08/10
 	* Rev. 13067 Accidentally reverted the fix to Drifter. [L0ne_W0lf]
