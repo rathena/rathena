@@ -10396,7 +10396,10 @@ void clif_parse_GMKick(int fd, struct map_session_data *sd)
 		lv = get_atcommand_level(atcommand_unloadnpc);
 		if( pc_isGM(sd) < lv )
 			return;
+		// copy-pasted from atcommand_unloadnpc
+		npc_unload_duplicates(nd);
 		npc_unload(nd);
+		npc_read_event_script();
 		if( log_config.gm && lv >= log_config.gm ) {
 			char message[256];
 			sprintf(message, "/kick %s (%d)", status_get_name(target), status_get_class(target));
