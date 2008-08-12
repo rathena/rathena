@@ -352,6 +352,7 @@ fi
 case $enable_debug in
 	"no")
 		# default value
+		CFLAGS="$CFLAGS -Wno-unused -Wno-parentheses"
 		;;
 	"yes")
 		CFLAGS="$CFLAGS -g -DDEBUG"
