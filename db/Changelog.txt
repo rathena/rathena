@@ -40,6 +40,8 @@
 	2385 Recuvative_Armor		Should trigger HP/SP return with magical kills as well.
 
 =======================
+2008/08/12
+	* Hammerfall now works with daggers and 1h swords (bugreport:2045) [ultramage]
 2008/08/11
 	* Rev. 13070 Corrections and fixes to the mob Skill DB. [L0ne_W0lf]
 	- Readded the skill "Self destruct" to G_SEYREN
