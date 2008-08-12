@@ -59,7 +59,7 @@ prt_in,61,141,2	script	Inn Employee#Ahlma	53,{
 }
 
 //======================== Alberta ====================================
-alberta_in,32,142,3	script	Inn Employee#Moira	53,{
+alberta_in,32,142,3	script	Inn Employee#Jennie	53,{
 
 	callfunc "F_InnMaid","[Employee Jennie]","'Fisherman Inn'!","alberta_in",26,142;
 	warp "alberta_in",18,188; end;

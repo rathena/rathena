@@ -1481,48 +1481,55 @@ static bool mob_ai_sub_hard(struct mob_data *md, unsigned int tick)
 	}
 			
 	// Check for target change.
-	if (md->attacked_id && mode&MD_CANATTACK)
+	if( md->attacked_id && mode&MD_CANATTACK )
 	{
-		if (md->attacked_id == md->target_id)
+		if( md->attacked_id == md->target_id )
 		{	//Rude attacked check.
-			if (!battle_check_range(&md->bl, tbl, md->status.rhw.range) &&
-				(	//Can't attack back and can't reach back.
-					(!can_move && DIFF_TICK(tick, md->ud.canmove_tick) > 0 &&
-					  	(battle_config.mob_ai&0x2 || md->sc.data[SC_SPIDERWEB])) ||
-					(!mob_can_reach(md, tbl, md->min_chase, MSS_RUSH))
-				) &&
-				md->state.attacked_count++ >= RUDE_ATTACKED_COUNT &&
-				!mobskill_use(md, tick, MSC_RUDEATTACKED) && //If can't rude Attack
-				can_move && unit_escape(&md->bl, tbl, rand()%10 +1)) //Attempt escape
+			if( !battle_check_range(&md->bl, tbl, md->status.rhw.range)
+			&&  ( //Can't attack back and can't reach back.
+			      (!can_move && DIFF_TICK(tick, md->ud.canmove_tick) > 0 && (battle_config.mob_ai&0x2 || md->sc.data[SC_SPIDERWEB]))
+			      || !mob_can_reach(md, tbl, md->min_chase, MSS_RUSH)
+			    )
+			&&  md->state.attacked_count++ >= RUDE_ATTACKED_COUNT
+			&&  !mobskill_use(md, tick, MSC_RUDEATTACKED) //If can't rude Attack
+			&&  can_move && unit_escape(&md->bl, tbl, rand()%10 +1)) //Attempt escape
 			{	//Escaped
 				md->attacked_id = 0;
 				return true;
 			}
-		} else
-		if ((abl= map_id2bl(md->attacked_id)) && (!tbl || mob_can_changetarget(md, abl, mode))) {
-			if (md->bl.m != abl->m || abl->prev == NULL ||
-				(dist = distance_bl(&md->bl, abl)) >= MAX_MINCHASE ||
-				battle_check_target(&md->bl, abl, BCT_ENEMY) <= 0 ||
-				(battle_config.mob_ai&0x2 && !status_check_skilluse(&md->bl, abl, 0, 0)) || //Retaliate check
-				(!battle_check_range(&md->bl, abl, md->status.rhw.range) &&
-					( //Reach check
-					(!can_move && DIFF_TICK(tick, md->ud.canmove_tick) > 0 &&
-							(battle_config.mob_ai&0x2 || md->sc.data[SC_SPIDERWEB])) ||
-						!mob_can_reach(md, abl, dist+md->db->range3, MSS_RUSH)
-					)
+		}
+		else
+		if( (abl= map_id2bl(md->attacked_id)) && (!tbl || mob_can_changetarget(md, abl, mode)) )
+		{
+			if (md->bl.m != abl->m || abl->prev == NULL
+			|| (dist = distance_bl(&md->bl, abl)) >= MAX_MINCHASE
+			|| battle_check_target(&md->bl, abl, BCT_ENEMY) <= 0
+			|| (battle_config.mob_ai&0x2 && !status_check_skilluse(&md->bl, abl, 0, 0)) //Retaliate check
+			|| (!battle_check_range(&md->bl, abl, md->status.rhw.range)
+				&&
+				( //Reach check
+				  (!can_move && DIFF_TICK(tick, md->ud.canmove_tick) > 0 && (battle_config.mob_ai&0x2 || md->sc.data[SC_SPIDERWEB]))
+				  || !mob_can_reach(md, abl, dist+md->db->range3, MSS_RUSH)
+				  )
 				)
-			)	{	//Rude attacked
-				if (md->state.attacked_count++ >= RUDE_ATTACKED_COUNT &&
-					!mobskill_use(md, tick, MSC_RUDEATTACKED) && can_move &&
-					!tbl && unit_escape(&md->bl, abl, rand()%10 +1))
+			)
+			{	//Rude attacked
+				if (md->state.attacked_count++ >= RUDE_ATTACKED_COUNT
+				&& !mobskill_use(md, tick, MSC_RUDEATTACKED) && can_move
+				&& !tbl && unit_escape(&md->bl, abl, rand()%10 +1))
 				{	//Escaped.
 					//TODO: Maybe it shouldn't attempt to run if it has another, valid target?
 					md->attacked_id = 0;
 					return true;
 				}
-			} else if (!(battle_config.mob_ai&0x2) && !status_check_skilluse(&md->bl, abl, 0, 0)) {
+			}
+			else
+			if (!(battle_config.mob_ai&0x2) && !status_check_skilluse(&md->bl, abl, 0, 0))
+			{
 				//Can't attack back, but didn't invoke a rude attacked skill...
-			} else { //Attackable
+			}
+			else
+			{ //Attackable
 				if (!tbl || dist < md->status.rhw.range || !check_distance_bl(&md->bl, tbl, dist)
 					|| battle_gettarget(tbl) != md->bl.id)
 				{	//Change if the new target is closer than the actual one
@@ -1537,6 +1544,7 @@ static bool mob_ai_sub_hard(struct mob_data *md, unsigned int tick)
 				}
 			}
 		}
+
 		//Clear it since it's been checked for already.
 		md->attacked_id = 0;
 	}
@@ -1549,20 +1557,18 @@ static bool mob_ai_sub_hard(struct mob_data *md, unsigned int tick)
 	if (!tbl && mode&MD_LOOTER && md->lootitem && DIFF_TICK(tick, md->ud.canact_tick) > 0 &&
 		(md->lootitem_count < LOOTITEM_SIZE || battle_config.monster_loot_type != 1))
 	{	// Scan area for items to loot, avoid trying to loot of the mob is full and can't consume the items.
-		map_foreachinrange (mob_ai_sub_hard_lootsearch, &md->bl,
-			view_range, BL_ITEM, md, &tbl);
+		map_foreachinrange (mob_ai_sub_hard_lootsearch, &md->bl, view_range, BL_ITEM, md, &tbl);
 	}
 
 	if ((!tbl && mode&MD_AGGRESSIVE) || md->state.skillstate == MSS_FOLLOW)
 	{
-		map_foreachinrange (mob_ai_sub_hard_activesearch, &md->bl,
-			view_range, DEFAULT_ENEMY_TYPE(md), md, &tbl);
-	} else
+		map_foreachinrange (mob_ai_sub_hard_activesearch, &md->bl, view_range, DEFAULT_ENEMY_TYPE(md), md, &tbl);
+	}
+	else
 	if (mode&MD_CHANGECHASE && (md->state.skillstate == MSS_RUSH || md->state.skillstate == MSS_FOLLOW))
 	{
 		search_size = view_range<md->status.rhw.range ? view_range:md->status.rhw.range;
-		map_foreachinrange (mob_ai_sub_hard_changechase, &md->bl,
-				search_size, DEFAULT_ENEMY_TYPE(md), md, &tbl);
+		map_foreachinrange (mob_ai_sub_hard_changechase, &md->bl, search_size, DEFAULT_ENEMY_TYPE(md), md, &tbl);
 	}
 
 	if (!tbl) { //No targets available.

@@ -3,7 +3,7 @@
 //===== By ================================================
 //= Valaris, Spira, Au{R}oN, Tharis, HiddenDragon
 //===== Version ===========================================
-//= 1.8
+//= 2.1
 //=========================================================
 //= 1.0 - Formatted to the standard
 //= 1.1 - New Effects, up to 2007/05/07 Sakexe. [Au{R}oN]
@@ -14,6 +14,9 @@
 //= 1.6 - New Effects, up to 2008/01/02 Sakexe. [Au{R}oN]
 //= 1.7 - New Effects, up to 2008/03/26 Sakexe. [Au{R}oN]
 //= 1.8 - Corrected several effect descriptions. [L0ne_W0lf]
+//= 1.9 - New Effects, up to 2008/05/28 Sakexe. [Au{R}oN]
+//= 2.0 - New Effects, up to 2008/07/15 Sakexe. [Au{R}oN]
+//= 2.1 - New Effects, up to 2008/08/06a Sakexe. [Au{R}oN]
 //===== Description =======================================
 //= A list of client-side effects sorted by their ID
 //=========================================================
@@ -722,8 +725,20 @@ number	description
 693.	Translucent yellow circle
 694.	Translucent green circle
 695.	Rotating green light
-696.	The same of 690 and 691 but Blue/Purple.
+696.	The same of 690 and 691 but Blue/Purple
 697.	(Nothing)
 698.	(Nothing)
-699.	Fall of powder from the sky and raise of some leaf.
-700+.	No More Effects From 2008/03/26 Sakexe.
+699.	Fall of powder from the sky and raise of some leaf
+700.	Big Colored Green Sphere.
+701.	Little Colored Violet Sphere
+702.	Light Infltrarion from and Fall of powder from the sky
+703.	(Nothing)
+704.	(Nothing)
+705.	(Nothing)
+706.	(Nothing)
+707.	Client Crash :P
+708.	A Perfect Copy of Storm Gust Effect (Effect 89)
+709.	A Firework that split in 4 mini fireworks
+710.	A Sphere like Effect 701 but Green, and a bit more larger
+711.	A big violet wall
+712.	No More Effects From 2008/08/06a Sakexe.
