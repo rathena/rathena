@@ -3981,7 +3981,7 @@ static int mob_readskilldb(void)
 
 	const struct {
 		char str[32];
-		int id;
+		enum MobSkillState id;
 	} cond1[] = {
 		{	"always",			MSC_ALWAYS				},
 		{	"myhpltmaxrate",	MSC_MYHPLTMAXRATE		},

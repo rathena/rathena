@@ -35,8 +35,22 @@
 #define MOB_CLONE_START (MAX_MOB_DB-999)
 #define MOB_CLONE_END MAX_MOB_DB
 
+//Mob skill states.
+enum MobSkillState {
+	MSS_ANY = -1,
+	MSS_IDLE,
+	MSS_WALK,
+	MSS_LOOT,
+	MSS_DEAD,
+	MSS_BERSERK, //Aggressive mob attacking
+	MSS_ANGRY,   //Mob retaliating from being attacked.
+	MSS_RUSH,    //Mob following a player after being attacked.
+	MSS_FOLLOW,  //Mob following a player without being attacked.
+	MSS_ANYTARGET,
+};
+
 struct mob_skill {
-	short state;
+	enum MobSkillState state;
 	short skill_id,skill_lv;
 	short permillage;
 	int casttime,delay;
@@ -88,7 +102,7 @@ struct mob_data {
 							//3: Alchemist Summon Flora
 	} special_state; //Special mob information that does not needs to be zero'ed on mob respawn.
 	struct {
-		unsigned skillstate : 8;
+		enum MobSkillState skillstate;
 		unsigned aggressive : 1; //Signals whether the mob AI is in aggressive mode or reactive mode. [Skotlex]
 		unsigned char steal_flag; //number of steal tries (to prevent steal exploit on mobs with few items) [Lupus]
 		unsigned steal_coin_flag : 1;
@@ -170,21 +184,6 @@ enum {
 	MSC_ALCHEMIST,
 	MSC_SPAWN,
 };
-
-//Mob skill states.
-enum {
-	MSS_ANY = -1,
-	MSS_IDLE,
-	MSS_WALK,
-	MSS_LOOT,
-	MSS_DEAD,
-	MSS_BERSERK, //Aggressive mob attacking
-	MSS_ANGRY,   //Mob retaliating from being attacked.
-	MSS_RUSH,    //Mob following a player after being attacked.
-	MSS_FOLLOW,  //Mob following a player without being attacked.
-	MSS_ANYTARGET,
-};
-
 
 // The data structures for storing delayed item drops
 struct item_drop {
