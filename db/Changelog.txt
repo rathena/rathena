@@ -40,6 +40,9 @@
 	2385 Recuvative_Armor		Should trigger HP/SP return with magical kills as well.
 
 =======================
+2008/08/14
+	* Added: new items, according to kRO items descriptions (commented out for a while) (bugreport:2043) [akrus]
+	* Fixed: items 7918, 11703 wrong line format (bugreport:2055) [akrus]
 2008/08/12
 	* Hammerfall now works with daggers and 1h swords (bugreport:2045) [ultramage]
 2008/08/11
