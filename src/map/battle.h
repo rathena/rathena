@@ -328,7 +328,7 @@ extern struct Battle_Config
 	int disp_hpmeter;
 	int bone_drop;
 	int buyer_name;
-	int gm_cant_party_max_lv;
+	int gm_cant_party_min_lv;
 	int gm_can_party; // [SketchyPhoenix]
 
 // eAthena additions

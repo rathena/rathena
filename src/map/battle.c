@@ -3404,7 +3404,7 @@ static const struct _battle_data {
 	{ "gm_join_chat",                       &battle_config.gm_join_chat,                    0,      0,      100,            },
 	{ "gm_kick_chat",                       &battle_config.gm_kick_chat,                    0,      0,      100,            },
 	{ "gm_can_party",                       &battle_config.gm_can_party,                    0,      0,      1,              },
-	{ "gm_cant_party_max_lv",               &battle_config.gm_cant_party_max_lv,            80,     0,      100,            },
+	{ "gm_cant_party_min_lv",               &battle_config.gm_cant_party_min_lv,            20,     0,      100,            },
 	{ "player_skillfree",                   &battle_config.skillfree,                       0,      0,      1,              },
 	{ "player_skillup_limit",               &battle_config.skillup_limit,                   1,      0,      1,              },
 	{ "weapon_produce_rate",                &battle_config.wp_rate,                         100,    0,      INT_MAX,        },
