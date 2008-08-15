@@ -4646,7 +4646,7 @@
 14277,Quagmire_10_Scroll_Box2,Quagmire Scroll 10ea Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14594,10; },{},{}
 14278,Quagmire_30_Scroll_Box2,Quagmire Scroll 30ea Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14594,30; },{},{}
 14279,Quagmire_50_Scroll_Box2,Quagmire Scroll 50ea Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14594,50; },{},{}
-14281,Healing_Staff_Box2,Healing Staff Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 1638,1; },{},{}
+14280,Healing_Staff_Box2,Healing Staff Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 1638,1; },{},{}
 14281,Praccsinos_Box,Praccsinos_Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 14282,Emperium_Box,Emperium_Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 14283,Marriage_Certificate_Box,Marriage_Certificate_Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
