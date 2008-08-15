@@ -136,7 +136,6 @@ void run_script(struct script_code*,int,int,int);
 int set_var(struct map_session_data *sd, char *name, void *val);
 int conv_num(struct script_state *st,struct script_data *data);
 const char* conv_str(struct script_state *st,struct script_data *data);
-void setd_sub(struct script_state *st, struct map_session_data *sd, char *varname, int elem, void *value, struct linkdb_node **ref);
 int run_script_timer(int tid, unsigned int tick, int id, intptr data);
 void run_script_main(struct script_state *st);
 

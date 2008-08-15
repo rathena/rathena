@@ -7,12 +7,12 @@
 //#define DEBUG_HASH
 
 #include "../common/cbasetypes.h"
-#include "../common/timer.h"
 #include "../common/malloc.h"
 #include "../common/lock.h"
 #include "../common/nullpo.h"
 #include "../common/showmsg.h"
 #include "../common/strlib.h"
+#include "../common/timer.h"
 #include "../common/utils.h"
 
 #include "map.h"
@@ -63,6 +63,10 @@
 // - 'function FuncName;' function declarations reverting to global functions 
 //   if local label isn't found
 // - join callfunc and callsub's functionality
+// - use script_op2name in the DEBUG_DISASM block
+// - remove dynamic allocation in add_word()
+// - remove GETVALUE / SETVALUE
+// - clean up the set_reg / set_val / setd_sub mess
 
 
 
@@ -146,22 +150,27 @@
 /// Composes the uid of a reference from the id and the index
 #define reference_uid(id,idx) ( (int32)((((uint32)(id)) & 0x00ffffff) | (((uint32)(idx)) << 24)) )
 
+#define not_server_variable(prefix) ( (prefix) != '$' && (prefix) != '.')
+#define not_array_variable(prefix) ( (prefix) != '$' && (prefix) != '@' && (prefix) != '.' )
+#define is_string_variable(name) ( (name)[strlen(name) - 1] == '$' )
+
 #define FETCH(n, t) \
 		if( script_hasdata(st,n) ) \
 			(t)=script_getnum(st,n);
 
 #define SCRIPT_BLOCK_SIZE 512
 enum { LABEL_NEXTLINE=1,LABEL_START };
-static unsigned char * script_buf = NULL;
-static int script_pos,script_size;
+
+/// temporary buffer for passing around compiled bytecode
+/// @see add_scriptb, set_label, parse_script
+static unsigned char* script_buf = NULL;
+static int script_pos = 0, script_size = 0;
 
 #define GETVALUE(buf,i)		((int)MakeDWord(MakeWord((buf)[i],(buf)[i+1]),MakeWord((buf)[i+2],0)))
 #define SETVALUE(buf,i,n)	((buf)[i]=GetByte(n,0),(buf)[i+1]=GetByte(n,1),(buf)[i+2]=GetByte(n,2))
 
-static char *str_buf;
-static int str_pos,str_size;
-static int str_data_size = 0;
-int str_num=LABEL_START;
+// String buffer structures.
+// str_data stores string information
 static struct str_data_struct {
 	enum c_op type;
 	int str;
@@ -171,6 +180,14 @@ static struct str_data_struct {
 	int val;
 	int next;
 } *str_data = NULL;
+static int str_data_size = 0; // size of the data
+static int str_num = LABEL_START; // next id to be assigned
+
+// str_buf holds the strings themselves
+static char *str_buf;
+static int str_size = 0; // size of the buffer
+static int str_pos = 0; // next position to be assigned
+
 
 // Using a prime number for SCRIPT_HASH_SIZE should give better distributions
 #define SCRIPT_HASH_SIZE 1021
@@ -257,9 +274,6 @@ typedef struct script_function {
 extern script_function buildin_func[];
 
 static struct linkdb_node *sleep_db;
-#define not_server_variable(prefix) ( (prefix) != '$' && (prefix) != '.')
-#define not_array_variable(prefix) ( (prefix) != '$' && (prefix) != '@' && (prefix) != '.' )
-#define is_string_variable(name) ( (name)[strlen(name) - 1] == '$' )
 
 /*==========================================
  * ローカルプロトタイプ宣言 (必要な物のみ)
@@ -416,7 +430,7 @@ static void script_reportdata(struct script_data* data)
 	case C_NAME:// reference
 		if( reference_tovariable(data) )
 		{// variable
-			char* name = reference_getname(data);
+			const char* name = reference_getname(data);
 			if( not_array_variable(*name) )
 				ShowDebug("Data: variable name='%s'\n", name);
 			else
@@ -584,56 +598,50 @@ int add_str(const char* p)
 }
 
 
-/*==========================================
- * スクリプトバッファサイズの確認と拡張
- *------------------------------------------*/
-static void expand_script_buf(void)
-{
-	script_size+=SCRIPT_BLOCK_SIZE;
-	RECREATE(script_buf,unsigned char,script_size);
-}
-
-/*==========================================
- * スクリプトバッファに１バイト書き込む
- *------------------------------------------*/
- 
-#define add_scriptb(a) if( script_pos+1>=script_size ) expand_script_buf(); script_buf[script_pos++]=(uint8)(a)
-
-#if 0
+/// Appends 1 byte to the script buffer.
 static void add_scriptb(int a)
 {
-	expand_script_buf();
-	script_buf[script_pos++]=a;
+	if( script_pos+1 >= script_size )
+	{
+		script_size += SCRIPT_BLOCK_SIZE;
+		RECREATE(script_buf,unsigned char,script_size);
+	}
+	script_buf[script_pos++] = (uint8)(a);
 }
-#endif
 
-/*==========================================
- * スクリプトバッファにデータタイプを書き込む
- *------------------------------------------*/
+/// Appends a c_op value to the script buffer.
+/// The value is variable-length encoded into 8-bit blocks.
+/// The encoding scheme is ( 01?????? )* 00??????, LSB first.
+/// All blocks but the last hold 7 bits of data, topmost bit is always 1 (carries).
 static void add_scriptc(int a)
 {
-	while(a>=0x40){
+	while( a >= 0x40 )
+	{
 		add_scriptb((a&0x3f)|0x40);
-		a=(a-0x40)>>6;
+		a = (a - 0x40) >> 6;
 	}
-	add_scriptb(a&0x3f);
+
+	add_scriptb(a);
 }
 
-/*==========================================
- * スクリプトバッファに整数を書き込む
- *------------------------------------------*/
+/// Appends an integer value to the script buffer.
+/// The value is variable-length encoded into 8-bit blocks.
+/// The encoding scheme is ( 11?????? )* 10??????, LSB first.
+/// All blocks but the last hold 7 bits of data, topmost bit is always 1 (carries).
 static void add_scripti(int a)
 {
-	while(a>=0x40){
-		add_scriptb(a|0xc0);
-		a=(a-0x40)>>6;
+	while( a >= 0x40 )
+	{
+		add_scriptb((a&0x3f)|0xc0);
+		a = (a - 0x40) >> 6;
 	}
 	add_scriptb(a|0x80);
 }
 
-/*==========================================
- * スクリプトバッファにラベル/変数/関数を書き込む
- *------------------------------------------*/
+/// Appends a str_data object (label/function/variable/integer) to the script buffer.
+
+///
+/// @param l The id of the str_data entry
 // 最大16Mまで
 static void add_scriptl(int l)
 {
@@ -651,18 +659,17 @@ static void add_scriptl(int l)
 	case C_USERFUNC:
 		// ラベルの可能性があるのでbackpatch用データ埋め込み
 		add_scriptc(C_NAME);
-		str_data[l].backpatch=script_pos;
+		str_data[l].backpatch = script_pos;
 		add_scriptb(backpatch);
 		add_scriptb(backpatch>>8);
 		add_scriptb(backpatch>>16);
 		break;
 	case C_INT:
 		add_scripti(abs(str_data[l].val));
-		if(str_data[l].val < 0) //Notice that this is negative, from jA (Rayce)
+		if( str_data[l].val < 0 ) //Notice that this is negative, from jA (Rayce)
 			add_scriptc(C_NEG);
 		break;
-	default:
-		// もう他の用途と確定してるので数字をそのまま
+	default: // assume C_NAME
 		add_scriptc(C_NAME);
 		add_scriptb(l);
 		add_scriptb(l>>8);
@@ -2024,7 +2031,7 @@ struct script_code* parse_script(const char *src,const char *file,int line,int o
 				break;
 			case C_NAME:
 				j = (*(int*)(script_buf+i)&0xffffff);
-				ShowMessage("C_NAME %s",j == 0xffffff ? "?? unknown ??" : str_buf + str_data[j].str);
+				ShowMessage("C_NAME %s",j == 0xffffff ? "?? unknown ??" : get_str(j));
 				i += 3;
 				break;
 			case C_ARG:		ShowMessage("C_ARG"); break;
@@ -2091,7 +2098,7 @@ TBL_PC *script_rid2sd(struct script_state *st)
 /// @param data Variable/constant
 void get_val(struct script_state* st, struct script_data* data)
 {
-	char* name;
+	const char* name;
 	char prefix;
 	char postfix;
 	TBL_PC* sd = NULL;
@@ -2232,12 +2239,12 @@ void* get_val2(struct script_state* st, int uid, struct linkdb_node** ref)
  * Stores the value of a script variable
  * Return value is 0 on fail, 1 on success.
  *------------------------------------------*/
-static int set_reg(struct script_state* st, TBL_PC* sd, int num, char* name, const void* value, struct linkdb_node** ref)
+static int set_reg(struct script_state* st, TBL_PC* sd, int num, const char* name, const void* value, struct linkdb_node** ref)
 {
-	char prefix = name[0]; char postfix = name[strlen(name)-1];
+	char prefix = name[0];
 
-	if (postfix == '$') { // string variable
-
+	if( is_string_variable(name) )
+	{// string variable
 		const char* str = (const char*)value;
 		switch (prefix) {
 		case '@':
@@ -2260,9 +2267,9 @@ static int set_reg(struct script_state* st, TBL_PC* sd, int num, char* name, con
 		default:
 			return pc_setglobalreg_str(sd, name, str);
 		}
-
-	} else { // integer variable
-
+	}
+	else
+	{// integer variable
 		int val = (int)value;
 		if(str_data[num&0x00ffffff].type == C_PARAM)
 			return pc_setparam(sd, str_data[num&0x00ffffff].val, val);
@@ -2293,7 +2300,12 @@ static int set_reg(struct script_state* st, TBL_PC* sd, int num, char* name, con
 
 int set_var(TBL_PC* sd, char* name, void* val)
 {
-    return set_reg(NULL, sd, add_str(name), name, val, NULL);
+    return set_reg(NULL, sd, reference_uid(add_str(name),0), name, val, NULL);
+}
+
+void setd_sub(struct script_state *st, TBL_PC *sd, const char *varname, int elem, void *value, struct linkdb_node **ref)
+{
+	set_reg(st, sd, reference_uid(add_str(varname),elem), varname, value, ref);
 }
 
 /// Converts the data to a string
@@ -2482,14 +2494,12 @@ void pop_stack(struct script_stack* stack, int start, int end)
  *------------------------------------------*/
 void script_free_vars(struct linkdb_node **node)
 {
-	struct linkdb_node *n = *node;
-	while(n) {
-		char *name   = str_buf + str_data[(int)(n->key)&0x00ffffff].str;
-		char postfix = name[strlen(name)-1];
-		if( postfix == '$' ) {
-			// 文字型変数なので、データ削除
-			aFree(n->data);
-		}
+	struct linkdb_node* n = *node;
+	while( n != NULL)
+	{
+		const char* name = get_str((int)(n->key)&0x00ffffff);
+		if( is_string_variable(name) )
+			aFree(n->data); // 文字型変数なので、データ削除
 		n = n->next;
 	}
 	linkdb_final( node );
@@ -2569,18 +2579,6 @@ int pop_val(struct script_state* st)
 	get_val(st,&(st->stack->stack_data[st->stack->sp]));
 	if(st->stack->stack_data[st->stack->sp].type==C_INT)
 		return st->stack->stack_data[st->stack->sp].u.num;
-	return 0;
-}
-
-int isstr(struct script_data *c)
-{
-	if( data_isstring(c) )
-		return 1;
-	else if( data_isreference(c) ) {
-		char *p = str_buf + str_data[c->u.num & 0xffffff].str;
-		char postfix = p[strlen(p)-1];
-		return (postfix == '$');
-	}
 	return 0;
 }
 
@@ -2831,15 +2829,15 @@ int run_func(struct script_state *st)
 
 #ifdef DEBUG_RUN
 	if(battle_config.etc_log) {
-		ShowDebug("run_func : %s? (%d(%d)) sp=%d (%d...%d)\n",str_buf+str_data[func].str, func, str_data[func].type, st->stack->sp, st->start, st->end);
+		ShowDebug("run_func : %s? (%d(%d)) sp=%d (%d...%d)\n", get_str(func), func, str_data[func].type, st->stack->sp, st->start, st->end);
 		ShowDebug("stack dump :");
 		for(i=0;i<end_sp;i++){
 			switch(st->stack->stack_data[i].type){
 			case C_INT:
-				ShowMessage(" int(%d)",st->stack->stack_data[i].u.num);
+				ShowMessage(" int(%d)", st->stack->stack_data[i].u.num);
 				break;
 			case C_NAME:
-				ShowMessage(" name(%s)",str_buf+str_data[st->stack->stack_data[i].u.num & 0xffffff].str);
+				ShowMessage(" name(%s)", get_str(st->stack->stack_data[i].u.num & 0xffffff);
 				break;
 			case C_ARG:
 				ShowMessage(" arg");
@@ -2862,22 +2860,20 @@ int run_func(struct script_state *st)
 #endif
 
 	if(str_data[func].type!=C_FUNC ){
-		ShowError("run_func: '"CL_WHITE"%s"CL_RESET"' (type %d) is not function and command!\n", str_buf+str_data[func].str, str_data[func].type);
+		ShowError("run_func: '"CL_WHITE"%s"CL_RESET"' (type %d) is not function and command!\n", get_str(func), str_data[func].type);
 //		st->stack->sp=0;
 		st->state=END;
 		script_reportsrc(st);
 		return 1;
 	}
 #ifdef DEBUG_RUN
-	ShowDebug("run_func : %s (func_no : %d , func_type : %d pos : 0x%x)\n",
-		str_buf+str_data[func].str,func,str_data[func].type,st->pos
-	);
+	ShowDebug("run_func : %s (func_no : %d , func_type : %d pos : 0x%x)\n", get_str(func),func,str_data[func].type,st->pos);
 #endif
 	if(str_data[func].func){
 		if (str_data[func].func(st)) //Report error
 			script_reportsrc(st);
 	} else {
-		ShowError("run_func : %s? (%d(%d))\n",str_buf+str_data[func].str,func,str_data[func].type);
+		ShowError("run_func : %s? (%d(%d))\n", get_str(func),func,str_data[func].type);
 		script_pushint(st,0);
 		script_reportsrc(st);
 	}
@@ -2917,7 +2913,7 @@ int run_func(struct script_state *st)
 }
 
 /*==========================================
- * スクリプトの実行
+ * script execution
  *------------------------------------------*/
 void run_script_main(struct script_state *st);
 
@@ -3272,8 +3268,8 @@ int do_final_script()
 			fprintf(fp,"num : hash : data_name\n");
 			fprintf(fp,"---------------------------------------------------------------\n");
 			for(i=LABEL_START; i<str_num; i++) {
-				unsigned int h = calc_hash(str_buf+str_data[i].str);
-				fprintf(fp,"%04d : %4u : %s\n",i,h,str_buf+str_data[i].str);
+				unsigned int h = calc_hash(get_str(i));
+				fprintf(fp,"%04d : %4u : %s\n",i,h, get_str(i));
 				++count[h];
 			}
 			fprintf(fp,"--------------------\n\n");
@@ -3741,7 +3737,7 @@ BUILDIN_FUNC(goto)
 }
 
 /*==========================================
- * ユーザー定義関数の呼び出し
+ * user-defined function call
  *------------------------------------------*/
 BUILDIN_FUNC(callfunc)
 {
@@ -3761,11 +3757,11 @@ BUILDIN_FUNC(callfunc)
 	for( i = st->start+3, j = 0; i < st->end; i++, j++ )
 		push_copy(st->stack,i);
 
-	script_pushint(st,j);				// 引数の数をプッシュ
-	script_pushint(st,st->stack->defsp);	// 現在の基準スタックポインタをプッシュ
-	script_pushint(st,(int)st->script);	// 現在のスクリプトをプッシュ
-	script_pushint(st,(int)st->stack->var_function);	// 現在の関数依存変数をプッシュ
-	push_val(st->stack,C_RETINFO,st->pos);		// 現在のスクリプト位置をプッシュ
+	script_pushint(st,j);                            // push argument count
+	script_pushint(st,st->stack->defsp);             // push current stack pointer
+	script_pushint(st,(int)st->script);              // push current script
+	script_pushint(st,(int)st->stack->var_function); // push function-dependent variables
+	push_val(st->stack,C_RETINFO,st->pos);           // push current script location
 
 	oldscr = st->script;
 	oldval = st->stack->var_function;
@@ -3776,65 +3772,65 @@ BUILDIN_FUNC(callfunc)
 	st->state = GOTO;
 	st->stack->var_function = (struct linkdb_node**)aCalloc(1, sizeof(struct linkdb_node*));
 
-	// ' 変数の引き継ぎ
 	for( i = 0; i < j; i++ )
 	{
 		struct script_data* s = script_getdatatop(st, -6-i);
 		if( data_isreference(s) && !s->ref )
 		{
-			char* name = str_buf + str_data[s->u.num&0x00ffffff].str;
-			// '@ 変数の引き継ぎ
-			if( name[0] == '.' && name[1] == '@' ) {
+			const char* name = reference_getname(s);
+			if( name[0] == '.' && name[1] == '@' )
 				s->ref = oldval;
-			} else if( name[0] == '.' ) {
+			else if( name[0] == '.' )
 				s->ref = &oldscr->script_vars;
-			}
 		}
 	}
 
 	return 0;
 }
 /*==========================================
- * サブルーティンの呼び出し
+ * subroutine call
  *------------------------------------------*/
 BUILDIN_FUNC(callsub)
 {
-	int pos=script_getnum(st,2);
 	int i,j;
-	if(!data_islabel(script_getdata(st,2)) && !data_isfunclabel(script_getdata(st,2))) {
+	struct linkdb_node** oldval;
+	int pos = script_getnum(st,2);
+
+	if( !data_islabel(script_getdata(st,2)) && !data_isfunclabel(script_getdata(st,2)) )
+	{
 		ShowError("script:callsub: argument is not a label\n");
 		script_reportdata(script_getdata(st,2));
-		st->state=END;
+		st->state = END;
 		return 1;
-	} else {
-		struct linkdb_node **oldval = st->stack->var_function;
+	}
 
-		for(i=st->start+3,j=0;i<st->end;i++,j++)
-			push_copy(st->stack,i);
+	oldval = st->stack->var_function;
 
-		script_pushint(st,j);				// 引数の数をプッシュ
-		script_pushint(st,st->stack->defsp);	// 現在の基準スタックポインタをプッシュ
-		script_pushint(st,(int)st->script);	// 現在のスクリプトをプッシュ
-		script_pushint(st,(int)st->stack->var_function);	// 現在の関数依存変数をプッシュ
-		push_val(st->stack,C_RETINFO,st->pos);		// 現在のスクリプト位置をプッシュ
+	for( i = st->start+3, j = 0; i < st->end; i++, j++ )
+		push_copy(st->stack,i);
 
-		st->pos=pos;
-		st->stack->defsp=st->start+5+j;
-		st->state=GOTO;
-		st->stack->var_function = (struct linkdb_node**)aCalloc(1, sizeof(struct linkdb_node*));
+	script_pushint(st,j);                            // push argument count
+	script_pushint(st,st->stack->defsp);             // push current stack pointer
+	script_pushint(st,(int)st->script);              // push current script
+	script_pushint(st,(int)st->stack->var_function); // push function-dependent variables
+	push_val(st->stack,C_RETINFO,st->pos);           // push current script location
 
-		// ' 変数の引き継ぎ
-		for(i = 0; i < j; i++) {
-			struct script_data *s = &st->stack->stack_data[st->stack->sp-6-i];
-			if( data_isreference(s) && !s->ref ) {
-				char *name = str_buf+str_data[s->u.num&0x00ffffff].str;
-				// '@ 変数の引き継ぎ
-				if( name[0] == '.' && name[1] == '@' ) {
-					s->ref = oldval;
-				}
-			}
+	st->pos = pos;
+	st->stack->defsp = st->start+5+j;
+	st->state = GOTO;
+	st->stack->var_function = (struct linkdb_node**)aCalloc(1, sizeof(struct linkdb_node*));
+
+	for(i = 0; i < j; i++)
+	{
+		struct script_data* s = script_getdatatop(st, -6-i);
+		if( data_isreference(s) && !s->ref )
+		{
+			const char* name = reference_getname(s);
+			if( name[0] == '.' && name[1] == '@' )
+				s->ref = oldval;
 		}
 	}
+
 	return 0;
 }
 
@@ -3887,7 +3883,7 @@ BUILDIN_FUNC(return)
 		data = script_getdatatop(st, -1);
 		if( data_isreference(data) )
 		{
-			char* name = reference_getname(data);
+			const char* name = reference_getname(data);
 			if( name[0] == '.' && name[1] == '@' )
 			{// temporary script variable, convert to value
 				get_val(st, data);
@@ -4326,7 +4322,7 @@ BUILDIN_FUNC(input)
 	TBL_PC* sd;
 	struct script_data* data;
 	int uid;
-	char* name;
+	const char* name;
 	int min;
 	int max;
 
@@ -4383,9 +4379,8 @@ BUILDIN_FUNC(set)
 	TBL_PC* sd = NULL;
 	struct script_data* data;
 	int num;
-	char* name;
+	const char* name;
 	char prefix;
-	char postfix;
 
 	data = script_getdata(st,2);
 	if( !data_isreference(data) )
@@ -4399,7 +4394,6 @@ BUILDIN_FUNC(set)
 	num = reference_getuid(data);
 	name = reference_getname(data);
 	prefix = *name;
-	postfix = (*name ? name[strlen(name)-1] : '\0');
 
 	if( not_server_variable(prefix) )
 	{
@@ -4411,16 +4405,11 @@ BUILDIN_FUNC(set)
 		}
 	}
 
-	if( postfix == '$' )
-	{// string variable
-		const char* str = script_getstr(st,3);
-		set_reg(st,sd,num,name,(void*)str,script_getref(st,2));
-	}
+	if( is_string_variable(name) )
+		set_reg(st,sd,num,name,(void*)script_getstr(st,3),script_getref(st,2));
 	else
-	{// integer variable
-		int val = script_getnum(st,3);
-		set_reg(st,sd,num,name,(void*)val,script_getref(st,2));
-	}
+		set_reg(st,sd,num,name,(void*)script_getnum(st,3),script_getref(st,2));
+
 	// return a copy of the variable reference
 	script_pushcopy(st,2);
 
@@ -4466,7 +4455,7 @@ static int32 getarraysize(struct script_state* st, int32 id, int32 idx, int isst
 BUILDIN_FUNC(setarray)
 {
 	struct script_data* data;
-	char* name;
+	const char* name;
 	int32 start;
 	int32 end;
 	int32 id;
@@ -4507,18 +4496,12 @@ BUILDIN_FUNC(setarray)
 	if( is_string_variable(name) )
 	{// string array
 		for( i = 3; start < end; ++start, ++i )
-		{
-			void* v = (void*)script_getstr(st,i);
-			set_reg(st, sd, reference_uid(id, start), name, v, reference_getref(data));
-		}
+			set_reg(st, sd, reference_uid(id, start), name, (void*)script_getstr(st,i), reference_getref(data));
 	}
 	else
 	{// int array
 		for( i = 3; start < end; ++start, ++i )
-		{
-			void* v = (void*)script_getnum(st,i);
-			set_reg(st, sd, reference_uid(id, start), name, v, reference_getref(data));
-		}
+			set_reg(st, sd, reference_uid(id, start), name, (void*)script_getnum(st,i), reference_getref(data));
 	}
 	return 0;
 }
@@ -4530,7 +4513,7 @@ BUILDIN_FUNC(setarray)
 BUILDIN_FUNC(cleararray)
 {
 	struct script_data* data;
-	char* name;
+	const char* name;
 	int32 start;
 	int32 end;
 	int32 id;
@@ -4586,8 +4569,8 @@ BUILDIN_FUNC(copyarray)
 {
 	struct script_data* data1;
 	struct script_data* data2;
-	char* name1;
-	char* name2;
+	const char* name1;
+	const char* name2;
 	int32 idx1;
 	int32 idx2;
 	int32 id1;
@@ -4679,7 +4662,7 @@ BUILDIN_FUNC(copyarray)
 BUILDIN_FUNC(getarraysize)
 {
 	struct script_data* data;
-	char* name;
+	const char* name;
 
 	data = script_getdata(st, 2);
 	if( !data_isreference(data) )
@@ -4713,7 +4696,7 @@ BUILDIN_FUNC(getarraysize)
 BUILDIN_FUNC(deletearray)
 {
 	struct script_data* data;
-	char* name;
+	const char* name;
 	int start;
 	int end;
 	int id;
@@ -4788,7 +4771,7 @@ BUILDIN_FUNC(deletearray)
 BUILDIN_FUNC(getelementofarray)
 {
 	struct script_data* data;
-	char* name;
+	const char* name;
 	int32 id;
 	int i;
 
@@ -10919,12 +10902,11 @@ BUILDIN_FUNC(getmapxy)
 	TBL_PC *sd=NULL;
 
 	int num;
-	char *name;
+	const char *name;
 	char prefix;
 
 	int x,y,type;
 	char mapname[MAP_NAME_LENGTH];
-	memset(mapname, 0, sizeof(mapname));
 
 	if( !data_isreference(script_getdata(st,2)) ){
 		ShowWarning("script: buildin_getmapxy: not mapname variable\n");
@@ -10993,11 +10975,11 @@ BUILDIN_FUNC(getmapxy)
 
 	x= bl->x;
 	y= bl->y;
-	memcpy(mapname, map[bl->m].name, MAP_NAME_LENGTH);
+	safestrncpy(mapname, map[bl->m].name, MAP_NAME_LENGTH);
 	
 	//Set MapName$
 	num=st->stack->stack_data[st->start+2].u.num;
-	name=(char *)(str_buf+str_data[num&0x00ffffff].str);
+	name=get_str(num&0x00ffffff);
 	prefix=*name;
 
 	if(not_server_variable(prefix))
@@ -11008,7 +10990,7 @@ BUILDIN_FUNC(getmapxy)
 
 	//Set MapX
 	num=st->stack->stack_data[st->start+3].u.num;
-	name=(char *)(str_buf+str_data[num&0x00ffffff].str);
+	name=get_str(num&0x00ffffff);
 	prefix=*name;
 
 	if(not_server_variable(prefix))
@@ -11019,7 +11001,7 @@ BUILDIN_FUNC(getmapxy)
 
 	//Set MapY
 	num=st->stack->stack_data[st->start+4].u.num;
-	name=(char *)(str_buf+str_data[num&0x00ffffff].str);
+	name=get_str(num&0x00ffffff);
 	prefix=*name;
 
 	if(not_server_variable(prefix))
@@ -11592,12 +11574,6 @@ BUILDIN_FUNC(distance)
 
 // <--- [zBuffer] List of mathematics commands
 // [zBuffer] List of dynamic var commands --->
-//FIXME: some other functions are using this private function
-void setd_sub(struct script_state *st, TBL_PC *sd, char *varname, int elem, void *value, struct linkdb_node **ref)
-{
-	set_reg(st, sd, add_str(varname)+(elem<<24), varname, value, ref);
-	return;
-}
 
 BUILDIN_FUNC(setd)
 {
@@ -11637,7 +11613,7 @@ int buildin_query_sql_sub(struct script_state* st, Sql* handle)
 	TBL_PC* sd = NULL;
 	const char* query;
 	struct script_data* data;
-	char* name;
+	const char* name;
 	int max_rows = 128;// maximum number of rows
 	int num_vars;
 	int num_cols;
@@ -12619,7 +12595,7 @@ BUILDIN_FUNC(awake)
 BUILDIN_FUNC(getvariableofnpc)
 {
 	struct script_data* data;
-	char* name;
+	const char* name;
 	struct npc_data* nd;
 
 	data = script_getdata(st,2);

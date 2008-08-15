@@ -634,8 +634,8 @@ int pc_setregstr(struct map_session_data *sd,int reg,const char *str);
 #define pc_setaccountreg2str(sd,reg,val) pc_setregistry_str(sd,reg,val,1)
 int pc_readregistry(struct map_session_data*,const char*,int);
 int pc_setregistry(struct map_session_data*,const char*,int,int);
-char *pc_readregistry_str(struct map_session_data*,char*,int);
-int pc_setregistry_str(struct map_session_data*,char*,const char*,int);
+char *pc_readregistry_str(struct map_session_data*,const char*,int);
+int pc_setregistry_str(struct map_session_data*,const char*,const char*,int);
 
 int pc_addeventtimer(struct map_session_data *sd,int tick,const char *name);
 int pc_deleventtimer(struct map_session_data *sd,const char *name);
