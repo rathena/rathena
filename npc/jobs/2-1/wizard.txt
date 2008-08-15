@@ -18,7 +18,8 @@
 //= 2.5c Bug fixes. Cleaned up some NPCs slightly. [L0ne_W0lf]
 //= 2.6 Fixed Water Room not warping on time-up. [L0ne_W0lf]
 //= 2.7 Now uses enable and disable waitingroomevent. [L0ne_W0lf]
-//= 	Other monir fixes to various NPCs.
+//= 	Other minor fixes to various NPCs.
+//= 2.7a Added end; :D (bugreport:2038) [Yommy]
 //============================================================ 
 
 gef_tower,111,37,4	script	Wizard Guildsman	70,{
@@ -1614,6 +1615,7 @@ OnTimer9000:
 	donpcevent "Test Helper#wiz::OnDisable";
 	donpcevent "Waiting Room#wiz::OnStart";
 	stopnpctimer;
+	end;
 }
 
 gef_tower,107,36,4	script	White Dog#wiz	81,{

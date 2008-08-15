@@ -1,6 +1,8 @@
 ﻿Date		Added
 ======
 2008/08/11
+	* Rev. 13079 Added end; :D (bugreport:2038) [Yommy]
+2008/08/11
 	* Rev. 13068 Updated the dungeon teleport scroll menu. [L0ne_W0lf]
 2008/08/10
 	* Rev. 13065 Updated Cashshop functions. [L0ne_W0lf]
