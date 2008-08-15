@@ -51,27 +51,6 @@ AC_ARG_ENABLE(
 
 
 #
-# mapregsql
-#
-AC_ARG_ENABLE(
-	[mapregsql],
-	AC_HELP_STRING(
-		[--enable-mapregsql],
-		[Makes map-wide script variables be saved to SQL instead of TXT files in the sql map-server. (disabled by default)]
-	),
-	[
-		enable_mapregsql="$enableval"
-		case $enableval in
-			no);;
-			yes);;
-			*) AC_MSG_ERROR([[invalid argument --enable-mapregsql=$enableval... stopping]]);;
-		esac
-	],
-	[enable_mapregsql="no"]
-)
-
-
-#
 # debug
 #
 AC_ARG_ENABLE(
@@ -335,14 +314,6 @@ esac
 #
 if test -n "$enable_packetver" ; then
 	CFLAGS="$CFLAGS -DPACKETVER=$enable_packetver"
-fi
-
-
-#
-# Mapregsql
-#
-if test "$enable_mapregsql" = "yes" ; then
-	CFLAGS="$CFLAGS -DMAPREGSQL"
 fi
 
 

@@ -4,6 +4,8 @@
 #ifndef _SCRIPT_H_
 #define _SCRIPT_H_
 
+struct map_session_data;
+
 extern int potion_flag; //For use on Alchemist improved potions/Potion Pitcher. [Skotlex]
 extern int potion_hp, potion_per_hp, potion_sp, potion_per_sp;
 extern int potion_target;
@@ -150,7 +152,8 @@ struct DBMap* script_get_userfunc_db(void);
 int script_config_read(char *cfgName);
 int do_init_script(void);
 int do_final_script(void);
-int add_str(const char *p);
+int add_str(const char* p);
+const char* get_str(int id);
 int script_reload(void);
 
 extern char mapreg_txt[];

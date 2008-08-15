@@ -301,6 +301,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\src\map\mapreg.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\map\mapreg_txt.c"
+				>
+			</File>
+			<File
 				RelativePath="..\src\map\mercenary.c"
 				>
 			</File>

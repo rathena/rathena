@@ -303,6 +303,14 @@ SOURCE=..\src\map\map.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\src\map\mapreg.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\map\mapreg_sql.c
+# End Source File
+# Begin Source File
+
 SOURCE=..\src\map\mercenary.c
 # End Source File
 # Begin Source File

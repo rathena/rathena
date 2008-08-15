@@ -359,6 +359,14 @@ SOURCE=..\src\map\map.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\src\map\mapreg.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\map\mapreg_txt.c
+# End Source File
+# Begin Source File
+
 SOURCE=..\src\map\mercenary.h
 # End Source File
 # Begin Source File

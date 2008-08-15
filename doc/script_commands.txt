@@ -533,7 +533,7 @@ nothing  - A permanent variable attached to the character, the default
            names starting with 'l' if you want full backward compatibility.
 "$"      - A global permanent variable.
            They are stored in "save\mapreg.txt" or database table `mapreg`,
-           depending on server type and the MAPREGSQL compilation flag.
+           depending on server type.
 "$@"     - A global temporary variable.
            This is important for scripts which are called with no RID
            attached, that is, not triggered by a specific character object.

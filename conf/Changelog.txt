@@ -1,5 +1,7 @@
 Date	Added
 
+2008/08/13
+	* Added config settings mapreg_txt and mapreg_db to inter config [ultramage]
 2008/08/10
 	* Removed duplicate gef_cas mapflags [Yommy]
 2008/08/01

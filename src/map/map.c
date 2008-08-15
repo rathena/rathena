@@ -32,6 +32,7 @@
 #include "unit.h"
 #include "battle.h"
 #include "script.h"
+#include "mapreg.h"
 #include "guild.h"
 #include "pet.h"
 #include "mercenary.h"
@@ -2932,9 +2933,6 @@ int map_config_read(char *cfgName)
 		if (strcmpi(w1, "charhelp_txt") == 0)
 			strcpy(charhelp_txt, w2);
 		else
-		if (strcmpi(w1, "mapreg_txt") == 0)
-			strcpy(mapreg_txt, w2);
-		else
 		if(strcmpi(w1,"map_cache_file") == 0)
 			strncpy(map_cache_file,w2,255);
 		else
@@ -3034,6 +3032,9 @@ int inter_config_read(char *cfgName)
 		if(strcmpi(w1,"log_db_db")==0)
 			strcpy(log_db_db, w2);
 	#endif
+		else
+		if( mapreg_config_read(w1,w2) )
+			continue;
 		//support the import command, just like any other config
 		else
 		if(strcmpi(w1,"import")==0)
