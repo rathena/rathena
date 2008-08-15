@@ -1,14 +1,14 @@
 <?php
 	// Visual Studio 9 to Visual Studio 8 project file converter
 	// author : theultramage
-	// version: 4. august 2008
+	// version: 15. august 2008
 ?>
 <?php
-	echo "VS9 to VS8 project file converter"."\n";
-	echo "---------------------------------"."\n";
+	fprintf(STDERR, "VS9 to VS8 project file converter"."\n");
+	fprintf(STDERR, "---------------------------------"."\n");
 	if( @$_SERVER["argc"] < 2 )
 	{
-		echo "Usage: {$_SERVER["argv"][0]} file.vcproj"."\n";
+		fprintf(STDERR, "Usage: {$_SERVER["argv"][0]} file.vcproj"."\n");
 		exit();
 	}
 
@@ -17,15 +17,15 @@
 	if( $data === FALSE )
 		die("invalid input file '".$input."'");
 
-	echo "Converting {$input}...";
+	fprintf(STDERR, "Converting {$input}...");
 	
 	foreach( $data as $line )
 	{
 		if( strstr($line,'Version="9,00"') !== FALSE )
-			echo "\t".'Version="8,00"'."\n";
+			fprintf(STDOUT, "\t".'Version="8,00"'."\n");
 		else
 		if( strstr($line,'Version="9.00"') !== FALSE )
-			echo "\t".'Version="8.00"'."\n";
+			fprintf(STDOUT, "\t".'Version="8.00"'."\n");
 		else
 		if( strstr($line,'TargetFrameworkVersion') !== FALSE )
 			;
@@ -36,8 +36,8 @@
 		if( strstr($line,'DataExecutionPrevention') !== FALSE )
 			;
 		else // default
-			echo $line;
+			fprintf(STDOUT, $line);
 	}
 
-	echo "done."."\n";
+	fprintf(STDERR, "done."."\n");
 ?>
