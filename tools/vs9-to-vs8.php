@@ -1,14 +1,14 @@
 <?php
 	// Visual Studio 9 to Visual Studio 8 project file converter
 	// author : theultramage
-	// version: 15. august 2008
+	// version: 16. august 2008
 ?>
 <?php
-	fprintf(STDERR, "VS9 to VS8 project file converter"."\n");
-	fprintf(STDERR, "---------------------------------"."\n");
+	fwrite(STDERR, "VS9 to VS8 project file converter".PHP_EOL);
+	fwrite(STDERR, "---------------------------------".PHP_EOL);
 	if( @$_SERVER["argc"] < 2 )
 	{
-		fprintf(STDERR, "Usage: {$_SERVER["argv"][0]} file.vcproj"."\n");
+		fwrite(STDERR, "Usage: {$_SERVER["argv"][0]} file.vcproj".PHP_EOL);
 		exit();
 	}
 
@@ -17,15 +17,18 @@
 	if( $data === FALSE )
 		die("invalid input file '".$input."'");
 
-	fprintf(STDERR, "Converting {$input}...");
+	fwrite(STDERR, "Converting {$input}...".PHP_EOL);
 	
+	$eol = ( strstr($data[0], "\r\n") !== FALSE ) ? "\r\n" : "\n";
+	define("EOL", $eol);
+
 	foreach( $data as $line )
 	{
 		if( strstr($line,'Version="9,00"') !== FALSE )
-			fprintf(STDOUT, "\t".'Version="8,00"'."\n");
+			fwrite(STDOUT, "\t".'Version="8,00"'.EOL);
 		else
 		if( strstr($line,'Version="9.00"') !== FALSE )
-			fprintf(STDOUT, "\t".'Version="8.00"'."\n");
+			fwrite(STDOUT, "\t".'Version="8.00"'.EOL);
 		else
 		if( strstr($line,'TargetFrameworkVersion') !== FALSE )
 			;
@@ -36,8 +39,8 @@
 		if( strstr($line,'DataExecutionPrevention') !== FALSE )
 			;
 		else // default
-			fprintf(STDOUT, $line);
+			fwrite(STDOUT, $line);
 	}
 
-	fprintf(STDERR, "done."."\n");
+	fwrite(STDERR, "done.".PHP_EOL);
 ?>
