@@ -3,6 +3,12 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2008/08/16
+	* Added a mapreg txt->sql converter script to /tools, because the sql
+	  mapserver doesn't read the txt mapreg savefile anymore and people
+	  will most likely want to preserve their global variables.
+	- script is php-based and requires the php_mysql module
+	- script produces a series of INSERT statements, ready to be imported
 2008/08/15
 	* Split off mapreg code from script.c [ultramage]
 	- new mapserver files, mapreg.h, mapreg_txt.c, mapreg_sql.c
