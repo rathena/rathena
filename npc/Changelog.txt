@@ -1,5 +1,7 @@
 ﻿Date		Added
 ======
+2008/08/16
+	* Rev. 13085 Fixed typo in disable/enable npc's (bugreport:2027) [Yommy]
 2008/08/11
 	* Rev. 13079 Added end; :D (bugreport:2038) [Yommy]
 2008/08/11

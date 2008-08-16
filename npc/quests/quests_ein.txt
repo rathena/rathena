@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Evera and The eAthena Dev Team
 //===== Current Version: ===================================== 
-//= 2.0
+//= 2.1
 //===== Compatible With: ===================================== 
 //= eAthena 7.15 +
 //===== Description: ========================================= 
@@ -27,6 +27,7 @@
 //= 1.8 Fixed experience gains to match upcoming rate adjustments. [SinSloth]
 //= 1.9 Fixed a bug with Einbroch Pollution quest. [SinSloth]
 //= 2.0 Fixed bad NPC header data to comply with rev. 11603. [L0ne_W0lf]
+//= 2.1 Fixed typo in disable/enable npc's (bugreport:2027) [Yommy]
 //============================================================ 
 
 
@@ -2729,8 +2730,8 @@ OnPolution:
 	donpcevent "Uwe Kleine::OnHide";
 	donpcevent "Laboratory Soldier#01::OnHide";
 	donpcevent "Laboratory Soldier#02::OnHide";
-	disablenpc "Paddler";
-	disablenpc "Head Gear Dealer";
+	disablenpc "Paddler#ein";
+	disablenpc "Flu Mask Dealer#ein";
 
 	mapannounce "einbroch","This is a state of emercency! Harmful smog is reaching high levels of saturation. Residents of Einbroch must find shelter immediately.",bc_map;
 	monster "einbroch",82,332,"Toxic Fog",1621,1,"#PolutionNPC::OnMobChk";
@@ -2856,8 +2857,8 @@ OnTimer600000:
 	donpcevent "Laboratory Soldier#01::OnUnHide";
 	enablenpc "Laboratory Soldier#02";
 	donpcevent "Laboratory Soldier#02::OnUnHide";
-	enablenpc "Paddler";
-	enablenpc "Head Gear Dealer";
+	enablenpc "Paddler#ein";
+	enablenpc "Flu Mask Dealer#ein";
 	set $EinPolution,0;
 	set $@AlrdEinPoll,0;
 	end;
