@@ -2506,7 +2506,7 @@ arug_cas01,92,380,3	script	Steward#aru01	55,{
 				mes "allow her to stay with us.";
 				close;
 			}
-			disablenpc "Kafra Employee#arug_cas01";
+			disablenpc "Kafra Employee#aru01";
 			SetCastleData "arug_cas01",9,0;
 			mes "[ Steward ]";
 			mes "That Kafra Employee";

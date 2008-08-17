@@ -77,9 +77,9 @@ int skill_name2id(const char* name)
 int skill_get_index( int id )
 {
 	// avoid ranges reserved for mapping guild/homun/mercenary skills
-	if( id >= GD_SKILLRANGEMIN && id <= GD_SKILLRANGEMAX
-	||  id >= HM_SKILLRANGEMIN && id <= HM_SKILLRANGEMAX
-	||  id >= MC_SKILLRANGEMIN && id <= MC_SKILLRANGEMAX )
+	if( (id >= GD_SKILLRANGEMIN && id <= GD_SKILLRANGEMAX)
+	||  (id >= HM_SKILLRANGEMIN && id <= HM_SKILLRANGEMAX)
+	||  (id >= MC_SKILLRANGEMIN && id <= MC_SKILLRANGEMAX) )
 		return 0;
 
 	// map skill id to skill db index
@@ -2387,9 +2387,11 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 		break;
 
 	case TK_JUMPKICK:
-		skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,flag);
-		if (unit_movepos(src, bl->x, bl->y, 1, 1)) //Should not jump over objects and cliffs
+		if( unit_movepos(src, bl->x, bl->y, 1, 1) )
+		{
+			skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,flag);
 			clif_slide(src,bl->x,bl->y);
+		}
 		break;
 
 	case SN_SHARPSHOOTING:
@@ -10799,9 +10801,9 @@ static bool skill_parse_row_skilldb(char* split[], int columns, int current)
 {// id,range,hit,inf,element,nk,splash,max,list_num,castcancel,cast_defence_rate,inf2,maxcount,skill_type,blow_count,name,description
 	int id = atoi(split[0]);
 	int i;
-	if( id >= GD_SKILLRANGEMIN && id <= GD_SKILLRANGEMAX
-	||  id >= HM_SKILLRANGEMIN && id <= HM_SKILLRANGEMAX
-	||  id >= MC_SKILLRANGEMIN && id <= MC_SKILLRANGEMAX )
+	if( (id >= GD_SKILLRANGEMIN && id <= GD_SKILLRANGEMAX)
+	||  (id >= HM_SKILLRANGEMIN && id <= HM_SKILLRANGEMAX)
+	||  (id >= MC_SKILLRANGEMIN && id <= MC_SKILLRANGEMAX) )
 	{
 		ShowWarning("skill_parse_row_skilldb: Skill id %d is forbidden (interferes with guild/homun/mercenary skill mapping)!\n");
 		return false;

@@ -226,7 +226,7 @@ void set_char_charselect(int account_id)
 	if (login_fd > 0 && !session[login_fd]->flag.eof)
 	{
 		WFIFOHEAD(login_fd,6);
-		WFIFOW(login_fd,0) = 0x272c;
+		WFIFOW(login_fd,0) = 0x272b;
 		WFIFOL(login_fd,2) = account_id;
 		WFIFOSET(login_fd,6);
 	}
