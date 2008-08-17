@@ -36,8 +36,8 @@ char* mapreg_readregstr(int uid)
 /// Modifies the value of an integer variable.
 bool mapreg_setreg(int uid, int val)
 {
-	int num = uid & 0x00ffffff;
-	int i   = uid & 0xff000000 >> 24;
+	int num = (uid & 0x00ffffff);
+	int i   = (uid & 0xff000000) >> 24;
 	const char* name = get_str(num);
 
 	if( val != 0 )
@@ -75,8 +75,8 @@ bool mapreg_setreg(int uid, int val)
 /// Modifies the value of a string variable.
 bool mapreg_setregstr(int uid, const char* str)
 {
-	int num = uid & 0x00ffffff;
-	int i   = uid & 0xff000000 >> 24;
+	int num = (uid & 0x00ffffff);
+	int i   = (uid & 0xff000000) >> 24;
 	const char* name = get_str(num);
 	
 	if( str == NULL || *str == 0 )
@@ -159,8 +159,8 @@ static void script_save_mapreg(void)
 	iter = mapreg_db->iterator(mapreg_db);
 	for( data = iter->first(iter,&key); iter->exists(iter); data = iter->next(iter,&key) )
 	{
-		int num = key.i & 0x00ffffff;
-		int i   = key.i & 0xff000000 >> 24;
+		int num = (key.i & 0x00ffffff);
+		int i   = (key.i & 0xff000000) >> 24;
 		const char* name = get_str(num);
 
 		if( name[1] == '@' )
@@ -174,8 +174,8 @@ static void script_save_mapreg(void)
 	iter = mapregstr_db->iterator(mapregstr_db);
 	for( data = iter->first(iter,&key); iter->exists(iter); data = iter->next(iter,&key) )
 	{
-		int num = key.i & 0x00ffffff;
-		int i   = key.i & 0xff000000 >> 24;
+		int num = (key.i & 0x00ffffff);
+		int i   = (key.i & 0xff000000) >> 24;
 		const char* name = get_str(num);
 		char tmp_str2[2*255+1];
 

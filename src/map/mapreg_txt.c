@@ -115,8 +115,8 @@ static void script_save_mapreg(void)
 	iter = mapreg_db->iterator(mapreg_db);
 	for( data = iter->first(iter,&key); iter->exists(iter); data = iter->next(iter,&key) )
 	{
-		int num = key.i & 0x00ffffff;
-		int i   = key.i & 0xff000000 >> 24;
+		int num = (key.i & 0x00ffffff);
+		int i   = (key.i & 0xff000000) >> 24;
 		const char* name = get_str(num);
 
 		if( name[1] == '@' )
@@ -132,8 +132,8 @@ static void script_save_mapreg(void)
 	iter = mapregstr_db->iterator(mapregstr_db);
 	for( data = iter->first(iter,&key); iter->exists(iter); data = iter->next(iter,&key) )
 	{
-		int num = key.i & 0x00ffffff;
-		int i   = key.i & 0xff000000 >> 24;
+		int num = (key.i & 0x00ffffff);
+		int i   = (key.i & 0xff000000) >> 24;
 		const char* name = get_str(num);
 
 		if( name[1] == '@' )
