@@ -2575,7 +2575,7 @@ int parse_frommap(int fd)
 				mapif_sendallwos(fd, buf, WBUFW(buf,2));
 			}
 			server[id].fd = -1;
-			online_char_db->foreach(online_char_db,char_db_setoffline,i); //Tag relevant chars as 'in disconnected' server.
+			online_char_db->foreach(online_char_db,char_db_setoffline,id); //Tag relevant chars as 'in disconnected' server.
 		}
 		do_close(fd);
 		create_online_files();
