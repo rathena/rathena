@@ -74,7 +74,7 @@ static void script_load_mapreg(void)
 		int n,s,i;
 
 		// read name and index
-		if( sscanf(line, "%255[^,],%d\t%n", varname,&i,&n) != 2 &&
+		if( sscanf(line, "%32[^,],%d\t%n", varname,&i,&n) != 2 &&
 			(i = 0, sscanf(line,"%[^\t]\t%n", varname,&n) != 1) )
 			continue;
 
