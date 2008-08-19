@@ -41,6 +41,8 @@
 
 =======================
 2008/08/19
+	* Rev. 13094 Fixed invalid element warning in mob database. [L0ne_W0lf]
+	* Healing staff and similar items now add to offensive heal as well.
 	* Rev. 13091 Fixed bugs in some items. (bugrepot:2059) [L0ne_W0lf]
 	* Added stats for some mobs, and fixed some others.
 2008/08/15
