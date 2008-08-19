@@ -184,7 +184,6 @@ struct status_change_data {
 };
 
 struct storage_data {
-	int account_id; // used by charserver
 	int storage_amount;
 	struct item items[MAX_STORAGE];
 };

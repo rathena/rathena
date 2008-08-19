@@ -36,7 +36,7 @@ int convert_init(void)
 {
 	char line[65536];
 	int ret;
-	int set,tmp_int[2], lineno, count;
+	int tmp_int[2], lineno, count;
 	char input;
 	FILE *fp;
 
@@ -118,18 +118,19 @@ int convert_init(void)
 		lineno = count = 0;
 		while(fgets(line, sizeof(line), fp))
 		{
+			int account_id;
+
 			lineno++;
-			set=sscanf(line,"%d,%d",&tmp_int[0],&tmp_int[1]);
-			if(set==2) {
-				memset(&storage, 0, sizeof(struct storage_data));
-				storage.account_id = tmp_int[0];
-				if (storage_fromstr(line,&storage) == 0) {
-					count++;
-					storage_tosql(storage.account_id,&storage); //to sql. (dump)
-				} else {
-					ShowError("Error parsing storage line [%s] (at %s:%d)\n", line, storage_txt, lineno);
-				}
-			}
+			if( sscanf(line,"%d,%d",&tmp_int[0],&tmp_int[1]) != 2 )
+				continue;
+
+			memset(&storage, 0, sizeof(struct storage_data));
+			if( storage_fromstr(line,&account_id,&storage) )
+			{
+				count++;
+				storage_tosql(account_id,&storage); //to sql. (dump)
+			} else
+				ShowError("Error parsing storage line [%s] (at %s:%d)\n", line, storage_txt, lineno);
 		}
 		ShowStatus("Converted %d storages.\n", count);
 		fclose(fp);

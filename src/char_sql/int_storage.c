@@ -36,7 +36,6 @@ int storage_fromsql(int account_id, struct storage_data* p)
 
 	memset(p, 0, sizeof(struct storage_data)); //clean up memory
 	p->storage_amount = 0;
-	p->account_id = account_id;
 
 	// storage {`account_id`/`id`/`nameid`/`amount`/`equip`/`identify`/`refine`/`attribute`/`card0`/`card1`/`card2`/`card3`}
 	StringBuf_Init(&buf);
