@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= sabernet09 & eAthena Team
 //===== Current Version: ===================================== 
-//= 2.1
+//= 2.2
 //===== Compatible With: ===================================== 
 //= eAthena 7.15 +
 //===== Description: ========================================= 
@@ -35,6 +35,7 @@
 //= than a stone at once, up to 10. [SinSloth]
 //= 2.0 Updated hack check and added a weight check to dismantling. [SinSloth]
 //= 2.1 Rescripted to Aegis 10.3 standards. Added strange quest. [L0ne_W0lf]
+//= 2.2 Readded the ability to dismantle multiple stones at once. [L0ne_W0lf]
 //============================================================ 
 
 //==============================================================================
@@ -365,6 +366,15 @@ um_in,39,122,5	script	Utan Chief	784,{
 //                    Create Essence/Dismantle Stone
 //=====================================================================
 um_in,44,71,2	script	Utan Shaman	782,{
+	if (checkweight(908,600) == 0) {
+		mes "^3355FFWait a second!";
+		mes "Right now, you're carrying";
+		mes "too many things with you.";
+		mes "Please come back after";
+		mes "using the Kafra Service";
+		mes "to store some of your items.^000000";
+		close;
+	}	
 	switch(event_umbala) {
 	default:	
 		mes "[??????????]";
@@ -607,7 +617,7 @@ um_in,44,71,2	script	Utan Shaman	782,{
 			case 990:
 				mes "Fire property...";
 				mes "I will need natural";
-					mes "objects that are filled with";
+				mes "objects that are filled with";
 				mes "the spirit of fire.";
 				next;
 				mes "[Puchuchartan]";
@@ -681,150 +691,129 @@ um_in,44,71,2	script	Utan Shaman	782,{
 			set .@divide,996; //Rough_Wind
 			break;
 		}
-		if (countitem(.@divide) > 0) {
-			mes "[Puchuchartan]";
-			mes "Let me try to return the enchanted";
-			mes "stone to its rough form...";
-			mes "Choose a number from 1 to 9.";
-			mes "If you wish to cancel this";
-			mes "request, enter 0.";
-			next;
-			while(1) {
-				input .@input,0,10;
-				if (.@input == 0) {
+		mes "[Puchuchartan]";
+		mes "Please enter the";
+		mes "number of enchanted";
+		mes "stones that you wish";
+		mes "to divide. I can only";
+		mes "divide up to 10 at a time.";
+		next;
+		input .@input,0,11;
+		if ((.@input > 0) && (.@input < 11)) {
+			if (countitem(.@divide) >= .@input) {
+				if (checkweight(.@divide,.@input * 300) == 0) {
 					mes "[Puchuchartan]";
-					mes "I see. It's your call.";
-					mes "Come back when you need me.";
+					mes "You're carrying too";
+					mes "many items right now.";
+					mes "Put some of your stuff";
+					mes "in Kafra Storage, and then";
+					mes "come back to me, okay?";
 					close;
 				}
-				else if (.@input > 9) {
-					mes "[Puchuchartan]";
-					mes "Remember to choose a number";
-					mes "from 1 to 9.";
-					next;
+				mes "[Puchuchartan]";
+				mes "I'll try to revert these";
+				mes "enchanted stones to their";
+				mes "rough forms. Enter a number";
+				mes "from 1 to 9, or enter 0 if";
+				mes "you decide to cancel.";
+				next;
+				while(1) {
+					input .@input2,0,10;
+					if (.@input2 == 0) {
+						mes "[Puchuchartan]";
+						mes "You want to cancel?";
+						mes "Well, if you change your";
+						mes "mind, feel free to come";
+						mes "ask me to help at any time.";
+						close;
+					}
+					else if (.@input2 > 9) {
+						mes "[Puchuchartan]";
+						mes "Hm? You need to enter";
+						mes "a number from 1 to 9.";
+						next;
+					}
+					else {
+						break;
+					}
 				}
-				else {
+				mes "[Puchuchartan]";
+				mes "I will now chant the";
+				mes "sacred words. Remember";
+				mes "the number you entered!";
+				next;
+				mes "[Puchuchartan]";
+				mes "Umba Umba Kalapum! Umba! Ta!";
+				mes "Lukura Ukulele Um! Umba! Ka!";
+				mes "Abulaka Tabulakan! Umba! La!";
+				mes "Ombaludu Zan Kunu! Umba! Ku!";
+				mes "Kum Tum Lakulakun! Umba! Ha!";
+				next;
+				mes "[Puchuchartan]";
+				mes "Here's the rough enchanted stones";
+				mes "you wished to have. I created this";
+				mes "with a lot of effort, so make good";
+				mes "use of them.";
+				while(1) {
+					if (.@sha_man == .@input) {
+						break;
+					}
+					else {
+						set .@shaman_max,.@shaman_max + rand(6,10);
+						set .@sha_man,.@sha_man + 1;
+					}
+				}
+				switch(.@divide) {
+				case 994:
+					getitem 990,.@shaman_max; //Boody_Red
+					break;
+				case 995:
+					getitem 991,.@shaman_max; //Crystal_Blue
+					break;
+				case 996:
+					getitem 992,.@shaman_max; //Wind_Of_Verdure
+					break;
+				case 997: 
+					getitem 993,.@shaman_max; //Yellow_Live
+				}
+				delitem .@divide,.@input;
+				close;
+			}
+			else {
+				mes "[Puchuchartan]";
+				mes "So, you wish to have rough";
+				switch(.@divide) {
+				case 994:
+					mes "fire stones? Then I will need";
+					mes "you to bring "+input_want+" pure fire stone.";
+					break;
+				case 995:
+					mes "water stones? Then I'll need";
+					mes "you to bring "+input_want+" pure water stone.";
+					break;
+				case 996:
+					mes "wind stones? Then I will need";
+					mes "you to bring "+input_want+" pure wind stone.";
+					break;
+				case 997: 
+					mes "earth stones? Then I'll need";
+					mes "you to bring "+.@input+" pure earth stone.";
 					break;
 				}
-			}
-			mes "[Puchuchartan]";
-			mes "I will now cast a sacred";
-			mes "incantation. Remember the number you entered.";
-			next;
-			mes "[Puchuchartan]";
-			mes "Umba Umba Kalapum! Umba! Ta!";
-			mes "Lukura Ukulele Um! Umba! Ka!";
-			mes "Abulaka Tabulakan! Umba! La!";
-			mes "Ombaludu Zan Kunu! Umba! Ku!";
-			mes "Kum Tum Lakulakun! Umba! Ha!";
-			next;
-			mes "[Puchuchartan]";
-			mes "Here's the rough enchanted stones";
-			mes "you wished to have. I created this";
-			mes "with a lot of effort, so make good";
-			mes "use of them.";
-			delitem .@divide,1;
-			switch(.@divide) {
-			case 994:
-				set .@shaman_p,rand(1,10);
-				if (.@shaman_p == 1) {
-					getitem 990,10; //Boody_Red
-				}
-				else if (.@shaman_p == 2 || .@shaman_p == 3) {
-					getitem 990,8; //Boody_Red
-				}
-				else if (.@shaman_p >= 4 && .@shaman_p == 6) {
-					getitem 990,7; //Boody_Red
-				}
-				else {
-					getitem 990,6; //Boody_Red
-				}
-				close;
-			case 995:
-				set .@shaman_p,rand(1,10);
-				if (.@shaman_p == 1) {
-					getitem 991,10; //Crystal_Blue
-				}
-				else if (.@shaman_p == 2 || .@shaman_p == 3) {
-					getitem 991,8; //Crystal_Blue
-				}
-				else if (.@shaman_p >= 4 && .@shaman_p <= 6) {
-					getitem 991,7; //Crystal_Blue
-				}
-				else {
-					getitem 991,6; //Crystal_Blue
-				}
-				close;
-			case 996:
-				set .@shaman_p,rand(1,10);
-				if (.@shaman_p == 1) {
-					if (rand(1,2) == 1) {
-						getitem 992,10; //Wind_Of_Verdure
-					}
-					else {
-						getitem 992,6; //Wind_Of_Verdure
-					}
-				}
-				else if (.@shaman_p == 2 || .@shaman_p == 3) {
-					getitem 992,8; //Wind_Of_Verdure
-				}
-				else if (.@shaman_p >= 4 && .@shaman_p == 6) {
-					getitem 992,7; //Wind_Of_Verdure
-				}
-				else {
-					getitem 992,6; //Wind_Of_Verdure
-				}
-				close;
-			case 997: 
-				set .@shaman_p,rand(1,5);
-				if (.@shaman_p == 1) {
-					getitem 993,10; //Yellow_Live
-				}
-				else if (.@shaman_p == 2) {
-					getitem 993,8; //Yellow_Live
-				}
-				else if (.@shaman_p >= 3 || .@shaman_p <= 4) {
-					getitem 993,7; //Yellow_Live
-				}
-				else {
-					if (rand(1,2) == 1) {
-						getitem 993,6; //Yellow_Live
-					}
-					else {
-						getitem 993,7; //Yellow_Live
-					}
-				}
+				mes "^3377FF1 "+.@input+" "+getitemname(.@divide)+"^000000.";
+				next;
+				mes "[Puchuchartan]";
+				mes "That's all I need...";
+				mes "Come back when";
+				mes "you're ready.";
+				mes "I will be here.";
 				close;
 			}
 		}
 		else {
 			mes "[Puchuchartan]";
-			mes "So, you wish to have rough";
-			switch(.@divide) {
-			case 994:
-				mes "fire stones? Then I will need";
-				mes "you to bring a pure fire stone.";
-				break;
-			case 995:
-				mes "water stones? Then I'll need";
-				mes "you to bring a pure water stone.";
-				break;
-			case 996:
-				mes "wind stones? Then I will need";
-				mes "you to bring a pure wind stone.";
-				break;
-			case 997: 
-				mes "earth stones? Then I'll need";
-				mes "you to bring a pure earth stone.";
-				break;
-			}
-			mes "^3377FF1 "+getitemname(.@divide)+"^000000.";
-			next;
-			mes "[Puchuchartan]";
-			mes "That's all I need...";
-			mes "Come back when";
-			mes "you're ready.";
-			mes "I will be here.";
+			mes "Hm? You need to enter";
+			mes "a number from 1 to 10.";
 			close;
 		}
 	case 3:

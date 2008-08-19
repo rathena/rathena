@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 
-//= 2.1
+//= 2.2
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -28,6 +28,7 @@
 //= 2.0 Turtle Island quest now clears TURTLE var and set 
 //= MISC_QUEST bit (MISC_QUEST & 65536) [Lupus]
 //= 2.1 Added missing close. [L0ne_W0lf]
+//= 2.2 Updated Gotan to be compliant with misc_quiest var. [L0ne_W0lf
 //============================================================ 
 
 
@@ -991,7 +992,7 @@ alberta_in,23,104,4	script	Grandpa Turtle#tur	120,{
 }
 
 alberta,247,122,4	script	Sailor#tur	709,{
-	if (TURTLE) {
+	if (TURTLE || (MISC_QUEST & 65536)) {
 		mes "[Gotanblue]";
 		mes "Heh...";
 		mes "Your eyes...";

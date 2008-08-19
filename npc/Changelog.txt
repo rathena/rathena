@@ -1,5 +1,12 @@
 ﻿Date		Added
 ======
+2008/08/19
+	* Rev. 13091 Rather large update to the Keil Hyre quest. [L0ne_W0lf]
+	- Update does not add any of the changes made by iRO.
+	- Many updates, see script or tracker for details.
+	* Fixed condition check in turtle island warper. (bugreport:1943)
+	* Removed the duplicate NPC "Mudie" from Hugel City. (bugreport:2079)
+	* Corrected Umbala Dismantle/create Essence NPC. (bugreport:2089)
 2008/08/16
 	* Rev. 13085 Fixed typo in disable/enable npc's (bugreport:2027) [Yommy]
 2008/08/11
