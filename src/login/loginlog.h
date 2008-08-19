@@ -5,6 +5,7 @@
 #define __LOGINLOG_H_INCLUDED__
 
 
+unsigned long loginlog_failedattempts(uint32 ip, unsigned int minutes);
 void login_log(uint32 ip, const char* username, int rcode, const char* message);
 bool loginlog_init(void);
 bool loginlog_final(void);

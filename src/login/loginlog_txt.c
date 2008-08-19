@@ -18,6 +18,13 @@
 char login_log_filename[1024] = "log/login.log";
 
 
+// Returns the number of failed login attemps by the ip in the last minutes.
+unsigned long loginlog_failedattempts(uint32 ip, unsigned int minutes)
+{
+	// XXX not implemented
+	return 0;
+}
+
 
 /*=============================================
  * Records an event in the login log

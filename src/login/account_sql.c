@@ -21,12 +21,21 @@ typedef struct AccountDB_SQL
 
 	Sql* accounts;       // SQL accounts storage
 
-	char db_hostname[32];
+	// global sql settings
+	char   global_db_hostname[32];
+	uint16 global_db_port;
+	char   global_db_username[32];
+	char   global_db_password[32];
+	char   global_db_database[32];
+	char   global_codepage[32];
+	// local sql settings
+	char   db_hostname[32];
 	uint16 db_port;
-	char db_username[32];
-	char db_password[32];
-	char db_database[32];
-	char codepage[32];
+	char   db_username[32];
+	char   db_password[32];
+	char   db_database[32];
+	char   codepage[32];
+	// other settings
 	bool case_sensitive;
 	char account_db[32];
 	char accreg_db[32];
@@ -78,12 +87,21 @@ AccountDB* account_db_sql(void)
 
 	// initialize to default values
 	db->accounts = NULL;
-	safestrncpy(db->db_hostname, "127.0.0.1", sizeof(db->db_hostname));
+	// global sql settings
+	safestrncpy(db->global_db_hostname, "127.0.0.1", sizeof(db->global_db_hostname));
+	db->global_db_port = 3306;
+	safestrncpy(db->global_db_username, "ragnarok", sizeof(db->global_db_username));
+	safestrncpy(db->global_db_password, "ragnarok", sizeof(db->global_db_password));
+	safestrncpy(db->global_db_database, "ragnarok", sizeof(db->global_db_database));
+	safestrncpy(db->global_codepage, "", sizeof(db->global_codepage));
+	// local sql settings
+	safestrncpy(db->db_hostname, "", sizeof(db->db_hostname));
 	db->db_port = 3306;
-	safestrncpy(db->db_username, "ragnarok", sizeof(db->db_username));
-	safestrncpy(db->db_password, "ragnarok", sizeof(db->db_password));
-	safestrncpy(db->db_database, "ragnarok", sizeof(db->db_database));
+	safestrncpy(db->db_username, "", sizeof(db->db_username));
+	safestrncpy(db->db_password, "", sizeof(db->db_password));
+	safestrncpy(db->db_database, "", sizeof(db->db_database));
 	safestrncpy(db->codepage, "", sizeof(db->codepage));
+	// other settings
 	db->case_sensitive = false;
 	safestrncpy(db->account_db, "login", sizeof(db->account_db));
 	safestrncpy(db->accreg_db, "global_reg_value", sizeof(db->accreg_db));
@@ -100,11 +118,36 @@ static bool account_db_sql_init(AccountDB* self)
 {
 	AccountDB_SQL* db = (AccountDB_SQL*)self;
 	Sql* sql_handle;
+	const char* username;
+	const char* password;
+	const char* hostname;
+	uint16      port;
+	const char* database;
+	const char* codepage;
 
 	db->accounts = Sql_Malloc();
 	sql_handle = db->accounts;
 
-	if( SQL_ERROR == Sql_Connect(sql_handle, db->db_username, db->db_password, db->db_hostname, db->db_port, db->db_database) )
+	if( db->db_hostname[0] != '\0' )
+	{// local settings
+		username = db->db_username;
+		password = db->db_password;
+		hostname = db->db_hostname;
+		port     = db->db_port;
+		database = db->db_database;
+		codepage = db->codepage;
+	}
+	else
+	{// global settings
+		username = db->global_db_username;
+		password = db->global_db_password;
+		hostname = db->global_db_hostname;
+		port     = db->global_db_port;
+		database = db->global_db_database;
+		codepage = db->global_codepage;
+	}
+
+	if( SQL_ERROR == Sql_Connect(sql_handle, username, password, hostname, port, database) )
 	{
 		Sql_ShowDebug(sql_handle);
 		Sql_Free(db->accounts);
@@ -112,7 +155,7 @@ static bool account_db_sql_init(AccountDB* self)
 		return false;
 	}
 
-	if( db->codepage[0] != '\0' && SQL_ERROR == Sql_SetEncoding(sql_handle, db->codepage) )
+	if( codepage[0] != '\0' && SQL_ERROR == Sql_SetEncoding(sql_handle, codepage) )
 		Sql_ShowDebug(sql_handle);
 
 	return true;
@@ -132,102 +175,158 @@ static void account_db_sql_destroy(AccountDB* self)
 static bool account_db_sql_get_property(AccountDB* self, const char* key, char* buf, size_t buflen)
 {
 	AccountDB_SQL* db = (AccountDB_SQL*)self;
-	const char* signature = "account.sql.";
+	const char* signature;
 
-	if( strcmp(key, "engine.name") == 0 )
+	signature = "engine.";
+	if( strncmpi(key, signature, strlen(signature)) == 0 )
 	{
-		safesnprintf(buf, buflen, "sql");
+		key += strlen(signature);
+		if( strcmpi(key, "name") == 0 )
+			safesnprintf(buf, buflen, "sql");
+		else
+		if( strcmpi(key, "version") == 0 )
+			safesnprintf(buf, buflen, "%d", ACCOUNT_SQL_DB_VERSION);
+		else
+		if( strcmpi(key, "comment") == 0 )
+			safesnprintf(buf, buflen, "SQL Account Database");
+		else
+			return false;// not found
 		return true;
 	}
-	if( strcmp(key, "engine.version") == 0 )
+
+	signature = "sql.";
+	if( strncmpi(key, signature, strlen(signature)) == 0 )
 	{
-		safesnprintf(buf, buflen, "%d", ACCOUNT_SQL_DB_VERSION);
+		key += strlen(signature);
+		if( strcmpi(key, "db_hostname") == 0 )
+			safesnprintf(buf, buflen, "%s", db->global_db_hostname);
+		else
+		if( strcmpi(key, "db_port") == 0 )
+			safesnprintf(buf, buflen, "%d", db->global_db_port);
+		else
+		if( strcmpi(key, "db_username") == 0 )
+			safesnprintf(buf, buflen, "%s", db->global_db_username);
+		else
+		if(	strcmpi(key, "db_password") == 0 )
+			safesnprintf(buf, buflen, "%s", db->global_db_password);
+		else
+		if( strcmpi(key, "db_database") == 0 )
+			safesnprintf(buf, buflen, "%s", db->global_db_database);
+		else
+		if( strcmpi(key, "codepage") == 0 )
+			safesnprintf(buf, buflen, "%s", db->global_codepage);
+		else
+			return false;// not found
 		return true;
 	}
-	if( strcmp(key, "engine.comment") == 0 )
+
+	signature = "account.sql.";
+	if( strncmpi(key, signature, strlen(signature)) == 0 )
 	{
-		safesnprintf(buf, buflen, "SQL Account Database");
+		key += strlen(signature);
+		if( strcmpi(key, "db_hostname") == 0 )
+			safesnprintf(buf, buflen, "%s", db->db_hostname);
+		else
+		if( strcmpi(key, "db_port") == 0 )
+			safesnprintf(buf, buflen, "%d", db->db_port);
+		else
+		if( strcmpi(key, "db_username") == 0 )
+			safesnprintf(buf, buflen, "%s", db->db_username);
+		else
+		if(	strcmpi(key, "db_password") == 0 )
+			safesnprintf(buf, buflen, "%s", db->db_password);
+		else
+		if( strcmpi(key, "db_database") == 0 )
+			safesnprintf(buf, buflen, "%s", db->db_database);
+		else
+		if( strcmpi(key, "codepage") == 0 )
+			safesnprintf(buf, buflen, "%s", db->codepage);
+		else
+		if( strcmpi(key, "case_sensitive") == 0 )
+			safesnprintf(buf, buflen, "%d", (db->case_sensitive ? 1 : 0));
+		else
+		if( strcmpi(key, "account_db") == 0 )
+			safesnprintf(buf, buflen, "%s", db->account_db);
+		else
+		if( strcmpi(key, "accreg_db") == 0 )
+			safesnprintf(buf, buflen, "%s", db->accreg_db);
+		else
+			return false;// not found
 		return true;
 	}
 
-	if( strncmp(key, signature, strlen(signature)) != 0 )
-		return false;
-
-	key += strlen(signature);
-
-	if( strcmpi(key, "db_hostname") == 0 )
-		safesnprintf(buf, buflen, "%s", db->db_hostname);
-	else
-	if( strcmpi(key, "db_port") == 0 )
-		safesnprintf(buf, buflen, "%d", db->db_port);
-	else
-	if( strcmpi(key, "db_username") == 0 )
-		safesnprintf(buf, buflen, "%s", db->db_username);
-	else
-	if( strcmpi(key, "db_password") == 0 )
-		safesnprintf(buf, buflen, "%s", db->db_password);
-	else
-	if( strcmpi(key, "db_database") == 0 )
-		safesnprintf(buf, buflen, "%s", db->db_database);
-	else
-	if( strcmpi(key, "codepage") == 0 )
-		safesnprintf(buf, buflen, "%s", db->codepage);
-	else
-	if( strcmpi(key, "case_sensitive") == 0 )
-		safesnprintf(buf, buflen, "%d", (db->case_sensitive ? 1 : 0));
-	else
-	if( strcmpi(key, "account_db") == 0 )
-		safesnprintf(buf, buflen, "%s", db->account_db);
-	else
-	if( strcmpi(key, "accreg_db") == 0 )
-		safesnprintf(buf, buflen, "%s", db->accreg_db);
-	else
-		return false;// not found
-
-	return true;
+	return false;// not found
 }
 
 /// if the option is supported, adjusts the internal state
 static bool account_db_sql_set_property(AccountDB* self, const char* key, const char* value)
 {
 	AccountDB_SQL* db = (AccountDB_SQL*)self;
-	const char* signature = "account.sql.";
+	const char* signature;
 
-	if( strncmp(key, signature, strlen(signature)) != 0 )
-		return false;
 
-	key += strlen(signature);
+	signature = "sql.";
+	if( strncmp(key, signature, strlen(signature)) == 0 )
+	{
+		key += strlen(signature);
+		if( strcmpi(key, "db_hostname") == 0 )
+			safestrncpy(db->global_db_hostname, value, sizeof(db->global_db_hostname));
+		else
+		if( strcmpi(key, "db_port") == 0 )
+			db->global_db_port = (uint16)strtoul(value, NULL, 10);
+		else
+		if( strcmpi(key, "db_username") == 0 )
+			safestrncpy(db->global_db_username, value, sizeof(db->global_db_username));
+		else
+		if( strcmpi(key, "db_password") == 0 )
+			safestrncpy(db->global_db_password, value, sizeof(db->global_db_password));
+		else
+		if( strcmpi(key, "db_database") == 0 )
+			safestrncpy(db->global_db_database, value, sizeof(db->global_db_database));
+		else
+		if( strcmpi(key, "codepage") == 0 )
+			safestrncpy(db->global_codepage, value, sizeof(db->global_codepage));
+		else
+			return false;// not found
+		return true;
+	}
 
-	if( strcmpi(key, "db_hostname") == 0 )
-		safestrncpy(db->db_hostname, value, sizeof(db->db_hostname));
-	else
-	if( strcmpi(key, "db_port") == 0 )
-		db->db_port = (uint16)strtoul(value, NULL, 10);
-	else
-	if( strcmpi(key, "db_username") == 0 )
-		safestrncpy(db->db_username, value, sizeof(db->db_username));
-	else
-	if( strcmpi(key, "db_password") == 0 )
-		safestrncpy(db->db_password, value, sizeof(db->db_password));
-	else
-	if( strcmpi(key, "db_database") == 0 )
-		safestrncpy(db->db_database, value, sizeof(db->db_database));
-	else
-	if( strcmpi(key, "codepage") == 0 )
-		safestrncpy(db->codepage, value, sizeof(db->codepage));
-	else
-	if( strcmpi(key, "case_sensitive") == 0 )
-		db->case_sensitive = config_switch(value);
-	else
-	if( strcmpi(key, "account_db") == 0 )
-		safestrncpy(db->account_db, value, sizeof(db->account_db));
-	else
-	if( strcmpi(key, "accreg_db") == 0 )
-		safestrncpy(db->accreg_db, value, sizeof(db->accreg_db));
-	else // no match
-		return false;
+	signature = "account.sql.";
+	if( strncmp(key, signature, strlen(signature)) == 0 )
+	{
+		key += strlen(signature);
+		if( strcmpi(key, "db_hostname") == 0 )
+			safestrncpy(db->db_hostname, value, sizeof(db->db_hostname));
+		else
+		if( strcmpi(key, "db_port") == 0 )
+			db->db_port = (uint16)strtoul(value, NULL, 10);
+		else
+		if( strcmpi(key, "db_username") == 0 )
+			safestrncpy(db->db_username, value, sizeof(db->db_username));
+		else
+		if( strcmpi(key, "db_password") == 0 )
+			safestrncpy(db->db_password, value, sizeof(db->db_password));
+		else
+		if( strcmpi(key, "db_database") == 0 )
+			safestrncpy(db->db_database, value, sizeof(db->db_database));
+		else
+		if( strcmpi(key, "codepage") == 0 )
+			safestrncpy(db->codepage, value, sizeof(db->codepage));
+		else
+		if( strcmpi(key, "case_sensitive") == 0 )
+			db->case_sensitive = config_switch(value);
+		else
+		if( strcmpi(key, "account_db") == 0 )
+			safestrncpy(db->account_db, value, sizeof(db->account_db));
+		else
+		if( strcmpi(key, "accreg_db") == 0 )
+			safestrncpy(db->accreg_db, value, sizeof(db->accreg_db));
+		else
+			return false;// not found
+		return true;
+	}
 
-	return true;
+	return false;// not found
 }
 
 /// create a new account entry

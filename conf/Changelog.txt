@@ -1,5 +1,10 @@
 Date	Added
 
+2008/08/19
+	* Added global sql settings 'sql.*' to inter_athena.conf.
+	* Commented 'ipban.sql.*' and 'account.sql.*' so they default to the global settings.
+	* Removed deprecated settings 'case_sensitive' and 'add_to_unlimited_account' from in login_athena.conf.
+	* Made inter_athena.conf be imported from login_athena.conf. [FlavioJS]
 2008/08/13
 	* Added config settings mapreg_txt and mapreg_db to inter config [ultramage]
 2008/08/10

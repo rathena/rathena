@@ -1572,9 +1572,7 @@ int login_config_read(const char* cfgName)
 		else if(!strcmpi(w1, "import"))
 			login_config_read(w2);
 		else
-		if( ipban_config_read(w1, w2) )
-			continue;
-		else if(!strcmpi(w1, "account.engine"))
+		if(!strcmpi(w1, "account.engine"))
 			safestrncpy(login_config.account_engine, w2, sizeof(login_config.account_engine));
 		else
 		{// try the account engines
@@ -1585,41 +1583,14 @@ int login_config_read(const char* cfgName)
 				if( db && db->set_property(db, w1, w2) )
 					break;
 			}
+			// try others
+			ipban_config_read(w1, w2);
+			loginlog_config_read(w1, w2);
 		}
 	}
 	fclose(fp);
 	ShowInfo("Finished reading %s.\n", cfgName);
 	return 0;
-}
-
-//-----------------------------------
-// Reading interserver configuration file
-//-----------------------------------
-void inter_config_read(const char* cfgName)
-{
-	char line[1024], w1[1024], w2[1024];
-	FILE* fp = fopen(cfgName, "r");
-	if(fp == NULL) {
-		ShowError("file not found: %s\n", cfgName);
-		return;
-	}
-	ShowInfo("reading configuration file %s...\n", cfgName);
-	while(fgets(line, sizeof(line), fp))
-	{
-		if (line[0] == '/' && line[1] == '/')
-			continue;
-		if (sscanf(line, "%[^:]: %[^\r\n]", w1, w2) < 2)
-			continue;
-
-		// settings common for multiple components
-		ipban_config_read(w1,w2);
-		loginlog_config_read(w1,w2);
-
-		if (!strcmpi(w1, "import"))
-			inter_config_read(w2);
-	}
-	fclose(fp);
-	ShowInfo("Done reading %s.\n", cfgName);
 }
 
 /// Get the engine selected in the config settings.
@@ -1712,7 +1683,6 @@ int do_init(int argc, char** argv)
 	login_set_defaults();
 	login_config_read((argc > 1) ? argv[1] : LOGIN_CONF_NAME);
 	login_lan_config_read((argc > 2) ? argv[2] : LAN_CONF_NAME);
-	inter_config_read(INTER_CONF_NAME);
 
 	srand((unsigned int)time(NULL));
 

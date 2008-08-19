@@ -10,29 +10,28 @@
 #include "../common/timer.h"
 #include "login.h"
 #include "ipban.h"
+#include "loginlog.h"
 #include <stdlib.h>
 #include <string.h>
 
-// database options
-static char   ipban_db_hostname[32] = "127.0.0.1";
-static uint16 ipban_db_port = 3306;
-static char   ipban_db_username[32] = "ragnarok";
-static char   ipban_db_password[32] = "ragnarok";
-static char   ipban_db_database[32] = "ragnarok";
+// global sql settings
+static char   global_db_hostname[32] = "127.0.0.1";
+static uint16 global_db_port = 3306;
+static char   global_db_username[32] = "ragnarok";
+static char   global_db_password[32] = "ragnarok";
+static char   global_db_database[32] = "ragnarok";
+static char   global_codepage[32] = "";
+// local sql settings
+static char   ipban_db_hostname[32] = "";
+static uint16 ipban_db_port = 0;
+static char   ipban_db_username[32] = "";
+static char   ipban_db_password[32] = "";
+static char   ipban_db_database[32] = "";
+static char   ipban_codepage[32] = "";
 static char   ipban_table[32] = "ipbanlist";
 
-static char   log_db_hostname[32] = "127.0.0.1";
-static uint16 log_db_port = 3306;
-static char   log_db_username[32] = "ragnarok";
-static char   log_db_password[32] = "ragnarok";
-static char   log_db_database[32] = "ragnarok";
-static char   loginlog_table[32] = "loginlog";
-
-static char default_codepage[32] = "";
-
 // globals
-static Sql* sql_handle;
-static Sql* logsql_handle;
+static Sql* sql_handle = NULL;
 static int cleanup_timer_id = INVALID_TIMER;
 
 int ipban_cleanup(int tid, unsigned int tick, int id, intptr data);
@@ -41,26 +40,42 @@ int ipban_cleanup(int tid, unsigned int tick, int id, intptr data);
 // initialize
 void ipban_init(void)
 {
+	const char* username;
+	const char* password;
+	const char* hostname;
+	uint16      port;
+	const char* database;
+	const char* codepage;
+
+	if( ipban_db_hostname[0] != '\0' )
+	{// local settings
+		username = ipban_db_username;
+		password = ipban_db_password;
+		hostname = ipban_db_hostname;
+		port     = ipban_db_port;
+		database = ipban_db_database;
+		codepage = ipban_codepage;
+	}
+	else
+	{// global settings
+		username = global_db_username;
+		password = global_db_password;
+		hostname = global_db_hostname;
+		port     = global_db_port;
+		database = global_db_database;
+		codepage = global_codepage;
+	}
+
 	// establish connections
 	sql_handle = Sql_Malloc();
-	if( SQL_ERROR == Sql_Connect(sql_handle, ipban_db_username, ipban_db_password, ipban_db_hostname, ipban_db_port, ipban_db_database) )
+	if( SQL_ERROR == Sql_Connect(sql_handle, username, password, hostname, port, database) )
 	{
 		Sql_ShowDebug(sql_handle);
 		Sql_Free(sql_handle);
 		exit(EXIT_FAILURE);
 	}
-	if( default_codepage[0] != '\0' && SQL_ERROR == Sql_SetEncoding(sql_handle, default_codepage) )
+	if( codepage[0] != '\0' && SQL_ERROR == Sql_SetEncoding(sql_handle, codepage) )
 		Sql_ShowDebug(sql_handle);
-
-	logsql_handle = Sql_Malloc();
-	if( SQL_ERROR == Sql_Connect(logsql_handle, log_db_username, log_db_password, log_db_hostname, log_db_port, log_db_database) )
-	{
-		Sql_ShowDebug(logsql_handle);
-		Sql_Free(logsql_handle);
-		exit(EXIT_FAILURE);
-	}
-	if( default_codepage[0] != '\0' && SQL_ERROR == Sql_SetEncoding(logsql_handle, default_codepage) )
-		Sql_ShowDebug(logsql_handle);
 
 	// set up periodic cleanup of connection history and active bans
 	add_timer_func_list(ipban_cleanup, "ipban_cleanup");
@@ -76,75 +91,92 @@ void ipban_final(void)
 	// close connections
 	Sql_Free(sql_handle);
 	sql_handle = NULL;
-	Sql_Free(logsql_handle);
-	logsql_handle = NULL;
 }
 
 // load configuration options
 bool ipban_config_read(const char* key, const char* value)
 {
-	// login server settings
-	if( strcmpi(key, "ipban.enable") == 0 )
-		login_config.ipban = (bool)config_switch(value);
-	else
-	if( strcmpi(key, "ipban.dynamic_pass_failure_ban") == 0 )
-		login_config.dynamic_pass_failure_ban = (bool)config_switch(value);
-	else
-	if( strcmpi(key, "ipban.dynamic_pass_failure_ban_interval") == 0 )
-		login_config.dynamic_pass_failure_ban_interval = atoi(value);
-	else
-	if( strcmpi(key, "ipban.dynamic_pass_failure_ban_limit") == 0 )
-		login_config.dynamic_pass_failure_ban_limit = atoi(value);
-	else
-	if( strcmpi(key, "ipban.dynamic_pass_failure_ban_duration") == 0 )
-		login_config.dynamic_pass_failure_ban_duration = atoi(value);
-	else
+	const char* signature;
 
-	// ipban table settings
-	if( strcmpi(key, "ipban.sql.db_hostname") == 0 )
-		safestrncpy(ipban_db_hostname, value, sizeof(ipban_db_hostname));
-	else
-	if( strcmpi(key, "ipban.sql.db_port") == 0 )
-		ipban_db_port = (uint16)strtoul(value, NULL, 10);
-	else
-	if( strcmpi(key, "ipban.sql.db_username") == 0 )
-		safestrncpy(ipban_db_username, value, sizeof(ipban_db_username));
-	else
-	if( strcmpi(key, "ipban.sql.db_password") == 0 )
-		safestrncpy(ipban_db_password, value, sizeof(ipban_db_password));
-	else
-	if( strcmpi(key, "ipban.sql.db_database") == 0 )
-		safestrncpy(ipban_db_database, value, sizeof(ipban_db_database));
-	else
-	if( strcmpi(key, "ipban.sql.ipban_table") == 0 )
-		safestrncpy(ipban_table, value, sizeof(ipban_table));
-	else
+	signature = "sql.";
+	if( strncmpi(key, signature, strlen(signature)) == 0 )
+	{
+		key += strlen(signature);
+		if( strcmpi(key, "db_hostname") == 0 )
+			safestrncpy(global_db_hostname, value, sizeof(global_db_hostname));
+		else
+		if( strcmpi(key, "db_port") == 0 )
+			global_db_port = (uint16)strtoul(value, NULL, 10);
+		else
+		if( strcmpi(key, "db_username") == 0 )
+			safestrncpy(global_db_username, value, sizeof(global_db_username));
+		else
+		if( strcmpi(key, "db_password") == 0 )
+			safestrncpy(global_db_password, value, sizeof(global_db_password));
+		else
+		if( strcmpi(key, "db_database") == 0 )
+			safestrncpy(global_db_database, value, sizeof(global_db_database));
+		else
+		if( strcmpi(key, "codepage") == 0 )
+			safestrncpy(global_codepage, value, sizeof(global_codepage));
+		else
+			return false;// not found
+		return true;
+	}
 
-	// interserver settings
-	if( strcmpi(key, "log_db_ip") == 0 )
-		safestrncpy(log_db_hostname, value, sizeof(log_db_hostname));
-	else
-	if( strcmpi(key, "log_db_port") == 0 )
-		log_db_port = (uint16)strtoul(value, NULL, 10);
-	else
-	if( strcmpi(key, "log_db_id") == 0 )
-		safestrncpy(log_db_username, value, sizeof(log_db_username));
-	else
-	if( strcmpi(key, "log_db_pw") == 0 )
-		safestrncpy(log_db_password, value, sizeof(log_db_password));
-	else
-	if( strcmpi(key, "log_db_db") == 0 )
-		safestrncpy(log_db_database, value, sizeof(log_db_database));
-	else
-	if( strcmpi(key, "loginlog_db") == 0 )
-		safestrncpy(loginlog_table, value, sizeof(loginlog_table));
-	else
-	if( strcmpi(key, "default_codepage") == 0 )
-		safestrncpy(default_codepage, value, sizeof(default_codepage));
-	else
-		return false;
+	signature = "ipban.sql.";
+	if( strncmpi(key, signature, strlen(signature)) == 0 )
+	{
+		key += strlen(signature);
+		if( strcmpi(key, "db_hostname") == 0 )
+			safestrncpy(ipban_db_hostname, value, sizeof(ipban_db_hostname));
+		else
+		if( strcmpi(key, "db_port") == 0 )
+			ipban_db_port = (uint16)strtoul(value, NULL, 10);
+		else
+		if( strcmpi(key, "db_username") == 0 )
+			safestrncpy(ipban_db_username, value, sizeof(ipban_db_username));
+		else
+		if( strcmpi(key, "db_password") == 0 )
+			safestrncpy(ipban_db_password, value, sizeof(ipban_db_password));
+		else
+		if( strcmpi(key, "db_database") == 0 )
+			safestrncpy(ipban_db_database, value, sizeof(ipban_db_database));
+		else
+		if( strcmpi(key, "codepage") == 0 )
+			safestrncpy(ipban_codepage, value, sizeof(ipban_codepage));
+		else
+		if( strcmpi(key, "ipban_table") == 0 )
+			safestrncpy(ipban_table, value, sizeof(ipban_table));
+		else
+			return false;// not found
+		return true;
+	}
 
-	return true;
+	signature = "ipban.";
+	if( strncmpi(key, signature, strlen(signature)) == 0 )
+	{
+		key += strlen(signature);
+		if( strcmpi(key, "enable") == 0 )
+			login_config.ipban = (bool)config_switch(value);
+		else
+		if( strcmpi(key, "dynamic_pass_failure_ban") == 0 )
+			login_config.dynamic_pass_failure_ban = (bool)config_switch(value);
+		else
+		if( strcmpi(key, "dynamic_pass_failure_ban_interval") == 0 )
+			login_config.dynamic_pass_failure_ban_interval = atoi(value);
+		else
+		if( strcmpi(key, "dynamic_pass_failure_ban_limit") == 0 )
+			login_config.dynamic_pass_failure_ban_limit = atoi(value);
+		else
+		if( strcmpi(key, "dynamic_pass_failure_ban_duration") == 0 )
+			login_config.dynamic_pass_failure_ban_duration = atoi(value);
+		else
+			return false;// not found
+		return true;
+	}
+
+	return false;// not found
 }
 
 // check ip against active bans list
@@ -175,19 +207,7 @@ bool ipban_check(uint32 ip)
 // log failed attempt
 void ipban_log(uint32 ip)
 {
-	unsigned long failures = 0;
-	if( SQL_ERROR == Sql_Query(logsql_handle, "SELECT count(*) FROM `%s` WHERE `ip` = '%s' AND `rcode` = '1' AND `time` > NOW() - INTERVAL %d MINUTE",
-		loginlog_table, ip2str(ip,NULL), login_config.dynamic_pass_failure_ban_interval) )// how many times failed account? in one ip.
-		Sql_ShowDebug(sql_handle);
-
-	//check query result
-	if( SQL_SUCCESS == Sql_NextRow(logsql_handle) )
-	{
-		char* data;
-		Sql_GetData(logsql_handle, 0, &data, NULL);
-		failures = strtoul(data, NULL, 10);
-		Sql_FreeResult(logsql_handle);
-	}
+	unsigned long failures = loginlog_failedattempts(ip, login_config.dynamic_pass_failure_ban_interval);// how many times failed account? in one ip.
 
 	// if over the limit, add a temporary ban entry
 	if( failures >= login_config.dynamic_pass_failure_ban_limit )
