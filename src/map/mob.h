@@ -91,7 +91,6 @@ struct mob_data {
 	struct status_data status, *base_status; //Second one is in case of leveling up mobs, or tiny/large mobs.
 	struct status_change sc;
 	struct mob_db *db;	//For quick data access (saves doing mob_db(md->class_) all the time) [Skotlex]
-	struct barricade_data *barricade;
 	char name[NAME_LENGTH];
 	struct {
 		unsigned size : 2; //Small/Big monsters.

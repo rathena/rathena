@@ -1277,7 +1277,7 @@ int skill_blown(struct block_list* src, struct block_list* target, int count, in
 		case BL_MOB:
 		{
 			struct mob_data* md = BL_CAST(BL_MOB, target);
-			if( md->class_ == MOBID_EMPERIUM || md->barricade )
+			if( md->class_ == MOBID_EMPERIUM )
 				return 0;
 			if(src != target && is_boss(target)) //Bosses can't be knocked-back
 				return 0;

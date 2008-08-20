@@ -1768,6 +1768,7 @@ int status_calc_pc(struct map_session_data* sd,int first)
 		// shorts
 		+ sizeof(sd->splash_range)
 		+ sizeof(sd->splash_add_range)
+		+ sizeof(sd->add_steal_rate)
 		+ sizeof(sd->hp_gain_value)
 		+ sizeof(sd->sp_gain_value)
 		+ sizeof(sd->sp_vanish_rate)
@@ -4614,7 +4615,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 	if( bl->type == BL_MOB )
 	{
 		struct mob_data *md = BL_CAST(BL_MOB,bl);
-		if( (md->class_ == MOBID_EMPERIUM && type != SC_SAFETYWALL && type != SC_PNEUMA) || md->barricade )
+		if( md->class_ == MOBID_EMPERIUM && type != SC_SAFETYWALL && type != SC_PNEUMA )
 			return 0; //Emperium can't be afflicted by status changes
 	}
 
