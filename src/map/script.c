@@ -4834,6 +4834,23 @@ BUILDIN_FUNC(setlook)
 	return 0;
 }
 
+BUILDIN_FUNC(changelook)
+{ // As setlook but only client side
+	int type,val;
+	TBL_PC* sd;
+
+	type=script_getnum(st,2);
+	val=script_getnum(st,3);
+
+	sd = script_rid2sd(st);
+	if( sd == NULL )
+		return 0;
+
+	clif_changelook(&sd->bl,type,val);
+
+	return 0;
+}
+
 /*==========================================
  *
  *------------------------------------------*/
@@ -7113,6 +7130,42 @@ BUILDIN_FUNC(monster)
 		m = map_mapname2mapid(map);
 
 	mob_once_spawn(sd,m,x,y,str,class_,amount,event);
+	return 0;
+}
+/*==========================================
+ * Request List of Monster Drops
+ *------------------------------------------*/
+BUILDIN_FUNC(getmobdrops)
+{
+	int class_ = script_getnum(st,2);
+	int i, j = 0;
+	struct item_data *i_data;
+	struct mob_db *mob;
+
+	if( !mobdb_checkid(class_) )
+	{
+		script_pushint(st, 0);
+		return 0;
+	}
+
+	mob = mob_db(class_);
+
+	for( i = 0; i < MAX_MOB_DROP; i++ )
+	{
+		if( mob->dropitem[i].nameid < 1 )
+			continue;
+		if( (i_data = itemdb_exists(mob->dropitem[i].nameid)) == NULL )
+			continue;
+
+		mapreg_setreg(add_str("$@MobDrop_item") + (j<<24), mob->dropitem[i].nameid);
+		mapreg_setreg(add_str("$@MobDrop_rate") + (j<<24), mob->dropitem[i].p);
+
+		j++;
+	}
+
+	mapreg_setreg(add_str("$@MobDrop_count"), j);
+	script_pushint(st, 1);
+
 	return 0;
 }
 /*==========================================
@@ -9654,6 +9707,36 @@ BUILDIN_FUNC(guardian)
 
 	check_event(st, evt);
 	script_pushint(st, mob_spawn_guardian(map,x,y,str,class_,evt,guardian,has_index));
+
+	return 0;
+}
+/*==========================================
+ * Invisible Walls [Zephyrus]
+ *------------------------------------------*/
+BUILDIN_FUNC(setwall)
+{
+	const char *map, *name;
+	int x, y, m, size, dir;
+	bool shootable;
+	
+	map = script_getstr(st,2);
+	x = script_getnum(st,3);
+	y = script_getnum(st,4);
+	size = script_getnum(st,5);
+	dir = script_getnum(st,6);
+	shootable = script_getnum(st,7);
+	name = script_getstr(st,8);
+
+	if( (m = map_mapname2mapid(map)) < 0 )
+		return 0; // Invalid Map
+
+	map_iwall_set(m, x, y, size, dir, shootable, name);
+	return 0;
+}
+BUILDIN_FUNC(delwall)
+{
+	const char *name = script_getstr(st,2);
+	map_iwall_remove(name);
 
 	return 0;
 }
@@ -12826,6 +12909,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(warpparty,"siii"), // [Fredzilla]
 	BUILDIN_DEF(warpguild,"siii"), // [Fredzilla]
 	BUILDIN_DEF(setlook,"ii"),
+	BUILDIN_DEF(changelook,"ii"), // Simulates but don't Store it
 	BUILDIN_DEF(set,"ii"),
 	BUILDIN_DEF(setarray,"rv*"),
 	BUILDIN_DEF(cleararray,"rvi"),
@@ -12908,6 +12992,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(itemskill,"vi"),
 	BUILDIN_DEF(produce,"i"),
 	BUILDIN_DEF(monster,"siisii*"),
+	BUILDIN_DEF(getmobdrops,"i"),
 	BUILDIN_DEF(areamonster,"siiiisii*"),
 	BUILDIN_DEF(killmonster,"ss?"),
 	BUILDIN_DEF(killmonsterall,"s?"),
@@ -13135,5 +13220,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(setquestobjective, "iisi"),
 	BUILDIN_DEF(setqueststatus, "ii"),
 	BUILDIN_DEF(hasquest, "i"),
+	BUILDIN_DEF(setwall,"siiiiis"),
+	BUILDIN_DEF(delwall,"s"),
 	{NULL,NULL,NULL},
 };

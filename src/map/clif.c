@@ -7978,6 +7978,7 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 			clif_announce(&sd->bl, output, strlen(output) + 1, 0x00CC66, 3);
 		}
 
+		map_iwall_get(sd); // Updates Walls Info on this Map to Client
 		sd->state.changemap = false;
 	}
 	

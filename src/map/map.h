@@ -387,6 +387,12 @@ struct mapcell
 #endif
 };
 
+struct iwall_data {
+	char wall_name[50];
+	short m, x, y, size, dir;
+	bool shootable;
+};
+
 struct map_data {
 	char name[MAP_NAME_LENGTH];
 	unsigned short index; // The map index used by the mapindex* functions.
@@ -398,6 +404,7 @@ struct map_data {
 	short bxs,bys; // map dimensions (in blocks)
 	int npc_num;
 	int users;
+	int iwall_num; // Total of invisible walls in this map
 	struct map_flag {
 		unsigned town : 1; // [Suggestion to protect Mail System]
 		unsigned autotrade : 1;
@@ -593,6 +600,10 @@ int cleanup_sub(struct block_list *bl, va_list ap);
 
 void map_helpscreen(int flag); // [Valaris]
 int map_delmap(char* mapname);
+
+bool map_iwall_set(int m, int x, int y, int size, int dir, bool shootable, const char* wall_name);
+void map_iwall_get(struct map_session_data *sd);
+void map_iwall_remove(const char *wall_name);
 
 int map_addmobtolist(unsigned short m, struct spawn_data *spawn);	// [Wizputer]
 void map_spawnmobs(int); // [Wizputer]

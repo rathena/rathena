@@ -1323,7 +1323,7 @@ int map_search_freecell(struct block_list *src, int m, short *x,short *y, int rx
 	int rx2 = 2*rx+1;
 	int ry2 = 2*ry+1;
 
-	if (!src && (!(flag&1) || flag&2))
+	if( !src && (!(flag&1) || flag&2) )
 	{
 		ShowDebug("map_search_freecell: Incorrect usage! When src is NULL, flag has to be &1 and can't have &2\n");
 		return 0;
@@ -2436,6 +2436,120 @@ void map_setgatcell(int m, int x, int y, int gat)
 	map[m].cell[j].water = cell.water;
 }
 
+/*==========================================
+ * Invisible Walls
+ *------------------------------------------*/
+static DBMap* iwall_db;
+
+void map_iwall_nextxy(int x, int y, int dir, int pos, int *x1, int *y1)
+{
+	if( dir == 0 || dir == 4 )
+		*x1 = x; // Keep X
+	else if( dir > 0 && dir < 4 )
+		*x1 = x - pos; // Going left
+	else
+		*x1 = x + pos; // Going right
+
+	if( dir == 2 || dir == 6 )
+		*y1 = y;
+	else if( dir > 2 && dir < 6 )
+		*y1 = y - pos;
+	else
+		*y1 = y + pos;
+}
+
+bool map_iwall_set(int m, int x, int y, int size, int dir, bool shootable, const char* wall_name)
+{
+	struct iwall_data *iwall;
+	int i, x1 = 0, y1 = 0;
+
+	if( size < 1 || !wall_name )
+		return false;
+
+	if( (iwall = (struct iwall_data *)strdb_get(iwall_db, wall_name)) != NULL )
+		return false; // Already Exists
+
+	if( map_getcell(m, x, y, CELL_CHKNOREACH) )
+		return false; // Starting cell problem
+
+	CREATE(iwall, struct iwall_data, 1);
+	iwall->m = m;
+	iwall->x = x;
+	iwall->y = y;
+	iwall->size = size;
+	iwall->dir = dir;
+	iwall->shootable = shootable;
+	safestrncpy(iwall->wall_name, wall_name, sizeof(iwall->wall_name));
+
+	for( i = 0; i < size; i++ )
+	{
+		map_iwall_nextxy(x, y, dir, i, &x1, &y1);
+
+		if( map_getcell(m, x1, y1, CELL_CHKNOREACH) )
+			break; // Collision
+
+		map_setcell(m, x1, y1, CELL_WALKABLE, false);
+		map_setcell(m, x1, y1, CELL_SHOOTABLE, shootable);
+
+		clif_changemapcell(0, m, x1, y1, map_getcell(m, x1, y1, CELL_GETTYPE), ALL_SAMEMAP);
+	}
+
+	iwall->size = i;
+
+	strdb_put(iwall_db, iwall->wall_name, iwall);
+	map[m].iwall_num++;
+
+	return true;
+}
+
+void map_iwall_get(struct map_session_data *sd)
+{
+	struct iwall_data *iwall;
+	DBIterator* iter;
+	DBKey key;
+	int x1, y1;
+	int i;
+
+	if( map[sd->bl.m].iwall_num < 1 )
+		return;
+
+	iter = iwall_db->iterator(iwall_db);
+	for( iwall = (struct iwall_data *)iter->first(iter,&key); iter->exists(iter); iwall = (struct iwall_data *)iter->next(iter,&key) )
+	{
+		if( iwall->m != sd->bl.m )
+			continue;
+
+		for( i = 0; i < iwall->size; i++ )
+		{
+			map_iwall_nextxy(iwall->x, iwall->y, iwall->dir, i, &x1, &y1);
+			clif_changemapcell(sd->fd, iwall->m, x1, y1, map_getcell(iwall->m, x1, y1, CELL_GETTYPE), SELF);
+		}
+	}
+	iter->destroy(iter);
+}
+
+void map_iwall_remove(const char *wall_name)
+{
+	struct iwall_data *iwall;
+	int i, x1, y1;
+
+	if( (iwall = (struct iwall_data *)strdb_get(iwall_db, wall_name)) == NULL )
+		return; // Nothing to do
+
+	for( i = 0; i < iwall->size; i++ )
+	{
+		map_iwall_nextxy(iwall->x, iwall->y, iwall->dir, i, &x1, &y1);
+
+		map_setcell(iwall->m, x1, y1, CELL_SHOOTABLE, true);
+		map_setcell(iwall->m, x1, y1, CELL_WALKABLE, true);
+
+		clif_changemapcell(0, iwall->m, x1, y1, map_getcell(iwall->m, x1, y1, CELL_GETTYPE), ALL_SAMEMAP);
+	}
+
+	map[iwall->m].iwall_num--;
+	strdb_remove(iwall_db, iwall->wall_name);
+}
+
 static void* create_map_data_other_server(DBKey key, va_list args)
 {
 	struct map_data_other_server *mdos;
@@ -3223,6 +3337,7 @@ void do_final(void)
 	bossid_db->destroy(bossid_db, NULL);
 	nick_db->destroy(nick_db, nick_db_final);
 	charid_db->destroy(charid_db, NULL);
+	iwall_db->destroy(iwall_db, NULL);
 
 #ifndef TXT_ONLY
     map_sql_close();
@@ -3396,6 +3511,9 @@ int do_init(int argc, char *argv[])
 	map_db = uidb_alloc(DB_OPT_BASE);
 	nick_db = idb_alloc(DB_OPT_BASE);
 	charid_db = idb_alloc(DB_OPT_BASE);
+
+	iwall_db = strdb_alloc(DB_OPT_RELEASE_DATA,2*NAME_LENGTH+2+1); // [Zephyrus] Invisible Walls
+
 #ifndef TXT_ONLY
 	map_sql_init();
 #endif /* not TXT_ONLY */

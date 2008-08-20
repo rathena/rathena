@@ -6181,5 +6181,14 @@ Example:
 
 ---------------------------------------
 
+*setwall "<map name>",<x>,<y>,<size>,<dir>,<shootable>,"<name>";
+*delwall "<name>";
+
+Creates an invisible wall, an array of "setcell" starting from x,y and doing a
+line of the given size in the given direction. The difference with setcell is
+this one update client part too to avoid the glith problem.
+
+---------------------------------------
+
 Whew.
 That's about all of them.
