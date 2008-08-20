@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= sabernet09 & eAthena Team
 //===== Current Version: ===================================== 
-//= 2.2
+//= 2.2a
 //===== Compatible With: ===================================== 
 //= eAthena 7.15 +
 //===== Description: ========================================= 
@@ -36,6 +36,7 @@
 //= 2.0 Updated hack check and added a weight check to dismantling. [SinSloth]
 //= 2.1 Rescripted to Aegis 10.3 standards. Added strange quest. [L0ne_W0lf]
 //= 2.2 Readded the ability to dismantle multiple stones at once. [L0ne_W0lf]
+//= 2.2a Fixed weight check from previous update. [L0ne_w0lf]
 //============================================================ 
 
 //==============================================================================
@@ -701,7 +702,7 @@ um_in,44,71,2	script	Utan Shaman	782,{
 		input .@input,0,11;
 		if ((.@input > 0) && (.@input < 11)) {
 			if (countitem(.@divide) >= .@input) {
-				if (checkweight(.@divide,.@input * 300) == 0) {
+				if (checkweight(908,(.@input * 30)) == 0) {
 					mes "[Puchuchartan]";
 					mes "You're carrying too";
 					mes "many items right now.";
@@ -800,7 +801,7 @@ um_in,44,71,2	script	Utan Shaman	782,{
 					mes "you to bring "+.@input+" pure earth stone.";
 					break;
 				}
-				mes "^3377FF1 "+.@input+" "+getitemname(.@divide)+"^000000.";
+				mes "^3377FF"+.@input+" "+getitemname(.@divide)+"^000000.";
 				next;
 				mes "[Puchuchartan]";
 				mes "That's all I need...";

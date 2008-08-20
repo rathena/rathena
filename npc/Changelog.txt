@@ -1,5 +1,7 @@
 ﻿Date		Added
 ======
+2008/08/20
+	* Rev. 13102 Follow up to r13091, fixed weight check in stone dismantler. [L0ne_W0lf]
 2008/08/19
 	* Rev. 13091 Rather large update to the Keil Hyre quest. [L0ne_W0lf]
 	- Update does not add any of the changes made by iRO.
