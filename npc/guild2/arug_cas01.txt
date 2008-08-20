@@ -403,63 +403,63 @@ OnInit:
 arug_cas01,1,1,0	script	#aru01_gard01	-1,{
 OnEnable:
 	set .@defence,GetCastleData("arug_cas01",3);
-	guardian "arug_cas01",233,83,"Guardian",1899,"#aru01_gard01::OnGuardianDied"; //0;
+	guardian "arug_cas01",233,83,"Guardian Soldier",1899,"#aru01_gard01::OnGuardianDied"; //0;
 	if ((.@defence > 10) && (.@defence < 31)) {
 		set .MyMobCount,2;
-		guardian "arug_cas01",252,81,"Guardian",1899,"#aru01_gard01::OnGuardianDied"; //1;
+		guardian "arug_cas01",252,81,"Guardian Soldier",1899,"#aru01_gard01::OnGuardianDied"; //1;
 	}
 	else if ((.@defence > 30) && (.@defence < 51)) {
 		set .MyMobCount,3;
-		guardian "arug_cas01",252,81,"Guardian",1899,"#aru01_gard01::OnGuardianDied"; //1;
-		guardian "arug_cas01",232,108,"Guardian",1899,"#aru01_gard01::OnGuardianDied"; //2;
+		guardian "arug_cas01",252,81,"Guardian Soldier",1899,"#aru01_gard01::OnGuardianDied"; //1;
+		guardian "arug_cas01",232,108,"Guardian Soldier",1899,"#aru01_gard01::OnGuardianDied"; //2;
 	}
 	else if ((.@defence > 50) && (.@defence < 71)) {
 		set .MyMobCount,4;
-		guardian "arug_cas01",252,81,"Guardian",1899,"#aru01_gard01::OnGuardianDied"; //1;
-		guardian "arug_cas01",232,108,"Guardian",1899,"#aru01_gard01::OnGuardianDied"; //2;
-		guardian "arug_cas01",201,130,"Guardian",1899,"#aru01_gard01::OnGuardianDied"; //3;
+		guardian "arug_cas01",252,81,"Guardian Soldier",1899,"#aru01_gard01::OnGuardianDied"; //1;
+		guardian "arug_cas01",232,108,"Guardian Soldier",1899,"#aru01_gard01::OnGuardianDied"; //2;
+		guardian "arug_cas01",201,130,"Guardian Soldier",1899,"#aru01_gard01::OnGuardianDied"; //3;
 	}
 	else if (.@defence > 70) {
 		set .MyMobCount,5;
-		guardian "arug_cas01",252,81,"Guardian",1899,"#aru01_gard01::OnGuardianDied"; //1;
-		guardian "arug_cas01",232,108,"Guardian",1899,"#aru01_gard01::OnGuardianDied"; //2;
-		guardian "arug_cas01",201,130,"Guardian",1899,"#aru01_gard01::OnGuardianDied"; //3;
-		guardian "arug_cas01",224,168,"Guardian",1899,"#aru01_gard01::OnGuardianDied"; //4;
+		guardian "arug_cas01",252,81,"Guardian Soldier",1899,"#aru01_gard01::OnGuardianDied"; //1;
+		guardian "arug_cas01",232,108,"Guardian Soldier",1899,"#aru01_gard01::OnGuardianDied"; //2;
+		guardian "arug_cas01",201,130,"Guardian Soldier",1899,"#aru01_gard01::OnGuardianDied"; //3;
+		guardian "arug_cas01",224,168,"Guardian Soldier",1899,"#aru01_gard01::OnGuardianDied"; //4;
 	}
 	else {
 		set .MyMobCount,2;
-		guardian "arug_cas01",195,250,"Guardian",1899,"#aru01_gard01::OnGuardianDied"; //1;
+		guardian "arug_cas01",195,250,"Guardian Soldier",1899,"#aru01_gard01::OnGuardianDied"; //1;
 	}
 	initnpctimer;
 	end;
 
 OnTimer300000:
 	set .MyMobCount,.MyMobCount+1;
-	guardian "arug_cas01",196,137,"Guardian",1899,"#aru01_gard01::OnGuardianDied"; //5;
+	guardian "arug_cas01",196,137,"Guardian Soldier",1899,"#aru01_gard01::OnGuardianDied"; //5;
 	mapannounce "arug_cas01","The 1st Guardian has been summoned from the Gate House.",bc_map,"0xff4500";
 	end;
 
 OnTimer900000:
 	set .MyMobCount,.MyMobCount+1;
-	guardian "arug_cas01",269,89,"Guardian",1899,"#aru01_gard01::OnGuardianDied"; //6;
+	guardian "arug_cas01",269,89,"Guardian Soldier",1899,"#aru01_gard01::OnGuardianDied"; //6;
 	mapannounce "arug_cas01","The 2nd Guardian has been summoned from the Gate House.",bc_map,"0xff4500";
 	end;
 
 OnTimer1800000:
 	set .MyMobCount,.MyMobCount+1;
-	guardian "arug_cas01",252,81,"Guardian",1899,"#aru01_gard01::OnGuardianDied"; //7;
+	guardian "arug_cas01",252,81,"Guardian Soldier",1899,"#aru01_gard01::OnGuardianDied"; //7;
 	mapannounce "arug_cas01","The 3rd Guardian has been summoned from the Gate House.",bc_map,"0xff4500";
 	end;
 
 OnTimer2700000:
 	set .MyMobCount,.MyMobCount+1;
-	guardian "arug_cas01",201,130,"Guardian",1899,"#aru01_gard01::OnGuardianDied"; //8;
+	guardian "arug_cas01",201,130,"Guardian Soldier",1899,"#aru01_gard01::OnGuardianDied"; //8;
 	mapannounce "arug_cas01","The 4th Guardian has been summoned from the Gate House.",bc_map,"0xff4500";
 	end;
 
 OnTimer3600000:
 	set .MyMobCount,.MyMobCount+1;
-	guardian "arug_cas01",224,168,"Guardian",1899,"#aru01_gard01::OnGuardianDied"; //9;
+	guardian "arug_cas01",224,168,"Guardian Soldier",1899,"#aru01_gard01::OnGuardianDied"; //9;
 	mapannounce "arug_cas01","The 5th Guardian has been summoned from the Gate House.",bc_map,"0xff4500";
 	stopnpctimer;
 	end;
@@ -468,7 +468,7 @@ OnGuardianDied:
 	set .MyMobCount,.MyMobCount-1;
 	if (.MyMobCount < 2) {
 		set .MyMobCount,.MyMobCount+1;
-		guardian "arug_cas01",222,129,"Guardian",1899,"#aru01_gard01::OnGuardianDied"; //10;
+		guardian "arug_cas01",222,129,"Guardian Soldier",1899,"#aru01_gard01::OnGuardianDied"; //10;
 	}
 	end;
 
@@ -481,59 +481,59 @@ Onreset:
 arug_cas01,1,2,0	script	#aru01_gard02	-1,{
 OnEnable:
 	set .@defence,GetCastleData("arug_cas01",3);
-	guardian "arug_cas01",294,210,"Guardian",1899,"#aru01_gard02::OnGuardianDied"; //11;
+	guardian "arug_cas01",294,210,"Guardian Soldier",1899,"#aru01_gard02::OnGuardianDied"; //11;
 	if ((.@defence > 10) && (.@defence < 31)) {
 		set .MyMobCount,2;
-		guardian "arug_cas01",256,203,"Guardian",1899,"#aru01_gard02::OnGuardianDied"; //12;
+		guardian "arug_cas01",256,203,"Guardian Soldier",1899,"#aru01_gard02::OnGuardianDied"; //12;
 	}
 	else if ((.@defence > 30) && (.@defence < 51)) {
 		set .MyMobCount,3;
-		guardian "arug_cas01",256,203,"Guardian",1899,"#aru01_gard02::OnGuardianDied"; //12;
-		guardian "arug_cas01",240,133,"Guardian",1899,"#aru01_gard02::OnGuardianDied"; //13;
+		guardian "arug_cas01",256,203,"Guardian Soldier",1899,"#aru01_gard02::OnGuardianDied"; //12;
+		guardian "arug_cas01",240,133,"Guardian Soldier",1899,"#aru01_gard02::OnGuardianDied"; //13;
 	}
 	else if ((.@defence > 50) && (.@defence < 71)) {
 		set .MyMobCount,4;
-		guardian "arug_cas01",256,203,"Guardian",1899,"#aru01_gard02::OnGuardianDied"; //12;
-		guardian "arug_cas01",240,133,"Guardian",1899,"#aru01_gard02::OnGuardianDied"; //13;
-		guardian "arug_cas01",246,92,"Guardian",1899,"#aru01_gard02::OnGuardianDied"; //14;
+		guardian "arug_cas01",256,203,"Guardian Soldier",1899,"#aru01_gard02::OnGuardianDied"; //12;
+		guardian "arug_cas01",240,133,"Guardian Soldier",1899,"#aru01_gard02::OnGuardianDied"; //13;
+		guardian "arug_cas01",246,92,"Guardian Soldier",1899,"#aru01_gard02::OnGuardianDied"; //14;
 	}
 	else if (.@defence > 70) {
 		set .MyMobCount,5;
-		guardian "arug_cas01",256,203,"Guardian",1899,"#aru01_gard02::OnGuardianDied"; //12;
-		guardian "arug_cas01",240,133,"Guardian",1899,"#aru01_gard02::OnGuardianDied"; //13;
-		guardian "arug_cas01",246,92,"Guardian",1899,"#aru01_gard02::OnGuardianDied"; //14;
-		guardian "arug_cas01",235,132,"Guardian",1899,"#aru01_gard02::OnGuardianDied"; //15;
+		guardian "arug_cas01",256,203,"Guardian Soldier",1899,"#aru01_gard02::OnGuardianDied"; //12;
+		guardian "arug_cas01",240,133,"Guardian Soldier",1899,"#aru01_gard02::OnGuardianDied"; //13;
+		guardian "arug_cas01",246,92,"Guardian Soldier",1899,"#aru01_gard02::OnGuardianDied"; //14;
+		guardian "arug_cas01",235,132,"Guardian Soldier",1899,"#aru01_gard02::OnGuardianDied"; //15;
 	}
 	else {
 		set .MyMobCount,2;
-		guardian "arug_cas01",292,188,"Guardian",1899,"#aru01_gard02::OnGuardianDied"; //12;
+		guardian "arug_cas01",292,188,"Guardian Soldier",1899,"#aru01_gard02::OnGuardianDied"; //12;
 	}
 	initnpctimer;
 	end;
 
 OnTimer600000:
 	set .MyMobCount,.MyMobCount+1;
-	guardian "arug_cas01",235,132,"Guardian",1899,"#aru01_gard02::OnGuardianDied"; //16;
+	guardian "arug_cas01",235,132,"Guardian Soldier",1899,"#aru01_gard02::OnGuardianDied"; //16;
 	end;
 
 OnTimer1200000:
 	set .MyMobCount,.MyMobCount+1;
-	guardian "arug_cas01",246,92,"Guardian",1899,"#aru01_gard02::OnGuardianDied"; //17;
+	guardian "arug_cas01",246,92,"Guardian Soldier",1899,"#aru01_gard02::OnGuardianDied"; //17;
 	end;
 
 OnTimer2100000:
 	set .MyMobCount,.MyMobCount+1;
-	guardian "arug_cas01",240,133,"Guardian",1899,"#aru01_gard02::OnGuardianDied"; //18;
+	guardian "arug_cas01",240,133,"Guardian Soldier",1899,"#aru01_gard02::OnGuardianDied"; //18;
 	end;
 
 OnTimer3000000:
 	set .MyMobCount,.MyMobCount+1;
-	guardian "arug_cas01",256,203,"Guardian",1899,"#aru01_gard02::OnGuardianDied"; //19;
+	guardian "arug_cas01",256,203,"Guardian Soldier",1899,"#aru01_gard02::OnGuardianDied"; //19;
 	end;
 
 OnTimer3900000:
 	set .MyMobCount,.MyMobCount+1;
-	guardian "arug_cas01",254,95,"Guardian",1899,"#aru01_gard02::OnGuardianDied"; //20;
+	guardian "arug_cas01",254,95,"Guardian Soldier",1899,"#aru01_gard02::OnGuardianDied"; //20;
 	stopnpctimer;
 	end;
 
@@ -541,7 +541,7 @@ OnGuardianDied:
 	set .MyMobCount,.MyMobCount-1;
 	if (.MyMobCount < 2) {
 		set .MyMobCount,.MyMobCount+1;
-		guardian "arug_cas01",242,151,"Guardian",1899,"#aru01_gard02::OnGuardianDied"; //21;
+		guardian "arug_cas01",242,151,"Guardian Soldier",1899,"#aru01_gard02::OnGuardianDied"; //21;
 	}
 	end;
 
@@ -584,7 +584,7 @@ OnGuardianStoneDied:
 	end;
 
 OnTimer300000:
-	donpcevent "1st Guardian Stone#aru01::OnGuardian";
+	donpcevent "1st Guardian Stone#aru01::OnEnable";
 	setarray $agit_ar01[0],2; //Global Variable
 	stopnpctimer;
 	end;
@@ -1124,7 +1124,7 @@ arug_cas01,308,189,0	script	2nd Guardian Stone#aru01	844,{
 								donpcevent "#aru01_RL00::OnEnable";
 							}
 							else {
-								mapannounce "arug_cas01","The 2nd Guardian Stone was repaired successfully.",bc_map,"0x00ff00";
+								mapannounce "arug_cas01","The 2nd Guardian Stone has been repaired successfully.",bc_map,"0x00ff00";
 							}
 							if ($agit_ar01[5] == 1) {
 								donpcevent "#aru01_gard02::OnEnable";
@@ -1169,7 +1169,6 @@ OnDisable:
 	end;
 }
 
-// Barrier Summoners
 arug_cas01,2,1,0	script	#aru01_RL00	-1,{
 OnEnable:
 	setcell "arug_cas01",238,74,245,74,cell_walkable,0;

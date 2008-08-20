@@ -2122,13 +2122,18 @@ static int skill_timerskill(int tid, unsigned int tick, int id, intptr data)
 		else {
 			if(src->m != skl->map)
 				break;
-			switch(skl->skill_id) {
+			switch( skl->skill_id )
+			{
 				case WZ_METEOR:
-					if(skl->type >= 0) {
-						skill_unitsetting(src,skl->skill_id,skl->skill_lv,skl->type>>16,skl->type&0xFFFF,skl->flag);
-						clif_skill_poseffect(src,skl->skill_id,skl->skill_lv,skl->x,skl->y,tick);
+					if( skl->type >= 0 )
+					{
+						int x = skl->type>>16, y = skl->type&0xFFFF;
+						if( path_search_long(NULL, src->m, src->x, src->y, x, y, CELL_CHKWALL) )
+							skill_unitsetting(src,skl->skill_id,skl->skill_lv,x,y,skl->flag);
+						if( path_search_long(NULL, src->m, src->x, src->y, skl->x, skl->y, CELL_CHKWALL) )
+							clif_skill_poseffect(src,skl->skill_id,skl->skill_lv,skl->x,skl->y,tick);
 					}
-					else
+					else if( path_search_long(NULL, src->m, src->x, src->y, skl->x, skl->y, CELL_CHKWALL) )
 						skill_unitsetting(src,skl->skill_id,skl->skill_lv,skl->x,skl->y,skl->flag);
 					break;
 			}
@@ -5756,25 +5761,29 @@ int skill_castend_pos2(struct block_list* src, int x, int y, int skillid, int sk
 
 	case WZ_METEOR:
 		{
-			int flag=0, area = skill_get_splash(skillid, skilllv);
+			int flag = 0, area = skill_get_splash(skillid, skilllv);
 			short tmpx = 0, tmpy = 0, x1 = 0, y1 = 0;
-			if (sc && sc->data[SC_MAGICPOWER])
+
+			if( sc && sc->data[SC_MAGICPOWER] )
 				flag = flag|2; //Store the magic power flag for future use. [Skotlex]
-			for(i=0;i<2+(skilllv>>1);i++) {
-				tmpx = x;
-				tmpy = y;
-				if (!map_search_freecell(NULL, src->m, &tmpx, &tmpy, area, area, 1))
-					continue;
-				if(!(flag&1)){
+
+			for( i = 0; i < 2 + (skilllv>>1); i++ )
+			{
+				// Creates a random Cell in the Splash Area
+				tmpx = x - area + rand()%(area * 2 + 1);
+				tmpy = y - area + rand()%(area * 2 + 1);
+
+				if( i == 0 && path_search_long(NULL, src->m, src->x, src->y, tmpx, tmpy, CELL_CHKWALL) )
 					clif_skill_poseffect(src,skillid,skilllv,tmpx,tmpy,tick);
-					flag=flag|1;
-				}
-				if(i > 0)
+
+				if( i > 0 )
 					skill_addtimerskill(src,tick+i*1000,0,tmpx,tmpy,skillid,skilllv,(x1<<16)|y1,flag&2); //Only pass the Magic Power flag
+
 				x1 = tmpx;
 				y1 = tmpy;
 			}
-			skill_addtimerskill(src,tick+i*1000,0,tmpx,tmpy,skillid,skilllv,-1,flag&2); //Only pass the Magic Power flag
+
+			skill_addtimerskill(src,tick+i*1000,0,tmpx,tmpy,skillid,skilllv,-1,flag&2);
 		}
 		break;
 
