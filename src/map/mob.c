@@ -2297,16 +2297,16 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 
 	if( !md->sc.data[SC_KAIZEL] )
 	{ // Only trigger event on final kill
+		md->status.hp = 0; //So that npc_event invoked functions KNOW that mob is dead
+		if( src )
+			switch( src->type )
+			{
+				case BL_PET: sd = ((TBL_PET*)src)->msd; break;
+				case BL_HOM: sd = ((TBL_HOM*)src)->master; break;
+			}
+
 		if( md->npc_event[0] && !md->state.npc_killmonster )
 		{
-			md->status.hp = 0; //So that npc_event invoked functions KNOW that I am dead.
-			if( src )
-				switch( src->type )
-				{
-					case BL_PET: sd = ((TBL_PET*)src)->msd; break;
-					case BL_HOM: sd = ((TBL_HOM*)src)->master; break;
-				}
-
 			if( sd && battle_config.mob_npc_event_type )
 			{
 				pc_setglobalreg(sd,"killerrid",sd->bl.id);
@@ -2319,14 +2319,14 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 			}
 			else
 				npc_event_do(md->npc_event);
-
-			md->status.hp = 1;
 		}
-		else if( mvp_sd )
+		else if( mvp_sd && !md->state.npc_killmonster )
 		{
 			pc_setglobalreg(mvp_sd,"killedrid",md->class_);
 			npc_script_event(mvp_sd, NPCE_KILLNPC); // PCKillNPC [Lance]
 		}
+		
+		md->status.hp = 1;
 	}
 
 	if(md->deletetimer!=-1) {
