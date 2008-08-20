@@ -782,8 +782,18 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 				status_change_end(bl, SC_SPEEDUP0, -1);
 			if (tsc->data[SC_SPEEDUP1] && !tsc->data[SC_SPEEDUP1]->val4)
 				status_change_end(bl, SC_SPEEDUP1, -1);
-			if (tsc->data[SC_SPIRIT])
+			// Stalkers who are preserved will no longer lose their link.
+			if (tsc->data[SC_SPIRIT] && !(dstsd->class_&MAPID_STALKER && tsc->data[SC_SPIRIT] && tsc->data[SC_PRESERVE]))
 				status_change_end(bl, SC_SPIRIT, -1);
+			// Updated by Brainstorm to remove 'Ka' status effects and Link granted skills.
+			if (tsc->data[SC_KAIZEL])
+				status_change_end(bl, SC_KAIZEL, -1);
+			if (tsc->data[SC_KAAHI])
+				status_change_end(bl, SC_KAAHI, -1);
+			if (tsc->data[SC_KAUPE])
+				status_change_end(bl, SC_KAUPE, -1);
+			if (tsc->data[SC_KAITE])
+				status_change_end(bl, SC_KAITE, -1);
 			if (tsc->data[SC_ONEHAND])
 				status_change_end(bl, SC_ONEHAND, -1);
 			if (tsc->data[SC_ADRENALINE2])
