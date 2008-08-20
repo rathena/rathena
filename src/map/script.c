@@ -9657,41 +9657,6 @@ BUILDIN_FUNC(guardian)
 
 	return 0;
 }
-/*==========================================
- * Build Barricade [Zephyrus]
- * buildbarricade("<map name>",<x>,<y>,"<name to show>",<size>,<dir>,<killable>,<walkable>,<shootable>,<odd>,"<event label>")
- *------------------------------------------*/
-BUILDIN_FUNC(buildbarricade)
-{
-	int m = map_mapname2mapid(script_getstr(st,2));
-	int x = script_getnum(st,3);
-	int y = script_getnum(st,4);
-	const char *str = script_getstr(st,5);
-	int size = script_getnum(st,6);
-	short dir = script_getnum(st,7);
-	bool killable = (bool)script_getnum(st,8);
-	bool walkable = (bool)script_getnum(st,9);
-	bool shootable = (bool)script_getnum(st,10);
-	bool odd = (bool)script_getnum(st,11);
-	const char *evt = script_getstr(st,12);
-
-	if( m < 0 ) return -1;
-
-	check_event(st, evt);
-	mob_barricade_build(m, x, y , str, size, dir, killable, walkable, shootable, odd, evt);
-
-	return 0;
-}
-
-BUILDIN_FUNC(killbarricade)
-{
-	int m = map_mapname2mapid(script_getstr(st,2));
-	const char *evt = script_getstr(st,3);
-
-	mob_barricade_destroy(m, evt);
-
-	return 0;
-}
 
 /// Retrieves various information about the specified guardian.
 ///
@@ -13165,8 +13130,6 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(openauction,""),
 	BUILDIN_DEF(checkcell,"siii"),
 	BUILDIN_DEF(setcell,"siiiiii"),
-	BUILDIN_DEF(buildbarricade,"siisiiiiiis"),
-	BUILDIN_DEF(killbarricade,"ss"),
 	BUILDIN_DEF(getquest, "ii*"),
 	BUILDIN_DEF(deletequest, "i"),
 	BUILDIN_DEF(setquestobjective, "iisi"),

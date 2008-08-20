@@ -2900,7 +2900,6 @@ int npc_reload(void)
 	// clear npc-related data structures
 	ev_db->clear(ev_db,NULL);
 	npcname_db->clear(npcname_db,NULL);
-	mod_barricade_clearall(); // Clear Barricades
 	npc_warp = npc_shop = npc_script = 0;
 	npc_mob = npc_cache_mob = npc_delay_mob = 0;
 

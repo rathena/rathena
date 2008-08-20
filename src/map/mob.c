@@ -67,8 +67,6 @@ static struct {
 	int class_[350];
 } summon[MAX_RANDOMMONSTER];
 
-static DBMap* barricade_db;
-
 #define CLASSCHANGE_BOSS_NUM 21
 
 /*==========================================
@@ -503,210 +501,6 @@ int mob_once_spawn_area(struct map_session_data* sd,int m,int x0,int y0,int x1,i
 
 	return id; // id of last spawned mob
 }
-/*==========================================
- * Barricades [Zephyrus]
- *------------------------------------------*/
-void mob_barricade_nextxy(short x, short y, short dir, int pos, short *x1, short *y1)
-{ // Calculates Next X-Y Position
-	if( dir == 0 || dir == 4 )
-		*x1 = x; // Keep X
-	else if( dir > 0 && dir < 4 )
-		*x1 = x - pos; // Going left
-	else
-		*x1 = x + pos; // Going right
-
-	if( dir == 2 || dir == 6 )
-		*y1 = y;
-	else if( dir > 2 && dir < 6 )
-		*y1 = y - pos;
-	else
-		*y1 = y + pos;
-}
-
-short mob_barricade_build(short m, short x, short y, const char* mobname, short count, short dir, bool killable, bool walkable, bool shootable, bool odd, const char* event)
-{
-	int i, j;
-	short x1, y1;
-	struct mob_data *md;
-	struct barricade_data *barricade;
-
-	if( count <= 0 ) return 1;
-	if( !event ) return 2;
-	if( (barricade = (struct barricade_data *)strdb_get(barricade_db,event)) != NULL ) return 3; // Already a barricade with event name
-	if( map_getcell(m, x, y, CELL_CHKNOREACH) ) return 4; // Starting cell problem
-
-	CREATE(barricade, struct barricade_data, 1);
-
-	barricade->dir = dir;
-	barricade->x = x;
-	barricade->y = y;
-	barricade->m = m;
-	safestrncpy(barricade->npc_event, event, sizeof(barricade->npc_event));
-	barricade->amount = 0;
-	barricade->killable = killable;
-	
-	// A protection just in case setting a walkable - non shootable
-	if( (barricade->walkable = walkable) == true )
-		barricade->shootable = true;
-	else
-		barricade->shootable = shootable;
-	
-	for( i = 0; i < count; i++ )
-	{
-		mob_barricade_nextxy(x, y, dir, i, &x1, &y1);
-
-		if( map_getcell(m, x1, y1, CELL_CHKNOREACH) ) break; // Collision
-
-		if( (odd && i % 2 != 0) || (!odd && i % 2 == 0) )
-		{
-			barricade->amount++;
-
-			if( map[m].flag.gvg_castle )
-				j = mob_spawn_guardian(map[m].name, x1, y1, mobname, 1905, "", 0, false);
-			else
-				j = mob_once_spawn(NULL, m, x1, y1, mobname, 1905, 1, "");
-
-			if( (md = (struct mob_data *)map_id2bl(j)) != NULL )
-				md->barricade = barricade;
-		}
-
-		if( !barricade->walkable )
-		{
-			map_setcell(m, x1, y1, CELL_WALKABLE, false);
-			map_setcell(m, x1, y1, CELL_SHOOTABLE, barricade->shootable);
-		}
-
-		clif_changemapcell(0, m, x1, y1, map_getcell(barricade->m, x1, y1, CELL_GETTYPE), ALL_SAMEMAP);
-	}
-
-	barricade->count = i;
-
-	strdb_put(barricade_db, barricade->npc_event, barricade);
-	map[m].barricade_num++;
-
-	return 0;
-}
-
-void mob_barricade_get(struct map_session_data *sd)
-{ // Update Barricade cell in client - Required only on changemap
-	struct barricade_data *barricade;
-	DBIterator* iter;
-	DBKey key;
-	short x1, y1;
-	int i;
-
-	if( map[sd->bl.m].barricade_num <= 0 )
-		return;
-
-	iter = barricade_db->iterator(barricade_db);
-	for( barricade = (struct barricade_data *)iter->first(iter,&key); iter->exists(iter); barricade = (struct barricade_data *)iter->next(iter,&key) )
-	{
-		if( sd->bl.m != barricade->m )
-			continue;
-
-		for( i = 0; i < barricade->count; i++ )
-		{
-			mob_barricade_nextxy(barricade->x, barricade->y, barricade->dir, i, &x1, &y1);
-			clif_changemapcell(sd->fd, barricade->m, x1, y1, map_getcell(barricade->m, x1, y1, CELL_GETTYPE), SELF);
-		}
-	}
-	iter->destroy(iter);
-}
-
-static void mob_barricade_break(struct barricade_data *barricade, struct block_list *src)
-{
-	int i;
-	struct map_session_data *sd = NULL;
-	short x1, y1;
-	
-	if( barricade == NULL )
-		return;
-
-	if( --barricade->amount > 0 )
-		return; // There are still barricades
-
-	for( i = 0; i < barricade->count; i++ )
-	{
-		mob_barricade_nextxy(barricade->x, barricade->y, barricade->dir, i, &x1, &y1);
-
-		if( !barricade->shootable )
-			map_setcell(barricade->m, x1, y1, CELL_SHOOTABLE, true);
-		if( !barricade->walkable )
-			map_setcell(barricade->m, x1, y1, CELL_WALKABLE, true);
-
-		clif_changemapcell(0, barricade->m, x1, y1, map_getcell(barricade->m, x1, y1, CELL_GETTYPE), ALL_SAMEMAP);
-	}
-
-	if( src )
-		switch( src->type )
-		{
-		case BL_PC:
-			sd = BL_CAST(BL_PC,src);
-			break;
-		case BL_PET:
-			sd = ((TBL_PET*)src)->msd;
-			break;
-		case BL_HOM:
-			sd = ((TBL_HOM*)src)->master;
-			break;
-		}
-
-	if( sd ) npc_event(sd, barricade->npc_event, 0);
-
-	map[barricade->m].barricade_num--;
-	strdb_remove(barricade_db, barricade->npc_event);
-}
-
-static int mob_barricade_destroy_sub(struct block_list *bl, va_list ap)
-{
-	TBL_MOB* md = (TBL_MOB*)bl;
-	char *event = va_arg(ap,char *);
-
-	if( md->barricade == NULL )
-		return 0;
-
-	if( strcmp(event, md->barricade->npc_event) == 0 )
-		status_kill(bl);
-
-	return 0;
-}
-
-void mob_barricade_destroy(short m, const char *event)
-{
-	if( !event )
-		return;
-
-	map_foreachinmap(mob_barricade_destroy_sub, m, BL_MOB, event, 0);
-}
-
-void mod_barricade_clearall(void)
-{
-	struct barricade_data *barricade;
-	DBIterator* iter;
-	DBKey key;
-	short x1, y1;
-	int i;
-
-	iter = barricade_db->iterator(barricade_db);
-	for( barricade = (struct barricade_data *)iter->first(iter,&key); iter->exists(iter); barricade = (struct barricade_data *)iter->next(iter,&key) )
-	{
-		for( i = 0; i < barricade->count; i++ )
-		{
-			mob_barricade_nextxy(barricade->x, barricade->y, barricade->dir, i, &x1, &y1);
-
-			if( !barricade->shootable )
-				map_setcell(barricade->m, x1, y1, CELL_SHOOTABLE, true);
-			if( !barricade->walkable )
-				map_setcell(barricade->m, x1, y1, CELL_WALKABLE, true);
-
-			clif_changemapcell(0, barricade->m, x1, y1, map_getcell(barricade->m, x1, y1, CELL_GETTYPE), ALL_SAMEMAP);
-		}
-	}
-	iter->destroy(iter);
-
-	barricade_db->clear(barricade_db, NULL);
-}
-
 /*==========================================
  * Set a Guardian's guild data [Skotlex]
  *------------------------------------------*/
@@ -2535,9 +2329,6 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		}
 	}
 
-	if( md->barricade != NULL )
-		mob_barricade_break(md->barricade, src);
-
 	if(md->deletetimer!=-1) {
 		delete_timer(md->deletetimer,mob_timer_delete);
 		md->deletetimer = INVALID_TIMER;
@@ -4356,8 +4147,6 @@ int do_init_mob(void)
 	item_drop_ers = ers_new(sizeof(struct item_drop));
 	item_drop_list_ers = ers_new(sizeof(struct item_drop_list));
 
-	barricade_db = strdb_alloc(DB_OPT_RELEASE_DATA,2*NAME_LENGTH+2+1);
-
 #ifndef TXT_ONLY
     if(db_use_sqldbs)
         mob_read_sqldb();
@@ -4404,6 +4193,5 @@ int do_final_mob(void)
 	}
 	ers_destroy(item_drop_ers);
 	ers_destroy(item_drop_list_ers);
-	barricade_db->destroy(barricade_db,NULL);
 	return 0;
 }

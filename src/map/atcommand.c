@@ -7784,45 +7784,6 @@ int atcommand_showdelay(const int fd, struct map_session_data* sd, const char* c
 }
 
 /*==========================================
- * Barricade Build
- *------------------------------------------*/
-int atcommand_barricade(const int fd, struct map_session_data* sd, const char* command, const char* message)
-{
-	int x = 0, y = 0, size = 1, killable = 0, shootable = 0, dir = 0;
-	char event[50];
-	short result;
-
-	if( !message || !*message || (sscanf(message, "%d %d %d %d %d %d %50s", &x, &y, &size, &dir, &killable, &shootable, event) < 7) )
-	{
-		clif_displaymessage(fd, "usage @barricade <x> <y> <size> <dir> <killable> <shootable> <event>");
-		return -1;
-	}
-
-	if( x == -1 ) x = sd->bl.x;
-	if( y == -1 ) y = sd->bl.y;
-
-	result = mob_barricade_build(sd->bl.m, x, y, "--ja--", size, dir, (bool)killable, false, (bool)shootable, false, event);
-
-	switch( result )
-	{
-	case 0: clif_displaymessage(fd, "Barricade build."); return 0; break;
-	case 1: clif_displaymessage(fd, "Barricade fail. Invalid Size"); break;
-	case 2: clif_displaymessage(fd, "Barricade fail. Invalid Event"); break;
-	case 3: clif_displaymessage(fd, "Barricade fail. Event already exists"); break;
-	case 4: clif_displaymessage(fd, "Barricade fail. Wall problem."); break;
-	}
-
-	return -1;
-}
-
-int atcommand_barricade_destroy(const int fd, struct map_session_data* sd, const char* command, const char* message)
-{
-	mob_barricade_destroy(sd->bl.m, message);
-
-	return 0;
-}
-
-/*==========================================
  * Duel organizing functions [LuzZza]
  *
  * @duel [limit|nick] - create a duel
@@ -8544,8 +8505,6 @@ AtCommandInfo atcommand_info[] = {
 	{ "allowks",            6,     atcommand_allowks },
 	{ "cash",              60,     atcommand_cash },
 	{ "points",            60,     atcommand_cash },
-	{ "barricade",         60,     atcommand_barricade },
-	{ "killbarricade",     60,     atcommand_barricade_destroy },
 };
 
 

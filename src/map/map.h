@@ -387,13 +387,6 @@ struct mapcell
 #endif
 };
 
-struct barricade_data {
-	char npc_event[50];
-	short m, x, y, count, amount, dir;
-
-	bool killable, shootable, walkable;
-};
-
 struct map_data {
 	char name[MAP_NAME_LENGTH];
 	unsigned short index; // The map index used by the mapindex* functions.
@@ -405,7 +398,6 @@ struct map_data {
 	short bxs,bys; // map dimensions (in blocks)
 	int npc_num;
 	int users;
-	int barricade_num;
 	struct map_flag {
 		unsigned town : 1; // [Suggestion to protect Mail System]
 		unsigned autotrade : 1;

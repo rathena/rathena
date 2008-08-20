@@ -7937,7 +7937,6 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 
 		//Login Event
 		npc_script_event(sd, NPCE_LOGIN);
-		mob_barricade_get(sd);
 	} else {
 		//For some reason the client "loses" these on warp/map-change.
 		clif_updatestatus(sd,SP_STR);
@@ -7979,7 +7978,6 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 			clif_announce(&sd->bl, output, strlen(output) + 1, 0x00CC66, 3);
 		}
 
-		mob_barricade_get(sd);
 		sd->state.changemap = false;
 	}
 	

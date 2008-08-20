@@ -3141,9 +3141,6 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 
 			if (!(agit_flag && map[m].flag.gvg_castle) && md->guardian_data && md->guardian_data->guild_id)
 				return 0; //Disable guardians/emperiums owned by Guilds on non-woe times.
-
-			if( md->barricade && !md->barricade->killable )
-				return 0;
 			break;
 		}
 	}
