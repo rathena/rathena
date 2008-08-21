@@ -155,6 +155,4 @@ int add_str(const char* p);
 const char* get_str(int id);
 int script_reload(void);
 
-extern char mapreg_txt[];
-
 #endif /* _SCRIPT_H_ */
