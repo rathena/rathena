@@ -300,8 +300,12 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,int damage,i
 
 	sc = status_get_sc(bl);
 
-	if (sc && sc->count) {
+	if( sc && sc->count )
+	{
 		//First, sc_*'s that reduce damage to 0.
+		if( sc->data[SC_BASILICA] && !(status_get_mode(src)&MD_BOSS) && skill_num != PA_PRESSURE )
+			return 0; // Basilica reduces damage to 0 except Pressure
+
 		if( sc->data[SC_SAFETYWALL] && (flag&(BF_SHORT|BF_MAGIC))==BF_SHORT )
 		{
 			struct skill_unit_group *group = (struct skill_unit_group *)sc->data[SC_SAFETYWALL]->val3;
@@ -3052,12 +3056,6 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 	nullpo_retr(0, target);
 
 	m = target->m;
-	if (flag&BCT_ENEMY && !map_flag_gvg(m) && !(status_get_mode(src)&MD_BOSS))
-	{	//No offensive stuff while in Basilica.
-		if (map_getcell(m,src->x,src->y,CELL_CHKBASILICA) ||
-			map_getcell(m,target->x,target->y,CELL_CHKBASILICA))
-			return -1;
-	}
 
 	//t_bl/s_bl hold the 'master' of the attack, while src/target are the actual
 	//objects involved.

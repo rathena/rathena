@@ -1284,8 +1284,13 @@ int skill_blown(struct block_list* src, struct block_list* target, int count, in
 		}
 			break;
 		case BL_PC:
-			if(src != target && ((TBL_PC*)target)->special_state.no_knockback)
+		{
+			struct map_session_data *sd = BL_CAST(BL_PC, target);
+			if( sd->sc.data[SC_BASILICA] && sd->sc.data[SC_BASILICA]->val4 == sd->bl.id )
+				return 0; // Basilica caster can't be knocked-back
+			if( src != target && sd->special_state.no_knockback )
 				return 0;
+		}
 			break;
 		case BL_SKILL:
 			su = (struct skill_unit *)target;
@@ -5753,10 +5758,15 @@ int skill_castend_pos2(struct block_list* src, int x, int y, int skillid, int sk
 		flag|=1;
 		break;
 	case HP_BASILICA:
-		skill_clear_unitgroup(src);
-		if (skill_unitsetting(src,skillid,skilllv,x,y,0))
-			sc_start(src,type,100,skilllv,skill_get_time(skillid,skilllv));
-		flag|=1;
+		if( sc->data[SC_BASILICA] )
+			status_change_end(src, SC_BASILICA, -1); // Cancel Basilica
+		else
+		{ // Create Basilica. Start SC on caster. Unit timer start SC on others.
+			skill_clear_unitgroup(src);
+			if( skill_unitsetting(src,skillid,skilllv,x,y,0) )
+				sc_start4(src,type,100,skilllv,0,0,src->id,skill_get_time(skillid,skilllv));
+			flag|=1;
+		}
 		break;
 	case CG_HERMODE:
 		skill_clear_unitgroup(src);
@@ -6028,6 +6038,7 @@ int skill_castend_map (struct map_session_data *sd, short skill_num, const char 
 		sd->sc.data[SC_STEELBODY] ||
 		sd->sc.data[SC_DANCING] ||
 		sd->sc.data[SC_BERSERK] ||
+		sd->sc.data[SC_BASILICA] ||
 		sd->sc.data[SC_MARIONETTE]
 	 )) {
 		skill_failed(sd);
@@ -6110,13 +6121,6 @@ int skill_castend_map (struct map_session_data *sd, short skill_num, const char 
 				return 0;
 			}
 			
-			// This makes Warp Portal fail if the cell is not empty
-			//if(skill_check_unit_range2(&sd->bl,wx,wy,skill_num,lv) > 0) {
-			//	clif_skill_fail(sd,0,0,0);
-			//	skill_failed(sd);
-			//	return 0;
-			//}
-
 			if((group=skill_unitsetting(&sd->bl,skill_num,lv,wx,wy,0))==NULL) {
 				skill_failed(sd);
 				return 0;
@@ -6255,9 +6259,8 @@ struct skill_unit_group* skill_unitsetting (struct block_list *src, short skilli
 	status = status_get_status_data(src);
 	sc = status_get_sc(src);	// for traps, firewall and fogwall - celest
 
-	switch(skillid)
+	switch( skillid )
 	{
-
 	case MG_SAFETYWALL:
 		val2=skilllv+1;
 		break;
@@ -6280,6 +6283,9 @@ struct skill_unit_group* skill_unitsetting (struct block_list *src, short skilli
 			val2 = group->val2; //Copy the (x,y) position you warp to
 			val3 = group->val3; //as well as the mapindex to warp to.
 		}
+		break;
+	case HP_BASILICA:
+		val1 = src->id; // Store caster id.
 		break;
 
 	case PR_SANCTUARY:
@@ -7129,6 +7135,17 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 				}
 			}
 			break;
+			
+		case UNT_BASILICA:
+			if( battle_check_target(&src->bl, bl, BCT_ENEMY) > 0 && !(status_get_mode(bl)&MD_BOSS) )
+			{ // knock-back any enemy except Boss
+				skill_blown(&src->bl, bl, 2, unit_getdir(bl), 0);
+				clif_fixpos(bl);
+			}
+
+			if( sg->src_id != bl->id && battle_check_target(&src->bl, bl, BCT_ENEMY) <= 0 )
+				status_change_start(bl, type, 100, src->bl.id, 0, 0, 0, sg->interval + 100, 0);
+			break;
 
 		case UNT_GRAVITATION:
 			skill_attack(skill_get_type(sg->skill_id),ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick,0);
@@ -7189,6 +7206,11 @@ int skill_unit_onout (struct skill_unit *src, struct block_list *bl, unsigned in
 	case UNT_SAFETYWALL:
 	case UNT_PNEUMA:
 		if (sce)
+			status_change_end(bl,type,-1);
+		break;
+
+	case UNT_BASILICA:
+		if( sce && sce->val1 == src->val1 )
 			status_change_end(bl,type,-1);
 		break;
 
@@ -8362,7 +8384,9 @@ int skill_delayfix (struct block_list *bl, int skill_id, int skill_lv)
 {
 	int delaynodex = skill_get_delaynodex(skill_id, skill_lv);
 	int time = skill_get_delay(skill_id, skill_lv);
-	
+	struct map_session_data *sd = BL_CAST(BL_PC, bl);
+	struct status_change *sc = status_get_sc(bl);
+
 	nullpo_retr(0, bl);
 
 	if (skill_id == SA_ABRACADABRA)
@@ -8383,6 +8407,10 @@ int skill_delayfix (struct block_list *bl, int skill_id, int skill_lv)
 	case CH_TIGERFIST:
 	case CH_CHAINCRUSH:
 		time -= 4*status_get_agi(bl) - 2*status_get_dex(bl);
+		break;
+	case HP_BASILICA:
+		if( sc && !sc->data[SC_BASILICA] )
+			time = 0; // There is no Delay on Basilica creation, only on cancel
 		break;
 	default:
 		if (battle_config.delay_dependon_dex && !(delaynodex&1))
@@ -8405,8 +8433,6 @@ int skill_delayfix (struct block_list *bl, int skill_id, int skill_lv)
 
 	if (!(delaynodex&2))
 	{
-		struct status_change *sc;
-		sc= status_get_sc(bl);
 		if (sc && sc->count) {
 			if (sc->data[SC_POEMBRAGI])
 				time -= time * sc->data[SC_POEMBRAGI]->val3 / 100;

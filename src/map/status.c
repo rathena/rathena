@@ -982,18 +982,6 @@ int status_check_skilluse(struct block_list *src, struct block_list *target, int
 		return 1;
 	}
 
-	if (((src && map_getcell(src->m,src->x,src->y,CELL_CHKBASILICA)) ||
-		(target && target != src && map_getcell(target->m,target->x,target->y,CELL_CHKBASILICA)))
-		&& !(status->mode&MD_BOSS))
-	{	//Basilica Check
-		if (!skill_num) return 0;
-		hide_flag = skill_get_inf(skill_num);
-		if (hide_flag&INF_ATTACK_SKILL)
-			return 0;
-		if (hide_flag&INF_GROUND_SKILL && skill_get_unit_target(skill_num)&BCT_ENEMY)
-			return 0;
-	}	
-		
 	//Should fail when used on top of Land Protector [Skotlex]
 	if (src && skill_num == AL_TELEPORT && map_getcell(src->m, src->x, src->y, CELL_CHKLANDPROTECTOR)
 		&& !(status->mode&MD_BOSS))

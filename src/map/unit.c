@@ -218,11 +218,6 @@ static int unit_walktoxy_timer(int tid, unsigned int tick, int id, intptr data)
 	else
 		i = status_get_speed(bl);
 
-	if( md && map_getcell(bl->m,x,y,CELL_CHKBASILICA) ) {
-		skill_blown(bl,bl,2,unit_getdir(bl),0);
-		clif_fixpos(bl);
-	}
-	
 	if(i > 0)
 		ud->walktimer = add_timer(tick+i,unit_walktoxy_timer,id,i);
 	else if(ud->state.running) {
@@ -1013,6 +1008,10 @@ int unit_skilluse_id2(struct block_list *src, int target_id, short skill_num, sh
 		if (sc && sc->data[SC_RUN])
 			casttime = 0;
 	break;
+	case HP_BASILICA:
+		if( sc && sc->data[SC_BASILICA] )
+			casttime = 0; // No Casting time on basilica cancel
+	break;
 	case KN_CHARGEATK:
 		{
 		unsigned int k = (distance_bl(src,target)-1)/3; //+100% every 3 cells of distance
@@ -1124,11 +1123,12 @@ int unit_skilluse_pos2( struct block_list *src, short skill_x, short skill_y, sh
 	if (sc && !sc->count)
 		sc = NULL;
 	
-	if(sd) {
-		if (skillnotok(skill_num, sd) || !skill_check_condition(sd, skill_num, skill_lv,0))
-		return 0;
-	} 
-	
+	if( sd )
+	{
+		if( skillnotok(skill_num, sd) || !skill_check_condition(sd, skill_num, skill_lv,0) )
+			return 0;
+	}
+
 	if (!status_check_skilluse(src, NULL, skill_num, 0))
 		return 0;
 

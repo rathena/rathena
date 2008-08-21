@@ -77,7 +77,7 @@
 330,0xaf,    ,  3, 0,  -1,all,   0x140	//DC_SERVICEFORYOU
 336,0xb2,    ,  0,-1,  -1,noone, 0x000	//WE_CALLPARTNER
 339,0x86,    , -1, 0, 400,enemy, 0x000	//NPC_DARKGRANDCROSS
-362,0xb4,    ,  0, 3,  -1,all,   0x000	//HP_BASILICA
+362,0xb4,    ,  0, 2, 300,all,   0x000	//HP_BASILICA
 369,0xb3,    , -1, 0,10000,all,  0x008	//PA_GOSPEL
 395,0xb5,    ,  4, 0,  -1,all,   0x200	//CG_MOONLIT
 404,0xb6,    , -1, 0,  -1,all,   0x000	//PF_FOGWALL

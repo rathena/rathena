@@ -8369,10 +8369,13 @@ void clif_parse_ActionRequest_sub(struct map_session_data *sd, int action_type, 
 	case 0x00: // once attack
 	case 0x07: // continuous attack
 
-		if (pc_cant_act(sd) || sd->sc.option&OPTION_HIDE)
+		if( pc_cant_act(sd) || sd->sc.option&OPTION_HIDE )
 			return;
 
-		if(sd->sc.option&(OPTION_WEDDING|OPTION_XMAS|OPTION_SUMMER))
+		if( sd->sc.option&(OPTION_WEDDING|OPTION_XMAS|OPTION_SUMMER) )
+			return;
+
+		if( sd->sc.data[SC_BASILICA] )
 			return;
 
 		if (!battle_config.sdelay_attack_enable && pc_checkskill(sd, SA_FREECAST) <= 0) {
@@ -9226,8 +9229,11 @@ void clif_parse_UseSkillToId(int fd, struct map_session_data *sd)
 		return;
 	}
 
-	if(sd->sc.option&(OPTION_WEDDING|OPTION_XMAS|OPTION_SUMMER))
+	if( sd->sc.option&(OPTION_WEDDING|OPTION_XMAS|OPTION_SUMMER) )
 		return;
+
+	if( sd->sc.data[SC_BASILICA] && (skillnum != HP_BASILICA || sd->sc.data[SC_BASILICA]->val4 != sd->bl.id) )
+		return; // On basilica only caster can use Basilica again to stop it.
 	
 	if(target_id<0 && -target_id == sd->bl.id) // for disguises [Valaris]
 		target_id = sd->bl.id;
@@ -9324,15 +9330,19 @@ void clif_parse_UseSkillToPosSub(int fd, struct map_session_data *sd, short skil
 
 	if (sd->ud.skilltimer != -1)
 		return;
+
 	if (DIFF_TICK(tick, sd->ud.canact_tick) < 0)
 	{
 		clif_skill_fail(sd, skillnum, 4, 0);
 		return;
 	}
 
-	if(sd->sc.option&(OPTION_WEDDING|OPTION_XMAS|OPTION_SUMMER))
+	if( sd->sc.option&(OPTION_WEDDING|OPTION_XMAS|OPTION_SUMMER) )
 		return;
-	
+
+	if( sd->sc.data[SC_BASILICA] && (skillnum != HP_BASILICA || sd->sc.data[SC_BASILICA]->val4 != sd->bl.id) )
+		return; // On basilica only caster can use Basilica again to stop it.
+
 	if(sd->menuskill_id)
 	{
 		if (sd->menuskill_id == SA_TAMINGMONSTER)
@@ -9402,7 +9412,7 @@ void clif_parse_UseSkillMap(int fd, struct map_session_data* sd)
 	if(skill_num != sd->menuskill_id) 
 		return;
 
-	if (pc_cant_act(sd))
+	if( pc_cant_act(sd) )
 	{
 		sd->menuskill_id = sd->menuskill_val = 0;
 		return;
