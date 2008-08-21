@@ -1858,14 +1858,15 @@ static int skill_check_unit_range2_sub (struct block_list *bl, va_list ap)
 	if(bl->prev == NULL)
 		return 0;
 
-	if(status_isdead(bl))
-		return 0;
-
 	skillid = va_arg(ap,int);
-	if (skillid==HP_BASILICA && bl->type==BL_PC)
+
+	if( status_isdead(bl) && skillid != AL_WARP )
 		return 0;
 
-	if (skillid==AM_DEMONSTRATION && bl->type==BL_MOB && ((TBL_MOB*)bl)->class_ == MOBID_EMPERIUM)
+	if( skillid == HP_BASILICA && bl->type == BL_PC )
+		return 0;
+
+	if( skillid == AM_DEMONSTRATION && bl->type == BL_MOB && ((TBL_MOB*)bl)->class_ == MOBID_EMPERIUM )
 		return 0; //Allow casting Bomb/Demonstration Right under emperium [Skotlex]
 	return 1;
 }
