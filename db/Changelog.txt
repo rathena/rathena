@@ -40,6 +40,8 @@
 	2385 Recuvative_Armor		Should trigger HP/SP return with magical kills as well.
 
 =======================
+2008/08/21
+	* Rev. 13105 Archer and Knight guardians (WoE 1.0) will no longer detect hidden. [L0ne_W0lf]
 2008/08/19
 	* Rev. 13094 Fixed invalid element warning in mob database. [L0ne_W0lf]
 	* Healing staff and similar items now add to offensive heal as well.
