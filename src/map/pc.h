@@ -313,6 +313,7 @@ struct map_session_data {
 
 	struct pet_data *pd;
 	struct homun_data *hd;	// [blackhole89]
+	struct mercenary_data *md;
 
 	struct{
 		int  m; //-1 - none, other: map index corresponding to map name.

@@ -23,6 +23,18 @@ struct s_mercenary_db {
 
 extern struct s_mercenary_db mercenary_db[MAX_MERCENARY_CLASS];
 
+struct mercenary_data {
+	struct block_list bl;
+	struct unit_data ud;
+	struct view_data *vd;
+	struct status_change *base_status, battle_status;
+	struct status_change sc;
+	struct regen_data regen;
+
+	struct s_mercenary_db *db;
+	struct s_mercenary mercenary;
+};
+
 // Homunculus DB Structures
 // ===================================
 
@@ -58,7 +70,7 @@ struct homun_data {
 	struct status_change sc;
 	struct regen_data regen;
 	struct s_homunculus_db *homunculusDB;	//[orn]
-	struct s_homunculus homunculus ;	//[orn]
+	struct s_homunculus homunculus;	//[orn]
 
 	struct map_session_data *master; //pointer back to its master
 	int hungry_timer;	//[orn]

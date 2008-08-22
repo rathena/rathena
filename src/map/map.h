@@ -176,6 +176,7 @@ enum bl_type {
 	BL_SKILL = 0x020,
 	BL_NPC   = 0x040,
 	BL_CHAT  = 0x080,
+	BL_MER   = 0x100,
 
 	BL_ALL   = 0xFFF,
 };
@@ -631,6 +632,7 @@ typedef struct chat_data        TBL_CHAT;
 typedef struct skill_unit       TBL_SKILL;
 typedef struct pet_data         TBL_PET;
 typedef struct homun_data       TBL_HOM;
+typedef struct mercenary_data   TBL_MER;
 
 #define BL_CAST(type_, bl) \
 	( ((bl) == (struct block_list*)NULL || (bl)->type != (type_)) ? (T ## type_ *)NULL : (T ## type_ *)(bl) )

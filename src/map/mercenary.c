@@ -37,12 +37,22 @@
 #include <string.h>
 #include <math.h>
 
-
 //Better equiprobability than rand()% [orn]
 #define rand(a, b) (a+(int) ((float)(b-a+1)*rand()/(RAND_MAX+1.0)))
 
+/*==========================================
+ * Mercenary's System
+ *------------------------------------------*/
 struct s_mercenary_db mercenary_db[MAX_MERCENARY_CLASS]; // Mercenary Database
 
+int merc_create(struct map_session_data *sd, int class_)
+{
+	return 1;
+}
+
+/*==========================================
+ * Homunculus's System
+ *------------------------------------------*/
 struct s_homunculus_db homunculus_db[MAX_HOMUNCULUS_CLASS];	//[orn]
 struct skill_tree_entry hskill_tree[MAX_HOMUNCULUS_CLASS][MAX_SKILL_TREE];
 

@@ -107,6 +107,8 @@
 //Mercenary System
 #define MC_SKILLBASE 8201
 #define MAX_MERCSKILL 37
+#define MAX_MERCENARY_CLASS 30
+#define MAX_MERCENARY_SKILL 4
 
 enum item_types {
 	IT_HEALING = 0,
@@ -233,6 +235,15 @@ struct s_homunculus {	//[orn]
 	int luk ;
 };
 
+struct s_mercenary {
+	int mercenary_id;
+	int char_id;
+	short class_;
+	int hp, sp;
+	unsigned int kill_count;
+	unsigned int remain_life_time;
+};
+
 struct s_friend {
 	int account_id;
 	int char_id;
@@ -265,8 +276,13 @@ struct mmo_charstatus {
 	short manner;
 	unsigned char karma;
 	short hair,hair_color,clothes_color;
-	int party_id,guild_id,pet_id,hom_id;
+	int party_id,guild_id,pet_id,hom_id,mer_id;
 	int fame;
+
+	// Mercenary Guilds Rank
+	int arch_loyalty, arch_count;
+	int spear_loyalty, spear_count;
+	int sword_loyalty, sword_count;
 
 	short weapon; // enum weapon_type
 	short shield; // view-id
