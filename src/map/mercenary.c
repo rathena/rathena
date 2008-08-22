@@ -41,6 +41,8 @@
 //Better equiprobability than rand()% [orn]
 #define rand(a, b) (a+(int) ((float)(b-a+1)*rand()/(RAND_MAX+1.0)))
 
+struct s_mercenary_db mercenary_db[MAX_MERCENARY_CLASS]; // Mercenary Database
+
 struct s_homunculus_db homunculus_db[MAX_HOMUNCULUS_CLASS];	//[orn]
 struct skill_tree_entry hskill_tree[MAX_HOMUNCULUS_CLASS][MAX_SKILL_TREE];
 
@@ -879,6 +881,165 @@ int merc_hom_shuffle(struct homun_data *hd)
 	return 1;
 }
 
+int read_mercenarydb(void)
+{
+	FILE *fp;
+	char line[1024], *p;
+	char *str[26];
+	int i, j = 0, k = 0, ele;
+	struct s_mercenary_db *db;
+	struct status_data *status;
+
+	sprintf(line, "%s/%s", db_path, "mercenary_db.txt");
+	memset(mercenary_db,0,sizeof(mercenary_db));
+
+	fp = fopen(line, "r");
+	if( !fp )
+	{
+		ShowError("read_mercenarydb : can't read mercenary_db.txt\n");
+		return -1;
+	}
+
+	while( fgets(line, sizeof(line), fp) && j < MAX_MERCENARY_CLASS )
+	{
+		k++;
+		if( line[0] == '/' && line[1] == '/' )
+			continue;
+
+		i = 0;
+		p = strtok(line, ",");
+		while( p != NULL && i < 26 )
+		{
+			str[i++] = p;
+			p = strtok(NULL, ",");
+		}
+		if( i < 26 )
+		{
+			ShowError("read_mercenarydb : Incorrect number of columns at mercenary_db.txt line %d.\n", k);
+			continue;
+		}
+
+		db = &mercenary_db[j];
+		db->class_ = atoi(str[0]);
+		strncpy(db->sprite, str[1], NAME_LENGTH);
+		strncpy(db->name, str[2], NAME_LENGTH);
+		db->lv = atoi(str[3]);
+
+		status = &db->status;
+		status->max_hp = atoi(str[4]);
+		status->max_sp = atoi(str[5]);
+		status->rhw.range = atoi(str[6]);
+		status->rhw.atk = atoi(str[7]);
+		status->rhw.atk2 = atoi(str[8]);
+		status->def = atoi(str[9]);
+		status->mdef = atoi(str[10]);
+		status->str = atoi(str[11]);
+		status->agi = atoi(str[12]);
+		status->vit = atoi(str[13]);
+		status->int_ = atoi(str[14]);
+		status->dex = atoi(str[15]);
+		status->luk = atoi(str[16]);
+		db->range2 = atoi(str[17]);
+		db->range3 = atoi(str[18]);
+		status->size = atoi(str[19]);
+		status->race = atoi(str[20]);
+	
+		ele = atoi(str[21]);
+		status->def_ele = ele%10;
+		status->ele_lv = ele/20;
+		if( status->def_ele >= ELE_MAX )
+		{
+			ShowWarning("Mercenary %d has invalid element type %d (max element is %d)\n", db->class_, status->def_ele, ELE_MAX - 1);
+			status->def_ele = ELE_NEUTRAL;
+		}
+		if( status->ele_lv < 1 || status->ele_lv > 4 )
+		{
+			ShowWarning("Mercenary %d has invalid element level %d (max is 4)\n", db->class_, status->ele_lv);
+			status->ele_lv = 1;
+		}
+
+		status->speed = atoi(str[22]);
+		status->adelay = atoi(str[23]);
+		status->amotion = atoi(str[24]);
+		status->dmotion = atoi(str[25]);
+
+		j++;
+	}
+
+	fclose(fp);
+	ShowStatus("Done reading '"CL_WHITE"%d"CL_RESET"' mercenaries in '"CL_WHITE"db/mercenary_db.txt"CL_RESET"'.\n",j);
+
+	return 0;
+}
+
+int read_mercenary_skilldb(void)
+{
+	FILE *fp;
+	char line[1024], *p;
+	char *str[3];
+	struct s_mercenary_db *db;
+	int i, j = 0, k = 0, class_;
+	int skillid, skilllv;
+
+	sprintf(line, "%s/%s", db_path, "mercenary_skill_db.txt");
+	fp = fopen(line, "r");
+	if( !fp )
+	{
+		ShowError("read_mercenary_skilldb : can't read mercenary_skill_db.txt\n");
+		return -1;
+	}
+
+	while( fgets(line, sizeof(line), fp) )
+	{
+		k++;
+		if( line[0] == '/' && line[1] == '/' )
+			continue;
+
+		i = 0;
+		p = strtok(line, ",");
+		while( p != NULL && i < 3 )
+		{
+			str[i++] = p;
+			p = strtok(NULL, ",");
+		}
+		if( i < 3 )
+		{
+			ShowError("read_mercenary_skilldb : Incorrect number of columns at mercenary_skill_db.txt line %d.\n", k);
+			continue;
+		}
+
+		class_ = atoi(str[0]);
+		ARR_FIND(0, MAX_MERCENARY_CLASS, i, class_ == mercenary_db[i].class_);
+		if( i == MAX_MERCENARY_CLASS )
+		{
+			ShowError("read_mercenary_skilldb : Class not found in mercenary_db for skill entry, line %d.\n", k);
+			continue;
+		}
+
+		db = &mercenary_db[i];
+		skillid = atoi(str[1]);
+		skilllv = atoi(str[2]);
+
+		ARR_FIND(0, MAX_MERCENARY_SKILL, i, db->skill[i].id == 0 || db->skill[i].id == skillid);
+		if( i == MAX_MERCENARY_SKILL )
+		{
+			ShowError("read_mercenary_skilldb : No more free skill slots for Class %d, line %d.\n", class_, k);
+			continue;
+		}
+		if( db->skill[i].id == skillid )
+			ShowError("read_mercenary_skilldb : Duplicate Skill for Class %d, line %d. Overwriting...\n", class_, k);
+
+		db->skill[i].id = skillid;
+		db->skill[i].lv = skilllv;
+		j++;
+	}
+
+	fclose(fp);
+	ShowStatus("Done reading '"CL_WHITE"%d"CL_RESET"' entries in '"CL_WHITE"db/mercenary_skill_db.txt"CL_RESET"'.\n",j);
+	return 0;
+}
+
+
 int read_homunculusdb(void)
 {
 	FILE *fp;
@@ -1155,6 +1316,10 @@ int do_init_merc(void)
 	read_homunculusdb();
 	read_homunculus_expdb();
 	read_homunculus_skilldb();
+
+	read_mercenarydb();
+	read_mercenary_skilldb();
+	
 	// Add homunc timer function to timer func list [Toms]
 	add_timer_func_list(merc_hom_hungry, "merc_hom_hungry");
 

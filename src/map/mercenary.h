@@ -7,6 +7,25 @@
 #include "status.h" // struct status_data, struct status_change
 #include "unit.h" // struct unit_data
 
+// Mercenary DB Structures
+// ===================================
+
+struct s_mercenary_db {
+	int class_;
+	char sprite[NAME_LENGTH], name[NAME_LENGTH];
+	unsigned short lv;
+	short range2, range3;
+	struct status_data status;
+	struct {
+		unsigned short id, lv;
+	} skill[MAX_MERCENARY_SKILL];
+};
+
+extern struct s_mercenary_db mercenary_db[MAX_MERCENARY_CLASS];
+
+// Homunculus DB Structures
+// ===================================
+
 struct h_stats {
 	unsigned int HP, SP;
 	unsigned short str, agi, vit, int_, dex, luk;
