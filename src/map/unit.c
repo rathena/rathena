@@ -739,6 +739,7 @@ int unit_can_move(struct block_list *bl)
 				(sc->data[SC_DANCING]->val1&0xFFFF) == CG_HERMODE
 			))
 			|| (sc->data[SC_GOSPEL] && sc->data[SC_GOSPEL]->val4 == BCT_SELF)	// cannot move while gospel is in effect
+			|| (sc->data[SC_BASILICA] && sc->data[SC_BASILICA]->val4 == bl->id) // Basilica caster cannot move
 			|| sc->data[SC_STOP]
 			|| sc->data[SC_CLOSECONFINE]
 			|| sc->data[SC_CLOSECONFINE2]
