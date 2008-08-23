@@ -80,6 +80,8 @@ int intif_quest_add(int char_id, struct quest * qd);
 // MERCENARY SYSTEM
 int intif_mercenary_create(struct s_mercenary *merc);
 int intif_mercenary_request(int merc_id, int char_id);
+int intif_mercenary_delete(int merc_id);
+int intif_mercenary_save(struct s_mercenary *merc);
 
 #ifndef TXT_ONLY
 // MAIL SYSTEM

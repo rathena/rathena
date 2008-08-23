@@ -281,11 +281,12 @@ int chrif_save(struct map_session_data *sd, int flag)
 	WFIFOSET(char_fd, WFIFOW(char_fd,2));
 
 
-	if(sd->status.pet_id > 0 && sd->pd)
+	if( sd->status.pet_id > 0 && sd->pd )
 		intif_save_petdata(sd->status.account_id,&sd->pd->pet);
-
-	if (sd->hd && merc_is_hom_active(sd->hd))
+	if( sd->hd && merc_is_hom_active(sd->hd) )
 		merc_save(sd->hd);
+	if( sd->md && sd->md->mercenary.remain_life_time > 0 )
+		mercenary_save(sd->md);
 
 	return 0;
 }

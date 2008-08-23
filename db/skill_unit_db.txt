@@ -95,7 +95,7 @@
 535,0xbd,    , -1, 0,  20,enemy, 0x010	//NJ_KAENSIN
 538,0xbb,    ,  1:1:1:2:2:2:3:3:3:4,0,-1,all,0x010	//NJ_SUITON
 670,0xc7,    ,  1, 4:7:10:13:16:19:22:25:28:31,1000,all,0x008	//NPC_EVILLAND
-//8209,0x90,    ,  0, 1,1000,enemy, 0x002	//MA_SKIDTRAP
-//8210,0x93,    ,  0, 0,1000,enemy, 0x002	//MA_LANDMINE
-//8211,0x95,    ,  0, 1,1000,enemy, 0x002	//MA_SANDMAN
-//8212,0x97,    ,  0, 1,1000,enemy, 0x002	//MA_FREEZINGTRAP
+8209,0x90,    ,  0, 1,1000,enemy, 0x002	//MA_SKIDTRAP
+8210,0x93,    ,  0, 0,1000,enemy, 0x002	//MA_LANDMINE
+8211,0x95,    ,  0, 1,1000,enemy, 0x002	//MA_SANDMAN
+8212,0x97,    ,  0, 1,1000,enemy, 0x002	//MA_FREEZINGTRAP

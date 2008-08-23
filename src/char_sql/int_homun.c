@@ -330,7 +330,7 @@ bool mapif_mercenary_load(int merc_id, int char_id, struct s_mercenary *merc)
 	merc->mercenary_id = merc_id;
 	merc->char_id = char_id;
 
-	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `class`, `hp`, `sp`, `kill_counter`, `life_time` FROM `mercenary` WHERE `merc_id` = '%d' AND `char_id` = '%d'", merc_id, char_id) )
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `class`, `hp`, `sp`, `kill_counter`, `life_time` FROM `mercenary` WHERE `mer_id` = '%d' AND `char_id` = '%d'", merc_id, char_id) )
 	{
 		Sql_ShowDebug(sql_handle);
 		return false;
@@ -356,7 +356,7 @@ bool mapif_mercenary_load(int merc_id, int char_id, struct s_mercenary *merc)
 
 bool mapif_mercenary_delete(int merc_id)
 {
-	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `mercenary` WHERE `merc_id` = '%d'", merc_id) )
+	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `mercenary` WHERE `mer_id` = '%d'", merc_id) )
 	{
 		Sql_ShowDebug(sql_handle);
 		return false;
@@ -390,6 +390,34 @@ static void mapif_parse_mercenary_load(int fd, int merc_id, int char_id)
 	mapif_mercenary_send(fd, &merc, result);
 }
 
+static void mapif_mercenary_deleted(int fd, unsigned char flag)
+{
+	WFIFOHEAD(fd,3);
+	WFIFOW(fd,0) = 0x3871;
+	WFIFOB(fd,2) = flag;
+	WFIFOSET(fd,3);
+}
+
+static void mapif_parse_mercenary_delete(int fd, int merc_id)
+{
+	bool result = mapif_mercenary_delete(merc_id);
+	mapif_mercenary_deleted(fd, result);
+}
+
+static void mapif_mercenary_saved(int fd, unsigned char flag)
+{
+	WFIFOHEAD(fd,3);
+	WFIFOW(fd,0) = 0x3872;
+	WFIFOB(fd,2) = flag;
+	WFIFOSET(fd,3);
+}
+
+static void mapif_parse_mercenary_save(int fd, struct s_mercenary* merc)
+{
+	bool result = mapif_mercenary_save(merc);
+	mapif_mercenary_saved(fd, result);
+}
+
 /*==========================================
  * Inter Packets
  *------------------------------------------*/
@@ -406,8 +434,10 @@ int inter_homunculus_parse_frommap(int fd)
 	case 0x3093: mapif_parse_homunculus_delete(fd, (int)RFIFOL(fd,2)); break;
 	case 0x3094: mapif_parse_homunculus_rename(fd, (int)RFIFOL(fd,2), (int)RFIFOL(fd,6), (char*)RFIFOP(fd,10)); break;
 	// Mercenary Packets
-	case 0x3070: mapif_parse_mercenary_create(fd, (struct s_mercenary*)RFIFOP(fd,8)); break;
+	case 0x3070: mapif_parse_mercenary_create(fd, (struct s_mercenary*)RFIFOP(fd,4)); break;
 	case 0x3071: mapif_parse_mercenary_load(fd, (int)RFIFOL(fd,2), (int)RFIFOL(fd,6)); break;
+	case 0x3072: mapif_parse_mercenary_delete(fd, (int)RFIFOL(fd,2)); break;
+	case 0x3073: mapif_parse_mercenary_save(fd, (struct s_mercenary*)RFIFOP(fd,4)); break;
 	default:
 		return 0;
 	}

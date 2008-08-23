@@ -7056,7 +7056,8 @@ int clif_charnameack (int fd, struct block_list *bl)
 	WBUFW(buf,0) = cmd;
 	WBUFL(buf,2) = bl->id;
 
-	switch(bl->type) {
+	switch( bl->type )
+	{
 	case BL_PC:
 		{
 			struct map_session_data *ssd = (struct map_session_data *)bl;
@@ -7116,6 +7117,9 @@ int clif_charnameack (int fd, struct block_list *bl)
 	//[blackhole89]
 	case BL_HOM:
 		memcpy(WBUFP(buf,6), ((TBL_HOM*)bl)->homunculus.name, NAME_LENGTH);
+		break;
+	case BL_MER:
+		memcpy(WBUFP(buf,6), ((TBL_MER*)bl)->db->name, NAME_LENGTH);
 		break;
 	case BL_PET:
 		memcpy(WBUFP(buf,6), ((TBL_PET*)bl)->pet.name, NAME_LENGTH);
@@ -12352,7 +12356,7 @@ void clif_mercenary_info(struct map_session_data *sd)
 	fd = sd->fd;
 	status = &md->battle_status;
 
-	WFIFOHEAD(fd,72);
+	WFIFOHEAD(fd,80);
 	WFIFOW(fd,0) = 0x029b;
 	WFIFOL(fd,2) = md->bl.id;
 	WFIFOW(fd,6) = cap_value(status->rhw.atk2+status->batk, 0, SHRT_MAX);
@@ -12369,10 +12373,12 @@ void clif_mercenary_info(struct map_session_data *sd)
 	WFIFOL(fd,52) = status->max_hp;
 	WFIFOL(fd,56) = status->sp;
 	WFIFOL(fd,60) = status->max_sp;
-	WFIFOL(fd,64) = 0; // Expiration Time
-	WFIFOW(fd,68) = 0; // No documentation (Guild Rank?)
-	WFIFOW(fd,70) = 0; // Times Summoned	
-	WFIFOSET(fd,72);
+	WFIFOL(fd,64) = 0; // Contract End
+	WFIFOW(fd,68) = 0; // Loyalty
+	WFIFOL(fd,70) = 0; // Summon Count
+	WFIFOL(fd,74) = 0; // Kill Counter
+	WFIFOW(fd,78) = 0;
+	WFIFOSET(fd,80);
 }
 
 void clif_mercenary_skillblock(struct map_session_data *sd)

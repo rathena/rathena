@@ -40,7 +40,9 @@ struct mercenary_data {
 
 bool merc_class(int class_);
 struct view_data * merc_get_viewdata(int class_);
+int merc_create(struct map_session_data *sd, int class_, unsigned int lifetime);
 int merc_data_received(struct s_mercenary *merc, bool flag);
+int mercenary_save(struct mercenary_data *md);
 
 // Homunculus DB Structures
 // ===================================

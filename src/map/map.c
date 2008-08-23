@@ -1584,7 +1584,8 @@ int map_quit(struct map_session_data *sd)
 	//Unit_free handles clearing the player related data, 
 	//map_quit handles extra specific data which is related to quitting normally
 	//(changing map-servers invokes unit_free but bypasses map_quit)
-	if(sd->sc.count) {
+	if( sd->sc.count )
+	{
 		//Status that are not saved...
 		if(sd->sc.data[SC_BOSSMAPINFO])
 			status_change_end(&sd->bl,SC_BOSSMAPINFO,-1);

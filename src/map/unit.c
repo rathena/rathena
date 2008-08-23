@@ -1772,9 +1772,9 @@ int unit_remove_map_(struct block_list *bl, int clrtype, const char* file, int l
 	}
 	case BL_HOM:
 	{
-		struct homun_data *hd = (struct homun_data *) bl;
+		struct homun_data *hd = (struct homun_data *)bl;
 		ud->canact_tick = ud->canmove_tick; //It appears HOM do reset the can-act tick.
-		if(!hd->homunculus.intimacy && !(hd->master && !hd->master->state.active) )
+		if( !hd->homunculus.intimacy && !(hd->master && !hd->master->state.active) )
 		{	//If logging out, this is deleted on unit_free
 			clif_emotion(bl, 28) ;	//sob
 			clif_clearunit_area(bl,clrtype);
@@ -1784,6 +1784,20 @@ int unit_remove_map_(struct block_list *bl, int clrtype, const char* file, int l
 			return 0;
 		}
 
+		break;
+	}
+	case BL_MER:
+	{
+		struct mercenary_data *md = (struct mercenary_data *)bl;
+		ud->canact_tick = ud->canmove_tick;
+		if( !md->mercenary.remain_life_time && !(md->master && !md->master->state.active) )
+		{
+			clif_clearunit_area(bl,clrtype);
+			map_delblock(bl);
+			unit_free(bl,0);
+			map_freeblock_unlock();
+			return 0;
+		}
 		break;
 	}
 	default: ;// do nothing
@@ -1805,12 +1819,15 @@ void unit_remove_map_pc(struct map_session_data *sd, int clrtype)
 		unit_remove_map(&sd->pd->bl, clrtype);
 	if(merc_is_hom_active(sd->hd))
 		unit_remove_map(&sd->hd->bl, clrtype);
+	if(sd->md)
+		unit_remove_map(&sd->md->bl, clrtype);
 }
 
 void unit_free_pc(struct map_session_data *sd)
 {
 	if (sd->pd) unit_free(&sd->pd->bl,0);
 	if (sd->hd) unit_free(&sd->hd->bl,0);
+	if (sd->md) unit_free(&sd->md->bl,0);
 	unit_free(&sd->bl,3);
 }
 
@@ -1828,171 +1845,212 @@ int unit_free(struct block_list *bl, int clrtype)
 	map_freeblock_lock();
 	if( bl->prev )	//Players are supposed to logout with a "warp" effect.
 		unit_remove_map(bl, clrtype);
-	
-	if( bl->type == BL_PC ) {
-		struct map_session_data *sd = (struct map_session_data*)bl;
-		if(status_isdead(bl))
-			pc_setrestartvalue(sd,2);
 
-		pc_delinvincibletimer(sd);
-	
-		pc_autoscript_clear(sd->autoscript, ARRAYLENGTH(sd->autoscript));
-		pc_autoscript_clear(sd->autoscript2, ARRAYLENGTH(sd->autoscript2));
-
-		if (sd->followtimer != -1)
-			pc_stop_following(sd);
-			
-		if(sd->duel_invite > 0)
-			duel_reject(sd->duel_invite, sd);
-	
-		// Notify friends that this char logged out. [Skotlex]
-		map_foreachpc(clif_friendslist_toggle_sub, sd->status.account_id, sd->status.char_id, 0);
-		party_send_logout(sd);
-		guild_send_memberinfoshort(sd,0);
-		pc_cleareventtimer(sd);
-		pc_delspiritball(sd,sd->spiritball,1);
-
-		if(sd->reg)
-		{	//Double logout already freed pointer fix... [Skotlex]
-			aFree(sd->reg);
-			sd->reg = NULL;
-			sd->reg_num = 0;
-		}
-		if(sd->regstr)
+	switch( bl->type )
+	{
+		case BL_PC:
 		{
-			int i;
-			for( i = 0; i < sd->regstr_num; ++i )
-				if( sd->regstr[i].data )
-					aFree(sd->regstr[i].data);
-			aFree(sd->regstr);
-			sd->regstr = NULL;
-			sd->regstr_num = 0;
-		}
+			struct map_session_data *sd = (struct map_session_data*)bl;
+			if( status_isdead(bl) )
+				pc_setrestartvalue(sd,2);
 
-		//Tell the script to end, not delete it, it will free itself when necessary [Kevin]
-		if (sd->st) {
-			sd->st->rid = 0;
-			sd->st->state = END;
-		}
-	} else if( bl->type == BL_PET ) {
-		struct pet_data *pd = (struct pet_data*)bl;
-		struct map_session_data *sd = pd->msd;
-		pet_hungry_timer_delete(pd);
-		if (pd->a_skill)
-		{
-			aFree(pd->a_skill);
-			pd->a_skill = NULL;
-		}
-		if (pd->s_skill)
-		{
-			if (pd->s_skill->timer != -1) {
-				if (pd->s_skill->id)
-					delete_timer(pd->s_skill->timer, pet_skill_support_timer);
-				else
-					delete_timer(pd->s_skill->timer, pet_heal_timer);
+			pc_delinvincibletimer(sd);
+			pc_autoscript_clear(sd->autoscript, ARRAYLENGTH(sd->autoscript));
+			pc_autoscript_clear(sd->autoscript2, ARRAYLENGTH(sd->autoscript2));
+
+			if( sd->followtimer != -1 )
+				pc_stop_following(sd);
+				
+			if( sd->duel_invite > 0 )
+				duel_reject(sd->duel_invite, sd);
+		
+			// Notify friends that this char logged out. [Skotlex]
+			map_foreachpc(clif_friendslist_toggle_sub, sd->status.account_id, sd->status.char_id, 0);
+			party_send_logout(sd);
+			guild_send_memberinfoshort(sd,0);
+			pc_cleareventtimer(sd);
+			pc_delspiritball(sd,sd->spiritball,1);
+
+			if( sd->reg )
+			{	//Double logout already freed pointer fix... [Skotlex]
+				aFree(sd->reg);
+				sd->reg = NULL;
+				sd->reg_num = 0;
 			}
-			aFree(pd->s_skill);
-			pd->s_skill = NULL;
-		}
-		if(pd->recovery)
-		{
-			if(pd->recovery->timer != -1)
-				delete_timer(pd->recovery->timer, pet_recovery_timer);
-			aFree(pd->recovery);
-			pd->recovery = NULL;
-		}
-		if(pd->bonus)
-		{
-			if (pd->bonus->timer != -1)
-				delete_timer(pd->bonus->timer, pet_skill_bonus_timer);
-			aFree(pd->bonus);
-			pd->bonus = NULL;
-		}
-		if (pd->loot)
-		{
-			pet_lootitem_drop(pd,sd);
-			if (pd->loot->item)
-				aFree(pd->loot->item);
-			aFree (pd->loot);
-			pd->loot = NULL;
-		}
-		if (clrtype >= 0) {
-			if(pd->pet.intimate > 0)
-				intif_save_petdata(pd->pet.account_id,&pd->pet);
-			else
-			{	//Remove pet.
-				intif_delete_petdata(pd->pet.pet_id);
-				if (sd) sd->status.pet_id = 0;
-			}
-		}
-		if (sd) sd->pd = NULL;
-	} else if(bl->type == BL_MOB) {
-		struct mob_data *md = (struct mob_data*)bl;
-		if(md->deletetimer!=-1) {
-			delete_timer(md->deletetimer,mob_timer_delete);
-			md->deletetimer = INVALID_TIMER;
-		}
-		if(md->lootitem) {
-			aFree(md->lootitem);
-			md->lootitem=NULL;
-		}
-		if( md->guardian_data )
-		{
-			struct guild_castle* gc = md->guardian_data->castle;
-			if( md->guardian_data->number >= 0 && md->guardian_data->number < MAX_GUARDIANS )
-			{
-				gc->guardian[md->guardian_data->number].id = 0;
-			}
-			else
+			if( sd->regstr )
 			{
 				int i;
-				ARR_FIND(0, gc->temp_guardians_max, i, gc->temp_guardians[i] == md->bl.id);
-				if( i < gc->temp_guardians_max )
-					gc->temp_guardians[i] = 0;
+				for( i = 0; i < sd->regstr_num; ++i )
+					if( sd->regstr[i].data )
+						aFree(sd->regstr[i].data);
+				aFree(sd->regstr);
+				sd->regstr = NULL;
+				sd->regstr_num = 0;
 			}
-			aFree(md->guardian_data);
-			md->guardian_data = NULL;
+			//Tell the script to end, not delete it, it will free itself when necessary [Kevin]
+			if( sd->st )
+			{
+				sd->st->rid = 0;
+				sd->st->state = END;
+			}
+			break;
 		}
-		if(md->spawn)
+		case BL_PET:
 		{
-			md->spawn->active--;
-
-			if( !md->spawn->state.dynamic )
-			{// permanently remove the mob
-				if( --md->spawn->num == 0 )
-				{// Last freed mob is responsible for deallocating the group's spawn data.
-					aFree(md->spawn);
-					md->spawn = NULL;
+			struct pet_data *pd = (struct pet_data*)bl;
+			struct map_session_data *sd = pd->msd;
+			pet_hungry_timer_delete(pd);
+			if( pd->a_skill )
+			{
+				aFree(pd->a_skill);
+				pd->a_skill = NULL;
+			}
+			if( pd->s_skill )
+			{
+				if (pd->s_skill->timer != -1) {
+					if (pd->s_skill->id)
+						delete_timer(pd->s_skill->timer, pet_skill_support_timer);
+					else
+						delete_timer(pd->s_skill->timer, pet_heal_timer);
+				}
+				aFree(pd->s_skill);
+				pd->s_skill = NULL;
+			}
+			if( pd->recovery )
+			{
+				if(pd->recovery->timer != -1)
+					delete_timer(pd->recovery->timer, pet_recovery_timer);
+				aFree(pd->recovery);
+				pd->recovery = NULL;
+			}
+			if( pd->bonus )
+			{
+				if (pd->bonus->timer != -1)
+					delete_timer(pd->bonus->timer, pet_skill_bonus_timer);
+				aFree(pd->bonus);
+				pd->bonus = NULL;
+			}
+			if( pd->loot )
+			{
+				pet_lootitem_drop(pd,sd);
+				if (pd->loot->item)
+					aFree(pd->loot->item);
+				aFree (pd->loot);
+				pd->loot = NULL;
+			}
+			if( clrtype >= 0 )
+			{
+				if( pd->pet.intimate > 0 )
+					intif_save_petdata(pd->pet.account_id,&pd->pet);
+				else
+				{	//Remove pet.
+					intif_delete_petdata(pd->pet.pet_id);
+					if (sd) sd->status.pet_id = 0;
 				}
 			}
+			if( sd )
+				sd->pd = NULL;
+			break;
 		}
-		if(md->base_status) {
-			aFree(md->base_status);
-			md->base_status = NULL;
-		}
-		if(mob_is_clone(md->class_))
-			mob_clone_delete(md->class_);
-	} else if(bl->type == BL_HOM) {
-		struct homun_data *hd = (TBL_HOM*)bl;
-		struct map_session_data *sd = hd->master;
-		// Desactive timers
-		merc_hom_hungry_timer_delete(hd);
-		if (clrtype >= 0) {
-			if (hd->homunculus.intimacy > 0)
-				merc_save(hd); 
-			else
+		case BL_MOB:
+		{
+			struct mob_data *md = (struct mob_data*)bl;
+			if( md->deletetimer != -1 )
 			{
-				intif_homunculus_requestdelete(hd->homunculus.hom_id);
-				if (sd) sd->status.hom_id = 0;
+				delete_timer(md->deletetimer,mob_timer_delete);
+				md->deletetimer = INVALID_TIMER;
 			}
+			if( md->lootitem )
+			{
+				aFree(md->lootitem);
+				md->lootitem=NULL;
+			}
+			if( md->guardian_data )
+			{
+				struct guild_castle* gc = md->guardian_data->castle;
+				if( md->guardian_data->number >= 0 && md->guardian_data->number < MAX_GUARDIANS )
+				{
+					gc->guardian[md->guardian_data->number].id = 0;
+				}
+				else
+				{
+					int i;
+					ARR_FIND(0, gc->temp_guardians_max, i, gc->temp_guardians[i] == md->bl.id);
+					if( i < gc->temp_guardians_max )
+						gc->temp_guardians[i] = 0;
+				}
+				aFree(md->guardian_data);
+				md->guardian_data = NULL;
+			}
+			if( md->spawn )
+			{
+				md->spawn->active--;
+				if( !md->spawn->state.dynamic )
+				{// permanently remove the mob
+					if( --md->spawn->num == 0 )
+					{// Last freed mob is responsible for deallocating the group's spawn data.
+						aFree(md->spawn);
+						md->spawn = NULL;
+					}
+				}
+			}
+			if( md->base_status)
+			{
+				aFree(md->base_status);
+				md->base_status = NULL;
+			}
+			if( mob_is_clone(md->class_) )
+				mob_clone_delete(md->class_);
+
+			break;
 		}
-		if(sd) sd->hd = NULL;
+		case BL_HOM:
+		{
+			struct homun_data *hd = (TBL_HOM*)bl;
+			struct map_session_data *sd = hd->master;
+			// Desactive timers
+			merc_hom_hungry_timer_delete(hd);
+			if( clrtype >= 0 )
+			{
+				if( hd->homunculus.intimacy > 0 )
+					merc_save(hd);
+				else
+				{
+					intif_homunculus_requestdelete(hd->homunculus.hom_id);
+					if( sd )
+						sd->status.hom_id = 0;
+				}
+			}
+			if( sd )
+				sd->hd = NULL;
+			break;
+		}
+		case BL_MER:
+		{
+			struct mercenary_data *md = (TBL_MER*)bl;
+			struct map_session_data *sd = md->master;
+			/* Stop Mercenary Timer */
+			if( clrtype >= 0 )
+			{
+				if( md->mercenary.remain_life_time > 0 )
+					mercenary_save(md);
+				else
+				{
+					intif_mercenary_delete(md->mercenary.mercenary_id);
+					if( sd )
+						sd->status.mer_id = 0;
+				}
+			}
+			if( sd )
+				sd->md = NULL;
+			break;
+		}
 	}
 
 	skill_clear_unitgroup(bl);
 	status_change_clear(bl,1);
 	map_deliddb(bl);
-	if (bl->type != BL_PC) //Players are handled by map_quit
+	if( bl->type != BL_PC ) //Players are handled by map_quit
 		map_freeblock(bl);
 	map_freeblock_unlock();
 	return 0;

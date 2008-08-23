@@ -54,7 +54,7 @@ int merc_search_index(int class_)
 
 bool merc_class(int class_)
 {
-	return (bool)(merc_search_index(class_) < 0);
+	return (bool)(merc_search_index(class_) > -1);
 }
 
 struct view_data * merc_get_viewdata(int class_)
@@ -87,6 +87,15 @@ int merc_create(struct map_session_data *sd, int class_, unsigned int lifetime)
 
 	// Request Char Server to create this mercenary
 	intif_mercenary_create(&merc);
+
+	return 1;
+}
+
+int mercenary_save(struct mercenary_data *md)
+{
+	md->mercenary.hp = md->battle_status.hp;
+	md->mercenary.sp = md->battle_status.sp;
+	intif_mercenary_save(&md->mercenary);
 
 	return 1;
 }
