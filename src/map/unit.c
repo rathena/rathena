@@ -42,7 +42,8 @@ struct unit_data* unit_bl2ud(struct block_list *bl)
 	if( bl->type == BL_MOB) return &((struct mob_data*)bl)->ud;
 	if( bl->type == BL_PET) return &((struct pet_data*)bl)->ud;
 	if( bl->type == BL_NPC) return &((struct npc_data*)bl)->ud;
-	if( bl->type == BL_HOM) return &((struct homun_data*)bl)->ud;	//[orn]
+	if( bl->type == BL_HOM) return &((struct homun_data*)bl)->ud;
+	if( bl->type == BL_MER) return &((struct mercenary_data*)bl)->ud;
 	return NULL;
 }
 

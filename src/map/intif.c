@@ -38,7 +38,7 @@ static const int packet_len_table[]={
 	 9, 9,-1,14,  0, 0, 0, 0, -1,74,-1,11, 11,-1,  0, 0, //0x3840
 	-1,-1, 7, 7,  7,11, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0, //0x3850  Auctions [Zephyrus]
 	-1,11,11, 0,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0, //0x3860  Quests [Kevin]
-	 0, 0, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0,
+	-1, 0, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0, //0x3870  Mercenaries [Zephyrus]
 	11,-1, 7, 3,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0, //0x3880
 	-1,-1, 7, 3,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0, //0x3890  Homunculus [albator]
 };
@@ -1864,6 +1864,41 @@ static void intif_parse_Auction_message(int fd)
 
 #endif
 
+/*==========================================
+ * Mercenary's System
+ *------------------------------------------*/
+int intif_mercenary_create(struct s_mercenary *merc)
+{
+	int size = sizeof(struct s_mercenary) + 4;
+
+	if( CheckForCharServer() )
+		return 0;
+
+	WFIFOHEAD(inter_fd,size);
+	WFIFOW(inter_fd,0) = 0x3070;
+	WFIFOW(inter_fd,2) = size;
+	memcpy(WFIFOP(inter_fd,4), merc, sizeof(struct s_mercenary));
+	WFIFOSET(inter_fd,size);
+	return 0;
+}
+
+int intif_parse_mercenary_create(int fd)
+{
+	int len = RFIFOW(fd,2) - 5;
+	if( sizeof(struct s_mercenary) != len )
+	{
+		if( battle_config.etc_log )
+			ShowError("intif: create mercenary data size error %d != %d\n", sizeof(struct s_homunculus), len);
+		return 0;
+	}
+
+	merc_data_received((struct s_mercenary*)RFIFOP(fd,9), RFIFOB(fd,8));
+	return 0;
+}
+
+
+
+
 //-----------------------------------------------------------------
 // inter serverÇ©ÇÁÇÃí êM
 // ÉGÉâÅ[Ç™Ç†ÇÍÇŒ0(false)Çï‘Ç∑Ç±Ç∆
@@ -1952,6 +1987,9 @@ int intif_parse(int fd)
 	case 0x3854:	intif_parse_Auction_message(fd); break;
 	case 0x3855:	intif_parse_Auction_bid(fd); break;
 #endif
+// Mercenary System
+	case 0x3870:	intif_parse_mercenary_create(fd); break;
+
 	case 0x3880:	intif_parse_CreatePet(fd); break;
 	case 0x3881:	intif_parse_RecvPetData(fd); break;
 	case 0x3882:	intif_parse_SavePetOk(fd); break;

@@ -45,10 +45,114 @@
  *------------------------------------------*/
 struct s_mercenary_db mercenary_db[MAX_MERCENARY_CLASS]; // Mercenary Database
 
-int merc_create(struct map_session_data *sd, int class_)
+int merc_search_index(int class_)
 {
+	int i;
+	ARR_FIND(0, MAX_MERCENARY_CLASS, i, mercenary_db[i].class_ == class_);
+	return (i == MAX_MERCENARY_CLASS)?-1:i;
+}
+
+bool merc_class(int class_)
+{
+	return (bool)(merc_search_index(class_) < 0);
+}
+
+struct view_data * merc_get_viewdata(int class_)
+{
+	int i = merc_search_index(class_);
+	if( i < 0 )
+		return 0;
+
+	return &mercenary_db[i].vd;
+}
+
+int merc_create(struct map_session_data *sd, int class_, unsigned int lifetime)
+{
+	struct s_mercenary merc;
+	struct s_mercenary_db *db;
+	int i;
+	nullpo_retr(1,sd);
+
+	if( (i = merc_search_index(class_)) < 0 )
+		return 0;
+
+	db = &mercenary_db[i];
+	memset(&merc,0,sizeof(struct s_mercenary));
+
+	merc.char_id = sd->status.char_id;
+	merc.class_ = class_;
+	merc.hp = db->status.max_hp;
+	merc.sp = db->status.max_sp;
+	merc.remain_life_time = lifetime;
+
+	// Request Char Server to create this mercenary
+	intif_mercenary_create(&merc);
+
 	return 1;
 }
+
+int merc_data_received(struct s_mercenary *merc, bool flag)
+{
+	struct map_session_data *sd;
+	struct mercenary_data *md;
+	struct s_mercenary_db *db;
+	int i = merc_search_index(merc->class_);
+
+	if( (sd = map_charid2sd(merc->char_id)) == NULL )
+		return 0;
+	if( !flag || i < 0 )
+	{ // Not created - loaded - DB info
+		sd->status.mer_id = 0;
+		return 0;
+	}
+
+	sd->status.mer_id = merc->mercenary_id;
+	db = &mercenary_db[i];
+
+	if( !sd->md )
+	{
+		short x = sd->bl.x, y = sd->bl.y;
+
+		sd->md = md = (struct mercenary_data*)aCalloc(1,sizeof(struct mercenary_data));
+		md->bl.type = BL_MER;
+		md->bl.id = npc_get_new_npc_id();
+
+		md->master = sd;
+		md->db = db;
+		memcpy(&md->mercenary, merc, sizeof(struct s_mercenary));
+		status_set_viewdata(&md->bl, md->mercenary.class_);
+		status_change_init(&md->bl);
+		unit_dataset(&md->bl);
+		md->ud.dir = sd->ud.dir;
+
+		md->bl.m = sd->bl.m;
+		md->bl.x = sd->bl.x;
+		md->bl.y = sd->bl.y;
+		x = sd->bl.x + 1;
+		y = sd->bl.y + 1;
+		map_random_dir(&md->bl, &x, &y);
+		md->bl.x = x;
+		md->bl.y = y;
+
+		map_addiddb(&md->bl);
+		// status_calc_mercenary(md,1);
+	}
+	else
+		memcpy(&sd->md->mercenary, merc, sizeof(struct s_mercenary));
+
+	md = sd->md;
+	if( md && md->bl.prev == NULL && sd->bl.prev != NULL )
+	{
+		map_addblock(&md->bl);
+		clif_spawn(&md->bl);
+		clif_mercenary_info(sd);
+		clif_mercenary_skillblock(sd);
+		// init timers
+	}
+
+	return 1;
+}
+
 
 /*==========================================
  * Homunculus's System
@@ -936,6 +1040,8 @@ int read_mercenarydb(void)
 		db->lv = atoi(str[3]);
 
 		status = &db->status;
+		db->vd.class_ = db->class_;
+
 		status->max_hp = atoi(str[4]);
 		status->max_sp = atoi(str[5]);
 		status->rhw.range = atoi(str[6]);
@@ -1025,20 +1131,18 @@ int read_mercenary_skilldb(void)
 			ShowError("read_mercenary_skilldb : Class not found in mercenary_db for skill entry, line %d.\n", k);
 			continue;
 		}
-
-		db = &mercenary_db[i];
+		
 		skillid = atoi(str[1]);
-		skilllv = atoi(str[2]);
-
-		ARR_FIND(0, MAX_MERCENARY_SKILL, i, db->skill[i].id == 0 || db->skill[i].id == skillid);
-		if( i == MAX_MERCENARY_SKILL )
+		if( skillid < MC_SKILLBASE || skillid >= MC_SKILLBASE + MAX_MERCSKILL )
 		{
-			ShowError("read_mercenary_skilldb : No more free skill slots for Class %d, line %d.\n", class_, k);
+			ShowError("read_mercenary_skilldb : Skill out of range, line %d.\n", k);
 			continue;
 		}
-		if( db->skill[i].id == skillid )
-			ShowError("read_mercenary_skilldb : Duplicate Skill for Class %d, line %d. Overwriting...\n", class_, k);
 
+		db = &mercenary_db[i];
+		skilllv = atoi(str[2]);
+
+		i = skillid - MC_SKILLBASE;
 		db->skill[i].id = skillid;
 		db->skill[i].lv = skilllv;
 		j++;

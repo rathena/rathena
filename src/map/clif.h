@@ -439,4 +439,8 @@ void clif_cashshop_show(struct map_session_data *sd, struct npc_data *nd);
 // ADOPTION
 void clif_Adopt_reply(struct map_session_data *sd, int type);
 
+// MERCENARIES
+void clif_mercenary_info(struct map_session_data *sd);
+void clif_mercenary_skillblock(struct map_session_data *sd);
+
 #endif /* _CLIF_H_ */

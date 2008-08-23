@@ -77,6 +77,9 @@ int intif_request_questlog(struct map_session_data * sd);
 int intif_quest_delete(int char_id, int quest_id);
 int intif_quest_add(int char_id, struct quest * qd);
 
+// MERCENARY SYSTEM
+int intif_mercenary_create(struct s_mercenary *merc);
+
 #ifndef TXT_ONLY
 // MAIL SYSTEM
 int intif_Mail_requestinbox(int char_id, unsigned char flag);

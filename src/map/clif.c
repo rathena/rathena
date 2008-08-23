@@ -1122,14 +1122,14 @@ int clif_homskillinfoblock(struct map_session_data *sd)
 	WFIFOW(fd,0)=0x235;
 	for ( i = 0; i < MAX_HOMUNSKILL; i++){
 		if( (id = hd->homunculus.hskill[i].id) != 0 ){
-			j = id - HM_SKILLBASE ;
-			WFIFOW(fd,len  ) = id ;
-			WFIFOW(fd,len+2) = skill_get_inf(id) ;
-			WFIFOW(fd,len+4) = 0 ;
-			WFIFOW(fd,len+6) = hd->homunculus.hskill[j].lv ;
-			WFIFOW(fd,len+8) = skill_get_sp(id,hd->homunculus.hskill[j].lv) ;
-			WFIFOW(fd,len+10)= skill_get_range2(&sd->hd->bl, id,hd->homunculus.hskill[j].lv) ;
-			safestrncpy((char*)WFIFOP(fd,len+12), skill_get_name(id), NAME_LENGTH) ;
+			j = id - HM_SKILLBASE;
+			WFIFOW(fd,len  ) = id;
+			WFIFOW(fd,len+2) = skill_get_inf(id);
+			WFIFOW(fd,len+4) = 0;
+			WFIFOW(fd,len+6) = hd->homunculus.hskill[j].lv;
+			WFIFOW(fd,len+8) = skill_get_sp(id,hd->homunculus.hskill[j].lv);
+			WFIFOW(fd,len+10)= skill_get_range2(&sd->hd->bl, id,hd->homunculus.hskill[j].lv);
+			safestrncpy((char*)WFIFOP(fd,len+12), skill_get_name(id), NAME_LENGTH);
 			WFIFOB(fd,len+36) = (hd->homunculus.hskill[j].lv < merc_skill_tree_get_max(id, hd->homunculus.class_))?1:0;
 			len+=37;
 		}
@@ -11272,20 +11272,23 @@ void clif_parse_HomMoveToMaster(int fd, struct map_session_data *sd)
 	unit_walktoxy(&sd->hd->bl, sd->bl.x,sd->bl.y-1, 4);
 }
 
-void clif_parse_HomMoveTo(int fd,struct map_session_data *sd)
+void clif_parse_HomMoveTo(int fd, struct map_session_data *sd)
 {
-	short x,y,cmd;
-
-	if(!merc_is_hom_active(sd->hd))
-		return;
+	int id = RFIFOL(fd,2); // Mercenary or Homunculus
+	struct block_list *bl = NULL;
+	short x, y, cmd;
 
 	cmd = RFIFOW(fd,0);
-	x = RFIFOB(fd,packet_db[sd->packet_ver][cmd].pos[0]) * 4 +
-		(RFIFOB(fd,packet_db[sd->packet_ver][cmd].pos[0] + 1) >> 6);
-	y = ((RFIFOB(fd,packet_db[sd->packet_ver][cmd].pos[0]+1) & 0x3f) << 4) +
-		(RFIFOB(fd,packet_db[sd->packet_ver][cmd].pos[0] + 2) >> 4);
+	x = RFIFOB(fd,packet_db[sd->packet_ver][cmd].pos[0]) * 4 + (RFIFOB(fd,packet_db[sd->packet_ver][cmd].pos[0] + 1) >> 6);
+	y = ((RFIFOB(fd,packet_db[sd->packet_ver][cmd].pos[0]+1) & 0x3f) << 4) + (RFIFOB(fd,packet_db[sd->packet_ver][cmd].pos[0] + 2) >> 4);
 
-	unit_walktoxy(&(sd->hd->bl),x,y,4);
+	if( sd->md && sd->md->bl.id == id )
+		bl = &sd->md->bl; // Moving Mercenary
+	else if( merc_is_hom_active(sd->hd) && sd->hd->bl.id == id )
+		bl = &sd->hd->bl; // Moving Homunculus
+	else return;
+
+	unit_walktoxy(bl, x, y, 4);
 }
 
 void clif_parse_HomAttack(int fd,struct map_session_data *sd)
@@ -12334,6 +12337,110 @@ void clif_send_quest_status(struct map_session_data * sd, int quest_id, bool act
 	WFIFOSET(fd, 7);
 }
 
+/*==========================================
+ * Mercenary System
+ *==========================================*/
+void clif_mercenary_info(struct map_session_data *sd)
+{
+	int fd;
+	struct mercenary_data *md;
+	struct status_data *status;
+
+	if( sd == NULL || (md = sd->md) == NULL )
+		return;
+
+	fd = sd->fd;
+	status = &md->battle_status;
+
+	WFIFOHEAD(fd,72);
+	WFIFOW(fd,0) = 0x029b;
+	WFIFOL(fd,2) = md->bl.id;
+	WFIFOW(fd,6) = cap_value(status->rhw.atk2+status->batk, 0, SHRT_MAX);
+	WFIFOW(fd,8) = cap_value(status->matk_max, 0, SHRT_MAX);
+	WFIFOW(fd,10) = status->hit;
+	WFIFOW(fd,12) = status->cri/10;
+	WFIFOW(fd,14) = status->def + status->vit;
+	WFIFOW(fd,16) = status->mdef;
+	WFIFOW(fd,18) = status->flee;
+	WFIFOW(fd,20) = status->amotion;
+	safestrncpy((char*)WFIFOP(fd,22), md->db->name, NAME_LENGTH);
+	WFIFOW(fd,46) = md->db->lv;
+	WFIFOL(fd,48) = status->hp;
+	WFIFOL(fd,52) = status->max_hp;
+	WFIFOL(fd,56) = status->sp;
+	WFIFOL(fd,60) = status->max_sp;
+	WFIFOL(fd,64) = 0; // Expiration Time
+	WFIFOW(fd,68) = 0; // No documentation (Guild Rank?)
+	WFIFOW(fd,70) = 0; // Times Summoned	
+	WFIFOSET(fd,72);
+}
+
+void clif_mercenary_skillblock(struct map_session_data *sd)
+{
+	struct mercenary_data *md;
+	int fd, i, len = 4, id, j;
+
+	if( sd == NULL || (md = sd->md) == NULL )
+		return;
+	
+	fd = sd->fd;
+	WFIFOHEAD(fd,4+37*MAX_MERCSKILL);
+	WFIFOW(fd,0) = 0x029d;
+	for( i = 0; i < MAX_MERCSKILL; i++ )
+	{
+		if( (id = md->db->skill[i].id) == 0 )
+			continue;
+		j = id - MC_SKILLBASE;
+		WFIFOW(fd,len) = id;
+		WFIFOW(fd,len+2) = skill_get_inf(id);
+		WFIFOW(fd,len+4) = 0;
+		WFIFOW(fd,len+6) = md->db->skill[j].lv;
+		WFIFOW(fd,len+8) = skill_get_sp(id, md->db->skill[j].lv);
+		WFIFOW(fd,len+10) = skill_get_range2(&md->bl, id, md->db->skill[j].lv);
+		safestrncpy((char*)WFIFOP(fd,len+12), skill_get_name(id), NAME_LENGTH);
+		WFIFOB(fd,len+36) = 0; // Skillable for Mercenary?
+		len += 37;
+	}
+
+	WFIFOW(fd,2) = len;
+	WFIFOSET(fd,len);
+}
+
+void clif_mercenary_updatestatus(struct map_session_data *sd, int type)
+{
+	struct mercenary_data *md;
+	int fd;
+	if( sd == NULL || (md = sd->md) == NULL )
+		return;
+
+	fd = sd->fd;
+	WFIFOHEAD(fd,8);
+	WFIFOW(fd,0) = 0x02a2;
+	WFIFOW(fd,2) = type;
+	switch( type )
+	{
+		case SP_HP:
+			WFIFOL(fd,4) = md->battle_status.hp;
+			break;
+		case SP_MAXHP:
+			WFIFOL(fd,4) = md->battle_status.max_hp;
+			break;
+		case SP_SP:
+			WFIFOL(fd,4) = md->battle_status.sp;
+			break;
+		case SP_MAXSP:
+			WFIFOL(fd,4) = md->battle_status.max_sp;
+			break;
+	}
+	WFIFOSET(fd,8);
+}
+
+void clif_parse_mercenary_action(int fd, struct map_session_data* sd)
+{
+	int option = RFIFOB(fd,2);
+	if( sd->md == NULL )
+		return;
+}
 
 /*==========================================
  * パケットデバッグ
@@ -12780,6 +12887,7 @@ static int packetdb_readdb(void)
 		{clif_parse_cashshop_buy,"cashshopbuy"},
 		{clif_parse_ViewPlayerEquip,"viewplayerequip"},
 		{clif_parse_EquipTick,"equiptickbox"},
+		{clif_parse_mercenary_action,"mermenu"},
 		{NULL,NULL}
 	};
 

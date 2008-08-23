@@ -4046,7 +4046,8 @@ int status_get_lv(struct block_list *bl)
 		case BL_MOB: return ((TBL_MOB*)bl)->level;
 		case BL_PET: return ((TBL_PET*)bl)->pet.level;
 		case BL_HOM: return ((TBL_HOM*)bl)->homunculus.level;
-	}		
+		case BL_MER: return ((TBL_MER*)bl)->db->lv;
+	}
 	return 1;
 }
 
@@ -4162,6 +4163,10 @@ int status_get_guild_id(struct block_list *bl)
 	  	if (((TBL_HOM*)bl)->master)
 			return ((TBL_HOM*)bl)->master->status.guild_id;
 		break;
+	case BL_MER:
+		if (((TBL_MER*)bl)->master)
+			return ((TBL_MER*)bl)->master->status.guild_id;
+		break;
 	case BL_NPC:
 	  	if (((TBL_NPC*)bl)->subtype == SCRIPT)
 			return ((TBL_NPC*)bl)->u.scr.guild_id;
@@ -4195,6 +4200,10 @@ int status_get_emblem_id(struct block_list *bl)
 	case BL_HOM:
 	  	if (((TBL_HOM*)bl)->master)
 			return ((TBL_HOM*)bl)->master->guild_emblem_id;
+		break;
+	case BL_MER:
+	  	if (((TBL_MER*)bl)->master)
+			return ((TBL_MER*)bl)->master->guild_emblem_id;
 		break;
 	case BL_NPC:
 		if (((TBL_NPC*)bl)->subtype == SCRIPT && ((TBL_NPC*)bl)->u.scr.guild_id > 0) {
@@ -4253,6 +4262,7 @@ struct view_data* status_get_viewdata(struct block_list *bl)
 		case BL_PET: return &((TBL_PET*)bl)->vd;
 		case BL_NPC: return ((TBL_NPC*)bl)->vd;
 		case BL_HOM: return ((TBL_HOM*)bl)->vd;
+		case BL_MER: return ((TBL_MER*)bl)->vd;
 	}
 	return NULL;
 }
@@ -4267,6 +4277,8 @@ void status_set_viewdata(struct block_list *bl, int class_)
 		vd = npc_get_viewdata(class_);
 	else if (homdb_checkid(class_))
 		vd = merc_get_hom_viewdata(class_);
+	else if (merc_class(class_))
+		vd = merc_get_viewdata(class_);
 	else
 		vd = NULL;
 
@@ -4365,6 +4377,15 @@ void status_set_viewdata(struct block_list *bl, int class_)
 				ShowError("status_set_viewdata (HOMUNCULUS): No view data for class %d\n", class_);
 		}
 		break;
+	case BL_MER:
+		{
+			struct mercenary_data *md = (struct mercenary_data*)bl;
+			if (vd)
+				md->vd = vd;
+			else
+				ShowError("status_set_viewdata (MERCENARY): No view data for class %d\n", class_);
+		}
+		break;
 	}
 	vd = status_get_viewdata(bl);
 	if (vd && vd->cloth_color && (
@@ -4383,6 +4404,7 @@ struct status_change *status_get_sc(struct block_list *bl)
 	case BL_MOB: return &((TBL_MOB*)bl)->sc;
 	case BL_NPC: return &((TBL_NPC*)bl)->sc;
 	case BL_HOM: return &((TBL_HOM*)bl)->sc;
+	case BL_MER: return &((TBL_MER*)bl)->sc;
 	}
 	return NULL;
 }
