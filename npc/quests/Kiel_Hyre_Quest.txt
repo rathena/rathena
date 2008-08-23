@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf (Script), DZeroX (Timer)
 //===== Current Version: ===================================== 
-//= 4.0
+//= 4.1
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -87,6 +87,7 @@
 //=     Updated some NPC positions, and facings.
 //=     Changed the way some NPCs work.
 //=     Updated comments for get/delitem commands.
+//= 4.1 Added an 'end;' to Kiel Hyre's dialog for the "Yes" option for if you want to confront Kiehl.
 //============================================================ 
 
 //============================================================================
@@ -4670,6 +4671,7 @@ kh_mansion,22,28,4	script	Kiel Hyre#kh	903,{
 			close2;
 			enablenpc "Kiehl_Room_Warp";
 			donpcevent "Kiehl_Room_Warp::OnEnable";
+			end;
 			break;
 		case 2:
 			mes "[Kiel Hyre]";

@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Tsuyuki & Samuray22
 //===== Current Version: ===================================== 
-//= 1.1
+//= 1.2
 //===== Compatible With: ===================================== 
 //= eAthena/Freya
 //===== Description: ========================================= 
@@ -11,10 +11,11 @@
 //===== Additional Comments: ================================= 
 //= 1.0 Replaced previous TK Job Quest with this one [Tsuyuki]
 //= 1.1 Rewrote to the Aegis Standars. [Samuray22]
+//= 1.2 Fixed position the npc is facing. [Kisuka]
 //============================================================ 
 
 
-payon,157,141,2	script	Phoenix#TKJobChange	753,{
+payon,157,141,5	script	Phoenix#TKJobChange	753,{
 	if(Upper == 2) {
 		mes "[Phoenix]";
 		mes "Hello, child.";
