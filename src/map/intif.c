@@ -1882,7 +1882,7 @@ int intif_mercenary_create(struct s_mercenary *merc)
 	return 0;
 }
 
-int intif_parse_mercenary_create(int fd)
+int intif_parse_mercenary_received(int fd)
 {
 	int len = RFIFOW(fd,2) - 5;
 	if( sizeof(struct s_mercenary) != len )
@@ -1892,12 +1892,22 @@ int intif_parse_mercenary_create(int fd)
 		return 0;
 	}
 
-	merc_data_received((struct s_mercenary*)RFIFOP(fd,9), RFIFOB(fd,8));
+	merc_data_received((struct s_mercenary*)RFIFOP(fd,5), RFIFOB(fd,4));
 	return 0;
 }
 
+int intif_mercenary_request(int merc_id, int char_id)
+{
+	if (CheckForCharServer())
+		return 0;
 
-
+	WFIFOHEAD(inter_fd,10);
+	WFIFOW(inter_fd,0) = 0x3071;
+	WFIFOL(inter_fd,2) = merc_id;
+	WFIFOL(inter_fd,6) = char_id;
+	WFIFOSET(inter_fd,10);
+	return 0;
+}
 
 //-----------------------------------------------------------------
 // inter serverÇ©ÇÁÇÃí êM
@@ -1988,7 +1998,7 @@ int intif_parse(int fd)
 	case 0x3855:	intif_parse_Auction_bid(fd); break;
 #endif
 // Mercenary System
-	case 0x3870:	intif_parse_mercenary_create(fd); break;
+	case 0x3870:	intif_parse_mercenary_received(fd); break;
 
 	case 0x3880:	intif_parse_CreatePet(fd); break;
 	case 0x3881:	intif_parse_RecvPetData(fd); break;

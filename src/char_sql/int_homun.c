@@ -322,12 +322,55 @@ bool mapif_mercenary_save(struct s_mercenary* merc)
 	return flag;
 }
 
-static void mapif_mercenary_created(int fd, struct s_mercenary *merc, unsigned char flag)
+bool mapif_mercenary_load(int merc_id, int char_id, struct s_mercenary *merc)
+{
+	char* data;
+
+	memset(merc, 0, sizeof(struct s_mercenary));
+	merc->mercenary_id = merc_id;
+	merc->char_id = char_id;
+
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `class`, `hp`, `sp`, `kill_counter`, `life_time` FROM `mercenary` WHERE `merc_id` = '%d' AND `char_id` = '%d'", merc_id, char_id) )
+	{
+		Sql_ShowDebug(sql_handle);
+		return false;
+	}
+
+	if( SQL_SUCCESS != Sql_NextRow(sql_handle) )
+	{
+		Sql_FreeResult(sql_handle);
+		return false;
+	}
+
+	Sql_GetData(sql_handle,  1, &data, NULL); merc->class_ = atoi(data);
+	Sql_GetData(sql_handle,  2, &data, NULL); merc->hp = atoi(data);
+	Sql_GetData(sql_handle,  3, &data, NULL); merc->sp = atoi(data);
+	Sql_GetData(sql_handle,  4, &data, NULL); merc->kill_count = atoi(data);
+	Sql_GetData(sql_handle,  5, &data, NULL); merc->remain_life_time = atoi(data);
+	Sql_FreeResult(sql_handle);
+	if( save_log )
+		ShowInfo("Mercenary loaded (%d - %d).\n", merc->mercenary_id, merc->char_id);
+	
+	return true;
+}
+
+bool mapif_mercenary_delete(int merc_id)
+{
+	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `mercenary` WHERE `merc_id` = '%d'", merc_id) )
+	{
+		Sql_ShowDebug(sql_handle);
+		return false;
+	}
+
+	return true;
+}
+
+static void mapif_mercenary_send(int fd, struct s_mercenary *merc, unsigned char flag)
 {
 	int size = sizeof(struct s_mercenary) + 5;
 
 	WFIFOHEAD(fd,size);
-	WFIFOW(fd,0) = 0x3860;
+	WFIFOW(fd,0) = 0x3870;
 	WFIFOW(fd,2) = size;
 	WFIFOB(fd,4) = flag;
 	memcpy(WFIFOP(fd,5),merc,sizeof(struct s_mercenary));
@@ -337,7 +380,14 @@ static void mapif_mercenary_created(int fd, struct s_mercenary *merc, unsigned c
 static void mapif_parse_mercenary_create(int fd, struct s_mercenary* merc)
 {
 	bool result = mapif_mercenary_save(merc);
-	mapif_mercenary_created(fd, merc, result);
+	mapif_mercenary_send(fd, merc, result);
+}
+
+static void mapif_parse_mercenary_load(int fd, int merc_id, int char_id)
+{
+	struct s_mercenary merc;
+	bool result = mapif_mercenary_load(merc_id, char_id, &merc);
+	mapif_mercenary_send(fd, &merc, result);
 }
 
 /*==========================================
@@ -357,6 +407,7 @@ int inter_homunculus_parse_frommap(int fd)
 	case 0x3094: mapif_parse_homunculus_rename(fd, (int)RFIFOL(fd,2), (int)RFIFOL(fd,6), (char*)RFIFOP(fd,10)); break;
 	// Mercenary Packets
 	case 0x3070: mapif_parse_mercenary_create(fd, (struct s_mercenary*)RFIFOP(fd,8)); break;
+	case 0x3071: mapif_parse_mercenary_load(fd, (int)RFIFOL(fd,2), (int)RFIFOL(fd,6)); break;
 	default:
 		return 0;
 	}

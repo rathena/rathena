@@ -79,6 +79,7 @@ CREATE TABLE IF NOT EXISTS `char` (
   `guild_id` int(11) unsigned NOT NULL default '0',
   `pet_id` int(11) unsigned NOT NULL default '0',
   `homun_id` int(11) unsigned NOT NULL default '0',
+  `mer_id` int(11) unsigned NOT NULL default '0',
   `hair` tinyint(4) unsigned NOT NULL default '0',
   `hair_color` smallint(5) unsigned NOT NULL default '0',
   `clothes_color` smallint(5) unsigned NOT NULL default '0',

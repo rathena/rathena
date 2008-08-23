@@ -917,8 +917,10 @@ int pc_reg_received(struct map_session_data *sd)
 		intif_request_petdata(sd->status.account_id, sd->status.char_id, sd->status.pet_id);
 
 	// Homunculus [albator]
-	if (sd->status.hom_id > 0)
+	if( sd->status.hom_id > 0 )
 		intif_homunculus_requestload(sd->status.account_id, sd->status.hom_id);
+	if( sd->status.mer_id > 0 )
+		intif_mercenary_request(sd->status.mer_id, sd->status.char_id);
 
 	map_addiddb(&sd->bl);
 	map_delnickdb(sd->status.char_id, sd->status.name);
