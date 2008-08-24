@@ -129,8 +129,7 @@ int merc_delete(struct mercenary_data *md, int reply)
 	struct map_session_data *sd = md->master;
 	md->mercenary.remain_life_time = 0;
 
-	if( md->contract_timer != INVALID_TIMER )
-		delete_timer(md->contract_timer, merc_contract_end);
+	merc_contract_stop(md);
 
 	if( !sd )
 		return unit_free(&md->bl, 1);
@@ -197,6 +196,7 @@ int merc_data_received(struct s_mercenary *merc, bool flag)
 		map_addiddb(&md->bl);
 		status_calc_mercenary(md,1);
 		md->contract_timer = INVALID_TIMER;
+		merc_contract_init(md);
 	}
 	else
 		memcpy(&sd->md->mercenary, merc, sizeof(struct s_mercenary));
@@ -208,7 +208,6 @@ int merc_data_received(struct s_mercenary *merc, bool flag)
 		clif_spawn(&md->bl);
 		clif_mercenary_info(sd);
 		clif_mercenary_skillblock(sd);
-		merc_contract_init(md);
 	}
 
 	return 1;

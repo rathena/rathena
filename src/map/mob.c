@@ -51,7 +51,7 @@
 #define MAX_MINCHASE 30	//Max minimum chase value to use for mobs.
 #define RUDE_ATTACKED_COUNT 2	//After how many rude-attacks should the skill be used?
 //Used to determine default enemy type of mobs (for use in eachinrange calls)
-#define DEFAULT_ENEMY_TYPE(md) (md->special_state.ai?BL_CHAR:BL_PC|BL_HOM)
+#define DEFAULT_ENEMY_TYPE(md) (md->special_state.ai?BL_CHAR:BL_PC|BL_HOM|BL_MER)
 
 //Dynamic mob database, allows saving of memory when there's big gaps in the mob_db [Skotlex]
 struct mob_db *mob_db_data[MAX_MOB_DB+1];

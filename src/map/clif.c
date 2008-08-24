@@ -12469,6 +12469,8 @@ void clif_parse_mercenary_action(int fd, struct map_session_data* sd)
 	int option = RFIFOB(fd,2);
 	if( sd->md == NULL )
 		return;
+
+	if( option == 2 ) merc_delete(sd->md, 2);
 }
 
 /*------------------------------------------
