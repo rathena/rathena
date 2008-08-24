@@ -487,8 +487,6 @@ static int merc_hom_hungry(int tid, unsigned int tick, int id, intptr data)
 {
 	struct map_session_data *sd;
 	struct homun_data *hd;
-	char mes[255];
-	bool talk = true;
 
 	sd=map_id2sd(id);
 	if(!sd)
@@ -507,17 +505,12 @@ static int merc_hom_hungry(int tid, unsigned int tick, int id, intptr data)
 	hd->homunculus.hunger-- ;
 	if(hd->homunculus.hunger <= 10) {
 		clif_emotion(&hd->bl, 6) ;	//an
-		snprintf(mes, sizeof mes,"%s : Tengo mucha hambre...",hd->homunculus.name);
 	} else if(hd->homunculus.hunger == 25) {
 		clif_emotion(&hd->bl, 20) ;	//hmm
-		snprintf(mes, sizeof mes,"%s : Tengo hambre...",hd->homunculus.name);
 	} else if(hd->homunculus.hunger == 75) {
 		clif_emotion(&hd->bl, 33) ;	//ok
-		snprintf(mes, sizeof mes,"%s : Tengo un poco de hambre...",hd->homunculus.name);
 	} else
 		talk = false;
-
-	if( talk ) clif_message(&hd->bl, mes);
 
 	if(hd->homunculus.hunger < 0) {
 		hd->homunculus.hunger = 0;
