@@ -442,5 +442,6 @@ void clif_Adopt_reply(struct map_session_data *sd, int type);
 // MERCENARIES
 void clif_mercenary_info(struct map_session_data *sd);
 void clif_mercenary_skillblock(struct map_session_data *sd);
+void clif_mercenary_message(int fd, int message);
 
 #endif /* _CLIF_H_ */

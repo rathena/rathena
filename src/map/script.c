@@ -28,6 +28,7 @@
 #include "pet.h"
 #include "mapreg.h"
 #include "homunculus.h"
+#include "mercenary.h"
 #include "intif.h"
 #include "skill.h"
 #include "status.h"
@@ -12792,6 +12793,28 @@ BUILDIN_FUNC(setcell)
 	return 0;
 }
 
+/*==========================================
+ * Mercenary Commands
+ *------------------------------------------*/
+BUILDIN_FUNC(createmercenary)
+{
+	struct map_session_data *sd;
+	int class_, contract_time;
+
+	if( (sd = script_rid2sd(st)) == NULL || sd->md || sd->status.mer_id != 0 )
+		return 0;
+	
+	class_ = script_getnum(st,2);
+
+	if( !merc_class(class_) )
+		return 0;
+
+	contract_time = script_getnum(st,3);
+	merc_create(sd, class_, contract_time);
+
+	return 0;
+}
+
 /******************
 Questlog script commands
 *******************/
@@ -13222,5 +13245,6 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(hasquest, "i"),
 	BUILDIN_DEF(setwall,"siiiiis"),
 	BUILDIN_DEF(delwall,"s"),
+	BUILDIN_DEF(createmercenary,"ii"),
 	{NULL,NULL,NULL},
 };

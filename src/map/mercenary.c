@@ -86,11 +86,73 @@ int merc_create(struct map_session_data *sd, int class_, unsigned int lifetime)
 
 int mercenary_save(struct mercenary_data *md)
 {
+	const struct TimerData * td = get_timer(md->contract_timer);
+
 	md->mercenary.hp = md->battle_status.hp;
 	md->mercenary.sp = md->battle_status.sp;
-	intif_mercenary_save(&md->mercenary);
+	if( td != NULL )
+		md->mercenary.remain_life_time = DIFF_TICK(td->tick, gettick());
+	else
+	{
+		md->mercenary.remain_life_time = 0;
+		ShowWarning("mercenary_save : mercenary without timer (tid %d)\n", md->contract_timer);
+	}
 
+	intif_mercenary_save(&md->mercenary);
 	return 1;
+}
+
+static int merc_contract_end(int tid, unsigned int tick, int id, intptr data)
+{
+	struct map_session_data *sd;
+	struct mercenary_data *md;
+
+	if( (sd = map_id2sd(id)) == NULL )
+		return 1;
+	if( (md = sd->md) == NULL )
+		return 1;
+
+	if( md->contract_timer != tid )
+	{
+		ShowError("merc_contract_end %d != %d.\n", md->contract_timer, tid);
+		return 0;
+	}
+
+	md->contract_timer = INVALID_TIMER;
+	merc_delete(md, 0); // Mercenary soldier's duty hour is over.
+
+	return 0;
+}
+
+int merc_delete(struct mercenary_data *md, int reply)
+{
+	struct map_session_data *sd = md->master;
+	md->mercenary.remain_life_time = 0;
+
+	if( md->contract_timer != INVALID_TIMER )
+		delete_timer(md->contract_timer, merc_contract_end);
+
+	if( !sd )
+		return unit_free(&md->bl, 1);
+	clif_mercenary_message(sd->fd, reply);
+	
+	return unit_remove_map(&md->bl, 1);
+}
+
+void merc_contract_stop(struct mercenary_data *md)
+{
+	nullpo_retv(md);
+	if( md->contract_timer != INVALID_TIMER )
+		delete_timer(md->contract_timer, merc_contract_end);
+	md->contract_timer = INVALID_TIMER;
+}
+
+void merc_contract_init(struct mercenary_data *md)
+{
+	if( md->contract_timer == INVALID_TIMER )
+		md->contract_timer = add_timer(gettick() + md->mercenary.remain_life_time, merc_contract_end, md->master->bl.id, 0);
+
+	md->regen.state.block = 0;
 }
 
 int merc_data_received(struct s_mercenary *merc, bool flag)
@@ -134,6 +196,7 @@ int merc_data_received(struct s_mercenary *merc, bool flag)
 
 		map_addiddb(&md->bl);
 		status_calc_mercenary(md,1);
+		md->contract_timer = INVALID_TIMER;
 	}
 	else
 		memcpy(&sd->md->mercenary, merc, sizeof(struct s_mercenary));
@@ -145,7 +208,7 @@ int merc_data_received(struct s_mercenary *merc, bool flag)
 		clif_spawn(&md->bl);
 		clif_mercenary_info(sd);
 		clif_mercenary_skillblock(sd);
-		// init timers
+		merc_contract_init(md);
 	}
 
 	return 1;

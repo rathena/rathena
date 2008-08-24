@@ -342,11 +342,11 @@ bool mapif_mercenary_load(int merc_id, int char_id, struct s_mercenary *merc)
 		return false;
 	}
 
-	Sql_GetData(sql_handle,  1, &data, NULL); merc->class_ = atoi(data);
-	Sql_GetData(sql_handle,  2, &data, NULL); merc->hp = atoi(data);
-	Sql_GetData(sql_handle,  3, &data, NULL); merc->sp = atoi(data);
-	Sql_GetData(sql_handle,  4, &data, NULL); merc->kill_count = atoi(data);
-	Sql_GetData(sql_handle,  5, &data, NULL); merc->remain_life_time = atoi(data);
+	Sql_GetData(sql_handle,  0, &data, NULL); merc->class_ = atoi(data);
+	Sql_GetData(sql_handle,  1, &data, NULL); merc->hp = atoi(data);
+	Sql_GetData(sql_handle,  2, &data, NULL); merc->sp = atoi(data);
+	Sql_GetData(sql_handle,  3, &data, NULL); merc->kill_count = atoi(data);
+	Sql_GetData(sql_handle,  4, &data, NULL); merc->remain_life_time = atoi(data);
 	Sql_FreeResult(sql_handle);
 	if( save_log )
 		ShowInfo("Mercenary loaded (%d - %d).\n", merc->mercenary_id, merc->char_id);

@@ -11306,11 +11306,21 @@ void clif_parse_HomMoveTo(int fd, struct map_session_data *sd)
 }
 
 void clif_parse_HomAttack(int fd,struct map_session_data *sd)
-{	//[orn]
-	if(!merc_is_hom_active(sd->hd))
-		return;
-	
-	unit_attack(&sd->hd->bl,RFIFOL(fd,6),0) ;
+{
+	struct block_list *bl = NULL;
+	int id = RFIFOL(fd,2),
+		target_id = RFIFOL(fd,6),
+		action_type = RFIFOB(fd,10);
+
+	if( merc_is_hom_active(sd->hd) && sd->hd->bl.id == id )
+		bl = &sd->hd->bl;
+	else if( sd->md && sd->md->bl.id == id )
+		bl = &sd->md->bl;
+	else return;
+
+	unit_stop_walking(bl, 1);
+	unit_stop_attack(bl);
+	unit_attack(bl, target_id, action_type != 0);
 }
 
 void clif_parse_HomMenu(int fd, struct map_session_data *sd)
@@ -12386,10 +12396,10 @@ void clif_mercenary_info(struct map_session_data *sd)
 	WFIFOL(fd,52) = status->max_hp;
 	WFIFOL(fd,56) = status->sp;
 	WFIFOL(fd,60) = status->max_sp;
-	WFIFOL(fd,64) = 0; // Contract End
+	WFIFOL(fd,64) = (int)time(NULL) + (md->mercenary.remain_life_time / 1000);
 	WFIFOW(fd,68) = 0; // Loyalty
 	WFIFOL(fd,70) = 0; // Summon Count
-	WFIFOL(fd,74) = 0; // Kill Counter
+	WFIFOL(fd,74) = md->mercenary.kill_count;
 	WFIFOW(fd,78) = 0;
 	WFIFOSET(fd,80);
 }
@@ -12459,6 +12469,21 @@ void clif_parse_mercenary_action(int fd, struct map_session_data* sd)
 	int option = RFIFOB(fd,2);
 	if( sd->md == NULL )
 		return;
+}
+
+/*------------------------------------------
+ * Mercenary Message
+ * 0 = Mercenary soldier's duty hour is over.
+ * 1 = Your mercenary soldier has been killed.
+ * 2 = Your mercenary soldier has been fired.
+ * 3 = Your mercenary soldier has ran away.
+ *------------------------------------------*/
+void clif_mercenary_message(int fd, int message)
+{
+	WFIFOHEAD(fd,4);
+	WFIFOW(fd,0) = 0x0291;
+	WFIFOW(fd,2) = 1266 + message;
+	WFIFOSET(fd,4);
 }
 
 /*==========================================

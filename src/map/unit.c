@@ -1258,9 +1258,8 @@ int unit_attack(struct block_list *src,int target_id,int continuous)
 		}
 	}
 
-	if(battle_check_target(src,target,BCT_ENEMY)<=0 ||
-		!status_check_skilluse(src, target, 0, 0)
-	) {
+	if( battle_check_target(src,target,BCT_ENEMY) <= 0 || !status_check_skilluse(src, target, 0, 0) )
+	{
 		unit_unattackable(src);
 		return 1;
 	}
@@ -2065,7 +2064,6 @@ int unit_free(struct block_list *bl, int clrtype)
 		{
 			struct homun_data *hd = (TBL_HOM*)bl;
 			struct map_session_data *sd = hd->master;
-			// Desactive timers
 			merc_hom_hungry_timer_delete(hd);
 			if( clrtype >= 0 )
 			{
@@ -2086,7 +2084,6 @@ int unit_free(struct block_list *bl, int clrtype)
 		{
 			struct mercenary_data *md = (TBL_MER*)bl;
 			struct map_session_data *sd = md->master;
-			/* Stop Mercenary Timer */
 			if( clrtype >= 0 )
 			{
 				if( md->mercenary.remain_life_time > 0 )

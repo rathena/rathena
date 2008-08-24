@@ -32,7 +32,8 @@ struct mercenary_data {
 	struct s_mercenary_db *db;
 	struct s_mercenary mercenary;
 
-	struct map_session_data *master; // Master of mercenary
+	struct map_session_data *master;
+	int contract_timer;
 };
 
 bool merc_class(int class_);
@@ -41,5 +42,7 @@ int merc_create(struct map_session_data *sd, int class_, unsigned int lifetime);
 int merc_data_received(struct s_mercenary *merc, bool flag);
 int mercenary_save(struct mercenary_data *md);
 int do_init_mercenary(void);
+int merc_delete(struct mercenary_data *md, int reply);
+void merc_contract_stop(struct mercenary_data *md);
 
 #endif /* _MERCENARY_H_ */

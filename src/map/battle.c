@@ -16,6 +16,7 @@
 #include "status.h"
 #include "skill.h"
 #include "homunculus.h"
+#include "mercenary.h"
 #include "mob.h"
 #include "itemdb.h"
 #include "clif.h"
@@ -3027,6 +3028,10 @@ struct block_list* battle_get_master(struct block_list *src)
 				if (((TBL_HOM*)src)->master)
 					src = (struct block_list*)((TBL_HOM*)src)->master;
 				break;
+			case BL_MER:
+				if (((TBL_MER*)src)->master)
+					src = (struct block_list*)((TBL_MER*)src)->master;
+				break;
 			case BL_SKILL:
 				if (((TBL_SKILL*)src)->group && ((TBL_SKILL*)src)->group->src_id)
 					src = map_id2bl(((TBL_SKILL*)src)->group->src_id);
@@ -3050,7 +3055,7 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 {
 	int m,state = 0; //Initial state none
 	int strip_enemy = 1; //Flag which marks whether to remove the BCT_ENEMY status if it's also friend/ally.
-	struct block_list *s_bl= src, *t_bl= target;
+	struct block_list *s_bl = src, *t_bl = target;
 
 	nullpo_retr(0, src);
 	nullpo_retr(0, target);
@@ -3059,13 +3064,13 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 
 	//t_bl/s_bl hold the 'master' of the attack, while src/target are the actual
 	//objects involved.
-	if ((t_bl = battle_get_master(target)) == NULL)
+	if( (t_bl = battle_get_master(target)) == NULL )
 		t_bl = target;
 
-	if ((s_bl = battle_get_master(src)) == NULL)
+	if( (s_bl = battle_get_master(src)) == NULL )
 		s_bl = src;
 
-	switch (target->type)
+	switch( target->type )
 	{	//Checks on actual target
 		case BL_PC:
 			if (((TBL_PC*)target)->invincible_timer != -1 || pc_isinvisible((TBL_PC*)target))
@@ -3109,6 +3114,7 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 		}
 			break;
 		//Valid targets with no special checks here.
+		case BL_MER:
 		case BL_HOM:
 			break;
 		//All else not specified is an invalid target.
@@ -3116,34 +3122,35 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 			return 0;
 	}
 
-	switch (t_bl->type)
+	switch( t_bl->type )
 	{	//Checks on target master
 		case BL_PC:
 		{
-			TBL_PC *sd = (TBL_PC*)t_bl;
-			if (sd->status.karma && t_bl != s_bl && s_bl->type == BL_PC &&
-				((TBL_PC*)s_bl)->status.karma)
-				state |= BCT_ENEMY; //Characters with bad karma may fight amongst them.
-			if (sd->state.monster_ignore && t_bl != s_bl && flag&BCT_ENEMY)
-				return 0; //Global inmunity to attacks.
-			if (sd->state.killable && t_bl != s_bl)
-			{
-				state |= BCT_ENEMY; //Universal Victim
+			struct map_session_data *sd;
+			if( t_bl == s_bl ) break;
+			sd = BL_CAST(BL_PC, t_bl);
+
+			if( sd->state.monster_ignore && flag&BCT_ENEMY )
+				return 0; // Global inminuty only to Attacks
+			if( sd->status.karma && s_bl->type == BL_PC && ((TBL_PC*)s_bl)->status.karma )
+				state |= BCT_ENEMY; // Characters with bad karma may fight amongst them
+			if( sd->state.killable ) {
+				state |= BCT_ENEMY; // Everything can kill it
 				strip_enemy = 0;
 			}
 			break;
 		}
 		case BL_MOB:
 		{
-			TBL_MOB *md = (TBL_MOB*)t_bl;
+			struct mob_data *md = BL_CAST(BL_MOB, t_bl);
 
-			if (!(agit_flag && map[m].flag.gvg_castle) && md->guardian_data && md->guardian_data->guild_id)
-				return 0; //Disable guardians/emperiums owned by Guilds on non-woe times.
+			if( !(agit_flag && map[m].flag.gvg_castle) && md->guardian_data && md->guardian_data->guild_id )
+				return 0; // Disable guardians/emperiums owned by Guilds on non-woe times.
 			break;
 		}
 	}
 
-	switch(src->type)
+	switch( src->type )
   	{	//Checks on actual src type
 		case BL_PET:
 			if (t_bl->type != BL_MOB && flag&BCT_ENEMY)
@@ -3170,26 +3177,24 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 		}
 	}
 
-	switch (s_bl->type)
+	switch( s_bl->type )
 	{	//Checks on source master
 		case BL_PC:
 		{
-			TBL_PC *sd = (TBL_PC*) s_bl;
+			struct map_session_data *sd = BL_CAST(BL_PC, s_bl);
 			if( s_bl != t_bl )
 			{
 				if( sd->state.killer )
 				{
-					state |= BCT_ENEMY; //Is on a killing rampage :O
+					state |= BCT_ENEMY; // Can kill anything
 					strip_enemy = 0;
 				}
 				else if( sd->duel_group && !((!battle_config.duel_allow_pvp && map[m].flag.pvp) || (!battle_config.duel_allow_gvg && map_flag_gvg(m))) )
 		  		{
-					if (t_bl->type == BL_PC &&
-						(sd->duel_group == ((TBL_PC*)t_bl)->duel_group))
-						//Duel targets can ONLY be your enemy, nothing else.
-						return (BCT_ENEMY&flag)?1:-1;
-					else // You can't target anything out of your duel
-						return 0;
+					if( t_bl->type == BL_PC && (sd->duel_group == ((TBL_PC*)t_bl)->duel_group) )
+						return (BCT_ENEMY&flag)?1:-1; // Duel targets can ONLY be your enemy, nothing else.
+					else
+						return 0; // You can't target anything out of your duel
 				}
 			}
 			if (map_flag_gvg(m) && !sd->status.guild_id &&
@@ -3201,20 +3206,21 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 		}
 		case BL_MOB:
 		{
-			TBL_MOB*md = (TBL_MOB*)s_bl;
-			if (!(agit_flag && map[m].flag.gvg_castle) && md->guardian_data && md->guardian_data->guild_id)
-				return 0; //Disable guardians/emperium owned by Guilds on non-woe times.
+			struct mob_data *md = BL_CAST(BL_MOB, s_bl);
+			if( !(agit_flag && map[m].flag.gvg_castle) && md->guardian_data && md->guardian_data->guild_id )
+				return 0; // Disable guardians/emperium owned by Guilds on non-woe times.
 
-			{	//Smart enemy criteria.
-				if (!md->special_state.ai) { //Normal mobs.
-					if (t_bl->type == BL_MOB && !((TBL_MOB*)t_bl)->special_state.ai)
-						state |= BCT_PARTY; //Normal mobs with no ai are friends.
-					else
-						state |= BCT_ENEMY; //However, all else are enemies.
-				} else {
-					if (t_bl->type == BL_MOB && !((TBL_MOB*)t_bl)->special_state.ai)
-						state |= BCT_ENEMY; //Natural enemy for AI mobs are normal mobs.
-				}
+			if( !md->special_state.ai )
+			{ //Normal mobs.
+				if( t_bl->type == BL_MOB && !((TBL_MOB*)t_bl)->special_state.ai )
+					state |= BCT_PARTY; //Normal mobs with no ai are friends.
+				else
+					state |= BCT_ENEMY; //However, all else are enemies.
+			}
+			else
+			{
+				if( t_bl->type == BL_MOB && !((TBL_MOB*)t_bl)->special_state.ai )
+					state |= BCT_ENEMY; //Natural enemy for AI mobs are normal mobs.
 			}
 			break;
 		}
