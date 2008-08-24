@@ -509,8 +509,7 @@ static int merc_hom_hungry(int tid, unsigned int tick, int id, intptr data)
 		clif_emotion(&hd->bl, 20) ;	//hmm
 	} else if(hd->homunculus.hunger == 75) {
 		clif_emotion(&hd->bl, 33) ;	//ok
-	} else
-		talk = false;
+	}
 
 	if(hd->homunculus.hunger < 0) {
 		hd->homunculus.hunger = 0;
