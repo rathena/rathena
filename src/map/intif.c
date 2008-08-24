@@ -18,7 +18,8 @@
 #include "guild.h"
 #include "pet.h"
 #include "atcommand.h"
-#include "mercenary.h" //albator
+#include "mercenary.h"
+#include "homunculus.h"
 #include "mail.h"
 #include "quest.h"
 

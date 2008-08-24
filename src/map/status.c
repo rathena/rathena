@@ -25,6 +25,7 @@
 #include "status.h"
 #include "script.h"
 #include "unit.h"
+#include "homunculus.h"
 #include "mercenary.h"
 #include "vending.h"
 

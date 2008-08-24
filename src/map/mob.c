@@ -20,7 +20,7 @@
 #include "pet.h"
 #include "status.h"
 #include "mob.h"
-#include "mercenary.h"	//[orn]
+#include "homunculus.h"
 #include "guild.h"
 #include "itemdb.h"
 #include "skill.h"

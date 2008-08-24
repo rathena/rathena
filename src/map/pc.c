@@ -22,7 +22,8 @@
 #include "mail.h"
 #include "map.h"
 #include "path.h"
-#include "mercenary.h" // merc_is_hom_active()
+#include "homunculus.h"
+#include "mercenary.h"
 #include "mob.h" // MAX_MOB_RACE_DB
 #include "npc.h" // fake_nd
 #include "pet.h" // pet_unlocktarget()

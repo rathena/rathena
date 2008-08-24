@@ -311,6 +311,14 @@ SOURCE=..\src\map\mapreg_sql.c
 # End Source File
 # Begin Source File
 
+SOURCE=..\src\map\homunculus.c
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\map\homunculus.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\src\map\mercenary.c
 # End Source File
 # Begin Source File

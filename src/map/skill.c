@@ -17,7 +17,7 @@
 #include "pc.h"
 #include "status.h"
 #include "pet.h"
-#include "mercenary.h"
+#include "homunculus.h"
 #include "mob.h"
 #include "npc.h"
 #include "battle.h"

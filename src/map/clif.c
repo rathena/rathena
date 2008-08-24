@@ -32,7 +32,8 @@
 #include "guild.h"
 #include "vending.h"
 #include "pet.h"
-#include "mercenary.h"	//[orn]
+#include "homunculus.h"
+#include "mercenary.h"
 #include "log.h"
 #include "clif.h"
 #include "mail.h"

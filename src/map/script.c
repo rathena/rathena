@@ -27,7 +27,7 @@
 #include "npc.h"
 #include "pet.h"
 #include "mapreg.h"
-#include "mercenary.h"	//[orn]
+#include "homunculus.h"
 #include "intif.h"
 #include "skill.h"
 #include "status.h"

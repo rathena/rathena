@@ -35,6 +35,7 @@
 #include "mapreg.h"
 #include "guild.h"
 #include "pet.h"
+#include "homunculus.h"
 #include "mercenary.h"
 #include "atcommand.h"
 #include "charcommand.h"
@@ -3544,7 +3545,8 @@ int do_init(int argc, char *argv[])
 	do_init_guild();
 	do_init_storage();
 	do_init_pet();
-	do_init_merc();	//[orn]
+	do_init_merc();
+	do_init_mercenary();
 	do_init_npc();
 	do_init_unit();
 #ifndef TXT_ONLY /* mail system [Valaris] */

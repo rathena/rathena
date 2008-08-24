@@ -314,6 +314,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\src\map\homunculus.c"
+				>
+			</File>
+			<File
+				RelativePath="..\src\map\homunculus.h"
+				>
+			</File>
+			<File
 				RelativePath="..\src\map\mercenary.c"
 				>
 			</File>

@@ -19,6 +19,7 @@
 #include "pet.h"
 #include "skill.h"
 #include "status.h"
+#include "homunculus.h"
 #include "mercenary.h"
 #include "chrif.h"
 #include "quest.h"

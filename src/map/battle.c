@@ -15,7 +15,7 @@
 #include "pc.h"
 #include "status.h"
 #include "skill.h"
-#include "mercenary.h"
+#include "homunculus.h"
 #include "mob.h"
 #include "itemdb.h"
 #include "clif.h"

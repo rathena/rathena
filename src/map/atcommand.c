@@ -27,6 +27,7 @@
 #include "mob.h"
 #include "npc.h"
 #include "pet.h"
+#include "homunculus.h"
 #include "mercenary.h"
 #include "party.h"
 #include "guild.h"
@@ -6592,15 +6593,15 @@ int atcommand_adjcmdlvl(const int fd, struct map_session_data* sd, const char* c
  *------------------------------------------*/
 int atcommand_adjgmlvl(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
-    int newlev;
-    char user[NAME_LENGTH];
-    struct map_session_data *pl_sd;
+	int newlev;
+	char user[NAME_LENGTH];
+	struct map_session_data *pl_sd;
 	nullpo_retr(-1, sd);
 
-    if (!message || !*message || sscanf(message, "%d %23[^\r\n]", &newlev, user) != 2) {
-        clif_displaymessage(fd, "Usage: @adjgmlvl <lvl> <user>.");
-        return -1;
-    }
+	if (!message || !*message || sscanf(message, "%d %23[^\r\n]", &newlev, user) != 2) {
+		clif_displaymessage(fd, "Usage: @adjgmlvl <lvl> <user>.");
+		return -1;
+	}
 
 	if ( (pl_sd = map_nick2sd(user)) == NULL )
 	{

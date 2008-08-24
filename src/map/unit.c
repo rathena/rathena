@@ -12,6 +12,7 @@
 #include "pc.h"
 #include "mob.h"
 #include "pet.h"
+#include "homunculus.h"
 #include "mercenary.h"
 #include "skill.h"
 #include "clif.h"

@@ -24,7 +24,7 @@
 #include "mob.h"
 #include "npc.h"
 #include "pet.h"
-#include "mercenary.h"
+#include "homunculus.h"
 #include "party.h"
 #include "guild.h"
 #include "script.h"
