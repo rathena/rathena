@@ -28,7 +28,7 @@ struct mercenary_data {
 	struct block_list bl;
 	struct unit_data ud;
 	struct view_data *vd;
-	struct status_data *base_status, battle_status;
+	struct status_data base_status, battle_status;
 	struct status_change sc;
 	struct regen_data regen;
 

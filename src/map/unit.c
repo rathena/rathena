@@ -1357,7 +1357,63 @@ bool unit_can_reach_bl(struct block_list *bl,struct block_list *tbl, int range, 
 	if (y) *y = tbl->y-dy;
 	return path_search(NULL,bl->m,bl->x,bl->y,tbl->x-dx,tbl->y-dy,easy,CELL_CHKNOREACH);
 }
+/*==========================================
+ * Calculates position of Pet/Mercenary/Homunculus
+ *------------------------------------------*/
+int	unit_calc_pos(struct block_list *bl, int tx, int ty, int dir)
+{
+	int dx, dy, x, y, i, k;
+	struct unit_data *ud = unit_bl2ud(bl);
+	nullpo_retr(0, ud);
 
+	if( dir < 0 || dir > 7 )
+		return 1;
+
+	ud->to_x = tx;
+	ud->to_y = ty;
+
+	// 2 cells from Master Position
+	dx = -dirx[dir] * 2;
+	dy = -diry[dir] * 2;
+	x = tx + dx;
+	y = ty + dy;
+
+	if( !unit_can_reach_pos(bl, x, y, 0) )
+	{
+		if( dx > 0 ) x--; else if( dx < 0 ) x++;
+		if( dy > 0 ) y--; else if( dy < 0 ) y++;
+		if( !unit_can_reach_pos(bl, x, y, 0) )
+		{
+			for( i = 0; i < 12; i++ )
+			{
+				k = rand()%8; // Pick a Random Dir
+				dx = -dirx[k] * 2;
+				dy = -diry[k] * 2;
+				x = tx + dx;
+				y = ty + dy;
+				if( unit_can_reach_pos(bl, x, y, 0) )
+					break;
+				else
+				{
+					if( dx > 0 ) x--; else if( dx < 0 ) x++;
+					if( dy > 0 ) y--; else if( dy < 0 ) y++;
+					if( unit_can_reach_pos(bl, x, y, 0) )
+						break;
+				}
+			}
+			if( i == 12 )
+			{
+				x = tx; y = tx; // Exactly Master Position
+				if( !unit_can_reach_pos(bl, x, y, 0) )
+					return 1;
+			}
+		}
+	}
+	ud->to_x = x;
+	ud->to_y = y;
+	
+	return 0;
+}
 
 /*==========================================
  * PCÇÃçUåÇ (timerä÷êî)

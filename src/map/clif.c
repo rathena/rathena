@@ -11270,10 +11270,19 @@ void clif_parse_ChangeHomunculusName(int fd, struct map_session_data *sd)
 
 void clif_parse_HomMoveToMaster(int fd, struct map_session_data *sd)
 {
-	if(!merc_is_hom_active(sd->hd))
-		return;
+	int id = RFIFOL(fd,2); // Mercenary or Homunculus
+	struct block_list *bl = NULL;
+	struct unit_data *ud = NULL;
 
-	unit_walktoxy(&sd->hd->bl, sd->bl.x,sd->bl.y-1, 4);
+	if( sd->md && sd->md->bl.id == id )
+		bl = &sd->md->bl;
+	else if( merc_is_hom_active(sd->hd) && sd->hd->bl.id == id )
+		bl = &sd->hd->bl; // Moving Homunculus
+	else return;
+
+	unit_calc_pos(bl, sd->bl.x, sd->bl.y, sd->ud.dir);
+	ud = unit_bl2ud(bl);
+	unit_walktoxy(bl, ud->to_x, ud->to_y, 4);
 }
 
 void clif_parse_HomMoveTo(int fd, struct map_session_data *sd)
@@ -12349,6 +12358,7 @@ void clif_mercenary_info(struct map_session_data *sd)
 	int fd;
 	struct mercenary_data *md;
 	struct status_data *status;
+	int atk;
 
 	if( sd == NULL || (md = sd->md) == NULL )
 		return;
@@ -12359,14 +12369,16 @@ void clif_mercenary_info(struct map_session_data *sd)
 	WFIFOHEAD(fd,80);
 	WFIFOW(fd,0) = 0x029b;
 	WFIFOL(fd,2) = md->bl.id;
-	WFIFOW(fd,6) = cap_value(status->rhw.atk2+status->batk, 0, SHRT_MAX);
+	// Mercenary shows ATK as a random value between ATK ~ ATK2
+	atk = rand()%(status->rhw.atk - status->rhw.atk2 + 1) + status->rhw.atk;
+	WFIFOW(fd,6) = cap_value(atk, 0, SHRT_MAX);
 	WFIFOW(fd,8) = cap_value(status->matk_max, 0, SHRT_MAX);
 	WFIFOW(fd,10) = status->hit;
 	WFIFOW(fd,12) = status->cri/10;
-	WFIFOW(fd,14) = status->def + status->vit;
+	WFIFOW(fd,14) = status->def + (status->vit/2);
 	WFIFOW(fd,16) = status->mdef;
 	WFIFOW(fd,18) = status->flee;
-	WFIFOW(fd,20) = status->amotion;
+	WFIFOW(fd,20) = status->aspd_rate;
 	safestrncpy((char*)WFIFOP(fd,22), md->db->name, NAME_LENGTH);
 	WFIFOW(fd,46) = md->db->lv;
 	WFIFOL(fd,48) = status->hp;

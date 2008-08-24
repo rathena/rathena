@@ -66,6 +66,7 @@ struct view_data {
 int unit_walktoxy( struct block_list *bl, short x, short y, int easy);
 int unit_walktobl( struct block_list *bl, struct block_list *target, int range, int easy);
 int unit_run(struct block_list *bl);
+int unit_calc_pos(struct block_list *bl, int tx, int ty, int dir);
 
 // •às’â~
 // type‚ÍˆÈ‰º‚Ì‘g‚İ‡‚í‚¹ : 

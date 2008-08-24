@@ -56,59 +56,6 @@ int pet_hungry_val(struct pet_data *pd)
 		return 0;
 }
 
-static int pet_calc_pos(struct pet_data *pd,int tx,int ty,int dir)
-{
-	int x,y,dx,dy;
-	int i,k;
-
-	nullpo_retr(0, pd);
-
-	pd->ud.to_x = tx;
-	pd->ud.to_y = ty;
-
-	if(dir < 0 || dir >= 8)
-	 return 1;
-	
-	dx = -dirx[dir]*2;
-	dy = -diry[dir]*2;
-	x = tx + dx;
-	y = ty + dy;
-	if(!unit_can_reach_pos(&pd->bl,x,y,0)) {
-		if(dx > 0) x--;
-		else if(dx < 0) x++;
-		if(dy > 0) y--;
-		else if(dy < 0) y++;
-		if(!unit_can_reach_pos(&pd->bl,x,y,0)) {
-			for(i=0;i<12;i++) {
-				k = rand()%8;
-				dx = -dirx[k]*2;
-				dy = -diry[k]*2;
-				x = tx + dx;
-				y = ty + dy;
-				if(unit_can_reach_pos(&pd->bl,x,y,0))
-					break;
-				else {
-					if(dx > 0) x--;
-					else if(dx < 0) x++;
-					if(dy > 0) y--;
-					else if(dy < 0) y++;
-					if(unit_can_reach_pos(&pd->bl,x,y,0))
-						break;
-				}
-			}
-			if(i>=12) {
-				x = tx;
-				y = ty;
-				if(!unit_can_reach_pos(&pd->bl,x,y,0))
-					return 1;
-			}
-		}
-	}
-	pd->ud.to_x = x;
-	pd->ud.to_y = y;
-	return 0;
-}
-
 int pet_create_egg(struct map_session_data *sd, int item_id)
 {
 	int pet_id = search_petDB_index(item_id, PET_EGG);
@@ -392,7 +339,7 @@ int pet_data_init(struct map_session_data *sd, struct s_pet *pet)
 	pd->bl.m = sd->bl.m;
 	pd->bl.x = sd->bl.x;
 	pd->bl.y = sd->bl.y;
-	pet_calc_pos(pd,sd->bl.x,sd->bl.y,sd->ud.dir);
+	unit_calc_pos(&pd->bl, sd->bl.x, sd->bl.y, sd->ud.dir);
 	pd->bl.x = pd->ud.to_x;
 	pd->bl.y = pd->ud.to_y;
 	pd->bl.id = npc_get_new_npc_id();
@@ -920,7 +867,7 @@ static int pet_ai_sub_hard(struct pet_data *pd, struct map_session_data *sd, uns
 		if(pd->ud.walktimer != -1 && check_distance_blxy(&sd->bl, pd->ud.to_x,pd->ud.to_y, 3))
 			return 0; //Already walking to him
 
-		pet_calc_pos(pd,sd->bl.x,sd->bl.y,sd->ud.dir);
+		unit_calc_pos(&pd->bl, sd->bl.x, sd->bl.y, sd->ud.dir);
 		if(!unit_walktoxy(&pd->bl,pd->ud.to_x,pd->ud.to_y,0))
 			pet_randomwalk(pd,tick);
 

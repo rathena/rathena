@@ -120,8 +120,6 @@ int merc_data_received(struct s_mercenary *merc, bool flag)
 
 	if( !sd->md )
 	{
-		short x = sd->bl.x, y = sd->bl.y;
-
 		sd->md = md = (struct mercenary_data*)aCalloc(1,sizeof(struct mercenary_data));
 		md->bl.type = BL_MER;
 		md->bl.id = npc_get_new_npc_id();
@@ -137,14 +135,12 @@ int merc_data_received(struct s_mercenary *merc, bool flag)
 		md->bl.m = sd->bl.m;
 		md->bl.x = sd->bl.x;
 		md->bl.y = sd->bl.y;
-		x = sd->bl.x + 1;
-		y = sd->bl.y + 1;
-		map_random_dir(&md->bl, &x, &y);
-		md->bl.x = x;
-		md->bl.y = y;
+		unit_calc_pos(&md->bl, sd->bl.x, sd->bl.y, sd->ud.dir);
+		md->bl.x = md->ud.to_x;
+		md->bl.y = md->ud.to_y;
 
 		map_addiddb(&md->bl);
-		// status_calc_mercenary(md,1);
+		status_calc_mercenary(md,1);
 	}
 	else
 		memcpy(&sd->md->mercenary, merc, sizeof(struct s_mercenary));
@@ -719,8 +715,6 @@ int merc_hom_alloc(struct map_session_data *sd, struct s_homunculus *hom)
 {
 	struct homun_data *hd;
 	int i = 0;
-	short x,y;
-
 	nullpo_retr(1, sd);
 
 	Assert((sd->status.hom_id == 0 || sd->hd == 0) || sd->hd->master == sd); 
@@ -750,11 +744,9 @@ int merc_hom_alloc(struct map_session_data *sd, struct s_homunculus *hom)
 	hd->bl.m = sd->bl.m;
 	hd->bl.x = sd->bl.x;
 	hd->bl.y = sd->bl.y;
-	x = sd->bl.x + 1;
-	y = sd->bl.y + 1;
-	map_random_dir(&hd->bl, &x, &y);
-	hd->bl.x = x;
-	hd->bl.y = y;
+	unit_calc_pos(&hd->bl, sd->bl.x, sd->bl.y, sd->ud.dir);
+	hd->bl.x = hd->ud.to_x;
+	hd->bl.y = hd->ud.to_y;
 	
 	map_addiddb(&hd->bl);
 	status_calc_homunculus(hd,1);

@@ -595,9 +595,9 @@ enum scb_flag
 };
 
 //Define to determine who gets HP/SP consumed on doing skills/etc. [Skotlex]
-#define BL_CONSUME (BL_PC|BL_HOM)
+#define BL_CONSUME (BL_PC|BL_HOM|BL_MER)
 //Define to determine who has regen
-#define BL_REGEN (BL_PC|BL_HOM)
+#define BL_REGEN (BL_PC|BL_HOM|BL_MER)
 
 
 //Basic damage info of a weapon
@@ -802,6 +802,7 @@ int status_calc_pet(struct pet_data* pd, int first); // [Skotlex]
 int status_calc_pc(struct map_session_data* sd,int first);
 int status_calc_mob(struct mob_data* md, int first); //[Skotlex]
 int status_calc_homunculus(struct homun_data *hd, int first);
+int status_calc_mercenary(struct mercenary_data *md, int first);
 void status_calc_misc(struct block_list *bl, struct status_data *status, int level);
 void status_calc_regen(struct block_list *bl, struct status_data *status, struct regen_data *regen);
 void status_calc_regen_rate(struct block_list *bl, struct regen_data *regen, struct status_change *sc);

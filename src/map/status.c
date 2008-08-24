@@ -1247,7 +1247,7 @@ static unsigned short status_base_atk(struct block_list *bl, struct status_data 
 void status_calc_misc(struct block_list *bl, struct status_data *status, int level)
 {
 	//Non players get the value set, players need to stack with previous bonuses.
-	if (bl->type != BL_PC)
+	if( bl->type != BL_PC )
 		status->batk = 
 		status->hit = status->flee =
 		status->def2 = status->mdef2 =
@@ -1261,7 +1261,7 @@ void status_calc_misc(struct block_list *bl, struct status_data *status, int lev
 	status->def2 += status->vit;
 	status->mdef2 += status->int_ + (status->vit>>1);
 
-	if (bl->type&battle_config.enable_critical)
+	if( bl->type&battle_config.enable_critical )
 		status->cri += status->luk*3 + 10;
 	else
 		status->cri = 0;
@@ -2374,6 +2374,31 @@ int status_calc_pc(struct map_session_data* sd,int first)
 	return 0;
 }
 
+int status_calc_mercenary(struct mercenary_data *md, int first)
+{
+	struct status_data *status;
+	struct s_mercenary *merc;
+
+	status = &md->base_status;
+	merc = &md->mercenary;
+
+	if( first )
+	{
+		memcpy(status, &md->db->status, sizeof(struct status_data));
+		status->mode = MD_CANMOVE|MD_CANATTACK;
+		status->hp = status->max_hp;
+		status->sp = status->max_sp;
+		md->battle_status.hp = merc->hp;
+		md->battle_status.sp = merc->sp;
+	}
+
+	status_calc_misc(&md->bl, status, md->db->lv);
+	status_cpy(&md->base_status, status);
+	status_calc_bl(&md->bl, SCB_ALL);
+		
+	return 0;
+}
+
 int status_calc_homunculus(struct homun_data *hd, int first)
 {
 	struct status_data b_status, *status;
@@ -2490,30 +2515,30 @@ void status_calc_regen(struct block_list *bl, struct status_data *status, struct
 	struct map_session_data *sd;
 	int val, skill;
 
-	if (!(bl->type&BL_REGEN) || !regen)
+	if( !(bl->type&BL_REGEN) || !regen )
 		return;
-	sd = BL_CAST(BL_PC,bl);
 
+	sd = BL_CAST(BL_PC,bl);
 	val = 1 + (status->vit/5) + (status->max_hp/200);
 
-	if (sd && sd->hprecov_rate != 100)
+	if( sd && sd->hprecov_rate != 100 )
 		val = val*sd->hprecov_rate/100;
 
 	regen->hp = cap_value(val, 1, SHRT_MAX);
 
 	val = 1 + (status->int_/6) + (status->max_sp/100);
-	if(status->int_ >= 120)
+	if( status->int_ >= 120 )
 		val += ((status->int_-120)>>1) + 4;
 
-	if(sd && sd->sprecov_rate != 100)
+	if( sd && sd->sprecov_rate != 100 )
 		val = val*sd->sprecov_rate/100;
 
 	regen->sp = cap_value(val, 1, SHRT_MAX);
 
-	if(sd)
+	if( sd )
 	{
 		struct regen_data_sub *sregen;
-		if((skill=pc_checkskill(sd,HP_MEDITATIO)) > 0)
+		if( (skill=pc_checkskill(sd,HP_MEDITATIO)) > 0 )
 		{
 			val = regen->sp*(100+3*skill)/100;
 			regen->sp = cap_value(val, 1, SHRT_MAX);
@@ -2522,14 +2547,14 @@ void status_calc_regen(struct block_list *bl, struct status_data *status, struct
 		sregen = regen->sregen;
 
 		val = 0;
-		if((skill=pc_checkskill(sd,SM_RECOVERY)) > 0)
+		if( (skill=pc_checkskill(sd,SM_RECOVERY)) > 0 )
 			val += skill*5 + skill*status->max_hp/500;
 		sregen->hp = cap_value(val, 0, SHRT_MAX);
 
 		val = 0;
-		if((skill=pc_checkskill(sd,MG_SRECOVERY)) > 0)
+		if( (skill=pc_checkskill(sd,MG_SRECOVERY)) > 0 )
 			val += skill*3 + skill*status->max_sp/500;
-		if((skill=pc_checkskill(sd,NJ_NINPOU)) > 0)
+		if( (skill=pc_checkskill(sd,NJ_NINPOU)) > 0 )
 			val += skill*3 + skill*status->max_sp/500;
 		sregen->sp = cap_value(val, 0, SHRT_MAX);
 
@@ -2537,38 +2562,46 @@ void status_calc_regen(struct block_list *bl, struct status_data *status, struct
 		sregen = regen->ssregen;
 
 		val = 0;
-		if((skill=pc_checkskill(sd,MO_SPIRITSRECOVERY)) > 0)
+		if( (skill=pc_checkskill(sd,MO_SPIRITSRECOVERY)) > 0 )
 			val += skill*4 + skill*status->max_hp/500;
 
-		if((skill=pc_checkskill(sd,TK_HPTIME)) > 0 && sd->state.rest)
+		if( (skill=pc_checkskill(sd,TK_HPTIME)) > 0 && sd->state.rest )
 			val += skill*30 + skill*status->max_hp/500;
 		sregen->hp = cap_value(val, 0, SHRT_MAX);
 
 		val = 0;
-		if((skill=pc_checkskill(sd,TK_SPTIME)) > 0 && sd->state.rest)
+		if( (skill=pc_checkskill(sd,TK_SPTIME)) > 0 && sd->state.rest )
 		{
 			val += skill*3 + skill*status->max_sp/500;
 			if ((skill=pc_checkskill(sd,SL_KAINA)) > 0) //Power up Enjoyable Rest
 				val += (30+10*skill)*val/100;
 		}
-		if((skill=pc_checkskill(sd,MO_SPIRITSRECOVERY)) > 0)
+		if( (skill=pc_checkskill(sd,MO_SPIRITSRECOVERY)) > 0 )
 			val += skill*2 + skill*status->max_sp/500;
 		sregen->sp = cap_value(val, 0, SHRT_MAX);
 	}
 
-	if(bl->type==BL_HOM)
+	if( bl->type == BL_HOM )
 	{
 		struct homun_data *hd = (TBL_HOM*)bl;
-		if((skill=merc_hom_checkskill(hd,HAMI_SKIN)) > 0)
+		if( (skill = merc_hom_checkskill(hd,HAMI_SKIN)) > 0 )
 		{
 			val = regen->hp*(100+5*skill)/100;
 			regen->hp = cap_value(val, 1, SHRT_MAX);
 		}
-		if((skill = merc_hom_checkskill(hd,HLIF_BRAIN)) > 0)
+		if( (skill = merc_hom_checkskill(hd,HLIF_BRAIN)) > 0 )
 		{
 			val = regen->sp*(100+3*skill)/100;
 			regen->sp = cap_value(val, 1, SHRT_MAX);
 		}
+	}
+	else if( bl->type == BL_MER )
+	{
+		val = (status->max_hp * status->vit / 10000 + 1) * 6;
+		regen->hp = cap_value(val, 1, SHRT_MAX);
+
+		val = (status->max_sp * (status->int_ + 10) / 750) + 1;
+		regen->sp = cap_value(val, 1, SHRT_MAX);
 	}
 }
 
@@ -4057,6 +4090,7 @@ struct regen_data *status_get_regen_data(struct block_list *bl)
 	switch (bl->type) {
 		case BL_PC:  return &((TBL_PC*)bl)->regen;
 		case BL_HOM: return &((TBL_HOM*)bl)->regen;
+		case BL_MER: return &((TBL_MER*)bl)->regen;
 		default:
 			return NULL;
 	}
@@ -4071,6 +4105,7 @@ struct status_data *status_get_status_data(struct block_list *bl)
 		case BL_MOB: return &((TBL_MOB*)bl)->status;
 		case BL_PET: return &((TBL_PET*)bl)->status;
 		case BL_HOM: return &((TBL_HOM*)bl)->battle_status;
+		case BL_MER: return &((TBL_MER*)bl)->battle_status;
 		default:
 			return &dummy_status;
 	}
@@ -4084,6 +4119,7 @@ struct status_data *status_get_base_status(struct block_list *bl)
 		case BL_MOB: return ((TBL_MOB*)bl)->base_status ? ((TBL_MOB*)bl)->base_status : &((TBL_MOB*)bl)->db->status;
 		case BL_PET: return &((TBL_PET*)bl)->db->status;
 		case BL_HOM: return &((TBL_HOM*)bl)->base_status;
+		case BL_MER: return &((TBL_MER*)bl)->base_status;
 		default:
 			return NULL;
 	}
@@ -4132,6 +4168,10 @@ int status_get_party_id(struct block_list *bl)
 	case BL_HOM:
 		if (((TBL_HOM*)bl)->master)
 			return ((TBL_HOM*)bl)->master->status.party_id;
+		break;
+	case BL_MER:
+		if (((TBL_MER*)bl)->master)
+			return ((TBL_MER*)bl)->master->status.party_id;
 		break;
 	case BL_SKILL:
 		return ((TBL_SKILL*)bl)->group->party_id;
