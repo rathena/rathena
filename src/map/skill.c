@@ -42,10 +42,10 @@
 // ranges reserved for mapping skill ids to skilldb offsets
 #define GD_SKILLRANGEMIN 900
 #define GD_SKILLRANGEMAX GD_SKILLRANGEMIN+MAX_GUILDSKILL
-#define HM_SKILLRANGEMIN 800
-#define HM_SKILLRANGEMAX HM_SKILLRANGEMIN+MAX_HOMUNSKILL
-#define MC_SKILLRANGEMIN 700
+#define MC_SKILLRANGEMIN 800
 #define MC_SKILLRANGEMAX MC_SKILLRANGEMIN+MAX_MERCSKILL
+#define HM_SKILLRANGEMIN 700
+#define HM_SKILLRANGEMAX HM_SKILLRANGEMIN+MAX_HOMUNSKILL
 
 static struct eri *skill_unit_ers = NULL; //For handling skill_unit's [Skotlex]
 static struct eri *skill_timer_ers = NULL; //For handling skill_timerskills [Skotlex]
@@ -86,11 +86,11 @@ int skill_get_index( int id )
 	if( id >= GD_SKILLBASE )
 		id = GD_SKILLRANGEMIN + id - GD_SKILLBASE;
 	else
-	if( id >= HM_SKILLBASE )
-		id = HM_SKILLRANGEMIN + id - HM_SKILLBASE;
-	else
 	if( id >= MC_SKILLBASE )
 		id = MC_SKILLRANGEMIN + id - MC_SKILLBASE;
+	else
+	if( id >= HM_SKILLBASE )
+		id = HM_SKILLRANGEMIN + id - HM_SKILLBASE;
 	else
 		; // identity
 
