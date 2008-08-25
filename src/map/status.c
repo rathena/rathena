@@ -7367,10 +7367,10 @@ static int status_natural_heal(struct block_list* bl, va_list args)
 		rate = natural_heal_diff_tick*(regen->rate.hp+bonus);
 		if (ud && ud->walktimer != -1)
 			rate/=2;
-		regen->tick.hp += rate;
+		// Homun HP regen fix (they should regen as if they were sitting (twice as fast) 
+		if(bl->type==BL_HOM) rate *=2;
 
-		// Homun HP regen fix (they should regen as if they were sitting (twice as fast)
-		if(bl->type==BL_HOM) regen->tick.hp *=2;
+		regen->tick.hp += rate;
 		
 		if(regen->tick.hp >= (unsigned int)battle_config.natural_healhp_interval)
 		{
@@ -7387,10 +7387,11 @@ static int status_natural_heal(struct block_list* bl, va_list args)
 	//Natural SP regen
 	if(flag&RGN_SP)
 	{
-		regen->tick.sp += natural_heal_diff_tick*(regen->rate.sp+bonus);
+		rate = natural_heal_diff_tick*(regen->rate.sp+bonus)
+		// Homun SP regen fix (they should regen as if they were sitting (twice as fast) 
+		if(bl->type==BL_HOM) rate *=2;
 
-		// Homun HP regen fix (they should regen as if they were sitting (twice as fast)
-		if(bl->type==BL_HOM) regen->tick.sp *=2;
+		regen->tick.sp += rate;
 		
 		if(regen->tick.sp >= (unsigned int)battle_config.natural_healsp_interval)
 		{
