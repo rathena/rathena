@@ -10,6 +10,7 @@ struct guild_member;
 struct guild_position;
 struct s_pet;
 struct s_homunculus;
+struct s_mercenary;
 struct mail_message;
 struct auction_data;
 

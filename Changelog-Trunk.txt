@@ -4,7 +4,7 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2008/08/25
-	* Fixed: compiler warning in admin.c [akrus]
+	* Fixed: several compiler warnings [akrus]
 2008/08/20
 	* Rev. 13098 Implemented Brainstorm's and SketchyPhoenix's fixes for Flying side kick. [L0ne_W0lf]
 	- Skill will now remove KA-type statuses and not remove stalker's link while preserved.

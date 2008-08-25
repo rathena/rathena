@@ -8384,7 +8384,7 @@ int skill_delayfix (struct block_list *bl, int skill_id, int skill_lv)
 {
 	int delaynodex = skill_get_delaynodex(skill_id, skill_lv);
 	int time = skill_get_delay(skill_id, skill_lv);
-	struct map_session_data *sd = BL_CAST(BL_PC, bl);
+	//struct map_session_data *sd = BL_CAST(BL_PC, bl);
 	struct status_change *sc = status_get_sc(bl);
 
 	nullpo_retr(0, bl);
