@@ -84,9 +84,7 @@ bool ladmin_auth(struct login_session_data* sd, const char* ip)
 //---------------------------------------
 int parse_admin(int fd)
 {
-	unsigned int i, j;
 	char* account_name;
-	struct mmo_account acc;
 
 	uint32 ipl = session[fd]->client_addr;
 	char ip[16];
