@@ -41,6 +41,7 @@
 
 =======================
 2008/08/25
+	* Rev. 13133 Corrected Spear and Swordman mercenary scrolls again. [L0ne_W0lf]
 	* Rev. 13132 Corrected Spear and Swordman mercenary summoning scrolls. [L0ne_W0lf]
 2008/08/21
 	* Rev. 13105 Archer and Knight guardians (WoE 1.0) will no longer detect hidden. [L0ne_W0lf]

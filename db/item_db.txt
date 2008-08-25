@@ -3508,26 +3508,26 @@
 12160,Bow_Mercenary_Scroll8,Archer Mercenary Summon Scroll Level 8,2,2,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ createmercenary 6024,1800000; },{},{}
 12161,Bow_Mercenary_Scroll9,Archer Mercenary Summon Scroll Level 9,2,2,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ createmercenary 6025,1800000; },{},{}
 12162,Bow_Mercenary_Scroll10,Archer Mercenary Summon Scroll Level 10,2,2,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ createmercenary 6026,1800000; },{},{}
-12163,SwordMercenary_Scroll1,Swordsman Mercenary Summon Scroll Level 1,2,2,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ createmercenary 6036,1800000; },{},{}
-12164,SwordMercenary_Scroll2,Swordsman Mercenary Summon Scroll Level 2,2,2,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ createmercenary 6037,1800000; },{},{}
-12165,SwordMercenary_Scroll3,Swordsman Mercenary Summon Scroll Level 3,2,2,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ createmercenary 6028,1800000; },{},{}
-12166,SwordMercenary_Scroll4,Swordsman Mercenary Summon Scroll Level 4,2,2,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ createmercenary 6039,1800000; },{},{}
-12167,SwordMercenary_Scroll5,Swordsman Mercenary Summon Scroll Level 5,2,2,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ createmercenary 6040,1800000; },{},{}
-12168,SwordMercenary_Scroll6,Swordsman Mercenary Summon Scroll Level 6,2,2,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ createmercenary 6041,1800000; },{},{}
-12169,SwordMercenary_Scroll7,Swordsman Mercenary Summon Scroll Level 7,2,2,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ createmercenary 6042,1800000; },{},{}
-12170,SwordMercenary_Scroll8,Swordsman Mercenary Summon Scroll Level 8,2,2,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ createmercenary 6043,1800000; },{},{}
-12171,SwordMercenary_Scroll9,Swordsman Mercenary Summon Scroll Level 9,2,2,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ createmercenary 6044,1800000; },{},{}
-12172,SwordMercenary_Scroll10,Swordsman Mercenary Summon Scroll Level 10,2,2,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ createmercenary 6045,1800000; },{},{}
-12173,SpearMercenary_Scroll1,Spearman Mercenary Summon Scroll Level 1,2,2,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ createmercenary 6026,1800000; },{},{}
-12174,SpearMercenary_Scroll2,Spearman Mercenary Summon Scroll Level 2,2,2,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ createmercenary 6027,1800000; },{},{}
-12175,SpearMercenary_Scroll3,Spearman Mercenary Summon Scroll Level 3,2,2,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ createmercenary 6028,1800000; },{},{}
-12176,SpearMercenary_Scroll4,Spearman Mercenary Summon Scroll Level 4,2,2,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ createmercenary 6029,1800000; },{},{}
-12177,SpearMercenary_Scroll5,Spearman Mercenary Summon Scroll Level 5,2,2,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ createmercenary 6030,1800000; },{},{}
-12178,SpearMercenary_Scroll6,Spearman Mercenary Summon Scroll Level 6,2,2,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ createmercenary 6031,1800000; },{},{}
-12179,SpearMercenary_Scroll7,Spearman Mercenary Summon Scroll Level 7,2,2,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ createmercenary 6032,1800000; },{},{}
-12180,SpearMercenary_Scroll8,Spearman Mercenary Summon Scroll Level 8,2,2,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ createmercenary 6033,1800000; },{},{}
-12181,SpearMercenary_Scroll9,Spearman Mercenary Summon Scroll Level 9,2,2,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ createmercenary 6034,1800000; },{},{}
-12182,SpearMercenary_Scroll10,Spearman Mercenary Summon Scroll Level 10,2,2,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ createmercenary 6035,1800000; },{},{}
+12163,SwordMercenary_Scroll1,Swordsman Mercenary Summon Scroll Level 1,2,2,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ createmercenary 6037,1800000; },{},{}
+12164,SwordMercenary_Scroll2,Swordsman Mercenary Summon Scroll Level 2,2,2,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ createmercenary 6038,1800000; },{},{}
+12165,SwordMercenary_Scroll3,Swordsman Mercenary Summon Scroll Level 3,2,2,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ createmercenary 6039,1800000; },{},{}
+12166,SwordMercenary_Scroll4,Swordsman Mercenary Summon Scroll Level 4,2,2,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ createmercenary 6040,1800000; },{},{}
+12167,SwordMercenary_Scroll5,Swordsman Mercenary Summon Scroll Level 5,2,2,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ createmercenary 6041,1800000; },{},{}
+12168,SwordMercenary_Scroll6,Swordsman Mercenary Summon Scroll Level 6,2,2,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ createmercenary 6042,1800000; },{},{}
+12169,SwordMercenary_Scroll7,Swordsman Mercenary Summon Scroll Level 7,2,2,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ createmercenary 6043,1800000; },{},{}
+12170,SwordMercenary_Scroll8,Swordsman Mercenary Summon Scroll Level 8,2,2,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ createmercenary 6044,1800000; },{},{}
+12171,SwordMercenary_Scroll9,Swordsman Mercenary Summon Scroll Level 9,2,2,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ createmercenary 6045,1800000; },{},{}
+12172,SwordMercenary_Scroll10,Swordsman Mercenary Summon Scroll Level 10,2,2,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ createmercenary 6046,1800000; },{},{}
+12173,SpearMercenary_Scroll1,Spearman Mercenary Summon Scroll Level 1,2,2,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ createmercenary 6027,1800000; },{},{}
+12174,SpearMercenary_Scroll2,Spearman Mercenary Summon Scroll Level 2,2,2,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ createmercenary 6028,1800000; },{},{}
+12175,SpearMercenary_Scroll3,Spearman Mercenary Summon Scroll Level 3,2,2,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ createmercenary 6029,1800000; },{},{}
+12176,SpearMercenary_Scroll4,Spearman Mercenary Summon Scroll Level 4,2,2,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ createmercenary 6030,1800000; },{},{}
+12177,SpearMercenary_Scroll5,Spearman Mercenary Summon Scroll Level 5,2,2,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ createmercenary 6031,1800000; },{},{}
+12178,SpearMercenary_Scroll6,Spearman Mercenary Summon Scroll Level 6,2,2,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ createmercenary 6032,1800000; },{},{}
+12179,SpearMercenary_Scroll7,Spearman Mercenary Summon Scroll Level 7,2,2,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ createmercenary 6033,1800000; },{},{}
+12180,SpearMercenary_Scroll8,Spearman Mercenary Summon Scroll Level 8,2,2,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ createmercenary 6034,1800000; },{},{}
+12181,SpearMercenary_Scroll9,Spearman Mercenary Summon Scroll Level 9,2,2,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ createmercenary 6035,1800000; },{},{}
+12182,SpearMercenary_Scroll10,Spearman Mercenary Summon Scroll Level 10,2,2,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ createmercenary 6036,1800000; },{},{}
 12183,Holy_Arrow_Quiver,Holy Arrow Quiver,2,2,,250,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 1772,500; },{},{}
 12184,Mercenary_Red_Potion,Mercenary's Red Potion,2,500,,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12185,Mercenary_Blue_Potion,Mercenary's Blue Potion,2,1000,,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
