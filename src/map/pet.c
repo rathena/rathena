@@ -334,39 +334,39 @@ int pet_data_init(struct map_session_data *sd, struct s_pet *pet)
 		return 1;
 	}
 	sd->pd = pd = (struct pet_data *)aCalloc(1,sizeof(struct pet_data));
+	pd->bl.type = BL_PET;
+	pd->bl.id = npc_get_new_npc_id();
+
+	pd->msd = sd;
 	pd->petDB = &pet_db[i];
+	pd->db = mob_db(pet->class_);
 	memcpy(&pd->pet, pet, sizeof(struct s_pet));
+	status_set_viewdata(&pd->bl, pet->class_);
+	unit_dataset(&pd->bl);
+	pd->ud.dir = sd->ud.dir;
+
 	pd->bl.m = sd->bl.m;
 	pd->bl.x = sd->bl.x;
 	pd->bl.y = sd->bl.y;
 	unit_calc_pos(&pd->bl, sd->bl.x, sd->bl.y, sd->ud.dir);
 	pd->bl.x = pd->ud.to_x;
 	pd->bl.y = pd->ud.to_y;
-	pd->bl.id = npc_get_new_npc_id();
-	pd->db = mob_db(pet->class_);
-	pd->bl.type = BL_PET;
-	pd->msd = sd;
-	status_set_viewdata(&pd->bl, pet->class_);
-	unit_dataset(&pd->bl);
-	pd->ud.dir = sd->ud.dir;
-	pd->last_thinktime = gettick();
 
 	map_addiddb(&pd->bl);
-
-	// initialise
 	status_calc_pet(pd,1);
 
+	pd->last_thinktime = gettick();
 	pd->state.skillbonus = 0;
-	if (battle_config.pet_status_support) //Skotlex
+	if( battle_config.pet_status_support )
 		run_script(pet_db[i].script,0,sd->bl.id,0);
 
-	if(battle_config.pet_hungry_delay_rate != 100)
+	if( battle_config.pet_hungry_delay_rate != 100 )
 		interval = (pd->petDB->hungry_delay*battle_config.pet_hungry_delay_rate)/100;
 	else
 		interval = pd->petDB->hungry_delay;
-	if(interval <= 0)
+	if( interval <= 0 )
 		interval = 1;
-	pd->pet_hungry_timer = add_timer(gettick()+interval,pet_hungry,sd->bl.id,0);
+	pd->pet_hungry_timer = add_timer(gettick() + interval, pet_hungry, sd->bl.id, 0);
 	return 0;
 }
 
