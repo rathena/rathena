@@ -7387,7 +7387,7 @@ static int status_natural_heal(struct block_list* bl, va_list args)
 	//Natural SP regen
 	if(flag&RGN_SP)
 	{
-		rate = natural_heal_diff_tick*(regen->rate.sp+bonus)
+		rate = natural_heal_diff_tick*(regen->rate.sp+bonus);
 		// Homun SP regen fix (they should regen as if they were sitting (twice as fast) 
 		if(bl->type==BL_HOM) rate *=2;
 
