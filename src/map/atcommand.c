@@ -6609,7 +6609,7 @@ int atcommand_adjgmlvl(const int fd, struct map_session_data* sd, const char* co
 		return -1;
 	}
 
-	sd->gmlevel = newlev;
+	pl_sd->gmlevel = newlev;
 
     return 0;
 }
