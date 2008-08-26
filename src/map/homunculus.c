@@ -594,7 +594,6 @@ int merc_hom_alloc(struct map_session_data *sd, struct s_homunculus *hom)
 {
 	struct homun_data *hd;
 	int i = 0;
-	short x,y;
 
 	nullpo_retr(1, sd);
 
