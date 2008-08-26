@@ -30,7 +30,7 @@
 #include "trade.h"
 #include "unit.h"
 
-#include "mercenary.h"
+#include "homunculus.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -625,11 +625,9 @@ int merc_hom_alloc(struct map_session_data *sd, struct s_homunculus *hom)
 	hd->bl.m = sd->bl.m;
 	hd->bl.x = sd->bl.x;
 	hd->bl.y = sd->bl.y;
-	x = sd->bl.x + 1;
-	y = sd->bl.y + 1;
-	map_random_dir(&hd->bl, &x, &y);
-	hd->bl.x = x;
-	hd->bl.y = y;
+	unit_calc_pos(&hd->bl, sd->bl.x, sd->bl.y, sd->ud.dir);
+	hd->bl.x = hd->ud.to_x;
+	hd->bl.y = hd->ud.to_y;
 	
 	map_addiddb(&hd->bl);
 	status_calc_homunculus(hd,1);

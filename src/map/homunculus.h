@@ -1,8 +1,8 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _MERCENARY_H_
-#define _MERCENARY_H_
+#ifndef _HOMUNCULUS_H_
+#define _HOMUNCULUS_H_
 
 #include "status.h" // struct status_data, struct status_change
 #include "unit.h" // struct unit_data
@@ -30,7 +30,6 @@ enum {
 	SP_HUNGRY 		= 0x200
 };
 
-
 struct homun_data {
 	struct block_list bl;
 	struct unit_data  ud;
@@ -39,7 +38,7 @@ struct homun_data {
 	struct status_change sc;
 	struct regen_data regen;
 	struct s_homunculus_db *homunculusDB;	//[orn]
-	struct s_homunculus homunculus ;	//[orn]
+	struct s_homunculus homunculus;	//[orn]
 
 	struct map_session_data *master; //pointer back to its master
 	int hungry_timer;	//[orn]
@@ -87,4 +86,4 @@ void merc_hom_init_timers(struct homun_data * hd);
 void merc_skill_reload(void);
 void merc_reload(void);
 
-#endif /* _MERCENARY_H_ */
+#endif /* _HOMUNCULUS_H_ */
