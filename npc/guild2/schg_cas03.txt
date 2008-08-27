@@ -1195,7 +1195,7 @@ OnBarrierDestroyed:
 schg_cas03,2,2,0	script	#sch03_RL01	-1,{
 OnEnable:
 	set .MyMobCount,6;
-	setcell "schg_cas03",325,227,332,227,cell_walkable,0;
+	setcell "schg_cas03",325,277,332,277,cell_walkable,0;
 	guardian "schg_cas03",326,278," ",1905,"#sch03_RL01::OnBarrierDestroyed"; //27;
 	guardian "schg_cas03",328,278," ",1905,"#sch03_RL01::OnBarrierDestroyed"; //28;
 	guardian "schg_cas03",330,278," ",1905,"#sch03_RL01::OnBarrierDestroyed"; //29;

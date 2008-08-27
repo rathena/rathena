@@ -6002,8 +6002,8 @@ kh_kiehl01,17,39,0	script	Receiver#kh	111,{
 		}
 		close2;
 		set .KHKilled,2;
-		monster "kh_kiehl01",16,32,"Alicel",1739,1,"Receiver::OnMyMobDead";
-		monster "kh_kiehl01",18,31,"Aliot",1740,1,"Receiver::OnMyMobDead";
+		monster "kh_kiehl01",16,32,"Alicel",1739,1,"Receiver#kh::OnMyMobDead";
+		monster "kh_kiehl01",18,31,"Aliot",1740,1,"Receiver#kh::OnMyMobDead";
 		end;
 	}
 
