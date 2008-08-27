@@ -5,6 +5,7 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2008/08/26
 	* Fixed @agjgmlvl bug preventing its use on other players. (bugreport:2124) [SketchyPhoenix]
+	* pc_isGM() checks in gm_cant_party config checks will now check against being lower or higher than lowest_gm_level config.
 2008/08/25
 	* Fixed homun sp regen bug introduced on r12953 bugreport:2071 [Brain]
 	* Fixed: several compiler warnings [akrus]
