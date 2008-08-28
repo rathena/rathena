@@ -127,12 +127,14 @@ static bool account_db_txt_init(AccountDB* self)
 		if( line[0] == '/' && line[1] == '/' )
 			continue;
 
+		int n = 0;
 		if( sscanf(line, "%d%n", &v, &n) == 1 && (line[n] == '\n' || line[n] == '\r') )
 		{// format version definition
 			version = v;
 			continue;
 		}
 
+		int n = 0;
 		if( sscanf(line, "%d\t%%newid%%%n", &account_id, &n) == 1 && (line[n] == '\n' || line[n] == '\r') )
 		{// auto-increment
 			if( account_id > db->next_account_id )
