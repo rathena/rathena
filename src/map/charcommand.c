@@ -928,7 +928,7 @@ int charcommand_cash(const int fd, struct map_session_data* sd, const char* comm
 			if( value > 0 )
 				pc_getcash(pl_sd, value, 0);
 			else
-				pc_paycash(pl_sd, value, 0);
+				pc_paycash(pl_sd, -value, 0);
 
 			clif_displaymessage(fd, "Character's Cash Points changed!.");
 		}
@@ -937,7 +937,7 @@ int charcommand_cash(const int fd, struct map_session_data* sd, const char* comm
 			if( value > 0 )
 				pc_getcash(pl_sd, 0, value);
 			else
-				pc_paycash(pl_sd, value, value);
+				pc_paycash(pl_sd, -value, -value);
 
 			clif_displaymessage(fd, "Character's Kafra Points changed!.");
 		}

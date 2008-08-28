@@ -7960,14 +7960,14 @@ int atcommand_cash(const int fd, struct map_session_data* sd, const char* comman
 		if( value > 0 )
 			pc_getcash(sd, value, 0);
 		else
-			pc_paycash(sd, value, 0);
+			pc_paycash(sd, -value, 0);
 	}
 	else
 	{ // @points
 		if( value > 0 )
 			pc_getcash(sd, 0, value);
 		else
-			pc_paycash(sd, value, value);
+			pc_paycash(sd, -value, -value);
 	}
 
 	return 0;
