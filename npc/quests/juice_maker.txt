@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= kobra_k88
 //===== Current Version: =====================================
-//= 2,0
+//= 2.1
 //===== Compatible With: =====================================
 //= eAthena SVN
 //===== Description: =========================================
@@ -15,6 +15,7 @@
 //= 1.9 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
 //=	Added tracking variables in, which are unset when complete.
 //= 2.0 Added missing checkweight. [L0ne_W0lf]
+//= 2.1 Fixed dialog for if your missing the needed items (He always said the dialog for grape juice). [Kisuka]
 //============================================================
 
 prt_in,49,172,3	script	Marianne#juice	53,{
@@ -214,7 +215,7 @@ payon_in03,188,146,5	script	Marx Hansen#juice	86,{
 			if (countitem(.@fruit) == 0 || countitem(713) == 0 || Zeny < 3) {
 				mes "[Merchant Marx Hansen]";
 				mes "Oh no...";
-				mes "You don't have all the necessary materials. To make Grape Juice, I need 1 Grape and 1 Empty Bottle. I will also need a 3 zeny fee.";
+				mes "You don't have all the necessary materials. To make "+getitemname(.@juice)+", I need 1 "+getitemname(.@fruit)+" and 1 Empty Bottle. I will also need a 3 zeny fee.";
 				next;
 				mes "[Merchant Marx Hansen]";
 				mes "When you have prepared everything, I will blend the fruit to give you delicious juice.";
