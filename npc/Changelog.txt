@@ -1,5 +1,11 @@
 ﻿Date		Added
 ======
+2008/08/29
+	* Rev. 13152 Just fixing some reported script bug. [L0ne_W0lf]
+	- Fixed coordinate in level 60 arena. (bugreport:1663)
+	- Fixed errors in the Keil Hyre quest. (bugreport:2129)
+	- Fixed guild look ups in Arug_cas02. (bugreport:2134)
+	- Corrected treasure spawn in schg_cas03. (bugreport:2142)
 2008/08/20
 	* Rev. 13102 Follow up to r13091, fixed weight check in stone dismantler. [L0ne_W0lf]
 2008/08/19

@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf (Script), DZeroX (Timer)
 //===== Current Version: ===================================== 
-//= 4.1
+//= 4.2
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -88,6 +88,7 @@
 //=     Changed the way some NPCs work.
 //=     Updated comments for get/delitem commands.
 //= 4.1 Added an 'end;' to Kiel Hyre's dialog for the "Yes" option for if you want to confront Kiehl.
+//= 4.2 Fixed some issues reported in bugreport:2129. [L0ne_W0lf]
 //============================================================ 
 
 //============================================================================
@@ -447,7 +448,7 @@ yuno_in01,35,179,4	script	Pub Master#kh	46,5,5,{
 		mes "can complain about the delivery.";
 		close;
 	}
-	else if (KielHyreQuest > 6) {
+	else if (KielHyreQuest == 6) {
 		if (countitem(7487) == 0) {
 			mes "[Vandt]";
 			mes "Oh, you're back.";
@@ -492,7 +493,8 @@ yuno_in01,35,179,4	script	Pub Master#kh	46,5,5,{
 		mes "worker, you know that?";
 		mes "Dependable, responsible,";
 		mes "willing to help others, and";
-		mes "proactive too! I think you'll^FFFFFF ^000000 go far in life, kid, I really do~";
+		mes "proactive too! I think you'll";
+		mes "go far in life, kid, I really do~";
 		close;
 	}
 
@@ -2531,6 +2533,7 @@ kh_vila,14,55,0	script	Calabash#khp1	111,{
 			mes "feel around with your";
 			mes "fingers until you retrieve";
 			mes "an Old Bronze Key.^000000";
+			getitem 7329,1; //Old_Bronze_Key
 			close;
 		case 3:
 			mes "^3355FFThere's probably";
@@ -3344,7 +3347,7 @@ kh_dun01,235,48,0	script	Heavy Door#kh1::HeavyDoorKHQ1	111,{
 			close;
 		}
 	}
-	else if ((KielHyreQuest >= 38) && (KielHyreQuest < 46)) {
+	else if ((KielHyreQuest <= 38) && (KielHyreQuest > 46)) {
 		mes "^3355FFThere is a large, heavy";
 		mes "door in front of you.^000000";
 		next;
@@ -3386,7 +3389,7 @@ kh_dun01,235,48,0	script	Heavy Door#kh1::HeavyDoorKHQ1	111,{
 // Robotic's Factory; Heavy Door (These doors don't seem to serve any purpose)
 //----------------------------------------------------------------------------
 kh_dun01,76,233,0	script	Heavy Door::HeavyDoorKHQ2	111,{
-	if ((KielHyreQuest >= 38) && (KielHyreQuest < 46)) {
+	if ((KielHyreQuest <= 38) && (KielHyreQuest > 46)) {
 		mes "^3355FFThere is a large, heavy";
 		mes "door infront of you.^000000";
 		next;

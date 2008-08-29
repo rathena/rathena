@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
-//= 1.5
+//= 1.6
 //===== Compatible With: =====================================
 //= eAthena SVN
 //===== Description: =========================================
@@ -18,6 +18,7 @@
 //=     Made it so treasure won't spawn if castle is empty.
 //=     Treasure will now be killed before spawning.
 //= 1.5 Fixed error with control devices. [L0ne_W0lf]
+//= 1.6 Two small fixes. (aegis carry-overs) [L0ne_W0lf]
 //============================================================
 
 arug_cas02,1,1,0	script	Manager#aru02_02	111,{
@@ -2847,10 +2848,10 @@ aru_gld,120,83,5	script	Cyr#flag_Ar02_3	722,{
 		mes "The Holy Kingdom of";
 		mes "Arunafeltz decrees that";
 		mes "this stronghold is owned";
-		mes "by the ^FF0000" + guildName + "^000000 Guild.";
+		mes "by the ^FF0000" + getGuildName(.@GID) + "^000000 Guild.";
 		next;
 		mes "[ Arunafeltz Royal Edict ]";
-		mes "^FF0000" + guildMaster + "^000000 is";
+		mes "^FF0000" + getGuildMaster(.@GID) + "^000000 is";
 		mes "Guild Master of ^FF0000" + guildName + "^000000.";
 		mes "Any that object must claim this";
 		mes "stronghold through strength of";

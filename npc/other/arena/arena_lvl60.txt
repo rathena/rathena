@@ -3,13 +3,14 @@
 //===== By: ==================================================
 //= SinSloth
 //===== Current Version: =====================================
-//= 1.0
+//= 1.1
 //===== Compatible With: =====================================
 //= Any Athena Version
 //===== Description: =========================================
 //= Izlude Battle Arena Level 60
 //===== Additional Comments: =================================
 //= 1.0 First version.
+//= 1.1 Fixed coordinate typo. (bugreport:1663) [L0ne_W0lf]
 //============================================================
 
 arena_room,38,88,5	script	lvl 60s Waiting Room	124,{
@@ -434,7 +435,7 @@ Onreset:
 Onon:
 	donpcevent "force_01ex#60::Onon";
 	monster "force_2-1",25,32,"Goblin Archer",1577,1,"force_01mob#60::OnMobDeath";
-	monster "force_2-1",21,260,"Goblin",1534,1,"force_01mob#60::OnMobDeath";
+	monster "force_2-1",21,26,"Goblin",1534,1,"force_01mob#60::OnMobDeath";
 	monster "force_2-1",25,36,"Goblin",1536,1,"force_01mob#60::OnMobDeath";
 	monster "force_2-1",25,15,"Goblin",1534,1,"force_01mob#60::OnMobDeath";
 	monster "force_2-1",40,30,"Goblin",1536,1,"force_01mob#60::OnMobDeath";
