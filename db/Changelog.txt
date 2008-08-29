@@ -40,6 +40,8 @@
 	2385 Recuvative_Armor		Should trigger HP/SP return with magical kills as well.
 
 =======================
+2008/08/29
+	* Rev. 13153 Couple small corrections to the mob database. [L0ne_W0lf]
 2008/08/25
 	* Rev. 13133 Corrected Spear and Swordman mercenary scrolls again. [L0ne_W0lf]
 	* Rev. 13132 Corrected Spear and Swordman mercenary summoning scrolls. [L0ne_W0lf]
