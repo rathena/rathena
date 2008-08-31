@@ -3140,6 +3140,9 @@ int pc_isUseitem(struct map_session_data *sd,int n)
 			break;
 	}
 
+	if( nameid >= 12153 && nameid <= 12182 && sd->md != NULL )
+		return 0; // Mercenary Scrolls
+
 	//added item_noequip.txt items check by Maya&[Lupus]
 	if (
 		(map[sd->bl.m].flag.pvp && item->flag.no_equip&1) || // PVP
