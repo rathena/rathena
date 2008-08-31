@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf (Script), DZeroX (Timer)
 //===== Current Version: ===================================== 
-//= 4.2a
+//= 4.2b
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -89,7 +89,8 @@
 //=     Updated comments for get/delitem commands.
 //= 4.1 Added an 'end;' to Kiel Hyre's dialog for the "Yes" option for if you want to confront Kiehl.
 //= 4.2 Fixed some issues reported in bugreport:2129. [L0ne_W0lf]
-//= 3.2a Follow up to last update. [L0ne_W0lf]
+//= 4.2a Follow up to last update. [L0ne_W0lf]
+//= 4.2b Missed a condition, fixed it though. [L0ne_W0lf]
 //============================================================ 
 
 //============================================================================
@@ -3388,7 +3389,7 @@ kh_dun01,235,48,0	script	Heavy Door#kh1::HeavyDoorKHQ1	111,{
 // Robotic's Factory; Heavy Door (These doors don't seem to serve any purpose)
 //----------------------------------------------------------------------------
 kh_dun01,76,233,0	script	Heavy Door::HeavyDoorKHQ2	111,{
-	if ((KielHyreQuest <= 38) && (KielHyreQuest > 46)) {
+	if ((KielHyreQuest >= 38) && (KielHyreQuest < 46)) {
 		mes "^3355FFThere is a large, heavy";
 		mes "door infront of you.^000000";
 		next;
