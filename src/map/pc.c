@@ -3056,37 +3056,90 @@ int pc_isUseitem(struct map_session_data *sd,int n)
 	item = sd->inventory_data[n];
 	nameid = sd->status.inventory[n].nameid;
 
-	if(item == NULL)
+	if( item == NULL )
 		return 0;
 	//Not consumable item
-	if(item->type != IT_HEALING && item->type != IT_USABLE)
+	if( item->type != IT_HEALING && item->type != IT_USABLE )
 		return 0;
-	if(!item->script) //if it has no script, you can't really consume it!
-		return 0;
-	//Anodyne (can't use Anodyne's Endure at GVG)
-	if(nameid == 605 && map_flag_gvg(sd->bl.m))
-		return 0;
-	//Fly Wing/Giant Fly Wing (can't use at GVG and when noteleport flag is on)
-	if((nameid == 601 || nameid == 12212) && (map[sd->bl.m].flag.noteleport || map_flag_gvg(sd->bl.m))) {
-		clif_skill_teleportmessage(sd,0);
-		return 0;
-	}
-	//Fly Wing/Butterfly Wing/Giant Fly Wing (can't use when you in duel) [LuzZza]
-	if((nameid == 601 || nameid == 602 || nameid == 12212) && (!battle_config.duel_allow_teleport && sd->duel_group)) {
-		clif_displaymessage(sd->fd, "Duel: Can't use this item in duel.");
-		return 0;
-	}
-	//Butterfly Wing (can't use noreturn flag is on)
-	if(nameid == 602 && map[sd->bl.m].flag.noreturn)
-		return 0;
-	//Dead Branch & Red Pouch & Bloody Branch & Poring Box (can't use at GVG and when nobranch flag is on)
-	if((nameid == 604 || nameid == 12024 || nameid == 12103 || nameid == 12109) && (map[sd->bl.m].flag.nobranch || map_flag_gvg(sd->bl.m)))
+	if( !item->script ) //if it has no script, you can't really consume it!
 		return 0;
 
-	//Anodyne/Aleovera not usable while sitting.
-	if ((nameid == 605 || nameid == 606) && pc_issit(sd))
-		return 0;
-	  
+	switch( nameid )
+	{
+		case 605: // Anodyne
+			if( map_flag_gvg(sd->bl.m) )
+				return 0;
+		case 606:
+			if( pc_issit(sd) )
+				return 0;
+			break;
+		case 601: // Fly Wing
+		case 12212: // Giant Fly Wing
+			if( map[sd->bl.m].flag.noteleport || map_flag_gvg(sd->bl.m) || !guild_canescape(sd) )
+			{
+				clif_skill_teleportmessage(sd,0);
+				return 0;
+			}
+		case 602: // ButterFly Wing
+		case 14527: // Dungeon Teleport Scroll
+		case 14581: // Dungeon Teleport Scroll
+		case 14582: // Yellow Butterfly Wing
+		case 14583: // Green Butterfly Wing
+		case 14584: // Red Butterfly Wing
+		case 14585: // Blue Butterfly Wing
+		case 14591: // Siege Teleport Scroll
+			if( sd->duel_group && !battle_config.duel_allow_teleport )
+			{
+				clif_displaymessage(sd->fd, "Duel: Can't use this item in duel.");
+				return 0;
+			}
+			if( !guild_canescape(sd) )
+			{ // Guild Wars
+				clif_displaymessage(sd->fd, "Guild Wars: Cannot escape in battle");
+				return 0;
+			}
+			if( nameid != 601 && nameid != 12212 && map[sd->bl.m].flag.noreturn )
+				return 0;
+			break;
+		case 604: // Dead Branch
+		case 12024: // Red Pouch
+		case 12103: // Bloody Branch
+		case 12109: // Poring Box
+			if( map[sd->bl.m].flag.nobranch || map_flag_gvg(sd->bl.m) )
+				return 0;
+			break;
+		case 12210: // Bubble Gum
+		case 12264: // Comp Bubble Gum
+			if( sd->sc.data[SC_ITEMBOOST] )
+				return 0;
+			break;
+		case 12208: // Battle Manual
+		case 12263: // Comp Battle Manual
+		case 12312: // Thick Battle Manual
+		case 12705: // Noble Nameplate
+		case 14532: // Battle_Manual25
+		case 14533: // Battle_Manual100
+		case 14545: // Battle_Manual300
+			if( sd->sc.data[SC_EXPBOOST] )
+				return 0;
+			break;
+
+		// Mercenary Items
+
+		case 12184: // Mercenary's Red Potion
+		case 12185: // Mercenary's Blue Potion
+		case 12241: // Mercenary's Concentration Potion
+		case 12242: // Mercenary's Awakening Potion
+		case 12243: // Mercenary's Berserk Potion
+			if( sd->md == NULL || sd->md->db == NULL )
+				return 0;
+			if( nameid == 12242 && sd->md->db->lv < 40 )
+				return 0;
+			if( nameid == 12243 && sd->md->db->lv < 80 )
+				return 0;
+			break;
+	}
+
 	//added item_noequip.txt items check by Maya&[Lupus]
 	if (
 		(map[sd->bl.m].flag.pvp && item->flag.no_equip&1) || // PVP
