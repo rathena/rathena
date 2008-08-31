@@ -12815,6 +12815,37 @@ BUILDIN_FUNC(createmercenary)
 	return 0;
 }
 
+BUILDIN_FUNC(mercenary_heal)
+{
+	struct map_session_data *sd = script_rid2sd(st);
+	int hp, sp;
+
+	if( sd == NULL || sd->md == NULL )
+		return 0;
+	hp = script_getnum(st,2);
+	sp = script_getnum(st,3);
+
+	status_heal(&sd->md->bl, hp, sp, 0);	
+	return 0;
+}
+
+BUILDIN_FUNC(mercenary_sc_start)
+{
+	struct map_session_data *sd = script_rid2sd(st);
+	enum sc_type type;
+	int tick, val1;
+
+	if( sd == NULL || sd->md == NULL )
+		return 0;
+
+	type = (sc_type)script_getnum(st,2);
+	tick = script_getnum(st,3);
+	val1 = script_getnum(st,4);
+
+	status_change_start(&sd->md->bl, type, 10000, val1, 0, 0, 0, tick, 2);
+	return 0;
+}
+
 /******************
 Questlog script commands
 *******************/
@@ -13246,5 +13277,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(setwall,"siiiiis"),
 	BUILDIN_DEF(delwall,"s"),
 	BUILDIN_DEF(createmercenary,"ii"),
+	BUILDIN_DEF(mercenary_heal,"ii"),
+	BUILDIN_DEF(mercenary_sc_start,"iii"),
 	{NULL,NULL,NULL},
 };

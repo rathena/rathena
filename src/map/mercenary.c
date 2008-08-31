@@ -218,6 +218,14 @@ void mercenary_damage(struct mercenary_data *md, struct block_list *src, int hp,
 	clif_mercenary_updatestatus(md->master, SP_HP);
 }
 
+void mercenary_heal(struct mercenary_data *md, int hp, int sp)
+{
+	if( hp )
+		clif_mercenary_updatestatus(md->master, SP_HP);
+	if( sp )
+		clif_mercenary_updatestatus(md->master, SP_SP);
+}
+
 int mercenary_dead(struct mercenary_data *md, struct block_list *src)
 {
 	merc_delete(md, 1);

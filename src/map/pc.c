@@ -3602,8 +3602,8 @@ int pc_setpos(struct map_session_data* sd, unsigned short mapindex, int x, int y
 	if( sd->md )
 	{
 		sd->md->bl.m = m;
-		sd->md->bl.x = sd->hd->ud.to_x = x;
-		sd->md->bl.y = sd->hd->ud.to_y = y;
+		sd->md->bl.x = sd->md->ud.to_x = x;
+		sd->md->bl.y = sd->md->ud.to_y = y;
 		sd->md->ud.dir = sd->ud.dir;
 	}
 
