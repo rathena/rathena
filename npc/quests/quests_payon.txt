@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 
-//= 1.6
+//= 1.7
 //===== Compatible With: ===================================== 
 //= eAthena 7.15 +
 //===== Description: ========================================= 
@@ -17,6 +17,7 @@
 //= 1.5 Updated Dialogs from "Pretend Murdered Quest" [Samuray22]
 //= 1.5a replaced item "names" with item id. [Lupus]
 //= 1.6 Updated Dialogs from "Oxygen Mask Quest" [Samuray22]
+//= 1.7 Updated headgear quests. [L0ne_W0lf]
 //============================================================ 
 
 
@@ -24,245 +25,299 @@
 //==========================================================================================//
 //				Pretend Murdered quest
 //==========================================================================================//
-payon,154,170,4	script	Granny	78,{
-	if(countitem(1049) > 3 ) {
-		mes "[Granny in Payon]";
-		mes "Hey... Is this the item for Skirt of Virgin tHat my children will wear for the coming festival...";
-		mes "Could you give me some ^3355FF' Skirt of Virgin '^000000 for young girl... I need four of it... please ?";
-		mes "I am begging you, please!";
+payon_in01,99,72,4	script	Granny	103,{
+	if (checkweight(908,1) == 0) {
+		mes "^3355FFWait a second! Right now, you're carrying too many items with you. Please come back after putting some of your things into Kafra Storage.^000000";
+		close;
+	}
+	if (countitem(1049) > 3) {
+		mes "[Granny]";
+		mes "I wish I could make some clothing for my grandchildren for the festival season...";
 		next;
-		switch(select( "Give it to her.","No way!")) {
+		mes "[Granny]";
+		mes "Oh! Would you give me your ^3355FFSkirt of Virgin^000000? I'd need four of them. Please, I'm begging you.";
+		next;
+		switch(select("Alright.:No way!")) {
 		case 1:
-			delitem 1049,4;
-			mes "[Granny in Payon]";
-			mes "Uh-uh... Thank you very much! Now I can make Skirt of Virgin for my children.";
-			mes "Hey... Oh! Yeah! I was in a stage play when I was young...";
-			mes "This is the overcoat I kept when I left the troupe after I got married...";
+			delitem 1049,4;  //Skirt_Of_Virgin
+			mes "[Granny]";
+			mes "Oh! Thank you so much~ Now I can make some clothes for Kitty Cutty~";
 			next;
-			mes "[Granny in Payon]";
-			mes "Take it if you like it... please!";
-			mes "Good bye! Nice meeting you...";
-			getitem 2293,1;
+			mes "[Granny]";
+			mes "Ah, Wait! I almost forgot. I was quite a popular actress back in my youth. My actor friends gave me a wedding present when I left the Troupe. I've kept it to remind me of those precious times.";
+			next;
+			mes "[Granny]";
+			mes "If it's okay...";
+			mes "I'd like to give you this.";
+			next;
+			getitem 2293,1; // Pretend_Murdered
+			mes "[Granny]";
+			mes "Goodbye, adventurer~!";
+			mes "Thank you for making an old woman so happy...";
 			close;
 		case 2:
-			mes "[Granny in Payon]";
-			mes "Uh-uh... How can I get  ^3355FF'Skirt of Virgin '^000000 by myself... I am so weak and tired.";
-			mes "It's such a cold world...";
+			mes "[Granny]";
+			mes "*Sigh* How can I get ^3355FFSkirt of Virgin^000000 by myself? I'm just so weak and feeble, even rolling in my rocking chair exhausts me. *Sniff* All I want is to make my grandchildren happy...";
 			close;
 		}
 	}
-		mes "[Granny in Payon]";
-		mes "I gather Mushrooms on the Mountain of Payon Everyday for my living. I don't know how I will survive this month.";
-		mes "... But festive is coming next month!";
-		mes "My children requested for Skirt of Virgin for this festival.";
-		mes "For Skirt of Virgin, I need ^3355FF' Skirt of Virgin '^000000 ...";
+	else {
+		mes "[Granny]";
+		mes "I gather Mushrooms on the Mountain of Payon everyday. Time passes and before I know it, it's already fesitval season. I wish I could make clothing for my family this time of the year.";
 		next;
-		mes "[Granny in Payon]";
-		mes "Young man, I have a favor to ask... If you ever find ^3355FF' Skirt of Virgin '^000000... ";
-		mes "Please come back to me. I will never forget your kindness...";
+		mes "[Granny]";
+		mes "...";
+		mes "But for that, I need ^3355FF4 Skirt of Virgin^000000...";
+		next;
+		mes "[Granny]";
+		mes "Young traveler, please help me. When you find some ^3355FFSkirt of Virgin^000000, please bring them to me. I'd really appreciate it...";
 		close;
+	}
 }
-
 
 //========================================================================================//
 //					Ear Muffs Quest
 //========================================================================================//
-payon_in01,18,10,4	script	Mystic Lady	75,{
+payon_in01,18,10,4	script	Mystic Lady	76,{
 	mes "[Mystic Lady]";
-	mes "Hi there.";
+	mes "My family has produced and sold the special Winter product ^3355FFEar Muffs^000000 for many years. We just moved here, but the weather is always warm so we can hardly make a living.";
 	next;
-	menu "Hello.",-,"Please make me a pair of Ear Muffs.",M_Muffs, "End",M_End;
-
-		mes "[Mystic Lady]";
-		mes "My family and I recently came to Payon.";
-		mes "Where we came from the weather was very cold so we started a business hand making a special type of ^5555FF'Ear Muffs'^000000";
-		next;
-		mes "[Mystic Lady]";
-		mes "I have tried to continue the family business here in Payon but it has proven to be difficult because of the warm whether.";
-		next;
-		mes "[Mystic Lady]";
-		mes "Although the 'Ear Muffs' aren't very useful here, if you plan on going somewhere that's cold our 'Ear Muffs' are a must have.";
-		next;
-		mes "[Mystic Lady]";
-		mes "All I need are:";
-		mes "^5555FF1 Cursed Ruby,";
-		mes "1 Headset,";
-		mes "200 Feathers,";
-		mes "and a 5,000 zeny fee^000000 for my labor.";
-		next;
-		mes "[Mystic Lady]";
-		mes "With those items I can make you a pair of 'Ear Muffs'.  Believe me, they are of the highest quality and look good on just about anybody!";
-		close;
-	
-	M_Muffs:
-		if(countitem(724)<1 || countitem(5001)<1 || countitem(949)<200 || zeny<5000) goto sL_NotEnuf;
-		delitem 724,1;
-		delitem 5001,1;
-		delitem 949,200;
-		set Zeny, Zeny-5000;
-		mes "[Mystic Lady]";
-		mes "Oh, I see that you have brought all of the required items.  Just a moment please...";
-		next;
-		mes "[Mystic Lady]";
-		mes "... this goes here... that goes there...... some glue here... a couple stitches over there..........";
-		next;
-		getitem 2283,1;
-		mes "[Mystic Lady]";
-		mes "Ah, there you are! One pair of my familys' specialty Ear Muffs.  Enjoy!";
-		close;
-
-		sL_NotEnuf:
+	mes "[Mystic Lady]";
+	mes "If you plan to travel to colder regions, I suggest that you bring some ^3355FFEar Muffs^000000...";
+	Emotion e_dots;
+	next;
+	mes "[Mystic Lady]";
+	mes "Ear Muffs are my family's specialty, and we provide it to customers who have ^FF33551 Cursed Ruby^000000, ^3311AA1 Headset,^000000 ^3355FF 200 Feathers^000000 and ^DDDD005000 Zeny^000000.";
+	Emotion e_dots;
+	next;
+	switch(select("Oh Yeah? That sounds good.:No thank you, Ma'am.")) {
+	case 1:
+		if ((countitem(724) > 0) && (countitem(916) > 199) && (countitem(5001) > 0) && (Zeny > 4999)) {
 			mes "[Mystic Lady]";
-			mes "I'm sorry but you don't have the required items for me to make you a pair of my familys' specialty Ear Muffs.";
+			delitem 724,1;  //Cardinal_Jewel_
+			delitem 916,200;  //Feather
+			delitem 5001,1;  //Headset
+			set Zeny,Zeny-5000;
+			mes "Here, I will give you this pre-made one.";
+			getitem 2283,1; // Ear_Mufs
+			next;
+			mes "[Mystic Lady]";
+			mes "Thank you for buying our product. You won't regret purchasing our Ear Muffs: Satisfaction guaranteed~";
+			Emotion e_dots;
 			close;
-	M_End:
+		}
+		else {
+			mes "[Mystic Lady]";
+			mes "Oh dear...";
+			mes "You don't have enough money or items. Unfortunately, we can't give any discounts. Please understand that we have to make a living...";
+			Emotion e_dots;
+			close;
+		}
+	case 2:
+		mes "[Mystic Lady]";
+		mes "That's fine.";
+		mes "I believe we";
+		mes "will meet again.";
+		mes "...One of these days.";
+		Emotion e_dots;
 		close;
-
+	}
 }
-
 
 //========================================================================================//
 //					Oxygen Mask Quest
 //========================================================================================//
-payon_in02,25,71,3	script	Young man#11	86,{
-	if(countitem(701) > 4) {
-		mes "[Young man]";
-		mes "What! Oh! No! No way!";
-		mes "Huh... You think that guy is cut... No! No way!!";
+payon_in02,25,71,4	script	Boy	86,{
+	if (countitem(701) > 4) {
+		mes "[Young Man]";
+		mes "ArrrGggghh!";
+		mes "Ah, No I can't...";
 		next;
-		switch(select( "Show him Ora Ora.","Give him Ora Ora.","Cancel.")) {
+		mes "[Young Man]";
+		mes "*Huk*";
+		mes "Now even my eyes have gone mad!! Why do these bugs suddenly seem so cute?! Nooooooo~!!!";
+		next;
+		switch(select("Show Ora Ora:Give Ora Ora:Cancel")) {
 		case 1:
-			mes "[Young man]";
-			mes "Wow! Wow! Wow!";
-			mes "This is Ora Ora...";
-			mes "I will speak frankly! If you are giving me this I will give you my treasure!";
-			mes "How about it? Don't you want it?";
+			mes "[Young Man]";
+			mes "Oooooohhhh!!!";
+			mes "Is, is this";
+			mes "the one?!";
+			mes "This is...";
+			mes "Ora Ora!!";
+			next;
+			mes "[Young Man]";
+			mes "I'll make it short! Give it to me, and I will give you my treasure! So how's my idea? Wanna deal?";
 			close;
 		case 2:
-			delitem 701, 5;
-			mes "[Young man]";
-			mes "Ha! Ha! Ha! I finally got it! Ora_Ora!";
-			mes "Damn Thief Bug!! Now I can kill you all!";
+			if (countitem(701) > 4) {
+				delitem 701,5;  //Ora_Ora
+			}
+			mes "[Young Man]";
+			mes "Muhahahahah!!!";
+			mes "I finally have this!";
+			mes "Ora Ora!";
+			mes "Stupid and Disgusting";
+			mes "Thief Bugs!!";
+			mes "You will pay!!!";
 			next;
-			mes "[Young man]";
-			mes "Ha! Ha! ... Ha! Ha!";
-			mes "I am sorry! I am too excited... Mm... I will give you my treasure as I promised!";
+			mes "[Young Man]";
+			mes "Huk...Huk...";
+			mes "Sorry, I was out of control with pleasure for a while. Now, I will give my treasure as promised.";
 			next;
-			getitem 5004, 1;
-			mes "[Young man]";
-			mes "If you breathe through this mouth piece... you can have fresh air all the time!";
-			mes "I used to worked by the sea and I brought one back with me.";
-			mes "I will give it to you for your kindness since I don't need it any more.";
+			getitem 5004,1; // Oxygen_Mask
+			mes "[Young Man]";
+			mes "When you wear this over your mouth and start to breathe, it filters junk out before getting to your lungs.";
 			next;
-			mes "[Young man]";
-			mes "Hey! Hey! THat's it! I want to try Ora Ora now!";
+			mes "[Young Man]";
+			mes "Kakakakakaka!";
+			mes "I can't wait";
+			mes "to use this";
+			mes "Ora Ora!";
 			close;
 		case 3:
-			mes "[Young man]";
-			mes "Uh... If it doesn't work on Thief bug...";
-			mes "Then I will have no choice but try to like Thief Bug... Hey...";
+			mes "[Young Man]";
+			mes "Huhuhuhuhu...";
+			mes "What if I can't get rid of all these Thief Bugs? I might even grow to love them... *Huk*";
 			close;
 		}
 	}
-		mes "[Young man]";
-		mes "Uh...Ah! I can't take it any more!";
-		mes "Damn Thief Bug!!";
+	else {
+		mes "[Young Man]";
+		mes "Wahhhhhh! I, I...";
+		mes "I can't take it any more!";
+		mes "You little stinky filthy bastards!";
 		next;
-		if( select( "Continue talking.","Cancel.") == 1) {
-			mes "[Young man]";
-			mes "My life was really rough.";
-			mes "My parents died when I was little... I had to work really hard to earn my living.";
+		switch(select("Continue:Cancel")) {
+		case 1:
+			mes "[Young Man]";
+			mes "Oh man...";
+			mes "It all started when my parents passed away when I was a little kid. Early on I had to work for a living, and had a really hard time.";
 			next;
-			mes "[Young man]";
-			mes "It's been ten years now... I got some saving... I dream to have my own house.";
+			mes "[Young Man]";
+			mes "I've worked for 10 years in hopes of buying my dream house where I could find some sense of peace and comfort again. Eventually I thought I had enough zeny to afford my very own sweet home.";
 			next;
-			mes "[Young man]";
-			mes "I can't afford a nice house even I spend all my saving on it...";
-			mes "However... I have a big but cheap house now... There weren't many choices for me...";
+			mes "[Young Man]";
+			mes "Unfortunately I didn't have enough money to buy the nice house that I had my eye on. But then, I found this house, which was bigger and cheaper than the first. I bought it without thinking...";
 			next;
-			mes "[Young man]";
-			mes "And now it is taken over by the damn Thief Bug as their den.";
+			mes "[Young Man]";
+			mes "Sweet Jesus! Turns out, it's a Heaven for Thief Bugs!!!";
 			next;
-			mes "[Young man]";
-			mes "I tried anything I could... To hunt them... To drive them away... Nothing really worked. They always come back!";
-			mes "I even burned my own house.";
+			mes "[Young Man]";
+			mes "I tried to do everything I could do. I coaxed them, killed them, but it only brought peace for a moment! I even tried to burn this house down...!";
 			next;
-			mes "[Young man]";
-			mes "Ah... I really want them to disappear... Do you think^3355FF Ora Ora^000000 is the answer?";
-			mes "I heard it is possible to find it in other countries...";
-			mes "If only I got five of it... I can get rid of them forever...";
+			mes "[Young Man]";
+			mes "*Gasp* I mean, really, do I need ^3355FF Ora Ora^000000 to get rid of them? People say it is very rarely seen in distant countries.";
+			next;
+			mes "[Young Man]";
+			mes "If I could afford 5 of them, I won't have to be frustrated with these disgusting bugs any more...";
+			close;
+		case 2:
+			mes "[Young Man]";
+			mes "This never ending fight with the bugs has really exhausted me. I give up. Do as you wish you scumbags!";
 			close;
 		}
-			mes "[Young man]";
-			mes "I just can't make them disappear no matter how... I am so tired of it... I can't take it any more... WHatever...";
-			close;
+	}
 }
-
 
 //========================================================================================//
 //			Derivuchi Cap(Hat of Petite Diablo), Helm of Angel
 //========================================================================================//
-payon_in01,56,12,4	script	Young Man#12	89,{
-	mes "[Young Man]";
-	mes "What is it?............";
+payon_in01,56,12,7	script	Young man#12	89,{
+	mes "[Young man]";
+	mes "...What is it?";
 	next;
-	menu "Can you make me a special item?",-, "Nothing.",M_End;
-
-		mes "[Young Man]";
-		mes "I see.... so you know about me huh?.... Ok, tell me what you want.";
+	switch(select("Can you make me a special item?:Hey.")) {
+	case 1:
+		mes "[Young man]";
+		mes "Huh? So you already know what I specialize in, eh? I suppose there's no need for the usual secrecy. Tell me what you want.";
 		next;
-		menu "-Helm of Angel",-, "-Deviruchi Hat",sM_Devir, "-I'll come back later.",M_End;
-
-			mes "[Young Man]";
-			mes "For the Helm of Angel I will need:";
-			mes "- ^5555FF1 Helm (slotted)^000000.";
-			mes "- ^5555FF1 Angel Wing^000000.";
-			mes "- ^5555FF5 Fang of Garm^000000.";
-			set @HAT, 1;
+		switch(select("Helm of Angel.:Deviruchi cap.:I will come next time.")) {
+		case 1:
+			mes "[Young man]";
+			mes "1 Helm (with slot).";
+			mes "1 Angel Wing.";
+			mes "5 Fang of Hatii.";
+			mes "That's all I require.";
 			next;
-			goto sL_GetHat;
-		sM_Devir:
-			mes "[Young Man]";
-			mes "For the Deviruchi Hat I will need:";
-			mes "- ^5555FF600 Little Evil Horn^000000.";
-			mes "- ^5555FF40 Talon of Griffon^000000.";
-			set @HAT, 2;
-
-			sL_GetHat:
-				mes "[Young Man]";
-				mes "Wait a moment!  Be careful about what items you give me.";
-				mes "I do not distinguish between equipment that has been forged or has cards attached to them.";
-				mes "If you don't want to loose a precious card or piece of equipment, make sure you don't have it equiped.";
-				next;
-				mes "[Young Man]";
-				mes "Do you have all of the items needed?";
-				menu "-Give him the items.",-, "Nevermind.",M_End;
-
-				if(@HAT == 2) goto ssL_Devir;
-
-					if(countitem(2229)<1 || countitem(2254)<1 || countitem(7036)<5) goto ssL_NotEnuf;
-					delitem 2229, 1;
-					delitem 2254, 1;
-					delitem 7036, 5;
-					mes "[Young Man]";
-					mes "Here is your Helm of Angel.";
-					getitem 5025, 1;
+			mes "[Young man]";
+			mes "Wait! Just so you know, I don't care if the items in your inventory have been upgraded, or have cards attached.";
+			next;
+			mes "[Young man]";
+			mes "I mean, any cards or upgrades in the items I will use to make something for you will be lost once I make the item. So be careful when you hand stuff over to me.";
+			next;
+			mes "[Young man]";
+			mes "Did you gather the items? Then hand them over.";
+			next;
+			switch(select("Give him the items.:Don't give him the items.")) {
+			case 1:
+				if ((countitem(2229) > 0) && (countitem(2254) > 0) && (countitem(7036) > 4)) {
+					mes "[Young man]";
+					mes ".....Hm.";
+					mes "Fine, here's your Helm of Angel. Take it.";
+					delitem 2229,1;  //Helm_
+					delitem 2254,1;  //Angelic_Chain
+					delitem 7036,5;  //Fang_Of_Garm
+					close2;
+					getitem 5025,1; // Helm_Of_Angel
+					end;
+				}
+				else {
+					mes "[Young man]";
+					mes "...The number of items is not right. You better double check.";
 					close;
-				ssL_Devir:
-					if(countitem(1038)<600 || countitem(7048)<40) goto ssL_NotEnuf;
-					delitem 1038, 600;
-					delitem 7048, 40;
-					mes "[Young Man]";
-					mes "Here is your Deviruchi Hat.";
-					getitem 5038, 1;
+				}
+			case 2:
+				mes "[Young man]";
+				mes "Do as you wish...";
+				close;
+			}
+		case 2:
+			mes "[Young man]";
+			mes "600 Little Evil Horn.";
+			mes "40 Talon of Griffon.";
+			mes "That's all I require.";
+			next;
+			mes "[Young man]";
+			mes "Wait! Just so you know, I don't care if the items in your inventory have been upgraded, or have cards attached.";
+			next;
+			mes "[Young man]";
+			mes "I mean, any cards or upgrades in the items I will use to make something for you will be lost once I make the item. So be careful when you hand stuff over to me.";
+			next;
+			mes "[Young man]";
+			mes "Did you gather the items? Then hand them over.";
+			next;
+			switch(select("Give him the items.:Don't give him the items.")) {
+			case 1:
+				if ((countitem(1038) > 599) && (countitem(7048) > 39)) {
+					mes "[Young man]";
+					mes ".....Hm. Here's your Deviruchi Hat. Please take it.";
+					delitem 1038,600;  //Petite_DiablOfs_Horn
+					delitem 7048,40;  //Talon_Of_Griffin
+					close2;
+					getitem 5038,1; // Deviruchi_Cap
+					end;
+				}
+				else {
+					mes "[Young man]";
+					mes "...The number of items isn't right. You better double check.";
 					close;
-				ssL_NotEnuf:
-					mes "[Young Man]";
-					mes "You don't have enough items for me to make what you want.";
-					close;
-
-	M_End:
-		mes "[Young Man]";
-		mes "Fine then.....";
+				}
+			case 2:
+				mes "[Young man]";
+				mes "Do as you wish...";
+				close;
+			}
+		case 3:
+			mes "[Young man]";
+			mes "Hm. Alright.";
+			mes "Then we shall meet again.";
+			close;
+		}
+	case 2:
+		mes "[Young man]";
+		mes "Hm.";
+		mes "Take care.";
 		close;
+	}
 }

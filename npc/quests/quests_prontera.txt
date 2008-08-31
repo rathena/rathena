@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88; L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 2.3b
+//= 2.4
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -16,6 +16,7 @@
 //= - [Aegis Conversion]
 //= - Variable in use: MISC_QUEST (bit 8)
 //= Ph.D Hat Quest:
+//= - [Aegis Conversion]
 //= - n/a
 //= Gaebolg Family Curse:
 //= - [Aegis Conversion]
@@ -41,6 +42,7 @@
 //= 2.3 Bamph will now talk to those who failed the Gaebolg quest. [L0ne_W0lf]
 //= 2.3a Touch up to Bamph fo other fail-points. [L0ne_W0lf]
 //= 2.3b Hopefully the last change needed for Nameless quest. [L0ne_W0lf]
+//= 2.4 Updated Headgear Quest. [L0ne_W0lf]
 //============================================================ 
 
 // Prontera Culvert
@@ -160,78 +162,86 @@ prt_fild05,270,212,5	script	Culvert Guardian	105,{
 
 // Ph.D Hat Quest
 //============================================================ 
-prt_in,38,108,3	script	Teacher	53,{
-	if(countitem(710) > 0 && countitem(703) > 0 && countitem(704) > 0 && countitem(708) > 0) {
+prt_in,38,108,4	script	Teacher	53,{
+	if ((countitem(710) > 0) && (countitem(703) > 0) && (countitem(606) > 0) && (countitem(708) > 0)) {
 		mes "[Teacher]";
-		mes "My God! The Flower you are holding...";
+		mes "Oh...";
+		mes "Those Flowers in your hand are...";
 		next;
-		switch( select( "Show her the flowers.","Give her the flowers.","Cancel.")) {
-			case 1:
-				mes "[Teacher]";
-				mes "Are those the Flowers I've been looking for...";
-				mes "Would you give them to me?";
-				next;
-				mes "[Teacher]";
-				mes "If you give them to me... I... I will give my precious item...";
-				close;
-			case 2:
-				if(countitem(710) > 0 && countitem(703) > 0 && countitem(704) > 0 && countitem(708) > 0) {
-					delitem 710,1;
-					delitem 703,1;
-					delitem 704,1;
-					delitem 708,1;
-					getitem 5012,1;
-					mes "[Teacher]";
-					mes "Thank you so much! First time in my life someone is nice to me!";
-					mes "I will give you my precious item like I promised you.";
-					mes "This is the cap I wore when I graduated, it is full of my school memory.";
-					mes "Please take it... I hope you would cherish it like me.";
-					close;
-				}
-					mes "[Teacher]";
-					mes "... After a closer look I realized those are not the flowers I want...";
-					mes "Ha! Ha! I have really bad eyesight...";
-					close;
-			case 3:
-				close;
-			}
-	}
-	mes "[Teacher]";
-	mes "Those flowers are pretty... Right?";
-	next;
-	switch( select( "Continue talking.","Cancel.")) {
+		switch(select("Show Flowers:Present Flowers:Cancel")) {
 		case 1:
 			mes "[Teacher]";
-			mes "I seldom go out with anyone when I was young, I was studying all the time.";
-			mes "Sometimes I think I've wasted my youth ... But I don't regret it. Because I study hard, I got good education and become who I am today!";
+			mes "Ah...";
+			mes "Those are definitely the 4 kinds of Flowers I was looking for! Would you give them to me?";
 			next;
 			mes "[Teacher]";
-			mes "But honestly... I feel sad sometimes for not having good friends...";
-			mes "When I get tired of studying... I don't even have a friend to talk to...";
-			mes "Luckily, I found the true friend of my life at last.";
+			mes "If you would...";
+			mes "I'll give you my precious item.";
+			close;
+		case 2:
+			if ((countitem(710) > 0) && (countitem(703) > 0) && (countitem(606) > 0) && (countitem(708) > 0)) {
+				delitem 710,1;  //Illusion_Flower
+				delitem 703,1;  //Hinalle
+				delitem 606,1;  //Aloe
+				delitem 708,1;  //Ment
+				getitem 5012,1;	//Ph.D_Hat
+				mes "[Teacher]";
+				mes "I really really appreciate you what you've done for me. I'm truly grateful. I will give my precious item to you as promised.";
+				next;
+				mes "[Teacher]";
+				mes "This is the Hat I've worn on my Graduation from my University. It reminds me of my happy school days. Please take this...";
+				close;
+			}
+			else {
+				mes "[Teacher]";
+				mes "... Oh, I'm Sorry.";
+				mes "But that's not what I'm looking for. Maybe you need to study flowers a little bit?";
+				close;
+			}
+		}
+	}
+	else {
+		mes "[Teacher]";
+		mes "Don't you think...";
+		mes "Flowers are pretty?";
+		next;
+		switch(select("Talk:Quit")) {
+		case 1:
+			mes "[Teacher]";
+			mes "When I was young,";
+			mes "I had no friends and";
+			mes "studied all the time.";
 			next;
 			mes "[Teacher]";
-			mes "When I walked into that garden and saw all the beautiful flowers...";
-			mes "I suddenly feel I am sharing the same fate as these flowers, so they become my best friends ever.";
+			mes "Sometimes I regret what I did when I was younger, but it's not a big deal now. Through hard study, I finished entire educational courses earlier than all the other students.";
 			next;
 			mes "[Teacher]";
-			mes "For others, they are just flowers... But for me, they are my source of strength.";
-			mes "I can't have achieved anything without their company.";
+			mes "However...";
+			mes "I was sad and sometimes lonely. Whenever the studying got too hard, I needed someone who would listen to me. Finally, one day, I met my best friend.";
 			next;
 			mes "[Teacher]";
-			mes "That's why I start to think about doing something to repay the people who had given me the flowers.";
-			mes "We have done so much research about flowers here... We even want to build a place full of flowers... for a better world!";
+			mes "When I saw a Pretty Flower blooming in the abandoned Garden, I realized It was my friend which shared my fate.";
 			next;
 			mes "[Teacher]";
-			mes "So... We really need a large amount of flowers...";
-			mes "But I never go out anywhere... It is hard for me to find any!";
-			mes "If you can find me  ^3355FFIllusion Flower^000000, ^3355FFHinalle^000000, ^3355FFAloe^000000 and ^3355FFMent^000000 and bring them to me, I will give you my treasure.";
+			mes "Although it is a Common and Normal Flower to others, she gave me the reason to study again. I could achieve my goals because of her.";
+			next;
+			mes "[Teacher]";
+			mes "So recently...";
+			mes "I am trying to pay her back. Now I am studying Flowers, and plan to over the whole world with them.";
+			next;
+			mes "[Teacher]";
+			mes "To accomplish my work...";
+			mes "I need bunches of flowers. But for someone who rarely goes outside, it is really hard to find all the flowers I need.";
+			next;
+			mes "[Teacher]";
+			mes "I need 1 ^3355FFIllusion Flower^000000 ,1 ^3355FFHinalle^000000,1 ^3355FFAloe^000000 and 1 ^3355FFMent^000000. If you can bring them to me, I'd give you my treasure...";
 			close;
 		case 2:
 			mes "[Teacher]";
-			mes "One day I will use a lot of flowers to make the most pretty place in the world...";
+			mes "One of these days I will cover this whole world with Flowers.";
 			close;
 		}
+	}
 }
 
 // Gaebolg Family Curse

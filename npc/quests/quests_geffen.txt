@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88 & Samuray22
 //===== Current Version: ===================================== 
-//= 1.3a
+//= 1.4
 //===== Compatible With: ===================================== 
 //= eAthena 7.15 +
 //===== Description: ========================================= 
@@ -12,60 +12,73 @@
 //= 1.1 Fixed exploits [Lupus]
 //= 1.2 Removed Duplicates [Silent]
 //= 1.3 Updated "Welding Mask" Quest to the Official one. [Samuray22]
-//= 1.3a replaced item "names" with item id. Added missing [] [Lupus]
+//= 1.3a replaced item "names" with item id. Added missing [Lupus]
+//= 1.4 Updated welding mask and headset quests. [L0ne_W0lf]
 //============================================================ 
-
-
 
 //==============================================================================================//
 // 					Blacksmith: 'Welding Mask' Quest
 //==============================================================================================//
-geffen_in,144,166,5	script	Blacksmith	63,{
+geffen_in,144,166,4	script	Blacksmith	63,{
 	mes "[Blacksmith]";
-	mes "I am the best Blacksmith! Do you know that?";
-	mes "I've been working for 30 years in this hot, bloody Hellfire!";
-	mes " I have been a Blacksmith for many years, I invented something really incredible. Wanna Know about it?";
+	mes "You've never heard of me? Why, I'm the Veteran Blacksmith of this land. I've spent 30 years in this hot and bloody hellfire, bending steel to my iron will!";
 	next;
-	switch( select( "Tip", "Not much help to me though...")) {
+	mes "[Blacksmith]";
+	mes "But...";
+	mes "I am growing older and my prowess begins to fade with age. So I've invented something for young, hot, upcoming Blacksmiths, in hopes that they too will master my craft...";
+	next;
+	switch(select("What is it?:...")) {
 	case 1:
 		mes "[Blacksmith]";
-		mes "As Blacksmith, we melt steel into various metal product with incredible high temperature.";
-		mes "So we have to face the heat and metallic fluid all the time, our face are almost burnt down and sometimes injured during working... ";
-		mes "But with this new item... You don't have to worry any more. Introducing ^3355FF' Welding Mask '^000000 !!";
+		mes "We Blacksmiths must always manipulate steel under extreme heat, and the hot air and melted metals are more than most people can stand.";
 		next;
 		mes "[Blacksmith]";
-		mes "It protect your face from the burning heat.";
-		mes "This is the most wanted item for anyone!";
-		mes "So? If you offer me  ^2244FF'50 Steel '^000000 and ^4422FF2000 Zeny^000000, I will make it for you right away!";
+		mes "For the sake of our craft, our beautiful, yet masculine faces are put at risk...";
 		next;
-		switch( select( "Not bad! I will take one.", "It doesn't seem useful.")) {
-			case 1:
-				if (countitem(999) > 49 && Zeny > 1999) {
-					mes "[Blacksmith]";
-					mes "Great! I will do it right now!!";
-					next;
-					delitem 999, 50;
-					set Zeny, Zeny-2000;
-					getitem 2292, 1;
-					mes "[Blacksmith]";
-					mes "Now you can enjoy the heat!";
-					mes "Good bye...";
-					close;
-				}
-					mes "[Blacksmith]";
-					mes "Look! You don't have enough steel and zeny. I can't do it!";
-					mes "Do you know about alchemy? It is wHat you need now!";
-					mes "Find the steel and zeny quickly then you can do alchemy.";
-					close;
-			case 2:
+		mes "[Blacksmith]";
+		mes "But with this wonder of technology, there's no need to worry! Behold, the ^3355FFWelding Mask^000000 !!";
+		next;
+		mes "[Blacksmith]";
+		mes "It works by covering your face with a fat metal plate. Truly, it's an item that everyone should want! If not yourself, it'd be a good idea to give this to a friend who is studying smithing.";
+		next;
+		mes "[Blacksmith]";
+		mes "So how about it ? If you give me ^2244FF50 Steel^000000 and ^4422FFonly 2000 Zeny^000000, I will make it for you right away~!!";
+		next;
+		switch(select("Hm... Not bad. Alright.:How does it work again?")) {
+		case 1:
+			if ((countitem(999) > 49) && (Zeny > 1999)){
 				mes "[Blacksmith]";
-				mes "Uh-uh... You don't know wHat you have missed!";
-				mes "Young man, you should take good care of your face before it gets shrinking.";
+				mes "Ah, I see that you appreciate a Blacksmith's work! Alright, I'll do it right away !!";
+				next;
+				delitem 999,50;  //Steel
+				set Zeny,Zeny-2000;
+				getitem 2292,1; // Welding_Mask
+				mes "[Blacksmith]";
+				mes "Hahaha~! Make good use of that!";
 				close;
 			}
+			else {
+				mes "[Blacksmith]";
+				mes "Hmmm...";
+				mes "You do not have the items I require.";
+				next;
+				mes "[Blacksmith]";
+				mes "A common Blacksmith would interpret this as a sign of disrepect, but I will forgive you. Just don't forget what I need if you want me to make you this mask.";
+				close;
+			}
+		case 2:
+			mes "[Blacksmith]";
+			mes "The ^3355FFWelding Mask^000000 protects your face by covering it with a fat metal plate. This invention is the result of 30 years of endless toil at the hammer and anvil.";
+			close;
+		}
 	case 2:
 		mes "[Blacksmith]";
-		mes "Never mind... I am not ganna waste any more my time talking to you! Leave now! ";
+		mes "Ah...!";
+		mes "I guess this is the first time you've met a Blacksmith as great as me, and you're just speechless with awe. Please, take your time and speak up when you are ready.";
+		next;
+		mes "^3355FFThis guy seems";
+		mes "a little full";
+		mes "of himself.^000000";
 		close;
 	}
 }
@@ -77,98 +90,79 @@ geffen_in,144,166,5	script	Blacksmith	63,{
 //=============================================================================================//
 geffen_in,30,71,4	script	Eric	83,{
 	mes "[Eric]";
-	mes "Please listen to the story of my blessed grand father...";
-	emotion e_sob;
+	mes "Please listen";
+	mes "to my story";
+	mes "of my blessed";
+	mes "grandfather.";
 	next;
-	menu "Listen.",-, "Ask about Items needed.",M_Ask, "Make.",M_Make, "End Conversation.",M_End;
-
+	switch(select("Talk:Ask about Items needed:Manufacture:Quit")) {
+	case 1:
 		mes "[Eric]";
-		mes "My grand father passed away few years ago.... he was very special to me.....";
+		mes "My Grandfather, who passed away a few years ago, was special to me. He always stayed with me, and took care of me. He was much better than my old man, who was always busy working.";
 		next;
 		mes "[Eric]";
-		mes "For as long as I can remember, he was always there for me.";
-		mes "He even took better care of me than did my own father, who was always busy with work.";
+		mes "To me, Grandfather's library was always like a fantasy land where I could escape. I spent most of my time there.";
 		next;
 		mes "[Eric]";
-		mes "To me, my grand father's library was always like a 'Fairyland'.";
-		mes "I spent most of my time there and I learned a lot of things from his vast collection of books";
+		mes "I learned a lot of things from his books in the Library. Grandfather was interested in Alchemy and Music, and his Library was filled with many mysterious old books.";
 		next;
 		mes "[Eric]";
-		mes "Grand father was interested in alchemy and music, so his library was filled with many books on these subjects.";
+		mes "One day...";
+		mes "As usual, I went to the Library and discovered an interesting schematic.";
 		next;
 		mes "[Eric]";
-		mes "One day while I was in grand fathers library, I discovered an interesting design sheet.....";
-		mes "It was a design for what look liked 'Ear Muffs'.... underneath the drawing was a description that read:";
+		mes "It showed some instrument which looked like Ear Muffs that, when worn on the head, could transmit music or whispers to the ears through a thin wire.";
 		next;
 		mes "[Eric]";
-		mes "'When worn on over the ears, anything from music to the faintest whispers can be heard.";
-		mes "The sounds are transmitted to the ears through a thin wire.  Project Name: ^5555FFHeadset^000000";
+		mes "I guess...";
+		mes "It is my grand father's unfinished work. I met a few Alchemists and asked them to produce it, but they rejected my offer...";
 		next;
 		mes "[Eric]";
-		mes "It was a project that my grand father was working on before he passed away.... unfortunately he was never able to finish it.....";
+		mes "In the end, I thought 'I've gotta make it myself.' So I researched for a few years, and now I fully understand how to make that thing. But, I could never gather the materials to make it!";
 		next;
 		mes "[Eric]";
-		mes "That's why I made up my mind to pick up where he left off and finish his beloved project!";
-		mes "I met with a few Alchemists and asked them to create a working prototype based on his plans.";
+		mes "If I can get those articles, I would build it right away. If you are interested in my idea, would you bring them for me?";
 		next;
 		mes "[Eric]";
-		mes "But they were not able to understand my grand fathers concepts and therefore could not help me.";
-		next;
-		mes "[Eric]";
-		mes "Even so I did not give up and decided to make it myself.  So I studied and researched for many years....";
-		mes "And now I have a full working knowledge of my grand fathers invention, the ^5555FFHeadset^000000!!";
-		next;
-		mes "[Eric]";
-		mes "Yet there is still one obsticale that is keeping me from making it.... I do not have the materials necessary to make my grand fathers invention!";
-		next;
-		mes "[Eric]";
-		mes "My only goal in life is to realize my grand fathers ideas and pay tribute to the man I hold so dear to my heart.......";
-		emotion e_sob;
-		next;
-		mes "[Eric]";
-		mes "If only I had those materials.... Hmm... would you be iterested in this project? All I ask is that you gather the right items for me....";
-		emotion e_hmm;
+		mes "All I wanna do is build this thing in honor of my grandfather and finish the work he started. If you ask me to keep it, I wouldn't mind.";
 		close;
-
-	M_Ask:
+	case 2:
 		mes "[Eric]";
-		mes "These are items needed for grand father's Headset:";
-		mes "^3355FFSteel^000000 ^FF555540^000000";
-		mes "^3355FFOridecon^000000 ^FF55551^000000";
-		mes "^3355FFAlcohol^000000 ^FF55551^000000";
-		mes "^3355FFCoal^000000 ^FF55551^000000";
+		mes "40 ^3355FFSteel^000000";
+		mes "1 ^3355FFOridecon^000000";
+		mes "1 ^3355FFAlcohol^000000";
+		mes "1 ^3355FFCoal^000000";
+		mes "These are the things I need for Grandfather's masterpiece.";
 		close;
-
-	M_Make:
-		mes "[Eric]";
-		if(countitem(999) < 40 || countitem(984) < 1 || countitem(970)<1 || countitem(1003) < 1) goto L_NotEnuf;
-		delitem 999,40;
-		delitem 984,1;
-		delitem 970,1;
-		delitem 1003,1;
-		mes "Oh this is GREAT!! You have all of the materials I need to make my grandfather's Headset!";
-		emotion e_ic;
-		next;
-		mes "[Eric]";
-		mes "Give me a few minutes to assemble it...............";
-		next;
-		getitem 5001,1;
-		mes "[Eric]";
-		mes "FINALLY!! It's complete! My grand father's Headset! Please take them... without your help this wouldn't have been possible.";
-		emotion e_gasp;
-		next;
-		mes "[Eric]";
-		mes "Thank so very much! Because of you, I could fullfill my grand father's wish.  I just know he's smiling down on me from Heaven.....";
-		emotion e_thx;
-		close;
-
-		L_NotEnuf:
-			mes "Thank you for trying to help me but..... you don't seem to have all of the items I need.....";
-			emotion e_swt;
+	case 3:
+		if ((countitem(999) > 39) && (countitem(615) > 0) && (countitem(970) > 0) && (countitem(1003) > 0)) {
+			delitem 999,40;  //Steel
+			delitem 615,1;  //Oridecon
+			delitem 970,1;  //Alchol
+			delitem 1003,1;  //Coal
+			getitem 5001,1; // Headset
+			mes "*Tap! Tap! Tap!*";
+			next;
+			mes "[Eric]";
+			mes "Thank you.";
+			mes "Because of you, I could accomplish my grandfather's wish. He would be happy if he looked down on me from Heaven.";
+			next;
+			mes "[Eric]";
+			mes "As I said, please take this. I am just proud that I can make this by myself.";
 			close;
-	M_End:
+		}
+		else {
+			mes "[Eric]";
+			mes "Thank you for trying to help me, but you didn't bring all the items I need. I think you will find them all soon though.";
+			close;
+		}
+	case 4:
 		mes "[Eric]";
-		mes "Farewell..... boo hoo....";
-		emotion e_sob;
+		mes "N-no?";
+		mes "Well...";
+		mes "You have your own";
+		mes "worries, I suppose.";
+		mes "Farewell.";
 		close;
+	}
 }

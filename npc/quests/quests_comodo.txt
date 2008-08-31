@@ -27,244 +27,449 @@
 //= 1.5 Rescripted Headgear Quests 1 to Aegis 10.3 Standards. [Samuray22]
 //= 1.5a Fixed a bad countitem. (bugreport:840) [Samuray22]
 //= 1.5b Fixed stripped hairband and blue hairband checking the wrong amount of items, bugreport:1674 [Brainstorm]
+//= 1.6 Updated headgear quest NPCs. [L0ne_W0lf]
 //============================================================ 
 
 // Headgear Quests 1
 // Cross Hat, Bulb Hairband, Striped Hairband, Blue Hairband
 //============================================================ 
-comodo,228,159,4	script	Hair Ornament Girl	700,{
+comodo,228,159,3	script	Hair Ornament Girl	700,{
 	mes "[Hair Ornament Girl]";
-	if(Sex == 1) {
-		mes "Oh! hi. You wanna make one?";
-		mes "If you want to give present to girl friend, Hair band is the one.";
-	} else {
-		mes "Hey! look at me. I think this will suit to you so much~";
-		mes "You wanna order one of Hair Band?";
+	if (Sex == 1) {
+		mes "Oh, hello!";
+		mes "Would you like to order a hairband? They're great presents to give to your girlfriend, and show that you're thinking of her.";
+	}
+	else {
+		mes "Hello~!";
+		mes "I think one of these will suit a pretty girl like you very well. Would you like to order a hairband?";
 	}
 	next;
 	mes "[Hair Ornament Girl]";
-	mes "If you give me simple items then I make a gorgeous Hair Band~";
-	mes "Have a look at these.";
+	mes "If you give me a few simple items then I can make a gorgeous Hair Band. If you have any questions, go ahead and have a look.";
 	next;
-	switch(select("Cross Band:Light Bulb Band:Stripe band:Blue hair band")) {
-	case 1:	
-		callsub L_select,1,2608,1,7069,500,0,0,5036; //Cross Band (1) = Rosary (1) + Destroyed Armor (500)
+	switch(select("Cross Hat:Bulb Band:Stripe Hairband:Blue Hairband")) {
+	case 1:
+		if ((countitem(2608) > 0) && (countitem(7069) > 499)) {
+			mes "[Hair Ornament Girl]";
+			mes "You've chosen the Cross Hat?";
+			mes "If you brought all the required items, I will make it for you~";
+			next;
+			mes "[Hair Ornament Girl]";
+			mes "But before I can make it, can you check that the items are right?";
+			mes "If it is a forged, upgraded item or has monster cards in it, then those cards and upgrades will be lost.";
+			next;
+			mes "[Hair Ornament Girl]";
+			mes "It's better to bring just to keep the requested items in your inventory. Did you check? Then let's make it, okay?";
+			next;
+			switch(select("No.:Yes.")) {
+			case 1:
+				mes "[Hair Ornament Girl]";
+				mes "Ah, alright. I guess you should put all your other things into Kafra Storage first. Okay then, see you soon.";
+				mes "See you soon~";
+				close;
+			case 2:
+				mes "^3355FFSwish swish snip snip^000000";
+				next;
+				delitem 2608,1;  //Rosary
+				delitem 7069,500;  //Broken_Armor_Piece
+				mes "[Hair Ornament Girl]";
+				mes "Look at this! Well done~";
+				mes "Please come again~ hoooo!";
+				getitem 5036,1; // Cross_Band
+				close;
+			}
+		}
+		else {
+			mes "[Hair Ornament Girl]";
+			mes "Oh, you've chosen Cross Hat?";
+			mes "There are some items needed to make this headband.";
+			next;
+			mes "[Hair Ornament Girl]";
+			mes "I'll need...";
+			mes "^3355FF1 Rosary^000000";
+			mes "^3355FF500 Destroyed Armor^000000";
+			next;
+			mes "[Hair Ornament Girl]";
+			mes "If you bring all the items then I will make it for you right away.";
+			mes "See you then~";
+			close;
+		}
 	case 2:
-		callsub L_select,2,2233,1,746,20,0,0,5034; //Bulb Band (1) = Circlet (1) + Glass Bead (20)
+		if ((countitem(2233) > 0) && (countitem(746) > 19)) {
+			mes "[Hair Ornament Girl]";
+			mes "You've chosen Bulb band?";
+			mes "If you brought all the required items, I will make it for you~";
+			next;
+			mes "[Hair Ornament Girl]";
+			mes "But before I can make it, can you check that the items are right?";
+			mes "If it is a forged, upgraded item or has monster cards in it, then those cards and upgrades will be lost.";
+			next;
+			mes "[Hair Ornament Girl]";
+			mes "It's better to bring just to keep the requested items in your inventory. Did you check? Then let's make it, okay?";
+			next;
+			switch(select("No.:Yes.")) {
+			case 1:
+				mes "[Hair Ornament Girl]";
+				mes "Ah, alright. I guess you should put all your other things into Kafra Storage first. Okay then, see you soon.";
+				close;
+			case 2:
+				mes "^3355FFSwish swish snip snip^000000";
+				next;
+				delitem 2233,1;  //Circlet_
+				delitem 746,20;  //Glass_Bead
+				mes "[Hair Ornament Girl]";
+				mes "Look at this! Well done~";
+				mes "Please come again~ hoooo!";
+				getitem 5034,1; // Light_Bulb_Band
+				close;
+			}
+		}
+		else {
+			mes "[Hair Ornament Girl]";
+			mes "Oh, you've chosen Bulb Band?";
+			mes "There are some required items needed to make this headband.";
+			next;
+			mes "[Hair Ornament Girl]";
+			mes "I'll need...";
+			mes "^3355FF1 Slotted Circlet^000000";
+			mes "^3355FF20 Glass Bead^000000";
+			next;
+			mes "[Hair Ornament Girl]";
+			mes "If you bring all the items then I will make it for you right away.";
+			mes "See you then~";
+			close;
+		}
 	case 3:
-		callsub L_select,3,1099,1500,0,0,0,0,5049; //Stripe Band (1) = Worn Out Prison Uniform (1500)
+		if (countitem(1099) > 1499) {
+			mes "[Hair Ornament Girl]";
+			mes "You've chosen Stripe band?";
+			mes "If you brought all the required items, I will make it for you~";
+			next;
+			mes "[Hair Ornament Girl]";
+			mes "You want me to make it now?";
+			next;
+			switch(select("No.:Yes.")) {
+			case 1:
+				mes "[Hair Ornament Girl]";
+				mes "See you later then~";
+				close;
+			case 2:
+				mes "^3355FFSwish swish snip snip^000000";
+				next;
+				delitem 1099,1500;  //Worn_Out_Prison_Uniform
+				mes "[Hair Ornament Girl]";
+				mes "Look at this! Well done~";
+				mes "Please come again~";
+				getitem 5049,1; // Stripe_Band
+				close;
+			}
+		}
+		else {
+			mes "[Hair Ornament Girl]";
+			mes "Oh, you've chosen the Stripe band? There are some required items needed to make this headband.";
+			next;
+			mes "[Hair Ornament Girl]";
+			mes "I'll need...";
+			mes "^3355FF1500 Worn-out Prison Uniform^000000";
+			next;
+			mes "[Hair Ornament Girl]";
+			mes "If you bring all the items then I will make it for you right away.";
+			mes "See you then~";
+			close;
+		}
 	case 4:
-		callsub L_select,4,2211,1,978,1,7003,300,5052; //Blue hair band (1) = Bandana (1) + Cobaltblue Dyestuffs (1) + Anolian Skin (300)
-	}
-L_select:
-	mes "[Hair Ornament Girl]";
-	if((getarg(0) == 1 && countitem(2608) > 0 && countitem(7069) > 499) ||
-	   (getarg(0) == 2 && countitem(2233) > 0 && countitem(746) > 19) || 
-	   (getarg(0) == 3 && countitem(1099) > 1499) ||
-	   (getarg(0) == 4 && countitem(2211) > 0 && countitem(978) > 0 && countitem(7003) > 299)) {
-		mes "Hum~ You've chosen "+getitemname(getarg(7))+"?";
-		mes "You brought all required item. I will make you~";
-		next;
-		if(getarg(0) != 3) {
+		if ((countitem(2211) > 0) && (countitem(978) > 0) && (countitem(7003) > 299)) {
 			mes "[Hair Ornament Girl]";
-			mes "But, before I make, can you check that Items are sure?";
-			mes "If it is forged item or monster cards is applied, then it is waste of item.";
+			mes "You've chosen Blue Hairband?";
+			mes "If you brought all the required items, I will make it for you~";
 			next;
-		}
-		mes "[Hair Ornament Girl]";
-		mes "It's better to bring only just requested item";
-		mes "Did you check? Then let's make it. ok?";
-		next;
-		if(select("No.:Yes.") == 1) {
 			mes "[Hair Ornament Girl]";
-			mes "Yes, Yes, Put other stuffs to storage~";
-			mes "See you soon~";
+			mes "But before I can make it, can you check that the items are right?";
+			mes "If it is a forged, upgraded item or has monster cards in it, then those cards and upgrades will be lost.";
+			next;
+			mes "[Hair Ornament Girl]";
+			mes "It's better to bring just to keep the requested items in your inventory. Did you check? Then let's make it, okay?";
+			next;
+			switch(select("No.:Yes.")) {
+			case 1:
+				mes "[Hair Ornament Girl]";
+				mes "Ah, alright. I guess you should put all your other things into Kafra Storage first. Okay then, see you soon.";
+				close;
+			case 2:
+				mes "^3355FFSwish swish snip snip^000000";
+				next;
+				delitem 2211,1;  //Bandana
+				delitem 978,1;  //Cobaltblue_Dyestuffs
+				delitem 7003,300;  //Anolian_Skin
+				mes "[Hair Ornament Girl]";
+				mes "Look, at this! Well done!";
+				mes "Please come again~ ";
+				getitem 5052,1; // Blue_Hair_Band
+				close;
+			}
+		}
+		else {
+			mes "[Hair Ornament Girl]";
+			mes "Oh, you've chosen Blue Hairband?";
+			mes "There are some required items needed to make this headband.";
+			next;
+			mes "[Hair Ornament Girl]";
+			mes "I'll need...";
+			mes "^3355FF1 Bandana^000000";
+			mes "^3355FF1 Cobaltblue Dyestuffs^000000";
+			mes "^3355FF300 Anolian Skin^000000";
+			next;
+			mes "[Hair Ornament Girl]";
+			mes "If you bring all the items then I will make it for you right away.";
+			mes "See you then~";
 			close;
 		}
-			mes "[Hair Ornament Girl]";
-			mes "^3355FFHm. Piece of cake^000000";
-			next;
-			delitem getarg(1),getarg(2);
-			if(getarg(3) != 0) delitem getarg(3),getarg(4);
-			if(getarg(5) != 0) delitem getarg(5),getarg(6);
-			mes "[Hair Ornament Girl]";
-			mes "Look, this! Well done~";
-			mes "Plaese come again~ hoooo!";
-			getitem getarg(7),1;
-			close;
 	}
-		mes "Hum~ You've chosen "+getitemname(getarg(7))+"?";
-		mes "There is some requiring items to make, Prepare items.";
-		next;
-		mes "[Hair Ornament Girl]";
-		mes "To make "+getitemname(getarg(7))+"...";
-		mes "^3355FF"+getitemname(getarg(1))+"^000000 "+getarg(2)+"";
-		if(getarg(3) > 0) mes "^3355FF"+getitemname(getarg(3))+"^000000 "+getarg(4)+"";
-		if(getarg(5) > 0) mes "^3355FF"+getitemname(getarg(5))+"^000000 "+getarg(6)+"";
-		mes "...will need?";
-		next;
-		mes "[Hair Ornament Girl]";
-		mes "If you bring all items then I will make you right away.";
-		mes "Hoo~ see you then~";
-		close;
 }
 
 // Headgear Quests 2
 // 'Mine Helmet', 'Parcel Hat', 'Money Loser's Grief', 'Phantom of the Opera Mask'
 //============================================================ 
-comodo,274,137,5	script	Mari Isac	702,{
-	mes "[Mari Isac]";
-	mes "I travel all over the world and get to hear many interesting stories from the people I meet.";
-	mes "Sometimes they even teach me how to make special items";
+comodo,273,137,4	script	Traveler#head	702,{
+	mes "[Isac Mari]";
+	mes "I travel around the world, and collect many interesting stories from people. Sometimes they teach me how to make special items.";
 	next;
-	mes "[Mari Isac]";
-	mes "Would you be interested in some of the items I've learned to make?";
-M_Menu:
+	mes "[Isac Mari]";
+	mes "I know how to make all sorts of worldly hats. But right now, I can't make these since I don't have the right items.";
 	next;
-	menu "Tell me about them.",M_0, "Make me one.",M_1;
-
-	M_0:
-		menu "-Mine Helmet",-, "-Parcel Hat",sM_Parcel, "-Money Loser's Grief",sM_Money, "-Phantom of the Opera Mask",sM_Phantom;
-
-			mes "[Mari Isac]";
-			mes "I learned how to make the Mine Helmet when I traveled to the old coal mines near Geffen.";
+	switch(select("Mine Helmet:Parcel Hat:Grief for Greed:Opera Phantom Mask")) {
+	case 1:
+		if ((countitem(5009) > 0) && (countitem(5028) > 0) && (countitem(999) > 24) && (countitem(747) > 0)) {
+			mes "[Isac Mari]";
+			mes "Mine Helmet was designed for the miners in the coal mines to have light in the dark. If you brought all the required items, I will go ahead and make it for you~";
 			next;
-			mes "[Mari Isac]";
-			mes "The 2 most important things a miner needs are light, and head protection.";
-			mes "A very inventive miner was able to create something that dealt with both issues.";
+			mes "[Isac Mari]";
+			mes "But can you check that the items in your inventory aren't upgraded or have cards compounded into them? If any of the required items have forged upgrades or cards, those will be lost once I create the Mine Hat.";
 			next;
-			mes "[Mari Isac]";
-			mes "He attached a light to his safety helmet and called it a Mine Helmet.";
-			mes "This meant that miners no longer had to worry about carrying around lamps and could work more efficiently.";
+			mes "[Isac Mari]";
+			mes "It's better to keep only the items used to make the Mine Hat in your inventory. Did you check? If so, let's get started.";
 			next;
-			mes "[Mari Isac]";
-			mes "Anyways, if you want me to make you a Mine Helmet you'll need to bring me these items:";
-			mes "^5555FF1 Safety Helmet^000000,";
-			mes "^5555FF1 Candle^000000,";
-			mes "^5555FF1 Crystal Mirror^000000,";
-			mes "^5555FF25 Steel^000000.";
+			switch(select("Give me a minute~!:Let's make the Mine Hat.")) {
+			case 1:
+				mes "[Isac Mari]";
+				mes "Alright. Please check your items again. It's much better to be safe than sorry.";
+				close;			break;
+			case 2:
+				mes "^3355FF*Thook Thook*";
+				mes "*Pop!*^000000";
+				next;
+				mes "[Isac Mari]";
+				mes "Whew! This is pretty hard!";
+				next;
+				delitem 5009,1;  //Safety_Helmet
+				delitem 5028,1;  //Candle
+				delitem 747,1;  //Crystal_Mirror
+				delitem 999,25;  //Steel
+				mes "[Isac Mari]";
+				mes "I'm not quite sure if this is the right one, but it looks about right. Ha ha~";
+				getitem 5031,1; // Mine_Helm
+				close;
+			}
+		}
+		else {
+			mes "[Isac Mari]";
+			mes "I hear Mine Helmets are used in the mines near Geffen. As you know, it's not possible to work without light, even though it attracts monsters in the caves.";
 			next;
-			goto M_0;
-		sM_Parcel:
-			mes "[Mari Isac]";
-			mes "I learned how to make the Parcel Hat when I traveled to Alberta.  There they have a unique way of distributing mail and goods.";
+			mes "[Isac Mari]";
+			mes "One day, a miner remodeled his own Safety Helmet so that he could work with both hands. Since then, it's been called the Mine Helm.";
 			next;
-			mes "[Mari Isac]";
-			mes "Instead of using a pouch or a sack to carry items for delivery, they use a special kind of hat, called a Parcel Hat.";
-			mes "This hat allows the delivery personel to carry numerous items on their heads.  Of course they have to have good balance to use it.";
+			mes "[Isac Mari]";
+			mes "If you want to make Mine Helmet,";
+			mes "^3355FF1 Safety Helmet^000000";
+			mes "^3355FF1 Candle^000000 ";
+			mes "^3355FF1 Crystal Mirror^000000";
+			mes "^3355FF25 Steel^000000";
+			mes "is needed to create it.";
 			next;
-			mes "[Mari Isac]";
-			mes "Anyways, if you want me to make you a Parcel Hat, you'll need to bring me these items.";
-			mes "^5555FF150 Fabric^000000,";
-			mes "^5555FF100 Resin^000000,";
-			mes "^5555FF1 Cobaltblue Dyestuffs^000000.";
-			next;
-			goto M_0;
-		sM_Money:
-			mes "[Mari Isac]";
-			mes "I learned how to make the Money Loser's Grief when I traveled to Morroc.";
-			next;
-			mes "[Mari Isac]";
-			mes "A long time ago an honest merchant got into a conflict with a crooked guild.";
-			mes "Unlike the dirty guild, the merchant did not scam or cheat people.";
-			next;
-			mes "[Mari Isac]";
-			mes "Because of this they attacked the merchants shop and took all of his goods.";
-			next;
-			mes "[Mari Isac]";
-			mes "The merchant was devastated by the loss of his shop.";
-			mes "In his sadness he used the bits and pieces that were left from his shop to create a new item.";
-			next;
-			mes "[Mari Isac]";
-			mes "He created the Money Loser's Grief, a symbol of his great sadness.  When people see it, they can't help but feel sympathetic to the wearer.";
-			next;
-			mes "[Mari Isac]";
-			mes "Many merchants now wear it to help themselves get more business.  Of course it is also a reminder of the honest merchants sad tale.";
-			next;
-			mes "[Mari Isac]";
-			mes "Anyways, if you want me to make you a Money Losers Grief, you'll need to bring me these items.";
-			mes "^5555FF1 Circlet with a single slott^000000,";
-			mes "^5555FF1 Gold^000000,";
-			mes "^5555FF20 Steel^000000,";
-			mes "^5555FF80 Feathers^000000,";
-			mes "^5555FF800 Sticky Mucus^000000.";
-			next;
-			goto M_0;
-		sM_Phantom:
-			mes "[Mari Isac]";
-			mes "I learned how to make the Phantom of the Opera Mask when I traveled to Al De Baran.";
-			mes "The story behind this item is that of a man's pure love........";
-			next;
-			mes "[Mari Isac]";
-			mes "There once was a man who was in love with a beautiful opera singer.";	
-			mes "Unfortunately the man had a terribly disfigured face which forced to him to wear a mask.";
-			next;
-			mes "[Mari Isac]";
-			mes "He was ashamed of his appearance and could never bring himself to face the singer.";
-			mes "The man instead, watched her from a far, admiring every nuance of her beauty and grace.";
-			next;
-			mes "[Mari Isac]";
-			mes "He lurked in the bowles of the opera house and from time to time he would sing his sad love song.";
-			mes "Many people heard it and believed that there was a phantom haunting the opera house.";
-			next;
-			mes "[Mari Isac]";
-			mes "The singer also heard his song, and through it she was able to feel his pain and his love for her.";
-			mes "The two eventually met, and when they did she was able to look past his appereance and accept him for who he was.";
-			next;
-			mes "[Mari Isac]";
-			mes "Too this day, the tale of the masked 'phantom' is still romantacised.";
-			next;
-			mes "[Mari Isac]";
-			mes "Anyways, if you want me to make you a Phantom of the Opera Mask, you'll need to bring me these items.";
-			mes "^5555FF1 Opera Masque^000000,";
-			mes "^5555FF50 Horrendous Hairs^000000.";
-			goto M_0;
-
-	M_1:
-		menu "-Mine Helmet",-, "-Parcel Hat",sM_MakePar, "-Money Loser's Grief",sM_MakeMon, "-Phantom of the Opera Mask",sM_MakePhan;
-
-			if(countitem(5009)<1 || countitem(5028)<1 || countitem(747)<1 || countitem(999)<25) goto ssL_NoItems;
-			delitem 5009, 1;
-			delitem 5028, 1;
-			delitem 747, 1;
-			delitem 999, 25;
-			mes "[Mari Isac]";
-			mes "Here you go.  Enjoy your Mine Helmet!";
-			getitem 5031,1;
+			mes "[Isac Mari]";
+			mes "If you bring all the items then I will make it for you right away. See you later~";
 			close;
-		sM_MakePar:
-			if(countitem(1059)<150 || countitem(907)<100 || countitem(978)<1) goto ssL_NoItems;
-			delitem 1059, 150;
-			delitem 907, 100;
-			delitem 978, 1;
-			mes "[Mari Isac]";
-			mes "Here you go.  Enjoy your Parcel Hat!";
-			getitem 5023,1;
+		}
+	case 2:
+		if ((countitem(1059) > 149) && (countitem(907) > 99) && (countitem(978) > 0)) {
+			mes "[Isac Mari]";
+			mes "Parcel Hat seems to be useful for business people to carry around their products. If you brought everything I need, I will make it for you.";
+			mes "If you brought all the required items, I will make it for you~";
+			next;
+			mes "[Isac Mari]";
+			mes "But can you check that the items in your inventory aren't upgraded or have cards compounded into them? If any of the required items have forged upgrades or cards, those will be lost once I create the Parcel Hat.";
+			next;
+			mes "[Isac Mari]";
+			mes "It's better to keep only the items used to make the Parcel Hat in your inventory. Did you check? If so, let's get started.";
+			next;
+			switch(select("Give me a minute~!:Let's make the Parcel Hat.")) {
+			case 1:
+				mes "[Isac Mari]";
+				mes "Alright. Please check your items again. It's much better to be safe than sorry.";
+				close;
+			case 2:
+				mes "^3355FF*Thook Thook*";
+				mes "*Pop!*^000000";
+				next;
+				mes "[Isac Mari]";
+				mes "Oh...";
+				mes "I think I messed up!";
+				mes "No, wait, I think I can fix this...";
+				next;
+				delitem 1059,150;  //Transparent_Cloth
+				delitem 907,100;  //Resin
+				delitem 978,1;  //Cobaltblue_Dyestuffs
+				mes "[Isac Mari]";
+				mes "Well...";
+				mes "Um, it looks like a Parcel Hat. So that's good enough for me! Ha ha~";
+				getitem 5023,1; // Hat_Of_Bundle
+				close;
+			}
+		}
+		else {
+			mes "[Isac Mari]";
+			mes "I heard that around Alberta, Merchants are always selling goods from their carts in the middle of the streets.";
+			next;
+			mes "[Isac Mari]";
+			mes "But in the East side of the country, they use a different way to transfer goods.";
+			next;
+			mes "[Isac Mari]";
+			mes "Goods would be packed into a bundle and placed on top of the head so you wouldn't need to carry things by hand. But it's hard to keep your balance.";
+			next;
+			mes "[Isac Mari]";
+			mes "I'll need...";
+			mes "^3355FF150 Fabric^000000";
+			mes "^3355FF100 Resin^000000 and";
+			mes "^3355FF1 Cobaltblue Dyestuffs^000000";
+			mes "to make a Parcel Hat.";
+			next;
+			mes "[Isac Mari]";
+			mes "If you bring all the items then I will make it for you right away. See you later~!";
 			close;
-		sM_MakeMon:
-			if(countitem(2233)<1 || countitem(969)<1 || countitem(999)<20 || countitem(949)<80 || countitem(938)<800) goto ssL_NoItems;
-			delitem 2233, 1;
-			delitem 969, 1;
-			delitem 999, 20;
-			delitem 949, 80;
-			delitem 938, 800;
-			mes "[Mari Isac]";
-			mes "Here you go.  Enjoy your Money Loser's Grief!";
-			getitem 5021,1;
+		}
+	case 3:
+		if ((countitem(2233) > 0) && (countitem(614) > 0) && (countitem(916) > 79) && (countitem(999) > 19) && (countitem(938) > 799)) {
+			mes "[Isac Mari]";
+			mes "Grief for Greed...";
+			mes "If you brought all the required items, I'll go ahead and make it for you~";
+			next;
+			mes "[Isac Mari]";
+			mes "[Isac Mari]";
+			mes "But can you check that the items in your inventory aren't upgraded or have cards compounded into them? If any of the required items have forged upgrades or cards, those will be lost once I create the Money Loser's Grief.";
+			next;
+			mes "[Isac Mari]";
+			mes "It's better to keep only the items used to make the Grief for Greed in your inventory. Did you check? If so, let's get started.";
+			next;
+			switch(select("Give me a minute~!:Let's make the Grief for Greed.")) {
+			case 1:
+				mes "[Isac Mari]";
+				mes "Alright. Please check your items again. It's much better to be safe than sorry.";
+				close;
+			case 2:
+				mes "^3355FF*Thook Thook*";
+				mes "*Pop!*^000000";
+				next;
+				mes "[Isac Mari]";
+				mes "Whew! This is pretty hard!";
+				next;
+				delitem 2233,1;  //Circlet_
+				delitem 614,1;  //Gold
+				delitem 916,80;  //Feather
+				delitem 999,20;  //Steel
+				delitem 938,800;  //Sticky_Mucus
+				mes "[Isac Mari]";
+				mes "I might have made a few mistakes, but it looks good enough. Here you go, your own Grief for Greed hat!";
+				getitem 5021,1; // Bankruptcy_Of_Heart
+				close;
+			}
+		}
+		else {
+			mes "[Isac Mari]";
+			mes "Grief for Greed...";
+			mes "There's a tale of an honest Merchant that lived in Morroc long ago who had a quarrel with a bad guild.";
+			next;
+			mes "[Isac Mari]";
+			mes "Because the honest Merchant was not cheating people by his prices, his street stall was attacked by the bad guild and all his goods were taken.";
+			next;
+			mes "[Isac Mari]";
+			mes "So, the honest Merchant lost everything except some broken items. To express his sadness, he took these broken items and created this magnificent hat, the Grief for Greed.";
+			next;
+			mes "[Isac Mari]";
+			mes "This special hat appeals to people's sympathies, making them buy more goods to support the inner goodness of honest Merchants.";
+			next;
+			mes "[Isac Mari]";
+			mes "For this hat, I'll need...";
+			mes "^3355FF1 Slotted Circlet^000000";
+			mes "^3355FF1 Gold^000000";
+			mes "^3355FF20 Steel^000000";
+			mes "^3355FF80 Feather^000000";
+			mes "^3355FF800 Sticky Mucus^000000";
+			next;
+			mes "[Isac Mari]";
+			mes "If you bring all the items then I will make it for you right away. See you later~";
 			close;
-		sM_MakePhan:
-			if(countitem(2281)<1 || countitem(1048)<50) goto ssL_NoItems; 
-			delitem 2281,1;
-			delitem 1048, 50;
-			mes "[Mari Isac]";
-			mes "Here you go.  Enjoy your Phantom of the Opera Mask!";
-			getitem 5043, 1;
+		}
+	case 4:
+		if ((countitem(2281) > 0) && (countitem(1048) > 49)) {
+			mes "[Isac Mari]";
+			mes "Opera Phantom Mask...";
+			mes "Frightening, but also tragic and romantic. If you brought all the required items, I will make it for you~";
+			next;
+			mes "[Isac Mari]";
+			mes "But can you check that the items in your inventory aren't upgraded or have cards compounded into them? If any of the required items have forged upgrades or cards, those will be lost once I create the Opera Masque.";
+			next;
+			mes "[Isac Mari]";
+			mes "It's better to keep only the items used to make the Mine Hat in your inventory. Did you check? If so, let's get started.";
+			next;
+			switch(select("Give me a minute~!:Let's make the Opera Masque.")) {
+			case 1:
+				mes "[Isac Mari]";
+				mes "Alright. Please check your items again. It's much better to be safe than sorry.";
+				close;
+			case 2:
+				mes "^3355FF*Thook Thook*";
+				mes "*Pop!*^000000";
+				next;
+				mes "[Isac Mari]";
+				mes "Whew! This is pretty hard!";
+				next;
+				delitem 2281,1;  //Phantom_Of_Opera
+				delitem 1048,50;  //Slender_Snake
+				mes "[Isac Mari]";
+				mes "I'm not quite sure if this is the right one.";
+				mes "But it looks fine. Ha ha";
+				getitem 5043,1; // Opera_Ghost_Mask
+				close;
+			}
+		}
+		else {
+			mes "[Isac Mari]";
+			mes "Opera Phantom Mask...";
+			mes "Behind this mask is a story about a man's love and personal tragedy.";
+			next;
+			mes "[Isac Mari]";
+			mes "You may know him as the Phantom of the Opera. He was a musical genius that brought terror to the stage, because his scarred face forced him to live outside of society.";
+			next;
+			mes "[Isac Mari]";
+			mes "However, he fell in love with a beautiful singer and used his talents to propel her to new heights of fame. He finally revealed himself to her.";
+			next;
+			mes "[Isac Mari]";
+			mes "In the end...";
+			mes "She deeply cared for him, but was in love with another singer. The Phantom disappeared, perhaps to haunt some other place, and all that was left of him was his mask...";
+			next;
+			mes "[Isac Mari]";
+			mes "The mask that he was wearing is differently shaped that other opera masks, and was made to cover his particular facial scarring.";
+			next;
+			mes "[Isac Mari]";
+			mes "If you want to make Phantom of Opera. You will need:";
+			mes "^3355FF1 Opera Masque^000000";
+			mes "^3355FF50 Horrendous Hair^000000";
+			next;
+			mes "[Isac Mari]";
+			mes "If you bring all the items then I will make it for you right away. See you later~";
 			close;
-
-		ssL_NoItems:
-			mes "[Mari Isac]";
-			mes "You don't seem to have enough items for me to make that hat.  Please come back when you do.";
-			close;
+		}
+	}
 }
 
 // Doomed Swords - Comodo Portion. (Continued in Juno)
