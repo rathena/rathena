@@ -2449,23 +2449,23 @@ int mob_class_change (struct mob_data *md, int class_)
 
 	nullpo_retr(0, md);
 
-	if (md->bl.prev == NULL)
+	if( md->bl.prev == NULL )
 		return 0;
 
 	//Disable class changing for some targets...
 	if (md->guardian_data)
 		return 0; //Guardians/Emperium
 
-	if (md->class_ >= 1324 && md->class_ <= 1363)
+	if( (md->class_ >= 1324 && md->class_ <= 1363) || (md->class_ >= 1938 && md->class_ <= 1946) )
 		return 0; //Treasure Boxes
 
-	if (md->special_state.ai > 1)
+	if( md->special_state.ai > 1 )
 		return 0; //Marine Spheres and Floras.
 
-	if (mob_is_clone(md->class_))
+	if( mob_is_clone(md->class_) )
 		return 0; //Clones
 
-	if (md->class_ == class_)
+	if( md->class_ == class_ )
 		return 0; //Nothing to change.
 
 	hp_rate = get_percentage(md->status.hp, md->status.max_hp);
@@ -3445,7 +3445,7 @@ static bool mob_parse_dbrow(char** str)
 		}
 		type = itemdb_type(db->dropitem[i].nameid);
 		rate = atoi(str[k+1]);
-		if (class_ >= 1324 && class_ <= 1363)
+		if( (class_ >= 1324 && class_ <= 1363) || (class_ >= 1938 && class_ <= 1946) )
 		{	//Treasure box drop rates [Skotlex]
 			rate_adjust = battle_config.item_rate_treasure;
 			ratemin = battle_config.item_drop_treasure_min;

@@ -3388,8 +3388,9 @@ int pc_steal_item(struct map_session_data *sd,struct block_list *bl, int lv)
 	sd_status= status_get_status_data(&sd->bl);
 	md_status= status_get_status_data(bl);
 
-	if(md->master_id || md_status->mode&MD_BOSS ||
-		(md->class_>=1324 && md->class_<1364) || // prevent stealing from treasure boxes [Valaris]
+	if( md->master_id || md_status->mode&MD_BOSS ||
+		(md->class_ >= 1324 && md->class_ < 1364) || // Treasure Boxes WoE
+		(md->class_ >= 1938 && md->class_ < 1946) || // Treasure Boxes WoE SE
 		map[bl->m].flag.nomobloot || // check noloot map flag [Lorky]
 		(battle_config.skill_steal_max_tries && //Reached limit of steal attempts. [Lupus]
 			md->state.steal_flag++ >= battle_config.skill_steal_max_tries)
@@ -3460,10 +3461,10 @@ int pc_steal_coin(struct map_session_data *sd,struct block_list *target)
 		return 0;
 
 	md = (TBL_MOB*)target;
-	if(md->state.steal_coin_flag || md->sc.data[SC_STONE] || md->sc.data[SC_FREEZE])
+	if( md->state.steal_coin_flag || md->sc.data[SC_STONE] || md->sc.data[SC_FREEZE] )
 		return 0;
 
-	if (md->class_>=1324 && md->class_<1364)
+	if( (md->class_ >= 1324 && md->class_ < 1364) || (md->class_ >= 1938 && md->class_ < 1946) )
 		return 0;
 
 	skill = pc_checkskill(sd,RG_STEALCOIN)*10;
