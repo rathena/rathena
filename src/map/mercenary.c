@@ -76,7 +76,7 @@ int merc_create(struct map_session_data *sd, int class_, unsigned int lifetime)
 	merc.class_ = class_;
 	merc.hp = db->status.max_hp;
 	merc.sp = db->status.max_sp;
-	merc.remain_life_time = lifetime;
+	merc.life_time = lifetime;
 
 	// Request Char Server to create this mercenary
 	intif_mercenary_create(&merc);
@@ -84,19 +84,21 @@ int merc_create(struct map_session_data *sd, int class_, unsigned int lifetime)
 	return 1;
 }
 
+int mercenary_get_lifetime(struct mercenary_data *md)
+{
+	const struct TimerData * td;
+	if( md == NULL )
+		return 0;
+
+	td = get_timer(md->contract_timer);
+	return (td != NULL) ? DIFF_TICK(td->tick, gettick()) : 0;
+}
+
 int mercenary_save(struct mercenary_data *md)
 {
-	const struct TimerData * td = get_timer(md->contract_timer);
-
 	md->mercenary.hp = md->battle_status.hp;
 	md->mercenary.sp = md->battle_status.sp;
-	if( td != NULL )
-		md->mercenary.remain_life_time = DIFF_TICK(td->tick, gettick());
-	else
-	{
-		md->mercenary.remain_life_time = 0;
-		ShowWarning("mercenary_save : mercenary without timer (tid %d)\n", md->contract_timer);
-	}
+	md->mercenary.life_time = mercenary_get_lifetime(md);
 
 	intif_mercenary_save(&md->mercenary);
 	return 1;
@@ -127,7 +129,7 @@ static int merc_contract_end(int tid, unsigned int tick, int id, intptr data)
 int merc_delete(struct mercenary_data *md, int reply)
 {
 	struct map_session_data *sd = md->master;
-	md->mercenary.remain_life_time = 0;
+	md->mercenary.life_time = 0;
 
 	merc_contract_stop(md);
 
@@ -149,7 +151,7 @@ void merc_contract_stop(struct mercenary_data *md)
 void merc_contract_init(struct mercenary_data *md)
 {
 	if( md->contract_timer == INVALID_TIMER )
-		md->contract_timer = add_timer(gettick() + md->mercenary.remain_life_time, merc_contract_end, md->master->bl.id, 0);
+		md->contract_timer = add_timer(gettick() + md->mercenary.life_time, merc_contract_end, md->master->bl.id, 0);
 
 	md->regen.state.block = 0;
 }

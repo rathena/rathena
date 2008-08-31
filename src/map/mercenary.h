@@ -47,5 +47,6 @@ int mercenary_dead(struct mercenary_data *md, struct block_list *src);
 int do_init_mercenary(void);
 int merc_delete(struct mercenary_data *md, int reply);
 void merc_contract_stop(struct mercenary_data *md);
+int mercenary_get_lifetime(struct mercenary_data *md);
 
 #endif /* _MERCENARY_H_ */

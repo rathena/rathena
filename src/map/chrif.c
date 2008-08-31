@@ -286,7 +286,7 @@ int chrif_save(struct map_session_data *sd, int flag)
 		intif_save_petdata(sd->status.account_id,&sd->pd->pet);
 	if( sd->hd && merc_is_hom_active(sd->hd) )
 		merc_save(sd->hd);
-	if( sd->md && sd->md->mercenary.remain_life_time > 0 )
+	if( sd->md && mercenary_get_lifetime(sd->md) > 0 )
 		mercenary_save(sd->md);
 
 	return 0;

@@ -240,7 +240,7 @@ struct s_mercenary {
 	short class_;
 	int hp, sp;
 	unsigned int kill_count;
-	unsigned int remain_life_time;
+	unsigned int life_time;
 };
 
 struct s_friend {

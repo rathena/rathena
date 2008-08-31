@@ -1850,14 +1850,13 @@ int unit_remove_map_(struct block_list *bl, int clrtype, const char* file, int l
 			map_freeblock_unlock();
 			return 0;
 		}
-
 		break;
 	}
 	case BL_MER:
 	{
 		struct mercenary_data *md = (struct mercenary_data *)bl;
 		ud->canact_tick = ud->canmove_tick;
-		if( !md->mercenary.remain_life_time && !(md->master && !md->master->state.active) )
+		if( mercenary_get_lifetime(md) <= 0 && !(md->master && !md->master->state.active) )
 		{
 			clif_clearunit_area(bl,clrtype);
 			map_delblock(bl);
@@ -2097,7 +2096,7 @@ int unit_free(struct block_list *bl, int clrtype)
 			struct map_session_data *sd = md->master;
 			if( clrtype >= 0 )
 			{
-				if( md->mercenary.remain_life_time > 0 )
+				if( mercenary_get_lifetime(md) > 0 )
 					mercenary_save(md);
 				else
 				{

@@ -12434,7 +12434,7 @@ void clif_mercenary_info(struct map_session_data *sd)
 	WFIFOL(fd,52) = status->max_hp;
 	WFIFOL(fd,56) = status->sp;
 	WFIFOL(fd,60) = status->max_sp;
-	WFIFOL(fd,64) = (int)time(NULL) + (md->mercenary.remain_life_time / 1000);
+	WFIFOL(fd,64) = (int)time(NULL) + (mercenary_get_lifetime(md) / 1000);
 	WFIFOW(fd,68) = 0; // Loyalty
 	WFIFOL(fd,70) = 0; // Summon Count
 	WFIFOL(fd,74) = md->mercenary.kill_count;
