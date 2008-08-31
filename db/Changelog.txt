@@ -40,6 +40,8 @@
 	2385 Recuvative_Armor		Should trigger HP/SP return with magical kills as well.
 
 =======================
+2008/08/31
+	* Rev. 13160 Added item effects for Mercenary potions. [L0ne_W0lf] 
 2008/08/29
 	* Rev. 13153 Couple small corrections to the mob database. [L0ne_W0lf]
 2008/08/25
