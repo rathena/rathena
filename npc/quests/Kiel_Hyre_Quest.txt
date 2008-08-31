@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf (Script), DZeroX (Timer)
 //===== Current Version: ===================================== 
-//= 4.2
+//= 4.2a
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -89,6 +89,7 @@
 //=     Updated comments for get/delitem commands.
 //= 4.1 Added an 'end;' to Kiel Hyre's dialog for the "Yes" option for if you want to confront Kiehl.
 //= 4.2 Fixed some issues reported in bugreport:2129. [L0ne_W0lf]
+//= 3.2a Follow up to last update. [L0ne_W0lf]
 //============================================================ 
 
 //============================================================================
@@ -104,8 +105,6 @@
 //  - I've fixed a few of iRO's mistakes, but I'm sure I made some of my own. 
 //  - Will probably require a major optimizing.
 //  - Not going to list ALL of the more usless NPCs. (Doors + Empty "Beautiful Ladies")
-//  - Near the end I finshed the quest with some people. Used packet logging to get dialog.
-//    Because of the above mentioned, NPC placement and dialog is a little sloppier.
 //  - Parties are *NOT REQUIRED* as per Doddler's Wiki information.
 //
 //----------------------------------------------------------------------------
@@ -1491,7 +1490,7 @@ kh_school,179,39,0	script	Cute Student#kh	895,{
 			}
 		}
 	}
-	else if (KielHyreQuest >= 24 || KielHyreQuest >= 26) {
+	else if (KielHyreQuest >= 24 || KielHyreQuest <= 26) {
 		cutin "kh_elly04",2;
 		mes "[Elly]";
 		mes "Argh, I'm in a fix!";
@@ -1542,7 +1541,7 @@ kh_school,179,39,0	script	Cute Student#kh	895,{
 // Elly's Window 
 //----------------------------------------------------------------------------
 yuno_fild08,69,185,0	script	Window#kh	111,{
-	if (KielHyreQuest > 29) {
+	if (KielHyreQuest < 29) {
 		mes "^3355FFYou can see a curtain";
 		mes "decorated with a cute";
 		mes "design through the";
@@ -1551,7 +1550,7 @@ yuno_fild08,69,185,0	script	Window#kh	111,{
 		mes "used by a young girl.^000000";
 		close;
 	}
-	if (KielHyreQuest > 30) {
+	else if (KielHyreQuest== 29) {
 		mes "^3355FFThis must be Elly's room.";
 		mes "It doesn't sound like anyone";
 		mes "is inside, so she probably";
@@ -1561,7 +1560,7 @@ yuno_fild08,69,185,0	script	Window#kh	111,{
 		mes "in their cottage's Study.^000000";
 		close;
 	}
-	if ((KielHyreQuest <= 30) && (KielHyreQuest >= 45)) {
+	else if ((KielHyreQuest >= 30) && (KielHyreQuest <= 45)) {
 		mes "^3355FFThis slightly open window";
 		mes "must lead into Elly's room.";
 		mes "Although she asked you to";
@@ -3327,7 +3326,7 @@ kh_vila,185,68,0	script	Test Tube::TestTubeKHQ2	111,{
 // Robotic's Factory; Heavy Door
 //----------------------------------------------------------------------------
 kh_dun01,235,48,0	script	Heavy Door#kh1::HeavyDoorKHQ1	111,{
-	if (KielHyreQuest > 38) {
+	if (KielHyreQuest < 38) {
 		mes "^3355FFThere is a large, heavy";
 		mes "door infront of you.^000000";
 		next;
@@ -3347,7 +3346,7 @@ kh_dun01,235,48,0	script	Heavy Door#kh1::HeavyDoorKHQ1	111,{
 			close;
 		}
 	}
-	else if ((KielHyreQuest <= 38) && (KielHyreQuest > 46)) {
+	else if ((KielHyreQuest >= 38) && (KielHyreQuest < 46)) {
 		mes "^3355FFThere is a large, heavy";
 		mes "door in front of you.^000000";
 		next;

@@ -1,5 +1,7 @@
 ﻿Date		Added
 ======
+2008/08/31
+	* Rev. 13154 Fixed blatant errors that I added to Keil Hyre Quest. [L0ne_W0lf]
 2008/08/29
 	* Rev. 13152 Just fixing some reported script bug. [L0ne_W0lf]
 	- Fixed coordinate in level 60 arena. (bugreport:1663)
