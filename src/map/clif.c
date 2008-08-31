@@ -7881,17 +7881,26 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 	}
 
 	//homunculus [blackhole89]
-	if(merc_is_hom_active(sd->hd)) {
+	if( merc_is_hom_active(sd->hd) )
+	{
 		map_addblock(&sd->hd->bl);
 		clif_spawn(&sd->hd->bl);
 		clif_send_homdata(sd,0,0);
 		clif_hominfo(sd,sd->hd,1);
 		clif_hominfo(sd,sd->hd,0); //for some reason, at least older clients want this sent twice
 		clif_homskillinfoblock(sd);
-		if (battle_config.hom_setting&0x8)
+		if( battle_config.hom_setting&0x8 )
 			status_calc_bl(&sd->hd->bl, SCB_SPEED); //Homunc mimic their master's speed on each map change
-		if (!(battle_config.hom_setting&0x2))
+		if( !(battle_config.hom_setting&0x2) )
 			skill_unit_move(&sd->hd->bl,gettick(),1); // apply land skills immediately
+	}
+
+	if( sd->md )
+	{
+		map_addblock(&sd->md->bl);
+		clif_spawn(&sd->md->bl);
+		clif_mercenary_info(sd);
+		clif_mercenary_skillblock(sd);
 	}
 
 	if(sd->state.connect_new) {
@@ -12364,6 +12373,35 @@ void clif_send_quest_status(struct map_session_data * sd, int quest_id, bool act
 /*==========================================
  * Mercenary System
  *==========================================*/
+void clif_mercenary_updatestatus(struct map_session_data *sd, int type)
+{
+	struct mercenary_data *md;
+	int fd;
+	if( sd == NULL || (md = sd->md) == NULL )
+		return;
+
+	fd = sd->fd;
+	WFIFOHEAD(fd,8);
+	WFIFOW(fd,0) = 0x02a2;
+	WFIFOW(fd,2) = type;
+	switch( type )
+	{
+		case SP_HP:
+			WFIFOL(fd,4) = md->battle_status.hp;
+			break;
+		case SP_MAXHP:
+			WFIFOL(fd,4) = md->battle_status.max_hp;
+			break;
+		case SP_SP:
+			WFIFOL(fd,4) = md->battle_status.sp;
+			break;
+		case SP_MAXSP:
+			WFIFOL(fd,4) = md->battle_status.max_sp;
+			break;
+	}
+	WFIFOSET(fd,8);
+}
+
 void clif_mercenary_info(struct map_session_data *sd)
 {
 	int fd;
@@ -12389,7 +12427,7 @@ void clif_mercenary_info(struct map_session_data *sd)
 	WFIFOW(fd,14) = status->def + (status->vit/2);
 	WFIFOW(fd,16) = status->mdef;
 	WFIFOW(fd,18) = status->flee;
-	WFIFOW(fd,20) = status->aspd_rate;
+	WFIFOW(fd,20) = status->amotion;
 	safestrncpy((char*)WFIFOP(fd,22), md->db->name, NAME_LENGTH);
 	WFIFOW(fd,46) = md->db->lv;
 	WFIFOL(fd,48) = status->hp;
@@ -12400,7 +12438,7 @@ void clif_mercenary_info(struct map_session_data *sd)
 	WFIFOW(fd,68) = 0; // Loyalty
 	WFIFOL(fd,70) = 0; // Summon Count
 	WFIFOL(fd,74) = md->mercenary.kill_count;
-	WFIFOW(fd,78) = 0;
+	WFIFOW(fd,78) = md->battle_status.rhw.range;
 	WFIFOSET(fd,80);
 }
 
@@ -12433,35 +12471,6 @@ void clif_mercenary_skillblock(struct map_session_data *sd)
 
 	WFIFOW(fd,2) = len;
 	WFIFOSET(fd,len);
-}
-
-void clif_mercenary_updatestatus(struct map_session_data *sd, int type)
-{
-	struct mercenary_data *md;
-	int fd;
-	if( sd == NULL || (md = sd->md) == NULL )
-		return;
-
-	fd = sd->fd;
-	WFIFOHEAD(fd,8);
-	WFIFOW(fd,0) = 0x02a2;
-	WFIFOW(fd,2) = type;
-	switch( type )
-	{
-		case SP_HP:
-			WFIFOL(fd,4) = md->battle_status.hp;
-			break;
-		case SP_MAXHP:
-			WFIFOL(fd,4) = md->battle_status.max_hp;
-			break;
-		case SP_SP:
-			WFIFOL(fd,4) = md->battle_status.sp;
-			break;
-		case SP_MAXSP:
-			WFIFOL(fd,4) = md->battle_status.max_sp;
-			break;
-	}
-	WFIFOSET(fd,8);
 }
 
 void clif_parse_mercenary_action(int fd, struct map_session_data* sd)

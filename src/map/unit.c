@@ -1238,20 +1238,23 @@ int unit_attack(struct block_list *src,int target_id,int continuous)
 
 	nullpo_retr(0, ud = unit_bl2ud(src));
 
-	target=map_id2bl(target_id);
-	if(target==NULL || status_isdead(target)) {
+	target = map_id2bl(target_id);
+	if( target==NULL || status_isdead(target) )
+	{
 		unit_unattackable(src);
 		return 1;
 	}
 
-	if( src->type == BL_PC ){
+	if( src->type == BL_PC )
+	{
 		TBL_PC* sd = (TBL_PC*)src;
 		if( target->type == BL_NPC )
-		{// monster npcs [Valaris]
+		{ // monster npcs [Valaris]
 			npc_click(sd,(TBL_NPC*)target); // submitted by leinsirk10 [Celest]
 			return 0;
-		} else if( pc_is90overweight(sd) )
-		{// overwheight - stop attacking and walking
+		}
+		else if( pc_is90overweight(sd) )
+		{ // overwheight - stop attacking and walking
 			unit_stop_attack(src);
 			unit_stop_walking(src,1);
 			return 0;
@@ -1427,42 +1430,46 @@ static int unit_attack_timer_sub(struct block_list* src, int tid, unsigned int t
 	struct mob_data *md = NULL;
 	int range;
 	
-	if((ud=unit_bl2ud(src))==NULL)
+	if( (ud=unit_bl2ud(src))==NULL )
 		return 0;
-	if(ud->attacktimer != tid){
+	if( ud->attacktimer != tid )
+	{
 		ShowError("unit_attack_timer %d != %d\n",ud->attacktimer,tid);
 		return 0;
 	}
+
 	sd = BL_CAST(BL_PC, src);
 	md = BL_CAST(BL_MOB, src);
 	ud->attacktimer = INVALID_TIMER;
 	target=map_id2bl(ud->target);
 
-	if(src == NULL || src->prev == NULL || target==NULL || target->prev == NULL)
+	if( src == NULL || src->prev == NULL || target==NULL || target->prev == NULL )
 		return 0;
 
-	if(status_isdead(src) || status_isdead(target) || !status_check_skilluse(src, target, 0, 0))
+	if( status_isdead(src) || status_isdead(target) || !status_check_skilluse(src, target, 0, 0) )
 		return 0; // can't attack under these conditions
 
-	if (src->m != target->m)
+	if( src->m != target->m )
 	{
-		if (src->type == BL_MOB && mob_warpchase((TBL_MOB*)src, target))
+		if( src->type == BL_MOB && mob_warpchase((TBL_MOB*)src, target) )
 			return 1; // Follow up.
 		return 0;
 	}
 
-	if(ud->skilltimer != -1 && !(sd && pc_checkskill(sd,SA_FREECAST) > 0))
+	if( ud->skilltimer != -1 && !(sd && pc_checkskill(sd,SA_FREECAST) > 0) )
 		return 0; // can't attack while casting
 	
-	if(!battle_config.sdelay_attack_enable && DIFF_TICK(ud->canact_tick,tick) > 0 && !(sd && pc_checkskill(sd,SA_FREECAST) > 0))
-	{	// attacking when under cast delay has restrictions:
-		if (tid == -1) { //requested attack.
+	if( !battle_config.sdelay_attack_enable && DIFF_TICK(ud->canact_tick,tick) > 0 && !(sd && pc_checkskill(sd,SA_FREECAST) > 0) )
+	{ // attacking when under cast delay has restrictions:
+		if( tid == -1 )
+		{ //requested attack.
 			if(sd) clif_skill_fail(sd,1,4,0);
 			return 0;
 		}
 		//Otherwise, we are in a combo-attack, delay this until your canact time is over. [Skotlex]
-		if(ud->state.attack_continue) {
-			if (DIFF_TICK(ud->canact_tick, ud->attackabletime) > 0)
+		if( ud->state.attack_continue )
+		{
+			if( DIFF_TICK(ud->canact_tick, ud->attackabletime) > 0 )
 				ud->attackabletime = ud->canact_tick;
 			ud->attacktimer=add_timer(ud->attackabletime,unit_attack_timer,src->id,0);
 		}
@@ -1472,20 +1479,24 @@ static int unit_attack_timer_sub(struct block_list* src, int tid, unsigned int t
 	sstatus = status_get_status_data(src);
 	range = sstatus->rhw.range;
 	
-	if(!sd || sd->status.weapon != W_BOW) range++; //Dunno why everyone but bows gets this extra range...
-	if(unit_is_walking(target)) range++; //Extra range when chasing
+	if( !sd || sd->status.weapon != W_BOW )
+		range++; //Dunno why everyone but bows gets this extra range...
+	if( unit_is_walking(target) )
+		range++; //Extra range when chasing
 
-	if(!check_distance_bl(src,target,range) ) {
-		//Chase if required.
+	if( !check_distance_bl(src,target,range) )
+	{ //Chase if required.
 		if(sd)
 			clif_movetoattack(sd,target);
 		else if(ud->state.attack_continue)
 			unit_walktobl(src,target,ud->chaserange,ud->state.walk_easy|2);
 		return 1;
 	}
-	if(!battle_check_range(src,target,range)) {
+	if( !battle_check_range(src,target,range) )
+	{
 	  	//Within range, but no direct line of attack
-		if(ud->state.attack_continue) {
+		if( ud->state.attack_continue )
+		{
 			if(ud->chaserange > 2) ud->chaserange-=2;
 			unit_walktobl(src,target,ud->chaserange,ud->state.walk_easy|2);
 		}
@@ -1496,7 +1507,7 @@ static int unit_attack_timer_sub(struct block_list* src, int tid, unsigned int t
 	//Non-players use the sync packet on the walk timer. [Skotlex]
 	if (tid == -1 && sd) clif_fixpos(src);
 
-	if(DIFF_TICK(ud->attackabletime,tick) <= 0)
+	if( DIFF_TICK(ud->attackabletime,tick) <= 0 )
 	{
 		if (battle_config.attack_direction_change && (src->type&battle_config.attack_direction_change)) {
 			ud->dir = map_calc_dir(src, target->x,target->y );
@@ -2097,6 +2108,8 @@ int unit_free(struct block_list *bl, int clrtype)
 			}
 			if( sd )
 				sd->md = NULL;
+
+			merc_contract_stop(md);
 			break;
 		}
 	}

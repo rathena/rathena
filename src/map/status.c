@@ -698,6 +698,7 @@ int status_damage(struct block_list *src,struct block_list *target,int hp, int s
 		case BL_PC:  pc_damage((TBL_PC*)target,src,hp,sp); break;
 		case BL_MOB: mob_damage((TBL_MOB*)target, src, hp); break;
 		case BL_HOM: merc_damage((TBL_HOM*)target,src,hp,sp); break;
+		case BL_MER: mercenary_damage((TBL_MER*)target,src,hp,sp); break;
 	}
 
 	if (status->hp)
@@ -717,6 +718,7 @@ int status_damage(struct block_list *src,struct block_list *target,int hp, int s
 		case BL_PC:  flag = pc_dead((TBL_PC*)target,src); break;
 		case BL_MOB: flag = mob_dead((TBL_MOB*)target, src, flag&4?3:0); break;
 		case BL_HOM: flag = merc_hom_dead((TBL_HOM*)target,src); break;
+		case BL_MER: flag = mercenary_dead((TBL_MER*)target,src); break;
 		default:	//Unhandled case, do nothing to object.
 			flag = 0;
 			break;
@@ -2394,9 +2396,9 @@ int status_calc_mercenary(struct mercenary_data *md, int first)
 	}
 
 	status_calc_misc(&md->bl, status, md->db->lv);
-	status_cpy(&md->base_status, status);
+	status_cpy(&md->battle_status, status);
 	status_calc_bl(&md->bl, SCB_ALL);
-		
+
 	return 0;
 }
 

@@ -21,6 +21,7 @@
 #include "status.h"
 #include "mob.h"
 #include "homunculus.h"
+#include "mercenary.h"
 #include "guild.h"
 #include "itemdb.h"
 #include "skill.h"
@@ -1293,9 +1294,9 @@ static bool mob_ai_sub_hard(struct mob_data *md, unsigned int tick)
 			}
 		}
 		else
-		if( (abl= map_id2bl(md->attacked_id)) && (!tbl || mob_can_changetarget(md, abl, mode)) )
+		if( (abl = map_id2bl(md->attacked_id)) && (!tbl || mob_can_changetarget(md, abl, mode)) )
 		{
-			if (md->bl.m != abl->m || abl->prev == NULL
+			if( md->bl.m != abl->m || abl->prev == NULL
 			|| (dist = distance_bl(&md->bl, abl)) >= MAX_MINCHASE
 			|| battle_check_target(&md->bl, abl, BCT_ENEMY) <= 0
 			|| (battle_config.mob_ai&0x2 && !status_check_skilluse(&md->bl, abl, 0, 0)) //Retaliate check
@@ -1740,63 +1741,78 @@ int mob_respawn(int tid, unsigned int tick, int id, intptr data)
 void mob_log_damage(struct mob_data *md, struct block_list *src, int damage)
 {
 	int char_id = 0, flag = 0;
-	if(damage < 0) return; //Do nothing for absorbed damage.
 
-	if(!damage && !(src->type&DEFAULT_ENEMY_TYPE(md)))
+	if( damage < 0 )
+		return; //Do nothing for absorbed damage.
+	if( !damage && !(src->type&DEFAULT_ENEMY_TYPE(md)) )
 		return; //Do not log non-damaging effects from non-enemies.
 
-	switch (src->type) {
-	case BL_PC: 
+	switch( src->type )
 	{
-		struct map_session_data *sd = (TBL_PC*)src;
-		char_id = sd->status.char_id;
-		if (damage)
-			md->attacked_id = src->id;
-		break;
-	}
-	case BL_HOM:	//[orn]
-	{
-		struct homun_data *hd = (TBL_HOM*)src;
-		flag = 1;
-		if (hd->master)
-			char_id = hd->master->status.char_id;
-		if (damage)
-			md->attacked_id = src->id;
-		break;
-	}
-	case BL_PET:
-	{
-		struct pet_data *pd = (TBL_PET*)src;
-		if (battle_config.pet_attack_exp_to_master && pd->msd) {
-			char_id = pd->msd->status.char_id;
-			damage=(damage*battle_config.pet_attack_exp_rate)/100; //Modify logged damage accordingly.
-		}
-		//Let mobs retaliate against the pet's master [Skotlex]
-		if(pd->msd && damage)
-			md->attacked_id = pd->msd->bl.id;
-		break;
-	}
-	case BL_MOB:
-	{
-		struct mob_data* md2 = (TBL_MOB*)src;
-		if(md2->special_state.ai && md2->master_id) {
-			struct map_session_data* msd = map_id2sd(md2->master_id);
-			if (msd) char_id = msd->status.char_id;
-		}
-		if (!damage)
+		case BL_PC: 
+		{
+			struct map_session_data *sd = (TBL_PC*)src;
+			char_id = sd->status.char_id;
+			if( damage )
+				md->attacked_id = src->id;
 			break;
-		//Let players decide whether to retaliate versus the master or the mob. [Skotlex]
-		if (md2->master_id && battle_config.retaliate_to_master)
-			md->attacked_id = md2->master_id;
-		else
+		}
+		case BL_HOM:
+		{
+			struct homun_data *hd = (TBL_HOM*)src;
+			flag = 1;
+			if( hd->master )
+				char_id = hd->master->status.char_id;
+			if( damage )
+				md->attacked_id = src->id;
+			break;
+		}
+		case BL_MER:
+		{
+			struct mercenary_data *mer = (TBL_MER*)src;
+			if( mer->master )
+				char_id = mer->master->status.char_id;
+			if( damage )
+				md->attacked_id = src->id;
+			break;
+		}
+		case BL_PET:
+		{
+			struct pet_data *pd = (TBL_PET*)src;
+			if( battle_config.pet_attack_exp_to_master && pd->msd )
+			{
+				char_id = pd->msd->status.char_id;
+				damage = (damage*battle_config.pet_attack_exp_rate)/100; //Modify logged damage accordingly.
+			}
+			//Let mobs retaliate against the pet's master [Skotlex]
+			if( pd->msd && damage )
+				md->attacked_id = pd->msd->bl.id;
+			break;
+		}
+		case BL_MOB:
+		{
+			struct mob_data* md2 = (TBL_MOB*)src;
+			if( md2->special_state.ai && md2->master_id )
+			{
+				struct map_session_data* msd = map_id2sd(md2->master_id);
+				if( msd )
+					char_id = msd->status.char_id;
+			}
+			if( !damage )
+				break;
+			//Let players decide whether to retaliate versus the master or the mob. [Skotlex]
+			if( md2->master_id && battle_config.retaliate_to_master )
+				md->attacked_id = md2->master_id;
+			else
+				md->attacked_id = src->id;
+			break;
+		}
+		default: //For all unhandled types.
 			md->attacked_id = src->id;
-		break;
 	}
-	default: //For all unhandled types.
-		md->attacked_id = src->id;
-	}
-	//Log damage...
-	if(char_id) {
+	
+	if( char_id )
+	{ //Log damage...
 		int i,minpos;
 		unsigned int mindmg;
 		for(i=0,minpos=DAMAGELOG_SIZE-1,mindmg=UINT_MAX;i<DAMAGELOG_SIZE;i++){
@@ -1881,14 +1897,14 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 	unsigned int mvp_damage, tick = gettick();
 	unsigned short flaghom = 1; // [Zephyrus] Does the mob only received damage from homunculus?
 
-	if(src && src->type == BL_PC)
+	status = &md->status;
+
+	if( src && src->type == BL_PC )
 	{
 		sd = (struct map_session_data *)src;
 		mvp_sd = sd;
 	}
 
-	status = &md->status;
-		
 	if( md->guardian_data && md->guardian_data->number >= 0 && md->guardian_data->number < MAX_GUARDIANS )
 		guild_castledatasave(md->guardian_data->castle->castle_id, 10+md->guardian_data->number,0);
 
@@ -2132,14 +2148,15 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 			// attempt to drop the item
 			if (rand() % 10000 >= drop_rate)
 			{	// Double try by Bubble Gum
-				if (!(sd && sd->sc.data[SC_ITEMBOOST] && rand() % 10000 < drop_rate))
+				if (!(mvp_sd && mvp_sd->sc.data[SC_ITEMBOOST] && rand() % 10000 < drop_rate))
 					continue;
 			}
 
 			ditem = mob_setdropitem(md->db->dropitem[i].nameid, 1);
 
 			//A Rare Drop Global Announce by Lupus
-			if(drop_rate<=battle_config.rare_drop_announce) {
+			if( drop_rate <= battle_config.rare_drop_announce )
+			{
 				struct item_data *i_data;
 				char message[128];
 				i_data = itemdb_search(ditem->item_data.nameid);

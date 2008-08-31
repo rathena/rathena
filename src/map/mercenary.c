@@ -132,10 +132,10 @@ int merc_delete(struct mercenary_data *md, int reply)
 	merc_contract_stop(md);
 
 	if( !sd )
-		return unit_free(&md->bl, 1);
+		return unit_free(&md->bl, 0);
 	clif_mercenary_message(sd->fd, reply);
 	
-	return unit_remove_map(&md->bl, 1);
+	return unit_remove_map(&md->bl, 0);
 }
 
 void merc_contract_stop(struct mercenary_data *md)
@@ -211,6 +211,17 @@ int merc_data_received(struct s_mercenary *merc, bool flag)
 	}
 
 	return 1;
+}
+
+void mercenary_damage(struct mercenary_data *md, struct block_list *src, int hp, int sp)
+{
+	clif_mercenary_updatestatus(md->master, SP_HP);
+}
+
+int mercenary_dead(struct mercenary_data *md, struct block_list *src)
+{
+	merc_delete(md, 1);
+	return 0;
 }
 
 int read_mercenarydb(void)
@@ -292,6 +303,7 @@ int read_mercenarydb(void)
 			status->ele_lv = 1;
 		}
 
+		status->aspd_rate = 1000;
 		status->speed = atoi(str[22]);
 		status->adelay = atoi(str[23]);
 		status->amotion = atoi(str[24]);

@@ -873,7 +873,7 @@ int pc_reg_received(struct map_session_data *sd)
 	sd->cashPoints = pc_readaccountreg(sd,"#CASHPOINTS");
 	sd->kafraPoints = pc_readaccountreg(sd,"#KAFRAPOINTS");
 
-	if ((sd->class_&MAPID_BASEMASK)==MAPID_TAEKWON)
+	if( (sd->class_&MAPID_BASEMASK) == MAPID_TAEKWON )
 	{	//Better check for class rather than skill to prevent "skill resets" from unsetting this
 		sd->mission_mobid = pc_readglobalreg(sd,"TK_MISSION_ID");
 		sd->mission_count = pc_readglobalreg(sd,"TK_MISSION_COUNT");
@@ -3571,30 +3571,40 @@ int pc_setpos(struct map_session_data* sd, unsigned short mapindex, int x, int y
 		//Tag player for rewarping after map-loading is done. [Skotlex]
 		sd->state.rewarp = 1;
 	
-	sd->mapindex =  mapindex;
+	sd->mapindex = mapindex;
 	sd->bl.m = m;
 	sd->bl.x = sd->ud.to_x = x;
 	sd->bl.y = sd->ud.to_y = y;
 
-	if (sd->status.guild_id > 0 && map[m].flag.gvg_castle)
+	if( sd->status.guild_id > 0 && map[m].flag.gvg_castle )
 	{	// Increased guild castle regen [Valaris]
 		struct guild_castle *gc = guild_mapindex2gc(sd->mapindex);
 		if(gc && gc->guild_id == sd->status.guild_id)
 			sd->regen.state.gc = 1;
 	}
 
-	if(sd->status.pet_id > 0 && sd->pd && sd->pd->pet.intimate > 0) {
+	if( sd->status.pet_id > 0 && sd->pd && sd->pd->pet.intimate > 0 )
+	{
 		sd->pd->bl.m = m;
 		sd->pd->bl.x = sd->pd->ud.to_x = x;
 		sd->pd->bl.y = sd->pd->ud.to_y = y;
 		sd->pd->ud.dir = sd->ud.dir;
 	}
 
-	if(merc_is_hom_active(sd->hd)) {	//orn
+	if( merc_is_hom_active(sd->hd) )
+	{
 		sd->hd->bl.m = m;
 		sd->hd->bl.x = sd->hd->ud.to_x = x;
 		sd->hd->bl.y = sd->hd->ud.to_y = y;
 		sd->hd->ud.dir = sd->ud.dir;
+	}
+
+	if( sd->md )
+	{
+		sd->md->bl.m = m;
+		sd->md->bl.x = sd->hd->ud.to_x = x;
+		sd->md->bl.y = sd->hd->ud.to_y = y;
+		sd->md->ud.dir = sd->ud.dir;
 	}
 
 	return 0;
@@ -4925,8 +4935,11 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 			pet_unlocktarget(sd->pd);
 	}
 
-	if(sd->status.hom_id > 0 && battle_config.homunculus_auto_vapor)	//orn
+	if( sd->status.hom_id > 0 && battle_config.homunculus_auto_vapor )
 		merc_hom_vaporize(sd, 0);
+
+	if( sd->md )
+		merc_delete(sd->md, 3); // Your mercenary soldier has ran away.
 
 	// Leave duel if you die [LuzZza]
 	if(battle_config.duel_autoleave_when_die) {
@@ -4968,6 +4981,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 			status_calc_mob(md, 0);
 			status_percent_heal(src,10,0);
 		}
+		src = battle_get_master(src); // Maybe Player Summon
 	}
 	break;
 	case BL_PET: //Pass on to master...
@@ -4975,6 +4989,9 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 	break;
 	case BL_HOM:
 		src = &((TBL_HOM*)src)->master->bl;
+	break;
+	case BL_MER:
+		src = &((TBL_MER*)src)->master->bl;
 	break;
 	}
 
