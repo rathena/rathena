@@ -3501,7 +3501,7 @@ static bool mob_parse_dbrow(char** str)
 		db->dropitem[i].p = mob_drop_adjust(rate, rate_adjust, ratemin, ratemax);
 		
 		//calculate and store Max available drop chance of the item
-		if (db->dropitem[i].p && (class_ < 1324 || class_ > 1363)) { //Skip treasure chests.
+		if (db->dropitem[i].p && (class_ < 1324 || class_ > 1363) && (class_ < 1938 || class_ > 1946) { //Skip treasure chests.
 			id = itemdb_search(db->dropitem[i].nameid);
 			if (id->maxchance == 10000 || (id->maxchance < db->dropitem[i].p) ) {
 				id->maxchance = db->dropitem[i].p; //item has bigger drop chance or sold in shops
