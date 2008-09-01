@@ -1,6 +1,7 @@
 ﻿Date		Added
 ======
 2008/09/01
+	* Rev. 13175 Updating god item seal quests (1/5) [L0ne_W0lf]
 	* Rev. 13174 More bugfixes tot he keil Hyre quest. [L0ne_W0lf]
 	* Rev. 13173 Fixed item requirements for PH D. Hat. [L0ne_W0lf]
 	* Rev. 13168 Updated refiner and related merchants. [L0ne_W0lf]
