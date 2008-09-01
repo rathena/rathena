@@ -395,19 +395,22 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,int damage,i
 		}
 
 		//Now damage increasing effects
-		if(sc->data[SC_AETERNA] && skill_num != PF_SOULBURN){
-			damage<<=1;
-			//Shouldn't end until Breaker's non-weapon part connects.
-			if (skill_num != ASC_BREAKER || !(flag&BF_WEAPON))
-				status_change_end( bl,SC_AETERNA,-1 );
+		if( sc->data[SC_AETERNA] && skill_num != PF_SOULBURN )
+		{
+			if( src->type != BL_MER || skill_num == 0 )
+				damage <<= 1; // Lex Aeterna only doubles damage of regular attacks from mercenaries
+
+			if( skill_num != ASC_BREAKER || !(flag&BF_WEAPON) )
+				status_change_end( bl,SC_AETERNA,-1 ); //Shouldn't end until Breaker's non-weapon part connects.
 		}
 
 		//Finally damage reductions....
-		if(sc->data[SC_ASSUMPTIO]){
-			if(map_flag_vs(bl->m))
-				damage=damage*2/3; //Receive 66% damage
+		if( sc->data[SC_ASSUMPTIO] )
+		{
+			if( map_flag_vs(bl->m) )
+				damage = damage*2/3; //Receive 66% damage
 			else
-				damage>>=1; //Receive 50% damage
+				damage >>= 1; //Receive 50% damage
 		}
 
 		if(sc->data[SC_DEFENDER] &&
@@ -3264,10 +3267,7 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 		if (flag&(BCT_GUILD|BCT_ENEMY)) {
 			int s_guild = status_get_guild_id(s_bl);
 			int t_guild = status_get_guild_id(t_bl);
-			if (
-				!(map[m].flag.pvp && map[m].flag.pvp_noguild) &&
-				s_guild && t_guild && (s_guild == t_guild || guild_isallied(s_guild, t_guild))
-			)
+			if( !(map[m].flag.pvp && map[m].flag.pvp_noguild) && s_guild && t_guild && (s_guild == t_guild || guild_isallied(s_guild, t_guild)) )
 				state |= BCT_GUILD;
 			else
 				state |= BCT_ENEMY;

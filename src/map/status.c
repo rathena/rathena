@@ -1125,10 +1125,10 @@ int status_check_skilluse(struct block_list *src, struct block_list *target, int
 	hide_flag = flag?OPTION_HIDE:(OPTION_HIDE|OPTION_CLOAK|OPTION_CHASEWALK);
 		
  	//You cannot hide from ground skills.
-	if(skill_get_ele(skill_num,1) == ELE_EARTH) //TODO: Need Skill Lv here :/
+	if( skill_get_ele(skill_num,1) == ELE_EARTH ) //TODO: Need Skill Lv here :/
 		hide_flag &= ~OPTION_HIDE;
 
-	switch (target->type)
+	switch( target->type )
 	{
 	case BL_PC:
 		{
@@ -1146,13 +1146,13 @@ int status_check_skilluse(struct block_list *src, struct block_list *target, int
 			return 1;
 		return 0;
 	case BL_HOM: 
-		//Can't use support skills on homun (only master/self can)
-		//Placed here instead of battle_check_target because support skill
-		//invocations don't call that function.
-		if (skill_num && battle_config.hom_setting&0x1 &&
-			skill_get_inf(skill_num)&INF_SUPPORT_SKILL &&
-			battle_get_master(target) != src)
-			return 0;
+	case BL_MER:
+		if( target->type == BL_HOM && skill_num && battle_config.hom_setting&0x1 && skill_get_inf(skill_num)&INF_SUPPORT_SKILL && battle_get_master(target) != src )
+			return 0; // Can't use support skills on Homunculus (only Master/Self)
+		if( target->type == BL_MER && (skill_num == PR_ASPERSIO || (skill_num >= SA_FLAMELAUNCHER && skill_num <= SA_SEISMICWEAPON)) && battle_get_master(target) != src )
+			return 0; // Can't use Weapon endow skills on Mercenary (only Master)
+		if( target->type == BL_MER && skill_num == AM_POTIONPITCHER )
+			return 0; // Can't use Potion Pitcher on Mercenaries
 	default:
 		//Check for chase-walk/hiding/cloaking opponents.
 		if (tsc && tsc->option&hide_flag && !(status->mode&(MD_BOSS|MD_DETECTOR)))
