@@ -5,7 +5,6 @@
 #define _INT_HOMUN_SQL_H_
 
 struct s_homunculus;
-struct s_mercenary;
 
 int inter_homunculus_sql_init(void);
 void inter_homunculus_sql_final(void);
@@ -15,7 +14,5 @@ bool mapif_homunculus_save(struct s_homunculus* hd);
 bool mapif_homunculus_load(int homun_id, struct s_homunculus* hd);
 bool mapif_homunculus_delete(int homun_id);
 bool mapif_homunculus_rename(char *name);
-
-bool mapif_mercenary_delete(int merc_id);
 
 #endif /* _INT_HOMUN_SQL_H_ */

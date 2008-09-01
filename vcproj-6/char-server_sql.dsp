@@ -219,6 +219,14 @@ SOURCE=..\src\char_sql\int_homun.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\src\char_sql\int_mercenary.c
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\char_sql\int_mercenary.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\src\char_sql\int_mail.c
 # End Source File
 # Begin Source File

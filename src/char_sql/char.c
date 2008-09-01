@@ -16,6 +16,7 @@
 #include "inter.h"
 #include "int_guild.h"
 #include "int_homun.h"
+#include "int_mercenary.h"
 #include "int_party.h"
 #include "int_storage.h"
 #include "char.h"
@@ -463,7 +464,7 @@ int mmo_char_tosql(int char_id, struct mmo_charstatus* p)
 		(p->int_ != cp->int_) || (p->dex != cp->dex) || (p->luk != cp->luk) ||
 		(p->option != cp->option) ||
 		(p->party_id != cp->party_id) || (p->guild_id != cp->guild_id) ||
-		(p->pet_id != cp->pet_id) || (p->weapon != cp->weapon) || (p->hom_id != cp->hom_id) || (p->mer_id != cp->mer_id) ||
+		(p->pet_id != cp->pet_id) || (p->weapon != cp->weapon) || (p->hom_id != cp->hom_id) ||
 		(p->shield != cp->shield) || (p->head_top != cp->head_top) ||
 		(p->head_mid != cp->head_mid) || (p->head_bottom != cp->head_bottom)
 	)
@@ -472,7 +473,7 @@ int mmo_char_tosql(int char_id, struct mmo_charstatus* p)
 			"`base_exp`='%u', `job_exp`='%u', `zeny`='%d',"
 			"`max_hp`='%d',`hp`='%d',`max_sp`='%d',`sp`='%d',`status_point`='%d',`skill_point`='%d',"
 			"`str`='%d',`agi`='%d',`vit`='%d',`int`='%d',`dex`='%d',`luk`='%d',"
-			"`option`='%d',`party_id`='%d',`guild_id`='%d',`pet_id`='%d',`homun_id`='%d',`mer_id`='%d',"
+			"`option`='%d',`party_id`='%d',`guild_id`='%d',`pet_id`='%d',`homun_id`='%d',"
 			"`weapon`='%d',`shield`='%d',`head_top`='%d',`head_mid`='%d',`head_bottom`='%d',"
 			"`last_map`='%s',`last_x`='%d',`last_y`='%d',`save_map`='%s',`save_x`='%d',`save_y`='%d'"
 			" WHERE  `account_id`='%d' AND `char_id` = '%d'",
@@ -480,7 +481,7 @@ int mmo_char_tosql(int char_id, struct mmo_charstatus* p)
 			p->base_exp, p->job_exp, p->zeny,
 			p->max_hp, p->hp, p->max_sp, p->sp, p->status_point, p->skill_point,
 			p->str, p->agi, p->vit, p->int_, p->dex, p->luk,
-			p->option, p->party_id, p->guild_id, p->pet_id, p->hom_id, p->mer_id,
+			p->option, p->party_id, p->guild_id, p->pet_id, p->hom_id,
 			p->weapon, p->shield, p->head_top, p->head_mid, p->head_bottom,
 			mapindex_id2name(p->last_point.map), p->last_point.x, p->last_point.y,
 			mapindex_id2name(p->save_point.map), p->save_point.x, p->save_point.y,
@@ -516,6 +517,15 @@ int mmo_char_tosql(int char_id, struct mmo_charstatus* p)
 		}
 
 		strcat(save_status, " status2");
+	}
+
+	/* Mercenary Owner */
+	if( (p->mer_id != cp->mer_id) ||
+		(p->arch_calls != cp->arch_calls) || (p->arch_faith != cp->arch_faith) ||
+		(p->spear_calls != cp->spear_calls) || (p->spear_faith != cp->spear_faith) ||
+		(p->sword_calls != cp->sword_calls) || (p->sword_faith != cp->sword_faith) )
+	{
+		mercenary_owner_tosql(char_id, p);
 	}
 
 	//memo points
@@ -908,7 +918,7 @@ int mmo_char_fromsql(int char_id, struct mmo_charstatus* p, bool load_everything
 	if( SQL_ERROR == SqlStmt_Prepare(stmt, "SELECT "
 		"`char_id`,`account_id`,`char_num`,`name`,`class`,`base_level`,`job_level`,`base_exp`,`job_exp`,`zeny`,"
 		"`str`,`agi`,`vit`,`int`,`dex`,`luk`,`max_hp`,`hp`,`max_sp`,`sp`,"
-		"`status_point`,`skill_point`,`option`,`karma`,`manner`,`party_id`,`guild_id`,`pet_id`,`homun_id`,`mer_id`,`hair`,"
+		"`status_point`,`skill_point`,`option`,`karma`,`manner`,`party_id`,`guild_id`,`pet_id`,`homun_id`,`hair`,"
 		"`hair_color`,`clothes_color`,`weapon`,`shield`,`head_top`,`head_mid`,`head_bottom`,`last_map`,`last_x`,`last_y`,"
 		"`save_map`,`save_x`,`save_y`,`partner_id`,`father`,`mother`,`child`,`fame`"
 		" FROM `%s` WHERE `char_id`=? LIMIT 1", char_db)
@@ -943,26 +953,25 @@ int mmo_char_fromsql(int char_id, struct mmo_charstatus* p, bool load_everything
 	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 26, SQLDT_INT,    &p->guild_id, 0, NULL, NULL)
 	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 27, SQLDT_INT,    &p->pet_id, 0, NULL, NULL)
 	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 28, SQLDT_INT,    &p->hom_id, 0, NULL, NULL)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 29, SQLDT_INT,    &p->mer_id, 0, NULL, NULL)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 30, SQLDT_SHORT,  &p->hair, 0, NULL, NULL)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 31, SQLDT_SHORT,  &p->hair_color, 0, NULL, NULL)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 32, SQLDT_SHORT,  &p->clothes_color, 0, NULL, NULL)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 33, SQLDT_SHORT,  &p->weapon, 0, NULL, NULL)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 34, SQLDT_SHORT,  &p->shield, 0, NULL, NULL)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 35, SQLDT_SHORT,  &p->head_top, 0, NULL, NULL)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 36, SQLDT_SHORT,  &p->head_mid, 0, NULL, NULL)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 37, SQLDT_SHORT,  &p->head_bottom, 0, NULL, NULL)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 38, SQLDT_STRING, &last_map, sizeof(last_map), NULL, NULL)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 39, SQLDT_SHORT,  &p->last_point.x, 0, NULL, NULL)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 40, SQLDT_SHORT,  &p->last_point.y, 0, NULL, NULL)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 41, SQLDT_STRING, &save_map, sizeof(save_map), NULL, NULL)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 42, SQLDT_SHORT,  &p->save_point.x, 0, NULL, NULL)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 43, SQLDT_SHORT,  &p->save_point.y, 0, NULL, NULL)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 44, SQLDT_INT,    &p->partner_id, 0, NULL, NULL)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 45, SQLDT_INT,    &p->father, 0, NULL, NULL)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 46, SQLDT_INT,    &p->mother, 0, NULL, NULL)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 47, SQLDT_INT,    &p->child, 0, NULL, NULL)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 48, SQLDT_INT,    &p->fame, 0, NULL, NULL) )
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 29, SQLDT_SHORT,  &p->hair, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 30, SQLDT_SHORT,  &p->hair_color, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 31, SQLDT_SHORT,  &p->clothes_color, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 32, SQLDT_SHORT,  &p->weapon, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 33, SQLDT_SHORT,  &p->shield, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 34, SQLDT_SHORT,  &p->head_top, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 35, SQLDT_SHORT,  &p->head_mid, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 36, SQLDT_SHORT,  &p->head_bottom, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 37, SQLDT_STRING, &last_map, sizeof(last_map), NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 38, SQLDT_SHORT,  &p->last_point.x, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 39, SQLDT_SHORT,  &p->last_point.y, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 40, SQLDT_STRING, &save_map, sizeof(save_map), NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 41, SQLDT_SHORT,  &p->save_point.x, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 42, SQLDT_SHORT,  &p->save_point.y, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 43, SQLDT_INT,    &p->partner_id, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 44, SQLDT_INT,    &p->father, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 45, SQLDT_INT,    &p->mother, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 46, SQLDT_INT,    &p->child, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 47, SQLDT_INT,    &p->fame, 0, NULL, NULL) )
 	{
 		SqlStmt_ShowDebug(stmt);
 		SqlStmt_Free(stmt);
@@ -1113,6 +1122,10 @@ int mmo_char_fromsql(int char_id, struct mmo_charstatus* p, bool load_everything
 			ShowWarning("mmo_char_fromsql: ignoring invalid hotkey (hotkey=%d,type=%u,id=%u,lv=%u) of character %s (AID=%d,CID=%d)\n", hotkey_num, tmp_hotkey.type, tmp_hotkey.id, tmp_hotkey.lv, p->name, p->account_id, p->char_id);
 	}
 	strcat(t_msg, " hotkeys");
+
+	/* Mercenary Owner DataBase */
+	mercenary_owner_fromsql(char_id, p);
+
 #endif
 
 	if (save_log) ShowInfo("Loaded char (%d - %s): %s\n", char_id, p->name, t_msg);	//ok. all data load successfuly!
@@ -1364,6 +1377,7 @@ int delete_char_sql(int char_id)
 	/* remove mercenary */ 
 	if( mer_id )
 		mapif_mercenary_delete(mer_id);
+	mercenary_owner_delete(char_id);
 
 	/* delete char's friends list */
 	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `char_id` = '%d'", friend_db, char_id) )

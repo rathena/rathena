@@ -15,6 +15,7 @@
 #include "int_storage.h"
 #include "int_pet.h"
 #include "int_homun.h"
+#include "int_mercenary.h"
 #include "int_mail.h"
 #include "int_auction.h"
 #include "int_quest.h"
@@ -296,7 +297,8 @@ int inter_init_sql(const char *file)
 	inter_storage_sql_init();
 	inter_party_sql_init();
 	inter_pet_sql_init();
-	inter_homunculus_sql_init(); // albator
+	inter_homunculus_sql_init();
+	inter_mercenary_sql_init();
 	inter_accreg_sql_init();
 	inter_mail_sql_init();
 	inter_auction_sql_init();
@@ -315,7 +317,8 @@ void inter_final(void)
 	inter_storage_sql_final();
 	inter_party_sql_final();
 	inter_pet_sql_final();
-	inter_homunculus_sql_final();	//[orn]
+	inter_homunculus_sql_final();
+	inter_mercenary_sql_final();
 	inter_mail_sql_final();
 	inter_auction_sql_final();
 	
@@ -719,6 +722,7 @@ int inter_parse_frommap(int fd)
 		  || inter_storage_parse_frommap(fd)
 		  || inter_pet_parse_frommap(fd)
 		  || inter_homunculus_parse_frommap(fd)
+		  || inter_mercenary_parse_frommap(fd)
 		  || inter_mail_parse_frommap(fd)
 		  || inter_auction_parse_frommap(fd)
 		  || inter_quest_parse_frommap(fd)

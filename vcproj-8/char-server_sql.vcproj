@@ -371,6 +371,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\src\char_sql\int_mercenary.c"
+				>
+			</File>
+			<File
+				RelativePath="..\src\char_sql\int_mercenary.h"
+				>
+			</File>
+			<File
 				RelativePath="..\src\char_sql\int_party.c"
 				>
 			</File>
