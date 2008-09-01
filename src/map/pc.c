@@ -3075,7 +3075,7 @@ int pc_isUseitem(struct map_session_data *sd,int n)
 			break;
 		case 601: // Fly Wing
 		case 12212: // Giant Fly Wing
-			if( map[sd->bl.m].flag.noteleport || map_flag_gvg(sd->bl.m) || !guild_canescape(sd) )
+			if( map[sd->bl.m].flag.noteleport || map_flag_gvg(sd->bl.m) )
 			{
 				clif_skill_teleportmessage(sd,0);
 				return 0;
@@ -3091,11 +3091,6 @@ int pc_isUseitem(struct map_session_data *sd,int n)
 			if( sd->duel_group && !battle_config.duel_allow_teleport )
 			{
 				clif_displaymessage(sd->fd, "Duel: Can't use this item in duel.");
-				return 0;
-			}
-			if( !guild_canescape(sd) )
-			{ // Guild Wars
-				clif_displaymessage(sd->fd, "Guild Wars: Cannot escape in battle");
 				return 0;
 			}
 			if( nameid != 601 && nameid != 12212 && map[sd->bl.m].flag.noreturn )
