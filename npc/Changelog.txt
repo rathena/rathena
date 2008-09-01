@@ -1,7 +1,8 @@
 ﻿Date		Added
 ======
 2008/09/01
-	* Rev. 13179 Updating god item seal quests (5/5) [L0ne_W0lf]
+	* Rev. 13181 Fixed item requirements for PH D. Hat again. [L0ne_W0lf]
+	* Rev. 13180 Updating god item seal quests (5/5) [L0ne_W0lf]
 	- Disabled god item quest variable modifying NPCs.
 	* Rev. 13179 Updating god item seal quests (4/5) [L0ne_W0lf]
 	* Rev. 13178 Updating god item seal quests (3/5) [L0ne_W0lf]
