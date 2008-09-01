@@ -117,7 +117,7 @@ int mercenary_get_faith(struct mercenary_data *md)
 int mercenary_set_faith(struct mercenary_data *md, int value)
 {
 	struct map_session_data *sd;
-	int class_;
+	int class_, *faith;
 
 	if( md == NULL || md->db == NULL || (sd = md->master) == NULL )
 		return 0;
@@ -125,11 +125,15 @@ int mercenary_set_faith(struct mercenary_data *md, int value)
 	class_ = md->db->class_;
 
 	if( class_ >= 6017 && class_ <= 6026 )
-		sd->status.arch_faith += value;
+		faith = &sd->status.arch_faith;
 	else if( class_ >= 6027 && class_ <= 6036 )
-		sd->status.spear_faith += value;
+		faith = &sd->status.spear_faith;
 	else if( class_ >= 6037 && class_ <= 6046 )
-		sd->status.sword_faith += value;
+		faith = &sd->status.sword_faith;
+
+	*faith += value;
+	*faith = cap_value(*faith, 0, SHRT_MAX);
+	clif_mercenary_updatestatus(sd, SP_MERCFAITH);
 
 	return 0;
 }
@@ -157,7 +161,7 @@ int mercenary_get_calls(struct mercenary_data *md)
 int mercenary_set_calls(struct mercenary_data *md, int value)
 {
 	struct map_session_data *sd;
-	int class_;
+	int class_, *calls;
 
 	if( md == NULL || md->db == NULL || (sd = md->master) == NULL )
 		return 0;
@@ -165,11 +169,14 @@ int mercenary_set_calls(struct mercenary_data *md, int value)
 	class_ = md->db->class_;
 
 	if( class_ >= 6017 && class_ <= 6026 )
-		sd->status.arch_calls += value;
+		calls = &sd->status.arch_calls;
 	else if( class_ >= 6027 && class_ <= 6036 )
-		sd->status.spear_calls += value;
+		calls = &sd->status.spear_calls;
 	else if( class_ >= 6037 && class_ <= 6046 )
-		sd->status.sword_calls += value;
+		calls = &sd->status.sword_calls;
+
+	*calls += value;
+	*calls = cap_value(*calls, 0, INT_MAX);
 
 	return 0;
 }
@@ -215,8 +222,14 @@ int merc_delete(struct mercenary_data *md, int reply)
 
 	if( !sd )
 		return unit_free(&md->bl, 0);
+
+	switch( reply )
+	{
+		case 0: mercenary_set_faith(md, 1); break; // +1 Loyalty on Contract ends.
+		case 1: mercenary_set_faith(md, -1); break; // -1 Loyalty on Mercenary killed
+	}
+
 	clif_mercenary_message(sd->fd, reply);
-	
 	return unit_remove_map(&md->bl, 0);
 }
 
@@ -251,9 +264,7 @@ int merc_data_received(struct s_mercenary *merc, bool flag)
 		return 0;
 	}
 
-	sd->status.mer_id = merc->mercenary_id;
 	db = &mercenary_db[i];
-
 	if( !sd->md )
 	{
 		sd->md = md = (struct mercenary_data*)aCalloc(1,sizeof(struct mercenary_data));
@@ -281,9 +292,15 @@ int merc_data_received(struct s_mercenary *merc, bool flag)
 		merc_contract_init(md);
 	}
 	else
+	{
 		memcpy(&sd->md->mercenary, merc, sizeof(struct s_mercenary));
+		md = sd->md;
+	}
 
-	md = sd->md;
+	if( sd->status.mer_id == 0 )
+		mercenary_set_calls(md, 1);
+	sd->status.mer_id = merc->mercenary_id;
+
 	if( md && md->bl.prev == NULL && sd->bl.prev != NULL )
 	{
 		map_addblock(&md->bl);
@@ -311,6 +328,20 @@ void mercenary_heal(struct mercenary_data *md, int hp, int sp)
 int mercenary_dead(struct mercenary_data *md, struct block_list *src)
 {
 	merc_delete(md, 1);
+	return 0;
+}
+
+int mercenary_kills(struct mercenary_data *md)
+{
+	md->mercenary.kill_count++;
+	md->mercenary.kill_count = cap_value(md->mercenary.kill_count, 0, INT_MAX);
+
+	if( (md->mercenary.kill_count % 50) == 0 )
+		mercenary_set_faith(md, 1);
+
+	if( md->master )
+		clif_mercenary_updatestatus(md->master, SP_MERCKILLS);
+
 	return 0;
 }
 

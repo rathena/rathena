@@ -1921,16 +1921,18 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 	if(src && src->type == BL_MOB)
 		mob_unlocktarget((struct mob_data *)src,tick);
 
-	if(sd) {
+	if( sd )
+	{
 		int sp = 0, hp = 0;
 		sp += sd->sp_gain_value;
 		sp += sd->sp_gain_race[status->race];
 		sp += sd->sp_gain_race[status->mode&MD_BOSS?RC_BOSS:RC_NONBOSS];
 		hp += sd->hp_gain_value;
-		if (hp||sp)
+		if( hp || sp )
 			status_heal(src, hp, sp, battle_config.show_hp_sp_gain?2:0);
-		if (sd->mission_mobid == md->class_) { //TK_MISSION [Skotlex]
-			if (++sd->mission_count >= 100 && (temp = mob_get_random_id(0, 0xE, sd->status.base_level)))
+		if( sd->mission_mobid == md->class_)
+		{ //TK_MISSION [Skotlex]
+			if( ++sd->mission_count >= 100 && (temp = mob_get_random_id(0, 0xE, sd->status.base_level)) )
 			{
 				pc_addfame(sd, 1);
 				sd->mission_mobid = temp;
@@ -1940,6 +1942,8 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 			}
 			pc_setglobalreg(sd,"TK_MISSION_COUNT", sd->mission_count);
 		}
+		if( sd->md && (md->level > sd->status.base_level / 2) )
+			mercenary_kills(sd->md);
 	}
 
 	// filter out entries not eligible for exp distribution
@@ -3501,7 +3505,8 @@ static bool mob_parse_dbrow(char** str)
 		db->dropitem[i].p = mob_drop_adjust(rate, rate_adjust, ratemin, ratemax);
 		
 		//calculate and store Max available drop chance of the item
-		if (db->dropitem[i].p && (class_ < 1324 || class_ > 1363) && (class_ < 1938 || class_ > 1946) { //Skip treasure chests.
+		if( db->dropitem[i].p && (class_ < 1324 || class_ > 1363) && (class_ < 1938 || class_ > 1946) )
+		{ //Skip treasure chests.
 			id = itemdb_search(db->dropitem[i].nameid);
 			if (id->maxchance == 10000 || (id->maxchance < db->dropitem[i].p) ) {
 				id->maxchance = db->dropitem[i].p; //item has bigger drop chance or sold in shops

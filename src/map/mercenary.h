@@ -55,6 +55,7 @@ int mercenary_get_faith(struct mercenary_data *md);
 int mercenary_set_faith(struct mercenary_data *md, int value);
 int mercenary_get_calls(struct mercenary_data *md);
 int mercenary_set_calls(struct mercenary_data *md, int value);
+int mercenary_kills(struct mercenary_data *md);
 
 int do_init_mercenary(void);
 
