@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf (Script), DZeroX (Timer)
 //===== Current Version: ===================================== 
-//= 4.2b
+//= 4.2c
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -91,6 +91,7 @@
 //= 4.2 Fixed some issues reported in bugreport:2129. [L0ne_W0lf]
 //= 4.2a Follow up to last update. [L0ne_W0lf]
 //= 4.2b Missed a condition, fixed it though. [L0ne_W0lf]
+//= 4.2c More various fixes :D [L0ne_W0lf]
 //============================================================ 
 
 //============================================================================
@@ -1843,7 +1844,7 @@ kh_school,175,176,0	script	Cookie Basket#kh	111,{
 		mes "It was probably written";
 		mes "by Elly for you to read.^000000";
 		next;
-		mes "^333333Dearest "+name_kh+",";
+		mes "^333333Dearest "+strcharinfo(0)+",";
 		mes " ";
 		mes "My teachers usually yell at me";
 		mes "since I make so many mistakes,";
@@ -3529,7 +3530,7 @@ kh_school,122,186,4	script	Beautiful Lady#kh6	894,{
 		close;
 	}
 	cutin "kh_ellisia",2;
-	if (KielHyreQuest > 38) {
+	if (KielHyreQuest < 38) {
 		mes "[??????]";
 		mes "This is private property.";
 		mes "Please leave immediately!";
@@ -3779,7 +3780,7 @@ OnTouch:
 		mes "^333333...Kiehl...";
 		mes "...How dare you...!^000000";
 		next;
-		mes "["+name_kh+"]";
+		mes "["+strcharinfo(0)+"]";
 		mes "Mister Kiel Hyre?";
 		mes "Is that you in there?";
 		next;
@@ -3787,7 +3788,7 @@ OnTouch:
 		mes "Wh-who's there?";
 		mes "Identify yourself!";
 		next;
-		mes "["+name_kh+"]";
+		mes "["+strcharinfo(0)+"]";
 		mes "I'm... I'm...";
 		next;
 		mes "^3355FFYou explain your story";
@@ -4021,7 +4022,7 @@ kh_mansion,22,28,4	script	Kiel Hyre#kh	903,{
 		mes "questions to ask me, so I'll";
 		mes "do my best to give you answers.";
 		next;
-		while(0) {
+		while(1) {
 			switch(select("Robots?:^3355FFKiehl^000000?:^FF0000Elly^000000's button?")) {
 			case 1:
 				mes "[Kiel Hyre]";
@@ -6440,12 +6441,12 @@ kh_kiehl01,166,187,0	script	Big Door#BigDoorKHQ5	111,{
 			mes "This must be some";
 			mes "kind of security device.^000000";
 			close2;
-			set .@KHDoorPushAttempt,.@KHDoorPushAttempt+1;
+			set @KHDoorPushAttempt,@KHDoorPushAttempt+1;
 			monster "kh_kiehl01",163,183,"Alicel",1739,1;
 			monster "kh_kiehl01",163,179,"Aliot",1740,1;
 			monster "kh_kiehl01",169,183,"Alicel",1739,1;
 			monster "kh_kiehl01",169,179,"Aliot",1740,1;
-			if (.@KHDoorPushAttempt >= 3) { 
+			if (@KHDoorPushAttempt >= 3) { 
 				set KielHyreQuest,86; 
 			}
 			end;
