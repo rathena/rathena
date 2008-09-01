@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88; L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 2.4
+//= 2.5
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -43,6 +43,7 @@
 //= 2.3a Touch up to Bamph fo other fail-points. [L0ne_W0lf]
 //= 2.3b Hopefully the last change needed for Nameless quest. [L0ne_W0lf]
 //= 2.4 Updated Headgear Quest. [L0ne_W0lf]
+//= 2.5 Fixed requirements for PH D. Hat. [L0ne_W0lf]
 //============================================================ 
 
 // Prontera Culvert
@@ -163,7 +164,7 @@ prt_fild05,270,212,5	script	Culvert Guardian	105,{
 // Ph.D Hat Quest
 //============================================================ 
 prt_in,38,108,4	script	Teacher	53,{
-	if ((countitem(710) > 0) && (countitem(703) > 0) && (countitem(606) > 0) && (countitem(708) > 0)) {
+	if ((countitem(710) > 0) && (countitem(703) > 0) && (countitem(604) > 0) && (countitem(708) > 0)) {
 		mes "[Teacher]";
 		mes "Oh...";
 		mes "Those Flowers in your hand are...";
@@ -179,10 +180,10 @@ prt_in,38,108,4	script	Teacher	53,{
 			mes "I'll give you my precious item.";
 			close;
 		case 2:
-			if ((countitem(710) > 0) && (countitem(703) > 0) && (countitem(606) > 0) && (countitem(708) > 0)) {
+			if ((countitem(710) > 0) && (countitem(703) > 0) && (countitem(604) > 0) && (countitem(708) > 0)) {
 				delitem 710,1;  //Illusion_Flower
 				delitem 703,1;  //Hinalle
-				delitem 606,1;  //Aloe
+				delitem 704,1;  //Aloe
 				delitem 708,1;  //Ment
 				getitem 5012,1;	//Ph.D_Hat
 				mes "[Teacher]";
