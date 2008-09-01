@@ -753,7 +753,8 @@ int party_send_xy_timer(int tid, unsigned int tick, int id, intptr data)
 		// for each member of this party,
 		for( i = 0; i < MAX_PARTY; i++ )
 		{
-			struct map_session_data* sd = p->data[i].sd;
+			//struct map_session_data* sd = p->data[i].sd;
+			struct map_session_data* sd = map_charid2sd(p->party.member[i].char_id); //temporary crashfix
 			if( !sd ) continue;
 
 			if( p->data[i].x != sd->bl.x || p->data[i].y != sd->bl.y )
