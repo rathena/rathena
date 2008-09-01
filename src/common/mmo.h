@@ -279,9 +279,9 @@ struct mmo_charstatus {
 	int fame;
 
 	// Mercenary Guilds Rank
-	int arch_loyalty, arch_count;
-	int spear_loyalty, spear_count;
-	int sword_loyalty, sword_count;
+	int arch_faith, arch_calls;
+	int spear_faith, spear_calls;
+	int sword_faith, sword_calls;
 
 	short weapon; // enum weapon_type
 	short shield; // view-id

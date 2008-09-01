@@ -274,6 +274,9 @@ enum _sp {
 
 	SP_BASEJOB=119,	// 100+19 - celest
 	SP_BASECLASS=120,	//Hmm.. why 100+19? I just use the next one... [Skotlex]
+
+	// Mercenaries
+	SP_MERCFLEE=165, SP_MERCKILLS=189, SP_MERCFAITH=190,
 	
 	// original 1000-
 	SP_ATTACKRANGE=1000,	SP_ATKELE,SP_DEFELE,	// 1000-1002

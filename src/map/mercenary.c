@@ -94,6 +94,86 @@ int mercenary_get_lifetime(struct mercenary_data *md)
 	return (td != NULL) ? DIFF_TICK(td->tick, gettick()) : 0;
 }
 
+int mercenary_get_faith(struct mercenary_data *md)
+{
+	struct map_session_data *sd;
+	int class_;
+
+	if( md == NULL || md->db == NULL || (sd = md->master) == NULL )
+		return 0;
+
+	class_ = md->db->class_;
+
+	if( class_ >= 6017 && class_ <= 6026 )
+		return sd->status.arch_faith;
+	if( class_ >= 6027 && class_ <= 6036 )
+		return sd->status.spear_faith;
+	if( class_ >= 6037 && class_ <= 6046 )
+		return sd->status.sword_faith;
+
+	return 0;
+}
+
+int mercenary_set_faith(struct mercenary_data *md, int value)
+{
+	struct map_session_data *sd;
+	int class_;
+
+	if( md == NULL || md->db == NULL || (sd = md->master) == NULL )
+		return 0;
+
+	class_ = md->db->class_;
+
+	if( class_ >= 6017 && class_ <= 6026 )
+		sd->status.arch_faith += value;
+	else if( class_ >= 6027 && class_ <= 6036 )
+		sd->status.spear_faith += value;
+	else if( class_ >= 6037 && class_ <= 6046 )
+		sd->status.sword_faith += value;
+
+	return 0;
+}
+
+int mercenary_get_calls(struct mercenary_data *md)
+{
+	struct map_session_data *sd;
+	int class_;
+
+	if( md == NULL || md->db == NULL || (sd = md->master) == NULL )
+		return 0;
+
+	class_ = md->db->class_;
+
+	if( class_ >= 6017 && class_ <= 6026 )
+		return sd->status.arch_calls;
+	if( class_ >= 6027 && class_ <= 6036 )
+		return sd->status.spear_calls;
+	if( class_ >= 6037 && class_ <= 6046 )
+		return sd->status.sword_calls;
+
+	return 0;
+}
+
+int mercenary_set_calls(struct mercenary_data *md, int value)
+{
+	struct map_session_data *sd;
+	int class_;
+
+	if( md == NULL || md->db == NULL || (sd = md->master) == NULL )
+		return 0;
+
+	class_ = md->db->class_;
+
+	if( class_ >= 6017 && class_ <= 6026 )
+		sd->status.arch_calls += value;
+	else if( class_ >= 6027 && class_ <= 6036 )
+		sd->status.spear_calls += value;
+	else if( class_ >= 6037 && class_ <= 6046 )
+		sd->status.sword_calls += value;
+
+	return 0;
+}
+
 int mercenary_save(struct mercenary_data *md)
 {
 	md->mercenary.hp = md->battle_status.hp;

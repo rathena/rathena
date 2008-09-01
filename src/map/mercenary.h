@@ -38,15 +38,24 @@ struct mercenary_data {
 
 bool merc_class(int class_);
 struct view_data * merc_get_viewdata(int class_);
+
 int merc_create(struct map_session_data *sd, int class_, unsigned int lifetime);
 int merc_data_received(struct s_mercenary *merc, bool flag);
 int mercenary_save(struct mercenary_data *md);
+
 void mercenary_damage(struct mercenary_data *md, struct block_list *src, int hp, int sp);
 void mercenary_heal(struct mercenary_data *md, int hp, int sp);
 int mercenary_dead(struct mercenary_data *md, struct block_list *src);
-int do_init_mercenary(void);
+
 int merc_delete(struct mercenary_data *md, int reply);
 void merc_contract_stop(struct mercenary_data *md);
+
 int mercenary_get_lifetime(struct mercenary_data *md);
+int mercenary_get_faith(struct mercenary_data *md);
+int mercenary_set_faith(struct mercenary_data *md, int value);
+int mercenary_get_calls(struct mercenary_data *md);
+int mercenary_set_calls(struct mercenary_data *md, int value);
+
+int do_init_mercenary(void);
 
 #endif /* _MERCENARY_H_ */

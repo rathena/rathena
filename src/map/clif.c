@@ -12398,6 +12398,12 @@ void clif_mercenary_updatestatus(struct map_session_data *sd, int type)
 		case SP_MAXSP:
 			WFIFOL(fd,4) = md->battle_status.max_sp;
 			break;
+		case SP_MERCKILLS:
+			WFIFOL(fd,4) = md->mercenary.kill_count;
+			break;
+		case SP_MERCFAITH:
+			WFIFOL(fd,4) = mercenary_get_faith(md);
+			break;
 	}
 	WFIFOSET(fd,8);
 }
@@ -12435,8 +12441,8 @@ void clif_mercenary_info(struct map_session_data *sd)
 	WFIFOL(fd,56) = status->sp;
 	WFIFOL(fd,60) = status->max_sp;
 	WFIFOL(fd,64) = (int)time(NULL) + (mercenary_get_lifetime(md) / 1000);
-	WFIFOW(fd,68) = 0; // Loyalty
-	WFIFOL(fd,70) = 0; // Summon Count
+	WFIFOW(fd,68) = mercenary_get_faith(md);
+	WFIFOL(fd,70) = mercenary_get_calls(md);
 	WFIFOL(fd,74) = md->mercenary.kill_count;
 	WFIFOW(fd,78) = md->battle_status.rhw.range;
 	WFIFOSET(fd,80);
