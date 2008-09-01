@@ -3,121 +3,135 @@
 //===== By: ================================================== 
 //= MasterOfMuppets
 //===== Current Version: ===================================== 
-//= 1.0
+//= 1.1
 //===== Compatible With: ===================================== 
 //= eAthena
 //===== Description: ========================================= 
 //= Use this NPC if the seals quest variables get messed up.
 //===== Additional Comments: =================================
-// 1.0 First version. [MasterOfMuppets]
+//= 1.0 First version. [MasterOfMuppets]
+//= 1.1 Updated several aspects of the script. [L0ne_W0lf]
 //============================================================
 
-sec_in02,15,170,0	script	Seals Quest Vars	817,{
-
-	if(getgmlevel() > 98)
-	{
-	mes "[Variable Management]";
-	mes "Welcome to the God Item Quest";
-	mes "Global Variable Management";
-	mes "function.";
-	next;
-	  while(1)
-	  {
-	menu "Check current variable values",s_Values,"Change variable values",s_Change,"Cancel",-;
-	close;
-
-s_Change:
-	mes "[Variable Management]";
-	mes "Which variable would you";
-	mes "like to change?";
-	next;
-	menu "$God1",-,"$God2",s_2,"$God3",s_3,"$God4",s_4;
-
-	mes "[Variable Management]";
-	mes "^0000FF$God1^000000 is currently ^FF0000" + $God1 + "^000000.";
-	mes "What would you like to";
-	mes "change it to? (Enter";
-	mes "101 to cancel)";
-	next;
-	input @temp;
-	if(@temp == 101)goto s_Canceled;
-	if(@temp < 0 || @temp > 100)goto s_BadValue;
-	set $God1,@temp;
-	mes "[Variable Management]";
-	mes "^0000FF$God1^000000 was changed to ^FF0000" + $God1 + "^000000.";
-	close;
-
-s_2:
-	mes "[Variable Management]";
-	mes "^0000FF$God2^000000 is currently ^FF0000" + $God2 + "^000000.";
-	mes "What would you like to";
-	mes "change it to? (Enter";
-	mes "101 to cancel)";
-	next;
-	input @temp;
-	if(@temp == 101)goto s_Canceled;
-	if(@temp < 0 || @temp > 100)goto s_BadValue;
-	set $God2,@temp;
-	mes "[Variable Management]";
-	mes "^0000FF$God2^000000 was changed to ^FF0000" + $God2 + "^000000.";
-	close;
-
-s_3:
-	mes "[Variable Management]";
-	mes "^0000FF$God3^000000 is currently ^FF0000" + $God3 + "^000000.";
-	mes "What would you like to";
-	mes "change it to? (Enter";
-	mes "101 to cancel)";
-	next;
-	input @temp;
-	if(@temp == 101)goto s_Canceled;
-	if(@temp < 0 || @temp > 100)goto s_BadValue;
-	set $God3,@temp;
-	mes "[Variable Management]";
-	mes "^0000FF$God3^000000 was changed to ^FF0000" + $God3 + "^000000.";
-	close;
-
-s_4:
-	mes "[Variable Management]";
-	mes "^0000FF$God4^000000 is currently ^FF0000" + $God4 + "^000000.";
-	mes "What would you like to";
-	mes "change it to? (Enter";
-	mes "101 to cancel)";
-	next;
-	input @temp;
-	if(@temp == 101)goto s_Canceled;
-	if(@temp < 0 || @temp > 100)goto s_BadValue;
-	set $God4,@temp;
-	mes "[Variable Management]";
-	mes "^0000FF$God4^000000 was changed to ^FF0000" + $God4 + "^000000.";
-	close;
-
-s_Canceled:
-	close;
-
-s_BadValue:
-	mes "[Variable Management]";
-	mes "Please enter a value";
-	mes "between 0-100.";
-	close;
-
-s_Values:
-	mes "[Variable Management]";
-	mes "Current variable values are:";
-	mes "^0000FF$God1^000000 = ^FF0000" + $God1 + "^000000.";
-	mes "^0000FF$God2^000000 = ^FF0000" + $God2 + "^000000.";
-	mes "^0000FF$God3^000000 = ^FF0000" + $God3 + "^000000.";
-	mes "^0000FF$God4^000000 = ^FF0000" + $God4 + "^000000.";
-	next;
-	  }
+sec_in02,15,170,0	script	Golbal var	817,{
+	//mes "[Check]";
+	//mes "Please enter the password.";
+	//next;
+	//set .@check,68392411;
+	//dlgwrite 0 10000000
+	//if (check == input){
+	if (getgmlevel() > 98) {
+		mes "[Check]";
+		mes "Please choose a menu.";
+		next;
+		switch(select("Now:No.1:No.2:No.3:No.4:Reset")) {
+		case 1:
+			mes "^0000FF$God1^000000 = ^FF0000" + $God1 + "^000000.";
+			mes "^0000FF$God2^000000 = ^FF0000" + $God2 + "^000000.";
+			mes "^0000FF$God3^000000 = ^FF0000" + $God3 + "^000000.";
+			mes "^0000FF$God4^000000 = ^FF0000" + $God4 + "^000000.";
+			close;
+		case 2:
+			input .@input,0,100;
+			mes "[Check]";
+			mes "Would you like to change to "+.@input+"?";
+			next;
+			if (select("Yes:No") == 1) {
+				mes "[Check]";
+				mes "The command "+.@input+" has been confirmed.";
+				next;
+				set $God1,.@input;
+				mes "$God1 "+.@input+"";
+				close;
+			}
+			else {
+				mes "[Check]";
+				mes "The command has been canceled.";
+				close;
+			}
+		case 3:
+			input .@input,0,100;
+			mes "[Check]";
+			mes "Would you like to change to "+.@input+"?";
+			next;
+			if (select("Yes:No") == 1) {
+				mes "[Check]";
+				mes "The command "+.@input+" has been confirmed.";
+				next;
+				set $God2,.@input;
+				mes "$God2 "+.@input+"";
+				close;
+			}
+			else {
+				mes "[Check]";
+				mes "The command has been canceled.";
+				close;
+			}
+		case 4:
+			input .@input,0,100;
+			mes "[Check]";
+			mes "Would you like to change to "+.@input+"?";
+			next;
+			if (select("Yes:No") == 1) {
+				mes "[Check]";
+				mes "The command "+.@input+" has been confirmed.";
+				next;
+				set $God3,.@input;
+				mes "$God3 "+.@input+"";
+				close;
+			}
+			else {
+				mes "[Check]";
+				mes "The command has been canceled.";
+				close;
+			}
+		case 5:
+			input .@input,0,100;
+			mes "[Check]";
+			mes "Would you like to change to "+.@input+"?";
+			next;
+			if (select("Yes:No") == 1) {
+				mes "[Check]";
+				mes "The command "+.@input+" has been confirmed.";
+				next;
+				set $God4,.@input;
+				mes "$God4 "+.@input+"";
+				close;
+			}
+			else {
+				mes "[Check]";
+				mes "The command has been canceled.";
+				close;
+			}
+		case 6:
+			mes "[Check]";
+			mes "Are you really sure that you want to reset the entire list of God Globalvar?";
+			next;
+			if (select("Yes:No") == 1) {
+				mes "[Check]";
+				mes "Now, the entire list of God Globalvar is being reset.";
+				next;
+				set $God1,0;
+				set $God2,0;
+				set $God3,0;
+				set $God4,0;
+				mes "^0000FF$God1^000000 = ^FF0000" + $God1 + "^000000.";
+				mes "^0000FF$God2^000000 = ^FF0000" + $God2 + "^000000.";
+				mes "^0000FF$God3^000000 = ^FF0000" + $God3 + "^000000.";
+				mes "^0000FF$God4^000000 = ^FF0000" + $God4 + "^000000.";
+				close;
+			}
+			else {
+				mes "[Check]";
+				mes "The command has been canceled.";
+				close;
+			}
+		}
 	}
-	else
-	{
-	mes "[Variable Management]";
-	mes "Sorry. You don't have";
-	mes "authorization to use this";
-	mes "npc.";
-	close;
+	else {
+		mes "[Check]";
+		//mes "Incorrect password.";
+		mes "You cannot access this NPC.";
+		close;
 	}
-
 }
