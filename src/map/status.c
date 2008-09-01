@@ -457,6 +457,12 @@ void initChangeTables(void)
 	StatusIconChangeTable[SC_SPCOST_RATE] = SI_SPCOST_RATE;
 	StatusIconChangeTable[SC_COMMONSC_RESIST] = SI_COMMONSC_RESIST;
 	StatusIconChangeTable[SC_ARMOR_RESIST] = SI_ARMOR_RESIST;
+	// Mercenary Bonus Effects
+	StatusIconChangeTable[SC_MERC_FLEEUP] = SI_MERC_FLEEUP;
+	StatusIconChangeTable[SC_MERC_ATKUP] = SI_MERC_ATKUP;
+	StatusIconChangeTable[SC_MERC_HPUP] = SI_MERC_HPUP;
+	StatusIconChangeTable[SC_MERC_SPUP] = SI_MERC_SPUP;
+	StatusIconChangeTable[SC_MERC_HITUP] = SI_MERC_HITUP;
 
 	//Other SC which are not necessarily associated to skills.
 	StatusChangeFlagTable[SC_ASPDPOTION0] = SCB_ASPD;
@@ -503,8 +509,14 @@ void initChangeTables(void)
 	StatusChangeFlagTable[SC_ARMOR_RESIST] |= SCB_PC;
 	StatusChangeFlagTable[SC_SPCOST_RATE] |= SCB_PC;
 	StatusChangeFlagTable[SC_WALKSPEED] |= SCB_SPEED;
+	// Mercenary Bonus Effects
+	StatusChangeFlagTable[SC_MERC_FLEEUP] |= SCB_FLEE;
+	StatusChangeFlagTable[SC_MERC_ATKUP] |= SCB_WATK;
+	StatusChangeFlagTable[SC_MERC_HPUP] |= SCB_MAXHP;
+	StatusChangeFlagTable[SC_MERC_SPUP] |= SCB_MAXSP;
+	StatusChangeFlagTable[SC_MERC_HITUP] |= SCB_HIT;
 
-	if (!battle_config.display_hallucination) //Disable Hallucination.
+	if( !battle_config.display_hallucination ) //Disable Hallucination.
 		StatusIconChangeTable[SC_HALLUCINATION] = SI_BLANK;
 }
 
@@ -3443,6 +3455,8 @@ static unsigned short status_calc_watk(struct block_list *bl, struct status_chan
 		watk -= watk * 25/100;
 	if(sc->data[SC_STRIPWEAPON])
 		watk -= watk * sc->data[SC_STRIPWEAPON]->val2/100;
+	if(sc->data[SC_MERC_ATKUP])
+		watk += sc->data[SC_MERC_ATKUP]->val2;
 
 	return (unsigned short)cap_value(watk,0,USHRT_MAX);
 }
@@ -3509,7 +3523,9 @@ static signed short status_calc_hit(struct block_list *bl, struct status_change 
 		hit -= 30;
 	if(sc->data[SC_INCREASING])
 		hit += 20; // RockmanEXE; changed based on updated [Reddozen]
-	
+	if(sc->data[SC_MERC_HITUP])
+		hit += sc->data[SC_MERC_HITUP]->val2;
+
 	return (short)cap_value(hit,1,SHRT_MAX);
 }
 
@@ -3548,7 +3564,9 @@ static signed short status_calc_flee(struct block_list *bl, struct status_change
 	if(sc->data[SC_GATLINGFEVER])
 		flee -= sc->data[SC_GATLINGFEVER]->val4;
 	if(sc->data[SC_SPEED])
-		flee += 10 + sc->data[SC_SPEED]->val1 * 10 ;
+		flee += 10 + sc->data[SC_SPEED]->val1 * 10;
+	if(sc->data[SC_MERC_FLEEUP])
+		flee += sc->data[SC_MERC_FLEEUP]->val2;
 
 	return (short)cap_value(flee,1,SHRT_MAX);
 }
@@ -3946,6 +3964,8 @@ static unsigned int status_calc_maxhp(struct block_list *bl, struct status_chang
 		maxhp += maxhp * sc->data[SC_DELUGE]->val2/100;
 	if(sc->data[SC_BERSERK])
 		maxhp += maxhp * 2;
+	if(sc->data[SC_MERC_HPUP])
+		maxhp += maxhp * sc->data[SC_MERC_HPUP]->val2/100;
 
 	return cap_value(maxhp,1,UINT_MAX);
 }
@@ -3959,6 +3979,8 @@ static unsigned int status_calc_maxsp(struct block_list *bl, struct status_chang
 		maxsp += maxsp * sc->data[SC_INCMSPRATE]->val1/100;
 	if(sc->data[SC_SERVICE4U])
 		maxsp += maxsp * sc->data[SC_SERVICE4U]->val2/100;
+	if(sc->data[SC_MERC_SPUP])
+		maxsp += maxsp * sc->data[SC_MERC_SPUP]->val2/100;
 
 	return cap_value(maxsp,1,UINT_MAX);
 }
@@ -4835,6 +4857,14 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 		}
 		if (tick == 1) return 1; //Minimal duration: Only strip without causing the SC
 	break;
+	case SC_MERC_FLEEUP:
+	case SC_MERC_ATKUP:
+	case SC_MERC_HPUP:
+	case SC_MERC_SPUP:
+	case SC_MERC_HITUP:
+		if( bl->type != BL_MER )
+			return 0; // Stats only for Mercenaries
+	break;
 	}
 
 	//Check for BOSS resistances
@@ -4958,21 +4988,28 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 		status_change_end(bl,SC_BLESSING,-1);
 		status_change_end(bl,SC_INCREASEAGI,-1);
 		break;
-		
 	}
 
 	//Check for overlapping fails
-	if((sce=sc->data[type]))
+	if( (sce = sc->data[type]) )
 	{
-		switch (type)
+		switch( type )
 		{
+			case SC_MERC_FLEEUP:
+			case SC_MERC_ATKUP:
+			case SC_MERC_HPUP:
+			case SC_MERC_SPUP:
+			case SC_MERC_HITUP:
+				if( sce->val1 > val1 )
+					val1 = sce->val1;
+				break;
 			case SC_ADRENALINE:
 			case SC_ADRENALINE2:
 			case SC_WEAPONPERFECTION:
 			case SC_OVERTHRUST:
 				if (sce->val2 > val2)
 					return 0;
-			break;
+				break;
 			case SC_HPREGEN:
 			case SC_SPREGEN:
 			case SC_BOSSMAPINFO:
@@ -5933,6 +5970,17 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			//Place here SCs that have no SCB_* data, no skill associated, no ICON
 			//associated, and yet are not wrong/unknown. [Skotlex]
 			break;
+
+		case SC_MERC_FLEEUP:
+		case SC_MERC_ATKUP:
+		case SC_MERC_HITUP:
+			val2 = 15 * val1;
+			break;
+		case SC_MERC_HPUP:
+		case SC_MERC_SPUP:
+			val2 = 5 * val1;
+			break;
+
 		default:
 			if( calc_flag == SCB_NONE && StatusSkillChangeTable[type] == 0 && StatusIconChangeTable[type] == 0 )
 			{	//Status change with no calc, no icon, and no skill associated...? 
@@ -6139,9 +6187,9 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 		calc_flag&=~SCB_DYE;
 	}
 
-	if (vd && pcdb_checkid(vd->class_)) //Only for players sprites, client crashes if they receive this for a mob o.O [Skotlex]
+	if( vd && (pcdb_checkid(vd->class_) || bl->type == BL_MER ) ) //Only for players sprites, client crashes if they receive this for a mob o.O [Skotlex]
 		clif_status_change(bl,StatusIconChangeTable[type],1);
-	else if (sd) //Send packet to self otherwise (disguised player?)
+	else if( sd ) //Send packet to self otherwise (disguised player?)
 		clif_status_load(bl,StatusIconChangeTable[type],1);
 
 	//Don't trust the previous sce assignment, in case the SC ended somewhere between there and here.
@@ -6170,21 +6218,45 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 	if(sd && sd->pd)
 		pet_sc_check(sd, type); //Skotlex: Pet Status Effect Healing
 
-	if (type==SC_BERSERK) {
-		sce->val2 = 5*status->max_hp/100;
-		status_heal(bl, status->max_hp, 0, 1); //Do not use percent_heal as this healing must override BERSERK's block.
-		status_set_sp(bl, 0, 0); //Damage all SP
-	} else if (type==SC_CHANGE) //Heal all HP/SP
-		status_percent_heal(bl, 100, 100);
-
-	if (type==SC_RUN) {
-		struct unit_data *ud = unit_bl2ud(bl);
-		if (ud)
-			ud->state.running = unit_run(bl);
+	switch( type )
+	{
+		case SC_BERSERK:
+			sce->val2 = 5*status->max_hp/100;
+			status_heal(bl, status->max_hp, 0, 1); //Do not use percent_heal as this healing must override BERSERK's block.
+			status_set_sp(bl, 0, 0); //Damage all SP
+			break;
+		case SC_CHANGE:
+			status_percent_heal(bl, 100, 100);
+			break;
+		case SC_RUN:
+			{
+				struct unit_data *ud = unit_bl2ud(bl);
+				if( ud )
+					ud->state.running = unit_run(bl);
+			}
+			break;
+		case SC_BOSSMAPINFO:
+			if( boss_md != NULL )
+				clif_bossmapinfo(sd->fd, boss_md, 0); // First Message
+			break;
+		case SC_MERC_HPUP:
+			clif_mercenary_updatestatus(((TBL_MER*)bl)->master, SP_MAXHP);
+			status_percent_heal(bl, 100, 0); // Recover Full HP
+			break;
+		case SC_MERC_SPUP:
+			clif_mercenary_updatestatus(((TBL_MER*)bl)->master, SP_MAXSP);
+			status_percent_heal(bl, 0, 100); // Recover Full SP
+			break;
+		case SC_MERC_FLEEUP:
+			clif_mercenary_updatestatus(((TBL_MER*)bl)->master, SP_MERCFLEE);
+			break;
+		case SC_MERC_ATKUP:
+			clif_mercenary_updatestatus(((TBL_MER*)bl)->master, SP_ATK1);
+			break;
+		case SC_MERC_HITUP:
+			clif_mercenary_updatestatus(((TBL_MER*)bl)->master, SP_HIT);
+			break;
 	}
-
-	if( boss_md != NULL )
-		clif_bossmapinfo(sd->fd, boss_md, 0); // First Message
 
 	return 1;
 }

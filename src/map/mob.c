@@ -1942,8 +1942,6 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 			}
 			pc_setglobalreg(sd,"TK_MISSION_COUNT", sd->mission_count);
 		}
-		if( sd->md && (md->level > sd->status.base_level / 2) )
-			mercenary_kills(sd->md);
 	}
 
 	// filter out entries not eligible for exp distribution
@@ -2324,7 +2322,11 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 			{
 				case BL_PET: sd = ((TBL_PET*)src)->msd; break;
 				case BL_HOM: sd = ((TBL_HOM*)src)->master; break;
+				case BL_MER: sd = ((TBL_MER*)src)->master; break;
 			}
+
+		if( sd && sd->md && src && src->type != BL_HOM )
+			mercenary_kills(sd->md);
 
 		if( md->npc_event[0] && !md->state.npc_killmonster )
 		{

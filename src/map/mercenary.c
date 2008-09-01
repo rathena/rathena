@@ -87,7 +87,7 @@ int merc_create(struct map_session_data *sd, int class_, unsigned int lifetime)
 int mercenary_get_lifetime(struct mercenary_data *md)
 {
 	const struct TimerData * td;
-	if( md == NULL )
+	if( md == NULL || md->contract_timer == INVALID_TIMER )
 		return 0;
 
 	td = get_timer(md->contract_timer);
@@ -331,6 +331,15 @@ int mercenary_dead(struct mercenary_data *md, struct block_list *src)
 	return 0;
 }
 
+int mercenary_killbonus(struct mercenary_data *md)
+{
+	const enum sc_type scs[] = { SC_MERC_FLEEUP, SC_MERC_ATKUP, SC_MERC_HPUP, SC_MERC_SPUP, SC_MERC_HITUP };
+	int index = rand() % ARRAYLENGTH(scs);
+
+	status_change_start(&md->bl, scs[index], 10000, rand()%5, 0, 0, 0, 600000, 0);
+	return 0;
+}
+
 int mercenary_kills(struct mercenary_data *md)
 {
 	md->mercenary.kill_count++;
@@ -341,6 +350,8 @@ int mercenary_kills(struct mercenary_data *md)
 
 	if( md->master )
 		clif_mercenary_updatestatus(md->master, SP_MERCKILLS);
+
+	mercenary_killbonus(md);
 
 	return 0;
 }

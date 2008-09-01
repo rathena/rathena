@@ -12398,6 +12398,15 @@ void clif_mercenary_updatestatus(struct map_session_data *sd, int type)
 		case SP_MAXSP:
 			WFIFOL(fd,4) = md->battle_status.max_sp;
 			break;
+		case SP_MERCFLEE:
+			WFIFOL(fd,4) = md->battle_status.flee;
+			break;
+		case SP_ATK1:
+			WFIFOL(fd,4) = md->battle_status.rhw.atk + md->battle_status.rhw.atk2;
+			break;
+		case SP_HIT:
+			WFIFOL(fd,4) = md->battle_status.hit;
+			break;
 		case SP_MERCKILLS:
 			WFIFOL(fd,4) = md->mercenary.kill_count;
 			break;

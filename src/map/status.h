@@ -295,6 +295,14 @@ typedef enum sc_type {
 	SC_DEF_RATE,
 	SC_SPREGEN,
 	SC_WALKSPEED,
+
+	// Mercenary Only Bonus Effects
+	SC_MERC_FLEEUP,
+	SC_MERC_ATKUP,
+	SC_MERC_HPUP,
+	SC_MERC_SPUP,
+	SC_MERC_HITUP,
+
 	SC_MAX, //Automatically updated max, used in for's to check we are within bounds.
 } sc_type;
 
@@ -457,6 +465,14 @@ enum si_type {
 	//SI_FOODDEX		= 274, //Same as 244
 	//SI_FOODINT		= 275, //Same as 245
 	//SI_FOODLUK		= 276, //Same as 246
+
+	// Mercenary Only
+	SI_MERC_FLEEUP	= 277,
+	SI_MERC_ATKUP	= 278,
+	SI_MERC_HPUP	= 279,
+	SI_MERC_SPUP	= 280,
+	SI_MERC_HITUP	= 281,
+
 	SI_SLOWCAST		= 282,
 	SI_CRITICALWOUND	= 286,
 	SI_DEF_RATE		= 290,
