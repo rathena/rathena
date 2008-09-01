@@ -99,6 +99,7 @@ int battle_gettarget(struct block_list* bl)
 		case BL_MOB: return ((struct mob_data*)bl)->target_id;
 		case BL_PET: return ((struct pet_data*)bl)->target_id;
 		case BL_HOM: return ((struct homun_data*)bl)->ud.target;
+		case BL_MER: return ((struct mercenary_data*)bl)->ud.target;
 	}
 	return 0;
 }
@@ -3315,19 +3316,18 @@ bool battle_check_range(struct block_list *src,struct block_list *bl,int range)
 	nullpo_retr(false, src);
 	nullpo_retr(false, bl);
 
-	if(src->m != bl->m)	// ˆá‚¤ƒ}ƒbƒv
+	if( src->m != bl->m )
 		return false;
 
-	if (!check_distance_bl(src, bl, range))
+	if( !check_distance_bl(src, bl, range) )
 		return false;
 
-	if((d=distance_bl(src, bl)) < 2) //No need for path checking.
-		return true;
+	if( (d = distance_bl(src, bl)) < 2 )
+		return true;  // No need for path checking.
 
-	if (d> AREA_SIZE)
-		return false; //Avoid targetting objects beyond your range of sight.
+	if( d > AREA_SIZE )
+		return false; // Avoid targetting objects beyond your range of sight.
 
-	// ?áŠQ•¨”»’è
 	return path_search_long(NULL,src->m,src->x,src->y,bl->x,bl->y,CELL_CHKWALL);
 }
 

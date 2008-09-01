@@ -4089,6 +4089,7 @@ int status_get_class(struct block_list *bl)
 	case BL_MOB: return ((TBL_MOB*)bl)->vd->class_; //Class used on all code should be the view class of the mob.
 	case BL_PET: return ((TBL_PET*)bl)->pet.class_;
 	case BL_HOM: return ((TBL_HOM*)bl)->homunculus.class_;
+	case BL_MER: return ((TBL_MER*)bl)->mercenary.class_;
 	case BL_NPC: return ((TBL_NPC*)bl)->class_;
 	}
 	return 0;
@@ -6772,7 +6773,7 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 	}
 
 	//On Aegis, when turning off a status change, first goes the sc packet, then the option packet.
-	if (vd && pcdb_checkid(vd->class_))
+	if( vd && pcdb_checkid(vd->class_) )
 		clif_status_change(bl,StatusIconChangeTable[type],0);
 	else if (sd)
 		clif_status_load(bl,StatusIconChangeTable[type],0);
@@ -6783,6 +6784,26 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 	if (calc_flag)
 		status_calc_bl(bl,calc_flag);
 
+	if( bl->type == BL_MER )
+		switch( type )
+		{ // Update Status Window
+			case SC_MERC_HPUP:
+				clif_mercenary_updatestatus(((TBL_MER*)bl)->master, SP_MAXHP);
+				break;
+			case SC_MERC_SPUP:
+				clif_mercenary_updatestatus(((TBL_MER*)bl)->master, SP_MAXSP);
+				break;
+			case SC_MERC_FLEEUP:
+				clif_mercenary_updatestatus(((TBL_MER*)bl)->master, SP_MERCFLEE);
+				break;
+			case SC_MERC_ATKUP:
+				clif_mercenary_updatestatus(((TBL_MER*)bl)->master, SP_ATK1);
+				break;
+			case SC_MERC_HITUP:
+				clif_mercenary_updatestatus(((TBL_MER*)bl)->master, SP_HIT);
+				break;
+		}
+	
 	if(opt_flag&4) //Out of hiding, invoke on place.
 		skill_unit_move(bl,gettick(),1);
 

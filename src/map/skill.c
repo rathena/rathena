@@ -275,6 +275,9 @@ int skill_calc_heal (struct block_list *src, struct block_list *target, int skil
 	if(src->type == BL_HOM && (skill = merc_hom_checkskill(((TBL_HOM*)src), HLIF_BRAIN)) > 0)
 		heal += heal * skill * 2 / 100;
 
+	if(src->type == BL_MER)
+		heal /= 2;
+
 	sc = status_get_sc(target);
 	if( sc && sc->count )
 	{
@@ -6840,15 +6843,15 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 		break;
 
 		case UNT_SANCTUARY:
-			if (battle_check_undead(tstatus->race, tstatus->def_ele) || tstatus->race==RC_DEMON)
-			{	//Only damage enemies with offensive Sanctuary. [Skotlex]
-				if(battle_check_target(&src->bl,bl,BCT_ENEMY)>0 &&
-					skill_attack(BF_MAGIC, ss, &src->bl, bl, sg->skill_id, sg->skill_lv, tick, 0))
-					// reduce healing count if this was meant for damaging [hekate]
-					sg->val1 -= 2;
-			} else {
+			if( battle_check_undead(tstatus->race, tstatus->def_ele) || tstatus->race==RC_DEMON )
+			{ //Only damage enemies with offensive Sanctuary. [Skotlex]
+				if( battle_check_target(&src->bl,bl,BCT_ENEMY) > 0 && skill_attack(BF_MAGIC, ss, &src->bl, bl, sg->skill_id, sg->skill_lv, tick, 0) )
+					sg->val1 -= 2; // reduce healing count if this was meant for damaging [hekate]
+			}
+			else
+			{
 				int heal = sg->val2;
-				if (tstatus->hp >= tstatus->max_hp)
+				if( tstatus->hp >= tstatus->max_hp )
 					break;
 				if( tsc )
 				{
@@ -6857,14 +6860,17 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 					if( tsc->data[SC_CRITICALWOUND] )
 						heal -= heal * tsc->data[SC_CRITICALWOUND]->val2 / 100;
 				}
-				if (status_isimmune(bl))
-					heal = 0;	/* 黄金蟲カード（ヒール量０） */
+				if( bl->type == BL_MER )
+					heal /= 2;
+				if( status_isimmune(bl) )
+					heal = 0;
+
 				clif_skill_nodamage(&src->bl, bl, AL_HEAL, heal, 1);
 				status_heal(bl, heal, 0, 0);
-				if (diff >= 500)
+				if( diff >= 500 )
 					sg->val1--;
 			}
-			if (sg->val1 <= 0)
+			if( sg->val1 <= 0 )
 				skill_delunitgroup(NULL,sg);
 			break;
 
