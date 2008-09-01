@@ -5901,33 +5901,43 @@ BUILDIN_FUNC(strnpcinfo)
 }
 
 
-unsigned int equip[10]={EQP_HEAD_TOP,EQP_ARMOR,EQP_HAND_L,EQP_HAND_R,EQP_GARMENT,EQP_SHOES,EQP_ACC_L,EQP_ACC_R,EQP_HEAD_MID,EQP_HEAD_LOW};
+// aegis->athena slot position conversion table
+static unsigned int equip[] = {EQP_HEAD_TOP,EQP_ARMOR,EQP_HAND_L,EQP_HAND_R,EQP_GARMENT,EQP_SHOES,EQP_ACC_L,EQP_ACC_R,EQP_HEAD_MID,EQP_HEAD_LOW};
 
 /*==========================================
  * GetEquipID(Pos);     Pos: 1-10
  *------------------------------------------*/
 BUILDIN_FUNC(getequipid)
 {
-	int i=-1,num;
-	TBL_PC *sd;
+	int i, num;
+	TBL_PC* sd;
 	struct item_data* item;
 
-	sd=script_rid2sd(st);
-	if(sd == NULL)
+	sd = script_rid2sd(st);
+	if( sd == NULL )
 		return 0;
 
-	num=script_getnum(st,2);
-	if (num > 0 && num <= ARRAYLENGTH(equip))
-		i=pc_checkequip(sd,equip[num-1]);
-	if(i >= 0){
-		item=sd->inventory_data[i];
-		if(item)
-			script_pushint(st,item->nameid);
-		else
-			script_pushint(st,0);
-	}else{
+	num = script_getnum(st,2) - 1;
+	if( num < 0 || num >= ARRAYLENGTH(equip) )
+	{
 		script_pushint(st,-1);
+		return 0;
 	}
+
+	// get inventory position of item
+	i = pc_checkequip(sd,equip[num]);
+	if( i < 0 )
+	{
+		script_pushint(st,-1);
+		return 0;
+	}
+		
+	item = sd->inventory_data[i];
+	if( item != 0 )
+		script_pushint(st,item->nameid);
+	else
+		script_pushint(st,0);
+
 	return 0;
 }
 
@@ -5936,31 +5946,34 @@ BUILDIN_FUNC(getequipid)
  *------------------------------------------*/
 BUILDIN_FUNC(getequipname)
 {
-	int i=-1,num;
-	TBL_PC *sd;
+	int i, num;
+	TBL_PC* sd;
 	struct item_data* item;
-	char *buf;
-
-	static char pos[11][100] = {"Head","Body","Left hand","Right hand","Robe","Shoes","Accessory 1","Accessory 2","Head 2","Head 3","Not Equipped"};
 
 	sd = script_rid2sd(st);
 	if( sd == NULL )
 		return 0;
 
-	buf=(char *)aMallocA(64*sizeof(char));
-	num=script_getnum(st,2);
-	if (num > 0 && num <= ARRAYLENGTH(equip))
-		i=pc_checkequip(sd,equip[num-1]);
-	if(i >= 0){
-		item=sd->inventory_data[i];
-		if(item)
-			sprintf(buf,"%s-[%s]",pos[num-1],item->jname);
-		else
-			sprintf(buf,"%s-[%s]",pos[num-1],pos[10]);
-	}else{
-		sprintf(buf,"%s-[%s]",pos[num-1],pos[10]);
+	num = script_getnum(st,2) - 1;
+	if( num < 0 || num >= ARRAYLENGTH(equip) )
+	{
+		script_pushconststr(st,"");
+		return 0;
 	}
-	script_pushstr(st,buf);
+
+	// get inventory position of item
+	i = pc_checkequip(sd,equip[num]);
+	if( i < 0 )
+	{
+		script_pushint(st,-1);
+		return 0;
+	}
+
+	item = sd->inventory_data[i];
+	if( item != 0 )
+		script_pushstrcopy(st,item->jname);
+	else
+		script_pushconststr(st,"");
 
 	return 0;
 }

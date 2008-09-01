@@ -120,6 +120,8 @@
 //=       unitskilluseid, unitskillusepos, bonus/bonus2/bonus3/bonus4/bonus5
 //= 3.22.20080622
 //=       Extended 'set' to return the variable reference. [FlavioJS]
+//= 3.22.20080901
+//=       Adjusted the 'getequipname' description to match src [ultramage]
 //=========================================================
 
 This document is a reference manual for all the scripting commands and functions 
@@ -2187,17 +2189,16 @@ armor, but also don't want them to equip if after the check, you would do this:
 
 *getequipname(<equpment slot>)
 
-This function will return the name of the item equipped in the specified 
-equipment slot on the invoking character. Almost identical to 'getequipid', good 
-for an NPC to state what your are wearing, or maybe saving as a string variable. 
+Returns the jname of the item equipped in the specified equipment slot on the
+invoking character, or an empty string if nothing is equipped in that position.
+Does the same thing as getitemname(getequipid()). Useful for an NPC to state
+what your are wearing, or maybe saving as a string variable.
 See 'getequipid' for a full list of valid equipment slots.
 
-        if (getequipname(EQI_HEAD_TOP)==0) goto L_No_HeadGear;
-        mes "So you are wearing a "+getequipname(EQI_HEAD_TOP)+" on your head";
-        close;
-    L_No_HeadGear:
-        mes "You are not wearing any head gear";
-        close;
+        if( getequipname(EQI_HEAD_TOP) != "" )
+	        mes "So you are wearing a "+getequipname(EQI_HEAD_TOP)+" on your head";
+	else
+	        mes "You are not wearing any head gear";
 
 ---------------------------------------
 

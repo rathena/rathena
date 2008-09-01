@@ -362,9 +362,15 @@ function	script	refinemain	{
 	mes "I can refine all kinds of weapons, armor and equipment, so let me";
 	mes "know what you want me to refine.";
 	next;
+
+	setarray .@position$[1], "Head","Body","Left hand","Right hand","Robe","Shoes","Accessory 1","Accessory 2","Head 2","Head 3";
 	set .@menu$,"";
-	for( set .@i,1; .@i < 11; set .@i,.@i+1 ){
-		set .@menu$,.@menu$+(getequipisequiped(.@i) ?  getequipname(.@i) : "")+":";
+	for( set .@i,1; .@i <= 10; set .@i,.@i+1 )
+	{
+		if( getequipisequiped(.@i) )
+			set .@menu$, .@menu$ + .@position$[.@i] + "-" + "[" + getequipname(.@i) + "]";
+
+		set .@menu$, .@menu$ + ":";
 	}
 	set .@part,select(.@menu$);
 	if(!getequipisequiped(.@part)) {
