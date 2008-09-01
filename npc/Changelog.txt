@@ -1,5 +1,7 @@
 ﻿Date		Added
 ======
+2008/09/01
+	* Rev. 13168 Updated refiner and related merchants. [L0ne_W0lf]
 2008/08/31
 	* Rev. 13164 Updated Monster Taming item cute pet armor quests. [L0ne_W0lf]
 	* Rev. 13163 Updated several ancient headgear quests. [L0ne_W0lf]
