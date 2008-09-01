@@ -1,6 +1,7 @@
 ﻿Date		Added
 ======
 2008/09/01
+	* Rev. 13179 Updating god item seal quests (4/5) [L0ne_W0lf]
 	* Rev. 13178 Updating god item seal quests (3/5) [L0ne_W0lf]
 	* Rev. 13177 Updating god item seal quests (2/5) [L0ne_W0lf]
 	* Rev. 13175 Updating god item seal quests (1/5) [L0ne_W0lf]
