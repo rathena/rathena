@@ -12376,36 +12376,56 @@ void clif_send_quest_status(struct map_session_data * sd, int quest_id, bool act
 void clif_mercenary_updatestatus(struct map_session_data *sd, int type)
 {
 	struct mercenary_data *md;
+	struct status_data *status;
 	int fd;
 	if( sd == NULL || (md = sd->md) == NULL )
 		return;
 
 	fd = sd->fd;
+	status = &md->battle_status;
 	WFIFOHEAD(fd,8);
 	WFIFOW(fd,0) = 0x02a2;
 	WFIFOW(fd,2) = type;
 	switch( type )
 	{
-		case SP_HP:
-			WFIFOL(fd,4) = md->battle_status.hp;
-			break;
-		case SP_MAXHP:
-			WFIFOL(fd,4) = md->battle_status.max_hp;
-			break;
-		case SP_SP:
-			WFIFOL(fd,4) = md->battle_status.sp;
-			break;
-		case SP_MAXSP:
-			WFIFOL(fd,4) = md->battle_status.max_sp;
-			break;
-		case SP_MERCFLEE:
-			WFIFOL(fd,4) = md->battle_status.flee;
-			break;
 		case SP_ATK1:
-			WFIFOL(fd,4) = md->battle_status.rhw.atk + md->battle_status.rhw.atk2;
+			{
+				int atk = rand()%(status->rhw.atk2 - status->rhw.atk + 1) + status->rhw.atk;
+				WFIFOL(fd,4) = cap_value(atk, 0, SHRT_MAX);
+			}
+			break;
+		case SP_MATK1:
+			WFIFOL(fd,4) = cap_value(status->matk_max, 0, SHRT_MAX);
 			break;
 		case SP_HIT:
-			WFIFOL(fd,4) = md->battle_status.hit;
+			WFIFOL(fd,4) = status->hit;
+			break;
+		case SP_CRITICAL:
+			WFIFOL(fd,4) = status->cri/10;
+			break;
+		case SP_DEF1:
+			WFIFOL(fd,4) = status->def;
+			break;
+		case SP_MDEF1:
+			WFIFOL(fd,4) = status->mdef;
+			break;
+		case SP_MERCFLEE:
+			WFIFOL(fd,4) = status->flee;
+			break;
+		case SP_ASPD:
+			WFIFOL(fd,4) = status->amotion;
+			break;
+		case SP_HP:
+			WFIFOL(fd,4) = status->hp;
+			break;
+		case SP_MAXHP:
+			WFIFOL(fd,4) = status->max_hp;
+			break;
+		case SP_SP:
+			WFIFOL(fd,4) = status->sp;
+			break;
+		case SP_MAXSP:
+			WFIFOL(fd,4) = status->max_sp;
 			break;
 		case SP_MERCKILLS:
 			WFIFOL(fd,4) = md->mercenary.kill_count;
@@ -12433,13 +12453,15 @@ void clif_mercenary_info(struct map_session_data *sd)
 	WFIFOHEAD(fd,80);
 	WFIFOW(fd,0) = 0x029b;
 	WFIFOL(fd,2) = md->bl.id;
+
 	// Mercenary shows ATK as a random value between ATK ~ ATK2
-	atk = rand()%(status->rhw.atk - status->rhw.atk2 + 1) + status->rhw.atk;
+	atk = rand()%(status->rhw.atk2 - status->rhw.atk + 1) + status->rhw.atk;
 	WFIFOW(fd,6) = cap_value(atk, 0, SHRT_MAX);
+
 	WFIFOW(fd,8) = cap_value(status->matk_max, 0, SHRT_MAX);
 	WFIFOW(fd,10) = status->hit;
 	WFIFOW(fd,12) = status->cri/10;
-	WFIFOW(fd,14) = status->def + (status->vit/2);
+	WFIFOW(fd,14) = status->def;
 	WFIFOW(fd,16) = status->mdef;
 	WFIFOW(fd,18) = status->flee;
 	WFIFOW(fd,20) = status->amotion;

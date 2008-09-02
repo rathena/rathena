@@ -275,8 +275,8 @@ int skill_calc_heal (struct block_list *src, struct block_list *target, int skil
 	if(src->type == BL_HOM && (skill = merc_hom_checkskill(((TBL_HOM*)src), HLIF_BRAIN)) > 0)
 		heal += heal * skill * 2 / 100;
 
-	if(src->type == BL_MER)
-		heal /= 2;
+	if(target && target->type == BL_MER)
+		heal >>= 1;
 
 	sc = status_get_sc(target);
 	if( sc && sc->count )

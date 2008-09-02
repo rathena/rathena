@@ -346,12 +346,13 @@ int mercenary_kills(struct mercenary_data *md)
 	md->mercenary.kill_count = cap_value(md->mercenary.kill_count, 0, INT_MAX);
 
 	if( (md->mercenary.kill_count % 50) == 0 )
+	{
 		mercenary_set_faith(md, 1);
+		mercenary_killbonus(md);
+	}
 
 	if( md->master )
 		clif_mercenary_updatestatus(md->master, SP_MERCKILLS);
-
-	mercenary_killbonus(md);
 
 	return 0;
 }
@@ -407,7 +408,7 @@ int read_mercenarydb(void)
 		status->max_sp = atoi(str[5]);
 		status->rhw.range = atoi(str[6]);
 		status->rhw.atk = atoi(str[7]);
-		status->rhw.atk2 = atoi(str[8]);
+		status->rhw.atk2 = status->rhw.atk + atoi(str[8]);
 		status->def = atoi(str[9]);
 		status->mdef = atoi(str[10]);
 		status->str = atoi(str[11]);

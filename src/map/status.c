@@ -2945,6 +2945,54 @@ void status_calc_bl_sub_hom(struct homun_data *hd, unsigned long flag)	//[orn]
 		clif_hominfo(hd->master,hd,0);
 }
 
+void status_calc_bl_sub_mer(struct mercenary_data *md, unsigned long flag)
+{
+	struct status_data
+		*status = &md->battle_status,
+		*b_status = &md->base_status;
+
+	if( flag&(SCB_MAXHP|SCB_VIT) )
+	{
+		flag |= SCB_MAXHP;
+		status->max_hp = cap_value(status->max_hp, 1, battle_config.max_hp);
+		status->hp = cap_value(status->hp, 0, status->max_hp);
+	}
+	if( flag&(SCB_MAXSP|SCB_INT) )
+	{
+		flag |= SCB_MAXSP;
+		status->max_sp = cap_value(status->max_sp, 1, battle_config.max_sp);
+		status->sp = cap_value(status->sp, 0, status->max_sp);
+	}
+	if( flag&SCB_VIT )
+	{
+		flag |= SCB_DEF;
+		status->def += status->vit; // Doddler says Merc DEF = DEF + VIT
+	}
+	if( flag == SCB_ALL )
+		return; // Client Refresh invoked by status_calc_mercenary
+
+	if( flag&SCB_WATK )	clif_mercenary_updatestatus(md->master, SP_ATK1);
+	if( flag&SCB_MATK )	clif_mercenary_updatestatus(md->master, SP_MATK1);
+	if( flag&SCB_HIT )	clif_mercenary_updatestatus(md->master, SP_HIT);
+	if( flag&SCB_CRI )	clif_mercenary_updatestatus(md->master, SP_CRITICAL);
+	if( flag&SCB_DEF )	clif_mercenary_updatestatus(md->master, SP_DEF1);
+	if( flag&SCB_MDEF )	clif_mercenary_updatestatus(md->master, SP_MDEF1);
+	if( flag&SCB_FLEE )	clif_mercenary_updatestatus(md->master, SP_MERCFLEE);
+	if( flag&SCB_ASPD )	clif_mercenary_updatestatus(md->master, SP_ASPD);
+
+	if( flag&SCB_MAXHP )
+	{
+		clif_mercenary_updatestatus(md->master, SP_MAXHP);
+		clif_mercenary_updatestatus(md->master, SP_HP);
+	}
+
+	if( flag&SCB_MAXSP )
+	{
+		clif_mercenary_updatestatus(md->master, SP_MAXSP);
+		clif_mercenary_updatestatus(md->master, SP_SP);
+	}
+}
+
 void status_calc_bl(struct block_list *bl, unsigned long flag)
 {
 	struct status_data *b_status, *status;
@@ -3166,6 +3214,9 @@ void status_calc_bl(struct block_list *bl, unsigned long flag)
 		if(flag&SCB_REGEN)
 			status_calc_regen_rate(bl, status_get_regen_data(bl), sc);
 	}
+
+	if(bl->type == BL_MER)
+		status_calc_bl_sub_mer((TBL_MER*)bl, flag);
 }
 /*==========================================
  * Apply shared stat mods from status changes [DracoRPG]
@@ -6241,21 +6292,10 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 				clif_bossmapinfo(sd->fd, boss_md, 0); // First Message
 			break;
 		case SC_MERC_HPUP:
-			clif_mercenary_updatestatus(((TBL_MER*)bl)->master, SP_MAXHP);
 			status_percent_heal(bl, 100, 0); // Recover Full HP
 			break;
 		case SC_MERC_SPUP:
-			clif_mercenary_updatestatus(((TBL_MER*)bl)->master, SP_MAXSP);
 			status_percent_heal(bl, 0, 100); // Recover Full SP
-			break;
-		case SC_MERC_FLEEUP:
-			clif_mercenary_updatestatus(((TBL_MER*)bl)->master, SP_MERCFLEE);
-			break;
-		case SC_MERC_ATKUP:
-			clif_mercenary_updatestatus(((TBL_MER*)bl)->master, SP_ATK1);
-			break;
-		case SC_MERC_HITUP:
-			clif_mercenary_updatestatus(((TBL_MER*)bl)->master, SP_HIT);
 			break;
 	}
 
@@ -6784,26 +6824,6 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 	if (calc_flag)
 		status_calc_bl(bl,calc_flag);
 
-	if( bl->type == BL_MER )
-		switch( type )
-		{ // Update Status Window
-			case SC_MERC_HPUP:
-				clif_mercenary_updatestatus(((TBL_MER*)bl)->master, SP_MAXHP);
-				break;
-			case SC_MERC_SPUP:
-				clif_mercenary_updatestatus(((TBL_MER*)bl)->master, SP_MAXSP);
-				break;
-			case SC_MERC_FLEEUP:
-				clif_mercenary_updatestatus(((TBL_MER*)bl)->master, SP_MERCFLEE);
-				break;
-			case SC_MERC_ATKUP:
-				clif_mercenary_updatestatus(((TBL_MER*)bl)->master, SP_ATK1);
-				break;
-			case SC_MERC_HITUP:
-				clif_mercenary_updatestatus(((TBL_MER*)bl)->master, SP_HIT);
-				break;
-		}
-	
 	if(opt_flag&4) //Out of hiding, invoke on place.
 		skill_unit_move(bl,gettick(),1);
 
