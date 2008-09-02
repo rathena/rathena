@@ -58,10 +58,10 @@ bool mercenary_owner_tosql(int char_id, struct mmo_charstatus *status)
 bool mercenary_owner_delete(int char_id)
 {
 	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `mercenary_owner` WHERE `char_id` = '%d'", char_id) )
-	{
 		Sql_ShowDebug(sql_handle);
-		return false;
-	}
+
+	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `mercenary` WHERE `char_id` = '%d'", char_id) )
+		Sql_ShowDebug(sql_handle);
 
 	return true;
 }
