@@ -18,6 +18,7 @@
 #include "status.h"
 #include "pet.h"
 #include "homunculus.h"
+#include "mercenary.h"
 #include "mob.h"
 #include "npc.h"
 #include "battle.h"
@@ -390,11 +391,10 @@ int skillnotok (int skillid, struct map_session_data *sd)
 	return (map[m].flag.noskill);
 }
 
-// [orn] - skill ok to cast? and when?	//homunculus
-int skillnotok_hom (int skillid, struct homun_data *hd)
+int skillnotok_hom(int skillid, struct homun_data *hd)
 {
 	int i = skill_get_index(skillid);
-	nullpo_retr (1, hd);
+	nullpo_retr(1,hd);
 
 	if (i == 0)
 		return 1; // invalid skill id
@@ -404,6 +404,19 @@ int skillnotok_hom (int skillid, struct homun_data *hd)
 
 	//Use master's criteria.
 	return skillnotok(skillid, hd->master);
+}
+
+int skillnotok_mercenary(int skillid, struct mercenary_data *md)
+{
+	int i = skill_get_index(skillid);
+	nullpo_retr(1,md);
+
+	if( i == 0 )
+		return 1; // Invalid Skill ID
+	if( md->blockskill[i] > 0 )
+		return 1;
+
+	return skillnotok(skillid, md->master);
 }
 
 struct s_skill_unit_layout* skill_get_unit_layout (int skillid, int skilllv, struct block_list* src, int x, int y)
@@ -1943,117 +1956,122 @@ int skill_guildaura_sub (struct block_list *bl, va_list ap)
 }
 
 /*==========================================
- * [orn]
- * Checks that you have the requirements for casting a skill for homunculus.
+ * Checks that you have the requirements for casting a skill for homunculus/mercenary.
  * Flag:
  * &1: finished casting the skill (invoke hp/sp/item consumption)
  * &2: picked menu entry (Warp Portal, Teleport and other menu based skills)
  *------------------------------------------*/
-static int skill_check_condition_hom (struct homun_data *hd, int skill, int lv, int type)
+static int skill_check_condition_mercenary(struct block_list *bl, int skill, int lv, int type)
 {
 	struct status_data *status;
-	TBL_PC * sd;
-	int i,j,hp,sp,hp_rate,sp_rate,state,mhp ;
+	struct map_session_data *sd;
+	int i, j, hp, sp, hp_rate, sp_rate, state, mhp;
 	int itemid[10],amount[ARRAYLENGTH(itemid)],index[ARRAYLENGTH(itemid)];
-	
-	nullpo_retr(0, hd);
-	sd = hd->master;
 
-	if (lv <= 0) return 0;
-
-	status = &hd->battle_status;
-
-	//Code speedup, rather than using skill_get_* over and over again.
-	j = skill_get_index(skill);
-	if( j == 0 )
-  		return 0;
 	if( lv < 1 || lv > MAX_SKILL_LEVEL )
 		return 0;
+	nullpo_retr(0,bl);
 
-	for(i = 0; i < 10; i++) {
+	switch( bl->type )
+	{
+		case BL_HOM: sd = ((TBL_HOM*)bl)->master; break;
+		case BL_MER: sd = ((TBL_MER*)bl)->master; break;
+	}
+
+	status = status_get_status_data(bl);
+	if( (j = skill_get_index(skill)) == 0 )
+		return 0;
+
+	// Requeriments
+	for( i = 0; i < ARRAYLENGTH(itemid); i++ )
+	{
 		itemid[i] = skill_db[j].itemid[i];
 		amount[i] = skill_db[j].amount[i];
 	}
-
 	hp = skill_db[j].hp[lv-1];
 	sp = skill_db[j].sp[lv-1];
 	hp_rate = skill_db[j].hp_rate[lv-1];
 	sp_rate = skill_db[j].sp_rate[lv-1];
 	state = skill_db[j].state;
-	mhp = skill_db[j].mhp[lv-1];
-	if(mhp > 0)
-		hp += (status->max_hp * mhp)/100;
-	if(hp_rate > 0)
-		hp += (status->hp * hp_rate)/100;
+	if( (mhp = skill_db[j].mhp[lv-1]) > 0 )
+		hp += (status->max_hp * mhp) / 100;
+	if( hp_rate > 0 )
+		hp += (status->hp * hp_rate) / 100;
 	else
-		hp += (status->max_hp * (-hp_rate))/100;
-	if(sp_rate > 0)
-		sp += (status->sp * sp_rate)/100;
+		hp += (status->max_hp * (-hp_rate)) / 100;
+	if( sp_rate > 0 )
+		sp += (status->sp * sp_rate) / 100;
 	else
-		sp += (status->max_sp * (-sp_rate))/100;
+		sp += (status->max_sp * (-sp_rate)) / 100;
 
-	switch(skill) { // Check for cost reductions due to skills & SCs
-		case HFLI_SBR44:
-			if(hd->homunculus.intimacy <= 200)
-				return 0;
-			break;
-		case HVAN_EXPLOSION:
-			if(hd->homunculus.intimacy < (unsigned int)battle_config.hvan_explosion_intimate)
-				return 0;
-			break;
-	}
-
-	if(!(type&2)){
-		if( hp>0 && status->hp <= (unsigned int)hp) {
-			clif_skill_fail(sd,skill,2,0);
-			return 0;
-		}
-		if( sp>0 && status->sp < (unsigned int)sp) {
-			clif_skill_fail(sd,skill,1,0);
-			return 0;
+	if( bl->type == BL_HOM )
+	{ // Intimacy Requeriments
+		struct homun_data *hd = BL_CAST(BL_HOM, bl);
+		switch( skill )
+		{
+			case HFLI_SBR44:
+				if( hd->homunculus.intimacy <= 200 )
+					return 0;
+				break;
+			case HVAN_EXPLOSION:
+				if( hd->homunculus.intimacy < (unsigned int)battle_config.hvan_explosion_intimate )
+					return 0;
+				break;
 		}
 	}
 
-	if (!type) //States are only checked on begin casting.
-	switch(state) {
-	case ST_MOVE_ENABLE:
-		if(!unit_can_move(&hd->bl)) {
-			clif_skill_fail(sd,skill,0,0);
+	if( !(type&2) )
+	{
+		if( hp > 0 && status->hp <= (unsigned int)hp )
+		{
+			clif_skill_fail(sd, skill, 2, 0);
 			return 0;
 		}
-		break;
+		if( sp > 0 && status->sp <= (unsigned int)sp )
+		{
+			clif_skill_fail(sd, skill, 1, 0);
+			return 0;
+		}
 	}
 
-	if(!(type&1))
+	if( !type )
+		switch( state )
+		{
+			case ST_MOVE_ENABLE:
+				if( !unit_can_move(bl) )
+				{
+					clif_skill_fail(sd, skill, 0, 0);
+					return 0;
+				}
+				break;
+		}
+	if( !(type&1) )
 		return 1;
 
-	// Check items and reduce required amounts
-	for( i = 0; i < ARRAYLENGTH(itemid); ++i )
+	// Check item existences
+	for( i = 0; i < ARRAYLENGTH(itemid); i++ )
 	{
 		index[i] = -1;
-		if(itemid[i] <= 0)
-			continue;// no item
-
-		index[i] = pc_search_inventory(sd,itemid[i]);
-		if(index[i] < 0 || sd->status.inventory[index[i]].amount < amount[i])
+		if( itemid[i] < 1 ) continue; // No item
+		index[i] = pc_search_inventory(sd, itemid[i]);
+		if( index[i] < 0 || sd->status.inventory[index[i]].amount < amount[i] )
 		{
-			clif_skill_fail(sd,skill,0,0);
+			clif_skill_fail(sd, skill, 0, 0);
 			return 0;
 		}
 	}
 
 	// Consume items
-	for( i = 0; i < ARRAYLENGTH(itemid); ++i )
+	for( i = 0; i < ARRAYLENGTH(itemid); i++ )
 	{
-		if(index[i] >= 0)
-			pc_delitem(sd,index[i],amount[i],0);
+		if( index[i] >= 0 ) pc_delitem(sd, index[i], amount[i], 0);
 	}
 
-	if(type&2)
+	if( type&2 )
 		return 1;
 
-	if(sp || hp)
-		status_zap(&hd->bl, hp, sp);
+	if( sp || hp )
+		status_zap(bl, hp, sp);
 
 	return 1;
 }
@@ -2272,6 +2290,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 	switch(skillid)
 	{
 	case SM_BASH:
+	case MS_BASH:
 	case MC_MAMMONITE:
 	case TF_DOUBLE:
 	case AC_DOUBLE:
@@ -5145,7 +5164,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			x = src->x;
 			y = src->y;
 			if (hd)
-				skill_blockmerc_start(hd, skillid, skill_get_time2(skillid,skilllv));
+				skill_blockhomun_start(hd, skillid, skill_get_time2(skillid,skilllv));
 
 			if (unit_movepos(src,bl->x,bl->y,0,0)) {
 				clif_skill_nodamage(src,src,skillid,skilllv,1); // Homunc
@@ -5197,7 +5216,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		clif_skill_nodamage(src,bl,skillid,skilllv,
 			sc_start(bl,type,100,skilllv,skill_get_time(skillid,skilllv)));
 		if (hd)
-			skill_blockmerc_start(hd, skillid, skill_get_time2(skillid,skilllv));
+			skill_blockhomun_start(hd, skillid, skill_get_time2(skillid,skilllv));
 		break;
 
 	case NPC_DRAGONFEAR:
@@ -5251,14 +5270,12 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
  *------------------------------------------*/
 int skill_castend_id(int tid, unsigned int tick, int id, intptr data)
 {
-	struct block_list* target = NULL;
-	struct block_list* src = NULL;
-	struct map_session_data* sd = NULL;
-	struct homun_data* hd = NULL;	//[orn]
-	struct mob_data* md = NULL;
-	struct unit_data* ud = NULL;
-	struct status_change* sc = NULL;
-	int inf,inf2,flag=0;
+	struct block_list *target, *src;
+	struct map_session_data *sd;
+	struct mob_data *md;
+	struct unit_data *ud;
+	struct status_change *sc;
+	int inf,inf2,flag = 0;
 
 	src = map_id2bl(id);
 	if( src == NULL )
@@ -5275,7 +5292,6 @@ int skill_castend_id(int tid, unsigned int tick, int id, intptr data)
 	}
 
 	sd = BL_CAST(BL_PC,  src);
-	hd = BL_CAST(BL_HOM, src);
 	md = BL_CAST(BL_MOB, src);
 
 	if( src->prev == NULL ) {
@@ -5400,12 +5416,12 @@ int skill_castend_id(int tid, unsigned int tick, int id, intptr data)
 			break;
 		}
 
-		if(sd && !skill_check_condition(sd,ud->skillid, ud->skilllv,1))
-			break;
-			
-		if(hd && !skill_check_condition_hom(hd,ud->skillid, ud->skilllv,1))	//[orn]
+		if( sd && !skill_check_condition(sd, ud->skillid, ud->skilllv,1) )
 			break;
 
+		if( (src->type == BL_MER || src->type == BL_HOM) && !skill_check_condition_mercenary(src, ud->skillid, ud->skilllv, 1) )
+			break;
+			
 		if (ud->state.running && ud->skillid == TK_JUMPKICK)
 			flag = 1;
 
@@ -5498,15 +5514,13 @@ int skill_castend_pos(int tid, unsigned int tick, int id, intptr data)
 {
 	struct block_list* src = map_id2bl(id);
 	int maxcount;
-	struct map_session_data *sd = NULL;
-	struct homun_data *hd = NULL;	//[orn]
+	struct map_session_data *sd;
 	struct unit_data *ud = unit_bl2ud(src);
-	struct mob_data *md = NULL;
+	struct mob_data *md;
 
 	nullpo_retr(0, ud);
 
 	sd = BL_CAST(BL_PC , src);
-	hd = BL_CAST(BL_HOM, src);
 	md = BL_CAST(BL_MOB, src);
 
 	if( src->prev == NULL ) {
@@ -5578,7 +5592,7 @@ int skill_castend_pos(int tid, unsigned int tick, int id, intptr data)
 		if(sd && !skill_check_condition(sd,ud->skillid, ud->skilllv, 1))
 			break;
 
-		if(hd && !skill_check_condition_hom(hd,ud->skillid, ud->skilllv, 1))	//[orn]
+		if( (src->type == BL_MER || src->type == BL_HOM) && !skill_check_condition_mercenary(src, ud->skillid, ud->skilllv, 1) )
 			break;
 
 		if(md) {
@@ -10510,7 +10524,7 @@ int skill_blockpc_start(struct map_session_data *sd, int skillid, int tick)
 	return add_timer(gettick()+tick,skill_blockpc_end,sd->bl.id,skillid);
 }
 
-int skill_blockmerc_end(int tid, unsigned int tick, int id, intptr data)	//[orn]
+int skill_blockhomun_end(int tid, unsigned int tick, int id, intptr data)	//[orn]
 {
 	struct homun_data *hd = (TBL_HOM*) map_id2bl(id);
 	if (data <= 0 || data >= MAX_SKILL)
@@ -10520,7 +10534,7 @@ int skill_blockmerc_end(int tid, unsigned int tick, int id, intptr data)	//[orn]
 	return 1;
 }
 
-int skill_blockmerc_start(struct homun_data *hd, int skillid, int tick)	//[orn]
+int skill_blockhomun_start(struct homun_data *hd, int skillid, int tick)	//[orn]
 {
 	nullpo_retr (-1, hd);
 	
@@ -10533,7 +10547,7 @@ int skill_blockmerc_start(struct homun_data *hd, int skillid, int tick)	//[orn]
 		return -1;
 	}
 	hd->blockskill[skillid] = 1;
-	return add_timer(gettick()+tick,skill_blockmerc_end,hd->bl.id,skillid);
+	return add_timer(gettick() + tick, skill_blockhomun_end, hd->bl.id, skillid);
 }
 
 

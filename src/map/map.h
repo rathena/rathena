@@ -172,11 +172,11 @@ enum bl_type {
 	BL_MOB   = 0x002,
 	BL_PET   = 0x004,
 	BL_HOM   = 0x008,
-	BL_ITEM  = 0x010,
-	BL_SKILL = 0x020,
-	BL_NPC   = 0x040,
-	BL_CHAT  = 0x080,
-	BL_MER   = 0x100,
+	BL_MER   = 0x010,
+	BL_ITEM  = 0x020,
+	BL_SKILL = 0x040,
+	BL_NPC   = 0x080,
+	BL_CHAT  = 0x100,
 
 	BL_ALL   = 0xFFF,
 };

@@ -314,7 +314,10 @@ int merc_data_received(struct s_mercenary *merc, bool flag)
 
 void mercenary_damage(struct mercenary_data *md, struct block_list *src, int hp, int sp)
 {
-	clif_mercenary_updatestatus(md->master, SP_HP);
+	if( hp )
+		clif_mercenary_updatestatus(md->master, SP_HP);
+	if( sp )
+		clif_mercenary_updatestatus(md->master, SP_SP);
 }
 
 void mercenary_heal(struct mercenary_data *md, int hp, int sp)
@@ -353,6 +356,18 @@ int mercenary_kills(struct mercenary_data *md)
 
 	if( md->master )
 		clif_mercenary_updatestatus(md->master, SP_MERCKILLS);
+
+	return 0;
+}
+
+int mercenary_checkskill(struct mercenary_data *md, int skill_id)
+{
+	int i = skill_id - MC_SKILLBASE;
+
+	if( !md || !md->db )
+		return 0;
+	if( md->db->skill[i].id == skill_id )
+		return md->db->skill[i].lv;
 
 	return 0;
 }

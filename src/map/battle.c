@@ -1120,6 +1120,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 		{	//Hit skill modifiers
 			//It is proven that bonus is applied on final hitrate, not hit.
 			case SM_BASH:
+			case MS_BASH:
 				hitrate += hitrate * 5 * skill_lv / 100;
 				break;
 			case SM_MAGNUM:
@@ -1309,6 +1310,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 			switch( skill_num )
 			{
 				case SM_BASH:
+				case MS_BASH:
 					skillratio += 30*skill_lv;
 					break;
 				case SM_MAGNUM:

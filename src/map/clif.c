@@ -9172,28 +9172,48 @@ static void clif_parse_UseSkillToId_homun(struct homun_data *hd, struct map_sess
 {
 	int lv;
 
-	if (!hd)
+	if( !hd )
 		return;
-
-	if (skillnotok_hom(skillnum, hd))	//[orn]
+	if( skillnotok_hom(skillnum, hd) )
 		return;
-
-	if (hd->bl.id != target_id &&
-		skill_get_inf(skillnum)&INF_SELF_SKILL)
-		target_id = hd->bl.id; //What good is it to mess up the target in self skills? Wished I knew... [Skotlex]
-	
-	if (hd->ud.skilltimer != -1) {
-		if (skillnum != SA_CASTCANCEL)
-			return;
-	} else if (DIFF_TICK(tick, hd->ud.canact_tick) < 0)
+	if( hd->bl.id != target_id && skill_get_inf(skillnum)&INF_SELF_SKILL )
+		target_id = hd->bl.id;
+	if( hd->ud.skilltimer != -1 )
+	{
+		if( skillnum != SA_CASTCANCEL ) return;
+	}
+	else if( DIFF_TICK(tick, hd->ud.canact_tick) < 0 )
 		return;
 
 	lv = merc_hom_checkskill(hd, skillnum);
-	if (skilllv > lv)
+	if( skilllv > lv )
 		skilllv = lv;
-			
-	if (skilllv)
+	if( skilllv )
 		unit_skilluse_id(&hd->bl, target_id, skillnum, skilllv);
+}
+
+static void clif_parse_UseSkillToId_mercenary(struct mercenary_data *md, struct map_session_data *sd, unsigned int tick, short skillnum, short skilllv, int target_id)
+{
+	int lv;
+
+	if( !md )
+		return;
+	if( skillnotok_mercenary(skillnum, md) )
+		return;
+	if( md->bl.id != target_id && skill_get_inf(skillnum)&INF_SELF_SKILL )
+		target_id = md->bl.id;
+	if( md->ud.skilltimer != INVALID_TIMER )
+	{
+		if( skillnum != SA_CASTCANCEL ) return;
+	}
+	else if( DIFF_TICK(tick, md->ud.canact_tick) < 0 )
+		return;
+
+	lv = mercenary_checkskill(md, skillnum);
+	if( skilllv > lv )
+		skilllv = lv;
+	if( skilllv )
+		unit_skilluse_id(&md->bl, target_id, skillnum, skilllv);
 }
 
 /*==========================================
@@ -9216,8 +9236,15 @@ void clif_parse_UseSkillToId(int fd, struct map_session_data *sd)
 	if (tmp&INF_GROUND_SKILL || !tmp)
 		return; //Using a ground/passive skill on a target? WRONG.
 
-	if (skillnum >= HM_SKILLBASE && skillnum < HM_SKILLBASE+MAX_HOMUNSKILL) {
+	if( skillnum >= HM_SKILLBASE && skillnum < HM_SKILLBASE+MAX_HOMUNSKILL )
+	{
 		clif_parse_UseSkillToId_homun(sd->hd, sd, tick, skillnum, skilllv, target_id);
+		return;
+	}
+
+	if( skillnum >= MC_SKILLBASE && skillnum < MC_SKILLBASE+MAX_MERCSKILL )
+	{
+		clif_parse_UseSkillToId_mercenary(sd->md, sd, tick, skillnum, skilllv, target_id);
 		return;
 	}
 

@@ -34,6 +34,8 @@ struct mercenary_data {
 
 	struct map_session_data *master;
 	int contract_timer;
+
+	char blockskill[MAX_SKILL];
 };
 
 bool merc_class(int class_);
@@ -56,6 +58,8 @@ int mercenary_set_faith(struct mercenary_data *md, int value);
 int mercenary_get_calls(struct mercenary_data *md);
 int mercenary_set_calls(struct mercenary_data *md, int value);
 int mercenary_kills(struct mercenary_data *md);
+
+int mercenary_checkskill(struct mercenary_data *md, int skill_id);
 
 int do_init_mercenary(void);
 
