@@ -1,6 +1,7 @@
 ﻿Date		Added
 ======
 2008/09/03
+	* Rev. 13187 Fixed inconsitencies in mosk_dun spawns. (bugreport:2165) [L0ne_W0lf]
 	* Rev. 13187 Fixed bug in refiner merchants. (bugreport:2168) [L0ne_W0lf]
 2008/09/01
 	* Rev. 13181 Fixed item requirements for PH D. Hat again. [L0ne_W0lf]
