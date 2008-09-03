@@ -45,6 +45,7 @@
 //= 2.3 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
 //= 2.4 Updated Refiner function. cleaner, and less dated. [L0ne_w0lf]
 //= 2.5 Rather large update to the refiner and merchants. :D [L0ne_W0lf]
+//= 2.6 Fixed a few bugs with creating pure stones. [L0ne_W0lf]
 //============================================================
 
 
@@ -285,7 +286,7 @@ geffen_in,110,172,0	script	Christopher#1::Chrisbs	63,{
 			}
 			else {
 				delitem 756,5;  //Oridecon_Stone
-				getitem 615,1; // Oridecon
+				getitem 984,1; // Oridecon
 				mes "[Christopher Guillenrow]";
 				mes "Here's an Oridecon fer ye. Ye will be always welcome here, I'll be waitin' for ye.";
 				close;
@@ -298,7 +299,7 @@ geffen_in,110,172,0	script	Christopher#1::Chrisbs	63,{
 			}
 			else {
 				delitem 757,5;  //Elunium_Stone
-				getitem 757,1; // Elunium
+				getitem 985,1; // Elunium
 				mes "[Christopher Guillenrow]";
 				mes "Arrr, here's yer Elunium. Yer business is always welcome here, so feel free to come again.";
 				close;
@@ -826,7 +827,7 @@ function	script	orimain	{
 	case 1:
 		if (countitem(756) > 4) {
 			delitem 756,5;  //Oridecon_Stone
-			getitem 615,1; // Oridecon
+			getitem 984,1; // Oridecon
 			mes "[" + getarg(0) + "]";
 			mes "Here's your Oridecon.";
 			mes "You're welcome to come";
@@ -842,7 +843,7 @@ function	script	orimain	{
 	case 2:
 		if (countitem(757) > 4) {
 			delitem 757,5;  //Elunium_Stone
-			getitem 757,1; // Elunium
+			getitem 985,1; // Elunium
 			mes "[" + getarg(0) + "]";
 			mes "Here's your Elunium.";
 			mes "You're welcome to come";
