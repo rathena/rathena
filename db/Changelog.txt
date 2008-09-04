@@ -40,6 +40,9 @@
 	2385 Recuvative_Armor		Should trigger HP/SP return with magical kills as well.
 
 =======================
+2008/09/05
+	* Rev. 13192 Removed job and level restriction on Mercenary ASPD potions. [L0ne_W0lf]
+	* Added Monster Mercenaries using mobs original stats.
 2008/09/03
 	* Fixed minor inconsistencies with mob_skill_db. (bugreport:2148) [L0ne_W0lf]
 2008/08/31

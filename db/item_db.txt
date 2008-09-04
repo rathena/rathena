@@ -3586,8 +3586,8 @@
 12239,New_Year_Rice_Cake_2,New Year Rice Cake,0,20,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ if(rand(1000)<100) sc_start SC_DPoison,10000,0; sc_start SC_Poison,50000,0; },{},{}
 12240,Old_Yellow_Box,Old Yellow Box,2,20,,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_YellowBox),1; },{},{}
 12241,M_Center_Potion,Concentration Potion,2,800,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ mercenary_sc_start SC_ASPDPOTION0,1800000,0; },{},{}
-12242,M_Awakening_Potion,Awakening Potion,2,1500,,150,,,,,0xFFF7FEEF,7,2,,,40,,,{ mercenary_sc_start SC_ASPDPOTION1,1800000,0; },{},{}
-12243,M_Berserk_Potion,Berserk Potion,2,3000,,200,,,,,0x01E646A6,7,2,,,85,,,{ mercenary_sc_start SC_ASPDPOTION2,1800000,0; },{},{}
+12242,M_Awakening_Potion,Awakening Potion,2,1500,,150,,,,,0xFFFFFFFF,7,2,,,0,,,{ mercenary_sc_start SC_ASPDPOTION1,1800000,0; },{},{}
+12243,M_Berserk_Potion,Berserk Potion,2,3000,,200,,,,,0xFFFFFFFF,7,2,,,0,,,{ mercenary_sc_start SC_ASPDPOTION2,1800000,0; },{},{}
 12244,Old_Gift_Box,Old Gift Box,2,20,,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_OldGiftBox),1; },{},{}
 //St. Patrick's Day Event (2007)
 12245,Green_Ale_US,Green Ale,0,5000,,500,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 100,0; },{},{}
@@ -3621,6 +3621,9 @@
 12273,Military_Rations_C,Military Rations C,0,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_INCFLEE,600000,33; },{},{}
 12274,Daehwandan,Daehwandan,0,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_INCMHPRATE,36000000,5; percentheal 10,0; },{},{}
 12275,Taecheongdan,Taecheongdan,0,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_INCMSPRATE,36000000,5; percentheal 0,10; },{},{}
+12276,Mimic_Summon_Scroll,Mimic Summon Scroll Level 1,2,2,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ createmercenary 1191,1800000; },{},{}
+12277,Disguise_Summon_Scroll,Disguise Summon Scroll Level 1,2,2,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ createmercenary 1506,1800000; },{},{}
+12278,Alice_Summon_Scroll,Alice Summon Scroll Level 1,2,2,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ createmercenary 1275,1800000; },{},{}
 12279,Undead_Element_Scroll,Shadow Armor Scroll,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start4 SC_ARMOR_RESIST,300000,20,20,20,20; },{},{}
 12280,Holy_Element_Scroll,Holy Armor Scroll,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ specialeffect2 91; sc_start SC_BENEDICTIO,300000,1; },{},{}
 12281,Event_Treasure_Box,.Event Treasure Box,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
@@ -3636,9 +3639,9 @@
 //Net Cafe Premium
 12298,SP_Reduction_Potion,SP Reduction Potion,0,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_SPCOST_RATE,36000000,15; },{},{}
 12299,Status_Resist_Potion,Status Resistance Potion,0,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_COMMONSC_RESIST,36000000,10; },{},{}
-12300,Wild_Rose_Summoning_Book,Wild_Rose Summoning Book,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-12301,Doppleganger_Summoning_Book,Doppleganger Summoning Book,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-12302,Egnigem_Cenia_Summoning_Book,Egnigem Cenia Summoning Book,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12300,Wild_Rose_Summoning_Book,Wild_Rose Summoning Book,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ createmercenary 1965,1800000; },{},{}
+12301,Doppeleganger_Summoning_Book,Doppleganger Summoning Book,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ createmercenary 1966,1800000; },{},{}
+12302,Egnigem_Cenia_Summoning_Book,Egnigem Cenia Summoning Book,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ createmercenary 1967,1800000; },{},{}
 12303,Blessing_Of_Water,Blessing Of Water,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12304,Diary_Magic_Powder,Diary Magic Powder,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12305,Mini_Heart_Magic_Powder,Mini Heart Magic Powder,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}

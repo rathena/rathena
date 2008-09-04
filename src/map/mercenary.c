@@ -110,6 +110,8 @@ int mercenary_get_faith(struct mercenary_data *md)
 		return sd->status.spear_faith;
 	if( class_ >= 6037 && class_ <= 6046 )
 		return sd->status.sword_faith;
+	else
+		return 0;
 
 	return 0;
 }
@@ -130,6 +132,8 @@ int mercenary_set_faith(struct mercenary_data *md, int value)
 		faith = &sd->status.spear_faith;
 	else if( class_ >= 6037 && class_ <= 6046 )
 		faith = &sd->status.sword_faith;
+	else
+		return 0;
 
 	*faith += value;
 	*faith = cap_value(*faith, 0, SHRT_MAX);
@@ -154,6 +158,8 @@ int mercenary_get_calls(struct mercenary_data *md)
 		return sd->status.spear_calls;
 	if( class_ >= 6037 && class_ <= 6046 )
 		return sd->status.sword_calls;
+	else
+		return 0;
 
 	return 0;
 }
@@ -174,6 +180,8 @@ int mercenary_set_calls(struct mercenary_data *md, int value)
 		calls = &sd->status.spear_calls;
 	else if( class_ >= 6037 && class_ <= 6046 )
 		calls = &sd->status.sword_calls;
+	else
+		return 0;
 
 	*calls += value;
 	*calls = cap_value(*calls, 0, INT_MAX);
