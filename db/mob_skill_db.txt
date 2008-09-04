@@ -4647,7 +4647,7 @@
 1880,Leshij@AL_HEAL,idle,28,9,9000,3,5000,yes,friend,friendhpltmaxrate,99,0,,,,,,
 1881,Lesavka@AL_HEAL,idle,28,5,2000,3,5000,no,self,myhpltmaxrate,50,0,,,,,,2
 1881,Lesavka@AL_HEAL,attack,28,5,2000,3,5000,no,self,myhpltmaxrate,50,0,,,,,,2
-1881,Lesavkaa@TF_POISON,attack,52,5,5000,0,8000,no,target,always,0,,,,,,29,
+1881,Lesavka@TF_POISON,attack,52,5,5000,0,8000,no,target,always,0,,,,,,29,
 1881,Lesavka@AL_TELEPORT,idle,26,1,10000,0,5000,yes,self,rudeattacked,0,,,,,,,
 1881,Lesavka@AL_TELEPORT,walk,26,1,10000,0,5000,yes,self,rudeattacked,0,,,,,,,
 1881,Lesavka@MO_BODYRELOCATION,chase,264,1,3000,500,5000,yes,target,always,0,,,,,,,
