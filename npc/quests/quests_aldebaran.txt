@@ -41,9 +41,10 @@ aldeba_in,152,166,4	script	Trader#01	86,{
 	next;
 	switch(select(" Doctor Band : Feather Bonnet : Phantom of Opera : Sakkat ")) {
 	case 1:
-		if ((countitem(2275) > 0) && (countitem(613) > 49) && (Zeny > 3499)) {
+		if ((countitem(2275) > 0) && (countitem(998) > 49) && (countitem(733) > 0) && (Zeny > 3499)) {
 			delitem 2275,1;  //Red_Bandana
-			delitem 613,50;  //Iron
+			delitem 998,50;  //Iron
+			delitem 733,1;  //Crystal_Jewel___
 			set Zeny,Zeny-3500;
 			mes "[Trader]";
 			mes "Hm! You don't have a medical license, do you? It's alright, I've heard about a rogue, unlicensed physician who performed medical miracles! But... That might have been a comic book.";
@@ -77,8 +78,8 @@ aldeba_in,152,166,4	script	Trader#01	86,{
 			close;
 		}
 	case 3:
-		if ((countitem(613) > 19) && (countitem(707) > 0) && (Zeny > 4999)){ //Iron Singing_Plant 
-			delitem 613,20;  //Iron
+		if ((countitem(998) > 19) && (countitem(707) > 0) && (Zeny > 4999)){ //Iron Singing_Plant 
+			delitem 998,20;  //Iron
 			delitem 707,1;  //Singing_Plant
 			set Zeny,Zeny-5000;
 			mes "[Trader]";

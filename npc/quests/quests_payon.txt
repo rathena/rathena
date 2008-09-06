@@ -92,10 +92,10 @@ payon_in01,18,10,4	script	Mystic Lady	76,{
 	next;
 	switch(select("Oh Yeah? That sounds good.:No thank you, Ma'am.")) {
 	case 1:
-		if ((countitem(724) > 0) && (countitem(916) > 199) && (countitem(5001) > 0) && (Zeny > 4999)) {
+		if ((countitem(724) > 0) && (countitem(949) > 199) && (countitem(5001) > 0) && (Zeny > 4999)) {
 			mes "[Mystic Lady]";
 			delitem 724,1;  //Cardinal_Jewel_
-			delitem 916,200;  //Feather
+			delitem 949,200;  //Feather
 			delitem 5001,1;  //Headset
 			set Zeny,Zeny-5000;
 			mes "Here, I will give you this pre-made one.";
@@ -237,7 +237,7 @@ payon_in01,56,12,7	script	Young man#12	89,{
 			mes "[Young man]";
 			mes "1 Helm (with slot).";
 			mes "1 Angel Wing.";
-			mes "5 Fang of Hatii.";
+			mes "5 Fang of Garm.";
 			mes "That's all I require.";
 			next;
 			mes "[Young man]";

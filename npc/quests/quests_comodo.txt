@@ -348,7 +348,7 @@ comodo,273,137,4	script	Traveler#head	702,{
 			close;
 		}
 	case 3:
-		if ((countitem(2233) > 0) && (countitem(614) > 0) && (countitem(916) > 79) && (countitem(999) > 19) && (countitem(938) > 799)) {
+		if ((countitem(2233) > 0) && (countitem(969) > 0) && (countitem(949) > 79) && (countitem(999) > 19) && (countitem(938) > 799)) {
 			mes "[Isac Mari]";
 			mes "Grief for Greed...";
 			mes "If you brought all the required items, I'll go ahead and make it for you~";
@@ -373,8 +373,8 @@ comodo,273,137,4	script	Traveler#head	702,{
 				mes "Whew! This is pretty hard!";
 				next;
 				delitem 2233,1;  //Circlet_
-				delitem 614,1;  //Gold
-				delitem 916,80;  //Feather
+				delitem 969,1;  //Gold
+				delitem 949,80;  //Feather
 				delitem 999,20;  //Steel
 				delitem 938,800;  //Sticky_Mucus
 				mes "[Isac Mari]";

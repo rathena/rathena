@@ -186,10 +186,10 @@ xmas,115,297,4	script	Vending Machine	111,{
 		}
 		break;
 	case 3:
-		if ((countitem(4048) > 849) && (countitem(7068) > 299) && (countitem(1015) > 0)) {
+		if ((countitem(7033) > 849) && (countitem(7068) > 299) && (countitem(1015) > 0)) {
 			mes "^3355FFYou gingerly place the items into the snowman's mouth.^000000";
 			next;
-			delitem 4048,850;  //Poison_Spore
+			delitem 7033,850;  //Poison_Spore
 			delitem 7068,300;  //Burn_Tree
 			delitem 1015,1;  //Thin_N'_Long_Tongue
 			Emotion e_oh;
@@ -273,12 +273,12 @@ xmas,115,297,4	script	Vending Machine	111,{
 		}
 		break;
 	case 7:
-		if ((countitem(539) > 119) && (countitem(982) > 0) && (countitem(916) > 329) && (countitem(1036) > 449)) {
+		if ((countitem(539) > 119) && (countitem(982) > 0) && (countitem(949) > 329) && (countitem(1036) > 449)) {
 			mes "^3355FFYou gingerly place the items into the snowman's mouth.^000000";
 			next;
 			delitem 539,120;  //Piece_Of_Cake
 			delitem 982,1;  //White_Dyestuffs
-			delitem 916,330;  //Feather
+			delitem 949,330;  //Feather
 			delitem 1036,450;  //Dragon_Scale
 			Emotion e_oh;
 			mes "^3355FF*Vroooooom~~*";

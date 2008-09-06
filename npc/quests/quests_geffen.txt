@@ -135,9 +135,9 @@ geffen_in,30,71,4	script	Eric	83,{
 		mes "These are the things I need for Grandfather's masterpiece.";
 		close;
 	case 3:
-		if ((countitem(999) > 39) && (countitem(615) > 0) && (countitem(970) > 0) && (countitem(1003) > 0)) {
+		if ((countitem(999) > 39) && (countitem(984) > 0) && (countitem(970) > 0) && (countitem(1003) > 0)) {
 			delitem 999,40;  //Steel
-			delitem 615,1;  //Oridecon
+			delitem 984,1;  //Oridecon
 			delitem 970,1;  //Alchol
 			delitem 1003,1;  //Coal
 			getitem 5001,1; // Headset

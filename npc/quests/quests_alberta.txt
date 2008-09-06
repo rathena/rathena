@@ -649,7 +649,7 @@ alberta,120,53,1	script	Stylish Merchant#new30	51,{
 			next;
 			mes "[Zic]";
 			mes "Just gimmie...";
-			mes "2300 ^0000FFCoral Reef^000000.";
+			mes "1200 ^0000FFCoral Reef^000000.";
 			mes "...Did you know this already?";
 			close;
 		}
@@ -899,7 +899,7 @@ alberta,136,79,1	script	Hat store girl#new30	71,{
 				mes "[Tempestra]";
 				mes "I want to make something special for you because you showed me such kindness, but I don't have anything like that right now.";
 				next;
-				if ((countitem(7086) > 0) && (countitem(614) > 9) && (countitem(999) > 39) && (countitem(1003) > 49) && (countitem(615) > 1)) {
+				if ((countitem(7086) > 0) && (countitem(969) > 9) && (countitem(999) > 39) && (countitem(1003) > 49) && (countitem(984) > 1)) {
 					mes "[Tempestra]";
 					mes "Hmm...";
 					mes "I think I can make a special item from the items you already have.";
@@ -912,10 +912,10 @@ alberta,136,79,1	script	Hat store girl#new30	71,{
 					mes "I think I'll make you a Hat of the Sun God~";
 					next;
 					delitem 7086,1;  //Symbol_Of_Sun
-					delitem 614,10;  //Gold
+					delitem 969,10;  //Gold
 					delitem 999,40;  //Steel
 					delitem 1003,50;  //Coal
-					delitem 615,2;  //Oridecon
+					delitem 984,2;  //Oridecon
 					mes "[Tempestra]";
 					mes "See! Here it is!!";
 					mes "Haha, I made this quicker than the speed of light!";
@@ -931,7 +931,7 @@ alberta,136,79,1	script	Hat store girl#new30	71,{
 				else {
 					mes "[Tempestra]";
 					mes "Hmm...";
-					mes "^0000FF1 Amblem of the Sun God^000000";
+					mes "^0000FF1 Emblem of the Sun God^000000";
 					mes "^0000FF10 Gold^000000";
 					mes "^0000FF40 Steel^000000";
 					mes "^0000FF50 Coal^000000";
