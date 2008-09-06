@@ -94,6 +94,25 @@ int mercenary_get_lifetime(struct mercenary_data *md)
 	return (td != NULL) ? DIFF_TICK(td->tick, gettick()) : 0;
 }
 
+int mercenary_get_guild(struct mercenary_data *md)
+{
+	int class_;
+
+	if( md == NULL || md->db == NULL )
+		return -1;
+
+	class_ = md->db->class_;
+
+	if( class_ >= 6017 && class_ <= 6026 )
+		return ARCH_MERC_GUILD;
+	if( class_ >= 6027 && class_ <= 6036 )
+		return SPEAR_MERC_GUILD;
+	if( class_ >= 6037 && class_ <= 6046 )
+		return SWORD_MERC_GUILD;
+
+	return -1;
+}
+
 int mercenary_get_faith(struct mercenary_data *md)
 {
 	struct map_session_data *sd;
@@ -110,8 +129,6 @@ int mercenary_get_faith(struct mercenary_data *md)
 		return sd->status.spear_faith;
 	if( class_ >= 6037 && class_ <= 6046 )
 		return sd->status.sword_faith;
-	else
-		return 0;
 
 	return 0;
 }
@@ -158,8 +175,6 @@ int mercenary_get_calls(struct mercenary_data *md)
 		return sd->status.spear_calls;
 	if( class_ >= 6037 && class_ <= 6046 )
 		return sd->status.sword_calls;
-	else
-		return 0;
 
 	return 0;
 }
@@ -231,6 +246,12 @@ int merc_delete(struct mercenary_data *md, int reply)
 	if( !sd )
 		return unit_free(&md->bl, 0);
 
+	if( md->devotion_flag )
+	{
+		md->devotion_flag = 0;
+		status_change_end(&sd->bl, SC_DEVOTION, -1);
+	}
+
 	switch( reply )
 	{
 		case 0: mercenary_set_faith(md, 1); break; // +1 Loyalty on Contract ends.
@@ -278,6 +299,7 @@ int merc_data_received(struct s_mercenary *merc, bool flag)
 		sd->md = md = (struct mercenary_data*)aCalloc(1,sizeof(struct mercenary_data));
 		md->bl.type = BL_MER;
 		md->bl.id = npc_get_new_npc_id();
+		md->devotion_flag = 0;
 
 		md->master = sd;
 		md->db = db;

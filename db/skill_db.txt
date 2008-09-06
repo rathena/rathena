@@ -700,17 +700,17 @@
 8222,0,6,4,0,0x3,-1,5,1,yes,0,0,0,magic,0,	MER_MAGNIFICAT,Magnificat
 8223,0,6,4,0,0x1,0,10,1,no,0,0,0,weapon,0,	MER_QUICKEN,Two-Hand_Quicken
 8224,0,6,4,3,0x3,3,1,1,yes,0,0,0,magic,0,	MER_SIGHT,Sight
-8225,0,0,0,0,0x1,0,5,0,no,0,0,0,weapon,0,	MER_CRASH,Crash
-8226,0,0,0,0,0x1,0,1,0,no,0,0,0,magic,0,	MER_REGAIN,Regain
-8227,0,0,0,0,0x1,0,1,0,no,0,0,0,magic,0,	MER_TENDER,Tender
-8228,0,0,0,0,0x1,0,1,0,no,0,0,0,magic,0,	MER_BENEDICTION,Benediction
-8229,0,0,0,0,0x1,0,1,0,no,0,0,0,magic,0,	MER_RECUPERATE,Recuperate
-8230,0,0,0,0,0x1,0,1,0,no,0,0,0,magic,0,	MER_MENTALCURE,Mental_Cure
-8231,0,0,0,0,0x1,0,1,0,no,0,0,0,magic,0,	MER_COMPRESS,Compress
-8232,9,6,1,0,1,0,10,1,no,0,0,0,none,0,	MER_PROVOKE,Provoke
-8233,0,6,4,0,0x1,0,1,1,no,0,0x1,0,weapon,0,	MER_AUTOBERSERK,Berserk
+8225,1,8,1,-1,0,0,5,3,no,0,0,0,weapon,0,	MER_CRASH,Crash
+8226,9,6,16,0,0x1,0,1,1,yes,0,0x1000,0,magic,0,	MER_REGAIN,Regain
+8227,9,6,16,0,0x1,0,1,1,yes,0,0x1000,0,magic,0,	MER_TENDER,Tender
+8228,9,6,16,0,0x1,0,1,1,yes,0,0x1000,0,magic,0,	MER_BENEDICTION,Benediction
+8229,9,6,16,0,0x1,0,1,1,yes,0,0x1000,0,magic,0,	MER_RECUPERATE,Recuperate
+8230,9,6,16,0,0x1,0,1,1,yes,0,0x1000,0,magic,0,	MER_MENTALCURE,Mental_Cure
+8231,9,6,16,0,0x1,0,1,1,yes,0,0x1000,0,magic,0,	MER_COMPRESS,Compress
+8232,9,6,1,0,0x1,0,10,1,no,0,0,0,none,0,	MER_PROVOKE,Provoke
+8233,0,6,4,0,0x1,0,1,1,no,0,0,0,weapon,0,	MER_AUTOBERSERK,Berserk
 8234,9,6,1,0,0x1,0,10,1,yes,0,0,0,magic,0,	MER_DECAGI,Decrease_AGI
-8235,0,0,0,0,0,0,1,0,no,0,0,0,none,0,		MER_SCAPEGOAT,Scapegoat
+8235,0,6,4,0,0x1,0,1,1,yes,0,0,0,none,0,		MER_SCAPEGOAT,Scapegoat
 8236,5,6,1,0,0x1,0,10,0,yes,0,0,0,magic,0,	MER_LEXDIVINA,Lex_Divina
 8237,9,6,1,0,0x1,0,1,1,yes,0,0,0,magic,0,	MER_ESTIMATION,Sense
 

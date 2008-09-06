@@ -7,6 +7,12 @@
 #include "status.h" // struct status_data, struct status_change
 #include "unit.h" // struct unit_data
 
+enum {
+	ARCH_MERC_GUILD,
+	SPEAR_MERC_GUILD,
+	SWORD_MERC_GUILD,
+};
+
 struct s_mercenary_db {
 	int class_;
 	char sprite[NAME_LENGTH], name[NAME_LENGTH];
@@ -31,11 +37,12 @@ struct mercenary_data {
 
 	struct s_mercenary_db *db;
 	struct s_mercenary mercenary;
+	char blockskill[MAX_SKILL];
 
 	struct map_session_data *master;
 	int contract_timer;
-
-	char blockskill[MAX_SKILL];
+	
+	unsigned devotion_flag : 1;
 };
 
 bool merc_class(int class_);
@@ -53,6 +60,7 @@ int merc_delete(struct mercenary_data *md, int reply);
 void merc_contract_stop(struct mercenary_data *md);
 
 int mercenary_get_lifetime(struct mercenary_data *md);
+int mercenary_get_guild(struct mercenary_data *md);
 int mercenary_get_faith(struct mercenary_data *md);
 int mercenary_set_faith(struct mercenary_data *md, int value);
 int mercenary_get_calls(struct mercenary_data *md);
