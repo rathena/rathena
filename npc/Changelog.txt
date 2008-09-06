@@ -1,6 +1,7 @@
 ﻿Date		Added
 ======
 2008/09/06
+	* Rev. 13194 Lots of small updates and corrections to seal quests. [L0ne_W0lf]
 	* Rev. 13193 Applied bug fixes for IDs in recent quests. (bugreport:2189) [L0ne_W0lf]
 2008/09/03
 	* Rev. 13188 Fixed inconsitencies in mosk_dun spawns. (bugreport:2165) [L0ne_W0lf]

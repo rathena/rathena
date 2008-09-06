@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= SinSloth
 //===== Current Version: ===================================== 
-//= 1.1
+//= 1.2
 //===== Compatible With: ===================================== 
 //= eAthena
 //===== Description: ========================================= 
@@ -11,6 +11,7 @@
 //===== Additional Comments: =================================
 //= 1.0 First version. Thanks to SinSloth for scripting it. [MasterOfMuppets]
 //= 1.1 Updated several aspects of the script. [L0ne_W0lf]
+//= 1.2 Corrected several incorrect item IDs. [L0ne_W0lf]
 //============================================================
 
 gld_dun01,28,85,0	script	Grunburti#1::GodDwarf	826,{
@@ -167,7 +168,7 @@ gld_dun01,28,85,0	script	Grunburti#1::GodDwarf	826,{
 		mes "[Dwarf Grunburti]";
 		mes "First of all, I shall confirm whether or not you have brought all the necessary materials to forge a godly item! I hate it when humans come here without any purpose!";
 		next;
-		if ((countitem(7073) > 3) && (countitem(7077) > 3) && (countitem(7088) > 2) && (countitem(7090) > 2) && (countitem(7092) > 2) && (countitem(726) > 1) && (countitem(722) > 2) && (countitem(727) > 9) && (countitem(724) > 4) && (countitem(614) > 19) && (countitem(2603) > 0)) {
+		if ((countitem(7073) > 3) && (countitem(7077) > 3) && (countitem(7088) > 2) && (countitem(7090) > 2) && (countitem(7092) > 2) && (countitem(726) > 1) && (countitem(722) > 2) && (countitem(727) > 9) && (countitem(724) > 4) && (countitem(969) > 19) && (countitem(2603) > 0)) {
 			mes "[Dwarf Grunburti]";
 			mes "Hmm...";
 			mes "I guess you";
@@ -175,7 +176,7 @@ gld_dun01,28,85,0	script	Grunburti#1::GodDwarf	826,{
 			mes "^0000FFBrisingamen^000000!";
 			next;
 		}
-		else if ((countitem(7058) > 0) && (countitem(614) > 19) && (countitem(726) > 9) && (countitem(615) > 9) && (countitem(2627) > 0)){ //Gullraifnir Gold Blue_Jewel Oridecon Belt 
+		else if ((countitem(7058) > 0) && (countitem(969) > 19) && (countitem(726) > 9) && (countitem(984) > 9) && (countitem(2627) > 0)){ //Gullraifnir Gold Blue_Jewel Oridecon Belt 
 			mes "[Dwarf Grunburti]";
 			mes "Hmm...";
 			mes "I guess you";
@@ -183,7 +184,7 @@ gld_dun01,28,85,0	script	Grunburti#1::GodDwarf	826,{
 			mes "^0000FFMegingjard^000000!";
 			next;
 		}
-		else if ((countitem(7076) > 2) && (countitem(7079) > 4) && (countitem(7083) > 2) && (countitem(7086) > 3) && (countitem(7087) > 2) && (countitem(614) > 19) && (countitem(757) > 9) && (countitem(2406) > 0)) {
+		else if ((countitem(7076) > 2) && (countitem(7079) > 4) && (countitem(7083) > 2) && (countitem(7086) > 3) && (countitem(7087) > 2) && (countitem(969) > 19) && (countitem(985) > 9) && (countitem(2406) > 0)) {
 			mes "[Dwarf Grunburti]";
 			mes "Hmm...";
 			mes "I guess you";
@@ -191,7 +192,7 @@ gld_dun01,28,85,0	script	Grunburti#1::GodDwarf	826,{
 			mes "^0000FFSleipnir^000000!";
 			next;
 		}
-		else if ((countitem(7074) > 1) && (countitem(7075) > 3) && (countitem(7078) > 4) && (countitem(7089) > 4) && (countitem(7091) > 4) && (countitem(615) > 19) && (countitem(757) > 4) && (countitem(614) > 39) && (countitem(1522) > 0)) {
+		else if ((countitem(7074) > 1) && (countitem(7075) > 3) && (countitem(7078) > 4) && (countitem(7089) > 4) && (countitem(7091) > 4) && (countitem(984) > 19) && (countitem(985) > 4) && (countitem(969) > 39) && (countitem(1522) > 0)) {
 			mes "[Dwarf Grunburti]";
 			mes "Hmm...";
 			mes "I guess you";
@@ -457,7 +458,7 @@ que_god01,154,112,4	script	Grunburti#god	826,{
 		next;
 		switch(select("Make Brisingamen.:Cancel.")) {
 		case 1:
-			if ((countitem(7073) > 3) && (countitem(7077) > 3) && (countitem(7088) > 2) && (countitem(7090) > 2) && (countitem(7092) > 2) && (countitem(726) > 1) && (countitem(722) > 2) && (countitem(727) > 9) && (countitem(724) > 4) && (countitem(614) > 19) && (countitem(2603) > 0)){ //Jewel_Of_Prayer Silver_Fancy Crystal_Of_Snow Slilince_Wave Air_Stream Blue_Jewel Scarlet_Jewel White_Jewel Cardinal_Jewel_ Gold Necklace 
+			if ((countitem(7073) > 3) && (countitem(7077) > 3) && (countitem(7088) > 2) && (countitem(7090) > 2) && (countitem(7092) > 2) && (countitem(726) > 1) && (countitem(722) > 2) && (countitem(727) > 9) && (countitem(724) > 4) && (countitem(969) > 19) && (countitem(2603) > 0)){ //Jewel_Of_Prayer Silver_Fancy Crystal_Of_Snow Slilince_Wave Air_Stream Blue_Jewel Scarlet_Jewel White_Jewel Cardinal_Jewel_ Gold Necklace 
 				mes "[Dwarf Grunburti]";
 				mes "Never in my wildest";
 				mes "imaginings have I thought that I'd be crafting this masterpiece for a mere human. Give me a moment.";
@@ -487,7 +488,7 @@ que_god01,154,112,4	script	Grunburti#god	826,{
 				delitem 722,3;  //Scarlet_Jewel
 				delitem 727,10;  //White_Jewel
 				delitem 724,5;  //Cardinal_Jewel_
-				delitem 614,20;  //Gold
+				delitem 969,20;  //Gold
 				delitem 2603,1;  //Necklace
 				getitem 2630,1; // Brysinggamen
 				set $God1,0;
@@ -536,7 +537,7 @@ que_god01,154,112,4	script	Grunburti#god	826,{
 		next;
 		switch(select("Make Megingjard.:Cancel.")) {
 		case 1:
-			if ((countitem(7058) > 0) && (countitem(614) > 19) && (countitem(726) > 9) && (countitem(615) > 9) && (countitem(2627) > 0)) {
+			if ((countitem(7058) > 0) && (countitem(969) > 19) && (countitem(726) > 9) && (countitem(984) > 9) && (countitem(2627) > 0)) {
 				mes "[Dwarf Grunburti]";
 				mes "Twenty years ago,";
 				mes "I'd never believe that";
@@ -559,9 +560,9 @@ que_god01,154,112,4	script	Grunburti#god	826,{
 					close;
 				}
 				delitem 7058,1;  //Gullraifnir
-				delitem 614,20;  //Gold
+				delitem 969,20;  //Gold
 				delitem 726,10;  //Blue_Jewel
-				delitem 615,10;  //Oridecon
+				delitem 984,10;  //Oridecon
 				delitem 2627,1;  //Belt
 				getitem 2629,1; // Magingiorde
 				set $God1,0;
@@ -621,7 +622,7 @@ que_god01,154,112,4	script	Grunburti#god	826,{
 		next;
 		switch(select("Make Sleipnir.:Cancel.")) {
 		case 1:
-			if ((countitem(7076) > 2) && (countitem(7079) > 4) && (countitem(7083) > 2) && (countitem(7086) > 3) && (countitem(7087) > 2) && (countitem(614) > 19) && (countitem(757) > 9) && (countitem(2406) > 0)) {
+			if ((countitem(7076) > 2) && (countitem(7079) > 4) && (countitem(7083) > 2) && (countitem(7086) > 3) && (countitem(7087) > 2) && (countitem(969) > 19) && (countitem(985) > 9) && (countitem(2406) > 0)) {
 				mes "[Dwarf Grunburti]";
 				mes "I never believed";
 				mes "that the speed of";
@@ -650,8 +651,8 @@ que_god01,154,112,4	script	Grunburti#god	826,{
 				delitem 7083,3;  //Soul_Of_Fish
 				delitem 7086,4;  //Symbol_Of_Sun
 				delitem 7087,3;  //Breath_Of_Soul
-				delitem 614,20;  //Gold
-				delitem 757,10;  //Elunium
+				delitem 969,20;  //Gold
+				delitem 985,10;  //Elunium
 				delitem 2406,1;  //Boots_
 				getitem 2410,1; // Sleipnir
 				set $God1,0;
@@ -710,7 +711,7 @@ que_god01,154,112,4	script	Grunburti#god	826,{
 		next;
 		switch(select("Make Mjolnir.:Cancel.")) {
 		case 1:
-			if ((countitem(7074) > 1) && (countitem(7075) > 3) && (countitem(7078) > 4) && (countitem(7089) > 4) && (countitem(7091) > 4) && (countitem(615) > 19) && (countitem(757) > 4) && (countitem(614) > 39) && (countitem(1522) > 0)) {
+			if ((countitem(7074) > 1) && (countitem(7075) > 3) && (countitem(7078) > 4) && (countitem(7089) > 4) && (countitem(7091) > 4) && (countitem(984) > 19) && (countitem(985) > 4) && (countitem(969) > 39) && (countitem(1522) > 0)) {
 				mes "[Dwarf Grunburti]";
 				mes "Do not disgrace";
 				mes "Thor, lord of Thunder,";
@@ -738,9 +739,9 @@ que_god01,154,112,4	script	Grunburti#god	826,{
 				delitem 7078,5;  //Anger_Of_Valkurye
 				delitem 7089,5;  //Indication_Of_Tempest
 				delitem 7091,5;  //Rough_Billows
-				delitem 615,20;  //Oridecon
-				delitem 757,5;  //Elunium
-				delitem 614,40;  //Gold
+				delitem 984,20;  //Oridecon
+				delitem 985,5;  //Elunium
+				delitem 969,40;  //Gold
 				delitem 1522,1;  //Stunner
 				getitem 1530,1; // Mjolnir
 				set $God1,0;

@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= SinSloth
 //===== Current Version: ===================================== 
-//= 1.3
+//= 1.4
 //===== Compatible With: ===================================== 
 //= eAthena
 //===== Description: ========================================= 
@@ -13,11 +13,12 @@
 //= 1.1 fixed exploit [Lupus]
 //= 1.2 Fixed experience gains to match upcoming rate adjustments. [SinSloth]
 //= 1.3 Updated several aspects of the script. [L0ne_W0lf]
+//= 1.4 Minor Touchups to quest. [L0ne_W0lf]
 //============================================================
 
 prt_castle,44,151,0	script	Rebarev Doug	56,{
 	cutin "god_rebeireb",2;
-	if ((countitem(7080) > 3) && (countitem(7081) > 4) && (countitem(7082) > 3) && (countitem(7084) > 2) && (countitem(7085) > 2)){ //Foot_Step_Of_Cat Beard_Of_Women Root_Of_Stone Saliva_Of_Bird Tendon_Of_Bear 
+	if ((countitem(7080) > 3) && (countitem(7081) > 4) && (countitem(7082) > 3) && (countitem(7084) > 2) && (countitem(7085) > 2)) {
 		mes "[Rebarev Doug]";
 		mes "What's this?";
 		mes "You...! You have";
@@ -1195,7 +1196,7 @@ prt_in,172,106,0	script	Librarian#megin	833,{
 										}
 									}
 								}
-								 else {
+								else {
 									mes "^663300[Keyword: ^996633"+.@input$+"^663300]";
 									mes "- No result has been found.-";
 									close2;

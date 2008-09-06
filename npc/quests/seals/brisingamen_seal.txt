@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= SinSloth
 //===== Current Version: ===================================== 
-//= 1.2
+//= 1.3
 //===== Compatible With: ===================================== 
 //= eAthena
 //===== Description: ========================================= 
@@ -13,6 +13,7 @@
 //= 1.0a Removed duplicates [Toms]
 //= 1.1 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
 //= 1.2 Updated several aspects of the script. [L0ne_W0lf]
+//= 1.3 Minor Touchups to quest. [L0ne_W0lf]
 //============================================================
 
 prt_fild08,175,374,3	script	Bard#brising	51,{
@@ -1312,19 +1313,6 @@ yuno_in04,47,113,1	script	Studying Scholar#1	749,{
 		}
 		else if (god_brising == 1) {
 			mes "[Enrico Kaili]";
-			mes "How are you...ah! It is you, " + strcharinfo(0) + "!";
-			mes "Yes, I was told by Nelliorde that you will visit me.";
-			mes "He always tells me that he will";
-			mes "a good assistance for my research.";
-			mes "So, how was your travel?";
-			next;
-			mes "[Enrico Kaili]";
-			mes "Hahaha, I guess you would not have a hard time to come";
-			mes "to Juno...since there are various convenience travelling";
-			mes "methods as warp portal and kafra teleport service!";
-			mes "So, how was my joke? Hahahaha!";
-			next;
-			mes "[Enrico Kaili]";
 			mes "Ah, you've arrived!";
 			mes "" + strcharinfo(0) + ", right?";
 			mes "Yes, I was told by Nelliorde that you'd come. He always manages";
@@ -1494,7 +1482,8 @@ prt_church,113,103,1	script	Praying Man	798,{
 	else if (god_brising > 19 && god_brising < 34) {
 		mes "[Hermite Charles]";
 		mes "I'll be waiting.";
-		mes "For some reason, I believe you'll be able to find some sort of clue about what happened these past two years one of these days.";
+		mes "For some reason, I believe you'll be able to find some sort of clue about what happened these past";
+		mes "two years one of these days.";
 		close;
 	}
 	else if (god_brising == 12) {

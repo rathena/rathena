@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= SinSloth
 //===== Current Version: ===================================== 
-//= 1.2
+//= 1.3
 //===== Compatible With: ===================================== 
 //= eAthena
 //===== Description: ========================================= 
@@ -13,6 +13,7 @@
 //= 1.1 Fixed wrong label names [Luups]
 //= 1.1a Corrected a a typo error ";;". [Samuray22]
 //= 1.2 Updated several aspects of the script. [L0ne_W0lf]
+//= 1.3 Minor Touchups to quest. [L0ne_W0lf]
 //============================================================
 
 prontera,124,297,3	script	Tialfi	706,{
@@ -653,13 +654,11 @@ mjolnir_11,149,247,5	script	Dwarf Blacksmith#east	826,{
 							}
 						}
 					}
-					else  {
+					else {
 						mes "[Austri]";
-						mes "You don't seem to understand.";
-						mes "If you wish to prove to me that";
-						mes "you understand blacksmiths, you";
-						mes "should bring something related";
-						mes "to my work!";
+						mes "You don't seem to";
+						mes "understand. If you";
+						mes "wish to prove to me that you understand blacksmiths, you should bring something related to my work!";
 						close;
 					}
 				}
@@ -1628,10 +1627,9 @@ mjolnir_09,209,341,3	script	Dwarf Blacksmith#south	826,{
 						specialeffect2 EF_GUARD;
 						if (.@p_def == 1) {
 							mes "--------------------";
-							mes "" + strcharinfo(0) + "";
-							mes "quickly dodged!";
-							mes "Sudri's arms were";
-							mes "too short and missed!";
+							mes "" + strcharinfo(0) + " quickly dodged,";
+							mes "Sudri's arms were too";
+							mes "short to reach at you.";
 							mes "--------------------";
 							mes "Sudri has failed to attack.";
 						}
@@ -1868,9 +1866,9 @@ mjolnir_01,35,136,7	script	Dwarf Blacksmith#west	826,{
 			mes "There's nothing like taking a relaxing break after putting your heart into your work.";
 			next;
 			mes "[Vestri]";
-			mes "What do you think, human?";
-			mes "Isn't that one of life's";
-			mes "simple pleasures?";
+			mes "What do you think,";
+			mes "human? Isn't that one";
+			mes "of life's simple pleasures?";
 			close;
 		}
 		else if(god_mjo_0 == 10) {
@@ -1940,6 +1938,36 @@ mjolnir_01,35,136,7	script	Dwarf Blacksmith#west	826,{
 				set .@strRetPart8$,getequipname(8);
 				set .@strRetPart9$,getequipname(9);
 				set .@strRetPart10$,getequipname(10);
+				if (.@strRetPart1$ == 0) {
+					set .@strPart1$,"Head ^000000[^003366Not Equipped^000000]";
+				}
+				if (.@strRetPart2$ == 0) {
+					set .@strPart2$,"Torso ^000000[^003366Not Equipped^000000]";
+				}
+				if (.@strRetPart3$ == 0) {
+					set .@strPart3$,"Left Hand ^000000[^003366Not Equipped^000000]";
+				}
+				if (.@strRetPart4$ == 0) {
+					set .@strPart4$,"Right Hand ^000000[^003366Not Equipped^000000]";
+				}
+				if (.@strRetPart5$ == 0) {
+					set .@strPart5$,"Garment ^000000[^003366Not Equipped^000000]";
+				}
+				if (.@strRetPart6$ == 0) {
+					set .@strPart6$,"Foot ^000000[^003366Not Equipped^000000]";
+				}
+				if (.@strRetPart7$ == 0) {
+					set .@strPart7$,"Accessory1 ^000000[^003366Not Equipped^000000]";
+				}
+				if (.@strRetPart8$ == 0) {
+					set .@strPart8$,"Accessory2 ^000000[^003366Not Equipped^000000]";
+				}
+				if (.@strRetPart9$ == 0) {
+					set .@strPart9$,"Head2 ^000000[^003366Not Equipped^000000]";
+				}
+				if (.@strRetPart10$ == 0) {
+					set .@strPart10$,"Head3 ^000000[^003366Not Equipped^000000]";
+				}
 				set .@menu$,.@strRetPart1$+":"+.@strRetPart2$+":"+.@strRetPart3$+":"+.@strRetPart4$+":"+.@strRetPart5$+":"+.@strRetPart6$+":"+.@strRetPart7$+":"+.@strRetPart8$+":"+.@strRetPart9$+":"+.@strRetPart10$;
 				switch(select(.@menu$)) {
 				case 1:
@@ -2080,7 +2108,7 @@ mjolnir_01,35,136,7	script	Dwarf Blacksmith#west	826,{
 					close2;
 				}
 				if (countitem(615) > 0) {
-					delitem 615,1;  //Oridecon
+					delitem 984,1; //Oridecon
 				}
 				else {
 					mes "[Vestri]";
@@ -2092,9 +2120,9 @@ mjolnir_01,35,136,7	script	Dwarf Blacksmith#west	826,{
 				}
 				if (getequippercentrefinery(.@part) > rand(100)) {
 					mes "^3355FF*Clang Clang!*^000000";
-					successrefitem @vestripart;
+					successrefitem .@part;
 					next;
-					emotion e_no1;
+					emotion e_heh;
 					mes "[Vestri]";
 					mes "Mwahahaha~";
 					mes "I've still got it!";
@@ -2106,7 +2134,7 @@ mjolnir_01,35,136,7	script	Dwarf Blacksmith#west	826,{
 				else {
 					mes "[Vestri]";
 					mes "^3355FF*Clang Clang!*^000000";
-					failedrefitem @vestripart;
+					failedrefitem .@part;
 					next;
 					emotion e_omg;
 					mes "[Vestri]";
@@ -2224,6 +2252,36 @@ mjolnir_01,35,136,7	script	Dwarf Blacksmith#west	826,{
 				set .@strRetPart8$,getequipname(8);
 				set .@strRetPart9$,getequipname(9);
 				set .@strRetPart10$,getequipname(10);
+				if (.@strRetPart1$ == 0) {
+					set .@strPart1$,"Head ^000000[^003366Not Equipped^000000]";
+				}
+				if (.@strRetPart2$ == 0) {
+					set .@strPart2$,"Torso ^000000[^003366Not Equipped^000000]";
+				}
+				if (.@strRetPart3$ == 0) {
+					set .@strPart3$,"Left Hand ^000000[^003366Not Equipped^000000]";
+				}
+				if (.@strRetPart4$ == 0) {
+					set .@strPart4$,"Right Hand ^000000[^003366Not Equipped^000000]";
+				}
+				if (.@strRetPart5$ == 0) {
+					set .@strPart5$,"Garment ^000000[^003366Not Equipped^000000]";
+				}
+				if (.@strRetPart6$ == 0) {
+					set .@strPart6$,"Foot ^000000[^003366Not Equipped^000000]";
+				}
+				if (.@strRetPart7$ == 0) {
+					set .@strPart7$,"Accessory1 ^000000[^003366Not Equipped^000000]";
+				}
+				if (.@strRetPart8$ == 0) {
+					set .@strPart8$,"Accessory2 ^000000[^003366Not Equipped^000000]";
+				}
+				if (.@strRetPart9$ == 0) {
+					set .@strPart9$,"Head2 ^000000[^003366Not Equipped^000000]";
+				}
+				if (.@strRetPart10$ == 0) {
+					set .@strPart10$,"Head3 ^000000[^003366Not Equipped^000000]";
+				}
 				set .@menu$,.@strRetPart1$+":"+.@strRetPart2$+":"+.@strRetPart3$+":"+.@strRetPart4$+":"+.@strRetPart5$+":"+.@strRetPart6$+":"+.@strRetPart7$+":"+.@strRetPart8$+":"+.@strRetPart9$+":"+.@strRetPart10$;
 				switch(select(.@menu$)) {
 				case 1:
@@ -2359,7 +2417,7 @@ mjolnir_01,35,136,7	script	Dwarf Blacksmith#west	826,{
 					close;
 				}
 				if (countitem(615) > 0) {
-					delitem 615,1;  //Oridecon
+					delitem 984,1; //Oridecon
 				}
 				else {
 					mes "[Vestri]";
@@ -2371,9 +2429,9 @@ mjolnir_01,35,136,7	script	Dwarf Blacksmith#west	826,{
 				}
 				if (getequippercentrefinery(.@part) > rand(100)) {
 					mes "^3355FF*Clang Clang!*^000000";
-					successrefitem @vestripart;
+					successrefitem .@part;
 					next;
-					emotion e_no1;
+					emotion e_heh;
 					mes "[Vestri]";
 					mes "Mwahahaha~";
 					mes "I've still got it!";
@@ -2384,8 +2442,8 @@ mjolnir_01,35,136,7	script	Dwarf Blacksmith#west	826,{
 				}
 				else {
 					mes "[Vestri]";
-					mes "Clang! Clang! Clang!";
-					failedrefitem @vestripart;
+					mes "^3355FF*Clang Clang!*^000000";
+					failedrefitem .@part;
 					next;
 					emotion e_omg;
 					mes "[Vestri]";

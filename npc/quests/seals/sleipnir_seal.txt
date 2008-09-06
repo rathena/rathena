@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= MasterOfMuppets
 //===== Current Version: ===================================== 
-//= 1.1
+//= 1.2
 //===== Compatible With: ===================================== 
 //= eAthena
 //===== Description: ========================================= 
@@ -11,6 +11,7 @@
 //===== Additional Comments: =================================
 //= 1.0 First version. [MasterOfMuppets]
 //= 1.1 Updated several aspects of the script. [L0ne_W0lf]
+//= 1.2 Minor Touchups to quest. [L0ne_W0lf]
 //============================================================
 
 yuno,164,200,4	script	Noyee#G	101,{
@@ -83,7 +84,7 @@ que_god01,98,98,4	script	Manager#G	69,{
 			mes "Wait...!";
 			mes "I can't even remember the last";
 			mes "time I went out with a guy! At this rate, I might retire before I can find a boyfriend. Noooo, I'm still in my prime~!";
-			Emotion ET_PROFUSELY_SWAT;
+			emotion e_swt2;
 			close;
 		}
 		else if (god_sl_1 == 1) {
@@ -535,7 +536,7 @@ que_god01,98,98,4	script	Manager#G	69,{
 			mes "Wait...!";
 			mes "I can't even remember the last";
 			mes "time I went out with a guy! At this rate, I might retire before I can find a boyfriend. Noooo, I'm still in my prime~!";
-			Emotion ET_PROFUSELY_SWAT;
+			emotion e_swt2;
 			close2;
 		}
 		else if (god_sl_1 < 51) {
@@ -630,12 +631,12 @@ que_god01,66,125,6	script	Researcher#G1	89,{
 					mes "[Hallandaute]";
 					mes "A mad scientist?";
 					mes "That doesn't sound right. In my wildest dreams, I never would have suspected Metto of turning out that way...";
-					Emotion ET_SCRATCH;
+					emotion e_hmm;
 					next;
 					mes "[Hallandaute]";
 					mes "Huh. That's...";
 					mes "That's too bad. I don't know what to say. We used to go watch movies and celebrate our birthdays together. P-please give me a moment...";
-					Emotion ET_THINK;
+					emotion e_dots;
 					set god_sl_2,2;
 					close;
 				}
@@ -1909,7 +1910,7 @@ OnTouch:
 	}
 	else {
 		mes "^3355FFThe door is locked. There is some sort of security device on the right side. It seems the device needs to detect some kind of pass before you can enter.^000000";
-		close2;
+		close;
 	}
 }
 
@@ -1922,7 +1923,7 @@ que_god01,49,97,0	script	Switch#God1	111,{
 	}
 	else {
 		mes "^3355FFThe door is locked. There is some sort of security device on the right side. It seems the device needs to detect some kind of pass before you can enter.^000000";
-		close2;
+		close;
 	}
 }
 
@@ -1936,7 +1937,7 @@ OnTouch:
 	}
 	else {
 		mes "^3355FFThe door is locked. There is some sort of security device on the right side. It seems the device needs to detect some kind of pass before you can enter.^000000";
-		close2;
+		close;
 	}
 }
 
@@ -1949,7 +1950,7 @@ que_god01,19,97,0	script	Switch#God2	111,{
 	}
 	else {
 		mes "^3355FFThe door is locked. There is some sort of security device on the right side. It seems the device needs to detect some kind of pass before you can enter.^000000";
-		close2;
+		close;
 	}
 }
 
@@ -1963,7 +1964,7 @@ OnTouch:
 	}
 	else {
 		mes "^3355FFThe door is locked. There is some sort of security device on the right side. It seems the device needs to detect some kind of pass before you can enter.^000000";
-		close2;
+		close;
 	}
 }
 
@@ -1976,7 +1977,7 @@ que_god01,14,80,0	script	Switch#God3	111,{
 	}
 	else {
 		mes "^3355FFThe door is locked. There is some sort of security device on the right side. It seems the device needs to detect some kind of pass before you can enter.^000000";
-		close2;
+		close;
 	}
 }
 
@@ -1990,7 +1991,7 @@ OnTouch:
 	}
 	else {
 		mes "^3355FFThe door is locked. There is some sort of security device on the right side. It seems the device needs to detect some kind of pass before you can enter.^000000";
-		close2;
+		close;
 	}
 }
 
@@ -2003,7 +2004,7 @@ que_god01,44,80,0	script	Switch#God4	111,{
 	}
 	else {
 		mes "^3355FFThe door is locked. There is some sort of security device on the right side. It seems the device needs to detect some kind of pass before you can enter.^000000";
-		close2;
+		close;
 	}
 }
 
@@ -2017,6 +2018,6 @@ OnTouch:
 	}
 	else {
 		mes "^3355FFThe door is locked. There is some sort of security device on the right side. It seems the device needs to detect some kind of pass before you can enter.^000000";
-		close2;
+		close;
 	}
 }
