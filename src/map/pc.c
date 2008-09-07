@@ -980,51 +980,63 @@ int pc_calc_skilltree(struct map_session_data *sd)
 	nullpo_retr(0, sd);
 	i = pc_calc_skilltree_normalize_job(sd);
 	c = pc_mapid2jobid(i, sd->status.sex);
-	if (c == -1) { //Unable to normalize job??
+	if( c == -1 )
+	{ //Unable to normalize job??
 		ShowError("pc_calc_skilltree: Unable to normalize job %d for character %s (%d:%d)\n", i, sd->status.name, sd->status.account_id, sd->status.char_id);
 		return 1;
 	}
 	c = pc_class2idx(c);
-	for(i=0;i<MAX_SKILL;i++){ 
-		if (sd->status.skill[i].flag != 13) //Don't touch plagiarized skills
-			sd->status.skill[i].id=0; //First clear skills.
+
+	for( i = 0; i < MAX_SKILL; i++ )
+	{ 
+		if( sd->status.skill[i].flag != 13 ) //Don't touch plagiarized skills
+			sd->status.skill[i].id = 0; //First clear skills.
 	}
 
-	for(i=0;i<MAX_SKILL;i++){ 
-		if (sd->status.skill[i].flag && sd->status.skill[i].flag != 13){ //Restore original level of skills after deleting earned skills.	
-			sd->status.skill[i].lv=(sd->status.skill[i].flag==1)?0:sd->status.skill[i].flag-2;
-			sd->status.skill[i].flag=0;
+	for( i = 0; i < MAX_SKILL; i++ )
+	{ 
+		if( sd->status.skill[i].flag && sd->status.skill[i].flag != 13 )
+		{ // Restore original level of skills after deleting earned skills.	
+			sd->status.skill[i].lv = (sd->status.skill[i].flag == 1)?0:sd->status.skill[i].flag-2;
+			sd->status.skill[i].flag = 0;
 		}
-		if(sd->sc.count && sd->sc.data[SC_SPIRIT] && sd->sc.data[SC_SPIRIT]->val2 == SL_BARDDANCER && i >= DC_HUMMING && i<= DC_SERVICEFORYOU)
+
+		if( sd->sc.count && sd->sc.data[SC_SPIRIT] && sd->sc.data[SC_SPIRIT]->val2 == SL_BARDDANCER && i >= DC_HUMMING && i<= DC_SERVICEFORYOU )
 		{ //Enable Bard/Dancer spirit linked skills.
-			if (sd->status.sex) { //Link dancer skills to bard.
-				sd->status.skill[i].id=i;
-				sd->status.skill[i].lv=sd->status.skill[i-8].lv; // Set the level to the same as the linking skill
-				sd->status.skill[i].flag=1; // Tag it as a non-savable, non-uppable, bonus skill
-			} else { //Link bard skills to dancer.
-				sd->status.skill[i-8].id=i-8;
-				sd->status.skill[i-8].lv=sd->status.skill[i].lv; // Set the level to the same as the linking skill
-				sd->status.skill[i-8].flag=1; // Tag it as a non-savable, non-uppable, bonus skill
+			if( sd->status.sex )
+			{ //Link dancer skills to bard.
+				sd->status.skill[i].id = i;
+				sd->status.skill[i].lv = sd->status.skill[i-8].lv; // Set the level to the same as the linking skill
+				sd->status.skill[i].flag = 1; // Tag it as a non-savable, non-uppable, bonus skill
+			}
+			else
+			{ //Link bard skills to dancer.
+				sd->status.skill[i-8].id = i - 8;
+				sd->status.skill[i-8].lv = sd->status.skill[i].lv; // Set the level to the same as the linking skill
+				sd->status.skill[i-8].flag = 1; // Tag it as a non-savable, non-uppable, bonus skill
 			}
 		}
 	}
 
-	if (battle_config.gm_allskill > 0 && pc_isGM(sd) >= battle_config.gm_allskill){
-		for(i=0;i<MAX_SKILL;i++){
-			if (skill_get_inf2(i)&(INF2_NPC_SKILL|INF2_GUILD_SKILL)) //Only skills you can't have are npc/guild ones
-				continue;
-			if (skill_get_max(i) > 0)
-				sd->status.skill[i].id=i;
+	if( battle_config.gm_allskill > 0 && pc_isGM(sd) >= battle_config.gm_allskill )
+	{
+		for( i = 0; i < MAX_SKILL; i++ )
+		{
+			if( skill_get_inf2(i)&(INF2_NPC_SKILL|INF2_GUILD_SKILL) )
+				continue; //Only skills you can't have are npc/guild ones
+			if( skill_get_max(i) > 0 )
+				sd->status.skill[i].id = i;
 		}
 		return 0;
 	}
 
 	do {
 		flag = 0;
-		for(i = 0; i < MAX_SKILL_TREE && (id = skill_tree[c][i].id) > 0; i++) {
+		for( i = 0; i < MAX_SKILL_TREE && (id = skill_tree[c][i].id) > 0; i++ )
+		{
 			int j, f, k, inf2;
 
-			if(sd->status.skill[id].id)
+			if( sd->status.skill[id].id )
 				continue; //Skill already known.
 
 			f = 1;
@@ -1040,16 +1052,17 @@ int pc_calc_skilltree(struct map_session_data *sd)
 							k = pc_checkskill(sd,k);
 						if (k < skill_tree[c][i].need[j].lv)
 						{
-							f=0;
+							f = 0;
 							break;
 						}
 					}
 				}
-				if (sd->status.job_level < skill_tree[c][i].joblv)
+				if( sd->status.job_level < skill_tree[c][i].joblv )
 					f = 0; // job level requirement wasn't satisfied
 			}
 
-			if (f) {
+			if( f )
+			{
 				inf2 = skill_get_inf2(id);
 
 				if(!sd->status.skill[id].lv && (
@@ -1071,17 +1084,29 @@ int pc_calc_skilltree(struct map_session_data *sd)
 		}
 	} while(flag);
 
-	if ((sd->class_&MAPID_UPPERMASK) == MAPID_TAEKWON && sd->status.base_level >= 90 && pc_famerank(sd->status.char_id, MAPID_TAEKWON)) {
-		//Grant all Taekwon Tree, but only as bonus skills in case they drop from ranking. [Skotlex]
-		for(i=0;i < MAX_SKILL_TREE && (id=skill_tree[c][i].id)>0;i++){
-			if ((skill_get_inf2(id)&(INF2_QUEST_SKILL|INF2_WEDDING_SKILL)))
+	// 
+	if( c > 0 && (sd->class_&MAPID_UPPERMASK) == MAPID_TAEKWON && sd->status.base_level >= 90 && sd->status.skill_point == 0 && pc_famerank(sd->status.char_id, MAPID_TAEKWON) )
+	{
+		/* Taekwon Ranger Bonus Skill Tree
+		============================================
+		- Grant All Taekwon Tree, but only as Bonus Skills in case they drop from ranking.
+		- (c > 0) to avoid grant Novice Skill Tree in case of Skill Reset (need more logic)
+		- (sd->status.skill_point == 0) to wait until all skill points are asigned to avoid problems with Job Change quest. */
+
+		for( i = 0; i < MAX_SKILL_TREE && (id = skill_tree[c][i].id) > 0; i++ )
+		{
+			if( (skill_get_inf2(id)&(INF2_QUEST_SKILL|INF2_WEDDING_SKILL)) )
 				continue; //Do not include Quest/Wedding skills.
-			if(sd->status.skill[id].id==0 ){
-				sd->status.skill[id].id=id;
-				sd->status.skill[id].flag=1; //So it is not saved, and tagged as a "bonus" skill.
-			} else
-				sd->status.skill[id].flag=sd->status.skill[id].lv+2; 
-			sd->status.skill[id].lv= skill_tree_get_max(id, sd->status.class_);
+
+			if( sd->status.skill[id].id == 0 )
+			{
+				sd->status.skill[id].id = id;
+				sd->status.skill[id].flag = 1; // So it is not saved, and tagged as a "bonus" skill.
+			}
+			else
+				sd->status.skill[id].flag = sd->status.skill[id].lv+2;
+
+			sd->status.skill[id].lv = skill_tree_get_max(id, sd->status.class_);
 		}
 	}
 
@@ -1105,44 +1130,46 @@ static void pc_check_skilltree(struct map_session_data *sd, int skill)
 	}
 	c = pc_class2idx(c);
 	do {
-		flag=0;
-		for(i=0;i < MAX_SKILL_TREE && (id=skill_tree[c][i].id)>0;i++){
-			int j,f=1, k;
+		flag = 0;
+		for( i = 0; i < MAX_SKILL_TREE && (id=skill_tree[c][i].id)>0; i++ )
+		{
+			int j, f = 1, k;
 
-			if(sd->status.skill[id].id) //Already learned
+			if( sd->status.skill[id].id ) //Already learned
 				continue;
 			
-			for(j=0;j<5;j++) {
-				if((k=skill_tree[c][i].need[j].id))
+			for( j = 0; j < 5; j++ )
+			{
+				if( (k = skill_tree[c][i].need[j].id) )
 				{
-					if (!sd->status.skill[k].id || sd->status.skill[k].flag == 13)
+					if( !sd->status.skill[k].id || sd->status.skill[k].flag == 13 )
 						k = 0; //Not learned.
-					else if (sd->status.skill[k].flag) //Real lerned level
-						k = sd->status.skill[skill_tree[c][i].need[j].id].flag-2;
+					else if( sd->status.skill[k].flag ) //Real lerned level
+						k = sd->status.skill[skill_tree[c][i].need[j].id].flag - 2;
 					else
 						k = pc_checkskill(sd,k);
-					if (k < skill_tree[c][i].need[j].lv)
+					if( k < skill_tree[c][i].need[j].lv )
 					{
-						f=0;
+						f = 0;
 						break;
 					}
 				}
 			}
-			if (!f)
+			if( !f )
 				continue;
-			if (sd->status.job_level < skill_tree[c][i].joblv)
+			if( sd->status.job_level < skill_tree[c][i].joblv )
 				continue;
 			
 			j = skill_get_inf2(id);
-			if(!sd->status.skill[id].lv && (
+			if( !sd->status.skill[id].lv && (
 				(j&INF2_QUEST_SKILL && !battle_config.quest_skill_learn) ||
 				j&INF2_WEDDING_SKILL ||
 				(j&INF2_SPIRIT_SKILL && !sd->sc.data[SC_SPIRIT])
-			))
+			) )
 				continue; //Cannot be learned via normal means.
 
-			sd->status.skill[id].id=id;
-			flag=1;
+			sd->status.skill[id].id = id;
+			flag = 1;
 		}
 	} while(flag);
 }
@@ -4559,30 +4586,35 @@ int pc_skillup(struct map_session_data *sd,int skill_num)
 {
 	nullpo_retr(0, sd);
 
-	if(skill_num >= GD_SKILLBASE && skill_num < GD_SKILLBASE+MAX_GUILDSKILL){
+	if( skill_num >= GD_SKILLBASE && skill_num < GD_SKILLBASE+MAX_GUILDSKILL )
+	{
 		guild_skillup(sd, skill_num);
 		return 0;
 	}
 
-	if(skill_num >= HM_SKILLBASE && skill_num < HM_SKILLBASE+MAX_HOMUNSKILL && sd->hd){
+	if( skill_num >= HM_SKILLBASE && skill_num < HM_SKILLBASE+MAX_HOMUNSKILL && sd->hd )
+	{
 		merc_hom_skillup(sd->hd, skill_num);
 		return 0;
 	}
 
-	if (skill_num < 0 || skill_num >= MAX_SKILL)
+	if( skill_num < 0 || skill_num >= MAX_SKILL )
 		return 0;
 
-	if(sd->status.skill_point>0 &&
+	if( sd->status.skill_point > 0 &&
 		sd->status.skill[skill_num].id &&
-		sd->status.skill[skill_num].flag==0 && //Don't allow raising while you have granted skills. [Skotlex]
+		sd->status.skill[skill_num].flag == 0 && //Don't allow raising while you have granted skills. [Skotlex]
 		sd->status.skill[skill_num].lv < skill_tree_get_max(skill_num, sd->status.class_) )
 	{
 		sd->status.skill[skill_num].lv++;
 		sd->status.skill_point--;
-		if (!skill_get_inf(skill_num)) //Only recalculate for passive skills.
-			status_calc_pc(sd,0);
+		if( !skill_get_inf(skill_num) ) 
+			status_calc_pc(sd,0); // Only recalculate for passive skills.
+		else if( sd->status.skill_point == 0 && (sd->class_&MAPID_UPPERMASK) == MAPID_TAEKWON && sd->status.base_level >= 90 && pc_famerank(sd->status.char_id, MAPID_TAEKWON) )
+			pc_calc_skilltree(sd); // Required to grant all TK Ranger skills.
 		else
-			pc_check_skilltree(sd, skill_num);
+			pc_check_skilltree(sd, skill_num); // Check if a new skill can Lvlup
+
 		clif_skillup(sd,skill_num);
 		clif_updatestatus(sd,SP_SKILLPOINT);
 		clif_skillinfoblock(sd);
@@ -4800,66 +4832,70 @@ int pc_resetskill(struct map_session_data* sd, int flag)
 	int i, lv, inf2, skill_point=0;
 	nullpo_retr(0, sd);
 
-	if(!(flag&2))
-	{	//Remove stuff lost when resetting skills.
-		if (pc_checkskill(sd, SG_DEVIL) &&  !pc_nextjobexp(sd))
+	if( !(flag&2) )
+	{ //Remove stuff lost when resetting skills.
+		if( pc_checkskill(sd, SG_DEVIL) &&  !pc_nextjobexp(sd) )
 			clif_status_load(&sd->bl, SI_DEVIL, 0); //Remove perma blindness due to skill-reset. [Skotlex]
 		i = sd->sc.option;
-		if (i&OPTION_RIDING && pc_checkskill(sd, KN_RIDING))
-		i&=~OPTION_RIDING;
-		if(i&OPTION_CART && pc_checkskill(sd, MC_PUSHCART))
-			i&=~OPTION_CART;
-		if(i&OPTION_FALCON && pc_checkskill(sd, HT_FALCON))
-			i&=~OPTION_FALCON;
+		if( i&OPTION_RIDING && pc_checkskill(sd, KN_RIDING) )
+			i &= ~OPTION_RIDING;
+		if( i&OPTION_CART && pc_checkskill(sd, MC_PUSHCART) )
+			i &= ~OPTION_CART;
+		if( i&OPTION_FALCON && pc_checkskill(sd, HT_FALCON) )
+			i &= ~OPTION_FALCON;
 
-		if(i != sd->sc.option)
+		if( i != sd->sc.option )
 			pc_setoption(sd, i);
 
-		if(merc_is_hom_active(sd->hd) && pc_checkskill(sd, AM_CALLHOMUN))
+		if( merc_is_hom_active(sd->hd) && pc_checkskill(sd, AM_CALLHOMUN) )
 			merc_hom_vaporize(sd, 0);
 	}
-	
-	for (i = 1; i < MAX_SKILL; i++) {
-		lv= sd->status.skill[i].lv;
+
+	for( i = 1; i < MAX_SKILL; i++ )
+	{
+		lv = sd->status.skill[i].lv;
 		if (lv < 1) continue;
 
 		inf2 = skill_get_inf2(i);
 
-		if(inf2&(INF2_WEDDING_SKILL|INF2_SPIRIT_SKILL)) //Avoid reseting wedding/linker skills.
+		if( inf2&(INF2_WEDDING_SKILL|INF2_SPIRIT_SKILL) ) //Avoid reseting wedding/linker skills.
 			continue;
 
-		if (inf2&INF2_QUEST_SKILL && !battle_config.quest_skill_learn)
-		{	//Only handle quest skills in a special way when you can't learn them manually
-			if (battle_config.quest_skill_reset && !(flag&2))
+		if( inf2&INF2_QUEST_SKILL && !battle_config.quest_skill_learn )
+		{ //Only handle quest skills in a special way when you can't learn them manually
+			if( battle_config.quest_skill_reset && !(flag&2) )
 			{	//Wipe them
 				sd->status.skill[i].lv = 0;
 				sd->status.skill[i].flag = 0;
 			}
 			continue;
 		}
-		if (!sd->status.skill[i].flag)
+		if( !sd->status.skill[i].flag )
 			skill_point += lv;
-		else if (sd->status.skill[i].flag > 2 && sd->status.skill[i].flag != 13)
+		else if( sd->status.skill[i].flag > 2 && sd->status.skill[i].flag != 13 )
 			skill_point += (sd->status.skill[i].flag - 2);
 
-		if (!(flag&2)) {
+		if( !(flag&2) )
+		{
 			sd->status.skill[i].lv = 0;
 			sd->status.skill[i].flag = 0;
 		}
 	}
 	
-	if (flag&2 || !skill_point) return skill_point;
+	if( flag&2 || !skill_point ) return skill_point;
 
-	if (sd->status.skill_point > USHRT_MAX - skill_point)
+	if( sd->status.skill_point > USHRT_MAX - skill_point )
 		sd->status.skill_point = USHRT_MAX;
 	else
 		sd->status.skill_point += skill_point;
 
-	if (flag&1) {
+	if( flag&1 )
+	{
 		clif_updatestatus(sd,SP_SKILLPOINT);
 		clif_skillinfoblock(sd);
 		status_calc_pc(sd,0);
 	}
+
 	return skill_point;
 }
 
