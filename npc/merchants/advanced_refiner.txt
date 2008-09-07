@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
-//= 1.0
+//= 1.2
 //===== Compatible With: =====================================
 //= Eathena SVN
 //===== Description: =========================================
@@ -19,6 +19,7 @@
 //===== Additional Comments: =================================
 //= 1.0 First Version. [L0ne_W0lf]
 //= 1.1 Fixed a weird carriage return. o_o [L0ne_W0lf]
+//= 1.2 Optimizing refine method [Zephyrus]
 //============================================================
 
 payon,174,138,0	script	Suhnbi#cash	85,{
@@ -28,128 +29,70 @@ payon,174,138,0	script	Suhnbi#cash	85,{
 	mes "armor and equipment, so let me";
 	mes "know what you want to refine.";
 	next;
-	set .@strRetPart1$,getequipname(1);
-	set .@strRetPart2$,getequipname(2);
-	set .@strRetPart3$,getequipname(3);
-	set .@strRetPart4$,getequipname(4);
-	set .@strRetPart5$,getequipname(5);
-	set .@strRetPart6$,getequipname(6);
-	set .@strRetPart7$,getequipname(7);
-	set .@strRetPart8$,getequipname(8);
-	set .@strRetPart9$,getequipname(9);
-	set .@strRetPart10$,getequipname(10);
+	
+	setarray .@position$[1], "Head","Body","Left hand","Right hand","Robe","Shoes","Accessory 1","Accessory 2","Head 2","Head 3";
+	set .@menu$,"";
+	for( set .@i,1; .@i <= 10; set .@i,.@i+1 )
+	{
+		if( getequipisequiped(.@i) )
+			set .@menu$, .@menu$ + .@position$[.@i] + "-" + "[" + getequipname(.@i) + "]";
 
-	set .@menu$,.@strRetPart1$+":"+.@strRetPart2$+":"+.@strRetPart3$+":"+.@strRetPart4$+":"+.@strRetPart5$+":"+.@strRetPart6$+":"+.@strRetPart7$+":"+.@strRetPart8$+":"+.@strRetPart9$+":"+.@strRetPart10$;
-
-	switch(select(.@menu$)) {
-	case 1:
-		set .@part,1;
-		if (getequipisequiped(1) == 0) {
-			mes "[Suhnbi]";
-			mes "Do you want me to refine your skull?";
-			close;
-		}
-		break;
-	case 2:
-		set .@part,2;
-		if (getequipisequiped(2) == 0) {
-			mes "[Suhnbi]";
-			mes "I'll refine your torso with my own passionate body!";
-			close;
-		}
-		break;
-	case 3:
-		set .@part,3;
-		if (getequipisequiped(3) == 0) {
-			mes "[Suhnbi]";
-			mes "Sorry, there ain't any technology yet to put rockets on your left hand...";
-			close;
-		}
-		break;
-	case 4:
-		set .@part,4;
-		if (getequipisequiped(4) == 0) {
-			mes "[Suhnbi]";
-			mes "Sorry, there ain't any technology yet to put rockets on your right hand...";
-			close;
-		}
-		break;
-	case 5:
-		set .@part,5;
-		if (getequipisequiped(5) == 0) {
-			mes "[Suhnbi]";
-			mes "You're not even wearing a garment? Are you?";
-			close;
-		}
-		break;
-	case 6:
-		set .@part,6;
-		if (getequipisequiped(6) == 0) {
-			mes "[Suhnbi]";
-			mes "What do I look like, a makeover artist? I can't refine your bare feet!";
-			close;
-		}
-		break;
-	case 7:
-		set .@part,7;
-		if (getequipisequiped(7) == 0) {
-			mes "[Suhnbi]";
-			mes "Um... You're not wearing an Accessory.";
-			close;
-		}
-		break;
-	case 8:
-		set .@part,8;
-		if (getequipisequiped(8) == 0) {
-			mes "[Suhnbi]";
-			mes "Accessory? You're not wearing one of those.";
-			close;
-		}
-		break;
-	case 9:
-		set .@part,9;
-		if (getequipisequiped(9) == 0) {
-			mes "[Suhnbi]";
-			mes "I refine equipment. I don't give hair cuts.";
-			close;
-		}
-		break;
-	case 10:
-		set .@part,10;
-		if (getequipisequiped(10) == 0) {
-			mes "[Suhnbi]";
-			mes "What am I, your personal hairstylist?. Go to the salon if you want work done on your precious hair.";
-			close2;
-		}
-		break;
+		set .@menu$, .@menu$ + ":";
 	}
+	set .@part,select(.@menu$);
 
-	if (getequipisenableref(.@part) == 0) {
+	if( !getequipisequiped(.@part) )
+	{
+		mes "[Suhnbi]";
+		switch(.@part)
+		{
+			case 1: mes "Do you want me to refine your skull?"; break;
+			case 2: mes "I'll refine your torso with my own passionate body!"; break;
+			case 3: mes "Sorry, there ain't any technology yet to put rockets on your left hand..."; break;
+			case 4: mes "Sorry, there ain't any technology yet to put rockets on your right hand..."; break;
+			case 5: mes "You're not even wearing a garment? Are you?"; break;
+			case 6: mes "What do I look like, a makeover artist? I can't refine your bare feet!"; break;
+			case 7: mes "Um... You're not wearing an Accessory."; break;
+			case 8: mes "Accessory? You're not wearing one of those."; break;
+			case 9: mes "I refine equipment. I don't give hair cuts."; break;
+			case 10: mes "What am I, your personal hairstylist?. Go to the salon if you want work done on your precious hair."; break;
+		}
+		close;
+	}
+	
+
+	if( !getequipisenableref(.@part) )
+	{
 		mes "[Suhnbi]";
 		mes "I don't think I can refine this item at all.";
 		close;
 	}
-	if (getequipisidentify(.@part) == 0) {
+	if( !getequipisidentify(.@part) )
+	{
 		mes "[Suhnbi]";
 		mes "This is has not been identified. So, it can't be refined...";
 		close;
 	}
-	if (getequiprefinerycnt(.@part) >= 10) {
+	if( getequiprefinerycnt(.@part) >= 10 )
+	{
 		mes "[Suhnbi]";
 		mes "This item cannot be refined because it has already reached its maximum level...";
 		close;
 	}
+
 	// Make sure you have the neccessary items and Zeny to refine your items
 	// Determines chance of failure and verifies that you want to continue.
-	switch(getequipweaponlv(.@part)) {
-	case 1: callsub S_RefineValidate,1,7620,50,.@part; break;
-	case 2: callsub S_RefineValidate,2,7620,200,.@part; break;
-	case 3: callsub S_RefineValidate,3,7620,5000,.@part; break;
-	case 4: callsub S_RefineValidate,4,7620,20000,.@part; break;
-	default: callsub S_RefineValidate,0,7619,2000,.@part; break;
+	switch( getequipweaponlv(.@part) )
+	{
+		case 1: callsub S_RefineValidate,1,7620,50,.@part; break;
+		case 2: callsub S_RefineValidate,2,7620,200,.@part; break;
+		case 3: callsub S_RefineValidate,3,7620,5000,.@part; break;
+		case 4: callsub S_RefineValidate,4,7620,20000,.@part; break;
+		default: callsub S_RefineValidate,0,7619,2000,.@part; break;
 	}
 
-	if (getequippercentrefinery(.@part) > rand(100) || getequippercentrefinery(.@part) > rand(100)) {
+	if( getequippercentrefinery(.@part) > rand(100) || getequippercentrefinery(.@part) > rand(100) )
+	{
 		mes "[Suhnbi]";
 		mes "Clink! Clank! Clunk!";
 		SuccessRefItem .@part;
@@ -160,7 +103,8 @@ payon,174,138,0	script	Suhnbi#cash	85,{
 		mes "It's been a while since I've made such a fine weapon. You must be happy because it has become stronger!";
 		close;
 	}
-	else {
+	else
+	{
 		mes "[Suhnbi]";
 		mes "Clink! Clank! Clunk!";
 		FailedRefItem .@part;
@@ -182,12 +126,14 @@ payon,174,138,0	script	Suhnbi#cash	85,{
 S_RefineValidate:
 	mes "[Suhnbi]";
 	if (getarg(0))
-		mes "A level "+getarg(0)+" weapon...";
-	mes "To refine this I need one ^ff9999"+getitemname(getarg(1))+"^000000 and a service fee of "+getarg(2)+" Zeny.";
+		mes "A level " + getarg(0) + " weapon...";
+	mes "To refine this I need one ^ff9999" + getitemname(getarg(1)) + "^000000 and a service fee of " + getarg(2) + " Zeny.";
 	mes "Do you wish to continue?";
 	next;
-	if (select("Yes:No") == 1) {
-		if (getequippercentrefinery(getarg(3)) < 100) {
+	if( select("Yes:No") == 1 )
+	{
+		if( getequippercentrefinery(getarg(3)) < 100 )
+		{
 			mes "[Suhnbi]";
 			mes "Wow!!";
 			mes "This weapon, probably";
@@ -205,26 +151,30 @@ S_RefineValidate:
 			mes " ";
 			mes "Are you sure you still want to continue?";
 			next;
-			if (select("Yes:No") == 2) {
+			if( select("Yes:No") == 2 )
+			{
 				mes "[Suhnbi]";
 				mes "I completely agree...";
 				mes "I might be a great refiner, but something even I make mistakes.";
 				close;
 			}
 		}
-		if (countitem(getarg(1)) > 0 && Zeny > getarg(2)) {
-			delitem getarg(1),1;
-			set zeny,zeny-getarg(2);
+		if( countitem(getarg(1)) > 0 && Zeny > getarg(2) )
+		{
+			delitem getarg(1), 1;
+			set Zeny, Zeny - getarg(2);
 			return;
 		}
-		else {
+		else
+		{
 			mes "[Suhnbi]";
-			mes "You don't seem to have enough Zeny or "+getitemname(getarg(1))+"...";
+			mes "You don't seem to have enough Zeny or " + getitemname(getarg(1)) + "...";
 			mes "Go get some more. I'll be here ll day if you need me.";
 			close;
 		}
 	}
-	else {
+	else
+	{
 		mes "[Suhnbi]";
 		mes "Yeah... There's no need to rush.";
 		mes "Take your time.";

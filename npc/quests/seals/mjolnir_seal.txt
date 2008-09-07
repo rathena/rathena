@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= SinSloth
 //===== Current Version: ===================================== 
-//= 1.3
+//= 1.4
 //===== Compatible With: ===================================== 
 //= eAthena
 //===== Description: ========================================= 
@@ -14,6 +14,7 @@
 //= 1.1a Corrected a a typo error ";;". [Samuray22]
 //= 1.2 Updated several aspects of the script. [L0ne_W0lf]
 //= 1.3 Minor Touchups to quest. [L0ne_W0lf]
+//= 1.4 Optimizing refine method and wrong close2. [Zephyrus]
 //============================================================
 
 prontera,124,297,3	script	Tialfi	706,{
@@ -1928,109 +1929,21 @@ mjolnir_01,35,136,7	script	Dwarf Blacksmith#west	826,{
 				mes "Great...!";
 				mes "Which one should I upgrade first, huh? My heart is pounding with anticipation...";
 				next;
-				set .@strRetPart1$,getequipname(1);
-				set .@strRetPart2$,getequipname(2);
-				set .@strRetPart3$,getequipname(3);
-				set .@strRetPart4$,getequipname(4);
-				set .@strRetPart5$,getequipname(5);
-				set .@strRetPart6$,getequipname(6);
-				set .@strRetPart7$,getequipname(7);
-				set .@strRetPart8$,getequipname(8);
-				set .@strRetPart9$,getequipname(9);
-				set .@strRetPart10$,getequipname(10);
-				if (.@strRetPart1$ == 0) {
-					set .@strPart1$,"Head ^000000[^003366Not Equipped^000000]";
+
+				setarray .@position$[1], "Head","Body","Left hand","Right hand","Robe","Shoes","Accessory 1","Accessory 2","Head 2","Head 3";
+				set .@menu$,"";
+				for( set .@i,1; .@i <= 10; set .@i,.@i+1 )
+				{
+					if( getequipisequiped(.@i) )
+						set .@menu$, .@menu$ + .@position$[.@i] + "-" + "[" + getequipname(.@i) + "]";
+
+					set .@menu$, .@menu$ + ":";
 				}
-				if (.@strRetPart2$ == 0) {
-					set .@strPart2$,"Torso ^000000[^003366Not Equipped^000000]";
-				}
-				if (.@strRetPart3$ == 0) {
-					set .@strPart3$,"Left Hand ^000000[^003366Not Equipped^000000]";
-				}
-				if (.@strRetPart4$ == 0) {
-					set .@strPart4$,"Right Hand ^000000[^003366Not Equipped^000000]";
-				}
-				if (.@strRetPart5$ == 0) {
-					set .@strPart5$,"Garment ^000000[^003366Not Equipped^000000]";
-				}
-				if (.@strRetPart6$ == 0) {
-					set .@strPart6$,"Foot ^000000[^003366Not Equipped^000000]";
-				}
-				if (.@strRetPart7$ == 0) {
-					set .@strPart7$,"Accessory1 ^000000[^003366Not Equipped^000000]";
-				}
-				if (.@strRetPart8$ == 0) {
-					set .@strPart8$,"Accessory2 ^000000[^003366Not Equipped^000000]";
-				}
-				if (.@strRetPart9$ == 0) {
-					set .@strPart9$,"Head2 ^000000[^003366Not Equipped^000000]";
-				}
-				if (.@strRetPart10$ == 0) {
-					set .@strPart10$,"Head3 ^000000[^003366Not Equipped^000000]";
-				}
-				set .@menu$,.@strRetPart1$+":"+.@strRetPart2$+":"+.@strRetPart3$+":"+.@strRetPart4$+":"+.@strRetPart5$+":"+.@strRetPart6$+":"+.@strRetPart7$+":"+.@strRetPart8$+":"+.@strRetPart9$+":"+.@strRetPart10$;
-				switch(select(.@menu$)) {
-				case 1:
-					set .@part,1;
-					if (getequipisequiped(1) == 0) {
-						close;
-					}
-					break;
-				case 2:
-					set .@part,2;
-					if (getequipisequiped(2) == 0) {
-						close;
-					}
-					break;
-				case 3:
-					set .@part,3;
-					if (getequipisequiped(3) == 0) {
-						close;
-					}
-					break;
-				case 4:
-					set .@part,4;
-					if (getequipisequiped(4) == 0) {
-						close;
-					}
-					break;
-				case 5:
-					set .@part,5;
-					if (getequipisequiped(5) == 0) {
-						close;
-					}
-					break;
-				case 6:
-					set .@part,6;
-					if (getequipisequiped(6) == 0) {
-						close;
-					}
-					break;
-				case 7:
-					set .@part,7;
-					if (getequipisequiped(7) == 0) {
-						close;
-					}
-					break;
-				case 8:
-					set .@part,8;
-					if (getequipisequiped(8) == 0) {
-						close;
-					}
-					break;
-				case 9:
-					set .@part,9;
-					if (getequipisequiped(9) == 0) {
-						close;
-					}
-					break;
-				case 10:
-					set .@part,10;
-					if (getequipisequiped(10) == 0) {
-						close;
-					}
-					break;
-				}
+				set .@part,select(.@menu$);
+
+				if (getequipisequiped(.@part) == 0)
+					close;
+
 				if (getequipisenableref(.@part) == 0) {
 					mes "[Vestri]";
 					mes "What...?!";
@@ -2081,6 +1994,7 @@ mjolnir_01,35,136,7	script	Dwarf Blacksmith#west	826,{
 					mes "Blacksmith work on that kind of stuff! Now, a Dwarf like me needs something that's more of a challenge!";
 					close;
 				}
+
 				mes "[Vestri]";
 				mes "Okay, let me give you the mandatory warning. If your weapon happens to be destroyed by chance during the upgrade, you'll never see the weapon again.";
 				next;
@@ -2091,10 +2005,8 @@ mjolnir_01,35,136,7	script	Dwarf Blacksmith#west	826,{
 				mes "If you understand,";
 				mes "then let's get on with it!";
 				next;
-				switch(select("Sure, let's do it!:N-no, I changed my mind!")) {
-				case 1:
-					break;
-				case 2:
+				if( select("Sure, let's do it!:N-no, I changed my mind!") == 2 )
+				{
 					mes "[Vestri]";
 					mes "Bah...!";
 					mes "How do you survive";
@@ -2105,8 +2017,9 @@ mjolnir_01,35,136,7	script	Dwarf Blacksmith#west	826,{
 					mes "Oh, forget it.";
 					mes "I know you're just being careful. Damn, I was just so eager to get";
 					mes "to work!";
-					close2;
+					close;
 				}
+
 				if (countitem(615) > 0) {
 					delitem 984,1; //Oridecon
 				}
@@ -2242,109 +2155,21 @@ mjolnir_01,35,136,7	script	Dwarf Blacksmith#west	826,{
 				mes "Great...!";
 				mes "Which one should I upgrade first, huh? My heart is pounding with anticipation...";
 				next;
-				set .@strRetPart1$,getequipname(1);
-				set .@strRetPart2$,getequipname(2);
-				set .@strRetPart3$,getequipname(3);
-				set .@strRetPart4$,getequipname(4);
-				set .@strRetPart5$,getequipname(5);
-				set .@strRetPart6$,getequipname(6);
-				set .@strRetPart7$,getequipname(7);
-				set .@strRetPart8$,getequipname(8);
-				set .@strRetPart9$,getequipname(9);
-				set .@strRetPart10$,getequipname(10);
-				if (.@strRetPart1$ == 0) {
-					set .@strPart1$,"Head ^000000[^003366Not Equipped^000000]";
+				
+				setarray .@position$[1], "Head","Body","Left hand","Right hand","Robe","Shoes","Accessory 1","Accessory 2","Head 2","Head 3";
+				set .@menu$,"";
+				for( set .@i,1; .@i <= 10; set .@i,.@i+1 )
+				{
+					if( getequipisequiped(.@i) )
+						set .@menu$, .@menu$ + .@position$[.@i] + "-" + "[" + getequipname(.@i) + "]";
+
+					set .@menu$, .@menu$ + ":";
 				}
-				if (.@strRetPart2$ == 0) {
-					set .@strPart2$,"Torso ^000000[^003366Not Equipped^000000]";
-				}
-				if (.@strRetPart3$ == 0) {
-					set .@strPart3$,"Left Hand ^000000[^003366Not Equipped^000000]";
-				}
-				if (.@strRetPart4$ == 0) {
-					set .@strPart4$,"Right Hand ^000000[^003366Not Equipped^000000]";
-				}
-				if (.@strRetPart5$ == 0) {
-					set .@strPart5$,"Garment ^000000[^003366Not Equipped^000000]";
-				}
-				if (.@strRetPart6$ == 0) {
-					set .@strPart6$,"Foot ^000000[^003366Not Equipped^000000]";
-				}
-				if (.@strRetPart7$ == 0) {
-					set .@strPart7$,"Accessory1 ^000000[^003366Not Equipped^000000]";
-				}
-				if (.@strRetPart8$ == 0) {
-					set .@strPart8$,"Accessory2 ^000000[^003366Not Equipped^000000]";
-				}
-				if (.@strRetPart9$ == 0) {
-					set .@strPart9$,"Head2 ^000000[^003366Not Equipped^000000]";
-				}
-				if (.@strRetPart10$ == 0) {
-					set .@strPart10$,"Head3 ^000000[^003366Not Equipped^000000]";
-				}
-				set .@menu$,.@strRetPart1$+":"+.@strRetPart2$+":"+.@strRetPart3$+":"+.@strRetPart4$+":"+.@strRetPart5$+":"+.@strRetPart6$+":"+.@strRetPart7$+":"+.@strRetPart8$+":"+.@strRetPart9$+":"+.@strRetPart10$;
-				switch(select(.@menu$)) {
-				case 1:
-					set .@part,1;
-					if (getequipisequiped(1) == 0) {
-						close;
-					}
-					break;
-				case 2:
-					set .@part,2;
-					if (getequipisequiped(2) == 0) {
-						close;
-					}
-					break;
-				case 3:
-					set .@part,3;
-					if (getequipisequiped(3) == 0) {
-						close;
-					}
-					break;
-				case 4:
-					set .@part,4;
-					if (getequipisequiped(4) == 0) {
-						close;
-					}
-					break;
-				case 5:
-					set .@part,5;
-					if (getequipisequiped(5) == 0) {
-						close;
-					}
-					break;
-				case 6:
-					set .@part,6;
-					if (getequipisequiped(6) == 0) {
-						close;
-					}
-					break;
-				case 7:
-					set .@part,7;
-					if (getequipisequiped(7) == 0) {
-						close;
-					}
-					break;
-				case 8:
-					set .@part,8;
-					if (getequipisequiped(8) == 0) {
-						close;
-					}
-					break;
-				case 9:
-					set .@part,9;
-					if (getequipisequiped(9) == 0) {
-						close;
-					}
-					break;
-				case 10:
-					set .@part,10;
-					if (getequipisequiped(10) == 0) {
-						close;
-					}
-					break;
-				}
+				set .@part,select(.@menu$);
+
+				if (getequipisequiped(.@part) == 0)
+					close;
+
 				if (getequipisenableref(.@part) == 0) {
 					mes "[Vestri]";
 					mes "What...?!";
@@ -2391,6 +2216,7 @@ mjolnir_01,35,136,7	script	Dwarf Blacksmith#west	826,{
 					mes "on Level 4 weapons?";
 					close;
 				}
+				mes "[Vestri]";
 				mes "Okay, let me give you the mandatory warning. If your weapon happens to be destroyed by chance during the upgrade, you'll never see the weapon again.";
 				next;
 				mes "[Vestri]";
@@ -2400,10 +2226,8 @@ mjolnir_01,35,136,7	script	Dwarf Blacksmith#west	826,{
 				mes "If you understand,";
 				mes "then let's get on with it!";
 				next;
-				switch(select("Sure, let's do it!:...no, I am out.")) {
-				case 1:
-					break;
-				case 2:
+				if( select("Sure, let's do it!:...no, I am out.") == 2 )
+				{
 					mes "[Vestri]";
 					mes "Bah...!";
 					mes "How do you survive";
