@@ -1580,8 +1580,7 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 					flag=1;
 				break;
 			case AC_DOUBLE:
-				if((tstatus->race == RC_BRUTE || tstatus->race == RC_INSECT) &&
-					pc_checkskill(sd, HT_POWER))
+				if( (tstatus->race == RC_BRUTE || tstatus->race == RC_INSECT) && pc_checkskill(sd, HT_POWER))
 				{
 					//TODO: This code was taken from Triple Blows, is this even how it should be? [Skotlex]
 					sc_start4(src,SC_COMBO,100,HT_POWER,bl->id,0,0,2000);
@@ -1740,16 +1739,17 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 			battle_drain(sd, bl, dmg.damage, dmg.damage2, tstatus->race, tstatus->mode&MD_BOSS);
 	}
 
-	if (rdamage>0) {
-		if (dmg.amotion)
+	if( rdamage > 0 )
+	{
+		if( dmg.amotion )
 			battle_delay_damage(tick, dmg.amotion,bl,src,0,0,0,rdamage,ATK_DEF,0);
 		else
 			status_fix_damage(bl,src,rdamage,0);
 		clif_damage(src,src,tick, dmg.amotion,0,rdamage,1,4,0);
 		//Use Reflect Shield to signal this kind of skill trigger. [Skotlex]
-		if (tsd && src != bl)
+		if( tsd && src != bl )
 			battle_drain(tsd, src, rdamage, rdamage, sstatus->race, is_boss(src));
-		skill_additional_effect(bl,src,CR_REFLECTSHIELD,1,BF_WEAPON|BF_SHORT|BF_NORMAL,tick);
+		skill_additional_effect(bl, src, CR_REFLECTSHIELD, 1, BF_WEAPON|BF_SHORT|BF_NORMAL,tick);
 	}
 
 	if (!(flag&2) &&
@@ -1964,7 +1964,7 @@ int skill_guildaura_sub (struct block_list *bl, va_list ap)
 static int skill_check_condition_mercenary(struct block_list *bl, int skill, int lv, int type)
 {
 	struct status_data *status;
-	struct map_session_data *sd;
+	struct map_session_data *sd = NULL;
 	int i, j, hp, sp, hp_rate, sp_rate, state, mhp;
 	int itemid[10],amount[ARRAYLENGTH(itemid)],index[ARRAYLENGTH(itemid)];
 
@@ -3788,7 +3788,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case ST_PRESERVE:
 	case SG_FUSION:
 	case GS_GATLINGFEVER:
-		if (tsce)
+		if( tsce )
 			i = status_change_end(bl, type, -1);
 		else
 			i = sc_start(bl,type,100,skilllv,skill_get_time(skillid,skilllv));
@@ -4678,7 +4678,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 
 	case HT_REMOVETRAP:
 		//FIXME: I think clif_skill_fail() is supposed to be sent if it fails below [ultramage]
-		clif_skill_nodamage(src,bl,skillid,skilllv,1);
+		clif_skill_nodamage(src, bl, skillid, skilllv, 1);
 		{
 			struct skill_unit* su;
 			struct skill_unit_group* sg;
@@ -4692,26 +4692,32 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				if( !(sg->unit_id == UNT_USED_TRAPS || (sg->unit_id == UNT_ANKLESNARE && sg->val2 != 0 )) )
 				{
 					if( battle_config.skill_removetrap_type )
-					{	// get back all items used to deploy the trap
-						for(i=0;i<10;i++) {
-							if(skill_db[su->group->skill_id].itemid[i] > 0){
+					{ // get back all items used to deploy the trap
+						for( i = 0; i < 10; i++ )
+						{
+							if( skill_db[su->group->skill_id].itemid[i] > 0 )
+							{
 								int flag;
 								struct item item_tmp;
 								memset(&item_tmp,0,sizeof(item_tmp));
 								item_tmp.nameid = skill_db[su->group->skill_id].itemid[i];
 								item_tmp.identify = 1;
-								if(item_tmp.nameid && (flag=pc_additem(sd,&item_tmp,skill_db[su->group->skill_id].amount[i]))){
+								if( item_tmp.nameid && (flag=pc_additem(sd,&item_tmp,skill_db[su->group->skill_id].amount[i])) )
+								{
 									clif_additem(sd,0,0,flag);
 									map_addflooritem(&item_tmp,skill_db[su->group->skill_id].amount[i],sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0);
 								}
 							}
 						}
-					} else { // get back 1 trap
+					}
+					else
+					{ // get back 1 trap
 						struct item item_tmp;
 						memset(&item_tmp,0,sizeof(item_tmp));
 						item_tmp.nameid = ITEMID_TRAP;
 						item_tmp.identify = 1;
-						if(item_tmp.nameid && (flag=pc_additem(sd,&item_tmp,1))){
+						if( item_tmp.nameid && (flag=pc_additem(sd,&item_tmp,1)) )
+						{
 							clif_additem(sd,0,0,flag);
 							map_addflooritem(&item_tmp,1,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0);
 						}
@@ -5274,7 +5280,7 @@ int skill_castend_id(int tid, unsigned int tick, int id, intptr data)
 	struct map_session_data *sd;
 	struct mob_data *md;
 	struct unit_data *ud;
-	struct status_change *sc;
+	struct status_change *sc = NULL;
 	int inf,inf2,flag = 0;
 
 	src = map_id2bl(id);
@@ -5355,14 +5361,14 @@ int skill_castend_id(int tid, unsigned int tick, int id, intptr data)
 		if (ud->skillid == PR_LEXDIVINA)
 		{
 			sc = status_get_sc(target);
-			if (battle_check_target(src,target, BCT_ENEMY)<=0 &&
-				(!sc || !sc->data[SC_SILENCE]))
-			{	//If it's not an enemy, and not silenced, you can't use the skill on them. [Skotlex]
+			if( battle_check_target(src,target, BCT_ENEMY) <= 0 && (!sc || !sc->data[SC_SILENCE]) )
+			{ //If it's not an enemy, and not silenced, you can't use the skill on them. [Skotlex]
 				clif_skill_nodamage (src, target, ud->skillid, ud->skilllv, 0);
 				break;
 			}
-		} else {
-			//Check target validity.
+		}
+		else
+		{ // Check target validity.
 			inf = skill_get_inf(ud->skillid);
 			inf2 = skill_get_inf2(ud->skillid);
 
@@ -5543,7 +5549,7 @@ int skill_castend_pos(int tid, unsigned int tick, int id, intptr data)
 	ud->skilltimer = INVALID_TIMER;
 
 	do {
-		if(status_isdead(src))
+		if( status_isdead(src) )
 			break;
 
 		if( !(src->type&battle_config.skill_reiteration) &&
@@ -6540,7 +6546,8 @@ struct skill_unit_group* skill_unitsetting (struct block_list *src, short skilli
 		if( battle_config.skill_wall_check && skill_get_unit_flag(skillid)&UF_PATHCHECK && !path_search_long(NULL,src->m,ux,uy,x,y,CELL_CHKWALL) )
 			continue; // no path between cell and center of casting.
 
-		switch (skillid) {
+		switch( skillid )
+		{
 		case MG_FIREWALL:
 		case NJ_KAENSIN:
 			val2=group->val2;
