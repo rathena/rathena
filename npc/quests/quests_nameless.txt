@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.4
+//= 1.5
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -36,6 +36,7 @@
 //= 1.2 Some final tuning to Nameless Island quest. [Koca]
 //= 1.3 Should fix any more issues with "Creature" npc. [L0ne_W0lf]
 //= 1.4 Changed the way aru_warp works slightly. [L0ne_W0lf]
+//= 1.5 added a next to stop double npc message [Yommy]
 //============================================================ 
 
 airplane_01,95,61,3	script	Agent#Aru	899,5,5,{
@@ -185,6 +186,7 @@ ra_in01,308,59,1	script	Waiter#Aru	930,{
 			close;
 		}
 		if (aru_monas == 6) {
+			next;
 			mes "[Waiter]";
 			mes "What would you like";
 			mes "to order? Or... If I'm";

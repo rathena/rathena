@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
-//= 1.2
+//= 1.3
 //===== Compatible With: =====================================
 //= Eathena SVN
 //===== Description: =========================================
@@ -20,6 +20,7 @@
 //= 1.0 First Version. [L0ne_W0lf]
 //= 1.1 Fixed a weird carriage return. o_o [L0ne_W0lf]
 //= 1.2 Optimizing refine method [Zephyrus]
+//= 1.3 Typo fixes [Yommy]
 //============================================================
 
 payon,174,138,0	script	Suhnbi#cash	85,{
@@ -70,7 +71,7 @@ payon,174,138,0	script	Suhnbi#cash	85,{
 	if( !getequipisidentify(.@part) )
 	{
 		mes "[Suhnbi]";
-		mes "This is has not been identified. So, it can't be refined...";
+		mes "This has not been identified. So, it can't be refined...";
 		close;
 	}
 	if( getequiprefinerycnt(.@part) >= 10 )
@@ -119,7 +120,7 @@ payon,174,138,0	script	Suhnbi#cash	85,{
 		mes "[Suhnbi]";
 		mes "Cough...Cough..";
 		mes "What a shame...";
-		mes "Your equipment broke during hte refining process. I had told you earlier this might happen!";
+		mes "Your equipment broke during the refining process. I had told you earlier this might happen!";
 		close;
 	}
 
@@ -155,7 +156,7 @@ S_RefineValidate:
 			{
 				mes "[Suhnbi]";
 				mes "I completely agree...";
-				mes "I might be a great refiner, but something even I make mistakes.";
+				mes "I might be a great refiner, but sometimes even I make mistakes.";
 				close;
 			}
 		}
@@ -169,7 +170,7 @@ S_RefineValidate:
 		{
 			mes "[Suhnbi]";
 			mes "You don't seem to have enough Zeny or " + getitemname(getarg(1)) + "...";
-			mes "Go get some more. I'll be here ll day if you need me.";
+			mes "Go get some more. I'll be here all day if you need me.";
 			close;
 		}
 	}

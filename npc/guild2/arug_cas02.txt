@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
-//= 1.6
+//= 1.7
 //===== Compatible With: =====================================
 //= eAthena SVN
 //===== Description: =========================================
@@ -19,6 +19,7 @@
 //=     Treasure will now be killed before spawning.
 //= 1.5 Fixed error with control devices. [L0ne_W0lf]
 //= 1.6 Two small fixes. (aegis carry-overs) [L0ne_W0lf]
+//= 1.7 Another two fixes [Yommy]
 //============================================================
 
 arug_cas02,1,1,0	script	Manager#aru02_02	111,{
@@ -175,7 +176,7 @@ arug_cas02,38,259,5	script	Yumenes#aru02_01	868,{
 	}
 	if (getcharid(2) == .@GID) {
 		if (strcharinfo(0) != getguildmaster(.@GID)) {
-			mes "[Brace]";
+			mes "[Yumenes]";
 			mes "As guardian of this";
 			mes "stronghold, I answer only";
 			mes "to the master of the guild";
@@ -2852,7 +2853,7 @@ aru_gld,120,83,5	script	Cyr#flag_Ar02_3	722,{
 		next;
 		mes "[ Arunafeltz Royal Edict ]";
 		mes "^FF0000" + getGuildMaster(.@GID) + "^000000 is";
-		mes "Guild Master of ^FF0000" + guildName + "^000000.";
+		mes "Guild Master of ^FF0000" + getGuildName(.@GID) + "^000000.";
 		mes "Any that object must claim this";
 		mes "stronghold through strength of";
 		mes "steel and magic during the";

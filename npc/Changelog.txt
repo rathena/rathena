@@ -1,5 +1,9 @@
 ﻿Date		Added
 ======
+2008/09/09
+	* Rev. 13201 Small bugfixes to arug_cas02 [Yommy]
+	- Typo fixes in advanced refiner [Yommy]
+	- Nameless entrance layout fix [Yommy]
 2008/09/06
 	* Rev. 13194 Lots of small updates and corrections to seal quests. [L0ne_W0lf]
 	* Rev. 13193 Applied bug fixes for IDs in recent quests. (bugreport:2189) [L0ne_W0lf]
