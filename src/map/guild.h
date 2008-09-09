@@ -100,6 +100,9 @@ int guild_castlealldataload(int len,struct guild_castle *gc);
 int guild_agit_start(void);
 int guild_agit_end(void);
 
+int guild_agit2_start(void);
+int guild_agit2_end(void);
+
 void do_final_guild(void);
 
 #endif /* _GUILD_H_ */

@@ -37,8 +37,8 @@ OnRecvCastlesc02:
 	}
 	end;
 
-OnAgitStart:
-	if (agitcheck()) {
+OnAgitStart2:
+	if (agitcheck2()) {
 		MapRespawnGuildID "schg_cas02",GetCastleData("schg_cas02",1),2;
 		GvgOn "schg_cas02";
 		donpcevent "Manager#sch02_02::Onstart";
@@ -51,7 +51,7 @@ OnAgitStart:
 	}
 	end;
 
-OnAgitEnd:
+OnAgitEnd2:
 	GvgOff "schg_cas02";
 	if (GetCastleData("schg_cas02",1)) {
 		KillMonster "schg_cas02","Steward#sch02::OnStartArena";
@@ -92,7 +92,7 @@ Onreset:
 	donpcevent "Control Device01#sch02::OnDisable";
 	donpcevent "Control Device02#sch02::OnDisable";
 	donpcevent "Control Device03#sch02::OnDisable";
-	if (agitcheck()) {
+	if (agitcheck2()) {
 		setarray $agit_sc02[0],0,0,1,1,1,0;
 	}
 	end;
@@ -185,7 +185,7 @@ schg_cas02,140,184,3	script	Endeef#sch02_01	868,{
 			close;
 		}
 		else {
-			if (agitcheck() == 0) {
+			if (agitcheck2() == 0) {
 				mes "[Endeef]";
 				mes "I am Endeef, guardian of";
 				mes "this stronghold. For now,";
@@ -790,7 +790,7 @@ schg_cas02,231,57,0	script	1st Guardian Stone#sch02	844,{
 						close;
 					}
 					else {
-						if (agitcheck() == 0) {
+						if (agitcheck2() == 0) {
 							mes "^3355FFIt is impossible to";
 							mes "rebuild the Guardian";
 							mes "Stone because the";
@@ -1099,7 +1099,7 @@ schg_cas02,335,231,0	script	2nd Guardian Stone#sch02	844,{
 						close;
 					}
 					else {
-						if (agitcheck() == 0) {
+						if (agitcheck2() == 0) {
 							mes "^3355FFIt is impossible to";
 							mes "rebuild the Guardian";
 							mes "Stone because the";
@@ -1447,7 +1447,7 @@ schg_cas02,288,97,0	script	Control Device01#sch02	111,{
 					mes "you're just about done";
 					mes "with repairing the gate.^000000";
 					next;
-					if (agitcheck() == 0) {
+					if (agitcheck2() == 0) {
 						mes "^3355FFUnfortunately, the Fortress";
 						mes "Gate can't be reconstructed:";
 						mes "the Emperium is no longer here.^000000";
@@ -1684,7 +1684,7 @@ schg_cas02,230,209,0	script	Control Device02#sch02	111,{
 					mes "you're just about done";
 					mes "with repairing the gate.^000000";
 					next;
-					if (agitcheck() == 0) {
+					if (agitcheck2() == 0) {
 						mes "^3355FFUnfortunately, the Fortress";
 						mes "Gate can't be reconstructed:";
 						mes "the Emperium is no longer here.^000000";
@@ -1923,7 +1923,7 @@ schg_cas02,159,143,0	script	Control Device03#sch02	111,{
 					mes "you're just about done";
 					mes "with repairing the gate.^000000";
 					next;
-					if (agitcheck() == 0) {
+					if (agitcheck2() == 0) {
 						mes "^3355FFUnfortunately, the Fortress";
 						mes "Gate can't be reconstructed:";
 						mes "the Emperium is no longer here.^000000";
@@ -2587,7 +2587,7 @@ OnStartArena:
 	else if (.msg == 2) {
 		announce "The [" + getguildname(.@gid) + "] conquered the [Nithafjoll 2] stronghold of "+GetCastleName("schg_cas02"),bc_all;
 		mapannounce "schg_cas02","The emperium has been shattered!",bc_map,"0x00FF00";
-		if (agitcheck()) {
+		if (agitcheck2()) {
 			donpcevent "Manager#sch02_02::Onreset";
 			initnpctimer;
 		}

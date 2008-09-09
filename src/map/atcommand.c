@@ -3805,6 +3805,24 @@ int atcommand_agitstart(const int fd, struct map_session_data* sd, const char* c
 /*==========================================
  *
  *------------------------------------------*/
+int atcommand_agitstart2(const int fd, struct map_session_data* sd, const char* command, const char* message)
+{
+	nullpo_retr(-1, sd);
+	if (agit2_flag == 1) {
+		clif_displaymessage(fd, msg_txt(404)); // "War of Emperium SE is currently in progress."
+		return -1;
+	}
+
+	agit2_flag = 1;
+	guild_agit2_start();
+	clif_displaymessage(fd, msg_txt(403)); // "War of Emperium SE has been initiated."
+
+	return 0;
+}
+
+/*==========================================
+ *
+ *------------------------------------------*/
 int atcommand_agitend(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
 	nullpo_retr(-1, sd);
@@ -3816,6 +3834,24 @@ int atcommand_agitend(const int fd, struct map_session_data* sd, const char* com
 	agit_flag = 0;
 	guild_agit_end();
 	clif_displaymessage(fd, msg_txt(74)); // Guild siege warfare end!
+
+	return 0;
+}
+
+/*==========================================
+ *
+ *------------------------------------------*/
+int atcommand_agitend2(const int fd, struct map_session_data* sd, const char* command, const char* message)
+{
+	nullpo_retr(-1, sd);
+	if (agit2_flag == 0) {
+		clif_displaymessage(fd, msg_txt(406)); // "War of Emperium SE is currently not in progress."
+		return -1;
+	}
+
+	agit2_flag = 0;
+	guild_agit2_end();
+	clif_displaymessage(fd, msg_txt(405)); // "War of Emperium SE has been ended."
 
 	return 0;
 }
@@ -8086,7 +8122,7 @@ int atcommand_main(const int fd, struct map_session_data* sd, const char* comman
 			intif_announce(atcmd_output, strlen(atcmd_output) + 1, 0xFE000000, 0);
 
 			// Chat logging type 'M' / Main Chat
-			if( log_config.chat&1 || (log_config.chat&32 && !(agit_flag && log_config.chat&64)) )
+			if( log_config.chat&1 || (log_config.chat&32 && !((agit_flag || agit2_flag) && log_config.chat&64)) )
 				log_chat("M", 0, sd->status.char_id, sd->status.account_id, mapindex_id2name(sd->mapindex), sd->bl.x, sd->bl.y, NULL, message);
 		}
 		
@@ -8506,6 +8542,8 @@ AtCommandInfo atcommand_info[] = {
 	{ "allowks",            6,     atcommand_allowks },
 	{ "cash",              60,     atcommand_cash },
 	{ "points",            60,     atcommand_cash },
+	{ "agitstart2",         60,     atcommand_agitstart2 },
+	{ "agitend2",           60,     atcommand_agitend2 },
 };
 
 

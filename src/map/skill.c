@@ -340,7 +340,7 @@ int skillnotok (int skillid, struct map_session_data *sd)
 		return 1;
 	if(map_flag_gvg(m) && skill_get_nocast (skillid) & 4)
 		return 1;
-	if(agit_flag && skill_get_nocast (skillid) & 8)
+	if((agit_flag || agit2_flag) && skill_get_nocast (skillid) & 8)
 		return 1;
 	if(map[m].flag.restricted && map[m].zone && skill_get_nocast (skillid) & (8*map[m].zone))
 		return 1;
@@ -379,7 +379,7 @@ int skillnotok (int skillid, struct map_session_data *sd)
 			break;
 		case GD_EMERGENCYCALL:
 			if (
-				!(battle_config.emergency_call&(agit_flag?2:1)) ||
+				!(battle_config.emergency_call&((agit_flag || agit2_flag)?2:1)) ||
 				!(battle_config.emergency_call&(map[m].flag.gvg || map[m].flag.gvg_castle?8:4)) ||
 				(battle_config.emergency_call&16 && map[m].flag.nowarpto && !map[m].flag.gvg_castle)
 			)	{

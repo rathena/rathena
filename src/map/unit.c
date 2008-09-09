@@ -170,7 +170,7 @@ static int unit_walktoxy_timer(int tid, unsigned int tick, int id, intptr data)
 		} else
 			sd->areanpc_id=0;
 		if (sd->state.gmaster_flag &&
-			(battle_config.guild_aura&(agit_flag?2:1)) &&
+			(battle_config.guild_aura&((agit_flag || agit2_flag)?2:1)) &&
 			(battle_config.guild_aura&(map_flag_gvg2(bl->m)?8:4))
 		)
 		{ //Guild Aura: Likely needs to be recoded, this method seems inefficient.

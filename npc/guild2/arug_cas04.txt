@@ -34,8 +34,8 @@ OnRecvCastlear04:
 	}
 	end;
 
-OnAgitStart:
-	if (agitcheck()) {
+OnAgitStart2:
+	if (agitcheck2()) {
 		MapRespawnGuildID "arug_cas04",GetCastleData("arug_cas04",1),2;
 		GvgOn "arug_cas04";
 		donpcevent "Manager#aru04_02::Onstart";
@@ -48,7 +48,7 @@ OnAgitStart:
 	}
 	end;
 
-OnAgitEnd:
+OnAgitEnd2:
 	GvgOff "arug_cas04";
 	if (GetCastleData("arug_cas04",1)) {
 		KillMonster "arug_cas04","Steward#aru04::OnStartArena";
@@ -89,7 +89,7 @@ Onreset:
 	donpcevent "Control Device01#aru04::OnDisable";
 	donpcevent "Control Device02#aru04::OnDisable";
 	donpcevent "Control Device03#aru04::OnDisable";
-	if (agitcheck()) {
+	if (agitcheck2()) {
 		setarray $agit_ar04[0],0,0,1,1,1,0;
 	}
 	end;
@@ -182,7 +182,7 @@ arug_cas04,146,315,3	script	Nios#aru04_01	868,{
 			close;
 		}
 		else {
-			if (agitcheck() == 0) {
+			if (agitcheck2() == 0) {
 				mes "[Nios]";
 				mes "I am Nios, guardian of";
 				mes "this stronghold. For now,";
@@ -787,7 +787,7 @@ arug_cas04,65,171,0	script	1st Guardian Stone#aru04	844,{
 						close;
 					}
 					else {
-						if (agitcheck() == 0) {
+						if (agitcheck2() == 0) {
 							mes "^3355FFIt is impossible to";
 							mes "rebuild the Guardian";
 							mes "Stone because the";
@@ -1096,7 +1096,7 @@ arug_cas04,212,149,0	script	2nd Guardian Stone#aru04	844,{
 						close;
 					}
 					else {
-						if (agitcheck() == 0) {
+						if (agitcheck2() == 0) {
 							mes "^3355FFIt is impossible to";
 							mes "rebuild the Guardian";
 							mes "Stone because the";
@@ -1447,7 +1447,7 @@ arug_cas04,143,158,0	script	Control Device01#aru04	111,{
 					mes "you're just about done";
 					mes "with repairing the gate.^000000";
 					next;
-					if (agitcheck() == 0) {
+					if (agitcheck2() == 0) {
 						mes "^3355FFUnfortunately, the Fortress";
 						mes "Gate can't be reconstructed:";
 						mes "the Emperium is no longer here.^000000";
@@ -1684,7 +1684,7 @@ arug_cas04,135,212,0	script	Control Device02#aru04	111,{
 					mes "you're just about done";
 					mes "with repairing the gate.^000000";
 					next;
-					if (agitcheck() == 0) {
+					if (agitcheck2() == 0) {
 						mes "^3355FFUnfortunately, the Fortress";
 						mes "Gate can't be reconstructed:";
 						mes "the Emperium is no longer here.^000000";
@@ -1923,7 +1923,7 @@ arug_cas04,134,266,0	script	Control Device03#aru04	111,{
 					mes "you're just about done";
 					mes "with repairing the gate.^000000";
 					next;
-					if (agitcheck() == 0) {
+					if (agitcheck2() == 0) {
 						mes "^3355FFUnfortunately, the Fortress";
 						mes "Gate can't be reconstructed:";
 						mes "the Emperium is no longer here.^000000";
@@ -2650,7 +2650,7 @@ OnStartArena:
 	else if (.msg == 2) {
 		announce "The [" + getguildname(.@gid) + "] conquered the [Valfreyja 4] stronghold of "+GetCastleName("arug_cas04"),bc_all;
 		mapannounce "arug_cas04","The emperium has been shattered!",bc_map,"0x00FF00";
-		if (agitcheck()) {
+		if (agitcheck2()) {
 			donpcevent "Manager#aru04_02::Onreset";
 			initnpctimer;
 		}

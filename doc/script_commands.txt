@@ -4,7 +4,7 @@
 //= A reference manual for the eAthena scripting language.
 //= Commands are sorted depending on their functionality.
 //===== Version ===========================================
-//= 3.22.20080622
+//= 3.23.20080909
 //=========================================================
 //= 1.0 - First release, filled will as much info as I could
 //=       remember or figure out, most likely there are errors,
@@ -122,6 +122,8 @@
 //=       Extended 'set' to return the variable reference. [FlavioJS]
 //= 3.22.20080901
 //=       Adjusted the 'getequipname' description to match src [ultramage]
+//= 3.23.20080909
+//=       Added WoE SE related commands. [L0ne_W0lf]
 //=========================================================
 
 This document is a reference manual for all the scripting commands and functions 
@@ -880,6 +882,9 @@ once and will not execute if the map server reconnects to the char server later.
 OnAgitStart:
 OnAgitEnd:
 OnAgitInit:
+OnAgitStart2:
+OnAgitEnd2:
+OnAgitInit2:
 
 OnAgitStart will run whenever the server shifts into WoE mode, whether it is 
 done with @agitstart GM command or with 'AgitStart' script command. OnAgitEnd 
@@ -889,6 +894,9 @@ loaded from the char-server by the map server.
 No RID will be attached while any of the abovementioned labels are triggered, so 
 no character or account-based variables will be accessible, until you attach a 
 RID with 'attachrid' (see below).
+
+The above also applies to, the last three laels, the only difference is that
+these labels are used exclusively for WoE SE, and are called independantly.
 
 OnTouch:
 
@@ -3158,9 +3166,11 @@ if (checkChatting()) mes "You are currently chatting!";
 ---------------------------------------
 
 *agitcheck()
+*agitcheck2()
 
-This function will let you check whether the server is currently in WoE mode.
-It will return 1 if the War of Emperium is on and 0 if it isn't.
+These function will let you check whether the server is currently in WoE mode
+(or WoE SE mode if the second function is called) and will return 1 if War of
+Emperium is on and 0 if it isn't. 
 
 ---------------------------------------
 
@@ -5432,13 +5442,16 @@ For examples, check the WoE scripts in the distribution.
 
 *agitstart;
 *agitend;
+*agitstart2;
+*agitend2;
 
-These two commands will start and end War of Emperium.
+These four commands will start and end War of Emperium or War of Emperium SE.
 
 This is a bit more complex than it sounds, since the commands themselves won't 
 actually do anything interesting, except causing all 'OnAgitStart:' and 
-'OnAgitEnd:' events to run everywhere, respectively. They are used as 
-simple triggers to run a lot of complex scripts all across the server, and they, 
+'OnAgitEnd:', or 'OnAgitStart2:' and 'OnAgitEnd2:' in the case of latter two
+commands, events to run everywhere, respectively. They are used as  simple 
+triggers to run a lot of complex scripts all across the server, and they, 
 in turn, are triggered by clock with an 'OnClock<time>:' time-triggering label.
 
 ---------------------------------------

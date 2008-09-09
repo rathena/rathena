@@ -64,6 +64,7 @@ struct{
 // timer for auto saving guild data during WoE
 #define GUILD_SAVE_INTERVAL 300000
 int guild_save_timer = INVALID_TIMER;
+int guild_save_timer2 = INVALID_TIMER;
 
 int guild_payexp_timer(int tid, unsigned int tick, int id, intptr data);
 int guild_save_sub(int tid, unsigned int tick, int id, intptr data);
@@ -640,7 +641,7 @@ int guild_invite(struct map_session_data *sd,struct map_session_data *tsd)
 
 	if(tsd->status.guild_id>0 ||
 		tsd->guild_invite>0 ||
-		(agit_flag && map[tsd->bl.m].flag.gvg_castle))
+		((agit_flag || agit2_flag) && map[tsd->bl.m].flag.gvg_castle))
 	{	//Can't invite people inside castles. [Skotlex]
 		clif_guild_inviteack(sd,0);
 		return 0;
@@ -798,7 +799,7 @@ int guild_leave(struct map_session_data* sd, int guild_id, int account_id, int c
 
 	if(sd->status.account_id!=account_id ||
 		sd->status.char_id!=char_id || sd->status.guild_id!=guild_id ||
-		(agit_flag && map[sd->bl.m].flag.gvg_castle))
+		((agit_flag || agit2_flag) && map[sd->bl.m].flag.gvg_castle))
 		return 0;
 
 	intif_guild_leave(sd->status.guild_id, sd->status.account_id, sd->status.char_id,0,mes);
@@ -828,7 +829,7 @@ int guild_expulsion(struct map_session_data* sd, int guild_id, int account_id, i
   	//Can't leave inside guild castles.
 	if ((tsd = map_id2sd(account_id)) &&
 		tsd->status.char_id == char_id &&
-		(agit_flag && map[tsd->bl.m].flag.gvg_castle))
+		((agit_flag || agit2_flag) && map[tsd->bl.m].flag.gvg_castle))
 		return 0;
 
 	// find the member and perform expulsion
@@ -989,7 +990,7 @@ int guild_send_message(struct map_session_data *sd,const char *mes,int len)
 	guild_recv_message(sd->status.guild_id,sd->status.account_id,mes,len);
 
 	// Chat logging type 'G' / Guild Chat
-	if( log_config.chat&1 || (log_config.chat&16 && !(agit_flag && log_config.chat&64)) )
+	if( log_config.chat&1 || (log_config.chat&16 && !((agit_flag || agit2_flag) && log_config.chat&64)) )
 		log_chat("G", sd->status.guild_id, sd->status.char_id, sd->status.account_id, mapindex_id2name(sd->mapindex), sd->bl.x, sd->bl.y, NULL, mes);
 
 	return 0;
@@ -1301,7 +1302,7 @@ int guild_reqalliance(struct map_session_data *sd,struct map_session_data *tsd)
 	struct guild *g[2];
 	int i;
 
-	if(agit_flag)	{	// Disable alliance creation during woe [Valaris]
+	if(agit_flag || agit2_flag)	{	// Disable alliance creation during woe [Valaris]
 		clif_displaymessage(sd->fd,"Alliances cannot be made during Guild Wars!");
 		return 0;
 	}	// end addition [Valaris]
@@ -1414,7 +1415,7 @@ int guild_delalliance(struct map_session_data *sd,int guild_id,int flag)
 {
 	nullpo_retr(0, sd);
 
-	if(agit_flag)	{	// Disable alliance breaking during woe [Valaris]
+	if(agit_flag || agit2_flag)	{	// Disable alliance breaking during woe [Valaris]
 		clif_displaymessage(sd->fd,"Alliances cannot be broken during Guild Wars!");
 		return 0;
 	}	// end addition [Valaris]
@@ -1854,8 +1855,10 @@ int guild_castlealldataload(int len,struct guild_castle *gc)
 	for( i = n-1; i >= 0 && !(gc[i].guild_id); --i );
 	ev = i; // offset of castle or -1
 
-	if( ev < 0 ) //No castles owned, invoke OnAgitInit as it is.
+	if( ev < 0 ) { //No castles owned, invoke OnAgitInit as it is.
 		npc_event_doall("OnAgitInit");
+		npc_event_doall("OnAgitInit2");
+	}
 	else // load received castles into memory, one by one
 	for( i = 0; i < n; i++, gc++ )
 	{
@@ -1872,8 +1875,10 @@ int guild_castlealldataload(int len,struct guild_castle *gc)
 		{
 			if( i != ev )
 				guild_request_info(c->guild_id);
-			else // last owned one
+			else { // last owned one
 				guild_npc_request_info(c->guild_id, "::OnAgitInit");
+				guild_npc_request_info(c->guild_id, "::OnAgitInit2");
+			}
 		}
 	}
 
@@ -1895,6 +1900,24 @@ int guild_agit_end(void)
 	ShowStatus("NPC_Event:[OnAgitEnd] Run (%d) Events by @AgitEnd.\n",c);
 	// Stop auto saving
 	delete_timer (guild_save_timer, guild_save_sub);
+	return 0;
+}
+
+int guild_agit2_start(void)
+{	// Run All NPC_Event[OnAgitStart2]
+	int c = npc_event_doall("OnAgitStart2");
+	ShowStatus("NPC_Event:[OnAgitStart2] Run (%d) Events by @AgitStart2.\n",c);
+	// Start auto saving
+	guild_save_timer2 = add_timer_interval (gettick() + GUILD_SAVE_INTERVAL, guild_save_sub, 0, 0, GUILD_SAVE_INTERVAL);
+	return 0;
+}
+
+int guild_agit2_end(void)
+{	// Run All NPC_Event[OnAgitEnd2]
+	int c = npc_event_doall("OnAgitEnd2");
+	ShowStatus("NPC_Event:[OnAgitEnd2] Run (%d) Events by @AgitEnd2.\n",c);
+	// Stop auto saving
+	delete_timer (guild_save_timer2, guild_save_sub);
 	return 0;
 }
 

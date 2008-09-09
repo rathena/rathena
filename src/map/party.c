@@ -675,7 +675,7 @@ int party_send_message(struct map_session_data *sd,const char *mes,int len)
 	party_recv_message(sd->status.party_id,sd->status.account_id,mes,len);
 
 	// Chat logging type 'P' / Party Chat
-	if( log_config.chat&1 || (log_config.chat&8 && !(agit_flag && log_config.chat&64)) )
+	if( log_config.chat&1 || (log_config.chat&8 && !((agit_flag || agit2_flag) && log_config.chat&64)) )
 		log_chat("P", sd->status.party_id, sd->status.char_id, sd->status.account_id, mapindex_id2name(sd->mapindex), sd->bl.x, sd->bl.y, NULL, mes);
 
 	return 0;

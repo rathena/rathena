@@ -9079,12 +9079,37 @@ BUILDIN_FUNC(agitend)
 	return 0;
 }
 
+BUILDIN_FUNC(agitstart2)
+{
+	if(agit2_flag==1) return 0;      // Agit2 already Start.
+	agit2_flag=1;
+	guild_agit2_start();
+	return 0;
+}
+
+BUILDIN_FUNC(agitend2)
+{
+	if(agit2_flag==0) return 0;      // Agit2 already End.
+	agit2_flag=0;
+	guild_agit2_end();
+	return 0;
+}
+
 /*==========================================
  * Returns whether woe is on or off.	// choice script
  *------------------------------------------*/
 BUILDIN_FUNC(agitcheck)
 {
 	script_pushint(st,agit_flag);
+	return 0;
+}
+
+/*==========================================
+ * Returns whether woese is on or off.	// choice script
+ *------------------------------------------*/
+BUILDIN_FUNC(agitcheck2)
+{
+	script_pushint(st,agit2_flag);
 	return 0;
 }
 
@@ -13419,5 +13444,9 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(mercenary_get_faith,"i"),
 	BUILDIN_DEF(mercenary_set_calls,"ii"),
 	BUILDIN_DEF(mercenary_set_faith,"ii"),
+	// WoE SE
+	BUILDIN_DEF(agitstart2,""),
+	BUILDIN_DEF(agitend2,""),
+	BUILDIN_DEF(agitcheck2,""),
 	{NULL,NULL,NULL},
 };

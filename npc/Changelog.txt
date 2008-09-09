@@ -1,6 +1,7 @@
 ﻿Date		Added
 ======
 2008/09/09
+	* Rev. 13202 Enabled WoE SE to be run independently of normal WoE. [L0ne_W0lf]
 	* Rev. 13201 Small bugfixes to arug_cas02 [Yommy]
 	- Typo fixes in advanced refiner [Yommy]
 	- Nameless entrance layout fix [Yommy]

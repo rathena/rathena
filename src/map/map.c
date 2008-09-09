@@ -122,6 +122,7 @@ int autosave_interval = DEFAULT_AUTOSAVE_INTERVAL;
 int minsave_interval = 100;
 int save_settings = 0xFFFF;
 int agit_flag = 0;
+int agit2_flag = 0;
 int night_flag = 0; // 0=day, 1=night [Yor]
 
 struct charid_request {
