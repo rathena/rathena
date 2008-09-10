@@ -3155,6 +3155,8 @@ int pc_isUseitem(struct map_session_data *sd,int n)
 		case 12243: // Mercenary's Berserk Potion
 			if( sd->md == NULL || sd->md->db == NULL )
 				return 0;
+			if( sd->md->sc.data[SC_BERSERK] )
+				return 0;
 			if( nameid == 12242 && sd->md->db->lv < 40 )
 				return 0;
 			if( nameid == 12243 && sd->md->db->lv < 80 )

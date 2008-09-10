@@ -403,6 +403,26 @@ void initChangeTables(void)
 	set_sc( HAMI_DEFENCE         , SC_DEFENCE         , SI_BLANK           , SCB_DEF );
 	set_sc( HAMI_BLOODLUST       , SC_BLOODLUST       , SI_BLANK           , SCB_BATK|SCB_WATK );
 
+	add_sc( MER_CRASH            , SC_STUN            );
+	set_sc( MER_PROVOKE          , SC_PROVOKE         , SI_PROVOKE         , SCB_DEF|SCB_DEF2|SCB_BATK|SCB_WATK );
+	add_sc( MS_MAGNUM            , SC_WATK_ELEMENT    );
+	add_sc( MER_SIGHT            , SC_SIGHT           );
+	set_sc( MER_DECAGI           , SC_DECREASEAGI     , SI_DECREASEAGI     , SCB_AGI|SCB_SPEED );
+	set_sc( MER_MAGNIFICAT       , SC_MAGNIFICAT      , SI_MAGNIFICAT      , SCB_REGEN );
+	add_sc( MER_LEXDIVINA        , SC_SILENCE         );
+	add_sc( MA_LANDMINE          , SC_STUN            );
+	add_sc( MA_SANDMAN           , SC_SLEEP           );
+	add_sc( MA_FREEZINGTRAP      , SC_FREEZE          );
+	set_sc( MER_AUTOBERSERK      , SC_AUTOBERSERK     , SI_AUTOBERSERK     , SCB_NONE );
+	set_sc( ML_AUTOGUARD         , SC_AUTOGUARD       , SI_AUTOGUARD       , SCB_NONE );
+	set_sc( MS_REFLECTSHIELD     , SC_REFLECTSHIELD   , SI_REFLECTSHIELD   , SCB_NONE );
+	set_sc( ML_DEFENDER          , SC_DEFENDER        , SI_DEFENDER        , SCB_SPEED|SCB_ASPD );
+	set_sc( MS_PARRYING          , SC_PARRYING        , SI_PARRYING        , SCB_NONE );
+	set_sc( MS_BERSERK           , SC_BERSERK         , SI_BERSERK         , SCB_DEF|SCB_DEF2|SCB_MDEF|SCB_MDEF2|SCB_FLEE|SCB_SPEED|SCB_ASPD|SCB_MAXHP|SCB_REGEN );
+	add_sc( ML_SPIRALPIERCE      , SC_STOP            );
+	set_sc( MER_QUICKEN          , SC_MERC_QUICKEN    , SI_BLANK           , SCB_ASPD );
+	add_sc( ML_DEVOTION          , SC_DEVOTION        );
+
 	set_sc( GD_LEADERSHIP        , SC_GUILDAURA       , SI_BLANK           , SCB_STR|SCB_AGI|SCB_VIT|SCB_DEX );
 	set_sc( GD_BATTLEORDER       , SC_BATTLEORDERS    , SI_BLANK           , SCB_STR|SCB_INT|SCB_DEX );
 	set_sc( GD_REGENERATION      , SC_REGENERATION    , SI_BLANK           , SCB_REGEN );
@@ -637,18 +657,23 @@ int status_damage(struct block_list *src,struct block_list *target,int hp, int s
 	if (sc && !sc->count)
 		sc = NULL;
 
-	if (hp && !(flag&1)) {
-		if (sc) {
+	if( hp && !(flag&1) ) {
+		if( sc ) {
 			struct status_change_entry *sce;
-			if ((sce=sc->data[SC_DEVOTION]) && src && battle_getcurrentskill(src) != PA_PRESSURE)
-			{	//Devotion prevents any of the other ailments from ending.
-				struct map_session_data *sd2 = map_id2sd(sce->val1);
-				if (sd2 && sd2->devotion[sce->val2] == target->id && check_distance_bl(target, &sd2->bl, sce->val3))
+			if( (sce = sc->data[SC_DEVOTION]) && src && battle_getcurrentskill(src) != PA_PRESSURE )
+			{ // Devotion prevents any of the other ailments from ending.
+				struct block_list *d_bl = map_id2bl(sce->val1);
+
+				if( d_bl && (
+					(d_bl->type == BL_MER && ((TBL_MER*)d_bl)->master && ((TBL_MER*)d_bl)->master->bl.id == target->id) ||
+					(d_bl->type == BL_PC && ((TBL_PC*)d_bl)->devotion[sce->val2] == target->id)
+					) && check_distance_bl(target, d_bl, sce->val3) )
 				{
-					clif_damage(&sd2->bl, &sd2->bl, gettick(), 0, 0, hp, 0, 0, 0);
-					status_fix_damage(NULL, &sd2->bl, hp, 0);
+					clif_damage(d_bl, d_bl, gettick(), 0, 0, hp, 0, 0, 0);
+					status_fix_damage(NULL, d_bl, hp, 0);
 					return 0;
 				}
+
 				status_change_end(target, SC_DEVOTION, -1);
 			}
 			if (sc->data[SC_STONE] && sc->opt1 == OPT1_STONE)
@@ -2963,11 +2988,6 @@ void status_calc_bl_sub_mer(struct mercenary_data *md, unsigned long flag)
 		status->max_sp = cap_value(status->max_sp, 1, battle_config.max_sp);
 		status->sp = cap_value(status->sp, 0, status->max_sp);
 	}
-	if( flag&SCB_VIT )
-	{
-		flag |= SCB_DEF;
-		status->def += status->vit; // Doddler says Merc DEF = DEF + VIT
-	}
 	if( flag == SCB_ALL )
 		return; // Client Refresh invoked by status_calc_mercenary
 
@@ -3908,6 +3928,10 @@ static short status_calc_aspd_rate(struct block_list *bl, struct status_change *
 			max < sc->data[SC_ONEHAND]->val2)
 			max = sc->data[SC_ONEHAND]->val2;
 
+		if(sc->data[SC_MERC_QUICKEN] &&
+			max < sc->data[SC_MERC_QUICKEN]->val2)
+			max = sc->data[SC_MERC_QUICKEN]->val2;
+
 		if(sc->data[SC_ADRENALINE2] &&
 			max < sc->data[SC_ADRENALINE2]->val3)
 			max = sc->data[SC_ADRENALINE2]->val3;
@@ -4804,6 +4828,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			return 0;
 	break;
 	case SC_ONEHAND:
+	case SC_MERC_QUICKEN:
 	case SC_TWOHANDQUICKEN:
 		if(sc->data[SC_DECREASEAGI])
 			return 0;
@@ -4974,6 +4999,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 		status_change_end(bl,SC_SPEARQUICKEN,-1);
 		status_change_end(bl,SC_TWOHANDQUICKEN,-1);
 		status_change_end(bl,SC_ONEHAND,-1);
+		status_change_end(bl,SC_MERC_QUICKEN,-1);
 		break;
 	case SC_ONEHAND:
 	  	//Removes the Aspd potion effect, as reported by Vicious. [Skotlex]
@@ -5010,6 +5036,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			status_change_end(bl,SC_CONCENTRATION,-1);
 			status_change_end(bl,SC_PARRYING,-1);
 			status_change_end(bl,SC_AURABLADE,-1);
+			status_change_end(bl,SC_MERC_QUICKEN,-1);
 		}
 		break;
 	case SC_ASSUMPTIO:
@@ -5140,19 +5167,23 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			break;
 		case SC_ENDURE:
 			val2 = 7; // Hit-count [Celest]
-			if (!(flag&1) && sd && !map_flag_gvg(bl->m) && (type != SC_ENDURE || !val4))
-			{	//See if there are devoted characters, and pass the status to them. [Skotlex]
-				//(but do not pass infinite endure)
+			if( !(flag&1) && (bl->type&(BL_PC|BL_MER)) && !map_flag_gvg(bl->m) && !val4 )
+			{
 				struct map_session_data *tsd;
-				int i;
-				for (i = 0; i < 5; i++)
-				{	
-					if (sd->devotion[i] && (tsd = map_id2sd(sd->devotion[i])))
-						status_change_start(&tsd->bl,type,10000,val1,val2,val3,val4,tick,1);
+				if( sd )
+				{
+					int i;
+					for( i = 0; i < 5; i++ )
+					{
+						if( sd->devotion[i] && (tsd = map_id2sd(sd->devotion[i])) )
+							status_change_start(&tsd->bl, type, 10000, val1, val2, val3, val4, tick, 1);
+					}
 				}
+				else if( bl->type == BL_MER && ((TBL_MER*)bl)->devotion_flag && (tsd = ((TBL_MER*)bl)->master) )
+					status_change_start(&tsd->bl, type, 10000, val1, val2, val3, val4, tick, 1);
 			}
 			//val4 signals infinite endure (if val4 == 2 it is infinite endure from Berserk)
-			if(val4)
+			if( val4 )
 				tick = -1;
 			break;
 		case SC_AUTOBERSERK:
@@ -5221,16 +5252,21 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			val2=val1*5; //Race/Ele resist
 			break;
 		case SC_REFLECTSHIELD:
-			val2=10+val1*3; //% Dmg reflected
-			if (sd && !(flag&1))
-			{	//Pass it to devoted chars.
+			val2=10+val1*3; // %Dmg reflected
+			if( !(flag&1) && (bl->type&(BL_PC|BL_MER)) )
+			{
 				struct map_session_data *tsd;
-				int i;
-				for (i = 0; i < 5; i++)
-				{	//Pass the status to the other affected chars. [Skotlex]
-					if (sd->devotion[i] && (tsd = map_id2sd(sd->devotion[i])))
-						status_change_start(&tsd->bl,type,10000,val1,val2,0,0,tick,1);
+				if( sd )
+				{
+					int i;
+					for( i = 0; i < 5; i++ )
+					{
+						if( sd->devotion[i] && (tsd = map_id2sd(sd->devotion[i])) )
+							status_change_start(&tsd->bl, type, 10000, val1, val2, 0, 0, tick, 1);
+					}
 				}
+				else if( bl->type == BL_MER && ((TBL_MER*)bl)->devotion_flag && (tsd = ((TBL_MER*)bl)->master) )
+					status_change_start(&tsd->bl, type, 10000, val1, val2, 0, 0, tick, 1);
 			}
 			break;
 		case SC_STRIPWEAPON:
@@ -5290,6 +5326,10 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			if (val1 > 10) //For boss casted skills [Skotlex]
 				val2 += 20*(val1-10);
 			break;
+		case SC_MERC_QUICKEN:
+			val2 = 300;
+			break;
+
 		case SC_SPEARQUICKEN:
 			val2 = 200+10*val1;
 			break;
@@ -5458,19 +5498,28 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			break;
 
 		case SC_AUTOGUARD:
-			if (!(flag&1))
+			if( !(flag&1) )
 			{
 				struct map_session_data *tsd;
 				int i,t;
-				for(i=val2=0;i<val1;i++) {
+				for( i = val2 = 0; i < val1; i++)
+				{
 					t = 5-(i>>1);
 					val2 += (t < 0)? 1:t;
 				}
-				if (sd)
-				for (i = 0; i < 5; i++)
-				{	//Pass the status to the other affected chars. [Skotlex]
-					if (sd->devotion[i] && (tsd = map_id2sd(sd->devotion[i])))
-						status_change_start(&tsd->bl,type,10000,val1,val2,0,0,tick,1);
+
+				if( bl->type&(BL_PC|BL_MER) )
+				{
+					if( sd )
+					{
+						for( i = 0; i < 5; i++ )
+						{
+							if( sd->devotion[i] && (tsd = map_id2sd(sd->devotion[i])) )
+								status_change_start(&tsd->bl, type, 10000, val1, val2, 0, 0, tick, 1);
+						}
+					}
+					else if( bl->type == BL_MER && ((TBL_MER*)bl)->devotion_flag && (tsd = ((TBL_MER*)bl)->master) )
+						status_change_start(&tsd->bl, type, 10000, val1, val2, 0, 0, tick, 1);
 				}
 			}
 			break;
@@ -5702,19 +5751,19 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 
 		case SC_DEVOTION:
 		{
-			struct map_session_data *src;
-			if ((src = map_id2sd(val1)) && src->sc.count)
-			{	//Try to inherit the status from the Crusader [Skotlex]
-			//Ideally, we should calculate the remaining time and use that, but we'll trust that
-			//once the Crusader's status changes, it will reflect on the others. 
+			struct block_list *d_bl;
+			struct status_change *d_sc;
+
+			if( (d_bl = map_id2bl(val1)) && (d_sc = status_get_sc(d_bl)) && d_sc->count )
+			{ // Inherits Status From Source
 				const enum sc_type types[] = { SC_AUTOGUARD, SC_DEFENDER, SC_REFLECTSHIELD, SC_ENDURE };
 				enum sc_type type2;
 				int i = map_flag_gvg(bl->m)?2:3;
-				while (i >= 0) {
+				while( i >= 0 )
+				{
 					type2 = types[i];
-					if (src->sc.data[type2])
-						sc_start(bl,type2,100,src->sc.data[type2]->val1,
-							skill_get_time(status_sc2skill(type2),src->sc.data[type2]->val1));
+					if( d_sc->data[type2] )
+						sc_start(bl, type2, 100, d_sc->data[type2]->val1, skill_get_time(status_sc2skill(type2),d_sc->data[type2]->val1));
 					i--;
 				}
 			}
@@ -6476,32 +6525,44 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 		case SC_DEFENDER:
 		case SC_REFLECTSHIELD:
 		case SC_AUTOGUARD:
-		if (sd) {
-			struct map_session_data *tsd;
-			int i;
-			for (i = 0; i < 5; i++)
-			{	//Clear the status from the others too [Skotlex]
-				if (sd->devotion[i] && (tsd = map_id2sd(sd->devotion[i])) && tsd->sc.data[type])
-					status_change_end(&tsd->bl,type,-1);
-			}
-		}
-		break;
-		case SC_DEVOTION:	
-		{
-			struct map_session_data *md = map_id2sd(sce->val1);
-			//The status could have changed because the Crusader left the game. [Skotlex]
-			if (md)
 			{
-				md->devotion[sce->val2] = 0;
-				clif_devotion(md,NULL);
+				struct map_session_data *tsd;
+				if( bl->type == BL_PC )
+				{ // Clear Status from others
+					int i;
+					for( i = 0; i < 5; i++ )
+					{
+						if( sd->devotion[i] && (tsd = map_id2sd(sd->devotion[i])) && tsd->sc.data[type] )
+							status_change_end(&tsd->bl, type, -1);
+					}
+				}
+				else if( bl->type == BL_MER && ((TBL_MER*)bl)->devotion_flag )
+				{ // Clear Status from Master
+					tsd = ((TBL_MER*)bl)->master;
+					if( tsd && tsd->sc.data[type] )
+						status_change_end(&tsd->bl, type, -1);
+				}
 			}
-			//Remove inherited status [Skotlex]
-			status_change_end(bl,SC_AUTOGUARD,-1);
-			status_change_end(bl,SC_DEFENDER,-1);
-			status_change_end(bl,SC_REFLECTSHIELD,-1);
-			status_change_end(bl,SC_ENDURE,-1);
-		}
-		break;
+			break;
+		case SC_DEVOTION:
+			{
+				struct block_list *d_bl = map_id2bl(sce->val1);
+				if( d_bl )
+				{
+					if( d_bl->type == BL_PC )
+						((TBL_PC*)d_bl)->devotion[sce->val2] = 0;
+					else if( d_bl->type == BL_MER )
+						((TBL_MER*)d_bl)->devotion_flag = 0;
+					clif_devotion(d_bl, NULL);
+				}
+
+				status_change_end(bl,SC_AUTOGUARD,-1);
+				status_change_end(bl,SC_DEFENDER,-1);
+				status_change_end(bl,SC_REFLECTSHIELD,-1);
+				status_change_end(bl,SC_ENDURE,-1);
+			}
+			break;
+
 		case SC_BLADESTOP:
 			if(sce->val4)
 			{
@@ -6608,8 +6669,7 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 				sc->data[SC_ENDURE]->val4 = 0;
 				status_change_end(bl, SC_ENDURE, -1);
 			}
-			sc_start4(bl, SC_REGENERATION, 100, 10,0,0,(RGN_HP|RGN_SP),
-				skill_get_time(LK_BERSERK, sce->val1));
+			sc_start4(bl, SC_REGENERATION, 100, 10,0,0,(RGN_HP|RGN_SP), skill_get_time(LK_BERSERK, sce->val1));
 			break;
 		case SC_GOSPEL:
 			if (sce->val3) { //Clear the group.
@@ -6725,6 +6785,7 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 	case SC_ONEHAND:
 	case SC_SPEARQUICKEN:
 	case SC_CONCENTRATION:
+	case SC_MERC_QUICKEN:
 		sc->opt3 &= ~0x1;
 		opt_flag = 0;
 		break;
@@ -6813,7 +6874,7 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 	}
 
 	//On Aegis, when turning off a status change, first goes the sc packet, then the option packet.
-	if( vd && pcdb_checkid(vd->class_) )
+	if( vd && (pcdb_checkid(vd->class_) || bl->type == BL_MER ) )
 		clif_status_change(bl,StatusIconChangeTable[type],0);
 	else if (sd)
 		clif_status_load(bl,StatusIconChangeTable[type],0);

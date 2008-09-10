@@ -39,7 +39,8 @@ int battle_getcurrentskill(struct block_list *bl)
 {	//Returns the current/last skill in use by this bl.
 	struct unit_data *ud;
 
-	if (bl->type == BL_SKILL) {
+	if( bl->type == BL_SKILL )
+	{
 		struct skill_unit * su = (struct skill_unit*)bl;
 		return su->group?su->group->skill_id:0;
 	}
@@ -322,9 +323,7 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,int damage,i
 		if( sc->data[SC_PNEUMA] && (flag&(BF_MAGIC|BF_LONG)) == BF_LONG )
 			return 0;
 
-		if((sce=sc->data[SC_AUTOGUARD]) && flag&BF_WEAPON &&
-			!(skill_get_nk(skill_num)&NK_NO_CARDFIX_ATK) &&
-			rand()%100 < sce->val2)
+		if( (sce=sc->data[SC_AUTOGUARD]) && flag&BF_WEAPON && !(skill_get_nk(skill_num)&NK_NO_CARDFIX_ATK) && rand()%100 < sce->val2 )
 		{
 			int delay;
 			clif_skill_nodamage(bl,bl,CR_AUTOGUARD,sce->val1,1);
@@ -342,11 +341,9 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,int damage,i
 			return 0;
 		}
 
-		if((sce=sc->data[SC_PARRYING]) && flag&BF_WEAPON
-			&& skill_num != WS_CARTTERMINATION
-			&& rand()%100 < sce->val2)
-		{// attack blocked by Parrying
-			clif_skill_nodamage(bl,bl,LK_PARRYING,sce->val1,1);
+		if( (sce=sc->data[SC_PARRYING]) && flag&BF_WEAPON && skill_num != WS_CARTTERMINATION && rand()%100 < sce->val2 )
+		{ // attack blocked by Parrying
+			clif_skill_nodamage(bl, bl, LK_PARRYING, sce->val1,1);
 			return 0;
 		}
 		
@@ -948,6 +945,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 				break;
 
 			case KN_PIERCE:
+			case ML_PIERCE:
 				wd.div_= (wd.div_>0?tstatus->size+1:-(tstatus->size+1));
 				break;
 
@@ -959,6 +957,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 			case GS_GROUNDDRIFT:
 			case KN_SPEARSTAB:
 			case KN_BOWLINGBASH:
+			case MS_BOWLINGBASH:
 			case MO_BALKYOUNG:
 			case TK_TURNKICK:
 				wd.blewcount=0;
@@ -1011,7 +1010,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 	if(!flag.cri && sstatus->cri &&
 		(!skill_num ||
 		skill_num == KN_AUTOCOUNTER ||
-		skill_num == SN_SHARPSHOOTING ||
+		skill_num == SN_SHARPSHOOTING || skill_num == MA_SHARPSHOOTING ||
 		skill_num == NJ_KIRIKAGE))
 	{
 		short cri = sstatus->cri;
@@ -1042,6 +1041,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 					cri <<= 1;
 				break;
 			case SN_SHARPSHOOTING:
+			case MA_SHARPSHOOTING:
 				cri += 200;
 				break;
 			case NJ_KIRIKAGE:
@@ -1123,6 +1123,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 			case MS_BASH:
 				hitrate += hitrate * 5 * skill_lv / 100;
 				break;
+			case MS_MAGNUM:
 			case SM_MAGNUM:
 				hitrate += hitrate * 10 * skill_lv / 100;
 				break;
@@ -1141,6 +1142,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 				hitrate += hitrate * 20 / 100;
 				break;
 			case KN_PIERCE:
+			case ML_PIERCE:
 				hitrate += hitrate * 5 * skill_lv / 100;
 				break;
 			case AS_SONICBLOW:
@@ -1194,6 +1196,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 				}
 				break;
 			case LK_SPIRALPIERCE:
+			case ML_SPIRALPIERCE:
 				if (sd) {
 					short index = sd->equip_index[EQI_HAND_R];
 
@@ -1295,18 +1298,15 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 			if(sc->data[SC_BERSERK])
 				skillratio += 100;
 		}
-		if (!skill_num)
-		{
-			// Random chance to deal multiplied damage - Consider it as part of skill-based-damage
-			if(sd &&
-				sd->random_attack_increase_add > 0 &&
-				sd->random_attack_increase_per &&
-				rand()%100 < sd->random_attack_increase_per
-				)
+		if( !skill_num )
+		{ // Random chance to deal multiplied damage - Consider it as part of skill-based-damage
+			if( sd && sd->random_attack_increase_add > 0 && sd->random_attack_increase_per && rand()%100 < sd->random_attack_increase_per )
 				skillratio += sd->random_attack_increase_add;
-		
+
 			ATK_RATE(skillratio);
-		} else {	//Skills
+		}
+		else
+		{
 			switch( skill_num )
 			{
 				case SM_BASH:
@@ -1314,6 +1314,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 					skillratio += 30*skill_lv;
 					break;
 				case SM_MAGNUM:
+				case MS_MAGNUM:
 					skillratio += 20*skill_lv; 
 					break;
 				case MC_MAMMONITE:
@@ -1323,18 +1324,26 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 					skillratio += 5*sstatus->str;
 					break;
 				case AC_DOUBLE:
+				case MA_DOUBLE:
 					skillratio += 10*(skill_lv-1);
 					break;
 				case AC_SHOWER:
+				case MA_SHOWER:
 					skillratio += 5*skill_lv-25;
 					break;
 				case AC_CHARGEARROW:
+				case MA_CHARGEARROW:
 					skillratio += 50;
 					break;
 				case HT_FREEZINGTRAP:
+				case MA_FREEZINGTRAP:
 					skillratio += -50+10*skill_lv;
 					break;
 				case KN_PIERCE:
+				case ML_PIERCE:
+					skillratio += 10*skill_lv;
+					break;
+				case MER_CRASH:
 					skillratio += 10*skill_lv;
 					break;
 				case KN_SPEARSTAB:
@@ -1344,6 +1353,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 					skillratio += 50*skill_lv;
 					break;
 				case KN_BRANDISHSPEAR:
+				case ML_BRANDISH:
 				{
 					int ratio = 100+20*skill_lv;
 					skillratio += ratio-100;
@@ -1356,6 +1366,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 					break;
 				}
 				case KN_BOWLINGBASH:
+				case MS_BOWLINGBASH:
 					skillratio+= 40*skill_lv;
 					break;
 				case AS_GRIMTOOTH:
@@ -1478,6 +1489,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 					skillratio += 40*skill_lv-60;
 					break;
 				case SN_SHARPSHOOTING:
+				case MA_SHARPSHOOTING:
 					skillratio += 100+50*skill_lv;
 					break;
 				case CG_ARROWVULCAN:
@@ -1754,15 +1766,16 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 		}
 
 		//Post skill/vit reduction damage increases
-		if (sc && skill_num != LK_SPIRALPIERCE)
+		if( sc && skill_num != LK_SPIRALPIERCE && skill_num != ML_SPIRALPIERCE )
 		{	//SC skill damages
 			if(sc->data[SC_AURABLADE]) 
 				ATK_ADD(20*sc->data[SC_AURABLADE]->val1);
 		}
 
 		//Refine bonus
-		if (sd && flag.weapon && skill_num != MO_INVESTIGATE && skill_num != MO_EXTREMITYFIST) {
-			if (skill_num == MO_FINGEROFFENSIVE) //Counts refine bonus multiple times
+		if( sd && flag.weapon && skill_num != MO_INVESTIGATE && skill_num != MO_EXTREMITYFIST )
+		{ // Counts refine bonus multiple times
+			if( skill_num == MO_FINGEROFFENSIVE )
 			{
 				ATK_ADD2(wd.div_*sstatus->rhw.atk2, wd.div_*sstatus->lhw.atk2);
 			} else {
@@ -2498,8 +2511,10 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 	//Skill Range Criteria
 	md.flag |= battle_range_type(src, target, skill_num, skill_lv);
 
-	switch(skill_num){
+	switch( skill_num )
+	{
 	case HT_LANDMINE:
+	case MA_LANDMINE:
 		md.damage=skill_lv*(sstatus->dex+75)*(100+sstatus->int_)/100;
 		break;
 	case HT_BLASTMINE:
@@ -2917,9 +2932,11 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 		battle_consume_ammo(sd, 0, 0);
 
 	damage = wd.damage + wd.damage2;
-	if (damage > 0 && src != target) {
+	if( damage > 0 && src != target )
+	{
 		rdamage = battle_calc_return_damage(target, damage, wd.flag);
-		if (rdamage > 0) {
+		if( rdamage > 0 )
+		{
 			rdelay = clif_damage(src, src, tick, wd.amotion, sstatus->dmotion, rdamage, 1, 4, 0);
 			//Use Reflect Shield to signal this kind of skill trigger. [Skotlex]
 			skill_additional_effect(target,src,CR_REFLECTSHIELD,1,BF_WEAPON|BF_SHORT|BF_NORMAL,tick);
@@ -3094,17 +3111,20 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 		case BL_SKILL:
 		{
 			TBL_SKILL *su = (TBL_SKILL*)target;
-			if (!su->group)
+			if( !su->group )
 				return 0;
-			if (skill_get_inf2(su->group->skill_id)&INF2_TRAP)
-			{	//Only a few skills can target traps...
-				switch (battle_getcurrentskill(src))
+			if( skill_get_inf2(su->group->skill_id)&INF2_TRAP )
+			{ //Only a few skills can target traps...
+				switch( battle_getcurrentskill(src) )
 				{
+					case MA_REMOVETRAP:
 					case HT_REMOVETRAP:
 					case AC_SHOWER:
+					case MA_SHOWER:
 					case WZ_SIGHTRASHER:
 					case WZ_SIGHTBLASTER:
 					case SM_MAGNUM:
+					case MS_MAGNUM:
 						state |= BCT_ENEMY;
 						strip_enemy = 0;
 						break;
@@ -3312,7 +3332,7 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 /*==========================================
  * ŽË’ö”»’è
  *------------------------------------------*/
-bool battle_check_range(struct block_list *src,struct block_list *bl,int range)
+bool battle_check_range(struct block_list *src, struct block_list *bl, int range)
 {
 	int d;
 	nullpo_retr(false, src);

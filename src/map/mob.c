@@ -1286,8 +1286,8 @@ static bool mob_ai_sub_hard(struct mob_data *md, unsigned int tick)
 			      || !mob_can_reach(md, tbl, md->min_chase, MSS_RUSH)
 			    )
 			&&  md->state.attacked_count++ >= RUDE_ATTACKED_COUNT
-			&&  !mobskill_use(md, tick, MSC_RUDEATTACKED) //If can't rude Attack
-			&&  can_move && unit_escape(&md->bl, tbl, rand()%10 +1)) //Attempt escape
+			&&  !mobskill_use(md, tick, MSC_RUDEATTACKED) // If can't rude Attack
+			&&  can_move && unit_escape(&md->bl, tbl, rand()%10 +1)) // Attempt escape
 			{	//Escaped
 				md->attacked_id = 0;
 				return true;
@@ -1297,18 +1297,17 @@ static bool mob_ai_sub_hard(struct mob_data *md, unsigned int tick)
 		if( (abl = map_id2bl(md->attacked_id)) && (!tbl || mob_can_changetarget(md, abl, mode)) )
 		{
 			if( md->bl.m != abl->m || abl->prev == NULL
-			|| (dist = distance_bl(&md->bl, abl)) >= MAX_MINCHASE
-			|| battle_check_target(&md->bl, abl, BCT_ENEMY) <= 0
-			|| (battle_config.mob_ai&0x2 && !status_check_skilluse(&md->bl, abl, 0, 0)) //Retaliate check
-			|| (!battle_check_range(&md->bl, abl, md->status.rhw.range)
-				&&
-				( //Reach check
-				  (!can_move && DIFF_TICK(tick, md->ud.canmove_tick) > 0 && (battle_config.mob_ai&0x2 || md->sc.data[SC_SPIDERWEB]))
-				  || !mob_can_reach(md, abl, dist+md->db->range3, MSS_RUSH)
-				  )
+				|| (dist = distance_bl(&md->bl, abl)) >= MAX_MINCHASE // Attacker longer than visual area
+				|| battle_check_target(&md->bl, abl, BCT_ENEMY) <= 0 // Attacker is not enemy of mob
+				|| status_isdead(abl) // Attacker is Dead (Reflecting Damage?)
+				|| (battle_config.mob_ai&0x2 && !status_check_skilluse(&md->bl, abl, 0, 0)) // Cannot normal attack back to Attacker
+				|| (!battle_check_range(&md->bl, abl, md->status.rhw.range) // Not on Melee Range and ...
+				&& ( // Reach check
+					(!can_move && DIFF_TICK(tick, md->ud.canmove_tick) > 0 && (battle_config.mob_ai&0x2 || md->sc.data[SC_SPIDERWEB]))
+					|| !mob_can_reach(md, abl, dist+md->db->range3, MSS_RUSH)
 				)
-			)
-			{	//Rude attacked
+				) )
+			{ // Rude attacked
 				if (md->state.attacked_count++ >= RUDE_ATTACKED_COUNT
 				&& !mobskill_use(md, tick, MSC_RUDEATTACKED) && can_move
 				&& !tbl && unit_escape(&md->bl, abl, rand()%10 +1))

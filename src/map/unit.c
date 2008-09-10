@@ -945,29 +945,32 @@ int unit_skilluse_id2(struct block_list *src, int target_id, short skill_num, sh
 			return 0;
 	}
 	//TODO: Add type-independant skill_check_condition function.
-	if (src->type == BL_MOB) {
-		switch (skill_num) {
+	if( src->type == BL_MOB )
+		switch( skill_num )
+		{
 			case NPC_SUMMONSLAVE:
 			case NPC_SUMMONMONSTER:
 			case AL_TELEPORT:
-				if (((TBL_MOB*)src)->master_id && ((TBL_MOB*)src)->special_state.ai)
+				if( ((TBL_MOB*)src)->master_id && ((TBL_MOB*)src)->special_state.ai )
 					return 0;
 		}
-	}
-
+	
 	//Check range when not using skill on yourself or is a combo-skill during attack
 	//(these are supposed to always have the same range as your attack)
-	if(src->id != target_id && (!temp || ud->attacktimer == -1))
+	if( src->id != target_id && (!temp || ud->attacktimer == -1) )
 	{
-		if (skill_get_state(ud->skillid) == ST_MOVE_ENABLE)
+		if( skill_get_state(ud->skillid) == ST_MOVE_ENABLE )
 		{
-			if (!unit_can_reach_bl(src, target, skill_get_range2(src, skill_num,skill_lv)+1, 1, NULL, NULL))
-				return 0; //Walk-path check failed.
-		} else
-		if	(!battle_check_range(src, target, skill_get_range2(src, skill_num,skill_lv)
-			+(skill_num==RG_CLOSECONFINE?0:1)))
-			//Close confine is exploitable thanks to this extra range "feature" of the client. [Skotlex]
-			return 0; //Arrow-path check failed.
+			if( !unit_can_reach_bl(src, target, skill_get_range2(src, skill_num,skill_lv) + 1, 1, NULL, NULL) )
+				return 0; // Walk-path check failed.
+		}
+		else if( src->type == BL_MER && skill_num == MA_REMOVETRAP )
+		{
+			if( !battle_check_range(battle_get_master(src), target, skill_get_range2(src, skill_num, skill_lv) + 1) )
+				return 0; // Aegis calc remove trap based on Master position, ignoring mercenary O.O
+		}
+		else if( !battle_check_range(src, target, skill_get_range2(src, skill_num,skill_lv) + (skill_num == RG_CLOSECONFINE?0:1)) )
+			return 0; // Arrow-path check failed.
 	}
 
 	if (!temp) //Stop attack on non-combo skills [Skotlex]
@@ -1028,8 +1031,8 @@ int unit_skilluse_id2(struct block_list *src, int target_id, short skill_num, sh
 	if (!(skill_get_castnodex(skill_num, skill_lv)&2))
 		casttime = skill_castfix_sc(src, casttime);
 
-	if( casttime>0 || temp){ 
-
+	if( casttime > 0 || temp )
+	{ 
 		clif_skillcasting(src, src->id, target_id, 0,0, skill_num, skill_get_ele(skill_num, skill_lv), casttime);
 
 		if (sd && target->type == BL_MOB)
@@ -1062,8 +1065,8 @@ int unit_skilluse_id2(struct block_list *src, int target_id, short skill_num, sh
 		}
 	}
 
-	if( casttime<=0 )
-		ud->state.skillcastcancel=0;
+	if( casttime <= 0 )
+		ud->state.skillcastcancel = 0;
 
 	ud->canact_tick  = tick + casttime + 100;
 	ud->skilltarget  = target_id;
@@ -1072,14 +1075,14 @@ int unit_skilluse_id2(struct block_list *src, int target_id, short skill_num, sh
 	ud->skillid      = skill_num;
 	ud->skilllv      = skill_lv;
 
- 	if(sc && sc->data[SC_CLOAKING] &&
-		!(sc->data[SC_CLOAKING]->val4&4) && skill_num != AS_CLOAKING)
+ 	if( sc && sc->data[SC_CLOAKING] && !(sc->data[SC_CLOAKING]->val4&4) && skill_num != AS_CLOAKING )
 	{
 		status_change_end(src,SC_CLOAKING,-1);
 		if (!src->prev) return 0; //Warped away!
 	}
 
-	if(casttime > 0) {
+	if( casttime > 0 )
+	{
 		ud->skilltimer = add_timer( tick+casttime, skill_castend_id, src->id, 0 );
 		if( sd && pc_checkskill(sd,SA_FREECAST) > 0 )
 			status_calc_bl(&sd->bl, SCB_SPEED);
@@ -1147,12 +1150,12 @@ int unit_skilluse_pos2( struct block_list *src, short skill_x, short skill_y, sh
 	bl.x = skill_x;
 	bl.y = skill_y;
 
-	if (skill_get_state(ud->skillid) == ST_MOVE_ENABLE)
+	if( skill_get_state(ud->skillid) == ST_MOVE_ENABLE )
 	{
-		if (!unit_can_reach_bl(src, &bl, skill_get_range2(src, skill_num,skill_lv)+1, 1, NULL, NULL))
+		if( !unit_can_reach_bl(src, &bl, skill_get_range2(src, skill_num,skill_lv) + 1, 1, NULL, NULL) )
 			return 0; //Walk-path check failed.
-	} else
-	if	(!battle_check_range(src,&bl,skill_get_range2(src, skill_num,skill_lv)+1))
+	}
+	else if( !battle_check_range(src, &bl, skill_get_range2(src, skill_num,skill_lv) + 1) )
 		return 0; //Arrow-path check failed.
 
 	unit_stop_attack(src);
@@ -1162,10 +1165,12 @@ int unit_skilluse_pos2( struct block_list *src, short skill_x, short skill_y, sh
 	if (!(skill_get_castnodex(skill_num, skill_lv)&2))
 		casttime = skill_castfix_sc(src, casttime);
 
-	if( casttime>0 ) {
+	if( casttime > 0 )
+	{
 		unit_stop_walking( src, 1);
 		clif_skillcasting(src, src->id, 0, skill_x, skill_y, skill_num, skill_get_ele(skill_num, skill_lv), casttime);
-	} else
+	}
+	else
 		ud->state.skillcastcancel=0;
 
 	ud->canact_tick  = tick + casttime + 100;
@@ -1181,14 +1186,16 @@ int unit_skilluse_pos2( struct block_list *src, short skill_x, short skill_y, sh
 		if (!src->prev) return 0; //Warped away!
 	}
 
-	if(casttime > 0) {
+	if( casttime > 0 )
+	{
 		ud->skilltimer = add_timer( tick+casttime, skill_castend_pos, src->id, 0 );
 		if( sd && pc_checkskill(sd,SA_FREECAST) > 0 )
 			status_calc_bl(&sd->bl, SCB_SPEED);
 		else
 			unit_stop_walking(src,1);
 	}
-	else {
+	else
+	{
 		ud->skilltimer = INVALID_TIMER;
 		skill_castend_pos(ud->skilltimer,tick,src->id,0);
 	}
