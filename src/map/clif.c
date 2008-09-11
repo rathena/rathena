@@ -10099,7 +10099,7 @@ void clif_parse_OpenVending(int fd, struct map_session_data* sd)
 	if( sd->sc.data[SC_NOCHAT] && sd->sc.data[SC_NOCHAT]->val1&MANNER_NOROOM )
 		return;
 	if( map[sd->bl.m].flag.novending || map_getcell(sd->bl.m,sd->bl.x,sd->bl.y,CELL_CHKNOVENDING) ) {
-		clif_displaymessage (sd->fd, msg_txt(276)); // "You can't open shop on this map"
+		clif_displaymessage (sd->fd, msg_txt(276)); // "You can't open a shop on this map"
 		return;
 	}
 	if( message[0] == '\0' ) // invalid input

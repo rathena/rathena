@@ -106,7 +106,7 @@ int charcommand_jobchange(const int fd, struct map_session_data* sd, const char*
 	}
 
 	if (pc_jobchange(pl_sd, job, upper) != 0) {
-		clif_displaymessage(fd, msg_txt(192)); // Impossible to change the character's job.
+		clif_displaymessage(fd, msg_txt(192)); // Unable to change the specified character's job.
 		return -1;
 	}
 
@@ -312,7 +312,7 @@ int charcommand_reset(const int fd, struct map_session_data* sd, const char* com
 
 	pc_resetstate(pl_sd);
 	pc_resetskill(pl_sd,1);
-	sprintf(output, msg_txt(208), character); // '%s' skill and stats points reseted!
+	sprintf(output, msg_txt(208), character); // '%s' skill and stat points have been reset.
 	clif_displaymessage(fd, output);
 
 	return 0;
@@ -403,7 +403,7 @@ int charcommand_save(const int fd, struct map_session_data* sd, const char* comm
 		pc_setsavepoint(pl_sd, map[m].index, x, y);
 	else
 		pc_setsavepoint(pl_sd, mapindex_name2id(map_name), x, y);
-	clif_displaymessage(fd, msg_txt(57)); // Character's respawn point changed.
+	clif_displaymessage(fd, msg_txt(57)); // Character's save point changed.	
 
 	return 0;
 }
@@ -441,7 +441,7 @@ int charcommand_spiritball(const int fd, struct map_session_data* sd,const char*
 		if (spirit > 1000)
 			clif_displaymessage(fd, msg_txt(204)); // WARNING: more than 1000 spiritballs can CRASH your server and/or client!
 	} else {
-		clif_displaymessage(fd, msg_txt(205)); // You already have this number of spiritballs.
+		clif_displaymessage(fd, msg_txt(205)); // You already have that number of spiritballs.
 		return -1;
 	}
 
@@ -887,12 +887,12 @@ int charcommand_zeny(const int fd, struct map_session_data* sd, const char* comm
 		if (new_zeny != pl_sd->status.zeny) {
 			pl_sd->status.zeny = new_zeny;
 			clif_updatestatus(pl_sd, SP_ZENY);
-			clif_displaymessage(fd, msg_txt(211)); // Character's number of zenys changed!
+			clif_displaymessage(fd, msg_txt(211)); // Character's current zeny changed.
 		} else {
 			if (zeny < 0)
-				clif_displaymessage(fd, msg_txt(41)); // Impossible to decrease the number/value.
+				clif_displaymessage(fd, msg_txt(41)); // Unable to decrease the number/value.
 			else
-				clif_displaymessage(fd, msg_txt(149)); // Impossible to increase the number/value.
+				clif_displaymessage(fd, msg_txt(149)); // Unable to increase the number/value.
 			return -1;
 		}
 	} else {
@@ -1242,7 +1242,7 @@ int charcommand_skreset(const int fd, struct map_session_data* sd, const char* c
 	if ((pl_sd = map_nick2sd(player)) != NULL) {
 		if (pc_isGM(sd) >= pc_isGM(pl_sd)) { // you can reset skill points only lower or same gm level
 			pc_resetskill(pl_sd,1);
-			sprintf(tmp_cmdoutput, msg_txt(206), player); // '%s' skill points reseted!
+			sprintf(tmp_cmdoutput, msg_txt(206), player); // '%s' skill points reset.
 			clif_displaymessage(fd, tmp_cmdoutput);
 		} else {
 			clif_displaymessage(fd, msg_txt(81)); // Your GM level don't authorise you to do this action on this player.
@@ -1274,7 +1274,7 @@ int charcommand_streset(const int fd, struct map_session_data* sd, const char* c
 	if ((pl_sd = map_nick2sd(player)) != NULL) {
 		if (pc_isGM(sd) >= pc_isGM(pl_sd)) { // you can reset stats points only lower or same gm level
 			pc_resetstate(pl_sd);
-			sprintf(tmp_cmdoutput, msg_txt(207), player); // '%s' stats points reseted!
+			sprintf(tmp_cmdoutput, msg_txt(207), player); // '%s' stats points reset.
 			clif_displaymessage(fd, tmp_cmdoutput);
 		} else {
 			clif_displaymessage(fd, msg_txt(81)); // Your GM level don't authorise you to do this action on this player.
@@ -1352,12 +1352,12 @@ int charcommand_skpoint(const int fd, struct map_session_data* sd, const char* c
 		if (new_skill_point != (int)pl_sd->status.skill_point) {
 			pl_sd->status.skill_point = new_skill_point;
 			clif_updatestatus(pl_sd, SP_SKILLPOINT);
-			clif_displaymessage(fd, msg_txt(209)); // Character's number of skill points changed!
+			clif_displaymessage(fd, msg_txt(209)); // Character's skill points changed.
 		} else {
 			if (point < 0)
-				clif_displaymessage(fd, msg_txt(41)); // Impossible to decrease the number/value.
+				clif_displaymessage(fd, msg_txt(41)); // Unable to decrease the number/value.
 			else
-				clif_displaymessage(fd, msg_txt(149)); // Impossible to increase the number/value.
+				clif_displaymessage(fd, msg_txt(149)); // Unable to increase the number/value.
 			return -1;
 		}
 	} else {
@@ -1394,12 +1394,12 @@ int charcommand_stpoint(const int fd, struct map_session_data* sd, const char* c
 		if (new_status_point != (int)pl_sd->status.status_point) {
 			pl_sd->status.status_point = new_status_point;
 			clif_updatestatus(pl_sd, SP_STATUSPOINT);
-			clif_displaymessage(fd, msg_txt(210)); // Character's number of status points changed!
+			clif_displaymessage(fd, msg_txt(210)); // Character's status points changed.
 		} else {
 			if (point < 0)
-				clif_displaymessage(fd, msg_txt(41)); // Impossible to decrease the number/value.
+				clif_displaymessage(fd, msg_txt(41)); // Unable to decrease the number/value.
 			else
-				clif_displaymessage(fd, msg_txt(149)); // Impossible to increase the number/value.
+				clif_displaymessage(fd, msg_txt(149)); // Unable to increase the number/value.
 			return -1;
 		}
 	} else {
@@ -1458,7 +1458,7 @@ int charcommand_feelreset(const int fd, struct map_session_data* sd, const char*
 	if ((pl_sd = map_nick2sd(character)) != NULL) {
 		if (pc_isGM(sd) >= pc_isGM(pl_sd)) { // you can reset a character only for lower or same GM level
 			pc_resetfeel(pl_sd);
-			sprintf(output, msg_txt(267), character); // '%s' designated maps reseted!
+			sprintf(output, msg_txt(267), character); // '%s' designated maps reset.
 			clif_displaymessage(fd, output);
 		} else {
 			clif_displaymessage(fd, msg_txt(81)); // Your GM level don't authorise you to do this action on this player.
@@ -2244,9 +2244,9 @@ int charcommand_param(const int fd, struct map_session_data* sd, const char* com
 			clif_displaymessage(fd, msg_txt(42)); // Stat changed.
 	} else {
 		if (value < 0)
-			clif_displaymessage(fd, msg_txt(41)); // Impossible to decrease the number/value.
+			clif_displaymessage(fd, msg_txt(41)); // Unable to decrease the number/value.
 		else
-			clif_displaymessage(fd, msg_txt(149)); // Impossible to increase the number/value.
+			clif_displaymessage(fd, msg_txt(149)); // Unable to increase the number/value.
 		return -1;
 	}
 
@@ -2669,25 +2669,25 @@ int charcommand_mount_peco(const int fd, struct map_session_data* sd, const char
 	{ // if actually no peco
 		if (!pc_checkskill(pl_sd, KN_RIDING))
 		{
-			clif_displaymessage(fd, msg_txt(217));	// Player cannot mount a PecoePeco with his/her job.
+			clif_displaymessage(fd, msg_txt(217));	// This player cannot mount a Peco Peco with his/her current job.
 			return -1;
 		}
 
 		if (pl_sd->disguise)
 		{
-			clif_displaymessage(fd, msg_txt(215)); // Player cannot mount a PecoPeco while in disguise.
+			clif_displaymessage(fd, msg_txt(215)); // This player cannot mount a Peco Peco while in disguise.
 			return -1;
 		}
 
 		pc_setoption(pl_sd, pl_sd->sc.option | OPTION_RIDING);
 		if (pl_sd->fd != fd)
 			clif_displaymessage(fd, "Player mounted a peco.");
-		clif_displaymessage(pl_sd->fd, msg_txt(216));	// Mounted Peco.
+		clif_displaymessage(pl_sd->fd, msg_txt(216));	// This player has mounted a Peco Peco.
 	}
 	else
 	{	//Dismount
 		pc_setoption(pl_sd, pl_sd->sc.option & ~OPTION_RIDING);
-		clif_displaymessage(pl_sd->fd, msg_txt(218)); // Unmounted Peco.
+		clif_displaymessage(pl_sd->fd, msg_txt(218)); // This player's Peco Peco has been released.
 		if (pl_sd->fd != fd)
 			clif_displaymessage(fd, "Player unmounted a peco.");
 	}
@@ -2760,7 +2760,7 @@ int charcommand_delitem(const int fd, struct map_session_data* sd, const char* c
 				sprintf(output, msg_txt(115), count, count, number); // %d item(s) removed. Player had only %d on %d items.
 			clif_displaymessage(fd, output);
 		} else {
-			clif_displaymessage(fd, msg_txt(116)); // Character does not have the item.
+			clif_displaymessage(fd, msg_txt(116)); // Character does not have the specified item.
 			return -1;
 		}
 	}

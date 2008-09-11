@@ -1444,13 +1444,13 @@ int intif_parse_Mail_inboxreceived(int fd)
 	else
 	{
 		char output[128];
-		sprintf(output, "You have %d new emails (%d unread)", sd->mail.inbox.unchecked, sd->mail.inbox.unread + sd->mail.inbox.unchecked);
+		sprintf(output, msg_txt(510), sd->mail.inbox.unchecked, sd->mail.inbox.unread + sd->mail.inbox.unchecked);
 		clif_disp_onlyself(sd, output, strlen(output));
 	}
 	return 0;
 }
 /*------------------------------------------
- * Mail Readed
+ * Mail Read
  *------------------------------------------*/
 int intif_Mail_read(int mail_id)
 {
