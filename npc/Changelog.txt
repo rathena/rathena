@@ -1,6 +1,7 @@
 ﻿Date		Added
 ======
 2008/09/14
+	* Rev. 13210 Added updates to crusader job quest from bugreport:1887. [L0ne_W0lf] 
 	* Rev. 13209 Corrected a typo in monster races. (bugreport:2147)
 	* Rev. 13208 Updated refiner function to allow for addition features per npc. [L0ne_W0lf]
 	* Updated repairmen positions and function. Now repairs all items at once.

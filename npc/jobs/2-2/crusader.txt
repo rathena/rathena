@@ -4,7 +4,7 @@
 //= Made by: Black Dragon
 //= Converted by: Shin
 //===== Current Version: ===================================== 
-//= 3.0
+//= 3.1
 //===== Compatible With: ===================================== 
 //= eAthena  SVN
 //===== Description: ========================================= 
@@ -29,6 +29,7 @@
 //= 2.9 Minor fixes, typos, an incorrect answer. Thanks to yyCC. [L0ne_W0lf]
 //= 2.9a Deleted unused variables. [Samuray22]
 //= 3.0 Updated waiting room. (Removes global var) [L0ne_W0lf]
+//= 3.1 Adding Hermemton's changes. [L0ne_W0lf]
 //============================================================
 
 
@@ -1261,6 +1262,7 @@ OnMonster2:
 	end;
 
 OnMonster3:
+	monster "job_cru",168,110,"Archer Skeleton",1016,1,"Monster Summon#cr0::OnDead";
 	monster "job_cru",168,115,"Mummy",1041,1,"Monster Summon#cr0::OnDead";
 	end;
 
@@ -1322,7 +1324,6 @@ OnInit:
 	end;
 
 OnTouch:
-	monster "job_cru",168,110,"Archer Skeleton",1016,1;
 	donpcevent "Monster Summon#cr0::OnMonster3";
 	donpcevent "Monster Summon#cr3::OnEnd";
 	end;
@@ -1378,10 +1379,12 @@ OnInit:
 OnTouch:
 	warp "prt_castle",35,147;
 	donpcevent "Monster Summon#cr0::OnReset";
+	donpcevent "Monster Summon#cr4::OnReset";
 	donpcevent "Monster Summon#cr0::OnEnd";
+	donpcevent "Monster Summon#cr4::OnEnd";
+	donpcevent "Monster Summon#cr5::OnEnd";
 	donpcevent "Monster Summon#cr6::OnStop";
 	donpcevent "Monster Summon#cr6::OnEnd";
-	donpcevent "Monster Summon#cr5::OnEnd";
 	donpcevent "Waiting Room#cr1::OnStart";
 	end;
 
@@ -1395,33 +1398,16 @@ OnEnd:
 }
 
 job_cru,2,2,1	script	Monster Summon#cr6	-1,{
-OnTimer60000:
-	donpcevent "Monster Summon#cr8::OnStart";
-	end;
-
-OnTimer61000:
-	donpcevent "Monster Summon#cr8::OnEnd";
-	end;
-
-OnTimer240000:
-	donpcevent "Monster Summon#cr7::OnStart";
-	end;
-
 OnTimer241000:
+	areawarp "job_cru",160,14,175,178,"job_cru",24,169;
 	donpcevent "Monster Summon#cr0::OnReset";
 	donpcevent "Monster Summon#cr4::OnReset";
-	end;
-
-OnTimer242000:
 	donpcevent "Monster Summon#cr0::OnEnd";
 	donpcevent "Monster Summon#cr4::OnEnd";
-	donpcevent "Monster Summon#cr7::OnEnd";
-	end;
-
-OnTimer243000:
+	donpcevent "Monster Summon#cr5::OnEnd";
+	donpcevent "Monster Summon#cr6::OnStop";
 	donpcevent "Monster Summon#cr6::OnEnd";
 	donpcevent "Waiting Room#cr1::OnStart";
-	stopnpctimer;
 	end;
 
 OnInit:
@@ -1440,43 +1426,6 @@ OnEnd:
 OnStop:
 	stopnpctimer;
 	end;
-}
-
-job_cru,168,110,0	script	Monster Summon#cr7	-1,14,82,{
-OnInit:
-	disablenpc "Monster Summon#cr7";
-	end;
-
-OnTouch:
-	warp "prontera",234,318;
-	end;
-
-OnStart:
-	enablenpc "Monster Summon#cr7";
-	end;
-
-OnEnd:
-	disablenpc "Monster Summon#cr7";
-	end;
-}
-
-job_cru,168,17,0	script	Monster Summon#cr8	-1,14,5,{
-OnInit:
-	disablenpc "Monster Summon#cr8";
-	end;
-
-OnTouch:
-	warp "prontera",234,318;
-	end;
-
-OnStart:
-	enablenpc "Monster Summon#cr8";
-	end;
-
-OnEnd:
-	disablenpc "Monster Summon#cr8";
-	end;
-
 }
 
 //============================================================ 
