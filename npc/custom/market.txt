@@ -3,37 +3,35 @@
 //===== By ===================================================
 //= Lupus
 //===== Version ==============================================
-//= 1.0
+//= 1.1
 //===== Compatible With ======================================
 //= eAthena 5760+
 //===== Description ==========================================
 //= This script should move vending crowds from Prontera
 //= streets to a suitable market place. Save your traffic 8)
 //===== Comments =============================================
-// No comments yet
+//=1.0 unknown
+//=1.1 Optimized it, Removed labels. [Spre]
 //============================================================
-
-
+ 
+ 
 prontera,144,174,3	script	Market Place	722,{
 	mes"[Market Place]";
 	mes"Tristan III's order: ^FF0000Move all the private shops to a special Market Place^000000.";
 	next;
-	menu "Enter the Market",M_ENTER, "Cancel",-;
-	close2;
-	end;
-
-M_ENTER:
-	if(rand(10)==0 && checkcart() && @mrketflg<30 && @mrketflg>5 && getcharid(2)>1) FlagEmblem getcharid(2);
+		if (select("Yes Please:No") == 2) {
+		close;
+	}
+	// I didn't see the need to check and show venders.... Since it didnt even work
 	warp "gon_test",27+rand(5),98;
-	set @mrketflg,@mrketflg+1;
 	end;
 }
-
+ 
 gon_test,73,103,0	script	MarketExit	45,1,2,{
 	warp "prontera",155,177-rand(10);
 	end;
 }
-
+ 
 //disable vending in Prontera
 prontera	mapflag	novending
 prt_in	mapflag	novending
