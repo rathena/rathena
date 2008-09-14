@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= SinSloth
 //===== Current Version: ===================================== 
-//= 1.4
+//= 1.5
 //===== Compatible With: ===================================== 
 //= eAthena
 //===== Description: ========================================= 
@@ -14,6 +14,7 @@
 //= 1.2 Fixed experience gains to match upcoming rate adjustments. [SinSloth]
 //= 1.3 Updated several aspects of the script. [L0ne_W0lf]
 //= 1.4 Minor Touchups to quest. [L0ne_W0lf]
+//= 1.5 Fixed missing close2 in Rebarev Doug. [L0ne_w0lf]
 //============================================================
 
 prt_castle,44,151,0	script	Rebarev Doug	56,{
@@ -521,6 +522,7 @@ prt_castle,44,151,0	script	Rebarev Doug	56,{
 		mes "As our forefathers have";
 		mes "done a thousand years ago, we shall vanquish the hordes of Demons when the day comes.";
 	}
+	close2;
 	cutin "god_rebeireb",255;
 	end;
 }

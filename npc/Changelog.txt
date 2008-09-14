@@ -1,6 +1,9 @@
 ﻿Date		Added
 ======
 2008/09/14
+	* Rev. 13208 Updated refiner function to allow for addition features per npc. [L0ne_W0lf]
+	* Updated repairmen positions and function. Now repairs all items at once.
+	* Added a missing close2 to the meg seal NPC Rebarev Doug (bugreport:2228)
 	* Changed a couple close2;'s to close;'s in the Refine NPC. (bugreport:2229) [Paradox924X]
 2008/09/09
 	* Rev. 13202 Enabled WoE SE to be run independently of normal WoE. [L0ne_W0lf]

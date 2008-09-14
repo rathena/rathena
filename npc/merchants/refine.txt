@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Syrus22 (1.1) dafide18 (1.4) Skotlex (1.5)
 //===== Current Version: =====================================
-//= 2.4
+//= 2.5
 //===== Compatible With: =====================================
 //= Any Athena Version
 //===== Description: =========================================
@@ -46,6 +46,9 @@
 //= 2.4 Updated Refiner function. cleaner, and less dated. [L0ne_w0lf]
 //= 2.5 Rather large update to the refiner and merchants. :D [L0ne_W0lf]
 //= 2.6 Fixed a few bugs with creating pure stones. [L0ne_W0lf]
+//= 2.7 Refiner function accepts additional paramater. [L0ne_W0lf]
+//=     0 = No special features; 1 = new refining features
+//=     Updated Repairmen and function. No longer shows menu.
 //============================================================
 
 
@@ -322,31 +325,31 @@ ein_in01,38,29,6	duplicate(Chrisbs)	Christopher#2	63
 // Weapon/Armor Refiners
 //=====================================================================================
 prt_in,63,60,4	script	Hollengrhen	85,{
-	callfunc "refinemain","Hollengrhen";
+	callfunc "refinemain","Hollengrhen",0;
 	end;
 }
 morocc_in,73,38,4	script	Aragham	99,{
-	callfunc "refinemain","Aragham";
+	callfunc "refinemain","Aragham",0;
 	end;
 }
 payon,144,173,4	script	Antonio	88,{
-	callfunc "refinemain","Antonio";
+	callfunc "refinemain","Antonio",0;
 	end;
 }
 alberta_in,28,58,4	script	Fredrik	85,{
-	callfunc "refinemain","Fredrik";
+	callfunc "refinemain","Fredrik",0;
 	end;
 }
 yuno_in01,164,26,6	script	Disturb	88,{
-	callfunc "refinemain","Disturb";
+	callfunc "refinemain","Disturb",0;
 	end;
 }
 ein_in01,24,87,6	script	Manthasman	826,{
-	callfunc "refinemain","Manthasman Pruhag";
+	callfunc "refinemain","Manthasman Pruhag",0;
 	end;
 }
 lhz_in02,282,20,7	script	Fulerr	869,{
-	callfunc "refinemain","Fulerr";
+	callfunc "refinemain","Fulerr",0;
 	end;
 }
 
@@ -357,7 +360,7 @@ lhz_in02,282,20,7	script	Fulerr	869,{
 //= .@features variable to 1
 //============================================================
 function	script	refinemain	{
-	set .@features,0;
+	set .@features,getarg(1);
 	mes "[" + getarg(0) + "]";
 	mes "I'm the Armsmith.";
 	mes "I can refine all kinds of weapons, armor and equipment, so let me";
@@ -879,20 +882,42 @@ function	script	orimain	{
 //=====================================================================================
 // Equipment Repairmen
 //=====================================================================================
-prt_in,62,54,2	script	Grendal	84,{
+alberta_in,31,65,4	script	Repairman#alb	86,{
+	callfunc "repairmain","Repairman";
+	end;
+}
+
+morocc_in,71,41,4	script	Repairman#moc	99,{
+	callfunc "repairmain","Repairman";
+	end;
+}
+
+payon,143,165,4	script	Repairman#pay	88,{
+	callfunc "repairmain","Repairman";
+	end;
+}
+
+prt_in,63,54,2	script	Repairman#prt	86,{
 	callfunc "repairmain","Grendal";
 	end;
 }
-//Temp Spot, Not Sure Where To place
-payon,149,182,2	script	Repairman#01	88,{
+
+yuno_in01,175,28,3	script	Repairman#juno	86,{
 	callfunc "repairmain","Repairman";
 	end;
 }
-morocc_in,71,40,2	script	Repairman#02	99,{
+
+geffen_in,34,166,3	script	Repairman#gef	99,{
 	callfunc "repairmain","Repairman";
 	end;
 }
-lhz_in02,284,14,3	script	Repairman#03	86,{
+
+aldeba_in,38,60,3	script	Repairman#alde	86,{
+	callfunc "repairmain","Repairman";
+	end;
+}
+
+lhz_in02,284,14,3	script	Repairman#lhz	86,{
 	callfunc "repairmain","Repairman";
 	end;
 }
@@ -902,37 +927,84 @@ lhz_in02,284,14,3	script	Repairman#03	86,{
 //============================================================
 function	script	repairmain	{
 	set .@repairprice,5000;
-	mes "[" + getarg(0) + "]";
-	mes "I am the Repair Smith and I can repair any Arms you want.";
-	mes "Tell me which Equipment you want to repair.";
+	mes "["+getarg(0)+"]";
+	mes "Hey there!";
+	mes "Do you want me";
+	mes "to repair any items?";
+	mes "You can count on me";
+	mes "for item repairs!";
 	next;
-	if(getbrokenid(1)==NULL) {
-		mes "[" + getarg(0) + "]";
-		mes "Looks like you don't need anything repaired today...";
+	switch(select("Actually, I do have some items...:None at the moment.")) {
+	case 1:
+		set .@checkitem,1;
+		while (1) {
+			if (getbrokenid(.@checkitem) == 0) {
+				break;
+			}
+			set .@checkitem,.@checkitem+1;
+		}
+		if (!.@checkitem) {
+			mes "["+getarg(0)+"]";
+			mes "Oh wow, this is incredible!";
+			mes "You must take very good care of your things. None of your items are damaged!";
+			next;
+			mes "["+getarg(0)+"]";
+			mes "If everyone is like you, I'm going to be unemployed!! Haha~!";
+			close;
+		}
+		mes "["+getarg(0)+"]";
+		mes "Hmm...";
+		mes "Let's see...";
+		mes "Out of all your items,";
+		mes "" + .@checkitem + " are damaged.";
+		mes "Would you like to repair?";
+		next;
+		set .@totalcost,.@repairprice*.@checkitem;
+		mes "["+getarg(0)+"]";
+		mes "Each repair costs 5000 Zeny. So to repair all your damaged items would cost " + .@totalcost + " Zeny! Would you like to repair the items?";
+		next;
+		switch(select("Yes:No")) {
+		case 1:
+			if (Zeny < .@totalcost) {
+				mes "["+getarg(0)+"]";
+				mes "Whoa whoa...";
+				mes "Check your wallet before you receive the repair bill! I can't repair anything because you don't have enough Zeny.";
+				close;
+			}
+			set .@checkitem2,1;
+			while (1) {
+				if (getbrokenid(.@checkitem2) == 0) {
+					break;
+				}
+				set .@checkitem2,.@checkitem2+1;
+			}
+			if (.@checkitem == .@checkitem2) {
+				set zeny,zeny-.@totalcost;
+				while (.@checkitem) {
+					repair(.@checkitem);
+					set .@checkitem,.@checkitem-1;
+				}
+				mes "["+getarg(0)+"]";
+				mes "Okay! All done. Now, try to be a little more careful. Items have lives too you know.";
+				close;
+			}
+			else {
+				mes "["+getarg(0)+"]";
+				mes "Mmm? Something's wrong. Wait... Equip the items you need to repair and then come back to me.";
+				close;
+			}
+		case 2:
+			mes "["+getarg(0)+"]";
+			mes "Well, it's no skin off my nose, but it's not good to leave items damaged. You should get them repaired as soon as possible!";
+			close;
+		}
+	case 2:
+		mes "["+getarg(0)+"]";
+		mes "Hohoho...";
+		mes "You don't have";
+		mes "any business with me";
+		mes "if you don't have any";
+		mes "items to repair.";
 		close;
 	}
-	set .@choice,select(getitemname(getbrokenid(1)),getitemname(getbrokenid(2)),
-		getitemname(getbrokenid(3)),getitemname(getbrokenid(4)),getitemname(getbrokenid(5)),
-		getitemname(getbrokenid(6)),getitemname(getbrokenid(7)),getitemname(getbrokenid(8)),
-		getitemname(getbrokenid(9)),getitemname(getbrokenid(10)));
-	mes "[" + getarg(0) + "]";
-	mes "You're gonna repair " + getitemname(getbrokenid(.@choice)) + ".";
-	mes "To repair this, I need " + .@repairprice + " Zeny.";
-	mes "Continue?";
-	next;
-	if(select("Yes","No") == 2) {
-		mes "[" + getarg(0) + "]";
-		mes "Ok, but don't expect to be using that...";
-		close;
-	}
-	if (Zeny < .@repairprice) {
-		mes "[" + getarg(0) + "]";
-		mes "Is it all you got?";
-		mes "Unfortunately, I have kids to feed...";
-		close;
-	}
-	set Zeny,Zeny-.@repairprice;
-	repair(.@choice);
-	close;
-
 }
