@@ -71,7 +71,6 @@ yuno_in02,38,61,5	script	Dean of the Academy#sa	743,{
 	}
 	if (SAGE_Q == 0) {
 		cutin "job_sage_kayron",2;
-		mes "[Kayron Grik]";
 		mes "Welcome, young one. I can see that you're intrigued by the wonders of magic.";
 		mes "So what kind of business brings you to me?";
 		next;
