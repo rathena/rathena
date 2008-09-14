@@ -267,7 +267,7 @@ geffen_in,110,172,0	script	Christopher#1::Chrisbs	63,{
 			set Zeny,Zeny-sell;
 			mes "[Christopher Guillenrow]";
 			mes "Thank ye fer shopping at me workshop. Feel free to come anytime, whenever ye need, whenever ye want.";
-			close2;
+			close;
 		case 3:
 			mes "[Christopher Guillenrow]";
 			mes "Feel free to come anytime, whenever ye need. Fare ye well.";
@@ -832,7 +832,7 @@ function	script	orimain	{
 			mes "Here's your Oridecon.";
 			mes "You're welcome to come";
 			mes "back whenever you want.";
-			close2;
+			close;
 		}
 		else {
 			mes "[" + getarg(0) + "]";
