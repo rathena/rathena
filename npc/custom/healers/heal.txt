@@ -3,38 +3,37 @@
 //===== By: ==================================================
 //= Lotsa People (1.x)
 //===== Current Version: =====================================
-//= 3.0
+//= 3.1
 //===== Compatible With: =====================================
 //= eAthena 0.1+;
 //===== Description: =========================================
 //= Healer NPC Which Heals For Free
 //===== Additional Comments: =================================
-//= 3.0 By massdriller, Changed and edited the script
-//= added other warp points of maps.
-//= 2.0 By Darkchild, Duplicates And Changed A Bit
-//= you can replace this script file by heal_payment.txt
-//= if you want that players have to pay their healings.
+//= 2.0 Duplicates And Changed A Bit you can replace this script file by 
+//= heal_payment.txt if you want that players have to pay their healings. [Darkchild]
+//= 3.0 Changed and edited the script added other warp points of maps. [massdriller]
+//= 3.1 Optimized for the greater good. [Kisuka]
 //============================================================
 
 prontera,150,184,5	script	Healer#h1-1::Healer	742,{
-
 	mes "[Healer]";
 	mes "I have amazing healing powers!!";
 	mes "You look like a person who needs them";
 	mes "Want some?";
 	next;
-	menu "Heal",-,"No thanks",CANCEL;
-		percentheal 100,100;
+	if (select("Heal:No thanks") == 2) {
 		mes "[Healer]";
-		mes "Wonderfull, You are now healed!.";
-		mes "Have fun adventuring!!";
+		mes "Allright, come back if you need a heal.";
 		close;
-	CANCEL:
+	}
+	percentheal 100,100;
 	mes "[Healer]";
-	mes "Allright, come back if you need a heal.";
+	mes "Wonderfull, You are now healed!.";
+	mes "Have fun adventuring!!";
 	close;
 }
 
+// --------- NPC Clones ---------
 morocc,159,96,5	duplicate(Healer)	Healer#h1-2	742
 ayothaya,155,111,5	duplicate(Healer)	Healer#h1-3	742
 geffen,121,61,5	duplicate(Healer)	Healer#h1-4	742

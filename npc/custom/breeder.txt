@@ -14,75 +14,40 @@
 //= 1.3 Simplified the checks of job [Silentdragon]
 //= 1.3a Fixed a Typo Error. [Samuray22]
 //	-Thanks to ~AnnieRuru~.
+//= 1.4 Optimized Script. No need for 50 million Labels. [Spre]
 //============================================================ 
-
-
-prontera,122,200,1	script	Universal Rental Npc	726,{
+ 
+prontera,124,201,1	script	Universal Rental Npc	726,{
 	mes "[Universal Rental Npc]";
 	mes "Hi, here you can rent Carts, Falcons or Pecopecos.";
 	next;
-
-L_Menu:
-	menu "Rent a Cart",L_Cart,"Rent a Falcon",L_Falcon,"Rent a Pecopeco",L_Peco,"Quit",L_Quit;
-	close;
-
-L_Cart:
-	if((BaseClass == Job_Merchant || BaseJob == Job_SuperNovice) && checkcart() == 0) goto L_Cart_Ok;
-	mes "[Universal Rental Npc]";
-	mes "Sorry " + strcharinfo(0) + ", but I only rent carts to people with the Merchant job root, who have enough skills to handle a cart.";
-	close;
-
-L_Cart_Ok:
-	if(getskilllv("MC_PUSHCART")<1) goto L_Need_Skill;
-	setcart;
-	goto L_Quit2;
-
-L_Need_Skill:
-	mes "[Universal Rental Npc]";
-	mes "Sorry you don't have the required skill to rent a cart.";
-	close;
-
-L_Falcon:
-	if(BaseJob != Job_Archer && BaseClass == Job_Archer && checkfalcon() == 0) goto L_Falc;
-	if(getskilllv("HT_FALCON")<1) goto L_Need_Skill2;
-
-	mes "[Universal Rental Npc]";
-	mes "Sorry " + strcharinfo(0) + ", but I only rent falcons to Hunters and Snipers who the ability to handle 'em.";
-	close;
-
-L_Falc:
-	setfalcon;
-	goto L_Quit2;
-
-L_Need_Skill2:
-	mes "[Universal Rental Npc]";
-	mes "Sorry you don't have the required skill to own a Falcon.";
-	close;
-
-L_Peco:
-	if (BaseJob != Job_Swordman && BaseClass == Job_Swordman && checkriding() == 0) goto L_Peco_Ok;
-	if(getskilllv("KN_RIDING")<1) goto L_Need_Skill3;
-
-	mes "[Universal Rental Npc]";
-	mes "Sorry " + strcharinfo(0) + ", but I only rent Pecopecos to Knights and Crusaders who have the ability to handle 'em.";
-	close;
-
-L_Peco_Ok:
-	setriding;
-	goto L_Quit2;
-
-L_Need_Skill3:
-	mes "[Universal Rental Npc]";
-	mes "Sorry you don't have the required skill to ride a Peco Peco.";
-	close;
-
-L_Quit:
-	mes "[Universal Rental Npc]";
-	mes strcharinfo(0) + ", please come back when you are ready to rent something.";
-	close;
-
-L_Quit2:
-	mes "[Universal Rental Npc]";
-	mes strcharinfo(0) + ", please come again when you want another...";
-	close;
+	switch(select("Cart:Falcon:Peco")) {
+		case 1:
+			if((BaseClass == Job_Merchant || BaseJob == Job_SuperNovice) && checkcart() == 0 && getskilllv("MC_PUSHCART")>0) {
+				setcart;
+				close;
+			}else{
+				mes "[Universal Rental Npc]";
+				mes "Sorry " + strcharinfo(0) + ", Please make sure you are the required job and have the required skill.";
+				close;
+			}
+		case 2:
+			if(BaseJob != Job_Archer && BaseClass == Job_Archer && checkfalcon() == 0 && getskilllv("HT_FALCON")>0) {
+				setfalcon;
+				close;
+			}else{
+				mes "[Universal Rental Npc]";
+				mes "Sorry " + strcharinfo(0) + ", Please make sure you are the required job and have the required skill.";
+				close;
+			}					
+		case 3:
+			if (BaseJob != Job_Swordman && BaseClass == Job_Swordman && checkriding() == 0 && getskilllv("KN_RIDING")>0) {
+				setriding;
+				close;
+			}else{
+				mes "[Universal Rental Npc]";
+				mes "Sorry " + strcharinfo(0) + ", Please make sure you are the required job and have the required skill.";
+				close;
+			}
+	}
 }
