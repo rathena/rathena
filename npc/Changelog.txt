@@ -1,5 +1,7 @@
 ﻿Date		Added
 ======
+2008/09/15
+	* Rev. 13216 Corrected a typo in Sleinpr seal quest. (bugreport:2234) [L0ne_W0lf]
 2008/09/14
 	* Rev. 13210 Added updates to crusader job quest from bugreport:1887. [L0ne_W0lf] 
 	* Rev. 13209 Corrected a typo in monster races. (bugreport:2147)
