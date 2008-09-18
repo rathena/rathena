@@ -1,5 +1,11 @@
 ﻿Date		Added
 ======
+2008/09/18
+	* Rev. 13219 Slew of bugreport fixage. Figured I should do something. [L0ne_W0lf]
+	* Fixed copy/paste errors in Aru castles. (bugreport:2012)
+	* Updated Trans-only warp in thanatos tower. (bugreport:2227)
+	* Fixed improper variable in airship quest (bugreport:2238)
+	* Fixed a minor bug in updated repairmain. (bugreport:2245)
 2008/09/15
 	* Rev. 13216 Corrected a typo in Sleinpr seal quest. (bugreport:2234) [L0ne_W0lf]
 2008/09/14

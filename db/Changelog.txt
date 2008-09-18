@@ -40,6 +40,9 @@
 	2385 Recuvative_Armor		Should trigger HP/SP return with magical kills as well.
 
 =======================
+2008/09/10
+	* Rev. 13219 Updated Giant Enyclopedia bonus. (bugreport:2053)
+	* Removed Snap from nocast_db in WoE SE
 2008/09/05
 	* Rev. 13192 Removed job and level restriction on Mercenary ASPD potions. [L0ne_W0lf]
 	* Added Monster Mercenaries using mobs original stats.

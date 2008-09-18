@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
-//= 1.7
+//= 1.8
 //===== Compatible With: =====================================
 //= eAthena SVN
 //===== Description: =========================================
@@ -20,6 +20,7 @@
 //= 1.5 Fixed error with control devices. [L0ne_W0lf]
 //= 1.6 Two small fixes. (aegis carry-overs) [L0ne_W0lf]
 //= 1.7 Another two fixes [Yommy]
+//= 1.8 Corrected copy/paste error. [L0ne_W0lf]
 //============================================================
 
 arug_cas02,1,1,0	script	Manager#aru02_02	111,{
@@ -1467,7 +1468,7 @@ arug_cas02,143,228,0	script	Control Device01#aru02	111,{
 							donpcevent "#aru02_RL01::OnEnable";
 							disablenpc "Control Device01#aru02";
 							mapannounce "arug_cas02","The 1st Fortress Gate has been reconstructed!",bc_map,"0x00ff00";
-							setarray $agit_ar01[2],0;
+							setarray $agit_ar02[2],0;
 							end;
 						}
 						else {

@@ -795,7 +795,7 @@
 1561,Hardback,Hardcover Book,4,20,,1500,140,,1,1,0x00410100,7,2,2,4,55,1,15,{ bonus bStr,3; bonus bDex,2; },{},{}
 1562,Bible_Of_Battlefield,Battlefield Textbook,4,20,,700,110,,1,1,0x00410100,7,2,2,4,80,0,15,{ bonus bInt,3; bonus3 bAutoSpell,"AL_BLESSING",3+(getskilllv("AL_BLESSING")>3)*(getskilllv("AL_BLESSING")-3),20; },{},{}
 1563,Diary_Of_Great_Sage_C,Refined Sage's Diary,4,1,,0,135,,1,2,0x00410100,7,2,2,3,1,0,15,{ bonus bMatkRate,20; bonus bAspdRate,5; },{},{}
-1564,Encyclopedia,Giant Encyclopedia,4,20,,2000,110,,1,2,0x00410100,7,2,2,3,70,1,15,{ bonus bMatkRate,15; bonus bInt,3; bonus bDex,2; bonus bCritical,20+(bLuk*2); },{},{}
+1564,Encyclopedia,Giant Encyclopedia,4,20,,2000,110,,1,2,0x00410100,7,2,2,3,70,1,15,{ bonus bMatkRate,15; bonus bInt,3; bonus bDex,2; bonus bCritical,20+((readparam(bLuk)*2)/10); },{},{}
 1565,Death_Note,Ledger of Death,4,20,,1000,137,,1,2,0x00410100,7,2,2,4,85,1,15,{ bonus bMatkRate,15; bonus bStr,3; bonus bInt,3; bonus bLuk,-20; bonus2 bWeaponComaRace,RC_DemiHuman,100; bonus bAspdRate,getrefine(); if(BaseJob == Job_Sage) bonus3 bAutoSpell,"NPC_HELLJUDGEMENT",5,20; },{},{}
 1566,Diary_Of_Great_Basil,Diary Of Great Basil,4,20,,0,120,,1,0,0x00410100,7,2,2,1,1,0,15,{ bonus2 bAddRace,RC_Boss,50; bonus2 bAddRace,RC_NonBoss,50; },{},{}
 1567,Hardcover_Book_C,Refined Hardcover Book,4,1,,0,168,,1,1,0x00410100,7,2,2,4,1,0,15,{ bonus bStr,5; bonus bDex,2; bonus bMatkRate,20; },{},{}

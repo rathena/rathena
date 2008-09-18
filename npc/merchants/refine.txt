@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Syrus22 (1.1) dafide18 (1.4) Skotlex (1.5)
 //===== Current Version: =====================================
-//= 2.5
+//= 2.7a
 //===== Compatible With: =====================================
 //= Any Athena Version
 //===== Description: =========================================
@@ -49,6 +49,7 @@
 //= 2.7 Refiner function accepts additional paramater. [L0ne_W0lf]
 //=     0 = No special features; 1 = new refining features
 //=     Updated Repairmen and function. No longer shows menu.
+//= 2.76a A couple touch-ups to the repairman function. [L0ne_w0lf]
 //============================================================
 
 
@@ -943,6 +944,7 @@ function	script	repairmain	{
 			}
 			set .@checkitem,.@checkitem+1;
 		}
+		set .@checkitem,.@checkitem-1;
 		if (!.@checkitem) {
 			mes "["+getarg(0)+"]";
 			mes "Oh wow, this is incredible!";
@@ -978,6 +980,7 @@ function	script	repairmain	{
 				}
 				set .@checkitem2,.@checkitem2+1;
 			}
+			set .@checkitem2,.@checkitem2-1;
 			if (.@checkitem == .@checkitem2) {
 				set zeny,zeny-.@totalcost;
 				while (.@checkitem) {

@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= [Ishizu-chan]
 //===== Current Version: =====================================
-//= 1.9
+//= 2.0
 //===== Compatible With: =====================================
 //= Any eAthena Version i guess?
 //===== Description: =========================================
@@ -21,6 +21,7 @@
 //= 1.7 Fixed a minor bug with prevented code part from reseting properly. [SinSloth]
 //= 1.8 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
 //= 1.9 Fixed a bug in the last event which allowed an exploit after the first summoning. [SinSloth]
+//= 2.0 Cleaned up the trans-only check, and added expanded classes. [L0ne_W0lf]
 //============================================================
 
 hu_fild01,140,163,5	script	Tower Keeper	852,3,3,{
@@ -2589,10 +2590,11 @@ OnThanaDead:
 }
 
 tha_t06,119,120,0	script	thana6-7	45,1,1,{
-
-	if((Class == Job_Lord_Knight) || (Class == Job_High_Priest) || (Class == Job_High_Wizard) || (Class == Job_Whitesmith) || (Class == Job_Sniper) || (Class == Job_Assassin_Cross) || (Class == Job_High_Wizard) || (Class == Job_Lord_Knight2) || (Class == Job_Paladin) || (Class == Job_Champion) || (Class == Job_Professor) || (Class == Job_Stalker) || (Class == Job_Creator) || (Class == Job_Clown) || (Class == Job_Gypsy) || (Class == Job_Paladin2)) warp "thana_step",69,369;
-	else
-	{
+	if (((Upper == 1) && ((Class > Job_Thief_High) && (Class < Job_Baby))) || (((Class == Job_Gunslinger) || (Class == Job_Ninja) || (BaseClass == Job_Taekwon)) && (BaseLevel >= 95))) {
+		warp "thana_step",69,369;
+		end;
+	}
+	else {
 		mes "^3355FFAn overwhelming force";
 		mes "acts against you, preventing";
 		mes "you from proceeding this way...^000000";
