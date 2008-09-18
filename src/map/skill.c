@@ -7286,14 +7286,17 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 			break;
 			
 		case UNT_BASILICA:
-			if( battle_check_target(&src->bl, bl, BCT_ENEMY) > 0 && !(status_get_mode(bl)&MD_BOSS) )
-			{ // knock-back any enemy except Boss
-				skill_blown(&src->bl, bl, 2, unit_getdir(bl), 0);
-				clif_fixpos(bl);
-			}
+			{
+				int i = battle_check_target(&src->bl, bl, BCT_ENEMY);
+				if( i > 0 && !(status_get_mode(bl)&MD_BOSS) )
+				{ // knock-back any enemy except Boss
+					skill_blown(&src->bl, bl, 2, unit_getdir(bl), 0);
+					clif_fixpos(bl);
+				}
 
-			if( sg->src_id != bl->id && battle_check_target(&src->bl, bl, BCT_ENEMY) <= 0 )
-				status_change_start(bl, type, 100, src->bl.id, 0, 0, 0, sg->interval + 100, 0);
+				if( sg->src_id != bl->id && i <= 0 )
+					sc_start4(bl, type, 100, 0, 0, 0, src->bl.id, sg->interval + 100);
+			}
 			break;
 
 		case UNT_GRAVITATION:
@@ -7359,7 +7362,7 @@ int skill_unit_onout (struct skill_unit *src, struct block_list *bl, unsigned in
 		break;
 
 	case UNT_BASILICA:
-		if( sce && sce->val1 == src->val1 )
+		if( sce && sce->val4 == src->bl.id )
 			status_change_end(bl,type,-1);
 		break;
 
