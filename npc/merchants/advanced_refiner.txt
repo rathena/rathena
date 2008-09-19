@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
-//= 1.3
+//= 1.4
 //===== Compatible With: =====================================
 //= Eathena SVN
 //===== Description: =========================================
@@ -21,6 +21,7 @@
 //= 1.1 Fixed a weird carriage return. o_o [L0ne_W0lf]
 //= 1.2 Optimizing refine method [Zephyrus]
 //= 1.3 Typo fixes [Yommy]
+//= 1.4 Removed unnecessary dialogs [Zephyrus]
 //============================================================
 
 payon,174,138,0	script	Suhnbi#cash	85,{
@@ -43,24 +44,7 @@ payon,174,138,0	script	Suhnbi#cash	85,{
 	set .@part,select(.@menu$);
 
 	if( !getequipisequiped(.@part) )
-	{
-		mes "[Suhnbi]";
-		switch(.@part)
-		{
-			case 1: mes "Do you want me to refine your skull?"; break;
-			case 2: mes "I'll refine your torso with my own passionate body!"; break;
-			case 3: mes "Sorry, there ain't any technology yet to put rockets on your left hand..."; break;
-			case 4: mes "Sorry, there ain't any technology yet to put rockets on your right hand..."; break;
-			case 5: mes "You're not even wearing a garment? Are you?"; break;
-			case 6: mes "What do I look like, a makeover artist? I can't refine your bare feet!"; break;
-			case 7: mes "Um... You're not wearing an Accessory."; break;
-			case 8: mes "Accessory? You're not wearing one of those."; break;
-			case 9: mes "I refine equipment. I don't give hair cuts."; break;
-			case 10: mes "What am I, your personal hairstylist?. Go to the salon if you want work done on your precious hair."; break;
-		}
 		close;
-	}
-	
 
 	if( !getequipisenableref(.@part) )
 	{

@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
-//= 1.5
+//= 1.6
 //===== Compatible With: =====================================
 //= eAthena SVN
 //===== Description: =========================================
@@ -18,6 +18,7 @@
 //=     Made it so treasure won't spawn if castle is empty.
 //=     Treasure will now be killed before spawning.
 //= 1.5 Fixed error with control devices. [L0ne_W0lf]
+//= 1.6 Implemented new Wall System. [Zephyrus]
 //============================================================
 
 arug_cas01,1,1,0	script	Manager#aru01_02	111,{
@@ -1171,8 +1172,7 @@ OnDisable:
 
 arug_cas01,2,1,0	script	#aru01_RL00	-1,{
 OnEnable:
-	setcell "arug_cas01",238,74,245,74,cell_walkable,0;
-	setcell "arug_cas01",238,74,245,74,cell_shootable,0;
+	setwall "arug_cas01",238,74,8,6,0,"aru01_RL00";
 	guardian "arug_cas01",239,73," ",1905,"#aru01_RL00::OnBarrierDestroyed"; //24;
 	guardian "arug_cas01",241,73," ",1905,"#aru01_RL00::OnBarrierDestroyed"; //25;
 	guardian "arug_cas01",243,73," ",1905,"#aru01_RL00::OnBarrierDestroyed"; //26;
@@ -1180,8 +1180,7 @@ OnEnable:
 	end;
 
 OnDisable:
-	setcell "arug_cas01",238,74,245,74,cell_walkable,1;
-	setcell "arug_cas01",238,74,245,74,cell_shootable,1;
+	delwall "aru01_RL00";
 	killmonster "arug_cas01","#aru01_RL00::OnBarrierDestroyed";
 	end;
 
@@ -1192,7 +1191,7 @@ OnBarrierDestroyed:
 arug_cas01,2,2,0	script	#aru01_RL01	-1,{
 OnEnable:
 	set .MyMobCount,6;
-	setcell "arug_cas01",239,53,246,53,cell_walkable,0;
+	setwall "arug_cas01",239,53,8,6,1,"aru01_RL01";
 	guardian "arug_cas01",239,55," ",1905,"#aru01_RL01::OnBarrierDestroyed"; //28;
 	guardian "arug_cas01",241,55," ",1905,"#aru01_RL01::OnBarrierDestroyed"; //29;
 	guardian "arug_cas01",243,55," ",1905,"#aru01_RL01::OnBarrierDestroyed"; //30;
@@ -1206,12 +1205,12 @@ OnBarrierDestroyed:
 	if (.MyMobCount == 0) {
 		setarray $agit_ar01[2],1;
 		mapannounce "arug_cas01","The 1st Fortress Gate is destroyed.",bc_map,"0x00ff00";
-		setcell "arug_cas01",239,53,246,53,cell_walkable,1;
+		delwall "aru01_RL01";
 	}
 	end;
 
 OnDisable:
-	setcell "arug_cas01",239,53,246,53,cell_walkable,1;
+	delwall "aru01_RL01";
 	killmonster "arug_cas01","#aru01_RL01::OnBarrierDestroyed";
 	end;
 }
@@ -1219,7 +1218,7 @@ OnDisable:
 arug_cas01,2,3,0	script	#aru01_RL02	-1,{
 OnEnable:
 	set .MyMobCount,6;
-	setcell "arug_cas01",107,124,112,124,cell_walkable,0;
+	setwall "arug_cas01",107,124,6,6,1,"aru01_RL02";
 	guardian "arug_cas01",107,122," ",1905,"#aru01_RL02::OnBarrierDestroyed"; //34;
 	guardian "arug_cas01",109,122," ",1905,"#aru01_RL02::OnBarrierDestroyed"; //35;
 	guardian "arug_cas01",111,122," ",1905,"#aru01_RL02::OnBarrierDestroyed"; //36;
@@ -1233,12 +1232,12 @@ OnBarrierDestroyed:
 	if (.MyMobCount == 0) {
 		setarray $agit_ar01[3],1;
 		mapannounce "arug_cas01","The 2nd Fortress Gate is destroyed.",bc_map,"0x00ff00";
-		setcell "arug_cas01",107,124,112,104,cell_walkable,1;
+		delwall "aru01_RL02";
 	}
 	end;
 
 OnDisable:
-	setcell "arug_cas01",107,124,112,104,cell_walkable,1;
+	delwall "aru01_RL02";
 	killmonster "arug_cas01","#aru01_RL02::OnBarrierDestroyed";
 	end;
 }
@@ -1246,7 +1245,7 @@ OnDisable:
 arug_cas01,2,4,0	script	#aru01_RL03	-1,{
 OnEnable:
 	set .MyMobCount,4;
-	setcell "arug_cas01",84,171,91,171,cell_walkable,0;
+	setwall "arug_cas01",84,171,8,6,1,"aru01_RL03";
 	guardian "arug_cas01",84,170," ",1905,"#aru01_RL03::OnBarrierDestroyed"; //40;
 	guardian "arug_cas01",86,170," ",1905,"#aru01_RL03::OnBarrierDestroyed"; //41;
 	guardian "arug_cas01",88,170," ",1905,"#aru01_RL03::OnBarrierDestroyed"; //42;
@@ -1258,12 +1257,12 @@ OnBarrierDestroyed:
 	if (.MyMobCount == 0) {
 		setarray $agit_ar01[4],1;
 		mapannounce "arug_cas01","The 3rd Fortress Gate is destroyed!",bc_map,"0x00ff00";
-		setcell "arug_cas01",84,171,91,171,cell_walkable,1;
+		delwall "aru01_RL03";
 	}
 	end;
 
 OnDisable:
-	setcell "arug_cas01",84,171,91,171,cell_walkable,1;
+	delwall "aru01_RL03";
 	killmonster "arug_cas01","#aru01_RL03::OnBarrierDestroyed";
 	end;
 }

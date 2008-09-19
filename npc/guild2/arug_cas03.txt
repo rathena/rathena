@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
-//= 1.6
+//= 1.7
 //===== Compatible With: =====================================
 //= eAthena SVN
 //===== Description: =========================================
@@ -20,6 +20,7 @@
 //=     Should take care of event-not-found error.
 //= 1.5 Fixed error with control devices. [L0ne_W0lf]
 //= 1.6 Corrected copy/paste error. [L0ne_W0lf]
+//= 1.7 Implemented new Wall System. [Zephyrus]
 //============================================================
 
 arug_cas03,1,1,0	script	Manager#aru03_02	111,{
@@ -586,7 +587,7 @@ OnGuardianStoneDied:
 	end;
 
 OnTimer300000:
-	donpcevent "1st Guardian Stone#aru03::OnGuardian";
+	donpcevent "1st Guardian Stone#aru03::OnEnable";
 	setarray $agit_ar03[0],2; //Global Variable
 	stopnpctimer;
 	end;
@@ -895,7 +896,7 @@ OnGuardianStoneDied:
 	end;
 
 OnTimer300000:
-	donpcevent "2nd Guardian Stone#aru03::OnGuardian";
+	donpcevent "2nd Guardian Stone#aru03::OnEnable";
 	setarray $agit_ar03[1],2; //Global Variable
 	stopnpctimer;
 	end;
@@ -1171,11 +1172,9 @@ OnDisable:
 	end;
 }
 
-// Barrier Summoners
 arug_cas03,2,1,0	script	#aru03_RL00	-1,{
 OnEnable:
-	setcell "arug_cas03",138,110,145,110,cell_walkable,0;
-	setcell "arug_cas03",138,110,145,110,cell_shootable,0;
+	setwall "arug_cas03",138,110,8,6,0,"aru03_RL00";
 	guardian "arug_cas03",139,111," ",1905,"#aru03_RL00::OnBarrierDestroyed"; //24;
 	guardian "arug_cas03",141,111," ",1905,"#aru03_RL00::OnBarrierDestroyed"; //25;
 	guardian "arug_cas03",143,111," ",1905,"#aru03_RL00::OnBarrierDestroyed"; //26;
@@ -1183,8 +1182,7 @@ OnEnable:
 	end;
 
 OnDisable:
-	setcell "arug_cas03",138,110,145,110,cell_walkable,1;
-	setcell "arug_cas03",138,110,145,110,cell_shootable,1;
+	delwall "aru03_RL00";
 	killmonster "arug_cas03","#aru03_RL00::OnBarrierDestroyed";
 	end;
 
@@ -1195,7 +1193,7 @@ OnBarrierDestroyed:
 arug_cas03,2,2,0	script	#aru03_RL01	-1,{
 OnEnable:
 	set .MyMobCount,6;
-	setcell "arug_cas03",139,158,144,158,cell_walkable,0;
+	setwall "arug_cas03",139,158,6,6,1,"aru03_RL01";
 	guardian "arug_cas03",140,157," ",1905,"#aru03_RL01::OnBarrierDestroyed"; //28;
 	guardian "arug_cas03",142,157," ",1905,"#aru03_RL01::OnBarrierDestroyed"; //29;
 	guardian "arug_cas03",144,157," ",1905,"#aru03_RL01::OnBarrierDestroyed"; //30;
@@ -1209,12 +1207,12 @@ OnBarrierDestroyed:
 	if (.MyMobCount == 0) {
 		setarray $agit_ar03[2],1;
 		mapannounce "arug_cas03","The 1st Fortress Gate is destroyed.",bc_map,"0x00ff00";
-		setcell "arug_cas03",139,158,144,158,cell_walkable,1;
+		delwall "aru03_RL01";
 	}
 	end;
 
 OnDisable:
-	setcell "arug_cas03",139,158,144,158,cell_walkable,1;
+	delwall "aru03_RL01";
 	killmonster "arug_cas03","#aru03_RL01::OnBarrierDestroyed";
 	end;
 }
@@ -1222,7 +1220,7 @@ OnDisable:
 arug_cas03,2,3,0	script	#aru03_RL02	-1,{
 OnEnable:
 	set .MyMobCount,6;
-	setcell "arug_cas03",138,210,145,210,cell_walkable,0;
+	setwall "arug_cas03",138,210,8,6,1,"aru03_RL02";
 	guardian "arug_cas03",140,209," ",1905,"#aru03_RL02::OnBarrierDestroyed"; //34;
 	guardian "arug_cas03",142,209," ",1905,"#aru03_RL02::OnBarrierDestroyed"; //35;
 	guardian "arug_cas03",144,209," ",1905,"#aru03_RL02::OnBarrierDestroyed"; //36;
@@ -1236,12 +1234,12 @@ OnBarrierDestroyed:
 	if (.MyMobCount == 0) {
 		setarray $agit_ar03[3],1;
 		mapannounce "arug_cas03","The 2nd Fortress Gate is destroyed.",bc_map,"0x00ff00";
-		setcell "arug_cas03",138,210,145,210,cell_walkable,1;
+		delwall "aru03_RL02";
 	}
 	end;
 
 OnDisable:
-	setcell "arug_cas03",138,210,145,210,cell_walkable,1;
+	delwall "aru03_RL02";
 	killmonster "arug_cas03","#aru03_RL02::OnBarrierDestroyed";
 	end;
 }
@@ -1249,7 +1247,7 @@ OnDisable:
 arug_cas03,2,4,0	script	#aru03_RL03	-1,{
 OnEnable:
 	set .MyMobCount,4;
-	setcell "arug_cas03",138,263,145,263,cell_walkable,0;
+	setwall "arug_cas03",138,263,8,6,1,"aru03_RL03";
 	guardian "arug_cas03",139,262," ",1905,"#aru03_RL03::OnBarrierDestroyed"; //40;
 	guardian "arug_cas03",141,262," ",1905,"#aru03_RL03::OnBarrierDestroyed"; //41;
 	guardian "arug_cas03",143,262," ",1905,"#aru03_RL03::OnBarrierDestroyed"; //42;
@@ -1261,12 +1259,12 @@ OnBarrierDestroyed:
 	if (.MyMobCount == 0) {
 		setarray $agit_ar03[4],1;
 		mapannounce "arug_cas03","The 3rd Fortress Gate is destroyed!",bc_map,"0x00ff00";
-		setcell "arug_cas03",138,363,145,263,cell_walkable,1;
+		delwall "aru03_RL03";
 	}
 	end;
 
 OnDisable:
-	setcell "arug_cas03",138,363,145,263,cell_walkable,1;
+	delwall "aru03_RL03";
 	killmonster "arug_cas03","#aru03_RL03::OnBarrierDestroyed";
 	end;
 }
@@ -2512,7 +2510,7 @@ arug_cas03,328,98,3	script	Steward#aru03	55,{
 				mes "allow her to stay with us.";
 				close;
 			}
-			disablenpc "Kafra Employee#arug_cas03";
+			disablenpc "Kafra Employee#aru03";
 			SetCastleData "arug_cas03",9,0;
 			mes "[ Steward ]";
 			mes "That Kafra Employee";
@@ -2679,6 +2677,7 @@ OnTimer10000:
 
 // Guild Kafra
 arug_cas03,315,98,5	script	Kafra Employee#aru03	117,{
+	cutin "kafra_01",2;
 	set .@GID, GetCastleData("arug_cas03",1);
 	if (getcharid(2) == .@GID && getgdskilllv(.@GID,10001)) {
 		mes "[Kafra Employee]";

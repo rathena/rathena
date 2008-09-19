@@ -10,7 +10,8 @@
 //= [Aegis COnversion]
 //= Warp Points for Veins
 //===== Additional Comments: =================================
-//= 1.4 Rescripted to Aegis 11.2 Standards. [L0ne_W0lf
+//= 1.4 Rescripted to Aegis 11.2 Standards. [L0ne_W0lf]
+//= 1.5 Removed duplicated Veins warps [Zephyrus]
 //============================================================
 
 veins,230,166,0	warp	ve_Tool1-1	1,1,ve_in,251,287
@@ -44,9 +45,7 @@ ve_in,194,369,0	warp	ve_House2_1-2	1,1,veins,331,231
 veins,267,230,0	warp	ve_factory1-1	1,1,ve_in02,17,19
 ve_in02,13,19,0	warp	ve_factory1-2	1,1,veins,269,225
 veins,143,25,0	warp	veins1-1	1,1,ve_fild07,147,366
-ve_fild07,147,371,0	warp	veins1-2	1,1,veins,146,28
 veins,218,361,0	warp	veins2-1	1,1,ve_fild06,148,225
-ve_fild06,153,220,0	warp	veins2-2	1,1,veins,218,355
 
 //============================================================ 
 // Old changelog
