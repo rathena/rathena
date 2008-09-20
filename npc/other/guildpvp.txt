@@ -1,0 +1,281 @@
+//===== eAthena Script ======================================= 
+//= Guild Battle NPC
+//===== By: ================================================== 
+//= L0ne_W0lf
+//===== Current Version: ===================================== 
+//= 1.0
+//===== Compatible With: ===================================== 
+//= eAthena SVN
+//===== Description: ========================================= 
+//= [Aegis Conversion]
+//= Guild Battle with PVP mechanics.
+//===== Additional Comments: ================================= 
+//= 1.0 First version. [L0ne_W0lf]
+//============================================================ 
+
+pvp_y_room,77,85,4	script	Guild Battle Guide	105,{
+	mes "[Guild Battle Guide]";
+	mes "How are you doing?";
+	mes "I'm the Guild Battle Guide";
+	mes "for the new PvP maps.";
+	mes "Let me know to which map";
+	mes "you want me to move you.";
+	next;
+	switch(select("Map 1:Map 2:Map 3:Map 4:Map 5")) {
+	case 1:
+		mes "[Guild Battle Guide]";
+		mes "You've chosen Map 1.";
+		mes "Now, which team are";
+		mes "you on? You can choose";
+		mes "either Team 1 or Team 2.";
+		next;
+		switch(select("Team 1:Team 2")) {
+		case 1:
+			mes "[Guild Battle Guide]";
+			mes "Alright, I'll move you";
+			mes "to Map 1 as a member";
+			mes "of Team 1. Are you ready";
+			mes "to be transported there now?";
+			next;
+			switch(select("Yes:No")) {
+			case 1:
+				mes "[Guild Battle Guide]";
+				mes "Great! Have a good time~";
+				close2;
+				warp "guild_vs1",7,49;
+				end;
+			case 2:
+				mes "[Guild Battle Guide]";
+				mes "Alright, I hope to";
+				mes "see you again on";
+				mes "the PvP fields!";
+				close;
+			}
+		case 2:
+			mes "[Guild Battle Guide]";
+			mes "Alright, I'll move you";
+			mes "to Map 1 as a member";
+			mes "of Team 2. Are you ready";
+			mes "to be transported there now?";
+			next;
+			switch(select("Yes:No")) {
+			case 1:
+				mes "[Guild Battle Guide]";
+				mes "Great! Have a good time~";
+				close2;
+				warp "guild_vs1",91,49;
+				end;
+			case 2:
+				mes "[Guild Battle Guide]";
+				mes "Alright, I hope to";
+				mes "see you again on";
+				mes "the PvP fields!";
+				close;
+			}
+		}
+	case 2:
+		mes "[Guild Battle Guide]";
+		mes "You've chosen Map 2.";
+		mes "Now, which team are";
+		mes "you on? You can choose";
+		mes "either Team 1 or Team 2.";
+		next;
+		switch(select("Team 1:Team 2")) {
+		case 1:
+			mes "[Guild Battle Guide]";
+			mes "Alright, I'll move you";
+			mes "to Map 2 as a member";
+			mes "of Team 1. Are you ready";
+			mes "to be transported there now?";
+			next;
+			switch(select("Yes:No")) {
+			case 1:
+				mes "[Guild Battle Guide]";
+				mes "Great! Have a good time~";
+				close2;
+				warp "guild_vs2",9,49;
+				end;
+			case 2:
+				mes "[Guild Battle Guide]";
+				mes "Alright, I hope to";
+				mes "see you again on";
+				mes "the PvP fields!";
+				close;
+			}
+		case 2:
+			mes "[Guild Battle Guide]";
+			mes "Alright, I'll move you";
+			mes "to Map 2 as a member";
+			mes "of Team 2. Are you ready";
+			mes "to be transported there now?";
+			next;
+			switch(select("Yes:No")) {
+			case 1:
+				mes "[Guild Battle Guide]";
+				mes "Great! Have a good time~";
+				close2;
+				warp "guild_vs2",90,49;
+				end;
+			case 2:
+				mes "[Guild Battle Guide]";
+				mes "Alright, I hope to";
+				mes "see you again on";
+				mes "the PvP fields!";
+				close;
+			}
+		}
+	case 3:
+		mes "[Guild Battle Guide]";
+		mes "You've chosen Map 3.";
+		mes "Now, which team are";
+		mes "you on? You can choose";
+		mes "either Team 1 or Team 2.";
+		next;
+		switch(select("Team 1:Team 2")) {
+		case 1:
+			mes "[Guild Battle Guide]";
+			mes "Alright, I'll move you";
+			mes "to Map 3 as a member";
+			mes "of Team 1. Are you ready";
+			mes "to be transported there now?";
+			next;
+			switch(select("Yes:No")) {
+			case 1:
+				mes "[Guild Battle Guide]";
+				mes "Great! Have a good time~";
+				close2;
+				warp "guild_vs3",16,50;
+				end;
+			case 2:
+				mes "[Guild Battle Guide]";
+				mes "Alright, I hope to";
+				mes "see you again on";
+				mes "the PvP fields!";
+				close;
+			}
+		case 2:
+			mes "[Guild Battle Guide]";
+			mes "Alright, I'll move you";
+			mes "to Map 3 as a member";
+			mes "of Team 2. Are you ready";
+			mes "to be transported there now?";
+			next;
+			switch(select("Yes:No")) {
+			case 1:
+				mes "[Guild Battle Guide]";
+				mes "Great! Have a good time~";
+				close2;
+				warp "guild_vs3",83,50;
+				end;
+			case 2:
+				mes "[Guild Battle Guide]";
+				mes "Alright, I hope to";
+				mes "see you again on";
+				mes "the PvP fields!";
+				close;
+			}
+		}
+	case 4:
+		mes "[Guild Battle Guide]";
+		mes "You've chosen Map 4.";
+		mes "Now, which team are";
+		mes "you on? You can choose";
+		mes "either Team 1 or Team 2.";
+		next;
+		switch(select("Team 1:Team 2")) {
+		case 1:
+			mes "[Guild Battle Guide]";
+			mes "Alright, I'll move you";
+			mes "to Map 4 as a member";
+			mes "of Team 1. Are you ready";
+			mes "to be transported there now?";
+			next;
+			switch(select("Yes:No")) {
+			case 1:
+				mes "[Guild Battle Guide]";
+				mes "Great! Have a good time~";
+				close2;
+				warp "guild_vs4",8,49;
+				end;
+			case 2:
+				mes "[Guild Battle Guide]";
+				mes "Alright, I hope to";
+				mes "see you again on";
+				mes "the PvP fields!";
+				close;
+			}
+		case 2:
+			mes "[Guild Battle Guide]";
+			mes "Alright, I'll move you";
+			mes "to Map 4 as a member";
+			mes "of Team 2. Are you ready";
+			mes "to be transported there now?";
+			next;
+			switch(select("Yes:No")) {
+			case 1:
+				mes "[Guild Battle Guide]";
+				mes "Great! Have a good time~";
+				close2;
+				warp "guild_vs4",91,49;
+				end;
+			case 2:
+				mes "[Guild Battle Guide]";
+				mes "Alright, I hope to";
+				mes "see you again on";
+				mes "the PvP fields!";
+				close;
+			}
+		}
+	case 5:
+		mes "[Guild Battle Guide]";
+		mes "You've chosen Map 5.";
+		mes "Now, which team are";
+		mes "you on? You can choose";
+		mes "either Team 1 or Team 2.";
+		next;
+		switch(select("Team 1:Team 2")) {
+		case 1:
+			mes "[Guild Battle Guide]";
+			mes "Alright, I'll move you";
+			mes "to Map 5 as a member";
+			mes "of Team 1. Are you ready";
+			mes "to be transported there now?";
+			next;
+			switch(select("Yes:No")) {
+			case 1:
+				mes "[Guild Battle Guide]";
+				mes "Great! Have a good time~";
+				close2;
+				warp "guild_vs5",20,50;
+				end;
+			case 2:
+				mes "[Guild Battle Guide]";
+				mes "Alright, I hope to";
+				mes "see you again on";
+				mes "the PvP fields!";
+				close;
+			}
+		case 2:
+			mes "[Guild Battle Guide]";
+			mes "Alright, I'll move you";
+			mes "to Map 4 as a member";
+			mes "of Team 2. Are you ready";
+			mes "to be transported there now?";
+			next;
+			switch(select("Yes:No")) {
+			case 1:
+				mes "[Guild Battle Guide]";
+				mes "Great! Have a good time~";
+				close2;
+				warp "guild_vs5",79,50;
+				end;
+			case 2:
+				mes "[Guild Battle Guide]";
+				mes "Alright, I hope to";
+				mes "see you again on";
+				mes "the PvP fields!";
+				close;
+			}
+		}
+	}
+}

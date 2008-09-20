@@ -149,7 +149,7 @@ geffen_in,110,172,0	script	Christopher#1::Chrisbs	63,{
 				close;
 			}
 			getitem 612,.@input; // Portable_Furnace
-			set Zeny,Zeny-.@sell
+			set Zeny,Zeny-.@sell;
 			mes "[Christopher Guillenrow]";
 			mes "Thank ye fer shopping at me workshop. Feel free to come anytime, whenever ye need.";
 			close;
@@ -230,7 +230,7 @@ geffen_in,110,172,0	script	Christopher#1::Chrisbs	63,{
 				close;
 			}
 			getitem 1010,.@input; // Phracon
-			set Zeny,Zeny-.@sell
+			set Zeny,Zeny-.@sell;
 			mes "[Christopher Guillenrow]";
 			mes "Thank ye fer shopping at me workshop. Feel free to come anytime, whenever ye need.";
 			close;
@@ -268,7 +268,7 @@ geffen_in,110,172,0	script	Christopher#1::Chrisbs	63,{
 				close;
 			}
 			getitem 1011,.@input; // Emveretarcon
-			set Zeny,Zeny-.@sell
+			set Zeny,Zeny-.@sell;
 			mes "[Christopher Guillenrow]";
 			mes "Thank ye fer shopping at me workshop. Feel free to come anytime, whenever ye need, whenever ye want.";
 			close;

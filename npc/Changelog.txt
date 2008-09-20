@@ -1,5 +1,8 @@
 ﻿Date		Added
 ======
+2008/09/20
+	* Rev. 131222 Fixed DZeroX's fix! (Missing ;'s) [L0ne_W0lf]
+	* Added Guild PVP NPC, and seal progress NPC.
 2008/09/18
 	* Rev. 13219 Slew of bugreport fixage. Figured I should do something. [L0ne_W0lf]
 	* Fixed copy/paste errors in Aru castles. (bugreport:2012)
