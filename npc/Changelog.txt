@@ -1,6 +1,7 @@
 Date		Added
 ======
 2008/09/21
+	* Rev. 13228 Corrected some issues with the lighthalzen biolab quest. (bugreport:1798) [L0ne_W0lf]
 	* Rev. 13224 Corrected Sealstatus checking global vars instead of character. (bugreport:2250) [L0ne_W0lf]
 	* Deleted Unnecesary Next; in Hunter Job Quest. (bugreports:1665,2239,2179) [Samuray22]
 	* Fixed a bug with the Bio Lab Quest when you relog. (bugreport:1798)

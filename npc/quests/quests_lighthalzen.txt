@@ -4,7 +4,7 @@
 //= Persian, Vicious_Pucca, aoa00, Evera, MasterOfMupppets,
 //= Lupus, Lord Gywall
 //===== Current Version: ===================================== 
-//= 4.3
+//= 4.3a
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -66,7 +66,10 @@
 //= 4.1 Updated Dungeon quest, and Friendhsip quest to 10.3 standards. [L0ne_W0lf]
 //= 4.2 Fixed wrong variable type in use in "Box#cube1". [L0ne_W0lf]
 //= 4.3 Fixed a bug where if you relog after you take out the Lab Permit from the Box
-//=	You can't finish the quest. (bugreport:1798) [Samuray22]
+//=     You can't finish the quest. (bugreport:1798) [Samuray22]
+//= 4.3a Reverted changes from the last version. . [L0ne_W0lf]
+//=     Changed temp char vars to normal vars, that unset at end.
+//=     Tube just makes sure you have 1 or more permits.
 //============================================================ 
 
 lighthalzen,1,1,7	script	sneakAddSuber	-1,{
@@ -595,7 +598,7 @@ lighthalzen,341,224,3	script	Fishbone	868,{
 			}
 			end;
 		}
-		else if (lhz_sincube <= 10) {
+		else if (lhz_sincube < 10) {
 			mes "[Fishbone]";
 			mes "Hm, you must not have";
 			mes "accomplished whatever";
@@ -726,8 +729,8 @@ lhz_cube,237,198,0	script	Bundle of Files#cube	111,{
 		mes "on the ground.^000000";
 		close;
 	}
-	else if (lhz_sincube <= 10) {
-		if (@lhz_secret01 < 1) {
+	else if (lhz_sincube < 10) {
+		if (lhz_secret01 < 1) {
 			mes "^3355FFThere are a bunch";
 			mes "of files scattered";
 			mes "on the ground. They";
@@ -742,7 +745,7 @@ lhz_cube,237,198,0	script	Bundle of Files#cube	111,{
 				mes "drops to the ground";
 				mes "with a clink. You decide";
 				mes "to keep this ^000000Red Key^3355FF.^000000";
-				set @lhz_secret01,1;
+				set lhz_secret01,1;
 			}
 			close;
 		}
@@ -762,7 +765,7 @@ lhz_cube,237,198,0	script	Bundle of Files#cube	111,{
 }
 
 lhz_cube,234,202,0	script	Picture#cube	111,{
-	if (@lhz_secret01 < 2) {
+	if (lhz_secret01 < 2) {
 		mes "^3355FFThis picture hanging";
 		mes "on the wall catches";
 		mes "your attention for some";
@@ -778,7 +781,7 @@ lhz_cube,234,202,0	script	Picture#cube	111,{
 		}
 		close;
 	}
-	else if (@lhz_secret01 == 2) {
+	else if (lhz_secret01 == 2) {
 		mes "^3355FFThis picture hanging";
 		mes "on the wall catches";
 		mes "your attention for some";
@@ -806,15 +809,15 @@ lhz_cube,234,202,0	script	Picture#cube	111,{
 				set .@number_rand,rand(1,3);
 				if (.@number_rand == 1) {
 					mes "4 3 2 9 1 6 8 2 7";
-					set @lhz_secret01,3;
+					set lhz_secret01,3;
 				}
 				else if (.@number_rand == 2) {
 					mes "3 6 4 1 2 8 7 1 5";
-					set @lhz_secret01,4;
+					set lhz_secret01,4;
 				}
 				else {
 					mes "4 9 3 7 6 2 8 6 6";
-					set @lhz_secret01,5;
+					set lhz_secret01,5;
 				}
 				close;
 			}
@@ -827,20 +830,20 @@ lhz_cube,234,202,0	script	Picture#cube	111,{
 		}
 		close;
 	}
-	else if (@lhz_secret01 < 6) {
+	else if (lhz_secret01 < 6) {
 		mes "^3355FFThe following numbers";
 		mes "were written behind the";
 		mes "picture. If they were hidden,";
 		mes "these numbers must have";
 		mes "some kind of importance.^000000";
 		mes " ";
-		if (@lhz_secret01 == 3) {
+		if (lhz_secret01 == 3) {
 			mes "4 3 2 9 1 6 8 2 7";
 		}
-		else if (@lhz_secret01 == 4) {
+		else if (lhz_secret01 == 4) {
 			mes "3 6 4 1 2 8 7 1 5";
 		}
-		else if (@lhz_secret01 == 5) {
+		else if (lhz_secret01 == 5) {
 			mes "4 9 3 7 6 2 8 6 6";
 		}
 		close;
@@ -858,14 +861,14 @@ lhz_cube,234,202,0	script	Picture#cube	111,{
 }
 
 lhz_cube,242,201,0	script	Drawer#cube	111,{
-	if (@lhz_secret01 < 1) {
+	if (lhz_secret01 < 1) {
 		mes "^3355FFThe drawer here";
 		mes "looks interesting,";
 		mes "but it's locked and";
 		mes "you can't open it.^000000";
 		close;
 	}
-	else if (@lhz_secret01 == 1) {
+	else if (lhz_secret01 == 1) {
 		mes "^3355FF The drawer here";
 		mes "looks interesting, but";
 		mes "it's locked. Hopefully, you";
@@ -879,7 +882,7 @@ lhz_cube,242,201,0	script	Drawer#cube	111,{
 			mes "^000000Jackknife^3355FF that you decide";
 			mes "to take. After all, it might";
 			mes "be handy sometime.^000000";
-			set @lhz_secret01,2;
+			set lhz_secret01,2;
 		}
 		else {
 			mes "^3355FFUnfortunately, you";
@@ -906,7 +909,7 @@ lhz_cube,248,179,0	script	Chest#cube	111,{
 		mes "and isn't suited for battle.^000000";
 		close;
 	}
-	else if (lhz_sincube == 7 || lhz_sincube == 10) {
+	else if (lhz_sincube == 7) {
 		mes "^3355FFYou've found a chest,";
 		mes "but more importantly,";
 		mes "there is a utility Axe";
@@ -970,7 +973,7 @@ lhz_cube,237,183,0	script	Barrel#cube	111,{
 		close;
 	}
 	else if (lhz_sincube == 9) {
-		if (@lhz_secret01 < 3) {
+		if (lhz_secret01 < 3) {
 			mes "^3355FFYou decide to enter";
 			mes "some numbers into the";
 			mes "metallic keypad. Remember,";
@@ -982,8 +985,8 @@ lhz_cube,237,183,0	script	Barrel#cube	111,{
 			mes "^3355FFNothing happened...^000000";
 			close;
 		}
-		else if (@lhz_secret01 >= 3 && @lhz_secret01 <= 5) {
-			switch(@lhz_secret01) {
+		else if (lhz_secret01 >= 3 && lhz_secret01 <= 5) {
+			switch(lhz_secret01) {
 			case 3: setarray .@numbers[0],4,3,2,9,1,6,8,2,7; break;
 			case 4: setarray .@numbers[0],3,6,4,1,2,8,7,1,5; break;
 			case 5: setarray .@numbers[0],4,9,3,7,6,2,8,6,6; break;
@@ -1003,7 +1006,7 @@ lhz_cube,237,183,0	script	Barrel#cube	111,{
 				mes "open and you find a key";
 				mes "Key inside the box. You";
 				mes "to keep this ^000000Yellow Key^3355FF.^000000";
-				set @lhz_secret01,6;
+				set lhz_secret01,6;
 			}
 			else {
 				mes "^3355FFNothing happened.";
@@ -1026,7 +1029,7 @@ lhz_cube,237,183,0	script	Barrel#cube	111,{
 }
 
 lhz_cube,224,192,0	script	Power Generator#cube	111,{
-	if (@lhz_secret01 < 6) {
+	if (lhz_secret01 < 6) {
 		mes "^3355FFThis is a noisily";
 		mes "operating huge machine";
 		mes "with a front panel that has";
@@ -1041,7 +1044,7 @@ lhz_cube,224,192,0	script	Power Generator#cube	111,{
 		mes "insert into the keyhole.^000000";
 		close;
 	}
-	else if (@lhz_secret01 == 6) {
+	else if (lhz_secret01 == 6) {
 		mes "^3355FFThis is a noisily";
 		mes "operating huge machine";
 		mes "with a front panel that has";
@@ -1060,7 +1063,7 @@ lhz_cube,224,192,0	script	Power Generator#cube	111,{
 			mes "^3355FFYou notice that the";
 			mes "^000000Status Light ^3355FFnext to the";
 			mes "bed has now turned off.^000000";
-			set @lhz_secret01,7;
+			set lhz_secret01,7;
 		}
 		else {
 			mes "^3355FFNothing happened.";
@@ -1075,7 +1078,7 @@ lhz_cube,224,192,0	script	Power Generator#cube	111,{
 }
 
 lhz_cube,244,201,0	script	Status Light#cube	111,{
-	if (@lhz_secret01 < 7) {
+	if (lhz_secret01 < 7) {
 		mes "^3355FFThe Status Light is";
 		mes "on. It looks like there's";
 		mes "something inside the";
@@ -1090,7 +1093,7 @@ lhz_cube,244,201,0	script	Status Light#cube	111,{
 		mes "cool enough for you to touch...^000000";
 		close;
 	}
-	else if (@lhz_secret01 == 7) {
+	else if (lhz_secret01 == 7) {
 		mes "The Status Light";
 		mes "is now off and the";
 		mes "bulb has cooled down.";
@@ -1100,7 +1103,7 @@ lhz_cube,244,201,0	script	Status Light#cube	111,{
 			mes "Status Light's bulb";
 			mes "and discover another key.";
 			mes "You obtained a ^000000Black Key^3355FF.^000000";
-			set @lhz_secret01,8;
+			set lhz_secret01,8;
 		}
 		close;
 	}
@@ -1110,7 +1113,7 @@ lhz_cube,244,201,0	script	Status Light#cube	111,{
 }
 
 lhz_cube,234,200,0	script	Desk#cube	111,{
-	if (@lhz_secret02 <= 1) {
+	if (lhz_secret02 <= 1) {
 		mes "^3355FFYou've found";
 		mes "a completely";
 		mes "cluttered desk.^000000";
@@ -1124,14 +1127,14 @@ lhz_cube,234,200,0	script	Desk#cube	111,{
 			mes "all that useful right now.^000000";
 			close;
 		case 2:
-			if (@lhz_secret02 < 1) {
+			if (lhz_secret02 < 1) {
 				mes "^3355FFUnder this desk, of";
 				mes "all conceivable places,";
 				mes "you find a ^000000Short Stick^3355FF";
 				mes "that you decide to keep.";
 				mes "You never know when";
 				mes "you'll need one of those.^000000";
-				set @lhz_secret02,1;
+				set lhz_secret02,1;
 			}
 			else {
 				mes "^3355FFThis is where you";
@@ -1150,7 +1153,7 @@ lhz_cube,234,200,0	script	Desk#cube	111,{
 			close;
 		}
 	}
-	else if (@lhz_secret02 == 2) {
+	else if (lhz_secret02 == 2) {
 		mes "^3355FFYou're back at the";
 		mes "messy desk which";
 		mes "is probably used by";
@@ -1196,7 +1199,7 @@ lhz_cube,234,200,0	script	Desk#cube	111,{
 			mes "to the sum of its parts.";
 			mes "You are now the proud";
 			mes "bearer of a ^000000Long Stick^3355FF.^000000";
-			set @lhz_secret02,3;
+			set lhz_secret02,3;
 			close;
 		case 3:
 			mes "^3355FFThis desk drawer is";
@@ -1247,7 +1250,7 @@ lhz_cube,234,200,0	script	Desk#cube	111,{
 }
 
 lhz_cube,247,198,0	script	Bed#cube	111,{
-	if (@lhz_secret02 == 0) {
+	if (lhz_secret02 == 0) {
 		mes "^3355FFYou've found a bed";
 		mes "in which the sheets";
 		mes "are slovenly arranged.^000000";
@@ -1266,11 +1269,11 @@ lhz_cube,247,198,0	script	Bed#cube	111,{
 			mes "keep. You never know";
 			mes "when certain, seemingly";
 			mes "useless objects will save you.^000000";
-			set @lhz_secret02,2;
+			set lhz_secret02,2;
 		}
 		close;
 	}
-	else if (@lhz_secret02 == 1) {
+	else if (lhz_secret02 == 1) {
 		mes "^3355FFYou've found a bed";
 		mes "in which the sheets";
 		mes "are slovenly arranged.^000000";
@@ -1295,11 +1298,11 @@ lhz_cube,247,198,0	script	Bed#cube	111,{
 			mes "to the sum of its parts.";
 			mes "You are now the proud";
 			mes "bearer of a ^000000Long Stick^3355FF.^000000";
-			set @lhz_secret02,3;
+			set lhz_secret02,3;
 		}
 		close;
 	}
-	else if (@lhz_secret02 == 2) {
+	else if (lhz_secret02 == 2) {
 		mes "^3355FFYou've found a bed";
 		mes "in which the sheets";
 		mes "are slovenly arranged.^000000";
@@ -1337,7 +1340,7 @@ lhz_cube,247,198,0	script	Bed#cube	111,{
 		}
 		close;
 	}
-	else if (@lhz_secret02 == 3) {
+	else if (lhz_secret02 == 3) {
 		mes "^3355FFYou find a messy";
 		mes "bed that may be more";
 		mes "than meets the eye.^000000";
@@ -1364,7 +1367,7 @@ lhz_cube,247,198,0	script	Bed#cube	111,{
 				mes "it under the bed towards you.";
 				mes "You now possess the ^000000Cube^3355FF";
 				mes "that was under the bed.^000000";
-				set @lhz_secret02,4;
+				set lhz_secret02,4;
 			}
 			else {
 				mes "^3355FFUnfortunately,";
@@ -1396,7 +1399,7 @@ lhz_cube,247,198,0	script	Bed#cube	111,{
 
 lhz_cube,229,184,0	script	Goblet#cube	111,{
 	if (lhz_sincube < 10) {
-		if (@lhz_secret03 == 0) {
+		if (lhz_secret03 == 0) {
 			mes "^3355FFYou see an empty";
 			mes "bottle and a goblet.";
 			mes "It looks like you";
@@ -1410,7 +1413,7 @@ lhz_cube,229,184,0	script	Goblet#cube	111,{
 				mes "rid of that rust somehow.";
 				mes "Perhaps you can dip the key";
 				mes "in some corrosive chemical?^000000";
-				set @lhz_secret03,1;
+				set lhz_secret03,1;
 			}
 			close;
 		}
@@ -1424,7 +1427,7 @@ lhz_cube,229,184,0	script	Goblet#cube	111,{
 }
 
 lhz_cube,231,202,0	script	Chemicals#cube	111,{
-	if (@lhz_secret03 < 1) {
+	if (lhz_secret03 < 1) {
 		mes "^3355FFThere is a bottle";
 		mes "containing slightly";
 		mes "corrosive chemicals";
@@ -1438,7 +1441,7 @@ lhz_cube,231,202,0	script	Chemicals#cube	111,{
 		mes "chemicals on something else.^000000";
 		close;
 	}
-	else if (@lhz_secret03 == 1) {
+	else if (lhz_secret03 == 1) {
 		mes "^3355FFThere is a bottle";
 		mes "containing slightly";
 		mes "corrosive chemicals";
@@ -1452,7 +1455,7 @@ lhz_cube,231,202,0	script	Chemicals#cube	111,{
 			mes "again. Now that it is clean,";
 			mes "the Rusty Key has become";
 			mes "a sparkling ^000000Green Key^3355FF.^000000";
-			set @lhz_secret03,2;
+			set lhz_secret03,2;
 		}
 		else {
 			mes "^3355FFWhatever you tried to";
@@ -1472,7 +1475,7 @@ lhz_cube,231,202,0	script	Chemicals#cube	111,{
 }
 
 lhz_cube,249,191,0	script	Cabinet#cube	111,{
-	if (@lhz_secret03 < 2) {
+	if (lhz_secret03 < 2) {
 		mes "^3355FFYou've found a";
 		mes "cabinet that contains";
 		mes "many drawers. Perhaps";
@@ -1487,7 +1490,7 @@ lhz_cube,249,191,0	script	Cabinet#cube	111,{
 		}
 		close;
 	}
-	else if (@lhz_secret03 == 2) {
+	else if (lhz_secret03 == 2) {
 		mes "^3355FFYou've found a";
 		mes "cabinet that contains";
 		mes "many drawers. Perhaps";
@@ -1500,7 +1503,7 @@ lhz_cube,249,191,0	script	Cabinet#cube	111,{
 			mes "one of the drawer keyholes.";
 			mes "You open the drawer and";
 			mes "obtain a strange ^000000Polygon^3355FF.^000000";
-			set @lhz_secret03,3;
+			set lhz_secret03,3;
 		}
 		else {
 			mes "^3355FFWhatever you tried";
@@ -1524,7 +1527,7 @@ lhz_cube,249,191,0	script	Cabinet#cube	111,{
 }
 
 lhz_cube,224,197,0	script	Experiment Tube#cube	111,{
-	if (@lhz_secret01 < 8) {
+	if (lhz_secret01 < 8) {
 		mes "^3355FFYou find a strange";
 		mes "tube that seems to";
 		mes "contain something.";
@@ -1540,7 +1543,7 @@ lhz_cube,224,197,0	script	Experiment Tube#cube	111,{
 		mes "card to insert into the slot.^000000";
 		close;
 	}
-	else if (@lhz_secret01 == 8) {
+	else if (lhz_secret01 == 8) {
 		mes "^3355FFYou find a strange";
 		mes "tube that seems to";
 		mes "contain something.";
@@ -1555,14 +1558,14 @@ lhz_cube,224,197,0	script	Experiment Tube#cube	111,{
 			mes "the experiment tube to open";
 			mes "and reveal an ^000000Oval^3355FF which you";
 			mes "you choose to take with you.^000000";
-			set @lhz_secret01,9;
+			set lhz_secret01,9;
 		}
 		else {
 			mes "^3355FFNothing happened...^000000";
 		}
 		close;
 	}
-	else if (@lhz_secret01 == 9) {
+	else if (lhz_secret01 == 9) {
 		mes "^3355FFThis is where you";
 		mes "obtained the ^000000Oval^3355FF.";
 		mes "As you look around";
@@ -1580,7 +1583,7 @@ lhz_cube,224,197,0	script	Experiment Tube#cube	111,{
 			next;
 			input .@input$;
 			if (.@input$ == "Laboratory Permit") {
-				if (countitem(2657) == 1) {
+				if (countitem(2657)) {
 					mes "^3355FFYou insert the";
 					mes "Laboratory Permit";
 					mes "into the slot and the";
@@ -1595,6 +1598,9 @@ lhz_cube,224,197,0	script	Experiment Tube#cube	111,{
 						close2;
 						//remove variables that are no longer used.
 						set lhz_sincube,0;
+						set lhz_secret01,0;
+						set lhz_secret02,0;
+						set lhz_secret03,0;
 						set MISC_QUEST,MISC_QUEST|512;
 						warp "lhz_cube",177,13;
 						end;
@@ -1620,7 +1626,7 @@ lhz_cube,224,197,0	script	Experiment Tube#cube	111,{
 }
 
 lhz_cube,248,193,0	script	Box#cube1	111,{
-	if ((@lhz_secret01 < 9) && (@lhz_secret02 < 4) && (@lhz_secret03 < 3)) {
+	if ((lhz_secret01 < 9) && (lhz_secret02 < 4) && (lhz_secret03 < 3)) {
 		mes "^3355FFYou find a box with";
 		mes "three distinctively";
 		mes "shaped holes.^000000";
@@ -1630,21 +1636,21 @@ lhz_cube,248,193,0	script	Box#cube1	111,{
 		mes "^3355FFNothing happened.^000000";
 		close;
 	}
-	else if ((@lhz_secret01 != 10) || (@lhz_secret02 != 5) || (@lhz_secret03 != 4)) {
+	else if ((lhz_secret01 != 10) || (lhz_secret02 != 5) || (lhz_secret03 != 4)) {
 		mes "^3355FFYou find a box with";
 		mes "three distinctively";
 		mes "shaped holes.^000000";
 		next;
 		switch(select("Oval Hole:Cube Hole:Polygon Hole")) {
 		case 1:
-			if (@lhz_secret01 == 9) {
+			if (lhz_secret01 == 9) {
 				next;
 				input .@input$;
 				if (.@input$ == "Oval") {
 					mes "^3355FFYou insert the Oval";
 					mes "into the Oval shaped";
 					mes "hole where it fits perfectly.^000000";
-					set @lhz_secret01,10;
+					set lhz_secret01,10;
 					close;
 				}
 				mes "^3355FFNothing happened.^000000";
@@ -1661,7 +1667,7 @@ lhz_cube,248,193,0	script	Box#cube1	111,{
 			mes "^3355FFNothing happened.^000000";
 			close;
 		case 2:
-			if (@lhz_secret02 == 4) {
+			if (lhz_secret02 == 4) {
 				next;
 				input .@input$;
 				if (.@input$ == "Cube") {
@@ -1670,13 +1676,13 @@ lhz_cube,248,193,0	script	Box#cube1	111,{
 					mes "and it clicks into place.";
 					mes "Your formal Kindergarten";
 					mes "training is finally justified.^000000";
-					set @lhz_secret02,5;
+					set lhz_secret02,5;
 					close;
 				}
 				mes "^3355FFNothing happened.^000000";
 				close;
 			}
-			else if (@lhz_secret02 == 5) {
+			else if (lhz_secret02 == 5) {
 				mes "^3355FFYou already placed";
 				mes "a Cube into the hole.";
 				mes "You could take it back";
@@ -1689,7 +1695,7 @@ lhz_cube,248,193,0	script	Box#cube1	111,{
 			mes "^3355FFNothing happened.^000000";
 			close;
 		case 3:
-			if (@lhz_secret03 == 3) {
+			if (lhz_secret03 == 3) {
 				next;
 				input .@input$;
 				if (.@input$ == "Polygon") {
@@ -1700,13 +1706,13 @@ lhz_cube,248,193,0	script	Box#cube1	111,{
 					mes "nondescript Polygonal hole.";
 					mes "The Polygon fits perfectly,";
 					mes "almost as if it were destiny.^000000";
-					set @lhz_secret03,4;
+					set lhz_secret03,4;
 					close;
 				}
 				mes "^3355FFNothing happened.^000000";
 				close;
 			}
-			else if (@lhz_secret03 == 4) {
+			else if (lhz_secret03 == 4) {
 				mes "^3355FFThe Polygon is already";
 				mes "inserted into the hole.";
 				mes "Trust that this is as much";
@@ -1718,7 +1724,7 @@ lhz_cube,248,193,0	script	Box#cube1	111,{
 			close;
 		}
 	}
-	else if (@lhz_secret01 == 10 && @lhz_secret02 == 5 && @lhz_secret03 == 4 && lhz_sincube != 10) {
+	else if (lhz_secret01 == 10 && lhz_secret02 == 5 && lhz_secret03 == 4 && lhz_sincube != 10) {
 		mes "^3355FFYou find a box with";
 		mes "three distinctively";
 		mes "shaped holes that";
@@ -1734,9 +1740,7 @@ lhz_cube,248,193,0	script	Box#cube1	111,{
 			mes "Permit^3355FF, knowing that you";
 			mes "will be needing it later.";
 			set lhz_sincube,10;
-			if(countitem(2657) < 1) {
-				getitem 2657,1; //Lab_Passport
-			}
+			getitem 2657,1; //Lab_Passport
 		}
 		close;
 	}
