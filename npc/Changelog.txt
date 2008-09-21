@@ -1,6 +1,11 @@
 Date		Added
 ======
 2008/09/21
+	* Rev. 13229 Large update to Einbroch. Requires testing. [L0ne_W0lf]
+	- Added missing somewhat-global einbroch quest.
+	- Full update to Uwe Kleine quest. Needs testing. 
+	- Updated the structure of the other quests.
+	- Updated the structure of several NPCs.
 	* Rev. 13228 Corrected some issues with the lighthalzen biolab quest. (bugreport:1798) [L0ne_W0lf]
 	* Rev. 13224 Corrected Sealstatus checking global vars instead of character. (bugreport:2250) [L0ne_W0lf]
 	* Deleted Unnecesary Next; in Hunter Job Quest. (bugreports:1665,2239,2179) [Samuray22]
