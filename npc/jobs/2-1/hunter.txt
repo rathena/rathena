@@ -5,7 +5,7 @@
 //= Converted by kobra_k88
 //= Further bugfixed and tested by Lupus
 //===== Current Version: ===================================== 
-//= 3.2
+//= 3.4
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -48,6 +48,8 @@
 //= 3.2 Fixes a bug where the timer was stopped causing the [L0ne_W0lf]
 //=	test to freeze. (bugreport:1099)
 //= 3.3 Added missing next. [L0ne_W0lf]
+//= 3.4 Corrected some Issues with the Waiting Room. (bugreport:1890) [Samuray22]
+//=	-Deleted a Unnecesary Next; on Hunter Guildsman#hnt. (bugreports:1665,2239,2179)
 //============================================================ 
 
 // Notices in the old Hunter Guild.
@@ -439,7 +441,6 @@ L_AskQuestions:
 			mes "I want to see you become a Hunter...! Waaah~ I think you'd look great, so please hurry!";
 			close;
 		}
-		next;
 		mes "[Hunter Sherin]";
 		mes "Hmm, I think you're supposed to visit someone else, not me. Like our Guildmaster who's out for business, you know?";
 		next;
@@ -964,7 +965,7 @@ OnTouch:
 			mapannounce "job_hunte",strcharinfo(0)+ " has resigned. Next person, please enter.",bc_map;
 			mes "[Guide]";
 			mes "Very well. I'll send you to Payon. Hope to see you next time. Don't forget to save when you leave.";
-			donpcevent "Waiting Room#hnt::OnStart";
+			// donpcevent "Waiting Room#hnt::OnStart";
 			close2;
 			set HNTR_Q,13;
 			savepoint "payon",104,99;
@@ -990,10 +991,8 @@ OnInit:
 	end;
 
 OnStartArena:
-	killmonsterall "job_hunte";
 	warpwaitingpc "job_hunte", 90, 67;
 	donpcevent "Manager#hnt::OnEnable";
-	donpcevent "Switch#hnt::OnDisable";
 	disablewaitingroomevent;
 	end;
 
@@ -1008,8 +1007,10 @@ OnInit:
 	end;
 
 OnEnable:
+	donpcevent "Switch#hnt::OnDisable";
 	enablenpc "Manager#hnt";
 	set .MyMobs,6;
+	initnpctimer;
 	// Target Mosnters
 	monster "job_hunte",67,80,"Job Change Monster",1015,1,"Manager#hnt::OnMyMobDead";
 	monster "job_hunte",114,78,"Job Change Monster",1015,1,"Manager#hnt::OnMyMobDead";
@@ -1017,7 +1018,6 @@ OnEnable:
 	monster "job_hunte",53,73,"Job Change Monster",1041,1,"Manager#hnt::OnMyMobDead";
 	monster "job_hunte",125,70,"Job Change Monster",1016,1,"Manager#hnt::OnMyMobDead";
 	monster "job_hunte",90,92,"Job Change Monster",1015,1,"Manager#hnt::OnMyMobDead";
-	initnpctimer;
 	// Decoy Monsters
 	monster "job_hunte",85,100,"Job Test Monster",1016,1,"Manager#hnt::OnMyMobDead2";
 	monster "job_hunte",72,102,"Job Test Monster",1041,1,"Manager#hnt::OnMyMobDead2";
@@ -1068,8 +1068,8 @@ OnMyMobDead2:
 	mapannounce "job_hunte",strcharinfo(0)+ "!! You made a mistake...Please try again.",bc_map;
 	set HNTR_Q,13;
 	warp "job_hunte",176,22;
-	donpcevent "Waiting Room#hnt::OnStart";
 	donpcevent "Manager#hnt::OnReset";
+	donpcevent "Waiting Room#hnt::OnStart";
 	end;
 
 OnReset:
@@ -1190,6 +1190,7 @@ OnTouch:
 		close2;
 		set HNTR_Q,13;
 		warp "job_hunte",176,22;
+		donpcevent "Manager#hnt::OnReset";
 		donpcevent "Waiting Room#hnt::OnStart";
 		end;
 	}
@@ -1210,6 +1211,7 @@ OnInit:
 	end;
 
 OnTouch:
+	donpcevent "Manager#hnt::OnReset";
 	donpcevent "Waiting Room#hnt::OnStart";
 	set HNTR_Q,16;
 	savepoint "payon",104,99;
@@ -1358,8 +1360,8 @@ OnTouch:
 	}
 	set HNTR_Q,13;
 	warp "job_hunte",176,22;
-	donpcevent "Waiting Room#hnt::OnStart";
 	donpcevent "Manager#hnt::OnReset";
+	donpcevent "Waiting Room#hnt::OnStart";
 	end;
 }
 
@@ -1594,8 +1596,8 @@ OnTouch:
 	mapannounce "job_hunte",strcharinfo(0) + ", has failed me! Go back to where you started!",bc_map;
 	set HNTR_Q,13;
 	warp "job_hunte",176,22;
-	donpcevent "Waiting Room#hnt::OnStart";
 	donpcevent "Manager#hnt::OnReset";
+	donpcevent "Waiting Room#hnt::OnStart";
 	end;
 }
 

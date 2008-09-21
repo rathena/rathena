@@ -4,7 +4,7 @@
 //= Persian, Vicious_Pucca, aoa00, Evera, MasterOfMupppets,
 //= Lupus, Lord Gywall
 //===== Current Version: ===================================== 
-//= 4.2
+//= 4.3
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -65,6 +65,8 @@
 //= 4.0 Updated several NPCs to Official (iRO) dialog, and restrucured. [L0ne_W0lf]
 //= 4.1 Updated Dungeon quest, and Friendhsip quest to 10.3 standards. [L0ne_W0lf]
 //= 4.2 Fixed wrong variable type in use in "Box#cube1". [L0ne_W0lf]
+//= 4.3 Fixed a bug where if you relog after you take out the Lab Permit from the Box
+//=	You can't finish the quest. (bugreport:1798) [Samuray22]
 //============================================================ 
 
 lighthalzen,1,1,7	script	sneakAddSuber	-1,{
@@ -593,7 +595,7 @@ lighthalzen,341,224,3	script	Fishbone	868,{
 			}
 			end;
 		}
-		else if (lhz_sincube < 10) {
+		else if (lhz_sincube <= 10) {
 			mes "[Fishbone]";
 			mes "Hm, you must not have";
 			mes "accomplished whatever";
@@ -724,7 +726,7 @@ lhz_cube,237,198,0	script	Bundle of Files#cube	111,{
 		mes "on the ground.^000000";
 		close;
 	}
-	else if (lhz_sincube < 10) {
+	else if (lhz_sincube <= 10) {
 		if (@lhz_secret01 < 1) {
 			mes "^3355FFThere are a bunch";
 			mes "of files scattered";
@@ -904,7 +906,7 @@ lhz_cube,248,179,0	script	Chest#cube	111,{
 		mes "and isn't suited for battle.^000000";
 		close;
 	}
-	else if (lhz_sincube == 7) {
+	else if (lhz_sincube == 7 || lhz_sincube == 10) {
 		mes "^3355FFYou've found a chest,";
 		mes "but more importantly,";
 		mes "there is a utility Axe";
@@ -1732,7 +1734,9 @@ lhz_cube,248,193,0	script	Box#cube1	111,{
 			mes "Permit^3355FF, knowing that you";
 			mes "will be needing it later.";
 			set lhz_sincube,10;
-			getitem 2657,1; //Lab_Passport
+			if(countitem(2657) < 1) {
+				getitem 2657,1; //Lab_Passport
+			}
 		}
 		close;
 	}
