@@ -987,7 +987,7 @@ int unit_skilluse_id2(struct block_list *src, int target_id, short skill_num, sh
 	case ALL_RESURRECTION:
 		if(battle_check_undead(tstatus->race,tstatus->def_ele)) {	
 			temp = 1;
-			casttime = skill_castfix(src, PR_TURNUNDEAD, skill_lv);
+			casttime = skill_castfix(src, ALL_RESURRECTION, skill_lv);
 		} else if (!status_isdead(target))
 			return 0; //Can't cast on non-dead characters.
 	break;
