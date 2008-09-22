@@ -4,7 +4,7 @@
 //= Kalen - Original jAthena
 //= Fredzilla - Converted, Lupus
 //===== Current Version: ===================================== 
-//= 3.6
+//= 3.6a
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -18,6 +18,7 @@
 //= 3.4 Fixed bad variables, bugreport:1685 [Brainstorm]
 //= 3.5 Minor corrections to script. (bugreport:1766) [L0ne_W0lf]
 //= 3.6 Applied Correction bug with for loop. [L0ne_W0lf]
+//= 3.6a Fixed a little Exploit to bug the quest with a timeout. (bugreport:2252) [Samuray22]
 //============================================================
 
 comodo,180,153,4	script	Sonotora#1	90,{
@@ -1210,9 +1211,8 @@ OnTimer82000:
 	end;
 
 OnTimer89000:
-	donpcevent "dance#return::OnEnable";
 	donpcevent "dance#poring::OnDisable";
-	stopnpctimer;
+	donpcevent "dance#return::OnEnable";
 	end;
 }
 
@@ -1263,6 +1263,7 @@ OnDisable:
 
 OnEnable:
 	enablenpc "dance#return#3";
+	donpcevent "Bijou#dance_timer::OnDisable";
 	donpcevent "Waiting Room#dance::OnEnable";
 	end;
 }
@@ -1274,10 +1275,12 @@ OnTouch:
 	donpcevent "Backdancer#1::OnOmg";
 	mapannounce "job_duncer"," " + strcharinfo(0) + ", you lack rhythm... Your timing was too late!",bc_map;
 	set DANC_Q,8;
+	donpcevent "Bijou#dance_timer::OnDisable";
 	donpcevent "Waiting Room#dance::OnEnable";
 	warp "comodo",188,162;
 	end;
 }
+
 job_duncer,69,113,0	duplicate(StepTrigger)	dance#up	-1,1,1
 job_duncer,69,107,0	duplicate(StepTrigger)	dance#down	-1,1,1
 job_duncer,66,110,0	duplicate(StepTrigger)	dance#left	-1,1,1

@@ -5,7 +5,7 @@
 //= Unknown Translator (1.0)
 //= Darkchild (1.2)
 //===== Current Version: ===================================== 
-//= 2.6
+//= 2.6a
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -24,6 +24,7 @@
 //	-Changed an incorrect "!=" to "==". (bugreport:1572) 
 //	-And Small Typo Error
 //= 2.6 Fixed Kayron Grik cutin not being removed as reported by jc1991, bugreport:1825 [Brainstorm]
+//= 2.6a Fixed a Little Bug with Whispers Summoned in the Last Test. (bugreport:2253) [Samuray22]
 //============================================================ 
 
 yuno_in02,38,61,5	script	Dean of the Academy#sa	743,{
@@ -2736,7 +2737,7 @@ OnTimer50000:
 
 OnTimer60000:
 	mapannounce "job_sage","Time over.",bc_map;
-	disablenpc "Arena#Doorkeeper";
+	donpcevent "Arena#Doorkeeper::OnReset";
 	end;
 
 OnTimer61000:
