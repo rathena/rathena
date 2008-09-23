@@ -1,5 +1,7 @@
 Date		Added
 ======
+2008/09/23
+	* Changed some " + name +" to strcharinfo(0) in Brisingamen Seal. [Samuray22]
 2008/09/22
 	* Fixed a little Exploit to bug the Dancer Job Quest. (bugreport:2252) [Samuray22]
 	* Fixed a Little Bug with Whispers Summoned in the Sage Job Quest. (bugreport:2253)

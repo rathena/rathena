@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= SinSloth
 //===== Current Version: ===================================== 
-//= 1.3
+//= 1.3a
 //===== Compatible With: ===================================== 
 //= eAthena
 //===== Description: ========================================= 
@@ -14,6 +14,7 @@
 //= 1.1 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
 //= 1.2 Updated several aspects of the script. [L0ne_W0lf]
 //= 1.3 Minor Touchups to quest. [L0ne_W0lf]
+//= 1.3a Changed some " + name +" to strcharinfo(0) [Samuray22]
 //============================================================
 
 prt_fild08,175,374,3	script	Bard#brising	51,{
@@ -3700,14 +3701,14 @@ xmas,38,105,0	script	#brisindwarf1	111,3,3,{
 				}
 				close;
 			case 2:
-				mes "[" + name + "]";
+				mes "["+ strcharinfo(0) +"]";
 				mes "Huh...?";
 				mes "Nothing happened.";
 				mes "Did I do something wrong, or is this just a completely ordinary puzzle cube?";
 				close;
 			}
 		case 2:
-			mes "["+ name +"]";
+			mes "["+ strcharinfo(0) +"]";
 			mes "This...";
 			mes "This better not";
 			mes "be just some regular";
@@ -4082,24 +4083,24 @@ prt_fild02,185,269,0	script	#brisindwarf2	111,3,3,{
 			next;
 			switch(select("To the tear drops dripping on the way:Her lovely scent:We gave:To the seducing red lips:Our hearts in")) {
 			case 1:
-				mes "[" + name + "]";
+				mes "["+ strcharinfo(0) +"]";
 				mes "To the tear drops dripping on the way";
 			break;
 			case 2:
-				mes "[" + name + "]";
+				mes "["+ strcharinfo(0) +"]";
 				mes "Her lovely scent";
 				set .@point,.@point + 10;
 			break;
 			case 3:
-				mes "[" + name + "]";
+				mes "["+ strcharinfo(0) +"]";
 				mes "We gave";
 			break;
 			case 4:
-				mes "[" + name + "]";
+				mes "["+ strcharinfo(0) +"]";
 				mes "To the seducing red lips";
 				break;
 			case 5:
-				mes "[" + name + "]";
+				mes "["+ strcharinfo(0) +"]";
 				mes "Our hearts in";
 				break;
 			}
@@ -4184,7 +4185,7 @@ prt_fild02,185,269,0	script	#brisindwarf2	111,3,3,{
 			}
 			close;
 		case 4:
-			mes "[" + name + "]";
+			mes "["+ strcharinfo(0) +"]";
 			mes "^333333*Cough cough!*";
 			mes "Aaaack!";
 			mes "It's so dusty!";
