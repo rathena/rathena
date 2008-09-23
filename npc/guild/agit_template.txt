@@ -50,30 +50,8 @@
 
 // Load (or reload) specific information for a castle.
 OnInterIfInitOnce:
-	if (strnpcinfo(2) == "aldeg_cas01") { GetCastleData "aldeg_cas01",0,strnpcinfo(0)+"::OnRecvCastle"; }
-	else if (strnpcinfo(2) == "aldeg_cas02") { GetCastleData "aldeg_cas02",0,strnpcinfo(0)+"::OnRecvCastle"; }
-	else if (strnpcinfo(2) == "aldeg_cas03") { GetCastleData "aldeg_cas03",0,strnpcinfo(0)+"::OnRecvCastle"; }
-	else if (strnpcinfo(2) == "aldeg_cas04") { GetCastleData "aldeg_cas04",0,strnpcinfo(0)+"::OnRecvCastle"; }
-	else if (strnpcinfo(2) == "aldeg_cas05") { GetCastleData "aldeg_cas05",0,strnpcinfo(0)+"::OnRecvCastle"; }
-	else if (strnpcinfo(2) == "gefg_cas01") { GetCastleData "gefg_cas01",0,strnpcinfo(0)+"::OnRecvCastle"; }
-	else if (strnpcinfo(2) == "gefg_cas02") { GetCastleData "gefg_cas02",0,strnpcinfo(0)+"::OnRecvCastle"; }
-	else if (strnpcinfo(2) == "gefg_cas03") { GetCastleData "gefg_cas03",0,strnpcinfo(0)+"::OnRecvCastle"; }
-	else if (strnpcinfo(2) == "gefg_cas04") { GetCastleData "gefg_cas04",0,strnpcinfo(0)+"::OnRecvCastle"; }
-	else if (strnpcinfo(2) == "gefg_cas05") { GetCastleData "gefg_cas05",0,strnpcinfo(0)+"::OnRecvCastle"; }
-	else if (strnpcinfo(2) == "payg_cas01") { GetCastleData "payg_cas01",0,strnpcinfo(0)+"::OnRecvCastle"; }
-	else if (strnpcinfo(2) == "payg_cas02") { GetCastleData "payg_cas02",0,strnpcinfo(0)+"::OnRecvCastle"; }
-	else if (strnpcinfo(2) == "payg_cas03") { GetCastleData "payg_cas03",0,strnpcinfo(0)+"::OnRecvCastle"; }
-	else if (strnpcinfo(2) == "payg_cas04") { GetCastleData "payg_cas04",0,strnpcinfo(0)+"::OnRecvCastle"; }
-	else if (strnpcinfo(2) == "payg_cas05") { GetCastleData "payg_cas05",0,strnpcinfo(0)+"::OnRecvCastle"; }
-	else if (strnpcinfo(2) == "prtg_cas01") { GetCastleData "prtg_cas01",0,strnpcinfo(0)+"::OnRecvCastle"; }
-	else if (strnpcinfo(2) == "prtg_cas02") { GetCastleData "prtg_cas02",0,strnpcinfo(0)+"::OnRecvCastle"; }
-	else if (strnpcinfo(2) == "prtg_cas03") { GetCastleData "prtg_cas03",0,strnpcinfo(0)+"::OnRecvCastle"; }
-	else if (strnpcinfo(2) == "prtg_cas04") { GetCastleData "prtg_cas04",0,strnpcinfo(0)+"::OnRecvCastle"; }
-	else if (strnpcinfo(2) == "prtg_cas05") { GetCastleData "prtg_cas05",0,strnpcinfo(0)+"::OnRecvCastle"; }
-	// Add custom Guild Castles here.
-	else {
-		end;
-	}
+	if (strnpcinfo(0) == "Gld_Agit_Manager") end;
+	GetCastleData strnpcinfo(2),0,strnpcinfo(0) + "::OnRecvCastle";
 	end;
 
 // War of Emperium has started.
@@ -153,10 +131,9 @@ OnAgitBreak:
 		}
 	}
 	// Respawn the Emperium, and display new owners.
-	if (agitcheck()) {
-		sleep 500; // Slow down script execution slightly.
+	sleep 500; // Slow down script execution slightly.
+	if( agitcheck() )
 		donpcevent "Agit#"+strnpcinfo(2)+"::OnStartArena";
-	}
 	sleep getbattleflag("gvg_eliminate_time");
 	announce "The [" + getcastlename(strnpcinfo(2)) + "] castle has been conquered by the [" + getguildName(.@GID) + "] guild.",bc_all;
 	end;
