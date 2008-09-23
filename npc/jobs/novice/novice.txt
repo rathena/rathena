@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Dr.Evil & MasterOfMuppets
 //===== Current Version: ===================================== 
-//= 2.2
+//= 2.3
 //===== Compatible With: ===================================== 
 //= eAthena SVN 3422+(Requires jA Script System)
 //===== Description: ========================================= 
@@ -20,6 +20,7 @@
 //= 2.0 Fixed savepoint not being changed sometimes. [L0ne_W0lf]
 //= 2.1 Corrected spacing issue in welcome message. [L0ne_W0lf]
 //= 2.2 Corrected Leo's endless dialog. [L0ne_W0lf]
+//= 2.3 Added fix to Hanson from GM-windsor- and Saithis. [L0ne_W0lf]
 //============================================================ 
 
 // Bulletin Board
@@ -3350,7 +3351,7 @@ new_1-4,100,29,1	script	Hanson#nv	46,{
 					warp "izlude_in",74,167;
 					end;
 				case 2:
-					callsub S_UserJobchoice;
+					callsub S_UserJobchoice,"Swordsman";
 					end;
 				}
 			}
@@ -3423,7 +3424,7 @@ new_1-4,100,29,1	script	Hanson#nv	46,{
 					warp "geffen_in",163,98;
 					end;
 				case 2:
-					callsub S_UserJobchoice;
+					callsub S_UserJobchoice,"Mage";
 					end;
 				}
 			}
@@ -3494,7 +3495,7 @@ new_1-4,100,29,1	script	Hanson#nv	46,{
 					warp "alberta_in",62,44;
 					end;
 				case 2:
-					callsub S_UserJobchoice;
+					callsub S_UserJobchoice,"Merchant";
 					end;
 				}
 			}
@@ -3562,7 +3563,7 @@ new_1-4,100,29,1	script	Hanson#nv	46,{
 					warp "moc_ruins",155,44;
 					end;
 				case 2:
-					callsub S_UserJobchoice;
+					callsub S_UserJobchoice,"Thief";
 					end;
 				}
 			}
@@ -3631,7 +3632,7 @@ new_1-4,100,29,1	script	Hanson#nv	46,{
 					warp "payon_in02",64,65;
 					end;
 				case 2:
-					callsub S_UserJobchoice;
+					callsub S_UserJobchoice,"Archer";
 					end;
 				}
 			}
@@ -3703,7 +3704,7 @@ new_1-4,100,29,1	script	Hanson#nv	46,{
 					warp "prt_church",172,19;
 					end;
 				case 2:
-					callsub S_UserJobchoice;
+					callsub S_UserJobchoice,"Acolyte";
 					end;
 				}
 			}
@@ -3837,10 +3838,31 @@ S_UserJobchoice:
 	mes "I see. It's your choice.";
 	mes "There is no obligation to change to the job we recommend. Please choose the job you wish to become.";
 	next;
-	select("Mage:Merchant:Thief:Archer:Acolyte");
+	setarray .@JOBS$[0],"Swordsman","Mage","Merchant","Thief","Archer","Acolyte";
+	
+	for( set .@i,0; .@i < getarraysize(.@JOBS$); set .@i,.@i+1 )
+	{
+		if(.@JOBS$[@i] == getarg(0)) set .@menu$,.@menu$+":";
+        	else set .@menu$,.@menu$+.@JOBS$[@i]+":";
+   	}
+	set .@menu, select(.@menu$) -1;
+	if( .@JOBS$[.@menu] == "Swordsman" ) set @menu,1;
+	else if( .@JOBS$[.@menu] == "Mage" ) set @menu,2;
+	else if( .@JOBS$[.@menu] == "Merchant" ) set @menu,3;
+	else if( .@JOBS$[.@menu] == "Thief" ) set @menu,4;
+	else if( .@JOBS$[.@menu] == "Archer" ) set @menu,5;
+	else if( .@JOBS$[.@menu] == "Acolyte" ) set @menu,6;
 	mes "[Hanson]";
 	mes "You have chosen";
 	if (@menu == 1) {
+		mes "to become a Swordsman.";
+		mes "You will be sent to";
+		mes "the town of Izlude.";
+		next;
+		mes "[Hanson]";
+		mes "The Swordman Association is located to the Northwest in Izlude. Please remember this.";
+	}
+	else if (@menu == 2) {
 		mes "to become a Mage.";
 		mes "You will be sent to";
 		mes "the town of Geffen.";
@@ -3848,12 +3870,12 @@ S_UserJobchoice:
 		mes "[Hanson]";
 		mes "The Mage Academy is located in the NorthWest in town. Please remember this.";
 	}
-	else if (@menu == 2) {					
+	else if (@menu == 3) {					
 		mes "to become a Merchant.";
 		mes "You will be sent to";
 		mes "the town of Alberta.";
 	}
-	else if (@menu == 3) {
+	else if (@menu == 4) {
 		mes "to become a Thief.";
 		mes "You will be sent to";
 		mes "the town of Morroc.";
@@ -3861,7 +3883,7 @@ S_UserJobchoice:
 		mes "[Hanson]";
 		mes "The Thief guild is in the underground 1st floor of a pyramid which is NorthWest of town. Please remember this.";
 	}
-	else if (@menu == 4) {
+	else if (@menu == 5) {
 		mes "to become an Archer.";
 		mes "You will be sent to";
 		mes "the town of Payon.";
@@ -3922,19 +3944,23 @@ S_UserJobchoice:
 	set nov_3_magician,0;
 	set nov_3_acolyte,0;
 	set nov_3_merchant,0;
-	if (@menu == 1) {
+	if(@menu == 1) {
+		savepoint "izlude",93,104;
+		warp "izlude_in",74,167;
+	}
+	else if (@menu == 2) {
 		savepoint "geffen",119,37;
 		warp "geffen_in",163,98;
 	}
-	else if (@menu == 2) {					
+	else if (@menu == 3) {
 		savepoint "alberta",30,232;
 		warp "alberta_in",62,44;
 	}
-	else if (@menu == 3) {
+	else if (@menu == 4) {
 		savepoint "morocc",150,99;
 		warp "moc_ruins",155,44;
 	}
-	else if (@menu == 4) {
+	else if (@menu == 5) {
 		savepoint "payon",70,100;
 		warp "payon_in02",64,65;
 	}

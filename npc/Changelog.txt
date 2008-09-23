@@ -1,6 +1,8 @@
-Date		Added
+﻿Date		Added
 ======
 2008/09/23
+	* Rev. 13233 Fixed error in Megingjard seal quest. (bugreport:2261) [L0ne_W0lf]
+	* Applied fix to Hanson in Novice Grounds. (bugreport:1747)
 	* Changed some " + name +" to strcharinfo(0) in Brisingamen Seal. [Samuray22]
 2008/09/22
 	* Fixed a little Exploit to bug the Dancer Job Quest. (bugreport:2252) [Samuray22]
