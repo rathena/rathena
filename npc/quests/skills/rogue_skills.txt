@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Lupus, Reddozen
 //===== Current Version: ===================================== 
-//= 1.6b
+//= 1.7
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -15,6 +15,7 @@
 //= 1.6 Bug fixes as pointed out by Brainstorm in bugreport:351 [L0ne_W0lf]
 //= 1.6a Fixed(?) antoher problem (NPCs not disabling) hopefully. [L0ne_W0lf]
 //= 1.6b Corrected a Typo error with "rouge". (bugreport:909) [Samuray22]
+//= 1.7 Replaced effect numerics with constants. [L0ne_W0lf]
 //============================================================
 
 in_rogue,359,177,0	script	#killershow01	-1,{
@@ -53,9 +54,9 @@ OnInit:
 
 OnTouch:
 	if (ROG_SK == 10) {
-		specialeffect2 174; // EF_CHANGECOLD
-		specialeffect 175; //"Killer#Rogueguild" EF_CHANGEWIND
-		specialeffect2 348; // EF_LIGHTSPHERE
+		specialeffect2 EF_CHANGECOLD;
+		specialeffect EF_CHANGEWIND;
+		specialeffect2 EF_LIGHTSPHERE;
 		set ROG_SK,11;
 		mes "[Killer]";
 		mes "Wh-what have";
@@ -92,15 +93,15 @@ OnTouch:
 				set .@lim_1,.@lim_1 + 1;
 				set .@move_1,rand(1,3);
 				if (.@move_1 == 1) {
-					specialeffect 174; //"Killer#Rogueguild" EF_CHANGECOLD
+					specialeffect EF_CHANGECOLD;
 					if (select("Block him to the Left:Block him to the Right:Block his Retreat") == 1) {
 						mes "^3355FFThe killer remains";
 						mes "unable to move and looks";
 						mes "incredibly confused! Right";
 						mes "now, you're using the Close";
 						mes "Confine skill perfectly!^000000";
-						specialeffect 204; //"Killer#Rogueguild" EF_POTION1
-						specialeffect2 210; // EF_POTION7
+						specialeffect EF_POTION1;
+						specialeffect2 EF_POTION7;
 						next;
 					}
 					else {
@@ -114,15 +115,15 @@ OnTouch:
 					}
 				}
 				else if (.@move_1 == 2) {
-					specialeffect 175; //"Killer#Rogueguild" EF_CHANGEWIND
+					specialeffect EF_CHANGEWIND;
 					if (select("Block him at the Left:Block him at the Right:Block him at the back") == 2) {
 						mes "^3355FFThe killer remains";
 						mes "unable to move and looks";
 						mes "incredibly confused! Right";
 						mes "now, you're using the Close";
 						mes "Confine skill perfectly!^000000";
-						specialeffect 204; //"Killer#Rogueguild" EF_POTION1
-						specialeffect2 210; // EF_POTION7
+						specialeffect EF_POTION1;
+						specialeffect2 EF_POTION7;
 						next;
 					}
 					else {
@@ -136,15 +137,15 @@ OnTouch:
 					}
 				}
 				else if (.@move_1 == 3) {
-					specialeffect 177; //"Killer#Rogueguild" EF_CHANGEEARTH
+					specialeffect EF_CHANGEEARTH;
 					if (select("Block him at the Left:Block him at the Right:Block him at the back") == 3) {
 						mes "^3355FFThe killer remains";
 						mes "unable to move and looks";
 						mes "incredibly confused! Right";
 						mes "now, you're using the Close";
 						mes "Confine skill perfectly!^000000";
-						specialeffect 204; //"Killer#Rogueguild" EF_POTION1
-						specialeffect2 210; // EF_POTION7
+						specialeffect EF_POTION1;
+						specialeffect2 EF_POTION7;
 						next;
 					}
 					else {
@@ -189,7 +190,7 @@ in_rogue,355,179,0	script	Haijara Greg#rogueguild	46,{
 			mes "resulting from transcending,";
 			mes "eh? Then I will teach you the";
 			mes "Close Confine skill once again.";
-			specialeffect2 348; // EF_LIGHTSPHERE
+			specialeffect2 EF_LIGHTSPHERE;
 			skill 1005,1,0;
 			set ROG_SK,13;
 			close;
@@ -340,14 +341,14 @@ in_rogue,355,179,0	script	Haijara Greg#rogueguild	46,{
 				mes "I'll show you the skill";
 				mes "that you covet so much...";
 				mes "^FF0000Close Confine^000000!";
-				specialeffect 174; //"Haijara Greg#rogueguild" EF_CHANGECOLD
-				specialeffect2 175; // EF_CHANGEWIND
+				specialeffect EF_CHANGECOLD;
+				specialeffect2 EF_CHANGEWIND;
 				next;
 				mes "[Haijara Greg]";
 				mes "Hmpf. Now you are";
 				mes "helpless, allowing";
 				mes "me to do this: ^FF0000Back Stab^000000!";
-				specialeffect2 190; // EF_COMBOATTACK5
+				specialeffect2 EF_COMBOATTACK5;
 				percentheal -95,0;
 				next;
 				mes "[Haijara Greg]";
@@ -460,7 +461,7 @@ in_rogue,355,179,0	script	Haijara Greg#rogueguild	46,{
 				mes "Stop! P-please, stop";
 				mes "that man! We can't let";
 				mes "him steal that book!";
-				specialeffect 190; //"Haijara Greg#rogueguild" EF_COMBOATTACK5
+				specialeffect EF_COMBOATTACK5;
 				donpcevent "Killer#Rogueguild::OnEnable";
 				set ROG_SK,10;
 				close;
@@ -544,7 +545,7 @@ in_rogue,355,179,0	script	Haijara Greg#rogueguild	46,{
 					mes "practice, and that you become^FFFFFF ^000000 as great a legend as Chae Takbae.";
 					set ROG_SK,12;
 					skill 1005,1,0;
-					specialeffect2 348; // EF_LIGHTSPHERE
+					specialeffect2 EF_LIGHTSPHERE;
 					close;
 				}
 				mes "[Haijara Greg]";
@@ -556,7 +557,7 @@ in_rogue,355,179,0	script	Haijara Greg#rogueguild	46,{
 				mes "thanks again for your help.";
 				set ROG_SK,12;
 				skill 1005,1,0;
-				specialeffect2 348; // EF_LIGHTSPHERE
+				specialeffect2 EF_LIGHTSPHERE;
 				close;
 			}
 			mes "[Haijara Greg]";

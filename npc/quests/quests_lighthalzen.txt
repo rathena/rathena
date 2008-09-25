@@ -4,7 +4,7 @@
 //= Persian, Vicious_Pucca, aoa00, Evera, MasterOfMupppets,
 //= Lupus, Lord Gywall
 //===== Current Version: ===================================== 
-//= 4.3a
+//= 4.4
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -70,6 +70,7 @@
 //= 4.3a Reverted changes from the last version. . [L0ne_W0lf]
 //=     Changed temp char vars to normal vars, that unset at end.
 //=     Tube just makes sure you have 1 or more permits.
+//= 4.4 Replaced effect numerics with constants. [L0ne_W0lf]
 //============================================================ 
 
 lighthalzen,1,1,7	script	sneakAddSuber	-1,{
@@ -1789,7 +1790,7 @@ OnTouch:
 	switch(rand(1,3)) {
 	case 1:
 		mes "^3355FF*SHHHHHHUK!*^000000";
-		specialeffect 18; //"Suspicious Guy#lhz_01" EF_STEAL
+		specialeffect EF_STEAL;
 		set zeny,zeny-100;
 		next;
 		mes "[" + strcharinfo(0) + "]";
@@ -1803,7 +1804,7 @@ OnTouch:
 		close;
 	case 2:
 		mes "^3355FF*SHHHHHHUK!*^000000";
-		specialeffect 18; //"Suspicious Guy#lhz_01" EF_STEAL
+		specialeffect EF_STEAL;
 		set zeny,zeny-200;
 		next;
 		mes "[" + strcharinfo(0) + "]";
@@ -1818,7 +1819,7 @@ OnTouch:
 		close;
 	case 3:
 		mes "^3355FF*SHHHHHHUK!*^000000";
-		specialeffect 18; //EF_STEAL
+		specialeffect EF_STEAL;
 		set zeny,zeny-10;
 		next;
 		mes "[" + strcharinfo(0) + "]";
@@ -1856,7 +1857,7 @@ OnTouch:
 	switch(rand(1,3)) {
 	case 1:
 		mes "^3355FF*SHHHHHHUK!*^000000";
-		specialeffect 18; //"Suspicious Guy#lhz_02" EF_STEAL
+		specialeffect EF_STEAL;
 		set zeny,zeny-100;
 		next;
 		mes "[" + strcharinfo(0) + "]";
@@ -1870,7 +1871,7 @@ OnTouch:
 		close;
 	case 2:
 		mes "^3355FF*SHHHHHHUK!*^000000";
-		specialeffect 18; //"Suspicious Guy#lhz_02" EF_STEAL
+		specialeffect EF_STEAL;
 		set zeny,zeny-200;
 		next;
 		mes "[" + strcharinfo(0) + "]";
@@ -1885,7 +1886,7 @@ OnTouch:
 		close;
 	case 3:
 		mes "^3355FF*SHHHHHHUK!*^000000";
-		specialeffect 18; //EF_STEAL
+		specialeffect EF_STEAL;
 		set zeny,zeny-10;
 		next;
 		mes "[" + strcharinfo(0) + "]";
@@ -1923,7 +1924,7 @@ OnTouch:
 	case 1:
 	case 2:
 		mes "^3355FF*SHHHHHHUK!*^000000";
-		specialeffect 18; //EF_STEAL
+		specialeffect EF_STEAL;
 		set zeny,zeny-100;
 		next;
 		mes "[" + strcharinfo(0) + "]";
@@ -1938,7 +1939,7 @@ OnTouch:
 	case 3:
 	case 4:
 		mes "^3355FF*SHHHHHHUK!*^000000";
-		specialeffect 18; //EF_STEAL
+		specialeffect EF_STEAL;
 		set zeny,zeny-200;
 		next;
 		mes "[" + strcharinfo(0) + "]";
@@ -1953,7 +1954,7 @@ OnTouch:
 		close;
 	case 5:
 		mes "^3355FF*SHHHHHHUK!*^000000";
-		specialeffect 18; //"Suspicious Guy#lhz_03" EF_STEAL
+		specialeffect EF_STEAL;
 		set zeny,zeny-10;
 		next;
 		mes "[" + strcharinfo(0) + "]";

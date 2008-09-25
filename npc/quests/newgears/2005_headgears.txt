@@ -3,15 +3,16 @@
 //===== By: ================================================== 
 //= MasterOfMuppets
 //===== Current Version: ===================================== 
-//= 1.1
+//= 1.2
 //===== Compatible With: ===================================== 
 //= eAthena
 //===== Description: ========================================= 
-// [Aegis Conversion]
+//= [Aegis Conversion]
 //= 2005 Headgears Official Quest.
 //===== Additional Comments: =================================
-// 1.0 First version, converted from the official aegis script. [MasterOfMuppets]
-// 1.1 Updated item ids in the zealotus mask npc, now requires a whip [ultramage]
+//= 1.0 First version, converted from the official aegis script. [MasterOfMuppets]
+//= 1.1 Updated item ids in the zealotus mask npc, now requires a whip [ultramage]
+//= 1.2 Replaced effect numerics with constants. [L0ne_W0lf]
 //============================================================ 
 
 yuno,222,116,3	script	Kasis#LhzHat	851,{
@@ -1674,8 +1675,8 @@ gl_prison1,137,138,5	script	Zealotus#LhzHat	1200,{
 				mes "in my power. Those that";
 				mes "bow to me must also bow";
 				mes "to " + strcharinfo(0) + ". It shall be done.";
-				specialeffect 196; //Curse? EF_DEVIL
-				specialeffect 192; //Poison attack? EF_POISONHIT
+				specialeffect EF_DEVIL;
+				specialeffect EF_POISONHIT;
 				next;
 				mes "[Zealotus]";
 				mes "Human, take this";

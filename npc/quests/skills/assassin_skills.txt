@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Lupus, Reddozen
 //===== Current Version: ===================================== 
-//= 1.4
+//= 1.5
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -11,6 +11,7 @@
 //= Quests for skills: Venom Knife, Sonic Acceleration
 //===== Additional Comments: ================================= 
 //= 1.4 Rescripted to Aegis 10.3 stadards. [L0ne_W0lf]
+//= 1.5 Replaced effect numerics with constants. [L0ne_W0lf]
 //============================================================
 
 in_moc_16,14,27,5	script	Assassin#realman	884,{
@@ -45,7 +46,7 @@ in_moc_16,14,27,5	script	Assassin#realman	884,{
 			mes "technique. Always basics";
 			mes "before the specifics. Now,";
 			mes "why don't you give it a try?";
-			specialeffect 65; //"Assassin#realman" EF_INVENOM
+			specialeffect EF_INVENOM;
 			next;
 			mes "[Killtin]";
 			mes "Good... Very good...";
@@ -54,7 +55,7 @@ in_moc_16,14,27,5	script	Assassin#realman	884,{
 			mes "you forgot how to do this";
 			mes "skill? I suppose that all you";
 			mes "needed was a quick refresher.";
-			specialeffect2 65; // EF_INVENOM
+			specialeffect2 EF_INVENOM;
 			next;
 			mes "[Killtin]";
 			mes "Alright, I think it's";
@@ -213,7 +214,7 @@ in_moc_16,14,27,5	script	Assassin#realman	884,{
 							mes "technique. Always basics";
 							mes "before the specifics. Now,";
 							mes "why don't you give it a try?";
-							specialeffect 65; //"Assassin#realman" EF_INVENOM
+							specialeffect EF_INVENOM;
 							next;
 							mes "[Killtin]";
 							mes "Hey, that's pretty good.";
@@ -223,7 +224,7 @@ in_moc_16,14,27,5	script	Assassin#realman	884,{
 							mes "bit of credit for my excellent";
 							mes "instruction. Ah, very nice.";
 							next;
-							specialeffect2 65; // EF_INVENOM
+							specialeffect2 EF_INVENOM;
 							next;
 							mes "[Killtin]";
 							mes "Alright, you may need";
@@ -318,7 +319,7 @@ in_moc_16,23,27,5	script	Assassin#realgirl	885,{
 			mes "like this. Then, as smoothly";
 			mes "and quickly as possible, shift";
 			mes "your weight over to this side.";
-			specialeffect 121; //"Assassin#realgirl" EF_SONICBLOW
+			specialeffect EF_SONICBLOW;
 			next;
 			mes "[Esmille]";
 			mes "Watch carefully, this";
@@ -327,7 +328,7 @@ in_moc_16,23,27,5	script	Assassin#realgirl	885,{
 			mes "are and the angle of my";
 			mes "arms? This is the form that";
 			mes "you've got to memorize.";
-			specialeffect 121; //"Assassin#realgirl" EF_SONICBLOW
+			specialeffect EF_SONICBLOW;
 			next;
 			mes "[Esmille]";
 			mes "Alright, that's all";
@@ -335,7 +336,7 @@ in_moc_16,23,27,5	script	Assassin#realgirl	885,{
 			mes "please try it so I can give";
 			mes "you feedback on your form.";
 			next;
-			specialeffect2 121; // EF_SONICBLOW
+			specialeffect2 EF_SONICBLOW;
 			next;
 			mes "[Esmille]";
 			mes "Hmm, you're shifting";
@@ -344,7 +345,7 @@ in_moc_16,23,27,5	script	Assassin#realgirl	885,{
 			mes "help if your center of";
 			mes "gravity was like this...";
 			next;
-			specialeffect2 121; // EF_SONICBLOW
+			specialeffect2 EF_SONICBLOW;
 			next;
 			mes "[Esmille]";
 			mes "Ah, you're so very";
@@ -405,7 +406,7 @@ in_moc_16,23,27,5	script	Assassin#realgirl	885,{
 		mes "like this. Then, as smoothly";
 		mes "and quickly as possible, shift";
 		mes "your weight over to this side.";
-		specialeffect 121; //"Assassin#realgirl" EF_SONICBLOW
+		specialeffect EF_SONICBLOW;
 		next;
 		mes "[Esmille]";
 		mes "Watch carefully, this";
@@ -414,7 +415,7 @@ in_moc_16,23,27,5	script	Assassin#realgirl	885,{
 		mes "are and the angle of my";
 		mes "arms? This is the form that";
 		mes "you've got to memorize.";
-		specialeffect 121; //"Assassin#realgirl" EF_SONICBLOW
+		specialeffect EF_SONICBLOW;
 		next;
 		mes "[Esmille]";
 		mes "Alright, that's all";
@@ -422,7 +423,7 @@ in_moc_16,23,27,5	script	Assassin#realgirl	885,{
 		mes "please try it so I can give";
 		mes "you feedback on your form.";
 		next;
-		specialeffect2 121; // EF_SONICBLOW
+		specialeffect2 EF_SONICBLOW;
 		next;
 		mes "[Esmille]";
 		mes "Hmm, you're shifting";
@@ -431,7 +432,7 @@ in_moc_16,23,27,5	script	Assassin#realgirl	885,{
 		mes "help if your center of";
 		mes "gravity was like this...";
 		next;
-		specialeffect2 121; // EF_SONICBLOW
+		specialeffect2 EF_SONICBLOW;
 		next;
 		mes "[Esmille]";
 		mes "That's a little better.";
@@ -440,7 +441,7 @@ in_moc_16,23,27,5	script	Assassin#realgirl	885,{
 		mes "and follow through with";
 		mes "the stabbing motion.";
 		next;
-		specialeffect2 121; // EF_SONICBLOW
+		specialeffect2 EF_SONICBLOW;
 		next;
 		mes "[Esmille]";
 		mes "Ah, you're so very";
@@ -448,7 +449,7 @@ in_moc_16,23,27,5	script	Assassin#realgirl	885,{
 		mes "Focus more on smoothly";
 		mes "transitioning from your";
 		mes "stance to executed action.";
-		specialeffect2 121; // EF_SONICBLOW
+		specialeffect2 EF_SONICBLOW;
 		next;
 		mes "[Esmille]";
 		mes "Yes, that's it...!";
@@ -496,7 +497,7 @@ in_moc_16,23,27,5	script	Assassin#realgirl	885,{
 			mes "like this. Then, as smoothly";
 			mes "and quickly as possible, shift";
 			mes "your weight over to this side.";
-			specialeffect 121; //"Assassin#realgirl" EF_SONICBLOW
+			specialeffect EF_SONICBLOW;
 			next;
 			mes "[Esmille]";
 			mes "Watch carefully, this";
@@ -505,7 +506,7 @@ in_moc_16,23,27,5	script	Assassin#realgirl	885,{
 			mes "are and the angle of my";
 			mes "arms? This is the form that";
 			mes "you've got to memorize.";
-			specialeffect 121; //"Assassin#realgirl" EF_SONICBLOW
+			specialeffect EF_SONICBLOW;
 			next;
 			mes "[Esmille]";
 			mes "Alright, that's all";
@@ -513,7 +514,7 @@ in_moc_16,23,27,5	script	Assassin#realgirl	885,{
 			mes "please try it so I can give";
 			mes "you feedback on your form.";
 			next;
-			specialeffect2 121; // EF_SONICBLOW
+			specialeffect2 EF_SONICBLOW;
 			next;
 			mes "[Esmille]";
 			mes "Hmm, you're shifting";
@@ -522,7 +523,7 @@ in_moc_16,23,27,5	script	Assassin#realgirl	885,{
 			mes "help if your center of";
 			mes "gravity was like this...";
 			next;
-			specialeffect2 121; // EF_SONICBLOW
+			specialeffect2 EF_SONICBLOW;
 			next;
 			mes "[Esmille]";
 			mes "That's a little better.";
@@ -531,7 +532,7 @@ in_moc_16,23,27,5	script	Assassin#realgirl	885,{
 			mes "and follow through with";
 			mes "the stabbing motion.";
 			next;
-			specialeffect2 121; // EF_SONICBLOW
+			specialeffect2 EF_SONICBLOW;
 			next;
 			mes "[Esmille]";
 			mes "Yes, that's it...!";
@@ -743,7 +744,7 @@ OnTouch:
 		mes "is slightly ajar. You";
 		mes "momentarily catch a glint";
 		mes "of something shining inside.^000000";
-		specialeffect 71; //"Old Coffin#1" EF_CONE
+		specialeffect EF_CONE;
 		next;
 		while(1) {
 			switch(select("Put your hand inside:Inspect the coffin's opening:Lift the lid:Turn the coffin upside down:Ignore it")) {
@@ -807,7 +808,7 @@ OnTouch:
 		mes "is slightly ajar. You";
 		mes "momentarily catch a glint";
 		mes "of something shining inside.^000000";
-		specialeffect 71; //"Old Coffin#2" EF_CONE
+		specialeffect EF_CONE;
 		next;
 		while(1) {
 			switch(select("Put your hand inside:Inspect the coffin's opening:Lift the lid:Turn the coffin upside down:Ignore it")) {
@@ -885,7 +886,7 @@ OnTouch:
 in_sphinx2,13,163,0	script	Stone Statue#qsk_as	-1,7,7,{
 OnTouch:
 	if (ASSN_SK == 3) {
-		specialeffect 71; //"Stone Statue#1" EF_CONE
+		specialeffect EF_CONE;
 		mes "^3355FFThis ancient stone statue";
 		mes "is covered with cracks and";
 		mes "looks close to falling apart.";
@@ -893,7 +894,7 @@ OnTouch:
 		mes "peers out from beneath one of";
 		mes "the feet. The ground appears";
 		mes "soft enough to dig through...^000000";
-		specialeffect 71; //"Old Coffin#2" EF_CONE
+		specialeffect EF_CONE;
 		next;
 		if (select("Dig to retrieve the shining object:Ignore it") == 1) {
 			mes "^3355FFAs your fingers dig into";
@@ -920,7 +921,7 @@ OnTouch:
 in_sphinx2,13,146,0	script	Stone Statue#qsk_as2	-1,7,7,{
 OnTouch:
 	if (ASSN_SK == 3) {
-		specialeffect 71; //"Stone Statue#1" EF_CONE
+		specialeffect EF_CONE;
 		mes "^3355FFThis ancient stone statue";
 		mes "is covered with cracks and";
 		mes "looks close to falling apart.";
@@ -928,7 +929,7 @@ OnTouch:
 		mes "peers out from beneath one of";
 		mes "the feet. The ground appears";
 		mes "soft enough to dig through...^000000";
-		specialeffect 71; //"Old Coffin#2" EF_CONE
+		specialeffect EF_CONE;
 		next;
 		if (select("Dig to retrieve the shining object:Ignore it") == 1) {
 			mes "^3355FFAs your fingers dig into";
@@ -954,7 +955,7 @@ OnTouch:
 moc_pryd04,85,96,0	script	¡¡#crypt	-1,3,3,{
 OnTouch:
 	if (ASSN_SK == 4) {
-		specialeffect 71; //"¡¡#crypt" EF_CONE
+		specialeffect EF_CONE;
 		mes "^3355FFThere's something";
 		mes "glimmering beneath";
 		mes "the surface of the water...^000000";

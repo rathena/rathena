@@ -3,7 +3,7 @@
 //===== By ===================================================
 //= MasterOfMuppets
 //===== Version ==============================================
-//= 1.5
+//= 1.7
 //===== Compatible With ======================================
 //= eAthena SVN
 //===== Description ==========================================
@@ -21,6 +21,7 @@
 //= 1.4 Fixed Elevator not working after failing once. [L0ne_W0lf]
 //= 1.5 Lots of Fixes, missing stopnpctimers, cleanup. [Zephyrus]
 //= 1.6 Added missing close in "Popular Feats" [L0ne_W0lf]
+//= 1.7 Replaced effect numerics with constants. [L0ne_W0lf]
 //============================================================
 
 yuno_in04,190,125,4	script	Scholar	700,{
@@ -1777,7 +1778,7 @@ OnTouch:
 		mes "Ahhhh...";
 		mes "It feels like";
 		mes "I'm floating...";
-		specialeffect2 348; // EF_LIGHTSPHERE
+		specialeffect2 EF_LIGHTSPHERE;
 		close2;
 		stopnpctimer;
 		warp "juperos_02",128,278;
@@ -1979,7 +1980,7 @@ jupe_area1,88,224,0	script	#hole#1-1	844,{
 				mes "Crest Piece and place";
 				mes "it into the slot where it";
 				mes "happens to fit perfectly.^000000";
-				specialeffect 159; //"#hole#1-1" EF_TOPRANK
+				specialeffect EF_TOPRANK;
 				cutin "1-1",2;
 				next;
 				if ($@JupreArea1InUse == 1) {
@@ -2271,7 +2272,7 @@ jupe_area1,25,238,0	script	#hole#1-2	844,{
 				mes "Crest Piece and place";
 				mes "it into the slot where it";
 				mes "happens to fit perfectly.^000000";
-				specialeffect 159; //"#hole#1-2" EF_TOPRANK
+				specialeffect EF_TOPRANK;
 				cutin "2-1",2;
 				next;
 				if ($@JupreArea1InUse == 1) {
@@ -2560,7 +2561,7 @@ jupe_area1,36,146,0	script	#hole#1-3	844,{
 				mes "Crest Piece and place";
 				mes "it into the slot where it";
 				mes "happens to fit perfectly.^000000";
-				specialeffect 159; //"#hole#1-3" EF_TOPRANK
+				specialeffect EF_TOPRANK;
 				cutin "3-1",2;
 				next;
 				if ($@JupreArea1InUse == 1) {
@@ -2848,7 +2849,7 @@ jupe_area1,50,49,0	script	#hole#1-4	844,{
 				mes "Crest Piece and place";
 				mes "it into the slot where it";
 				mes "happens to fit perfectly.^000000";
-				specialeffect 159; //"#hole#1-4" EF_TOPRANK
+				specialeffect EF_TOPRANK;
 				cutin "4-1",2;
 				next;
 				if ($@JupreArea1InUse == 1) {
@@ -3188,7 +3189,7 @@ jupe_area2,74,224,0	script	#hole#2-1	844,{
 				mes "Crest Piece and place";
 				mes "it into the slot where it";
 				mes "happens to fit perfectly.^000000";
-				specialeffect 159; //"#hole#2-1" EF_TOPRANK
+				specialeffect EF_TOPRANK;
 				cutin "1-1",2;
 				next;
 				if ($@JupreArea2InUse == 1) {
@@ -3480,7 +3481,7 @@ jupe_area2,138,238,0	script	#hole#2-2	844,{
 				mes "Crest Piece and place";
 				mes "it into the slot where it";
 				mes "happens to fit perfectly.^000000";
-				specialeffect 159; //"#hole#2-2" EF_TOPRANK
+				specialeffect EF_TOPRANK;
 				cutin "2-1",2;
 				next;
 				if ($@JupreArea2InUse == 1) {
@@ -3769,7 +3770,7 @@ jupe_area2,127,146,0	script	#hole#2-3	844,{
 				mes "Crest Piece and place";
 				mes "it into the slot where it";
 				mes "happens to fit perfectly.^000000";
-				specialeffect 159; //"#hole#2-3" EF_TOPRANK
+				specialeffect EF_TOPRANK;
 				cutin "3-1",2;
 				next;
 				if ($@JupreArea2InUse == 1) {
@@ -4059,7 +4060,7 @@ jupe_area2,113,49,0	script	#hole#2-4	844,{
 				mes "Crest Piece and place";
 				mes "it into the slot where it";
 				mes "happens to fit perfectly.^000000";
-				specialeffect 159; //"#hole#2-4" EF_TOPRANK
+				specialeffect EF_TOPRANK;
 				cutin "4-1",2;
 				next;
 				if ($@JupreArea2InUse == 1) {
@@ -4406,7 +4407,7 @@ jupe_ele_r,51,98,0	script	Switch#ufe	844,{
 					mes "the slots and begin to";
 					mes "emit a strange light.^000000";
 					cutin "5-1",2;
-					specialeffect 72; //"Switch#ufe" EF_SPHERE
+					specialeffect EF_SPHERE;
 					delitem 7356,1; //Piece_Of_Crest1
 					delitem 7359,1; //Piece_Of_Crest4
 					delitem 7357,1; //Piece_Of_Crest2
@@ -5063,7 +5064,7 @@ OnTouch:
 	next;
 	switch(select("Use it.:Ignore it.")) {
 	case 1:
-		specialeffect2 348; // EF_LIGHTSPHERE
+		specialeffect2 EF_LIGHTSPHERE;
 		close2;
 		stopnpctimer;
 		warp "juperos_02",130,142;

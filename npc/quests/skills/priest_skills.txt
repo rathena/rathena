@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Lupus, Reddozen
 //===== Current Version: ===================================== 
-//= 1.4
+//= 1.5
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -11,6 +11,7 @@
 //= Quests for skills: Redempito
 //===== Additional Comments: ================================= 
 //= 1.4 Rescripted to Aegis 10.3 stadards. [L0ne_W0lf]
+//= 1.5 Replaced effect numerics with constants. [L0ne_W0lf]
 //============================================================
 
 prt_church,111,112,1	script	Sister Linus	79,{
@@ -298,7 +299,7 @@ prt_church,111,112,1	script	Sister Linus	79,{
 					}
 
 					if (.@success) {
-						specialeffect2 14; // EF_HEALSP
+						specialeffect2 EF_HEALSP;
 						mes "[Sister Linus]";
 						mes "Congratulations!";
 						mes "You successfully";
@@ -313,7 +314,7 @@ prt_church,111,112,1	script	Sister Linus	79,{
 						close;
 					}
 					else {
-						specialeffect2 53; // EF_POISONHIT
+						specialeffect2 EF_POISONHIT;
 						mes "[Sister Linus]";
 						mes "Oh no! I'm sorry,";
 						mes "but you failed to";

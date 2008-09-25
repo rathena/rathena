@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Lupus, Reddozen
 //===== Current Version: ===================================== 
-//= 1.4
+//= 1.5
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -12,6 +12,7 @@
 //===== Additional Comments: ================================= 
 //= 1.4 Rescripted to Aegis 10.3 stadards. [L0ne_W0lf]
 //= 1.4a Changed NPC location [Yommy]
+//= 1.5 Replaced effect numerics with constants. [L0ne_W0lf]
 //============================================================
 
 comodo,204,172,5	script	Canell#qsk_dan01	724,{
@@ -45,7 +46,7 @@ comodo,204,172,5	script	Canell#qsk_dan01	724,{
 				mes "Ow...!";
 				mes "Th-that whip!";
 				mes "I-i-it huuuurts!";
-				specialeffect2 1; // EF_HIT2
+				specialeffect2 EF_HIT2;
 				percentheal -5,0;
 				close;
 			}
@@ -61,7 +62,7 @@ comodo,204,172,5	script	Canell#qsk_dan01	724,{
 			mes "What the...? Ack!";
 			mes "S-stop wh-whipping";
 			mes "me! It... It stiiings!";
-			specialeffect2 1; // EF_HIT2
+			specialeffect2 EF_HIT2;
 			percentheal -10,0;
 			next;
 			mes "[Canell]";
@@ -85,7 +86,7 @@ comodo,204,172,5	script	Canell#qsk_dan01	724,{
 				mes "Not that whip";
 				mes "again! Arrgh, it's--";
 				mes "It hurts so much!";
-				specialeffect2 1; // EF_HIT2
+				specialeffect2 EF_HIT2;
 				percentheal -10,0;
 				close;
 			}
@@ -143,7 +144,7 @@ comodo,204,172,5	script	Canell#qsk_dan01	724,{
 				mes "I am irresistable!";
 				mes "I am the most attractive";
 				mes "woman in the whole world!";
-				specialeffect2 99; // EF_FLASHER
+				specialeffect2 EF_FLASHER;
 				next;
 				mes "^3355FFYour self esteem has";
 				mes "sky rocketed. Fortunately,";
@@ -160,7 +161,7 @@ comodo,204,172,5	script	Canell#qsk_dan01	724,{
 				mes "^FF00001 Crystal Mirror^000000!? Now go";
 				mes "and get it before I find";
 				mes "reason to punish you!";
-				specialeffect 107; //"Canell#qsk_dan01" EF_CLAYMORE
+				specialeffect EF_CLAYMORE;
 				close;
 			}
 		}
@@ -229,7 +230,7 @@ comodo,204,172,5	script	Canell#qsk_dan01	724,{
 			next;
 			mes "[Canell]";
 			mes "Bam!";
-			specialeffect2 1; // EF_HIT2
+			specialeffect2 EF_HIT2;
 			percentheal -5,0;
 			next;
 			mes "["+ strcharinfo(0) +"]";
@@ -279,14 +280,14 @@ comodo,204,172,5	script	Canell#qsk_dan01	724,{
 				mes "O-ow!";
 				mes "P-please...!";
 				mes "Not the whip again!";
-				specialeffect2 1; // EF_HIT2
+				specialeffect2 EF_HIT2;
 				percentheal -5,0;
 				close;
 			case 3:
 				mes "["+ strcharinfo(0) +"]";
 				mes "Un, deux, trois~";
 				Emotion e_no1,1;
-				specialeffect2 99; // EF_FLASHER
+				specialeffect2 EF_FLASHER;
 				next;
 				mes "[Canell]";
 				mes "Great, that's exactly";
@@ -315,7 +316,7 @@ comodo,204,172,5	script	Canell#qsk_dan01	724,{
 				mes "^3355FFYou have finally learned";
 				mes "the Charming Wink skill.^000000";
 				set DANCER_SK,9;
-				specialeffect2 253; // EF_ABSORBSPIRITS
+				specialeffect2 EF_ABSORBSPIRITS;
 				skill "DC_WINKCHARM",1,0;
 				close;
 			}
@@ -358,7 +359,7 @@ comodo,204,172,5	script	Canell#qsk_dan01	724,{
 			next;
 			mes "^3355FFYou have learned the";
 			mes "Charming Wink skill.^000000";
-			specialeffect2 253; // EF_ABSORBSPIRITS
+			specialeffect2 EF_ABSORBSPIRITS;
 			skill "DC_WINKCHARM",1,0;
 			close;
 		}
@@ -389,7 +390,7 @@ comodo,204,172,5	script	Canell#qsk_dan01	724,{
 			mes "handsome~";
 			mes "^333333*Wink~*^000000";
 			Emotion e_kis;
-			specialeffect2 364; // EF_VALLENTINE2
+			specialeffect2 EF_VALLENTINE2;
 			next;
 			mes "^3355FFStrangely enough,";
 			mes "her wink has made";
@@ -561,7 +562,7 @@ prontera,183,333,1	script	Aelle#qsk_dan02	79,{
 				mes "her fists and laughs";
 				mes "maniacally to herself.^000000";
 				percentheal -10,0;
-				specialeffect2 1; // EF_HIT2
+				specialeffect2 EF_HIT2;
 				Emotion e_dots,1;
 				delitem 970,1; //Alchol
 				delitem 512,1; //Apple

@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= MasterOfMuppets
 //===== Current Version: =====================================
-//= 1.7
+//= 1.8
 //===== Compatible With: =====================================
 //= eAthena SVN
 //===== Description: =========================================
@@ -19,6 +19,7 @@
 //=     you can again repeat this quest from the start.
 //= 1.6 Fixed issue with #prt_key-1-1. [L0ne_W0lf]
 //= 1.7 Corrected reminants from aegis conversion. [L0en_w0lf]
+//= 1.8 Replaced effect numerics with constants. [L0ne_W0lf]
 //============================================================
 
 morocc_in,116,101,3	script	Old Scholar Tyus#hellion	735,3,3,{
@@ -363,8 +364,8 @@ morocc_in,116,101,3	script	Old Scholar Tyus#hellion	735,3,3,{
 			mes "this piece I found here in";
 			mes "Morroc, and the pieces you";
 			mes "found in Prontera and Payon. There's one more left in Geffen.";
-			specialeffect2 313; // EF_HEAL2
-			specialeffect 313; //"Old Scholar Tyus#hellion" EF_HEAL2
+			specialeffect2 EF_HEAL2;
+			specialeffect EF_HEAL2;
 			next;
 			mes "[Sir Chilias'Tyus]";
 			mes "Anyway, on the tablet";
@@ -535,7 +536,7 @@ morocc_in,116,101,3	script	Old Scholar Tyus#hellion	735,3,3,{
 			mes "you peace. To the despairing";
 			mes "ones, to the shameless ones,";
 			mes "I give guidance to heaven...";
-			specialeffect 12; //"Old Scholar Tyus#hellion" EF_BEGINSPELL
+			specialeffect EF_BEGINSPELL;
 			next;
 			mes "[Sir Chilias'Tyus]";
 			mes "Instead of sadness,";
@@ -544,13 +545,13 @@ morocc_in,116,101,3	script	Old Scholar Tyus#hellion	735,3,3,{
 			mes "love. Souls that are";
 			mes "lost will now find";
 			mes "their way...";
-			specialeffect 58; //"Old Scholar Tyus#hellion" EF_BEGINSPELL6
+			specialeffect EF_BEGINSPELL6;
 			next;
 			mes "[Sir Chilias'Tyus]";
 			mes "Light and hope...";
 			mes "Heaven and earth...";
 			mes "Cast away the darkness.";
-			specialeffect 83; //"Old Scholar Tyus#hellion" EF_SANCTUARY
+			specialeffect EF_SANCTUARY;
 			next;
 			mes "[Sir Chilias'Tyus]";
 			mes "I did it.";
@@ -604,7 +605,7 @@ morocc_in,116,101,3	script	Old Scholar Tyus#hellion	735,3,3,{
 			mes "you peace. To the despairing";
 			mes "ones, to the shameless ones,";
 			mes "I give guidance to heaven...";
-			specialeffect 12; //"Old Scholar Tyus#hellion" EF_BEGINSPELL
+			specialeffect EF_BEGINSPELL;
 			next;
 			mes "[Sir Chilias'Tyus]";
 			mes "Instead of sadness,";
@@ -613,13 +614,13 @@ morocc_in,116,101,3	script	Old Scholar Tyus#hellion	735,3,3,{
 			mes "love. Souls that are";
 			mes "lost will now find";
 			mes "their way...";
-			specialeffect 58; //"Old Scholar Tyus#hellion" EF_BEGINSPELL6
+			specialeffect EF_BEGINSPELL6;
 			next;
 			mes "[Sir Chilias'Tyus]";
 			mes "Light and hope...";
 			mes "Heaven and earth...";
 			mes "Cast away the darkness.";
-			specialeffect 83; //"Old Scholar Tyus#hellion" EF_SANCTUARY
+			specialeffect EF_SANCTUARY;
 			next;
 			mes "[Sir Chilias'Tyus]";
 			mes "I did it.";
@@ -684,8 +685,8 @@ morocc_in,116,101,3	script	Old Scholar Tyus#hellion	735,3,3,{
 
 OnTouch:
 	if (HELLIONQ == 57 && countitem(7334) > 0) {
-		specialeffect2 313; // EF_HEAL2
-		specialeffect 313; //"Old Scholar Tyus#hellion" EF_HEAL2
+		specialeffect2 EF_HEAL2; 
+		specialeffect EF_HEAL2;
 		mes "^3355FFOne of the Tablet Pieces";
 		mes "that you have is beginning to";
 		mes "shine with light, as if it were";
@@ -1901,8 +1902,8 @@ pay_arche,142,28,0	script	Buddha Statue#paypuzz6	111,5,5,{
 
 OnTouch:
 	if (HELLIONQ == 56 && countitem(7333) > 0) {
-		specialeffect2 313; // EF_HEAL2
-		specialeffect 313; //"Buddha Statue#paypuzz6" EF_HEAL2
+		specialeffect2 EF_HEAL2;
+		specialeffect EF_HEAL2;
 		mes "^3355FFThe piece of tablet";
 		mes "that you have is shining";
 		mes "with light as if in response";
@@ -1929,8 +1930,8 @@ geffen,110,200,3	script	Sage Welshyun#hellion	754,3,3,{
 		close;
 	}
 	else if (HELLIONQ == 58) {
-		specialeffect2 313; // EF_HEAL2
-		specialeffect 313; //"Sage Welshyun" EF_HEAL2
+		specialeffect2 EF_HEAL2;
+		specialeffect EF_HEAL2;
 		mes "[Welshyun]";
 		mes "That...";
 		mes "That eerie glow...";
@@ -2180,13 +2181,13 @@ geffen,110,200,3	script	Sage Welshyun#hellion	754,3,3,{
 			mes "Shadows remembered by time.";
 			mes "Help me retrieve the forgotten";
 			mes "stories that have been scattered in the wind. Right here. Right now.";
-			specialeffect 54; //"Sage Welshyun" EF_BEGINSPELL2
+			specialeffect EF_BEGINSPELL2;
 			next;
 			mes "[Welshyun]";
 			mes "...";
 			mes "Okay...";
 			mes "That was tough.";
-			specialeffect 234; //"Sage Welshyun" EF_SPELLBREAKER
+			specialeffect EF_SPELLBREAKER;
 			next;
 			mes "[Welshyun]";
 			mes "That was tough";
@@ -2271,8 +2272,8 @@ geffen,110,200,3	script	Sage Welshyun#hellion	754,3,3,{
 
 OnTouch:
 	if (HELLIONQ == 58 && countitem(7335) > 0) {
-		specialeffect2 313; // EF_HEAL2
-		specialeffect 313; //"Sage Welshyun" EF_HEAL2
+		specialeffect2 EF_HEAL2;
+		specialeffect EF_HEAL2;
 		mes "^3355FFThe piece of tablet";
 		mes "that you have is shining";
 		mes "with light as if in response";
@@ -2450,8 +2451,8 @@ gef_fild09,296,59,0	script	Hidden Cave#hellion	111,3,3,{
 
 OnTouch:
 	if (HELLIONQ == 68 && countitem(7332) > 0) {
-		specialeffect2 313; // EF_HEAL2
-		specialeffect 313; //"Hidden Cave#hellion" EF_HEAL2
+		specialeffect2 EF_HEAL2;
+		specialeffect EF_HEAL2;
 		mes "^3355FFThe tablet in your";
 		mes "hands begins to shine";
 		mes "with light, responding";

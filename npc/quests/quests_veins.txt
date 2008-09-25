@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.5a
+//= 1.6
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -37,6 +37,7 @@
 //= 1.4a Corrected a typo error ";;". [Toms]
 //= 1.5 Added Nameless Island quest addition. [L0ne_W0lf]
 //= 1.5a Corrected a couple typos in Nameless Addition. [L0ne_W0lf]
+//= 1.6 Replaced effect numerics with constants. [L0ne_W0lf]
 //============================================================ 
 
 // Stone Quest
@@ -322,7 +323,7 @@ ve_in,169,310,6	script	Strange Old Man#ve	121,{
 			mes "Look! Look what you did!";
 			mes "You made me screw up!";
 			next;
-			specialeffect 90; //EF_LORD
+			specialeffect EF_LORD;
 			percentheal -30,0;
 			next;
 			mes "[Absar]";
@@ -335,7 +336,7 @@ ve_in,169,310,6	script	Strange Old Man#ve	121,{
 		mes "[Absar]";
 		mes "Oh, no...";
 		next;
-		specialeffect 86; //"Strange Old Man#ve" EF_ASPERSIO
+		specialeffect EF_ASPERSIO;
 		next;
 		mes "[Absar]";
 		mes "How...?!";
@@ -416,7 +417,7 @@ ve_in,169,310,6	script	Strange Old Man#ve	121,{
 			delitem 7561,2; //Ice_Heart
 			set veins_stone,3;
 			close2;
-			specialeffect 50; //"Strange Old Man#ve" EF_FIRESPLASHHIT
+			specialeffect EF_FIRESPLASHHIT;
 			end;
 		}
 		mes "[Absar]";
@@ -3030,7 +3031,7 @@ veins,327,185,3	script	Kid#camelcamel	944,{
 			mes "It's a promise, then.";
 			mes "I'll see you later~";
 			set rachel_camel,25;
-			specialeffect2 253; // EF_ABSORBSPIRITS
+			specialeffect2 EF_ABSORBSPIRITS;
 			getexp 1000000,700000;
 			close;
 		}
@@ -6683,7 +6684,7 @@ thor_camp,159,74,3	script	Colonel Vito#3	946,{
 			mes "[Colonel Vito]";
 			mes "You idiot!";
 			percentheal -10,0;
-			specialeffect2 1; // EF_HIT2
+			specialeffect2 EF_HIT2;
 			next;
 		}
 		mes "[Colonel Vito]";
@@ -7082,43 +7083,43 @@ thor_camp,150,65,3	script	Dummy#1::VeinsDummy	111,{
 		mes "["+strcharinfo(0)+"]";
 		mes "Yes, sir!";
 		next;
-		specialeffect 1; //EF_HIT2
+		specialeffect EF_HIT2;
 		mes "["+strcharinfo(0)+"]";
 		mes "One!";
 		next;
-		specialeffect 1; //EF_HIT2
+		specialeffect EF_HIT2;
 		mes "["+strcharinfo(0)+"]";
 		mes "Two!";
 		next;
-		specialeffect 1; //EF_HIT2
+		specialeffect EF_HIT2;
 		mes "["+strcharinfo(0)+"]";
 		mes "Three!!";
 		next;
-		specialeffect 1; //EF_HIT2
+		specialeffect EF_HIT2;
 		mes "["+strcharinfo(0)+"]";
 		mes "Four!";
 		next;
-		specialeffect 1; //EF_HIT2
+		specialeffect EF_HIT2;
 		mes "["+strcharinfo(0)+"]";
 		mes "Five!!";
 		next;
-		specialeffect 1; //EF_HIT2
+		specialeffect EF_HIT2;
 		mes "["+strcharinfo(0)+"]";
 		mes "Six!!";
 		next;
-		specialeffect 1; //EF_HIT2
+		specialeffect EF_HIT2;
 		mes "["+strcharinfo(0)+"]";
 		mes "Seven!!";
 		next;
-		specialeffect 1; //EF_HIT2
+		specialeffect EF_HIT2;
 		mes "["+strcharinfo(0)+"]";
 		mes "Eight!!";
 		next;
-		specialeffect 1; //EF_HIT2
+		specialeffect EF_HIT2;
 		mes "["+strcharinfo(0)+"]";
 		mes "Nine!";
 		next;
-		specialeffect 1; //EF_HIT2
+		specialeffect EF_HIT2;
 		mes "["+strcharinfo(0)+"]";
 		mes "Ten!";
 		set aru_vol,20;
@@ -7126,7 +7127,7 @@ thor_camp,150,65,3	script	Dummy#1::VeinsDummy	111,{
 	}
 	else if (aru_vol == 20) {
 		mes "^3355FF*THUD*^000000";
-		specialeffect 1; //EF_HIT2
+		specialeffect EF_HIT2;
 		emotion e_omg,1;
 		next;
 		mes "[Colonel Vito]";
@@ -7401,6 +7402,6 @@ ve_in,239,107,1	script	Male Customer#ve2	943,{
 	mes "my only friend in";
 	mes "all the world...";
 	mes "A toast... To drinking!";
-	specialeffect 86; //"Male Customer#ve2" EF_ASPERSIO
+	specialeffect EF_ASPERSIO;
 	close;
 }

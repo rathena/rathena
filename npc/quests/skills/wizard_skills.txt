@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Lupus, Reddozen
 //===== Current Version: ===================================== 
-//= 1.4
+//= 1.5
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -11,6 +11,7 @@
 //= Quests for skills: Sight Blaster
 //===== Additional Comments: ================================= 
 //= 1.4 Rescripted to Aegis 10.3 stadards. [L0ne_W0lf]
+//= 1.5 Replaced effect numerics with constants. [L0ne_W0lf]
 //============================================================
 
 gef_tower,115,36,4	script	Meow#q_wiz	876,{
@@ -26,7 +27,7 @@ gef_tower,115,36,4	script	Meow#q_wiz	876,{
 				mes "Alright, here's your lesson!";
 				next;
 				mes "^3355FF*BAM! BOOM! CRASH!*^000000";
-				specialeffect2 183; // EF_SUI_EXPLOSION
+				specialeffect2 EF_SUI_EXPLOSION;
 				next;
 				mes "[Meow]";
 				mes "Don't you dare get";
@@ -40,7 +41,7 @@ gef_tower,115,36,4	script	Meow#q_wiz	876,{
 				mes "the Sight Blaster skill before";
 				mes "Meow can administer another";
 				mes "vicious beating to you.";
-				specialeffect2 253; // EF_ABSORBSPIRITS
+				specialeffect2 EF_ABSORBSPIRITS;
 				skill "WZ_SIGHTBLASTER",1,0;
 				next;
 				mes "[Meow]";
@@ -264,7 +265,7 @@ gef_tower,115,36,4	script	Meow#q_wiz	876,{
 			mes "you to cast Sight before you";
 			mes "can activate it. Now try it.";
 			next;
-			specialeffect2 183; // EF_SUI_EXPLOSION
+			specialeffect2 EF_SUI_EXPLOSION;
 			mes "^3355FF*BAM! BOOM!*^000000";
 			next;
 			mes "[Meow]";
@@ -288,7 +289,7 @@ gef_tower,115,36,4	script	Meow#q_wiz	876,{
 			mes "You actually learned it!";
 			mes "That took way too much effort,";
 			mes "but at least we're done here.";
-			specialeffect2 253; // EF_ABSORBSPIRITS
+			specialeffect2 EF_ABSORBSPIRITS;
 			delitem 991,10; //Crystal_Blue
 			delitem 993,10; //Yellow_Live
 			delitem 990,10; //Boody_Red

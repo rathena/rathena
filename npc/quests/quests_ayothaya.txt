@@ -3,7 +3,7 @@
 //===== By ===================================================
 //= Fredzilla, MasterOfMuppets
 //===== Version ==============================================
-//= 2.1
+//= 2.2
 //===== Compatible With ======================================
 //= eAthena SVN
 //===== Description ==========================================
@@ -27,6 +27,7 @@
 //=	10.3 standards.
 //= 2.0a Corrected a Typo error ";;". [Samuray22]
 //= 2.1 Added missing checkweights. [L0ne_W0lf]
+//= 2.2 Replaced effect numerics with constants. [L0ne_W0lf]
 //============================================================
 
 // Ayothaya Ring Quest
@@ -2609,26 +2610,26 @@ ayo_in01,145,163,3	script	Cook#ayo	839,{
 				mes "^FF0000*Tuk*^000000";
 				mes "^9C009C*Tup*^000000";
 				mes "^009C00*Puk*^000000";
-				specialeffect 125; //"Cook#ayo" EF_ENCHANTPOISON
+				specialeffect EF_ENCHANTPOISON;
 				next;
 				mes "^FF0031*Chop chop*^000000";
 				mes "^FF9C00*Tup tup tup*^000000";
 				mes "^639CFF*Pu pu^000000 -";
-				specialeffect 124; //"Cook#ayo" EF_VENOMDUST
+				specialeffect EF_VENOMDUST;
 				next;
 				mes "[Mali the Spicy]";
 				mes "- ^9C6300Tup tup^000000 ^006363chook^000000";
 				mes "^316363Chop chop^000000";
 				mes "^FF0000Tup tup tup^000000 ^009C00Pu pu^000000 -";
-				specialeffect 23; //"Cook#ayo" EF_STONECURSE
-				specialeffect 98; //"Cook#ayo" EF_HASTEUP
-				specialeffect 12; //"Cook#ayo" EF_BEGINSPELL
+				specialeffect EF_STONECURSE;
+				specialeffect EF_HASTEUP;
+				specialeffect EF_BEGINSPELL;
 				next;
 				mes "[Mali the Spicy]";
 				mes "Wah^00009Cah^0000FFahhhh^0063FFaaaahhh^000000!";
 				emotion e_omg;
-				specialeffect 99; //"Cook#ayo" EF_FLASHER
-				specialeffect 90; //"Cook#ayo" EF_LORD
+				specialeffect EF_FLASHER;
+				specialeffect EF_LORD;
 				next;
 				mes "[Mali the Spicy]";
 				mes " ...";

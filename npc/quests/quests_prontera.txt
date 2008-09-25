@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88; L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 2.5a
+//= 2.6
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -45,6 +45,7 @@
 //= 2.4 Updated Headgear Quest. [L0ne_W0lf]
 //= 2.5 Fixed requirements for PH D. Hat. [L0ne_W0lf]
 //= 2.5a Fixed requirements for PH D. Hat agian lol. [L0ne_W0lf]
+//= 2.6 Replaced effect numerics with constants. [L0ne_W0lf]
 //============================================================ 
 
 // Prontera Culvert
@@ -325,7 +326,7 @@ prontera,248,212,3	script	Busy Boy#prt	706,3,3,{
 			mes "You couldn't help it:";
 			mes "it was a natural reflex!^000000";
 			next;
-			Specialeffect 180; //EF_HITDARK
+			Specialeffect EF_HITDARK;
 			Emotion e_omg;
 			mes "^3355FF*BAM!*^000000";
 			next;
@@ -447,7 +448,7 @@ OnTouch:
 	callsub S_CheckWeight; //Check Player's weight
 	if (BaseLevel > 59) {
 		if (prt_curse == 0) {
-			Specialeffect 180; //EF_HITDARK
+			Specialeffect EF_HITDARK;
 			mes "^3355FF*BAM!*^000000";
 			next;
 			mes "[Busy Looking Boy]";
@@ -3212,9 +3213,9 @@ prt_church,21,111,5	script	#prince2	887,{
 		close;
 	}
 	else if (prt_curse == 33 || prt_curse > 41 && prt_curse < 51 || prt_curse == 52) {
-		specialeffect 192; //EF_POISONATTACK
-		specialeffect 53; //EF_POISONHIT
-		specialeffect 109; //EF_BUBBLE
+		specialeffect EF_POISONATTACK;
+		specialeffect EF_POISONHIT;
+		specialeffect EF_BUBBLE;
 		mes "^3355FFYou poured a little of the";
 		mes "solution made from Green";
 		mes "Potion and Yellow Gemstone";
@@ -3304,9 +3305,9 @@ prt_church,24,111,5	script	#prince3	887,{
 			mes "forming a solution to test for the presense of poison. You pour";
 			mes "it on the prince's scale marks.^000000";
 			next;
-			specialeffect 192; //EF_POISONATTACK
-			specialeffect 53; //EF_POISONHIT
-			specialeffect 109; //EF_BUBBLE
+			specialeffect EF_POISONATTACK;
+			specialeffect EF_POISONHIT;
+			specialeffect EF_BUBBLE;
 			mes "^3355FF*Pssssssssh*^000000";
 			next;
 			mes "^3355FFThe solution bubbles";

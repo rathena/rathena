@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Lupus, Reddozen, Samuray22
 //===== Current Version: ===================================== 
-//= 2.1a
+//= 2.2
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -15,6 +15,7 @@
 //= 2.0 Rescripted (and re-added) Bio Ethics quest. [L0ne_W0lf]
 //= 2.1 Fixed a Resurrection -> Homunculus Resurrection. [L0ne_W0lf]
 //= 2.1a Deleted some unused Variables in Bio Ethics quest. [Samuray22]
+//= 2.2 Replaced effect numerics with constants. [L0ne_W0lf]
 //============================================================
 
 yuno_in04,33,108,4	script	Pisruik#qsk_al	883,{
@@ -678,7 +679,7 @@ yuno_in04,33,108,4	script	Pisruik#qsk_al	883,{
 				}
 				next;
 				set ALCHE_SK,9;
-				specialeffect 183; //"Pisruik" EF_SUI_EXPLOSION
+				specialeffect EF_SUI_EXPLOSION;
 				mes "[Pisruik]";
 				mes "Ah!";
 				mes "M-my face!";
@@ -782,7 +783,7 @@ yuno_in04,33,108,4	script	Pisruik#qsk_al	883,{
 				}
 				next;
 				set ALCHE_SK,9;
-				specialeffect 183; //"Pisruik" EF_SUI_EXPLOSION
+				specialeffect EF_SUI_EXPLOSION;
 				mes "[Pisruik]";
 				mes "Ah!";
 				mes "M-my face!";

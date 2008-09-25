@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 2.7
+//= 2.8
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -51,6 +51,7 @@
 //= 2.5 Added Nameless Island quest addition. [L0ne_W0lf]
 //= 2.6 Uncommented ontouchNPC label for Man Stuck in Ice. [L0ne_W0lf]
 //= 2.7 Corrected overlaping warp coordinates. [L0ne_W0lf]
+//= 2.8 Replaced effect numerics with constants. [L0ne_W0lf]
 //============================================================ 
 
 // Lost Child Quest (Prerequisite to High Priest quest)
@@ -2957,12 +2958,12 @@ ice_dun02,120,105,3	script	Man Stuck in Ice#cave	924,5,5,{
 		mes "this ice off of me!.";
 		next;
 		if (getskilllv("MG_FIREBOLT") > 0) {
-			misceffect 24;  //EF_FIREBALL
+			misceffect EF_FIREBALL;
 			mes "^3355FFYou cast Fire Bolt at";
 			mes "the ice..^000000";
 		}
 		else {
-			misceffect 1; //EF_HIT2
+			misceffect EF_HIT2;
 			mes "^3355FFYou hammer at the";
 			mes "ice with all your might.^000000";
 		}
@@ -3165,9 +3166,9 @@ ice_dun02,120,105,3	script	Man Stuck in Ice#cave	924,5,5,{
 		mes "swung it down at the ice";
 		mes "with all of your strength.^000000";
 		next;
-		misceffect 276; //EF_TEIHIT3
-		misceffect 133; //EF_FREEZE
-		misceffect 135; //EF_ICECRASH
+		misceffect EF_TEIHIT3;
+		misceffect EF_FREEZE;
+		misceffect EF_ICECRASH;
 		mes "^3355FF*Pzzzzz*";
 		mes "*CRASH!*^000000";
 		next;
@@ -3178,7 +3179,7 @@ ice_dun02,120,105,3	script	Man Stuck in Ice#cave	924,5,5,{
 		mes "After all of this";
 		mes "time! I'm free!";
 		next;
-		misceffect 56; //EF_BEGINSPELL4
+		misceffect EF_BEGINSPELL4;
 		mes "[Maheo]";
 		mes "Now, all of the monsters";
 		mes "in this cave will taste the";
@@ -3191,7 +3192,7 @@ ice_dun02,120,105,3	script	Man Stuck in Ice#cave	924,5,5,{
 		monster "ice_dun02",114,112,"Snowier",1775,1,"Man Stuck in Ice#cave::OnMyMobDead";
 		monster "ice_dun02",126,105,"Snowier",1775,1,"Man Stuck in Ice#cave::OnMyMobDead";
 		monster "ice_dun02",121,99,"Snowier",1775,1,"Man Stuck in Ice#cave::OnMyMobDead";
-		misceffect 90; //EF_LORD
+		misceffect EF_LORD;
 		killmonster "ice_dun02","Man Stuck in Ice#cave::OnMyMobDead";
 		mes "[Maheo]";
 		mes "Muhahahahahahahaha!";

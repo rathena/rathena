@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Dj-Yhn
 //===== Current Version: ===================================== 
-//= 1.5
+//= 1.6
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -32,6 +32,7 @@
 //===== Additional Comments: =================================
 //= 1.4 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
 //= 1.5 Vito'd function call for checkweight. [L0ne_W0lf]
+//= 1.6 Replaced effect numerics with constants. [L0ne_W0lf]
 //============================================================
 
 // Black Cat Ears
@@ -699,7 +700,7 @@ yuno,241,52,3	script	Old Blacksmith#hgear	813,{
 						mes "[Hatbyr Mhore]";
 						mes "Alright...";
 						mes "Let's get a groove on!";
-						specialeffect 101; //"Old Blacksmith#hgear" EF_REPAIRWEAPON
+						specialeffect EF_REPAIRWEAPON;
 						next;
 						mes "[Hatbyr Mhore]";
 						mes "There you go, buddy.";
@@ -757,7 +758,7 @@ yuno,241,52,3	script	Old Blacksmith#hgear	813,{
 					if (countitem(2255) > 0 && countitem(2286) > 0 && Zeny > 19999) {
 						mes "[Hatbyr Mhore]";
 						mes "Alright, it's time to roll!";
-						specialeffect 101; //"Old Blacksmith#hgear" EF_REPAIRWEAPON
+						specialeffect EF_REPAIRWEAPON;
 						next;
 						mes "[Hatbyr Mhore]";
 						mes "There you go, buddy. I am proud to say this is my masterpiece. I call it... 'Devil Wing Ears!'";
@@ -827,7 +828,7 @@ yuno,241,52,3	script	Old Blacksmith#hgear	813,{
 						mes "[Hatbyr Mhore]";
 						mes "Alright...";
 						mes "Let's get a groove on!";
-						specialeffect 101; //"Old Blacksmith#hgear" EF_REPAIRWEAPON
+						specialeffect EF_REPAIRWEAPON;
 						next;
 						mes "[Hatbyr Mhore]";
 						mes "There you go, buddy.";
@@ -882,7 +883,7 @@ yuno,241,52,3	script	Old Blacksmith#hgear	813,{
 					if (countitem(2254) > 0 && countitem(2286) > 0 && Zeny > 19999) {
 						mes "Alright...";
 						mes "Let's get a groove on!";
-						specialeffect 101; //"Old Blacksmith#hgear" EF_REPAIRWEAPON
+						specialeffect EF_REPAIRWEAPON;
 						next;
 						mes "[Hatbyr Mhore]";
 						mes "There you go, buddy.";
@@ -995,7 +996,7 @@ xmas,183,267,3	script	Pretty Lindsay#1	793,{
 		mes "^FF0000Lindsay put the Raccoon Hat on the ground, threw the Smokie Leaf onto the hat and mumbled some words while hugging herself.^000000";
 		next;
 		mes "^FF0000Then, suddenly with a dazzling light, the Raccoon Hat turned blue and slowly transformed into a Sea-Otter Hat.^000000";
-		specialeffect 99; // EF_FLASHER
+		specialeffect EF_FLASHER;
 		next;
 		mes "[Pretty Lindsay]";
 		mes "Phew! It's done!";
@@ -1916,7 +1917,7 @@ alde_alche,88,180,0	script	Muscle Man#Alarm Mask	748,{
 	mes "It's...";
 	mes "It's sexy time!";
 	next;
-	specialeffect 99; //EF_FLASHER
+	specialeffect EF_FLASHER;
 	setnpcdisplay "Muscle Man#Alarm Mask Man", 1193;
 	enablenpc " #Alarm Mask Man1";
 	enablenpc " #Alarm Mask Man2";
@@ -2031,7 +2032,7 @@ alde_alche,88,180,0	script	Muscle Man#Alarm Mask	748,{
 	close;
 
 OnTimer4000:
-	specialeffect 99; //"Muscle Man#Alarm Mask Man" EF_FLASHER
+	specialeffect EF_FLASHER;
 	setnpcdisplay "Muscle Man#Alarm Mask Man", 748;
 	disablenpc " #Alarm Mask Man1";
 	disablenpc " #Alarm Mask Man2";
@@ -2051,7 +2052,7 @@ OnInit:
 	end;
 
 OnAlarmState:
-	specialeffect 107; // EF_CLAYMORE
+	specialeffect EF_CLAYMORE;
 	end;
 }
 
@@ -2061,7 +2062,7 @@ OnInit:
 	end;
 
 OnAlarmState:
-	specialeffect 107; // EF_CLAYMORE
+	specialeffect EF_CLAYMORE;
 	end;
 }
 
@@ -2071,7 +2072,7 @@ OnInit:
 	end;
 
 OnAlarmState:
-	specialeffect 107; // EF_CLAYMORE
+	specialeffect EF_CLAYMORE;
 	end;
 }
 
@@ -2081,7 +2082,7 @@ OnInit:
 	end;
 
 OnAlarmState:
-	specialeffect 107; // EF_CLAYMORE
+	specialeffect EF_CLAYMORE;
 	end;
 }
 
@@ -2512,12 +2513,12 @@ OnTouch:
 		case 25: set .@x,154;	set .@y,130;	break;
 		}
 		monster "pay_dun03",.@x,.@y,"Nine Tail",1180,1,"SpawnManager#Kitsune::OnMyMobDead";
-		specialeffect 99; //EF_FLASHER
+		specialeffect EF_FLASHER;
 		disablenpc "Nine Tails#Kitsune Mask";
 		end;
 	}
 	close2;
-	specialeffect 99; //EF_FLASHER
+	specialeffect EF_FLASHER;
 	disablenpc "Nine Tails#Kitsune Mask";
 	enablenpc "Nine Tails#Kitsune Man";
 	end;
@@ -2610,7 +2611,7 @@ pay_dun03,48,84,4	script	Nine Tails#Kitsune Man	762,{
 	case 25: set .@x,154;	set .@y,130;	break;
 	}
 	monster "pay_dun03",.@x,.@y,"Nine Tail",1180,1,"SpawnManager#Kitsune::OnMyMobDead2";
-	specialeffect 106; // EF_BLASTMINEBOMB
+	specialeffect EF_BLASTMINEBOMB;
 	disablenpc "Nine Tails#Kitsune Man";
 	end;
 

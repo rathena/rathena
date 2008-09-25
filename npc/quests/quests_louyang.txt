@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Evera and The eAthena Dev Team
 //===== Current Version: ===================================== 
-//= 1.9
+//= 2.0
 //===== Compatible With: ===================================== 
 //= eAthena 1.0
 //===== Description: ========================================= 
@@ -30,6 +30,7 @@
 //=	a typo in Poison King quest.
 //= 1.8 Bug fixes. (bugreport:1025 bugreport:1062) [L0ne_W0lf]
 //= 1.9 Bug fixes/Typos. [Paradox924X]
+//= 2.0 Replaced effect numerics with constants. [L0ne_W0lf]
 //============================================================ 
 
 // Soup Quest
@@ -867,20 +868,20 @@ lou_in02,58,183,5	script	Chef Assistant#lou1	823,5,5,{
 	mes "[Jin Wei Ling]";
 	mes "When we're busy, I can use my martial arts to cook cuisine much more quickly! Hahaha~ Martial arts can be very practical!";
 	next;
-	specialeffect 55; //"Chef Assistant" EF_BEGINSPELL3
+	specialeffect EF_BEGINSPELL3;
 	mes "[Jin Wei Ling]";
 	mes "Waaa-!!!!";
 	next;
-	specialeffect 11; //"Chef Assistant" EF_ENDURE
+	specialeffect EF_ENDURE; 
 	mes "[Jin Wei Ling]";
 	mes "Waaa Taaah-!!!!!";
 	next;
-	specialeffect 121; //"Chef Assistant" EF_SONICBLOW
+	specialeffect EF_SONICBLOW;
 	mes "[Jin Wei Ling]";
 	mes "Waaa...";
 	mes "Waaa Taaah-!!!!!";
 	next;
-	specialeffect 122; //"Chef Assistant" EF_SONICBLOWHIT
+	specialeffect EF_SONICBLOWHIT;
 	mes "^3355FF* Chop chop chop chop chop *^000000";
 	next;
 	emotion e_no1;
@@ -3650,7 +3651,7 @@ lou_in02,253,45,0	script	Employee#poison	822,{
 		mes "Oh, forget about it.";
 		mes "I don't think I can ever";
 		mes "make you understand how I feel.";
-		specialeffect 11; //"Employee#poison" EF_ENDURE
+		specialeffect EF_ENDURE;
 		close2;
 		set ch_poison,6;
 		end;
@@ -3689,7 +3690,7 @@ lou_in02,253,45,0	script	Employee#poison	822,{
 			next;
 			mes "[Song Zhi Du]";
 			mes "You're still missing some of the items I need. I must have them all in order to finish making this poison!";
-			specialeffect 11; //"Employee#poison" EF_ENDURE
+			specialeffect EF_ENDURE;
 			close;
 		}
 		mes "[Song Zhi Du]";
@@ -3701,7 +3702,7 @@ lou_in02,253,45,0	script	Employee#poison	822,{
 		mes "10 Venom Canine,";
 		mes "10 Empty Potion,";
 		mes "30 Green Potion^000000.";
-		specialeffect 11; //"Employee#poison" EF_ENDURE
+		specialeffect EF_ENDURE;
 		close;
 	}
 	else if (ch_par > 9 && ch_poison == 8) {
@@ -3739,17 +3740,17 @@ lou_in02,253,45,0	script	Employee#poison	822,{
 			next;
 			mes "[Song Zhi Du]";
 			mes "Then, I add Green Herb extract, poison extracted from Bee Sting and a Large Jellopy into the liquid! Finally, I must heat them all!";
-			specialeffect 12; //"Employee#poison" EF_BEGINSPELL
+			specialeffect EF_BEGINSPELL;
 			next;
 			mes "[Song Zhi Du]";
 			mes "Finally, I have to carefully heat the mixture and collect it all into a Potion Bottle.";
-			specialeffect 125; //"Employee#poison" EF_ENCHANTPOISON
-			specialeffect 124; //"Employee#poison" EF_VENOMDUST
+			specialeffect EF_ENCHANTPOISON;
+			specialeffect EF_VENOMDUST;
 			next;
 			mes "[Song Zhi Du]";
 			mes "Now, I've got to do this just right. This is a very delicate procedure...";
 			next;
-			specialeffect 17; //"Employee#poison" EF_MAGNUMBREAK
+			specialeffect EF_MAGNUMBREAK;
 			emotion e_omg;
 			mes "[Song Zhi Du]";
 			mes "No!! I failed again! ^666666*Sigh...*^000000 And I spent a long time preparing all of those materials...";
@@ -3807,20 +3808,20 @@ lou_in02,253,45,0	script	Employee#poison	822,{
 				mes "[Song Zhi Du]";
 				mes "Then, I add Green Herb extract,";
 				mes "a poison extracted from Bee Sting and a Large Jellopy!";
-				specialeffect 12; //"Employee#poison" EF_BEGINSPELL
+				specialeffect EF_BEGINSPELL;
 				next;
 				mes "[Song Zhi Du]";
 				mes "Finally, I have to carefully heat the mixture and collect it all into a Potion Bottle.";
-				specialeffect 125; //"Employee#poison" EF_ENCHANTPOISON
-				specialeffect 124; //"Employee#poison" EF_VENOMDUST
+				specialeffect EF_ENCHANTPOISON;
+				specialeffect EF_VENOMDUST;
 				next;
 				mes "[Song Zhi Du]";
 				mes "*Phew...*";
 				mes "Did...";
 				mes "Did I make it?";
 				next;
-				specialeffect 20; //"Employee#poison" EF_PATTACK
-				specialeffect 53; //"Employee#poison" EF_POISONHIT
+				specialeffect EF_PATTACK;
+				specialeffect EF_POISONHIT; 
 				emotion e_omg;
 				mes "[Song Zhi Du]";
 				mes "Hahaha~!";
@@ -3855,19 +3856,19 @@ lou_in02,253,45,0	script	Employee#poison	822,{
 			next;
 			mes "[Song Zhi Du]";
 			mes "Then I add Green Herb extract, a poison extracted from Bee Sting and a Large Jellopy!";
-			specialeffect 12; //"Employee#poison" EF_BEGINSPELL
+			specialeffect EF_BEGINSPELL;
 			next;
 			mes "[Song Zhi Du]";
 			mes "Then I must carefully heat the mixture, and gather it all into a potion bottle.";
-			specialeffect 125; //"Employee#poison" EF_ENCHANTPOISON
-			specialeffect 124; //"Employee#poison" EF_VENOMDUST
+			specialeffect EF_ENCHANTPOISON;
+			specialeffect EF_VENOMDUST;
 			next;
 			mes "[Song Zhi Du]";
 			mes "*Phew...*";
 			mes "Did...";
 			mes "Did I make it?";
 			next;
-			specialeffect 17; //"Employee#poison" EF_MAGNUMBREAK
+			specialeffect EF_MAGNUMBREAK;
 			emotion e_omg;
 			mes "[Song Zhi Du]";
 			mes "NO! I... I've failed again! And I spent a long time getting everything ready...";
@@ -4251,7 +4252,7 @@ lou_fild01,225,350,0	script	 #fire	139,{
 	end;
 
 OnClaymore:
-	specialeffect 106; //" #fire" EF_BLASTMINEBOMB
+	specialeffect EF_BLASTMINEBOMB;
 	end;
 }
 

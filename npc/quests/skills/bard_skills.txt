@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Lupus, Reddozen; L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.5
+//= 1.6
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -24,6 +24,7 @@
 //= 1.4a Checks the proper variable now. (bard_q -> gef_bard_q) [L0ne_W0lf]
 //= 1.5 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
 //= 1.6 Added missing checkweights. [L0ne_W0lf]
+//= 1.6 Replaced effect numerics with constants. [L0ne_W0lf]
 //============================================================
 
 prontera,174,328,3	script	Young Man#bard_q1	89,3,3,{
@@ -428,7 +429,7 @@ morocc_in,169,72,7	script	Spiteful-Looking Bard#bs	741,3,3,{
 				mes "Kkkkuuurrirrreeee";
 				mes "Oooumm guandlejdl";
 				mes "Woooo Ei ei ei ei......";
-				specialeffect 295; //EF_TALK_FROSTJOKE
+				specialeffect EF_TALK_FROSTJOKE;
 				next;
 				mes "[Riott]";
 				mes "Pang's Voice is used to";
@@ -486,7 +487,7 @@ morocc_in,169,72,7	script	Spiteful-Looking Bard#bs	741,3,3,{
 				mes "voices yours, is this voice";
 				mes "mine. Head spinning, head";
 				mes "spinning, head spinning...!''";
-				specialeffect2 295; // EF_TALK_FROSTJOKE
+				specialeffect2 EF_TALK_FROSTJOKE;
 				delitem 7277,1; //Munak_Doll
 				skill "BA_PANGVOICE",1,0;
 				set qskill_bard,9;
@@ -568,7 +569,7 @@ morocc_in,169,72,7	script	Spiteful-Looking Bard#bs	741,3,3,{
 				mes "voices yours, is this voice";
 				mes "mine. Head spinning, head";
 				mes "spinning, head spinning...!''";
-				specialeffect2 295; // EF_TALK_FROSTJOKE
+				specialeffect2 EF_TALK_FROSTJOKE;
 				delitem 574,5; //Egg
 				skill 1010,1,0;
 				set qskill_bard,9;

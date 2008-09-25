@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Riotblade and L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.3
+//= 1.4
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -25,6 +25,7 @@
 //= 1.2 Changed variable to "gef_bards_q" to avoid job quest conflict. [L0ne_W0lf]
 //=	Progress prior to the 5th+ step will be lost. Job quest takes priority.
 //= 1.3 Fixed experience gains to match upcoming rate adjustments. [SinSloth]
+//= 1.4 Replaced effect numerics with constants. [L0ne_W0lf]
 //============================================================ 
 
 geffen,132,38,3	script	Bard#2	51,{
@@ -64,7 +65,7 @@ geffen,132,38,3	script	Bard#2	51,{
 		mes "Goddess, Idun.";
 		mes "Keeper of the apples of youth";
 		mes "Goddess of immortality.^000000";
-		specialeffect2 18; //EF_STEAL
+		specialeffect2 EF_STEAL;
 		next;
 		mes "^483D8BEvery god never grows old.";
 		mes "Idun, the wife of Bragi,";
@@ -86,7 +87,7 @@ geffen,132,38,3	script	Bard#2	51,{
 		mes "Loki was careless once,";
 		mes "and made her lost to the gods.";
 		mes "He was forced to get her back.^000000";
-		specialeffect2 18; //EF_STEAL
+		specialeffect2 EF_STEAL;
 		next;
 		mes "^483D8BMy goddess stands";
 		mes "In the field of Asgard";
@@ -95,7 +96,7 @@ geffen,132,38,3	script	Bard#2	51,{
 		mes "You will be blessed";
 		mes "By every god...^000000";
 		next;
-		specialeffect 58; //EF_BEGINSPELL6
+		specialeffect EF_BEGINSPELL6;
 		mes "^483D8BIf you share the";
 		mes "Apple of youth with me";
 		mes "Even a bite of it with";
@@ -104,7 +105,7 @@ geffen,132,38,3	script	Bard#2	51,{
 		mes "You will be blessed";
 		mes "By every god...^000000";
 		next;
-		specialeffect2 77; //EF_RESURRECTION
+		specialeffect2 EF_RESURRECTION;
 		mes "^3355FFWhile listening to his song, you feel at ease, and your thoughts become clearer. You believe that you see the vision of an angel, and you gain some experience points.^000000";
 		set gef_bard_q,31;
 		if (BaseLevel < 56) getexp 4500,0;
@@ -154,7 +155,7 @@ geffen,132,38,3	script	Bard#2	51,{
 		mes "Goddess, Idun.";
 		mes "Keeper of the apples of youth";
 		mes "Goddess of immortality.^000000";
-		specialeffect2 18; //EF_STEAL
+		specialeffect2 EF_STEAL;
 		next;
 		mes "^483D8BEvery god never grows old.";
 		mes "Idun, the wife of Bragi,";
@@ -176,7 +177,7 @@ geffen,132,38,3	script	Bard#2	51,{
 		mes "Loki was careless once,";
 		mes "and made her lost to the gods.";
 		mes "He was forced to get her back.^000000";
-		specialeffect2 18; //EF_STEAL
+		specialeffect2 EF_STEAL;
 		next;
 		mes "^483D8BMy goddess stands";
 		mes "In the field of Asgard";
@@ -185,7 +186,7 @@ geffen,132,38,3	script	Bard#2	51,{
 		mes "You will be blessed";
 		mes "By every god...^000000";
 		next;
-		specialeffect 58; //EF_BEGINSPELL6
+		specialeffect EF_BEGINSPELL6;
 		mes "^483D8BIf you share the";
 		mes "Apple of youth with me";
 		mes "Even a bite of it with";
@@ -194,7 +195,7 @@ geffen,132,38,3	script	Bard#2	51,{
 		mes "You will be blessed";
 		mes "By every god...^000000";
 		next;
-		specialeffect2 77; //EF_RESURRECTION
+		specialeffect2 EF_RESURRECTION;
 		mes "^3355FFWhile listening to his song, you feel at ease, and your thoughts become clearer. You believe that you see the vision of an angel, and you gain some experience points.^000000";
 		set gef_bard_q,30;
 		if (BaseLevel < 56) getexp 4500,0;
@@ -250,7 +251,7 @@ geffen,132,38,3	script	Bard#2	51,{
 		mes "Now, let me cast a spell...";
 		mes "*Mumble mumble...*";
 		next;
-		specialeffect2 71; //EF_CONE
+		specialeffect2 EF_CONE;
 		mes "^3355FFOn your left wrist, a crescent shaped mark glowing with a silver light appeared. It's only noticeable when you concentrate on finding it, but it might clearly appear under the moonlight.^000000";
 		next;
 		mes "[Errende]";
@@ -1777,7 +1778,7 @@ morocc,134,111,3	script	Bard#3	741,{
 				mes "Are one. 12 petals, our";
 				mes "Love finally blossoms.^000000";
 				next;
-				specialeffect2 127; //EF_POISONREACT2
+				specialeffect2 EF_POISONREACT2;
 				mes "^3355FFAfter the song, Kino smiles at you. You feel a sharp pain on your wrist. On the spot where the silver crescent was, you see a tiny black cross.^000000";
 				next;
 				mes "[Kino Kitty]";
