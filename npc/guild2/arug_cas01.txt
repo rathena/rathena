@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
-//= 1.6
+//= 1.7
 //===== Compatible With: =====================================
 //= eAthena SVN
 //===== Description: =========================================
@@ -19,6 +19,7 @@
 //=     Treasure will now be killed before spawning.
 //= 1.5 Fixed error with control devices. [L0ne_W0lf]
 //= 1.6 Implemented new Wall System. [Zephyrus]
+//= 1.7 Replaced effect numerics with constants. [L0ne_W0lf]
 //============================================================
 
 arug_cas01,1,1,0	script	Manager#aru01_02	111,{
@@ -692,7 +693,7 @@ arug_cas01,211,234,0	script	1st Guardian Stone#aru01	844,{
 					else {
 						switch(rand(1,3)) {
 						case 1:
-							specialeffect 54; //"1st Guardian Stone#aru01" EF_BEGINSPELL2
+							specialeffect EF_BEGINSPELL2;
 							mes "^3355FFThe Gemstones must";
 							mes "be arranged in the correct";
 							mes "order according to their";
@@ -715,13 +716,13 @@ arug_cas01,211,234,0	script	1st Guardian Stone#aru01	844,{
 								mes "^3355FFYou placed the Blue Gemstone.^000000";
 								set .@nice,.@nice+10;
 								set .@roof0,.@roof0 + 1;
-								specialeffect 18; //"1st Guardian Stone#aru01" EF_STEAL
+								specialeffect EF_STEAL;
 								next;
 								break;
 							}
 							break;
 						case 2:
-							specialeffect 225; //"1st Guardian Stone#aru01" EF_VOLCANO
+							specialeffect EF_VOLCANO;
 							mes "^3355FFThe Gemstones must";
 							mes "be arranged in the correct";
 							mes "order according to their";
@@ -732,7 +733,7 @@ arug_cas01,211,234,0	script	1st Guardian Stone#aru01	844,{
 								mes "^3355FFYou placed the Red Gemstone.^000000";
 								set .@nice,.@nice+10;
 								set .@roof0,.@roof0 + 1;
-								specialeffect 18; //"1st Guardian Stone#aru01" EF_STEAL
+								specialeffect EF_STEAL;
 								next;
 								break;
 							case 2:
@@ -750,7 +751,7 @@ arug_cas01,211,234,0	script	1st Guardian Stone#aru01	844,{
 							}
 							break;
 						case 3:
-							specialeffect 56; //"1st Guardian Stone#aru01" EF_BEGINSPELL4
+							specialeffect EF_BEGINSPELL4;
 							mes "^3355FFThe Gemstones must";
 							mes "be arranged in the correct";
 							mes "order according to their";
@@ -767,7 +768,7 @@ arug_cas01,211,234,0	script	1st Guardian Stone#aru01	844,{
 								mes "^3355FFYou placed the Yellow Gemstone.^000000";
 								set .@nice,.@nice+10;
 								set .@roof0,.@roof0 + 1;
-								specialeffect 18; //"1st Guardian Stone#aru01" EF_STEAL
+								specialeffect EF_STEAL;
 								next;
 								break;
 							case 3:
@@ -807,7 +808,7 @@ arug_cas01,211,234,0	script	1st Guardian Stone#aru01	844,{
 							delitem 716,5; //Red_Gemstone
 							close2;
 							donpcevent "#aru01_df01::OnEnable";
-							specialeffect 135; //"1st Guardian Stone#aru01" EF_ICECRASH
+							specialeffect EF_ICECRASH;
 							disablenpc "1st Guardian Stone#aru01";
 							setarray $agit_ar01[0],0;
 							set .@df_all,$agit_ar01[0]+$agit_ar01[1];
@@ -853,7 +854,7 @@ OnInit:
 
 OnEnable:
 	enablenpc "1st Guardian Stone#aru01";
-	specialeffect 247; //"1st Guardian Stone#aru01" EF_MAPPILLAR2
+	specialeffect EF_MAPPILLAR2;
 	end;
 
 OnDisable:
@@ -1001,7 +1002,7 @@ arug_cas01,308,189,0	script	2nd Guardian Stone#aru01	844,{
 					else {
 						switch(rand(1,3)) {
 						case 1:
-							specialeffect 54; //"2nd Guardian Stone#aru01" EF_BEGINSPELL2
+							specialeffect EF_BEGINSPELL2;
 							mes "^3355FFThe Gemstones must";
 							mes "be arranged in the correct";
 							mes "order according to their";
@@ -1024,13 +1025,13 @@ arug_cas01,308,189,0	script	2nd Guardian Stone#aru01	844,{
 								mes "^3355FFYou placed the Blue Gemstone.^000000";
 								set .@nice,.@nice+10;
 								set .@roof0,.@roof0 + 1;
-								specialeffect 18; //"2nd Guardian Stone#aru01" EF_STEAL
+								specialeffect EF_STEAL;
 								next;
 								break;
 							}
 							break;
 						case 2:
-							specialeffect 225; //"2nd Guardian Stone#aru01" EF_VOLCANO
+							specialeffect EF_VOLCANO;
 							mes "^3355FFThe Gemstones must";
 							mes "be arranged in the correct";
 							mes "order according to their";
@@ -1041,7 +1042,7 @@ arug_cas01,308,189,0	script	2nd Guardian Stone#aru01	844,{
 								mes "^3355FFYou placed the Red Gemstone.^000000";
 								set .@nice,.@nice+10;
 								set .@roof0,.@roof0 + 1;
-								specialeffect 18; //"2nd Guardian Stone#aru01" EF_STEAL
+								specialeffect EF_STEAL;
 								next;
 								break;
 							case 2:
@@ -1059,7 +1060,7 @@ arug_cas01,308,189,0	script	2nd Guardian Stone#aru01	844,{
 							}
 							break;
 						case 3:
-							specialeffect 56; //"2nd Guardian Stone#aru01" EF_BEGINSPELL4
+							specialeffect EF_BEGINSPELL4;
 							mes "^3355FFThe Gemstones must";
 							mes "be arranged in the correct";
 							mes "order according to their";
@@ -1076,7 +1077,7 @@ arug_cas01,308,189,0	script	2nd Guardian Stone#aru01	844,{
 								mes "^3355FFYou placed the Yellow Gemstone.^000000";
 								set .@nice,.@nice+10;
 								set .@roof0,.@roof0 + 1;
-								specialeffect 18; //"2nd Guardian Stone#aru01" EF_STEAL
+								specialeffect EF_STEAL;
 								next;
 								break;
 							case 3:
@@ -1116,7 +1117,7 @@ arug_cas01,308,189,0	script	2nd Guardian Stone#aru01	844,{
 							delitem 716,5; //Red_Gemstone
 							close2;
 							donpcevent "#aru01_df02::OnEnable";
-							specialeffect 135; //"2nd Guardian Stone#aru01" EF_ICECRASH
+							specialeffect EF_ICECRASH;
 							disablenpc "2nd Guardian Stone#aru01";
 							setarray $agit_ar01[1],0;
 							set .@df_all,$agit_ar01[0]+$agit_ar01[1];
@@ -1162,7 +1163,7 @@ OnInit:
 
 OnEnable:
 	enablenpc "2nd Guardian Stone#aru01";
-	specialeffect 247; //"2nd Guardian Stone#aru01" EF_MAPPILLAR2
+	specialeffect EF_MAPPILLAR2;
 	end;
 
 OnDisable:
@@ -1310,7 +1311,7 @@ arug_cas01,247,52,0	script	Control Device01#aru01	111,{
 									mes "reinforced with wood.^000000";
 									set .@rp_temp,.@rp_temp + 1;
 									set .@ro_of02,.@ro_of02 + 1;
-									specialeffect2 101; // EF_REPAIRWEAPON
+									specialeffect2 EF_REPAIRWEAPON;
 									next;
 									break;
 								case 2:
@@ -1361,7 +1362,7 @@ arug_cas01,247,52,0	script	Control Device01#aru01	111,{
 									mes "like this will work.^000000";
 									set .@rp_temp,.@rp_temp + 1;
 									set .@ro_of02,.@ro_of02 + 1;
-									specialeffect2 101; // EF_REPAIRWEAPON
+									specialeffect2 EF_REPAIRWEAPON;
 									next;
 									break;
 								}
@@ -1385,7 +1386,7 @@ arug_cas01,247,52,0	script	Control Device01#aru01	111,{
 									mes "is starting to look more solid.^000000";
 									set .@rp_temp,.@rp_temp + 1;
 									set .@ro_of02,.@ro_of02 + 1;
-									specialeffect2 101; // EF_REPAIRWEAPON
+									specialeffect2 EF_REPAIRWEAPON;
 									next;
 									break;
 								case 3:
@@ -1426,7 +1427,7 @@ arug_cas01,247,52,0	script	Control Device01#aru01	111,{
 									mes "much of the gate's damage.^000000";
 									set .@rp_temp,.@rp_temp + 1;
 									set .@ro_of02,.@ro_of02 + 1;
-									specialeffect2 101; // EF_REPAIRWEAPON
+									specialeffect2 EF_REPAIRWEAPON;
 									next;
 									break;
 								case 4:
@@ -1545,7 +1546,7 @@ arug_cas01,118,131,0	script	Control Device02#aru01	111,{
 									mes "reinforced with wood.^000000";
 									set .@rp_temp,.@rp_temp + 1;
 									set .@ro_of02,.@ro_of02 + 1;
-									specialeffect2 101; // EF_REPAIRWEAPON
+									specialeffect2 EF_REPAIRWEAPON;
 									next;
 									break;
 								case 2:
@@ -1598,7 +1599,7 @@ arug_cas01,118,131,0	script	Control Device02#aru01	111,{
 									mes "like this will work.^000000";
 									set .@rp_temp,.@rp_temp + 1;
 									set .@ro_of02,.@ro_of02 + 1;
-									specialeffect2 101; // EF_REPAIRWEAPON
+									specialeffect2 EF_REPAIRWEAPON;
 									next;
 									break;
 								}
@@ -1622,7 +1623,7 @@ arug_cas01,118,131,0	script	Control Device02#aru01	111,{
 									mes "is starting to look more solid.^000000";
 									set .@rp_temp,.@rp_temp + 1;
 									set .@ro_of02,.@ro_of02 + 1;
-									specialeffect2 101; // EF_REPAIRWEAPON
+									specialeffect2 EF_REPAIRWEAPON;
 									next;
 									break;
 								case 3:
@@ -1663,7 +1664,7 @@ arug_cas01,118,131,0	script	Control Device02#aru01	111,{
 									mes "much of the gate's damage.^000000";
 									set .@rp_temp,.@rp_temp + 1;
 									set .@ro_of02,.@ro_of02 + 1;
-									specialeffect2 101; // EF_REPAIRWEAPON
+									specialeffect2 EF_REPAIRWEAPON;
 									next;
 									break;
 								case 4:
@@ -1784,7 +1785,7 @@ arug_cas01,82,172,0	script	Control Device03#aru01	111,{
 									mes "reinforced with wood.^000000";
 									set .@rp_temp,.@rp_temp + 1;
 									set .@ro_of02,.@ro_of02 + 1;
-									specialeffect2 101; // EF_REPAIRWEAPON
+									specialeffect2 EF_REPAIRWEAPON;
 									next;
 									break;
 								case 2:
@@ -1837,7 +1838,7 @@ arug_cas01,82,172,0	script	Control Device03#aru01	111,{
 									mes "like this will work.^000000";
 									set .@rp_temp,.@rp_temp + 1;
 									set .@ro_of02,.@ro_of02 + 1;
-									specialeffect2 101; // EF_REPAIRWEAPON
+									specialeffect2 EF_REPAIRWEAPON;
 									next;
 									break;
 								}
@@ -1861,7 +1862,7 @@ arug_cas01,82,172,0	script	Control Device03#aru01	111,{
 									mes "is starting to look more solid.^000000";
 									set .@rp_temp,.@rp_temp + 1;
 									set .@ro_of02,.@ro_of02 + 1;
-									specialeffect2 101; // EF_REPAIRWEAPON
+									specialeffect2 EF_REPAIRWEAPON;
 									next;
 									break;
 								case 3:
@@ -1902,7 +1903,7 @@ arug_cas01,82,172,0	script	Control Device03#aru01	111,{
 									mes "much of the gate's damage.^000000";
 									set .@rp_temp,.@rp_temp + 1;
 									set .@ro_of02,.@ro_of02 + 1;
-									specialeffect2 101; // EF_REPAIRWEAPON
+									specialeffect2 EF_REPAIRWEAPON;
 									next;
 									break;
 								case 4:

@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //=  erKURITA, Au{R}oN (Translated by Alan), $ephiroth
 //===== Current Version: ===================================== 
-//= 1.7b
+//= 1.8
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -37,6 +37,7 @@
 //=	Corrected Lucius so he checks the donation variable. (bugreport:1103) [L0ne_W0lf]
 //= 1.7a Another fix to Lucius. (bugreport:1118) [L0ne_W0lf]
 //= 1.7b Another fix to Lucius (trivial). (bugreport:1125)
+//= 1.8 Replaced effect numerics with constants. [L0ne_W0lf]
 //=============================================================
 
 lighthalzen,198,285,5	script	Jiwon#zen5	862,{
@@ -2285,7 +2286,7 @@ lhz_in01,166,55,3	script	#crazy4u	111,{
 	mes "happen to touch contains";
 	mes "an amazing amount of dark";
 	mes "power, causing you to drop it.^000000";
-	specialeffect 196; //"#crazy4u" EF_CURSEATTACK
+	specialeffect EF_CURSEATTACK;
 	close;
 }
 

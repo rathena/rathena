@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
-//= 1.1
+//= 1.2
 //===== Compatible With: =====================================
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -12,6 +12,7 @@
 //===== Additional Comments: =================================
 //= 1.0 First version. [L0ne_W0lf]
 //= 1.1 Fixed small official bug. [L0ne_W0lf]
+//= 1.2 Replaced effect numerics with constants. [L0ne_W0lf]
 //============================================================
 
 turbo_room,91,135,3	script	Normal mode - 16 person	124,{
@@ -1319,7 +1320,7 @@ turbo_n_16,253,364,0	duplicate(Warp_n_16)	Warp#n_16_7	-1,2,2
 
 turbo_n_16,307,55,0	script	trap_n16#F1::TurboTrap_n16	-1,1,1,{
 OnTouch:
-	specialeffect 106; //"trap_e4#F1" EF_BLASTMINEBOMB
+	specialeffect EF_BLASTMINEBOMB;
 	set .@HitTrap,10;
 	if (.@HitTrap > 0 && .@HitTrap < 4)
 		percentheal -1,0;
@@ -1374,7 +1375,7 @@ turbo_n_16,332,36,0	duplicate(TurboTrap_n16)	trap_n16#F41	139,1,1
 
 turbo_n_16,336,56,0	script	trap_n16#F42::TurboTrap_n16_2	139,1,1,{
 OnTouch:
-	specialeffect 108; //"trap_e4#F42" EF_FREEZING
+	specialeffect EF_FREEZING;
 	set .@HitTrap,10;
 	if (.@HitTrap > 0 && .@HitTrap < 4)
 		percentheal -1,0;

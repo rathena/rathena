@@ -5,7 +5,7 @@
 //= DNett123 (1.1 - 1.5)
 //= L0ne_w0lf
 //===== Current Version: =====================================
-//= 3.4
+//= 3.5
 //===== Compatible With: =====================================
 //= eAthena SVN
 //===== Description: =========================================
@@ -33,6 +33,7 @@
 //= 3.3 Just a small fix up on the Bartender. [L0ne_W0lf]
 //= 3.3a Just a little typo error. [Samuray22]
 //= 3.4 Added missing checkweights. [L0ne_W0lf]
+//= 3.5 Replaced effect numerics with constants. [L0ne_W0lf]
 //============================================================
 
 // Jawaii
@@ -914,7 +915,7 @@ jawaii_in,28,124,0	script	Bartender#jaw	46,{
 				mes "throat is burning.";
 				next;
 				mes "^3355FFYou gulped it down.^000000";
-				specialeffect2 124; //EF_VENOMDUST
+				specialeffect2 EF_VENOMDUST;
 				percentheal -20,0;
 				next;
 				break;
@@ -936,7 +937,7 @@ jawaii_in,28,124,0	script	Bartender#jaw	46,{
 				mes "^3355FFYou drank it sip by sip,";
 				mes "savoring its rich,";
 				mes "robust flavor.^000000";
-				specialeffect2 118; //EF_FIREIVY
+				specialeffect2 EF_FIREIVY;
 				percentheal -20,0;
 				next;
 				break;
@@ -960,7 +961,7 @@ jawaii_in,28,124,0	script	Bartender#jaw	46,{
 				mes "Lick the sugar before taking a sip. That will make it taste a little sweeter and will soften the taste.";
 				next;
 				mes "^3355FFYou carefully took a sip.^000000";
-				specialeffect2 38; //EF_DECAGILITY
+				specialeffect2 EF_DECAGILITY;
 				percentheal -20,0;
 				next;
 				break;

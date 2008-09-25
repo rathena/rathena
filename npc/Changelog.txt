@@ -1,6 +1,9 @@
 Date		Added
 ======
 2008/09/25
+	* Rev. 13238 Continues replacing of specialeffect/2 numerics with constants. [L0ne_W0lf]
+	- A lot of files still remain, but they don't have the proper
+	  effect names in commented in beside the ID. ;P
 	* Rev. 13237 Replacing specialeffect/2 numerics with constants in quests. [L0ne_W0lf]
 2008/09/23
 	* Rev. 13233 Fixed error in Megingjard seal quest. (bugreport:2261) [L0ne_W0lf]

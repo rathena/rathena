@@ -1241,7 +1241,7 @@ turbo_e_8,253,364,0	duplicate(Warp_e_8)	Warp#e_8_7	-1,2,2
 
 turbo_e_8,307,55,0	script	trap_e8#F1::TurboTrap_e8	-1,1,1,{
 OnTouch:
-	specialeffect 106; //"trap_e4#F1" EF_BLASTMINEBOMB
+	specialeffect EF_BLASTMINEBOMB;
 	set .@HitTrap,10;
 	if (.@HitTrap > 0 && .@HitTrap < 4)
 		percentheal -1,0;
@@ -1296,7 +1296,7 @@ turbo_e_8,332,36,0	duplicate(TurboTrap_e8)	trap_e8#F41	139,1,1
 
 turbo_e_8,336,56,0	script	trap_e8#F42::TurboTrap_e8_2	-1,1,1,{
 OnTouch:
-	specialeffect 108; //"trap_e4#F42" EF_FREEZING
+	specialeffect EF_FREEZING;
 	set .@HitTrap,10;
 	if (.@HitTrap > 0 && .@HitTrap < 4)
 		percentheal -1,0;

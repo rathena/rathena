@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Brainstorm
 //===== Current Version: =====================================
-//= 1.1
+//= 1.2
 //===== Compatible With: =====================================
 //= eAthena SVN
 //===== Description: =========================================
@@ -21,6 +21,7 @@
 //===== Additional Comments: =================================
 //= 1.0 First semi-working conversion. [Brainstorm]
 //= 1.1 Refined Brainstorm's conversion. [L0ne_W0lf]
+//= 1.2 Replaced effect numerics with constants. [L0ne_W0lf]
 //============================================================
 
 // Louise's Santa Hat (Event 1)
@@ -95,7 +96,7 @@ xmas_in,89,92,5	script	Louise Kim#designer	714,{
 					mes "~With the number one designer, Louise Kim,~";
 					mes "~you are the most blessed soul.~";
 					emotion e_ho;
-					misceffect 42; //EF_BLESSING
+					misceffect EF_BLESSING;
 					next;
 					mes "-Immediately, she puts Rosary in an-";
 					mes "-unknown liquid and dissolves it.-";
@@ -107,7 +108,7 @@ xmas_in,89,92,5	script	Louise Kim#designer	714,{
 					mes "~With the number one designer, Louise Kim,~";
 					mes "~you are the luckiest soul.~";
 					emotion e_ho;
-					misceffect 75; //EF_GLORIA
+					misceffect EF_GLORIA;
 					next;
 					mes "-She starts sewing the hat with -";
 					mes "-a Cactus Needle and a thread.-";
@@ -118,7 +119,7 @@ xmas_in,89,92,5	script	Louise Kim#designer	714,{
 					mes "~The most talented disigner,~";
 					mes "~L_O_U_I_S_E K_I_M~";
 					emotion e_lv;
-					misceffect 91; //EF_BENEDICTIO
+					misceffect EF_BENEDICTIO;
 					next;
 					mes "[Designer Louise Kim]";
 					mes "Here!! All done~~";
@@ -272,21 +273,21 @@ prontera,155,285,3	script	Enjoy#enjoy	753,{
 		case 3:
 			mes "[Enjoy]";
 			mes "......";
-			specialeffect 42; //EF_BLESSING
+			specialeffect EF_BLESSING;
 			next;
 			mes "[Enjoy]";
 			mes ".............";
-			specialeffect 37; //EF_INCAGIDEX
+			specialeffect EF_INCAGIDEX;
 			next;
 			mes "[Enjoy]";
 			mes "........................";
-			specialeffect 254; //EF_STEELBODY
+			specialeffect EF_STEELBODY;
 			next;
 			mes "[Enjoy]";
 			mes "........................";
 			mes "Get lost,you devil!!!!!!";
-			specialeffect 328; //EF_BEGINASURA
-			specialeffect2 1; //EF_HIT2
+			specialeffect EF_BEGINASURA;
+			specialeffect2 EF_HIT2;
 			set Hp,Hp/2;
 			set Hp,Hp/2;
 			close2;
@@ -938,7 +939,7 @@ prontera,156,242,0	script	Oholy#pron::OholyDup	79,{
 		mes "[Oholy]";
 		mes "Joy to the world!";
 		mes "The Lord has come.";
-		specialeffect 75; //EF_GLORIA
+		specialeffect EF_GLORIA;
 		next;
 		if (Sex) {
 			mes "[Oholy]";
@@ -1150,7 +1151,7 @@ prontera,156,242,0	script	Oholy#pron::OholyDup	79,{
 			mes "~wherever you are;~";
 			mes "~Tomorrow is Christmas~";
 			mes "~beneath every star.~";
-			specialeffect 75; //EF_GLORIA
+			specialeffect EF_GLORIA;
 			next;
 			mes "-Your mind is overwhelmed by her singing-";
 			mes "-You started humming then,-";
@@ -1161,7 +1162,7 @@ prontera,156,242,0	script	Oholy#pron::OholyDup	79,{
 			mes "~and tomorrow you'll see~";
 			mes "~Every wish, one and all,~";
 			mes "~waiting under the tree.~";
-			specialeffect2 75; //EF_GLORIA
+			specialeffect2 EF_GLORIA;
 			next;
 			mes "[Oholy]";
 			mes "Oh, my. You have a wonderful";

@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
-//= 1.2
+//= 1.3
 //===== Compatible With: =====================================
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -13,6 +13,7 @@
 //= 1.0 First version. [L0ne_W0lf]
 //= 1.1 Fixed small official bug. [L0ne_W0lf]
 //= 1.2 Fixed end timer not enabling warp. (bugreport:1682) [L0ne_W0lf]
+//= 1.3 Replaced effect numerics with constants. [L0ne_W0lf]
 //============================================================
 
 turbo_room,72,132,3	script	Solo Mode#n1	124,{
@@ -1163,7 +1164,7 @@ turbo_n_1,253,364,0	duplicate(Warp_n_1)	Warp#n_1_7	-1,2,2,{
 
 turbo_n_1,307,55,0	script	trap_n1#F1::TurboTrap_n1	139,1,1,{
 OnTouch:
-	specialeffect 106; //"trap_n1#F1" EF_BLASTMINEBOMB
+	specialeffect EF_BLASTMINEBOMB;
 	set .@HitTrap,10;
 	if (.@HitTrap > 0 && .@HitTrap < 4)
 		percentheal -1,0;
@@ -1218,7 +1219,7 @@ turbo_n_1,332,36,0	duplicate(TurboTrap_n1)	trap_n1#F41	139,1,1
 
 turbo_n_1,336,56,0	script	trap_n1#F42::TurboTrap_n1_2	-1,1,1,{
 OnTouch:
-	specialeffect 108; //"trap_n1#F42" EF_FREEZING
+	specialeffect EF_FREEZING;
 	set .@HitTrap,10;
 	if (.@HitTrap > 0 && .@HitTrap < 4)
 		percentheal -1,0;

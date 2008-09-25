@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
-//= 1.1
+//= 1.2
 //===== Compatible With: =====================================
 //= eAthena SVN (Trunk, r12752+)
 //===== Description: =========================================
@@ -15,6 +15,7 @@
 //===== Additional Comments: =================================
 //= 1.0 First version. Please report bugs. [L0ne_W0lf]
 //= 1.1 Corrected a minor typo. [L0ne_W0lf]
+//= 1.2 Replaced effect numerics with constants. [L0ne_W0lf]
 //============================================================
 
 //============================================================
@@ -7486,14 +7487,14 @@ OnDisable:
 OnTouchNPC:
 	if ($@mon_race_2_1 == 0) {
 		emotion e_lv;
-		specialeffect 68; //"#poring1" EF_MVP
+		specialeffect EF_MVP;
 		mapannounce "p_track02","Monster 1 has reached the Finish Line!",bc_map,"0x66FFCC";
 		set $@mon_race_2_1,1;
 		donpcevent "#poring1::OnDisable";
 	}
 	else {
 		emotion e_lv;
-		specialeffect 68; //"#poring1" EF_MVP
+		specialeffect EF_MVP;
 		mapannounce "p_track02","The race is over! Monster 1 has reached the Finish Line!",bc_map,"0x66FFCC";
 		set $@mon_race_2_2,1;
 		donpcevent "#poring1::OnDisable";
@@ -7530,14 +7531,14 @@ OnDisable:
 OnTouchNPC:
 	if ($@mon_race_2_1 == 0) {
 		emotion e_ho;
-		specialeffect 68; //"#lunatic1" EF_MVP
+		specialeffect EF_MVP;
 		mapannounce "p_track02","Monster 2 has reached the Finish Line!",bc_map,"0x66FFCC";
 		set $@mon_race_2_1,2;
 		donpcevent "#lunatic1::OnDisable";
 	}
 	else {
 		emotion e_ho;
-		specialeffect 68; //"#lunatic1" EF_MVP
+		specialeffect EF_MVP;
 		mapannounce "p_track02","The race is over! Monster 2 has reached the Finish Line!",bc_map,"0x66FFCC";
 		set $@mon_race_2_2,2;
 		donpcevent "#lunatic1::OnDisable";
@@ -7574,14 +7575,14 @@ OnDisable:
 OnTouchNPC:
 	if ($@mon_race_2_1 == 0) {
 		emotion e_heh;
-		specialeffect 68; //"#savagebebe1" EF_MVP
+		specialeffect EF_MVP;
 		mapannounce "p_track02","Monster 3 has reached the Finish Line!",bc_map,"0x66FFCC";
 		set $@mon_race_2_1,3;
 		donpcevent "#savagebebe1::OnDisable";
 	}
 	else {
 		emotion e_heh;
-		specialeffect 68; //"#savagebebe1" EF_MVP
+		specialeffect EF_MVP;
 		mapannounce "p_track02","The race is over! Monster 3 has reached the Finish Line!",bc_map,"0x66FFCC";
 		set $@mon_race_2_2,3;
 		donpcevent "#savagebebe1::OnDisable";
@@ -7618,14 +7619,14 @@ OnDisable:
 OnTouchNPC:
 	if ($@mon_race_2_1 == 0) {
 		emotion e_kis;
-		specialeffect 68; //"#desertwolf1" EF_MVP
+		specialeffect EF_MVP;
 		mapannounce "p_track02","Monster 4 has reached the Finish Line!",bc_map,"0x66FFCC";
 		set $@mon_race_2_1,4;
 		donpcevent "#desertwolf1::OnDisable";
 	}
 	else {
 		emotion e_kis;
-		specialeffect 68; //"#desertwolf1" EF_MVP
+		specialeffect EF_MVP;
 		mapannounce "p_track02","The race is over! Monster 4 has reached the Finish Line!",bc_map,"0x66FFCC";
 		set $@mon_race_2_2,4;
 		donpcevent "#desertwolf1::OnDisable";
@@ -7662,14 +7663,14 @@ OnDisable:
 OnTouchNPC:
 	if ($@mon_race_2_1 == 0) {
 		emotion e_gg;
-		specialeffect 68; //"#deviruchi1" EF_MVP
+		specialeffect EF_MVP;
 		mapannounce "p_track02","Monster 5 has reached the Finish Line!",bc_map,"0x66FFCC";
 		set $@mon_race_2_1,5;
 		donpcevent "#deviruchi1::OnDisable";
 	}
 	else {
 		emotion e_gg;
-		specialeffect 68; //"#deviruchi1" EF_MVP
+		specialeffect EF_MVP;
 		mapannounce "p_track02","The race is over! Monster 5 has reached the Finish Line!",bc_map,"0x66FFCC";
 		set $@mon_race_2_2,5;
 		donpcevent "#deviruchi1::OnDisable";
@@ -7706,14 +7707,14 @@ OnDisable:
 OnTouchNPC:
 	if ($@mon_race_2_1 == 0) {
 		emotion e_pif;
-		specialeffect 68; //"#baphomet1" EF_MVP
+		specialeffect EF_MVP;
 		mapannounce "p_track02","Monster 6 has reached the Finish Line!",bc_map,"0x66FFCC";
 		set $@mon_race_2_1,6;
 		donpcevent "#baphomet1::OnDisable";
 	}
 	else {
 		emotion e_pif;
-		specialeffect 68; //"#baphomet1" EF_MVP
+		specialeffect EF_MVP;
 		mapannounce "p_track02","The race is over! Monster 6 has reached the Finish Line!",bc_map,"0x66FFCC";
 		set $@mon_race_2_2,6;
 		donpcevent "#baphomet1::OnDisable";
@@ -12296,7 +12297,7 @@ p_track02,32,45,3	script	Eccentric Scholar#double	755,{
 	mes "I must complete";
 	mes "my calculations!";
 	mes "Now, where was I...?";
-	specialeffect 107; //"Eccentric Scholar#double" EF_CLAYMORE
+	specialeffect EF_CLAYMORE;
 	emotion e_an;
 	close;
 }
