@@ -1,6 +1,7 @@
 Date		Added
 ======
 2008/09/27
+	* Rev. 13242 Implemented fixes for The Sign quest until my rewrite is finished. (bugreport:2269) [L0ne_W0lf]
 	* Continues replacing of specialeffect/2 numerics with constants. [Samuray22]
 	* Corrected an If to continue the President's Quest. (bugreport:2276)
 2008/09/25
