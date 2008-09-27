@@ -11027,7 +11027,7 @@ static bool skill_parse_row_skilldb(char* split[], int columns, int current)
 	||  (id >= HM_SKILLRANGEMIN && id <= HM_SKILLRANGEMAX)
 	||  (id >= MC_SKILLRANGEMIN && id <= MC_SKILLRANGEMAX) )
 	{
-		ShowWarning("skill_parse_row_skilldb: Skill id %d is forbidden (interferes with guild/homun/mercenary skill mapping)!\n");
+		ShowWarning("skill_parse_row_skilldb: Skill id %d is forbidden (interferes with guild/homun/mercenary skill mapping)!\n", id);
 		return false;
 	}
 
