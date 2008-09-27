@@ -2318,12 +2318,15 @@ void clif_changelook(struct block_list *bl,int type,int val)
 {
 	unsigned char buf[16];
 	struct map_session_data* sd = NULL;
+	struct status_change* sc;
 	struct view_data* vd;
+	enum send_target target = AREA;
 	nullpo_retv(bl);
 
 	sd = BL_CAST(BL_PC, bl);
+	sc = status_get_sc(bl);
 	vd = status_get_viewdata(bl);
-	//nullpo_ret(vd);	
+	//nullpo_ret(vd);
 	if( vd ) //temp hack to let Warp Portal change appearance
 	switch(type)
 	{
@@ -2395,12 +2398,16 @@ void clif_changelook(struct block_list *bl,int type,int val)
 		break;
 	}
 
+	// prevent leaking the presence of GM-hidden objects
+	if( sc->option&OPTION_INVISIBLE )
+		target = SELF;
+
 #if PACKETVER < 4
 	WBUFW(buf,0)=0xc3;
 	WBUFL(buf,2)=bl->id;
 	WBUFB(buf,6)=type;
 	WBUFB(buf,7)=val;
-	clif_send(buf,packet_len(0xc3),bl,AREA);
+	clif_send(buf,packet_len(0xc3),bl,target);
 #else
 	WBUFW(buf,0)=0x1d7;
 	WBUFL(buf,2)=bl->id;
@@ -2413,7 +2420,7 @@ void clif_changelook(struct block_list *bl,int type,int val)
 		WBUFW(buf,7)=val;
 		WBUFW(buf,9)=0;
 	}
-	clif_send(buf,packet_len(0x1d7),bl,AREA);
+	clif_send(buf,packet_len(0x1d7),bl,target);
 #endif
 }
 
