@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= SinSloth
 //===== Current Version: ===================================== 
-//= 1.6
+//= 1.7
 //===== Compatible With: ===================================== 
 //= eAthena
 //===== Description: ========================================= 
@@ -16,6 +16,7 @@
 //= 1.4 Minor Touchups to quest. [L0ne_W0lf]
 //= 1.5 Fixed missing close2 in Rebarev Doug. [L0ne_w0lf]
 //= 1.6 Corrected mismatched variables. [L0ne_W0lf]
+//= 1.7 Replaced effect numerics with constants. [Samuray22]
 //============================================================
 
 prt_castle,44,151,0	script	Rebarev Doug	56,{
@@ -3142,28 +3143,28 @@ niflheim,109,254,0	script	Egnigem	796,{
 			mes "I'm going to";
 			mes "imbue you with the";
 			mes "^666666last vestiges of my strength^000000...";
-			specialeffect 57;
-			specialeffect2 152;
+			specialeffect EF_BEGINSPELL5;
+			specialeffect2 EF_HOLYHIT;
 			next;
 			mes "[Egnigem]";
 			mes "May the heavens";
 			mes "answer me as I call upon the";
 			mes "light of justice that empowers the defenders of truth, and threaten the enemies of peace.";
-			specialeffect 58;
-			specialeffect2 152;
+			specialeffect EF_BEGINSPELL6;
+			specialeffect2 EF_HOLYHIT;
 			next;
 			mes "[Egnigem]";
 			mes "May you always shine with";
 			mes "the light of truth. Let the light within you eradicate the shadows";
 			mes "of deception, fear and malice.";
-			specialeffect 58;
-			specialeffect2 152;
+			specialeffect EF_BEGINSPELL6;
+			specialeffect2 EF_HOLYHIT;
 			next;
 			mes "[Egnigem]";
 			mes "By the holy power";
 			mes "invested in me, I humbly bestow upon you my remaining strength. Fight honorably, and do not lose sight of righteousness.";
-			specialeffect 60;
-			specialeffect2 245;
+			specialeffect EF_LOCKON;
+			specialeffect2 EF_HOLYCROSS;
 			set god_eremes,27;
 			set BaseExp,BaseExp+1220358;
 			close;
@@ -3180,28 +3181,28 @@ niflheim,109,254,0	script	Egnigem	796,{
 			mes "I'm going to";
 			mes "imbue you with the";
 			mes "^666666last vestiges of my strength^000000...";
-			specialeffect 57;
-			specialeffect2 152;
+			specialeffect EF_BEGINSPELL5;
+			specialeffect2 EF_HOLYHIT;
 			next;
 			mes "[Egnigem]";
 			mes "May the heavens";
 			mes "answer me as I call upon the";
 			mes "light of justice that empowers the defenders of truth, and threaten the enemies of peace.";
-			specialeffect 58;
-			specialeffect2 152;
+			specialeffect EF_BEGINSPELL6;
+			specialeffect2 EF_HOLYHIT;
 			next;
 			mes "[Egnigem]";
 			mes "May you always shine with";
 			mes "the light of truth. Let the light within you eradicate the shadows";
 			mes "of deception, fear and malice.";
-			specialeffect 58;
-			specialeffect2 152;
+			specialeffect EF_BEGINSPELL6;
+			specialeffect2 EF_HOLYHIT;
 			next;
 			mes "[Egnigem]";
 			mes "By the holy power";
 			mes "invested in me, I humbly bestow upon you my remaining strength. Fight honorably, and do not lose sight of righteousness.";
-			specialeffect 60;
-			specialeffect2 245;
+			specialeffect EF_LOCKON;
+			specialeffect2 EF_HOLYCROSS;
 			set god_eremes,27;
 			getexp 1220358,0;
 			close;

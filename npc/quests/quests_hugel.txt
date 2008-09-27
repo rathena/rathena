@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= MasterOfMuppets & SinSloth
 //===== Current Version: =====================================
-//= 1.8
+//= 1.9
 //===== Compatible With: =====================================
 //= eAthena
 //===== Description: =========================================
@@ -21,6 +21,7 @@
 //= 1.6 Fixed bad NPC header data to comply with rev. 11603. [L0ne_W0lf]
 //= 1.7 Corrected locations of warpinside#1. (DarkValmir) [L0ne_W0lf]
 //= 1.8 Added missing checkweight. [L0ne_W0lf]
+//= 1.9 Replaced effect numerics with constants. [Samuray22]
 //============================================================
 
 //-------------------------------------------------------------------------
@@ -474,7 +475,7 @@ OnSweat:
 	end;
 
 OnEffect:
-	specialeffect 174;
+	specialeffect EF_CHANGECOLD;
 	end;
 
 }
@@ -703,7 +704,7 @@ OnTouch:
 		mes "Old Blue Box deep";
 		mes "inside the drawer.^000000";
 		close2;
-		specialeffect 71;
+		specialeffect EF_CONE;
 		set hg_herb,13;
 		getitem 603,1; //Old blue box
 		getexp 50000,0;
@@ -2665,17 +2666,17 @@ hu_in01,256,40,3	script	Herico	897,{
 			mes "[Herico]";
 			mes "Then...SPIT THEM OUT!";
 			percentheal -5,0;
-			specialeffect2 3;
+			specialeffect2 EF_HIT4;
 			next;
 			mes "[Herico]";
 			mes "SPIT THEM OUT!";
 			percentheal -5,0;
-			specialeffect2 3;
+			specialeffect2 EF_HIT4;
 			next;
 			mes "[Herico]";
 			mes "I SAID, SPIT THEM OUUUUUT!";
 			percentheal -5,0;
-			specialeffect2 3;
+			specialeffect2 EF_HIT4;
 			next;
 			mes "["+strcharinfo(0)+"]";
 			mes "Err...I was just kidding...";
@@ -3825,16 +3826,16 @@ hu_fild06,168,359,3	script	Moks Mushrooms#Mush1	111,{
 			mes "- *Snip Snip* -";
 			mes "- *Snip Snip* -";
 			mes "- *Snip Snip* -";
-			specialeffect2 71;
+			specialeffect2 EF_CONE;
 			next;
 			if(rand(1,5) > 4)
 			{
 				mes "- You were being clumsy and broke the mushrooms. You have failed in gathering the mushrooms. -";
-				specialeffect2 194;
+				specialeffect2 EF_STUNATTACK;
 				close;
 			}
 			mes "- You have successfully gathered mushrooms. -";
-			specialeffect2 364;
+			specialeffect2 EF_VALLENTINE2;
 			set hg_tre,hg_tre+1;
 			if(hg_tre == 11)
 				mes "Collected Moks Mushroom Solution: 1ea ";
@@ -3889,16 +3890,16 @@ hu_fild06,194,341,3	script	Moks Mushrooms#Mush2	111,{
 			mes "- *Snip Snip* -";
 			mes "- *Snip Snip* -";
 			mes "- *Snip Snip* -";
-			specialeffect2 71;
+			specialeffect2 EF_CONE;
 			next;
 			if(rand(1,5) > 4)
 			{
 				mes "- You were being clumsy and broke the mushrooms. You have failed in gathering the mushrooms. -";
-				specialeffect2 194;
+				specialeffect2 EF_STUNATTACK;
 				close;
 			}
 			mes "- You have successfully gathered mushrooms. -";
-			specialeffect2 364;
+			specialeffect2 EF_VALLENTINE2;
 			set hg_tre,hg_tre+1;
 			if(hg_tre == 11)
 				mes "Collected Moks Mushroom Solution: 1ea ";
@@ -3953,16 +3954,16 @@ hu_fild06,198,339,3	script	Moks Mushrooms#Mush3	111,{
 			mes "- *Snip Snip* -";
 			mes "- *Snip Snip* -";
 			mes "- *Snip Snip* -";
-			specialeffect2 71;
+			specialeffect2 EF_CONE;
 			next;
 			if(rand(1,5) > 4)
 			{
 				mes "- You were being clumsy and broke the mushrooms. You have failed in gathering the mushrooms. -";
-				specialeffect2 194;
+				specialeffect2 EF_STUNATTACK;
 				close;
 			}
 			mes "- You have successfully gathered mushrooms. -";
-			specialeffect2 364;
+			specialeffect2 EF_VALLENTINE2;
 			set hg_tre,hg_tre+1;
 			if(hg_tre == 11)
 				mes "Collected Moks Mushroom Solution: 1ea ";
@@ -4017,16 +4018,16 @@ hugel,209,163,3	script	Clam#C1	111,{
 			mes "- *Snip Snip* -";
 			mes "- *Snip Snip* -";
 			mes "- *Snip Snip* -";
-			specialeffect2 71;
+			specialeffect2 EF_CONE;
 			next;
 			if(rand(1,5) > 4)
 			{
 				mes "- Clams are too strong to open. You have failed in gathering Clam Flesh. -";
-				specialeffect2 194;
+				specialeffect2 EF_STUNATTACK;
 				close;
 			}
 			mes "- You have successfully gathered Clam Flesh. -";
-			specialeffect2 364;
+			specialeffect2 EF_VALLENTINE2;
 			set hg_tre,hg_tre+1;
 			if(hg_tre == 21)
 				mes "Collected Clam Flesh: 1ea ";
@@ -4081,16 +4082,16 @@ hugel,203,166,3	script	Clam#C2	111,{
 			mes "- *Snip Snip* -";
 			mes "- *Snip Snip* -";
 			mes "- *Snip Snip* -";
-			specialeffect2 71;
+			specialeffect2 EF_CONE;
 			next;
 			if(rand(1,5) > 4)
 			{
 				mes "- Clams are too strong to open. You have failed in gathering Clam Flesh. -";
-				specialeffect 194;
+				specialeffect EF_STUNATTACK;
 				close;
 			}
 			mes "- You have successfully gathered Clam Flesh. -";
-			specialeffect2 364;
+			specialeffect2 EF_VALLENTINE2;
 			set hg_tre,hg_tre+1;
 			if(hg_tre == 21)
 				mes "Collected Clam Flesh: 1ea ";
@@ -4145,16 +4146,16 @@ hugel,217,158,3	script	Clam#C3	111,{
 			mes "- *Snip Snip* -";
 			mes "- *Snip Snip* -";
 			mes "- *Snip Snip* -";
-			specialeffect2 71;
+			specialeffect2 EF_CONE;
 			next;
 			if(rand(1,5) > 4)
 			{
 				mes "- Clams are too strong to open. You have failed in gathering Clam Flesh. -";
-				specialeffect2 194;
+				specialeffect2 EF_STUNATTACK;
 				close;
 			}
 			mes "- You have successfully gathered Clam Flesh. -";
-			specialeffect2 364;
+			specialeffect2 EF_VALLENTINE2;
 			set hg_tre,hg_tre+1;
 			if(hg_tre == 21)
 				mes "Collected Clam Flesh: 1ea ";
@@ -4209,16 +4210,16 @@ hugel,204,150,3	script	Clam#C4	111,{
 			mes "- *Snip Snip* -";
 			mes "- *Snip Snip* -";
 			mes "- *Snip Snip* -";
-			specialeffect2 71;
+			specialeffect2 EF_CONE;
 			next;
 			if(rand(1,5) > 4)
 			{
 				mes "- Clams are too strong to open. You have failed in gathering Clam Flesh. -";
-				specialeffect2 194;
+				specialeffect2 EF_STUNATTACK;
 				close;
 			}
 			mes "- You have successfully gathered Clam Flesh. -";
-			specialeffect2 364;
+			specialeffect2 EF_VALLENTINE2;
 			set hg_tre,hg_tre+1;
 			if(hg_tre == 21)
 				mes "Collected Clam Flesh: 1ea ";
@@ -4273,16 +4274,16 @@ hu_fild06,155,309,1	script	Moks Bugs#Bug1	1053,{
 			mes "- *Whizz Whizz Bzzzz* -";
 			mes "- *Whizz Whizz*-";
 			mes "- *Whizz Whizz*-";
-			specialeffect2 71;
+			specialeffect2 EF_CONE;
 			next;
 			if(rand(1,5) > 4)
 			{
 				mes "- The bugs quickly ran away. You have failed to gather their shells. -";
-				specialeffect2 194;
+				specialeffect2 EF_STUNATTACK;
 				close;
 			}
 			mes "- You have successfully gathered Moks Bugs Shells. -";
-			specialeffect2 364;
+			specialeffect2 EF_VALLENTINE2;
 			set hg_tre,hg_tre+1;
 			if(hg_tre == 31)
 				mes "Collected Moks Bugs Shells: 1ea ";
@@ -4337,16 +4338,16 @@ hu_fild06,218,320,1	script	Moks Bugs#Bug2	1053,{
 			mes "- *Whizz Whizz Bzzzz* -";
 			mes "- *Whizz Whizz*-";
 			mes "- *Whizz Whizz*-";
-			specialeffect2 71;
+			specialeffect2 EF_CONE;
 			next;
 			if(rand(1,5) > 4)
 			{
 				mes "- The bugs quickly ran away. You have failed to gather their shells. -";
-				specialeffect2 194;
+				specialeffect2 EF_STUNATTACK;
 				close;
 			}
 			mes "- You have successfully gathered Moks Bugs Shells. -";
-			specialeffect2 364;
+			specialeffect2 EF_VALLENTINE2;
 			set hg_tre,hg_tre+1;
 			if(hg_tre == 31)
 				mes "Collected Moks Bugs Shells: 1ea ";
@@ -4401,16 +4402,16 @@ hu_fild06,249,329,1	script	Moks Bugs#Bug3	1053,{
 			mes "- *Whizz Whizz Bzzzz* -";
 			mes "- *Whizz Whizz*-";
 			mes "- *Whizz Whizz*-";
-			specialeffect2 71;
+			specialeffect2 EF_CONE;
 			next;
 			if(rand(1,5) > 4)
 			{
 				mes "- The bugs quickly ran away. You have failed to gather their shells. -";
-				specialeffect2 194;
+				specialeffect2 EF_STUNATTACK;
 				close;
 			}
 			mes "- You have successfully gathered Moks Bugs Shells. -";
-			specialeffect2 364;
+			specialeffect2 EF_VALLENTINE2;
 			set hg_tre,hg_tre+1;
 			if(hg_tre == 31)
 				mes "Collected Moks Bugs Shells: 1ea ";
@@ -4470,11 +4471,11 @@ hu_fild06,218,373,1	script	Moks Bugs#Bug4	1053,{
 			if(rand(1,5) > 4)
 			{
 				mes "- The bugs quickly ran away. You have failed to gather their shells. -";
-				specialeffect2 194;
+				specialeffect2 EF_STUNATTACK;
 				close;
 			}
 			mes "- You have successfully gathered Moks Bugs Shells. -";
-			specialeffect2 364;
+			specialeffect2 EF_VALLENTINE2;
 			set hg_tre,hg_tre+1;
 			if(hg_tre == 31)
 				mes "Collected Moks Bugs Shells: 1ea ";

@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 2.8
+//= 2.9
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -52,6 +52,7 @@
 //= 2.6 Uncommented ontouchNPC label for Man Stuck in Ice. [L0ne_W0lf]
 //= 2.7 Corrected overlaping warp coordinates. [L0ne_W0lf]
 //= 2.8 Replaced effect numerics with constants. [L0ne_W0lf]
+//= 2.9 Replaced effect numerics with constants. [Samuray22]
 //============================================================ 
 
 // Lost Child Quest (Prerequisite to High Priest quest)
@@ -3386,7 +3387,7 @@ rachel,265,98,3	script	Hamion#aru	930,{
 		mes "[Hamion]";
 		mes "Here we go...!";
 		next;
-		specialeffect2 71; //EF_CONE
+		specialeffect2 EF_CONE;
 		mes "^3355FF*Pzzzz*^000000";
 		next;
 		mes "[Hamion]";
@@ -5591,7 +5592,7 @@ ra_temin,277,159,3	script	High Priest Zhed#rachel	932,{
 		mes "you in your travels. Peace";
 		mes "be with you, "+strcharinfo(0)+".";
 		set lost_boy,13;
-		specialeffect2 253;
+		specialeffect2 EF_ABSORBSPIRITS;
 		getexp 900000,0;
 		goto L_End;
 	}
@@ -6022,7 +6023,7 @@ ra_temin,277,159,3	script	High Priest Zhed#rachel	932,{
 				set MISC_QUEST,MISC_QUEST | 8192;
 				set ra_tem_q,0;
 				cutin "",255;
-				specialeffect2 253;
+				specialeffect2 EF_ABSORBSPIRITS;
 				getexp 900000,600000;
 				end;
 

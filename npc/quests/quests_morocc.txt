@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 
-//= 2.2
+//= 2.3
 //===== Compatible With: ===================================== 
 //= eAthena 7.15 +
 //===== Description: ========================================= 
@@ -24,6 +24,7 @@
 //= 2.0a Corrected a Typo error ";;". [Samuray22]
 //= 2.1 Assassins will now get their request item. (bugreport:1220) [L0ne_W0lf]
 //= 2.2 Updated Binocular and Stop Post quests. [L0ne_W0lf]
+//= 2.3 Replaced effect numerics with constants. [Samuray22]
 //============================================================ 
 
 //==================================================================================//
@@ -6850,8 +6851,8 @@ moc_fild10,281,148,1	script	Upturned Spot#water	111,{
 			mes "the Rough Wind, and both";
 			mes "objects violent glow in";
 			mes "conflict against each other.^000000";
-			specialeffect 54;
-			specialeffect 56;
+			specialeffect EF_BEGINSPELL2;
+			specialeffect EF_BEGINSPELL4;
 			next;
 			cutin "mocseal_ice02.bmp",2;
 			mes "^3355FFSuddenly, the crest sprayed";
@@ -6859,7 +6860,7 @@ moc_fild10,281,148,1	script	Upturned Spot#water	111,{
 			mes "quickly in mid-air: it seems";
 			mes "the Wind element neutralized";
 			mes "this crest's Water element.^000000";
-			specialeffect 72;
+			specialeffect EF_SPHERE;
 			delitem 996,1;
 			set mao_request,15;
 			next;
@@ -6904,7 +6905,7 @@ moc_fild10,281,148,1	script	Upturned Spot#water	111,{
 			mes "suddenly causing the air";
 			mes "to chill and raising the";
 			mes "waves in the oasis.^000000";
-			specialeffect 54;
+			specialeffect EF_BEGINSPELL2;
 			delitem 995,1;
 			set mao_request,114;
 			next;
@@ -6991,15 +6992,15 @@ moc_fild19,21,33,1	script	Unturned Spot#wind	111,{
 			mes "^3355FFThe Wind elemental crest";
 			mes "quickly responds to the";
 			mes "Great Nature stone.^000000";
-			specialeffect 56;
-			specialeffect 57;
+			specialeffect EF_BEGINSPELL4;
+			specialeffect EF_BEGINSPELL5;
 			next;
 			cutin "mocseal_wind02.bmp",2;
 			mes "^3355FFThe Wind and Earth";
 			mes "neutralized each other,";
 			mes "causing the power of the";
 			mes "Wind in this area to stabilize.^000000";
-			specialeffect 72;
+			specialeffect EF_SPHERE;
 			delitem 997,1;
 			set mao_request,13;
 			next;
@@ -7107,7 +7108,7 @@ moc_fild19,21,33,1	script	Unturned Spot#wind	111,{
 			mes "Rough Wind, causing the";
 			mes "crest to shine brighter and";
 			mes "the wind to blow stronger.^000000";
-			specialeffect 56;
+			specialeffect EF_BEGINSPELL4;
 			delitem 996,1;
 			set mao_request,112;
 			next;
@@ -7166,8 +7167,8 @@ moc_fild12,280,36,1	script	Unturned Spot#earth	111,{
 			mes "and the crest begin to glow";
 			mes "intensely, as if their powers";
 			mes "were conflicting.^000000";
-			specialeffect 57;
-			specialeffect 55;
+			specialeffect EF_BEGINSPELL5;
+			specialeffect EF_BEGINSPELL3;
 			next;
 			mes "^3355FFThe Flame Heart then";
 			mes "quickly vanishes with";
@@ -7175,7 +7176,7 @@ moc_fild12,280,36,1	script	Unturned Spot#earth	111,{
 			mes "This power of this crest";
 			mes "is now stabilized.^000000";
 			cutin "mocseal_earth02.bmp",2;
-			specialeffect 72;
+			specialeffect EF_SPHERE;
 			delitem 994,1;
 			set mao_request,14;
 			next;
@@ -7226,7 +7227,7 @@ moc_fild12,280,36,1	script	Unturned Spot#earth	111,{
 			mes "causes tremors in the";
 			mes "ground and sand to flow";
 			mes "towards the crest.^000000";
-			specialeffect 57;
+			specialeffect EF_BEGINSPELL5;
 			delitem 997,1;
 			set mao_request,113;
 			next;
@@ -7281,15 +7282,15 @@ moc_fild07,192,166,1	script	Unturned Spot#fire	111,{
 			mes "it begins to pulse with";
 			mes "light as the crest glows";
 			mes "brighter and brighter.^000000";
-			specialeffect 55;
-			specialeffect 54;
+			specialeffect EF_BEGINSPELL3;
+			specialeffect EF_BEGINSPELL2;
 			next;
 			mes "^3355FFThe air in the area";
 			mes "suddenly chills, and";
 			mes "your Mystic Frozen";
 			mes "bursts into cold vapor.^000000";
 			cutin "mocseal_fire02.bmp",2;
-			specialeffect 72;
+			specialeffect EF_SPHERE;
 			delitem 995,1;
 			set mao_request,16;
 			next;
@@ -7332,7 +7333,7 @@ moc_fild07,192,166,1	script	Unturned Spot#fire	111,{
 			mes "Heart, and the crest";
 			mes "begins to shine as the";
 			mes "air around you heats up.^000000";
-			specialeffect 55;
+			specialeffect EF_BEGINSPELL3;
 			cutin "mocseal_fire01.bmp",2;
 			delitem 994,1;
 			set mao_request,115;
@@ -8463,7 +8464,7 @@ OnTimer5000:
 	end;
 	
 OnTimer6000:
-	specialeffect 90;
+	specialeffect EF_LORD;
 	end;
 	
 OnTimer6500:
@@ -8831,7 +8832,7 @@ OnEmotion2:
 	end;
 	
 OnSpell:
-	specialeffect 54;
+	specialeffect EF_BEGINSPELL2;
 	end;
 }
 
@@ -8865,11 +8866,11 @@ OnEmotion:
 	end;
 	
 OnSpell:
-	specialeffect 54;
+	specialeffect EF_BEGINSPELL2;
 	end;
 	
 OnSpell2:
-	specialeffect 90;
+	specialeffect EF_LORD;
 	end;
 }
 
@@ -8888,7 +8889,7 @@ OnEmotion:
 	end;
 	
 OnSpell:
-	specialeffect 54;
+	specialeffect EF_BEGINSPELL2;
 	end;
 }
 
@@ -8907,7 +8908,7 @@ OnEmotion:
 	end;
 	
 OnSpell:
-	specialeffect 90;
+	specialeffect EF_LORD;
 	end;
 }
 
@@ -9478,7 +9479,7 @@ OnTimer5000:
 	end;
 	
 OnTimer6000:
-	specialeffect 90;
+	specialeffect EF_LORD;
 	end;
 	
 OnTimer6500:
@@ -9857,7 +9858,7 @@ OnEmotion2:
 	end;
 	
 OnSpell:
-	specialeffect 54;
+	specialeffect EF_BEGINSPELL2;
 	end;
 }
 
@@ -9891,11 +9892,11 @@ OnEmotion:
 	end;
 	
 OnSpell:
-	specialeffect 54;
+	specialeffect EF_BEGINSPELL2;
 	end;
 	
 OnSpell2:
-	specialeffect 90;
+	specialeffect EF_LORD;
 	end;
 }
 
@@ -9914,7 +9915,7 @@ OnEmotion:
 	end;
 	
 OnSpell:
-	specialeffect 54;
+	specialeffect EF_BEGINSPELL2;
 	end;
 }
 
@@ -9933,7 +9934,7 @@ OnEmotion:
 	end;
 	
 OnSpell:
-	specialeffect 90;
+	specialeffect EF_LORD;
 	end;
 }
 

@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= SinSloth
 //===== Current Version: ===================================== 
-//= 1.3a
+//= 1.4
 //===== Compatible With: ===================================== 
 //= eAthena
 //===== Description: ========================================= 
@@ -15,6 +15,7 @@
 //= 1.2 Updated several aspects of the script. [L0ne_W0lf]
 //= 1.3 Minor Touchups to quest. [L0ne_W0lf]
 //= 1.3a Changed some " + name +" to strcharinfo(0) [Samuray22]
+//= 1.4 Replaced effect numerics with constants. [Samuray22]
 //============================================================
 
 prt_fild08,175,374,3	script	Bard#brising	51,{
@@ -3163,7 +3164,7 @@ OnEmoGasp:
 que_god02,175,55,4	script	#doppelganger2	739,{
 
 OnCast:
-	specialeffect 59;
+	specialeffect EF_BEGINSPELL7;
 	end;
 }
 
@@ -3174,7 +3175,7 @@ OnEmoGasp:
 	end;
 
 OnCast:
-	specialeffect 59;
+	specialeffect EF_BEGINSPELL7;
 	end;
 }
 
@@ -3412,7 +3413,7 @@ que_god02,178,127,3	script	Valkyrie#1	811,{
 			next;
 			mes "[Valkyrie]";
 			mes "Your soul and spirit will be reborn in Valhalla as a holy warrior preparing for the holy war.";
-			specialeffect2 42;
+			specialeffect2 EF_BLESSING;
 			next;
 			mes "[Valkyrie]";
 			mes "And...";
@@ -3497,7 +3498,7 @@ que_god02,178,127,3	script	Valkyrie#1	811,{
 			mes "[Valkyrie]";
 			mes "Your soul and";
 			mes "spirit will be reborn in Valhalla as a holy warrior preparing for the holy war.";
-			specialeffect2 42;
+			specialeffect2 EF_BLESSING;
 			next;
 			mes "[Valkyrie]";
 			mes "And...";
@@ -4338,7 +4339,7 @@ mjolnir_09,85,129,0	script	#brisindwarf3	111,3,3,{
 		close;
 	}
 	if ((god_brising > 42) && (god_brising < 50)) {
-		specialeffect 109;
+		specialeffect EF_BUBBLE;
 		mes "[Echoing Voice]";
 		mes "Alfrik: confirmed.";
 		mes "Dvalin: confirmed.";
@@ -4354,25 +4355,25 @@ mjolnir_09,85,129,0	script	#brisindwarf3	111,3,3,{
 		next;
 		switch(select("20!","How should I know?!","40!","42!" )) {
 		case 1:
-			specialeffect 109;
+			specialeffect EF_BUBBLE;
 			mes "[Echoing Voice]";
 			mes "Failed.";
 			mes "Failed...";
 			close;
 		case 2:
-			specialeffect 109;
+			specialeffect EF_BUBBLE;
 			mes "[Echoing Voice]";
 			mes "Failed.";
 			mes "Failed...";
 			close;
 		case 3:
-			specialeffect 109;
+			specialeffect EF_BUBBLE;
 			mes "[Echoing Voice]";
 			mes "Failed.";
 			mes "Failed...";
 			close;
 		case 4:
-			specialeffect 109;
+			specialeffect EF_BUBBLE;
 			mes "[Echoing Voice]";
 			mes "...Confirmed.";
 			mes "Shutting down barrier.";
@@ -4486,7 +4487,7 @@ mjolnir_09,87,129,3	script	Berling#1	826,{
 				next;
 				mes "[Berling]";
 				mes "Memorize all five lines of this song exactly. Now take this golden teardrop and please seek out Grer.";
-				specialeffect2 84;
+				specialeffect2 EF_IMPOSITIO;
 				set god_brising,44;
 				close2;
 				hideonnpc "Berling#1";

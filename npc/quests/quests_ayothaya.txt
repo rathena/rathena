@@ -3,7 +3,7 @@
 //===== By ===================================================
 //= Fredzilla, MasterOfMuppets
 //===== Version ==============================================
-//= 2.2
+//= 2.3
 //===== Compatible With ======================================
 //= eAthena SVN
 //===== Description ==========================================
@@ -28,6 +28,7 @@
 //= 2.0a Corrected a Typo error ";;". [Samuray22]
 //= 2.1 Added missing checkweights. [L0ne_W0lf]
 //= 2.2 Replaced effect numerics with constants. [L0ne_W0lf]
+//= 2.3 Replaced effect numerics with constants. [Samuray22]
 //============================================================
 
 // Ayothaya Ring Quest
@@ -661,7 +662,7 @@ ayo_dun02,91,264,3	script	Haggard Man	841,{
 				mes "I thank you for curing me. Now, it's time for me to resume my training.";
 				next;
 				mes "[" +strcharinfo(0)+ "]";
-				specialeffect 120;
+				specialeffect EF_CLOAKING;
 				mes "Wait, I can't let you go! You don't know how hard it was for me to find you! You can't just leave!";
 				next;
 				mes "[Annon]";

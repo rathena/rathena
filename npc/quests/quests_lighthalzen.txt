@@ -71,6 +71,8 @@
 //=     Changed temp char vars to normal vars, that unset at end.
 //=     Tube just makes sure you have 1 or more permits.
 //= 4.4 Replaced effect numerics with constants. [L0ne_W0lf]
+//= 4.5 Corrected an Incorrect check of the Shinokas_Quest. (bugreport:2276) [Samuray22]
+//=	  Replaced effect numerics with constants.
 //============================================================ 
 
 lighthalzen,1,1,7	script	sneakAddSuber	-1,{
@@ -4627,13 +4629,13 @@ L_NoText:
 				mes "You must remember the";
 				mes "locations that I am about";
 				mes "to show you. Get ready...";
-				specialeffect2 22;
+				specialeffect2 EF_SIGHT;
 				next;
 				mes "[Elder]";
 				mes "Yaaaaappp ---!";
-				specialeffect2 62;
-				specialeffect2 225;
-				specialeffect2 36;
+				specialeffect2 EF_SIGHTRASHER;
+				specialeffect2 EF_VOLCANO;
+				specialeffect2 EF_PORTAL;
 				next;
 				mes "[Elder]";
 				mes "There! The locations";
@@ -4755,11 +4757,11 @@ L_NoText:
 		mes "......";
 		mes ".........";
 		mes "Hoooooooo...";
-		specialeffect2 88;
+		specialeffect2 EF_SUFFRAGIUM;
 		next;
 		mes "[Elder]";
 		mes "Yaaaaapp ---!";
-		specialeffect2 86;
+		specialeffect2 EF_ASPERSIO;
 		next;
 		mes "[Elder]";
 		mes "Whew! I've managed";
@@ -4829,7 +4831,7 @@ lhz_in03,32,162,3	script	Crippled Girl	53,{
 			mes "old pendant";
 			mes "into her hands.^000000";
 			next;
-			specialeffect2 259;
+			specialeffect2 EF_MAPPILLAR3;
 			mes "...............";
 			next;
 			mes "["+strcharinfo(0)+"]";
@@ -5028,7 +5030,7 @@ lhz_in03,32,162,3	script	Crippled Girl	53,{
 							mes "old pendant";
 							mes "into her hands.^000000";
 							next;
-							specialeffect2 259;
+							specialeffect2 EF_MAPPILLAR3;
 							mes "......";
 							next;
 							mes "["+strcharinfo(0)+"]";
@@ -5191,7 +5193,7 @@ OnTouch:
 		next;
 		mes "[????]";
 		mes "............";
-		specialeffect2 36;
+		specialeffect2 EF_PORTAL;
 		next;
 		mes "[???]";
 		mes "^FF0000...I'm sorry...";
@@ -7848,7 +7850,7 @@ L_Mission:
 			mes "I don't want our enemies";
 			mes "to discover Shinokas before";
 			mes "we can get him to talk.";
-			if(Shinokas_Quest == 10) set lhz_boss,24;
+			if(Shinokas_Quest == 11) set lhz_boss,24;
 			else set lhz_boss,23;
 			close2;
 			cutin "",255;
@@ -7873,7 +7875,7 @@ L_Mission:
 	}
 	else if(lhz_boss == 23)
 	{
-		if(Shinokas_Quest == 10)
+		if(Shinokas_Quest == 11)
 		{
 			mes "[Karl]";
 			mes "Ymir's Heart Pieces?";

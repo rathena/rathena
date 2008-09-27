@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= SinSloth(Most of the NPCs), MasterOfMuppets(Some of the NPCs + bug fixes) & Kargha(The quiz NPCs)
 //===== Current Version: ===================================== 
-//= 2.5a
+//= 2.7
 //===== Compatible With: ===================================== 
 //= eAthena SVN 3422+(Requires jA Script System)
 //===== Description: ========================================= 
@@ -40,6 +40,7 @@
 //= 2.5 Updated to fall within proper name restrictions. [L0ne_W0lf]
 //= 2.5a Corrected a Typo error ";;". [Samuray22]
 //= 2.6 Fixed Engel giving back 7 Sobbing Starlight on failing to refine it, bugreport:1473 [Brainstorm]
+//= 2.7 Replaced effect numerics with constants. [Samuray22]
 //============================================================ 
 //===== Configuration : ======================================
 prontera,1,1,1	script	TheSignConfig	-1,{
@@ -5397,7 +5398,7 @@ L_Success:
     next;
     getitem 7178,1;
     set signquest,23;
-    specialeffect2 94;
+    specialeffect2 EF_YUFITELHIT;
     next;
     mes "[Engel]";
     mes "This was one of the most difficult";
@@ -5967,7 +5968,7 @@ L_FirstTouch:
 	mes "What the...?";
 	mes "What's happening?!";
 	next;
-	specialeffect2 9;
+	specialeffect2 EF_ENHANCE;
 	mes "^3355FFFor some reason, in";
 	mes "this particular spot, the";
 	mes "Sobbing Starlight is reacting";
@@ -5976,7 +5977,7 @@ L_FirstTouch:
 	mes "holding. All the objects are";
 	mes "violently resonating";
 	next;
-	specialeffect2 99;
+	specialeffect2 EF_FLASHER;
 	mes "All of a sudden these";
 	mes "objects emit a bright flash";
 	mes "of light that envelops your";
@@ -9389,7 +9390,7 @@ geffen,119,49,1	script	Fountain#SignFountain	111,{
 	close;
 
 L_Lament:
-	specialeffect2 200;
+	specialeffect2 EF_LEVEL99;
 	mes "^3355FFAs you approach the fountain, a strange light begins to emit from the Lucifer's Lament in your pocket and from something deep within the fountain's water.";
 	next;
 	menu "Throw Lucifer's Lament into the fountain.",L_Throw,"Ignore the light.",-;

@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= acky (god@acky.com)
 //===== Current Version: =====================================
-//= 1.2
+//= 1.3
 //===== Compatible With: =====================================
 //= Any eAthena Version
 //===== Description: =========================================
@@ -17,6 +17,7 @@
 //=
 //= Removed permanent global variables
 //= 1.2 Removed Duplicates [Silent]
+//= 1.3 Replaced effect numerics with constants. [Samuray22]
 //============================================================
 
 //Warps you into race way
@@ -96,7 +97,7 @@ close;
 
 	OnCount4000:
 		emotion 27;
-		specialeffect 267;
+		specialeffect EF_CHIMTO;
 		announce "[GO!]",1;
 		set $@race,1;
 		set $@position,0;

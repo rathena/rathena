@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= SinSloth
 //===== Current Version: =====================================
-//= 1.0a
+//= 1.1
 //===== Compatible With: =====================================
 //= Any Athena Version
 //===== Description: =========================================
@@ -11,6 +11,7 @@
 //===== Additional Comments: =================================
 //= 1.0 First version.
 //= 1.0a Fixed a typo.
+//= 1.1 Replaced effect numerics with constants. [Samuray22]
 //============================================================
 
 arena_room,162,88,3	script	Ponox	124,{
@@ -1148,7 +1149,7 @@ prt_are_in,181,135,3	script	Staff#party-1	67,{
 	mes "[Staff]";	
 	mes "Let me guide you outside. I hope you had a good time.";	
 	close2;
-	specialeffect2 4;	
+	specialeffect2 EF_HIT5;
 	warp "arena_room",100,75;
 	end;
 }
@@ -1233,7 +1234,7 @@ prt_are_in,77,135,3	script	Staff#party-2	67,{
 			donpcevent "alloff#pt::Onon";
 			donpcevent "Ponox::Onstart";
 		}
-		specialeffect2 4;	
+		specialeffect2 EH_HIT5;
  		donpcevent "cast#pt::Onnomal1";
 		warp "arena_room",100,75;
 		end;
@@ -1325,7 +1326,7 @@ prt_are_in,77,135,3	script	Staff#party-2	67,{
 			donpcevent "alloff#pt::Onon";
 			donpcevent "Ponox::Onstart";
 		}
-		specialeffect2 4;	
+		specialeffect2 EF_HIT5;
 		warp "arena_room",100,75;
 		end;
 	}	

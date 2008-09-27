@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= eAthena dev team
 //===== Current Version: =====================================
-//= 1.5
+//= 1.6
 //===== Compatible With: =====================================
 //= eAthena SVN
 //===== Description: =========================================
@@ -21,6 +21,7 @@
 //= 1.3 Fixed a wrong item ID with Sphinx Hat. [SinSloth]
 //= 1.4 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
 //= 1.5 Removed Ontouch trigger area from NPCs. [L0ne_W0lf]
+//= 1.6 Replaced effect numerics with constants. [Samuray22]
 //============================================================
 
 payon,140,151,5	script	Seiyablem	84,{
@@ -368,8 +369,8 @@ function	script	Func_Socket	{
 	set .@socketrand,rand(1,100);
 	if((.@socketrand > getarg(3)) && (.@socketrand < getarg(4)))
 	{
-		if(getarg(4) == 51) specialeffect 90;
-		else specialeffect 83;
+		if(getarg(4) == 51) specialeffect EF_LORD;
+		else specialeffect EF_SANCTUARY;
 		mes "[Seiyablem]";
 		mes "Great, it seems to be successful.";
 		mes "It looks pretty well done. Congratulations!";
@@ -385,7 +386,7 @@ function	script	Func_Socket	{
 	}
 	else
 	{
-		specialeffect 108;
+		specialeffect EF_FREEZING;
 		mes "[Seiyablem]";
 		mes "Wah! ...I am so sorry, it failed.";
 		mes "However, I am completely innocent.";

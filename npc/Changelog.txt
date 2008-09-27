@@ -1,5 +1,8 @@
 Date		Added
 ======
+2008/09/27
+	* Continues replacing of specialeffect/2 numerics with constants. [Samuray22]
+	* Corrected an If to continue the President's Quest. (bugreport:2276)
 2008/09/25
 	* Rev. 13238 Continues replacing of specialeffect/2 numerics with constants. [L0ne_W0lf]
 	- A lot of files still remain, but they don't have the proper

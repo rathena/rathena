@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= [Ishizu-chan]
 //===== Current Version: =====================================
-//= 2.0
+//= 2.1
 //===== Compatible With: =====================================
 //= Any eAthena Version i guess?
 //===== Description: =========================================
@@ -22,6 +22,7 @@
 //= 1.8 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
 //= 1.9 Fixed a bug in the last event which allowed an exploit after the first summoning. [SinSloth]
 //= 2.0 Cleaned up the trans-only check, and added expanded classes. [L0ne_W0lf]
+//= 2.1 Replaced effect numerics with constants. [Samuray22]
 //============================================================
 
 hu_fild01,140,163,5	script	Tower Keeper	852,3,3,{
@@ -1864,7 +1865,7 @@ tha_t12,96,58,0	script	Stone Statue#thana1	111,{
 					mes "statue glows even brighter";
 					mes "with a mysterious light.^000000";
 					delitem 7426,1;
-					specialeffect 55;
+					specialeffect EF_BEGINSPELL3;
 					enablenpc "tteffect2";
 					donpcevent "tteffect2::OnGlow";
 					set $@thana_summon,1;
@@ -1931,7 +1932,7 @@ tha_t12,104,18,0	script	Stone Statue#thana2	111,{
 					mes "statue glows even brighter";
 					mes "with a mysterious light.^000000";
 					delitem 7428,1;
-					specialeffect 55;
+					specialeffect EF_BEGINSPELL3;
 					enablenpc "tteffect5";
 					donpcevent "tteffect5::OnGlow";
 					set $@thana_summon,3;
@@ -1988,7 +1989,7 @@ tha_t12,128,86,0	script	Stone Statue#thana3	111,{
 					mes "statue glows even brighter";
 					mes "with a mysterious light.^000000";
 					delitem 7430,1;
-					specialeffect 59;
+					specialeffect EF_BEGINSPELL7;
 					enablenpc "tteffect1";
 					donpcevent "tteffect1::OnGlow";
 					set $@thana_summon,4;
@@ -2046,7 +2047,7 @@ tha_t12,161,58,0	script	Stone Statue#thana4	111,{
 					mes "statue glows even brighter";
 					mes "with a mysterious light.^000000";
 					delitem 7427,1;
-					specialeffect 57;
+					specialeffect EF_BEGINSPELL5;
 					enablenpc "tteffect3";
 					donpcevent "tteffect3::OnGlow";
 					set $@thana_summon,2;
@@ -2103,7 +2104,7 @@ tha_t12,154,18,0	script	Stone Statue#thana5	111,{
 					mes "Green Charm Stone, the";
 					mes "statue glows even brighter";
 					mes "with a mysterious light.^000000";
-					specialeffect 56;
+					specialeffect EF_BEGINSPELL4;
 					enablenpc "tteffect4";
 					donpcevent "tteffect4::OnGlow";
 					delitem 7429,1;
@@ -2160,11 +2161,11 @@ OnTimer1000:
 OnTimer1500:
 OnTimer2000:
 OnTimer2500:
-	specialeffect 59;
+	specialeffect EF_BEGINSPELL7;
 	end;
 	
 OnTimer3000:
-	specialeffect 59;
+	specialeffect EF_BEGINSPELL7;
 	stopnpctimer;
 	if($@thana_summon == 6)	end;
 	initnpctimer;
@@ -2190,11 +2191,11 @@ OnTimer1000:
 OnTimer1500:
 OnTimer2000:
 OnTimer2500:
-	specialeffect 55;
+	specialeffect EF_BEGINSPELL3;
 	end;
 	
 OnTimer3000:
-	specialeffect 55;
+	specialeffect EF_BEGINSPELL3;
 	stopnpctimer;
 	if($@thana_summon == 6)	end;
 	initnpctimer;
@@ -2220,11 +2221,11 @@ OnTimer1000:
 OnTimer1500:
 OnTimer2000:
 OnTimer2500:
-	specialeffect 57;
+	specialeffect EF_BEGINSPELL5;
 	end;
 	
 OnTimer3000:
-	specialeffect 57;
+	specialeffect EF_BEGINSPELL5;
 	stopnpctimer;
 	if($@thana_summon == 6)	end;
 	initnpctimer;
@@ -2250,11 +2251,11 @@ OnTimer1000:
 OnTimer1500:
 OnTimer2000:
 OnTimer2500:
-	specialeffect 56;
+	specialeffect EF_BEGINSPELL4;
 	end;
 	
 OnTimer3000:
-	specialeffect 56;
+	specialeffect EF_BEGINSPELL4;
 	stopnpctimer;
 	if($@thana_summon == 6)	end;
 	initnpctimer;
@@ -2280,11 +2281,11 @@ OnTimer1000:
 OnTimer1500:
 OnTimer2000:
 OnTimer2500:
-	specialeffect 54;
+	specialeffect EF_BEGINSPELL2;
 	end;
 	
 OnTimer3000:
-	specialeffect 54;
+	specialeffect EF_BEGINSPELL2;
 	stopnpctimer;
 	if($@thana_summon == 6)	end;
 	initnpctimer;

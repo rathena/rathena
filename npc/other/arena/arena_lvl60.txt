@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= SinSloth
 //===== Current Version: =====================================
-//= 1.1
+//= 1.2
 //===== Compatible With: =====================================
 //= Any Athena Version
 //===== Description: =========================================
@@ -11,6 +11,7 @@
 //===== Additional Comments: =================================
 //= 1.0 First version.
 //= 1.1 Fixed coordinate typo. (bugreport:1663) [L0ne_W0lf]
+//= 1.2 Replaced effect numerics with constants. [Samuray22]
 //============================================================
 
 arena_room,38,88,5	script	lvl 60s Waiting Room	124,{
@@ -880,7 +881,7 @@ prt_are_in,129,135,3	script	Staff#60-1	67,{
 	mes "[Staff]";	
 	mes "Let me guide you outside. I hope you had a good time.";	
 	close2;
-	specialeffect2 4;	
+	specialeffect2 EF_EXIT;
 	warp "arena_room",100,75;
 	end;
 }
@@ -958,7 +959,7 @@ prt_are_in,25,135,3	script	Staff#60-2	67,{
 			mes "See you later~";	
 			close2;
 		}
-		specialeffect2 4;	
+		specialeffect2 EF_EXIT;
  		donpcevent "cast#60::Onnomal1";
 		warp "arena_room",100,75;
 		donpcevent "#arn_timer_60::Onstop";
@@ -1009,7 +1010,7 @@ prt_are_in,25,135,3	script	Staff#60-2	67,{
 			mes "See you later~";	
 			close2;
 		}
-		specialeffect2 4;	
+		specialeffect2 EF_HIT5;
  		donpcevent "cast#60::Onnomal2";
 		warp "arena_room",100,75;
 		donpcevent "#arn_timer_60::Onstop";
