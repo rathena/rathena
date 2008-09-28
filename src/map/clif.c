@@ -2399,7 +2399,7 @@ void clif_changelook(struct block_list *bl,int type,int val)
 	}
 
 	// prevent leaking the presence of GM-hidden objects
-	if( sc->option&OPTION_INVISIBLE )
+	if( sc && sc->option&OPTION_INVISIBLE )
 		target = SELF;
 
 #if PACKETVER < 4
