@@ -380,6 +380,30 @@
 				>
 			</File>
 			<File
+				RelativePath="..\src\char_sql\int_mercenary.c"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)_sql.obj"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)_sql.obj"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\src\char_sql\int_mercenary.h"
+				>
+			</File>
+			<File
 				RelativePath="..\src\char_sql\int_party.c"
 				>
 				<FileConfiguration
