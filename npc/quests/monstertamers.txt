@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= kobra_k88, Darkchild, x[tsk]
 //===== Current Version: =====================================
-//= 1.4
+//= 1.4a
 //===== Compatible With: =====================================
 //= eAthena 1.0
 //===== Description: =========================================
@@ -14,6 +14,7 @@
 //= 1.2 Removed Duplicates [Silent]
 //= 1.3 Added Bongun's taming item quest. Credits to Lone_Wolf. [SinSloth]
 //= 1.4 Updated Monster taming item quests. [L0ne_W0lf]
+//= 1.4a FIXED item requirement for stellar hairpin. [L0ne_W0lf]
 //============================================================
 
 alberta_in,173,76,4	script	Monster Tamer#alb	125,{
@@ -347,7 +348,7 @@ aldeba_in,168,175,4	script	Monster Tamer#alde	125,{
 		mes "[YuU]";
 		mes "This is an item far beyond the fashion sense of humans! Its name? ^3355FFStellar Hairpin^000000! It's dangerous for humans to wear, but fashionable of monsters.";
 		next;
-		if (countitem(1148) > 0) {
+		if (countitem(2294) > 0) {
 			mes "[YuU]";
 			mes "Oh! You have all the items necessary to make 1 Stellar! Good, good! With all my pride as a monster tamer, I will make it for you right away.";
 			next;
@@ -364,7 +365,7 @@ aldeba_in,168,175,4	script	Monster Tamer#alde	125,{
 			mes "the cute monster you";
 			mes "are raising";
 			mes "Stellar Hairpin!";
-			delitem 1148,1;  //Star_Dust
+			delitem 1148,1;  // Stellar
 			getitem 10011,1; // Stellar_Hairpin
 			close;
 		}
