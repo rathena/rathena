@@ -1,6 +1,7 @@
 Date		Added
 ======
 2008/09/30
+	* Rev. 13249 Full implementation of all Episode 11.3 Quests. [L0ne_W0lf]
 	* Corrected a wrong variable name in the Novice Training Ground (bugreport:2293) [Samuray22]
 2008/09/29
 	* Rev. 13247 Fixed the delitem assosiated with the last uptate. [L0ne_W0lf]
