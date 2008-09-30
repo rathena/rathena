@@ -1,5 +1,7 @@
 Date		Added
 ======
+2008/09/30
+	* Corrected a wrong variable name in the Novice Training Ground (bugreport:2293) [Samuray22]
 2008/09/29
 	* Rev. 13247 Fixed the delitem assosiated with the last uptate. [L0ne_W0lf]
 	* Rev. 13246 Fixed item requirement for Stellar hairpin in monstertamers.txt. (bugreport:2290) [L0ne_W0lf]

@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Dr.Evil & MasterOfMuppets
 //===== Current Version: ===================================== 
-//= 2.3
+//= 2.3a
 //===== Compatible With: ===================================== 
 //= eAthena SVN 3422+(Requires jA Script System)
 //===== Description: ========================================= 
@@ -21,6 +21,7 @@
 //= 2.1 Corrected spacing issue in welcome message. [L0ne_W0lf]
 //= 2.2 Corrected Leo's endless dialog. [L0ne_W0lf]
 //= 2.3 Added fix to Hanson from GM-windsor- and Saithis. [L0ne_W0lf]
+//= 2.3a Correct a wrong variable name. (bugreport:2293) [Samuray22]
 //============================================================ 
 
 // Bulletin Board
@@ -752,7 +753,7 @@ new_1-2,83,111,3	script	Skill Tutor#nv	753,{
 			mes "^3355FFYou have learned";
 			mes "the ^4A708BFirst Aid^3355FF skill.^000000";
 			skill 142,1,0; //NV_FIRSTAID
-			set skill_nov,3;
+			set NOV_SK,3;
 			set nov_get_item03,11;
 			next;
 			if (JobLevel < 7) {
