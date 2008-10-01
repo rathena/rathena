@@ -363,10 +363,8 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,int damage,i
 		if(sc->data[SC_TATAMIGAESHI] && (flag&(BF_MAGIC|BF_LONG)) == BF_LONG)
 			return 0;
 
-		if((sce=sc->data[SC_KAUPE]) &&
-			rand()%100 < sce->val2 &&
-			(src->type == BL_PC || !skill_num))
-		{	//Kaupe only blocks all skills of players.
+		if((sce=sc->data[SC_KAUPE]) && rand()%100 < sce->val2)
+		{	//Kaupe blocks damage (skill or otherwise) from players, mobs, homuns, mercenaries.
 			clif_specialeffect(bl, 462, AREA);
 			//Shouldn't end until Breaker's non-weapon part connects.
 			if (skill_num != ASC_BREAKER || !(flag&BF_WEAPON))
