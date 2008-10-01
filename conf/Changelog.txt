@@ -1,5 +1,7 @@
 Date	Added
 
+2008/10/02
+	* Rev. 13253 Modified homunculus auto-vapor setting to yes. (bugreport:2298) [L0ne_W0lf]
 2008/09/11
 	* Rev. 13204 Updated some messages in msg_athena.conf. [L0ne_W0lf]
 2008/08/19
