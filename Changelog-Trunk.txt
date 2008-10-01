@@ -3,6 +3,9 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2008/10/01
+	* Rev. 13251 Removed 'casttime' adjustment from offensive ressurection. Follow up to r13225. [L0ne_W0lf]
+	* Kaahi will now override override higher existing levels previously casted. (bugreport:2296)
 2008/09/27
 	* Fixed clif_changelook betraying the presence of gm-hidden players (bugreport:2283) [ultramage]
 2008/09/11

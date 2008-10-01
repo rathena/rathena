@@ -5134,8 +5134,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 					return 1;
 				break;
 			case SC_KAAHI:
-				if(sce->val1 > val1)
-					return 1;
+				//Kaahi overwrites previous level regardless of existing level.
 				//Delete timer if it exists.
 				if (sce->val4 != -1) {
 					delete_timer(sce->val4,kaahi_heal_timer);
