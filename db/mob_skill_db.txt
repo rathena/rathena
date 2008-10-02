@@ -4589,9 +4589,9 @@
 1873,Beelzebub@NPC_CALLSLAVE,attack,352,1,10000,0,15000,yes,self,always,0,,,,,,
 1873,Beelzebub@NPC_CALLSLAVE,chase,352,1,10000,0,15000,yes,self,always,0,,,,,,
 1873,Beelzebub@NPC_CALLSLAVE,idle,352,1,10000,0,15000,yes,self,always,0,,,,,,
-1873,Beelzebub@NPC_SUMMONSLAVE,attack,196,13,10000,0,10000,yes,self,slavele,5,1872,1011,,,,
-1873,Beelzebub@NPC_SUMMONSLAVE,chase,196,13,10000,0,10000,yes,self,slavele,5,1872,1011,,,,
-1873,Beelzebub@NPC_SUMMONSLAVE,idle,196,13,10000,0,10000,yes,self,slavele,5,1872,1011,,,,
+1873,Beelzebub@NPC_SUMMONSLAVE,attack,196,10,10000,0,10000,yes,self,slavele,5,1872,1872,1011,,,
+1873,Beelzebub@NPC_SUMMONSLAVE,chase,196,10,10000,0,10000,yes,self,slavele,5,1872,1872,1011,,,
+1873,Beelzebub@NPC_SUMMONSLAVE,idle,196,10,10000,0,10000,yes,self,slavele,5,1872,1872,1011,,,
 1873,Beelzebub@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,0,,,,,,
 1873,Beelzebub@AL_TELEPORT,chase,26,1,5000,0,5000,yes,self,rudeattacked,0,,,,,,
 1873,Beelzebub@NPC_METAMORPHOSIS,chase,193,1,10000,5000,5000,no,self,myhpltmaxrate,50,1874,,,,,
@@ -4615,9 +4615,9 @@
 1874,Beelzebub@NPC_CALLSLAVE,attack,352,1,10000,0,15000,yes,self,always,0,,,,,,
 1874,Beelzebub@NPC_CALLSLAVE,chase,352,1,10000,0,15000,yes,self,always,0,,,,,,
 1874,Beelzebub@NPC_CALLSLAVE,idle,352,1,10000,0,15000,yes,self,always,0,,,,,,
-1874,Beelzebub@NPC_SUMMONSLAVE,attack,196,13,10000,0,10000,yes,self,slavele,5,1872,1011,,,,
-1874,Beelzebub@NPC_SUMMONSLAVE,chase,196,13,10000,0,10000,yes,self,slavele,5,1872,1011,,,,
-1874,Beelzebub@NPC_SUMMONSLAVE,idle,196,13,10000,0,10000,yes,self,slavele,5,1872,1011,,,,
+1874,Beelzebub@NPC_SUMMONSLAVE,attack,196,10,10000,0,10000,yes,self,slavele,5,1872,1872,1011,,,
+1874,Beelzebub@NPC_SUMMONSLAVE,chase,196,10,10000,0,10000,yes,self,slavele,5,1872,1872,1011,,,
+1874,Beelzebub@NPC_SUMMONSLAVE,idle,196,10,10000,0,10000,yes,self,slavele,5,1872,1872,1011,,,
 1874,Beelzebub@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,0,,,,,,
 1874,Beelzebub@AL_TELEPORT,chase,26,1,5000,0,5000,yes,self,rudeattacked,0,,,,,,
 1874,Beelzebub@NPC_STONESKIN,chase,675,4,10000,1000,30000,no,self,myhpltmaxrate,3,,,,,,
@@ -4641,54 +4641,57 @@
 //1874,Beelzebub@NPC_WIDESOULDRAIN,attack,680,7,1000,500,5000,no,self,myhpltmaxrate,50,,,,,,42
 1875,Tristan@NPC_BLOODDRAIN,attack,199,1,2000,0,5000,yes,target,always,0,,,,,,
 
-// Moscovia (Based on information from futurewiki.)
-1880,Leshij@AL_HEAL,attack,28,9,9000,0,5000,yes,self,always,0,,,,,,,
-1880,Leshij@AL_HEAL,idle,28,9,9000,3,5000,yes,self,always,0,,,,,,,
-1880,Leshij@AL_HEAL,idle,28,9,9000,3,5000,yes,friend,friendhpltmaxrate,99,0,,,,,,
-1881,Lesavka@AL_HEAL,idle,28,5,2000,3,5000,no,self,myhpltmaxrate,50,0,,,,,,2
-1881,Lesavka@AL_HEAL,attack,28,5,2000,3,5000,no,self,myhpltmaxrate,50,0,,,,,,2
-1881,Lesavka@TF_POISON,attack,52,5,5000,0,8000,no,target,always,0,,,,,,29,
-1881,Lesavka@AL_TELEPORT,idle,26,1,10000,0,5000,yes,self,rudeattacked,0,,,,,,,
-1881,Lesavka@AL_TELEPORT,walk,26,1,10000,0,5000,yes,self,rudeattacked,0,,,,,,,
-1881,Lesavka@MO_BODYRELOCATION,chase,264,1,3000,500,5000,yes,target,always,0,,,,,,,
-1882,Baba-Yaga@AS_SONICBLOW,attack,136,3,6000,100,5000,no,target,always,0,,,,,,,
-1882,Baba-Yaga@WZ_WATERBALL,chase,86,2,3000,600,5000,yes,target,always,0,,,,,,,
-1882,Baba-Yaga@WZ_WATERBALL,attack,86,2,3000,600,5000,yes,target,always,0,,,,,,,
-1882,Baba-Yaga@NPC_CURSEATTACK,attack,181,2,4000,0,5000,yes,target,always,0,,,,,,,
-1883,Kikimora@WZ_WATERBALL,attack,86,4,4000,500,7000,yes,target,always,0,,,,,,,
-1883,Kikimora@WZ_WATERBALL,chase,86,4,4000,500,7000,yes,target,always,0,,,,,,,
-1883,Kikimora@NPC_CURSEATTACK,attack,181,2,2000,0,5000,yes,target,always,0,,,,,,,
-1884,Mavka@NPC_SILENCEATTACK,attack,178,5,5000,0,5000,no,target,always,0,,,,,,,
-1884,Mavka@NPC_SILENCEATTACK,chase,178,5,5000,0,5000,no,target,always,0,,,,,,,
-1884,Mavka@WZ_EARTHSPIKE,attack,90,6,2500,200,5000,no,target,always,0,,,,,,,
-1884,Mavka@WZ_EARTHSPIKE,chase,90,6,2500,200,5000,no,target,always,0,,,,,,,
-1884,Mavka@WZ_HEAVENDRIVE,attack,91,5,2000,400,6500,no,target,always,0,,,,,,,
-1884,Mavka@WZ_HEAVENDRIVE,chase,91,5,2000,400,6500,no,target,always,0,,,,,,,
-1884,Mavka@AL_HEAL,idle,28,10,6000,0,5000,no,self,always,0,,,,,,,
-1884,Mavka@AL_HEAL,attack,28,10,6000,0,5000,no,self,always,0,,,,,,,
-1885,Zmey Gorynych@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,,
-1885,Zmey Gorynych@AL_TELEPORT,idle,26,1,5000,0,5000,yes,self,rudeattacked,,,,,,,,
-1885,Zmey Gorynych@AL_TELEPORT,walk,26,1,5000,0,5000,yes,self,rudeattacked,,,,,,,,
-1885,Zmey Gorynych@WZ_QUAGMIRE,chase,92,5,5000,0,6000,no,target,always,0,,,,,,,
-1885,Zmey Gorynych@WZ_QUAGMIRE,follow,92,5,5000,0,6000,no,target,always,0,,,,,,,
-1885,Zmey Gorynych@WZ_METEOR,attack,83,11,3000,300,8000,no,target,always,0,,,,,,,
-1885,Zmey Gorynych@WZ_METEOR,chase,83,11,3000,300,8000,no,target,always,0,,,,,,,
-1885,Zmey Gorynych@MG_FIREBOLT,attack,19,15,5000,0,4000,no,target,always,0,,,,,,,
-1885,Zmey Gorynych@SM_MAGNUM,chase,83,11,3000,0,8000,no,target,always,0,,,,,,,
-1885,Zmey Gorynych@NPC_CALLSLAVE,attack,352,1,10000,0,30000,yes,self,always,0,,,,,,,
-1885,Zmey Gorynych@NPC_CALLSLAVE,idle,352,1,10000,0,30000,yes,self,always,0,,,,,,,
-1885,Zmey Gorynych@NPC_SUMMONSLAVE,attack,196,7,10000,700,10000,no,self,slavele,5,1886,,,,,,
-1885,Zmey Gorynych@NPC_SUMMONSLAVE,idle,196,7,10000,700,10000,no,self,slavele,5,1886,,,,,,
-1885,Zmey Gorynych@AL_HEAL,idle,28,11,10000,0,10000,yes,self,myhpltmaxrate,50,,,,,,,
-1886,Mavka@NPC_SILENCEATTACK,attack,178,5,5000,0,5000,no,target,always,0,,,,,,,
-1886,Mavka@NPC_SILENCEATTACK,chase,178,5,5000,0,5000,no,target,always,0,,,,,,,
-1886,Mavka@WZ_EARTHSPIKE,attack,90,6,2500,200,5000,no,target,always,0,,,,,,,
-1886,Mavka@WZ_EARTHSPIKE,chase,90,6,2500,200,5000,no,target,always,0,,,,,,,
-1886,Mavka@WZ_HEAVENDRIVE,attack,91,5,2000,400,6500,no,target,always,0,,,,,,,
-1886,Mavka@WZ_HEAVENDRIVE,chase,91,5,2000,400,6500,no,target,always,0,,,,,,,
-1886,Mavka@AL_HEAL,idle,28,10,6000,0,5000,no,self,always,0,,,,,,,
-1886,Mavka@AL_HEAL,attack,28,10,6000,0,5000,no,self,always,0,,,,,,,
-
+// Moscovia
+1880,Wood Goblin@AL_HEAL,idle,28,9,10000,3000,5000,yes,friend,friendhpltmaxrate,50,,,,,,
+1880,Wood Goblin@AL_HEAL,idle,28,9,5000,500,5000,yes,self,myhpltmaxrate,40,,,,,,19
+1880,Wood Goblin@NPC_SPLASHATTACK,attack,174,1,3000,0,5000,yes,target,attackpcge,2,,,,,,0
+1880,Wood Goblin@NPC_GROUNDATTACK,attack,185,1,2000,0,5000,yes,target,always,0,,,,,,
+1880,Wood Goblin@NPC_STUNATTACK,attack,179,3,1000,1500,5000,no,target,always,0,,,,,,
+1881,Les@MO_BODYRELOCATION,chase,264,1,2000,500,5000,no,target,always,0,,,,,,
+1881,Les@NPC_COMBOATTACK,attack,171,2,3000,700,5000,no,target,always,0,,,,,,
+1881,Les@NPC_BLEEDING,attack,660,3,2000,0,3000,yes,target,always,0,,,,,,32
+1881,Les@NPC_POISON,attack,176,2,1000,0,5000,yes,target,always,0,,,,,,
+1882,Babayaga@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,0,,,,,,
+1882,Babayaga@WZ_WATERBALL,chase,86,1,5000,1000,5000,no,target,always,0,,,,,,
+1882,Babayaga@NPC_COMBOATTACK,attack,171,1,2000,0,5000,yes,target,always,0,,,,,,
+1882,Babayaga@WZ_WATERBALL,attack,86,2,2000,3000,5000,yes,target,always,0,,,,,,19
+1883,Uzdas@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,7,,,,,
+1883,Uzdas@NPC_MAGICALATTACK,chase,192,1,2000,800,5000,no,target,always,0,,,,,,
+1883,Uzdas@NPC_POISON,attack,176,2,2000,800,5000,yes,target,always,0,,,,,,
+1883,Uzdas@WZ_WATERBALL,attack,86,3,2000,3000,5000,yes,target,always,0,,,,,,19
+1883,Uzdas@NPC_CURSEATTACK,attack,181,2,1000,800,5000,no,target,always,0,,,,,,29
+1884,Mavka@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,2,,,,,
+1884,Mavka@AL_HEAL,idle,28,5,10000,2000,5000,yes,friend,friendhpltmaxrate,50,,,,,,19
+1884,Mavka@WZ_EARTHSPIKE,chase,90,2,5000,0,10000,yes,target,always,0,,,,,,
+1884,Mavka@NPC_GROUNDATTACK,attack,185,2,3000,0,5000,yes,target,always,0,,,,,,
+1884,Mavka@NPC_SILENCEATTACK,attack,178,2,2000,2000,10000,yes,target,always,0,,,,,,36
+1885,Gorynych@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,0,,,,,,
+1885,Gorynych@NPC_SUMMONSLAVE,attack,196,5,10000,1000,30000,no,self,slavele,1,1886,,,,,
+1885,Gorynych@NPC_SUMMONSLAVE,chase,196,5,5000,1000,30000,no,self,slavele,0,1886,,,,,
+1885,Gorynych@NPC_SUMMONSLAVE,idle,196,5,10000,1000,30000,no,self,slavele,0,1887,,,,,
+1885,Gorynych@WZ_QUAGMIRE,chase,92,5,5000,200,5000,no,target,always,0,,,,,,
+1885,Gorynych@NPC_CALLSLAVE,attack,352,1,10000,0,15000,yes,self,always,0,,,,,,
+1885,Gorynych@NPC_CALLSLAVE,chase,352,1,5000,0,15000,yes,self,always,0,,,,,,
+1885,Gorynych@NPC_CALLSLAVE,idle,352,1,10000,0,15000,yes,self,always,0,,,,,,
+1885,Gorynych@WZ_METEOR,attack,83,11,5000,1500,5000,no,target,myhpltmaxrate,50,,,,,,6
+1885,Gorynych@MG_FIREBALL,chase,17,9,10000,0,5000,yes,target,always,0,,,,,,
+1885,Gorynych@MG_FIREBALL,attack,17,20,5000,0,5000,yes,target,always,0,,,,,,
+1885,Gorynych@NPC_AGIUP,attack,350,5,3000,0,120000,yes,self,myhpltmaxrate,30,,,,,,6
+1885,Gorynych@KN_TWOHANDQUICKEN,attack,60,20,5000,0,30000,yes,self,myhpltmaxrate,30,,,,,,6
+1885,Gorynych@NPC_POWERUP,attack,349,5,6000,0,5000,yes,self,myhpltmaxrate,30,,,,,,6
+1885,Gorynych@WZ_HEAVENDRIVE,chase,91,5,5000,0,5000,yes,target,always,0,,,,,,
+1885,Gorynych@SM_MAGNUM,attack,7,20,5000,0,5000,yes,self,always,0,,,,,,
+1885,Gorynych@NPC_SILENCEATTACK,attack,178,5,1000,700,5000,no,target,always,0,,,,,,
+1885,Gorynych@NPC_MENTALBREAKER,chase,159,5,500,800,25000,no,target,always,0,,,,,,
+1885,Gorynych@WZ_HEAVENDRIVE,attack,91,5,5000,500,25000,no,target,always,0,,,,,,
+1885,Gorynych@NPC_SILENCEATTACK,chase,178,5,5000,700,25000,no,target,always,0,,,,,,
+1885,Gorynych@WZ_QUAGMIRE,attack,92,5,5000,700,5000,no,target,always,0,,,,,,
+1886,Lesavka@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,2,,,,,
+1886,Lesavka@AL_HEAL,idle,28,9,10000,1000,5000,yes,friend,friendhpltmaxrate,50,,,,,,19
+1886,Lesavka@WZ_EARTHSPIKE,chase,90,4,5000,0,10000,yes,target,always,0,,,,,,
+1886,Lesavka@NPC_GROUNDATTACK,attack,185,4,3000,0,5000,yes,target,always,0,,,,,,
+1886,Lesavka@NPC_SILENCEATTACK,attack,178,4,2000,2000,10000,yes,target,always,0,,,,,,36
+//
 1891,Valkyrie@AL_HEAL,idle,28,11,10000,500,5000,yes,friend,friendhpltmaxrate,60,,,,,,3
 1891,Valkyrie@AL_HEAL,attack,28,11,10000,500,10000,yes,friend,friendhpltmaxrate,60,,,,,,3
 1891,Valkyrie@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,

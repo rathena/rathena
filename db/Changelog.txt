@@ -40,6 +40,10 @@
 	2385 Recuvative_Armor		Should trigger HP/SP return with magical kills as well.
 
 =======================
+2008/10/03
+	* Rev. 13255 Implemented Official Moscovia monster skills. Should finish 11.3 [L0ne_W0lf]
+	* Corrected Beelzebub's summonslave so he spawns 7 flys and 3 chons.
+	* Implemented the Bombring Box. On use summons one bomb poring.
 2008/09/10
 	* Rev. 13219 Updated Giant Enyclopedia bonus. (bugreport:2053)
 	* Removed Snap from nocast_db in WoE SE

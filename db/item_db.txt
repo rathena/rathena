@@ -3603,7 +3603,7 @@
 12255,Vit_Dish_M,Immortal Stew,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_VITFood,3600000,10; percentheal 25,0; },{},{}
 12256,PRO_Gift_Box,PRO Gift Box,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12257,Cold_Medicine,Cold Medicine,2,20,,100,,,,,0xFFFFFFFF,7,2,,,50,,,{ percentheal 25,25; },{},{}
-12258,Bombring_Box,Bomb Poring Box,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12258,Bombring_Box,Bomb Poring Box,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ monster "this",-1,-1,"--ja--",1904,1,""; },{},{}
 12259,Miracle_Medicine,Miracle Medicine,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12260,Cool_Summer_Outfit,Summer Event Suit,2,0,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_Summer,600000,0; },{},{}
 12261,Secret_Medicine,Secret Medicine,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
