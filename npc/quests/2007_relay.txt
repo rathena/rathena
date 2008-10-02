@@ -17,7 +17,7 @@ payon,103,113,3	script	Ledrion#payon::RelayLedrion	109,{
 	getpartymember(getcharid(1));
 	set .@partymembercount,$@partymembercount;
 	set .@partyleader,getpartyleader(getcharid(1),2);
-	if (checkweight(907,300) < 0) {
+	if (checkweight(907,300) == 0) {
 		mes "^3355FFWait a minute! You're";
 		mes "carrying too many items";
 		mes "right now: store some of";
@@ -445,7 +445,7 @@ payon,83,327,3	script	Gatan#payon::RelayGatan	86,{
 	getpartymember(getcharid(1));
 	set .@partymembercount,$@partymembercount;
 	set .@partyleader,getpartyleader(getcharid(1),2);
-	if (checkweight(907,300) < 0) {
+	if (checkweight(907,300) == 0) {
 		mes "^3355FFWait a minute! You're";
 		mes "carrying too many items";
 		mes "right now: store some of";
@@ -1940,7 +1940,7 @@ payon,204,221,3	script	Bafhail#payon::RelayBafhail	731,{
 	getpartymember(getcharid(1));
 	set .@partymembercount,$@partymembercount;
 	set .@partyleader,getpartyleader(getcharid(1),2);
-	if (checkweight(907,300) < 0) {
+	if (checkweight(907,300) == 0) {
 		mes "^3355FFWait a minute! You're";
 		mes "carrying too many items";
 		mes "right now: store some of";
@@ -2733,7 +2733,7 @@ payon,168,314,3	script	Lospii#payon::RelayLospii	706,{
 	getpartymember(getcharid(1));
 	set .@partymembercount,$@partymembercount;
 	set .@partyleader,getpartyleader(getcharid(1),2);
-	if (checkweight(907,300) < 0) {
+	if (checkweight(907,300) == 0) {
 		mes "^3355FFWait a minute! You're";
 		mes "carrying too many items";
 		mes "right now: store some of";

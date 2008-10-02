@@ -5628,7 +5628,6 @@ ra_temin,277,159,3	script	High Priest Zhed#rachel	932,{
 				next;
 				if (.@input$ == "Varmunt") {
 					mes "[High Priest Zhed]";
-					mes "[High Priest Zhed]";
 					mes "Oh, you've heard of him?";
 					mes "Yes, his name was Varmunt.";
 					mes "Unfortunately, he deliberately";
