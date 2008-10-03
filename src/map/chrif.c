@@ -1016,10 +1016,16 @@ int chrif_accountban(int fd)
 int chrif_disconnectplayer(int fd)
 {
 	struct map_session_data* sd;
+	int account_id = RFIFOL(fd, 2);
 
-	sd = map_id2sd(RFIFOL(fd, 2));
-	if(sd == NULL)
+	sd = map_id2sd(account_id);
+	if( sd == NULL )
+	{
+		struct auth_node* auth = chrif_search(account_id);
+		if( auth != NULL && chrif_auth_delete(account_id, auth->char_id, ST_LOGIN) )
+			return 0;
 		return -1;
+	}
 
 	if (!sd->fd)
 	{	//No connection
