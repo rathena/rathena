@@ -2295,10 +2295,11 @@ int parse_fromlogin(int fd)
 						WFIFOSET(i,3);
 						set_eof(i);
 					}
-					else //Shouldn't happen, but just in case.
+					else // still moving to the map-server
 						set_char_offline(-1, aid);
 				}
 			}
+			idb_remove(auth_db, aid);// reject auth attempts from map-server
 		}
 		break;
 		
