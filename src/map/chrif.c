@@ -890,13 +890,14 @@ int chrif_divorce(int partner_id1, int partner_id2)
 
 /*==========================================
  * Divorce players
+ * only used if 'partner_id' is offline
  *------------------------------------------*/
 int chrif_divorceack(int char_id, int partner_id)
 {
 	struct map_session_data* sd;
 	int i;
 
-	if (!char_id || !partner_id || (sd = map_charid2sd(partner_id)) == NULL || sd->status.partner_id != char_id)
+	if (!char_id || !partner_id || (sd = map_charid2sd(char_id)) == NULL || sd->status.partner_id != partner_id)
 		return 0;
 
 	// Update Partner info
@@ -906,6 +907,8 @@ int chrif_divorceack(int char_id, int partner_id)
 	for(i = 0; i < MAX_INVENTORY; i++)
 		if (sd->status.inventory[i].nameid == WEDDING_RING_M || sd->status.inventory[i].nameid == WEDDING_RING_F)
 			pc_delitem(sd, i, 1, 0);
+
+	//TODO: send clif_divorced()
 
 	return 0;
 }
