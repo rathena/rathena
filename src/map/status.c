@@ -654,9 +654,6 @@ int status_damage(struct block_list *src,struct block_list *target,int hp, int s
 
 	sc = status_get_sc(target);
 
-	if (sc && !sc->count)
-		sc = NULL;
-
 	if( hp && !(flag&1) ) {
 		if( sc ) {
 			struct status_change_entry *sce;
