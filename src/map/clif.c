@@ -11027,8 +11027,8 @@ void clif_friendslist_reqack(struct map_session_data *sd, struct map_session_dat
 	WFIFOW(fd,2) = type;
 	if (f_sd)
 	{
-		WFIFOW(fd,4) = f_sd->status.account_id;
-		WFIFOW(fd,8) = f_sd->status.char_id;
+		WFIFOL(fd,4) = f_sd->status.account_id;
+		WFIFOL(fd,8) = f_sd->status.char_id;
 		memcpy(WFIFOP(fd, 12), f_sd->status.name,NAME_LENGTH);
 	}
 	WFIFOSET(fd, packet_len(0x209));
