@@ -2380,6 +2380,8 @@ void mob_revive(struct mob_data *md, unsigned int hp)
 	md->next_walktime = tick+rand()%50+5000;
 	md->last_linktime = tick;
 	md->last_pcneartime = 0;
+	memset(md->dmglog, 0, sizeof(md->dmglog));	// Reset the damage done on the rebirthed monster, otherwise will grant full exp + damage done. [Valaris] 
+	md->tdmg = 0;
 	if (!md->bl.prev)
 		map_addblock(&md->bl);
 	clif_spawn(&md->bl);

@@ -1,5 +1,7 @@
 Date	Added
 
+2008/10/06
+	* Rev. 13264 Changed exp_calc_type to 1, as type 0 seems to be based off old rumour, and to compliment the update to mob_revive. [L0ne_W0lf]
 2008/10/02
 	* Rev. 13253 Modified homunculus auto-vapor setting to yes. (bugreport:2298) [L0ne_W0lf]
 2008/09/11
