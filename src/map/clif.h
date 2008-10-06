@@ -119,8 +119,8 @@ void clif_move(struct unit_data *ud); //area
 void clif_changemap(struct map_session_data*,short,int,int);	//self
 void clif_changemapserver(struct map_session_data* sd, unsigned short map_index, int x, int y, uint32 ip, uint16 port);	//self
 int clif_blown(struct block_list *); // area
-int clif_slide(struct block_list *,int,int); // area
-int clif_fixpos(struct block_list *);	// area
+void clif_slide(struct block_list *,int,int); // area
+void clif_fixpos(struct block_list *);	// area
 int clif_npcbuysell(struct map_session_data*,int);	//self
 int clif_buylist(struct map_session_data*,struct npc_data*);	//self
 int clif_selllist(struct map_session_data*);	//self

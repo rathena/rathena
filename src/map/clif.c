@@ -1334,22 +1334,22 @@ int clif_blown(struct block_list *bl)
 /*==========================================
  *
  *------------------------------------------*/
-int clif_fixpos(struct block_list *bl)
+void clif_fixpos(struct block_list *bl)
 {
-	unsigned char buf[16];
+	unsigned char buf[10];
+	nullpo_retv(bl);
 
-	nullpo_retr(0, bl);
-
-	WBUFW(buf,0)=0x88;
-	WBUFL(buf,2)=bl->id;
-	WBUFW(buf,6)=bl->x;
-	WBUFW(buf,8)=bl->y;
+	WBUFW(buf,0) = 0x88;
+	WBUFL(buf,2) = bl->id;
+	WBUFW(buf,6) = bl->x;
+	WBUFW(buf,8) = bl->y;
 	clif_send(buf, packet_len(0x88), bl, AREA);
-	if (disguised(bl)) {
-		WBUFL(buf,2)=-bl->id;
+
+	if( disguised(bl) )
+	{
+		WBUFL(buf,2) = -bl->id;
 		clif_send(buf, packet_len(0x88), bl, SELF);
 	}
-	return 0;
 }
 
 /*==========================================
@@ -7263,18 +7263,22 @@ int clif_charnameupdate (struct map_session_data *ssd)
 	return 0;
 }
 
-int clif_slide(struct block_list *bl, int x, int y){
+void clif_slide(struct block_list *bl, int x, int y)
+{
 	unsigned char buf[10];
-
-	nullpo_retr(0, bl);
+	nullpo_retv(bl);
 
 	WBUFW(buf, 0) = 0x01ff;
 	WBUFL(buf, 2) = bl->id;
 	WBUFW(buf, 6) = x;
 	WBUFW(buf, 8) = y;
-
 	clif_send(buf, packet_len(0x1ff), bl, AREA);
-	return 0;
+
+	if( disguised(bl) )
+	{
+		WBUFL(buf,2) = -bl->id;
+		clif_send(buf, packet_len(0x1ff), bl, SELF);
+	}
 }
 
 /*------------------------------------------
