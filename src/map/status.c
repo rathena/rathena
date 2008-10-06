@@ -6374,6 +6374,8 @@ int status_change_clear(struct block_list* bl, int type)
 		if(type == 0)
 		switch (i)
 		{	//Type 0: PC killed -> Place here statuses that do not dispel on death.
+		case SC_WEIGHT50:
+		case SC_WEIGHT90:
 		case SC_EDP:
 		case SC_MELTDOWN:
 		case SC_XMAS:
