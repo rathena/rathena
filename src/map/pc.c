@@ -4334,7 +4334,7 @@ static void pc_calcexp(struct map_session_data *sd, unsigned int *base_exp, unsi
 	if (sd->expaddrace[status->race])
 		bonus += sd->expaddrace[status->race];	
 	bonus += sd->expaddrace[status->mode&MD_BOSS?RC_BOSS:RC_NONBOSS];
-	
+
 	if (battle_config.pk_mode && 
 		(int)(status_get_lv(src) - sd->status.base_level) >= 20)
 		bonus += 15; // pk_mode additional exp if monster >20 levels [Valaris]	
@@ -4344,9 +4344,9 @@ static void pc_calcexp(struct map_session_data *sd, unsigned int *base_exp, unsi
 
 	if (!bonus)
 	  	return;
-	
-	*base_exp += (unsigned int) cap_value((double)*base_exp * bonus/100., 1, UINT_MAX);
-	*job_exp += (unsigned int) cap_value((double)*job_exp * bonus/100., 1, UINT_MAX);
+
+	*base_exp = (unsigned int) cap_value(*base_exp + (double)*base_exp * bonus/100., 1, UINT_MAX);
+	*job_exp = (unsigned int) cap_value(*job_exp + (double)*job_exp * bonus/100., 1, UINT_MAX);
 
 	return;
 }
