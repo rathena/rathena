@@ -4,6 +4,7 @@
 #include "../common/cbasetypes.h"
 #include "../common/malloc.h"
 #include "../common/nullpo.h"
+#include "../common/showmsg.h"
 #include "../common/strlib.h"
 #include "atcommand.h" // msg_txt()
 #include "battle.h" // struct battle_config
@@ -292,6 +293,12 @@ int chat_createnpcchat(struct npc_data* nd, const char* title, int limit, bool p
 {
 	struct chat_data* cd;
 	nullpo_retr(0, nd);
+
+	if( nd->chat_id )
+	{
+		ShowError("chat_createnpcchat: npc '%s' already has a chatroom, cannot create new one!\n", nd->exname);
+		return 0;
+	}
 
 	cd = chat_createchat(&nd->bl, title, "", limit, pub, trigger, ev);
 	if( cd )
