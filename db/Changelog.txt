@@ -40,6 +40,8 @@
 	2385 Recuvative_Armor		Should trigger HP/SP return with magical kills as well.
 
 =======================
+2008/10/09
+	* Rev. 13273 Removed duplicate constant I added in r13272. [L0ne_W0lf]
 2008/10/07
 	* Rev. 13267 Adjusted known values for BonusAutoScript down by rate/10. [L0ne_W0lf]
 	- Most cards now trigger at a 0.x% while Isilla only triggers 5%.
