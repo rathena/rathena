@@ -216,7 +216,7 @@ void initChangeTables(void)
 	add_sc( NPC_DEFENDER         , SC_ARMOR           );
 	add_sc( NPC_LICK             , SC_STUN            );
 	set_sc( NPC_HALLUCINATION    , SC_HALLUCINATION   , SI_HALLUCINATION   , SCB_NONE );
-	add_sc( NPC_REBIRTH          , SC_KAIZEL          );
+	add_sc( NPC_REBIRTH          , SC_REBIRTH         );
 	add_sc( RG_RAID              , SC_STUN            );
 	set_sc( RG_STRIPWEAPON       , SC_STRIPWEAPON     , SI_STRIPWEAPON     , SCB_WATK );
 	set_sc( RG_STRIPSHIELD       , SC_STRIPSHIELD     , SI_STRIPSHIELD     , SCB_DEF );
@@ -790,6 +790,15 @@ int status_damage(struct block_list *src,struct block_list *target,int hp, int s
 		if( target->type == BL_MOB ) 
 			((TBL_MOB*)target)->state.rebirth = 1;
 
+		return hp+sp;
+	}
+
+	if( !((TBL_MOB*)target)->state.rebirth && sc && sc->data[SC_REBIRTH] && target->type == BL_MOB )
+	{ // Ensure the monster has not already rebirthed before doing so.
+		int time = skill_get_time2(NPC_REBIRTH,sc->data[SC_REBIRTH]->val1);
+		status_revive(target, sc->data[SC_REBIRTH]->val2, 0);
+		status_change_clear(target,0);
+		((TBL_MOB*)target)->state.rebirth = 1;
 		return hp+sp;
 	}
 
@@ -6076,6 +6085,9 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 		case SC_MERC_HPUP:
 		case SC_MERC_SPUP:
 			val2 = 5 * val1;
+			break;
+		case SC_REBIRTH:
+			val2 = 20*val1; //% of life to be revived with
 			break;
 
 		default:

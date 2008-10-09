@@ -2313,7 +2313,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 	  	//Emperium destroyed by script. Discard mvp character. [Skotlex]
 		mvp_sd = NULL;
 
-	if( !md->sc.data[SC_KAIZEL] )
+	if( !md->sc.data[SC_REBIRTH] )
 	{ // Only trigger event on final kill
 		md->status.hp = 0; //So that npc_event invoked functions KNOW that mob is dead
 		if( src )

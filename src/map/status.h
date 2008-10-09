@@ -287,7 +287,7 @@ typedef enum sc_type {
 	SC_INCHEALRATE,
 	SC_PNEUMA,
 	SC_AUTOTRADE,
-	SC_KSPROTECTED,
+	SC_KSPROTECTED, //270
 	SC_ARMOR_RESIST,
 	SC_SPCOST_RATE,
 	SC_COMMONSC_RESIST,
@@ -299,10 +299,12 @@ typedef enum sc_type {
 	// Mercenary Only Bonus Effects
 	SC_MERC_FLEEUP,
 	SC_MERC_ATKUP,
-	SC_MERC_HPUP,
+	SC_MERC_HPUP, //280
 	SC_MERC_SPUP,
 	SC_MERC_HITUP,
 	SC_MERC_QUICKEN,
+
+	SC_REBIRTH,
 
 	SC_MAX, //Automatically updated max, used in for's to check we are within bounds.
 } sc_type;
