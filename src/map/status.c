@@ -793,12 +793,12 @@ int status_damage(struct block_list *src,struct block_list *target,int hp, int s
 		return hp+sp;
 	}
 
-	if( !((TBL_MOB*)target)->state.rebirth && sc && sc->data[SC_REBIRTH] && target->type == BL_MOB )
-	{ // Ensure the monster has not already rebirthed before doing so.
-		int time = skill_get_time2(NPC_REBIRTH,sc->data[SC_REBIRTH]->val1);
+	if( target->type == BL_MOB && sc && sc->data[SC_REBIRTH] && !((TBL_MOB*)target)->state.rebirth )
+	{// Ensure the monster has not already rebirthed before doing so.
 		status_revive(target, sc->data[SC_REBIRTH]->val2, 0);
 		status_change_clear(target,0);
 		((TBL_MOB*)target)->state.rebirth = 1;
+
 		return hp+sp;
 	}
 

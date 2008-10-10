@@ -4610,8 +4610,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		break;
 
 	case NPC_REBIRTH:
-		//Rebirth system now uses SC_REBIRTH instead of SC_KAIZEL. [L0ne_W0lf]
-		sc_start(bl,type,100,skilllv,skill_get_time(NPC_REBIRTH,skilllv));
+		sc_start(bl,type,100,skilllv,-1);
 		break;
 
 	case NPC_DARKBLESSING:

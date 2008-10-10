@@ -218,7 +218,7 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 	* Moved the mob killmonster flag to a more appropriate area. (bugreport:1795) [SketchyPhoenix]
 2008/07/04
 	* Fixed AM_PHARMACY produce chances based on info gathered by flaviojs, aegis zone ep 11.2, of 20070629 [Brain/FlavioJS]
-	* Rev. 12911 Homunculus will no longer auto-vaporize on master death. [L0ne_W0lf]
+	* Rev. 12912 Homunculus will no longer auto-vaporize on master death. [L0ne_W0lf]
 	- Added config option to allow for this to be turned on or off.
 	* Added missing 'E' logs to mail system [Lupus]
 2008/07/03
