@@ -12353,7 +12353,7 @@ void clif_parse_EquipTick(int fd, struct map_session_data* sd)
 /*==========================================
  * Questlog System [Kevin]
  * 02B5 <packet_len>.W <ignored>.L {         }.10B* <-- UNKOWN PACKET
- * 02B7 <quest_id>.L <state>.B
+ * 02B6 <quest_id>.L <state>.B
  *------------------------------------------*/
 
 void clif_parse_questStateAck(int fd, struct map_session_data * sd)
@@ -12459,13 +12459,13 @@ void clif_send_quest_delete(struct map_session_data * sd, int quest_id)
 }
 
 //Change active state of the quest
-//* 02B6 <quest_id>.L <state_to>.B
+//* 02B7 <quest_id>.L <state_to>.B
 void clif_send_quest_status(struct map_session_data * sd, int quest_id, bool active)
 {
 	int fd = sd->fd;
 
 	WFIFOHEAD(fd, 7);
-	WFIFOW(fd, 0) = 0x02B6;
+	WFIFOW(fd, 0) = 0x02B7;
 	WFIFOL(fd, 2) = quest_id;
 	WFIFOB(fd, 6) = active?1:0;
 	WFIFOSET(fd, 7);
