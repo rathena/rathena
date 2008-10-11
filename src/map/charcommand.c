@@ -3314,7 +3314,7 @@ int charcommand_monsterignore(const int fd, struct map_session_data* sd, const c
 		if (fd != pl_sd->fd)
 			clif_displaymessage(pl_sd->fd, "Target player is now immune to attacks.");
 	} else {
-		sd->state.monster_ignore = 0;
+		pl_sd->state.monster_ignore = 0;
 		clif_displaymessage(sd->fd, "You are no longer immune to attacks.");
 		if (fd != pl_sd->fd)
 			clif_displaymessage(pl_sd->fd, "Target player is no longer immune to attacks.");
