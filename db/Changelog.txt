@@ -40,6 +40,12 @@
 	2385 Recuvative_Armor		Should trigger HP/SP return with magical kills as well.
 
 =======================
+2008/10/11
+	* Rev. 13282 Just some minor updates and fixes I've been putting off :D [L0ne_W0lf]
+	- Corrected some of the item typos mentioned by Argatlahm. (bugreport:2326)
+	- Corrected Gorynych summoning Freezers instead of Leskava. (bugreport:2334)
+	- Moved all event items to item_db2 as part of the fix for bugreport:2337.
+	  To activate event bonuses for old event items, you need to just uncomment them now.
 2008/10/09
 	* Rev. 13273 Removed duplicate constant I added in r13272. [L0ne_W0lf]
 2008/10/07

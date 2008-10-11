@@ -4668,7 +4668,7 @@
 1885,Gorynych@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,0,,,,,,
 1885,Gorynych@NPC_SUMMONSLAVE,attack,196,5,10000,1000,30000,no,self,slavele,1,1886,,,,,
 1885,Gorynych@NPC_SUMMONSLAVE,chase,196,5,5000,1000,30000,no,self,slavele,0,1886,,,,,
-1885,Gorynych@NPC_SUMMONSLAVE,idle,196,5,10000,1000,30000,no,self,slavele,0,1887,,,,,
+1885,Gorynych@NPC_SUMMONSLAVE,idle,196,5,10000,1000,30000,no,self,slavele,0,1886,,,,,
 1885,Gorynych@WZ_QUAGMIRE,chase,92,5,5000,200,5000,no,target,always,0,,,,,,
 1885,Gorynych@NPC_CALLSLAVE,attack,352,1,10000,0,15000,yes,self,always,0,,,,,,
 1885,Gorynych@NPC_CALLSLAVE,chase,352,1,5000,0,15000,yes,self,always,0,,,,,,
