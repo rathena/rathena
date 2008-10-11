@@ -5172,10 +5172,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 			if(base_penalty) {
 			  	if (battle_config.pk_mode && src && src->type==BL_PC)
 					base_penalty*=2;
-				if(sd->status.base_exp < base_penalty)
-					sd->status.base_exp = 0;
-				else
-					sd->status.base_exp -= base_penalty;
+				sd->status.base_exp -= min(sd->status.base_exp, base_penalty);
 				clif_updatestatus(sd,SP_BASEEXP);
 			}
 		}
@@ -5193,10 +5190,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 			if(base_penalty) {
 			  	if (battle_config.pk_mode && src && src->type==BL_PC)
 					base_penalty*=2;
-				if(sd->status.job_exp < base_penalty)
-					sd->status.job_exp = 0;
-				else
-					sd->status.job_exp -= base_penalty;
+				sd->status.job_exp -= min(sd->status.job_exp, base_penalty);
 				clif_updatestatus(sd,SP_JOBEXP);
 			}
 		}

@@ -3054,8 +3054,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			}
 			skill_area_temp[0] = 5 - skill_area_temp[0]; // The actual penalty...
 			if (skill_area_temp[0] > 0 && !map[src->m].flag.noexppenalty) { //Apply penalty
-				sd->status.base_exp -= pc_nextbaseexp(sd) * skill_area_temp[0] * 2/1000; //0.2% penalty per each.
-				sd->status.job_exp -= pc_nextjobexp(sd) * skill_area_temp[0] * 2/1000;
+				sd->status.base_exp -= min(sd->status.base_exp, pc_nextbaseexp(sd) * skill_area_temp[0] * 2/1000); //0.2% penalty per each.
+				sd->status.job_exp -= min(sd->status.job_exp, pc_nextjobexp(sd) * skill_area_temp[0] * 2/1000);
 				clif_updatestatus(sd,SP_BASEEXP);
 				clif_updatestatus(sd,SP_JOBEXP);
 			}
@@ -8152,8 +8152,8 @@ int skill_check_condition(struct map_session_data* sd, short skill, short lv, in
 	case PR_REDEMPTIO:
 		{
 			int exp;
-			if(((exp = pc_nextbaseexp(sd)) > 0 && sd->status.base_exp*100/exp < 1) ||
-				((exp = pc_nextjobexp(sd)) > 0 && sd->status.job_exp*100/exp < 1)) {
+			if( ((exp = pc_nextbaseexp(sd)) > 0 && get_percentage(sd->status.base_exp, exp) < 1) ||
+				((exp = pc_nextjobexp(sd)) > 0 && get_percentage(sd->status.job_exp, exp) < 1)) {
 				clif_skill_fail(sd,skill,0,0); //Not enough exp.
 				return 0;
 			}
