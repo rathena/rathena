@@ -5488,12 +5488,10 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			break;
 
 		//Permanent effects.
-		case SC_WEIGHT90:
-			unit_stop_attack(bl);
-			// fall through
 		case SC_AETERNA:
 		case SC_MODECHANGE:
 		case SC_WEIGHT50:
+		case SC_WEIGHT90:
 		case SC_BROKENWEAPON:
 		case SC_BROKENARMOR:
 		case SC_READYSTORM:
@@ -6141,6 +6139,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 		case SC_HIDING:
 		case SC_CLOAKING:
 		case SC_CHASEWALK:
+		case SC_WEIGHT90:
 			unit_stop_attack(bl);
 		break;
 		case SC_SILENCE:
