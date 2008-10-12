@@ -783,7 +783,7 @@ int status_damage(struct block_list *src,struct block_list *target,int hp, int s
 	{ //flag&8 = disable Kaizel
 		int time = skill_get_time2(SL_KAIZEL,sc->data[SC_KAIZEL]->val1);
 		//Look for Osiris Card's bonus effect on the character and revive 100% or revive normally
-		if ( BL_CAST(BL_PC,target)->special_state.restart_full_recover = 1 )
+		if ( BL_CAST(BL_PC,target)->special_state.restart_full_recover == 1 )
 			status_revive(target, 100, 100);
 		else
 			status_revive(target, sc->data[SC_KAIZEL]->val2, 0);
