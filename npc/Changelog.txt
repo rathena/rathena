@@ -1,6 +1,7 @@
 Date		Added
 ======
 2008/10/12
+	* Rev. 13289 Reverted donpcevent change to wizard quest. Moved a percentheal, which should fix bugreport:2311. [L0ne_W0lf]
 	* Changed An nonexistent variable in Refine NPC. (bugreport:2340) [Samuray22]
 	* Fixed a Exploit in Thief Quest Skill. (bugreport:2332)
 	* Fixed donpcevent to doevent. (bugreport:2311)
