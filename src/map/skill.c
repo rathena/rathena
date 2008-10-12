@@ -4610,6 +4610,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		break;
 
 	case NPC_REBIRTH:
+		if( md && md->state.rebirth )
+			break; // only works once
 		sc_start(bl,type,100,skilllv,-1);
 		break;
 
