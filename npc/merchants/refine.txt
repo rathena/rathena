@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Syrus22 (1.1) dafide18 (1.4) Skotlex (1.5)
 //===== Current Version: =====================================
-//= 2.7a
+//= 2.8
 //===== Compatible With: =====================================
 //= Any Athena Version
 //===== Description: =========================================
@@ -49,7 +49,8 @@
 //= 2.7 Refiner function accepts additional paramater. [L0ne_W0lf]
 //=     0 = No special features; 1 = new refining features
 //=     Updated Repairmen and function. No longer shows menu.
-//= 2.76a A couple touch-ups to the repairman function. [L0ne_w0lf]
+//= 2.7a A couple touch-ups to the repairman function. [L0ne_w0lf]
+//= 2.8 Changed the nonexistent variable .@matname$ for getitemname(.@material). (bugreport:2340) [Samuray22]
 //============================================================
 
 
@@ -606,7 +607,7 @@ function	script	refinemain	{
 	}
 	set .@fullprice,.@price * .@refinecnt;
 	mes "[" + getarg(0) + "]";
-	mes "That will cost you " + .@refinecnt + " " + .@matname$ + " and " + .@fullprice + " Zeny. Is that ok?";
+	mes "That will cost you " + .@refinecnt + " " + getitemname(.@material) + " and " + .@fullprice + " Zeny. Is that ok?";
 	next;
 	if(select("Yes","No...") == 2){
 		mes "[" + getarg(0) + "]";

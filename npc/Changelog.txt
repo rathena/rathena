@@ -1,5 +1,9 @@
 Date		Added
 ======
+2008/10/12
+	* Changed An nonexistent variable in Refine NPC. (bugreport:2340) [Samuray22]
+	* Fixed a Exploit in Thief Quest Skill. (bugreport:2332)
+	* Fixed donpcevent to doevent. (bugreport:2311)
 2008/09/30
 	* Rev. 13250 Added Mercenary System related NPCs. [L0ne_W0lf]
 	* Rev. 13249 Full implementation of all Episode 11.3 Quests. [L0ne_W0lf]

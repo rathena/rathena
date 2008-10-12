@@ -4,7 +4,7 @@
 //= (Aegis) Translated by yoshiki, converted by kobra_k88
 //= Further bugfixed and tested by Lupus
 //===== Current Version: ===================================== 
-//= 2.7
+//= 2.8
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -20,6 +20,7 @@
 //= 2.7 Now uses enable and disable waitingroomevent. [L0ne_W0lf]
 //= 	Other minor fixes to various NPCs.
 //= 2.7a Added end; :D (bugreport:2038) [Yommy]
+//= 2.8 Fixed donpcevent to doevent. (bugreport:2311) [SoulBlaker]
 //============================================================ 
 
 gef_tower,111,37,4	script	Wizard Guildsman	70,{
@@ -1099,7 +1100,7 @@ OnMyMobDead:
 	if (.MyMobs < 1) {
 		set WIZ_Q2,WIZ_Q2+1;
 		mapannounce "job_wiz",strcharinfo(0)+" has succeeded in eliminating the monsters.",bc_map;
-		donpcevent "Room of Water#Door::OnEnable";
+		doevent "Room of Water#Door::OnEnable";
 		stopnpctimer;
 	}
 	end;
@@ -1188,8 +1189,8 @@ OnMyMobDead:
 		mapannounce "job_wiz",strcharinfo(0)+" has succeeded in eliminating the monsters.",bc_map;
 		warp "job_wiz",116,97;
 		percentheal 100,100;
-		donpcevent "Room of Water#Door::OnDisable";
-		donpcevent "Room of Earth::OnEnable";
+		doevent "Room of Water#Door::OnDisable";
+		doevent "Room of Earth::OnEnable";
 		stopnpctimer;
 	}
 	end;
@@ -1269,7 +1270,7 @@ OnMyMobDead:
 	set .MyMobs,.MyMobs-1;
 	if (.MyMobs < 1) {
 		mapannounce "job_wiz",strcharinfo(0) + " has succeeded in eliminating the monsters.",bc_map;
-		donpcevent "Room of Earth#Door::OnEnable";
+		doevent "Room of Earth#Door::OnEnable";
 		stopnpctimer;
 	}
 	end;
@@ -1360,8 +1361,8 @@ OnMyMobDead:
 		mapannounce "job_wiz",strcharinfo(0) + " has succeeded in eliminating the monster.",bc_map;
 		percentheal 100,100;
 		warp "job_wiz",46,99;
-		donpcevent "Room of Earth#Door::OnDisable";
-		donpcevent "Room of Fire::OnEnable";
+		doevent "Room of Earth#Door::OnDisable";
+		doevent "Room of Fire::OnEnable";
 		stopnpctimer;
 	}
 	end;
@@ -1439,7 +1440,7 @@ OnMyMobDead:
 	set .MyMobs,.MyMobs-1;
 	if (.MyMobs < 1) {
 		mapannounce "job_wiz",strcharinfo(0) + " has succeeded in eliminating the monsters.",bc_map;
-		donpcevent "Room of Fire#Door::OnEnable";
+		doevent "Room of Fire#Door::OnEnable";
 		stopnpctimer;
 	}
 	end;
@@ -1525,8 +1526,8 @@ OnMyMobDead:
 	if (.MyMobs < 1) {
 		mapannounce "job_wiz","Congratulations, " + strcharinfo(0) + ". You have passed the job change test.",bc_map;
 		set WIZ_Q,7;
-		donpcevent "Room of Fire#Door::OnDisable";
-		donpcevent "Test Helper#wiz::OnEnable";
+		doevent "Room of Fire#Door::OnDisable";
+		doevent "Test Helper#wiz::OnEnable";
 		stopnpctimer;
 	}
 	end;
@@ -1912,6 +1913,7 @@ gef_tower,107,36,4	script	White Dog#wiz	81,{
 		mes "[Maria]";
 		mes "As I thought, I knew you'd be able to do it, I could smell it in yah! *Woof*";
 		mes "Now I can call you Wizard.";
+
 		next;
 		mes "[Maria]";
 		mes "Congratulations. Always give your best at everything, no matter what.";
