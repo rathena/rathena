@@ -897,19 +897,25 @@ int chrif_divorceack(int char_id, int partner_id)
 	struct map_session_data* sd;
 	int i;
 
-	if (!char_id || !partner_id || (sd = map_charid2sd(char_id)) == NULL || sd->status.partner_id != partner_id)
+	if( !char_id || !partner_id )
 		return 0;
 
-	// Update Partner info
-	sd->status.partner_id = 0;
+	if( (sd = map_charid2sd(char_id)) != NULL && sd->status.partner_id == partner_id )
+	{
+		sd->status.partner_id = 0;
+		for(i = 0; i < MAX_INVENTORY; i++)
+			if (sd->status.inventory[i].nameid == WEDDING_RING_M || sd->status.inventory[i].nameid == WEDDING_RING_F)
+				pc_delitem(sd, i, 1, 0);
+	}
 
-	// Remove Wedding Rings from inventory
-	for(i = 0; i < MAX_INVENTORY; i++)
-		if (sd->status.inventory[i].nameid == WEDDING_RING_M || sd->status.inventory[i].nameid == WEDDING_RING_F)
-			pc_delitem(sd, i, 1, 0);
-
-	//TODO: send clif_divorced()
-
+	if( (sd = map_charid2sd(partner_id)) != NULL && sd->status.partner_id == char_id )
+	{
+		sd->status.partner_id = 0;
+		for(i = 0; i < MAX_INVENTORY; i++)
+			if (sd->status.inventory[i].nameid == WEDDING_RING_M || sd->status.inventory[i].nameid == WEDDING_RING_F)
+				pc_delitem(sd, i, 1, 0);
+	}
+	
 	return 0;
 }
 /*==========================================
