@@ -1202,6 +1202,12 @@ packet_ver: 22
 0x035f,-1
 0x0389,-1
 
+//2008-09-10aSakexe
+packet_ver: 23
+0x0436,19,wanttoconnection,2:6:10:14:18
+0x0437,7,actionrequest,2:6
+0x0438,10,useskilltoid,2:4:6
+0x0439,8,useitem,2:4
 
 //Add new packets here
-//packet_ver: 23
+//packet_ver: 24
