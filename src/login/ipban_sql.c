@@ -33,6 +33,7 @@ static char   ipban_table[32] = "ipbanlist";
 // globals
 static Sql* sql_handle = NULL;
 static int cleanup_timer_id = INVALID_TIMER;
+static bool ipban_inited = false;
 
 int ipban_cleanup(int tid, unsigned int tick, int id, intptr data);
 
@@ -46,6 +47,11 @@ void ipban_init(void)
 	uint16      port;
 	const char* database;
 	const char* codepage;
+
+	ipban_inited = true;
+
+	if( !login_config.ipban )
+		return;// ipban disabled
 
 	if( ipban_db_hostname[0] != '\0' )
 	{// local settings
@@ -85,6 +91,9 @@ void ipban_init(void)
 // finalize
 void ipban_final(void)
 {
+	if( !login_config.ipban )
+		return;// ipban disabled
+
 	// release data
 	delete_timer(cleanup_timer_id, ipban_cleanup);
 
@@ -97,6 +106,9 @@ void ipban_final(void)
 bool ipban_config_read(const char* key, const char* value)
 {
 	const char* signature;
+
+	if( ipban_inited )
+		return false;// settings can only be changed before init
 
 	signature = "sql.";
 	if( strncmpi(key, signature, strlen(signature)) == 0 )
@@ -186,6 +198,9 @@ bool ipban_check(uint32 ip)
 	char* data = NULL;
 	int matches;
 
+	if( !login_config.ipban )
+		return false;// ipban disabled
+
 	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT count(*) FROM `%s` WHERE `list` = '%u.*.*.*' OR `list` = '%u.%u.*.*' OR `list` = '%u.%u.%u.*' OR `list` = '%u.%u.%u.%u'",
 		ipban_table, p[3], p[3], p[2], p[3], p[2], p[1], p[3], p[2], p[1], p[0]) )
 	{
@@ -207,7 +222,12 @@ bool ipban_check(uint32 ip)
 // log failed attempt
 void ipban_log(uint32 ip)
 {
-	unsigned long failures = loginlog_failedattempts(ip, login_config.dynamic_pass_failure_ban_interval);// how many times failed account? in one ip.
+	unsigned long failures;
+
+	if( !login_config.ipban )
+		return;// ipban disabled
+
+	failures = loginlog_failedattempts(ip, login_config.dynamic_pass_failure_ban_interval);// how many times failed account? in one ip.
 
 	// if over the limit, add a temporary ban entry
 	if( failures >= login_config.dynamic_pass_failure_ban_limit )
@@ -222,6 +242,9 @@ void ipban_log(uint32 ip)
 // remove expired bans
 int ipban_cleanup(int tid, unsigned int tick, int id, intptr data)
 {
+	if( !login_config.ipban )
+		return 0;// ipban disabled
+
 	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `ipbanlist` WHERE `rtime` <= NOW()") )
 		Sql_ShowDebug(sql_handle);
 
