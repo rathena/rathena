@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.6
+//= 1.7
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -52,6 +52,7 @@
 //=     Added Quest: Z-Gang Quest
 //=     Added Quest: Unlucky Emerald
 //=     Added Quest: Rogue Guild Investigation
+//= 1.7 Fixed a typo in monestary quest. [L0ne_W0lf]
 //============================================================ 
 
 // Nameless Island and Cursed Monestary Access Quest
@@ -1953,7 +1954,7 @@ abbey02,224,70,0	script	Book#Aru	111,{
 		mes "of old, moldy books.^000000";
 		close;
 	}
-	else if (aru_mons == 21) {
+	else if (aru_monas == 21) {
 		mes "^3355FFThere's a book stained";
 		mes "with blood amongst all";
 		mes "these old, moldy books.^000000";

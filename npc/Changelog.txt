@@ -1,5 +1,8 @@
 Date		Added
 ======
+2008/10/16
+	* Rev. 13295 Corrected typo in Nameless Monestary quest. (bugreport:2352) [L0ne_W0lf]
+	* Swapped baseclass for basejob and fixed server-wide announce in god item quests. (bugreport:2349)
 2008/10/12
 	* Rev. 13289 Reverted donpcevent change to wizard quest. Moved a percentheal, which should fix bugreport:2311. [L0ne_W0lf]
 	* Changed An nonexistent variable in Refine NPC. (bugreport:2340) [Samuray22]
