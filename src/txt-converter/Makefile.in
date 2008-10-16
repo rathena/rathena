@@ -39,6 +39,7 @@ CHAR_CONVERTER_OBJ = \
 	obj_char/sql-inter.o \
 	obj_char/sql-int_party.o \
 	obj_char/sql-int_guild.o \
+	obj_char/sql-int_mercenary.o \
 	../common/obj_all/minicore.o \
 	../common/obj_all/malloc.o \
 	../common/obj_all/strlib.o \
@@ -62,6 +63,7 @@ CHAR_CONVERTER_H = \
 	../char_sql/inter.h \
 	../char_sql/int_party.h \
 	../char_sql/int_guild.h \
+	../char_sql/int_mercenary.h \
 	../common/cbasetypes.h \
 	../common/mmo.h \
 	../common/core.h \
