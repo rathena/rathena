@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf (Script), DZeroX (Timer)
 //===== Current Version: ===================================== 
-//= 4.2c
+//= 4.3
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -92,6 +92,8 @@
 //= 4.2a Follow up to last update. [L0ne_W0lf]
 //= 4.2b Missed a condition, fixed it though. [L0ne_W0lf]
 //= 4.2c More various fixes :D [L0ne_W0lf]
+//= 4.3 Fixed improper condition in the Elly NPC. [L0ne_W0lf]
+//=     Corrected some typos in the dialogs.
 //============================================================ 
 
 //============================================================================
@@ -1429,7 +1431,7 @@ kh_school,179,39,0	script	Cute Student#kh	895,{
 			mes "[Elly]";
 			mes "This place certainly";
 			mes "isn't like other schools.";
-			mes "You already know that only";
+			//mes "You already know that only";
 			mes "Yeah, everything is made to";
 			mes "fit each of the student's needs.";
 			next;
@@ -1492,7 +1494,7 @@ kh_school,179,39,0	script	Cute Student#kh	895,{
 			}
 		}
 	}
-	else if (KielHyreQuest >= 24 || KielHyreQuest <= 26) {
+	else if (KielHyreQuest >= 24 && KielHyreQuest <= 26) {
 		cutin "kh_elly04",2;
 		mes "[Elly]";
 		mes "Argh, I'm in a fix!";
@@ -4899,7 +4901,7 @@ kh_mansion,18,30,4	script	Allysia	894,{
 				mes "[Allysia]";
 				mes "With their organic bodies";
 				mes "and advanced artificial hearts";
-				mes "make from imitation Ymir Heart";
+				mes "made from imitation Ymir Heart";
 				mes "Pieces, they can experience";
 				mes "physiologic phenomena";
 				mes "just like ordinary humans.";
@@ -5063,7 +5065,7 @@ OnTouch:
 			mes "son and heir, Kiehl, helped";
 			mes "his father establish this";
 			mes "special academy as their";
-			mes "way of giving back t society.";
+			mes "way of giving back to society.";
 			next;
 			mes "[??????]";
 			mes "Almost every corporation and";

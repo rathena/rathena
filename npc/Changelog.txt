@@ -1,5 +1,11 @@
 Date		Added
 ======
+2008/10/17
+	* Rev. 13305 Corrected some issues in the Keil Hyre Quest and Mjolnir Seal quest. [L0ne_W0lf]
+	- Corrected Sudri not setting player and NPC hp variables. (bugreport:2355)
+	- Corrected a few minor typos in the Kyle Hyre Quest. (bugreport:2356)
+	- Corrected bad if condition checking in Kyle Hyre Quest. (bugreport:2358)
+	- Corrected Mjolnir seal checking for Oridecon hammer. (bugreport:2363)
 2008/10/16
 	* Rev. 13295 Corrected typo in Nameless Monestary quest. (bugreport:2352) [L0ne_W0lf]
 	* Swapped baseclass for basejob and fixed server-wide announce in god item quests. (bugreport:2349)
