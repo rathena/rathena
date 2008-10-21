@@ -677,7 +677,12 @@ int guild_reply_invite(struct map_session_data* sd, int guild_id, int flag)
 	//NOTE: this can be NULL because the person might have logged off in the meantime
 	tsd = map_id2sd(sd->guild_invite_account);
 
-	if( flag == 0 )
+	if ( sd->status.guild_id > 0 ) // [Paradox924X]
+	{ // Already in another guild.
+		if ( tsd ) clif_guild_inviteack(tsd,0);
+		return 0;
+	}
+	else if( flag == 0 )
 	{// rejected
 		sd->guild_invite = 0;
 		sd->guild_invite_account = 0;
