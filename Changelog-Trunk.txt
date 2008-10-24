@@ -3,6 +3,8 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2008/10/24
+	* Commented out unused function clif_marriage_process. [Paradox924X]
 2008/10/21
 	* Added a check to make sure a player wasn't in a guild when they accepted a guild invitation. [Paradox924X]
 2008/10/18

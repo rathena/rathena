@@ -6769,7 +6769,7 @@ void clif_callpartner(struct map_session_data *sd)
 
 /*==========================================
  * Marry [DracoRPG]
- *------------------------------------------*/
+ *------------------------------------------
 void clif_marriage_process(struct map_session_data *sd)
 {
 	int fd;
@@ -6780,6 +6780,7 @@ void clif_marriage_process(struct map_session_data *sd)
 	WFIFOW(fd,0)=0x1e4;
 	WFIFOSET(fd,packet_len(0x1e4));
 }
+*/
 
 
 /*==========================================
