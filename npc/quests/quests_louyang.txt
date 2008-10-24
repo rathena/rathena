@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Evera and The eAthena Dev Team
 //===== Current Version: ===================================== 
-//= 2.0
+//= 2.1
 //===== Compatible With: ===================================== 
 //= eAthena 1.0
 //===== Description: ========================================= 
@@ -31,6 +31,7 @@
 //= 1.8 Bug fixes. (bugreport:1025 bugreport:1062) [L0ne_W0lf]
 //= 1.9 Bug fixes/Typos. [Paradox924X]
 //= 2.0 Replaced effect numerics with constants. [L0ne_W0lf]
+//= 2.1 Fixed guard tower warper ALWAYS warping. (bugreport:2377) [L0ne_W0lf]
 //============================================================ 
 
 // Soup Quest
@@ -582,7 +583,7 @@ lou_fild01,195,177,5	script	Jiu Lian Bu#1-1	819,{
 		mes "Hey~";
 		mes "So how ya been, ya smooth criminal? You wanna visit that place again?";
 		next;
-		switch(select("Sure, let's go~:Nah, maybe next time.")) {
+		if (select("Sure, let's go~:Nah, maybe next time.") == 1) {
 			mes "[Jiu Lian Bu]";
 			mes "Alright~";
 			mes "Let's get";

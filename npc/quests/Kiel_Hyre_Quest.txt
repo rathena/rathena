@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf (Script), DZeroX (Timer)
 //===== Current Version: ===================================== 
-//= 4.3
+//= 4.4
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -67,8 +67,8 @@
 //= 3.2b Fixed some typos and grammar mistakes. [SinSloth]
 //= 3.3 Fixed the receiver log out bugs. [L0ne_W0lf]
 //= 3.4 Fixed bug when u can't get a Yellow Keycard if u got the Blue one at first [Lupus]
-//=		Note: There are many condition checks that should be omitted in the future fixed item names in item_db.txt / txt resources according the quest
-//=		for items, should be used bitwise methods in a single variable. So let's fix the rest possible bugs (if they exist) and then optimize ^_-		
+//=     Note: There are many condition checks that should be omitted in the future fixed item names in item_db.txt / txt resources according the quest
+//=     for items, should be used bitwise methods in a single variable. So let's fix the rest possible bugs (if they exist) and then optimize ^_-		
 //= 3.5 Changed the way the Black Keycard distibuting NPCs work slighty. [L0ne_W0lf]
 //= 3.6 Keil Hyre removes ALL outstanding quest items when he is talked [L0ne_W0lf]
 //=	to after finishing the quest.
@@ -94,6 +94,7 @@
 //= 4.2c More various fixes :D [L0ne_W0lf]
 //= 4.3 Fixed improper condition in the Elly NPC. [L0ne_W0lf]
 //=     Corrected some typos in the dialogs.
+//= 4.4 Updated reviecer and robots NPC to use mobcount. (bugreport:2380) [L0ne_W0lf]
 //============================================================ 
 
 //============================================================================
@@ -5993,7 +5994,7 @@ yuno_fild09,158,217,0	script	Wooden Board#kh	111,{
 // Kiehl's Room; Receiver (Gives black keycards upon killing mobs)
 //----------------------------------------------------------------------------
 kh_kiehl01,17,39,0	script	Receiver#kh	111,{
-	if (.KHKilled < 1) {
+	if (mobcount("kh_kiehl01","Receiver#kh::OnMyMobDead") < 1) {
 		mes "^333333*BBBZZZ*^000000";
 		if (KielHyreQuest == 74) {
 			next;
@@ -6007,7 +6008,6 @@ kh_kiehl01,17,39,0	script	Receiver#kh	111,{
 			set KielHyreQuest,76;
 		}
 		close2;
-		set .KHKilled,2;
 		monster "kh_kiehl01",16,32,"Alicel",1739,1,"Receiver#kh::OnMyMobDead";
 		monster "kh_kiehl01",18,31,"Aliot",1740,1,"Receiver#kh::OnMyMobDead";
 		end;
@@ -6018,10 +6018,8 @@ kh_kiehl01,17,39,0	script	Receiver#kh	111,{
 	}
 
 OnMyMobDead:
-	set .KHKilled,.KHKilled-1;
-	if (.KHKilled < 1) { 
-		makeitem 7506,1,"this",19,36; 
-		set .KHKilled,0;
+	if (mobcount("kh_kiehl01","Receiver#kh::OnMyMobDead") <1) { 
+		makeitem 7506,1,"this",19,36;
 	}
 	end;
 }
@@ -6382,13 +6380,12 @@ OnTouch:
 // Kiehl's Room; Robots
 //----------------------------------------------------------------------------
 kh_kiehl01,15,179,0	script	Robots#kh1	111,{
-	if (.KHKilled < 1) {
+	if (mobcount("kh_kiehl01","Robots#kh1::OnMyMobDead") < 1) {
 		mes "^3355FFAs soon as you";
 		mes "touch the test tube,";
 		mes "a bunch of robots";
 		mes "suddenly appeared.^000000.";
 		close2;
-		set .KHKilled,4;
 		monster "kh_kiehl01",18,181,"Aliot",1740,1,"Robots#kh1::OnMyMobDead";
 		monster "kh_kiehl01",18,180,"Alicel",1739,1,"Robots#kh1::OnMyMobDead";
 		monster "kh_kiehl01",18,179,"Aliot",1740,1,"Robots#kh1::OnMyMobDead";
@@ -6400,11 +6397,9 @@ kh_kiehl01,15,179,0	script	Robots#kh1	111,{
 	}
 
 OnMyMobDead:
-	set .KHKilled,.KHKilled-1;
-	if (.KHKilled < 1) { 
+	if (mobcount("kh_kiehl01","Robots#kh1::OnMyMobDead") < 1) { 
 		makeitem 7506,1,"this",18,180;
-		set .KHKilled,0;
-	}
+		}
 	end;
 }
 

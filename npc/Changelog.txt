@@ -1,5 +1,10 @@
 Date		Added
 ======
+2008/10/24
+	* Rev. 13319 Bugfixing yay! Just goin' though the tracker. [L0ne_W0lf]
+	- Fixed variables in a loop in the novice grounds. (bugreport:2374)
+	- Swapped switch for if in Louyang Guard Tower thing. (bugreport:2377)
+	- Swapped mobcount for npc vars in two keil hyre npcs. (bugreport:2380)
 2008/10/17
 	* Rev. 13305 Corrected some issues in the Keil Hyre Quest and Mjolnir Seal quest. [L0ne_W0lf]
 	- Corrected Sudri not setting player and NPC hp variables. (bugreport:2355)

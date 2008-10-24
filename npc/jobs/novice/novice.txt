@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Dr.Evil & MasterOfMuppets
 //===== Current Version: ===================================== 
-//= 2.3a
+//= 2.4
 //===== Compatible With: ===================================== 
 //= eAthena SVN 3422+(Requires jA Script System)
 //===== Description: ========================================= 
@@ -22,6 +22,7 @@
 //= 2.2 Corrected Leo's endless dialog. [L0ne_W0lf]
 //= 2.3 Added fix to Hanson from GM-windsor- and Saithis. [L0ne_W0lf]
 //= 2.3a Correct a wrong variable name. (bugreport:2293) [Samuray22]
+//= 2.4 Corrected an error in Hanson. (bugreport:2374) [L0ne_W0lf]
 //============================================================ 
 
 // Bulletin Board
@@ -3843,8 +3844,8 @@ S_UserJobchoice:
 	
 	for( set .@i,0; .@i < getarraysize(.@JOBS$); set .@i,.@i+1 )
 	{
-		if(.@JOBS$[@i] == getarg(0)) set .@menu$,.@menu$+":";
-        	else set .@menu$,.@menu$+.@JOBS$[@i]+":";
+		if(.@JOBS$[.@i] == getarg(0)) set .@menu$,.@menu$+":";
+        	else set .@menu$,.@menu$+.@JOBS$[.@i]+":";
    	}
 	set .@menu, select(.@menu$) -1;
 	if( .@JOBS$[.@menu] == "Swordsman" ) set @menu,1;
