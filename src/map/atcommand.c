@@ -1515,7 +1515,7 @@ int atcommand_heal(const int fd, struct map_session_data* sd, const char* comman
 
 	if ( hp < -2147483647 || sp < -2147483647 ) { // Prevent overflow. [Paradox924X]
 		status_damage(NULL, &sd->bl, 2147483647, 2147483647, 0, 0);
-		clif_damage(&sd->bl,&sd->bl, gettick(), 0, 0, -hp, 0 , 4, 0);
+		clif_damage(&sd->bl,&sd->bl, gettick(), 0, 0, 2147483647, 0 , 4, 0);
 		clif_displaymessage(fd, msg_txt(156)); // HP or/and SP modified.
 		return 0;
 	}
