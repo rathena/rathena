@@ -1504,14 +1504,22 @@ int atcommand_heal(const int fd, struct map_session_data* sd, const char* comman
 
 	sscanf(message, "%d %d", &hp, &sp);
 
-	if (hp == 0 && sp == 0) {
+	if ( ( hp == 0 && sp == 0 )
+		|| ( hp > 2147483647 || sp > 2147483647 ) ) { // Prevent overflow. [Paradox924X]
 		if (!status_percent_heal(&sd->bl, 100, 100))
 			clif_displaymessage(fd, msg_txt(157)); // HP and SP have already been recovered.
 		else
 			clif_displaymessage(fd, msg_txt(17)); // HP, SP recovered.
 		return 0;
 	}
-	
+
+	if ( hp < -2147483647 || sp < -2147483647 ) { // Prevent overflow. [Paradox924X]
+		status_damage(NULL, &sd->bl, 2147483647, 2147483647, 0, 0);
+		clif_damage(&sd->bl,&sd->bl, gettick(), 0, 0, -hp, 0 , 4, 0);
+		clif_displaymessage(fd, msg_txt(156)); // HP or/and SP modified.
+		return 0;
+	}
+
 	if(hp > 0 && sp >= 0) {
 		if(!status_heal(&sd->bl, hp, sp, 0))
 			clif_displaymessage(fd, msg_txt(157)); // HP and SP are already with the good value.
