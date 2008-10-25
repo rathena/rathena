@@ -41,6 +41,7 @@
 
 =======================
 2008/10/25
+	* Rev. 13324 iRO lied to me. Reverted casting range of traps to 3. [L0ne_W0lf]
 	* Rev. 13323 Just some random updates and bugfixes! [L0ne_W0lf]
 	- Corrected Landmine's placement range. (bugreport:2305)
 	- Corrected comment in merc skill db. (bugreport:2324)
