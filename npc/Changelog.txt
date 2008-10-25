@@ -1,5 +1,8 @@
 Date		Added
 ======
+2008/10/25
+	* Rev. 13325 Fixed a copy/paste error in Nordri. (bugreport:2372) [L0ne_W0lf]
+
 2008/10/24
 	* Rev. 13319 Bugfixing yay! Just goin' though the tracker. [L0ne_W0lf]
 	- Fixed variables in a loop in the novice grounds. (bugreport:2374)
