@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
-//= 1.9
+//= 2.0
 //===== Compatible With: =====================================
 //= eAthena SVN
 //===== Description: =========================================
@@ -24,6 +24,7 @@
 //= 1.7 Fixed a typo when disabling a control device. [L0ne_W0lf]
 //= 1.8 Changed the treasure box spawn from 1939 to 1940. [L0ne_W0lf]
 //= 1.9 Replaced effect numerics with constants. [L0ne_W0lf]
+//= 2.0 Fixed setcell coords for the first barricade. [L0ne_W0lf]
 //============================================================
 
 schg_cas03,1,1,0	script	Manager#sch03_02	111,{
@@ -1211,12 +1212,12 @@ OnBarrierDestroyed:
 	if (.MyMobCount == 0) {
 		setarray $agit_sc03[2],1;
 		mapannounce "schg_cas03","The 1st Fortress Gate is destroyed.",bc_map,"0x00ff00";
-		setcell "schg_cas03",325,227,332,227,cell_walkable,1;
+		setcell "schg_cas03",325,277,332,277,cell_walkable,1;
 	}
 	end;
 
 OnDisable:
-	setcell "schg_cas03",325,227,332,227,cell_walkable,1;
+	setcell "schg_cas03",325,277,332,277,cell_walkable,1;
 	killmonster "schg_cas03","#sch03_RL01::OnBarrierDestroyed";
 	end;
 }
