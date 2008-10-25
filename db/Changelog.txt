@@ -40,6 +40,11 @@
 	2385 Recuvative_Armor		Should trigger HP/SP return with magical kills as well.
 
 =======================
+2008/10/25
+	* Rev. 13323 Just some random updates and bugfixes! [L0ne_W0lf]
+	- Corrected Landmine's placement range. (bugreport:2305)
+	- Corrected comment in merc skill db. (bugreport:2324)
+	- Corrected the casting range for traps. (Based on visial comparison from iRO)
 2008/10/11
 	* Rev. 13282 Just some minor updates and fixes I've been putting off :D [L0ne_W0lf]
 	- Corrected some of the item typos mentioned by Argatlahm. (bugreport:2326)
