@@ -192,7 +192,6 @@ bonus bSPGainValue,n;			When killing a monster by physical attack, you gain n SP
 bonus bHPGainValue,n;			When killing a monster by physical attack, you gain n HP
 bonus bIgnoreDefMob,n;			Ignore monster's DEF when attacking.
 							n: 0=All normal monster except Bosses, 1=All monsters
-bonus bDamageWhenUnequip,n;		You lose n HP when the item is unequipped
 bonus2 bCriticalAddRace,n,r;		Critical + n vs. enemies of race r
 								r:
 									0=Formless, 1=Undead, 2=Brute, 3=Plant, 4=Insect,
@@ -282,8 +281,6 @@ bonus2 bAddItemHealRate,n,x;		Increases HP recovered by n type items by x%,
 								(Check db/item_group_db.txt)
 
 //---- 3/15 new card effects ----
-
-bonus bLoseSPWhenUnequip,n;		Lose n SP when the item is unequipped
 
 bonus2 bSPRegenRate,n,x;		Gain n SP every x milliseconds
 bonus2 bSPLossRate,n,x;			Lose n SP every x milliseconds
