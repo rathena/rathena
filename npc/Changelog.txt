@@ -1,6 +1,8 @@
 Date		Added
 ======
 2008/10/28
+	* Fixed location error in Blacksmith quest. NPC said Alberta, NPC location in Einbech (bugreport:2401) [Jman]
+	* Fixed minor typo in tu_archer NPC. (bugreport:2393) [Jman]
 	* Rev. 13328 More boredom and bugfixing to various scripts. :D [L0ne_W0lf]
 	- Updated an outdated comment in refine.txt. (bugreport:2370)
 	- Fixed two bad event calls in arug_cas04/05. (bugreport:2386)

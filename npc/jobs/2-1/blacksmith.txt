@@ -195,7 +195,7 @@ ein_in01,18,28,4	script	Guildsman#BLS	731,{
 		else if (BSMITH_Q > 0  && BSMITH_Q < 8) {
 			mes "[Altiregen]";
 			mes "You haven't left yet?";
-			mes "Go to Alberta and find ^8E6B23Geschupenschte^000000. Finish helping him out, and when you're done, come back to me.";
+			mes "Go to Einbech and find ^8E6B23Geschupenschte^000000. Finish helping him out, and when you're done, come back to me.";
 			close;
 		}
 		else if (BSMITH_Q > 8 && BSMITH_Q < 15) {
