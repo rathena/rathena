@@ -51,13 +51,15 @@
 //=     Updated Repairmen and function. No longer shows menu.
 //= 2.7a A couple touch-ups to the repairman function. [L0ne_w0lf]
 //= 2.8 Changed the nonexistent variable .@matname$ for getitemname(.@material). (bugreport:2340) [Samuray22]
+//= 2.8 Added proper Blacksmith Supplier to Einroch. [L0ne_W0lf]
+//=     Updated dated features comment to reflect new usage.
 //============================================================
 
 
 //=========================================================
 // Christopher: Geffen Blacksmith
 //=========================================================
-geffen_in,110,172,0	script	Christopher#1::Chrisbs	63,{
+geffen_in,110,172,0	script	Christopher#1	63,{
 	mes "[Christopher Guillenrow]";
 	mes "Welcome to Christopher's Workshop. Ye can get all yer stuff for forging here. What business";
 	mes "brings ye to me?";
@@ -321,7 +323,242 @@ geffen_in,110,172,0	script	Christopher#1::Chrisbs	63,{
 	}
 }
 
-ein_in01,38,29,6	duplicate(Chrisbs)	Christopher#2	63
+//=========================================================
+// Paul Spanner: Einbroch Blacksmith Supplier
+//=========================================================
+ein_in01,38,29,0	script	Paul Spanner	63,{
+	if (checkweight(1201,1) == 0) {
+		mes "- Wait a minute !! -";
+		mes "- Currently you're carrying -";
+		mes "- too many items with you. -";
+		mes "- Please try again -";
+		mes "- after you loose some weight. -";
+		close;
+	}
+	mes "[Paul Spanner]";
+	mes "Welcome, my friend.";
+	mes "In my shop, you will find everything that you need in forging.";
+	mes "Tell me what you need.";
+	next;
+	switch(select("Purchase Anvil.:Purchase Forging Items.:Purchase Metal.:Process Ores.:Quit.")) {
+	case 1:
+		mes "[Paul Spanner]";
+		mes "Anvil is the most necessary item for Blacksmiths.";
+		mes "Since you will use an Anvil more than once, you'd better buy a nice one.";
+		next;
+		switch(select("Anvil - 30,000z.:Oridecon Anvil - 120,000z.:Golden Anvil - 300,000z.:I need a better anvil.:Cancel.")) {
+		case 1:
+			if (zeny < 30000) {
+				mes "[Paul Spanner]";
+				mes "With that much of money, you cannot even buy a toy anvil!";
+				close;
+			}
+			getitem 986,1; //Anvil
+			set zeny,zeny-30000;
+			mes "[Paul Spanner]";
+			mes "It is the cheapest anvil which has the most basic ability.";
+			mes "Thank you for using my shop. If you need anything, just let me know.";
+			close;
+		case 2:
+			if (zeny < 120000) {
+				mes "[Paul Spanner]";
+				mes "With that much of money, you cannot even buy a toy anvil!";
+				close;
+			}
+			getitem 987,1; //Oridecon_Anvil
+			set zeny,zeny-120000;
+			mes "[Paul Spanner]";
+			mes "Ah, you have an eye for anvil. A Blacksmith needs an anvil at least as good as this.";
+			mes "Thank you for using my shop. If you need anything, just let me know.";
+			close;
+		case 3:
+			if (zeny < 300000) {
+				mes "[Paul Spanner]";
+				mes "With that much of money, you cannot even buy a toy anvil!";
+				close;
+			}
+			getitem 988,1; //Golden_Anvil
+			set zeny,zeny-300000;
+			mes "[Paul Spanner]";
+			mes "I can tell your ambition to become a good Blacksmith just by looking at you to choose this Golden Anvil!";
+			mes "This anvil will surely aid you in creating the best weapons.";
+			close;
+		case 4:
+			mes "[Paul Spanner]";
+			mes "I am sorry, but I do not sell better anvils than Golden Anvil.";
+			mes "Unless you find the legendary anvil of 'Linggell', I don't think that you could find better one than Golden Anvil in any other places.";
+			close;
+		case 5:
+			mes "[Paul Spanner]";
+			mes "If you need anything, just let me know.";
+			close;
+		}
+	case 2:
+		mes "[Paul Spanner]";
+		mes "You need various materials to process ores and to forge weapons.";
+		mes "I have everything that you need. Take a look.";
+		next;
+		switch(select("Mini Furnace - 150z.:Iron Hammer - 1,000z.:Golden Hammer - 3,000z.:Oridecon Hammer - 5,000z.:Cancel.")) {
+		case 1:
+			set .@item,612;
+			set .@item_cost,150;
+			set .@item_weight,200;
+			mes "[Paul Spanner]";
+			mes "You definately need this furnce to process ores!";
+			next;
+			break;
+		case 2:
+			set .@item,613;
+			set .@item_cost,1000;
+			set .@item_weight,200;
+			break;
+		case 3:
+			set .@item,614;
+			set .@item_cost,3000;
+			set .@item_weight,300;
+			break;
+		case 4:
+			set .@item,615;
+			set .@item_cost,5000;
+			set .@item_weight,400;
+			break;
+		case 5:
+			mes "[Paul Spanner]";
+			mes "If you need anything, just let me know.";
+			close;
+		}
+		mes "[Paul Spanner]";
+		mes "So, how many do you need? If you want to cancel the trade, enter '0'.";
+		next;
+		while(1) {
+			input .@input;
+			if (.@input == 0) {
+				mes "[Paul Spanner]";
+				mes "You have canceled the trade. If you need anything, just let me know.";
+				close;
+			}
+			else if ((.@input < 0) || (.@input > 500)) {
+				mes "[Paul Spanner]";
+				mes "You can only buy 500 or less at a time.";
+				next;
+			}
+			else {
+				break;
+			}
+		}
+		set .@sell,.@input * .@item_cost;
+		if (zeny < .@sell) {
+			mes "[Paul Spanner]";
+			mes "You don't have enough money. Sorry, I cannot sell them at a loss.";
+			close;
+		}
+		if (checkweight(.@item,.@input) == 0) {
+			mes "[Paul Spanner]";
+			mes "Hey, you look pale. Why don't you go lighten your weight first.";
+			close;
+		}
+		set zeny,zeny-.@sell;
+		getitem 612,.@input;
+		mes "[Paul Spanner]";
+		mes "Thank you for using my shop. If you need anything, just let me know.";
+		close;
+	case 3:
+		mes "[Paul Spanner]";
+		mes "I have high quality metal.";
+		mes "So, which metal would you like to buy?";
+		next;
+		switch(select("Phracon - 200z.:Emveretarcon - 1,000z.:Quit.")) {
+		case 1:
+			set .@item,1010;
+			set .@item_price,200;
+			break;
+		case 2:
+			set .@item,1011;
+			set .@item_price,1000;
+			break;		
+		case 3:
+			mes "[Paul Spanner]";
+			mes "If you need anything, just let me know.";
+			close;
+		}
+		mes "[Paul Spanner]";
+		mes "So, how many of them do you need? If you want to cancel the trade, enter '0'.";
+		next;
+		while(1) {
+			input .@input;
+			if (.@input == 0) {
+				mes "[Paul Spanner]";
+				mes "The trade has been canceled. If you need anything, just let me know.";
+				close;
+			}
+			else if ((.@input < 0) || (.@input > 500)) {
+				mes "[Paul Spanner]";
+				mes "You can buy 500 or less at a time.";
+				next;
+			}
+			else {
+				break;
+			}
+		}
+		set .@sell,.@input * .@item_price;
+		if (zeny < .@sell) {
+			mes "[Paul Spanner]";
+			mes "You don't have enough money. Sorry, I cannot sell them at a loss.";
+			close;
+		}
+		if (checkweight(.@item,.@input) == 0) {
+			mes "[Paul Spanner]";
+			mes "Hey, you look pale. Why don't you go lighten your weight first?";
+			close;
+		}
+		getitem .@item,.@input;
+		set zeny,zeny-.@sell;
+		mes "[Paul Spanner]";
+		mes "Thank you for using my shop. If you need anything, just let me know.";
+		close;
+	case 4:
+		mes "[Paul Spanner]";
+		mes "I can process Oridecon and Elunium for you.";
+		mes "You need 5 ores to process them into one Oridecon or Elunium.";
+		mes "So, which one do you want to process?";
+		switch(select("Oridecon:Elunium:Quit.")) {
+		case 1:
+			if (countitem(756) < 5) {
+				mes "[Paul Spanner]";
+				mes "You need 5 ores to process them into one pure Oridecon.";
+				close;
+			}
+			else {
+				delitem 756,5; //Oridecon_Stone
+				getitem 984,1; //Oridecon
+				mes "[Paul Spanner]";
+				mes "There you go. Thank you for using my service.";
+				close;
+			}
+		case 2:
+			if (countitem(757) < 5) {
+				mes "[Paul Spanner]";
+				mes "You need 5 ores to process them into one pure Elunium.";
+				close;
+			}
+			else {
+				delitem 757,5; //Elunium_Stone
+				getitem 985,1; //Elunium
+				mes "[Paul Spanner]";
+				mes "There you go. Thank you for using my service.";
+				close;
+			}
+		case 3:
+			mes "[Paul Spanner]";
+			mes "If you need anything, just let me know.";
+			close;
+		}
+	case 5:
+		mes "[Paul Spanner]";
+		mes "If you need anything, just let me know.";
+		close;
+	}
+}
 
 //=====================================================================================
 // Weapon/Armor Refiners
@@ -359,7 +596,7 @@ lhz_in02,282,20,7	script	Fulerr	869,{
 //= Main Refiner Function
 //============================================================
 //= To allow auto safe refining/multiple refining set the
-//= .@features variable to 1
+//= second argument to '1' in the function call.
 //============================================================
 function	script	refinemain	{
 	set .@features,getarg(1);

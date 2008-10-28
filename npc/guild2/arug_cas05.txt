@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
-//= 1.7
+//= 1.8
 //===== Compatible With: =====================================
 //= eAthena SVN
 //===== Description: =========================================
@@ -20,6 +20,7 @@
 //= 1.5 Fixed error with control devices. [L0ne_W0lf]
 //= 1.6 Corrected copy/paste error. [L0ne_W0lf]
 //= 1.7 Replaced effect numerics with constants. [L0ne_W0lf]
+//= 1.8 Fixed wrong event call for stones. (bugreport:2386) [L0ne_W0lf]
 //============================================================
 
 arug_cas05,1,1,0	script	Manager#aru05_02	111,{
@@ -586,7 +587,7 @@ OnGuardianStoneDied:
 	end;
 
 OnTimer300000:
-	donpcevent "1st Guardian Stone#aru05::OnGuardian";
+	donpcevent "1st Guardian Stone#aru05::OnEnable";
 	setarray $agit_ar05[0],2; //Global Variable
 	stopnpctimer;
 	end;
@@ -895,7 +896,7 @@ OnGuardianStoneDied:
 	end;
 
 OnTimer300000:
-	donpcevent "2nd Guardian Stone#aru05::OnGuardian";
+	donpcevent "2nd Guardian Stone#aru05::OnEnable";
 	setarray $agit_ar05[1],2; //Global Variable
 	stopnpctimer;
 	end;

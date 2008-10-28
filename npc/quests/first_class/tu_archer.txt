@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Fix up by Jukka
 //===== Current Version: ===================================== 
-//= 1.5
+//= 1.6
 //===== Compatible With: ===================================== 
 //= eAthena SVN (Testet in Trunk 88xx)
 //===== Description: ========================================= 
@@ -16,6 +16,7 @@
 //=	Skill quest NPC) [Lupus]
 //= 1.4 Fixed experience gains to match upcoming rate adjustments. [SinSloth]
 //= 1.5 Fixed bad NPC header data to comply with rev. 11603. [L0ne_W0lf]
+//= 1.6 Fixed infinate loop. (bugreport:2393) [L0ne_W0lf]
 //============================================================ 
 
 
@@ -1312,8 +1313,10 @@ pay_arche,84,139,3	script	Seisner	727,{
 						mes "anything else that";
 						mes "you want to ask me?";
 						next;
+						set .@exitwhite,1;
 						break;
 					}
+					if (.@exitwhile) break;
 				}
 				break;
 			case 3:
