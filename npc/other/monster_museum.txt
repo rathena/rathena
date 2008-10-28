@@ -19,6 +19,7 @@
 //= 1.3 Added a Missing "case 1:". [Samuray22]
 //	-Thanks to Dr.Evil
 //= 1.4 Corrected a few typos. (bugreport:1077) [L0ne_W0lf]
+//= 1.4a "S_BonusREward" -> "S_BonusReward" [Paradox924X]
 //============================================================ 
 
 yuno_in03,32,15,3	script	Museum Guide	67,{

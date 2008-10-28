@@ -1,5 +1,7 @@
 Date		Added
 ======
+2008/10/27
+	* Replaced 96 instances of "S_BonusREward" with "S_BonusReward" as it should be in monster_race.txt. [Paradox924X]
 2008/10/25
 	* Rev. 13326 Fixed setcell coords for the first barricade in schg_cas03. [L0ne_W0lf].
 	* Rev. 13325 Fixed a copy/paste error in Nordri. (bugreport:2372) [L0ne_W0lf]
