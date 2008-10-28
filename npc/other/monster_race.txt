@@ -10990,16 +10990,16 @@ ein_in01,85,208,5	script	Ei felle#repay01	854,{
 			next;
 			switch(select("Fire Element:Earth Element:Wind Element:Water Element")) {
 			case 1:
-				callsub S_BonusREward,1000,2345;
+				callsub S_BonusReward,1000,2345;
 				end;
 			case 2:
-				callsub S_BonusREward,1000,2351;
+				callsub S_BonusReward,1000,2351;
 				end;
 			case 3:
-				callsub S_BonusREward,1000,2349;
+				callsub S_BonusReward,1000,2349;
 				end;
 			case 4:
-				callsub S_BonusREward,1000,2347;
+				callsub S_BonusReward,1000,2347;
 				end;
 			}
 		case 2:
@@ -11126,58 +11126,58 @@ ein_in01,85,208,5	script	Ei felle#repay01	854,{
 				next;
 				switch(select("Ginnungagap:Grimtooth:Dragon Killer:Mail Breaker:Bazerald:Sword Breaker:Ice Pick:Sucsamad:Kitchen Knife:Azoth:Exercise:Assassin Dagger:Moonlight Sword:Weeder Knife:Cursed Dagger:Counter Dagger:Combat Knife:Fortune Sword:Cancel")) {
 				case 1:
-					callsub S_BonusREward,1500,13002;
+					callsub S_BonusReward,1500,13002;
 					end;
 				case 2:
-					callsub S_BonusREward,1500,1237;
+					callsub S_BonusReward,1500,1237;
 					end;
 				case 3:
-					callsub S_BonusREward,1500,13001;
+					callsub S_BonusReward,1500,13001;
 					end;
 				case 4:
-					callsub S_BonusREward,1500,1225;
+					callsub S_BonusReward,1500,1225;
 					end;
 				case 5:
-					callsub S_BonusREward,1500,1231;
+					callsub S_BonusReward,1500,1231;
 					end;
 				case 6:
-					callsub S_BonusREward,1500,1224;
+					callsub S_BonusReward,1500,1224;
 					end;
 				case 7:
-					callsub S_BonusREward,1500,1230;
+					callsub S_BonusReward,1500,1230;
 					end;
 				case 8:
-					callsub S_BonusREward,1500,1236;
+					callsub S_BonusReward,1500,1236;
 					end;
 				case 9:
-					callsub S_BonusREward,1500,1229;
+					callsub S_BonusReward,1500,1229;
 					end;
 				case 10:
-					callsub S_BonusREward,1500,1235;
+					callsub S_BonusReward,1500,1235;
 					end;
 				case 11:
-					callsub S_BonusREward,1500,1223;
+					callsub S_BonusReward,1500,1223;
 					end;
 				case 12:
-					callsub S_BonusREward,1500,1232;
+					callsub S_BonusReward,1500,1232;
 					end;
 				case 13:
-					callsub S_BonusREward,1500,1234;
+					callsub S_BonusReward,1500,1234;
 					end;
 				case 14:
-					callsub S_BonusREward,1500,1227;
+					callsub S_BonusReward,1500,1227;
 					end;
 				case 15:
-					callsub S_BonusREward,1500,1241;
+					callsub S_BonusReward,1500,1241;
 					end;
 				case 16:
-					callsub S_BonusREward,1500,1242;
+					callsub S_BonusReward,1500,1242;
 					end;
 				case 17:
-					callsub S_BonusREward,1500,1228;
+					callsub S_BonusReward,1500,1228;
 					end;
 				case 18:
-					callsub S_BonusREward,1500,1223;
+					callsub S_BonusReward,1500,1223;
 					end;
 				case 19:
 					break;
@@ -11191,43 +11191,43 @@ ein_in01,85,208,5	script	Ei felle#repay01	854,{
 				next;
 				switch(select("Nagan:Immaterial Sword:Mysteltainn:Byeollungum:Star Dust Blade:Caesar's Sword:Ice Falchion:Excalibur:Edge:Cutlus:Solar Sword:Tirfing:Fireblend:Cancel")) {
 				case 1:
-					callsub S_BonusREward,1500,1130;
+					callsub S_BonusReward,1500,1130;
 					end;
 				case 2:
-					callsub S_BonusREward,1500,1141;
+					callsub S_BonusReward,1500,1141;
 					end;
 				case 3:
-					callsub S_BonusREward,1500,1138;
+					callsub S_BonusReward,1500,1138;
 					end;
 				case 4:
-					callsub S_BonusREward,1500,1140;
+					callsub S_BonusReward,1500,1140;
 					end;
 				case 5:
-					callsub S_BonusREward,1500,1148;
+					callsub S_BonusReward,1500,1148;
 					end;
 				case 6:
-					callsub S_BonusREward,1500,1134;
+					callsub S_BonusReward,1500,1134;
 					end;
 				case 7:
-					callsub S_BonusREward,1500,1131;
+					callsub S_BonusReward,1500,1131;
 					end;
 				case 8:
-					callsub S_BonusREward,1500,1137;
+					callsub S_BonusReward,1500,1137;
 					end;
 				case 9:
-					callsub S_BonusREward,1500,1132;
+					callsub S_BonusReward,1500,1132;
 					end;
 				case 10:
-					callsub S_BonusREward,1500,1135;
+					callsub S_BonusReward,1500,1135;
 					end;
 				case 11:
-					callsub S_BonusREward,1500,1136;
+					callsub S_BonusReward,1500,1136;
 					end;
 				case 12:
-					callsub S_BonusREward,1500,1139;
+					callsub S_BonusReward,1500,1139;
 					end;
 				case 13:
-					callsub S_BonusREward,1500,1133;
+					callsub S_BonusReward,1500,1133;
 					end;
 				case 14:
 					break;
@@ -11241,25 +11241,25 @@ ein_in01,85,208,5	script	Ei felle#repay01	854,{
 				next;
 				switch(select("Dragon Slayer:Masamune:Muramasa:Schweizersabel:Executioner:Zweihander:Katzbalger:cancel")) {
 				case 1:
-					callsub S_BonusREward,1500,1166;
+					callsub S_BonusReward,1500,1166;
 					end;
 				case 2:
-					callsub S_BonusREward,1500,1165;
+					callsub S_BonusReward,1500,1165;
 					end;
 				case 3:
-					callsub S_BonusREward,1500,1164;
+					callsub S_BonusReward,1500,1164;
 					end;
 				case 4:
-					callsub S_BonusREward,1500,1167;
+					callsub S_BonusReward,1500,1167;
 					end;
 				case 5:
-					callsub S_BonusREward,1500,1169;
+					callsub S_BonusReward,1500,1169;
 					end;
 				case 6:
-					callsub S_BonusREward,1500,1168;
+					callsub S_BonusReward,1500,1168;
 					end;
 				case 7:
-					callsub S_BonusREward,1500,1170;
+					callsub S_BonusReward,1500,1170;
 					end;
 				case 8:
 					break;
@@ -11273,28 +11273,28 @@ ein_in01,85,208,5	script	Ei felle#repay01	854,{
 				next;
 				switch(select("Great Axe:Guillotine:Right Epsilon:Brood Axe:Sabbath:Slaughter:Cleaver:Tomahawk:cancel")) {
 				case 1:
-					callsub S_BonusREward,1500,1364;
+					callsub S_BonusReward,1500,1364;
 					end;
 				case 2:
-					callsub S_BonusREward,1500,1369;
+					callsub S_BonusReward,1500,1369;
 					end;
 				case 3:
-					callsub S_BonusREward,1500,1366;
+					callsub S_BonusReward,1500,1366;
 					end;
 				case 4:
-					callsub S_BonusREward,1500,1363;
+					callsub S_BonusReward,1500,1363;
 					end;
 				case 5:
-					callsub S_BonusREward,1500,1365;
+					callsub S_BonusReward,1500,1365;
 					end;
 				case 6:
-					callsub S_BonusREward,1500,1367;
+					callsub S_BonusReward,1500,1367;
 					end;
 				case 7:
-					callsub S_BonusREward,1500,1395;
+					callsub S_BonusReward,1500,1395;
 					end;
 				case 8:
-					callsub S_BonusREward,1500,1368;
+					callsub S_BonusReward,1500,1368;
 					end;
 				case 9:
 					break;
@@ -11308,22 +11308,22 @@ ein_in01,85,208,5	script	Ei felle#repay01	854,{
 				next;
 				switch(select("Golden Mace:Grand Cross:Long Mace:Spike:Slash:Quadrille:cancel")) {
 				case 1:
-					callsub S_BonusREward,1500,1524;
+					callsub S_BonusReward,1500,1524;
 					end;
 				case 2:
-					callsub S_BonusREward,1500,1528;
+					callsub S_BonusReward,1500,1528;
 					end;
 				case 3:
-					callsub S_BonusREward,1500,1525;
+					callsub S_BonusReward,1500,1525;
 					end;
 				case 4:
-					callsub S_BonusREward,1500,1523;
+					callsub S_BonusReward,1500,1523;
 					end;
 				case 5:
-					callsub S_BonusREward,1500,1526;
+					callsub S_BonusReward,1500,1526;
 					end;
 				case 6:
-					callsub S_BonusREward,1500,1527;
+					callsub S_BonusReward,1500,1527;
 					end;
 				case 7:
 					break;
@@ -11337,16 +11337,16 @@ ein_in01,85,208,5	script	Ei felle#repay01	854,{
 				next;
 				switch(select("Bow Of Roguemaster:Dragon Wing:Bow Of Rudra:Balistar:cancel")) {
 				case 1:
-					callsub S_BonusREward,1500,1719;
+					callsub S_BonusReward,1500,1719;
 					end;
 				case 2:
-					callsub S_BonusREward,1500,1724;
+					callsub S_BonusReward,1500,1724;
 					end;
 				case 3:
-					callsub S_BonusREward,1500,1720;
+					callsub S_BonusReward,1500,1720;
 					end;
 				case 4:
-					callsub S_BonusREward,1500,1722;
+					callsub S_BonusReward,1500,1722;
 					end;
 				case 5:
 					break;
@@ -11360,10 +11360,10 @@ ein_in01,85,208,5	script	Ei felle#repay01	854,{
 				next;
 				switch(select("Staff Of Wing:Wizardy Staff:cancel")) {
 				case 1:
-					callsub S_BonusREward,1500,1616;
+					callsub S_BonusReward,1500,1616;
 					end;
 				case 2:
-					callsub S_BonusREward,1500,1473;
+					callsub S_BonusReward,1500,1473;
 					end;
 				case 3:
 					break;
@@ -11377,16 +11377,16 @@ ein_in01,85,208,5	script	Ei felle#repay01	854,{
 				next;
 				switch(select("Legacy of Dragon:Book of the Apocalypse:Girl's Diary:Hardback:cancel")) {
 				case 1:
-					callsub S_BonusREward,1500,1559;
+					callsub S_BonusReward,1500,1559;
 					end;
 				case 2:
-					callsub S_BonusREward,1500,1557;
+					callsub S_BonusReward,1500,1557;
 					end;
 				case 3:
-					callsub S_BonusREward,1500,1558;
+					callsub S_BonusReward,1500,1558;
 					end;
 				case 4:
-					callsub S_BonusREward,1500,1561;
+					callsub S_BonusReward,1500,1561;
 					end;
 				case 5:
 					break;
@@ -11400,37 +11400,37 @@ ein_in01,85,208,5	script	Ei felle#repay01	854,{
 				next;
 				switch(select("Gae Bolg:Gelerdria:Gungnir:Skewer:Longinus's Spear:Brionac:Bill Guisarme:Zephyrus:Crescent Scythe:Tjungkuletti:Hell Fire:cancel")) {
 				case 1:
-					callsub S_BonusREward,1500,1474;
+					callsub S_BonusReward,1500,1474;
 					end;
 				case 2:
-					callsub S_BonusREward,1500,1414;
+					callsub S_BonusReward,1500,1414;
 					end;
 				case 3:
-					callsub S_BonusREward,1500,1413;
+					callsub S_BonusReward,1500,1413;
 					end;
 				case 4:
-					callsub S_BonusREward,1500,1415;
+					callsub S_BonusReward,1500,1415;
 					end;
 				case 5:
-					callsub S_BonusREward,1500,1469;
+					callsub S_BonusReward,1500,1469;
 					end;
 				case 6:
-					callsub S_BonusREward,1500,1470;
+					callsub S_BonusReward,1500,1470;
 					end;
 				case 7:
-					callsub S_BonusREward,1500,1467;
+					callsub S_BonusReward,1500,1467;
 					end;
 				case 8:
-					callsub S_BonusREward,1500,1468;
+					callsub S_BonusReward,1500,1468;
 					end;
 				case 9:
-					callsub S_BonusREward,1500,1466;
+					callsub S_BonusReward,1500,1466;
 					end;
 				case 10:
-					callsub S_BonusREward,1500,1416;
+					callsub S_BonusReward,1500,1416;
 					end;
 				case 11:
-					callsub S_BonusREward,1500,1471;
+					callsub S_BonusReward,1500,1471;
 					end;
 				case 12:
 					break;
@@ -11444,13 +11444,13 @@ ein_in01,85,208,5	script	Ei felle#repay01	854,{
 				next;
 				switch(select("Infiltrator:Bloody Roar:Unholy Touch:cancel")) {
 				case 1:
-					callsub S_BonusREward,1500,1261;
+					callsub S_BonusReward,1500,1261;
 					end;
 				case 2:
-					callsub S_BonusREward,1500,1265;
+					callsub S_BonusReward,1500,1265;
 					end;
 				case 3:
-					callsub S_BonusREward,1500,1263;
+					callsub S_BonusReward,1500,1263;
 					end;
 				case 4:
 					break;
@@ -11464,13 +11464,13 @@ ein_in01,85,208,5	script	Ei felle#repay01	854,{
 				next;
 				switch(select("Claw of Garm:Berserk:Kaiser Knuckle:cancel")) {
 				case 1:
-					callsub S_BonusREward,1500,1815;
+					callsub S_BonusReward,1500,1815;
 					end;
 				case 2:
-					callsub S_BonusREward,1500,1814;
+					callsub S_BonusReward,1500,1814;
 					end;
 				case 3:
-					callsub S_BonusREward,1500,1813;
+					callsub S_BonusReward,1500,1813;
 					end;
 				case 4:
 					break;
@@ -11484,19 +11484,19 @@ ein_in01,85,208,5	script	Ei felle#repay01	854,{
 				next;
 				switch(select("Lariat:Rapture Rose:Bladed Whip:Chemeti:Queen's Whip:cancel")) {
 				case 1:
-					callsub S_BonusREward,1500,1962;
+					callsub S_BonusReward,1500,1962;
 					end;
 				case 2:
-					callsub S_BonusREward,1500,1963;
+					callsub S_BonusReward,1500,1963;
 					end;
 				case 3:
-					callsub S_BonusREward,1500,1969;
+					callsub S_BonusReward,1500,1969;
 					end;
 				case 4:
-					callsub S_BonusREward,1500,1964;
+					callsub S_BonusReward,1500,1964;
 					end;
 				case 5:
-					callsub S_BonusREward,1500,1970;
+					callsub S_BonusReward,1500,1970;
 					end;
 				case 6:
 					break;
@@ -11510,10 +11510,10 @@ ein_in01,85,208,5	script	Ei felle#repay01	854,{
 				next;
 				switch(select("Oriental Lute:Electronic Guitar:cancel")) {
 				case 1:
-					callsub S_BonusREward,1500,1918;
+					callsub S_BonusReward,1500,1918;
 					end;
 				case 2:
-					callsub S_BonusREward,1500,1913;
+					callsub S_BonusReward,1500,1913;
 					end;
 				case 3:
 					break;
@@ -11535,19 +11535,19 @@ ein_in01,85,208,5	script	Ei felle#repay01	854,{
 			next;
 			switch(select("Glittering Clothes:Flame Sprits Armor:Earth Sprits Armor:Wind Sprits Armor:Water Sprits Armor:cancel")) {
 			case 1:
-				callsub S_BonusREward,500,2319;
+				callsub S_BonusReward,500,2319;
 				end;
 			case 2:
-				callsub S_BonusREward,1000,2345;
+				callsub S_BonusReward,1000,2345;
 				end;
 			case 3:
-				callsub S_BonusREward,1000,2351;
+				callsub S_BonusReward,1000,2351;
 				end;
 			case 4:
-				callsub S_BonusREward,1000,2349;
+				callsub S_BonusReward,1000,2349;
 				end;
 			case 5:
-				callsub S_BonusREward,1000,2347;
+				callsub S_BonusReward,1000,2347;
 				end;
 			case 6:
 				break;
