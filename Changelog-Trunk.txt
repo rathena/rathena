@@ -4,6 +4,7 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2008/10/27
+	* Fixed all overflow checks and made the code a bit cleaner from r13322. [Paradox924X]
 	* Removed leftovers of "bLoseSPWhenUnequip" and "bDamageWhenUnequip". [Paradox924X]
 2008/10/24
 	* Added protection from segfault by int overflow in charcommand heal and fixed a typo in atcommand heal. (Follow-up to r13321) [Paradox924X]
