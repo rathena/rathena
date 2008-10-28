@@ -1313,7 +1313,7 @@ pay_arche,84,139,3	script	Seisner	727,{
 						mes "anything else that";
 						mes "you want to ask me?";
 						next;
-						set .@exitwhite,1;
+						set .@exitwhile,1;
 						break;
 					}
 					if (.@exitwhile) break;
