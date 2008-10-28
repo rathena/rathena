@@ -11458,8 +11458,10 @@ BUILDIN_FUNC(unequip)
 	if( sd != NULL && num >= 1 && num <= ARRAYLENGTH(equip) )
 	{
 		i = pc_checkequip(sd,equip[num-1]);
-		if (i >= 0)
+		if (i >= 0) {
 			pc_unequipitem(sd,i,2);
+			status_calc_pc(sd,0);
+		}
 		return 0;
 	}
 	return 0;
