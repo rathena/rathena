@@ -4861,6 +4861,14 @@ int pc_resetskill(struct map_session_data* sd, int flag)
 
 		if( inf2&(INF2_WEDDING_SKILL|INF2_SPIRIT_SKILL) ) //Avoid reseting wedding/linker skills.
 			continue;
+		
+		 // Don't reset trick dead if not a novice/baby
+		if( i == NV_TRICKDEAD && (sd->class_&MAPID_UPPERMASK) != MAPID_NOVICE && (sd->class_&MAPID_UPPERMASK) != MAPID_BABY )
+		{
+			sd->status.skill[i].lv = 0;
+			sd->status.skill[i].flag = 0;
+		}
+		continue;
 
 		if( inf2&INF2_QUEST_SKILL && !battle_config.quest_skill_learn )
 		{ //Only handle quest skills in a special way when you can't learn them manually
