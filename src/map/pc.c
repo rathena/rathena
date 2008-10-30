@@ -4867,8 +4867,8 @@ int pc_resetskill(struct map_session_data* sd, int flag)
 		{
 			sd->status.skill[i].lv = 0;
 			sd->status.skill[i].flag = 0;
+			continue;
 		}
-		continue;
 
 		if( inf2&INF2_QUEST_SKILL && !battle_config.quest_skill_learn )
 		{ //Only handle quest skills in a special way when you can't learn them manually
