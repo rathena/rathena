@@ -1504,45 +1504,15 @@ int atcommand_heal(const int fd, struct map_session_data* sd, const char* comman
 
 	sscanf(message, "%d %d", &hp, &sp);
 
-	if ( ( hp == 0 && sp == 0 )
-		|| ( hp > INT_MAX && sp > INT_MAX ) ) { // Prevent overflow. [Paradox924X]
+	// some overflow checks
+	if( hp == INT_MIN ) hp++;
+	if( sp == INT_MIN ) sp++;
+
+	if ( hp == 0 && sp == 0 ) {
 		if (!status_percent_heal(&sd->bl, 100, 100))
 			clif_displaymessage(fd, msg_txt(157)); // HP and SP have already been recovered.
 		else
 			clif_displaymessage(fd, msg_txt(17)); // HP, SP recovered.
-		return 0;
-	}
-
-	// Prevent overflow. [Paradox924X]
-	if ( hp < -INT_MAX && sp < -INT_MAX ) {
-		status_damage(NULL, &sd->bl, INT_MAX, INT_MAX, 0, 0);
-		clif_damage(&sd->bl,&sd->bl, gettick(), 0, 0, INT_MAX, 0, 4, 0);
-		clif_displaymessage(fd, msg_txt(156)); // HP or/and SP modified.
-		return 0;
-	}
-
-	// Prevent overflow. [Paradox924X]
-	if ( hp > INT_MAX ) {
-		if (!status_percent_heal(&sd->bl, 100, 0))
-			clif_displaymessage(fd, msg_txt(157)); // HP and SP have already been recovered.
-		else
-			clif_displaymessage(fd, msg_txt(17)); // HP, SP recovered.
-		return 0;
-	} else if ( hp < -INT_MAX ) {
-		status_damage(NULL, &sd->bl, INT_MAX, 0, 0, 0);
-		clif_damage(&sd->bl,&sd->bl, gettick(), 0, 0, INT_MAX, 0, 4, 0);
-		clif_displaymessage(fd, msg_txt(156)); // HP or/and SP modified.
-		return 0;
-	}
-
-	// Prevent overflow. [Paradox924X]
-	if ( sp > INT_MAX ) {
-		status_heal(&sd->bl, 0, INT_MAX, 0);
-		clif_displaymessage(fd, msg_txt(156)); // HP or/and SP modified.
-		return 0;
-	} else if ( sp < -INT_MAX ) {
-		status_damage(NULL, &sd->bl, 0, INT_MAX, 0, 0);
-		clif_displaymessage(fd, msg_txt(156)); // HP or/and SP modified.
 		return 0;
 	}
 
