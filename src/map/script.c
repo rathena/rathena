@@ -6199,7 +6199,7 @@ BUILDIN_FUNC(successrefitem)
 			log_pick_pc(sd, "N", sd->status.inventory[i].nameid, -1, &sd->status.inventory[i]);
 
 		sd->status.inventory[i].refine++;
-		pc_unequipitem(sd,i,2);
+		pc_unequipitem(sd,i,2); // status calc will happen in pc_equipitem() below
 
 		clif_refine(sd->fd,0,i,sd->status.inventory[i].refine);
 		clif_delitem(sd,i,1);
@@ -11458,11 +11458,8 @@ BUILDIN_FUNC(unequip)
 	if( sd != NULL && num >= 1 && num <= ARRAYLENGTH(equip) )
 	{
 		i = pc_checkequip(sd,equip[num-1]);
-		if (i >= 0) {
-			pc_unequipitem(sd,i,2);
-			status_calc_pc(sd,0);
-		}
-		return 0;
+		if (i >= 0)
+			pc_unequipitem(sd,i,1|2);
 	}
 	return 0;
 }
