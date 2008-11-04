@@ -16,6 +16,7 @@
 //=	Added Lost Knife, updated dialog for Broken Sword
 //=	dungeon quest mechanics aportion is still the same.
 //= 1.2a Bugfixes (bugreport:2404) [Paradox924X]
+//= 1.2b More Bugfixes (bugreport:2407) [Paradox924X]
 //============================================================ 
 
 // Broken Sword
@@ -790,7 +791,7 @@ gon_dun01,148,156,0	script	start01#gnbs	-1,{
 	OnInit:
 		sleep 10000;
 	OnCommandOn:
-		donpcevent "trace1-"+rand(1,5)+"::OnCommandOn";
+		donpcevent "trace1-"+rand(1,5)+"#gnbs::OnCommandOn";
 		end;
 }
 
@@ -1138,7 +1139,7 @@ gon_dun02,1,1,0	script	start02#gnbs	-1,{
 	OnInit:
 		sleep 10000;
 	OnCommandOn:
-		donpcevent "trace2-"+rand(1,6)+"::OnCommandOn";
+		donpcevent "trace2-"+rand(1,6)+"#gnbs::OnCommandOn";
 		end;
 }
 
@@ -1554,7 +1555,7 @@ gon_dun03,1,1,0	script	start03#gnbs	-1,{
 	OnInit:
 		sleep 10000;
 	OnCommandOn:
-		donpcevent "trace3-"+rand(1,7)+"::OnCommandOn";
+		donpcevent "trace3-"+rand(1,7)+"#gnbs::OnCommandOn";
 		end;
 }
 
