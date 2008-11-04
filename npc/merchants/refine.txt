@@ -53,6 +53,7 @@
 //= 2.8 Changed the nonexistent variable .@matname$ for getitemname(.@material). (bugreport:2340) [Samuray22]
 //= 2.8 Added proper Blacksmith Supplier to Einroch. [L0ne_W0lf]
 //=     Updated dated features comment to reflect new usage.
+//= 2.8a Small bugfix. (bugreport:2418) [Paradox924X]
 //============================================================
 
 
@@ -458,7 +459,7 @@ ein_in01,38,29,0	script	Paul Spanner	63,{
 			close;
 		}
 		set zeny,zeny-.@sell;
-		getitem 612,.@input;
+		getitem .@item,.@input;
 		mes "[Paul Spanner]";
 		mes "Thank you for using my shop. If you need anything, just let me know.";
 		close;

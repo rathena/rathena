@@ -1,6 +1,7 @@
-﻿Date		Added
+Date		Added
 ======
 2008/11/04
+	* Small update to fix merchant Paul Spanner from giving item 612 instead of .@item. (bugreport:2418) [Paradox924X]
 	* Fixed a few donpcevent's that didn't include the NPC's hidden display name. (bugreport:2407) [Paradox924X]
 	* Added a bunch of missing "end;"s for Broken Sword Quest that caused NPC to execute unwanted labels. (bugreport:2404) [Paradox924X]
 2008/10/28
@@ -860,7 +861,7 @@
 	- Thanks to Barron-Monster.
 	* Rev. 10906 Fixed the Kafra Welcome message for guilds. Thanks Barron-Monster. [L0ne_W0lf]
 2007/07/23
-	* Fixed 3� Test in Hunter Job Quest. [Samuray22]
+	* Fixed 3  Test in Hunter Job Quest. [Samuray22]
 	-Thanks to ultramage.
 	* Fixed a little bug in "Dandelion Quest" with "Job_Alchemist" changed to "Job_Alchem". [Samuray22]
 	-Thanks to Nobuo
@@ -1750,7 +1751,7 @@
 	* Tried to remove all duplicates (in default NPCs) [Toms]
 	* Removed useless 'npc\other\old' directory, who would need that anyway... [DracoRPG]
 	* Commented out the path to Divorce NPC as Lupus forgot to add it for good [DracoRPG]
-	* Fixed critical syntax errors in the new Valkyrie script, (�_�) @ Lupus [DracoRPG]
+	* Fixed critical syntax errors in the new Valkyrie script, ( _ ) @ Lupus [DracoRPG]
 	* Improved Bioethics quest & nearby Rekenber Guards [DracoRPG]
 	  - Used isequipped() instead of getequipid() to simplify code (esp. with accessories)
 	  - Rewritten the custom text about Hom. Res. and removed its actual learning
