@@ -15,6 +15,7 @@
 //= 1.2 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
 //=	Added Lost Knife, updated dialog for Broken Sword
 //=	dungeon quest mechanics aportion is still the same.
+//= 1.2a Bugfixes (bugreport:2404) [Paradox924X]
 //============================================================ 
 
 // Broken Sword
@@ -854,6 +855,7 @@ gon_dun01,202,25,0	script	#getitem1-1	111,2,1,{
 		enablenpc "#getitem1-1";
 		donpcevent "timer1-1::OnCommandOff";
 		donpcevent "start01#gnbs::OnCommandOn";
+		end;
 
 	OnCommandOff:
 		disablenpc "#getitem1-1";
@@ -921,6 +923,7 @@ gon_dun01,190,159,0	script	#getitem1-2	111,2,1,{
 		enablenpc "#getitem1-2";
 		donpcevent "timer1-2::OnCommandOff";
 		donpcevent "start01#gnbs::OnCommandOn";
+		end;
 
 	OnCommandOff:
 		disablenpc "#getitem1-2";
@@ -988,6 +991,7 @@ gon_dun01,164,53,0	script	#getitem1-3	111,2,1,{
 		enablenpc "#getitem1-3";
 		donpcevent "timer1-3::OnCommandOff";
 		donpcevent "start01#gnbs::OnCommandOn";
+		end;
 
 	OnCommandOff:
 		disablenpc "#getitem1-3";
@@ -1055,6 +1059,7 @@ gon_dun01,134,183,0	script	#getitem1-4	111,2,1,{
 		enablenpc "#getitem1-4";
 		donpcevent "timer1-4::OnCommandOff";
 		donpcevent "start01#gnbs::OnCommandOn";
+		end;
 
 	OnCommandOff:
 		disablenpc "#getitem1-4";
@@ -1122,6 +1127,7 @@ gon_dun01,140,257,0	script	#getitem1-5	111,2,1,{
 		enablenpc "#getitem1-5";
 		donpcevent "timer1-5::OnCommandOff";
 		donpcevent "start01#gnbs::OnCommandOn";
+		end;
 
 	OnCommandOff:
 		disablenpc "#getitem1-5";
@@ -1197,6 +1203,7 @@ gon_dun02,202,25,0	script	#getitem2-1	111,2,1,{
 		enablenpc "#getitem2-1";
 		donpcevent "timer2-1::OnCommandOff";
 		donpcevent "start02#gnbs::OnCommandOn";
+		end;
 
 	OnCommandOff:
 		disablenpc "#getitem2-1";
@@ -1264,6 +1271,7 @@ gon_dun02,265,201,0	script	#getitem2-2	111,2,1,{
 		enablenpc "#getitem2-2";
 		donpcevent "timer2-2::OnCommandOff";
 		donpcevent "start02#gnbs::OnCommandOn";
+		end;
 
 	OnCommandOff:
 		disablenpc "#getitem2-2";
@@ -1331,6 +1339,7 @@ gon_dun02,247,128,0	script	#getitem2-3	111,2,1,{
 		enablenpc "#getitem2-3";
 		donpcevent "timer2-3::OnCommandOff";
 		donpcevent "start02#gnbs::OnCommandOn";
+		end;
 
 	OnCommandOff:
 		disablenpc "#getitem2-3";
@@ -1398,6 +1407,7 @@ gon_dun02,149,75,0	script	#getitem2-4	111,2,1,{
 		enablenpc "#getitem2-4";
 		donpcevent "timer2-4::OnCommandOff";
 		donpcevent "start02#gnbs::OnCommandOn";
+		end;
 
 	OnCommandOff:
 		disablenpc "#getitem2-4";
@@ -1465,6 +1475,7 @@ gon_dun02,23,106,0	script	#getitem2-5	111,2,1,{
 		enablenpc "#getitem2-5";
 		donpcevent "timer2-5::OnCommandOff";
 		donpcevent "start02#gnbs::OnCommandOn";
+		end;
 
 	OnCommandOff:
 		disablenpc "#getitem2-5";
@@ -1532,6 +1543,7 @@ gon_dun02,249,40,0	script	#getitem2-6	111,2,1,{
 		enablenpc "#getitem2-6";
 		donpcevent "timer2-6::OnCommandOff";
 		donpcevent "start02#gnbs::OnCommandOn";
+		end;
 
 	OnCommandOff:
 		disablenpc "#getitem2-6";
@@ -1611,6 +1623,7 @@ gon_dun03,10,74,0	script	#getitem3-1	111,2,1,{
 		enablenpc "#getitem3-1";
 		donpcevent "timer3-1::OnCommandOff";
 		donpcevent "start03#gnbs::OnCommandOn";
+		end;
 
 	OnCommandOff:
 		disablenpc "#getitem3-1";
@@ -1682,6 +1695,7 @@ gon_dun03,199,102,0	script	#getitem3-2	111,2,1,{
 		enablenpc "#getitem3-2";
 		donpcevent "timer3-2::OnCommandOff";
 		donpcevent "start03#gnbs::OnCommandOn";
+		end;
 
 	OnCommandOff:
 		disablenpc "#getitem3-2";
@@ -1753,6 +1767,7 @@ gon_dun03,14,163,0	script	#getitem3-3	111,2,1,{
 		enablenpc "#getitem3-3";
 		donpcevent "timer3-3::OnCommandOff";
 		donpcevent "start03#gnbs::OnCommandOn";
+		end;
 
 	OnCommandOff:
 		disablenpc "#getitem3-3";
@@ -1824,6 +1839,7 @@ gon_dun03,156,263,0	script	#getitem3-4	111,2,1,{
 		enablenpc "#getitem3-4";
 		donpcevent "timer3-4::OnCommandOff";
 		donpcevent "start03#gnbs::OnCommandOn";
+		end;
 
 	OnCommandOff:
 		disablenpc "#getitem3-4";
@@ -1895,6 +1911,7 @@ gon_dun03,170,90,0	script	#getitem3-5	111,2,1,{
 		enablenpc "#getitem3-5";
 		donpcevent "timer3-5::OnCommandOff";
 		donpcevent "start03#gnbs::OnCommandOn";
+		end;
 
 	OnCommandOff:
 		disablenpc "#getitem3-5";
@@ -1966,6 +1983,7 @@ gon_dun03,68,39,0	script	#getitem3-6	111,1,2,{
 		enablenpc "#getitem3-6";
 		donpcevent "timer3-6::OnCommandOff";
 		donpcevent "start03#gnbs::OnCommandOn";
+		end;
 
 	OnCommandOff:
 		disablenpc "#getitem3-6";
@@ -2037,6 +2055,7 @@ gon_dun03,68,213,0	script	#getitem3-7	111,1,2,{
 		enablenpc "#getitem3-7";
 		donpcevent "timer3-7::OnCommandOff";
 		donpcevent "start03#gnbs::OnCommandOn";
+		end;
 
 	OnCommandOff:
 		disablenpc "#getitem3-7";
