@@ -644,7 +644,7 @@
 1004,9,8,1,0,0x8,0,1,1,no,0,0x1,0,weapon,0,	AS_VENOMKNIFE,Throw Venom Knife
 1005,1,6,1,0,0x1,0,1,1,no,0,0x1,0,weapon,0,	RG_CLOSECONFINE,Close Confine
 1006,0,6,4,3,0,2,1,1,yes,0,0x1,0,magic,3,	WZ_SIGHTBLASTER,Sight Blaster
-1007,0,6,4,0,0x1,0,10,0,no,0,0x1,0,none,0,	SA_CREATECON,Create Elemental Converter
+1007,0,6,4,0,0x1,0,1,0,no,0,0x1,0,none,0,	SA_CREATECON,Create Elemental Converter
 1008,9,6,1,1,0x1,0,1,1,yes,0,0x1,0,magic,0,	SA_ELEMENTWATER,Elemental Change Water
 1009,-9,6,1,0,0,0,1,1,no,0,0x1,0,weapon,3,	HT_PHANTASMIC,Phantasmic Arrow
 1010,9,6,1,0,0x1,0,1,0,no,0,0x1,0,misc,0,	BA_PANGVOICE,Pang Voice

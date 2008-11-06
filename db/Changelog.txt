@@ -40,6 +40,8 @@
 	2385 Recuvative_Armor		Should trigger HP/SP return with magical kills as well.
 
 =======================
+2008/11/05
+	* Fixed the maximum level of Create Elemental Converter. (bugreport:2326) [Sara]
 2008/10/27
 	* Removed a leftover instance of "bLoseSPWhenUnequip" in item 2385, Recuperative_Armor. [Paradox924X]
 2008/10/25

@@ -8196,6 +8196,41 @@ BUILDIN_FUNC(debugmes)
 }
 
 /*==========================================
+ * 天の声アナウンス（特定マップ）
+ *------------------------------------------*/
+static int buildin_mapannounce_sub(struct block_list *bl,va_list ap)
+{
+	char *str, *color;
+	int len,flag;
+	str=va_arg(ap,char *);
+	len=va_arg(ap,int);
+	flag=va_arg(ap,int);
+	color=va_arg(ap,char *);
+	if (color)
+		clif_announce(bl,str,len, strtol(color, (char **)NULL, 0), flag|3);
+	else
+		clif_GMmessage(bl,str,len,flag|3);
+	return 0;
+}
+BUILDIN_FUNC(mapannounce)
+{
+	const char *mapname,*str, *color=NULL;
+	int flag,m;
+
+	mapname=script_getstr(st,2);
+	str=script_getstr(st,3);
+	flag=script_getnum(st,4);
+	if (script_hasdata(st,5))
+		color=script_getstr(st,5);
+
+	if( (m=map_mapname2mapid(mapname))<0 )
+		return 0;
+
+	map_foreachinmap(buildin_mapannounce_sub,
+		m, BL_PC, str,strlen(str)+1,flag&0x10, color);
+	return 0;
+}
+/*==========================================
  *捕獲アイテム使用
  *------------------------------------------*/
 BUILDIN_FUNC(catchpet)
@@ -10765,6 +10800,236 @@ BUILDIN_FUNC(jump_zero)
 	}
 	return 0;
 }
+
+BUILDIN_FUNC(select)
+{
+	int i;
+	const char* text;
+	TBL_PC* sd;
+
+	sd = script_rid2sd(st);
+	if( sd == NULL )
+		return 0;
+
+	if( sd->state.menu_or_input == 0 )
+	{
+		struct StringBuf buf;
+
+		StringBuf_Init(&buf);
+		sd->npc_menu = 0;
+		for( i = 2; i <= script_lastdata(st); ++i )
+		{
+			text = script_getstr(st, i);
+			if( sd->npc_menu > 0 )
+				StringBuf_AppendStr(&buf, ":");
+			StringBuf_AppendStr(&buf, text);
+			sd->npc_menu += menu_countoptions(text, 0, NULL);
+		}
+
+		st->state = RERUNLINE;
+		sd->state.menu_or_input = 1;
+		clif_scriptmenu(sd, st->oid, StringBuf_Value(&buf));
+		StringBuf_Destroy(&buf);
+	}
+	else if( sd->npc_menu == 0xff )
+	{// Cancel was pressed
+		sd->state.menu_or_input = 0;
+		st->state = END;
+	}
+	else
+	{// return selected option
+		int menu = 0;
+
+		sd->state.menu_or_input = 0;
+		for( i = 2; i <= script_lastdata(st); ++i )
+		{
+			text = script_getstr(st, i);
+			sd->npc_menu -= menu_countoptions(text, sd->npc_menu, &menu);
+			if( sd->npc_menu <= 0 )
+				break;// entry found
+		}
+		pc_setreg(sd, add_str("@menu"), menu);
+		script_pushint(st, menu);
+	}
+	return 0;
+}
+
+/*==========================================
+ * 配列対応select()
+ *------------------------------------------
+ * arrayselect( <source> [, <count>] )
+ * @return : 選ばれた項目に対応する配列のindex
+ */
+int buildin_arrayselect( struct script_state *st )
+{
+	// 第1引数がsource
+	struct script_data *source = &st->stack->stack_data[ st->start + 2 ];
+	// bit:24-31 ; 配列の最初のindex(?)
+	int num = source->u.num, max;
+	// loop用
+	int begin, i = 0;
+	// 配列変数の名前
+	char *name = str_buf + str_data[ ARRAYIDX_GETDATA( num ) ].str;
+	char postfix = name[ strlen( name ) - 1 ];
+
+	struct map_session_data *sd = script_rid2sd( st );
+
+	nullpo_retr( 0, sd );
+
+	if( !check_arrayscope( name[ 0 ], "buildin_arrayselect" ) ) return 0;
+
+	// 配列の最大個数
+	max = getarraysize( st, num, postfix, source->ref );
+	// loopの始点
+	begin = ARRAYIDX_GETIDX( num );
+
+//	printf( "num = %d, max = %d, begin = %d, end = %d, count = %d\n", num, max, begin, end, count );
+//	printf( "st->start = %d, st->end = %d\n", st->start, st->end ); 
+
+	// menuもinput windowも表示中ではない
+	if( sd->state.menu_or_input == 0 )
+	{
+		char *buf;
+		size_t len;
+		int count, end;
+
+		// arrayselect()をもう一度実行することでclientからの結果を解析する
+		st->state = RERUNLINE;
+		// set flag
+		sd->state.menu_or_input = 1;
+
+		// 第二引数があるか？
+		if( st->end > st->start + 3 )
+		{
+			count = conv_num( st, &st->stack->stack_data[ st->start + 3 ] );
+		}
+		else
+		{
+			count = -1;
+		}
+
+		// loopの終点
+		end = count != -1 ? count + begin : max;
+
+		// menu用packed文字列に必要な文字列長を計算
+		len = 0;
+		for( i = begin; i < end; ++i )
+		{
+			// 配列要素の値を取得
+			void *elem = get_val2( st, ARRAYIDX_PACK( i, num ), source->ref );
+
+			// str?
+			if( postfix == '$' )
+			{
+				if( elem ) len += strlen( ( char * ) elem );
+			}
+			// int
+			else
+			{
+				// 符号を考慮して1byte余計に確保
+				len += ( size_t )log10( abs( ( int ) elem ) ) + 2;
+			}
+
+			// separator(:)
+			++len;
+		}
+
+		buf = ( char * ) aCalloc( len + 1, sizeof( char ) );
+		buf[ 0 ] = '\0';
+
+		for( i = begin; i < end; ++i )
+		{
+			void *elem = get_val2( st, ARRAYIDX_PACK( i, num ), source->ref );
+
+			// str?
+			if( postfix == '$' )
+			{
+				if( elem )
+				{
+					strcat( buf, ( char * ) elem );
+				}
+			}
+			else
+			{
+				char temp[ 16 ];
+				snprintf( temp, 16, "%d", ( int ) elem );
+				strcat( buf, temp );
+			}
+
+			strcat( buf, ":" );
+		}
+
+		// show the menu
+		clif_scriptmenu( sd, st->oid, buf );
+
+		// release
+		free( buf );
+	}
+	// 2度目の実行
+	else
+	{
+		// set flag
+		sd->state.menu_or_input = 0;
+
+		// canceled or invalid responce
+		if( sd->npc_menu == 0xff || !( sd->npc_menu > 0 ) )
+		{
+			st->state = END;
+		}
+		// valid responce
+		else
+		{
+			int selected = sd->npc_menu;
+
+			// 長さ0の文字列のメニューはclientには表示されないので, 値を補正する
+			// ex)
+			// 配列 { "あ", "い", "", "え", "お", } で npc_menu が 4 のとき,
+			// 実際に選ばれたのは "え" ではなくて "お" である.
+			// -> 4 を 5 に修正
+			if( postfix == '$' )
+			{
+				int cnt_len0 = 0, cnt_rest = selected;
+
+				// 長さ0でない文字列がselected個現れるまでに, いくつ長さ0の文字列があるか？
+				for( i = begin; cnt_rest > 0; ++i )
+				{
+					void *elem = get_val2( st, ARRAYIDX_PACK( i, num ), source->ref );
+
+					if( !elem || strlen( ( char * ) elem ) == 0 )
+					{
+						++cnt_len0;
+					}
+					else
+					{
+						--cnt_rest;
+					}
+				}
+
+				selected += cnt_len0;
+			}
+
+			// fix beginning offset & returned value range (1~)
+			selected += begin - 1;
+			
+			// overflow?
+			if( selected > max - 1 )
+			{
+				st->state = END;
+				return 0;
+			}
+
+			// return
+			pc_setreg( sd, add_str( "@menu" ), selected );
+			push_val( st->stack, C_INT, selected );
+		}
+	}
+
+	return 0;
+}
+
+#undef ARRAYIDX_GETIDX
+#undef ARRAYIDX_GETDATA
+#undef ARRAYIDX_PACK
 
 /*==========================================
  * GetMapMobs

@@ -9177,7 +9177,8 @@ void clif_parse_ChangeCart(int fd,struct map_session_data *sd)
 	if( (type == 5 && sd->status.base_level > 90) ||
 	    (type == 4 && sd->status.base_level > 80) ||
 	    (type == 3 && sd->status.base_level > 65) ||
-	    (type == 2 && sd->status.base_level > 40) )
+	    (type == 2 && sd->status.base_level > 40) ||
+	    (type == 1))
 		pc_setcart(sd,type);
 }
 
