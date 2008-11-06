@@ -3,6 +3,11 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2008/11/06
+	* Fixed 'Char creation denied' message not being sent properly. [FlavioJS]
+	- Number 2 didn't exist in old clients so it used the default message,
+	  now it exists so the wrong message is displayed.
+	- Changed 2 to 0xFF to get the default message.
 2008/11/05
 	* Fixed issue preventing you from changing to the original cart when using Change Cart. (bugreport:2383) [Sara]
 2008/10/29

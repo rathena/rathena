@@ -3107,7 +3107,7 @@ int parse_char(int fd)
 				WFIFOW(fd,0) = 0x6e;
 				switch (i) {
 				case -1: WFIFOB(fd,2) = 0x00; break;
-				case -2: WFIFOB(fd,2) = 0x02; break;
+				case -2: WFIFOB(fd,2) = 0xFF; break;
 				case -3: WFIFOB(fd,2) = 0x01; break;
 				}
 				WFIFOSET(fd,3);
