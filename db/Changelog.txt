@@ -40,6 +40,8 @@
 	2385 Recuvative_Armor		Should trigger HP/SP return with magical kills as well.
 
 =======================
+2008/11/07
+	* Rev. 13356 Corrected typo in Librarian Gloves bonuses. [L0ne_W0lf]
 2008/11/05
 	* Fixed the maximum level of Create Elemental Converter. (bugreport:2423) [Sara]
 2008/10/27
