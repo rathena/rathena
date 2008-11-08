@@ -3787,41 +3787,38 @@ static int mob_read_randommonster(void)
 }
 
 /*==========================================
- * mob_skill_db.txt reading
+ * processes one mob_skill_db entry
+ * @param last_mob_id ensures that only one error message per mob id is printed
  *------------------------------------------*/
-static int mob_readskilldb(void)
+static bool mob_parse_row_mobskilldb(char** str, const char* source, int line, int* last_mob_id)
 {
-	FILE *fp;
-	char line[1024];
-	int i,tmp, count;
-
-	const struct {
+	static const struct {
 		char str[32];
 		enum MobSkillState id;
 	} cond1[] = {
-		{	"always",			MSC_ALWAYS				},
-		{	"myhpltmaxrate",	MSC_MYHPLTMAXRATE		},
-		{	"myhpinrate",		MSC_MYHPINRATE 		},
-		{	"friendhpltmaxrate",MSC_FRIENDHPLTMAXRATE	},
-		{	"friendhpinrate",	MSC_FRIENDHPINRATE	},
-		{	"mystatuson",		MSC_MYSTATUSON			},
-		{	"mystatusoff",		MSC_MYSTATUSOFF			},
-		{	"friendstatuson",	MSC_FRIENDSTATUSON		},
-		{	"friendstatusoff",	MSC_FRIENDSTATUSOFF		},
-		{	"attackpcgt",		MSC_ATTACKPCGT			},
-		{	"attackpcge",		MSC_ATTACKPCGE			},
-		{	"slavelt",			MSC_SLAVELT				},
-		{	"slavele",			MSC_SLAVELE				},
-		{	"closedattacked",	MSC_CLOSEDATTACKED		},
-		{	"longrangeattacked",MSC_LONGRANGEATTACKED	},
-		{	"skillused",		MSC_SKILLUSED			},
-		{	"afterskill",		MSC_AFTERSKILL			},
-		{	"casttargeted",		MSC_CASTTARGETED		},
-		{	"rudeattacked",		MSC_RUDEATTACKED		},
-		{	"masterhpltmaxrate",MSC_MASTERHPLTMAXRATE	},
-		{	"masterattacked",	MSC_MASTERATTACKED		},
-		{	"alchemist",		MSC_ALCHEMIST			},
-		{	"onspawn",			MSC_SPAWN},
+		{ "always",            MSC_ALWAYS            },
+		{ "myhpltmaxrate",     MSC_MYHPLTMAXRATE     },
+		{ "myhpinrate",        MSC_MYHPINRATE        },
+		{ "friendhpltmaxrate", MSC_FRIENDHPLTMAXRATE },
+		{ "friendhpinrate",    MSC_FRIENDHPINRATE    },
+		{ "mystatuson",        MSC_MYSTATUSON        },
+		{ "mystatusoff",       MSC_MYSTATUSOFF       },
+		{ "friendstatuson",    MSC_FRIENDSTATUSON    },
+		{ "friendstatusoff",   MSC_FRIENDSTATUSOFF   },
+		{ "attackpcgt",        MSC_ATTACKPCGT        },
+		{ "attackpcge",        MSC_ATTACKPCGE        },
+		{ "slavelt",           MSC_SLAVELT           },
+		{ "slavele",           MSC_SLAVELE           },
+		{ "closedattacked",    MSC_CLOSEDATTACKED    },
+		{ "longrangeattacked", MSC_LONGRANGEATTACKED },
+		{ "skillused",         MSC_SKILLUSED         },
+		{ "afterskill",        MSC_AFTERSKILL        },
+		{ "casttargeted",      MSC_CASTTARGETED      },
+		{ "rudeattacked",      MSC_RUDEATTACKED      },
+		{ "masterhpltmaxrate", MSC_MASTERHPLTMAXRATE },
+		{ "masterattacked",    MSC_MASTERATTACKED    },
+		{ "alchemist",         MSC_ALCHEMIST         },
+		{ "onspawn",           MSC_SPAWN             },
 	}, cond2[] ={
 		{	"anybad",		-1				},
 		{	"stone",		SC_STONE		},
@@ -3863,218 +3860,251 @@ static int mob_readskilldb(void)
 		{	"around",	MST_AROUND	},
 	};
 
-	int x;
-	const char* filename[] = { "mob_skill_db.txt","mob_skill_db2.txt" };
+	struct mob_skill *ms, gms;
+	int mob_id;
+	int i, j, tmp;
 
-	if( battle_config.mob_skill_rate == 0 ) {
+	mob_id = atoi(str[0]);
+
+	if (mob_id > 0 && mob_db(mob_id) == mob_dummy)
+	{
+		if (mob_id != *last_mob_id) {
+			ShowError("mob_skill: Non existant Mob id %d at %s, line %d\n", mob_id, source, line);
+			*last_mob_id = mob_id;
+		}
+		return false;
+	}
+	if( strcmp(str[1],"clear")==0 ){
+		if (mob_id < 0)
+			return false;
+		memset(mob_db_data[mob_id]->skill,0,sizeof(struct mob_skill));
+		mob_db_data[mob_id]->maxskill=0;
+		return true;
+	}
+
+	if (mob_id < 0)
+	{	//Prepare global skill. [Skotlex]
+		memset(&gms, 0, sizeof (struct mob_skill));
+		ms = &gms;
+	} else {
+		ARR_FIND( 0, MAX_MOBSKILL, i, (ms = &mob_db_data[mob_id]->skill[i])->skill_id == 0 );
+		if( i == MAX_MOBSKILL )
+		{
+			if (mob_id != *last_mob_id) {
+				ShowError("mob_skill: readdb: too many skills! Line %d in %d[%s]\n", line, mob_id, mob_db_data[mob_id]->sprite);
+				*last_mob_id = mob_id;
+			}
+			return false;
+		}
+	}
+
+	//State
+	ARR_FIND( 0, ARRAYLENGTH(state), j, strcmp(str[2],state[j].str) == 0 );
+	if( j < ARRAYLENGTH(state) )
+		ms->state = state[j].id;
+	else {
+		ShowWarning("mob_skill: Unrecognized state %s at %s, line %d\n", str[2], source, line);
+		ms->state = MSS_ANY;
+	}
+
+	//Skill ID
+	j=atoi(str[3]);
+	if (j<=0 || j>MAX_SKILL_DB) //fixed Lupus
+	{
+		if (mob_id < 0)
+			ShowError("Invalid Skill ID (%d) for all mobs\n", j);
+		else
+			ShowError("Invalid Skill ID (%d) for mob %d (%s)\n", j, mob_id, mob_db_data[mob_id]->sprite);
+		return false;
+	}
+	ms->skill_id=j;
+
+	//Skill lvl
+	j= atoi(str[4])<=0 ? 1 : atoi(str[4]);
+	ms->skill_lv= j>battle_config.mob_max_skilllvl ? battle_config.mob_max_skilllvl : j; //we strip max skill level
+
+	//Apply battle_config modifiers to rate (permillage) and delay [Skotlex]
+	tmp = atoi(str[5]);
+	if (battle_config.mob_skill_rate != 100)
+		tmp = tmp*battle_config.mob_skill_rate/100;
+	if (tmp > 10000)
+		ms->permillage= 10000;
+	else
+		ms->permillage= tmp;
+	ms->casttime=atoi(str[6]);
+	ms->delay=atoi(str[7]);
+	if (battle_config.mob_skill_delay != 100)
+		ms->delay = ms->delay*battle_config.mob_skill_delay/100;
+	if (ms->delay < 0) //time overflow?
+		ms->delay = INT_MAX;
+	ms->cancel=atoi(str[8]);
+	if( strcmp(str[8],"yes")==0 ) ms->cancel=1;
+
+	//Target
+	ARR_FIND( 0, ARRAYLENGTH(target), j, strcmp(str[9],target[j].str) == 0 );
+	if( j < ARRAYLENGTH(target) )
+		ms->target = target[j].id;
+	else {
+		ShowWarning("mob_skill: Unrecognized target %s at %s, line %d\n", str[9], source, line);
+		ms->target = MST_TARGET;
+	}
+
+	//Check that the target condition is right for the skill type. [Skotlex]
+	if (skill_get_casttype(ms->skill_id) == CAST_GROUND)
+	{	//Ground skill.
+		if (ms->target > MST_AROUND)
+		{
+			ShowWarning("Wrong mob skill target for ground skill %d (%s) for %s.\n",
+				ms->skill_id, skill_get_name(ms->skill_id),
+				mob_id < 0?"all mobs":mob_db_data[mob_id]->sprite);
+			ms->target = MST_TARGET;
+		}
+	} else if (ms->target > MST_MASTER) {
+		ShowWarning("Wrong mob skill target 'around' for non-ground skill %d (%s) for %s\n.",
+			ms->skill_id, skill_get_name(ms->skill_id),
+			mob_id < 0?"all mobs":mob_db_data[mob_id]->sprite);
+		ms->target = MST_TARGET;
+	}
+
+	//Cond1
+	ARR_FIND( 0, ARRAYLENGTH(cond1), j, strcmp(str[10],cond1[j].str) == 0 );
+	if( j < ARRAYLENGTH(cond1) )
+		ms->cond1 = cond1[j].id;
+	else {
+		ShowWarning("mob_skill: Unrecognized condition 1 %s at %s, line %d\n", str[10], source, line);
+		ms->cond1 = -1;
+	}
+
+	//Cond2
+	// numeric value
+	ms->cond2 = atoi(str[11]);
+	// or special constant 
+	ARR_FIND( 0, ARRAYLENGTH(cond2), j, strcmp(str[11],cond2[j].str) == 0 );
+	if( j < ARRAYLENGTH(cond2) )
+		ms->cond2 = cond2[j].id;
+	
+	ms->val[0]=(int)strtol(str[12],NULL,0);
+	ms->val[1]=(int)strtol(str[13],NULL,0);
+	ms->val[2]=(int)strtol(str[14],NULL,0);
+	ms->val[3]=(int)strtol(str[15],NULL,0);
+	ms->val[4]=(int)strtol(str[16],NULL,0);
+	
+	if(ms->skill_id == NPC_EMOTION && mob_id>0 &&
+		ms->val[1] == mob_db(mob_id)->status.mode)
+	{
+		ms->val[1] = 0;
+		ms->val[4] = 1; //request to return mode to normal.
+	}
+	if(ms->skill_id == NPC_EMOTION_ON && mob_id>0 && ms->val[1])
+	{	//Adds a mode to the mob.
+		//Remove aggressive mode when the new mob type is passive.
+		if (!(ms->val[1]&MD_AGGRESSIVE)) 
+			ms->val[3]|=MD_AGGRESSIVE;
+		ms->val[2]|= ms->val[1]; //Add the new mode.
+		ms->val[1] = 0; //Do not "set" it.
+	}
+
+	if(str[17] != NULL && strlen(str[17])>2)
+		ms->emotion=atoi(str[17]);
+	else
+		ms->emotion=-1;
+	if (mob_id < 0)
+	{	//Set this skill to ALL mobs. [Skotlex]
+		mob_id *= -1;
+		for (i = 1; i < MAX_MOB_DB; i++)
+		{
+			if (mob_db_data[i] == NULL)
+				continue;
+			if (mob_db_data[i]->status.mode&MD_BOSS)
+			{
+				if (!(mob_id&2)) //Skill not for bosses
+					continue;
+			} else
+				if (!(mob_id&1)) //Skill not for normal enemies.
+					continue;
+
+			ARR_FIND( 0, MAX_MOBSKILL, j, mob_db_data[i]->skill[j].skill_id == 0 );
+			if(j==MAX_MOBSKILL)
+				continue;
+
+			memcpy (&mob_db_data[i]->skill[j], ms, sizeof(struct mob_skill));
+			mob_db_data[i]->maxskill=j+1;
+		}
+	} else //Skill set on a single mob.
+		mob_db_data[mob_id]->maxskill=i+1;
+
+	return true;
+}
+
+/*==========================================
+ * mob_skill_db.txt reading
+ *------------------------------------------*/
+static int mob_readskilldb(void)
+{
+	const char* filename[] = { "mob_skill_db.txt", "mob_skill_db2.txt" };
+	int fi;
+
+	if( battle_config.mob_skill_rate == 0 )
+	{
 		ShowStatus("Mob skill use disabled. Not reading mob skills.\n");
 		return 0;
 	}
 
-	for( x = 0; x < ARRAYLENGTH(filename); ++x )
+	for( fi = 0; fi < ARRAYLENGTH(filename); ++fi )
 	{
-		int last_mob_id = 0;
-		count = 0;
-		sprintf(line, "%s/%s", db_path, filename[x]); 
-		fp=fopen(line,"r");
-		if(fp==NULL){
-			if(x==0)
-				ShowError("can't read %s\n",line);
+		uint32 lines = 0, count = 0;
+		char line[1024];
+		int i;
+		int tmp = 0;
+
+		char path[256];
+		FILE *fp;
+
+		sprintf(path, "%s/%s", db_path, filename[fi]); 
+		fp = fopen(path, "r");
+		if( fp == NULL )
+		{
+			ShowWarning("mob_readskilldb: File not found \"%s\", skipping.\n", path);
 			continue;
 		}
+
+		// process rows one by one
 		while(fgets(line, sizeof(line), fp))
 		{
-			char *sp[20],*p;
-			int mob_id;
-			struct mob_skill *ms, gms;
+			char *str[20], *p, *np;
 			int j=0;
 
-			count++;
+			lines++;
 			if(line[0] == '/' && line[1] == '/')
 				continue;
+			memset(str, 0, sizeof(str));
 
-			memset(sp,0,sizeof(sp));
-			for(i=0,p=line;i<18 && p;i++){
-				sp[i]=p;
-				if((p=strchr(p,','))!=NULL)
-					*p++=0;
-			}
-			if(i == 0 || (mob_id=atoi(sp[0]))== 0)
-				continue;
-			if(i < 18) {
-				ShowError("mob_skill: Insufficient number of fields for skill at %s, line %d\n", filename[x], count);
-				continue;
-			}
-			if (mob_id > 0 && mob_db(mob_id) == mob_dummy)
+			p = line;
+			while( ISSPACE(*p) )
+				++p;
+			if( *p == '\0' )
+				continue;// empty line
+			for(i = 0; i < 18; i++)
 			{
-				if (mob_id != last_mob_id) {
-					ShowError("mob_skill: Non existant Mob id %d at %s, line %d\n", mob_id, filename[x], count);
-					last_mob_id = mob_id;
-				}
-				continue;
-			}
-			if( strcmp(sp[1],"clear")==0 ){
-				if (mob_id < 0)
-					continue;
-				memset(mob_db_data[mob_id]->skill,0,sizeof(struct mob_skill));
-				mob_db_data[mob_id]->maxskill=0;
-				continue;
-			}
-
-			if (mob_id < 0)
-			{	//Prepare global skill. [Skotlex]
-				memset(&gms, 0, sizeof (struct mob_skill));
-				ms = &gms;
-			} else {
-				ARR_FIND( 0, MAX_MOBSKILL, i, (ms = &mob_db_data[mob_id]->skill[i])->skill_id == 0 );
-				if( i == MAX_MOBSKILL ) {
-					if (mob_id != last_mob_id) {
-						ShowError("mob_skill: readdb: too many skills! Line %d in %d[%s]\n", count,mob_id,mob_db_data[mob_id]->sprite);
-						last_mob_id = mob_id;
-					}
-					continue;
+				str[i] = p;
+				if((np = strchr(p, ',')) != NULL) {
+					*np = '\0'; p = np + 1;
 				}
 			}
-
-			//State
-			ARR_FIND( 0, ARRAYLENGTH(state), j, strcmp(sp[2],state[j].str) == 0 );
-			if( j < ARRAYLENGTH(state) )
-				ms->state = state[j].id;
-			else {
-				ShowWarning("mob_skill: Unrecognized state %s at %s, line %d\n", sp[2], filename[x], count);
-				ms->state = MSS_ANY;
-			}
-
-			//Skill ID
-			j=atoi(sp[3]);
-			if (j<=0 || j>MAX_SKILL_DB) //fixed Lupus
-			{
-				if (mob_id < 0)
-					ShowError("Invalid Skill ID (%d) for all mobs\n", j);
-				else
-					ShowError("Invalid Skill ID (%d) for mob %d (%s)\n", j, mob_id, mob_db_data[mob_id]->sprite);
-				continue;
-			}
-			ms->skill_id=j;
-
-			//Skill lvl
-			j= atoi(sp[4])<=0 ? 1 : atoi(sp[4]);
-			ms->skill_lv= j>battle_config.mob_max_skilllvl ? battle_config.mob_max_skilllvl : j; //we strip max skill level
-
-			//Apply battle_config modifiers to rate (permillage) and delay [Skotlex]
-			tmp = atoi(sp[5]);
-			if (battle_config.mob_skill_rate != 100)
-				tmp = tmp*battle_config.mob_skill_rate/100;
-			if (tmp > 10000)
-				ms->permillage= 10000;
-			else
-				ms->permillage= tmp;
-			ms->casttime=atoi(sp[6]);
-			ms->delay=atoi(sp[7]);
-			if (battle_config.mob_skill_delay != 100)
-				ms->delay = ms->delay*battle_config.mob_skill_delay/100;
-			if (ms->delay < 0) //time overflow?
-				ms->delay = INT_MAX;
-			ms->cancel=atoi(sp[8]);
-			if( strcmp(sp[8],"yes")==0 ) ms->cancel=1;
-
-			//Target
-			ARR_FIND( 0, ARRAYLENGTH(target), j, strcmp(sp[9],target[j].str) == 0 );
-			if( j < ARRAYLENGTH(target) )
-				ms->target = target[j].id;
-			else {
-				ShowWarning("mob_skill: Unrecognized target %s at %s, line %d\n", sp[9], filename[x], count);
-				ms->target = MST_TARGET;
-			}
-
-			//Check that the target condition is right for the skill type. [Skotlex]
-			if (skill_get_casttype(ms->skill_id) == CAST_GROUND)
-			{	//Ground skill.
-				if (ms->target > MST_AROUND)
-				{
-					ShowWarning("Wrong mob skill target for ground skill %d (%s) for %s.\n",
-						ms->skill_id, skill_get_name(ms->skill_id),
-						mob_id < 0?"all mobs":mob_db_data[mob_id]->sprite);
-					ms->target = MST_TARGET;
-				}
-			} else if (ms->target > MST_MASTER) {
-				ShowWarning("Wrong mob skill target 'around' for non-ground skill %d (%s) for %s\n.",
-					ms->skill_id, skill_get_name(ms->skill_id),
-					mob_id < 0?"all mobs":mob_db_data[mob_id]->sprite);
-				ms->target = MST_TARGET;
-			}
-
-			//Cond1
-			ARR_FIND( 0, ARRAYLENGTH(cond1), j, strcmp(sp[10],cond1[j].str) == 0 );
-			if( j < ARRAYLENGTH(cond1) )
-				ms->cond1 = cond1[j].id;
-			else {
-				ShowWarning("mob_skill: Unrecognized condition 1 %s at %s, line %d\n", sp[10], filename[x], count);
-				ms->cond1 = -1;
-			}
-
-			//Cond2
-			// numeric value
-			ms->cond2 = atoi(sp[11]);
-			// or special constant 
-			ARR_FIND( 0, ARRAYLENGTH(cond2), j, strcmp(sp[11],cond2[j].str) == 0 );
-			if( j < ARRAYLENGTH(cond2) )
-				ms->cond2 = cond2[j].id;
 			
-			ms->val[0]=(int)strtol(sp[12],NULL,0);
-			ms->val[1]=(int)strtol(sp[13],NULL,0);
-			ms->val[2]=(int)strtol(sp[14],NULL,0);
-			ms->val[3]=(int)strtol(sp[15],NULL,0);
-			ms->val[4]=(int)strtol(sp[16],NULL,0);
-			
-			if(ms->skill_id == NPC_EMOTION && mob_id>0 &&
-				ms->val[1] == mob_db(mob_id)->status.mode)
+			if( i < 18 )
 			{
-				ms->val[1] = 0;
-				ms->val[4] = 1; //request to return mode to normal.
-			}
-			if(ms->skill_id == NPC_EMOTION_ON && mob_id>0 && ms->val[1])
-			{	//Adds a mode to the mob.
-				//Remove aggressive mode when the new mob type is passive.
-				if (!(ms->val[1]&MD_AGGRESSIVE)) 
-					ms->val[3]|=MD_AGGRESSIVE;
-				ms->val[2]|= ms->val[1]; //Add the new mode.
-				ms->val[1] = 0; //Do not "set" it.
+				ShowError("mob_readskilldb: Insufficient number of fields for skill at %s, line %d\n", filename[fi], lines);
+				continue;
 			}
 
-			if(sp[17] != NULL && strlen(sp[17])>2)
-				ms->emotion=atoi(sp[17]);
-			else
-				ms->emotion=-1;
-			if (mob_id < 0)
-			{	//Set this skill to ALL mobs. [Skotlex]
-				mob_id *= -1;
-				for (i = 1; i < MAX_MOB_DB; i++)
-				{
-					if (mob_db_data[i] == NULL)
-						continue;
-					if (mob_db_data[i]->status.mode&MD_BOSS)
-					{
-						if (!(mob_id&2)) //Skill not for bosses
-							continue;
-					} else
-						if (!(mob_id&1)) //Skill not for normal enemies.
-							continue;
-					
-					for(j=0;j<MAX_MOBSKILL;j++)
-						if( mob_db_data[i]->skill[j].skill_id == 0)
-							break;
-					if(j==MAX_MOBSKILL)
-						continue;
+			if( !mob_parse_row_mobskilldb(str, path, lines, &tmp) )
+				continue;
 
-					memcpy (&mob_db_data[i]->skill[j], ms, sizeof(struct mob_skill));
-					mob_db_data[i]->maxskill=j+1;
-				}
-			} else //Skill set on a single mob.
-				mob_db_data[mob_id]->maxskill=i+1;
+			count++;
 		}
 		fclose(fp);
-		ShowStatus("Done reading '"CL_WHITE"%s"CL_RESET"'.\n",filename[x]);
+		ShowStatus("Done reading '"CL_WHITE"%s"CL_RESET"'.\n", filename[fi]);
 	}
 	return 0;
 }
