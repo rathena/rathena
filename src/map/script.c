@@ -9530,7 +9530,8 @@ BUILDIN_FUNC(mapwarp)	// Added by RoVeRT
 static int buildin_mobcount_sub(struct block_list *bl,va_list ap)	// Added by RoVeRT
 {
 	char *event=va_arg(ap,char *);
-	if(strcmp(event,((struct mob_data *)bl)->npc_event)==0)
+    struct mob_data *md = ((struct mob_data *)bl);
+    if(strcmp(event,md->npc_event)==0 && md->status.hp > 0)
 		return 1;
 	return 0;
 }
