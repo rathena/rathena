@@ -3,6 +3,8 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2008/11/09
+	* Added a check to make sure killed monster's level was greater than half of the mercenary owner's level before incrementing mercenary's killcount. (bugreport:2410) [Paradox924X]
 2008/11/07
 	* Rev. 13358 Changed how mobcount works since it wasn't counting last mob death. (bugreport:2419) [L0ne_W0lf]
 2008/11/06
