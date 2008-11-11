@@ -2273,7 +2273,19 @@ static int set_reg(struct script_state* st, TBL_PC* sd, int num, const char* nam
 	{// integer variable
 		int val = (int)value;
 		if(str_data[num&0x00ffffff].type == C_PARAM)
-			return pc_setparam(sd, str_data[num&0x00ffffff].val, val);
+		{
+			if( pc_setparam(sd, str_data[num&0x00ffffff].val, val) == 0 )
+			{
+				if( st != NULL )
+				{
+					ShowError("script:set_reg: failed to set param '%s' to %d.\n", name, val);
+					script_reportsrc(st);
+					st->state = END;
+				}
+				return 0;
+			}
+			return 1;
+		}
 
 		switch (prefix) {
 		case '@':
@@ -5367,9 +5379,12 @@ BUILDIN_FUNC(makeitem)
 
 	return 0;
 }
-/*==========================================
- * script DELITEM command (fixed 2 bugs by Lupus, added deletion priority by Lupus)
- *------------------------------------------*/
+
+/// Deletes items from the target/attached player.
+/// Prioritizes ordinary items.
+///
+/// delitem <item id>,<amount>{,<account id>}
+/// delitem "<item name>",<amount>{,<account id>}
 BUILDIN_FUNC(delitem)
 {
 	int nameid=0,amount,i,important_item=0;
@@ -5377,30 +5392,45 @@ BUILDIN_FUNC(delitem)
 	struct script_data *data;
 
 	if( script_hasdata(st,4) )
-		sd=map_id2sd(script_getnum(st,4)); // <Account ID>
+	{
+		int account_id = script_getnum(st,4);
+		sd = map_id2sd(account_id); // <account id>
+		if( sd == NULL )
+		{
+			ShowError("script:delitem: player not found (AID=%d).\n", account_id);
+			st->state = END;
+			return 1;
+		}
+	}
 	else
-		sd=script_rid2sd(st); // Attached player
+	{
+		sd = script_rid2sd(st);// attached player
+		if( sd == NULL )
+			return 0;
+	}
 
-	if( sd == NULL ) // no target
-		return 0;
-
-	data=script_getdata(st,2);
+	data = script_getdata(st,2);
 	get_val(st,data);
-	if( data_isstring(data) ){
-		const char *name=conv_str(st,data);
-		struct item_data *item_data = itemdb_searchname(name);
-		//nameid=UNKNOWN_ITEM_ID;
-		if( item_data )
-			nameid=item_data->nameid;
-	}else
-		nameid=conv_num(st,data);
+	if( data_isstring(data) )
+	{
+		const char* item_name = conv_str(st,data);
+		struct item_data* id = itemdb_searchname(item_name);
+		if( id == NULL )
+		{
+			ShowError("script:delitem: unknown item \"%s\".\n", item_name);
+			st->state = END;
+			return 1;
+		}
+		nameid = id->nameid;// "<item name>"
+	}
+	else
+		nameid = conv_num(st,data);// <item id>
 
 	amount=script_getnum(st,3);
 
-	if (nameid<500 || amount<=0 ) {//by Lupus. Don't run FOR if u got wrong item ID or amount<=0
-		//eprintf("wrong item ID or amount<=0 : delitem %i,\n",nameid,amount);
-		return 0;
-	}
+	if( amount <= 0 )
+		return 0;// nothing to do
+
 	//1st pass
 	//here we won't delete items with CARDS, named items but we count them
 	for(i=0;i<MAX_INVENTORY;i++){
@@ -5473,12 +5503,15 @@ BUILDIN_FUNC(delitem)
 			}
 		}
 
-	return 0;
+	ShowError("script:delitem: failed to delete %d items (AID=%d item_id=%d).\n", amount, sd->status.account_id, nameid);
+	st->state = END;
+	return 1;
 }
 
-/*==========================================
- * advanced version of delitem [modified by Mihilion]
- *------------------------------------------*/
+/// Deletes items from the target/attached player.
+///
+/// delitem2 <item id>,<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<account ID>}
+/// delitem2 "<Item name>",<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<account ID>}
 BUILDIN_FUNC(delitem2)
 {
 	int nameid=0,amount,i=0;
@@ -5487,23 +5520,39 @@ BUILDIN_FUNC(delitem2)
 	struct script_data *data;
 
 	if( script_hasdata(st,11) )
-		sd=map_id2sd(script_getnum(st,11)); // <Account ID>
+	{
+		int account_id = script_getnum(st,11);
+		sd = map_id2sd(account_id); // <account id>
+		if( sd == NULL )
+		{
+			ShowError("script:delitem2: player not found (AID=%d).\n", account_id);
+			st->state = END;
+			return 1;
+		}
+	}
 	else
-		sd=script_rid2sd(st); // Attached player
+	{
+		sd = script_rid2sd(st);// attached player
+		if( sd == NULL )
+			return 0;
+	}
 
-	if( sd == NULL ) // no target
-		return 0;
-
-	data=script_getdata(st,2);
+	data = script_getdata(st,2);
 	get_val(st,data);
-	if( data_isstring(data) ){
-		const char *name=conv_str(st,data);
-		struct item_data *item_data = itemdb_searchname(name);
-		//nameid=UNKNOWN_ITEM_ID;
-		if( item_data )
-			nameid=item_data->nameid;
-	}else
-		nameid=conv_num(st,data);
+	if( data_isstring(data) )
+	{
+		const char* item_name = conv_str(st,data);
+		struct item_data* id = itemdb_searchname(item_name);
+		if( id == NULL )
+		{
+			ShowError("script:delitem2: unknown item \"%s\".\n", item_name);
+			st->state = END;
+			return 1;
+		}
+		nameid = id->nameid;// "<item name>"
+	}
+	else
+		nameid = conv_num(st,data);// <item id>
 
 	amount=script_getnum(st,3);
 	iden=script_getnum(st,4);
@@ -5514,10 +5563,8 @@ BUILDIN_FUNC(delitem2)
 	c3=script_getnum(st,9);
 	c4=script_getnum(st,10);
 
-	if (!itemdb_exists(nameid) || amount<=0 ) {//by Lupus. Don't run FOR if u got wrong item ID or amount<=0
-		 //eprintf("wrong item ID or amount<=0 : delitem %i,\n",nameid,amount);
-		 return 0;
-	}
+	if( amount <= 0 )
+		return 0;// nothing to do
 
 	for(i=0;i<MAX_INVENTORY;i++){
 	//we don't delete wrong item or equipped item
@@ -5553,7 +5600,10 @@ BUILDIN_FUNC(delitem2)
 			pc_delitem(sd,i,sd->status.inventory[i].amount,0);
 		}
 	}
-	return 0;
+
+	ShowError("script:delitem: failed to delete %d items (AID=%d item_id=%d).\n", amount, sd->status.account_id, nameid);
+	st->state = END;
+	return 1;
 }
 
 /*==========================================

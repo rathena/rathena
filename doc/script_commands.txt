@@ -4,7 +4,7 @@
 //= A reference manual for the eAthena scripting language.
 //= Commands are sorted depending on their functionality.
 //===== Version ===========================================
-//= 3.23.20080909
+//= 3.34.20081111
 //=========================================================
 //= 1.0 - First release, filled will as much info as I could
 //=       remember or figure out, most likely there are errors,
@@ -124,6 +124,8 @@
 //=       Adjusted the 'getequipname' description to match src [ultramage]
 //= 3.23.20080909
 //=       Added WoE SE related commands. [L0ne_W0lf]
+//= 3.34.20081111
+//=       Changed the error behaviour of delitem/delitem2/Zeny. [FlavioJS]
 //=========================================================
 
 This document is a reference manual for all the scripting commands and functions 
@@ -631,6 +633,7 @@ not certain whether this will work for all of them. Whenever there is a command
 or a function to set something, it's usually preferable to use that instead. The 
 notable exception is Zeny, which you can and often will address directly -
 setting it will make the character own this number of zeny.
+If you try to set Zeny to a negative number, the script will be terminated with an error.
 
 Strings
 -------
@@ -3872,7 +3875,7 @@ If the map name is given as "this", the map the invoking character is on will be
 *delitem <item id>,<amount>{,<account ID>};
 *delitem "<item name>",<amount>{,<account ID>};
 
-This command will take a specified amount of items from the invoking character. 
+This command will take a specified amount of items from the invoking/target character. 
 As all the item commands, this one uses the ID of the item found inside 
 'db/item_db.txt'. The items are destroyed - there is no way an NPC can simply 
 own items and have an inventory of them, other as by destroying and recreating 
@@ -3881,10 +3884,9 @@ them when needed.
     delitem 502,10 // The person will lose 10 apples
     delitem 617,1  // The person will lose 1 Old Violet Box
 
-It is always a good idea to to check if the player actually has the item before 
-you take it from them, Otherwise, you could try to delete items which the 
-players don't actually have, which won't fail and won't give an error message, 
-but might open up ways to exploit your script.
+It is always a good idea to check if the player actually has the items before you delete them.
+If you try to delete more items that the player has, the player will lose the ones he/she has 
+and the script will be terminated with an error.
 
 Like 'getitem' this command will also accept an 'english name' field from the 
 database. If the name is not found, nothing will be deleted.
@@ -3894,7 +3896,7 @@ database. If the name is not found, nothing will be deleted.
 *delitem2 <item id>,<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<account ID>};
 *delitem2 "<Item name>",<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<account ID>};
 
-This command will take a specified amount of items from the invoking character. 
+This command will take a specified amount of items from the invoking/target character. 
 Check 'getitem2' to understand its expanded parameters.
 
 ---------------------------------------
