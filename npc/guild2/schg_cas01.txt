@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
-//= 1.7
+//= 1.8
 //===== Compatible With: =====================================
 //= eAthena SVN
 //===== Description: =========================================
@@ -20,6 +20,7 @@
 //=     Treasure will now be killed before spawning.
 //= 1.6 Corrected a typo with treasure spawning. [L0ne_W0lf]
 //= 1.7 Replaced effect numerics with constants. [L0ne_W0lf]
+//= 1.8 Corrected wrong treasure spawn position. [zapbomb]
 //============================================================
 
 schg_cas01,1,1,0	script	Manager#sch01_02	111,{
@@ -154,7 +155,7 @@ OnClock0001:
 		if (.@Treasure < 22) end;
 		monster "schg_cas01",388,386,"Treasure Chest",1324,1,"Manager#sch01_02::OnTreasureDied";
 		if (.@Treasure < 23) end;
-		monster "schg_cas01",387,286,"Treasure Chest",1938,1,"Manager#sch01_02::OnTreasureDied";
+		monster "schg_cas01",387,386,"Treasure Chest",1938,1,"Manager#sch01_02::OnTreasureDied";
 		if (.@Treasure < 24) end;
 		monster "schg_cas01",386,386,"Treasure Chest",1324,1,"Manager#sch01_02::OnTreasureDied";
 	}
