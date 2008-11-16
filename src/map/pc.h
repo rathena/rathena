@@ -340,6 +340,7 @@ struct map_session_data {
 	char away_message[128]; // [LuzZza]
 
 	int cashPoints, kafraPoints;
+	int rental_timer;
 
 	// Auction System [Zephyrus]
 	struct {
@@ -710,6 +711,11 @@ extern int day_timer_tid;
 extern int night_timer_tid;
 int map_day_timer(int tid, unsigned int tick, int id, intptr data); // by [yor]
 int map_night_timer(int tid, unsigned int tick, int id, intptr data); // by [yor]
+
+// Rental System
+void pc_inventory_rentals(struct map_session_data *sd);
+int pc_inventory_rental_clear(struct map_session_data *sd);
+void pc_inventory_rental_add(struct map_session_data *sd, int seconds);
 
 //Duel functions // [LuzZza]
 int duel_create(struct map_session_data* sd, const unsigned int maxpl);

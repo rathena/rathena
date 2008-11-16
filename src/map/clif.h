@@ -445,4 +445,8 @@ void clif_mercenary_skillblock(struct map_session_data *sd);
 void clif_mercenary_message(int fd, int message);
 void clif_mercenary_updatestatus(struct map_session_data *sd, int type);
 
+// RENTAL SYSTEM
+void clif_rental_time(int fd, int nameid, int seconds);
+void clif_rental_expired(int fd, int nameid);
+
 #endif /* _CLIF_H_ */

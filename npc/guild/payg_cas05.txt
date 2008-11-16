@@ -50,7 +50,8 @@ pay_gld,208,268,4	script	Bamboo Grove Hill#f5-3::BambooGroveHill2	722,{
 			if (select("Return to the guild castle.:Quit.") == 1) {
 				if (getcharid(2) == GetCastleData("payg_cas05",1)) {
 					warp "payg_cas05",276,227;
-					//warp "payg_cas05",243;27;					end;
+					//warp "payg_cas05",243;27;
+					end;
 				}
 			}
 			close;

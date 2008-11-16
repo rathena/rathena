@@ -69,15 +69,13 @@ int mail_removezeny(struct map_session_data *sd, short flag)
 
 unsigned char mail_setitem(struct map_session_data *sd, int idx, int amount)
 {
-	if (idx == 0)
+	if( idx == 0 )
 	{ // Zeny Transfer
-		if( amount < 0 )
-			return 0;
+		if( amount < 0 || !pc_can_give_items(pc_isGM(sd)) )
+			return 1;
+
 		if( amount > sd->status.zeny )
 			amount = sd->status.zeny;
-
-		if( !pc_can_give_items(pc_isGM(sd)) )
-			amount = 0;
 
 		sd->mail.zeny = amount;
 		// clif_updatestatus(sd, SP_ZENY);
@@ -94,6 +92,8 @@ unsigned char mail_setitem(struct map_session_data *sd, int idx, int amount)
 			return 1;
 		if( !pc_candrop(sd, &sd->status.inventory[idx]) )
 			return 1;
+		if( sd->status.inventory[idx].expire_time )
+			return 1; // Rental System
 
 		sd->mail.index = idx;
 		sd->mail.nameid = sd->status.inventory[idx].nameid;
@@ -174,7 +174,7 @@ void mail_deliveryfail(struct map_session_data *sd, struct mail_message *msg)
 	nullpo_retv(sd);
 	nullpo_retv(msg);
 
-	// Item  recieve (due to failure)
+	// Item recieve (due to failure)
 	if(log_config.enable_logs&0x2000)
 		log_pick_pc(sd, "E", msg->item.nameid, msg->item.amount, &msg->item);
 

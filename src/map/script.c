@@ -5239,6 +5239,77 @@ BUILDIN_FUNC(getitem2)
 }
 
 /*==========================================
+ * rentitem <item id>
+ * rentitem "<item name>"
+ *------------------------------------------*/
+BUILDIN_FUNC(rentitem)
+{
+	struct map_session_data *sd;
+	struct script_data *data;
+	struct item it;
+	int seconds;
+	int nameid = 0, flag;
+
+	data = script_getdata(st,2);
+	get_val(st,data);
+
+	if( (sd = script_rid2sd(st)) == NULL )
+		return 0;
+
+	if( data_isstring(data) )
+	{
+		const char *name = conv_str(st,data);
+		struct item_data *itd = itemdb_searchname(name);
+		if( itd == NULL )
+		{
+			ShowError("buildin_rentitem: Nonexistant item %s requested.\n", name);
+			return 1;
+		}
+		nameid = itd->nameid;
+	}
+	else if( data_isint(data) )
+	{
+		nameid = conv_num(st,data);
+		if( nameid <= 0 || !itemdb_exists(nameid) )
+		{
+			ShowError("buildin_rentitem: Nonexistant item %d requested.\n", nameid);
+			return 1;
+		}
+	}
+	else
+	{
+		ShowError("buildin_rentitem: invalid data type for argument #1 (%d).\n", data->type);
+		return 1;
+	}
+
+	if( itemdb_isstackable(nameid) )
+	{
+		ShowError("buildin_rentitem: invalid rental item %d requested.\n", nameid);
+		return 1;
+	}
+
+	seconds = script_getnum(st,3);
+	memset(&it, 0, sizeof(it));
+	it.nameid = nameid;
+	it.identify = 1;
+	it.expire_time = (unsigned int)(time(NULL) + seconds);
+
+	if( (flag = pc_additem(sd, &it, 1)) )
+	{
+		clif_additem(sd, 0, 0, flag);
+		return 1;
+	}
+
+	clif_rental_time(sd->fd, nameid, seconds);
+	pc_inventory_rental_add(sd, seconds);
+
+	if( log_config.enable_logs&LOG_SCRIPT_TRANSACTIONS )
+		log_pick_pc(sd, "N", nameid, 1, NULL);
+	
+	return 0;
+}
+
+/*==========================================
  * gets an item with someone's name inscribed [Skotlex]
  * getinscribeditem item_num, character_name
  * Returned Qty is always 1, only works on equip-able
@@ -9580,8 +9651,8 @@ BUILDIN_FUNC(mapwarp)	// Added by RoVeRT
 static int buildin_mobcount_sub(struct block_list *bl,va_list ap)	// Added by RoVeRT
 {
 	char *event=va_arg(ap,char *);
-    struct mob_data *md = ((struct mob_data *)bl);
-    if(strcmp(event,md->npc_event)==0 && md->status.hp > 0)
+	struct mob_data *md = ((struct mob_data *)bl);
+	if(strcmp(event,md->npc_event)==0 && md->status.hp > 0)
 		return 1;
 	return 0;
 }
@@ -13186,6 +13257,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(deletearray,"r?"),
 	BUILDIN_DEF(getelementofarray,"ri"),
 	BUILDIN_DEF(getitem,"vi?"),
+	BUILDIN_DEF(rentitem,"vi"),
 	BUILDIN_DEF(getitem2,"iiiiiiiii*"),
 	BUILDIN_DEF(getnameditem,"is"),
 	BUILDIN_DEF2(grouprandomitem,"groupranditem","i"),

@@ -1941,6 +1941,7 @@ int unit_free(struct block_list *bl, int clrtype)
 			party_send_logout(sd);
 			guild_send_memberinfoshort(sd,0);
 			pc_cleareventtimer(sd);
+			pc_inventory_rental_clear(sd);
 			pc_delspiritball(sd,sd->spiritball,1);
 
 			if( sd->reg )

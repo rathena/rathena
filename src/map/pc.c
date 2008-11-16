@@ -281,6 +281,88 @@ int pc_setrestartvalue(struct map_session_data *sd,int type)
 }
 
 /*==========================================
+	Rental System
+ *------------------------------------------*/
+static int pc_inventory_rental_end(int tid, unsigned int tick, int id, intptr data)
+{
+	struct map_session_data *sd = map_id2sd(id);
+	if( sd == NULL )
+		return 0;
+	if( tid != sd->rental_timer )
+	{
+		ShowError("pc_inventory_rental_end: invalid timer id.\n");
+		return 0;
+	}
+
+	pc_inventory_rentals(sd);
+	return 1;
+}
+
+int pc_inventory_rental_clear(struct map_session_data *sd)
+{
+	if( sd->rental_timer != INVALID_TIMER )
+	{
+		delete_timer(sd->rental_timer, pc_inventory_rental_end);
+		sd->rental_timer = -1;
+	}
+
+	return 1;
+}
+
+void pc_inventory_rentals(struct map_session_data *sd)
+{
+	int i, c = 0;
+	unsigned int expire_tick, next_tick = UINT_MAX;
+
+	for( i = 0; i < MAX_INVENTORY; i++ )
+	{
+		if( sd->status.inventory[i].nameid == 0 )
+			continue; // Nothing here
+		if( sd->status.inventory[i].expire_time == 0 )
+			continue;
+
+		if( sd->status.inventory[i].expire_time <= time(NULL) )
+		{
+			clif_rental_expired(sd->fd, sd->status.inventory[i].nameid);
+			pc_delitem(sd, i, sd->status.inventory[i].amount, 0);
+		}
+		else
+		{
+			expire_tick = (unsigned int)(sd->status.inventory[i].expire_time - time(NULL)) * 1000;
+			clif_rental_time(sd->fd, sd->status.inventory[i].nameid, (int)(expire_tick / 1000));
+			next_tick = min(expire_tick, next_tick);
+			c++;
+		}
+	}
+
+	if( c > 0 )
+		sd->rental_timer = add_timer(gettick() + next_tick, pc_inventory_rental_end, sd->bl.id, 0);
+	else
+		sd->rental_timer = -1;
+}
+
+void pc_inventory_rental_add(struct map_session_data *sd, int seconds)
+{
+	const struct TimerData * td;
+	int tick = seconds * 1000;
+
+	if( sd == NULL )
+		return;
+
+	if( sd->rental_timer != INVALID_TIMER )
+	{
+		td = get_timer(sd->rental_timer);
+		if( DIFF_TICK(td->tick, gettick()) > tick )
+		{ // Update Timer as this one ends first than the current one
+			pc_inventory_rental_clear(sd);
+			sd->rental_timer = add_timer(gettick() + tick, pc_inventory_rental_end, sd->bl.id, 0);
+		}
+	}
+	else
+		sd->rental_timer = add_timer(gettick() + tick, pc_inventory_rental_end, sd->bl.id, 0);
+}
+
+/*==========================================
 	Determines if the GM can give / drop / trade / vend items
     Args: GM Level (current player GM level)
  *------------------------------------------*/
@@ -732,7 +814,7 @@ bool pc_authok(struct map_session_data *sd, int login_id2, time_t expiration_tim
 	// アイテムチェック
 	pc_setinventorydata(sd);
 	pc_checkitem(sd);
-	
+
 	status_change_init(&sd->bl);
 	if ((battle_config.atc_gmonly == 0 || pc_isGM(sd)) && (pc_isGM(sd) >= get_atcommand_level(atcommand_hide)))
 		sd->status.option &= (OPTION_MASK | OPTION_INVISIBLE);
@@ -747,11 +829,13 @@ bool pc_authok(struct map_session_data *sd, int login_id2, time_t expiration_tim
 	sd->guild_x = -1;
 	sd->guild_y = -1;
 
-	// イベント?係の初期化
-	for(i = 0; i < MAX_EVENTTIMER; i++)
+	// Event Timers
+	for( i = 0; i < MAX_EVENTTIMER; i++ )
 		sd->eventtimer[i] = -1;
+	// Rental Timer
+	sd->rental_timer = -1;
 
-	for (i = 0; i < 3; i++)
+	for( i = 0; i < 3; i++ )
 		sd->hate_mob[i] = -1;
 
 	// 位置の設定
@@ -873,7 +957,7 @@ int pc_reg_received(struct map_session_data *sd)
 	sd->kafraPoints = pc_readaccountreg(sd,"#KAFRAPOINTS");
 
 	if( (sd->class_&MAPID_BASEMASK) == MAPID_TAEKWON )
-	{	//Better check for class rather than skill to prevent "skill resets" from unsetting this
+	{ // Better check for class rather than skill to prevent "skill resets" from unsetting this
 		sd->mission_mobid = pc_readglobalreg(sd,"TK_MISSION_ID");
 		sd->mission_count = pc_readglobalreg(sd,"TK_MISSION_COUNT");
 	}
@@ -940,6 +1024,10 @@ int pc_reg_received(struct map_session_data *sd)
 		sd->state.connect_new = 1;
 		clif_parse_LoadEndAck(sd->fd, sd);
 	}
+
+#ifndef TXT_ONLY
+	pc_inventory_rentals(sd);
+#endif
 	return 1;
 }
 
@@ -2982,12 +3070,14 @@ int pc_dropitem(struct map_session_data *sd,int n,int amount)
 		)
 		return 0;
 
-	if (map[sd->bl.m].flag.nodrop) {
+	if( map[sd->bl.m].flag.nodrop )
+	{
 		clif_displaymessage (sd->fd, msg_txt(271));
 		return 0; //Can't drop items in nodrop mapflag maps.
 	}
 	
-	if (!pc_candrop(sd,&sd->status.inventory[n])) {
+	if( !pc_candrop(sd,&sd->status.inventory[n]) || sd->status.inventory[n].expire_time )
+	{
 		clif_displaymessage (sd->fd, msg_txt(263));
 		return 0;
 	}
@@ -3291,17 +3381,17 @@ int pc_cart_additem(struct map_session_data *sd,struct item *item_data,int amoun
 		return 1;
 	data = itemdb_search(item_data->nameid);
 
-	if(!itemdb_cancartstore(item_data, pc_isGM(sd)))
-	{	//Check item trade restrictions	[Skotlex]
+	if( item_data->expire_time || !itemdb_cancartstore(item_data, pc_isGM(sd)) )
+	{ // Check item trade restrictions	[Skotlex]
 		clif_displaymessage (sd->fd, msg_txt(264));
 		return 1;
 	}
 
-	if((w=data->weight*amount) + sd->cart_weight > battle_config.max_cart_weight)
+	if( (w = data->weight*amount) + sd->cart_weight > battle_config.max_cart_weight )
 		return 1;
 
-	i=MAX_CART;
-	if(itemdb_isstackable2(data))
+	i = MAX_CART;
+	if( itemdb_isstackable2(data) )
 	{
 		ARR_FIND( 0, MAX_CART, i,
 			sd->status.cart[i].nameid == item_data->nameid &&
@@ -7562,6 +7652,7 @@ int do_init_pc(void)
 
 	add_timer_func_list(pc_invincible_timer, "pc_invincible_timer");
 	add_timer_func_list(pc_eventtimer, "pc_eventtimer");
+	add_timer_func_list(pc_inventory_rental_end, "pc_inventory_rental_end");
 	add_timer_func_list(pc_calc_pvprank_timer, "pc_calc_pvprank_timer");
 	add_timer_func_list(pc_autosave, "pc_autosave");
 	add_timer_func_list(pc_spiritball_timer, "pc_spiritball_timer");

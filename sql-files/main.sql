@@ -41,6 +41,7 @@ CREATE TABLE IF NOT EXISTS `cart_inventory` (
   `card1` int(11) NOT NULL default '0',
   `card2` int(11) NOT NULL default '0',
   `card3` int(11) NOT NULL default '0',
+  `expire_time` int(11) unsigned NOT NULL default '0',
   PRIMARY KEY  (`id`),
   KEY `char_id` (`char_id`)
 ) ENGINE=MyISAM;
@@ -309,6 +310,7 @@ CREATE TABLE IF NOT EXISTS `guild_storage` (
   `card1` smallint(11) NOT NULL default '0',
   `card2` smallint(11) NOT NULL default '0',
   `card3` smallint(11) NOT NULL default '0',
+  `expire_time` int(11) unsigned NOT NULL default '0',
   PRIMARY KEY  (`id`),
   KEY `guild_id` (`guild_id`)
 ) ENGINE=MyISAM;
@@ -369,6 +371,7 @@ CREATE TABLE IF NOT EXISTS `inventory` (
   `card1` smallint(11) NOT NULL default '0',
   `card2` smallint(11) NOT NULL default '0',
   `card3` smallint(11) NOT NULL default '0',
+  `expire_time` int(11) unsigned NOT NULL default '0',
   PRIMARY KEY  (`id`),
   KEY `char_id` (`char_id`)
 ) ENGINE=MyISAM;
@@ -634,6 +637,7 @@ CREATE TABLE IF NOT EXISTS `storage` (
   `card1` smallint(11) NOT NULL default '0',
   `card2` smallint(11) NOT NULL default '0',
   `card3` smallint(11) NOT NULL default '0',
+  `expire_time` int(11) unsigned NOT NULL default '0',
   PRIMARY KEY  (`id`),
   KEY `account_id` (`account_id`)
 ) ENGINE=MyISAM;

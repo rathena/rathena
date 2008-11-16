@@ -354,6 +354,13 @@ void trade_tradeadditem(struct map_session_data *sd, short index, short amount)
 		return;
 	}
 
+	if( item->expire_time )
+	{ // Rental System
+		clif_displaymessage (sd->fd, msg_txt(260));
+		clif_tradeitemok(sd, index+2, 1);
+		return;
+	}
+
 	//Locate a trade position
 	ARR_FIND( 0, 10, trade_i, sd->deal.item[trade_i].index == index || sd->deal.item[trade_i].amount == 0 );
 	if( trade_i == 10 ) //No space left

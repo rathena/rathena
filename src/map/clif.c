@@ -1419,17 +1419,22 @@ int clif_selllist(struct map_session_data *sd)
 	fd=sd->fd;
 	WFIFOHEAD(fd, MAX_INVENTORY * 10 + 4);
 	WFIFOW(fd,0)=0xc7;
-	for(i=0;i<MAX_INVENTORY;i++) {
-		if(sd->status.inventory[i].nameid > 0 && sd->inventory_data[i]) {
-			if (!itemdb_cansell(&sd->status.inventory[i], pc_isGM(sd)))
+	for( i = 0; i < MAX_INVENTORY; i++ )
+	{
+		if( sd->status.inventory[i].nameid > 0 && sd->inventory_data[i] )
+		{
+			if( !itemdb_cansell(&sd->status.inventory[i], pc_isGM(sd)) )
 				continue;
 
+			if( sd->status.inventory[i].expire_time )
+				continue; // Cannot Sell Rental Items
+
 			val=sd->inventory_data[i]->value_sell;
-			if (val < 0)
+			if( val < 0 )
 				continue;
 			WFIFOW(fd,4+c*10)=i+2;
 			WFIFOL(fd,6+c*10)=val;
-			if (!sd->inventory_data[i]->flag.value_notoc)
+			if( !sd->inventory_data[i]->flag.value_notoc )
 				val=pc_modifysellvalue(sd,val);
 			WFIFOL(fd,10+c*10)=val;
 			c++;
@@ -11992,12 +11997,12 @@ void clif_parse_Auction_setitem(int fd, struct map_session_data *sd)
 		return;
 	}
 	
-	if( !pc_candrop(sd, &sd->status.inventory[idx]) || !sd->status.inventory[idx].identify )
+	if( !pc_candrop(sd, &sd->status.inventory[idx]) || !sd->status.inventory[idx].identify || sd->status.inventory[idx].expire_time )
 	{ // Quest Item or something else
 		clif_Auction_setitem(sd->fd, idx, true);
 		return;
 	}
-
+	
 	sd->auction.index = idx;
 	sd->auction.amount = amount;
 	clif_Auction_setitem(fd, idx + 2, false);
@@ -12207,7 +12212,10 @@ void clif_parse_cashshop_buy(int fd, struct map_session_data *sd)
 	amount = RFIFOW(fd,4);
 	points = RFIFOL(fd,6); // Not Implemented. Should be 0
 
-	fail = npc_cashshop_buy(sd, nameid, amount, points);
+	if( sd->state.trading || !sd->npc_shopid )
+		fail = 1;
+	else
+		fail = npc_cashshop_buy(sd, nameid, amount, points);
 
 	WFIFOHEAD(fd,12);
 	WFIFOW(fd,0) = 0x289;
@@ -12634,6 +12642,27 @@ void clif_mercenary_message(int fd, int message)
 	WFIFOW(fd,0) = 0x0291;
 	WFIFOW(fd,2) = 1266 + message;
 	WFIFOSET(fd,4);
+}
+
+/*------------------------------------------
+ * Rental System Messages
+ *------------------------------------------*/
+void clif_rental_time(int fd, int nameid, int seconds)
+{ // '<ItemName>' item will disappear in <seconds/60> minutes.
+	WFIFOHEAD(fd,8);
+	WFIFOW(fd,0) = 0x0298;
+	WFIFOW(fd,2) = nameid;
+	WFIFOL(fd,4) = seconds;
+	WFIFOSET(fd,8);
+}
+
+void clif_rental_expired(int fd, int nameid)
+{ // '<ItemName>' item has been deleted from the Inventory
+	WFIFOHEAD(fd,6);
+	WFIFOW(fd,0) = 0x0299;
+	WFIFOW(fd,2) = 0;
+	WFIFOW(fd,4) = nameid;
+	WFIFOSET(fd,6);
 }
 
 /*==========================================

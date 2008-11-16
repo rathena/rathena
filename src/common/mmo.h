@@ -155,6 +155,7 @@ struct item {
 	char refine;
 	char attribute;
 	short card[MAX_SLOTS];
+	unsigned int expire_time;
 };
 
 struct point {

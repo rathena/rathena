@@ -112,10 +112,11 @@ int storage_storageopen(struct map_session_data *sd)
 // helper function
 int compare_item(struct item *a, struct item *b)
 {
-	if (a->nameid == b->nameid &&
+	if( a->nameid == b->nameid &&
 		a->identify == b->identify &&
 		a->refine == b->refine &&
-		a->attribute == b->attribute)
+		a->attribute == b->attribute &&
+		a->expire_time == b->expire_time )
 	{
 		int i;
 		for (i = 0; i < MAX_SLOTS && (a->card[i] == b->card[i]); i++);
@@ -215,7 +216,10 @@ int storage_storageadd(struct map_session_data* sd, int index, int amount)
 		return 0;
 
 	if( sd->status.inventory[index].nameid <= 0 )
-		return 0; //No item on that spot
+		return 0; // No item on that spot
+
+	if( sd->status.inventory[index].expire_time )
+		return 0; // Cannot Store Rental Items
 	
 	if( amount < 1 || amount > sd->status.inventory[index].amount )
   		return 0;
@@ -266,6 +270,9 @@ int storage_storageaddfromcart(struct map_session_data* sd, int index, int amoun
 	if( sd->status.cart[index].nameid <= 0 )
 		return 0; //No item there.
 	
+	if( sd->status.inventory[index].expire_time )
+		return 0; // Cannot Store Rental Items
+
 	if( amount < 1 || amount > sd->status.cart[index].amount )
 		return 0;
 
@@ -462,16 +469,19 @@ int storage_guild_storageadd(struct map_session_data* sd, int index, int amount)
 	nullpo_retr(0, sd);
 	nullpo_retr(0, stor=guild2storage2(sd->status.guild_id));
 		
-	if (!stor->storage_status || stor->storage_amount > MAX_GUILD_STORAGE)
+	if( !stor->storage_status || stor->storage_amount > MAX_GUILD_STORAGE )
 		return 0;
 	
-	if(index<0 || index>=MAX_INVENTORY)
+	if( index<0 || index>=MAX_INVENTORY )
 		return 0;
 
-	if(sd->status.inventory[index].nameid <= 0)
+	if( sd->status.inventory[index].nameid <= 0 )
 		return 0;
 	
-	if(amount < 1 || amount > sd->status.inventory[index].amount)
+	if( amount < 1 || amount > sd->status.inventory[index].amount )
+		return 0;
+
+	if( sd->status.inventory[index].expire_time )
 		return 0;
 
 //	log_tostorage(sd, index, 1);
@@ -517,16 +527,19 @@ int storage_guild_storageaddfromcart(struct map_session_data* sd, int index, int
 	nullpo_retr(0, sd);
 	nullpo_retr(0, stor=guild2storage2(sd->status.guild_id));
 
-	if(!stor->storage_status || stor->storage_amount > MAX_GUILD_STORAGE)
+	if( !stor->storage_status || stor->storage_amount > MAX_GUILD_STORAGE )
 		return 0;
 
-	if(index<0 || index>=MAX_CART)
+	if( index < 0 || index >= MAX_CART )
 		return 0;
 
-	if(sd->status.cart[index].nameid <= 0)
+	if( sd->status.cart[index].nameid <= 0 )
 		return 0;
 	
-	if(amount < 1 || amount > sd->status.cart[index].amount)
+	if( amount < 1 || amount > sd->status.cart[index].amount )
+		return 0;
+
+	if( sd->status.inventory[index].expire_time )
 		return 0;
 
 	if(guild_storage_additem(sd,stor,&sd->status.cart[index],amount)==0)
