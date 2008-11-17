@@ -216,6 +216,7 @@ void inter_auctions_fromsql(void)
 
 		item->identify = 1;
 		item->amount = 1;
+		item->expire_time = 0;
 
 		for( i = 0; i < MAX_SLOTS; i++ )
 		{
