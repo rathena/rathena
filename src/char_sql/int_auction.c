@@ -109,6 +109,7 @@ unsigned int auction_create(struct auction_data *auction)
 
 		auction->item.amount = 1;
 		auction->item.identify = 1;
+		auction->item.expire_time = 0;
 
 		auction->auction_id = (unsigned int)SqlStmt_LastInsertId(stmt);
 		auction->auction_end_timer = add_timer( gettick() + tick , auction_end_timer, auction->auction_id, 0);
