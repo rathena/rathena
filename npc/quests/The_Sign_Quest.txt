@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= SinSloth(Most of the NPCs), MasterOfMuppets(Some of the NPCs + bug fixes) & Kargha(The quiz NPCs)
 //===== Current Version: ===================================== 
-//= 2.8
+//= 2.9
 //===== Compatible With: ===================================== 
 //= eAthena SVN 3422+(Requires jA Script System)
 //===== Description: ========================================= 
@@ -42,6 +42,7 @@
 //= 2.6 Fixed Engel giving back 7 Sobbing Starlight on failing to refine it, bugreport:1473 [Brainstorm]
 //= 2.7 Replaced effect numerics with constants. [Samuray22]
 //= 2.8 Fixed some bugs with itemids and leftover questitems [Fish0r]
+//= 2.9 Made a delitem causing script to fault use countitem when deleting. [L0ne_W0lf]
 //============================================================ 
 //===== Configuration : ======================================
 prontera,1,1,1	script	TheSignConfig	-1,{
@@ -8532,7 +8533,7 @@ L_Soul:
 	mes "I'm leaving my soul";
 	mes "with you. Please guide";
 	mes "me to the queen of the dead...";
-	delitem 7306,4;
+	delitem 7306,countitem(7306);
 	getitem 7307,1;
 	set signquest,54;
 	close;

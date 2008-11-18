@@ -40,8 +40,12 @@
 	2385 Recuvative_Armor		Should trigger HP/SP return with magical kills as well.
 
 =======================
+2008/11/18
+	* Rev. 13376 Some bug fixes here too! Holy crap! Bug fixes everywhere! [L0ne_W0lf]
+	- Corrected Wolfheiden and Mithril magic cape skill levels. (bugreport:2431)
+	- Corrected 12.1 monsters using penuma on target not self. (bugreport:2435)
 2008/11/07
-	* Rev. 13356 Corrected typo in Librarian Gloves bonuses. [L0ne_W0lf]
+	* Rev. 13357 Corrected typo in Librarian Gloves bonuses. [L0ne_W0lf]
 2008/11/05
 	* Fixed the maximum level of Create Elemental Converter. (bugreport:2423) [Sara]
 2008/10/27

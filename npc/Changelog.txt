@@ -1,5 +1,9 @@
 Date		Added
 ======
+2008/11/18
+	* Rev. 13376 Bug fixes up the wazoo! Hoorah! L0ne's doing something! [L0ne_W0lf]
+	- Removed redundent input from mercenary vendor. (bugreport:2427)
+	- Fixed delitem causing the sign quest to fault. (bugreport:2444)
 2008/11/04
 	* Small update to fix merchant Paul Spanner from giving item 612 instead of .@item. (bugreport:2418) [Paradox924X]
 	* Fixed a few donpcevent's that didn't include the NPC's hidden display name. (bugreport:2407) [Paradox924X]
