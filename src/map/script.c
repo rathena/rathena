@@ -10995,13 +10995,16 @@ BUILDIN_FUNC(npctalk)
 // change npc walkspeed [Valaris]
 BUILDIN_FUNC(npcspeed)
 {
-	struct npc_data *nd=(struct npc_data *)map_id2bl(st->oid);
-	int x=0;
+	struct npc_data* nd;
+	int speed;
 
-	x=script_getnum(st,2);
+	speed = script_getnum(st,2);
+	nd =(struct npc_data *)map_id2bl(st->oid);
 
-	if(nd) {
-		nd->speed=x;
+	if( nd )
+	{
+		nd->speed = speed;
+		nd->ud.state.speed_changed = 1;
 	}
 
 	return 0;
