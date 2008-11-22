@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Evera and The eAthena Dev Team
 //===== Current Version: ===================================== 
-//= 2.2
+//= 2.2a
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -19,7 +19,7 @@
 //= Murder Quest
 //= - Variable in use: Shinokas_Quest (max 11)
 //= Lovers Quest
-//= - Variable in use: EIN_LOVERQRQ (max 17)
+//= - Variable in use: EIN_LOVERQ (max 17)
 //===== Additional Comments: ================================= 
 //= 1.0 Initial Release [Evera]
 //= 1.1 Added more quests [Evera]
@@ -43,6 +43,7 @@
 //=     Swapped the use of enable/disablenpc with hideon/offnpc.
 //=     Added missing quest, "Oridecon/Mineral Quest"
 //=     Full overhual of the Uwe Kleine quest.
+//= 2.2a Fixed typos in var names from EIN_LOVERQRQ to EIN_LOVERQ. (bugreport:2464) [Paradox924X]
 //============================================================ 
 
 // Oridecon Stone OR Mineral Stone Quest
@@ -5838,7 +5839,7 @@ ein_in01,31,138,3	script	Calla#ein	90,{
 		mes "be able to do that...";
 		close;
 	}
-	if (EIN_LOVERQRQ == 17) {
+	if (EIN_LOVERQ == 17) {
 		mes "[Calla]";
 		mes "Thank you so much!";
 		mes "I'll try my best to convince";
@@ -5860,7 +5861,7 @@ ein_in01,31,138,3	script	Calla#ein	90,{
 		mes "for your safety, adventurer.";
 		close;
 	}
-	if (EIN_LOVERQRQ == 16) {
+	if (EIN_LOVERQ == 16) {
 		mes "[Calla]";
 		mes "I just heard from my mother";
 		mes "that she's planning to have";
@@ -5942,7 +5943,7 @@ ein_in01,31,138,3	script	Calla#ein	90,{
 		mes "your adventures~";
 		close;
 	}
-	if ((EIN_LOVERQRQ == 5) && (countitem(712) > 0)) {
+	if ((EIN_LOVERQ == 5) && (countitem(712) > 0)) {
 		mes "[Calla]";
 		mes "You've spoken";
 		mes "with Clitzer? How";
@@ -5990,7 +5991,7 @@ ein_in01,31,138,3	script	Calla#ein	90,{
 			close;
 		}	
 	}
-	if (EIN_LOVERQRQ == 4) {
+	if (EIN_LOVERQ == 4) {
 		mes "[Calla]";
 		mes "Oh my god...";
 		mes "Are you alright?";
@@ -6015,7 +6016,7 @@ ein_in01,31,138,3	script	Calla#ein	90,{
 		getitem 1901,1; //Violin
 		close;
 	}
-	if ((EIN_LOVERQRQ == 3) || (EIN_LOVERQRQ == 5)) {
+	if ((EIN_LOVERQ == 3) || (EIN_LOVERQ == 5)) {
 		mes "[Calla]";
 		mes "Oh, please send my";
 		mes "regards to Clitzer for me.";
@@ -6024,7 +6025,7 @@ ein_in01,31,138,3	script	Calla#ein	90,{
 		mes "is the best I can do for now.";
 		close;
 	}
-	if (EIN_LOVERQRQ == 2) {
+	if (EIN_LOVERQ == 2) {
 		mes "[Calla]";
 		mes "You're the adventurer";
 		mes "from before, aren't you?";
@@ -6080,7 +6081,7 @@ ein_in01,31,138,3	script	Calla#ein	90,{
 		mes "my family what I really want,";
 		mes "much less change things here...";
 		next;
-		if (EIN_LOVERQRQ == 0) {
+		if (EIN_LOVERQ == 0) {
 			set EIN_LOVERQ,1;
 		}
 		mes "[Calla]";
@@ -6095,7 +6096,7 @@ ein_in01,31,138,3	script	Calla#ein	90,{
 }
 
 ein_in01,200,101,5	script	Clitzer#ein	854,{
-	if (EIN_LOVERQRQ == 16) {
+	if (EIN_LOVERQ == 16) {
 		mes "[Clitzer]";
 		mes "Look out, world!";
 		mes "I'm gonna become";
@@ -6104,7 +6105,7 @@ ein_in01,200,101,5	script	Clitzer#ein	854,{
 		mes "parents will approve me!";
 		close;
 	}
-	if ((EIN_LOVERQRQ == 15) && (countitem(7170) > 0)) {
+	if ((EIN_LOVERQ == 15) && (countitem(7170) > 0)) {
 		mes "[Clitzer]";
 		mes "Waaaah!";
 		mes "What should I wear?!";
@@ -6185,7 +6186,7 @@ ein_in01,200,101,5	script	Clitzer#ein	854,{
 			close;
 		}
 	}
-	if (EIN_LOVERQRQ == 15) {
+	if (EIN_LOVERQ == 15) {
 		mes "[Clitzer]";
 		mes "Noooooo!";
 		mes "I've got to find";
@@ -6202,7 +6203,7 @@ ein_in01,200,101,5	script	Clitzer#ein	854,{
 		mes "wear suspenders or a belt?!";
 		close;
 	}
-	if (EIN_LOVERQRQ == 14) {
+	if (EIN_LOVERQ == 14) {
 		mes "[Clitzer]";
 		mes "Noooooo!";
 		mes "I've got to find";
@@ -6219,7 +6220,7 @@ ein_in01,200,101,5	script	Clitzer#ein	854,{
 		mes "might be bad too...";
 		close;
 	}
-	if (EIN_LOVERQRQ == 13) {
+	if (EIN_LOVERQ == 13) {
 		mes "[Clitzer]";
 		mes "Eh...?";
 		mes "What did you just say?";
@@ -6250,7 +6251,7 @@ ein_in01,200,101,5	script	Clitzer#ein	854,{
 		mes "am I in a pickle...";
 		close;
 	}
-	if (EIN_LOVERQRQ > 6) {
+	if (EIN_LOVERQ > 6) {
 		mes "[Clitzer]";
 		mes "*Sigh...*";
 		mes "What can I do to";
@@ -6260,7 +6261,7 @@ ein_in01,200,101,5	script	Clitzer#ein	854,{
 		mes "think of anything...";
 		close;
 	}
-	if (EIN_LOVERQRQ == 6) {
+	if (EIN_LOVERQ == 6) {
 		mes "[Clitzer]";
 		mes "You've given her";
 		mes "the flower? That's";
@@ -6309,7 +6310,7 @@ ein_in01,200,101,5	script	Clitzer#ein	854,{
 			close;
 		}
 	}
-	if (EIN_LOVERQRQ == 5) {
+	if (EIN_LOVERQ == 5) {
 		mes "[Clitzer]";
 		mes "Have you left to";
 		mes "see Calla for me yet?";
@@ -6325,7 +6326,7 @@ ein_in01,200,101,5	script	Clitzer#ein	854,{
 		mes "should be just fine.";
 		close;
 	}
-	if ((EIN_LOVERQRQ == 3) && (countitem(1901) == 1)) {
+	if ((EIN_LOVERQ == 3) && (countitem(1901) == 1)) {
 		mes "[Clitzer]";
 		mes "What brings you here?";
 		mes "Aren't you tired of hearing";
@@ -6401,7 +6402,7 @@ ein_in01,200,101,5	script	Clitzer#ein	854,{
 		mes "I'm sorry for troubling you... ";
 		close;
 	}
-	if (EIN_LOVERQRQ == 2) {
+	if (EIN_LOVERQ == 2) {
 		mes "[Clitzer]";
 		mes "^333333*Sigh*^000000";
 		mes "I really appreciate your";
@@ -6416,7 +6417,7 @@ ein_in01,200,101,5	script	Clitzer#ein	854,{
 		mes "the first place... Oh, Calla...";
 		close;
 	}
-	if (EIN_LOVERQRQ == 1) {
+	if (EIN_LOVERQ == 1) {
 		mes "[Clitzer]";
 		mes "That faintly sweet";
 		mes "and pleasant scent...";
@@ -6480,7 +6481,7 @@ ein_in01,21,147,3	script	Megass#EIN	853,3,3,{
 	end;
 
 OnTouch:
-	if ((EIN_LOVERQRQ == 4) && (EIN_LOVERQRQ == 5)) {
+	if ((EIN_LOVERQ == 4) && (EIN_LOVERQ == 5)) {
 		mes "[Megass]";
 		mes "You again?!";
 		mes "What do you";
@@ -6498,7 +6499,7 @@ OnTouch:
 		warp "einbroch",112,245;
 		end;
 	}
-	if ((EIN_LOVERQRQ == 3) && (countitem(1901) > 0)) {
+	if ((EIN_LOVERQ == 3) && (countitem(1901) > 0)) {
 		mes "[Megass]";
 		mes "That's...";
 		mes "That's my";
@@ -6545,7 +6546,7 @@ OnTouch:
 }
 
 ein_in01,31,151,3	script	Satra#ein	850,{
-	if (EIN_LOVERQRQ > 12) {
+	if (EIN_LOVERQ > 12) {
 		mes "[Satra]";
 		mes "I understand that my";
 		mes "home is extravagantly";
@@ -6561,7 +6562,7 @@ ein_in01,31,151,3	script	Satra#ein	850,{
 		mes "honor of speaking with me.";
 		close;
 	}
-	if ((EIN_LOVERQRQ == 12) && (countitem(1003) > 9)) {
+	if ((EIN_LOVERQ == 12) && (countitem(1003) > 9)) {
 		mes "[Satra]";
 		mes "Ho ho ho ho~";
 		mes "Welcome adventurer,";
@@ -6635,7 +6636,7 @@ ein_in01,31,151,3	script	Satra#ein	850,{
 			mes "marry that oafish Megass~";
 			next;
 			delitem 1003,10; //Coal
-			set EIN_LOVERQ,13				;
+			set EIN_LOVERQ,13;
 			mes "[Satra]";
 			mes "Anyway, when you next";
 			mes "meet Clitzer, please tell";
@@ -6654,7 +6655,7 @@ ein_in01,31,151,3	script	Satra#ein	850,{
 			close;
 		}
 	}
-	if (EIN_LOVERQRQ == 12) {
+	if (EIN_LOVERQ == 12) {
 		mes "[Satra]";
 		mes "Ho ho ho ho~";
 		mes "Welcome adventurer,";
@@ -6669,7 +6670,7 @@ ein_in01,31,151,3	script	Satra#ein	850,{
 		mes "I'm willing to overlook.";
 		close;
 	}
-	if ((EIN_LOVERQRQ == 11) && (countitem(1003) > 9)) {
+	if ((EIN_LOVERQ == 11) && (countitem(1003) > 9)) {
 		mes "[Satra]";
 		mes "Why hello~";
 		mes "Your visits have";
@@ -6734,7 +6735,7 @@ ein_in01,31,151,3	script	Satra#ein	850,{
 		mes "visit, don't forget to bring some Coal with you. Tah tah~";
 		close;
 	}
-	if (EIN_LOVERQRQ == 11) {
+	if (EIN_LOVERQ == 11) {
 		mes "[Satra]";
 		mes "Why hello~";
 		mes "Your visits have";
@@ -6757,7 +6758,7 @@ ein_in01,31,151,3	script	Satra#ein	850,{
 		mes "any ^FF0000Coal^000000. Ho ho ho ho~";
 		close;
 	}
-	if ((EIN_LOVERQRQ == 10) && (countitem(1003) > 9)) {
+	if ((EIN_LOVERQ == 10) && (countitem(1003) > 9)) {
 		mes "[Satra]";
 		mes "^333333*Titter~*^000000";
 		mes "Why, if it isn't my";
@@ -6812,7 +6813,7 @@ ein_in01,31,151,3	script	Satra#ein	850,{
 		mes "gift of Coal. Toodles~";
 		close;
 	}
-	if (EIN_LOVERQRQ == 10) {
+	if (EIN_LOVERQ == 10) {
 		mes "[Satra]";
 		mes "^333333*Titter~*^000000";
 		mes "Why, if it isn't my";
@@ -6836,7 +6837,7 @@ ein_in01,31,151,3	script	Satra#ein	850,{
 		mes "Ho ho ho ho~";
 		close;
 	}
-	if ((EIN_LOVERQRQ == 9) && (countitem(1003) > 9)) {
+	if ((EIN_LOVERQ == 9) && (countitem(1003) > 9)) {
 		mes "[Satra]";
 		mes "My, you've already";
 		mes "brought the Coal?";
@@ -6886,7 +6887,7 @@ ein_in01,31,151,3	script	Satra#ein	850,{
 		mes "of my good graces. Ho ho~";
 		close;
 	}
-	if (EIN_LOVERQRQ == 9) {
+	if (EIN_LOVERQ == 9) {
 		mes "[Satra]";
 		mes "A wandering adventurer...?";
 		mes "How ravishingly delightful!";
@@ -6951,7 +6952,7 @@ ein_in01,31,151,3	script	Satra#ein	850,{
 		mes "adventurer~";
 		close;
 	}
-	if (EIN_LOVERQRQ == 8) {
+	if (EIN_LOVERQ == 8) {
 		mes "[Satra]";
 		mes "A wandering adventurer...?";
 		mes "How ravishingly delightful!";
@@ -7041,7 +7042,7 @@ ein_in01,31,151,3	script	Satra#ein	850,{
 }
 
 ein_in01,191,102,5	script	Kaijeta#ein	846,{
-	if (EIN_LOVERQRQ > 15) {
+	if (EIN_LOVERQ > 15) {
 		mes "[Kaijeta]";
 		mes "My son learned";
 		mes "an awful lot from";
@@ -7058,7 +7059,7 @@ ein_in01,191,102,5	script	Kaijeta#ein	846,{
 		mes "take you.";
 		close;
 	}
-	if (EIN_LOVERQRQ == 15) {
+	if (EIN_LOVERQ == 15) {
 		mes "[Kaijeta]";
 		mes "Thank you for helping";
 		mes "my son Clitzer. Sadly, the";
@@ -7075,7 +7076,7 @@ ein_in01,191,102,5	script	Kaijeta#ein	846,{
 		mes "Hopefully, he'll learn that soon.";
 		close;
 	}
-	if (EIN_LOVERQRQ == 14) {
+	if (EIN_LOVERQ == 14) {
 		mes "[Kaijeta]";
 		mes "Thank you for helping";
 		mes "my son Clitzer. Sadly, the";
@@ -7093,7 +7094,7 @@ ein_in01,191,102,5	script	Kaijeta#ein	846,{
 		mes "Hopefully, he'll learn that soon.";
 		close;
 	}
-	if (EIN_LOVERQRQ == 8) {
+	if (EIN_LOVERQ == 8) {
 		mes "[Kaijeta]";
 		mes "I can't bear to see the";
 		mes "petty hatred between our";
@@ -7101,7 +7102,7 @@ ein_in01,191,102,5	script	Kaijeta#ein	846,{
 		mes "seeing the woman he loves...";
 		close;
 	}
-	if (EIN_LOVERQRQ == 7) {
+	if (EIN_LOVERQ == 7) {
 		mes "[Kaijeta]";
 		mes "Thank you for helping my";
 		mes "son. He may look like a fool";
