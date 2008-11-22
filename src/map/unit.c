@@ -803,7 +803,7 @@ int unit_set_walkdelay(struct block_list *bl, unsigned int tick, int delay, int 
 			//Resume running after can move again [Kevin]
 			if(ud->state.running)
 			{
-				add_timer(ud->canmove_tick, unit_resume_running, bl->id, (int)ud);
+				add_timer(ud->canmove_tick, unit_resume_running, bl->id, (intptr)ud);
 			}
 			else
 			{

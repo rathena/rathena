@@ -183,7 +183,7 @@ static bool account_db_txt_init(AccountDB* self)
 
 	// initialize data saving timer
 	add_timer_func_list(mmo_auth_sync_timer, "mmo_auth_sync_timer");
-	db->save_timer = add_timer_interval(gettick() + AUTH_SAVING_INTERVAL, mmo_auth_sync_timer, 0, (int)db, AUTH_SAVING_INTERVAL);
+	db->save_timer = add_timer_interval(gettick() + AUTH_SAVING_INTERVAL, mmo_auth_sync_timer, 0, (intptr)db, AUTH_SAVING_INTERVAL);
 
 	return true;
 }

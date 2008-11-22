@@ -3150,7 +3150,7 @@ void run_script_main(struct script_state *st)
 		//Delay execution
 		st->sleep.charid = sd?sd->status.char_id:0;
 		st->sleep.timer  = add_timer(gettick()+st->sleep.tick,
-			run_script_timer, st->sleep.charid, (int)st);
+			run_script_timer, st->sleep.charid, (intptr)st);
 		linkdb_insert(&sleep_db, (void*)st->oid, st);
 		//Restore previous script
 		if (sd) {

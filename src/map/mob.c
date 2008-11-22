@@ -1632,7 +1632,7 @@ static int mob_delay_item_drop(int tid, unsigned int tick, int id, intptr data)
 {
 	struct item_drop_list *list;
 	struct item_drop *ditem, *ditem_prev;
-	list=(struct item_drop_list *)id;
+	list=(struct item_drop_list *)data;
 	ditem = list->item;
 	while (ditem) {
 		map_addflooritem(&ditem->item_data,ditem->item_data.amount,
@@ -2218,7 +2218,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 				mob_item_drop(md, dlist, mob_setlootitem(&md->lootitem[i]), 1, 10000, 0);
 		}
 		if (dlist->item) //There are drop items.
-			add_timer(tick + (!battle_config.delay_battle_damage?500:0), mob_delay_item_drop, (int)dlist, 0);
+			add_timer(tick + (!battle_config.delay_battle_damage?500:0), mob_delay_item_drop, 0, (intptr)dlist);
 		else //No drops
 			ers_free(item_drop_list_ers, dlist);
 	} else if (md->lootitem && md->lootitem_count) {	//Loot MUST drop!
@@ -2232,7 +2232,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		dlist->item = NULL;
 		for(i = 0; i < md->lootitem_count; i++)
 			mob_item_drop(md, dlist, mob_setlootitem(&md->lootitem[i]), 1, 10000, 0);
-		add_timer(tick + (!battle_config.delay_battle_damage?500:0), mob_delay_item_drop, (int)dlist, 0);
+		add_timer(tick + (!battle_config.delay_battle_damage?500:0), mob_delay_item_drop, 0, (intptr)dlist);
 	}
 
 	if(mvp_sd && md->db->mexp > 0 && !md->special_state.ai)

@@ -63,9 +63,9 @@ int add_timer_func_list(TimerFunc func, char* name)
 		for( tfl=tfl_root; tfl != NULL; tfl=tfl->next )
 		{// check suspicious cases
 			if( func == tfl->func )
-				ShowWarning("add_timer_func_list: duplicating function %08x(%s) as %s.\n",(int)tfl->func,tfl->name,name);
+				ShowWarning("add_timer_func_list: duplicating function %p(%s) as %s.\n",tfl->func,tfl->name,name);
 			else if( strcmp(name,tfl->name) == 0 )
-				ShowWarning("add_timer_func_list: function %08X has the same name as %08X(%s)\n",(int)func,(int)tfl->func,tfl->name);
+				ShowWarning("add_timer_func_list: function %p has the same name as %p(%s)\n",func,tfl->func,tfl->name);
 		}
 		CREATE(tfl,struct timer_func_list,1);
 		tfl->next = tfl_root;
@@ -256,7 +256,7 @@ int add_timer_interval(unsigned int tick, TimerFunc func, int id, intptr data, i
 
 	if( interval < 1 )
 	{
-		ShowError("add_timer_interval: invalid interval (tick=%u %08x[%s] id=%d data=%d diff_tick=%d)\n", tick, (int)func, search_timer_func_list(func), id, data, DIFF_TICK(tick, gettick()));
+		ShowError("add_timer_interval: invalid interval (tick=%u %p[%s] id=%d data=%d diff_tick=%d)\n", tick, func, search_timer_func_list(func), id, data, DIFF_TICK(tick, gettick()));
 		return INVALID_TIMER;
 	}
 	
@@ -285,12 +285,12 @@ int delete_timer(int tid, TimerFunc func)
 {
 	if( tid < 0 || tid >= timer_data_num )
 	{
-		ShowError("delete_timer error : no such timer %d (%08x(%s))\n", tid, (int)func, search_timer_func_list(func));
+		ShowError("delete_timer error : no such timer %d (%p(%s))\n", tid, func, search_timer_func_list(func));
 		return -1;
 	}
 	if( timer_data[tid].func != func )
 	{
-		ShowError("delete_timer error : function mismatch %08x(%s) != %08x(%s)\n", (int)timer_data[tid].func, search_timer_func_list(timer_data[tid].func), (int)func, search_timer_func_list(func));
+		ShowError("delete_timer error : function mismatch %p(%s) != %p(%s)\n", timer_data[tid].func, search_timer_func_list(timer_data[tid].func), func, search_timer_func_list(func));
 		return -2;
 	}
 
@@ -324,7 +324,7 @@ int settick_timer(int tid, unsigned int tick)
 	{// skip timers with the same tick
 		if( old_tick != timer_data[timer_heap[old_pos]].tick )
 		{
-			ShowError("settick_timer: no such timer %d (%08x(%s))\n", tid, (int)timer_data[tid].func, search_timer_func_list(timer_data[tid].func));
+			ShowError("settick_timer: no such timer %d (%p(%s))\n", tid, timer_data[tid].func, search_timer_func_list(timer_data[tid].func));
 			return -1;
 		}
 		++old_pos;

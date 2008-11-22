@@ -434,9 +434,9 @@ int npc_timerevent(int tid, unsigned int tick, int id, intptr data)
 			- nd->u.scr.timer_event[ ted->next-1 ].timer;
 		ted->time+=next;
 		if (sd)
-			sd->npc_timer_id = add_timer(tick+next,npc_timerevent,id,(int)ted);
+			sd->npc_timer_id = add_timer(tick+next,npc_timerevent,id,(intptr)ted);
 		else
-			nd->u.scr.timerid = add_timer(tick+next,npc_timerevent,id,(int)ted);
+			nd->u.scr.timerid = add_timer(tick+next,npc_timerevent,id,(intptr)ted);
 	} else {
 		if (sd)
 			sd->npc_timer_id = -1;
@@ -500,9 +500,9 @@ int npc_timerevent_start(struct npc_data* nd, int rid)
 	next = nd->u.scr.timer_event[j].timer - nd->u.scr.timer;
 	ted->time = nd->u.scr.timer_event[j].timer;
 	if (sd)
-		sd->npc_timer_id = add_timer(gettick()+next,npc_timerevent,nd->bl.id,(int)ted);
+		sd->npc_timer_id = add_timer(gettick()+next,npc_timerevent,nd->bl.id,(intptr)ted);
 	else
-		nd->u.scr.timerid = add_timer(gettick()+next,npc_timerevent,nd->bl.id,(int)ted);
+		nd->u.scr.timerid = add_timer(gettick()+next,npc_timerevent,nd->bl.id,(intptr)ted);
 	return 0;
 }
 /*==========================================

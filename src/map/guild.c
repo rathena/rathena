@@ -1874,7 +1874,7 @@ int guild_castlealldataload(int len,struct guild_castle *gc)
 		}
 
 		// update mapserver castle data with new info
-		memcpy(&c->guild_id, &gc->guild_id, sizeof(struct guild_castle) - ((int)&c->guild_id - (int)c));
+		memcpy(&c->guild_id, &gc->guild_id, sizeof(struct guild_castle) - ((uintptr)&c->guild_id - (uintptr)c));
 
 		if( c->guild_id )
 		{

@@ -6393,7 +6393,7 @@ int pc_addeventtimer(struct map_session_data *sd,int tick,const char *name)
 	if( i == MAX_EVENTTIMER )
 		return 0;
 
-	sd->eventtimer[i] = add_timer(gettick()+tick, pc_eventtimer, sd->bl.id, (int)aStrdup(name));
+	sd->eventtimer[i] = add_timer(gettick()+tick, pc_eventtimer, sd->bl.id, (intptr)aStrdup(name));
 	sd->eventcount++;
 
 	return 1;

@@ -955,7 +955,7 @@ static int pet_delay_item_drop(int tid, unsigned int tick, int id, intptr data)
 {
 	struct item_drop_list *list;
 	struct item_drop *ditem, *ditem_prev;
-	list=(struct item_drop_list *)id;
+	list=(struct item_drop_list *)data;
 	ditem = list->item;
 	while (ditem) {
 		map_addflooritem(&ditem->item_data,ditem->item_data.amount,
@@ -1012,7 +1012,7 @@ int pet_lootitem_drop(struct pet_data *pd,struct map_session_data *sd)
 	pd->ud.canact_tick = gettick()+10000;	//	10*1000ms‚ÌŠÔE‚í‚È‚¢
 
 	if (dlist->item)
-		add_timer(gettick()+540,pet_delay_item_drop,(int)dlist,0);
+		add_timer(gettick()+540,pet_delay_item_drop,0,(intptr)dlist);
 	else
 		ers_free(item_drop_list_ers, dlist);
 	return 1;

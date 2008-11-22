@@ -428,7 +428,7 @@ void _mfree(void *ptr, const char *file, int line, const char *func )
 					hash_unfill[ block->unit_hash ] = block;
 				}
 				head->size     = block->unit_unfill;
-				block->unit_unfill = (unsigned short)(((unsigned long)head - (unsigned long)block->data) / block->unit_size);
+				block->unit_unfill = (unsigned short)(((uintptr)head - (uintptr)block->data) / block->unit_size);
 			}
 		}
 	}

@@ -8739,7 +8739,7 @@ int atcommand_commands(const int fd, struct map_session_data* sd, const char* co
 		slen = (unsigned int)strlen(atcommand_info[i].command);
 
 		// flush the text buffer if this command won't fit into it
-		if( ((CHATBOX_SIZE-1+(int)line_buff)-(int)cur) < (int)slen )
+		if( slen + cur - line_buff >= CHATBOX_SIZE )
 		{
 			clif_displaymessage(fd,line_buff);
 			cur = line_buff;
