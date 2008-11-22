@@ -41,6 +41,7 @@
 
 =======================
 2008/11/22
+	* Updated effects for the Radio Antenna (bugreport:2465) [Jman]
 	* Fixed small typo with Platinum Shield (bugreport:2470) [Jman]
 2008/11/18
 	* Rev. 13376 Some bug fixes here too! Holy crap! Bug fixes everywhere! [L0ne_W0lf]

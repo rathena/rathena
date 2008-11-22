@@ -2278,7 +2278,7 @@
 5330,Drooping_Kitty_C,Refined Drooping Cat,5,1,,0,,6,,0,0xFFFFFFFE,7,2,256,,1,0,142,{ bonus bMDef,15; bonus2 bResEff,Eff_Curse,4000; bonus2 bResEff,Eff_Curse,1000; },{},{}
 5331,Corsair_C,Refined Corsair,5,1,,500,,10,,0,0xFFFFFFFE,7,2,256,,1,0,105,{ bonus bVit,3; bonus bInt,3; },{},{}
 5332,Loki_Mask,Loki Mask,5,0,,200,,0,,0,0xFFFFFFFF,7,2,513,,1,0,346,{ bonus bFlee2,3; },{},{}
-5333,Radio_Antenna,Antenna,5,0,,1500,,2,,0,0xFFFFFFFF,7,2,256,,60,0,347,{ bonus bMdef,3; skill "MG_LIGHTNINGBOLT",1; },{},{}
+5333,Radio_Antenna,Antenna,5,0,,1500,,2,,0,0xFFFFFFFF,7,2,256,,60,0,347,{ bonus bMdef,5; bonus bCritical,5; bonus bFlee,5; skill "MG_LIGHTNINGBOLT",1; bonus4 bAutoSpellWhenHit,"MG_THUNDERSTORM",5,20,1; },{},{}
 5334,Angeling_Wanna_Fly,Flying Angeling,5,0,,700,,0,,0,0xFFFFFFFF,7,2,256,,38,1,348,{ bonus bLuk,2; bonus bMdef,2; },{},{}
 5335,Jumping_Poring,Squatting Poring,5,0,,300,,2,,0,0xFFFFFFFF,7,2,256,,10,1,349,{ bonus bLuk,1; bonus bUnbreakableHelm,0; },{},{}
 5336,Guildsman_Recruiter,Guild Recruiting Hat,5,,,700,,2,,0,0xFFFFFFFF,7,2,256,,10,1,350,{},{},{}
