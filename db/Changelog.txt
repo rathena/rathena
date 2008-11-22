@@ -40,6 +40,8 @@
 	2385 Recuvative_Armor		Should trigger HP/SP return with magical kills as well.
 
 =======================
+2008/11/22
+	* Fixed small typo with Platinum Shield (bugreport:2470) [Jman]
 2008/11/18
 	* Rev. 13376 Some bug fixes here too! Holy crap! Bug fixes everywhere! [L0ne_W0lf]
 	- Corrected Wolfheiden and Mithril magic cape skill levels. (bugreport:2431)
