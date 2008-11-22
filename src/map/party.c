@@ -929,7 +929,6 @@ int party_sub_count(struct block_list *bl, va_list ap)
 int party_foreachsamemap(int (*func)(struct block_list*,va_list),struct map_session_data *sd,int range,...)
 {
 	struct party_data *p;
-	va_list ap;
 	int i;
 	int x0,y0,x1,y1;
 	struct block_list *list[MAX_PARTY];
@@ -946,8 +945,6 @@ int party_foreachsamemap(int (*func)(struct block_list*,va_list),struct map_sess
 	x1=sd->bl.x+range;
 	y1=sd->bl.y+range;
 
-	va_start(ap,range);
-	
 	for(i=0;i<MAX_PARTY;i++)
 	{
 		struct map_session_data *psd = p->data[i].sd;
@@ -964,10 +961,14 @@ int party_foreachsamemap(int (*func)(struct block_list*,va_list),struct map_sess
 	map_freeblock_lock();
 	
 	for(i=0;i<blockcount;i++)
-		total += func(list[i],ap);
+	{
+		va_list ap;
+		va_start(ap, range);
+		total += func(list[i], ap);
+		va_end(ap);
+	}
 
 	map_freeblock_unlock();
 
-	va_end(ap);
 	return total;
 }

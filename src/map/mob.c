@@ -697,7 +697,6 @@ int mob_linksearch(struct block_list *bl,va_list ap)
 	unsigned int tick;
 	
 	nullpo_retr(0, bl);
-	nullpo_retr(0, ap);
 	md=(struct mob_data *)bl;
 	class_ = va_arg(ap, int);
 	target = va_arg(ap, struct block_list *);
@@ -898,7 +897,6 @@ static int mob_ai_sub_hard_activesearch(struct block_list *bl,va_list ap)
 	int dist;
 
 	nullpo_retr(0, bl);
-	nullpo_retr(0, ap);
 	md=va_arg(ap,struct mob_data *);
 	target= va_arg(ap,struct block_list**);
 
@@ -946,7 +944,6 @@ static int mob_ai_sub_hard_changechase(struct block_list *bl,va_list ap)
 	struct block_list **target;
 
 	nullpo_retr(0, bl);
-	nullpo_retr(0, ap);
 	md=va_arg(ap,struct mob_data *);
 	target= va_arg(ap,struct block_list**);
 
@@ -1708,7 +1705,6 @@ int mob_deleteslave_sub(struct block_list *bl,va_list ap)
 	int id;
 
 	nullpo_retr(0, bl);
-	nullpo_retr(0, ap);
 	nullpo_retr(0, md = (struct mob_data *)bl);
 
 	id=va_arg(ap,int);
@@ -2771,7 +2767,6 @@ int mob_getfriendstatus_sub(struct block_list *bl,va_list ap)
 	int flag=0;
 
 	nullpo_retr(0, bl);
-	nullpo_retr(0, ap);
 	nullpo_retr(0, md=(struct mob_data *)bl);
 	nullpo_retr(0, mmd=va_arg(ap,struct mob_data *));
 

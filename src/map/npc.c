@@ -92,7 +92,6 @@ int npc_enable_sub(struct block_list *bl, va_list ap)
 	struct npc_data *nd;
 
 	nullpo_retr(0, bl);
-	nullpo_retr(0, ap);
 	nullpo_retr(0, nd=va_arg(ap,struct npc_data *));
 	if(bl->type == BL_PC && (sd=(struct map_session_data *)bl))
 	{
@@ -232,7 +231,6 @@ int npc_event_doall_sub(DBKey key, void* data, va_list ap)
 	int rid;
 
 	nullpo_retr(0, ev = (struct event_data *)data);
-	nullpo_retr(0, ap);
 	nullpo_retr(0, c = va_arg(ap, int *));
 	nullpo_retr(0, name = va_arg(ap, const char *));
 	rid = va_arg(ap, int);
@@ -258,7 +256,6 @@ static int npc_event_do_sub(DBKey key, void* data, va_list ap)
 	const char* name;
 
 	nullpo_retr(0, ev = (struct event_data *)data);
-	nullpo_retr(0, ap);
 	nullpo_retr(0, c = va_arg(ap, int *));
 	nullpo_retr(0, name = va_arg(ap, const char *));
 
@@ -1795,7 +1792,6 @@ int npc_convertlabel_db(DBKey key, void* data, va_list ap)
 	const char *p;
 	int len;
 
-	nullpo_retr(0, ap);
 	nullpo_retr(0, label_list = va_arg(ap,struct npc_label_list**));
 	nullpo_retr(0, label_list_num = va_arg(ap,int*));
 	nullpo_retr(0, filepath = va_arg(ap,const char*));

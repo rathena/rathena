@@ -255,13 +255,13 @@ static void create_dummy_data(void)
 	dummy_item.view_id=UNKNOWN_ITEM_ID;
 }
 
-static void* create_item_data(DBKey key, va_list args)
+static struct item_data* create_item_data(int nameid)
 {
 	struct item_data *id;
 	CREATE(id, struct item_data, 1);
-	id->nameid=key.i;
-	id->weight=1;
-	id->type=IT_ETC;
+	id->nameid = nameid;
+	id->weight = 1;
+	id->type = IT_ETC;
 	return id;
 }
 
@@ -271,34 +271,22 @@ static void* create_item_data(DBKey key, va_list args)
 struct item_data* itemdb_load(int nameid)
 {
 	struct item_data *id;
-	DBKey key;
 
 	if( nameid >= 0 && nameid < ARRAYLENGTH(itemdb_array) )
 	{
 		id = itemdb_array[nameid];
-		if( id == NULL )
-		{
-			key.i = nameid;
-			id = itemdb_array[nameid] = (struct item_data*)create_item_data(key, NULL);
-		}
+		if( id == NULL || id == &dummy_item )
+			id = itemdb_array[nameid] = create_item_data(nameid);
 		return id;
 	}
 
-	id = (struct item_data*)idb_ensure(itemdb_other, nameid, create_item_data);
-	if( id == &dummy_item )
-	{// Remove dummy_item, replace by real data.
-		key.i = nameid;
-		id = (struct item_data*)create_item_data(key, NULL);
+	id = (struct item_data*)idb_get(itemdb_other, nameid);
+	if( id == NULL || id == &dummy_item )
+	{
+		id = create_item_data(nameid);
 		idb_put(itemdb_other, nameid, id);
 	}
 	return id;
-}
-
-static void* return_dummy_data(DBKey key, va_list args)
-{
-	ShowWarning("itemdb_search: Item ID %d does not exists in the item_db. Using dummy data.\n", key.i);
-	dummy_item.nameid = key.i;
-	return &dummy_item;
 }
 
 /*==========================================
@@ -306,15 +294,19 @@ static void* return_dummy_data(DBKey key, va_list args)
  *------------------------------------------*/
 struct item_data* itemdb_search(int nameid)
 {
+	struct item_data* id;
 	if( nameid >= 0 && nameid < ARRAYLENGTH(itemdb_array) )
+		id = itemdb_array[nameid];
+	else
+		id = (struct item_data*)idb_get(itemdb_other, nameid);
+
+	if( id == NULL )
 	{
-		DBKey key;
-		if( itemdb_array[nameid] )
-			return itemdb_array[nameid];
-		key.i = nameid;
-		return (struct item_data*)return_dummy_data(key, NULL);
+		ShowWarning("itemdb_search: Item ID %d does not exists in the item_db. Using dummy data.\n", nameid);
+		id = &dummy_item;
+		dummy_item.nameid = nameid;
 	}
-	return (struct item_data*)idb_ensure(itemdb_other,nameid,return_dummy_data);
+	return id;
 }
 
 /*==========================================

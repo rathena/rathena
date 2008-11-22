@@ -1801,7 +1801,6 @@ int skill_area_sub (struct block_list *bl, va_list ap)
 	SkillFunc func;
 
 	nullpo_retr(0, bl);
-	nullpo_retr(0, ap);
 
 	src=va_arg(ap,struct block_list *);
 	skill_id=va_arg(ap,int);
@@ -7569,7 +7568,6 @@ static int skill_check_condition_char_sub (struct block_list *bl, va_list ap)
 	int *p_sd;	//Contains the list of characters found.
 
 	nullpo_retr(0, bl);
-	nullpo_retr(0, ap);
 	nullpo_retr(0, tsd=(struct map_session_data*)bl);
 	nullpo_retr(0, src=va_arg(ap,struct block_list *));
 	nullpo_retr(0, sd=(struct map_session_data*)src);
@@ -9025,7 +9023,6 @@ int skill_frostjoke_scream (struct block_list *bl, va_list ap)
 	unsigned int tick;
 
 	nullpo_retr(0, bl);
-	nullpo_retr(0, ap);
 	nullpo_retr(0, src=va_arg(ap,struct block_list*));
 
 	skillnum=va_arg(ap,int);
@@ -9189,7 +9186,6 @@ int skill_greed (struct block_list *bl, va_list ap)
 	struct flooritem_data *fitem=NULL;
 
 	nullpo_retr(0, bl);
-	nullpo_retr(0, ap);
 	nullpo_retr(0, src = va_arg(ap, struct block_list *));
 
 	if(src->type == BL_PC && (sd=(struct map_session_data *)src) && bl->type==BL_ITEM && (fitem=(struct flooritem_data *)bl))

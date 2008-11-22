@@ -673,6 +673,7 @@ char timestamp_format[20] = ""; //For displaying Timestamps
 
 int _vShowMessage(enum msg_type flag, const char *string, va_list ap)
 {
+	va_list apcopy;
 	char prefix[100];
 #if defined(DEBUGLOGMAP) || defined(DEBUGLOGCHAR) || defined(DEBUGLOGLOGIN)
 	FILE *fp;
@@ -734,12 +735,16 @@ int _vShowMessage(enum msg_type flag, const char *string, va_list ap)
 	if (flag == MSG_ERROR || flag == MSG_FATALERROR || flag == MSG_SQL)
 	{	//Send Errors to StdErr [Skotlex]
 		FPRINTF(STDERR, "%s ", prefix);
-		VFPRINTF(STDERR, string, ap);
+		va_copy(apcopy, ap);
+		VFPRINTF(STDERR, string, apcopy);
+		va_end(apcopy);
 		FFLUSH(STDERR);
 	} else {
 		if (flag != MSG_NONE)
 			FPRINTF(STDOUT, "%s ", prefix);
-		VFPRINTF(STDOUT, string, ap);
+		va_copy(apcopy, ap);
+		VFPRINTF(STDOUT, string, apcopy);
+		va_end(apcopy);
 		FFLUSH(STDOUT);
 	}
 
@@ -751,7 +756,9 @@ int _vShowMessage(enum msg_type flag, const char *string, va_list ap)
 			FFLUSH(STDERR);
 		} else {
 			fprintf(fp,"%s ", prefix);
-			vfprintf(fp,string,ap);
+			va_copy(apcopy, ap);
+			vfprintf(fp,string,apcopy);
+			va_end(apcopy);
 			fclose(fp);
 		}
 	} else {
@@ -760,7 +767,6 @@ int _vShowMessage(enum msg_type flag, const char *string, va_list ap)
 	}
 #endif
 
-	va_end(ap);
 	return 0;
 }
 

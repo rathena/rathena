@@ -511,13 +511,11 @@ struct skill_unit* map_find_skill_unit_oncell(struct block_list* target,int x,in
  *------------------------------------------*/
 int map_foreachinrange(int (*func)(struct block_list*,va_list), struct block_list* center, int range, int type, ...)
 {
-	va_list ap;
 	int bx,by,m;
 	int returnCount =0;	//total sum of returned values of func() [Skotlex]
 	struct block_list *bl;
 	int blockcount=bl_list_count,i;
 	int x0,x1,y0,y1;
-	va_start(ap,type);
 
 	m = center->m;
 	x0 = max(center->x-range, 0);
@@ -562,11 +560,15 @@ int map_foreachinrange(int (*func)(struct block_list*,va_list), struct block_lis
 
 	for(i=blockcount;i<bl_list_count;i++)
 		if(bl_list[i]->prev)	// 有?かどうかチェック
-			returnCount += func(bl_list[i],ap);
+		{
+			va_list ap;
+			va_start(ap, type);
+			returnCount += func(bl_list[i], ap);
+			va_end(ap);
+		}
 
 	map_freeblock_unlock();	// 解放を許可する
 
-	va_end(ap);
 	bl_list_count = blockcount;
 	return returnCount;	//[Skotlex]
 }
@@ -576,7 +578,6 @@ int map_foreachinrange(int (*func)(struct block_list*,va_list), struct block_lis
  *------------------------------------------*/
 int map_foreachinshootrange(int (*func)(struct block_list*,va_list),struct block_list* center, int range, int type,...)
 {
-	va_list ap;
 	int bx,by,m;
 	int returnCount =0;	//total sum of returned values of func() [Skotlex]
 	struct block_list *bl;
@@ -586,8 +587,6 @@ int map_foreachinshootrange(int (*func)(struct block_list*,va_list),struct block
 	m = center->m;
 	if (m < 0)
 		return 0;
-
-	va_start(ap,type);
 
 	x0 = max(center->x-range, 0);
 	y0 = max(center->y-range, 0);
@@ -633,11 +632,15 @@ int map_foreachinshootrange(int (*func)(struct block_list*,va_list),struct block
 
 	for(i=blockcount;i<bl_list_count;i++)
 		if(bl_list[i]->prev)	// 有?かどうかチェック
-			returnCount += func(bl_list[i],ap);
+		{
+			va_list ap;
+			va_start(ap, type);
+			returnCount += func(bl_list[i], ap);
+			va_end(ap);
+		}
 
 	map_freeblock_unlock();	// 解放を許可する
 
-	va_end(ap);
 	bl_list_count = blockcount;
 	return returnCount;	//[Skotlex]
 }
@@ -649,7 +652,6 @@ int map_foreachinshootrange(int (*func)(struct block_list*,va_list),struct block
  *------------------------------------------*/
 int map_foreachinarea(int (*func)(struct block_list*,va_list), int m, int x0, int y0, int x1, int y1, int type, ...)
 {
-	va_list ap;
 	int bx,by;
 	int returnCount =0;	//total sum of returned values of func() [Skotlex]
 	struct block_list *bl;
@@ -657,7 +659,6 @@ int map_foreachinarea(int (*func)(struct block_list*,va_list), int m, int x0, in
 
 	if (m < 0)
 		return 0;
-	va_start(ap,type);
 	if (x1 < x0)
 	{	//Swap range
 		bx = x0;
@@ -696,11 +697,15 @@ int map_foreachinarea(int (*func)(struct block_list*,va_list), int m, int x0, in
 
 	for(i=blockcount;i<bl_list_count;i++)
 		if(bl_list[i]->prev)	// 有?かどうかチェック
-			returnCount += func(bl_list[i],ap);
+		{
+			va_list ap;
+			va_start(ap, type);
+			returnCount += func(bl_list[i], ap);
+			va_end(ap);
+		}
 
 	map_freeblock_unlock();	// 解放を許可する
 
-	va_end(ap);
 	bl_list_count = blockcount;
 	return returnCount;	//[Skotlex]
 }
@@ -717,13 +722,11 @@ int map_foreachinmovearea(int (*func)(struct block_list*,va_list), struct block_
 	int bx,by,m;
 	int returnCount =0;  //total sum of returned values of func() [Skotlex]
 	struct block_list *bl;
-	va_list ap;
 	int blockcount=bl_list_count,i;
 	int x0, x1, y0, y1;
 
 	if (!range) return 0;
 	if (!dx && !dy) return 0; //No movement.
-	va_start(ap,type);
 	m = center->m;
 
 	x0 = center->x-range;
@@ -830,11 +833,15 @@ int map_foreachinmovearea(int (*func)(struct block_list*,va_list), struct block_
 
 	for(i=blockcount;i<bl_list_count;i++)
 		if(bl_list[i]->prev)
-			returnCount += func(bl_list[i],ap);
+		{
+			va_list ap;
+			va_start(ap, type);
+			returnCount += func(bl_list[i], ap);
+			va_end(ap);
+		}
 
 	map_freeblock_unlock();	// 解放を許可する
 
-	va_end(ap);
 	bl_list_count = blockcount;
 	return returnCount;
 }
@@ -848,12 +855,9 @@ int map_foreachincell(int (*func)(struct block_list*,va_list), int m, int x, int
 	int bx,by;
 	int returnCount =0;  //total sum of returned values of func() [Skotlex]
 	struct block_list *bl;
-	va_list ap;
 	int blockcount=bl_list_count,i;
 
 	if (x < 0 || y < 0 || x >= map[m].xs || y >= map[m].ys) return 0;
-
-	va_start(ap,type);
 
 	by=y/BLOCK_SIZE;
 	bx=x/BLOCK_SIZE;
@@ -875,11 +879,15 @@ int map_foreachincell(int (*func)(struct block_list*,va_list), int m, int x, int
 
 	for(i=blockcount;i<bl_list_count;i++)
 		if(bl_list[i]->prev)	// 有?かどうかチェック
-			returnCount += func(bl_list[i],ap);
+		{
+			va_list ap;
+			va_start(ap, type);
+			returnCount += func(bl_list[i], ap);
+			va_end(ap);
+		}
 
 	map_freeblock_unlock();	// 解放を許可する
 
-	va_end(ap);
 	bl_list_count = blockcount;
 	return returnCount;
 }
@@ -924,7 +932,6 @@ int map_foreachinpath(int (*func)(struct block_list*,va_list),int m,int x0,int y
 // kRO.
 
 	//Generic map_foreach* variables.
-	va_list ap;
 	int i, blockcount = bl_list_count;
 	struct block_list *bl;
 	int bx, by;
@@ -938,8 +945,6 @@ int map_foreachinpath(int (*func)(struct block_list*,va_list),int m,int x0,int y
 	
 	if (m < 0)
 		return 0;
-		
-	va_start(ap,type);
 
 	len_limit = magnitude2 = MAGNITUDE2(x0,y0, x1,y1);
 	if (magnitude2 < 1) //Same begin and ending point, can't trace path.
@@ -1068,11 +1073,15 @@ int map_foreachinpath(int (*func)(struct block_list*,va_list),int m,int x0,int y
 
 	for(i=blockcount;i<bl_list_count;i++)
 		if(bl_list[i]->prev)	//This check is done in case some object gets killed due to further skill processing.
-			returnCount += func(bl_list[i],ap);
+		{
+			va_list ap;
+			va_start(ap, type);
+			returnCount += func(bl_list[i], ap);
+			va_end(ap);
+		}
 
 	map_freeblock_unlock();
 
-	va_end(ap);
 	bl_list_count = blockcount;
 	return returnCount;	//[Skotlex]
 
@@ -1084,10 +1093,7 @@ int map_foreachinmap(int (*func)(struct block_list*,va_list), int m, int type,..
 	int b, bsize;
 	int returnCount =0;  //total sum of returned values of func() [Skotlex]
 	struct block_list *bl;
-	va_list ap;
 	int blockcount=bl_list_count,i;
-
-	va_start(ap,type);
 
 	bsize = map[m].bxs * map[m].bys;
 
@@ -1110,11 +1116,15 @@ int map_foreachinmap(int (*func)(struct block_list*,va_list), int m, int type,..
 
 	for(i=blockcount;i<bl_list_count;i++)
 		if(bl_list[i]->prev)	// 有?かどうかチェック
-			returnCount += func(bl_list[i],ap);
+		{
+			va_list ap;
+			va_start(ap, type);
+			returnCount += func(bl_list[i], ap);
+			va_end(ap);
+		}
 
 	map_freeblock_unlock();	// 解放を許可する
 
-	va_end(ap);
 	bl_list_count = blockcount;
 	return returnCount;
 }
@@ -1210,9 +1220,6 @@ void map_foreachobject(int (*func)(struct block_list*,va_list),int type,...)
 {
 	int i;
 	int blockcount=bl_list_count;
-	va_list ap;
-
-	va_start(ap,type);
 
 	for(i=2;i<=last_object_id;i++){
 		if(objects[i]){
@@ -1230,11 +1237,15 @@ void map_foreachobject(int (*func)(struct block_list*,va_list),int type,...)
 
 	for(i=blockcount;i<bl_list_count;i++)
 		if( bl_list[i]->prev || bl_list[i]->next )
-			func(bl_list[i],ap);
+		{
+			va_list ap;
+			va_start(ap, type);
+			func(bl_list[i], ap);
+			va_end(ap);
+		}
 
 	map_freeblock_unlock();
 
-	va_end(ap);
 	bl_list_count = blockcount;
 }
 
@@ -3271,7 +3282,7 @@ int cleanup_sub(struct block_list *bl, va_list ap)
 
 static int cleanup_db_sub(DBKey key,void *data,va_list va)
 {
-	return cleanup_sub((struct block_list*)data, NULL);
+	return cleanup_sub((struct block_list*)data, va);
 }
 
 /*==========================================

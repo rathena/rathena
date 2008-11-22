@@ -171,7 +171,6 @@ int clif_send_sub(struct block_list *bl, va_list ap)
 	int len, type, fd;
 
 	nullpo_retr(0, bl);
-	nullpo_retr(0, ap);
 	nullpo_retr(0, sd = (struct map_session_data *)bl);
 
 	fd = sd->fd;
@@ -3718,7 +3717,6 @@ void clif_01ac(struct block_list* bl)
 	struct map_session_data *sd;
 
 	nullpo_retr(0, bl);
-	nullpo_retr(0, ap);
 
 	sd=va_arg(ap,struct map_session_data*);
 

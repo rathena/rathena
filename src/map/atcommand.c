@@ -2561,7 +2561,6 @@ static int atkillmonster_sub(struct block_list *bl, va_list ap)
 	struct mob_data *md;
 	int flag;
 	
-	nullpo_retr(0, ap);
 	nullpo_retr(0, md=(struct mob_data *)bl);
 	flag = va_arg(ap, int);
 
@@ -6311,35 +6310,12 @@ int atcommand_sound(const int fd, struct map_session_data *sd, const char *comma
 /*==========================================
  * 	MOB Search
  *------------------------------------------*/
-static int atmobsearch_sub(struct block_list *bl,va_list ap)
-{
-	int mob_id,fd;
-	static int number=0;
-	struct mob_data *md;
-
-	nullpo_retr(0, bl);
-
-	if(!ap){
-		number=0;
-		return 0;
-	}
-	mob_id = va_arg(ap,int);
-	fd = va_arg(ap,int);
-
-	md = (struct mob_data *)bl;
-
-	if(md && fd && (mob_id==-1 || (md->class_==mob_id))){
-		snprintf(atcmd_output, sizeof atcmd_output, "%2d[%3d:%3d] %s",
-				++number,bl->x, bl->y,md->name);
-		clif_displaymessage(fd, atcmd_output);
-	}
-	return 0;
-}
-
 int atcommand_mobsearch(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
 	char mob_name[100];
 	int mob_id,map_id = 0;
+	int number = 0;
+	struct s_mapiterator* it;
 
 	nullpo_retr(-1, sd);
 
@@ -6364,9 +6340,21 @@ int atcommand_mobsearch(const int fd, struct map_session_data* sd, const char* c
 	snprintf(atcmd_output, sizeof atcmd_output, "Mob Search... %s %s", mob_name, mapindex_id2name(sd->mapindex));
 	clif_displaymessage(fd, atcmd_output);
 
-	map_foreachinmap(atmobsearch_sub, map_id, BL_MOB, mob_id, fd);
+	it = mapit_geteachmob();
+	while( true )
+	{
+		TBL_MOB* md = (TBL_MOB*)mapit_next(it);
+		if( md == NULL )
+			break;// no more mobs
 
-	atmobsearch_sub(&sd->bl,0); // reset the counter
+		if( mob_id == -1 || md->class_ == mob_id )
+		{
+			++number;
+			snprintf(atcmd_output, sizeof atcmd_output, "%2d[%3d:%3d] %s", number, md->bl.x, md->bl.y, md->name);
+			clif_displaymessage(fd, atcmd_output);
+		}
+	}
+	mapit_free(it);
 
 	return 0;
 }
@@ -7021,36 +7009,12 @@ int atshowmobs_timer(int tid, unsigned int tick, int id, intptr data)
 	return 1;
 }
 
-static int atshowmobs_sub(struct block_list *bl,va_list ap)
-{
-	int mob_id;
-	struct map_session_data* sd;
-	static int number=0;
-	struct mob_data *md;
-
-	if(!ap){
-		number=0;
-		return 0;
-	}
-	mob_id = va_arg(ap,int);
-	sd = va_arg(ap,struct map_session_data*);
-
-	md = (struct mob_data *)bl;
-
-	if(md->special_state.ai || md->master_id)
-		 return 0; //Hide slaves and player summoned mobs. [Skotlex]
-
-	if(mob_id==-1 || md->class_==mob_id){
-		clif_viewpoint(sd, 1, 1, bl->x, bl->y, ++number, 0xFFFFFF);
-		add_timer(gettick()+5000, atshowmobs_timer, sd->bl.id, number);
-	}
-	return 0;
-}
-
 int atcommand_showmobs(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
 	char mob_name[100];
 	int mob_id,map_id = 0;
+	int number = 0;
+	struct s_mapiterator* it;
 
 	nullpo_retr(-1, sd);
 
@@ -7081,11 +7045,23 @@ int atcommand_showmobs(const int fd, struct map_session_data* sd, const char* co
 
 	snprintf(atcmd_output, sizeof atcmd_output, "Mob Search... %s %s",
 		mob_name, mapindex_id2name(sd->mapindex));
-		clif_displaymessage(fd, atcmd_output);
+	clif_displaymessage(fd, atcmd_output);
 
-	map_foreachinmap(atshowmobs_sub, map_id, BL_MOB, mob_id, sd);
+	it = mapit_geteachmob();
+	while( true )
+	{
+		TBL_MOB* md = (TBL_MOB*)mapit_next(it);
+		if( md == NULL )
+			break;// no more mobs
 
-	atshowmobs_sub(&sd->bl,0);
+		if( mob_id == -1 || md->class_ == mob_id )
+		{
+			++number;
+			clif_viewpoint(sd, 1, 1, md->bl.x, md->bl.y, number, 0xFFFFFF);
+			add_timer(gettick()+5000, atshowmobs_timer, sd->bl.id, number);
+		}
+	}
+	mapit_free(it);
 
 	return 0;
 }
