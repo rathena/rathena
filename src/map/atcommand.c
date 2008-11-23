@@ -7054,6 +7054,9 @@ int atcommand_showmobs(const int fd, struct map_session_data* sd, const char* co
 		if( md == NULL )
 			break;// no more mobs
 
+		if( md->special_state.ai || md->master_id )
+			continue;//Hide slaves and player summoned mobs. [Skotlex]
+
 		if( mob_id == -1 || md->class_ == mob_id )
 		{
 			++number;
