@@ -98,11 +98,11 @@
 					end;
 					break;
 				case 14:
-					warp "morocc",159,93;
+					warp "xmas",150,133;
 					end;
 					break;
 				case 15:
-					warp "prontera",156,187;
+					warp "morocc",159,93;
 					end;
 					break;
 				case 16:
@@ -110,14 +110,18 @@
 					end;
 					break;
 				case 17:
-					warp "umbala",130,130;
+					warp "prontera",156,187;
 					end;
 					break;
 				case 18:
-					warp "xmas",148,131;
+					warp "umbala",130,130;
 					end;
 					break;
 				case 19:
+					warp "xmas",148,131;
+					end;
+					break;
+				case 20:
 					warp "yuno",160,168;
 					end;
 			}
