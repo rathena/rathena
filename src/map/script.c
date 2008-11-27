@@ -3900,11 +3900,6 @@ BUILDIN_FUNC(return)
 			if( name[0] == '.' && name[1] == '@' )
 			{// temporary script variable, convert to value
 				get_val(st, data);
-				if( data_isstring(data) )
-				{// duplicate the string
-					data->type = C_STR;
-					data->u.str = aStrdup(data->u.str);
-				}
 			}
 			else if( name[0] == '.' && !data->ref )
 			{// script variable, link to current script
