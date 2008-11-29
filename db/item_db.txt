@@ -3685,7 +3685,7 @@
 12908,Immortal_Stew_Box,Immortal Stew Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 12207,10; },{},{}
 12909,Kafra_Card_Box,Kafra Card Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 12211,10; },{},{}
 12910,Giant_Fly_Wing_Box,Giant Fly Wing Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 12212,10; },{},{}
-12911,Glittering_Wand_Box,Neuralizer Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 12213,1; },{},{}
+12911,Glittering_Wand_Box,Neuralizer Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 12213,10; },{},{}
 12912,Convex_Mirror_Box,Convex Mirror Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 12214,10; },{},{}
 12913,Blessing_Scroll_Box,Blessing 10 Scroll Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 12215,10; },{},{}
 12914,Increase_Agility_Scroll_Box,Increase AGI 10 Scroll Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 12216,10; },{},{}
@@ -4551,7 +4551,7 @@
 14164,Immortal_Stew_Box_10,Immortal Stew Box(10),2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 12207,10; },{},{}
 14165,Kafra_Card_Box_10,Kafra Card Box(10),2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 12211,10; },{},{}
 14166,Giant_Fly_Wing_Box_10,Giant Fly Wing Box(10),2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 12212,10; },{},{}
-14167,Glittering_Wand_Box_10,Neuralizer Box(10),2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 12213,1; },{},{}
+14167,Glittering_Wand_Box_10,Neuralizer Box(10),2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 12213,10; },{},{}
 14168,Convex_Mirror_Box_10,Convex Mirror Box(10),2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 12214,10; },{},{}
 14169,Blessing_Scroll_Box_10,Blessing 10 Scroll Box(10),2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 12215,10; },{},{}
 14170,Increase_Agility_Scroll_Box_10,Increase AGI 10 Scroll Box(10),2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 12216,10; },{},{}
