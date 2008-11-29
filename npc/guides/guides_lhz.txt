@@ -50,7 +50,7 @@ lighthalzen,207,310,5	script	Guide#lhz::LhzGuide	852,{
 			while(.@loop2) {
 				if (.@wait_button_chk == 0) set .@wait_button_chk,1;
 				else next;
-				switch(select("^FF0000Rekenber Corporation^000000:Train Staition:Police Station:Bank:Hotel:Airport:Merchant Guild:Jewelry Shop:Weapon Shop:Departement Store:Cancel")) {
+				switch(select("^FF0000Rekenber Corporation^000000:Train Station:Police Station:Bank:Hotel:Airport:Merchant Guild:Jewelry Shop:Weapon Shop:Departement Store:Cancel")) {
 				case 1:
 					mes "[Lighthalzen Guide]";
 					mes "Rekenber Corporation,";

@@ -1793,7 +1793,9 @@ OnTouch:
 	case 1:
 		mes "^3355FF*SHHHHHHUK!*^000000";
 		specialeffect EF_STEAL;
-		set zeny,zeny-100;
+		if (zeny >= 100) {
+			set zeny,zeny-100;
+		}
 		next;
 		mes "[" + strcharinfo(0) + "]";
 		mes "Huh...?";
@@ -1807,7 +1809,9 @@ OnTouch:
 	case 2:
 		mes "^3355FF*SHHHHHHUK!*^000000";
 		specialeffect EF_STEAL;
-		set zeny,zeny-200;
+		if (zeny >= 200) {
+			set zeny,zeny-200;
+		}
 		next;
 		mes "[" + strcharinfo(0) + "]";
 		mes "Huh...?";
@@ -1822,7 +1826,9 @@ OnTouch:
 	case 3:
 		mes "^3355FF*SHHHHHHUK!*^000000";
 		specialeffect EF_STEAL;
-		set zeny,zeny-10;
+		if (zeny >= 10) {
+			set zeny,zeny-10;
+		}
 		next;
 		mes "[" + strcharinfo(0) + "]";
 		mes "Huh...?";
@@ -1860,7 +1866,9 @@ OnTouch:
 	case 1:
 		mes "^3355FF*SHHHHHHUK!*^000000";
 		specialeffect EF_STEAL;
-		set zeny,zeny-100;
+		if (zeny >= 100) {
+			set zeny,zeny-100;
+		}
 		next;
 		mes "[" + strcharinfo(0) + "]";
 		mes "Huh...?";
@@ -1874,7 +1882,9 @@ OnTouch:
 	case 2:
 		mes "^3355FF*SHHHHHHUK!*^000000";
 		specialeffect EF_STEAL;
-		set zeny,zeny-200;
+		if (zeny >= 200) {
+			set zeny,zeny-200;
+		}
 		next;
 		mes "[" + strcharinfo(0) + "]";
 		mes "Huh...?";
@@ -1889,7 +1899,9 @@ OnTouch:
 	case 3:
 		mes "^3355FF*SHHHHHHUK!*^000000";
 		specialeffect EF_STEAL;
-		set zeny,zeny-10;
+		if (zeny >= 10) {
+			set zeny,zeny-10;
+		}
 		next;
 		mes "[" + strcharinfo(0) + "]";
 		mes "Huh...?";
@@ -1927,7 +1939,9 @@ OnTouch:
 	case 2:
 		mes "^3355FF*SHHHHHHUK!*^000000";
 		specialeffect EF_STEAL;
-		set zeny,zeny-100;
+		if (zeny >= 100) {
+			set zeny,zeny-100;
+		}
 		next;
 		mes "[" + strcharinfo(0) + "]";
 		mes "Huh...?";
@@ -1942,7 +1956,9 @@ OnTouch:
 	case 4:
 		mes "^3355FF*SHHHHHHUK!*^000000";
 		specialeffect EF_STEAL;
-		set zeny,zeny-200;
+		if (zeny >= 200) {
+			set zeny,zeny-200;
+		}
 		next;
 		mes "[" + strcharinfo(0) + "]";
 		mes "Huh...?";
@@ -1957,7 +1973,9 @@ OnTouch:
 	case 5:
 		mes "^3355FF*SHHHHHHUK!*^000000";
 		specialeffect EF_STEAL;
-		set zeny,zeny-10;
+		if (zeny >= 10) {
+			set zeny,zeny-10;
+		}
 		next;
 		mes "[" + strcharinfo(0) + "]";
 		mes "Huh...?";
