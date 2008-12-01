@@ -3,6 +3,12 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2008/12/01
+	* Fixed rare crash when using Flying Kick on clones (bugreport:2506) [ultramage]
+	* Corrected Flying Kick's debuff rules to match official servers
+	- only works on players
+	- soul linkers and stalkers with Preserve active are immune
+	- only removes Berserk Potion, Kaahi, Kaite, 1HQ, AAR and Soul Links
 2008/11/27
 	* Fixed a memory leak when returning a string variable in the script engine. [FlavioJS]
 	  (since r9864/r9865, fixes bugreport:2488)

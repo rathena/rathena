@@ -796,37 +796,20 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 		break;
 
 	case TK_JUMPKICK:
-		//Cancel out Soul Linker status of the target. [Skotlex]
-		if (tsc->count) {
-			//Remove NORMAL potions effect.
-			if (tsc->data[SC_ASPDPOTION0] && !tsc->data[SC_ASPDPOTION0]->val4)
-				status_change_end(bl, SC_ASPDPOTION0, -1);
-			if (tsc->data[SC_ASPDPOTION1] && !tsc->data[SC_ASPDPOTION1]->val4)
-				status_change_end(bl, SC_ASPDPOTION1, -1);
-			if (tsc->data[SC_ASPDPOTION2] && !tsc->data[SC_ASPDPOTION2]->val4)
-				status_change_end(bl, SC_ASPDPOTION2, -1);
-			if (tsc->data[SC_ASPDPOTION3] && !tsc->data[SC_ASPDPOTION3]->val4)
-				status_change_end(bl, SC_ASPDPOTION3, -1);
-			if (tsc->data[SC_SPEEDUP0] && !tsc->data[SC_SPEEDUP0]->val4)
-				status_change_end(bl, SC_SPEEDUP0, -1);
-			if (tsc->data[SC_SPEEDUP1] && !tsc->data[SC_SPEEDUP1]->val4)
-				status_change_end(bl, SC_SPEEDUP1, -1);
-			// Stalkers who are preserved will no longer lose their link.
-			if (tsc->data[SC_SPIRIT] && !(dstsd->class_&MAPID_STALKER && tsc->data[SC_SPIRIT] && tsc->data[SC_PRESERVE]))
+		if( dstsd && dstsd->class_ != MAPID_SOUL_LINKER && !tsc->data[SC_PRESERVE] )
+		{// debuff the following statuses
+			if (tsc->data[SC_SPIRIT])
 				status_change_end(bl, SC_SPIRIT, -1);
-			// Updated by Brainstorm to remove 'Ka' status effects and Link granted skills.
-			if (tsc->data[SC_KAIZEL])
-				status_change_end(bl, SC_KAIZEL, -1);
-			if (tsc->data[SC_KAAHI])
-				status_change_end(bl, SC_KAAHI, -1);
-			if (tsc->data[SC_KAUPE])
-				status_change_end(bl, SC_KAUPE, -1);
-			if (tsc->data[SC_KAITE])
-				status_change_end(bl, SC_KAITE, -1);
-			if (tsc->data[SC_ONEHAND])
-				status_change_end(bl, SC_ONEHAND, -1);
 			if (tsc->data[SC_ADRENALINE2])
 				status_change_end(bl, SC_ADRENALINE2, -1);
+			if (tsc->data[SC_KAITE])
+				status_change_end(bl, SC_KAITE, -1);
+			if (tsc->data[SC_KAAHI])
+				status_change_end(bl, SC_KAAHI, -1);
+			if (tsc->data[SC_ONEHAND])
+				status_change_end(bl, SC_ONEHAND, -1);
+			if (tsc->data[SC_ASPDPOTION2])
+				status_change_end(bl, SC_ASPDPOTION2, -1);
 		}		
 		break;
 	case TK_TURNKICK:
