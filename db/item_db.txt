@@ -2278,20 +2278,20 @@
 5330,Drooping_Kitty_C,Refined Drooping Cat,5,1,,0,,6,,0,0xFFFFFFFE,7,2,256,,1,0,142,{ bonus bMDef,15; bonus2 bResEff,Eff_Curse,4000; bonus2 bResEff,Eff_Curse,1000; },{},{}
 5331,Corsair_C,Refined Corsair,5,1,,500,,10,,0,0xFFFFFFFE,7,2,256,,1,0,105,{ bonus bVit,3; bonus bInt,3; },{},{}
 5332,Loki_Mask,Loki Mask,5,0,,200,,0,,0,0xFFFFFFFF,7,2,513,,1,0,346,{ bonus bFlee2,3; },{},{}
-5333,Radio_Antenna,Antenna,5,0,,1500,,2,,0,0xFFFFFFFF,7,2,256,,60,0,347,{ bonus bMdef,5; bonus bCritical,5; bonus bFlee,5; skill "MG_LIGHTNINGBOLT",1; bonus4 bAutoSpellWhenHit,"MG_THUNDERSTORM",5,20,1; },{},{}
+5333,Radio_Antenna,Antenna,5,0,,1500,,2,,0,0xFFFFFFFF,7,2,256,,50,0,347,{ bonus bMdef,5; bonus bCritical,5; bonus bFlee,5; skill "MG_LIGHTNINGBOLT",1; bonus4 bAutoSpellWhenHit,"MG_THUNDERSTORM",5,20,1; },{},{}
 5334,Angeling_Wanna_Fly,Flying Angeling,5,0,,700,,0,,0,0xFFFFFFFF,7,2,256,,38,1,348,{ bonus bLuk,2; bonus bMdef,2; },{},{}
 5335,Jumping_Poring,Squatting Poring,5,0,,300,,2,,0,0xFFFFFFFF,7,2,256,,10,1,349,{ bonus bLuk,1; bonus bUnbreakableHelm,0; },{},{}
-5336,Guildsman_Recruiter,Guild Recruiting Hat,5,,,700,,2,,0,0xFFFFFFFF,7,2,256,,10,1,350,{},{},{}
-5337,Party_Recruiter_Hat,Party Hat,5,0,,700,,2,,0,0xFFFFFFFF,7,2,256,,10,1,351,{},{},{}
-5338,Bf_Recruiter_Hat,Boyfriend Hat,5,0,,700,,2,,0,0xFFFFFFFF,7,2,256,,10,1,352,{},{},{}
-5339,Friend_Recruiter_Hat,Friend Hat,5,0,,700,,2,,0,0xFFFFFFFF,7,2,256,,10,1,353,{},{},{}
+5336,Guildsman_Recruiter,Guild Recruiting Hat,5,,,0,,2,,0,0xFFFFFFFF,7,2,256,,10,1,350,{},{},{}
+5337,Party_Recruiter_Hat,Party Hat,5,0,,0,,2,,0,0xFFFFFFFF,7,2,256,,10,1,351,{},{},{}
+5338,Bf_Recruiter_Hat,Boyfriend Hat,5,0,,0,,2,,0,0xFFFFFFFF,7,2,256,,10,1,352,{},{},{}
+5339,Friend_Recruiter_Hat,Friend Hat,5,0,,0,,2,,0,0xFFFFFFFF,7,2,256,,10,1,353,{},{},{}
 5340,Deprotai_Doll_Hat,Deporte Doll Hat,5,0,,500,,0,,1,0xFFFFFFFF,7,2,256,,60,0,354,{ bonus2 bSubRace,RC_DemiHuman,5; bonus bStr,2; },{},{}
 5341,Claris_Doll_Hat,Clarice Doll Hat,5,0,,500,,0,,1,0xFFFFFFFF,7,2,256,,60,0,355,{ bonus2 bSubRace,RC_DemiHuman,5; bonus bInt,2; },{},{}
 5342,Sorin_Doll_Hat,Sorin Doll Hat,5,0,,500,,0,,1,0xFFFFFFFF,7,2,256,,60,0,356,{ bonus2 bSubRace,RC_DemiHuman,5; bonus bDex,2; },{},{}
 5343,Tayelin_Doll_Hat,Tailring Doll Hat,5,0,,500,,0,,1,0xFFFFFFFF,7,2,256,,60,0,357,{ bonus2 bSubRace,RC_DemiHuman,5; bonus bAgi,2; },{},{}
 5344,Binit_Doll_Hat,Vinit Doll Hat,5,0,,500,,0,,1,0xFFFFFFFF,7,2,256,,60,0,358,{ bonus2 bSubRace,RC_DemiHuman,5; bonus bVit,2; },{},{}
 5345,Debril_Doll_Hat,W Doll Hat,5,0,,500,,0,,1,0xFFFFFFFF,7,2,256,,60,0,359,{ bonus2 bSubRace,RC_DemiHuman,5; bonus bLuk,2; },{},{}
-5346,Gf_Recruiter_Hat,Girlfriend Hat,5,0,,700,,0,,0,0xFFFFFFFF,7,2,256,,10,1,360,{},{},{}
+5346,Gf_Recruiter_Hat,Girlfriend Hat,5,0,,0,,2,,0,0xFFFFFFFF,7,2,256,,10,1,360,{},{},{}
 5347,Ph.D_Hat_,Ph.D Hat,5,20,,200,,3,,1,0xFFFFFFFE,7,2,256,,0,1,98,{},{},{}
 5348,Big_Sis'_Ribbon_,Big Ribbon,5,15000,,200,,2,,1,0xFFFFFFFE,7,2,256,,0,1,28,{ bonus bMdef,3; },{},{}
 5349,Boy's_Cap_,Boys Cap,5,20,,100,,2,,1,0xFFFFFFFE,7,2,256,,0,1,102,{},{},{}

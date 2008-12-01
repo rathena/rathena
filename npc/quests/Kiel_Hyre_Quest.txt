@@ -3925,7 +3925,7 @@ kh_mansion,78,55,5	script	Steward#kh	109,{
 			mes "afraid that I must insist on";
 			mes "your immediate departure!";
 			close2;
-			warp "lightalzen",188,201;
+			warp "lighthalzen",188,201;
 			end;
 		}
 	}
