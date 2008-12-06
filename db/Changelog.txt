@@ -40,6 +40,8 @@
 	2385 Recuvative_Armor		Should trigger HP/SP return with magical kills as well.
 
 =======================
+2008/12/05
+	* Rev. 13393 Added new, and for the time being, useless, 'quest_db'. [L0ne_W0lf]
 2008/11/22
 	* Updated effects for the Radio Antenna (bugreport:2465) [Jman]
 	* Fixed small typo with Platinum Shield (bugreport:2470) [Jman]
