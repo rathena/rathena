@@ -590,7 +590,7 @@ izlude_in,129,64,4	script	Monster Tamer#izu	125,{
 			mes "the cute monster";
 			mes "you are raising...";
 			mes "Orc Trophy!";
-			delitem 0,1;  //Scorpion's_Tail
+			delitem 904,1;  //Scorpion's_Tail
 			delitem 1004,1;  //Patriotism_Marks
 			getitem 635,1; // Horror_Of_Tribe
 			close;

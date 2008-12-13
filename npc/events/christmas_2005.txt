@@ -149,7 +149,7 @@ xmas_in,89,92,5	script	Louise Kim#designer	714,{
 					mes "~being with Louise.~";
 					emotion e_ho;
 					delitem 2236,1; //Santa's_Hat
-					delitem 953,1; //Cactus_Needle
+					delitem 952,1; //Cactus_Needle
 					delitem 523,10; //Holy_Water
 					delitem 2608,1; //Rosary
 					getitem 5136,1; //Santa's_Hat_
