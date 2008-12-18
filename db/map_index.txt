@@ -738,6 +738,20 @@ arug_que01
 arug_dun01
 1@orcs
 2@orcs
+1@nyd
+2@nyd
+nyd_dun01
+nyd_dun02
+manuk
+man_fild02
+man_in01
+splendide
+spl_fild01
+spl_in01
+spl_in02
+bat_c01
+bat_c02
+bat_c03
 
 // Only add maps under this line if they are not standard maps!
 
