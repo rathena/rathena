@@ -620,7 +620,6 @@ extern char *LOG_CONF_NAME;
 extern char *MAP_CONF_NAME;
 extern char *BATTLE_CONF_FILENAME;
 extern char *ATCOMMAND_CONF_FILENAME;
-extern char *CHARCOMMAND_CONF_FILENAME;
 extern char *SCRIPT_CONF_NAME;
 extern char *MSG_CONF_NAME;
 extern char *GRF_PATH_FILENAME;

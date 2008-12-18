@@ -38,7 +38,6 @@
 #include "homunculus.h"
 #include "mercenary.h"
 #include "atcommand.h"
-#include "charcommand.h"
 #include "log.h"
 #ifndef TXT_ONLY
 #include "mail.h"
@@ -2935,7 +2934,7 @@ int parse_console(char* buf)
 	ShowInfo("Type of command: '%s' || Command: '%s' || Map: '%s' Coords: %d %d\n", type, command, map, x, y);
 
 	if( n == 5 && strcmpi("admin",type) == 0 ){
-		if( !is_atcommand_sub(sd.fd,&sd,command,99) )
+		if( !is_atcommand_sub(sd.fd,&sd,command,99,sd.status.name) )
 			ShowInfo("Console: not atcommand\n");
 	} else if( n == 2 && strcmpi("server",type) == 0 ){
 		if( strcmpi("shutdown",command) == 0 ||
@@ -3468,8 +3467,6 @@ int do_init(int argc, char *argv[])
 			BATTLE_CONF_FILENAME = argv[i+1];
 		else if (strcmp(argv[i],"--atcommand_config") == 0 || strcmp(argv[i],"--atcommand-config") == 0)
 			ATCOMMAND_CONF_FILENAME = argv[i+1];
-		else if (strcmp(argv[i],"--charcommand_config") == 0 || strcmp(argv[i],"--charcommand-config") == 0)
-			CHARCOMMAND_CONF_FILENAME = argv[i+1];
 		else if (strcmp(argv[i],"--script_config") == 0 || strcmp(argv[i],"--script-config") == 0)
 			SCRIPT_CONF_NAME = argv[i+1];
 		else if (strcmp(argv[i],"--msg_config") == 0 || strcmp(argv[i],"--msg-config") == 0)
@@ -3511,7 +3508,6 @@ int do_init(int argc, char *argv[])
 	battle_config_read(BATTLE_CONF_FILENAME);
 	msg_config_read(MSG_CONF_NAME);
 	atcommand_config_read(ATCOMMAND_CONF_FILENAME);
-	charcommand_config_read(CHARCOMMAND_CONF_FILENAME);
 	script_config_read(SCRIPT_CONF_NAME);
 	inter_config_read(INTER_CONF_NAME);
 	log_config_read(LOG_CONF_NAME);

@@ -161,12 +161,6 @@
 				RelativePath="..\src\map\battle.h">
 			</File>
 			<File
-				RelativePath="..\src\map\charcommand.c">
-			</File>
-			<File
-				RelativePath="..\src\map\charcommand.h">
-			</File>
-			<File
 				RelativePath="..\src\map\chat.c">
 			</File>
 			<File

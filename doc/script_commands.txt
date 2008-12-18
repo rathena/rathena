@@ -5770,23 +5770,10 @@ one.
 
 *charcommand <command>;
 
-NOTE: This command is changed a bit on newer trunk versions, 
-scroll down a bit for the new version!
+This command will run the given command line exactly as if it was typed in from 
+the keyboard from a character that belonged to an account which had GM level 99.
 
-On older trunk versions and stable:
-
-command is the name of the current character (strcharinfo(0))
-followed by ':' and the command and it's parameters.
-
-Example(s):
-
-//Will be executed as if a lvl 99 GM done the #option command.
-	charCommand strcharinfo(0)+":#option 0 0 0 Roy";
-
-Newer Trunk version:
-
-The big change is that the character name is no longer needed.
-This also enabled the commands to run without a player attached (according to Lance).
+The commands can also run without an attached rid.
 
 Example(s):
 

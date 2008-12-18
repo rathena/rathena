@@ -23,7 +23,6 @@
 #include "script.h"
 #include "skill.h"
 #include "atcommand.h"
-#include "charcommand.h"
 #include "intif.h"
 #include "battle.h"
 #include "mob.h"
@@ -8215,7 +8214,7 @@ void clif_parse_GlobalMessage(int fd, struct map_session_data* sd)
 	if( !clif_process_message(sd, 0, &name, &namelen, &message, &messagelen) )
 		return;
 
-	if( is_atcommand(fd, sd, message) || is_charcommand(fd, sd, message) )
+	if( is_atcommand(fd, sd, message)  )
 		return;
 
 	if( sd->sc.data[SC_BERSERK] || (sd->sc.data[SC_NOCHAT] && sd->sc.data[SC_NOCHAT]->val1&MANNER_NOCHAT) )
@@ -8526,7 +8525,7 @@ void clif_parse_WisMessage(int fd, struct map_session_data* sd)
 	if( !clif_process_message(sd, 1, &target, &namelen, &message, &messagelen) )
 		return;
 
-	if (is_atcommand(fd, sd, message) || is_charcommand(fd, sd, message) )
+	if (is_atcommand(fd, sd, message)  )
 		return;
 
 	if (sd->sc.data[SC_BERSERK] || (sd->sc.data[SC_NOCHAT] && sd->sc.data[SC_NOCHAT]->val1&MANNER_NOCHAT))
@@ -10053,7 +10052,7 @@ void clif_parse_PartyMessage(int fd, struct map_session_data* sd)
 	if( !clif_process_message(sd, 0, &name, &namelen, &message, &messagelen) )
 		return;
 
-	if( is_atcommand(fd, sd, message) || is_charcommand(fd, sd, message) )
+	if( is_atcommand(fd, sd, message)  )
 		return;
 
 	if( sd->sc.data[SC_BERSERK] || (sd->sc.data[SC_NOCHAT] && sd->sc.data[SC_NOCHAT]->val1&MANNER_NOCHAT) )
@@ -10331,7 +10330,7 @@ void clif_parse_GuildMessage(int fd, struct map_session_data* sd)
 	if( !clif_process_message(sd, 0, &name, &namelen, &message, &messagelen) )
 		return;
 
-	if( is_atcommand(fd, sd, message) || is_charcommand(fd, sd, message) )
+	if( is_atcommand(fd, sd, message) )
 		return;
 
 	if( sd->sc.data[SC_BERSERK] || (sd->sc.data[SC_NOCHAT] && sd->sc.data[SC_NOCHAT]->val1&MANNER_NOCHAT) )

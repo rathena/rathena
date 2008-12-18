@@ -6,6 +6,7 @@
 #include "../common/nullpo.h"
 #include "../common/showmsg.h"
 #include "../common/strlib.h"
+#include "../common/mmo.h"
 #include "atcommand.h" // msg_txt()
 #include "battle.h" // struct battle_config
 #include "clif.h"

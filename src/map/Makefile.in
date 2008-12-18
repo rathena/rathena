@@ -15,7 +15,7 @@ COMMON_SQL_H = ../common/sql.h
 
 MAP_OBJ = map.o chrif.o clif.o pc.o status.o npc.o \
 	npc_chat.o chat.o path.o itemdb.o mob.o script.o \
-	storage.o skill.o atcommand.o charcommand.o battle.o \
+	storage.o skill.o atcommand.o battle.o \
 	intif.o trade.o party.o vending.o guild.o pet.o \
 	log.o mail.o date.o unit.o homunculus.o mercenary.o quest.o
 MAP_TXT_OBJ = $(MAP_OBJ:%=obj_txt/%) \
@@ -24,7 +24,7 @@ MAP_SQL_OBJ = $(MAP_OBJ:%=obj_sql/%) \
 	obj_sql/mapreg_sql.o
 MAP_H = map.h chrif.h clif.h pc.h status.h npc.h \
 	chat.h itemdb.h mob.h script.h path.h \
-	storage.h skill.h atcommand.h charcommand.h battle.h \
+	storage.h skill.h atcommand.h battle.h \
 	intif.h trade.h party.h vending.h guild.h pet.h \
 	log.h mail.h date.h unit.h homunculus.h mercenary.h quest.h mapreg.h
 

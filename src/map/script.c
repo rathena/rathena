@@ -37,7 +37,6 @@
 #include "party.h"
 #include "guild.h"
 #include "atcommand.h"
-#include "charcommand.h"
 #include "log.h"
 #include "unit.h"
 #include "pet.h"
@@ -10686,7 +10685,7 @@ BUILDIN_FUNC(atcommand)
 			cmd++;
 	}
 
-	is_atcommand_sub(fd, sd, cmd, 99);
+	is_atcommand_sub(fd, sd, cmd, 99, sd->status.name);
 
 	return 0;
 }
@@ -10695,8 +10694,11 @@ BUILDIN_FUNC(charcommand)
 {
 	TBL_PC dummy_sd;
 	TBL_PC* sd;
+	TBL_PC* temp_sd;
+	char output[200], temp[200], command[200], charname[NAME_LENGTH], param[200];
 	int fd;
 	const char* cmd;
+	const char* message;
 
 	cmd = script_getstr(st,2);
 
@@ -10717,15 +10719,24 @@ BUILDIN_FUNC(charcommand)
 		}
 	}
 
-	// compatibility with previous implementation (deprecated!)
-	if(cmd[0] != charcommand_symbol)
+	if (*cmd == charcommand_symbol)
 	{
-		cmd += strlen(sd->status.name);
-		while(*cmd != charcommand_symbol && *cmd != 0)
-			cmd++;
+		if (sscanf(cmd, "%99s \"%23[^\"]\" %99[^\n]", command, charname, param) > 2
+		|| sscanf(cmd, "%99s %23s %99[^\n]", command, charname, param) > 2)
+		{
+			if ( (temp_sd = map_nick2sd(charname)) != NULL )
+			{
+				sprintf(output, "%s %s", cmd, param);
+				memcpy(temp, output, sizeof(output));
+				message = temp;
+				is_atcommand_sub(fd,sd,message,99,sd->status.name);
+			}
+		}
 	}
-
-	is_charcommand_sub(fd, sd, cmd, 99);
+	else {
+		ShowWarning("script: buildin_charcommand: No '#' symbol!");
+		script_reportsrc(st);
+	}
 
 	return 0;
 }

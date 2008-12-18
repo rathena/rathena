@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9,00"
+	Version="9.00"
 	Name="map-server_txt"
 	ProjectGUID="{D356871D-58E1-450B-967A-E1E9646175AF}"
 	RootNamespace="map-server_txt"
@@ -218,14 +218,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\src\map\charcommand.c"
-				>
-			</File>
-			<File
-				RelativePath="..\src\map\charcommand.h"
-				>
-			</File>
-			<File
 				RelativePath="..\src\map\chat.c"
 				>
 			</File>
@@ -263,6 +255,14 @@
 			</File>
 			<File
 				RelativePath="..\src\map\guild.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\map\homunculus.c"
+				>
+			</File>
+			<File
+				RelativePath="..\src\map\homunculus.h"
 				>
 			</File>
 			<File
@@ -311,14 +311,6 @@
 			</File>
 			<File
 				RelativePath="..\src\map\mapreg_txt.c"
-				>
-			</File>
-			<File
-				RelativePath="..\src\map\homunculus.c"
-				>
-			</File>
-			<File
-				RelativePath="..\src\map\homunculus.h"
 				>
 			</File>
 			<File
