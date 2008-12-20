@@ -4,7 +4,7 @@
 //= A reference manual for the eAthena scripting language.
 //= Commands are sorted depending on their functionality.
 //===== Version ===========================================
-//= 3.34.20081111
+//= 3.25.20081220
 //=========================================================
 //= 1.0 - First release, filled will as much info as I could
 //=       remember or figure out, most likely there are errors,
@@ -124,8 +124,10 @@
 //=       Adjusted the 'getequipname' description to match src [ultramage]
 //= 3.23.20080909
 //=       Added WoE SE related commands. [L0ne_W0lf]
-//= 3.34.20081111
+//= 3.24.20081111
 //=       Changed the error behaviour of delitem/delitem2/Zeny. [FlavioJS]
+//= 3.25.20081220
+//=       Extended the behaviour of duplicates (warps/shops/cashshops). [FlavioJS]
 //=========================================================
 
 This document is a reference manual for all the scripting commands and functions 
@@ -375,15 +377,6 @@ triggered. It may contain commands and function calls, descriptions of which
 compose most of this document. It has to be in curly brackets, unlike elsewhere 
 where we use curly brackets, these do NOT signify an optional parameter.
 
-** Define an NPC duplicate.
-
-<map name>,<x>,<y>,<facing>%TAB%duplicate(<label>)%TAB%<name>%TAB%<sprite id>
-<map name>,<x>,<y>,<facing>%TAB%duplicate(<label>)%TAB%<name>%TAB%<sprite id>,<triggerX>,<triggerY>
-
-This will duplicate an NPC referred to by 'label'. The duplicate runs the same 
-code as the source NPC, but has its own name, location, facing, sprite ID and
-trigger area (in other words, the duplicate does not 'inherit' any of these).
-
 ** Define a 'floating' NPC object.
 
 -%TAB%script%TAB%<NPC Name>%TAB%-1,{<code>}
@@ -393,8 +386,9 @@ normally mean it's pointless since it can't do anything, but there are
 exceptions, mostly related to running scripts at specified time, which is what 
 these floating NPC objects are for. More on that below.
 
-** Define a shop NPC.
+** Define a shop/cashshop NPC.
 
+-%TAB%shop%TAB%<NPC Name>%TAB%<sprite id>,<itemid>:<price>{,<itemid>:<price>...}
 <map name>,<x>,<y>,<facing>%TAB%shop%TAB%<NPC Name>%TAB%<sprite id>,<itemid>:<price>{,<itemid>:<price>...}
 
 This will define a shop NPC, which, when triggered (which can only be done by 
@@ -414,6 +408,21 @@ to use the Cash Shop interface, allowing you to buy items with special points
 This type of shop will not allow you to sell items at it, you may only
 purchase items here. The layout used to define sale items still count, and
 "<price>" refers to how many points will be spent purchasing the them.
+
+** Define an warp/shop/cashshop/NPC duplicate.
+
+warp: <map name>,<x>,<y>,<facing>%TAB%duplicate(<label>)%TAB%<NPC Name>%TAB%<spanx>,<spany>
+shop/cashshop/npc: -%TAB%duplicate(<label>)%TAB%<NPC Name>%TAB%<sprite id>
+shop/cashshop/npc: <map name>,<x>,<y>,<facing>%TAB%duplicate(<label>)%TAB%<NPC Name>%TAB%<sprite id>
+npc: -%TAB%duplicate(<label>)%TAB%<NPC Name>%TAB%<sprite id>,<triggerX>,<triggerY>
+npc: <map name>,<x>,<y>,<facing>%TAB%duplicate(<label>)%TAB%<NPC Name>%TAB%<sprite id>,<triggerX>,<triggerY>
+
+This will duplicate an warp/shop/cashshop/NPC referred to by 'label'.
+Warp duplicates inherit the target location.
+Shop/cashshop duplicates inherit the item list.
+NPC duplicates inherit the script code.
+The rest (name, location, facing, sprite ID, span/trigger area)
+is obtained from the definition of the duplicate (not inherited).
 
 ** Define a function object
 

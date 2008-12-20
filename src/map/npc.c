@@ -1356,11 +1356,8 @@ static int npc_unload_dup_sub(struct npc_data* nd, va_list args)
 {
 	int src_id;
 
-	if( nd->subtype != SCRIPT )
-		return 0;
-
 	src_id = va_arg(args, int);
-	if (nd->u.scr.src_id == src_id)
+	if (nd->src_id == src_id)
 		npc_unload(nd);
 	return 0;
 }
@@ -1386,7 +1383,7 @@ int npc_unload(struct npc_data* nd)
 	npc_chat_finalize(nd); // deallocate npc PCRE data structures
 #endif
 
-	if( nd->subtype == SHOP || nd->subtype == CASHSHOP )
+	if( (nd->subtype == SHOP || nd->subtype == CASHSHOP) && nd->src_id == 0) //src check for duplicate shops [Orcao]
 		aFree(nd->u.shop.shop_item);
 	else
 	if( nd->subtype == SCRIPT )
@@ -1401,7 +1398,7 @@ int npc_unload(struct npc_data* nd)
 		}
 		if (nd->u.scr.timer_event)
 			aFree(nd->u.scr.timer_event);
-		if (nd->u.scr.src_id == 0) {
+		if (nd->src_id == 0) {
 			if(nd->u.scr.script) {
 				script_free_code(nd->u.scr.script);
 				nd->u.scr.script = NULL;
@@ -1892,12 +1889,11 @@ static const char* npc_parse_script(char* w1, char* w2, char* w3, char* w4, cons
 	struct script_code *script;
 	int i;
 	const char* end;
+	const char* script_start;
 
 	struct npc_label_list* label_list;
 	int label_list_num;
-	int src_id;
 	struct npc_data* nd;
-	struct npc_data* dnd;
 
 	if( strcmp(w1, "-") == 0 )
 	{// floating npc
@@ -1915,53 +1911,27 @@ static const char* npc_parse_script(char* w1, char* w2, char* w3, char* w4, cons
 		m = map_mapname2mapid(mapname);
 	}
 
-	if( strcmp(w2, "script") == 0 )
-	{// parsing script with curly
-		const char* script_start;
-
-		script_start = strstr(start,",{");
-		end = strchr(start,'\n');
-		if( strstr(w4,",{") == NULL || script_start == NULL || (end != NULL && script_start > end) )
-		{
-			ShowError("npc_parse_script: Missing left curly ',{' in file '%s', line '%d'. Skipping the rest of the file.\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", filepath, strline(buffer,start-buffer), w1, w2, w3, w4);
-			return NULL;// can't continue
-		}
-		++script_start;
-
-		end = npc_skip_script(script_start, buffer, filepath);
-		if( end == NULL )
-			return NULL;// (simple) parse error, don't continue
-
-		script = parse_script(script_start, filepath, strline(buffer,script_start-buffer), SCRIPT_USE_LABEL_DB);
-		label_list = NULL;
-		label_list_num = 0;
-		src_id = 0;
-		if( script )
-		{
-			DBMap* label_db = script_get_label_db();
-			label_db->foreach(label_db, npc_convertlabel_db, &label_list, &label_list_num, filepath);
-			label_db->clear(label_db, NULL); // not needed anymore, so clear the db
-		}
+	script_start = strstr(start,",{");
+	end = strchr(start,'\n');
+	if( strstr(w4,",{") == NULL || script_start == NULL || (end != NULL && script_start > end) )
+	{
+		ShowError("npc_parse_script: Missing left curly ',{' in file '%s', line '%d'. Skipping the rest of the file.\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", filepath, strline(buffer,start-buffer), w1, w2, w3, w4);
+		return NULL;// can't continue
 	}
-	else
-	{// duplicate npc
-		char srcname[128];
+	++script_start;
 
-		end = strchr(start,'\n');
-		if( sscanf(w2,"duplicate(%127[^)])",srcname) != 1 )
-		{
-			ShowError("npc_parse_script: bad duplicate name in file '%s', line '%d' : %s\n", filepath, strline(buffer,start-buffer), w2);
-			return strchr(start, '\n');// next line, try to continue
-		}
-		dnd = npc_name2id(srcname);
-		if( dnd == NULL) {
-			ShowError("npc_parse_script: original npc not found for duplicate in file '%s', line '%d' : %s\n", filepath, strline(buffer,start-buffer), srcname);
-			return strchr(start, '\n');// next line, continue
-		}
-		script = dnd->u.scr.script;
-		label_list = dnd->u.scr.label_list;// TODO duplicate this?
-		label_list_num = dnd->u.scr.label_list_num;
-		src_id = dnd->bl.id;
+	end = npc_skip_script(script_start, buffer, filepath);
+	if( end == NULL )
+		return NULL;// (simple) parse error, don't continue
+
+	script = parse_script(script_start, filepath, strline(buffer,script_start-buffer), SCRIPT_USE_LABEL_DB);
+	label_list = NULL;
+	label_list_num = 0;
+	if( script )
+	{
+		DBMap* label_db = script_get_label_db();
+		label_db->foreach(label_db, npc_convertlabel_db, &label_list, &label_list_num, filepath);
+		label_db->clear(label_db, NULL); // not needed anymore, so clear the db
 	}
 
 	CREATE(nd, struct npc_data, 1);
@@ -1987,7 +1957,6 @@ static const char* npc_parse_script(char* w1, char* w2, char* w3, char* w4, cons
 	nd->class_ = class_;
 	nd->speed = 200;
 	nd->u.scr.script = script;
-	nd->u.scr.src_id = src_id;
 	nd->u.scr.label_list = label_list;
 	nd->u.scr.label_list_num = label_list_num;
 
@@ -2035,6 +2004,189 @@ static const char* npc_parse_script(char* w1, char* w2, char* w3, char* w4, cons
 			ev->pos = pos;
 			if( strdb_put(ev_db, buf, ev) != NULL )// There was already another event of the same name?
 				ShowWarning("npc_parse_script : duplicate event %s (%s)\n", buf, filepath);
+		}
+	}
+
+	//-----------------------------------------
+	// ラベルデータからタイマーイベント取り込み
+	for (i = 0; i < nd->u.scr.label_list_num; i++){
+		int t = 0, k = 0;
+		char *lname = nd->u.scr.label_list[i].name;
+		int pos = nd->u.scr.label_list[i].pos;
+		if (sscanf(lname, "OnTimer%d%n", &t, &k) == 1 && lname[k] == '\0') {
+			// タイマーイベント
+			struct npc_timerevent_list *te = nd->u.scr.timer_event;
+			int j, k = nd->u.scr.timeramount;
+			if (te == NULL)
+				te = (struct npc_timerevent_list *)aMallocA(sizeof(struct npc_timerevent_list));
+			else
+				te = (struct npc_timerevent_list *)aRealloc( te, sizeof(struct npc_timerevent_list) * (k+1) );
+			for (j = 0; j < k; j++){
+				if (te[j].timer > t){
+					memmove(te+j+1, te+j, sizeof(struct npc_timerevent_list)*(k-j));
+					break;
+				}
+			}
+			te[j].timer = t;
+			te[j].pos = pos;
+			nd->u.scr.timer_event = te;
+			nd->u.scr.timeramount++;
+		}
+	}
+	nd->u.scr.timerid = -1;
+
+	return end;
+}
+
+/// Duplicate a warp, shop, cashshop or script. [Orcao]
+/// warp: <map name>,<x>,<y>,<facing>%TAB%duplicate(<name of target>)%TAB%<NPC Name>%TAB%<spanx>,<spany>
+/// shop/cashshop/npc: -%TAB%duplicate(<name of target>)%TAB%<NPC Name>%TAB%<sprite id>
+/// shop/cashshop/npc: <map name>,<x>,<y>,<facing>%TAB%duplicate(<name of target>)%TAB%<NPC Name>%TAB%<sprite id>
+/// npc: -%TAB%duplicate(<name of target>)%TAB%<NPC Name>%TAB%<sprite id>,<triggerX>,<triggerY>
+/// npc: <map name>,<x>,<y>,<facing>%TAB%duplicate(<name of target>)%TAB%<NPC Name>%TAB%<sprite id>,<triggerX>,<triggerY>
+const char* npc_parse_duplicate(char* w1, char* w2, char* w3, char* w4, const char* start, const char* buffer, const char* filepath)
+{
+	int x, y, dir, m, xs = -1, ys = -1, class_ = 0;
+	char mapname[32];
+	char srcname[128];
+	int i;
+	const char* end;
+
+	int src_id;
+	int type;
+	struct npc_data* nd;
+	struct npc_data* dnd;
+
+	end = strchr(start,'\n');
+	// get the npc being duplicated
+	if( sscanf(w2,"duplicate(%127[^)])",srcname) != 1 )
+	{
+		ShowError("npc_parse_script: bad duplicate name in file '%s', line '%d' : %s\n", filepath, strline(buffer,start-buffer), w2);
+		return end;// next line, try to continue
+	}
+	dnd = npc_name2id(srcname);
+	if( dnd == NULL) {
+		ShowError("npc_parse_script: original npc not found for duplicate in file '%s', line '%d' : %s\n", filepath, strline(buffer,start-buffer), srcname);
+		return end;// next line, try to continue
+	}
+	src_id = dnd->bl.id;
+	type = dnd->subtype;
+
+	// get placement
+	if( (type==SHOP || type==CASHSHOP || type==SCRIPT) && strcmp(w1, "-") == 0 )
+	{// floating shop/chashshop/script
+		x = y = dir = 0;
+		m = -1;
+	}
+	else
+	{
+		if( sscanf(w1, "%31[^,],%d,%d,%d", mapname, &x, &y, &dir) != 4 )// <map name>,<x>,<y>,<facing>
+		{
+			ShowError("npc_parse_duplicate: Invalid placement format for duplicate in file '%s', line '%d'. Skipping line...\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", filepath, strline(buffer,start-buffer), w1, w2, w3, w4);
+			return end;// next line, try to continue
+		}
+		m = map_mapname2mapid(mapname);
+	}
+
+	if( type == WARP && sscanf(w4, "%d,%d", &xs, &ys) == 2 );// <spanx>,<spany>
+	else if( type == SCRIPT && sscanf(w4, "%d,%d,%d", &class_, &xs, &ys) == 3);// <sprite id>,<triggerX>,<triggerY>
+	else if( type != WARP ) class_ = atoi(w4);// <sprite id>
+	else
+	{
+		ShowError("npc_parse_duplicate: Invalid span format for duplicate warp in file '%s', line '%d'. Skipping line...\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", filepath, strline(buffer,start-buffer), w1, w2, w3, w4);
+		return end;// next line, try to continue
+	}
+
+	CREATE(nd, struct npc_data, 1);
+
+	nd->bl.prev = nd->bl.next = NULL;
+	nd->bl.m = m;
+	nd->bl.x = x;
+	nd->bl.y = y;
+	npc_parsename(nd, w3, start, buffer, filepath);
+	nd->bl.id = npc_get_new_npc_id();
+	nd->class_ = class_;
+	nd->speed = 200;
+	nd->src_id = src_id;
+	nd->bl.type = BL_NPC;
+	nd->subtype = type;
+	switch( type )
+	{
+	case SCRIPT:
+		++npc_script;
+		nd->u.scr.xs = xs;
+		nd->u.scr.ys = ys;
+		nd->u.scr.script = dnd->u.scr.script;
+		nd->u.scr.label_list = dnd->u.scr.label_list;
+		nd->u.scr.label_list_num = dnd->u.scr.label_list_num;
+		break;
+
+	case SHOP:
+	case CASHSHOP:
+		++npc_shop;
+		nd->u.shop.shop_item = dnd->u.shop.shop_item;
+		nd->u.shop.count = dnd->u.shop.count;
+		break;
+
+	case WARP:
+		++npc_warp;
+		if( !battle_config.warp_point_debug )
+			nd->class_ = WARP_CLASS;
+		else
+			nd->class_ = WARP_DEBUG_CLASS;
+		nd->u.warp.xs = xs;
+		nd->u.warp.ys = ys;
+		nd->u.warp.mapindex = dnd->u.warp.mapindex;
+		nd->u.warp.x = dnd->u.warp.x;
+		nd->u.warp.y = dnd->u.warp.y;
+		break;
+	}
+
+	//Add the npc to its location
+	if( m >= 0 )
+	{
+		map_addnpc(m, nd);
+		status_change_init(&nd->bl);
+		unit_dataset(&nd->bl);
+		nd->ud.dir = dir;
+		npc_setcells(nd);
+		map_addblock(&nd->bl);
+		if( class_ >= 0 )
+		{
+			status_set_viewdata(&nd->bl, nd->class_);
+			clif_spawn(&nd->bl);
+		}
+	}
+	else
+	{
+		// we skip map_addnpc, but still add it to the list of ID's
+		map_addiddb(&nd->bl);
+	}
+	strdb_put(npcname_db, nd->exname, nd);
+
+	if( type != SCRIPT )
+		return end;
+
+	//Handle labels
+	//-----------------------------------------
+	// イベント用ラベルデータのエクスポート
+	for (i = 0; i < nd->u.scr.label_list_num; i++)
+	{
+		char* lname = nd->u.scr.label_list[i].name;
+		int pos = nd->u.scr.label_list[i].pos;
+
+		if ((lname[0] == 'O' || lname[0] == 'o') && (lname[1] == 'N' || lname[1] == 'n'))
+		{
+			struct event_data* ev;
+			char buf[NAME_LENGTH*2+3]; // 24 for npc name + 24 for label + 2 for a "::" and 1 for EOS
+			snprintf(buf, ARRAYLENGTH(buf), "%s::%s", nd->exname, lname);
+
+			// generate the data and insert it
+			CREATE(ev, struct event_data, 1);
+			ev->nd = nd;
+			ev->pos = pos;
+			if( strdb_put(ev_db, buf, ev) != NULL )// There was already another event of the same name?
+				ShowWarning("npc_parse_duplicate : duplicate event %s (%s)\n", buf, filepath);
 		}
 	}
 
@@ -2760,7 +2912,7 @@ void npc_parsesrcfile(const char* filepath)
 		}
 		else if( (i=0, sscanf(w2,"duplicate%n",&i), (i > 0 && w2[i] == '(')) && count > 3 )
 		{
-			p = npc_parse_script(w1,w2,w3,w4, p, buffer, filepath);
+			p = npc_parse_duplicate(w1,w2,w3,w4, p, buffer, filepath);
 		}
 		else if( strcmpi(w2,"monster") == 0 && count > 3 )
 		{

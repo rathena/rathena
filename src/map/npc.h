@@ -40,6 +40,7 @@ struct npc_data {
 
 	void* chatdb; // pointer to a npc_parse struct (see npc_chat.c)
 	enum npc_subtype subtype;
+	int src_id;
 	union {
 		struct {
 			struct script_code *script;
@@ -50,7 +51,6 @@ struct npc_data {
 			struct npc_timerevent_list *timer_event;
 			int label_list_num;
 			struct npc_label_list *label_list;
-			int src_id;
 		} scr;
 		struct {
 			struct npc_item_list* shop_item;
