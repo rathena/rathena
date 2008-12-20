@@ -798,18 +798,12 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 	case TK_JUMPKICK:
 		if( dstsd && dstsd->class_ != MAPID_SOUL_LINKER && !tsc->data[SC_PRESERVE] )
 		{// debuff the following statuses
-			if (tsc->data[SC_SPIRIT])
-				status_change_end(bl, SC_SPIRIT, -1);
-			if (tsc->data[SC_ADRENALINE2])
-				status_change_end(bl, SC_ADRENALINE2, -1);
-			if (tsc->data[SC_KAITE])
-				status_change_end(bl, SC_KAITE, -1);
-			if (tsc->data[SC_KAAHI])
-				status_change_end(bl, SC_KAAHI, -1);
-			if (tsc->data[SC_ONEHAND])
-				status_change_end(bl, SC_ONEHAND, -1);
-			if (tsc->data[SC_ASPDPOTION2])
-				status_change_end(bl, SC_ASPDPOTION2, -1);
+			status_change_end(bl, SC_SPIRIT, -1);
+			status_change_end(bl, SC_ADRENALINE2, -1);
+			status_change_end(bl, SC_KAITE, -1);
+			status_change_end(bl, SC_KAAHI, -1);
+			status_change_end(bl, SC_ONEHAND, -1);
+			status_change_end(bl, SC_ASPDPOTION2, -1);
 		}		
 		break;
 	case TK_TURNKICK:
@@ -7971,8 +7965,9 @@ int skill_check_condition(struct map_session_data* sd, short skill, short lv, in
 		}
 		break;
 
-	case TK_MISSION: //Does not works on Non-Taekwon
-		if ((sd->class_&MAPID_UPPERMASK) != MAPID_TAEKWON) {
+	case TK_MISSION:
+		if( (sd->class_&MAPID_UPPERMASK) != MAPID_TAEKWON )
+		{// Cannot be used by Non-Taekwon classes
 			clif_skill_fail(sd,skill,0,0);
 			return 0;
 		}
@@ -7985,8 +7980,8 @@ int skill_check_condition(struct map_session_data* sd, short skill, short lv, in
 		if(sc && sc->data[status_skill2sc(skill)])
 			return 1; //Enable disabling them regardless of who you are.
 	case TK_JUMPKICK:
-		if ((sd->class_&MAPID_UPPERMASK) == MAPID_SOUL_LINKER) {
-			//They do not work on Soul Linkers.
+		if( (sd->class_&MAPID_UPPERMASK) == MAPID_SOUL_LINKER )
+		{// Soul Linkers cannot use this skill
 			clif_skill_fail(sd,skill,0,0);
 			return 0;
 		}
