@@ -44,8 +44,8 @@ void login_log(uint32 ip, const char* username, int rcode, const char* message)
 		time_t raw_time;
 		char str_time[24];
 
-		sv_escape_c(esc_username, username, NAME_LENGTH, NULL);
-		sv_escape_c(esc_message, message, 255, NULL);
+		sv_escape_c(esc_username, username, safestrnlen(username,NAME_LENGTH), NULL);
+		sv_escape_c(esc_message, message, safestrnlen(message,255), NULL);
 
 		time(&raw_time);
 		strftime(str_time, 24, login_config.date_format, localtime(&raw_time));
