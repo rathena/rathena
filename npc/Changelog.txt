@@ -1,5 +1,7 @@
 Date		Added
 ======
+2008/12/23
+	* Small update to the checkweight in Christmas 2005 Event. (bugreport:2553) [Paradox924X]
 2008/11/21
 	* Fixed typos in var names from EIN_LOVERQRQ to EIN_LOVERQ in Einbroch Lovers Quest. (bugreport:2464) [Paradox924X]
 2008/11/18

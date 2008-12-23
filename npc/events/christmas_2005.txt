@@ -22,6 +22,7 @@
 //= 1.0 First semi-working conversion. [Brainstorm]
 //= 1.1 Refined Brainstorm's conversion. [L0ne_W0lf]
 //= 1.2 Replaced effect numerics with constants. [L0ne_W0lf]
+//= 1.2a Small update to the checkweight. (bugreport:2553). [Paradox924X]
 //============================================================
 
 // Louise's Santa Hat (Event 1)
@@ -1115,7 +1116,7 @@ prontera,156,242,0	script	Oholy#pron::OholyDup	79,{
 		close;
 	}
 	else if(christ_carol05 == 2) {
-		if(checkweight(1201,1)) {
+		if(!checkweight(1201,1)) {
 			mes "^3355FFWait a second!";
 			mes "Right now, you're carrying";
 			mes "too many things with you.";
