@@ -10685,7 +10685,7 @@ BUILDIN_FUNC(atcommand)
 			cmd++;
 	}
 
-	is_atcommand_sub(fd, sd, cmd, 99, sd->status.name);
+	is_atcommand_sub(fd, sd, cmd, 99);
 
 	return 0;
 }
@@ -10729,7 +10729,7 @@ BUILDIN_FUNC(charcommand)
 				sprintf(output, "%s %s", cmd, param);
 				memcpy(temp, output, sizeof(output));
 				message = temp;
-				is_atcommand_sub(fd,sd,message,99,sd->status.name);
+				is_atcommand_sub(fd,sd,message,99);
 			}
 		}
 	}

@@ -8236,6 +8236,321 @@ int atcommand_allowks(const int fd, struct map_session_data *sd, const char *com
 	return 0;
 }
 
+int atcommand_resetstat(const int fd, struct map_session_data* sd, const char* command, const char* message)
+{
+	nullpo_retr(-1, sd);
+	
+	pc_resetstate(sd);
+	sprintf(atcmd_output, msg_txt(207), sd->status.name);
+	clif_displaymessage(fd, atcmd_output);
+	return 0;
+}
+
+int atcommand_resetskill(const int fd, struct map_session_data* sd, const char* command, const char* message)
+{
+	nullpo_retr(-1,sd);
+	
+	pc_resetskill(sd,1);
+	sprintf(atcmd_output, msg_txt(206), sd->status.name);
+	clif_displaymessage(fd, atcmd_output);
+	return 0;
+}
+
+/*==========================================
+ * #storagelist <character>: Displays the items list of a player's storage.
+ *------------------------------------------*/
+int atcommand_storagelist(const int fd, struct map_session_data* sd, const char* command, const char* message)
+{
+	struct item_data *item_data, *item_temp;
+	int i, j, count = 0, counter = 0, counter2 = 0;
+	char character[NAME_LENGTH], output[200], outputtmp[200];
+	nullpo_retr(-1, sd);
+
+	memset(character, '\0', sizeof(character));
+	memset(output, '\0', sizeof(output));
+	memset(outputtmp, '\0', sizeof(outputtmp));
+
+	for (i = 0; i < MAX_STORAGE; i++)
+	{
+		struct item* it = &sd->status.storage.items[i];
+		if( it->nameid > 0 && (item_data = itemdb_search(it->nameid)) != NULL )
+		{
+			counter = counter + it->amount;
+			count++;
+			if (count == 1) {
+				sprintf(output, "------ Storage items list of '%s' ------", sd->status.name);
+				clif_displaymessage(fd, output);
+			}
+			if (it->refine)
+				sprintf(output, "%d %s %+d (%s %+d, id: %d)", it->amount, item_data->name, it->refine, item_data->jname, it->refine, it->nameid);
+			else
+				sprintf(output, "%d %s (%s, id: %d)", it->amount, item_data->name, item_data->jname, it->nameid);
+			clif_displaymessage(fd, output);
+
+			memset(output, '\0', sizeof(output));
+			counter2 = 0;
+			for (j = 0; j < item_data->slot; j++) {
+				if (it->card[j]) {
+					if ((item_temp = itemdb_search(it->card[j])) != NULL) {
+						if (output[0] == '\0')
+							sprintf(outputtmp, " -> (card(s): #%d %s (%s), ", ++counter2, item_temp->name, item_temp->jname);
+						else
+							sprintf(outputtmp, "#%d %s (%s), ", ++counter2, item_temp->name, item_temp->jname);
+						strcat(output, outputtmp);
+					}
+				}
+			}
+			if (output[0] != '\0') {
+				output[strlen(output) - 2] = ')';
+				output[strlen(output) - 1] = '\0';
+				clif_displaymessage(fd, output);
+			}
+		}
+	}
+
+	if (count == 0)
+		clif_displaymessage(fd, "No item found in the storage of this player.");
+	else {
+		sprintf(output, "%d item(s) found in %d kind(s) of items.", counter, count);
+		clif_displaymessage(fd, output);
+	}
+
+	return 0;
+}
+
+/*==========================================
+ * Displays contents of target's cart [HiddenDragon]
+ *------------------------------------------*/
+int atcommand_cart_list(const int fd, struct map_session_data* sd, const char* command, const char* message)
+{
+	char outputtmp[200];
+	char output[200];
+	char character[NAME_LENGTH];
+	struct item_data *item_data, *item_temp;
+	int i, j, count = 0, counter = 0, counter2;
+	nullpo_retr(-1, sd);
+
+	memset(character, '\0', sizeof(character));
+	memset(output, '\0', sizeof(output));
+	memset(outputtmp, '\0', sizeof(outputtmp));
+
+	for (i = 0; i < MAX_CART; i++) {
+		if (sd->status.cart[i].nameid > 0 && (item_data = itemdb_search(sd->status.cart[i].nameid)) != NULL) {
+			counter = counter + sd->status.cart[i].amount;
+			count++;
+			if (count == 1) {
+				sprintf(output, "------ Cart items list of '%s' ------", sd->status.name);
+				clif_displaymessage(fd, output);
+			}
+			if (sd->status.cart[i].refine)
+				sprintf(output, "%d %s %+d (%s %+d, id: %d)", sd->status.cart[i].amount, item_data->name, sd->status.cart[i].refine, item_data->jname, sd->status.cart[i].refine, sd->status.cart[i].nameid);
+			else
+				sprintf(output, "%d %s (%s, id: %d)", sd->status.cart[i].amount, item_data->name, item_data->jname, sd->status.cart[i].nameid);
+			clif_displaymessage(fd, output);
+			memset(output, '\0', sizeof(output));
+			counter2 = 0;
+			for (j = 0; j < item_data->slot; j++) {
+				if (sd->status.cart[i].card[j]) {
+					if ( (item_temp = itemdb_search(sd->status.cart[i].card[j])) != NULL) {
+						if (output[0] == '\0')
+							sprintf(outputtmp, " -> (card(s): #%d %s (%s), ", ++counter2, item_temp->name, item_temp->jname);
+						else
+							sprintf(outputtmp, "#%d %s (%s), ", ++counter2, item_temp->name, item_temp->jname);
+						strcat(output, outputtmp);
+					}
+				}
+			}
+			if (output[0] != '\0') {
+				output[strlen(output) - 2] = ')';
+				output[strlen(output) - 1] = '\0';
+				clif_displaymessage(fd, output);
+			}
+		}
+	}
+	if (count == 0)
+		clif_displaymessage(fd, "No item found in the cart of this player.");
+	else {
+		sprintf(output, "%d item(s) found in %d kind(s) of items.", counter, count);
+		clif_displaymessage(fd, output);
+	}
+
+	return 0;
+}
+
+int atcommand_itemlist(const int fd, struct map_session_data* sd, const char* command, const char* message)
+{
+	struct item_data *item_data, *item_temp;
+	int i, j, equip, count, counter, counter2;
+	char character[NAME_LENGTH], output[200], equipstr[100], outputtmp[200];
+	struct item *i_item; //Current inventory item.
+	nullpo_retr(-1, sd);
+
+	memset(character, '\0', sizeof(character));
+	memset(output, '\0', sizeof(output));
+	memset(equipstr, '\0', sizeof(equipstr));
+	memset(outputtmp, '\0', sizeof(outputtmp));
+
+	counter = 0;
+	count = 0;
+	for (i = 0; i < MAX_INVENTORY; i++) {
+		i_item = &sd->status.inventory[i];
+		if (sd->status.inventory[i].nameid > 0 && (item_data = itemdb_exists(i_item->nameid)) != NULL) {
+			counter = counter + i_item->amount;
+			count++;
+			if (count == 1) {
+				sprintf(output, "------ Items list of '%s' ------", sd->status.name);
+				clif_displaymessage(fd, output);
+			}
+			if ((equip = i_item->equip)) {
+				strcpy(equipstr, "| equiped: ");
+				if (equip & EQP_GARMENT)
+					strcat(equipstr, "robe/gargment, ");
+				if (equip & EQP_ACC_L)
+					strcat(equipstr, "left accessory, ");
+				if (equip & EQP_ARMOR)
+					strcat(equipstr, "body/armor, ");
+				if ((equip & EQP_ARMS) == EQP_HAND_R)
+					strcat(equipstr, "right hand, ");
+				if ((equip & EQP_ARMS) == EQP_HAND_L)
+					strcat(equipstr, "left hand, ");
+				if ((equip & EQP_ARMS) == EQP_ARMS)
+					strcat(equipstr, "both hands, ");
+				if (equip & EQP_SHOES)
+					strcat(equipstr, "feet, ");
+				if (equip & EQP_ACC_R)
+					strcat(equipstr, "right accessory, ");
+				if ((equip & EQP_HELM) == EQP_HEAD_LOW)
+					strcat(equipstr, "lower head, ");
+				if ((equip & EQP_HELM) == EQP_HEAD_TOP)
+					strcat(equipstr, "top head, ");
+				if ((equip & EQP_HELM) == (EQP_HEAD_LOW|EQP_HEAD_TOP))
+					strcat(equipstr, "lower/top head, ");
+				if ((equip & EQP_HELM) == EQP_HEAD_MID)
+					strcat(equipstr, "mid head, ");
+				if ((equip & EQP_HELM) == (EQP_HEAD_LOW|EQP_HEAD_MID))
+					strcat(equipstr, "lower/mid head, ");
+				if ((equip & EQP_HELM) == EQP_HELM)
+					strcat(equipstr, "lower/mid/top head, ");
+				// remove final ', '
+				equipstr[strlen(equipstr) - 2] = '\0';
+			} else
+				memset(equipstr, '\0', sizeof(equipstr));
+			if (i_item->refine)
+				sprintf(output, "%d %s %+d (%s %+d, id: %d) %s", i_item->amount, item_data->name, i_item->refine, item_data->jname, i_item->refine, i_item->nameid, equipstr);
+			else
+				sprintf(output, "%d %s (%s, id: %d) %s", i_item->amount, item_data->name, item_data->jname, i_item->nameid, equipstr);
+			clif_displaymessage(fd, output);
+			memset(output, '\0', sizeof(output));
+			counter2 = 0;
+
+			if(i_item->card[0]==CARD0_PET) { //pet eggs
+				if (i_item->card[3])
+					sprintf(outputtmp, " -> (pet egg, pet id: %u, named)", (unsigned int)MakeDWord(i_item->card[1], i_item->card[2]));
+				else
+					sprintf(outputtmp, " -> (pet egg, pet id: %u, unnamed)", (unsigned int)MakeDWord(i_item->card[1], i_item->card[2]));
+				strcat(output, outputtmp);
+			} else
+			if(i_item->card[0]==CARD0_FORGE) { //forged items.
+				sprintf(outputtmp, " -> (crafted item, creator id: %u, star crumbs %d, element %d)", (unsigned int)MakeDWord(i_item->card[2], i_item->card[3]), i_item->card[1]>>8, i_item->card[1]&0x0f);
+			} else
+			if(i_item->card[0]==CARD0_CREATE) { //created items.
+				sprintf(outputtmp, " -> (produced item, creator id: %u)", (unsigned int)MakeDWord(i_item->card[2], i_item->card[3]));
+				strcat(output, outputtmp);
+			} else //Normal slots
+			for (j = 0; j < item_data->slot; j++) {
+				if (sd->status.inventory[i].card[j]) {
+					if ((item_temp = itemdb_exists(i_item->card[j])) != NULL) {
+						if (output[0] == '\0')
+							sprintf(outputtmp, " -> (card(s): #%d %s (%s), ", ++counter2, item_temp->name, item_temp->jname);
+						else
+							sprintf(outputtmp, "#%d %s (%s), ", ++counter2, item_temp->name, item_temp->jname);
+						strcat(output, outputtmp);
+					}
+				}
+			}
+			if (output[0] != '\0') {
+				output[strlen(output) - 2] = ')';
+				output[strlen(output) - 1] = '\0';
+				clif_displaymessage(fd, output);
+			}
+		}
+	}
+	if (count == 0)
+	{
+		clif_displaymessage(fd, "No item found on this player.");
+		return -1;
+	}
+
+	sprintf(output, "%d item(s) found in %d kind(s) of items.", counter, count);
+	clif_displaymessage(fd, output);
+	return 0;
+}
+
+int atcommand_stats(const int fd, struct map_session_data* sd, const char* command, const char* message)
+{
+	char character[NAME_LENGTH];
+	char job_jobname[100];
+	char output[200];
+	int i;
+	struct {
+		const char* format;
+		int value;
+	} output_table[] = {
+		{ "Base Level - %d", 0 },
+		{ NULL, 0 },
+		{ "Hp - %d", 0 },
+		{ "MaxHp - %d", 0 },
+		{ "Sp - %d", 0 },
+		{ "MaxSp - %d", 0 },
+		{ "Str - %3d", 0 },
+		{ "Agi - %3d", 0 },
+		{ "Vit - %3d", 0 },
+		{ "Int - %3d", 0 },
+		{ "Dex - %3d", 0 },
+		{ "Luk - %3d", 0 },
+		{ "Zeny - %d", 0 },
+		{ "Free SK Points - %d", 0 },
+		{ "JobChangeLvl - %d", 0 },
+		{ NULL, 0 }
+	};
+
+	memset(character, '\0', sizeof(character));
+	memset(job_jobname, '\0', sizeof(job_jobname));
+	memset(output, '\0', sizeof(output));
+
+	//direct array initialization with variables is not standard C compliant.
+	output_table[0].value = sd->status.base_level;
+	output_table[1].format = job_jobname;
+	output_table[1].value = sd->status.job_level;
+	output_table[2].value = sd->status.hp;
+	output_table[3].value = sd->status.max_hp;
+	output_table[4].value = sd->status.sp;
+	output_table[5].value = sd->status.max_sp;
+	output_table[6].value = sd->status.str;
+	output_table[7].value = sd->status.agi;
+	output_table[8].value = sd->status.vit;
+	output_table[9].value = sd->status.int_;
+	output_table[10].value = sd->status.dex;
+	output_table[11].value = sd->status.luk;
+	output_table[12].value = sd->status.zeny;
+	output_table[13].value = sd->status.skill_point;
+	output_table[14].value = sd->change_level;
+
+	sprintf(job_jobname, "Job - %s %s", job_name(sd->status.class_), "(level %d)");
+	sprintf(output, msg_txt(53), sd->status.name); // '%s' stats:
+
+	clif_displaymessage(fd, output);
+	
+	for (i = 0; output_table[i].format != NULL; i++) {
+		sprintf(output, output_table[i].format, output_table[i].value);
+		clif_displaymessage(fd, output);
+	}
+
+	return 0;
+}
+
+
+
 /*==========================================
  * atcommand_info[] structure definition
  *------------------------------------------*/
@@ -8530,6 +8845,12 @@ AtCommandInfo atcommand_info[] = {
 	{ "points",            60,60,     atcommand_cash },
 	{ "agitstart2",         60,60,    atcommand_agitstart2 },
 	{ "agitend2",           60,60,    atcommand_agitend2 },
+	{ "skreset",            60,60,    atcommand_resetskill },
+	{ "streset",            60,60,    atcommand_resetstat },
+	{ "storagelist",        40,40,    atcommand_storagelist },
+	{ "cartlist",           40,40,    atcommand_cart_list },
+	{ "itemlist",           40,40,    atcommand_itemlist },
+	{ "stats",              40,40,    atcommand_stats },
 };
 
 
@@ -8564,9 +8885,8 @@ int get_atcommand_level(const AtCommandFunc func)
 
 /// Executes an at-command.
 /// To be called by internal server code (bypasses various restrictions).
-bool is_atcommand_sub(const int fd, struct map_session_data* sd, const char* str, int gmlvl, const char charname[NAME_LENGTH])
+bool is_atcommand_sub(const int fd, struct map_session_data* sd, const char* str, int gmlvl)
 {
-	struct map_session_data* ssd;
 	AtCommandInfo* info;
 	char command[100];
 	char args[100];
@@ -8594,12 +8914,9 @@ bool is_atcommand_sub(const int fd, struct map_session_data* sd, const char* str
 		}
 	}
 
-	if( log_config.gm && info->level >= log_config.gm ) {
-		if( (ssd = map_nick2sd(charname)) != NULL )
-			log_atcommand(ssd, str);
-		else
+	//fd will not equal sd->fd if it's a charcommand. Of course, using a charcommand on yourself would make it = sd->fd as well
+	if( log_config.gm && ( info->level >= log_config.gm || info->level2 >= log_config.gm ) && fd == sd->fd)
 			log_atcommand(sd, str);
-	}
 
 	if( info->func(fd, sd, command, args) != 0 )
 	{
@@ -8619,6 +8936,8 @@ bool is_atcommand(const int fd, struct map_session_data* sd, const char* message
 	char charname[NAME_LENGTH];
 	char cmd[100];
 	char param[100];
+	char output[200];
+	char output2[200];
 	const char* message2;
 	
 	int gmlvl = pc_isGM(sd);
@@ -8651,22 +8970,22 @@ bool is_atcommand(const int fd, struct map_session_data* sd, const char* message
 		{
 			if ( (pl_sd = map_nick2sd(charname)) == NULL )
 			{
-				sprintf(atcmd_output, "%s failed. Player %s not found.", cmd, charname);
-				clif_displaymessage(fd, atcmd_output);
+				sprintf(output, "%s failed. Player %s not found.", cmd, charname);
+				clif_displaymessage(fd, output);
 				return true;
 			}
 			else {
 				//we pass fd instead of pl_sd->fd otherwise command output messages are sent to the target
 				//also, the name is taken out of the message since it's not needed anymore
-				sprintf(atcmd_output, "%s %s", cmd, param);
-				memcpy(atcmd_temp, atcmd_output, sizeof(atcmd_output));
-				message2 = atcmd_temp;
-				return is_atcommand_sub(fd,pl_sd,message2,gmlvl,sd->status.name);
+				sprintf(output, "%s %s", cmd, param);
+				memcpy(output2, output, sizeof(output2));
+				message2 = output2;
+				return is_atcommand_sub(fd,pl_sd,message2,gmlvl);
 			}
 		}
 	}
 	
-	return is_atcommand_sub(fd,sd,message,gmlvl,sd->status.name);
+	return is_atcommand_sub(fd,sd,message,gmlvl);
 }
 
 
@@ -8690,8 +9009,8 @@ int atcommand_config_read(const char* cfgName)
 		if( line[0] == '/' && line[1] == '/' )
 			continue;
 		
-		if( (sscanf(line, "%1023[^:]:%1023[^,],%1023s", w1, w2, w3)) != 3 
-		&& ( sscanf(line, "%1023[^:]:%1023s", w1, w2) != 2 && strcmpi(w1, "import") != 0 ) )
+		if( (sscanf(line, "%1023[^:]:%1023[^,],%1023s", w1, w2, w3)) != 3 && ( sscanf(line, "%1023[^:]:%1023s", w1, w2) != 2 
+		&& strcmpi(w1, "import") != 0 ) && strcmpi(w1, "command_symbol") != 0 && strcmpi(w1, "char_symbol") != 0 )
 			continue;
 
 		p = get_atcommandinfo_byname(w1);
@@ -8699,8 +9018,16 @@ int atcommand_config_read(const char* cfgName)
 		{
 			p->level = atoi(w2);
 			p->level = cap_value(p->level, 0, 100);
-			p->level2 = atoi(w3);
-			p->level2 = cap_value(p->level2, 0, 100);
+			if( (sscanf(line, "%1023[^:]:%1023s", w1, w2) == 2) && (sscanf(line, "%1023[^:]:%1023[^,],%1023s", w1, w2, w3)) != 3 )
+			{	
+				ShowWarning("atcommand_conf: setting %s:%d is deprecated! Please see atcommand_athena.conf for the new setting format.\n",w1,atoi(w2));
+				ShowWarning("atcommand_conf: defaulting %s charcommand level to %d.\n",w1,atoi(w2));
+				p->level2 = atoi(w2);
+			}
+			else {
+				p->level2 = atoi(w3);
+				p->level2 = cap_value(p->level2, 0, 100);
+			}
 		}
 		else
 		if( strcmpi(w1, "import") == 0 )
@@ -8713,6 +9040,14 @@ int atcommand_config_read(const char* cfgName)
 			w2[0] != '$' && // symbol of guild chat speaking
 			w2[0] != '#' ) // remote symbol
 			atcommand_symbol = w2[0];
+		else 
+		if( strcmpi(w1, "char_symbol") == 0 &&
+			w2[0] > 31   &&
+			w2[0] != '/' &&
+			w2[0] != '%' &&
+			w2[0] != '$' &&
+			w2[0] != '@' )
+			charcommand_symbol = w2[0];
 		else
 			ShowWarning("Unknown setting '%s' in file %s\n", w1, cfgName);
 	}

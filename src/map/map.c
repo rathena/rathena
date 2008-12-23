@@ -2934,7 +2934,7 @@ int parse_console(char* buf)
 	ShowInfo("Type of command: '%s' || Command: '%s' || Map: '%s' Coords: %d %d\n", type, command, map, x, y);
 
 	if( n == 5 && strcmpi("admin",type) == 0 ){
-		if( !is_atcommand_sub(sd.fd,&sd,command,99,sd.status.name) )
+		if( !is_atcommand_sub(sd.fd,&sd,command,99) )
 			ShowInfo("Console: not atcommand\n");
 	} else if( n == 2 && strcmpi("server",type) == 0 ){
 		if( strcmpi("shutdown",command) == 0 ||

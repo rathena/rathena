@@ -3,6 +3,12 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2008/12/22
+	* Added a few missing atcommands. [SketchyPhoenix]
+	* Added more commands to configurations (bugreport:2565)
+	* Added a missing charcommand symbol config to atcommand configs.
+	* GM command configs under the old format will have a warning printed back to the console as being deprecated.
+	* Other fixes/cleaning partially resolving bugreport:2549
 2008/12/20
 	* Extended how duplicates work: (based on Orcao's work in bugreport:2361) [FlavioJS]
 	- you can duplicate warps/shops/cashshops/npcs (before only npcs could be duplicated)
