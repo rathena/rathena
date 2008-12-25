@@ -8965,8 +8965,13 @@ bool is_atcommand(const int fd, struct map_session_data* sd, const char* message
 
 	if (*message == charcommand_symbol)
 	{
-		if (sscanf(message, "%99s \"%23[^\"]\" %99[^\n]", cmd, charname, param) > 2
-		|| sscanf(message, "%99s %23s %99[^\n]", cmd, charname, param) > 2)
+		if( sscanf(message, "%99s %99[^\n]", cmd, param) == 1 ) {
+				sprintf(output, "%s failed. Please enter a player name.", cmd);
+				clif_displaymessage(fd, output);
+				return true;
+		}
+		else if (sscanf(message, "%99s \"%23[^\"]\" %99[^\n]", cmd, charname, param) > 1
+		|| sscanf(message, "%99s %23s %99[^\n]", cmd, charname, param) > 1)
 		{
 			if ( (pl_sd = map_nick2sd(charname)) == NULL )
 			{
