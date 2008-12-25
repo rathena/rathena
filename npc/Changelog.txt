@@ -1,5 +1,7 @@
 Date		Added
 ======
+2008/12/25
+	* Added a check in The Sign Quest for Sign_Branch8A before attempting to run a delitem on items not needed based on Path taken. [Paradox924X]
 2008/12/23
 	* Small update to the checkweight in Christmas 2005 Event. (bugreport:2553) [Paradox924X]
 2008/11/21

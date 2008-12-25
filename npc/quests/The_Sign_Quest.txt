@@ -43,6 +43,7 @@
 //= 2.7 Replaced effect numerics with constants. [Samuray22]
 //= 2.8 Fixed some bugs with itemids and leftover questitems [Fish0r]
 //= 2.9 Made a delitem causing script to fault use countitem when deleting. [L0ne_W0lf]
+//= 2.9a Added a check for Sign_Branch8A before attempting to run a delitem on items not needed based on Path taken. [Paradox924X]
 //============================================================ 
 //===== Configuration : ======================================
 prontera,1,1,1	script	TheSignConfig	-1,{
@@ -8234,7 +8235,7 @@ L_NoMedal:
 
 L_Success:
     if (countitem(7313) < 5 && Sign_Branch8A) goto L_Voucher;
-    delitem 7313,5;
+    if (Sign_Branch8A) delitem 7313,5;
     mes "[Kirkena]";
     mes "You've done well.";
     mes "Without her memories of her";
