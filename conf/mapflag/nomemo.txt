@@ -144,12 +144,12 @@ mjolnir_11	mapflag	nomemo
 moc_fild01	mapflag	nomemo
 moc_fild02	mapflag	nomemo
 moc_fild03	mapflag	nomemo
-moc_fild04	mapflag	nomemo
-moc_fild05	mapflag	nomemo
-moc_fild08	mapflag	nomemo
+//moc_fild04	mapflag	nomemo
+//moc_fild05	mapflag	nomemo
+//moc_fild08	mapflag	nomemo
 moc_fild09	mapflag	nomemo
-moc_fild13	mapflag	nomemo
-moc_fild14	mapflag	nomemo
+//moc_fild13	mapflag	nomemo
+//moc_fild14	mapflag	nomemo
 moc_fild15	mapflag	nomemo
 moc_fild16	mapflag	nomemo
 moc_fild17	mapflag	nomemo

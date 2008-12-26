@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 
-//= 2.7
+//= 2.8
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -19,9 +19,10 @@
 //= 2.5 Added dummy "OnMyMobDead" labels. (bugreport:1100) [L0ne_W0lf]
 //= 2.6 Fixed a few bugs in the Rogue Guildsman. [L0ne_W0lf]
 //= 2.7 Fixed a bug on Markie question 5, bugreport:1600 [Brainstorm]
+//= 2.8 Moved "Thug" to Morroc Ruins. [L0ne_W0lf]
 //============================================================ 
 
-morocc,100,104,1	script	Thug#rg	118,{
+moc_ruins,86,103,1	script	Thug#rg	118,{
 	mes "[Thug]";
 	mes "*Sigh...*";
 	mes "What is life?";

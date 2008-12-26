@@ -4,7 +4,7 @@
 //= Darkchild (1.1)
 //= Playtester (1.2)
 //===== Current Version: ===================================== 
-//= 2.6
+//= 2.7
 //===== Compatible With: ===================================== 
 //= eAthena 1.0+
 //===== Description: ========================================= 
@@ -41,6 +41,7 @@
 //= 2.4 Fixed Inn Employee#Ahlma warping to same destination as save point, bugreport: 191.
 //= 2.5 Added Moskovia Gostinitsa (Inn) from jA
 //= 2.6 Updated Alberta inn to official. [L0ne_W0lf]
+//= 2.7 Removed Morroc Inns as per episode 12.1. [L0ne_W0lf]
 //============================================================ 
 
 
@@ -81,6 +82,7 @@ payon_in01,132,62,5	script	Inn Employee#Ahee	53,{
 
 //======================== Morocc ====================================
 // North East --------------------------
+/*
 morocc_in,147,141,3	script	Inn Employee#Hasna	53,{
 
 	callfunc "F_InnMaid","[Employee Hasna]","Morroc Inn","morocc_in",142,140;
@@ -92,7 +94,7 @@ morocc_in,80,100,5	script	Inn Employee#Manar	53,{
 	callfunc "F_InnMaid","[Employee Manar]","Morroc Inn","morocc_in",78,95;
 	warp "morocc_in",79,123; end;
 }
-
+*/
 
 //====================== Aldebaran ===================================
 aldeba_in,92,58,5	script	Inn Maid#Rilim	53,{

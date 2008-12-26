@@ -1,5 +1,16 @@
 Date		Added
 ======
+2008/12/26
+	Rev. 13415 Happy boxing day, eAthena! Here have a massive update. [L0ne_W0lf]
+	* Implemented the first round of episode 12.1 change which include:
+	- Many Morroc NPCs have been moved to Morroc Ruins.
+	- The addition of new of NPCs to the ruins of Morroc.
+	- Several warp points leading around Morroc altered.
+	- The implementation of the continental Guard Quest.
+	- The removal of the 'Dandelion's Request" quest.
+	- This update contains several changes, as Morroc and several fields no longer
+	  exist in one sense of the word. AS such, many NPCs have been moved, there may
+	  be quests that no longer function because of NPCs on inaccessable maps.
 2008/12/25
 	* Added a check in The Sign Quest for Sign_Branch8A before attempting to run a delitem on items not needed based on Path taken. [Paradox924X]
 2008/12/23

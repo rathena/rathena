@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= MasterOfMuppets
 //===== Current Version: =====================================
-//= 1.6
+//= 1.7
 //===== Compatible With: =====================================
 //= Any Athena Version
 //===== Additional Comments: =================================
@@ -18,6 +18,7 @@
 //= 1.5a Fixed a small screw up with the color codes in the Glastheim BB [MasterOfMuppets]
 //= 1.5b Fixed another small screw up with the color codes in the Glastheim BB [Kayla]
 //= 1.6 Removed Duplicates [Silent]
+//= 1.7 Updated MOrroc NPCs to reflect episode 12.1 changes. [L0ne_W0lf]
 //============================================================
 
 alberta,111,59,5	script	Bulletin Board#1	837,{
@@ -196,32 +197,16 @@ mjolnir_02,76,362,5	script	Bulletin Board#10	837,{
 
 morocc,152,110,5	script	Bulletin Board#11	837,{
 	mes "[Morroc: The Frontier Town]";
-	mes "Welcome to Morroc, the City of the";
-	mes "Desert. Morroc was built on an";
-	mes "on an oasis, so this town can accommodate";
-	mes "its many visitors and travelers.";
+	mes "Welcome to Morroc, the City of the Desert. Morroc was built on an oasis, so this town can accomodate its many visitors and travelers.";
 	next;
 	mes "[Morroc: The Frontier Town]";
-	mes "Morroc Castle lies in the center of";
-	mes "this city. Please feel free to";
-	mes "explore this town, and enjoy its";
-	mes "unique atmosphere. However, watch";
-	mes "your pockets and beware of Rogues";
-	mes "and Thieves.";
+	mes "Morroc Castle lies in the center of this city. Please feel free to explore this town, and enjoy its unique atmosphere. However, watch your pockets and beware of Rogues and Thieves.";
 	next;
 	mes "[Morroc: The Frontier Town]";
-	mes "From Morroc, the ^6B1312Pyramid Dungeon^000000";
-	mes "can be found to the Northwest, and";
-	mes "the ^6B1312Sphinx Dungeon^000000 can be found to";
-	mes "the West. To the southeast, you may";
-	mes "find ^6B1312Ant Hell.";
+	mes "From Morroc, the ^660000Pyramid Dungeon^000000 can be found to the Northwest, and the ^660000Sphinx Dungeon^000000 can be found to the West. To the Southeast, you may find ^660000Ant Hell^000000.";
 	next;
-	mes "[Morroc: The Frontier Town]";
-	mes "The Assassin Guild is rumored to be";
-	mes "located to the Southeast. When you";
-	mes "head East from Morroc, and then";
-	mes "North, you will arrive at";
-	mes "^6D6FE0Prontera^000000.";
+	mes "[Morroc: The Frontier Town";
+	mes "The Assassin Guild is rumored to be located to the Southeast. When you head East from Morroc, and then North, you will arrive at ^3355FFProntera^000000.";
 	close;
 }
 
@@ -567,6 +552,7 @@ niflheim,200,191,5	script	Bulletin Board#25	837,{
 	close;
 }
 
+/*
 moc_fild15,267,264,5	script	Bulletin Board#26	837,{
 
 	mes "[Ant Hell]";
@@ -582,6 +568,7 @@ moc_fild15,267,264,5	script	Bulletin Board#26	837,{
 	mes "a boss monster called ^6B1312Phreeoni^000000 will appear at certain time.";
 	close;
 }
+*/
 
 moc_ruins,61,164,5	script	Bulletin Board#27	837,{
 

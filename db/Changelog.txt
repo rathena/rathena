@@ -40,6 +40,8 @@
 	2385 Recuvative_Armor		Should trigger HP/SP return with magical kills as well.
 
 =======================
+2008/12/26
+	* Rev. 13415 Updated episode 12.1 skills to official. [L0ne_W0lf]
 2008/12/17
 	* Rev. 13405 Added additional maps to map_index.txt. [L0ne_W0lf]
 	* Rev. 13404 Semi-reverted r13396. All item bonuses from past events can be found in item_db2. [L0ne_W0lf]

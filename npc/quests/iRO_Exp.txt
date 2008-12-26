@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Kisuka
 //===== Current Version: =====================================
-//= 1.0
+//= 1.1
 //===== Compatible With: =====================================
 //= eAthena SVN
 //===== Description: =========================================
@@ -17,6 +17,7 @@
 //= From Vendor shops in npc/merchants/shops.txt
 //===== Additional Comments: =================================
 //= 1.0 First version. [Kisuka]
+//= 1.1 Moved Jeremy and Gregor to different maps. [L0ne_W0lf]
 //============================================================
 
 // Yullo - 25 Porcupine Quill
@@ -511,7 +512,7 @@ moc_fild17,66,273,5	script	Lemly#iROExp	725,{
 
 // Private Jeremy - 25 Stone Heart
 //===========================================================
-moc_fild05,213,163,7	script	Private Jeremy#iROExp	707,{
+moc_fild11,57,138,7	script	Private Jeremy#iROExp	707,{
 	if((BaseLevel < 25)) {
 		mes "[Private Jeremy]";
 		mes "It is dangerous here";
@@ -562,7 +563,7 @@ moc_fild05,213,163,7	script	Private Jeremy#iROExp	707,{
 
 // Gregor - 25 Bill of Birds
 //===========================================================
-moc_fild06,33,204,3	script	Gregor#iROExp	97,{
+moc_fild02,74,329,3	script	Gregor#iROExp	97,{
 	if((BaseLevel < 10)) {
 		mes "[Gregor]";
 		mes "He there.";

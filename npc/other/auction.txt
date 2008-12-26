@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
-//= 1.0
+//= 1.1
 //===== Compatible With: =====================================
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -11,11 +11,12 @@
 //= Auction house releated NPCs, and warps
 //===== Additional Comments: =================================
 //= 1.0 First version, place holders only. [L0ne_W0lf]
+//= 1.1 Moved Morroc Auction NPCs to Morroc Ruins. [L0ne_W0lf]
 //============================================================
 
 // Auction House warpers
 //============================================================
-morocc,182,95,6	script	Auction Hall Guide#moc	98,{
+moc_ruins,78,173,6	script	Auction Hall Guide#moc	98,{
 	callfunc "F_AuctionWarper",1;
 }
 
@@ -63,7 +64,7 @@ function	script	F_AuctionWarper	{
 
 // Sign posts
 //============================================================
-morocc,180,97,6	script	Information Post#moc::AuctionSign	837,{
+moc_ruins,76,176,6	script	Information Post#moc::AuctionSign	837,{
 	mes "[Information]";
 	mes "Auction Warp Guide";
 	close;

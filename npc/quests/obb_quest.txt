@@ -3,7 +3,7 @@
 //===== By ===================================================
 //= Celesta, Lupus
 //===== Version ==============================================
-//= 1.8
+//= 1.9
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -18,6 +18,7 @@
 //===== Additional Comments: ================================= 
 //= 1.7 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
 //= 1.8 Added missing checkweights. [L0ne_W0lf]
+//= 1.9 Moved Morroc NPCs to Morroc Ruins. [L0ne_W0lf]
 //============================================================ 
 
 alberta,43,244,0	script	Tourist#thai	99,{
@@ -614,7 +615,7 @@ alberta,43,244,0	script	Tourist#thai	99,{
 	}
 }
 
-morocc,230,150,0	script	Jacob#thai	50,{
+moc_ruins,105,62,4	script	Jacob#thai	50,{
 	if (thai_head >= 6 && thai_head <= 11) {
 		switch (thai_head) {
 		case 6:
@@ -1843,7 +1844,7 @@ comodo,68,195,0	script	Old Man#thai	120,{
 	}
 }
 
-morocc,230,148,0	script	Tommy#thai	716,{
+moc_ruins,107,62,0	script	Tommy#thai	716,{
 	if (thai_head == 6 && thai_head == 11) {
 		switch(thai_head) {
 		case 6:

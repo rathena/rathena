@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Syrus22 (1.1) dafide18 (1.4) Skotlex (1.5)
 //===== Current Version: =====================================
-//= 2.8
+//= 2.9
 //===== Compatible With: =====================================
 //= Any Athena Version
 //===== Description: =========================================
@@ -54,6 +54,7 @@
 //= 2.8 Added proper Blacksmith Supplier to Einroch. [L0ne_W0lf]
 //=     Updated dated features comment to reflect new usage.
 //= 2.8a Small bugfix. (bugreport:2418) [Paradox924X]
+//= 2.9 MOved Morroc repairman to Morroc Ruins. [L0ne_W0lf]
 //============================================================
 
 
@@ -1127,7 +1128,7 @@ alberta_in,31,65,4	script	Repairman#alb	86,{
 	end;
 }
 
-morocc_in,71,41,4	script	Repairman#moc	99,{
+moc_ruins,107,94,5	script	Repairman#moc	99,{
 	callfunc "repairmain","Repairman";
 	end;
 }
