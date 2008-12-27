@@ -2240,7 +2240,7 @@ new_1-2,17,182,5	script	Helper#nv	84,{
 					set nov_2nd_cos,17;
 					getexp 112,0;
 				}
-				else if (BaseLevel == 7) {
+				else if (BaseLevel >= 7) {
 					set nov_2nd_cos,18;
 					getexp 153,0;
 				}

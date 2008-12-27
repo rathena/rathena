@@ -3836,7 +3836,7 @@ this really cause.
 
 ---------------------------------------
 
-* getnameditem <item name|item id>,<Character name|character ID>;
+*getnameditem <item name|item id>,<Character name|character ID>;
 
 -Note: there's a total of 4 possible combinations of this command.
 E.g: item name and character name, or with character id, etc...
@@ -4547,7 +4547,7 @@ Example(s):
 	
 ---------------------------------------
 
-* pcblockmove <id>,<option>;
+*pcblockmove <id>,<option>;
 
 Prevents the given ID from moving when the option != 0, 0 enables the ID to move again.
 ID should be able to be GID of a monster/npc or AID from a character.
@@ -4751,7 +4751,7 @@ the homunculus must be on at least 91000/100000 intimacy with it's owner.
 
 ---------------------------------------
 
-* unitwalk <GID>,<x>,<y>;
+*unitwalk <GID>,<x>,<y>;
 * unitwalk <GID>,<mapid>;
 
 This is one command, but can be used in two ways. If only the first argument is given,
@@ -4771,12 +4771,12 @@ Example(s):
 
 ---------------------------------------
 
-* unitkill <GID>;
-* unitwarp <GID>,<Mapname>,<x>,<y>;
-* unitattack <GID>,<Target ID>;
-* unitstop <GID>;
-* unittalk <GID>,<Text>;
-* unitemote <GID>,<Emote>;
+*unitkill <GID>;
+*unitwarp <GID>,<Mapname>,<x>,<y>;
+*unitattack <GID>,<Target ID>;
+*unitstop <GID>;
+*unittalk <GID>,<Text>;
+*unitemote <GID>,<Emote>;
 
 Okay, these commands should be fairly self explaining.
 For the emotions, you can look in db/const.txt for prefixes with e_
@@ -5156,7 +5156,7 @@ labels can take over handling for relatively the buying of items from the shop
 and selling the items to a shop. Via these labels you can customize the way an item
 is bought or sold by a player. 
 
-In the OnBuyItem, two arrays are set (@bought_nameid and @bough_quantity), which
+In the OnBuyItem, two arrays are set (@bought_nameid and @bought_quantity), which
 hold information about the name id (item id) sold and the amount sold of it. Same 
 goes for the OnSellItem label, only the variables are named different 
 (@sold_nameid and @sold_quantity). An example on a shop comes with eAthena, and 

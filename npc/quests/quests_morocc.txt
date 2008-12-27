@@ -1973,6 +1973,6 @@ OnTimer5415000:
 	stopnpctimer;
 	killmonster "moc_fild21","Satan Summon#edq::OnMyMobDead";
 	set $@re_moc,0;
-	donpcevent "Satan Summon#edq::OnDiable";
+	donpcevent "Satan Summon#edq::OnDisable";
 	end;
 }
