@@ -2743,48 +2743,49 @@ int pc_skill(TBL_PC* sd, int id, int level, int flag)
 /*==========================================
  * ƒJ?ƒh?“ü
  *------------------------------------------*/
-int pc_insert_card(struct map_session_data *sd,int idx_card,int idx_equip)
+int pc_insert_card(struct map_session_data* sd, int idx_card, int idx_equip)
 {
-	int i, ep;
-	int nameid, cardid;
+	int i;
 
 	nullpo_retr(0, sd);
 
-	if(idx_card < 0 || idx_card >= MAX_INVENTORY || !sd->inventory_data[idx_card])
-		return 0; //Invalid card index.
-			
-	if(idx_equip < 0 || idx_equip >= MAX_INVENTORY || !sd->inventory_data[idx_equip])
+	if( idx_equip < 0 || idx_equip >= MAX_INVENTORY || sd->inventory_data[idx_equip] == NULL )
 		return 0; //Invalid item index.
-	
-	nameid=sd->status.inventory[idx_equip].nameid;
-	cardid=sd->status.inventory[idx_card].nameid;
-	ep=sd->inventory_data[idx_card]->equip;
+	if( idx_card < 0 || idx_card >= MAX_INVENTORY || sd->inventory_data[idx_card] == NULL )
+		return 0; //Invalid card index.
+	if( sd->status.inventory[idx_equip].nameid <= 0 || sd->status.inventory[idx_equip].amount < 1 )
+		return 0; // target item missing
+	if( sd->status.inventory[idx_card].nameid <= 0 || sd->status.inventory[idx_card].amount < 1 )
+		return 0; // target card missing
+	if( sd->inventory_data[idx_equip]->type != IT_WEAPON && sd->inventory_data[idx_equip]->type != IT_ARMOR )
+		return 0; // only weapons and armor are allowed
+	if( sd->inventory_data[idx_card]->type != IT_CARD )
+		return 0; // must be a card
+	if( sd->status.inventory[idx_equip].identify == 0 )
+		return 0; // target must be identified
+	if( itemdb_isspecial(sd->status.inventory[idx_equip].card[0]) )
+		return 0; // card slots reserved for other purposes
+	if( (sd->inventory_data[idx_equip]->equip & sd->inventory_data[idx_card]->equip) == 0 )
+		return 0; // card cannot be compounded on this item type
+	if( sd->inventory_data[idx_equip]->type == IT_WEAPON && sd->inventory_data[idx_card]->equip == EQP_SHIELD )
+		return 0; // attempted to place shield card on left-hand weapon.
+	if( sd->status.inventory[idx_equip].equip != 0 )
+		return 0; // item must be unequipped
 
-	//Check validity
-	if( nameid <= 0 || cardid <= 0 ||
-		sd->status.inventory[idx_equip].amount < 1 || //These two should never be required due to pc_delitem zero'ing the data.
-		sd->status.inventory[idx_card].amount < 1 ||
-		(sd->inventory_data[idx_equip]->type!=IT_WEAPON && sd->inventory_data[idx_equip]->type!=IT_ARMOR)||
-		sd->inventory_data[idx_card]->type!=IT_CARD || // Prevent Hack [Ancyker]
-		sd->status.inventory[idx_equip].identify==0 ||
-		itemdb_isspecial(sd->status.inventory[idx_equip].card[0]) ||
-		!(sd->inventory_data[idx_equip]->equip&ep) ||
-		(sd->inventory_data[idx_equip]->type==IT_WEAPON && ep==EQP_SHIELD) || //Card shield attempted to place on left-hand weapon.
-		sd->status.inventory[idx_equip].equip){
+	ARR_FIND( 0, sd->inventory_data[idx_equip]->slot, i, sd->status.inventory[idx_equip].card[i] == 0 );
+	if( i == sd->inventory_data[idx_equip]->slot )
+		return 0; // no free slots
 
+	if( pc_delitem(sd,idx_card,1,1) == 1 )
+	{// failed
 		clif_insert_card(sd,idx_equip,idx_card,1);
-		return 0;
 	}
-	for(i=0;i<sd->inventory_data[idx_equip]->slot;i++){
-		if( sd->status.inventory[idx_equip].card[i] == 0)
-		{	//Free slot found.
-			sd->status.inventory[idx_equip].card[i]=cardid;
-			clif_insert_card(sd,idx_equip,idx_card,0);
-			pc_delitem(sd,idx_card,1,1);
-			return 0;
-		}
+	else
+	{// success
+		sd->status.inventory[idx_equip].card[i] = sd->status.inventory[idx_card].nameid;
+		clif_insert_card(sd,idx_equip,idx_card,0);
 	}
-	clif_insert_card(sd,idx_equip,idx_card,1);
+
 	return 0;
 }
 

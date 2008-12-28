@@ -4806,14 +4806,11 @@ int clif_use_card(struct map_session_data *sd,int idx)
 		if((sd->inventory_data[i]->equip&ep)==0)	//Not equippable on this part.
 			continue;
 
-		if(sd->inventory_data[i]->type==IT_WEAPON && ep==EQP_HAND_L) //Shield card won't go on left weapon.
+		if(sd->inventory_data[i]->type==IT_WEAPON && ep==EQP_SHIELD) //Shield card won't go on left weapon.
 			continue;
 
-		for(j=0;j<sd->inventory_data[i]->slot;j++){
-			if( sd->status.inventory[i].card[j]==0 )
-				break;
-		}
-		if(j==sd->inventory_data[i]->slot)	// No room
+		ARR_FIND( 0, sd->inventory_data[i]->slot, j, sd->status.inventory[i].card[j] == 0 );
+		if( j == sd->inventory_data[i]->slot )	// No room
 			continue;
 
 		WFIFOW(fd,4+c*2)=i+2;
