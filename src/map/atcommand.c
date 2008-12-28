@@ -6586,7 +6586,7 @@ int atcommand_adjcmdlvl(const int fd, struct map_session_data* sd, const char* c
 
 	nullpo_retr(-1, sd);
 
-	if (!message || !*message || sscanf(message, "%d %d %99s", &newlev, &newremotelev, name) != 2)
+	if (!message || !*message || sscanf(message, "%d %d %99s", &newlev, &newremotelev, name) != 3)
 	{
 		clif_displaymessage(fd, "Usage: @adjcmdlvl <lvl> <remote lvl> <command>.");
 		return -1;
