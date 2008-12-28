@@ -13140,6 +13140,24 @@ BUILDIN_FUNC(mercenary_set_faith)
 	return 0;
 }
 
+/*------------------------------------------
+ * Book Reading
+ *------------------------------------------*/
+BUILDIN_FUNC(readbook)
+{
+	struct map_session_data *sd;
+	int book_id, page;
+
+	if( (sd = script_rid2sd(st)) == NULL )
+		return 0;
+
+	book_id = script_getnum(st,2);
+	page = script_getnum(st,3);
+
+	clif_readbook(sd->fd, book_id, page);
+	return 0;
+}
+
 /******************
 Questlog script commands
 *******************/
@@ -13578,6 +13596,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(mercenary_get_faith,"i"),
 	BUILDIN_DEF(mercenary_set_calls,"ii"),
 	BUILDIN_DEF(mercenary_set_faith,"ii"),
+	BUILDIN_DEF(readbook,"ii"),
 	// WoE SE
 	BUILDIN_DEF(agitstart2,""),
 	BUILDIN_DEF(agitend2,""),

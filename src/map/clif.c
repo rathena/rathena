@@ -12662,6 +12662,18 @@ void clif_rental_expired(int fd, int nameid)
 	WFIFOSET(fd,6);
 }
 
+/*------------------------------------------
+ * Book Reading
+ *------------------------------------------*/
+void clif_readbook(int fd, int book_id, int page)
+{
+	WFIFOHEAD(fd,10);
+	WFIFOW(fd,0) = 0x0294;
+	WFIFOL(fd,2) = book_id;
+	WFIFOL(fd,6) = page;
+	WFIFOSET(fd,10);
+}
+
 /*==========================================
  * パケットデバッグ
  *------------------------------------------*/
