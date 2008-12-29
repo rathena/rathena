@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= nestor_zulueta (Fusion), converted by Darkchild
 //===== Current Version: ===================================== 
-//= 2.7
+//= 2.8
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -14,6 +14,7 @@
 //=	No longer uses function "F_BlockHigh"
 //= 2.6 Corrected a bug in advanced class checking. [L0ne_W0lf]
 //= 2.7 Added missing checkweights. [L0ne_W0lf]
+//= 2.8 Fixed minor typo in test section. [L0ne_W0lf]
 //============================================================ 
 
 alde_alche,27,185,5	script	Alchemist Guildsman#am	744,{
@@ -660,7 +661,7 @@ L_AskQuestions:
 			if (.@input != 12) set .@w_point,.@w_point+1;
 			mes "[Raspuchin Gregory]";
 			mes "If you buy 4 Padded Armors";
-			mes "at a 25% discount and sell";
+			mes "at a 24% discount and sell";
 			mes "them at 20% of the original";
 			mes "price, how much profit would";
 			mes "you make from this sale?";

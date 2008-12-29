@@ -55,6 +55,7 @@
 //= 2.9 Replaced effect numerics with constants. [Samuray22]
 //= 3.0 Large reordering of Zhed, and Peace to the Arunafeltz addition. [L0ne_W0lf]
 //=     Some more numeric conversion, and some other cleanup.
+//= 3.1 Updated Ice Necklace quest, added missing checks. [L0ne_W0lf]
 //============================================================ 
 
 // Lost Child Quest (Prerequisite to High Priest quest)
@@ -2740,6 +2741,14 @@ ra_in01,255,25,0	script	Book#ra_in	111,{
 //rachel,157,183,3	script	Sincere Follower Urstia	917,{
 rachel,157,183,3	script	Sincere Follower Urstia	916,{
 	cutin "ra_usti1",2;
+	if (checkweight(908,200) == 0) {
+		mes "^3355FFWait a second!";
+		mes "Right now, you're carrying";
+		mes "too many things with you.";
+		mes "Please come back after";
+		mes "using the Kafra Service";
+		mes "to store some of your items.^000000";
+	}
 	if (ice_necklace_q < 1) {
 		mes "[Urstialla]";
 		mes "Oh, are you an adventurer";
@@ -2860,7 +2869,9 @@ rachel,157,183,3	script	Sincere Follower Urstia	916,{
 				mes "maybe my prayers haven't";
 				mes "been answered yet. Perhaps";
 				mes "I need to pray more fervently?.";
-				goto L_End;
+				close2;
+				cutin "",255;
+				end;
 			}
 			mes "[Urstialla]";
 			mes "Thank you so much!";
@@ -2869,9 +2880,11 @@ rachel,157,183,3	script	Sincere Follower Urstia	916,{
 			mes "to restore its luster. Then,";
 			mes "it'll be a fitting tribute to";
 			mes "our loving goddess Freya.";
-			getitem 7572,1; //Ashy_Necklace
+			getitem 7572,1; //Magic_Necklace
 			set ice_necklace_q,1;
-			goto L_End;
+			close2;
+			cutin "",255;
+			end;
 		}
 		cutin "ra_usti2",2;
 		mes "[Urstialla]";
@@ -2880,67 +2893,73 @@ rachel,157,183,3	script	Sincere Follower Urstia	916,{
 		mes "that you don't believe?";
 		mes "Repent, and may your";
 		mes "heart be opened to Freya!";
-		goto L_End;
 	}
-
 	else if ((ice_necklace_q >= 1) && (ice_necklace_q < 5)) {
 		mes "[Urstialla]";
 		mes "Please find Maheo the";
 		mes "Mage and ask him to restore";
 		mes "the beauty of the necklace";
-
 		mes "I gave you. He should be";
 		mes "fighting monsters in the";
 		mes "ice cave to the north.";
-		goto L_End;
 	}
-
 	else if (ice_necklace_q == 5) {
-		mes "[Urstialla]";
-		mes "Oh! My necklace! Thank you!";
-		mes "It's so beautiful! It will";
-		mes "make a wonderful tribute to";
-		mes "Freya! I am certain with this,";
-		mes "my son will get better!";
-		next;
-		mes "[Urstialla]";
-		mes "Here, I know it's not much,";
-		mes "but please accept this as a";
-		mes "token of my appreication for";
-		mes " what you have done for me.";
-		delitem 7573,1; //Sparkling Necklace
-		getexp 700000,0;
-		set ice_necklace_q,6;
-		next;
-		mes "["+strcharinfo(0)+"]";
-		mes "Oh, let's just say it was";
-		mes "a worthwhile experience";
-		mes "for me.";
-		next;
-		mes "[Urstialla]";
-		mes ".........";
-		mes "............";
-		mes "May Freya always protect and";
-		mes "guide you and forgive you for";
-		mes "that horrible joke.";
-		goto L_End;
+		if (countitem(7573) > 0) {
+			mes "[Urstialla]";
+			mes "Oh! My necklace! Thank you!";
+			mes "It's so beautiful! It will";
+			mes "make a wonderful tribute to";
+			mes "Freya! I am certain with this,";
+			mes "my son will get better!";
+			next;
+			mes "[Urstialla]";
+			mes "Here, I know it's not much,";
+			mes "but please accept this as a";
+			mes "token of my appreication for";
+			mes " what you have done for me.";
+			delitem 7573,1; //Magic_Necklace_
+			getexp 700000,0;
+			set ice_necklace_q,6;
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "Oh, let's just say it was";
+			mes "a worthwhile experience";
+			mes "for me.";
+			next;
+			mes "[Urstialla]";
+			mes ".........";
+			mes "............";
+			mes "May Freya always protect and";
+			mes "guide you and forgive you for";
+			mes "that horrible joke.";
+		}
+		else {
+			mes "["+strcharinfo(0)+"]";
+			mes "Oh, no! The necklace has disappeared!";
+		}
 	}
-
-	mes "[Urstialla]";
-	mes "May Freya always";
-	mes "protect and guide you";
-	mes "with her everflowing";
-	mes "grace and wisdom..";
-	goto L_End;
-
-L_End:
+	else {
+		mes "[Urstialla]";
+		mes "May Freya always";
+		mes "protect and guide you";
+		mes "with her everflowing";
+		mes "grace and wisdom..";
+	}
 	close2;
 	cutin "",255;
 	end;
-
 }
 
 ice_dun02,120,105,3	script	Man Stuck in Ice#cave	924,5,5,{
+	if (checkweight(908,200) == 0) {
+		mes "^3355FFWait a second!";
+		mes "Right now, you're carrying";
+		mes "too many things with you.";
+		mes "Please come back after";
+		mes "using the Kafra Service";
+		mes "to store some of your items.^000000";
+		close;
+	}
 	if (ice_necklace_q == 1) {
 		cutin "ra_magic3",2;
 		emotion e_omg;
@@ -3132,7 +3151,6 @@ ice_dun02,120,105,3	script	Man Stuck in Ice#cave	924,5,5,{
 		cutin "",255;
 		end;
 	}
-
 	else if ((ice_necklace_q == 2) || (ice_necklace_q == 3)) {
 		mes "[Maheo]";
 		mes "My master may not have";
@@ -3143,15 +3161,36 @@ ice_dun02,120,105,3	script	Man Stuck in Ice#cave	924,5,5,{
 		mes "be reading near Freya's Spring.";
 		close;
 	}
-
 	else if (ice_necklace_q == 4) {
-		mes "[Maheo]";
-		mes "Oh, you're back!";
-		mes "So did my master have";
-		mes "any ideas on breaking";
-		mes "this cold prison of ice?";
-		next;
-		//Need proper check for Hammer_of_Wind and Gray_Necklace
+		if (countitem(7569) > 0) {
+			if (countitem(7572) > 0) {
+				mes "[Maheo]";
+				mes "Oh, you're back!";
+				mes "So did my master have";
+				mes "any ideas on breaking";
+				mes "this cold prison of ice?";
+				next;
+			}
+			else {
+				mes "["+strcharinfo(0)+"]";
+				mes "Oh, shoot! I left the necklace in the city! I will be right back!";
+				next;
+				mes "[Maheo]";
+				mes "Hey, hey! Can't you just release me first?";
+				emotion e_sob;
+				close;
+			}
+		}
+		else {
+			mes "[Maheo]";
+			mes "My master may not have";
+			mes "my sheer talent, but he";
+			mes "is very knowledgable in";
+			mes "the ways of magic. Please...";
+			mes "Ask him for help. He should";
+			mes "be reading near Freya's Spring.";
+			close;
+		}
 		mes "["+strcharinfo(0)+"]";
 		mes "Well, he made this";
 		mes "magic hammer which is";
@@ -3229,10 +3268,10 @@ ice_dun02,120,105,3	script	Man Stuck in Ice#cave	924,5,5,{
 		mes "And please don't mention";
 		mes "the fact that I trapped myself";
 		mes "in ice to anyone else, okay?";
+		delitem 7572,1; //Magic_Necklace
+		delitem 7569,1; //Wind Of_Hammer
 		getitem 7574,4; //Freezing Snow Powder
-		getitem 7573,1; //Sparkling Necklace
-		delitem 7572,1; //Ashy_Necklace
-		delitem 7569,1; //Wind Hammer
+		getitem 7573,1; //Magic_Necklace_
 		set ice_necklace_q,5;
 		close2;
 		cutin "",255;
@@ -3250,7 +3289,6 @@ OnTouchNPC:
 
 OnMyMobDead:
 	end;
-
 }
 
 ice_dun02,120,3,0	script	#cave_vos	-1,{
@@ -3274,6 +3312,15 @@ OnTimer10800000:
 }
 
 rachel,265,98,3	script	Hamion#aru	930,{
+	if (checkweight(908,200) == 0) {
+		mes "^3355FFWait a second!";
+		mes "Right now, you're carrying";
+		mes "too many things with you.";
+		mes "Please come back after";
+		mes "using the Kafra Service";
+		mes "to store some of your items.^000000";
+		close;
+	}
 	if (ice_necklace_q < 2) {
 		mes "[Hamion]";
 		mes "Hm? Did you need";
@@ -3282,7 +3329,6 @@ rachel,265,98,3	script	Hamion#aru	930,{
 		mes "get back to reading my book.";
 		close;
 	}
-
 	else if (ice_necklace_q == 2) {
 		mes "[Hamion]";
 		mes "Hm? Did you need";
@@ -3334,7 +3380,6 @@ rachel,265,98,3	script	Hamion#aru	930,{
 		set ice_necklace_q,3;
 		close;
 	}
-
 	else if (ice_necklace_q == 3) {
 		if ((countitem(996) < 5) || (countitem(1354) < 1) || (countitem(7433) < 1)) { 
 			mes "[Hamion]";
@@ -3360,7 +3405,6 @@ rachel,265,98,3	script	Hamion#aru	930,{
 			mes "I'm just smart, not strong.";
 			close;
 		}
-
 		mes "[Hamion]";
 		mes "Great, you have everything";
 		mes "I need! But first, would you";
@@ -3406,7 +3450,6 @@ rachel,265,98,3	script	Hamion#aru	930,{
 		set ice_necklace_q,4;
 		close;
 	}
-
 	else if (ice_necklace_q >= 4) {
 		mes "[Hamion]";
 		mes "There are always";
@@ -3417,7 +3460,6 @@ rachel,265,98,3	script	Hamion#aru	930,{
 		mes "such a great place to read.";
 		close;
 	}
-
 }
 
 rachel,113,96,5	script	Mohadian	929,10,10,{
@@ -3482,7 +3524,6 @@ rachel,113,96,5	script	Mohadian	929,10,10,{
 		set ice_necklace_q,7;
 		close;
 	}
-
 	else if (ice_necklace_q == 7) {
 		if (countitem(7561) < 1) {
 			mes "[Mohadian]";
@@ -3552,7 +3593,6 @@ ice_dun03,126,126,3	script	Blazing Fire#ice1	802,{
 				set $ktullanux_summon,$ktullanux_summon+1;
 				if ($ktullanux_summon == 4) donpcevent "ice_boss#broad::OnStart";
 			}
-
 			else if (countitem(7562) > 0) {
 				next;
 				select("Use Ice Scale.");
@@ -3565,9 +3605,7 @@ ice_dun03,126,126,3	script	Blazing Fire#ice1	802,{
 				if ($ktullanux_summon == 4) donpcevent "ice_boss#broad::OnStart";
 				close;
 			}
-
 		}
-
 	}
 	close;
 
@@ -3597,7 +3635,6 @@ ice_dun03,172,126,0	script	Blazing Fire#ice2	802,{
 				set $ktullanux_summon,$ktullanux_summon+1;
 				if ($ktullanux_summon == 4) donpcevent "ice_boss#broad::OnStart";
 			}
-
 			else if (countitem(7562) > 0) {
 				next;
 				select("Use Ice Scale.");
@@ -3610,9 +3647,7 @@ ice_dun03,172,126,0	script	Blazing Fire#ice2	802,{
 				if ($ktullanux_summon == 4) donpcevent "ice_boss#broad::OnStart";
 				close;
 			}
-
 		}
-
 	}
 	close;
 
@@ -3641,7 +3676,6 @@ ice_dun03,172,172,0	script	Blazing Fire#ice3	802,{
 				set $ktullanux_summon,$ktullanux_summon+1;
 				if ($ktullanux_summon == 4) donpcevent "ice_boss#broad::OnStart";
 			}
-
 			else if (countitem(7562) > 0) {
 				next;
 				select("Use Ice Scale.");
@@ -3654,9 +3688,7 @@ ice_dun03,172,172,0	script	Blazing Fire#ice3	802,{
 				if ($ktullanux_summon == 4) donpcevent "ice_boss#broad::OnStart";
 				close;
 			}
-
 		}
-
 	}
 	close;
 
@@ -3685,7 +3717,6 @@ ice_dun03,127,172,0	script	Blazing Fire#ice4	802,{
 				set $ktullanux_summon,$ktullanux_summon+1;
 				if ($ktullanux_summon == 4) donpcevent "ice_boss#broad::OnStart";
 			}
-
 			else if (countitem(7562) > 0) {
 				next;
 				select("Use Ice Scale.");
@@ -3698,9 +3729,7 @@ ice_dun03,127,172,0	script	Blazing Fire#ice4	802,{
 				if ($ktullanux_summon == 4) donpcevent "ice_boss#broad::OnStart";
 				close;
 			}
-
 		}
-
 	}
 	close;
 
@@ -3720,27 +3749,27 @@ OnStart:
 	end;
 
 OnTimer2000:
-	mapannounce "ice_dun03","Thor's Flame is the blaze of observation and oath, but someone has put it out!",bc_map,0xFF6633;
+	mapannounce "ice_dun03","Someone has put out Thor's flames... Infidel!",bc_map,0xFF6633;
 	end;
 
 OnTimer8000:
-	mapannounce "ice_dun03","I, Ktullanux shall keep everything from Thor's fierce flame,",bc_map,0xFF6633;
+	mapannounce "ice_dun03","I, Ktullanux, must protect and preserve Thor's fierce flames...",bc_map,0xFF6633;
 	end;
 
 OnTimer10000:
-	mapannounce "ice_dun03","as the master of this cave!",bc_map,0xFF6633;
+	mapannounce "ice_dun03","As the master of this cave, I vow vengeance!",bc_map,0xFF6633;
 	end;
 
 OnTimer13000:
-	mapannounce "ice_dun03","You must be a foolish human who does not appreciate your life.",bc_map,0xFF6633;
+	mapannounce "ice_dun03","Only a human would be so foolhardy....",bc_map,0xFF6633;
 	end;
 
 OnTimer16000:
-	mapannounce "ice_dun03","Because of your dangerous curiosity,",bc_map,0xFF6633;
+	mapannounce "ice_dun03","Your curiosity will cost you, human.",bc_map,0xFF6633;
 	end;
 
 OnTimer19000:
-	mapannounce "ice_dun03","you will taste inconceivable pain which can even freeze the mother nature's breath!",bc_map,0xFF6633;
+	mapannounce "ice_dun03","Prepare yourself for a freezing realm of pain which you cannot possibly imagine!",bc_map,0xFF6633;
 	end;
 
 OnTimer21000:

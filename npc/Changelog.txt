@@ -1,5 +1,12 @@
 Date		Added
 ======
+2008/12/29
+	* Rev. 13422 Workin' on fixing some bugs. :) [L0ne_W0lf]
+	- Corrected issues with the Keil Hyre quest. (bugreport:2511)
+	- Corrected minor typo in alchemsit quest. (bugreport:2530)
+	- High Aco is now given skills on change. (bugreport:2552)
+	- Added item checks to Ice Necklace quest.
+	- Uncommented a warp in morroc_fild.
 2008/12/26
 	Rev. 13415 Happy boxing day, eAthena! Here have a massive update. [L0ne_W0lf]
 	* Implemented the first round of episode 12.1 change which include:

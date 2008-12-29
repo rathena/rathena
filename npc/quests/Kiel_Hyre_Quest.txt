@@ -1181,14 +1181,14 @@ kh_school,179,39,0	script	Cute Student#kh	895,{
 			mes "give me a moment while I bake";
 			mes "these cookies?  It shouldn't take";
 			mes "long, so hold on just a bit.";
-			set KielHyreQuest,8;
-			//KHPubMasterEnd no longer needed-- deleting.
-			set KHPubMasterEnd,0;
 			delitem 519,7; //Milk
 			delitem 548,2; //Cheese
 			delitem 7182,5; //Cacao
 			delitem 7487,1; //Tavern_Wine
 			delitem 7488,1; //Delivery_Package
+			set KielHyreQuest,8;
+			//KHPubMasterEnd no longer needed-- deleting.
+			set KHPubMasterEnd,0;
 			emotion e_ho;
 		}
 	}
@@ -1216,8 +1216,8 @@ kh_school,179,39,0	script	Cute Student#kh	895,{
 		mes "[Elly]";
 		mes ""+strcharinfo(0)+"?";
 		mes "...that name! It's wonderful!";
-		set KielHyreQuest,10;
 		getitem 538,5; //Well_Baked_Cookie
+		set KielHyreQuest,10;
 	}
 	else if (KielHyreQuest == 10) {
 		mes "[Elly]";
@@ -3642,8 +3642,8 @@ kh_school,122,186,4	script	Beautiful Lady#kh6	894,{
 		mes "Alright, I've recieved";
 		mes "Kiel Hyre's orders, and";
 		mes "must carry them out...";
-		set KielHyreQuest,44;
 		delitem 7497,1; //Steel_Piece
+		set KielHyreQuest,44;
 		close2;
 		cutin "",255;
 		end;
@@ -4119,9 +4119,9 @@ kh_mansion,22,28,4	script	Kiel Hyre#kh	903,{
 		mes "Please, take this as";
 		mes "a little reward for";
 		mes "saving my life.";
-		set KielHyreQuest,50;
 		getitem 12105,1; //Taming_Gift_Set
 		getexp 700000,0;
+		set KielHyreQuest,50;
 	}
 	else if ((KielHyreQuest >= 50) && (KielHyreQuest < 64)) {
 		mes "[Kiel Hyre]";
@@ -4459,13 +4459,13 @@ kh_mansion,22,28,4	script	Kiel Hyre#kh	903,{
 		mes "wrong... and she just... just...";
 		mes "The river swallowed her...";
 		mes "I felt empty. She was gone. ";
-		set KielHyreQuest,70;
 		delitem 7498,1; //Rosimier_Key
 		delitem 7499,1; //Family_Portrait
 		delitem 7500,1; //Elysia_Portrait
 		delitem 7501,1; //Kyll_Hyre_Letter2
 		delitem 7502,1; //Piece_Memo_Of_James
 		delitem 7503,1; //Man_Portrait
+		set KielHyreQuest,70;
 		close2;
 		cutin "",255;
 		end;
@@ -4730,8 +4730,8 @@ kh_mansion,22,28,4	script	Kiel Hyre#kh	903,{
 		mes "enter and investigate the";
 		mes "deepest levels of the factory.";
 		mes "I'll investigate Kiehl's room.";
-		set KielHyreQuest,108;
 		getitem 7509,1; //Fancy_Key_Card
+		set KielHyreQuest,108;
 		next;
 		if (sex == 0) {
 			if (getpartnerid() == 0) set .@KHTitle$,"Miss";
@@ -4754,28 +4754,6 @@ kh_mansion,22,28,4	script	Kiel Hyre#kh	903,{
 		mes "......";
 		mes ".........";
 		mes "............";
-		delitem 7487,countitem(7487); //Tavern_Wine
-		delitem 7488,countitem(7488); //Delivery_Package
-		delitem 7489,countitem(7489); //Villa_Spare_Key
-		delitem 7490,countitem(7490); //Kyll_Hire_Letter
-		delitem 7491,countitem(7491); //Iron_Box
-		delitem 7492,countitem(7492); //Yellow_Key_Card
-		delitem 7493,countitem(7493); //Golden_Key
-		delitem 7494,countitem(7494); //Kiel_Button
-		delitem 7495,countitem(7495); //Blue_Key_Card
-		delitem 7496,countitem(7496); //Red_Key_Card
-		delitem 7497,countitem(7497); //Steel_Piece
-		delitem 7498,countitem(7498); //Rosimier_Key
-		delitem 7499,countitem(7499); //Family_Portrait
-		delitem 7500,countitem(7500); //Elysia_Portrait
-		delitem 7501,countitem(7501); //Kyll_Hyre_Letter2
-		delitem 7502,countitem(7502); //Piece_Memo_Of_James
-		delitem 7503,countitem(7503); //Man_Portrait
-		delitem 7504,countitem(7504); //Toy_Motor
-		delitem 7505,countitem(7505); //Toy_Key
-		delitem 7506,countitem(7506); //Black_Key_Card
-		delitem 7508,countitem(7508); //Elysia_Ring
-		delitem 7516,countitem(7516); //Green_Key_Card
 	}
 	close2;
 	cutin "",255;
@@ -5468,8 +5446,8 @@ yuno,250,132,0	script	Old Lady#kh	711,{
 			mes "from City Hall ask me for it.";
 			mes "Alright then, I hope you find";
 			mes "what you're looking for.";
-			set KielHyreQuest,58;
 			getitem 7498,1; //Rosimier_Key
+			set KielHyreQuest,58;
 			close;
 		}
 	}
@@ -5530,8 +5508,8 @@ yuno,250,132,0	script	Old Lady#kh	711,{
 		mes "Allysia's body in the river,";
 		mes "so he might have a better";
 		mes "idea of what had happened.";
-		set KielHyreQuest,60;
 		delitem 7498,1; //Rosimier_Key 
+		set KielHyreQuest,60;
 		close;
 	}
 	else if (KielHyreQuest >= 60) {
@@ -5966,8 +5944,8 @@ yuno_fild09,158,217,0	script	Wooden Board#kh	111,{
 		mes "of Kiel Hyre, in a broken";
 		mes "picture frame underneath";
 		mes "the old wooden board.^000000";
-		set KielHyreQuest,64;
 		getitem 7503,1;	//Man_Portrait
+		set KielHyreQuest,64;
 		next;
 		cutin "",255;
 		mes "^3355FFYou have enough";
@@ -6478,8 +6456,8 @@ kh_kiehl01,166,187,0	script	Big Door#BigDoorKHQ5	111,{
 						mes "The gap widens a little bit,";
 						mes "but you break one of your";
 						mes "Solid Iron Pieces.^000000";
-						set KielHyreQuest,KielHyreQuest+2;
 						delitem 7507,1; //Hard_Piece_of_Steel
+						set KielHyreQuest,KielHyreQuest+2;
 						close;
 					}
 					else if (KielHyreQuest == 92) {
@@ -6490,8 +6468,8 @@ kh_kiehl01,166,187,0	script	Big Door#BigDoorKHQ5	111,{
 						mes "Unable the withstand the";
 						mes "awesome force, this Solid";
 						mes "Iron Piece shatters into dust.^000000";
-						set KielHyreQuest,94;
 						delitem 7507,1; //Hard_Piece_of_Steel
+						set KielHyreQuest,94;
 						close;
 					}
 				}
@@ -7059,8 +7037,8 @@ kh_kiehl02,50,52,4	script	Kiehl#Original	902,{
 		mes "^3355FFYou retrieve the";
 		mes "ring from the heart of";
 		mes "Kiehl's old robotic body.^000000";
-		set KielHyreQuest,106;
 		getitem 7508,1; //Elysia_Ring
+		set KielHyreQuest,106;
 		close2;
 		cutin "",255;
 		end;
