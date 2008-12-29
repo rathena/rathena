@@ -8549,6 +8549,66 @@ int atcommand_stats(const int fd, struct map_session_data* sd, const char* comma
 	return 0;
 }
 
+int atcommand_delitem(const int fd, struct map_session_data* sd, const char* command, const char* message)
+{
+	char item_name[100];
+	int i, number = 0, item_id, item_position, count;
+	struct item_data *item_data;
+	char output[200];
+
+	nullpo_retr(-1, sd);
+
+	memset(item_name, '\0', sizeof(item_name));
+	memset(output, '\0', sizeof(output));
+
+	if (!message || !*message || (
+		sscanf(message, "\"%99[^\"]\" %d", item_name, &number) < 2 &&
+		sscanf(message, "%s %d", item_name, &number) < 2
+	) || number < 1) {
+		clif_displaymessage(fd, "Please, enter an item name/id, a quantity and a player name (usage: #delitem <item_name_or_ID> <quantity> <player>).");
+		return -1;
+	}
+
+	item_id = 0;
+	if ((item_data = itemdb_searchname(item_name)) != NULL ||
+	    (item_data = itemdb_exists(atoi(item_name))) != NULL)
+		item_id = item_data->nameid;
+	
+	if (item_id > 500) {
+		item_position = pc_search_inventory(sd, item_id);
+		if (item_position >= 0) {
+			count = 0;
+			for(i = 0; i < number && item_position >= 0; i++) {
+
+				//Logs (A)dmins items [Lupus]
+				if(log_config.enable_logs&0x400)
+					log_pick_pc(sd, "A", sd->status.inventory[item_position].nameid, -1, &sd->status.inventory[item_position]);
+
+				pc_delitem(sd, item_position, 1, 0);
+				count++;
+				item_position = pc_search_inventory(sd, item_id); // for next loop
+			}
+			sprintf(output, msg_txt(113), count); // %d item(s) removed by a GM.
+			clif_displaymessage(sd->fd, output);
+			if (number == count)
+				sprintf(output, msg_txt(114), count); // %d item(s) removed from the player.
+			else
+				sprintf(output, msg_txt(115), count, count, number); // %d item(s) removed. Player had only %d on %d items.
+			clif_displaymessage(fd, output);
+		} else {
+			clif_displaymessage(fd, msg_txt(116)); // Character does not have the item.
+			return -1;
+		}
+	}
+	else
+	{
+		clif_displaymessage(fd, msg_txt(19)); // Invalid item ID or name.
+		return -1;
+	}
+
+	return 0;
+}
+
 
 
 /*==========================================
@@ -8851,6 +8911,7 @@ AtCommandInfo atcommand_info[] = {
 	{ "cartlist",           40,40,    atcommand_cart_list },
 	{ "itemlist",           40,40,    atcommand_itemlist },
 	{ "stats",              40,40,    atcommand_stats },
+	{ "delitem",            60,60,    atcommand_delitem },
 };
 
 
@@ -8965,13 +9026,15 @@ bool is_atcommand(const int fd, struct map_session_data* sd, const char* message
 
 	if (*message == charcommand_symbol)
 	{
+		//Fail any #commands without names.
 		if( sscanf(message, "%99s %99[^\n]", cmd, param) == 1 ) {
-				sprintf(output, "%s failed. Please enter a player name.", cmd);
+				sprintf(output, "Charcommand failed. Usage: #<command> <char name> <params>.", cmd);
 				clif_displaymessage(fd, output);
 				return true;
 		}
-		else if (sscanf(message, "%99s \"%23[^\"]\" %99[^\n]", cmd, charname, param) > 1
-		|| sscanf(message, "%99s %23s %99[^\n]", cmd, charname, param) > 1)
+		//Checks to see if #command has a name or a name + parameters.
+		else if (sscanf(message, "%99s \"%23[^\"]\" %99[^\n]", cmd, charname, param) >= 2
+		|| sscanf(message, "%99s %23s %99[^\n]", cmd, charname, param) >= 2)
 		{
 			if ( (pl_sd = map_nick2sd(charname)) == NULL )
 			{
@@ -8980,14 +9043,24 @@ bool is_atcommand(const int fd, struct map_session_data* sd, const char* message
 				return true;
 			}
 			else {
-				//we pass fd instead of pl_sd->fd otherwise command output messages are sent to the target
-				//also, the name is taken out of the message since it's not needed anymore
-				sprintf(output, "%s %s", cmd, param);
-				memcpy(output2, output, sizeof(output2));
-				message2 = output2;
-				return is_atcommand_sub(fd,pl_sd,message2,gmlvl);
+				//If it's just a name and no params, send the command with no name. Otherwise, send it with the parameters.
+				if (sscanf(message, "%99s \"%23[^\"]\" %99[^\n]", cmd, charname, param) == 2
+				|| sscanf(message, "%99s %23s %99[^\n]", cmd, charname, param) == 2)
+				{
+					sprintf(output, "%s", cmd);
+					memcpy(output2, output, sizeof(output2));
+					message2 = output2;
+					//NOTE: fd is passed to is_atcommand_sub instead of pl_sd->fd because we want output sent to the user of the command, not the target.
+					return is_atcommand_sub(fd,pl_sd,message2,gmlvl);
+				}
+				else {
+					sprintf(output, "%s %s", cmd, param);
+					memcpy(output2, output, sizeof(output2));
+					message2 = output2;
+					return is_atcommand_sub(fd,pl_sd,message2,gmlvl);
+				}
 			}
-		}
+		}	
 	}
 	
 	return is_atcommand_sub(fd,sd,message,gmlvl);
