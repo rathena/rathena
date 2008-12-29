@@ -484,28 +484,19 @@ OnRecvCastle:
 		close;
 	case 2:
 		set .@Economy,GetCastleData(strnpcinfo(2),2);
-		if (.@Economy < 6) { set .@eco_invest,5000; }
-		else if ((.@Economy >= 6) && (.@Economy <= 10)) { set .@eco_invest,10000; }
-		else if ((.@Economy >= 11) && (.@Economy <= 15)) { set .@eco_invest,20000; }
-		else if ((.@Economy >= 16) && (.@Economy <= 20)) { set .@eco_invest,35000; }
-		else if ((.@Economy >= 21) && (.@Economy <= 25)) { set .@eco_invest,55000; }
-		else if ((.@Economy >= 26) && (.@Economy <= 30)) { set .@eco_invest,80000; }
-		else if ((.@Economy >= 31) && (.@Economy <= 35)) { set .@eco_invest,110000; }
-		else if ((.@Economy >= 36) && (.@Economy <= 40)) { set .@eco_invest,145000; }
-		else if ((.@Economy >= 41) && (.@Economy <= 45)) { set .@eco_invest,185000; }
-		else if ((.@Economy >= 46) && (.@Economy <= 50)) { set .@eco_invest,0; }
-		else if ((.@Economy >= 51) && (.@Economy <= 55)) { set .@eco_invest,0; }
-		else if ((.@Economy >= 56) && (.@Economy <= 60)) { set .@eco_invest,0; }
-		else if ((.@Economy >= 61) && (.@Economy <= 65)) { set .@eco_invest,0; }
-		else if ((.@Economy >= 66) && (.@Economy <= 70)) { set .@eco_invest,0; }
-		else if ((.@Economy >= 71) && (.@Economy <= 75)) { set .@eco_invest,0; }
-		else if ((.@Economy >= 76) && (.@Economy <= 80)) { set .@eco_invest,0; }
-		else if ((.@Economy >= 81) && (.@Economy <= 85)) { set .@eco_invest,0; }
-		else if ((.@Economy >= 86) && (.@Economy <= 90)) { set .@eco_invest,0; }
-		else if ((.@Economy >= 96) && (.@Economy <= 100)) { set .@eco_invest,0; }
-		//Quadruple the cost of investing if you've already invested once.
+		if(.@Economy < 8) set .@eco_invest,10000;
+		if(.@Economy >= 8) set .@eco_invest,20000;
+		if(.@Economy >= 16) set .@eco_invest,40000;
+		if(.@Economy >= 25) set .@eco_invest,80000;
+		if(.@Economy >= 34) set .@eco_invest,160000;
+		if(.@Economy >= 44) set .@eco_invest,320000;
+		if(.@Economy >= 54) set .@eco_invest,640000;
+		if(.@Economy >= 65) set .@eco_invest,1280000;
+		if(.@Economy >= 76) set .@eco_invest,2560000;
+		if(.@Economy >= 88) set .@eco_invest,5120000;
+		//Double the cost of investing if you've already invested once.
 		if (GetCastleData(strnpcinfo(2),4)) {
-			set .@eco_invest,.@eco_invest*4;
+			set .@eco_invest,.@eco_invest*2;
 		}
 		mes "[ Steward " + .@name$ + " ]";
 		mes "If you raise commercial growth, the quantity of goods made by the guild will increase. So if you want a prosperous future, investment will be required.";

@@ -1,6 +1,7 @@
 Date		Added
 ======
 2008/12/29
+	* Rev. 13423 Fixed Econ values in agit_template. Commited by accident, as it's not finished. [L0ne_W0lf]
 	* Rev. 13422 Workin' on fixing some bugs. :) [L0ne_W0lf]
 	- Corrected issues with the Keil Hyre quest. (bugreport:2511)
 	- Corrected minor typo in alchemsit quest. (bugreport:2530)
