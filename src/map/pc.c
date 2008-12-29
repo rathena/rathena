@@ -2746,6 +2746,7 @@ int pc_skill(TBL_PC* sd, int id, int level, int flag)
 int pc_insert_card(struct map_session_data* sd, int idx_card, int idx_equip)
 {
 	int i;
+	int nameid;
 
 	nullpo_retr(0, sd);
 
@@ -2776,13 +2777,16 @@ int pc_insert_card(struct map_session_data* sd, int idx_card, int idx_equip)
 	if( i == sd->inventory_data[idx_equip]->slot )
 		return 0; // no free slots
 
+	// remember the card id to insert
+	nameid = sd->status.inventory[idx_card].nameid;
+
 	if( pc_delitem(sd,idx_card,1,1) == 1 )
 	{// failed
 		clif_insert_card(sd,idx_equip,idx_card,1);
 	}
 	else
 	{// success
-		sd->status.inventory[idx_equip].card[i] = sd->status.inventory[idx_card].nameid;
+		sd->status.inventory[idx_equip].card[i] = nameid;
 		clif_insert_card(sd,idx_equip,idx_card,0);
 	}
 
