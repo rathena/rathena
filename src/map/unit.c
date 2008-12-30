@@ -1961,6 +1961,7 @@ int unit_free(struct block_list *bl, int clrtype)
 				sd->regstr_num = 0;
 			}
 			//Tell the script to end, not delete it, it will free itself when necessary [Kevin]
+			// TODO review this assumption, possible source of memory leaks [FlavioJS]
 			if( sd->st )
 			{
 				sd->st->rid = 0;

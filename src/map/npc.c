@@ -163,9 +163,7 @@ int npc_event_dequeue(struct map_session_data* sd)
 			sd->state.using_fake_npc = 0;
 		}
 		if (sd->st) {
-			sd->st->pos = -1;
-			script_free_stack(sd->st->stack);
-			aFree(sd->st);
+			script_free_state(sd->st);
 			sd->st = NULL;
 		}
 		sd->npc_id = 0;

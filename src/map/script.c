@@ -273,7 +273,7 @@ typedef struct script_function {
 
 extern script_function buildin_func[];
 
-static struct linkdb_node *sleep_db;
+static struct linkdb_node* sleep_db;// int oid -> struct script_state*
 
 /*==========================================
  * ローカルプロトタイプ宣言 (必要な物のみ)
@@ -2520,7 +2520,8 @@ void script_free_vars(struct linkdb_node **node)
 /*==========================================
  * Free's the whole stack. Invoked when clearing a character. [Skotlex]
  *------------------------------------------*/
-void script_free_stack(struct script_stack *stack)
+/// @deprecated will be removed later [FlavioJS]
+static void script_free_stack(struct script_stack *stack)
 {
 	int i;
 	for(i = 0; i < stack->sp; i++) {
@@ -2544,6 +2545,45 @@ void script_free_code(struct script_code* code)
 	script_free_vars( &code->script_vars );
 	aFree( code->script_buf );
 	aFree( code );
+}
+
+/// Creates a new script state.
+///
+/// @param script Script code
+/// @param pos Position in the code
+/// @param rid Who is running the script (attached player)
+/// @param oid Where the code is being run (npc 'object')
+/// @return Script state
+struct script_state* script_alloc_state(struct script_code* script, int pos, int rid, int oid)
+{
+	struct script_state* st;
+	CREATE(st, struct script_state, 1);
+	st->stack = (struct script_stack*)aMalloc(sizeof(struct script_stack));
+	st->stack->sp = 0;
+	st->stack->sp_max = 64;
+	CREATE(st->stack->stack_data, struct script_data, st->stack->sp_max);
+	st->stack->defsp = st->stack->sp;
+	CREATE(st->stack->var_function, struct linkdb_node*, 1);
+	st->state = RUN;
+	st->script = script;
+	//st->scriptroot = script;
+	st->pos = pos;
+	st->rid = rid;
+	st->oid = oid;
+	st->sleep.timer = INVALID_TIMER;
+	return st;
+}
+
+/// Frees a script state.
+///
+/// @param st Script state
+void script_free_state(struct script_state* st)
+{
+	if( st->sleep.timer != INVALID_TIMER )
+		delete_timer(st->sleep.timer, run_script_timer);
+	script_free_stack(st->stack);
+	st->pos = -1;
+	aFree(st);
 }
 
 //
@@ -2885,9 +2925,10 @@ int run_func(struct script_state *st)
 		if (str_data[func].func(st)) //Report error
 			script_reportsrc(st);
 	} else {
-		ShowError("run_func : %s? (%d(%d))\n", get_str(func),func,str_data[func].type);
-		script_pushint(st,0);
+		ShowError("script:run_func: missing buildin command '%s' (id=%d type=%s)\n", get_str(func), func, script_op2name(str_data[func].type));
+		script_pushnil(st);
 		script_reportsrc(st);
+		st->state = END;
 	}
 
 	// Stack's datum are used when re-run functions [Eoe]
@@ -2932,31 +2973,14 @@ void run_script_main(struct script_state *st);
 void run_script(struct script_code *rootscript,int pos,int rid,int oid)
 {
 	struct script_state *st;
-	TBL_PC *sd=NULL;
 
-	if(rootscript==NULL || pos<0)
+	if( rootscript == NULL || pos < 0 )
 		return;
 
-	if (rid) sd = map_id2sd(rid);
-	if (sd && sd->st && sd->st->scriptroot == rootscript && sd->st->pos == pos){
-		//Resume script.
-		st = sd->st;
-	} else {
-		st = (struct script_state*)aCalloc(sizeof(struct script_state), 1);
-		// the script is different, make new script_state and stack
-		st->stack = (struct script_stack*)aMalloc (sizeof(struct script_stack));
-		st->stack->sp=0;
-		st->stack->sp_max=64;
-		st->stack->stack_data = (struct script_data *)aCalloc(st->stack->sp_max,sizeof(st->stack->stack_data[0]));
-		st->stack->defsp = st->stack->sp;
-		st->stack->var_function = (struct linkdb_node**)aCalloc(1, sizeof(struct linkdb_node*));
-		st->state  = RUN;
-		st->script = rootscript;
-	}
-	st->pos = pos;
-	st->rid = rid;
-	st->oid = oid;
-	st->sleep.timer = INVALID_TIMER;
+	// TODO In jAthena, this function can take over the pending script in the player. [FlavioJS]
+	//      It is unclear how that can be triggered, so it needs the be traced/checked in more detail.
+	// NOTE At the time of this change, this function wasn't capable of taking over the script state because st->scriptroot was never set.
+	st = script_alloc_state(rootscript, pos, rid, oid);
 	run_script_main(st);
 }
 
@@ -2968,10 +2992,7 @@ void script_stop_sleeptimers(int id)
 		st = (struct script_state*)linkdb_erase(&sleep_db,(void*)id);
 		if( st == NULL )
 			break; // no more sleep timers
-		if( st->sleep.timer != INVALID_TIMER )
-			delete_timer(st->sleep.timer, run_script_timer);
-		script_free_stack(st->stack);
-		aFree(st);
+		script_free_state(st);
 	}
 }
 
@@ -3036,7 +3057,7 @@ void run_script_main(struct script_state *st)
 	int bk_npcid = 0;
 	struct script_stack *stack=st->stack;
 
-	sd = st->rid?map_id2sd(st->rid):NULL;
+	sd = map_id2sd(st->rid);
 
 	if(sd){
 		if(sd->st != st){
@@ -3048,7 +3069,6 @@ void run_script_main(struct script_state *st)
 	}
 
 	if(st->state == RERUNLINE) {
-		st->state = RUN;
 		run_func(st);
 		if(st->state == GOTO)
 			st->state = RUN;
@@ -3188,16 +3208,13 @@ void run_script_main(struct script_state *st)
 			if (sd->state.reg_dirty&1)
 				intif_saveregistry(sd,1);
 		}
-		st->pos = -1;
-		script_free_stack (st->stack);
-		aFree(st);
+		script_free_state(st);
+		st = NULL;
 	}
 
 	if (bk_st)
 	{	//Remove previous script
-		bk_st->pos = -1;
-		script_free_stack(bk_st->stack);
-		aFree(bk_st);
+		script_free_state(bk_st);
 		bk_st = NULL;
 	}
 
@@ -3326,8 +3343,7 @@ int do_final_script()
 		struct linkdb_node *n = (struct linkdb_node *)sleep_db;
 		while(n) {
 			struct script_state *st = (struct script_state *)n->data;
-			script_free_stack(st->stack);
-			aFree(st);
+			script_free_state(st);
 			n = n->next;
 		}
 		linkdb_final(&sleep_db);
@@ -3362,10 +3378,7 @@ int script_reload()
 		struct linkdb_node *n = (struct linkdb_node *)sleep_db;
 		while(n) {
 			struct script_state *st = (struct script_state *)n->data;
-			if( st->sleep.timer != INVALID_TIMER )
-				delete_timer(st->sleep.timer, run_script_timer);
-			script_free_stack(st->stack);
-			aFree(st);
+			script_free_state(st);
 			n = n->next;
 		}
 		linkdb_final(&sleep_db);
@@ -3660,6 +3673,7 @@ BUILDIN_FUNC(select)
 		}
 		pc_setreg(sd, add_str("@menu"), menu);
 		script_pushint(st, menu);
+		st->state = RUN;
 	}
 	return 0;
 }
@@ -3707,6 +3721,7 @@ BUILDIN_FUNC(prompt)
 		sd->state.menu_or_input = 0;
 		pc_setreg(sd, add_str("@menu"), 0xff);
 		script_pushint(st, 0xff);
+		st->state = RUN;
 	}
 	else
 	{// return selected option
@@ -3722,6 +3737,7 @@ BUILDIN_FUNC(prompt)
 		}
 		pc_setreg(sd, add_str("@menu"), menu);
 		script_pushint(st, menu);
+		st->state = RUN;
 	}
 	return 0;
 }
@@ -4373,6 +4389,7 @@ BUILDIN_FUNC(input)
 			set_reg(st, sd, uid, name, (void*)cap_value(amount,min,max), script_getref(st,2));
 			script_pushint(st, (amount > max ? 1 : amount < min ? -1 : 0));
 		}
+		st->state = RUN;
 	}
 	return 0;
 }
@@ -12733,6 +12750,7 @@ BUILDIN_FUNC(sleep)
 	}
 	else
 	{// sleep time is over
+		st->state = RUN;
 		st->sleep.tick = 0;
 	}
 	return 0;
@@ -12759,6 +12777,7 @@ BUILDIN_FUNC(sleep2)
 	}
 	else
 	{// sleep time is over
+		st->state = RUN;
 		st->sleep.tick = 0;
 		script_pushint(st, (map_id2sd(st->rid)!=NULL));
 	}
