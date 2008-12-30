@@ -9028,7 +9028,7 @@ bool is_atcommand(const int fd, struct map_session_data* sd, const char* message
 	{
 		//Fail any #commands without names.
 		if( sscanf(message, "%99s %99[^\n]", cmd, param) == 1 ) {
-				sprintf(output, "Charcommand failed. Usage: #<command> <char name> <params>.", cmd);
+				sprintf(output, "Charcommand failed. Usage: #<command> <char name> <params>.");
 				clif_displaymessage(fd, output);
 				return true;
 		}
