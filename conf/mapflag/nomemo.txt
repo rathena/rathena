@@ -154,6 +154,9 @@ moc_fild15	mapflag	nomemo
 moc_fild16	mapflag	nomemo
 moc_fild17	mapflag	nomemo
 moc_fild18	mapflag	nomemo
+moc_fild20	mapflag	nomemo
+moc_fild21	mapflag	nomemo
+moc_fild22	mapflag	nomemo
 nif_fild01	mapflag	nomemo
 nif_fild02	mapflag	nomemo
 pay_fild02	mapflag	nomemo

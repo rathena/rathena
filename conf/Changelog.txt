@@ -1,5 +1,6 @@
 Date	Added
 2008/12/26
+	* Rev. 13444 Marked new Morroc fields as nomemo. [L0ne_W0lf]
 	* Rev. 13415 Commented out maps no longer accessable with 12.1. [L0ne_W0lf]
 2008/12/17
 	* Rev. 13405 Added additional maps to maps_athena.conf. [L0ne_W0lf]
