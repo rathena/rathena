@@ -67,11 +67,20 @@ typedef enum c_op {
 	C_L_SHIFT // a << b
 } c_op;
 
+struct script_retinfo {
+	struct linkdb_node** var_function;// scope variables
+	struct script_code* script;// script code
+	int pos;// script location
+	int nargs;// argument count
+	int defsp;// default stack pointer
+};
+
 struct script_data {
 	enum c_op type;
 	union script_data_val {
 		int num;
 		char *str;
+		struct script_retinfo* ri;
 	} u;
 	struct linkdb_node** ref;
 };
@@ -89,7 +98,7 @@ struct script_stack {
 	int sp_max;// capacity of the stack
 	int defsp;
 	struct script_data *stack_data;// stack
-	struct linkdb_node **var_function;	// ֐ˑϐ
+	struct linkdb_node** var_function;// scope variables
 };
 
 

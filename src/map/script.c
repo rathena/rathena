@@ -5,6 +5,7 @@
 //#define DEBUG_DISASM
 //#define DEBUG_RUN
 //#define DEBUG_HASH
+//#define DEBUG_DUMP_STACK
 
 #include "../common/cbasetypes.h"
 #include "../common/malloc.h"
@@ -108,7 +109,7 @@
 /// Pushes a copy of the data in the target index relative to the top of the stack
 #define script_pushcopytop(st,i) push_copy((st)->stack, (st)->stack->sp + (i))
 /// Removes the range of values [start,end[ relative to the top of the stack
-#define script_removetop(st,start,end) ( pop_stack((st)->stack, ((st)->stack->sp + (start)), (st)->stack->sp + (end)) )
+#define script_removetop(st,start,end) ( pop_stack((st), ((st)->stack->sp + (start)), (st)->stack->sp + (end)) )
 
 //
 // struct script_data* data;
@@ -380,6 +381,48 @@ const char* script_op2name(int op)
 	}
 #undef RETURN_OP_NAME
 }
+
+#ifdef DEBUG_DUMP_STACK
+static void script_dump_stack(struct script_state* st)
+{
+	int i;
+	ShowMessage("\tstart = %d\n", st->start);
+	ShowMessage("\tend   = %d\n", st->end);
+	ShowMessage("\tdefsp = %d\n", st->stack->defsp);
+	ShowMessage("\tsp    = %d\n", st->stack->sp);
+	for( i = 0; i < st->stack->sp; ++i )
+	{
+		struct script_data* data = &st->stack->stack_data[i];
+		ShowMessage("\t[%d] %s", i, script_op2name(data->type));
+		switch( data->type )
+		{
+		case C_INT:
+		case C_POS:
+			ShowMessage(" %d\n", data->u.num);
+			break;
+
+		case C_STR:
+		case C_CONSTSTR:
+			ShowMessage(" \"%s\"\n", data->u.str);
+			break;
+
+		case C_NAME:
+			ShowMessage(" \"%s\" (id=%d ref=%p subtype=%s)\n", reference_getname(data), data->u.num, data->ref, script_op2name(str_data[data->u.num].type));
+			break;
+
+		case C_RETINFO:
+			{
+				struct script_retinfo* ri = data->u.ri;
+				ShowMessage(" %p {var_function=%p, script=%p, pos=%d, nargs=%d, defsp=%d}\n", ri, ri->var_function, ri->script, ri->pos, ri->nargs, ri->defsp);
+			}
+			break;
+		default:
+			ShowMessage("\n");
+			break;
+		}
+	}
+}
+#endif
 
 /// Reports on the console the src of a script error.
 static void script_reportsrc(struct script_state *st)
@@ -2222,7 +2265,7 @@ void get_val(struct script_state* st, struct script_data* data)
 	return;
 }
 
-void push_val2(struct script_stack* stack, enum c_op type, int val, struct linkdb_node** ref);
+struct script_data* push_val2(struct script_stack* stack, enum c_op type, int val, struct linkdb_node** ref);
 
 /// Retrieves the value of a reference identified by uid (variable, constant, param)
 /// The value is left in the top of the stack and needs to be removed manually.
@@ -2428,7 +2471,7 @@ void stack_expand(struct script_stack* stack)
 #define push_val(stack,type,val) push_val2(stack, type, val, NULL)
 
 /// Pushes a value into the stack (with reference)
-void push_val2(struct script_stack* stack, enum c_op type, int val, struct linkdb_node** ref)
+struct script_data* push_val2(struct script_stack* stack, enum c_op type, int val, struct linkdb_node** ref)
 {
 	if( stack->sp >= stack->sp_max )
 		stack_expand(stack);
@@ -2436,10 +2479,11 @@ void push_val2(struct script_stack* stack, enum c_op type, int val, struct linkd
 	stack->stack_data[stack->sp].u.num = val;
 	stack->stack_data[stack->sp].ref   = ref;
 	stack->sp++;
+	return &stack->stack_data[stack->sp-1];
 }
 
 /// Pushes a string into the stack
-void push_str(struct script_stack* stack, enum c_op type, char* str)
+struct script_data* push_str(struct script_stack* stack, enum c_op type, char* str)
 {
 	if( stack->sp >= stack->sp_max )
 		stack_expand(stack);
@@ -2447,21 +2491,38 @@ void push_str(struct script_stack* stack, enum c_op type, char* str)
 	stack->stack_data[stack->sp].u.str = str;
 	stack->stack_data[stack->sp].ref   = NULL;
 	stack->sp++;
+	return &stack->stack_data[stack->sp-1];
+}
+
+/// Pushes a retinfo into the stack
+struct script_data* push_retinfo(struct script_stack* stack, struct script_retinfo* ri)
+{
+	if( stack->sp >= stack->sp_max )
+		stack_expand(stack);
+	stack->stack_data[stack->sp].type = C_RETINFO;
+	stack->stack_data[stack->sp].u.ri = ri;
+	stack->stack_data[stack->sp].ref  = NULL;
+	stack->sp++;
+	return &stack->stack_data[stack->sp-1];
 }
 
 /// Pushes a copy of the target position into the stack
-void push_copy(struct script_stack* stack, int pos)
+struct script_data* push_copy(struct script_stack* stack, int pos)
 {
 	switch( stack->stack_data[pos].type )
 	{
 	case C_CONSTSTR:
-		push_str(stack, C_CONSTSTR, stack->stack_data[pos].u.str);
+		return push_str(stack, C_CONSTSTR, stack->stack_data[pos].u.str);
 		break;
 	case C_STR:
-		push_str(stack, C_STR, aStrdup(stack->stack_data[pos].u.str));
+		return push_str(stack, C_STR, aStrdup(stack->stack_data[pos].u.str));
+		break;
+	case C_RETINFO:
+		ShowFatalError("script:push_copy: can't create copies of C_RETINFO. Exiting...\n");
+		exit(1);
 		break;
 	default:
-		push_val2(
+		return push_val2(
 			stack,stack->stack_data[pos].type,
 			stack->stack_data[pos].u.num,
 			stack->stack_data[pos].ref
@@ -2470,16 +2531,18 @@ void push_copy(struct script_stack* stack, int pos)
 	}
 }
 
-/// Removes the values in indexes [start,end[ from the stack
-void pop_stack(struct script_stack* stack, int start, int end)
+/// Removes the values in indexes [start,end[ from the stack.
+/// Adjusts all stack pointers.
+void pop_stack(struct script_state* st, int start, int end)
 {
+	struct script_stack* stack = st->stack;
 	struct script_data* data;
 	int i;
 
 	if( start < 0 )
 		start = 0;
-	if( end > stack->sp_max )
-		end = stack->sp_max;
+	if( end > stack->sp )
+		end = stack->sp;
 	if( start >= end )
 		return;// nothing to pop
 
@@ -2489,11 +2552,32 @@ void pop_stack(struct script_stack* stack, int start, int end)
 		data = &stack->stack_data[i];
 		if( data->type == C_STR )
 			aFree(data->u.str);
+		if( data->type == C_RETINFO )
+		{
+			struct script_retinfo* ri = data->u.ri;
+			if( ri->var_function )
+			{
+				script_free_vars(ri->var_function);
+				aFree(ri->var_function);
+			}
+			aFree(ri);
+		}
 		data->type = C_NOP;
 	}
 	// move the rest of the elements
 	if( stack->sp > end )
+	{
 		memmove(&stack->stack_data[start], &stack->stack_data[end], sizeof(stack->stack_data[0])*(stack->sp - end));
+		for( i = start + stack->sp - end; i < stack->sp; ++i )
+			stack->stack_data[i].type = C_NOP;
+	}
+	// adjust stack pointers
+	     if( st->start > end )   st->start -= end - start;
+	else if( st->start > start ) st->start = start;
+	     if( st->end > end )   st->end -= end - start;
+	else if( st->end > start ) st->end = start;
+	     if( stack->defsp > end )   stack->defsp -= end - start;
+	else if( stack->defsp > start ) stack->defsp = start;
 	stack->sp -= end - start;
 }
 
@@ -2515,29 +2599,6 @@ void script_free_vars(struct linkdb_node **node)
 		n = n->next;
 	}
 	linkdb_final( node );
-}
-
-/*==========================================
- * Free's the whole stack. Invoked when clearing a character. [Skotlex]
- *------------------------------------------*/
-/// @deprecated will be removed later [FlavioJS]
-static void script_free_stack(struct script_stack *stack)
-{
-	int i;
-	for(i = 0; i < stack->sp; i++) {
-		if( stack->stack_data[i].type == C_STR ) {
-			aFree(stack->stack_data[i].u.str);
-			stack->stack_data[i].type = C_INT;
-		} else if( i > 0 && stack->stack_data[i].type == C_RETINFO ) {
-			struct linkdb_node** n = (struct linkdb_node**)stack->stack_data[i-1].u.num;
-			script_free_vars( n );
-			aFree( n );
-		}
-	}
-	script_free_vars( stack->var_function );
-	aFree(stack->var_function);
-	aFree(stack->stack_data);
-	aFree(stack);
 }
 
 void script_free_code(struct script_code* code)
@@ -2581,7 +2642,11 @@ void script_free_state(struct script_state* st)
 {
 	if( st->sleep.timer != INVALID_TIMER )
 		delete_timer(st->sleep.timer, run_script_timer);
-	script_free_stack(st->stack);
+	script_free_vars(st->stack->var_function);
+	aFree(st->stack->var_function);
+	pop_stack(st, 0, st->stack->sp);
+	aFree(st->stack->stack_data);
+	aFree(st->stack);
 	st->pos = -1;
 	aFree(st);
 }
@@ -2858,108 +2923,83 @@ void op_1(struct script_state* st, int op)
 }
 
 
-/*==========================================
- * 関数の実行
- *------------------------------------------*/
+
+/// Executes a buildin command.
+/// Stack: C_NAME(<command>) C_ARG <arg0> <arg1> ... <argN>
 int run_func(struct script_state *st)
 {
+	struct script_data* data;
 	int i,start_sp,end_sp,func;
 
-	end_sp=st->stack->sp;
-	for(i=end_sp-1;i>=0 && st->stack->stack_data[i].type!=C_ARG;i--);
-	if(i<=0){ //Crash fix when missing "push_val" causes current pointer to become -1. from Rayce (jA)
-		ShowError("function not found\n");
-//		st->stack->sp=0;
-		st->state=END;
+	end_sp = st->stack->sp;// position after the last argument
+	for( i = end_sp-1; i > 0 ; --i )
+		if( st->stack->stack_data[i].type == C_ARG )
+			break;
+	if( i == 0 )
+	{
+		ShowError("script:run_func: C_ARG not found. please report this!!!\n");
+		st->state = END;
 		script_reportsrc(st);
 		return 1;
 	}
-	start_sp=i-1;
-	st->start=i-1;
-	st->end=end_sp;
-	func=st->stack->stack_data[st->start].u.num;
+	start_sp = i-1;// C_NAME of the command
+	st->start = start_sp;
+	st->end = end_sp;
 
-#ifdef DEBUG_RUN
-	if(battle_config.etc_log) {
-		ShowDebug("run_func : %s? (%d(%d)) sp=%d (%d...%d)\n", get_str(func), func, str_data[func].type, st->stack->sp, st->start, st->end);
-		ShowDebug("stack dump :");
-		for(i=0;i<end_sp;i++){
-			switch(st->stack->stack_data[i].type){
-			case C_INT:
-				ShowMessage(" int(%d)", st->stack->stack_data[i].u.num);
-				break;
-			case C_NAME:
-				ShowMessage(" name(%s)", get_str(st->stack->stack_data[i].u.num & 0xffffff);
-				break;
-			case C_ARG:
-				ShowMessage(" arg");
-				break;
-			case C_POS:
-				ShowMessage(" pos(%d)",st->stack->stack_data[i].u.num);
-				break;
-			case C_STR:
-				ShowMessage(" str(%s)",st->stack->stack_data[i].u.str);
-				break;
-			case C_CONSTSTR:
-				ShowMessage(" cstr(%s)",st->stack->stack_data[i].u.str);
-				break;
-			default:
-				ShowMessage(" etc(%d,%d)",st->stack->stack_data[i].type,st->stack->stack_data[i].u.num);
-			}
-		}
-		ShowMessage("\n");
-	}
-#endif
-
-	if(str_data[func].type!=C_FUNC ){
-		ShowError("run_func: '"CL_WHITE"%s"CL_RESET"' (type %d) is not function and command!\n", get_str(func), str_data[func].type);
-//		st->stack->sp=0;
-		st->state=END;
+	data = &st->stack->stack_data[st->start];
+	if( data->type == C_NAME && str_data[data->u.num].type == C_FUNC )
+		func = data->u.num;
+	else
+	{
+		ShowError("script:run_func: not a buildin command.\n");
+		script_reportdata(data);
 		script_reportsrc(st);
+		st->state = END;
 		return 1;
 	}
-#ifdef DEBUG_RUN
-	ShowDebug("run_func : %s (func_no : %d , func_type : %d pos : 0x%x)\n", get_str(func),func,str_data[func].type,st->pos);
-#endif
+
 	if(str_data[func].func){
 		if (str_data[func].func(st)) //Report error
 			script_reportsrc(st);
 	} else {
-		ShowError("script:run_func: missing buildin command '%s' (id=%d type=%s)\n", get_str(func), func, script_op2name(str_data[func].type));
-		script_pushnil(st);
+		ShowError("script:run_func: '%s' (id=%d type=%s) has no C function. please report this!!!\n", get_str(func), func, script_op2name(str_data[func].type));
 		script_reportsrc(st);
 		st->state = END;
 	}
 
-	// Stack's datum are used when re-run functions [Eoe]
-	if(st->state != RERUNLINE) {
-		pop_stack(st->stack,start_sp,end_sp);
-	}
+	// Stack's datum are used when re-running functions [Eoe]
+	if( st->state == RERUNLINE )
+		return 0;
 
-	if(st->state==RETFUNC){
-		// ユーザー定義関数からの復帰
-		int olddefsp=st->stack->defsp;
-		int i;
+	pop_stack(st, st->start, st->end);
+	if( st->state == RETFUNC )
+	{// return from a user-defined function
+		struct script_retinfo* ri;
+		int olddefsp = st->stack->defsp;
+		int nargs;
 
-		pop_stack(st->stack,st->stack->defsp,start_sp);	// 復帰に邪魔なスタック削除
-		if(st->stack->defsp<5 || st->stack->stack_data[st->stack->defsp-1].type!=C_RETINFO){
-			ShowWarning("script:run_func(return) return without callfunc or callsub!\n");
-			st->state=END;
+		pop_stack(st, st->stack->defsp, st->start);// pop distractions from the stack
+		if( st->stack->defsp < 1 || st->stack->stack_data[st->stack->defsp-1].type != C_RETINFO )
+		{
+			ShowWarning("script:run_func: return without callfunc or callsub!\n");
 			script_reportsrc(st);
+			st->state = END;
 			return 1;
 		}
 		script_free_vars( st->stack->var_function );
 		aFree(st->stack->var_function);
 
-		i = conv_num(st,& (st->stack->stack_data[st->stack->defsp-5]));					// 引数の数所得
-		st->pos=conv_num(st,& (st->stack->stack_data[st->stack->defsp-1]));				// スクリプト位置の復元
-		st->script=(struct script_code*)conv_num(st,& (st->stack->stack_data[st->stack->defsp-3]));	// スクリプトを復元
-		st->stack->var_function = (struct linkdb_node**)st->stack->stack_data[st->stack->defsp-2].u.num; // 関数依存変数
+		ri = st->stack->stack_data[st->stack->defsp-1].u.ri;
+		nargs = ri->nargs;
+		st->pos = ri->pos;
+		st->script = ri->script;
+		st->stack->var_function = ri->var_function;
+		st->stack->defsp = ri->defsp;
+		memset(ri, 0, sizeof(struct script_retinfo));
 
-		st->stack->defsp=conv_num(st,& (st->stack->stack_data[st->stack->defsp-4]));	// 基準スタックポインタを復元
-		pop_stack(st->stack,olddefsp-5-i,olddefsp);		// 要らなくなったスタック(引数と復帰用データ)削除
+		pop_stack(st, olddefsp-nargs-1, olddefsp);// pop arguments and retinfo
 
-		st->state=GOTO;
+		st->state = GOTO;
 	}
 
 	return 0;
@@ -3080,16 +3120,10 @@ void run_script_main(struct script_state *st)
 		enum c_op c = get_com(st->script->script_buf,&st->pos);
 		switch(c){
 		case C_EOL:
-			if( stack->sp != stack->defsp )
-			{
-				if( stack->sp > stack->defsp )
-				{	//sp > defsp is valid in cases when you invoke functions and don't use the returned value. [Skotlex]
-					//Since sp is supposed to be defsp in these cases, we could assume the extra stack elements are unneeded.
-					pop_stack(stack, stack->defsp, stack->sp); //Clear out the unused stack-section.
-				} else
-					ShowError("script:run_script_main: unexpected stack position stack.sp(%d) != default(%d)\n", stack->sp, stack->defsp);
-				stack->sp = stack->defsp;
-			}
+			if( stack->defsp > stack->sp )
+				ShowError("script:run_script_main: unexpected stack position (defsp=%d sp=%d). please report this!!!\n", stack->defsp, stack->sp);
+			else
+				pop_stack(st, stack->defsp, stack->sp);// pop unused stack data. (unused return value)
 			break;
 		case C_INT:
 			push_val(stack,C_INT,get_num(st->script->script_buf,&st->pos));
@@ -3770,8 +3804,8 @@ BUILDIN_FUNC(goto)
 BUILDIN_FUNC(callfunc)
 {
 	int i, j;
-	struct linkdb_node** oldval;
-	struct script_code *scr, *oldscr;
+	struct script_retinfo* ri;
+	struct script_code* scr;
 	const char* str = script_getstr(st,2);
 
 	scr = (struct script_code*)strdb_get(userfunc_db, str);
@@ -3783,35 +3817,31 @@ BUILDIN_FUNC(callfunc)
 	}
 
 	for( i = st->start+3, j = 0; i < st->end; i++, j++ )
-		push_copy(st->stack,i);
+	{
+		struct script_data* data = push_copy(st->stack,i);
+		if( data_isreference(data) && !data->ref )
+		{
+			const char* name = reference_getname(data);
+			if( name[0] == '.' && name[1] == '@' )
+				data->ref = st->stack->var_function;
+			else if( name[0] == '.' )
+				data->ref = &st->script->script_vars;
+		}
+	}
 
-	script_pushint(st,j);                            // push argument count
-	script_pushint(st,st->stack->defsp);             // push current stack pointer
-	script_pushint(st,(int)st->script);              // push current script
-	script_pushint(st,(int)st->stack->var_function); // push function-dependent variables
-	push_val(st->stack,C_RETINFO,st->pos);           // push current script location
-
-	oldscr = st->script;
-	oldval = st->stack->var_function;
+	CREATE(ri, struct script_retinfo, 1);
+	ri->script       = st->script;// script code
+	ri->var_function = st->stack->var_function;// scope variables
+	ri->pos          = st->pos;// script location
+	ri->nargs        = j;// argument count
+	ri->defsp        = st->stack->defsp;// default stack pointer
+	push_retinfo(st->stack, ri);
 
 	st->pos = 0;
 	st->script = scr;
-	st->stack->defsp = st->start+5+j;
+	st->stack->defsp = st->stack->sp;
 	st->state = GOTO;
 	st->stack->var_function = (struct linkdb_node**)aCalloc(1, sizeof(struct linkdb_node*));
-
-	for( i = 0; i < j; i++ )
-	{
-		struct script_data* s = script_getdatatop(st, -6-i);
-		if( data_isreference(s) && !s->ref )
-		{
-			const char* name = reference_getname(s);
-			if( name[0] == '.' && name[1] == '@' )
-				s->ref = oldval;
-			else if( name[0] == '.' )
-				s->ref = &oldscr->script_vars;
-		}
-	}
 
 	return 0;
 }
@@ -3821,7 +3851,7 @@ BUILDIN_FUNC(callfunc)
 BUILDIN_FUNC(callsub)
 {
 	int i,j;
-	struct linkdb_node** oldval;
+	struct script_retinfo* ri;
 	int pos = script_getnum(st,2);
 
 	if( !data_islabel(script_getdata(st,2)) && !data_isfunclabel(script_getdata(st,2)) )
@@ -3832,32 +3862,29 @@ BUILDIN_FUNC(callsub)
 		return 1;
 	}
 
-	oldval = st->stack->var_function;
-
 	for( i = st->start+3, j = 0; i < st->end; i++, j++ )
-		push_copy(st->stack,i);
-
-	script_pushint(st,j);                            // push argument count
-	script_pushint(st,st->stack->defsp);             // push current stack pointer
-	script_pushint(st,(int)st->script);              // push current script
-	script_pushint(st,(int)st->stack->var_function); // push function-dependent variables
-	push_val(st->stack,C_RETINFO,st->pos);           // push current script location
-
-	st->pos = pos;
-	st->stack->defsp = st->start+5+j;
-	st->state = GOTO;
-	st->stack->var_function = (struct linkdb_node**)aCalloc(1, sizeof(struct linkdb_node*));
-
-	for(i = 0; i < j; i++)
 	{
-		struct script_data* s = script_getdatatop(st, -6-i);
-		if( data_isreference(s) && !s->ref )
+		struct script_data* data = push_copy(st->stack,i);
+		if( data_isreference(data) && !data->ref )
 		{
-			const char* name = reference_getname(s);
+			const char* name = reference_getname(data);
 			if( name[0] == '.' && name[1] == '@' )
-				s->ref = oldval;
+				data->ref = st->stack->var_function;
 		}
 	}
+
+	CREATE(ri, struct script_retinfo, 1);
+	ri->script       = st->script;// script code
+	ri->var_function = st->stack->var_function;// scope variables
+	ri->pos          = st->pos;// script location
+	ri->nargs        = j;// argument count
+	ri->defsp        = st->stack->defsp;// default stack pointer
+	push_retinfo(st->stack, ri);
+
+	st->pos = pos;
+	st->stack->defsp = st->stack->sp;
+	st->state = GOTO;
+	st->stack->var_function = (struct linkdb_node**)aCalloc(1, sizeof(struct linkdb_node*));
 
 	return 0;
 }
@@ -3868,28 +3895,26 @@ BUILDIN_FUNC(callsub)
 /// getarg(<index>{,<default_value>}) -> <value>
 BUILDIN_FUNC(getarg)
 {
+	struct script_retinfo* ri;
 	int idx;
-	int count;
-	int stsp;
 
-	if( st->stack->defsp < 5 || st->stack->stack_data[st->stack->defsp - 1].type != C_RETINFO )
+	if( st->stack->defsp < 1 || st->stack->stack_data[st->stack->defsp - 1].type != C_RETINFO )
 	{
 		ShowError("script:getarg: no callfunc or callsub!\n");
 		st->state = END;
 		return 1;
 	}
-	count = conv_num(st, &(st->stack->stack_data[st->stack->defsp - 5]));
-	stsp = st->stack->defsp - count - 5;
+	ri = st->stack->stack_data[st->stack->defsp - 1].u.ri;
 
 	idx = script_getnum(st,2);
 
-	if( idx < count )
-		push_copy(st->stack, stsp + idx);
+	if( idx >= 0 && idx < ri->nargs )
+		push_copy(st->stack, st->stack->defsp - 1 - ri->nargs + idx);
 	else if( script_hasdata(st,3) )
 		script_pushcopy(st, 3);
 	else
 	{
-		ShowError("script:getarg: index (idx=%d) out of range (count=%d) and no default value found\n", idx, count);
+		ShowError("script:getarg: index (idx=%d) out of range (nargs=%d) and no default value found\n", idx, ri->nargs);
 		st->state = END;
 		return 1;
 	}
@@ -3913,8 +3938,9 @@ BUILDIN_FUNC(return)
 		{
 			const char* name = reference_getname(data);
 			if( name[0] == '.' && name[1] == '@' )
-			{// temporary script variable, convert to value
-				get_val(st, data);
+			{// scope variable
+				if( !data->ref || data->ref == st->stack->var_function )
+					get_val(st, data);// current scope, convert to value
 			}
 			else if( name[0] == '.' && !data->ref )
 			{// script variable, link to current script
@@ -4379,7 +4405,7 @@ BUILDIN_FUNC(input)
 		sd->state.menu_or_input = 0;
 		if( is_string_variable(name) )
 		{
-			size_t len = strlen(sd->npc_str);
+			int len = (int)strlen(sd->npc_str);
 			set_reg(st, sd, uid, name, (void*)sd->npc_str, script_getref(st,2));
 			script_pushint(st, (len > max ? 1 : len < min ? -1 : 0));
 		}
