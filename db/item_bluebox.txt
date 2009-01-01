@@ -93,7 +93,7 @@
 1,641,12	//Contracts in Shadow
 1,642,12	//Book of the Devil
 1,643,12	//Pet Incubator
-1,644,311	//Gift Box
+1,644,312	//Gift Box
 1,645,12	//Concentration Potion
 1,656,12	//Awakening Potion
 1,657,12	//Berserk Potion

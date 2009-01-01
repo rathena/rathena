@@ -3,12 +3,12 @@
 // Structure of Database:
 // GroupID,ItemID,Rate
 
-3,4001,7	//Poring Card
-3,4002,7	//Fabre Card
+3,4001,12	//Poring Card
+3,4002,14	//Fabre Card
 3,4003,6	//Pupa Card
-3,4004,7	//Drops Card
-3,4005,1	//Santa Poring Card
-3,4006,7	//Lunatic Card
+3,4004,14	//Drops Card
+3,4005,2	//Santa Poring Card
+3,4006,14	//Lunatic Card
 3,4007,4	//Peco Peco Egg Card
 3,4008,7	//Picky Card
 3,4009,7	//Chonchon Card
@@ -48,14 +48,12 @@
 3,4044,3	//Smokie Card
 3,4045,3	//Horn Card
 3,4046,3	//Martin Card
-//3,4047,1	//Ghostring Card
 3,4048,3	//Poison Spore Card
 3,4049,3	//Vadon Card
 3,4050,3	//Male Thief Bug Card
 3,4051,3	//Yoyo Card
 3,4052,3	//Elder Willow Card
 3,4053,1	//Vitata Card
-//3,4054,1	//Angeling Card
 3,4055,3	//Marina Card
 3,4056,3	//Dustiness Card
 3,4057,2	//Metaller Card
@@ -127,7 +125,6 @@
 3,4129,1	//Bapho Jr. Card
 3,4133,1	//Raydric Card
 3,4136,1	//Khalitzburg Card
-3,4139,1	//Joker Card
 3,4141,1	//Evil Druid Card
 3,4149,1	//Gargoyle Card
 3,4150,1	//Goat Card
@@ -208,7 +205,6 @@
 3,4239,1	//Iron Fist Card
 3,4240,1	//Arclouze Card
 3,4242,1	//Apocalipse Card
-3,4243,1	//Antonio Card
 3,4244,1	//Alarm Card
 3,4245,1	//Am Mut Card
 3,4246,1	//Assaulter Card
@@ -285,9 +281,9 @@
 
 //New cards
 3,4332,1	//Waste Stove Card
-3,4333,1	//Venomous Card
+3,4333,3	//Venomous Card
 3,4334,1	//Noxious Card
-3,4335,1	//Pitman Card
+3,4335,3	//Pitman Card
 3,4336,1	//Ungoliant Card
 3,4337,1	//Porcellio Card
 3,4338,1	//Obsidian Card
@@ -295,22 +291,21 @@
 3,4340,1	//Teddy Bear Card
 3,4341,1	//Metaling Card
 3,4343,1	//Holden Card
-3,4344,1	//Anopheles Card
-3,4345,1	//Hill Wind Card
+3,4344,3	//Anopheles Card
+3,4345,3	//Hill Wind Card
 3,4346,1	//Egnigem Cenia Card
-3,4347,1	//Armeyer Dinze Card
+3,4347,3	//Armeyer Dinze Card
 3,4348,1	//Wikebine Tres Card
 3,4349,1	//Errende Ebecee Card
-3,4350,1	//Laurell Weinder Card
+3,4350,3	//Laurell Weinder Card
 3,4351,1	//Kavach Icarus Card
 3,4353,1	//Remover Card
 3,4354,1	//Gemini-S58 Card
-3,4355,1	//Gremlin Card
+3,4355,3	//Gremlin Card
 3,4356,1	//Beholder Card
 3,4358,1	//Seyren Windsor Card
-3,4360,1	//Eremes Guile Card
+3,4360,3	//Eremes Guile Card
 3,4362,1	//Howard Alt-Eisen Card
-3,4364,1	//Margaretha Solin Card
 3,4366,1	//Kathryne Keyron Card
 3,4368,1	//Cecil Damon Card
 3,4369,1	//Venatu Card
@@ -318,30 +313,28 @@
 3,4371,1	//Archdam Card
 3,4373,1	//Chung E Card
 3,4375,1	//Orc Baby Card
-3,4377,1	//Green Iguana Card
+3,4377,3	//Green Iguana Card
 3,4378,1	//Gold Acidus Card
 3,4379,1	//Blue Acidus Card
-3,4380,1	//Red Ferus Card
+3,4380,3	//Red Ferus Card
 3,4381,1	//Green Ferus Card
 3,4382,1	//Yellow Novus Card
-3,4383,1	//Red Novus Card
+3,4383,3	//Red Novus Card
 3,4384,1	//Hydro Card
-3,4385,1	//Dragon Egg Card
+3,4385,3	//Dragon Egg Card
 3,4387,1	//Ancient Mimic Card
-3,4388,1	//Deathword Card
+3,4388,3	//Deathword Card
 3,4389,1	//Plasma Card
 3,4390,1	//Breeze Card
-3,4391,1	//Retribution Card
+3,4391,3	//Retribution Card
 3,4392,1	//Observation Card
 3,4393,1	//Shelter Card
 3,4394,1	//Solace Card
 3,4395,1	//Thanatos Maero Card
 3,4396,1	//Thanatos Odium Card
 3,4397,1	//Thanatos Despero Card
-3,4398,1	//Thanatos Dolor Card
 3,4400,1	//Aliza Card
 3,4401,1	//Alicel Card
 3,4402,1	//Aliot Card
 3,4404,1	//Skogul Card
-3,4405,1	//Frus Card
-3,4406,1	//Skeggiold Card
+3,4405,2	//Frus Card

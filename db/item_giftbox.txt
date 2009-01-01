@@ -77,7 +77,7 @@
 4,997,1	//Great Nature
 4,999,1	//Steel
 4,1000,1	//Star Crumb
-4,1558,1	//Girl's Diary
+4,1558,2	//Girl's Diary
 4,4005,1	//Santa Poring Card
 4,7034,1	//Red Stocking
 // GiftBox_1
@@ -231,7 +231,7 @@
 29,997,1	//Great Nature
 29,999,1	//Steel
 29,1000,1	//Star Crumb
-29,1558,1	//Girl's Diary
+29,1558,2	//Girl's Diary
 29,4005,1	//Santa Poring Card
 29,7034,1	//Red Stocking
 // Gift_Box3
@@ -308,7 +308,7 @@
 30,997,1	//Great Nature
 30,999,1	//Steel
 30,1000,1	//Star Crumb
-30,1558,1	//Girl's Diary
+30,1558,2	//Girl's Diary
 30,4005,1	//Santa Poring Card
 30,7034,1	//Red Stocking
 // GiftBox_4
@@ -385,7 +385,7 @@
 31,997,1	//Great Nature
 31,999,1	//Steel
 31,1000,1	//Star Crumb
-31,1558,1	//Girl's Diary
+31,1558,2	//Girl's Diary
 31,4005,1	//Santa Poring Card
 31,7034,1	//Red Stocking
 // GiftBox_China
