@@ -40,6 +40,8 @@
 	2385 Recuvative_Armor		Should trigger HP/SP return with magical kills as well.
 
 =======================
+2009/01/02
+	* Rev. 13429 Removed bonuses from Novice Armlet. C'mon guys. :( [L0ne_W0lf]
 2008/12/26
 	* Rev. 13415 Updated episode 12.1 skills to official. [L0ne_W0lf]
 2008/12/17

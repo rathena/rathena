@@ -1360,7 +1360,7 @@
 2625,Brooch_,Brooch,5,30000,,200,,0,,1,0xFFFFFFFE,7,2,136,,90,0,0,{ bonus bAgi,1; },{},{}
 2626,Rosary_,Rosary,5,15000,,200,,0,,1,0xFFFFFFFE,7,2,136,,90,0,0,{ bonus bMdef,3; bonus bLuk,1; },{},{}
 2627,Belt,Belt,5,20000,,1200,,0,,1,0xFFFFFFFF,7,2,136,,25,0,0,{},{},{}
-2628,Novice_Armlet,Novice Armlet,5,400,,200,,0,,1,0x00000001,7,2,136,,1,0,0,{ bonus bStr,1; bonus bInt,1; bonus bLuk,1; },{},{}
+2628,Novice_Armlet,Novice Armlet,5,400,,200,,0,,1,0x00000001,7,2,136,,1,0,0,{},{},{}
 2629,Magingiorde,Megingjard,5,20,,8000,,2,,0,0xFFFFFFFF,7,2,136,,94,0,0,{ bonus bStr,40; bonus bMdef,7; },{},{}
 2630,Brysinggamen,Brisingamen,5,20,,1500,,1,,0,0xFFFFFFFF,7,2,136,,94,0,0,{ bonus bStr,6; bonus bAgi,6; bonus bVit,6; bonus bInt,6; bonus bLuk,10; bonus bMdef,5; },{},{}
 2631,First_Age_Ring,Celebration Ring,5,1,,10,,0,,0,0xFFFFFFFF,7,2,136,,1,0,0,{},{},{}
