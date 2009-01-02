@@ -2360,7 +2360,8 @@
 //5414,Camp_Fire_Hat,Camp Fire Hat,5,20,,300,,2,,0,0xFFFFFFFF,7,2,256,,0,1,416,{ bonus4 bAutoSpellWhenHit,"MG_FIREBALL",5,100,1; bonus2 bSubEle,Ele_Fire,10; },{},{}
 //5415,Poring_Cake_Hat,Poring Cake Hat,5,20,,1000,,5,,0,0xFFFFFFFF,7,2,256,,40,1,417,{ bonus bMdef,5; bonus bCritical,5; bonus bFlee,5; bonus bFlee2,5; bonus bAspdRate,5; bonus bCastrate,-5; bonus bDelayRate,-5; },{},{}
 //5416,Beer_Hat,Beer Hat,5,20,,600,,2,,0,0xFFFFFFFE,7,2,256,,18,1,418,{ bonus bFlee2,5; skill "SM_RECOVERY",3; skill "MG_SRECOVERY",3; },{},{}
-//5417-5418
+5417,Crown_Parrots,Crown Parrots,5,20,,200,,1,,1,0xFFFFFFFF,7,2,256,,0,0,419,{ bonus2 bResEff,Eff_Silence,10000; bonus3 bAutoSpell,"DC_SCREAM",1,50; bonus bInt,1; },{},{}
+5418,Legionnaire_Hat,Legionnaire Hat,5,20,,400,,4,,1,0xFFFFFFFF,7,2,256,,0,1,420,{ bonus bStr,1; bonus2 bAddRace,RC_NonBoss,3; bonus2 bAddRace,RC_Boss,3; },{},{}
 //5419,Leaves_Of_Grass,Leaves Of Grass,5,,,100,,0,,0,0xFFFFFFFF,7,2,1,,0,0,57,{ bonus bVit,1; bonus2 bSubRace,RC_Plant,5; },{},{}
 //5420,Mask_Of_Ifrit,Mask Of Ifrit,5,,,0,,8,,0,0xFFFFFFFE,7,2,769,,70,0,421,{ bonus bStr,1; bonus bInt,1; bonus bMdef,5; bonus2 bSubEle,Ele_Fire,10; },{},{}
 //5421,Ears_Of_Ifrit,Ears Of Ifrit,5,,,0,,0,,0,0xFFFFFFFE,7,2,512,,70,0,422,{ bonus bStr,1; bonus bMdef,3; bonus2 bSkillAtk,"MG_FIREBOLT",2; bonus2 bSkillAtk,"WZ_FIREPILLAR",2; bonus2 bSkillAtk,"WZ_METEOR",2; bonus2 bSkillAtk,"SM_BASH",2; bonus2 bSkillAtk,"SM_MAGNUM",2; bonus2 bSkillAtk,"KN_PIERCE",2; bonus2 bSubEle,Ele_Fire,5; },{},{}

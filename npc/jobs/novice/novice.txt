@@ -3840,20 +3840,10 @@ S_UserJobchoice:
 	mes "I see. It's your choice.";
 	mes "There is no obligation to change to the job we recommend. Please choose the job you wish to become.";
 	next;
-	setarray .@JOBS$[0],"Swordsman","Mage","Merchant","Thief","Archer","Acolyte";
-	
-	for( set .@i,0; .@i < getarraysize(.@JOBS$); set .@i,.@i+1 )
-	{
-		if(.@JOBS$[.@i] == getarg(0)) set .@menu$,.@menu$+":";
-        	else set .@menu$,.@menu$+.@JOBS$[.@i]+":";
-   	}
-	set .@menu, select(.@menu$) -1;
-	if( .@JOBS$[.@menu] == "Swordsman" ) set @menu,1;
-	else if( .@JOBS$[.@menu] == "Mage" ) set @menu,2;
-	else if( .@JOBS$[.@menu] == "Merchant" ) set @menu,3;
-	else if( .@JOBS$[.@menu] == "Thief" ) set @menu,4;
-	else if( .@JOBS$[.@menu] == "Archer" ) set @menu,5;
-	else if( .@JOBS$[.@menu] == "Acolyte" ) set @menu,6;
+	select( "Swordsman:Mage:Merchant:Thief:Archer:Acolyte" );
+	// @menu is already set by Core.
+	setarray .@Jobs$[1],"Swordsman","Mage","Merchant","Thief","Archer","Acolyte";
+
 	mes "[Hanson]";
 	mes "You have chosen";
 	if (@menu == 1) {
@@ -3929,7 +3919,7 @@ S_UserJobchoice:
 	mes "Free tickets for Kafra storage and transportation can be used for Kafra storage and teleport services.";
 	next;
 	mes "[Hanson]";
-	mes "'Zeny' is the currency of Rune-Midgard. The 'Adventurer's Suit' will come in handy once you become a "+@menu+".";
+	mes "'Zeny' is the currency of Rune-Midgard. The 'Adventurer's Suit' will come in handy once you become a " + .@Jobs$[@menu] + ".";
 	next;
 	mes "[Hanson]";
 	mes "You will now";
