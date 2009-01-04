@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Darkchild
 //===== Current Version: =====================================
-//= 1.9
+//= 2.0
 //===== Compatible With: =====================================
 //= Any eAthena Version;
 //===== Description: =========================================
@@ -23,6 +23,7 @@
 //= 1.7 Temporary? Added F_ClearGarbage to clear unused/outdated variables [Lupus]
 //= 1.8 Removed Duplicates [Silent]
 //= 1.9 Optimized for the greater good. [Kisuka]
+//= 2.0 Fixed warp for AntHell and Yuno. [Kisuka]
 //============================================================
 //============================================================
 //= To allow selecting the Level of the Dungeon you want to
@@ -118,10 +119,6 @@
 					end;
 					break;
 				case 19:
-					warp "xmas",148,131;
-					end;
-					break;
-				case 20:
 					warp "yuno",160,168;
 					end;
 			}
@@ -140,7 +137,7 @@
 					end;
 					break;
 				case 3:
-					warp "moc_fild04",210,328;
+					warp "moc_fild20",148,141;
 					end;
 					break;
 				case 4:

@@ -5,7 +5,7 @@
 //= Darlskies, Darkchild, Syrus22, Lupus, kobra_k88 (2.0)
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 6.1
+//= 6.2
 //===== Compatible With: ===================================== 
 //= eAthena 1.0
 //===== Description: =========================================
@@ -57,6 +57,7 @@
 //= 6.0 Closed Kafra Password exploit in Cool Event Corp. Storages until we got a client/packet based password support.
 //=		Added 2 args into F_SetKafCode to fit it in Cool Evnt Co. NPC [Lupus]
 //= 6.1 Added menu for Turbo Track Kafra Staff. [L0ne_W0lf]
+//= 6.2 Updated/Fixed warp cords. [Kisuka]
 //============================================================ 
 
 
@@ -398,19 +399,19 @@ function	script	F_KafTele	{
 			set RESRVPTS, RESRVPTS + (@wrpP[@num]/16);
 		}
 		if (@wrpD$[@num] == "Alberta") warp "alberta", 117, 56;
-		if (@wrpD$[@num] == "Al De Baran") warp "aldebaran",143,110;
-		if (@wrpD$[@num] == "Aldebaran") warp "aldebaran",143,110;
-		if (@wrpD$[@num] == "Comodo") warp "comodo", 207, 144;
+		if (@wrpD$[@num] == "Al De Baran") warp "aldebaran",168,112;
+		if (@wrpD$[@num] == "Aldebaran") warp "aldebaran",168,112;
+		if (@wrpD$[@num] == "Comodo") warp "comodo", 209, 143;
 		if (@wrpD$[@num] == "Izlude") warp "izlude", 91, 105;
 		if (@wrpD$[@num] == "Geffen") warp "geffen", 120, 39;
 		if (@wrpD$[@num] == "Morroc") warp "morocc", 156, 46;
-		if (@wrpD$[@num] == "Payon") warp "payon", 168, 103;
+		if (@wrpD$[@num] == "Payon") warp "payon", 161, 58;
 		if (@wrpD$[@num] == "Prontera") warp "prontera", 116, 72;
-		if (@wrpD$[@num] == "Mjolnir Dead Pit") warp "mjolnir_02", 82, 347;
+		if (@wrpD$[@num] == "Mjolnir Dead Pit") warp "mjolnir_02", 99, 351;
 		if (@wrpD$[@num] == "Comodo Pharos Beacon") warp "cmd_fild07", 127, 134;
 		if (@wrpD$[@num] == "Orc Dungeon") warp "gef_fild10", 52, 326;
-		if (@wrpD$[@num] == "Umbala") warp "umbala", 130, 130;
-		if (@wrpD$[@num] == "Juno") warp "yuno", 157, 123;
+		if (@wrpD$[@num] == "Umbala") warp "umbala", 100, 154;
+		if (@wrpD$[@num] == "Juno") warp "yuno", 158, 125;
 		cutin "", 255;
 		end;
 }
