@@ -352,6 +352,7 @@ struct map_session_data {
 		short nameid;
 		int index, amount, zeny;
 		struct mail_data inbox;
+		bool changed; // if true, should sync with charserver on next mailbox request
 	} mail;
 
 	//Quest log system [Kevin]

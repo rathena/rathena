@@ -332,7 +332,7 @@ struct mail_message {
 
 struct mail_data {
 	short amount;
-	bool changed, full;
+	bool full;
 	short unchecked, unread;
 	struct mail_message msg[MAIL_MAX_INBOX];
 };

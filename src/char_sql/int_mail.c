@@ -73,7 +73,6 @@ static int mail_fromsql(int char_id, struct mail_data* md)
 	md->full = ( Sql_NumRows(sql_handle) > MAIL_MAX_INBOX );
 
 	md->amount = i;
-	md->changed = false;
 	Sql_FreeResult(sql_handle);
 
 	md->unchecked = 0;
