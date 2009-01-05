@@ -8916,6 +8916,7 @@ AtCommandInfo atcommand_info[] = {
 	{ "itemlist",           40,40,    atcommand_itemlist },
 	{ "stats",              40,40,    atcommand_stats },
 	{ "delitem",            60,60,    atcommand_delitem },
+	{ "charcommands",        1,1,     atcommand_commands },
 };
 
 
@@ -9002,8 +9003,7 @@ bool is_atcommand(const int fd, struct map_session_data* sd, const char* message
 	char cmd[100];
 	char param[100];
 	char output[200];
-	char output2[200];
-	const char* message2;
+	char message2[200];
 	
 	int gmlvl = pc_isGM(sd);
 	
@@ -9051,16 +9051,12 @@ bool is_atcommand(const int fd, struct map_session_data* sd, const char* message
 				if (sscanf(message, "%99s \"%23[^\"]\" %99[^\n]", cmd, charname, param) == 2
 				|| sscanf(message, "%99s %23s %99[^\n]", cmd, charname, param) == 2)
 				{
-					sprintf(output, "%s", cmd);
-					memcpy(output2, output, sizeof(output2));
-					message2 = output2;
+					sprintf(message2, "%s", cmd);
 					//NOTE: fd is passed to is_atcommand_sub instead of pl_sd->fd because we want output sent to the user of the command, not the target.
 					return is_atcommand_sub(fd,pl_sd,message2,gmlvl);
 				}
 				else {
-					sprintf(output, "%s %s", cmd, param);
-					memcpy(output2, output, sizeof(output2));
-					message2 = output2;
+					sprintf(message2, "%s %s", cmd, param);
 					return is_atcommand_sub(fd,pl_sd,message2,gmlvl);
 				}
 			}
@@ -9169,7 +9165,9 @@ int atcommand_commands(const int fd, struct map_session_data* sd, const char* co
 		{
 			unsigned int slen;
 
-			if( gm_lvl < atcommand_info[i].level )
+			if( gm_lvl < atcommand_info[i].level && stristr(command,"commands") )
+				continue;
+			if( gm_lvl < atcommand_info[i].level2 && stristr(command,"charcommands") )
 				continue;
 
 			slen = (unsigned int)strlen(atcommand_info[i].command);
@@ -9189,35 +9187,9 @@ int atcommand_commands(const int fd, struct map_session_data* sd, const char* co
 			count++;
 		}
 		
-		for( i = 0; i < ARRAYLENGTH(atcommand_info); i++ )
-		{
-			unsigned int slen;
-
-			if( gm_lvl < atcommand_info[i].level2 )
-				continue;
-
-			slen = (unsigned int)strlen(atcommand_info[i].command);
-
-			// flush the text buffer if this command won't fit into it
-			if( slen + cur - line_buff >= CHATBOX_SIZE )
-			{
-				clif_displaymessage(fd,line_buff);
-				cur = line_buff;
-				memset(line_buff,' ',CHATBOX_SIZE);
-				line_buff[CHATBOX_SIZE-1] = 0;
-			}
-
-			memcpy(cur,atcommand_info[i].command,slen);
-			cur += slen+(10-slen%10);
-
-			count2++;
-		}
-		
 	clif_displaymessage(fd,line_buff);
 
 	sprintf(atcmd_output, msg_txt(274), count); // "%d commands found."
-	clif_displaymessage(fd, atcmd_output);
-	sprintf(atcmd_output, "%d charcommands found.", count2);
 	clif_displaymessage(fd, atcmd_output);
 	
 	return 0;

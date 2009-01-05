@@ -1,4 +1,6 @@
 Date	Added
+2009/1/5
+	* Added @charcommands to return a list of available # commands [SketchyPhoenix]
 2008/12/26
 	* Rev. 13444 Marked new Morroc fields as nomemo. [L0ne_W0lf]
 	* Rev. 13415 Commented out maps no longer accessable with 12.1. [L0ne_W0lf]

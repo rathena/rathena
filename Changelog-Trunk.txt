@@ -7,6 +7,7 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 	* Fixed @mobsearch and @showmobs (bugreport:2481) [ultramage]
 	- now only search for mobs on the same map as the caller
 	- now properly distinguish between dead and alive mobs
+	* Added @charcommands to return a list of available charcommands (bugreport:2630) [SketchyPhoenix]
 2008/12/31
 	* Changes to the script engine: [FlavioJS]
 	- new stack datatype script_retinfo for C_RETINFO to hold all the return state info 
