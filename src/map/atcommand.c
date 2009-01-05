@@ -6315,7 +6315,7 @@ int atcommand_sound(const int fd, struct map_session_data *sd, const char *comma
 int atcommand_mobsearch(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
 	char mob_name[100];
-	int mob_id,map_id = 0;
+	int mob_id;
 	int number = 0;
 	struct s_mapiterator* it;
 
@@ -6337,8 +6337,6 @@ int atcommand_mobsearch(const int fd, struct map_session_data* sd, const char* c
 				strcpy(mob_name,mob_db(mob_id)->jname);	// --ja--
 //				strcpy(mob_name,mob_db(mob_id)->name);	// --en--
 
-	map_id = sd->bl.m;
-
 	snprintf(atcmd_output, sizeof atcmd_output, "Mob Search... %s %s", mob_name, mapindex_id2name(sd->mapindex));
 	clif_displaymessage(fd, atcmd_output);
 
@@ -6349,12 +6347,17 @@ int atcommand_mobsearch(const int fd, struct map_session_data* sd, const char* c
 		if( md == NULL )
 			break;// no more mobs
 
-		if( mob_id == -1 || md->class_ == mob_id )
-		{
-			++number;
-			snprintf(atcmd_output, sizeof atcmd_output, "%2d[%3d:%3d] %s", number, md->bl.x, md->bl.y, md->name);
-			clif_displaymessage(fd, atcmd_output);
-		}
+		if( md->bl.m != sd->bl.m )
+			continue;
+		if( mob_id != -1 && md->class_ != mob_id )
+			continue;
+
+		++number;
+		if( md->spawn_timer == INVALID_TIMER )
+			snprintf(atcmd_output, sizeof(atcmd_output), "%2d[%3d:%3d] %s", number, md->bl.x, md->bl.y, md->name);
+		else
+			snprintf(atcmd_output, sizeof(atcmd_output), "%2d[%s] %s", number, "dead", md->name);
+		clif_displaymessage(fd, atcmd_output);
 	}
 	mapit_free(it);
 
@@ -7015,7 +7018,7 @@ int atshowmobs_timer(int tid, unsigned int tick, int id, intptr data)
 int atcommand_showmobs(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
 	char mob_name[100];
-	int mob_id,map_id = 0;
+	int mob_id;
 	int number = 0;
 	struct s_mapiterator* it;
 
@@ -7044,8 +7047,6 @@ int atcommand_showmobs(const int fd, struct map_session_data* sd, const char* co
 		strcpy(mob_name,mob_db(mob_id)->jname);    // --ja--
 		//strcpy(mob_name,mob_db(mob_id)->name);    // --en--
 
-	map_id = sd->bl.m;
-
 	snprintf(atcmd_output, sizeof atcmd_output, "Mob Search... %s %s",
 		mob_name, mapindex_id2name(sd->mapindex));
 	clif_displaymessage(fd, atcmd_output);
@@ -7057,15 +7058,18 @@ int atcommand_showmobs(const int fd, struct map_session_data* sd, const char* co
 		if( md == NULL )
 			break;// no more mobs
 
+		if( md->bl.m != sd->bl.m )
+			continue;
+		if( mob_id != -1 && md->class_ != mob_id )
+			continue;
 		if( md->special_state.ai || md->master_id )
-			continue;//Hide slaves and player summoned mobs. [Skotlex]
+			continue; // hide slaves and player summoned mobs
+		if( md->spawn_timer != INVALID_TIMER )
+			continue; // hide mobs waiting for respawn
 
-		if( mob_id == -1 || md->class_ == mob_id )
-		{
-			++number;
-			clif_viewpoint(sd, 1, 1, md->bl.x, md->bl.y, number, 0xFFFFFF);
-			add_timer(gettick()+5000, atshowmobs_timer, sd->bl.id, number);
-		}
+		++number;
+		clif_viewpoint(sd, 1, 1, md->bl.x, md->bl.y, number, 0xFFFFFF);
+		add_timer(gettick()+5000, atshowmobs_timer, sd->bl.id, number);
 	}
 	mapit_free(it);
 
