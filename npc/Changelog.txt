@@ -1,5 +1,7 @@
 Date		Added
 ======
+2009/01/06
+	* Rev. 13436 Uncommented warp moc_fild02 -> pay_fild04, in morroc_fild.txt. [L0ne_W0lf]
 2008/12/29
 	* Rev. 13423 Fixed Econ values in agit_template. Commited by accident, as it's not finished. [L0ne_W0lf]
 	* Rev. 13422 Workin' on fixing some bugs. :) [L0ne_W0lf]
