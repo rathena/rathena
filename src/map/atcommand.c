@@ -8954,6 +8954,7 @@ int get_atcommand_level(const AtCommandFunc func)
 bool is_atcommand_sub(const int fd, struct map_session_data* sd, const char* str, int gmlvl)
 {
 	AtCommandInfo* info;
+	struct map_session_data *ssd;
 	char command[100];
 	char args[100];
 	char output[200];
@@ -8980,9 +8981,12 @@ bool is_atcommand_sub(const int fd, struct map_session_data* sd, const char* str
 		}
 	}
 
-	//fd will not equal sd->fd if it's a charcommand. Of course, using a charcommand on yourself would make it = sd->fd as well
-	if( log_config.gm && ( info->level >= log_config.gm || info->level2 >= log_config.gm ) && fd == sd->fd)
-			log_atcommand(sd, str);
+	if( log_config.gm && info->level >= log_config.gm && *str == atcommand_symbol )
+		log_atcommand(sd, str);
+	
+	if( log_config.gm && info->level2 >= log_config.gm && *str == charcommand_symbol 
+	&& (ssd = (struct map_session_data *)session[fd]->session_data) != NULL )
+		log_atcommand(ssd, str);
 
 	if( info->func(fd, sd, command, args) != 0 )
 	{
@@ -9030,14 +9034,8 @@ bool is_atcommand(const int fd, struct map_session_data* sd, const char* message
 
 	if (*message == charcommand_symbol)
 	{
-		//Fail any #commands without names.
-		if( sscanf(message, "%99s %99[^\n]", cmd, param) == 1 ) {
-				sprintf(output, "Charcommand failed. Usage: #<command> <char name> <params>.");
-				clif_displaymessage(fd, output);
-				return true;
-		}
 		//Checks to see if #command has a name or a name + parameters.
-		else if (sscanf(message, "%99s \"%23[^\"]\" %99[^\n]", cmd, charname, param) >= 2
+		if (sscanf(message, "%99s \"%23[^\"]\" %99[^\n]", cmd, charname, param) >= 2
 		|| sscanf(message, "%99s %23s %99[^\n]", cmd, charname, param) >= 2)
 		{
 			if ( (pl_sd = map_nick2sd(charname)) == NULL )
@@ -9060,7 +9058,12 @@ bool is_atcommand(const int fd, struct map_session_data* sd, const char* message
 					return is_atcommand_sub(fd,pl_sd,message2,gmlvl);
 				}
 			}
-		}	
+		}
+		else {
+			sprintf(output, "Charcommand failed. Usage: #<command> <char name> <params>.");
+			clif_displaymessage(fd, output);
+			return true;
+		}
 	}
 	
 	return is_atcommand_sub(fd,sd,message,gmlvl);
