@@ -7461,9 +7461,6 @@ static int status_natural_heal(struct block_list* bl, va_list args)
 	struct map_session_data *sd;
 	int val,rate,bonus = 0,flag;
 
-	if (!(bl->type&BL_REGEN))
-		return 0;
-
 	regen = status_get_regen_data(bl);
 	if (!regen) return 0;
 	status = status_get_status_data(bl);
@@ -7647,7 +7644,7 @@ static int status_natural_heal(struct block_list* bl, va_list args)
 static int status_natural_heal_timer(int tid, unsigned int tick, int id, intptr data)
 {
 	natural_heal_diff_tick = DIFF_TICK(tick,natural_heal_prev_tick);
-	map_foreachiddb(status_natural_heal);
+	map_foreachregen(status_natural_heal);
 	natural_heal_prev_tick = tick;
 	return 0;
 }

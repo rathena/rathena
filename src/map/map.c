@@ -99,6 +99,7 @@ static DBMap* bossid_db=NULL; // int id -> struct mob_data* (MVP db)
 static DBMap* map_db=NULL; // unsigned int mapindex -> struct map_data*
 static DBMap* nick_db=NULL; // int char_id -> struct charid2nick* (requested names of offline characters)
 static DBMap* charid_db=NULL; // int char_id -> struct map_session_data*
+static DBMap* regen_db=NULL; // int id -> struct block_list* (status_natural_heal processing)
 
 static int map_users=0;
 static struct block_list *objects[MAX_FLOORITEM];
@@ -1547,6 +1548,9 @@ void map_addiddb(struct block_list *bl)
 			idb_put(bossid_db, bl->id, bl);
 	}
 
+	if( bl->type & BL_REGEN )
+		idb_put(regen_db, bl->id, bl);
+
 	idb_put(id_db,bl->id,bl);
 }
 
@@ -1568,6 +1572,10 @@ void map_deliddb(struct block_list *bl)
 		idb_remove(mobid_db,bl->id);
 		idb_remove(bossid_db,bl->id);
 	}
+
+	if( bl->type & BL_REGEN )
+		idb_remove(regen_db,bl->id);
+
 	idb_remove(id_db,bl->id);
 }
 
@@ -1861,6 +1869,28 @@ void map_foreachnpc(int (*func)(struct npc_data* nd, va_list args), ...)
 			if( ret == -1 )
 				break;// stop iterating
 		}
+	}
+	dbi_destroy(iter);
+}
+
+/// Applies func to everything in the db.
+/// Stops iteratin gif func returns -1.
+void map_foreachregen(int (*func)(struct block_list* bl, va_list args), ...)
+{
+	DBIterator* iter;
+	struct block_list* bl;
+
+	iter = db_iterator(regen_db);
+	for( bl = (struct block_list*)dbi_first(iter); dbi_exists(iter); bl = (struct block_list*)dbi_next(iter) )
+	{
+		va_list args;
+		int ret;
+
+		va_start(args, func);
+		ret = func(bl, args);
+		va_end(args);
+		if( ret == -1 )
+			break;// stop iterating
 	}
 	dbi_destroy(iter);
 }
@@ -3349,6 +3379,7 @@ void do_final(void)
 	nick_db->destroy(nick_db, nick_db_final);
 	charid_db->destroy(charid_db, NULL);
 	iwall_db->destroy(iwall_db, NULL);
+	regen_db->destroy(regen_db, NULL);
 
 #ifndef TXT_ONLY
     map_sql_close();
@@ -3519,6 +3550,7 @@ int do_init(int argc, char *argv[])
 	map_db = uidb_alloc(DB_OPT_BASE);
 	nick_db = idb_alloc(DB_OPT_BASE);
 	charid_db = idb_alloc(DB_OPT_BASE);
+	regen_db = idb_alloc(DB_OPT_BASE); // efficient status_natural_heal processing
 
 	iwall_db = strdb_alloc(DB_OPT_RELEASE_DATA,2*NAME_LENGTH+2+1); // [Zephyrus] Invisible Walls
 
