@@ -8984,6 +8984,7 @@ bool is_atcommand_sub(const int fd, struct map_session_data* sd, const char* str
 	if( log_config.gm && info->level >= log_config.gm && *str == atcommand_symbol )
 		log_atcommand(sd, str);
 	
+	//
 	if( log_config.gm && info->level2 >= log_config.gm && *str == charcommand_symbol 
 	&& (ssd = (struct map_session_data *)session[fd]->session_data) != NULL )
 		log_atcommand(ssd, str);
@@ -9003,13 +9004,13 @@ bool is_atcommand(const int fd, struct map_session_data* sd, const char* message
 {
 	struct map_session_data* pl_sd;
 	
-	char charname[NAME_LENGTH];
+	char charname[NAME_LENGTH], charname2[NAME_LENGTH];
 	char cmd[100];
-	char param[100];
+	char param[100], param2[100];
 	char output[200];
 	char message2[200];
 	
-	int gmlvl = pc_isGM(sd);
+	int x, y, z, gmlvl = pc_isGM(sd);
 	
 	nullpo_retr(false, sd);
 	
@@ -9035,35 +9036,38 @@ bool is_atcommand(const int fd, struct map_session_data* sd, const char* message
 	if (*message == charcommand_symbol)
 	{
 		//Checks to see if #command has a name or a name + parameters.
-		if (sscanf(message, "%99s \"%23[^\"]\" %99[^\n]", cmd, charname, param) >= 2
-		|| sscanf(message, "%99s %23s %99[^\n]", cmd, charname, param) >= 2)
+		x = sscanf(message, "%99s \"%23[^\"]\" %99[^\n]", cmd, charname, param);
+		y = sscanf(message, "%99s %23s %99[^\n]", cmd, charname2, param2);
+		
+		//x being > 1 is unique to its proper syntax
+		z = ( x > 1 ) ? x : y;
+
+		if ( (pl_sd = map_nick2sd(charname)) == NULL  && ( (pl_sd = map_nick2sd(charname2)) == NULL ) )
 		{
-			if ( (pl_sd = map_nick2sd(charname)) == NULL )
-			{
-				sprintf(output, "%s failed. Player %s not found.", cmd, charname);
-				clif_displaymessage(fd, output);
-				return true;
-			}
-			else {
-				//If it's just a name and no params, send the command with no name. Otherwise, send it with the parameters.
-				if (sscanf(message, "%99s \"%23[^\"]\" %99[^\n]", cmd, charname, param) == 2
-				|| sscanf(message, "%99s %23s %99[^\n]", cmd, charname, param) == 2)
-				{
-					sprintf(message2, "%s", cmd);
-					//NOTE: fd is passed to is_atcommand_sub instead of pl_sd->fd because we want output sent to the user of the command, not the target.
-					return is_atcommand_sub(fd,pl_sd,message2,gmlvl);
-				}
-				else {
-					sprintf(message2, "%s %s", cmd, param);
-					return is_atcommand_sub(fd,pl_sd,message2,gmlvl);
-				}
-			}
-		}
-		else {
-			sprintf(output, "Charcommand failed. Usage: #<command> <char name> <params>.");
+			sprintf(output, "%s failed. Player not found.", cmd);
 			clif_displaymessage(fd, output);
 			return true;
 		}
+		
+		if ( x == 3 && x > y ) {
+			sprintf(message2, "%s %s", cmd, param);
+			return is_atcommand_sub(fd,pl_sd,message2,gmlvl);
+		}
+		else if ( y > 2 ) {
+			sprintf(message2, "%s %s", cmd, param2);
+			return is_atcommand_sub(fd,pl_sd,message2,gmlvl);
+		}
+		
+		//Regardless of what style the #command is used, if it's correct, it will always have
+		//this value if there is no parameter.
+		if ( z == 2 ) {
+			sprintf(message2, "%s", cmd);
+			return is_atcommand_sub(fd,pl_sd,message2,gmlvl);
+		}
+		
+		sprintf(output, "Charcommand failed. Usage: #<command> <char name> <params>.");
+		clif_displaymessage(fd, output);
+		return true;
 	}
 	
 	return is_atcommand_sub(fd,sd,message,gmlvl);

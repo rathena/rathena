@@ -1,4 +1,6 @@
 Date	Added
+2009/1/12
+	* Second agitend corrected to agitend2 [SketchyPhoenix]
 2009/1/5
 	* Added @charcommands to return a list of available # commands [SketchyPhoenix]
 2008/12/26

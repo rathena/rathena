@@ -5,6 +5,9 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2009/01/12
 	* Added regen_db to reduce hp/sp processing delays (bugreport:2256) [ultramage]
+	* #command parsing cleaned up. [SketchyPhoenix]
+	- Fixed charname reading problems from r13441 
+	- Corrected agitend typo to agitend2 (bugreport:2654)
 2009/01/05
 	* Fixed @mobsearch and @showmobs (bugreport:2481) [ultramage]
 	- now only search for mobs on the same map as the caller
