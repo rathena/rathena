@@ -4,6 +4,8 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2009/01/12
+	* Mobs with nonzero spawn time can now be cached as well (bugreport:1197)
+	* Fixed dynamic mobs being unloaded without stopping their respawn timer
 	* Added regen_db to reduce hp/sp processing delays (bugreport:2256) [ultramage]
 	* #command parsing cleaned up. [SketchyPhoenix]
 	- Fixed charname reading problems from r13441 

@@ -2129,14 +2129,17 @@ int map_removemobs_sub(struct block_list *bl, va_list ap)
 	struct mob_data *md = (struct mob_data *)bl;
 	nullpo_retr(0, md);
 
-	//When not to remove:
-	//Mob doesn't respawn and is not a slave
+	//When not to remove mob:
+	// doesn't respawn and is not a slave
 	if( !md->spawn && !md->master_id )
 		return 0;
-	//Mob respawn data is not in cache
+	// respawn data is not in cache
 	if( md->spawn && !md->spawn->state.dynamic )
 		return 0;
-	//Mob is damaged and mob_remove_damaged is off
+	// hasn't spawned yet
+	if( md->spawn_timer != INVALID_TIMER )
+		return 0;
+	// is damaged and mob_remove_damaged is off
 	if( !battle_config.mob_remove_damaged && md->status.hp < md->status.max_hp )
 		return 0;
 	
@@ -2174,7 +2177,7 @@ int map_removemobs_timer(int tid, unsigned int tick, int id, intptr data)
 
 void map_removemobs(int m)
 {
-	if (map[m].mob_delete_timer != -1)
+	if (map[m].mob_delete_timer != -1) // should never happen
 		return; //Mobs are already scheduled for removal
 
 	map[m].mob_delete_timer = add_timer(gettick()+battle_config.mob_remove_delay, map_removemobs_timer, m, 0);

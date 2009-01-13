@@ -2029,7 +2029,12 @@ int unit_free(struct block_list *bl, int clrtype)
 		case BL_MOB:
 		{
 			struct mob_data *md = (struct mob_data*)bl;
-			if( md->deletetimer != -1 )
+			if( md->spawn_timer != INVALID_TIMER )
+			{
+				delete_timer(md->spawn_timer,mob_delayspawn);
+				md->spawn_timer = INVALID_TIMER;
+			}
+			if( md->deletetimer != INVALID_TIMER )
 			{
 				delete_timer(md->deletetimer,mob_timer_delete);
 				md->deletetimer = INVALID_TIMER;

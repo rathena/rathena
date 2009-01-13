@@ -2531,34 +2531,27 @@ static const char* npc_parse_mob(char* w1, char* w2, char* w3, char* w4, const c
 		}
 	}
 
-	//Now that all has been validated. We allocate the actual memory
-	//that the re-spawn data will use.
+	//Now that all has been validated. We allocate the actual memory that the re-spawn data will use.
 	data = (struct spawn_data*)aMalloc(sizeof(struct spawn_data));
 	memcpy(data, &mob, sizeof(struct spawn_data));
-	
-	if( !battle_config.dynamic_mobs || data->delay1 || data->delay2 ) {
+
+	// spawn / cache the new mobs
+	if( battle_config.dynamic_mobs && map_addmobtolist(data->m, data) >= 0 )
+	{
+		data->state.dynamic = true;
+		npc_cache_mob += data->num;
+
+		// check if target map has players
+		// (usually shouldn't occur when map server is just starting,
+		// but not the case when we do @reloadscript
+		if( map[data->m].users > 0 )
+			npc_parse_mob2(data);
+	}
+	else
+	{
 		data->state.dynamic = false;
 		npc_parse_mob2(data);
 		npc_delay_mob += data->num;
-	} else {
-		int index = map_addmobtolist(data->m, data);
-		if( index >= 0 ) {
-			data->state.dynamic = true;
-			// check if target map has players
-			// (usually shouldn't occur when map server is just starting,
-			// but not the case when we do @reloadscript
-			if (map[data->m].users > 0)
-				npc_parse_mob2(data);
-			npc_cache_mob += data->num;
-		} else {
-			// mobcache is full
-			// create them as delayed with one second
-			data->state.dynamic = false;
-			data->delay1 = 1000;
-			data->delay2 = 1000;
-			npc_parse_mob2(data);
-			npc_delay_mob += data->num;
-		}
 	}
 
 	npc_mob++;
