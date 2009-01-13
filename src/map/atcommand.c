@@ -6463,53 +6463,48 @@ int atcommand_pettalk(const int fd, struct map_session_data* sd, const char* com
 	return 0;
 }
 
-/*==========================================
- * @users - displays the number of players present on each map (percentage)
- *------------------------------------------*/
+/// @users - displays the number of players present on each map (and percentage)
+/// #users displays on the target user instead of self
 int atcommand_users(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
 	char buf[256];
-	DBMap* users_db; // unsigned int mapindex -> int users
+	int i;
+	int users[MAX_MAPINDEX];
 	int users_all;
+	struct s_mapiterator* iter;
 
-	users_db = uidb_alloc(DB_OPT_BASE);
+	memset(users, 0, sizeof(users));
 	users_all = 0;
 
 	// count users on each map
+	iter = mapit_getallusers();
+	while( true )
 	{
-		struct s_mapiterator* iter;
-		struct map_session_data* sd;
+		struct map_session_data* sd2 = (struct map_session_data*)mapit_next(iter);
+		if( sd2 == NULL )
+			break;// no more users
 
-		iter = mapit_getallusers();
-		for( sd = (struct map_session_data*)mapit_first(iter); mapit_exists(iter); sd = (struct map_session_data*)mapit_next(iter) )
-		{
-			int users = (int)uidb_get(users_db,sd->mapindex) + 1;
-			uidb_put(users_db,(unsigned int)sd->mapindex,(void *)users);
-			users_all++;
-		}
-		mapit_free(iter);
+		if( sd2->mapindex >= MAX_MAPINDEX )
+			continue;// invalid mapindex
+
+		if( users[sd2->mapindex] < INT_MAX ) ++users[sd2->mapindex];
+		if( users_all < INT_MAX ) ++users_all;
 	}
+	mapit_free(iter);
 
 	// display results for each map
+	for( i = 0; i < MAX_MAPINDEX; ++i )
 	{
-		DBIterator* iter;
-		DBKey index;
-		int users;
+		if( users[i] == 0 )
+			continue;// empty
 
-		iter = users_db->iterator(users_db);
-		for( users = (int)iter->first(iter,&index); iter->exists(iter); users = (int)iter->next(iter,&index) )
-		{
-			sprintf(buf,"%s: %d (%d%%)",mapindex_id2name(index.i),users,users * 100 / users_all);
-			clif_displaymessage(sd->fd,buf);
-		}
-		iter->destroy(iter);
+		safesnprintf(buf, sizeof(buf), "%s: %d (%.2f%%)", mapindex_id2name(i), users[i], (float)(100.0f*users[i]/users_all));
+		clif_displaymessage(sd->fd, buf);
 	}
 
 	// display overall count
-	sprintf(buf,"all: %d",users_all);
-	clif_displaymessage(fd,buf);
-
-	users_db->destroy(users_db,NULL);
+	safesnprintf(buf, sizeof(buf), "all: %d", users_all);
+	clif_displaymessage(sd->fd, buf);
 
 	return 0;
 }
