@@ -9036,6 +9036,9 @@ bool is_atcommand(const int fd, struct map_session_data* sd, const char* message
 		
 		//x being > 1 is unique to its proper syntax
 		z = ( x > 1 ) ? x : y;
+		
+		sprintf(output, "x = %d, y = %d, z = %d", x, y, z);
+		clif_displaymessage(fd, output);
 
 		if ( (pl_sd = map_nick2sd(charname)) == NULL  && ( (pl_sd = map_nick2sd(charname2)) == NULL ) )
 		{
@@ -9044,7 +9047,7 @@ bool is_atcommand(const int fd, struct map_session_data* sd, const char* message
 			return true;
 		}
 		
-		if ( x == 3 && x > y ) {
+		if ( x > 2 ) {
 			sprintf(message2, "%s %s", cmd, param);
 			return is_atcommand_sub(fd,pl_sd,message2,gmlvl);
 		}
