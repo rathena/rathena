@@ -23,11 +23,7 @@ bool ladmin_auth(struct login_session_data* sd, const char* ip);
 struct Login_Config login_config;
 
 int login_fd; // login server socket
-#define MAX_SERVERS 30
 struct mmo_char_server server[MAX_SERVERS]; // char server data
-
-#define sex_num2str(num) ( (num ==  0  ) ? 'F' : (num ==  1  ) ? 'M' : 'S' )
-#define sex_str2num(str) ( (str == 'F' ) ?  0  : (str == 'M' ) ?  1  :  2  )
 
 // Account engines available
 static struct{
@@ -1130,6 +1126,7 @@ void login_auth_ok(struct login_session_data* sd)
 	WFIFOL(fd,12) = sd->login_id2;
 	WFIFOL(fd,16) = 0; // in old version, that was for ip (not more used)
 	//memcpy(WFIFOP(fd,20), sd->lastlogin, 24); // in old version, that was for name (not more used)
+	memset(WFIFOP(fd,20), 0, 24);
 	WFIFOW(fd,44) = 0; // unknown
 	WFIFOB(fd,46) = sex_str2num(sd->sex);
 	for( i = 0, n = 0; i < MAX_SERVERS; ++i )
@@ -1284,32 +1281,54 @@ int parse_login(int fd)
 			RFIFOSKIP(fd,18);
 		break;
 
-		// request client login
-		case 0x0064: // S 0064 <version>.l <username>.24B <password>.24B <version2>.B
-		case 0x01dd: // S 01dd <version>.l <username>.24B <md5 hash>.16B <version2>.B
-		case 0x0277: // S 0277 <version>.l <username>.24B <password>.24B <junk?>.29B <version2>.B (kRO 2006-04-24aSakexe langtype 0)
-		case 0x02b0: // S 02b0 <version>.l <username>.24B <password>.24B <???>.B <ip address>.16S <mac address>.13S <version2>.B (kRO 2007-05-14aSakexe langtype 0)
+		// request client login (raw password)
+		case 0x0064: // S 0064 <version>.L <username>.24B <password>.24B <clienttype>.B
+		case 0x0277: // S 0277 <version>.L <username>.24B <password>.24B <clienttype>.B <ip address>.16B <adapter address>.13B
+		case 0x02b0: // S 02b0 <version>.L <username>.24B <password>.24B <clienttype>.B <ip address>.16B <adapter address>.13B <g_isGravityID>.B
+		// request client login (md5-hashed password)
+		case 0x01dd: // S 01dd <version>.L <username>.24B <password hash>.16B <clienttype>.B
+		case 0x01fa: // S 01fa <version>.L <username>.24B <password hash>.16B <clienttype>.B <?>.B(index of the connection in the clientinfo file (+10 if the command-line contains "pc"))
+		case 0x027c: // S 027c <version>.L <username>.24B <password hash>.16B <clienttype>.B <?>.13B(junk)
 		{
 			size_t packet_len = RFIFOREST(fd);
 
 			if( (command == 0x0064 && packet_len < 55)
-			||  (command == 0x01dd && packet_len < 47)
 			||  (command == 0x0277 && packet_len < 84)
-			||  (command == 0x02b0 && packet_len < 85) )
-			return 0;
+			||  (command == 0x02b0 && packet_len < 85)
+			||  (command == 0x01dd && packet_len < 47)
+			||  (command == 0x01fa && packet_len < 48)
+			||  (command == 0x027c && packet_len < 60) )
+				return 0;
 		}
 		{
-			int version = RFIFOL(fd,2);
-			char* userid = (char*)RFIFOP(fd,6);
-			char* passwd = (char*)RFIFOP(fd,30);
+			uint32 version;
+			char username[NAME_LENGTH];
+			char password[NAME_LENGTH];
+			unsigned char passhash[16];
+			uint8 clienttype;
+			bool israwpass = (command==0x0064 || command==0x0277 || command==0x02b0);
+
+			version = RFIFOL(fd,2);
+			safestrncpy(username, (const char*)RFIFOP(fd,6), NAME_LENGTH);
+			if( israwpass )
+			{
+				safestrncpy(password, (const char*)RFIFOP(fd,30), NAME_LENGTH);
+				clienttype = RFIFOB(fd,54);
+			}
+			else
+			{
+				memcpy(passhash, RFIFOP(fd,30), 16);
+				clienttype = RFIFOB(fd,46);
+			}
 			RFIFOSKIP(fd,RFIFOREST(fd)); // assume no other packet was sent
 
+			sd->clienttype = clienttype;
 			sd->version = version;
-			safestrncpy(sd->userid, userid, NAME_LENGTH);
-			if( command != 0x01dd )
+			safestrncpy(sd->userid, username, NAME_LENGTH);
+			if( israwpass )
 			{
 				ShowStatus("Request for connection of %s (ip: %s).\n", sd->userid, ip);
-				safestrncpy(sd->passwd, passwd, NAME_LENGTH);
+				safestrncpy(sd->passwd, password, NAME_LENGTH);
 				if( login_config.use_md5_passwds )
 					MD5_String(sd->passwd, sd->passwd);
 				sd->passwdenc = 0;
@@ -1317,7 +1336,7 @@ int parse_login(int fd)
 			else
 			{
 				ShowStatus("Request for connection (passwdenc mode) of %s (ip: %s).\n", sd->userid, ip);
-				bin2hex(sd->passwd, (unsigned char*)passwd, 16); // raw binary data here!
+				bin2hex(sd->passwd, passhash, 16); // raw binary data here!
 				sd->passwdenc = PASSWORDENC;
 			}
 

@@ -594,6 +594,12 @@ enum {
 	JOB_MAX,
 };
 
+enum {
+	SEX_FEMALE = 0,
+	SEX_MALE,
+	SEX_SERVER
+};
+
 // sanity checks...
 #if MAX_ZENY > INT_MAX
 #error MAX_ZENY is too big

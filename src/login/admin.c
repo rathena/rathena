@@ -21,8 +21,6 @@
 #include <string.h>
 #include <sys/stat.h> // for stat/lstat/fstat
 
-#define MAX_SERVERS 30
-extern struct mmo_char_server server[MAX_SERVERS];
 extern AccountDB* accounts;
 
 int charif_sendallwos(int sfd, unsigned char *buf, unsigned int len);

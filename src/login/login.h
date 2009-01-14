@@ -4,7 +4,7 @@
 #ifndef _LOGIN_H_
 #define _LOGIN_H_
 
-#include "../common/mmo.h" // NAME_LENGTH
+#include "../common/mmo.h" // NAME_LENGTH,SEX_*
 
 #define LOGIN_CONF_NAME "conf/login_athena.conf"
 #define LAN_CONF_NAME "conf/subnet_athena.conf"
@@ -17,7 +17,7 @@ struct login_session_data {
 	int account_id;
 	long login_id1;
 	long login_id2;
-	char sex;
+	char sex;// 'F','M','S'
 
 	char userid[NAME_LENGTH];
 	char passwd[32+1]; // 23+1 for plaintext, 32+1 for md5-ed passwords
@@ -27,7 +27,8 @@ struct login_session_data {
 
 	char lastlogin[24];
 	uint8 level;
-	int version;
+	uint8 clienttype;
+	uint32 version;
 
 	int fd;
 };
@@ -74,6 +75,11 @@ struct Login_Config {
 	char account_engine[256];                       // name of the engine to use (defaults to auto, for the first available engine)
 };
 
+#define sex_num2str(num) ( (num ==  SEX_FEMALE  ) ? 'F' : (num ==  SEX_MALE  ) ? 'M' : 'S' )
+#define sex_str2num(str) ( (str == 'F' ) ?  SEX_FEMALE  : (str == 'M' ) ?  SEX_MALE  :  SEX_SERVER  )
+
+#define MAX_SERVERS 30
+extern struct mmo_char_server server[MAX_SERVERS];
 extern struct Login_Config login_config;
 
 

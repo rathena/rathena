@@ -199,9 +199,17 @@ typedef unsigned long long	uint64;
 #ifdef __64BIT__
 typedef uint64 uintptr;
 typedef int64 intptr;
+#define UINTPTR_MIN UINT64_MIN
+#define UINTPTR_MAX UINT64_MAX
+#define INTPTR_MIN INT64_MIN;
+#define INTPTR_MAX INT64_MAX;
 #else
 typedef uint32 uintptr;
 typedef int32 intptr;
+#define UINTPTR_MIN UINT32_MIN
+#define UINTPTR_MAX UINT32_MAX
+#define INTPTR_MIN INT32_MIN;
+#define INTPTR_MAX INT32_MAX;
 #endif
 
 
