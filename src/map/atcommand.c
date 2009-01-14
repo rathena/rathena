@@ -9030,6 +9030,9 @@ bool is_atcommand(const int fd, struct map_session_data* sd, const char* message
 
 	if (*message == charcommand_symbol)
 	{
+		if (gmlvl = 0)
+			return false;
+			
 		//Checks to see if #command has a name or a name + parameters.
 		x = sscanf(message, "%99s \"%23[^\"]\" %99[^\n]", cmd, charname, param);
 		y = sscanf(message, "%99s %23s %99[^\n]", cmd, charname2, param2);
@@ -9037,9 +9040,6 @@ bool is_atcommand(const int fd, struct map_session_data* sd, const char* message
 		//x being > 1 is unique to its proper syntax
 		z = ( x > 1 ) ? x : y;
 		
-		sprintf(output, "x = %d, y = %d, z = %d", x, y, z);
-		clif_displaymessage(fd, output);
-
 		if ( (pl_sd = map_nick2sd(charname)) == NULL  && ( (pl_sd = map_nick2sd(charname2)) == NULL ) )
 		{
 			sprintf(output, "%s failed. Player not found.", cmd);
@@ -9066,6 +9066,7 @@ bool is_atcommand(const int fd, struct map_session_data* sd, const char* message
 		sprintf(output, "Charcommand failed. Usage: #<command> <char name> <params>.");
 		clif_displaymessage(fd, output);
 		return true;
+		
 	}
 	
 	return is_atcommand_sub(fd,sd,message,gmlvl);
