@@ -3,9 +3,15 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2009/01/15
+	* Updated script_commands.txt with the book reading command. [SketchyPhoenix]
+	* Added/reworded/removed comments out of r13450
 2009/01/14
 	* Added client login packets 0x01fa and 0x027c. [FlavioJS]
 	* Other minor cleanups.
+	* #commands used by nonGM players now appear in the chat like normal rather 
+	  than being processed and ultimately failed, printing out failed command messages 
+	  that should be visible to only GMs.
 2009/01/13
 	* Cleaned up command @users/#users: [FlavioJS]
 	- displays everything on the target user (self for @users)

@@ -6202,5 +6202,11 @@ this one update client part too to avoid the glith problem.
 
 ---------------------------------------
 
+*readbook <book id>,<page>;
+
+This will open a book item at the specified page
+
+---------------------------------------
+
 Whew.
 That's about all of them.

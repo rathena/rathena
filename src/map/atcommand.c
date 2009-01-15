@@ -8979,7 +8979,6 @@ bool is_atcommand_sub(const int fd, struct map_session_data* sd, const char* str
 	if( log_config.gm && info->level >= log_config.gm && *str == atcommand_symbol )
 		log_atcommand(sd, str);
 	
-	//
 	if( log_config.gm && info->level2 >= log_config.gm && *str == charcommand_symbol 
 	&& (ssd = (struct map_session_data *)session[fd]->session_data) != NULL )
 		log_atcommand(ssd, str);
@@ -9030,14 +9029,14 @@ bool is_atcommand(const int fd, struct map_session_data* sd, const char* message
 
 	if (*message == charcommand_symbol)
 	{
-		if (gmlvl = 0)
+		if (gmlvl == 0)
 			return false;
 			
 		//Checks to see if #command has a name or a name + parameters.
 		x = sscanf(message, "%99s \"%23[^\"]\" %99[^\n]", cmd, charname, param);
 		y = sscanf(message, "%99s %23s %99[^\n]", cmd, charname2, param2);
 		
-		//x being > 1 is unique to its proper syntax
+		//z always has the value of the scan that was successful
 		z = ( x > 1 ) ? x : y;
 		
 		if ( (pl_sd = map_nick2sd(charname)) == NULL  && ( (pl_sd = map_nick2sd(charname2)) == NULL ) )
@@ -9047,6 +9046,9 @@ bool is_atcommand(const int fd, struct map_session_data* sd, const char* message
 			return true;
 		}
 		
+		//#command + name means the sufficient target was used and anything else after
+		//can be looked at by the actual command function since most scan to see if the
+		//right parameters are used.
 		if ( x > 2 ) {
 			sprintf(message2, "%s %s", cmd, param);
 			return is_atcommand_sub(fd,pl_sd,message2,gmlvl);
@@ -9057,7 +9059,7 @@ bool is_atcommand(const int fd, struct map_session_data* sd, const char* message
 		}
 		
 		//Regardless of what style the #command is used, if it's correct, it will always have
-		//this value if there is no parameter.
+		//this value if there is no parameter. Send it as just the #command
 		if ( z == 2 ) {
 			sprintf(message2, "%s", cmd);
 			return is_atcommand_sub(fd,pl_sd,message2,gmlvl);
