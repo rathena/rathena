@@ -1352,7 +1352,7 @@
 2617,Mitten_Of_Presbyter,Celebrant's Mitten,5,2,,100,,1,,0,0xFFFFFFFE,7,2,136,,35,0,0,{ bonus bInt,1; },{},{}
 2618,Matyr's_Flea_Guard,Matyr's Leash,5,2,,100,,1,,0,0xFFFFFFFE,7,2,136,,35,0,0,{ bonus bAgi,1; },{},{}
 2619,Thimble_Of_Archer,Bow Thimble,5,10000,,100,,0,,0,0x00080808,7,2,136,,65,0,0,{ bonus bLongAtkRate,3; },{},{}
-2620,Ring_Of_Rogue,Rogue's Treasure,5,10000,,100,,0,,0,0x02021040,7,2,136,,70,0,0,{ bonus bAddStealRate,1; },{},{}
+2620,Thief_Ring,Thief Ring,5,10000,,100,,0,,0,0x02021040,7,2,136,,70,0,0,{ if(readparam(bStr)>=90){ bonus bHit,10; bonus bFlee,10; } if(readparam(bAgi)>=90){ bonus bAtk,10; bonus bCritical,10; } if(isequipped(2746)){ bonus2 bAddSize,1,8; } if(isequipped(2747)){ bonus2 bAddSize,2,8; } },{},{}
 2621,Ring_,Ring,5,30000,,200,,0,,1,0xFFFFFFFE,7,2,136,,90,0,0,{ bonus bStr,1; },{},{}
 2622,Earring_,Earring,5,30000,,200,,0,,1,0xFFFFFFFE,7,2,136,,90,0,0,{ bonus bInt,1; },{},{}
 2623,Necklace_,Necklace,5,30000,,200,,0,,1,0xFFFFFFFE,7,2,136,,90,0,0,{ bonus bVit,1; },{},{}
@@ -1474,13 +1474,13 @@
 2740,Commemorative_Coin__,Rusty Commemorative Coin,5,0,,0,,1,,0,0xFFFFFFFF,7,2,136,,80,0,0,{ bonus bAtkRate,3; bonus bMatkRate,3; },{},{}
 2741,All_In_One_Ring,All In One Ring,5,0,,0,,0,,0,0xFFFFFFFF,7,2,136,,0,0,0,{ skill "AL_HEAL",1; skill "AL_TELEPORT",1; bonus bNoCastCancel,0; bonus bAllStats,1; bonus bCastRate,10; },{},{}
 //2742#Lucky_Clip#
-//2743#Angelic_Ring#
-//2744#Sprint_Ring#
-//2745#Pinguicura's_Corsage#
-//2746#Cold_Heart#
-//2747#Black_Cat#
-//2748#Cursed_Star#
-//2749#Linen_Glove#
+//2743,Angelic_Ring,Angelic Ring,5,0,,100,,0,,0,0xFDF80,2,2,136,,70,0,0,{ bonus bInt,2; bonus bDex,1; bonus bMdef,2; },{},{}
+2744,Sprint_Ring,Sprint Ring,5,0,,100,,0,,0,0xFDF80,2,2,136,,70,0,0,{ bonus bCastrate,-10; bonus bDelayRate,-5; },{},{}
+2745,Pinguicura's_Corsage,Pinguicura's Corsage,5,0,,200,,0,,1,0xFDF80,2,2,136,,70,0,0,{ bonus bMdef,2; bonus bMaxSP,25; },{},{}
+2746,Cold_Heart,Cold Heart,5,0,,100,,1,,0,0x1000,2,2,136,,80,0,0,{ bonus bAgi,3; if(isequipped(2620)){ bonus bAspd,getrefine(); } },{},{}
+2747,Black_Cat,Black Cat,5,0,,100,,1,,0,0x20000,2,2,136,,80,0,0,{ bonus bDef,3; if(isequipped(2620)){ bonus bHit,getrefine(); bonus bCastrate,-getrefine(); } },{},{}
+2748,Cursed_Star,Cursed Star,5,0,,200,,0,,0,0x80808,2,2,136,,84,0,0,{ bonus bMdef,3; bonus bDex,2; bonus bLuk,-1; bonus2 bHPLossRate,50,10000; bonus2 bAddEff,Eff_Curse,200; if(isequipped(1741)){ bonus bAtk,25; bonus2 bAddEff,Eff_Curse,200; } },{},{ heal -300,0; }
+2749,Linen_Glove,Linen Glove,5,0,,120,,1,,1,0xFDF80,2,2,136,,90,0,0,{ bonus bMdef,2; bonus bAgi,2; bonus bDex,1; if(isequipped(2390)){ bonus bFlee2,5; } },{},{}
 //2750#...#
 2751,Academy_of_Badge,Academy of Badge,5,0,,100,,0,,0,0xFFFFFFFF,7,2,136,,0,0,0,{ if(BaseLevel < 80) { bonus bMaxHP,400; bonus bMaxSP,200; } },{},{}
 2753,Beholder_Ring,Beholder Ring,5,0,,100,,0,,0,0xFFFFFFFF,7,2,136,,0,0,0,{ bonus2 bExpAddRace,RC_Formless,1; },{},{}
