@@ -1017,6 +1017,21 @@ void  linkdb_final  ( struct linkdb_node** head );
 
 
 
+/// Inserts a zeroed value in the target index.
+/// Assumes the index is valid and there is enough capacity.
+///
+/// @param __vec Vector
+/// @param __idx Index
+#define VECTOR_INSERTZEROED(__vec,__idx) \
+	do{ \
+		if( (__idx) < VECTOR_LENGTH(__vec) ) /* move data */ \
+			memmove(&VECTOR_INDEX(__vec,(__idx)+1),&VECTOR_INDEX(__vec,__idx),(VECTOR_LENGTH(__vec)-(__idx))*sizeof(VECTOR_FIRST(__vec))); \
+		memset(&VECTOR_INDEX(__vec,__idx), 0, sizeof(VECTOR_INDEX(__vec,__idx))); /* set zeroed value */ \
+		++VECTOR_LENGTH(__vec); /* increase length */ \
+	}while(0)
+
+
+
 /// Inserts a value in the target index. (using the '=' operator)
 /// Assumes the index is valid and there is enough capacity.
 ///
@@ -1059,6 +1074,17 @@ void  linkdb_final  ( struct linkdb_node** head );
 		VECTOR_LENGTH(__vec) += (__n); /* increase length */ \
 	}while(0)
 
+
+
+/// Inserts a zeroed value in the end of the vector.
+/// Assumes there is enough capacity.
+///
+/// @param __vec Vector
+#define VECTOR_PUSHZEROED(__vec) \
+	do{ \
+		memset(&VECTOR_INDEX(__vec,VECTOR_LENGTH(__vec)), 0, sizeof(VECTOR_INDEX(__vec,VECTOR_LENGTH(__vec)))); /* set zeroed value */ \
+		++VECTOR_LENGTH(__vec); /* increase length */ \
+	}while(0)
 
 
 /// Inserts a value in the end of the vector. (using the '=' operator)
@@ -1156,6 +1182,186 @@ void  linkdb_final  ( struct linkdb_node** head );
 			VECTOR_LENGTH(__vec) = 0; /* clear length */ \
 		} \
 	}while(0)
+
+
+
+/////////////////////////////////////////////////////////////////////
+// Binary heap library based on defines. (uses the vector defines above)
+// uses aMalloc, aRealloc, aFree
+
+
+
+/// Declares an anonymous binary heap struct.
+///
+/// @param __type Type of data
+#define BHEAP_DECL(__type) VECTOR_DECL(__type)
+
+
+
+/// Declares a named binary heap struct.
+///
+/// @param __name Structure name
+/// @param __type Type of data
+#define BHEAP_STRUCT_DECL(__name,__type) VECTOR_STRUCT_DECL(__name,__type)
+
+
+
+/// Declares and initializes an anonymous binary heap variable.
+///
+/// @param __type Type of data
+/// @param __var Variable name
+#define BHEAP_VAR(__type,__var) VECTOR_VAR(__type,__var)
+
+
+
+/// Declares and initializes a named binary heap variable.
+///
+/// @param __name Structure name
+/// @param __var Variable name
+#define BHEAP_STRUCT_VAR(__name,__var) VECTOR_STRUCT_VAR(__name,__var)
+
+
+
+/// Initializes a heap.
+///
+/// @param __heap Binary heap
+#define BHEAP_INIT(__heap) VECTOR_INIT(__heap)
+
+
+
+/// Returns the internal array of values.
+///
+/// @param __heap Binary heap
+/// @return Array of values
+#define BHEAP_DATA(__heap) VECTOR_DATA(__heap)
+
+
+
+/// Returns the length of the heap.
+///
+/// @param __heap Binary heap
+/// @return Length
+#define BHEAP_LENGTH(__heap) VECTOR_LENGTH(__heap)
+
+
+
+/// Returns the capacity of the heap.
+///
+/// @param __heap Binary heap
+/// @return Capacity
+#define BHEAP_CAPACITY(__heap) VECTOR_CAPACITY(__heap)
+
+
+
+/// Ensures that the heap has the target number of empty positions.
+/// Increases the capacity in multiples of __step.
+///
+/// @param __heap Binary heap
+/// @param __n Empty positions
+/// @param __step Increase
+#define BHEAP_ENSURE(__heap,__n,__step) VECTOR_ENSURE(__heap,__n,__step)
+
+
+
+/// Returns the top value of the heap.
+/// Assumes the heap is not empty.
+///
+/// @param __heap Binary heap
+/// @return Value at the top
+#define BHEAP_PEEK(__heap) VECTOR_INDEX(__heap,0)
+
+
+
+/// Inserts a value in the heap. (using the '=' operator)
+/// Assumes there is enough capacity.
+///
+/// The comparator takes two values as arguments, returns:
+/// - negative if the first value is on the top
+/// - positive if the second value is on the top
+/// - 0 if they are equal
+///
+/// @param __heap Binary heap
+/// @param __val Value
+/// @param __topcmp Comparator
+#define BHEAP_PUSH(__heap,__val,__topcmp) \
+	do{ \
+		size_t _i_ = VECTOR_LENGTH(__heap); \
+		VECTOR_PUSH(__heap,__val); /* insert at end */ \
+		while( _i_ ) \
+		{ /* restore heap property */ \
+			size_t _parent_ = (_i_-1)/2; \
+			if( __topcmp(VECTOR_INDEX(__heap,_parent_),__val) < 0 ) \
+				break; /* done */ \
+			VECTOR_INDEX(__heap,_i_) = VECTOR_INDEX(__heap,_parent_); \
+			VECTOR_INDEX(__heap,_parent_) = __val; \
+			_i_ = _parent_; \
+		} \
+	}while(0)
+
+
+
+/// Removes the top value of the heap. (using the '=' operator)
+/// Assumes the heap is not empty.
+///
+/// The comparator takes two values as arguments, returns:
+/// - negative if the first value is on the top
+/// - positive if the second value is on the top
+/// - 0 if they are equal
+///
+/// @param __heap Binary heap
+/// @param __topcmp Comparator
+#define BHEAP_POP(__heap,__topcmp) \
+	do{ \
+		size_t _i_ = 0; \
+		VECTOR_INDEX(__heap,0) = VECTOR_POP(__heap); /* put last at top */ \
+		while( _i_ < VECTOR_LENGTH(__heap) ) \
+		{ /* restore heap property */ \
+			size_t _lchild_ = _i_*2 + 1; \
+			size_t _rchild_ = _i_*2 + 2; \
+			if( (_lchild_ >= VECTOR_LENGTH(__heap) || __topcmp(VECTOR_INDEX(__heap,_i_),VECTOR_INDEX(__heap,_lchild_)) <= 0) && \
+				(_rchild_ >= VECTOR_LENGTH(__heap) || __topcmp(VECTOR_INDEX(__heap,_i_),VECTOR_INDEX(__heap,_rchild_)) <= 0) ) \
+				break; /* done */ \
+			else if( _rchild_ >= VECTOR_LENGTH(__heap) || __topcmp(VECTOR_INDEX(__heap,_lchild_),VECTOR_INDEX(__heap,_rchild_)) <= 0 ) \
+			{ /* left child */ \
+				VECTOR_INDEX(__heap,_i_) = VECTOR_INDEX(__heap,_lchild_); \
+				VECTOR_INDEX(__heap,_lchild_) = VECTOR_INDEX(__heap,VECTOR_LENGTH(__heap)); \
+				_i_ = _lchild_; \
+			} \
+			else \
+			{ /* right child */ \
+				VECTOR_INDEX(__heap,_i_) = VECTOR_INDEX(__heap,_rchild_); \
+				VECTOR_INDEX(__heap,_rchild_) = VECTOR_INDEX(__heap,VECTOR_LENGTH(__heap)); \
+				_i_ = _rchild_; \
+			} \
+		} \
+	}while(0)
+
+
+
+/// Clears the binary heap, freeing allocated data.
+///
+/// @param __heap Binary heap
+#define BHEAP_CLEAR(__heap) VECTOR_CLEAR(__heap)
+
+
+
+/// Generic comparator for a min-heap. (minimum value at top)
+/// Returns -1 if v1 is smaller, 1 if v2 is smaller, 0 if equal.
+///
+/// @param v1 First value
+/// @param v2 Second value
+/// @return negative if v1 is top, positive if v2 is top, 0 if equal
+#define BHEAP_MINTOPCMP(v1,v2) ( v1 == v2 ? 0 : v1 < v2 ? -1 : 1 )
+
+
+
+/// Generic comparator for a max-heap. (maximum value at top)
+/// Returns -1 if v1 is bigger, 1 if v2 is bigger, 0 if equal.
+///
+/// @param v1 First value
+/// @param v2 Second value
+/// @return negative if v1 is top, positive if v2 is top, 0 if equal
+#define BHEAP_MAXTOPCMP(v1,v2) ( v1 == v2 ? 0 : v1 > v2 ? -1 : 1 )
 
 
 
