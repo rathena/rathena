@@ -4582,9 +4582,11 @@ unsigned int pc_thisjobexp(struct map_session_data *sd)
 	return exp_table[pc_class2idx(sd->status.class_)][1][sd->status.job_level-2];
 }
 
+/// Returns the value of the specified stat.
 static int pc_getstat(struct map_session_data* sd, int type)
 {
 	nullpo_retr(-1, sd);
+
 	switch( type ) {
 	case SP_STR: return sd->status.str;
 	case SP_AGI: return sd->status.agi;
@@ -4597,23 +4599,40 @@ static int pc_getstat(struct map_session_data* sd, int type)
 	}
 }
 
-/*==========================================
- * 必要ステ?タスポイント計算
- *------------------------------------------*/
-int pc_need_status_point(struct map_session_data *sd,int type)
+/// Sets the specified stat to the specified value.
+/// Returns the new value.
+static int pc_setstat(struct map_session_data* sd, int type, int val)
 {
 	nullpo_retr(-1, sd);
-	if( type < SP_STR || type > SP_LUK )
+
+	switch( type ) {
+	case SP_STR: sd->status.str = val; break;
+	case SP_AGI: sd->status.agi = val; break;
+	case SP_VIT: sd->status.vit = val; break;
+	case SP_INT: sd->status.int_ = val; break;
+	case SP_DEX: sd->status.dex = val; break;
+	case SP_LUK: sd->status.luk = val;
+	default:
 		return -1;
+	}
+
+	return val;
+}
+
+/// Returns the number of stat points needed to raise the specified stat by 1.
+int pc_need_status_point(struct map_session_data* sd, int type)
+{
 	return ( 1 + (pc_getstat(sd,type) + 9) / 10 );
 }
 
-/*==========================================
- * 能力値成長
- *------------------------------------------*/
-int pc_statusup(struct map_session_data *sd,int type)
+/// Raises a stat by 1.
+/// Obeys max_parameter limits.
+/// Subtracts stat points.
+///
+/// @param type The stat to change (see enum _sp)
+int pc_statusup(struct map_session_data* sd, int type)
 {
-	int max, need,val = 0;
+	int max, need, val;
 
 	nullpo_retr(0, sd);
 
@@ -4633,51 +4652,60 @@ int pc_statusup(struct map_session_data *sd,int type)
 		return 1;
 	}
 
-	switch(type){
-	case SP_STR: val= ++sd->status.str; break;
-	case SP_AGI: val= ++sd->status.agi; break;
-	case SP_VIT: val= ++sd->status.vit; break;
-	case SP_INT: val= ++sd->status.int_; break;
-	case SP_DEX: val= ++sd->status.dex; break;
-	case SP_LUK: val= ++sd->status.luk; break;
-	}
+	// set new values
+	val = pc_setstat(sd, type, pc_getstat(sd,type) + 1);
+	sd->status.status_point -= need;
 
-	sd->status.status_point-=need;
 	status_calc_pc(sd,0);
 
+	// update increase cost indicator
 	if( need != pc_need_status_point(sd,type) )
-		clif_updatestatus(sd,type-SP_STR+SP_USTR);
+		clif_updatestatus(sd, SP_USTR + type-SP_STR);
+
+	// update statpoint count
 	clif_updatestatus(sd,SP_STATUSPOINT);
-	clif_statusupack(sd,type,1,val);
-	clif_updatestatus(sd,type); // send after the 'ack' to override the value
+
+	// update stat value
+	clif_statusupack(sd,type,1,val); // required
+	if( val > 255 )
+		clif_updatestatus(sd,type); // send after the 'ack' to override the truncated value
 
 	return 0;
 }
 
-/*==========================================
- * 能力値成長
- *------------------------------------------*/
-int pc_statusup2(struct map_session_data *sd,int type,int val)
+/// Raises a stat by the specified amount.
+/// Obeys max_parameter limits.
+/// Does not subtract stat points.
+///
+/// @param type The stat to change (see enum _sp)
+/// @param val The stat increase amount.
+int pc_statusup2(struct map_session_data* sd, int type, int val)
 {
-	int max;
+	int max, need;
 	nullpo_retr(0, sd);
 
-	max = pc_maxparameter(sd);
-	
-	switch(type){
-	case SP_STR: sd->status.str = cap_value(sd->status.str + val, 1, max); break;
-	case SP_AGI: sd->status.agi = cap_value(sd->status.agi + val, 1, max); break;
-	case SP_VIT: sd->status.vit = cap_value(sd->status.vit + val, 1, max); break;
-	case SP_INT: sd->status.int_= cap_value(sd->status.int_+ val, 1, max); break;
-	case SP_DEX: sd->status.dex = cap_value(sd->status.dex + val, 1, max); break;
-	case SP_LUK: sd->status.luk = cap_value(sd->status.luk + val, 1, max); break;
-	default:
+	if( type < SP_STR || type > SP_LUK )
+	{
 		clif_statusupack(sd,type,0,0);
 		return 1;
 	}
 
+	need = pc_need_status_point(sd,type);
+
+	// set new value
+	max = pc_maxparameter(sd);
+	val = pc_setstat(sd, type, cap_value(pc_getstat(sd,type) + val, 1, max));
+	
 	status_calc_pc(sd,0);
-	clif_statusupack(sd,type,1,val);
+
+	// update increase cost indicator
+	if( need != pc_need_status_point(sd,type) )
+		clif_updatestatus(sd, SP_USTR + type-SP_STR);
+
+	// update stat value
+	clif_statusupack(sd,type,1,val); // required
+	if( val > 255 )
+		clif_updatestatus(sd,type); // send after the 'ack' to override the truncated value
 
 	return 0;
 }
