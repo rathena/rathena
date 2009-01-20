@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Everybody mentioned in the comments
 //===== Current Version: ===================================== 
-//= 1.4
+//= 1.7
 //===== Compatible With: ===================================== 
 //= eAthena Revision 3000+
 //===== Description: ========================================= 
@@ -28,6 +28,7 @@
 //= 1.4 Implemented the polution script. [MasterOfMuppets]
 //= 1.5 Updated Hotel Employee to work with Airship Ticket Quest [Samuray22]
 //= 1.6 Optimized several NPCs [DZeroX]
+//= 1.7 Replaced outdated variable with getarg. [L0ne_W0lf]
 //============================================================
 
 einbroch,218,198,5	script	Mark#ein	855,{
@@ -89,7 +90,7 @@ einbroch,176,172,5	script	Khemko#ein	855,{
 }
 
 function	script	EinTower	{
-	mes "["+.@name$+"]";
+	mes "[" + getarg(0) + "]";
 	mes "Good day~";
 	mes "I'm " + getarg(0) + ", your";
 	mes "guide to exploring";

@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= eAthena dev team
 //===== Current Version: =====================================
-//= 1.6
+//= 1.7
 //===== Compatible With: =====================================
 //= eAthena SVN
 //===== Description: =========================================
@@ -22,6 +22,7 @@
 //= 1.4 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
 //= 1.5 Removed Ontouch trigger area from NPCs. [L0ne_W0lf]
 //= 1.6 Replaced effect numerics with constants. [Samuray22]
+//= 1.7 Adjusted prices on some armor and weapons. [L0ne_W0lf]
 //============================================================
 
 payon,140,151,5	script	Seiyablem	84,{
@@ -73,7 +74,7 @@ payon,140,151,5	script	Seiyablem	84,{
 						case 1: callfunc "Func_Socket",1,1519,1520,40,61,300,1010,10; break;
 						case 2: callfunc "Func_Socket",2,1219,1220,40,61,300,984,1,999,5; break;
 						case 3: callfunc "Func_Socket",2,1714,1716,40,61,300,984,2,999,5; break;
-						case 4: callfunc "Func_Socket",1,1407,1408,40,61,300,1010,10; break;
+						case 4: callfunc "Func_Socket",1,1407,1408,40,61,200,1010,10; break;
 						case 5: callfunc "Func_Socket",2,1123,1128,40,61,300,984,2,999,5; break;
 						case 6: callfunc "Func_Socket",1,1905,1906,40,61,300,1011,10; break;
 						case 7: callfunc "Func_Socket",1,1954,1955,40,61,300,1011,10; break;
@@ -94,14 +95,14 @@ payon,140,151,5	script	Seiyablem	84,{
 					switch( select( "Hunter Bow","Survivor's Rod(INT)","Zweihander","Flamberge","Infiltrator","Ballista","Stunner","Berserk","Claymore","Dragon Killer","Katar of Frozen Icicle","Katar of Quaking","Katar of Raging Blaze","Katar of Piercing Wind","Golden Mace","Oriental Lute","Queen's Whip","Phantom Spear","Schweizersabel" ) )
 					{
 						case 1: callfunc "Func_Socket",2,1718,1726,40,61,500,984,2,999,10; break;
-						case 2: callfunc "Func_Socket",2,1619,1620,40,61,500,984,2,999,10; break;
+						case 2: callfunc "Func_Socket",2,1619,1620,40,61,500,984,5,999,10; break;
 						case 3: callfunc "Func_Socket",2,1168,1171,40,61,800,984,5,999,10; break;
 						case 4: callfunc "Func_Socket",2,1129,1149,40,61,500,984,2,999,10; break;
 						case 5: callfunc "Func_Socket",2,1261,1266,40,61,700,984,5,999,10; break;
 						case 6: callfunc "Func_Socket",2,1722,1727,40,61,500,984,5,999,10; break;
-						case 7: callfunc "Func_Socket",2,1522,1532,40,61,700,984,2,999,10; break;
-						case 8: callfunc "Func_Socket",2,1814,1816,40,61,700,984,5,999,10; break;
-						case 9: callfunc "Func_Socket",2,1163,1172,40,61,700,984,5,999,10; break;
+						case 7: callfunc "Func_Socket",2,1522,1532,40,61,500,984,2,999,10; break;
+						case 8: callfunc "Func_Socket",2,1814,1816,40,61,500,984,5,999,10; break;
+						case 9: callfunc "Func_Socket",2,1163,1172,40,61,500,984,5,999,10; break;
 						case 10: callfunc "Func_Socket",1,13001,13030,40,61,500,984,2; break;
 						case 11: callfunc "Func_Socket",1,1256,1275,40,61,500,984,2; break;
 						case 12: callfunc "Func_Socket",1,1257,1276,40,61,500,984,2; break;
@@ -166,7 +167,7 @@ payon,140,151,5	script	Seiyablem	84,{
 						case 2: callfunc "Func_Socket",1,2309,2310,40,66,200,999,3; break;
 						case 3: callfunc "Func_Socket",1,2232,2233,40,66,200,999,3; break;
 						case 4: callfunc "Func_Socket",1,2216,2217,40,66,200,999,3; break;
-						case 5: callfunc "Func_Socket",1,2253,5351,40,66,200,999,3; break;
+						case 5: callfunc "Func_Socket",1,2253,5351,40,66,100,999,3; break;
 						case 6: callfunc "Func_Socket",1,5012,5347,40,66,200,999,3; break;
 						case 7: callfunc "Func_Socket",1,2244,5348,40,66,200,999,5; break;
 						case 8: callfunc "Func_Socket",1,5016,5349,40,66,200,999,5; break;
@@ -241,11 +242,11 @@ payon,140,151,5	script	Seiyablem	84,{
 						case 4:  callfunc "Func_Socket",1,5019,5163,40,51,2000,985,2; break;
 						case 5:  callfunc "Func_Socket",1,2235,5165,40,51,2000,985,2; break;
 						case 6:  callfunc "Func_Socket",1,2234,5164,40,51,2000,985,2; break;
-						case 7:  callfunc "Func_Socket",1,5053,5166,40,51,1000,985,2; break;
-						case 8:  callfunc "Func_Socket",1,2343,2360,40,51,1000,985,2; break;
-						case 9:  callfunc "Func_Socket",1,2602,2622,40,51,1000,985,2; break;
-						case 10: callfunc "Func_Socket",1,2601,2621,40,51,1000,985,2; break;
-						case 11: callfunc "Func_Socket",1,2619,2671,40,51,1000,985,2; break;
+						case 7:  callfunc "Func_Socket",1,5053,5166,40,51,2000,985,2; break;
+						case 8:  callfunc "Func_Socket",1,2343,2360,40,51,2000,985,2; break;
+						case 9:  callfunc "Func_Socket",1,2602,2622,40,51,2000,985,2; break;
+						case 10: callfunc "Func_Socket",1,2601,2621,40,51,2000,985,2; break;
+						case 11: callfunc "Func_Socket",1,2619,2671,40,51,2000,985,2; break;
 						case 12: callfunc "Func_Socket",1,2334,2372,40,51,1000,985,1; break;
 						case 13: callfunc "Func_Socket",1,2327,2373,40,51,1000,985,1; break;
 						case 14: callfunc "Func_Socket",1,2111,2128,40,51,1000,985,1; break;

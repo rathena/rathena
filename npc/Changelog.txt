@@ -1,5 +1,18 @@
 Date		Added
 ======
+2009/01/19
+	* Rev. 13458 Looooots of bugfixes provided by various people! [L0ne_W0lf]
+	- Fixed Seal quest checking for oridecon hammer. Again. (Bugreport:2363)
+	- Fixed some requirements for the socket NPC. (famiong) (Bugreport:2572)
+	- Fixed a global variable-collision in Z-Gang quest. (Bugreport:2616)
+	- Fixed issue with Zhed saying things he shouldn't (Bugreport:2627)
+	- Fixed OnMyMobDwead in Nameless quest issue. (Bugreport:2628)
+	- Fixed Kyle Hyre script halting on delitem. (Bugreport:2633)
+	- Added missing part of Peace for Arunafelts (Gepard) (Bugreport:2639)
+	- Added missing Kafra npc to Comodo. (Daegaladh) (Bugreport:2662)
+	- Fixed a minor error in Einbroch Tower NPC. (magegahell) (Bugreport:2669)
+	- Fixed exp reward in Peace for Arunafeltz. (Gepard) (Bugreport:2676)
+	- Fixed exp reward in Meg. God Seal quest. (Daegaladh) (Bugreport:2677)
 2009/01/06
 	* Rev. 13436 Uncommented warp moc_fild02 -> pay_fild04, in morroc_fild.txt. [L0ne_W0lf]
 2008/12/29

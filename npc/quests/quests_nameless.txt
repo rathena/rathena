@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.7
+//= 1.8
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -13,7 +13,6 @@
 //= - Quest to gain access to Nameless Island and dungeon.
 //= - Variable in use: aru_monas  (Max: 26)
 //= Peace for Arunafeltz:
-//= - -CURRENTLY INCOMPATABLE WITH EPISODE 12+
 //- - Help to keep peace between Arunafeltz and Midgard.
 //= - Variable in use: aru_em (Max: 23)
 //= Muff's Loan:
@@ -28,13 +27,11 @@
 //- - Help to aprehend the infamous Z-Gang.
 //= - Variable in use: zdan_edq (Max: 19)
 //= Unlucky Emerald:
-//= - -CURRENTLY INCOMPATABLE WITH EPISODE 12+
 //- - Help a treasure hunter from Prontera get home, and 
 //=   learn the origins of the Unlucky Emerald.
 //= - Variable in use: treasure_nd (Max: 12)
 //= - Variable in use: jewel_nd (Max: 31)
 //= Rogue Guild Investigation Assistance:
-//= - -CURRENTLY INCOMPATABLE WITH EPISODE 12+
 //- - Assist the Rogue Guild with their investigations.
 //= - Variable in use: rumour_nd (Max: 22)
 //===== Additional Comments: ================================= 
@@ -53,6 +50,8 @@
 //=     Added Quest: Unlucky Emerald
 //=     Added Quest: Rogue Guild Investigation
 //= 1.7 Fixed a typo in monestary quest. [L0ne_W0lf]
+//= 1.8 Renamed temporary global variable. [L0ne_W0lf]
+//=     moved OnMyMobDead for access quest to a different NPC.
 //============================================================ 
 
 // Nameless Island and Cursed Monestary Access Quest
@@ -1823,13 +1822,13 @@ nameless_in,13,53,0	script	Creature#Aru	1864,{
 OnInit:
 	hideonnpc "Creature#Aru";
 	end;
-}
-
-nameless_in,13,53,0	script	#Aru_Trigger2	-1,3,1,{
-	end;
 
 OnMyMobDead:
 	enablenpc "aru_warp";
+	end;
+}
+
+nameless_in,13,53,0	script	#Aru_Trigger2	-1,3,1,{
 	end;
 
 OnTouch:
@@ -1839,7 +1838,7 @@ OnTouch:
 		close2;
 		hideonnpc "Creature#Aru";
 		set @mymobcount,1;
-		monster "nameless_in",13,53,"Zombie",1864,1,"#Aru_Trigger2::OnMyMobDead";
+		monster "nameless_in",13,53,"Zombie",1864,1,"Creature#Aru::OnMyMobDead";
 		end;
 	}
 	end;
@@ -1960,7 +1959,7 @@ abbey02,224,70,0	script	Book#Aru	111,{
 		mes "these old, moldy books.^000000";
 		next;
 		if(select("Examine Book:Ignore")==1) {
-			//Readbook 7755;
+			Readbook 7755,1;
 			getitem 7755,1; // Reasearch_Note
 			set aru_monas,22;
 			close;
@@ -8537,11 +8536,11 @@ OnTouch:
 
 z_agit,98,44,0	script	EntranceCheck#1	-1,10,10,{
 OnTouch:
-	if (((zdan_edq == 15) || (zdan_edq == 16)) && ($@monster == 0)) {
-		set $@monster,1;
+	if (((zdan_edq == 15) || (zdan_edq == 16)) && ($@monster_zgang == 0)) {
+		set $@monster_zgang,1;
 		donpcevent "#zdan_broad::OnEnable";
 	}
-	else if (((zdan_edq == 15) || (zdan_edq == 16)) && ($@monster > 0)) {
+	else if (((zdan_edq == 15) || (zdan_edq == 16)) && ($@monster_zgang > 0)) {
 		end;
 	}
 	else if (zdan_edq == 17) {
@@ -8557,7 +8556,7 @@ OnTouch:
 		mes "terribly wrong, hasn't";
 		mes "it? Let me go baaaack~!";
 		close2;
-		set $@monster,0;
+		set $@monster_zgang,0;
 		set $@door2,0;
 		warp "moc_fild17",209,235;
 	}
@@ -8566,11 +8565,11 @@ OnTouch:
 
 z_agit,98,92,0	script	EntranceCheck#2	-1,10,10,{
 OnTouch:
-	if (((zdan_edq == 15) || (zdan_edq == 16)) && ($@monster == 0)) {
-		set $@monster,1;
+	if (((zdan_edq == 15) || (zdan_edq == 16)) && ($@monster_zgang == 0)) {
+		set $@monster_zgang,1;
 		donpcevent "#zdan_broad::OnEnable";
 	}
-	else if (((zdan_edq == 15) || (zdan_edq == 16)) && ($@monster > 0)) {
+	else if (((zdan_edq == 15) || (zdan_edq == 16)) && ($@monster_zgang > 0)) {
 		end;
 	}
 	else if (zdan_edq == 17) {
@@ -8586,7 +8585,7 @@ OnTouch:
 		mes "terribly wrong, hasn't";
 		mes "it? Let me go baaaack~! ";
 		close2;
-		set $@monster,0;
+		set $@monster_zgang,0;
 		set $@door2,0;
 		warp "moc_fild17",209,235;
 	}
@@ -8652,7 +8651,7 @@ OnTimer21000:
 OnTimer300000:
 	killmonster "z_agit","#ZGuard::OnMyMobDead";
 	donpcevent "#zdan_broad::OnDisable";
-	set $@monster,0;
+	set $@monster_zgang,0;
 	set $@door2,0;
 	end;
 
@@ -8661,7 +8660,7 @@ OnTimer350000:
 	hideonnpc "Louis";
 	hideonnpc "Martha";
 	hideonnpc "Catfoii";
-	set $@monster,0;
+	set $@monster_zgang,0;
 	set $@door2,0;
 	end;
 }
@@ -8687,7 +8686,7 @@ OnDisable:
 
 Onreset:
 	killmonster "z_agit","#ZGuard::OnMyMobDead";
-	set $@monster,0;
+	set $@monster_zgang,0;
 	end;
 
 OnMyMobDead:
@@ -8733,7 +8732,7 @@ OnTimer300000:
 	mapwarp "z_agit","moc_fild17",209,235;
 	donpcevent "#zdan_broad::OnDisable";
 	killmonster "z_agit","#ZGuard::OnMyMobDead";
-	set $@monster,0;
+	set $@monster_zgang,0;
 	set $@door2,0;
 	donpcevent "#ZGuard::OnDisable";
 	stopnpctimer;
@@ -8832,7 +8831,7 @@ z_agit,97,101,3	script	Louis	931,{
 		getitem 7724,1; //Forbidden_Secret_Art
 		set zdan_edq,18;
 		mapwarp "z_agit","moc_fild09",68,298;
-		set $@monster,0;
+		set $@monster_zgang,0;
 		set $@door2,0;
 		hideonnpc "Louis";
 		hideonnpc "Martha";
@@ -8847,7 +8846,7 @@ z_agit,97,101,3	script	Louis	931,{
 		mes "terribly wrong, hasn't";
 		mes "it? Let me go baaaack~! ";
 		set zdan_edq,15;
-		set $@monster,0;
+		set $@monster_zgang,0;
 		set $@door2,0;
 		close2;
 		warp "moc_fild17",209,235;
@@ -8954,7 +8953,7 @@ z_agit,99,101,3	script	Martha	101,{
 		getitem 7724,1; //Forbidden_Secret_Art
 		set zdan_edq,18;
 		mapwarp "z_agit","moc_fild17",209,235;
-		set $@monster,0;
+		set $@monster_zgang,0;
 		set $@door2,0;
 		hideonnpc "Louis";
 		hideonnpc "Martha";
@@ -8970,7 +8969,7 @@ z_agit,99,101,3	script	Martha	101,{
 		mes "terribly wrong, hasn't";
 		mes "it? Let me go baaaack~! ";
 		set zdan_edq,15;
-		set $@monster,0;
+		set $@monster_zgang,0;
 		set $@door2,0;
 		close2;
 		warp "moc_fild17",209,235;
@@ -9073,7 +9072,7 @@ z_agit,95,101,3	script	Catfoii	876,{
 		getitem 7724,1; //Forbidden_Secret_Art
 		set zdan_edq,18;
 		mapwarp "z_agit","moc_fild17",209,235;
-		set $@monster,0;
+		set $@monster_zgang,0;
 		set $@door2,0;
 		hideonnpc "Louis";
 		hideonnpc "Martha";
@@ -9089,7 +9088,7 @@ z_agit,95,101,3	script	Catfoii	876,{
 		mes "terribly wrong, hasn't";
 		mes "it? Let me go baaaack~! ";
 		set zdan_edq,15;
-		set $@monster,0;
+		set $@monster_zgang,0;
 		set $@door2,0;
 		close2;
 		warp "moc_fild17",209,235;

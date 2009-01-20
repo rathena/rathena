@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= eAthena dev team
 //===== Current Version: ===================================== 
-//= 1.8
+//= 1.9
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -20,6 +20,7 @@
 //= 1.6 Split doomed sword quest to quests/quests_comodo.txt [Evera]
 //= 1.7 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
 //= 1.8 Fixed a small bug. (close -> close2) [L0ne_W0lf]
+//= 1.9 Added a missing Kafra NPC. [L0ne_W0lf]
 //============================================================
 
 // Inside Comodo
@@ -421,6 +422,27 @@ cmd_fild07,94,134,4	script	Sarumane#cmd	100,{
 	}
 }
 
+
+cmd_in02,146,180,4	script	Kafra Employee::kaf_comodo2	721,{
+	cutin "kafra_07",2;
+	mes "[Kafra Misty]";
+	mes "Welcome to the";
+	mes "Kafra Corporation.";
+	mes "You know that our";
+	mes "service is always";
+	mes "on your side~";
+	next;
+	mes "[Kafra Misty]";
+	mes "The Kafra Corporation";
+	mes "Western Division promises";
+	mes "the best quality service that";
+	mes "emphasizes reliability, and";
+	mes "total consumer satisfaction.";
+	mes "Thank you for your patronage~";
+	close2;
+	cutin "", 255;
+	end;
+}
 
 // Morroc Field
 //============================================================

@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= SinSloth
 //===== Current Version: ===================================== 
-//= 1.7
+//= 1.8
 //===== Compatible With: ===================================== 
 //= eAthena
 //===== Description: ========================================= 
@@ -17,6 +17,7 @@
 //= 1.5 Fixed missing close2 in Rebarev Doug. [L0ne_w0lf]
 //= 1.6 Corrected mismatched variables. [L0ne_W0lf]
 //= 1.7 Replaced effect numerics with constants. [Samuray22]
+//= 1.8 Corrected how exp reward is applied. [L0ne_W0lf]
 //============================================================
 
 prt_castle,44,151,0	script	Rebarev Doug	56,{
@@ -3166,7 +3167,7 @@ niflheim,109,254,0	script	Egnigem	796,{
 			specialeffect EF_LOCKON;
 			specialeffect2 EF_HOLYCROSS;
 			set god_eremes,27;
-			set BaseExp,BaseExp+1220358;
+			getexp 1220358,0;
 			close;
 		}
 		else if (god_eremes == 26) {

@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= SinSloth
 //===== Current Version: ===================================== 
-//= 1.7
+//= 1.8
 //===== Compatible With: ===================================== 
 //= eAthena
 //===== Description: ========================================= 
@@ -19,6 +19,7 @@
 //= 1.6 Fixed checking for Oridecon Hammer. [L0ne_W0lf]
 //=     Corrected Sudi's and player's HP settings.
 //= 1.7 Fixed a copy/paste error in Nordri. [L0ne_W0lf]
+//= 1.8 Fixed item check for Oridecon. [L0ne_W0lf]
 //============================================================
 
 prontera,124,297,3	script	Tialfi	706,{
@@ -2248,7 +2249,7 @@ mjolnir_01,35,136,7	script	Dwarf Blacksmith#west	826,{
 					mes "to work!";
 					close;
 				}
-				if (countitem(615) > 0) {
+				if (countitem(984) > 0) {
 					delitem 984,1; //Oridecon
 				}
 				else {

@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 3.0
+//= 3.2
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -56,6 +56,7 @@
 //= 3.0 Large reordering of Zhed, and Peace to the Arunafeltz addition. [L0ne_W0lf]
 //=     Some more numeric conversion, and some other cleanup.
 //= 3.1 Updated Ice Necklace quest, added missing checks. [L0ne_W0lf]
+//= 3.2 Added missing updates for Peace to the Arunafeltz quest. [L0ne_W0lf]
 //============================================================ 
 
 // Lost Child Quest (Prerequisite to High Priest quest)
@@ -4953,7 +4954,7 @@ que_rachel,169,18,0	script	Quest Temple Exit#ra_tem	45,2,2,{
 }
 
 ra_temin,277,159,3	script	High Priest Zhed#rachel	932,{
-	if (ra_tem_q > 14) set lost_boy,14;
+	if ((ra_tem_q > 14) || (MISC_QUEST&8192)) set lost_boy,14;
 	if (checkweight(908,200) == 0) {
 		mes "^3355FFWait a second!";
 		mes "Right now, you're carrying";
@@ -5465,11 +5466,12 @@ ra_temin,277,159,3	script	High Priest Zhed#rachel	932,{
 		getexp 900000,600000;
 		end;
 	}
-	if (MISC_QUEST & 8192) {
+	else if (MISC_QUEST & 8192) {
 		// Start Veins "Thor Volcano Base" Quest Addition
 		if (rachel_camel == 25) {
 			// Start Nameless Island Access Quest Addition
 			if (aru_monas == 11) {
+				cutin "ra_gman",2;
 				mes "[High Priest Zhed]";
 				mes "Ah, it's been a while,";
 				mes "hasn't it? You look well,";
@@ -5538,7 +5540,7 @@ ra_temin,277,159,3	script	High Priest Zhed#rachel	932,{
 				}
 			}
 			// End Nameless Island Access Quest Addition.
-			if (aru_vol == 0) {
+			else if (aru_vol == 0) {
 				cutin "ra_gman",2;
 				mes "[High Priest Zhed]";
 				mes "Ah, it does my heart to";
@@ -6454,7 +6456,7 @@ ra_temin,277,159,3	script	High Priest Zhed#rachel	932,{
 					mes "Your place in Valhalla is";
 					mes "already assured, I'm sure.";
 					set aru_em,24;
-					set BaseExp,BaseExp+1500000;
+					getexp 1500000,0;
 				}
 				else {
 					mes "[High Priest Zhed]";
@@ -6923,7 +6925,47 @@ L_End:
 }
 
 ra_temin,134,128,3	script	Pope's Office Guard#rac::raofficeguard	926,{
-	if (MISC_QUEST & 8192) {
+	if ((ra_tem_q == 15) && (countitem(7561) > 39)) {
+		mes "[Pope's Office Guard]";
+		mes "Hm? What's that you have";
+		mes "there? Oh, you've gathered";
+		mes "40 Glacial Hearts and brought";
+		mes "a recommendation letter from";
+		mes "a High Priest? Most impressive.";
+		next;
+		mes "[Pope's Office Guard]";
+		mes "I think I know why you're";
+		mes "here. Thanks for bringing";
+		mes "those to me, and I'll let you";
+		mes "enter and see the pope";
+		mes "Welcome, brave "+strcharinfo(0)+".";
+		close2;
+		set ra_tem_q,16;
+		delitem 7561,40; //Ice_Heart
+		end;
+	}
+	else if (ra_tem_q == 16) {
+		mes "[Pope's Office Guard]";
+		mes "The pope is inside";
+		mes "expecting you, so please";
+		mes "don't keep her waiting long.";
+		close;
+	}
+	else if (MISC_QUEST & 8192) {
+		if ((aru_em == 15) || (aru_em == 21)) {
+			mes "- Niren told me to pay a visit to the Pope in her office... -";
+			close;
+		}
+		else {
+			mes "[Pope's Office Guard]";
+			mes "I'm sorry, but outsiders";
+			mes "typically aren't allowed";
+			mes "to visit the pope without";
+			mes "special authorization.";
+			close;
+		}
+	}
+	else {
 		mes "[Pope's Office Guard]";
 		mes "I'm sorry, but the pope";
 		mes "is officiating a service";
@@ -6931,45 +6973,19 @@ ra_temin,134,128,3	script	Pope's Office Guard#rac::raofficeguard	926,{
 		mes "after the service is ended.";
 		close;
 	}
+}
 
-	if ((ra_tem_q < 15) || (ra_tem_q == 15) && (countitem(7561) < 40)) {
-		mes "[Pope's Office Guard]";
-		mes "I'm sorry, but outsiders";
-		mes "typically aren't allowed";
-		mes "to visit the pope without";
-		mes "special authorization.";
-		close;
+ra_temin,134,134,3	duplicate(raofficeguard)	Pope's Office Guard#2ra	926
+
+ra_temin,134,131,0	script	gyoin1#rachel	45,1,1,{
+OnTouch:
+	if (ra_tem_q == 16) {
+		warp "ra_temin",276,239;
 	}
-
-
-	else {
-		if (ra_tem_q == 15) {
-			mes "[Pope's Office Guard]";
-			mes "Hm? What's that you have";
-			mes "there? Oh, you've gathered";
-			mes "40 Glacial Hearts and brought";
-			mes "a recommendation letter from";
-			mes "a High Priest? Most impressive.";
-			next;
-			mes "[Pope's Office Guard]";
-			mes "I think I know why you're";
-			mes "here. Thanks for bringing";
-			mes "those to me, and I'll let you";
-			mes "enter and see the pope";
-			mes "Welcome, brave "+strcharinfo(0)+".";
-			close2;
-			set ra_tem_q,16;
-			delitem 7561,40; //Ice_Heart
+	else if ((ra_tem_q > 16) || (MISC_QUEST & 8192)){
+		if ((aru_em == 15) || (aru_em == 21)) {
+			warp "ra_temin",276,239;
 		}
-
-		if (ra_tem_q == 16) {
-			mes "[Pope's Office Guard]";
-			mes "The pope is inside";
-			mes "expecting you, so please";
-			mes "don't keep her waiting long.";
-			close;
-		}
-
 		else {
 			mes "[Pope's Office Guard]";
 			mes "I'm sorry, but the pope";
@@ -6978,32 +6994,21 @@ ra_temin,134,128,3	script	Pope's Office Guard#rac::raofficeguard	926,{
 			mes "after the service is ended.";
 			close;
 		}
-
 	}
-
-}
-
-ra_temin,134,134,3	duplicate(raofficeguard)	Pope's Office Guard#2ra	926
-
-ra_temin,134,131,0	script	gyoin1#rachel	45,1,1,{
-OnTouch:
-	if ((ra_tem_q > 16) || (MISC_QUEST & 8192)){
-		mes "[Pope's Office Guard]";
-		mes "I'm sorry, but the pope";
-		mes "is officiating a service";
-		mes "now. Please come back";
-		mes "after the service is ended.";
-		close;
-	}
-
 	if (ra_tem_q < 16) {
 		mes "^3355FFThe door is locked.^000000";
 		close;
 	}
-	else if (ra_tem_q == 16) {
-		warp "ra_temin",276,239;
-	}
+	end;
+}
 
+ra_temin,275,226,0	script	#rachel33	45,1,1,{
+	end;
+OnTouch:
+	if (aru_em == 21)
+		warp "que_temsky",99,11;
+	else
+		warp "ra_temsky",99,11;
 	end;
 }
 
@@ -7145,20 +7150,85 @@ ra_temsky,99,99,5	script	Pope#rachel	936,{
 		cutin "",255;
 		end;
 	}
-
-	else if (ra_tem_q == 17) {
-		mes "[Pope]";
-		mes "Oh, that's right...";
-		mes "Zhed... Er, High Priest";
-		mes "Zhed wanted to speak to you!";
-		close2;
-		cutin "",255;
-		end;
+	else {
+		if (aru_em < 15) {
+			mes "[Pope]";
+			mes "Oh, that's right...";
+			mes "Zhed... Er, High Priest";
+			mes "Zhed wanted to speak to you!";
+			close2;
+			cutin "",255;
+			end;
+		}
+		else if (aru_em == 15) {
+			mes "[Pope]";
+			mes "Oh, hello! It's you again!";
+			mes "Have you come to tell me";
+			mes "interesting stories about";
+			mes "the outside world again?";
+			next;
+			input .@input$;
+			mes "[Pope]";
+			mes "Mm. That sounds pretty";
+			mes "strange to me. Well, it's";
+			mes "good to hear it from you.";
+			next;
+			mes "["+PcName+"]";
+			mes "(^333333I can't just leave";
+			mes "now. I should try to see";
+			mes "if I can learn anything";
+			mes "useful from the pope...^000000)";
+			next;
+			switch(select("Aren't you lonely?:Do you ever take a break?")) {
+			case 1:
+				mes "[Pope]";
+				mes "Well, there are always";
+				mes "some priests with me all";
+				mes "the time. Some of them";
+				mes "even watch me when I sleep.";
+				mes "I don't think I have time";
+				mes "to feel lonely, actually.";
+				next;
+				mes "[Pope]";
+				mes "Thank you for asking.";
+				mes "Sometimes... Sometimes";
+				mes "I wonder if I have a real";
+				mes "family. I don't even know";
+				mes "who'd they be or if they";
+				mes "exist. I don't know...";
+				next;
+				mes "[Pope]";
+				mes "I... I'm sorry.";
+				mes "I guess you didn't";
+				mes "expect to hear something";
+				mes "like that. ^666666*Sigh*^000000 I'm feeling";
+				mes "pretty exhausted. I better...";
+				mes "I better get some rest...";
+				set aru_em,16;
+				close2;
+				cutin "",255;
+				end;
+			case 2:
+				mes "[Pope]";
+				mes "Well, even if I wanted";
+				mes "to, I can't just go out";
+				mes "and play. As pope... Well...";
+				mes "Everyone and everything";
+				mes "sort of needs my attention.";
+				close2;
+				cutin "",255;
+				end;
+			}
+		}
+		else if (aru_em == 16) {
+			mes "[Follower]";
+			mes "The pope said that she's";
+			mes "exhausted. Please come";
+			mes "back when she's feeling";
+			mes "better, and she will have";
+			mes "an audience with you.";
+		}
 	}
-
-	mes "[Pope]";
-	mes "...";
-	mes "...";
 	close2;
 	cutin "",255;
 	end;

@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf (Script), DZeroX (Timer)
 //===== Current Version: ===================================== 
-//= 4.4
+//= 4.5
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -95,6 +95,7 @@
 //= 4.3 Fixed improper condition in the Elly NPC. [L0ne_W0lf]
 //=     Corrected some typos in the dialogs.
 //= 4.4 Updated reviecer and robots NPC to use mobcount. (bugreport:2380) [L0ne_W0lf]
+//= 4.5 Removed a delitem that was no logner needed. [L0en_W0lf]
 //============================================================ 
 
 //============================================================================
@@ -4459,7 +4460,6 @@ kh_mansion,22,28,4	script	Kiel Hyre#kh	903,{
 		mes "wrong... and she just... just...";
 		mes "The river swallowed her...";
 		mes "I felt empty. She was gone. ";
-		delitem 7498,1; //Rosimier_Key
 		delitem 7499,1; //Family_Portrait
 		delitem 7500,1; //Elysia_Portrait
 		delitem 7501,1; //Kyll_Hyre_Letter2
