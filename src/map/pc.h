@@ -202,6 +202,7 @@ struct map_session_data {
 	int critaddrace[RC_MAX];
 	int expaddrace[RC_MAX];
 	int ignore_mdef[RC_MAX];
+	int ignore_def[RC_MAX];
 	int itemgrouphealrate[MAX_ITEMGROUP];
 	short sp_gain_race[RC_MAX];
 	// zeroed arrays end here.

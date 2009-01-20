@@ -1715,6 +1715,7 @@ int status_calc_pc(struct map_session_data* sd,int first)
 		+ sizeof(sd->critaddrace)
 		+ sizeof(sd->expaddrace)
 		+ sizeof(sd->ignore_mdef)
+		+ sizeof(sd->ignore_def)
 		+ sizeof(sd->itemgrouphealrate)
 		+ sizeof(sd->sp_gain_race)
 		);

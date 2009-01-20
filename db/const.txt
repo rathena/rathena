@@ -380,6 +380,7 @@ bDelayrate	1083
 bHPDrainRateRace	1084
 bSPDrainRateRace	1085
 bIgnoreMdefRate	1086
+bIgnoreDefRate	1087
 
 bRestartFullRecover	2000
 bNoCastCancel	2001
@@ -484,6 +485,8 @@ ATF_SELF	0x01
 ATF_TARGET	0x02
 ATF_SHORT	0x04
 ATF_LONG	0x08
+ATF_WEAPON	0x10
+ATF_SKILL	0x20
 
 IG_BlueBox	1
 IG_VioletBox	2

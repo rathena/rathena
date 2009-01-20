@@ -1712,8 +1712,20 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 			short vit_def;
 			signed char def1 = status_get_def(target); //Don't use tstatus->def1 due to skill timer reductions.
 			short def2 = (short)tstatus->def2;
-			if(battle_config.vit_penalty_type &&
-				battle_config.vit_penalty_target&target->type)
+
+			if( sd )
+			{
+				i = sd->ignore_def[is_boss(target)?RC_BOSS:RC_NONBOSS];
+				i += sd->ignore_def[tstatus->race];
+				if( i )
+				{
+					if( i > 100 ) i = 100;
+					def1 -= def1 * i / 100;
+					// def2 -= def2 * i / 100;
+				}
+			}
+
+			if( battle_config.vit_penalty_type && battle_config.vit_penalty_target&target->type )
 			{
 				unsigned char target_count; //256 max targets should be a sane max
 				target_count = unit_counttargeted(target,battle_config.vit_penalty_count_lv);

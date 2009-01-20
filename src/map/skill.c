@@ -842,27 +842,30 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 		break;
 	}
 
-	if( sd && attack_type&BF_WEAPON &&
-		skillid != WS_CARTTERMINATION &&
-		skillid != AM_DEMONSTRATION &&
-		skillid != CR_REFLECTSHIELD && skillid != MS_REFLECTSHIELD &&
-		skillid != ASC_BREAKER )
+	if( sd && skillid != WS_CARTTERMINATION && skillid != AM_DEMONSTRATION && skillid != CR_REFLECTSHIELD && skillid != MS_REFLECTSHIELD && skillid != ASC_BREAKER )
 	{ // Trigger status effects
 		enum sc_type type;
 		int i;
-		for(i=0; i < ARRAYLENGTH(sd->addeff) && sd->addeff[i].flag; i++)
+		for( i = 0; i < ARRAYLENGTH(sd->addeff) && sd->addeff[i].flag; i++ )
 		{
 			rate = sd->addeff[i].rate;
-			if (attack_type&BF_LONG) // Any ranged physical attack takes status arrows into account (Grimtooth...) [DracoRPG]
+			if( attack_type&BF_LONG ) // Any ranged physical attack takes status arrows into account (Grimtooth...) [DracoRPG]
 				rate += sd->addeff[i].arrow_rate;
-			if (!rate) continue;
+			if( !rate ) continue;
 
-			if ((sd->addeff[i].flag&(ATF_LONG|ATF_SHORT)) != (ATF_LONG|ATF_SHORT))
-			{	//Trigger has range consideration.
+			if( (sd->addeff[i].flag&(ATF_WEAPON|ATF_SKILL)) != (ATF_WEAPON|ATF_SKILL) )
+			{ // Trigger has attack type consideration.
+				if( (sd->addeff[i].flag&ATF_WEAPON && !(attack_type&BF_WEAPON)) || (sd->addeff[i].flag&ATF_SKILL && !(attack_type&(BF_MAGIC|BF_MISC))) )
+					continue;
+			}
+
+			if( (sd->addeff[i].flag&(ATF_LONG|ATF_SHORT)) != (ATF_LONG|ATF_SHORT) )
+			{ // Trigger has range consideration.
 				if((sd->addeff[i].flag&ATF_LONG && !(attack_type&BF_LONG)) ||
 					(sd->addeff[i].flag&ATF_SHORT && !(attack_type&BF_SHORT)))
 					continue; //Range Failed.
 			}
+
 			type =  sd->addeff[i].id;
 			skill = skill_get_time2(status_sc2skill(type),7);
 

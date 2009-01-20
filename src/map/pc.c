@@ -1487,6 +1487,8 @@ static int pc_bonus_addeff(struct s_addeffect* effect, int max, enum sc_type id,
 		flag|=ATF_SHORT|ATF_LONG; //Default range: both
 	if (!(flag&(ATF_TARGET|ATF_SELF)))
 		flag|=ATF_TARGET; //Default target: enemy.
+	if (!(flag&(ATF_WEAPON|ATF_SKILL)))
+		flag|=ATF_WEAPON; //Defatul type: weapon.
 
 	for (i = 0; i < max && effect[i].flag; i++) {
 		if (effect[i].id == id && effect[i].flag == flag)
@@ -2532,6 +2534,10 @@ int pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 	case SP_IGNORE_MDEF_RATE:
 		if(sd->state.lr_flag != 2)
 			sd->ignore_mdef[type2] += val;
+		break;
+	case SP_IGNORE_DEF_RATE:
+		if(sd->state.lr_flag != 2)
+			sd->ignore_def[type2] += val;
 		break;
 
 	default:
