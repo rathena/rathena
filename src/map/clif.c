@@ -228,10 +228,11 @@ int clif_send_sub(struct block_list *bl, va_list ap)
 int clif_send(const uint8* buf, int len, struct block_list* bl, enum send_target type)
 {
 	int i;
-	struct map_session_data *sd;
+	struct map_session_data *sd, *tsd;
 	struct party_data *p = NULL;
 	struct guild *g = NULL;
 	int x0 = 0, x1 = 0, y0 = 0, y1 = 0, fd;
+	struct s_mapiterator* iter;
 
 	if( type != ALL_CLIENT && type != CHAT_MAINCHAT )
 		nullpo_retr(0, bl);
@@ -239,32 +240,35 @@ int clif_send(const uint8* buf, int len, struct block_list* bl, enum send_target
 	sd = BL_CAST(BL_PC, bl);
 
 	switch(type) {
+
 	case ALL_CLIENT: //All player clients.
-		for (i = 0; i < fd_max; i++) {
-			if (session[i] && session[i]->func_parse == clif_parse &&
-				(sd = (struct map_session_data *)session[i]->session_data) != NULL &&
-				sd->state.active &&
-				packet_db[sd->packet_ver][RBUFW(buf,0)].len)
+		iter = mapit_getallusers();
+		while( (tsd = (TBL_PC*)mapit_next(iter)) != NULL )
+		{
+			if( packet_db[tsd->packet_ver][RBUFW(buf,0)].len )
 			{ // packet must exist for the client version
-				WFIFOHEAD(i, len);
-				memcpy(WFIFOP(i,0), buf, len);
-				WFIFOSET(i,len);
+				WFIFOHEAD(tsd->fd, len);
+				memcpy(WFIFOP(tsd->fd,0), buf, len);
+				WFIFOSET(tsd->fd,len);
 			}
 		}
+		mapit_free(iter);
 		break;
+
 	case ALL_SAMEMAP: //All players on the same map
-		for(i = 0; i < fd_max; i++) {
-			if (session[i] && session[i]->func_parse == clif_parse &&
-				(sd = (struct map_session_data*)session[i]->session_data) != NULL &&
-				sd->state.active && sd->bl.m == bl->m &&
-				packet_db[sd->packet_ver][RBUFW(buf,0)].len)
+		iter = mapit_getallusers();
+		while( (tsd = (TBL_PC*)mapit_next(iter)) != NULL )
+		{
+			if( sd->bl.m == tsd->bl.m && packet_db[tsd->packet_ver][RBUFW(buf,0)].len )
 			{ // packet must exist for the client version
-				WFIFOHEAD(i,len);
-				memcpy(WFIFOP(i,0), buf, len);
-				WFIFOSET(i,len);
+				WFIFOHEAD(tsd->fd, len);
+				memcpy(WFIFOP(tsd->fd,0), buf, len);
+				WFIFOSET(tsd->fd,len);
 			}
 		}
+		mapit_free(iter);
 		break;
+
 	case AREA:
 	case AREA_WOSC:
 		if (sd && bl->prev == NULL) //Otherwise source misses the packet.[Skotlex]
@@ -278,6 +282,7 @@ int clif_send(const uint8* buf, int len, struct block_list* bl, enum send_target
 		map_foreachinarea(clif_send_sub, bl->m, bl->x-(AREA_SIZE-5), bl->y-(AREA_SIZE-5),
 			bl->x+(AREA_SIZE-5), bl->y+(AREA_SIZE-5), BL_PC, buf, len, bl, AREA_WOC);
 		break;
+
 	case CHAT:
 	case CHAT_WOS:
 		{
@@ -303,18 +308,21 @@ int clif_send(const uint8* buf, int len, struct block_list* bl, enum send_target
 			}
 		}
 		break;
+
 	case CHAT_MAINCHAT: //[LuzZza]
-		for(i=1; i<fd_max; i++) {
-			if (session[i] && session[i]->func_parse == clif_parse &&
-				(sd = (struct map_session_data*)session[i]->session_data) != NULL &&
-				sd->state.active && sd->state.mainchat && !sd->chatID)
-			{
-				WFIFOHEAD(i,len);
-				memcpy(WFIFOP(i,0), buf, len);
-				WFIFOSET(i, len);
+		iter = mapit_getallusers();
+		while( (tsd = (TBL_PC*)mapit_next(iter)) != NULL )
+		{
+			if( tsd->state.mainchat && tsd->chatID == 0 && packet_db[tsd->packet_ver][RBUFW(buf,0)].len )
+			{ // packet must exist for the client version
+				WFIFOHEAD(tsd->fd, len);
+				memcpy(WFIFOP(tsd->fd,0), buf, len);
+				WFIFOSET(tsd->fd,len);
 			}
 		}
+		mapit_free(iter);
 		break;
+
 	case PARTY_AREA:
 	case PARTY_AREA_WOS:
 		x0 = bl->x - AREA_SIZE;
@@ -354,39 +362,40 @@ int clif_send(const uint8* buf, int len, struct block_list* bl, enum send_target
 			}
 			if (!enable_spy) //Skip unnecessary parsing. [Skotlex]
 				break;
-			for (i = 1; i < fd_max; i++){ // partyspy [Syrus22]
 
-				if (session[i] && session[i]->func_parse == clif_parse &&
-					(sd = (struct map_session_data*)session[i]->session_data) != NULL &&
-				  	sd->state.active && sd->partyspy == p->party.party_id &&
-					packet_db[sd->packet_ver][RBUFW(buf,0)].len)
+			iter = mapit_getallusers();
+			while( (tsd = (TBL_PC*)mapit_next(iter)) != NULL )
+			{
+				if( tsd->partyspy == p->party.party_id && packet_db[tsd->packet_ver][RBUFW(buf,0)].len )
 				{ // packet must exist for the client version
-					WFIFOHEAD(i,len);
-					memcpy(WFIFOP(i,0), buf, len);
-					WFIFOSET(i,len);
+					WFIFOHEAD(tsd->fd, len);
+					memcpy(WFIFOP(tsd->fd,0), buf, len);
+					WFIFOSET(tsd->fd,len);
 				}
 			}
+			mapit_free(iter);
 		}
 		break;
+
 	case DUEL:
 	case DUEL_WOS:
 		if (!sd || !sd->duel_group) break; //Invalid usage.
 
-		x0 = sd->duel_group; //Here we use x0 to store the duel group. [Skotlex]
-		for (i = 0; i < fd_max; i++) {
-			if (session[i] && session[i]->func_parse == clif_parse &&
-				(sd = (struct map_session_data *)session[i]->session_data) != NULL &&
-				sd->state.active && sd->duel_group == x0) {
-				if (type == DUEL_WOS && bl->id == sd->bl.id)
-					continue;
-				if (packet_db[sd->packet_ver][RBUFW(buf,0)].len) { 
-					WFIFOHEAD(i, len);
-					memcpy(WFIFOP(i,0), buf, len);
-					WFIFOSET(i,len);
-				}
+		iter = mapit_getallusers();
+		while( (tsd = (TBL_PC*)mapit_next(iter)) != NULL )
+		{
+			if( type == DUEL_WOS && sd->bl.id == tsd->bl.id )
+				continue;
+			if( sd->duel_group == tsd->duel_group && packet_db[tsd->packet_ver][RBUFW(buf,0)].len )
+			{ // packet must exist for the client version
+				WFIFOHEAD(tsd->fd, len);
+				memcpy(WFIFOP(tsd->fd,0), buf, len);
+				WFIFOSET(tsd->fd,len);
 			}
 		}
+		mapit_free(iter);
 		break;
+
 	case SELF:
 		if (sd && (fd=sd->fd) && packet_db[sd->packet_ver][RBUFW(buf,0)].len) { // packet must exist for the client version
 			WFIFOHEAD(fd,len);
@@ -435,17 +444,18 @@ int clif_send(const uint8* buf, int len, struct block_list* bl, enum send_target
 			}
 			if (!enable_spy) //Skip unnecessary parsing. [Skotlex]
 				break;
-			for (i = 1; i < fd_max; i++){ // guildspy [Syrus22]
-				if (session[i] && session[i]->func_parse == clif_parse &&
-					(sd = (struct map_session_data*)session[i]->session_data) != NULL &&
-				  	sd->state.active && sd->guildspy == g->guild_id &&
-					packet_db[sd->packet_ver][RBUFW(buf,0)].len)
+
+			iter = mapit_getallusers();
+			while( (tsd = (TBL_PC*)mapit_next(iter)) != NULL )
+			{
+				if( tsd->guildspy == g->guild_id && packet_db[tsd->packet_ver][RBUFW(buf,0)].len )
 				{ // packet must exist for the client version
-					WFIFOHEAD(i,len);
-					memcpy(WFIFOP(i,0), buf, len);
-					WFIFOSET(i,len);
+					WFIFOHEAD(tsd->fd, len);
+					memcpy(WFIFOP(tsd->fd,0), buf, len);
+					WFIFOSET(tsd->fd,len);
 				}
 			}
+			mapit_free(iter);
 		}
 		break;
 
