@@ -2781,7 +2781,7 @@ int atcommand_memo(const int fd, struct map_session_data* sd, const char* comman
 		return 0;
  	}
  
-	if( position < 0 && position >= MAX_MEMOPOINTS )
+	if( position < 0 || position >= MAX_MEMOPOINTS )
 	{
 		sprintf(atcmd_output, "Please, enter a valid position (usage: @memo <memo_position:%d-%d>).", 0, MAX_MEMOPOINTS-1);
 		clif_displaymessage(fd, atcmd_output);
