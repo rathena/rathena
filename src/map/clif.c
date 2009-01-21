@@ -259,7 +259,7 @@ int clif_send(const uint8* buf, int len, struct block_list* bl, enum send_target
 		iter = mapit_getallusers();
 		while( (tsd = (TBL_PC*)mapit_next(iter)) != NULL )
 		{
-			if( sd->bl.m == tsd->bl.m && packet_db[tsd->packet_ver][RBUFW(buf,0)].len )
+			if( bl->m == tsd->bl.m && packet_db[tsd->packet_ver][RBUFW(buf,0)].len )
 			{ // packet must exist for the client version
 				WFIFOHEAD(tsd->fd, len);
 				memcpy(WFIFOP(tsd->fd,0), buf, len);
@@ -384,7 +384,7 @@ int clif_send(const uint8* buf, int len, struct block_list* bl, enum send_target
 		iter = mapit_getallusers();
 		while( (tsd = (TBL_PC*)mapit_next(iter)) != NULL )
 		{
-			if( type == DUEL_WOS && sd->bl.id == tsd->bl.id )
+			if( type == DUEL_WOS && bl->id == tsd->bl.id )
 				continue;
 			if( sd->duel_group == tsd->duel_group && packet_db[tsd->packet_ver][RBUFW(buf,0)].len )
 			{ // packet must exist for the client version
