@@ -3,6 +3,8 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2009/01/21
+	* Replaced the fake timer heap (sorted array) with a real heap. (improves performance) [FlavioJS]
 2009/01/20
 	* Added a generic binary heap implementation based on defines. [FlavioJS]
 	* Fixed pc_statusup2 to correctly update the client's stat window [ultramage]
