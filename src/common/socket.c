@@ -205,6 +205,10 @@ int naddr_ = 0;   // # of ip addresses
 // initial send buffer size (will be resized as needed)
 #define WFIFO_SIZE (16*1024)
 
+// Maximum size of pending data in the write fifo. (for non-server connections)
+// The connection is closed if it goes over the limit.
+#define WFIFO_MAX (1*1024*1024)
+
 struct socket_data* session[FD_SETSIZE];
 
 #ifdef SEND_SHORTLIST
@@ -625,10 +629,16 @@ int WFIFOSET(int fd, size_t len)
 	if(s->wdata_size+len > s->max_wdata)
 	{	// actually there was a buffer overflow already
 		uint32 ip = s->client_addr;
-		ShowFatalError("WFIFOSET: Write Buffer Overflow. Connection %d (%d.%d.%d.%d) has written %d bytes on a %d/%d bytes buffer.\n", fd, CONVIP(ip), len, s->wdata_size, s->max_wdata);
+		ShowFatalError("WFIFOSET: Write Buffer Overflow. Connection %d (%d.%d.%d.%d) has written %u bytes on a %u/%u bytes buffer.\n", fd, CONVIP(ip), (unsigned int)len, (unsigned int)s->wdata_size, (unsigned int)s->max_wdata);
 		ShowDebug("Likely command that caused it: 0x%x\n", (*(unsigned short*)(s->wdata + s->wdata_size)));
 		// no other chance, make a better fifo model
 		exit(EXIT_FAILURE);
+	}
+
+	if( !s->flag.server && s->wdata_size+len > WFIFO_MAX )
+	{// reached maximum write fifo size
+		set_eof(fd);
+		return 0;
 	}
 
 	s->wdata_size += len;
