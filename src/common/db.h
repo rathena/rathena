@@ -1288,12 +1288,11 @@ void  linkdb_final  ( struct linkdb_node** head );
 		size_t _i_ = VECTOR_LENGTH(__heap); \
 		VECTOR_PUSH(__heap,__val); /* insert at end */ \
 		while( _i_ ) \
-		{ /* restore heap property */ \
+		{ /* restore heap property in parents */ \
 			size_t _parent_ = (_i_-1)/2; \
-			if( __topcmp(VECTOR_INDEX(__heap,_parent_),__val) < 0 ) \
+			if( __topcmp(VECTOR_INDEX(__heap,_parent_),VECTOR_INDEX(__heap,_i_)) < 0 ) \
 				break; /* done */ \
-			VECTOR_INDEX(__heap,_i_) = VECTOR_INDEX(__heap,_parent_); \
-			VECTOR_INDEX(__heap,_parent_) = __val; \
+			swap(VECTOR_INDEX(__heap,_parent_),VECTOR_INDEX(__heap,_i_)); \
 			_i_ = _parent_; \
 		} \
 	}while(0)
@@ -1310,12 +1309,35 @@ void  linkdb_final  ( struct linkdb_node** head );
 ///
 /// @param __heap Binary heap
 /// @param __topcmp Comparator
-#define BHEAP_POP(__heap,__topcmp) \
+#define BHEAP_POP(__heap,__topcmp) BHEAP_POPINDEX(__heap,0,__topcmp)
+
+
+
+/// Removes the target value of the heap. (using the '=' operator)
+/// Assumes the index exists.
+///
+/// The comparator takes two values as arguments, returns:
+/// - negative if the first value is on the top
+/// - positive if the second value is on the top
+/// - 0 if they are equal
+///
+/// @param __heap Binary heap
+/// @param __idx Index
+/// @param __topcmp Comparator
+#define BHEAP_POPINDEX(__heap,__idx,__topcmp) \
 	do{ \
-		size_t _i_ = 0; \
-		VECTOR_INDEX(__heap,0) = VECTOR_POP(__heap); /* put last at top */ \
+		size_t _i_ = __idx; \
+		VECTOR_INDEX(__heap,__idx) = VECTOR_POP(__heap); /* put last at index */ \
+		while( _i_ ) \
+		{ /* restore heap property in parents */ \
+			size_t _parent_ = (_i_-1)/2; \
+			if( __topcmp(VECTOR_INDEX(__heap,_parent_),VECTOR_INDEX(__heap,_i_)) < 0 ) \
+				break; /* done */ \
+			swap(VECTOR_INDEX(__heap,_parent_),VECTOR_INDEX(__heap,_i_)); \
+			_i_ = _parent_; \
+		} \
 		while( _i_ < VECTOR_LENGTH(__heap) ) \
-		{ /* restore heap property */ \
+		{ /* restore heap property in childs */ \
 			size_t _lchild_ = _i_*2 + 1; \
 			size_t _rchild_ = _i_*2 + 2; \
 			if( (_lchild_ >= VECTOR_LENGTH(__heap) || __topcmp(VECTOR_INDEX(__heap,_i_),VECTOR_INDEX(__heap,_lchild_)) <= 0) && \
@@ -1323,14 +1345,12 @@ void  linkdb_final  ( struct linkdb_node** head );
 				break; /* done */ \
 			else if( _rchild_ >= VECTOR_LENGTH(__heap) || __topcmp(VECTOR_INDEX(__heap,_lchild_),VECTOR_INDEX(__heap,_rchild_)) <= 0 ) \
 			{ /* left child */ \
-				VECTOR_INDEX(__heap,_i_) = VECTOR_INDEX(__heap,_lchild_); \
-				VECTOR_INDEX(__heap,_lchild_) = VECTOR_INDEX(__heap,VECTOR_LENGTH(__heap)); \
+				swap(VECTOR_INDEX(__heap,_i_),VECTOR_INDEX(__heap,_lchild_)); \
 				_i_ = _lchild_; \
 			} \
 			else \
 			{ /* right child */ \
-				VECTOR_INDEX(__heap,_i_) = VECTOR_INDEX(__heap,_rchild_); \
-				VECTOR_INDEX(__heap,_rchild_) = VECTOR_INDEX(__heap,VECTOR_LENGTH(__heap)); \
+				swap(VECTOR_INDEX(__heap,_i_),VECTOR_INDEX(__heap,_rchild_)); \
 				_i_ = _rchild_; \
 			} \
 		} \
