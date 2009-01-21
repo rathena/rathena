@@ -1,0 +1,153 @@
+//===== eAthena Script ======================================= 
+//= Moscovia Kafras
+//===== By: ================================================== 
+//= Kisuka
+//===== Current Version: ===================================== 
+//= 1.0
+//===== Compatible With: ===================================== 
+//= eAthena SVN
+//===== Description: ========================================= 
+//= Kafras for the town of Moscovia.
+//===== Additional Comments: ================================= 
+//= 1.0 First Version. [Kisuka]
+//============================================================ 
+
+moscovia,223,191,4	script	Kafra Staff#mosk	114,{
+	cutin "kafra_04",2;
+	mes "[Kafra Staff]";
+	mes "Welcome to the";
+	mes "Kafra Corporation.";
+	mes "The Kafra services";
+	mes "are always on your side.";
+	mes "How may I assist you?";
+	next;
+	switch(select("Save:Use Storage:Rent a Pushcart:Check Other Information:Cancel")) {
+		case 1:
+			mes "[Kafra Staff]";
+			mes "Your Respawn Point has";
+			mes "been saved in the city of";
+			mes "Moscovia. Thank you for";
+			mes "using the Kafra Service.";
+			savepoint "moscovia",221,194;
+			close2;
+			cutin "", 255;
+			end;
+		case 2:
+			if(basicskillcheck() && getskilllv("NV_BASIC") < 6){
+				mes "[Kafra Staff]";
+				mes "I'm sorry, but you";
+				mes "need the Novice's";
+				mes "Basic Skill Level 6 to";
+				mes "use the Storage Service.";
+				close2;
+				cutin "", 255;
+				end;
+			}
+			if(countitem(7059)) delitem 7059,1;
+			else {
+				if(Zeny<80){
+					mes "[Kafra Staff]";
+					mes "I'm sorry, but you don't";
+					mes "have enough zeny to use";
+					mes "the Storage Service. Our";
+					mes "Storage access fee is 80 zeny.";
+					close2;
+					cutin "", 255;
+					end;
+				}
+				set Zeny, Zeny-80;
+				set RESRVPTS, RESRVPTS + (80/5);
+			}
+			mes "[Kafra Staff]";
+			mes "Here, let me open";
+			mes "your Storage for you.";
+			mes "Thank you for using";
+			mes "the Kafra Service.";
+			
+			callfunc("F_CheckKafCode");	//check your storage password, if set
+			
+			close2;
+			openstorage;
+			cutin "", 255;
+			end;
+		case 3:
+			if(baseClass != Job_Merchant){
+				mes "[Kafra Staff]";
+				mes "I'm sorry, but the";
+				mes "Pushcart rental service";
+				mes "is only available to Merchants,";
+				mes "Blacksmiths, Master Smiths,";
+				mes "Alchemists and Biochemists.";
+				close2;
+				cutin "", 255;
+				end;
+			}
+
+			else if(checkcart() == 1){
+				mes "[Kafra Staff]";
+				mes "You already have";
+				mes "a Pushcart equipped.";
+				mes "Unfortunately, we can't";
+				mes "rent more than one to";
+				mes "each customer at a time.";
+				close2;
+				cutin "", 255;
+				end;
+			}
+
+			if(countitem(7061) > 0) delitem 7061,1;
+			else {
+				mes "[Kafra Staff]";
+				mes "The Pushcart rental";
+				mes "fee is 700 zeny. Would";
+				mes "you like to rent a Pushcart?";
+				next;
+				if(select("Rent a Pushcart.:Cancel.") == 1) {
+					if(Zeny<700){
+						mes "[Kafra Staff]";
+						mes "I'm sorry, but you";
+						mes "don't have enough";
+						mes "zeny to pay the Pushcart";
+						mes "rental fee of 700 zeny.";
+						close2;
+						cutin "", 255;
+						end;
+					}
+					set Zeny,Zeny-700;
+					set RESRVPTS, RESRVPTS + 48;
+				}else{
+					close2;
+					cutin "", 255;
+					end;
+				}
+			}
+			setcart;
+			close2;
+			cutin "", 255;
+			end;
+		case 4:
+			if(select("Check Special Reserve Points.:Cancel") == 2) {
+				cutin "", 255;
+				close;
+			}
+			mes "[Kafra Staff]";
+			mes strcharinfo(0) + ", you have a total of";
+			mes RESRVPTS+ " Special Reserve Points.";
+			next;
+			mes "[Kafra Staff]";
+			mes "You can exchange your";
+			mes "Special Reserve Points for";
+			mes "rewards at the Kafra Main Office in Al De Baran. Please use our";
+			mes "convenient services to see the benefits of our rewards program.";
+			close2;
+			cutin "", 255;
+			end;
+		case 5:
+			mes "[Kafra Staff]";
+			mes "We, here at Kafra Corporation,";
+			mes "are always endeavoring to provide you with the best services. We hope that we meet your adventuring needs and standards of excellence.";
+			close2;
+			cutin "", 255;
+			end;
+	}
+}

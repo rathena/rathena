@@ -1,0 +1,327 @@
+//===== eAthena Script ======================================= 
+//= Moscovia Town
+//===== By: ================================================== 
+//= Kisuka
+//===== Current Version: ===================================== 
+//= 1.0
+//===== Compatible With: ===================================== 
+//= eAthena SVN
+//===== Description: ========================================= 
+//= Moscovia Town Script
+//===== Additional Comments: ================================= 
+//= 1.0 First Version. [Kisuka]
+//============================================================
+
+// Moscovia Transportation
+//============================================================ 
+alberta,245,66,4	script	Moscovia P.R. Officer#1	960,{
+	mes "[Moscovia P.R. Officer]";
+	mes "Moscovia! Do you know Moscovia?";
+	mes "the paradise spreading on the endless seas...";
+	mes "Welcome to Moscovia";
+	mes "It's adventurous and mystic.";
+	next;
+	switch(select("About Moscovia...:Go to Moscovia.:Cancel")) {
+		case 1:
+			mes "[Moscovia P.R. Officer]";
+			mes "Moscovia is a beautiful kingdom";
+			mes "on an island located north of Rune";
+			mes "Midgarts.";
+			next;
+			mes "[Moscovia P.R. Officer]";
+			mes "I'm sure that you will be";
+			mes "absolutely fascinated";
+			mes "by Moscovia's beautiful scenery";
+			mes "and gorgeous palace.";
+			next;
+			mes "[Moscovia P.R. Officer]";
+			mes "Now that our long winter has";
+			mes "passed,";
+			mes "I'm happy that I can now show you";
+			mes "our gorgeous hometown.";
+			next;
+			mes "[Moscovia P.R. Officer]";
+			mes "If you feel like visiting Moscovia";
+			mes "take the chance now!";
+			mes "I'll help you to have a nice trip";
+			mes "to Moscovia!";
+			close;
+			
+		case 2:
+			mes "[Moscovia P.R. Officer]";
+			mes "Ok then, let us start now.";
+			mes "You should pay me 10,000 zeny";
+			mes "to go to Moscovia.";
+			mes "But when you come back,";
+			mes "you don't have to pay.";
+			next;
+			mes "[Moscovia P.R. Officer]";
+			mes "Can we leave now?";
+			next;
+			if (select("Let's go!:Cancel") == 2) {
+				mes "[Moscovia P.R. Officer]";
+				mes "If you're too busy now,";
+				mes "please tell me again whenever you want.";
+				mes "I'm always ready to guide anyone to Moscovia.";
+				close;
+			}
+			if (Zeny < 10000) {
+				mes "[Moscovia P.R. Officer]";
+				mes "I'm sorry but you don't have";
+				mes "enough zeny now";
+				mes "You need 10,000 zeny";
+				mes "to go to Moscovia";
+				mes "Thank you.";
+				close;
+			}else{
+				mes "[Moscovia P.R. Officer]";
+				mes "Ok then, we're leaving now.";
+				close2;
+				set Zeny,Zeny - 10000;
+				warp "moscovia",163,55;
+				end;
+			}
+		case 3:
+			mes "[Moscovia P.R. Officer]";
+			mes "If you're too busy now,";
+			mes "please tell me again whenever you want.";
+			mes "I'm always ready to guide anyone to Moscovia.";
+			close;
+	}
+}
+
+moscovia,166,53,4	script	Moscovia P.R. Officer#2	960,{
+	mes "[Moscovia P.R. Officer]";
+	mes "How was your trip?";
+	mes "Do you have good memories from Moscovia?";
+	mes "A ship is now leaving";
+	mes "for Rune Midgarts.";
+	next;
+	if (select("Return to Alberta:Cancel") == 2) {
+		mes "[Moscovia P.R. Officer]";
+		mes "If you want to see more";
+		mes "please take your time.";
+		close;
+	}
+	mes "[Moscovia P.R. Officer]";
+	mes "Please come and visit soon.";
+	mes "Ok then, Let's get going.";
+	close2;
+	warp "alberta",243,67;
+	end;
+}
+
+// Generic Moscovia NPCs
+//============================================================ 
+moscovia,149,112,4	script	A man#mosk1	964,{
+	mes "[Lev]";
+	mes "I was once like you.";
+	mes "with hot heart and cool reason";
+	mes "adventuring everywhere and";
+	mes "coping with all the troubles...";
+	close;
+}
+
+moscovia,167,97,4	script	A lady#mosk1	961,{
+	mes "[Roza]";
+	mes "Naughty boys are too excited in the warm days.";
+	next;
+	mes "[Roza]";
+	mes "Where is the sun?";
+	mes "Where is it hiding?";
+	close;
+}
+
+moscovia,168,135,4	script	A lady#mosk2	961,{
+	mes "[Kyra]";
+	mes "I've seen many people";
+	mes "from other provinces recently.";
+	next;
+	mes "[Kyra]";
+	mes "This is not";
+	mes "a tourist town.";
+	mes "What happened...?";
+	close;
+}
+
+moscovia,192,80,4	script	A lady#mosk3	959,{
+	mes "[Sabina]";
+	mes "Sunflowers are squeezed for oil and";
+	mes "their bodies are used for medicinal purposes";
+	mes "They are very useful.";
+	close;
+}
+
+moscovia,196,71,4	script	A young man#mosk1	968,{
+	mes "[Fredek]";
+	mes "The men here grow up";
+	mes "after going through though waves in";
+	mes "the vast sea.";
+	next;
+	mes "[Fredek]";
+	mes "Do you like";
+	mes "sailing?";
+	close;
+}
+
+moscovia,228,80,4	script	A little boy#mosk1	962,{
+	mes "[Rurik]";
+	mes "It's hard to look up at you.";
+	mes "Come lower so I can see your eyes.";
+	next;
+	mes "[Rurik]";
+	mes "Hmm, that's better.";
+	mes "Children are the future.";
+	mes "I won't have a future if I fall";
+	mes "back and hurt my neck";
+	mes "while looking up at you.";
+	close;
+}
+
+moscovia,202,102,4	script	A little boy#mosk2	962,{
+	mes "[Feliks]";
+	mes "This is the story";
+	mes "about a terrible dragon.";
+	next;
+	mes "[Feliks]";
+	mes "It is sleeping";
+	mes "in its lair,";
+	mes "but, it destroys everything";
+	mes "around it when it awakes.";
+	next;
+	mes "[Feliks]";
+	mes "This came from my grandma's";
+	mes "grandma's grandma's";
+	mes "grandma's grandma's";
+	mes "grandma's grandma.";
+	close;
+}
+
+moscovia,211,215,5	script	A young man#mosk2	967,{
+	mes "[Izlof]";
+	mes "There is a old saying,";
+	mes "'an opportunity is a chance.'";
+	next;
+	mes "[Izlof]";
+	mes "It is best time to confess";
+	mes "to ladies in the warm winter,";
+	mes "when their minds wander";
+	mes "right now!";
+	close;
+}
+
+
+moscovia,204,188,5	script	A maid#mosk1	959,{
+	mes "[Katya]";
+	mes "The spring has come~";
+	next;
+	mes "[Katya]";
+	mes "A million sunflowers are blooming~";
+	close;
+}
+
+moscovia,220,172,4	script	A young man#mosk3	968,{
+	mes "[Ilyav]";
+	mes "I am going to adventure";
+	mes "to experience new worlds";
+	mes "as you do.";
+	close;
+}
+
+moscovia,234,168,5	script	A man#mosk2	964,{
+	mes "[Gavrel]";
+	mes "Don't you think that the castle is magnificent?";
+	mes "It was built by my great great grandfather.";
+	close;
+}
+
+moscovia,219,229,5	script	A middle aged man#mosk1	964,{
+	mes "[Viktor]";
+	mes "Our people are very, very";
+	mes "proud of their strength and";
+	mes "invincible spirits.";
+	next;
+	mes "[Viktor]";
+	mes "It doesn't matter to us";
+	mes "how cold the winter is!";
+	close;
+}
+
+moscovia,233,204,4	script	A young man#mosk4	968,{
+	mes "[Fedor]";
+	mes "Finally, Winter is over.";
+	mes "Spring is coming";
+	mes "to my mind...";
+	close;
+}
+
+moscovia,253,175,4	script	A man#mosk3	964,{
+	mes "[Orek]";
+	mes "The present Csar is a bit strict and";
+	mes "terrible, but";
+	mes "he actually loves";
+	mes "his people.";
+	close;
+}
+
+moscovia,253,166,4	script	Soldier#mosk1	966,{
+	mes "[Soldier]";
+	mes "Our dear Czar Alexsay III is in the palace.";
+	mes "He rules over Moscovia.";
+	mes "Please be careful not to cause him any trouble.";
+	close;
+}
+
+moscovia,252,203,5	script	A little girl#mosk1	958,{
+	mes "[Yosefina]";
+	mes "Babayaga, the Horrible Cannibal";
+	mes "is living outside the town.";
+	next;
+	mes "[Yosefina]";
+	mes "My mom tole me.";
+	mes "that wat is real.";
+	close;
+}
+
+moscovia,255,203,4	script	A little boy#mosk3	962,{
+	mes "[Vasili]";
+	if (sex)
+		mes "Wow, he is";
+	else {
+		mes "Wow, she is";
+	}
+	mes "an adventurer, an adventurer!!";
+	next;
+	mes "[Vasili]";
+	mes "Tell me your exciting story.";
+	mes "Have you fought a dragon?";
+	mes "Where is your gold-shining";
+	mes "sword and shield...?";
+	mes "Where?";
+	close;
+}
+
+// Inside Moscovia
+//============================================================ 
+mosk_in,141,212,4	script	Pub Owner#mosk	964,{
+	mes "[Pub Owner]";
+	mes "Welcome to our pub.";
+	mes "I'm Alexandre of ^0000FF'Stream Pub'^000000 But,";
+	mes "everyone calls me 'Sasha'.";
+	mes "It's a fine day today. I feel like";
+	mes "going out.";
+	close;
+}
+
+// Moscovia Palace
+//============================================================ 
+-	script	Soldier::MoscSoldier	966,{
+	mes "[Soldier]";
+	mes "Please be silent or the Czar will be angry.";
+	close;
+}
+
+mosk_in,118,66,5	duplicate(MoscSoldier)	Soldier#mosk02	966
+mosk_in,133,110,3	duplicate(MoscSoldier)	Soldier#mosk03	966
+mosk_in,133,73,3	duplicate(MoscSoldier)	Soldier#mosk04	966
+mosk_in,113,124,5	duplicate(MoscSoldier)	Soldier#mosk05	966

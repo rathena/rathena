@@ -201,37 +201,33 @@ ve_in,157,219,5	script	Inn Master#Receptionist	709,{
 }
 
 //======================== Moscovia ====================================
-mosk_in,135,191,5	script	Hotel Inn#Receptionist	961,{
-	mes "[Hotel Inn]";
-	mes "Good day~";
-	mes "Welcome to the";
-	mes "most comfortable";
-	mes "inn here in Moscovia~";
+mosk_in,135,191,5	script	Landlord#mosk	961,{
+	mes "[Landlord]";
+	mes "Oh, welcome to the Inn 'Sticky Herb Tree'.";
+	mes "It is the most comfortable and";
+	mes "calmest place in all of Moscovia.";
 	next;
-	menu "Save",Msave, "Take a Rest -> 5000 zeny",Mrent, "Cancel",Mend;
-
-	Msave:
-		mes "[Hotel Inn]";
+	if (select("Save:Stay the night - 5000z") == 1) {
+		mes "[Landlord]";
 		mes "Your respawn point";
-		mes "has been saved in Moscovia.";
-		mes "Enjoy your stay in town~";
-		savepoint "mosk_in",142,189;
+		mes "has been saved.";
+		mes "Hope we can see you again next time hoho.";
+		savepoint "mosk_in",141,188;
 		close;
-	Mrent:
-		mes "[Hotel Inn]";
-		if(Zeny < 5000){
-			mes "I'm sorry, but you don't have enough money to check in.";
-			mes "The service charge is 5,000 zeny.";
-			close;
-		}
-		mes "Enjoy your stay~";
-		close2;
-		set Zeny,Zeny - 5000;
-		percentheal 100,100;
-		warp "mosk_in",215,181;
-
-	Mend:
+	}
+	mes "[Landlord]";
+	if(Zeny < 5000) {
+		mes "The service charge is 5000z.";
+		mes "Please make sure you have enough";
+		mes "money for the service.";
 		close;
+	}
+	mes "Please be comfortable.";
+	close2;
+	set Zeny,Zeny - 5000;
+	percentheal 100,100;
+	warp "mosk_in",215,181;
+	end;
 }
 
 //======================= Inn Function ==============================
