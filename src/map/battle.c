@@ -2903,11 +2903,11 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 			int skilllv = tsc->data[SC_BLADESTOP_WAIT]->val1;
 			int duration = skill_get_time2(MO_BLADESTOP,skilllv);
 			status_change_end(target, SC_BLADESTOP_WAIT, -1);
-			if(sc_start4(src, SC_BLADESTOP, 100, sd?pc_checkskill(sd, MO_BLADESTOP):5, 0, 0, (int)target, duration))
+			if(sc_start4(src, SC_BLADESTOP, 100, sd?pc_checkskill(sd, MO_BLADESTOP):5, 0, 0, target->id, duration))
 		  	{	//Target locked.
 				clif_damage(src, target, tick, sstatus->amotion, 1, 0, 1, 0, 0); //Display MISS.
-				clif_bladestop(target,src,1);
-				sc_start4(target, SC_BLADESTOP, 100, skilllv, 0, 0,(int)src, duration);
+				clif_bladestop(target, src->id, 1);
+				sc_start4(target, SC_BLADESTOP, 100, skilllv, 0, 0, src->id, duration);
 				return ATK_NONE;
 			}
 		}

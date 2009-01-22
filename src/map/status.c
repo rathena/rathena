@@ -4549,9 +4549,10 @@ void status_set_viewdata(struct block_list *bl, int class_)
 		vd->cloth_color = 0;
 }
 
+/// Returns the status_change data of bl or NULL if it doesn't exist.
 struct status_change *status_get_sc(struct block_list *bl)
 {
-	nullpo_retr(NULL, bl);
+	if( bl )
 	switch (bl->type) {
 	case BL_PC:  return &((TBL_PC*)bl)->sc;
 	case BL_MOB: return &((TBL_MOB*)bl)->sc;
@@ -6582,15 +6583,16 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 		case SC_BLADESTOP:
 			if(sce->val4)
 			{
-				struct block_list *tbl = (struct block_list *)sce->val4;
+				int tid = sce->val4;
+				struct block_list *tbl = map_id2bl(tid);
 				struct status_change *tsc = status_get_sc(tbl);
 				sce->val4 = 0;
-				if(tsc && tsc->data[SC_BLADESTOP])
+				if(tbl && tsc && tsc->data[SC_BLADESTOP])
 				{
 					tsc->data[SC_BLADESTOP]->val4 = 0;
 					status_change_end(tbl,SC_BLADESTOP,-1);
 				}
-				clif_bladestop(bl,tbl,0);
+				clif_bladestop(bl, tid, 0);
 			}
 			break;
 		case SC_DANCING:

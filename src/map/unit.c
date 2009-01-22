@@ -855,7 +855,7 @@ int unit_skilluse_id2(struct block_list *src, int target_id, short skill_num, sh
 		{	//Check for skills that auto-select target
 		case MO_CHAINCOMBO:
 			if (sc && sc->data[SC_BLADESTOP]){
-				if ((target=(struct block_list *)sc->data[SC_BLADESTOP]->val4) == NULL)
+				if ((target=map_id2bl(sc->data[SC_BLADESTOP]->val4)) == NULL)
 					return 0;
 			}
 			break;
