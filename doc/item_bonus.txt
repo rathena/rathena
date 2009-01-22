@@ -3,12 +3,13 @@
 //===== By ================================================
 //= Developers
 //===== Version ===========================================
-//= 1.1.20080612
+//= 1.1.20090122
 //=========================================================
 //= 1.0 - Standardized doc file
 //= 1.1.20080612 - skill command and bonuses (bAutoSpell, bSkillAtk, 
 //=   bSkillHeal, bAutoSpellWhenHit, bAddSkillBlow, bCastrate) accept 
 //=   skill names [FlavioJS]
+//= 1.1.20090122 - removed outdated bSPDrainValue command [ultramage]
 //= 
 //===== Description =======================================
 //= List of script instructions used in item bonuses,
@@ -213,10 +214,6 @@ bonus3 bAutoSpellWhenHit,x,y,n;		n/10% chance to cast skill x of level y on
 bonus3 bSPDrainRate,n,x,y;		When attacking there is a n% chance to either gain SP equivalent to x% of damage dealt,
 							OR drain the amount of sp from the enemy.
 							y: 0=gain sp  1:drain enemy sp
-bonus3 bSPDrainValue,n,x,y;		When attacking there is a n% chance to either gain x SP,
-							OR drain the amount of sp from the enemy.
-							y:0=gain sp  1:drain enemy sp
-							(Note: setting x to -1 or below will reduce YOUR sp)
 bonus4 bAutoSpell,x,y,n,i;		n/10% chance to cast skill x of level y when attacking (supports skill names)
 							i:
 								0=cast on self
