@@ -761,11 +761,12 @@ int npc_touch_areanpc(struct map_session_data* sd, int m, int x, int y)
 
 			snprintf(name, ARRAYLENGTH(name), "%s::OnTouch", map[m].npc[i]->exname); // It goes here too. exname being the unique identifier. [Lance]
 
-			if( npc_event(sd,name,0)>0 ) {
-				pc_stop_walking(sd,1); //Make it stop walking!
+			if( npc_event(sd,name,0) > 0 )
+			{// failed to run OnTouch event, so just click the npc
 				npc_click(sd,map[m].npc[i]);
 			}
-			//aFree(name);
+
+			pc_stop_walking(sd,1); //Make it stop walking!
 			break;
 		}
 	}

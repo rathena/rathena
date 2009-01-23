@@ -4611,7 +4611,7 @@ static int pc_setstat(struct map_session_data* sd, int type, int val)
 	case SP_VIT: sd->status.vit = val; break;
 	case SP_INT: sd->status.int_ = val; break;
 	case SP_DEX: sd->status.dex = val; break;
-	case SP_LUK: sd->status.luk = val;
+	case SP_LUK: sd->status.luk = val; break;
 	default:
 		return -1;
 	}

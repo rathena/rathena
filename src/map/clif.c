@@ -5961,7 +5961,7 @@ void clif_bladestop(struct block_list *src, int dst_id, int active)
 {
 	unsigned char buf[32];
 
-	nullpo_retr(0, src);
+	nullpo_retv(src);
 
 	WBUFW(buf,0)=0x1d1;
 	WBUFL(buf,2)=src->id;
