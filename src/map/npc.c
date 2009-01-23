@@ -51,7 +51,27 @@ static int npc_script=0;
 static int npc_mob=0;
 static int npc_delay_mob=0;
 static int npc_cache_mob=0;
-int npc_get_new_npc_id(void){ return npc_id++; }
+
+/// Returns a new npc id that isn't being used in id_db.
+/// Fatal error if nothing is available.
+int npc_get_new_npc_id(void)
+{
+	if( npc_id >= START_NPC_NUM && map_id2bl(npc_id) == NULL )
+		return npc_id++;// available
+	{// find next id
+		int base_id = npc_id;
+		while( base_id != ++npc_id )
+		{
+			if( npc_id < START_NPC_NUM )
+				npc_id = START_NPC_NUM;
+			if( map_id2bl(npc_id) == NULL )
+				return npc_id++;// available
+		}
+		// full loop, nothing available
+		ShowFatalError("npc_get_new_npc_id: All ids are taken. Exiting...");
+		exit(1);
+	}
+}
 
 static DBMap* ev_db; // const char* event_name -> struct event_data*
 static DBMap* npcname_db; // const char* npc_name -> struct npc_data*

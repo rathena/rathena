@@ -3,6 +3,13 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2009/01/23
+	* Changed npc_get_new_npc_id to ensure that it never returns invalid/used ids. [FlavioJS]
+	- npc_get_new_npc_id is used to generate ids for npcs/mobs/homunculus/mercenaries/pets.
+	  If the server runs for long enough (years to months or less, depending on settings),
+	  the auxiliary variable npc_id will eventually overflow and go negative, then go 
+	  through the range of object ids, then through the range of account ids.
+	  This can lead to all sorts of random crashes and memory leaks.
 2009/01/22
 	* Changed val4 of SC_BLADESTOP from a block_list pointer to an id. [FlavioJS]
 2009/01/21
