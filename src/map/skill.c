@@ -6042,7 +6042,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, int skillid, int sk
 	
 	case HW_GRAVITATION:
 		if ((sg = skill_unitsetting(src,skillid,skilllv,x,y,0)))
-			sc_start4(src,type,100,skilllv,0,BCT_SELF,(int)sg,skill_get_time(skillid,skilllv));
+			sc_start4(src,type,100,skilllv,0,BCT_SELF,sg->group_id,skill_get_time(skillid,skilllv));
 		flag|=1;
 		break;
 
@@ -6078,7 +6078,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, int skillid, int sk
 	case SG_STAR_WARM:
 		skill_clear_unitgroup(src);
 		if ((sg = skill_unitsetting(src,skillid,skilllv,src->x,src->y,0)))
-			sc_start4(src,type,100,skilllv,0,0,(int)sg,skill_get_time(skillid,skilllv));
+			sc_start4(src,type,100,skilllv,0,0,sg->group_id,skill_get_time(skillid,skilllv));
 		flag|=1;
 		break;
 
@@ -6091,7 +6091,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, int skillid, int sk
 			if (!sg) break;
 			if (sce)
 				status_change_end(src,type,-1); //Was under someone else's Gospel. [Skotlex]
-			sc_start4(src,type,100,skilllv,0,(int)sg,BCT_SELF,skill_get_time(skillid,skilllv));
+			sc_start4(src,type,100,skilllv,0,sg->group_id,BCT_SELF,skill_get_time(skillid,skilllv));
 			clif_skill_poseffect(src, skillid, skilllv, 0, 0, tick); // PA_GOSPEL music packet
 		}
 		break;
@@ -6620,7 +6620,7 @@ struct skill_unit_group* skill_unitsetting (struct block_list *src, short skilli
 			sd->skilllv_dance = skilllv;
 		}
 		if (
-			sc_start4(src, SC_DANCING, 100, skillid, (int)group, skilllv,
+			sc_start4(src, SC_DANCING, 100, skillid, group->group_id, skilllv,
 				(group->state.song_dance&2?BCT_SELF:0), limit+1000) &&
 			sd && group->state.song_dance&2 && skillid != CG_HERMODE //Hermod is a encore with a warp!
 		)
@@ -6753,7 +6753,7 @@ static int skill_unit_onplace (struct skill_unit *src, struct block_list *bl, un
 	case UNT_SAFETYWALL:
 		//TODO: Find a more reliable way to handle the link to sg, this could cause dangling pointers. [Skotlex]
 		if (!sce)
-			sc_start4(bl,type,100,sg->skill_lv,sg->group_id,(int)sg,0,sg->limit);
+			sc_start4(bl,type,100,sg->skill_lv,sg->group_id,sg->group_id,0,sg->limit);
 		break;
 
 	case UNT_PNEUMA:
@@ -9423,7 +9423,7 @@ void skill_stop_dancing (struct block_list *src)
 	if(!sc->count || !(sce=sc->data[SC_DANCING]))
 		return;
 	
-	group = (struct skill_unit_group *)sce->val2;
+	group = skill_id2group(sce->val2);
 	sce->val2 = 0;
 	
 	if (sce->val4)
@@ -9547,7 +9547,37 @@ int skill_delunit (struct skill_unit* unit)
 /*==========================================
  *
  *------------------------------------------*/
+static DBMap* group_db = NULL;// int group_id -> struct skill_unit_group*
+
+/// Returns the target skill_unit_group or NULL if not found.
+struct skill_unit_group* skill_id2group(int group_id)
+{
+	return (struct skill_unit_group*)idb_get(group_db, group_id);
+}
+
+
 static int skill_unit_group_newid = MAX_SKILL_DB;
+
+/// Returns a new group_id that isn't being used in group_db.
+/// Fatal error if nothing is available.
+static int skill_get_new_group_id(void)
+{
+	if( skill_unit_group_newid >= MAX_SKILL_DB && skill_id2group(skill_unit_group_newid) == NULL )
+		return skill_unit_group_newid++;// available
+	{// find next id
+		int base_id = skill_unit_group_newid;
+		while( base_id != ++skill_unit_group_newid )
+		{
+			if( skill_unit_group_newid < MAX_SKILL_DB )
+				skill_unit_group_newid = MAX_SKILL_DB;
+			if( skill_id2group(skill_unit_group_newid) == NULL )
+				return skill_unit_group_newid++;// available
+		}
+		// full loop, nothing available
+		ShowFatalError("skill_get_new_group_id: All ids are taken. Exiting...");
+		exit(1);
+	}
+}
 
 struct skill_unit_group* skill_initunitgroup (struct block_list* src, int count, short skillid, short skilllv, int unit_id, int limit, int interval)
 {
@@ -9581,7 +9611,7 @@ struct skill_unit_group* skill_initunitgroup (struct block_list* src, int count,
 	group->src_id     = src->id;
 	group->party_id   = status_get_party_id(src);
 	group->guild_id   = status_get_guild_id(src);
-	group->group_id   = skill_unit_group_newid++;
+	group->group_id   = skill_get_new_group_id();
 	group->unit       = (struct skill_unit *)aCalloc(count,sizeof(struct skill_unit));
 	group->unit_count = count;
 	group->alive_count = 0;
@@ -9599,12 +9629,10 @@ struct skill_unit_group* skill_initunitgroup (struct block_list* src, int count,
 
 	ud->skillunit[i] = group;
 
-	if(skill_unit_group_newid<=0)
-		skill_unit_group_newid = MAX_SKILL_DB;
-
 	if (skillid == PR_SANCTUARY) //Sanctuary starts healing +1500ms after casted. [Skotlex]
 		group->tick += 1500;
 
+	idb_put(group_db, group->group_id, group);
 	return group;
 }
 
@@ -9672,6 +9700,7 @@ int skill_delunitgroup (struct block_list *src, struct skill_unit_group *group)
 	}
 
 	map_freeblock(&group->unit->bl);
+	idb_remove(group_db, group->group_id);
 	group->unit=NULL;
 	group->group_id=0;
 	group->unit_count=0;
@@ -11304,6 +11333,7 @@ int do_init_skill (void)
 	skilldb_name2id = strdb_alloc(DB_OPT_DUP_KEY, 0);
 	skill_readdb();
 	
+	group_db = idb_alloc(DB_OPT_BASE);
 	skill_unit_ers = ers_new(sizeof(struct skill_unit_group));
 	skill_timer_ers  = ers_new(sizeof(struct skill_timerskill));
 	
@@ -11321,6 +11351,7 @@ int do_init_skill (void)
 int do_final_skill(void)
 {
 	db_destroy(skilldb_name2id);
+	db_destroy(group_db);
 	ers_destroy(skill_unit_ers);
 	ers_destroy(skill_timer_ers);
 	return 0;

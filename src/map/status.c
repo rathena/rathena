@@ -692,7 +692,7 @@ int status_damage(struct block_list *src,struct block_list *target,int hp, int s
 			}
 			if ((sce=sc->data[SC_GRAVITATION]) && sce->val3 == BCT_SELF)
 			{
-				struct skill_unit_group *sg = (struct skill_unit_group *)sce->val4;
+				struct skill_unit_group* sg = skill_id2group(sce->val4);
 				if (sg) {
 					skill_delunitgroup(target,sg);
 					sce->val4 = 0;
@@ -6602,7 +6602,7 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 				struct skill_unit_group *group;
 				if(sce->val2)
 				{
-					group = (struct skill_unit_group *)sce->val2;
+					group = skill_id2group(sce->val2);
 					sce->val2 = 0;
 					skill_delunitgroup(bl, group);
 				}
@@ -6691,7 +6691,7 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 			break;
 		case SC_GOSPEL:
 			if (sce->val3) { //Clear the group.
-				struct skill_unit_group *group = (struct skill_unit_group *)sce->val3;
+				struct skill_unit_group* group = skill_id2group(sce->val3);
 				sce->val3 = 0;
 				skill_delunitgroup(bl, group);
 			}
@@ -6708,7 +6708,7 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 			break;
 		case SC_WARM:
 			if (sce->val4) { //Clear the group.
-				struct skill_unit_group *group = (struct skill_unit_group *)sce->val4;
+				struct skill_unit_group* group = skill_id2group(sce->val4);
 				sce->val4 = 0;
 				skill_delunitgroup(bl, group);
 			}

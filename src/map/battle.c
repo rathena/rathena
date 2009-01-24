@@ -311,7 +311,7 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,int damage,i
 
 		if( sc->data[SC_SAFETYWALL] && (flag&(BF_SHORT|BF_MAGIC))==BF_SHORT )
 		{
-			struct skill_unit_group *group = (struct skill_unit_group *)sc->data[SC_SAFETYWALL]->val3;
+			struct skill_unit_group* group = skill_id2group(sc->data[SC_SAFETYWALL]->val3);
 			if (group) {
 				if (--group->val2<=0)
 					skill_delunitgroup(NULL,group);
