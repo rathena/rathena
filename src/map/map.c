@@ -136,16 +136,16 @@ struct charid2nick {
 
 // This is the main header found at the very beginning of the map cache
 struct map_cache_main_header {
-	unsigned long file_size;
-	unsigned short map_count;
+	uint32 file_size;
+	uint16 map_count;
 };
 
 // This is the header appended before every compressed map cells info in the map cache
 struct map_cache_map_info {
 	char name[MAP_NAME_LENGTH];
-	short xs;
-	short ys;
-	long len;
+	int16 xs;
+	int16 ys;
+	int32 len;
 };
 
 char map_cache_file[256]="db/map_cache.dat";
@@ -2694,9 +2694,12 @@ int map_readfromcache(struct map_data *m, FILE *fp)
 		unsigned char *buf, *buf2;
 		unsigned long size, xy;
 
+		if( info.xs <= 0 || info.ys <= 0 )
+			return 0;// invalid
+
 		m->xs = info.xs;
 		m->ys = info.ys;
-		size = info.xs*info.ys;
+		size = (unsigned long)info.xs*(unsigned long)info.ys;
 
 		buf = (unsigned char*)aMalloc(info.len); // temp buffer to read the zipped map
 		buf2 = (unsigned char*)aMalloc(size); // temp buffer to unpack the data
@@ -2713,7 +2716,7 @@ int map_readfromcache(struct map_data *m, FILE *fp)
 		return 1;
 	}
 
-	return 0;
+	return 0;// not found
 }
 
 int map_addmap(char* mapname)

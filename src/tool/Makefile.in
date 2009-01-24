@@ -9,12 +9,11 @@ all: adduser mapcache
 adduser:
 	@CC@ -o ../../tools/adduser@EXEEXT@ adduser.c
 
-mapcache: obj_mapcache
-	@CC@ -c -o obj_mapcache/grfio.o grfio.c
-	@CC@ -o ../../mapcache@EXEEXT@ mapcache.c obj_mapcache/grfio.o -lz
+mapcache:
+	@CC@ -o ../../mapcache@EXEEXT@ mapcache.c grfio.c -lz
 
 clean:
-	rm -rf *.o obj_mapcache ../../tools/adduser@EXEEXT@ ../../mapcache@EXEEXT@
+	rm -rf *.o ../../tools/adduser@EXEEXT@ ../../mapcache@EXEEXT@
 
 help:
 	@echo "possible targets are 'adduser' 'mapcache' 'all' 'clean' 'help'"
@@ -25,6 +24,3 @@ help:
 	@echo "'help'      - outputs this message"
 
 #####################################################################
-
-obj_mapcache:
-	-mkdir obj_mapcache

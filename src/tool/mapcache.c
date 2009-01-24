@@ -9,6 +9,7 @@
 #include <unistd.h>
 #endif
 
+#include "../common/cbasetypes.h"
 #include "grfio.h"
 
 #define MAP_NAME_LENGTH 12
@@ -26,23 +27,23 @@ unsigned long file_size;
 
 // Used internally, this structure contains the physical map cells
 struct map_data {
-	short xs;
-	short ys;
+	int16 xs;
+	int16 ys;
 	unsigned char *cells;
 };
 
 // This is the main header found at the very beginning of the file
 struct main_header {
-	unsigned long file_size;
-	unsigned short map_count;
+	uint32 file_size;
+	uint16 map_count;
 } header;
 
 // This is the header appended before every compressed map cells info
 struct map_info {
 	char name[MAP_NAME_LENGTH];
-	short xs;
-	short ys;
-	long len;
+	int16 xs;
+	int16 ys;
+	int32 len;
 };
 
 
@@ -50,55 +51,52 @@ struct map_info {
 * Big-endian compatibility functions *
 *************************************/
 
-// Converts a short (16 bits) from current machine order to little-endian
-short MakeShortLE(short val)
+// Converts an int16 from current machine order to little-endian
+int16 MakeShortLE(int16 val)
 {
 	unsigned char buf[2];
 	buf[0] = (unsigned char)( (val & 0x00FF)         );
 	buf[1] = (unsigned char)( (val & 0xFF00) >> 0x08 );
-	return *((short*)buf);
+	return *((int16*)buf);
 }
 
-// Converts a long (32 bits) from current machine order to little-endian
-long MakeLongLE(long val)
+// Converts an int32 from current machine order to little-endian
+int32 MakeLongLE(int32 val)
 {
 	unsigned char buf[4];
 	buf[0] = (unsigned char)( (val & 0x000000FF)         );
 	buf[1] = (unsigned char)( (val & 0x0000FF00) >> 0x08 );
 	buf[2] = (unsigned char)( (val & 0x00FF0000) >> 0x10 );
 	buf[3] = (unsigned char)( (val & 0xFF000000) >> 0x18 );
-	return *((long*)buf);
+	return *((int32*)buf);
 }
 
-// Reads an unsigned short (16 bits) in little-endian from the buffer
-unsigned short GetUShort(const unsigned char *buf)
+// Reads an uint16 in little-endian from the buffer
+uint16 GetUShort(const unsigned char* buf)
 {
-	return	 ( ((unsigned short)(buf[0]))         )
-			|( ((unsigned short)(buf[1])) << 0x08 );
+	return	 ( ((uint16)(buf[0]))         )
+			|( ((uint16)(buf[1])) << 0x08 );
 }
 
-// Reads a long (32 bits) in little-endian from the buffer
-long GetLong(const unsigned char *buf)
+// Reads an uint32 in little-endian from the buffer
+uint32 GetULong(const unsigned char* buf)
 {
-	return	 ( ((long)(buf[0]))         )
-			|( ((long)(buf[1])) << 0x08 )
-			|( ((long)(buf[2])) << 0x10 )
-			|( ((long)(buf[3])) << 0x18 );
+	return	 ( ((uint32)(buf[0]))         )
+			|( ((uint32)(buf[1])) << 0x08 )
+			|( ((uint32)(buf[2])) << 0x10 )
+			|( ((uint32)(buf[3])) << 0x18 );
 }
 
-// Reads an unsigned long (32 bits) in little-endian from the buffer
-unsigned long GetULong(const unsigned char *buf)
+// Reads an int32 in little-endian from the buffer
+int32 GetLong(const unsigned char* buf)
 {
-	return	 ( ((unsigned long)(buf[0]))         )
-			|( ((unsigned long)(buf[1])) << 0x08 )
-			|( ((unsigned long)(buf[2])) << 0x10 )
-			|( ((unsigned long)(buf[3])) << 0x18 );
+	return (int32)GetULong(buf);
 }
 
 // Reads a float (32 bits) from the buffer
-float GetFloat(const unsigned char *buf)
+float GetFloat(const unsigned char* buf)
 {
-	unsigned long val = GetULong(buf);
+	uint32 val = GetULong(buf);
 	return *((float*)&val);
 }
 
@@ -111,7 +109,7 @@ int read_map(char *name, struct map_data *m)
 	int water_height;
 	size_t xy, off, num_cells;
 	float height;
-	unsigned long type;
+	uint32 type;
 
 	// Open map GAT
 	sprintf(filename,"data\\%s.gat", name);
@@ -131,9 +129,13 @@ int read_map(char *name, struct map_data *m)
 		water_height = NO_WATER;
 
 	// Read map size and allocate needed memory
-	m->xs = (short)GetULong(gat+6);
-	m->ys = (short)GetULong(gat+10);
-	num_cells = (size_t)m->xs*m->ys;
+	m->xs = (int16)GetULong(gat+6);
+	m->ys = (int16)GetULong(gat+10);
+	if (m->xs <= 0 || m->ys <= 0) {
+		free(gat);
+		return 0;
+	}
+	num_cells = (size_t)m->xs*(size_t)m->ys;
 	m->cells = (unsigned char *)malloc(num_cells);
 
 	// Set cell properties
@@ -165,7 +167,7 @@ void cache_map(char *name, struct map_data *m)
 	unsigned char *write_buf;
 
 	// Create an output buffer twice as big as the uncompressed map... this way we're sure it fits
-	len = m->xs*m->ys*2;
+	len = (unsigned long)m->xs*(unsigned long)m->ys*2;
 	write_buf = (unsigned char *)malloc(len);
 	// Compress the cells and get the compressed length
 	encode_zip(write_buf, &len, m->cells, m->xs*m->ys);
