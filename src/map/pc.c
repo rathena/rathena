@@ -127,26 +127,29 @@ void pc_delinvincibletimer(struct map_session_data* sd)
 static int pc_spiritball_timer(int tid, unsigned int tick, int id, intptr data)
 {
 	struct map_session_data *sd;
+	int i;
 
 	if( (sd=(struct map_session_data *)map_id2sd(id)) == NULL || sd->bl.type!=BL_PC )
 		return 1;
 
-	if(sd->spirit_timer[0] != tid){
-		ShowError("spirit_timer %d != %d\n",sd->spirit_timer[0],tid);
-		return 0;
-	}
-
-	if(sd->spiritball <= 0) {
-		ShowError("Spiritballs are already 0 when pc_spiritball_timer gets called");
+	if( sd->spiritball <= 0 )
+	{
+		ShowError("pc_spiritball_timer: %d spiritball's available. (aid=%d cid=%d tid=%d)\n", sd->spiritball, sd->status.account_id, sd->status.char_id, tid);
 		sd->spiritball = 0;
 		return 0;
 	}
 
+	ARR_FIND(0, sd->spiritball, i, sd->spirit_timer[i] == tid);
+	if( i == sd->spiritball )
+	{
+		ShowError("pc_spiritball_timer: timer not found (aid=%d cid=%d tid=%d)\n", sd->status.account_id, sd->status.char_id, tid);
+		return 0;
+	}
+
 	sd->spiritball--;
-	// I leave this here as bad example [Shinomori]
-	//memcpy( &sd->spirit_timer[0], &sd->spirit_timer[1], sizeof(sd->spirit_timer[0]) * sd->spiritball );
-	memmove( sd->spirit_timer+0, sd->spirit_timer+1, (sd->spiritball)*sizeof(int) );
-	sd->spirit_timer[sd->spiritball]=-1;
+	if( i != sd->spiritball )
+		memmove(sd->spirit_timer+i, sd->spirit_timer+i+1, (sd->spiritball-i)*sizeof(int));
+	sd->spirit_timer[sd->spiritball] = INVALID_TIMER;
 
 	clif_spiritball(sd);
 
@@ -155,6 +158,8 @@ static int pc_spiritball_timer(int tid, unsigned int tick, int id, intptr data)
 
 int pc_addspiritball(struct map_session_data *sd,int interval,int max)
 {
+	int tid, i;
+
 	nullpo_retr(0, sd);
 
 	if(max > MAX_SKILL_LEVEL)
@@ -162,17 +167,22 @@ int pc_addspiritball(struct map_session_data *sd,int interval,int max)
 	if(sd->spiritball < 0)
 		sd->spiritball = 0;
 
-	if(sd->spiritball >= max) {
+	if( sd->spiritball && sd->spiritball >= max )
+	{
 		if(sd->spirit_timer[0] != -1)
 			delete_timer(sd->spirit_timer[0],pc_spiritball_timer);
-		// I leave this here as bad example [Shinomori]
-		//memcpy( &sd->spirit_timer[0], &sd->spirit_timer[1], sizeof(sd->spirit_timer[0]) * (sd->spiritball - 1));
-		memmove( sd->spirit_timer+0, sd->spirit_timer+1, (sd->spiritball - 1)*sizeof(int) );
-		//sd->spirit_timer[sd->spiritball-1] = -1; // intentionally, but will be overwritten
-	} else
-		sd->spiritball++;
+		sd->spiritball--;
+		if( sd->spiritball != 0 )
+			memmove(sd->spirit_timer+0, sd->spirit_timer+1, (sd->spiritball)*sizeof(int));
+		sd->spirit_timer[sd->spiritball] = INVALID_TIMER;
+	}
 
-	sd->spirit_timer[sd->spiritball-1] = add_timer(gettick()+interval,pc_spiritball_timer,sd->bl.id,0);
+	tid = add_timer(gettick()+interval, pc_spiritball_timer, sd->bl.id, 0);
+	ARR_FIND(0, sd->spiritball, i, DIFF_TICK(get_timer(tid)->tick, get_timer(sd->spirit_timer[i])->tick) < 0);
+	if( i != sd->spiritball )
+		memmove(sd->spirit_timer+i+1, sd->spirit_timer+i, (sd->spiritball-i)*sizeof(int));
+	sd->spirit_timer[i] = tid;
+	sd->spiritball++;
 	clif_spiritball(sd);
 
 	return 0;
