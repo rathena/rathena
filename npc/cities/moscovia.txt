@@ -301,6 +301,67 @@ moscovia,255,203,4	script	A little boy#mosk3	962,{
 	close;
 }
 
+moscovia,208,182,7	script	Acorn Dealer#mosk	967,{
+	mes "[Acorn Dealer]";
+	mes "We have very fresh acorns. Everyone will like them!";
+	mes "You can buy one acorn for 100zeny!";
+	next;
+	if(select("Buy one.:What can I use them for?") == 2) {
+		mes "[Acorn Dealer]";
+		mes "Well uh...";
+		mes "You can grind them to make";
+		mes "something to eat and you can feed squirrels.";
+		next;
+		mes "[Acorn Dealer]";
+		mes "Someone can decorate their house";
+		mes "with them but I don't know how...";
+		mes "they've got to be highly talented.";
+		mes "Haha.";
+		close;
+	}
+	mes "[Acorn Dealer]";
+	mes "I'll bet you that they are very fresh!";
+	mes "How many acorns do you need?";
+	next;
+	while(.@input <= 0 || .@input > 500) {
+		input .@input;
+		if (.@input <= 0) {
+			mes "[Acorn Dealer]";
+			mes "Do you want to cancel this trade?";
+			close;
+		}
+		if (.@input > 500) {
+			mes "[Acorn Dealer]";
+			mes "You can't buy more than 500.";
+			next;
+		}
+		
+	}
+	if (!checkweight(1026, .@input)) {
+		mes "[Acorn Dealer]";
+		mes "Hello, I think you can't get acorns";
+		mes "now. You're carrying too many";
+		mes "items!";
+		mes "Please use Kafra service. I'll be";
+		mes "right here.";
+		close;
+	}
+	set .@price, .@input * 100;
+	if (Zeny < .@price) {
+		mes "[Acorn Dealer]";
+		mes "Hello? You've turned pale! Are you ok??";
+		mes "Do you have enough money?";
+		close;
+	}else{
+		mes "[Acorn Dealer]";
+		mes "Oh, thank you...";
+		mes "What do you think of them? They're fresh, aren't they?";
+		set Zeny,Zeny - .@price;
+		getitem 1026,.@input;
+		close;
+	}
+}
+
 // Inside Moscovia
 //============================================================ 
 mosk_in,141,212,4	script	Pub Owner#mosk	964,{
