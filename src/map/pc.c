@@ -5202,7 +5202,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 	if(sd->status.pet_id > 0 && sd->pd)
 	{
 		struct pet_data *pd = sd->pd;
-		if( !map[sd->bl.m].flag.noexppenalty && !flag )
+		if( !map[sd->bl.m].flag.noexppenalty )
 		{
 			pet_set_intimate(pd, pd->pet.intimate - pd->petDB->die);
 			if( pd->pet.intimate < 0 )
