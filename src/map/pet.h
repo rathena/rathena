@@ -27,7 +27,8 @@ struct s_pet_db {
 	int attack_rate;
 	int defence_attack_rate;
 	int change_target_rate;
-	struct script_code *script;
+	struct script_code *equip_script;
+	struct script_code *pet_script;
 };
 extern struct s_pet_db pet_db[MAX_PET_DB];
 
@@ -101,6 +102,7 @@ struct pet_data {
 
 int pet_create_egg(struct map_session_data *sd, int item_id);
 int pet_hungry_val(struct pet_data *pd);
+void pet_set_intimate(struct pet_data *pd, int value);
 int pet_target_check(struct map_session_data *sd,struct block_list *bl,int type);
 int pet_unlocktarget(struct pet_data *pd);
 int pet_sc_check(struct map_session_data *sd, int type); //Skotlex

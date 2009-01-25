@@ -180,6 +180,7 @@ extern struct Battle_Config
 	int emergency_call;
 	int guild_aura;
 	int pc_invincible_time;
+
 	int pet_catch_rate;
 	int pet_rename;
 	int pet_friendly_rate;
@@ -189,6 +190,7 @@ extern struct Battle_Config
 	int pet_attack_support;
 	int pet_damage_support;
 	int pet_support_min_friendly;	//[Skotlex]
+	int pet_equip_min_friendly;
 	int pet_support_rate;
 	int pet_attack_exp_to_master;
 	int pet_attack_exp_rate;
@@ -197,6 +199,8 @@ extern struct Battle_Config
 	int pet_max_atk1; //[Skotlex]
 	int pet_max_atk2; //[Skotlex]
 	int pet_no_gvg; //Disables pets in gvg. [Skotlex]
+	int pet_equip_required;
+
 	int skill_min_damage;
 	int finger_offensive_type;
 	int heal_exp;
@@ -280,7 +284,7 @@ extern struct Battle_Config
 	int item_rate_mvp, item_rate_common, item_rate_common_boss, item_rate_card, item_rate_card_boss,
 		item_rate_equip, item_rate_equip_boss, item_rate_heal, item_rate_heal_boss, item_rate_use,
 		item_rate_use_boss, item_rate_treasure, item_rate_adddrop;
-	
+
 	int logarithmic_drops;
 	int item_drop_common_min,item_drop_common_max;	// Added by TyrNemesis^
 	int item_drop_card_min,item_drop_card_max;
@@ -290,6 +294,7 @@ extern struct Battle_Config
 	int item_drop_use_min,item_drop_use_max;	//End
 	int item_drop_treasure_min,item_drop_treasure_max; //by [Skotlex]
 	int item_drop_adddrop_min,item_drop_adddrop_max; //[Skotlex]
+
 	int prevent_logout;	// Added by RoVeRT
 
 	int alchemist_summon_reward;	// [Valaris]
@@ -298,7 +303,6 @@ extern struct Battle_Config
 	int equip_natural_break_rate;	//Base Natural break rate for attacks.
 	int equip_self_break_rate; //Natural & Penalty skills break rate
 	int equip_skill_break_rate; //Offensive skills break rate
-	int pet_equip_required;
 	int multi_level_up;
 	int max_exp_gain_rate; //Max amount of exp bar % you can get in one go.
 	int pk_mode;

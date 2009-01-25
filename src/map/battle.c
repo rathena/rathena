@@ -3505,6 +3505,7 @@ static const struct _battle_data {
 	{ "pet_attack_support",                 &battle_config.pet_attack_support,              0,      0,      1,              },
 	{ "pet_damage_support",                 &battle_config.pet_damage_support,              0,      0,      1,              },
 	{ "pet_support_min_friendly",           &battle_config.pet_support_min_friendly,        900,    0,      950,            },
+	{ "pet_equip_min_friendly",             &battle_config.pet_equip_min_friendly,          900,    0,      950,            },
 	{ "pet_support_rate",                   &battle_config.pet_support_rate,                100,    0,      INT_MAX,        },
 	{ "pet_attack_exp_to_master",           &battle_config.pet_attack_exp_to_master,        0,      0,      1,              },
 	{ "pet_attack_exp_rate",                &battle_config.pet_attack_exp_rate,             100,    0,      INT_MAX,        },

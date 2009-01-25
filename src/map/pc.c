@@ -5201,14 +5201,15 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 
 	if(sd->status.pet_id > 0 && sd->pd)
 	{
-		struct s_pet *pet = &sd->pd->pet;
-		if(!map[sd->bl.m].flag.noexppenalty){
-			pet->intimate -= sd->pd->petDB->die;
-			if(pet->intimate < 0)
-				pet->intimate = 0;
-			clif_send_petdata(sd,sd->pd,1,pet->intimate);
+		struct pet_data *pd = sd->pd;
+		if( !map[sd->bl.m].flag.noexppenalty && !flag )
+		{
+			pet_set_intimate(pd, pd->pet.intimate - pd->petDB->die);
+			if( pd->pet.intimate < 0 )
+				pd->pet.intimate = 0;
+			clif_send_petdata(sd,sd->pd,1,pd->pet.intimate);
 		}
-		if(sd->pd->target_id) // Unlock all targets...
+		if( sd->pd->target_id ) // Unlock all targets...
 			pet_unlocktarget(sd->pd);
 	}
 

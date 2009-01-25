@@ -3178,7 +3178,8 @@ int atcommand_petfriendly(const int fd, struct map_session_data* sd, const char*
 		clif_displaymessage(fd, msg_txt(183)); // Pet intimacy is already at maximum.
 		return -1;
 	}
-	pd->pet.intimate = friendly;
+
+	pet_set_intimate(pd, friendly);
 	clif_send_petstatus(sd);
 	clif_displaymessage(fd, msg_txt(182)); // Pet intimacy changed.
 	return 0;

@@ -1967,16 +1967,16 @@ int status_calc_pc(struct map_session_data* sd,int first)
 		}
 	}
 
-	if(sd->pd && battle_config.pet_status_support)
-	{ // Pet
-		struct pet_data *pd=sd->pd;
-		if(pd && pd->pet.intimate > 0 &&
-			(!battle_config.pet_equip_required || pd->pet.equip > 0) &&
-			pd->state.skillbonus == 1 && pd->bonus) //Skotlex: Readjusted for pets
+	if( sd->pd )
+	{ // Pet Bonus
+		struct pet_data *pd = sd->pd;
+		if( pd && pd->petDB && pd->petDB->equip_script && pd->pet.intimate >= battle_config.pet_equip_min_friendly )
+			run_script(pd->petDB->equip_script,0,sd->bl.id,0);
+		if( pd && pd->pet.intimate > 0 && (!battle_config.pet_equip_required || pd->pet.equip > 0) && pd->state.skillbonus == 1 && pd->bonus )
 			pc_bonus(sd,pd->bonus->type, pd->bonus->val);
 	}
-	//param_bonus now holds card bonuses.
 
+	//param_bonus now holds card bonuses.
 	if(status->rhw.range < 1) status->rhw.range = 1;
 	if(status->lhw.range < 1) status->lhw.range = 1;
 	if(status->rhw.range < status->lhw.range)
