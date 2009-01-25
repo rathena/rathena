@@ -936,17 +936,18 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 	}
 
 	//Auto-script when attacking
-	if(sd && src != bl && sd->autoscript[0].script) {
+	if( sd && src != bl && sd->autoscript[0].script )
+	{
 		int i;
-		for (i = 0; i < ARRAYLENGTH(sd->autoscript) && sd->autoscript[i].script; i++) {
-
+		for( i = 0; i < ARRAYLENGTH(sd->autoscript) && sd->autoscript[i].script; i++ )
+		{
 			if(!(sd->autoscript[i].flag&attack_type&BF_WEAPONMASK &&
 				 sd->autoscript[i].flag&attack_type&BF_RANGEMASK &&
 				 sd->autoscript[i].flag&attack_type&BF_SKILLMASK))
 				continue; // one or more trigger conditions were not fulfilled
-			if (rand()%1000 > sd->autoscript[i].rate)
+			if( rand()%1000 > sd->autoscript[i].rate )
 				continue;
-			run_script(sd->autoscript[i].script,0,sd->bl.id,0);
+			run_script(sd->autoscript[i].script,0,sd->autoscript[i].target?bl->id:src->id,0);
 			break; //Have only one script execute at a time.
 		}
 	}
@@ -1123,19 +1124,18 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 		}
 	}
 	//Auto-script when attacked
-	if(dstsd && !status_isdead(bl) && src != bl && dstsd->autoscript2[0].script &&
-		!(skillid && skill_get_nk(skillid)&NK_NO_DAMAGE)) 
+	if( dstsd && !status_isdead(bl) && src != bl && dstsd->autoscript2[0].script && !(skillid && skill_get_nk(skillid)&NK_NO_DAMAGE) ) 
 	{
 		int i;
-		for (i = 0; i < ARRAYLENGTH(dstsd->autoscript2) && dstsd->autoscript2[i].script; i++) {
-
+		for( i = 0; i < ARRAYLENGTH(dstsd->autoscript2) && dstsd->autoscript2[i].script; i++ )
+		{
 			if(!(dstsd->autoscript2[i].flag&attack_type&BF_WEAPONMASK &&
 				 dstsd->autoscript2[i].flag&attack_type&BF_RANGEMASK &&
 				 dstsd->autoscript2[i].flag&attack_type&BF_SKILLMASK))
 				continue; // one or more trigger conditions were not fulfilled
-			if (rand()%1000 > dstsd->autoscript2[i].rate)
+			if( rand()%1000 > dstsd->autoscript2[i].rate )
 				continue;
-			run_script(dstsd->autoscript2[i].script,0,dstsd->bl.id,0);
+			run_script(dstsd->autoscript2[i].script,0,dstsd->autoscript2[i].target?src->id:bl->id,0);
 			break; //Have only one script execute at a time.
 		}
 	}
@@ -2978,20 +2978,23 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			int heal = skill_calc_heal(src, bl, skilllv);
 			int heal_get_jobexp;
 	
-			if (status_isimmune(bl) || (dstmd && dstmd->class_ == MOBID_EMPERIUM))
+			if( status_isimmune(bl) || (dstmd && dstmd->class_ == MOBID_EMPERIUM) )
 				heal=0;
-			if (sd) {
-				if ((i = pc_skillheal_bonus(sd, skillid)))
+			if( sd )
+			{
+				if( (i = pc_skillheal_bonus(sd, skillid)) )
 					heal += heal * i / 100;
-				if (sd && dstsd && sd->status.partner_id == dstsd->status.char_id &&
-					(sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE && sd->status.sex == 0)
+				if( sd && dstsd && sd->status.partner_id == dstsd->status.char_id && (sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE && sd->status.sex == 0 )
 					heal = heal*2;
 			}
 
-			if (tsc && tsc->count)
+			if( dstsd && (i = pc_skillheal2_bonus(dstsd, skillid)) )
+				heal += heal * i / 100;
+
+			if( tsc && tsc->count )
 			{
-				if (tsc->data[SC_KAITE] && !(sstatus->mode&MD_BOSS)
-				) { //Bounce back heal
+				if( tsc->data[SC_KAITE] && !(sstatus->mode&MD_BOSS) )
+				{ //Bounce back heal
 					if (--tsc->data[SC_KAITE]->val2 <= 0)
 						status_change_end(bl, SC_KAITE, -1);
 					if (src == bl)
@@ -4231,25 +4234,30 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case AM_POTIONPITCHER:
 		{
 			int i,x,hp = 0,sp = 0,bonus=100;
-			if(sd) {
+			if( sd )
+			{
 				x = skilllv%11 - 1;
 				i = pc_search_inventory(sd,skill_db[skillid].itemid[x]);
-				if(i < 0 || skill_db[skillid].itemid[x] <= 0) {
+				if( i < 0 || skill_db[skillid].itemid[x] <= 0 )
+				{
 					clif_skill_fail(sd,skillid,0,0);
 					map_freeblock_unlock();
 					return 1;
 				}
-				if(sd->inventory_data[i] == NULL || sd->status.inventory[i].amount < skill_db[skillid].amount[x]) {
+				if( sd->inventory_data[i] == NULL || sd->status.inventory[i].amount < skill_db[skillid].amount[x] )
+				{
 					clif_skill_fail(sd,skillid,0,0);
 					map_freeblock_unlock();
 					return 1;
 				}
-				if(skillid == AM_BERSERKPITCHER) { //Does not override use-level, and cannot be used on bows.
-					if (dstsd && (dstsd->status.base_level<(unsigned int)sd->inventory_data[i]->elv || dstsd->weapontype1 == W_BOW)) {
+				if( skillid == AM_BERSERKPITCHER )
+				{ //Does not override use-level, and cannot be used on bows.
+					if( dstsd && (dstsd->status.base_level<(unsigned int)sd->inventory_data[i]->elv || dstsd->weapontype1 == W_BOW) )
+					{
 						clif_skill_fail(sd,skillid,0,0);
 						map_freeblock_unlock();
 						return 1;
-					 }
+					}
 				}
 				potion_flag = 1;
 				potion_hp = potion_sp = potion_per_hp = potion_per_sp = 0;
@@ -4257,27 +4265,32 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				run_script(sd->inventory_data[i]->script,0,sd->bl.id,0);
 				pc_delitem(sd,i,skill_db[skillid].amount[x],0);
 				potion_flag = potion_target = 0;
-				if (sd->sc.data[SC_SPIRIT] && sd->sc.data[SC_SPIRIT]->val2 == SL_ALCHEMIST)
+				if( sd->sc.data[SC_SPIRIT] && sd->sc.data[SC_SPIRIT]->val2 == SL_ALCHEMIST )
 					bonus += sd->status.base_level;
-				if(potion_per_hp > 0 || potion_per_sp > 0) {
+				if( potion_per_hp > 0 || potion_per_sp > 0 )
+				{
 					hp = tstatus->max_hp * potion_per_hp / 100;
 					hp = hp * (100 + pc_checkskill(sd,AM_POTIONPITCHER)*10 + pc_checkskill(sd,AM_LEARNINGPOTION)*5)*bonus/10000;
-					if(dstsd) {
+					if( dstsd )
+					{
 						sp = dstsd->status.max_sp * potion_per_sp / 100;
 						sp = sp * (100 + pc_checkskill(sd,AM_POTIONPITCHER)*10 + pc_checkskill(sd,AM_LEARNINGPOTION)*5)*bonus/10000;
 					}
 				}
-				else {
-					if(potion_hp > 0) {
+				else
+				{
+					if( potion_hp > 0 )
+					{
 						hp = potion_hp * (100 + pc_checkskill(sd,AM_POTIONPITCHER)*10 + pc_checkskill(sd,AM_LEARNINGPOTION)*5)*bonus/10000;
 						hp = hp * (100 + (tstatus->vit<<1)) / 100;
-						if(dstsd)
+						if( dstsd )
 							hp = hp * (100 + pc_checkskill(dstsd,SM_RECOVERY)*10) / 100;
 					}
-					if(potion_sp > 0) {
+					if( potion_sp > 0 )
+					{
 						sp = potion_sp * (100 + pc_checkskill(sd,AM_POTIONPITCHER)*10 + pc_checkskill(sd,AM_LEARNINGPOTION)*5)*bonus/10000;
 						sp = sp * (100 + (tstatus->int_<<1)) / 100;
-						if(dstsd)
+						if( dstsd )
 							sp = sp * (100 + pc_checkskill(dstsd,MG_SRECOVERY)*10) / 100;
 					}
 				}
@@ -4288,27 +4301,33 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 					sp += sp * sd->itemgrouphealrate[IG_POTION] / 100;
 				}
 
-				if ((i = pc_skillheal_bonus(sd, skillid)))
+				if( (i = pc_skillheal_bonus(sd, skillid)) )
 				{
 					hp += hp * i / 100;
 					sp += sp * i / 100;
 				}
 			}
-			else {
+			else
+			{
 				hp = (1 + rand()%400) * (100 + skilllv*10) / 100;
 				hp = hp * (100 + (tstatus->vit<<1)) / 100;
-				if(dstsd)
+				if( dstsd )
 					hp = hp * (100 + pc_checkskill(dstsd,SM_RECOVERY)*10) / 100;
 			}
-			if (tsc && tsc->data[SC_CRITICALWOUND])
+			if( dstsd && (i = pc_skillheal2_bonus(dstsd, skillid)) )
+			{
+				hp += hp * i / 100;
+				sp += sp * i / 100;
+			}
+			if( tsc && tsc->data[SC_CRITICALWOUND] )
 			{
 				hp -= hp * tsc->data[SC_CRITICALWOUND]->val2 / 100;
 				sp -= sp * tsc->data[SC_CRITICALWOUND]->val2 / 100;
 			}
 			clif_skill_nodamage(src,bl,skillid,skilllv,1);
-			if(hp > 0 || (skillid == AM_POTIONPITCHER && sp <= 0))
+			if( hp > 0 || (skillid == AM_POTIONPITCHER && sp <= 0) )
 				clif_skill_nodamage(NULL,bl,AL_HEAL,hp,1);
-			if(sp > 0)
+			if( sp > 0 )
 				clif_skill_nodamage(NULL,bl,MG_SRECOVERY,sp,1);
 			status_heal(bl,hp,sp,0);
 		}
@@ -5294,6 +5313,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			if (!bl) bl = src;
 			i = skill_calc_heal( src, bl, 1+rand()%skilllv);
 			if (sd && (rnd = pc_skillheal_bonus(sd, skillid)) > 0)
+				i += i * rnd / 100;
+			if (dstsd && (rnd = pc_skillheal2_bonus(dstsd, skillid)) > 0)
 				i += i * rnd / 100;
 			//Eh? why double skill packet?
 			clif_skill_nodamage(src,bl,AL_HEAL,i,1);
@@ -6981,6 +7002,9 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 					if( tsc->data[SC_CRITICALWOUND] )
 						heal -= heal * tsc->data[SC_CRITICALWOUND]->val2 / 100;
 				}
+				if( tsd )
+					heal += heal * pc_skillheal2_bonus(tsd, sg->skill_id) / 100;
+
 				if( bl->type == BL_MER )
 					heal /= 2;
 				if( status_isimmune(bl) )
@@ -8445,35 +8469,42 @@ int skill_check_condition(struct map_session_data* sd, short skill, short lv, in
  *------------------------------------------*/
 int skill_castfix (struct block_list *bl, int skill_id, int skill_lv)
 {
-	int time = skill_get_cast(skill_id, skill_lv);	
+	int time = skill_get_cast(skill_id, skill_lv);
 	struct map_session_data *sd;
+	struct status_change *sc;
 
 	nullpo_retr(0, bl);
 	sd = BL_CAST(BL_PC, bl);
+	sc = status_get_sc(bl);
 	
 	// calculate base cast time (reduced by dex)
-	if (!(skill_get_castnodex(skill_id, skill_lv)&1)) {
+	if( !(skill_get_castnodex(skill_id, skill_lv)&1) )
+	{
 		int scale = battle_config.castrate_dex_scale - status_get_dex(bl);
-		if (scale > 0)	// not instant cast
+		if( scale > 0 )	// not instant cast
 			time = time * scale / battle_config.castrate_dex_scale;
 		else return 0;	// instant cast
 	}
 
 	// calculate cast time reduced by item/card bonuses
-	if (!(skill_get_castnodex(skill_id, skill_lv)&4) && sd)
+	if( !(skill_get_castnodex(skill_id, skill_lv)&4) && sd )
 	{
 		int i;
-		if (sd->castrate != 100)
+		if( sd->castrate != 100 )
 			time = time * sd->castrate / 100;
-		for(i = 0; i < ARRAYLENGTH(sd->skillcast) && sd->skillcast[i].id; i++)
+		for( i = 0; i < ARRAYLENGTH(sd->skillcast) && sd->skillcast[i].id; i++ )
 		{
-			if (sd->skillcast[i].id == skill_id)
+			if( sd->skillcast[i].id == skill_id )
 			{
 				time+= time * sd->skillcast[i].val / 100;
 				break;
 			}
 		}
 	}
+
+	if( sc && sc->count && sc->data[SC_SKILLCASTRATE] && sc->data[SC_SKILLCASTRATE]->val1 == skill_id )
+		time += time * sc->data[SC_SKILLCASTRATE]->val2 / 100;
+
 	// config cast time multiplier
 	if (battle_config.cast_rate != 100)
 		time = time * battle_config.cast_rate / 100;

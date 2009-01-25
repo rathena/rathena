@@ -381,6 +381,7 @@ bHPDrainRateRace	1084
 bSPDrainRateRace	1085
 bIgnoreMdefRate	1086
 bIgnoreDefRate	1087
+bSkillHeal2	1088
 
 bRestartFullRecover	2000
 bNoCastCancel	2001
@@ -472,6 +473,7 @@ RC_Angel	8
 RC_Dragon	9
 RC_Boss	10
 RC_NonBoss	11
+RC_NonDemiHuman	12
 
 BF_WEAPON	0x0001
 BF_MAGIC	0x0002
@@ -802,6 +804,10 @@ SC_DEF_RATE	275
 SC_SPREGEN	276
 SC_WALKSPEED	277
 SC_REBIRTH	284
+SC_SKILLCASTRATE	285
+SC_DEFRATIOATK	286
+SC_HPDRAIN	287
+SC_SKILLATKBONUS	288
 
 e_gasp	0
 e_what	1

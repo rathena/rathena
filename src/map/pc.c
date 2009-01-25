@@ -1395,22 +1395,30 @@ int pc_disguise(struct map_session_data *sd, int class_)
 	return 1;
 }
 
-int pc_autoscript_add(struct s_autoscript *scripts, int max, short rate, short flag, struct script_code *script)
+int pc_autoscript_add(struct s_autoscript *scripts, int max, short rate, short flag, short target, struct script_code *script)
 {
 	int i;
 	ARR_FIND(0, max, i, scripts[i].script == NULL);
-	if (i == max) {
+	if( i == max )
+	{
 		ShowWarning("pc_autoscript_bonus: Reached max (%d) number of autoscripts per character!\n", max);
 		return 0;
 	}
+
 	scripts[i].script = script;
 	scripts[i].rate = rate;
+	scripts[i].target = target; // 0 = Script on Self 1 = Script on Target
 	//Auto-update flag value.
-	if (!(flag&BF_RANGEMASK)) flag|=BF_SHORT|BF_LONG; //No range defined? Use both.
-	if (!(flag&BF_WEAPONMASK)) flag|=BF_WEAPON; //No attack type defined? Use weapon.
-	if (!(flag&BF_SKILLMASK)) {
-		if (flag&(BF_MAGIC|BF_MISC)) flag|=BF_SKILL; //These two would never trigger without BF_SKILL
-		if (flag&BF_WEAPON) flag|=BF_NORMAL;
+	if( !(flag&BF_RANGEMASK) )
+		flag|=BF_SHORT|BF_LONG; //No range defined? Use both.
+	if( !(flag&BF_WEAPONMASK) )
+		flag|=BF_WEAPON; //No attack type defined? Use weapon.
+	if( !(flag&BF_SKILLMASK) )
+	{
+		if( flag&(BF_MAGIC|BF_MISC) )
+			flag|=BF_SKILL; //These two would never trigger without BF_SKILL
+		if( flag&BF_WEAPON )
+			flag|=BF_NORMAL|BF_SKILL;
 	}
 	scripts[i].flag = flag;
 	return 1;
@@ -2408,7 +2416,7 @@ int pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 			break;
 		ARR_FIND(0, ARRAYLENGTH(sd->skillheal), i, sd->skillheal[i].id == 0 || sd->skillheal[i].id == type2);
 		if (i == ARRAYLENGTH(sd->skillheal))
-		{	//Better mention this so the array length can be updated. [Skotlex]
+		{ // Better mention this so the array length can be updated. [Skotlex]
 			ShowDebug("run_script: bonus2 bSkillHeal reached it's limit (%d skills per character), bonus skill %d (+%d%%) lost.\n", ARRAYLENGTH(sd->skillheal), type2, val);
 			break;
 		}
@@ -2417,6 +2425,22 @@ int pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 		else {
 			sd->skillheal[i].id = type2;
 			sd->skillheal[i].val = val;
+		}
+		break;
+	case SP_SKILL_HEAL2:
+		if(sd->state.lr_flag == 2)
+			break;
+		ARR_FIND(0, ARRAYLENGTH(sd->skillheal2), i, sd->skillheal2[i].id == 0 || sd->skillheal2[i].id == type2);
+		if (i == ARRAYLENGTH(sd->skillheal2))
+		{ // Better mention this so the array length can be updated. [Skotlex]
+			ShowDebug("run_script: bonus2 bSkillHeal2 reached it's limit (%d skills per character), bonus skill %d (+%d%%) lost.\n", ARRAYLENGTH(sd->skillheal2), type2, val);
+			break;
+		}
+		if (sd->skillheal2[i].id == type2)
+			sd->skillheal2[i].val += val;
+		else {
+			sd->skillheal2[i].id = type2;
+			sd->skillheal2[i].val = val;
 		}
 		break;
 	case SP_ADD_SKILL_BLOW:
@@ -5081,24 +5105,41 @@ int pc_resethate(struct map_session_data* sd)
 
 int pc_skillatk_bonus(struct map_session_data *sd, int skill_num)
 {
-	int i;
-	for (i = 0; i < ARRAYLENGTH(sd->skillatk) && sd->skillatk[i].id; i++)
+	int i, bonus = 0;
+	ARR_FIND(0, ARRAYLENGTH(sd->skillatk), i, sd->skillatk[i].id && sd->skillatk[i].id == skill_num);
+	if( i < ARRAYLENGTH(sd->skillatk) && sd->skillatk[i].id )
+		bonus = sd->skillatk[i].val;
+	if( sd->sc.data[SC_SKILLATKBONUS] )
 	{
-		if (sd->skillatk[i].id == skill_num)
-			return sd->skillatk[i].val;
+		if( sd->sc.data[SC_SKILLATKBONUS]->val1 && sd->sc.data[SC_SKILLATKBONUS]->val1 == skill_num )
+			bonus += sd->sc.data[SC_SKILLATKBONUS]->val4;
+		if( sd->sc.data[SC_SKILLATKBONUS]->val2 && sd->sc.data[SC_SKILLATKBONUS]->val2 == skill_num )
+			bonus += sd->sc.data[SC_SKILLATKBONUS]->val4;
+		if( sd->sc.data[SC_SKILLATKBONUS]->val3 && sd->sc.data[SC_SKILLATKBONUS]->val3 == skill_num )
+			bonus += sd->sc.data[SC_SKILLATKBONUS]->val4;
 	}
-	return 0;
+
+	return bonus;
 }
 
 int pc_skillheal_bonus(struct map_session_data *sd, int skill_num)
 {
-	int i;
-	for (i = 0; i < ARRAYLENGTH(sd->skillheal) && sd->skillheal[i].id; i++)
-	{
-		if (sd->skillheal[i].id == skill_num)
-			return sd->skillheal[i].val;
-	}
-	return 0;
+	int i, bonus = 0;
+
+	ARR_FIND(0, ARRAYLENGTH(sd->skillheal), i, sd->skillheal[i].id == skill_num);
+	if( i < ARRAYLENGTH(sd->skillheal) ) bonus += sd->skillheal[i].val;
+
+	return bonus;
+}
+
+int pc_skillheal2_bonus(struct map_session_data *sd, int skill_num)
+{
+	int i, bonus = 0;
+
+	ARR_FIND(0, ARRAYLENGTH(sd->skillheal2), i, sd->skillheal2[i].id == skill_num);
+	if( i < ARRAYLENGTH(sd->skillheal2) ) bonus += sd->skillheal2[i].val;
+
+	return bonus;
 }
 
 void pc_respawn(struct map_session_data* sd, uint8 clrtype)

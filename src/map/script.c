@@ -6487,6 +6487,7 @@ BUILDIN_FUNC(bonus)
 	case SP_AUTOSPELL_WHENHIT:
 	case SP_SKILL_ATK:
 	case SP_SKILL_HEAL:
+	case SP_SKILL_HEAL2:
 	case SP_ADD_SKILL_BLOW:
 	case SP_CASTRATE:
 		// these bonuses support skill names
@@ -6535,7 +6536,7 @@ BUILDIN_FUNC(bonus)
 /// Bonus script that has a chance of being executed on attack.
 BUILDIN_FUNC(bonusautoscript)
 {
-	int rate, flag = 0;
+	int rate, flag = 0, target = 0;
 	const char *str;
 	struct script_code *script;
 	TBL_PC* sd;
@@ -6548,10 +6549,12 @@ BUILDIN_FUNC(bonusautoscript)
 	rate = script_getnum(st,3);
 	if( script_hasdata(st,4) )
 		flag = script_getnum(st,4);
+	if( script_hasdata(st,5) )
+		target = script_getnum(st,5);
 	script = parse_script(str, "autoscript bonus", 0, 0);
-	if (!script)
+	if( !script )
 		return 1;
-	if (!pc_autoscript_add(sd->autoscript, ARRAYLENGTH(sd->autoscript), rate, flag, script))
+	if( !pc_autoscript_add(sd->autoscript, ARRAYLENGTH(sd->autoscript), rate, flag, target, script) )
 	{
 		script_free_code(script);
 		return 1;
@@ -6561,7 +6564,7 @@ BUILDIN_FUNC(bonusautoscript)
 /// Bonus script that has a chance of being executed when attacked.
 BUILDIN_FUNC(bonusautoscript2)
 {
-	int rate, flag = 0;
+	int rate, flag = 0, target = 0;
 	const char *str;
 	struct script_code *script;
 	TBL_PC* sd;
@@ -6574,10 +6577,12 @@ BUILDIN_FUNC(bonusautoscript2)
 	rate = script_getnum(st,3);
 	if( script_hasdata(st,4) )
 		flag = script_getnum(st,4);
+	if( script_hasdata(st,5) )
+		target = script_getnum(st,5);
 	script = parse_script(str, "autoscript2 bonus", 0, 0);
 	if (!script)
 		return 1;
-	if (!pc_autoscript_add(sd->autoscript2, ARRAYLENGTH(sd->autoscript2), rate, flag, script))
+	if (!pc_autoscript_add(sd->autoscript2, ARRAYLENGTH(sd->autoscript2), rate, flag, target, script))
 	{
 		script_free_code(script);
 		return 1;
@@ -13376,8 +13381,8 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF2(bonus,"bonus3","ivii"),
 	BUILDIN_DEF2(bonus,"bonus4","iviii"),
 	BUILDIN_DEF2(bonus,"bonus5","iviiii"),
-	BUILDIN_DEF(bonusautoscript,"si?"),
-	BUILDIN_DEF(bonusautoscript2,"si?"),
+	BUILDIN_DEF(bonusautoscript,"si??"),
+	BUILDIN_DEF(bonusautoscript2,"si??"),
 	BUILDIN_DEF(skill,"vi?"),
 	BUILDIN_DEF(addtoskill,"vi?"), // [Valaris]
 	BUILDIN_DEF(guildskill,"vi"),

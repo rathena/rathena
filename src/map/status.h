@@ -305,6 +305,10 @@ typedef enum sc_type {
 	SC_MERC_QUICKEN,
 
 	SC_REBIRTH,
+	SC_SKILLCASTRATE, //285
+	SC_DEFRATIOATK,
+	SC_HPDRAIN,
+	SC_SKILLATKBONUS,
 
 	SC_MAX, //Automatically updated max, used in for's to check we are within bounds.
 } sc_type;

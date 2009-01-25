@@ -1754,6 +1754,7 @@ int status_calc_pc(struct map_session_data* sd,int first)
 		+ sizeof(sd->addeff2)
 		+ sizeof(sd->skillatk)
 		+ sizeof(sd->skillheal)
+		+ sizeof(sd->skillheal2)
 		+ sizeof(sd->hp_loss)
 		+ sizeof(sd->sp_loss)
 		+ sizeof(sd->hp_regen)
@@ -5102,6 +5103,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 					return 0;
 				break;
 			case SC_HPREGEN:
+			case SC_HPDRAIN:
 			case SC_SPREGEN:
 			case SC_BOSSMAPINFO:
 			case SC_STUN:
@@ -5432,6 +5434,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			tick = 10000;
 			break;
 		case SC_HPREGEN:
+		case SC_HPDRAIN:
 		case SC_SPREGEN:
 			if( val1 == 0 ) return 0;
 			// val1 = heal percent/amout
@@ -7094,6 +7097,17 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr data)
 		}
 		break;
 
+	case SC_KNOWLEDGE:
+		if (!sd) break;
+		if(bl->m == sd->feel_map[0].m ||
+			bl->m == sd->feel_map[1].m ||
+			bl->m == sd->feel_map[2].m)
+		{	//Timeout will be handled by pc_setpos
+			sce->timer = INVALID_TIMER;
+			return 0;
+		}
+		break;
+
 	case SC_BLEEDING:
 		if (--(sce->val4) >= 0) {
 			int flag;
@@ -7107,14 +7121,16 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr data)
 		}
 		break;
 
-	case SC_KNOWLEDGE:
-		if (!sd) break;
-		if(bl->m == sd->feel_map[0].m ||
-			bl->m == sd->feel_map[1].m ||
-			bl->m == sd->feel_map[2].m)
-		{	//Timeout will be handled by pc_setpos
-			sce->timer = INVALID_TIMER;
-			return 0;
+	case SC_HPDRAIN:
+		if( --(sce->val4) >= 0 )
+		{
+			int flag, hp = (sce->val1 < 0) ? (int)(status->max_hp * -1 * sce->val1 / 100.) : sce->val1;
+			map_freeblock_lock();
+			status_fix_damage(NULL, bl, hp, 0);
+			flag = !sc->data[type];
+			map_freeblock_unlock();
+			if( flag ) return 0;
+			sc_timer_next((sce->val2 * 1000) + tick, status_change_timer, bl->id, data);
 		}
 		break;
 
@@ -7130,7 +7146,7 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr data)
 				sp = (sce->val1 < 0) ? (int)(sd->status.max_sp * -1 * sce->val1 / 100.) : sce->val1 ;
 
 			status_heal(bl, hp, sp, 2);
-			sc_timer_next((sce->val2 * 1000) + tick, status_change_timer, bl->id, data );
+			sc_timer_next((sce->val2 * 1000) + tick, status_change_timer, bl->id, data);
 			return 0;
 		}
 		break;

@@ -1658,26 +1658,24 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 				break;
 		}
 		
-		if(sd)
+		if( sd )
 		{
 			if (skill_num && (i = pc_skillatk_bonus(sd, skill_num)))
 				ATK_ADDRATE(i);
 
-			if(skill_num != PA_SACRIFICE && skill_num != MO_INVESTIGATE &&
-				skill_num != CR_GRANDCROSS && skill_num != NPC_GRANDDARKNESS &&
-				skill_num != PA_SHIELDCHAIN
-			  	&& !flag.cri)
-			{	//Elemental/Racial adjustments
-				if(sd->right_weapon.def_ratio_atk_ele & (1<<tstatus->def_ele) ||
+			if( skill_num != PA_SACRIFICE && skill_num != MO_INVESTIGATE && skill_num != CR_GRANDCROSS && skill_num != NPC_GRANDDARKNESS && skill_num != PA_SHIELDCHAIN && !flag.cri )
+			{ //Elemental/Racial adjustments
+				if( sd->right_weapon.def_ratio_atk_ele & (1<<tstatus->def_ele) ||
 					sd->right_weapon.def_ratio_atk_race & (1<<tstatus->race) ||
 					sd->right_weapon.def_ratio_atk_race & (1<<(is_boss(target)?RC_BOSS:RC_NONBOSS))
 				)
 					flag.pdef = 1;
 
-				if(sd->left_weapon.def_ratio_atk_ele & (1<<tstatus->def_ele) ||
+				if( sd->left_weapon.def_ratio_atk_ele & (1<<tstatus->def_ele) ||
 					sd->left_weapon.def_ratio_atk_race & (1<<tstatus->race) ||
 					sd->left_weapon.def_ratio_atk_race & (1<<(is_boss(target)?RC_BOSS:RC_NONBOSS))
-				) {	//Pass effect onto right hand if configured so. [Skotlex]
+				)
+				{ //Pass effect onto right hand if configured so. [Skotlex]
 					if (battle_config.left_cardfix_to_right && flag.rh)
 						flag.pdef = 1;
 					else
@@ -1706,6 +1704,9 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 				}
 			}
 		}
+
+		if( sc && sc->count && sc->data[SC_DEFRATIOATK] && skill_num != PA_SACRIFICE && skill_num != CR_GRANDCROSS && skill_num != NPC_GRANDDARKNESS && skill_num != PA_SHIELDCHAIN && !flag.cri )
+			flag.pdef = flag.pdef2 = sc->data[SC_DEFRATIOATK]->val1; // Occult Impact Effect
 
 		if (!flag.idef || !flag.idef2)
 		{	//Defense reduction
@@ -1875,7 +1876,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 		}
 
 		//Card Fix, sd side
-		if ((wd.damage || wd.damage2) && !(nk&NK_NO_CARDFIX_ATK))
+		if( (wd.damage || wd.damage2) && !(nk&NK_NO_CARDFIX_ATK) )
 		{
 			int cardfix = 1000, cardfix_ = 1000;
 			int t_race2 = status_get_race2(target);	
@@ -1887,8 +1888,12 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 				cardfix=cardfix*(100+sd->right_weapon.addsize[tstatus->size]+sd->arrow_addsize[tstatus->size])/100;
 				cardfix=cardfix*(100+sd->right_weapon.addrace2[t_race2])/100;
 				cardfix=cardfix*(100+sd->right_weapon.addrace[is_boss(target)?RC_BOSS:RC_NONBOSS]+sd->arrow_addrace[is_boss(target)?RC_BOSS:RC_NONBOSS])/100;
-			} else {	//Melee attack
-				if(!battle_config.left_cardfix_to_right)
+				if( tstatus->race != RC_DEMIHUMAN )
+					cardfix=cardfix*(100+sd->right_weapon.addrace[RC_NONDEMIHUMAN]+sd->arrow_addrace[RC_NONDEMIHUMAN])/100;
+			}
+			else
+			{ // Melee attack
+				if( !battle_config.left_cardfix_to_right )
 				{
 					cardfix=cardfix*(100+sd->right_weapon.addrace[tstatus->race])/100;
 					if (!(nk&NK_NO_ELEFIX))
@@ -1896,8 +1901,10 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 					cardfix=cardfix*(100+sd->right_weapon.addsize[tstatus->size])/100;
 					cardfix=cardfix*(100+sd->right_weapon.addrace2[t_race2])/100;
 					cardfix=cardfix*(100+sd->right_weapon.addrace[is_boss(target)?RC_BOSS:RC_NONBOSS])/100;
+					if( tstatus->race != RC_DEMIHUMAN )
+						cardfix=cardfix*(100+sd->right_weapon.addrace[RC_NONDEMIHUMAN])/100;
 
-					if (flag.lh)
+					if( flag.lh )
 					{
 						cardfix_=cardfix_*(100+sd->left_weapon.addrace[tstatus->race])/100;
 						if (!(nk&NK_NO_ELEFIX))
@@ -1905,51 +1912,60 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 						cardfix_=cardfix_*(100+sd->left_weapon.addsize[tstatus->size])/100;
 						cardfix_=cardfix_*(100+sd->left_weapon.addrace2[t_race2])/100;
 						cardfix_=cardfix_*(100+sd->left_weapon.addrace[is_boss(target)?RC_BOSS:RC_NONBOSS])/100;
+						if( tstatus->race != RC_DEMIHUMAN )
+							cardfix=cardfix*(100+sd->left_weapon.addrace[RC_NONDEMIHUMAN])/100;
 					}
-				} else {
+				}
+				else
+				{
 					cardfix=cardfix*(100+sd->right_weapon.addrace[tstatus->race]+sd->left_weapon.addrace[tstatus->race])/100;
 					cardfix=cardfix*(100+sd->right_weapon.addele[tstatus->def_ele]+sd->left_weapon.addele[tstatus->def_ele])/100;
 					cardfix=cardfix*(100+sd->right_weapon.addsize[tstatus->size]+sd->left_weapon.addsize[tstatus->size])/100;
 					cardfix=cardfix*(100+sd->right_weapon.addrace2[t_race2]+sd->left_weapon.addrace2[t_race2])/100;
 					cardfix=cardfix*(100+sd->right_weapon.addrace[is_boss(target)?RC_BOSS:RC_NONBOSS]+sd->left_weapon.addrace[is_boss(target)?RC_BOSS:RC_NONBOSS])/100;
+					if( tstatus->race != RC_DEMIHUMAN )
+						cardfix=cardfix*(100+sd->right_weapon.addrace[RC_NONDEMIHUMAN]+sd->left_weapon.addrace[RC_NONDEMIHUMAN])/100;
 				}
 			}
 
-			for(i=0;i<ARRAYLENGTH(sd->right_weapon.add_dmg) && sd->right_weapon.add_dmg[i].rate;i++) {
-				if(sd->right_weapon.add_dmg[i].class_ == t_class) {
+			for( i = 0; i < ARRAYLENGTH(sd->right_weapon.add_dmg) && sd->right_weapon.add_dmg[i].rate; i++ )
+			{
+				if( sd->right_weapon.add_dmg[i].class_ == t_class )
+				{
 					cardfix=cardfix*(100+sd->right_weapon.add_dmg[i].rate)/100;
 					break;
 				}
 			}
 
-			if (flag.lh)
+			if( flag.lh )
 			{
-				for(i=0;i<ARRAYLENGTH(sd->left_weapon.add_dmg) && sd->left_weapon.add_dmg[i].rate;i++) {
-					if(sd->left_weapon.add_dmg[i].class_ == t_class) {
+				for( i = 0; i < ARRAYLENGTH(sd->left_weapon.add_dmg) && sd->left_weapon.add_dmg[i].rate; i++ )
+				{
+					if( sd->left_weapon.add_dmg[i].class_ == t_class )
+					{
 						cardfix_=cardfix_*(100+sd->left_weapon.add_dmg[i].rate)/100;
 						break;
 					}
 				}
 			}
 
-			if(wd.flag&BF_LONG)
+			if( wd.flag&BF_LONG )
 				cardfix=cardfix*(100+sd->long_attack_atk_rate)/100;
 
-			if (cardfix != 1000 || cardfix_ != 1000)
+			if( cardfix != 1000 || cardfix_ != 1000 )
 				ATK_RATE2(cardfix/10, cardfix_/10);	//What happens if you use right-to-left and there's no right weapon, only left?
 		}
 		
-		if (skill_num == CR_SHIELDBOOMERANG || skill_num == PA_SHIELDCHAIN) { //Refine bonus applies after cards and elements.
+		if( skill_num == CR_SHIELDBOOMERANG || skill_num == PA_SHIELDCHAIN )
+		{ //Refine bonus applies after cards and elements.
 			short index= sd->equip_index[EQI_HAND_L];
-			if (index >= 0 &&
-				sd->inventory_data[index] &&
-				sd->inventory_data[index]->type == IT_ARMOR)
+			if( index >= 0 && sd->inventory_data[index] && sd->inventory_data[index]->type == IT_ARMOR )
 				ATK_ADD(10*sd->status.inventory[index].refine);
 		}
 	} //if (sd)
 
 	//Card Fix, tsd sid
-	if (tsd && !(nk&NK_NO_CARDFIX_DEF))
+	if( tsd && !(nk&NK_NO_CARDFIX_DEF) )
 	{
 		short s_race2,s_class;
 		short cardfix=1000;
@@ -1957,24 +1973,29 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 		s_race2 = status_get_race2(src);
 		s_class = status_get_class(src);
 
-		if (!(nk&NK_NO_ELEFIX))
+		if( !(nk&NK_NO_ELEFIX) )
 		{
 			cardfix=cardfix*(100-tsd->subele[s_ele])/100;
-			if (flag.lh && s_ele_ != s_ele)
+			if( flag.lh && s_ele_ != s_ele )
 				cardfix=cardfix*(100-tsd->subele[s_ele_])/100;
 		}
 		cardfix=cardfix*(100-tsd->subsize[sstatus->size])/100;
  		cardfix=cardfix*(100-tsd->subrace2[s_race2])/100;
 		cardfix=cardfix*(100-tsd->subrace[sstatus->race])/100;
 		cardfix=cardfix*(100-tsd->subrace[is_boss(src)?RC_BOSS:RC_NONBOSS])/100;
-		for(i=0; i < ARRAYLENGTH(tsd->add_def) && tsd->add_def[i].rate;i++) {
-			if(tsd->add_def[i].class_ == s_class) {
+		if( sstatus->race != RC_DEMIHUMAN )
+			cardfix=cardfix*(100-tsd->subrace[RC_NONDEMIHUMAN])/100;
+
+		for( i = 0; i < ARRAYLENGTH(tsd->add_def) && tsd->add_def[i].rate;i++ )
+		{
+			if( tsd->add_def[i].class_ == s_class )
+			{
 				cardfix=cardfix*(100-tsd->add_def[i].rate)/100;
 				break;
 			}
 		}
 
-		if(wd.flag&BF_SHORT)
+		if( wd.flag&BF_SHORT )
 			cardfix=cardfix*(100-tsd->near_attack_def_rate)/100;
 		else	// BF_LONG (there's no other choice)
 			cardfix=cardfix*(100-tsd->long_attack_def_rate)/100;
@@ -1982,17 +2003,17 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 		if( tsd->sc.data[SC_DEF_RATE] )
 			cardfix=cardfix*(100-tsd->sc.data[SC_DEF_RATE]->val1)/100;
 
-		if (cardfix != 1000)
+		if( cardfix != 1000 )
 			ATK_RATE(cardfix/10);
 	}
 
-	if(flag.infdef)
+	if( flag.infdef )
 	{ //Plants receive 1 damage when hit
-		if (flag.rh && (flag.hit || wd.damage>0))
+		if( flag.rh && (flag.hit || wd.damage>0) )
 			wd.damage = 1;
-		if (flag.lh && (flag.hit || wd.damage2>0))
+		if( flag.lh && (flag.hit || wd.damage2>0) )
 			wd.damage2 = 1;
-		if (!(battle_config.skill_min_damage&1)) 
+		if( !(battle_config.skill_min_damage&1) )
 			//Do not return if you are supposed to deal greater damage to plants than 1. [Skotlex]
 			return wd;
 	}
@@ -2430,9 +2451,9 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 				MATK_RATE(cardfix/10);
 		}
 
-		if (tsd && !(nk&NK_NO_CARDFIX_DEF))
-	  	{	//Target cards.
-			short s_race2=status_get_race2(src);
+		if( tsd && !(nk&NK_NO_CARDFIX_DEF) )
+	  	{ // Target cards.
+			short s_race2 = status_get_race2(src);
 			short s_class= status_get_class(src);
 			int cardfix=1000;
 
@@ -2442,6 +2463,9 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 			cardfix=cardfix*(100-tsd->subrace2[s_race2])/100;
 			cardfix=cardfix*(100-tsd->subrace[sstatus->race])/100;
 			cardfix=cardfix*(100-tsd->subrace[is_boss(src)?RC_BOSS:RC_NONBOSS])/100;
+			if( sstatus->race != RC_DEMIHUMAN )
+				cardfix=cardfix*(100-tsd->subrace[RC_NONDEMIHUMAN])/100;
+
 			for(i=0; i < ARRAYLENGTH(tsd->add_mdef) && tsd->add_mdef[i].rate;i++) {
 				if(tsd->add_mdef[i].class_ == s_class) {
 					cardfix=cardfix*(100-tsd->add_mdef[i].rate)/100;
@@ -2662,7 +2686,8 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 		}
 	}
 
-	if(md.damage && tsd && !(nk&NK_NO_CARDFIX_DEF)){
+	if( md.damage && tsd && !(nk&NK_NO_CARDFIX_DEF) )
+	{
 		int cardfix = 10000;
 		int race2 = status_get_race2(src);
 		if (!(nk&NK_NO_ELEFIX))
@@ -2671,6 +2696,9 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 		cardfix=cardfix*(100-tsd->subrace2[race2])/100;
 		cardfix=cardfix*(100-tsd->subrace[sstatus->race])/100;
 		cardfix=cardfix*(100-tsd->subrace[is_boss(src)?RC_BOSS:RC_NONBOSS])/100;
+		if( sstatus->race != RC_DEMIHUMAN )
+			cardfix=cardfix*(100-tsd->subrace[RC_NONDEMIHUMAN])/100;
+
 		cardfix=cardfix*(100-tsd->misc_def_rate)/100;
 		if(md.flag&BF_SHORT)
 			cardfix=cardfix*(100-tsd->near_attack_def_rate)/100;
@@ -3104,7 +3132,7 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 		s_bl = src;
 
 	switch( target->type )
-	{	//Checks on actual target
+	{ // Checks on actual target
 		case BL_PC:
 			if (((TBL_PC*)target)->invincible_timer != -1 || pc_isinvisible((TBL_PC*)target))
 				return -1; //Cannot be targeted yet.
@@ -3267,24 +3295,26 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 			break;
 	}
 	
-	if ((flag&BCT_ALL) == BCT_ALL) { //All actually stands for all attackable chars 
-		if (target->type&BL_CHAR)
+	if( (flag&BCT_ALL) == BCT_ALL )
+	{ //All actually stands for all attackable chars 
+		if( target->type&BL_CHAR )
 			return 1;
 		else
 			return -1;
-	} else
-	if (flag == BCT_NOONE) //Why would someone use this? no clue.
+	}
+	else if( flag == BCT_NOONE ) //Why would someone use this? no clue.
 		return -1;
 	
-	if (t_bl == s_bl)
-	{	//No need for further testing.
+	if( t_bl == s_bl )
+	{ //No need for further testing.
 		state |= BCT_SELF|BCT_PARTY|BCT_GUILD;
-		if (state&BCT_ENEMY && strip_enemy)
+		if( state&BCT_ENEMY && strip_enemy )
 			state&=~BCT_ENEMY;
 		return (flag&state)?1:-1;
 	}
 	
-	if (map_flag_vs(m)) { //Check rivalry settings.
+	if( map_flag_vs(m) )
+	{ //Check rivalry settings.
 		if (flag&(BCT_PARTY|BCT_ENEMY)) {
 			int s_party = status_get_party_id(s_bl);
 			if (
@@ -3331,10 +3361,10 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 		}
 	}
 	
-	if (!state) //If not an enemy, nor a guild, nor party, nor yourself, it's neutral.
+	if( !state ) //If not an enemy, nor a guild, nor party, nor yourself, it's neutral.
 		state = BCT_NEUTRAL;
 	//Alliance state takes precedence over enemy one.
-	else if (state&BCT_ENEMY && strip_enemy && state&(BCT_SELF|BCT_PARTY|BCT_GUILD))
+	else if( state&BCT_ENEMY && strip_enemy && state&(BCT_SELF|BCT_PARTY|BCT_GUILD) )
 		state&=~BCT_ENEMY;
 
 	return (flag&state)?1:-1;

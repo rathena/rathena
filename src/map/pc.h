@@ -62,7 +62,7 @@ struct s_add_drop {
 };
 
 struct s_autoscript {
-	unsigned short rate, flag;
+	unsigned short rate, flag, target;
 	struct script_code *script;
 };
 
@@ -212,7 +212,7 @@ struct map_session_data {
 	struct { //skillatk raises bonus dmg% of skills, skillheal increases heal%, skillblown increases bonus blewcount for some skills.
 		unsigned short id;
 		short val;
-	} skillatk[MAX_PC_BONUS], skillheal[5], skillblown[MAX_PC_BONUS], skillcast[MAX_PC_BONUS];
+	} skillatk[MAX_PC_BONUS], skillheal[5], skillheal2[5], skillblown[MAX_PC_BONUS], skillcast[MAX_PC_BONUS];
 	struct {
 		short value;
 		int rate;
@@ -555,7 +555,7 @@ bool pc_adoption(struct map_session_data *p1_sd, struct map_session_data *p2_sd,
 
 int pc_updateweightstatus(struct map_session_data *sd);
 
-int pc_autoscript_add(struct s_autoscript *scripts, int max, short rate, short flag, struct script_code *script);
+int pc_autoscript_add(struct s_autoscript *scripts, int max, short rate, short flag, short target, struct script_code *script);
 void pc_autoscript_clear(struct s_autoscript *scripts, int max);
 
 int pc_bonus(struct map_session_data*,int,int);
@@ -602,6 +602,7 @@ int pc_useitem(struct map_session_data*,int);
 
 int pc_skillatk_bonus(struct map_session_data *sd, int skill_num);
 int pc_skillheal_bonus(struct map_session_data *sd, int skill_num);
+int pc_skillheal2_bonus(struct map_session_data *sd, int skill_num);
 
 void pc_damage(struct map_session_data *sd,struct block_list *src,unsigned int hp, unsigned int sp);
 int pc_dead(struct map_session_data *sd,struct block_list *src);
