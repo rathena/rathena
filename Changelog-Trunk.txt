@@ -3,12 +3,14 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2009/01/25
+	* Changes to the configure script: [FlavioJS]
+	- added option --enable-profiler (supports gprof)
+	- added option --enable-64bit (don't force 32bit)
 2009/01/24
-	* Changed pc_spiritball_timer and pc_addspiritball: (bugreport:2705) [FlavioJS]
+	* Changed pc_spiritball_timer and pc_addspiritball: (bugreport:2705)
 	- don't make assumptions about the calling order of timers
-	- ensure that sd->spirit_timer is is ordered by expiration time
-	* Changed pc_spiritball_timer to not assume that timers are called in the same order they are created. (bugreport:2705)
-	- the timer heap makes no garantees about the order order when timers have the same tick
+	- ensure that sd->spirit_timer is ordered by expiration time
 	* Changed the variables of the mapcache structs to fixed size equivalents.
 	* Changed all uses of struct skill_unit_group* to group_id in status_change_entry's. [FlavioJS]
 2009/01/23

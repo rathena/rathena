@@ -56,9 +56,11 @@ AC_ARG_ENABLE(
 AC_ARG_ENABLE(
 	[debug],
 	AC_HELP_STRING(
-		[--enable-debug],
-		[Compiles extra debug code. (disabled by default)],
-		[(available options: yes, no, gdb)]
+		[--enable-debug@<:@=ARG@:>@],
+		[
+			Compiles extra debug code. (disabled by default)
+			(available options: yes, no, gdb)
+		]
 	),
 	[
 		enable_debug="$enableval"
@@ -70,6 +72,51 @@ AC_ARG_ENABLE(
 		esac
 	],
 	[enable_debug="no"]
+)
+
+
+#
+# Profiler
+#
+AC_ARG_ENABLE(
+	[profiler],
+	AC_HELP_STRING(
+		[--enable-profiler=ARG],
+		[Profilers: no, gprof (disabled by default)]
+	),
+	[
+		enable_profiler="$enableval"
+		case $enableval in
+			"no");;
+			"gprof");;
+			*) AC_MSG_ERROR([[invalid argument --enable-profiler=$enableval... stopping]]);;
+		esac
+	],
+	[enable_profiler="no"]
+)
+
+
+#
+# 64bit
+#
+AC_ARG_ENABLE(
+	[64bit],
+	AC_HELP_STRING(
+		[--enable-64bit],
+		[
+			Don't force 32 bit. (disabled by default)
+			64bit support is still being tested, not recommended for production servers.
+		]
+	),
+	[
+		enable_64bit="$enableval"
+		case $enableval in
+			"no");;
+			"yes");;
+			*) AC_MSG_ERROR([[invalid argument --enable-64bit=$enableval... stopping]]);;
+		esac
+	],
+	[enable_64bit="no"]
 )
 
 
@@ -205,25 +252,27 @@ AC_C_BIGENDIAN(
 )
 
 
-AC_MSG_CHECKING([whether pointers can be stored in ints (old code)])
-pointers_fit_in_ints="no"
-AC_COMPILE_IFELSE(
-	[AC_LANG_PROGRAM([[static int test_array[((long int)sizeof(int)) == ((long int)sizeof(void*)) ? 1 : -1];]])],
-	[pointers_fit_in_ints="yes"],
-	[]
-)
-if test "$pointers_fit_in_ints" = "no" ; then
-	CFLAGS="$CFLAGS -m32"
-	LDFLAGS="$LDFLAGS -m32"
+if test "$enable_64bit" = "no" ; then
+	AC_MSG_CHECKING([whether pointers can be stored in ints (old code)])
+	pointers_fit_in_ints="no"
 	AC_COMPILE_IFELSE(
-		[AC_LANG_PROGRAM([[static int test_array[((long int)sizeof(int)) == ((long int)sizeof(void *)) ? 1 : -1];]])],
-		[pointers_fit_in_ints="yes (with -m32)"],
+		[AC_LANG_PROGRAM([[static int test_array[((long int)sizeof(int)) == ((long int)sizeof(void*)) ? 1 : -1];]])],
+		[pointers_fit_in_ints="yes"],
 		[]
 	)
-fi
-AC_MSG_RESULT($pointers_fit_in_ints)
-if test "$pointers_fit_in_ints" = "no" ; then
-	AC_MSG_ERROR([pointers cannot be stored in ints, required for old code... stopping])
+	if test "$pointers_fit_in_ints" = "no" ; then
+		CFLAGS="$CFLAGS -m32"
+		LDFLAGS="$LDFLAGS -m32"
+		AC_COMPILE_IFELSE(
+			[AC_LANG_PROGRAM([[static int test_array[((long int)sizeof(int)) == ((long int)sizeof(void *)) ? 1 : -1];]])],
+			[pointers_fit_in_ints="yes (with -m32)"],
+			[]
+		)
+	fi
+	AC_MSG_RESULT($pointers_fit_in_ints)
+	if test "$pointers_fit_in_ints" = "no" ; then
+		AC_MSG_ERROR([pointers cannot be stored in ints, required for old code... stopping])
+	fi
 fi
 
 
@@ -330,6 +379,20 @@ case $enable_debug in
 		;;
 	"gdb")
 		CFLAGS="$CFLAGS -ggdb -DDEBUG"
+		;;
+esac
+
+
+#
+# Profiler
+#
+case $enable_profiler in
+	"no")
+		# default value
+		;;
+	"gprof")
+		CFLAGS="$CFLAGS -pg"
+		LDFLAGS="$LDFLAGS -pg"
 		;;
 esac
 
