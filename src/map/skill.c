@@ -3179,6 +3179,20 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			break;
 		status_percent_heal(bl, 100, 100);
 		break;
+	case NPC_ALLHEAL:
+		{
+			int heal;
+			if( status_isimmune(bl) )
+				break;
+			heal = status_percent_heal(bl, 100, 0);
+			clif_skill_nodamage(NULL, bl, AL_HEAL, heal, 1);
+			if( skillid == NPC_ALLHEAL && dstmd )
+			{ // Reset Damage Logs
+				memset(dstmd->dmglog, 0, sizeof(dstmd->dmglog));
+				dstmd->tdmg = 0;
+			}
+		}
+		break;
 	case SA_SUMMONMONSTER:
 		clif_skill_nodamage(src,bl,skillid,skilllv,1);
 		if (sd) mob_once_spawn(sd,src->m,src->x,src->y,"--ja--",-1,1,"");
