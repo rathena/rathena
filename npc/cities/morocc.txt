@@ -45,7 +45,7 @@ OnTouch:
 	close;
 }
 
-morocc,202,244,0	script	Volenteer - Morroc#01	745,{
+morocc,202,244,0	script	Volunteer - Morroc#01	745,{
 	mes "[Morroc Volunteer]";
 	mes "After that terrible incident wiped out the entire Morroc, Rune-Midgard Kingdom has gathered us valunteers to help restorations.";
 	next;
@@ -54,7 +54,7 @@ morocc,202,244,0	script	Volenteer - Morroc#01	745,{
 	close;
 }
 
-morocc,88,133,3	script	Volenteer - Morroc#02	748,{
+morocc,88,133,3	script	Volunteer - Morroc#02	748,{
 	mes "[Morroc Volunteer]";
 	mes "We're... We're flooded with work...";
 	next;
@@ -67,7 +67,7 @@ morocc,88,133,3	script	Volenteer - Morroc#02	748,{
 	close;
 }
 
-morocc,202,110,0	script	Volenteer - Morroc#03	730,{
+morocc,202,110,0	script	Volunteer - Morroc#03	730,{
 	mes "[Morroc Volunteer]";
 	mes "We're still unable to estimate the overall damage.";
 	next;
@@ -79,7 +79,7 @@ morocc,202,110,0	script	Volenteer - Morroc#03	730,{
 	close;
 }
 
-morocc,268,287,3	script	Volenteer - Morroc#04	727,{
+morocc,268,287,3	script	Volunteer - Morroc#04	727,{
 	mes "[Morroc Volunteer]";
 	mes "As bad as it seems, we can't even ask for more support.";
 	mes "This sure must be the worst thing ever happened in Rune-Midgard's history.";
@@ -89,7 +89,7 @@ morocc,268,287,3	script	Volenteer - Morroc#04	727,{
 	close;
 }
 
-morocc,37,287,0	script	Volenteer - Morroc#05	79,{
+morocc,37,287,0	script	Volunteer - Morroc#05	79,{
 	mes "[Morroc Volunteer]";
 	mes "The town's all shattered, but the real problem is the towners.";
 	next;
@@ -101,7 +101,7 @@ morocc,37,287,0	script	Volenteer - Morroc#05	79,{
 	close;
 }
 
-morocc,223,102,0	script	Volenteer - Morroc#06::MocVolenteer	741,{
+morocc,223,102,0	script	Volunteer - Morroc#06::MocVolunteer	741,{
 	mes "[Morroc Volunteer]";
 	mes "Ugh.. It's kinda spooky, here.. Even this dry wind of the desert seems to have a dark nature.";
 	next;
@@ -127,7 +127,7 @@ morocc,223,102,0	script	Volenteer - Morroc#06::MocVolenteer	741,{
 	next;
 	mes "[Ringing Voice]";
 	mes "Be quiet! Can't you see what's going on?!";
-	donpcevent "Volenteer - Morroc#06::OnHit";
+	donpcevent "Volunteer - Morroc#06::OnHit";
 	next;
 	mes "[Morroc Volunteer]";
 	mes "Heyyy, you're being too harsh, Senyorita. Your fist may be as fragile as you are, but it sure can hurt somebody.";
@@ -144,7 +144,7 @@ OnHit:
 	end;
 }
 
-morocc,226,102,4	duplicate(MocVolenteer)	Volenteer - Morroc#07	726
+morocc,226,102,4	duplicate(MocVolunteer)	Volunteer - Morroc#07	726
 
 moc_ruins,123,154,0	script	Young Man#moc01	99,{
 	mes "[Young Man]";

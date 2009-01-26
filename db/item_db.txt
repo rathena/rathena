@@ -1279,7 +1279,7 @@
 2437,Combat_Boots,Combat Boots,5,0,,0,,3,,1,0x01000000,7,2,64,,80,1,0,{ bonus bMaxHP,100; bonus bMdef,1; bonus2 bSubRace,RC_DemiHuman,1; },{},{}
 2438,Cat's_Paw,Cat's Paw,5,20,,300,,0,,0,0xFFFFFFFF,7,2,64,,80,1,0,{ bonus bFlee,5; bonus bAgi,1; },{},{}
 2439,Refresh_Shoes,Refresh Shoes,5,20,,0,,9,,0,0xFFFFFFFF,7,2,64,,0,0,0,{ bonus bMaxHPRate,17; bonus bMaxSPRate,8; bonus2 bHPRegenRate,20,10000; bonus2 bSPRegenRate,3,10000; },{},{}
-2440,Sprint_Shoes,Sprint Shoes,5,20,,300,,2,,0,0x00CFDF80,2,2,64,,0,1,0,{ bonus bAGI,1; bonus bSPrecovRate,5; if (isequipped(2387)) { bonus bMaxHPRate,7; bonus bMaxSPRate,7; bonus bCastRate,-3; bonus DelayRate,-15; }; },{},{}
+2440,Sprint_Shoes,Sprint Shoes,5,20,,300,,2,,0,0x00CFDF80,2,2,64,,0,1,0,{ bonus bAGI,1; bonus bSPrecovRate,5; if (isequipped(2387)) { bonus bMaxHPRate,7; bonus bMaxSPRate,7; bonus bCastRate,-3; bonus bDelayRate,-15; }; },{},{}
 2441,Beach_Sandals,Beach Sandals,5,20,,200,,0,,0,0xFFFFFFFF,7,2,64,,0,1,0,{ bonus bStr,1; bonus bInt,1; bonus bAgi,1; bonus2 bSubEle,Ele_Fire,10; if (isequipped(2546)) bonus bFlee,5; },{},{}
 //2442#Red_Stocking_Boots#
 // Garments
@@ -4360,7 +4360,7 @@
 13970,Iron_Box,Iron Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 998,10; },{},{}
 13971,Steel_Box,Steel Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 999,10; },{},{}
 13972,Coal_Box,Coal Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 1003,10; },{},{}
-13973,Poison_Bottle_Box,Poison Bottle Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 678,10; },{},{}
+13973,Poison_Bottle_Box,Poison Bottle Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 678,30; },{},{}
 13974,Fisherman_Scroll,Fisherman Scroll,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 13975,Diary_Magic_Powder_Box,Diary Magic Powder Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 12304,1; },{},{}
 13976,Mini_Heart_Magic_Powder_Box,Mini Heart Magic Powder Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 12305,1; },{},{}
@@ -4615,6 +4615,20 @@
 14225,Quagmire_30_Scroll_Box,Quagmire Scroll 30ea Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14594,30; },{},{}
 14226,Quagmire_50_Scroll_Box,Quagmire Scroll 50ea Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14594,50; },{},{}
 14227,Healing_Staff_Box,Healing Staff Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 1638,1; },{},{}
+//14228,Praccsinos_Box,Praccsinos Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 2752,1; },{},{}
+//14229#Cherry_Blossoms_Scroll#Cherry Blossoms Scroll
+//14230,Note_Headphones_Box,Note Headphones Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 5151,1; },{},{}
+//14231,Novice_Breastplate_Boxes,Novice Breastplate Boxes,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+14232,Yggdrasil_Berry_Box_10,Yggdrasil Berry Box(10),2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 607,10; },{},{}
+14233,Dead_Branch_Box_10,Dead Branch Box(10),2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 604,10; },{},{}
+14234,Dead_Branch_Box_25,Dead Branch Box(25),2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 604,25; },{},{}
+14235,Field_Manual_Box_2,Field Manual Box(2),2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 12208,2; },{},{}
+14236,Steamed_Tongue_Box_20,Steamed Tongue Box(20),2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 12202,20; },{},{}
+14237,Steamed_Desert_Scorpions_Box_20,Steamed Desert Scorpions Box(20),2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 12203,20; },{},{}
+14238,Stew_Of_Immortality_Box_20,Stew of Immortality Box(20),2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 12207,20; },{},{}
+14239,Dragon_Breath_Cocktail_Box_20,Dragon Breath Cocktail Box(20),2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 12204,20; },{},{}
+14240,Hwergelmir's_Tonic_Box_20,Hwergelmir's Tonic Box(20),2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 12205,20; },{},{}
+14241,Nine_Tail_Dish_Box_20,Nine Tail Dish Box(20),2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 12206,20; },{},{}
 14242,Beholder_Ring_Box,Beholder Ring Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 2753,1; },{},{}
 14243,Hallow_Ring_Box,Hallow Ring Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 2754,1; },{},{}
 14244,Clamorous_Ring_Box,Clamorus Ring Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 2755,1; },{},{}

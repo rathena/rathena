@@ -88,7 +88,7 @@ mjolnir_02,83,362,4	script	Kafra Employee::kaf_mjolnir_02	116,{
 
 
 //<=============================== Morroc Ruins ============================>\\
-moc_ruins,61,156,5	script	Kafra Employee::moc_ruins	114,{
+moc_ruins,59,157,5	script	Kafra Employee::moc_ruins	114,{
 	cutin "kafra_04",2;
 	mes "[Kafra Employee]";
 	mes "Welcome!";
