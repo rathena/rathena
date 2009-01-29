@@ -778,19 +778,17 @@ int mob_spawn (struct mob_data *md)
 		md->bl.x = md->spawn->x;
 		md->bl.y = md->spawn->y;
 
-		if ((md->bl.x == 0 && md->bl.y == 0) || md->spawn->xs || md->spawn->ys)
+		if( (md->bl.x == 0 && md->bl.y == 0) || md->spawn->xs || md->spawn->ys )
 		{	//Monster can be spawned on an area.
-			if (!map_search_freecell(&md->bl, -1,
-			  	&md->bl.x, &md->bl.y, md->spawn->xs, md->spawn->ys,
-			  	battle_config.no_spawn_on_player?4:0)) {
-				// retry again later
-				add_timer(tick+5000,mob_delayspawn,md->bl.id,0);
+			if( !map_search_freecell(&md->bl, -1, &md->bl.x, &md->bl.y, md->spawn->xs, md->spawn->ys, battle_config.no_spawn_on_player?4:0) )
+			{ // retry again later
+				md->spawn_timer = add_timer(tick+5000,mob_delayspawn,md->bl.id,0);
 				return 1;
 			}
-		} else if (battle_config.no_spawn_on_player>99 &&
-			map_foreachinrange(mob_count_sub, &md->bl, AREA_SIZE, BL_PC))
-		{	//retry again later (players on sight)
-			add_timer(tick+5000,mob_delayspawn,md->bl.id,0);
+		}
+		else if( battle_config.no_spawn_on_player > 99 && map_foreachinrange(mob_count_sub, &md->bl, AREA_SIZE, BL_PC) )
+		{ // retry again later (players on sight)
+			md->spawn_timer = add_timer(tick+5000,mob_delayspawn,md->bl.id,0);
 			return 1;
 		}
 	}
