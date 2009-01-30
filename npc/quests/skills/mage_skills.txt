@@ -26,7 +26,7 @@ geffen_in,151,119,4	script	Great Wizard#qsk_mg	64,{
 		mes "[BLIZZARDRISS]";
 		mes "For many years";
 		mes "I have studied the ancient";
-		mes "magic¡¯s of Geffen.";
+		mes "magic's of Geffen.";
 		mes "Recently, I discovered";
 		mes "a very good forgotten skill! ! !";
 		mes "Isn't that fortunate?";

@@ -131,7 +131,7 @@ moc_prydb1,154,128,4	script	Alcouskou#qsk_tf	118,{
 				mes "for you to use with this skill.";
 				next;
 				mes "[Alcouskou]";
-				mes "Well let¡¯s see what your skill";
+				mes "Well let's see what your skill";
 				mes "is like -";
 				mes "Try it out ! !";
 				next;
@@ -155,7 +155,7 @@ moc_prydb1,154,128,4	script	Alcouskou#qsk_tf	118,{
 		case 2:
 			if (countitem(940) > 19  && ((BaseJob == Job_Thief && JobLevel > 34) || BaseJob == Job_Assassin || BaseJob == Job_Rogue)) {
 				mes "[Alcouskou]";
-				mes "Okay! Let¡¯s practice!";
+				mes "Okay! Let's practice!";
 				next;
 				mes "[Alcouskou]";
 				mes "Suuu Suuu uk -";

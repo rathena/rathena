@@ -242,7 +242,7 @@ prt_in,75,88,5	script	Leon Von Frich#qsk_sm	85,3,3,{
 			mes "When you use bash, depending on";
 			mes "your level, your opponent can";
 			mes "become stunned.";
-			mes "You have learned bash, haven¡¯t you?";
+			mes "You have learned bash, haven't you?";
 			next;
 			mes "[Leon]";
 			mes "When I was a swordsman like you,";

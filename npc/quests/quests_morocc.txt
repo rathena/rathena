@@ -220,7 +220,7 @@ OnTouch:
 		next;
 		if (prt_curse == 24) {
 			mes "[" + strcharinfo(0) + "]";
-			mes "I don¡¯t care what you say, I¡¯m coming in!!!";
+			mes "I don't care what you say, I'm coming in!!!";
 			next;
 			mes "[Litheron]";
 			mes "Hey, master-! What do we do with this guy?";
@@ -228,7 +228,7 @@ OnTouch:
 			next;
 			mes "[Master]";
 			mes "Hmm. Let him do what he wants to do.";
-			mes "Passing through one door doesn¡¯t make any difference.";
+			mes "Passing through one door doesn't make any difference.";
 			next;
 			mes "[Litheron]";
 			mes "Hah! Did you hear that?";

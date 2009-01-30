@@ -525,7 +525,7 @@ payon_in03,117,128,5	script	Fortune Teller	704,{
 					cutin "스켈나이트카드",4;
 					mes "[Lhimetorra]";
 					mes " He is falling asleep awaiting a battle. Is it because he is laid back, or simply pathetic? Depends on the situation I suppose. ";
-					mes " But you’ve got to give him credit for his boldness. ";
+					mes " But you've got to give him credit for his boldness. ";
 					next;
 					mes "[Lhimetorra]";
 					mes " How about becoming a brave warrior in the battle of love? ";
@@ -582,7 +582,7 @@ payon_in03,117,128,5	script	Fortune Teller	704,{
 					mes " He is a warning you not to drool over someone else. ";
 					next;
 					mes "[Lhimetorra]";
-					mes " That’s bad! You will be punished! ";
+					mes " That's bad! You will be punished! ";
 					next;
 				}
 				if (.@card_1_love == 56) {
@@ -677,7 +677,7 @@ payon_in03,117,128,5	script	Fortune Teller	704,{
 				if (.@card_1_love == 66) {
 					cutin "조커카드",4;
 					mes "[Lhimetorra]";
-					mes " Don’t get fooled by tricks. They are a person, too. They know how to lie once in a while. Search for the trick calmly and carefully. ";
+					mes " Don't get fooled by tricks. They are a person, too. They know how to lie once in a while. Search for the trick calmly and carefully. ";
 					next;
 					mes "[Lhimetorra]";
 					mes " And then search for a different route. That is the wise decision. ";
@@ -784,7 +784,7 @@ payon_in03,117,128,5	script	Fortune Teller	704,{
 					mes " Something very rare may come your way. A gold mine has been the dream of many since ancient times. You have a gold mine right in front of you. ";
 					next;
 					mes "[Lhimetorra]";
-					mes " All in all, a big fortune is right in front of your eyes. I’ll be looking forward to it. ";
+					mes " All in all, a big fortune is right in front of your eyes. I'll be looking forward to it. ";
 					next;
 				}
 				if (.@card_1_money == 3) {
@@ -802,7 +802,7 @@ payon_in03,117,128,5	script	Fortune Teller	704,{
 					mes " The card says that you should not be too greedy, for that may cause you to dig your own grave. ";
 					next;
 					mes "[Lhimetorra]";
-					mes " You may not feel good about it, but you should accept the card’s advice..! ";
+					mes " You may not feel good about it, but you should accept the card's advice..! ";
 					next;
 				}
 				if (.@card_1_money == 5) {
@@ -1237,7 +1237,7 @@ payon_in03,117,128,5	script	Fortune Teller	704,{
 				if (.@card_1_money == 54) {
 					cutin "오크로드카드",4;
 					mes "[Lhimetorra]";
-					mes " The Orc Lord possesses much wealth. It’s because of greed. Greed is essential in collecting money. The desire and greediness to make money is not something to be ashamed about. Be diligent and go make money. ";
+					mes " The Orc Lord possesses much wealth. It's because of greed. Greed is essential in collecting money. The desire and greediness to make money is not something to be ashamed about. Be diligent and go make money. ";
 					next;
 					mes "[Lhimetorra]";
 					mes " But, too much greed is forbidden. ";
@@ -1279,7 +1279,7 @@ payon_in03,117,128,5	script	Fortune Teller	704,{
 					mes " Jack makes money through jokes. Others' happiness is the key to his wealth. ";
 					next;
 					mes "[Lhimetorra]";
-					mes " Why don’t you learn how to make others happy? It should be of great help. ";
+					mes " Why don't you learn how to make others happy? It should be of great help. ";
 					next;
 				}
 				if (.@card_1_money == 59) {
@@ -1719,7 +1719,7 @@ payon_in03,117,128,5	script	Fortune Teller	704,{
 				if (.@card_1_future == 31) {
 					cutin "샌드맨카드",4;
 					mes "[Lhimetorra]";
-					mes " A sand's future is simply sand. Not a rock, nor mud. Some things just don’t change young one. ";
+					mes " A sand's future is simply sand. Not a rock, nor mud. Some things just don't change young one. ";
 					next;
 					mes "[Lhimetorra]";
 					mes " What the Sandman card is trying to say is to treasure your present self. ";
@@ -3053,7 +3053,7 @@ payon_in03,75,129,5	script	Poring Fortune Teller	704,{
 				}
 				next;
 				mes "[Chocarle]";
-				mes " You’ve been told your study fortune! Was it a good one? ";
+				mes " You've been told your study fortune! Was it a good one? ";
 				mes " But in studying, effort is more important than any type of fortune! ";
 				next;
 				cutin "",255;
@@ -3063,7 +3063,7 @@ payon_in03,75,129,5	script	Poring Fortune Teller	704,{
 			//=================================================================Friends ===
 			case 3:
 				mes "[Chocarle]";
-				mes " Relationships among friends is more difficult than people think! Let’s use the cards to try and solve this complicated puzzle of friendship! ";
+				mes " Relationships among friends is more difficult than people think! Let's use the cards to try and solve this complicated puzzle of friendship! ";
 				next;
 				mes "[Chocarle]";
 				set .@card_2_buddy,rand(1,33);
@@ -3211,7 +3211,7 @@ payon_in03,75,129,5	script	Poring Fortune Teller	704,{
 			//=================================================================Future ===
 			case 4:
 				mes "[Chocarle]";
-				mes " If you say fortunetelling! Of course it is about the future! Let’s try to figure this out! ";
+				mes " If you say fortunetelling! Of course it is about the future! Let's try to figure this out! ";
 				next;
 				mes "[Chocarle]";
 				set .@card_2_future,rand(1,33);
@@ -3225,7 +3225,7 @@ payon_in03,75,129,5	script	Poring Fortune Teller	704,{
 				}
 				if (.@card_2_future == 3) {
 					cutin "고스트링카드",4;
-					mes " Cut! You are filled with uncertainty about the future! Let’s get rid of this! Wee! It's gone! ";
+					mes " Cut! You are filled with uncertainty about the future! Let's get rid of this! Wee! It's gone! ";
 				}
 				if (.@card_2_future == 4) {
 					cutin "드롭프스카드",4;
@@ -3361,7 +3361,7 @@ payon_in03,75,129,5	script	Poring Fortune Teller	704,{
 			case 5:
 				mes "[Chocarle]";
 				mes " Mmm! The long awaited time has come! Asking a question about money to the cute Poring! ";
-				mes " Ok! Let’s try it! ";
+				mes " Ok! Let's try it! ";
 				next;
 				mes "[Chocarle]";
 				set .@card_2_fortune,rand(1,33);

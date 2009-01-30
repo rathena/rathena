@@ -138,7 +138,7 @@ prt_in,234,133,4	script	Nami#qsk_nv	66,{
 						skill 142,1,0;
 						set NOV_SK,3;
 						mes "[Nami]";
-						mes "Yes yes, that¡¯s right!";
+						mes "Yes yes, that's right!";
 						mes "Now that you have this";
 						mes "skill, I hope that it helps you";
 						mes "in the future.";
@@ -260,12 +260,12 @@ prt_in,73,87,4	script	Chivalry Member#qsk_nv	65,{
 			mes "perfectly dead. . .";
 			next;
 			mes "[Bulma]";
-			mes "I think that¡¯s enough explanation.";
+			mes "I think that's enough explanation.";
 			mes "I can tell by the look in your eyes";
 			mes "that you are ready for your training.";
 			mes "Lets not delay!";
 			mes "Ok, take this pill first. . .";
-			mes "Let¡¯s see how this goes. . .";
+			mes "Let's see how this goes. . .";
 			next;
 			mes "[Bulma]";
 			mes "Within in 10 minutes, you must";
