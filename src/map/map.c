@@ -102,8 +102,6 @@ static DBMap* charid_db=NULL; // int char_id -> struct map_session_data*
 static DBMap* regen_db=NULL; // int id -> struct block_list* (status_natural_heal processing)
 
 static int map_users=0;
-static struct block_list *objects[MAX_FLOORITEM];
-static int first_free_object_id=0,last_object_id=0;
 
 #define block_free_max 1048576
 struct block_list *block_free[block_free_max];
@@ -1129,124 +1127,38 @@ int map_foreachinmap(int (*func)(struct block_list*,va_list), int m, int type,..
 	return returnCount;
 }
 
-/*==========================================
- * 床アイテムやエフェクト用の一三bj割り?て
- * object[]への保存とid_db登?まで
- *
- * bl->idもこの中で設定して問題無い?
- *------------------------------------------*/
-int map_addobject(struct block_list *bl)
+
+/// Generates a new flooritem object id from the interval [MIN_FLOORITEM, MAX_FLOORITEM).
+/// Used for floor items, skill units and chatroom objects.
+/// @return The new object id
+int map_get_new_object_id(void)
 {
+	static int last_object_id = MIN_FLOORITEM - 1;
 	int i;
-	if( bl == NULL ){
-		ShowWarning("map_addobject nullpo?\n");
+
+	// find a free id
+	i = last_object_id + 1;
+	while( i != last_object_id )
+	{
+		if( i == MAX_FLOORITEM )
+			i = MIN_FLOORITEM;
+
+		if( idb_get(id_db, i) == NULL )
+			break;
+
+		++i;
+	}
+
+	if( i == last_object_id )
+	{
+		ShowError("map_addobject: no free object id!\n");
 		return 0;
 	}
-	if(first_free_object_id<2 || first_free_object_id>=MAX_FLOORITEM)
-		first_free_object_id=2;
-	for(i=first_free_object_id;i<MAX_FLOORITEM && objects[i];i++);
-	if(i>=MAX_FLOORITEM){
-		ShowWarning("no free object id\n");
-		return 0;
-	}
-	first_free_object_id=i;
-	if(last_object_id<i)
-		last_object_id=i;
-	objects[i]=bl;
-	idb_put(id_db,i,bl);
+
+	// update cursor
+	last_object_id = i;
+
 	return i;
-}
-
-/*==========================================
- * 一三bjectの解放
- *	map_delobjectのfreeしないバ?ジョン
- *------------------------------------------*/
-int map_delobjectnofree(int id)
-{
-	if( id < 0 || id >= MAX_FLOORITEM )
-	{
-		ShowError("map_delobjectnofree: invalid object id '%d'!\n", id);
-		return 0;
-	}
-
-	if(objects[id]==NULL)
-		return 0;
-
-	map_delblock(objects[id]);
-	idb_remove(id_db,id);
-	objects[id]=NULL;
-
-	if(first_free_object_id>id)
-		first_free_object_id=id;
-
-	while(last_object_id>2 && objects[last_object_id]==NULL)
-		last_object_id--;
-
-	return 0;
-}
-
-/*==========================================
- * 一三bjectの解放
- * block_listからの削除、id_dbからの削除
- * object dataのfree、object[]へのNULL代入
- *
- * addとの??性が無いのが?になる
- *------------------------------------------*/
-int map_delobject(int id)
-{
-	struct block_list* bl;
-
-	if( id < 0 || id >= MAX_FLOORITEM )
-	{
-		ShowError("map_delobject: invalid object id '%d'!\n", id);
-		return 0;
-	}
-
-	if(objects[id]==NULL)
-		return 0;
-
-	bl = objects[id];
-	map_delobjectnofree(id);
-	map_freeblock(bl);
-
-	return 0;
-}
-
-/*==========================================
- * 全一三bj相手にfuncを呼ぶ
- *
- *------------------------------------------*/
-void map_foreachobject(int (*func)(struct block_list*,va_list),int type,...)
-{
-	int i;
-	int blockcount=bl_list_count;
-
-	for(i=2;i<=last_object_id;i++){
-		if(objects[i]){
-			if(!(objects[i]->type==type)) // Fixed [Lance]
-				continue;
-			if(bl_list_count>=BL_LIST_MAX) {
-				ShowWarning("map_foreachobject: too many blocks !\n");
-				break;
-			}
-			bl_list[bl_list_count++]=objects[i];
-		}
-	}
-
-	map_freeblock_lock();
-
-	for(i=blockcount;i<bl_list_count;i++)
-		if( bl_list[i]->prev || bl_list[i]->next )
-		{
-			va_list ap;
-			va_start(ap, type);
-			func(bl_list[i], ap);
-			va_end(ap);
-		}
-
-	map_freeblock_unlock();
-
-	bl_list_count = blockcount;
 }
 
 /*==========================================
@@ -1259,9 +1171,7 @@ void map_foreachobject(int (*func)(struct block_list*,va_list),int type,...)
  *------------------------------------------*/
 int map_clearflooritem_timer(int tid, unsigned int tick, int id, intptr data)
 {
-	struct flooritem_data *fitem=NULL;
-
-	fitem = (struct flooritem_data *)objects[id];
+	struct flooritem_data* fitem = idb_get(id_db, id);
 	if(fitem==NULL || fitem->bl.type!=BL_ITEM || (!data && fitem->cleartimer != tid)){
 		ShowError("map_clearflooritem_timer : error\n");
 		return 1;
@@ -1271,7 +1181,8 @@ int map_clearflooritem_timer(int tid, unsigned int tick, int id, intptr data)
 	else if(fitem->item_data.card[0] == CARD0_PET)
 		intif_delete_petdata( MakeDWord(fitem->item_data.card[1],fitem->item_data.card[2]) );
 	clif_clearflooritem(fitem,0);
-	map_delobject(fitem->bl.id);
+	map_delblock(&fitem->bl);
+	map_freeblock(&fitem->bl);
 
 	return 0;
 }
@@ -1414,7 +1325,7 @@ int map_addflooritem(struct item *item_data,int amount,int m,int x,int y,int fir
 	fitem->bl.m=m;
 	fitem->bl.x=x;
 	fitem->bl.y=y;
-	fitem->bl.id = map_addobject(&fitem->bl);
+	fitem->bl.id = map_get_new_object_id();
 	if(fitem->bl.id==0){
 		aFree(fitem);
 		return 0;
@@ -1433,6 +1344,7 @@ int map_addflooritem(struct item *item_data,int amount,int m,int x,int y,int fir
 	fitem->suby=((r>>2)&3)*3+3;
 	fitem->cleartimer=add_timer(gettick()+battle_config.flooritem_lifetime,map_clearflooritem_timer,fitem->bl.id,0);
 
+	map_addiddb(&fitem->bl);
 	map_addblock(&fitem->bl);
 	clif_dropflooritem(fitem);
 
@@ -1765,13 +1677,7 @@ struct map_session_data * map_nick2sd(const char *nick)
  *------------------------------------------*/
 struct block_list * map_id2bl(int id)
 {
-	struct block_list *bl;
-	if(id >= 0 && id < ARRAYLENGTH(objects))
-		bl = objects[id];
-	else
-		bl = (struct block_list*)idb_get(id_db,id);
-
-	return bl;
+	return (struct block_list*)idb_get(id_db,id);
 }
 
 /*==========================================

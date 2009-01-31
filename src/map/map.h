@@ -38,7 +38,8 @@ struct item_data;
 #define MAX_EVENTQUEUE 2
 #define MAX_EVENTTIMER 32
 #define NATURAL_HEAL_INTERVAL 500
-#define MAX_FLOORITEM 500000
+#define MIN_FLOORITEM 2
+#define MAX_FLOORITEM START_ACCOUNT_NUM
 #define MAX_LEVEL 99
 #define MAX_DROP_PER_MAP 48
 #define MAX_IGNORE_LIST 20 // official is 14
@@ -535,10 +536,7 @@ int map_foreachinmap(int (*func)(struct block_list*,va_list), int m, int type, .
 int map_count_oncell(int m,int x,int y,int type);
 struct skill_unit *map_find_skill_unit_oncell(struct block_list *,int x,int y,int skill_id,struct skill_unit *);
 // ˆêŽž“IobjectŠÖ˜A
-int map_addobject(struct block_list *);
-int map_delobject(int);
-int map_delobjectnofree(int id);
-void map_foreachobject(int (*)(struct block_list*,va_list),int,...);
+int map_get_new_object_id(void);
 int map_search_freecell(struct block_list *src, int m, short *x, short *y, int rx, int ry, int flag);
 //
 int map_quit(struct map_session_data *);

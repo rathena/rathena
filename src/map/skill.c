@@ -9504,7 +9504,7 @@ struct skill_unit *skill_initunit (struct skill_unit_group *group, int idx, int 
 	if(!unit->alive)
 		group->alive_count++;
 
-	unit->bl.id=map_addobject(&unit->bl);
+	unit->bl.id=map_get_new_object_id();
 	unit->bl.type=BL_SKILL;
 	unit->bl.m=group->map;
 	unit->bl.x=x;
@@ -9514,6 +9514,7 @@ struct skill_unit *skill_initunit (struct skill_unit_group *group, int idx, int 
 	unit->val1=val1;
 	unit->val2=val2;
 
+	map_addiddb(&unit->bl);
 	map_addblock(&unit->bl);
 
 	// perform oninit actions
@@ -9583,7 +9584,7 @@ int skill_delunit (struct skill_unit* unit)
 
 	unit->group=NULL;
 	unit->alive=0;
-	map_delobjectnofree(unit->bl.id);
+	map_delblock(&unit->bl); // don't free yet
 	if(--group->alive_count==0)
 		skill_delunitgroup(NULL, group);
 
@@ -9851,10 +9852,16 @@ int skill_unit_timer_sub_onplace (struct block_list* bl, va_list ap)
  *------------------------------------------*/
 int skill_unit_timer_sub (struct block_list* bl, va_list ap)
 {
-	struct skill_unit* unit = (struct skill_unit *)bl;
-	struct skill_unit_group* group = unit->group;
 	unsigned int tick = va_arg(ap,unsigned int);
+	struct skill_unit* unit;
+	struct skill_unit_group* group;
   	bool dissonance;
+
+	if( bl->type != BL_SKILL )
+		return 0;
+
+	unit = (struct skill_unit *)bl;
+	group = unit->group;
 
 	if( !unit->alive )
 		return 0;
@@ -10011,7 +10018,7 @@ int skill_unit_timer(int tid, unsigned int tick, int id, intptr data)
 {
 	map_freeblock_lock();
 
-	map_foreachobject( skill_unit_timer_sub, BL_SKILL, tick );
+	map_foreachiddb( skill_unit_timer_sub, tick );
 
 	map_freeblock_unlock();
 
