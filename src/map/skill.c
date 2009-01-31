@@ -51,6 +51,8 @@
 static struct eri *skill_unit_ers = NULL; //For handling skill_unit's [Skotlex]
 static struct eri *skill_timer_ers = NULL; //For handling skill_timerskills [Skotlex]
 
+DBMap* skillunit_db = NULL; // int id -> struct skill_unit*
+
 DBMap* skilldb_name2id = NULL;
 struct s_skill_db skill_db[MAX_SKILL_DB];
 struct s_skill_produce_db skill_produce_db[MAX_SKILL_PRODUCE_DB];
@@ -9514,6 +9516,7 @@ struct skill_unit *skill_initunit (struct skill_unit_group *group, int idx, int 
 	unit->val1=val1;
 	unit->val2=val2;
 
+	idb_put(skillunit_db, unit->bl.id, unit);
 	map_addiddb(&unit->bl);
 	map_addblock(&unit->bl);
 
@@ -9584,6 +9587,7 @@ int skill_delunit (struct skill_unit* unit)
 
 	unit->group=NULL;
 	unit->alive=0;
+	idb_remove(skillunit_db, unit->bl.id);
 	map_delblock(&unit->bl); // don't free yet
 	if(--group->alive_count==0)
 		skill_delunitgroup(NULL, group);
@@ -9745,7 +9749,7 @@ int skill_delunitgroup (struct block_list *src, struct skill_unit_group *group)
 		group->valstr = NULL;
 	}
 
-	map_freeblock(&group->unit->bl);
+	map_freeblock(&group->unit->bl); // schedules deallocation of whole array (HACK)
 	idb_remove(group_db, group->group_id);
 	group->unit=NULL;
 	group->group_id=0;
@@ -9850,18 +9854,13 @@ int skill_unit_timer_sub_onplace (struct block_list* bl, va_list ap)
 /*==========================================
  *
  *------------------------------------------*/
-int skill_unit_timer_sub (struct block_list* bl, va_list ap)
+static int skill_unit_timer_sub (DBKey key, void* data, va_list ap)
 {
+	struct skill_unit* unit = (struct skill_unit*)data;
+	struct skill_unit_group* group = unit->group;
 	unsigned int tick = va_arg(ap,unsigned int);
-	struct skill_unit* unit;
-	struct skill_unit_group* group;
   	bool dissonance;
-
-	if( bl->type != BL_SKILL )
-		return 0;
-
-	unit = (struct skill_unit *)bl;
-	group = unit->group;
+	struct block_list* bl = &unit->bl;
 
 	if( !unit->alive )
 		return 0;
@@ -10018,7 +10017,7 @@ int skill_unit_timer(int tid, unsigned int tick, int id, intptr data)
 {
 	map_freeblock_lock();
 
-	map_foreachiddb( skill_unit_timer_sub, tick );
+	skillunit_db->foreach(skillunit_db, skill_unit_timer_sub, tick);
 
 	map_freeblock_unlock();
 
@@ -11386,6 +11385,7 @@ int do_init_skill (void)
 	skill_readdb();
 	
 	group_db = idb_alloc(DB_OPT_BASE);
+	skillunit_db = idb_alloc(DB_OPT_BASE);
 	skill_unit_ers = ers_new(sizeof(struct skill_unit_group));
 	skill_timer_ers  = ers_new(sizeof(struct skill_timerskill));
 	
