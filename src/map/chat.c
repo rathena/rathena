@@ -328,6 +328,7 @@ int chat_deletenpcchat(struct npc_data* nd)
 	clif_clearchat(cd, 0);
 	map_delblock(&cd->bl);
 	map_freeblock(&cd->bl);
+	map_deliddb(&cd->bl);
 	nd->chat_id = 0;
 	
 	return 0;

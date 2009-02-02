@@ -9587,8 +9587,9 @@ int skill_delunit (struct skill_unit* unit)
 
 	unit->group=NULL;
 	unit->alive=0;
-	idb_remove(skillunit_db, unit->bl.id);
 	map_delblock(&unit->bl); // don't free yet
+	map_deliddb(&unit->bl);
+	idb_remove(skillunit_db, unit->bl.id);
 	if(--group->alive_count==0)
 		skill_delunitgroup(NULL, group);
 
@@ -11404,6 +11405,7 @@ int do_final_skill(void)
 {
 	db_destroy(skilldb_name2id);
 	db_destroy(group_db);
+	db_destroy(skillunit_db);
 	ers_destroy(skill_unit_ers);
 	ers_destroy(skill_timer_ers);
 	return 0;
