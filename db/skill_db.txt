@@ -626,7 +626,7 @@
 //684,0,0,0,0,0,0,9,0,no,0,0,0,none,0,		NPC_WIDEHELLDIGNITY,Hell Dignity
 //685,0,0,0,0,0,0,9,0,no,0,0,0,none,0,		NPC_INVINCIBLE,Incinvible
 //686,0,0,0,0,0,0,9,0,no,0,0,0,none,0,		NPC_INVINCIBLEOFF,Invincible off
-687,0,6,4,0,0x1,0,1,1,yes,0,0,0,none,0,		NPC_ALLHEAL,Full Heal
+687,0,6,4,0,0x1,0,1,1,yes,0,0x2,0,none,0,	NPC_ALLHEAL,Full Heal
 
 // Additional Skill (??)
 //688,0,0,0,0,0,0,9,0,no,0,0,0,none,0,		GM_SANDMAN,GM Sandman
