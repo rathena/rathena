@@ -176,6 +176,7 @@ int chat_leavechat(struct map_session_data* sd, bool kicked)
 		clif_clearchat(cd, 0);
 		map_delblock(&cd->bl);
 		map_freeblock(&cd->bl);
+		map_deliddb(&cd->bl);
 		return 1;
 	}
 
