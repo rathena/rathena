@@ -178,7 +178,7 @@ int pc_addspiritball(struct map_session_data *sd,int interval,int max)
 	}
 
 	tid = add_timer(gettick()+interval, pc_spiritball_timer, sd->bl.id, 0);
-	ARR_FIND(0, sd->spiritball, i, DIFF_TICK(get_timer(tid)->tick, get_timer(sd->spirit_timer[i])->tick) < 0);
+	ARR_FIND(0, sd->spiritball, i, sd->spirit_timer[i] == INVALID_TIMER || DIFF_TICK(get_timer(tid)->tick, get_timer(sd->spirit_timer[i])->tick) < 0);
 	if( i != sd->spiritball )
 		memmove(sd->spirit_timer+i+1, sd->spirit_timer+i, (sd->spiritball-i)*sizeof(int));
 	sd->spirit_timer[i] = tid;
@@ -199,6 +199,8 @@ int pc_delspiritball(struct map_session_data *sd,int count,int type)
 		return 0;
 	}
 
+	if(count <= 0)
+		return 0;
 	if(count > sd->spiritball)
 		count = sd->spiritball;
 	sd->spiritball -= count;

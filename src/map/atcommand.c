@@ -3713,20 +3713,19 @@ int atcommand_lostskill(const int fd, struct map_session_data* sd, const char* c
  *------------------------------------------*/
 int atcommand_spiritball(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
+	int max_spiritballs = min(ARRAYLENGTH(sd->spirit_timer), 0x7FFF);
 	int number;
 	nullpo_retr(-1, sd);
 
-	if (!message || !*message || (number = atoi(message)) < 0) {
-		clif_displaymessage(fd, "Please, enter a spirit ball number (usage: @spiritball <number: 0-1000>).");
+	if (!message || !*message || (number = atoi(message)) < 0 || number >= max_spiritballs) {
+		char msg[256];
+		safesnprintf(msg, sizeof(msg), "Please, enter a spirit ball number (usage: @spiritball <number: 0-%d>).", max_spiritballs);
+		clif_displaymessage(fd, msg);
 		return -1;
 	}
 
-	// set max number to avoid server/client crash (500 create big balls of several balls: no visial difference with more)
-	if (number > 500)
-		number = 500;
-
-	if (number >= 0 && number <= 0x7FFF) {
-		if (sd->spiritball != number || number > 499) {
+	if (number >= 0 && number <= max_spiritballs) {
+		if (sd->spiritball != number) {
 			if (sd->spiritball > 0)
 				pc_delspiritball(sd, sd->spiritball, 1);
 			sd->spiritball = number;
