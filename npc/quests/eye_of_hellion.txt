@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= MasterOfMuppets
 //===== Current Version: =====================================
-//= 1.8
+//= 1.9
 //===== Compatible With: =====================================
 //= eAthena SVN
 //===== Description: =========================================
@@ -20,6 +20,7 @@
 //= 1.6 Fixed issue with #prt_key-1-1. [L0ne_W0lf]
 //= 1.7 Corrected reminants from aegis conversion. [L0en_w0lf]
 //= 1.8 Replaced effect numerics with constants. [L0ne_W0lf]
+//= 1.9 Removed duplicate text. [Kisuka]
 //============================================================
 
 morocc_in,116,101,3	script	Old Scholar Tyus#hellion	735,3,3,{
@@ -2205,7 +2206,6 @@ geffen,110,200,3	script	Sage Welshyun#hellion	754,3,3,{
 			mes "Wait, take a look!";
 			mes "There's a map on the back";
 			mes "of the tablet. Although the gem";
-			mes "is already embedded within the";
 			mes "is already embedded within the";
 			mes "tablet, who knows where this map may lead? Perhaps Hellion Revenant?";
 			next;

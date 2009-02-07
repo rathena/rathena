@@ -1,4 +1,4 @@
-prontera,156,183,0	script	NPCtimerƒeƒXƒg::npctimerX0000	116,{
+prontera,156,183,0	script	NPCtimerTest::npctimerX0000	116,{
 L_INIT:
 	mes "What would you like to know?";
 	menu "Tell me my level",L_WAIT;

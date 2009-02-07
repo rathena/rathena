@@ -1,9 +1,9 @@
 
-prontera,156,183,0	script	NPCtimerテスト::npctimerX0000	116,{
-	mes "タイマー値" + getnpctimer(0);
-	mes "タイマー状態" + getnpctimer(1,"npctimerX0000");
-	mes "イベント個数" + getnpctimer(2);
-	menu "初期化",L_INIT,"停止",L_STOP,"再開",L_START,"設定",L_SET;
+prontera,156,183,0	script	NPCtimerTest::npctimerX0000	116,{
+	mes "Timer value" + getnpctimer(0);
+	mes "State timer" + getnpctimer(1,"npctimerX0000");
+	mes "Number of events" + getnpctimer(2);
+	menu "Initialization",L_INIT,"Stop",L_STOP,"Start",L_START,"Settings",L_SET;
 	close;
 L_INIT:
 	initnpctimer;
@@ -20,14 +20,14 @@ L_SET:
 	close;
 
 OnTimer1000:
-	announce "1秒経過",0;
+	announce "After a second",0;
 	end;
 
 OnTimer5000:
-	announce "5秒経過",0;
+	announce "After 5 seconds",0;
 	end;
 
 OnTimer10000:
-	announce "10秒経過",0;
+	announce "After 10 seconds",0;
 	end;
 }

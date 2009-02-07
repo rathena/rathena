@@ -1,8 +1,8 @@
-// 配列のテスト
-prontera,164,190,1	script	配列テスト	112,{
+// Array Test
+prontera,164,190,1	script	Array Test	112,{
 	set @hoge[0],1;
 	set @hoge[1],5;
-	mes "hoge[2]を入力してください";
+	mes "Please enter a value for hoge[2].";
 	next;
 	input @hoge[2];
 	mes "hoge   => " + @hoge;
