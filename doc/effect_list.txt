@@ -3,7 +3,7 @@
 //===== By ================================================
 //= Valaris, Spira, Au{R}oN, Tharis, HiddenDragon
 //===== Version ===========================================
-//= 2.1
+//= 2.2
 //=========================================================
 //= 1.0 - Formatted to the standard
 //= 1.1 - New Effects, up to 2007/05/07 Sakexe. [Au{R}oN]
@@ -17,6 +17,7 @@
 //= 1.9 - New Effects, up to 2008/05/28 Sakexe. [Au{R}oN]
 //= 2.0 - New Effects, up to 2008/07/15 Sakexe. [Au{R}oN]
 //= 2.1 - New Effects, up to 2008/08/06a Sakexe. [Au{R}oN]
+//= 2.2 - New Effects, up to 2009/01/21a Sakexe. [Au{R}oN]
 //===== Description =======================================
 //= A list of client-side effects sorted by their ID
 //=========================================================
@@ -730,9 +731,9 @@ number	description
 698.	(Nothing)
 699.	Fall of powder from the sky and raise of some leaf
 700.	Big Colored Green Sphere.
-701.	Little Colored Violet Sphere
-702.	Light Infltrarion from and Fall of powder from the sky
-703.	(Nothing)
+701.	Huge Blue Sphere
+702.	Little Colored Violet Sphere
+703.	Light Infiltration with fall of pownder
 704.	(Nothing)
 705.	(Nothing)
 706.	(Nothing)
@@ -741,4 +742,24 @@ number	description
 709.	A Firework that split in 4 mini fireworks
 710.	A Sphere like Effect 701 but Green, and a bit more larger
 711.	A big violet wall
-712.	No More Effects From 2008/08/06a Sakexe.
+712.	A Little Flame Sphere
+713.	A lot of Very Small and Yellow Sphere
+714.	(Nothing)
+715.	Something Like a Little Blue Basilica (Probably something related Arch Bishop)
+716.	The same of 715 (Probably something related Arch Bishop)
+717.	Something like Angelus (Probably something related Arch Bishop)
+718.	Another Fire Pillar Effect (Probably something related Warlock)
+719.	Light Infiltration from the Sky (Probably something related Warlock)
+720.	Some sound and effect of Soul Destroyer but Yellow (Probably something related Warlock)
+721.	Big Lightning from the SKy (Probably something related Warlock)
+722.	Bug Fire Explosion (Probably something related Warlock)
+723.	Noise Sound (Probably something related Warlock)
+724.	Client Crash :P
+725.	Status Recovery Sound and Wind movement on the ground (Probably something related Arch Bishop)
+726.	Big Blue Vapor Area (Probably something related Warlock)
+727.	A Comet from the SKy (Probably something related Warlock)
+728.	A Little Flare that Remain on the Player for some second (Probably something related Warlock)
+729.	Effect like Close Confine (Probably something related Warlock)
+730.	Little Explosion (Probably something related Warlock)
+731.	An effect like Mob's Skill Scream (Probably something related a 3th classes)
+732+.	No More Effects From 2009/01/21a Sakexe.

@@ -2110,7 +2110,7 @@ struct script_code* parse_script(const char *src,const char *file,int line,int o
 			default:
 				ShowMessage("unknown");
 			}
-			ShowMessage("\n");
+			ShowMessage(CL_CLL "\n");
 		}
 	}
 #endif
@@ -5208,10 +5208,10 @@ BUILDIN_FUNC(getitem2)
 	iden=script_getnum(st,4);
 	ref=script_getnum(st,5);
 	attr=script_getnum(st,6);
-	c1=script_getnum(st,7);
-	c2=script_getnum(st,8);
-	c3=script_getnum(st,9);
-	c4=script_getnum(st,10);
+	c1=(short)script_getnum(st,7);
+	c2=(short)script_getnum(st,8);
+	c3=(short)script_getnum(st,9);
+	c4=(short)script_getnum(st,10);
 
 	if(nameid<0) { // ƒ‰ƒ“ƒ_ƒ€
 		nameid=itemdb_searchrandomid(-nameid);
@@ -5242,10 +5242,10 @@ BUILDIN_FUNC(getitem2)
 			item_tmp.identify=0;
 		item_tmp.refine=ref;
 		item_tmp.attribute=attr;
-		item_tmp.card[0]=c1;
-		item_tmp.card[1]=c2;
-		item_tmp.card[2]=c3;
-		item_tmp.card[3]=c4;
+		item_tmp.card[0]=(short)c1;
+		item_tmp.card[1]=(short)c2;
+		item_tmp.card[2]=(short)c3;
+		item_tmp.card[3]=(short)c4;
 
 		//Check if it's stackable.
 		if (!itemdb_isstackable(nameid))
@@ -5666,10 +5666,10 @@ BUILDIN_FUNC(delitem2)
 	iden=script_getnum(st,4);
 	ref=script_getnum(st,5);
 	attr=script_getnum(st,6);
-	c1=script_getnum(st,7);
-	c2=script_getnum(st,8);
-	c3=script_getnum(st,9);
-	c4=script_getnum(st,10);
+	c1=(short)script_getnum(st,7);
+	c2=(short)script_getnum(st,8);
+	c3=(short)script_getnum(st,9);
+	c4=(short)script_getnum(st,10);
 
 	if( amount <= 0 )
 		return 0;// nothing to do
@@ -5709,7 +5709,7 @@ BUILDIN_FUNC(delitem2)
 		}
 	}
 
-	ShowError("script:delitem: failed to delete %d items (AID=%d item_id=%d).\n", amount, sd->status.account_id, nameid);
+	ShowError("script:delitem2: failed to delete %d items (AID=%d item_id=%d).\n", amount, sd->status.account_id, nameid);
 	st->state = END;
 	return 1;
 }
