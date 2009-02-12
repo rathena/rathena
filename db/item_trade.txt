@@ -585,3 +585,7 @@
 //7915,123,100	// Bronze_Coin
 //7916,123,100	// Silver_Coin
 //12715,123,100	// Black_Treasure_Chest
+
+// "Valentine's Day (2009)" Event related items
+//5817,123,100
+//14466,123,100
