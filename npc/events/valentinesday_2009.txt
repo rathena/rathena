@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Kisuka
 //===== Current Version: =====================================
-//= 1.0
+//= 1.1
 //===== Compatible With: =====================================
 //= eAthena SVN
 //===== Description: =========================================
@@ -19,6 +19,7 @@
 //= Must enable the event items in item_db2 and item_trade!
 //===== Additional Comments: =================================
 //= 1.0 First version. [Kisuka]
+//= 1.1 Fixed exploit [Lupus]
 //============================================================
 
 // Marco Bassinio (Chocolate/Chocolate Box maker)
@@ -376,7 +377,7 @@ prontera,154,185,5	script	Event Ring Maker#Val09	721,{
 		close;
 	}
 	
-	if (iROval09ring == 1) {
+	if (iROval09ring >= 1) {
 		mes "[Event Ring Maker]";
 		mes "The box with the ring,";
 		mes "carved with your name,";
