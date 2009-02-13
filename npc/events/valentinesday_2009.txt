@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Kisuka
 //===== Current Version: =====================================
-//= 1.1
+//= 1.2
 //===== Compatible With: =====================================
 //= eAthena SVN
 //===== Description: =========================================
@@ -19,7 +19,7 @@
 //= Must enable the event items in item_db2 and item_trade!
 //===== Additional Comments: =================================
 //= 1.0 First version. [Kisuka]
-//= 1.1 Fixed exploit [Lupus]
+//= 1.1-1.2 Fixed exploits with unlimited rings and non deleting choco [Lupus]
 //============================================================
 
 // Marco Bassinio (Chocolate/Chocolate Box maker)
@@ -173,6 +173,7 @@ prontera,164,174,4	script	Trader#Val09	58,{
 			mes "See, your name looks";
 			mes "great on the box!";
 			next;
+			delitem 558,1;
 			delitem 7175,1;
 			delitem 7174,1;
 			delitem 7948,1;
