@@ -113,6 +113,7 @@ LV4_0:
 			mes "enough to handle my products.";
 			mes "They are charged with evil power.";
 			next;
+			mes "[Bazo]";
 			mes "That means if their owners are not powerful";
 			mes "and not experienced enough,";
 			mes "they will drive the owners insane.";

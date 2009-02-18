@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= eAthena Dev Team
 //===== Current Version: ===================================== 
-//= 1.1a
+//= 1.1b
 //===== Compatible With: ===================================== 
 //= eAthena SVN 3422+(Requires jA Script System)
 //===== Description: ========================================= 
@@ -30,6 +30,7 @@
 //= 1.0 Fixed bad NPC header data to comply with rev. 11603. [L0ne_W0lf]
 //= 1.1 Touch-ups, and changed references of "Yuno" to "Juno",  [L0ne_W0lf]
 //= 1.1a Small fix to comparison check. [Paradox924X]
+//= 1.1b Small fix to zeny check. [Kisuka]
 //============================================================ 
 
 //============================================================ 
@@ -858,7 +859,7 @@ izlude,201,54,3	script	Airship Staff#izl	91,{
 				warp "airplane_01",224,64;
 				close;
 			}
-			if(Zeny > 1200) {
+			if(Zeny >= 1200) {
 				set Zeny, Zeny - 1200;
 				warp "airplane_01",224,64;
 				close;
@@ -897,7 +898,7 @@ hugel,182,150,3	script	Airship Staff#hu	91,{
 				warp "airplane",224,64;
 				close;
 			}
-			if(Zeny > 1200) {
+			if(Zeny >= 1200) {
 				set Zeny, Zeny - 1200;
 				warp "airplane",224,64;
 				close;

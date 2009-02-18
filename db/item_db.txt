@@ -731,7 +731,7 @@
 1480,Gae_Bolg_,Gae Bolg,4,20,,2000,160,,3,2,0x00004082,7,2,34,4,60,1,5,{ bonus bIgnoreDefRace,RC_Dragon; bonus2 bAddRace,RC_Boss,10; },{},{}
 1481,Zephyrus_,Zephyrus,4,20,,2000,170,,3,3,0x00004082,7,2,34,4,48,1,5,{ bonus bAtkEle,Ele_Wind; bonus2 bAddEff,Eff_Silence,200; bonus3 bAutoSpell,"MG_THUNDERSTORM",3,100; },{},{}
 1482,Assaulter's_Lance,Assaulter's Lance,4,,,0,160,,3,0,0x00004082,7,2,34,3,80,1,5,{ bonus bStr,2; bonus2 bAddRace,RC_DemiHuman,25; bonus bIgnoreDefRace,RC_DemiHuman; bonus bUnbreakableWeapon,0; },{},{}
-//1483#Ivory_Lance#
+1483,Ivory_Lance,Ivory Lance,4,,,1000,160,,3,0,0x00004082,7,2,34,3,50,1,5,{ bonus bAgi,2; bonus bAspdRate,3; bonus2 bAddEff,Eff_Bleeding,100; bonus3 bAutoSpell,"LK_JOINTBEAT",1,100; skill 58,5; },{},{}
 //1484#Carled#
 //1485#Battle_Fork#
 // Maces
@@ -3635,10 +3635,10 @@
 12288,Squillroll_Magic_Powder,Squillroll Angel Magic Powder,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12289,Gogo_Magic_Powder,Gogo Magic Powder,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 //
-12294,PC-Room_Coin_Box1,PC-Room Coin Box,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-12295,PC-Room_Coin_Box2,PC-Room Coin Box,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-12296,PC-Room_Coin_Box3,PC-Room Coin Box,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-12297,PC-Room_Coin_Box4,PC-Room Coin Box,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12294,PC-Room_Coin_Box1,PC-Room Coin Box,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 2740,1; },{},{}
+12295,PC-Room_Coin_Box2,PC-Room Coin Box,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 2739,1; },{},{}
+12296,PC-Room_Coin_Box3,PC-Room Coin Box,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 2738,1; },{},{}
+12297,PC-Room_Coin_Box4,PC-Room Coin Box,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 2738,2; },{},{}
 //Net Cafe Premium
 12298,SP_Reduction_Potion,SP Reduction Potion,0,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_SPCOST_RATE,36000000,15; },{},{}
 12299,Status_Resist_Potion,Status Resistance Potion,0,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_COMMONSC_RESIST,36000000,10; },{},{}

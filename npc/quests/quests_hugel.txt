@@ -1914,6 +1914,7 @@ lhz_in03,193,28,3	script	Makkie	83,{
 		mes "[Makkie]";
 		mes "Oh, that? Yeah, that was";
 		mes "taken when Dono, Morriphen";
+		mes "and I worked for the";
 		mes "Rekenber Corporation. I know";
 		mes "they look eccentric, but they're really good guys, trust me.";
 		next;

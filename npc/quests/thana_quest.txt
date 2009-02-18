@@ -1208,7 +1208,7 @@ tha_t06,43,152,0	script	Machine Device#thana4	111,{
 						mes "wheels to make them rotate.^000000";
 						next;
 						mes "^3355FFJudging from the machine's";
-						mes "shaking and jittery joises, the";
+						mes "shaking and jittery noises, the";
 						mes "wheels may be misaligned.";
 						mes "You might be able to activate";
 						mes "the machine by properly";
