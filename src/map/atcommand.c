@@ -3717,30 +3717,19 @@ int atcommand_spiritball(const int fd, struct map_session_data* sd, const char* 
 	int number;
 	nullpo_retr(-1, sd);
 
-	if (!message || !*message || (number = atoi(message)) < 0 || number >= max_spiritballs) {
+	if( !message || !*message || (number = atoi(message)) < 0 || number > max_spiritballs )
+	{
 		char msg[256];
-		safesnprintf(msg, sizeof(msg), "Please, enter a spirit ball number (usage: @spiritball <number: 0-%d>).", max_spiritballs);
+		safesnprintf(msg, sizeof(msg), "Usage: @spiritball <number: 0-%d>", max_spiritballs);
 		clif_displaymessage(fd, msg);
 		return -1;
 	}
 
-	if (number >= 0 && number <= max_spiritballs) {
-		if (sd->spiritball != number) {
-			if (sd->spiritball > 0)
-				pc_delspiritball(sd, sd->spiritball, 1);
-			sd->spiritball = number;
-			clif_spiritball(sd);
-			// no message, player can look the difference
-			if (number > 1000)
-				clif_displaymessage(fd, msg_txt(204)); // WARNING: more than 1000 spiritballs can CRASH your server and/or client!
-		} else {
-			clif_displaymessage(fd, msg_txt(205)); // You already have this number of spiritballs.
-			return -1;
-		}
-	} else {
-		clif_displaymessage(fd, msg_txt(37)); // An invalid number was specified.
-		return -1;
-	}
+	if( sd->spiritball > 0 )
+		pc_delspiritball(sd, sd->spiritball, 1);
+	sd->spiritball = number;
+	clif_spiritball(sd);
+	// no message, player can look the difference
 
 	return 0;
 }

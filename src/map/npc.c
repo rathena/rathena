@@ -2875,9 +2875,14 @@ void npc_parsesrcfile(const char* filepath)
 		// fill w4 (to end of line)
 		if( pos[1]-pos[8] > ARRAYLENGTH(w4)-1 )
 			ShowWarning("npc_parsesrcfile: w4 truncated, too much data (%d) in file '%s', line '%d'.\n", pos[1]-pos[8], filepath, strline(buffer,p-buffer));
-		i = min(pos[1]-pos[8], ARRAYLENGTH(w4)-1);
-		memcpy(w4, p+pos[8], i*sizeof(char));
-		w4[i] = '\0';
+		if( pos[8] != -1 )
+		{
+			i = min(pos[1]-pos[8], ARRAYLENGTH(w4)-1);
+			memcpy(w4, p+pos[8], i*sizeof(char));
+			w4[i] = '\0';
+		}
+		else
+			w4[0] = '\0';
 
 		if( count < 3 )
 		{// Unknown syntax
