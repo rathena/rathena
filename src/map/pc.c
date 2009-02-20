@@ -1308,7 +1308,7 @@ int pc_calc_skilltree_normalize_job(struct map_session_data *sd)
 	else
 	//Do not send S. Novices to first class (Novice)
 	if ((sd->class_&JOBL_2) && (sd->class_&MAPID_UPPERMASK) != MAPID_SUPER_NOVICE &&
-		sd->status.skill_point >= (int)sd->status.job_level &&
+		sd->status.skill_point >= sd->status.job_level &&
 		((sd->change_level > 0 && skill_point < sd->change_level+8) || skill_point < 58)) {
 		//Send it to first class.
 		c &= MAPID_BASEMASK;
@@ -4391,10 +4391,8 @@ int pc_checkbaselevelup(struct map_session_data *sd)
 			next = statp[sd->status.base_level] - statp[sd->status.base_level-1];
 		else //Estimated way.
 			next = (sd->status.base_level+14) / 5 ;
-		if (sd->status.status_point > USHRT_MAX - next)
-			sd->status.status_point = USHRT_MAX;
-		else	
-			sd->status.status_point += next;
+
+		sd->status.status_point += next;
 
 	} while ((next=pc_nextbaseexp(sd)) > 0 && sd->status.base_exp >= next);
 
@@ -4943,11 +4941,10 @@ int pc_resetstate(struct map_session_data* sd)
 		if (sd->class_&JOBL_UPPER)
 			stat+=52;	// extra 52+48=100 stat points
 		
-		if (stat > USHRT_MAX)
-			sd->status.status_point = USHRT_MAX;
-		else
-			sd->status.status_point = stat;
-	} else { //Use new stat-calculating equation [Skotlex]
+		sd->status.status_point = stat;
+	}
+	else
+	{ //Use new stat-calculating equation [Skotlex]
 #define sumsp(a) (((a-1)/10 +2)*(5*((a-1)/10 +1) + (a-1)%10) -10)
 		int add=0;
 		add += sumsp(sd->status.str);
@@ -4956,10 +4953,7 @@ int pc_resetstate(struct map_session_data* sd)
 		add += sumsp(sd->status.int_);
 		add += sumsp(sd->status.dex);
 		add += sumsp(sd->status.luk);
-		if (add > USHRT_MAX - sd->status.status_point)
-			sd->status.status_point = USHRT_MAX;
-		else
-			sd->status.status_point+=add;
+		sd->status.status_point+=add;
 	}
 
 	sd->status.str=1;
@@ -5059,10 +5053,7 @@ int pc_resetskill(struct map_session_data* sd, int flag)
 	
 	if( flag&2 || !skill_point ) return skill_point;
 
-	if( sd->status.skill_point > USHRT_MAX - skill_point )
-		sd->status.skill_point = USHRT_MAX;
-	else
-		sd->status.skill_point += skill_point;
+	sd->status.skill_point += skill_point;
 
 	if( flag&1 )
 	{
@@ -5545,11 +5536,7 @@ int pc_setparam(struct map_session_data *sd,int type,int val)
 			int stat=0;
 			for (i = 1; i <= (int)((unsigned int)val - sd->status.base_level); i++)
 				stat += (sd->status.base_level + i + 14) / 5 ;
-			if (sd->status.status_point > USHRT_MAX - stat)
-				
-				sd->status.status_point = USHRT_MAX;
-			else
-				sd->status.status_point += stat;
+			sd->status.status_point += stat;
 		}
 		sd->status.base_level = (unsigned int)val;
 		sd->status.base_exp = 0;
@@ -5562,10 +5549,7 @@ int pc_setparam(struct map_session_data *sd,int type,int val)
 	case SP_JOBLEVEL:
 		if ((unsigned int)val >= sd->status.job_level) {
 			if ((unsigned int)val > pc_maxjoblv(sd)) val = pc_maxjoblv(sd);
-			if (sd->status.skill_point > USHRT_MAX - val + sd->status.job_level)
-				sd->status.skill_point = USHRT_MAX;
-			else
-				sd->status.skill_point += val-sd->status.job_level;
+			sd->status.skill_point += val - sd->status.job_level;
 			clif_updatestatus(sd, SP_SKILLPOINT);
 		}
 		sd->status.job_level = (unsigned int)val;

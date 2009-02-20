@@ -675,8 +675,8 @@ int mmo_char_fromstr(char *str, struct mmo_charstatus *p, struct global_reg *reg
 	p->int_ = tmp_int[16];
 	p->dex = tmp_int[17];
 	p->luk = tmp_int[18];
-	p->status_point = min(tmp_int[19], USHRT_MAX);
-	p->skill_point = min(tmp_int[20], USHRT_MAX);
+	p->status_point = tmp_int[19];
+	p->skill_point = tmp_int[20];
 	p->option = tmp_int[21];
 	p->karma = tmp_int[22];
 	p->manner = tmp_int[23];
@@ -2077,10 +2077,7 @@ int parse_fromlogin(int fd)
 						// remove specifical skills of classes 19, 4020 and 4042
 						for(j = 315; j <= 322; j++) {
 							if (char_dat[i].status.skill[j].id > 0 && !char_dat[i].status.skill[j].flag) {
-								if (char_dat[i].status.skill_point > USHRT_MAX - char_dat[i].status.skill[j].lv)
-									char_dat[i].status.skill_point = USHRT_MAX;
-								else
-									char_dat[i].status.skill_point += char_dat[i].status.skill[j].lv;
+								char_dat[i].status.skill_point += char_dat[i].status.skill[j].lv;
 								char_dat[i].status.skill[j].id = 0;
 								char_dat[i].status.skill[j].lv = 0;
 							}
@@ -2088,11 +2085,7 @@ int parse_fromlogin(int fd)
 						// remove specifical skills of classes 20, 4021 and 4043
 						for(j = 323; j <= 330; j++) {
 							if (char_dat[i].status.skill[j].id > 0 && !char_dat[i].status.skill[j].flag) {
-								if (char_dat[i].status.skill_point > USHRT_MAX - char_dat[i].status.skill[j].lv)
-									char_dat[i].status.skill_point = USHRT_MAX;
-								else
-									char_dat[i].status.skill_point += char_dat[i].status.skill[j].lv;
-
+								char_dat[i].status.skill_point += char_dat[i].status.skill[j].lv;
 								char_dat[i].status.skill[j].id = 0;
 								char_dat[i].status.skill[j].lv = 0;
 							}
