@@ -630,8 +630,16 @@ int WFIFOSET(int fd, size_t len)
 	{	// actually there was a buffer overflow already
 		uint32 ip = s->client_addr;
 		ShowFatalError("WFIFOSET: Write Buffer Overflow. Connection %d (%d.%d.%d.%d) has written %u bytes on a %u/%u bytes buffer.\n", fd, CONVIP(ip), (unsigned int)len, (unsigned int)s->wdata_size, (unsigned int)s->max_wdata);
-		ShowDebug("Likely command that caused it: 0x%x\n", (*(unsigned short*)(s->wdata + s->wdata_size)));
+		ShowDebug("Likely command that caused it: 0x%x\n", (*(uint16*)(s->wdata + s->wdata_size)));
 		// no other chance, make a better fifo model
+		exit(EXIT_FAILURE);
+	}
+
+	if( len > 0xFFFF )
+	{
+		// dynamic packets allow up to UINT16_MAX bytes (<packet_id>.W <packet_len>.W ...)
+		// all known fixed-size packets are within this limit, so use the same limit
+		ShowFatalError("WFIFOSET: Packet 0x%x is too big. (len=%u, max=%u)\n", (*(uint16*)(s->wdata + s->wdata_size)), (unsigned int)len, 0xFFFF);
 		exit(EXIT_FAILURE);
 	}
 
