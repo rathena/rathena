@@ -722,9 +722,19 @@ int mob_linksearch(struct block_list *bl,va_list ap)
  *------------------------------------------*/
 int mob_delayspawn(int tid, unsigned int tick, int id, intptr data)
 {
-	struct block_list *bl = map_id2bl(id);
-	if (bl && bl->type == BL_MOB && bl->prev == NULL)
-		mob_spawn((TBL_MOB*)bl);
+	struct block_list* bl = map_id2bl(id);
+	struct mob_data* md = BL_CAST(BL_MOB, bl);
+
+	if( md )
+	{
+		if( md->spawn_timer != tid )
+		{
+			ShowError("mob_delayspawn: Timer mismatch: %d != %d\n", tid, md->spawn_timer);
+			return 0;
+		}
+		md->spawn_timer = INVALID_TIMER;
+		mob_spawn(md);
+	}
 	return 0;
 }
 
@@ -745,6 +755,8 @@ int mob_setdelayspawn(struct mob_data *md)
 	if (spawntime < 5000) //Min respawn time (is it needed?)
 		spawntime = 5000;
 
+	if( md->spawn_timer != INVALID_TIMER )
+		delete_timer(md->spawn_timer, mob_delayspawn);
 	md->spawn_timer = add_timer(gettick()+spawntime, mob_delayspawn, md->bl.id, 0);
 	return 0;
 }
@@ -783,12 +795,16 @@ int mob_spawn (struct mob_data *md)
 		{	//Monster can be spawned on an area.
 			if( !map_search_freecell(&md->bl, -1, &md->bl.x, &md->bl.y, md->spawn->xs, md->spawn->ys, battle_config.no_spawn_on_player?4:0) )
 			{ // retry again later
+				if( md->spawn_timer != INVALID_TIMER )
+					delete_timer(md->spawn_timer, mob_delayspawn);
 				md->spawn_timer = add_timer(tick+5000,mob_delayspawn,md->bl.id,0);
 				return 1;
 			}
 		}
 		else if( battle_config.no_spawn_on_player > 99 && map_foreachinrange(mob_count_sub, &md->bl, AREA_SIZE, BL_PC) )
 		{ // retry again later (players on sight)
+			if( md->spawn_timer != INVALID_TIMER )
+				delete_timer(md->spawn_timer, mob_delayspawn);
 			md->spawn_timer = add_timer(tick+5000,mob_delayspawn,md->bl.id,0);
 			return 1;
 		}
@@ -799,7 +815,11 @@ int mob_spawn (struct mob_data *md)
 	md->attacked_id = 0;
 	md->target_id = 0;
 	md->move_fail_count = 0;
-	md->spawn_timer = INVALID_TIMER;
+	if( md->spawn_timer != INVALID_TIMER )
+	{
+		delete_timer(md->spawn_timer, mob_delayspawn);
+		md->spawn_timer = INVALID_TIMER;
+	}
 
 //	md->master_id = 0;
 	md->master_dist = 0;
