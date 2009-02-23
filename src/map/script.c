@@ -11330,6 +11330,8 @@ BUILDIN_FUNC(summon)
 	if (md) {
 		md->master_id=sd->bl.id;
 		md->special_state.ai=1;
+		if( md->deletetimer != INVALID_TIMER )
+			delete_timer(md->deletetimer, mob_timer_delete);
 		md->deletetimer = add_timer(tick+(timeout>0?timeout*1000:60000),mob_timer_delete,md->bl.id,0);
 		mob_spawn (md); //Now it is ready for spawning.
 		clif_misceffect2(&md->bl,344);

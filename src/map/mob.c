@@ -1705,13 +1705,20 @@ static void mob_item_drop(struct mob_data *md, struct item_drop_list *dlist, str
 
 int mob_timer_delete(int tid, unsigned int tick, int id, intptr data)
 {
-	struct block_list *bl=map_id2bl(id);
-	nullpo_retr(0, bl);
-	if (bl->type != BL_MOB)
-		return 0; //??
-	//for Alchemist CANNIBALIZE [Lupus]
-	((TBL_MOB*)bl)->deletetimer = INVALID_TIMER;
-	unit_free(bl,3);
+	struct block_list* bl = map_id2bl(id);
+	struct mob_data* md = BL_CAST(BL_MOB, bl);
+
+	if( md )
+	{
+		if( md->deletetimer != tid )
+		{
+			ShowError("mob_timer_delete: Timer mismatch: %d != %d\n", tid, md->deletetimer);
+			return 0;
+		}
+		//for Alchemist CANNIBALIZE [Lupus]
+		md->deletetimer = INVALID_TIMER;
+		unit_free(bl, 3);
+	}
 	return 0;
 }
 
@@ -3227,7 +3234,11 @@ int mob_clone_spawn(struct map_session_data *sd, int m, int x, int y, const char
 		if (master_id) //Attach to Master
 			md->master_id = master_id;
 		if (duration) //Auto Delete after a while.
+		{
+			if( md->deletetimer != INVALID_TIMER )
+				delete_timer(md->deletetimer, mob_timer_delete);
 			md->deletetimer = add_timer (gettick() + duration, mob_timer_delete, md->bl.id, 0);
+		}
 	}
 
 	mob_spawn(md);

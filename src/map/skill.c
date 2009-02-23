@@ -6002,6 +6002,8 @@ int skill_castend_pos2(struct block_list* src, int x, int y, int skillid, int sk
 			if (md) {
 				md->master_id = src->id;
 				md->special_state.ai = skillid==AM_SPHEREMINE?2:3;
+				if( md->deletetimer != INVALID_TIMER )
+					delete_timer(md->deletetimer, mob_timer_delete);
 				md->deletetimer = add_timer (gettick() + skill_get_time(skillid,skilllv), mob_timer_delete, md->bl.id, 0);
 				mob_spawn (md); //Now it is ready for spawning.
 			}
@@ -6104,7 +6106,11 @@ int skill_castend_pos2(struct block_list* src, int x, int y, int skillid, int sk
 				TBL_MOB* md = mob_once_spawn_sub(src, src->m, x, y, "--ja--",(skilllv < 2 ? 1084+rand()%2 : 1078+rand()%6),"");
 				if (!md) break;
 				if ((i = skill_get_time(skillid, skilllv)) > 0)
+				{
+					if( md->deletetimer != INVALID_TIMER )
+						delete_timer(md->deletetimer, mob_timer_delete);
 					md->deletetimer = add_timer (tick + i, mob_timer_delete, md->bl.id, 0);
+				}
 				mob_spawn (md);
 			}
 		}

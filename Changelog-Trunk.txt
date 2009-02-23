@@ -6,6 +6,8 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 2009/02/23
 	* Made mob_delayspawn check the spawn_timer in the mob. [FlavioJS]
 	* Added missing delete_timer's every time spawn_timer is being set. (except when allocating)
+	* Made mob_timer_delete check the deletetimer in the mob.
+	* Added missing delete_timer's every time deletetimer is being set. (except when allocating)
 2009/02/20
 	* Increased variable size for status/skill points to remove the 65k cap (bugreport:1579) [ultramage]
 	* Modified WFIFOSET to trigger a fatal error when trying to send a packet that is too big. [FlavioJS]
