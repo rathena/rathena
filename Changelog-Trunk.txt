@@ -8,6 +8,13 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 	* Added missing delete_timer's every time spawn_timer is being set. (except when allocating)
 	* Made mob_timer_delete check the deletetimer in the mob.
 	* Added missing delete_timer's every time deletetimer is being set. (except when allocating)
+	* Consolidated is_atcommand() and is_atcommand_sub() [SketchyPhoenix]
+	- replaced gmlvl arg with a flag arg for internal/player generated checks. (dummy sds that used this arg are given gm levels)
+	- each command check runs through is_atcommand() and is checked for its origin (internal or player generated)
+	- charcommands are also parsed in this function.
+	- script atcommand/charcommand function calls to is_atcommand() have been updated
+	- also updated some clif/map functions calls to is_atcommand()
+	* charcommands should now log properly with the target of the command included.
 2009/02/20
 	* Increased variable size for status/skill points to remove the 65k cap (bugreport:1579) [ultramage]
 	* Modified WFIFOSET to trigger a fatal error when trying to send a packet that is too big. [FlavioJS]

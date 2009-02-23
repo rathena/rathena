@@ -8217,7 +8217,7 @@ void clif_parse_GlobalMessage(int fd, struct map_session_data* sd)
 	if( !clif_process_message(sd, 0, &name, &namelen, &message, &messagelen) )
 		return;
 
-	if( is_atcommand(fd, sd, message)  )
+	if( is_atcommand(fd, sd, message, 1)  )
 		return;
 
 	if( sd->sc.data[SC_BERSERK] || (sd->sc.data[SC_NOCHAT] && sd->sc.data[SC_NOCHAT]->val1&MANNER_NOCHAT) )
@@ -8528,7 +8528,7 @@ void clif_parse_WisMessage(int fd, struct map_session_data* sd)
 	if( !clif_process_message(sd, 1, &target, &namelen, &message, &messagelen) )
 		return;
 
-	if (is_atcommand(fd, sd, message)  )
+	if (is_atcommand(fd, sd, message, 1)  )
 		return;
 
 	if (sd->sc.data[SC_BERSERK] || (sd->sc.data[SC_NOCHAT] && sd->sc.data[SC_NOCHAT]->val1&MANNER_NOCHAT))
@@ -10055,7 +10055,7 @@ void clif_parse_PartyMessage(int fd, struct map_session_data* sd)
 	if( !clif_process_message(sd, 0, &name, &namelen, &message, &messagelen) )
 		return;
 
-	if( is_atcommand(fd, sd, message)  )
+	if( is_atcommand(fd, sd, message, 1)  )
 		return;
 
 	if( sd->sc.data[SC_BERSERK] || (sd->sc.data[SC_NOCHAT] && sd->sc.data[SC_NOCHAT]->val1&MANNER_NOCHAT) )
@@ -10333,7 +10333,7 @@ void clif_parse_GuildMessage(int fd, struct map_session_data* sd)
 	if( !clif_process_message(sd, 0, &name, &namelen, &message, &messagelen) )
 		return;
 
-	if( is_atcommand(fd, sd, message) )
+	if( is_atcommand(fd, sd, message, 1) )
 		return;
 
 	if( sd->sc.data[SC_BERSERK] || (sd->sc.data[SC_NOCHAT] && sd->sc.data[SC_NOCHAT]->val1&MANNER_NOCHAT) )
@@ -10548,7 +10548,7 @@ void clif_parse_GMKick(int fd, struct map_session_data *sd)
  *------------------------------------------*/
 void clif_parse_GMKickAll(int fd, struct map_session_data* sd)
 {
-	is_atcommand(fd, sd, "@kickall");
+	is_atcommand(fd, sd, "@kickall", 1);
 }
 
 /*==========================================

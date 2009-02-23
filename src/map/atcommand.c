@@ -8924,103 +8924,66 @@ int get_atcommand_level(const AtCommandFunc func)
 
 
 /// Executes an at-command.
-/// To be called by internal server code (bypasses various restrictions).
-bool is_atcommand_sub(const int fd, struct map_session_data* sd, const char* str, int gmlvl)
+bool is_atcommand(const int fd, struct map_session_data* sd, const char* message, int type)
 {
-	AtCommandInfo* info;
-	struct map_session_data *ssd;
+	char charname[NAME_LENGTH], params[100];
+	char charname2[NAME_LENGTH], params2[100];
 	char command[100];
-	char args[100];
 	char output[200];
+	int x, y, z;
 	
-	if( !str || !*str )
-		return false;
+	//Reconstructed message
+	char atcmd_msg[200];
 	
-	if( *str != atcommand_symbol && *str != charcommand_symbol ) // check first char
-		return false;
-	
-	if( sscanf(str, "%99s %99[^\n]", command, args) < 2 )
-		args[0] = '\0';
+	TBL_PC * ssd = NULL; //sd for target
+	AtCommandInfo * info;
 
-	info = get_atcommandinfo_byname(command);
-	if( info == NULL || info->func == NULL || ( *str == atcommand_symbol && gmlvl < info->level ) || ( *str == charcommand_symbol && gmlvl < info->level2 ) )
-	{
-		if( gmlvl == 0 )
-			return false; // will just display as normal text
-		else
-		{
-			sprintf(output, msg_txt(153), command); // "%s is Unknown Command."
-			clif_displaymessage(fd, output);
-			return true;
-		}
-	}
-
-	if( log_config.gm && info->level >= log_config.gm && *str == atcommand_symbol )
-		log_atcommand(sd, str);
-	
-	if( log_config.gm && info->level2 >= log_config.gm && *str == charcommand_symbol 
-	&& (ssd = (struct map_session_data *)session[fd]->session_data) != NULL )
-		log_atcommand(ssd, str);
-
-	if( info->func(fd, sd, command, args) != 0 )
-	{
-		sprintf(output, msg_txt(154), command); // "%s failed."
-		clif_displaymessage(fd, output);
-	}
-	
-	return true;
-}
-
-/// Executes an at-command.
-/// To be used by player-invoked code (restrictions will be applied).
-bool is_atcommand(const int fd, struct map_session_data* sd, const char* message)
-{
-	struct map_session_data* pl_sd;
-	
-	char charname[NAME_LENGTH], charname2[NAME_LENGTH];
-	char cmd[100];
-	char param[100], param2[100];
-	char output[200];
-	char message2[200];
-	
-	int x, y, z, gmlvl = pc_isGM(sd);
-	
 	nullpo_retr(false, sd);
 	
+	//Shouldn't happen
 	if( !message || !*message )
-		return false; // shouldn't happen
+		return false;
 	
+	//Block NOCHAT but do not display it as a normal message
 	if( sd->sc.data[SC_NOCHAT] && sd->sc.data[SC_NOCHAT]->val1&MANNER_NOCOMMAND )
-		return true; // so that it won't display as normal message
-	
-	if( battle_config.atc_gmonly != 0 && gmlvl == 0 )
-		return false;
-	
-	if( map[sd->bl.m].nocommand && gmlvl < map[sd->bl.m].nocommand )
-	{
-		clif_displaymessage(fd, msg_txt(143)); // "Commands are disabled on this map."
-		return false;
-	}
-	
+		return true;
+		
 	// skip 10/11-langtype's codepage indicator, if detected
 	if( message[0] == '|' && strlen(message) >= 4 && (message[3] == atcommand_symbol || message[3] == charcommand_symbol) )
 		message += 3;
-
-	if (*message == charcommand_symbol)
+		
+	//Should display as a normal message
+	if ( *message != atcommand_symbol && *message != charcommand_symbol )
+		return false;
+	
+	// type value 0 = server invoked: bypass restrictions
+	// 1 = player invoked
+	if( type )
 	{
-		if (gmlvl == 0)
+		//Commands are disabled on maps flagged as 'nocommand'
+		if( map[sd->bl.m].nocommand && pc_isGM(sd) < map[sd->bl.m].nocommand )
+		{
+			clif_displaymessage(fd, msg_txt(143));
 			return false;
-			
+		}
+		
+		//Displays as a normal message for Non-GMs
+		if( battle_config.atc_gmonly != 0 && pc_isGM(sd) == 0 )
+			return false;	
+	}
+
+	while (*message == charcommand_symbol)
+	{	
 		//Checks to see if #command has a name or a name + parameters.
-		x = sscanf(message, "%99s \"%23[^\"]\" %99[^\n]", cmd, charname, param);
-		y = sscanf(message, "%99s %23s %99[^\n]", cmd, charname2, param2);
+		x = sscanf(message, "%99s \"%23[^\"]\" %99[^\n]", command, charname, params);
+		y = sscanf(message, "%99s %23s %99[^\n]", command, charname2, params2);
 		
 		//z always has the value of the scan that was successful
 		z = ( x > 1 ) ? x : y;
 		
-		if ( (pl_sd = map_nick2sd(charname)) == NULL  && ( (pl_sd = map_nick2sd(charname2)) == NULL ) )
+		if ( (ssd = map_nick2sd(charname)) == NULL  && ( (ssd = map_nick2sd(charname2)) == NULL ) )
 		{
-			sprintf(output, "%s failed. Player not found.", cmd);
+			sprintf(output, "%s failed. Player not found.", command);
 			clif_displaymessage(fd, output);
 			return true;
 		}
@@ -9029,28 +8992,65 @@ bool is_atcommand(const int fd, struct map_session_data* sd, const char* message
 		//can be looked at by the actual command function since most scan to see if the
 		//right parameters are used.
 		if ( x > 2 ) {
-			sprintf(message2, "%s %s", cmd, param);
-			return is_atcommand_sub(fd,pl_sd,message2,gmlvl);
+			sprintf(atcmd_msg, "%s %s", command, params);
+			break;
 		}
 		else if ( y > 2 ) {
-			sprintf(message2, "%s %s", cmd, param2);
-			return is_atcommand_sub(fd,pl_sd,message2,gmlvl);
+			sprintf(atcmd_msg, "%s %s", command, params2);
+			break;
 		}
-		
 		//Regardless of what style the #command is used, if it's correct, it will always have
 		//this value if there is no parameter. Send it as just the #command
-		if ( z == 2 ) {
-			sprintf(message2, "%s", cmd);
-			return is_atcommand_sub(fd,pl_sd,message2,gmlvl);
+		else if ( z == 2 ) {
+			sprintf(atcmd_msg, "%s", command);
+			break;
 		}
 		
 		sprintf(output, "Charcommand failed. Usage: #<command> <char name> <params>.");
 		clif_displaymessage(fd, output);
 		return true;
-		
 	}
 	
-	return is_atcommand_sub(fd,sd,message,gmlvl);
+	if (*message == atcommand_symbol) {
+		//atcmd_msg is constructed above differently for charcommands
+		//it's copied from message if not a charcommand so it can 
+		//pass through the rest of the code compatible with both symbols
+		sprintf(atcmd_msg, "%s", message);
+	}
+	
+	//Clearing these to be used once more. 
+	memset(command, '\0', sizeof(command));
+	memset(params, '\0', sizeof(params));
+	
+	//check to see if any params exist within this command
+	if( sscanf(atcmd_msg, "%99s %99[^\n]", command, params) < 2 )
+		params[0] = '\0';
+	
+	//Grab the command information and check for the proper GM level required to use it or if the command exists
+	info = get_atcommandinfo_byname(command);
+	if( info == NULL || info->func == NULL || ( *atcmd_msg == atcommand_symbol && pc_isGM(sd) < info->level ) || ( *atcmd_msg == charcommand_symbol && pc_isGM(sd) < info->level2 ) )
+	{
+			sprintf(output, msg_txt(153), command); // "%s is Unknown Command."
+			clif_displaymessage(fd, output);
+			return true;
+	}
+	
+	//Attempt to use the command
+	if ( (info->func(fd, (*atcmd_msg == atcommand_symbol) ? sd : ssd, command, params) != 0) )
+	{
+		sprintf(output,msg_txt(154), command);
+		clif_displaymessage(fd, output);
+	}
+	
+	//Log atcommands
+	if( log_config.gm && info->level >= log_config.gm && *atcmd_msg == atcommand_symbol )
+		log_atcommand(sd, atcmd_msg);
+		
+	//Log Charcommands
+	if( log_config.gm && info->level2 >= log_config.gm && *atcmd_msg == charcommand_symbol && ssd != NULL )
+		log_atcommand(ssd, message);
+	
+	return true;
 }
 
 

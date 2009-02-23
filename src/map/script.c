@@ -10733,7 +10733,8 @@ BUILDIN_FUNC(atcommand)
 			cmd++;
 	}
 
-	is_atcommand_sub(fd, sd, cmd, 99);
+	sd->gmlevel = 99;
+	is_atcommand(fd, sd, cmd, 0);
 
 	return 0;
 }
@@ -10742,11 +10743,8 @@ BUILDIN_FUNC(charcommand)
 {
 	TBL_PC dummy_sd;
 	TBL_PC* sd;
-	TBL_PC* temp_sd;
-	char output[200], temp[200], command[200], charname[NAME_LENGTH], param[200];
 	int fd;
 	const char* cmd;
-	const char* message;
 
 	cmd = script_getstr(st,2);
 
@@ -10767,24 +10765,14 @@ BUILDIN_FUNC(charcommand)
 		}
 	}
 
-	if (*cmd == charcommand_symbol)
-	{
-		if (sscanf(cmd, "%99s \"%23[^\"]\" %99[^\n]", command, charname, param) > 2
-		|| sscanf(cmd, "%99s %23s %99[^\n]", command, charname, param) > 2)
-		{
-			if ( (temp_sd = map_nick2sd(charname)) != NULL )
-			{
-				sprintf(output, "%s %s", cmd, param);
-				memcpy(temp, output, sizeof(output));
-				message = temp;
-				is_atcommand_sub(fd,sd,message,99);
-			}
-		}
-	}
-	else {
+	if (*cmd != charcommand_symbol) {
 		ShowWarning("script: buildin_charcommand: No '#' symbol!");
 		script_reportsrc(st);
+		return 1;
 	}
+	
+	sd->gmlevel = 99;
+	is_atcommand(0, sd, cmd, 0);
 
 	return 0;
 }
