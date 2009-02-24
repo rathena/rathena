@@ -9028,7 +9028,8 @@ bool is_atcommand(const int fd, struct map_session_data* sd, const char* message
 	
 	//Grab the command information and check for the proper GM level required to use it or if the command exists
 	info = get_atcommandinfo_byname(command);
-	if( info == NULL || info->func == NULL || ( *atcmd_msg == atcommand_symbol && pc_isGM(sd) < info->level ) || ( *atcmd_msg == charcommand_symbol && pc_isGM(sd) < info->level2 ) )
+	if( info == NULL || info->func == NULL || ( *atcmd_msg == atcommand_symbol && ((info) ? 99:pc_isGM(sd)) < info->level ) 
+	|| ( *atcmd_msg == charcommand_symbol && ((info) ? 99:pc_isGM(sd)) < info->level2 ) )
 	{
 			sprintf(output, msg_txt(153), command); // "%s is Unknown Command."
 			clif_displaymessage(fd, output);

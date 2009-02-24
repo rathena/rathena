@@ -10733,7 +10733,6 @@ BUILDIN_FUNC(atcommand)
 			cmd++;
 	}
 
-	sd->gmlevel = 99;
 	is_atcommand(fd, sd, cmd, 0);
 
 	return 0;
@@ -10771,7 +10770,6 @@ BUILDIN_FUNC(charcommand)
 		return 1;
 	}
 	
-	sd->gmlevel = 99;
 	is_atcommand(0, sd, cmd, 0);
 
 	return 0;
