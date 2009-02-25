@@ -979,7 +979,7 @@ int StringBuf_Vprintf(StringBuf* self, const char* fmt, va_list ap)
 		/* Try to print in the allocated space. */
 		size = self->max_ - (self->ptr_ - self->buf_);
 		va_copy(apcopy, ap);
-		n = vsnprintf(self->ptr_, size, fmt, ap);
+		n = vsnprintf(self->ptr_, size, fmt, apcopy);
 		va_end(apcopy);
 		/* If that worked, return the length. */
 		if( n > -1 && n < size )
