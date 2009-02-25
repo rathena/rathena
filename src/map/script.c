@@ -10734,7 +10734,6 @@ BUILDIN_FUNC(atcommand)
 	}
 
 	is_atcommand(fd, sd, cmd, 0);
-
 	return 0;
 }
 
@@ -10770,8 +10769,7 @@ BUILDIN_FUNC(charcommand)
 		return 1;
 	}
 	
-	is_atcommand(0, sd, cmd, 0);
-
+	is_atcommand(fd, sd, cmd, 0);
 	return 0;
 }
 
