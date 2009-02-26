@@ -161,6 +161,12 @@
 				RelativePath="..\src\map\battle.h">
 			</File>
 			<File
+				RelativePath="..\src\map\battleground.c">
+			</File>
+			<File
+				RelativePath="..\src\map\battleground.h">
+			</File>
+			<File
 				RelativePath="..\src\map\chat.c">
 			</File>
 			<File

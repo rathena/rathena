@@ -199,6 +199,10 @@ SOURCE=..\src\map\battle.c
 # End Source File
 # Begin Source File
 
+SOURCE=..\src\map\battleground.c
+# End Source File
+# Begin Source File
+
 SOURCE=..\src\map\chat.c
 # End Source File
 # Begin Source File
@@ -312,6 +316,10 @@ SOURCE=..\src\map\atcommand.h
 # Begin Source File
 
 SOURCE=..\src\map\battle.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\map\battleground.h
 # End Source File
 # Begin Source File
 
