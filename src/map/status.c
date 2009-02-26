@@ -686,8 +686,7 @@ int status_damage(struct block_list *src,struct block_list *target,int hp, int s
 			if ((sce=sc->data[SC_ENDURE]) && !sce->val4) {
 				//Endure count is only reduced by non-players on non-gvg maps.
 				//val4 signals infinite endure. [Skotlex]
-				if (src && src->type != BL_PC && !map_flag_gvg(target->m)
-					&& --(sce->val2) < 0)
+				if (src && src->type != BL_PC && !map_flag_gvg(target->m) && !map[target->m].flag.battleground && --(sce->val2) < 0)
 					status_change_end(target, SC_ENDURE, -1);
 			}
 			if ((sce=sc->data[SC_GRAVITATION]) && sce->val3 == BCT_SELF)
@@ -3614,8 +3613,13 @@ static signed short status_calc_hit(struct block_list *bl, struct status_change 
 
 static signed short status_calc_flee(struct block_list *bl, struct status_change *sc, int flee)
 {
-	if (bl->type == BL_PC && map_flag_gvg(bl->m)) //GVG grounds flee penalty, placed here because it's "like" a status change. [Skotlex]
-		flee -= flee * battle_config.gvg_flee_penalty/100;
+	if( bl->type == BL_PC )
+	{
+		if( map_flag_gvg(bl->m) )
+			flee -= flee * battle_config.gvg_flee_penalty/100;
+		else if( map[bl->m].flag.battleground )
+			flee -= flee * battle_config.bg_flee_penalty/100;
+	}
 
 	if(!sc || !sc->count)
 		return cap_value(flee,1,SHRT_MAX);
@@ -4025,14 +4029,14 @@ static short status_calc_aspd_rate(struct block_list *bl, struct status_change *
 
 static unsigned short status_calc_dmotion(struct block_list *bl, struct status_change *sc, int dmotion)
 {
-	if(!sc || !sc->count || map_flag_gvg(bl->m))
+	if( !sc || !sc->count || map_flag_gvg(bl->m) || map[bl->m].flag.battleground )
 		return cap_value(dmotion,0,USHRT_MAX);
 		
-	if (sc->data[SC_ENDURE])
+	if( sc->data[SC_ENDURE] )
 		return 0;
-	if (sc->data[SC_CONCENTRATION])
+	if( sc->data[SC_CONCENTRATION] )
 		return 0;
-	if(sc->data[SC_RUN])
+	if( sc->data[SC_RUN] )
 		return 0;
 
 	return (unsigned short)cap_value(dmotion,0,USHRT_MAX);
@@ -4777,11 +4781,11 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 	if( status_isdead(bl) )
 		return 0;
 
-	if( bl->type == BL_MOB )
+	if( bl->type == BL_MOB && type != SC_SAFETYWALL && type != SC_PNEUMA )
 	{
 		struct mob_data *md = BL_CAST(BL_MOB,bl);
-		if( md->class_ == MOBID_EMPERIUM && type != SC_SAFETYWALL && type != SC_PNEUMA )
-			return 0; //Emperium can't be afflicted by status changes
+		if( md->class_ == MOBID_EMPERIUM || mob_is_battleground(md) )
+			return 0; //Emperium/BG Monsters can't be afflicted by status changes
 	}
 
 	sd = BL_CAST(BL_PC, bl);
@@ -5180,7 +5184,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			break;
 		case SC_ENDURE:
 			val2 = 7; // Hit-count [Celest]
-			if( !(flag&1) && (bl->type&(BL_PC|BL_MER)) && !map_flag_gvg(bl->m) && !val4 )
+			if( !(flag&1) && (bl->type&(BL_PC|BL_MER)) && !map_flag_gvg(bl->m) && !map[bl->m].flag.battleground && !val4 )
 			{
 				struct map_session_data *tsd;
 				if( sd )
@@ -5473,7 +5477,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			if (sc->data[SC_SPIRIT] && sc->data[SC_SPIRIT]->val2 == SL_ROGUE)
 				val3 -= 40;
 			val4 = 10+val1*2; //SP cost.
-			if (map_flag_gvg(bl->m)) val4 *= 5;
+			if (map_flag_gvg(bl->m) || map[bl->m].flag.battleground) val4 *= 5;
 			break;
 		case SC_CLOAKING:
 			if (!sd) //Monsters should be able to walk with no penalties. [Skotlex]
@@ -5772,7 +5776,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			{ // Inherits Status From Source
 				const enum sc_type types[] = { SC_AUTOGUARD, SC_DEFENDER, SC_REFLECTSHIELD, SC_ENDURE };
 				enum sc_type type2;
-				int i = map_flag_gvg(bl->m)?2:3;
+				int i = (map_flag_gvg(bl->m) || map[bl->m].flag.battleground)?2:3;
 				while( i >= 0 )
 				{
 					type2 = types[i];

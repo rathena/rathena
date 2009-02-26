@@ -662,6 +662,51 @@ int mob_spawn_guardian(const char* mapname, short x, short y, const char* mobnam
 }
 
 /*==========================================
+ * Summoning BattleGround [Zephyrus]
+ *------------------------------------------*/
+int mob_spawn_bg(const char* mapname, short x, short y, const char* mobname, int class_, const char* event, int bg_id)
+{
+	struct mob_data *md = NULL;
+	struct spawn_data data;
+	int m;
+
+	if( (m = map_mapname2mapid(mapname)) < 0 )
+	{
+		ShowWarning("mob_spawn_bg: Map [%s] not found.\n", mapname);
+		return 0;
+	}
+
+	memset(&data, 0, sizeof(struct spawn_data));
+	data.m = m;
+	data.num = 1;
+	if( class_ <= 0 )
+	{
+		class_ = mob_get_random_id(-class_-1,1,99);
+		if( !class_ ) return 0;
+	}
+
+	data.class_ = class_;
+	if( (x <= 0 || y <= 0) && !map_search_freecell(NULL, m, &x, &y, -1,-1, 0) )
+	{
+		ShowWarning("mob_spawn_bg: Couldn't locate a spawn cell for guardian class %d (bg_id %d) at map %s\n",class_, bg_id, map[m].name);
+		return 0;
+	}
+
+	data.x = x;
+	data.y = y;
+	safestrncpy(data.name, mobname, sizeof(data.name));
+	safestrncpy(data.eventname, event, sizeof(data.eventname));
+	if( !mob_parse_dataset(&data) )
+		return 0;
+
+	md = mob_spawn_dataset(&data);
+	mob_spawn(md);
+	md->state.bg_id = bg_id; // BG Team ID
+
+	return md->bl.id;
+}
+
+/*==========================================
  * Reachability to a Specification ID existence place
  * state indicates type of 'seek' mob should do:
  * - MSS_LOOT: Looking for item, path must be easy.

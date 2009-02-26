@@ -14,6 +14,7 @@
 
 #include "atcommand.h" // get_atcommand_level()
 #include "battle.h" // battle_config
+#include "battleground.h"
 #include "chrif.h"
 #include "clif.h"
 #include "date.h" // is_day_of_*()
@@ -79,6 +80,28 @@ int pc_class2idx(int class_) {
 	if (class_ >= JOB_NOVICE_HIGH)
 		return class_- JOB_NOVICE_HIGH+JOB_MAX_BASIC;
 	return class_;
+}
+
+void pc_update_last_action(struct map_session_data *sd)
+{
+	struct battleground_data *bg;
+	int i;
+
+	sd->idletime = last_tick;
+	if( sd->state.bg_id && (bg = bg_team_search(sd->state.bg_id)) != NULL )
+	{ // Update Battleground Idle Timer
+		ARR_FIND(0, MAX_BG_MEMBERS, i, bg->members[i].sd == sd);
+		if( i == MAX_BG_MEMBERS)
+			return;
+
+		if( bg->members[i].afk && bg->g )
+		{
+			char output[128];
+			sprintf(output, "%s : %s is no longer away...", bg->g->name, sd->status.name);
+			clif_bg_message(bg, 0, output, strlen(output));
+			bg->members[i].afk = 0;
+		}
+	}
 }
 
 int pc_isGM(struct map_session_data* sd)
@@ -3740,6 +3763,7 @@ int pc_setpos(struct map_session_data* sd, unsigned short mapindex, int x, int y
 			skill_clear_unitgroup(&sd->bl);
 		party_send_dot_remove(sd); //minimap dot fix [Kevin]
 		guild_send_dot_remove(sd);
+		bg_send_dot_remove(sd);
 		if (sd->regen.state.gc)
 			sd->regen.state.gc = 0;
 	}
@@ -5139,10 +5163,12 @@ void pc_respawn(struct map_session_data* sd, uint8 clrtype)
 {
 	if( !pc_isdead(sd) )
 		return; // not applicable
+	if( sd->state.bg_id && bg_member_respawn(sd) )
+		return; // member revived by battleground
 
 	pc_setstand(sd);
 	pc_setrestartvalue(sd,3);
-	if(pc_setpos(sd, sd->status.save_point.map, sd->status.save_point.x, sd->status.save_point.y, clrtype))
+	if( pc_setpos(sd, sd->status.save_point.map, sd->status.save_point.x, sd->status.save_point.y, clrtype) )
 		clif_resurrection(&sd->bl, 1); //If warping fails, send a normal stand up packet.
 }
 
@@ -5231,6 +5257,13 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 
 	pc_setglobalreg(sd,"PC_DIE_COUNTER",sd->die_counter+1);
 	pc_setglobalreg(sd,"killerrid",src?src->id:0);
+	if( sd->state.bg_id )
+	{
+		struct battleground_data *bg;
+		if( (bg = bg_team_search(sd->state.bg_id)) != NULL && bg->die_event[0] )
+			npc_event(sd, bg->die_event, 0);
+	}
+
 	npc_script_event(sd,NPCE_DIE);
 
 	if ( sd && sd->spiritball && (sd->class_&MAPID_BASEMASK)==MAPID_GUNSLINGER ) // maybe also monks' spiritballs ?
@@ -5436,30 +5469,42 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 	}
 	// pvp
 	// disable certain pvp functions on pk_mode [Valaris]
-	if (map[sd->bl.m].flag.gvg_dungeon ||
-		(map[sd->bl.m].flag.pvp && !battle_config.pk_mode && !map[sd->bl.m].flag.pvp_nocalcrank))
-	{	//Pvp points always take effect on gvg_dungeon maps.
+	if( map[sd->bl.m].flag.gvg_dungeon || (map[sd->bl.m].flag.pvp && !battle_config.pk_mode && !map[sd->bl.m].flag.pvp_nocalcrank) )
+	{ // Pvp points always take effect on gvg_dungeon maps.
 		sd->pvp_point -= 5;
 		sd->pvp_lost++;
-		if (src && src->type == BL_PC) {
+		if( src && src->type == BL_PC )
+		{
 			struct map_session_data *ssd = (struct map_session_data *)src;
 			ssd->pvp_point++;
 			ssd->pvp_won++;
 		}
-		if( sd->pvp_point < 0 ){
+		if( sd->pvp_point < 0 )
+		{
 			sd->pvp_point=0;
 			add_timer(tick+1000, pc_respawn_timer,sd->bl.id,0);
 			return 1|8;
 		}
 	}
 	//GvG
-	if(map_flag_gvg(sd->bl.m)){
-		add_timer(tick+1000, pc_respawn_timer,sd->bl.id,0);
+	if( map_flag_gvg(sd->bl.m) )
+	{
+		add_timer(tick+1000, pc_respawn_timer, sd->bl.id, 0);
 		return 1|8;
 	}
+	else if( sd->state.bg_id )
+	{
+		struct battleground_data *bg = bg_team_search(sd->state.bg_id);
+		if( bg && bg->mapindex > 0 )
+		{ // Respawn by BG
+			add_timer(tick+1000, pc_respawn_timer, sd->bl.id, 0);
+			return 1|8;
+		}
+	}
+
 
 	//Reset "can log out" tick.
-	if (battle_config.prevent_logout)
+	if( battle_config.prevent_logout )
 		sd->canlog_tick = gettick() - battle_config.prevent_logout;
 	return 1;
 }

@@ -35,6 +35,7 @@
 #include "status.h"
 #include "chat.h"
 #include "battle.h"
+#include "battleground.h"
 #include "party.h"
 #include "guild.h"
 #include "atcommand.h"
@@ -4066,6 +4067,38 @@ BUILDIN_FUNC(areawarp)
 }
 
 /*==========================================
+ * areapercentheal <map>,<x1>,<y1>,<x2>,<y2>,<hp>,<sp>
+ *------------------------------------------*/
+static int buildin_areapercentheal_sub(struct block_list *bl,va_list ap)
+{
+	int hp, sp;
+	hp = va_arg(ap, int);
+	sp = va_arg(ap, int);
+	pc_percentheal((TBL_PC *)bl,hp,sp);
+	return 0;
+}
+BUILDIN_FUNC(areapercentheal)
+{
+	int hp,sp,m;
+	const char *mapname;
+	int x0,y0,x1,y1;
+
+	mapname=script_getstr(st,2);
+	x0=script_getnum(st,3);
+	y0=script_getnum(st,4);
+	x1=script_getnum(st,5);
+	y1=script_getnum(st,6);
+	hp=script_getnum(st,8);
+	sp=script_getnum(st,9);
+
+	if( (m=map_mapname2mapid(mapname))< 0)
+		return 0;
+
+	map_foreachinarea(buildin_areapercentheal_sub,m,x0,y0,x1,y1,BL_PC,hp,sp);
+	return 0;
+}
+
+/*==========================================
  * warpchar [LuzZza]
  * Useful for warp one player from 
  * another player npc-session.
@@ -5782,6 +5815,7 @@ BUILDIN_FUNC(getcharid)
 	case 1: script_pushint(st,sd->status.party_id); break;
 	case 2: script_pushint(st,sd->status.guild_id); break;
 	case 3: script_pushint(st,sd->status.account_id); break;
+	case 4: script_pushint(st,sd->state.bg_id); break;
 	default:
 		ShowError("buildin_getcharid: invalid parameter (%d).\n", num);
 		script_pushint(st,0);
@@ -13277,6 +13311,228 @@ BUILDIN_FUNC(setqueststatus)
 	return 0;
 }
 
+/*==========================================
+ * BattleGround System
+ *------------------------------------------*/
+BUILDIN_FUNC(waitingroom2bg)
+{
+	struct npc_data *nd;
+	struct chat_data *cd;
+	const char *map_name, *ev = "", *dev = "";
+	int x, y, i, mapindex = 0, guild_index, bg_id, n;
+	struct map_session_data *sd;
+
+	if( script_hasdata(st,8) )
+		nd = npc_name2id(script_getstr(st,8));
+	else
+		nd = (struct npc_data *)map_id2bl(st->oid);
+
+	if( nd == NULL || (cd = (struct chat_data *)map_id2bl(nd->chat_id)) == NULL )
+	{
+		script_pushint(st,0);
+		return 0;
+	}
+
+	map_name = script_getstr(st,2);
+	if( strcmp(map_name,"-") != 0 )
+	{
+		mapindex = mapindex_name2id(map_name);
+		if( mapindex == 0 )
+		{ // Invalid Map
+			script_pushint(st,0);
+			return 0;
+		}
+	}
+
+	x = script_getnum(st,3);
+	y = script_getnum(st,4);
+	guild_index = script_getnum(st,5);
+	ev = script_getstr(st,6); // Logout Event
+	dev = script_getstr(st,7); // Die Event
+
+	guild_index = cap_value(guild_index, 0, 1);
+	if( (bg_id = bg_create(mapindex, x, y, guild_index, ev, dev)) == 0 )
+	{ // Creation failed
+		script_pushint(st,0);
+		return 0;
+	}
+
+	n = cd->users;
+	for( i = 0; i < n && i < MAX_BG_MEMBERS; i++ )
+	{
+		if( (sd = cd->usersd[i]) != NULL && bg_team_join(bg_id, sd) )
+			mapreg_setreg(add_str("$@arenamembers") + (i<<24), sd->bl.id);
+		else
+			mapreg_setreg(add_str("$@arenamembers") + (i<<24), 0);
+	}
+
+	mapreg_setreg(add_str("$@arenamembersnum"), i);
+	script_pushint(st,bg_id);
+	return 0;
+}
+
+BUILDIN_FUNC(waitingroom2bg_single)
+{
+	const char* map_name;
+	struct npc_data *nd;
+	struct chat_data *cd;
+	struct map_session_data *sd;
+	int x, y, mapindex, bg_id;
+
+	bg_id = script_getnum(st,2);
+	map_name = script_getstr(st,3);
+	if( (mapindex = mapindex_name2id(map_name)) == 0 )
+		return 0; // Invalid Map
+
+	x = script_getnum(st,4);
+	y = script_getnum(st,5);
+	nd = npc_name2id(script_getstr(st,6));
+
+	if( nd == NULL || (cd = (struct chat_data *)map_id2bl(nd->chat_id)) == NULL || cd->users <= 0 )
+		return 0;
+
+	if( (sd = cd->usersd[0]) == NULL )
+		return 0;
+
+	if( bg_team_join(bg_id, sd) )
+	{
+		pc_setpos(sd, mapindex, x, y, 3);
+		script_pushint(st,1);
+	}
+	else
+		script_pushint(st,0);
+
+	return 0;
+}
+
+BUILDIN_FUNC(bg_warp)
+{
+	int x, y, mapindex, bg_id;
+	const char* map_name;
+
+	bg_id = script_getnum(st,2);
+	map_name = script_getstr(st,3);
+	if( (mapindex = mapindex_name2id(map_name)) == 0 )
+		return 0; // Invalid Map
+	x = script_getnum(st,4);
+	y = script_getnum(st,5);
+	bg_team_warp(bg_id, mapindex, x, y);
+	return 0;
+}
+
+BUILDIN_FUNC(bg_monster)
+{
+	int class_ = 0, x = 0, y = 0, bg_id = 0;
+	const char *str,*map, *evt="";
+
+	bg_id  = script_getnum(st,2);
+	map    = script_getstr(st,3);
+	x      = script_getnum(st,4);
+	y      = script_getnum(st,5);
+	str    = script_getstr(st,6);
+	class_ = script_getnum(st,7);
+	if( script_hasdata(st,8) ) evt = script_getstr(st,8);
+	check_event(st, evt);
+	script_pushint(st, mob_spawn_bg(map,x,y,str,class_,evt,bg_id));
+	return 0;
+}
+
+BUILDIN_FUNC(setmobdata)
+{
+	struct mob_data *md;
+	struct block_list *mbl;
+	int id = script_getnum(st,2),
+		type = script_getnum(st,3),
+		value = script_getnum(st,4);
+
+	if( (mbl = map_id2bl(id)) == NULL || mbl->type != BL_MOB )
+		return 0;
+	md = (TBL_MOB *)mbl;
+	switch( type )
+	{
+		case 0: md->state.inmunity = value > 0 ? 1 : 0; break;
+		default:
+			ShowError("script:setmobdata: unknown data identifier %d\n", type);
+			return 1;
+	}
+
+	return 0;
+}
+
+BUILDIN_FUNC(bg_leave)
+{
+	struct map_session_data *sd = script_rid2sd(st);
+	if( sd == NULL || !sd->state.bg_id )
+		return 0;
+	
+	bg_team_leave(sd,0);
+	return 0;
+}
+
+BUILDIN_FUNC(bg_destroy)
+{
+	int bg_id = script_getnum(st,2);
+	bg_team_delete(bg_id);
+	return 0;
+}
+
+BUILDIN_FUNC(bg_getareausers)
+{
+	const char *str;
+	int m, x0, y0, x1, y1, bg_id;
+	int i = 0, c = 0;
+	struct battleground_data *bg = NULL;
+	struct map_session_data *sd;
+
+	bg_id = script_getnum(st,2);
+	str = script_getstr(st,3);
+
+	if( (bg = bg_team_search(bg_id)) == NULL || (m = map_mapname2mapid(str)) < 0 )
+	{
+		script_pushint(st,0);
+		return 0;
+	}
+
+	x0 = script_getnum(st,4);
+	y0 = script_getnum(st,5);
+	x1 = script_getnum(st,6);
+	y1 = script_getnum(st,7);
+
+	for( i = 0; i < MAX_BG_MEMBERS; i++ )
+	{
+		if( (sd = bg->members[i].sd) == NULL )
+			continue;
+		if( sd->bl.m != m || sd->bl.x < x0 || sd->bl.y < y0 || sd->bl.x > x1 || sd->bl.y > y1 )
+			continue;
+		c++;
+	}
+
+	script_pushint(st,c);
+	return 0;
+}
+
+BUILDIN_FUNC(bg_get_data)
+{
+	struct battleground_data *bg;
+	int bg_id = script_getnum(st,2),
+		type = script_getnum(st,3);
+
+	if( (bg = bg_team_search(bg_id)) == NULL )
+	{
+		script_pushint(st,0);
+		return 0;
+	}
+
+	switch( type )
+	{
+		case 0: script_pushint(st, bg->count); break;
+		default:
+			ShowError("script:bg_get_data: unknown data identifier %d\n", type);
+			break;
+	}
+
+	return 0;
+}
 
 // declarations that were supposed to be exported from npc_chat.c
 #ifdef PCRE_SUPPORT
@@ -13637,5 +13893,16 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(agitstart2,""),
 	BUILDIN_DEF(agitend2,""),
 	BUILDIN_DEF(agitcheck2,""),
+	// BattleGround
+	BUILDIN_DEF(waitingroom2bg,"siiiss?"),
+	BUILDIN_DEF(waitingroom2bg_single,"isiis"),
+	BUILDIN_DEF(bg_warp,"isii"),
+	BUILDIN_DEF(bg_monster,"isiisi*"),
+	BUILDIN_DEF(bg_leave,""),
+	BUILDIN_DEF(bg_destroy,"i"),
+	BUILDIN_DEF(areapercentheal,"siiiiii"),
+	BUILDIN_DEF(setmobdata,"iii"),
+	BUILDIN_DEF(bg_get_data,"ii"),
+	BUILDIN_DEF(bg_getareausers,"isiiii"),
 	{NULL,NULL,NULL},
 };

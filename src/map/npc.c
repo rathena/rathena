@@ -2651,13 +2651,18 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 		map[m].flag.nozenypenalty=state;
 	}
 	else if (!strcmpi(w3,"pvp")) {
-		map[m].flag.pvp=state;
-		if (state) {
-			if (map[m].flag.gvg || map[m].flag.gvg_dungeon || map[m].flag.gvg_castle)
-				ShowWarning("npc_parse_mapflag: You can't set PvP and GvG flags for the same map! Removing GvG flags from %s (file '%s', line '%d').\n", map[m].name, filepath, strline(buffer,start-buffer));
-			map[m].flag.gvg=0;
-			map[m].flag.gvg_dungeon=0;
-			map[m].flag.gvg_castle=0;
+		map[m].flag.pvp = state;
+		if( state && (map[m].flag.gvg || map[m].flag.gvg_dungeon || map[m].flag.gvg_castle) )
+		{
+			map[m].flag.gvg = 0;
+			map[m].flag.gvg_dungeon = 0;
+			map[m].flag.gvg_castle = 0;
+			ShowWarning("npc_parse_mapflag: You can't set PvP and GvG flags for the same map! Removing GvG flags from %s (file '%s', line '%d').\n", map[m].name, filepath, strline(buffer,start-buffer));
+		}
+		if( state && map[m].flag.battleground )
+		{
+			map[m].flag.battleground = 0;
+			ShowWarning("npc_parse_mapflag: You can't set GvG and BattleGround flags for the same map! Removing BattleGround flag from %s (file '%s', line '%d').\n", map[m].name, filepath, strline(buffer,start-buffer));
 		}
 	}
 	else if (!strcmpi(w3,"pvp_noparty"))
@@ -2697,11 +2702,16 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 	else if (!strcmpi(w3,"pvp_nocalcrank"))
 		map[m].flag.pvp_nocalcrank=state;
 	else if (!strcmpi(w3,"gvg")) {
-		map[m].flag.gvg=state;
-		if (state && map[m].flag.pvp)
+		map[m].flag.gvg = state;
+		if( state && map[m].flag.pvp )
 		{
-			map[m].flag.pvp=0;
+			map[m].flag.pvp = 0;
 			ShowWarning("npc_parse_mapflag: You can't set PvP and GvG flags for the same map! Removing PvP flag from %s (file '%s', line '%d').\n", map[m].name, filepath, strline(buffer,start-buffer));
+		}
+		if( state && map[m].flag.battleground )
+		{
+			map[m].flag.battleground = 0;
+			ShowWarning("npc_parse_mapflag: You can't set PvP and BattleGround flags for the same map! Removing BattleGround flag from %s (file '%s', line '%d').\n", map[m].name, filepath, strline(buffer,start-buffer));
 		}
 	}
 	else if (!strcmpi(w3,"gvg_noparty"))
@@ -2713,6 +2723,21 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 	else if (!strcmpi(w3,"gvg_castle")) {
 		map[m].flag.gvg_castle=state;
 		if (state) map[m].flag.pvp=0;
+	}
+	else if (!strcmpi(w3,"battleground")) {
+		map[m].flag.battleground = state;
+		if( state && map[m].flag.pvp )
+		{
+			map[m].flag.pvp = 0;
+			ShowWarning("npc_parse_mapflag: You can't set PvP and BattleGround flags for the same map! Removing PvP flag from %s (file '%s', line '%d').\n", map[m].name, filepath, strline(buffer,start-buffer));
+		}
+		if( state && (map[m].flag.gvg || map[m].flag.gvg_dungeon || map[m].flag.gvg_castle) )
+		{
+			map[m].flag.gvg = 0;
+			map[m].flag.gvg_dungeon = 0;
+			map[m].flag.gvg_castle = 0;
+			ShowWarning("npc_parse_mapflag: You can't set GvG and BattleGround flags for the same map! Removing GvG flag from %s (file '%s', line '%d').\n", map[m].name, filepath, strline(buffer,start-buffer));
+		}
 	}
 	else if (!strcmpi(w3,"noexppenalty"))
 		map[m].flag.noexppenalty=state;

@@ -96,6 +96,9 @@
 				Name="VCAppVerifierTool"
 			/>
 			<Tool
+				Name="VCWebDeploymentTool"
+			/>
+			<Tool
 				Name="VCPostBuildEventTool"
 			/>
 		</Configuration>
@@ -185,6 +188,9 @@
 			/>
 			<Tool
 				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCWebDeploymentTool"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
@@ -351,6 +357,14 @@
 			</File>
 			<File
 				RelativePath="..\src\map\battle.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\map\battleground.c"
+				>
+			</File>
+			<File
+				RelativePath="..\src\map\battleground.h"
 				>
 			</File>
 			<File

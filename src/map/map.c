@@ -31,6 +31,7 @@
 #include "party.h"
 #include "unit.h"
 #include "battle.h"
+#include "battleground.h"
 #include "script.h"
 #include "mapreg.h"
 #include "guild.h"
@@ -1514,6 +1515,8 @@ int map_quit(struct map_session_data *sd)
 	if (sd->npc_timer_id != -1) //Cancel the event timer.
 		npc_timerevent_quit(sd);
 
+	if( sd->state.bg_id )
+		bg_team_leave(sd,1);
 	npc_script_event(sd, NPCE_LOGOUT);
 
 	//Unit_free handles clearing the player related data, 
@@ -3272,6 +3275,7 @@ void do_final(void)
 	do_final_skill();
 	do_final_status();
 	do_final_unit();
+	do_final_battleground();
 	
 	map_db->destroy(map_db, map_db_final);
 	
@@ -3504,6 +3508,7 @@ int do_init(int argc, char *argv[])
 	do_init_mercenary();
 	do_init_npc();
 	do_init_unit();
+	do_init_battleground();
 #ifndef TXT_ONLY /* mail system [Valaris] */
 	if (log_config.sql_logs)
 		log_sql_init();

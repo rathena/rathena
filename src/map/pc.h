@@ -115,6 +115,7 @@ struct map_session_data {
 		unsigned noks : 3; // [Zeph Kill Steal Protection]
 		bool changemap;
 		struct guild *gmaster_flag;
+		unsigned int bg_id;
 	} state;
 	struct {
 		unsigned char no_weapon_damage, no_magic_damage, no_misc_damage;
@@ -714,6 +715,8 @@ extern int day_timer_tid;
 extern int night_timer_tid;
 int map_day_timer(int tid, unsigned int tick, int id, intptr data); // by [yor]
 int map_night_timer(int tid, unsigned int tick, int id, intptr data); // by [yor]
+
+void pc_update_last_action(struct map_session_data *sd);
 
 // Rental System
 void pc_inventory_rentals(struct map_session_data *sd);

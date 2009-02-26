@@ -20,6 +20,7 @@
 #include "guild.h"
 #include "status.h"
 #include "battle.h"
+#include "battleground.h"
 #include "chat.h"
 #include "trade.h"
 #include "vending.h"
@@ -1585,7 +1586,7 @@ int unit_skillcastcancel(struct block_list *bl,int type)
 			return 0;
 
 		if (sd && (sd->special_state.no_castcancel2 ||
-			(sd->special_state.no_castcancel && !map_flag_gvg(bl->m)))) //fixed flags being read the wrong way around [blackhole89]
+			(sd->special_state.no_castcancel && !map_flag_gvg(bl->m) && !map[bl->m].flag.battleground))) //fixed flags being read the wrong way around [blackhole89]
 			return 0;
 	}
 	
@@ -1792,6 +1793,7 @@ int unit_remove_map_(struct block_list *bl, int clrtype, const char* file, int l
 		}
 		party_send_dot_remove(sd);//minimap dot fix [Kevin]
 		guild_send_dot_remove(sd);
+		bg_send_dot_remove(sd);
 
 		if( map[bl->m].users <= 0 || sd->state.debug_remove_map )
 		{// this is only place where map users is decreased, if the mobs were removed too soon then this function was executed too many times [FlavioJS]

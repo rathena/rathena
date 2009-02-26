@@ -22,6 +22,7 @@
 #include "mob.h"
 #include "npc.h"
 #include "battle.h"
+#include "battleground.h"
 #include "party.h"
 #include "itemdb.h"
 #include "script.h"
@@ -347,7 +348,7 @@ int skillnotok (int skillid, struct map_session_data *sd)
 		return 1;
 	if(map_flag_gvg(m) && skill_get_nocast (skillid) & 4)
 		return 1;
-	if((agit_flag || agit2_flag) && skill_get_nocast (skillid) & 8)
+	if(map[m].flag.battleground && skill_get_nocast (skillid) & 8)
 		return 1;
 	if(map[m].flag.restricted && map[m].zone && skill_get_nocast (skillid) & (8*map[m].zone))
 		return 1;
@@ -1278,7 +1279,7 @@ int skill_blown(struct block_list* src, struct block_list* target, int count, in
 
 	nullpo_retr(0, src);
 
-	if (src != target && map_flag_gvg(target->m))
+	if (src != target && (map_flag_gvg(target->m) || map[target->m].flag.battleground))
 		return 0; //No knocking back in WoE
 	if (count == 0)
 		return 0; //Actual knockback distance is 0.
@@ -2417,7 +2418,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 		unsigned int dir = map_calc_dir(bl, src->x, src->y);
 
 		// teleport to target (if not on WoE grounds)
-		if( !map_flag_gvg(src->m) && unit_movepos(src, bl->x, bl->y, 0, 1) )
+		if( !map_flag_gvg(src->m) && !map[src->m].flag.battleground && unit_movepos(src, bl->x, bl->y, 0, 1) )
 			clif_slide(src, bl->x, bl->y);
 
 		// cause damage and knockback if the path to target was a straight one
@@ -2847,7 +2848,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 			sc_start(src,SC_HIDING,100,skilllv,skill_get_time(skillid,skilllv));
 		break;
 	case NJ_KIRIKAGE:
-		if (!map_flag_gvg(src->m))
+		if( !map_flag_gvg(src->m) && !map[src->m].flag.battleground )
 		{	//You don't move on GVG grounds.
 			short x, y;
 			map_search_freecell(bl, 0, &x, &y, 1, 1, 0);
@@ -2980,8 +2981,10 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			int heal = skill_calc_heal(src, bl, skilllv);
 			int heal_get_jobexp;
 	
-			if( status_isimmune(bl) || (dstmd && dstmd->class_ == MOBID_EMPERIUM) )
+			if( status_isimmune(bl) )
 				heal=0;
+			if( dstmd && (dstmd->class_ == MOBID_EMPERIUM || mob_is_battleground(dstmd)) )
+				heal=0; // Emperium - BattleGround Mobs cannot be Healed
 			if( sd )
 			{
 				if( (i = pc_skillheal_bonus(sd, skillid)) )
@@ -3053,7 +3056,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			break;
 		
 	case ALL_RESURRECTION:
-		if(sd && map_flag_gvg(bl->m))
+		if(sd && (map_flag_gvg(bl->m) || map[bl->m].flag.battleground))
 		{	//No reviving in WoE grounds!
 			clif_skill_fail(sd,skillid,0,0);
 			break;
@@ -5018,8 +5021,11 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case CG_TAROTCARD:
 		{
 			int eff, count = -1;
-			if (rand() % 100 > skilllv * 8) {
-				if (sd) clif_skill_fail(sd,skillid,0,0);
+			if( rand() % 100 > skilllv * 8 || (dstmd && ((dstmd->guardian_data && dstmd->class_ == MOBID_EMPERIUM) || mob_is_battleground(dstmd))) )
+			{
+				if( sd )
+					clif_skill_fail(sd,skillid,0,0);
+
 				map_freeblock_unlock();
 				return 0;
 			}
@@ -5980,7 +5986,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, int skillid, int sk
 		break;
 	case NJ_SHADOWJUMP:
 	{
-		if (!map_flag_gvg(src->m))
+		if( !map_flag_gvg(src->m) && !map[src->m].flag.battleground )
 		{	//You don't move on GVG grounds.
 			unit_movepos(src, x, y, 1, 0);
 			clif_slide(src,x,y);
@@ -6479,7 +6485,7 @@ struct skill_unit_group* skill_unitsetting (struct block_list *src, short skilli
 	case HT_FREEZINGTRAP:
 	case MA_FREEZINGTRAP:
 	case HT_BLASTMINE:
-		if( map_flag_gvg(src->m) )
+		if( map_flag_gvg(src->m) || map[src->m].flag.battleground )
 			limit *= 4; // longer trap times in WOE [celest]
 		if( battle_config.vs_traps_bctall && map_flag_vs(src->m) && (src->type&battle_config.vs_traps_bctall) )
 			target = BCT_ALL;
@@ -7015,6 +7021,9 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 			else
 			{
 				int heal = sg->val2;
+				struct mob_data *md = BL_CAST(BL_MOB, bl);
+				if( md && mob_is_battleground(md) )
+					break;
 				if( tstatus->hp >= tstatus->max_hp )
 					break;
 				if( tsc )
@@ -8629,7 +8638,7 @@ int skill_delayfix (struct block_list *bl, int skill_id, int skill_lv)
 						time /=2;
 					break;
 				case AS_SONICBLOW:
-					if (!map_flag_gvg(bl->m) && sc->data[SC_SPIRIT]->val2 == SL_ASSASIN)
+					if (!map_flag_gvg(bl->m) && !map[bl->m].flag.battleground && sc->data[SC_SPIRIT]->val2 == SL_ASSASIN)
 						time /= 2;
 					break;
 			}
@@ -9668,6 +9677,7 @@ struct skill_unit_group* skill_initunitgroup (struct block_list* src, int count,
 	group->src_id     = src->id;
 	group->party_id   = status_get_party_id(src);
 	group->guild_id   = status_get_guild_id(src);
+	group->bg_id      = bg_team_get_id(src);
 	group->group_id   = skill_get_new_group_id();
 	group->unit       = (struct skill_unit *)aCalloc(count,sizeof(struct skill_unit));
 	group->unit_count = count;

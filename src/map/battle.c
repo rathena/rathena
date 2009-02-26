@@ -24,6 +24,7 @@
 #include "guild.h"
 #include "party.h"
 #include "battle.h"
+#include "battleground.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -277,11 +278,17 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,int damage,i
 
 	nullpo_retr(0, bl);
 
-	if (!damage)
+	if( !damage )
 		return 0;
-	
 	if( mob_ksprotected(src, bl) )
 		return 0;
+
+	if( bl->type == BL_MOB )
+	{ // Event Emperiums works like GvG Emperiums
+		struct mob_data *md = BL_CAST(BL_MOB, bl);
+		if( map[bl->m].flag.battleground && (md->class_ == 1914 || md->class_ == 1915) && flag&BF_SKILL )
+			return 0; // Crystal Cannot receive magic damage on battlegrounds
+	}
 
 	if (bl->type == BL_PC) {
 		sd=(struct map_session_data *)bl;
@@ -522,6 +529,42 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,int damage,i
 }
 
 /*==========================================
+ * Calculates BG related damage adjustments.
+ *------------------------------------------*/
+int battle_calc_bg_damage(struct block_list *src, struct block_list *bl, int damage, int div_, int skill_num, int skill_lv, int flag)
+{
+	if( !damage ) return 0;
+	switch( skill_num )
+	{
+		case PA_PRESSURE:
+		case HW_GRAVITATION:
+		case NJ_ZENYNAGE:
+			break;
+		default:
+			if( flag&BF_SKILL )
+			{ //Skills get a different reduction than non-skills. [Skotlex]
+				if( flag&BF_WEAPON )
+					damage = damage * battle_config.bg_weapon_damage_rate/100;
+				if( flag&BF_MAGIC )
+					damage = damage * battle_config.bg_magic_damage_rate/100;
+				if(	flag&BF_MISC )
+					damage = damage * battle_config.bg_misc_damage_rate/100;
+			}
+			else
+			{ //Normal attacks get reductions based on range.
+				if( flag&BF_SHORT )
+					damage = damage * battle_config.bg_short_damage_rate/100;
+				if( flag&BF_LONG )
+					damage = damage * battle_config.bg_long_damage_rate/100;
+			}
+			
+			if( !damage ) damage = 1;
+	}
+
+	return damage;
+}
+
+/*==========================================
  * Calculates GVG related damage adjustments.
  *------------------------------------------*/
 int battle_calc_gvg_damage(struct block_list *src,struct block_list *bl,int damage,int div_,int skill_num,int skill_lv,int flag)
@@ -536,7 +579,7 @@ int battle_calc_gvg_damage(struct block_list *src,struct block_list *bl,int dama
 
 	if (bl->type == BL_MOB)
 		md=(struct mob_data *)bl;
-	
+
 	if(md && md->guardian_data) {
 		if(class_ == MOBID_EMPERIUM && flag&BF_SKILL)
 		//Skill immunity.
@@ -2083,19 +2126,25 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 	{	//There is a total damage value
 		if(!wd.damage2) {
 			wd.damage=battle_calc_damage(src,target,wd.damage,wd.div_,skill_num,skill_lv,wd.flag);
-			if (map_flag_gvg2(target->m))
+			if( map_flag_gvg2(target->m) )
 				wd.damage=battle_calc_gvg_damage(src,target,wd.damage,wd.div_,skill_num,skill_lv,wd.flag);
+			else if( map[target->m].flag.battleground )
+				wd.damage=battle_calc_bg_damage(src,target,wd.damage,wd.div_,skill_num,skill_lv,wd.flag);
 		} else
 		if(!wd.damage) {
 			wd.damage2=battle_calc_damage(src,target,wd.damage2,wd.div_,skill_num,skill_lv,wd.flag);
-			if (map_flag_gvg2(target->m))
+			if( map_flag_gvg2(target->m) )
 				wd.damage2=battle_calc_gvg_damage(src,target,wd.damage2,wd.div_,skill_num,skill_lv,wd.flag);
+			else if( map[target->m].flag.battleground )
+				wd.damage=battle_calc_bg_damage(src,target,wd.damage2,wd.div_,skill_num,skill_lv,wd.flag);
 		} else
 		{
 			int d1=wd.damage+wd.damage2,d2=wd.damage2;
 			wd.damage=battle_calc_damage(src,target,d1,wd.div_,skill_num,skill_lv,wd.flag);
-			if (map_flag_gvg2(target->m))
+			if( map_flag_gvg2(target->m) )
 				wd.damage=battle_calc_gvg_damage(src,target,wd.damage,wd.div_,skill_num,skill_lv,wd.flag);
+			else if( map[target->m].flag.battleground )
+				wd.damage=battle_calc_bg_damage(src,target,wd.damage,wd.div_,skill_num,skill_lv,wd.flag);
 			wd.damage2=(d2*100/d1)*wd.damage/100;
 			if(wd.damage > 1 && wd.damage2 < 1) wd.damage2=1;
 			wd.damage-=wd.damage2;
@@ -2494,8 +2543,10 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 		ad.damage = ad.damage>0?1:-1;
 		
 	ad.damage=battle_calc_damage(src,target,ad.damage,ad.div_,skill_num,skill_lv,ad.flag);
-	if (map_flag_gvg2(target->m))
+	if( map_flag_gvg2(target->m) )
 		ad.damage=battle_calc_gvg_damage(src,target,ad.damage,ad.div_,skill_num,skill_lv,ad.flag);
+	else if( map[target->m].flag.battleground )
+		ad.damage=battle_calc_bg_damage(src,target,ad.damage,ad.div_,skill_num,skill_lv,ad.flag);
 	return ad;
 }
 
@@ -2721,8 +2772,10 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 		md.damage=battle_attr_fix(src, target, md.damage, s_ele, tstatus->def_ele, tstatus->ele_lv);
 
 	md.damage=battle_calc_damage(src,target,md.damage,md.div_,skill_num,skill_lv,md.flag);
-	if (map_flag_gvg2(target->m))
+	if( map_flag_gvg2(target->m) )
 		md.damage=battle_calc_gvg_damage(src,target,md.damage,md.div_,skill_num,skill_lv,md.flag);
+	else if( map[target->m].flag.battleground )
+		md.damage=battle_calc_bg_damage(src,target,md.damage,md.div_,skill_num,skill_lv,md.flag);
 
 	if (skill_num == NJ_ZENYNAGE && sd)
 	{	//Time to Pay Up.
@@ -3210,6 +3263,8 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 
 			if( !((agit_flag || agit2_flag) && map[m].flag.gvg_castle) && md->guardian_data && md->guardian_data->guild_id )
 				return 0; // Disable guardians/emperiums owned by Guilds on non-woe times.
+			if( md->state.inmunity && flag&BCT_ENEMY )
+				return 0;
 			break;
 		}
 	}
@@ -3261,10 +3316,9 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 						return 0; // You can't target anything out of your duel
 				}
 			}
-			if (map_flag_gvg(m) && !sd->status.guild_id &&
-				t_bl->type == BL_MOB && ((TBL_MOB*)t_bl)->guardian_data)
+			if( map_flag_gvg(m) && !sd->status.guild_id && t_bl->type == BL_MOB && ((TBL_MOB*)t_bl)->guardian_data )
 				return 0; //If you don't belong to a guild, can't target guardians/emperium.
-			if (t_bl->type != BL_PC)
+			if( t_bl->type != BL_PC )
 				state |= BCT_ENEMY; //Natural enemy.
 			break;
 		}
@@ -3315,28 +3369,34 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 	
 	if( map_flag_vs(m) )
 	{ //Check rivalry settings.
-		if (flag&(BCT_PARTY|BCT_ENEMY)) {
+		int sbg_id = 0, tbg_id = 0;
+		if( map[m].flag.battleground )
+		{
+			sbg_id = bg_team_get_id(s_bl);
+			tbg_id = bg_team_get_id(t_bl);
+		}
+		if( flag&(BCT_PARTY|BCT_ENEMY) )
+		{
 			int s_party = status_get_party_id(s_bl);
-			if (
-				!(map[m].flag.pvp && map[m].flag.pvp_noparty) &&
-				!(map_flag_gvg(m) && map[m].flag.gvg_noparty) &&
-				s_party && s_party == status_get_party_id(t_bl)
-			)
+			if( s_party && s_party == status_get_party_id(t_bl) && !(map[m].flag.pvp && map[m].flag.pvp_noparty) && !(map_flag_gvg(m) && map[m].flag.gvg_noparty) && (!map[m].flag.battleground || sbg_id == tbg_id) )
 				state |= BCT_PARTY;
 			else
 				state |= BCT_ENEMY;
 		}
-		if (flag&(BCT_GUILD|BCT_ENEMY)) {
+		if( flag&(BCT_GUILD|BCT_ENEMY) )
+		{
 			int s_guild = status_get_guild_id(s_bl);
 			int t_guild = status_get_guild_id(t_bl);
-			if( !(map[m].flag.pvp && map[m].flag.pvp_noguild) && s_guild && t_guild && (s_guild == t_guild || guild_isallied(s_guild, t_guild)) )
+			if( !(map[m].flag.pvp && map[m].flag.pvp_noguild) && s_guild && t_guild && (s_guild == t_guild || guild_isallied(s_guild, t_guild)) && (!map[m].flag.battleground || sbg_id == tbg_id) )
 				state |= BCT_GUILD;
 			else
 				state |= BCT_ENEMY;
 		}
-		if (state&BCT_ENEMY && battle_config.pk_mode && !map_flag_gvg(m) &&
-			s_bl->type == BL_PC && t_bl->type == BL_PC)
-		{	//Prevent novice engagement on pk_mode (feature by Valaris)
+		if( state&BCT_ENEMY && map[m].flag.battleground && sbg_id && sbg_id == tbg_id )
+			state &= ~BCT_ENEMY;
+
+		if( state&BCT_ENEMY && battle_config.pk_mode && !map_flag_gvg(m) && s_bl->type == BL_PC && t_bl->type == BL_PC )
+		{ // Prevent novice engagement on pk_mode (feature by Valaris)
 			TBL_PC *sd = (TBL_PC*)s_bl, *sd2 = (TBL_PC*)t_bl;
 			if (
 				(sd->class_&MAPID_UPPERMASK) == MAPID_NOVICE ||
@@ -3345,15 +3405,19 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 			  	(int)sd2->status.base_level < battle_config.pk_min_level ||
 				(battle_config.pk_level_range && abs((int)sd->status.base_level - (int)sd2->status.base_level) > battle_config.pk_level_range)
 			)
-				state&=~BCT_ENEMY;
+				state &= ~BCT_ENEMY;
 		}
-	} else { //Non pvp/gvg, check party/guild settings.
-		if (flag&BCT_PARTY || state&BCT_ENEMY) {
+	}
+	else
+	{ //Non pvp/gvg, check party/guild settings.
+		if( flag&BCT_PARTY || state&BCT_ENEMY )
+		{
 			int s_party = status_get_party_id(s_bl);
 			if(s_party && s_party == status_get_party_id(t_bl))
 				state |= BCT_PARTY;
 		}
-		if (flag&BCT_GUILD || state&BCT_ENEMY) {
+		if( flag&BCT_GUILD || state&BCT_ENEMY )
+		{
 			int s_guild = status_get_guild_id(s_bl);
 			int t_guild = status_get_guild_id(t_bl);
 			if(s_guild && t_guild && (s_guild == t_guild || guild_isallied(s_guild, t_guild)))
@@ -3768,6 +3832,17 @@ static const struct _battle_data {
 	{ "auction_maximumprice",               &battle_config.auction_maximumprice,            500000000, 0,   MAX_ZENY,       },
 	{ "gm_viewequip_min_lv",                &battle_config.gm_viewequip_min_lv,             0,      0,      99,             },
 	{ "homunculus_auto_vapor",              &battle_config.homunculus_auto_vapor,           0,      0,      1,              },
+// BattleGround Settings
+	{ "bg_update_interval",                 &battle_config.bg_update_interval,              1000,   100,    INT_MAX,        },
+	{ "bg_guild_id1",                       &battle_config.bg_guild_id1,                    0,      0,      INT_MAX,        },
+	{ "bg_guild_id2",                       &battle_config.bg_guild_id2,                    0,      0,      INT_MAX,        },
+	{ "bg_short_attack_damage_rate",        &battle_config.bg_short_damage_rate,            80,     0,      INT_MAX,        },
+	{ "bg_long_attack_damage_rate",         &battle_config.bg_long_damage_rate,             80,     0,      INT_MAX,        },
+	{ "bg_weapon_attack_damage_rate",       &battle_config.bg_weapon_damage_rate,           60,     0,      INT_MAX,        },
+	{ "bg_magic_attack_damage_rate",        &battle_config.bg_magic_damage_rate,            60,     0,      INT_MAX,        },
+	{ "bg_misc_attack_damage_rate",         &battle_config.bg_misc_damage_rate,             60,     0,      INT_MAX,        },
+	{ "bg_flee_penalty",                    &battle_config.bg_flee_penalty,                 20,     0,      INT_MAX,        },
+	{ "bg_idle_announce",                   &battle_config.bg_idle_announce,                0,      0,      INT_MAX,        },
 };
 
 
