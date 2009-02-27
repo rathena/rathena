@@ -7,7 +7,7 @@
 //  1 = Cannot be used in normal maps
 //  2 = Cannot be used in PvP maps (use this instead of 1 for PK-mode servers)
 //  4 = Cannot be used in GvG maps
-//  8 = Cannot be used when WoE is on
+//  8 = Cannot be used in Battleground maps
 //  16 = Cannot be cloned (clones will not copy this skill)
 //  Restricted zones - they're configured by 'restricted <number>' mapflag
 //  32 = Cannot be used in zone 1 maps
@@ -30,6 +30,32 @@
 362,4	//HP_BASILICA
 395,4	//CG_MOONLIT
 491,4	//CR_CULTIVATION
+
+//BATTLEGROUND
+26,8	//AL_TELEPORT
+27,8	//AL_WARP
+87,8	//WZ_ICEWALL
+150,8	//TF_BACKSLIDING
+361,8	//HP_ASSUMPTIO
+362,8	//HP_BASILICA
+395,8	//CG_MOONLIT
+491,8	//CR_CULTIVATION
+411,8	//TK_RUN
+426,8	//High Jump
+427,8	//SG_FEEL
+428,8	//SG_SUN_WARM
+429,8	//SG_MOON_WARM
+430,8	//SG_STAR_WARM
+431,8	//SG_SUN_COMFORT
+432,8	//SG_MOON_COMFORT
+433,8	//SG_STAR_COMFORT
+434,8	//SG_HATE
+435,8	//SG_SUN_ANGER
+436,8	//SG_MOON_ANGER
+437,8	//SG_STAR_ANGER
+438,8	//SG_SUN_BLESS
+439,8	//SG_MOON_BLESS
+440,8	//SG_STAR_BLESS
 
 //mixed
 488,3	//CG_HERMODE
