@@ -3,6 +3,13 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2008/10/13
+	* Fixes from 2008/10/13 bugreport:2077 (Only commiting because nobody did until now and those bugs would get lost)
+	* Fixed monster's Spiral Pierce, now it is always blocked by Pneuma.
+ 	* Fixed Monk Absorb Spirits mana recovery per spirit absorbed, 7, not 10.
+ 	* Fixed Monk spirit balls not being removed on death (like happens with gunslingers).
+ 	* Fixed Swordman Auto-Berserk sp cost, 1, not 5. Should be 0, but eA wont allow the skill to work.
+
 2009/03/01
 	* Ankle Snare cannot be knocked back anymore (bugreport:2804) [ultramage]
 2009/02/25
