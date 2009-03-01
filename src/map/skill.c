@@ -1306,6 +1306,8 @@ int skill_blown(struct block_list* src, struct block_list* target, int count, in
 			break;
 		case BL_SKILL:
 			su = (struct skill_unit *)target;
+			if( su->group->unit_id == UNT_ANKLESNARE )
+				return 0; // ankle snare cannot be knocked back
 			break;
 	}
 
