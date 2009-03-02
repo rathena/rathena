@@ -9378,7 +9378,10 @@ void clif_parse_UseSkillToId(int fd, struct map_session_data *sd)
 		return;
 
 	if( sd->bl.id != target_id && !sd->state.skill_flag && tmp&INF_SELF_SKILL )
-		target_id = sd->bl.id; //What good is it to mess up the target in self skills? Wished I knew... [Skotlex]
+		target_id = sd->bl.id; // never trust the client
+	
+	if( target_id < 0 && -target_id == sd->bl.id ) // for disguises [Valaris]
+		target_id = sd->bl.id;
 	
 	if( sd->ud.skilltimer != -1 )
 	{
@@ -9396,9 +9399,6 @@ void clif_parse_UseSkillToId(int fd, struct map_session_data *sd)
 
 	if( sd->sc.data[SC_BASILICA] && (skillnum != HP_BASILICA || sd->sc.data[SC_BASILICA]->val4 != sd->bl.id) )
 		return; // On basilica only caster can use Basilica again to stop it.
-	
-	if( target_id < 0 && -target_id == sd->bl.id ) // for disguises [Valaris]
-		target_id = sd->bl.id;
 	
 	if( sd->menuskill_id )
 	{

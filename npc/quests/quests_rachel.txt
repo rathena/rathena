@@ -6401,7 +6401,7 @@ ra_temin,277,159,3	script	High Priest Zhed#rachel	932,{
 					mes "I'm glad that everything";
 					mes "turned out great. Your";
 					mes "help was truly a blessing.";
-					mes "Althoug Schwaltzvalt will";
+					mes "Although Schwaltzvalt will";
 					mes "continue their plans without";
 					mes "us, we've slowed them down.";
 					next;

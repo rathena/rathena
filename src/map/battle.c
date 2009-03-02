@@ -2964,36 +2964,33 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 	if (sc && sc->data[SC_CLOAKING] && !(sc->data[SC_CLOAKING]->val4&2))
 		status_change_end(src,SC_CLOAKING,-1);
 
-	//Check for counter attacks that block your attack. [Skotlex]
-	if(tsc)
+	if( tsc && tsc->data[SC_AUTOCOUNTER] && status_check_skilluse(target, src, KN_AUTOCOUNTER, 1) )
 	{
-		if(tsc->data[SC_AUTOCOUNTER] &&
-			status_check_skilluse(target, src, KN_AUTOCOUNTER, 1)
-		)	{
-			int dir = map_calc_dir(target,src->x,src->y);
-			int t_dir = unit_getdir(target);
-			int dist = distance_bl(src, target);
-			if(dist <= 0 || (!map_check_dir(dir,t_dir) && dist <= tstatus->rhw.range+1))
-			{
-				int skilllv = tsc->data[SC_AUTOCOUNTER]->val1;
-				clif_skillcastcancel(target); //Remove the casting bar. [Skotlex]
-				clif_damage(src, target, tick, sstatus->amotion, 1, 0, 1, 0, 0); //Display MISS.
-				status_change_end(target,SC_AUTOCOUNTER,-1);
-				skill_attack(BF_WEAPON,target,target,src,KN_AUTOCOUNTER,skilllv,tick,0);
-				return ATK_NONE;
-			}
+		int dir = map_calc_dir(target,src->x,src->y);
+		int t_dir = unit_getdir(target);
+		int dist = distance_bl(src, target);
+		if(dist <= 0 || (!map_check_dir(dir,t_dir) && dist <= tstatus->rhw.range+1))
+		{
+			int skilllv = tsc->data[SC_AUTOCOUNTER]->val1;
+			clif_skillcastcancel(target); //Remove the casting bar. [Skotlex]
+			clif_damage(src, target, tick, sstatus->amotion, 1, 0, 1, 0, 0); //Display MISS.
+			status_change_end(target,SC_AUTOCOUNTER,-1);
+			skill_attack(BF_WEAPON,target,target,src,KN_AUTOCOUNTER,skilllv,tick,0);
+			return ATK_NONE;
 		}
-		if (tsc->data[SC_BLADESTOP_WAIT] && !is_boss(src)) {
-			int skilllv = tsc->data[SC_BLADESTOP_WAIT]->val1;
-			int duration = skill_get_time2(MO_BLADESTOP,skilllv);
-			status_change_end(target, SC_BLADESTOP_WAIT, -1);
-			if(sc_start4(src, SC_BLADESTOP, 100, sd?pc_checkskill(sd, MO_BLADESTOP):5, 0, 0, target->id, duration))
-		  	{	//Target locked.
-				clif_damage(src, target, tick, sstatus->amotion, 1, 0, 1, 0, 0); //Display MISS.
-				clif_bladestop(target, src->id, 1);
-				sc_start4(target, SC_BLADESTOP, 100, skilllv, 0, 0, src->id, duration);
-				return ATK_NONE;
-			}
+	}
+
+	if( tsc && tsc->data[SC_BLADESTOP_WAIT] && !is_boss(src) )
+	{
+		int skilllv = tsc->data[SC_BLADESTOP_WAIT]->val1;
+		int duration = skill_get_time2(MO_BLADESTOP,skilllv);
+		status_change_end(target, SC_BLADESTOP_WAIT, -1);
+		if(sc_start4(src, SC_BLADESTOP, 100, sd?pc_checkskill(sd, MO_BLADESTOP):5, 0, 0, target->id, duration))
+	  	{	//Target locked.
+			clif_damage(src, target, tick, sstatus->amotion, 1, 0, 1, 0, 0); //Display MISS.
+			clif_bladestop(target, src->id, 1);
+			sc_start4(target, SC_BLADESTOP, 100, skilllv, 0, 0, src->id, duration);
+			return ATK_NONE;
 		}
 	}
 

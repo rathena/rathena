@@ -5266,7 +5266,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 
 	npc_script_event(sd,NPCE_DIE);
 
-	if ( sd && sd->spiritball ) // maybe also monks' spiritballs ?
+	if ( sd && sd->spiritball )
 		pc_delspiritball(sd,sd->spiritball,0);
 
 	if (src)
