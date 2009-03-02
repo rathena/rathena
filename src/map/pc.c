@@ -3390,7 +3390,6 @@ int pc_useitem(struct map_session_data *sd,int n)
 		sd->sc.data[SC_MARIONETTE] ||
 		(sd->sc.data[SC_GRAVITATION] && sd->sc.data[SC_GRAVITATION]->val3 == BCT_SELF) ||
 		sd->sc.data[SC_TRICKDEAD] ||
-		sd->sc.data[SC_BLADESTOP] ||
 		sd->sc.data[SC_HIDING] ||
 		(sd->sc.data[SC_NOCHAT] && sd->sc.data[SC_NOCHAT]->val1&MANNER_NOITEM)
 	))
@@ -6622,7 +6621,7 @@ int pc_equipitem(struct map_session_data *sd,int n,int req_pos)
 		return 0;
 	}
 
-	if(sd->sc.data[SC_BERSERK] || sd->sc.data[SC_BLADESTOP])
+	if( sd->sc.data[SC_BERSERK] )
 	{
 		clif_equipitemack(sd,n,0,0);	// fail
 		return 0;
@@ -6768,7 +6767,8 @@ int pc_unequipitem(struct map_session_data *sd,int n,int flag)
 	}
 
 	// if player is berserk then cannot unequip
-	if(!(flag&2) && sd->sc.count && (sd->sc.data[SC_BLADESTOP] || sd->sc.data[SC_BERSERK])){
+	if( !(flag&2) && sd->sc.count && sd->sc.data[SC_BERSERK] )
+	{
 		clif_unequipitemack(sd,n,0,0);
 		return 0;
 	}
