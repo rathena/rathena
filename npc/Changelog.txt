@@ -1,5 +1,8 @@
 Date		Added
 ======
+2009/03/03
+	* Rev. 13560 Applied the updated eco/def investment system to Rachel WoESE castles, Juno's next. [L0ne_W0lf]
+	* Corrected the conditions in the if block that I goofed up, in agit_template.
 2009/03/02
 	* Rev. 13559 Another round of bug fixes to various scripts. [L0ne_W0lf]
 	- Added Satan Morroc spawn and corrected shadow spawn timers. (bugreport:2690)

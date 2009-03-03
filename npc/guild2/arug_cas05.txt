@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
-//= 1.8
+//= 1.9
 //===== Compatible With: =====================================
 //= eAthena SVN
 //===== Description: =========================================
@@ -21,6 +21,7 @@
 //= 1.6 Corrected copy/paste error. [L0ne_W0lf]
 //= 1.7 Replaced effect numerics with constants. [L0ne_W0lf]
 //= 1.8 Fixed wrong event call for stones. (bugreport:2386) [L0ne_W0lf]
+//= 1.9 Applied updated eco/def systems. [L0ne_W0lf]
 //============================================================
 
 arug_cas05,1,1,0	script	Manager#aru05_02	111,{
@@ -108,10 +109,6 @@ Onchange:
 OnClock0001:
 	if (!GetCastleData("arug_cas05",1)) end;
 	killmonster "arug_cas05","Manager#aru05_02::OnTreasureDied";
-
-	setcastledata "arug_cas05",4,0;
-	setcastledata "arug_cas05",5,0;
-
 	set .@Treasure,GetCastleData("arug_cas05",2)/5+4;
 	if (.@Treasure) {
 		monster "arug_cas05",291,276,"Treasure Chest",1945,1,"Manager#aru05_02::OnTreasureDied";
@@ -158,6 +155,16 @@ OnClock0001:
 		monster "arug_cas05",297,269,"Treasure Chest",1945,1,"Manager#aru05_02::OnTreasureDied";
 		if (.@Treasure < 24) end;
 		monster "arug_cas05",298,269,"Treasure Chest",1324,1,"Manager#aru05_02::OnTreasureDied";
+	}
+	if (GetCastleData("arug_cas05",4)) {
+		set .@Economy,GetCastleData("arug_cas05",2);
+		SetCastleData "arug_cas05",2,.@Economy + GetCastleData("arug_cas05",4) + (.@Economy<99 && rand(2) && getgdskilllv(.@GID,10014));
+		setcastledata "arug_cas05",4,0;
+	}
+	if (GetCastleData("arug_cas05",5)) {
+		set .@Defence,GetCastleData("arug_cas05",3);
+		SetCastleData "arug_cas05",3,.@Defence + GetCastleData("arug_cas05",5);
+		setcastledata "arug_cas05",5,0;
 	}
 	end;
 
@@ -2307,16 +2314,30 @@ arug_cas05,328,98,3	script	Steward#aru05	55,{
 		close;
 	case 2:
 		set .@Economy,GetCastleData("arug_cas05",2);
-		if(.@Economy < 8) set .@eco_invest,10000;
-		if(.@Economy >= 8) set .@eco_invest,20000;
-		if(.@Economy >= 16) set .@eco_invest,40000;
-		if(.@Economy >= 25) set .@eco_invest,80000;
-		if(.@Economy >= 34) set .@eco_invest,160000;
-		if(.@Economy >= 44) set .@eco_invest,320000;
-		if(.@Economy >= 54) set .@eco_invest,640000;
-		if(.@Economy >= 65) set .@eco_invest,1280000;
-		if(.@Economy >= 76) set .@eco_invest,2560000;
-		if(.@Economy >= 88) set .@eco_invest,5120000;
+		if (.@Economy < 6) { set .@eco_invest,5000; }
+		else if ((.@Economy >= 6) && (.@Economy <= 10)) { set .@eco_invest,10000; }
+		else if ((.@Economy >= 11) && (.@Economy <= 15)) { set .@eco_invest,20000; }
+		else if ((.@Economy >= 16) && (.@Economy <= 20)) { set .@eco_invest,35000; }
+		else if ((.@Economy >= 21) && (.@Economy <= 25)) { set .@eco_invest,55000; }
+		else if ((.@Economy >= 26) && (.@Economy <= 30)) { set .@eco_invest,80000; }
+		else if ((.@Economy >= 31) && (.@Economy <= 35)) { set .@eco_invest,110000; }
+		else if ((.@Economy >= 36) && (.@Economy <= 40)) { set .@eco_invest,145000; }
+		else if ((.@Economy >= 41) && (.@Economy <= 45)) { set .@eco_invest,185000; }
+		else if ((.@Economy >= 46) && (.@Economy <= 50)) { set .@eco_invest,230000; }
+		else if ((.@Economy >= 51) && (.@Economy <= 55)) { set .@eco_invest,280000; }
+		else if ((.@Economy >= 56) && (.@Economy <= 60)) { set .@eco_invest,335000; }
+		else if ((.@Economy >= 61) && (.@Economy <= 65)) { set .@eco_invest,395000; }
+		else if ((.@Economy >= 66) && (.@Economy <= 70)) { set .@eco_invest,460000; }
+		else if ((.@Economy >= 71) && (.@Economy <= 75)) { set .@eco_invest,530000; }
+		else if ((.@Economy >= 76) && (.@Economy <= 80)) { set .@eco_invest,605000; }
+		else if ((.@Economy >= 81) && (.@Economy <= 85)) { set .@eco_invest,685000; }
+		else if ((.@Economy >= 86) && (.@Economy <= 90)) { set .@eco_invest,770000; }
+		else if ((.@Economy >= 91) && (.@Economy <= 95)) { set .@eco_invest,860000; }
+		else if ((.@Economy >= 96) && (.@Economy <= 100)) { set .@eco_invest,955000; }
+		//Quadruple the cost of investing if you've already invested once.
+		if (GetCastleData("arug_cas05",4)) {
+			set .@eco_invest,.@eco_invest*4;
+		}
 		mes "[ Steward ]";
 		mes "Raising the stronghold's";
 		mes "commercial growth will";
@@ -2378,7 +2399,6 @@ arug_cas05,328,98,3	script	Steward#aru05	55,{
 			}
 			set zeny,zeny-.@eco_invest;
 			SetCastleData "arug_cas05",4,GetCastleData("arug_cas05",4)+1;
-			SetCastleData "arug_cas05",2,.@Economy + 1 + (.@Economy<99 && rand(2) && getgdskilllv(.@GID,10014));
 			mes "[ Steward ]";
 			mes "A wise use of the guild's";
 			mes "funds, Master. We can expect";
@@ -2392,16 +2412,30 @@ arug_cas05,328,98,3	script	Steward#aru05	55,{
 		}
 	case 3:
 		set .@Defence,GetCastleData("arug_cas05",3);
-		if(.@Defence < 8) set .@def_invest,20000;
-		if(.@Defence >= 8) set .@def_invest,40000;
-		if(.@Defence >= 16) set .@def_invest,80000;
-		if(.@Defence >= 25) set .@def_invest,160000;
-		if(.@Defence >= 34) set .@def_invest,320000;
-		if(.@Defence >= 44) set .@def_invest,640000;
-		if(.@Defence >= 54) set .@def_invest,1280000;
-		if(.@Defence >= 65) set .@def_invest,2560000;
-		if(.@Defence >= 76) set .@def_invest,5120000;
-		if(.@Defence >= 88) set .@def_invest,10240000;
+		if (.@Defence < 6) { set .@def_invest,10000; }
+		else if ((.@Defence >= 6) && (.@Defence <= 10)) { set .@def_invest,20000; }
+		else if ((.@Defence >= 11) && (.@Defence <= 15)) { set .@def_invest,40000; }
+		else if ((.@Defence >= 16) && (.@Defence <= 20)) { set .@def_invest,70000; }
+		else if ((.@Defence >= 21) && (.@Defence <= 25)) { set .@def_invest,110000; }
+		else if ((.@Defence >= 26) && (.@Defence <= 30)) { set .@def_invest,160000; }
+		else if ((.@Defence >= 31) && (.@Defence <= 35)) { set .@def_invest,220000; }
+		else if ((.@Defence >= 36) && (.@Defence <= 40)) { set .@def_invest,290000; }
+		else if ((.@Defence >= 41) && (.@Defence <= 45)) { set .@def_invest,370000; }
+		else if ((.@Defence >= 46) && (.@Defence <= 50)) { set .@def_invest,460000; }
+		else if ((.@Defence >= 51) && (.@Defence <= 55)) { set .@def_invest,560000; }
+		else if ((.@Defence >= 56) && (.@Defence <= 60)) { set .@def_invest,670000; }
+		else if ((.@Defence >= 61) && (.@Defence <= 65)) { set .@def_invest,790000; }
+		else if ((.@Defence >= 66) && (.@Defence <= 70)) { set .@def_invest,920000; }
+		else if ((.@Defence >= 71) && (.@Defence <= 75)) { set .@def_invest,1060000; }
+		else if ((.@Defence >= 76) && (.@Defence <= 80)) { set .@def_invest,1210000; }
+		else if ((.@Defence >= 81) && (.@Defence <= 85)) { set .@def_invest,1370000; }
+		else if ((.@Defence >= 86) && (.@Defence <= 90)) { set .@def_invest,1540000; }
+		else if ((.@Defence >= 91) && (.@Defence <= 95)) { set .@def_invest,1720000; }
+		else if ((.@Defence >= 96) && (.@Defence <= 100)) { set .@def_invest,1910000; }
+		//Quadruple the cost of investing if you've already invested once.
+		if (GetCastleData("arug_cas05",5)) {
+			set .@def_invest,.@def_invest*4;
+		}
 		mes "[ Steward ]";
 		mes "Investing in our stronghold's";
 		mes "defense will enhance the";
@@ -2457,7 +2491,6 @@ arug_cas05,328,98,3	script	Steward#aru05	55,{
 			}
 			set zeny,zeny-.@def_invest;
 			SetCastleData "arug_cas05",5,GetCastleData("arug_cas05",5)+1;
-			SetCastleData "arug_cas05",3,.@Defence+1;
 			mes "[ Steward ]";
 			mes "A wise use of the guild's";
 			mes "funds, Master. Increasing";

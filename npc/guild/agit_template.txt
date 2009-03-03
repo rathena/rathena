@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
-//= 1.6
+//= 1.6a
 //===== Compatible With: =====================================
 //= eAthena SVN
 //===== Description: =========================================
@@ -45,6 +45,7 @@
 //=     Corrected cost for investing, thanks to Ai4rei.
 //=     Second invest is now quadruple the value of the first
 //=     Investing now happens at the turn of the day.
+//= 1.6a Corrected conditions in the new investing blocks. [L0ne_W0lf]
 //============================================================
 
 // AGIT Manager Template
@@ -488,26 +489,26 @@ OnRecvCastle:
 		close;
 	case 2:
 		set .@Economy,GetCastleData(strnpcinfo(2),2);
-		if (.@Economy > 6) { set .@eco_invest,5000; }
-		else if ((.@Economy <= 6) && (.@Economy >= 10)) { set .@eco_invest,10000; }
-		else if ((.@Economy <= 11) && (.@Economy >= 15)) { set .@eco_invest,20000; }
-		else if ((.@Economy <= 16) && (.@Economy >= 20)) { set .@eco_invest,35000; }
-		else if ((.@Economy <= 21) && (.@Economy >= 25)) { set .@eco_invest,55000; }
-		else if ((.@Economy <= 26) && (.@Economy >= 30)) { set .@eco_invest,80000; }
-		else if ((.@Economy <= 31) && (.@Economy >= 35)) { set .@eco_invest,110000; }
-		else if ((.@Economy <= 36) && (.@Economy >= 40)) { set .@eco_invest,145000; }
-		else if ((.@Economy <= 41) && (.@Economy >= 45)) { set .@eco_invest,185000; }
-		else if ((.@Economy <= 46) && (.@Economy >= 50)) { set .@eco_invest,230000; }
-		else if ((.@Economy <= 51) && (.@Economy >= 55)) { set .@eco_invest,280000; }
-		else if ((.@Economy <= 56) && (.@Economy >= 60)) { set .@eco_invest,335000; }
-		else if ((.@Economy <= 61) && (.@Economy >= 65)) { set .@eco_invest,395000; }
-		else if ((.@Economy <= 66) && (.@Economy >= 70)) { set .@eco_invest,460000; }
-		else if ((.@Economy <= 71) && (.@Economy >= 75)) { set .@eco_invest,530000; }
-		else if ((.@Economy <= 76) && (.@Economy >= 80)) { set .@eco_invest,605000; }
-		else if ((.@Economy <= 81) && (.@Economy >= 85)) { set .@eco_invest,685000; }
-		else if ((.@Economy <= 86) && (.@Economy >= 90)) { set .@eco_invest,770000; }
-		else if ((.@Economy <= 91) && (.@Economy >= 95)) { set .@eco_invest,860000; }
-		else if ((.@Economy <= 96) && (.@Economy >= 100)) { set .@eco_invest,955000; }
+		if (.@Economy < 6) { set .@eco_invest,5000; }
+		else if ((.@Economy >= 6) && (.@Economy <= 10)) { set .@eco_invest,10000; }
+		else if ((.@Economy >= 11) && (.@Economy <= 15)) { set .@eco_invest,20000; }
+		else if ((.@Economy >= 16) && (.@Economy <= 20)) { set .@eco_invest,35000; }
+		else if ((.@Economy >= 21) && (.@Economy <= 25)) { set .@eco_invest,55000; }
+		else if ((.@Economy >= 26) && (.@Economy <= 30)) { set .@eco_invest,80000; }
+		else if ((.@Economy >= 31) && (.@Economy <= 35)) { set .@eco_invest,110000; }
+		else if ((.@Economy >= 36) && (.@Economy <= 40)) { set .@eco_invest,145000; }
+		else if ((.@Economy >= 41) && (.@Economy <= 45)) { set .@eco_invest,185000; }
+		else if ((.@Economy >= 46) && (.@Economy <= 50)) { set .@eco_invest,230000; }
+		else if ((.@Economy >= 51) && (.@Economy <= 55)) { set .@eco_invest,280000; }
+		else if ((.@Economy >= 56) && (.@Economy <= 60)) { set .@eco_invest,335000; }
+		else if ((.@Economy >= 61) && (.@Economy <= 65)) { set .@eco_invest,395000; }
+		else if ((.@Economy >= 66) && (.@Economy <= 70)) { set .@eco_invest,460000; }
+		else if ((.@Economy >= 71) && (.@Economy <= 75)) { set .@eco_invest,530000; }
+		else if ((.@Economy >= 76) && (.@Economy <= 80)) { set .@eco_invest,605000; }
+		else if ((.@Economy >= 81) && (.@Economy <= 85)) { set .@eco_invest,685000; }
+		else if ((.@Economy >= 86) && (.@Economy <= 90)) { set .@eco_invest,770000; }
+		else if ((.@Economy >= 91) && (.@Economy <= 95)) { set .@eco_invest,860000; }
+		else if ((.@Economy >= 96) && (.@Economy <= 100)) { set .@eco_invest,955000; }
 		//Quadruple the cost of investing if you've already invested once.
 		if (GetCastleData(strnpcinfo(2),4)) {
 			set .@eco_invest,.@eco_invest*4;
@@ -551,26 +552,26 @@ OnRecvCastle:
 		}
 	case 3:
 		set .@Defence,GetCastleData(strnpcinfo(2),3);
-		if (.@Defence > 6) { set .@def_invest,10000; }
-		else if ((.@Defence <= 6) && (.@Defence >= 10)) { set .@def_invest,20000; }
-		else if ((.@Defence <= 11) && (.@Defence >= 15)) { set .@def_invest,40000; }
-		else if ((.@Defence <= 16) && (.@Defence >= 20)) { set .@def_invest,70000; }
-		else if ((.@Defence <= 21) && (.@Defence >= 25)) { set .@def_invest,110000; }
-		else if ((.@Defence <= 26) && (.@Defence >= 30)) { set .@def_invest,160000; }
-		else if ((.@Defence <= 31) && (.@Defence >= 35)) { set .@def_invest,220000; }
-		else if ((.@Defence <= 36) && (.@Defence >= 40)) { set .@def_invest,290000; }
-		else if ((.@Defence <= 41) && (.@Defence >= 45)) { set .@def_invest,370000; }
-		else if ((.@Defence <= 46) && (.@Defence >= 50)) { set .@def_invest,460000; }
-		else if ((.@Defence <= 51) && (.@Defence >= 55)) { set .@def_invest,560000; }
-		else if ((.@Defence <= 56) && (.@Defence >= 60)) { set .@def_invest,670000; }
-		else if ((.@Defence <= 61) && (.@Defence >= 65)) { set .@def_invest,790000; }
-		else if ((.@Defence <= 66) && (.@Defence >= 70)) { set .@def_invest,920000; }
-		else if ((.@Defence <= 71) && (.@Defence >= 75)) { set .@def_invest,1060000; }
-		else if ((.@Defence <= 76) && (.@Defence >= 80)) { set .@def_invest,1210000; }
-		else if ((.@Defence <= 81) && (.@Defence >= 85)) { set .@def_invest,1370000; }
-		else if ((.@Defence <= 86) && (.@Defence >= 90)) { set .@def_invest,1540000; }
-		else if ((.@Defence <= 91) && (.@Defence >= 95)) { set .@def_invest,1720000; }
-		else if ((.@Defence <= 96) && (.@Defence >= 100)) { set .@def_invest,1910000; }
+		if (.@Defence < 6) { set .@def_invest,10000; }
+		else if ((.@Defence >= 6) && (.@Defence <= 10)) { set .@def_invest,20000; }
+		else if ((.@Defence >= 11) && (.@Defence <= 15)) { set .@def_invest,40000; }
+		else if ((.@Defence >= 16) && (.@Defence <= 20)) { set .@def_invest,70000; }
+		else if ((.@Defence >= 21) && (.@Defence <= 25)) { set .@def_invest,110000; }
+		else if ((.@Defence >= 26) && (.@Defence <= 30)) { set .@def_invest,160000; }
+		else if ((.@Defence >= 31) && (.@Defence <= 35)) { set .@def_invest,220000; }
+		else if ((.@Defence >= 36) && (.@Defence <= 40)) { set .@def_invest,290000; }
+		else if ((.@Defence >= 41) && (.@Defence <= 45)) { set .@def_invest,370000; }
+		else if ((.@Defence >= 46) && (.@Defence <= 50)) { set .@def_invest,460000; }
+		else if ((.@Defence >= 51) && (.@Defence <= 55)) { set .@def_invest,560000; }
+		else if ((.@Defence >= 56) && (.@Defence <= 60)) { set .@def_invest,670000; }
+		else if ((.@Defence >= 61) && (.@Defence <= 65)) { set .@def_invest,790000; }
+		else if ((.@Defence >= 66) && (.@Defence <= 70)) { set .@def_invest,920000; }
+		else if ((.@Defence >= 71) && (.@Defence <= 75)) { set .@def_invest,1060000; }
+		else if ((.@Defence >= 76) && (.@Defence <= 80)) { set .@def_invest,1210000; }
+		else if ((.@Defence >= 81) && (.@Defence <= 85)) { set .@def_invest,1370000; }
+		else if ((.@Defence >= 86) && (.@Defence <= 90)) { set .@def_invest,1540000; }
+		else if ((.@Defence >= 91) && (.@Defence <= 95)) { set .@def_invest,1720000; }
+		else if ((.@Defence >= 96) && (.@Defence <= 100)) { set .@def_invest,1910000; }
 		//Quadruple the cost of investing if you've already invested once.
 		if (GetCastleData(strnpcinfo(2),5)) {
 			set .@def_invest,.@def_invest*4;
