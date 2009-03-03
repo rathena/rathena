@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
-//= 2.0
+//= 2.0a
 //===== Compatible With: =====================================
 //= eAthena SVN
 //===== Description: =========================================
@@ -23,6 +23,7 @@
 //= 1.8 Fixed error with control devices. [L0ne_W0lf]
 //= 1.9 Replaced effect numerics with constants. [L0ne_W0lf]
 //= 2.0 Applied updated eco/def systems. [L0ne_W0lf]
+//= 2.0a Corrected investment data being reset before applied.
 //============================================================
 
 schg_cas02,1,1,0	script	Manager#sch02_02	111,{
@@ -110,9 +111,6 @@ Onchange:
 OnClock0001:
 	if (!GetCastleData("schg_cas02",1)) end;
 	killmonster "schg_cas02","Manager#sch02_02::OnTreasureDied";
-
-	setcastledata "schg_cas02",4,0;
-	setcastledata "schg_cas02",5,0;
 
 	set .@Treasure,GetCastleData("schg_cas02",2)/5+4;
 	if (.@Treasure) {
