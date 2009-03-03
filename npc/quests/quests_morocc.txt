@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 
-//= 2.4
+//= 2.5
 //===== Compatible With: ===================================== 
 //= eAthena 7.15 +
 //===== Description: ========================================= 
@@ -28,6 +28,7 @@
 //= 2.4 Implemented Ep. 12.1 Continental Guard Quest. [L0ne_W0lf]
 //=     Moved Dandelion's Request to a it's own file.
 //=     Added support NPCs required to finish Gaebolg quest.
+//= 2.5 Fixed Group of Evil never re-enabling. [L0ne_W0lf]
 //============================================================ 
 
 //==================================================================================//
@@ -1881,7 +1882,6 @@ OnInit:
 
 OnEnable:
 	enablenpc "Group of Evil#edq";
-	donpcevent "Time-Space Gap#edq::OnDisable";
 	end;
 
 OnDisable:
@@ -1933,7 +1933,7 @@ OnTimer1800000:
 OnTimer21600000:
 	stopnpctimer;
 	set $@re_moc,0;
-	disablenpc "Time-Space Gap#edq";
+	donpcevent "Time-Space Gap#edq::OnDisable";
 	end;
 }
 

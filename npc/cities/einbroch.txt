@@ -29,6 +29,7 @@
 //= 1.5 Updated Hotel Employee to work with Airship Ticket Quest [Samuray22]
 //= 1.6 Optimized several NPCs [DZeroX]
 //= 1.7 Replaced outdated variable with getarg. [L0ne_W0lf]
+//= 1.8 Fixed Occurances of PcName. [L0ne_W0lf]
 //============================================================
 
 einbroch,218,198,5	script	Mark#ein	855,{
@@ -330,7 +331,7 @@ einbroch,40,116,1	script	Airship Engineer#ein-1	855,{
 		next;
 		switch(select("Ah~:Uh huh...")) {
 		case 1:
-			mes "["+PcName+"]";
+			mes "["+strcharinfo(0)+"]";
 			mes "Ah~";
 			mes "I see, so you're";
 			mes "working on restoring";
@@ -344,7 +345,7 @@ einbroch,40,116,1	script	Airship Engineer#ein-1	855,{
 			mes "fixing up Burielle...";
 			close;
 		case 2:
-			mes "["+PcName+"]";
+			mes "["+strcharinfo(0)+"]";
 			mes "Uh huh...";
 			mes "Right. For a second";
 			mes "there, I thought you were";
@@ -352,7 +353,7 @@ einbroch,40,116,1	script	Airship Engineer#ein-1	855,{
 			mes "then I also assumed that you";
 			mes "weren't, you know, a nutcase.";
 			next;
-			mes "["+PcName+"]";
+			mes "["+strcharinfo(0)+"]";
 			mes "Oh, did you say,";
 			mes "''prettiest model?''";
 			mes "All Airships look the";

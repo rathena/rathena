@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Evera and The eAthena Dev Team
 //===== Current Version: ===================================== 
-//= 2.1
+//= 2.2
 //===== Compatible With: ===================================== 
 //= eAthena 1.0
 //===== Description: ========================================= 
@@ -32,6 +32,7 @@
 //= 1.9 Bug fixes/Typos. [Paradox924X]
 //= 2.0 Replaced effect numerics with constants. [L0ne_W0lf]
 //= 2.1 Fixed guard tower warper ALWAYS warping. (bugreport:2377) [L0ne_W0lf]
+//= 2.2 Removed unused "name" variable. [L0ne_W0lf]
 //============================================================ 
 
 // Soup Quest
@@ -4333,7 +4334,6 @@ OnTouch:
 
 louyang,217,278,0	script	 #lou_path	111,{
 	if (ch_poison == 12 || ch_poison == 16) {
-		set name,PcName;
 		mes "["+strcharinfo(0)+"]";
 		mes "What's this?";
 		mes "A crack in the wall?";

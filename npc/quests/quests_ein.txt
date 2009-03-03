@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Evera and The eAthena Dev Team
 //===== Current Version: ===================================== 
-//= 2.2a
+//= 2.3
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -44,6 +44,7 @@
 //=     Added missing quest, "Oridecon/Mineral Quest"
 //=     Full overhual of the Uwe Kleine quest.
 //= 2.2a Fixed typos in var names from EIN_LOVERQRQ to EIN_LOVERQ. (bugreport:2464) [Paradox924X]
+//= 2.3 Removed occurance of PcName. [L0ne_W0lf]
 //============================================================ 
 
 // Oridecon Stone OR Mineral Stone Quest
@@ -1049,7 +1050,7 @@ einbroch,215,180,6	script	Uwe Kleine#ein	85,{
 			mes "Oh! Hello again,";
 			mes "you cutie adventurer.";
 			mes "So tell me, what brings";
-			mes "you here, "+PcName+"?";
+			mes "you here, "+strcharinfo(0)+"?";
 			next;
 			switch(select("Ask about Cooking.:Ask about Einbroch.:Cancel.")) {
 			case 1:

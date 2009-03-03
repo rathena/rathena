@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf (Script), DZeroX (Timer)
 //===== Current Version: ===================================== 
-//= 4.5
+//= 4.6
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -96,6 +96,7 @@
 //=     Corrected some typos in the dialogs.
 //= 4.4 Updated reviecer and robots NPC to use mobcount. (bugreport:2380) [L0ne_W0lf]
 //= 4.5 Removed a delitem that was no logner needed. [L0en_W0lf]
+//= 4.6 Fixed impossible condition for security guard. [L0ne_W0lf]
 //============================================================ 
 
 //============================================================================
@@ -756,7 +757,7 @@ yuno_fild08,196,196,5	script	Hanie#kh1	102,{
 // Academy Security Guards
 //----------------------------------------------------------------------------
 yuno_fild08,158,194,6	script	Security Guard#1::KHAGuard	852,{
-	if ((KielHyreQuest < 2) && (KielHyreQuest > 31)) { 
+	if ((KielHyreQuest < 2) || (KielHyreQuest > 31)) { 
 		mes "[Security Guard]";
 		mes "I'm sorry, but if you aren't";
 		mes "associated with this institution,";

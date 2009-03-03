@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 3.2
+//= 3.3
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -57,6 +57,8 @@
 //=     Some more numeric conversion, and some other cleanup.
 //= 3.1 Updated Ice Necklace quest, added missing checks. [L0ne_W0lf]
 //= 3.2 Added missing updates for Peace to the Arunafeltz quest. [L0ne_W0lf]
+//= 3.3 Fixed occurance of PcName. [L0ne_W0lf]
+//=     Fixed level 4 ID warps always being usable.
 //============================================================ 
 
 // Lost Child Quest (Prerequisite to High Priest quest)
@@ -3813,10 +3815,10 @@ OnTimer7200000:
 ice_dun03,1,175,3	script	#ice_sec	-1,{
 OnStart:
 	initnpctimer;
-	hideoffnpc "#ice_4f_1";
-	hideoffnpc "#ice_4f_2";
-	hideoffnpc "#ice_4f_3";
-	hideoffnpc "#ice_4f_4";
+	enablenpc "#ice_4f_1";
+	enablenpc "#ice_4f_2";
+	enablenpc "#ice_4f_3";
+	enablenpc "#ice_4f_4";
 	donpcevent "#ice_4f_1::OnEnable";
 	donpcevent "#ice_4f_2::OnEnable";
 	donpcevent "#ice_4f_3::OnEnable";
@@ -3825,10 +3827,10 @@ OnStart:
 
 OnTimer60000:
 	stopnpctimer;
-	hideonnpc "#ice_4f_1";
-	hideonnpc "#ice_4f_2";
-	hideonnpc "#ice_4f_3";
-	hideonnpc "#ice_4f_4";
+	disablenpc "#ice_4f_1";
+	disablenpc "#ice_4f_2";
+	disablenpc "#ice_4f_3";
+	disablenpc "#ice_4f_4";
 	end;
 }
 
@@ -7173,7 +7175,7 @@ ra_temsky,99,99,5	script	Pope#rachel	936,{
 			mes "strange to me. Well, it's";
 			mes "good to hear it from you.";
 			next;
-			mes "["+PcName+"]";
+			mes "["+strcharinfo(0)+"]";
 			mes "(^333333I can't just leave";
 			mes "now. I should try to see";
 			mes "if I can learn anything";

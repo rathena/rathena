@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
-//= 1.4
+//= 1.6
 //===== Compatible With: =====================================
 //= eAthena SVN
 //===== Description: =========================================
@@ -41,6 +41,10 @@
 //= 1.4 Fixed a typo in defense investment. [L0ne_W0lf]
 //= 1.5 Fixed spawn point of the emperium in Payon 1. [L0ne_W0lf]
 //=     Double-investing doubles the price now.
+//= 1.6 Corrected Zeny check when summoning guardians. [L0ne_W0lf]
+//=     Corrected cost for investing, thanks to Ai4rei.
+//=     Second invest is now quadruple the value of the first
+//=     Investing now happens at the turn of the day.
 //============================================================
 
 // AGIT Manager Template
@@ -484,19 +488,29 @@ OnRecvCastle:
 		close;
 	case 2:
 		set .@Economy,GetCastleData(strnpcinfo(2),2);
-		if(.@Economy < 8) set .@eco_invest,10000;
-		if(.@Economy >= 8) set .@eco_invest,20000;
-		if(.@Economy >= 16) set .@eco_invest,40000;
-		if(.@Economy >= 25) set .@eco_invest,80000;
-		if(.@Economy >= 34) set .@eco_invest,160000;
-		if(.@Economy >= 44) set .@eco_invest,320000;
-		if(.@Economy >= 54) set .@eco_invest,640000;
-		if(.@Economy >= 65) set .@eco_invest,1280000;
-		if(.@Economy >= 76) set .@eco_invest,2560000;
-		if(.@Economy >= 88) set .@eco_invest,5120000;
-		//Double the cost of investing if you've already invested once.
+		if (.@Economy > 6) { set .@eco_invest,5000; }
+		else if ((.@Economy <= 6) && (.@Economy >= 10)) { set .@eco_invest,10000; }
+		else if ((.@Economy <= 11) && (.@Economy >= 15)) { set .@eco_invest,20000; }
+		else if ((.@Economy <= 16) && (.@Economy >= 20)) { set .@eco_invest,35000; }
+		else if ((.@Economy <= 21) && (.@Economy >= 25)) { set .@eco_invest,55000; }
+		else if ((.@Economy <= 26) && (.@Economy >= 30)) { set .@eco_invest,80000; }
+		else if ((.@Economy <= 31) && (.@Economy >= 35)) { set .@eco_invest,110000; }
+		else if ((.@Economy <= 36) && (.@Economy >= 40)) { set .@eco_invest,145000; }
+		else if ((.@Economy <= 41) && (.@Economy >= 45)) { set .@eco_invest,185000; }
+		else if ((.@Economy <= 46) && (.@Economy >= 50)) { set .@eco_invest,230000; }
+		else if ((.@Economy <= 51) && (.@Economy >= 55)) { set .@eco_invest,280000; }
+		else if ((.@Economy <= 56) && (.@Economy >= 60)) { set .@eco_invest,335000; }
+		else if ((.@Economy <= 61) && (.@Economy >= 65)) { set .@eco_invest,395000; }
+		else if ((.@Economy <= 66) && (.@Economy >= 70)) { set .@eco_invest,460000; }
+		else if ((.@Economy <= 71) && (.@Economy >= 75)) { set .@eco_invest,530000; }
+		else if ((.@Economy <= 76) && (.@Economy >= 80)) { set .@eco_invest,605000; }
+		else if ((.@Economy <= 81) && (.@Economy >= 85)) { set .@eco_invest,685000; }
+		else if ((.@Economy <= 86) && (.@Economy >= 90)) { set .@eco_invest,770000; }
+		else if ((.@Economy <= 91) && (.@Economy >= 95)) { set .@eco_invest,860000; }
+		else if ((.@Economy <= 96) && (.@Economy >= 100)) { set .@eco_invest,955000; }
+		//Quadruple the cost of investing if you've already invested once.
 		if (GetCastleData(strnpcinfo(2),4)) {
-			set .@eco_invest,.@eco_invest*2;
+			set .@eco_invest,.@eco_invest*4;
 		}
 		mes "[ Steward " + .@name$ + " ]";
 		mes "If you raise commercial growth, the quantity of goods made by the guild will increase. So if you want a prosperous future, investment will be required.";
@@ -527,7 +541,6 @@ OnRecvCastle:
 			}
 			set zeny,zeny-.@eco_invest;
 			SetCastleData strnpcinfo(2),4,GetCastleData(strnpcinfo(2),4)+1;
-			SetCastleData strnpcinfo(2),2,.@Economy + 1 + (.@Economy<99 && rand(2) && getgdskilllv(.@GID,10014));
 			mes "[ Steward " + .@name$ + "]";
 			mes "We finished the investment safely. I expect that our growth level will be increased by tomorrow.";
 			close;
@@ -538,19 +551,29 @@ OnRecvCastle:
 		}
 	case 3:
 		set .@Defence,GetCastleData(strnpcinfo(2),3);
-		if(.@Defence < 8) set .@def_invest,20000;
-		if(.@Defence >= 8) set .@def_invest,40000;
-		if(.@Defence >= 16) set .@def_invest,80000;
-		if(.@Defence >= 25) set .@def_invest,160000;
-		if(.@Defence >= 34) set .@def_invest,320000;
-		if(.@Defence >= 44) set .@def_invest,640000;
-		if(.@Defence >= 54) set .@def_invest,1280000;
-		if(.@Defence >= 65) set .@def_invest,2560000;
-		if(.@Defence >= 76) set .@def_invest,5120000;
-		if(.@Defence >= 88) set .@def_invest,10240000;
-		//Double the cost of investing if you've already invested once.
+		if (.@Defence > 6) { set .@def_invest,10000; }
+		else if ((.@Defence <= 6) && (.@Defence >= 10)) { set .@def_invest,20000; }
+		else if ((.@Defence <= 11) && (.@Defence >= 15)) { set .@def_invest,40000; }
+		else if ((.@Defence <= 16) && (.@Defence >= 20)) { set .@def_invest,70000; }
+		else if ((.@Defence <= 21) && (.@Defence >= 25)) { set .@def_invest,110000; }
+		else if ((.@Defence <= 26) && (.@Defence >= 30)) { set .@def_invest,160000; }
+		else if ((.@Defence <= 31) && (.@Defence >= 35)) { set .@def_invest,220000; }
+		else if ((.@Defence <= 36) && (.@Defence >= 40)) { set .@def_invest,290000; }
+		else if ((.@Defence <= 41) && (.@Defence >= 45)) { set .@def_invest,370000; }
+		else if ((.@Defence <= 46) && (.@Defence >= 50)) { set .@def_invest,460000; }
+		else if ((.@Defence <= 51) && (.@Defence >= 55)) { set .@def_invest,560000; }
+		else if ((.@Defence <= 56) && (.@Defence >= 60)) { set .@def_invest,670000; }
+		else if ((.@Defence <= 61) && (.@Defence >= 65)) { set .@def_invest,790000; }
+		else if ((.@Defence <= 66) && (.@Defence >= 70)) { set .@def_invest,920000; }
+		else if ((.@Defence <= 71) && (.@Defence >= 75)) { set .@def_invest,1060000; }
+		else if ((.@Defence <= 76) && (.@Defence >= 80)) { set .@def_invest,1210000; }
+		else if ((.@Defence <= 81) && (.@Defence >= 85)) { set .@def_invest,1370000; }
+		else if ((.@Defence <= 86) && (.@Defence >= 90)) { set .@def_invest,1540000; }
+		else if ((.@Defence <= 91) && (.@Defence >= 95)) { set .@def_invest,1720000; }
+		else if ((.@Defence <= 96) && (.@Defence >= 100)) { set .@def_invest,1910000; }
+		//Quadruple the cost of investing if you've already invested once.
 		if (GetCastleData(strnpcinfo(2),5)) {
-			set .@def_invest,.@def_invest*2;
+			set .@def_invest,.@def_invest*4;
 		}
 		mes "[ Steward " + .@name$ + " ]";
 		mes "If you raise the safeguard, the durability of the Guardians and emperium will increase. So if you expect more defenses in battles, investment will be required.";
@@ -581,7 +604,6 @@ OnRecvCastle:
 			}
 			set zeny,zeny-.@def_invest;
 			SetCastleData strnpcinfo(2),5,GetCastleData(strnpcinfo(2),5)+1;
-			SetCastleData strnpcinfo(2),3,.@Defence+1;
 			mes "[ Steward " + .@name$ + "]";
 			mes "We finished the investment safely. I expect that the safeguard level will be increased by tomorrow.";
 			close;
@@ -624,7 +646,7 @@ OnRecvCastle:
 				close;
 			}
 
-			if (Zeny < 1000) {
+			if (Zeny < 10000) {
 				mes "Well... I'm sorry but we don't have funds to summon the Guardian. We failed to summon the Guardian.";
 				close;
 			}
@@ -1230,10 +1252,6 @@ OnClock0001:
 		end;
 	}
 
-	// Reset daily investment limit.
-	setcastledata strnpcinfo(2),4,0;
-	setcastledata strnpcinfo(2),5,0;
-
 	// Spawn boxes in proper order.
 	for (set .@i,0; .@i <= .@Treasure ; set .@i,.@i+1) {
 		// set treasure box ID
@@ -1245,6 +1263,21 @@ OnClock0001:
 			setd "$@"+strnpcinfo(2)+"_treasure",getd("$@"+strnpcinfo(2)+"_treasure") | .@box;
 		}
 	}
+
+	// Apply investment to Eco. and Def. Only happens if there were investments made.
+	// Permanent Development can only happen once per day.
+	if (GetCastleData(strnpcinfo(2),4)) {
+		set .@Economy,GetCastleData(strnpcinfo(2),2);
+		SetCastleData strnpcinfo(2),2,.@Economy + GetCastleData(strnpcinfo(2),4) + (.@Economy<99 && rand(2) && getgdskilllv(.@GID,10014));
+	}
+	if (GetCastleData(strnpcinfo(2),5)) {
+		set .@Defence,GetCastleData(strnpcinfo(2),3);
+		SetCastleData strnpcinfo(2),3,.@Defence + GetCastleData(strnpcinfo(2),5);
+	}
+	// Reset daily investment limits.
+	setcastledata strnpcinfo(2),4,0;
+	setcastledata strnpcinfo(2),5,0;
+
 	end;
 
 // Individual "You killed a chest" events to ensure proper spawning at the change of day.

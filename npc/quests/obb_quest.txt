@@ -3,7 +3,7 @@
 //===== By ===================================================
 //= Celesta, Lupus
 //===== Version ==============================================
-//= 1.9
+//= 2.0
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -19,6 +19,7 @@
 //= 1.7 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
 //= 1.8 Added missing checkweights. [L0ne_W0lf]
 //= 1.9 Moved Morroc NPCs to Morroc Ruins. [L0ne_W0lf]
+//= 2.0 Removed unused "name" variable. [L0ne_W0lf]
 //============================================================ 
 
 alberta,43,244,0	script	Tourist#thai	99,{
@@ -1017,7 +1018,6 @@ moc_ruins,105,62,4	script	Jacob#thai	50,{
 				mes "'^0000FFTry to be in someone else's shoes before judging that person.^000000'";
 				mes "Do you understand?";
 				next;
-				set name,PcName;
 				mes "["+strcharinfo(0)+"]";
 				mes "(There's more this guy can tell me, I just know it...)";
 				close;

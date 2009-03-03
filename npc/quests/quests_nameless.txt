@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.8
+//= 2.0
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -52,6 +52,8 @@
 //= 1.7 Fixed a typo in monestary quest. [L0ne_W0lf]
 //= 1.8 Renamed temporary global variable. [L0ne_W0lf]
 //=     moved OnMyMobDead for access quest to a different NPC.
+//= 1.9 Fixed mapwarp warping to disabled map. [L0ne_W0lf]
+//= 2.0 Removed duplicate dialog. [L0ne_W0lf]
 //============================================================ 
 
 // Nameless Island and Cursed Monestary Access Quest
@@ -2800,7 +2802,6 @@ OnTouch:
 		mes "priests, the corruption...^000000";
 		next;
 		mes "^3355FFHe also explained the role";
-		mes "He also explained the role";
 		mes "of the priests in the inhumane";
 		mes "testing conducted by the";
 		mes "Rekenber Corporation, and";
@@ -8830,7 +8831,7 @@ z_agit,97,101,3	script	Louis	931,{
 		close2;
 		getitem 7724,1; //Forbidden_Secret_Art
 		set zdan_edq,18;
-		mapwarp "z_agit","moc_fild09",68,298;
+		mapwarp "z_agit","moc_fild17",209,235;
 		set $@monster_zgang,0;
 		set $@door2,0;
 		hideonnpc "Louis";

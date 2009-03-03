@@ -1,5 +1,19 @@
 Date		Added
 ======
+2009/03/02
+	* Rev. 13559 Another round of bug fixes to various scripts. [L0ne_W0lf]
+	- Added Satan Morroc spawn and corrected shadow spawn timers. (bugreport:2690)
+	- Fixed Group of Evil NPC not reactivating  when it should. (bugreport:2696)
+	- Fixed the Zeny check when summoning guardians in agits. (bugreport:2712)
+	- Added zeny check to Jawaii bartender (hung the script.) (bugreport:2747)
+	- Corrected a mapwarp assosiated with the z-gang quest. (bugreport:2757)
+	- Fixed warps in ice dungeon 3 being usable all the time. (bugreport:2776)
+	- Corrected impossible condition if in Keil Hyre quest. (bugreport:2789)
+	- Corrected leftover aegis variables in several scripts. (bugreport:2794)
+	- Removed duplicate line from nameless quest. (bugreport:2795)
+	* Implemented official behaviour/Cost for investing in economy and defence
+	- Eco/Def will be modified on the turn of the day instead of immediately.
+	- Cost has been updated to official values. Investing twice now costs 4 times the first investment.
 2009/01/19
 	* Rev. 13458 Looooots of bugfixes provided by various people! [L0ne_W0lf]
 	- Fixed Seal quest checking for oridecon hammer. Again. (Bugreport:2363)

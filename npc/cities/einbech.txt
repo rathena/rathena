@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Muad_Dib
 //===== Current Version: ===================================== 
-//= 1.4
+//= 1.5
 //===== Compatible With: ===================================== 
 //= eAthena Revision 3000+
 //===== Description: ========================================= 
@@ -23,6 +23,7 @@
 //= 1.3 Implemented the Lover's quest. [MasterOfMuppets]
 //= 1.4 Moved quests to quests/quests_ein.txt [Evera]
 //= 1.5 Optimized some of the NPCs and fixed some typos [DZeroX]
+//= 1.6 Replaced occurances of PcName. [L0ne_W0lf]
 //============================================================
 
 einbech,172,113,4	script	Nemuk#ein	855,{
@@ -456,7 +457,7 @@ ein_in01,277,95,7	script	Ryan Danger#air#einbech	855,{
 	mes "clothes? I'll buy you whatever";
 	mes "you want, it's on me! C'mon~";
 	next;
-	mes "["+PcName+"]";
+	mes "["+strcharinfo(0)+"]";
 	mes "N-no...!";
 	mes "I-I-I-I...";
 	mes "^666666(This is the";
@@ -476,7 +477,7 @@ ein_in01,277,95,7	script	Ryan Danger#air#einbech	855,{
 	mes "Or am I?";
 	mes "Bwahahahaha!";
 	next;
-	mes "["+PcName+"]";
+	mes "["+strcharinfo(0)+"]";
 	mes "(Th-this guy";
 	mes "must be drunk out";
 	mes "of his freakin' mind!)";
