@@ -46,6 +46,7 @@
 //=     Second invest is now quadruple the value of the first
 //=     Investing now happens at the turn of the day.
 //= 1.6a Corrected conditions in the new investing blocks. [L0ne_W0lf]
+//= 1.6b Moved where investments are added to eco/def. [L0ne_W0lf]
 //============================================================
 
 // AGIT Manager Template
@@ -1253,6 +1254,22 @@ OnClock0001:
 		end;
 	}
 
+	// Apply investment to Eco. and Def. Only happens if there were investments made.
+	// Permanent Development can only happen once per day.
+	if (GetCastleData(strnpcinfo(2),4)) {
+		set .@Economy,GetCastleData(strnpcinfo(2),2);
+		SetCastleData strnpcinfo(2),2,.@Economy + GetCastleData(strnpcinfo(2),4) + (rand(2) && getgdskilllv(.@GID,10014));
+		if (GetCastleData(strnpcinfo(2),2) > 100) SetCastleData strnpcinfo(2),2,100;
+	}
+	if (GetCastleData(strnpcinfo(2),5)) {
+		set .@Defence,GetCastleData(strnpcinfo(2),3);
+		SetCastleData strnpcinfo(2),3,.@Defence + GetCastleData(strnpcinfo(2),5);
+		if (GetCastleData(strnpcinfo(2),3) > 100) SetCastleData strnpcinfo(2),3,100;
+	}
+	// Reset daily investment limits.
+	setcastledata strnpcinfo(2),4,0;
+	setcastledata strnpcinfo(2),5,0;
+
 	// Spawn boxes in proper order.
 	for (set .@i,0; .@i <= .@Treasure ; set .@i,.@i+1) {
 		// set treasure box ID
@@ -1264,21 +1281,6 @@ OnClock0001:
 			setd "$@"+strnpcinfo(2)+"_treasure",getd("$@"+strnpcinfo(2)+"_treasure") | .@box;
 		}
 	}
-
-	// Apply investment to Eco. and Def. Only happens if there were investments made.
-	// Permanent Development can only happen once per day.
-	if (GetCastleData(strnpcinfo(2),4)) {
-		set .@Economy,GetCastleData(strnpcinfo(2),2);
-		SetCastleData strnpcinfo(2),2,.@Economy + GetCastleData(strnpcinfo(2),4) + (.@Economy<99 && rand(2) && getgdskilllv(.@GID,10014));
-	}
-	if (GetCastleData(strnpcinfo(2),5)) {
-		set .@Defence,GetCastleData(strnpcinfo(2),3);
-		SetCastleData strnpcinfo(2),3,.@Defence + GetCastleData(strnpcinfo(2),5);
-	}
-	// Reset daily investment limits.
-	setcastledata strnpcinfo(2),4,0;
-	setcastledata strnpcinfo(2),5,0;
-
 	end;
 
 // Individual "You killed a chest" events to ensure proper spawning at the change of day.

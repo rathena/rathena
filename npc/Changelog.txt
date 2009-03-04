@@ -1,5 +1,7 @@
 Date		Added
 ======
+2009/03/04
+	* Rev. 13566 Follow up to r13559, r13560 and r13561. Moved some stuff around in the WoESE agits, and corrected a few mistakes I made. [L0ne_W0lf]
 2009/03/03
 	* Rev. 13563 Removed extra lines from schg_cas02 resetting data before eco/def is applied. (bugreport:2842) [L0ne_W0lf]
 	* Rev. 13561 Applied the updated eco/def investment system to Juno WoESE castles. [L0ne_W0lf]

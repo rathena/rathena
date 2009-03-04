@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
-//= 2.1
+//= 2.2
 //===== Compatible With: =====================================
 //= eAthena SVN
 //===== Description: =========================================
@@ -24,6 +24,8 @@
 //= 1.9 Implemented new Wall System. [Zephyrus]
 //= 2.0 Replaced effect numerics with constants. [L0ne_W0lf]
 //= 2.1 Applied updated eco/def systems. [L0ne_W0lf]
+//= 2.2 Fixed eco/def not actually incrementing. [L0ne_W0lf]
+//=     Can no longer gain eco/def higher than 100.
 //============================================================
 
 arug_cas02,1,1,0	script	Manager#aru02_02	111,{
@@ -112,6 +114,19 @@ OnClock0001:
 	if (!GetCastleData("arug_cas02",1)) end;
 	killmonster "arug_cas02","Manager#aru02_02::OnTreasureDied";
 
+	if (GetCastleData("arug_cas02",4)) {
+		set .@Economy,GetCastleData("arug_cas02",2);
+		SetCastleData "arug_cas02",2,.@Economy + GetCastleData("arug_cas02",4) + (rand(2) && getgdskilllv(.@GID,10014));
+		if (GetCastleData("arug_cas02",2) > 100) SetCastleData "arug_cas02",2,100;
+		setcastledata "arug_cas02",4,0;
+	}
+	if (GetCastleData("arug_cas02",5)) {
+		set .@Defence,GetCastleData("arug_cas02",3);
+		SetCastleData "arug_cas02",3,.@Defence + GetCastleData("arug_cas02",5);
+		if (GetCastleData("arug_cas02",3) > 100) SetCastleData "arug_cas02",3,100;
+		setcastledata "arug_cas02",5,0;
+	}
+
 	set .@Treasure,GetCastleData("arug_cas02",2)/5+4;
 	if (.@Treasure) {
 		monster "arug_cas02",382,231,"Treasure Chest",1944,1,"Manager#aru02_02::OnTreasureDied";
@@ -158,16 +173,6 @@ OnClock0001:
 		monster "arug_cas02",388,224,"Treasure Chest",1944,1,"Manager#aru02_02::OnTreasureDied";
 		if (.@Treasure < 24) end;
 		monster "arug_cas02",389,224,"Treasure Chest",1324,1,"Manager#aru02_02::OnTreasureDied";
-	}
-	if (GetCastleData("arug_cas02",4)) {
-		set .@Economy,GetCastleData("arug_cas02",2);
-		SetCastleData "arug_cas02",2,.@Economy + GetCastleData("arug_cas02",4) + (.@Economy<99 && rand(2) && getgdskilllv(.@GID,10014));
-		setcastledata "arug_cas02",4,0;
-	}
-	if (GetCastleData("arug_cas02",5)) {
-		set .@Defence,GetCastleData("arug_cas02",3);
-		SetCastleData "arug_cas02",3,.@Defence + GetCastleData("arug_cas02",5);
-		setcastledata "arug_cas02",5,0;
 	}
 	end;
 

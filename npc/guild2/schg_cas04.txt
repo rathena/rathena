@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
-//= 1.6
+//= 1.7
 //===== Compatible With: =====================================
 //= eAthena SVN
 //===== Description: =========================================
@@ -19,6 +19,8 @@
 //=     Treasure will now be killed before spawning.
 //= 1.5 Replaced effect numerics with constants. [L0ne_W0lf]
 //= 1.6 Applied updated eco/def systems. [L0ne_W0lf]
+//= 1.7 Fixed eco/def not actually incrementing. [L0ne_W0lf]
+//=     Can no longer gain eco/def higher than 100.
 //============================================================
 
 schg_cas04,1,1,0	script	Manager#sch04_02	111,{
@@ -107,6 +109,19 @@ OnClock0001:
 	if (!GetCastleData("schg_cas04",1)) end;
 	killmonster "schg_cas04","Manager#sch04_02::OnTreasureDied";
 
+	if (GetCastleData("schg_cas04",4)) {
+		set .@Economy,GetCastleData("schg_cas04",2);
+		SetCastleData "schg_cas04",2,.@Economy + GetCastleData("schg_cas04",4) + (rand(2) && getgdskilllv(.@GID,10014));
+		if (GetCastleData("schg_cas04",2) > 100) SetCastleData "schg_cas04",2,100;
+		setcastledata "schg_cas04",4,0;
+	}
+	if (GetCastleData("schg_cas04",5)) {
+		set .@Defence,GetCastleData("schg_cas04",3);
+		SetCastleData "schg_cas04",3,.@Defence + GetCastleData("schg_cas04",5);
+		if (GetCastleData("schg_cas04",3) > 100) SetCastleData "schg_cas04",3,100;
+		setcastledata "schg_cas04",5,0;
+	}
+
 	set .@Treasure,GetCastleData("schg_cas04",2)/5+4;
 	if (.@Treasure) {
 		monster "schg_cas04",388,388,"Treasure Chest",1941,1,"Manager#sch04_02::OnTreasureDied";
@@ -153,16 +168,6 @@ OnClock0001:
 		monster "schg_cas04",387,286,"Treasure Chest",1941,1,"Manager#sch04_02::OnTreasureDied";
 		if (.@Treasure < 24) end;
 		monster "schg_cas04",386,386,"Treasure Chest",1324,1,"Manager#sch04_02::OnTreasureDied";
-	}
-	if (GetCastleData("schg_cas04",4)) {
-		set .@Economy,GetCastleData("schg_cas04",2);
-		SetCastleData "schg_cas04",2,.@Economy + GetCastleData("schg_cas04",4) + (.@Economy<99 && rand(2) && getgdskilllv(.@GID,10014));
-		setcastledata "schg_cas04",4,0;
-	}
-	if (GetCastleData("schg_cas04",5)) {
-		set .@Defence,GetCastleData("schg_cas04",3);
-		SetCastleData "schg_cas04",3,.@Defence + GetCastleData("schg_cas04",5);
-		setcastledata "schg_cas04",5,0;
 	}
 	end;
 
