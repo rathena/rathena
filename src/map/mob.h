@@ -112,7 +112,6 @@ struct mob_data {
 		int provoke_flag; // Celest
 		unsigned npc_killmonster: 1; //for new killmonster behavior
 		unsigned rebirth: 1; // NPC_Rebirth used
-		unsigned inmunity: 1; // Monster Cannot be attacked
 		unsigned int bg_id; // BattleGround System
 	} state;
 	struct guardian_data* guardian_data; 

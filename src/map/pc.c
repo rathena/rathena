@@ -82,28 +82,6 @@ int pc_class2idx(int class_) {
 	return class_;
 }
 
-void pc_update_last_action(struct map_session_data *sd)
-{
-	struct battleground_data *bg;
-	int i;
-
-	sd->idletime = last_tick;
-	if( sd->state.bg_id && (bg = bg_team_search(sd->state.bg_id)) != NULL )
-	{ // Update Battleground Idle Timer
-		ARR_FIND(0, MAX_BG_MEMBERS, i, bg->members[i].sd == sd);
-		if( i == MAX_BG_MEMBERS)
-			return;
-
-		if( bg->members[i].afk && bg->g )
-		{
-			char output[128];
-			sprintf(output, "%s : %s is no longer away...", bg->g->name, sd->status.name);
-			clif_bg_message(bg, 0, output, strlen(output));
-			bg->members[i].afk = 0;
-		}
-	}
-}
-
 int pc_isGM(struct map_session_data* sd)
 {
 	return sd->gmlevel;

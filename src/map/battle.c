@@ -283,13 +283,6 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,int damage,i
 	if( mob_ksprotected(src, bl) )
 		return 0;
 
-	if( bl->type == BL_MOB )
-	{ // Event Emperiums works like GvG Emperiums
-		struct mob_data *md = BL_CAST(BL_MOB, bl);
-		if( map[bl->m].flag.battleground && (md->class_ == 1914 || md->class_ == 1915) && flag&BF_SKILL )
-			return 0; // Crystal Cannot receive magic damage on battlegrounds
-	}
-
 	if (bl->type == BL_PC) {
 		sd=(struct map_session_data *)bl;
 		//Special no damage states
@@ -536,7 +529,16 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,int damage,i
  *------------------------------------------*/
 int battle_calc_bg_damage(struct block_list *src, struct block_list *bl, int damage, int div_, int skill_num, int skill_lv, int flag)
 {
-	if( !damage ) return 0;
+	if( !damage )
+		return 0;
+
+	if( bl->type == BL_MOB )
+	{
+		struct mob_data* md = BL_CAST(BL_MOB, bl);
+		if( map[bl->m].flag.battleground && (md->class_ == 1914 || md->class_ == 1915) && flag&BF_SKILL )
+			return 0; // Crystal cannot receive skill damage on battlegrounds
+	}
+
 	switch( skill_num )
 	{
 		case PA_PRESSURE:
@@ -572,17 +574,12 @@ int battle_calc_bg_damage(struct block_list *src, struct block_list *bl, int dam
  *------------------------------------------*/
 int battle_calc_gvg_damage(struct block_list *src,struct block_list *bl,int damage,int div_,int skill_num,int skill_lv,int flag)
 {
-	struct mob_data *md = NULL;
-	int class_;
+	struct mob_data* md = BL_CAST(BL_MOB, bl);
+	int class_ = status_get_class(bl);
 
 	if (!damage) //No reductions to make.
 		return 0;
 	
-	class_ = status_get_class(bl);
-
-	if (bl->type == BL_MOB)
-		md=(struct mob_data *)bl;
-
 	if(md && md->guardian_data) {
 		if(class_ == MOBID_EMPERIUM && flag&BF_SKILL)
 		//Skill immunity.
@@ -598,8 +595,7 @@ int battle_calc_gvg_damage(struct block_list *src,struct block_list *bl,int dama
 			if (!g) return 0;
 			if (class_ == MOBID_EMPERIUM && guild_checkskill(g,GD_APPROVAL) <= 0)
 				return 0;
-			if (battle_config.guild_max_castles &&
-				guild_checkcastles(g)>=battle_config.guild_max_castles)
+			if (battle_config.guild_max_castles && guild_checkcastles(g)>=battle_config.guild_max_castles)
 				return 0; // [MouseJstr]
 		}
 	}
@@ -3263,8 +3259,6 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 
 			if( !((agit_flag || agit2_flag) && map[m].flag.gvg_castle) && md->guardian_data && md->guardian_data->guild_id )
 				return 0; // Disable guardians/emperiums owned by Guilds on non-woe times.
-			if( md->state.inmunity && flag&BCT_ENEMY )
-				return 0;
 			break;
 		}
 	}
@@ -3842,7 +3836,6 @@ static const struct _battle_data {
 	{ "bg_magic_attack_damage_rate",        &battle_config.bg_magic_damage_rate,            60,     0,      INT_MAX,        },
 	{ "bg_misc_attack_damage_rate",         &battle_config.bg_misc_damage_rate,             60,     0,      INT_MAX,        },
 	{ "bg_flee_penalty",                    &battle_config.bg_flee_penalty,                 20,     0,      INT_MAX,        },
-	{ "bg_idle_announce",                   &battle_config.bg_idle_announce,                0,      0,      INT_MAX,        },
 };
 
 

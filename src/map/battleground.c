@@ -289,14 +289,6 @@ int bg_send_xy_timer_sub(DBKey key, void *data, va_list ap)
 			bg->members[i].y = sd->bl.y;
 			clif_bg_xy(sd);
 		}
-		if( battle_config.bg_idle_announce && !bg->members[i].afk && DIFF_TICK(last_tick, sd->idletime) >= battle_config.bg_idle_announce && bg->g )
-		{ // Idle announces
-			char output[128];
-			bg->members[i].afk = 1;
-			sprintf(output, "%s : %s seens to be away...", bg->g->name, sd->status.name);
-
-			clif_bg_message(bg, 0, output, strlen(output));
-		}
 	}
 	return 0;
 }

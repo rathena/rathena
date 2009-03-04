@@ -13437,28 +13437,6 @@ BUILDIN_FUNC(bg_monster)
 	return 0;
 }
 
-BUILDIN_FUNC(setmobdata)
-{
-	struct mob_data *md;
-	struct block_list *mbl;
-	int id = script_getnum(st,2),
-		type = script_getnum(st,3),
-		value = script_getnum(st,4);
-
-	if( (mbl = map_id2bl(id)) == NULL || mbl->type != BL_MOB )
-		return 0;
-	md = (TBL_MOB *)mbl;
-	switch( type )
-	{
-		case 0: md->state.inmunity = value > 0 ? 1 : 0; break;
-		default:
-			ShowError("script:setmobdata: unknown data identifier %d\n", type);
-			return 1;
-	}
-
-	return 0;
-}
-
 BUILDIN_FUNC(bg_leave)
 {
 	struct map_session_data *sd = script_rid2sd(st);
@@ -13901,7 +13879,6 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(bg_leave,""),
 	BUILDIN_DEF(bg_destroy,"i"),
 	BUILDIN_DEF(areapercentheal,"siiiiii"),
-	BUILDIN_DEF(setmobdata,"iii"),
 	BUILDIN_DEF(bg_get_data,"ii"),
 	BUILDIN_DEF(bg_getareausers,"isiiii"),
 	{NULL,NULL,NULL},

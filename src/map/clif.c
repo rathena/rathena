@@ -5639,6 +5639,7 @@ int clif_hpmeter(struct map_session_data *sd)
 		WBUFW(buf,8) = sd->battle_status.max_hp;
 	}
 
+	//TODO: replace with map_foreachinarea?
 	for( i = 0; i < fd_max; i++ )
 	{
 		if( session[i] && session[i]->func_parse == clif_parse && (sd2 = (struct map_session_data*)session[i]->session_data) && sd != sd2 && sd2->state.active )
@@ -7918,7 +7919,8 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 		clif_party_hp(sd); // Show hp after displacement [LuzZza]
 	}
 
-	if( sd->state.bg_id ) clif_bg_hp(sd); // BattleGround System
+	if( sd->state.bg_id )
+		clif_bg_hp(sd); // BattleGround System
 
 	if(map[sd->bl.m].flag.pvp) {
 		if(!battle_config.pk_mode) { // remove pvp stuff for pk_mode [Valaris]
@@ -8202,7 +8204,7 @@ void clif_parse_WalkToXY(int fd, struct map_session_data *sd)
 	y = ((RFIFOB(fd,packet_db[sd->packet_ver][cmd].pos[0]+1) & 0x3f) << 4) +
 		(RFIFOB(fd,packet_db[sd->packet_ver][cmd].pos[0] + 2) >> 4);
 	//Set last idle time... [Skotlex]
-	pc_update_last_action(sd);
+	sd->idletime = last_tick;
 	
 	unit_walktoxy(&sd->bl, x, y, 4);
 }
@@ -8494,7 +8496,7 @@ void clif_parse_ActionRequest_sub(struct map_session_data *sd, int action_type, 
 		}
 
 		pc_delinvincibletimer(sd);
-		pc_update_last_action(sd);
+		sd->idletime = last_tick;
 		unit_attack(&sd->bl, target_id, action_type != 0);
 	break;
 	case 0x02: // sitdown
@@ -8854,7 +8856,7 @@ void clif_parse_UseItem(int fd, struct map_session_data *sd)
 	pc_delinvincibletimer(sd);
 
 	//Whether the item is used or not is irrelevant, the char ain't idle. [Skotlex]
-	pc_update_last_action(sd);
+	sd->idletime = last_tick;
 	n = RFIFOW(fd,packet_db[sd->packet_ver][RFIFOW(fd,0)].pos[0])-2;
 	
 	if(n <0 || n >= MAX_INVENTORY)
@@ -9367,7 +9369,7 @@ void clif_parse_UseSkillToId(int fd, struct map_session_data *sd)
 	}
 
 	// Whether skill fails or not is irrelevant, the char ain't idle. [Skotlex]
-	pc_update_last_action(sd);
+	sd->idletime = last_tick;
 
 	if( pc_cant_act(sd) )
 		return;
@@ -9493,7 +9495,7 @@ void clif_parse_UseSkillToPosSub(int fd, struct map_session_data *sd, short skil
 	}
 
 	//Whether skill fails or not is irrelevant, the char ain't idle. [Skotlex]
-	pc_update_last_action(sd);
+	sd->idletime = last_tick;
 
 	if( skillnotok(skillnum, sd) )
 		return;

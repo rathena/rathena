@@ -716,8 +716,6 @@ extern int night_timer_tid;
 int map_day_timer(int tid, unsigned int tick, int id, intptr data); // by [yor]
 int map_night_timer(int tid, unsigned int tick, int id, intptr data); // by [yor]
 
-void pc_update_last_action(struct map_session_data *sd);
-
 // Rental System
 void pc_inventory_rentals(struct map_session_data *sd);
 int pc_inventory_rental_clear(struct map_session_data *sd);

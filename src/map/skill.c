@@ -2983,10 +2983,9 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			int heal = skill_calc_heal(src, bl, skilllv);
 			int heal_get_jobexp;
 	
-			if( status_isimmune(bl) )
+			if( status_isimmune(bl) || (dstmd && (dstmd->class_ == MOBID_EMPERIUM || mob_is_battleground(dstmd))) )
 				heal=0;
-			if( dstmd && (dstmd->class_ == MOBID_EMPERIUM || mob_is_battleground(dstmd)) )
-				heal=0; // Emperium - BattleGround Mobs cannot be Healed
+
 			if( sd )
 			{
 				if( (i = pc_skillheal_bonus(sd, skillid)) )
