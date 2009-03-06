@@ -1,0 +1,610 @@
+// ==============================================================================
+// BattleGround System - Tierra Valley 1
+// ==============================================================================
+
+// Registration NPC's
+// *********************************************************************
+
+bat_room,85,227,4	script	Registration::TV1R_Guillaume	418,{
+	end;
+OnInit:
+	waitingroom "Battle Station 10 Players",10,"Tierra_BG1::OnGuillaumeJoin",1;
+	end;
+OnEnterBG:
+	set $@TierraBG1_id1, waitingroom2bg("bat_a01",50,374,0,"Tierra_BG1::OnGuillaumeQuit","");
+	end;
+}
+
+bat_room,85,204,0	script	Registration::TV1R_Croix	414,{
+	end;
+OnInit:
+	waitingroom "Battle Station 10 Players",10,"Tierra_BG1::OnCroixJoin",1;
+	end;
+OnEnterBG:
+	set $@TierraBG1_id2, waitingroom2bg("bat_a01",42,16,1,"Tierra_BG1::OnCroixQuit","");
+	end;
+}
+
+// Battleground Engine
+// *********************************************************************
+
+-	script	Tierra_BG1	-1,{
+	end;
+
+OnInit:
+	disablenpc "Tierra Neutral#lion1";
+	disablenpc "Tierra Neutral#eagle1";
+	disablenpc "Croix Vintenar#tv1";
+	disablenpc "Guillaume Vintenar#tv1";
+	disablenpc "Therapist in battle#tv11";
+	disablenpc "Therapist in battle#tv12";
+	end;
+
+OnGuillaumeQuit:
+OnCroixQuit:
+	set BG_Delay_Tick, gettimetick(2) + 1200;
+	end;
+
+OnGuillaumeJoin:
+OnCroixJoin:
+	if( $@TierraBG1 == 0 )
+		donpcevent "Tierra_BG1::OnReadyCheck";
+	end;
+
+OnReadyCheck:
+	if( $@TierraBG1 )
+		end;
+	set .@Guillaume, getwaitingroomstate(0,"TV1R_Guillaume");
+	set .@Croix, getwaitingroomstate(0,"TV1R_Croix");
+
+	if( .@Guillaume < 10 || .@Croix < 10 )
+	{
+		mapannounce "bat_room","Battleground -- Tierra Valley [80-99] G: " + .@Guillaume + "/10, C: " + .@Croix + "/10",1,0xFFA500;
+		end;
+	}
+
+	set $@TierraBG1, 1;
+	donpcevent "TV1R_Croix::OnEnterBG";
+	donpcevent "TV1R_Guillaume::OnEnterBG";
+	donpcevent "Guillaume_TV1B::OnBuild";
+	donpcevent "Croix_TV1B::OnBuild";
+	bg_monster $@TierraBG1_id1,"bat_a01",176,345,"Food Depot",1909,"Tierra_BG1::OnGuillaumeBreak";
+	bg_monster $@TierraBG1_id2,"bat_a01",167,50,"Food Storage",1910,"Tierra_BG1::OnCroixBreak";
+	bg_monster 0,"bat_a01",273,204,"Neutrality Flag",1911,"Tierra_BG1::OnNeutralBreak";
+	set $@TierraBG1_Base, 0;
+	set $@TierraBG1_Victory, 0;
+	enablenpc "Therapist in battle#tv11";
+	enablenpc "Therapist in battle#tv12";
+	disablenpc "Croix Vintenar#tv1";
+	disablenpc "Guillaume Vintenar#tv1";
+	// Respawner
+	donpcevent "#gtv1_respawn::OnBGStart";
+	donpcevent "#ctv1_respawn::OnBGStart";
+	// Warp Teams
+	announce "Battleground -- Tierra Valley [80-99] has started!",0,0xFFA500;
+	bg_warp $@TierraBG1_id1,"bat_a01",353,344;
+	bg_warp $@TierraBG1_id2,"bat_a01",353,52;
+	// Final Messages
+	sleep 6000;
+	mapannounce "bat_a01","Guillaume Vintenar Axl Rose : Let's attack to burn down Croix's food storage",1,0x0000FF;
+	sleep 2000;
+	mapannounce "bat_a01","Croix Vintenar Swandery : Master of Valhalla! Let us be gifted with unfailing faith and courage",1,0xFF0000;
+	
+	initnpctimer;
+	end;
+
+OnNeutralBreak:
+	if( Bat_Team == 1 )
+	{
+		mapannounce "bat_a01","Guillaume obtained a neurality banner, so they have an advantage.",1,0x0000FF;
+		setnpcdisplay("Tierra Neutral#lion1","Guillaume Base",973);
+		enablenpc "Tierra Neutral#lion1";
+		bg_monster $@TierraBG1_id1,"bat_a01",28,185,"Guillaume Camp Guardian",1949,"Tierra_BG1::OnGuardian";
+		bg_monster $@TierraBG1_id1,"bat_a01",287,203,"Guillaume Camp Guardian",1950,"Tierra_BG1::OnGuardian";
+		bg_monster $@TierraBG1_id1,"bat_a01",268,204,"Guillaume Camp Guardian",1949,"Tierra_BG1::OnGuardian";
+		bg_monster $@TierraBG1_id1,"bat_a01",280,233,"Guillaume Camp Guardian",1950,"Tierra_BG1::OnGuardian";
+	}
+	else if( Bat_Team == 2 )
+	{
+		mapannounce "bat_a01","Croix obtained a neutrality banner, so they have an advantage.",1,0xFF0000;
+		setnpcdisplay("Tierra Neutral#eagle1","Croix Base",974);
+		enablenpc "Tierra Neutral#eagle1";
+		bg_monster $@TierraBG1_id2,"bat_a01",28,185,"Croix Camp Guardian",1949,"Tierra_BG1::OnGuardian";
+		bg_monster $@TierraBG1_id2,"bat_a01",287,203,"Croix Camp Guardian",1950,"Tierra_BG1::OnGuardian";
+		bg_monster $@TierraBG1_id2,"bat_a01",268,204,"Croix Camp Guardian",1949,"Tierra_BG1::OnGuardian";
+		bg_monster $@TierraBG1_id2,"bat_a01",280,233,"Croix Camp Guardian",1950,"Tierra_BG1::OnGuardian";
+	}
+	else end; // Should not happend
+	set $@TierraBG1_Base, Bat_Team;
+	end;
+
+OnGuardian:
+	end;
+
+OnGuillaumeBreak:
+	set $@TierraBG1_Victory, 2;
+	mapannounce "bat_a01","Croix Vintenar Swandery: We destroyed Guillaume's food storehause. We won that! Wow!",1,0xFF0000;
+	donpcevent "Tierra_BG1::OnStop";
+	end;
+
+OnCroixBreak:
+	set $@TierraBG1_Victory, 1;
+	mapannounce "bat_a01","Guillaume Vintenar Axl Rose: We destroyed Croix's food storehause. We won that! Wow!",1,0x0000FF;
+	donpcevent "Tierra_BG1::OnStop";
+	end;
+
+OnTimer2400000:
+	mapannounce "bat_a01","Battle of Tierra Gorge will ends in 5 minutes",1,0xFFA500;
+	end;
+OnTimer2640000:
+	mapannounce "bat_a01","Battle of Tierra Gorge will ends in 1 minute",1,0xFFA500;
+	end;
+
+OnTimer2700000:
+	set $@TierraBG1_Victory, 3; // Draw Game
+	mapannounce "bat_a01","Battle of Tierra Gorge is over. The time is out, this is a Tie",1,0xFFA500;
+	donpcevent "Tierra_BG1::OnStop";
+	end;
+
+OnStop:
+	set $@TierraBG1, 2;
+	disablenpc "Therapist in battle#tv11";
+	disablenpc "Therapist in battle#tv12";
+	donpcevent "#gtv1_respawn::OnBGStop";
+	donpcevent "#ctv1_respawn::OnBGStop";
+	enablenpc "Croix Vintenar#tv1";
+	enablenpc "Guillaume Vintenar#tv1";
+	killmonster "bat_a01","Tierra_BG1::OnGuillaumeBreak";
+	killmonster "bat_a01","Tierra_BG1::OnCroixBreak";
+	killmonster "bat_a01","Tierra_BG1::OnNeutralBreak";
+	killmonster "bat_a01","Tierra_BG1::OnGuardian";
+	stopnpctimer;
+	sleep 3000;
+	bg_warp $@TierraBG1_id1,"bat_a01",50,374;
+	bg_warp $@TierraBG1_id2,"bat_a01",42,16;
+	sleep 3000;
+	mapannounce "bat_a01","Battle of Tierra Gorge will close in 1 minute!",1,0xFFA500;
+	initnpctimer;
+	end;
+
+OnTimer30000:
+	if( $@TierraBG1 == 2 )
+		mapannounce "bat_a01","Battle of Tierra Gorge will close in 30 seconds!",1,0xFFA500;
+	end;
+OnTimer50000:
+	if( $@TierraBG1 == 2 )
+		mapannounce "bat_a01","Battle of Tierra Gorge will close in 10 seconds!",1,0xFFA500;
+	end;
+
+OnTimer60000:
+	if( $@TierraBG1 != 2 )
+		end;
+OnReset:
+	stopnpctimer;
+	set $@TierraBG1_Base, 0;
+	disablenpc "Tierra Neutral#lion1";
+	disablenpc "Tierra Neutral#eagle1";
+	disablenpc "Croix Vintenar#tv1";
+	disablenpc "Guillaume Vintenar#tv1";
+	disablenpc "Therapist in battle#tv11";
+	disablenpc "Therapist in battle#tv12";
+	donpcevent "#gtv1_respawn::OnBGStop";
+	donpcevent "#ctv1_respawn::OnBGStop";
+
+	killmonster "bat_a01","Tierra_BG1::OnGuillaumeBreak";
+	killmonster "bat_a01","Tierra_BG1::OnCroixBreak";
+	killmonster "bat_a01","Tierra_BG1::OnNeutralBreak";
+	killmonster "bat_a01","Tierra_BG1::OnGuardian";
+	donpcevent "Guillaume_TV1B::OnDestroy";
+	donpcevent "Croix_TV1B::OnDestroy";
+
+	set $@TierraBG1_Victory, 0;
+	if( $@TierraBG1_id1 ) { bg_destroy $@TierraBG1_id1; set $@TierraBG1_id1, 0; }
+	if( $@TierraBG1_id2 ) { bg_destroy $@TierraBG1_id2; set $@TierraBG1_id2, 0; }
+	sleep 1000;
+	mapwarp "bat_a01","bat_room",155,150;
+	sleep 2000;
+	maprespawnguildid "bat_a01",0,3; // Just in case someone else
+	sleep 2000;
+	set $@TierraBG1, 0;
+	donpcevent "Tierra_BG1::OnReadyCheck"; // Maybe a game is ready to start
+	end;
+}
+
+// MapFlags
+// *********************************************************************
+
+bat_a01	mapflag	battleground
+bat_a01	mapflag	nomemo
+bat_a01	mapflag	nosave	SavePoint
+bat_a01	mapflag	noteleport
+bat_a01	mapflag	nowarp
+bat_a01	mapflag	nowarpto
+bat_a01	mapflag	noreturn
+bat_a01	mapflag	nobranch
+bat_a01	mapflag	nopenalty
+
+// Neutral Point Flags
+// *********************************************************************
+
+bat_a01,273,204,1	script	Tierra Neutral#lion1	973,{ end; }
+bat_a01,273,204,1	script	Tierra Neutral#eagle1	974,{ end; }
+
+// Other Flags
+// *********************************************************************
+
+bat_a01,148,85,1	duplicate(Croix camp#bat)	Croix camp#bat10	974
+bat_a01,155,85,1	duplicate(Croix camp#bat)	Croix camp#bat11	974
+bat_a01,357,75,1	duplicate(Croix camp#bat)	Croix camp#bat12	974
+bat_a01,348,74,1	duplicate(Croix camp#bat)	Croix camp#bat13	974
+bat_a01,199,49,1	duplicate(Croix camp#bat)	Croix camp#bat14	974
+bat_a01,168,16,1	duplicate(Croix camp#bat)	Croix camp#bat15	974
+bat_a01,138,12,1	duplicate(Croix camp#bat)	Croix camp#bat16	974
+bat_a01,108,35,1	duplicate(Croix camp#bat)	Croix camp#bat17	974
+bat_a01,164,308,1	duplicate(Guillaume camp#bat)	Guillaume camp#bat10	973
+bat_a01,157,308,1	duplicate(Guillaume camp#bat)	Guillaume camp#bat11	973
+bat_a01,359,327,1	duplicate(Guillaume camp#bat)	Guillaume camp#bat12	973
+bat_a01,350,326,1	duplicate(Guillaume camp#bat)	Guillaume camp#bat13	973
+bat_a01,209,344,1	duplicate(Guillaume camp#bat)	Guillaume camp#bat14	973
+bat_a01,173,380,1	duplicate(Guillaume camp#bat)	Guillaume camp#bat15	973
+bat_a01,150,380,1	duplicate(Guillaume camp#bat)	Guillaume camp#bat16	973
+bat_a01,118,357,1	duplicate(Guillaume camp#bat)	Guillaume camp#bat17	973
+bat_a01,119,336,1	duplicate(Guillaume camp#bat)	Guillaume camp#bat18	973
+
+// Barricades
+// *********************************************************************
+
+-	script	Guillaume_TV1B	-1,{
+	end;
+
+OnBuild:
+	bg_monster $@TierraBG1_id1,"bat_a01",160,380,"Barricade",1906,"Guillaume_TV1B::OnWall1";
+	bg_monster $@TierraBG1_id1,"bat_a01",161,380,"Barricade",1906,"Guillaume_TV1B::OnWall1";
+	bg_monster $@TierraBG1_id1,"bat_a01",162,380,"Barricade",1906,"Guillaume_TV1B::OnWall1";
+	bg_monster $@TierraBG1_id1,"bat_a01",163,380,"Barricade",1906,"Guillaume_TV1B::OnWall1";
+	setwall "bat_a01",160,380,4,6,0,"bat_a01_g1";
+	
+	bg_monster $@TierraBG1_id1,"bat_a01",160,363,"Barricade",1906,"Guillaume_TV1B::OnWall2";
+	bg_monster $@TierraBG1_id1,"bat_a01",161,363,"Barricade",1906,"Guillaume_TV1B::OnWall2";
+	bg_monster $@TierraBG1_id1,"bat_a01",162,363,"Barricade",1906,"Guillaume_TV1B::OnWall2";
+	setwall "bat_a01",160,363,3,6,0,"bat_a01_g2";
+	
+	bg_monster $@TierraBG1_id1,"bat_a01",119,344,"Barricade",1906,"Guillaume_TV1B::OnWall3";
+	bg_monster $@TierraBG1_id1,"bat_a01",119,345,"Barricade",1906,"Guillaume_TV1B::OnWall3";
+	bg_monster $@TierraBG1_id1,"bat_a01",119,346,"Barricade",1906,"Guillaume_TV1B::OnWall3";
+	bg_monster $@TierraBG1_id1,"bat_a01",119,347,"Barricade",1906,"Guillaume_TV1B::OnWall3";
+	setwall "bat_a01",119,344,4,0,0,"bat_a01_g3";
+	
+	bg_monster $@TierraBG1_id1,"bat_a01",134,345,"Barricade",1906,"Guillaume_TV1B::OnWall4";
+	bg_monster $@TierraBG1_id1,"bat_a01",134,346,"Barricade",1906,"Guillaume_TV1B::OnWall4";
+	bg_monster $@TierraBG1_id1,"bat_a01",134,347,"Barricade",1906,"Guillaume_TV1B::OnWall4";
+	setwall "bat_a01",134,345,3,0,0,"bat_a01_g4";
+	
+	bg_monster $@TierraBG1_id1,"bat_a01",159,311,"Barricade",1906,"Guillaume_TV1B::OnWall5";
+	bg_monster $@TierraBG1_id1,"bat_a01",160,311,"Barricade",1906,"Guillaume_TV1B::OnWall5";
+	bg_monster $@TierraBG1_id1,"bat_a01",161,311,"Barricade",1906,"Guillaume_TV1B::OnWall5";
+	bg_monster $@TierraBG1_id1,"bat_a01",162,311,"Barricade",1906,"Guillaume_TV1B::OnWall5";
+	setwall "bat_a01",159,311,4,6,0,"bat_a01_g5";
+	
+	bg_monster $@TierraBG1_id1,"bat_a01",159,327,"Barricade",1906,"Guillaume_TV1B::OnWall6";
+	bg_monster $@TierraBG1_id1,"bat_a01",160,327,"Barricade",1906,"Guillaume_TV1B::OnWall6";
+	bg_monster $@TierraBG1_id1,"bat_a01",161,327,"Barricade",1906,"Guillaume_TV1B::OnWall6";
+	bg_monster $@TierraBG1_id1,"bat_a01",162,327,"Barricade",1906,"Guillaume_TV1B::OnWall6";
+	setwall "bat_a01",159,327,4,6,0,"bat_a01_g6";
+	
+	bg_monster $@TierraBG1_id1,"bat_a01",163,344,"Barricade",1906,"Guillaume_TV1B::OnWall7";
+	bg_monster $@TierraBG1_id1,"bat_a01",163,345,"Barricade",1906,"Guillaume_TV1B::OnWall7";
+	bg_monster $@TierraBG1_id1,"bat_a01",163,346,"Barricade",1906,"Guillaume_TV1B::OnWall7";
+	bg_monster $@TierraBG1_id1,"bat_a01",163,347,"Barricade",1906,"Guillaume_TV1B::OnWall7";
+	setwall "bat_a01",163,344,4,0,0,"bat_a01_g7";
+
+	setarray .MyMobCount[1],4,3,4,3,4,4,4;
+	end;
+
+OnDestroy:
+	for( set .@i, 1; .@i < 8; set .@i, .@i + 1 )
+	{
+		killmonster "bat_a01","Guillaume_TV1B::OnWall" + .@i + "";
+		delwall "bat_a01_g" + .@i + "";
+	}
+	
+	setarray .MyMobCount[1],0,0,0,0,0,0,0;
+	end;
+
+OnWall1:
+	if( set(.MyMobCount[1],.MyMobCount[1] - 1) < 1 )
+	{
+		delwall "bat_a01_g1";
+		mapannounce "bat_a01","Guillaume Camp : A Gate has been Destroy!!",1,0xffb85d;
+	}
+	end;
+OnWall2:
+	if( set(.MyMobCount[2],.MyMobCount[2] - 1) < 1 )
+	{
+		delwall "bat_a01_g2";
+		mapannounce "bat_a01","Guillaume Camp : A Gate has been Destroy!!",1,0xffb85d;
+	}
+	end;
+OnWall3:
+	if( set(.MyMobCount[3],.MyMobCount[3] - 1) < 1 )
+	{
+		delwall "bat_a01_g3";
+		mapannounce "bat_a01","Guillaume Camp : A Gate has been Destroy!!",1,0xffb85d;
+	}
+	end;
+OnWall4:
+	if( set(.MyMobCount[4],.MyMobCount[4] - 1) < 1 )
+	{
+		delwall "bat_a01_g4";
+		mapannounce "bat_a01","Guillaume Camp : A Gate has been Destroy!!",1,0xffb85d;
+	}
+	end;
+OnWall5:
+	if( set(.MyMobCount[5],.MyMobCount[5] - 1) < 1 )
+	{
+		delwall "bat_a01_g5";
+		mapannounce "bat_a01","Guillaume Camp : A Gate has been Destroy!!",1,0xffb85d;
+	}
+	end;
+OnWall6:
+	if( set(.MyMobCount[6],.MyMobCount[6] - 1) < 1 )
+	{
+		delwall "bat_a01_g6";
+		mapannounce "bat_a01","Guillaume Camp : A Gate has been Destroy!!",1,0xffb85d;
+	}
+	end;
+OnWall7:
+	if( set(.MyMobCount[7],.MyMobCount[7] - 1) < 1 )
+	{
+		delwall "bat_a01_g7";
+		mapannounce "bat_a01","Guillaume Camp : Main Gate has been Destroy, our Food Storehouse is unprotected!!",1,0xffb85d;
+	}
+	end;
+}
+
+-	script	Croix_TV1B	-1,{
+	end;
+
+OnBuild:
+	bg_monster $@TierraBG1_id2,"bat_a01",150,83,"Barricade",1906,"Croix_TV1B::OnWall1";
+	bg_monster $@TierraBG1_id2,"bat_a01",151,83,"Barricade",1906,"Croix_TV1B::OnWall1";
+	bg_monster $@TierraBG1_id2,"bat_a01",152,83,"Barricade",1906,"Croix_TV1B::OnWall1";
+	bg_monster $@TierraBG1_id2,"bat_a01",153,83,"Barricade",1906,"Croix_TV1B::OnWall1";
+	setwall "bat_a01",150,83,4,6,0,"bat_a01_c1";
+
+	bg_monster $@TierraBG1_id2,"bat_a01",150,67,"Barricade",1906,"Croix_TV1B::OnWall2";
+	bg_monster $@TierraBG1_id2,"bat_a01",151,67,"Barricade",1906,"Croix_TV1B::OnWall2";
+	bg_monster $@TierraBG1_id2,"bat_a01",152,67,"Barricade",1906,"Croix_TV1B::OnWall2";
+	bg_monster $@TierraBG1_id2,"bat_a01",153,67,"Barricade",1906,"Croix_TV1B::OnWall2";
+	setwall "bat_a01",150,67,4,6,0,"bat_a01_c2";
+
+	bg_monster $@TierraBG1_id2,"bat_a01",109,47,"Barricade",1906,"Croix_TV1B::OnWall3";
+	bg_monster $@TierraBG1_id2,"bat_a01",109,48,"Barricade",1906,"Croix_TV1B::OnWall3";
+	bg_monster $@TierraBG1_id2,"bat_a01",109,49,"Barricade",1906,"Croix_TV1B::OnWall3";
+	bg_monster $@TierraBG1_id2,"bat_a01",109,50,"Barricade",1906,"Croix_TV1B::OnWall3";
+	setwall "bat_a01",109,47,4,0,0,"bat_a01_c3";
+
+	bg_monster $@TierraBG1_id2,"bat_a01",127,47,"Barricade",1906,"Croix_TV1B::OnWall4";
+	bg_monster $@TierraBG1_id2,"bat_a01",127,48,"Barricade",1906,"Croix_TV1B::OnWall4";
+	bg_monster $@TierraBG1_id2,"bat_a01",127,49,"Barricade",1906,"Croix_TV1B::OnWall4";
+	bg_monster $@TierraBG1_id2,"bat_a01",127,50,"Barricade",1906,"Croix_TV1B::OnWall4";
+	setwall "bat_a01",127,47,4,0,0,"bat_a01_c4";
+
+	bg_monster $@TierraBG1_id2,"bat_a01",152,13,"Barricade",1906,"Croix_TV1B::OnWall5";
+	bg_monster $@TierraBG1_id2,"bat_a01",153,13,"Barricade",1906,"Croix_TV1B::OnWall5";
+	bg_monster $@TierraBG1_id2,"bat_a01",154,13,"Barricade",1906,"Croix_TV1B::OnWall5";
+	bg_monster $@TierraBG1_id2,"bat_a01",155,13,"Barricade",1906,"Croix_TV1B::OnWall5";
+	setwall "bat_a01",152,13,4,6,0,"bat_a01_c5";
+
+	bg_monster $@TierraBG1_id2,"bat_a01",152,32,"Barricade",1906,"Croix_TV1B::OnWall6";
+	bg_monster $@TierraBG1_id2,"bat_a01",153,32,"Barricade",1906,"Croix_TV1B::OnWall6";
+	bg_monster $@TierraBG1_id2,"bat_a01",154,32,"Barricade",1906,"Croix_TV1B::OnWall6";
+	bg_monster $@TierraBG1_id2,"bat_a01",155,32,"Barricade",1906,"Croix_TV1B::OnWall6";
+	setwall "bat_a01",152,32,4,6,0,"bat_a01_c6";
+
+	bg_monster $@TierraBG1_id2,"bat_a01",153,48,"Barricade",1906,"Croix_TV1B::OnWall7";
+	bg_monster $@TierraBG1_id2,"bat_a01",153,49,"Barricade",1906,"Croix_TV1B::OnWall7";
+	bg_monster $@TierraBG1_id2,"bat_a01",153,50,"Barricade",1906,"Croix_TV1B::OnWall7";
+	bg_monster $@TierraBG1_id2,"bat_a01",153,51,"Barricade",1906,"Croix_TV1B::OnWall7";
+	setwall "bat_a01",153,48,4,0,0,"bat_a01_c7";
+
+	setarray .MyMobCount[1],4,4,4,4,4,4,4;
+	end;
+
+OnDestroy:
+	for( set .@i, 1; .@i < 8; set .@i, .@i + 1 )
+	{
+		killmonster "bat_a01","Croix_TV1B::OnWall" + .@i + "";
+		delwall "bat_a01_c" + .@i + "";
+	}
+	
+	setarray .MyMobCount[1],0,0,0,0,0,0,0;
+	end;
+
+OnWall1:
+	if( set(.MyMobCount[1],.MyMobCount[1] - 1) < 1 )
+	{
+		delwall "bat_a01_c1";
+		mapannounce "bat_a01","Croix Camp : A Gate has been Destroy!!",1,0xff9fa1;
+	}
+	end;
+OnWall2:
+	if( set(.MyMobCount[2],.MyMobCount[2] - 1) < 1 )
+	{
+		delwall "bat_a01_c2";
+		mapannounce "bat_a01","Croix Camp : A Gate has been Destroy!!",1,0xff9fa1;
+	}
+	end;
+OnWall3:
+	if( set(.MyMobCount[3],.MyMobCount[3] - 1) < 1 )
+	{
+		delwall "bat_a01_c3";
+		mapannounce "bat_a01","Croix Camp : A Gate has been Destroy!!",1,0xff9fa1;
+	}
+	end;
+OnWall4:
+	if( set(.MyMobCount[4],.MyMobCount[4] - 1) < 1 )
+	{
+		delwall "bat_a01_c4";
+		mapannounce "bat_a01","Croix Camp : A Gate has been Destroy!!",1,0xff9fa1;
+	}
+	end;
+OnWall5:
+	if( set(.MyMobCount[5],.MyMobCount[5] - 1) < 1 )
+	{
+		delwall "bat_a01_c5";
+		mapannounce "bat_a01","Croix Camp : A Gate has been Destroy!!",1,0xff9fa1;
+	}
+	end;
+OnWall6:
+	if( set(.MyMobCount[6],.MyMobCount[6] - 1) < 1 )
+	{
+		delwall "bat_a01_c6";
+		mapannounce "bat_a01","Croix Camp : A Gate has been Destroy!!",1,0xff9fa1;
+	}
+	end;
+OnWall7:
+	if( set(.MyMobCount[7],.MyMobCount[7] - 1) < 1 )
+	{
+		delwall "bat_a01_c7";
+		mapannounce "bat_a01","Croix Camp : Main Gate has been Destroy, our Food Storehouse is unprotected!!",1,0xff9fa1;
+	}
+	end;
+}
+
+// Battleground rewards
+// *********************************************************************
+
+bat_a01,45,19,3	script	Croix Vintenar#tv1	415,{
+	if( $@TierraBG1_Victory )
+	{
+		if( $@TierraBG1_Victory == Bat_Team )
+		{ // Victory
+			set .@Reward, 3;
+			mes "[Swandery]";
+			mes "Blessed Croax!!";
+			mes "Let's enjoy our glorious victory!";
+			mes "" + strcharinfo(0) + ", its a sign reflecting victory";
+			close2;
+		}
+		else
+		{ // 
+			set .@Reward, 1;
+			mes "[Swandery]";
+			mes "Oh, " + strcharinfo(0) + ". Don't be sad.";
+			mes "Even though we didn't win, we did our best.";
+			mes "This is a Royal gift from Croix, and please don't forget this battle. We can win the next.";
+			close2;
+		}
+
+		set Tierra_BG_Tick, gettimetick(2) + 300;
+		getitem 7828, .@Reward;
+		bg_leave;
+		warp "bat_room",155,150;
+		end;
+	}
+	end;
+}
+
+bat_a01,53,377,3	script	Guillaume Vintenar#tv1	419,{
+	if( $@TierraBG1_Victory )
+	{
+		if( $@TierraBG1_Victory == Bat_Team )
+		{ // Victory
+			set .@Reward, 3;
+			mes "[Swandery]";
+			mes "Blessed Guillaume!!";
+			mes "Let's enjoy our glorious victory!";
+			mes "" + strcharinfo(0) + ", its a sign reflecting victory";
+			close2;
+		}
+		else
+		{ // 
+			set .@Reward, 1;
+			mes "[Swandery]";
+			mes "You lost, but you're dedicated to this battle.";
+			mes "This is a reward for your great dedication by Guillaume Marollo!";
+			mes "Just take this defeat a lesson, and later you would definitely learn.";
+			close2;
+		}
+
+		set Tierra_BG_Tick, gettimetick(2) + 300;
+		getitem 7828, .@Reward;
+		bg_leave;
+		warp "bat_room",155,150;
+		end;
+	}
+	end;
+}
+
+// Battleground Therapist
+// *********************************************************************
+
+bat_a01,53,377,3	script	Therapist in battle#tv12	95,{
+	mes "[Therapist in battle]";
+	mes "Just close your eyes, and take a deep breathe.";
+	mes "You can be free from pain.";
+	specialeffect2 312;
+	close;
+}
+
+bat_a01,45,18,3	script	Therapist in battle#tv11	95,{
+	mes "[Therapist in battle]";
+	mes "Just close your eyes, and take a deep breathe.";
+	mes "You can be free from pain.";
+	specialeffect2 312;
+	close;
+}
+
+// Battleground Respawn
+// *********************************************************************
+
+bat_a01,50,374,0	script	#gtv1_respawn	139,{
+	end;
+
+OnBGStart:
+	initnpctimer;
+	end;
+
+OnBGStop:
+	stopnpctimer;
+	end;
+
+OnTimer24000:
+	misceffect 83;
+	end;
+
+OnTimer25000:
+	areapercentheal "bat_a01",46,370,54,378,100,100;
+	if( $@TierraBG1_Base == 1 )
+		areawarp "bat_a01",46,370,54,378,"bat_a01",285,226;
+	else
+		areawarp "bat_a01",46,370,54,378,"bat_a01",354,340;
+	initnpctimer;
+	end;
+}
+
+bat_a01,42,16,0	script	#ctv1_respawn	139,{
+	end;
+
+OnBGStart:
+	initnpctimer;
+	end;
+
+OnBGStop:
+	stopnpctimer;
+	end;
+
+OnTimer24000:
+	misceffect 83;
+	end;
+
+OnTimer25000:
+	areapercentheal "bat_a01",38,12,47,21,100,100;
+	if( $@TierraBG1_Base == 2 )
+		areawarp "bat_a01",38,12,47,21,"bat_a01",260,183;
+	else
+		areawarp "bat_a01",38,12,47,21,"bat_a01",354,57;
+	initnpctimer;
+	end;
+}
