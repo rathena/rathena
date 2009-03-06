@@ -227,13 +227,6 @@ turbo_e_16	mapflag	nopenalty
 p_track01	mapflag	nopenalty
 p_track02	mapflag	nopenalty
 
-//Battle Fields =================
-bat_room	mapflag	nopenalty
-bat_a01	mapflag	nopenalty
-bat_a02	mapflag	nopenalty
-bat_b01	mapflag	nopenalty
-bat_b02	mapflag	nopenalty
-
 //Vision of Okolnir =============
 que_qsch01	mapflag	nopenalty
 que_qsch02	mapflag	nopenalty

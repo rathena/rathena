@@ -310,7 +310,7 @@ bat_room,156,121,1	script	Tierra Valley Officer#2	414,{
 
 // Guillaume Knight - Tierra
 // *********************************************************************
-bat_room,175,178,5	script	Guillaume Knight#3	417,{
+bat_room,175,178,5	script	Guillaume Knight#2	417,{
 	mes "[Guillaume Knight]";
 	mes "Tierra Gorge is a very steep canyon with two forts residing in the north and south ends of the map.";
 	next;
@@ -375,7 +375,7 @@ bat_room,172,178,5	script	Tierra Valley Officer#3	418,{
 
 // Croix Knight - Tierra
 // *********************************************************************
-bat_room,175,121,1	script	Croix Knight#3	413,{
+bat_room,175,121,1	script	Croix Knight#2	413,{
 	mes "[Croix Knight]";
 	mes "Tierra Gorge is a very steep canyon with two forts residing in the north and south ends of the map.";
 	next;
@@ -440,7 +440,7 @@ bat_room,172,121,1	script	Tierra Valley Officer#4	414,{
 
 // Guillaune Knight - Flavius
 // *********************************************************************
-bat_room,151,178,5	script	Guillaume Knight#2	417,{
+bat_room,151,178,5	script	Guillaume Knight#3	417,{
 	mes "[Guillaume Knight]";
 	mes "The objective of the Flavius Battle is to score 2 points before your enemy by destryoing theur crystal.";
 	next;
@@ -506,7 +506,7 @@ bat_room,148,178,5	script	Flavius Officer#1	418,{
 
 // Croix Knight - Flavius
 // *********************************************************************
-bat_room,151,121,1	script	Croix Knight#2	413,{
+bat_room,151,121,1	script	Croix Knight#3	413,{
 	mes "[Croix Knight]";
 	mes "The objective of the Flavius Battle is to score 2 points before your enemy by destryoing theur crystal.";
 	next;
@@ -572,7 +572,7 @@ bat_room,148,121,1	script	Flavius Officer#2	414,{
 
 // Guillaume Knight - KvM
 // *********************************************************************
-bat_room,143,178,5	script	Guillaume Knight#3	417,{
+bat_room,143,178,5	script	Guillaume Knight#4	417,{
 	mes "[Guillaume Knight]";
 	mes "To win the Battle of Kriger Von Midgard you and your team must kill all the other oponents before all of you die.";
 	next;
@@ -635,7 +635,7 @@ bat_room,140,178,5	script	KVM [80-99] Officer#1	418,{
 
 // Croix Knight - KvM
 // *********************************************************************
-bat_room,143,121,1	script	Croix Knight#3	413,{
+bat_room,143,121,1	script	Croix Knight#4	413,{
 	mes "[Croix Knight]";
 	mes "To win the Battle of Kriger Von Midgard you and your team must kill all the other oponents before all of you die.";
 	next;
@@ -698,7 +698,7 @@ bat_room,140,121,1	script	KVM [80-99] Officer#2	414,{
 
 // Guillaume Knight - KvM
 // *********************************************************************
-bat_room,135,178,5	script	Guillaume Knight#4	417,{
+bat_room,135,178,5	script	Guillaume Knight#5	417,{
 	mes "[Guillaume Knight]";
 	mes "To win the Battle of Kriger Von Midgard you and your team must kill all the other oponents before all of you die.";
 	next;
@@ -761,7 +761,7 @@ bat_room,132,178,5	script	KVM [60-79] Officer#1	418,{
 
 // Croix Knight - KvM
 // *********************************************************************
-bat_room,135,121,1	script	Croix Knight#4	413,{
+bat_room,135,121,1	script	Croix Knight#5	413,{
 	mes "[Croix Knight]";
 	mes "To win the Battle of Kriger Von Midgard you and your team must kill all the other oponents before all of you die.";
 	next;
@@ -824,7 +824,7 @@ bat_room,132,121,1	script	KVM [60-79] Officer#2	414,{
 
 // Guillaume Knight - KvM
 // *********************************************************************
-bat_room,127,178,5	script	Guillaume Knight#5	417,{
+bat_room,127,178,5	script	Guillaume Knight#6	417,{
 	mes "[Guillaume Knight]";
 	mes "To win the Battle of Kriger Von Midgard you and your team must kill all the other oponents before all of you die.";
 	next;
@@ -887,7 +887,7 @@ bat_room,124,178,5	script	KVM [1-59] Officer#1	418,{
 
 // Croix Knight - KvM
 // *********************************************************************
-bat_room,127,121,1	script	Croix Knight#5	413,{
+bat_room,127,121,1	script	Croix Knight#6	413,{
 	mes "[Croix Knight]";
 	mes "To win the Battle of Kriger Von Midgard you and your team must kill all the other oponents before all of you die.";
 	next;

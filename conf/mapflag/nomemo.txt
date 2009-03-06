@@ -614,13 +614,6 @@ turbo_e_16	mapflag	nomemo
 p_track01	mapflag	nomemo
 p_track02	mapflag	nomemo
 
-//Battle Fields ==============
-bat_room	mapflag	nomemo
-bat_a01	mapflag	nomemo
-bat_a02	mapflag	nomemo
-bat_b01	mapflag	nomemo
-bat_b02	mapflag	nomemo
-
 //Vision of Okolnir ==========
 que_qsch01	mapflag	nomemo
 que_qsch02	mapflag	nomemo

@@ -74,13 +74,6 @@ prt_are_in	mapflag	nowarpto
 p_track01	mapflag	nowarpto
 p_track02	mapflag	nowarpto
 
-//Battle Fields ================
-bat_room	mapflag	nowarpto
-bat_a01	mapflag	nowarpto
-bat_a02	mapflag	nowarpto
-bat_b01	mapflag	nowarpto
-bat_b02	mapflag	nowarpto
-
 //Vision of Okolnir ============
 que_qsch01	mapflag	nowarpto
 que_qsch02	mapflag	nowarpto

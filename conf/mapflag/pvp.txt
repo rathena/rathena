@@ -97,9 +97,3 @@ pvp_2vs2	mapflag	pvp
 turbo_e_4	mapflag	pvp
 turbo_e_8	mapflag	pvp
 turbo_e_16	mapflag	pvp
-
-//Battle Fields ===============
-bat_a01	mapflag	pvp
-bat_a02	mapflag	pvp
-bat_b01	mapflag	pvp
-bat_b02	mapflag	pvp

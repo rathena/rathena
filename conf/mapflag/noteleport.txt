@@ -311,13 +311,6 @@ turbo_e_16	mapflag	noteleport
 p_track01	mapflag	noteleport
 p_track02	mapflag	noteleport
 
-//Battle Fields ==================
-bat_room	mapflag	noteleport
-bat_a01	mapflag	noteleport
-bat_a02	mapflag	noteleport
-bat_b01	mapflag	noteleport
-bat_b02	mapflag	noteleport
-
 //Vision of Okolnir ==============
 que_qsch01	mapflag	noteleport
 que_qsch02	mapflag	noteleport
