@@ -11774,6 +11774,10 @@ void clif_Mail_read(struct map_session_data *sd, int mail_id)
 
 void clif_parse_Mail_read(int fd, struct map_session_data *sd)
 {
+	int mail_id = RFIFOL(fd,2);
+
+	if( mail_id <= 0 )
+		return;
 	if( mail_invalid_operation(sd) )
 		return;
 
@@ -11785,9 +11789,12 @@ void clif_parse_Mail_read(int fd, struct map_session_data *sd)
  *------------------------------------------*/
 void clif_parse_Mail_getattach(int fd, struct map_session_data *sd)
 {
-	int i, mail_id = RFIFOL(fd,2);
+	int mail_id = RFIFOL(fd,2);
+	int i;
 	bool fail = false;
 
+	if( mail_id <= 0 )
+		return;
 	if( mail_invalid_operation(sd) )
 		return;
 
@@ -11841,8 +11848,11 @@ void clif_parse_Mail_getattach(int fd, struct map_session_data *sd)
  *------------------------------------------*/
 void clif_parse_Mail_delete(int fd, struct map_session_data *sd)
 {
-	int i, mail_id = RFIFOL(fd,2);
+	int mail_id = RFIFOL(fd,2);
+	int i;
 
+	if( mail_id <= 0 )
+		return;
 	if( mail_invalid_operation(sd) )
 		return;
 
@@ -11866,8 +11876,11 @@ void clif_parse_Mail_delete(int fd, struct map_session_data *sd)
  *------------------------------------------*/
 void clif_parse_Mail_return(int fd, struct map_session_data *sd)
 {
-	int i, mail_id = RFIFOL(fd,2);
+	int mail_id = RFIFOL(fd,2);
+	int i;
 
+	if( mail_id <= 0 )
+		return;
 	if( mail_invalid_operation(sd) )
 		return;
 

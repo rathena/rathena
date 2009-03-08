@@ -3,6 +3,8 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2009/03/08
+	* Added several mail id checks to prevent a map server crash (bugreport:2837)
 2009/03/02
 	* Blade Stop status no longer prevents item use and equip changing.
 	* Against non-players, Blade Stop skill will now only activate if the attacker is at most 2 cells away (1 if barehanded).
