@@ -46,7 +46,7 @@
 #define PVP_CALCRANK_INTERVAL 1000	// PVP‡ˆÊŒvZ‚ÌŠÔŠu
 static unsigned int exp_table[CLASS_COUNT][2][MAX_LEVEL];
 static unsigned int max_level[CLASS_COUNT][2];
-static short statp[MAX_LEVEL+1];
+static unsigned int statp[MAX_LEVEL+1];
 
 // h-files are for declarations, not for implementations... [Shinomori]
 struct skill_tree_entry skill_tree[CLASS_COUNT][MAX_SKILL_TREE];
@@ -4930,18 +4930,14 @@ int pc_resetstate(struct map_session_data* sd)
 	
 	if (battle_config.use_statpoint_table)
 	{	// New statpoint table used here - Dexity
-		int stat;
 		if (sd->status.base_level > MAX_LEVEL)
 		{	//statp[] goes out of bounds, can't reset!
 			ShowError("pc_resetstate: Can't reset stats of %d:%d, the base level (%d) is greater than the max level supported (%d)\n",
 				sd->status.account_id, sd->status.char_id, sd->status.base_level, MAX_LEVEL);
 			return 0;
 		}
-		stat = statp[sd->status.base_level];
-		if (sd->class_&JOBL_UPPER)
-			stat+=52;	// extra 52+48=100 stat points
 		
-		sd->status.status_point = stat;
+		sd->status.status_point = statp[sd->status.base_level] + ( sd->class_&JOBL_UPPER ? 52 : 0 ); // extra 52+48=100 stat points
 	}
 	else
 	{ //Use new stat-calculating equation [Skotlex]
@@ -4953,6 +4949,7 @@ int pc_resetstate(struct map_session_data* sd)
 		add += sumsp(sd->status.int_);
 		add += sumsp(sd->status.dex);
 		add += sumsp(sd->status.luk);
+
 		sd->status.status_point+=add;
 	}
 
@@ -7488,6 +7485,7 @@ int pc_split_atoui(char* str, unsigned int* val, char sep, int max)
 int pc_readdb(void)
 {
 	int i,j,k;
+	unsigned int stat;
 	FILE *fp;
 	char line[24000],*p;
 
@@ -7675,7 +7673,7 @@ int pc_readdb(void)
 	// ƒXƒLƒ‹ƒcƒŠ?
 	memset(statp,0,sizeof(statp));
 	i=1;
-	j=45;	// base points
+	stat = 45;	// base points
 	sprintf(line, "%s/statpoint.txt", db_path);
 	fp=fopen(line,"r");
 	if(fp == NULL){
@@ -7686,11 +7684,11 @@ int pc_readdb(void)
 		{
 			if(line[0]=='/' && line[1]=='/')
 				continue;
-			if ((j=atoi(line))<0)
-				j=0;
+			if ((stat=strtoul(line,NULL,10))<0)
+				stat=0;
 			if (i > MAX_LEVEL)
 				break;
-			statp[i]=j;			
+			statp[i]=stat;			
 			i++;
 		}
 		fclose(fp);
@@ -7698,8 +7696,8 @@ int pc_readdb(void)
 	}
 	// generate the remaining parts of the db if necessary
 	for (; i <= MAX_LEVEL; i++) {
-		j += (i+15)/5;
-		statp[i] = j;		
+		stat += (i+15)/5;
+		statp[i] = stat;		
 	}
 
 	return 0;
