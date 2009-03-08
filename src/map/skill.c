@@ -3267,22 +3267,35 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		
 	case CG_MARIONETTE:
 		{
-			struct status_change *sc= status_get_sc(src);
-			enum sc_type type2 = SC_MARIONETTE2;
+			struct status_change* sc = status_get_sc(src);
 
-			if(sc && tsc){
-				if (!sc->data[type] && !tsc->data[type2]) {
-					sc_start(src,type,100,bl->id,skill_get_time(skillid,skilllv));
-					sc_start(bl,type2,100,src->id,skill_get_time(skillid,skilllv));
+			if( sd && dstsd && (dstsd->class_&MAPID_UPPERMASK) == MAPID_BARDDANCER && dstsd->status.sex == sd->status.sex )
+			{// Cannot cast on another bard/dancer-type class of the same gender as caster
+				clif_skill_fail(sd,skillid,0,0);
+				map_freeblock_unlock();
+				return 1;
+			}
+
+			if( sc && tsc )
+			{
+				if( !sc->data[SC_MARIONETTE] && !tsc->data[SC_MARIONETTE2] )
+				{
+					sc_start(src,SC_MARIONETTE,100,bl->id,skill_get_time(skillid,skilllv));
+					sc_start(bl,SC_MARIONETTE2,100,src->id,skill_get_time(skillid,skilllv));
 					clif_skill_nodamage(src,bl,skillid,skilllv,1);
 				}
-				else if (sc->data[type] && tsc->data[type2] &&
-					sc->data[type]->val1 == bl->id && tsc->data[type2]->val1 == src->id) {
-					status_change_end(src, type, -1);
-					status_change_end(bl, type2, -1);
+				else
+				if(  sc->data[SC_MARIONETTE ] &&  sc->data[SC_MARIONETTE ]->val1 == bl->id &&
+					tsc->data[SC_MARIONETTE2] && tsc->data[SC_MARIONETTE2]->val1 == src->id )
+				{
+					status_change_end(src, SC_MARIONETTE, -1);
+					status_change_end(bl, SC_MARIONETTE2, -1);
 				}
-				else {
-					if (sd) clif_skill_fail(sd,skillid,0,0);
+				else
+				{
+					if( sd )
+						clif_skill_fail(sd,skillid,0,0);
+
 					map_freeblock_unlock();
 					return 1;
 				}

@@ -3365,7 +3365,6 @@ int pc_useitem(struct map_session_data *sd,int n)
 
 	if (sd->sc.count && (
 		sd->sc.data[SC_BERSERK] ||
-		sd->sc.data[SC_MARIONETTE] ||
 		(sd->sc.data[SC_GRAVITATION] && sd->sc.data[SC_GRAVITATION]->val3 == BCT_SELF) ||
 		sd->sc.data[SC_TRICKDEAD] ||
 		sd->sc.data[SC_HIDING] ||

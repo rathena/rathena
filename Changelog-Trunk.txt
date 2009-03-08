@@ -4,6 +4,12 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2009/03/08
+	* Fixed a couple bugs with marionette control [Brainstorm]
+	- Reduces caster max hp by 1000.
+	- Job and Equipment bonuses counts toward the 99 limit.
+	- Fixed stat overflow on baby targets with stats over 80 (bugreport:2232).
+	- Fixed clowns being able to cast it on another bard/clown (same for gypsy/dancer) (bugreport:166).
+	- Caster is no longer blocked from using items.
 	* Added several mail id checks to prevent a map server crash (bugreport:2837)
 2009/03/02
 	* Blade Stop status no longer prevents item use and equip changing.

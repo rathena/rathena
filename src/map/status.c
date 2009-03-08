@@ -1101,8 +1101,8 @@ int status_check_skilluse(struct block_list *src, struct block_list *target, int
 		) {	//Skills blocked through status changes...
 			if (!flag && ( //Blocked only from using the skill (stuff like autospell may still go through
 				sc->data[SC_SILENCE] ||
-				(sc->data[SC_MARIONETTE] && skill_num != CG_MARIONETTE) ||
-				(sc->data[SC_MARIONETTE2] && skill_num == CG_MARIONETTE) ||
+				(sc->data[SC_MARIONETTE] && skill_num != CG_MARIONETTE) || //Only skill you can use is marionette again to cancel it
+				(sc->data[SC_MARIONETTE2] && skill_num == CG_MARIONETTE) || //Cannot use marionette if you are being buffed by another
 				sc->data[SC_STEELBODY] ||
 				sc->data[SC_BERSERK]
 			))
@@ -4055,6 +4055,9 @@ static unsigned int status_calc_maxhp(struct block_list *bl, struct status_chang
 		maxhp += maxhp * sc->data[SC_DELUGE]->val2/100;
 	if(sc->data[SC_BERSERK])
 		maxhp += maxhp * 2;
+	if(sc->data[SC_MARIONETTE])
+		maxhp -= 1000;
+
 	if(sc->data[SC_MERC_HPUP])
 		maxhp += maxhp * sc->data[SC_MERC_HPUP]->val2/100;
 
@@ -5603,143 +5606,44 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			break;
 
 		case SC_MARIONETTE:
-			if (sd) {
-				val3 = 0;
-				val2 = sd->status.str>>1;
-				if (val2 > 0xFF) val2 = 0xFF;
-				val3|=val2<<16;
+		{
+			int stat;
 
-				val2 = sd->status.agi>>1;
-				if (val2 > 0xFF) val2 = 0xFF;
-				val3|=val2<<8;
-
-				val2 = sd->status.vit>>1;
-				if (val2 > 0xFF) val2 = 0xFF;
-				val3|=val2;
-
-				val4 = 0;
-				val2 = sd->status.int_>>1;
-				if (val2 > 0xFF) val2 = 0xFF;
-				val4|=val2<<16;
-
-				val2 = sd->status.dex>>1;
-				if (val2 > 0xFF) val2 = 0xFF;
-				val4|=val2<<8;
-
-				val2 = sd->status.luk>>1;
-				if (val2 > 0xFF) val2 = 0xFF;
-				val4|=val2;
-			} else {
-				struct status_data *b_status = status_get_base_status(bl);
-				if (!b_status)
-					return 0;
-
-				val3 = 0;
-				val2 = b_status->str>>1;
-				if (val2 > 0xFF) val2 = 0xFF;
-				val3|=val2<<16;
-
-				val2 = b_status->agi>>1;
-				if (val2 > 0xFF) val2 = 0xFF;
-				val3|=val2<<8;
-
-				val2 = b_status->vit>>1;
-				if (val2 > 0xFF) val2 = 0xFF;
-				val3|=val2;
-
-				val4 = 0;
-				val2 = b_status->int_>>1;
-				if (val2 > 0xFF) val2 = 0xFF;
-				val4|=val2<<16;
-
-				val2 = b_status->dex>>1;
-				if (val2 > 0xFF) val2 = 0xFF;
-				val4|=val2<<8;
-
-				val2 = b_status->luk>>1;
-				if (val2 > 0xFF) val2 = 0xFF;
-				val4|=val2;
-			}
-			val2 = tick/1000;
+			val2 = tick / 1000;
+			val3 = 0;
+			val4 = 0;
+			stat = ( sd ? sd->status.str : status_get_base_status(bl)->str ) / 2; if (stat > 0xFF) stat = 0xFF; val3 |= stat<<16;
+			stat = ( sd ? sd->status.agi : status_get_base_status(bl)->agi ) / 2; if (stat > 0xFF) stat = 0xFF; val3 |= stat<<8;
+			stat = ( sd ? sd->status.vit : status_get_base_status(bl)->vit ) / 2; if (stat > 0xFF) stat = 0xFF; val3 |= stat;
+			stat = ( sd ? sd->status.int_: status_get_base_status(bl)->int_) / 2; if (stat > 0xFF) stat = 0xFF; val4 |= stat<<16;
+			stat = ( sd ? sd->status.dex : status_get_base_status(bl)->dex ) / 2; if (stat > 0xFF) stat = 0xFF; val4 |= stat<<8;
+			stat = ( sd ? sd->status.luk : status_get_base_status(bl)->luk ) / 2; if (stat > 0xFF) stat = 0xFF; val4 |= stat;
 			tick = 1000;
 			break;
+		}
 		case SC_MARIONETTE2:
 		{
+			int stat,max;
+			// fetch caster information
 			struct block_list *pbl = map_id2bl(val1);
 			struct status_change *psc = pbl?status_get_sc(pbl):NULL;
 			struct status_change_entry *psce = psc?psc->data[SC_MARIONETTE]:NULL;
-			int stat,max;
+			// fetch target's stats
+			struct status_data* status = status_get_status_data(bl); // battle status
+
 			if (!psce)
 				return 0;
-			val2 = tick /1000;
-			val3 = val4 = 0;
-			if (sd) {
-				max = pc_maxparameter(sd); //Cap to max parameter. [Skotlex]
-				//Str
-				stat = (psce->val3>>16)&0xFF;
-				if (sd->status.str+stat > max)
-					stat =max-sd->status.str;
-				val3 |= stat<<16;
-				//Agi
-				stat = (psce->val3>>8)&0xFF;
-				if (sd->status.agi+stat > max)
-					stat =max-sd->status.agi;
-				val3 |= stat<<8;
-				//Vit
-				stat = psce->val3&0xFF;
-				if (sd->status.vit+stat > max)
-					stat =max-sd->status.vit;
-				val3 |= stat;
-				//Int
-				stat = (psce->val4>>16)&0xFF;
-				if (sd->status.int_+stat > max)
-					stat =max-sd->status.int_;
-				val4 |= stat<<16;
-				//Dex
-				stat = (psce->val4>>8)&0xFF;
-				if (sd->status.dex+stat > max)
-					stat =max-sd->status.dex;
-				val4 |= stat<<8;
-				//Luk
-				stat = psce->val4&0xFF;
-				if (sd->status.luk+stat > max)
-					stat =max-sd->status.luk;
-				val4 |= stat;
-			} else {
-				struct status_data *b_status = status_get_base_status(bl);
-				if (!b_status) return 0;
-				max = 0xFF; //Assume a 256 max parameter
-				//Str
-				stat = (psce->val3>>16)&0xFF;
-				if (b_status->str+stat > max)
-					stat = max - b_status->str;
-				val3 |= stat<<16;
-				//Agi
-				stat = (psce->val3>>8)&0xFF;
-				if (b_status->agi+stat > max)
-					stat = max - b_status->agi;
-				val3 |= stat<<8;
-				//Vit
-				stat = psce->val3&0xFF;
-				if (b_status->vit+stat > max)
-					stat = max - b_status->vit;
-				val3 |= stat;
-				//Int
-				stat = (psce->val4>>16)&0xFF;
-				if (b_status->int_+stat > max)
-					stat = max - b_status->int_;
-				val4 |= stat<<16;
-				//Dex
-				stat = (psce->val4>>8)&0xFF;
-				if (b_status->dex+stat > max)
-					stat = max - b_status->dex;
-				val4 |= stat<<8;
-				//Luk
-				stat = psce->val4&0xFF;
-				if (b_status->luk+stat > max)
-					stat = max - b_status->luk;
-				val4 |= stat;
-			}
+
+			val2 = tick / 1000;
+			val3 = 0;
+			val4 = 0;
+			max = battle_config.max_parameter; //Cap to 99 (default)
+			stat = (psce->val3 >>16)&0xFF; stat = cap_value(status->str + stat, INT_MIN, max) - cap_value(status->str, INT_MIN, max); if (stat > 0xFF) stat = 0xFF; val3 |= stat<<16;
+			stat = (psce->val3 >> 8)&0xFF; stat = cap_value(status->agi + stat, INT_MIN, max) - cap_value(status->agi, INT_MIN, max); if (stat > 0xFF) stat = 0xFF; val3 |= stat<<8;
+			stat = (psce->val3 >> 0)&0xFF; stat = cap_value(status->vit + stat, INT_MIN, max) - cap_value(status->vit, INT_MIN, max); if (stat > 0xFF) stat = 0xFF; val3 |= stat;
+			stat = (psce->val4 >>16)&0xFF; stat = cap_value(status->int_+ stat, INT_MIN, max) - cap_value(status->int_,INT_MIN, max); if (stat > 0xFF) stat = 0xFF; val4 |= stat<<16;
+			stat = (psce->val4 >> 8)&0xFF; stat = cap_value(status->dex + stat, INT_MIN, max) - cap_value(status->dex, INT_MIN, max); if (stat > 0xFF) stat = 0xFF; val4 |= stat<<8;
+			stat = (psce->val4 >> 0)&0xFF; stat = cap_value(status->luk + stat, INT_MIN, max) - cap_value(status->luk, INT_MIN, max); if (stat > 0xFF) stat = 0xFF; val4 |= stat;
 			tick = 1000;
 			break;
 		}
