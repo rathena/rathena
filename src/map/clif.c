@@ -1492,9 +1492,12 @@ int clif_selllist(struct map_session_data *sd)
 	return 0;
 }
 
-/*==========================================
- *
- *------------------------------------------*/
+/// Client behavior (dialog window):
+/// - disable mouse targeting
+/// - open the dialog window
+/// - set npcid of dialog window (0 by default)
+/// - if set to clear on next mes, clear contents
+/// - append this text
 int clif_scriptmes(struct map_session_data *sd, int npcid, const char *mes)
 {
 	int fd = sd->fd;
@@ -1509,9 +1512,14 @@ int clif_scriptmes(struct map_session_data *sd, int npcid, const char *mes)
 	return 0;
 }
 
-/*==========================================
- *
- *------------------------------------------*/
+/// Client behavior (dialog window):
+/// - disable mouse targeting
+/// - open the dialog window
+/// - add 'next' button
+/// When 'next' is pressed:
+/// - S 00B9 <npcid of dialog window>.L
+/// - set to clear on next mes
+/// - remove 'next' button
 int clif_scriptnext(struct map_session_data *sd,int npcid)
 {
 	int fd;
@@ -1527,9 +1535,19 @@ int clif_scriptnext(struct map_session_data *sd,int npcid)
 	return 0;
 }
 
-/*==========================================
- *
- *------------------------------------------*/
+/// Client behavior:
+/// - if dialog window is open:
+///   - remove 'next' button
+///   - add 'close' button
+/// - else:
+///   - enable mouse targeting
+///   - close the dialog window
+///   - close the menu window
+/// When 'close' is pressed:
+/// - enable mouse targeting
+/// - close the dialog window
+/// - close the menu window
+/// - S 0146 <npcid of dialog window>.L
 int clif_scriptclose(struct map_session_data *sd, int npcid)
 {
 	int fd;
@@ -1572,9 +1590,24 @@ void clif_sendfakenpc(struct map_session_data *sd, int npcid)
 	return;
 }
 
-/*==========================================
- *
- *------------------------------------------*/
+/// Client behavior:
+/// - disable mouse targeting
+/// - close the menu window
+/// - open the menu window
+/// - add options to the menu (separated in the text by ":")
+/// - set npcid of menu window
+/// - if dialog window is open:
+///   - remove 'next' button
+/// When 'ok' is pressed:
+/// - S 00B8 <npcid of menu window>.L <selected option>.B
+/// - close the menu window
+/// When 'cancel' is pressed:
+/// - S 00B8 <npcid of menu window>.L <-1>.B
+/// - enable mouse targeting
+/// - close a bunch of windows...
+/// WARNING: the 'cancel' button closes other windows besides the dialog window and the menu window.
+///    Which suggests their have intertwined behavior. (probably the mouse targeting)
+/// TODO investigate behavior of other windows [FlavioJS]
 int clif_scriptmenu(struct map_session_data* sd, int npcid, const char* mes)
 {
 	int fd = sd->fd;
@@ -1596,9 +1629,15 @@ int clif_scriptmenu(struct map_session_data* sd, int npcid, const char* mes)
 	return 0;
 }
 
-/*==========================================
- *
- *------------------------------------------*/
+/// Client behavior (inputnum window):
+/// - if npcid exists in the client:
+///   - open the inputnum window
+///   - set npcid of inputnum window
+/// When 'ok' is pressed:
+/// - if inputnum window has text:
+///   - if npcid exists in the client:
+///     - S 0143 <npcid of inputnum window>.L <atoi(text)>.L
+///   - close inputnum window
 int clif_scriptinput(struct map_session_data *sd, int npcid)
 {
 	int fd;
@@ -1620,9 +1659,15 @@ int clif_scriptinput(struct map_session_data *sd, int npcid)
 	return 0;
 }
 
-/*==========================================
- *
- *------------------------------------------*/
+/// Client behavior (inputstr window):
+/// - if npcid is 0 or npcid exists in the client:
+///   - open the inputstr window
+///   - set npcid of inputstr window
+/// When 'ok' is pressed:
+/// - if inputstr window has text and isn't an insult(manner.txt):
+///   - if npcid is 0 or npcid exists in the client:
+///     - S 01d5 <packetlen>.W <npcid of inputstr window>.L <text>.?B
+///   - close inputstr window
 int clif_scriptinputstr(struct map_session_data *sd, int npcid)
 {
 	int fd;
