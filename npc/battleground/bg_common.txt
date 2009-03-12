@@ -1225,7 +1225,7 @@ bat_room,160,150,3	script	Erundek	109,{
 	set .@Menu$, "";
 	set .@Count, getarraysize(.@Item_DB);
 	for( set .@i, 0; .@i < .@Count; set .@i, .@i + 1 )
-		set .@Menu$, .@Menu$ + getitemname(@Item_DB[.@i]) + ":";
+		set .@Menu$, .@Menu$ + getitemname(.@Item_DB[.@i]) + ":";
 
 	set .@Item_ID, .@Item_DB[select(.@Menu$) - 1];
 

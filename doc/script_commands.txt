@@ -2811,7 +2811,7 @@ has a skill or not, and it can tell you if the level is high enough.
 
 Example 1:
 
-        f (getskilllv(152)) goto L_HasSkillThrowStone;
+        if (getskilllv(152)) goto L_HasSkillThrowStone;
         mes "You don't have Throw Stone";
         close;
     L_HasSkillThrowStone:

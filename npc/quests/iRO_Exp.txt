@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Kisuka
 //===== Current Version: =====================================
-//= 1.1
+//= 1.2
 //===== Compatible With: =====================================
 //= eAthena SVN
 //===== Description: =========================================
@@ -18,6 +18,7 @@
 //===== Additional Comments: =================================
 //= 1.0 First version. [Kisuka]
 //= 1.1 Moved Jeremy and Gregor to different maps. [L0ne_W0lf]
+//= 1.2 Fixed the engrish and typos.
 //============================================================
 
 // Yullo - 25 Porcupine Quill
@@ -100,8 +101,8 @@ moc_fild17,208,346,5	script	Shone#iROExp	707,{
 	mes "skills.";
 	next;
 	mes "[Shone]";
-	mes "Hey do you think you van help me? I";
-	mes "am trying to collect ^00CE0025 Earthwarm^000000";
+	mes "Hey do you think you can help me? I";
+	mes "am trying to collect ^00CE0025 Earthworm^000000";
 	mes "^00CE00Peelings^000000. I will reward you if you";
 	mes "help.";
 	next;
@@ -112,7 +113,7 @@ moc_fild17,208,346,5	script	Shone#iROExp	707,{
 	}
 	if (countitem(1055) < 25) {
 		mes "[Shone]";
-		mes "I don't see any ^00CE00Earthworm Peerlings^000000.";
+		mes "I don't see any ^00CE00Earthworm Peelings^000000.";
 		mes "Are you trying to scam me?";
 		close;
 	}else{
@@ -123,9 +124,9 @@ moc_fild17,208,346,5	script	Shone#iROExp	707,{
 		mes "Thank you for the 25 Earthworm";
 		mes "Peelings!";
 		mes "Here is that reward I promised you,";
-		mes "I hope take this wisdom I have";
-		mes "passed on to you and share it with";
-		mes "others.";
+		mes "I hope you will take this wisdom I";
+		mes "have passed on to you and share it";
+		mes "with others.";
 		close;
 	}
 }
@@ -191,16 +192,16 @@ gef_fild04,191,54,4	script	Halgus#iROExp	123,{
 	}
 	else if((BaseLevel > 20)) {
 		mes "[Halgus]";
-		mes "You are way to learned to be";
+		mes "You are way to strong to be";
 		mes "hunting these little things.";
 		next;
 		close;
 	}
 	mes "[Halgus]";
-	mes "New here are you? Well look I like";
+	mes "New here are you? Well look, I like";
 	mes "helping new faces around here.";
 	mes "And lets be honest you are not the";
-	mes "prettiest look face I have seen.";
+	mes "prettiest looking face I have seen.";
 	next;
 	mes "[Halgus]";
 	mes "None-the-less my daughter would";
@@ -314,9 +315,8 @@ mjolnir_01,293,20,3	script	Nutters#iROExp	779,{
 	mes "Acorns.";
 	next;
 	mes "[Nutters]";
-	mes "Can you help me find ^00CE0025 Acorns^000000.I";
-	mes "will reward you with much if you";
-	mes "can.";
+	mes "Can you help me find ^00CE0025 Acorns^000000.";
+	mes "I will reward you with much if you can.";
 	next;
 	if (select("I have 25 Acorns:Please come again?") == 2) {
 		mes "[Nutters]";
@@ -326,8 +326,7 @@ mjolnir_01,293,20,3	script	Nutters#iROExp	779,{
 	if (countitem(1026) < 25) {
 		mes "[Nutters]";
 		mes "Where are my ^00CE00Acorns^000000? Hey, I'm not";
-		mes "playing, you better not hold out on";
-		mes "me.";
+		mes "playing, you better not hold out on me.";
 		close;
 	}else{
 		mes "[Nutters]";
