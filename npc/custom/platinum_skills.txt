@@ -100,6 +100,6 @@ prontera,128,200,6	script	Platinum Skill NPC	94,{
 		close;
 	}
 	mes "[Platinum Skill NPC]";
-	mes "Im sorry, but there is no special skills that I can give you.";
+	mes "I'm sorry, but there are no special skills that I can give you.";
 	close;
 }
