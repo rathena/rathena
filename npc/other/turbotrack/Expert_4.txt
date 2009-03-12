@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
-//= 1.1
+//= 1.2
 //===== Compatible With: =====================================
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -12,9 +12,12 @@
 //===== Additional Comments: =================================
 //= 1.0 First version. [L0ne_W0lf]
 //= 1.1 Fixed small official bug. [L0ne_W0lf]
+//= 1.2 Fixed a little mistake [akrus]
 //============================================================
 
 turbo_room,110,135,3	script	Expert mode - 4 person	124,{
+	end;
+
 OnInit:
 	waitingroom "Expert mode - 4 person",60,"Expert mode - 4 person::OnStartArena",4;
 	//SetFeeZeny 1000
