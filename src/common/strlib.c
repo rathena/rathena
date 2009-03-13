@@ -872,6 +872,8 @@ bool sv_readdb(const char* directory, const char* filename, char delim, int minc
 	int columns;
 	char path[1024], line[1024];
 
+	snprintf(path, sizeof(path), "%s/%s", directory, filename);
+
 	if( maxcols > ARRAYLENGTH(fields)-1 )
 	{
 		ShowError("sv_readdb: Insufficient column storage in parser for file \"%s\" (want %d, have only %d). Increase the capacity in the source code please.\n", path, maxcols, ARRAYLENGTH(fields)-1);
@@ -879,7 +881,6 @@ bool sv_readdb(const char* directory, const char* filename, char delim, int minc
 	}
 
 	// open file
-	snprintf(path, sizeof(path), "%s/%s", directory, filename);
 	fp = fopen(path, "r");
 	if( fp == NULL )
 	{
