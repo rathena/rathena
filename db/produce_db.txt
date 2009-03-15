@@ -160,7 +160,7 @@
 
 //--------------------LEVEL 2-----------
 
-//-- Seasoned Webs <-- 20 Cobweb, 10 Green Herb, 10 Yellow Herb, 1 Plain Sauce
+//-- Seasoned Webs <-- 20 Sticky Webfoot, 10 Green Herb, 10 Yellow Herb, 1 Plain Sauce
 12042,12,0,0,7473,0,918,20,511,10,508,10,7454,1
 //-- Sea Food <-- 10 Clam Flesh, 5 Gill, 5 Fin, 1 Yummy Fish
 12052,12,0,0,7473,0,966,10,956,5,951,5,579,1
@@ -243,7 +243,7 @@
 //-- Soul Hunt Bread <-- 10 Bread, 5 Mastela Fruit, 1 Sweet Sauce, 5 Ment, 5 Amulet, 2 Unripe Apple
 12092,17,0,0,7478,0,580,10,522,5,7453,1,708,5,609,5,619,2
 //-- Boiled Vegetable stuffed with Roasted Crocodile <-- 10 Anolian Skin, 10 Jack o' Pumpkin, 10 Carrot, 10 Aloe Leaflet, 10 Yellow Herb, 1 Yellow Spice
-12087,17,0,0,7478,0,7003,10,1062,10,515,10,521,10,508,10
+12087,17,0,0,7478,0,7003,10,1062,10,515,10,521,10,508,10,7452,1
 //-- Sumptuous Feast <-- 10 Fish Tail, 5 Aloe Leaflet, 10 Mane, 2 Yummy Fish, 10 Pet Food, 1 Sweet Sauce
 12082,17,0,0,7478,0,1023,10,521,5,1028,10,579,2,537,10,7453,1
 //-- Grilled Meat Skewer <-- 10 Scale Shell, 5 Gill, 10 Soft Blade of Grass, 5 Meat, 10 Mushroom, 10 Clam Flesh

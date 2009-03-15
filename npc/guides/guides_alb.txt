@@ -79,7 +79,7 @@ alberta,23,238,4	script	Guide#alb::AlbGuide	105,{
 					mes "Alberta. It shouldn't";
 					mes "be too hard to find.";
 					if (.@compass_check)
-						viewpoint 1,98,154,4,0xFFFF00FF;
+						viewpoint 1,98,154,4,0xFF00FF;
 					break;
 				case 4:
 					mes "[Alberta Guide]";
