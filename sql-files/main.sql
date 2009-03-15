@@ -75,7 +75,7 @@ CREATE TABLE IF NOT EXISTS `char` (
   `skill_point` int(11) unsigned NOT NULL default '0',
   `option` int(11) NOT NULL default '0',
   `karma` tinyint(3) NOT NULL default '0',
-  `manner` tinyint(3) NOT NULL default '0',
+  `manner` smallint(6) NOT NULL default '0',
   `party_id` int(11) unsigned NOT NULL default '0',
   `guild_id` int(11) unsigned NOT NULL default '0',
   `pet_id` int(11) unsigned NOT NULL default '0',
