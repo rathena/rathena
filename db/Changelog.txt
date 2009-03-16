@@ -40,6 +40,13 @@
 	2385 Recuvative_Armor		Should trigger HP/SP return with magical kills as well.
 
 =======================
+2009/03/16
+	* Rev. 13589 Lots of tiny little updates here and there. [L0ne_W0lf]
+	- Added official skills for Naght Seiger and Entweihen Crothen.
+	- Added the skill bash to the list for the Wild Rose mercenary.
+	- Updated some of the newer item names to the iRO equivilent.
+	- Added new items for Sealed Catacombs and Endless Tower.
+	- Minor updates to the Arrow Crafting database.
 2009/01/06
 	* Rev. 13436 Updated monster modes for battleground NPCs. [L0ne_W0lf]
 2009/01/02
