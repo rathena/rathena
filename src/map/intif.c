@@ -293,7 +293,7 @@ int intif_saveregistry(struct map_session_data *sd, int type)
 	WFIFOL(inter_fd,8)=sd->status.char_id;
 	WFIFOB(inter_fd,12)=type;
 	for( p = 13, i = 0; i < count; i++ ) {
-		if (reg[i].str[0] && reg[i].value != 0) {
+		if (reg[i].str[0] != '\0' && reg[i].value[0] != '\0') {
 			p+= sprintf((char*)WFIFOP(inter_fd,p), "%s", reg[i].str)+1; //We add 1 to consider the '\0' in place.
 			p+= sprintf((char*)WFIFOP(inter_fd,p), "%s", reg[i].value)+1;
 		}
