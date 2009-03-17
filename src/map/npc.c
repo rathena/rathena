@@ -2725,13 +2725,22 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 		if (state) map[m].flag.pvp=0;
 	}
 	else if (!strcmpi(w3,"battleground")) {
-		map[m].flag.battleground = state;
-		if( state && map[m].flag.pvp )
+		if( state )
+		{
+			if( sscanf(w4, "%d", &state) == 1 )
+				map[m].flag.battleground = state;
+			else
+				map[m].flag.battleground = 1; // Default value
+		}
+		else
+			map[m].flag.battleground = 0;
+
+		if( map[m].flag.battleground && map[m].flag.pvp )
 		{
 			map[m].flag.pvp = 0;
 			ShowWarning("npc_parse_mapflag: You can't set PvP and BattleGround flags for the same map! Removing PvP flag from %s (file '%s', line '%d').\n", map[m].name, filepath, strline(buffer,start-buffer));
 		}
-		if( state && (map[m].flag.gvg || map[m].flag.gvg_dungeon || map[m].flag.gvg_castle) )
+		if( map[m].flag.battleground && (map[m].flag.gvg || map[m].flag.gvg_dungeon || map[m].flag.gvg_castle) )
 		{
 			map[m].flag.gvg = 0;
 			map[m].flag.gvg_dungeon = 0;
