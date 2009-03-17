@@ -343,14 +343,16 @@ int clif_bg_hp(struct map_session_data *sd);
 int clif_bg_xy(struct map_session_data *sd);
 int clif_bg_xy_remove(struct map_session_data *sd);
 int clif_bg_belonginfo(struct map_session_data *sd);
-int clif_bg_guild_id(struct block_list *bl);
-int clif_bg_emblem_id(struct block_list *bl);
+int clif_visual_guild_id(struct block_list *bl);
+int clif_visual_emblem_id(struct block_list *bl);
 int clif_bg_emblem(struct map_session_data *sd, struct guild *g);
 int clif_bg_memberlist(struct map_session_data *sd);
 int clif_bg_leave(struct map_session_data *sd, const char *name, const char *mes);
 int clif_bg_leave_single(struct map_session_data *sd, const char *name, const char *mes);
-int clif_bg_message(struct battleground_data *bg, int account_id, const char *mes, int len);
+int clif_bg_message(struct battleground_data *bg, const char *name, const char *mes, int len);
 int clif_bg_expulsion_single(struct map_session_data *sd, const char *name, const char *mes);
+int clif_bg_updatescore(int m);
+int clif_bg_updatescore_single(struct map_session_data *sd);
 
 // atcommand
 int clif_displaymessage(const int fd,const char* mes);

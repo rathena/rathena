@@ -269,7 +269,7 @@ int bg_send_message(struct map_session_data *sd, const char *mes, int len)
 	nullpo_retr(0, sd);
 	if( sd->state.bg_id == 0 || (bg = bg_team_search(sd->state.bg_id)) == NULL )
 		return 0;
-	clif_bg_message(bg, sd->status.account_id, mes, len);
+	clif_bg_message(bg, sd->status.name, mes, len);
 	return 0;
 }
 

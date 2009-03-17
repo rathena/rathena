@@ -13405,6 +13405,20 @@ BUILDIN_FUNC(waitingroom2bg_single)
 	return 0;
 }
 
+BUILDIN_FUNC(bg_team_setxy)
+{
+	struct battleground_data *bg;
+	int bg_id;
+
+	bg_id = script_getnum(st,2);
+	if( (bg = bg_team_search(bg_id)) == NULL )
+		return 0;
+
+	bg->x = script_getnum(st,3);
+	bg->y = script_getnum(st,4);
+	return 0;
+}
+
 BUILDIN_FUNC(bg_warp)
 {
 	int x, y, mapindex, bg_id;
@@ -13434,6 +13448,26 @@ BUILDIN_FUNC(bg_monster)
 	if( script_hasdata(st,8) ) evt = script_getstr(st,8);
 	check_event(st, evt);
 	script_pushint(st, mob_spawn_bg(map,x,y,str,class_,evt,bg_id));
+	return 0;
+}
+
+BUILDIN_FUNC(bg_monster_set_team)
+{
+	struct mob_data *md;
+	struct block_list *mbl;
+	int id = script_getnum(st,2),
+		bg_id = script_getnum(st,3);
+	
+	if( (mbl = map_id2bl(id)) == NULL || mbl->type != BL_MOB )
+		return 0;
+	md = (TBL_MOB *)mbl;
+	md->state.bg_id = bg_id;
+
+	mob_stop_attack(md);
+	mob_stop_walking(md, 0);
+	md->target_id = md->attacked_id = 0;
+	clif_charnameack(0, &md->bl);
+
 	return 0;
 }
 
@@ -13486,6 +13520,22 @@ BUILDIN_FUNC(bg_getareausers)
 	}
 
 	script_pushint(st,c);
+	return 0;
+}
+
+BUILDIN_FUNC(bg_updatescore)
+{
+	const char *str;
+	int m;
+
+	str = script_getstr(st,2);
+	if( (m = map_mapname2mapid(str)) < 0 )
+		return 0;
+
+	map[m].bgscore_lion = script_getnum(st,3);
+	map[m].bgscore_eagle = script_getnum(st,4);
+
+	clif_bg_updatescore(m);
 	return 0;
 }
 
@@ -13874,12 +13924,15 @@ struct script_function buildin_func[] = {
 	// BattleGround
 	BUILDIN_DEF(waitingroom2bg,"siiiss?"),
 	BUILDIN_DEF(waitingroom2bg_single,"isiis"),
+	BUILDIN_DEF(bg_team_setxy,"iii"),
 	BUILDIN_DEF(bg_warp,"isii"),
 	BUILDIN_DEF(bg_monster,"isiisi*"),
+	BUILDIN_DEF(bg_monster_set_team,"ii"),
 	BUILDIN_DEF(bg_leave,""),
 	BUILDIN_DEF(bg_destroy,"i"),
 	BUILDIN_DEF(areapercentheal,"siiiiii"),
 	BUILDIN_DEF(bg_get_data,"ii"),
 	BUILDIN_DEF(bg_getareausers,"isiiii"),
+	BUILDIN_DEF(bg_updatescore,"sii"),
 	{NULL,NULL,NULL},
 };

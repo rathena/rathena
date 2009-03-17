@@ -411,6 +411,7 @@ struct map_data {
 	int m;
 	short xs,ys; // map dimensions (in cells)
 	short bxs,bys; // map dimensions (in blocks)
+	short bgscore_lion, bgscore_eagle; // Battleground ScoreBoard
 	int npc_num;
 	int users;
 	int iwall_num; // Total of invisible walls in this map
@@ -434,7 +435,7 @@ struct map_data {
 		unsigned gvg : 1; // Now it identifies gvg versus maps that are active 24/7
 		unsigned gvg_dungeon : 1; // Celest
 		unsigned gvg_noparty : 1;
-		unsigned battleground : 1; // [BattleGround System]
+		unsigned battleground : 2; // [BattleGround System]
 		unsigned nozenypenalty : 1;
 		unsigned notrade : 1;
 		unsigned noskill : 1;
