@@ -40,6 +40,8 @@
 	2385 Recuvative_Armor		Should trigger HP/SP return with magical kills as well.
 
 =======================
+2008/03/17
+	* Rev. 13592 Removed garbage # from the medal of honor names. [L0ne_W0lf]
 2009/03/16
 	* Rev. 13589 Lots of tiny little updates here and there. [L0ne_W0lf]
 	- Added official skills for Naght Seiger and Entweihen Crothen.

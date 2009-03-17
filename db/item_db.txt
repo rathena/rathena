@@ -1451,12 +1451,12 @@
 2717,Pocket_Watch,Pocket Watch,5,20,,200,,0,,0,0x00010204,7,2,136,,80,0,0,{},{},{}
 2718,Lunatic_Brooch,Lunatic Brooch,5,20,,200,,0,,1,0x00080808,7,2,136,,65,0,0,{},{},{}
 2719,Iron_Wrist,Iron Wrist,5,20,,700,,1,,0,0x000444A2,7,2,136,,50,0,0,{ bonus2 bSkillAtk,"SM_BASH",6; bonus2 bSkillAtk,"MC_MAMMONITE",6; },{},{}
-2720,Medal_Swordman,#Medal of Honor,5,0,,0,,1,,0,0x00004082,7,2,136,,70,0,0,{ bonus bAtkRate,5; bonus bMatkRate,5; bonus bHit,10; bonus bMaxHP,500; bonus bMaxSP,50; bonus2 bAddEff,Eff_Stun,1000; },{},{}
-2721,Medal_Thief,#Medal of Honor,5,0,,0,,1,,0,0x00021040,7,2,136,,70,0,0,{ bonus bAtkRate,5; bonus bMatkRate,5; bonus bFlee,10; bonus bMaxHP,300; bonus bMaxSP,80; bonus2 bAddEff,Eff_Poison,1000; },{},{}
-2722,Medal_Acolyte,#Medal of Honor,5,0,,0,,1,,0,0x00008110,7,2,136,,70,0,0,{ bonus bAtkRate,5; bonus bMatkRate,5; bonus bMdef,6; bonus bMaxHP,600; bonus2 bAddEff,Eff_Silence,1000; },{},{}
-2723,Medal_Mage,#Medal of Honor,5,0,,0,,1,,0,0x00010204,7,2,136,,70,0,0,{ bonus bAtkRate,5; bonus bMatkRate,5; bonus bMdef,6; bonus bMaxHP,600; bonus2 bAddEffWhenHit,Eff_Stone,1000; },{},{}
-2724,Medal_Archer,#Medal of Honor,5,0,,0,,1,,0,0x00080808,7,2,136,,70,0,0,{ bonus bAtkRate,5; bonus bMatkRate,5; bonus bCritical,10; bonus bMaxHP,300; bonus bMaxSP,80; bonus2 bAddEff,Eff_Blind,1000; },{},{}
-2725,Medal_Merchant,#Medal of Honor,5,0,,0,,1,,0,0x00040420,7,2,136,,70,0,0,{ bonus bAtkRate,5; bonus bMatkRate,5; bonus bAspd,10; bonus bMaxHP,500; bonus bMaxSP,50; bonus2 bAddEff,Eff_Curse,1000; },{},{}
+2720,Medal_Swordman,Medal of Honor,5,0,,0,,1,,0,0x00004082,7,2,136,,70,0,0,{ bonus bAtkRate,5; bonus bMatkRate,5; bonus bHit,10; bonus bMaxHP,500; bonus bMaxSP,50; bonus2 bAddEff,Eff_Stun,1000; },{},{}
+2721,Medal_Thief,Medal of Honor,5,0,,0,,1,,0,0x00021040,7,2,136,,70,0,0,{ bonus bAtkRate,5; bonus bMatkRate,5; bonus bFlee,10; bonus bMaxHP,300; bonus bMaxSP,80; bonus2 bAddEff,Eff_Poison,1000; },{},{}
+2722,Medal_Acolyte,Medal of Honor,5,0,,0,,1,,0,0x00008110,7,2,136,,70,0,0,{ bonus bAtkRate,5; bonus bMatkRate,5; bonus bMdef,6; bonus bMaxHP,600; bonus2 bAddEff,Eff_Silence,1000; },{},{}
+2723,Medal_Mage,Medal of Honor,5,0,,0,,1,,0,0x00010204,7,2,136,,70,0,0,{ bonus bAtkRate,5; bonus bMatkRate,5; bonus bMdef,6; bonus bMaxHP,600; bonus2 bAddEffWhenHit,Eff_Stone,1000; },{},{}
+2724,Medal_Archer,Medal of Honor,5,0,,0,,1,,0,0x00080808,7,2,136,,70,0,0,{ bonus bAtkRate,5; bonus bMatkRate,5; bonus bCritical,10; bonus bMaxHP,300; bonus bMaxSP,80; bonus2 bAddEff,Eff_Blind,1000; },{},{}
+2725,Medal_Merchant,Medal of Honor,5,0,,0,,1,,0,0x00040420,7,2,136,,70,0,0,{ bonus bAtkRate,5; bonus bMatkRate,5; bonus bAspd,10; bonus bMaxHP,500; bonus bMaxSP,50; bonus2 bAddEff,Eff_Curse,1000; },{},{}
 2726,Icarus_Wing,Icarus Wings,5,20,,100,,0,,0,0x00000800,2,2,136,,70,0,0,{ bonus bMaxSP,50; bonus bDex,3; },{},{}
 2727,Bowman_Scarf,Bowman Scarf,5,,,200,,0,,0,0x00000800,2,2,136,,0,0,0,{ bonus bMaxSP,50; bonus bDex,3; if (isequipped(2726)) bonus bUseSPrate,-25; },{},{}
 2728,Morroc_Skin1,Cursed Hand,5,0,,50,,0,,1,0xFFFFFFFE,2,2,136,,80,0,0,{ bonus3 bAutoSpell,"NPC_CRITICALWOUND",1,30; bonus bHit,10; bonus bHPrecovRate,20; },{},{}
