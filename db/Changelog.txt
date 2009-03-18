@@ -40,6 +40,8 @@
 	2385 Recuvative_Armor		Should trigger HP/SP return with magical kills as well.
 
 =======================
+2008/03/18
+	* Corrected names, damage and modes of Moscovia mobs [Playtester]
 2008/03/17
 	* Rev. 13592 Removed garbage # from the medal of honor names. [L0ne_W0lf]
 2009/03/16
