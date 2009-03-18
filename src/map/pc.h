@@ -56,6 +56,12 @@ struct s_addeffect {
 	unsigned char flag;
 };
 
+struct s_addeffectonskill {
+	enum sc_type id;
+	short rate, skill;
+	unsigned char target;
+};
+
 struct s_add_drop { 
 	short id, group;
 	int race, rate;
@@ -116,6 +122,7 @@ struct map_session_data {
 		bool changemap;
 		struct guild *gmaster_flag;
 		unsigned int bg_id;
+		unsigned skillonskill : 1;
 	} state;
 	struct {
 		unsigned char no_weapon_damage, no_magic_damage, no_misc_damage;
@@ -208,8 +215,10 @@ struct map_session_data {
 	short sp_gain_race[RC_MAX];
 	// zeroed arrays end here.
 	// zeroed structures start here
-	struct s_autospell autospell[15], autospell2[15];
+	struct s_autospell autospell[15], autospell2[15], autospell3[15];
 	struct s_addeffect addeff[MAX_PC_BONUS], addeff2[MAX_PC_BONUS];
+	struct s_addeffectonskill addeff3[MAX_PC_BONUS];
+
 	struct { //skillatk raises bonus dmg% of skills, skillheal increases heal%, skillblown increases bonus blewcount for some skills.
 		unsigned short id;
 		short val;
@@ -229,7 +238,7 @@ struct map_session_data {
 	} itemhealrate[MAX_PC_BONUS];
 	// zeroed structures end here
 	// manually zeroed structures start here.
-	struct s_autoscript autoscript[10], autoscript2[10]; //Auto script on attack, when attacked
+	struct s_autoscript autoscript[10], autoscript2[10], autoscript3[10]; //Auto script on attack, when attacked, on skill usage
 	// manually zeroed structures end here.
 	// zeroed vars start here.
 	int arrow_atk,arrow_ele,arrow_cri,arrow_hit;
@@ -556,7 +565,7 @@ bool pc_adoption(struct map_session_data *p1_sd, struct map_session_data *p2_sd,
 
 int pc_updateweightstatus(struct map_session_data *sd);
 
-int pc_autoscript_add(struct s_autoscript *scripts, int max, short rate, short flag, short target, struct script_code *script);
+int pc_autoscript_add(struct s_autoscript *scripts, int max, short rate, short flag, short target, struct script_code *script, bool onskill);
 void pc_autoscript_clear(struct s_autoscript *scripts, int max);
 
 int pc_bonus(struct map_session_data*,int,int);

@@ -1398,7 +1398,7 @@ int pc_disguise(struct map_session_data *sd, int class_)
 	return 1;
 }
 
-int pc_autoscript_add(struct s_autoscript *scripts, int max, short rate, short flag, short target, struct script_code *script)
+int pc_autoscript_add(struct s_autoscript *scripts, int max, short rate, short flag, short target, struct script_code *script, bool onskill)
 {
 	int i;
 	ARR_FIND(0, max, i, scripts[i].script == NULL);
@@ -1411,17 +1411,20 @@ int pc_autoscript_add(struct s_autoscript *scripts, int max, short rate, short f
 	scripts[i].script = script;
 	scripts[i].rate = rate;
 	scripts[i].target = target; // 0 = Script on Self 1 = Script on Target
-	//Auto-update flag value.
-	if( !(flag&BF_RANGEMASK) )
-		flag|=BF_SHORT|BF_LONG; //No range defined? Use both.
-	if( !(flag&BF_WEAPONMASK) )
-		flag|=BF_WEAPON; //No attack type defined? Use weapon.
-	if( !(flag&BF_SKILLMASK) )
-	{
-		if( flag&(BF_MAGIC|BF_MISC) )
-			flag|=BF_SKILL; //These two would never trigger without BF_SKILL
-		if( flag&BF_WEAPON )
-			flag|=BF_NORMAL|BF_SKILL;
+
+	if( !onskill )
+	{ // Auto-update flag value.
+		if( !(flag&BF_RANGEMASK) )
+			flag|=BF_SHORT|BF_LONG; //No range defined? Use both.
+		if( !(flag&BF_WEAPONMASK) )
+			flag|=BF_WEAPON; //No attack type defined? Use weapon.
+		if( !(flag&BF_SKILLMASK) )
+		{
+			if( flag&(BF_MAGIC|BF_MISC) )
+				flag|=BF_SKILL; //These two would never trigger without BF_SKILL
+			if( flag&BF_WEAPON )
+				flag|=BF_NORMAL|BF_SKILL;
+		}
 	}
 	scripts[i].flag = flag;
 	return 1;
@@ -1501,6 +1504,36 @@ static int pc_bonus_autospell(struct s_autospell *spell, int max, short id, shor
 	return 1;
 }
 
+static int pc_bonus_autospell_onskill(struct s_autospell *spell, int max, short src_skill, short id, short lv, short rate, short card_id)
+{
+	int i;
+	if( rate < 0 )
+		return pc_bonus_autospell_del(spell, max, id, lv, -rate, card_id);
+
+	for( i = 0; i < max && spell[i].id; i++ )
+	{
+		if( spell[i].flag == src_skill && spell[i].id == id && spell[i].lv == lv && spell[i].card_id == card_id )
+		{
+			if( !battle_config.autospell_stacking )
+				rate += spell[i].rate;
+			break;
+		}
+	}
+
+	if( i == max )
+	{
+		ShowWarning("pc_bonus: Reached max (%d) number of autospells per character!\n", max);
+		return 0;
+	}
+
+	spell[i].flag = src_skill;
+	spell[i].id	= id;
+	spell[i].lv = lv;
+	spell[i].rate = rate;
+	spell[i].card_id = card_id;
+	return 1;
+}
+
 static int pc_bonus_addeff(struct s_addeffect* effect, int max, enum sc_type id, short rate, short arrow_rate, unsigned char flag)
 {
 	int i;
@@ -1527,6 +1560,28 @@ static int pc_bonus_addeff(struct s_addeffect* effect, int max, enum sc_type id,
 	effect[i].rate = rate;
 	effect[i].arrow_rate = arrow_rate;
 	effect[i].flag = flag;
+	return 1;
+}
+
+static int pc_bonus_addeff_onskill(struct s_addeffectonskill* effect, int max, enum sc_type id, short rate, short skill, unsigned char target)
+{
+	int i;
+	for( i = 0; i < max && effect[i].skill; i++ )
+	{
+		if( effect[i].id == id && effect[i].skill == skill && effect[i].target == target )
+		{
+			effect[i].rate += rate;
+			return 1;
+		}
+	}
+	if( i == max ) {
+		ShowWarning("pc_bonus: Reached max (%d) number of add effects on skill per character!\n", max);
+		return 0;
+	}
+	effect[i].id = id;
+	effect[i].rate = rate;
+	effect[i].skill = skill;
+	effect[i].target = target;
 	return 1;
 }
 
@@ -2673,6 +2728,15 @@ int pc_bonus3(struct map_session_data *sd,int type,int type2,int type3,int val)
 			pc_bonus_addeff(sd->addeff2, ARRAYLENGTH(sd->addeff2), (sc_type)type2, type3, 0, val);
 		break;
 
+	case SP_ADDEFF_ONSKILL:
+		if( type3 > SC_MAX ) {
+			ShowWarning("pc_bonus3 (Add Effect on skill): %d is not supported.\n", type3);
+			break;
+		}
+		if( sd->state.lr_flag != 2 )
+			pc_bonus_addeff_onskill(sd->addeff3, ARRAYLENGTH(sd->addeff3), (sc_type)type3, val, type2, 2);
+		break;
+
 	default:
 		ShowWarning("pc_bonus3: unknown type %d %d %d %d!\n",type,type2,type3,val);
 		break;
@@ -2695,6 +2759,26 @@ int pc_bonus4(struct map_session_data *sd,int type,int type2,int type3,int type4
 		if(sd->state.lr_flag != 2)
 			pc_bonus_autospell(sd->autospell2, ARRAYLENGTH(sd->autospell2), (val&1?type2:-type2), (val&2?-type3:type3), type4, 0, current_equip_card_id);
 		break;
+
+	case SP_AUTOSPELL_ONSKILL:
+		if(sd->state.lr_flag != 2)
+		{
+			int target = skill_get_inf(type2); //Support or Self (non-auto-target) skills should pick self.
+			target = target&INF_SUPPORT_SKILL || (target&INF_SELF_SKILL && !(skill_get_inf2(type2)&INF2_NO_TARGET_SELF));
+
+			pc_bonus_autospell_onskill(sd->autospell3, ARRAYLENGTH(sd->autospell3), type2, target?-type3:type3, type4, val, current_equip_card_id);
+		}
+		break;
+
+	case SP_ADDEFF_ONSKILL:
+		if( type2 > SC_MAX ) {
+			ShowWarning("pc_bonus3 (Add Effect on skill): %d is not supported.\n", type2);
+			break;
+		}
+		if( sd->state.lr_flag != 2 )
+			pc_bonus_addeff_onskill(sd->addeff3, ARRAYLENGTH(sd->addeff3), (sc_type)type3, type4, type2, val);
+		break;
+
 	default:
 		ShowWarning("pc_bonus4: unknown type %d %d %d %d %d!\n",type,type2,type3,type4,val);
 		break;
@@ -2717,6 +2801,12 @@ int pc_bonus5(struct map_session_data *sd,int type,int type2,int type3,int type4
 		if(sd->state.lr_flag != 2)
 			pc_bonus_autospell(sd->autospell2, ARRAYLENGTH(sd->autospell2), (val&1?type2:-type2), (val&2?-type3:type3), type4, type5, current_equip_card_id);
 		break;
+
+	case SP_AUTOSPELL_ONSKILL:
+		if(sd->state.lr_flag != 2)
+			pc_bonus_autospell_onskill(sd->autospell3, ARRAYLENGTH(sd->autospell3), type2, (val&1?-type3:type3), (val&2?-type4:type4), type5, current_equip_card_id);
+		break;
+
 	default:
 		ShowWarning("pc_bonus5: unknown type %d %d %d %d %d %d!\n",type,type2,type3,type4,type5,val);
 		break;

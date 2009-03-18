@@ -309,6 +309,7 @@ typedef enum sc_type {
 	SC_DEFRATIOATK,
 	SC_HPDRAIN,
 	SC_SKILLATKBONUS,
+	SC_ITEMSCRIPT,
 
 	SC_MAX, //Automatically updated max, used in for's to check we are within bounds.
 } sc_type;
@@ -488,7 +489,9 @@ enum si_type {
 	SI_INCHEALRATE	= 293,
 	SI_HPREGEN		= 294,
 	// 295 Sword ?
-	SI_SPCOST_RATE	= 300,
+	// 296 4 chars up ?
+	SI_SPCOST_RATE  = 298,
+	// 300 Stars ?
 	SI_COMMONSC_RESIST	= 301,
 	SI_ARMOR_RESIST	= 302,
 };

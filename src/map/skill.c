@@ -880,6 +880,24 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 		}
 	}
 
+	if( sd && skillid )
+	{ // Trigger status effects on skills
+		enum sc_type type;
+		int i;
+		for( i = 0; i < ARRAYLENGTH(sd->addeff3) && sd->addeff3[i].skill; i++ )
+		{
+			if( skillid != sd->addeff3[i].skill || !sd->addeff3[i].rate )
+				continue;
+			type = sd->addeff3[i].id;
+			skill = skill_get_time2(status_sc2skill(type),7);
+
+			if( sd->addeff3[i].target&ATF_TARGET )
+				status_change_start(bl,type,sd->addeff3[i].rate,7,0,0,0,skill,0);
+			if( sd->addeff3[i].target&ATF_SELF )
+				status_change_start(src,type,sd->addeff3[i].rate,7,0,0,0,skill,0);
+		}
+	}
+
 	if (md && battle_config.summons_trigger_autospells && md->master_id && md->special_state.ai)
 	{	//Pass heritage to Master for status causing effects. [Skotlex]
 		sd = map_id2sd(md->master_id);
@@ -887,7 +905,8 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 	}
 
 	// Autospell when attacking
-	if(sd && !status_isdead(bl) && src != bl && sd->autospell[0].id) {
+	if( sd && !status_isdead(bl) && src != bl && sd->autospell[0].id )
+	{
 		struct block_list *tbl;
 		struct unit_data *ud;
 		int i, skilllv;
@@ -978,6 +997,64 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 	}
 
 	return 0;
+}
+
+int skill_onskillusage(struct map_session_data *sd, struct block_list *bl, int skillid, unsigned int tick)
+{
+	int skill, skilllv, i;
+	struct block_list *tbl;
+
+	if( sd == NULL || skillid <= 0 )
+		return 0;
+
+	sd->state.skillonskill = 1;
+	for( i = 0; i < ARRAYLENGTH(sd->autospell3) && sd->autospell3[i].flag; i++ )
+	{
+		if( sd->autospell3[i].flag != skillid )
+			continue;
+		skill = (sd->autospell3[i].id > 0) ? sd->autospell3[i].id : -sd->autospell3[i].id;
+		if( skillnotok(skill, sd) )
+			continue;
+
+		skilllv = sd->autospell3[i].lv ? sd->autospell3[i].lv : 1;
+		if( skilllv < 0 ) skilllv = 1 + rand()%(-skilllv);
+
+		if( sd->autospell3[i].id >= 0 && bl == NULL )
+			continue; // No target
+		if( rand()%1000 > sd->autospell3[i].rate )
+			continue;
+
+		if( sd->autospell3[i].id < 0 )
+			tbl = &sd->bl;
+		else
+			tbl = bl;
+
+		switch( skill_get_casttype(skill) )
+		{
+			case CAST_GROUND:   skill_castend_pos2(&sd->bl, tbl->x, tbl->y, skill, skilllv, tick, 0); break;
+			case CAST_NODAMAGE: skill_castend_nodamage_id(&sd->bl, tbl, skill, skilllv, tick, 0); break;
+			case CAST_DAMAGE:   skill_castend_damage_id(&sd->bl, tbl, skill, skilllv, tick, 0); break;
+		}
+		break;
+	}
+
+	if( sd->autoscript3[0].script )
+	{
+		for( i = 0; i < ARRAYLENGTH(sd->autoscript3) && sd->autoscript3[i].script; i++ )
+		{
+			if( sd->autoscript3[i].flag != skillid )
+				continue;
+			if( sd->autoscript3[i].target && bl == NULL )
+				continue;
+			if( rand()%1000 > sd->autoscript3[i].rate )
+				continue;
+			run_script(sd->autoscript3[i].script,0,sd->bl.id,0);
+			break;
+		}
+	}
+
+	sd->state.skillonskill = 0;
+	return 1;
 }
 
 /* Splitted off from skill_additional_effect, which is never called when the
@@ -2888,8 +2965,14 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 
 	map_freeblock_unlock();	
 
-	if (sd && !(flag&1) && sd->state.arrow_atk) //Consume arrow on last invocation to this skill.
-		battle_consume_ammo(sd, skillid, skilllv);
+	if( sd && !(flag&1) )
+	{
+		if( sd->state.arrow_atk ) //Consume arrow on last invocation to this skill.
+			battle_consume_ammo(sd, skillid, skilllv);
+		if( !sd->state.skillonskill )
+			skill_onskillusage(sd, bl, skillid, tick);
+	}
+
 	return 0;
 }
 
@@ -5408,8 +5491,13 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		mobskill_event(dstmd, src, tick, MSC_SKILLUSED|(skillid<<16));
 	}
 	
-	if (sd && !(flag&1) && sd->state.arrow_atk) //Consume arrow on last invocation to this skill.
-		battle_consume_ammo(sd, skillid, skilllv);
+	if( sd && !(flag&1) )
+	{
+		if( sd->state.arrow_atk ) //Consume arrow on last invocation to this skill.
+			battle_consume_ammo(sd, skillid, skilllv);
+		if( !sd->state.skillonskill )
+			skill_onskillusage(sd, bl, skillid, tick);
+	}
 
 	map_freeblock_unlock();
 	return 0;
@@ -6182,9 +6270,15 @@ int skill_castend_pos2(struct block_list* src, int x, int y, int skillid, int sk
 	if (sc && sc->data[SC_MAGICPOWER])
 		status_change_end(src,SC_MAGICPOWER,-1);
 
-	if (sd && !(flag&1) && sd->state.arrow_atk) //Consume arrow if a ground skill was not invoked. [Skotlex]
-		battle_consume_ammo(sd, skillid, skilllv);
-		
+	if( sd )
+	{
+		if( sd->state.arrow_atk && !(flag&1) ) //Consume arrow if a ground skill was not invoked. [Skotlex]
+			battle_consume_ammo(sd, skillid, skilllv);
+
+		if( !sd->state.skillonskill )
+			skill_onskillusage(sd, NULL, skillid, tick);
+	}
+
 	return 0;
 }
 
@@ -8547,8 +8641,8 @@ int skill_castfix (struct block_list *bl, int skill_id, int skill_lv)
 		}
 	}
 
-	if( sc && sc->count && sc->data[SC_SKILLCASTRATE] && sc->data[SC_SKILLCASTRATE]->val1 == skill_id )
-		time += time * sc->data[SC_SKILLCASTRATE]->val2 / 100;
+	if( sc && sc->count && sc->data[SC_SKILLCASTRATE] && (sc->data[SC_SKILLCASTRATE]->val1 == skill_id || sc->data[SC_SKILLCASTRATE]->val2 == skill_id || sc->data[SC_SKILLCASTRATE]->val3 == skill_id) )
+		time += time * sc->data[SC_SKILLCASTRATE]->val4 / 100;
 
 	// config cast time multiplier
 	if (battle_config.cast_rate != 100)

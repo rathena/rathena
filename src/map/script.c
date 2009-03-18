@@ -6519,11 +6519,13 @@ BUILDIN_FUNC(bonus)
 	{
 	case SP_AUTOSPELL:
 	case SP_AUTOSPELL_WHENHIT:
+	case SP_AUTOSPELL_ONSKILL:
 	case SP_SKILL_ATK:
 	case SP_SKILL_HEAL:
 	case SP_SKILL_HEAL2:
 	case SP_ADD_SKILL_BLOW:
 	case SP_CASTRATE:
+	case SP_ADDEFF_ONSKILL:
 		// these bonuses support skill names
 		val1 = ( script_isstring(st,3) ? skill_name2id(script_getstr(st,3)) : script_getnum(st,3) );
 		break;
@@ -6547,13 +6549,21 @@ BUILDIN_FUNC(bonus)
 		pc_bonus3(sd, type, val1, val2, val3);
 		break;
 	case 4:
-		val2 = script_getnum(st,4);
+		if( type == SP_AUTOSPELL_ONSKILL && script_isstring(st,4) )
+			val2 = skill_name2id(script_getstr(st,4)); // 2nd value can be skill name
+		else
+			val2 = script_getnum(st,4);
+
 		val3 = script_getnum(st,5);
 		val4 = script_getnum(st,6);
 		pc_bonus4(sd, type, val1, val2, val3, val4);
 		break;
 	case 5:
-		val2 = script_getnum(st,4);
+		if( type == SP_AUTOSPELL_ONSKILL && script_isstring(st,4) )
+			val2 = skill_name2id(script_getstr(st,4)); // 2nd value can be skill name
+		else
+			val2 = script_getnum(st,4);
+
 		val3 = script_getnum(st,5);
 		val4 = script_getnum(st,6);
 		val5 = script_getnum(st,7);
@@ -6588,7 +6598,7 @@ BUILDIN_FUNC(bonusautoscript)
 	script = parse_script(str, "autoscript bonus", 0, 0);
 	if( !script )
 		return 1;
-	if( !pc_autoscript_add(sd->autoscript, ARRAYLENGTH(sd->autoscript), rate, flag, target, script) )
+	if( !pc_autoscript_add(sd->autoscript, ARRAYLENGTH(sd->autoscript), rate, flag, target, script, false) )
 	{
 		script_free_code(script);
 		return 1;
@@ -6616,12 +6626,39 @@ BUILDIN_FUNC(bonusautoscript2)
 	script = parse_script(str, "autoscript2 bonus", 0, 0);
 	if (!script)
 		return 1;
-	if (!pc_autoscript_add(sd->autoscript2, ARRAYLENGTH(sd->autoscript2), rate, flag, target, script))
+	if (!pc_autoscript_add(sd->autoscript2, ARRAYLENGTH(sd->autoscript2), rate, flag, target, script, false))
 	{
 		script_free_code(script);
 		return 1;
 	}
 	return 0;	
+}
+/// Bonus script that has a chance of being executed when used a skill
+BUILDIN_FUNC(bonusautoscript3)
+{
+	int rate, skill, target = 0;
+	const char *str;
+	struct script_code *script;
+	TBL_PC* sd;
+
+	sd = script_rid2sd(st);
+	if( sd == NULL )
+		return 0;// no player attached, report source
+
+	str  = script_getstr(st,2);
+	rate = script_getnum(st,3);
+	skill = ( script_isstring(st,4) ? skill_name2id(script_getstr(st,4)) : script_getnum(st,4) );
+	if( script_hasdata(st,5) )
+		target = script_getnum(st,5);
+	script = parse_script(str, "autoscript3 bonus", 0, 0);
+	if( !script )
+		return 1;
+	if( !pc_autoscript_add(sd->autoscript3, ARRAYLENGTH(sd->autoscript3), rate, skill, target, script, true) )
+	{
+		script_free_code(script);
+		return 1;
+	}
+	return 0;
 }
 
 /// Changes the level of a player skill.
@@ -13649,10 +13686,11 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(bonus,"iv"),
 	BUILDIN_DEF2(bonus,"bonus2","ivi"),
 	BUILDIN_DEF2(bonus,"bonus3","ivii"),
-	BUILDIN_DEF2(bonus,"bonus4","iviii"),
-	BUILDIN_DEF2(bonus,"bonus5","iviiii"),
+	BUILDIN_DEF2(bonus,"bonus4","ivvii"),
+	BUILDIN_DEF2(bonus,"bonus5","ivviii"),
 	BUILDIN_DEF(bonusautoscript,"si??"),
 	BUILDIN_DEF(bonusautoscript2,"si??"),
+	BUILDIN_DEF(bonusautoscript3,"siv?"),
 	BUILDIN_DEF(skill,"vi?"),
 	BUILDIN_DEF(addtoskill,"vi?"), // [Valaris]
 	BUILDIN_DEF(guildskill,"vi"),

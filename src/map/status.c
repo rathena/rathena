@@ -193,7 +193,7 @@ void initChangeTables(void)
 	set_sc( MG_ENERGYCOAT        , SC_ENERGYCOAT      , SI_ENERGYCOAT      , SCB_NONE );
 	set_sc( NPC_EMOTION          , SC_MODECHANGE      , SI_BLANK           , SCB_MODE );
 	add_sc( NPC_EMOTION_ON       , SC_MODECHANGE      );
-	set_sc( NPC_ATTRICHANGE      , SC_ELEMENTALCHANGE , SI_BLANK           , SCB_DEF_ELE );
+	set_sc( NPC_ATTRICHANGE      , SC_ELEMENTALCHANGE , SI_ARMOR_RESIST    , SCB_DEF_ELE );
 	add_sc( NPC_CHANGEWATER      , SC_ELEMENTALCHANGE );
 	add_sc( NPC_CHANGEGROUND     , SC_ELEMENTALCHANGE );
 	add_sc( NPC_CHANGEFIRE       , SC_ELEMENTALCHANGE );
@@ -529,6 +529,7 @@ void initChangeTables(void)
 	StatusChangeFlagTable[SC_ARMOR_RESIST] |= SCB_PC;
 	StatusChangeFlagTable[SC_SPCOST_RATE] |= SCB_PC;
 	StatusChangeFlagTable[SC_WALKSPEED] |= SCB_SPEED;
+	StatusChangeFlagTable[SC_ITEMSCRIPT] |= SCB_PC;
 	// Mercenary Bonus Effects
 	StatusChangeFlagTable[SC_MERC_FLEEUP] |= SCB_FLEE;
 	StatusChangeFlagTable[SC_MERC_ATKUP] |= SCB_WATK;
@@ -1749,8 +1750,10 @@ int status_calc_pc(struct map_session_data* sd,int first)
 	//zero up structures...
 	memset(&sd->autospell,0,sizeof(sd->autospell)
 		+ sizeof(sd->autospell2)
+		+ sizeof(sd->autospell3)
 		+ sizeof(sd->addeff)
 		+ sizeof(sd->addeff2)
+		+ sizeof(sd->addeff3)
 		+ sizeof(sd->skillatk)
 		+ sizeof(sd->skillheal)
 		+ sizeof(sd->skillheal2)
@@ -1769,6 +1772,7 @@ int status_calc_pc(struct map_session_data* sd,int first)
 	// clear autoscripts...
 	pc_autoscript_clear(sd->autoscript, ARRAYLENGTH(sd->autoscript));
 	pc_autoscript_clear(sd->autoscript2, ARRAYLENGTH(sd->autoscript2));
+	pc_autoscript_clear(sd->autoscript3, ARRAYLENGTH(sd->autoscript3));
 	
 	// vars zeroing. ints, shorts, chars. in that order.
 	memset (&sd->arrow_atk, 0,sizeof(sd->arrow_atk)
@@ -1964,6 +1968,13 @@ int status_calc_pc(struct map_session_data* sd,int first)
 					return 1;
 			}
 		}
+	}
+
+	if( sc->count && sc->data[SC_ITEMSCRIPT] )
+	{
+		struct item_data *data = itemdb_exists(sc->data[SC_ITEMSCRIPT]->val1);
+		if( data && data->script )
+			run_script(data->script,0,sd->bl.id,0);
 	}
 
 	if( sd->pd )

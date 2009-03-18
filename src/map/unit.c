@@ -1932,6 +1932,7 @@ int unit_free(struct block_list *bl, int clrtype)
 			pc_delinvincibletimer(sd);
 			pc_autoscript_clear(sd->autoscript, ARRAYLENGTH(sd->autoscript));
 			pc_autoscript_clear(sd->autoscript2, ARRAYLENGTH(sd->autoscript2));
+			pc_autoscript_clear(sd->autoscript3, ARRAYLENGTH(sd->autoscript3));
 
 			if( sd->followtimer != -1 )
 				pc_stop_following(sd);
