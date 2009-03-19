@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Kisuka
 //===== Current Version: ===================================== 
-//= 1.0
+//= 1.1
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -12,6 +12,7 @@
 //= Banish Winter, Shafka Hat.
 //===== Additional Comments: ================================= 
 //= 1.0 First version. [Kisuka]
+//= 1.1 Small fixes on The Moving Island. [Kisuka]
 //============================================================ 
 
 //============================================================================
@@ -3584,7 +3585,7 @@ mosk_fild01,86,104,3	script	Aged Stranger#npc	963,{
 		mes "Are you ready to learn the Gusli?";
 		mes "Please equip the Gusli.";
 		next;
-		if(getequipid(EQI_ACC_L || EQI_ACC_R) == 2707) {
+		if(getequipid(EQI_ACC_L) || getequipid(EQI_ACC_R) == 2707) {
 			mes "[Aged Stranger]";
 			mes "Hm... Very well.";
 			mes "At first, look at me how I play,";
@@ -3712,7 +3713,7 @@ mosk_fild01,86,104,3	script	Aged Stranger#npc	963,{
 		mes "[Aged Stranger]";
 		mes "Are you ready to learn the Gusli?";
 		next;
-		if(getequipid(EQI_ACC_L || EQI_ACC_R) == 2707) {
+		if(getequipid(EQI_ACC_L) || getequipid(EQI_ACC_R) == 2707) {
 			mes "[Aged Stranger]";
 			mes "Um... You did well.";
 			next;
@@ -4324,7 +4325,7 @@ mosk_in,131,92,3	script	Csar Alexsay III#npc	965,{
 			mes "A Gooselri? Which only exists";
 			mes "in the whale island? Let's see.";
 			next;
-			if (getequipid(EQI_ACC_L || EQI_ACC_R) == 2707 || countitem(2707) > 0) {
+			if (getequipid(EQI_ACC_L) || getequipid(EQI_ACC_R) == 2707 || countitem(2707) > 0) {
 				mes "[Csar Alexsay III]";
 				mes "Oh... Is this instrument... a Gooselri?";
 				next;
@@ -4436,7 +4437,7 @@ mosk_in,131,92,3	script	Csar Alexsay III#npc	965,{
 			mes "something to satisfy me";
 			mes "at the whale island?";
 			next;
-			if (getequipid(EQI_ACC_L || EQI_ACC_R) == 2707 || countitem(2707) > 0) {
+			if (getequipid(EQI_ACC_L) || getequipid(EQI_ACC_R) == 2707 || countitem(2707) > 0) {
 				mes "[Csar Alexsay III]";
 				mes "Oh... Is this instrument... a Gooselri?";
 				next;
@@ -4714,7 +4715,7 @@ OnTouch:
 		mes "Stop by the whale island?";
 		next;
 		if(select("Go to Whale Island.:Stay put.") == 1) {
-			if (getequipid(EQI_ACC_L || EQI_ACC_R) == 2707) {
+			if (getequipid(EQI_ACC_L) || getequipid(EQI_ACC_R) == 2707) {
 				soundeffect "mos_gusli2.wav",0;
 				mes "-Slowly, your hands are on the";
 				mes "Gusli, and the playing starts...";
