@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Kisuka, $ephiroth
 //===== Current Version: =====================================
-//= 1.3
+//= 1.4
 //===== Compatible With: =====================================
 //= Any Athena Version
 //===== Description: =========================================
@@ -12,6 +12,7 @@
 //= 1.0 Initial version [$ephiroth]
 //= 1.1, 1.2 Updated from jA [$ephiroth]
 //= 1.3 Added warp npcs. Removed place holder warps. [Kisuka]
+//= 1.4 Fixed cords on milestone 1-3. [Kisuka]
 //============================================================
 
 mosk_fild02,190,257,0	warp	moscoviawarp0401	1,1,mosk_dun01,189,45
@@ -188,7 +189,7 @@ mosk_dun01,207,276,3	script	Milestone#1-2	111,{
 	close;
 }
 
-mosk_dun01,164,191,3	script	Milestone#1-3	111,{
+mosk_dun01,264,191,3	script	Milestone#1-3	111,{
 	mes "- There is writing on a big rock. -";
 	next;
 	mes "^3131FF- Those who advance may get hurt but are brave of heart and those who move back will remain safe.";
