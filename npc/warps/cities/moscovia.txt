@@ -43,5 +43,3 @@ moscovia,205,98,0	warp	moskwarp1021	1,1,mosk_in,214,255
 mosk_in,214,252,0	warp	moskwarp1022	1,1,moscovia,203,96
 mosk_in,220,273,0	warp	moskwarp1023	1,1,mosk_in,152,275
 mosk_in,152,272,0	warp	moskwarp1024	1,1,mosk_in,220,270
-
-mosk_in,215,36,0	warp	moskwarp1025	1,1,mosk_dun02,53,217

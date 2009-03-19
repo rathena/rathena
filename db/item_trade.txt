@@ -457,6 +457,9 @@
 7773,115,100	// War_Badge
 
 // Moscovia Quest Items -----
+2707,91,100	// Gusli
+7761,115,100	// Magic_Gourd_Bottle
+7765,115,100	// Yaga_Secret_Medicine
 7876,115,100	// Gold_Key
 7877,115,100	// Red_Ring
 7878,115,100	// Lusalka_Hair
