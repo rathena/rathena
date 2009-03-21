@@ -40,6 +40,8 @@
 	2385 Recuvative_Armor		Should trigger HP/SP return with magical kills as well.
 
 =======================
+2009/03/21
+	* Fixed Anubis (who made him broken and exploitable in the first place?) [Playtester]
 2009/03/19
 	* A few database fixes [Playtester]
 	- Fixed Maya Purple losing her boss mode
