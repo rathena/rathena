@@ -40,6 +40,9 @@
 	2385 Recuvative_Armor		Should trigger HP/SP return with magical kills as well.
 
 =======================
+2009/03/22
+	* Hopefully fixed NPC_DEFENDER not working [Playtester]
+	  (thanks to Brainstorm for the fix)
 2009/03/21
 	* Fixed Anubis (who made him broken and exploitable in the first place?) [Playtester]
 2009/03/19
