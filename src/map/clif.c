@@ -4533,7 +4533,7 @@ int clif_status_load(struct block_list *bl,int type, int flag)
  *------------------------------------------*/
 int clif_status_change(struct block_list *bl,int type,int flag,unsigned int tick)
 {
-	unsigned char buf[16];
+	unsigned char buf[32];
 
 	if (type == SI_BLANK)  //It shows nothing on the client...
 		return 0;
@@ -4557,6 +4557,9 @@ int clif_status_change(struct block_list *bl,int type,int flag,unsigned int tick
 	WBUFB(buf,8)=flag;
 	if( battle_config.display_status_timers && tick>0 ) {
 		WBUFL(buf,9)=tick;
+		WBUFL(buf,13)=0;
+		WBUFL(buf,17)=0;
+		WBUFL(buf,21)=0;
 		clif_send(buf,packet_len(0x43f),bl,AREA);
 	} else
 		clif_send(buf,packet_len(0x196),bl,AREA);
