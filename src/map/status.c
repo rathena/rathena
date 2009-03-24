@@ -6228,7 +6228,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 	if( vd && (pcdb_checkid(vd->class_) || bl->type == BL_MER ) ) //Only for players sprites, client crashes if they receive this for a mob o.O [Skotlex]
 		clif_status_change(bl,StatusIconChangeTable[type],1,tick);
 	else if( sd ) //Send packet to self otherwise (disguised player?)
-		clif_status_load(bl,StatusIconChangeTable[type],1,tick);
+		clif_status_load(bl,StatusIconChangeTable[type],1);
 
 	//Don't trust the previous sce assignment, in case the SC ended somewhere between there and here.
 	if((sce=sc->data[type]))
