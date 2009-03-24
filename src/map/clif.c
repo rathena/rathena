@@ -4560,7 +4560,9 @@ int clif_status_change(struct block_list *bl,int type,int flag,unsigned int tick
 		WBUFL(buf,13)=0;
 		WBUFL(buf,17)=0;
 		WBUFL(buf,21)=0;
-		clif_send(buf,packet_len(0x43f),bl,AREA);
+		//for some reason, it isn't reading the packet length properly!
+		//clif_send(buf,packet_len(0x43f),bl,AREA);
+		clif_send(buf,25,bl,AREA);
 	} else
 		clif_send(buf,packet_len(0x196),bl,AREA);
 	return 0;
