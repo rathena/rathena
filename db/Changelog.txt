@@ -40,6 +40,8 @@
 	2385 Recuvative_Armor		Should trigger HP/SP return with magical kills as well.
 
 =======================
+2009/03/24
+	* Fixed Incarnations of Morroc losing their boss mode [Playtester]
 2009/03/23
 	* Fixed the duration of NPC_Statuschange skills [Playtester]
 	- duration is a fixed 30s, except for stun 5s and bleeding 60s
