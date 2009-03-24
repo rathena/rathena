@@ -4548,14 +4548,14 @@ int clif_status_change(struct block_list *bl,int type,int flag,unsigned int tick
 		type == SI_READYTURN || type == SI_READYCOUNTER || type == SI_DODGE ||
 		type == SI_DEVIL || type == SI_NIGHT || type == SI_INTRAVISION)
 		tick=0;
-	if( battle_config.display_skill_timers && tick>0 )
+	if( battle_config.display_status_timers && tick>0 )
 		WBUFW(buf,0)=0x043f;
 	else
 		WBUFW(buf,0)=0x0196;
 	WBUFW(buf,2)=type;
 	WBUFL(buf,4)=bl->id;
 	WBUFB(buf,8)=flag;
-	if( battle_config.display_skill_timers && tick>0 )
+	if( battle_config.display_status_timers && tick>0 )
 		clif_send(buf,packet_len(0x196),bl,AREA);
 	else {
 		WBUFL(buf,9)=tick;
