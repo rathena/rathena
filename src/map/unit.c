@@ -1596,7 +1596,7 @@ int unit_skillcastcancel(struct block_list *bl,int type)
 	
 	ud->canact_tick = tick;
 	if ( sd )
-		clif_status_change(src, SI_ACTIONDELAY, 1, ud->canact_tick);
+		clif_status_change(bl, SI_ACTIONDELAY, 1, ud->canact_tick);
 
 	if(type&1 && sd)
 		skill = sd->skillid_old;
