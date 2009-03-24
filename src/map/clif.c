@@ -4556,10 +4556,10 @@ int clif_status_change(struct block_list *bl,int type,int flag,unsigned int tick
 	WBUFL(buf,4)=bl->id;
 	WBUFB(buf,8)=flag;
 	if( battle_config.display_status_timers && tick>0 )
-		clif_send(buf,packet_len(0x196),bl,AREA);
-	else {
 		WBUFL(buf,9)=tick;
 		clif_send(buf,packet_len(0x43f),bl,AREA);
+	else {
+		clif_send(buf,packet_len(0x196),bl,AREA);
 	}
 	return 0;
 }
