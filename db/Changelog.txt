@@ -45,6 +45,7 @@
 	- duration is a fixed 30s, except for stun 5s and bleeding 60s
 	- petrify/stone don't have a 5-second solidifying phase (instant stone)
 	- also lol @ DARKGRANDNESS
+	* Added new packets, included new status change packet. [Sara]
 2009/03/22
 	* Hopefully fixed NPC_DEFENDER not working [Playtester]
 	  (thanks to Brainstorm for the fix)

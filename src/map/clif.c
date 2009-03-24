@@ -4531,20 +4531,36 @@ int clif_status_load(struct block_list *bl,int type, int flag)
 /*==========================================
  * 状態異常アイコン/メッセージ表示
  *------------------------------------------*/
-int clif_status_change(struct block_list *bl,int type,int flag)
+int clif_status_change(struct block_list *bl,int type,int flag,unsigned int tick)
 {
 	unsigned char buf[16];
 
 	if (type == SI_BLANK)  //It shows nothing on the client...
 		return 0;
-	
+
 	nullpo_retr(0, bl);
 
-	WBUFW(buf,0)=0x0196;
+	if (type == SI_BLANK || type == SI_MAXIMIZEPOWER || type == SI_RIDING ||
+		type == SI_FALCON || type == SI_TRICKDEAD || type == SI_BROKENARMOR ||
+		type == SI_BROKENWEAPON || type == SI_WEIGHT50 || type == SI_WEIGHT90 ||
+		type == SI_TENSIONRELAX || type == SI_LANDENDOW || type == SI_AUTOBERSERK ||
+		type == SI_BUMP || type == SI_READYSTORM || type == SI_READYDOWN ||
+		type == SI_READYTURN || type == SI_READYCOUNTER || type == SI_DODGE ||
+		type == SI_DEVIL || type == SI_NIGHT || type == SI_INTRAVISION)
+		tick=0;
+	if( battle_config.display_skill_timers && tick>0 )
+		WBUFW(buf,0)=0x043f;
+	else
+		WBUFW(buf,0)=0x0196;
 	WBUFW(buf,2)=type;
 	WBUFL(buf,4)=bl->id;
 	WBUFB(buf,8)=flag;
-	clif_send(buf,packet_len(0x196),bl,AREA);
+	if( battle_config.display_skill_timers && tick>0 )
+		clif_send(buf,packet_len(0x196),bl,AREA);
+	else {
+		WBUFL(buf,9)=tick;
+		clif_send(buf,packet_len(0x43f),bl,AREA);
+	}
 	return 0;
 }
 

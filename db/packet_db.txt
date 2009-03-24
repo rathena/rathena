@@ -1208,6 +1208,17 @@ packet_ver: 23
 0x0437,7,actionrequest,2:6
 0x0438,10,useskilltoid,2:4:6
 0x0439,8,useitem,2:4
+0x043d,8
+0x043e,-1
+0x043f,25
+0x0440,10
+0x0441,4
+0x0442,-1
+0x0443,8
+0x0444,-1
+0x0445,10
+0x0446,14
+0x0448,-1
 
 //Add new packets here
 //packet_ver: 24

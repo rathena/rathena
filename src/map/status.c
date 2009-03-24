@@ -5370,7 +5370,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			//val3 : Brings the skilllv (merged into val1 here)
 			//val4 : Partner
 			if (val1 == CG_MOONLIT)
-				clif_status_change(bl,SI_MOONLIT,1);
+				clif_status_change(bl,SI_MOONLIT,1,tick);
 			val1|= (val3<<16);
 			val3 = tick/1000; //Tick duration
 			tick = 1000;
@@ -6226,9 +6226,9 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 	}
 
 	if( vd && (pcdb_checkid(vd->class_) || bl->type == BL_MER ) ) //Only for players sprites, client crashes if they receive this for a mob o.O [Skotlex]
-		clif_status_change(bl,StatusIconChangeTable[type],1);
+		clif_status_change(bl,StatusIconChangeTable[type],1,tick);
 	else if( sd ) //Send packet to self otherwise (disguised player?)
-		clif_status_load(bl,StatusIconChangeTable[type],1);
+		clif_status_load(bl,StatusIconChangeTable[type],1,tick);
 
 	//Don't trust the previous sce assignment, in case the SC ended somewhere between there and here.
 	if((sce=sc->data[type]))
@@ -6538,7 +6538,7 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 				}
 			}
 			if ((sce->val1&0xFFFF) == CG_MOONLIT)
-				clif_status_change(bl,SI_MOONLIT,0);
+				clif_status_change(bl,SI_MOONLIT,0,0);
 
 			status_change_end(bl,SC_LONGING,-1);
 			break;
@@ -6815,7 +6815,7 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 
 	//On Aegis, when turning off a status change, first goes the sc packet, then the option packet.
 	if( vd && (pcdb_checkid(vd->class_) || bl->type == BL_MER ) )
-		clif_status_change(bl,StatusIconChangeTable[type],0);
+		clif_status_change(bl,StatusIconChangeTable[type],0,0);
 	else if (sd)
 		clif_status_load(bl,StatusIconChangeTable[type],0);
 

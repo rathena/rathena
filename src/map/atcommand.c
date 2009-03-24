@@ -2816,16 +2816,17 @@ int atcommand_gat(const int fd, struct map_session_data* sd, const char* command
  *------------------------------------------*/
 int atcommand_displaystatus(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
-	int i, type, flag;
+	int i, type, flag, tick;
 	nullpo_retr(-1, sd);
 	
-	if (!message || !*message || (i = sscanf(message, "%d %d", &type, &flag)) < 1) {
-		clif_displaymessage(fd, "Please, enter a status type/flag (usage: @displaystatus <status type> <flag>).");
+	if (!message || !*message || (i = sscanf(message, "%d %d %d", &type, &flag, &tick)) < 1) {
+		clif_displaymessage(fd, "Please, enter a status type/flag (usage: @displaystatus <status type> <flag> <tick>).");
 		return -1;
 	}
-	if (i == 1) flag = 1;
+	if (i < 2) flag = 1;
+	if (i < 3) tick = 0;
 
-	clif_status_change(&sd->bl, type, flag);
+	clif_status_change(&sd->bl, type, flag, tick);
 
 	return 0;
 }

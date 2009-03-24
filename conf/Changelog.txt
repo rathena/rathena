@@ -1,4 +1,6 @@
 Date	Added
+2009/3/23
+	* Added setting display_status_timers to client.conf for new status change packet. [Sara]
 2009/1/26
 	* Rev. 13494 Changed guild_skill_relog_delay to yes. Relogging no longer resets delay on guild skills. [L0ne_W0lf]
 2009/1/12
