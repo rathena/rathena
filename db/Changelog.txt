@@ -40,6 +40,8 @@
 	2385 Recuvative_Armor		Should trigger HP/SP return with magical kills as well.
 
 =======================
+2009/03/25
+	* Fixed Sonic Blow's and Arrow Vulcan's aftercast delay being reducable by Bragi [Playtester]
 2009/03/24
 	* Fixed Incarnations of Morroc losing their boss mode [Playtester]
 2009/03/23
