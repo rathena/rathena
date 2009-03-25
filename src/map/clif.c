@@ -4507,6 +4507,47 @@ int clif_skill_produce_mix_list(struct map_session_data *sd, int trigger)
 }
 
 /*==========================================
+ *
+ *------------------------------------------*/
+void clif_cooking_list(struct map_session_data *sd, int trigger)
+{
+	int fd;
+	int i, c;
+	int view;
+
+	nullpo_retv(sd);
+	fd = sd->fd;
+
+	WFIFOHEAD(fd, 6 + 2*MAX_SKILL_PRODUCE_DB);
+	WFIFOW(fd,0) = 0x25a;
+	WFIFOW(fd,4) = 1; // list type
+
+	c = 0;
+	for( i = 0; i < MAX_SKILL_PRODUCE_DB; i++ )
+	{
+		if( !skill_can_produce_mix(sd,skill_produce_db[i].nameid,trigger, 1) )
+			continue;
+
+		if( (view = itemdb_viewid(skill_produce_db[i].nameid)) > 0 )
+			WFIFOW(fd, 6+2*c)= view;
+		else
+			WFIFOW(fd, 6+2*c)= skill_produce_db[i].nameid;
+
+		c++;
+	}
+
+	WFIFOW(fd,2) = 6 + 2*c;
+	WFIFOSET(fd,WFIFOW(fd,2));
+
+	//TODO: replace with proper solution
+	if( c > 0 )
+	{
+		sd->menuskill_id = AM_PHARMACY;
+		sd->menuskill_val = trigger;
+	}
+}
+
+/*==========================================
  * Sends a status change packet to the object only, used for loading status changes. [Skotlex]
  *------------------------------------------*/
 int clif_status_load(struct block_list *bl,int type, int flag)
@@ -9698,6 +9739,23 @@ void clif_parse_ProduceMix(int fd,struct map_session_data *sd)
 	sd->menuskill_val = sd->menuskill_id = 0;
 }
 /*==========================================
+ *
+ *------------------------------------------*/
+void clif_parse_Cooking(int fd,struct map_session_data *sd)
+{
+	int type = RFIFOW(fd,2); // '1' for cooking
+	int nameid = RFIFOW(fd,4);
+
+	if (pc_istrading(sd)) {
+		//Make it fail to avoid shop exploits where you sell something different than you see.
+		clif_skill_fail(sd,sd->ud.skillid,0,0);
+		sd->menuskill_val = sd->menuskill_id = 0;
+		return;
+	}
+	skill_produce_mix(sd,0,nameid,0,0,0,1);
+	sd->menuskill_val = sd->menuskill_id = 0;
+}
+/*==========================================
  * ïêäÌèCóù
  *------------------------------------------*/
 void clif_parse_RepairItem(int fd, struct map_session_data *sd)
@@ -13371,7 +13429,7 @@ static int packetdb_readdb(void)
 	   12, 26,  9, 11, -1, -1, 10,  2, 282, 11,  4, 36, -1, -1,  4,  2,
 	//#0x0240
 	   -1, -1, -1, -1, -1,  3,  4,  8,  -1,  3, 70,  4,  8, 12,  4, 10,
-	    3, 32, -1,  3,  3,  5,  5,  8,   2,  3, -1, -1,  4, -1,  4,  0,
+	    3, 32, -1,  3,  3,  5,  5,  8,   2,  3, -1,  6,  4, -1,  4,  0,
 	    6,  0,  0,  0,  0,  0,  0,  0,   0,  0,  0,  0,  0,  0,  0,  0,
 	    0,  0,  0,  0,  8,  0,  0,  0,   0,  0,  0,  0,  0,  0,  0,  0,
 	//#0x0280
@@ -13438,6 +13496,7 @@ static int packetdb_readdb(void)
 		{clif_parse_UseSkillMap,"useskillmap"},
 		{clif_parse_RequestMemo,"requestmemo"},
 		{clif_parse_ProduceMix,"producemix"},
+		{clif_parse_Cooking,"cooking"},
 		{clif_parse_NpcSelectMenu,"npcselectmenu"},
 		{clif_parse_NpcNextClicked,"npcnextclicked"},
 		{clif_parse_NpcAmountInput,"npcamountinput"},

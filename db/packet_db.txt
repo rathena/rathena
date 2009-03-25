@@ -819,7 +819,7 @@ packet_ver: 19
 //2005-10-10aSakexe
 0x020e,32
 0x025a,-1
-0x025b,-1
+0x025b,6,cooking,0
 
 //2005-10-13aSakexe
 0x007a,6

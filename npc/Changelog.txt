@@ -1,6 +1,8 @@
 Date		Added
 ======
 2009/03/25
+	* Renamed the cooking quest variable to cooking_q to avoid a naming collision. [ultramage]
+	- You need to manually rename all occurences of this variable in your txt-savefile/sql-database if you want to preserve player progress.
 	* Fixed Thief Training Quest [Playtester]
 2009/03/18
 	* Fixed Moscovia mob names in the spawn file [Playtester]

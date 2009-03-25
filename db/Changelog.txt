@@ -41,6 +41,8 @@
 
 =======================
 2009/03/25
+	* Added cooking packets to packet_db.txt
+	* Changed the cooking kit items to use the new 'cooking' function [ultramage]
 	* Added missing 12.1 drops to the monsters [Playtester]
 	* Fixed Sonic Blow's and Arrow Vulcan's aftercast delay being reducable by Bragi [Playtester]
 2009/03/24

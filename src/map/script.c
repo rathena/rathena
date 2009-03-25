@@ -7246,6 +7246,22 @@ BUILDIN_FUNC(produce)
 	return 0;
 }
 /*==========================================
+ *
+ *------------------------------------------*/
+BUILDIN_FUNC(cooking)
+{
+	int trigger;
+	TBL_PC* sd;
+
+	sd = script_rid2sd(st);
+	if( sd == NULL )
+		return 0;
+
+	trigger=script_getnum(st,2);
+	clif_cooking_list(sd, trigger);
+	return 0;
+}
+/*==========================================
  * NPCÇ≈ÉyÉbÉgçÏÇÈ
  *------------------------------------------*/
 BUILDIN_FUNC(makepet)
@@ -13716,6 +13732,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(guildopenstorage,"*"),
 	BUILDIN_DEF(itemskill,"vi"),
 	BUILDIN_DEF(produce,"i"),
+	BUILDIN_DEF(cooking,"i"),
 	BUILDIN_DEF(monster,"siisii*"),
 	BUILDIN_DEF(getmobdrops,"i"),
 	BUILDIN_DEF(areamonster,"siiiisii*"),
