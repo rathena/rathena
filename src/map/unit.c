@@ -1071,7 +1071,7 @@ int unit_skilluse_id2(struct block_list *src, int target_id, short skill_num, sh
 
 	ud->canact_tick  = tick + casttime + 100;
 	if ( battle_config.display_status_timers && sd )
-		clif_status_change(src, SI_ACTIONDELAY, 1, ud->canact_tick);
+		clif_status_change(src, SI_ACTIONDELAY, 1, casttime);
 	ud->skilltarget  = target_id;
 	ud->skillx       = 0;
 	ud->skilly       = 0;
@@ -1178,7 +1178,7 @@ int unit_skilluse_pos2( struct block_list *src, short skill_x, short skill_y, sh
 
 	ud->canact_tick  = tick + casttime + 100;
 	if ( battle_config.display_status_timers && sd )
-		clif_status_change(src, SI_ACTIONDELAY, 1, ud->canact_tick);
+		clif_status_change(src, SI_ACTIONDELAY, 1, casttime);
 	ud->skillid      = skill_num;
 	ud->skilllv      = skill_lv;
 	ud->skillx       = skill_x;

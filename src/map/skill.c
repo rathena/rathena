@@ -950,8 +950,11 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 			ud = unit_bl2ud(src);
 			if (ud) {
 				rate = skill_delayfix(src, skill, skilllv);
-				if (DIFF_TICK(ud->canact_tick, tick + rate) < 0)
+				if (DIFF_TICK(ud->canact_tick, tick + rate) < 0){
 					ud->canact_tick = tick+rate;
+					if ( battle_config.display_status_timers && sd )
+						clif_status_change(src, SI_ACTIONDELAY, 1, rate);
+				}
 			}
 			break; //Only one auto skill comes off at a time.
 		}
@@ -1197,8 +1200,11 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 			ud = unit_bl2ud(bl);
 			if (ud) {
 				rate = skill_delayfix(bl, skillid, skilllv);
-				if (DIFF_TICK(ud->canact_tick, tick + rate) < 0)
+				if (DIFF_TICK(ud->canact_tick, tick + rate) < 0){
 					ud->canact_tick = tick+rate;
+					if ( battle_config.display_status_timers && dstsd )
+						clif_status_change(bl, SI_ACTIONDELAY, 1, rate);
+				}
 			}
 			break; //trigger only one auto-spell per hit.
 		}
@@ -5667,6 +5673,8 @@ int skill_castend_id(int tid, unsigned int tick, int id, intptr data)
 			unit_stop_walking(src,1);
 		
 		ud->canact_tick = tick + skill_delayfix(src, ud->skillid, ud->skilllv);
+		if ( battle_config.display_status_timers && sd )
+			clif_status_change(src, SI_ACTIONDELAY, 1, skill_delayfix(src, ud->skillid, ud->skilllv));
 	
 		if (skill_get_state(ud->skillid) != ST_MOVE_ENABLE)
 			unit_set_walkdelay(src, tick, battle_config.default_walk_delay+skill_get_walkdelay(ud->skillid, ud->skilllv), 1);
@@ -5844,6 +5852,8 @@ int skill_castend_pos(int tid, unsigned int tick, int id, intptr data)
 				src->type, src->id, ud->skillid, ud->skilllv, ud->skillx, ud->skilly);
 		unit_stop_walking(src,1);
 		ud->canact_tick = tick + skill_delayfix(src, ud->skillid, ud->skilllv);
+		if ( battle_config.display_status_timers && sd )
+			clif_status_change(src, SI_ACTIONDELAY, 1, skill_delayfix(src, ud->skillid, ud->skilllv));
 		unit_set_walkdelay(src, tick, battle_config.default_walk_delay+skill_get_walkdelay(ud->skillid, ud->skilllv), 1);
 
 		map_freeblock_lock();
