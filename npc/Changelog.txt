@@ -1,5 +1,7 @@
 Date		Added
 ======
+2009/03/25
+	* Fixed Thief Training Quest [Playtester]
 2009/03/18
 	* Fixed Moscovia mob names in the spawn file [Playtester]
 2009/03/04

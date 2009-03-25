@@ -1,9 +1,9 @@
 //===== eAthena Script ======================================= 
-//= Acolyte Class Tutorial and Job Specific Quest
+//= Thief Class Tutorial and Job Specific Quest
 //===== By: ================================================== 
 //= Fix up by Jukka
 //===== Current Version: ===================================== 
-//= 1.2
+//= 1.3
 //===== Compatible With: ===================================== 
 //= eAthena SVN (Testet in Trunk 88xx)
 //===== Description: ========================================= 
@@ -13,6 +13,7 @@
 //= 1.1 optimized [Lupus]
 //=	TODO: Test, Add correct misceffects numbers
 //= 1.2 Fixed experience gains to match upcoming rate adjustments. [SinSloth]
+//= 1.3 Fixed a few minor mistakes [Playtester]
 //============================================================ 
 
 //=================================================Thief Trainer====================================================
@@ -520,7 +521,7 @@ moc_ruins,66,164,4	script	Thief Trainer#T	84,{
 			mes "So, did you complete your mission?";
 			mes "I know it is a pretty difficult one though.";
 			next;
-			switch(select("I am still ivestigating.:Not yet.:Yes, I did.")){
+			switch(select("I am still investigating.:Not yet.:Yes, I did.")){
 			case 1:
 				mes "[Yierhan]";
 				mes "Ah...";
@@ -577,7 +578,7 @@ moc_ruins,66,164,4	script	Thief Trainer#T	84,{
 				mes "Please take this.";
 				mes "This is a reward for your great job.";
 				set tu_thief01, 27;
-				set Mantle, 1; // Why this? Maybe getitem? [Jukka]
+				getitem 2307, 1;
 				set Zeny, Zeny + 5000;
 				getexp 8000,3000;
 				next;
@@ -636,7 +637,7 @@ moc_ruins,66,164,4	script	Thief Trainer#T	84,{
 			mes "I have had so many other works recently";
 			mes "to focus on the investigation.";
 			next;
-			switch(select("I am still ivestigating.:Not yet.:I finished to investigate.")){
+			switch(select("I am still investigating.:Not yet.:I finished to investigate.")){
 			case 1:
 				mes "[Yierhan]";
 				mes "Ah...";
