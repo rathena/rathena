@@ -3528,7 +3528,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case SG_MOON_COMFORT:
 	case SG_STAR_COMFORT:
 	case NPC_HALLUCINATION:
-	case HP_ASSUMPTIO:
 	case GS_MADNESSCANCEL:
 	case GS_ADJUSTMENT:
 	case GS_INCREASING:
@@ -3539,6 +3538,14 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case NPC_MAGICMIRROR:
 		clif_skill_nodamage(src,bl,skillid,skilllv,
 			sc_start(bl,type,100,skilllv,skill_get_time(skillid,skilllv)));
+		break;
+	case HP_ASSUMPTIO:
+		if (sd && !dstsd) {
+			clif_skill_fail(sd,skillid,0,0);
+		} else {
+			clif_skill_nodamage(src,bl,skillid,skilllv,
+				sc_start(bl,type,100,skilllv,skill_get_time(skillid,skilllv)));
+		}
 		break;
 	case MG_SIGHT:
 	case MER_SIGHT:
@@ -4536,6 +4543,10 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				case SC_READYCOUNTER:case SC_DODGE:       case SC_WARM:
 				case SC_SPEEDUP1:    case SC_AUTOTRADE:   case SC_CRITICALWOUND:
 					continue;
+				case SC_ASSUMPTIO:
+					if( bl->type == BL_MOB )
+						continue;
+					break;
 				}
 				if(i==SC_BERSERK) tsc->data[i]->val2=0; //Mark a dispelled berserk to avoid setting hp to 100 by setting hp penalty to 0.
 				status_change_end(bl,(sc_type)i,-1);
@@ -8744,22 +8755,25 @@ int skill_delayfix (struct block_list *bl, int skill_id, int skill_lv)
 		}
 	}
 
+	if (sc->data[SC_SPIRIT])
+	{
+		switch (skill_id) {
+			case CR_SHIELDBOOMERANG:
+				if (sc->data[SC_SPIRIT]->val2 == SL_CRUSADER)
+					time /= 2;
+				break;
+			case AS_SONICBLOW:
+				if (!map_flag_gvg(bl->m) && !map[bl->m].flag.battleground && sc->data[SC_SPIRIT]->val2 == SL_ASSASIN)
+					time /= 2;
+				break;
+		}
+	}
+
 	if (!(delaynodex&2))
 	{
 		if (sc && sc->count) {
 			if (sc->data[SC_POEMBRAGI])
 				time -= time * sc->data[SC_POEMBRAGI]->val3 / 100;
-			if (sc->data[SC_SPIRIT])
-			switch (skill_id) {
-				case CR_SHIELDBOOMERANG:
-					if (sc->data[SC_SPIRIT]->val2 == SL_CRUSADER)
-						time /=2;
-					break;
-				case AS_SONICBLOW:
-					if (!map_flag_gvg(bl->m) && !map[bl->m].flag.battleground && sc->data[SC_SPIRIT]->val2 == SL_ASSASIN)
-						time /= 2;
-					break;
-			}
 		}
 	}
 

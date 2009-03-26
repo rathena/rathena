@@ -3,6 +3,9 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2009/03/26
+	* Fixed Spirit of Assassin not reducing the aftercast delay of Sonic Blow [Playtester]
+	* Assumptio can neither be cast nor dispelled on monsters anymore [Playtester]
 2009/03/23
 	* Added support for new status change packet, uses new setting display_status_timers in client.conf. [Sara]
 2009/03/18

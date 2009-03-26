@@ -7,7 +7,7 @@
 //
 // Delay: 0 - everything affects the skill's delay
 //        1 - skill's delay is not affected by dex
-//        2 - skill's delay is not affected by statuses (Magic Strings, etc)
+//        2 - skill's delay is not affected by Magic Strings / Bragi
 //        4 - skill's delay is not affected by item bonuses (equip, cards)
 //
 // Note: Values are bit fields, add them up to combine their effects.
