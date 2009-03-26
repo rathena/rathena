@@ -8755,7 +8755,7 @@ int skill_delayfix (struct block_list *bl, int skill_id, int skill_lv)
 		}
 	}
 
-	if (sc->data[SC_SPIRIT])
+	if ( sc && sc->data[SC_SPIRIT] )
 	{
 		switch (skill_id) {
 			case CR_SHIELDBOOMERANG:
