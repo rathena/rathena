@@ -10840,8 +10840,9 @@ int skill_blockpc_end(int tid, unsigned int tick, int id, intptr data)
 	struct map_session_data *sd = map_id2sd(id);
 	if (data <= 0 || data >= MAX_SKILL)
 		return 0;
-	if (sd) sd->blockskill[data] = 0;
-
+	if (!sd) return 0;
+	if (sd->blockskill[data] != (0x1|(tid&0xFE))) return 0;
+	sd->blockskill[data] = 0;
 	return 1;
 }
 
@@ -10858,8 +10859,8 @@ int skill_blockpc_start(struct map_session_data *sd, int skillid, int tick)
 		return -1;
 	}
 
-	sd->blockskill[skillid] = 1;
-	return add_timer(gettick()+tick,skill_blockpc_end,sd->bl.id,skillid);
+	sd->blockskill[skillid] = 0x1|(0xFE&add_timer(gettick()+tick,skill_blockpc_end,sd->bl.id,skillid));
+	return 0;
 }
 
 int skill_blockhomun_end(int tid, unsigned int tick, int id, intptr data)	//[orn]

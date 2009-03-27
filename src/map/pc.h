@@ -174,7 +174,7 @@ struct map_session_data {
 	short skillitem,skillitemlv;
 	short skillid_old,skilllv_old;
 	short skillid_dance,skilllv_dance;
-	char blockskill[MAX_SKILL];	// [celest]
+	unsigned char blockskill[MAX_SKILL];
 	int cloneskill_id;
 	int menuskill_id, menuskill_val;
 
