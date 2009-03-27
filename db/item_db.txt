@@ -543,7 +543,7 @@
 1181,Tae_Goo_Lyeon,Tae Goo Lyeon,4,20,,2000,250,,1,2,0x00004082,2,2,34,4,79,1,3,{ bonus bFlee2,10; if (JobLevel>=70) bonusautoscript "{ sc_start SC_INCBASEATK,5000,50; }",10; if (getrefine() > 8) { bonus bCastrate,-20; bonus bDelayRate,-20; } },{},{}
 1182,Bloody_Eater,Bloody Eater,4,20,,2000,250,,1,2,0x00004082,2,2,34,4,79,1,3,{ bonusautoscript "{ sc_start SC_INCCRI,15000,100; sc_start SC_INCBASEATK,15000,100; }",10; bonus bHPGainValue,100; },{},{}
 1183,Brave_Assaulter's_Katzbalger,Brave Assaulter's Katzbalger,4,,,0,200,,1,0,0x00004082,7,2,34,3,80,1,3,{ bonus bStr,2; bonus2 bAddRace,RC_DemiHuman,55; bonus2 bIgnoreDefRate,RC_DemiHuman,20; bonus bUnbreakableWeapon,0; },{},{}
-1184,Valorous_Assaulter's_Katzbalger,Valorous Assaulter's Katzbalger,4,,,0,200,,1,0,0x00004082,7,2,34,3,80,1,3,{ bonus bCritical,20; bonus2 bAddRace,RC_DemiHuman,55; bonus bCritAtkRate,20; bonus bUnbreakableWeapon,0; },{},{}
+1184,Valorous_Assaulter's_Katzbalger,Valorous Assaulter's Katzbalger,4,,,0,200,,1,0,0x00004082,7,2,34,3,80,1,3,{ bonus bStr,2; bonus bCritical,20; bonus2 bAddRace,RC_DemiHuman,55; bonus bCritAtkRate,20; bonus bUnbreakableWeapon,0; },{},{}
 1185,Violet_Fear,Violet Fear,4,,,2200,275,,1,2,0x00004082,2,2,34,4,80,1,3,{ bonus3 bAutoSpell,"WZ_METEOR",3,10; bonus3 bAutoSpell,"WZ_FROSTNOVA",5,10; },{},{}
 //1186#Invoker_Of_Death#
 1187,Glorious_Claymore,Glorious Claymore,4,0,,0,220,,1,0,0x00004082,7,2,34,4,80,1,3,{ bonus2 bAddRace,RC_DemiHuman,70; bonus2 bIgnoreDefRate,RC_DemiHuman,25; bonus bUnbreakableWeapon,0; if(getrefine() > 5) bonus2 bIgnoreDefRate,RC_DemiHuman,5; if(getrefine() > 8) { bonus3 bAutoSpell,"LK_CONCENTRATION",1,50; bonus3 bAutoSpell,"LK_AURABLADE",1,50; } },{},{}
@@ -1479,7 +1479,7 @@
 2720,Medal_Swordman,Medal of Honor,5,0,,0,,1,,0,0x00004082,7,2,136,,70,0,0,{ bonus bAtkRate,5; bonus bMatkRate,5; bonus bHit,10; bonus bMaxHP,500; bonus bMaxSP,50; bonus2 bAddEff,Eff_Stun,1000; },{},{}
 2721,Medal_Thief,Medal of Honor,5,0,,0,,1,,0,0x00021040,7,2,136,,70,0,0,{ bonus bAtkRate,5; bonus bMatkRate,5; bonus bFlee,10; bonus bMaxHP,300; bonus bMaxSP,80; bonus2 bAddEff,Eff_Poison,1000; },{},{}
 2722,Medal_Acolyte,Medal of Honor,5,0,,0,,1,,0,0x00008110,7,2,136,,70,0,0,{ bonus bAtkRate,5; bonus bMatkRate,5; bonus bMdef,6; bonus bMaxHP,600; bonus2 bAddEff,Eff_Silence,1000; },{},{}
-2723,Medal_Mage,Medal of Honor,5,0,,0,,1,,0,0x00010204,7,2,136,,70,0,0,{ bonus bAtkRate,5; bonus bMatkRate,5; bonus bMdef,6; bonus bMaxHP,600; bonus2 bAddEffWhenHit,Eff_Stone,1000; },{},{}
+2723,Medal_Mage,Medal of Honor,5,0,,0,,1,,0,0x00810204,7,2,136,,70,0,0,{ bonus bAtkRate,5; bonus bMatkRate,5; bonus bMdef,6; bonus bMaxHP,600; bonus2 bAddEffWhenHit,Eff_Stone,1000; },{},{}
 2724,Medal_Archer,Medal of Honor,5,0,,0,,1,,0,0x00080808,7,2,136,,70,0,0,{ bonus bAtkRate,5; bonus bMatkRate,5; bonus bCritical,10; bonus bMaxHP,300; bonus bMaxSP,80; bonus2 bAddEff,Eff_Blind,1000; },{},{}
 2725,Medal_Merchant,Medal of Honor,5,0,,0,,1,,0,0x00040420,7,2,136,,70,0,0,{ bonus bAtkRate,5; bonus bMatkRate,5; bonus bAspd,10; bonus bMaxHP,500; bonus bMaxSP,50; bonus2 bAddEff,Eff_Curse,1000; },{},{}
 2726,Icarus_Wing,Icarus Wings,5,20,,100,,0,,0,0x00000800,2,2,136,,70,0,0,{ bonus bMaxSP,50; bonus bDex,3; },{},{}
@@ -2514,6 +2514,31 @@
 6047,Clothing_Dye_Coupon_II,Clothing Dye Coupon_II,3,0,,10,,,,,,,,,,,,,{},{},{}
 6048,Unidentified_Ore,Unidentified Ore,3,0,,10,,,,,,,,,,,,,{},{},{}
 6049,Blue_Marlin,Blue_Marlin,3,0,,10,,,,,,,,,,,,,{},{},{}
+
+// More Pet Food
+// 6094,Traditional_Sweets,Traditional Sweets,3,0,,10,,,,,,,,,,,,,{},{},{}
+6095,Fragance_Liquor,Fragance Liquor,3,0,,10,,,,,,,,,,,,,{},{},{}
+6096,Blue_Fish,Blue Fish,3,0,,10,,,,,,,,,,,,,{},{},{}
+6097,Pumpkin_Pie,Pumpkin Pie,3,0,,10,,,,,,,,,,,,,{},{},{}
+6098,Small_Snow,Small Snow,3,0,,10,,,,,,,,,,,,,{},{},{}
+6099,Roast_Rice_Cake,Roast Rice Cake,3,0,,10,,,,,,,,,,,,,{},{},{}
+6100,Chunks_Of_Darkness,Chunks of Darkness,3,0,,10,,,,,,,,,,,,,{},{},{}
+6104,Big_Cell,Big Cell,3,0,,10,,,,,,,,,,,,,{},{},{}
+6105,Morning_Dew,Morning Dew,3,0,,10,,,,,,,,,,,,,{},{},{}
+6106,Well_Ripened_Strawberry,Well Ripened Strawberry,3,0,,10,,,,,,,,,,,,,{},{},{}
+6107,Sunset_Cocktail,Sunset Cocktail,3,0,,10,,,,,,,,,,,,,{},{},{}
+6108,Apple_Pudding,Apple Pudding,3,0,,10,,,,,,,,,,,,,{},{},{}
+6109,Plant_Nutrition,Plant Nutrition,3,0,,10,,,,,,,,,,,,,{},{},{}
+6110,Flower_Of_Life,Flower of Life,3,0,,10,,,,,,,,,,,,,{},{},{}
+6111,Magic_Of_Stone, Magic of Stone,3,0,,10,,,,,,,,,,,,,{},{},{}
+6112,Fresh_Grass,Fresh Grass,3,0,,10,,,,,,,,,,,,,{},{},{}
+6113,Flower_Of_Life,Flower of Life,3,0,,10,,,,,,,,,,,,,{},{},{}
+6114,Gemstone_Of_Fire,Gemstone of Fire,3,0,,10,,,,,,,,,,,,,{},{},{}
+6115,Child_Dumpling,Child Dumpling,3,0,,10,,,,,,,,,,,,,{},{},{}
+6116,Succubus_Pet_Exchange_Coupon,Succubus Pet Exchange Coupon,3,0,,10,,,,,,,,,,,,,{},{},{}
+6117,Imp_Pet_Exchange_Coupon,Imp Pet Exchange Coupon,3,0,,10,,,,,,,,,,,,,{},{},{}
+6118,Chung_E_Exchange_Coupon,Chung E Exchange Coupon,3,0,,10,,,,,,,,,,,,,{},{},{}
+
 7001,Mould_Powder,Mould Powder,3,466,,10,,,,,,,,,,,,,{},{},{}
 7002,Ogre_Tooth,Ogre Tooth,3,658,,10,,,,,,,,,,,,,{},{},{}
 7003,Anolian_Skin,Anolian Skin,3,968,,10,,,,,,,,,,,,,{},{},{}
@@ -3387,6 +3412,25 @@
 9036,Diabolic_Egg,Diabolic Egg,7,20,,0,,,,,,,,,,,,,{},{},{}
 9037,Wanderer_Egg,Wanderer Egg,7,20,,0,,,,,,,,,,,,,{},{},{}
 9038,Chung_E_Egg_,New year Doll Egg,7,20,,0,,,,,,,,,,,,,{},{},{}
+// 9039,Bacsojin_Egg,Bacsojin Egg,7,20,,0,,,,,,,,,,,,,{},{},{}
+9040,Civil_Servant_Egg,Civil Servant Egg,7,20,,0,,,,,,,,,,,,,{},{},{}
+9041,Leaf_Cat_Egg,Leaf Cat Egg,7,20,,0,,,,,,,,,,,,,{},{},{}
+9042,Loli_Ruri_Egg,Loli Ruri Egg,7,20,,0,,,,,,,,,,,,,{},{},{}
+9043,Marionette_Egg,Marionette Egg,7,20,,0,,,,,,,,,,,,,{},{},{}
+9044,Shinobi_Egg,Shinobi Egg,7,20,,0,,,,,,,,,,,,,{},{},{}
+9045,Whisper_Egg,Whisper Egg,7,20,,0,,,,,,,,,,,,,{},{},{}
+9046,Goblin_Leader_Egg,Goblin Leader Egg,7,20,,0,,,,,,,,,,,,,{},{},{}
+9047,Wicked_Nymph_Egg,Wicked Nymph Egg,7,20,,0,,,,,,,,,,,,,{},{},{}
+9048,Miyabi_Ningyo_Egg,Miyabi Ningyo Egg,7,20,,0,,,,,,,,,,,,,{},{},{}
+9049,Dullahan_Egg,Dullahan Egg,7,20,,0,,,,,,,,,,,,,{},{},{}
+9050,Medusa_Egg,Medusa Egg,7,20,,0,,,,,,,,,,,,,{},{},{}
+9051,Stone_Shooter_Egg,Stone Shooter Egg,7,20,,0,,,,,,,,,,,,,{},{},{}
+9052,Incubus_Egg,Incubus Egg,7,20,,0,,,,,,,,,,,,,{},{},{}
+9053,Golem_Egg,Golem Egg,7,20,,0,,,,,,,,,,,,,{},{},{}
+9054,Nightmare_Terror_Egg,Nightmare Terror Egg,7,20,,0,,,,,,,,,,,,,{},{},{}
+9055,Succubus_Egg,Succubus Egg,7,20,,0,,,,,,,,,,,,,{},{},{}
+9056,Imp_Egg,Imp Egg,7,20,,0,,,,,,,,,,,,,{},{},{}
+
 // Pet Accessories
 //===================================================================
 10001,Skull_Helm,Skull Helm,8,20,,0,,,,,,,,,,,,,{},{},{}
@@ -3409,6 +3453,25 @@
 10018,Monkey_Circlet,Monkey Circlet,8,20,,0,,,,,,,,,,,,,{},{},{}
 10019,Red_Muffler,Red Scarf,8,20,,0,,,,,,,,,,,,,{},{},{}
 10020,Sword_Of_Grave_Keeper,Grave Keeper's Sword,8,20,,0,,,,,,,,,,,,,{},{},{}
+// 10021,Circular_Headgear,Circular Headgear,8,20,,0,,,,,,,,,,,,,{},{},{}
+10022,Gold_Earring,Gold Earring,8,20,,0,,,,,,,,,,,,,{},{},{}
+10023,Green_Jewel_Bag,Green Jewel Bag,8,20,,0,,,,,,,,,,,,,{},{},{}
+10024,Fashion_Glasses,Fashion Glasses,8,20,,0,,,,,,,,,,,,,{},{},{}
+10025,Hairband_Of_Stars,Hairband Of Stars,8,20,,0,,,,,,,,,,,,,{},{},{}
+10026,Tassel_for_Durumagi,Tassel for Durumagi,8,20,,0,,,,,,,,,,,,,{},{},{}
+10027,Pet_Soul_Ring,Pet Soul Ring,8,20,,0,,,,,,,,,,,,,{},{},{}
+10028,Beautiful_Badges,Beautiful Badges,8,20,,0,,,,,,,,,,,,,{},{},{}
+10029,Jade_Trinket,Jade Trinket,8,20,,0,,,,,,,,,,,,,{},{},{}
+10030,Summer_Fan,Summer Fan,8,20,,0,,,,,,,,,,,,,{},{},{}
+10031,Ring_Of_Death,Ring Of Death,8,20,,0,,,,,,,,,,,,,{},{},{}
+10032,Queen's_Coronet,Queen's Coronet,8,20,,0,,,,,,,,,,,,,{},{},{}
+10033,Afro,Afro,8,20,,0,,,,,,,,,,,,,{},{},{}
+10034,Masked_Ball,Masked Ball,8,20,,0,,,,,,,,,,,,,{},{},{}
+10035,Spring,Spring,8,20,,0,,,,,,,,,,,,,{},{},{}
+10036,Horn_Of_Hell,Horn Of Hell,8,20,,0,,,,,,,,,,,,,{},{},{}
+10037,Black_Butterfly_Mask,Black Butterfly Mask,8,20,,0,,,,,,,,,,,,,{},{},{}
+10038,Horn_Barrier,Horn Barrier,8,20,,0,,,,,,,,,,,,,{},{},{}
+
 // Misc "Etc" Books
 //===================================================================
 11000,Prontera_Book_01,History book of Prontera,3,8000,,0,,,,,,,,,,,,,{},{},{}
@@ -3757,7 +3820,27 @@
 12323,Novice_Wing_Of_Fly,Novice Fly Wing,2,1,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ warp "Random",0,0; },{},{}
 12324,Novice_Wing_Of_Butterfly,Novice Butterfly Wing,2,1,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ warp "SavePoint",0,0; },{},{}
 12325,Novice_Spectacles,Novice Magnifier,11,1,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill "MC_IDENTIFY",1; },{},{}
-//
+
+// More Pet Tamings
+// 12357,Shining_Winged_Cloth,Shining Winged Cloth,2,0,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1002; },{},{}
+12358,Wind_Fan,Wind Fan,2,0,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1513; },{},{}
+12359,Soft_Grass,Soft Grass,2,0,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1586; },{},{}
+12360,Red_Juice,Red Juice,2,0,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1505; },{},{}
+12361,Tasty_Sundae,Tasty Sundae,2,0,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1143; },{},{}
+12362,Len_Cross,Len Cross,2,0,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1401; },{},{}
+12363,Customized_Coffin,Customized Coffin,2,0,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1179; },{},{}
+12364,Staff_Of_Leader,Staff Of Leader,2,0,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1299; },{},{}
+12365,Lovely_Lotus,Lovely Lotus,2,0,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1416; },{},{}
+12366,Girl_Dolls,Girl Dolls,2,0,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1404; },{},{}
+12367,Liquor_Bottle,Liquor Bottle,2,0,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1504; },{},{}
+12368,Brilliant_Mirror,Brilliant Mirror,2,0,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1148; },{},{}
+12369,Oil_Palm_Fruit,Oil Palm Fruit,2,0,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1495; },{},{}
+12370,Romance_Of_Girl,Romance Of Girl,2,0,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1374; },{},{}
+12371,Lithograph_Of_Magic,Lithograph Of Magic,2,0,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1040; },{},{}
+12372,Contract_Of_Hell,Contract Of Hell,2,0,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1379; },{},{}
+12373,Romance_Of_Boy,Romance Of Boy,2,0,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1370; },{},{}
+12374,Flame_Ice,Flame Ice,2,0,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1837; },{},{}
+
 12701,Old_Blue_Box_F,Old Blue Box,2,,,200,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 //April Fools Day Event (2007)
 12702,Old_Bleu_Box,Old Bleu Box,2,0,,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_BleuBox),1; getitem groupranditem(IG_BleuBox),1; },{},{}
