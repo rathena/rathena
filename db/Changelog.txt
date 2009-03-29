@@ -40,6 +40,8 @@
 	2385 Recuvative_Armor		Should trigger HP/SP return with magical kills as well.
 
 =======================
+2009/03/29
+	* Fixed Ribbon of Bride and Baphomet Horns [Playtester]
 2009/03/25
 	* Added cooking packets to packet_db.txt
 	* Changed the cooking kit items to use the new 'cooking' function [ultramage]
