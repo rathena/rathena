@@ -13975,7 +13975,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(agitend2,""),
 	BUILDIN_DEF(agitcheck2,""),
 	// BattleGround
-	BUILDIN_DEF(waitingroom2bg,"siiiss?"),
+	BUILDIN_DEF(waitingroom2bg,"siiss?"),
 	BUILDIN_DEF(waitingroom2bg_single,"isiis"),
 	BUILDIN_DEF(bg_team_setxy,"iii"),
 	BUILDIN_DEF(bg_warp,"isii"),
