@@ -6325,7 +6325,7 @@ mosk_dun03,153,90,3	script	Bubbling Swamp#mos1	844,{
 		next;
 		mes "- Gas bubbles are rising. The atomosphere here is pretty scary -";
 		next;
-		mes "["+PcName+"]";
+		mes "["+strcharinfo(0)+"]";
 		mes "I don't see any traces of Mikhail. I think I should go back and check his house one more time.";
 		set mos_swan,11;
 		close;
@@ -6352,6 +6352,7 @@ mosk_dun03,153,90,3	script	Bubbling Swamp#mos1	844,{
 				close;
 			}else{
 				getitem 7763,1;
+				set mos_swan,mos_swan+1;
 				close;
 			}
 		}else{
