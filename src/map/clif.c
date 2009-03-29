@@ -9797,16 +9797,19 @@ void clif_parse_WeaponRefine(int fd, struct map_session_data *sd)
  *------------------------------------------*/
 void clif_parse_NpcSelectMenu(int fd,struct map_session_data *sd)
 {
-	uint8 select;
+	int npc_id = RFIFOL(fd,2);
+	uint8 select = RFIFOB(fd,6);
 
-	select = RFIFOB(fd,6);
-	if((select > sd->npc_menu && select != 0xff) || !select){
-		ShowWarning("Hack on NPC Select Menu: %s (AID: %d)!\n",sd->status.name,sd->bl.id);
+	if( (select > sd->npc_menu && select != 0xff) || select == 0 )
+	{
+		TBL_NPC* nd = map_id2nd(npc_id);
+		ShowWarning("Invalid menu selection on npc %d:'%s' - got %d, valid range is [%d..%d] (player AID:%d, CID:%d, name:'%s')!\n", npc_id, (nd)?nd->name:"invalid npc id", select, 1, sd->npc_menu, sd->bl.id, sd->status.char_id, sd->status.name);
 		clif_GM_kick(NULL,sd);
-	} else {
-		sd->npc_menu=select;
-		npc_scriptcont(sd,RFIFOL(fd,2));
+		return;
 	}
+
+	sd->npc_menu = select;
+	npc_scriptcont(sd,npc_id);
 }
 
 /*==========================================
