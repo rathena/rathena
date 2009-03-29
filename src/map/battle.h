@@ -464,8 +464,6 @@ extern struct Battle_Config
 	int display_status_timers; //Show or hide skill buff/delay timers in recent clients [Sara]
 	// [BattleGround Settings]
 	int bg_update_interval;
-	int bg_guild_id1;
-	int bg_guild_id2;
 	int bg_short_damage_rate;
 	int bg_long_damage_rate;
 	int bg_weapon_damage_rate;

@@ -11,7 +11,7 @@ OnInit:
 	waitingroom "Battle Station 10 Players",10,"Flavius_BG2::OnGuillaumeJoin",1;
 	end;
 OnEnterBG:
-	set $@FlaviusBG2_id1, waitingroom2bg("bat_b02",390,10,0,"Flavius_BG2::OnGuillaumeQuit","");
+	set $@FlaviusBG2_id1, waitingroom2bg("bat_b02",390,10,"Flavius_BG2::OnGuillaumeQuit","");
 	end;
 }
 
@@ -21,7 +21,7 @@ OnInit:
 	waitingroom "Battle Station 10 Players",10,"Flavius_BG2::OnCroixJoin",1;
 	end;
 OnEnterBG:
-	set $@FlaviusBG2_id2, waitingroom2bg("bat_b02",10,290,1,"Flavius_BG2::OnCroixQuit","");
+	set $@FlaviusBG2_id2, waitingroom2bg("bat_b02",10,290,"Flavius_BG2::OnCroixQuit","");
 	end;
 }
 

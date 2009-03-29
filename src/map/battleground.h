@@ -19,8 +19,6 @@ struct battleground_data {
 	unsigned int bg_id;
 	unsigned char count;
 	struct battleground_member_data members[MAX_BG_MEMBERS];
-	// Fake Guild Link
-	struct guild *g;
 	// BG Cementery
 	unsigned short mapindex, x, y;
 	// Logout Event
@@ -28,18 +26,15 @@ struct battleground_data {
 	char die_event[50];
 };
 
-extern struct guild bg_guild[];
-
 void do_init_battleground(void);
 void do_final_battleground(void);
 
 struct battleground_data* bg_team_search(int bg_id);
-struct guild* bg_guild_get(int bg_id);
 int bg_send_dot_remove(struct map_session_data *sd);
 int bg_team_get_id(struct block_list *bl);
 struct map_session_data* bg_getavailablesd(struct battleground_data *bg);
 
-int bg_create(unsigned short mapindex, short rx, short ry, int guild_index, const char *ev, const char *dev);
+int bg_create(unsigned short mapindex, short rx, short ry, const char *ev, const char *dev);
 int bg_team_join(int bg_id, struct map_session_data *sd);
 int bg_team_delete(int bg_id);
 int bg_team_leave(struct map_session_data *sd, int flag);

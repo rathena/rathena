@@ -13372,7 +13372,7 @@ BUILDIN_FUNC(waitingroom2bg)
 	struct npc_data *nd;
 	struct chat_data *cd;
 	const char *map_name, *ev = "", *dev = "";
-	int x, y, i, mapindex = 0, guild_index, bg_id, n;
+	int x, y, i, mapindex = 0, bg_id, n;
 	struct map_session_data *sd;
 
 	if( script_hasdata(st,8) )
@@ -13399,12 +13399,10 @@ BUILDIN_FUNC(waitingroom2bg)
 
 	x = script_getnum(st,3);
 	y = script_getnum(st,4);
-	guild_index = script_getnum(st,5);
-	ev = script_getstr(st,6); // Logout Event
-	dev = script_getstr(st,7); // Die Event
+	ev = script_getstr(st,5); // Logout Event
+	dev = script_getstr(st,6); // Die Event
 
-	guild_index = cap_value(guild_index, 0, 1);
-	if( (bg_id = bg_create(mapindex, x, y, guild_index, ev, dev)) == 0 )
+	if( (bg_id = bg_create(mapindex, x, y, ev, dev)) == 0 )
 	{ // Creation failed
 		script_pushint(st,0);
 		return 0;

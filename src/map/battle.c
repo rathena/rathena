@@ -3829,8 +3829,6 @@ static const struct _battle_data {
 	{ "display_status_timers",              &battle_config.display_status_timers,           1,      0,      1,              },
 // BattleGround Settings
 	{ "bg_update_interval",                 &battle_config.bg_update_interval,              1000,   100,    INT_MAX,        },
-	{ "bg_guild_id1",                       &battle_config.bg_guild_id1,                    0,      0,      INT_MAX,        },
-	{ "bg_guild_id2",                       &battle_config.bg_guild_id2,                    0,      0,      INT_MAX,        },
 	{ "bg_short_attack_damage_rate",        &battle_config.bg_short_damage_rate,            80,     0,      INT_MAX,        },
 	{ "bg_long_attack_damage_rate",         &battle_config.bg_long_damage_rate,             80,     0,      INT_MAX,        },
 	{ "bg_weapon_attack_damage_rate",       &battle_config.bg_weapon_damage_rate,           60,     0,      INT_MAX,        },

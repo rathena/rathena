@@ -11,7 +11,7 @@ OnInit:
 	waitingroom "Battle Station 10 Players",10,"Tierra_BG1::OnGuillaumeJoin",1;
 	end;
 OnEnterBG:
-	set $@TierraBG1_id1, waitingroom2bg("bat_a01",50,374,0,"Tierra_BG1::OnGuillaumeQuit","");
+	set $@TierraBG1_id1, waitingroom2bg("bat_a01",50,374,"Tierra_BG1::OnGuillaumeQuit","");
 	end;
 }
 
@@ -21,7 +21,7 @@ OnInit:
 	waitingroom "Battle Station 10 Players",10,"Tierra_BG1::OnCroixJoin",1;
 	end;
 OnEnterBG:
-	set $@TierraBG1_id2, waitingroom2bg("bat_a01",42,16,1,"Tierra_BG1::OnCroixQuit","");
+	set $@TierraBG1_id2, waitingroom2bg("bat_a01",42,16,"Tierra_BG1::OnCroixQuit","");
 	end;
 }
 
