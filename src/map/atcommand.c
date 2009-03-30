@@ -2936,7 +2936,7 @@ int atcommand_zeny(const int fd, struct map_session_data* sd, const char* comman
 int atcommand_param(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
 	int i, value = 0, new_value, max;
-	const char* param[] = { "@str", "@agi", "@vit", "@int", "@dex", "@luk", NULL };
+	const char* param[] = { "str", "agi", "vit", "int", "dex", "luk" };
 	short* status[6];
  	//we don't use direct initialization because it isn't part of the c standard.
 	nullpo_retr(-1, sd);
@@ -2949,11 +2949,9 @@ int atcommand_param(const int fd, struct map_session_data* sd, const char* comma
 		return -1;
 	}
 
-	for (i = 0; param[i] != NULL; i++)
-		if (strcmpi(command, param[i]) == 0)
-			break;
+	ARR_FIND( 0, ARRAYLENGTH(param), i, strcmpi(command+1, param[i]) == 0 );
 
-	if (param[i] == NULL || i > MAX_STATUS_TYPE) { // normally impossible...
+	if( i == ARRAYLENGTH(param) || i > MAX_STATUS_TYPE) { // normally impossible...
 		sprintf(atcmd_output, "Please, enter a valid value (usage: @str,@agi,@vit,@int,@dex,@luk <+/-adjustment>).");
 		clif_displaymessage(fd, atcmd_output);
 		return -1;
