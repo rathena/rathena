@@ -321,4 +321,4 @@ moc_fild22,0,0,0,0	monster	Morroc's Shadow	1918,60,30000,0,0
 moc_fild22,0,0,0,0	monster	Morroc's Shadow	1919,60,30000,0,0
 moc_fild22,0,0,0,0	monster	Morroc's Shadow	1920,60,30000,0,0
 moc_fild22,0,0,0,0	monster	Morroc's Shadow	1921,25,30000,0,0
-moc_fild22,0,0,0,0	monster	Woudned Satan Morroc	1917,1,43200000,3600000,1
+moc_fild22,0,0,0,0	monster	Wounded Satan Morroc	1917,1,43200000,3600000,1
