@@ -40,8 +40,9 @@ struct quest;
 // 20070821 - 2007-08-21aSakexe+ - 0x2c5
 // 20070918 - 2007-09-18aSakexe+ - 0x2d7, 0x2d9, 0x2da
 // 20071106 - 2007-11-06aSakexe+ - 0x78, 0x7c, 0x22c
+// 20081126 - 2008-11-26aSakexe+ - 0x1a2
 #ifndef PACKETVER
-	#define PACKETVER	20071106
+	#define PACKETVER	20081126
 #endif
 // backward compatible PACKETVER 8 and 9
 #if PACKETVER == 8

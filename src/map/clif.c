@@ -5939,6 +5939,9 @@ int clif_send_petstatus(struct map_session_data *sd)
 	WFIFOW(fd,29)=pet->hungry;
 	WFIFOW(fd,31)=pet->intimate;
 	WFIFOW(fd,33)=pet->equip;
+#if PACKETVER >= 20081126
+	WFIFOW(fd,35)=pet->class_;
+#endif
 	WFIFOSET(fd,packet_len(0x1a2));
 
 	return 0;
@@ -13251,7 +13254,11 @@ static int packetdb_readdb(void)
 #else	// 196 comodo以降 状態表示アイコン用
 	   90, 86, 24,  6, 30,102,  9,  4,  8,  4, 14, 10, -1,  6,  2,  6,
 #endif
+#if PACKETVER < 20081126
 	    3,  3, 35,  5, 11, 26, -1,  4,  4,  6, 10, 12,  6, -1,  4,  4,
+#else // 0x1a2 changed (35->37)
+	    3,  3, 37,  5, 11, 26, -1,  4,  4,  6, 10, 12,  6, -1,  4,  4,
+#endif
 	   11,  7, -1, 67, 12, 18,114,  6,  3,  6, 26, 26, 26, 26,  2,  3,
 	//#0x01C0,   Set 0x1d5=-1
 	    2, 14, 10, -1, 22, 22,  4,  2, 13, 97,  3,  9,  9, 30,  6, 28,
