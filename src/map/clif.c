@@ -4593,6 +4593,7 @@ int clif_status_change(struct block_list *bl,int type,int flag,unsigned int tick
 		type == SI_READYTURN || type == SI_READYCOUNTER || type == SI_DODGE ||
 		type == SI_DEVIL || type == SI_NIGHT || type == SI_INTRAVISION)
 		tick=0;
+
 	if( battle_config.display_status_timers && tick>0 )
 		WBUFW(buf,0)=0x043f;
 	else
@@ -4600,16 +4601,14 @@ int clif_status_change(struct block_list *bl,int type,int flag,unsigned int tick
 	WBUFW(buf,2)=type;
 	WBUFL(buf,4)=bl->id;
 	WBUFB(buf,8)=flag;
-	if( battle_config.display_status_timers && tick>0 ) {
+	if( battle_config.display_status_timers && tick>0 )
+	{
 		WBUFL(buf,9)=tick;
 		WBUFL(buf,13)=0;
 		WBUFL(buf,17)=0;
 		WBUFL(buf,21)=0;
-		//for some reason, it isn't reading the packet length properly!
-		//clif_send(buf,packet_len(0x43f),bl,AREA);
-		clif_send(buf,25,bl,AREA);
-	} else
-		clif_send(buf,packet_len(0x196),bl,AREA);
+	}
+	clif_send(buf,packet_len(WBUFW(buf,0)),bl,AREA);
 	return 0;
 }
 
@@ -13307,7 +13306,7 @@ static int packetdb_readdb(void)
 	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 25,
 	//#0x0440
 	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
