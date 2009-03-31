@@ -1,4 +1,6 @@
 Date	Added
+2009/3/31
+	* Added missing pet_equip_min_friendly config option [ultramage]
 2009/3/23
 	* Added setting display_status_timers to client.conf for new status change packet. [Sara]
 2009/1/26
