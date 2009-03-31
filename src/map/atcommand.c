@@ -9047,7 +9047,7 @@ bool is_atcommand(const int fd, struct map_session_data* sd, const char* message
 		
 	//Log Charcommands
 	if( log_config.gm && info->level2 >= log_config.gm && *atcmd_msg == charcommand_symbol && ssd != NULL )
-		log_atcommand(ssd, message);
+		log_atcommand(sd, message);
 	
 	return true;
 }
