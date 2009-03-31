@@ -14,7 +14,7 @@
 	Missing 12.1 Equipment Bonuses:
 	2537 Diablos_Manteau		Increase damage taken from "Satan Morroc" by 10%
 	2729 Diablos_Ring		Increase damage taken from "Satan Morroc" by 10%
-	1630 Release_of_Wish		Increased recovery skill effect + 5%. On magical attack, chance for two seconds you'll recover 50 SP and 100 HP.
+	1630 Release_of_Wish		On magical attack, chance for two seconds you'll recover 50 SP and 100 HP.
 	1541 Nemesis			When attacking, chance to increase damage against demon and dark element monsters by 10%.
 
 	Battleground Reward items:
@@ -40,6 +40,8 @@
 	2385 Recuvative_Armor		Should trigger HP/SP return with magical kills as well.
 
 =======================
+2009/03/31
+	* Some fixes on the 12.1 Rods [Playtester]
 2009/03/29
 	* Fixed Ribbon of Bride and Baphomet Horns [Playtester]
 2009/03/25
