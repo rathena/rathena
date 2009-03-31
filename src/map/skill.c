@@ -830,9 +830,9 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 	case GS_DISARM:
 		rate = 3*skilllv;
 		if (sstatus->dex > tstatus->dex)
-			rate += (sstatus->dex - tstatus->dex)/5;
-		if (skill_strip_equip(bl, EQP_WEAPON, rate, skilllv, skill_get_time(skillid,skilllv)))
-			clif_skill_nodamage(src,bl,skillid,skilllv,1);
+			rate += (sstatus->dex - tstatus->dex)/5; //TODO: Made up formula
+		skill_strip_equip(bl, EQP_WEAPON, rate, skilllv, skill_get_time(skillid,skilllv));
+		clif_skill_nodamage(src,bl,skillid,skilllv,1);
 		break;
 	case NPC_EVILLAND:
 		sc_start(bl,SC_BLIND,5*skilllv,skilllv,skill_get_time2(skillid,skilllv));
@@ -7478,7 +7478,7 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 				skill_get_splash(sg->skill_id, sg->skill_lv), sg->bl_flag,
 				&src->bl,tick);
 			sg->unit_id = UNT_USED_TRAPS;
-			clif_changetraplook(&src->bl, UNT_FIREPILLAR_ACTIVE);
+			//clif_changetraplook(&src->bl, UNT_FIREPILLAR_ACTIVE);
 			sg->limit=DIFF_TICK(tick,sg->tick)+1500;
 			break;
 	}
@@ -10048,7 +10048,7 @@ static int skill_unit_timer_sub (DBKey key, void* data, va_list ap)
 			case UNT_GROUNDDRIFT_WATER:
 			case UNT_GROUNDDRIFT_FIRE:
 				group->unit_id = UNT_USED_TRAPS;
-				clif_changetraplook(bl, UNT_FIREPILLAR_ACTIVE);
+				//clif_changetraplook(bl, UNT_FIREPILLAR_ACTIVE);
 				group->limit=DIFF_TICK(tick+1500,group->tick);
 				unit->limit=DIFF_TICK(tick+1500,group->tick);
 			break;

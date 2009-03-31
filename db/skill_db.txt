@@ -553,7 +553,7 @@
 509,0,0,0,0,0,0,10,0,no,0,0,0,none,0,		GS_SINGLEACTION,Single Action
 510,0,0,0,0,0,0,10,0,no,0,0,0,none,0,		GS_SNAKEEYE,Snake Eye
 511,-9,8,0,-1,0,0,10,2,no,0,0,0,weapon,0,	GS_CHAINACTION,Chain Action
-512,-9,6,1,-1,0,0,10,1,no,0,0,0,weapon,0,	GS_TRACKING,Tracking
+512,-9,6,1,-1,0,0,10,1,yes,0,0,0,weapon,0,	GS_TRACKING,Tracking
 513,-9,6,1,-1,0,0,5,1,no,0,0,0,weapon,0,		GS_DISARM,Disarm
 514,-9,6,1,-1,0x20,0,5,1,no,0,0,0,weapon,0,	GS_PIERCINGSHOT,Piercing Shot
 515,-9,8,1,-1,0,0,10,5,no,0,0,0,weapon,0,	GS_RAPIDSHOWER,Rapid Shower
