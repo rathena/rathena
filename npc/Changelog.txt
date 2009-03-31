@@ -1,5 +1,7 @@
 Date		Added
 ======
+2009/03/31
+	* Fixed viewpoint coordinates of the Aldebaran Guides thanks to rvitoi and Saithis [Playtester]
 2009/03/29
 	* Fixed a few errors in quests_moscovia.txt, one not being able to move on with the quest at 'Swap' and the other having in incorrect variable. [Jguy]
 2009/03/25

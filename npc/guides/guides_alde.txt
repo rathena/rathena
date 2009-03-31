@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88; L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.6a
+//= 1.7
 //===== Compatible With: ===================================== 
 //= eAthena 7.15 +
 //===== Description: ========================================= 
@@ -18,6 +18,7 @@
 //= 1.5 Removed Duplicates [Silent]
 //= 1.6 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
 //= 1.6a Changed some "close"s to "close2"s. (bugreport:1597) [Samuray22]
+//= 1.7 Fixed viewpoint coordinates [Playtester]
 //============================================================
 
 aldebaran,139,63,4	script	Soldier#alde	105,{
@@ -31,12 +32,12 @@ aldebaran,139,63,4	script	Soldier#alde	105,{
 	mes "through our town!";
 	next;
 	if (select("Get Location Guide.:End conversation.") == 1) {
-		viewpoint 1,30,210,0,0xFF6633;
-		viewpoint 1,52,180,1,0x0000FF;
-		viewpoint 1,210,210,2,0x00FFFF;
-		viewpoint 1,218,84,3,0x515151;
-		viewpoint 1,178,54,4,0x3355FF;
-		viewpoint 1,36,36,5,0xFF5555;
+		viewpoint 1,61,229,0,0xFF6633;
+		viewpoint 1,72,197,1,0x0000FF;
+		viewpoint 1,223,222,2,0x00FFFF;
+		viewpoint 1,233,105,3,0x515151;
+		viewpoint 1,197,70,4,0x3355FF;
+		viewpoint 1,60,60,5,0xFF5555;
 		mes "^FF6633+^000000 -> Kafra Main Office ";
 		mes "^0000FF+^000000 -> Weapon Shop ";
 		mes "^00FFFF+^000000 -> Sorcerer Guild (Closed)";
@@ -71,27 +72,27 @@ aldebaran,133,108,4	script	Soldier#2alde	105,{
 	next;
 	switch(select("Kafra Main Office :Weapon Shop :Sorcerer Guild :Pub :Item Shop :Alchemist Guild :End Conversation ")) {
 	case 1:
-		viewpoint 1,30,210,0,0xFF66;
+		viewpoint 1,61,229,0,0xFF6633;
 		mes "^FF6633+^000000 -> Kafra Main Office ";
 		break;
 	case 2:
-		viewpoint 1,52,180,1,0x0000FF;
+		viewpoint 1,72,197,1,0x0000FF;
 		mes "^0000FF+^000000 -> Weapon Shop ";
 		break;
 	case 3:
-		viewpoint 1,210,210,2,0x00FFFF;
+		viewpoint 1,223,222,2,0x00FFFF;
 		mes "^00FFFF+^000000 -> Sorcerer Guild (Closed)";
 		break;
 	case 4:
-		viewpoint 1,218,84,3,0x515151;
+		viewpoint 1,233,105,3,0x515151;
 		mes "^515151+^000000 -> Pub ";
 		break;
 	case 5:
-		viewpoint 1,178,54,4,0x3355FF;
+		viewpoint 1,197,70,4,0x3355FF;
 		mes "^3355FF+^000000 -> Item Shop ";
 		break;
 	case 6:
-		viewpoint 1,36,36,5,0xFF5555;
+		viewpoint 1,60,60,5,0xFF5555;
 		mes "^FF5555+^000000 -> Alchemist Guild";
 		break;
 	case 7:
