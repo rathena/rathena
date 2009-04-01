@@ -39,6 +39,8 @@
 	2385 Recuvative_Armor		Should trigger HP/SP return with magical kills as well.
 
 =======================
+2009/04/01
+	* Fixed 12.1 Swords and Daggers [Playtester]
 2009/03/31
 	* Fixed Nemesis [Playtester]
 	* Some fixes on the 12.1 Rods [Playtester]
