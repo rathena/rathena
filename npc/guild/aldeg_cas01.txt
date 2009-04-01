@@ -15,7 +15,7 @@
 
 // Guild Flag (Town)
 //============================================================
-aldebaran,152,97,4	script	Neuschwanstein#a1-1	722,{
+aldebaran,152,97,4	script	Neuschwanstein#a1-1::Neuschwanstein	722,{
 	end;
 
 OnRecvCastleA01:

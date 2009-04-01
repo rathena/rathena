@@ -35,7 +35,8 @@ prontera,55,350,5	script	Peco Peco Breeder#knt	105,{
 		mes "a Peco Peco? The rental";
 		mes "fee is "+.@price+" zeny.";
 		next;
-		if (select("Rent Peco Peco:Cancel") == 1) {
+		switch(select("Rent Peco Peco:Cancel")) {
+		case 1:
 			if (zeny < .@price) {
 				mes "[Peco Peco Breeder]";
 				mes "You do not";
@@ -61,19 +62,21 @@ prontera,55,350,5	script	Peco Peco Breeder#knt	105,{
 			}
 			set zeny,zeny-.@price;
 			setriding;
+			close;
+		case 2:
+			mes "[Peco Peco Breeder]";
+			mes "I see.";
+			mes "Well then,";
+			mes "have a good day.";
+			close;
 		}
-
-		mes "[Peco Peco Breeder]";
-		mes "I see.";
-		mes "Well then,";
-		mes "have a good day.";
+	} else {
+		mes "I'm sorry, but these";
+		mes "Peco Pecos are only";
+		mes "available for Knights";
+		mes "and Lord Knights.";
 		close;
 	}
-	mes "I'm sorry, but these";
-	mes "Peco Pecos are only";
-	mes "available for Knights";
-	mes "and Lord Knights.";
-	close;
 }
 
 // Grand PecoPeco Breeder (for Crusaders)-------------------------------------------
@@ -84,15 +87,15 @@ prontera,232,318,3	script	Peco Peco Breeder#cru	105,{
 
 	mes "[PecoPeco Breeder]";
 	if (BaseJob == Job_Crusader) {
-		if (Class == Job_Crusader && Upper == 0 || Upper == 1) mes "Welcome, Crusader.";
-		else 
-mes "Welcome, Paladin.";
+		if(Upper != 1 ) mes "Welcome, Crusader.";
+		else mes "Welcome, Paladin.";
 		mes "We have a special";
 		mes "Peco Peco prepared";
 		mes "for you. To rent one";
 		mes "will cost "+.@price+" zeny.";
 		next;
-		if (select("Rent a PecoPeco:Quit") ==1) {
+		switch(select("Rent a PecoPeco:Quit")) {
+		case 1:
 			if (zeny < .@price) {
 				mes "[Peco Peco Breeder]";
 				mes "You do not";
@@ -118,17 +121,20 @@ mes "Welcome, Paladin.";
 			}
 			set zeny,zeny-.@price;
 			setriding;
+			close;
+		case 2:
+			mes "[PecoPeco Breeder]";
+			mes "See you around.";
+			close;
 		}
-		mes "[PecoPeco Breeder]";
-		mes "See you around.";
+	} else {
+		mes "What can I do for you?";
+		mes "Please be aware that";
+		mes "this Peco Peco rental";
+		mes "service is strictly for";
+		mes "Crusaders and Paladins.";
 		close;
 	}
-	mes "What can I do for you?";
-	mes "Please be aware that";
-	mes "this Peco Peco rental";
-	mes "service is strictly for";
-	mes "Crusaders and Paladins.";
-	close;
 }
 
 // Falcon Master--------------------------------------------------------------
@@ -144,7 +150,8 @@ hu_in01,381,304,5	script	Falcon Breeder#hnt	105,{
 		mes "trusty bird of prey for a";
 		mes "fee of just "+.@price+" zeny~";
 		next;
-		if (select("Rent Falcon:Cancel") == 1) {
+		switch(select("Rent Falcon:Cancel")) {
+		case 1:
 			if (zeny < .@price) {
 				mes "[Falcon Breeder]";
 				mes "What is this?";
@@ -176,18 +183,20 @@ hu_in01,381,304,5	script	Falcon Breeder#hnt	105,{
 			set zeny,zeny-.@price;
 			setfalcon;
 			close;
+		case 2:
+			mes "[Falcon Breeder]";
+			mes "W-wait, where're";
+			mes "you goin'? These";
+			mes "Falcons are top notch,";
+			mes "I guarantee it! C'mon, yo~";
+			close;
 		}
-		mes "[Falcon Breeder]";
-		mes "W-wait, where're";
-		mes "you goin'? These";
-		mes "Falcons are top notch,";
-		mes "I guarantee it! C'mon, yo~";
+	} else {
+		mes "Young fool!";
+		mes "Falcons can only";
+		mes "be used by Hunters";
+		mes "and Snipers, capish?";
+		mes "...Heh heh, jealous?";
 		close;
 	}
-	mes "Young fool!";
-	mes "Falcons can only";
-	mes "be used by Hunters";
-	mes "and Snipers, capish?";
-	mes "...Heh heh, jealous?";
-	close;
 }
