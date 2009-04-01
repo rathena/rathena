@@ -114,8 +114,6 @@ int save_log = 0; //Have the logs be off by default when converting
 int save_log = 1;
 #endif
 
-static int online_check = 1; //If one, it won't let players connect when their account is already registered online and will send the relevant map server a kick user request. [Skotlex]
-
 // Advanced subnet check [LuzZza]
 struct s_subnet {
 	uint32 mask;
@@ -131,6 +129,8 @@ struct char_session_data {
 	char email[40]; // e-mail (default: a@a.com) by [Yor]
 	time_t expiration_time; // # of seconds 1/1/1970 (timestamp): Validity limit of the account (0 = unlimited)
 	int gmlevel;
+	uint32 version;
+	uint8 clienttype;
 };
 
 int char_num, char_max;
@@ -245,7 +245,7 @@ void set_char_online(int map_id, int char_id, int account_id)
 
 	//Check to see for online conflicts
 	character = (struct online_char_data*)idb_ensure(online_char_db, account_id, create_online_char_data);
-	if (online_check && character->char_id != -1 && character->server > -1 && character->server != map_id)
+	if( character->char_id != -1 && character->server > -1 && character->server != map_id )
 	{
 		ShowNotice("set_char_online: Character %d:%d marked in map server %d, but map server %d claims to have (%d:%d) online!\n",
 			character->account_id, character->char_id, character->server, map_id, account_id, char_id);
@@ -1608,16 +1608,8 @@ int char_family(int pl1, int pl2, int pl3)
 static void char_auth_ok(int fd, struct char_session_data *sd)
 {
 	struct online_char_data* character;
-	if (max_connect_user && count_users() >= max_connect_user && sd->gmlevel < gm_allow_level)
-	{
-		// refuse connection (over populated)
-		WFIFOW(fd,0) = 0x6c;
-		WFIFOW(fd,2) = 0;
-		WFIFOSET(fd,3);
-		return;
-	}
 
-	if( online_check && (character = (struct online_char_data*)idb_get(online_char_db, sd->account_id)) != NULL )
+	if( (character = (struct online_char_data*)idb_get(online_char_db, sd->account_id)) != NULL )
 	{	// check if character is not online already. [Skotlex]
 		if (character->server > -1)
 		{	//Character already online. KICK KICK KICK
@@ -1640,7 +1632,7 @@ static void char_auth_ok(int fd, struct char_session_data *sd)
 	}
 
 	if (login_fd > 0) {
-		// request to login-server to obtain e-mail/time limit
+		// request account data
 		WFIFOHEAD(login_fd,6);
 		WFIFOW(login_fd,0) = 0x2716;
 		WFIFOL(login_fd,2) = sd->account_id;
@@ -1653,8 +1645,7 @@ static void char_auth_ok(int fd, struct char_session_data *sd)
 	// set char online on charserver
 	set_char_charselect(sd->account_id);
 
-	// send characters to player
-	mmo_char_send006b(fd, sd);
+	// continues when account data is received...
 }
 
 int send_accounts_tologin(int tid, unsigned int tick, int id, intptr data);
@@ -1714,50 +1705,66 @@ int parse_fromlogin(int fd)
 
 		// acknowledgement of account authentication request
 		case 0x2713:
-			if (RFIFOREST(fd) < 60)
+			if (RFIFOREST(fd) < 25)
 				return 0;
 		{
 			int account_id = RFIFOL(fd,2);
-			int login_id1 = RFIFOL(fd,6);
-			int login_id2 = RFIFOL(fd,10);
-			bool result = RFIFOB(fd,14);
-			const char* email = (const char*)RFIFOP(fd,15);
-			time_t expiration_time = (time_t)RFIFOL(fd,55);
-			int gmlevel = RFIFOB(fd,59);
+			uint32 login_id1 = RFIFOL(fd,6);
+			uint32 login_id2 = RFIFOL(fd,10);
+			uint8 sex = RFIFOB(fd,14);
+			uint8 result = RFIFOB(fd,15);
+			int request_id = RFIFOL(fd,16);
+			uint32 version = RFIFOL(fd,20);
+			uint8 clienttype = RFIFOB(fd,24);
+			RFIFOSKIP(fd,25);
 
-			// find the session with this account id
-			ARR_FIND( 0, fd_max, i, session[i] && (sd = (struct char_session_data*)session[i]->session_data) &&
-				sd->account_id == account_id && sd->login_id1 == login_id1 && sd->login_id2 == login_id2 );
-			if( i < fd_max )
+			if( session_isActive(request_id) && (sd=(struct char_session_data*)session[request_id]->session_data) &&
+				!sd->auth && sd->account_id == account_id && sd->login_id1 == login_id1 && sd->login_id2 == login_id2 && sd->sex == sex )
 			{
-				if( result ) { // failure
-					WFIFOHEAD(i,3);
-					WFIFOW(i,0) = 0x6c;
-					WFIFOB(i,2) = 0x42;
-					WFIFOSET(i,3);
-				} else { // success
-					memcpy(sd->email, email, 40);
-					sd->expiration_time = expiration_time;
-					sd->gmlevel = gmlevel;
-					char_auth_ok(i, sd);
+				int client_fd = request_id;
+				sd->version = version;
+				sd->clienttype = clienttype;
+				switch( result )
+				{
+				case 0:// ok
+					char_auth_ok(client_fd, sd);
+					break;
+				case 1:// auth failed
+					WFIFOHEAD(client_fd,3);
+					WFIFOW(client_fd,0) = 0x6c;
+					WFIFOB(client_fd,2) = 0;// rejected from server
+					WFIFOSET(client_fd,3);
+					break;
 				}
 			}
 		}
-			RFIFOSKIP(fd,60);
 		break;
 
-		// acknowledgement of e-mail/limited time request
-		case 0x2717:
+		case 0x2717: // account data
 			if (RFIFOREST(fd) < 51)
 				return 0;
 
-			// find the session with this account id
-			ARR_FIND( 0, fd_max, i, session[i] && (sd = (struct char_session_data*)session[i]->session_data) && sd->account_id == RFIFOL(fd,2) );
+			// find the authenticated session with this account id
+			ARR_FIND( 0, fd_max, i, session[i] && (sd = (struct char_session_data*)session[i]->session_data) && sd->auth && sd->account_id == RFIFOL(fd,2) );
 			if( i < fd_max )
 			{
 				memcpy(sd->email, RFIFOP(fd,6), 40);
 				sd->expiration_time = (time_t)RFIFOL(fd,46);
 				sd->gmlevel = RFIFOB(fd,50);
+
+				// continued from char_auth_ok...
+				if( max_connect_user && count_users() >= max_connect_user && sd->gmlevel < gm_allow_level )
+				{
+					// refuse connection (over populated)
+					WFIFOW(i,0) = 0x6c;
+					WFIFOW(i,2) = 0;
+					WFIFOSET(i,3);
+				}
+				else
+				{
+					// send characters to player
+					mmo_char_send006b(i, sd);
+				}
 			}
 			RFIFOSKIP(fd,51);
 		break;
@@ -2948,14 +2955,15 @@ int parse_char(int fd)
 			else
 			{// authentication not found (coming from login server)
 				if (login_fd > 0) { // don't send request if no login-server
-					WFIFOHEAD(login_fd,19);
+					WFIFOHEAD(login_fd,23);
 					WFIFOW(login_fd,0) = 0x2712; // ask login-server to authentify an account
 					WFIFOL(login_fd,2) = sd->account_id;
 					WFIFOL(login_fd,6) = sd->login_id1;
 					WFIFOL(login_fd,10) = sd->login_id2;
 					WFIFOB(login_fd,14) = sd->sex;
 					WFIFOL(login_fd,15) = htonl(ipl);
-					WFIFOSET(login_fd,19);
+					WFIFOL(login_fd,19) = fd;
+					WFIFOSET(login_fd,23);
 				} else { // if no login-server, we must refuse connection
 					WFIFOHEAD(fd,3);
 					WFIFOW(fd,0) = 0x6c;
@@ -3728,8 +3736,6 @@ int char_config_read(const char* cfgName)
 			gm_allow_level = atoi(w2);
 			if(gm_allow_level < 0)
 				gm_allow_level = 99;
-		} else if (strcmpi(w1, "online_check") == 0) {
-			online_check = config_switch(w2);
 		} else if (strcmpi(w1, "autosave_time") == 0) {
 			autosave_interval = atoi(w2)*1000;
 			if (autosave_interval <= 0)

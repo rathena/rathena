@@ -9,6 +9,7 @@
 #include "md5calc.h"
 #include <string.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 #ifndef UINT_MAX
 #define UINT_MAX 4294967295U
@@ -226,4 +227,13 @@ void MD5_String(const char * string, char * output)
 		digest[ 4], digest[ 5], digest[ 6], digest[ 7],
 		digest[ 8], digest[ 9], digest[10], digest[11],
 		digest[12], digest[13], digest[14], digest[15]);
+}
+
+/** output is a sequence of non-zero characters to be used as password salt. */
+void MD5_Salt(unsigned int len, char * output)
+{
+	unsigned int i;
+	for( i = 0; i < len; ++i )
+		output[i] = (char)(1 + rand() % 255);
+
 }

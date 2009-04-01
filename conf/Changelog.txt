@@ -1,13 +1,17 @@
 Date	Added
-2009/3/31
+
+2009/04/01
+	* Removed online_check config options. [FlavioJS]
+	* Clarified char_maintenance config option.
+2009/03/31
 	* Added missing pet_equip_min_friendly config option [ultramage]
-2009/3/23
+2009/03/23
 	* Added setting display_status_timers to client.conf for new status change packet. [Sara]
-2009/1/26
+2009/01/26
 	* Rev. 13494 Changed guild_skill_relog_delay to yes. Relogging no longer resets delay on guild skills. [L0ne_W0lf]
-2009/1/12
+2009/01/12
 	* Second agitend corrected to agitend2 [SketchyPhoenix]
-2009/1/5
+2009/01/05
 	* Added @charcommands to return a list of available # commands [SketchyPhoenix]
 2008/12/26
 	* Rev. 13444 Marked new Morroc fields as nomemo. [L0ne_W0lf]

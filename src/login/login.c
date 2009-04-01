@@ -83,6 +83,8 @@ struct auth_node {
 	uint32 login_id2;
 	uint32 ip;
 	char sex;
+	uint32 version;
+	uint8 clienttype;
 };
 
 static DBMap* auth_db; // int account_id -> struct auth_node*
@@ -114,8 +116,6 @@ static void* create_online_user(DBKey key, va_list args)
 struct online_login_data* add_online_user(int char_server, int account_id)
 {
 	struct online_login_data* p;
-	if( !login_config.online_check )
-		return NULL;
 	p = (struct online_login_data*)idb_ensure(online_db, account_id, create_online_user);
 	p->char_server = char_server;
 	if( p->waiting_disconnect != -1 )
@@ -129,8 +129,6 @@ struct online_login_data* add_online_user(int char_server, int account_id)
 void remove_online_user(int account_id)
 {
 	struct online_login_data* p;
-	if( !login_config.online_check )
-		return;
 	p = (struct online_login_data*)idb_get(online_db, account_id);
 	if( p == NULL )
 		return;
@@ -395,7 +393,7 @@ int parse_fromchar(int fd)
 		{
 
 		case 0x2712: // request from char-server to authenticate an account
-			if( RFIFOREST(fd) < 19 )
+			if( RFIFOREST(fd) < 23 )
 				return 0;
 		{
 			struct auth_node* node;
@@ -403,61 +401,51 @@ int parse_fromchar(int fd)
 			int account_id = RFIFOL(fd,2);
 			uint32 login_id1 = RFIFOL(fd,6);
 			uint32 login_id2 = RFIFOL(fd,10);
-			char sex = sex_num2str(RFIFOB(fd,14));
+			uint8 sex = RFIFOB(fd,14);
 			uint32 ip_ = ntohl(RFIFOL(fd,15));
-			RFIFOSKIP(fd,19);
+			int request_id = RFIFOL(fd,19);
+			RFIFOSKIP(fd,23);
 
 			node = (struct auth_node*)idb_get(auth_db, account_id);
 			if( node != NULL &&
 			    node->account_id == account_id &&
 				node->login_id1  == login_id1 &&
 				node->login_id2  == login_id2 &&
-				node->sex        == sex &&
+				node->sex        == sex_num2str(sex) &&
 				node->ip         == ip_ )
 			{// found
-				struct mmo_account acc;
-				time_t expiration_time = 0;
-				const char* email = "";
-				int gmlevel = 0;
-
 				//ShowStatus("Char-server '%s': authentication of the account %d accepted (ip: %s).\n", server[id].name, account_id, ip);
 
 				// each auth entry can only be used once
 				idb_remove(auth_db, account_id);
 
-				// retrieve email and account expiration time and gm level
-				if( accounts->load_num(accounts, &acc, account_id) )
-				{
-					email = acc.email;
-					expiration_time = acc.expiration_time;
-					gmlevel = acc.level;
-				}
-
 				// send ack
-				WFIFOHEAD(fd,60);
+				WFIFOHEAD(fd,25);
 				WFIFOW(fd,0) = 0x2713;
 				WFIFOL(fd,2) = account_id;
 				WFIFOL(fd,6) = login_id1;
 				WFIFOL(fd,10) = login_id2;
-				WFIFOB(fd,14) = 0;
-				safestrncpy((char*)WFIFOP(fd,15), email, 40);
-				WFIFOL(fd,55) = (uint32)expiration_time;
-				WFIFOB(fd,59) = gmlevel;
-				WFIFOSET(fd,60);
+				WFIFOB(fd,14) = sex;
+				WFIFOB(fd,15) = 0;// ok
+				WFIFOL(fd,16) = request_id;
+				WFIFOL(fd,20) = node->version;
+				WFIFOB(fd,24) = node->clienttype;
+				WFIFOSET(fd,25);
 			}
 			else
 			{// authentication not found
 				ShowStatus("Char-server '%s': authentication of the account %d REFUSED (ip: %s).\n", server[id].name, account_id, ip);
-				WFIFOHEAD(fd,60);
+				WFIFOHEAD(fd,25);
 				WFIFOW(fd,0) = 0x2713;
 				WFIFOL(fd,2) = account_id;
 				WFIFOL(fd,6) = login_id1;
 				WFIFOL(fd,10) = login_id2;
-				WFIFOB(fd,14) = 1;
-				//safestrncpy((char*)WFIFOP(fd,15), "", 40);
-				//WFIFOL(fd,55) = (uint32)0;
-				//WFIFOB(fd,59) = 0;
-				WFIFOSET(fd,60);
+				WFIFOB(fd,14) = sex;
+				WFIFOB(fd,15) = 1;// auth failed
+				WFIFOL(fd,16) = request_id;
+				WFIFOL(fd,20) = 0;
+				WFIFOB(fd,24) = 0;
+				WFIFOSET(fd,25);
 			}
 		}
 		break;
@@ -504,7 +492,7 @@ int parse_fromchar(int fd)
 		}
 		break;
 
-		case 0x2716: // received an e-mail/limited time request, because a player comes back from a map-server to the char-server
+		case 0x2716: // request account data
 			if( RFIFOREST(fd) < 6 )
 				return 0;
 		{
@@ -517,7 +505,7 @@ int parse_fromchar(int fd)
 			RFIFOSKIP(fd,6);
 
 			if( !accounts->load_num(accounts, &acc, account_id) )
-				ShowNotice("Char-server '%s': e-mail of the account %d NOT found (ip: %s).\n", server[id].name, account_id, ip);
+				ShowNotice("Char-server '%s': account %d NOT found (ip: %s).\n", server[id].name, account_id, ip);
 			else
 			{
 				safestrncpy(email, acc.email, sizeof(email));
@@ -790,7 +778,6 @@ int parse_fromchar(int fd)
 		case 0x272d:	// Receive list of all online accounts. [Skotlex]
 			if (RFIFOREST(fd) < 4 || RFIFOREST(fd) < RFIFOW(fd,2))
 				return 0;
-			if( login_config.online_check )
 			{
 				struct online_login_data *p;
 				int aid;
@@ -1079,7 +1066,6 @@ void login_auth_ok(struct login_session_data* sd)
 		return;
 	}
 
-	if( login_config.online_check )
 	{
 		struct online_login_data* data = (struct online_login_data*)idb_get(online_db, sd->account_id);
 		if( data )
@@ -1139,7 +1125,7 @@ void login_auth_ok(struct login_session_data* sd)
 		WFIFOW(fd,47+n*32+4) = ntows(htons(server[i].port)); // [!] LE byte order here [!]
 		memcpy(WFIFOP(fd,47+n*32+6), server[i].name, 20);
 		WFIFOW(fd,47+n*32+26) = server[i].users;
-		WFIFOW(fd,47+n*32+28) = server[i].maintenance;
+		WFIFOW(fd,47+n*32+28) = server[i].type;
 		WFIFOW(fd,47+n*32+30) = server[i].new_;
 		n++;
 	}
@@ -1152,9 +1138,10 @@ void login_auth_ok(struct login_session_data* sd)
 	node->login_id2 = sd->login_id2;
 	node->sex = sd->sex;
 	node->ip = ip;
+	node->version = sd->version;
+	node->clienttype = sd->clienttype;
 	idb_put(auth_db, sd->account_id, node);
 
-	if( login_config.online_check )
 	{
 		struct online_login_data* data;
 
@@ -1359,12 +1346,9 @@ int parse_login(int fd)
 		case 0x791a:	// Sending request of the coding key (administration packet)
 			RFIFOSKIP(fd,2);
 		{
-			unsigned int i;
-
 			memset(sd->md5key, '\0', sizeof(sd->md5key));
 			sd->md5keylen = (uint16)(12 + rand() % 4);
-			for( i = 0; i < sd->md5keylen; ++i )
-				sd->md5key[i] = (char)(1 + rand() % 255);
+			MD5_Salt(sd->md5keylen, sd->md5key);
 
 			WFIFOHEAD(fd,4 + sd->md5keylen);
 			WFIFOW(fd,0) = 0x01dc;
@@ -1382,7 +1366,7 @@ int parse_login(int fd)
 			char message[256];
 			uint32 server_ip;
 			uint16 server_port;
-			uint16 maintenance;
+			uint16 type;
 			uint16 new_;
 
 			safestrncpy(sd->userid, (char*)RFIFOP(fd,2), NAME_LENGTH);
@@ -1394,7 +1378,7 @@ int parse_login(int fd)
 			server_ip = ntohl(RFIFOL(fd,54));
 			server_port = ntohs(RFIFOW(fd,58));
 			safestrncpy(server_name, (char*)RFIFOP(fd,60), 20);
-			maintenance = RFIFOW(fd,82);
+			type = RFIFOW(fd,82);
 			new_ = RFIFOW(fd,84);
 			RFIFOSKIP(fd,86);
 
@@ -1411,7 +1395,7 @@ int parse_login(int fd)
 				server[sd->account_id].ip = server_ip;
 				server[sd->account_id].port = server_port;
 				server[sd->account_id].users = 0;
-				server[sd->account_id].maintenance = maintenance;
+				server[sd->account_id].type = type;
 				server[sd->account_id].new_ = new_;
 
 				session[fd]->func_parse = parse_fromchar;
@@ -1497,7 +1481,6 @@ void login_set_defaults()
 	login_config.new_account_flag = true;
 	login_config.use_md5_passwds = false;
 	login_config.min_level_to_connect = 0;
-	login_config.online_check = true;
 	login_config.check_client_version = false;
 	login_config.client_version_to_connect = 20;
 
@@ -1572,8 +1555,6 @@ int login_config_read(const char* cfgName)
 			allowed_regs = atoi(w2);
 		else if(!strcmpi(w1, "time_allowed"))
 			time_allowed = atoi(w2);
-		else if(!strcmpi(w1, "online_check"))
-			login_config.online_check = (bool)config_switch(w2);
 		else if(!strcmpi(w1, "use_dnsbl"))
 			login_config.use_dnsbl = (bool)config_switch(w2);
 		else if(!strcmpi(w1, "dnsbl_servers"))

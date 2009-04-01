@@ -40,7 +40,7 @@ struct mmo_char_server {
 	uint32 ip;
 	uint16 port;
 	uint16 users;       // user count on this server
-	uint16 maintenance; // in maintenance mode?
+	uint16 type;        // 0=normal, 1=maintenance, 2=over 18, 3=paying, 4=P2P
 	uint16 new_;        // should display as 'new'?
 };
 
@@ -56,7 +56,6 @@ struct Login_Config {
 	int start_limited_time;                         // new account expiration time (-1: unlimited)
 	bool use_md5_passwds;                           // work with password hashes instead of plaintext passwords?
 	int min_level_to_connect;                       // minimum level of player/GM (0: player, 1-99: GM) to connect
-	bool online_check;                              // reject incoming players that are already registered as online ?
 	bool check_client_version;                      // check the clientversion set in the clientinfo ?
 	int client_version_to_connect;                  // the client version needed to connect (if checking is enabled)
 
