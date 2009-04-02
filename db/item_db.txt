@@ -1948,7 +1948,7 @@
 4415,Snowier_Card,Snowier Card,6,20,,10,,,,,,,,136,,,,,{ bonus2 bAddMonsterDropItem,536,200; bonus2 bAddItemHealRate,536,100; },{},{}
 4416,Siroma_Card,Siroma Card,6,20,,10,,,,,,,,136,,,,,{ bonus2 bSkillAtk,14,25; bonus2 bCastrate,14,-25; },{},{}
 4417,Ice_Titan_Card,Ice Titan Card,6,20,,10,,,,,,,,64,,,,,{ bonus bVit,2; bonusautoscript2 "{ specialeffect2 EF_FREEZED; sc_start SC_INCDEF,10000,10; }",3,BF_WEAPON|BF_MAGIC; },{},{}
-4418,Gazeti_Card,Gazeti Card,6,20,,10,,,,,,,,136,,,,,{ bonus3 bAutoSpell,"MG_COLDBOLT",2,10; },{},{}
+4418,Gazeti_Card,Gazeti Card,6,20,,10,,,,,,,,136,,,,,{ bonus3 bAutoSpell,"MG_COLDBOLT",2,100; },{},{}
 4419,Ktullanux_Card,Ktullanux Card,6,20,,10,,,,,,,,16,,,,,{  bonus2 bAddEle,Ele_Fire,50; bonus5 bAutoSpellWhenHit,"WZ_FROSTNOVA",10,30,BF_WEAPON|BF_MAGIC,0; },{},{}
 4420,Muscipular_Card,Muscipular Card,6,20,,10,,,,,,,,32,,,,,{ bonus5 bAutoSpellWhenHit,"AL_HEAL",1,10,BF_SHORT,0; bonus5 bAutoSpellWhenHit,"AL_INCAGI",1,10,BF_SHORT,0; },{},{}
 4421,Drosera_Card,Drosera Card,6,20,,10,,,,,,,,2,,,,,{ if (getiteminfo(getequipid(EQI_HAND_R),9) > 3) bonus bCritical,15; },{},{}
