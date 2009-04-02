@@ -1,5 +1,7 @@
 Date	Added
 
+2009/04/02
+	* Uncommented pvp_room in maps_athena.conf [Playtester]
 2009/04/01
 	* Removed online_check config options. [FlavioJS]
 	* Clarified char_maintenance config option.
