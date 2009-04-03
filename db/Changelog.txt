@@ -39,6 +39,10 @@
 	2385 Recuvative_Armor		Should trigger HP/SP return with magical kills as well.
 
 =======================
+2009/04/03
+	* Fixed mob mode on Beetle King and Les [Playtester]
+	- Beetle King is passive / assist now
+	- Les can't detect anymore
 2009/04/02
 	* Fixed Kasa and Muscipular Card [Playtester]
 	* Fixed Gazeti Card [Playtester]
