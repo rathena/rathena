@@ -7874,17 +7874,8 @@ void clif_parse_WantToConnection(int fd, TBL_PC* sd)
 
 	if (bl || 
 		((node=chrif_search(account_id)) && //An already existing node is valid only if it is for this login.
-			!(node->account_id == account_id && node->char_id == char_id && node->state == ST_LOGIN))) {
-		sd = BL_CAST(BL_PC, bl);
-		if (!sd)
-			;	//We have another char with the same account logging in/out.
-		else //Already connected player.
-		if (sd->fd)
-			clif_authfail_fd(sd->fd, 2); //someone else logged in
-		else
-		if(sd->state.autotrade)
-			map_quit(sd);// kick autotrading character
-		//Else do not kick character, it could be on its 10 sec penalty for Alt+F4
+			!(node->account_id == account_id && node->char_id == char_id && node->state == ST_LOGIN)))
+	{
 		clif_authfail_fd(fd, 8); //Still recognizes last connection
 		return;
 	}
