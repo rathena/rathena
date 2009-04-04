@@ -38,6 +38,11 @@
 
 =======================
 2009/04/04
+	* Monster and Item update [Playtester]
+	- implemented Endless Tower and Sealed Shrine mobs properly
+	- added the official drops to them
+	- some skills are still missing so be careful
+	- fixed up the remaining 12.1 cards (chances)
 	* Fixed many of the 12.1 gears [Playtester]
 	- for details create a diff of the changes
 2009/04/03
