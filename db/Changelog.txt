@@ -12,8 +12,6 @@
 	12214 Convex_Mirror:		Detect MVP spawn on minimap; doesn't work with special condition MVPs. (Recommend constant: SC_DetectMVPSpawn)
 
 	Missing 12.1 Equipment Bonuses:
-	2537 Diablos_Manteau		Increase damage taken from "Satan Morroc" by 10%
-	2729 Diablos_Ring		Increase damage taken from "Satan Morroc" by 10%
 	1630 Release_of_Wish		On magical attack, chance for two seconds you'll recover 50 SP and 100 HP.
 
 	Battleground Reward items:
@@ -39,6 +37,9 @@
 	2385 Recuvative_Armor		Should trigger HP/SP return with magical kills as well.
 
 =======================
+2009/04/04
+	* Fixed many of the 12.1 gears [Playtester]
+	- for details create a diff of the changes
 2009/04/03
 	* Fixed mob mode on Beetle King and Les [Playtester]
 	- Beetle King is passive / assist now
