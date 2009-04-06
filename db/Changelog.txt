@@ -37,6 +37,8 @@
 	2385 Recuvative_Armor		Should trigger HP/SP return with magical kills as well.
 
 =======================
+2009/04/06
+	* Updated Gatekeeper-DD and two minor Endless Tower fixes [Playtester]
 2009/04/04
 	* Monster and Item update [Playtester]
 	- implemented Endless Tower and Sealed Shrine mobs properly

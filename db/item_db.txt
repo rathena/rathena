@@ -2482,7 +2482,7 @@
 //5812,Hat_Of_Expert,Hat Of Expert
 // More Etc Items
 //===================================================================
-6000,Ashes_of_Darkness,Ashes of Darkness,3,,,10,,,,,,,,,,,,,{},{},{}
+6000,Ashes_of_Darkness,Ashes of Darkness,3,,,0,,,,,,,,,,,,,{},{},{}
 6001,Essence_Of_Fire,Essence of Fire,3,,,10,,,,,,,,,,,,,{},{},{}
 6002,Token_Of_Apostle,Token of Apostles,3,,,10,,,,,,,,,,,,,{},{},{}
 6003,Soul_Pendant,Pendant of Spirit,3,,,10,,,,,,,,,,,,,{},{},{}
@@ -4031,7 +4031,7 @@
 13164,Long_Barrel_,Long Barrel,4,40000,,1000,150,,9,1,0x01000000,7,2,34,3,70,1,18,{ bonus bHit,10; bonus bCritical,20; bonus bAspdRate,-3; bonus3 bAutoSpell,"GS_TRACKING",5,20; },{},{}
 13165,Jungle_Carbine,Jungle Carbine,4,56000,,700,170,,9,0,0x01000000,7,2,34,3,70,1,18,{ bonus bHit,10; bonus bCritical,4; bonus bAspdRate,10; bonus bHit,-readparam(bDex)/3; },{},{}
 13166,Jungle_Carbine_,Jungle Carbine,4,56000,,700,170,,9,1,0x01000000,7,2,34,3,70,1,18,{ bonus bHit,10; bonus bCritical,4; bonus bAspdRate,10; bonus bHit,-readparam(bDex)/3; },{},{}
-13167,Gate_KeeperDD,Gate Keeper-DD,4,72000,,1300,200,,9,0,0x01000000,7,2,34,3,70,1,20,{ bonus bSplashRange,1; bonus3 bAutoSpell,"GS_SPREADATTACK",6,50; bonus bDef,getrefine(); bonus bDex,1; },{},{}
+13167,Gate_KeeperDD,Gate Keeper-DD,4,72000,,1300,200,,9,0,0x01000000,7,2,34,4,70,1,20,{ bonus bSplashRange,1; bonus3 bAutoSpell,"GS_SPREADATTACK",6,50; bonus bDef,getrefine(); bonus bDex,1; },{},{}
 13168,Thunder_P,Thunder-P,4,76000,,700,80,,9,1,0x01000000,7,2,34,3,70,1,20,{ bonus bSplashRange,1; bonus bHit,-5; bonus bAspdRate,20; },{},{}
 13169,Thunder_P_,Thunder-P,4,76000,,700,80,,9,2,0x01000000,7,2,34,3,70,1,20,{ bonus bSplashRange,1; bonus bHit,-5; bonus bAspdRate,20; },{},{}
 13170,Lever_Action_Rifle,Lever Action Rifle,4,20,,770,138,,9,2,0x01000000,7,2,34,3,70,1,18,{ bonus bHit,20; bonus bCritical,50; bonus bAspdRate,-5; },{},{}
