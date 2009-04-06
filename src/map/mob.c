@@ -1560,7 +1560,6 @@ static int mob_ai_sub_foreachclient(struct map_session_data *sd,va_list ap)
 static int mob_ai_sub_lazy(struct mob_data *md, va_list args)
 {
 	unsigned int tick;
-	int mode;
 
 	nullpo_retr(0, md);
 
@@ -1605,35 +1604,21 @@ static int mob_ai_sub_lazy(struct mob_data *md, va_list args)
 		return 0;
 	}
 
-	mode = status_get_mode(&md->bl);
-	if(DIFF_TICK(md->next_walktime,tick)<0 &&
-		(mode&MD_CANMOVE) && unit_can_move(&md->bl) ){
-
-		if( map[md->bl.m].users>0 ){
-			// Since PC is in the same map, somewhat better negligent processing is carried out.
-
-			// It sometimes moves.
-			if(rand()%1000<MOB_LAZYMOVEPERC(md))
-				mob_randomwalk(md,tick);
-			else if(rand()%1000<MOB_LAZYSKILLPERC) //Chance to do a mob's idle skill.
+	if( DIFF_TICK(md->next_walktime,tick) < 0 && (status_get_mode(&md->bl)&MD_CANMOVE) && unit_can_move(&md->bl) )
+	{
+		if( map[md->bl.m].users > 0 )
+		{
+			if( rand()%1000 < MOB_LAZYMOVEPERC(md) )
+				mob_randomwalk(md, tick);
+			else
+			if( rand()%1000 < MOB_LAZYSKILLPERC ) //Chance to do a mob's idle skill.
 				mobskill_use(md, tick, -1);
-			// MOB which is not not the summons MOB but BOSS, either sometimes reboils.
-			// People don't want this, it seems custom, noone can prove it....
-//			else if( rand()%1000<MOB_LAZYWARPPERC
-//				&& (md->spawn && !md->spawn->x && !md->spawn->y)
-//				&& !md->target_id && !(mode&MD_BOSS))
-//				unit_warp(&md->bl,-1,-1,-1,0);
-		}else{
-			// Since PC is not even in the same map, suitable processing is carried out even if it takes.
-
-			// MOB which is not BOSS which is not Summons MOB, either -- a case -- sometimes -- leaping
-			if( rand()%1000<MOB_LAZYWARPPERC
-				&& (md->spawn && !md->spawn->x && !md->spawn->y)
-				&& !(mode&MD_BOSS))
-				unit_warp(&md->bl,-1,-1,-1,0);
 		}
-
-		md->next_walktime = tick+rand()%10000+5000;
+		else
+		{
+			if( rand()%1000 < MOB_LAZYMOVEPERC(md) )
+				mob_randomwalk(md, tick);
+		}
 	}
 	return 0;
 }
