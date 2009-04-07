@@ -4379,8 +4379,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 					return 1;
 				}
 				if( skillid == AM_BERSERKPITCHER )
-				{ //Does not override use-level, and cannot be used on bows.
-					if( dstsd && (dstsd->status.base_level<(unsigned int)sd->inventory_data[i]->elv || dstsd->weapontype1 == W_BOW) )
+				{
+					if( dstsd && dstsd->status.base_level < (unsigned int)sd->inventory_data[i]->elv )
 					{
 						clif_skill_fail(sd,skillid,0,0);
 						map_freeblock_unlock();
