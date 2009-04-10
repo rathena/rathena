@@ -48,7 +48,7 @@
 // in Aegis, this is 100% for mobs that have been activated by players and none otherwise.
 #define MOB_LAZYMOVEPERC(md) (md->state.spotted?1000:0)
 #define MOB_LAZYWARPPERC 20	// Warp probability in the negligent mode MOB (rate of 1000 minute)
-
+#define MOB_MAX_DELAY (24*3600*1000)
 #define MAX_MINCHASE 30	//Max minimum chase value to use for mobs.
 #define RUDE_ATTACKED_COUNT 2	//After how many rude-attacks should the skill be used?
 //Used to determine default enemy type of mobs (for use in eachinrange calls)
@@ -817,7 +817,8 @@ static int mob_count_sub(struct block_list *bl,va_list ap)
 int mob_spawn (struct mob_data *md)
 {
 	int i=0;
-	unsigned int c =0, tick = gettick();
+	unsigned int tick = gettick();
+	int c =0;
 
 	md->last_thinktime = tick;
 	if (md->bl.prev != NULL)
@@ -875,7 +876,7 @@ int mob_spawn (struct mob_data *md)
 	md->last_linktime = tick;
 	md->last_pcneartime = 0;
 
-	for (i = 0, c = tick-1000*3600*10; i < MAX_MOBSKILL; i++)
+	for (i = 0, c = tick-MOB_MAX_DELAY; i < MAX_MOBSKILL; i++)
 		md->skilldelay[i] = c;
 
 	memset(md->dmglog, 0, sizeof(md->dmglog));
@@ -2568,7 +2569,7 @@ int mob_class_change (struct mob_data *md, int class_)
 		if(md->status.hp < 1) md->status.hp = 1;
 	}
 
-	for(i=0,c=tick-1000*3600*10;i<MAX_MOBSKILL;i++)
+	for(i=0,c=tick-MOB_MAX_DELAY;i<MAX_MOBSKILL;i++)
 		md->skilldelay[i] = c;
 
 	if(md->lootitem == NULL && md->db->status.mode&MD_LOOTER)
@@ -3917,7 +3918,7 @@ static bool mob_parse_row_mobskilldb(char** str, const char* source, int line, i
 
 	struct mob_skill *ms, gms;
 	int mob_id;
-	int i, j, tmp;
+	int i =0, j, tmp;
 
 	mob_id = atoi(str[0]);
 
@@ -3984,14 +3985,16 @@ static bool mob_parse_row_mobskilldb(char** str, const char* source, int line, i
 		tmp = tmp*battle_config.mob_skill_rate/100;
 	if (tmp > 10000)
 		ms->permillage= 10000;
+	else if (!tmp && battle_config.mob_skill_rate)
+		ms->permillage= 1;
 	else
 		ms->permillage= tmp;
 	ms->casttime=atoi(str[6]);
 	ms->delay=atoi(str[7]);
 	if (battle_config.mob_skill_delay != 100)
 		ms->delay = ms->delay*battle_config.mob_skill_delay/100;
-	if (ms->delay < 0) //time overflow?
-		ms->delay = INT_MAX;
+	if (ms->delay < 0 || ms->delay > MOB_MAX_DELAY) //time overflow?
+		ms->delay = MOB_MAX_DELAY;
 	ms->cancel=atoi(str[8]);
 	if( strcmp(str[8],"yes")==0 ) ms->cancel=1;
 
