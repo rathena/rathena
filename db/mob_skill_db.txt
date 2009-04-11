@@ -4623,7 +4623,7 @@
 1874,Beelzebub@NPC_STONESKIN,chase,675,4,10000,1000,30000,no,self,myhpltmaxrate,3,,,,,,
 1874,Beelzebub@NPC_STONESKIN,attack,675,4,10000,1000,30000,no,self,myhpltmaxrate,3,,,,,,
 1874,Beelzebub@NPC_EVILLAND,attack,670,10,10000,0,15000,yes,self,myhpltmaxrate,50,,,,,,
-1874,Beelzebub@SA_LANDPROTECTOR,attack,288,5,10000,0,30000,yes,self,always,0,,,,,,
+1874,Beelzebub@SA_LANDPROTECTOR,attack,288,5,10000,0,30000,yes,target,always,0,,,,,,
 1874,Beelzebub@NPC_CRITICALWOUND,attack,673,3,2000,0,30000,yes,target,always,0,,,,,,
 1874,Beelzebub@NPC_SHIELDBRAKE,attack,346,10,2000,0,30000,yes,target,always,0,,,,,,
 1874,Beelzebub@NPC_SLOWCAST,attack,672,5,10000,0,30000,yes,self,always,0,,,,,,
