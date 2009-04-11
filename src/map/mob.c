@@ -3046,7 +3046,7 @@ int mobskill_use(struct mob_data *md, unsigned int tick, int event)
 				continue;
 		}
 		//Skill used. Post-setups... 
-		if(battle_config.mob_ai&0x200)
+		if(!(battle_config.mob_ai&0x200))
 		{ //pass on delay to same skill.
 			for (j = 0; j < md->db->maxskill; j++)
 				if (md->db->skill[j].skill_id == ms[i].skill_id)
