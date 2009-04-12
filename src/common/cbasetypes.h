@@ -196,6 +196,10 @@ typedef unsigned long long	uint64;
 //////////////////////////////////////////////////////////////////////////
 // pointer sized integers
 //////////////////////////////////////////////////////////////////////////
+#undef UINTPTR_MIN
+#undef UINTPTR_MAX
+#undef INTPTR_MIN
+#undef INTPTR_MAX
 #ifdef __64BIT__
 typedef uint64 uintptr;
 typedef int64 intptr;

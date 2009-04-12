@@ -5623,18 +5623,18 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			val2 = tick / 1000;
 			val3 = 0;
 			val4 = 0;
-			stat = ( sd ? sd->status.str : status_get_base_status(bl)->str ) / 2; if (stat > 0xFF) stat = 0xFF; val3 |= stat<<16;
-			stat = ( sd ? sd->status.agi : status_get_base_status(bl)->agi ) / 2; if (stat > 0xFF) stat = 0xFF; val3 |= stat<<8;
-			stat = ( sd ? sd->status.vit : status_get_base_status(bl)->vit ) / 2; if (stat > 0xFF) stat = 0xFF; val3 |= stat;
-			stat = ( sd ? sd->status.int_: status_get_base_status(bl)->int_) / 2; if (stat > 0xFF) stat = 0xFF; val4 |= stat<<16;
-			stat = ( sd ? sd->status.dex : status_get_base_status(bl)->dex ) / 2; if (stat > 0xFF) stat = 0xFF; val4 |= stat<<8;
-			stat = ( sd ? sd->status.luk : status_get_base_status(bl)->luk ) / 2; if (stat > 0xFF) stat = 0xFF; val4 |= stat;
+			stat = ( sd ? sd->status.str : status_get_base_status(bl)->str ) / 2; val3 |= cap_value(stat,0,0xFF)<<16;
+			stat = ( sd ? sd->status.agi : status_get_base_status(bl)->agi ) / 2; val3 |= cap_value(stat,0,0xFF)<<8;
+			stat = ( sd ? sd->status.vit : status_get_base_status(bl)->vit ) / 2; val3 |= cap_value(stat,0,0xFF);
+			stat = ( sd ? sd->status.int_: status_get_base_status(bl)->int_) / 2; val4 |= cap_value(stat,0,0xFF)<<16;
+			stat = ( sd ? sd->status.dex : status_get_base_status(bl)->dex ) / 2; val4 |= cap_value(stat,0,0xFF)<<8;
+			stat = ( sd ? sd->status.luk : status_get_base_status(bl)->luk ) / 2; val4 |= cap_value(stat,0,0xFF);
 			tick = 1000;
 			break;
 		}
 		case SC_MARIONETTE2:
 		{
-			int stat,max;
+			int stat,max_stat;
 			// fetch caster information
 			struct block_list *pbl = map_id2bl(val1);
 			struct status_change *psc = pbl?status_get_sc(pbl):NULL;
@@ -5648,13 +5648,13 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			val2 = tick / 1000;
 			val3 = 0;
 			val4 = 0;
-			max = battle_config.max_parameter; //Cap to 99 (default)
-			stat = (psce->val3 >>16)&0xFF; stat = cap_value(status->str + stat, INT_MIN, max) - cap_value(status->str, INT_MIN, max); if (stat > 0xFF) stat = 0xFF; val3 |= stat<<16;
-			stat = (psce->val3 >> 8)&0xFF; stat = cap_value(status->agi + stat, INT_MIN, max) - cap_value(status->agi, INT_MIN, max); if (stat > 0xFF) stat = 0xFF; val3 |= stat<<8;
-			stat = (psce->val3 >> 0)&0xFF; stat = cap_value(status->vit + stat, INT_MIN, max) - cap_value(status->vit, INT_MIN, max); if (stat > 0xFF) stat = 0xFF; val3 |= stat;
-			stat = (psce->val4 >>16)&0xFF; stat = cap_value(status->int_+ stat, INT_MIN, max) - cap_value(status->int_,INT_MIN, max); if (stat > 0xFF) stat = 0xFF; val4 |= stat<<16;
-			stat = (psce->val4 >> 8)&0xFF; stat = cap_value(status->dex + stat, INT_MIN, max) - cap_value(status->dex, INT_MIN, max); if (stat > 0xFF) stat = 0xFF; val4 |= stat<<8;
-			stat = (psce->val4 >> 0)&0xFF; stat = cap_value(status->luk + stat, INT_MIN, max) - cap_value(status->luk, INT_MIN, max); if (stat > 0xFF) stat = 0xFF; val4 |= stat;
+			max_stat = battle_config.max_parameter; //Cap to 99 (default)
+			stat = (psce->val3 >>16)&0xFF; stat = min(stat, max_stat - status->str ); val3 |= cap_value(stat,0,0xFF)<<16;
+			stat = (psce->val3 >> 8)&0xFF; stat = min(stat, max_stat - status->agi ); val3 |= cap_value(stat,0,0xFF)<<8;
+			stat = (psce->val3 >> 0)&0xFF; stat = min(stat, max_stat - status->vit ); val3 |= cap_value(stat,0,0xFF);
+			stat = (psce->val4 >>16)&0xFF; stat = min(stat, max_stat - status->int_); val4 |= cap_value(stat,0,0xFF)<<16;
+			stat = (psce->val4 >> 8)&0xFF; stat = min(stat, max_stat - status->dex ); val4 |= cap_value(stat,0,0xFF)<<8;
+			stat = (psce->val4 >> 0)&0xFF; stat = min(stat, max_stat - status->luk ); val4 |= cap_value(stat,0,0xFF);
 			tick = 1000;
 			break;
 		}
