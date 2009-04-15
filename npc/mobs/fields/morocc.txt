@@ -259,7 +259,7 @@ moc_fild17,0,0,0,0	monster	Magnolia	1138,15,0,0,0
 moc_fild17,0,0,0,0	monster	Frilldora	1119,25,0,0,0
 moc_fild17,0,0,0,0	monster	Ant Egg	1097,10,0,0,0
 moc_fild17,0,0,0,0	monster	Scorpion	1001,5,0,0,0
-moc_fild17,0,0,0,0	monster	Phreeoni	1159,1,7200000,3600000,1
+moc_fild17,0,0,0,0	monster	Phreeoni	1159,1,7200000,600000,1
 moc_fild17,40,258,0,0	monster	Yellow Plant	1081,1,180000,90000,1
 moc_fild17,144,151,0,0	monster	Yellow Plant	1081,1,180000,90000,1
 moc_fild17,243,138,0,0	monster	Yellow Plant	1081,1,180000,90000,1
