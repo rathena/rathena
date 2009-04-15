@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Athena (1.0)
 //===== Current Version: =====================================
-//= 1.6
+//= 1.7
 //===== Compatible With: =====================================
 //= Any Athena Version
 //===== Additional Comments: =================================
@@ -14,6 +14,7 @@
 //= 1.5 Fixed Pheeroni spawn location. [Kisuka]
 //= 1.6 Added Satan MOrroc static spawn. [L0ne_W0lf]
 //=     Added 30s spawn time for all Morroc Shadows.
+//= 1.7 Corrected MVP spawn variance. [L0ne_W0lf]
 //============================================================
 
 //==================================================
@@ -225,7 +226,7 @@ moc_fild13,161,273,5,5	monster	Yellow Plant	1081,3,180000,90000,1
 //moc_fild15,0,0,0,0	monster	Magnolia	1138,25,0,0,0
 //moc_fild15,0,0,0,0	monster	Andre	1095,40,0,0,0
 //moc_fild15,0,0,0,0	monster	Ant Egg	1097,10,0,0,0
-//moc_fild15,0,0,0,0	monster	Phreeoni	1159,1,7200000,3600000,1
+//moc_fild15,0,0,0,0	monster	Phreeoni	1159,1,7200000,600000,1
 //moc_fild15,40,126,0,0	monster	Yellow Plant	1081,1,180000,90000,1
 //moc_fild15,57,39,0,0	monster	Yellow Plant	1081,1,180000,90000,1
 //moc_fild15,46,250,0,0	monster	Yellow Plant	1081,1,180000,90000,1

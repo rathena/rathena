@@ -1,4 +1,4 @@
-//===== eAthena Script =======================================
+/===== eAthena Script =======================================
 //= Mt. Mjolnir Fields Monster Spawn Script
 //===== By: ==================================================
 //= Athena (1.0)
@@ -100,7 +100,7 @@ mjolnir_04,0,0,0,0	monster	Hornet	1004,70,0,0,0
 mjolnir_04,0,0,0,0	monster	Poporing	1031,10,0,0,0
 mjolnir_04,0,0,0,0	monster	Flora	1118,30,0,0,0
 mjolnir_04,0,0,0,0	monster	Argiope	1099,20,0,0,0
-mjolnir_04,0,0,0,0	monster	Mistress	1059,1,7200000,3600000,1
+mjolnir_04,0,0,0,0	monster	Mistress	1059,1,7200000,600000,1
 mjolnir_04,200,200,30,30	monster	Shining Plant	1083,3,1800000,900000,1
 mjolnir_04,177,34,0,0	monster	Green Plant	1080,1,180000,90000,1
 mjolnir_04,122,28,0,0	monster	Green Plant	1080,1,180000,90000,1

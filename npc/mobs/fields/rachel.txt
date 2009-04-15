@@ -3,13 +3,14 @@
 //===== By: ==================================================
 //= Athena (1.0)
 //===== Current Version: =====================================
-//= 1.2
+//= 1.3
 //===== Compatible With: =====================================
 //= Any Athena Version
 //===== Additional Comments: =================================
 //= 1.0 Created this [Sepheus]
 //= 1.1 Updated [Playtester]
 //= 1.2 More accurate spawns [Playtester]
+//= 1.3 Corrected MVP spawn variance. [L0ne_W0lf]
 //============================================================
 
 //==================================================
@@ -27,7 +28,7 @@ ra_fild01,0,0,0,0	monster	Gryphon	1259,3,3600000,0,1
 ra_fild02,0,0,0,0	monster	Muscipular	1780,60,0,0,0
 ra_fild02,0,0,0,0	monster	Drosera	1781,20,0,0,0
 ra_fild02,0,0,0,0	monster	Galion	1783,15,0,0,0
-ra_fild02,0,0,0,0	monster	Atroce	1785,1,14400000,10800000,1
+ra_fild02,0,0,0,0	monster	Atroce	1785,1,14400000,600000,1
 
 //==================================================
 // ra_fild03 - Rachel Field
@@ -36,7 +37,7 @@ ra_fild03,0,0,0,0	monster	Galion	1783,35,0,0,0
 ra_fild03,0,0,0,0	monster	Drosera	1781,10,0,0,1
 ra_fild03,0,0,0,0	monster	Roween	1782,10,0,0,0
 ra_fild03,0,0,0,0	monster	Stapo	1784,10,0,0,0
-ra_fild03,0,0,0,0	monster	Atroce	1785,1,10800000,10200000,1
+ra_fild03,0,0,0,0	monster	Atroce	1785,1,10800000,600000,1
 
 //==================================================
 // ra_fild04 - Rachel Field
@@ -45,7 +46,7 @@ ra_fild04,0,0,0,0	monster	Roween	1782,60,0,0,0
 ra_fild04,0,0,0,0	monster	Stapo	1784,20,0,0,0
 ra_fild04,0,0,0,0	monster	Wild Rose	1261,10,0,0,0
 ra_fild04,0,0,0,0	monster	Galion	1783,3,0,0,0
-ra_fild04,0,0,0,0	monster	Atroce	1785,1,18000000,10200000,1
+ra_fild04,0,0,0,0	monster	Atroce	1785,1,18000000,600000,1
 
 //==================================================
 // ra_fild05 - Rachel Field

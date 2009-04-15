@@ -3,11 +3,12 @@
 //===== By: ==================================================
 //= Athena (1.0)
 //===== Current Version: =====================================
-//= 1.1
+//= 1.2
 //===== Compatible With: =====================================
 //= Any Athena Version
 //===== Additional Comments: =================================
 //= 1.1 Official kRO 10.1 spawns [Playtester]
+//= 1.2 Corrected MVP spawn variance. [L0ne_W0lf]
 //============================================================
 
 //==================================================
@@ -40,4 +41,4 @@ gon_dun03,0,0,0,0	monster	White Plant	1082,10,0,0,0
 gon_dun03,0,0,0,0	monster	Hermit Plant	1413,20,600000,300000,0
 gon_dun03,0,0,0,0	monster	Evil Nymph	1416,50,600000,300000,0
 gon_dun03,0,0,0,0	monster	Taoist Hermit	1412,30,0,0,0
-gon_dun03,0,0,0,0	monster	Evil Snake Lord	1418,1,5650000,3650000,0
+gon_dun03,0,0,0,0	monster	Evil Snake Lord	1418,1,5650000,600000,0

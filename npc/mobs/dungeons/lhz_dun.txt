@@ -3,7 +3,7 @@
 //===== By: ==================================================
 // The Prometheus Project, eAthena dev team
 //===== Current Version: =====================================
-//= 1.7a
+//= 1.8
 //===== Compatible With: =====================================
 //= Any Athena
 //===== Additional Comments: =================================
@@ -20,6 +20,7 @@
 //=	- Spare spawn and MVP spawn now spawn in official locations.
 //=	- Expandeded timer to allow for varying spawn times.
 //= 1.7a Added dummy event to keep from causnig warnings. [L0ne_W0lf]
+//= 1.8 Corrected MVP spawn variance (Labs2 MVP). [L0ne_W0lf]
 //============================================================
 
 
@@ -93,7 +94,7 @@ lhz_dun02,0,0,0,0	monster	Laurell Weinder	1657,10,300000,150000,1
 lhz_dun02,0,0,0,0	monster	Remover	1682,20,300000,150000,1
 lhz_dun02,0,0,0,0	monster	Eremes Guile	1635,1,180000,120000,0
 lhz_dun02,0,0,0,0	monster	Gemini-S58	1681,10,5400000,180000,0
-lhz_dun02,0,0,0,0	monster	Egnigem Cenia	1658,1,7200000,5400000,1
+lhz_dun02,0,0,0,0	monster	Egnigem Cenia	1658,1,7200000,600000,1
 
 //========================================================================================
 // lhz_dun03 - Bio-life Labs 3F

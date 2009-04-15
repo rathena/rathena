@@ -3,11 +3,12 @@
 //===== By: ==================================================
 //= Athena (1.0)
 //===== Current Version: =====================================
-//= 1.1
+//= 1.2
 //===== Compatible With: =====================================
 //= Any Athena Version
 //===== Additional Comments: =================================
 //= 1.1 Official kRO 10.1 spawns [Playtester]
+//= 1.2 Corrected MVP spawn variance. [L0ne_W0lf]
 //============================================================
 
 //==================================================
@@ -49,4 +50,4 @@ prt_sewb4,0,0,0,0	monster	Thief Bug Female	1053,20,0,0,0
 prt_sewb4,0,0,0,0	monster	Thief Bug Male	1054,70,0,0,0
 prt_sewb4,0,0,0,0	monster	Drainliar	1111,20,0,0,0
 prt_sewb4,0,0,0,0	monster	Cramp	1209,5,0,0,0
-prt_sewb4,0,0,0,0	monster	Golden Thief Bug	1086,1,3600000,1800000,1
+prt_sewb4,0,0,0,0	monster	Golden Thief Bug	1086,1,3600000,600000,1

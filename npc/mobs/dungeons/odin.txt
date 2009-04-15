@@ -3,12 +3,13 @@
 //===== By: ==================================================
 //= Poki#3 (0.1)
 //===== Current Version: =====================================
-//= 1.1
+//= 1.2
 //===== Compatible With: =====================================
 //= Any Athena Version
 //===== Additional Comments: =================================
 //= 1.0 Updated by using Tharis' Homun AI, by Tharis [Vicious]
 //= 1.1 More accurate spawns [Playtester]
+//= 1.2 Corrected MVP spawn variance. [L0ne_W0lf]
 //============================================================
 
 //==================================================
@@ -61,6 +62,6 @@ odin_tem03,205,240,3,3	monster	Frus	1762,1,30000,15000,0
 odin_tem03,238,265,3,3	monster	Skogul	1761,1,30000,15000,0
 odin_tem03,256,271,3,3	monster	Frus	1762,1,30000,15000,0
 odin_tem03,0,0,0,0	monster	Valkyrie	1765,2,1800000,1200000,0
-odin_tem03,0,0,0,0	monster	Valkyrie Randgris	1751,1,28800000,14400000,1
+odin_tem03,0,0,0,0	monster	Valkyrie Randgris	1751,1,28800000,600000,1
 odin_tem03,0,0,0,0	monster	Blue Plant	1079,15,1800000,900000,1
 odin_tem03,0,0,0,0	monster	Shining Plant	1083,15,1800000,900000,1

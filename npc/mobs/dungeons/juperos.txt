@@ -3,7 +3,7 @@
 //===== By: ==================================================
 // The Prometheus Project, eAthena dev team
 //===== Current Version: =====================================
-//= 1.3
+//= 1.4
 //===== Compatible With: =====================================
 //= Any Athena/Freya Version
 //===== Additional Comments: =================================
@@ -14,6 +14,7 @@
 //= 1.1 Official X.3 spawns [Playtester]
 //= 1.2 Some 11.1 spawn changes [Playtester]
 //= 1.3 More accurate spawns [Playtester]
+//= 1.4 Corrected MVP spawn variance. [L0ne_W0lf]
 //============================================================
 
 //========================================================================================
@@ -56,4 +57,4 @@ jupe_core,0,0,0,0	monster	Dimik	1671,40,0,0,1
 jupe_core,0,0,0,0	monster	Dimik	1672,40,0,0,1
 jupe_core,0,0,0,0	monster	Dimik	1673,40,0,0,1
 jupe_core,0,0,0,0	monster	Archdam	1668,40,0,0,1
-jupe_core,0,0,0,0	monster	Vesper	1685,1,7200000,3600000,1
+jupe_core,0,0,0,0	monster	Vesper	1685,1,7200000,600000,1

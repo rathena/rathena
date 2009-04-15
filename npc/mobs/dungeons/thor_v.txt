@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Playtester
 //===== Current Version: =====================================
-//= 1.3
+//= 1.4
 //===== Compatible With: =====================================
 //= Any Athena Version
 //===== Description: =========================================
@@ -13,6 +13,7 @@
 //= 1.1 Added Byorgue and Ifrit [Playtester]
 //= 1.2 Updated spawns according to RODE [Playtester]
 //= 1.3 More official spawns [Playtester]
+//= 1.4 Corrected MVP spawn variance. [L0ne_W0lf]
 //============================================================
 
 // ================= [Thor Volcano - 01] =====================
@@ -64,4 +65,4 @@ thor_v03,0,0,0,0	monster	Sword Master	1829,5,1800000,0,0
 thor_v03,0,0,0,0	monster	Bow Master	1830,5,0,0,0
 thor_v03,0,0,0,0	monster	Bow Master	1830,5,1800000,0,0
 thor_v03,0,0,0,0	monster	Byorgue	1839,5,1800000,0,0
-thor_v03,0,0,0,0	monster	Ifrit	1832,1,39600000,0,0
+thor_v03,0,0,0,0	monster	Ifrit	1832,1,39600000,600000,0
