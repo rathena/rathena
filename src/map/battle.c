@@ -322,9 +322,6 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,int damage,i
 
 		if( sc->data[SC_PNEUMA] && (flag&(BF_MAGIC|BF_LONG)) == BF_LONG )
 			return 0;
-			
-		if( sc->data[SC_PNEUMA] && src->type == BL_MOB && skill_num == LK_SPIRALPIERCE)
-			return 0; //Mob's Spiral Pierce is always blocked by pneuma [Brain]
 
 		if( (sce=sc->data[SC_AUTOGUARD]) && flag&BF_WEAPON && !(skill_get_nk(skill_num)&NK_NO_CARDFIX_ATK) && rand()%100 < sce->val2 )
 		{
@@ -1009,6 +1006,10 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 
 			case NPC_CRITICALSLASH:
 				flag.cri = 1; //Always critical skill.
+				break;
+
+			case LK_SPIRALPIERCE:
+				if (!sd) wd.flag=(wd.flag&~(BF_RANGEMASK|BF_WEAPONMASK))|BF_LONG|BF_WEAPON;
 				break;
 		}
 	} else //Range for normal attacks.
