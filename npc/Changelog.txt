@@ -1,6 +1,7 @@
 Date		Added
 ======
 2009/04/15
+	* Corrected in error in the mjolnir fields spawn script. [Jguy]
 	* Rev. 13674 Modified the commented out Phreeoni and forgot to fix the varience for the active one as well. [L0ne_W0lf]
 	* Rev. 13673 Corrected most MVP spawn variances. Some were right (11.3+), and a couple are unchanged (Kiel for example.) [L0ne_W0lf]
 2009/04/01
