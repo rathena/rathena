@@ -37,6 +37,12 @@
 	2385 Recuvative_Armor		Should trigger HP/SP return with magical kills as well.
 
 =======================
+2009/04/17
+	* Fixed a few items [Playtester]
+	- Windhawk can be equipped by thief class
+	- a few axes are for trans classes only
+	- fixed def bonus of Luna Bow
+	- fixed a few aegis names thanks to b0nes
 2009/04/06
 	* Updated Gatekeeper-DD and two minor Endless Tower fixes [Playtester]
 2009/04/04
