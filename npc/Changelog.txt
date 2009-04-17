@@ -1,5 +1,7 @@
 Date		Added
 ======
+2009/04/17
+	* Fixed small typo in /battlegrounds/bg_common.txt [Jguy]
 2009/04/15
 	* Corrected in error in the mjolnir fields spawn script. [Jguy]
 	* Rev. 13674 Modified the commented out Phreeoni and forgot to fix the varience for the active one as well. [L0ne_W0lf]

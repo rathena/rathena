@@ -21,7 +21,7 @@ payon,189,104,3	script	Maroll Battle Recruiter::BatRecruit	728,{
 	mes "I'm a knight from a far country called Maroll Kingdom.";
 	next;
 	mes "[Maroll Battle Recruiter]";
-	mes "The two princes of the kingdom are now battling for the throne of Maroll, and are in need of experienced soldiers liky you. How would you like to lend your power to one of the princes in the Maroll Kingdom?";
+	mes "The two princes of the kingdom are now battling for the throne of Maroll, and are in need of experienced soldiers like you. How would you like to lend your power to one of the princes in the Maroll Kingdom?";
 	next;
 	if( select("Join:Don't Join") == 2 )
 	{
