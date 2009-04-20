@@ -9797,8 +9797,8 @@ void clif_parse_NpcStringInput(int fd, struct map_session_data* sd)
 	int npcid = RFIFOL(fd,4);
 	const char* message = (char*)RFIFOP(fd,8);
 	
-	if( message_len < 0 )
-		message_len = 0;
+	if( message_len <= 0 )
+		return; // invalid input
 
 	safestrncpy(sd->npc_str, message, min(message_len,CHATBOX_SIZE));
 	npc_scriptcont(sd, npcid);
