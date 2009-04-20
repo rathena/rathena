@@ -301,14 +301,25 @@ int config_switch(const char* str)
 	return (int)strtol(str, NULL, 0);
 }
 
-/// always nul-terminates the string
+/// strncpy that always nul-terminates the string
 char* safestrncpy(char* dst, const char* src, size_t n)
 {
-	char* ret;
-	ret = strncpy(dst, src, n);
-	if( ret != NULL )
-		ret[n - 1] = '\0';
-	return ret;
+	if( n > 0 )
+	{
+		char* d = dst;
+		const char* s = src;
+		d[--n] = '\0';/* nul-terminate string */
+		for( ; n > 0; --n )
+		{
+			if( (*d++ = *s++) == '\0' )
+			{/* nul-pad remaining bytes */
+				while( --n > 0 )
+					*d++ = '\0';
+				break;
+			}
+		}
+	}
+	return dst;
 }
 
 /// doesn't crash on null pointer

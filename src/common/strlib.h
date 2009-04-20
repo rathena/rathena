@@ -31,7 +31,7 @@ size_t strnlen (const char* string, size_t maxlen);
 int e_mail_check(char* email);
 int config_switch(const char* str);
 
-/// always nul-terminates the string
+/// strncpy that always nul-terminates the string
 char* safestrncpy(char* dst, const char* src, size_t n);
 
 /// doesn't crash on null pointer
