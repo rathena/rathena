@@ -1,5 +1,10 @@
 Date		Added
 ======
+2009/04/20
+	* Various script updates [Playtester]
+	- Removed the Acorn repeatable quest (got removed on iRO)
+	- Re-enabled Umbala bungee jumping (bugreport:2978)
+	- Fixed a reward in monster race (bugreport:2990)
 2009/04/17
 	* Fixed small typo in /battlegrounds/bg_common.txt [Jguy]
 2009/04/15

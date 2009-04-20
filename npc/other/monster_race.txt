@@ -11291,7 +11291,7 @@ ein_in01,85,208,5	script	Ei felle#repay01	854,{
 					callsub S_BonusReward,1500,1367;
 					end;
 				case 7:
-					callsub S_BonusReward,1500,1395;
+					callsub S_BonusReward,1500,1305;
 					end;
 				case 8:
 					callsub S_BonusReward,1500,1368;

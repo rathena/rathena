@@ -22,7 +22,6 @@
 //= 1.9 - Moved Umbala Event, Create Essence/Dismantle Stone, and Skeletal Gate to npc/quests/quests_umbala.txt [Evera]
 //= 2.0 - Removed duplicates, max NPC name length is 23, so Utan Tribe Young Adult#1, the 1 is skipped [Toms]
 //= 2.1 - Updated to Aegis 10.3 standards. [L0ne_W0lf]
-//=	- Disabled warping to Niflheim from the bungee jump, uncomment to reenable.
 //============================================================
 
 comodo,170,137,7	script	La Ed#um	84,{
@@ -1021,10 +1020,10 @@ OnTouch:
 		mapannounce "umbala","Bungee Jump: "+strcharinfo(0)+" : Wooooooaaaaaaaaaaaaaahhhhhhhhhhhh~~~~~~!",bc_map;
 		end;
 	case 3:
-		//if (rand(1,2) == 2) {
-		//	percentheal -99,0;
-		//	warp "nif_in",69,15;
-		//}
+		if (rand(1,2) == 2) {
+			percentheal -99,0;
+			warp "nif_in",69,15;
+		}
 		end;
 	}
 }

@@ -294,55 +294,55 @@ prt_fild04,356,148,3	script	Laertes#iROExp	798,{
 
 // Nutters - 25 Acorn
 //===========================================================
-mjolnir_01,293,20,3	script	Nutters#iROExp	779,{
-	if((BaseLevel < 18)) {
-		mes "[Nutters]";
-		mes "You are just too small to fight";
-		mes "these things for me. Can you get a";
-		mes "little taller then return?";
-		close;
-	}
-	else if((BaseLevel > 60)) {
-		mes "[Nutters]";
-		mes "You are much to strong to be";
-		mes "fighting these things!";
-		next;
-		close;
-	}
-	mes "[Nutters]";
-	mes "I..I just can't seem to find any.";
-	mes "Pesky Coco's have hidden all the";
-	mes "Acorns.";
-	next;
-	mes "[Nutters]";
-	mes "Can you help me find ^00CE0025 Acorns^000000.";
-	mes "I will reward you with much if you can.";
-	next;
-	if (select("I have 25 Acorns:Please come again?") == 2) {
-		mes "[Nutters]";
-		mes "I need ^00CE0025 Acorns^000000.";
-		close;
-	}
-	if (countitem(1026) < 25) {
-		mes "[Nutters]";
-		mes "Where are my ^00CE00Acorns^000000? Hey, I'm not";
-		mes "playing, you better not hold out on me.";
-		close;
-	}else{
-		mes "[Nutters]";
-		mes "Oh great you found out where they";
-		mes "were hiding them. Gimme Gimme!!!";
-		next;
-		delitem 1026,25;
-		getitem 502,5;
-		getexp 3600,3905;
-		mes "[Nutters]";
-		mes "Oh thats right, sorry I just love";
-		mes "roasting Acorns. Mmm.";
-		mes "Here is what I promised you.";
-		close;
-	}
-}
+//mjolnir_01,293,20,3	script	Nutters#iROExp	779,{
+//	if((BaseLevel < 18)) {
+//		mes "[Nutters]";
+//		mes "You are just too small to fight";
+//		mes "these things for me. Can you get a";
+//		mes "little taller then return?";
+//
+//	}
+//	else if((BaseLevel > 60)) {
+//		mes "[Nutters]";
+//		mes "You are much to strong to be";
+//		mes "fighting these things!";
+//		next;
+//		close;
+//	}
+//	mes "[Nutters]";
+//	mes "I..I just can't seem to find any.";
+//	mes "Pesky Coco's have hidden all the";
+//	mes "Acorns.";
+//	next;
+//	mes "[Nutters]";
+//	mes "Can you help me find ^00CE0025 Acorns^000000.";
+//	mes "I will reward you with much if you can.";
+//	next;
+//	if (select("I have 25 Acorns:Please come again?") == 2) {
+//		mes "[Nutters]";
+//		mes "I need ^00CE0025 Acorns^000000.";
+//		close;
+//	}
+//	if (countitem(1026) < 25) {
+//		mes "[Nutters]";
+//		mes "Where are my ^00CE00Acorns^000000? Hey, I'm not";
+//		mes "playing, you better not hold out on me.";
+//		close;
+//	}else{
+//		mes "[Nutters]";
+//		mes "Oh great you found out where they";
+//		mes "were hiding them. Gimme Gimme!!!";
+//		next;
+//		delitem 1026,25;
+//		getitem 502,5;
+//		getexp 3600,3905;
+//		mes "[Nutters]";
+//		mes "Oh thats right, sorry I just love";
+//		mes "roasting Acorns. Mmm.";
+//		mes "Here is what I promised you.";
+//		close;
+//	}
+//}
 
 // Cuir - 25 Anolian Skin
 //===========================================================
