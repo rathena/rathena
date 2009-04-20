@@ -123,13 +123,8 @@ aldeg_cas05,64,8,0	script	#switch_A05	111,{
 	mes " ";
 	mes "There's a small lever. Will you pull it? ";
 	next;
-	switch(select("Pull.:Do not.")) {
-	case 1:
-		warp "aldeg_cas05",51,179;
-		break;
-	case 2:
-		break;
-	}
+	if(select("Pull.:Do not.") == 2) close;
+	warp "aldeg_cas05",51,179;
 	end;
 }
 

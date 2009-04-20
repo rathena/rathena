@@ -115,13 +115,8 @@ gefg_cas01,152,117,0	script	#switch_G01	111,{
 	mes " ";
 	mes "There's a small lever. Will you pull it? ";
 	next;
-	switch(select("Pull.:Do not.")) {
-	case 1:
-		warp "gefg_cas01",40,49;
-		break;
-	case 2:
-		break;
-	}
+	if(select("Pull.:Do not.") == 2) close;
+	warp "gefg_cas01",40,49;
 	end;
 }
 

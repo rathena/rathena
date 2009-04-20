@@ -37,6 +37,8 @@
 	2385 Recuvative_Armor		Should trigger HP/SP return with magical kills as well.
 
 =======================
+2009/04/20
+	* Fixed slotted Memory Book not giving the combo bonus (bugreport:2997) [Playtester]
 2009/04/17
 	* Fixed a few items [Playtester]
 	- Windhawk can be equipped by thief class

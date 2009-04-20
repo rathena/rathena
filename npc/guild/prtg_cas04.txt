@@ -119,13 +119,8 @@ prtg_cas04,275,160,0	script	#switch_Pt04	111,{
 	mes " ";
 	mes "There's a small lever. Will you pull it? ";
 	next;
-	switch(select("Pull.:Do not.")) {
-	case 1:
-		warp "prtg_cas04",259,265;
-		break;
-	case 2:
-		break;
-	}
+	if(select("Pull.:Do not.") == 2) close;
+	warp "prtg_cas04",259,265;
 	end;
 }
 

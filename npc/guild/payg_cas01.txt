@@ -119,13 +119,8 @@ payg_cas01,295,8,0	script	#switch_Py01	111,{
 	mes " ";
 	mes "There's a small lever. Will you pull it? ";
 	next;
-	switch(select("Pull.:Do not.")) {
-	case 1:
-		warp "payg_cas01",120,59;
-		break;
-	case 2:
-		break;
-	}
+	if(select("Pull.:Do not.") == 2) close;
+	warp "payg_cas01",120,59;
 	end;
 }
 

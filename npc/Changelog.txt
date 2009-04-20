@@ -1,6 +1,7 @@
 Date		Added
 ======
 2009/04/20
+	* Applied BrianL's castle switch fix (bugreport:2969) [Playtester]
 	* Various script updates [Playtester]
 	- Removed the Acorn repeatable quest (got removed on iRO)
 	- Re-enabled Umbala bungee jumping (bugreport:2978)
