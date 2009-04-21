@@ -1494,6 +1494,9 @@ static bool mob_ai_sub_hard(struct mob_data *md, unsigned int tick)
 	
 	if (battle_check_range (&md->bl, tbl, md->status.rhw.range))
 	{	//Target within range, engage
+
+		if(tbl->type == BL_PC)
+			mob_log_damage(md, tbl, 0); //Log interaction (counts as 'attacker' for the exp bonus)
 		unit_attack(&md->bl,tbl->id,1);
 		return true;
 	}
