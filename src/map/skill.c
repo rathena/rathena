@@ -9782,7 +9782,7 @@ struct skill_unit_group* skill_initunitgroup (struct block_list* src, int count,
 	struct skill_unit_group* group;
 	int i;
 
-	if(skilllv <= 0) return 0;
+	if(skillid <= 0 || skilllv <= 0) return 0;
 
 	nullpo_retr(NULL, src);
 	nullpo_retr(NULL, ud);
