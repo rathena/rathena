@@ -37,6 +37,15 @@
 	2385 Recuvative_Armor		Should trigger HP/SP return with magical kills as well.
 
 =======================
+2009/04/21
+	* Fixed items that use the "AddSPAmount_Action" bonus on aegis [Playtester]
+	- Guillotine gives you 2 SP each time you attack something with a normal attack
+	  (only worked with DemiHuman)
+	- Tjungkuletti gives you 1 SP each time you attack something with a normal attack
+	  (before it drained 1 SP from the target instead)
+	- Dark Priest Card gives Sages 1 SP each time you attack something with a normal attack
+	  (before it was per kill)
+	- also added the bSPDrainValue bonus to the documentation again
 2009/04/20
 	* Fixed slotted Memory Book not giving the combo bonus (bugreport:2997) [Playtester]
 2009/04/17

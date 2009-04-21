@@ -3,14 +3,14 @@
 //===== By ================================================
 //= Developers
 //===== Version ===========================================
-//= 1.1.20090122
+//= 1.1.20090421
 //=========================================================
 //= 1.0 - Standardized doc file
 //= 1.1.20080612 - skill command and bonuses (bAutoSpell, bSkillAtk, 
 //=   bSkillHeal, bAutoSpellWhenHit, bAddSkillBlow, bCastrate) accept 
 //=   skill names [FlavioJS]
 //= 1.1.20090122 - removed outdated bSPDrainValue command [ultramage]
-//= 
+//= 1.1.20090421 - added the correct bonus documentation for bSPDrainValue [Playtester]
 //===== Description =======================================
 //= List of script instructions used in item bonuses,
 //= mainly bonus/bonus2/bonus3/bonus4/bonus5 arguments
@@ -322,3 +322,10 @@ bonus2 bWeaponComaRace,x,y;		y/100% chance to cause Coma when attacking a monste
 bAddStealRate,n;			n/100% increase to Steal skill success chance
 
 bonus2 bAddSkillBlow,x,y;	Pushback the target by y cells when using skill x (supports skill names)
+
+bonus bSPDrainValue,n;			When hitting a monster by physical attack, you gain n SP
+					(use negative numbers so the user loses SP)
+bonus2 bSPDrainValue,n,x;		When hitting a monster by physical attack, ...
+					x:					
+					0=you gain n SP
+					1=you drain n SP from target
