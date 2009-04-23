@@ -9095,8 +9095,8 @@ void clif_parse_CreateChatRoom(int fd, struct map_session_data* sd)
 	bool pub = (RFIFOB(fd,6) != 0);
 	const char* password = (char*)RFIFOP(fd,7); //not zero-terminated
 	const char* title = (char*)RFIFOP(fd,15); // not zero-terminated
-	char s_title[CHATROOM_TITLE_SIZE];
 	char s_password[CHATROOM_PASS_SIZE];
+	char s_title[CHATROOM_TITLE_SIZE];
 
 	if (sd->sc.data[SC_NOCHAT] && sd->sc.data[SC_NOCHAT]->val1&MANNER_NOROOM)
 		return;
@@ -9105,8 +9105,11 @@ void clif_parse_CreateChatRoom(int fd, struct map_session_data* sd)
 		return;
 	}
 
-	safestrncpy(s_title, title, min(len+1,CHATROOM_TITLE_SIZE));
+	if( len <= 0 )
+		return; // invalid input
+
 	safestrncpy(s_password, password, CHATROOM_PASS_SIZE);
+	safestrncpy(s_title, title, min(len+1,CHATROOM_TITLE_SIZE)); //NOTE: assumes that safestrncpy will not access the len+1'th byte
 
 	chat_createpcchat(sd, s_title, s_password, limit, pub);
 }
@@ -9134,11 +9137,14 @@ void clif_parse_ChatRoomStatusChange(int fd, struct map_session_data* sd)
 	bool pub = (RFIFOB(fd,6) != 0);
 	const char* password = (char*)RFIFOP(fd,7); // not zero-terminated
 	const char* title = (char*)RFIFOP(fd,15); // not zero-terminated
-
-	char s_title[CHATROOM_TITLE_SIZE];
 	char s_password[CHATROOM_PASS_SIZE];
-	safestrncpy(s_title, title, min(len+1,CHATROOM_TITLE_SIZE));
+	char s_title[CHATROOM_TITLE_SIZE];
+
+	if( len <= 0 )
+		return; // invalid input
+
 	safestrncpy(s_password, password, CHATROOM_PASS_SIZE);
+	safestrncpy(s_title, title, min(len+1,CHATROOM_TITLE_SIZE)); //NOTE: assumes that safestrncpy will not access the len+1'th byte
 
 	chat_changechatstatus(sd, s_title, s_password, limit, pub);
 }
