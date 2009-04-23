@@ -1,5 +1,8 @@
 Date		Added
 ======
+2009/04/23
+	* Fixed wrong coordinates of the Prontera Bartender (bugreport:3000) [Playtester]
+	* Fixed a chat window not being closeable in the Training Grounds (bugreport:3009) [Playtester]
 2009/04/20
 	* Applied BrianL's castle switch fix (bugreport:2969) [Playtester]
 	* Various script updates [Playtester]

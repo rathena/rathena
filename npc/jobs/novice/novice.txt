@@ -857,7 +857,7 @@ new_1-2,83,111,3	script	Skill Tutor#nv	753,{
 			end;
 		case 3:
 			emotion e_omg;
-			end;
+			close;
 		}
 	}
 	else if (nov_get_item04 < 10) {
@@ -880,7 +880,7 @@ new_1-2,83,111,3	script	Skill Tutor#nv	753,{
 			end;
 		case 3:
 			emotion e_omg;
-			end;
+			close;
 		}
 	}
 }

@@ -290,7 +290,7 @@ prt_in,26,31,0	script	An Old Man#2pront	54,{
 	close;
 }
 
-prt_in,180,70,2	script	Bartender#pront	61,{
+prt_in,180,20,2	script	Bartender#pront	61,{
 	mes "[Bartender]";
 	mes "Sigh...as more and more people coming into Prontera,";
 	mes "better and better my business has become nowadays. But...";
