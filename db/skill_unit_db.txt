@@ -89,7 +89,7 @@
 430,0x86,    ,  0, 1, 100,enemy, 0x000	//SG_STAR_WARM
 484,0xb8,    ,  2, 0,1000,enemy, 0x808	//HW_GRAVITATION
 488,0xb9,    ,  3, 0,  -1,all,   0x200	//CG_HERMODE
-516,0xba,    ,  3, 0, 100,enemy, 0x000	//GS_DESPERADO
+516,0x86,    ,  3, 0, 100,enemy, 0x000	//GS_DESPERADO
 521,0xbe,    ,  0, 1,1000,enemy, 0x000	//GS_GROUNDDRIFT
 527,0xbc,    , -1, 0,2000,enemy, 0x018	//NJ_TATAMIGAESHI
 535,0xbd,    , -1, 0,  20,enemy, 0x010	//NJ_KAENSIN

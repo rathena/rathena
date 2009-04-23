@@ -7124,7 +7124,7 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 	switch (sg->unit_id)
 	{
 		case UNT_FIREWALL:
-		case UNT_KAENSIN:
+		case UNT_KAEN:
 		{
 			int count=0;
 			const int x = bl->x, y = bl->y;
@@ -7203,7 +7203,7 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 			skill_attack(BF_MAGIC,ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick,0);
 			break;
 
-		case UNT_ATTACK_SKILLS:
+		case UNT_DUMMYSKILL:
 			switch (sg->skill_id)
 			{
 				case SG_SUN_WARM: //SG skills [Komurka]
@@ -7241,6 +7241,12 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 					if (skill_attack(skill_get_type(sg->skill_id),ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick,0) <= 0 && tsc)
 						tsc->sg_counter=0; //Attack absorbed.
 				break;
+
+				case GS_DESPERADO:
+					if (rand()%100 < src->val1)
+						skill_attack(BF_WEAPON,ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick,0);
+				break;
+
 				default:
 					skill_attack(skill_get_type(sg->skill_id),ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick,0);
 			}
@@ -7462,11 +7468,6 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 
 		case UNT_GRAVITATION:
 			skill_attack(skill_get_type(sg->skill_id),ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick,0);
-			break;
-
-		case UNT_DESPERADO:
-			if (rand()%100 < src->val1)
-				skill_attack(BF_WEAPON,ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick,0);
 			break;
 
 		case UNT_GROUNDDRIFT_WIND:
