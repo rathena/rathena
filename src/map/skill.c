@@ -9898,8 +9898,8 @@ int skill_delunitgroup (struct block_list *src, struct skill_unit_group *group)
 		group->valstr = NULL;
 	}
 
-	map_freeblock(&group->unit->bl); // schedules deallocation of whole array (HACK)
 	idb_remove(group_db, group->group_id);
+	map_freeblock(&group->unit->bl); // schedules deallocation of whole array (HACK)
 	group->unit=NULL;
 	group->group_id=0;
 	group->unit_count=0;

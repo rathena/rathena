@@ -1186,9 +1186,9 @@ int map_clearflooritem_timer(int tid, unsigned int tick, int id, intptr data)
 		intif_delete_petdata( MakeDWord(fitem->item_data.card[1],fitem->item_data.card[2]) );
 
 	clif_clearflooritem(fitem,0);
+	map_deliddb(&fitem->bl);
 	map_delblock(&fitem->bl);
 	map_freeblock(&fitem->bl);
-	map_deliddb(&fitem->bl);
 
 	return 0;
 }

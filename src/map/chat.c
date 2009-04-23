@@ -174,9 +174,9 @@ int chat_leavechat(struct map_session_data* sd, bool kicked)
 	if( cd->users == 0 && cd->owner->type == BL_PC )
 	{	// Delete empty chatroom
 		clif_clearchat(cd, 0);
+		map_deliddb(&cd->bl);
 		map_delblock(&cd->bl);
 		map_freeblock(&cd->bl);
-		map_deliddb(&cd->bl);
 		return 1;
 	}
 
@@ -327,9 +327,9 @@ int chat_deletenpcchat(struct npc_data* nd)
 	
 	chat_npckickall(cd);
 	clif_clearchat(cd, 0);
+	map_deliddb(&cd->bl);
 	map_delblock(&cd->bl);
 	map_freeblock(&cd->bl);
-	map_deliddb(&cd->bl);
 	nd->chat_id = 0;
 	
 	return 0;
