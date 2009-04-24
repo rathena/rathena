@@ -6131,12 +6131,18 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			sc->opt3 |= 0x20;
 			opt_flag = 0;
 			break;
-		//0x40 missing?
+		case SC_AURABLADE:
+			sc->opt3 |= 0x40;
+			opt_flag = 0;
+			break;
 		case SC_BERSERK:
 			sc->opt3 |= 0x80;
 			opt_flag = 0;
 			break;
-		//0x100 missing?
+//		case ???: // OPT3_LIGHTBLADE, doesn't seem to do anything
+//			sc->opt3 |= 0x100;
+//			opt_flag = 0;
+//			break;
 		case SC_DANCING:
 			if ((val1&0xFFFF) == CG_MOONLIT)
 				sc->opt3 |= 0x200;
@@ -6171,8 +6177,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			sc->opt3 |= 0x10000;
 			opt_flag = 0;
 			break;
-//	TODO: unknown option (looks like the aura of biolab mobs)
-//		case ???:
+//		case ???: // OPT3_CONTRACT, from DA_CONTRACT (looks like biolab mobs aura)
 //			sc->opt3 |= 0x20000;
 //			opt_flag = 0;
 //			break;
