@@ -2758,7 +2758,7 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 			cardfix=cardfix*(100-tsd->long_attack_def_rate)/100;
 
 		if (cardfix != 10000)
-			md.damage=md.damage*(cardfix/10000);
+			md.damage=md.damage*((double)cardfix/10000);
 	}
 
 	if (sd && (i = pc_skillatk_bonus(sd, skill_num)))
