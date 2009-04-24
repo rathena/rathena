@@ -243,7 +243,7 @@ typedef enum sc_type {
 	SC_KAITE,
 	SC_SWOO, // [marquis007]
 	SC_SKA, // [marquis007]
-	SC_TKREST, // [marquis007]
+	SC_EARTHSCROLL,
 	SC_MIRACLE, //SG 'hidden' skill [Komurka]
 	SC_MADNESSCANCEL,
 	SC_ADJUSTMENT,
@@ -446,7 +446,6 @@ enum si_type {
 	SI_CLOSECONFINE2	= 201,
 	SI_MADNESSCANCEL	= 203,	//[blackhole89]
 	SI_GATLINGFEVER		= 204,
-	SI_TKREST = 205, // 205 = Gloria again (but TK- Happy State looks like it)
 	SI_UTSUSEMI		= 206,
 	SI_BUNSINJYUTSU		= 207,
 	SI_NEN			= 208,

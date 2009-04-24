@@ -318,7 +318,7 @@ void initChangeTables(void)
 	set_sc( TK_READYTURN         , SC_READYTURN       , SI_READYTURN       , SCB_NONE );
 	set_sc( TK_READYCOUNTER      , SC_READYCOUNTER    , SI_READYCOUNTER    , SCB_NONE );
 	set_sc( TK_DODGE             , SC_DODGE           , SI_DODGE           , SCB_NONE );
-	set_sc( TK_SPTIME            , SC_TKREST          , SI_TKREST          , SCB_NONE );
+	add_sc( TK_SPTIME            , SC_EARTHSCROLL );
 	add_sc( TK_SEVENWIND         , SC_SEVENWIND ); 
 	set_sc( TK_SEVENWIND         , SC_GHOSTWEAPON     , SI_GHOSTWEAPON     , SCB_ATK_ELE ); 
 	set_sc( TK_SEVENWIND         , SC_SHADOWWEAPON    , SI_SHADOWWEAPON    , SCB_ATK_ELE ); 
@@ -5772,7 +5772,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			val4 = tick; //Store combo-time in val4.
 		}
 			break;
-		case SC_TKREST:
+		case SC_EARTHSCROLL:
 			val2 = 11-val1; //Chance to consume: 11-skilllv%
 			break;
 		case SC_RUN:
@@ -6328,7 +6328,7 @@ int status_change_clear(struct block_list* bl, int type)
 		case SC_SUMMER:
 		case SC_NOCHAT:
 		case SC_FUSION:
-		case SC_TKREST:
+		case SC_EARTHSCROLL:
 		case SC_READYSTORM:
 		case SC_READYDOWN:
 		case SC_READYCOUNTER:
