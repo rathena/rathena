@@ -4989,10 +4989,6 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			case SC_COMA:
 			case SC_GRAVITATION:
 			case SC_SUITON:
-			case SC_STRIPWEAPON:
-			case SC_STRIPSHIELD:
-			case SC_STRIPARMOR:
-			case SC_STRIPHELM:
 			case SC_RICHMANKIM:
 			case SC_ROKISWEIL:
 			case SC_FOGWALL:
@@ -5305,19 +5301,19 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			break;
 		case SC_STRIPWEAPON:
 			if (!sd) //Watk reduction
-				val2 = 5*val1;
+				val2 = 25;
 			break;
 		case SC_STRIPSHIELD:
 			if (!sd) //Def reduction
-				val2 = 3*val1;
+				val2 = 15;
 			break;
 		case SC_STRIPARMOR:
 			if (!sd) //Vit reduction
-				val2 = 8*val1;
+				val2 = 40;
 			break;
 		case SC_STRIPHELM:
 			if (!sd) //Int reduction
-				val2 = 8*val1;
+				val2 = 40;
 			break;
 		case SC_AUTOSPELL:
 			//Val1 Skill LV of Autospell

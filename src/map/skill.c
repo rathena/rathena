@@ -4328,9 +4328,15 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case ST_FULLSTRIP:
 	{
 		unsigned short location = 0;
-		i = 5+2*skilllv;
-		if (sstatus->dex > tstatus->dex)
-			i += (sstatus->dex - tstatus->dex)/5;
+		int d = 0;
+		
+		//Rate in percent
+		i = 5 + 2*skilllv + (sstatus->dex - tstatus->dex)/5;
+		if (i < 5) i = 5; //Minimum rate 5%
+
+		//Duration in ms
+		d = skill_get_time(skillid,skilllv) + (sstatus->dex - tstatus->dex)*500;
+		if (d < 0) d = 0; //Minimum duration 0ms
 
 		switch (skillid) {
 		case RG_STRIPWEAPON:
@@ -4349,11 +4355,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			location = EQP_WEAPON|EQP_SHIELD|EQP_ARMOR|EQP_HELM;
 			break;
 		}
-		//Note that Full Strip autospell doesn't use a duration
-		if (!clif_skill_nodamage(src,bl,skillid,skilllv,
-				skill_strip_equip(bl, location, i, skilllv,
-				sd&&skillid==ST_FULLSTRIP&&!pc_checkskill(sd, skillid)?0:skill_get_time(skillid,skilllv)))
-			&& sd)
+		//Attempts to strip at rate i and duration d
+		if (!clif_skill_nodamage(src,bl,skillid,skilllv,skill_strip_equip(bl, location, i, skilllv, d)) && sd)
 			clif_skill_fail(sd,skillid,0,0); //Nothing stripped.
 	}
 		break;
