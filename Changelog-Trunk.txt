@@ -4,6 +4,8 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2009/04/25
+	* Fixed Monster Spiral Pierce not being reduced by Ghostring Card (bugreport:3013) [Playtester]
+	- it is forced neutral as its a MISC skill for monsters and doesn't take weapon element
 	* First attempt to fix up the strip skills, please make sure these fixes work (bugreport:3011) [Playtester]
 	- the minimum rate of strip skills is now 5% for all levels
 	- duration of strip skills depends on the dex difference between target and caster and can be reduced to 0

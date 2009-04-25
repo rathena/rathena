@@ -1035,8 +1035,17 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 	} else if (s_ele == -2) { //Use enchantment's element
 		s_ele = s_ele_ = status_get_attack_sc_element(src,sc);
 	}
-	if (skill_num == GS_GROUNDDRIFT)
-		s_ele = s_ele_ = wflag; //element comes in flag.
+
+	switch(skill_num)
+	{
+		case GS_GROUNDDRIFT:
+			s_ele = s_ele_ = wflag; //element comes in flag.
+			break;
+
+		case LK_SPIRALPIERCE:
+			if (!sd) nk &= ~NK_NO_ELEFIX; //forced neutral for monsters
+			break;
+	}
 
 	if(!skill_num)
   	{	//Skills ALWAYS use ONLY your right-hand weapon (tested on Aegis 10.2)
