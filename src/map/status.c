@@ -193,7 +193,7 @@ void initChangeTables(void)
 	set_sc( MG_ENERGYCOAT        , SC_ENERGYCOAT      , SI_ENERGYCOAT      , SCB_NONE );
 	set_sc( NPC_EMOTION          , SC_MODECHANGE      , SI_BLANK           , SCB_MODE );
 	add_sc( NPC_EMOTION_ON       , SC_MODECHANGE      );
-	set_sc( NPC_ATTRICHANGE      , SC_ELEMENTALCHANGE , SI_ARMOR_RESIST    , SCB_DEF_ELE );
+	set_sc( NPC_ATTRICHANGE      , SC_ELEMENTALCHANGE , SI_ARMOR_PROPERTY  , SCB_DEF_ELE );
 	add_sc( NPC_CHANGEWATER      , SC_ELEMENTALCHANGE );
 	add_sc( NPC_CHANGEGROUND     , SC_ELEMENTALCHANGE );
 	add_sc( NPC_CHANGEFIRE       , SC_ELEMENTALCHANGE );
@@ -472,11 +472,12 @@ void initChangeTables(void)
 	StatusIconChangeTable[SC_DEF_RATE] = SI_DEF_RATE;
 	StatusIconChangeTable[SC_MDEF_RATE] = SI_MDEF_RATE;
 	StatusIconChangeTable[SC_INCCRI] = SI_INCCRI;
+	StatusIconChangeTable[SC_INCFLEE2] = SI_PLUSAVOIDVALUE;
 	StatusIconChangeTable[SC_INCHEALRATE] = SI_INCHEALRATE;
-	StatusIconChangeTable[SC_HPREGEN] = SI_HPREGEN;
-	StatusIconChangeTable[SC_SPCOST_RATE] = SI_SPCOST_RATE;
-	StatusIconChangeTable[SC_COMMONSC_RESIST] = SI_COMMONSC_RESIST;
-	StatusIconChangeTable[SC_ARMOR_RESIST] = SI_ARMOR_RESIST;
+	StatusIconChangeTable[SC_S_LIFEPOTION] = SI_S_LIFEPOTION;
+	StatusIconChangeTable[SC_L_LIFEPOTION] = SI_L_LIFEPOTION;
+	StatusIconChangeTable[SC_SPCOST_RATE] = SI_ATKER_BLOOD;
+	StatusIconChangeTable[SC_COMMONSC_RESIST] = SI_TARGET_BLOOD;
 	// Mercenary Bonus Effects
 	StatusIconChangeTable[SC_MERC_FLEEUP] = SI_MERC_FLEEUP;
 	StatusIconChangeTable[SC_MERC_ATKUP] = SI_MERC_ATKUP;
@@ -5123,6 +5124,8 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			case SC_HPREGEN:
 			case SC_HPDRAIN:
 			case SC_SPREGEN:
+			case SC_S_LIFEPOTION:
+			case SC_L_LIFEPOTION:
 			case SC_BOSSMAPINFO:
 			case SC_STUN:
 			case SC_SLEEP:
@@ -5454,6 +5457,8 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 		case SC_HPREGEN:
 		case SC_HPDRAIN:
 		case SC_SPREGEN:
+		case SC_S_LIFEPOTION:
+		case SC_L_LIFEPOTION:
 			if( val1 == 0 ) return 0;
 			// val1 = heal percent/amout
 			// val2 = seconds between heals
@@ -7059,17 +7064,28 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr data)
 		break;
 
 	case SC_HPREGEN:
+	case SC_S_LIFEPOTION:
+	case SC_L_LIFEPOTION:
+		if( sd && --(sce->val4) >= 0 )
+		{
+			// val1 < 0 = per max% | val1 > 0 = exact amount
+			int hp = 0;
+			if( status->hp < status->max_hp )
+				hp = (sce->val1 < 0) ? (int)(sd->status.max_hp * -1 * sce->val1 / 100.) : sce->val1 ;
+			status_heal(bl, hp, 0, 2);
+			sc_timer_next((sce->val2 * 1000) + tick, status_change_timer, bl->id, data);
+			return 0;
+		}
+		break;
+
 	case SC_SPREGEN:
 		if( sd && --(sce->val4) >= 0 )
 		{
 			// val1 < 0 = per max% | val1 > 0 = exact amount
-			int hp = 0, sp = 0;
-			if( type == SC_HPREGEN && status->hp < status->max_hp )
-				hp = (sce->val1 < 0) ? (int)(sd->status.max_hp * -1 * sce->val1 / 100.) : sce->val1 ;
-			else if( type == SC_SPREGEN && status->sp < status->max_sp )
+			int sp = 0;
+			if( status->sp < status->max_sp )
 				sp = (sce->val1 < 0) ? (int)(sd->status.max_sp * -1 * sce->val1 / 100.) : sce->val1 ;
-
-			status_heal(bl, hp, sp, 2);
+			status_heal(bl, 0, sp, 2);
 			sc_timer_next((sce->val2 * 1000) + tick, status_change_timer, bl->id, data);
 			return 0;
 		}

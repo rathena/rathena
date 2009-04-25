@@ -310,6 +310,8 @@ typedef enum sc_type {
 	SC_HPDRAIN,
 	SC_SKILLATKBONUS,
 	SC_ITEMSCRIPT,
+	SC_S_LIFEPOTION,
+	SC_L_LIFEPOTION,
 
 	SC_MAX, //Automatically updated max, used in for's to check we are within bounds.
 } sc_type;
@@ -485,15 +487,16 @@ enum si_type {
 	SI_CRITICALWOUND	= 286,
 	SI_DEF_RATE		= 290,
 	SI_MDEF_RATE	= 291,
-	SI_INCCRI		= 292,
-	SI_INCHEALRATE	= 293,
-	SI_HPREGEN		= 294,
-	// 295 Sword ?
-	// 296 4 chars up ?
+
+	SI_INCHEALRATE	= 292,
+	SI_S_LIFEPOTION = 293,
+	SI_L_LIFEPOTION = 294,
+	SI_INCCRI		= 295,
+	SI_PLUSAVOIDVALUE = 296,
 	SI_SPCOST_RATE  = 298,
-	// 300 Stars ?
-	SI_COMMONSC_RESIST	= 301,
-	SI_ARMOR_RESIST	= 302,
+	SI_ATKER_BLOOD = 300,
+	SI_TARGET_BLOOD = 301,
+	SI_ARMOR_PROPERTY = 302,
 };
 
 // JOINTBEAT stackable ailments
