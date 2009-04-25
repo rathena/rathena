@@ -2654,7 +2654,7 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 		break;
 	case CR_ACIDDEMONSTRATION: // updated the formula based on a Japanese formula found to be exact [Reddozen]
 		if(tstatus->vit+sstatus->int_) //crash fix
-			md.damage = 7*tstatus->vit*sstatus->int_*sstatus->int_ / (10*(tstatus->vit+sstatus->int_));
+			md.damage = (int64)7*tstatus->vit*sstatus->int_*sstatus->int_ / (10*(tstatus->vit+sstatus->int_));
 		else
 			md.damage = 0;
 		if (tsd) md.damage>>=1;
@@ -2739,7 +2739,7 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 	}
 
 	if( md.damage && tsd && !(nk&NK_NO_CARDFIX_DEF) )
-	{
+	{// misc damage reduction from equipment
 		int cardfix = 10000;
 		int race2 = status_get_race2(src);
 		if (!(nk&NK_NO_ELEFIX))
@@ -2758,7 +2758,7 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 			cardfix=cardfix*(100-tsd->long_attack_def_rate)/100;
 
 		if (cardfix != 10000)
-			md.damage=md.damage*((double)cardfix/10000);
+			md.damage=(int64)md.damage*cardfix/10000;
 	}
 
 	if (sd && (i = pc_skillatk_bonus(sd, skill_num)))
