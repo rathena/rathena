@@ -1280,7 +1280,7 @@ int skill_break_equip (struct block_list *bl, unsigned short where, int rate, in
 				where&=~where_list[i];
 			else if (rand()%10000 >= rate)
 				where&=~where_list[i];
-			else if (!sd) //Cause Strip effect.
+			else if (!sd && !(status_get_mode(bl)&MD_BOSS)) //Cause Strip effect.
 				sc_start(bl,scatk[i],100,0,skill_get_time(status_sc2skill(scatk[i]),1));
 		}
 	}
