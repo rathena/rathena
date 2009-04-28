@@ -388,7 +388,7 @@ ra_temin,287,88,7	script	Follower Lekua	926,{
 //ra_temin,228,303,5	script	Freya's Follower#in1	927,{
 ra_temin,228,303,5	script	Freya's Follower#in1	926,{
 	mes "[Freya's Follower]";
-	mes "Once atain, I didn't get";
+	mes "Once again, I didn't get";
 	mes "any sleep yesterday... I'm";
 	mes "praying so hard for Freya's";
 	mes "second coming. I'm exhausted,";

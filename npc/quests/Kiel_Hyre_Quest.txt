@@ -3248,6 +3248,7 @@ kh_vila,185,68,0	script	Test Tube::TestTubeKHQ2	111,{
 		mes "^3355FFA strange looking,";
 		mes "wizened old man is";
 		mes "held within this test tube.^000000";
+		close;
 	}
 	else if (KielHyreQuest == 28) {
 		mes "^3355FFA strange looking,";

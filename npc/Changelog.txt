@@ -1,5 +1,10 @@
 Date		Added
 ======
+2009/04/28
+	* A few quest updates due to bugreports [Playtester]
+	- added a missing close in the Kiel Hyre Quest (bugreport:2885)
+	- added L0ne_W0lf's Cool Event Corp script + a few fixes to it (bugreport:3019)
+	- fixed a small typo in rachel.txt (bugreport:3029)
 2009/04/23
 	* Fixed wrong coordinates of the Prontera Bartender (bugreport:3000) [Playtester]
 	* Fixed a chat window not being closeable in the Training Grounds (bugreport:3009) [Playtester]

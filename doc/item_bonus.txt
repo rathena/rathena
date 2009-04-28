@@ -203,6 +203,7 @@ bonus2 bHPLossRate,n,x;			Lose n HP every x milliseconds
 bonus2 bAddEffWhenHit,n,x;		x/100% chance to cause n state to the enemy when being hit by physical damage
 bonus2 bSkillAtk,n,x;			Increase damage of skill n by x% (supports skill names)
 bonus2 bSkillHeal,n,x;			Increase heal amount of skill n by x% (supports skill names)
+bonus2 bSkillHeal2,n,x;			Increase heal amount if you are healed by skill n by x% (supports skill names)
 bonus2 bAddDamageByClass,n,x;		When being hit by monster of class n increase damage by x%
 bonus2 bAddRace2,n,x;			Increase damage by x% vs. enemies of race n
 							(Check db/mob_race2_db.txt)

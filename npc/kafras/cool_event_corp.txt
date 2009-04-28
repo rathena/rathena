@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Gepard
 //===== Current Version: ===================================== 
-//= 1.4
+//= 1.5
 //===== Compatible With: ===================================== 
 //= eAthena
 //===== Description: ========================================= 
@@ -17,10 +17,10 @@
 //= 1.3 Added cutins, closed Kafra Password exploit
 //=	until we got a client/packet based password support [Lupus]
 //= 1.4 Added Veins Cool Event Corp. Staff. [L0ne_W0lf]
+//= 1.5 Cool Event Corp staff is now more iRO like. [L0ne_W0lf]
 //============================================================ 
 
 hugel,88,168,4	script	Cool Event Corp. Staff::CoolEventCorpStaffHugel	874,{
-
 	cutin "zonda_01",2;
 	mes "[Cool Event Corp. Staff]";
 	mes "Welcome to Cool Event Corp.";
@@ -29,7 +29,6 @@ hugel,88,168,4	script	Cool Event Corp. Staff::CoolEventCorpStaffHugel	874,{
 	mes "for quality service. So how";
 	mes "may I assist you today?";
 	next;
-
 	switch(select("Save:Use Storage:Rent a Pushcart:Storage Password Service:Cancel")){
 	case 1:
 		mes "[Cool Event Corp. Staff]";
@@ -38,11 +37,9 @@ hugel,88,168,4	script	Cool Event Corp. Staff::CoolEventCorpStaffHugel	874,{
 		mes "in the village of Hugel.";
 		mes "Thank you for using the";
 		mes "Cool Event Corp. service~";
-		emotion e_thx;
 		savepoint "hugel",96,155;
 		close2;
-		cutin "", 255;
-		end;
+		break;
 	case 2:
 		mes "[Cool Event Corp. Staff]";
 		if(basicskillcheck() && getskilllv("NV_BASIC") < 6){
@@ -50,35 +47,27 @@ hugel,88,168,4	script	Cool Event Corp. Staff::CoolEventCorpStaffHugel	874,{
 			mes "need the Novice's";
 			mes "Basic Skill Level 6 to";
 			mes "use the Storage Service.";
-			emotion e_sry;
 			close2;
-			cutin "", 255;
-			end;
+			break;
 		}
 		if(Zeny < 40){
 			mes "I'm sorry, but you don't";
 			mes "have enough Zeny to use";
 			mes "the Storage Service. Our";
 			mes "Storage access fee is 40 Zeny.";
-			emotion e_cash;
 			close2;
-			cutin "", 255;
-			end;
+			break;
 		}
 		set Zeny, Zeny - 40;
-		set RESRVPTS, RESRVPTS + 4;
 		mes "Let me open your personal";
 		mes "storage for you right away.";
 		mes "Thanks for supporting Cool";
 		mes "Event Corp. by using our";
 		mes "services. Have a good day~";
-
 		callfunc("F_CheckKafCode");	//check your storage password, if set
 		close2;
 		openstorage;
-		cutin "", 255;
-		end;
-
+		break;
 	case 3:
 		mes "[Cool Event Corp. Staff]";
 		if(BaseClass != Job_Merchant){
@@ -87,17 +76,14 @@ hugel,88,168,4	script	Cool Event Corp. Staff::CoolEventCorpStaffHugel	874,{
 			mes "is only available to Merchants,";
 			mes "Blacksmiths, White Smiths,";
 			mes "Alchemists and Creators.";
-			emotion e_sry;
 			close2;
-			cutin "", 255;
-			end;
+			break;
 		}
 		if(getskilllv("MC_PUSHCART") == 0){
 			mes "You can only rent a cart after";
 			mes "learning the Pushcart Skill.";
 			close2;
-			cutin "", 255;
-			end;
+			break;
 		}
 		if(checkcart() == 1){
 			mes "You already have";
@@ -106,15 +92,13 @@ hugel,88,168,4	script	Cool Event Corp. Staff::CoolEventCorpStaffHugel	874,{
 			mes "rent more than one to";
 			mes "each customer at a time.";
 			close2;
-			cutin "", 255;
-			end;
+			break;
 		}
 		if(countitem(7061)){
 			delitem 7061,1;
 			setcart;
 			close2;
-			cutin "", 255;
-			end;
+			break;
 		}
 		mes "The Pushcart rental";
 		mes "fee is 800 Zeny. Would";
@@ -127,22 +111,13 @@ hugel,88,168,4	script	Cool Event Corp. Staff::CoolEventCorpStaffHugel	874,{
 				mes "don't have enough";
 				mes "Zeny to pay the Pushcart";
 				mes "rental fee of 800 Zeny.";
-				emotion e_cash;
-				close2;
-				cutin "", 255;
-				end;
 			} else {
 				set Zeny, Zeny - 800;
-				set RESRVPTS, RESRVPTS + 80;
 				setcart;
-				close2;
-				cutin "", 255;
-				end;
 			}
 		}
 		close2;
-		cutin "", 255;
-		end;
+		break;
 	case 4:
 		callfunc("F_SetKafCode","[Cool Event Corp. Staff]","Cool Event Corp.");
 		//the function closes msg and remoes cutins
@@ -156,13 +131,12 @@ hugel,88,168,4	script	Cool Event Corp. Staff::CoolEventCorpStaffHugel	874,{
 		mes "providing us with your opinions";
 		mes "and honest feedback. Thank you.";
 		close2;
-		cutin "", 255;
-		end;
 	}
+	cutin "", 255;
+	end;
 }
 
 rachel,109,138,5	script	Cool Event Corp. Staff::CoolEventCorpStaffRachel	874,{
-
 	cutin "zonda_01",2;
 	mes "[Cool Event Corp. Staff]";
 	mes "Welcome to Cool Event Corp.";
@@ -171,8 +145,7 @@ rachel,109,138,5	script	Cool Event Corp. Staff::CoolEventCorpStaffRachel	874,{
 	mes "for quality service. So how";
 	mes "may I assist you today?";
 	next;
-
-	switch(select("Save:Use Storage:Rent a Pushcart:Storage Password Service:Cancel")){
+	switch(select("Save:Use Storage:Teleport Service:Rent a Pushcart:Storage Password Service:Cancel")){
 	case 1:
 		mes "[Cool Event Corp. Staff]";
 		mes "Your Respawn Point";
@@ -180,11 +153,9 @@ rachel,109,138,5	script	Cool Event Corp. Staff::CoolEventCorpStaffRachel	874,{
 		mes "in the town of Rachel.";
 		mes "Thank you for using the";
 		mes "Cool Event Corp. service~";
-		emotion e_thx;
 		savepoint "rachel",113,137;
 		close2;
-		cutin "", 255;
-		end;
+		break;
 	case 2:
 		mes "[Cool Event Corp. Staff]";
 		if(basicskillcheck() && getskilllv("NV_BASIC") < 6){
@@ -192,23 +163,18 @@ rachel,109,138,5	script	Cool Event Corp. Staff::CoolEventCorpStaffRachel	874,{
 			mes "need the Novice's";
 			mes "Basic Skill Level 6 to";
 			mes "use the Storage Service.";
-			emotion e_sry;
 			close2;
-			cutin "", 255;
-			end;
+			break;
 		}
 		if(Zeny < 40){
 			mes "I'm sorry, but you don't";
 			mes "have enough Zeny to use";
 			mes "the Storage Service. Our";
 			mes "Storage access fee is 40 Zeny.";
-			emotion e_cash;
 			close2;
-			cutin "", 255;
-			end;
+			break;
 		}
 		set Zeny, Zeny - 40;
-		set RESRVPTS, RESRVPTS + 4;
 		mes "Let me open your personal";
 		mes "storage for you right away.";
 		mes "Thanks for supporting Cool";
@@ -217,9 +183,34 @@ rachel,109,138,5	script	Cool Event Corp. Staff::CoolEventCorpStaffRachel	874,{
 		callfunc("F_CheckKafCode");	//check your storage password, if set
 		close2;
 		openstorage;
-		cutin "", 255;
-		end;
+		break;
 	case 3:
+		mes "Please choose";
+		mes "your destination.";
+		next;
+		if (select("Veins -> 2200 z:Cancel") == 1) {
+			if ((countitem(7060) != 0) || (Zeny >= 2200)) {
+				if (countitem(7060) != 0) {
+					delitem 7060,1;
+				}
+				else {
+					set Zeny,Zeny-2200;
+				}
+				warp "veins",205,101;
+				cutin "",255;
+				end;
+			}
+			else {
+				mes "[Cool Event Corp. Staff]";
+				mes "I'm sorry, but you don't have";
+				mes "enough zeny for the Teleport";
+				mes "Service. The fee to teleport";
+				mes "to Rachel is 2200 zeny.";
+			}
+		}
+		close2;
+		break;
+	case 4:
 		mes "[Cool Event Corp. Staff]";
 		if(BaseClass != Job_Merchant){
 			mes "I'm sorry, but the";
@@ -227,17 +218,14 @@ rachel,109,138,5	script	Cool Event Corp. Staff::CoolEventCorpStaffRachel	874,{
 			mes "is only available to Merchants,";
 			mes "Blacksmiths, White Smiths,";
 			mes "Alchemists and Creators.";
-			emotion e_sry;
 			close2;
-			cutin "", 255;
-			end;
+			break;
 		}
 		if(getskilllv("MC_PUSHCART") == 0){
 			mes "You can only rent a cart after";
 			mes "learning the Pushcart Skill.";
 			close2;
-			cutin "", 255;
-			end;
+			break;
 		}
 		if(checkcart() == 1){
 			mes "You already have";
@@ -246,15 +234,13 @@ rachel,109,138,5	script	Cool Event Corp. Staff::CoolEventCorpStaffRachel	874,{
 			mes "rent more than one to";
 			mes "each customer at a time.";
 			close2;
-			cutin "", 255;
-			end;
+			break;
 		}
 		if(countitem(7061)){
 			delitem 7061,1;
 			setcart;
 			close2;
-			cutin "", 255;
-			end;
+			break;
 		}
 		mes "The Pushcart rental";
 		mes "fee is 800 Zeny. Would";
@@ -267,26 +253,17 @@ rachel,109,138,5	script	Cool Event Corp. Staff::CoolEventCorpStaffRachel	874,{
 				mes "don't have enough";
 				mes "Zeny to pay the Pushcart";
 				mes "rental fee of 800 Zeny.";
-				emotion e_cash;
-				close2;
-				cutin "", 255;
-				end;
 			} else {
 				set Zeny, Zeny - 800;
-				set RESRVPTS, RESRVPTS + 80;
 				setcart;
-				close2;
-				cutin "", 255;
-				end;
 			}
 		}
 		close2;
-		cutin "", 255;
-		end;
-	case 4:
+		break;
+	case 5:
 		callfunc("F_SetKafCode","[Cool Event Corp. Staff]","Cool Event Corp.");
 		//the function closes msg and remoes cutins
-	case 5:
+	case 6:
 	default:
 		mes "[Cool Event Corp. Staff]";
 		mes "Cool Event Corp. is always";
@@ -296,13 +273,12 @@ rachel,109,138,5	script	Cool Event Corp. Staff::CoolEventCorpStaffRachel	874,{
 		mes "providing us with your opinions";
 		mes "and honest feedback. Thank you.";
 		close2;
-		cutin "", 255;
-		end;
 	}
+	cutin "", 255;
+	end;
 }
 
 veins,208,128,5	script	Cool Event Corp. Staff::CoolEventCorpStaffVeins	874,{
-
 	cutin "zonda_01",2;
 	mes "[Cool Event Corp. Staff]";
 	mes "Welcome to Cool Event Corp.";
@@ -311,8 +287,7 @@ veins,208,128,5	script	Cool Event Corp. Staff::CoolEventCorpStaffVeins	874,{
 	mes "for quality service. So how";
 	mes "may I assist you today?";
 	next;
-
-	switch(select("Save:Use Storage:Rent a Pushcart:Storage Password Service:Cancel")){
+	switch(select("Save:Use Storage:Teleport Service:Rent a Pushcart:Storage Password Service:Cancel")){
 	case 1:
 		mes "[Cool Event Corp. Staff]";
 		mes "Your Respawn Point";
@@ -320,11 +295,9 @@ veins,208,128,5	script	Cool Event Corp. Staff::CoolEventCorpStaffVeins	874,{
 		mes "in the town of Veins.";
 		mes "Thank you for using the";
 		mes "Cool Event Corp. service~";
-		emotion e_thx;
 		savepoint "veins",204,103;
 		close2;
-		cutin "", 255;
-		end;
+		break;
 	case 2:
 		mes "[Cool Event Corp. Staff]";
 		if(basicskillcheck() && getskilllv("NV_BASIC") < 6){
@@ -332,23 +305,18 @@ veins,208,128,5	script	Cool Event Corp. Staff::CoolEventCorpStaffVeins	874,{
 			mes "need the Novice's";
 			mes "Basic Skill Level 6 to";
 			mes "use the Storage Service.";
-			emotion e_sry;
 			close2;
-			cutin "", 255;
-			end;
+			break;
 		}
 		if(Zeny < 40){
 			mes "I'm sorry, but you don't";
 			mes "have enough Zeny to use";
 			mes "the Storage Service. Our";
 			mes "Storage access fee is 40 Zeny.";
-			emotion e_cash;
 			close2;
-			cutin "", 255;
-			end;
+			break;
 		}
 		set Zeny, Zeny - 40;
-		set RESRVPTS, RESRVPTS + 4;
 		mes "Let me open your personal";
 		mes "storage for you right away.";
 		mes "Thanks for supporting Cool";
@@ -357,9 +325,34 @@ veins,208,128,5	script	Cool Event Corp. Staff::CoolEventCorpStaffVeins	874,{
 		callfunc("F_CheckKafCode");	//check your storage password, if set
 		close2;
 		openstorage;
-		cutin "", 255;
-		end;
+		break;
 	case 3:
+		mes "Please choose";
+		mes "your destination.";
+		next;
+		if (select("Rachel -> 2200 z:Cancel") == 1) {
+			if ((countitem(7060) != 0) || (Zeny >= 2200)) {
+				if (countitem(7060) != 0) {
+					delitem 7060,1;
+				}
+				else {
+					set Zeny,Zeny-2200;
+				}
+				warp "rachel",115,125;
+				cutin "",255;
+				end;
+			}
+			else {
+				mes "[Cool Event Corp. Staff]";
+				mes "I'm sorry, but you don't have";
+				mes "enough zeny for the Teleport";
+				mes "Service. The fee to teleport";
+				mes "to Rachel is 2200 zeny.";
+			}
+		}
+		close2;
+		break;
+	case 4:
 		mes "[Cool Event Corp. Staff]";
 		if(BaseClass != Job_Merchant){
 			mes "I'm sorry, but the";
@@ -367,17 +360,14 @@ veins,208,128,5	script	Cool Event Corp. Staff::CoolEventCorpStaffVeins	874,{
 			mes "is only available to Merchants,";
 			mes "Blacksmiths, White Smiths,";
 			mes "Alchemists and Creators.";
-			emotion e_sry;
 			close2;
-			cutin "", 255;
-			end;
+			break;
 		}
 		if(getskilllv("MC_PUSHCART") == 0){
 			mes "You can only rent a cart after";
 			mes "learning the Pushcart Skill.";
 			close2;
-			cutin "", 255;
-			end;
+			break;
 		}
 		if(checkcart() == 1){
 			mes "You already have";
@@ -386,15 +376,13 @@ veins,208,128,5	script	Cool Event Corp. Staff::CoolEventCorpStaffVeins	874,{
 			mes "rent more than one to";
 			mes "each customer at a time.";
 			close2;
-			cutin "", 255;
-			end;
+			break;
 		}
 		if(countitem(7061)){
 			delitem 7061,1;
 			setcart;
 			close2;
-			cutin "", 255;
-			end;
+			break;
 		}
 		mes "The Pushcart rental";
 		mes "fee is 800 Zeny. Would";
@@ -407,26 +395,18 @@ veins,208,128,5	script	Cool Event Corp. Staff::CoolEventCorpStaffVeins	874,{
 				mes "don't have enough";
 				mes "Zeny to pay the Pushcart";
 				mes "rental fee of 800 Zeny.";
-				emotion e_cash;
 				close2;
-				cutin "", 255;
-				end;
 			} else {
 				set Zeny, Zeny - 800;
-				set RESRVPTS, RESRVPTS + 80;
 				setcart;
-				close2;
-				cutin "", 255;
-				end;
 			}
 		}
 		close2;
-		cutin "", 255;
-		end;
-	case 4:
+		break;
+	case 5:
 		callfunc("F_SetKafCode","[Cool Event Corp. Staff]","Cool Event Corp.");
 		//the function closes msg and remoes cutins
-	case 5:
+	case 6:
 	default:
 		mes "[Cool Event Corp. Staff]";
 		mes "Cool Event Corp. is always";
@@ -436,7 +416,7 @@ veins,208,128,5	script	Cool Event Corp. Staff::CoolEventCorpStaffVeins	874,{
 		mes "providing us with your opinions";
 		mes "and honest feedback. Thank you.";
 		close2;
-		cutin "", 255;
-		end;
 	}
+	cutin "", 255;
+	end;
 }
