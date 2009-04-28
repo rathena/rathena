@@ -1,6 +1,7 @@
 Date		Added
 ======
 2009/04/28
+	* Removed unnecessary text and fixed a goto in the Hunter Jobquest (bugreport:3014) [Playtester]
 	* A few quest updates due to bugreports [Playtester]
 	- added a missing close in the Kiel Hyre Quest (bugreport:2885)
 	- added L0ne_W0lf's Cool Event Corp script + a few fixes to it (bugreport:3019)

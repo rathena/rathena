@@ -219,7 +219,6 @@ hu_in01,386,373,4	script	Hunter Guildsman#hnt	727,{
 				mes "Well then,";
 				mes "shall we begin?";
 				next;
-L_AskQuestions:
 				if (select("Yes~ Let's start now.:No, I'll be back later.") == 1) {
 					mes "[Hunter Sherin]";
 					mes "Listen carefully to the scenarios I describe. When I ask a question, you choose an answer. Pretty simple, don't you think?";
@@ -227,6 +226,7 @@ L_AskQuestions:
 					mes "[Hunter Sherin]";
 					mes "I just want to know how you think about life, and why you want to become a Hunter, so there's no need to be nervous.";
 					next;
+L_AskQuestions:
 					mes "[Hunter Sherin]";
 					mes "Well then,";
 					mes "let's begin.";
@@ -409,13 +409,6 @@ L_AskQuestions:
 			mes "[Hunter Sherin]";
 			mes "Welcome back...!";
 			mes "Well, let's start with the interview. This time, carefully think about the answers to each question.";
-			next;
-			mes "[Hunter Sherin]";
-			mes "Well then,";
-			mes "let's begin.";
-			next;
-			mes "[Hunter Sherin]";
-			mes "You are an Archer, and you don't know where you should go to hunt. What do you do?";
 			next;
 			goto L_AskQuestions;
 		}
