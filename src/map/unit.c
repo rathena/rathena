@@ -757,7 +757,6 @@ int unit_can_move(struct block_list *bl)
 	return 1;
 }
 
-
 /*==========================================
  * Resume running after a walk delay
  *------------------------------------------*/
@@ -792,7 +791,8 @@ int unit_set_walkdelay(struct block_list *bl, unsigned int tick, int delay, int 
 		if (DIFF_TICK(ud->canmove_tick, tick+delay) > 0)
 			return 0;
 	} else {
-		if (DIFF_TICK(ud->canmove_tick, tick) > 0)
+		//Don't set walk delays when already trapped.
+		if (!unit_can_move(bl))
 			return 0;
 	}
 	ud->canmove_tick = tick + delay;
