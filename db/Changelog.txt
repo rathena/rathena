@@ -37,6 +37,8 @@
 	2385 Recuvative_Armor		Should trigger HP/SP return with magical kills as well.
 
 =======================
+2009/04/29
+	* Incarnation of Morroc (Angel) is now Shadow 1 instead of Holy 1 [Playtester]
 2009/04/21
 	* Fixed items that use the "AddSPAmount_Action" bonus on aegis [Playtester]
 	- Guillotine gives you 2 SP each time you attack something with a normal attack
