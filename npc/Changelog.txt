@@ -1,5 +1,9 @@
 Date		Added
 ======
+2009-04/29
+	*Updated ASSIN_Q2 variable range check from < 1 to < 3 to defend against the variable being stuck at an incorrect value of 1 or 2,
+	 caused by logging out or pressing cancel on choices list at an inappropriate time thus rendering the player unable to complete the Assassin Quest.
+	 Thanks to Chibi for Report. [Paradox924X]
 2009/04/28
 	* Removed unnecessary text and fixed a goto in the Hunter Jobquest (bugreport:3014) [Playtester]
 	* A few quest updates due to bugreports [Playtester]

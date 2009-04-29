@@ -646,7 +646,7 @@ OnTouch:
 
 in_moc_16,19,154,0	script	nameless_one	-1,8,2,{
 OnTouch:
-	if (ASSIN_Q2 < 1) {
+	if (ASSIN_Q2 < 3) {
 		mes "[The Anonymous One]";
 		mes "Welcome, guest.";
 		mes "Mwahaha, it's useless";
