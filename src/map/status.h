@@ -669,6 +669,7 @@ extern int percentrefinery[5][MAX_REFINE+1]; //The last slot always has a 0% suc
 
 //Status change option definitions (options are what makes status changes visible to chars
 //who were not on your field of sight when it happened)
+
 //opt1: Non stackable status changes.
 enum {
 	OPT1_STONE = 1, //Petrified
@@ -680,34 +681,62 @@ enum {
 };
 
 //opt2: Stackable status changes.
-#define OPT2_POISON       0x0001
-#define OPT2_CURSE        0x0002
-#define OPT2_SILENCE      0x0004
-#define OPT2_SIGNUMCRUCIS 0x0008
-#define OPT2_BLIND        0x0010
-#define OPT2_ANGELUS      0x0020
-#define OPT2_BLEEDING     0x0040
-#define OPT2_DPOISON      0x0080
+enum {
+	OPT2_POISON       = 0x0001,
+	OPT2_CURSE        = 0x0002,
+	OPT2_SILENCE      = 0x0004,
+	OPT2_SIGNUMCRUCIS = 0x0008,
+	OPT2_BLIND        = 0x0010,
+	OPT2_ANGELUS      = 0x0020,
+	OPT2_BLEEDING     = 0x0040,
+	OPT2_DPOISON      = 0x0080,
+};
 
-#define OPTION_SIGHT 0x00000001
-#define OPTION_HIDE 0x00000002
-#define OPTION_CLOAK 0x00000004
-#define OPTION_CART1 0x00000008
-#define OPTION_FALCON 0x00000010
-#define OPTION_RIDING 0x00000020
-#define OPTION_INVISIBLE 0x00000040
-#define OPTION_CART2 0x00000080
-#define OPTION_CART3 0x00000100
-#define OPTION_CART4 0x00000200
-#define OPTION_CART5 0x00000400
-#define OPTION_ORCISH 0x00000800
-#define OPTION_WEDDING 0x00001000
-#define OPTION_RUWACH 0x00002000
-#define OPTION_CHASEWALK 0x00004000
-//Note that clientside Flying and Xmas are 0x8000 for clients prior to 2007.
-#define OPTION_FLYING 0x0008000
-#define OPTION_XMAS 0x00010000
-#define OPTION_SUMMER 0x00040000
+//opt3: (SHOW_EFST_*)
+enum {
+	OPT3_NORMAL           = 0x00000000,
+	OPT3_QUICKEN          = 0x00000001,
+	OPT3_OVERTHRUST       = 0x00000002,
+	OPT3_ENERGYCOAT       = 0x00000004,
+	OPT3_EXPLOSIONSPIRITS = 0x00000008,
+	OPT3_STEELBODY        = 0x00000010,
+	OPT3_BLADESTOP        = 0x00000020,
+	OPT3_AURABLADE        = 0x00000040,
+	OPT3_BERSERK          = 0x00000080,
+	OPT3_LIGHTBLADE       = 0x00000100,
+	OPT3_MOONLIT          = 0x00000200,
+	OPT3_MARIONETTE       = 0x00000400,
+	OPT3_ASSUMPTIO        = 0x00000800,
+	OPT3_WARM             = 0x00001000,
+	OPT3_KAITE            = 0x00002000,
+	OPT3_BUNSIN           = 0x00004000,
+	OPT3_SOULLINK         = 0x00008000,
+	OPT3_UNDEAD           = 0x00010000,
+	OPT3_CONTRACT         = 0x00020000,
+};
+
+enum {
+	OPTION_NOTHING   = 0x00000000,
+	OPTION_SIGHT     = 0x00000001,
+	OPTION_HIDE      = 0x00000002,
+	OPTION_CLOAK     = 0x00000004,
+	OPTION_CART1     = 0x00000008,
+	OPTION_FALCON    = 0x00000010,
+	OPTION_RIDING    = 0x00000020,
+	OPTION_INVISIBLE = 0x00000040,
+	OPTION_CART2     = 0x00000080,
+	OPTION_CART3     = 0x00000100,
+	OPTION_CART4     = 0x00000200,
+	OPTION_CART5     = 0x00000400,
+	OPTION_ORCISH    = 0x00000800,
+	OPTION_WEDDING   = 0x00001000,
+	OPTION_RUWACH    = 0x00002000,
+	OPTION_CHASEWALK = 0x00004000,
+	OPTION_FLYING    = 0x00008000, //Note that clientside Flying and Xmas are 0x8000 for clients prior to 2007.
+	OPTION_XMAS      = 0x00010000,
+	OPTION_TRANSFORM = 0x00020000,
+	OPTION_SUMMER    = 0x00040000,
+};
 
 #define OPTION_CART (OPTION_CART1|OPTION_CART2|OPTION_CART3|OPTION_CART4|OPTION_CART5)
 

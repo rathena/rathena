@@ -6097,20 +6097,22 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 		case SC_DPOISON:      sc->opt2 |= OPT2_DPOISON;      break;
 		//OPT3
 		case SC_TWOHANDQUICKEN:
+		case SC_ONEHAND:
 		case SC_SPEARQUICKEN:
 		case SC_CONCENTRATION:
-			sc->opt3 |= 0x1;
+		case SC_MERC_QUICKEN:
+			sc->opt3 |= OPT3_QUICKEN;
 			opt_flag = 0;
 			break;
 		case SC_MAXOVERTHRUST:
 		case SC_OVERTHRUST:
 		case SC_SWOO:	//Why does it shares the same opt as Overthrust? Perhaps we'll never know...
-			sc->opt3 |= 0x2;
+			sc->opt3 |= OPT3_OVERTHRUST;
 			opt_flag = 0;
 			break;
 		case SC_ENERGYCOAT:
 		case SC_SKE:
-			sc->opt3 |= 0x4;
+			sc->opt3 |= OPT3_ENERGYCOAT;
 			opt_flag = 0;
 			break;
 		case SC_INCATKRATE:
@@ -6120,66 +6122,66 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 				break;
 			}
 		case SC_EXPLOSIONSPIRITS:
-			sc->opt3 |= 0x8;
+			sc->opt3 |= OPT3_EXPLOSIONSPIRITS;
 			opt_flag = 0;
 			break;
 		case SC_STEELBODY:
 		case SC_SKA:
-			sc->opt3 |= 0x10;
+			sc->opt3 |= OPT3_STEELBODY;
 			opt_flag = 0;
 			break;
 		case SC_BLADESTOP:
-			sc->opt3 |= 0x20;
+			sc->opt3 |= OPT3_BLADESTOP;
 			opt_flag = 0;
 			break;
 		case SC_AURABLADE:
-			sc->opt3 |= 0x40;
+			sc->opt3 |= OPT3_AURABLADE;
 			opt_flag = 0;
 			break;
 		case SC_BERSERK:
-			sc->opt3 |= 0x80;
+			sc->opt3 |= OPT3_BERSERK;
 			opt_flag = 0;
 			break;
-//		case ???: // OPT3_LIGHTBLADE, doesn't seem to do anything
-//			sc->opt3 |= 0x100;
+//		case ???: // doesn't seem to do anything
+//			sc->opt3 |= OPT3_LIGHTBLADE;
 //			opt_flag = 0;
 //			break;
 		case SC_DANCING:
 			if ((val1&0xFFFF) == CG_MOONLIT)
-				sc->opt3 |= 0x200;
+				sc->opt3 |= OPT3_MOONLIT;
 			opt_flag = 0;
 			break;
 		case SC_MARIONETTE:
 		case SC_MARIONETTE2:
-			sc->opt3 |= 0x400;
+			sc->opt3 |= OPT3_MARIONETTE;
 			opt_flag = 0;
 			break;
 		case SC_ASSUMPTIO:
-			sc->opt3 |= 0x800;
+			sc->opt3 |= OPT3_ASSUMPTIO;
 			opt_flag = 0;
 			break;
 		case SC_WARM: //SG skills [Komurka]
-			sc->opt3 |= 0x1000;
+			sc->opt3 |= OPT3_WARM;
 			opt_flag = 0;
 			break;
 		case SC_KAITE:
-			sc->opt3 |= 0x2000;
+			sc->opt3 |= OPT3_KAITE;
 			opt_flag = 0;
 			break;
 		case SC_BUNSINJYUTSU:
-			sc->opt3 |= 0x4000;
+			sc->opt3 |= OPT3_BUNSIN;
 			opt_flag = 0;
 			break;
 		case SC_SPIRIT:
-			sc->opt3 |= 0x8000;
+			sc->opt3 |= OPT3_SOULLINK;
 			opt_flag = 0;
 			break;
 		case SC_CHANGEUNDEAD:
-			sc->opt3 |= 0x10000;
+			sc->opt3 |= OPT3_UNDEAD;
 			opt_flag = 0;
 			break;
-//		case ???: // OPT3_CONTRACT, from DA_CONTRACT (looks like biolab mobs aura)
-//			sc->opt3 |= 0x20000;
+//		case ???: // from DA_CONTRACT (looks like biolab mobs aura)
+//			sc->opt3 |= OPT3_CONTRACT;
 //			opt_flag = 0;
 //			break;
 		//OPTION
@@ -6732,18 +6734,18 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 	case SC_SPEARQUICKEN:
 	case SC_CONCENTRATION:
 	case SC_MERC_QUICKEN:
-		sc->opt3 &= ~0x1;
+		sc->opt3 &= ~OPT3_QUICKEN;
 		opt_flag = 0;
 		break;
 	case SC_OVERTHRUST:
 	case SC_MAXOVERTHRUST:
 	case SC_SWOO:
-		sc->opt3 &= ~0x2;
+		sc->opt3 &= ~OPT3_OVERTHRUST;
 		opt_flag = 0;
 		break;
 	case SC_ENERGYCOAT:
 	case SC_SKE:
-		sc->opt3 &= ~0x4;
+		sc->opt3 &= ~OPT3_ENERGYCOAT;
 		opt_flag = 0;
 		break;
 	case SC_INCATKRATE: //Simulated Explosion spirits effect.
@@ -6753,59 +6755,66 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 			break;
 		}
 	case SC_EXPLOSIONSPIRITS:
-		sc->opt3 &= ~0x8;
+		sc->opt3 &= ~OPT3_EXPLOSIONSPIRITS;
 		opt_flag = 0;
 		break;
 	case SC_STEELBODY:
 	case SC_SKA:
-		sc->opt3 &= ~0x10;
+		sc->opt3 &= ~OPT3_STEELBODY;
 		opt_flag = 0;
 		break;
 	case SC_BLADESTOP:
-		sc->opt3 &= ~0x20;
+		sc->opt3 &= ~OPT3_BLADESTOP;
+		opt_flag = 0;
+		break;
+	case SC_AURABLADE:
+		sc->opt3 &= ~OPT3_AURABLADE;
 		opt_flag = 0;
 		break;
 	case SC_BERSERK:
-		sc->opt3 &= ~0x80;
+		sc->opt3 &= ~OPT3_BERSERK;
 		opt_flag = 0;
 		break;
+//	case ???: // doesn't seem to do anything
+//		sc->opt3 &= ~OPT3_LIGHTBLADE;
+//		opt_flag = 0;
+//		break;
 	case SC_DANCING:
 		if ((sce->val1&0xFFFF) == CG_MOONLIT)
-			sc->opt3 &= ~0x200;
+			sc->opt3 &= ~OPT3_MOONLIT;
 		opt_flag = 0;
 		break;
 	case SC_MARIONETTE:
 	case SC_MARIONETTE2:
-		sc->opt3 &= ~0x400;
+		sc->opt3 &= ~OPT3_MARIONETTE;
 		opt_flag = 0;
 		break;
 	case SC_ASSUMPTIO:
-		sc->opt3 &= ~0x800;
+		sc->opt3 &= ~OPT3_ASSUMPTIO;
 		opt_flag = 0;
 		break;
 	case SC_WARM: //SG skills [Komurka]
-		sc->opt3 &= ~0x1000;
+		sc->opt3 &= ~OPT3_WARM;
 		opt_flag = 0;
 		break;
 	case SC_KAITE:
-		sc->opt3 &= ~0x2000;
+		sc->opt3 &= ~OPT3_KAITE;
 		opt_flag = 0;
 		break;
 	case SC_BUNSINJYUTSU:
-		sc->opt3 &= ~0x4000;
+		sc->opt3 &= ~OPT3_BUNSIN;
 		opt_flag = 0;
 		break;
 	case SC_SPIRIT:
-		sc->opt3 &= ~0x8000;
+		sc->opt3 &= ~OPT3_SOULLINK;
 		opt_flag = 0;
 		break;
 	case SC_CHANGEUNDEAD:
-		sc->opt3 &= ~0x10000;
+		sc->opt3 &= ~OPT3_UNDEAD;
 		opt_flag = 0;
 		break;
-//	TODO:
-//	case ???:
-//		sc->opt3 &= ~0x20000;
+//	case ???: // from DA_CONTRACT (looks like biolab mobs aura)
+//		sc->opt3 &= ~OPT3_CONTRACT;
 //		opt_flag = 0;
 //		break;
 	default:
