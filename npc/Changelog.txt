@@ -1,5 +1,7 @@
 Date		Added
 ======
+2009/05/02
+	* Applied timexy's pvp warp name fix (bugreport:2938) [Playtester]
 2009/04/30
 	* Fixed various typos in the Moscovia quests thanks to Ihades (bugreport:3036) [Playtester]
 2009/04/29
