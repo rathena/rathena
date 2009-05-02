@@ -1106,12 +1106,16 @@ int pc_calc_skilltree(struct map_session_data *sd)
 		{ //Enable Bard/Dancer spirit linked skills.
 			if( sd->status.sex )
 			{ //Link dancer skills to bard.
+				if( sd->status.skill[i-8].lv < 10 )
+					continue;
 				sd->status.skill[i].id = i;
 				sd->status.skill[i].lv = sd->status.skill[i-8].lv; // Set the level to the same as the linking skill
 				sd->status.skill[i].flag = 1; // Tag it as a non-savable, non-uppable, bonus skill
 			}
 			else
 			{ //Link bard skills to dancer.
+				if( sd->status.skill[i].lv < 10 )
+					continue;
 				sd->status.skill[i-8].id = i - 8;
 				sd->status.skill[i-8].lv = sd->status.skill[i].lv; // Set the level to the same as the linking skill
 				sd->status.skill[i-8].flag = 1; // Tag it as a non-savable, non-uppable, bonus skill

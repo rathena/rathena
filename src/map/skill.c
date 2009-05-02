@@ -7216,7 +7216,7 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 					int count = 0;
 					const int x = bl->x, y = bl->y;
 
-					//If target isn't knocked back it should hit every 20ms [Playtester]
+					//If target isn't knocked back it should hit every "interval" ms [Playtester]
 					do
 					{
 						if( bl->type == BL_PC )
