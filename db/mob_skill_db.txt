@@ -4393,6 +4393,9 @@
 1832,Ifrit@NPC_DRAGONFEAR,chase,659,5,10000,0,10000,yes,self,always,,,,,,,
 1832,Ifrit@WZ_METEOR,idle,83,9,10000,0,5000,yes,target,always,,,,,,,
 1833,Kasa@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
+1833,Kasa@CR_REFLECTSHIELD,idle,252,1,1000,0,300000,yes,self,always,,,,,,,6
+1833,Kasa@CR_REFLECTSHIELD,chase,252,1,1000,0,300000,yes,self,always,,,,,,,6
+1833,Kasa@CR_REFLECTSHIELD,attack,252,1,1000,0,300000,yes,self,always,,,,,,,6
 1833,Kasa@WZ_FIREPILLAR,idle,80,5,10000,500,30000,no,target,always,,,,,,,
 1833,Kasa@NPC_FIREBREATH,chase,654,10,2000,1500,15000,no,target,always,,,,,,,
 1833,Kasa@NPC_FIREBREATH,attack,654,10,2000,1500,15000,no,target,always,,,,,,,
@@ -4416,6 +4419,9 @@
 1834,Salamander@NPC_CRITICALSLASH,attack,170,1,2000,0,5000,yes,target,always,,,,,,,
 1834,Salamander@NPC_WIDEBLEEDING,attack,665,2,10000,500,100000,no,self,myhpltmaxrate,20,,,,,,
 1835,Kasa@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
+1835,Kasa@CR_REFLECTSHIELD,idle,252,1,1000,0,300000,yes,self,always,,,,,,,6
+1835,Kasa@CR_REFLECTSHIELD,chase,252,1,1000,0,300000,yes,self,always,,,,,,,6
+1835,Kasa@CR_REFLECTSHIELD,attack,252,1,1000,0,300000,yes,self,always,,,,,,,6
 1835,Kasa@WZ_FIREPILLAR,idle,80,5,10000,500,30000,no,target,always,,,,,,,
 1835,Kasa@NPC_FIREBREATH,chase,654,10,2000,3000,200000,no,target,always,,,,,,,
 1835,Kasa@NPC_FIREBREATH,attack,654,10,2000,3000,200000,no,target,always,,,,,,,
