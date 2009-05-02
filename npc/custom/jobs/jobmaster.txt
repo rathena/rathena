@@ -187,7 +187,7 @@ prontera,153,193,6	script	Job Master	123,{
 				close;
 			}
 	}
-	mes "Looks like something has gone wrong. Please report to the eAthena Development Team about this error.";
+	mes "I'm sorry, there are no further classes for your job.";
 	close;
 
 L_GivePlat:

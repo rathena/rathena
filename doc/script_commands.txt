@@ -2048,7 +2048,7 @@ Lets say the ID of a party was saved as a global variable:
 
 ---------------------------------------
 
-*getpartymember <party id>,{<type>};
+*getpartymember <party id>{,<type>};
 
 Thank you to HappyDenn for all this information.
 
@@ -2112,7 +2112,7 @@ Example:
 
 ---------------------------------------
 
-*getpartyleader(<party id>,{<type>});
+*getpartyleader(<party id>{,<type>});
 
 This function returns some information about the given party-id's leader.
 When type is ommitted, the default information retrieved is the leader's name.
@@ -3856,7 +3856,7 @@ Example:
 	getnameditem "Apple","Aaron"; 
 	
 //Self-explanatory (I hope).
-	if (getnameitem("Apple,"Aaron")) {
+	if (getnameitem("Apple","Aaron")) {
 		mes "You now have a Aaron's Apple!"; 
 	}
 
@@ -5939,10 +5939,14 @@ to query the server log tables.
 
 ---------------------------------------
 
-*setitemscript(<ItemID>,<"{ new item script }">);
+*setitemscript(<item id>,<"{ new item script }">{,<type>});
 
 Set a new script bonus to the Item. Very useful for game events.
-You can remove an item's itemscript by leaving empty the itemscript argument.
+You can remove an item's itemscript by leaving the itemscript argument empty.
+Type can optionally be used indicates which script to set (default is 0):
+ 0 - Script
+ 1 - OnEquip_Script
+ 2 - OnUnequip_Script
 
 Example:
 

@@ -86,10 +86,10 @@ lighthalzen,154,60,6	script	Cool Event Voting Staff::CoolEventVotingStaff02	874,
 	callfunc "F_DTS_Warp",0,0;
 }
 //Prontera
-prontera,147,125,4	script	Cool Event Voting Staff::CoolEventVotingStaff03	874,{
+prontera,147,125,6	script	Cool Event Voting Staff::CoolEventVotingStaff03	874,{
 	callfunc "F_DTS_Warp",0,0;
 }
-prontera,164,125,6	script	Kafra Voting Staff#02	115,{
+prontera,164,125,4	script	Kafra Voting Staff#02	115,{
 	callfunc "F_DTS_Warp",1,3;
 }
 

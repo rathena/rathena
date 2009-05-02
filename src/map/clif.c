@@ -12496,7 +12496,7 @@ void clif_bossmapinfo(int fd, struct mob_data *md, short flag)
 			unsigned int seconds;
 			int hours, minutes;
 
-			seconds = DIFF_TICK(timer_data->tick, gettick()) / 1000;
+			seconds = DIFF_TICK(timer_data->tick, gettick()) / 1000 + 60;
 			hours = seconds / (60 * 60);
 			seconds = seconds - (60 * 60 * hours);
 			minutes = seconds / 60;

@@ -6040,7 +6040,7 @@ BUILDIN_FUNC(strcharinfo)
 				script_pushconststr(st,"");
 			break;
 		default:
-			ShowWarning("buildin_strcharinfo: unknown parameter.");
+			ShowWarning("buildin_strcharinfo: unknown parameter.\n");
 			script_pushconststr(st,"");
 			break;
 	}
@@ -10851,7 +10851,7 @@ BUILDIN_FUNC(charcommand)
 	}
 
 	if (*cmd != charcommand_symbol) {
-		ShowWarning("script: buildin_charcommand: No '#' symbol!");
+		ShowWarning("script: buildin_charcommand: No '#' symbol!\n");
 		script_reportsrc(st);
 		return 1;
 	}

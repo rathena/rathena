@@ -311,14 +311,14 @@ static void ers_obj_destroy(ERS self)
 		}
 	}
 	if (count) { // missing entries
-		ShowWarning("ers::destroy : %u entries missing (possible double free), continuing destruction (entry size=%u).",
+		ShowWarning("ers::destroy : %u entries missing (possible double free), continuing destruction (entry size=%u).\n",
 				count, obj->size);
 	} else if (reuse) { // extra entries
 		while (reuse && count != UINT32_MAX) {
 			count++;
 			reuse = reuse->next;
 		}
-		ShowWarning("ers::destroy : %u extra entries found, continuing destruction (entry size=%u).",
+		ShowWarning("ers::destroy : %u extra entries found, continuing destruction (entry size=%u).\n",
 				count, obj->size);
 	}
 	// destroy the entry manager

@@ -30,7 +30,7 @@ const char* mapindex_getmapname(const char* string, char* output)
 	
 	size_t len = strnlen(string, MAP_NAME_LENGTH_EXT);
 	if (len == MAP_NAME_LENGTH_EXT) {
-		ShowWarning("(mapindex_normalize_name) Map name '%*s' is too long!", 2*MAP_NAME_LENGTH_EXT, string);
+		ShowWarning("(mapindex_normalize_name) Map name '%*s' is too long!\n", 2*MAP_NAME_LENGTH_EXT, string);
 		len--;
 	}
 	if (len >= 4 && stricmp(&string[len-4], ".gat") == 0)
@@ -52,7 +52,7 @@ const char* mapindex_getmapname_ext(const char* string, char* output)
 	
 	size_t len = safestrnlen(string, MAP_NAME_LENGTH);
 	if (len == MAP_NAME_LENGTH) {
-		ShowWarning("(mapindex_normalize_name) Map name '%*s' is too long!", 2*MAP_NAME_LENGTH, string);
+		ShowWarning("(mapindex_normalize_name) Map name '%*s' is too long!\n", 2*MAP_NAME_LENGTH, string);
 		len--;
 	}
 	

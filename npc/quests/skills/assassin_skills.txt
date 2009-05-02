@@ -486,7 +486,7 @@ in_moc_16,23,27,5	script	Assassin#realgirl	885,{
 			mes "[Esmille]";
 			mes "That jewel is yours";
 			mes "to keep. In truth, I don't";
-			mes "really need any treasure, just^FFFFFF ^000000 some proof your of qualification.";
+			mes "really need any treasure, just^FFFFFF ^000000 some proof of your qualification.";
 			mes "It looks like you're ready for me^FFFFFF ^000000 to teach you Sonic Acceleration.";
 			set ASSN_SK,6;
 			next;
