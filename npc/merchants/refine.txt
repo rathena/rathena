@@ -1203,7 +1203,7 @@ function	script	repairmain	{
 		next;
 		set .@totalcost,.@repairprice*.@checkitem;
 		mes "["+getarg(0)+"]";
-		mes "Each repair costs 5000 Zeny. So to repair all your damaged items would cost " + .@totalcost + " Zeny! Would you like to repair the items?";
+		mes "Each repair costs " + .@repairprice + " Zeny. So to repair all your damaged items would cost " + .@totalcost + " Zeny! Would you like to repair the items?";
 		next;
 		switch(select("Yes:No")) {
 		case 1:
