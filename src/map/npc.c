@@ -498,7 +498,12 @@ int npc_timerevent_start(struct npc_data* nd, int rid)
 	}
 
 	//Check if timer is already started.
-	if( (sd && sd->npc_timer_id != -1) || nd->u.scr.timerid != -1 )
+	if( sd )
+	{
+		if( sd->npc_timer_id != -1 )
+			return 0;
+	}
+	else if( nd->u.scr.timerid != -1 )
 		return 0;
 		
 	ted = ers_alloc(timer_event_ers, struct timer_event_data);

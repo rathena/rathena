@@ -436,7 +436,7 @@ int pc_makesavestatus(struct map_session_data *sd)
 }
 
 /*==========================================
- * Ú?ŽbÌ‰Šú‰»
+ * Ú?ŽbÌ‰Šú‰?
  *------------------------------------------*/
 int pc_setnewpc(struct map_session_data *sd, int account_id, int char_id, int login_id1, unsigned int client_tick, int sex, int fd)
 {
@@ -5548,7 +5548,6 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 		}
 		if( sd->pvp_point < 0 )
 		{
-			sd->pvp_point=0;
 			add_timer(tick+1000, pc_respawn_timer,sd->bl.id,0);
 			return 1|8;
 		}
