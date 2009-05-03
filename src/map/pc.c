@@ -5243,7 +5243,10 @@ static int pc_respawn_timer(int tid, unsigned int tick, int id, intptr data)
 {
 	struct map_session_data *sd = map_id2sd(id);
 	if( sd != NULL )
+	{
+		sd->pvp_point=0;
 		pc_respawn(sd,0);
+	}
 
 	return 0;
 }
