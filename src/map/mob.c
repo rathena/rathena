@@ -1800,6 +1800,8 @@ void mob_log_damage(struct mob_data *md, struct block_list *src, int damage)
 		return; //Do nothing for absorbed damage.
 	if( !damage && !(src->type&DEFAULT_ENEMY_TYPE(md)) )
 		return; //Do not log non-damaging effects from non-enemies.
+	if( src->id == md->bl.id )
+		return; //Do not log self-damage.
 
 	switch( src->type )
 	{
