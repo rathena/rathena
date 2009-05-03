@@ -5,6 +5,7 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2009/05/03
 	* Do not log damage if it's done by mob itself (bugreport:2933) [Inkfish]
+	* Fix 'awake' not working (bugreport:2580) [Inkfish]
 2009/05/02
 	* Spirit of Bard and Dancer now only works for mastered skills (bugreport:3037) [Playtester]
 	- also fixed an outdated comment in the source code

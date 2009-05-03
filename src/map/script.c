@@ -12921,7 +12921,7 @@ BUILDIN_FUNC(awake)
 			delete_timer(tst->sleep.timer, run_script_timer);
 			node = script_erase_sleepdb(node);
 			tst->sleep.timer = INVALID_TIMER;
-			tst->sleep.tick = 0;
+			//tst->sleep.tick = 0;
 			run_script_main(tst);
 		}
 		else
