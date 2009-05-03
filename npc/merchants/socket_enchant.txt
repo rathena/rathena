@@ -340,9 +340,13 @@ function	script	Func_Socket	{
 		close;
 	}
 
+	mes "[Seiyablem]";
+	mes "Alright then, let the work begin!";
+	mes "You'd better pray for a successful result.";
+	next;
 	switch(getarg(0))
 	{
-		case 1:		
+		case 1:
 			if((Zeny < getarg(5)*1000) || (countitem(getarg(6)) < getarg(7)) || (!countitem(getarg(1))))
 			{
 				mes "[Seiyablem]";
@@ -363,10 +367,6 @@ function	script	Func_Socket	{
 			break;
 	}
 	
-	mes "[Seiyablem]";
-	mes "Alright then, let the work begin!";
-	mes "You'd better pray for a successful result.";
-	next;
 	set .@socketrand,rand(1,100);
 	if((.@socketrand > getarg(3)) && (.@socketrand < getarg(4)))
 	{

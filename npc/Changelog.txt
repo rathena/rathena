@@ -1,6 +1,7 @@
 Date		Added
 ======
 2009/05/03
+	- Switched the slot enchanter's checks so they come AFTER the final 'next' pause. (bugreport:2664)
 	* Removed the obfuscation of the #kafra_code password, following ultramage's suggestion. [brianluau]
 2009/05/02
 	- Changed a misleading message in the custom Job Changer. (bugreport:682) [brianluau]
