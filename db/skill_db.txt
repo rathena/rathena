@@ -260,7 +260,7 @@
 216,1,6,1,0,0x1,0,5,1,no,0,0,0,weapon,0,		RG_STRIPSHIELD,Divest Shield
 217,1,6,1,0,0x1,0,5,1,no,0,0,0,weapon,0,		RG_STRIPARMOR,Divest Armor
 218,1,6,1,0,0x1,0,5,1,no,0,0,0,weapon,0,		RG_STRIPHELM,Divest Helm
-219,-1,6,1,-1,0,0,5,1,no,0,0,0,weapon,0,		RG_INTIMIDATE,Snatch
+219,1,6,1,-1,0,0,5,1,no,0,0,0,weapon,0,		RG_INTIMIDATE,Snatch
 220,1,6,2,0,0x1,0,1,1,no,0,0,0,none,0,		RG_GRAFFITI,Scribble
 221,0,6,2,0,0x1,0,5,1,no,0,0,0,none,0,		RG_FLAGGRAFFITI,Piece
 222,1,6,2,0,0x3,5,1,1,no,0,0,0,none,0,		RG_CLEANER,Remover
