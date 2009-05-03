@@ -4,14 +4,11 @@
 //= Old Warper 2 by Darkchild - Remade with quest format by DZeroX
 //= Huge Rewrite by Neouni
 //===== Current Version: ==========================================
-//= 2.1
+//= 2.2
 //===== Compatible With: ==========================================
 //= Any eAthena Version
 //===== Description: ==============================================
 //= Warper that works only after locations are unlocked
-//===== Warning: ==================================================
-// you have to set the securitycode value [1337] the same as in
-// functions_kafras.txt if you changed it !!
 //===== Additional Comments: ======================================
 //= 1.0 - NPCs created
 //= 1.1 - Add Dungeons by sturm
@@ -73,6 +70,7 @@
 //-2.0b
 // - Special warpname menu option name bug fixed
 //-2.1 Updated names to fall within retrictions. [L0ne_W0lf]
+//-2.2 #kafra_code is now stored as is. [brianluau]
 //=================================================================
 
 //========================Function=&=Script========================
@@ -599,12 +597,11 @@ L_Storage:
 	end;
 
 F_CheckKafCode:
-// you have to set the 1337 value the same as in functions_kafras.txt if you changed it !!
 	if(#kafra_code==0) return;
 	mes "Enter your storage password:";
 	set @code_,0;
 	input @code_;
-	if(@code_ != #kafra_code-getcharid(3)-1337) {
+	if(@code_ != #kafra_code) {
 		dispbottom "Wrong storage password.";
 		close;
 	}

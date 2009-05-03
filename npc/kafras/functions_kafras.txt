@@ -5,7 +5,7 @@
 //= Darlskies, Darkchild, Syrus22, Lupus, kobra_k88 (2.0)
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 6.2
+//= 6.3
 //===== Compatible With: ===================================== 
 //= eAthena 1.0
 //===== Description: =========================================
@@ -33,7 +33,6 @@
 //= 3.2 Fixed an exploit [Lupus]
 //= 4.0 Added Kafra storage password protection. [Lupus]
 //=	to block Kafra Password, read comments at 350 line
-//=	Note: You can change '1337' value to another to raise password protection
 //= 5.0 Fixed the close2;....close; end; lines. Who let them slip away? =/ [erKURITA]
 //=	  Also, the kafra upon warp was giving back the zeny. Removed. [erKURITA]
 //= 5.1 Optimized a little, added no tele/save arg's [Evera]
@@ -58,6 +57,7 @@
 //=		Added 2 args into F_SetKafCode to fit it in Cool Evnt Co. NPC [Lupus]
 //= 6.1 Added menu for Turbo Track Kafra Staff. [L0ne_W0lf]
 //= 6.2 Updated/Fixed warp cords. [Kisuka]
+//= 6.3 #kafra_code is now stored as is. [brianluau]
 //============================================================ 
 
 
@@ -561,7 +561,7 @@ function	script	F_CheckKafCode	{
 	mes "Enter your storage password:";
 	set @code_,0;
 	input @code_;
-	if(@code_ != #kafra_code-getcharid(3)-1337) {
+	if(@code_ != #kafra_code) {
 		dispbottom "Wrong storage password.";
 		close2;
 		cutin "",255;
@@ -593,7 +593,7 @@ function	script	F_SetKafCode	{
 	mes getarg(0);
 	mes "At first, please enter your ^0000FFold password^000000.";
 	set @code,callfunc("F_EntKafCode");
-	if(@code==0 || @code != #kafra_code-getcharid(3)-1337) {
+	if(@code==0 || @code != #kafra_code) {
 		mes "Wrong password. You can't set a new password.";
 		emotion e_hmm;
 		goto M_END;
@@ -615,7 +615,7 @@ M_SET:
 	set Zeny,Zeny-5000;
 	//set RESRVPTS, RESRVPTS + (5000/50);	//hardcoded password doesn't add pts
 
-	set #kafra_code,@code+getcharid(3)+1337;
+	set #kafra_code,@code;
 	mes "You've protected your storage with a secret password.";
 	mes "Thank you for using "+getarg(1)+".";
 	emotion e_thx;
@@ -635,7 +635,7 @@ M_CLEAR:
 	if(Zeny < 1000) goto L_ZENY;
 	set Zeny,Zeny-1000;
 	//set RESRVPTS, RESRVPTS + (1000/50);	//hardcoded password doesn't add pts
-	if(@code == #kafra_code-getcharid(3)-1337) {
+	if(@code == #kafra_code) {
 		set #kafra_code,0;
 		mes "You've successfully cleared your storage password.";
 		mes "Thank you for using "+getarg(1)+".";

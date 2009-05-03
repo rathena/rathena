@@ -1,6 +1,11 @@
 Date		Added
 ======
+2009/05/03
+	* Removed the obfuscation of the #kafra_code password, following ultramage's suggestion. [brianluau]
 2009/05/02
+	- Changed a misleading message in the custom Job Changer. (bugreport:682) [brianluau]
+	- Updated some NPC's facing directions. (bugreport:3030)
+	- Fixed a grammar typo in the Assassin skill quest.
 	* Applied timexy's pvp warp name fix (bugreport:2938) [Playtester]
 2009/04/30
 	* Fixed various typos in the Moscovia quests thanks to Ihades (bugreport:3036) [Playtester]
