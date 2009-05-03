@@ -5688,7 +5688,15 @@ int skill_castend_id(int tid, unsigned int tick, int id, intptr data)
 		ud->canact_tick = tick + skill_delayfix(src, ud->skillid, ud->skilllv);
 		if ( battle_config.display_status_timers && sd )
 			clif_status_change(src, SI_ACTIONDELAY, 1, skill_delayfix(src, ud->skillid, ud->skilllv));
-
+		if( sd )
+		{
+			switch( ud->skillid )
+			{
+			case GS_DESPERADO:
+				sd->canequip_tick = tick + skill_get_time(ud->skillid, ud->skilllv);
+				break;
+			}
+		}
 		if (skill_get_state(ud->skillid) != ST_MOVE_ENABLE)
 			unit_set_walkdelay(src, tick, battle_config.default_walk_delay+skill_get_walkdelay(ud->skillid, ud->skilllv), 1);
 
@@ -5867,6 +5875,15 @@ int skill_castend_pos(int tid, unsigned int tick, int id, intptr data)
 		ud->canact_tick = tick + skill_delayfix(src, ud->skillid, ud->skilllv);
 		if ( battle_config.display_status_timers && sd )
 			clif_status_change(src, SI_ACTIONDELAY, 1, skill_delayfix(src, ud->skillid, ud->skilllv));
+//		if( sd )
+//		{
+//			switch( ud->skillid )
+//			{
+//			case ????:
+//				sd->canequip_tick = tick + ????;
+//				break;
+//			}
+//		}
 		unit_set_walkdelay(src, tick, battle_config.default_walk_delay+skill_get_walkdelay(ud->skillid, ud->skilllv), 1);
 
 		map_freeblock_lock();

@@ -8,6 +8,9 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 	* Fix 'awake' not working (bugreport:2580) [Inkfish]
 	* Fix several npctimer issues (bugreport:1619, bugreport:1730) [Inkfish]
 	* Players now cannot be revived during pvp respawn delay [Inkfish]
+	* Block equipments switching for some skills (bugreport:2900) [Inkfish]
+	- cannot change equipments during Arrow Vulcan's cast time
+	- cannot change equipments within Desperado's attack duration
 2009/05/02
 	* Spirit of Bard and Dancer now only works for mastered skills (bugreport:3037) [Playtester]
 	- also fixed an outdated comment in the source code

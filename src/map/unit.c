@@ -1072,6 +1072,14 @@ int unit_skilluse_id2(struct block_list *src, int target_id, short skill_num, sh
 	ud->canact_tick  = tick + casttime + 100;
 	if ( battle_config.display_status_timers && sd )
 		clif_status_change(src, SI_ACTIONDELAY, 1, casttime);
+	if( sd )
+	{
+		switch( skill_num )
+		{
+		case CG_ARROWVULCAN:
+			sd->canequip_tick = tick + casttime;
+		}
+	}
 	ud->skilltarget  = target_id;
 	ud->skillx       = 0;
 	ud->skilly       = 0;
@@ -1179,6 +1187,14 @@ int unit_skilluse_pos2( struct block_list *src, short skill_x, short skill_y, sh
 	ud->canact_tick  = tick + casttime + 100;
 	if ( battle_config.display_status_timers && sd )
 		clif_status_change(src, SI_ACTIONDELAY, 1, casttime);
+//	if( sd )
+//	{
+//		switch( skill_num )
+//		{
+//		case ????:
+//			sd->canequip_tick = tick + casttime;
+//		}
+//	}
 	ud->skillid      = skill_num;
 	ud->skilllv      = skill_lv;
 	ud->skillx       = skill_x;
@@ -1597,6 +1613,8 @@ int unit_skillcastcancel(struct block_list *bl,int type)
 	ud->canact_tick = tick;
 	if ( battle_config.display_status_timers && sd )
 		clif_status_change(bl, SI_ACTIONDELAY, 0, 0);
+	if( sd )
+		sd->canequip_tick = tick;
 
 	if(type&1 && sd)
 		skill = sd->skillid_old;

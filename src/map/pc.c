@@ -6681,6 +6681,12 @@ int pc_equipitem(struct map_session_data *sd,int n,int req_pos)
 		return 0;
 	}
 
+	if( DIFF_TICK(sd->canequip_tick,gettick()) > 0 )
+	{
+		clif_equipitemack(sd,n,0,0);
+		return 0;
+	}
+
 	id = sd->inventory_data[n];
 	pos = pc_equippoint(sd,n); //With a few exceptions, item should go in all specified slots.
 

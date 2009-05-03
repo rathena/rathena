@@ -181,6 +181,7 @@ struct map_session_data {
 	int invincible_timer;
 	unsigned int canlog_tick;
 	unsigned int canuseitem_tick;	// [Skotlex]
+	unsigned int canequip_tick;	// [Inkfish]
 	unsigned int cantalk_tick;
 	unsigned int cansendmail_tick; // [Mail System Flood Protection]
 	unsigned int ks_floodprotect_tick; // [Kill Steal Protection]
