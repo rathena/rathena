@@ -421,47 +421,52 @@ int npc_timerevent(int tid, unsigned int tick, int id, intptr data)
 	struct timer_event_data *ted = (struct timer_event_data*)data;
 	struct map_session_data *sd=NULL;
 
-	if( nd==NULL ){
+	if( nd == NULL )
+	{
 		ShowError("npc_timerevent: NPC not found??\n");
 		return 0;
 	}
-	if (ted->rid) {
-		sd = map_id2sd(ted->rid);
-		if (!sd) {
-			ShowError("npc_timerevent: Attached player not found.\n");
-			ers_free(timer_event_ers, ted);
-			return 0;
-		}
+
+	if( ted->rid && !(sd = map_id2sd(ted->rid)) )
+	{
+		ShowError("npc_timerevent: Attached player not found.\n");
+		ers_free(timer_event_ers, ted);
+		return 0;
 	}
+
 	old_rid = nd->u.scr.rid; //To restore it later.
 	nd->u.scr.rid = sd?sd->bl.id:0;
 	
 	old_tick = nd->u.scr.timertick;
-	nd->u.scr.timertick=ted->otick;
-	te=nd->u.scr.timer_event+ ted->next;
+	nd->u.scr.timertick = ted->otick = gettick();
+	te = nd->u.scr.timer_event + ted->next;
 	
 	old_timer = nd->u.scr.timer;
-	t = nd->u.scr.timer=ted->time;
+	t = nd->u.scr.timer = ted->time;
 	ted->next++;
 	
-	if( nd->u.scr.timeramount> ted->next){
-		next= nd->u.scr.timer_event[ ted->next ].timer
-			- nd->u.scr.timer_event[ ted->next-1 ].timer;
-		ted->time+=next;
-		if (sd)
+	if( nd->u.scr.timeramount > ted->next)
+	{
+		next = nd->u.scr.timer_event[ ted->next ].timer - nd->u.scr.timer_event[ ted->next - 1 ].timer;
+		ted->time += next;
+		if( sd )
 			sd->npc_timer_id = add_timer(tick+next,npc_timerevent,id,(intptr)ted);
 		else
 			nd->u.scr.timerid = add_timer(tick+next,npc_timerevent,id,(intptr)ted);
-	} else {
-		if (sd)
+	}
+	else
+	{
+		if( sd )
 			sd->npc_timer_id = -1;
 		else
 			nd->u.scr.timerid = -1;
 		ers_free(timer_event_ers, ted);
+		nd->u.scr.timertick = 0;
 	}
 	run_script(nd->u.scr.script,te->pos,nd->u.scr.rid,nd->bl.id);
 	//Restore previous data, only if this timer is a player-attached one.
-	if (sd) {
+	if( sd )
+	{
 		nd->u.scr.rid = old_rid;
 		nd->u.scr.timer = old_timer;
 		nd->u.scr.timertick = old_tick;
@@ -473,48 +478,44 @@ int npc_timerevent(int tid, unsigned int tick, int id, intptr data)
  *------------------------------------------*/
 int npc_timerevent_start(struct npc_data* nd, int rid)
 {
-	int j,n, next;
+	int j, next;
 	struct map_session_data *sd=NULL; //Player to whom script is attached.
 	struct timer_event_data *ted;
 		
 	nullpo_retr(0, nd);
 
-	n=nd->u.scr.timeramount;
-	if( n==0 )
+	if( nd->u.scr.timeramount == 0 )
 		return 0;
 
-	ARR_FIND( 0, n, j, nd->u.scr.timer_event[j].timer > nd->u.scr.timer );
-	if(j>=n) // check if there is a timer to use !!BEFORE!! you write stuff to the structures [Shinomori]
+	ARR_FIND( 0, nd->u.scr.timeramount, j, nd->u.scr.timer_event[j].timer > nd->u.scr.timer );
+	if( j >= nd->u.scr.timeramount ) // check if there is a timer to use !!BEFORE!! you write stuff to the structures [Shinomori]
 		return 0;
-	if (nd->u.scr.rid > 0) {
-		//Try to attach timer to this player.
-		sd = map_id2sd(nd->u.scr.rid);
-		if (!sd) {
-			ShowError("npc_timerevent_start: Attached player not found!\n");
-			return 1;
-		}
+
+	if( nd->u.scr.rid > 0 && !(sd = map_id2sd(nd->u.scr.rid)) )
+	{ //Try to attach timer to this player.
+		ShowError("npc_timerevent_start: Attached player not found!\n");
+		return 1;
 	}
+
 	//Check if timer is already started.
-	if (sd) {
-		if (sd->npc_timer_id != -1)
-			return 0;
-	} else if (nd->u.scr.timerid != -1)
+	if( (sd && sd->npc_timer_id != -1) || nd->u.scr.timerid != -1 )
 		return 0;
 		
 	ted = ers_alloc(timer_event_ers, struct timer_event_data);
 	ted->next = j;
-	nd->u.scr.timertick=ted->otick=gettick();
+	nd->u.scr.timertick = ted->otick = gettick();
 
 	//Attach only the player if attachplayerrid was used.
 	ted->rid = sd?sd->bl.id:0;
 
-// Do not store it to make way to two types of timers: globals and personals.	
-//	if (rid >= 0) nd->u.scr.rid=rid;	// changed to: attaching to given rid by default [Shinomori]
+	// Do not store it to make way to two types of timers: globals and personals.	
+//	if( rid >= 0 ) // changed to: attaching to given rid by default [Shinomori]
+//		nd->u.scr.rid=rid;
 	// if rid is less than 0 leave it unchanged [celest]
 
 	next = nd->u.scr.timer_event[j].timer - nd->u.scr.timer;
 	ted->time = nd->u.scr.timer_event[j].timer;
-	if (sd)
+	if( sd )
 		sd->npc_timer_id = add_timer(gettick()+next,npc_timerevent,nd->bl.id,(intptr)ted);
 	else
 		nd->u.scr.timerid = add_timer(gettick()+next,npc_timerevent,nd->bl.id,(intptr)ted);
@@ -528,27 +529,29 @@ int npc_timerevent_stop(struct npc_data* nd)
 	struct map_session_data *sd =NULL;
 	const struct TimerData *td = NULL;
 	int *tid;
+
 	nullpo_retr(0, nd);
-	if (nd->u.scr.rid) {
-		sd = map_id2sd(nd->u.scr.rid);
-		if (!sd) {
-			ShowError("npc_timerevent_stop: Attached player not found!\n");
-			return 1;
-		}
+	if( nd->u.scr.rid && !(sd = map_id2sd(nd->u.scr.rid)) )
+	{
+		ShowError("npc_timerevent_stop: Attached player not found!\n");
+		return 1;
 	}
 	
 	tid = sd?&sd->npc_timer_id:&nd->u.scr.timerid;
-	
 	if (*tid == -1) //Nothing to stop
 		return 0;
+
 	td = get_timer(*tid);
 	if (td && td->data) 
 		ers_free(timer_event_ers, (void*)td->data);
 	delete_timer(*tid,npc_timerevent);
 	*tid = -1;
+
 	//Set the timer tick to the time that has passed since the beginning of the timers and now.
-	nd->u.scr.timer = DIFF_TICK(gettick(),nd->u.scr.timertick);
+	nd->u.scr.timer += DIFF_TICK(gettick(),nd->u.scr.timertick);
+	nd->u.scr.timertick = 0;
 //	nd->u.scr.rid = 0; //Eh? why detach?
+
 	return 0;
 }
 /*==========================================
@@ -559,39 +562,46 @@ void npc_timerevent_quit(struct map_session_data* sd)
 	const struct TimerData *td;
 	struct npc_data* nd;
 	struct timer_event_data *ted;
-	if (sd->npc_timer_id == -1)
+
+	if( sd->npc_timer_id == -1 )
 		return;
-	td = get_timer(sd->npc_timer_id);
-	if (!td) {
+
+	if( !(td = get_timer(sd->npc_timer_id)) )
+	{
 		sd->npc_timer_id = -1;
 		return; //??
 	}
+
 	nd = (struct npc_data *)map_id2bl(td->id);
 	ted = (struct timer_event_data*)td->data;
 	delete_timer(sd->npc_timer_id, npc_timerevent);
 	sd->npc_timer_id = -1;
-	if (nd && nd->bl.type == BL_NPC)
+	if( nd && nd->bl.type == BL_NPC )
 	{	//Execute OnTimerQuit
 		char buf[NAME_LENGTH*2+3];
 		struct event_data *ev;
+
 		snprintf(buf, ARRAYLENGTH(buf), "%s::OnTimerQuit", nd->exname);
 		ev = (struct event_data*)strdb_get(ev_db, buf);
-		if(ev && ev->nd != nd) {
+		if( ev && ev->nd != nd )
+		{
 			ShowWarning("npc_timerevent_quit: Unable to execute \"OnTimerQuit\", two NPCs have the same event name [%s]!\n",buf);
 			ev = NULL;
 		}
-		if (ev) {
+		if( ev )
+		{
 			int old_rid,old_timer;
 			unsigned int old_tick;
+
 			//Set timer related info.
 			old_rid = nd->u.scr.rid;
 			nd->u.scr.rid = sd->bl.id;
 
 			old_tick = nd->u.scr.timertick;
-			nd->u.scr.timertick=ted->otick;
+			nd->u.scr.timertick = ted->otick = gettick();
 
 			old_timer = nd->u.scr.timer;
-			nd->u.scr.timer=ted->time;
+			nd->u.scr.timer = ted->time;
 		
 			//Execute label
 			run_script(nd->u.scr.script,ev->pos,sd->bl.id,nd->bl.id);
@@ -603,6 +613,7 @@ void npc_timerevent_quit(struct map_session_data* sd)
 		}
 	}
 	ers_free(timer_event_ers, ted);
+	nd->u.scr.timertick = 0;
 }
 
 /*==========================================
