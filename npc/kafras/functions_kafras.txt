@@ -58,6 +58,7 @@
 //= 6.1 Added menu for Turbo Track Kafra Staff. [L0ne_W0lf]
 //= 6.2 Updated/Fixed warp cords. [Kisuka]
 //= 6.3 #kafra_code is now stored as is. [brianluau]
+//= 6.3b The md5() of their kafra code is now stored in #kafra_code$ [brianluau]
 //============================================================ 
 
 
@@ -557,11 +558,11 @@ function	script	F_KafEnd	{
 
 // Check Storage Password Function ====================
 function	script	F_CheckKafCode	{
-	if(#kafra_code==0) return;
+	if(#kafra_code$=="") return;
 	mes "Enter your storage password:";
 	set @code_,0;
 	input @code_;
-	if(@code_ != #kafra_code) {
+	if(md5(@code_) != #kafra_code$) {
 		dispbottom "Wrong storage password.";
 		close2;
 		cutin "",255;
@@ -576,7 +577,7 @@ function	script	F_CheckKafCode	{
 // getarg(0) = NPC Name, getarg(1) = Company Name
 function	script	F_SetKafCode	{
 	mes getarg(0);
-	if(#kafra_code) {
+	if(#kafra_code$) {
 		mes "Your storage is protected with a password. What would you do now?";
 		next;
 		menu "Change old password -> 5000z",-,
@@ -593,7 +594,7 @@ function	script	F_SetKafCode	{
 	mes getarg(0);
 	mes "At first, please enter your ^0000FFold password^000000.";
 	set @code,callfunc("F_EntKafCode");
-	if(@code==0 || @code != #kafra_code) {
+	if(@code==0 || md5(@code) != #kafra_code$) {
 		mes "Wrong password. You can't set a new password.";
 		emotion e_hmm;
 		goto M_END;
@@ -615,7 +616,7 @@ M_SET:
 	set Zeny,Zeny-5000;
 	//set RESRVPTS, RESRVPTS + (5000/50);	//hardcoded password doesn't add pts
 
-	set #kafra_code,@code;
+	set #kafra_code$,md5(@code);
 	mes "You've protected your storage with a secret password.";
 	mes "Thank you for using "+getarg(1)+".";
 	emotion e_thx;
@@ -635,8 +636,8 @@ M_CLEAR:
 	if(Zeny < 1000) goto L_ZENY;
 	set Zeny,Zeny-1000;
 	//set RESRVPTS, RESRVPTS + (1000/50);	//hardcoded password doesn't add pts
-	if(@code == #kafra_code) {
-		set #kafra_code,0;
+	if(md5(@code) == #kafra_code$) {
+		set #kafra_code$,"";
 		mes "You've successfully cleared your storage password.";
 		mes "Thank you for using "+getarg(1)+".";
 		emotion e_thx;

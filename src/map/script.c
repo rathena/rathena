@@ -9,6 +9,7 @@
 
 #include "../common/cbasetypes.h"
 #include "../common/malloc.h"
+#include "../common/md5calc.h"
 #include "../common/lock.h"
 #include "../common/nullpo.h"
 #include "../common/showmsg.h"
@@ -11900,6 +11901,7 @@ BUILDIN_FUNC(pow)
 	script_pushint(st,(int)i);
 	return 0;
 }
+
 BUILDIN_FUNC(distance)
 {
 	int x0, y0, x1, y1;
@@ -11914,6 +11916,19 @@ BUILDIN_FUNC(distance)
 }
 
 // <--- [zBuffer] List of mathematics commands
+
+BUILDIN_FUNC(md5)
+{
+	const char *tmpstr;
+	char *md5str;
+
+	tmpstr = script_getstr(st,2);
+	md5str = (char *)aMallocA((32+1)*sizeof(char));
+	MD5_String(tmpstr, md5str);
+	script_pushstr(st, md5str);
+	return 0;
+}
+
 // [zBuffer] List of dynamic var commands --->
 
 BUILDIN_FUNC(setd)
@@ -13900,6 +13915,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(pow,"ii"),
 	BUILDIN_DEF(distance,"iiii"),
 	// <--- [zBuffer] List of mathematics commands
+	BUILDIN_DEF(md5,"s"),
 	// [zBuffer] List of dynamic var commands --->
 	BUILDIN_DEF(getd,"*"),
 	BUILDIN_DEF(setd,"*"),
