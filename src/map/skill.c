@@ -1747,9 +1747,6 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 
 			if ((type = pc_checkskill(tsd,RG_PLAGIARISM)) < lv)
 				lv = type;
-			//kRO Update makes it impossible to copy skills beyond the skill_db max.
-			if ((type = skill_get_max(skillid)) < lv)
-				lv = type;
 
 			tsd->cloneskill_id = skillid;
 			tsd->status.skill[skillid].id = skillid;
@@ -2828,35 +2825,46 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 		break;
 	case WZ_WATERBALL:
 		skill_attack(BF_MAGIC,src,src,bl,skillid,skilllv,tick,flag);
-	{
-		int range = skilllv/2;
-		int size = 2*range + 1;
-		int count = 0;
-
-		if( src->type == BL_PC )
-		{// count the number of water cells in range
-			struct skill_unit* unit;
+		{
+			int range = skilllv/2;
+			int size = 2*range + 1;
+			int count = 0;
 			int x, y;
-			for( y = src->y - range; y <= src->y + range; ++y )
-			for( x = src->x - range; x <= src->x + range; ++x )
-			{
-				if( map_getcell(src->m,x,y,CELL_CHKWATER) )
-					count++; // natural water cell
-				else
-				if( (unit = map_find_skill_unit_oncell(src,x,y,SA_DELUGE,NULL)) != NULL
-				||  (unit = map_find_skill_unit_oncell(src,x,y,NJ_SUITON,NULL)) != NULL )
-				{
-					count++; // skill-induced water cell
-					skill_delunit(unit); // consume cell
-				}
-			}
-		}
-		else // non-players bypass the water requirement
-			count = size*size;
 
-		if( count > 1 ) // queue the remaining count - 1 timerskill Waterballs
-			skill_addtimerskill(src,tick+150,bl->id,0,0,skillid,skilllv,count-1,flag);
-	}
+			if( src->type == BL_PC )
+			{// count the number of water cells in range
+				struct skill_unit* unit;
+				int maxlv = skill_get_max(skillid);
+
+				if( skilllv > maxlv )
+					range =  maxlv / 2;
+
+				for( y = src->y - range; y <= src->y + range; ++y )
+					for( x = src->x - range; x <= src->x + range; ++x )
+					{
+						if( map_getcell(src->m,x,y,CELL_CHKWATER) )
+							count++; // natural water cell
+						else
+						if( (unit = map_find_skill_unit_oncell(src,x,y,SA_DELUGE,NULL)) != NULL
+						||  (unit = map_find_skill_unit_oncell(src,x,y,NJ_SUITON,NULL)) != NULL )
+						{
+							count++; // skill-induced water cell
+							skill_delunit(unit); // consume cell
+						}
+					}
+			}
+			else
+			{ // non-players bypass the water requirement
+				count = size*size;
+				for( y = src->y - range; y <= src->y + range; ++y )
+					for( x = src->x - range; x <= src->x + range; ++x )
+						if( map_find_skill_unit_oncell(src,x,y,SA_LANDPROTECTOR,NULL) != NULL )
+							count--;
+			}
+
+			if( count > 1 ) // queue the remaining count - 1 timerskill Waterballs
+				skill_addtimerskill(src,tick+150,bl->id,0,0,skillid,skilllv,count-1,flag);
+		}
 		break;
 
 	case PR_BENEDICTIO:
@@ -5339,7 +5347,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			clif_skill_nodamage(src,bl,skillid,skilllv,1);
 			for(i = 0; i < g->max_member; i++, j++) {
 				if (j>8) j=0;
-				if ((dstsd = g->member[i].sd) != NULL && sd != dstsd && !pc_isdead(dstsd) && !dstsd->state.autotrade) {
+				if ((dstsd = g->member[i].sd) != NULL && sd != dstsd && !dstsd->state.autotrade) {
 					if (map[dstsd->bl.m].flag.nowarp && !map_flag_gvg2(dstsd->bl.m))
 						continue;
 					if(map_getcell(src->m,src->x+dx[j],src->y+dy[j],CELL_CHKNOREACH))

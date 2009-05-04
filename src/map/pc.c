@@ -3805,6 +3805,12 @@ int pc_setpos(struct map_session_data* sd, unsigned short mapindex, int x, int y
 		return 1;
 	}
 
+	if( pc_isdead(sd) )
+	{ //Revive dead people before warping them
+		pc_setstand(sd);
+		pc_setrestartvalue(sd,1);
+	}
+
 	sd->state.changemap = (sd->mapindex != mapindex);
 	if( sd->state.changemap )
 	{	//Misc map-changing settings

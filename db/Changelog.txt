@@ -37,6 +37,8 @@
 	2385 Recuvative_Armor		Should trigger HP/SP return with magical kills as well.
 
 =======================
+2009/05/04
+	* Added cast time and sp cost for Waterball Lvl 5 - 10 [Inkfish]
 2009/05/03
 	* Snatch now works with all weapons (including bow!) [Playtester]
 	- range doesn't depend on weapon range anymore and is always 1 even with bows

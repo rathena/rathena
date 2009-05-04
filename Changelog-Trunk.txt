@@ -5,6 +5,11 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2009/05/04
 	* Added the md5() script command. [brianluau]
+	* Now if a dead player is moved for whatever reason, he'll be alive with 1 HP. (bugreport:70) [Inkfish]
+	* Players now are allowed to copy the skills the level which is beyond the skill_db max. [Inkfish]
+	* Fixed some behaviors for Waterball (bugreport:3024) [Inkfish]
+	- High level Waterball used by players doesn't increase the number of balls.
+	- Monsters can't pull water from cells with Magnetic Earth.
 2009/05/03
 	* Updated item_db.sql and mob_db.sql from recent changes to both. Thanks to Peter once again! [Jguy]
 	* Do not log damage if it's done by mob itself (bugreport:2933) [Inkfish]
