@@ -603,9 +603,9 @@ moc_ruins,91,150,0	script	Ponka-Hontas	93,{
 	mes "[Mage Guildsman]";
 	mes "Would you like a Solution? Then please give me 50 Zeny and at least 1 Empty Testtube.";
 	next;
-	IF (select("Alright, Deal.:Nah, forget it.") == 1) {
+	if (select("Alright, Deal.:Nah, forget it.") == 1) {
 		mes "[Mage Guildsman]";
-		if (zENY < 50) {
+		if (zeny < 50) {
 			mes "I'm sorry, but you don't have enough money to cover the 50 Zeny fee.";
 			close;
 		}
@@ -617,7 +617,7 @@ moc_ruins,91,150,0	script	Ponka-Hontas	93,{
 		set zeny,zeny-50;
 		getitem 1088,1; //Morocc_Potion
 	}
-	CLOSE;
+	close;
 }
 
 geffen_in,177,112,4	script	Bookshelf	111,{
@@ -714,4 +714,5 @@ geffen_in,177,112,4	script	Bookshelf	111,{
 		mes "Mixing Machine)";
 		close;
 	}
+	close;
 }
