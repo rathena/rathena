@@ -107,6 +107,14 @@ SOURCE=..\src\common\malloc.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\src\common\md5calc.c
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\common\md5calc.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\src\common\mapindex.c
 # End Source File
 # Begin Source File

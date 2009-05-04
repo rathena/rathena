@@ -1,7 +1,6 @@
 Date		Added
 ======
 2009/05/04
-	- The md5 checksum of the kafra code is now stored in #kafra_code$ [brianluau]
 	- Added a missing zeny check in the Jawaii Bartender. (bugreport:2897) [brianluau]
 	- Added a missing 'close' in the Mage quest Bookshelf. (bugreport:2873)
 2009/05/03

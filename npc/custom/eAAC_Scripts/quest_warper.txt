@@ -71,7 +71,6 @@
 // - Special warpname menu option name bug fixed
 //-2.1 Updated names to fall within retrictions. [L0ne_W0lf]
 //-2.2 #kafra_code is now stored as is. [brianluau]
-//-2.2b The md5() of their kafra code is now stored in #kafra_code$ [brianluau]
 //=================================================================
 
 //========================Function=&=Script========================
@@ -598,11 +597,11 @@ L_Storage:
 	end;
 
 F_CheckKafCode:
-	if(#kafra_code$=="") return;
+	if(#kafra_code==0) return;
 	mes "Enter your storage password:";
 	set @code_,0;
 	input @code_;
-	if(md5(@code_) != #kafra_code$) {
+	if(@code_ != #kafra_code) {
 		dispbottom "Wrong storage password.";
 		close;
 	}
