@@ -808,6 +808,7 @@ bool pc_authok(struct map_session_data *sd, int login_id2, time_t expiration_tim
 	sd->pvp_timer = INVALID_TIMER;
 	
 	sd->canuseitem_tick = tick;
+	sd->canequip_tick = tick;
 	sd->cantalk_tick = tick;
 	sd->cansendmail_tick = tick;
 
