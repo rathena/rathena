@@ -453,9 +453,6 @@
 7875,83,100	// Pirate_Box
 5305,91,100	// Pirate_Dagger
 
-// Battle Badge
-7773,115,100	// War_Badge
-
 // Moscovia Quest Items -----
 2707,91,100	// Gusli
 7761,115,100	// Magic_Gourd_Bottle

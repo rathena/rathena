@@ -1787,6 +1787,92 @@ optimisation.
 
 ---------------------------------------
 
+*while (<condition>) <statement>;
+
+This is probably the simplest and most frequently used loop structure. The 'while' 
+statement can be interpreted as "while <condition> is true, perform <statement>". 
+It is a pretest loop, meaning the conditional expression is tested before any of the 
+statements in the body of the loop are performed. If the condition evaluates to 
+false, the statement(s) in the body of the loop is/are never executed. If the 
+condition evaluates to true, the statement(s) are executed, then control transfers 
+back to the conditional expression, which is reevaluated and the cycle continues. 
+
+Multiple statements can be grouped with { }, curly braces, just like with the 'if' statement.
+
+Example 1:
+	while (switch(select("Yes:No") == 2 ))
+		mes "You picked no.";
+
+Example 2: multiple statements
+	while (switch(select("Yes:No") == 2 )) {
+		mes "Why did you pick no?";
+		mes "You should pick yes instead!";
+	}
+
+Example 3: counter-controlled loop
+	set .@i, 1;
+	while (.@i <= 5) {
+		mes "This line will print 5 times.";
+		set .@i, .@i +1;
+	}
+
+Example 4: sentinel-controlled loop
+	mes "Input 0 to stop";
+	input .@num;
+	while (.@num != 0) {
+		mes "You entered " + .@num;
+		input .@num;
+	}
+	close;
+
+---------------------------------------
+
+*for (<variable initialization>; <condition>; <variable update>) <statement>;
+
+Another pretest looping structure is the 'for' statement. It is considered a 
+specialized form of the 'while' statement, and is usually associated with counter-
+controlled loops. Here are the steps of the 'for' statement: the initialize 
+statement is executed first and only once. The condition test is performed. 
+When the condition evaluates to false, the rest of the for statement is skipped. 
+When the condition evaluates to true, the body of the loop is executed, then the 
+update statement is executed (this usually involves incrementing a variable). 
+Then the condition is reevaluated and the cycle continues. 
+
+Example 1:
+	for( set .@i, 1; .@i <= 5; set .@i, .@i +1 )
+		mes "This line will print 5 times.";
+
+Example 2:
+	mes "This will print the numbers 1 - 5.";
+	for( set .@i, 1; .@i <= 5; set .@i, .@i +1 )
+		mes .@i;
+
+---------------------------------------
+
+*do { <statement>; } while (<condition>);
+
+The 'do...while' is the only posttest loop structure available in this script 
+language. With a posttest, the statements are executed once before the condition 
+is tested. When the condition is true, the statement(s) are repeated. When the 
+condition is false, control is transferred to the statement following the 
+'do...while' loop expression.
+
+Example 1: sentinel-controlled loop
+	mes "This menu will keep appearing until you pick Cancel";
+	do {
+		set .@menu, select("One:Two:Three:Cancel");
+	} while (.@menu != 4);
+
+Example 2: counter-controlled loop
+	mes "This will countdown from 10 to 1.";
+	set .@i, 10;
+	do {
+		mes .@i;
+		set .@i, .@i - 1;
+	} while (.@i > 0);
+
+---------------------------------------
+
 *setarray <array name>[<first value>],<value>{,<value>...<value>};
 
 This command will allow you to quickly fill up an array in one go. Check the 
@@ -2012,7 +2098,7 @@ if( getcharid(2) == 0 ) mes "Only members of a guild are allowed here!";
 *getmotherid()
 *getfatherid()
 
-These functions return the characters (shild/mother/father) ID
+These functions return the characters (child/mother/father) ID
 
     if (getmotherid()) mes "Oh... I know your mother's ID:"+getmotherid();
 
@@ -2234,13 +2320,13 @@ the players would normally see on screen.)
 
 This function will search the invoking character's inventory for any broken 
 items, and will return their item ID numbers. Since the character may have 
-several broken items, 0 given as an argument will return the first one found, 1 
+several broken items, 1 given as an argument will return the first one found, 2 
 will return the second one, etc. Will return 0 if no such item is found.
 
     // Let's see if they have anything broken:
-        if (getbrokenid(0)==0) goto Skip;
+        if (getbrokenid(1)==0) goto Skip;
     // They do, so let's print the name of the first broken item:
-        mes "Oh, I see you have a broken "+getitemname(getbrokenid(0))+" here!";
+        mes "Oh, I see you have a broken "+getitemname(getbrokenid(1))+" here!";
     Skip:
         mes "You don't have anything broken, quit bothering me.";
 
@@ -2485,7 +2571,7 @@ when you want to check item cards or if it's signed. Useful for such quests as
 "Sign this refined item with players name" etc;
 	Hat[0] +4 -> Player's Hat[0] +4
 	
---------------------------------------
+---------------------------------------
 
 *getitemslots (<item id>);
 
@@ -2496,7 +2582,7 @@ Example(s):
 //@slots now has the amount of slots of the item with ID 1205.
 	set @slots, getItemSlots(1205);
 	
---------------------------------------
+---------------------------------------
 //
 2,1.- End of item-related commands.
 //
@@ -2988,7 +3074,7 @@ deal with timers as there's no guarantee the player will still be logged on
 when the timer triggers. Note that the ID of a player is actually their
 account ID.
 
--------------------------
+---------------------------------------
 
 *isloggedin(<account id>{,<char id>});
 
@@ -3598,19 +3684,13 @@ do, but this will only happen in a later SVN revision.
 
 This command will change the gender for the attached character's account. If it 
 was male, it will become female, if it was female, it will become male. The 
-change will be written to the character server, but there is no way to send this 
-information to the client, so the player will continue to see their character as 
-the gender it previously was. What the other players will see before the 
-relogin is not clear.
+change will be written to the character server, the player will receive the 
+message: "Need disconnection to perform change-sex request..." and the player 
+will be immediately kicked to the login screen. When they log back in, they will 
+be the opposite sex.
 
-If the character currently connected when this command was invoked was a 
-Dancer/Gypsy or Bard/Clown, they will become a Swordman upon 'changesex'. 
-Whatever happens to their skills is not clear. Whatever happens if another 
-character on the same account was a gender-specific class is not clear either, 
-but it's likely that the client will have serious issues with that, since no 
-other characters on the same account will get altered.
-
-There's good reasons to be very careful when using this command.
+If there are any Dancer/Gypsy or Bard/Clown characters on the account, 
+they will also have their skills reset upon 'changesex'.
 
 ---------------------------------------
 
@@ -3637,14 +3717,16 @@ adjusts the gained value. If you want to bypass this, use the 'set' method.
 ---------------------------------------
 
 *setlook <look type>,<look value>;
+*changelook <look type>,<look value>;
 
-This command will alter the look data for the invoking character. It is used 
-mainly for changing the palette used on hair and clothes, you specify which look 
+'setlook' will alter the look data for the invoking character. It is used 
+mainly for changing the palette used on hair and clothes: you specify which look 
 type you want to change, then the palette you want to use. Make sure you specify 
 a palette number that exists/is usable by the client you use.
+'changelook' works the same, but is only client side (it doesn't save the look value).
 
     // This will change your hair(6), so that it uses palette 8, what ever your 
-    // palette 8 is your hair will use that colour
+    // palette 8 is, your hair will use that colour
 
     setlook 6,8; 
 
@@ -3859,6 +3941,20 @@ Example:
 	if (getnameitem("Apple","Aaron")) {
 		mes "You now have a Aaron's Apple!"; 
 	}
+
+---------------------------------------
+
+*rentitem <item id>,<time>;
+*rentitem "<item name>",<time>;
+
+Creates a rental item in the attached character's inventory. The item will expire 
+in <time> seconds and be automatically deleted. When receiving a rental item, 
+the character will receive a message in their chat window. The character will 
+also receive warning messages in their chat window before the item disappears.
+
+This command can not be used to rent stackable items. Rental items cannot be 
+removed from the character's inventory. (i.e. trade mask 123 in ../db/item_trade.txt)
+Note: 'delitem' in an NPC script can still remove rental items.
 
 ---------------------------------------
 
@@ -4129,6 +4225,30 @@ before you open storage.
     close2;
     openstorage;
     end;
+
+---------------------------------------
+
+*openmail;
+
+This will open a character's Mail window on the client connected to the 
+invoking character.
+
+    mes "Close this window to open your mail inbox.";
+    close2;
+    openmail;
+    end;
+
+---------------------------------------
+
+*openauction;
+
+This will open the Auction window on the client connected to the invoking character.
+
+    mes "Close this window to open your mail inbox.";
+    close2;
+    openmail;
+    end;
+
 ---------------------------------------
 \\
 4,2.- Guild-related commands
@@ -4490,7 +4610,7 @@ both of these characters. No rings will be given and no effects will be shown.
 *wedding;
 
 This command will call up wedding effects - the music and confetti - centered on 
-the invoking character.
+the invoking character. Example can be found in the wedding script.
 
 ---------------------------------------
 
@@ -5345,7 +5465,7 @@ example.
 
 ---------------------------------------
 
-*waitingroomkickall {"<NPC object name>"};
+*kickwaitingroomall {"<NPC object name>"};
 
 This command would kick everybody out of a specified waiting room chat. IF it 
 was properly linked into the script interpreter which it isn't, even though the 
@@ -5903,7 +6023,7 @@ set @i, pow(2,3); // @i will be 8
 
 Returns square-root of number.
 
-Examlpe:
+Example:
 set @i, sqrt(25); // @i will be 5
 
 ---------------------------------------
@@ -5947,6 +6067,17 @@ Note: Use $ as suffix in the array to receive all data as text.
 Note: The difference between query_sql and query_logsql is that the latter
 uses the sql connection to the log database, and should be used when you want
 to query the server log tables.
+
+---------------------------------------
+
+*escape_sql("<string>")
+
+Escapes special characters in the string, so that it is safe to use in query_sql(), 
+and returns the escaped form of the given string.
+
+Example 1:
+	set .@str$, "John's Laptop";
+	set .@esc_str$, escape_sql(.@name$);	// Escaped string: John\'s Laptop
 
 ---------------------------------------
 
@@ -5996,7 +6127,7 @@ Example(s):
 	if (compare("Blood Butterfly","Bloody"))
 		dothat;
 
---------------------------------------
+---------------------------------------
 
 *charisalpha("<string>",<position>)
 
@@ -6004,12 +6135,6 @@ This function will return 1 if the character number Position in the given string
 is a letter, 0 if it isn't a letter but a digit or a space.
 
 ---------------------------------------
-
-*wedding_effect;
-Starts the effect used when a wedding is done (music and everything else)
-Example can be found in the wedding script.
-
---------------------------------------
 
 * The Pet AI commands
 
@@ -6085,7 +6210,7 @@ buffing items.
 
 Nobody tried this before, so you're essentially on your own here.
 
---------------------------------------
+---------------------------------------
 
 *bpet;
 
@@ -6110,18 +6235,6 @@ caught a pet in the normal way.
 Notice that you absolutely have to create pet eggs with this command. If you try 
 to give a pet egg with 'getitem', pet data will not be created by the char 
 server and the egg will disappear when anyone tries to hatch it.
-
----------------------------------------
-
-*openmail;
-
-This will open a character's Mail window on the client connected to the 
-invoking character.
-
-    mes "Close this window to open your mail inbox.";
-    close2;
-    openmail;
-    end;
 
 ---------------------------------------
 
