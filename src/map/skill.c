@@ -4327,7 +4327,11 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		int d = 0;
 		
 		//Rate in percent
-		i = 5 + 2*skilllv + (sstatus->dex - tstatus->dex)/5;
+		if ( skillid == ST_FULLSTRIP ) {
+			i = 5 + 2*skilllv + (sstatus->dex - tstatus->dex)/5;
+		} else {
+			i = 5 + 5*skilllv + (sstatus->dex - tstatus->dex)/5;
+		}
 		if (i < 5) i = 5; //Minimum rate 5%
 
 		//Duration in ms
