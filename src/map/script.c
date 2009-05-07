@@ -7712,6 +7712,7 @@ BUILDIN_FUNC(initnpctimer)
 {
 	struct npc_data *nd;
 	int flag = 0;
+
 	if( script_hasdata(st,3) )
 	{	//Two arguments: NPC name and attach flag.
 		nd = npc_name2id(script_getstr(st, 2));
@@ -7736,11 +7737,11 @@ BUILDIN_FUNC(initnpctimer)
 		}
 	}
 	else
-		nd=(struct npc_data *)map_id2bl(st->oid);
+		nd = (struct npc_data *)map_id2bl(st->oid);
 
-	if (!nd)
+	if( !nd )
 		return 0;
-	if (flag) //Attach
+	if( flag ) //Attach
 	{
 		TBL_PC* sd = script_rid2sd(st);
 		if( sd == NULL )
@@ -7759,6 +7760,7 @@ BUILDIN_FUNC(startnpctimer)
 {
 	struct npc_data *nd;
 	int flag = 0;
+
 	if( script_hasdata(st,3) )
 	{	//Two arguments: NPC name and attach flag.
 		nd = npc_name2id(script_getstr(st, 2));
@@ -7785,9 +7787,9 @@ BUILDIN_FUNC(startnpctimer)
 	else
 		nd=(struct npc_data *)map_id2bl(st->oid);
 
-	if (!nd)
+	if( !nd )
 		return 0;
-	if (flag) //Attach
+	if( flag ) //Attach
 	{
 		TBL_PC* sd = script_rid2sd(st);
 		if( sd == NULL )
@@ -7805,6 +7807,7 @@ BUILDIN_FUNC(stopnpctimer)
 {
 	struct npc_data *nd;
 	int flag = 0;
+
 	if( script_hasdata(st,3) )
 	{	//Two arguments: NPC name and attach flag.
 		nd = npc_name2id(script_getstr(st, 2));
@@ -7831,9 +7834,9 @@ BUILDIN_FUNC(stopnpctimer)
 	else
 		nd=(struct npc_data *)map_id2bl(st->oid);
 
-	if (!nd)
+	if( !nd )
 		return 0;
-	if (flag) //Detach
+	if( flag ) //Detach
 		nd->u.scr.rid = 0;
 
 	npc_timerevent_stop(nd);
@@ -7846,35 +7849,41 @@ BUILDIN_FUNC(getnpctimer)
 {
 	struct npc_data *nd;
 	TBL_PC *sd;
-	int type=script_getnum(st,2);
-	int val=0;
+	int type = script_getnum(st,2);
+	int val = 0;
+
 	if( script_hasdata(st,3) )
 		nd = npc_name2id(script_getstr(st,3));
 	else
 		nd = (struct npc_data *)map_id2bl(st->oid);
 	
-	if (!nd || nd->bl.type != BL_NPC)
+	if( !nd || nd->bl.type != BL_NPC )
 	{
 		script_pushint(st,0);
 		ShowError("getnpctimer: Invalid NPC.\n");
 		return 1;
 	}
 
-	switch(type){
-	case 0: val=npc_gettimerevent_tick(nd); break;
+	switch( type )
+	{
+	case 0: val = npc_gettimerevent_tick(nd); break;
 	case 1:
-		if (nd->u.scr.rid) {
+		if( nd->u.scr.rid )
+		{
 			sd = map_id2sd(nd->u.scr.rid);
-			if (!sd) {
+			if( !sd )
+			{
 				ShowError("buildin_getnpctimer: Attached player not found!\n");
 				break;
 			}
 			val = (sd->npc_timer_id != -1);
-		} else
-			  val= (nd->u.scr.timerid !=-1);
+		}
+		else
+			val = (nd->u.scr.timerid !=-1);
 		break;
-	case 2: val= nd->u.scr.timeramount; break;
+	case 2: val = nd->u.scr.timeramount; break;
 	}
+
 	script_pushint(st,val);
 	return 0;
 }
@@ -7885,13 +7894,14 @@ BUILDIN_FUNC(setnpctimer)
 {
 	int tick;
 	struct npc_data *nd;
-	tick=script_getnum(st,2);
-	if( script_hasdata(st,3) )
-		nd=npc_name2id(script_getstr(st,3));
-	else
-		nd=(struct npc_data *)map_id2bl(st->oid);
 
-	if (!nd || nd->bl.type != BL_NPC)
+	tick = script_getnum(st,2);
+	if( script_hasdata(st,3) )
+		nd = npc_name2id(script_getstr(st,3));
+	else
+		nd = (struct npc_data *)map_id2bl(st->oid);
+
+	if( !nd || nd->bl.type != BL_NPC )
 	{
 		script_pushint(st,1);
 		ShowError("setnpctimer: Invalid NPC.\n");
@@ -7909,11 +7919,9 @@ BUILDIN_FUNC(setnpctimer)
 BUILDIN_FUNC(attachnpctimer)
 {
 	TBL_PC *sd;
-	struct npc_data *nd;
+	struct npc_data *nd = (struct npc_data *)map_id2bl(st->oid);
 
-	nd=(struct npc_data *)map_id2bl(st->oid);
-
-	if (!nd || nd->bl.type != BL_NPC)
+	if( !nd || nd->bl.type != BL_NPC )
 	{
 		script_pushint(st,1);
 		ShowError("setnpctimer: Invalid NPC.\n");
@@ -7921,11 +7929,11 @@ BUILDIN_FUNC(attachnpctimer)
 	}
 
 	if( script_hasdata(st,2) )
-		sd=map_nick2sd(script_getstr(st,2));
+		sd = map_nick2sd(script_getstr(st,2));
 	else
 		sd = script_rid2sd(st);
 
-	if (!sd)
+	if( !sd )
 	{
 		script_pushint(st,1);
 		ShowWarning("attachnpctimer: Invalid player.\n");
@@ -7943,12 +7951,13 @@ BUILDIN_FUNC(attachnpctimer)
 BUILDIN_FUNC(detachnpctimer)
 {
 	struct npc_data *nd;
-	if( script_hasdata(st,2) )
-		nd=npc_name2id(script_getstr(st,2));
-	else
-		nd=(struct npc_data *)map_id2bl(st->oid);
 
-	if (!nd || nd->bl.type != BL_NPC)
+	if( script_hasdata(st,2) )
+		nd = npc_name2id(script_getstr(st,2));
+	else
+		nd = (struct npc_data *)map_id2bl(st->oid);
+
+	if( !nd || nd->bl.type != BL_NPC )
 	{
 		script_pushint(st,1);
 		ShowError("detachnpctimer: Invalid NPC.\n");
