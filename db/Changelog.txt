@@ -37,6 +37,8 @@
 	2385 Recuvative_Armor		Should trigger HP/SP return with magical kills as well.
 
 =======================
+2009/05/07
+	* Fixed Satan Morroc resummoning normal mobs instead of slaves (bugreport:3056) [Playtester]
 2009/05/04
 	* Added cast time and sp cost for Waterball Lvl 5 - 10 [Inkfish]
 2009/05/03
