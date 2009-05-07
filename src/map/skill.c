@@ -2826,41 +2826,29 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 	case WZ_WATERBALL:
 		skill_attack(BF_MAGIC,src,src,bl,skillid,skilllv,tick,flag);
 		{
-			int range = skilllv/2;
-			int size = 2*range + 1;
+			int range = skilllv / 2;
+			int maxlv = skill_get_max(skillid); // learnable level
 			int count = 0;
 			int x, y;
+			struct skill_unit* unit;
 
-			if( src->type == BL_PC )
-			{// count the number of water cells in range
-				struct skill_unit* unit;
-				int maxlv = skill_get_max(skillid);
+			if( src->type == BL_PC && skilllv > maxlv )
+				range = maxlv / 2;
 
-				if( skilllv > maxlv )
-					range =  maxlv / 2;
-
-				for( y = src->y - range; y <= src->y + range; ++y )
-					for( x = src->x - range; x <= src->x + range; ++x )
+			for( y = src->y - range; y <= src->y + range; ++y )
+				for( x = src->x - range; x <= src->x + range; ++x )
+				{
+					if( !map_find_skill_unit_oncell(src,x,y,SA_LANDPROTECTOR,NULL) )
 					{
-						if( map_getcell(src->m,x,y,CELL_CHKWATER) )
+						if( src->type != BL_PC || map_getcell(src->m,x,y,CELL_CHKWATER) ) // non-players bypass the water requirement
 							count++; // natural water cell
-						else
-						if( (unit = map_find_skill_unit_oncell(src,x,y,SA_DELUGE,NULL)) != NULL
-						||  (unit = map_find_skill_unit_oncell(src,x,y,NJ_SUITON,NULL)) != NULL )
+						else if( (unit = map_find_skill_unit_oncell(src,x,y,SA_DELUGE,NULL)) != NULL || (unit = map_find_skill_unit_oncell(src,x,y,NJ_SUITON,NULL)) != NULL )
 						{
 							count++; // skill-induced water cell
 							skill_delunit(unit); // consume cell
 						}
 					}
-			}
-			else
-			{ // non-players bypass the water requirement
-				count = size*size;
-				for( y = src->y - range; y <= src->y + range; ++y )
-					for( x = src->x - range; x <= src->x + range; ++x )
-						if( map_find_skill_unit_oncell(src,x,y,SA_LANDPROTECTOR,NULL) != NULL )
-							count--;
-			}
+				}
 
 			if( count > 1 ) // queue the remaining count - 1 timerskill Waterballs
 				skill_addtimerskill(src,tick+150,bl->id,0,0,skillid,skilllv,count-1,flag);
