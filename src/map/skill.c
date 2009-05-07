@@ -2832,8 +2832,8 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 			int x, y;
 			struct skill_unit* unit;
 
-			if( src->type == BL_PC && skilllv > maxlv )
-				range = maxlv / 2;
+			if( skilllv > maxlv && (src->type == BL_PC || skilllv < 10) )
+				range = maxlv / 2;			
 
 			for( y = src->y - range; y <= src->y + range; ++y )
 				for( x = src->x - range; x <= src->x + range; ++x )
