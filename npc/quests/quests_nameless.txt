@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 2.0
+//= 2.1
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -54,6 +54,7 @@
 //=     moved OnMyMobDead for access quest to a different NPC.
 //= 1.9 Fixed mapwarp warping to disabled map. [L0ne_W0lf]
 //= 2.0 Removed duplicate dialog. [L0ne_W0lf]
+//= 2.1 Fixed a race condition blocking progress. [brianluau]
 //============================================================ 
 
 // Nameless Island and Cursed Monestary Access Quest
@@ -2329,7 +2330,6 @@ OnTouch:
 		set .@nawara,rand(1,10);
 		if (.@nawara < 5) {
 			hideoffnpc "Foreign Merchant#aru2";
-			set aru_em,6;
 		}
 		else {
 			set aru_em,2;

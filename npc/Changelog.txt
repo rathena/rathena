@@ -1,5 +1,8 @@
 Date		Added
 ======
+2009/05/07
+	- Fixed a "player not attached" error in the Moscovia quest. (bugreport:3041) [brianluau]
+	- Fixed a race condition in the Arunafeltz quest blocking progress. (bugreport:2782)
 2009/05/04
 	- Added a missing zeny check in the Jawaii Bartender. (bugreport:2897) [brianluau]
 	- Added a missing 'close' in the Mage quest Bookshelf. (bugreport:2873)
