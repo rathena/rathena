@@ -4930,6 +4930,8 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 		if (tick == 1) return 1; //Minimal duration: Only strip without causing the SC
 	break;
 	case SC_STRIPSHIELD:
+		if( val2 == 1 ) val2 = 0; //GX effect. Do not take shield off..		
+		else
 		if (sd) {
 			int i;
 			if(sd->unstripable_equip&EQP_SHIELD)

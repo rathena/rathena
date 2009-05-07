@@ -141,7 +141,7 @@ struct block_list* battle_getenemy(struct block_list *target, int type, int rang
 	return bl_list[rand()%c];
 }
 
-// ƒ_ƒ??[ƒW‚Ì’x‰„
+// ƒ_??[ƒW‚Ì’x‰„
 struct delay_damage {
 	struct block_list *src;
 	int target;
@@ -268,7 +268,7 @@ int battle_attr_fix(struct block_list *src, struct block_list *target, int damag
 }
 
 /*==========================================
- * ƒ_ƒ??[ƒW?Å?IŒvZ
+ * ƒ_??[ƒW??IŒvZ
  *------------------------------------------*/
 int battle_calc_damage(struct block_list *src,struct block_list *bl,int damage,int div_,int skill_num,int skill_lv,int flag)
 {
@@ -645,7 +645,7 @@ static int battle_calc_drain(int damage, int rate, int per)
 }
 
 /*==========================================
- * ?C—ûƒ_ƒ??[ƒW
+ * ?C—ûƒ_??[ƒW
  *------------------------------------------*/
 int battle_addmastery(struct map_session_data *sd,struct block_list *target,int dmg,int type)
 {
@@ -1116,21 +1116,19 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 			flag.hit = 1; //SG_FUSION always hit [Komurka]
 			flag.idef = flag.idef2 = 1; //def ignore [Komurka]
 		}
-		if (skill_num && !flag.hit)
+		if( !flag.hit )
 			switch(skill_num)
 			{
 				case AS_SPLASHER:
-					if (wflag) // Always hits the one exploding.
-						break;
-					flag.hit = 1;
-					break;
-				case CR_SHIELDBOOMERANG:
-					if (sc && sc->data[SC_SPIRIT] && sc->data[SC_SPIRIT]->val2 == SL_CRUSADER)
+					if( !wflag ) // Always hits the one exploding.
 						flag.hit = 1;
 					break;
-				case 0:
-					//If flag, this is splash damage from Baphomet Card and it always hits.
-					if (wflag)
+				case CR_SHIELDBOOMERANG:
+					if( sc && sc->data[SC_SPIRIT] && sc->data[SC_SPIRIT]->val2 == SL_CRUSADER )
+						flag.hit = 1;
+					break;
+				case 0:					
+					if( wflag ) //If flag, this is splash damage from Baphomet Card and it always hits.
 						flag.hit = 1;
 					break;
 			}
@@ -1888,9 +1886,6 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
   	else if(wd.div_ < 0) //Since the attack missed...
 		wd.div_ *= -1; 
 
-	if(skill_num == CR_GRANDCROSS || skill_num == NPC_GRANDDARKNESS)
-		return wd; //Enough, rest is not needed.
-
 	if(sd && (skill=pc_checkskill(sd,BS_WEAPONRESEARCH)) > 0) 
 		ATK_ADD(skill*2);
 
@@ -1917,6 +1912,9 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 			ATK_ADD(damage);
 		}
 	}
+
+	if(skill_num == CR_GRANDCROSS || skill_num == NPC_GRANDDARKNESS)
+		return wd; //Enough, rest is not needed.
 
 	if (sd)
 	{
@@ -2462,19 +2460,6 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 			else
 				ad.damage = ad.damage * (100-mdef)/100 - mdef2;
 		}
-
-		if(skill_num == CR_GRANDCROSS || skill_num == NPC_GRANDDARKNESS)
-		{	//Apply the physical part of the skill's damage. [Skotlex]
-			struct Damage wd = battle_calc_weapon_attack(src,target,skill_num,skill_lv,mflag);
-			ad.damage = (wd.damage + ad.damage) * (100 + 40*skill_lv)/100;
-			if(src==target)
-			{
-				if (src->type == BL_PC)
-					ad.damage = ad.damage/2;
-				else
-					ad.damage = 0;
-			}
-		}
 		
 		if (skill_num == NPC_EARTHQUAKE)
 		{	//Adds atk2 to the damage, should be influenced by number of hits and skill-ratio, but not mdef reductions. [Skotlex]
@@ -2490,6 +2475,19 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 
 		if (!(nk&NK_NO_ELEFIX))
 			ad.damage=battle_attr_fix(src, target, ad.damage, s_ele, tstatus->def_ele, tstatus->ele_lv);
+
+		if( skill_num == CR_GRANDCROSS || skill_num == NPC_GRANDDARKNESS )
+		{ //Apply the physical part of the skill's damage. [Skotlex]
+			struct Damage wd = battle_calc_weapon_attack(src,target,skill_num,skill_lv,mflag);
+			ad.damage = battle_attr_fix(src, target, wd.damage + ad.damage, s_ele, tstatus->def_ele, tstatus->ele_lv);
+			if( src == target )
+			{
+				if( src->type == BL_PC )
+					ad.damage = ad.damage/2;
+				else
+					ad.damage = 0;
+			}
+		}
 
 		if (sd && !(nk&NK_NO_CARDFIX_ATK)) {
 			short t_class = status_get_class(target);
@@ -2561,7 +2559,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 }
 
 /*==========================================
- * ‚»‚Ì‘¼ƒ_ƒ??[ƒWŒvZ
+ * ‚»‚Ì‘¼ƒ_??[ƒWŒvZ
  *------------------------------------------*/
 struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *target,int skill_num,int skill_lv,int mflag)
 {
@@ -2797,7 +2795,7 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 	return md;
 }
 /*==========================================
- * ƒ_ƒ??[ƒWŒvZˆêŠ‡?ˆ—?—p
+ * ƒ_??[ƒWŒvZˆêŠ‡?ˆ—?—p
  *------------------------------------------*/
 struct Damage battle_calc_attack(int attack_type,struct block_list *bl,struct block_list *target,int skill_num,int skill_lv,int count)
 {
@@ -2899,7 +2897,7 @@ void battle_drain(TBL_PC *sd, struct block_list *tbl, int rdamage, int ldamage, 
 }
 
 /*==========================================
- * ’Ê?í?UŒ‚?ˆ—?‚Ü‚Æ‚ß
+ * ’Ê??UŒ‚?ˆ—?‚Ü‚Æ‚ß
  *------------------------------------------*/
 enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* target, unsigned int tick, int flag)
 {

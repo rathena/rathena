@@ -2,9 +2,16 @@ Date	Added
 
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
-
-2009/05/07
-	* Added check on stackable items to 'checkweight' (bugreport:1569, bugreport:2756, bugreport 2994) [Inkfish]
+09/05/07
+	* Fixed splash damage from Baphomet Card might miss. [Inkfish]
+	* Check if group unit is expired before processing it. (bugreport:3054) [Inkfish]
+	* Fixed Grand Corss outdated behavior (bugreport:1590) [Inkfish]
+	- use new damage formula
+	- DEF is reduced to 2/3 during cast time
+	- block shields switching within attack duration
+	- monsters don't damage themselves any more
+	- intervals between hits are 300ms
+	* Added check on stackable items to 'checkweight' (bugreport:1569, bugreport:2756, bugreport:2994) [Inkfish]
 	* Fixed flee penalty wasn't applied for battleground and wouldn't be restored on map change [Inkfish]
 	* Fixed players can pull water from ME cell (follow up to r13730) [Inkfish]
 2009/05/04

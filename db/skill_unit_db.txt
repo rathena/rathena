@@ -52,7 +52,7 @@
 140,0x92,    , -1, 0,1000,enemy, 0x000	//AS_VENOMDUST
 220,0xb0,    ,  0, 0,  -1,all,   0x002	//RG_GRAFFITI
 229,0xb1,    ,  0, 1,1000,enemy, 0x006	//AM_DEMONSTRATION
-254,0x86,    , -1, 0, 400,enemy, 0x010	//CR_GRANDCROSS
+254,0x86,    , -1, 0, 300,enemy, 0x010	//CR_GRANDCROSS
 285,0x9a,    ,  3, 0,  -1,all,   0x010	//SA_VOLCANO
 286,0x9b,    ,  3, 0,  -1,all,   0x010	//SA_DELUGE
 287,0x9c,    ,  3, 0,  -1,all,   0x010	//SA_VIOLENTGALE
@@ -76,7 +76,7 @@
 329,0xae,    ,  3, 0,  -1,all,   0x140	//DC_FORTUNEKISS
 330,0xaf,    ,  3, 0,  -1,all,   0x140	//DC_SERVICEFORYOU
 336,0xb2,    ,  0,-1,  -1,noone, 0x000	//WE_CALLPARTNER
-339,0x86,    , -1, 0, 400,enemy, 0x000	//NPC_DARKGRANDCROSS
+339,0x86,    , -1, 0, 300,enemy, 0x000	//NPC_DARKGRANDCROSS
 362,0xb4,    ,  0, 2, 300,all,   0x000	//HP_BASILICA
 369,0xb3,    , -1, 0,10000,all,  0x008	//PA_GOSPEL
 395,0xb5,    ,  4, 0,  -1,all,   0x200	//CG_MOONLIT

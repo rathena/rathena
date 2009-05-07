@@ -5567,6 +5567,9 @@ int skill_castend_id(int tid, unsigned int tick, int id, intptr data)
 		}
 
 		ud->skilltimer = INVALID_TIMER;
+
+		if( sd && (ud->skillid == CR_GRANDCROSS || ud->skillid == NPC_GRANDDARKNESS) )
+			status_calc_bl(&sd->bl, SCB_DEF); // restore original DEF
 	}
 
 	if (ud->skilltarget == id)
@@ -5690,6 +5693,16 @@ int skill_castend_id(int tid, unsigned int tick, int id, intptr data)
 			{
 			case GS_DESPERADO:
 				sd->canequip_tick = tick + skill_get_time(ud->skillid, ud->skilllv);
+				break;
+			case CR_GRANDCROSS:
+			case NPC_GRANDDARKNESS:
+				if( (sc = status_get_sc(src)) && sc->data[SC_STRIPSHIELD] )
+				{
+					const struct TimerData *timer = get_timer(sc->data[SC_STRIPSHIELD]->timer);
+					if( timer && timer->func == status_change_timer && DIFF_TICK(timer->tick,gettick()+skill_get_time(ud->skillid, ud->skilllv)) > 0 )
+						break;
+				}
+				sc_start2(src, SC_STRIPSHIELD, 100, 0, 1, skill_get_time(ud->skillid, ud->skilllv));
 				break;
 			}
 		}
@@ -10032,27 +10045,6 @@ static int skill_unit_timer_sub (DBKey key, void* data, va_list ap)
 
 	nullpo_retr(0, group);
 
-	dissonance = skill_dance_switch(unit, 0);
-
-	if( unit->range >= 0 && group->interval != -1 )
-	{
-		if( battle_config.skill_wall_check )
-			map_foreachinshootrange(skill_unit_timer_sub_onplace, bl, unit->range, group->bl_flag, bl,tick);
-		else
-			map_foreachinrange(skill_unit_timer_sub_onplace, bl, unit->range, group->bl_flag, bl,tick);
-
-		if(unit->range == -1) //Unit disabled, but it should not be deleted yet.
-			group->unit_id = UNT_USED_TRAPS;
-
-		if( !unit->alive )
-		{
-			if( dissonance ) skill_dance_switch(unit, 1);
-			return 0;
-		}
-	}
-
-  	if( dissonance ) skill_dance_switch(unit, 1);
-
 	// check for expiration
 	if( (DIFF_TICK(tick,group->tick) >= group->limit || DIFF_TICK(tick,group->tick) >= unit->limit) )
 	{// skill unit expired (inlined from skill_unit_onlimit())
@@ -10172,6 +10164,31 @@ static int skill_unit_timer_sub (DBKey key, void* data, va_list ap)
 				break;
 		}
 	}
+
+	//Don't continue if unit or even group is expired and has been deleted.
+	if( !group || !unit->alive )
+		return 0;
+
+	dissonance = skill_dance_switch(unit, 0);
+
+	if( unit->range >= 0 && group->interval != -1 )
+	{
+		if( battle_config.skill_wall_check )
+			map_foreachinshootrange(skill_unit_timer_sub_onplace, bl, unit->range, group->bl_flag, bl,tick);
+		else
+			map_foreachinrange(skill_unit_timer_sub_onplace, bl, unit->range, group->bl_flag, bl,tick);
+
+		if(unit->range == -1) //Unit disabled, but it should not be deleted yet.
+			group->unit_id = UNT_USED_TRAPS;
+
+		if( !unit->alive )
+		{
+			if( dissonance ) skill_dance_switch(unit, 1);
+			return 0;
+		}
+	}
+
+  	if( dissonance ) skill_dance_switch(unit, 1);
 
 	return 0;
 }
