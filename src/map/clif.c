@@ -6890,7 +6890,7 @@ void clif_wedding_effect(struct block_list *bl)
 	clif_send(buf, packet_len(0x1ea), bl, AREA);
 }
 /*==========================================
- * ‚ ‚È‚½‚Éˆ§‚¢‚½‚¢Žg—pŽž–¼‘O‹©‚Ñ
+ * ?‚È‚½‚Éˆ§‚¢‚½‚¢Žg—pŽž–¼‘O‹©‚Ñ
  *------------------------------------------
 
 void clif_callpartner(struct map_session_data *sd)
@@ -8012,11 +8012,7 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 	}
 
 	if( map_flag_gvg(sd->bl.m) )
-	{
 		clif_set0199(sd,3);
-		if( battle_config.gvg_flee_penalty != 100 || battle_config.bg_flee_penalty != 100 )
-			status_calc_bl(&sd->bl, SCB_FLEE); //Apply flee penalty
-	}
 
 	// info about nearby objects
 	// must use foreachinarea (CIRCULAR_AREA interferes with foreachinrange)
@@ -8129,6 +8125,9 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 
 	if( sd->state.changemap )
 	{// restore information that gets lost on map-change
+		if( battle_config.gvg_flee_penalty != 100 || battle_config.bg_flee_penalty != 100 )
+			status_calc_bl(&sd->bl, SCB_FLEE); //Refresh flee penalty
+
 		if( night_flag && map[sd->bl.m].flag.nightenabled )
 		{	//Display night.
 			if( !sd->state.night )

@@ -5104,18 +5104,21 @@ BUILDIN_FUNC(checkweight)
 	}
 
 	weight = itemdb_weight(nameid)*amount;
-	if(amount > MAX_AMOUNT || weight + sd->weight > sd->max_weight){
+	if( amount > MAX_AMOUNT || weight + sd->weight > sd->max_weight )
 		script_pushint(st,0);
-	} else { 
-		//Check if the inventory ain't full.
-		//TODO: Currently does not checks if you can just stack it on top of another item you already have....
-
-		i = pc_search_inventory(sd,0);
-		if (i >= 0) //Empty slot available.
-			script_pushint(st,1);
-		else //Inventory full
-			script_pushint(st,0);
-			
+	else if( itemdb_isstackable(nameid) )
+	{
+		if( (i = pc_search_inventory(sd,nameid)) >= 0 )
+			script_pushint(st,amount + sd->status.inventory[i].amount > MAX_AMOUNT ? 0 : 1);
+		else
+			script_pushint(st,pc_search_inventory(sd,0) >= 0 ? 1 : 0);
+	}
+	else
+	{
+		for( i = 0; i < MAX_INVENTORY && amount; ++i )
+			if( sd->status.inventory[i].nameid == 0 )
+				amount--;
+		script_pushint(st,amount ? 0 : 1);
 	}
 
 	return 0;
