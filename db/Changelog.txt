@@ -38,6 +38,8 @@
 
 =======================
 2009/05/07
+	* Rev. 13742 Looking into why the monster Elder was not working as intended lead to fixes! [L0ne_W0lf]
+	- Monsters that are 1) aggressive 2) change targets and 3) and ANGRY will no longer cast sensor.
 	* Fixed Satan Morroc resummoning normal mobs instead of slaves (bugreport:3056) [Playtester]
 2009/05/04
 	* Added cast time and sp cost for Waterball Lvl 5 - 10 [Inkfish]
