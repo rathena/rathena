@@ -37,6 +37,11 @@
 	2385 Recuvative_Armor		Should trigger HP/SP return with magical kills as well.
 
 =======================
+2009/05/08
+	* Rev. 13743 Well, as it turns out, DETECTOR is actually detect hidden (not cast sense.) Elder is at least fixed though. [L0ne_W0lf]
+	- Reverted the mob mode change for nearly all mobs. Elder is exempt from this revert.
+	- Adding some "closer to official" stats for the Okolnir Monsters, Wish Maiden, Piamette, Etc.
+	* As an added bonus for that snaffu I'm implementing hte Okolnir mob skills as well.
 2009/05/07
 	* Rev. 13742 Looking into why the monster Elder was not working as intended lead to fixes! [L0ne_W0lf]
 	- Monsters that are 1) aggressive 2) change targets and 3) and ANGRY will no longer cast sensor.

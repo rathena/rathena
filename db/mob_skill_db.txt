@@ -4718,7 +4718,7 @@
 1904,Bomb Poring@NPC_SELFDESTRUCTION,attack,173,2,10000,3000,0,no,self,always,0,,,,,,
 1904,Bomb Poring@NPC_SELFDESTRUCTION,chase,173,2,10000,3000,0,no,self,always,0,,,,,,
 
-// Satan Morroc (Based on information from Future Wiki)
+// Satan Morroc
 1916,Satan Morroc@NPC_DRAGONFEAR,chase,659,10,10000,0,600000,yes,self,myhpltmaxrate,5,,,,,,
 1916,Satan Morroc@NPC_DRAGONFEAR,attack,659,10,10000,0,600000,yes,self,myhpltmaxrate,5,,,,,,
 //1916,Satan Morroc@NPC_TALK,chase,682,10,10000,0,600000,yes,self,myhpltmaxrate,10,,,,,,
@@ -4906,8 +4906,101 @@
 1925,Incarnation of Morroc@AL_HEAL,chase,28,11,10000,300,0,yes,friend,friendhpltmaxrate,99,,,,,,36
 1925,Incarnation of Morroc@AL_HEAL,attack,28,11,10000,300,0,yes,friend,friendhpltmaxrate,99,,,,,,36
 1925,Incarnation of Morroc@AL_HEAL,idle,28,11,10000,300,0,yes,self,myhpltmaxrate,70,,,,,,36
+
+// Fallacious Okolnir
+1930,Piamette@WZ_METEOR,idle,83,11,10000,300,0,yes,target,rudeattacked,0,,,,,,
+1930,Piamette@NPC_WIDECURSE,chase,677,5,10000,700,35000,no,self,myhpltmaxrate,20,,,,,,
+1930,Piamette@NPC_WIDECURSE,attack,677,5,10000,700,35000,no,self,myhpltmaxrate,20,,,,,,
+1930,Piamette@MG_THUNDERSTORM,attack,21,9,2000,1500,10000,no,target,myhpltmaxrate,30,,,,,,
+1930,Piamette@MG_THUNDERSTORM,chase,21,9,2000,1500,10000,no,target,myhpltmaxrate,30,,,,,,
+1930,Piamette@NPC_HELLJUDGEMENT,chase,662,5,5000,800,35000,no,self,myhpltmaxrate,30,,,,,,
+1930,Piamette@NPC_HELLJUDGEMENT,attack,662,5,5000,800,35000,no,self,myhpltmaxrate,30,,,,,,
+1930,Piamette@NPC_DARKNESSBREATH,chase,658,2,500,800,5000,no,target,myhpltmaxrate,30,,,,,,29
+1930,Piamette@NPC_DARKNESSBREATH,attack,658,2,500,800,5000,no,target,myhpltmaxrate,30,,,,,,29
+1930,Piamette@WZ_VERMILION,attack,85,20,1000,1000,5000,no,target,myhpltmaxrate,30,,,,,,
+1930,Piamette@WZ_VERMILION,chase,85,20,2000,1000,5000,no,target,myhpltmaxrate,30,,,,,,
+1930,Piamette@AL_HEAL,chase,28,9,10000,500,5000,no,self,myhpltmaxrate,30,,,,,,18
+1930,Piamette@AL_HEAL,attack,28,9,10000,500,5000,no,self,myhpltmaxrate,30,,,,,,18
+1930,Piamette@MG_FROSTDIVER,chase,15,10,3000,1000,20000,no,target,myhpltmaxrate,50,,,,,,
+1930,Piamette@MG_FROSTDIVER,attack,15,10,3000,1000,20000,no,target,myhpltmaxrate,50,,,,,,
+1930,Piamette@WZ_JUPITEL,chase,84,20,5000,1000,20000,no,target,myhpltmaxrate,50,,,,,,
+1930,Piamette@WZ_JUPITEL,attack,84,20,5000,1000,20000,no,target,myhpltmaxrate,50,,,,,,
+1930,Piamette@NPC_CRITICALWOUND,attack,673,2,2000,0,5000,yes,target,always,0,,,,,,
+1930,Piamette@NPC_CRITICALWOUND,chase,673,2,2000,0,5000,yes,target,always,0,,,,,,
+1930,Piamette@NPC_COMBOATTACK,attack,171,1,3000,0,5000,yes,target,always,0,,,,,,
+1930,Piamette@NPC_CALLSLAVE,attack,352,1,10000,0,30000,yes,self,always,0,,,,,,
+1930,Piamette@NPC_CALLSLAVE,chase,352,1,10000,0,30000,yes,self,always,0,,,,,,
+1930,Piamette@NPC_CALLSLAVE,idle,352,1,10000,0,30000,yes,self,always,0,,,,,,
+1930,Piamette@NPC_SUMMONSLAVE,attack,196,3,10000,2000,60000000,no,self,myhpltmaxrate,70,1947,,,,,
+1930,Piamette@NPC_SUMMONSLAVE,chase,196,3,10000,2000,60000000,no,self,myhpltmaxrate,70,1947,,,,,
+1931,Wish Maiden@WZ_METEOR,idle,83,11,10000,300,0,yes,target,rudeattacked,0,,,,,,
+1931,Wish Maiden@NPC_SUMMONSLAVE,attack,196,5,10000,2000,5000,no,self,slavele,1,1933,,,,,
+1931,Wish Maiden@NPC_SUMMONSLAVE,idle,196,5,10000,2000,5000,no,self,slavele,1,1933,,,,,
+1931,Wish Maiden@NPC_SUMMONSLAVE,chase,196,5,10000,2000,5000,no,self,slavele,1,1933,,,,,
+1931,Wish Maiden@NPC_CALLSLAVE,attack,352,1,10000,0,30000,yes,self,always,0,,,,,,
+1931,Wish Maiden@NPC_CALLSLAVE,idle,352,1,10000,0,30000,yes,self,always,0,,,,,,
+1931,Wish Maiden@NPC_CALLSLAVE,chase,352,1,10000,0,30000,yes,self,always,0,,,,,,
+1931,Wish Maiden@NPC_AGIUP,attack,350,5,10000,0,100000,yes,self,myhpltmaxrate,50,,,,,,
+1931,Wish Maiden@NPC_AGIUP,chase,350,5,10000,0,100000,yes,self,myhpltmaxrate,50,,,,,,
+1931,Wish Maiden@NPC_PULSESTRIKE,attack,661,5,2000,0,30000,yes,self,always,0,,,,,,32
+1931,Wish Maiden@KN_TWOHANDQUICKEN,chase,60,20,10000,0,90000,yes,self,myhpltmaxrate,30,,,,,,
+1931,Wish Maiden@KN_TWOHANDQUICKEN,attack,60,20,10000,0,90000,yes,self,myhpltmaxrate,30,,,,,,
+1931,Wish Maiden@AS_SONICBLOW,attack,136,10,2000,0,5000,yes,target,always,0,,,,,,
+1931,Wish Maiden@SA_DISPELL,attack,289,5,10000,0,30000,yes,target,always,0,,,,,,
+1931,Wish Maiden@SA_DISPELL,chase,289,5,10000,0,30000,yes,target,always,0,,,,,,
+1931,Wish Maiden@LK_SPIRALPIERCE,attack,397,1,2000,1000,10000,no,target,always,0,,,,,,
+1931,Wish Maiden@NPC_HOLYATTACK,attack,189,10,2000,500,5000,no,target,always,0,,,,,,
+1931,Wish Maiden@CR_HOLYCROSS,attack,253,10,2000,0,5000,yes,target,always,0,,,,,,
+1931,Wish Maiden@KN_BRANDISHSPEAR,attack,57,10,2000,0,5000,yes,target,always,0,,,,,,
+1931,Wish Maiden@MG_THUNDERSTORM,attack,21,10,10000,1500,5000,no,target,attackpcge,2,,,,,,
+1931,Wish Maiden@WZ_VERMILION,attack,85,20,1000,1000,5000,no,target,always,0,,,,,,
+1931,Wish Maiden@WZ_VERMILION,chase,85,20,2000,1000,5000,no,target,always,0,,,,,,
+1932,Garden Keeper@NPC_RUN,attack,354,1,10000,0,0,yes,self,myhpltmaxrate,99,,,,,,26
+1932,Garden Keeper@NPC_RUN,chase,354,1,10000,0,0,yes,self,myhpltmaxrate,99,,,,,,26
+1932,Garden Keeper@NPC_RUN,attack,354,1,10000,0,0,yes,self,myhpltmaxrate,99,,,,,,26
+1933,Garden Watcher@NPC_HOLYATTACK,attack,189,2,500,0,5000,no,target,always,0,,,,,,18
+1933,Garden Watcher@NPC_HOLYATTACK,chase,189,2,500,0,5000,no,target,always,0,,,,,,18
+1933,Garden Watcher@MG_SAFETYWALL,attack,12,5,1000,1000,5000,no,self,always,0,,,,,,18
+1933,Garden Watcher@WZ_JUPITEL,attack,84,4,1000,1000,5000,yes,target,always,0,,,,,,6
+1933,Garden Watcher@WZ_JUPITEL,chase,84,4,1000,1000,5000,yes,target,always,0,,,,,,6
+1933,Garden Watcher@AL_HEAL,chase,28,9,10000,500,5000,no,friend,friendhpltmaxrate,50,,,,,,18
+1933,Garden Watcher@AL_HEAL,attack,28,9,10000,500,5000,no,friend,friendhpltmaxrate,50,,,,,,18
+1933,Garden Watcher@AL_HEAL,chase,28,9,10000,500,5000,no,self,myhpltmaxrate,50,,,,,,18
+1933,Garden Watcher@AL_HEAL,attack,28,9,10000,500,5000,no,self,myhpltmaxrate,50,,,,,,18
+1933,Garden Watcher@NPC_CURSEATTACK,attack,181,3,500,800,5000,no,target,always,0,,,,,,
+1933,Garden Watcher@NPC_DARKBREATH,chase,202,1,500,800,5000,no,target,always,0,,,,,,29
+1933,Garden Watcher@NPC_DARKBREATH,attack,202,1,500,800,5000,no,target,always,0,,,,,,29
+1933,Garden Watcher@NPC_DARKCROSS,attack,338,5,2000,1500,10000,no,target,always,0,,,,,,
+1933,Garden Watcher@CR_REFLECTSHIELD,attack,252,3,10000,0,400000,yes,self,always,0,,,,,,32
+1933,Garden Watcher@CR_REFLECTSHIELD,chase,252,3,10000,0,400000,yes,self,always,0,,,,,,32
 1937,Constant@NPC_SELFDESTRUCTION,attack,173,1,10000,1000,0,no,self,always,0,,,,,,
 1937,Constant@NPC_SELFDESTRUCTION,chase,173,1,2000,1000,0,no,self,always,0,,,,,,
+1947,Piamette@NPC_WIDECURSE,chase,677,5,10000,700,35000,no,self,myhpltmaxrate,20,,,,,,
+1947,Piamette@NPC_WIDECURSE,attack,677,5,10000,700,35000,no,self,myhpltmaxrate,20,,,,,,
+1947,Piamette@MG_THUNDERSTORM,attack,21,9,2000,1500,10000,no,target,myhpltmaxrate,30,,,,,,
+1947,Piamette@MG_THUNDERSTORM,chase,21,9,2000,1500,10000,no,target,myhpltmaxrate,30,,,,,,
+1947,Piamette@NPC_HELLJUDGEMENT,chase,662,2,5000,800,35000,no,self,myhpltmaxrate,30,,,,,,
+1947,Piamette@NPC_HELLJUDGEMENT,attack,662,2,5000,800,35000,no,self,myhpltmaxrate,30,,,,,,
+1947,Piamette@NPC_DARKNESSBREATH,chase,658,2,500,800,5000,no,target,myhpltmaxrate,30,,,,,,29
+1947,Piamette@NPC_DARKNESSBREATH,attack,658,2,500,800,5000,no,target,myhpltmaxrate,30,,,,,,29
+1947,Piamette@WZ_VERMILION,attack,85,20,1000,1000,5000,no,target,myhpltmaxrate,30,,,,,,
+1947,Piamette@WZ_VERMILION,chase,85,20,2000,1000,5000,no,target,myhpltmaxrate,30,,,,,,
+1947,Piamette@AL_HEAL,chase,28,9,10000,500,5000,no,self,myhpltmaxrate,30,,,,,,18
+1947,Piamette@AL_HEAL,attack,28,9,10000,500,5000,no,self,myhpltmaxrate,30,,,,,,18
+1947,Piamette@MG_FROSTDIVER,chase,15,10,3000,1000,20000,no,target,myhpltmaxrate,50,,,,,,
+1947,Piamette@MG_FROSTDIVER,attack,15,10,3000,1000,20000,no,target,myhpltmaxrate,50,,,,,,
+1947,Piamette@WZ_JUPITEL,chase,84,20,5000,1000,20000,no,target,myhpltmaxrate,50,,,,,,
+1947,Piamette@WZ_JUPITEL,attack,84,20,5000,1000,20000,no,target,myhpltmaxrate,50,,,,,,
+1947,Piamette@NPC_DARKBLESSING,attack,203,1,300,0,2000,no,target,myhpltmaxrate,50,,,,,,
+1947,Piamette@NPC_CRITICALWOUND,attack,673,2,2000,0,5000,yes,target,always,0,,,,,,
+1947,Piamette@NPC_CRITICALWOUND,chase,673,2,2000,0,5000,yes,target,always,0,,,,,,
+1947,Piamette@AL_HEAL,chase,28,11,10000,500,5000,no,friend,friendhpltmaxrate,80,,,,,,18
+1947,Piamette@AL_HEAL,attack,28,11,10000,500,5000,no,friend,friendhpltmaxrate,80,,,,,,18
+1947,Piamette@HP_ASSUMPTIO,idle,361,5,5000,1000,5000,no,friend,friendhpltmaxrate,90,,,,,,
+1947,Piamette@HP_ASSUMPTIO,chase,361,5,5000,1000,10000,no,friend,friendhpltmaxrate,90,,,,,,
+1947,Piamette@HP_ASSUMPTIO,attack,361,5,5000,1000,10000,no,friend,friendhpltmaxrate,90,,,,,,
+1947,Piamette@NPC_WIDESILENCE,chase,663,5,3000,1000,20000,no,self,always,0,,,,,,36
+1947,Piamette@NPC_WIDESILENCE,attack,663,5,3000,1000,20000,no,self,always,0,,,,,,36
 
 // Endless Tower (Based on information from Future Wiki)
 1956,Naght Seiger@KN_BRANDISHSPEAR,attack,57,3,2000,500,5000,no,target,always,0,,,,,,
