@@ -2479,7 +2479,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 		if( skill_num == CR_GRANDCROSS || skill_num == NPC_GRANDDARKNESS )
 		{ //Apply the physical part of the skill's damage. [Skotlex]
 			struct Damage wd = battle_calc_weapon_attack(src,target,skill_num,skill_lv,mflag);
-			ad.damage = battle_attr_fix(src, target, wd.damage + ad.damage, s_ele, tstatus->def_ele, tstatus->ele_lv);
+			ad.damage = battle_attr_fix(src, target, wd.damage + ad.damage, s_ele, tstatus->def_ele, tstatus->ele_lv) * (100 + 40*skill_lv)/100;;
 			if( src == target )
 			{
 				if( src->type == BL_PC )
