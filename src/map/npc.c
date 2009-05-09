@@ -449,17 +449,8 @@ int npc_timerevent(int tid, unsigned int tick, int id, intptr data)
 	nd->u.scr.timertick = tick;		//current time tick
 	nd->u.scr.timer = ted->time;	//total time from beginning to now
 
-	// Run the script
+	// Locate the event
 	te = nd->u.scr.timer_event + ted->next;
-	run_script(nd->u.scr.script,te->pos,nd->u.scr.rid,nd->bl.id);
-	
-	
-	nd->u.scr.rid = old_rid; // Attached-rid should be restored anyway.
-	if( sd )
-	{ // Restore previous data, only if this timer is a player-attached one.
-		nd->u.scr.timer = old_timer;
-		nd->u.scr.timertick = old_tick;
-	}
 
 	// Arrange for the next event
 	ted->next++;	
@@ -482,6 +473,16 @@ int npc_timerevent(int tid, unsigned int tick, int id, intptr data)
 			nd->u.scr.timertick = 0; // NPC timer stopped
 		}
 		ers_free(timer_event_ers, ted);
+	}
+
+	// Run the script
+	run_script(nd->u.scr.script,te->pos,nd->u.scr.rid,nd->bl.id);	
+	
+	nd->u.scr.rid = old_rid; // Attached-rid should be restored anyway.
+	if( sd )
+	{ // Restore previous data, only if this timer is a player-attached one.
+		nd->u.scr.timer = old_timer;
+		nd->u.scr.timertick = old_tick;
 	}
 
 	return 0;
@@ -534,6 +535,7 @@ int npc_timerevent_start(struct npc_data* nd, int rid)
 	}
 	else
 	{
+		ted->rid = 0;
 		nd->u.scr.timertick = tick; // Set when timer is started
 		nd->u.scr.timerid = add_timer(tick+next,npc_timerevent,nd->bl.id,(intptr)ted);
 	}
@@ -547,7 +549,7 @@ int npc_timerevent_stop(struct npc_data* nd)
 {
 	struct map_session_data *sd = NULL;
 	const struct TimerData *td = NULL;
-	int tid;
+	int *tid;
 
 	nullpo_retr(0, nd);
 
@@ -557,16 +559,16 @@ int npc_timerevent_stop(struct npc_data* nd)
 		return 1;
 	}
 	
-	tid = sd?sd->npc_timer_id:nd->u.scr.timerid;
-	if( tid == -1 ) // Nothing to stop
+	tid = sd?&sd->npc_timer_id:&nd->u.scr.timerid;
+	if( *tid == -1 ) // Nothing to stop
 		return 0;
 
 	// Delete timer
-	td = get_timer(tid);
+	td = get_timer(*tid);
 	if( td && td->data ) 
 		ers_free(timer_event_ers, (void*)td->data);
-	delete_timer(tid,npc_timerevent);
-	tid = -1;
+	delete_timer(*tid,npc_timerevent);
+	*tid = -1;
 
 	if( !sd )
 	{
