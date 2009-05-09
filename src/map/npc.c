@@ -377,44 +377,49 @@ void npc_event_do_oninit(void)
  *------------------------------------------*/
 int npc_timerevent_import(char* lname, void* data, va_list ap)
 {
-	int pos=(int)data;
-	struct npc_data *nd=va_arg(ap,struct npc_data *);
-	int t=0,i=0;
+	int pos = (int)data;
+	struct npc_data *nd = va_arg(ap,struct npc_data *);
+	int t = 0, i = 0;
 
-	if(sscanf(lname,"OnTimer%d%n",&t,&i)==1 && lname[i]==':')
+	if( sscanf(lname,"OnTimer%d%n",&t,&i)==1 && lname[i]==':' )
 	{
-		// タイマーイベント
-		struct npc_timerevent_list *te=nd->u.scr.timer_event;
-		int j,i=nd->u.scr.timeramount;
-		if(te==NULL) te=(struct npc_timerevent_list*)aMallocA(sizeof(struct npc_timerevent_list));
-		else te= (struct npc_timerevent_list*)aRealloc( te, sizeof(struct npc_timerevent_list) * (i+1) );
-		if(te==NULL){
+		struct npc_timerevent_list *te= nd->u.scr.timer_event;
+		int j, i = nd->u.scr.timeramount;
+
+		if( te == NULL )
+			te = (struct npc_timerevent_list*)aMallocA( sizeof(struct npc_timerevent_list) );
+		else
+			te = (struct npc_timerevent_list*)aRealloc( te, sizeof(struct npc_timerevent_list) * (i+1) );
+
+		if( te == NULL )
+		{
 			ShowFatalError("npc_timerevent_import: out of memory !\n");
 			exit(EXIT_FAILURE);
 		}
+
 		ARR_FIND( 0, i, j, te[j].timer > t );
 		if( j < i )
 			memmove(te+j+1,te+j,sizeof(struct npc_timerevent_list)*(i-j));
-		te[j].timer=t;
-		te[j].pos=pos;
-		nd->u.scr.timer_event=te;
+		te[j].timer = t;
+		te[j].pos = pos;
+		nd->u.scr.timer_event = te;
 		nd->u.scr.timeramount++;
 	}
 	return 0;
 }
 struct timer_event_data {
 	int rid; //Attached player for this timer.
-	int next; //timer index (starts with 0, then goes up to nd->u.scr.timeramount
-	int time; //holds total time elapsed for the script from when timer started to when last time event triggered.
-	unsigned int otick; //Holds tick value at which timer sequence was started (that is, it stores the tick value for which T= 0
+	int next; //timer index (starts with 0, then goes up to nd->u.scr.timeramount)
+	int time; //holds total time elapsed for the script from when timer was started to when last time the event triggered.
 };
 
 /*==========================================
- * タイマーイベント実行
+ * triger 'OnTimerXXXX' events
  *------------------------------------------*/
 int npc_timerevent(int tid, unsigned int tick, int id, intptr data)
 {
-	int next,t,old_rid,old_timer;
+	int next;
+	int old_rid, old_timer;
 	unsigned int old_tick;
 	struct npc_data* nd=(struct npc_data *)map_id2bl(id);
 	struct npc_timerevent_list *te;
@@ -434,17 +439,30 @@ int npc_timerevent(int tid, unsigned int tick, int id, intptr data)
 		return 0;
 	}
 
-	old_rid = nd->u.scr.rid; //To restore it later.
-	nd->u.scr.rid = sd?sd->bl.id:0;
-	
+	// These stuffs might need to be restored.
+	old_rid = nd->u.scr.rid;	
 	old_tick = nd->u.scr.timertick;
-	nd->u.scr.timertick = ted->otick = gettick();
-	te = nd->u.scr.timer_event + ted->next;
-	
 	old_timer = nd->u.scr.timer;
-	t = nd->u.scr.timer = ted->time;
-	ted->next++;
+
+	// Set the values of the timer
+	nd->u.scr.rid = sd?sd->bl.id:0;	//attached rid
+	nd->u.scr.timertick = tick;		//current time tick
+	nd->u.scr.timer = ted->time;	//total time from beginning to now
+
+	// Run the script
+	te = nd->u.scr.timer_event + ted->next;
+	run_script(nd->u.scr.script,te->pos,nd->u.scr.rid,nd->bl.id);
 	
+	
+	nd->u.scr.rid = old_rid; // Attached-rid should be restored anyway.
+	if( sd )
+	{ // Restore previous data, only if this timer is a player-attached one.
+		nd->u.scr.timer = old_timer;
+		nd->u.scr.timertick = old_tick;
+	}
+
+	// Arrange for the next event
+	ted->next++;	
 	if( nd->u.scr.timeramount > ted->next )
 	{
 		next = nd->u.scr.timer_event[ ted->next ].timer - nd->u.scr.timer_event[ ted->next - 1 ].timer;
@@ -459,46 +477,43 @@ int npc_timerevent(int tid, unsigned int tick, int id, intptr data)
 		if( sd )
 			sd->npc_timer_id = -1;
 		else
+		{
 			nd->u.scr.timerid = -1;
+			nd->u.scr.timertick = 0; // NPC timer stopped
+		}
 		ers_free(timer_event_ers, ted);
-		nd->u.scr.timertick = 0;
 	}
-	run_script(nd->u.scr.script,te->pos,nd->u.scr.rid,nd->bl.id);
-	//Restore previous data, only if this timer is a player-attached one.
-	if( sd )
-	{
-		nd->u.scr.rid = old_rid;
-		nd->u.scr.timer = old_timer;
-		nd->u.scr.timertick = old_tick;
-	}
+
 	return 0;
 }
 /*==========================================
- * タイマーイベント開始
+ * Start/Resume NPC timer
  *------------------------------------------*/
 int npc_timerevent_start(struct npc_data* nd, int rid)
 {
 	int j, next;
+	unsigned int tick = gettick();
 	struct map_session_data *sd = NULL; //Player to whom script is attached.
 	struct timer_event_data *ted;
 		
 	nullpo_retr(0, nd);
 
+	// No need to start because of no events
 	if( nd->u.scr.timeramount == 0 )
 		return 0;
 
 	// Check if there is an OnTimer Event
 	ARR_FIND( 0, nd->u.scr.timeramount, j, nd->u.scr.timer_event[j].timer > nd->u.scr.timer );
-	if( j >= nd->u.scr.timeramount ) // Check if there is an OnTimer Event
+	if( j >= nd->u.scr.timeramount ) // No need to start because of no events left to trigger
 		return 0;
 
 	if( nd->u.scr.rid > 0 && !(sd = map_id2sd(nd->u.scr.rid)) )
-	{ //Failed to attach timer to this player.
+	{ // Failed to attach timer to this player.
 		ShowError("npc_timerevent_start: Attached player not found!\n");
 		return 1;
 	}
 
-	//Check if timer is already started.
+	// Check if timer is already started.
 	if( sd )
 	{
 		if( sd->npc_timer_id != -1 )
@@ -506,30 +521,33 @@ int npc_timerevent_start(struct npc_data* nd, int rid)
 	}
 	else if( nd->u.scr.timerid != -1 )
 		return 0;
-		
+
+	// Arrange for the next event		
 	ted = ers_alloc(timer_event_ers, struct timer_event_data);
 	ted->next = j; // Set event index
-	nd->u.scr.timertick = ted->otick = gettick(); // Set when timer is started
-
-	//Attach only the player if attachplayerrid was used.
-	ted->rid = sd?sd->bl.id:0;
-
-	next = nd->u.scr.timer_event[j].timer - nd->u.scr.timer;
 	ted->time = nd->u.scr.timer_event[j].timer;
+	next = nd->u.scr.timer_event[j].timer - nd->u.scr.timer;
 	if( sd )
-		sd->npc_timer_id = add_timer(gettick()+next,npc_timerevent,nd->bl.id,(intptr)ted);
+	{
+		ted->rid = sd->bl.id; // Attach only the player if attachplayerrid was used.
+		sd->npc_timer_id = add_timer(tick+next,npc_timerevent,nd->bl.id,(intptr)ted);
+	}
 	else
-		nd->u.scr.timerid = add_timer(gettick()+next,npc_timerevent,nd->bl.id,(intptr)ted);
+	{
+		nd->u.scr.timertick = tick; // Set when timer is started
+		nd->u.scr.timerid = add_timer(tick+next,npc_timerevent,nd->bl.id,(intptr)ted);
+	}
+
 	return 0;
 }
 /*==========================================
- * タイマーイベント終了
+ * Stop NPC timer
  *------------------------------------------*/
 int npc_timerevent_stop(struct npc_data* nd)
 {
 	struct map_session_data *sd = NULL;
 	const struct TimerData *td = NULL;
-	int *tid;
+	int tid;
 
 	nullpo_retr(0, nd);
 
@@ -539,25 +557,27 @@ int npc_timerevent_stop(struct npc_data* nd)
 		return 1;
 	}
 	
-	tid = sd?&sd->npc_timer_id:&nd->u.scr.timerid;
-	if( *tid == -1 ) //Nothing to stop
+	tid = sd?sd->npc_timer_id:nd->u.scr.timerid;
+	if( tid == -1 ) // Nothing to stop
 		return 0;
 
-	td = get_timer(*tid);
-	if (td && td->data) 
+	// Delete timer
+	td = get_timer(tid);
+	if( td && td->data ) 
 		ers_free(timer_event_ers, (void*)td->data);
-	delete_timer(*tid,npc_timerevent);
-	*tid = -1;
+	delete_timer(tid,npc_timerevent);
+	tid = -1;
 
-	//Set 'timer' to the time that has passed since the beginning of the timers and now.
-	nd->u.scr.timer += DIFF_TICK(gettick(),nd->u.scr.timertick);
-	//Set 'tick' to zero so that we know it's off.
-	nd->u.scr.timertick = 0;
+	if( !sd )
+	{
+		nd->u.scr.timer += DIFF_TICK(gettick(),nd->u.scr.timertick); // Set 'timer' to the time that has passed since the beginning of the timers
+		nd->u.scr.timertick = 0; // Set 'tick' to zero so that we know it's off.
+	}
 
 	return 0;
 }
 /*==========================================
- * Aborts a running npc timer that is attached to a player.
+ * Aborts a running NPC timer that is attached to a player.
  *------------------------------------------*/
 void npc_timerevent_quit(struct map_session_data* sd)
 {
@@ -565,6 +585,7 @@ void npc_timerevent_quit(struct map_session_data* sd)
 	struct npc_data* nd;
 	struct timer_event_data *ted;
 
+	// Check timer existance
 	if( sd->npc_timer_id == -1 )
 		return;
 	if( !(td = get_timer(sd->npc_timer_id)) )
@@ -573,13 +594,15 @@ void npc_timerevent_quit(struct map_session_data* sd)
 		return;
 	}
 
+	// Delete timer
 	nd = (struct npc_data *)map_id2bl(td->id);
 	ted = (struct timer_event_data*)td->data;
 	delete_timer(sd->npc_timer_id, npc_timerevent);
 	sd->npc_timer_id = -1;
 
+	// Execute OnTimerQuit
 	if( nd && nd->bl.type == BL_NPC )
-	{	//Execute OnTimerQuit
+	{
 		char buf[NAME_LENGTH*2+3];
 		struct event_data *ev;
 
@@ -596,13 +619,12 @@ void npc_timerevent_quit(struct map_session_data* sd)
 			unsigned int old_tick;
 
 			//Set timer related info.
-			old_rid = nd->u.scr.rid;
-			nd->u.scr.rid = sd->bl.id;
-
+			old_rid = (nd->u.scr.rid == sd->bl.id ? 0 : nd->u.scr.rid); // Detach rid if the last attached player logged off.
 			old_tick = nd->u.scr.timertick;
-			nd->u.scr.timertick = ted->otick = gettick();
-
 			old_timer = nd->u.scr.timer;
+
+			nd->u.scr.rid = sd->bl.id;			
+			nd->u.scr.timertick = gettick();			
 			nd->u.scr.timer = ted->time;
 		
 			//Execute label
@@ -615,11 +637,10 @@ void npc_timerevent_quit(struct map_session_data* sd)
 		}
 	}
 	ers_free(timer_event_ers, ted);
-	nd->u.scr.timertick = 0;
 }
 
 /*==========================================
- * Get the tick value of a npc timer
+ * Get the tick value of an NPC timer
  * If it's stopped, return stopped time
  *------------------------------------------*/
 int npc_gettimerevent_tick(struct npc_data* nd)
@@ -627,7 +648,9 @@ int npc_gettimerevent_tick(struct npc_data* nd)
 	int tick;
 	nullpo_retr(0, nd);
 
-	tick = nd->u.scr.timer; // The last time it's active(stop or event trigger)
+	// TODO: Get player attached timer's tick. Now we can just get it by using 'getnpctimer' inside OnTimer event.
+
+	tick = nd->u.scr.timer; // The last time it's active(start, stop or event trigger)
 	if( nd->u.scr.timertick ) // It's a running timer
 		tick += DIFF_TICK(gettick(), nd->u.scr.timertick);
 
@@ -640,27 +663,24 @@ int npc_gettimerevent_tick(struct npc_data* nd)
 int npc_settimerevent_tick(struct npc_data* nd, int newtimer)
 {
 	bool flag;
+	int old_rid;
 	struct map_session_data *sd = NULL;
 
 	nullpo_retr(0, nd);
 
-	//Check if timer is started
-	if( nd->u.scr.rid )
-	{
-		if( !(sd = map_id2sd(nd->u.scr.rid)) )
-		{
-			ShowError("npc_settimerevent_tick: Attached player not found!\n");
-			return 1;
-		}
-		flag = (sd->npc_timer_id != -1);
-	}
-	else
-		flag = (nd->u.scr.timerid != -1);
+	// TODO: Set player attached timer's tick.	
+
+	old_rid = nd->u.scr.rid;
+	nd->u.scr.rid = 0;
+
+	// Check if timer is started
+	flag = (nd->u.scr.timerid != INVALID_TIMER);
 
 	if( flag ) npc_timerevent_stop(nd);
 	nd->u.scr.timer = newtimer;
 	if( flag ) npc_timerevent_start(nd, -1);
 
+	nd->u.scr.rid = old_rid;
 	return 0;
 }
 
@@ -1425,7 +1445,27 @@ int npc_unload(struct npc_data* nd)
 	else
 	if( nd->subtype == SCRIPT )
 	{
-		ev_db->foreach(ev_db,npc_unload_ev,nd->exname); //Clean up all events related.
+		struct s_mapiterator* iter;
+		struct block_list* bl;		
+
+		ev_db->foreach(ev_db,npc_unload_ev,nd->exname); //Clean up all events related
+
+		iter = mapit_geteachpc();  
+		for( bl = (struct block_list*)mapit_first(iter); mapit_exists(iter); bl = (struct block_list*)mapit_next(iter) )  
+		{
+			struct map_session_data *sd = map_id2sd(bl->id);
+			if( sd && sd->npc_timer_id != INVALID_TIMER )
+			{
+				const struct TimerData *td = NULL;
+				td = get_timer(sd->npc_timer_id);
+				if (td && td->data) 
+					ers_free(timer_event_ers, (void*)td->data);
+				delete_timer(sd->npc_timer_id, npc_timerevent);
+				sd->npc_timer_id = INVALID_TIMER;
+			}
+		}  
+		mapit_free(iter);
+
 		if (nd->u.scr.timerid != -1) {
 			const struct TimerData *td = NULL;
 			td = get_timer(nd->u.scr.timerid);

@@ -5110,8 +5110,8 @@ The 'setnpctimer' command will explicitly set the timer to a given tick.
  0 - Will return the current tick count of the timer.
  1 - Will return 1 if there are remaining "OnTimer<ticks>:" labels in the 
      specified NPC waiting for execution.
- 2 - Will return the number of times the timer has triggered an "OnTimer<tick>:" 
-     label in the specified NPC.
+ 2 - Will return the number of times the timer has triggered and will trigger
+     an "OnTimer<tick>:"  label in the specified NPC.
 
 Example 1:
 
@@ -5135,7 +5135,7 @@ Example 1:
         npctalk "1";
         end;
     OnTimer10000:
-        stopnpctimer;
+        stopnpctimer; // This command is indeed not neccessary here because timer automaticly stopped due to no remaining events.
         mes "[Man]";
         mes "Ok we can talk now";
     }
@@ -5143,8 +5143,10 @@ Example 1:
 Example 2:
 
     OnTimer15000:
-	npctalk "Another 15 seconds have passed.";
-        setnpctimer 0;
+				npctalk "Another 15 seconds have passed.";
+        initnpctimer; // You have to use 'initnpctimer' instead of 'setnpctimer 0'.
+        							// This is equal to 'setnpctimer 0' + 'startnpctimer'.
+        							// Alternatively, you can also insert another 'OnTimer15001' label so that the timer won't stop.
         end;
        
     // This OnInit label will run when the script is loaded, so that the timer 
