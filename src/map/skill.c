@@ -9428,8 +9428,7 @@ static int skill_cell_overlap(struct block_list *bl, va_list ap)
 	switch (skillid)
 	{
 		case SA_LANDPROTECTOR:
-			if( unit->group->skill_id == SA_LANDPROTECTOR &&
-				battle_check_target(bl, src, BCT_ENEMY) > 0 )
+			if( unit->group->skill_id == SA_LANDPROTECTOR )
 			{	//Check for offensive Land Protector to delete both. [Skotlex]
 				(*alive) = 0;
 				skill_delunit(unit);
