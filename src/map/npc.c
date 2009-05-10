@@ -1460,7 +1460,7 @@ int npc_unload(struct npc_data* nd)
 			{
 				const struct TimerData *td = get_timer(sd->npc_timer_id);
 
-				if( td && td->id == nd->bl.id )
+				if( td && td->id != nd->bl.id )
 					continue;
 
 				if( td && td->data )
