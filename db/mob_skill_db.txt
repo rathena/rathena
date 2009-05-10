@@ -176,8 +176,8 @@
 1038,Osiris@NPC_DARKBREATH,attack,202,5,500,0,5000,no,target,always,0,,,,,,9
 1038,Osiris@NPC_DARKBREATH,chase,202,5,500,0,5000,no,target,always,0,,,,,,9
 1038,Osiris@NPC_POISONATTACK,attack,188,5,2000,0,5000,no,target,always,0,,,,,,9
-1038,Osiris@NPC_SUMMONSLAVE,attack,196,1,10000,700,10000,no,self,slavele,4,1522,,,,,
-1038,Osiris@NPC_SUMMONSLAVE,idle,196,1,10000,700,10000,no,self,slavele,4,1522,,,,,
+1038,Osiris@NPC_SUMMONSLAVE,attack,196,5,10000,700,10000,no,self,slavele,3,1522,,,,,
+1038,Osiris@NPC_SUMMONSLAVE,idle,196,5,10000,700,10000,no,self,slavele,3,1522,,,,,
 1038,Osiris@NPC_SUMMONSLAVE,idle,196,7,10000,0,0,no,self,onspawn,0,1029,,,,,
 1038,Osiris@SM_BASH,attack,5,10,2000,0,5000,yes,target,always,0,,,,,,
 1038,Osiris@NPC_DARKTHUNDER,chase,341,10,2000,0,5000,no,target,always,0,,,,,,
