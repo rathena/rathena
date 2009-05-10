@@ -3758,11 +3758,9 @@ static signed short status_calc_def2(struct block_list *bl, struct status_change
 		def2 -= def2 * 50/100;
 	if(sc->data[SC_PROVOKE])
 		def2 -= def2 * sc->data[SC_PROVOKE]->val4/100;
-	if(sc->data[SC_JOINTBEAT]){
-		def2 -= def2 *
-			( ( sc->data[SC_JOINTBEAT]->val2&BREAK_SHOULDER ? 50 : 0 )
-			+ ( sc->data[SC_JOINTBEAT]->val2&BREAK_WAIST    ? 25 : 0 ) );
-	}
+	if(sc->data[SC_JOINTBEAT])
+		def2 -= def2 * ( sc->data[SC_JOINTBEAT]->val2&BREAK_SHOULDER ? 50 : 0 ) / 100
+			  + def2 * ( sc->data[SC_JOINTBEAT]->val2&BREAK_WAIST ? 25 : 0 ) / 100;
 	if(sc->data[SC_FLING])
 		def2 -= def2 * (sc->data[SC_FLING]->val3)/100;
 
