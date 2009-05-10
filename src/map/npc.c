@@ -1458,9 +1458,12 @@ int npc_unload(struct npc_data* nd)
 			struct map_session_data *sd = map_id2sd(bl->id);
 			if( sd && sd->npc_timer_id != INVALID_TIMER )
 			{
-				const struct TimerData *td = NULL;
-				td = get_timer(sd->npc_timer_id);
-				if (td && td->data) 
+				const struct TimerData *td = get_timer(sd->npc_timer_id);
+
+				if( td && td->id == nd->bl.id )
+					continue;
+
+				if( td && td->data )
 					ers_free(timer_event_ers, (void*)td->data);
 				delete_timer(sd->npc_timer_id, npc_timerevent);
 				sd->npc_timer_id = INVALID_TIMER;
