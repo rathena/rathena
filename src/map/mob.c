@@ -3010,10 +3010,12 @@ int mobskill_use(struct mob_data *md, unsigned int tick, int event)
 				map_search_freecell(&md->bl, md->bl.m, &x, &y, j, j, 3);
 			}
 			md->skillidx = i;
-			if (!unit_skilluse_pos2(&md->bl, x, y,
-				ms[i].skill_id, ms[i].skill_lv,
-				ms[i].casttime, ms[i].cancel))
+			map_freeblock_lock();
+			if (!unit_skilluse_pos2(&md->bl, x, y, ms[i].skill_id, ms[i].skill_lv, ms[i].casttime, ms[i].cancel))
+			{
+				map_freeblock_unlock();
 				continue;
+			}
 		} else {
 			//Targetted skill
 			switch (ms[i].target) {
@@ -3044,10 +3046,12 @@ int mobskill_use(struct mob_data *md, unsigned int tick, int event)
 			}
 			if (!bl) continue;
 			md->skillidx = i;
-			if (!unit_skilluse_id2(&md->bl, bl->id,
-				ms[i].skill_id, ms[i].skill_lv,
-				ms[i].casttime, ms[i].cancel))
+			map_freeblock_lock();
+			if (!unit_skilluse_id2(&md->bl, bl->id, ms[i].skill_id, ms[i].skill_lv, ms[i].casttime, ms[i].cancel))
+			{
+				map_freeblock_unlock();
 				continue;
+			}
 		}
 		//Skill used. Post-setups... 
 		if(!(battle_config.mob_ai&0x200))
@@ -3057,6 +3061,7 @@ int mobskill_use(struct mob_data *md, unsigned int tick, int event)
 					md->skilldelay[j]=tick;
 		} else
 			md->skilldelay[i]=tick;
+		map_freeblock_unlock();
 		return 1;
 	}
 	//No skill was used.
