@@ -37,6 +37,8 @@
 	2385 Recuvative_Armor		Should trigger HP/SP return with magical kills as well.
 
 =======================
+2009/05/11
+	* Rev. 13753 Fixed a couple mistakes in r13752, extra commas at the end a couple lines, and missing quotes around an AL_HEAL. [L0ne_W0lf]
 2009/05/10
 	* Rev. 13752 Updated pet database. [L0ne_W0lf]
 	- Defined the header for the pet database. Lordy was this not fun.
