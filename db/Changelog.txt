@@ -38,6 +38,11 @@
 
 =======================
 2009/05/10
+	* Rev. 13752 Updated pet database. [L0ne_W0lf]
+	- Defined the header for the pet database. Lordy was this not fun.
+	- All pets now walk at character speed (150), but do not inherit bonuses from owner.
+	- All pets have the same hungrydelay, and will lose hunger at 80 points per 60 seconds.
+	- Corrected capture success rates for Alice, Zealotus, and the goblin pets.
 	* Rev. 13749 Osiris now summons the correct amount of Ancient Mummies at the right slave number (Partial revert of r7010.) [L0ne_W0lf]
 2009/05/08
 	* Rev. 13743 Well, as it turns out, DETECTOR is actually detect hidden (not cast sense.) Elder is at least fixed though. [L0ne_W0lf]
