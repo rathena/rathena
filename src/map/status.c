@@ -3941,6 +3941,8 @@ static unsigned short status_calc_speed(struct block_list *bl, struct status_cha
 	return (short)cap_value(speed,10,USHRT_MAX);
 }
 
+/// Calculates an object's ASPD modifier (alters the base amotion value).
+/// Note that the scale of aspd_rate is 1000 = 100%.
 static short status_calc_aspd_rate(struct block_list *bl, struct status_change *sc, int aspd_rate)
 {
 	int i;
@@ -4021,7 +4023,7 @@ static short status_calc_aspd_rate(struct block_list *bl, struct status_change *
 		sc->data[i=SC_ASPDPOTION0])
 		aspd_rate -= sc->data[i]->val2;
 	if(sc->data[SC_DONTFORGETME])
-		aspd_rate += sc->data[SC_DONTFORGETME]->val2;
+		aspd_rate += 10 * sc->data[SC_DONTFORGETME]->val2;
 	if(sc->data[SC_LONGING])
 		aspd_rate += sc->data[SC_LONGING]->val2;
 	if(sc->data[SC_STEELBODY])
