@@ -3131,8 +3131,8 @@ int pc_additem(struct map_session_data *sd,struct item *item_data,int amount)
 
 	i = MAX_INVENTORY;
 
-	if( itemdb_isstackable2(data) && item_data->serial == 0 && item_data->expire_time == 0 )
-	{ // Stackable | Non Serialized (non unique) | Non Rental
+	if( itemdb_isstackable2(data) && item_data->expire_time == 0 )
+	{ // Stackable | Non Rental
 		for( i = 0; i < MAX_INVENTORY; i++ )
 		{
 			if( sd->status.inventory[i].nameid == item_data->nameid && memcmp(&sd->status.inventory[i].card, &item_data->card, sizeof(item_data->card)) == 0 )
@@ -3495,7 +3495,7 @@ int pc_useitem(struct map_session_data *sd,int n)
 
 			//Logs (C)onsumable items [Lupus]
 			if( log_config.enable_logs&0x100 )
-				log_pick_pc(sd, "C", sd->status.inventory[n].nameid, -1, &sd->status.inventory[n], sd->status.inventory[n].serial );
+				log_pick_pc(sd, "C", sd->status.inventory[n].nameid, -1, &sd->status.inventory[n]);
 
 			pc_delitem(sd,n,1,1); // Rental Usable Items are not deleted until expiration
 		}
