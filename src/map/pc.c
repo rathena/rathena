@@ -349,10 +349,10 @@ void pc_inventory_rentals(struct map_session_data *sd)
 		}
 	}
 
-	if( c > 0 )
-		sd->rental_timer = add_timer(gettick() + next_tick, pc_inventory_rental_end, sd->bl.id, 0);
+	if( c > 0 ) // min(next_tick,3600000) 1 hour each timer to keep announcing to the owner, and to avoid a but with rental time > 15 days
+		sd->rental_timer = add_timer(gettick() + min(next_tick,3600000), pc_inventory_rental_end, sd->bl.id, 0);
 	else
-		sd->rental_timer = -1;
+		sd->rental_timer = INVALID_TIMER;
 }
 
 void pc_inventory_rental_add(struct map_session_data *sd, int seconds)
@@ -848,7 +848,7 @@ bool pc_authok(struct map_session_data *sd, int login_id2, time_t expiration_tim
 	for( i = 0; i < MAX_EVENTTIMER; i++ )
 		sd->eventtimer[i] = -1;
 	// Rental Timer
-	sd->rental_timer = -1;
+	sd->rental_timer = INVALID_TIMER;
 
 	for( i = 0; i < 3; i++ )
 		sd->hate_mob[i] = -1;
@@ -3119,9 +3119,9 @@ int pc_additem(struct map_session_data *sd,struct item *item_data,int amount)
 	nullpo_retr(1, sd);
 	nullpo_retr(1, item_data);
 
-	if(item_data->nameid <= 0 || amount <= 0)
+	if( item_data->nameid <= 0 || amount <= 0 )
 		return 1;
-	if(amount > MAX_AMOUNT)
+	if( amount > MAX_AMOUNT )
 		return 5;
 	
 	data = itemdb_search(item_data->nameid);
@@ -3131,15 +3131,13 @@ int pc_additem(struct map_session_data *sd,struct item *item_data,int amount)
 
 	i = MAX_INVENTORY;
 
-	if (itemdb_isstackable2(data))
-	{ //Stackable
-		for (i = 0; i < MAX_INVENTORY; i++)
+	if( itemdb_isstackable2(data) && item_data->serial == 0 && item_data->expire_time == 0 )
+	{ // Stackable | Non Serialized (non unique) | Non Rental
+		for( i = 0; i < MAX_INVENTORY; i++ )
 		{
-			if(sd->status.inventory[i].nameid == item_data->nameid &&
-				memcmp(&sd->status.inventory[i].card,&item_data->card,
-					sizeof(item_data->card))==0)
+			if( sd->status.inventory[i].nameid == item_data->nameid && memcmp(&sd->status.inventory[i].card, &item_data->card, sizeof(item_data->card)) == 0 )
 			{
-				if (amount > MAX_AMOUNT - sd->status.inventory[i].amount)
+				if( amount > MAX_AMOUNT - sd->status.inventory[i].amount )
 					return 5;
 				sd->status.inventory[i].amount += amount;
 				clif_additem(sd,i,amount,0);
@@ -3147,12 +3145,16 @@ int pc_additem(struct map_session_data *sd,struct item *item_data,int amount)
 			}
 		}
 	}
-	if (i >= MAX_INVENTORY){
+
+	if( i >= MAX_INVENTORY )
+	{
 		i = pc_search_inventory(sd,0);
-		if(i<0) return 4;
+		if( i < 0 )
+			return 4;
+
 		memcpy(&sd->status.inventory[i], item_data, sizeof(sd->status.inventory[0]));
 		// clear equips field first, just in case
-		if (item_data->equip)
+		if( item_data->equip )
 			sd->status.inventory[i].equip = 0;
 
 		sd->status.inventory[i].amount = amount;
@@ -3447,18 +3449,17 @@ int pc_useitem(struct map_session_data *sd,int n)
 
 	nullpo_retr(0, sd);
 
-	if(sd->status.inventory[n].nameid <= 0 ||
-		sd->status.inventory[n].amount <= 0)
+	if( sd->status.inventory[n].nameid <= 0 || sd->status.inventory[n].amount <= 0 )
 		return 0;
 
-	if(!pc_isUseitem(sd,n))
+	if( !pc_isUseitem(sd,n) )
 		return 0;
 
 	 //Prevent mass item usage. [Skotlex]
-	if(DIFF_TICK(sd->canuseitem_tick, tick) > 0)
+	if( DIFF_TICK(sd->canuseitem_tick, tick) > 0 )
 		return 0;
 
-	if (sd->sc.count && (
+	if( sd->sc.count && (
 		sd->sc.data[SC_BERSERK] ||
 		(sd->sc.data[SC_GRAVITATION] && sd->sc.data[SC_GRAVITATION]->val3 == BCT_SELF) ||
 		sd->sc.data[SC_TRICKDEAD] ||
@@ -3484,15 +3485,22 @@ int pc_useitem(struct map_session_data *sd,int n)
 	amount = sd->status.inventory[n].amount;
 	script = sd->inventory_data[n]->script;
 	//Check if the item is to be consumed immediately [Skotlex]
-	if (sd->inventory_data[n]->flag.delay_consume)
+	if( sd->inventory_data[n]->flag.delay_consume )
 		clif_useitemack(sd,n,amount,1);
-	else {
-		clif_useitemack(sd,n,amount-1,1);
-		//Logs (C)onsumable items [Lupus]
-		if(log_config.enable_logs&0x100)
-			log_pick_pc(sd, "C", sd->status.inventory[n].nameid, -1, &sd->status.inventory[n]);
-		//Logs
-		pc_delitem(sd,n,1,1);
+	else
+	{
+		if( sd->status.inventory[n].expire_time == 0 )
+		{
+			clif_useitemack(sd,n,amount-1,1);
+
+			//Logs (C)onsumable items [Lupus]
+			if( log_config.enable_logs&0x100 )
+				log_pick_pc(sd, "C", sd->status.inventory[n].nameid, -1, &sd->status.inventory[n], sd->status.inventory[n].serial );
+
+			pc_delitem(sd,n,1,1); // Rental Usable Items are not deleted until expiration
+		}
+		else
+			clif_useitemack(sd,n,0,0);
 	}
 	if(sd->status.inventory[n].card[0]==CARD0_CREATE &&
 		pc_famerank(MakeDWord(sd->status.inventory[n].card[2],sd->status.inventory[n].card[3]), MAPID_ALCHEMIST))
@@ -3533,7 +3541,7 @@ int pc_cart_additem(struct map_session_data *sd,struct item *item_data,int amoun
 		return 1;
 
 	i = MAX_CART;
-	if( itemdb_isstackable2(data) )
+	if( itemdb_isstackable2(data) && !item_data->expire_time )
 	{
 		ARR_FIND( 0, MAX_CART, i,
 			sd->status.cart[i].nameid == item_data->nameid &&
@@ -3606,10 +3614,10 @@ int pc_putitemtocart(struct map_session_data *sd,int idx,int amount)
 	
 	item_data = &sd->status.inventory[idx];
 
-	if (item_data->nameid==0 || amount < 1 || item_data->amount<amount || sd->vender_id)
+	if( item_data->nameid == 0 || amount < 1 || item_data->amount < amount || sd->vender_id || item_data->expire_time )
 		return 1;
 
-	if (pc_cart_additem(sd,item_data,amount) == 0)
+	if( pc_cart_additem(sd,item_data,amount) == 0 )
 		return pc_delitem(sd,idx,amount,0);
 
 	return 1;
@@ -3814,9 +3822,10 @@ int pc_setpos(struct map_session_data* sd, unsigned short mapindex, int x, int y
 
 	sd->state.changemap = (sd->mapindex != mapindex);
 	if( sd->state.changemap )
-	{	//Misc map-changing settings
+	{ // Misc map-changing settings
+		sd->state.pmap = sd->bl.m;
 		if (sd->sc.count)
-		{ //Cancel some map related stuff.
+		{ // Cancel some map related stuff.
 			if (sd->sc.data[SC_JAILED])
 				return 1; //You may not get out!
 			if (sd->sc.data[SC_BOSSMAPINFO])

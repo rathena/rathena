@@ -1062,6 +1062,8 @@ int clif_spawn(struct block_list *bl)
 				clif_specialeffect(bl,423,AREA);
 			else if(sd->state.size==1)
 				clif_specialeffect(bl,421,AREA);
+			if( sd->state.user_font )
+				clif_font_area(sd);
 			if( sd->state.bg_id && map[sd->bl.m].flag.battleground )
 				clif_sendbgemblem_area(sd);
 		}
@@ -3486,6 +3488,8 @@ void clif_getareachar_unit(struct map_session_data* sd,struct block_list *bl)
 				clif_specialeffect_single(bl,423,sd->fd);
 			else if(tsd->state.size==1)
 				clif_specialeffect_single(bl,421,sd->fd);
+			if( tsd->state.user_font )
+				clif_font_single(sd->fd,tsd);
 			if( tsd->state.bg_id && map[tsd->bl.m].flag.battleground )
 				clif_sendbgemblem_single(sd->fd,tsd);
 		}
@@ -8125,8 +8129,10 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 
 	if( sd->state.changemap )
 	{// restore information that gets lost on map-change
-		if( battle_config.gvg_flee_penalty != 100 || battle_config.bg_flee_penalty != 100 )
+		if( (map_flag_gvg(sd->state.pmap) && battle_config.gvg_flee_penalty != 100) || (map[sd->state.pmap].flag.battleground && battle_config.bg_flee_penalty != 100) )
 			status_calc_bl(&sd->bl, SCB_FLEE); //Refresh flee penalty
+		else if( (map_flag_gvg(sd->bl.m) && battle_config.gvg_flee_penalty != 100) || (map[sd->bl.m].flag.battleground && battle_config.bg_flee_penalty != 100) )
+			status_calc_bl(&sd->bl, SCB_FLEE);
 
 		if( night_flag && map[sd->bl.m].flag.nightenabled )
 		{	//Display night.
@@ -13013,6 +13019,32 @@ int clif_sendbgemblem_single(int fd, struct map_session_data *sd)
 }
 
 /*==========================================
+ * Custom Fonts
+ * S 0x2ef <account_id>.l <font id>.w
+ *------------------------------------------*/
+int clif_font_area(struct map_session_data *sd)
+{
+	unsigned char buf[8];
+	nullpo_retr(0,sd);
+	WBUFW(buf,0) = 0x2ef;
+	WBUFL(buf,2) = sd->bl.id;
+	WBUFW(buf,6) = sd->state.user_font;
+	clif_send(buf, packet_len(0x2ef), &sd->bl, AREA);
+	return 1;
+}
+
+int clif_font_single(int fd, struct map_session_data *sd)
+{
+	nullpo_retr(0,sd);
+	WFIFOHEAD(fd,packet_len(0x2ef));
+	WFIFOW(fd,0) = 0x2ef;
+	WFIFOL(fd,2) = sd->bl.id;
+	WFIFOW(fd,6) = sd->state.user_font;
+	WFIFOSET(fd,packet_len(0x2ef));
+	return 1;
+}
+
+/*==========================================
  * パケットデバッグ
  *------------------------------------------*/
 void clif_parse_debug(int fd,struct map_session_data *sd)
@@ -13286,7 +13318,7 @@ static int packetdb_readdb(void)
 	//#0x02C0
 	    0,  0,  0,  0,  0, 30,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 	    0,  0,  0,  0,  0,  0,  6, -1, 10, 10,  0,  0, -1, 32,  6,  0,
-	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  8,
 	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 	//#0x0300
 	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,

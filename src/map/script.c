@@ -5356,12 +5356,6 @@ BUILDIN_FUNC(rentitem)
 		return 1;
 	}
 
-	if( itemdb_isstackable(nameid) )
-	{
-		ShowError("buildin_rentitem: invalid rental item %d requested.\n", nameid);
-		return 1;
-	}
-
 	seconds = script_getnum(st,3);
 	memset(&it, 0, sizeof(it));
 	it.nameid = nameid;
@@ -6268,14 +6262,12 @@ BUILDIN_FUNC(getequipisenableref)
 	if( sd == NULL )
 		return 0;
 
-	if (num > 0 && num <= ARRAYLENGTH(equip))
-		i=pc_checkequip(sd,equip[num-1]);
-	if(i >= 0 && sd->inventory_data[i] && !sd->inventory_data[i]->flag.no_refine)
-	{
+	if( num > 0 && num <= ARRAYLENGTH(equip) )
+		i = pc_checkequip(sd,equip[num-1]);
+	if( i >= 0 && sd->inventory_data[i] && !sd->inventory_data[i]->flag.no_refine && !sd->status.inventory[i].expire_time )
 		script_pushint(st,1);
-	} else {
+	else
 		script_pushint(st,0);
-	}
 
 	return 0;
 }
@@ -13640,6 +13632,25 @@ BUILDIN_FUNC(bg_get_data)
 	return 0;
 }
 
+/*==========================================
+ * Custom Fonts
+ *------------------------------------------*/
+BUILDIN_FUNC(setfont)
+{
+	struct map_session_data *sd = script_rid2sd(st);
+	int font = script_getnum(st,2);
+	if( sd == NULL )
+		return 0;
+
+	if( sd->state.user_font != font )
+		sd->state.user_font = font;
+	else
+		sd->state.user_font = 0;
+	
+	clif_font_area(sd);
+	return 0;
+}
+
 // declarations that were supposed to be exported from npc_chat.c
 #ifdef PCRE_SUPPORT
 BUILDIN_FUNC(defpattern);
@@ -13998,6 +14009,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(mercenary_set_calls,"ii"),
 	BUILDIN_DEF(mercenary_set_faith,"ii"),
 	BUILDIN_DEF(readbook,"ii"),
+	BUILDIN_DEF(setfont,"i"),
 	// WoE SE
 	BUILDIN_DEF(agitstart2,""),
 	BUILDIN_DEF(agitend2,""),

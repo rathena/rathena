@@ -120,9 +120,11 @@ struct map_session_data {
 		unsigned short autolootid; // [Zephyrus]
 		unsigned noks : 3; // [Zeph Kill Steal Protection]
 		bool changemap;
+		short pmap; // Previous map on Map Change
 		struct guild *gmaster_flag;
 		unsigned int bg_id;
 		unsigned skillonskill : 1;
+		unsigned short user_font;
 	} state;
 	struct {
 		unsigned char no_weapon_damage, no_magic_damage, no_misc_damage;

@@ -266,6 +266,7 @@ void vending_openvending(struct map_session_data* sd, const char* message, bool 
 		//NOTE: official server does not do any of the following checks!
 		||  !sd->status.cart[index].identify // unidentified item
 		||  sd->status.cart[index].attribute == 1 // broken item
+		||  sd->status.cart[index].expire_time // It should not be in the cart but just in case
 		||  !itemdb_cantrade(&sd->status.cart[index], pc_isGM(sd), pc_isGM(sd)) ) // untradeable item
 			continue;
 

@@ -8586,6 +8586,42 @@ int atcommand_delitem(const int fd, struct map_session_data* sd, const char* com
 	return 0;
 }
 
+/*==========================================
+ * Custom Fonts
+ *------------------------------------------*/
+int atcommand_font(const int fd, struct map_session_data *sd, const char *command, const char *message)
+{
+	int font_id;
+	nullpo_retr(-1,sd);
+
+	font_id = atoi(message);
+	if( font_id == 0 )
+	{
+		if( sd->state.user_font )
+		{
+			sd->state.user_font = 0;
+			clif_displaymessage(fd, "Returning to normal font.");
+			clif_font_area(sd);
+		}
+		else
+		{
+			clif_displaymessage(fd, "Use @font <1..9> to change your messages font.");
+			clif_displaymessage(fd, "Use 0 or no parameter to back to normal font.");
+		}
+	}
+	else if( font_id < 0 || font_id > 9 )
+		clif_displaymessage(fd, "Invalid font. Use a Value from 0 to 9.");
+	else if( font_id != sd->state.user_font )
+	{
+		sd->state.user_font = font_id;
+		clif_font_area(sd);
+		clif_displaymessage(fd, "Font changed.");
+	}
+	else
+		clif_displaymessage(fd, "Already using this font.");
+
+	return 0;
+}
 
 
 /*==========================================
@@ -8890,6 +8926,7 @@ AtCommandInfo atcommand_info[] = {
 	{ "stats",              40,40,    atcommand_stats },
 	{ "delitem",            60,60,    atcommand_delitem },
 	{ "charcommands",        1,1,     atcommand_commands },
+	{ "font",               1,1,     atcommand_font },
 };
 
 
@@ -9147,36 +9184,35 @@ int atcommand_commands(const int fd, struct map_session_data* sd, const char* co
 
 	clif_displaymessage(fd, msg_txt(273)); // "Commands available:"
 
-		for( i = 0; i < ARRAYLENGTH(atcommand_info); i++ )
+	for( i = 0; i < ARRAYLENGTH(atcommand_info); i++ )
+	{
+		unsigned int slen;
+
+		if( gm_lvl < atcommand_info[i].level && stristr(command,"commands") )
+			continue;
+		if( gm_lvl < atcommand_info[i].level2 && stristr(command,"charcommands") )
+			continue;
+
+		slen = (unsigned int)strlen(atcommand_info[i].command);
+
+		// flush the text buffer if this command won't fit into it
+		if( slen + cur - line_buff >= CHATBOX_SIZE )
 		{
-			unsigned int slen;
-
-			if( gm_lvl < atcommand_info[i].level && stristr(command,"commands") )
-				continue;
-			if( gm_lvl < atcommand_info[i].level2 && stristr(command,"charcommands") )
-				continue;
-
-			slen = (unsigned int)strlen(atcommand_info[i].command);
-
-			// flush the text buffer if this command won't fit into it
-			if( slen + cur - line_buff >= CHATBOX_SIZE )
-			{
-				clif_displaymessage(fd,line_buff);
-				cur = line_buff;
-				memset(line_buff,' ',CHATBOX_SIZE);
-				line_buff[CHATBOX_SIZE-1] = 0;
-			}
-
-			memcpy(cur,atcommand_info[i].command,slen);
-			cur += slen+(10-slen%10);
-
-			count++;
+			clif_displaymessage(fd,line_buff);
+			cur = line_buff;
+			memset(line_buff,' ',CHATBOX_SIZE);
+			line_buff[CHATBOX_SIZE-1] = 0;
 		}
-		
+
+		memcpy(cur,atcommand_info[i].command,slen);
+		cur += slen+(10-slen%10);
+
+		count++;
+	}
 	clif_displaymessage(fd,line_buff);
 
 	sprintf(atcmd_output, msg_txt(274), count); // "%d commands found."
 	clif_displaymessage(fd, atcmd_output);
-	
+
 	return 0;
 }

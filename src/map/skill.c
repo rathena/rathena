@@ -7995,11 +7995,10 @@ int skill_check_condition(struct map_session_data* sd, short skill, short lv, in
 			}
 			//Consume
 			sd->itemid = sd->itemindex = -1;
-			if(skill == WZ_EARTHSPIKE && sc &&
-				sc->data[SC_EARTHSCROLL] && rand()%100 > sc->data[SC_EARTHSCROLL]->val2) // [marquis007]
+			if( skill == WZ_EARTHSPIKE && sc && sc->data[SC_EARTHSCROLL] && rand()%100 > sc->data[SC_EARTHSCROLL]->val2 ) // [marquis007]
 				; //Do not consume item.
-			else
-				pc_delitem(sd,i,1,0);
+			else if( sd->status.inventory[i].expire_time == 0 )
+				pc_delitem(sd,i,1,0); // Rental usable items are not consumed until expiration
 		}
 		if (type&1) //Casting finished
 			sd->skillitem = sd->skillitemlv = 0;
