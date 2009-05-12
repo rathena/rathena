@@ -1894,22 +1894,26 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 
 	if(!(nk&NK_NO_ELEFIX))
 	{	//Elemental attribute fix
-		if (wd.damage > 0)
+		if( wd.damage > 0 )
 		{
 			wd.damage=battle_attr_fix(src,target,wd.damage,s_ele,tstatus->def_ele, tstatus->ele_lv);
-			if(skill_num==MC_CARTREVOLUTION) //Cart Revolution applies the element fix once more with neutral element
+			if( skill_num == MC_CARTREVOLUTION ) //Cart Revolution applies the element fix once more with neutral element
 				wd.damage = battle_attr_fix(src,target,wd.damage,ELE_NEUTRAL,tstatus->def_ele, tstatus->ele_lv);
-			if(skill_num== GS_GROUNDDRIFT) //Additional 50*lv Neutral damage.
-				wd.damage+= battle_attr_fix(src,target,50*skill_lv,ELE_NEUTRAL,tstatus->def_ele, tstatus->ele_lv);
+			if( skill_num== GS_GROUNDDRIFT ) //Additional 50*lv Neutral damage.
+				wd.damage += battle_attr_fix(src,target,50*skill_lv,ELE_NEUTRAL,tstatus->def_ele, tstatus->ele_lv);
 		}
-		if (flag.lh && wd.damage2 > 0)
+		if( flag.lh && wd.damage2 > 0 )
 			wd.damage2 = battle_attr_fix(src,target,wd.damage2,s_ele_,tstatus->def_ele, tstatus->ele_lv);
-		if(sc && sc->data[SC_WATK_ELEMENT])
-		{	//Descriptions indicate this means adding a percent of a normal attack in another element. [Skotlex]
-			int damage= battle_calc_base_damage(sstatus, &sstatus->rhw, sc, tstatus->size, sd, (flag.arrow?2:0));
-			damage = damage*sc->data[SC_WATK_ELEMENT]->val2/100;
-			damage = battle_attr_fix(src,target,damage,sc->data[SC_WATK_ELEMENT]->val1,tstatus->def_ele, tstatus->ele_lv);
-			ATK_ADD(damage);
+		if( sc && sc->data[SC_WATK_ELEMENT] )
+		{ // Descriptions indicate this means adding a percent of a normal attack in another element. [Skotlex]
+			int damage = battle_calc_base_damage(sstatus, &sstatus->rhw, sc, tstatus->size, sd, (flag.arrow?2:0)) * sc->data[SC_WATK_ELEMENT]->val2 / 100;
+			wd.damage += battle_attr_fix(src, target, damage, sc->data[SC_WATK_ELEMENT]->val1, tstatus->def_ele, tstatus->ele_lv);
+
+			if( flag.lh )
+			{
+				damage = battle_calc_base_damage(sstatus, &sstatus->lhw, sc, tstatus->size, sd, (flag.arrow?2:0)) * sc->data[SC_WATK_ELEMENT]->val2 / 100;
+				wd.damage2 += battle_attr_fix(src, target, damage, sc->data[SC_WATK_ELEMENT]->val1, tstatus->def_ele, tstatus->ele_lv);
+			}
 		}
 	}
 
@@ -2060,9 +2064,9 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 
 	if( flag.infdef )
 	{ //Plants receive 1 damage when hit
-		if( flag.rh && (flag.hit || wd.damage>0) )
-			wd.damage = 1;
-		if( flag.lh && (flag.hit || wd.damage2>0) )
+		if( flag.hit || wd.damage > 0 )
+			wd.damage = 1; // In some cases, right hand no need to have a weapon to increase damage
+		if( flag.lh && (flag.hit || wd.damage2 > 0) )
 			wd.damage2 = 1;
 		if( !(battle_config.skill_min_damage&1) )
 			//Do not return if you are supposed to deal greater damage to plants than 1. [Skotlex]
@@ -2479,7 +2483,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 		if( skill_num == CR_GRANDCROSS || skill_num == NPC_GRANDDARKNESS )
 		{ //Apply the physical part of the skill's damage. [Skotlex]
 			struct Damage wd = battle_calc_weapon_attack(src,target,skill_num,skill_lv,mflag);
-			ad.damage = battle_attr_fix(src, target, wd.damage + ad.damage, s_ele, tstatus->def_ele, tstatus->ele_lv) * (100 + 40*skill_lv)/100;;
+			ad.damage = battle_attr_fix(src, target, wd.damage + ad.damage, s_ele, tstatus->def_ele, tstatus->ele_lv) * (100 + 40*skill_lv)/100;
 			if( src == target )
 			{
 				if( src->type == BL_PC )
