@@ -4370,6 +4370,11 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case AM_POTIONPITCHER:
 		{
 			int i,x,hp = 0,sp = 0,bonus=100;
+			if( dstmd && dstmd->class_ == MOBID_EMPERIUM )
+			{
+				map_freeblock_unlock();
+				return 1;
+			}
 			if( sd )
 			{
 				x = skilllv%11 - 1;
@@ -5083,6 +5088,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 
 	// Slim Pitcher
 	case CR_SLIMPITCHER:
+		if( dstmd && dstmd->class_ == MOBID_EMPERIUM )
+			break;
 		if (potion_hp || potion_sp) {
 			int hp = potion_hp, sp = potion_sp;
 			hp = hp * (100 + (tstatus->vit<<1))/100;
