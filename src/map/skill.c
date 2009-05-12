@@ -5576,9 +5576,6 @@ int skill_castend_id(int tid, unsigned int tick, int id, intptr data)
 		}
 
 		ud->skilltimer = INVALID_TIMER;
-
-		if( sd && (ud->skillid == CR_GRANDCROSS || ud->skillid == NPC_GRANDDARKNESS) )
-			status_calc_bl(&sd->bl, SCB_DEF); // restore original DEF
 	}
 
 	if (ud->skilltarget == id)

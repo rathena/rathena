@@ -1072,7 +1072,15 @@ int unit_skilluse_id2(struct block_list *src, int target_id, short skill_num, sh
 	ud->canact_tick  = tick + casttime + 100;
 	if ( battle_config.display_status_timers && sd )
 		clif_status_change(src, SI_ACTIONDELAY, 1, casttime);
-
+	if( sd )
+	{
+		switch( skill_num )
+		{
+		case CG_ARROWVULCAN:
+			sd->canequip_tick = tick + casttime;
+			break;
+		}
+	}
 	ud->skilltarget  = target_id;
 	ud->skillx       = 0;
 	ud->skilly       = 0;
@@ -1092,20 +1100,6 @@ int unit_skilluse_id2(struct block_list *src, int target_id, short skill_num, sh
 			status_calc_bl(&sd->bl, SCB_SPEED);
 		else
 			unit_stop_walking(src,1);
-
-		if( sd )
-		{
-			switch( skill_num )
-			{
-			case CG_ARROWVULCAN:
-				sd->canequip_tick = tick + casttime;
-				break;
-			case CR_GRANDCROSS:
-			case NPC_GRANDDARKNESS:
-				status_calc_bl(src, SCB_DEF);
-				break;
-			}
-		}
 	}
 	else
 		skill_castend_id(ud->skilltimer,tick,src->id,0);
@@ -1645,10 +1639,6 @@ int unit_skillcastcancel(struct block_list *bl,int type)
 		{
 		case CG_ARROWVULCAN:
 			sd->canequip_tick = tick;
-			break;
-		case CR_GRANDCROSS:
-		case NPC_GRANDDARKNESS:
-			status_calc_bl(bl, SCB_DEF);
 			break;
 		}
 	}

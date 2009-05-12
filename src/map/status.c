@@ -3685,13 +3685,6 @@ static signed short status_calc_flee2(struct block_list *bl, struct status_chang
 
 static signed char status_calc_def(struct block_list *bl, struct status_change *sc, int def)
 {
-	if( bl->type == BL_PC )
-	{
-		struct unit_data *ud = unit_bl2ud( bl);
-		if( ud && ud->skilltimer != INVALID_TIMER && (ud->skillid == CR_GRANDCROSS || ud->skillid == NPC_GRANDDARKNESS) )
-			def = def*2/3;
-	}
-
 	if(!sc || !sc->count)
 		return (signed char)cap_value(def,CHAR_MIN,CHAR_MAX);
 
