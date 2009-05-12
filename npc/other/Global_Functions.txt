@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Lupus, kobra_k88
 //===== Current Version: ===================================== 
-//= 2.13
+//= 2.15
 //===== Compatible With: ===================================== 
 //= eAthena 1.0
 //===== Description: ========================================= 
@@ -36,7 +36,8 @@
 //= 2.11 Updated function Job_Change to jobchange based on Upper value. [Paradox924X]
 //= 2.12 Added more unused vars to F_ClearGarbage [Lupus]
 //= 2.13 Added more unused vars to F_ClearGarbage [Lupus]
-//= 2,14 Added old novice variables to F_ClearGarbage. [L0ne_W0lf]
+//= 2.14 Added old novice variables to F_ClearGarbage. [L0ne_W0lf]
+//= 2.15 Added no unused DTS variables to F_ClearGarbage. [L0ne_W0lf]
 //============================================================ 
 
 
@@ -111,6 +112,10 @@ function	script	F_ClearGarbage	{
 	set NEW_LVUP1,0;
 	set NEW_JOBLVUP,0;
 
+	// Old DTS variables that are no longer used.
+	set dtseligible,0;
+	set MISC_QUEST,MISC_QUEST & ~128;
+	
 	return;
 }
 

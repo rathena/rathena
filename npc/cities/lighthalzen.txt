@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //=  erKURITA, Au{R}oN (Translated by Alan), $ephiroth
 //===== Current Version: ===================================== 
-//= 1.8
+//= 1.9
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -38,6 +38,7 @@
 //= 1.7a Another fix to Lucius. (bugreport:1118) [L0ne_W0lf]
 //= 1.7b Another fix to Lucius (trivial). (bugreport:1125)
 //= 1.8 Replaced effect numerics with constants. [L0ne_W0lf]
+//= 1.9 Added Cool Corp. Event Staff, who oringialy resided in the DTS_warper script file. [L0ne_W0lf]
 //=============================================================
 
 lighthalzen,198,285,5	script	Jiwon#zen5	862,{
@@ -2949,7 +2950,6 @@ OnTouch:
 	end;
 }
 
-
 lhz_in01,139,48,7	script	Leimi#mimir	73,{
 	mes "[Leimi]";
 	mes "...";
@@ -2996,6 +2996,146 @@ OnTouch:
 		}
 	}
 	end;
+}
+
+lhz_in02,36,274,4	script	Cool Event Staff#Saera	831,{
+	mes "[Saera]";
+	mes "Welcome to the";
+	mes "temporary headquarters";
+	mes "of Cool Event Corporation.";
+	mes "How may I help you today?";
+	next;
+	switch(select("Temporary headquarters?:Voting:No, thanks.")) {
+	case 1:
+		mes "[Saera]";
+		mes "Our headquarters building";
+		mes "is currently undergoing";
+		mes "reconstruction, so we are";
+		mes "basing our operations in";
+		mes "this place for the meantime.";
+		close;
+	case 2:
+		if (lhz_boss < 17) {
+			mes "[Saera]";
+			mes "Currently, Kafra Corporation";
+			mes "and Cool Event Corp are working";
+			mes "on a collaborative program that";
+			mes "will provide direct teleport";
+			mes "services to dungeons.";
+			next;
+			mes "[Saera]";
+			mes "Due to technical issues,";
+			mes "both companies cannot provide";
+			mes "teleport services to the same";
+			mes "dungeon. Therefore, we will be";
+			mes "selecting our valued customers to choose the company they want.";
+			next;
+			mes "[Saera]";
+			mes "Only a limited number of";
+			mes "voters will be chosen, so";
+			mes "you can check your voting";
+			mes "eligibility at the headquarters";
+			mes "of both participating companies. Thank you for your patronage~";
+			close;
+		}
+		else {
+			mes "[Saera]";
+			mes "Currently, Kafra Corporation";
+			mes "and Cool Event Corp are working";
+			mes "on a collaborative program that";
+			mes "will provide direct teleport";
+			mes "services to dungeons.";
+			next;
+			mes "[Saera]";
+			mes "Due to technical issues,";
+			mes "both companies cannot provide";
+			mes "teleport services to the same";
+			mes "dungeon. Therefore, we will be";
+			mes "selecting a number of valued customers to vote for their choice.";
+			next;
+			mes "[Saera]";
+			mes "I've just reviewed your";
+			mes "information and would like";
+			mes "to inform you that you are";
+			mes "indeed eligible to vote.";
+			mes "Your participation in this";
+			mes "election is much appreciated.";
+			next;
+			mes "[Saera]";
+			mes "Remember that the";
+			mes "election polls can be";
+			mes "found in either Prontera";
+			mes "or Juno. Thank you very much.";
+			close;
+		}
+	case 3:
+		mes "[Saera]";
+		mes "Thank you.";
+		mes "Have a good day.";
+		close;
+	}
+}
+
+lhz_in02,40,280,6	script	Event Planner	833,{
+	mes "[Jellarin]";
+	mes "I don't like this.";
+	mes "But I don't like that";
+	mes "idea either. What will";
+	mes "I do for a new event, eh?";
+	next;
+	mes "[Jellarin]";
+	mes "I need something";
+	mes "major, something that'll";
+	mes "really shake up the world,";
+	mes "something epochal, but what?";
+	mes "Hey, do you have any ideas?";
+	close;
+}
+
+lhz_in02,110,286,5	script	Cool Event Manager	853,{
+	mes "[Baoto]";
+	mes "Hmmm...";
+	mes "The employees seem";
+	mes "to be having too much";
+	mes "fun amongst themselves";
+	mes "recently. This does not";
+	mes "bode well at all...";
+	next;
+	mes "[Baoto]";
+	mes "It looks like I'm";
+	mes "just going to have to";
+	mes "start cracking that whip";
+	mes "more often and much";
+	mes "harder. Ha ha ha ha!";
+	close;
+}
+
+lhz_in02,36,284,0	script	Cool Event Staff#Cesuna	874,{
+	mes "[Cesuna]";
+	mes "Ack! I'm totally";
+	mes "swamped with all this";
+	mes "work! But I don't wanna";
+	mes "do any of it. That's it!";
+	mes "I totally need a break.";
+	next;
+	mes "[Cesuna]";
+	mes "^333333*Sigh...*^000000";
+	mes "I wonder if Saera";
+	mes "would ever consider";
+	mes "going out with me?";
+	mes "That would be nice~";
+	close;
+}
+
+lhz_in02,19,274,2	script	Maintenance Guy#lhz	851,{
+	mes "[Kudiuu]";
+	mes "Holy...!";
+	mes "Will this place";
+	mes "ever get cleaned up?!";
+	mes "^333333*Cough cough*^000000 There's";
+	mes "so much dust here, it's";
+	mes "almost a health hazard!";
+	close;
 }
 
 // Lighthalzen Mushroom.

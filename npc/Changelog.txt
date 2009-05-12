@@ -1,5 +1,11 @@
 Date		Added
 ======
+2009/05/12
+	* Rev. 13764 Completely rescripted the DTS warp service based on the aegis 11.3 file. [L0ne_W0lf]
+	- Updated F_ClearGarbage to erase obsolete DTS player variables.
+	- Moved Cool Corp. Staff NPCs to Lighthalzen (cities/lighthalzen.txt.)
+	- Now everyone can enjoy the global broadcast "every-hour-nag" to vote!
+	- Note: Upon loading ALL prior DTS global variables are erased.
 2009/05/11
 	- Fixed double-quotes not being escaped in the custom xmas_rings_event. (bugreport:2546) [brianluau]
 	- Renamed an OnClock label in schg_cas01 so it's consistent with the other castles. (bugreport:2831)
