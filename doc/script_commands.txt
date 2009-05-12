@@ -6095,7 +6095,7 @@ Type can optionally be used indicates which script to set (default is 0):
 Example:
 
 setitemscript 2637,"{ if(isequipped(2236)==0)end; if(getskilllv(26)){skill 40,1;}else{skill 26,1+isequipped(2636);} }";
-setitemscript 2639,"";
+setitemscript 2637,"";
 
 ---------------------------------------
 

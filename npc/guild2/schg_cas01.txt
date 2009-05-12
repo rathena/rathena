@@ -108,7 +108,7 @@ Onchange:
 	donpcevent "2nd Guardian Stone#sch01::OnEnable";
 	end;
 
-OnClock0000:
+OnClock0001:
 	if (!GetCastleData("schg_cas01",1)) end;
 	killmonster "schg_cas01","Manager#sch01_02::OnTreasureDied";
 

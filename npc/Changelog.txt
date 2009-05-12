@@ -1,5 +1,8 @@
 Date		Added
 ======
+2009/05/11
+	- Fixed double-quotes not being escaped in the custom xmas_rings_event. (bugreport:2546) [brianluau]
+	- Renamed an OnClock label in schg_cas01 so it's consistent with the other castles. (bugreport:2831)
 2009/05/07
 	- Fixed a "player not attached" error in the Moscovia quest. (bugreport:3041) [brianluau]
 	- Fixed a race condition in the Arunafeltz quest blocking progress. (bugreport:2782)
