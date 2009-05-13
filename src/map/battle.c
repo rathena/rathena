@@ -2140,8 +2140,9 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 	{	//There is a total damage value
 		if(!wd.damage2)
 		{
-			wd.damage=battle_calc_damage(src,target,wd.damage,wd.div_,skill_num,skill_lv,wd.flag);
-			if( wd.damage == -1 )
+			bool flag = (wd.damage > 0);
+			wd.damage = battle_calc_damage(src,target,wd.damage,wd.div_,skill_num,skill_lv,wd.flag);
+			if( flag && wd.damage == -1 )
 			{
 				wd.flag |= 0xf000;
 				wd.damage = 0;
@@ -2153,32 +2154,35 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 		}
 		else if(!wd.damage)
 		{
-			wd.damage2=battle_calc_damage(src,target,wd.damage2,wd.div_,skill_num,skill_lv,wd.flag);
-			if( wd.damage2 == -1 )
+			bool flag = (wd.damage2 > 0);
+			wd.damage2 = battle_calc_damage(src,target,wd.damage2,wd.div_,skill_num,skill_lv,wd.flag);
+			if( flag && wd.damage2 == -1 )
 			{
 				wd.flag |= 0xf000;
 				wd.damage2 = 0;
 			}
 			if( map_flag_gvg2(target->m) )
-				wd.damage2=battle_calc_gvg_damage(src,target,wd.damage2,wd.div_,skill_num,skill_lv,wd.flag);
+				wd.damage2 = battle_calc_gvg_damage(src,target,wd.damage2,wd.div_,skill_num,skill_lv,wd.flag);
 			else if( map[target->m].flag.battleground )
-				wd.damage=battle_calc_bg_damage(src,target,wd.damage2,wd.div_,skill_num,skill_lv,wd.flag);
+				wd.damage = battle_calc_bg_damage(src,target,wd.damage2,wd.div_,skill_num,skill_lv,wd.flag);
 		}
 		else
 		{
-			int d1=wd.damage+wd.damage2,d2=wd.damage2;
-			wd.damage=battle_calc_damage(src,target,d1,wd.div_,skill_num,skill_lv,wd.flag);
-			if( wd.damage == -1 )
+			int d1 = wd.damage + wd.damage2,d2 = wd.damage2;
+			bool flag;
+			flag = (d1 > 0);
+			wd.damage = battle_calc_damage(src,target,d1,wd.div_,skill_num,skill_lv,wd.flag);
+			if( flag && wd.damage == -1 )
 			{
 				wd.flag |= 0xf000;
 				wd.damage = 0;
 			}
 			if( map_flag_gvg2(target->m) )
-				wd.damage=battle_calc_gvg_damage(src,target,wd.damage,wd.div_,skill_num,skill_lv,wd.flag);
+				wd.damage = battle_calc_gvg_damage(src,target,wd.damage,wd.div_,skill_num,skill_lv,wd.flag);
 			else if( map[target->m].flag.battleground )
-				wd.damage=battle_calc_bg_damage(src,target,wd.damage,wd.div_,skill_num,skill_lv,wd.flag);
-			wd.damage2=(d2*100/d1)*wd.damage/100;
-			if(wd.damage > 1 && wd.damage2 < 1) wd.damage2=1;
+				wd.damage = battle_calc_bg_damage(src,target,wd.damage,wd.div_,skill_num,skill_lv,wd.flag);
+			wd.damage2 = (d2*100/d1)*wd.damage/100;
+			if(wd.damage > 1 && wd.damage2 < 1) wd.damage2 = 1;
 			wd.damage-=wd.damage2;
 		}
 	}
@@ -2573,12 +2577,15 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 	
 	if (flag.infdef && ad.damage)
 		ad.damage = ad.damage>0?1:-1;
-		
-	ad.damage=battle_calc_damage(src,target,ad.damage,ad.div_,skill_num,skill_lv,ad.flag);
-	if( ad.damage == -1 )
+
 	{
-		ad.flag |= 0xf000;
-		ad.damage = 0;
+		bool flag = (ad.damage > 0);
+		ad.damage=battle_calc_damage(src,target,ad.damage,ad.div_,skill_num,skill_lv,ad.flag);
+		if( flag && ad.damage == -1 )
+		{
+			ad.flag |= 0xf000;
+			ad.damage = 0;
+		}
 	}
 	if( map_flag_gvg2(target->m) )
 		ad.damage=battle_calc_gvg_damage(src,target,ad.damage,ad.div_,skill_num,skill_lv,ad.flag);
@@ -2808,11 +2815,14 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 	if(!(nk&NK_NO_ELEFIX))
 		md.damage=battle_attr_fix(src, target, md.damage, s_ele, tstatus->def_ele, tstatus->ele_lv);
 
-	md.damage=battle_calc_damage(src,target,md.damage,md.div_,skill_num,skill_lv,md.flag);
-	if( md.damage == -1 )
 	{
-		md.flag |= 0xf000;
-		md.damage = 0;
+		bool flag = (md.damage > 0);
+		md.damage=battle_calc_damage(src,target,md.damage,md.div_,skill_num,skill_lv,md.flag);
+		if( flag && md.damage == -1 )
+		{
+			md.flag |= 0xf000;
+			md.damage = 0;
+		}
 	}
 	if( map_flag_gvg2(target->m) )
 		md.damage=battle_calc_gvg_damage(src,target,md.damage,md.div_,skill_num,skill_lv,md.flag);
