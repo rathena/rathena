@@ -166,7 +166,10 @@ int battle_delay_damage_sub(int tid, unsigned int tick, int id, intptr data)
 		map_freeblock_lock();
 		status_fix_damage(dat->src, target, dat->damage, dat->delay);
 		if( dat->attack_type && (dat->damage > 0 || dat->attack_type&0xf000) && !status_isdead(target) )
+		{
+			if( dat->damage > 0 ) dat->attack_type &= ~0xf000;
 			skill_additional_effect(dat->src,target,dat->skill_id,dat->skill_lv,dat->attack_type,tick);
+		}
 		if( dat->damage > 0 && dat->attack_type )
 			skill_counter_additional_effect(dat->src,target,dat->skill_id,dat->skill_lv,dat->attack_type,tick);
 		map_freeblock_unlock();
@@ -185,7 +188,10 @@ int battle_delay_damage (unsigned int tick, int amotion, struct block_list *src,
 		map_freeblock_lock();
 		status_fix_damage(src, target, damage, ddelay);
 		if( attack_type && (damage > 0 || attack_type&0xf000) && !status_isdead(target) )
+		{
+			if( damage > 0 ) attack_type &= ~0xf000;
 			skill_additional_effect(src, target, skill_id, skill_lv, attack_type, gettick());
+		}
 		if( damage > 0 && attack_type )
 			skill_counter_additional_effect(src, target, skill_id, skill_lv, attack_type, gettick());
 		map_freeblock_unlock();
@@ -303,7 +309,7 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,int damage,i
 	{
 		//First, sc_*'s that reduce damage to 0.
 		if( sc->data[SC_BASILICA] && !(status_get_mode(src)&MD_BOSS) && skill_num != PA_PRESSURE )
-			return -1; // Trigger status effects.
+			return (damage > 0 ? -1 : 0); // Trigger status effects.
 
 		if( sc->data[SC_SAFETYWALL] && (flag&(BF_SHORT|BF_MAGIC))==BF_SHORT )
 		{
@@ -311,13 +317,13 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,int damage,i
 			if (group) {
 				if (--group->val2<=0)
 					skill_delunitgroup(NULL,group);
-				return -1; // Trigger status effects.
+				return (damage > 0 ? -1 : 0); // Trigger status effects.
 			}
 			status_change_end(bl,SC_SAFETYWALL,-1);
 		}
 
 		if( sc->data[SC_PNEUMA] && (flag&(BF_MAGIC|BF_LONG)) == BF_LONG )
-			return -1; // Trigger status effects.
+			return (damage > 0 ? -1 : 0); // Trigger status effects.
 
 		if( (sce=sc->data[SC_AUTOGUARD]) && flag&BF_WEAPON && !(skill_get_nk(skill_num)&NK_NO_CARDFIX_ATK) && rand()%100 < sce->val2 )
 		{

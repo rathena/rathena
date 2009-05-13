@@ -1789,7 +1789,10 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 	{ //Instant damage
 		status_fix_damage(src,bl,damage,dmg.dmotion); //Deal damage before knockback to allow stuff like firewall+storm gust combo.
 		if( (damage > 0 || attack_type&0xf000) && !status_isdead(bl) )
+		{
+			if( damage > 0 ) attack_type &= ~0xf000;
 			skill_additional_effect(src,bl,skillid,skilllv,attack_type,tick);
+		}
 		if( damage > 0 ) //Counter status effects [Skotlex]
 			skill_counter_additional_effect(dsrc,bl,skillid,skilllv,attack_type,tick);
 	}
