@@ -541,10 +541,10 @@
 1179,Executioner__,Executioner,4,20,,2200,155,,1,1,0x00004082,7,2,34,4,48,1,3,{ bonus bIgnoreDefRace,RC_DemiHuman; bonus2 bAddRace,RC_DemiHuman,20; bonus2 bSubRace,RC_DemiHuman,-10; bonus bAtkEle,Ele_Dark; },{},{}
 1180,Dragon_Slayer_,Dragon Slayer,4,20,,1300,150,,1,2,0x00004082,7,2,34,4,48,1,3,{ bonus bIgnoreDefRace,RC_Dragon; bonus2 bAddRace,RC_Dragon,15; },{},{}
 1181,Tae_Goo_Lyeon,Tae Goo Lyeon,4,20,,2000,250,,1,2,0x00004082,2,2,34,4,90,1,3,{ bonus bFlee2,10; if (JobLevel>=70) bonusautoscript "{ sc_start SC_INCBASEATK,10000,50; }",10; if (getrefine() > 8) { bonus bCastrate,-20; bonus bDelayRate,-20; } },{},{}
-1182,Bloody_Eater,Bloody Eater,4,20,,1200,200,,1,2,0x00004082,7,2,34,4,50,1,3,{ bonus bAtkEle,Ele_Ghost; bonusautoscript "{ sc_start SC_INCCRI,5000,100; sc_start SC_INCBASEATK,5000,50; }",10; bonus bHPGainValue,100; },{},{}
+1182,Bloody_Eater,Bloody Eater,4,20,,1200,200,,1,2,0x00004082,7,2,34,4,50,1,3,{ bonus bAtkEle,Ele_Ghost; bonusautoscript "{ sc_start SC_INCCRI,5000,100; sc_start SC_INCBASEATK,5000,50; }",1; bonus bHPGainValue,100; },{},{}
 1183,Brave_Assaulter's_Katzbalger,Brave Assaulter's Katzbalger,4,,,0,200,,1,0,0x00004082,7,2,34,3,80,1,3,{ bonus bStr,2; bonus2 bAddRace,RC_DemiHuman,55; bonus2 bIgnoreDefRate,RC_DemiHuman,20; bonus bUnbreakableWeapon,0; },{},{}
 1184,Valorous_Assaulter's_Katzbalger,Valorous Assaulter's Katzbalger,4,,,0,200,,1,0,0x00004082,7,2,34,3,80,1,3,{ bonus bStr,2; bonus bCritical,20; bonus2 bAddRace,RC_DemiHuman,55; bonus bCritAtkRate,20; bonus bUnbreakableWeapon,0; },{},{}
-1185,Violet_Fear,Violet Fear,4,,,2200,275,,1,2,0x00004082,2,2,34,4,80,1,3,{ bonus3 bAutoSpell,"WZ_METEOR",3,10; bonus3 bAutoSpell,"WZ_FROSTNOVA",5,10; },{},{}
+1185,Violet_Fear,Violet Fear,4,,,2200,275,,1,2,0x00004082,2,2,34,4,80,1,3,{ bonus3 bAutoSpell,"WZ_METEOR",3,30; bonus3 bAutoSpell,"WZ_FROSTNOVA",5,50; },{},{}
 //1186#Invoker_Of_Death#
 1187,Glorious_Claymore,Glorious Claymore,4,0,,0,220,,1,0,0x00004082,7,2,34,4,80,1,3,{ bonus2 bAddRace,RC_DemiHuman,70; bonus2 bIgnoreDefRate,RC_DemiHuman,25; bonus bUnbreakableWeapon,0; if(getrefine() > 5) bonus2 bIgnoreDefRate,RC_DemiHuman,5; if(getrefine() > 8) { bonus3 bAutoSpell,"LK_CONCENTRATION",1,50; bonus3 bAutoSpell,"LK_AURABLADE",1,50; } },{},{}
 // Daggers

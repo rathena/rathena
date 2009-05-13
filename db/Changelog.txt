@@ -31,12 +31,16 @@
 	2376 General's_Plate_Mail	Increases heal recovery effectiveness on you by 10%
 
 	Endless Tower+
-	13412 Naght_Seiger_Twin_Edge	Chance while attacking to pierce enemy defence for 5 seconds.
-	13413 Naght_Seiger_Twin_Edge_	Chance while attacking to pierce enemy defence for 5 seconds.
-	1185 Violet_Fear		Chance while attacking to pierce enemy defence for 5 seconds.
+	13412 Naght_Seiger_Twin_Edge	5% chance to activate defense bypassing on normal (non boss) targets for 5 seconds (no visual).
+	13413 Naght_Seiger_Twin_Edge_	5% chance to activate defense bypassing on normal (non boss) targets for 5 seconds (no visual).
+	1185 Violet_Fear		5% chance to activate defense bypassing on normal (non boss) targets for 5 seconds (no visual).
 	2385 Recuvative_Armor		Should trigger HP/SP return with magical kills as well.
 
 =======================
+2009/05/13
+	* Fixed activation rates on Bloody Eater and Violet Fear [Playtester]
+	- Bloody Eater is 0.1% activation for 5 seconds
+	- Violet Fear is 3% chance to activate Meteor Storm and 5% chance to activate Frost Nova
 2009/05/12
 	* SG_WARM no longer ignores FLEE by default. [Inkfish]
 2009/05/11
