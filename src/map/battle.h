@@ -56,6 +56,7 @@ enum {	// 最終計算のフラグ
 	BF_WEAPONMASK=0x000f,
 	BF_RANGEMASK= 0x00f0,
 	BF_SKILLMASK= 0x0f00,
+	//0xf000 is used for marking if a zero damage is resulted from SafetyWall and the like. [Inkfish]
 };
 
 int battle_delay_damage (unsigned int tick, int amotion, struct block_list *src, struct block_list *target, int attack_type, int skill_id, int skill_lv, int damage, enum damage_lv dmg_lv, int ddelay);

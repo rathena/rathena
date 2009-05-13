@@ -484,6 +484,74 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 		//So if the target can't be inflicted with statuses, this is pointless.
 		return 0;
 
+	if( sd )
+	{ // These status will be applied anyway even if there is no actual damage. [Inkfish]
+		if( sd->special_state.bonus_coma && !skillid)
+		{
+			rate  = sd->weapon_coma_ele[tstatus->def_ele];
+			rate += sd->weapon_coma_race[tstatus->race];
+			rate += sd->weapon_coma_race[tstatus->mode&MD_BOSS?RC_BOSS:RC_NONBOSS];
+			if (rate)
+				status_change_start(bl, SC_COMA, rate, 0, 0, 0, 0, 0, 0);
+		}
+
+		if( skillid != WS_CARTTERMINATION && skillid != AM_DEMONSTRATION && skillid != CR_REFLECTSHIELD && skillid != MS_REFLECTSHIELD && skillid != ASC_BREAKER )
+		{ // Trigger status effects
+			enum sc_type type;
+			int i;
+			for( i = 0; i < ARRAYLENGTH(sd->addeff) && sd->addeff[i].flag; i++ )
+			{
+				rate = sd->addeff[i].rate;
+				if( attack_type&BF_LONG ) // Any ranged physical attack takes status arrows into account (Grimtooth...) [DracoRPG]
+					rate += sd->addeff[i].arrow_rate;
+				if( !rate ) continue;
+
+				if( (sd->addeff[i].flag&(ATF_WEAPON|ATF_SKILL)) != (ATF_WEAPON|ATF_SKILL) )
+				{ // Trigger has attack type consideration.
+					if( (sd->addeff[i].flag&ATF_WEAPON && !(attack_type&BF_WEAPON)) || (sd->addeff[i].flag&ATF_SKILL && !(attack_type&(BF_MAGIC|BF_MISC))) )
+						continue;
+				}
+
+				if( (sd->addeff[i].flag&(ATF_LONG|ATF_SHORT)) != (ATF_LONG|ATF_SHORT) )
+				{ // Trigger has range consideration.
+					if((sd->addeff[i].flag&ATF_LONG && !(attack_type&BF_LONG)) ||
+						(sd->addeff[i].flag&ATF_SHORT && !(attack_type&BF_SHORT)))
+						continue; //Range Failed.
+				}
+
+				type =  sd->addeff[i].id;
+				skill = skill_get_time2(status_sc2skill(type),7);
+
+				if (sd->addeff[i].flag&ATF_TARGET)
+					status_change_start(bl,type,rate,7,0,0,0,skill,0);
+
+				if (sd->addeff[i].flag&ATF_SELF)
+					status_change_start(src,type,rate,7,0,0,0,skill,0);
+			}
+		}
+
+		if( skillid )
+		{ // Trigger status effects on skills
+			enum sc_type type;
+			int i;
+			for( i = 0; i < ARRAYLENGTH(sd->addeff3) && sd->addeff3[i].skill; i++ )
+			{
+				if( skillid != sd->addeff3[i].skill || !sd->addeff3[i].rate )
+					continue;
+				type = sd->addeff3[i].id;
+				skill = skill_get_time2(status_sc2skill(type),7);
+
+				if( sd->addeff3[i].target&ATF_TARGET )
+					status_change_start(bl,type,sd->addeff3[i].rate,7,0,0,0,skill,0);
+				if( sd->addeff3[i].target&ATF_SELF )
+					status_change_start(src,type,sd->addeff3[i].rate,7,0,0,0,skill,0);
+			}
+		}
+	}
+
+	if( attack_type&0xf000 ) // no damage, return;
+		return 0;
+
 	switch(skillid)
 	{
 	case 0: // Normal attacks (no skill used)
@@ -528,14 +596,6 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 					sc_start4(src,SC_COMBO, rate, TK_COUNTER, bl->id,0,0,
 						(2000 - 4*sstatus->agi - 2*sstatus->dex));
 				}
-			}
-
-			if (sd->special_state.bonus_coma) {
-				rate  = sd->weapon_coma_ele[tstatus->def_ele];
-				rate += sd->weapon_coma_race[tstatus->race];
-				rate += sd->weapon_coma_race[tstatus->mode&MD_BOSS?RC_BOSS:RC_NONBOSS];
-				if (rate)
-					status_change_start(bl, SC_COMA, rate, 0, 0, 0, 0, 0, 0);
 			}
 		}
 
@@ -843,59 +903,6 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 	case NPC_CRITICALWOUND:
 		sc_start(bl,SC_CRITICALWOUND,100,skilllv,skill_get_time2(skillid,skilllv));
 		break;
-	}
-
-	if( sd && skillid != WS_CARTTERMINATION && skillid != AM_DEMONSTRATION && skillid != CR_REFLECTSHIELD && skillid != MS_REFLECTSHIELD && skillid != ASC_BREAKER )
-	{ // Trigger status effects
-		enum sc_type type;
-		int i;
-		for( i = 0; i < ARRAYLENGTH(sd->addeff) && sd->addeff[i].flag; i++ )
-		{
-			rate = sd->addeff[i].rate;
-			if( attack_type&BF_LONG ) // Any ranged physical attack takes status arrows into account (Grimtooth...) [DracoRPG]
-				rate += sd->addeff[i].arrow_rate;
-			if( !rate ) continue;
-
-			if( (sd->addeff[i].flag&(ATF_WEAPON|ATF_SKILL)) != (ATF_WEAPON|ATF_SKILL) )
-			{ // Trigger has attack type consideration.
-				if( (sd->addeff[i].flag&ATF_WEAPON && !(attack_type&BF_WEAPON)) || (sd->addeff[i].flag&ATF_SKILL && !(attack_type&(BF_MAGIC|BF_MISC))) )
-					continue;
-			}
-
-			if( (sd->addeff[i].flag&(ATF_LONG|ATF_SHORT)) != (ATF_LONG|ATF_SHORT) )
-			{ // Trigger has range consideration.
-				if((sd->addeff[i].flag&ATF_LONG && !(attack_type&BF_LONG)) ||
-					(sd->addeff[i].flag&ATF_SHORT && !(attack_type&BF_SHORT)))
-					continue; //Range Failed.
-			}
-
-			type =  sd->addeff[i].id;
-			skill = skill_get_time2(status_sc2skill(type),7);
-
-			if (sd->addeff[i].flag&ATF_TARGET)
-				status_change_start(bl,type,rate,7,0,0,0,skill,0);
-
-			if (sd->addeff[i].flag&ATF_SELF)
-				status_change_start(src,type,rate,7,0,0,0,skill,0);
-		}
-	}
-
-	if( sd && skillid )
-	{ // Trigger status effects on skills
-		enum sc_type type;
-		int i;
-		for( i = 0; i < ARRAYLENGTH(sd->addeff3) && sd->addeff3[i].skill; i++ )
-		{
-			if( skillid != sd->addeff3[i].skill || !sd->addeff3[i].rate )
-				continue;
-			type = sd->addeff3[i].id;
-			skill = skill_get_time2(status_sc2skill(type),7);
-
-			if( sd->addeff3[i].target&ATF_TARGET )
-				status_change_start(bl,type,sd->addeff3[i].rate,7,0,0,0,skill,0);
-			if( sd->addeff3[i].target&ATF_SELF )
-				status_change_start(src,type,sd->addeff3[i].rate,7,0,0,0,skill,0);
-		}
 	}
 
 	if (md && battle_config.summons_trigger_autospells && md->master_id && md->special_state.ai)
@@ -1778,14 +1785,13 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 			ud->attackabletime = tick + type;
 	}
 
-	if (!dmg.amotion) {
+	if( !dmg.amotion )
+	{ //Instant damage
 		status_fix_damage(src,bl,damage,dmg.dmotion); //Deal damage before knockback to allow stuff like firewall+storm gust combo.
-		if (damage > 0) {
-			if (!status_isdead(bl))
-				skill_additional_effect(src,bl,skillid,skilllv,attack_type,tick);
-			//Counter status effects [Skotlex]
+		if( (damage > 0 || attack_type&0xf000) && !status_isdead(bl) )
+			skill_additional_effect(src,bl,skillid,skilllv,attack_type,tick);
+		if( damage > 0 ) //Counter status effects [Skotlex]
 			skill_counter_additional_effect(dsrc,bl,skillid,skilllv,attack_type,tick);
-		}
 	}
 
 	//Only knockback if it's still alive, otherwise a "ghost" is left behind. [Skotlex]

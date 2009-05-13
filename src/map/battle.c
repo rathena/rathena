@@ -165,12 +165,10 @@ int battle_delay_damage_sub(int tid, unsigned int tick, int id, intptr data)
 	{
 		map_freeblock_lock();
 		status_fix_damage(dat->src, target, dat->damage, dat->delay);
-		if (dat->damage > 0 && dat->attack_type)
-		{
-			if (!status_isdead(target))
-				skill_additional_effect(dat->src,target,dat->skill_id,dat->skill_lv,dat->attack_type,tick);
+		if( dat->attack_type && (dat->damage > 0 || dat->attack_type&0xf000) && !status_isdead(target) )
+			skill_additional_effect(dat->src,target,dat->skill_id,dat->skill_lv,dat->attack_type,tick);
+		if( dat->damage > 0 && dat->attack_type )
 			skill_counter_additional_effect(dat->src,target,dat->skill_id,dat->skill_lv,dat->attack_type,tick);
-		}
 		map_freeblock_unlock();
 	}
 	ers_free(delay_damage_ers, dat);
@@ -186,12 +184,10 @@ int battle_delay_damage (unsigned int tick, int amotion, struct block_list *src,
 	if (!battle_config.delay_battle_damage) {
 		map_freeblock_lock();
 		status_fix_damage(src, target, damage, ddelay);
-		if (damage > 0 && attack_type)
-		{
-			if (!status_isdead(target))
-				skill_additional_effect(src, target, skill_id, skill_lv, attack_type, gettick());
+		if( attack_type && (damage > 0 || attack_type&0xf000) && !status_isdead(target) )
+			skill_additional_effect(src, target, skill_id, skill_lv, attack_type, gettick());
+		if( damage > 0 && attack_type )
 			skill_counter_additional_effect(src, target, skill_id, skill_lv, attack_type, gettick());
-		}
 		map_freeblock_unlock();
 		return 0;
 	}
@@ -307,7 +303,7 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,int damage,i
 	{
 		//First, sc_*'s that reduce damage to 0.
 		if( sc->data[SC_BASILICA] && !(status_get_mode(src)&MD_BOSS) && skill_num != PA_PRESSURE )
-			return 0; // Basilica reduces damage to 0 except Pressure
+			return -1; // Trigger status effects.
 
 		if( sc->data[SC_SAFETYWALL] && (flag&(BF_SHORT|BF_MAGIC))==BF_SHORT )
 		{
@@ -315,13 +311,13 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,int damage,i
 			if (group) {
 				if (--group->val2<=0)
 					skill_delunitgroup(NULL,group);
-				return 0;
+				return -1; // Trigger status effects.
 			}
 			status_change_end(bl,SC_SAFETYWALL,-1);
 		}
 
 		if( sc->data[SC_PNEUMA] && (flag&(BF_MAGIC|BF_LONG)) == BF_LONG )
-			return 0;
+			return -1; // Trigger status effects.
 
 		if( (sce=sc->data[SC_AUTOGUARD]) && flag&BF_WEAPON && !(skill_get_nk(skill_num)&NK_NO_CARDFIX_ATK) && rand()%100 < sce->val2 )
 		{
@@ -2134,25 +2130,43 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 	if(!flag.lh && wd.damage2)
 		wd.damage2=0;
 
-	if(wd.damage + wd.damage2)
+	if( wd.damage + wd.damage2 )
 	{	//There is a total damage value
-		if(!wd.damage2) {
+		if(!wd.damage2)
+		{
 			wd.damage=battle_calc_damage(src,target,wd.damage,wd.div_,skill_num,skill_lv,wd.flag);
+			if( wd.damage == -1 )
+			{
+				wd.flag |= 0xf000;
+				wd.damage = 0;
+			}
 			if( map_flag_gvg2(target->m) )
 				wd.damage=battle_calc_gvg_damage(src,target,wd.damage,wd.div_,skill_num,skill_lv,wd.flag);
 			else if( map[target->m].flag.battleground )
 				wd.damage=battle_calc_bg_damage(src,target,wd.damage,wd.div_,skill_num,skill_lv,wd.flag);
-		} else
-		if(!wd.damage) {
+		}
+		else if(!wd.damage)
+		{
 			wd.damage2=battle_calc_damage(src,target,wd.damage2,wd.div_,skill_num,skill_lv,wd.flag);
+			if( wd.damage2 == -1 )
+			{
+				wd.flag |= 0xf000;
+				wd.damage2 = 0;
+			}
 			if( map_flag_gvg2(target->m) )
 				wd.damage2=battle_calc_gvg_damage(src,target,wd.damage2,wd.div_,skill_num,skill_lv,wd.flag);
 			else if( map[target->m].flag.battleground )
 				wd.damage=battle_calc_bg_damage(src,target,wd.damage2,wd.div_,skill_num,skill_lv,wd.flag);
-		} else
+		}
+		else
 		{
 			int d1=wd.damage+wd.damage2,d2=wd.damage2;
 			wd.damage=battle_calc_damage(src,target,d1,wd.div_,skill_num,skill_lv,wd.flag);
+			if( wd.damage == -1 )
+			{
+				wd.flag |= 0xf000;
+				wd.damage = 0;
+			}
 			if( map_flag_gvg2(target->m) )
 				wd.damage=battle_calc_gvg_damage(src,target,wd.damage,wd.div_,skill_num,skill_lv,wd.flag);
 			else if( map[target->m].flag.battleground )
@@ -2555,6 +2569,11 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 		ad.damage = ad.damage>0?1:-1;
 		
 	ad.damage=battle_calc_damage(src,target,ad.damage,ad.div_,skill_num,skill_lv,ad.flag);
+	if( ad.damage == -1 )
+	{
+		ad.flag |= 0xf000;
+		ad.damage = 0;
+	}
 	if( map_flag_gvg2(target->m) )
 		ad.damage=battle_calc_gvg_damage(src,target,ad.damage,ad.div_,skill_num,skill_lv,ad.flag);
 	else if( map[target->m].flag.battleground )
@@ -2784,6 +2803,11 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 		md.damage=battle_attr_fix(src, target, md.damage, s_ele, tstatus->def_ele, tstatus->ele_lv);
 
 	md.damage=battle_calc_damage(src,target,md.damage,md.div_,skill_num,skill_lv,md.flag);
+	if( md.damage == -1 )
+	{
+		md.flag |= 0xf000;
+		md.damage = 0;
+	}
 	if( map_flag_gvg2(target->m) )
 		md.damage=battle_calc_gvg_damage(src,target,md.damage,md.div_,skill_num,skill_lv,md.flag);
 	else if( map[target->m].flag.battleground )
