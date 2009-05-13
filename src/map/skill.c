@@ -1634,6 +1634,8 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 					  	status_change_timer, src->id, SC_COMBO);
 					break;
 				}
+				unit_cancel_combo(src); // Cancel combo wait
+				break;
 			default:
 				status_change_end(src,SC_COMBO,-1);
 			}
