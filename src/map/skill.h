@@ -261,7 +261,7 @@ int skill_cleartimerskill(struct block_list *src);
 int skill_addtimerskill(struct block_list *src,unsigned int tick,int target,int x,int y,int skill_id,int skill_lv,int type,int flag);
 
 // ’Ç‰Á?‰Ê
-int skill_additional_effect( struct block_list* src, struct block_list *bl,int skillid,int skilllv,int attack_type,unsigned int tick);
+int skill_additional_effect( struct block_list* src, struct block_list *bl,int skillid,int skilllv,int attack_type,int dmg_lv,unsigned int tick);
 int skill_counter_additional_effect( struct block_list* src, struct block_list *bl,int skillid,int skilllv,int attack_type,unsigned int tick);
 int skill_blown(struct block_list* src, struct block_list* target, int count, int direction, int flag);
 int skill_break_equip(struct block_list *bl, unsigned short where, int rate, int flag);

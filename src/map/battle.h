@@ -9,6 +9,8 @@ typedef enum damage_lv {
 	ATK_NONE,    // not an attack
 	ATK_LUCKY,   // attack was lucky-dodged
 	ATK_FLEE,    // attack was dodged
+	ATK_MISS,    // attack missed because of element/race modifier.
+	ATK_BLOCK,   // attack was blocked by some skills.
 	ATK_DEF      // attack connected
 } damage_lv;
 
@@ -41,7 +43,7 @@ int battle_attr_ratio(int atk_elem,int def_type, int def_lv);
 int battle_attr_fix(struct block_list *src, struct block_list *target, int damage,int atk_elem,int def_type, int def_lv);
 
 // ダメージ最終計算
-int battle_calc_damage(struct block_list *src,struct block_list *bl,int damage,int div_,int skill_num,int skill_lv,int flag);
+int battle_calc_damage(struct block_list *src,struct block_list *bl,struct Damage *d,int damage,int skill_num,int skill_lv);
 int battle_calc_gvg_damage(struct block_list *src,struct block_list *bl,int damage,int div_,int skill_num,int skill_lv,int flag);
 int battle_calc_bg_damage(struct block_list *src,struct block_list *bl,int damage,int div_,int skill_num,int skill_lv,int flag);
 

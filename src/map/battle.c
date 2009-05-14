@@ -165,11 +165,8 @@ int battle_delay_damage_sub(int tid, unsigned int tick, int id, intptr data)
 	{
 		map_freeblock_lock();
 		status_fix_damage(dat->src, target, dat->damage, dat->delay);
-		if( dat->attack_type && (dat->damage > 0 || dat->attack_type&0xf000) && !status_isdead(target) )
-		{
-			if( dat->damage > 0 ) dat->attack_type &= ~0xf000;
-			skill_additional_effect(dat->src,target,dat->skill_id,dat->skill_lv,dat->attack_type,tick);
-		}
+		if( dat->attack_type && !status_isdead(target) )
+			skill_additional_effect(dat->src,target,dat->skill_id,dat->skill_lv,dat->attack_type,dat->dmg_lv,tick);
 		if( dat->damage > 0 && dat->attack_type )
 			skill_counter_additional_effect(dat->src,target,dat->skill_id,dat->skill_lv,dat->attack_type,tick);
 		map_freeblock_unlock();
@@ -187,11 +184,8 @@ int battle_delay_damage (unsigned int tick, int amotion, struct block_list *src,
 	if (!battle_config.delay_battle_damage) {
 		map_freeblock_lock();
 		status_fix_damage(src, target, damage, ddelay);
-		if( attack_type && (damage > 0 || attack_type&0xf000) && !status_isdead(target) )
-		{
-			if( damage > 0 ) attack_type &= ~0xf000;
-			skill_additional_effect(src, target, skill_id, skill_lv, attack_type, gettick());
-		}
+		if( attack_type && !status_isdead(target) )
+			skill_additional_effect(src, target, skill_id, skill_lv, attack_type, dmg_lv, gettick());
 		if( damage > 0 && attack_type )
 			skill_counter_additional_effect(src, target, skill_id, skill_lv, attack_type, gettick());
 		map_freeblock_unlock();
@@ -272,11 +266,12 @@ int battle_attr_fix(struct block_list *src, struct block_list *target, int damag
 /*==========================================
  * ƒ_??[ƒW??IŒvŽZ
  *------------------------------------------*/
-int battle_calc_damage(struct block_list *src,struct block_list *bl,int damage,int div_,int skill_num,int skill_lv,int flag)
+int battle_calc_damage(struct block_list *src,struct block_list *bl,struct Damage *d,int damage,int skill_num,int skill_lv)
 {
 	struct map_session_data *sd = NULL;
 	struct status_change *sc;
 	struct status_change_entry *sce;
+	int div_ = d->div_, flag = d->flag;
 
 	nullpo_retr(0, bl);
 
@@ -309,7 +304,10 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,int damage,i
 	{
 		//First, sc_*'s that reduce damage to 0.
 		if( sc->data[SC_BASILICA] && !(status_get_mode(src)&MD_BOSS) && skill_num != PA_PRESSURE )
-			return (damage > 0 ? -1 : 0); // Trigger status effects.
+		{
+			d->dmg_lv = ATK_BLOCK;
+			return 0;
+		}
 
 		if( sc->data[SC_SAFETYWALL] && (flag&(BF_SHORT|BF_MAGIC))==BF_SHORT )
 		{
@@ -317,13 +315,17 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,int damage,i
 			if (group) {
 				if (--group->val2<=0)
 					skill_delunitgroup(NULL,group);
-				return (damage > 0 ? -1 : 0); // Trigger status effects.
+				d->dmg_lv = ATK_BLOCK;
+				return 0;
 			}
 			status_change_end(bl,SC_SAFETYWALL,-1);
 		}
 
 		if( sc->data[SC_PNEUMA] && (flag&(BF_MAGIC|BF_LONG)) == BF_LONG )
-			return (damage > 0 ? -1 : 0); // Trigger status effects.
+		{
+			d->dmg_lv = ATK_BLOCK;
+			return 0;
+		}
 
 		if( (sce=sc->data[SC_AUTOGUARD]) && flag&BF_WEAPON && !(skill_get_nk(skill_num)&NK_NO_CARDFIX_ATK) && rand()%100 < sce->val2 )
 		{
@@ -2140,13 +2142,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 	{	//There is a total damage value
 		if(!wd.damage2)
 		{
-			bool flag = (wd.damage > 0);
-			wd.damage = battle_calc_damage(src,target,wd.damage,wd.div_,skill_num,skill_lv,wd.flag);
-			if( flag && wd.damage == -1 )
-			{
-				wd.flag |= 0xf000;
-				wd.damage = 0;
-			}
+			wd.damage = battle_calc_damage(src,target,&wd,wd.damage,skill_num,skill_lv);
 			if( map_flag_gvg2(target->m) )
 				wd.damage=battle_calc_gvg_damage(src,target,wd.damage,wd.div_,skill_num,skill_lv,wd.flag);
 			else if( map[target->m].flag.battleground )
@@ -2154,13 +2150,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 		}
 		else if(!wd.damage)
 		{
-			bool flag = (wd.damage2 > 0);
-			wd.damage2 = battle_calc_damage(src,target,wd.damage2,wd.div_,skill_num,skill_lv,wd.flag);
-			if( flag && wd.damage2 == -1 )
-			{
-				wd.flag |= 0xf000;
-				wd.damage2 = 0;
-			}
+			wd.damage2 = battle_calc_damage(src,target,&wd,wd.damage2,skill_num,skill_lv);
 			if( map_flag_gvg2(target->m) )
 				wd.damage2 = battle_calc_gvg_damage(src,target,wd.damage2,wd.div_,skill_num,skill_lv,wd.flag);
 			else if( map[target->m].flag.battleground )
@@ -2169,14 +2159,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 		else
 		{
 			int d1 = wd.damage + wd.damage2,d2 = wd.damage2;
-			bool flag;
-			flag = (d1 > 0);
-			wd.damage = battle_calc_damage(src,target,d1,wd.div_,skill_num,skill_lv,wd.flag);
-			if( flag && wd.damage == -1 )
-			{
-				wd.flag |= 0xf000;
-				wd.damage = 0;
-			}
+			wd.damage = battle_calc_damage(src,target,&wd,d1,skill_num,skill_lv);
 			if( map_flag_gvg2(target->m) )
 				wd.damage = battle_calc_gvg_damage(src,target,wd.damage,wd.div_,skill_num,skill_lv,wd.flag);
 			else if( map[target->m].flag.battleground )
@@ -2578,15 +2561,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 	if (flag.infdef && ad.damage)
 		ad.damage = ad.damage>0?1:-1;
 
-	{
-		bool flag = (ad.damage > 0);
-		ad.damage=battle_calc_damage(src,target,ad.damage,ad.div_,skill_num,skill_lv,ad.flag);
-		if( flag && ad.damage == -1 )
-		{
-			ad.flag |= 0xf000;
-			ad.damage = 0;
-		}
-	}
+	ad.damage=battle_calc_damage(src,target,&ad,ad.damage,skill_num,skill_lv);
 	if( map_flag_gvg2(target->m) )
 		ad.damage=battle_calc_gvg_damage(src,target,ad.damage,ad.div_,skill_num,skill_lv,ad.flag);
 	else if( map[target->m].flag.battleground )
@@ -2815,15 +2790,7 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 	if(!(nk&NK_NO_ELEFIX))
 		md.damage=battle_attr_fix(src, target, md.damage, s_ele, tstatus->def_ele, tstatus->ele_lv);
 
-	{
-		bool flag = (md.damage > 0);
-		md.damage=battle_calc_damage(src,target,md.damage,md.div_,skill_num,skill_lv,md.flag);
-		if( flag && md.damage == -1 )
-		{
-			md.flag |= 0xf000;
-			md.damage = 0;
-		}
-	}
+	md.damage=battle_calc_damage(src,target,&md,md.damage,skill_num,skill_lv);
 	if( map_flag_gvg2(target->m) )
 		md.damage=battle_calc_gvg_damage(src,target,md.damage,md.div_,skill_num,skill_lv,md.flag);
 	else if( map[target->m].flag.battleground )
@@ -2853,11 +2820,11 @@ struct Damage battle_calc_attack(int attack_type,struct block_list *bl,struct bl
 		memset(&d,0,sizeof(d));
 		break;
 	}
-	if (d.damage + d.damage2 < 1)
+	if( d.damage + d.damage2 < 1 )
 	{	//Miss/Absorbed
 		//Weapon attacks should go through to cause additional effects.
-		if (d.dmg_lv != ATK_LUCKY && attack_type&(BF_MAGIC|BF_MISC))
-			d.dmg_lv = ATK_FLEE;
+		if (d.dmg_lv == ATK_DEF /*&& attack_type&(BF_MAGIC|BF_MISC)*/) // Isn't it that additional effects don't apply if miss?
+			d.dmg_lv = ATK_MISS;
 		d.dmotion = 0;
 	}
 	return d;
@@ -3079,7 +3046,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 		{
 			rdelay = clif_damage(src, src, tick, wd.amotion, sstatus->dmotion, rdamage, 1, 4, 0);
 			//Use Reflect Shield to signal this kind of skill trigger. [Skotlex]
-			skill_additional_effect(target,src,CR_REFLECTSHIELD,1,BF_WEAPON|BF_SHORT|BF_NORMAL,tick);
+			skill_additional_effect(target,src,CR_REFLECTSHIELD,1,BF_WEAPON|BF_SHORT|BF_NORMAL,ATK_DEF,tick);
 		}
 	}
 
@@ -3673,7 +3640,7 @@ static const struct _battle_data {
 	{ "vit_penalty_type",                   &battle_config.vit_penalty_type,                1,      0,      2,              },
 	{ "vit_penalty_count",                  &battle_config.vit_penalty_count,               3,      2,      INT_MAX,        },
 	{ "vit_penalty_num",                    &battle_config.vit_penalty_num,                 5,      0,      INT_MAX,        },
-	{ "vit_penalty_count_lv",               &battle_config.vit_penalty_count_lv,            ATK_DEF, 0,     INT_MAX,        },
+	{ "vit_penalty_count_lv",               &battle_config.vit_penalty_count_lv,            ATK_MISS, 0,    INT_MAX,        },
 	{ "weapon_defense_type",                &battle_config.weapon_defense_type,             0,      0,      INT_MAX,        },
 	{ "magic_defense_type",                 &battle_config.magic_defense_type,              0,      0,      INT_MAX,        },
 	{ "skill_reiteration",                  &battle_config.skill_reiteration,               BL_NUL, BL_NUL, BL_ALL,         },

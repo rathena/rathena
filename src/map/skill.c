@@ -454,7 +454,7 @@ struct s_skill_unit_layout* skill_get_unit_layout (int skillid, int skilllv, str
 /*==========================================
  *
  *------------------------------------------*/
-int skill_additional_effect (struct block_list* src, struct block_list *bl, int skillid, int skilllv, int attack_type, unsigned int tick)
+int skill_additional_effect (struct block_list* src, struct block_list *bl, int skillid, int skilllv, int attack_type, int dmg_lv, unsigned int tick)
 {
 	struct map_session_data *sd, *dstsd;
 	struct mob_data *md, *dstmd;
@@ -471,6 +471,9 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 	if(skillid < 0) return 0;
 	if(skillid > 0 && skilllv <= 0) return 0;	// don't forget auto attacks! - celest
 
+	if( dmg_lv < ATK_BLOCK ) // Don't apply effect if miss.
+		return 0;
+
 	sd = BL_CAST(BL_PC, src);
 	md = BL_CAST(BL_MOB, src);
 	dstsd = BL_CAST(BL_PC, bl);
@@ -485,7 +488,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 		return 0;
 
 	if( sd )
-	{ // These status will be applied anyway even if there is no actual damage. [Inkfish]
+	{ // These statuses would be applied anyway even if the damage was blocked by some skills. [Inkfish]
 		if( sd->special_state.bonus_coma && !skillid)
 		{
 			rate  = sd->weapon_coma_ele[tstatus->def_ele];
@@ -549,7 +552,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 		}
 	}
 
-	if( attack_type&0xf000 ) // no damage, return;
+	if( dmg_lv < ATK_DEF ) // no damage, return;
 		return 0;
 
 	switch(skillid)
@@ -1575,7 +1578,7 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 					type = 0;
 				if (type >= 0) {
 					dmg.damage = dmg.damage2 = 0;
-					dmg.dmg_lv = ATK_FLEE;
+					dmg.dmg_lv = ATK_MISS;
 					sc->data[SC_SPIRIT]->val3 = skillid;
 					sc->data[SC_SPIRIT]->val4 = dsrc->id;
 				}
@@ -1585,7 +1588,7 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 		if(sc && sc->data[SC_MAGICROD] && src == dsrc) {
 			int sp = skill_get_sp(skillid,skilllv);
 			dmg.damage = dmg.damage2 = 0;
-			dmg.dmg_lv = ATK_FLEE; //This will prevent skill additional effect from taking effect. [Skotlex]
+			dmg.dmg_lv = ATK_MISS; //This will prevent skill additional effect from taking effect. [Skotlex]
 			sp = sp * sc->data[SC_MAGICROD]->val2 / 100;
 			if(skillid == WZ_WATERBALL && skilllv > 1)
 				sp = sp/((skilllv|1)*(skilllv|1)); //Estimate SP cost of a single water-ball
@@ -1777,7 +1780,7 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 			damage = 0; //Sight rasher, blaster, and arrow shower may dmg traps. [Kevin]
 	}
 
-	if (dmg.dmg_lv == ATK_DEF && (type = skill_get_walkdelay(skillid, skilllv)) > 0)
+	if (dmg.dmg_lv >= ATK_MISS && (type = skill_get_walkdelay(skillid, skilllv)) > 0)
 	{	//Skills with can't walk delay also stop normal attacking for that
 		//duration when the attack connects. [Skotlex]
 		struct unit_data *ud = unit_bl2ud(src);
@@ -1788,11 +1791,8 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 	if( !dmg.amotion )
 	{ //Instant damage
 		status_fix_damage(src,bl,damage,dmg.dmotion); //Deal damage before knockback to allow stuff like firewall+storm gust combo.
-		if( (damage > 0 || attack_type&0xf000) && !status_isdead(bl) )
-		{
-			if( damage > 0 ) attack_type &= ~0xf000;
-			skill_additional_effect(src,bl,skillid,skilllv,attack_type,tick);
-		}
+		if( !status_isdead(bl) )
+			skill_additional_effect(src,bl,skillid,skilllv,attack_type,dmg.dmg_lv,tick);
 		if( damage > 0 ) //Counter status effects [Skotlex]
 			skill_counter_additional_effect(dsrc,bl,skillid,skilllv,attack_type,tick);
 	}
@@ -1839,7 +1839,7 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 		//Use Reflect Shield to signal this kind of skill trigger. [Skotlex]
 		if( tsd && src != bl )
 			battle_drain(tsd, src, rdamage, rdamage, sstatus->race, is_boss(src));
-		skill_additional_effect(bl, src, CR_REFLECTSHIELD, 1, BF_WEAPON|BF_SHORT|BF_NORMAL,tick);
+		skill_additional_effect(bl, src, CR_REFLECTSHIELD, 1, BF_WEAPON|BF_SHORT|BF_NORMAL,ATK_DEF,tick);
 	}
 
 	if (!(flag&2) &&
@@ -3773,7 +3773,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case MO_BALKYOUNG: //Passive part of the attack. Splash knock-back+stun. [Skotlex]
 		if (skill_area_temp[1] != bl->id) {
 			skill_blown(src,bl,skill_get_blewcount(skillid,skilllv),-1,0);
-			skill_additional_effect(src,bl,skillid,skilllv,BF_MISC,tick); //Use Misc rather than weapon to signal passive pushback
+			skill_additional_effect(src,bl,skillid,skilllv,BF_MISC,ATK_DEF,tick); //Use Misc rather than weapon to signal passive pushback
 		}
 		break;
 
@@ -7077,7 +7077,7 @@ static int skill_unit_onplace (struct skill_unit *src, struct block_list *bl, un
 		{
 			sc_start4(bl, type, 100, sg->skill_lv, sg->val1, sg->val2, sg->group_id, sg->limit);
 			if (battle_check_target(&src->bl,bl,BCT_ENEMY)>0)
-				skill_additional_effect (ss, bl, sg->skill_id, sg->skill_lv, BF_MISC, tick);
+				skill_additional_effect (ss, bl, sg->skill_id, sg->skill_lv, BF_MISC, ATK_DEF, tick);
 		}
 		break;
 
@@ -7374,12 +7374,12 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 		case UNT_LULLABY:
 			if (ss->id == bl->id)
 				break;
-			skill_additional_effect(ss, bl, sg->skill_id, sg->skill_lv, BF_LONG|BF_SKILL|BF_MISC, tick);
+			skill_additional_effect(ss, bl, sg->skill_id, sg->skill_lv, BF_LONG|BF_SKILL|BF_MISC, ATK_DEF, tick);
 			break;
 
 		case UNT_UGLYDANCE:	//Ugly Dance [Skotlex]
 			if (ss->id != bl->id)
-				skill_additional_effect(ss, bl, sg->skill_id, sg->skill_lv, BF_LONG|BF_SKILL|BF_MISC, tick);
+				skill_additional_effect(ss, bl, sg->skill_id, sg->skill_lv, BF_LONG|BF_SKILL|BF_MISC, ATK_DEF, tick);
 			break;
 
 		case UNT_DISSONANCE:
@@ -9266,9 +9266,9 @@ int skill_frostjoke_scream (struct block_list *bl, va_list ap)
 	}
 	//It has been reported that Scream/Joke works the same regardless of woe-setting. [Skotlex]
 	if(battle_check_target(src,bl,BCT_ENEMY) > 0)
-		skill_additional_effect(src,bl,skillnum,skilllv,BF_MISC,tick);
+		skill_additional_effect(src,bl,skillnum,skilllv,BF_MISC,ATK_DEF,tick);
 	else if(battle_check_target(src,bl,BCT_PARTY) > 0 && rand()%100 < 10)
-		skill_additional_effect(src,bl,skillnum,skilllv,BF_MISC,tick);
+		skill_additional_effect(src,bl,skillnum,skilllv,BF_MISC,ATK_DEF,tick);
 
 	return 0;
 }
@@ -9561,7 +9561,7 @@ static int skill_trap_splash (struct block_list *bl, va_list ap)
 		case UNT_SHOCKWAVE:
 		case UNT_SANDMAN:
 		case UNT_FLASHER:
-			skill_additional_effect(ss,bl,sg->skill_id,sg->skill_lv,BF_MISC,tick);
+			skill_additional_effect(ss,bl,sg->skill_id,sg->skill_lv,BF_MISC,ATK_DEF,tick);
 			break;
 		case UNT_GROUNDDRIFT_WIND:
 			if(skill_attack(BF_WEAPON,ss,src,bl,sg->skill_id,sg->skill_lv,tick,sg->val1))
