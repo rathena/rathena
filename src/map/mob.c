@@ -191,8 +191,6 @@ int mob_parse_dataset(struct spawn_data *data)
 				memmove(data->eventname, data->eventname+1, i-1);
 		}
 	}
-	if (!data->level)
-		data->level = mob_db(data->class_)->lv;
 
 	if(strcmp(data->name,"--en--")==0)
 		strncpy(data->name,mob_db(data->class_)->name,NAME_LENGTH-1);
@@ -221,8 +219,6 @@ struct mob_data* mob_spawn_dataset(struct spawn_data *data)
 		md->special_state.size = data->state.size;
 	if (data->eventname[0] && strlen(data->eventname) >= 4)
 		memcpy(md->npc_event, data->eventname, 50);
-	md->level = data->level;
-
 	if(md->db->status.mode&MD_LOOTER)
 		md->lootitem = (struct item *)aCalloc(LOOTITEM_SIZE,sizeof(struct item));
 	md->spawn_timer = INVALID_TIMER;
@@ -2706,7 +2702,6 @@ int mob_summonslave(struct mob_data *md2,int *value,int amount,int skill_id)
 		else
 			strcpy(data.name,"--ja--");
 
-		data.level = 0;
 		if (!mob_parse_dataset(&data))
 			continue;
 		

@@ -2478,9 +2478,8 @@ void npc_parse_mob2(struct spawn_data* mob)
 
 static const char* npc_parse_mob(char* w1, char* w2, char* w3, char* w4, const char* start, const char* buffer, const char* filepath)
 {
-	int level, num, class_, mode, x,y,xs,ys, i,j;
+	int num, class_, mode, x,y,xs,ys, i,j;
 	char mapname[32];
-	char mobname[128];
 	struct spawn_data mob, *data;
 	struct mob_db* db;
 
@@ -2564,10 +2563,6 @@ static const char* npc_parse_mob(char* w1, char* w2, char* w3, char* w4, const c
 		mob.delay2 = mob.delay2/100*battle_config.mob_spawn_delay;
 	}
 
-	// parse MOB_NAME,[MOB LEVEL]
-	if (sscanf(w3, "%127[^,],%d", mobname, &level) > 1)
-		mob.level = level;
-
 	if(mob.delay1>0xfffffff || mob.delay2>0xfffffff) {
 		ShowError("npc_parse_mob: wrong monsters spawn delays : %s %s (file '%s', line '%d').\n", w3, w4, filepath, strline(buffer,start-buffer));
 		return strchr(start,'\n');// skip and continue
@@ -2579,7 +2574,7 @@ static const char* npc_parse_mob(char* w1, char* w2, char* w3, char* w4, const c
 	else if (battle_config.override_mob_names==2)
 		strcpy(mob.name,"--ja--");
 	else
-		strncpy(mob.name, mobname, NAME_LENGTH-1);
+		safestrncpy(mob.name, w3, sizeof(mob.name));
 
 	//Verify dataset.
 	if( !mob_parse_dataset(&mob) )

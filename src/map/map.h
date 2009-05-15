@@ -243,7 +243,6 @@ struct spawn_data {
 	signed short xs,ys;
 	unsigned short num; //Number of mobs using this structure
 	unsigned short active; //Number of mobs that are already spawned (for mob_remove_damaged: no)
-	unsigned int level; //Custom level.
 	unsigned int delay1,delay2; //Min delay before respawning after spawn/death
 	struct {
 		unsigned size :2; //Holds if mob has to be tiny/large
