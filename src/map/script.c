@@ -11162,7 +11162,7 @@ BUILDIN_FUNC(npcstop)
 	struct npc_data *nd=(struct npc_data *)map_id2bl(st->oid);
 
 	if(nd) {
-		unit_stop_walking(&nd->bl,5);
+		unit_stop_walking(&nd->bl,1|4);
 	}
 
 	return 0;

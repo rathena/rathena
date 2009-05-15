@@ -159,7 +159,7 @@ static int unit_walktoxy_timer(int tid, unsigned int tick, int id, intptr data)
 	if (bl->x != x || bl->y != y || ud->walktimer != -1)
 		return 0; //map_moveblock has altered the object beyond what we expected (moved/warped it)
 
-	ud->walktimer = 1; //FIXME: why '1'? [ultramage]
+	ud->walktimer = -2; // arbitrary non-INVALID_TIMER value to make the clif code send walking packets
 	map_foreachinmovearea(clif_insight, bl, AREA_SIZE, -dx, -dy, sd?BL_ALL:BL_PC, bl);
 	ud->walktimer = INVALID_TIMER;
 	
@@ -508,7 +508,7 @@ int unit_movepos(struct block_list *bl, short dst_x, short dst_y, int easy, bool
 
 	map_moveblock(bl, dst_x, dst_y, gettick());
 	
-	ud->walktimer = 1; //Enables clif_insight related packets to spawn character in moving animation.
+	ud->walktimer = -2; // arbitrary non-INVALID_TIMER value to make the clif code send walking packets
 	map_foreachinmovearea(clif_insight, bl, AREA_SIZE, -dx, -dy, sd?BL_ALL:BL_PC, bl);
 	ud->walktimer = INVALID_TIMER;
 		
@@ -814,7 +814,7 @@ int unit_set_walkdelay(struct block_list *bl, unsigned int tick, int delay, int 
 			}
 			else
 			{
-				unit_stop_walking(bl,6);
+				unit_stop_walking(bl,2|4);
 				if(ud->target)
 					add_timer(ud->canmove_tick+1, unit_walktobl_sub, bl->id, ud->target);
 			}
