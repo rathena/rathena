@@ -1730,7 +1730,7 @@ int guild_addcastleinfoevent(int castle_id,int index,const char *name)
 		return 0;
 
 	ev = (struct eventlist *)aMalloc(sizeof(struct eventlist));
-	memcpy(ev->name,name,sizeof(ev->name));
+	strncpy(ev->name,name,ARRAYLENGTH(ev->name));
 	//The next event becomes whatever was currently stored.
 	ev->next = (struct eventlist *)idb_put(guild_castleinfoevent_db,code,ev);
 	return 0;

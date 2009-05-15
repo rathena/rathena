@@ -254,7 +254,7 @@ int mob_countslave(struct block_list *bl);
 int mob_is_clone(int class_);
 
 int mob_clone_spawn(struct map_session_data *sd, int m, int x, int y, const char *event, int master_id, int mode, int flag, unsigned int duration);
-int mob_clone_delete(int class_);
+int mob_clone_delete(struct mob_data *md);
 
 void mob_reload(void);
 

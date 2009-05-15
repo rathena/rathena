@@ -1459,10 +1459,10 @@ void map_addiddb(struct block_list *bl)
 	}
 	else if( bl->type == BL_MOB )
 	{
-		struct mob_data* md = BL_CAST(BL_MOB, bl);
+		TBL_MOB* md = (TBL_MOB*)bl;
 		idb_put(mobid_db,bl->id,bl);
 
-		if( md && (md->db->status.mode&MD_BOSS) && md->db->mexp > 0 )
+		if( (md->db->status.mode&MD_BOSS) && md->db->mexp > 0 )
 			idb_put(bossid_db, bl->id, bl);
 	}
 

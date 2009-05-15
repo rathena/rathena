@@ -9707,7 +9707,7 @@ void clif_parse_ProduceMix(int fd,struct map_session_data *sd)
  *------------------------------------------*/
 void clif_parse_Cooking(int fd,struct map_session_data *sd)
 {
-	int type = RFIFOW(fd,2); // '1' for cooking
+	//int type = RFIFOW(fd,2); // '1' for cooking, but what do other values mean?
 	int nameid = RFIFOW(fd,4);
 
 	if (pc_istrading(sd)) {
@@ -11605,7 +11605,6 @@ void clif_parse_HomAttack(int fd,struct map_session_data *sd)
 		bl = &sd->md->bl;
 	else return;
 
-	unit_stop_walking(bl, 1);
 	unit_stop_attack(bl);
 	unit_attack(bl, target_id, action_type != 0);
 }
@@ -12494,7 +12493,7 @@ void clif_bossmapinfo(int fd, struct mob_data *md, short flag)
 			else
 				WFIFOB(fd,2) = 2; // First Time
 		}
-		else
+		else if (md->spawn_timer != -1)
 		{ // Boss is Dead
 			const struct TimerData * timer_data = get_timer(md->spawn_timer);
 			unsigned int seconds;
@@ -13311,7 +13310,7 @@ static int packetdb_readdb(void)
 	    0,  0,  0,  0,  8,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 	//#0x0280
 	    0,  0,  0,  6,  0,  0,  0,  0,  0,  8, 18,  0,  0,  0,  0,  0,
-	    0,  4,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+	    0,  4,  0, 70,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 	    0,  0,  0,  0,  0,  0,  0,  0,  0,191,  0,  0,  0,  0,  0,  0,
 	//#0x02C0

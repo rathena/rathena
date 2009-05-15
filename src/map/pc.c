@@ -5206,7 +5206,7 @@ int pc_resethate(struct map_session_data* sd)
 int pc_skillatk_bonus(struct map_session_data *sd, int skill_num)
 {
 	int i, bonus = 0;
-	ARR_FIND(0, ARRAYLENGTH(sd->skillatk), i, sd->skillatk[i].id && sd->skillatk[i].id == skill_num);
+	ARR_FIND(0, ARRAYLENGTH(sd->skillatk), i, !sd->skillatk[i].id || sd->skillatk[i].id == skill_num);
 	if( i < ARRAYLENGTH(sd->skillatk) && sd->skillatk[i].id )
 		bonus = sd->skillatk[i].val;
 	if( sd->sc.data[SC_SKILLATKBONUS] )

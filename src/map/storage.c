@@ -42,13 +42,13 @@ static int storage_comp_item(const void *_i1, const void *_i2)
 		return -1;
 	return i1->nameid - i2->nameid;
 }
- 
+/* In case someone wants to use it in the future.
 static void storage_sortitem(struct storage_data* stor)
 {
 	nullpo_retv(stor);
 	qsort(stor->items, MAX_STORAGE, sizeof(struct item), storage_comp_item);
 }
-
+*/
 static void storage_gsortitem(struct guild_storage* gstor)
 {
 	nullpo_retv(gstor);

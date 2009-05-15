@@ -3281,12 +3281,16 @@ int mob_clone_spawn(struct map_session_data *sd, int m, int x, int y, const char
 	return md->bl.id;
 }
 
-int mob_clone_delete(int class_)
+int mob_clone_delete(struct mob_data *md)
 {
+	const int class_ = md->class_;
 	if (class_ >= MOB_CLONE_START && class_ < MOB_CLONE_END
 		&& mob_db_data[class_]!=NULL) {
 		aFree(mob_db_data[class_]);
 		mob_db_data[class_]=NULL;
+		//Clear references to the db
+		md->db = NULL;
+		md->vd = NULL;
 		return 1;
 	}
 	return 0;
@@ -4134,7 +4138,6 @@ static int mob_readskilldb(void)
 		while(fgets(line, sizeof(line), fp))
 		{
 			char *str[20], *p, *np;
-			int j=0;
 
 			lines++;
 			if(line[0] == '/' && line[1] == '/')

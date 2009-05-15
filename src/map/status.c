@@ -817,7 +817,7 @@ int status_damage(struct block_list *src,struct block_list *target,int hp, int s
 	else
 	{ //Some death states that would normally be handled by unit_remove_map
 		unit_stop_attack(target);
-		unit_stop_walking(target,0);
+		unit_stop_walking(target,1);
 		unit_skillcastcancel(target,0);
 		clif_clearunit_area(target,1);
 		skill_unit_move(target,gettick(),4);
@@ -2992,8 +2992,7 @@ void status_calc_bl_sub_hom(struct homun_data *hd, unsigned long flag)	//[orn]
 void status_calc_bl_sub_mer(struct mercenary_data *md, unsigned long flag)
 {
 	struct status_data
-		*status = &md->battle_status,
-		*b_status = &md->base_status;
+		*status = &md->battle_status;
 
 	if( flag&(SCB_MAXHP|SCB_VIT) )
 	{
@@ -3192,7 +3191,7 @@ void status_calc_bl(struct block_list *bl, unsigned long flag)
 		if (!(status->mode&MD_CANATTACK))
 			unit_stop_attack(bl);
 		if (!(status->mode&MD_CANMOVE))
-			unit_stop_walking(bl,0);
+			unit_stop_walking(bl,1);
 	}
 
 // No status changes alter these yet.
@@ -4441,7 +4440,7 @@ void status_set_viewdata(struct block_list *bl, int class_)
 	struct view_data* vd;
 	nullpo_retv(bl);
 	if (mobdb_checkid(class_) || mob_is_clone(class_))
-		vd =  mob_get_viewdata(class_);
+		vd = mob_get_viewdata(class_);
 	else if (npcdb_checkid(class_) || (bl->type == BL_NPC && class_ == WARP_CLASS))
 		vd = npc_get_viewdata(class_);
 	else if (homdb_checkid(class_))
@@ -4773,8 +4772,6 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 	struct status_data *status;
 	struct view_data *vd;
 	int opt_flag, calc_flag, undead_flag;
-
-	struct mob_data *boss_md = NULL;
 
 	nullpo_retr(0, bl);
 	sc = status_get_sc(bl);
@@ -5465,13 +5462,12 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 		case SC_BOSSMAPINFO:
 			if( sd != NULL )
 			{
-				boss_md = map_getmob_boss(bl->m); // Search for Boss on this Map
+				struct mob_data *boss_md = map_getmob_boss(bl->m); // Search for Boss on this Map
 				if( boss_md == NULL || boss_md->bl.prev == NULL )
 				{ // No MVP on this map - MVP is dead
 					clif_bossmapinfo(sd->fd, boss_md, 1);
 					return 0; // No need to start SC
 				}
-
 				val1 = boss_md->bl.id;
 				if( (val4 = tick/1000) < 1 )
 					val4 = 1;
@@ -6280,8 +6276,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			}
 			break;
 		case SC_BOSSMAPINFO:
-			if( boss_md != NULL )
-				clif_bossmapinfo(sd->fd, boss_md, 0); // First Message
+			clif_bossmapinfo(sd->fd, map_id2boss(sce->val1), 0); // First Message
 			break;
 		case SC_MERC_HPUP:
 			status_percent_heal(bl, 100, 0); // Recover Full HP
@@ -6894,9 +6889,6 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr data)
 	struct status_change *sc;
 	struct status_change_entry *sce;
 
-	struct mob_data *boss_md = NULL;
-	int result;
-
 	bl = map_id2bl(id);
 	if(!bl)
 	{
@@ -7097,12 +7089,14 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr data)
 	case SC_BOSSMAPINFO:
 		if( sd && --(sce->val4) >= 0 )
 		{
-			boss_md = map_id2boss(sce->val1);
-			if( boss_md && boss_md->bl.prev != NULL && sd->bl.m == boss_md->bl.m )
+			struct mob_data *boss_md = map_id2boss(sce->val1);
+			if( boss_md && sd->bl.m == boss_md->bl.m )
 			{
 				clif_bossmapinfo(sd->fd, boss_md, 1); // Update X - Y on minimap
-				sc_timer_next(5000 + tick, status_change_timer, bl->id, data);
-				return 0;
+				if (boss_md->bl.prev != NULL) {
+					sc_timer_next(5000 + tick, status_change_timer, bl->id, data);
+					return 0;
+				}
 			}
 		}
 		break;
@@ -7258,12 +7252,7 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr data)
 	}
 
 	// default for all non-handled control paths is to end the status
-	result = status_change_end( bl,type,tid );
-	
-	if( sd && boss_md && boss_md->bl.prev == NULL )
-		clif_bossmapinfo(sd->fd, boss_md, 1); // Killed MVP - Show next spawn info
-
-	return result;
+	return status_change_end( bl,type,tid );	
 #undef sc_timer_next
 }
 

@@ -508,7 +508,7 @@ int unit_movepos(struct block_list *bl, short dst_x, short dst_y, int easy, bool
 
 	map_moveblock(bl, dst_x, dst_y, gettick());
 	
-	ud->walktimer = 1; //FIXME: why '1'? [ultramage]
+	ud->walktimer = 1; //Enables clif_insight related packets to spawn character in moving animation.
 	map_foreachinmovearea(clif_insight, bl, AREA_SIZE, -dx, -dy, sd?BL_ALL:BL_PC, bl);
 	ud->walktimer = INVALID_TIMER;
 		
@@ -631,7 +631,12 @@ int unit_warp(struct block_list *bl,short m,short x,short y,int type)
 }
 
 /*==========================================
- * •às’âŽ~
+ * Caused the target object to stop moving.
+ * Flag values:
+ * &0x1: Issue a fixpos packet afterwards
+ * &0x2: Force the unit to move one cell if it hasn't yet
+ * &0x4: Enable moving to the next cell when unit was already half-way there
+ *       (could trigger additional on-touch/place code)
  *------------------------------------------*/
 int unit_stop_walking(struct block_list *bl,int type)
 {
@@ -652,7 +657,7 @@ int unit_stop_walking(struct block_list *bl,int type)
 	ud->state.change_walk_target = 0;
 	tick = gettick();
 	if ((type&0x02 && !ud->walkpath.path_pos) //Force moving at least one cell.
-		|| (td && DIFF_TICK(td->tick, tick) <= td->data/2)) //Enough time has passed to cover half-cell
+		|| (!(type&0x04) && td && DIFF_TICK(td->tick, tick) <= td->data/2)) //Enough time has passed to cover half-cell
 	{	
 		ud->walkpath.path_len = ud->walkpath.path_pos+1;
 		unit_walktoxy_timer(-1, tick, bl->id, ud->walkpath.path_pos);
@@ -800,7 +805,7 @@ int unit_set_walkdelay(struct block_list *bl, unsigned int tick, int delay, int 
 	{	//Stop walking, if chasing, readjust timers.
 		if (delay == 1)
 		{	//Minimal delay (walk-delay) disabled. Just stop walking.
-			unit_stop_walking(bl,0);
+			unit_stop_walking(bl,4);
 		} else {
 			//Resume running after can move again [Kevin]
 			if(ud->state.running)
@@ -809,7 +814,7 @@ int unit_set_walkdelay(struct block_list *bl, unsigned int tick, int delay, int 
 			}
 			else
 			{
-				unit_stop_walking(bl,2);
+				unit_stop_walking(bl,6);
 				if(ud->target)
 					add_timer(ud->canmove_tick+1, unit_walktobl_sub, bl->id, ud->target);
 			}
@@ -1034,13 +1039,13 @@ int unit_skilluse_id2(struct block_list *src, int target_id, short skill_num, sh
 
 	if( casttime > 0 || temp )
 	{ 
+		unit_stop_walking(src,1);
 		clif_skillcasting(src, src->id, target_id, 0,0, skill_num, skill_get_ele(skill_num, skill_lv), casttime);
 
 		if (sd && target->type == BL_MOB)
 		{
 			TBL_MOB *md = (TBL_MOB*)target;
 			mobskill_event(md, src, tick, -1); //Cast targetted skill event.
-			//temp: used to store mob's mode now.
 			if (tstatus->mode&(MD_CASTSENSOR_IDLE|MD_CASTSENSOR_CHASE) &&
 				battle_check_target(target, src, BCT_ENEMY) > 0)
 			{
@@ -1050,7 +1055,7 @@ int unit_skilluse_id2(struct block_list *src, int target_id, short skill_num, sh
 					if (!(tstatus->mode&MD_CASTSENSOR_CHASE))
 						break;
 					md->target_id = src->id;
-					md->state.aggressive = (temp&MD_ANGRY)?1:0;
+					md->state.aggressive = (tstatus->mode&MD_ANGRY)?1:0;
 					md->min_chase = md->db->range3;
 					break;
 				case MSS_IDLE:
@@ -1058,7 +1063,7 @@ int unit_skilluse_id2(struct block_list *src, int target_id, short skill_num, sh
 					if (!(tstatus->mode&MD_CASTSENSOR_IDLE))
 						break;
 					md->target_id = src->id;
-					md->state.aggressive = (temp&MD_ANGRY)?1:0;
+					md->state.aggressive = (tstatus->mode&MD_ANGRY)?1:0;
 					md->min_chase = md->db->range3;
 					break;
 				}
@@ -1098,8 +1103,6 @@ int unit_skilluse_id2(struct block_list *src, int target_id, short skill_num, sh
 		ud->skilltimer = add_timer( tick+casttime, skill_castend_id, src->id, 0 );
 		if( sd && pc_checkskill(sd,SA_FREECAST) > 0 )
 			status_calc_bl(&sd->bl, SCB_SPEED);
-		else
-			unit_stop_walking(src,1);
 	}
 	else
 		skill_castend_id(ud->skilltimer,tick,src->id,0);
@@ -1172,20 +1175,12 @@ int unit_skilluse_pos2( struct block_list *src, short skill_x, short skill_y, sh
 		return 0; //Arrow-path check failed.
 
 	unit_stop_attack(src);
-	ud->state.skillcastcancel = castcancel;
 
 	// moved here to prevent Suffragium from ending if skill fails
 	if (!(skill_get_castnodex(skill_num, skill_lv)&2))
 		casttime = skill_castfix_sc(src, casttime);
 
-	if( casttime > 0 )
-	{
-		unit_stop_walking( src, 1);
-		clif_skillcasting(src, src->id, 0, skill_x, skill_y, skill_num, skill_get_ele(skill_num, skill_lv), casttime);
-	}
-	else
-		ud->state.skillcastcancel=0;
-
+	ud->state.skillcastcancel = castcancel&&casttime>0?1:0;
 	ud->canact_tick  = tick + casttime + 100;
 	if ( battle_config.display_status_timers && sd )
 		clif_status_change(src, SI_ACTIONDELAY, 1, casttime);
@@ -1211,11 +1206,11 @@ int unit_skilluse_pos2( struct block_list *src, short skill_x, short skill_y, sh
 
 	if( casttime > 0 )
 	{
+		unit_stop_walking(src,1);
+		clif_skillcasting(src, src->id, 0, skill_x, skill_y, skill_num, skill_get_ele(skill_num, skill_lv), casttime);
 		ud->skilltimer = add_timer( tick+casttime, skill_castend_pos, src->id, 0 );
 		if( sd && pc_checkskill(sd,SA_FREECAST) > 0 )
 			status_calc_bl(&sd->bl, SCB_SPEED);
-		else
-			unit_stop_walking(src,1);
 	}
 	else
 	{
@@ -1283,10 +1278,9 @@ int unit_attack(struct block_list *src,int target_id,int continuous)
 			npc_click(sd,(TBL_NPC*)target); // submitted by leinsirk10 [Celest]
 			return 0;
 		}
-		else if( pc_is90overweight(sd) )
-		{ // overwheight - stop attacking and walking
+		if( pc_is90overweight(sd) )
+		{ // overweight - stop attacking
 			unit_stop_attack(src);
-			unit_stop_walking(src,1);
 			return 0;
 		}
 	}
@@ -2117,8 +2111,7 @@ int unit_free(struct block_list *bl, int clrtype)
 				md->base_status = NULL;
 			}
 			if( mob_is_clone(md->class_) )
-				mob_clone_delete(md->class_);
-
+				mob_clone_delete(md);
 			break;
 		}
 		case BL_HOM:

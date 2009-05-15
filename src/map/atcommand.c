@@ -9176,7 +9176,7 @@ void do_final_atcommand()
 int atcommand_commands(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
 	char line_buff[CHATBOX_SIZE];
-	int i, gm_lvl = pc_isGM(sd), count = 0, count2 = 0;
+	int i, gm_lvl = pc_isGM(sd), count = 0;
 	char* cur = line_buff;
 
 	memset(line_buff,' ',CHATBOX_SIZE);

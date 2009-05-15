@@ -5904,7 +5904,8 @@ int skill_castend_pos(int tid, unsigned int tick, int id, intptr data)
 		if(battle_config.skill_log && battle_config.skill_log&src->type)
 			ShowInfo("Type %d, ID %d skill castend pos [id =%d, lv=%d, (%d,%d)]\n",
 				src->type, src->id, ud->skillid, ud->skilllv, ud->skillx, ud->skilly);
-		unit_stop_walking(src,1);
+		if (ud->walktimer != -1)
+			unit_stop_walking(src,1);
 		ud->canact_tick = tick + skill_delayfix(src, ud->skillid, ud->skilllv);
 		if ( battle_config.display_status_timers && sd )
 			clif_status_change(src, SI_ACTIONDELAY, 1, skill_delayfix(src, ud->skillid, ud->skilllv));
@@ -7707,7 +7708,7 @@ static int skill_unit_effect (struct block_list* bl, va_list ap)
 	int skill_id;
 	bool dissonance;
 
-	if( !unit->alive || bl->prev == NULL )
+	if( (!unit->alive && !(flag&4)) || bl->prev == NULL )
 		return 0;
 
 	nullpo_retr(0, group);
@@ -9751,6 +9752,8 @@ int skill_delunit (struct skill_unit* unit)
 	nullpo_retr(0, unit);
 	if( !unit->alive )
 		return 0;
+	unit->alive=0;
+
 	nullpo_retr(0, group=unit->group);
 
 	if( group->state.song_dance&0x1 ) //Cancel dissonance effect.
@@ -9784,7 +9787,6 @@ int skill_delunit (struct skill_unit* unit)
 	clif_skill_delunit(unit);
 
 	unit->group=NULL;
-	unit->alive=0;
 	map_delblock(&unit->bl); // don't free yet
 	map_deliddb(&unit->bl);
 	idb_remove(skillunit_db, unit->bl.id);

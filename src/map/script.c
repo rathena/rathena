@@ -7519,7 +7519,9 @@ BUILDIN_FUNC(killmonster)
 		}
 	}
 	
+	map_freeblock_lock();
 	map_foreachinmap(buildin_killmonster_sub_strip, m, BL_MOB, event ,allflag);
+	map_freeblock_unlock();
 	return 0;
 }
 
@@ -11160,7 +11162,7 @@ BUILDIN_FUNC(npcstop)
 	struct npc_data *nd=(struct npc_data *)map_id2bl(st->oid);
 
 	if(nd) {
-		unit_stop_walking(&nd->bl,1);
+		unit_stop_walking(&nd->bl,5);
 	}
 
 	return 0;
@@ -12738,7 +12740,7 @@ BUILDIN_FUNC(unitstop)
 	if( bl != NULL )
 	{
 		unit_stop_attack(bl);
-		unit_stop_walking(bl,0);
+		unit_stop_walking(bl,4);
 		if( bl->type == BL_MOB )
 			((TBL_MOB*)bl)->target_id = 0;
 	}

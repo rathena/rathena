@@ -666,7 +666,7 @@ int npc_settimerevent_tick(struct npc_data* nd, int newtimer)
 {
 	bool flag;
 	int old_rid;
-	struct map_session_data *sd = NULL;
+	//struct map_session_data *sd = NULL;
 
 	nullpo_retr(0, nd);
 
