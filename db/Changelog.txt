@@ -38,6 +38,8 @@
 
 =======================
 2009/05/15
+	* Removed custom behavior on some AutoSpellWhenHit bonuses [Playtester]
+	- they now use aegis default activation (SHORT+LONG+WEAPON+NORMAL+SKILL)
 	* Added graphical effects to bonusautoscripts of Bloody Eater and Atroce Card [Playtester]
 2009/05/13
 	* Fixed activation rates on Bloody Eater and Violet Fear [Playtester]
