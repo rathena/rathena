@@ -1351,7 +1351,7 @@ void status_calc_misc(struct block_list *bl, struct status_data *status, int lev
 
 //Skotlex: Calculates the initial status for the given mob
 //first will only be false when the mob leveled up or got a GuardUp level.
-int status_calc_mob(struct mob_data* md, int first)
+int status_calc_mob(struct mob_data* md, bool first)
 {
 	struct status_data *status;
 	struct block_list *mbl = NULL;
@@ -1504,7 +1504,7 @@ int status_calc_mob(struct mob_data* md, int first)
 }
 
 //Skotlex: Calculates the stats of the given pet.
-int status_calc_pet(struct pet_data *pd, int first)
+int status_calc_pet(struct pet_data *pd, bool first)
 {
 	nullpo_retr(0, pd);
 
@@ -1631,7 +1631,7 @@ static unsigned int status_base_pc_maxsp(struct map_session_data* sd, struct sta
 
 //Calculates player data from scratch without counting SC adjustments.
 //Should be invoked whenever players raise stats, learn passive skills or change equipment.
-int status_calc_pc(struct map_session_data* sd,int first)
+int status_calc_pc(struct map_session_data* sd, bool first)
 {
 	static int calculating = 0; //Check for recursive call preemption. [Skotlex]
 	struct status_data b_status, *status;
@@ -1654,7 +1654,7 @@ int status_calc_pc(struct map_session_data* sd,int first)
 
 	sd->max_weight = max_weight_base[pc_class2idx(sd->status.class_)]+sd->status.str*300;
 
-	if(first&1) {
+	if(first) {
 		//Load Hp/SP from char-received data.
 		sd->battle_status.hp = sd->status.hp;
 		sd->battle_status.sp = sd->status.sp;
@@ -1835,7 +1835,7 @@ int status_calc_pc(struct map_session_data* sd,int first)
 
 		status->def += sd->inventory_data[index]->def;
 
-		if(first&1 && sd->inventory_data[index]->equip_script)
+		if(first && sd->inventory_data[index]->equip_script)
 	  	{	//Execute equip-script on login
 			run_script(sd->inventory_data[index]->equip_script,0,sd->bl.id,0);
 			if (!calculating)
@@ -1938,7 +1938,7 @@ int status_calc_pc(struct map_session_data* sd,int first)
 				data = itemdb_exists(c);
 				if(!data)
 					continue;
-				if(first&1 && data->equip_script)
+				if(first && data->equip_script)
 			  	{	//Execute equip-script on login
 					run_script(data->equip_script,0,sd->bl.id,0);
 					if (!calculating)
@@ -2434,7 +2434,7 @@ int status_calc_pc(struct map_session_data* sd,int first)
 	return 0;
 }
 
-int status_calc_mercenary(struct mercenary_data *md, int first)
+int status_calc_mercenary(struct mercenary_data *md, bool first)
 {
 	struct status_data *status;
 	struct s_mercenary *merc;
@@ -2459,7 +2459,7 @@ int status_calc_mercenary(struct mercenary_data *md, int first)
 	return 0;
 }
 
-int status_calc_homunculus(struct homun_data *hd, int first)
+int status_calc_homunculus(struct homun_data *hd, bool first)
 {
 	struct status_data b_status, *status;
 	struct s_homunculus *hom;
