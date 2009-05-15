@@ -2668,7 +2668,7 @@ int pc_bonus3(struct map_session_data *sd,int type,int type2,int type3,int val)
 			int target = skill_get_inf(type2); //Support or Self (non-auto-target) skills should pick self.
 			target = target&INF_SUPPORT_SKILL || (target&INF_SELF_SKILL && !(skill_get_inf2(type2)&INF2_NO_TARGET_SELF));
 			pc_bonus_autospell(sd->autospell2, ARRAYLENGTH(sd->autospell2),
-				target?-type2:type2, type3, val, 0, current_equip_card_id);
+				target?-type2:type2, type3, val, BF_NORMAL|BF_SKILL, current_equip_card_id);
 		}
 		break;
 	case SP_SP_DRAIN_RATE:
@@ -2762,7 +2762,7 @@ int pc_bonus4(struct map_session_data *sd,int type,int type2,int type3,int type4
 
 	case SP_AUTOSPELL_WHENHIT:
 		if(sd->state.lr_flag != 2)
-			pc_bonus_autospell(sd->autospell2, ARRAYLENGTH(sd->autospell2), (val&1?type2:-type2), (val&2?-type3:type3), type4, 0, current_equip_card_id);
+			pc_bonus_autospell(sd->autospell2, ARRAYLENGTH(sd->autospell2), (val&1?type2:-type2), (val&2?-type3:type3), type4, BF_NORMAL|BF_SKILL, current_equip_card_id);
 		break;
 
 	case SP_AUTOSPELL_ONSKILL:
