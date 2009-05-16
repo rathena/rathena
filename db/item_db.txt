@@ -3291,10 +3291,10 @@
 7828,Bravery_Badge,Bravery Badge,3,,1,0,,,,,,,,,,,,,{},{},{}
 7829,Valor_Badge,Valor Badge,3,,1,0,,,,,,,,,,,,,{},{},{}
 7830,Goddess_Tear,Goddess Tear,3,1,,500,,,,,,,,,,,,,{},{},{}
-7831,Valkyrie's_Token,Valkyrie's Token,3,1,,500,,,,,,,,,,,,,{},{},{}
+7831,Valkyrie_Token,Valkyrie's Token,3,1,,500,,,,,,,,,,,,,{},{},{}
 7832,Brynhild_Armor_Piece,Brynhild Armor Piece,3,1,,500,,,,,,,,,,,,,{},{},{}
 7833,Hero_Remains,Hero's Remains,3,1,,500,,,,,,,,,,,,,{},{},{}
-7834,Andvari's_Ring,Andvari's Ring,3,1,,500,,,,,,,,,,,,,{},{},{}
+7834,Andvari_Ring,Andvari's Ring,3,1,,500,,,,,,,,,,,,,{},{},{}
 7835,Dusk_Glow,Dusk Glow,3,1,,500,,,,,,,,,,,,,{},{},{}
 7836,Dawn_Essence,Dawn Essence,3,1,,500,,,,,,,,,,,,,{},{},{}
 7837,Cold_Moonlight,Cold Moonlight,3,1,,500,,,,,,,,,,,,,{},{},{}

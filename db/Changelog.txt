@@ -38,6 +38,9 @@
 
 =======================
 2009/05/15
+	* Rev. 13779 Minor database updates related to the Falicious Okolnir dungeon. [L0ne_W0lf]
+	- Corrected the names of Andvari's Ring and Valkyrie's Token.
+	- Added Crystal_Key and Valkyrie's_Gift item_trade restrictions.
 	* Removed custom behavior on some AutoSpellWhenHit bonuses [Playtester]
 	- they now use aegis default activation (SHORT+LONG+WEAPON+NORMAL+SKILL)
 	* Added graphical effects to bonusautoscripts of Bloody Eater and Atroce Card [Playtester]
