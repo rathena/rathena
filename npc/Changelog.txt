@@ -1,5 +1,7 @@
 Date		Added
 ======
+2009/05/15
+	* Rev. 13780 Falicious Okolnir update - Asprika creation quest. Basic unoptimized version. [L0ne_W0lf]
 2009/05/12
 	* Rev. 13764 Completely rescripted the DTS warp service based on the aegis 11.3 file. [L0ne_W0lf]
 	- Updated F_ClearGarbage to erase obsolete DTS player variables.
