@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.0
+//= 1.1
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -11,6 +11,11 @@
 //= God Item SE Creation scipt (Brynhild)
 //===== Additional Comments: ================================= 
 //= 1.0 First version. [L0ne_W0lf]
+//= 1.1 First round of bug fixes. (bugreport:3085) [L0ne_W0lf]
+//=     Fixed two spawn locations of the key stones in Piamete's room.
+//=     Fixed calling an event that doesn't exist when killing Piamete.
+//=     Fixed the Wish Maiden not enabling when the boss is killed.
+//=     fixed two NPC named that were missed when translating.
 //============================================================ 
 
 schg_cas04,376,307,3	script	Guide#gq_sch04	899,{
@@ -998,8 +1003,8 @@ OnDisable:
 	disablenpc "#sch04_cage04";
 	disablenpc "#sch04_cage05";
 	disablenpc "#sch04_cage06";
-	donpcevent "windpath03_sch04::OnDisable";
-	donpcevent "windpath04_sch04::OnDisable";
+	disablenpc "windpath03_sch04";
+	disablenpc "windpath04_sch04";
 	set $gqse_sch04_miro,0;
 	set $gqse_sch04_pcc,0;
 	set $gqse_sch04_gd,0;
@@ -1085,8 +1090,8 @@ OnTimer3600000:
 	disablenpc "#sch04_cage04";
 	disablenpc "#sch04_cage05";
 	disablenpc "#sch04_cage06";
-	donpcevent "windpath03_sch04::OnDisable";
-	donpcevent "windpath04_sch04::OnDisable";
+	disablenpc "windpath03_sch04";
+	disablenpc "windpath04_sch04";
 	end;
 
 OnTimer3605000:
@@ -1769,8 +1774,8 @@ OnTimer8000:
 OnTimer12000:
 	mapannounce "que_qsch04","Piamette : The keeper of the key is protecting my cage.",bc_map,"0xdb7093";
 	monster "que_qsch04",108,151,"Key Stone",1905,1,"#gdtimer02_sch04::OnMyMobDead";
-	monster "que_qsch04",107,135,"Key Stone",1905,1,"#gdtimer02_sch04::OnMyMobDead";
-	monster "que_qsch04",113,114,"Key Stone",1905,1,"#gdtimer02_sch04::OnMyMobDead";
+	monster "que_qsch04",109,135,"Key Stone",1905,1,"#gdtimer02_sch04::OnMyMobDead";
+	monster "que_qsch04",115,116,"Key Stone",1905,1,"#gdtimer02_sch04::OnMyMobDead";
 	monster "que_qsch04",158,106,"Key Stone",1905,1,"#gdtimer02_sch04::OnMyMobDead";
 	monster "que_qsch04",163,133,"Key Stone",1905,1,"#gdtimer02_sch04::OnMyMobDead";
 	monster "que_qsch04",150,154,"Key Stone",1905,1,"#gdtimer02_sch04::OnMyMobDead";
@@ -1840,8 +1845,8 @@ OnTimer5000:
 
 OnMyMobDead:
 	mapannounce "que_qsch04","Piamette has been released, so the warp gate toward the South is working now.",bc_map,"0x00ff00";
-	donpcevent "windpath03_sch04::OnEnable";
-	donpcevent "windpath04_sch04::OnEnable";
+	enablenpc "windpath03_sch04";
+	enablenpc "windpath04_sch04";
 	donpcevent "#nm_switch_sch04::OnEnable";
 	end;
 }
@@ -2996,9 +3001,9 @@ OnMyMobDead:
 	end;
 }
 
-que_qsch04,247,330,5	script	신전수호자#sch04_ac01	1933,4,4,{
+que_qsch04,247,330,5	script	Temple Keeper#sch04_ac01	1933,4,4,{
 OnInit:
-	disablenpc "신전수호자#sch04_ac01";
+	disablenpc "Temple Keeper#sch04_ac01";
 	end;
 
 OnDisable:
@@ -3017,9 +3022,9 @@ OnMyMobDead:
 	end;
 }
 
-que_qsch04,255,330,3	script	신전수호자#sch04_ac02	1933,4,4,{
+que_qsch04,255,330,3	script	Temple Keeper#sch04_ac02	1933,4,4,{
 OnInit:
-	disablenpc "신전수호자#sch04_ac02";
+	disablenpc "Temple Keeper#sch04_ac02";
 	end;
 
 OnDisable:
@@ -3040,12 +3045,12 @@ OnMyMobDead:
 
 que_qsch04,251,255,3	script	Wish Maiden#sch04_boss	1931,{
 OnInit:
-	disablenpc "Wish Maiden#sch04_boss";
+	hideonnpc "Wish Maiden#sch04_boss";
 	end;
 
 OnDisable:
 	killmonster "que_qsch04","Wish Maiden#sch04_boss::OnMyMobDead";
-	disablenpc "Wish Maiden#sch04_boss";
+	hideonnpc "Wish Maiden#sch04_boss";
 	stopnpctimer;
 	end;
 
@@ -3063,7 +3068,7 @@ OnTimer4000:
 
 OnTimer5000:
 	specialeffect EF_ICECRASH;
-	disablenpc "Wish Maiden#sch04_boss";
+	hideonnpc "Wish Maiden#sch04_boss";
 	specialeffect EF_SPHERE;
 	monster "que_qsch04",252,340,"Wish Maiden",1931,1,"Wish Maiden#sch04_boss::OnMyMobDead";
 	stopnpctimer;
@@ -3117,7 +3122,7 @@ que_qsch04,252,340,3	script	Wish Maiden#sch04_gift	403,{
 				close2;
 				cutin "wish_maiden11",255;
 				disablenpc "Wish Maiden#sch04_gift";
-				donpcevent "#to_agit_sch04_gate::OnEnable";
+				enablenpc "#to_agit_sch04_gate";
 				end;
 			}
 			else {
@@ -3223,7 +3228,7 @@ OnTimer3600000:
 		set $gqse_sch04_time,0;
 		enablenpc "Wish Maiden#gq_sch04";
 		enablenpc "Piamette#sch04";
-		donpcevent "Wish Maiden#sch04_boss::OnEnable";
+		hideoffnpc "Wish Maiden#sch04_boss";
 		stopnpctimer;
 	}
 	end;

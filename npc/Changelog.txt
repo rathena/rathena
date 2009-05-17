@@ -1,5 +1,12 @@
 Date		Added
 ======
+2009/05/17
+	* Rev. 13782 First round of bug fixes for the Okolnir scripts. (bugreport:3085) [L0ne_W0lf]
+	- Fixed two spawn locations of the key stones in Piamete's room.
+	- Fixed calling an event that doesn't exist when killing Piamete.
+	- Fixed the Wish Maiden not enabling when the boss is killed.
+	- Fixed two NPC named that were missed when translating.
+	- Fixed Dialog that was overlooked in some files and not others.
 2009/05/15
 	* Rev. 13781 Falicious Okolnir update - Brynhild creation quest. Basic unoptimized version. [L0ne_W0lf]
 	* Rev. 13780 Falicious Okolnir update - Asprika creation quest. Basic unoptimized version. [L0ne_W0lf]

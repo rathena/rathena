@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.0
+//= 1.1
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -11,6 +11,12 @@
 //= God Item SE Creation scipt (Asprika)
 //===== Additional Comments: ================================= 
 //= 1.0 First version. [L0ne_W0lf]
+//= 1.1 First round of bug fixes. (bugreport:3085) [L0ne_W0lf]
+//=     Fixed two spawn locations of the key stones in Piamete's room.
+//=     Fixed calling an event that doesn't exist when killing Piamete.
+//=     Fixed the Wish Maiden not enabling when the boss is killed.
+//=     Fixed two NPC named that were missed when translating.
+//=     Fixed Dialog that was overlooked in some files and not others.
 //============================================================ 
 
 arug_cas04,324,161,3	script	Guide#gq_aru04	899,{
@@ -209,8 +215,8 @@ que_qaru04,345,82,3	script	Wish Maiden#gq_aru04	403,{
 						else {
 							cutin "wish_maiden13",1;
 							mes "[Wish Maiden]";
-							mes "오콜니르의 문을 열 자는 열다섯을 넘어야 하고 스물을 넘어선 안된다.";
-							mes "함께 할 이들을 다시 데려오라.";
+							mes "You need to have 16 to 20 members present to open the gate of Okolnir.";
+							mes "Come back when you are ready.";
 							close2;
 						}
 						break;
@@ -1000,8 +1006,8 @@ OnDisable:
 	disablenpc "#aru04_cage04";
 	disablenpc "#aru04_cage05";
 	disablenpc "#aru04_cage06";
-	donpcevent "windpath03_aru04::OnDisable";
-	donpcevent "windpath04_aru04::OnDisable";
+	disablenpc "windpath03_aru04";
+	disablenpc "windpath04_aru04";
 	set $gqse_aru04_miro,0;
 	set $gqse_aru04_pcc,0;
 	set $gqse_aru04_gd,0;
@@ -1087,8 +1093,8 @@ OnTimer3600000:
 	disablenpc "#aru04_cage04";
 	disablenpc "#aru04_cage05";
 	disablenpc "#aru04_cage06";
-	donpcevent "windpath03_aru04::OnDisable";
-	donpcevent "windpath04_aru04::OnDisable";
+	disablenpc "windpath03_aru04";
+	disablenpc "windpath04_aru04";
 	end;
 
 OnTimer3605000:
@@ -1771,8 +1777,8 @@ OnTimer8000:
 OnTimer12000:
 	mapannounce "que_qaru04","Piamette : The keeper of the key is protecting my cage.",bc_map,"0xdb7093";
 	monster "que_qaru04",108,151,"Key Stone",1905,1,"#gdtimer02_aru04::OnMyMobDead";
-	monster "que_qaru04",107,135,"Key Stone",1905,1,"#gdtimer02_aru04::OnMyMobDead";
-	monster "que_qaru04",113,114,"Key Stone",1905,1,"#gdtimer02_aru04::OnMyMobDead";
+	monster "que_qaru04",109,135,"Key Stone",1905,1,"#gdtimer02_aru04::OnMyMobDead";
+	monster "que_qaru04",115,116,"Key Stone",1905,1,"#gdtimer02_aru04::OnMyMobDead";
 	monster "que_qaru04",158,106,"Key Stone",1905,1,"#gdtimer02_aru04::OnMyMobDead";
 	monster "que_qaru04",163,133,"Key Stone",1905,1,"#gdtimer02_aru04::OnMyMobDead";
 	monster "que_qaru04",150,154,"Key Stone",1905,1,"#gdtimer02_aru04::OnMyMobDead";
@@ -1842,8 +1848,8 @@ OnTimer5000:
 
 OnMyMobDead:
 	mapannounce "que_qaru04","Piamette has been released, so the warp gate toward the South is working now.",bc_map,"0x00ff00";
-	donpcevent "windpath03_aru04::OnEnable";
-	donpcevent "windpath04_aru04::OnEnable";
+	enablenpc "windpath03_aru04";
+	enablenpc "windpath04_aru04";
 	donpcevent "#nm_switch_aru04::OnEnable";
 	end;
 }
@@ -2998,9 +3004,9 @@ OnMyMobDead:
 	end;
 }
 
-que_qaru04,247,330,5	script	신전수호자#aru04_ac01	1933,4,4,{
+que_qaru04,247,330,5	script	Temple Keeper#aru04_ac01	1933,4,4,{
 OnInit:
-	disablenpc "신전수호자#aru04_ac01";
+	disablenpc "Temple Keeper#aru04_ac01";
 	end;
 
 OnDisable:
@@ -3019,9 +3025,9 @@ OnMyMobDead:
 	end;
 }
 
-que_qaru04,255,330,3	script	신전수호자#aru04_ac02	1933,4,4,{
+que_qaru04,255,330,3	script	Temple Keeper#aru04_ac02	1933,4,4,{
 OnInit:
-	disablenpc "신전수호자#aru04_ac02";
+	disablenpc "Temple Keeper#aru04_ac02";
 	end;
 
 OnDisable:
@@ -3042,12 +3048,12 @@ OnMyMobDead:
 
 que_qaru04,251,255,3	script	Wish Maiden#aru04_boss	1931,{
 OnInit:
-	disablenpc "Wish Maiden#aru04_boss";
+	hideonnpc "Wish Maiden#aru04_boss";
 	end;
 
 OnDisable:
 	killmonster "que_qaru04","Wish Maiden#aru04_boss::OnMyMobDead";
-	disablenpc "Wish Maiden#aru04_boss";
+	hideonnpc "Wish Maiden#aru04_boss";
 	stopnpctimer;
 	end;
 
@@ -3065,7 +3071,7 @@ OnTimer4000:
 
 OnTimer5000:
 	specialeffect EF_ICECRASH;
-	disablenpc "Wish Maiden#aru04_boss";
+	hideonnpc "Wish Maiden#aru04_boss";
 	specialeffect EF_SPHERE;
 	monster "que_qaru04",252,340,"Wish Maiden",1931,1,"Wish Maiden#aru04_boss::OnMyMobDead";
 	stopnpctimer;
@@ -3119,7 +3125,7 @@ que_qaru04,252,340,3	script	Wish Maiden#aru04_gift	403,{
 				close2;
 				cutin "wish_maiden11",255;
 				disablenpc "Wish Maiden#aru04_gift";
-				donpcevent "#to_agit_aru04_gate::OnEnable";
+				enablenpc "#to_agit_aru04_gate";
 				end;
 			}
 			else {
@@ -3225,7 +3231,7 @@ OnTimer3600000:
 		set $gqse_aru04_time,0;
 		enablenpc "Wish Maiden#gq_aru04";
 		enablenpc "Piamette#aru04";
-		donpcevent "Wish Maiden#aru04_boss::OnEnable";
+		hideoffnpc "Wish Maiden#aru04_boss";
 		stopnpctimer;
 	}
 	end;
