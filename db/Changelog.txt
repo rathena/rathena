@@ -38,6 +38,7 @@
 
 =======================
 2009/05/15
+	* Rev. 13784 Updated walk speed and aspd of Okolnir mobs, also fixed the flower mob modes. [L0ne_W0lf]
 	* Rev. 13779 Minor database updates related to the Falicious Okolnir dungeon. [L0ne_W0lf]
 	- Corrected the names of Andvari's Ring and Valkyrie's Token.
 	- Added Crystal_Key and Valkyrie's_Gift item_trade restrictions.
