@@ -3320,6 +3320,11 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case SA_MONOCELL:
 		if (dstmd)
 		{
+			if ( dstmd->status.mode&MD_BOSS )
+			{
+				clif_skill_fail(sd,skillid,0,0);
+				break;
+			}
 			int class_ = skillid==SA_MONOCELL?1002:mob_get_random_id(2, 1, 0);
 			clif_skill_nodamage(src,bl,skillid,skilllv,1);
 			mob_class_change(dstmd,class_);
@@ -3334,6 +3339,11 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		}
 		break;
 	case SA_DEATH:
+		if ( dstmd && dstmd->status.mode&MD_BOSS )
+		{
+			clif_skill_fail(sd,skillid,0,0);
+			break;
+		}
 		clif_skill_nodamage(src,bl,skillid,skilllv,1);
 		status_kill(bl);
 		break;

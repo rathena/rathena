@@ -3,6 +3,8 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+09/05/17
+	* Monocell, Instant Death and Class Change will now fail on bosses (bugreport:2907) [Playtester]
 09/05/15
 	* AutoSpellWhenHit now triggers on normal+skill by default (bugreport:1652) [Playtester]
 	* Removed the undocumented custom level feature from monster spawn lines (bugreport:3076) [ultramage]
