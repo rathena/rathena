@@ -5,6 +5,7 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 09/05/17
 	* Monocell, Instant Death and Class Change will now fail on bosses (bugreport:2907) [Playtester]
+	* Eske and Eska now affect friendly guardians and slaves. (bugreport:2131) [Inkfish]
 09/05/15
 	* AutoSpellWhenHit now triggers on normal+skill by default (bugreport:1652) [Playtester]
 	* Removed the undocumented custom level feature from monster spawn lines (bugreport:3076) [ultramage]

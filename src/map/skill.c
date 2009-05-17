@@ -5308,13 +5308,11 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		if (sd && !battle_config.allow_es_magic_pc && bl->type != BL_MOB) {
 			clif_skill_fail(sd,skillid,0,0);
 			status_change_start(src,SC_STUN,10000,skilllv,0,0,0,500,10);
-		} else
-			clif_skill_nodamage(src,bl,skillid,skilllv,
-				sc_start(bl,type,100,skilllv,skill_get_time(skillid,skilllv)));
-
+			break;
+		}
+		clif_skill_nodamage(src,bl,skillid,skilllv,sc_start(bl,type,100,skilllv,skill_get_time(skillid,skilllv)));
 		if (skillid == SL_SKE)
 			sc_start(src,SC_SMA,100,skilllv,skill_get_time(SL_SMA,skilllv));
-
 		break;
 
 	// New guild skills [Celest]
@@ -5674,6 +5672,12 @@ int skill_castend_id(int tid, unsigned int tick, int id, intptr data)
 				inf &= ~BCT_NEUTRAL;
 			}
 
+			if( ud->skillid >= SL_SKE && ud->skillid <= SL_SKA && target->type == BL_MOB )
+			{
+				if( ((TBL_MOB*)target)->class_ == MOBID_EMPERIUM )
+					break;
+			}
+			else
 			if (inf && battle_check_target(src, target, inf) <= 0)
 				break;
 
