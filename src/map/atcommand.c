@@ -7325,35 +7325,16 @@ int atcommand_homstats(const int fd, struct map_session_data* sd, const char* co
 
 int atcommand_homshuffle(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
-	TBL_PC* tsd = sd;
-
 	nullpo_retr(-1, sd);
 
-	if ((!message || !*message) && !sd->hd)
-	{
-		clif_displaymessage(fd, "usage: @homshuffle <Alchemist's name>");
-		clif_displaymessage(fd, "Use this to recalculate your (or someone else's) homunculus growth data");
-		return -1;
-	}
-	if (message && *message) {
-		tsd = map_nick2sd((char*)message);
-		if (!tsd) {
-			clif_displaymessage(fd, msg_txt(3)); // Character not found.
-			return -1;
-		}
-		if (pc_isGM(tsd) > pc_isGM(sd)) {
-			clif_displaymessage(fd, msg_txt(81)); // Your GM level don't authorise you to do this action on this player.
-			return -1;
-		}
-	}
+	if(!sd->hd)
+		return -1; // nothing to do
 
-	if(!merc_hom_shuffle(tsd->hd))
+	if(!merc_hom_shuffle(sd->hd))
 		return -1;
 
 	clif_displaymessage(sd->fd, "[Homunculus Stats Altered]");
-	//Print out the new stats
-	//This will send the commands to the invoker since they all use this fd regardless of sd value.
-	atcommand_homstats(fd, tsd, command, message);
+	atcommand_homstats(fd, sd, command, message); //Print out the new stats
 	return 0;
 }
 
