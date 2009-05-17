@@ -3070,6 +3070,9 @@ int mobskill_event(struct mob_data *md, struct block_list *src, unsigned int tic
 {
 	int target_id, res = 0;
 
+	if(md->bl.prev == NULL || md->status.hp <= 0)
+		return 0;
+
 	target_id = md->target_id;
 	if (!target_id || battle_config.mob_changetarget_byskill)
 		md->target_id = src->id;
@@ -3289,7 +3292,7 @@ int mob_clone_delete(struct mob_data *md)
 		aFree(mob_db_data[class_]);
 		mob_db_data[class_]=NULL;
 		//Clear references to the db
-		md->db = NULL;
+		md->db = mob_dummy;
 		md->vd = NULL;
 		return 1;
 	}
