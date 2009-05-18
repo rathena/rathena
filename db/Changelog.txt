@@ -37,6 +37,8 @@
 	2385 Recuvative_Armor		Should trigger HP/SP return with magical kills as well.
 
 =======================
+2009/05/18
+	* NPC skills now use the official default durations for status changes [Playtester]
 2009/05/15
 	* Rev. 13784 Updated walk speed and aspd of Okolnir mobs, also fixed the flower mob modes. [L0ne_W0lf]
 	* Rev. 13779 Minor database updates related to the Falicious Okolnir dungeon. [L0ne_W0lf]

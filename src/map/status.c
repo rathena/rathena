@@ -122,16 +122,16 @@ void initChangeTables(void)
 	memset(StatusChangeFlagTable, 0, sizeof(StatusChangeFlagTable));
 
 	//First we define the skill for common ailments. These are used in skill_additional_effect through sc cards. [Skotlex]
-	set_sc( MG_STONECURSE     , SC_STONE     , SI_BLANK    , SCB_DEF_ELE|SCB_DEF|SCB_MDEF );
-	set_sc( MG_FROSTDIVER     , SC_FREEZE    , SI_BLANK    , SCB_DEF_ELE|SCB_DEF|SCB_MDEF );
+	set_sc( NPC_PETRIFYATTACK , SC_STONE     , SI_BLANK    , SCB_DEF_ELE|SCB_DEF|SCB_MDEF );
+	set_sc( NPC_WIDEFREEZE    , SC_FREEZE    , SI_BLANK    , SCB_DEF_ELE|SCB_DEF|SCB_MDEF );
 	set_sc( NPC_STUNATTACK    , SC_STUN      , SI_BLANK    , SCB_NONE );
 	set_sc( NPC_SLEEPATTACK   , SC_SLEEP     , SI_BLANK    , SCB_NONE );
 	set_sc( NPC_POISON        , SC_POISON    , SI_BLANK    , SCB_DEF2|SCB_REGEN );
 	set_sc( NPC_CURSEATTACK   , SC_CURSE     , SI_BLANK    , SCB_LUK|SCB_BATK|SCB_WATK|SCB_SPEED );
 	set_sc( NPC_SILENCEATTACK , SC_SILENCE   , SI_BLANK    , SCB_NONE );
-	set_sc( DC_WINKCHARM      , SC_CONFUSION , SI_BLANK    , SCB_NONE );
+	set_sc( NPC_WIDECONFUSE   , SC_CONFUSION , SI_BLANK    , SCB_NONE );
 	set_sc( NPC_BLINDATTACK   , SC_BLIND     , SI_BLANK    , SCB_HIT|SCB_FLEE );
-	set_sc( LK_HEADCRUSH      , SC_BLEEDING  , SI_BLEEDING , SCB_REGEN );
+	set_sc( NPC_BLEEDING      , SC_BLEEDING  , SI_BLEEDING , SCB_REGEN );
 	set_sc( NPC_POISON        , SC_DPOISON   , SI_BLANK    , SCB_DEF2|SCB_REGEN );
 
 	//The main status definitions
@@ -4535,14 +4535,14 @@ int status_get_sc_def(struct block_list *bl, enum sc_type type, int rate, int ti
 		sc_def = 3 +status->mdef;
 		break;
 	case SC_CURSE:
-		//Special property: inmunity when luk is greater than level
-		if (status->luk > status_get_lv(bl))
+		//Special property: inmunity when luk is greater than level or zero
+		if (status->luk > status_get_lv(bl) || status->luk == 0)
 			return 0;
 		else
 			sc_def = 3 +status->luk;
 		tick_def = status->vit;
 		break;
-	case SC_BLIND: //TODO: These 50/50 factors are guessed. Need to find actual value.
+	case SC_BLIND:
 		sc_def = 3 +(status->vit + status->int_)/2;
 		break;
 	case SC_CONFUSION:
