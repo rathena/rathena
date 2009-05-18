@@ -784,8 +784,8 @@ enum scb_flag
 	SCB_RANGE   = 0x10000000,
 	SCB_REGEN   = 0x20000000,
 	SCB_DYE     = 0x40000000, // force cloth-dye change to 0 to avoid client crashes.
-	SCB_PC      = 0x80000000,
 
+	SCB_BATTLE  = 0x3FFFFFFE,
 	SCB_ALL     = 0x3FFFFFFF
 };
 
@@ -992,12 +992,19 @@ int status_change_timer_sub(struct block_list* bl, va_list ap);
 int status_change_clear(struct block_list* bl, int type);
 int status_change_clear_buffs(struct block_list* bl, int type);
 
-void status_calc_bl(struct block_list *bl, unsigned long flag);
-int status_calc_mob(struct mob_data* md, bool first);
-int status_calc_pet(struct pet_data* pd, bool first);
-int status_calc_pc(struct map_session_data* sd, bool first);
-int status_calc_homunculus(struct homun_data *hd, bool first);
-int status_calc_mercenary(struct mercenary_data *md, bool first);
+#define status_calc_bl(bl, flag) status_calc_bl_(bl, flag, false)
+#define status_calc_mob(md, first) status_calc_bl_(&(md)->bl, SCB_ALL, first)
+#define status_calc_pet(pd, first) status_calc_bl_(&(pd)->bl, SCB_ALL, first)
+#define status_calc_pc(sd, first) status_calc_bl_(&(sd)->bl, SCB_ALL, first)
+#define status_calc_homunculus(hd, first) status_calc_bl_(&(hd)->bl, SCB_ALL, first)
+#define status_calc_mercenary(md, first) status_calc_bl_(&(md)->bl, SCB_ALL, first)
+
+void status_calc_bl_(struct block_list *bl, enum scb_flag flag, bool first);
+int status_calc_mob_(struct mob_data* md, bool first);
+int status_calc_pet_(struct pet_data* pd, bool first);
+int status_calc_pc_(struct map_session_data* sd, bool first);
+int status_calc_homunculus_(struct homun_data *hd, bool first);
+int status_calc_mercenary_(struct mercenary_data *md, bool first);
 
 void status_calc_misc(struct block_list *bl, struct status_data *status, int level);
 void status_calc_regen(struct block_list *bl, struct status_data *status, struct regen_data *regen);
