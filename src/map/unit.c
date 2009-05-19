@@ -1769,7 +1769,6 @@ int unit_remove_map_(struct block_list *bl, int clrtype, const char* file, int l
 		if (sc->data[SC_GOSPEL] && sc->data[SC_GOSPEL]->val4 == BCT_SELF)
 			status_change_end(bl,SC_GOSPEL,-1);
 		status_change_end(bl,SC_CHANGE,-1);
-		status_change_end(bl,SC_MIRACLE,-1);
 	}
 
 	if (bl->type&BL_CHAR) {
