@@ -1034,8 +1034,6 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 		s_ele_ = sstatus->lhw.ele;
 		if (flag.arrow && sd && sd->arrow_ele)
 			s_ele = sd->arrow_ele;
-		if (battle_config.attack_attr_none&src->type)
-			nk|=NK_NO_ELEFIX; //Weapon's element is "not elemental"
 	} else if (s_ele == -2) { //Use enchantment's element
 		s_ele = s_ele_ = status_get_attack_sc_element(src,sc);
 	}
@@ -1896,7 +1894,9 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 	if(skill_num==TF_POISON)
 		ATK_ADD(15*skill_lv);
 
-	if(!(nk&NK_NO_ELEFIX))
+	if(!(nk&NK_NO_ELEFIX) &&
+	   !(battle_config.attack_attr_none&src->type && (skill_num == 0 || skill_get_ele(skill_num, skill_lv) == -1))
+	)
 	{	//Elemental attribute fix
 		if( wd.damage > 0 )
 		{
