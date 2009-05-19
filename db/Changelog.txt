@@ -37,6 +37,8 @@
 	2385 Recuvative_Armor		Should trigger HP/SP return with magical kills as well.
 
 =======================
+2009/05/19
+	* Fixed Coma chances being 10 times too high [Playtester]
 2009/05/18
 	* NPC skills now use the official default durations for status changes [Playtester]
 2009/05/15
