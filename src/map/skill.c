@@ -7162,8 +7162,9 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 
 	if (sg->interval == -1) {
 		switch (sg->unit_id) {
+			case UNT_SPIDERWEB: // The 'interval' value was set to -1 so that the unit wouldn't trigger in the next interval,
+				break;			// but FiberLock can trap multiple targets on the same cell. [Inkfish]
 			case UNT_ANKLESNARE: //These happen when a trap is splash-triggered by multiple targets on the same cell.
-			case UNT_SPIDERWEB:
 			case UNT_FIREPILLAR_ACTIVE:
 				return 0;
 			default:
@@ -7337,18 +7338,22 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 
 		case UNT_SPIDERWEB:
 		case UNT_ANKLESNARE:
-			if(sg->val2==0 && tsc){
+			if( ( sg->val2 == 0 || sg->unit_id == UNT_SPIDERWEB ) && tsc )
+			{
 				int sec = skill_get_time2(sg->skill_id,sg->skill_lv);
-				if (status_change_start(bl,type,10000,sg->skill_lv,sg->group_id,0,0,sec, 8))
+				if( status_change_start(bl,type,10000,sg->skill_lv,sg->group_id,0,0,sec, 8) )
 				{
-					const struct TimerData* td = tsc->data[type]?get_timer(tsc->data[type]->timer):NULL;
-					if (td) sec = DIFF_TICK(td->tick, tick);
+					const struct TimerData* td = tsc->data[type]?get_timer(tsc->data[type]->timer):NULL; 
+					if( td )
+						sec = DIFF_TICK(td->tick, tick);
 					map_moveblock(bl, src->bl.x, src->bl.y, tick);
 					clif_fixpos(bl);
-					sg->val2=bl->id;
-				} else
+					sg->val2 = bl->id;
+				}
+				else
 					sec = 3000; //Couldn't trap it?
-				if( sg->unit_id == UNT_ANKLESNARE ) clif_01ac(&src->bl); // mysterious packet
+				if( sg->unit_id == UNT_ANKLESNARE )
+					clif_01ac(&src->bl); // mysterious packet
 				sg->limit = DIFF_TICK(tick,sg->tick)+sec;
 				sg->interval = -1;
 				src->range = 0;

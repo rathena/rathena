@@ -5,6 +5,7 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 09/05/19
 	* Added missing packet 0x2c9 and fixed 0x2da's length error. [Inkfish]
+	* Fiberlock now can trap multiple enemies on the same cell and its triggering area was reduced to 1x1. [Inkfish]
 09/05/18
 	* Item-bonuses now use the official default durations for status changes [Playtester]
 	* status calc code cleanup [ultramage]
