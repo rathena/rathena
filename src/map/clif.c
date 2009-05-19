@@ -5509,6 +5509,23 @@ int clif_party_info(struct party_data* p, struct map_session_data *sd)
 	
 	return 0;
 }
+
+/*==========================================
+ * The player's 'party invite' state, sent during login
+ * R 02c9 <flag>.B
+ *------------------------------------------*/
+void clif_partyinvitationstate(struct map_session_data* sd)
+{
+	int fd;
+	nullpo_retv(sd);
+	fd = sd->fd;
+
+	WFIFOHEAD(fd, packet_len(0x2c9));
+	WFIFOW(fd, 0) = 0x2c9;
+	WFIFOB(fd, 2) = 0; // not implemented
+	WFIFOSET(fd, packet_len(0x2c9));
+}
+
 /*==========================================
  * パーティ勧誘
  *------------------------------------------*/
@@ -7582,7 +7599,7 @@ void clif_equipcheckbox(struct map_session_data* sd)
 
 	WFIFOHEAD(fd, packet_len(0x2da));
 	WFIFOW(fd, 0) = 0x2da;
-	WFIFOW(fd, 2) = (sd->status.show_equip ? 1 : 0);
+	WFIFOB(fd, 2) = (sd->status.show_equip ? 1 : 0);
 	WFIFOSET(fd, packet_len(0x2da));
 }
 
@@ -8101,6 +8118,7 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 		}
 
 #if PACKETVER >= 20070918
+		clif_partyinvitationstate(sd);
 		clif_equipcheckbox(sd);
 #endif
 
@@ -13314,8 +13332,8 @@ static int packetdb_readdb(void)
 	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 	    0,  0,  0,  0,  0,  0,  0,  0,  0,191,  0,  0,  0,  0,  0,  0,
 	//#0x02C0
-	    0,  0,  0,  0,  0, 30,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-	    0,  0,  0,  0,  0,  0,  6, -1, 10, 10,  0,  0, -1, 32,  6,  0,
+	    0,  0,  0,  0,  0, 30,  0,  0,  0,  3,  0,  0,  0,  0,  0,  0,
+	    0,  0,  0,  0,  0,  0,  6, -1, 10, 10,  3,  0, -1, 32,  6,  0,
 	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  8,
 	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 	//#0x0300
