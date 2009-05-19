@@ -930,7 +930,7 @@
 655,0,0,0,0,12000
 //-- NPC_ACIDBREATH
 657,0,0,0,0,60000
-//-- NPC_DRAGONFEAR (Upkeep2 times are duration of: Stun(lv1), Curse(lv2), Silence(lv3) and Bleeding (lv4))
+//-- NPC_DRAGONFEAR (Upkeep2 times are duration of: Stun(lv1), Silence(lv2), Confusion(lv3) and Bleeding(lv4))
 659,0,0,0,0,5000:30000:30000:120000
 //-- NPC_BLEEDING
 660,0,0,0,0,120000

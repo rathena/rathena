@@ -38,6 +38,9 @@
 
 =======================
 2009/05/19
+	* Updated item_db and skill_cast_db [Playtester]
+	- fixed Sabbath giving 500 Crit instead of 50 Crit
+	- updated the comment on Dragon Fear in skill_cast_db
 	* Fixed Coma chances being 10 times too high [Playtester]
 2009/05/18
 	* NPC skills now use the official default durations for status changes [Playtester]
