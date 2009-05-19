@@ -5516,9 +5516,16 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 
 	case NPC_DRAGONFEAR:
 		if (flag&1) {
-			const enum sc_type sc[] = { SC_STUN, SC_CURSE, SC_SILENCE, SC_BLEEDING };
-			i = rand()%ARRAYLENGTH(sc);
-			sc_start(bl,sc[i],100,skilllv,skill_get_time2(skillid,i+1));
+			const enum sc_type sc[] = { SC_STUN, SC_SILENCE, SC_CONFUSION, SC_BLEEDING };
+			int j;
+			j = i = rand()%ARRAYLENGTH(sc);
+			while ( !sc_start(bl,sc[i],100,skilllv,skill_get_time2(skillid,i+1)) ) {
+				i++;
+				if ( i == ARRAYLENGTH(sc) )
+					i = 0;
+				if (i == j)
+					break;
+			}
 			break;
 		}
 	case NPC_WIDEBLEEDING:
