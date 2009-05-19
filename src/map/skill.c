@@ -2226,7 +2226,14 @@ static int skill_timerskill(int tid, unsigned int tick, int id, intptr data)
 					map_foreachinarea(skill_frostjoke_scream,skl->map,skl->x-range,skl->y-range,
 						skl->x+range,skl->y+range,BL_CHAR,src,skl->skill_id,skl->skill_lv,tick);
 					break;
-
+				case NPC_EARTHQUAKE:
+					skill_area_temp[0] = map_foreachinrange(skill_area_sub, src, skill_get_splash(skl->skill_id, skl->skill_lv), BL_CHAR, src, skl->skill_id, skl->skill_lv, tick, BCT_ENEMY, skill_area_sub_count);
+					skill_area_temp[1] = src->id;
+					skill_area_temp[2] = 0;
+					map_foreachinrange(skill_area_sub, src, skill_get_splash(skl->skill_id, skl->skill_lv), splash_target(src), src, skl->skill_id, skl->skill_lv, tick, skl->flag, skill_castend_damage_id);
+					if( skl->type > 1 )
+						skill_addtimerskill(src,tick+250,src->id,0,0,skl->skill_id,skl->skill_lv,skl->type-1,skl->flag);
+					break;
 				case WZ_WATERBALL:
 					if (!status_isdead(target))
 						skill_attack(BF_MAGIC,src,src,target,skl->skill_id,skl->skill_lv,tick,skl->flag);
@@ -2697,6 +2704,10 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 
 			// recursive invocation of skill_castend_damage_id() with flag|1
 			map_foreachinrange(skill_area_sub, bl, skill_get_splash(skillid, skilllv), splash_target(src), src, skillid, skilllv, tick, flag|BCT_ENEMY|SD_SPLASH|1, skill_castend_damage_id);
+
+			//FIXME: Isn't EarthQuake a ground skill after all?
+			if( skillid == NPC_EARTHQUAKE )
+				skill_addtimerskill(src,tick+250,src->id,0,0,skillid,skilllv,2,flag|BCT_ENEMY|SD_SPLASH|1);
 
 			//FIXME: move this to skill_additional_effect or some such? [ultramage]
 			if( skillid == SM_MAGNUM || skillid == MS_MAGNUM )
