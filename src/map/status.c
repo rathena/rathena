@@ -3535,7 +3535,7 @@ static signed short status_calc_flee(struct block_list *bl, struct status_change
 		flee += sc->data[SC_MOON_COMFORT]->val2;
 	if(sc->data[SC_CLOSECONFINE])
 		flee += 10;
-	if(sc->data[SC_SPIDERWEB])
+	if(sc->data[SC_SPIDERWEB] && sc->data[SC_SPIDERWEB]->val1)
 		flee -= flee * 50/100;
 	if(sc->data[SC_BERSERK])
 		flee -= flee * 50/100;
@@ -5814,8 +5814,9 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 				tick /= 5; //TODO: Reduce skill's duration. But for how long?
 			break;
 		case SC_SPIDERWEB:
-			if (bl->type == BL_PC)
-				tick /=2;
+			if( bl->type == BL_PC )
+				tick /= 2;
+			val1 = val2 = 1;
 			break;
 		case SC_ARMOR:
 			//NPC_DEFENDER:

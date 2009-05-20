@@ -7355,6 +7355,12 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 			break;
 
 		case UNT_SPIDERWEB:
+			if( tsc && tsc->data[SC_SPIDERWEB] && tsc->data[SC_SPIDERWEB]->val1 > 0 )
+			{ // If you are fiberlocked and can't move, it will only increase your fireweakness level. [Inkfish]
+				tsc->data[SC_SPIDERWEB]->val2++;
+				sg->interval = -1;
+				break;
+			}
 		case UNT_ANKLESNARE:
 			if( ( sg->val2 == 0 || sg->unit_id == UNT_SPIDERWEB ) && tsc )
 			{

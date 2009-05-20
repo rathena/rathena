@@ -252,13 +252,13 @@ int battle_attr_fix(struct block_list *src, struct block_list *target, int damag
 		if(sc->data[SC_DELUGE] && atk_elem == ELE_WATER)
 			ratio += enchant_eff[sc->data[SC_DELUGE]->val1-1];
 	}
-	if (tsc && tsc->count)
+	if( atk_elem == ELE_FIRE && tsc && tsc->count && tsc->data[SC_SPIDERWEB] )
 	{
-		if(tsc->data[SC_SPIDERWEB] && atk_elem == ELE_FIRE)
-		{	// [Celest]
-			damage <<= 1;
-			status_change_end(target, SC_SPIDERWEB, -1);
-		}
+		tsc->data[SC_SPIDERWEB]->val1 = 0; // free to move now
+		if( tsc->data[SC_SPIDERWEB]->val2-- > 0 )
+			damage <<= 1; // double damage
+		if( tsc->data[SC_SPIDERWEB]->val2 == 0 )
+			status_change_end(target,SC_SPIDERWEB,-1);
 	}
 	return damage*ratio/100;
 }
