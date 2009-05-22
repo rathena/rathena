@@ -550,6 +550,8 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 	{
 	case 0: // Normal attacks (no skill used)
 	{
+		if( !(attack_type&BF_WEAPON) )
+			break; // If a normal attack is not a weapon attack, it's splash damage. [Inkfish]
 		if(sd) {
 			// Automatic trigger of Blitz Beat
 			if (pc_isfalcon(sd) && sd->status.weapon == W_BOW && (skill=pc_checkskill(sd,HT_BLITZBEAT))>0 &&
@@ -1568,8 +1570,7 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 	if (sc && sc->data[SC_TRICKDEAD] && !(sstatus->mode&MD_BOSS))
 		return 0;
 
-	dmg=battle_calc_attack(attack_type,src,bl,skillid,skilllv,flag&0xFFF);
-	attack_type|=dmg.flag; //Add on the rest of attack properties.
+	dmg = battle_calc_attack(attack_type,src,bl,skillid,skilllv,flag&0xFFF);
 
 	//Skotlex: Adjusted to the new system
 	if(src->type==BL_PET)
@@ -1589,7 +1590,7 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 		}
 	}
 
-	if (attack_type&BF_MAGIC) {
+	if (dmg.flag&BF_MAGIC) {
 		if( !(sstatus->mode&MD_BOSS) && (dmg.damage || dmg.damage2) && skill_magic_reflect(src, bl, src==dsrc) )
 		{	//Magic reflection, switch caster/target
 			struct block_list *tbl = bl;
@@ -1829,13 +1830,16 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 			ud->attackabletime = tick + type;
 	}
 
+	if( !skillid && flag&1 )
+		dmg.flag &= ~BF_WEAPON; // hack to make splash attack not trigger anything else.
+
 	if( !dmg.amotion )
 	{ //Instant damage
 		status_fix_damage(src,bl,damage,dmg.dmotion); //Deal damage before knockback to allow stuff like firewall+storm gust combo.
 		if( !status_isdead(bl) )
-			skill_additional_effect(src,bl,skillid,skilllv,attack_type,dmg.dmg_lv,tick);
+			skill_additional_effect(src,bl,skillid,skilllv,dmg.flag,dmg.dmg_lv,tick);
 		if( damage > 0 ) //Counter status effects [Skotlex]
-			skill_counter_additional_effect(dsrc,bl,skillid,skilllv,attack_type,tick);
+			skill_counter_additional_effect(dsrc,bl,skillid,skilllv,dmg.flag,tick);
 	}
 
 	//Only knockback if it's still alive, otherwise a "ghost" is left behind. [Skotlex]
@@ -1854,7 +1858,7 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 
 	//Delayed damage must be dealt after the knockback (it needs to know actual position of target)
 	if (dmg.amotion)
-		battle_delay_damage(tick, dmg.amotion,src,bl,attack_type,skillid,skilllv,damage,dmg.dmg_lv,dmg.dmotion);
+		battle_delay_damage(tick, dmg.amotion,src,bl,dmg.flag,skillid,skilllv,damage,dmg.dmg_lv,dmg.dmotion);
 
 	if(skillid == RG_INTIMIDATE && damage > 0 && !(tstatus->mode&MD_BOSS)) {
 		int rate = 50 + skilllv * 5;

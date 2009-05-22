@@ -1044,9 +1044,11 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 			s_ele = s_ele_ = wflag; //element comes in flag.
 			break;
 
-		case LK_SPIRALPIERCE:
-			if (!sd) nk &= ~NK_NO_ELEFIX; //forced neutral for monsters
-			break;
+		// TODO: A patch here doesn't work anymore since mechanism has changed. 
+		//       If mob's spiral pierce is forced neutral is under investigation.
+		//case LK_SPIRALPIERCE:
+		//	if (!sd) nk &= ~NK_NO_ELEFIX; //forced neutral for monsters
+		//	break;
 	}
 
 	if(!skill_num)
