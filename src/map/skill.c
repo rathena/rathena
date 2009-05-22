@@ -489,15 +489,6 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 
 	if( sd )
 	{ // These statuses would be applied anyway even if the damage was blocked by some skills. [Inkfish]
-		if( sd->special_state.bonus_coma && !skillid)
-		{
-			rate  = sd->weapon_coma_ele[tstatus->def_ele];
-			rate += sd->weapon_coma_race[tstatus->race];
-			rate += sd->weapon_coma_race[tstatus->mode&MD_BOSS?RC_BOSS:RC_NONBOSS];
-			if (rate)
-				status_change_start(bl, SC_COMA, rate, 0, 0, 0, 0, 0, 0);
-		}
-
 		if( skillid != WS_CARTTERMINATION && skillid != AM_DEMONSTRATION && skillid != CR_REFLECTSHIELD && skillid != MS_REFLECTSHIELD && skillid != ASC_BREAKER )
 		{ // Trigger status effects
 			enum sc_type type;
@@ -709,6 +700,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 		//Chance to cause blind status vs demon and undead element, but not against players
 		if(!dstsd && (battle_check_undead(tstatus->race,tstatus->def_ele) || tstatus->race == RC_DEMON))
 			sc_start(bl,SC_BLIND,100,skilllv,skill_get_time2(skillid,skilllv));
+		attack_type |= BF_WEAPON;
 		break;
 
 	case AM_ACIDTERROR:
@@ -914,8 +906,53 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 		src = sd?&sd->bl:src;
 	}
 
+	if( attack_type&BF_WEAPON )
+	{ // Coma, Breaking Equipment
+		if( sd && sd->special_state.bonus_coma )
+		{
+			rate  = sd->weapon_coma_ele[tstatus->def_ele];
+			rate += sd->weapon_coma_race[tstatus->race];
+			rate += sd->weapon_coma_race[tstatus->mode&MD_BOSS?RC_BOSS:RC_NONBOSS];
+			if (rate)
+				status_change_start(bl, SC_COMA, rate, 0, 0, 0, 0, 0, 0);
+		}
+		if( sd && battle_config.equip_self_break_rate )
+		{	// Self weapon breaking
+			rate = battle_config.equip_natural_break_rate;
+			if( sc )
+			{
+				if(sc->data[SC_OVERTHRUST])
+					rate += 10;
+				if(sc->data[SC_MAXOVERTHRUST])
+					rate += 10;
+			}
+			if( rate )
+				skill_break_equip(src, EQP_WEAPON, rate, BCT_SELF);
+		}	
+		if( battle_config.equip_skill_break_rate && skillid != WS_CARTTERMINATION && skillid != ITM_TOMAHAWK )
+		{	// Cart Termination/Tomahawk won't trigger breaking data. Why? No idea, go ask Gravity.
+			// Target weapon breaking
+			rate = 0;
+			if( sd )
+				rate += sd->break_weapon_rate;
+			if( sc && sc->data[SC_MELTDOWN] )
+				rate += sc->data[SC_MELTDOWN]->val2;
+			if( rate )
+				skill_break_equip(bl, EQP_WEAPON, rate, BCT_ENEMY);
+
+			// Target armor breaking
+			rate = 0;
+			if( sd )
+				rate += sd->break_armor_rate;
+			if( rate )
+				rate += sc->data[SC_MELTDOWN]->val3;
+			if( rate )
+				skill_break_equip(bl, EQP_ARMOR, rate, BCT_ENEMY);
+		}
+	}
+
 	// Autospell when attacking
-	if( sd && !status_isdead(bl) && src != bl && sd->autospell[0].id )
+	if( sd && !status_isdead(bl) && sd->autospell[0].id )
 	{
 		struct block_list *tbl;
 		struct unit_data *ud;
@@ -971,7 +1008,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 	}
 
 	//Auto-script when attacking
-	if( sd && src != bl && sd->autoscript[0].script )
+	if( sd && sd->autoscript[0].script )
 	{
 		int i;
 		for( i = 0; i < ARRAYLENGTH(sd->autoscript) && sd->autoscript[i].script; i++ )
@@ -1098,43 +1135,6 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 	sd = BL_CAST(BL_PC, src);
 	dstsd = BL_CAST(BL_PC, bl);
 
-	switch(skillid){
-	case 0: //Normal Attack
-		if(tsc && tsc->data[SC_KAAHI] && tsc->data[SC_KAAHI]->val4 == -1)
-			tsc->data[SC_KAAHI]->val4 = add_timer(
-				tick+skill_get_time2(SL_KAAHI,tsc->data[SC_KAAHI]->val1),
-				kaahi_heal_timer, bl->id, SC_KAAHI); //Activate heal.
-		break;
-	case MO_EXTREMITYFIST:
-		sc_start(src,status_skill2sc(skillid),100,skilllv,skill_get_time2(skillid,skilllv));
-		break;
-	case GS_FULLBUSTER:
-		sc_start(src,SC_BLIND,2*skilllv,skilllv,skill_get_time2(skillid,skilllv));
-		break;
-	case HFLI_SBR44:	//[orn]
-	case HVAN_EXPLOSION:
-		if(src->type == BL_HOM){
-			TBL_HOM *hd = (TBL_HOM*)src;
-			hd->homunculus.intimacy = 200;
-			if (hd->master)
-				clif_send_homdata(hd->master,0x100,hd->homunculus.intimacy/100);
-		}
-		break;
-	}
-
-	if(sd && (sd->class_&MAPID_UPPERMASK) == MAPID_STAR_GLADIATOR &&
-		rand()%10000 < battle_config.sg_miracle_skill_ratio)	//SG_MIRACLE [Komurka]
-		sc_start(src,SC_MIRACLE,100,1,battle_config.sg_miracle_skill_duration);
-
-	if(sd && skillid && attack_type&BF_MAGIC && status_isdead(bl) &&
-	 	!(skill_get_inf(skillid)&(INF_GROUND_SKILL|INF_SELF_SKILL)) &&
-		(rate=pc_checkskill(sd,HW_SOULDRAIN))>0
-	){	//Soul Drain should only work on targetted spells [Skotlex]
-		if (pc_issit(sd)) pc_setstand(sd); //Character stuck in attacking animation while 'sitting' fix. [Skotlex]
-		clif_skill_nodamage(src,bl,HW_SOULDRAIN,rate,1);
-		status_heal(src, 0, status_get_lv(bl)*(95+15*rate)/100, 2);
-	}
-
 	if(dstsd && attack_type&BF_WEAPON)
 	{	//Counter effects.
 		enum sc_type type;
@@ -1163,8 +1163,49 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 		}
 	}
 
+	switch(skillid){
+	case 0: //Normal Attack
+		if(tsc && tsc->data[SC_KAAHI] && tsc->data[SC_KAAHI]->val4 == -1)
+			tsc->data[SC_KAAHI]->val4 = add_timer(
+				tick+skill_get_time2(SL_KAAHI,tsc->data[SC_KAAHI]->val1),
+				kaahi_heal_timer, bl->id, SC_KAAHI); //Activate heal.
+		break;
+	case MO_EXTREMITYFIST:
+		sc_start(src,status_skill2sc(skillid),100,skilllv,skill_get_time2(skillid,skilllv));
+		break;
+	case GS_FULLBUSTER:
+		sc_start(src,SC_BLIND,2*skilllv,skilllv,skill_get_time2(skillid,skilllv));
+		break;
+	case HFLI_SBR44:	//[orn]
+	case HVAN_EXPLOSION:
+		if(src->type == BL_HOM){
+			TBL_HOM *hd = (TBL_HOM*)src;
+			hd->homunculus.intimacy = 200;
+			if (hd->master)
+				clif_send_homdata(hd->master,0x100,hd->homunculus.intimacy/100);
+		}
+		break;
+	case CR_GRANDCROSS:
+	case NPC_GRANDDARKNESS:
+		attack_type |= BF_WEAPON;
+		break;
+	}
+
+	if(sd && (sd->class_&MAPID_UPPERMASK) == MAPID_STAR_GLADIATOR &&
+		rand()%10000 < battle_config.sg_miracle_skill_ratio)	//SG_MIRACLE [Komurka]
+		sc_start(src,SC_MIRACLE,100,1,battle_config.sg_miracle_skill_duration);
+
+	if(sd && skillid && attack_type&BF_MAGIC && status_isdead(bl) &&
+	 	!(skill_get_inf(skillid)&(INF_GROUND_SKILL|INF_SELF_SKILL)) &&
+		(rate=pc_checkskill(sd,HW_SOULDRAIN))>0
+	){	//Soul Drain should only work on targetted spells [Skotlex]
+		if (pc_issit(sd)) pc_setstand(sd); //Character stuck in attacking animation while 'sitting' fix. [Skotlex]
+		clif_skill_nodamage(src,bl,HW_SOULDRAIN,rate,1);
+		status_heal(src, 0, status_get_lv(bl)*(95+15*rate)/100, 2);
+	}
+
 	// Trigger counter-spells to retaliate against damage causing skills.
-	if(dstsd && !status_isdead(bl) && src != bl && dstsd->autospell2[0].id &&
+	if(dstsd && !status_isdead(bl) && dstsd->autospell2[0].id &&
 		!(skillid && skill_get_nk(skillid)&NK_NO_DAMAGE))
 	{
 		struct block_list *tbl;
@@ -1220,7 +1261,7 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 		}
 	}
 	//Auto-script when attacked
-	if( dstsd && !status_isdead(bl) && src != bl && dstsd->autoscript2[0].script && !(skillid && skill_get_nk(skillid)&NK_NO_DAMAGE) )
+	if( dstsd && !status_isdead(bl) && dstsd->autoscript2[0].script && !(skillid && skill_get_nk(skillid)&NK_NO_DAMAGE) )
 	{
 		int i;
 		for( i = 0; i < ARRAYLENGTH(dstsd->autoscript2) && dstsd->autoscript2[i].script; i++ )
@@ -1821,6 +1862,9 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 		if(rand()%100 < rate)
 			skill_addtimerskill(src,tick + 800,bl->id,0,0,skillid,skilllv,0,flag);
 	}
+
+	if(skillid == CR_GRANDCROSS || skillid == NPC_GRANDDARKNESS)
+		dmg.flag |= BF_WEAPON;
 
 	if(sd && dmg.flag&BF_WEAPON && src != bl && src == dsrc && damage > 0) {
 		if (battle_config.left_cardfix_to_right)

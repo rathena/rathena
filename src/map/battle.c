@@ -2176,40 +2176,6 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 		wd.damage += md.damage;
 	}
 
-	if (wd.damage || wd.damage2) {
-		if (sd && battle_config.equip_self_break_rate)
-		{	// Self weapon breaking
-			int breakrate = battle_config.equip_natural_break_rate;
-			if (sc) {
-				if(sc->data[SC_OVERTHRUST])
-					breakrate += 10;
-				if(sc->data[SC_MAXOVERTHRUST])
-					breakrate += 10;
-			}
-			if (breakrate)
-				skill_break_equip(src, EQP_WEAPON, breakrate, BCT_SELF);
-		}
-		//Cart Termination/Tomahawk won't trigger breaking data. Why? No idea, go ask Gravity.
-		if (battle_config.equip_skill_break_rate && skill_num != WS_CARTTERMINATION && skill_num != ITM_TOMAHAWK)
-		{	// Target equipment breaking
-			int breakrate[2] = {0,0}; // weapon = 0, armor = 1
-			if (sd) {	// Break rate from equipment
-				breakrate[0] += sd->break_weapon_rate;
-				breakrate[1] += sd->break_armor_rate;
-			}
-			if (sc) {
-				if (sc->data[SC_MELTDOWN]) {
-					breakrate[0] += sc->data[SC_MELTDOWN]->val2;
-					breakrate[1] += sc->data[SC_MELTDOWN]->val3;
-				}
-			}	
-			if (breakrate[0])
-				skill_break_equip(target, EQP_WEAPON, breakrate[0], BCT_ENEMY);
-			if (breakrate[1])
-				skill_break_equip(target, EQP_ARMOR, breakrate[1], BCT_ENEMY);
-		}
-	}
-
 	//SG_FUSION hp penalty [Komurka]
 	if (sc && sc->data[SC_FUSION])
 	{
