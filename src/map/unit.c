@@ -1075,8 +1075,6 @@ int unit_skilluse_id2(struct block_list *src, int target_id, short skill_num, sh
 		ud->state.skillcastcancel = 0;
 
 	ud->canact_tick  = tick + casttime + 100;
-	if ( battle_config.display_status_timers && sd )
-		clif_status_change(src, SI_ACTIONDELAY, 1, casttime);
 	if( sd )
 	{
 		switch( skill_num )
@@ -1182,8 +1180,6 @@ int unit_skilluse_pos2( struct block_list *src, short skill_x, short skill_y, sh
 
 	ud->state.skillcastcancel = castcancel&&casttime>0?1:0;
 	ud->canact_tick  = tick + casttime + 100;
-	if ( battle_config.display_status_timers && sd )
-		clif_status_change(src, SI_ACTIONDELAY, 1, casttime);
 //	if( sd )
 //	{
 //		switch( skill_num )

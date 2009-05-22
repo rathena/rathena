@@ -10,6 +10,8 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 	- Skill's self damage may now causes coma, equipment breaking and autospell/autoscript.
 	- GrandCross now allows you to drain hp/sp.
 	- Splash attack doesn't cause any status effects or autocasts any more.
+	* The delay icon doesn't appear during casting now.
+	* Status icon of ASPD potions doesn't overriding each other now.
 09/05/20
 	* Now fiberlocking a fiberlocked target doesn't renew the timer but instead increases its fireweakness [Inkfish]
 	- This makes doublecasting firebolts on a double fiberlocked target having double damage from both 2 bolts possible = =(bugreport:3061)

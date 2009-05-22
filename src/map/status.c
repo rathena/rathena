@@ -447,10 +447,10 @@ void initChangeTables(void)
 	//Status that don't have a skill associated.
 	StatusIconChangeTable[SC_WEIGHT50] = SI_WEIGHT50;
 	StatusIconChangeTable[SC_WEIGHT90] = SI_WEIGHT90;
-	StatusIconChangeTable[SC_ASPDPOTION0] = SI_ASPDPOTION;
-	StatusIconChangeTable[SC_ASPDPOTION1] = SI_ASPDPOTION;
-	StatusIconChangeTable[SC_ASPDPOTION2] = SI_ASPDPOTION;
-	StatusIconChangeTable[SC_ASPDPOTION3] = SI_ASPDPOTION;
+	StatusIconChangeTable[SC_ASPDPOTION0] = SI_ASPDPOTION0;
+	StatusIconChangeTable[SC_ASPDPOTION1] = SI_ASPDPOTION1;
+	StatusIconChangeTable[SC_ASPDPOTION2] = SI_ASPDPOTION2;
+	StatusIconChangeTable[SC_ASPDPOTION3] = SI_ASPDPOTIONINFINITY;
 	StatusIconChangeTable[SC_SPEEDUP0] = SI_SPEEDPOTION1;
 	StatusIconChangeTable[SC_SPEEDUP1] = SI_SPEEDPOTION2;
 	StatusIconChangeTable[SC_INCSTR] = SI_INCSTR;
