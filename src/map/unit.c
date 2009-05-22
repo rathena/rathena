@@ -1750,7 +1750,7 @@ int unit_remove_map_(struct block_list *bl, int clrtype, const char* file, int l
 		status_change_end(bl,SC_BASILICA,-1);
 		status_change_end(bl,SC_ANKLE,-1);
 		status_change_end(bl,SC_TRICKDEAD,-1);
-		status_change_end(bl,SC_BLADESTOP,-1);
+		status_change_end(bl,SC_BLADESTOP_WAIT,-1);
 		status_change_end(bl,SC_RUN,-1);
 		skill_stop_dancing(bl);
 		status_change_end(bl,SC_WARM,-1);
@@ -1765,6 +1765,7 @@ int unit_remove_map_(struct block_list *bl, int clrtype, const char* file, int l
 		if (sc->data[SC_GOSPEL] && sc->data[SC_GOSPEL]->val4 == BCT_SELF)
 			status_change_end(bl,SC_GOSPEL,-1);
 		status_change_end(bl,SC_CHANGE,-1);
+		status_change_end(bl,SC_STOP,-1);
 	}
 
 	if (bl->type&BL_CHAR) {

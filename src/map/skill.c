@@ -3604,7 +3604,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case PF_MEMORIZE:
 	case PA_SACRIFICE:
 	case ASC_EDP:
-	case NPC_STOP:
 	case PF_DOUBLECASTING:
 	case SG_SUN_COMFORT:
 	case SG_MOON_COMFORT:
@@ -3620,6 +3619,11 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case NPC_MAGICMIRROR:
 		clif_skill_nodamage(src,bl,skillid,skilllv,
 			sc_start(bl,type,100,skilllv,skill_get_time(skillid,skilllv)));
+		break;
+	case NPC_STOP:
+		if( clif_skill_nodamage(src,bl,skillid,skilllv,
+			sc_start2(bl,type,100,skilllv,src->id,skill_get_time(skillid,skilllv)) ) )
+			sc_start2(src,type,100,skilllv,bl->id,skill_get_time(skillid,skilllv));
 		break;
 	case HP_ASSUMPTIO:
 		if( sd && dstmd )

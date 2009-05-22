@@ -6553,6 +6553,15 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 			// from here it's not neccesary to continue
 			return 1;
 			break;
+		case SC_STOP:
+			if( sce->val2 )
+			{
+				struct block_list* tbl = map_id2bl(sce->val2);
+				sce->val2 = 0;
+				if( tbl && (sc = status_get_sc(tbl)) && sc->data[SC_STOP] && sc->data[SC_STOP]->val2 == bl->id )
+					status_change_end(tbl, SC_STOP, -1);
+			}
+			break;
 		}
 
 	opt_flag = 1;
