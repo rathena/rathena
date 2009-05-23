@@ -550,8 +550,8 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 	{
 	case 0: // Normal attacks (no skill used)
 	{
-		if( !(attack_type&BF_WEAPON) )
-			break; // If a normal attack is not a weapon attack, it's splash damage. [Inkfish]
+		if( attack_type&BF_SKILL )
+			break; // If a normal attack is a skill, it's splash damage. [Inkfish]
 		if(sd) {
 			// Automatic trigger of Blitz Beat
 			if (pc_isfalcon(sd) && sd->status.weapon == W_BOW && (skill=pc_checkskill(sd,HT_BLITZBEAT))>0 &&
@@ -1829,9 +1829,6 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 		if (ud && DIFF_TICK(ud->attackabletime, tick + type) < 0)
 			ud->attackabletime = tick + type;
 	}
-
-	if( !skillid && flag&1 )
-		dmg.flag &= ~BF_WEAPON; // hack to make splash attack not trigger anything else.
 
 	if( !dmg.amotion )
 	{ //Instant damage

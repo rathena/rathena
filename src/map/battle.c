@@ -939,7 +939,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 	wd.dmotion=tstatus->dmotion;
 	wd.blewcount=skill_get_blewcount(skill_num,skill_lv);
 	wd.flag = BF_WEAPON; //Initial Flag
-	wd.flag|= skill_num?BF_SKILL:BF_NORMAL;
+	wd.flag |= (skill_num||wflag)?BF_SKILL:BF_NORMAL; // Baphomet card's splash damage is counted as a skill. [Inkfish]
 	wd.dmg_lv=ATK_DEF;	//This assumption simplifies the assignation later
 	nk = skill_get_nk(skill_num);
 	flag.hit	= nk&NK_IGNORE_FLEE?1:0;
