@@ -1358,6 +1358,12 @@ int skill_break_equip (struct block_list *bl, unsigned short where, int rate, in
 						(where&EQP_WEAPON && sd->inventory_data[j]->type == IT_WEAPON) ||
 						(where&EQP_SHIELD && sd->inventory_data[j]->type == IT_ARMOR));
 					break;
+				case EQI_SHOES:
+					flag = (where&EQP_SHOES);
+					break;
+				case EQI_GARMENT:
+					flag = (where&EQP_GARMENT);
+					break;
 				default:
 					continue;
 			}
@@ -5255,10 +5261,11 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 					break;
 				case 3:	// 1000 damage, random armor destroyed
 					{
-						int where[] = { EQP_ARMOR, EQP_SHIELD, EQP_HELM };
+						int where[] = { EQP_ARMOR, EQP_SHIELD, EQP_HELM, EQP_SHOES, EQP_GARMENT };
 						status_fix_damage(src, bl, 1000, 0);
 						clif_damage(src,bl,tick,0,0,1000,0,0,0);
-						skill_break_equip(bl, where[rand()%3], 10000, BCT_ENEMY);
+						if( !status_isdead(bl) )
+							skill_break_equip(bl, where[rand()%5], 10000, BCT_ENEMY);
 					}
 					break;
 				case 4:	// atk halved
