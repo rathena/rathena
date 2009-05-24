@@ -3,7 +3,7 @@
 //===== By ================================================
 //= Developers
 //===== Version ===========================================
-//= 1.1.20090421
+//= 1.1.20090524
 //=========================================================
 //= 1.0 - Standardized doc file
 //= 1.1.20080612 - skill command and bonuses (bAutoSpell, bSkillAtk, 
@@ -11,6 +11,7 @@
 //=   skill names [FlavioJS]
 //= 1.1.20090122 - removed outdated bSPDrainValue command [ultramage]
 //= 1.1.20090421 - added the correct bonus documentation for bSPDrainValue [Playtester]
+//= 1.1.20090524 - removed outdated bMatk/bMatk1/bMatk2 doc [ultramage]
 //===== Description =======================================
 //= List of script instructions used in item bonuses,
 //= mainly bonus/bonus2/bonus3/bonus4/bonus5 arguments
@@ -34,9 +35,6 @@ bonus bAtk,n;				ATK + n
 bonus bAtk2,n;				ATK2 + n
 bonus bAtkRate,n;				Attack power + n%
 bonus bBaseAtk,n;				Basic attack power + n
-bonus bMatk,n;				Minimum AND Maximum Magical Attack Power + n
-bonus bMatk1,n;				Minimum Magical attack power + n
-bonus bMatk2,n;				Maximum Magical attack power + n
 bonus bMatkRate,n;			Magical attack power + n%
 bonus bDef,n;				Equipment DEF + n
 bonus bDef2,n;				VIT based DEF + n
