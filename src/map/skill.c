@@ -946,7 +946,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 			rate = 0;
 			if( sd )
 				rate += sd->break_armor_rate;
-			if( rate )
+			if( sc && sc->data[SC_MELTDOWN] )
 				rate += sc->data[SC_MELTDOWN]->val3;
 			if( rate )
 				skill_break_equip(bl, EQP_ARMOR, rate, BCT_ENEMY);
