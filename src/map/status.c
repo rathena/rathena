@@ -6326,6 +6326,7 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 			clif_changelook(bl,LOOK_CLOTHES_COLOR,vd->cloth_color);
 			clif_changelook(bl,LOOK_WEAPON,vd->weapon);
 			clif_changelook(bl,LOOK_SHIELD,vd->shield);
+			if(sd) clif_skillinfoblock(sd);
 		break;
 		case SC_RUN:
 		{

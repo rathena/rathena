@@ -6108,16 +6108,15 @@ int pc_setoption(struct map_session_data *sd,int type)
 
 	if (type&OPTION_RIDING && !(p_type&OPTION_RIDING) && (sd->class_&MAPID_BASEMASK) == MAPID_SWORDMAN)
 	{	//We are going to mount. [Skotlex]
-		new_look = -1;
 		clif_status_load(&sd->bl,SI_RIDING,1);
 		status_calc_pc(sd,0); //Mounting/Umounting affects walk and attack speeds.
 	}
 	else if (!(type&OPTION_RIDING) && p_type&OPTION_RIDING && (sd->class_&MAPID_BASEMASK) == MAPID_SWORDMAN)
 	{	//We are going to dismount.
-		new_look = -1;
 		clif_status_load(&sd->bl,SI_RIDING,0);
 		status_calc_pc(sd,0); //Mounting/Umounting affects walk and attack speeds.
 	}
+
 	if(type&OPTION_CART && !(p_type&OPTION_CART))
   	{ //Cart On
 		clif_cartlist(sd);
@@ -6157,20 +6156,20 @@ int pc_setoption(struct map_session_data *sd,int type)
 	else if (!(type&OPTION_SUMMER) && p_type&OPTION_SUMMER)
 		new_look = -1;
 
-	if (sd->disguise)
+	if (sd->disguise || !new_look)
 		return 0; //Disguises break sprite changes
 
 	if (new_look < 0) { //Restore normal look.
 		status_set_viewdata(&sd->bl, sd->status.class_);
 		new_look = sd->vd.class_;
 	}
-	if (new_look) {
-		//Stop attacking on new view change (to prevent wedding/santa attacks.
-		pc_stop_attack(sd);
-		clif_changelook(&sd->bl,LOOK_BASE,new_look);
-		if (sd->vd.cloth_color)
-			clif_changelook(&sd->bl,LOOK_CLOTHES_COLOR,sd->vd.cloth_color);
-	}
+
+	pc_stop_attack(sd); //Stop attacking on new view change (to prevent wedding/santa attacks.
+	clif_changelook(&sd->bl,LOOK_BASE,new_look);
+	if (sd->vd.cloth_color)
+		clif_changelook(&sd->bl,LOOK_CLOTHES_COLOR,sd->vd.cloth_color);
+	clif_skillinfoblock(sd); // Skill list needs to be updated after base change.
+
 	return 0;
 }
 
