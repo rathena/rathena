@@ -28,4 +28,4 @@ ayo_dun01,0,0,0,0	monster	Ghoul	1036,30,0,0,0
 ayo_dun02,0,0,0,0	monster	Tamruan	1584,100,0,0,0
 ayo_dun02,0,0,0,0	monster	Whisper	1179,20,0,0,0
 ayo_dun02,0,0,0,0	monster	Kraben	1587,20,0,0,0
-ayo_dun02,150,90,15,30	monster	Lady Tanee	1688,1,25200000,600000,0
+ayo_dun02,150,90,15,30	boss_monster	Lady Tanee	1688,1,25200000,600000,0

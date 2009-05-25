@@ -59,4 +59,4 @@ abyss_03,0,0,0,0	monster	Ferus	1714,10,300000,0,0
 abyss_03,0,0,0,0	monster	Ferus	1717,10,300000,0,0
 abyss_03,0,0,0,0	monster	Dragon Egg	1721,10,1800000,600000,0
 abyss_03,0,0,0,0	monster	Hydrolancer	1720,3,3000000,2400000,0
-abyss_03,0,0,0,0	monster	Detardeurus	1719,1,10800000,600000,0
+abyss_03,0,0,0,0	boss_monster	Detardeurus	1719,1,10800000,600000,0

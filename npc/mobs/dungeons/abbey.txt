@@ -98,7 +98,7 @@ abbey02,232,76,46,54	monster	Zombie Slaughter	1864,30,63000,0,1
 abbey02,232,76,46,54	monster	Ragged Zombie	1865,10,0,0,1
 abbey02,232,76,46,54	monster	Flame Skull	1869,3,0,0,1
 abbey02,232,76,46,54	monster	Necromancer	1870,1,0,0,1
-abbey02,236,78,21,18	monster	Fallen Bishop Hibram	1871,1,7200000,600000,1
+abbey02,236,78,21,18	boss_monster	Fallen Bishop Hibram	1871,1,7200000,600000,1
 abbey02,150,153,142,23	monster	Zombie Slaughter	1864,30,122000,0,1
 abbey02,150,153,142,23	monster	Ragged Zombie	1865,10,0,0,1
 abbey02,150,153,142,23	monster	Flame Skull	1869,3,0,0,1
@@ -117,7 +117,7 @@ abbey02,232,220,46,58	monster	Flame Skull	1869,3,0,0,1
 abbey02,232,220,46,58	monster	Necromancer	1870,1,0,0,1
 
 // Cursed Abbey Dungeon 3
-abbey03,0,0,0,0	monster	Beelzebub	1873,1,43200000,600000,1
+abbey03,0,0,0,0	boss_monster	Beelzebub	1873,1,43200000,600000,1
 abbey03,120,212,116,24	monster	Necromancer	1870,10,0,0,1
 abbey03,120,212,116,24	monster	Banshee	1867,10,0,0,1
 abbey03,120,212,116,24	monster	Flame Skull	1869,5,0,0,1

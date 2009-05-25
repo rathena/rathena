@@ -37,7 +37,7 @@ gef_dun01,0,0,0,0	monster	Zombie	1015,25,0,0,0
 gef_dun01,0,0,0,0	monster	Ghoul	1036,40,0,0,0
 gef_dun01,0,0,0,0	monster	Jakk	1130,40,300000,100000,0
 gef_dun01,234,121,0,0	monster	Blue Plant	1079,1,300000,100000,0
-gef_dun01,0,0,0,0	monster	Dracula	1389,1,3600000,600000,1
+gef_dun01,0,0,0,0	boss_monster	Dracula	1389,1,3600000,600000,1
 gef_dun01,0,0,0,0	monster	Black Mushroom	1084,5,180000,90000,1
 gef_dun01,188,104,10,10	monster	White Plant	1082,3,180000,90000,1
 gef_dun01,263,115,10,10	monster	White Plant	1082,3,180000,90000,1
@@ -53,7 +53,7 @@ gef_dun02,0,0,0,0	monster	Hunter Fly	1035,10,0,0,0
 gef_dun02,0,0,0,0	monster	Marionette	1143,20,0,0,0
 gef_dun02,0,0,0,0	monster	Deviruchi	1109,35,0,0,0
 gef_dun02,0,0,0,0	monster	Nightmare	1061,40,60000,0,0
-gef_dun02,0,0,0,0	monster	Doppelganger	1046,1,7200000,600000,1
+gef_dun02,0,0,0,0	boss_monster	Doppelganger	1046,1,7200000,600000,1
 gef_dun02,214,212,10,10	monster	White Plant	1082,3,180000,90000,1
 gef_dun02,215,67,10,10	monster	White Plant	1082,3,180000,90000,1
 gef_dun02,72,210,20,20	monster	White Plant	1082,3,180000,90000,1

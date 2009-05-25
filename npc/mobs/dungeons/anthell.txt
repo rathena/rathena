@@ -119,4 +119,4 @@ anthell02,0,0,0,0	monster	Piere	1160,15,0,0,0
 anthell02,0,0,0,0	monster	Deniro	1105,15,0,0,0
 anthell02,0,0,0,0	monster	Vitata	1176,30,0,0,0
 anthell02,0,0,0,0	monster	Giearth	1121,3,0,0,0
-anthell02,0,0,0,0	monster	Maya	1147,1,7200000,600000,1
+anthell02,0,0,0,0	boss_monster	Maya	1147,1,7200000,600000,1

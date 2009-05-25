@@ -2485,6 +2485,8 @@ static const char* npc_parse_mob(char* w1, char* w2, char* w3, char* w4, const c
 
 	memset(&mob, 0, sizeof(struct spawn_data));
 
+	mob.boss = !strcmpi(w2,"boss_monster");
+
 	// w1=<map name>,<x>,<y>,<xs>,<ys>
 	// w4=<mob id>,<amount>,<delay1>,<delay2>,<event>
 	if( sscanf(w1, "%31[^,],%d,%d,%d,%d", mapname, &x, &y, &xs, &ys) < 3
@@ -3023,7 +3025,7 @@ void npc_parsesrcfile(const char* filepath)
 		{
 			p = npc_parse_duplicate(w1,w2,w3,w4, p, buffer, filepath);
 		}
-		else if( strcmpi(w2,"monster") == 0 && count > 3 )
+		else if( (strcmpi(w2,"monster") == 0 || strcmpi(w2,"boss_monster") == 0) && count > 3 )
 		{
 			p = npc_parse_mob(w1, w2, w3, w4, p, buffer, filepath);
 		}

@@ -40,7 +40,7 @@ odin_tem02,172,292,3,3	monster	Skogul	1761,1,30000,15000,0
 odin_tem02,182,263,3,3	monster	Frus	1762,1,30000,15000,0
 odin_tem02,190,236,3,3	monster	Skogul	1761,1,30000,15000,0
 odin_tem02,205,198,3,3	monster	Frus	1762,1,30000,15000,0
-odin_tem02,0,0,0,0	monster	Valkyrie	1765,1,5400000,1800000,0
+odin_tem02,0,0,0,0	boss_monster	Valkyrie	1765,1,5400000,1800000,0
 odin_tem02,0,0,0,0	monster	Blue Plant	1079,10,1800000,900000,1
 
 //==================================================
@@ -62,6 +62,6 @@ odin_tem03,205,240,3,3	monster	Frus	1762,1,30000,15000,0
 odin_tem03,238,265,3,3	monster	Skogul	1761,1,30000,15000,0
 odin_tem03,256,271,3,3	monster	Frus	1762,1,30000,15000,0
 odin_tem03,0,0,0,0	monster	Valkyrie	1765,2,1800000,1200000,0
-odin_tem03,0,0,0,0	monster	Valkyrie Randgris	1751,1,28800000,600000,1
+odin_tem03,0,0,0,0	boss_monster	Valkyrie Randgris	1751,1,28800000,600000,1
 odin_tem03,0,0,0,0	monster	Blue Plant	1079,15,1800000,900000,1
 odin_tem03,0,0,0,0	monster	Shining Plant	1083,15,1800000,900000,1

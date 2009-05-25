@@ -142,6 +142,6 @@ pay_fild10,66,332,10,10	monster	Blue Plant	1079,1,360000,180000,1
 pay_fild11,0,0,0,0	monster	Greatest General	1277,30,0,0,0
 pay_fild11,0,0,0,0	monster	Nine Tail	1180,60,180000,0,0
 pay_fild11,0,0,0,0	monster	Dragon Tail	1321,50,180000,0,0
-pay_fild11,0,0,0,0	monster	Eddga	1115,1,7200000,600000,1
+pay_fild11,0,0,0,0	boss_monster	Eddga	1115,1,7200000,600000,1
 pay_fild11,241,162,5,5	monster	Red Mushroom	1085,3,360000,180000,1
 pay_fild11,66,293,5,5	monster	Red Mushroom	1085,3,360000,180000,1

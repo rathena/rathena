@@ -79,4 +79,4 @@ ra_san05,0,0,0,0	monster	Seeker	1774,20,0,0,0
 ra_san05,0,0,0,0	monster	Hodremlin	1773,20,0,0,0
 ra_san05,0,0,0,0	monster	Agav	1769,10,18000000,14400000,0
 ra_san05,0,0,0,0	monster	Echio	1770,10,18000000,14400000,0
-ra_san05,0,0,0,0	monster	Gloom Under Night	1768,1,18000000,600000,0
+ra_san05,0,0,0,0	boss_monster	Gloom Under Night	1768,1,18000000,600000,0

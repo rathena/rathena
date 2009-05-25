@@ -65,4 +65,4 @@ thor_v03,0,0,0,0	monster	Sword Master	1829,5,1800000,0,0
 thor_v03,0,0,0,0	monster	Bow Master	1830,5,0,0,0
 thor_v03,0,0,0,0	monster	Bow Master	1830,5,1800000,0,0
 thor_v03,0,0,0,0	monster	Byorgue	1839,5,1800000,0,0
-thor_v03,0,0,0,0	monster	Ifrit	1832,1,39600000,600000,0
+thor_v03,0,0,0,0	boss_monster	Ifrit	1832,1,39600000,600000,0

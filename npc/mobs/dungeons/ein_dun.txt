@@ -37,4 +37,4 @@ ein_dun02,0,0,0,0	monster	Teddy Bear	1622,10,0,0,0
 ein_dun02,155,230,140,55	monster	Teddy Bear	1622,20,480000,0,0
 ein_dun02,0,0,0,0	monster	Old Stove	1617,10,0,0,0
 ein_dun02,154,80,134,55	monster	Old Stove	1617,20,480000,0,0
-ein_dun02,0,0,0,0	monster	RSX-0806	1623,1,7500000,600000,0
+ein_dun02,0,0,0,0	boss_monster	RSX-0806	1623,1,7500000,600000,0

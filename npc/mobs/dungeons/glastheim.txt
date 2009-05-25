@@ -134,7 +134,7 @@ gl_chyard,0,0,0,0	monster	Wraith	1192,45,0,0,0
 gl_chyard,0,0,0,0	monster	Evil Druid	1117,10,0,0,0
 gl_chyard,0,0,0,0	monster	Hunter Fly	1035,3,0,0,0
 gl_chyard,0,0,0,0	monster	Mimic	1191,3,0,0,0
-gl_chyard,0,0,0,0	monster	Dark Lord	1272,1,3600000,600000,1
+gl_chyard,0,0,0,0	boss_monster	Dark Lord	1272,1,3600000,600000,1
 
 //==================================================
 // gl_sew01 - Glast Heim Culvert F1

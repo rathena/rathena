@@ -57,4 +57,4 @@ jupe_core,0,0,0,0	monster	Dimik	1671,40,0,0,1
 jupe_core,0,0,0,0	monster	Dimik	1672,40,0,0,1
 jupe_core,0,0,0,0	monster	Dimik	1673,40,0,0,1
 jupe_core,0,0,0,0	monster	Archdam	1668,40,0,0,1
-jupe_core,0,0,0,0	monster	Vesper	1685,1,7200000,600000,1
+jupe_core,0,0,0,0	boss_monster	Vesper	1685,1,7200000,600000,1

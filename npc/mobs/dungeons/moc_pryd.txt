@@ -44,7 +44,7 @@ moc_pryd04,0,0,0,0	monster	Mummy	1041,25,0,0,0
 moc_pryd04,0,0,0,0	monster	Ancient Mummy	1297,3,0,0,0
 moc_pryd04,0,0,0,0	monster	Isis	1029,50,150000,75000,0
 moc_pryd04,0,0,0,0	monster	Mimic	1191,15,600000,300000,1
-moc_pryd04,0,0,0,0	monster	Osiris	1038,1,3600000,600000,0
+moc_pryd04,0,0,0,0	boss_monster	Osiris	1038,1,3600000,600000,0
 moc_pryd04,0,0,0,0	monster	Matyr	1146,20,0,0,0
 
 //==================================================
@@ -61,4 +61,4 @@ moc_pryd06,0,0,0,0	monster	Verit	1032,10,0,0,0
 moc_pryd06,0,0,0,0	monster	Arclouze	1194,20,0,0,0
 moc_pryd06,100,90,80,50	monster	Ancient Mummy	1297,20,0,0,0
 moc_pryd06,100,90,80,50	monster	Mimic	1191,20,0,0,0
-moc_pryd06,102,85,1,1	monster	Amon Ra	1511,1,3600000,600000,0
+moc_pryd06,102,85,1,1	boss_monster	Amon Ra	1511,1,3600000,600000,0

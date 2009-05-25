@@ -85,7 +85,7 @@ prt_maze03,170,170,70,70	monster	Mantis	1139,30,60000,30000,0
 prt_maze03,170,170,70,70	monster	Eclipse	1093,1,1920000,150000,1
 prt_maze03,23,23,70,70	monster	Mastering	1090,1,1920000,150000,1
 prt_maze03,100,100,80,80	monster	Baphomet Jr.	1101,25,0,0,0
-prt_maze03,0,0,0,0	monster	Baphomet	1039,1,7200000,600000,1
+prt_maze03,0,0,0,0	boss_monster	Baphomet	1039,1,7200000,600000,1
 prt_maze03,61,98,10,10	monster	Shining Plant	1083,1,1800000,900000,1
 prt_maze03,61,98,10,10	monster	Blue Plant	1079,1,1800000,900000,1
 prt_maze03,61,98,10,10	monster	Yellow Plant	1081,1,1800000,900000,1

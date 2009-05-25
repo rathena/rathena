@@ -46,4 +46,4 @@ mosk_dun03,0,0,0,0	monster	Mavka	1884,15,20000,10000,1
 mosk_dun03,0,0,0,0	monster	Yellow Plant	1081,10,0,0,0
 mosk_dun03,0,0,0,0	monster	White Plant	1082,10,0,0,0
 mosk_dun03,0,0,0,0	monster	Shining Plant	1083,5,10000,0,0
-mosk_dun03,207,221,5,5	monster	Gopinich	1885,1,7200000,600000,1
+mosk_dun03,207,221,5,5	boss_monster	Gopinich	1885,1,7200000,600000,1

@@ -1,5 +1,7 @@
 Date		Added
 ======
+2009/05/25
+	* Now use 'boss_monster' to summon the boss monsters so that Convex Mirror can work properly. [Inkfish]
 2009/05/17
 	* Rev. 13782 First round of bug fixes for the Okolnir scripts. (bugreport:3085) [L0ne_W0lf]
 	- Fixed two spawn locations of the key stones in Piamete's room.

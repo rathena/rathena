@@ -53,4 +53,4 @@ in_sphinx5,0,0,0,0	monster	Matyr	1146,10,0,0,0
 in_sphinx5,0,0,0,0	monster	Side Winder	1037,20,0,0,0
 in_sphinx5,0,0,0,0	monster	Anubis	1098,10,0,0,0
 in_sphinx5,0,0,0,0	monster	Mimic	1191,7,600000,300000,1
-in_sphinx5,0,0,0,0	monster	Pharaoh	1157,1,3600000,600000,1
+in_sphinx5,0,0,0,0	boss_monster	Pharaoh	1157,1,3600000,600000,1

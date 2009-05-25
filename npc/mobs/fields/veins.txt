@@ -21,7 +21,7 @@ ve_fild01,0,0,0,0	monster	Drops	1113,10,0,0,0
 ve_fild01,0,0,0,0	monster	Stapo	1784,20,0,0,0
 ve_fild01,0,0,0,0	monster	Muka	1055,70,0,0,0
 ve_fild01,0,0,0,0	monster	Side Winder	1037,10,0,0,0
-ve_fild01,0,0,0,0	monster	Atroce	1785,1,10800000,0,0
+ve_fild01,0,0,0,0	boss_monster	Atroce	1785,1,10800000,0,0
 ve_fild01,0,0,0,0	monster	Red Plant	1078,10,0,0,0
 ve_fild01,0,0,0,0	monster	Yellow Plant	1081,10,0,0,0
 ve_fild01,270,80,20,7	monster	Blue Plant	1079,4,840000,0,0
@@ -35,7 +35,7 @@ ve_fild02,65,220,14,14	monster	Roween	1782,2,660000,0,0
 ve_fild02,220,215,135,180	monster	Roween	1782,18,0,0,0
 ve_fild02,65,220,14,14	monster	Side Winder	1037,1,900000,0,0
 ve_fild02,220,215,135,180	monster	Side Winder	1037,4,0,0,0
-ve_fild02,120,55,50,50	monster	Atroce	1785,1,21600000,0,0
+ve_fild02,120,55,50,50	boss_monster	Atroce	1785,1,21600000,0,0
 ve_fild02,0,0,0,0	monster	Red Plant	1078,10,0,0,0
 ve_fild02,0,0,0,0	monster	Yellow Plant	1081,10,0,0,0
 

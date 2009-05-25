@@ -476,7 +476,7 @@ int map_count_oncell(int m, int x, int y, int type)
 	return count;
 }
 /*
- * «»«E¾ªÎõÌôøªËÌ¸ªÄª±ª¿«¹«­«Eæ«Ë«Ã«ÈªòÚ÷ª¹
+ * «»«E¾ªÎõÌôøªËÌ¸ªÄª±ª¿«¹«­«Eæ«Ë«Ã«ÈªòÚ÷ª?
  */
 struct skill_unit* map_find_skill_unit_oncell(struct block_list* target,int x,int y,int skill_id,struct skill_unit* out_unit)
 {
@@ -710,7 +710,7 @@ int map_foreachinarea(int (*func)(struct block_list*,va_list), int m, int x0, in
 }
 
 /*==========================================
- * ‹éŒ`(x0,y0)-(x1,y1)‚ª(dx,dy)ˆÚ“®‚µ‚½bÌ
+ * ‹éŒ`(x0,y0)-(x1,y1)‚ª(dx,dy)ˆÚ“®‚µ‚½b?
  * —ÌˆæŠO‚É‚È‚é—Ìˆæ(‹éŒ`‚©LšŒ`)?‚Ìobj‚É
  * ?‚µ‚Äfunc‚ğŒÄ‚Ô
  *
@@ -1165,7 +1165,7 @@ int map_get_new_object_id(void)
 /*==========================================
  * °ƒAƒCƒeƒ€‚ğÁ‚·
  *
- * data==0‚ÌbÍtimer‚ÅÁ‚¦‚½ê * data!=0‚ÌbÍE‚¤“™‚ÅÁ‚¦‚½bÆ‚µ‚Ä“®ì
+ * data==0‚ÌbÍtimer‚ÅÁ‚¦‚½ê * data!=0‚ÌbÍE‚¤“™‚ÅÁ‚¦‚½bÆ‚µ‚Ä“®?
  *
  * ŒãÒ‚ÍAmap_clearflooritem(id)‚Ö
  * map.h?‚Å#define‚µ‚Ä‚ ‚é
@@ -1462,7 +1462,7 @@ void map_addiddb(struct block_list *bl)
 		TBL_MOB* md = (TBL_MOB*)bl;
 		idb_put(mobid_db,bl->id,bl);
 
-		if( (md->db->status.mode&MD_BOSS) && md->db->mexp > 0 )
+		if( md->boss )
 			idb_put(bossid_db, bl->id, bl);
 	}
 
@@ -1700,11 +1700,11 @@ struct mob_data * map_getmob_boss(int m)
 	iter = db_iterator(bossid_db);
 	for( md = (struct mob_data*)dbi_first(iter); dbi_exists(iter); md = (struct mob_data*)dbi_next(iter) )
 	{
-		if( md->bl.m != m || !md->spawn )
-			continue;
-
-		found = true;
-		break;
+		if( md->bl.m == m )
+		{
+			found = true;		
+			break;
+		}
 	}
 	dbi_destroy(iter);
 

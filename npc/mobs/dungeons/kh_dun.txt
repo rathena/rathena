@@ -59,4 +59,4 @@ kh_dun02,0,0,0,0	monster	Alicel	1735,30,0,0,0
 kh_dun02,0,0,0,0	monster	Aliza	1737,10,0,0,0
 kh_dun02,0,0,0,0	monster	Constant	1738,15,1800000,1200000,0
 kh_dun02,0,0,0,0	monster	Constant	1745,5,0,0,0
-kh_dun02,0,0,0,0	monster	Kiel D-01	1734,1,7200000,3600000,0
+kh_dun02,0,0,0,0	boss_monster	Kiel D-01	1734,1,7200000,3600000,0
