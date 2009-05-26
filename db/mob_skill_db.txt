@@ -3490,7 +3490,7 @@
 1688,Lady Tany@AM_POTIONPITCHER,attack,231,4,2000,0,0,yes,friend,friendhpltmaxrate,90,,,,,,2
 1688,Lady Tany@AL_TELEPORT,idle,26,1,1000,0,30000,yes,self,always,0,,,,,,
 1688,Lady Tany@AL_TELEPORT,attack,26,1,1000,0,30000,yes,self,always,0,,,,,,
-1688,Lady Tanee@NPC_EXPULSION,attack,674,1,1000,1000,10000,no,self,myhpltmaxrate,60,,,,,,
+1688,Lady Tanee@NPC_EXPULSION,attack,674,1,1000,1000,10000,no,target,myhpltmaxrate,60,,,,,,
 1688,Lady Tany@AC_CHARGEARROW,attack,148,1,2000,0,5000,yes,randomtarget,always,0,,,,,,6
 1688,Lady Tany@NPC_COMBOATTACK,attack,171,1,1000,0,5000,no,randomtarget,always,0,,,,,,
 1688,Lady Tany@NPC_CRITICALSLASH,attack,170,1,500,500,5000,no,randomtarget,always,0,,,,,,6
@@ -3649,9 +3649,9 @@
 1708,Thanatos@NPC_CALLSLAVE,idle,352,1,10000,0,60000,yes,self,always,0,,,,,,
 1708,Thanatos@NPC_SUMMONSLAVE,attack,196,6,10000,700,30000,no,self,slavele,0,1711,1710,1709,1712,,
 1708,Thanatos@NPC_SUMMONSLAVE,idle,196,6,10000,700,30000,no,self,slavele,0,1711,1710,1709,1712,,
-1708,Thanatos@NPC_EXPULSION,attack,674,1,1000,1000,10000,no,self,myhpltmaxrate,60,,,,,,
+1708,Thanatos@NPC_EXPULSION,attack,674,1,1000,1000,10000,no,target,myhpltmaxrate,60,,,,,,
 1708,Thanatos@KN_TWOHANDQUICKEN,attack,60,20,3000,0,300000,yes,self,myhpltmaxrate,30,,,,,,2
-1708,Thanatos@KN_BOWLINGBASH,attack,62,10,1000,0,10000,yes,target,always,0,,,,,,
+//1708,Thanatos@KN_BOWLINGBASH,attack,62,10,1000,0,10000,yes,target,always,0,,,,,,
 1708,Thanatos@SM_BASH,attack,5,10,1000,0,5000,yes,target,always,0,,,,,,
 1708,Thanatos@BS_HAMMERFALL,chase,110,11,2000,0,5000,yes,target,always,0,,,,,,
 1708,Thanatos@BS_HAMMERFALL,attack,110,11,2000,0,5000,yes,target,always,0,,,,,,
@@ -4634,7 +4634,7 @@
 1874,Beelzebub@NPC_SHIELDBRAKE,attack,346,10,2000,0,30000,yes,target,always,0,,,,,,
 1874,Beelzebub@NPC_SLOWCAST,attack,672,5,10000,0,30000,yes,self,always,0,,,,,,
 1874,Beelzebub@NPC_MAGICMIRROR,attack,671,1,10000,0,30000,yes,self,always,0,,,,,,
-1874,Beelzebub@NPC_EXPULSION,attack,674,1,50,1000,30000,no,self,always,0,,,,,,
+1874,Beelzebub@NPC_EXPULSION,attack,674,1,50,1000,30000,no,target,always,0,,,,,,
 1874,Beelzebub@NPC_WIDESTONE,attack,666,5,10000,500,15000,no,self,myhpltmaxrate,80,,,,,,
 1874,Beelzebub@NPC_WIDESTONE,chase,666,5,10000,500,15000,no,self,myhpltmaxrate,80,,,,,,
 1874,Beelzebub@LK_SPIRALPIERCE,attack,397,1,2000,500,5000,no,target,always,0,,,,,,

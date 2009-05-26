@@ -37,6 +37,10 @@
 	2385 Recuvative_Armor		Should trigger HP/SP return with magical kills as well.
 
 =======================
+2009/05/26
+	* Some mob_skill_db updates [Playtester]
+	- fixed monsters trying to use Exile on self
+	- removed Bowling Bash from Thanatos (he doesn't use it anymore)
 2009/05/19
 	* Updated item_db and skill_cast_db [Playtester]
 	- fixed Sabbath giving 500 Crit instead of 50 Crit
