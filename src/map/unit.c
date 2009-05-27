@@ -948,7 +948,7 @@ int unit_skilluse_id2(struct block_list *src, int target_id, short skill_num, sh
 			}
 			break;
 		}
-		if (!skill_check_condition(sd, skill_num, skill_lv, 0))
+		if (!skill_check_condition_castbegin(sd, skill_num, skill_lv))
 			return 0;
 	}
 	//TODO: Add type-independant skill_check_condition function.
@@ -1145,7 +1145,7 @@ int unit_skilluse_pos2( struct block_list *src, short skill_x, short skill_y, sh
 	
 	if( sd )
 	{
-		if( skillnotok(skill_num, sd) || !skill_check_condition(sd, skill_num, skill_lv,0) )
+		if( skillnotok(skill_num, sd) || !skill_check_condition_castbegin(sd, skill_num, skill_lv) )
 			return 0;
 	}
 

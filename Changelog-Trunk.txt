@@ -3,6 +3,13 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+09/05/26
+	* skill_check_condition clean up (bugreport:2770, bugreport:2957, bugreport:3010) [Inkfish]
+	- Weapon, SP, HP and state are checked at the beginning of cast.
+	- Required items and ammos are checked at the end of cast.
+	- SP and status change required are removed at the end of cast without checking again.
+	- Required items are removed only if the skill is successfully used.
+	- Autocasts won't check for requirements but will remove them if you have them(except for SP/HP).
 09/05/25
 	* Fixed losing skill list after base change. (bugreport:3106) [Inkfish]
 	* Now we can use 'boss_monster' to summon whatever monsters that need to be radared by Convex Mirror. (bugreport:2653) [Inkfish]

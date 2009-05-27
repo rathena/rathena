@@ -984,6 +984,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 			else
 				tbl = bl;
 
+			skill_consume_requirement(sd,skill,skilllv,2); // Autocasts don't consume sp
 			switch (skill_get_casttype(skill)) {
 				case CAST_GROUND:
 					skill_castend_pos2(src, tbl->x, tbl->y, skill, skilllv, tick, 0);
@@ -1238,6 +1239,7 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 			else
 				tbl = src;
 
+			skill_consume_requirement(sd,skillid,skilllv,2); // Autocasts don't consume sp
 			switch (skill_get_casttype(skillid)) {
 				case CAST_GROUND:
 					skill_castend_pos2(bl, tbl->x, tbl->y, skillid, skilllv, tick, 0);
@@ -2110,7 +2112,7 @@ static int skill_check_condition_mercenary(struct block_list *bl, int skill, int
 	struct status_data *status;
 	struct map_session_data *sd = NULL;
 	int i, j, hp, sp, hp_rate, sp_rate, state, mhp;
-	int itemid[10],amount[ARRAYLENGTH(itemid)],index[ARRAYLENGTH(itemid)];
+	int itemid[MAX_SKILL_ITEM_REQUIRE],amount[ARRAYLENGTH(itemid)],index[ARRAYLENGTH(itemid)];
 
 	if( lv < 1 || lv > MAX_SKILL_LEVEL )
 		return 0;
@@ -3051,6 +3053,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 			battle_consume_ammo(sd, skillid, skilllv);
 		if( !sd->state.skillonskill )
 			skill_onskillusage(sd, bl, skillid, tick);
+		skill_consume_requirement(sd,skillid,skilllv,4);
 	}
 
 	return 0;
@@ -3502,14 +3505,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				clif_skill_nodamage(src,bl,skillid,skilllv,0);
 				break;
 			}
-		}
-		if (sd) {
-			int i = pc_search_inventory (sd, skill_db[skillid].itemid[0]);
-			if(i < 0 || sd->status.inventory[i].amount < skill_db[skillid].amount[0]) {
-				clif_skill_fail(sd,skillid,0,0);
-				break;
-			}
-			pc_delitem(sd, i, skill_db[skillid].amount[0], 0);
 		}
 		// 100% success rate at lv4 & 5, but lasts longer at lv5
 		if(!clif_skill_nodamage(src,bl,skillid,skilllv, sc_start(bl,type,(60+skilllv*10),skilllv, skill_get_time(skillid,skilllv)))) {
@@ -4202,12 +4197,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				// Level 6-10 doesn't consume a red gem if it fails [celest]
 				if (skilllv > 5) break;
 			}
-			if (sd) {
-				if (sd->sc.data[SC_SPIRIT] && sd->sc.data[SC_SPIRIT]->val2 == SL_WIZARD)
-					break; //Do not delete the gemstone.
-				if ((i=pc_search_inventory(sd, skill_db[skillid].itemid[0])) >= 0 )
-					pc_delitem(sd, i, skill_db[skillid].amount[0], 0);
-			}
 		}
 		break;
 
@@ -4467,13 +4456,13 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			{
 				x = skilllv%11 - 1;
 				i = pc_search_inventory(sd,skill_db[skillid].itemid[x]);
-				if( i < 0 || skill_db[skillid].itemid[x] <= 0 )
+				if(i < 0 || skill_db[skillid].itemid[x] <= 0)
 				{
 					clif_skill_fail(sd,skillid,0,0);
 					map_freeblock_unlock();
 					return 1;
 				}
-				if( sd->inventory_data[i] == NULL || sd->status.inventory[i].amount < skill_db[skillid].amount[x] )
+				if(sd->inventory_data[i] == NULL || sd->status.inventory[i].amount < skill_db[skillid].amount[x])
 				{
 					clif_skill_fail(sd,skillid,0,0);
 					map_freeblock_unlock();
@@ -4492,7 +4481,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				potion_hp = potion_sp = potion_per_hp = potion_per_sp = 0;
 				potion_target = bl->id;
 				run_script(sd->inventory_data[i]->script,0,sd->bl.id,0);
-				pc_delitem(sd,i,skill_db[skillid].amount[x],0);
 				potion_flag = potion_target = 0;
 				if( sd->sc.data[SC_SPIRIT] && sd->sc.data[SC_SPIRIT]->val2 == SL_ALCHEMIST )
 					bonus += sd->status.base_level;
@@ -5237,7 +5225,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case CG_TAROTCARD:
 		{
 			int eff, count = -1;
-			if( rand() % 100 > skilllv * 8 || (dstmd && ((dstmd->guardian_data && dstmd->class_ == MOBID_EMPERIUM) || mob_is_battleground(dstmd))) )
+			if( (dstmd && ((dstmd->guardian_data && dstmd->class_ == MOBID_EMPERIUM) || mob_is_battleground(dstmd))) )
 			{
 				if( sd )
 					clif_skill_fail(sd,skillid,0,0);
@@ -5622,6 +5610,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			battle_consume_ammo(sd, skillid, skilllv);
 		if( !sd->state.skillonskill )
 			skill_onskillusage(sd, bl, skillid, tick);
+		skill_consume_requirement(sd,skillid,skilllv,4);
 	}
 
 	map_freeblock_unlock();
@@ -5780,13 +5769,18 @@ int skill_castend_id(int tid, unsigned int tick, int id, intptr data)
 			if (sd) {
 				clif_skill_fail(sd,ud->skillid,0,0);
 				if(battle_config.skill_out_range_consume) //Consume items anyway. [Skotlex]
-					skill_check_condition(sd,ud->skillid, ud->skilllv,1);
+					skill_consume_requirement(sd,ud->skillid,ud->skilllv,7);
 			}
 			break;
 		}
 
-		if( sd && !skill_check_condition(sd, ud->skillid, ud->skilllv,1) )
-			break;
+		if( sd )
+		{
+			if( !skill_check_condition_castend(sd, ud->skillid, ud->skilllv) )
+				break;
+			else
+				skill_consume_requirement(sd,ud->skillid,ud->skilllv,3);
+		}
 
 		if( (src->type == BL_MER || src->type == BL_HOM) && !skill_check_condition_mercenary(src, ud->skillid, ud->skilllv, 1) )
 			break;
@@ -5857,7 +5851,7 @@ int skill_castend_id(int tid, unsigned int tick, int id, intptr data)
 	if (ud->skillid == MO_EXTREMITYFIST && sd && !(sc && sc->data[SC_FOGWALL]))
   	{	//When Asura fails... (except when it fails from Fog of Wall)
 		//Consume SP/spheres
-		skill_check_condition(sd,ud->skillid, ud->skilllv,1);
+		skill_consume_requirement(sd,ud->skillid, ud->skilllv,3);
 		status_set_sp(src, 0, 0);
 		sc = &sd->sc;
 		if (sc->count)
@@ -5885,6 +5879,7 @@ int skill_castend_id(int tid, unsigned int tick, int id, intptr data)
 			clif_skill_fail(sd,ud->skillid,0,0);
 		}
 	}
+
 	ud->skillid = ud->skilllv = ud->skilltarget = 0;
 	ud->canact_tick = tick;
 	//You can't place a skill failed packet here because it would be
@@ -5973,13 +5968,18 @@ int skill_castend_pos(int tid, unsigned int tick, int id, intptr data)
 			if(battle_config.skill_add_range &&
 				!check_distance_blxy(src, ud->skillx, ud->skilly, skill_get_range2(src,ud->skillid,ud->skilllv)+battle_config.skill_add_range)) {
 				if (sd && battle_config.skill_out_range_consume) //Consume items anyway.
-					skill_check_condition(sd,ud->skillid, ud->skilllv,1);
+					skill_consume_requirement(sd,ud->skillid,ud->skilllv,7);
 				break;
 			}
 		}
 
-		if(sd && !skill_check_condition(sd,ud->skillid, ud->skilllv, 1))
-			break;
+		if( sd )
+		{
+			if( !skill_check_condition_castend(sd, ud->skillid, ud->skilllv) )
+				break;
+			else
+				skill_consume_requirement(sd,ud->skillid,ud->skilllv,3);
+		}
 
 		if( (src->type == BL_MER || src->type == BL_HOM) && !skill_check_condition_mercenary(src, ud->skillid, ud->skilllv, 1) )
 			break;
@@ -6017,6 +6017,7 @@ int skill_castend_pos(int tid, unsigned int tick, int id, intptr data)
 			else ud->skillid = 0; //Non mobs can't clear this one as it is used for skill condition 'afterskill'
 			ud->skilllv = ud->skillx = ud->skilly = 0;
 		}
+
 		map_freeblock_unlock();
 		return 1;
 	} while(0);
@@ -6103,6 +6104,24 @@ int skill_castend_pos2(struct block_list* src, int x, int y, int skillid, int sk
 			src->m, x-i, y-i, x+i,y+i,BL_SKILL);
 		break;
 
+	case SA_VOLCANO:
+	case SA_DELUGE:
+	case SA_VIOLENTGALE:
+	{	//Does not consumes if the skill is already active. [Skotlex]
+		struct skill_unit_group *sg;
+		if ((sg= skill_locate_element_field(&sd->bl)) != NULL && ( sg->skill_id == SA_VOLCANO || sg->skill_id == SA_DELUGE || sg->skill_id == SA_VIOLENTGALE ))
+		{
+			if (sg->limit - DIFF_TICK(gettick(), sg->tick) > 0)
+			{
+				skill_unitsetting(src,skillid,skilllv,x,y,0);
+				return 0; // not to consume items
+			}
+			else
+				sg->limit = 0; //Disable it.
+		}
+		skill_unitsetting(src,skillid,skilllv,x,y,0);
+		break;
+	}
 	case MG_SAFETYWALL:
 	case MG_FIREWALL:
 	case MG_THUNDERSTORM:
@@ -6140,9 +6159,6 @@ int skill_castend_pos2(struct block_list* src, int x, int y, int skillid, int sk
 	case WE_CALLBABY:
 	case AC_SHOWER:	//Ground-placed skill implementation.
 	case MA_SHOWER:
-	case SA_VOLCANO:
-	case SA_DELUGE:
-	case SA_VIOLENTGALE:
 	case SA_LANDPROTECTOR:
 	case BD_LULLABY:
 	case BD_RICHMANKIM:
@@ -6240,7 +6256,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, int skillid, int sk
 				(skilllv >= 4) ? sd->status.memo_point[2].map : 0
 			);
 		}
-		break;
+		return 0; // not to consume item.
 
 	case MO_BODYRELOCATION:
 		if (unit_movepos(src, x, y, 1, 1)) {
@@ -6295,7 +6311,6 @@ int skill_castend_pos2(struct block_list* src, int x, int y, int skillid, int sk
 			potion_hp = 0;
 			potion_sp = 0;
 			run_script(sd->inventory_data[j]->script,0,sd->bl.id,0);
-			pc_delitem(sd,j,skill_db[skillid].amount[i],0);
 			potion_flag = 0;
 			//Apply skill bonuses
 			i = pc_checkskill(sd,CR_SLIMPITCHER)*10
@@ -6359,17 +6374,12 @@ int skill_castend_pos2(struct block_list* src, int x, int y, int skillid, int sk
 	// Plant Cultivation [Celest]
 	case CR_CULTIVATION:
 		if (sd) {
-			int i = skilllv - 1;
-			int j = pc_search_inventory(sd,skill_db[skillid].itemid[i]);
-			if(j < 0 || skill_db[skillid].itemid[i] <= 0 || sd->inventory_data[j] == NULL ||
-				sd->status.inventory[j].amount < skill_db[skillid].amount[i] ||
-				map_count_oncell(src->m,x,y,BL_CHAR) > 0
-			) {
+			int i;
+			if( map_count_oncell(src->m,x,y,BL_CHAR) > 0 )
+			{
 				clif_skill_fail(sd,skillid,0,0);
 				return 1;
 			}
-
-			pc_delitem(sd,j,skill_db[skillid].amount[i],0);
 			clif_skill_poseffect(src,skillid,skilllv,x,y,tick);
 			if (rand()%100 < 50) {
 				clif_skill_fail(sd,skillid,0,0);
@@ -6437,9 +6447,9 @@ int skill_castend_pos2(struct block_list* src, int x, int y, int skillid, int sk
 	{
 		if( sd->state.arrow_atk && !(flag&1) ) //Consume arrow if a ground skill was not invoked. [Skotlex]
 			battle_consume_ammo(sd, skillid, skilllv);
-
 		if( !sd->state.skillonskill )
 			skill_onskillusage(sd, NULL, skillid, tick);
+		skill_consume_requirement(sd,skillid,skilllv,4);
 	}
 
 	return 0;
@@ -6550,11 +6560,13 @@ int skill_castend_map (struct map_session_data *sd, short skill_num, const char 
 				return 0;
 			}
 
-			if(!skill_check_condition(sd, sd->menuskill_id, lv,3)) //This checks versus skillid/skilllv...
-			{
+			if(!skill_check_condition_castend(sd, sd->menuskill_id, lv))
+			{  // This checks versus skillid/skilllv...
 				skill_failed(sd);
 				return 0;
 			}
+
+			skill_consume_requirement(sd,sd->menuskill_id,lv,4);
 
 			if((group=skill_unitsetting(&sd->bl,skill_num,lv,wx,wy,0))==NULL) {
 				skill_failed(sd);
@@ -8028,19 +8040,12 @@ int skill_isammotype (struct map_session_data *sd, int skill)
 	);
 }
 
-/*==========================================
- * Checks that you have the requirements for casting a skill.
- * Flag:
- * &1: finished casting the skill (invoke hp/sp/item consumption)
- * &2: picked menu entry (Warp Portal, Teleport and other menu based skills)
- *------------------------------------------*/
-int skill_check_condition(struct map_session_data* sd, short skill, short lv, int type)
+int skill_check_condition_castbegin(struct map_session_data* sd, short skill, short lv)
 {
 	struct status_data *status;
 	struct status_change *sc;
-	int i,j,hp,sp,hp_rate,sp_rate,zeny,weapon,ammo,ammo_qty,state,spiritball,mhp;
-	int itemid[10],amount[10];
-	char item_flag = 2; //0 - no item checking. 1 - only check if you have items. 2 - check and delete
+	struct skill_condition require;
+	int i;
 
 	nullpo_retr(0, sd);
 
@@ -8058,31 +8063,14 @@ int skill_check_condition(struct map_session_data* sd, short skill, short lv, in
 		return 1;
 	}
 
-	status = &sd->battle_status;
-	sc = &sd->sc;
-	if (!sc->count)
-		sc = NULL;
-
 	if(pc_is90overweight(sd)) {
 		clif_skill_fail(sd,skill,9,0);
 		sd->skillitem = sd->skillitemlv = 0;
 		return 0;
 	}
 
-	if (sd->state.abra_flag)
-	{
-		if (sd->skillitem != skill)
-		{	//Cancelled, using a different skill.
-			sd->skillitem = sd->skillitemlv = sd->state.abra_flag = 0;
-		} else {
-			//Abracadabra skill, skip requisites!
-			if(type&1)
-			{	//Clear out the data.
-				sd->skillitem = sd->skillitemlv = sd->state.abra_flag = 0;
-			}
-			return 1;
-		}
-	}
+	if( sd->state.abra_flag && sd->skillitem != skill ) // Cancelled, using a different skill.
+		sd->skillitem = sd->skillitemlv = sd->state.abra_flag = 0;
 
 	if (sd->menuskill_id == AM_PHARMACY &&
 		(skill == AM_PHARMACY || skill == AC_MAKINGARROW || skill == BS_REPAIRWEAPON ||
@@ -8092,8 +8080,13 @@ int skill_check_condition(struct map_session_data* sd, short skill, short lv, in
 		return 0;
 	}
 
+	status = &sd->battle_status;
+	sc = &sd->sc;
+	if( !sc->count )
+		sc = NULL;
+	
 	if(sd->skillitem == skill) {
-		if(!type) //When a target was selected
+		// When a target was selected
 		{	//Consume items that were skipped in pc_use_item [Skotlex]
 			 if((i = sd->itemindex) == -1 ||
 				sd->status.inventory[i].nameid != sd->itemid ||
@@ -8112,98 +8105,16 @@ int skill_check_condition(struct map_session_data* sd, short skill, short lv, in
 			else if( sd->status.inventory[i].expire_time == 0 )
 				pc_delitem(sd,i,1,0); // Rental usable items are not consumed until expiration
 		}
-		if (type&1) //Casting finished
-			sd->skillitem = sd->skillitemlv = 0;
 		return 1;
 	}
 
-	//Code speedup, rather than using skill_get_* over and over again.
-	j = skill_get_index(skill);
-	if( j == 0 ) // invalid skill id
-  		return 0;
 	if( lv < 1 || lv > MAX_SKILL_LEVEL )
 		return 0;
 
-	hp = skill_db[j].hp[lv-1];
-	sp = skill_db[j].sp[lv-1];
-	if((sd->skillid_old == BD_ENCORE) && skill == sd->skillid_dance)
-		sp=sp/2;
-	hp_rate = skill_db[j].hp_rate[lv-1];
-	sp_rate = skill_db[j].sp_rate[lv-1];
-	zeny = skill_db[j].zeny[lv-1];
-
-	weapon = skill_db[j].weapon;
-	ammo = skill_db[j].ammo;
-	ammo_qty = skill_db[j].ammo_qty[lv-1];
-	state = skill_db[j].state;
-
-	spiritball = skill_db[j].spiritball[lv-1];
-	mhp = skill_db[j].mhp[lv-1];
-	for(i = 0; i < 10; i++) {
-		itemid[i] = skill_db[j].itemid[i];
-		amount[i] = skill_db[j].amount[i];
-	}
-	if(mhp > 0 && get_percentage(status->hp, status->max_hp) > mhp) {
-		//mhp is the max-hp-requirement, that is,
-		//you must have this % or less of HP to cast it.
-		clif_skill_fail(sd,skill,2,0);
-		return 0;
-	}
-	if(hp_rate > 0)
-		hp += (status->hp * hp_rate)/100;
-	else
-		hp += (status->max_hp * (-hp_rate))/100;
-	if(sp_rate > 0)
-		sp += (status->sp * sp_rate)/100;
-	else
-		sp += (status->max_sp * (-sp_rate))/100;
-
-	if (weapon && !ammo && skill && skill_isammotype(sd, skill))
-	{	//Assume this skill is using the weapon, therefore it requires arrows.
-		ammo = 0xFFFFFFFF; //Enable use on all ammo types.
-		ammo_qty = 1;
-	}
+	require = skill_get_requirement(sd,skill,lv);
 
 	//Can only update state when weapon/arrow info is checked.
-	if (weapon) sd->state.arrow_atk = ammo?1:0;
-
-	switch(skill) { // Check for cost reductions due to skills & SCs
-		case MC_MAMMONITE:
-			if(pc_checkskill(sd,BS_UNFAIRLYTRICK)>0)
-				zeny -= zeny*10/100;
-			break;
-		case AL_HOLYLIGHT:
-			if(sc && sc->data[SC_SPIRIT] && sc->data[SC_SPIRIT]->val2 == SL_PRIEST)
-				sp *= 5;
-			break;
-		case SL_SMA:
-		case SL_STUN:
-		case SL_STIN:
-		{
-			int kaina_lv = pc_checkskill(sd,SL_KAINA);
-
-			if(kaina_lv==0 || sd->status.base_level<70)
-				break;
-			if(sd->status.base_level>=90)
-				sp -= sp*7*kaina_lv/100;
-			else if(sd->status.base_level>=80)
-				sp -= sp*5*kaina_lv/100;
-			else if(sd->status.base_level>=70)
-				sp -= sp*3*kaina_lv/100;
-		}
-			break;
-		case MO_TRIPLEATTACK:
-		case MO_CHAINCOMBO:
-		case MO_COMBOFINISH:
-		case CH_TIGERFIST:
-		case CH_CHAINCRUSH:
-			if(sc && sc->data[SC_SPIRIT] && sc->data[SC_SPIRIT]->val2 == SL_MONK)
-				sp -= sp*25/100; //FIXME: Need real data. this is a custom value.
-			break;
-	}
-
-	if(sd->dsprate!=100)
-		sp=sp*sd->dsprate/100;
+	if (require.weapon) sd->state.arrow_atk = require.ammo?1:0;
 
 	// perform skill-specific checks (and actions)
 	switch( skill )
@@ -8232,8 +8143,6 @@ int skill_check_condition(struct map_session_data* sd, short skill, short lv, in
 		break;
 
 	case AL_WARP:
-		if(!(type&2)) //Delete the item when the portal has been selected (type&2). [Skotlex]
-			item_flag = 1;
 		if(!battle_config.duel_allow_teleport && sd->duel_group) { // duel restriction [LuzZza]
 			clif_displaymessage(sd->fd, "Duel: Can't use warp in duel.");
 			return 0;
@@ -8247,15 +8156,15 @@ int skill_check_condition(struct map_session_data* sd, short skill, short lv, in
 		break;
 	case MO_FINGEROFFENSIVE:				//指弾
 	case GS_FLING:
-		if (sd->spiritball > 0 && sd->spiritball < spiritball) {
-			spiritball = sd->spiritball;
+		if (sd->spiritball > 0 && sd->spiritball < require.spiritball) {
+			require.spiritball = sd->spiritball;
 			sd->spiritball_old = sd->spiritball;
 		}
-		else sd->spiritball_old = spiritball;
+		else sd->spiritball_old = require.spiritball;
 		break;
 	case MO_BODYRELOCATION:
 		if (sc && sc->data[SC_EXPLOSIONSPIRITS])
-			spiritball = 0;
+			require.spiritball = 0;
 		break;
 	case MO_CHAINCOMBO:
 		if(!sc)
@@ -8283,22 +8192,22 @@ int skill_check_condition(struct map_session_data* sd, short skill, short lv, in
 //		if(sc && sc->data[SC_EXTREMITYFIST]) //To disable Asura during the 5 min skill block uncomment this...
 //			return 0;
 		if(sc && sc->data[SC_BLADESTOP])
-			spiritball--;
+			require.spiritball--;
 		else if (sc && sc->data[SC_COMBO]) {
 			switch(sc->data[SC_COMBO]->val1) {
 				case MO_COMBOFINISH:
-					spiritball = 4;
+					require.spiritball = 4;
 					break;
 				case CH_TIGERFIST:
-					spiritball = 3;
+					require.spiritball = 3;
 					break;
 				case CH_CHAINCRUSH:	//It should consume whatever is left as long as it's at least 1.
-					spiritball = sd->spiritball?sd->spiritball:1;
+					require.spiritball = sd->spiritball?sd->spiritball:1;
 					break;
 				default:
 					return 0;
 			}
-		} else if(!type && !unit_can_move(&sd->bl)) //Check only on begin casting.
+		} else if(!unit_can_move(&sd->bl)) //Check only on begin casting.
 	  	{	//Placed here as ST_MOVE_ENABLE should not apply if rooted or on a combo. [Skotlex]
 			clif_skill_fail(sd,skill,0,0);
 			return 0;
@@ -8371,44 +8280,14 @@ int skill_check_condition(struct map_session_data* sd, short skill, short lv, in
 		break;
 
 	case PR_BENEDICTIO:
-		if (!(type&1))
-		{	//Started casting.
-			if (skill_check_pc_partner(sd, skill, &lv, 1, 0) < 2)
-			{
-				clif_skill_fail(sd,skill,0,0);
-				return 0;
-			}
+		if (skill_check_pc_partner(sd, skill, &lv, 1, 0) < 2)
+		{
+			clif_skill_fail(sd,skill,0,0);
+			return 0;
 		}
-		else
-			//Should I repeat the check? If so, it would be best to only do this on cast-ending. [Skotlex]
-			skill_check_pc_partner(sd, skill, &lv, 1, 1);
 		break;
 
-	case AM_CANNIBALIZE:
-	case AM_SPHEREMINE:
-		if(type&1){
-			int c=0;
-			int summons[5] = { 1589, 1579, 1575, 1555, 1590 };
-			//int summons[5] = { 1020, 1068, 1118, 1500, 1368 };
-			int maxcount = (skill==AM_CANNIBALIZE)? 6-lv : skill_get_maxcount(skill,lv);
-			int mob_class = (skill==AM_CANNIBALIZE)? summons[lv-1] :1142;
-			if(battle_config.land_skill_limit && maxcount>0 && (battle_config.land_skill_limit&BL_PC)) {
-				i = map_foreachinmap(skill_check_condition_mob_master_sub ,sd->bl.m, BL_MOB, sd->bl.id, mob_class, skill, &c);
-				if(c >= maxcount ||
-					(skill==AM_CANNIBALIZE && c != i && battle_config.summon_flora&2))
-				{	//Fails when: exceed max limit. There are other plant types already out.
-					clif_skill_fail(sd,skill,0,0);
-					return 0;
-				}
-			}
-		}
-		break;
-	case WZ_FIREPILLAR: // celest
-		if (lv <= 5)	// no gems required at level 1-5
-			itemid[0] = 0;
-		break;
 	case SL_SMA:
-		if(type) break; //Only do the combo check when the target is selected (type == 0)
 		if(!(sc && sc->data[SC_SMA]))
 			return 0;
 		break;
@@ -8417,35 +8296,7 @@ int skill_check_condition(struct map_session_data* sd, short skill, short lv, in
 		if(!(sc && sc->data[SC_COMBO] && sc->data[SC_COMBO]->val1 == skill))
 			return 0;
 		break;
-	case AM_BERSERKPITCHER:
-	case AM_POTIONPITCHER:
-	case CR_SLIMPITCHER:
-	case MG_STONECURSE:
-	case CR_CULTIVATION:
-	case SA_FLAMELAUNCHER:
-	case SA_FROSTWEAPON:
-	case SA_LIGHTNINGLOADER:
-	case SA_SEISMICWEAPON:
-		item_flag = 1;
-		break;
-	case SA_DELUGE:
-	case SA_VOLCANO:
-	case SA_VIOLENTGALE:
-	{	//Does not consumes if the skill is already active. [Skotlex]
-		struct skill_unit_group *sg;
-		if ((sg= skill_locate_element_field(&sd->bl)) != NULL &&
-		(
-			sg->skill_id == SA_VOLCANO ||
-			sg->skill_id == SA_DELUGE ||
-			sg->skill_id == SA_VIOLENTGALE
-		)) {
-			if (sg->limit - DIFF_TICK(gettick(), sg->tick) > 0)
-				item_flag = 0;
-			else
-				sg->limit = 0; //Disable it.
-		}
-		break;
-	}
+
 	case CG_HERMODE:
 		if(!npc_check_areanpc(1,sd->bl.m,sd->bl.x,sd->bl.y,skill_get_splash(skill, lv)))
 		{
@@ -8514,12 +8365,12 @@ int skill_check_condition(struct map_session_data* sd, short skill, short lv, in
 			break;
 		//Auron insists we should implement SP consumption when you are not Soul Linked. [Skotlex]
 		//Only invoke on skill begin cast (instant cast skill). [Kevin]
-		if(sp>0 && !type)
+		if(require.sp>0)
 		{
-			if (status->sp < (unsigned int)sp)
+			if (status->sp < (unsigned int)require.sp)
 				clif_skill_fail(sd,skill,1,0);
 			else
-				status_zap(&sd->bl, 0, sp);
+				status_zap(&sd->bl, 0, require.sp);
 		}
 		return 0;
 	case GD_BATTLEORDER:
@@ -8555,11 +8406,10 @@ int skill_check_condition(struct map_session_data* sd, short skill, short lv, in
 		break;
 
 	case NJ_ZENYNAGE:
-		if(sd->status.zeny < zeny) {
+		if(sd->status.zeny < require.zeny) {
 			clif_skill_fail(sd,skill,5,0);
 			return 0;
 		}
-		zeny = 0; //Zeny is reduced on skill_attack.
 		break;
 	case PF_HPCONVERSION:
 		if (status->sp == status->max_sp)
@@ -8570,8 +8420,6 @@ int skill_check_condition(struct map_session_data* sd, short skill, short lv, in
 			clif_skill_fail(sd,skill,0,0);
 			return 0;
 		}
-		if (sd->status.hom_id) //Don't delete items when hom is already out.
-			item_flag = 0;
 		break;
 	case AM_REST: //Can't vapo homun if you don't have an active homunc or it's hp is < 80%
 		if (!merc_is_hom_active(sd->hd) || sd->hd->battle_status.hp < (sd->hd->battle_status.max_hp*80/100))
@@ -8582,47 +8430,7 @@ int skill_check_condition(struct map_session_data* sd, short skill, short lv, in
 		break;
 	}
 
-	if(!(type&2)){
-		if( hp>0 && status->hp <= (unsigned int)hp) {				/* HPチェック */
-			clif_skill_fail(sd,skill,2,0);		/* HP不足：失敗通知 */
-			return 0;
-		}
-		if( sp>0 && status->sp < (unsigned int)sp) {				/* SPチェック */
-			clif_skill_fail(sd,skill,1,0);		/* SP不足：失敗通知 */
-			return 0;
-		}
-		if(zeny>0 && sd->status.zeny < zeny) {
-			clif_skill_fail(sd,skill,5,0);
-			return 0;
-		}
-
-		if(weapon && !pc_check_weapontype(sd,weapon)) {
-			clif_skill_fail(sd,skill,6,0);
-			return 0;
-		}
-		if(ammo) { //Skill requires stuff equipped in the arrow slot.
-			if((i=sd->equip_index[EQI_AMMO]) < 0 ||
-				!sd->inventory_data[i] ||
-				sd->status.inventory[i].amount < ammo_qty
-			) {
-				clif_arrow_fail(sd,0);
-				return 0;
-			}
-			if (!(ammo&1<<sd->inventory_data[i]->look))
-			{	//Ammo type check. Send the "wrong weapon type" message
-				//which is the closest we have to wrong ammo type. [Skotlex]
-				clif_arrow_fail(sd,0); //Haplo suggested we just send the equip-arrows message instead. [Skotlex]
-				//clif_skill_fail(sd,skill,6,0);
-				return 0;
-			}
-		}
-		if( spiritball > 0 && sd->spiritball < spiritball) {
-			clif_skill_fail(sd,skill,0,0);
-			return 0;
-		}
-	}
-
-	switch(state) {
+	switch(require.state) {
 	case ST_HIDING:
 		if(!(sc && sc->option&OPTION_HIDE)) {
 			clif_skill_fail(sd,skill,0,0);
@@ -8706,75 +8514,350 @@ int skill_check_condition(struct map_session_data* sd, short skill, short lv, in
 		return 0;
 	}
 
-	if(!(type&1))
-		return 1; // consumption only happens on cast-end
+	if(require.mhp > 0 && get_percentage(status->hp, status->max_hp) > require.mhp) {
+		//mhp is the max-hp-requirement, that is,
+		//you must have this % or less of HP to cast it.
+		clif_skill_fail(sd,skill,2,0);
+		return 0;
+	}
 
-	if( item_flag )
+	if( require.weapon && !pc_check_weapontype(sd,require.weapon) ) {
+		clif_skill_fail(sd,skill,6,0);
+		return 0;
+	}
+
+	if( require.hp > 0 && status->hp <= (unsigned int)require.hp) {
+		clif_skill_fail(sd,skill,2,0);
+		return 0;
+	}
+
+	if( require.sp > 0 && status->sp < (unsigned int)require.sp) {
+		clif_skill_fail(sd,skill,1,0);
+		return 0;
+	}
+
+	if( require.zeny > 0 && sd->status.zeny < require.zeny ) {
+		clif_skill_fail(sd,skill,5,0);
+		return 0;
+	}
+
+	if( require.spiritball > 0 && sd->spiritball < require.spiritball) {
+		clif_skill_fail(sd,skill,0,0);
+		return 0;
+	}
+
+	return 1;
+}
+
+int skill_check_condition_castend(struct map_session_data* sd, short skill, short lv)
+{
+	struct skill_condition require;
+	int i;
+	int index[MAX_SKILL_ITEM_REQUIRE];
+
+	nullpo_retr(0, sd);
+
+	if( lv <= 0 || sd->chatID )
+		return 0;
+
+	if( battle_config.gm_skilluncond && pc_isGM(sd) >= battle_config.gm_skilluncond && sd->skillitem != skill )
+	{	//GMs don't override the skillItem check, otherwise they can use items without them being consumed! [Skotlex]
+		sd->skillitem = sd->skillitemlv = 0;
+		//Need to do arrow state check.
+		sd->state.arrow_atk = skill_get_ammotype(skill)?1:0; 
+		//Need to do Spiritball check.
+		sd->spiritball_old = sd->spiritball;
+		return 1;
+	}
+
+	if( pc_is90overweight(sd) )
 	{
-		int index[ARRAYLENGTH(itemid)];
+		clif_skill_fail(sd,skill,9,0);
+		sd->skillitem = sd->skillitemlv = 0;
+		return 0;
+	}
 
-		// Check consumed items and reduce required amounts
-		for( i = 0; i < ARRAYLENGTH(itemid); ++i )
+	if( sd->state.abra_flag )
+	{ // Abracadabra skill, skip requisites!	
+		sd->skillitem = sd->skillitemlv = sd->state.abra_flag = 0;
+		return 1;
+	}
+
+	if( sd->menuskill_id == AM_PHARMACY )
+	{ // Cast start or cast end??
+		switch( skill )
 		{
-			index[i] = -1;
-			if( itemid[i] <= 0 )
-				continue;// no item
-			if( itemid_isgemstone(itemid[i]) && skill != HW_GANBANTEIN )
-			{
-				if( sd->special_state.no_gemstone )
-				{	//Make it substract 1 gem rather than skipping the cost.
-					if( --amount[i] < 1 )
-						continue;
-				}
-				if(sc && sc->data[SC_INTOABYSS])
-				{
-					if( skill != SA_ABRACADABRA )
-						continue;
-					else if( --amount[i] < 1 )
-						amount[i] = 1; // Hocus Pocus allways use at least 1 gem
-				}
-			}
+		case AM_PHARMACY:
+		case AC_MAKINGARROW:
+		case BS_REPAIRWEAPON:
+		case AM_TWILIGHT1:
+		case AM_TWILIGHT2:
+		case AM_TWILIGHT3:
+			sd->skillitem = sd->skillitemlv = 0;
+			return 0;
+		}
+	}
+	
+	if( sd->skillitem == skill )
+	{ // Casting finished
+		sd->skillitem = sd->skillitemlv = 0;
+		return 1;
+	}
 
-			if((skill == AM_POTIONPITCHER ||
-				skill == CR_SLIMPITCHER ||
-				skill == CR_CULTIVATION) && i != lv%11 - 1)//TODO huh? what is this for? [FlavioJS] //These itemsdo not need a check versus ALL their item requirements, but only versus the item in the same slot position (eg: lv1 requires only item[0], lv5 requires only item[4]) [Skotlex]
-				continue;
-
-			index[i] = pc_search_inventory(sd,itemid[i]);
-			if(index[i] < 0 || sd->status.inventory[index[i]].amount < amount[i]) {
-				if( itemid[i] == ITEMID_RED_GEMSTONE )
-					clif_skill_fail(sd,skill,7,0);// red gemstone required
-				else if( itemid[i] == ITEMID_BLUE_GEMSTONE )
-					clif_skill_fail(sd,skill,8,0);// blue gemstone required
-				else
-					clif_skill_fail(sd,skill,0,0);
+	// perform skill-specific checks (and actions)
+	switch( skill )
+	{
+	case PR_BENEDICTIO:
+		skill_check_pc_partner(sd, skill, &lv, 1, 1);
+		break;
+	case AM_CANNIBALIZE:
+	case AM_SPHEREMINE:
+	{
+		int c=0;
+		int summons[5] = { 1589, 1579, 1575, 1555, 1590 };
+		//int summons[5] = { 1020, 1068, 1118, 1500, 1368 };
+		int maxcount = (skill==AM_CANNIBALIZE)? 6-lv : skill_get_maxcount(skill,lv);
+		int mob_class = (skill==AM_CANNIBALIZE)? summons[lv-1] :1142;
+		if(battle_config.land_skill_limit && maxcount>0 && (battle_config.land_skill_limit&BL_PC)) {
+			i = map_foreachinmap(skill_check_condition_mob_master_sub ,sd->bl.m, BL_MOB, sd->bl.id, mob_class, skill, &c);
+			if(c >= maxcount ||
+				(skill==AM_CANNIBALIZE && c != i && battle_config.summon_flora&2))
+			{	//Fails when: exceed max limit. There are other plant types already out.
+				clif_skill_fail(sd,skill,0,0);
 				return 0;
 			}
-			if( itemid_isgemstone(itemid[i]) && skill != HW_GANBANTEIN &&
-				sc && sc->data[SC_SPIRIT] && sc->data[SC_SPIRIT]->val2 == SL_WIZARD)
-				index[i] = -1; //Gemstones are checked, but not substracted from inventory.
 		}
-
-		// Consume items
-		if (item_flag==2)
-		for( i = 0; i < ARRAYLENGTH(itemid); ++i )
+		break;
+	}
+	case CG_TAROTCARD:
+		if( rand() % 100 > lv * 8 )
 		{
-			if(index[i] >= 0)
-				pc_delitem(sd,index[i],amount[i],0);
+			if( sd )
+				clif_skill_fail(sd,skill,0,0);
+			return 0;
+		}
+		break;
+	}
+
+	require = skill_get_requirement(sd,skill,lv);
+
+	if( require.ammo ) { //Skill requires stuff equipped in the arrow slot.
+		if((i=sd->equip_index[EQI_AMMO]) < 0 ||
+			!sd->inventory_data[i] ||
+			sd->status.inventory[i].amount < require.ammo_qty
+		) {
+			clif_arrow_fail(sd,0);
+			return 0;
+		}
+		if (!(require.ammo&1<<sd->inventory_data[i]->look))
+		{	//Ammo type check. Send the "wrong weapon type" message
+			//which is the closest we have to wrong ammo type. [Skotlex]
+			clif_arrow_fail(sd,0); //Haplo suggested we just send the equip-arrows message instead. [Skotlex]
+			//clif_skill_fail(sd,skill,6,0);
+			return 0;
 		}
 	}
 
-	if(type&2)
-		return 1;
-
-	if(sp || hp)
-		status_zap(&sd->bl, hp, sp);
-	if(zeny > 0)					// Zeny消費
-		pc_payzeny(sd,zeny);
-	if(spiritball > 0)
-		pc_delspiritball(sd,spiritball,0);
+	for( i = 0; i < MAX_SKILL_ITEM_REQUIRE; ++i )
+	{
+		index[i] = pc_search_inventory(sd,require.itemid[i]);
+		if( index[i] < 0 || sd->status.inventory[index[i]].amount < require.amount[i] ) {
+			if( require.itemid[i] == ITEMID_RED_GEMSTONE )
+				clif_skill_fail(sd,skill,7,0);// red gemstone required
+			else if( require.itemid[i] == ITEMID_BLUE_GEMSTONE )
+				clif_skill_fail(sd,skill,8,0);// blue gemstone required
+			else
+				clif_skill_fail(sd,skill,0,0);
+			return 0;
+		}
+	}
 
 	return 1;
+}
+
+int skill_consume_requirement( struct map_session_data *sd, short skill, short lv, short type)
+{
+	int n,i;
+	struct skill_condition req;
+
+	nullpo_retr(0, sd);
+
+	req = skill_get_requirement(sd,skill,lv);
+
+	if( type&1 )
+	{
+		if(req.hp || req.sp)
+			status_zap(&sd->bl, req.hp, req.sp);
+	}
+
+	if( type&2 )
+	{
+		if(req.spiritball > 0)
+			pc_delspiritball(sd,req.spiritball,0);
+
+		if(req.zeny > 0)
+		{
+			if( skill == NJ_ZENYNAGE )
+				req.zeny = 0; //Zeny is reduced on skill_attack.
+			if( sd->status.zeny < req.zeny )
+				req.zeny = sd->status.zeny;
+			pc_payzeny(sd,req.zeny);
+		}
+	}
+
+	if( type&4 )
+	{
+		struct status_change *sc = &sd->sc;
+
+		if( !sc->count )
+			sc = NULL;
+
+		for( i = 0; i < MAX_SKILL_ITEM_REQUIRE; ++i )
+		{
+			if( itemid_isgemstone(req.itemid[i]) && skill != HW_GANBANTEIN && sc && sc->data[SC_SPIRIT] && sc->data[SC_SPIRIT]->val2 == SL_WIZARD )
+				continue; //Gemstones are checked, but not substracted from inventory.
+
+			if( (n = pc_search_inventory(sd,req.itemid[i])) >= 0 )
+				pc_delitem(sd,n,req.amount[i],0);
+		}
+	}
+
+	return 1;
+}
+
+struct skill_condition skill_get_requirement(struct map_session_data* sd, short skill, short lv)
+{
+	struct skill_condition req;
+	struct status_data *status;
+	struct status_change *sc;
+	int i,j,hp_rate,sp_rate;
+
+	memset(&req,0,sizeof(req));
+
+	if( !sd )
+		return req;
+	j = skill_get_index(skill);
+	if( j == 0 ) // invalid skill id
+  		return req;
+	if( lv < 1 || lv > MAX_SKILL_LEVEL )
+		return req;
+
+	status = &sd->battle_status;
+	sc = &sd->sc;
+	if( !sc->count )
+		sc = NULL;
+
+	req.hp = skill_db[j].hp[lv-1];
+	hp_rate = skill_db[j].hp_rate[lv-1];
+	if(hp_rate > 0)
+		req.hp += (status->hp * hp_rate)/100;
+	else
+		req.hp += (status->max_hp * (-hp_rate))/100;
+
+	req.sp = skill_db[j].sp[lv];
+	if((sd->skillid_old == BD_ENCORE) && skill == sd->skillid_dance)
+		req.sp /= 2;
+	sp_rate = skill_db[j].sp_rate[lv-1];
+	if(sp_rate > 0)
+		req.sp += (status->sp * sp_rate)/100;
+	else
+		req.sp += (status->max_sp * (-sp_rate))/100;
+	if( sd->dsprate!=100 )
+		req.sp = req.sp * sd->dsprate / 100;
+
+	req.zeny = skill_db[j].zeny[lv-1];
+
+	req.spiritball = skill_db[j].spiritball[lv-1];
+
+	req.state = skill_db[j].state;
+
+	req.mhp = skill_db[j].mhp[lv-1];
+
+	req.weapon = skill_db[j].weapon;
+
+	req.ammo = skill_db[j].ammo;
+	req.ammo_qty = skill_db[j].ammo_qty[lv-1];
+	if (req.weapon && !req.ammo && skill && skill_isammotype(sd, skill))
+	{	//Assume this skill is using the weapon, therefore it requires arrows.
+		req.ammo = 0xFFFFFFFF; //Enable use on all ammo types.
+		req.ammo_qty = 1;
+	}
+
+	for( i = 0; i < MAX_SKILL_ITEM_REQUIRE; i++ )
+	{
+		if( (skill == AM_POTIONPITCHER || skill == CR_SLIMPITCHER || skill == CR_CULTIVATION) && i != lv%11 - 1 )
+			continue;
+
+		switch( skill )
+		{
+		case AM_CALLHOMUN:
+			if (sd->status.hom_id) //Don't delete items when hom is already out.
+				continue;
+			break;
+		case WZ_FIREPILLAR: // celest
+			if (lv <= 5)	// no gems required at level 1-5
+				continue;
+			break;
+		}
+
+		req.itemid[i] = skill_db[j].itemid[i];
+		req.amount[i] = skill_db[j].amount[i];
+
+		if( itemid_isgemstone(req.itemid[i]) && skill != HW_GANBANTEIN )
+		{
+			if( sd->special_state.no_gemstone )
+			{	//Make it substract 1 gem rather than skipping the cost.
+				if( --req.amount[i] < 1 )
+					continue;
+			}
+			if(sc && sc->data[SC_INTOABYSS])
+			{
+				if( skill != SA_ABRACADABRA )
+					continue;
+				else if( --req.amount[i] < 1 )
+					req.amount[i] = 1; // Hocus Pocus allways use at least 1 gem
+			}
+		}
+	}
+
+	// Check for cost reductions due to skills & SCs
+	switch(skill) {
+		case MC_MAMMONITE:
+			if(pc_checkskill(sd,BS_UNFAIRLYTRICK)>0)
+				req.zeny -= req.zeny*10/100;
+			break;
+		case AL_HOLYLIGHT:
+			if(sc && sc->data[SC_SPIRIT] && sc->data[SC_SPIRIT]->val2 == SL_PRIEST)
+				req.sp *= 5;
+			break;
+		case SL_SMA:
+		case SL_STUN:
+		case SL_STIN:
+		{
+			int kaina_lv = pc_checkskill(sd,SL_KAINA);
+
+			if(kaina_lv==0 || sd->status.base_level<70)
+				break;
+			if(sd->status.base_level>=90)
+				req.sp -= req.sp*7*kaina_lv/100;
+			else if(sd->status.base_level>=80)
+				req.sp -= req.sp*5*kaina_lv/100;
+			else if(sd->status.base_level>=70)
+				req.sp -= req.sp*3*kaina_lv/100;
+		}
+			break;
+		case MO_TRIPLEATTACK:
+		case MO_CHAINCOMBO:
+		case MO_COMBOFINISH:
+		case CH_TIGERFIST:
+		case CH_CHAINCRUSH:
+			if(sc && sc->data[SC_SPIRIT] && sc->data[SC_SPIRIT]->val2 == SL_MONK)
+				req.sp -= req.sp*25/100; //FIXME: Need real data. this is a custom value.
+			break;
+
+	}
+	
+	return req;
 }
 
 /*==========================================
@@ -11504,7 +11587,7 @@ static bool skill_parse_row_requiredb(char* split[], int columns, int current)
 	else skill_db[i].state = ST_NONE;
 
 	skill_split_atoi(split[11],skill_db[i].spiritball);
-	for( j = 0; j < 10; j++ ) {
+	for( j = 0; j < MAX_SKILL_ITEM_REQUIRE; j++ ) {
 		skill_db[i].itemid[j] = atoi(split[12+ 2*j]);
 		skill_db[i].amount[j] = atoi(split[13+ 2*j]);
 	}

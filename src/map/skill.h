@@ -68,6 +68,12 @@ struct status_change_entry;
 #define SD_SPLASH    0x4000 // skill_area_sub will count targets in skill_area_temp[2]
 #define SD_PREAMBLE  0x8000 // skill_area_sub will transmit a 'magic' damage packet (-30000 dmg) for the first target selected
 
+#define MAX_SKILL_ITEM_REQUIRE	10
+struct skill_condition {
+	int weapon,ammo,ammo_qty,hp,sp,zeny,spiritball,mhp,state;
+	int itemid[MAX_SKILL_ITEM_REQUIRE],amount[MAX_SKILL_ITEM_REQUIRE];
+};
+
 // スキルデ?タベ?ス
 struct s_skill_db {
 	char name[NAME_LENGTH];
@@ -81,7 +87,7 @@ struct s_skill_db {
 	int blewcount[MAX_SKILL_LEVEL];
 	int hp[MAX_SKILL_LEVEL],sp[MAX_SKILL_LEVEL],mhp[MAX_SKILL_LEVEL],hp_rate[MAX_SKILL_LEVEL],sp_rate[MAX_SKILL_LEVEL],zeny[MAX_SKILL_LEVEL];
 	int weapon,ammo,ammo_qty[MAX_SKILL_LEVEL],state,spiritball[MAX_SKILL_LEVEL];
-	int itemid[10],amount[10];
+	int itemid[MAX_SKILL_ITEM_REQUIRE],amount[MAX_SKILL_ITEM_REQUIRE];
 	int castnodex[MAX_SKILL_LEVEL], delaynodex[MAX_SKILL_LEVEL];
 	int nocast;
 	int unit_id[2];
@@ -281,7 +287,13 @@ int skill_unit_ondamaged(struct skill_unit *src,struct block_list *bl,int damage
 int skill_castfix( struct block_list *bl, int skill_id, int skill_lv);
 int skill_castfix_sc( struct block_list *bl, int time);
 int skill_delayfix( struct block_list *bl, int skill_id, int skill_lv);
-int skill_check_condition( struct map_session_data *sd, short skill, short lv, int type);
+
+// Skill conditions check and remove [Inkfish]
+int skill_check_condition_castbegin(struct map_session_data *sd, short skill, short lv);
+int skill_check_condition_castend(struct map_session_data *sd, short skill, short lv);
+int skill_consume_requirement(struct map_session_data *sd, short skill, short lv, short type);
+struct skill_condition skill_get_requirement(struct map_session_data *sd, short skill, short lv);
+
 int skill_check_pc_partner(struct map_session_data *sd, short skill_id, short* skill_lv, int range, int cast_flag);
 // -- moonsoul	(added skill_check_unit_cell)
 int skill_check_unit_cell(int skillid,int m,int x,int y,int unit_id);
