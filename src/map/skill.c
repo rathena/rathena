@@ -8686,6 +8686,8 @@ int skill_consume_requirement( struct map_session_data *sd, short skill, short l
 
 	if( type&1 )
 	{
+		if( skill == CG_TAROTCARD )
+			req.sp = 0; // sp will be consumed in skill_cast_nodamage_id [Inkfish]
 		if(req.hp || req.sp)
 			status_zap(&sd->bl, req.hp, req.sp);
 	}
@@ -8822,9 +8824,6 @@ struct skill_condition skill_get_requirement(struct map_session_data* sd, short 
 
 	// Check for cost reductions due to skills & SCs
 	switch(skill) {
-		case CG_TAROTCARD:
-			req.sp = 0; // sp will be consumed in skill_cast_nodamage_id [Inkfish]
-			break;
 		case MC_MAMMONITE:
 			if(pc_checkskill(sd,BS_UNFAIRLYTRICK)>0)
 				req.zeny -= req.zeny*10/100;
