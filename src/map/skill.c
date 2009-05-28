@@ -4195,7 +4195,11 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			else if(sd) {
 				clif_skill_fail(sd,skillid,0,0);
 				// Level 6-10 doesn't consume a red gem if it fails [celest]
-				if (skilllv > 5) break;
+				if (skilllv > 5)
+				{ // not to consume items
+					map_freeblock_unlock();
+					return 0;
+				}
 			}
 		}
 		break;
@@ -5225,7 +5229,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case CG_TAROTCARD:
 		{
 			int eff, count = -1;
-			if( (dstmd && ((dstmd->guardian_data && dstmd->class_ == MOBID_EMPERIUM) || mob_is_battleground(dstmd))) )
+			if( rand() % 100 > skilllv * 8 || (dstmd && ((dstmd->guardian_data && dstmd->class_ == MOBID_EMPERIUM) || mob_is_battleground(dstmd))) )
 			{
 				if( sd )
 					clif_skill_fail(sd,skillid,0,0);
@@ -5233,6 +5237,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				map_freeblock_unlock();
 				return 0;
 			}
+			status_zap(src,0,skill_db[skill_get_index(skillid)].sp[skilllv]); // consume sp only if succeeded [Inkfish]
 			do {
 				eff = rand() % 14;
 				clif_specialeffect(bl, 523 + eff, AREA);
@@ -8526,11 +8531,6 @@ int skill_check_condition_castbegin(struct map_session_data* sd, short skill, sh
 		return 0;
 	}
 
-	if( require.hp > 0 && status->hp <= (unsigned int)require.hp) {
-		clif_skill_fail(sd,skill,2,0);
-		return 0;
-	}
-
 	if( require.sp > 0 && status->sp < (unsigned int)require.sp) {
 		clif_skill_fail(sd,skill,1,0);
 		return 0;
@@ -8552,6 +8552,7 @@ int skill_check_condition_castbegin(struct map_session_data* sd, short skill, sh
 int skill_check_condition_castend(struct map_session_data* sd, short skill, short lv)
 {
 	struct skill_condition require;
+	struct status_data *status;
 	int i;
 	int index[MAX_SKILL_ITEM_REQUIRE];
 
@@ -8629,17 +8630,16 @@ int skill_check_condition_castend(struct map_session_data* sd, short skill, shor
 		}
 		break;
 	}
-	case CG_TAROTCARD:
-		if( rand() % 100 > lv * 8 )
-		{
-			if( sd )
-				clif_skill_fail(sd,skill,0,0);
-			return 0;
-		}
-		break;
 	}
 
+	status = &sd->battle_status;
+
 	require = skill_get_requirement(sd,skill,lv);
+
+	if( require.hp > 0 && status->hp <= (unsigned int)require.hp) {
+		clif_skill_fail(sd,skill,2,0);
+		return 0;
+	}
 
 	if( require.ammo ) { //Skill requires stuff equipped in the arrow slot.
 		if((i=sd->equip_index[EQI_AMMO]) < 0 ||
@@ -8822,6 +8822,9 @@ struct skill_condition skill_get_requirement(struct map_session_data* sd, short 
 
 	// Check for cost reductions due to skills & SCs
 	switch(skill) {
+		case CG_TAROTCARD:
+			req.sp = 0; // sp will be consumed in skill_cast_nodamage_id [Inkfish]
+			break;
 		case MC_MAMMONITE:
 			if(pc_checkskill(sd,BS_UNFAIRLYTRICK)>0)
 				req.zeny -= req.zeny*10/100;
