@@ -8159,17 +8159,12 @@ int skill_check_condition_castbegin(struct map_session_data* sd, short skill, sh
 			return 0;
 		}
 		break;
-	case MO_FINGEROFFENSIVE:				//指弾
+	case MO_FINGEROFFENSIVE:
 	case GS_FLING:
-		if (sd->spiritball > 0 && sd->spiritball < require.spiritball) {
-			require.spiritball = sd->spiritball;
-			sd->spiritball_old = sd->spiritball;
-		}
-		else sd->spiritball_old = require.spiritball;
-		break;
-	case MO_BODYRELOCATION:
-		if (sc && sc->data[SC_EXPLOSIONSPIRITS])
-			require.spiritball = 0;
+		if( sd->spiritball > 0 && sd->spiritball < require.spiritball )
+			sd->spiritball_old = require.spiritball = sd->spiritball;
+		else
+			sd->spiritball_old = require.spiritball;
 		break;
 	case MO_CHAINCOMBO:
 		if(!sc)
@@ -8196,23 +8191,20 @@ int skill_check_condition_castbegin(struct map_session_data* sd, short skill, sh
 	case MO_EXTREMITYFIST:
 //		if(sc && sc->data[SC_EXTREMITYFIST]) //To disable Asura during the 5 min skill block uncomment this...
 //			return 0;
-		if(sc && sc->data[SC_BLADESTOP])
-			require.spiritball--;
-		else if (sc && sc->data[SC_COMBO]) {
+		if( sc && sc->data[SC_BLADESTOP] )
+			break;
+		if( sc && sc->data[SC_COMBO] )
+		{
 			switch(sc->data[SC_COMBO]->val1) {
 				case MO_COMBOFINISH:
-					require.spiritball = 4;
-					break;
 				case CH_TIGERFIST:
-					require.spiritball = 3;
-					break;
-				case CH_CHAINCRUSH:	//It should consume whatever is left as long as it's at least 1.
-					require.spiritball = sd->spiritball?sd->spiritball:1;
+				case CH_CHAINCRUSH:
 					break;
 				default:
 					return 0;
 			}
-		} else if(!unit_can_move(&sd->bl)) //Check only on begin casting.
+		}
+		if( !unit_can_move(&sd->bl) )
 	  	{	//Placed here as ST_MOVE_ENABLE should not apply if rooted or on a combo. [Skotlex]
 			clif_skill_fail(sd,skill,0,0);
 			return 0;
@@ -8370,7 +8362,7 @@ int skill_check_condition_castbegin(struct map_session_data* sd, short skill, sh
 			break;
 		//Auron insists we should implement SP consumption when you are not Soul Linked. [Skotlex]
 		//Only invoke on skill begin cast (instant cast skill). [Kevin]
-		if(require.sp>0)
+		if( require.sp > 0 )
 		{
 			if (status->sp < (unsigned int)require.sp)
 				clif_skill_fail(sd,skill,1,0);
@@ -8660,6 +8652,8 @@ int skill_check_condition_castend(struct map_session_data* sd, short skill, shor
 
 	for( i = 0; i < MAX_SKILL_ITEM_REQUIRE; ++i )
 	{
+		if( !require.itemid[i] )
+			continue;
 		index[i] = pc_search_inventory(sd,require.itemid[i]);
 		if( index[i] < 0 || sd->status.inventory[index[i]].amount < require.amount[i] ) {
 			if( require.itemid[i] == ITEMID_RED_GEMSTONE )
@@ -8716,6 +8710,9 @@ int skill_consume_requirement( struct map_session_data *sd, short skill, short l
 
 		for( i = 0; i < MAX_SKILL_ITEM_REQUIRE; ++i )
 		{
+			if( !req.itemid[i] )
+				continue;
+
 			if( itemid_isgemstone(req.itemid[i]) && skill != HW_GANBANTEIN && sc && sc->data[SC_SPIRIT] && sc->data[SC_SPIRIT]->val2 == SL_WIZARD )
 				continue; //Gemstones are checked, but not substracted from inventory.
 
@@ -8856,7 +8853,32 @@ struct skill_condition skill_get_requirement(struct map_session_data* sd, short 
 			if(sc && sc->data[SC_SPIRIT] && sc->data[SC_SPIRIT]->val2 == SL_MONK)
 				req.sp -= req.sp*25/100; //FIXME: Need real data. this is a custom value.
 			break;
-
+		case MO_BODYRELOCATION:
+			if( sc && sc->data[SC_EXPLOSIONSPIRITS] )
+				req.spiritball = 0;
+			break;
+		case MO_EXTREMITYFIST:
+			if( sc )
+			{
+				if( sc->data[SC_BLADESTOP] )
+					req.spiritball--;
+				else if( sc->data[SC_COMBO] )
+				{
+					switch( sc->data[SC_COMBO]->val1 )
+					{
+						case MO_COMBOFINISH:
+							req.spiritball = 4;
+							break;
+						case CH_TIGERFIST:
+							req.spiritball = 3;
+							break;
+						case CH_CHAINCRUSH:	//It should consume whatever is left as long as it's at least 1.
+							req.spiritball = sd->spiritball?sd->spiritball:1;
+							break;
+					}
+				}
+			}
+			break;
 	}
 	
 	return req;

@@ -3,10 +3,14 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+09/05/29
+	* Some more fixes to skill condition issues. [Inkfish]
+	- Fixed skills fail when MAX_INVENTORY reached.
+	- Fixed spiritballs not being removed correctly in some situation.
 09/05/28
 	* Fixed some skill condition issues. [Inkfish]
 	- HP is now checked at the end of cast.
-	- Lv 6-10 StoneCurse doesn't consume gems.
+	- Lv 6-10 StoneCurse doesn't consume gems when it fails.
 	- Tarotcard's aftercast delay will still be applied if it fails.
 09/05/26
 	* skill_check_condition clean up (bugreport:2770, bugreport:2957, bugreport:3010) [Inkfish]
