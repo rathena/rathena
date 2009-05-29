@@ -269,32 +269,59 @@ int skill_get_range2 (struct block_list *bl, int id, int lv)
 	return range;
 }
 
-int skill_calc_heal (struct block_list *src, struct block_list *target, int skill_lv)
+int skill_calc_heal(struct block_list *src, struct block_list *target, int skill_id, int skill_lv)
 {
 	int skill, heal;
+	struct map_session_data *sd = map_id2sd(src->id);
+	struct map_session_data *tsd = map_id2sd(target->id);
 	struct status_change* sc;
 
-	if (skill_lv >= battle_config.max_heal_lv)
-		return battle_config.max_heal;
+	switch( skill_id )
+	{
+	case BA_APPLEIDUN:
+		heal = 30+5*skill_lv+5*(status_get_vit(src)/10); // HP recovery
+		if( sd )
+			heal += 5*pc_checkskill(sd,BA_MUSICALLESSON);
+		break;
+	case PR_SANCTUARY:
+		heal = (skill_lv>6)?777:skill_lv*100;
+		break;
+	case NPC_EVILLAND:
+		heal = (skill_lv>6)?666:skill_lv*100;
+		break;
+	default:
+		if (skill_lv >= battle_config.max_heal_lv)
+			return battle_config.max_heal;
 
-	heal = ( status_get_lv(src)+status_get_int(src) )/8 *(4+ skill_lv*8);
-	if(src->type == BL_PC && ((skill = pc_checkskill((TBL_PC*)src, HP_MEDITATIO)) > 0))
-		heal += heal * skill * 2 / 100;
+		heal = ( status_get_lv(src)+status_get_int(src) )/8 *(4+ skill_lv*8);
+		if( sd && ((skill = pc_checkskill(sd, HP_MEDITATIO)) > 0) )
+			heal += heal * skill * 2 / 100;
+		else if( src->type == BL_HOM && (skill = merc_hom_checkskill(((TBL_HOM*)src), HLIF_BRAIN)) > 0 )
+			heal += heal * skill * 2 / 100;
+		break;
+	}
 
-	if(src->type == BL_HOM && (skill = merc_hom_checkskill(((TBL_HOM*)src), HLIF_BRAIN)) > 0)
-		heal += heal * skill * 2 / 100;
-
-	if(target && target->type == BL_MER)
+	//FIXME: Is NPC_EVILLAND or BA_APPLEIDUN really an exception or we failed to add them to the original code? [Inkfish]
+	if( target && target->type == BL_MER && skill_id != NPC_EVILLAND )
 		heal >>= 1;
 
+	if( sd && (skill = pc_skillheal_bonus(sd, skill_id)) )
+		heal += heal*skill/100;
+	
+	if( tsd && (skill = pc_skillheal2_bonus(tsd, skill_id)) )
+		heal += heal*skill/100;
+
+	//FIXME: Is offensive heal affected by the following status? [Inkfish]
+	//According to the original code, HEAL is but SANCTUARY isn't. Is that true?
 	sc = status_get_sc(target);
 	if( sc && sc->count )
 	{
 		if( sc->data[SC_CRITICALWOUND] )
 			heal -= heal * sc->data[SC_CRITICALWOUND]->val2/100;
-		if( sc->data[SC_INCHEALRATE] )
+		if( sc->data[SC_INCHEALRATE] ) //FIXME: BA_APPLEIDUN not affected by this one? [Inkfish]
 			heal += heal * sc->data[SC_INCHEALRATE]->val1/100;
 	}
+
 	return heal;
 }
 
@@ -3146,22 +3173,14 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case HLIF_HEAL:	//[orn]
 	case AL_HEAL:
 		{
-			int heal = skill_calc_heal(src, bl, skilllv);
+			int heal = skill_calc_heal(src, bl, skillid, skilllv);
 			int heal_get_jobexp;
 
 			if( status_isimmune(bl) || (dstmd && (dstmd->class_ == MOBID_EMPERIUM || mob_is_battleground(dstmd))) )
 				heal=0;
 
-			if( sd )
-			{
-				if( (i = pc_skillheal_bonus(sd, skillid)) )
-					heal += heal * i / 100;
-				if( sd && dstsd && sd->status.partner_id == dstsd->status.char_id && (sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE && sd->status.sex == 0 )
-					heal = heal*2;
-			}
-
-			if( dstsd && (i = pc_skillheal2_bonus(dstsd, skillid)) )
-				heal += heal * i / 100;
+			if( sd && dstsd && sd->status.partner_id == dstsd->status.char_id && (sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE && sd->status.sex == 0 )
+				heal = heal*2;
 
 			if( tsc && tsc->count )
 			{
@@ -5174,12 +5193,11 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			int hp = potion_hp, sp = potion_sp;
 			hp = hp * (100 + (tstatus->vit<<1))/100;
 			sp = sp * (100 + (tstatus->int_<<1))/100;
-
 			if (dstsd) {
 				if (hp)
-					hp = hp * (100 + pc_checkskill(dstsd,SM_RECOVERY)*10)/100;
+					hp = hp * (100 + pc_checkskill(dstsd,SM_RECOVERY)*10 + pc_skillheal2_bonus(dstsd, skillid))/100;
 				if (sp)
-					sp = sp * (100 + pc_checkskill(dstsd,MG_SRECOVERY)*10)/100;
+					sp = sp * (100 + pc_checkskill(dstsd,MG_SRECOVERY)*10 + pc_skillheal2_bonus(dstsd, skillid))/100;
 			}
 			if (tsc && tsc->data[SC_CRITICALWOUND])
 			{
@@ -5541,11 +5559,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				bl = map_id2bl(battle_gettarget(src));
 
 			if (!bl) bl = src;
-			i = skill_calc_heal( src, bl, 1+rand()%skilllv);
-			if (sd && (rnd = pc_skillheal_bonus(sd, skillid)) > 0)
-				i += i * rnd / 100;
-			if (dstsd && (rnd = pc_skillheal2_bonus(dstsd, skillid)) > 0)
-				i += i * rnd / 100;
+			i = skill_calc_heal(src, bl, skillid, 1+rand()%skilllv);
 			//Eh? why double skill packet?
 			clif_skill_nodamage(src,bl,AL_HEAL,i,1);
 			clif_skill_nodamage(src,bl,skillid,i,1);
@@ -6307,8 +6321,8 @@ int skill_castend_pos2(struct block_list* src, int x, int y, int skillid, int sk
 		if (sd) {
 			int i = skilllv%11 - 1;
 			int j = pc_search_inventory(sd,skill_db[skillid].itemid[i]);
-			if(j < 0 || skill_db[skillid].itemid[i] <= 0 || sd->inventory_data[j] == NULL ||
-				sd->status.inventory[j].amount < skill_db[skillid].amount[i]) {
+			if( j < 0 || skill_db[skillid].itemid[i] <= 0 || sd->inventory_data[j] == NULL || sd->status.inventory[j].amount < skill_db[skillid].amount[i] )
+			{
 				clif_skill_fail(sd,skillid,0,0);
 				return 1;
 			}
@@ -6743,9 +6757,6 @@ struct skill_unit_group* skill_unitsetting (struct block_list *src, short skilli
 	case PR_SANCTUARY:
 	case NPC_EVILLAND:
 		val1=(skilllv+3)*2;
-		val2=(skilllv>6)?(skillid == PR_SANCTUARY?777:666):skilllv*100;
-		if (sd && (i = pc_skillheal_bonus(sd, skillid)))
-			val2 += val2 * i / 100;
 		break;
 
 	case WZ_FIREPILLAR:
@@ -6839,13 +6850,8 @@ struct skill_unit_group* skill_unitsetting (struct block_list *src, short skilli
 		break;
 	case BA_APPLEIDUN:
 		val1 = 5+2*skilllv+status->vit/10; // MaxHP percent increase
-		val2 = 30+5*skilllv+5*(status->vit/10); // HP recovery
-		if(sd){
+		if(sd)
 			val1 += pc_checkskill(sd,BA_MUSICALLESSON);
-			val2 += 5*pc_checkskill(sd,BA_MUSICALLESSON);
-			if ((i = pc_skillheal_bonus(sd, skillid)))
-				val2 += val2 * i / 100;
-		}
 		break;
 	case DC_SERVICEFORYOU:
 		val1 = 15+skilllv+(status->int_/10); // MaxSP percent increase TO-DO: this INT bonus value is guessed
@@ -7309,27 +7315,14 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 			}
 			else
 			{
-				int heal = sg->val2;
+				int heal = skill_calc_heal(ss,bl,sg->skill_id,sg->skill_lv);
 				struct mob_data *md = BL_CAST(BL_MOB, bl);
 				if( md && mob_is_battleground(md) )
 					break;
 				if( tstatus->hp >= tstatus->max_hp )
 					break;
-				if( tsc )
-				{
-					if( tsc->data[SC_INCHEALRATE] )
-						heal += heal * tsc->data[SC_INCHEALRATE]->val1 / 100;
-					if( tsc->data[SC_CRITICALWOUND] )
-						heal -= heal * tsc->data[SC_CRITICALWOUND]->val2 / 100;
-				}
-				if( tsd )
-					heal += heal * pc_skillheal2_bonus(tsd, sg->skill_id) / 100;
-
-				if( bl->type == BL_MER )
-					heal /= 2;
 				if( status_isimmune(bl) )
 					heal = 0;
-
 				clif_skill_nodamage(&src->bl, bl, AL_HEAL, heal, 1);
 				status_heal(bl, heal, 0, 0);
 				if( diff >= 500 )
@@ -7346,11 +7339,9 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 				if(battle_check_target(&src->bl,bl,BCT_ENEMY)>0)
 					skill_attack(BF_MISC, ss, &src->bl, bl, sg->skill_id, sg->skill_lv, tick, 0);
 			} else {
-				int heal = sg->val2;
+				int heal = skill_calc_heal(ss,bl,sg->skill_id,sg->skill_lv);
 				if (tstatus->hp >= tstatus->max_hp)
 					break;
-				if (tsc && tsc->data[SC_CRITICALWOUND])
-					heal -= heal * tsc->data[SC_CRITICALWOUND]->val2 / 100;
 				if (status_isimmune(bl))
 					heal = 0;
 				clif_skill_nodamage(&src->bl, bl, AL_HEAL, heal, 1);
@@ -7509,9 +7500,7 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 			int heal;
 			if( sg->src_id == bl->id && !(tsc && tsc->data[SC_SPIRIT] && tsc->data[SC_SPIRIT]->val2 == SL_BARDDANCER) )
 				break; // affects self only when soullinked
-			heal = sg->val2;
-			if(tsc && tsc->data[SC_CRITICALWOUND])
-				heal -= heal * tsc->data[SC_CRITICALWOUND]->val2 / 100;
+			heal = skill_calc_heal(ss,bl,sg->skill_id, sg->skill_lv);
 			clif_skill_nodamage(&src->bl, bl, AL_HEAL, heal, 1);
 			status_heal(bl, heal, 0, 0);
 			break;

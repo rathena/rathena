@@ -267,6 +267,7 @@ struct map_session_data {
 	
 	short splash_range, splash_add_range;
 	short add_steal_rate;
+	short add_heal_rate, add_heal2_rate;
 	short sp_gain_value, hp_gain_value;
 	short sp_vanish_rate;
 	short sp_vanish_per;	

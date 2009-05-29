@@ -2279,13 +2279,11 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 		{	//Calc base damage according to skill
 			case AL_HEAL:
 			case PR_BENEDICTIO:
-				ad.damage = skill_calc_heal(src, target, skill_lv)/2;
+			case PR_SANCTUARY:
+				ad.damage = skill_calc_heal(src, target, skill_num, skill_lv)/2;
 				break;
 			case PR_ASPERSIO:
 				ad.damage = 40;
-				break;
-			case PR_SANCTUARY:
-				ad.damage = (skill_lv>6)?388:skill_lv*50;
 				break;
 			case ALL_RESURRECTION:
 			case PR_TURNUNDEAD:
@@ -2673,7 +2671,7 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 		md.dmotion = 0; //No flinch animation.
 		break;
 	case NPC_EVILLAND:
-		md.damage = (skill_lv>6)?666:skill_lv*100;
+		md.damage = skill_calc_heal(src,target,skill_num,skill_lv);
 		break;
 	}
 

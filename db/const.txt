@@ -383,6 +383,8 @@ bIgnoreMdefRate	1086
 bIgnoreDefRate	1087
 bSkillHeal2	1088
 bAddEffOnSkill	1089
+bHealPower	1090
+bHealPower2	1091
 
 bRestartFullRecover	2000
 bNoCastCancel	2001
