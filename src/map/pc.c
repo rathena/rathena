@@ -2094,6 +2094,14 @@ int pc_bonus(struct map_session_data *sd,int type,int val)
 		if(sd->state.lr_flag != 2)
 			sd->unbreakable_equip |= EQP_SHIELD;
 		break;
+	case SP_UNBREAKABLE_GARMENT:
+		if(sd->state.lr_flag != 2)
+			sd->unbreakable_equip |= EQP_GARMENT;
+		break;
+	case SP_UNBREAKABLE_SHOES:
+		if(sd->state.lr_flag != 2)
+			sd->unbreakable_equip |= EQP_SHOES;
+		break;
 	case SP_CLASSCHANGE: // [Valaris]
 		if(sd->state.lr_flag !=2)
 			sd->classchange=val;

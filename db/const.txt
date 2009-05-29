@@ -343,7 +343,7 @@ bAddMdefClass	1046
 bAddMonsterDropItem	1047
 bDefRatioAtkEle	1048
 bDefRatioAtkRace	1049
-bAddSpeed	1050
+bUnbreakableGarment	1050
 bHitRate	1051
 bFleeRate	1052
 bFlee2Rate	1053
@@ -418,7 +418,7 @@ bSPDrainValueRace	2029
 bExpAddRace	2030
 bSPGainRace	2031
 bSubRace2	2032
-
+bUnbreakableShoes	2033
 bUnstripableWeapon	2034
 bUnstripableArmor	2035
 bUnstripableHelm	2036
