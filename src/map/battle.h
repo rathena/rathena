@@ -462,8 +462,9 @@ extern struct Battle_Config
 	int auction_feeperhour;
 	int auction_maximumprice;
 	int gm_viewequip_min_lv;
-	int homunculus_auto_vapor; //Keep Homunculus from Vaporizing when master dies. [L0ne_W0lf]
-	int display_status_timers; //Show or hide skill buff/delay timers in recent clients [Sara]
+	int homunculus_auto_vapor;	//Keep Homunculus from Vaporizing when master dies. [L0ne_W0lf]
+	int display_status_timers;	//Show or hide skill buff/delay timers in recent clients [Sara]
+	int skill_add_heal_rate;	//skills that bHealPower has effect on [Inkfish]
 	// [BattleGround Settings]
 	int bg_update_interval;
 	int bg_short_damage_rate;

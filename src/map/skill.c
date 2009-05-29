@@ -269,9 +269,9 @@ int skill_get_range2 (struct block_list *bl, int id, int lv)
 	return range;
 }
 
-int skill_calc_heal(struct block_list *src, struct block_list *target, int skill_id, int skill_lv)
+int skill_calc_heal(struct block_list *src, struct block_list *target, int skill_id, int skill_lv, bool heal)
 {
-	int skill, heal;
+	int skill, hp;
 	struct map_session_data *sd = map_id2sd(src->id);
 	struct map_session_data *tsd = map_id2sd(target->id);
 	struct status_change* sc;
@@ -279,50 +279,47 @@ int skill_calc_heal(struct block_list *src, struct block_list *target, int skill
 	switch( skill_id )
 	{
 	case BA_APPLEIDUN:
-		heal = 30+5*skill_lv+5*(status_get_vit(src)/10); // HP recovery
+		hp = 30+5*skill_lv+5*(status_get_vit(src)/10); // HP recovery
 		if( sd )
-			heal += 5*pc_checkskill(sd,BA_MUSICALLESSON);
+			hp += 5*pc_checkskill(sd,BA_MUSICALLESSON);
 		break;
 	case PR_SANCTUARY:
-		heal = (skill_lv>6)?777:skill_lv*100;
+		hp = (skill_lv>6)?777:skill_lv*100;
 		break;
 	case NPC_EVILLAND:
-		heal = (skill_lv>6)?666:skill_lv*100;
+		hp = (skill_lv>6)?666:skill_lv*100;
 		break;
 	default:
 		if (skill_lv >= battle_config.max_heal_lv)
 			return battle_config.max_heal;
 
-		heal = ( status_get_lv(src)+status_get_int(src) )/8 *(4+ skill_lv*8);
+		hp = ( status_get_lv(src)+status_get_int(src) )/8 *(4+ skill_lv*8);
 		if( sd && ((skill = pc_checkskill(sd, HP_MEDITATIO)) > 0) )
-			heal += heal * skill * 2 / 100;
+			hp += hp * skill * 2 / 100;
 		else if( src->type == BL_HOM && (skill = merc_hom_checkskill(((TBL_HOM*)src), HLIF_BRAIN)) > 0 )
-			heal += heal * skill * 2 / 100;
+			hp += hp * skill * 2 / 100;
 		break;
 	}
 
-	//FIXME: Is NPC_EVILLAND or BA_APPLEIDUN really an exception or we failed to add them to the original code? [Inkfish]
-	if( target && target->type == BL_MER && skill_id != NPC_EVILLAND )
-		heal >>= 1;
+	if( ( (target && target->type == BL_MER) || !heal ) && skill_id != NPC_EVILLAND )
+		hp >>= 1;
 
 	if( sd && (skill = pc_skillheal_bonus(sd, skill_id)) )
-		heal += heal*skill/100;
+		hp += hp*skill/100;
 	
 	if( tsd && (skill = pc_skillheal2_bonus(tsd, skill_id)) )
-		heal += heal*skill/100;
+		hp += hp*skill/100;
 
-	//FIXME: Is offensive heal affected by the following status? [Inkfish]
-	//According to the original code, HEAL is but SANCTUARY isn't. Is that true?
 	sc = status_get_sc(target);
 	if( sc && sc->count )
 	{
-		if( sc->data[SC_CRITICALWOUND] )
-			heal -= heal * sc->data[SC_CRITICALWOUND]->val2/100;
-		if( sc->data[SC_INCHEALRATE] ) //FIXME: BA_APPLEIDUN not affected by this one? [Inkfish]
-			heal += heal * sc->data[SC_INCHEALRATE]->val1/100;
+		if( sc->data[SC_CRITICALWOUND] && heal ) // Critical Wound has no effect on offensive heal. [Inkfish]
+			hp -= hp * sc->data[SC_CRITICALWOUND]->val2/100;
+		if( sc->data[SC_INCHEALRATE] && skill_id != NPC_EVILLAND && skill_id != BA_APPLEIDUN )
+			hp += hp * sc->data[SC_INCHEALRATE]->val1/100; // Only affects Heal, Sanctuary and PotionPitcher.(like bHealPower) [Inkfish]
 	}
 
-	return heal;
+	return hp;
 }
 
 // Making plagiarize check its own function [Aru]
@@ -3173,7 +3170,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case HLIF_HEAL:	//[orn]
 	case AL_HEAL:
 		{
-			int heal = skill_calc_heal(src, bl, skillid, skilllv);
+			int heal = skill_calc_heal(src, bl, skillid, skilllv, true);
 			int heal_get_jobexp;
 
 			if( status_isimmune(bl) || (dstmd && (dstmd->class_ == MOBID_EMPERIUM || mob_is_battleground(dstmd))) )
@@ -5559,7 +5556,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				bl = map_id2bl(battle_gettarget(src));
 
 			if (!bl) bl = src;
-			i = skill_calc_heal(src, bl, skillid, 1+rand()%skilllv);
+			i = skill_calc_heal(src, bl, skillid, 1+rand()%skilllv, true);
 			//Eh? why double skill packet?
 			clif_skill_nodamage(src,bl,AL_HEAL,i,1);
 			clif_skill_nodamage(src,bl,skillid,i,1);
@@ -7315,7 +7312,7 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 			}
 			else
 			{
-				int heal = skill_calc_heal(ss,bl,sg->skill_id,sg->skill_lv);
+				int heal = skill_calc_heal(ss,bl,sg->skill_id,sg->skill_lv,true);
 				struct mob_data *md = BL_CAST(BL_MOB, bl);
 				if( md && mob_is_battleground(md) )
 					break;
@@ -7339,7 +7336,7 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 				if(battle_check_target(&src->bl,bl,BCT_ENEMY)>0)
 					skill_attack(BF_MISC, ss, &src->bl, bl, sg->skill_id, sg->skill_lv, tick, 0);
 			} else {
-				int heal = skill_calc_heal(ss,bl,sg->skill_id,sg->skill_lv);
+				int heal = skill_calc_heal(ss,bl,sg->skill_id,sg->skill_lv,true);
 				if (tstatus->hp >= tstatus->max_hp)
 					break;
 				if (status_isimmune(bl))
@@ -7500,7 +7497,7 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 			int heal;
 			if( sg->src_id == bl->id && !(tsc && tsc->data[SC_SPIRIT] && tsc->data[SC_SPIRIT]->val2 == SL_BARDDANCER) )
 				break; // affects self only when soullinked
-			heal = skill_calc_heal(ss,bl,sg->skill_id, sg->skill_lv);
+			heal = skill_calc_heal(ss,bl,sg->skill_id, sg->skill_lv, true);
 			clif_skill_nodamage(&src->bl, bl, AL_HEAL, heal, 1);
 			status_heal(bl, heal, 0, 0);
 			break;
