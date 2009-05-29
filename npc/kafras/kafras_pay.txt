@@ -68,7 +68,7 @@ pay_arche,55,123,0	script	Kafra Employee::kaf_payon3	115,{
 	callfunc "F_KafSetPay";
 	mes "[Kafra Employee]";
 	mes "Welcome to the";
-	mes "Kafra Corporartion.";
+	mes "Kafra Corporation.";
 	mes "The Kafra services";
 	mes "are always on your side.";
 	mes "How may I assist you?";

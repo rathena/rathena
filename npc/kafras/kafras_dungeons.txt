@@ -126,7 +126,7 @@ alb2trea,59,69,5	script	Kafra Employee::kaf_alb2trea	117,{
 	cutin "kafra_01",2;
 	mes "[Kafra Employee]";
 	mes "Welcome to the";
-	mes "Kafra Corporartion.";
+	mes "Kafra Corporation.";
 	mes "The Kafra services";
 	mes "are always on your side.";
 	mes "How may I assist you?";

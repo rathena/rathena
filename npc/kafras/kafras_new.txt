@@ -104,7 +104,7 @@ einbroch,59,203,6	script	Kafra Employee#ein1::kaf_einbroch2	861,{
 	cutin "kafra_09",2;
 	mes "[Kafra Employee]";
 	mes "Welcome to the";
-	mes "Kafra Corporartion.";
+	mes "Kafra Corporation.";
 	mes "The Kafra services";
 	mes "are always on your side.";
 	mes "How may I assist you?";
@@ -138,7 +138,7 @@ lighthalzen,164,100,4	script	Kafra Employee::kaf_lighthalzen	860,{
 	cutin "kafra_08",2;
 	mes "[Kafra Employee]";
 	mes "Welcome to the";
-	mes "Kafra Corporartion.";
+	mes "Kafra Corporation.";
 	mes "The Kafra services";
 	mes "are always on your side.";
 	mes "How may I assist you?";

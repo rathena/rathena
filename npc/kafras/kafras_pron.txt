@@ -105,7 +105,7 @@ prontera,146,89,6	script	Kafra Employee::kaf_prontera5	117,{
 	callfunc "F_KafSetPront";
 	mes "[Kafra Employee]";
 	mes "Welcome to the";
-	mes "Kafra Corporartion.";
+	mes "Kafra Corporation.";
 	mes "The Kafra services";
 	mes "are always on your side.";
 	mes "How may I assist you?";

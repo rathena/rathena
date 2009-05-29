@@ -1,5 +1,7 @@
 Date		Added
 ======
+2009/05/29
+	- Fixed a spelling typo in Kafras' dialog. (bugreport:3145) [brianluau]
 2009/05/25
 	* Now use 'boss_monster' to summon the boss monsters so that Convex Mirror can work properly. [Inkfish]
 2009/05/17

@@ -37,7 +37,7 @@ izlude,134,87,3	script	Kafra Employee::kaf_izlude	117,{
 	set @wrpC$[4], "Cancel";
 	mes "[Kafra Employee]";
 	mes "Welcome to the";
-	mes "Kafra Corporartion.";
+	mes "Kafra Corporation.";
 	mes "The Kafra services";
 	mes "are always on your side.";
 	mes "How may I assist you?";
