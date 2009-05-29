@@ -37,6 +37,14 @@
 	2385 Recuvative_Armor		Should trigger HP/SP return with magical kills as well.
 
 =======================
+2009/05/29
+	* Various small item_db fixes [Playtester]
+	- 11.3 typo fixes
+	- fixed Phantom Spear being backwards (now you need the seal to decrease the self-confusion)
+	- added missing bHealPower bonuses
+	- Base Guitar and Foot of Sea Witch now autocast on target rather than self
+	- Valkyrie's Shoes, Ragamuffin Manteau, Valkyrie's Manteau, Asprika and Vanilmirth Hat are now unbreakable
+	- Asprika and Vanilmirth Hat make no longer your armor unbreakable
 2009/05/26
 	* Some mob_skill_db updates [Playtester]
 	- fixed monsters trying to use Exile on self
