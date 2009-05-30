@@ -896,7 +896,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 	short skill=0;
 	short s_ele, s_ele_, t_class;
 	int i, nk;
-	bool n_ele; // non-elemental
+	bool n_ele = false; // non-elemental
 
 	struct map_session_data *sd, *tsd;
 	struct Damage wd;
