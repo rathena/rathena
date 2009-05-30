@@ -896,6 +896,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 	short skill=0;
 	short s_ele, s_ele_, t_class;
 	int i, nk;
+	bool n_ele; // non-elemental
 
 	struct map_session_data *sd, *tsd;
 	struct Damage wd;
@@ -942,7 +943,9 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 	wd.flag |= (skill_num||wflag)?BF_SKILL:BF_NORMAL; // Baphomet card's splash damage is counted as a skill. [Inkfish]
 	wd.dmg_lv=ATK_DEF;	//This assumption simplifies the assignation later
 	nk = skill_get_nk(skill_num);
-	flag.hit	= nk&NK_IGNORE_FLEE?1:0;
+	if( !skill_num && wflag ) //If flag, this is splash damage from Baphomet Card and it always hits.
+		nk |= NK_NO_CARDFIX_ATK|NK_IGNORE_FLEE;
+	flag.hit = nk&NK_IGNORE_FLEE?1:0;
 	flag.idef = flag.idef2 = nk&NK_IGNORE_DEF?1:0;
 
 	if (sc && !sc->count)
@@ -1029,26 +1032,25 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 
 	t_class = status_get_class(target);
 	s_ele = s_ele_ = skill_get_ele(skill_num, skill_lv);
-	if (!skill_num || s_ele == -1) { //Take weapon's element
+	if( !skill_num || s_ele == -1 )
+	{ //Take weapon's element
 		s_ele = sstatus->rhw.ele;
 		s_ele_ = sstatus->lhw.ele;
-		if (flag.arrow && sd && sd->arrow_ele)
+		if( flag.arrow && sd && sd->arrow_ele )
 			s_ele = sd->arrow_ele;
-	} else if (s_ele == -2) { //Use enchantment's element
-		s_ele = s_ele_ = status_get_attack_sc_element(src,sc);
+		if( battle_config.attack_attr_none&src->type )
+			n_ele = true; //Weapon's element is "not elemental"
 	}
-
-	switch(skill_num)
+	else if( s_ele == -2 ) //Use enchantment's element
+		s_ele = s_ele_ = status_get_attack_sc_element(src,sc);
+	switch( skill_num )
 	{
 		case GS_GROUNDDRIFT:
 			s_ele = s_ele_ = wflag; //element comes in flag.
 			break;
-
-		// TODO: A patch here doesn't work anymore since mechanism has changed. 
-		//       If mob's spiral pierce is forced neutral is under investigation.
-		//case LK_SPIRALPIERCE:
-		//	if (!sd) nk &= ~NK_NO_ELEFIX; //forced neutral for monsters
-		//	break;
+		case LK_SPIRALPIERCE:
+			if (!sd) n_ele = false; //forced neutral for monsters
+			break;
 	}
 
 	if(!skill_num)
@@ -1129,10 +1131,6 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 					break;
 				case CR_SHIELDBOOMERANG:
 					if( sc && sc->data[SC_SPIRIT] && sc->data[SC_SPIRIT]->val2 == SL_CRUSADER )
-						flag.hit = 1;
-					break;
-				case 0:					
-					if( wflag ) //If flag, this is splash damage from Baphomet Card and it always hits.
 						flag.hit = 1;
 					break;
 			}
@@ -1896,9 +1894,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 	if(skill_num==TF_POISON)
 		ATK_ADD(15*skill_lv);
 
-	if(!(nk&NK_NO_ELEFIX) &&
-	   !(battle_config.attack_attr_none&src->type && (skill_num == 0 || skill_get_ele(skill_num, skill_lv) == -1))
-	)
+	if( !(nk&NK_NO_ELEFIX) && !n_ele )
 	{	//Elemental attribute fix
 		if( wd.damage > 0 )
 		{

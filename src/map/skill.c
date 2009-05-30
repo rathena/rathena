@@ -1030,7 +1030,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 						clif_status_change(src, SI_ACTIONDELAY, 1, rate);
 				}
 			}
-			break; //Only one auto skill comes off at a time.
+			//break; //Only one auto skill comes off at a time.
 		}
 	}
 
@@ -1112,7 +1112,7 @@ int skill_onskillusage(struct map_session_data *sd, struct block_list *bl, int s
 			case CAST_NODAMAGE: skill_castend_nodamage_id(&sd->bl, tbl, skill, skilllv, tick, 0); break;
 			case CAST_DAMAGE:   skill_castend_damage_id(&sd->bl, tbl, skill, skilllv, tick, 0); break;
 		}
-		break;
+		//break;
 	}
 
 	if( sd->autoscript3[0].script )
@@ -1285,7 +1285,7 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 						clif_status_change(bl, SI_ACTIONDELAY, 1, rate);
 				}
 			}
-			break; //trigger only one auto-spell per hit.
+			//break; //trigger only one auto-spell per hit.
 		}
 	}
 	//Auto-script when attacked
