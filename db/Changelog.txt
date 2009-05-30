@@ -38,6 +38,7 @@
 
 =======================
 2009/05/29
+	* Rev. 13825 Removed an extra comma from chocolate_pie. [L0ne_W0lf]
 	* Rev. 13824 Various item database updates of my own :D [L0ne_W0lf]
 	- Updated items that increase heal effectiveness to use bHealPower.
 	- Added Fishing gear (has no effect and is currently not used)

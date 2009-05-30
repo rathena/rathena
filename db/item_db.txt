@@ -3832,7 +3832,7 @@
 12319,Strawberry_Cake,Rune Strawberry Cake,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12320,Pineapple_Juice,Schwartzwald Pine Jubilee,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12321,Spicey_Sandwich,Arunafeltz Desert Sandwich,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-12322,Chocolate_Pie,Chocolate Pie,,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12322,Chocolate_Pie,Chocolate Pie,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 //New Novice Ground Items
 12323,Novice_Wing_Of_Fly,Novice Fly Wing,2,1,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ warp "Random",0,0; },{},{}
 12324,Novice_Wing_Of_Butterfly,Novice Butterfly Wing,2,1,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ warp "SavePoint",0,0; },{},{}
