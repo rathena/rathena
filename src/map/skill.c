@@ -7416,6 +7416,11 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 			break;
 
 		case UNT_SPIDERWEB:
+			if( DIFF_TICK(tick, sg->tick) > SKILLUNITTIMER_INTERVAL )
+			{ // Visual effect stays but can't catch anyone anymore. [Inkfish]
+				sg->interval = -1;
+				break;
+			}
 			if( tsc && tsc->data[SC_SPIDERWEB] && tsc->data[SC_SPIDERWEB]->val1 > 0 )
 			{ // If you are fiberlocked and can't move, it will only increase your fireweakness level. [Inkfish]
 				tsc->data[SC_SPIDERWEB]->val2++;
@@ -8798,12 +8803,12 @@ struct skill_condition skill_get_requirement(struct map_session_data* sd, short 
 			if( sd->special_state.no_gemstone )
 			{	//Make it substract 1 gem rather than skipping the cost.
 				if( --req.amount[i] < 1 )
-					continue;
+					req.itemid[i] = 0;
 			}
 			if(sc && sc->data[SC_INTOABYSS])
 			{
 				if( skill != SA_ABRACADABRA )
-					continue;
+					req.itemid[i] = req.amount[i] = 0;
 				else if( --req.amount[i] < 1 )
 					req.amount[i] = 1; // Hocus Pocus allways use at least 1 gem
 			}
