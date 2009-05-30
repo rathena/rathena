@@ -8749,7 +8749,7 @@ struct skill_condition skill_get_requirement(struct map_session_data* sd, short 
 	else
 		req.hp += (status->max_hp * (-hp_rate))/100;
 
-	req.sp = skill_db[j].sp[lv];
+	req.sp = skill_db[j].sp[lv-1];
 	if((sd->skillid_old == BD_ENCORE) && skill == sd->skillid_dance)
 		req.sp /= 2;
 	sp_rate = skill_db[j].sp_rate[lv-1];
