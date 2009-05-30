@@ -8060,8 +8060,12 @@ int skill_check_condition_castbegin(struct map_session_data* sd, short skill, sh
 		return 0;
 	}
 
-	if( sd->state.abra_flag && sd->skillitem != skill ) // Cancelled, using a different skill.
-		sd->skillitem = sd->skillitemlv = sd->state.abra_flag = 0;
+	if( sd->state.abra_flag )
+	{
+		if( sd->skillitem == skill )
+			return 1;
+		sd->skillitem = sd->skillitemlv = sd->state.abra_flag = 0; // Cancelled, using a different skill	
+	}
 
 	if (sd->menuskill_id == AM_PHARMACY &&
 		(skill == AM_PHARMACY || skill == AC_MAKINGARROW || skill == BS_REPAIRWEAPON ||
@@ -8558,8 +8562,9 @@ int skill_check_condition_castend(struct map_session_data* sd, short skill, shor
 
 	if( sd->state.abra_flag )
 	{ // Abracadabra skill, skip requisites!	
-		sd->skillitem = sd->skillitemlv = sd->state.abra_flag = 0;
-		return 1;
+		sd->skillitem = sd->skillitemlv = sd->state.abra_flag = 0; // Clear out the data.
+		if( sd->skillitem == skill )
+			return 1;
 	}
 
 	if( sd->menuskill_id == AM_PHARMACY )
