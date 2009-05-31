@@ -4653,7 +4653,7 @@
 14057,Survival_Rod_Box2,Refined Survivor's Rod Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ rentitem 1628,604800; },{},{}
 14058,Quadrille_Box2,Refined Quadrille Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ rentitem 1537,604800; },{},{}
 14059,Great_Axe_Box,Refined Great Axe Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ rentitem 1378,604800; },{},{}
-14060,Bloody_Roar_Box,Refined Bloody Roar Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ rentitem 1237,604800; },{},{}
+14060,Bloody_Roar_Box,Refined Bloody Roar Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ rentitem 1273,604800; },{},{}
 14061,Hardcover_Book_Box,Refined Hardcover Book Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ rentitem 1567,604800; },{},{}
 14062,Fireblend_Box,Refined Fireblend Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ rentitem 13408,604800; },{},{}
 14063,Immaterial_Sword_Box,Refined Immaterial Sword Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ rentitem 13409,604800; },{},{}

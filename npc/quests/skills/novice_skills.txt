@@ -374,7 +374,7 @@ prt_castle,175,146,4	script	Nursing Instructor#qsk_n	50,{
 	mes "I am very busy ! ! !";
 	mes "Would you just bug off ? ! ? !";
 	next;
-	if (NOV_SK >= 0 || NOV_SK <= 5) {
+	if (NOV_SK == 0 || NOV_SK == 1 || NOV_SK == 2 || NOV_SK == 4 || NOV_SK == 5) {
 		switch(NOV_SK) {
 		case 0:
 			mes "[Dread Lord]";

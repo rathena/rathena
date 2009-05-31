@@ -442,7 +442,7 @@ bat_room,172,121,1	script	Tierra Valley Officer#4	414,{
 // *********************************************************************
 bat_room,151,178,5	script	Guillaume Knight#3	417,{
 	mes "[Guillaume Knight]";
-	mes "The objective of the Flavius Battle is to score 2 points before your enemy by destryoing theur crystal.";
+	mes "The objective of the Flavius Battle is to score 2 points before your enemy by destroying their crystal.";
 	next;
 	mes "[Guillaume Knight]";
 	mes "The crystals for both armies are protected by special barricades that cannot be destroyed by direct attacks.";
@@ -508,7 +508,7 @@ bat_room,148,178,5	script	Flavius Officer#1	418,{
 // *********************************************************************
 bat_room,151,121,1	script	Croix Knight#3	413,{
 	mes "[Croix Knight]";
-	mes "The objective of the Flavius Battle is to score 2 points before your enemy by destryoing theur crystal.";
+	mes "The objective of the Flavius Battle is to score 2 points before your enemy by destroying their crystal.";
 	next;
 	mes "[Croix Knight]";
 	mes "The crystals for both armies are protected by special barricades that cannot be destroyed by direct attacks.";
@@ -574,7 +574,7 @@ bat_room,148,121,1	script	Flavius Officer#2	414,{
 // *********************************************************************
 bat_room,167,178,5	script	Guillaume Knight#4	417,{
 	mes "[Guillaume Knight]";
-	mes "The objective of the Flavius Battle is to score 2 points before your enemy by destryoing theur crystal.";
+	mes "The objective of the Flavius Battle is to score 2 points before your enemy by destroying their crystal.";
 	next;
 	mes "[Guillaume Knight]";
 	mes "The crystals for both armies are protected by special barricades that cannot be destroyed by direct attacks.";
@@ -640,7 +640,7 @@ bat_room,164,178,5	script	Flavius Officer#3	418,{
 // *********************************************************************
 bat_room,167,121,1	script	Croix Knight#4	413,{
 	mes "[Croix Knight]";
-	mes "The objective of the Flavius Battle is to score 2 points before your enemy by destryoing theur crystal.";
+	mes "The objective of the Flavius Battle is to score 2 points before your enemy by destroying their crystal.";
 	next;
 	mes "[Croix Knight]";
 	mes "The crystals for both armies are protected by special barricades that cannot be destroyed by direct attacks.";
@@ -706,7 +706,7 @@ bat_room,164,121,1	script	Flavius Officer#4	414,{
 // *********************************************************************
 bat_room,143,178,5	script	Guillaume Knight#5	417,{
 	mes "[Guillaume Knight]";
-	mes "To win the Battle of Kriger Von Midgard you and your team must kill all the other oponents before all of you die.";
+	mes "To win the Battle of Kriger Von Midgard you and your team must kill all the other opponents before all of you die.";
 	next;
 	mes "[Guillaume Knight]";
 	mes "The first team to lose all their soldiers loses.";
@@ -769,7 +769,7 @@ bat_room,140,178,5	script	KVM [80-99] Officer#1	418,{
 // *********************************************************************
 bat_room,143,121,1	script	Croix Knight#5	413,{
 	mes "[Croix Knight]";
-	mes "To win the Battle of Kriger Von Midgard you and your team must kill all the other oponents before all of you die.";
+	mes "To win the Battle of Kriger Von Midgard you and your team must kill all the other opponents before all of you die.";
 	next;
 	mes "[Croix Knight]";
 	mes "The first team to lose all their soldiers loses.";
@@ -832,7 +832,7 @@ bat_room,140,121,1	script	KVM [80-99] Officer#2	414,{
 // *********************************************************************
 bat_room,135,178,5	script	Guillaume Knight#6	417,{
 	mes "[Guillaume Knight]";
-	mes "To win the Battle of Kriger Von Midgard you and your team must kill all the other oponents before all of you die.";
+	mes "To win the Battle of Kriger Von Midgard you and your team must kill all the other opponents before all of you die.";
 	next;
 	mes "[Guillaume Knight]";
 	mes "The first team to lose all their soldiers loses.";
@@ -895,7 +895,7 @@ bat_room,132,178,5	script	KVM [60-79] Officer#1	418,{
 // *********************************************************************
 bat_room,135,121,1	script	Croix Knight#6	413,{
 	mes "[Croix Knight]";
-	mes "To win the Battle of Kriger Von Midgard you and your team must kill all the other oponents before all of you die.";
+	mes "To win the Battle of Kriger Von Midgard you and your team must kill all the other opponents before all of you die.";
 	next;
 	mes "[Croix Knight]";
 	mes "The first team to lose all their soldiers loses.";
@@ -958,7 +958,7 @@ bat_room,132,121,1	script	KVM [60-79] Officer#2	414,{
 // *********************************************************************
 bat_room,127,178,5	script	Guillaume Knight#7	417,{
 	mes "[Guillaume Knight]";
-	mes "To win the Battle of Kriger Von Midgard you and your team must kill all the other oponents before all of you die.";
+	mes "To win the Battle of Kriger Von Midgard you and your team must kill all the other opponents before all of you die.";
 	next;
 	mes "[Guillaume Knight]";
 	mes "The first team to lose all their soldiers loses.";
@@ -1021,7 +1021,7 @@ bat_room,124,178,5	script	KVM [1-59] Officer#1	418,{
 // *********************************************************************
 bat_room,127,121,1	script	Croix Knight#7	413,{
 	mes "[Croix Knight]";
-	mes "To win the Battle of Kriger Von Midgard you and your team must kill all the other oponents before all of you die.";
+	mes "To win the Battle of Kriger Von Midgard you and your team must kill all the other opponents before all of you die.";
 	next;
 	mes "[Croix Knight]";
 	mes "The first team to lose all their soldiers loses.";
@@ -1182,7 +1182,7 @@ bat_room,160,150,3	script	Erundek	109,{
 			deletearray .@Item_DB[0],127;
 			set .@Badge, 7828;
 
-			switch( select("Weapons:Garment:Footgear:Armor:Accesory") )
+			switch( select("Weapons:Garment:Footgear:Armor:Accessory") )
 			{
 				case 1: setarray .@Item_DB[0],13036,13411,1425,1632,1634,1543,1924,1978,1574,1824,1183,1380,13305,1279,1739,13108,13172; set .@Value, 100; break;
 				case 2: setarray .@Item_DB[0],2538,2539,2540; set .@Value, 50; break;
@@ -1200,7 +1200,7 @@ bat_room,160,150,3	script	Erundek	109,{
 			deletearray .@Item_DB[0],127;
 			set .@Badge, 7829;
 
-			switch( select("Weapons:Garment:Footgear:Armor:Accesory") )
+			switch( select("Weapons:Garment:Footgear:Armor:Accessory") )
 			{
 				case 1: setarray .@Item_DB[0],13037,13410,1633,1635,1542,1923,1977,1575,1823,1184,1482,1379,13306,1280,1738,13171,13173,13174; set .@Value, 100; break;
 				case 2: setarray .@Item_DB[0],2538,2539,2540; set .@Value, 50; break;
@@ -1246,7 +1246,7 @@ bat_room,160,150,3	script	Erundek	109,{
 	if( countitem(.@Badge) < .@Value )
 	{
 		mes "[Erundek]";
-		mes "Im sorry, but you don't have enough badges to exchange.";
+		mes "I'm sorry, but you don't have enough badges to exchange.";
 		close;
 	}
 	
