@@ -6943,7 +6943,7 @@ struct skill_unit_group* skill_unitsetting (struct block_list *src, short skilli
 	group->state.song_dance = (unit_flag&(UF_DANCE|UF_SONG)?1:0)|(unit_flag&UF_ENSEMBLE?2:0); //Signals if this is a song/dance/duet
 
   	//if tick is greater than current, do not invoke onplace function just yet. [Skotlex]
-	if (DIFF_TICK(group->tick, gettick()) > 100)
+	if (DIFF_TICK(group->tick, gettick()) > SKILLUNITTIMER_INTERVAL)
 		active_flag = 0;
 
 	if(skillid==HT_TALKIEBOX || skillid==RG_GRAFFITI){
@@ -7089,7 +7089,31 @@ static int skill_unit_onplace (struct skill_unit *src, struct block_list *bl, un
 	type = status_skill2sc(sg->skill_id);
 	sce = (sc && type != -1)?sc->data[type]:NULL;
 	skillid = sg->skill_id; //In case the group is deleted, we need to return the correct skill id, still.
-	switch (sg->unit_id) {
+	switch (sg->unit_id)
+	{
+	case UNT_SPIDERWEB:
+		if( sc && sc->data[SC_SPIDERWEB] && sc->data[SC_SPIDERWEB]->val1 > 0 )
+		{ // If you are fiberlocked and can't move, it will only increase your fireweakness level. [Inkfish]
+			sc->data[SC_SPIDERWEB]->val2++;
+			break;
+		}
+		else if( sc )
+		{
+			int sec = skill_get_time2(sg->skill_id,sg->skill_lv);
+			if( status_change_start(bl,type,10000,sg->skill_lv,sg->group_id,0,0,sec,8) )
+			{
+				const struct TimerData* td = sc->data[type]?get_timer(sc->data[type]->timer):NULL; 
+				if( td )
+					sec = DIFF_TICK(td->tick, tick);
+				map_moveblock(bl, src->bl.x, src->bl.y, tick);
+				clif_fixpos(bl);
+				sg->val2 = bl->id;
+			}
+			else
+				sec = 3000; //Couldn't trap it?
+			sg->limit = DIFF_TICK(tick,sg->tick)+sec;
+		}
+		break;
 	case UNT_SAFETYWALL:
 		//TODO: Find a more reliable way to handle the link to sg, this could cause dangling pointers. [Skotlex]
 		if (!sce)
@@ -7256,8 +7280,6 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 
 	if (sg->interval == -1) {
 		switch (sg->unit_id) {
-			case UNT_SPIDERWEB: // The 'interval' value was set to -1 so that the unit wouldn't trigger in the next interval,
-				break;			// but FiberLock can trap multiple targets on the same cell. [Inkfish]
 			case UNT_ANKLESNARE: //These happen when a trap is splash-triggered by multiple targets on the same cell.
 			case UNT_FIREPILLAR_ACTIVE:
 				return 0;
@@ -7415,20 +7437,8 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 			}
 			break;
 
-		case UNT_SPIDERWEB:
-			if( DIFF_TICK(tick, sg->tick) > SKILLUNITTIMER_INTERVAL )
-			{ // Visual effect stays but can't catch anyone anymore. [Inkfish]
-				sg->interval = -1;
-				break;
-			}
-			if( tsc && tsc->data[SC_SPIDERWEB] && tsc->data[SC_SPIDERWEB]->val1 > 0 )
-			{ // If you are fiberlocked and can't move, it will only increase your fireweakness level. [Inkfish]
-				tsc->data[SC_SPIDERWEB]->val2++;
-				sg->interval = -1;
-				break;
-			}
 		case UNT_ANKLESNARE:
-			if( ( sg->val2 == 0 || sg->unit_id == UNT_SPIDERWEB ) && tsc )
+			if( sg->val2 == 0 && tsc )
 			{
 				int sec = skill_get_time2(sg->skill_id,sg->skill_lv);
 				if( status_change_start(bl,type,10000,sg->skill_lv,sg->group_id,0,0,sec, 8) )
@@ -7442,8 +7452,7 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 				}
 				else
 					sec = 3000; //Couldn't trap it?
-				if( sg->unit_id == UNT_ANKLESNARE )
-					clif_01ac(&src->bl); // mysterious packet
+				clif_01ac(&src->bl); // mysterious packet
 				sg->limit = DIFF_TICK(tick,sg->tick)+sec;
 				sg->interval = -1;
 				src->range = 0;
@@ -10454,6 +10463,9 @@ int skill_unit_move_sub (struct block_list* bl, va_list ap)
 
 	if( !unit->alive || target->prev == NULL )
 		return 0;
+
+	if( unit->group->skill_id == PF_SPIDERWEB && flag&1 )
+		return 0; // Fiberlock is never supposed to trigger on skill_unit_move. [Inkfish]
 
 	dissonance = skill_dance_switch(unit, 0);
 

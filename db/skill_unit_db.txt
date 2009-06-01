@@ -81,7 +81,7 @@
 369,0xb3,    , -1, 0,10000,all,  0x008	//PA_GOSPEL
 395,0xb5,    ,  4, 0,  -1,all,   0x200	//CG_MOONLIT
 404,0xb6,    , -1, 0,  -1,all,   0x000	//PF_FOGWALL
-405,0xb7,    ,  0, 0,1000,enemy, 0x000	//PF_SPIDERWEB
+405,0xb7,    ,  0, 0,  -1,enemy, 0x000	//PF_SPIDERWEB
 409,0xb2,    ,  0,-1,  -1,noone, 0x000	//WE_CALLBABY
 410,0xb2,    ,  0,-1,  -1,noone, 0x000	//WE_CALLPARENT
 428,0x86,    ,  0, 1, 100,enemy, 0x000	//SG_SUN_WARM
