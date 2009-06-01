@@ -2086,7 +2086,7 @@ ra_in01,250,19,3	script	Mr. Shendar	929,{
 		mes "Still alive, eh? Hmpf!";
 		mes "I'll finish you off! I'll...";
 		mes "Er, huh?! Wait, I think";
-		mes "AI know you. You're that";
+		mes "I know you. You're that";
 		mes "adventurer that's been";
 		mes "here before, right?";
 		next;

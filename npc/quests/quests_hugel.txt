@@ -3395,7 +3395,7 @@ hu_in01,310,380,5	script	Girl#hugel	891,{
 		mes "Then do you have any family member who shares the same name as yours?";
 		mes "Like your father, for instance.";
 		next;
-		mes "["+strcharinfo(0)+"]";
+		mes "[Wintzil Trony]";
 		mes "I said, I am the only Wintzil Trony in my family.";
 		mes "And I don't have a father.";
 		mes "My mom is out of Hugel to sell Hugel's principal products.";
