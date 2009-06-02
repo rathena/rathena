@@ -4363,14 +4363,20 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				break;
 			}
 			clif_skill_nodamage(src,bl,skillid,skilllv,1);
-			if(skilllv == 1) {
-				// possibility to skip menu [LuzZza]
-				if(!battle_config.skip_teleport_lv1_menu && sd->skillitem != AL_TELEPORT)
+
+			// FIXME: Before r13836, sd->skillitem was never equal to AL_TELEPORT!! 
+			// So, neither normal casted, nor item skill, nor autocasts would skip the menu! What was this intended to do?
+			// Now, I assume only autocasts teleport may always skip the menu. [Inkfish]
+			if( skilllv == 1 )
+			{
+				if( !battle_config.skip_teleport_lv1_menu && sd->skillitem == AL_TELEPORT ) // possibility to skip menu [LuzZza]
 					clif_skill_warppoint(sd,skillid,skilllv, (unsigned short)-1,0,0,0);
 				else
 					pc_randomwarp(sd,3);
-			} else {
-				if (sd->skillitem != AL_TELEPORT)
+			}
+			else
+			{
+				if( sd->skillitem == AL_TELEPORT )
 					clif_skill_warppoint(sd,skillid,skilllv, (unsigned short)-1,sd->status.save_point.map,0,0);
 				else //Autocasted Teleport level 2??
 					pc_setpos(sd,sd->status.save_point.map,sd->status.save_point.x,sd->status.save_point.y,3);
@@ -5854,6 +5860,9 @@ int skill_castend_id(int tid, unsigned int tick, int id, intptr data)
 				sc->data[SC_SPIRIT]->val3 = 0; //Clear bounced spell check.
 		}
 
+		if( sd && sd->skillitem == ud->skillid )
+			sd->skillitem = sd->skillitemlv = 0;
+
 		if (ud->skilltimer == -1) {
 			if(md) md->skillidx = -1;
 			else ud->skillid = 0; //mobs can't clear this one as it is used for skill condition 'afterskill'
@@ -5901,9 +5910,10 @@ int skill_castend_id(int tid, unsigned int tick, int id, intptr data)
 	//You can't place a skill failed packet here because it would be
 	//sent in ALL cases, even cases where skill_check_condition fails
 	//which would lead to double 'skill failed' messages u.u [Skotlex]
-	if(sd) sd->skillitem = sd->skillitemlv = 0;
-	else
-	if(md) md->skillidx = -1;
+	if(sd)
+		sd->skillitem = sd->skillitemlv = 0;
+	else if(md)
+		md->skillidx = -1;
 	return 0;
 }
 
@@ -6027,6 +6037,9 @@ int skill_castend_pos(int tid, unsigned int tick, int id, intptr data)
 
 		map_freeblock_lock();
 		skill_castend_pos2(src,ud->skillx,ud->skilly,ud->skillid,ud->skilllv,tick,0);
+
+		if( sd && sd->skillitem == ud->skillid )
+			sd->skillitem = sd->skillitemlv = 0;
 
 		if (ud->skilltimer == -1) {
 			if (md) md->skillidx = -1;
@@ -8056,48 +8069,44 @@ int skill_check_condition_castbegin(struct map_session_data* sd, short skill, sh
 
 	if (lv <= 0 || sd->chatID) return 0;
 
-	if( battle_config.gm_skilluncond &&
-		pc_isGM(sd)>= battle_config.gm_skilluncond &&
-		sd->skillitem != skill)
-	{	//GMs don't override the skillItem check, otherwise they can use items without them being consumed! [Skotlex]
-		sd->skillitem = sd->skillitemlv = 0;
-		//Need to do arrow state check.
-		sd->state.arrow_atk = skill_get_ammotype(skill)?1:0;
-		//Need to do Spiritball check.
-		sd->spiritball_old = sd->spiritball;
+	if( battle_config.gm_skilluncond && pc_isGM(sd)>= battle_config.gm_skilluncond && sd->skillitem != skill )
+	{	//GMs don't override the skillItem check, otherwise they can use items without them being consumed! [Skotlex]	
+		sd->state.arrow_atk = skill_get_ammotype(skill)?1:0; //Need to do arrow state check.
+		sd->spiritball_old = sd->spiritball; //Need to do Spiritball check.
 		return 1;
 	}
 
 	if(pc_is90overweight(sd)) {
 		clif_skill_fail(sd,skill,9,0);
-		sd->skillitem = sd->skillitemlv = 0;
 		return 0;
 	}
 
-	if( sd->state.abra_flag )
+	if( sd->menuskill_id == AM_PHARMACY )
 	{
-		if( sd->skillitem == skill )
-			return 1;
-		sd->skillitem = sd->skillitemlv = sd->state.abra_flag = 0; // Cancelled, using a different skill	
-	}
-
-	if (sd->menuskill_id == AM_PHARMACY &&
-		(skill == AM_PHARMACY || skill == AC_MAKINGARROW || skill == BS_REPAIRWEAPON ||
-		skill == AM_TWILIGHT1 || skill == AM_TWILIGHT2  || skill == AM_TWILIGHT3
-	)) {
-		sd->skillitem = sd->skillitemlv = 0;
-		return 0;
+		switch( skill )
+		{
+		case AM_PHARMACY:
+		case AC_MAKINGARROW:
+		case BS_REPAIRWEAPON:
+		case AM_TWILIGHT1:
+		case AM_TWILIGHT2:
+		case AM_TWILIGHT3:
+			return 0;
+		}
 	}
 
 	status = &sd->battle_status;
 	sc = &sd->sc;
 	if( !sc->count )
 		sc = NULL;
-	
-	if(sd->skillitem == skill) {
-		// When a target was selected
-		{	//Consume items that were skipped in pc_use_item [Skotlex]
-			 if((i = sd->itemindex) == -1 ||
+
+	if( sd->skillitem == skill )
+	{
+		if( sd->state.abra_flag ) // Hocus-Pocus was used. [Inkfish]
+			sd->state.abra_flag = 0;
+		else
+		{ // When a target was selected, consume items that were skipped in pc_use_item [Skotlex]
+			if( (i = sd->itemindex) == -1 ||
 				sd->status.inventory[i].nameid != sd->itemid ||
 				sd->inventory_data[i] == NULL ||
 				!sd->inventory_data[i]->flag.delay_consume ||
@@ -8558,27 +8567,16 @@ int skill_check_condition_castend(struct map_session_data* sd, short skill, shor
 		return 0;
 
 	if( battle_config.gm_skilluncond && pc_isGM(sd) >= battle_config.gm_skilluncond && sd->skillitem != skill )
-	{	//GMs don't override the skillItem check, otherwise they can use items without them being consumed! [Skotlex]
-		sd->skillitem = sd->skillitemlv = 0;
-		//Need to do arrow state check.
-		sd->state.arrow_atk = skill_get_ammotype(skill)?1:0; 
-		//Need to do Spiritball check.
-		sd->spiritball_old = sd->spiritball;
+	{	//GMs don't override the skillItem check, otherwise they can use items without them being consumed! [Skotlex]	
+		sd->state.arrow_atk = skill_get_ammotype(skill)?1:0; //Need to do arrow state check.
+		sd->spiritball_old = sd->spiritball; //Need to do Spiritball check.
 		return 1;
 	}
 
 	if( pc_is90overweight(sd) )
 	{
 		clif_skill_fail(sd,skill,9,0);
-		sd->skillitem = sd->skillitemlv = 0;
 		return 0;
-	}
-
-	if( sd->state.abra_flag )
-	{ // Abracadabra skill, skip requisites!	
-		sd->skillitem = sd->skillitemlv = sd->state.abra_flag = 0; // Clear out the data.
-		if( sd->skillitem == skill )
-			return 1;
 	}
 
 	if( sd->menuskill_id == AM_PHARMACY )
@@ -8591,16 +8589,12 @@ int skill_check_condition_castend(struct map_session_data* sd, short skill, shor
 		case AM_TWILIGHT1:
 		case AM_TWILIGHT2:
 		case AM_TWILIGHT3:
-			sd->skillitem = sd->skillitemlv = 0;
 			return 0;
 		}
 	}
 	
-	if( sd->skillitem == skill )
-	{ // Casting finished
-		sd->skillitem = sd->skillitemlv = 0;
+	if( sd->skillitem == skill ) // Casting finished (Item skill or Hocus-Pocus)
 		return 1;
-	}
 
 	// perform skill-specific checks (and actions)
 	switch( skill )
@@ -8740,6 +8734,10 @@ struct skill_condition skill_get_requirement(struct map_session_data* sd, short 
 
 	if( !sd )
 		return req;
+
+	if( sd->skillitem == skill )
+		return req; // Item skills and Hocus-Pocus don't have requirements.[Inkfish]
+
 	j = skill_get_index(skill);
 	if( j == 0 ) // invalid skill id
   		return req;
