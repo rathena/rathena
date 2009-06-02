@@ -5134,7 +5134,6 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			//val1: Skill lv
 			val2 = 1; //Lasts 1 invocation
 			val3 = 5*val1; //Matk% increase
-			tick = -1;
 			break;
 		case SC_SACRIFICE:
 			val2 = 5; //Lasts 5 hits
