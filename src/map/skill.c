@@ -1008,7 +1008,8 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 			else
 				tbl = bl;
 
-			skill_consume_requirement(sd,skill,skilllv,2); // Autocasts don't consume sp
+			sd->state.autocast = 1;
+			skill_consume_requirement(sd,skill,skilllv,1);
 			switch (skill_get_casttype(skill)) {
 				case CAST_GROUND:
 					skill_castend_pos2(src, tbl->x, tbl->y, skill, skilllv, tick, 0);
@@ -1020,6 +1021,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 					skill_castend_damage_id(src, tbl, skill, skilllv, tick, 0);
 					break;
 			}
+			sd->state.autocast = 0;
 			//Set canact delay. [Skotlex]
 			ud = unit_bl2ud(src);
 			if (ud) {
@@ -1030,7 +1032,6 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 						clif_status_change(src, SI_ACTIONDELAY, 1, rate);
 				}
 			}
-			//break; //Only one auto skill comes off at a time.
 		}
 	}
 
@@ -1106,13 +1107,15 @@ int skill_onskillusage(struct map_session_data *sd, struct block_list *bl, int s
 		else
 			tbl = bl;
 
+		sd->state.autocast = 1;
+		skill_consume_requirement(sd,skill,skilllv,1);
 		switch( skill_get_casttype(skill) )
 		{
 			case CAST_GROUND:   skill_castend_pos2(&sd->bl, tbl->x, tbl->y, skill, skilllv, tick, 0); break;
 			case CAST_NODAMAGE: skill_castend_nodamage_id(&sd->bl, tbl, skill, skilllv, tick, 0); break;
 			case CAST_DAMAGE:   skill_castend_damage_id(&sd->bl, tbl, skill, skilllv, tick, 0); break;
 		}
-		//break;
+		sd->state.autocast = 0;
 	}
 
 	if( sd->autoscript3[0].script )
@@ -1263,7 +1266,8 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 			else
 				tbl = src;
 
-			skill_consume_requirement(sd,skillid,skilllv,2); // Autocasts don't consume sp
+			dstsd->state.autocast = 1;
+			skill_consume_requirement(dstsd,skillid,skilllv,1);
 			switch (skill_get_casttype(skillid)) {
 				case CAST_GROUND:
 					skill_castend_pos2(bl, tbl->x, tbl->y, skillid, skilllv, tick, 0);
@@ -1275,6 +1279,7 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 					skill_castend_damage_id(bl, tbl, skillid, skilllv, tick, 0);
 					break;
 			}
+			dstsd->state.autocast = 0;
 			//Set canact delay. [Skotlex]
 			ud = unit_bl2ud(bl);
 			if (ud) {
@@ -1285,7 +1290,6 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 						clif_status_change(bl, SI_ACTIONDELAY, 1, rate);
 				}
 			}
-			//break; //trigger only one auto-spell per hit.
 		}
 	}
 	//Auto-script when attacked
@@ -3077,7 +3081,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 			battle_consume_ammo(sd, skillid, skilllv);
 		if( !sd->state.skillonskill )
 			skill_onskillusage(sd, bl, skillid, tick);
-		skill_consume_requirement(sd,skillid,skilllv,4);
+		skill_consume_requirement(sd,skillid,skilllv,2);
 	}
 
 	return 0;
@@ -3750,6 +3754,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		break;
 
 	case SM_PROVOKE:
+	case SM_SELFPROVOKE:
 	case MER_PROVOKE:
 		if( (tstatus->mode&MD_BOSS) || battle_check_undead(tstatus->race,tstatus->def_ele) )
 		{
@@ -3758,7 +3763,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		}
 		//TODO: How much does base level affects? Dummy value of 1% per level difference used. [Skotlex]
 		clif_skill_nodamage(src,bl,skillid,skilllv,
-			(i = sc_start(bl,type, 50 + 3*skilllv + status_get_lv(src) - status_get_lv(bl), skilllv, skill_get_time(skillid,skilllv))));
+			(i = sc_start(bl,type, skillid == SM_SELFPROVOKE ? 100:( 50 + 3*skilllv + status_get_lv(src) - status_get_lv(bl)), skilllv, skill_get_time(skillid,skilllv))));
 		if( !i )
 		{
 			if( sd )
@@ -4365,24 +4370,21 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				clif_displaymessage(sd->fd, "Duel: Can't use teleport in duel.");
 				break;
 			}
-			clif_skill_nodamage(src,bl,skillid,skilllv,1);
 
-			// FIXME: Before r13836, sd->skillitem was never equal to AL_TELEPORT!! So, I don't know what was intened to do. 
-			// Now, Teleport thru items won't show the menu but normal casted and autocasted will. [Inkfish]
-			if( skilllv == 1 )
+			if( sd->state.autocast || sd->skillitem == AL_TELEPORT || battle_config.skip_teleport_lv1_menu || skilllv > 2 )
 			{
-				if( !battle_config.skip_teleport_lv1_menu && sd->skillitem != AL_TELEPORT ) // possibility to skip menu [LuzZza]
-					clif_skill_warppoint(sd,skillid,skilllv, (unsigned short)-1,0,0,0);
-				else
+				if( skilllv == 1 )
 					pc_randomwarp(sd,3);
-			}
-			else
-			{
-				if( sd->skillitem != AL_TELEPORT )
-					clif_skill_warppoint(sd,skillid,skilllv, (unsigned short)-1,sd->status.save_point.map,0,0);
-				else //Autocasted Teleport level 2??
+				else
 					pc_setpos(sd,sd->status.save_point.map,sd->status.save_point.x,sd->status.save_point.y,3);
+				break;
 			}
+
+			clif_skill_nodamage(src,bl,skillid,skilllv,1);
+			if( skilllv == 1 )
+				clif_skill_warppoint(sd,skillid,skilllv, (unsigned short)-1,0,0,0);
+			else
+				clif_skill_warppoint(sd,skillid,skilllv, (unsigned short)-1,sd->status.save_point.map,0,0);
 		} else
 			unit_warp(bl,-1,-1,-1,3);
 		break;
@@ -5634,7 +5636,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			battle_consume_ammo(sd, skillid, skilllv);
 		if( !sd->state.skillonskill )
 			skill_onskillusage(sd, bl, skillid, tick);
-		skill_consume_requirement(sd,skillid,skilllv,4);
+		skill_consume_requirement(sd,skillid,skilllv,2);
 	}
 
 	map_freeblock_unlock();
@@ -5793,7 +5795,7 @@ int skill_castend_id(int tid, unsigned int tick, int id, intptr data)
 			if (sd) {
 				clif_skill_fail(sd,ud->skillid,0,0);
 				if(battle_config.skill_out_range_consume) //Consume items anyway. [Skotlex]
-					skill_consume_requirement(sd,ud->skillid,ud->skilllv,7);
+					skill_consume_requirement(sd,ud->skillid,ud->skilllv,3);
 			}
 			break;
 		}
@@ -5803,7 +5805,7 @@ int skill_castend_id(int tid, unsigned int tick, int id, intptr data)
 			if( !skill_check_condition_castend(sd, ud->skillid, ud->skilllv) )
 				break;
 			else
-				skill_consume_requirement(sd,ud->skillid,ud->skilllv,3);
+				skill_consume_requirement(sd,ud->skillid,ud->skilllv,1);
 		}
 
 		if( (src->type == BL_MER || src->type == BL_HOM) && !skill_check_condition_mercenary(src, ud->skillid, ud->skilllv, 1) )
@@ -5862,7 +5864,7 @@ int skill_castend_id(int tid, unsigned int tick, int id, intptr data)
 				sc->data[SC_SPIRIT]->val3 = 0; //Clear bounced spell check.
 		}
 
-		if( sd && sd->skillitem == ud->skillid )
+		if( sd && ud->skillid != SA_ABRACADABRA ) // Hocus-Pocus has just set the data so leave it as it is.[Inkfish]
 			sd->skillitem = sd->skillitemlv = 0;
 
 		if (ud->skilltimer == -1) {
@@ -5878,7 +5880,7 @@ int skill_castend_id(int tid, unsigned int tick, int id, intptr data)
 	if (ud->skillid == MO_EXTREMITYFIST && sd && !(sc && sc->data[SC_FOGWALL]))
   	{	//When Asura fails... (except when it fails from Fog of Wall)
 		//Consume SP/spheres
-		skill_consume_requirement(sd,ud->skillid, ud->skilllv,3);
+		skill_consume_requirement(sd,ud->skillid, ud->skilllv,1);
 		status_set_sp(src, 0, 0);
 		sc = &sd->sc;
 		if (sc->count)
@@ -5996,7 +5998,7 @@ int skill_castend_pos(int tid, unsigned int tick, int id, intptr data)
 			if(battle_config.skill_add_range &&
 				!check_distance_blxy(src, ud->skillx, ud->skilly, skill_get_range2(src,ud->skillid,ud->skilllv)+battle_config.skill_add_range)) {
 				if (sd && battle_config.skill_out_range_consume) //Consume items anyway.
-					skill_consume_requirement(sd,ud->skillid,ud->skilllv,7);
+					skill_consume_requirement(sd,ud->skillid,ud->skilllv,3);
 				break;
 			}
 		}
@@ -6006,7 +6008,7 @@ int skill_castend_pos(int tid, unsigned int tick, int id, intptr data)
 			if( !skill_check_condition_castend(sd, ud->skillid, ud->skilllv) )
 				break;
 			else
-				skill_consume_requirement(sd,ud->skillid,ud->skilllv,3);
+				skill_consume_requirement(sd,ud->skillid,ud->skilllv,1);
 		}
 
 		if( (src->type == BL_MER || src->type == BL_HOM) && !skill_check_condition_mercenary(src, ud->skillid, ud->skilllv, 1) )
@@ -6040,7 +6042,7 @@ int skill_castend_pos(int tid, unsigned int tick, int id, intptr data)
 		map_freeblock_lock();
 		skill_castend_pos2(src,ud->skillx,ud->skilly,ud->skillid,ud->skilllv,tick,0);
 
-		if( sd && sd->skillitem == ud->skillid )
+		if( sd && sd->skillitem != AL_WARP ) // Warp-Portal thru items will clear data in skill_castend_map. [Inkfish]
 			sd->skillitem = sd->skillitemlv = 0;
 
 		if (ud->skilltimer == -1) {
@@ -6480,7 +6482,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, int skillid, int sk
 			battle_consume_ammo(sd, skillid, skilllv);
 		if( !sd->state.skillonskill )
 			skill_onskillusage(sd, NULL, skillid, tick);
-		skill_consume_requirement(sd,skillid,skilllv,4);
+		skill_consume_requirement(sd,skillid,skilllv,2);
 	}
 
 	return 0;
@@ -6573,8 +6575,7 @@ int skill_castend_map (struct map_session_data *sd, short skill_num, const char 
 				}
 			}
 
-			//When it's an item-used warp-portal, the skill-lv used is lost.. assume max level.
-			lv = sd->skillitem==skill_num?skill_get_max(skill_num):pc_checkskill(sd,skill_num);
+			lv = sd->skillitem==skill_num?sd->skillitemlv:pc_checkskill(sd,skill_num);
 			wx = sd->menuskill_val>>16;
 			wy = sd->menuskill_val&0xffff;
 
@@ -6597,7 +6598,8 @@ int skill_castend_map (struct map_session_data *sd, short skill_num, const char 
 				return 0;
 			}
 
-			skill_consume_requirement(sd,sd->menuskill_id,lv,4);
+			skill_consume_requirement(sd,sd->menuskill_id,lv,2);
+			sd->skillitem = sd->skillitemlv = 0; // Clear data that's skipped in 'skill_castend_pos' [Inkfish]
 
 			if((group=skill_unitsetting(&sd->bl,skill_num,lv,wx,wy,0))==NULL) {
 				skill_failed(sd);
@@ -8670,6 +8672,8 @@ int skill_check_condition_castend(struct map_session_data* sd, short skill, shor
 	return 1;
 }
 
+// type&2: consume items (after skill was used)
+// type&1: consume the others (before skill was used)
 int skill_consume_requirement( struct map_session_data *sd, short skill, short lv, short type)
 {
 	int n,i;
@@ -8681,14 +8685,11 @@ int skill_consume_requirement( struct map_session_data *sd, short skill, short l
 
 	if( type&1 )
 	{
-		if( skill == CG_TAROTCARD )
-			req.sp = 0; // sp will be consumed in skill_cast_nodamage_id [Inkfish]
+		if( skill == CG_TAROTCARD || sd->state.autocast )
+			req.sp = 0; // TarotCard will consume sp in skill_cast_nodamage_id [Inkfish]
 		if(req.hp || req.sp)
 			status_zap(&sd->bl, req.hp, req.sp);
-	}
 
-	if( type&2 )
-	{
 		if(req.spiritball > 0)
 			pc_delspiritball(sd,req.spiritball,0);
 
@@ -8702,7 +8703,7 @@ int skill_consume_requirement( struct map_session_data *sd, short skill, short l
 		}
 	}
 
-	if( type&4 )
+	if( type&2 )
 	{
 		struct status_change *sc = &sd->sc;
 

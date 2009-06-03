@@ -3487,10 +3487,7 @@ int pc_useitem(struct map_session_data *sd,int n)
 	//Since most delay-consume items involve using a "skill-type" target cursor,
 	//perform a skill-use check before going through. [Skotlex]
 	//resurrection was picked as testing skill, as a non-offensive, generic skill, it will do.
-	if (sd->inventory_data[n]->flag.delay_consume && (
-		sd->ud.skilltimer != -1 ||
-		DIFF_TICK(tick, sd->ud.canact_tick) < 0 ||
-		!status_check_skilluse(&sd->bl, &sd->bl, ALL_RESURRECTION, 0)))
+	if( sd->inventory_data[n]->flag.delay_consume && ( sd->ud.skilltimer != -1 || !status_check_skilluse(&sd->bl, &sd->bl, ALL_RESURRECTION, 0) ) )
 		return 0;
 
 	sd->itemid = sd->status.inventory[n].nameid;
@@ -5147,10 +5144,17 @@ int pc_resetskill(struct map_session_data* sd, int flag)
 		if( inf2&(INF2_WEDDING_SKILL|INF2_SPIRIT_SKILL) ) //Avoid reseting wedding/linker skills.
 			continue;
 		
-		 // Don't reset trick dead if not a novice/baby
+		// Don't reset trick dead if not a novice/baby
 		if( i == NV_TRICKDEAD && (sd->class_&MAPID_UPPERMASK) != MAPID_NOVICE && (sd->class_&MAPID_UPPERMASK) != MAPID_BABY )
 		{
 			sd->status.skill[i].lv = 0;
+			sd->status.skill[i].flag = 0;
+			continue;
+		}
+
+		if( i == NV_BASIC && (sd->class_&MAPID_UPPERMASK) != MAPID_NOVICE && (sd->class_&MAPID_UPPERMASK) != MAPID_BABY )
+		{ // Official server does not include Basic Skill to be resetted. [Jobbie]
+			sd->status.skill[i].lv = 9;
 			sd->status.skill[i].flag = 0;
 			continue;
 		}

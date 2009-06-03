@@ -9481,8 +9481,11 @@ void clif_parse_UseSkillToId(int fd, struct map_session_data *sd)
 	}
 	else if( DIFF_TICK(tick, sd->ud.canact_tick) < 0 )
 	{
-		clif_skill_fail(sd, skillnum, 4, 0);
-		return;
+		if( sd->skillitem != skillnum )
+		{
+			clif_skill_fail(sd, skillnum, 4, 0);
+			return;
+		}
 	}
 
 	if( sd->sc.option&(OPTION_WEDDING|OPTION_XMAS|OPTION_SUMMER) )
@@ -9490,7 +9493,7 @@ void clif_parse_UseSkillToId(int fd, struct map_session_data *sd)
 
 	if( sd->sc.data[SC_BASILICA] && (skillnum != HP_BASILICA || sd->sc.data[SC_BASILICA]->val4 != sd->bl.id) )
 		return; // On basilica only caster can use Basilica again to stop it.
-	
+
 	if( sd->menuskill_id )
 	{
 		if( sd->menuskill_id == SA_TAMINGMONSTER )
@@ -9604,8 +9607,11 @@ void clif_parse_UseSkillToPosSub(int fd, struct map_session_data *sd, short skil
 
 	if( DIFF_TICK(tick, sd->ud.canact_tick) < 0 )
 	{
-		clif_skill_fail(sd, skillnum, 4, 0);
-		return;
+		if( sd->skillitem != skillnum )
+		{
+			clif_skill_fail(sd, skillnum, 4, 0);
+			return;
+		}
 	}
 
 	if( sd->sc.option&(OPTION_WEDDING|OPTION_XMAS|OPTION_SUMMER) )

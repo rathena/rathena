@@ -514,7 +514,7 @@
 470,9,6,1,0,0x1,0,7,1,no,0,0,0,magic,0,		SL_SWOO,Eswoo
 471,9,6,1,0,0x1,0,3,1,no,0,0,0,magic,0,		SL_SKE,Eske
 472,9,6,1,0,0x1,0,3,1,no,0,0,0,magic,0,		SL_SKA,Eska
-473,0,0,0,0,0,0,0,0,no,0,0,0,none,0,		SM_SELFPROVOKE,Provoke Self
+473,0,6,4,0,0,0,1,1,no,0,0,0,none,0,		SM_SELFPROVOKE,Provoke Self
 474,0,0,4,0,0x1,0,10,1,no,0,0x2,0,none,0,	NPC_EMOTION_ON,Emotion ON
 475,0,0,4,0,0x1,0,1,1,yes,0,0,0,none,0,		ST_PRESERVE,Preserve
 476,1,6,1,0,0x1,0,5,1,yes,0,0,0,weapon,0,	ST_FULLSTRIP,Divest All

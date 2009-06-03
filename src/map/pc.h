@@ -96,6 +96,7 @@ struct map_session_data {
 		unsigned snovice_call_flag : 2; //Summon Angel (stage 1~3)
 		unsigned snovice_dead_flag : 1; //Explosion spirits on death: 0 off, 1 used.
 		unsigned abra_flag : 1; // Abracadabra bugfix by Aru
+		unsigned autocast : 1; // Autospell flag [Inkfish]
 		unsigned autotrade : 1;	//By Fantik
 		unsigned reg_dirty : 3; //By Skotlex (marks whether registry variables have been saved or not yet)
 		unsigned showdelay :1;
