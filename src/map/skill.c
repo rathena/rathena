@@ -342,7 +342,7 @@ int can_copy (struct map_session_data *sd, int skillid, struct block_list* bl)
 	}
 
 	//Added so plagarize can't copy agi/bless if you're undead since it damages you
-	if ((skillid == AL_INCAGI || skillid == AL_BLESSING))
+	if ((skillid == AL_INCAGI || skillid == AL_BLESSING || skillid == CASH_BLESSING || skillid == CASH_INCAGI))
 		return 0;
 
 	return 1;
@@ -1673,7 +1673,7 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 
 	damage = dmg.damage + dmg.damage2;
 
-	if( (skillid == AL_INCAGI || skillid == AL_BLESSING) && tsd->sc.data[SC_CHANGEUNDEAD] )
+	if( (skillid == AL_INCAGI || skillid == AL_BLESSING || skillid == CASH_BLESSING || skillid == CASH_INCAGI) && tsd->sc.data[SC_CHANGEUNDEAD] )
 		damage = 1;
 
 	if( damage > 0 && dmg.flag&BF_WEAPON && src != bl && ( src == dsrc || ( dsrc->type == BL_SKILL && ( skillid == SG_SUN_WARM || skillid == SG_MOON_WARM || skillid == SG_STAR_WARM ) ) )
@@ -4013,6 +4013,9 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case PR_MAGNIFICAT:
 	case PR_GLORIA:
 	case SN_WINDWALK:
+	case CASH_BLESSING:
+	case CASH_INCAGI:
+	case CASH_ASSUMPTIO:
 		if( sd == NULL || sd->status.party_id == 0 || (flag & 1) )
 			clif_skill_nodamage(bl, bl, skillid, skilllv, sc_start(bl,type,100,skilllv,skill_get_time(skillid,skilllv)));
 		else if( sd )

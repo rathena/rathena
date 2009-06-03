@@ -4,6 +4,7 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 09/06/02
+	* Rev. 13840 Implemented the Party Buff cash skills. [L0ne_W0lf]
 	* Fixed Mystical Amplification having unlimited duration [Playtester]
 	* Fixed skills used through items and Hocus-pocus consume requirements if you have them. (bugreport:3164) [Inkfish]
 09/06/01

@@ -37,6 +37,11 @@
 	2385 Recuvative_Armor		Should trigger HP/SP return with magical kills as well.
 
 =======================
+2009/06/02
+	* Rev. 13840 Misc updates, and updates for party buff items. [L0ne_W0lf]
+	- Added CASH_BLESSING, CASH_INCAGI and CASH_ASSUMPTIO skills.
+	- Added itemskill commands for the party buff scrolls.
+	- Corrected Equipment repair book's itemtype to 11.
 2009/05/29
 	* Rev. 13825 Removed an extra comma from chocolate_pie. [L0ne_W0lf]
 	* Rev. 13824 Various item database updates of my own :D [L0ne_W0lf]
