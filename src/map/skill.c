@@ -4364,19 +4364,18 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			}
 			clif_skill_nodamage(src,bl,skillid,skilllv,1);
 
-			// FIXME: Before r13836, sd->skillitem was never equal to AL_TELEPORT!! 
-			// So, neither normal casted, nor item skill, nor autocasts would skip the menu! What was this intended to do?
-			// Now, I assume only autocasts teleport may always skip the menu. [Inkfish]
+			// FIXME: Before r13836, sd->skillitem was never equal to AL_TELEPORT!! So, I don't know what was intened to do. 
+			// Now, Teleport thru items won't show the menu but normal casted and autocasted will. [Inkfish]
 			if( skilllv == 1 )
 			{
-				if( !battle_config.skip_teleport_lv1_menu && sd->skillitem == AL_TELEPORT ) // possibility to skip menu [LuzZza]
+				if( !battle_config.skip_teleport_lv1_menu && sd->skillitem != AL_TELEPORT ) // possibility to skip menu [LuzZza]
 					clif_skill_warppoint(sd,skillid,skilllv, (unsigned short)-1,0,0,0);
 				else
 					pc_randomwarp(sd,3);
 			}
 			else
 			{
-				if( sd->skillitem == AL_TELEPORT )
+				if( sd->skillitem != AL_TELEPORT )
 					clif_skill_warppoint(sd,skillid,skilllv, (unsigned short)-1,sd->status.save_point.map,0,0);
 				else //Autocasted Teleport level 2??
 					pc_setpos(sd,sd->status.save_point.map,sd->status.save_point.x,sd->status.save_point.y,3);
