@@ -1,4 +1,5 @@
 //id,range,hit,inf,element,nk,splash,max,list_num,castcancel,cast_defence_rate,inf2,maxcount,skill_type,blow_count,name,description
+//id,range,hit,inf,element,nk,splash,max,list_num,castcancel,cast_defence_rate,inf2,maxcount,skill_type,blow_count,name,description
 // 01 ID
 // 02 range (combo skills do not check for range when used,
 //           if range is < 5, the skill is considered melee-range)
@@ -622,8 +623,8 @@
 
 // Additional NPC skill (Episode 12)
 //682,0,0,0,0,0,0,9,0,no,0,0,0,none,0,		NPC_TALK,Talk
-//683,0,0,0,0,0,0,9,0,no,0,0,0,none,0,		NPC_HELLPOWER,Hell Power
-//684,0,0,0,0,0,0,9,0,no,0,0,0,none,0,		NPC_WIDEHELLDIGNITY,Hell Dignity
+683,-9,6,1,-1,0,0,1,1,no,0,0x2,0,none,0,		NPC_HELLPOWER,Hell Power
+684,0,6,4,0,0x3,-1,1,1,no,0,0x2,0,none,0,		NPC_WIDEHELLDIGNITY,Hell Dignity
 //685,0,0,0,0,0,0,9,0,no,0,0,0,none,0,		NPC_INVINCIBLE,Incinvible
 //686,0,0,0,0,0,0,9,0,no,0,0,0,none,0,		NPC_INVINCIBLEOFF,Invincible off
 687,0,6,4,0,0x1,0,1,1,yes,0,0x2,0,none,0,	NPC_ALLHEAL,Full Heal

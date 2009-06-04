@@ -1559,6 +1559,11 @@ int map_quit(struct map_session_data *sd)
 			//TO-DO Probably there are way more NPC_type negative status that are removed
 			if(sd->sc.data[SC_CHANGEUNDEAD])
 				status_change_end(&sd->bl,SC_CHANGEUNDEAD,-1);
+			// Both these statuses are removed on logout. [L0ne_W0lf]
+			if(sd->sc.data[SC_SLOWCAST])
+				status_change_end(&sd->bl,SC_SLOWCAST,-1);
+			if(sd->sc.data[SC_CRITICALWOUND])
+				status_change_end(&sd->bl,SC_CRITICALWOUND,-1);
 		}
 		if (battle_config.debuff_on_logout&2)
 		{
@@ -1568,6 +1573,8 @@ int map_quit(struct map_session_data *sd)
 				status_change_end(&sd->bl,SC_MAXOVERTHRUST,-1);
 			if(sd->sc.data[SC_STEELBODY])
 				status_change_end(&sd->bl,SC_STEELBODY,-1);
+			if(sd->sc.data[SC_PRESERVE])
+				status_change_end(&sd->bl,SC_PRESERVE,-1);
 		}
 	}
 	

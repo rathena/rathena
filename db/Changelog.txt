@@ -37,6 +37,8 @@
 	2385 Recuvative_Armor		Should trigger HP/SP return with magical kills as well.
 
 =======================
+2009/06/04
+	* Rev. 13843 Added skill information for NPC_HELLPOWER and NPC_WIDEHELLDIGNITY, and enabled skills in mob_skill_db. [L0ne_W0lf]
 2009/06/03
 	* Rev. 13842 Fixed Party Assumptio scroll casting level 10 assumptio. [L0ne_W0lf]
 2009/06/02

@@ -786,6 +786,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 	case NPC_POISON:
 	case NPC_SILENCEATTACK:
 	case NPC_STUNATTACK:
+	case NPC_HELLPOWER:
 		sc_start(bl,status_skill2sc(skillid),50+10*skilllv,skilllv,skill_get_time2(skillid,skilllv));
 		break;
 	case NPC_ACIDBREATH:
@@ -2555,6 +2556,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 	case HFLI_SBR44:	//[orn]
 	case NPC_BLEEDING:
 	case NPC_CRITICALWOUND:
+	case NPC_HELLPOWER:
 		skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,flag);
 		break;
 
@@ -3252,6 +3254,9 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			break;
 		{
 			int per = 0, sper = 0;
+			if (status_get_sc(bl)->data[SC_HELLPOWER])
+				break;
+
 			if (map[bl->m].flag.pvp && dstsd && dstsd->pvp_point < 0)
 				break;
 
@@ -3635,6 +3640,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case NJ_NEN:
 	case NPC_DEFENDER:
 	case NPC_MAGICMIRROR:
+	case ST_PRESERVE:
 		clif_skill_nodamage(src,bl,skillid,skilllv,
 			sc_start(bl,type,100,skilllv,skill_get_time(skillid,skilllv)));
 		break;
@@ -4064,7 +4070,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case TK_READYCOUNTER:
 	case TK_DODGE:
 	case CR_SHRINK:
-	case ST_PRESERVE:
 	case SG_FUSION:
 	case GS_GATLINGFEVER:
 		if( tsce )
@@ -5607,6 +5612,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case NPC_WIDESTONE:
 	case NPC_WIDESTUN:
 	case NPC_SLOWCAST:
+	case NPC_WIDEHELLDIGNITY:
 		if (flag&1)
 			sc_start(bl,type,100,skilllv,skill_get_time2(skillid,skilllv));
 		else {

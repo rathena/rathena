@@ -312,6 +312,7 @@ typedef enum sc_type {
 	SC_ITEMSCRIPT,
 	SC_S_LIFEPOTION,
 	SC_L_LIFEPOTION,
+	SC_HELLPOWER,
 
 	SC_MAX, //Automatically updated max, used in for's to check we are within bounds.
 } sc_type;
@@ -623,7 +624,7 @@ enum si_type {
 	SI_TARGET_BLOOD = 301,
 	SI_ARMOR_PROPERTY = 302,
 //	SI_REUSE_LIMIT_A = 303,
-//	SI_HELLPOWER = 304,
+	SI_HELLPOWER = 304,
 //	SI_STEAMPACK = 305,
 //	SI_REUSE_LIMIT_B = 306,
 //	SI_REUSE_LIMIT_C = 307,
