@@ -37,6 +37,8 @@
 	2385 Recuvative_Armor		Should trigger HP/SP return with magical kills as well.
 
 =======================
+2009/06/03
+	* Rev. 13842 Fixed Party Assumptio scroll casting level 10 assumptio. [L0ne_W0lf]
 2009/06/02
 	* Rev. 13840 Misc updates, and updates for party buff items. [L0ne_W0lf]
 	- Added CASH_BLESSING, CASH_INCAGI and CASH_ASSUMPTIO skills.
