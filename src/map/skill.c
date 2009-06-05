@@ -1048,8 +1048,9 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 				continue; // one or more trigger conditions were not fulfilled
 			if( rand()%1000 > sd->autoscript[i].rate )
 				continue;
+			sd->state.autocast = 1;
 			run_script(sd->autoscript[i].script,0,sd->autoscript[i].target?bl->id:src->id,0);
-			break; //Have only one script execute at a time.
+			sd->state.autocast = 0;
 		}
 	}
 
@@ -1129,8 +1130,9 @@ int skill_onskillusage(struct map_session_data *sd, struct block_list *bl, int s
 				continue;
 			if( rand()%1000 > sd->autoscript3[i].rate )
 				continue;
+			sd->state.autocast = 1;
 			run_script(sd->autoscript3[i].script,0,sd->bl.id,0);
-			break;
+			sd->state.autocast = 0;
 		}
 	}
 
@@ -1305,8 +1307,9 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 				continue; // one or more trigger conditions were not fulfilled
 			if( rand()%1000 > dstsd->autoscript2[i].rate )
 				continue;
+			dstsd->state.autocast = 1;
 			run_script(dstsd->autoscript2[i].script,0,dstsd->autoscript2[i].target?src->id:bl->id,0);
-			break; //Have only one script execute at a time.
+			dstsd->state.autocast = 0;
 		}
 	}
 
@@ -4073,10 +4076,12 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case SG_FUSION:
 	case GS_GATLINGFEVER:
 		if( tsce )
-			i = status_change_end(bl, type, -1);
-		else
-			i = sc_start(bl,type,100,skilllv,skill_get_time(skillid,skilllv));
-			clif_skill_nodamage(src,bl,skillid,skilllv,i);
+		{
+			clif_skill_nodamage(src,bl,skillid,skilllv,status_change_end(bl, type, -1));
+			map_freeblock_unlock();
+			return 0;
+		}
+		clif_skill_nodamage(src,bl,skillid,skilllv,sc_start(bl,type,100,skilllv,skill_get_time(skillid,skilllv)));
 		break;
 	case SL_KAITE:
 	case SL_KAAHI:
@@ -4109,35 +4114,40 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case TF_HIDING:
 	case ST_CHASEWALK:
 		if (tsce)
-			i = status_change_end(bl, type, -1);
-		else
-			i = sc_start(bl,type,100,skilllv,skill_get_time(skillid,skilllv));
-		clif_skill_nodamage(src,bl,skillid,-1,i); //Hide skill-scream animation.
+		{
+			clif_skill_nodamage(src,bl,skillid,-1,status_change_end(bl, type, -1)); //Hide skill-scream animation.
+			map_freeblock_unlock();
+			return 0;
+		}
+		clif_skill_nodamage(src,bl,skillid,-1,sc_start(bl,type,100,skilllv,skill_get_time(skillid,skilllv)));		
 		break;
 	case TK_RUN:
-			if (tsce)
-				clif_skill_nodamage(src,bl,skillid,skilllv,
-					status_change_end(bl, type, -1));
-			else {
-				clif_skill_nodamage(src,bl,skillid,skilllv,
-					sc_start4(bl,type,100,skilllv,unit_getdir(bl),0,0,0));
-//				If the client receives a skill-use packet inmediately before
-//				a walkok packet, it will discard the walk packet! [Skotlex]
-//				So aegis has to resend the walk ok.
-				if (sd) clif_walkok(sd);
-			}
+		if (tsce)
+		{
+			clif_skill_nodamage(src,bl,skillid,skilllv,status_change_end(bl, type, -1));
+			map_freeblock_unlock();
+			return 0;
+		}
+		clif_skill_nodamage(src,bl,skillid,skilllv,sc_start4(bl,type,100,skilllv,unit_getdir(bl),0,0,0));
+		if (sd) // If the client receives a skill-use packet inmediately before a walkok packet, it will discard the walk packet! [Skotlex]
+			clif_walkok(sd); // So aegis has to resend the walk ok.
 		break;
-
 	case AS_CLOAKING:
-		if( !tsce )
-			i = sc_start(bl,type,100,skilllv,skill_get_time(skillid,skilllv));
-		else
+		if (tsce)
+		{
 			i = status_change_end(bl, type, -1);
-
+			if( i )
+				clif_skill_nodamage(src,bl,skillid,-1,i);
+			else if( sd )
+				clif_skill_fail(sd,skillid,0,0);
+			map_freeblock_unlock();
+			return 0;
+		}
+		i = sc_start(bl,type,100,skilllv,skill_get_time(skillid,skilllv));
 		if( i )
 			clif_skill_nodamage(src,bl,skillid,-1,i);
-		else
-			if( sd ) clif_skill_fail(sd,skillid,0,0);
+		else if( sd )
+			clif_skill_fail(sd,skillid,0,0);
 		break;
 
 	case BD_ADAPTATION:
@@ -4376,7 +4386,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				break;
 			}
 
-			if( sd->state.autocast || sd->skillitem == AL_TELEPORT || battle_config.skip_teleport_lv1_menu || skilllv > 2 )
+			if( sd->state.autocast || sd->skillitem == AL_TELEPORT || (battle_config.skip_teleport_lv1_menu && skilllv == 1) || skilllv > 2 )
 			{
 				if( skilllv == 1 )
 					pc_randomwarp(sd,3);
@@ -4665,6 +4675,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				case SC_READYSTORM:  case SC_READYDOWN:   case SC_READYTURN:
 				case SC_READYCOUNTER:case SC_DODGE:       case SC_WARM:
 				case SC_SPEEDUP1:    case SC_AUTOTRADE:   case SC_CRITICALWOUND:
+				case SC_JEXPBOOST:
 					continue;
 				case SC_ASSUMPTIO:
 					if( bl->type == BL_MOB )
@@ -5823,8 +5834,9 @@ int skill_castend_id(int tid, unsigned int tick, int id, intptr data)
 		if (ud->walktimer != -1 && ud->skillid != TK_RUN)
 			unit_stop_walking(src,1);
 
-		ud->canact_tick = tick + skill_delayfix(src, ud->skillid, ud->skilllv);
-		if ( battle_config.display_status_timers && sd )
+		if( sd->skillitem == ud->skillid && skill_get_delay(ud->skillid,ud->skilllv) )
+			ud->canact_tick = tick + skill_delayfix(src, ud->skillid, ud->skilllv); //Tests show wings don't overwrite the delay but skill scrolls do. [Inkfish]
+		if( battle_config.display_status_timers && sd )
 			clif_status_change(src, SI_ACTIONDELAY, 1, skill_delayfix(src, ud->skillid, ud->skilllv));
 		if( sd )
 		{
@@ -5916,7 +5928,8 @@ int skill_castend_id(int tid, unsigned int tick, int id, intptr data)
 	}
 
 	ud->skillid = ud->skilllv = ud->skilltarget = 0;
-	ud->canact_tick = tick;
+	if( sd->skillitem == ud->skillid && skill_get_delay(ud->skillid,ud->skilllv) )
+		ud->canact_tick = tick;
 	//You can't place a skill failed packet here because it would be
 	//sent in ALL cases, even cases where skill_check_condition fails
 	//which would lead to double 'skill failed' messages u.u [Skotlex]
@@ -6029,10 +6042,13 @@ int skill_castend_pos(int tid, unsigned int tick, int id, intptr data)
 		if(battle_config.skill_log && battle_config.skill_log&src->type)
 			ShowInfo("Type %d, ID %d skill castend pos [id =%d, lv=%d, (%d,%d)]\n",
 				src->type, src->id, ud->skillid, ud->skilllv, ud->skillx, ud->skilly);
+
 		if (ud->walktimer != -1)
 			unit_stop_walking(src,1);
-		ud->canact_tick = tick + skill_delayfix(src, ud->skillid, ud->skilllv);
-		if ( battle_config.display_status_timers && sd )
+
+		if( sd->skillitem == ud->skillid && skill_get_delay(ud->skillid,ud->skilllv) )
+			ud->canact_tick = tick + skill_delayfix(src, ud->skillid, ud->skilllv);
+		if( battle_config.display_status_timers && sd )
 			clif_status_change(src, SI_ACTIONDELAY, 1, skill_delayfix(src, ud->skillid, ud->skilllv));
 //		if( sd )
 //		{
@@ -6061,7 +6077,8 @@ int skill_castend_pos(int tid, unsigned int tick, int id, intptr data)
 		return 1;
 	} while(0);
 
-	ud->canact_tick = tick;
+	if( sd->skillitem == ud->skillid && skill_get_delay(ud->skillid,ud->skilllv) )
+		ud->canact_tick = tick;
 	ud->skillid = ud->skilllv = 0;
 	if(sd)
 		sd->skillitem = sd->skillitemlv = 0;
@@ -6447,7 +6464,10 @@ int skill_castend_pos2(struct block_list* src, int x, int y, int skillid, int sk
 
 	case PA_GOSPEL:
 		if (sce && sce->val4 == BCT_SELF)
+		{
 			status_change_end(src,SC_GOSPEL,-1);
+			return 0;
+		}
 		else
 	  	{
 			sg = skill_unitsetting(src,skillid,skilllv,src->x,src->y,0);
@@ -8136,6 +8156,16 @@ int skill_check_condition_castbegin(struct map_session_data* sd, short skill, sh
 		return 1;
 	}
 
+	switch( skill )
+	{ // Turn off check.
+	case BS_MAXIMIZE:		case NV_TRICKDEAD:	case TF_HIDING:			case AS_CLOAKING:		case CR_AUTOGUARD:
+	case ML_AUTOGUARD:		case CR_DEFENDER:	case ML_DEFENDER:		case ST_CHASEWALK:		case PA_GOSPEL:
+	case CR_SHRINK:			case TK_RUN:		case GS_GATLINGFEVER:	case TK_READYCOUNTER:	case TK_READYDOWN:
+	case TK_READYSTORM:		case TK_READYTURN:	case SG_FUSION:
+		if( sc && sc->data[status_skill2sc(skill)] )
+			return 1;
+	}
+
 	if( lv < 1 || lv > MAX_SKILL_LEVEL )
 		return 0;
 
@@ -8153,23 +8183,6 @@ int skill_check_condition_castbegin(struct map_session_data* sd, short skill, sh
 			return 0;
 		}
 		break;
-	case BS_MAXIMIZE:
-	case NV_TRICKDEAD:
-	case TF_HIDING:
-	case AS_CLOAKING:
-	case CR_AUTOGUARD:
-	case ML_AUTOGUARD:
-	case CR_DEFENDER:
-	case ML_DEFENDER:
-	case ST_CHASEWALK:
-	case PA_GOSPEL:
-	case CR_SHRINK:
-	case TK_RUN:
-	case GS_GATLINGFEVER:
-		if(sc && sc->data[status_skill2sc(skill)])
-			return 1; //Allow turning off.
-		break;
-
 	case AL_WARP:
 		if(!battle_config.duel_allow_teleport && sd->duel_group) { // duel restriction [LuzZza]
 			clif_displaymessage(sd->fd, "Duel: Can't use warp in duel.");
@@ -8246,8 +8259,6 @@ int skill_check_condition_castbegin(struct map_session_data* sd, short skill, sh
 	case TK_READYDOWN:
 	case TK_READYSTORM:
 	case TK_READYTURN:
-		if(sc && sc->data[status_skill2sc(skill)])
-			return 1; //Enable disabling them regardless of who you are.
 	case TK_JUMPKICK:
 		if( (sd->class_&MAPID_UPPERMASK) == MAPID_SOUL_LINKER )
 		{// Soul Linkers cannot use this skill
@@ -8379,8 +8390,6 @@ int skill_check_condition_castbegin(struct map_session_data* sd, short skill, sh
 		clif_skill_fail(sd,skill,0,0);
 		return 0;
 	case SG_FUSION:
-		if (sc && sc->data[SC_FUSION])
-			return 1;
 		if (sc && sc->data[SC_SPIRIT] && sc->data[SC_SPIRIT]->val2 == SL_STAR)
 			break;
 		//Auron insists we should implement SP consumption when you are not Soul Linked. [Skotlex]
@@ -8747,6 +8756,20 @@ struct skill_condition skill_get_requirement(struct map_session_data* sd, short 
 	if( sd->skillitem == skill )
 		return req; // Item skills and Hocus-Pocus don't have requirements.[Inkfish]
 
+	sc = &sd->sc;
+	if( !sc->count )
+		sc = NULL;
+
+	switch( skill )
+	{ // Turn off check.
+	case BS_MAXIMIZE:		case NV_TRICKDEAD:	case TF_HIDING:			case AS_CLOAKING:		case CR_AUTOGUARD:
+	case ML_AUTOGUARD:		case CR_DEFENDER:	case ML_DEFENDER:		case ST_CHASEWALK:		case PA_GOSPEL:
+	case CR_SHRINK:			case TK_RUN:		case GS_GATLINGFEVER:	case TK_READYCOUNTER:	case TK_READYDOWN:
+	case TK_READYSTORM:		case TK_READYTURN:	case SG_FUSION:
+		if( sc && sc->data[status_skill2sc(skill)] )
+			return req;
+	}
+
 	j = skill_get_index(skill);
 	if( j == 0 ) // invalid skill id
   		return req;
@@ -8754,9 +8777,6 @@ struct skill_condition skill_get_requirement(struct map_session_data* sd, short 
 		return req;
 
 	status = &sd->battle_status;
-	sc = &sd->sc;
-	if( !sc->count )
-		sc = NULL;
 
 	req.hp = skill_db[j].hp[lv-1];
 	hp_rate = skill_db[j].hp_rate[lv-1];

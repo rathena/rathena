@@ -242,7 +242,7 @@ struct map_session_data {
 	} itemhealrate[MAX_PC_BONUS];
 	// zeroed structures end here
 	// manually zeroed structures start here.
-	struct s_autoscript autoscript[10], autoscript2[10], autoscript3[10]; //Auto script on attack, when attacked, on skill usage
+	struct s_autoscript autoscript[MAX_PC_BONUS], autoscript2[MAX_PC_BONUS], autoscript3[MAX_PC_BONUS]; //Auto script on attack, when attacked, on skill usage
 	// manually zeroed structures end here.
 	// zeroed vars start here.
 	int arrow_atk,arrow_ele,arrow_cri,arrow_hit;
@@ -571,7 +571,7 @@ bool pc_adoption(struct map_session_data *p1_sd, struct map_session_data *p2_sd,
 int pc_updateweightstatus(struct map_session_data *sd);
 
 int pc_autoscript_add(struct s_autoscript *scripts, int max, short rate, short flag, short target, struct script_code *script, bool onskill);
-void pc_autoscript_clear(struct s_autoscript *scripts, int max);
+void pc_autoscript_clear(struct map_session_data *sd);
 
 int pc_bonus(struct map_session_data*,int,int);
 int pc_bonus2(struct map_session_data *sd,int,int,int);

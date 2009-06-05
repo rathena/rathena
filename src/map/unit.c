@@ -1074,7 +1074,8 @@ int unit_skilluse_id2(struct block_list *src, int target_id, short skill_num, sh
 	if( casttime <= 0 )
 		ud->state.skillcastcancel = 0;
 
-	ud->canact_tick  = tick + casttime + 100;
+	if( sd->skillitem == skill_num && skill_get_cast(skill_num,skill_lv) )
+		ud->canact_tick = tick + casttime + 100;
 	if( sd )
 	{
 		switch( skill_num )
@@ -1179,7 +1180,8 @@ int unit_skilluse_pos2( struct block_list *src, short skill_x, short skill_y, sh
 		casttime = skill_castfix_sc(src, casttime);
 
 	ud->state.skillcastcancel = castcancel&&casttime>0?1:0;
-	ud->canact_tick  = tick + casttime + 100;
+	if( sd->skillitem == skill_num && skill_get_cast(skill_num,skill_lv) )
+		ud->canact_tick  = tick + casttime + 100;
 //	if( sd )
 //	{
 //		switch( skill_num )
@@ -1603,8 +1605,6 @@ int unit_skillcastcancel(struct block_list *bl,int type)
 	}
 	
 	ud->canact_tick = tick;
-	if ( battle_config.display_status_timers && sd )
-		clif_status_change(bl, SI_ACTIONDELAY, 0, 0);
 
 	if(type&1 && sd)
 		skill = sd->skillid_old;
@@ -1954,9 +1954,7 @@ int unit_free(struct block_list *bl, int clrtype)
 				pc_setrestartvalue(sd,2);
 
 			pc_delinvincibletimer(sd);
-			pc_autoscript_clear(sd->autoscript, ARRAYLENGTH(sd->autoscript));
-			pc_autoscript_clear(sd->autoscript2, ARRAYLENGTH(sd->autoscript2));
-			pc_autoscript_clear(sd->autoscript3, ARRAYLENGTH(sd->autoscript3));
+			pc_autoscript_clear(sd);
 
 			if( sd->followtimer != -1 )
 				pc_stop_following(sd);

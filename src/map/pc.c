@@ -1435,12 +1435,25 @@ int pc_autoscript_add(struct s_autoscript *scripts, int max, short rate, short f
 	return 1;
 }
 
-void pc_autoscript_clear(struct s_autoscript *scripts, int max)
+void pc_autoscript_clear(struct map_session_data *sd)
 {
 	int i;
-	for (i = 0; i < max && scripts[i].script; i++)
-		script_free_code(scripts[i].script);
-	memset(scripts, 0, i*sizeof(struct s_autoscript));
+
+	if( sd->state.autocast )
+		return;
+
+	for (i = 0; i < MAX_PC_BONUS && sd->autoscript[i].script; i++)
+		script_free_code(sd->autoscript[i].script);
+
+	for (i = 0; i < MAX_PC_BONUS && sd->autoscript2[i].script; i++)
+		script_free_code(sd->autoscript2[i].script);
+
+	for (i = 0; i < MAX_PC_BONUS && sd->autoscript3[i].script; i++)
+		script_free_code(sd->autoscript3[i].script);
+
+	memset(&sd->autoscript, 0, sizeof(struct s_autoscript));
+	memset(&sd->autoscript2, 0, sizeof(struct s_autoscript));
+	memset(&sd->autoscript3, 0, sizeof(struct s_autoscript));
 }
 
 static int pc_bonus_autospell_del(struct s_autospell* spell, int max, short id, short lv, short rate, short card_id)
@@ -3393,6 +3406,7 @@ int pc_isUseitem(struct map_session_data *sd,int n)
 		case 14532: // Battle_Manual25
 		case 14533: // Battle_Manual100
 		case 14545: // Battle_Manual300
+		case 14592: // JOB_Battle_Manual
 			if( sd->sc.data[SC_EXPBOOST] )
 				return 0;
 			break;
@@ -4603,10 +4617,11 @@ static void pc_calcexp(struct map_session_data *sd, unsigned int *base_exp, unsi
 	if (sd->sc.data[SC_EXPBOOST])
 		bonus += sd->sc.data[SC_EXPBOOST]->val1;
 
-	if (!bonus)
-	  	return;
-
 	*base_exp = (unsigned int) cap_value(*base_exp + (double)*base_exp * bonus/100., 1, UINT_MAX);
+
+	if (sd->sc.data[SC_JEXPBOOST])
+		bonus += sd->sc.data[SC_JEXPBOOST]->val1;
+
 	*job_exp = (unsigned int) cap_value(*job_exp + (double)*job_exp * bonus/100., 1, UINT_MAX);
 
 	return;

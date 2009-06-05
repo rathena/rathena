@@ -6594,7 +6594,7 @@ BUILDIN_FUNC(bonusautoscript)
 	script = parse_script(str, "autoscript bonus", 0, 0);
 	if( !script )
 		return 1;
-	if( !pc_autoscript_add(sd->autoscript, ARRAYLENGTH(sd->autoscript), rate, flag, target, script, false) )
+	if( sd->state.autocast || !pc_autoscript_add(sd->autoscript, ARRAYLENGTH(sd->autoscript), rate, flag, target, script, false) )
 	{
 		script_free_code(script);
 		return 1;
@@ -6622,7 +6622,7 @@ BUILDIN_FUNC(bonusautoscript2)
 	script = parse_script(str, "autoscript2 bonus", 0, 0);
 	if (!script)
 		return 1;
-	if (!pc_autoscript_add(sd->autoscript2, ARRAYLENGTH(sd->autoscript2), rate, flag, target, script, false))
+	if( sd->state.autocast || !pc_autoscript_add(sd->autoscript2, ARRAYLENGTH(sd->autoscript2), rate, flag, target, script, false) )
 	{
 		script_free_code(script);
 		return 1;
@@ -6649,7 +6649,7 @@ BUILDIN_FUNC(bonusautoscript3)
 	script = parse_script(str, "autoscript3 bonus", 0, 0);
 	if( !script )
 		return 1;
-	if( !pc_autoscript_add(sd->autoscript3, ARRAYLENGTH(sd->autoscript3), rate, skill, target, script, true) )
+	if( sd->state.autocast || !pc_autoscript_add(sd->autoscript3, ARRAYLENGTH(sd->autoscript3), rate, skill, target, script, true) )
 	{
 		script_free_code(script);
 		return 1;

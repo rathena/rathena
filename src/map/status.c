@@ -475,6 +475,7 @@ void initChangeTables(void)
 	//Cash Items
 	StatusIconChangeTable[SC_EXPBOOST] = SI_EXPBOOST;
 	StatusIconChangeTable[SC_ITEMBOOST] = SI_ITEMBOOST;
+	StatusIconChangeTable[SC_JEXPBOOST] = SI_CASH_PLUSONLYJOBEXP;
 	StatusIconChangeTable[SC_LIFEINSURANCE] = SI_LIFEINSURANCE;
 	StatusIconChangeTable[SC_BOSSMAPINFO] = SI_BOSSMAPINFO;
 	StatusIconChangeTable[SC_DEF_RATE] = SI_DEF_RATE;
@@ -1771,9 +1772,7 @@ int status_calc_pc_(struct map_session_data* sd, bool first)
 		+ sizeof(sd->itemhealrate)
 	);
 	// clear autoscripts...
-	pc_autoscript_clear(sd->autoscript, ARRAYLENGTH(sd->autoscript));
-	pc_autoscript_clear(sd->autoscript2, ARRAYLENGTH(sd->autoscript2));
-	pc_autoscript_clear(sd->autoscript3, ARRAYLENGTH(sd->autoscript3));
+	pc_autoscript_clear(sd);
 	
 	// vars zeroing. ints, shorts, chars. in that order.
 	memset (&sd->arrow_atk, 0,sizeof(sd->arrow_atk)
@@ -5864,6 +5863,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			val3*=val1;
 			break;
 		case SC_EXPBOOST:
+		case SC_JEXPBOOST:
 			if (val1 < 0)
 				val1 = 0;
 			break;
@@ -6232,6 +6232,7 @@ int status_change_clear(struct block_list* bl, int type)
 		case SC_EXPBOOST:
 		case SC_ITEMBOOST:
 		case SC_HELLPOWER:
+		case SC_JEXPBOOST:
 			continue;
 		}
 

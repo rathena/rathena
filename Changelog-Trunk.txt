@@ -4,6 +4,13 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 09/06/04
+	* Fixed turning off a skill needed to meet the requirements. [Inkfish]
+	* Skills used through items which don't have aftercast delay or cast time now don't overwrite the former canact_tick. [Inkfish]
+	* Multiple autoscripts now can trigger at once. [Inkfish]
+	* Applied a temp fix for autoscripts crashing server. [Inkfish]
+	* Implemented SC_JEXPBOOST (thanks to GMJobbie for the diff) and SC_IGNOREDEF. [Inkfish]
+	* SC_DEFRATIOATK won't affect boss monsters. [Inkfish]
+	* Fixed skip_teleport_lv1_menu made lv2 skip menu as well. [Inkfish]
 	* Rev. 13843 Updates to ST_PRESERVE and a few other minor details! [L0ne_W0lf]
 	- Recasting Preserve no longer toggles the skill off while active.
 	- Preserve is no longer saved on log-out or mapserver changes.

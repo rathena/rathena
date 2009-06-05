@@ -310,8 +310,10 @@ typedef enum sc_type {
 	SC_HPDRAIN,
 	SC_SKILLATKBONUS,
 	SC_ITEMSCRIPT,
-	SC_S_LIFEPOTION,
+	SC_S_LIFEPOTION, //290
 	SC_L_LIFEPOTION,
+	SC_JEXPBOOST,
+	SC_IGNOREDEF,
 	SC_HELLPOWER,
 
 	SC_MAX, //Automatically updated max, used in for's to check we are within bounds.
@@ -632,7 +634,7 @@ enum si_type {
 //	SI_REUSE_LIMIT_E = 309,
 //	SI_REUSE_LIMIT_F = 310,
 //	SI_INVINCIBLE = 311,
-//	SI_CASH_PLUSONLYJOBEXP = 312,
+	SI_CASH_PLUSONLYJOBEXP = 312,
 //	SI_PARTYFLEE = 313,
 //	SI_ANGEL_PROTECT = 314,
 };
