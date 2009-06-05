@@ -3406,8 +3406,11 @@ int pc_isUseitem(struct map_session_data *sd,int n)
 		case 14532: // Battle_Manual25
 		case 14533: // Battle_Manual100
 		case 14545: // Battle_Manual300
-		case 14592: // JOB_Battle_Manual
 			if( sd->sc.data[SC_EXPBOOST] )
+				return 0;
+			break;
+		case 14592: // JOB_Battle_Manual
+			if( sd->sc.data[SC_JEXPBOOST] )
 				return 0;
 			break;
 

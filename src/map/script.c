@@ -3203,6 +3203,7 @@ void run_script_main(struct script_state *st)
 
 	if(st->sleep.tick > 0) {
 		//Delay execution
+		sd = map_id2sd(st->rid); // Refresh sd since script might have attached someone while running. [Inkfish]
 		st->sleep.charid = sd?sd->status.char_id:0;
 		st->sleep.timer  = add_timer(gettick()+st->sleep.tick,
 			run_script_timer, st->sleep.charid, (intptr)st);
