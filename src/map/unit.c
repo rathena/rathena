@@ -1074,7 +1074,7 @@ int unit_skilluse_id2(struct block_list *src, int target_id, short skill_num, sh
 	if( casttime <= 0 )
 		ud->state.skillcastcancel = 0;
 
-	if( sd->skillitem == skill_num && skill_get_cast(skill_num,skill_lv) )
+	if( !sd || sd->skillitem != ud->skillid || skill_get_cast(skill_num,skill_lv) )
 		ud->canact_tick = tick + casttime + 100;
 	if( sd )
 	{
@@ -1180,7 +1180,7 @@ int unit_skilluse_pos2( struct block_list *src, short skill_x, short skill_y, sh
 		casttime = skill_castfix_sc(src, casttime);
 
 	ud->state.skillcastcancel = castcancel&&casttime>0?1:0;
-	if( sd->skillitem == skill_num && skill_get_cast(skill_num,skill_lv) )
+	if( !sd || sd->skillitem != ud->skillid || skill_get_cast(skill_num,skill_lv) )
 		ud->canact_tick  = tick + casttime + 100;
 //	if( sd )
 //	{
