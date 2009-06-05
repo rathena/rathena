@@ -1451,9 +1451,9 @@ void pc_autoscript_clear(struct map_session_data *sd)
 	for (i = 0; i < MAX_PC_BONUS && sd->autoscript3[i].script; i++)
 		script_free_code(sd->autoscript3[i].script);
 
-	memset(&sd->autoscript, 0, sizeof(struct s_autoscript));
-	memset(&sd->autoscript2, 0, sizeof(struct s_autoscript));
-	memset(&sd->autoscript3, 0, sizeof(struct s_autoscript));
+	memset(&sd->autoscript, 0, sizeof(sd->autoscript));
+	memset(&sd->autoscript2, 0, sizeof(sd->autoscript2));
+	memset(&sd->autoscript3, 0, sizeof(sd->autoscript3));
 }
 
 static int pc_bonus_autospell_del(struct s_autospell* spell, int max, short id, short lv, short rate, short card_id)
