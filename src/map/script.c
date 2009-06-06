@@ -3202,18 +3202,18 @@ void run_script_main(struct script_state *st)
 	}
 
 	if(st->sleep.tick > 0) {
-		//Delay execution
-		sd = map_id2sd(st->rid); // Refresh sd since script might have attached someone while running. [Inkfish]
-		st->sleep.charid = sd?sd->status.char_id:0;
-		st->sleep.timer  = add_timer(gettick()+st->sleep.tick,
-			run_script_timer, st->sleep.charid, (intptr)st);
-		linkdb_insert(&sleep_db, (void*)st->oid, st);
 		//Restore previous script
 		if (sd) {
 			sd->st = bk_st;
 			sd->npc_id = bk_npcid;
 			bk_st = NULL; //Remove tag for removal.
 		}
+		//Delay execution
+		sd = map_id2sd(st->rid); // Refresh sd since script might have attached someone while running. [Inkfish]
+		st->sleep.charid = sd?sd->status.char_id:0;
+		st->sleep.timer  = add_timer(gettick()+st->sleep.tick,
+			run_script_timer, st->sleep.charid, (intptr)st);
+		linkdb_insert(&sleep_db, (void*)st->oid, st);
 	}
 	else if(st->state != END && sd){
 		//Resume later (st is already attached to player).
