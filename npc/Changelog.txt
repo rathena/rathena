@@ -1,6 +1,7 @@
 Date		Added
 ======
 2009/06/06
+	* Rewrote Platinum Skill NPC to give all correct skills to all proper classes. [Paradox924X]
 	* Fixed several issues introduced by Kisuka and/or Spre in r13214 with custom platinum skills script. Fix by Ancyker (bugreport:3190) [Paradox924X]
 2009/05/29
 	- Fixed a spelling typo in Kafras' dialog. (bugreport:3145) [brianluau]

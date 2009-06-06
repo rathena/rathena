@@ -3,11 +3,11 @@
 //===== By: =================================================================================
 //= Keichii and edited by DarkChild
 //===== Current Version: ====================================================================
-//= 2.6
+//= 2.7
 //===== Compatible With: ====================================================================
 //= Any eAthena Version
 //===== Description: ========================================================================
-//= Single NPC that assigns quests skills for all classes.
+//= Single NPC that assigns quests skills for all classes
 //===== Additional Comments: ================================================================
 //=2.0 Added advanced classes by ShadowLady.
 //=2.1 Added baby clases by Midas
@@ -16,72 +16,75 @@
 //=2.4 Added Advanced skills. [Spre]
 //=2.5 Added dialog for if the user is none of the listed jobs. [Kisuka]
 //=2.6 Fixed 2nd advanced classes not being able to get their advanced skills. [Ancyker]
+//=2.7 Rewrote to give all correct skills to all proper classes. [Paradox924X]
 //===========================================================================================
 prontera,128,200,6	script	Platinum Skill NPC	94,{
 	mes "[Platinum Skill NPC]";
-	mes "I can give you the special skills available to your job. Would you like these skills now?";
+	mes "I can give you the special skills available to your job.";
+	mes "Would you like these skills now?";
 	next;
 	if (select("Yes Please:No") == 2) {
 		mes "[Platinum Skill NPC]";
 		mes "Have a nice day... >.>";
 		close;
 	}
-	if (BaseClass==Job_Novice) {
-		skill 142,1,0;
-		skill 143,1,0;
-	} else if (BaseClass==Job_Swordman) {
-		skill 142,1,0;
-		skill 144,1,0;
-		skill 145,1,0;
-		skill 146,1,0;
-	} else if (BaseClass==Job_Mage) {
-		skill 142,1,0;
-		skill 157,1,0;
-	} else if (BaseClass==Job_Archer) {
-		skill 142,1,0;
-		skill 147,1,0;
-		skill 148,1,0;
-	} else if (BaseClass==Job_Acolyte) {
-		skill 142,1,0;
-		skill 156,1,0;
-	} else if (BaseClass==Job_Merchant) {
-		skill 142,1,0;
-		skill 153,1,0;
-		skill 154,1,0;
-		skill 155,1,0;
-	} else if (BaseClass==Job_Thief) {
-		skill 142,1,0;
-		skill 149,1,0;
-		skill 150,1,0;
-		skill 151,1,0;
-		skill 152,1,0;
+	skill 142,1,0; // First Aid
+	if (BaseClass == Job_Novice) {
+		skill 143,1,0; // Play Dead
+	} else if (BaseClass == Job_Swordman) {
+		skill 144,1,0; // Moving HP-Recovery
+		skill 145,1,0; // Fatal Blow
+		skill 146,1,0; // Auto Berserk
+	} else if (BaseClass == Job_Mage) {
+		skill 157,1,0; // Energy Coat
+	} else if (BaseClass == Job_Archer) {
+		skill 147,1,0; // Arrow Crafting
+		skill 148,1,0; // Arrow Repel
+	} else if (BaseClass == Job_Merchant) {
+		skill 153,1,0; // Cart Revolution
+		skill 154,1,0; // Change Cart
+		skill 155,1,0; // Crazy Uproar
+	} else if (BaseClass == Job_Thief) {
+		skill 149,1,0; // Sand Attack
+		skill 150,1,0; // Back Slide
+		skill 151,1,0; // Find Stone
+		skill 152,1,0; // Stone Fling
+	} else if (BaseClass == Job_Acolyte) {
+		skill 156,1,0; // Holy Light
 	}
-	if (Class==Job_Lord_Knight) {
-		skill 1002,1,0;
-	} else if (Class==Job_High_Wizard) {
-		skill 1006,1,0;
-	} else if (Class==Job_Professor) {
-		skill 1007,1,0;
-	} else if (Class==Job_Sniper) {
-		skill 1009,1,0;
-	} else if (Class==Job_Clown) {
-		skill 1010,1,0;
-	} else if (Class==Job_Gypsy) {
-		skill 1011,1,0;
-	} else if (Class==Job_High_Priest) {
-		skill 1014,1,0;
-		skill 363,10,0;
-	} else if (Class==Job_Champion) {
-		skill 1015,1,0;
-		skill 1016,10,0;
-	} else if (Class==Job_WhiteSmith) {
-		skill 1012,1,0;
-		skill 1013,1,0;
-	} else if (Class==Job_Assassin_Cross) {
-		skill 1003,1,0;
-		skill 1004,1,0;
-	} else if (Class==Job_Stalker) {
-		skill 1005,1,0;
+	if (Class == Job_Knight || Class == Job_Lord_Knight) {
+		skill 1001,1,0; // Charge Attack
+	} else if (Class == Job_Crusader || Class == Job_Paladin) {
+		skill 1002,1,0; // Shrink
+	} else if (Class == Job_Wizard || Class == Job_High_Wizard) {
+		skill 1006,1,0; // Sight Blaster
+	} else if (Class == Job_Sage || Class == Job_Professor) {
+		skill 1007,1,0; // Create Elemental Converter
+		skill 1008,1,0; // Elemental Change Water
+		skill 1017,1,0; // Elemental Change Earth
+		skill 1018,1,0; // Elemental Change Fire
+		skill 1019,1,0; // Elemental Change Wind
+	} else if (Class == Job_Hunter || Class == Job_Sniper) {
+		skill 1009,1,0; // Phantasmic Arrow
+	} else if (Class == Job_Bard || Class == Job_Clown) {
+		skill 1010,1,0; // Pang Voice
+	} else if (Class == Job_Dancer || Class == Job_Gypsy) {
+		skill 1011,1,0; // Wink of Charm
+	} else if (Class == Job_Blacksmith || Class == Job_Whitesmith) {
+		skill 1012,1,0; // Unfair Trick
+		skill 1013,1,0; // Greed
+	} else if (Class == Job_Alchemist || Class == Job_Creator) {
+		skill 238,1,0; // Bioethics
+	} else if (Class == Job_Assassin || Class == Job_Assassin_Cross) {
+		skill 1003,1,0; // Sonic Acceleration
+		skill 1004,1,0; // Throw Venom Knife
+	} else if (Class == Job_Rogue || Class == Job_Stalker) {
+		skill 1005,1,0; // Close Confine
+	} else if (Class == Job_Priest || Class == Job_High_Priest) {
+		skill 1014,1,0; // Redemptio
+	} else if (Class == Job_Monk || Class == Job_Champion) {
+		skill 1015,1,0; // Ki Translation
+		skill 1016,1,0; // Ki Explosion
 	}
 	mes "[Platinum Skill NPC]";
 	mes "There you go!";
