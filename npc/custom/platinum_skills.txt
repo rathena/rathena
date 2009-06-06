@@ -3,7 +3,7 @@
 //===== By: =================================================================================
 //= Keichii and edited by DarkChild
 //===== Current Version: ====================================================================
-//= 2.5
+//= 2.6
 //===== Compatible With: ====================================================================
 //= Any eAthena Version
 //===== Description: ========================================================================
@@ -15,91 +15,75 @@
 //=2.3 Thehell? Cleaned up script removed the nastiness. Also added rebirth skills. [Spre]
 //=2.4 Added Advanced skills. [Spre]
 //=2.5 Added dialog for if the user is none of the listed jobs. [Kisuka]
+//=2.6 Fixed 2nd advanced classes not being able to get their advanced skills. [Ancyker]
 //===========================================================================================
 prontera,128,200,6	script	Platinum Skill NPC	94,{
 	mes "[Platinum Skill NPC]";
 	mes "I can give you the special skills available to your job. Would you like these skills now?";
 	next;
 	if (select("Yes Please:No") == 2) {
-	mes "[Platinum Skill NPC]";
-	mes "Have a nice day... >.>";
-	close;
+		mes "[Platinum Skill NPC]";
+		mes "Have a nice day... >.>";
+		close;
 	}
 	if (BaseClass==Job_Novice) {
 		skill 142,1,0;
 		skill 143,1,0;
-		close;
-    } else if (BaseClass==Job_Swordman) {
+	} else if (BaseClass==Job_Swordman) {
 		skill 142,1,0;
 		skill 144,1,0;
 		skill 145,1,0;
 		skill 146,1,0;
-		close;
-	} else 	if (BaseClass==Job_Mage) {
+	} else if (BaseClass==Job_Mage) {
 		skill 142,1,0;
 		skill 157,1,0;
-		close;
-	} else 	if (BaseClass==Job_Archer) {
+	} else if (BaseClass==Job_Archer) {
 		skill 142,1,0;
 		skill 147,1,0;
 		skill 148,1,0;
-		close;
-	} else 	if (BaseClass==Job_Acolyte) {
+	} else if (BaseClass==Job_Acolyte) {
 		skill 142,1,0;
 		skill 156,1,0;
-		close;
-	} else 	if (BaseClass==Job_Merchant) {
+	} else if (BaseClass==Job_Merchant) {
 		skill 142,1,0;
 		skill 153,1,0;
 		skill 154,1,0;
 		skill 155,1,0;
-		close;
-	} else 	if (BaseClass==Job_Thief) {
+	} else if (BaseClass==Job_Thief) {
 		skill 142,1,0;
 		skill 149,1,0;
 		skill 150,1,0;
 		skill 151,1,0;
 		skill 152,1,0;
-		close;
-	} else if (BaseClass==Job_Lord_Knight) {
+	}
+	if (Class==Job_Lord_Knight) {
 		skill 1002,1,0;
-		close;
-	} else if (BaseClass==Job_High_Wizard) {
+	} else if (Class==Job_High_Wizard) {
 		skill 1006,1,0;
-		close;
-	} else if (BaseClass==Job_Professor) {
+	} else if (Class==Job_Professor) {
 		skill 1007,1,0;
-		close;	
-	} else if (BaseClass==Job_Sniper) {
+	} else if (Class==Job_Sniper) {
 		skill 1009,1,0;
-		close;
-	} else if (BaseClass==Job_Clown) {
+	} else if (Class==Job_Clown) {
 		skill 1010,1,0;
-		close;
-	} else if (BaseClass==Job_Gypsy) {
+	} else if (Class==Job_Gypsy) {
 		skill 1011,1,0;
-		close;
-	} else if (BaseClass==Job_High_Priest) {
+	} else if (Class==Job_High_Priest) {
 		skill 1014,1,0;
 		skill 363,10,0;
-		close;
-	} else if (BaseClass==Job_Champion) {
+	} else if (Class==Job_Champion) {
 		skill 1015,1,0;
 		skill 1016,10,0;
-		close;
-	} else if (BaseClass==Job_WhiteSmith) {
+	} else if (Class==Job_WhiteSmith) {
 		skill 1012,1,0;
 		skill 1013,1,0;
-		close;
-	} else if (BaseClass==Job_Assassin_Cross) {
+	} else if (Class==Job_Assassin_Cross) {
 		skill 1003,1,0;
 		skill 1004,1,0;
-		close;
-	} else if (BaseClass==Job_Stalker) {
+	} else if (Class==Job_Stalker) {
 		skill 1005,1,0;
-		close;
 	}
 	mes "[Platinum Skill NPC]";
-	mes "I'm sorry, but there are no special skills that I can give you.";
+	mes "There you go!";
 	close;
 }
