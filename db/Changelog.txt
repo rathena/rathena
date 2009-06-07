@@ -38,6 +38,9 @@
 
 =======================
 2009/06/07
+	* Fixed up the first set of Battle Ground weapons [Playtester]
+	- reduced guessed chances from 5% to 0.5%
+	- some bonuses might still not work
 	* Fixed Ring of Flame Lord casting LK_CONCENTRATION instead of CH_SOULCOLLECT (bugreport:3199) [Playtester]
 	- also reduced level of MO_EXPLOSIONSPIRITS to 1
 2009/06/04
