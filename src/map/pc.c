@@ -6760,7 +6760,7 @@ int pc_equipitem(struct map_session_data *sd,int n,int req_pos)
 
 	if(battle_config.battle_log)
 		ShowInfo("equip %d(%d) %x:%x\n",sd->status.inventory[n].nameid,n,id->equip,req_pos);
-	if(!pc_isequip(sd,n) || !(pos&req_pos) || sd->status.inventory[n].attribute==1 ) { // [Valaris]
+	if(!pc_isequip(sd,n) || !(pos&req_pos) || sd->status.inventory[n].equip != 0 || sd->status.inventory[n].attribute==1 ) { // [Valaris]
 		clif_equipitemack(sd,n,0,0);	// fail
 		return 0;
 	}
