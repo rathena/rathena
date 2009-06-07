@@ -11114,7 +11114,7 @@ int skill_arrow_create (struct map_session_data *sd, int nameid)
 		return 1;
 
 	pc_delitem(sd,j,1,0);
-	for(i=0;i<5;i++) {
+	for(i=0;i<MAX_ARROW_RESOURCE;i++) {
 		memset(&tmp_item,0,sizeof(tmp_item));
 		tmp_item.identify = 1;
 		tmp_item.nameid = skill_arrow_db[index].cre_id[i];
