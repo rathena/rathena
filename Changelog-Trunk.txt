@@ -3,6 +3,8 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+09/06/07
+	* Implemented "cooking exp" that increases the success chance of cooking by 0.05% per try and the max bonus is 20%. [Inkfish]
 09/06/05
 	* Job_Battle_Manual and Battle_Manual can be used simultaneously. [Inkfish]
 	* Fixed "sleep" after "attachrid" (a different rid) halts the script. [Inkfish]

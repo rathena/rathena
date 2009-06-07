@@ -971,6 +971,9 @@ int pc_reg_received(struct map_session_data *sd)
 	sd->cashPoints = pc_readaccountreg(sd,"#CASHPOINTS");
 	sd->kafraPoints = pc_readaccountreg(sd,"#KAFRAPOINTS");
 
+	// Cooking Exp
+	sd->cooking_attempt = pc_readglobalreg(sd,"COOKING_ATTEMPT");
+
 	if( (sd->class_&MAPID_BASEMASK) == MAPID_TAEKWON )
 	{ // Better check for class rather than skill to prevent "skill resets" from unsetting this
 		sd->mission_mobid = pc_readglobalreg(sd,"TK_MISSION_ID");
@@ -6469,6 +6472,11 @@ int pc_setregistry(struct map_session_data *sd,const char *reg,int val,int type)
 			sd->die_counter = val;
 			if( i )
 				status_calc_pc(sd,0); // Lost the bonus.
+		}
+		else if( !strcmp(reg,"COOKING_ATTEMPT") && sd->cooking_attempt != val )
+		{
+			val = cap_value(val, 0, 400);
+			sd->cooking_attempt = val;
 		}
 		sd_reg = sd->save_reg.global;
 		max = &sd->save_reg.global_num;

@@ -10909,7 +10909,9 @@ int skill_produce_mix (struct map_session_data *sd, int skill_id, int nameid, in
 						make_per = 1200*(sd->menuskill_val-10) //12% chance per set level.
 							+ 1000 - 500*(skill_produce_db[idx].itemlv-10) //10% - 5% per dish level
 							+ 20*status->dex + 10*status->luk //0.2% per DEX, 0.1% per LUK
-							+ 1000; //TODO: Replace with MIN(5*COOKINGATTEMPTS;2000)
+							+ 5*sd->cooking_attempt; //+0.05% per try
+					if( sd->cooking_attempt < 400 )
+						pc_setglobalreg(sd, "COOKING_ATTEMPT", sd->cooking_attempt+1);
 					break;
 				}
 				make_per = 5000;
