@@ -8327,6 +8327,9 @@ void clif_parse_GetCharNameRequest(int fd, struct map_session_data *sd)
 	if( bl == NULL )
 		return;	// Lagged clients could request names of already gone mobs/players. [Skotlex]
 
+	if( sd->bl.m != bl->m || !check_distance_bl(&sd->bl, bl, AREA_SIZE) )
+		return; // Block namerequests past view range
+
 	// 'see people in GM hide' cheat detection
 	/* disabled due to false positives (network lag + request name of char that's about to hide = race condition)
 	sc = status_get_sc(bl);
