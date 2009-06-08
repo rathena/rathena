@@ -11,9 +11,6 @@
 	Missing Effects:
 	12214 Convex_Mirror:		Detect MVP spawn on minimap; doesn't work with special condition MVPs. (Recommend constant: SC_DetectMVPSpawn)
 
-	Missing 12.1 Equipment Bonuses:
-	1630 Release_of_Wish		On magical attack, chance for two seconds you'll recover 50 SP and 100 HP.
-
 	Battleground Reward items:
 	Various weapons			Some weapons require a bonus to bypass 20% defense on demi-human opponents.
 	13037 Assassin_Dagger_		When attacking, chance to gain occult impaction/icepick effect for 6 seconds, .
@@ -38,6 +35,8 @@
 
 =======================
 2009/06/08
+	* Fixed Radiant Wisdom giving double as much HP/SP than it should [Playtester]
+	- it will give 100 HP and 50 SP every 2 seconds for 10 seconds when it activates
 	* Fixed up the first set of Battle Ground armors [Playtester]
 	- reduced guessed chances from 5% to 0.5%
 	- fixed valorous huuma only giving 10% attack bonus instead of 100%
