@@ -1237,6 +1237,17 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 		status_heal(src, 0, status_get_lv(bl)*(95+15*rate)/100, 2);
 	}
 
+	if( sd && status_isdead(bl) && attack_type&BF_WEAPON )
+	{
+		int sp = 0, hp = 0;
+		sp += sd->sp_gain_value;
+		sp += sd->sp_gain_race[status_get_race(bl)];
+		sp += sd->sp_gain_race[is_boss(bl)?RC_BOSS:RC_NONBOSS];
+		hp += sd->hp_gain_value;
+		if( hp || sp )
+			status_heal(src, hp, sp, battle_config.show_hp_sp_gain?2:0);
+	}
+
 	// Trigger counter-spells to retaliate against damage causing skills.
 	if(dstsd && !status_isdead(bl) && dstsd->autospell2[0].id &&
 		!(skillid && skill_get_nk(skillid)&NK_NO_DAMAGE))
@@ -1640,34 +1651,29 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 			struct block_list *tbl = bl;
 			bl = src;
 			src = tbl;
+			sd = BL_CAST(BL_PC, src);
+			tsd = BL_CAST(BL_PC, bl);
+			sc = status_get_sc(bl);
+			if (sc && !sc->count)
+				sc = NULL; //Don't need it.
 
-			if( type == 2 )
-			{ // Kaite
-				sd = BL_CAST(BL_PC, src);
-				tsd = BL_CAST(BL_PC, bl);
+			//Spirit of Wizard blocks Kaite's reflection
+			if( type == 2 && sc && sc->data[SC_SPIRIT] && sc->data[SC_SPIRIT]->val2 == SL_WIZARD )
+			{	//It should only consume once per skill casted. Val3 is the skill id and val4 is the ID of the damage src.
+				//This should account for ground spells (and single target spells will be completed on castend_id) [Skotlex]
+				if (tsd && !(sc->data[SC_SPIRIT]->val3 == skillid && sc->data[SC_SPIRIT]->val4 == dsrc->id) )
+				{	//Check if you have stone to consume.
+				  	type = pc_search_inventory (tsd, 7321);
+					if (type >= 0)
+						pc_delitem(tsd, type, 1, 0);
+				} else
+					type = 0;
 
-				sc = status_get_sc(bl);
-				if (sc && !sc->count)
-					sc = NULL; //Don't need it.
-
-				//Spirit of Wizard blocks Kaite's reflection
-				if( sc && sc->data[SC_SPIRIT] && sc->data[SC_SPIRIT]->val2 == SL_WIZARD )
-				{	//It should only consume once per skill casted. Val3 is the skill id and val4 is the ID of the damage src.
-					//This should account for ground spells (and single target spells will be completed on castend_id) [Skotlex]
-					if (tsd && !(sc->data[SC_SPIRIT]->val3 == skillid && sc->data[SC_SPIRIT]->val4 == dsrc->id) )
-					{	//Check if you have stone to consume.
-				  		type = pc_search_inventory (tsd, 7321);
-						if (type >= 0)
-							pc_delitem(tsd, type, 1, 0);
-					} else
-						type = 0;
-
-					if (type >= 0) {
-						dmg.damage = dmg.damage2 = 0;
-						dmg.dmg_lv = ATK_MISS;
-						sc->data[SC_SPIRIT]->val3 = skillid;
-						sc->data[SC_SPIRIT]->val4 = dsrc->id;
-					}
+				if (type >= 0) {
+					dmg.damage = dmg.damage2 = 0;
+					dmg.dmg_lv = ATK_MISS;
+					sc->data[SC_SPIRIT]->val3 = skillid;
+					sc->data[SC_SPIRIT]->val4 = dsrc->id;
 				}
 			}
 		}

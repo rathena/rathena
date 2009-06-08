@@ -3,6 +3,11 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+09/06/08
+	* Fixed bHPGainValue and bSPGainValue worked on all types of attacks and was only activated on mob's death.(bugreport:3193) [Inkfish]
+	* Added a configuration for whether damage of EarthQuake with single target can be reflected. [Inkfish]
+	* Fixed Wizard Spirit can block reflected magical damage other than Kaite's.(bugreport:3161) [Inkfish]
+	* Fixed Kaite works against bosses.(follow up to r13857) [Inkfish]
 09/06/07
 	* Magical damage reflection now works against boss monsters and only on target skill(but EarthQuake with one target is an exception). [Inkfish]
 	* Changed hardcoded "5" to MAX_ARROW_RESOURCE in skill_arrow_create preventing proper usage. (bugreport:3025) [Paradox924X]
