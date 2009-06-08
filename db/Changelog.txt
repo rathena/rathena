@@ -37,6 +37,10 @@
 	2385 Recuvative_Armor		Should trigger HP/SP return with magical kills as well.
 
 =======================
+2009/06/08
+	* Fixed up the first set of Battle Ground armors [Playtester]
+	- reduced guessed chances from 5% to 0.5%
+	- fixed valorous huuma only giving 10% attack bonus instead of 100%
 2009/06/07
 	* Fixed up the first set of Battle Ground weapons [Playtester]
 	- reduced guessed chances from 5% to 0.5%
