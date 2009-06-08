@@ -13,21 +13,21 @@
 Bit Legend:
 -------------------------------------------------------------------------------
 
-MD_CANMOVE            | 0x0001 |    1
-MD_LOOTER             | 0x0002 |    2
-MD_AGGRESSIVE         | 0x0004 |    4
-MD_ASSIST             | 0x0008 |    8
-MD_CASTSENSOR_IDLE    | 0x0010 |   16
-MD_BOSS               | 0x0020 |   32
-MD_PLANT              | 0x0040 |   64
-MD_CANATTACK          | 0x0080 |  128
-MD_DETECTOR           | 0x0100 |  256
-MD_CASTSENSOR_CHASE   | 0x0200 |  512
-MD_CHANGECHASE        | 0x0400 | 1024
-MD_ANGRY              | 0x0800 | 2048
-MD_CHANGETARGET_MELEE | 0x1000 | 4096
-MD_CHANGETARGET_CHASE | 0x2000 | 8192
-
+MD_CANMOVE            | 0x0001 |      1
+MD_LOOTER             | 0x0002 |      2
+MD_AGGRESSIVE         | 0x0004 |      4
+MD_ASSIST             | 0x0008 |      8
+MD_CASTSENSOR_IDLE    | 0x0010 |     16
+MD_BOSS               | 0x0020 |     32
+MD_PLANT              | 0x0040 |     64
+MD_CANATTACK          | 0x0080 |    128
+MD_DETECTOR           | 0x0100 |    256
+MD_CASTSENSOR_CHASE   | 0x0200 |    512
+MD_CHANGECHASE        | 0x0400 |   1024
+MD_ANGRY              | 0x0800 |   2048
+MD_CHANGETARGET_MELEE | 0x1000 |   4096
+MD_CHANGETARGET_CHASE | 0x2000 |   8192
+MD_TARGETWEAK         | 0x4000 | 126384
 Explanation for modes:
 -------------------------------------------------------------------------------
 
@@ -70,6 +70,9 @@ Change Target Melee: Enables a mob to switch targets when attacked while
 Change Target Chase: Enables a mob to switch targets when attacked while
 	chasing another character.
 
+Target Weak: Allows aggressive monsters to only be aggressive against 
+   characters that aren't five or more levels above the monster's.
+
 Aegis Mob Types:
 -------------------------------------------------------------------------------
 
@@ -85,6 +88,7 @@ Aegis/eA (description)
 05: 0x2085 (aggro, change-target chase)
 06: 0x0000 (passive, immobile, can't attack) [plants]
 07: 0x108B (passive, looter, assist, change-target melee)
+08: 0x6085 (aggro, change-target chase, target weak enemies)
 09: 0x3095 (aggro, change-target melee/chase, cast sensor idle) [Guardian]
 10: 0x0084 (aggro, immobile)
 11: 0x0084 (aggro, immobile) [Guardian]
@@ -95,5 +99,5 @@ Aegis/eA (description)
 20: 0x3295 (aggro, change-target melee/chase, cast sensor idle/chase)
 21: 0x3695 (aggro, change-target melee/chase, cast sensor idle/chase, chase-change target)
 
-- Note that the detector bit due to being Insect/Demon, plant  and Boss mode
+- Note that the detector bit due to being Insect/Demon, plant and Boss mode
   bits need to be added independently of this list.
