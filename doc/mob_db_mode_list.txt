@@ -27,7 +27,9 @@ MD_CHANGECHASE        | 0x0400 |   1024
 MD_ANGRY              | 0x0800 |   2048
 MD_CHANGETARGET_MELEE | 0x1000 |   4096
 MD_CHANGETARGET_CHASE | 0x2000 |   8192
-MD_TARGETWEAK         | 0x4000 | 126384
+MD_TARGETWEAK         | 0x4000 |  16384
+MD_RANDOMTARGET       | 0x8000 |  32768 (not implemented)
+
 Explanation for modes:
 -------------------------------------------------------------------------------
 
@@ -71,7 +73,10 @@ Change Target Chase: Enables a mob to switch targets when attacked while
 	chasing another character.
 
 Target Weak: Allows aggressive monsters to only be aggressive against 
-   characters that aren't five or more levels above the monster's.
+	characters that aren't five or more levels above the monster's.
+
+Random Target: Picks a new random target in range on each attack / skill.
+	(not implemented)
 
 Aegis Mob Types:
 -------------------------------------------------------------------------------
@@ -98,6 +103,8 @@ Aegis/eA (description)
 19: 0x3095 (aggro, change-target melee/chase, cast sensor idle)
 20: 0x3295 (aggro, change-target melee/chase, cast sensor idle/chase)
 21: 0x3695 (aggro, change-target melee/chase, cast sensor idle/chase, chase-change target)
+26: 0xB695 (aggro, change-target melee/chase, cast sensor idle/chase, chase-change target, random target)
+27: 0x8084 (aggro, immobile, random target)
 
 - Note that the detector bit due to being Insect/Demon, plant and Boss mode
   bits need to be added independently of this list.
