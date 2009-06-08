@@ -2491,7 +2491,7 @@
 6003,Soul_Pendant,Pendant of Spirit,3,,,10,,,,,,,,,,,,,{},{},{}
 6004,Bapho_Doll,Cursed Baphomet Doll,3,,,10,,,,,,,,,,,,,{},{},{}
 //
-6024,Pickaxe,Hoe,3,0,,10,,,,,,,,,,,,,{},{},{}
+6010,Pickaxe,Hoe,3,0,,10,,,,,,,,,,,,,{},{},{}
 //
 6024,17_Carat_Diamond,17 Carat Diamond,3,0,,10,,,,,,,,,,,,,{},{},{}
 6025,Towel_of_Memory,Towel of Memory,3,0,,10,,,,,,,,,,,,,{},{},{}
