@@ -967,7 +967,7 @@ static int mob_ai_sub_hard_activesearch(struct block_list *bl,va_list ap)
 	if ((*target) == bl || !status_check_skilluse(&md->bl, bl, 0, 0))
 		return 0;
 
-	if ((mode&MD_TARGETWEAK) && status_get_lv(bl) >= md->level+5)
+	if ((mode&MD_TARGETWEAK) && status_get_lv(bl) >= md->level-5)
 		return 0;
 
 	if(battle_check_target(&md->bl,bl,BCT_ENEMY)<=0)

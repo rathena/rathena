@@ -73,7 +73,8 @@ Change Target Chase: Enables a mob to switch targets when attacked while
 	chasing another character.
 
 Target Weak: Allows aggressive monsters to only be aggressive against 
-	characters that aren't five or more levels above the monster's.
+	characters that are five levels below it's own level.
+	For example, a monster of level 104 will not pick fights with a level 99.
 
 Random Target: Picks a new random target in range on each attack / skill.
 	(not implemented)
