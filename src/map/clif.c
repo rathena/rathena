@@ -2813,10 +2813,12 @@ int clif_changeoption(struct block_list* bl)
 {
 	unsigned char buf[32];
 	struct status_change *sc;
+	struct map_session_data* sd;
 
 	nullpo_retr(0, bl);
 	sc = status_get_sc(bl);
 	if (!sc) return 0; //How can an option change if there's no sc?
+	sd = BL_CAST(BL_PC, bl);
 	
 #if PACKETVER >= 7
 	WBUFW(buf,0) = 0x229;
@@ -2824,7 +2826,7 @@ int clif_changeoption(struct block_list* bl)
 	WBUFW(buf,6) = sc->opt1;
 	WBUFW(buf,8) = sc->opt2;
 	WBUFL(buf,10) = sc->option;
-	WBUFB(buf,14) = 0;	// PK???
+	WBUFB(buf,14) = (sd)? sd->status.karma : 0;
 	if(disguised(bl)) {
 		clif_send(buf,packet_len(0x229),bl,AREA_WOS);
 		WBUFL(buf,2) = -bl->id;
@@ -2840,7 +2842,7 @@ int clif_changeoption(struct block_list* bl)
 	WBUFW(buf,6) = sc->opt1;
 	WBUFW(buf,8) = sc->opt2;
 	WBUFW(buf,10) = sc->option;
-	WBUFB(buf,12) = 0;	// ??
+	WBUFB(buf,12) = (sd)? sd->status.karma : 0;
 	if(disguised(bl)) {
 		clif_send(buf,packet_len(0x119),bl,AREA_WOS);
 		WBUFL(buf,2) = -bl->id;

@@ -1478,8 +1478,8 @@
 2717,Pocket_Watch,Pocket Watch,5,20,,200,,0,,0,0x00010204,7,2,136,,80,0,0,{},{},{}
 2718,Lunatic_Brooch,Lunatic Brooch,5,20,,200,,0,,1,0x00080808,7,2,136,,65,0,0,{},{},{}
 2719,Iron_Wrist,Iron Wrist,5,20,,700,,1,,0,0x000444A2,7,2,136,,50,0,0,{ bonus2 bSkillAtk,"SM_BASH",6; bonus2 bSkillAtk,"MC_MAMMONITE",6; },{},{}
-2720,Medal_Swordman,Medal of Honor,5,0,,0,,1,,0,0x00004082,7,2,136,,70,0,0,{ bonus bAtkRate,5; bonus bMatkRate,5; bonus bHit,10; bonus bMaxHP,500; bonus bMaxSP,50; bonus2 bAddEff,Eff_Stun,1000; },{},{}
-2721,Medal_Thief,Medal of Honor,5,0,,0,,1,,0,0x00021040,7,2,136,,70,0,0,{ bonus bAtkRate,5; bonus bMatkRate,5; bonus bFlee,10; bonus bMaxHP,300; bonus bMaxSP,80; bonus2 bAddEff,Eff_Poison,1000; },{},{}
+2720,Medal_Swordman,Medal of Honor,5,0,,0,,1,,0,0x00404082,7,2,136,,70,0,0,{ bonus bAtkRate,5; bonus bMatkRate,5; bonus bHit,10; bonus bMaxHP,500; bonus bMaxSP,50; bonus2 bAddEff,Eff_Stun,1000; },{},{}
+2721,Medal_Thief,Medal of Honor,5,0,,0,,1,,0,0x02021040,7,2,136,,70,0,0,{ bonus bAtkRate,5; bonus bMatkRate,5; bonus bFlee,10; bonus bMaxHP,300; bonus bMaxSP,80; bonus2 bAddEff,Eff_Poison,1000; },{},{}
 2722,Medal_Acolyte,Medal of Honor,5,0,,0,,1,,0,0x00008110,7,2,136,,70,0,0,{ bonus bAtkRate,5; bonus bMatkRate,5; bonus bMdef,6; bonus bMaxHP,600; bonus2 bAddEff,Eff_Silence,1000; },{},{}
 2723,Medal_Mage,Medal of Honor,5,0,,0,,1,,0,0x00810204,7,2,136,,70,0,0,{ bonus bAtkRate,5; bonus bMatkRate,5; bonus bMdef,6; bonus bMaxHP,600; bonus2 bAddEffWhenHit,Eff_Stone,1000; },{},{}
 2724,Medal_Archer,Medal of Honor,5,0,,0,,1,,0,0x00080808,7,2,136,,70,0,0,{ bonus bAtkRate,5; bonus bMatkRate,5; bonus bCritical,10; bonus bMaxHP,300; bonus bMaxSP,80; bonus2 bAddEff,Eff_Blind,1000; },{},{}
@@ -4013,7 +4013,7 @@
 13034,Twilight_Desert,Desert Twilight,4,20,,600,130,,1,2,0x00001000,2,2,2,2,70,1,1,{ if (isequipped(13035)) { bonus bMaxSP,20; bonus bMaxHPRate,5; bonus bHit,10; bonus2 bAddSize,2,30; bonusautoscript "{ specialeffect2 EF_POTION_BERSERK; sc_start SC_INCASPDRATE,7000,100; }",1; } },{},{}
 13035,Sandstorm,Sandstorm,4,20,,600,50,,1,4,0x00001000,2,2,2,2,70,1,1,{},{},{}
 13036,Brave_Assassin's_Damascus,Brave Assassin's Damascus,4,0,,0,120,,1,0,0x028F5EEF,7,2,2,3,80,1,1,{ bonus bStr,1; bonus bAgi,1; bonus2 bAddRace,RC_DemiHuman,75; bonus2 bIgnoreDefRate,RC_DemiHuman,20; bonus bUnbreakableWeapon,0; if (Class == Job_Ninja || Class == Job_Rogue || Class == Job_Stalker) bonus bMatkRate,15; },{},{}
-13037,Valorous_Assassin's_Damascus,Valorous Assassin's Damascus,4,0,,0,120,,1,0,0x028F5EEF,7,2,2,3,80,1,1,{ bonus bStr,1; bonus bAgi,1; bonus2 bAddRace,RC_DemiHuman,75; bonus bUnbreakableWeapon,0; bonusautoscript "{ sc_start SC_DEFRATIOATK,6000,2; }",5; if (Class == Job_Ninja || Class == Job_Rogue || Class == Job_Stalker) bonus bMatkRate,15; },{},{}
+13037,Valorous_Assassin's_Damascus,Valorous Assassin's Damascus,4,0,,0,120,,1,0,0x029E7CEB,7,2,2,3,80,1,1,{ bonus bStr,1; bonus bAgi,1; bonus2 bAddRace,RC_DemiHuman,75; bonus bUnbreakableWeapon,0; bonusautoscript "{ sc_start SC_DEFRATIOATK,6000,1; }",50; if (Class == Job_Ninja || Class == Job_Rogue || Class == Job_Stalker) bonus bMatkRate,15; },{},{}
 //13038#Trackers_Dagger#
 //13039#Ivory_Knife#
 13040,Novice_Cutter,Novice Cutter,4,1,,0,50,,1,0,0xFE9F7EEF,7,2,2,1,1,0,1,{},{},{}
