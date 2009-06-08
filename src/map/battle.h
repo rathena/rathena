@@ -465,6 +465,8 @@ extern struct Battle_Config
 	int homunculus_auto_vapor;	//Keep Homunculus from Vaporizing when master dies. [L0ne_W0lf]
 	int display_status_timers;	//Show or hide skill buff/delay timers in recent clients [Sara]
 	int skill_add_heal_rate;	//skills that bHealPower has effect on [Inkfish]
+	int eq_single_target_reflectable;
+
 	// [BattleGround Settings]
 	int bg_update_interval;
 	int bg_short_damage_rate;

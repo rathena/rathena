@@ -1539,6 +1539,9 @@ static int skill_magic_reflect(struct block_list* src, struct block_list* bl, in
 	if( sd && sd->magic_damage_return && type && rand()%100 < sd->magic_damage_return )
 		return 1;
 
+	if( is_boss(src) )
+		return 0;
+
 	// status-based reflection
 	if( !sc || sc->count == 0 )
 		return 0;
@@ -1551,7 +1554,7 @@ static int skill_magic_reflect(struct block_list* src, struct block_list* bl, in
 		clif_specialeffect(bl, 438, AREA);
 		if( --sc->data[SC_KAITE]->val2 <= 0 )
 			status_change_end(bl, SC_KAITE, -1);
-		return 1;
+		return 2;
 	}
 
 	return 0;
@@ -1630,40 +1633,41 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 		}
 	}
 
-	if( dmg.flag&BF_MAGIC && ( skillid != NPC_EARTHQUAKE || (flag&0xFFF) == 1 ) )
+	if( dmg.flag&BF_MAGIC && ( skillid != NPC_EARTHQUAKE || (battle_config.eq_single_target_reflectable && (flag&0xFFF) == 1) ) )
 	{ // Earthquake on multiple targets is not counted as a target skill. [Inkfish]
-		if( (dmg.damage || dmg.damage2) && skill_magic_reflect(src, bl, src==dsrc) )
+		if( (dmg.damage || dmg.damage2) && (type = skill_magic_reflect(src, bl, src==dsrc)) )
 		{	//Magic reflection, switch caster/target
 			struct block_list *tbl = bl;
 			bl = src;
 			src = tbl;
-			sd = BL_CAST(BL_PC, src);
-			tsd = BL_CAST(BL_PC, bl);
-			sc = status_get_sc(bl);
-			if (sc && !sc->count)
-				sc = NULL; //Don't need it.
-			//Spirit of Wizard blocks bounced back spells.
-			if (sc && sc->data[SC_SPIRIT] &&
-				sc->data[SC_SPIRIT]->val2 == SL_WIZARD)
-			{
-				//It should only consume once per skill casted. Val3 is the skill
-				//id and val4 is the ID of the damage src, this should account for
-				//ground spells (and single target spells will be completed on
-				//castend_id) [Skotlex]
-				if (tsd && !(
-					sc->data[SC_SPIRIT]->val3 == skillid &&
-				  	sc->data[SC_SPIRIT]->val4 == dsrc->id)
-				) {	//Check if you have stone to consume.
-				  	type = pc_search_inventory (tsd, 7321);
-					if (type >= 0)
-						pc_delitem(tsd, type, 1, 0);
-				} else
-					type = 0;
-				if (type >= 0) {
-					dmg.damage = dmg.damage2 = 0;
-					dmg.dmg_lv = ATK_MISS;
-					sc->data[SC_SPIRIT]->val3 = skillid;
-					sc->data[SC_SPIRIT]->val4 = dsrc->id;
+
+			if( type == 2 )
+			{ // Kaite
+				sd = BL_CAST(BL_PC, src);
+				tsd = BL_CAST(BL_PC, bl);
+
+				sc = status_get_sc(bl);
+				if (sc && !sc->count)
+					sc = NULL; //Don't need it.
+
+				//Spirit of Wizard blocks Kaite's reflection
+				if( sc && sc->data[SC_SPIRIT] && sc->data[SC_SPIRIT]->val2 == SL_WIZARD )
+				{	//It should only consume once per skill casted. Val3 is the skill id and val4 is the ID of the damage src.
+					//This should account for ground spells (and single target spells will be completed on castend_id) [Skotlex]
+					if (tsd && !(sc->data[SC_SPIRIT]->val3 == skillid && sc->data[SC_SPIRIT]->val4 == dsrc->id) )
+					{	//Check if you have stone to consume.
+				  		type = pc_search_inventory (tsd, 7321);
+						if (type >= 0)
+							pc_delitem(tsd, type, 1, 0);
+					} else
+						type = 0;
+
+					if (type >= 0) {
+						dmg.damage = dmg.damage2 = 0;
+						dmg.dmg_lv = ATK_MISS;
+						sc->data[SC_SPIRIT]->val3 = skillid;
+						sc->data[SC_SPIRIT]->val4 = dsrc->id;
+					}
 				}
 			}
 		}
