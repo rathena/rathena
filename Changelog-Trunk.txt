@@ -3,6 +3,8 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+09/06/09
+	* Fixed applying autocasts with negative rate before the positive one made it fail to remove the autocast. [Inkfish]
 09/06/08
 	* Rev. 13869 Follow up to r13867, corrected the newly added MD_TARGETWEAK. Monsters with this mode will now only target players five level LOWER than itself. [L0ne_W0lf]
 09/06/08

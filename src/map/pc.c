@@ -1459,48 +1459,18 @@ void pc_autoscript_clear(struct map_session_data *sd)
 	memset(&sd->autoscript3, 0, sizeof(sd->autoscript3));
 }
 
-static int pc_bonus_autospell_del(struct s_autospell* spell, int max, short id, short lv, short rate, short card_id)
-{
-	int i, j;
-	for(i=max-1; i>=0 && !spell[i].id; i--);
-	if (i<0) return 0; //Nothing to substract from.
-
-	j = i;
-	for(; i>=0 && rate>0; i--)
-	{
-		if (spell[i].id != id || spell[i].lv != lv) continue;
-		if (rate >= spell[i].rate) {
-			rate-= spell[i].rate;
-			spell[i].rate = 0;
-			memmove(&spell[i], &spell[j], sizeof(struct s_autospell));
-			memset(&spell[j], 0, sizeof(struct s_autospell));
-			j--;
-		} else {
-			spell[i].rate -= rate;
-			rate = 0;
-		}
-	}
-	if (rate > 0 && ++j < max)
-	{	 //Tag this as "pending" autospell to remove.
-		spell[j].id = id;
-		spell[j].lv = lv;
-		spell[j].rate = -rate;
-		spell[j].card_id = card_id;
-	}
-	return rate;
-}
-
 static int pc_bonus_autospell(struct s_autospell *spell, int max, short id, short lv, short rate, short flag, short card_id)
 {
 	int i;
-	if (rate < 0) return //Remove the autobonus.
-		pc_bonus_autospell_del(spell, max, id, lv, -rate, card_id);
 
-	for (i = 0; i < max && spell[i].id; i++) {
-		if ((spell[i].card_id == card_id || spell[i].rate < 0) &&
-			spell[i].id == id && spell[i].lv == lv)
+	if( !rate )
+		return 0;
+
+	for( i = 0; i < max && spell[i].id; i++ )
+	{
+		if( (spell[i].card_id == card_id || spell[i].rate < 0 || rate < 0) && spell[i].id == id && spell[i].lv == lv )
 		{
-			if (!battle_config.autospell_stacking && spell[i].rate > 0)
+			if( !battle_config.autospell_stacking && spell[i].rate > 0 && rate > 0 )
 				return 0;
 			rate += spell[i].rate;
 			break;
@@ -1528,17 +1498,19 @@ static int pc_bonus_autospell(struct s_autospell *spell, int max, short id, shor
 static int pc_bonus_autospell_onskill(struct s_autospell *spell, int max, short src_skill, short id, short lv, short rate, short card_id)
 {
 	int i;
-	if( rate < 0 )
-		return pc_bonus_autospell_del(spell, max, id, lv, -rate, card_id);
 
-	for( i = 0; i < max && spell[i].id; i++ )
-	{
-		if( spell[i].flag == src_skill && spell[i].id == id && spell[i].lv == lv && spell[i].card_id == card_id )
-		{
-			if( !battle_config.autospell_stacking )
-				rate += spell[i].rate;
-			break;
-		}
+	if( !rate )
+		return 0;
+
+	for( i = 0; i < max && spell[i].id; i++ )  
+	{  
+		if( spell[i].flag == src_skill && spell[i].id == id && spell[i].lv == lv && (spell[i].card_id == card_id || spell[i].rate <= 0 || rate < 0) )  
+		{  
+			if( !battle_config.autospell_stacking && spell[i].rate > 0 && rate > 0 )
+				return 0;
+			rate += spell[i].rate;
+			break; 
+		}  
 	}
 
 	if( i == max )
