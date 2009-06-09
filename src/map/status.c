@@ -1503,7 +1503,8 @@ int status_calc_mob_(struct mob_data* md, bool first)
 		status->aspd_rate -= 100*md->guardian_data->guardup_lv;
 	}
 
-	memcpy(&md->status, status, sizeof(struct status_data));
+	if( first ) //Initial battle status
+		memcpy(&md->status, status, sizeof(struct status_data));
 
 	return 1;
 }
