@@ -1,5 +1,10 @@
 Date		Added
 ======
+2009/06/09
+	* Rev. 13878 Implemented rewrite of the quest "The Sign". [L0ne_W0lf]
+	- Attempts to save player progress when quest npcs are talked too. This is Untested.
+	- Talking to any quest related NPC will remove all out-dated quest vars.
+	* Fixed incorrect sprite ID used in some Niflheim quest npcs.
 2009/06/06
 	* Rewrote Platinum Skill NPC to give all correct skills to all proper classes. [Paradox924X]
 	* Fixed several issues introduced by Kisuka and/or Spre in r13214 with custom platinum skills script. Fix by Ancyker (bugreport:3190) [Paradox924X]

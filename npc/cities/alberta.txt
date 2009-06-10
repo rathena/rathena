@@ -545,20 +545,3 @@ alberta,190,173,4	script	Phelix	85,{
 		}
 	}
 }
-
-alberta,43,49,5	script	Poor-looking Merchant	89,{
-	mes "[Machen]";
-	mes "Why...?";
-	mes "How did my";
-	mes "family's wealth";
-	mes "and prestige just";
-	mes "go down the drain?";
-	next;
-	mes "[Machen]";
-	mes "Ever since the";
-	mes "Alcheshs came to Alberta,";
-	mes "they quickly took our place";
-	mes "as the biggest business owners";
-	mes "here. It's our biggest shame...";
-	close;
-}
