@@ -972,7 +972,7 @@ int pc_reg_received(struct map_session_data *sd)
 	sd->kafraPoints = pc_readaccountreg(sd,"#KAFRAPOINTS");
 
 	// Cooking Exp
-	sd->cooking_attempt = pc_readglobalreg(sd,"COOKING_ATTEMPT");
+	sd->cook_mastery = pc_readglobalreg(sd,"COOK_MASTERY");
 
 	if( (sd->class_&MAPID_BASEMASK) == MAPID_TAEKWON )
 	{ // Better check for class rather than skill to prevent "skill resets" from unsetting this
@@ -6445,10 +6445,10 @@ int pc_setregistry(struct map_session_data *sd,const char *reg,int val,int type)
 			if( i )
 				status_calc_pc(sd,0); // Lost the bonus.
 		}
-		else if( !strcmp(reg,"COOKING_ATTEMPT") && sd->cooking_attempt != val )
+		else if( !strcmp(reg,"COOK_MASTERY") && sd->cook_mastery != val )
 		{
-			val = cap_value(val, 0, 400);
-			sd->cooking_attempt = val;
+			val = cap_value(val, 0, 1999);
+			sd->cook_mastery = val;
 		}
 		sd_reg = sd->save_reg.global;
 		max = &sd->save_reg.global_num;

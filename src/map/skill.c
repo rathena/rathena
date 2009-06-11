@@ -6333,7 +6333,6 @@ int skill_castend_pos2(struct block_list* src, int x, int y, int skillid, int sk
 		}
 		break;
 	case NJ_SHADOWJUMP:
-	{
 		if( !map_flag_gvg(src->m) && !map[src->m].flag.battleground )
 		{	//You don't move on GVG grounds.
 			unit_movepos(src, x, y, 1, 0);
@@ -6341,7 +6340,6 @@ int skill_castend_pos2(struct block_list* src, int x, int y, int skillid, int sk
 		}
 		if (sc && sc->data[SC_HIDING])
 			status_change_end(src, SC_HIDING, -1);
-	}
 		break;
 	case AM_SPHEREMINE:
 	case AM_CANNIBALIZE:
@@ -10425,17 +10423,6 @@ static int skill_unit_timer_sub (DBKey key, void* data, va_list ap)
 					}
 				}
 				break;
-			case UNT_TATAMIGAESHI:
-				if( unit->range >= 0 )
-				{	//Disable processed cell.
-					unit->range = -1;
-					if (--group->val1 <= 0) // number of live cells
-	  				{	//All tiles were processed, disable skill.
-						group->target_flag=BCT_NOONE;
-						group->bl_flag= BL_NUL;
-					}
-				}
-				break;
 		}
 	}
 
@@ -10455,10 +10442,14 @@ static int skill_unit_timer_sub (DBKey key, void* data, va_list ap)
 		if(unit->range == -1) //Unit disabled, but it should not be deleted yet.
 			group->unit_id = UNT_USED_TRAPS;
 
-		if( !unit->alive )
+		if( group->unit_id == UNT_TATAMIGAESHI )
 		{
-			if( dissonance ) skill_dance_switch(unit, 1);
-			return 0;
+			unit->range = -1; //Disable processed cell.
+			if (--group->val1 <= 0) // number of live cells
+	  		{	//All tiles were processed, disable skill.
+				group->target_flag=BCT_NOONE;
+				group->bl_flag= BL_NUL;
+			}
 		}
 	}
 
@@ -10774,6 +10765,7 @@ int skill_produce_mix (struct map_session_data *sd, int skill_id, int nameid, in
 {
 	int slot[3];
 	int i,sc,ele,idx,equip,wlv,make_per,flag;
+	int num = -1; // exclude the recipe
 	struct status_data *status;
 
 	nullpo_retr(0, sd);
@@ -10815,6 +10807,7 @@ int skill_produce_mix (struct map_session_data *sd, int skill_id, int nameid, in
 		int j,id,x;
 		if( (id=skill_produce_db[idx].mat_id[i]) <= 0 )
 			continue;
+		num++;
 		x=qty*skill_produce_db[idx].mat_amount[i];
 		do{
 			int y=0;
@@ -10917,12 +10910,14 @@ int skill_produce_mix (struct map_session_data *sd, int skill_id, int nameid, in
 					if (sd->menuskill_val >= 15) //Legendary Cooking Set.
 						make_per = 10000; //100% Success
 					else
-						make_per = 1200*(sd->menuskill_val-10) //12% chance per set level.
-							+ 1000 - 500*(skill_produce_db[idx].itemlv-10) //10% - 5% per dish level
-							+ 20*status->dex + 10*status->luk //0.2% per DEX, 0.1% per LUK
-							+ 5*sd->cooking_attempt; //+0.05% per try
-					if( sd->cooking_attempt < 400 )
-						pc_setglobalreg(sd, "COOKING_ATTEMPT", sd->cooking_attempt+1);
+						make_per = 1200 * (sd->menuskill_val - 10)
+							+ 20  * (sd->status.base_level + 1)
+							+ 20  * (status->dex + 1)
+							+ 100 * (rand()%(30+5*(sd->cook_mastery/400) - (6+sd->cook_mastery/80)) + (6+sd->cook_mastery/80))
+							- 400 * (skill_produce_db[idx].itemlv - 11 + 1)
+							- 10  * (100 - status->luk + 1)
+							- 500 * (num - 1)
+							- 100 * (rand()%4 + 1);
 					break;
 				}
 				make_per = 5000;
@@ -11056,9 +11051,12 @@ int skill_produce_mix (struct map_session_data *sd, int skill_id, int nameid, in
 					clif_misceffect(&sd->bl,3);
 					break;
 				default: //Those that don't require a skill?
-					if (skill_produce_db[idx].itemlv>10 &&
-						skill_produce_db[idx].itemlv<= 20) //Cooking items.
+					if( skill_produce_db[idx].itemlv > 10 && skill_produce_db[idx].itemlv <= 20)
+					{ //Cooking items.
 						clif_specialeffect(&sd->bl, 608, AREA);
+						if( sd->cook_mastery < 1999 )
+							pc_setglobalreg(sd, "COOK_MASTERY",sd->cook_mastery + ( 1 << ( (skill_produce_db[idx].itemlv - 11) / 2 ) ) * 5);
+					}
 					break;
 			}
 		}
@@ -11097,9 +11095,12 @@ int skill_produce_mix (struct map_session_data *sd, int skill_id, int nameid, in
 				clif_misceffect(&sd->bl,2);
 				break;
 			default:
-				if (skill_produce_db[idx].itemlv>10 &&
-					skill_produce_db[idx].itemlv<= 20) //Cooking items.
+				if( skill_produce_db[idx].itemlv > 10 && skill_produce_db[idx].itemlv <= 20 )
+				{ //Cooking items.
 					clif_specialeffect(&sd->bl, 609, AREA);
+					if( sd->cook_mastery > 0 )
+						pc_setglobalreg(sd, "COOK_MASTERY", sd->cook_mastery - ( 1 << ((skill_produce_db[idx].itemlv - 11) / 2) ) - ( ( ( 1 << ((skill_produce_db[idx].itemlv - 11) / 2) ) >> 1 ) * 3 ));
+				}
 		}
 	}
 	return 0;
