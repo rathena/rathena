@@ -10703,21 +10703,26 @@ void clif_parse_GMKick(int fd, struct map_session_data *sd)
 			clif_GM_kickack(sd, 0);
 			return;
 		}
-		clif_GM_kick(sd, tsd);
+
 		if(log_config.gm && lv >= log_config.gm) {
 			char message[256];
 			sprintf(message, "/kick %s (%d)", tsd->status.name, tsd->status.char_id);
 			log_atcommand(sd, message);
 		}
+
+		clif_GM_kick(sd, tsd);
 	}
 	break;
 	case BL_MOB:
-		status_percent_damage(&sd->bl, target, 100, 0, true);
+	{
 		if(log_config.gm && lv >= log_config.gm) {
 			char message[256];
 			sprintf(message, "/kick %s (%d)", status_get_name(target), status_get_class(target));
 			log_atcommand(sd, message);
 		}
+
+		status_percent_damage(&sd->bl, target, 100, 0, true); // can invalidate 'target'
+	}
 	break;
 	case BL_NPC:
 	{
@@ -10725,15 +10730,17 @@ void clif_parse_GMKick(int fd, struct map_session_data *sd)
 		lv = get_atcommand_level(atcommand_unloadnpc);
 		if( pc_isGM(sd) < lv )
 			return;
-		// copy-pasted from atcommand_unloadnpc
-		npc_unload_duplicates(nd);
-		npc_unload(nd);
-		npc_read_event_script();
+
 		if( log_config.gm && lv >= log_config.gm ) {
 			char message[256];
 			sprintf(message, "/kick %s (%d)", status_get_name(target), status_get_class(target));
 			log_atcommand(sd, message);
 		}
+
+		// copy-pasted from atcommand_unloadnpc
+		npc_unload_duplicates(nd);
+		npc_unload(nd); // invalidates 'target'
+		npc_read_event_script();
 	}
 	break;
 	default:
