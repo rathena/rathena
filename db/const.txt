@@ -852,8 +852,8 @@ e_kis	30
 e_kis2	31
 e_pif	32
 e_ok	33
-
-
+e_mute	34
+e_indonesia	35
 e_bzz	36
 e_rice	37
 e_awsm	38
@@ -867,8 +867,8 @@ e_yawn	45
 e_grat	46
 e_hp	47
 e_philippines	48
-e_usa	49
-e_indonesia	50
+e_malaysia	49
+e_singapore	50
 e_brazil	51
 e_flash	52
 e_turn	53
@@ -877,6 +877,28 @@ e_proud	55
 e_loud	56
 e_ohnoes	57
 e_dice	58
+e_dice2	59
+e_dice3	60
+e_dice4	61
+e_dice5	62
+e_dice6	63
+e_india	64
+e_looser	65
+e_russia	66
+e_virgin	67
+e_phone	68
+e_mail	69
+e_chinese	70
+e_signal	71
+e_signal2	72
+e_signal3	73
+e_hum	74
+e_abs	75
+e_oops	76
+e_spit	77
+e_ene	78
+e_panic	79
+e_whisp	80
 
 PET_CLASS	1
 PET_NAME	2
