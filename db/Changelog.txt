@@ -34,6 +34,8 @@
 	2385 Recuvative_Armor		Should trigger HP/SP return with magical kills as well.
 
 =======================
+2009/06/12
+	* Fixed the Memory Book combo using Eye Patch instead of Monocle (bugreport:3237) [Playtester]
 2009/06/08
 	* Fixed Radiant Wisdom giving double as much HP/SP than it should [Playtester]
 	- it will give 100 HP and 50 SP every 2 seconds for 10 seconds when it activates

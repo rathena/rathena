@@ -1030,7 +1030,7 @@
 2106,Shield_,Shield,5,56000,,1300,,6,,1,0x00004082,7,2,32,,0,1,3,{},{},{}
 2107,Mirror_Shield,Mirror Shield,5,60000,,1000,,4,,0,0x00404082,7,2,32,,0,1,4,{ bonus bMdef,5; },{},{}
 2108,Mirror_Shield_,Mirror Shield,5,60000,,1000,,4,,1,0x00404082,7,2,32,,0,1,4,{ bonus bMdef,5; },{},{}
-2109,Memorize_Book,Memory Book,5,20,,1000,,3,,0,0x00810204,7,2,32,,0,1,0,{ bonus bInt,1; bonus bMdef,2; if (isequipped(2717) && isequipped(2212)) { bonus bHPrecovRate,15; bonus bSPrecovRate,15; bonus bMatkRate,7; }; },{},{}
+2109,Memorize_Book,Memory Book,5,20,,1000,,3,,0,0x00810204,7,2,32,,0,1,0,{ bonus bInt,1; bonus bMdef,2; if (isequipped(2717) && isequipped(2239)) { bonus bHPrecovRate,15; bonus bSPrecovRate,15; bonus bMatkRate,7; }; },{},{}
 2110,Holy_Guard,Holy Guard,5,85000,,1400,,5,,0,0x00004000,7,2,32,,68,0,3,{ bonus bVit,2; bonus bMdef,2; },{},{}
 2111,Herald_Of_GOD,Sacred Mission,5,128000,,1600,,5,,0,0x00004000,7,2,32,,83,1,3,{ bonus bVit,3; bonus bInt,2; bonus bMdef,3; bonus bUnbreakableShield,0; },{},{}
 2112,Novice_Guard,Novice Guard,5,1,,1,,3,,0,0x00000001,7,2,32,,0,0,1,{},{},{}
@@ -1042,7 +1042,7 @@
 2118,Arm_Guard_,Arm Guard,5,10000,,150,,5,,1,0x02000000,7,2,32,,20,1,,{},{},{}
 2119,Improved_Arm_Guard,Improved Arm Guard,5,40000,,150,,4,,0,0x02000000,7,2,32,,50,1,,{ bonus bMdef,5; },{},{}
 2120,Improved_Arm_Guard_,Improved Arm Guard,5,40000,,150,,4,,1,0x02000000,7,2,32,,50,1,,{ bonus bMdef,5; },{},{}
-2121,Memorize_Book_,Memory Book,5,20,,1000,,3,,1,0x00810204,7,2,32,,0,1,0,{ bonus bInt,1; bonus bMdef,2; if (isequipped(2717) && isequipped(2212)) { bonus bHPrecovRate,15; bonus bSPrecovRate,15; bonus bMatkRate,7; }; },{},{}
+2121,Memorize_Book_,Memory Book,5,20,,1000,,3,,1,0x00810204,7,2,32,,0,1,0,{ bonus bInt,1; bonus bMdef,2; if (isequipped(2717) && isequipped(2239)) { bonus bHPrecovRate,15; bonus bSPrecovRate,15; bonus bMatkRate,7; }; },{},{}
 2122,Platinum_Shield,Platinum Shield,5,20,,1200,,5,,0,0xFFFFFFFE,2,2,32,,68,1,1,{ bonus bMdef,5; bonus2 bSubSize,1,15; bonus2 bSubSize,2,15; bonus2 bSubRace,RC_Undead,10; bonus5 bAutoSpellWhenHit,"NPC_MAGICMIRROR",2,150,BF_MAGIC,0; },{},{}
 2123,Orleans_Server,Orleans' Plate,5,20,,1000,,5,,1,0xFFFFFFFE,2,2,32,,55,1,1,{ bonus bMDef,2; bonus bMagicDamageReturn,5; if (isequipped(2701)) bonus bCastrate,-10; },{},{}
 2124,Thorny_Buckler,Thorny Shield,5,20,,1000,,5,,1,0xFFFFFFFE,2,2,32,,55,1,1,{ bonus bMDef,2; if (isequipped(2702)) { bonus bAspdRate,10; bonus bShortWeaponDamageReturn,5; } },{},{}
