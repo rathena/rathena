@@ -2713,7 +2713,7 @@ int atcommand_produce(const int fd, struct map_session_data* sd, const char* com
 	if ((item_data = itemdb_searchname(item_name)) == NULL &&
 	    (item_data = itemdb_exists(atoi(item_name))) == NULL)
 	{
-		sprintf(atcmd_output, msg_txt(170)); // The item is not equipable.
+		strcpy(atcmd_output, msg_txt(170)); // The item is not equipable.
 		clif_displaymessage(fd, atcmd_output);
 		return -1;
 	}

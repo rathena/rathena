@@ -3128,9 +3128,9 @@ int mob_clone_spawn(struct map_session_data *sd, int m, int x, int y, const char
 
 	db = mob_db_data[class_]=(struct mob_db*)aCalloc(1, sizeof(struct mob_db));
 	status = &db->status;
-	sprintf(db->sprite,sd->status.name);
-	sprintf(db->name,sd->status.name);
-	sprintf(db->jname,sd->status.name);
+	strcpy(db->sprite,sd->status.name);
+	strcpy(db->name,sd->status.name);
+	strcpy(db->jname,sd->status.name);
 	db->lv=status_get_lv(&sd->bl);
 	memcpy(status, &sd->base_status, sizeof(struct status_data));
 	status->rhw.atk2= status->dex + status->rhw.atk + status->rhw.atk2; //Max ATK
