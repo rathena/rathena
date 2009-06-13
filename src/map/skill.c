@@ -384,13 +384,12 @@ int skillnotok (int skillid, struct map_session_data *sd)
 				return 1;
 			}
 			return 0;
-		break;
 		case AL_TELEPORT:
-			if(map[m].flag.noteleport) {
-				clif_skill_teleportmessage(sd,0);
-				return 1;
-			}
-			return 0;
+		//	if(map[m].flag.noteleport) {
+		//		clif_skill_teleportmessage(sd,0);
+		//		return 1;
+		//	}
+			return 0; // gonna be checked in 'skill_castend_nodamage_id'
 		case WE_CALLPARTNER:
 		case WE_CALLPARENT:
 		case WE_CALLBABY:
@@ -4388,11 +4387,11 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case AL_TELEPORT:
 		if(sd)
 		{
-			if (map[bl->m].flag.noteleport) {
+			if (map[bl->m].flag.noteleport && skilllv <= 2) {
 				clif_skill_teleportmessage(sd,0);
 				break;
 			}
-			if(!battle_config.duel_allow_teleport && sd->duel_group) { // duel restriction [LuzZza]
+			if(!battle_config.duel_allow_teleport && sd->duel_group && skilllv <= 2) { // duel restriction [LuzZza]
 				clif_displaymessage(sd->fd, "Duel: Can't use teleport in duel.");
 				break;
 			}

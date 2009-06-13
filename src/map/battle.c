@@ -1066,8 +1066,26 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 			flag.lh=1;
 	}
 
+	if( sd && !skill_num )
+	{	//Check for double attack.
+		if( ( ( skill_lv = pc_checkskill(sd,TF_DOUBLE) ) > 0 && sd->weapontype1 == W_DAGGER )
+			|| ( sd->double_rate > 0 && sd->weapontype1 != W_FIST ) ) //Will fail bare-handed 
+		{	//Success chance is not added, the higher one is used [Skotlex]
+			if( rand()%100 < ( 5*skill_lv > sd->double_rate ? 5*skill_lv : sd->double_rate ) )
+			{
+				wd.div_ = skill_get_num(TF_DOUBLE,skill_lv?skill_lv:1);
+				wd.type = 0x08;
+			}
+		}
+		else if( sd->weapontype1 == W_REVOLVER && (skill_lv = pc_checkskill(sd,GS_CHAINACTION)) > 0 && rand()%100 < 5*skill_lv )
+		{
+			wd.div_ = skill_get_num(GS_CHAINACTION,skill_lv);
+			wd.type = 0x08;
+		}
+	}
+
 	//Check for critical
-	if(!flag.cri && sstatus->cri &&
+	if( !flag.cri && !(wd.type&0x08) && sstatus->cri &&
 		(!skill_num ||
 		skill_num == KN_AUTOCOUNTER ||
 		skill_num == SN_SHARPSHOOTING || skill_num == MA_SHARPSHOOTING ||
@@ -2087,29 +2105,6 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 		if( !(battle_config.skill_min_damage&1) )
 			//Do not return if you are supposed to deal greater damage to plants than 1. [Skotlex]
 			return wd;
-	}
-
-	if(sd && !skill_num && !flag.cri)
-	{	//Check for double attack.
-		if(((skill_lv = pc_checkskill(sd,TF_DOUBLE)) > 0 && sd->weapontype1 == W_DAGGER)
-			||(sd->double_rate > 0 && sd->weapontype1 != W_FIST)) //Will fail bare-handed
-		{	//Success chance is not added, the higher one is used [Skotlex]
-			if (rand()%100 < (5*skill_lv>sd->double_rate?5*skill_lv:sd->double_rate))
-			{
-				wd.div_=skill_get_num(TF_DOUBLE,skill_lv?skill_lv:1);
-				damage_div_fix(wd.damage, wd.div_);
-				wd.type = 0x08;
-			}
-		} else
-	  	if (sd->weapontype1 == W_REVOLVER &&
-			(skill_lv = pc_checkskill(sd,GS_CHAINACTION)) > 0 &&
-			(rand()%100 < 5*skill_lv)
-			)
-		{
-			wd.div_=skill_get_num(GS_CHAINACTION,skill_lv);
-			damage_div_fix(wd.damage, wd.div_);
-			wd.type = 0x08;
-		}
 	}
 
 	if (sd)
