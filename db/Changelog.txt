@@ -34,6 +34,10 @@
 	2385 Recuvative_Armor		Should trigger HP/SP return with magical kills as well.
 
 =======================
+2009/06/15
+	* Updated mob_db [Playtester]
+	- fixed various ATK2 values (bugreport:3185)
+	- Frilldora is finally angry again (bugreport:3243)
 2009/06/12
 	* Fixed the Memory Book combo using Eye Patch instead of Monocle (bugreport:3237) [Playtester]
 2009/06/08

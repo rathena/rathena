@@ -2734,7 +2734,7 @@ ra_in01,255,25,0	script	Book#ra_in	111,{
 //End of Bruspetti quest
 //============================================================ 
 
-// Ice Necklace/Summon Ktullanux Quest and Glaial Heart buyer
+// Ice Necklace/Summon Ktullanux Quest and Glacial Heart buyer
 //============================================================ 
 //iRO Changed this NPC to avoid "offending" people.
 //To enable how it originally looked, uncomment the
