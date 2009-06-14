@@ -7059,7 +7059,10 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr data)
 				if (sc->data[SC_LONGING])
 					sp*= 3;
 				if (!status_charge(bl, 0, sp))
-					break;
+				{
+					skill_stop_dancing(bl);
+					return 0;
+				}
 			}
 			sc_timer_next(1000+tick, status_change_timer, bl->id, data);
 			return 0;
