@@ -314,7 +314,7 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,struct Damag
 			struct skill_unit_group* group = skill_id2group(sc->data[SC_SAFETYWALL]->val3);
 			if (group) {
 				if (--group->val2<=0)
-					skill_delunitgroup(NULL,group);
+					skill_delunitgroup(group);
 				d->dmg_lv = ATK_BLOCK;
 				return 0;
 			}

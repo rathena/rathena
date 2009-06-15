@@ -704,7 +704,7 @@ int status_damage(struct block_list *src,struct block_list *target,int hp, int s
 			{
 				struct skill_unit_group* sg = skill_id2group(sce->val4);
 				if (sg) {
-					skill_delunitgroup(target,sg);
+					skill_delunitgroup(sg);
 					sce->val4 = 0;
 					status_change_end(target, SC_GRAVITATION, -1);
 				}
@@ -6438,7 +6438,7 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 				{// erase associated land skill
 					group = skill_id2group(sce->val2);
 					sce->val2 = 0;
-					skill_delunitgroup(NULL, group);
+					skill_delunitgroup(group);
 				}
 
 				if((sce->val1&0xFFFF) == CG_MOONLIT)
@@ -6520,7 +6520,7 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 			if (sce->val3) { //Clear the group.
 				struct skill_unit_group* group = skill_id2group(sce->val3);
 				sce->val3 = 0;
-				skill_delunitgroup(bl, group);
+				skill_delunitgroup(group);
 			}
 			break;
 		case SC_HERMODE: 
@@ -6537,7 +6537,7 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 			if (sce->val4) { //Clear the group.
 				struct skill_unit_group* group = skill_id2group(sce->val4);
 				sce->val4 = 0;
-				skill_delunitgroup(bl, group);
+				skill_delunitgroup(group);
 			}
 			break;
 		case SC_KAAHI:

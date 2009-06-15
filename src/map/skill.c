@@ -7097,7 +7097,7 @@ struct skill_unit_group* skill_unitsetting (struct block_list *src, short skilli
 
 	if (!group->alive_count)
 	{	//No cells? Something that was blocked completely by Land Protector?
-		skill_delunitgroup(src, group);
+		skill_delunitgroup(group);
 		return NULL;
 	}
 
@@ -7187,7 +7187,7 @@ static int skill_unit_onplace (struct skill_unit *src, struct block_list *bl, un
 				unsigned short m = sg->val3;
 
 				if( --sg->val1 <= 0 )
-					skill_delunitgroup(NULL, sg);
+					skill_delunitgroup(sg);
 
 				pc_setpos(sd,m,x,y,3);
 				sg = src->group; // avoid dangling pointer (pc_setpos can cause deletion of 'sg')
@@ -7399,7 +7399,7 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 					sg->val1--;
 			}
 			if( sg->val1 <= 0 )
-				skill_delunitgroup(NULL,sg);
+				skill_delunitgroup(sg);
 			break;
 
 		case UNT_EVILLAND:
@@ -9611,7 +9611,7 @@ int skill_clear_group (struct block_list *bl, int flag)
 
 	}
 	for (i=0;i<count;i++)
-		skill_delunitgroup(bl, group[i]);
+		skill_delunitgroup(group[i]);
 	return count;
 }
 
@@ -10000,7 +10000,7 @@ int skill_delunit (struct skill_unit* unit)
 	map_deliddb(&unit->bl);
 	idb_remove(skillunit_db, unit->bl.id);
 	if(--group->alive_count==0)
-		skill_delunitgroup(NULL, group);
+		skill_delunitgroup(group);
 
 	return 0;
 }
@@ -10062,7 +10062,7 @@ struct skill_unit_group* skill_initunitgroup (struct block_list* src, int count,
 				maxdiff=x;
 				j=i;
 			}
-		skill_delunitgroup(src, ud->skillunit[j]);
+		skill_delunitgroup(ud->skillunit[j]);
 		//Since elements must have shifted, we use the last slot.
 		i = MAX_SKILLUNITGROUP-1;
 	}
@@ -10100,14 +10100,15 @@ struct skill_unit_group* skill_initunitgroup (struct block_list* src, int count,
 /*==========================================
  *
  *------------------------------------------*/
-int skill_delunitgroup (struct block_list *src, struct skill_unit_group *group)
+int skill_delunitgroup (struct skill_unit_group *group)
 {
+	struct block_list* src;
 	struct unit_data *ud;
 	int i,j;
 
 	nullpo_retr(0, group);
 
-	if (!src) src=map_id2bl(group->src_id);
+	src=map_id2bl(group->src_id);
 	ud = unit_bl2ud(src);
 	if(!src || !ud) {
 		ShowError("skill_delunitgroup: Group's source not found! (src_id: %d skill_id: %d)\n", group->src_id, group->skill_id);
@@ -10191,7 +10192,7 @@ int skill_clear_unitgroup (struct block_list *src)
 	nullpo_retr(0, ud);
 
 	while (ud->skillunit[0])
-		skill_delunitgroup(src, ud->skillunit[0]);
+		skill_delunitgroup(ud->skillunit[0]);
 
 	return 1;
 }
