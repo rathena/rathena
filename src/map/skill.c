@@ -4163,7 +4163,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case BD_ADAPTATION:
 		if(tsc && tsc->data[SC_DANCING]){
 			clif_skill_nodamage(src,bl,skillid,skilllv,1);
-			skill_stop_dancing(bl);
+			status_change_end(bl, SC_DANCING, -1);
 		}
 		break;
 
@@ -7810,7 +7810,7 @@ static int skill_unit_onleft (int skill_id, struct block_list *bl, unsigned int 
 				//it only checks if you are doing the same ensemble. So if there's two chars doing an ensemble
 				//which overlaps, by stepping outside of the other parther's ensemble will cause you to cancel
 				//your own. Let's pray that scenario is pretty unlikely and noone will complain too much about it.
-				skill_stop_dancing(bl);
+				status_change_end(bl, SC_DANCING, -1);
 			}
 		case MG_SAFETYWALL:
 		case AL_PNEUMA:
@@ -9897,45 +9897,6 @@ bool skill_check_cloaking(struct block_list *bl, struct status_change_entry *sce
 	}
 
 	return wall;
-}
-
-/*==========================================
- *
- *
- *------------------------------------------*/
-void skill_stop_dancing (struct block_list *src)
-{
-	struct status_change* sc;
-	struct status_change_entry *sce;
-	struct skill_unit_group* group;
-	struct map_session_data* dsd = NULL;
-
-	nullpo_retv(src);
-	nullpo_retv(sc = status_get_sc(src));
-
-	if(!sc->count || !(sce=sc->data[SC_DANCING]))
-		return;
-
-	group = skill_id2group(sce->val2);
-	sce->val2 = 0;
-
-	if (sce->val4)
-	{
-		if (sce->val4 != BCT_SELF)
-			dsd = map_id2sd(sce->val4);
-		sce->val4 = 0;
-	}
-
-	status_change_end(src, SC_DANCING, -1);
-
-	if (dsd && (sce=dsd->sc.data[SC_DANCING]))
-	{
-		sce->val4 = sce->val2 = 0;
-		status_change_end(&dsd->bl, SC_DANCING, -1);
-	}
-
-	if (group)
-		skill_delunitgroup(NULL, group);
 }
 
 /*==========================================

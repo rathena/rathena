@@ -1752,7 +1752,7 @@ int unit_remove_map_(struct block_list *bl, int clrtype, const char* file, int l
 		status_change_end(bl,SC_TRICKDEAD,-1);
 		status_change_end(bl,SC_BLADESTOP_WAIT,-1);
 		status_change_end(bl,SC_RUN,-1);
-		skill_stop_dancing(bl);
+		status_change_end(bl,SC_DANCING,-1);
 		status_change_end(bl,SC_WARM,-1);
 		status_change_end(bl,SC_DEVOTION,-1);
 		status_change_end(bl,SC_MARIONETTE,-1);

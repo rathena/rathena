@@ -6916,7 +6916,7 @@ int pc_unequipitem(struct map_session_data *sd,int n,int flag)
 		pc_calcweapontype(sd);
 		clif_changelook(&sd->bl,LOOK_WEAPON,sd->status.weapon);
 		if(sd->sc.data[SC_DANCING]) //When unequipping, stop dancing. [Skotlex]
-			skill_stop_dancing(&sd->bl);
+			status_change_end(&sd->bl, SC_DANCING, -1);
 	}
 	if(sd->status.inventory[n].equip & EQP_HAND_L) {
 		sd->status.shield = sd->weapontype2 = 0;

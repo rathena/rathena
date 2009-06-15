@@ -710,7 +710,7 @@ int status_damage(struct block_list *src,struct block_list *target,int hp, int s
 				}
 			}
 			if(sc->data[SC_DANCING] && (unsigned int)hp > status->max_hp>>2)
-				skill_stop_dancing(target);
+				status_change_end(target, SC_DANCING, -1);
 		}
 		unit_skillcastcancel(target, 2);
 	}
@@ -5947,7 +5947,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 				pc_setstand(sd);
 		case SC_TRICKDEAD:
 			unit_stop_attack(bl);
-			skill_stop_dancing(bl);
+			status_change_end(bl, SC_DANCING, -1);
 			// Cancel cast when get status [LuzZza]
 			if (battle_config.sc_castcancel&bl->type)
 				unit_skillcastcancel(bl, 0);
@@ -6205,9 +6205,6 @@ int status_change_clear(struct block_list* bl, int type)
 	if (!sc || !sc->count)
 		return 0;
 
-	if(sc->data[SC_DANCING])
-		skill_stop_dancing(bl);
-
 	for(i = 0; i < SC_MAX; i++)
 	{
 		if(!sc->data[i])
@@ -6426,25 +6423,29 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 				struct map_session_data *dsd;
 				struct status_change_entry *dsc;
 				struct skill_unit_group *group;
-				if(sce->val2)
-				{
-					group = skill_id2group(sce->val2);
-					sce->val2 = 0;
-					skill_delunitgroup(bl, group);
-				}
-				if(sce->val4 && sce->val4 != BCT_SELF && (dsd=map_id2sd(sce->val4))){
-					dsc = dsd->sc.data[type];
+
+				if(sce->val4 && sce->val4 != BCT_SELF && (dsd=map_id2sd(sce->val4)))
+				{// end status on partner as well
+					dsc = dsd->sc.data[SC_DANCING];
 					if(dsc)
 					{	//This will prevent recursive loops. 
 						dsc->val2 = dsc->val4 = 0;
-						status_change_end(&dsd->bl, type, -1);
+						status_change_end(&dsd->bl, SC_DANCING, -1);
 					}
 				}
-			}
-			if ((sce->val1&0xFFFF) == CG_MOONLIT)
-				clif_status_change(bl,SI_MOONLIT,0,0);
 
-			status_change_end(bl,SC_LONGING,-1);
+				if(sce->val2)
+				{// erase associated land skill
+					group = skill_id2group(sce->val2);
+					sce->val2 = 0;
+					skill_delunitgroup(NULL, group);
+				}
+
+				if((sce->val1&0xFFFF) == CG_MOONLIT)
+					clif_status_change(bl,SI_MOONLIT,0,0);
+
+				status_change_end(bl,SC_LONGING,-1);
+			}
 			break;
 		case SC_NOCHAT:
 			if (sd && sd->status.manner < 0 && tid != -1)
@@ -7059,10 +7060,7 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr data)
 				if (sc->data[SC_LONGING])
 					sp*= 3;
 				if (!status_charge(bl, 0, sp))
-				{
-					skill_stop_dancing(bl);
-					return 0;
-				}
+					break;
 			}
 			sc_timer_next(1000+tick, status_change_timer, bl->id, data);
 			return 0;
