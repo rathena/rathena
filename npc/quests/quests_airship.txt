@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 // Samuray22
 //===== Current Version: ===================================== 
-//= 1.5
+//= 1.6
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -22,6 +22,7 @@
 //= 1.3a Corrected a Typo error ";;". [Samuray22]
 //= 1.4 Fixed incorrect variable type used. [L0ne_W0lf]
 //= 1.5 Replaced effect numerics with constants. [Samuray22]
+//= 1.6 Changed some variables to scope instead of permanent char. [brianluau]
 //============================================================ 
 
 //=======================================================================================================//
@@ -91,7 +92,7 @@ airplane,47,61,1	script	Crewman	833,{
 				close;
 			} else {
 				mes "["+strcharinfo(0)+"]";
-				mes ""+@comment$+".";
+				mes @comment$+".";
 				next;
 				mes "[Kain Himere]";
 				mes "Hmmmm...";
@@ -134,7 +135,7 @@ airplane,47,61,1	script	Crewman	833,{
 				close;
 			} else {
 				mes "["+strcharinfo(0)+"]";
-				mes ""+@comment$+".";
+				mes @comment$+".";
 				next;
 				mes "[Kain Himere]";
 				mes "Hmmmm...";
@@ -829,10 +830,10 @@ function	script	cherno	{
 		next;
 		mes "["+strcharinfo(0)+"]";
 		mes "I am called,";
-		mes ""+strcharinfo(0)+".";
+		mes strcharinfo(0)+".";
 		next;
 		mes "[Tarsha Cherno]";
-		mes ""+strcharinfo(0)+",";
+		mes strcharinfo(0)+",";
 		mes "I appreciate your concerns~ Would you please stay for a cup of tea?";
 		next;
 		mes "[Tarsha Cherno]";
@@ -1387,16 +1388,16 @@ airplane_01,238,154,5	script	Airship Captain#01	873,{
 	mes "Airship. Did you";
 	mes "have a question?";
 	next;
-	if (lght_air >= 0 && lght_air <= 2 || lght_air == 7) {
-		set question$, "How does this Airship fly?";
+	if (lght_air >= 0 && lght_air <= 3 || lght_air == 7) {
+		set .@question$, "How does this Airship fly?";
 	} else if(lght_air == 4) {
-		set question$, "I handed the letter to Captain Ferlock.";
+		set .@question$, "I handed the letter to Captain Ferlock.";
 	} else if(lght_air == 5) {
-		set question$, "You finished reading the letter?";
+		set .@question$, "You finished reading the letter?";
 	} else if(lght_air == 6) {
-		set question$, "Already finished reading?";
+		set .@question$, "Already finished reading?";
 	}
-	switch( select( "Y-you're a reindeer?!", ""+question$+"", "No, not really." )){
+	switch( select( "Y-you're a reindeer?!", .@question$, "No, not really." )){
 	case 1:
 		mes "[Tarlock]";
 		mes "Hm? Oh, that";
@@ -1415,7 +1416,7 @@ airplane_01,238,154,5	script	Airship Captain#01	873,{
 		mes "make sure your flight is safe.";
 		close2;
 		cutin "",255;
-		end;	
+		end;
 	case 2:
 		if(lght_air == 1) {
 			if (BaseLevel <= 59) {
@@ -1427,7 +1428,7 @@ airplane_01,238,154,5	script	Airship Captain#01	873,{
 				mes "allowed to tell you that secret.";
 				close2;
 				cutin "",255;
-				end;	
+				end;
 			} else {
 				mes "[Tarlock]";
 				mes "Mm...?";
@@ -1445,7 +1446,7 @@ airplane_01,238,154,5	script	Airship Captain#01	873,{
 					mes "fly through the skies.";
 					close2;
 					cutin "",255;
-					end;	
+					end;
 				case 2:
 					mes "[Tarlock]";
 					mes "In all honestly, the";
@@ -1473,7 +1474,7 @@ airplane_01,238,154,5	script	Airship Captain#01	873,{
 						mes "back after you decide, alright?";
 						close2;
 						cutin "",255;
-						end;	
+						end;
 					case 2:
 						set lght_air, 2;
 						mes "[Tarlock]";
@@ -1504,7 +1505,7 @@ airplane_01,238,154,5	script	Airship Captain#01	873,{
 						mes "brother, Captain Ferlock.";
 						close2;
 						cutin "",255;
-						end;	
+						end;
 					}
 				}
 			}
@@ -1519,7 +1520,7 @@ airplane_01,238,154,5	script	Airship Captain#01	873,{
 			mes "I'll read his letter.";
 			close2;
 			cutin "",255;
-			end;	
+			end;
 		} else if(lght_air == 5) {
 			set lght_air, 6;
 			mes "[Tarlock]";
@@ -1534,7 +1535,7 @@ airplane_01,238,154,5	script	Airship Captain#01	873,{
 			mes "the letter.^000000";
 			close2;
 			cutin "",255;
-			end;	
+			end;
 		} else if(lght_air== 6) {
 			mes "[Tarlock]";
 			mes "Yes, I finished.";
@@ -1578,7 +1579,7 @@ airplane_01,238,154,5	script	Airship Captain#01	873,{
 				mes "called ^ff0000Rune Mechanism^000000.";
 				next;
 				switch( select( "Uh? What's a Rune Mechanism?")) {
-				case 1:					
+				case 1:
 					mes "[Tarlock]";
 					mes "It's a device that uses a";
 					mes "magic stone as power source.";
@@ -1612,7 +1613,7 @@ airplane_01,238,154,5	script	Airship Captain#01	873,{
 					getexp 200000, 10000;
 					close2;
 					cutin "",255;
-					end;	
+					end;
 				}
 			}
 		} else if(lght_air == 7) {
@@ -1622,7 +1623,7 @@ airplane_01,238,154,5	script	Airship Captain#01	873,{
 			mes "tale again!";
 			close2;
 			cutin "",255;
-			end;	
+			end;
 		} else if(lght_air == 2) {
 			mes "[Tarlock]";
 			mes "Hahahah! Don't worry, I'll";
@@ -1632,7 +1633,7 @@ airplane_01,238,154,5	script	Airship Captain#01	873,{
 			mes "and bring back his reply.";
 			close2;
 			cutin "",255;
-			end;	
+			end;
 		}
 		mes "[Tarlock]";
 		mes "Hahaha! How this";
@@ -1644,7 +1645,7 @@ airplane_01,238,154,5	script	Airship Captain#01	873,{
 		set lght_air, 1;
 		close2;
 		cutin "",255;
-		end;	
+		end;
 	case 3:
 		mes "[Tarlock]";
 		mes "Alright, then.";
@@ -1653,7 +1654,7 @@ airplane_01,238,154,5	script	Airship Captain#01	873,{
 		mes "you enjoy your travels.";
 		close2;
 		cutin "",255;
-		end;	
+		end;
 	}
 }
 
@@ -1977,16 +1978,15 @@ airplane,236,163,5	script	Airship Captain#03	873,{
 	mes "I be of service to you?";
 	next;
 	if(lght_air == 2) {
-		set question2$, "Give him Tarlock's Letter.";
-		set question3$, "Cancel.";
+		set .@question2$, "Give him Tarlock's Letter.";
+		set .@question3$, "Cancel.";
 	} else if(lght_air == 3) {
-		set question2$, "Here are the items I've found.";
-		set question3$, "Cancel.";
+		set .@question2$, "Here are the items I've found.";
+		set .@question3$, "Cancel.";
 	} else {
-		set question2$, "Cancel.";
-		set question3$, "";
+		set .@question2$, "Cancel.";
 	}
-	switch( select( "How does this Airship fly?", ""+question2$+"", ""+question3$+"")) {
+	switch( select( "How does this Airship fly?", .@question2$, .@question3$)) {
 	case 1:
 		mes "[Ferlock]";
 		mes "I'm sorry, but I can't";
@@ -2103,7 +2103,7 @@ airplane,236,163,5	script	Airship Captain#03	873,{
 		mes "very pleasant journey.";
 		close2;
 		cutin "",255;
-		end;	
+		end;
 	case 3:
 		mes "[Ferlock]";
 		mes "Well, I hope that";
