@@ -8114,11 +8114,6 @@ int skill_check_condition_castbegin(struct map_session_data* sd, short skill, sh
 		return 1;
 	}
 
-	if(pc_is90overweight(sd)) {
-		clif_skill_fail(sd,skill,9,0);
-		return 0;
-	}
-
 	if( sd->menuskill_id == AM_PHARMACY )
 	{
 		switch( skill )
@@ -8162,6 +8157,12 @@ int skill_check_condition_castbegin(struct map_session_data* sd, short skill, sh
 				pc_delitem(sd,i,1,0); // Rental usable items are not consumed until expiration
 		}
 		return 1;
+	}
+
+	if( pc_is90overweight(sd) )
+	{
+		clif_skill_fail(sd,skill,9,0);
+		return 0;
 	}
 
 	switch( skill )
@@ -8600,12 +8601,6 @@ int skill_check_condition_castend(struct map_session_data* sd, short skill, shor
 		return 1;
 	}
 
-	if( pc_is90overweight(sd) )
-	{
-		clif_skill_fail(sd,skill,9,0);
-		return 0;
-	}
-
 	if( sd->menuskill_id == AM_PHARMACY )
 	{ // Cast start or cast end??
 		switch( skill )
@@ -8622,6 +8617,12 @@ int skill_check_condition_castend(struct map_session_data* sd, short skill, shor
 	
 	if( sd->skillitem == skill ) // Casting finished (Item skill or Hocus-Pocus)
 		return 1;
+
+	if( pc_is90overweight(sd) )
+	{
+		clif_skill_fail(sd,skill,9,0);
+		return 0;
+	}
 
 	// perform skill-specific checks (and actions)
 	switch( skill )
