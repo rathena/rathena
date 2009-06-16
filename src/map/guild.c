@@ -1229,6 +1229,7 @@ int guild_skillup(TBL_PC* sd, int skill_num)
 {
 	struct guild* g;
 	int idx = skill_num - GD_SKILLBASE;
+	int max = guild_skill_get_max(skill_num);
 
 	nullpo_retr(0, sd);
 
@@ -1239,8 +1240,8 @@ int guild_skillup(TBL_PC* sd, int skill_num)
 
 	if( g->skill_point > 0 &&
 			g->skill[idx].id != 0 &&
-			g->skill[idx].lv < guild_skill_get_max(skill_num) )
-		intif_guild_skillup(g->guild_id, skill_num, sd->status.account_id);
+			g->skill[idx].lv < max )
+		intif_guild_skillup(g->guild_id, skill_num, sd->status.account_id, max);
 
 	return 0;
 }

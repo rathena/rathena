@@ -3,6 +3,8 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+09/06/16
+	* Fixed an exploit that makes guild skill get higher level than the max defined in guild_skill_tree. (bugreport:3241) [Inkfish]
 09/06/15
 	* Skill through items will not be blocked when 90% overweight. (bugreport:3246) [Inkfish]
 	* Now you can drop items when hiding. [Inkfish]

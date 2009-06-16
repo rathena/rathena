@@ -52,7 +52,7 @@ int intif_guild_change_gm(int guild_id, const char* name, int len);
 int intif_guild_change_basicinfo(int guild_id, int type, const void *data, int len);
 int intif_guild_change_memberinfo(int guild_id, int account_id, int char_id, int type, const void *data, int len);
 int intif_guild_position(int guild_id, int idx, struct guild_position *p);
-int intif_guild_skillup(int guild_id, int skill_num, int account_id);
+int intif_guild_skillup(int guild_id, int skill_num, int account_id, int max);
 int intif_guild_alliance(int guild_id1, int guild_id2, int account_id1, int account_id2, int flag);
 int intif_guild_notice(int guild_id, const char *mes1, const char *mes2);
 int intif_guild_emblem(int guild_id, int len, const char *data);
