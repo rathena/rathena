@@ -1003,6 +1003,10 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 
 			if (rand()%1000 > rate)
 				continue;
+
+			if( !battle_check_range(src, bl, skill_get_range2(src, skill,skilllv) + (skill == RG_CLOSECONFINE?0:1)) )
+				continue; //Autocasts should always fail if the target is outside the skill range or an obstacle is in between.[Inkfish]
+
 			if (sd->autospell[i].id < 0)
 				tbl = src;
 			else
@@ -1101,6 +1105,8 @@ int skill_onskillusage(struct map_session_data *sd, struct block_list *bl, int s
 		if( sd->autospell3[i].id >= 0 && bl == NULL )
 			continue; // No target
 		if( rand()%1000 > sd->autospell3[i].rate )
+			continue;
+		if( !battle_check_range(&sd->bl, bl, skill_get_range2(&sd->bl, skill,skilllv) + (skill == RG_CLOSECONFINE?0:1)) )
 			continue;
 
 		if( sd->autospell3[i].id < 0 )
@@ -1273,6 +1279,8 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 			if (skillnotok(skillid, dstsd))
 				continue;
 			if (rand()%1000 > rate)
+				continue;
+			if( !battle_check_range(src, bl, skill_get_range2(src, skillid,skilllv) + (skillid == RG_CLOSECONFINE?0:1)) )
 				continue;
 			if (dstsd->autospell2[i].id < 0)
 				tbl = bl;
@@ -5316,8 +5324,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 					sc_start(bl,SC_INCATKRATE,100,-50,skill_get_time2(skillid,skilllv));
 					break;
 				case 5:	// 2000HP heal, random teleported
-					status_heal(src, 2000, 0, 0);
-					unit_warp(src, -1,-1,-1, 3);
+					status_heal(bl, 2000, 0, 0);
+					unit_warp(bl, -1,-1,-1, 3);
 					break;
 				case 6:	// random 2 other effects
 					if (count == -1)
@@ -5757,6 +5765,7 @@ int skill_castend_id(int tid, unsigned int tick, int id, intptr data)
 				break;
 			}
 		}
+		else
 		if( ud->skillid == PR_LEXDIVINA || ud->skillid == MER_LEXDIVINA )
 		{
 			sc = status_get_sc(target);
@@ -5765,6 +5774,13 @@ int skill_castend_id(int tid, unsigned int tick, int id, intptr data)
 				clif_skill_nodamage (src, target, ud->skillid, ud->skilllv, 0);
 				break;
 			}
+		}
+		else
+		if( ud->skillid == PR_TURNUNDEAD )
+		{
+			struct status_data *tstatus = status_get_status_data(target);
+			if( !battle_check_undead(tstatus->race, tstatus->def_ele) )
+				break;
 		}
 		else
 		{ // Check target validity.
