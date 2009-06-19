@@ -279,36 +279,11 @@ morocc_in,116,101,3	script	Old Scholar Tyus#hellion	735,3,3,{
 		mes "way or another.";
 		close;
 	}
-	else if (HELLIONQ == 45) {
+	else if (HELLIONQ == 45 || HELLIONQ == 46) {
 		mes "[Sir Chilias'Tyus]";
 		mes "Ah, yes! This is one piece";
-		mes "of the tablet that you will";
-		mes "lead you to the Hellion's gem!";
-		mes "This engraving was definitely";
-		mes "made by my grandfather, and Christopher was one of his friends.";
-		next;
-		mes "[Sir Chilias'Tyus]";
-		mes "I suppose he hid these pieces";
-		mes "in the places that reminded him";
-		mes "of his friends. Now according";
-		mes "to the tablet's message, you";
-		mes "should find the next piece in ''the city of thickest forest.''";
-		next;
-		mes "[Sir Chilias'Tyus]";
-		mes "I'm sure that the";
-		mes "next tablet piece is";
-		mes "in Payon, so go there";
-		mes "and see if you can find";
-		mes "it. Good luck to you,";
-		mes "kind adventurer.";
-		set HELLIONQ,47;
-		close;
-	}
-	else if (HELLIONQ == 46) {
-		mes "[Sir Chilias'Tyus]";
-		mes "Ah, yes! This is one piece";
-		mes "of the tablet that you will";
-		mes "lead you to the Hellion's gem!";
+		mes "of the tablet that will lead";
+		mes "you to the Hellion's gem!";
 		mes "This engraving was definitely";
 		mes "made by my grandfather, and Christopher was one of his friends.";
 		next;
@@ -1128,7 +1103,7 @@ OnTouch:
 			mes "[Veggie Lady]";
 			mes "Finally, you say it.";
 			mes "Yeesh, I thought I was";
-			mes "going to what forever for";
+			mes "going to wait forever for";
 			mes "somebody to say that";
 			mes "password. Okay, here's";
 			mes "the code number you want...";
@@ -1229,7 +1204,7 @@ prt_in,128,79,0	script	Unknown Machine#prt_key	111,{
 					next;
 					mes "^3355FFThe message engraved on";
 					mes "this tablet reads: ''This is for";
-					mes "for Christopher, my dear friend";
+					mes "Christopher, my dear friend";
 					mes "who I met in Prontera. To the";
 					mes "one who finds this, please seek";
 					mes "out the next piece of this tablet";
@@ -1280,7 +1255,7 @@ prt_in,128,79,0	script	Unknown Machine#prt_key	111,{
 			next;
 			mes "^3355FFThe message engraved on";
 			mes "this tablet reads: ''This is for";
-			mes "for Christopher, my dear friend";
+			mes "Christopher, my dear friend";
 			mes "who I met in Prontera. To the";
 			mes "one who finds this, please seek";
 			mes "out the next piece of this tablet";

@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 
-//= 3.1b
+//= 3.2
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -44,6 +44,7 @@
 //= 3.1 Fixed problem with waiting room. (bugreport:1099) [L0ne_W0lf]
 //= 3.1a Follow up fix. Forgot to replace a label. [L0ne_W0lf]
 //= 3.1b Fixed waiting room not enabled in some situations [Zephyrus]
+//= 3.2 Fixed a question having all correct answers. [brianluau]
 //============================================================ 
 
 in_moc_16,19,33,1	script	Guildsman#asn	55,{
@@ -931,8 +932,8 @@ L_AskQuestions:
 			mes "[The Anonymous One]";
 			mes "6. Choose the correct specialty of the Assassin class.";
 			next;
-			select("Excellent singing talent:Excellent reading talent:Excellent dancing talent:Excellent dodge ability");
-			set .@assassin_t,.@assassin_t+10;
+			if (select("Excellent singing talent:Excellent reading talent:Excellent dancing talent:Excellent dodge ability") == 4)
+				set .@assassin_t,.@assassin_t+10;
 			mes "[The Anonymous One]";
 			mes "7. Choose the maximum AGI bonus an Assassin can get at job level 50.";
 			next;
@@ -948,8 +949,6 @@ L_AskQuestions:
 			next;
 			switch(select("Orange Gooey Mushroom:Red Gooey Mushroom:Orange Net Mushroom:Orange Hair Mushroom")) {
 			case 1:
-				set .@assassin_t,.@assassin_t+10;
-				break;
 			case 3:
 				set .@assassin_t,.@assassin_t+10;
 				break;
@@ -2147,7 +2146,7 @@ OnTouch:
 		end;
 	}
 }
-				
+
 in_moc_16,186,81,1	script	Master Assist	55,1,1,{
 	mes "[Assistent Gayle Maroubitz]";
 	mes "Sorry, but I'm not in charge of job changes. Go to the Guildmaster, as he has told you.";

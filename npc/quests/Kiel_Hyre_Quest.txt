@@ -2730,7 +2730,7 @@ kh_vila,115,186,0	script	Drawer#khp1	111,{
 			mes "^3355FFYou obtain a Yellow";
 			mes "Keycard from inside the";
 			mes "drawer. Opening that drawer";
-			mes "Fturned out to be worthwhile.^000000";
+			mes "turned out to be worthwhile.^000000";
 			getitem 7492,1; //Yellow_Key_Card
 			close;
 		case 2:
@@ -3174,7 +3174,7 @@ kh_vila,136,68,0	script	Sword Hilt#kh	111,{
 					}
 					next;
 					mes "^3355FFLastly, please select";
-					mes "Fthe snake in which you";
+					mes "the snake in which you";
 					mes "will insert the fourth sword.^000000";
 					next;
 					switch(select("First Snake:Second Snake:Third Snake:Fourth Snake")) {
@@ -4054,6 +4054,7 @@ kh_mansion,22,28,4	script	Kiel Hyre#kh	903,{
 				mes "everything much more succinctly";
 				mes "than I can. I tend to ramble...";
 				set .@KHQRead,.@KHQRead+1;
+				next;
 				break;
 			case 2:
 				mes "[Kiel Hyre]";
@@ -4080,6 +4081,7 @@ kh_mansion,22,28,4	script	Kiel Hyre#kh	903,{
 				mes "to do this. I still have";
 				mes "absolutely no clue...";
 				set .@KHQRead,.@KHQRead+1;
+				next;
 				break;
 			case 3:
 				mes "[Kiel Hyre]";
@@ -4098,10 +4100,10 @@ kh_mansion,22,28,4	script	Kiel Hyre#kh	903,{
 				mes "his face! Kiehl just hired";
 				mes "him without letting me know...";
 				set .@KHQRead,.@KHQRead+1;
+				next;
 				break;
 			}
 			if (.@KHQRead == 3) {
-				next;
 				mes "[Kiel Hyre]";
 				mes "If you don't have";
 				mes "anymore questions for me,";
@@ -4406,7 +4408,7 @@ kh_mansion,22,28,4	script	Kiel Hyre#kh	903,{
 		mes "I'm assuming the place you";
 		mes "two first met was near the";
 		mes "river. No more of your lies:";
-		mes "well me what really happened!";
+		mes "Tell me what really happened!";
 		next;
 		cutin "kh_kyel02",2;
 		mes "[Kiel Hyre]";
@@ -5626,7 +5628,7 @@ kh_rossi,92,40,0	script	Shelf#khr	111,{
 					next;
 					cutin "kh_ellisia_port",2;
 					mes "^3355FFThe message, ''To my love,";
-					mes "FAllysia. From James.'' is";
+					mes "Allysia. From James.'' is";
 					mes "written on the back.^000000";
 					getitem 7500,1; //Elysia_Portrait
 					close2;
@@ -5835,7 +5837,7 @@ yuno_fild12,232,222,0	script	Old Fisherman	709,{
 			mes "for me? Heh, how very";
 			mes "generous of you. If you're";
 			mes "going to be so kind, then";
-			mes "i suppose I have to repay";
+			mes "I suppose I have to repay";
 			mes "the favor. Ask me anything~";
 			next;
 			select("30 years ago, a woman killed herself...");

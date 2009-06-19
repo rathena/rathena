@@ -84,7 +84,7 @@ um_in,39,122,5	script	Utan Chief	784,{
 		next;
 		mes "[Karkatan]";
 		mes "Sometimes, I teach the Utan";
-		mes "langauge, but I do not give";
+		mes "language, but I do not give";
 		mes "everyone that privilege.";
 		mes "If unscrupulous outsiders";
 		mes "learn the Utan language, they";

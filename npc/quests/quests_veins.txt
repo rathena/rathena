@@ -240,7 +240,7 @@ ve_fild05,257,130,4	script	Wincing Old Man#ve	945,{
 		mes "to know that now. That's";
 		mes "really very nice of him.";
 		next;
-		mes "Zabaroo]";
+		mes "[Zabaroo]";
 		mes "I hate to ask you...";
 		mes "But would you mind";
 		mes "helping me out one";
@@ -559,7 +559,7 @@ ve_in02,54,49,2	script	Factory Worker#ve1	943,{
 		mes "[Bahed]";
 		mes "Let me confirm Zabaroo's";
 		mes "quota for today. Ah, and";
-		mes "don't worry, We pay him";
+		mes "don't worry, we pay him";
 		mes "for his quotas regularly.";
 		next;
 		select("I have a question...");

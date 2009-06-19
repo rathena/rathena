@@ -5833,7 +5833,7 @@ ra_temin,277,159,3	script	High Priest Zhed#rachel	932,{
 					mes "go to war for their beliefs.";
 					next;
 					mes "[High Priest Zhed]";
-					mes "The fact that they've evena";
+					mes "The fact that they've even";
 					mes "built a military camp in Thor";
 					mes "Volcano disturbs me greatly.";
 					mes "It's almost certain that they";
