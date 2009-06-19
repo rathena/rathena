@@ -466,6 +466,7 @@ extern struct Battle_Config
 	int display_status_timers;	//Show or hide skill buff/delay timers in recent clients [Sara]
 	int skill_add_heal_rate;	//skills that bHealPower has effect on [Inkfish]
 	int eq_single_target_reflectable;
+	int invincible_nodamage;
 
 	// [BattleGround Settings]
 	int bg_update_interval;

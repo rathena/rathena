@@ -294,11 +294,14 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,struct Damag
 
 		if(!damage) return 0;
 	}
-	
-	if (skill_num == PA_PRESSURE)
-		return damage; //This skill bypass everything else.
 
 	sc = status_get_sc(bl);
+
+	if( sc && sc->data[SC_INVINCIBLE] && !sc->data[SC_INVINCIBLEOFF] )
+		return 0;
+
+	if (skill_num == PA_PRESSURE)
+		return damage; //This skill bypass everything else.
 
 	if( sc && sc->count )
 	{
@@ -482,12 +485,16 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,struct Damag
 			status_heal(src, damage*sce->val4/100, 0, 3);
 
 	}
-	//SC effects from caster side. Currently none.
-/*	
+
+	//SC effects from caster side.
 	sc = status_get_sc(src);
-	if (sc && sc->count) {
+
+	if (sc && sc->count)
+	{
+		if( sc->data[SC_INVINCIBLE] && !sc->data[SC_INVINCIBLEOFF] )
+			damage += damage * 75 / 100;
 	}
-*/	
+
 	if (battle_config.pk_mode && sd && bl->type == BL_PC && damage)
   	{
 		if (flag & BF_SKILL) { //Skills get a different reduction than non-skills. [Skotlex]
@@ -3820,6 +3827,7 @@ static const struct _battle_data {
 	{ "display_status_timers",              &battle_config.display_status_timers,           1,      0,      1,              },
 	{ "skill_add_heal_rate",                &battle_config.skill_add_heal_rate,             7,      0,      INT_MAX,        },
 	{ "eq_single_target_reflectable",       &battle_config.eq_single_target_reflectable,    1,      0,      1,              },
+	{ "invincible.nodamage",                &battle_config.invincible_nodamage,             0,      0,      1,              },
 // BattleGround Settings
 	{ "bg_update_interval",                 &battle_config.bg_update_interval,              1000,   100,    INT_MAX,        },
 	{ "bg_short_attack_damage_rate",        &battle_config.bg_short_damage_rate,            80,     0,      INT_MAX,        },

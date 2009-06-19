@@ -388,6 +388,8 @@ void initChangeTables(void)
 
 	set_sc( NPC_HELLPOWER        , SC_HELLPOWER       , SI_HELLPOWER       , SCB_NONE );
 	set_sc( NPC_WIDEHELLDIGNITY  , SC_HELLPOWER       , SI_HELLPOWER       , SCB_NONE );
+	set_sc( NPC_INVINCIBLE       , SC_INVINCIBLE      , SI_INVINCIBLE      , SCB_SPEED );
+	set_sc( NPC_INVINCIBLEOFF    , SC_INVINCIBLEOFF   , SI_BLANK           , SCB_SPEED );
 
 	set_sc( CASH_BLESSING        , SC_BLESSING        , SI_BLESSING        , SCB_STR|SCB_INT|SCB_DEX );
 	set_sc( CASH_INCAGI          , SC_INCREASEAGI     , SI_INCREASEAGI     , SCB_AGI|SCB_SPEED );
@@ -664,6 +666,13 @@ int status_damage(struct block_list *src,struct block_list *target,int hp, int s
 //		return 0; //Cannot damage a bl not on a map, except when "charging" hp/sp
 
 	sc = status_get_sc(target);
+
+	if( battle_config.invincible_nodamage && src && sc && sc->data[SC_INVINCIBLE] && !sc->data[SC_INVINCIBLEOFF] )
+	{
+		if( !sp )
+			return 0;
+		hp = 0;
+	}
 
 	if( hp && !(flag&1) ) {
 		if( sc ) {
@@ -3798,6 +3807,8 @@ static unsigned short status_calc_speed(struct block_list *bl, struct status_cha
 				val = max( val, 55 );
 			if( sc->data[SC_AVOID] )
 				val = max( val, 10 * sc->data[SC_AVOID]->val1 );
+			if( sc->data[SC_INVINCIBLE] && !sc->data[SC_INVINCIBLEOFF] )
+				val = max( val, 75 );
 
 			//FIXME: official items use a single bonus for this [ultramage]
 			if( sc->data[SC_SPEEDUP0] ) // temporary item-based speedup
@@ -3822,7 +3833,7 @@ static unsigned short status_calc_speed(struct block_list *bl, struct status_cha
 			speed = 200;
 		if( sc->data[SC_DEFENDER] )
 			speed = max(speed, 200);
-		if( sc->data[SC_WALKSPEED] ) // ChangeSpeed
+		if( sc->data[SC_WALKSPEED] && sc->data[SC_WALKSPEED]->val1 > 0 ) // ChangeSpeed
 			speed = speed * 100 / sc->data[SC_WALKSPEED]->val1;
 	}
 

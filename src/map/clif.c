@@ -8940,8 +8940,6 @@ void clif_parse_UseItem(int fd, struct map_session_data *sd)
 	} else
 	if (pc_istrading(sd))
 		return;
-	
-	pc_delinvincibletimer(sd);
 
 	//Whether the item is used or not is irrelevant, the char ain't idle. [Skotlex]
 	sd->idletime = last_tick;
@@ -9510,6 +9508,8 @@ void clif_parse_UseSkillToId(int fd, struct map_session_data *sd)
 	{
 		if( skilllv != sd->skillitemlv )
 			skilllv = sd->skillitemlv;
+		if( !(skill_get_inf(skillnum)&INF_SELF_SKILL) )
+			pc_delinvincibletimer(sd); // Target skills thru items cancel invincibility. [Inkfish]
 		unit_skilluse_id(&sd->bl, target_id, skillnum, skilllv);
 		return;
 	}

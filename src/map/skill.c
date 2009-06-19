@@ -360,7 +360,10 @@ int skillnotok (int skillid, struct map_session_data *sd)
 		return 1; // invalid skill id
 
 	if (battle_config.gm_skilluncond && pc_isGM(sd) >= battle_config.gm_skilluncond)
-		return 0;  // GMs can do any damn thing they want
+		return 0; // GMs can do any damn thing they want
+
+	if( skillid == AL_TELEPORT && sd->skillitem == skillid && sd->skillitemlv > 2 )
+		return 0; // Teleport lv 3 bypasses this check.[Inkfish]
 
 	if (sd->blockskill[i] > 0)
 		return 1;
@@ -385,10 +388,10 @@ int skillnotok (int skillid, struct map_session_data *sd)
 			}
 			return 0;
 		case AL_TELEPORT:
-		//	if(map[m].flag.noteleport) {
-		//		clif_skill_teleportmessage(sd,0);
-		//		return 1;
-		//	}
+			if(map[m].flag.noteleport) {
+				clif_skill_teleportmessage(sd,0);
+				return 1;
+			}
 			return 0; // gonna be checked in 'skill_castend_nodamage_id'
 		case WE_CALLPARTNER:
 		case WE_CALLPARENT:
@@ -3662,6 +3665,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case NPC_DEFENDER:
 	case NPC_MAGICMIRROR:
 	case ST_PRESERVE:
+	case NPC_INVINCIBLE:
+	case NPC_INVINCIBLEOFF:
 		clif_skill_nodamage(src,bl,skillid,skilllv,
 			sc_start(bl,type,100,skilllv,skill_get_time(skillid,skilllv)));
 		break;

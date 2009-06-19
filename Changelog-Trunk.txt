@@ -3,6 +3,10 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+09/06/19
+	* Implemented script command "areamobuseskill" and skill NPC_INVINCIBLE and NPC_INVINCIBLEOFF. (topic:217330) [Inkfish]
+	* Using items no longer cancels invincibility(but using target and ground skills through items does). (bugreport:3259) [Inkfish]
+	* Fixed Butterfly Wings not working during GVG. (bugreport:3264) [Inkfish]
 09/06/16
 	* Fixed an exploit that makes guild skill get higher level than the max defined in guild_skill_tree. (bugreport:3241) [Inkfish]
 	* Turn Undead won't apply aftercast delay when casted on a "living" entity. (bugreport:1740) [Inkfish]

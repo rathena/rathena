@@ -13655,6 +13655,80 @@ BUILDIN_FUNC(setfont)
 	return 0;
 }
 
+static int buildin_mobuseskill_sub(struct block_list *bl,va_list ap)
+{
+	TBL_MOB* md		= (TBL_MOB*)bl;
+	struct block_list *tbl;
+	int mobid		= va_arg(ap,int);
+	int skillid		= va_arg(ap,int);
+	int skilllv		= va_arg(ap,int);
+	int casttime	= va_arg(ap,int);
+	int cancel		= va_arg(ap,bool);
+	int emotion		= va_arg(ap,int);
+	int target		= va_arg(ap,int);
+
+	if( md->class_ != mobid )
+		return 0;
+
+	if( md->ud.skilltimer != -1 ) // Cancel the casting skill.
+		unit_skillcastcancel(bl,0);
+
+	// 0:self, 1:target, 2:master, default:random
+	switch( target )
+	{
+		case 0: tbl = map_id2bl(md->bl.id); break;
+		case 1: tbl = map_id2bl(md->target_id); break;
+		case 2: tbl = map_id2bl(md->master_id); break;
+		default:tbl = battle_getenemy(&md->bl, DEFAULT_ENEMY_TYPE(md),skill_get_range2(&md->bl, skillid, skilllv)); break;
+	}
+
+	if( !tbl )
+		return 0;
+
+	if( skill_get_casttype(skillid) == CAST_GROUND )
+		unit_skilluse_pos2(&md->bl, tbl->x, tbl->y, skillid, skilllv, casttime, cancel);
+	else
+		unit_skilluse_id2(&md->bl, tbl->id, skillid, skilllv, casttime, cancel);
+
+	clif_emotion(&md->bl, emotion);
+
+	return 0;
+}
+/*==========================================
+ * areamobuseskill "Map Name",<x1>,<y1>,<x2>,<y2>,<Mob ID>,"Skill Name"/<Skill ID>,<Skill Lv>,<Cast Time>,<Cancelable>,<Emotion>,<Target Type>;
+ *------------------------------------------*/
+BUILDIN_FUNC(areamobuseskill)
+{
+	int m,x1,y1,x2,y2,mobid,skillid,skilllv,casttime,emotion,target;
+	bool cancel;
+
+	if( m = map_mapname2mapid(script_getstr(st,2)) < 0 )
+	{
+		ShowError("areamobuseskill: invalid map name.\n");
+		return 0;
+	}
+
+	skillid = ( script_isstring(st,8) ? skill_name2id(script_getstr(st,8)) : script_getnum(st,8) );
+
+	skilllv = script_getnum(st,9);
+	if( skilllv > battle_config.mob_max_skilllvl )
+		skilllv = battle_config.mob_max_skilllvl;
+
+	x1 = script_getnum(st,3);
+	y1 = script_getnum(st,4);
+	x2 = script_getnum(st,5);
+	y2 = script_getnum(st,6);
+
+	mobid = script_getnum(st,7);	
+	casttime = script_getnum(st,10);
+	cancel = script_getnum(st,11);
+	emotion = script_getnum(st,12);
+	target = script_getnum(st,13);
+
+	map_foreachinarea(buildin_mobuseskill_sub, m, x1, y1, x2, y2, BL_MOB, mobid,skillid,skilllv,casttime,cancel,emotion,target);
+	return 0;
+}
+
 // declarations that were supposed to be exported from npc_chat.c
 #ifdef PCRE_SUPPORT
 BUILDIN_FUNC(defpattern);
@@ -14014,6 +14088,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(mercenary_set_faith,"ii"),
 	BUILDIN_DEF(readbook,"ii"),
 	BUILDIN_DEF(setfont,"i"),
+	BUILDIN_DEF(areamobuseskill,"siiiiiviiiii"),
 	// WoE SE
 	BUILDIN_DEF(agitstart2,""),
 	BUILDIN_DEF(agitend2,""),
