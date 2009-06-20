@@ -844,10 +844,10 @@ int unit_skilluse_id2(struct block_list *src, int target_id, short skill_num, sh
 	sc = status_get_sc(src);	
 	if (sc && !sc->count)
 		sc = NULL; //Unneeded
+
 	//temp: used to signal combo-skills right now.
-	temp = (target_id == src->id && !(sd && sd->state.skill_flag)
-		&& skill_get_inf(skill_num)&INF_SELF_SKILL
-		&& skill_get_inf2(skill_num)&INF2_NO_TARGET_SELF);
+	temp = ( target_id == src->id && 
+		   ( (sd && sd->state.combo) || (skill_get_inf(skill_num)&INF_SELF_SKILL && skill_get_inf2(skill_num)&INF2_NO_TARGET_SELF) ) );
 	if (temp)
 		target_id = ud->target; //Auto-select skills. [Skotlex]
 
@@ -961,7 +961,7 @@ int unit_skilluse_id2(struct block_list *src, int target_id, short skill_num, sh
 				if( ((TBL_MOB*)src)->master_id && ((TBL_MOB*)src)->special_state.ai )
 					return 0;
 		}
-	
+
 	//Check range when not using skill on yourself or is a combo-skill during attack
 	//(these are supposed to always have the same range as your attack)
 	if( src->id != target_id && (!temp || ud->attacktimer == -1) )

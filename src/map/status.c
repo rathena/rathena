@@ -5668,6 +5668,22 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 				case TK_COUNTER:
 					clif_skill_nodamage(bl,bl,TK_READYCOUNTER,1,1);
 					break;
+				case MO_COMBOFINISH:
+				case CH_TIGERFIST:
+				case CH_CHAINCRUSH:
+					if( sd )
+					{
+						sd->state.combo = 1;
+						clif_skillinfoblock(sd);
+					}
+					break;
+				case TK_JUMPKICK:
+					if( sd )
+					{
+						sd->state.combo = 2;
+						clif_skillinfoblock(sd);
+					}
+					break;		
 			}
 			if (ud && !val3) 
 			{
@@ -6497,8 +6513,16 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 			}
 			break;
 		case SC_COMBO: //Clear last used skill when it is part of a combo.
-			if (sd && sd->skillid_old == sce->val1)
-				sd->skillid_old = sd->skilllv_old = 0;
+			if( sd )
+			{
+				if( sd->state.combo )
+				{
+					sd->state.combo = 0;
+					clif_skillinfoblock(sd);
+				}
+				if( sd->skillid_old == sce->val1 )
+					sd->skillid_old = sd->skilllv_old = 0;
+			}
 			break;
 
 		case SC_MARIONETTE:

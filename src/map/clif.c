@@ -3931,7 +3931,7 @@ int clif_insight(struct block_list *bl,va_list ap)
 
 /*==========================================
  *
- *------------------------------------------*/
+ *------------------------------------------
 int clif_skillinfo(struct map_session_data *sd,int skillid,int type,int range)
 {
 	int fd,id;
@@ -3963,7 +3963,7 @@ int clif_skillinfo(struct map_session_data *sd,int skillid,int type,int range)
 	WFIFOSET(fd,packet_len(0x147));
 
 	return 0;
-}
+}*/
 
 /*==========================================
  * スキルリストを送信する
@@ -3985,7 +3985,10 @@ int clif_skillinfoblock(struct map_session_data *sd)
 		if( (id = sd->status.skill[i].id) != 0 )
 		{
 			WFIFOW(fd,len)   = id;
-			WFIFOW(fd,len+2) = skill_get_inf(id);
+			if( (id == MO_EXTREMITYFIST && sd->state.combo&1) || (id == TK_JUMPKICK && sd->state.combo&2) )
+				WFIFOW(fd,len+2) = INF_SELF_SKILL;
+			else
+				WFIFOW(fd,len+2) = skill_get_inf(id);
 			WFIFOW(fd,len+4) = 0;
 			WFIFOW(fd,len+6) = sd->status.skill[i].lv;
 			WFIFOW(fd,len+8) = skill_get_sp(id,sd->status.skill[i].lv);
@@ -9471,7 +9474,7 @@ void clif_parse_UseSkillToId(int fd, struct map_session_data *sd)
 	if( skillnotok(skillnum, sd) )
 		return;
 
-	if( sd->bl.id != target_id && !sd->state.skill_flag && tmp&INF_SELF_SKILL )
+	if( sd->bl.id != target_id && (tmp&INF_SELF_SKILL || sd->state.combo) )
 		target_id = sd->bl.id; // never trust the client
 	
 	if( target_id < 0 && -target_id == sd->bl.id ) // for disguises [Valaris]
@@ -9515,41 +9518,6 @@ void clif_parse_UseSkillToId(int fd, struct map_session_data *sd)
 	}
 
 	sd->skillitem = sd->skillitemlv = 0;
-	if( skillnum == MO_EXTREMITYFIST )
-	{
-		if( (!sd->sc.data[SC_COMBO] ||
-			(sd->sc.data[SC_COMBO]->val1 != MO_COMBOFINISH &&
-			sd->sc.data[SC_COMBO]->val1 != CH_TIGERFIST &&
-			sd->sc.data[SC_COMBO]->val1 != CH_CHAINCRUSH))) {
-			if( !sd->state.skill_flag )
-			{
-				sd->state.skill_flag = 1;
-				clif_skillinfo(sd, MO_EXTREMITYFIST, INF_ATTACK_SKILL, -1);
-				return;
-			} else if( sd->bl.id == target_id )
-			{
-				clif_skillinfo(sd, MO_EXTREMITYFIST, INF_ATTACK_SKILL, -1);
-				return;
-			}
-		}
-	}
-	if( skillnum == TK_JUMPKICK )
-	{
-		if( !sd->sc.data[SC_COMBO] || sd->sc.data[SC_COMBO]->val1 != TK_JUMPKICK )
-		{
-			if( !sd->state.skill_flag )
-			{
-				sd->state.skill_flag = 1;
-				clif_skillinfo(sd, TK_JUMPKICK, INF_ATTACK_SKILL, -1);
-				return;
-			}
-			else if( sd->bl.id == target_id )
-			{
-				clif_skillinfo(sd, TK_JUMPKICK, INF_ATTACK_SKILL, -1);
-				return;
-			}
-		}
-	}
 
 	if( skillnum >= GD_SKILLBASE )
 	{
@@ -9569,9 +9537,6 @@ void clif_parse_UseSkillToId(int fd, struct map_session_data *sd)
 	
 	if( skilllv )
 		unit_skilluse_id(&sd->bl, target_id, skillnum, skilllv);
-
-	if( sd->state.skill_flag )
-		sd->state.skill_flag = 0;
 }
 
 /*==========================================

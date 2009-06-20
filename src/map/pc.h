@@ -89,7 +89,7 @@ struct map_session_data {
 		unsigned lr_flag : 2;
 		unsigned connect_new : 1;
 		unsigned arrow_atk : 1;
-		unsigned skill_flag : 1;
+		unsigned combo : 2; // 1:Asura, 2:Kick [Inkfish]
 		unsigned gangsterparadise : 1;
 		unsigned rest : 1;
 		unsigned storage_flag : 2; //0: closed, 1: Normal Storage open, 2: guild storage open [Skotlex]
