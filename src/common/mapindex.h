@@ -47,4 +47,7 @@ const char* mapindex_id2name(unsigned short);
 void mapindex_init(void);
 void mapindex_final(void);
 
+int mapindex_addmap(int index, const char* name);
+int mapindex_removemap(int index);
+
 #endif /* _MAPINDEX_H_ */

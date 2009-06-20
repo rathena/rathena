@@ -423,17 +423,25 @@ int intif_party_leave(int party_id,int account_id, int char_id)
 // パーティ移動要求
 int intif_party_changemap(struct map_session_data *sd,int online)
 {
+	int m, mapindex;
+	
 	if (CheckForCharServer())
 		return 0;
 	if(!sd)
 		return 0;
+
+	if( (m=map_mapindex2mapid(sd->mapindex)) >= 0 && map[m].instance_id )
+		mapindex = map[map[m].instance_map[0]].index;
+	else
+		mapindex = sd->mapindex;
+	
 
 	WFIFOHEAD(inter_fd,19);
 	WFIFOW(inter_fd,0)=0x3025;
 	WFIFOL(inter_fd,2)=sd->status.party_id;
 	WFIFOL(inter_fd,6)=sd->status.account_id;
 	WFIFOL(inter_fd,10)=sd->status.char_id;
-	WFIFOW(inter_fd,14)=sd->mapindex;
+	WFIFOW(inter_fd,14)=mapindex;
 	WFIFOB(inter_fd,16)=online;
 	WFIFOW(inter_fd,17)=sd->status.base_level;
 	WFIFOSET(inter_fd,19);

@@ -117,6 +117,7 @@ struct script_state {
 	struct sleep_data {
 		int tick,timer,charid;
 	} sleep;
+	int instance_id;
 };
 
 struct script_reg {
@@ -164,5 +165,7 @@ int do_final_script(void);
 int add_str(const char* p);
 const char* get_str(int id);
 int script_reload(void);
+
+uint32 crc32(char *dat, int len);
 
 #endif /* _SCRIPT_H_ */

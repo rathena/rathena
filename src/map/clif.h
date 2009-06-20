@@ -350,6 +350,11 @@ int clif_bg_updatescore_single(struct map_session_data *sd);
 int clif_sendbgemblem_area(struct map_session_data *sd);
 int clif_sendbgemblem_single(int fd, struct map_session_data *sd);
 
+// Instancing
+int clif_instance(int instance_id, int type, int flag);
+void clif_instance_join(int fd, int instance_id);
+void clif_instance_leave(int fd);
+
 // Custom Fonts
 int clif_font_area(struct map_session_data *sd);
 int clif_font_single(int fd, struct map_session_data *sd);

@@ -114,6 +114,8 @@ static int bl_list_count = 0;
 
 struct map_data map[MAX_MAP_PER_SERVER];
 int map_num = 0;
+int map_instance_start = 0; // To keep the last index + 1 of normal map inserted in the map[ARRAY]
+struct map_instance instance[MAX_INSTANCE];
 
 int map_port=0;
 
@@ -1583,6 +1585,25 @@ int map_quit(struct map_session_data *sd)
 	if( sd->state.storage_flag == 1 ) sd->state.storage_flag = 0; // No need to Double Save Storage on Quit.
 
 	unit_remove_map_pc(sd,3);
+	
+	if( map[sd->bl.m].instance_id )
+	{ // Avoid map conflicts and warnings on next login
+		int m;
+		struct point *pt;
+		if( map[sd->bl.m].save.map )
+			pt = &map[sd->bl.m].save;
+		else
+			pt = &sd->status.save_point;
+
+		if( (m=map_mapindex2mapid(pt->map)) >= 0 )
+		{
+			sd->bl.m = m;
+			sd->bl.x = pt->x;
+			sd->bl.y = pt->y;
+			sd->mapindex = pt->map;
+		}
+	}	
+
 	pc_makesavestatus(sd);
 	pc_clean_skilltree(sd);
 	chrif_save(sd,1);
@@ -2645,12 +2666,15 @@ int map_readfromcache(struct map_data *m, FILE *fp)
 
 int map_addmap(char* mapname)
 {
-	if (strcmpi(mapname,"clear")==0) {
-		map_num=0;
+	if( strcmpi(mapname,"clear")==0 )
+	{
+		map_num = 0;
+		map_instance_start = 0;
 		return 0;
 	}
 
-	if (map_num >= MAX_MAP_PER_SERVER - 1) {
+	if( map_num >= MAX_MAP_PER_SERVER - 1 )
+	{
 		ShowError("Could not add map '"CL_WHITE"%s"CL_RESET"', the limit of maps has been reached.\n",mapname);
 		return 1;
 	}
@@ -2841,11 +2865,546 @@ int map_readallmaps (void)
 
 	// finished map loading
 	ShowInfo("Successfully loaded '"CL_WHITE"%d"CL_RESET"' maps."CL_CLL"\n",map_num);
+	map_instance_start = map_num; // Next Map Index will be instances
 
 	if (maps_removed)
 		ShowNotice("Maps removed: '"CL_WHITE"%d"CL_RESET"'\n",maps_removed);
 
 	return 0;
+}
+
+/*======================================
+ * Instancing [by Sirius White]
+ *--------------------------------------*/
+
+/*--------------------------------------
+ * map_instance_map2imap
+ * m : source map of this instance
+ * sd : source party/guild of this instance
+ * type : result (0 = map id | 1 = instance id)
+ *--------------------------------------*/
+int map_instance_map2imap(int m, struct map_session_data *sd, int type)
+{
+	int i;
+	struct party_data *p;
+	if( !sd->status.party_id || (p = party_search(sd->status.party_id)) == NULL || !p->instance_id )
+		return -1;
+	
+	for( i = 0; i < instance[p->instance_id].num_map; i++ )
+	{
+		if( instance[p->instance_id].map[i] && map[instance[p->instance_id].map[i]].instance_map[0] == m )
+		{
+			if( type == 0 )
+				return instance[p->instance_id].map[i];
+			else
+				return p->instance_id;
+		}
+	}
+	return -1;
+}
+
+/*--------------------------------------
+ * map_instance_mapid2imapid
+ * m : source map
+ * instance_id : where to search
+ * result : mapid of map "m" in this instance
+ *--------------------------------------*/
+int map_instance_mapid2imapid(int m, int instance_id)
+{
+	int i, max;
+	if( map[m].instance_map[0] == 0 )
+		return m; // not instances found for this map
+	else if( map[m].instance_id )
+	{ // This map is a instance
+		ShowError("map_instance_mapid2imapid: already instanced (%d / %d)\n", m, instance_id);
+		return -1;
+	}
+
+	if( instance_id <= 0 )
+		return -1;
+
+	max = instance[instance_id].num_map;
+
+	for( i = 0; i < max; i++ )
+		if( map[instance[instance_id].map[i]].instance_map[0] == m )
+			return instance[instance_id].map[i];
+
+	return -1;
+}
+
+/*--------------------------------------
+ * map_instance_create
+ * type : 0 = Party | 1 = Guild
+ * group_id : party_id / guild_id
+ * name_id : ...
+ * name : instance name
+ * Return value could be
+ * -4 = already exists | -3 = no free instances | -2 = missing parameter | -1 = invalid type
+ * On success return instance_id
+ *--------------------------------------*/
+int map_instance_create(int party_id, int name_id, const char *name)
+{
+	int i;
+	struct party_data *p = NULL;
+
+	if( !party_id || !name_id || !name )
+	{
+		ShowError("map_instance_create: missing parameter.\n");
+		return -2;
+	}
+
+	p = party_search(party_id);
+	if( !p || p->instance_id )
+		return -4; // Party already instancing
+
+	// Searching a Free Instance
+	// 0 is ignored as this mean "no instance" on maps
+	ARR_FIND(1, MAX_INSTANCE, i, instance[i].party_id == 0);
+	if( i == MAX_INSTANCE )
+	{
+		ShowError("map_instance_create: no free instances, consider increasing MAX_INSTANCE.\n");
+		return -3;
+	}
+
+	instance[i].instance_id = i;
+	instance[i].name_id = name_id;
+	instance[i].idle_timer = INVALID_TIMER;
+	instance[i].idle_timeout = instance[i].idle_timeoutval = 0;
+	instance[i].progress_timer = INVALID_TIMER;
+	instance[i].progress_timeout = instance[i].progress_timeoutval = 0;
+	instance[i].users = 0;
+	instance[i].party_id = party_id;
+	instance[i].ivar = NULL;
+	instance[i].svar = NULL;
+
+	memcpy( instance[i].name, name, sizeof(instance[i].name) );
+	memset( instance[i].map, 0x00, sizeof(instance[i].map) );
+	p->instance_id = i;
+
+	clif_instance(i, 1, 0); // Start instancing window
+	ShowInfo("[Instance] Created: %s.\n", name);
+	return i;
+}
+
+/*--------------------------------------
+ * map_instance_npcname
+ * Conver "name" to "name_MEM000" format
+ *--------------------------------------*/
+char *map_instance_npcname(char *name, int instance_id)
+{
+	static char npc_name[NAME_LENGTH+1];
+	uint32 crc = crc32(name, strlen(name));
+	
+	snprintf(npc_name, sizeof(npc_name), "MEM_%.8x_%u", crc, instance_id);
+	return &npc_name[0];
+}
+
+/*--------------------------------------
+ * map_instance_map
+ * Add a map to the instance using src map "name"
+ *--------------------------------------*/
+int map_instance_map(const char *name, int instance_id)
+{
+	int m = map_mapname2mapid(name), i, ii = -1, im = -1;
+	size_t num_cell, size;
+
+	if( m < 0 )
+		return -1; // source map not found
+		
+	if( !instance[instance_id].name_id )
+	{
+		ShowError("map_instance_map: trying to attach '%s' map to non-existing instance %d.\n", name, instance_id);
+		return -1;
+	}
+	if( instance[instance_id].num_map >= MAX_MAP_PER_INSTANCE )
+	{
+		ShowError("map_instance_map: trying to add '%s' map to instance %d (%s) failed. Please increase MAX_MAP_PER_INSTANCE.\n", name, instance_id, instance[instance_id].name);
+		return -2;
+	}
+	if( map[m].instance_id != 0 )
+	{ // Source map is a Instance.
+		ShowError("map_instance_map: trying to instance already instanced map %s.\n", name);
+		return -4;
+	}
+
+	ARR_FIND(map_instance_start, map_num, i, !map[i].name[0]); // Searching for a Free Map
+	if( i < map_num ) im = i; // Unused map found (old instance)
+	else if( map_num - 1 >= MAX_MAP_PER_SERVER )
+	{ // No more free maps
+		ShowError("map_instance_map: no more free space to create maps on this server.\n");
+		return -5;
+	}
+	else im = map_num++; // Using next map index
+
+	// Grab instance map id
+	ARR_FIND(0, ARRAYLENGTH(map[m].instance_map), i, !map[m].instance_map[i]);
+	if( i >= ARRAYLENGTH(map[m].instance_map) )
+	{
+		ShowError("map_instance_map: limit of instances per map reach.\n");
+		return -2;
+	}
+
+	ii = i;
+
+	// Copy source map
+	memcpy( &map[im], &map[m], sizeof(struct map_data));
+		
+	// Add map index
+	snprintf(map[im].name, MAP_NAME_LENGTH, "%.3d%s", ii, name);
+	map[im].index = mapindex_addmap(-1, map[im].name);
+	if( !map[im].index )
+	{
+		map[im].name[0] = '\0';
+		ShowError("map_instance_map: no more free map indexes.\n");
+		return -3; // No free map index
+	}	
+
+	// Reallocate cells
+	num_cell = map[im].xs * map[im].ys;
+	CREATE( map[im].cell, struct mapcell, num_cell);
+	memcpy( map[im].cell, map[m].cell, num_cell * sizeof(struct mapcell));
+
+	size = map[im].bxs * map[im].bys * sizeof(struct block_list*);
+	map[im].block = (struct block_list**)aCalloc(size, 1);
+	map[im].block_mob = (struct block_list**)aCalloc(size, 1);
+
+	memset(map[im].npc, 0x00, sizeof(map[i].npc));
+	map[im].npc_num = 0;
+
+	memset(map[im].moblist, 0x00, sizeof(map[im].moblist));
+	map[im].mob_delete_timer = INVALID_TIMER;
+
+	map[im].m = im;
+	map[im].instance_id = instance_id;
+	map[m].instance_map[ii] = im; // add the mapid of this instance to the source map
+	map[im].instance_map[0] = m; // uses index [0] to store source map for this instance
+
+	instance[instance_id].map[instance[instance_id].num_map++] = im; // Attach to actual instance
+	uidb_put(map_db, (unsigned int)map[im].index, &map[im]); // Put to map list
+
+	return im;
+}
+
+/*--------------------------------------
+ * map_instance_map_npcsub
+ * Used on Init instance. Duplicates each script on source map
+ *--------------------------------------*/
+int map_instance_map_npcsub(struct block_list* bl, va_list args)
+{
+	char *inst_name;
+	static char w1[50], w2[50], w3[50], w4[50];
+	const char* stat_buf = "- call from instancing subsystem -\n";
+	struct npc_data* nd = (struct npc_data*)bl;
+	int m = va_arg(args, int);
+	
+	inst_name = map_instance_npcname(nd->exname, map[m].instance_id);
+	if( inst_name == NULL )
+		return 1;
+
+	if( nd->subtype == WARP )
+	{ // Adjust destination, if instanced
+		struct npc_data *wnd;
+		int dm = map_mapindex2mapid(nd->u.warp.mapindex), im;
+
+		if( dm < 0 ) return 1;
+
+		im = map_instance_mapid2imapid(dm, map[m].instance_id);
+		if( im == -1 )
+		{
+			ShowError("map_instance_map_npcsub: warp (%s) leading to instanced map (%s), but instance map is not attached to current instance.\n", map[dm].name, nd->exname);
+			return 1;
+		}
+
+		CREATE(wnd, struct npc_data, 1);
+		wnd->bl.id = npc_get_new_npc_id();
+		map_addnpc(m, wnd);
+		wnd->bl.prev = wnd->bl.next = NULL;
+		wnd->bl.m = m;
+		wnd->bl.x = nd->bl.x;
+		wnd->bl.y = nd->bl.y;
+		safestrncpy(wnd->name, "", ARRAYLENGTH(wnd->name));
+		safestrncpy(wnd->exname, inst_name, ARRAYLENGTH(wnd->exname));
+		wnd->class_ = WARP_CLASS;
+		wnd->speed = 200;
+		wnd->u.warp.mapindex = map_id2index(im);
+		wnd->u.warp.x = nd->u.warp.x;
+		wnd->u.warp.y = nd->u.warp.y;
+		wnd->u.warp.xs = nd->u.warp.xs;
+		wnd->u.warp.ys = nd->u.warp.ys;
+		wnd->bl.type = BL_NPC;
+		wnd->subtype = WARP;
+		npc_setcells(wnd);
+		map_addblock(&wnd->bl);
+		status_set_viewdata(&wnd->bl, wnd->class_);
+		status_change_init(&wnd->bl);
+		unit_dataset(&wnd->bl);
+		clif_spawn(&wnd->bl);
+		strdb_put(npcname_db, wnd->exname, wnd);
+
+		return 1;
+	}
+
+	snprintf(w1, sizeof(w1), "%s,%d,%d,%d", map[m].name, nd->bl.x, nd->bl.y, nd->ud.dir);
+	snprintf(w2, sizeof(w2), "duplicate(%s)", nd->exname);
+	snprintf(w3, sizeof(w3), "%s::%s", nd->name, inst_name);
+	if( nd->u.scr.xs >= 0 && nd->u.scr.ys >= 0 )
+		snprintf(w4, sizeof(w4), "%d,%d,%d", nd->class_, nd->u.scr.xs, nd->u.scr.ys);
+	else
+		snprintf(w4, sizeof(w4), "%d", nd->class_);
+	
+	npc_parse_duplicate(w1, w2, w3, w4, stat_buf, stat_buf, "INSTANCING");
+	return 1;
+}
+
+/*--------------------------------------
+ * map_instance_init
+ * Init all map on the instance. Npcs are created here
+ *--------------------------------------*/
+void map_instance_init(int instance_id)
+{
+	int i;
+	if( !instance_id )
+		return;
+
+	for( i = 0; i < instance[instance_id].num_map; i++ )
+		map_foreachinmap(map_instance_map_npcsub, map[instance[instance_id].map[i]].instance_map[0], BL_NPC, instance[instance_id].map[i]);
+
+	ShowInfo("[Instance] Initialized %s.\n", instance[instance_id].name);
+}
+
+/*--------------------------------------
+ * map_instance_del_load
+ * Used on instance deleting process.
+ * Warps all players on each instance map to its save points.
+ *--------------------------------------*/
+int map_instance_del_load(struct map_session_data* sd, va_list args)
+{
+	int m = va_arg(args,int);
+	if( !sd || sd->bl.m != m )
+		return 0;
+
+	pc_setpos(sd, sd->status.save_point.map, sd->status.save_point.x, sd->status.save_point.y, 0);
+	return 1;
+}
+
+/*--------------------------------------
+ * map_instance_del
+ * Removes a simple instance map
+ *--------------------------------------*/
+void map_instance_del(int m)
+{
+	int sm, i;
+	if( m <= 0 || !map[m].instance_id )
+	{
+		ShowError("Tried to remove non-existing instance map (%d)\n", m);
+		return;
+	}
+
+	sm = map[m].instance_map[0];
+	map_foreachpc(map_instance_del_load, m);
+	map_foreachinmap(cleanup_sub, m, BL_ALL);
+
+	if( map[m].mob_delete_timer != INVALID_TIMER )
+		delete_timer(map[m].mob_delete_timer, map_removemobs_timer);
+
+	mapindex_removemap( map[m].index );
+
+	// Free memory
+	aFree(map[m].cell);
+	aFree(map[m].block);
+	aFree(map[m].block_mob);
+
+	// Remove from instance
+	for( i = 0; i < instance[map[m].instance_id].num_map; i++ )
+	{
+		if( instance[map[m].instance_id].map[i] == m )
+		{
+			instance[map[m].instance_id].num_map--;
+			for( ; i < instance[map[m].instance_id].num_map; i++ )
+				instance[map[m].instance_id].map[i] = instance[map[m].instance_id].map[i+1];
+			i = -1;
+			break;
+		}
+	}
+	if( i == instance[map[m].instance_id].num_map )
+		ShowError("map_instance_del: failed to remove %s from instance list (%s): %d\n", map[m].name, instance[map[m].instance_id].name, m);
+
+	uidb_remove(map_db, map[m].index); // Remove from mapindex db
+
+	map[m].m = map[m].index = 0;
+	map[m].name[0] = '\0';
+
+	ARR_FIND(0, ARRAYLENGTH(map[sm].instance_map), i, map[sm].instance_map[i] == m);
+	if( i < ARRAYLENGTH(map[sm].instance_map) )
+	{
+		memmove(&map[sm].instance_map[i], &map[sm].instance_map[i+1], sizeof(map[sm].instance_map) - (i+1)*sizeof(map[sm].instance_map[0]));
+		map[sm].instance_map[ARRAYLENGTH(map[sm].instance_map) - 1] = 0; // Because i am not sure if the final value is set to 0 by "memmove"
+	}
+	else
+		ShowError("Failed to remove instance from instance db.\n");
+
+	memset(&map[m], 0x00, sizeof(map[0]));
+}
+
+/*--------------------------------------
+ * map_instance_destroy_freesvar
+ * Used for instance variables. Clean each variable from memory.
+ *--------------------------------------*/
+void map_instance_destroy_freesvar(void *key, void *data, va_list args)
+{
+	if( data ) aFree(data);
+}
+
+/*--------------------------------------
+ * map_instance_destroy_timer
+ * Timer to destroy instance by process or idle
+ *--------------------------------------*/
+int map_instance_destroy_timer(int tid, unsigned int tick, int id, intptr data)
+{
+	map_instance_destroy(id);
+	return 0;
+}
+
+/*--------------------------------------
+ * map_instance_destroy
+ * Removes a instance, all its maps and npcs.
+ *--------------------------------------*/
+void map_instance_destroy(int instance_id)
+{
+	int last = 0, type;
+	time_t now = time(NULL);
+
+	if( !instance_id || !instance[instance_id].name_id )
+		return;
+
+	if( instance[instance_id].progress_timeout && instance[instance_id].progress_timeout <= now )
+		type = 1;
+	else if( instance[instance_id].idle_timeout && instance[instance_id].idle_timeout <= now )
+		type = 2;
+	else
+		type = 3;
+
+	clif_instance(instance_id, 5, type); // Report users this instance has been destroyed
+
+	while( instance[instance_id].num_map && last != instance[instance_id].map[0] )
+	{
+		last = instance[instance_id].map[0];
+		map_instance_del( instance[instance_id].map[0] );
+	}
+
+	if( instance[instance_id].ivar )
+		linkdb_final( &instance[instance_id].ivar );
+		
+	if( instance[instance_id].svar )
+	{
+		linkdb_foreach( &instance[instance_id].svar, map_instance_destroy_freesvar );
+		linkdb_final( &instance[instance_id].svar );
+	}
+
+	if( instance[instance_id].progress_timer != INVALID_TIMER )
+		delete_timer( instance[instance_id].progress_timer, map_instance_destroy_timer);
+	if( instance[instance_id].idle_timer != INVALID_TIMER )
+		delete_timer( instance[instance_id].idle_timer, map_instance_destroy_timer);
+
+	instance[instance_id].ivar = NULL;
+	instance[instance_id].svar = NULL;
+
+	ShowInfo("[Instance] Destroyed %s.\n", instance[instance_id].name);
+	memset( &instance[instance_id], 0x00, sizeof(instance[0]) );
+}
+
+/*--------------------------------------
+ * map_instance_check_idle
+ * Checks if there are users in the instance or not to start idle timer
+ *--------------------------------------*/
+void map_instance_check_idle(int instance_id)
+{
+	bool idle = true;
+	time_t now = time(NULL);
+
+	if( !instance_id || instance[instance_id].idle_timeoutval == 0 )
+		return;
+
+	if( instance[instance_id].users )
+		idle = false;
+
+	if( instance[instance_id].idle_timer != INVALID_TIMER && !idle )
+	{
+		delete_timer(instance[instance_id].idle_timer, map_instance_destroy_timer);
+		instance[instance_id].idle_timer = INVALID_TIMER;
+		instance[instance_id].idle_timeout = 0;
+		clif_instance(instance_id, 3, 0); // Notify instance users normal instance expiration
+	}
+	else if( instance[instance_id].idle_timer == INVALID_TIMER && idle )
+	{
+		instance[instance_id].idle_timeout = now + instance[instance_id].idle_timeoutval;
+		instance[instance_id].idle_timer = add_timer( gettick() + (unsigned int)instance[instance_id].idle_timeoutval * 1000, map_instance_destroy_timer, instance_id, 0);
+		clif_instance(instance_id, 4, 0); // Notify instance users it will be destroyed of no user join it again in "X" time
+	}
+}
+
+/*--------------------------------------
+ * map_instance_set_timeout
+ * Set instance Timers
+ *--------------------------------------*/
+void map_instance_set_timeout(int instance_id, unsigned int progress_timeout, unsigned int idle_timeout)
+{
+	time_t now = time(0);
+
+	if( !instance_id )
+		return;
+		
+	if( instance[instance_id].progress_timer != INVALID_TIMER )
+		delete_timer( instance[instance_id].progress_timer, map_instance_destroy_timer);
+	if( instance[instance_id].idle_timer != INVALID_TIMER )
+		delete_timer( instance[instance_id].idle_timer, map_instance_destroy_timer);
+
+	if( progress_timeout )
+	{
+		instance[instance_id].progress_timeoutval = progress_timeout;
+		instance[instance_id].progress_timeout = now + progress_timeout;
+		instance[instance_id].progress_timer = add_timer( gettick() + progress_timeout * 1000, map_instance_destroy_timer, instance_id, 0);
+	}
+	else
+	{
+		instance[instance_id].progress_timeoutval = 0;
+		instance[instance_id].progress_timeout = 0;
+		instance[instance_id].progress_timer = INVALID_TIMER;
+	}
+		
+	if( idle_timeout )
+	{
+		instance[instance_id].idle_timeoutval = idle_timeout;
+		instance[instance_id].idle_timer = INVALID_TIMER;
+		map_instance_check_idle(instance_id);
+	}
+	else
+	{
+		instance[instance_id].idle_timeoutval = 0;
+		instance[instance_id].idle_timeout = 0;
+		instance[instance_id].idle_timer = INVALID_TIMER;
+	}
+
+	if( instance[instance_id].idle_timer == INVALID_TIMER && instance[instance_id].progress_timer != INVALID_TIMER )
+		clif_instance(instance_id, 3, 0);
+}
+
+/*--------------------------------------
+ * map_instance_check_mapkick
+ * Checks if sd in on a instance and should be kicked from it
+ *--------------------------------------*/
+void map_instance_check_kick(struct map_session_data *sd)
+{
+	int m = sd->bl.m;
+
+	clif_instance_leave(sd->fd);
+	if( map[m].instance_id )
+	{ // User was on the instance map
+		if( map[m].save.map )
+			pc_setpos(sd, map[m].save.map, map[m].save.x, map[m].save.y, 3);
+		else
+			pc_setpos(sd, sd->status.save_point.map, sd->status.save_point.x, sd->status.save_point.y, 3);
+	}
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -3264,7 +3823,10 @@ void do_final(void)
 	for( sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC*)mapit_next(iter) )
 		map_quit(sd);
 	mapit_free(iter);
-		
+	
+	for( i = 0; i < MAX_INSTANCE; i++ )
+		if( instance[i].party_id ) map_instance_destroy(i);
+
 	id_db->foreach(id_db,cleanup_db_sub);
 	chrif_char_reset_offline();
 	chrif_flush_fifo();
@@ -3489,6 +4051,8 @@ int do_init(int argc, char *argv[])
 	map_sql_init();
 #endif /* not TXT_ONLY */
 
+	memset(instance, 0x00, sizeof(instance));
+
 	mapindex_init();
 	if(enable_grf)
 		grfio_init(GRF_PATH_FILENAME);
@@ -3498,6 +4062,7 @@ int do_init(int argc, char *argv[])
 	add_timer_func_list(map_freeblock_timer, "map_freeblock_timer");
 	add_timer_func_list(map_clearflooritem_timer, "map_clearflooritem_timer");
 	add_timer_func_list(map_removemobs_timer, "map_removemobs_timer");
+	add_timer_func_list(map_instance_destroy_timer, "map_instance_destroy_timer");
 	add_timer_interval(gettick()+1000, map_freeblock_timer, 0, 0, 60*1000);
 
 	do_init_atcommand();

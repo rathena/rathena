@@ -3826,6 +3826,20 @@ int pc_setpos(struct map_session_data* sd, unsigned short mapindex, int x, int y
 		pc_setrestartvalue(sd,1);
 	}
 
+	m = map_mapindex2mapid(mapindex);
+	if( map[m].instance_map[0] && map[m].instance_id == 0 )
+	{ // Source Instance Map
+		int im = map_instance_map2imap(m, sd, 0);
+		if( im <= 0 )
+		{
+			ShowError("pc_setpos: player %s trying to enter instance map '%s' without instanced copy.\n", sd->status.name, map[m].name);
+			return 2; // map not found
+		}
+
+		m = im;
+		mapindex = map_id2index(m);
+	}
+
 	sd->state.changemap = (sd->mapindex != mapindex);
 	if( sd->state.changemap )
 	{ // Misc map-changing settings
@@ -3862,8 +3876,8 @@ int pc_setpos(struct map_session_data* sd, unsigned short mapindex, int x, int y
 			sd->regen.state.gc = 0;
 	}
 
-	m=map_mapindex2mapid(mapindex);
-	if(m<0) {
+	if( m < 0 )
+	{
 		uint32 ip;
 		uint16 port;
 		//if can't find any map-servers, just abort setting position.

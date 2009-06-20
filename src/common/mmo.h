@@ -18,7 +18,7 @@
 //The number is the max number of hotkeys to save (27 = 9 skills x 3 bars)
 #define MAX_HOTKEYS 27
 
-#define MAX_MAP_PER_SERVER 1024
+#define MAX_MAP_PER_SERVER 1500 // Increased to allow creation of Instance Maps
 #define MAX_INVENTORY 100
 //Max number of characters per account. Note that changing this setting alone is not enough if the client is not hexed to support more characters as well.
 #define MAX_CHARS 9

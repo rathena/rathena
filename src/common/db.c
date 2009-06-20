@@ -2562,6 +2562,21 @@ void linkdb_insert( struct linkdb_node** head, void *key, void* data)
 	node->data = data;
 }
 
+void linkdb_foreach( struct linkdb_node** head, LinkDBFunc func, ...  )
+{
+	va_list args;
+	struct linkdb_node *node;
+	
+	if( head == NULL ) return;
+	
+	va_start(args, func);
+	node = *head;
+	while ( node ) {
+		func( node->key, node->data, args );
+		node = node->next;
+	}
+}
+
 void* linkdb_search( struct linkdb_node** head, void *key)
 {
 	int n = 0;

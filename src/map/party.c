@@ -47,6 +47,17 @@ static void party_fill_member(struct party_member *member, struct map_session_da
 }
 
 /*==========================================
+ * Request an available sd of this party
+ *------------------------------------------*/
+struct map_session_data* party_getavailablesd(struct party_data *p)
+{
+	int i;
+	nullpo_retr(NULL, p);
+	ARR_FIND(0, MAX_PARTY, i, p->data[i].sd != NULL);
+	return( i < MAX_PARTY ) ? p->data[i].sd : NULL;
+}
+
+/*==========================================
  * Retrieves and validates the sd pointer for this party member [Skotlex]
  *------------------------------------------*/
 
@@ -385,7 +396,11 @@ void party_member_joined(struct map_session_data *sd)
 	}
 	ARR_FIND( 0, MAX_PARTY, i, p->party.member[i].account_id == sd->status.account_id && p->party.member[i].char_id == sd->status.char_id );
 	if (i < MAX_PARTY)
+	{
 		p->data[i].sd = sd;
+		if( p->instance_id )
+			clif_instance_join(sd->fd,p->instance_id);
+	}
 	else
 		sd->status.party_id = 0; //He does not belongs to the party really?
 }
@@ -449,6 +464,9 @@ int party_member_added(int party_id,int account_id,int char_id, int flag)
 	clif_party_hp(sd);
 	clif_party_xy(sd);
 	clif_charnameupdate(sd); //Update char name's display [Skotlex]
+
+	if( p->instance_id )
+		clif_instance_join(sd->fd, p->instance_id);
 
 	return 0;
 }
@@ -521,7 +539,10 @@ int party_member_leaved(int party_id, int account_id, int char_id)
 		sd->status.party_id = 0;
 		clif_charnameupdate(sd); //Update name display [Skotlex]
 		//TODO: hp bars should be cleared too
+		if( p->instance_id )
+			map_instance_check_kick(sd);
 	}
+
 	return 0;
 }
 
@@ -534,6 +555,9 @@ int party_broken(int party_id)
 	p = party_search(party_id);
 	if( p == NULL )
 		return 0;
+		
+	if( p->instance_id )
+		map_instance_destroy( p->instance_id );
 
 	for(i=0;i<MAX_PARTY;i++){
 		if(p->data[i].sd!=NULL){

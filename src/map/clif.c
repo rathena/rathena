@@ -7990,6 +7990,11 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 
 	if (map[sd->bl.m].users++ == 0 && battle_config.dynamic_mobs)	//Skotlex
 		map_spawnmobs(sd->bl.m);
+	if( map[sd->bl.m].instance_id )
+	{
+		instance[map[sd->bl.m].instance_id].users++;
+		map_instance_check_idle(map[sd->bl.m].instance_id);
+	}
 	sd->state.debug_remove_map = 0; // temporary state to track double remove_map's [FlavioJS]
 
 	map_addblock(&sd->bl);
@@ -13043,6 +13048,105 @@ int clif_font_single(int fd, struct map_session_data *sd)
 }
 
 /*==========================================
+ * Instancing Window
+ *------------------------------------------*/
+int clif_instance(int instance_id, int type, int flag)
+{
+	struct map_session_data *sd;
+	struct party_data *p;
+	unsigned char buf[255];
+
+	if( (p = party_search(instance[instance_id].party_id)) == NULL || (sd = party_getavailablesd(p)) == NULL )
+		return 0;
+
+	switch( type )
+	{
+	case 1:
+		// S 0x2cb <Instance name>.63B <Standby Position>.W
+		// Required to start the instancing information window on Client
+		// This window re-appear each "refresh" of client automatically until type 4 is send to client.
+		WBUFW(buf,0) = 0x02CB;
+		memcpy(WBUFP(buf,2),instance[instance_id].name,61);
+		WBUFW(buf,63) = flag;
+		clif_send(buf,packet_len(0x02CB),&sd->bl,PARTY);
+		break;
+	case 2:
+		// S 0x2cc <Standby Position>.W
+		// To announce Instancing queue creation if no maps available
+		WBUFW(buf,0) = 0x02CC;
+		WBUFW(buf,2) = flag;
+		clif_send(buf,packet_len(0x02CC),&sd->bl,PARTY);
+		break;
+	case 3:
+	case 4:
+		// S 0x2cd <Instance Name>.61B <Instance Remaining Time>.L <Instance Noplayers close time>.L
+		WBUFW(buf,0) = 0x02CD;
+		memcpy(WBUFP(buf,2),instance[instance_id].name,61);
+		if( type == 3 )
+		{
+			WBUFL(buf,63) = (uint32)instance[instance_id].progress_timeout;
+			WBUFL(buf,67) = 0;
+		}
+		else
+		{
+			WBUFL(buf,63) = 0;
+			WBUFL(buf,67) = (uint32)instance[instance_id].idle_timeout;
+		}
+		clif_send(buf,packet_len(0x02CD),&sd->bl,PARTY);
+		break;
+	case 5: // R 02CE <message ID>.L
+		// S 0x2ce <Message ID>.L
+		// 1 = The Memorial Dungeon expired; it has been destroyed
+		// 2 = The Memorial Dungeon's entry time limit expired; it has been destroyed
+		// 3 = The Memorial Dungeon has been removed.
+		// 4 = Just remove the window, maybe party/guild leave
+		WBUFW(buf,0) = 0x02CE;
+		WBUFL(buf,2) = flag;
+		clif_send(buf,packet_len(0x02CE),&sd->bl,PARTY);
+		break;
+	}
+	return 0;
+}
+
+void clif_instance_join(int fd, int instance_id)
+{
+	if( instance[instance_id].idle_timer != INVALID_TIMER )
+	{
+		WFIFOHEAD(fd,packet_len(0x02CD));
+		WFIFOW(fd,0) = 0x02CD;
+		memcpy(WFIFOP(fd,2),instance[instance_id].name,61);
+		WFIFOL(fd,63) = 0;
+		WFIFOL(fd,67) = (uint32)instance[instance_id].idle_timeout;
+		WFIFOSET(fd,packet_len(0x02CD));
+	}
+	else if( instance[instance_id].progress_timer != INVALID_TIMER )
+	{
+		WFIFOHEAD(fd,packet_len(0x02CD));
+		WFIFOW(fd,0) = 0x02CD;
+		memcpy(WFIFOP(fd,2),instance[instance_id].name,61);
+		WFIFOL(fd,63) = (uint32)instance[instance_id].progress_timeout;;
+		WFIFOL(fd,67) = 0;
+		WFIFOSET(fd,packet_len(0x02CD));
+	}
+	else
+	{
+		WFIFOHEAD(fd,packet_len(0x02CB));
+		WFIFOW(fd,0) = 0x02CB;
+		memcpy(WFIFOP(fd,2),instance[instance_id].name,61);
+		WFIFOW(fd,63) = 0;
+		WFIFOSET(fd,packet_len(0x02CB));
+	}
+}
+
+void clif_instance_leave(int fd)
+{
+	WFIFOHEAD(fd,packet_len(0x02CE));
+	WFIFOW(fd,0) = 0x02ce;
+	WFIFOL(fd,2) = 4;
+	WFIFOSET(fd,packet_len(0x02CE));
+}
+
+/*==========================================
  * パケットデバッグ
  *------------------------------------------*/
 void clif_parse_debug(int fd,struct map_session_data *sd)
@@ -13314,7 +13418,7 @@ static int packetdb_readdb(void)
 	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 	    0,  0,  0,  0,  0,  0,  0,  0,  0,191,  0,  0,  0,  0,  0,  0,
 	//#0x02C0
-	    0,  0,  0,  0,  0, 30,  0,  0,  0,  3,  0,  0,  0,  0,  0,  0,
+	    0,  0,  0,  0,  0, 30,  0,  0,  0,  3,  0, 65,  4, 71, 10,  0,
 	    0,  0,  0,  0,  0,  0,  6, -1, 10, 10,  3,  0, -1, 32,  6,  0,
 	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  8,
 	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,

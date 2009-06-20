@@ -22,6 +22,7 @@ struct party_data {
 	struct party party;
 	struct party_member_data data[MAX_PARTY];
 	uint8 itemc; //For item distribution, position of last picker in party
+	unsigned int instance_id;
 	struct {
 		unsigned monk : 1; //There's at least one monk in party?
 		unsigned sg : 1;	//There's at least one Star Gladiator in party?
@@ -35,6 +36,7 @@ void do_init_party(void);
 void do_final_party(void);
 struct party_data* party_search(int party_id);
 struct party_data* party_searchname(const char* str);
+struct map_session_data* party_getavailablesd(struct party_data *p);
 
 int party_create(struct map_session_data *sd,char *name, int item, int item2);
 void party_created(int account_id,int char_id,int fail,int party_id,char *name);

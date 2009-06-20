@@ -71,6 +71,8 @@
 // - remove GETVALUE / SETVALUE
 // - clean up the set_reg / set_val / setd_sub mess
 
+void crc32_init();
+
 
 
 //
@@ -153,8 +155,8 @@
 /// Composes the uid of a reference from the id and the index
 #define reference_uid(id,idx) ( (int32)((((uint32)(id)) & 0x00ffffff) | (((uint32)(idx)) << 24)) )
 
-#define not_server_variable(prefix) ( (prefix) != '$' && (prefix) != '.')
-#define not_array_variable(prefix) ( (prefix) != '$' && (prefix) != '@' && (prefix) != '.' )
+#define not_server_variable(prefix) ( (prefix) != '$' && (prefix) != '.' && (prefix) != '\'')
+#define not_array_variable(prefix) ( (prefix) != '$' && (prefix) != '@' && (prefix) != '.' && (prefix) != '\'' )
 #define is_string_variable(name) ( (name)[strlen(name) - 1] == '$' )
 
 #define FETCH(n, t) \
@@ -277,6 +279,7 @@ typedef struct script_function {
 extern script_function buildin_func[];
 
 static struct linkdb_node* sleep_db;// int oid -> struct script_state*
+uint32 crctab[256];
 
 /*==========================================
  * ローカルプロトタイプ宣言 (必要な物のみ)
@@ -797,6 +800,8 @@ const char* skip_word(const char* p)
 		++p; break;
 	case '#':// account variable
 		p += ( p[1] == '#' ? 2 : 1 ); break;
+	case '\'':// instance variable
+		++p; break;
 	case '.':// npc variable
 		p += ( p[1] == '@' ? 2 : 1 ); break;
 	case '$':// global variable
@@ -2203,6 +2208,14 @@ void get_val(struct script_state* st, struct script_data* data)
 				data->u.str = (char*)linkdb_search(n, (void*)reference_getuid(data));
 			}
 			break;
+		case '\'':
+			{
+				struct linkdb_node** n = NULL;
+				if( st->instance_id )
+					n = &instance[st->instance_id].svar;
+				data->u.str = (char*)linkdb_search(n, (void*)reference_getuid(data));
+			}
+			break;
 		default:
 			data->u.str = pc_readglobalreg_str(sd, name);
 			break;
@@ -2254,6 +2267,14 @@ void get_val(struct script_state* st, struct script_data* data)
 					data->ref      ? data->ref:
 					name[1] == '@' ? st->stack->var_function:// instance/scope variable
 					                 &st->script->script_vars;// npc variable
+				data->u.num = (int)linkdb_search(n, (void*)reference_getuid(data));
+			}
+			break;
+		case '\'':
+			{
+				struct linkdb_node** n = NULL;
+				if( st->instance_id )
+					n = &instance[st->instance_id].ivar;
 				data->u.num = (int)linkdb_search(n, (void*)reference_getuid(data));
 			}
 			break;
@@ -2309,6 +2330,17 @@ static int set_reg(struct script_state* st, TBL_PC* sd, int num, const char* nam
 			if (str[0]) linkdb_insert(n, (void*)num, aStrdup(str));
 			}
 			return 1;
+		case '\'': {
+			char *p;
+			struct linkdb_node** n = NULL;
+			if( st->instance_id )
+				n = &instance[st->instance_id].svar;
+
+			p = (char*)linkdb_erase(n, (void*)num);
+			if (p) aFree(p);
+			if( str[0] ) linkdb_insert(n, (void*)num, aStrdup(str));
+			}
+			return 1;
 		default:
 			return pc_setglobalreg_str(sd, name, str);
 		}
@@ -2349,6 +2381,18 @@ static int set_reg(struct script_state* st, TBL_PC* sd, int num, const char* nam
 				linkdb_replace(n, (void*)num, (void*)val);
 			}
 			return 1;
+		case '\'':
+			{
+				struct linkdb_node** n = NULL;
+				if( st->instance_id )
+					n = &instance[st->instance_id].ivar;
+
+				if( val == 0 )
+					linkdb_erase(n, (void*)num);
+				else
+					linkdb_replace(n, (void*)num, (void*)val);
+				return 1;
+			}
 		default:
 			return pc_setglobalreg(sd, name, val);
 		}
@@ -3098,6 +3142,7 @@ void run_script_main(struct script_state *st)
 	struct script_state *bk_st = NULL;
 	int bk_npcid = 0;
 	struct script_stack *stack=st->stack;
+	struct npc_data *nd;
 
 	sd = map_id2sd(st->rid);
 
@@ -3109,6 +3154,10 @@ void run_script_main(struct script_state *st)
 		sd->st = st;
 		sd->npc_id = st->oid;
 	}
+
+	nd = map_id2nd(st->oid);
+	if( nd && map[nd->bl.m].instance_id > 0 )
+		st->instance_id = map[nd->bl.m].instance_id;
 
 	if(st->state == RERUNLINE) {
 		run_func(st);
@@ -3398,6 +3447,7 @@ int do_final_script()
  *------------------------------------------*/
 int do_init_script()
 {
+	crc32_init();
 	userfunc_db=strdb_alloc(DB_OPT_DUP_KEY,0);
 	scriptlabel_db=strdb_alloc((DBOptions)(DB_OPT_DUP_KEY|DB_OPT_ALLOW_NULL_DATA),50);
 
@@ -7361,7 +7411,7 @@ BUILDIN_FUNC(guildchangegm)
  *------------------------------------------*/
 BUILDIN_FUNC(monster)
 {
-	const char* map   = script_getstr(st,2);
+	const char* mapn  = script_getstr(st,2);
 	int x             = script_getnum(st,3);
 	int y             = script_getnum(st,4);
 	const char* str   = script_getstr(st,5);
@@ -7385,10 +7435,21 @@ BUILDIN_FUNC(monster)
 
 	sd = map_id2sd(st->rid);
 
-	if( sd && strcmp(map,"this") == 0 )
+	if( sd && strcmp(mapn,"this") == 0 )
 		m = sd->bl.m;
 	else
-		m = map_mapname2mapid(map);
+	{
+		m = map_mapname2mapid(mapn);
+		if( map[m].instance_map[0] && map[m].instance_id == 0 && st->instance_id )
+		{
+			m = map_instance_mapid2imapid(m, st->instance_id);
+			if( m < 0 )
+			{
+				ShowError("buildin_monster: Trying to spawn monster (%d) on instance map (%s) without instance attached.\n", class_, mapn);
+				return 1;
+			}
+		}
+	}
 
 	mob_once_spawn(sd,m,x,y,str,class_,amount,event);
 	return 0;
@@ -7434,7 +7495,7 @@ BUILDIN_FUNC(getmobdrops)
  *------------------------------------------*/
 BUILDIN_FUNC(areamonster)
 {
-	const char* map   = script_getstr(st,2);
+	const char* mapn  = script_getstr(st,2);
 	int x0            = script_getnum(st,3);
 	int y0            = script_getnum(st,4);
 	int x1            = script_getnum(st,5);
@@ -7455,11 +7516,22 @@ BUILDIN_FUNC(areamonster)
 
 	sd = map_id2sd(st->rid);
 
-	if( sd && strcmp(map,"this") == 0 )
+	if( sd && strcmp(mapn,"this") == 0 )
 		m = sd->bl.m;
 	else
-		m = map_mapname2mapid(map);
-
+	{
+		m = map_mapname2mapid(mapn);
+		if( map[m].instance_map[0] && map[m].instance_id == 0 && st->instance_id )
+		{
+			m = map_instance_mapid2imapid(m, st->instance_id);
+			if( m < 0 )
+			{
+				ShowError("buildin_areamonster: Trying to spawn monster (%d) on instance map (%s) without instance attached.\n", class_, mapn);
+				return 1;
+			}
+		}
+	}
+	
 	mob_once_spawn_area(sd,m,x0,y0,x1,y1,str,class_,amount,event);
 	return 0;
 }
@@ -7513,6 +7585,9 @@ BUILDIN_FUNC(killmonster)
 	if( (m=map_mapname2mapid(mapname))<0 )
 		return 0;
 		
+	if( map[m].instance_map[0] && map[m].instance_id == 0 && st->instance_id && (m=map_instance_mapid2imapid(m, st->instance_id)) < 0 )
+		return 0;
+		
 	if( script_hasdata(st,4) ) {
 		if ( script_getnum(st,4) == 1 ) {
 			map_foreachinmap(buildin_killmonster_sub, m, BL_MOB, event ,allflag);
@@ -7551,6 +7626,9 @@ BUILDIN_FUNC(killmonsterall)
 	if( (m=map_mapname2mapid(mapname))<0 )
 		return 0;
 	
+	if( map[m].instance_map[0] && map[m].instance_id == 0 && st->instance_id && (m=map_instance_mapid2imapid(m, st->instance_id)) < 0 )
+		return 0;
+
 	if( script_hasdata(st,3) ) {
 		if ( script_getnum(st,3) == 1 ) {
 			map_foreachinmap(buildin_killmonsterall_sub,m,BL_MOB);
@@ -9804,6 +9882,12 @@ BUILDIN_FUNC(mobcount)	// Added by RoVeRT
 	check_event(st, event);
 
 	if( (m=map_mapname2mapid(mapname))<0 ) {
+		script_pushint(st,-1);
+		return 0;
+	}
+	
+	if( map[m].instance_map[0] && map[m].instance_id == 0 && st->instance_id && (m=map_instance_mapid2imapid(m, st->instance_id)) < 0 )
+	{
 		script_pushint(st,-1);
 		return 0;
 	}
@@ -13637,6 +13721,288 @@ BUILDIN_FUNC(bg_get_data)
 }
 
 /*==========================================
+ * Instancing Script Commands
+ *------------------------------------------*/
+
+BUILDIN_FUNC(instance_create)
+{
+	const char *name;
+	int party_id, name_id;
+	int res;
+
+	name = script_getstr(st, 2);
+	party_id = script_getnum(st, 3);
+	name_id = script_getnum(st, 4);
+
+	res = map_instance_create(party_id, name_id, name);
+
+	if( res == -4 ) // Already exists
+	{
+		script_pushint(st, -1);
+		return 0;
+	}
+	else if( res < 0 )
+	{
+		char *err;
+		switch(res)
+		{
+		case -3: err = "No free instances"; break;
+		case -2: err = "Missing parameter"; break;
+		case -1: err = "Invalid type"; break;
+		default: err = "Unknown"; break;
+		}
+		ShowError("buildin_instance_create: %s [%d].\n", err, res);
+		script_pushint(st, -2);
+		return 0;
+	}
+	
+	script_pushint(st, res);
+	return 0;
+}
+
+BUILDIN_FUNC(instance_destroy)
+{
+	int instance_id;
+	
+	if( script_hasdata(st, 2) )
+		instance_id = script_getnum(st, 2);
+	else
+		instance_id = st->instance_id;
+		
+	if( instance_id <= 0 || instance_id >= MAX_INSTANCE )
+	{
+		ShowError("buildin_instance_destroy: Trying to destroy invalid instance %d.\n", instance_id);
+		return 0;
+	}
+		
+	map_instance_destroy(instance_id);
+	return 0;
+}
+
+BUILDIN_FUNC(instance_attachmap)
+{
+	const char *name;
+	int m;
+	int instance_id;
+	
+	instance_id = script_getnum(st, 2);
+	name = script_getstr(st, 3);
+	
+	m = map_instance_map(name, instance_id);
+	
+	if( m < 0 )
+	{
+		ShowError("buildin_instance_attachmap: instance creation failed (%s): %d\n", name, m);
+		script_pushconststr(st, "");
+		return 0;
+	}
+	
+	script_pushconststr(st, map[m].name);
+	
+	return 0;
+}
+
+BUILDIN_FUNC(instance_detachmap)
+{
+	const char *name;
+	int m;
+	
+	name = script_getstr(st, 2);
+	
+	m = map_mapname2mapid(name);
+	if( m < 0 )
+	{
+		ShowError("buildin_instance_detachmap: Trying to detach invalid map %s\n", name);
+		return 0;
+	}
+	map_instance_del(m);
+	
+	return 0;
+}
+
+BUILDIN_FUNC(instance_attach)
+{
+	int instance_id;
+	
+	instance_id = script_getnum(st, 2);
+	if( instance_id <= 0 || instance_id >= MAX_INSTANCE )
+		return 0;
+	
+	st->instance_id = instance_id;
+	return 0;
+}
+
+BUILDIN_FUNC(instance_id)
+{
+	int type, instance_id;
+	struct map_session_data *sd = script_rid2sd(st);
+	struct party_data *p;
+	
+	if( script_hasdata(st, 2) )
+	{
+		type = script_getnum(st, 2);
+		if( type == 0 )
+			instance_id = st->instance_id;
+		else if( type == 1 && sd && sd->status.party_id && (p = party_search(sd->status.party_id)) != NULL )
+			instance_id = p->instance_id;
+		else
+			instance_id = 0;
+	}
+	else
+		instance_id = st->instance_id;
+	script_pushint(st, instance_id);
+	return 0;
+}
+
+BUILDIN_FUNC(instance_set_timeout)
+{
+	int progress_timeout, idle_timeout;
+	int instance_id;
+	
+	progress_timeout = script_getnum(st, 2);
+	idle_timeout = script_getnum(st, 3);
+	
+	if( script_hasdata(st, 4) )
+		instance_id = script_getnum(st, 4);
+	else
+		instance_id = st->instance_id;
+		
+	if( instance_id > 0 )
+		map_instance_set_timeout(instance_id, progress_timeout, idle_timeout);
+		
+	return 0;
+}
+
+BUILDIN_FUNC(instance_init)
+{
+	int instance_id;
+	
+	instance_id = script_getnum(st, 2);
+	
+	map_instance_init(instance_id);
+	
+	return 0;
+}
+
+BUILDIN_FUNC(instance_announce)
+{
+	const char *str, *color=NULL;
+	int flag,instance_id,i;
+	
+	instance_id=script_getnum(st,2);
+	str=script_getstr(st,3);
+	flag=script_getnum(st,4);
+	if (script_hasdata(st,5))
+		color=script_getstr(st,5);
+		
+	if( instance_id == 0 )
+		instance_id = st->instance_id;
+	
+	if( instance_id <= 0 || instance_id >= MAX_INSTANCE )
+		return 0;
+		
+	for(i=0; i<instance[instance_id].num_map; i++)
+		map_foreachinmap(buildin_mapannounce_sub, instance[instance_id].map[i], BL_PC, str,strlen(str)+1,flag&0x10, color);
+	return 0;
+}
+
+BUILDIN_FUNC(instance_npcname)
+{
+	const char *str;
+	struct npc_data *nd = map_id2nd(st->oid);
+	int instance_id;
+	
+	str = script_getstr(st, 2);
+	if( script_hasdata(st, 3) )
+		instance_id = script_getnum(st, 3);
+	else
+		instance_id = st->instance_id;
+	
+	script_pushconststr(st, map_instance_npcname((char*)str, instance_id));
+	return 0;
+}
+
+BUILDIN_FUNC(has_instance)
+{
+	TBL_PC* sd = script_rid2sd(st);
+	const char *str;
+	int m;
+	
+	str = script_getstr(st, 2);
+	
+	if( (m = map_mapname2mapid(str)) < 0 || (m = map_instance_map2imap(m,sd,0)) < 0 )
+	{
+		script_pushconststr(st, "");
+		return 0;
+	}
+	
+	script_pushconststr(st, map[m].name);
+	return 0;
+}
+
+BUILDIN_FUNC(instance_warpall)
+{
+	TBL_PC *pl_sd;
+	int m, i;
+	const char *mapn;
+	int x, y;
+	unsigned short mapindex;
+	struct party_data *p = NULL;
+	
+	if( !st->instance_id )
+		return 0;
+		
+	mapn = script_getstr(st, 2);
+	x    = script_getnum(st, 3);
+	y    = script_getnum(st, 4);
+		
+	if( (m=map_mapname2mapid(mapn)) < 0 || (map[m].instance_map[0] && (m=map_instance_mapid2imapid(m,st->instance_id)) < 0) )
+		return 0;
+		
+	if( !(p = party_search(instance[st->instance_id].party_id)) )
+		return 0;
+
+	mapindex = map_id2index(m);
+	for( i = 0; i < MAX_PARTY; i++ )
+		if( (pl_sd = p->data[i].sd) && map[pl_sd->bl.m].instance_id == st->instance_id ) pc_setpos(pl_sd,mapindex,x,y,3);
+
+	return 0;
+}
+
+void crc32_init()
+{
+	uint32 crc, poly;
+	uint32 i, c;
+	
+	poly = 0xEDB88320;
+	
+	for( i = 0; i < 256; i++ )
+	{
+		crc = i;
+		for( c = 8; c; c-- )
+		{
+			if( crc & 1 )
+				crc = (crc >> 1) ^ poly;
+			else
+				crc >>= 1;
+		}
+
+		crctab[i] = crc;
+	}
+}
+
+uint32 crc32(char *dat, int len)
+{
+	uint32 crc, i;
+	
+	crc = 0xFFFFFFFF;	
+	for( i=0; i<len; i++ )
+		crc = ((crc >> 8 ) & 0x00FFFFFF) ^ crctab[(crc ^ *dat++) & 0xFF];
+		
+	return (crc ^ 0xFFFFFFFF);
+}
+
+/*==========================================
  * Custom Fonts
  *------------------------------------------*/
 BUILDIN_FUNC(setfont)
@@ -13695,37 +14061,38 @@ static int buildin_mobuseskill_sub(struct block_list *bl,va_list ap)
 	return 0;
 }
 /*==========================================
- * areamobuseskill "Map Name",<x1>,<y1>,<x2>,<y2>,<Mob ID>,"Skill Name"/<Skill ID>,<Skill Lv>,<Cast Time>,<Cancelable>,<Emotion>,<Target Type>;
+ * areamobuseskill "Map Name",<x>,<y>,<range>,<Mob ID>,"Skill Name"/<Skill ID>,<Skill Lv>,<Cast Time>,<Cancelable>,<Emotion>,<Target Type>;
  *------------------------------------------*/
 BUILDIN_FUNC(areamobuseskill)
 {
-	int m,x1,y1,x2,y2,mobid,skillid,skilllv,casttime,emotion,target;
+	struct block_list center;
+	int m,range,mobid,skillid,skilllv,casttime,emotion,target;
 	bool cancel;
 
-	if( m = map_mapname2mapid(script_getstr(st,2)) < 0 )
+	if( (m = map_mapname2mapid(script_getstr(st,2))) < 0 )
 	{
 		ShowError("areamobuseskill: invalid map name.\n");
 		return 0;
 	}
 
-	skillid = ( script_isstring(st,8) ? skill_name2id(script_getstr(st,8)) : script_getnum(st,8) );
+	if( map[m].instance_map[0] && map[m].instance_id == 0 && st->instance_id && (m=map_instance_mapid2imapid(m, st->instance_id)) < 0 )
+		return 0;
 
-	skilllv = script_getnum(st,9);
-	if( skilllv > battle_config.mob_max_skilllvl )
+	center.m = m;
+	center.x = script_getnum(st,3);
+	center.y = script_getnum(st,4);
+	range = script_getnum(st,5);
+	mobid = script_getnum(st,6);
+	skillid = ( script_isstring(st,7) ? skill_name2id(script_getstr(st,7)) : script_getnum(st,7) );
+	if( (skilllv = script_getnum(st,8)) > battle_config.mob_max_skilllvl )
 		skilllv = battle_config.mob_max_skilllvl;
 
-	x1 = script_getnum(st,3);
-	y1 = script_getnum(st,4);
-	x2 = script_getnum(st,5);
-	y2 = script_getnum(st,6);
-
-	mobid = script_getnum(st,7);	
-	casttime = script_getnum(st,10);
-	cancel = script_getnum(st,11);
-	emotion = script_getnum(st,12);
-	target = script_getnum(st,13);
-
-	map_foreachinarea(buildin_mobuseskill_sub, m, x1, y1, x2, y2, BL_MOB, mobid,skillid,skilllv,casttime,cancel,emotion,target);
+	casttime = script_getnum(st,9);
+	cancel = script_getnum(st,10);
+	emotion = script_getnum(st,11);
+	target = script_getnum(st,12);
+	
+	map_foreachinrange(buildin_mobuseskill_sub, &center, range, BL_MOB, mobid, skillid, skilllv, casttime, cancel, emotion, target);
 	return 0;
 }
 
@@ -14088,7 +14455,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(mercenary_set_faith,"ii"),
 	BUILDIN_DEF(readbook,"ii"),
 	BUILDIN_DEF(setfont,"i"),
-	BUILDIN_DEF(areamobuseskill,"siiiiiviiiii"),
+	BUILDIN_DEF(areamobuseskill,"siiiiviiiii"),
 	// WoE SE
 	BUILDIN_DEF(agitstart2,""),
 	BUILDIN_DEF(agitend2,""),
@@ -14106,5 +14473,18 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(bg_get_data,"ii"),
 	BUILDIN_DEF(bg_getareausers,"isiiii"),
 	BUILDIN_DEF(bg_updatescore,"sii"),
+	// Instancing
+	BUILDIN_DEF(instance_create,"sii?"),
+	BUILDIN_DEF(instance_destroy,"?"),
+	BUILDIN_DEF(instance_attachmap,"is"),
+	BUILDIN_DEF(instance_detachmap,"is"),
+	BUILDIN_DEF(instance_init,"i"),
+	BUILDIN_DEF(instance_announce,"isi*"),
+	BUILDIN_DEF(instance_attach,"i"),
+	BUILDIN_DEF(instance_npcname,"s?"),
+	BUILDIN_DEF(has_instance,"s"),
+	BUILDIN_DEF(instance_id,"?"),
+	BUILDIN_DEF(instance_warpall,"sii"),
+	BUILDIN_DEF(instance_set_timeout,"ii?"),
 	{NULL,NULL,NULL},
 };

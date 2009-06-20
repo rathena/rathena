@@ -1840,6 +1840,11 @@ int unit_remove_map_(struct block_list *bl, int clrtype, const char* file, int l
 		else
 		if (--map[bl->m].users == 0 && battle_config.dynamic_mobs)	//[Skotlex]
 			map_removemobs(bl->m);
+		if( map[bl->m].instance_id )
+		{
+			instance[map[bl->m].instance_id].users--;
+			map_instance_check_idle(map[bl->m].instance_id);
+		}
 		sd->state.debug_remove_map = 1; // temporary state to track double remove_map's [FlavioJS]
 		sd->debug_file = file;
 		sd->debug_line = line;

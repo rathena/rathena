@@ -47,17 +47,22 @@ const char* mapindex_getmapname(const char* string, char* output)
 /// Result gets placed either into 'buf' or in a static local buffer.
 const char* mapindex_getmapname_ext(const char* string, char* output)
 {
-	static char buf[MAP_NAME_LENGTH_EXT];
+	char buf[MAP_NAME_LENGTH_EXT];
 	char* dest = (output != NULL) ? output : buf;
-	
-	size_t len = safestrnlen(string, MAP_NAME_LENGTH);
+
+	size_t len;
+
+	strcpy(buf,string);
+	sscanf(string,"%*[^#]%*[#]%s",buf);
+
+	len = safestrnlen(buf, MAP_NAME_LENGTH);
+
 	if (len == MAP_NAME_LENGTH) {
-		ShowWarning("(mapindex_normalize_name) Map name '%*s' is too long!\n", 2*MAP_NAME_LENGTH, string);
+		ShowWarning("(mapindex_normalize_name) Map name '%*s' is too long!", 2*MAP_NAME_LENGTH, buf);
 		len--;
 	}
-	
-	strncpy(dest, string, len+1);
-	
+	strncpy(dest, buf, len+1);
+
 	if (len < 4 || stricmp(&dest[len-4], ".gat") != 0) {
 		strcpy(&dest[len], ".gat");
 		len += 4; // add .gat extension
@@ -70,9 +75,18 @@ const char* mapindex_getmapname_ext(const char* string, char* output)
 
 /// Adds a map to the specified index
 /// Returns 1 if successful, 0 oherwise
-static int mapindex_addmap(int index, const char* name)
+int mapindex_addmap(int index, const char* name)
 {
 	char map_name[MAP_NAME_LENGTH];
+
+	if (index == -1){
+		for (index = 1; index < max_index; index++)
+		{
+			//if (strcmp(indexes[index].name,"#CLEARED#")==0)
+			if (indexes[index].name[0] == '\0')
+				break;
+		}
+	}
 
 	if (index < 0 || index >= MAX_MAPINDEX) {
 		ShowError("(mapindex_add) Map index (%d) for \"%s\" out of range (max is %d)\n", index, name, MAX_MAPINDEX);
@@ -85,10 +99,11 @@ static int mapindex_addmap(int index, const char* name)
 		ShowError("(mapindex_add) Cannot add maps with no name.\n");
 		return 0;
 	}
-	//if (strlen(map_name) >= MAP_NAME_LENGTH) {
-	//	ShowError("(mapindex_add) Map name %s is too long. Maps are limited to %d characters.\n", map_name, MAP_NAME_LENGTH);
-	//	return 0;
-	//}
+
+	if (strlen(map_name) >= MAP_NAME_LENGTH) {
+		ShowError("(mapindex_add) Map name %s is too long. Maps are limited to %d characters.\n", map_name, MAP_NAME_LENGTH);
+		return 0;
+	}
 
 	if (mapindex_exists(index))
 		ShowWarning("(mapindex_add) Overriding index %d: map \"%s\" -> \"%s\"\n", index, indexes[index].name, map_name);
@@ -97,7 +112,7 @@ static int mapindex_addmap(int index, const char* name)
 	if (max_index <= index)
 		max_index = index+1;
 
-	return 1;
+	return index;
 }
 
 unsigned short mapindex_name2id(const char* name)
@@ -168,6 +183,11 @@ void mapindex_init(void)
 		last_index = index;
 	}
 	fclose(fp);
+}
+
+int mapindex_removemap(int index){
+	indexes[index].name[0] = '\0';
+	return 0;
 }
 
 void mapindex_final(void)
