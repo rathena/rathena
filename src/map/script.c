@@ -13663,7 +13663,7 @@ static int buildin_mobuseskill_sub(struct block_list *bl,va_list ap)
 	int skillid		= va_arg(ap,int);
 	int skilllv		= va_arg(ap,int);
 	int casttime	= va_arg(ap,int);
-	int cancel		= va_arg(ap,bool);
+	bool cancel		= va_arg(ap,bool);
 	int emotion		= va_arg(ap,int);
 	int target		= va_arg(ap,int);
 
