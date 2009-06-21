@@ -662,6 +662,7 @@ mosk_fild02
 mosk_dun01
 mosk_dun02
 mosk_dun03
+mosk_que
 force_4-1
 force_5-1
 06guild_r
@@ -762,6 +763,11 @@ bat_c03
 //rwc01	1000
 //rwc02
 //rwc03
+//2009rwc_f01
+//2009rwc_01
+//2009rwc_02
+//2009rwc_03
+//2009rwc_04
 //prontera_x
 //alberta_x
 //aldebaran_x

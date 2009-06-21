@@ -464,7 +464,7 @@
 7880,115,100	// Babayaga_Silver_Spoon
 7881,115,100	// Book_Of_Magic
 7882,115,100	// Pointed_Branch
-7883,115,100	// Reed_Pipe
+7883,115,100	// Wooden_Flute
 2429,115,100	// Iron_Shoes_01
 2430,115,100	// Iron_Shoes_02
 

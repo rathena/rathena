@@ -3,18 +3,19 @@
 //===== By: ================================================== 
 //= Kisuka
 //===== Current Version: ===================================== 
-//= 1.3
+//= 1.4
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
 //= Quests for Moscovia.
 //= The Moving Island, Help Mikhail, Acorn Exchange,
-//= Banish Winter, Shafka Hat.
+//= Banish Winter, Shafka Hat, Koshei the Immortal.
 //===== Additional Comments: ================================= 
 //= 1.0 First version. [Kisuka]
 //= 1.1 Small fixes on The Moving Island. [Kisuka]
 //= 1.2 Fixed a "player not attached" error. [brianluau]
 //= 1.3 Replaced occurrences of PcName. [brianluau]
+//= 1.4 Added 'Koshei the Immortal' quest. [Kisuka]
 //============================================================ 
 
 //============================================================================
@@ -10111,5 +10112,6273 @@ moscovia,211,93,3	script	Irina#edq	958,{
 		mes "[Irina]";
 		mes "The materials are: ^0000FFNine Tails 20, Yarn 10, Soft Silk 10, Sea-otter Fur 20, Spool 1^000000.";
 		close;
+	}
+}
+
+//============================================================================
+// Koshei the Immortal
+//============================================================================
+
+//----------------------------------------------------------------------------
+// Sage - Starting Point
+//----------------------------------------------------------------------------
+mosk_fild02,198,252,3	script	Sage#rus01	755,{
+	if (rhea_rus_main < 1) {
+		mes "[Sage]";
+		mes "Ah, a foreigner,";
+		mes "you're not from";
+		mes "around here are you?";
+		mes "It's nice to meet you!";
+		next;
+		mes "[Sage]";
+		mes "I've heard stories of the many adventurers from your lands. But, I haven't been able to talk with them much because they were always busy.";
+		next;
+		if(select("Sorry, but I'm busy.....:Ok, let's talk.") == 1) {
+			mes "[Sage]";
+			mes "Ah, you are...";
+			mes "I just wanted to hear about news from other lands...";
+			next;
+			mes "[Sage]";
+			mes "Sorry to bother you. You have a good trip.";
+			close;
+		}
+		mes "[Sage]";
+		mes "I've heard that interesting creatures inhabit your lands. Could you please tell me about at least one of them?";
+		next;
+		select("Show him a Poring Card");
+		mes "["+ strcharinfo(0) +"]";
+		mes "This is a card of one of the monsters that inhabit the Rune Midgard continent.";
+		next;
+		if (countitem(4001) < 1) {
+			mes "[Sage]";
+			mes "...?!";
+			mes "What are you talking about?";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "I mean, this card.............";
+			mes "..................Ehhh?";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "Ah.. haha.. where is it?!";
+			mes "W, wait.. I've got one somewhere!";
+			close;
+		}
+		mes "[Sage]";
+		mes "Hooh, it is.. I can't believe this is real.";
+		mes "Thank you for showing me this.";
+		next;
+		mes "[Sage]";
+		mes "By the way, do you like this place?";
+		next;
+		mes "[Sage]";
+		mes "Now, that winter has passed and summer is coming the weather is great. And I know that winter comes every year, but I always pray that it won't return again.";
+		next;
+		mes "[Sage]";
+		mes "After the passing of winter, the summer weather has made the forest dense and the air so warm. My favorite season will always be summer.";
+		next;
+		mes "[Sage]";
+		mes "But, don't forget that you should still be careful. Lots of adventurers were lost in the forst in front of us.";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "Have any of the adventurers returned?";
+		next;
+		mes "[Sage]";
+		mes "Only one has come back and told me of a mysterious stone, where the road splits into three, that curses those who touch it so I've been keeping away from it.";
+		next;
+		mes "[Sage]";
+		mes "But, don't worry about me. I know my way around here and am not afraid of monsters, haha.";
+		set rhea_rus_main,1;
+		close;
+	}else{
+		mes "[Sage]";
+		mes "Now, that winter has passed and summer is coming the weather is great. And I know that winter comes every year, but I always pray that it won't return again.";
+		next;
+		mes "[Sage]";
+		mes "After the passing of winter, the summer weather has made the forest dense and the air so warm. My favorite season will always be summer.";
+		next;
+		mes "[Sage]";
+		mes "But, don't forget that you should still be careful. Lots of adventurers were lost in the forst in front of us.";
+		next;
+		mes "[Sage]";
+		mes "Only one has come back and told me of a mysterious stone, where the road splits into three, that curses those who touch it so I've been keeping away from it.";
+		next;
+		mes "[Sage]";
+		mes "Me? Haha, don't worry about me. I know my way around here and am not afraid of monsters, haha.";
+		close;
+	}
+}
+
+//----------------------------------------------------------------------------
+// Mysterious Stone
+//----------------------------------------------------------------------------
+mosk_dun01,169,162,0	script	Mysterious Stone#rus02	111,{
+	if (rhea_rus_main < 1) {
+		mes "- The road forks here -";
+		close;
+	}
+	else if (rhea_rus_main > 0 && rhea_rus_main < 3) {
+		mes "- Words are engraved -";
+		mes "- on the stone -";
+		next;
+		mes "- Right path -> Drain -";
+		mes "- Left path -> Curse -";
+		mes "- Middle -> ? -";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "...Where should I go?";
+		next;
+		switch(select("Right:Left:Middle")) {
+		case 1:
+			mes "["+ strcharinfo(0) +"]";
+			mes "...What about the right...";
+			next;
+			mes "- You decide to go to the right -";
+			next;
+			mes "- !!!!!! -";
+			percentheal -50,-50;
+			specialeffect2 212;
+			specialeffect2 1;
+			emotion 23,1;
+			next;
+			mes "- An unknown force has -";
+			mes "- drained your health -";
+			close2;
+			warp "mosk_dun01",190,47;
+			end;
+			break;
+		case 2:
+			if (checkriding() == 0) {
+				mes "["+ strcharinfo(0) +"]";
+				mes "...What about the left...?";
+				next;
+				mes "- You decide to go to the left -";
+				next;
+				mes "- !!!!!! -";
+				emotion 23,1;
+				next;
+				mes "- An unknown force has -";
+				mes "- cursed your body -";
+				sc_start SC_CURSE,60000,0;
+				close2;
+				warp "mosk_dun01",190,47;
+				end;
+			}else{
+				mes "["+ strcharinfo(0) +"]";
+				mes "...What about the left...?";
+				next;
+				mes "- You decide to go to the left -";
+				next;
+				mes "- !!!!!! -";
+				emotion 23,1;
+				next;
+				mes "- Your trusty Pecopeco senses -";
+				mes "- an unknown force and tries -";
+				mes "- to run away!! -";
+				sc_start SC_CURSE,60000,0;
+				setriding 0;
+				close2;
+				warp "mosk_dun01",190,47;
+				end;
+			}
+			break;
+		case 3:
+			mes "["+ strcharinfo(0) +"]";
+			mes "...What about the middle...?";
+			next;
+			mes "- You move forward -";
+			mes "- toward the middle -";
+			next;
+			mes "- !!!!!! -";
+			emotion 23,1;
+			donpcevent "Gray Wolf#rus03::OnEnable";
+			set rhea_rus_main,2;
+			close;
+		}
+	}
+	else if (rhea_rus_main == 3) {
+		mes "- Words are engraved -";
+		mes "- on the stone -";
+		next;
+		mes "- Right path -> Drain -";
+		mes "- Left path -> Curse -";
+		mes "- Middle -> ? -";
+		next;
+		mes "- You carefully read the stone -";
+		mes "- and decide to wait -";
+		set rhea_rus_main,4;
+		donpcevent "Gray Wolf#rus03::OnEnable";
+		close;
+	}
+	else if (rhea_rus_main == 4) {
+		mes "- Words are engraved -";
+		mes "- on the stone -";
+		next;
+		mes "- Right path -> Drain -";
+		mes "- Left path -> Curse -";
+		mes "- Middle -> ? -";
+		next;
+		mes "- You carefully read the stone -";
+		mes "- and decide to wait -";
+		donpcevent "Gray Wolf#rus03::OnEnable";
+		close;
+	}
+}
+
+//----------------------------------------------------------------------------
+// Gray Wolf
+//----------------------------------------------------------------------------
+mosk_dun01,167,160,3	script	Gray Wolf#rus03	972,{
+	if (rhea_rus_main < 2) {
+		mes "[Gray Wolf]";
+		mes "... Turn back, adventurer...";
+		mes "This is not where you belong.";
+		close2;
+		warp "mosk_dun01",190,47;
+		end;
+	}
+	else if (rhea_rus_main == 2) {
+		mes "[Gray Wolf]";
+		mes "Halt, adventurer.";
+		mes "Why did you disregard the warnings on the stone?";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "Are you the reason adventurers are getting lost around this forest?";
+		next;
+		mes "[Gray Wolf]";
+		mes "...lost around this forest.";
+		mes "He doesn't want anyone to wander around the forest.";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "He? Who is he?!";
+		next;
+		mes "[Gray Wolf]";
+		mes "His name is Koshei, the Immortal...";
+		mes "and he has been freed from his captivity... You'd better leave before he finds you.";
+		next;
+		mes "[Gray Wolf]";
+		mes "I'm warning you again!";
+		mes "Unless you want to be killed, leave now.";
+		set rhea_rus_main,3;
+		emotion 23,1;
+		specialeffect2 1;
+		percentheal -50,0;
+		next;
+		mes "- The Gray Wolf attacks you -";
+		mes "- with it's claws and jumps -";
+		mes "- into the bushes behind you!! -";
+		donpcevent "Gray Wolf#rus03::OnDisable";
+		close2;
+		warp "mosk_dun01",190,47;
+		end;
+	}
+	else if (rhea_rus_main == 4) {
+		mes "[Gray Wolf]";
+		mes "...Why did you come back?";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "I am afraid of nothing!";
+		mes "I'm not afraid of your warning 'cuz I'm not as weak as you think I am!";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "Your attack from before was a cheapshot! If you have something to do with the missing people around here, you won't be forgiven!";
+		mes "Come on!!!";
+		next;
+		mes "- You stand firm and -";
+		mes "- aim your weapon -";
+		mes "- at the Gray Wolf -";
+		next;
+		mes "[Gray Wolf]";
+		mes "Stop it. You cannot beat me.";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "Let's see who's stronger?!";
+		mes "Take your position. I won't take you by surprise!!!";
+		next;
+		mes "[Gray Wolf]";
+		mes "......You...... Haha.....";
+		mes "Hahahahaha!!";
+		next;
+		mes "[Gray Wolf]";
+		mes "Yes, you are very brave.";
+		mes "... Yes, I think that I've been waiting for someone like you.";
+		next;
+		mes "[Gray Wolf]";
+		mes "Please accept my apologies.";
+		next;
+		mes "[Gray Wolf]";
+		mes "I need brave adventurers, like you, to help me. Can you help me?";
+		next;
+		if(select("No, how can I trust you?:Ok, I'll help") == 1) {
+			mes "[Gray Wolf]";
+			mes "Hu.. you won't. But, I ask you again. Can you help me?";
+			next;
+		}
+		mes "["+ strcharinfo(0) +"]";
+		mes "... Ok, ok. There's no way I can refuse this type of request.";
+		mes "So, what do you want me to do?";
+		next;
+		mes "[Gray Wolf]";
+		mes "This isn't a good place to talk. Get on my back, I will show you something.";
+		next;
+		mes "- He turns his back to me -";
+		mes "- I jump up and suddenly -";
+		set rhea_rus_main,5;
+		donpcevent "Gray Wolf#rus03::OnDisable";
+		close2;
+		warp "mosk_dun01",46,253;
+		end;
+	}
+
+OnInit:
+	disablenpc "Gray Wolf#rus03";
+	end;
+
+OnEnable:
+	enablenpc "Gray Wolf#rus03";
+	initnpctimer;
+	end;
+
+OnDisable:
+	disablenpc "Gray Wolf#rus03";
+	stopnpctimer
+	end;
+
+OnTimer120000:
+	stopnpctimer;
+	donpcevent "Gray Wolf#rus03::OnDisable";
+	end;
+}
+
+//----------------------------------------------------------------------------
+// Wall (Maria Morebna, Gray Wolf, Koshei)
+//----------------------------------------------------------------------------
+mosk_dun01,45,259,0	script	Wall#rus04	111,{
+	if (rhea_rus_main < 5) {
+		mes "["+ strcharinfo(0) +"]";
+		mes "...?!";
+		emotion 1,1;
+		close;
+	}
+	else if (rhea_rus_main == 5) {
+		set .@speak01,rand(1,3);
+		if (.@speak01 == 3) {
+			mes "["+ strcharinfo(0) +"]";
+			mes "...?!";
+			emotion 1,1;
+			donpcevent "Gray Wolf#rus05::OnEnable";
+			next;
+		}else{
+			mes "["+ strcharinfo(0) +"]";
+			mes "...?!";
+			emotion 1,1;
+			close;
+		}
+		mes "[Girl's Voice]";
+		mes "Who is there? Gray Wolf?!";
+		mes "Wolf, who are you with?";
+		next;
+		mes "[Gray Wolf]";
+		mes "This is an adventurer from another land. He is not afraid of Koshei. He may be able to help you.";
+		next;
+		mes "[Girl's Voice]";
+		mes "Help me? Do you think he can stop Koshei?";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "Ah, hold on. Who is Koshei and who is talking?";
+		next;
+		mes "[Girl's Voice]";
+		mes "Koshei.. He is an immortal and endless evil. I fought against him a long tim ago. After a fierce fight, I had to seal him in the darkness because he is immortal.";
+		next;
+		mes "[Girl's Voice]";
+		mes "And as a result I became imprisoned in this wall.";
+		mes "He has found a way to break away from his seal and I fear for the worst.";
+		next;
+		mes "[Girl's Voice]";
+		mes "My name is Maria Morebna. Help me exterminate Koshei. I want to keep peace in Moscovia. Can you help me?";
+		next;
+		select("Ok, I can");
+		mes "["+ strcharinfo(0) +"]";
+		mes "So, how can I help you?";
+		next;
+		mes "[Gray Wolf]";
+		mes "First, you need to find a way to get her out of there.";
+		mes "I've heard about a '^0000ffGolden Key^000000' that can open anything. There is a keymaker in town.";
+		next;
+		mes "[Gray Wolf]";
+		mes "As you see, I look like a monster so I am not able to go there. I want you to find this keymaker and ask about the '^0000ffGolden Key^000000'.";
+		next;
+		mes "[Girl's Voice]";
+		mes "Please don't forget about me.";
+		donpcevent "Gray Wolf#rus05::OnDisable";
+		set rhea_rus_main,6;
+		close;
+	}
+	else if (rhea_rus_main > 5 && rhea_rus_main < 8) {
+		mes "[Girl's Voice]";
+		mes "Help me get out of here.";
+		mes "I hope you can help me find that '^0000ffGolden Key^000000' that can open anything.";
+		next;
+		mes "[Girl's Voice]";
+		mes "I've heard about a keymaker in Moscovia who knows how to make a '^0000ffGolden Key^000000'.";
+		close;
+	}
+	else if (rhea_rus_main == 8) {
+		if (rhea_rus_quiz < 3) {
+			if(getequipid(EQI_SHOES) != 2429 || getequipid(EQI_SHOES) != 2430) {
+					mes "["+ strcharinfo(0) +"]";
+					mes "...Hmm, did I forget to wear something...?";
+					close;
+			}
+			mes "[Girl's Voice]";
+			mes "Did you get the key?";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "...I need golden thread. I heard that I was able to get it from Marozka. He....";
+			next;
+			mes "[Girl's Voice]";
+			mes "Marozka... He is the owner of winter and dwells in the deep underground. He won't let just anyone see him.";
+			next;
+			mes "[Girl's Voice]";
+			mes "He has monsters that guard his underground lair. It's very dangerous. But, I know where he is.";
+			next;
+			mes "[Girl's Voice]";
+			mes "What do you think? I can open a portal to the cave Do you want to go there now?";
+			next;
+			if(select("Not yet...:Open the portal!") == 1) {
+				mes "[Girl's Voice]";
+				mes "... When you're ready, just tell me.";
+				close;
+			}
+			mes "[Girl's Voice]";
+			mes "...Ok, be careful There are a lot of monsters there.";
+			donpcevent "1#rus27::OnEnable";
+			close;
+		}else{
+			mes "[Girl's Voice]";
+			mes "Have you.. got the key?";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "Not yet... Give me a second.";
+			next;
+			mes "[Girl's Voice]";
+			mes "If you gather all the necessary things, go to Moscovia and find the keymaker. Do me this favor, please.";
+			close;
+		}
+	}
+	else if (rhea_rus_main > 8 && rhea_rus_main < 47) {
+		mes "[Girl's Voice]";
+		mes "Have you.. got the key?";
+		next;
+		if (rhea_rus_ring > 8 && rhea_rus_hair > 8 && rhea_rus_quiz > 29) {
+			mes "["+ strcharinfo(0) +"]";
+			mes "I collected every meterial for the key, But have not yet got the key...";
+			next;
+			mes "[Girl's Voice]";
+			mes "Go to Moscovia and find the keymaker.";
+			close;
+		}else{
+			mes "["+ strcharinfo(0) +"]";
+			mes "Not yet... Give me a second.";
+			next;
+			mes "[Girl's Voice]";
+			mes "If you gather all the things necessary, go to Moscovia and find the keymaker. Do me this favor, please.";
+			close;
+		}
+	}
+	else if (rhea_rus_main == 47) {
+		if (countitem(7876) > 0) {
+			if ($@rus_req02 == 1) {
+				mes "[Girl's Voice]";
+				mes "I can feel Koshei's energy.. It is not a time to use the key...";
+				close;
+			}else{
+				set $@rus_req02,1;
+				mes "[Girl's Voice]";
+				mes "Did you get the key?";
+				next;
+				mes "["+ strcharinfo(0) +"]";
+				mes "I did. So, how do I use it?";
+				next;
+				mes "[Girl's Voice]";
+				mes "Listen very carefully!";
+				mes "Left the key up, and shout '^0000ffThe Free wind blows and gets you wherever you want^000000'.";
+				next;
+				input .@input$;
+				if (.@input$ == "The Free wind blows and gets you wherever you want") {
+					mes "["+ strcharinfo(0) +"]";
+					mes "^0000ff "+ .@input$ +" !! ^000000";
+					next;
+					mes "- The key begins to glow -";
+					mes "- wind begins to blow -";
+					mes "- from somewhere -";
+					specialeffect2 12;
+					specialeffect 134;
+					next;
+				}else{
+					mes "["+ strcharinfo(0) +"]";
+					mes " "+ .@input$ +" !! ";
+					next;
+					mes "[Girl's Voice]";
+					mes ".........................................................................................";
+					next;
+					mes "[Girl's Voice]";
+					mes "You must've said it wrong...";
+					set $@rus_req02,0;
+					close;
+				}
+				mes "- The wind disappears and -";
+				mes "- a very young girl appears -";
+				donpcevent "Maria Morebna#rus46::OnEnable";
+				donpcevent "Maria Morebna#rus46::Freezed";
+				next;
+				mes "[Maria Morebna]";
+				mes "Thank you!";
+				mes "I'm finally out of there! Now I can.....................aaaaak!!!....";
+				next;
+				donpcevent "Maria Morebna#rus46::Death";
+				mes "- Maria is attacked -";
+				mes "- and falls down!! -";
+				next;
+				mes "["+ strcharinfo(0) +"]";
+				mes "Maria?! What happened?!";
+				sc_start SC_CURSE,60000,0;
+				emotion 23,1;
+				next;
+				mes "[Koshei, the Immortal]";
+				mes "I really want to thank you, human. Maria was imprisoned in the wall so I couldn't do anything!";
+				next;
+				mes "[Koshei, the Immortal]";
+				mes "She'll thank me for giving her a quick death!!";
+				next;
+				mes "[Koshei, the Immortal]";
+				mes "But you, human... You are here to disturb me?";
+				next;
+				mes "[Koshei, the Immortal]";
+				mes "No one can stop me! Now, die!!!";
+				next;
+				mes "[Gray Wolf]";
+				mes "Watch out!!";
+				next;
+				donpcevent "Gray Wolf#rus05::OnEnable";
+				mes "[Koshei, the Immortal]";
+				mes "Gray Wolf...";
+				mes "You think you can fight me?!";
+				next;
+				donpcevent "Gray Wolf#rus05::Firehit";
+				mes "- Staggering from -";
+				mes "- Koshei's flames, -";
+				mes "- Gray Wolf quickly tell me -";
+				next;
+				mes "[Gray Wolf]";
+				mes "Listen, I can still help Maria if I treat her now.";
+				mes "I will flee with her and leave you to deal with Koshei!!";
+				next;
+				donpcevent "Gray Wolf#rus05::OnDisable";
+				donpcevent "Maria Morebna#rus46::OnDisable";
+				mes "[Koshei, the Immortal]";
+				mes "Stop! Where do you think you're going?!!!";
+				delitem 7876,1;
+				set rhea_rus_main,48;
+				monster "mosk_dun01",45,256,"Koshei, the Immortal",1890,1,"Wall#rus04::OnMyMobDead";
+				donpcevent "Koshei#rus47::OnEnable";
+				close;
+			}
+		}else{
+			mes "[Girl's Voice]";
+			mes "Have you.. got the key?";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "Sure! Here it...";
+			mes "...............Errr?";
+			close;
+		}
+	}
+	else if (rhea_rus_main == 48) {
+		if ($@rus_req02 == 1) {
+			mes "[Gray Wolf's voice]";
+			mes "I can sense Koshei's presence.";
+			next;
+			mes "[Gray Wolf's voice]";
+			mes "I can still help Maria if I treat her now.";
+			mes "I will flee with her and leave you to deal with Koshei!!";
+			close;
+		}else{
+			mes "["+ strcharinfo(0) +"]";
+			mes "...Maria...";
+			mes "I... could do nothing...";
+			next;
+			mes "[Gray Wolf]";
+			mes "No, it's not too late!";
+			emotion 0,1;
+			donpcevent "Gray Wolf#rus05::OnEnable";
+			next;
+			mes "[Gray Wolf]";
+			mes "She's alive.";
+			mes "But, she's still unstable.";
+			next;
+			mes "[Gray Wolf]";
+			mes "To save her, I need 'Life Water' and 'Death Water'. Find Baba Yaga, she'll know what to do.";
+			next;
+			mes "[Gray Wolf]";
+			mes "I can't keep her alive for much longer. You must find Baba Yaga.";
+			set rhea_rus_main,49;
+			close2;
+			donpcevent "Gray Wolf#rus05::OnDisable";
+			end;
+		}
+	}
+	else if (rhea_rus_main > 48 && rhea_rus_main < 51) {
+		mes "[Gray Wolf's voice]";
+		mes "But, she's still unstable.";
+		next;
+		mes "[Gray Wolf's voice]";
+		mes "To save her, I need 'Life Water' and 'Death Water'. Find Baba Yaga, she'll know what to do.";
+		next;
+		mes "[Gray Wolf's voice]";
+		mes "I can't keep her alive for much longer. You must find Baba Yaga.";
+		close;
+	}
+	else if (rhea_rus_main == 51) {
+		if ($@rus_req02 == 1) {
+			mes "[Gray Wolf's voice]";
+			mes "I can sense Koshei's presence.";
+			next;
+			mes "[Gray Wolf's voice]";
+			mes "I can still help Maria if I treat her now.";
+			mes "I will flee with her and leave you to deal with Koshei!!";
+			close;
+		}else{
+			mes "[Gray Wolf's voice]";
+			mes "Did you get the 'Life Water' and 'Death Water'?";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "I've got them! How's Maria?!";
+			donpcevent "Gray Wolf#rus05::OnEnable";
+			donpcevent "Maria Morebna#rus46::OnEnable";
+			next;
+			mes "[Gray Wolf]";
+			mes "I fear that her spirit has gone. Severe wounds and curses are hindering her spirit from coming back. But we can save her with that water.";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "Ok... First...";
+			next;
+			if(select("Death Water:Life Water") == 1) {
+				mes "["+ strcharinfo(0) +"]";
+				mes "I hope this works...";
+				next;
+				mes "- I pour the Death Water -";
+				mes "- on Maria's stiff body -";
+				next;
+			}else{
+				mes "["+ strcharinfo(0) +"]";
+				mes "I hope this works...";
+				next;
+				mes "- I pour the Life Water -";
+				mes "- on Maria's stiff body -";
+				next;
+				mes "[Maria Morebna]";
+				mes "..........................";
+				next;
+				mes "- Nothing changed -";
+				next;
+				mes "["+ strcharinfo(0) +"]";
+				mes "Huk, was this wrong...?!";
+				next;
+				mes "[Gray Wolf]";
+				mes "What are you doing?! I told you we did not have much time! What are you going to do now?!";
+				next;
+				donpcevent "Gray Wolf#rus05::OnDisable";
+				donpcevent "Maria Morebna#rus46::OnDisable";
+				mes "["+ strcharinfo(0) +"]";
+				mes "I am so sorry. But some water is left...";
+				close;
+			}
+			mes "- The wounds and -";
+			mes "- curses on her body -";
+			mes "- are removed !! -";
+			donpcevent "Maria Morebna#rus46::Absorbspirits";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "Ok! Next...";
+			next;
+			if(select("Death Water:Life Water") == 1) {
+				mes "["+ strcharinfo(0) +"]";
+				mes "Pour the 'Death Water' again...";
+				next;
+				mes "["+ strcharinfo(0) +"]";
+				mes "...!? No, not 'Death Water'.. I should pour 'Life Water'.......";
+				next;
+				mes "[Gray Wolf]";
+				mes "............................";
+				mes "Can I trust you...?";
+				next;
+				mes "["+ strcharinfo(0) +"]";
+				mes "Hehehe, you can trust me. Next is the 'Life Water'.";
+				next;
+				mes "- I pour 'Life Water' on Maria -";
+				next;
+			}else{
+				mes "["+ strcharinfo(0) +"]";
+				mes "Ok, next the 'Life Water'.";
+				next;
+				mes "- I pour the Life Water -";
+				mes "- on Maria's stiff body  -";
+				next;
+			}
+			mes "- !! -";
+			donpcevent "Maria Morebna#rus46::Resurrection";
+			next;
+			mes "[Gray Wolf]";
+			mes "Success!!";
+			next;
+			mes "[Maria Morebna]";
+			mes "Ah, did I...?!";
+			mes "You saved me. I really appreicate it. Thank you for helping us fight against Koshei.";
+			next;
+			mes "[Maria Morebna]";
+			mes "And you, Gray Wolf.. Thank you for protecting me while I was helpless.";
+			next;
+			mes "[Maria Morebna]";
+			mes "Koshei wasn't completely destroyed. But, his power has weakened, it shouldn't be hard to seal his power without me also being sealed.";
+			next;
+			mes "[Maria Morebna]";
+			mes "Koshei and I are bound by magic. If one's power should be sealed, the other must be sealed as well.";
+			next;
+			mes "[Maria Morebna]";
+			mes "But the original seal weakened over time and Koshei was able to get out of his confinement. That is why I asked you to get me out of here.";
+			next;
+			mes "[Maria Morebna]";
+			mes "He realized that I was trying to break free and waited here for anyone who would help me. I never ever expected it...";
+			next;
+			mes "[Maria Morebna]";
+			mes "Anyway, I'm so grateful for everything you did.";
+			next;
+			mes "[Maria Morebna]";
+			mes "Please accept my poor reward, I hope that it will be of some help for such a brave adventurer. I hope that the gods will bless you on your journey.";
+			next;
+			mes "[Maria Morebna]";
+			mes "It's been a long time since I've felt the sunlight, fresh wind and the scent of grass. I'm so grateful.";
+			set rhea_rus_main,52;
+			set .@rus_food,rand(1,6);
+			if (.@rus_food == 1) {
+				getitem 12093,1;
+			}
+			else if (.@rus_food == 2) {
+				getitem 12088,1;
+			}
+			else if (.@rus_food == 3) {
+				getitem 12073,1;		
+			}
+			else if (.@rus_food == 4) {
+				getitem 12078,1;		
+			}
+			else if (.@rus_food == 5) {
+				getitem 12083,1;		
+			}
+			else {
+				getitem 12098,1;		
+			}
+			if (BaseLevel < 56) {
+				getexp 13000,3500;
+			}
+			else if (BaseLevel > 55 && BaseLevel < 61) {
+				getexp 24600,6150;
+			}
+			else if (BaseLevel > 60 && BaseLevel < 66) {
+				getexp 42420,10605;
+			}
+			else if (BaseLevel > 65 && BaseLevel < 71) {
+				getexp 64892,16223;
+			}
+			else if (BaseLevel > 70 && BaseLevel < 76) {
+				getexp 164908,41227;
+			}	
+			else if (BaseLevel > 75 && BaseLevel < 81) {
+				getexp 276292,69073;
+			}
+			else if (BaseLevel > 80 && BaseLevel < 86) {
+				getexp 340408,85102;
+			}
+			else if (BaseLevel > 85 && BaseLevel < 91) {
+				getexp 418460,104615;
+			}
+			else if (BaseLevel > 90 && BaseLevel < 99) {
+				getexp 888140,222035;
+			}
+			else {
+				getitem 617,1;
+			}
+			donpcevent "Gray Wolf#rus05::OnDisable";
+			donpcevent "Maria Morebna#rus46::OnDisable";
+			close;
+		}
+	}
+	else if (rhea_rus_main > 51) {
+		mes "[Girl's Voice]";
+		mes "... Koshei is immortal and will surely appear again someday...";
+		next;
+		mes "[Girl's Voice]";
+		mes "When that time comes, I will deal with him. I will use my time of waiting to train to make myself strong whenever he returns...";
+		next;
+		mes "[Girl's Voice]";
+		mes "I'm grateful that you did your best for me and my village. I will never forget your kindness.";
+		next;
+		mes "[Girl's Voice]";
+		mes "Ah, Go to Baba Yaga in your free time. She seems to have something to tell you.";
+		next;
+		mes "[Girl's Voice]";
+		mes "Take care of yourself. It is better for you to stay away from here because, Koshei may try to use your power as his own, huhu.";
+		close;
+	}
+
+OnInit:
+	enablenpc "Wall#rus04";
+	set $@rus_req02,0;
+	end;
+
+OnEnable:
+	enablenpc "Wall#rus04";
+	end;
+
+OnDisable:
+	disablenpc "Wall#rus04";
+	end;
+
+OnMyMobDead:
+	donpcevent "Koshei#rus47::OnDisable";
+	set $@rus_req02,0;
+	stopnpctimer;
+	announce "Koshei, the Immortal : Keeeek, you, cursed human.. I'll never give up!!! We'll see who's smiling in the end!!!",bc_map,0xCE3131;
+	end;
+}
+
+//----------------------------------------------------------------------------
+// Koshei, The Immortal
+//----------------------------------------------------------------------------
+mosk_dun01,5,5,0	script	Koshei#rus47	-1,0,0,{
+	end;
+	
+OnInit:
+	disablenpc "Koshei#rus47";
+	end;
+
+OnEnable:
+	initnpctimer;
+	enablenpc "Koshei#rus47";
+	end;
+
+OnDisable:
+	stopnpctimer;
+	disablenpc "Koshei#rus47";
+	end;
+
+OnTimer3000:
+	announce "Koshei, the Immortal : I will kill all who disturb me!! Cry in terror weak humans!!!",bc_map,0xCE3131;
+	end;
+
+OnTimer63000:
+	announce "Koshei, the Immortal : You worms, you mere monsters... I will curse all who are in my way!!",bc_map,0xCE3131;
+	end;
+
+OnTimer150000:
+	announce "Koshei, the Immortal : Mankind! Cry in terror!! Hahahahahahahhahahah!!!",bc_map,0xCE3131;
+	end;
+
+OnTimer300000:
+	stopnpctimer;
+	initnpctimer;
+	end;
+}
+
+//----------------------------------------------------------------------------
+// Gray Wolf
+//----------------------------------------------------------------------------
+mosk_dun01,50,256,3	script	Gray Wolf#rus05	972,{
+	end;
+	
+OnInit:
+	disablenpc "Gray Wolf#rus05";
+	end;
+
+OnEnable:
+	initnpctimer;
+	enablenpc "Gray Wolf#rus05";
+	end;
+
+OnDisable:
+	stopnpctimer;
+	disablenpc "Gray Wolf#rus05";
+	end;
+
+Firehit:
+	specialeffect 49;
+	end;
+	
+OnTimer120000:
+	stopnpctimer;
+	donpcevent "Gray Wolf#rus05::OnDisable";
+	end;
+}
+
+//----------------------------------------------------------------------------
+// Maria Morebna
+//----------------------------------------------------------------------------
+mosk_dun01,46,256,3	script	Maria Morebna#rus46	958,{
+	end;
+	
+OnInit:
+	disablenpc "Maria Morebna#rus46";
+	end;
+
+OnEnable:
+	initnpctimer;
+	enablenpc "Maria Morebna#rus46";
+	end;
+
+OnDisable:
+	stopnpctimer;
+	disablenpc "Maria Morebna#rus46";
+	end;
+	
+Freezed:
+	specialeffect 134;
+	end;
+	
+Death:
+	specialeffect 1;
+	specialeffect 212;
+	specialeffect 372;
+	end;
+	
+Absorbspirits:
+	specialeffect 253;
+	end;
+	
+Resurrection:
+	specialeffect 77;
+	end;
+
+OnTimer120000:
+	donpcevent "Maria Morebna#rus46::OnDisable";
+	end;
+}
+
+//----------------------------------------------------------------------------
+// The Blacksmith (Golden Key)
+//----------------------------------------------------------------------------
+moscovia,178,127,0	script	The Blacksmith#rus06	63,{
+	if (checkweight(1201,1) == 0) {
+		mes "[The Blacksmith]";
+		mes "Why are you carrying that much?";
+		mes "Are you training for something?";
+		close;
+	}
+	if ((MaxWeight-Weight) < 3500) {
+		mes "[The Blacksmith]";
+		mes "Why are you carrying that much?";
+		mes "Are you training for something?";
+		close;
+	}
+	if (rhea_rus_main < 6) {
+		mes "[The Blacksmith]";
+		mes "Bahaha~";
+		mes "Good weather! Eh?";
+		mes "Perfect for a picnic.";
+		next;
+		mes "[The Blacksmith]";
+		mes "But, I've heard that some people have become lost in the forest on the island near this village. What's going on?";
+		close;
+	}
+	else if (rhea_rus_main == 6) {
+		mes "[The Blacksmith]";
+		mes "Bahaha~";
+		mes "Good weather! Eh?";
+		mes "Perfect for a picnic.";
+		next;
+		mes "[The Blacksmith]";
+		mes "But, I've heard that some people have become lost in the forest on the island near this village. What's going on?";
+		next;
+		select("Excuse me...");
+		mes "["+ strcharinfo(0) +"]";
+		mes "Excuse me, have you heard of a keymaker who knows how to make a '^0000ffGolden Key^000000'?";
+		next;
+		mes "[The Blacksmith]";
+		mes "Hmm, are you an adventurer? Who told you about the '^0000ffGolden Key^000000'?";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "Ah, in fact...";
+		next;
+		mes "- You tell him about -";
+		mes "- Maria Morebna -";
+		mes "- and Gray Wolf -";
+		next;
+		mes "[The Blacksmith]";
+		mes "Well, then... The keymaker for the '^0000ffGolden Key^000000'.";
+		mes "You are very lucky to have asked me about this.";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "W, what do you mean...?";
+		next;
+		mes "[The Blacksmith]";
+		mes "I'm the only one in this town that knows what materials are needed to make the '^0000ffGolden Key^000000'! Bahaha!";
+		next;
+		mes "[The Blacksmith]";
+		mes "I guess you think that getting the materials will be easy huh?";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "Hey I didn't say...";
+		next;
+		mes "[The Blacksmith]";
+		mes "Bahahaha~";
+		mes "It will take a lot of work.";
+		mes "A long journey awaits you";
+		mes "If you choose to take it.";
+		next;
+		mes "[The Blacksmith]";
+		mes "Your boots will be worn";
+		mes "out after this journey.";
+		mes "What do you think?";
+		mes "Would you like to try?";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "Of course! I have to help Maria!";
+		next;
+		mes "[The Blacksmith]";
+		mes "Bahaha! I like you!";
+		mes "Ok, first, bring me ^0000ff25 Steel^000000. I'm not going anywhere so come back here when you have them.";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "Ok so that's the first thing you need for the 'Golden Key' right?";
+		next;
+		mes "[The Blacksmith]";
+		mes "Bahahaha~";
+		mes "I promise you, I'll explain when you bring the ^0000ff25 Steel^000000 to me. Please just get the Steel and come back.";
+		set rhea_rus_main,7;
+		close;
+	}
+	else if (rhea_rus_main == 7) {
+		if (countitem(999) > 24) {
+			mes "[The Blacksmith]";
+			mes "Ohhh, that was faster than I expected!";
+			next;
+			mes "[The Blacksmith]";
+			mes "Ok then, wait here.";
+			next;
+			mes "- He melts the steel -";
+			mes "- and begins to forge -";
+			mes "- it into something !! -";
+			next;
+			mes "[The Blacksmith]";
+			mes "Bahaha~, it's not my";
+			mes "best work, but it'll do.";
+			mes "Here ya go!";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "Ah?! This is?!!";
+			next;
+			mes "[The Blacksmith]";
+			mes "Strong Steel Boots!";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "The Golden!!.........................";
+			mes "....................Eh, what?";
+			next;
+			mes "[The Blacksmith]";
+			mes "Bahaha~ Didn't I tell you? A long journey awaits you. These boots will help you on your long journey.";
+			next;
+			mes "[The Blacksmith]";
+			mes "When they have worn out, you will know that your journey is near it's end.";
+			next;
+			mes "[The Blacksmith]";
+			mes "^ff0000You must always wear these boots while gathering the materials for the 'Golden Key'.^000000";
+			next;
+			mes "[The Blacksmith]";
+			mes "Ok, I'll tell you what materials you need to get. I can make the key anytime if you get them to me.";
+			next;
+			mes "[The Blacksmith]";
+			mes "You need ^0000ff2 Cursed Ruby, 3 Gold, 1 Red Ring, 2 Lusalka's Hair, 10 Golden Thread^000000 to make the key.";
+			next;
+			mes "[The Blacksmith]";
+			mes "Well, you know what to do now. I will be waiting here.";
+			mes "Bahahaha~";
+			mes "And don't forget to wear these!";
+			delitem 999,25;
+			set rhea_rus_main,8;		
+			if (Class == Job_Merchant || Class == Job_Merchant_High || Class == Job_Blacksmith || ADVJOB == Job_Whitesmith || Class == Job_Alchemist || ADVJOB == Job_Creator) {
+				getitem 2429,1;
+				close;
+			}
+			else if (Class == Job_Swordman || Class == Job_Swordman_High || Class == Job_Knight || ADVJOB == Job_Lord_Knight || Class == Job_Crusader || ADVJOB == Job_Paladin) {
+				getitem 2429,1;
+				close;
+			}
+			else if (Class == Job_Thief || Class == Job_Thief_High || Class == Job_Assassin || ADVJOB == Job_Assassin_Cross || Class == Job_Rogue || ADVJOB == Job_Stalker) {
+				getitem 2429,1;
+				close;
+			}
+			else if (Class == Job_Archer || Class == Job_Archer_High || Class == Job_Hunter || ADVJOB == Job_Sniper || Class == Job_Bard || ADVJOB == Job_Clown || Class == Job_Dancer || ADVJOB == Job_Gypsy) {
+				getitem 2429,1;
+				close;
+			}
+			else {
+				getitem 2430,1;
+				close;
+			}
+		}else{
+			mes "[The Blacksmith]";
+			mes "What are you doing? First, you must get me ^0000ff25 Steel^000000.";
+			next;
+			mes "[The Blacksmith]";
+			mes "The faster you get me the materials, The faster you can help Maria Morebna.";
+			close;
+		}
+	}
+	else if (rhea_rus_main == 8) {
+		if (countitem(724) > 1 && countitem(969) > 2 && countitem(7877) > 0 && countitem(7878) > 1 && countitem(7879) > 9) {
+			if (rhea_rus_ring > 8 && rhea_rus_hair > 8 && rhea_rus_quiz > 29) {
+				if(getequipid(EQI_SHOES) != 2429 || getequipid(EQI_SHOES) != 2430) {
+						mes "["+ strcharinfo(0) +"]";
+						mes "...Hmm, did I forget to wear something...?";
+						close;
+				}
+				mes "[The Blacksmith]";
+				mes "So, you got all the materials. I can't believe it.";
+				mes "You did your best until your boots were worn out, didn't you?";
+				next;
+				mes "["+ strcharinfo(0) +"]";
+				mes "Yes, you know, it's not very comfortable walking around in Steel boots all day!";
+				next;
+				mes "[The Blacksmith]";
+				mes "Bahaha~ Ok, well done.";
+				mes "Well.. While you were looking for the materials, I was searching for the keymaker who can make the key!";
+				next;
+				mes "["+ strcharinfo(0) +"]";
+				mes "I thought you said that you knew how to make the key?";
+				next;
+				mes "[The Blacksmith]";
+				mes "Hmm... Well I know the materials. And I know who makes the key. So I will tell you where to find the keymaker. Is that ok?";
+				next;
+				mes "["+ strcharinfo(0) +"]";
+				mes "Of course! I have to know where this person is.";
+				next;
+				mes "[The Blacksmith]";
+				mes "Ok, listen carefully. The Keymaker is at a cabin deep inside of the forest.";
+				next;
+				mes "[The Blacksmith]";
+				mes "Ah, wait. Take off your armor. I need to cast a protection spell on you, ok? Hey, don't get the wrong idea. This is just a simple protection spell!";
+				nude;
+				next;
+				mes "[The Blacksmith]";
+				mes "Bah ram y--- wait that's uh something else...";
+				next;
+				mes "[The Blacksmith]";
+				mes "'^ff0000Spellshield Protection^000000.";
+				specialeffect2 253;
+				next;
+				mes "[The Blacksmith]";
+				mes "This spell protects you from any curse the keymaker might try to use. Remember the words of the spell. It won't last very long because I am just a blacksmith.";
+				next;
+				if (countitem(2429) > 0) {
+					mes "[The Blacksmith]";
+					mes "The forest is dangerous. Be very careful in there!";
+					mes "Ah and you shouldn't be needing those Steel Boots anymore. Good luck!";
+					delitem 2429,1;
+					set rhea_rus_main,9;
+					close;
+				}
+				else if (countitem(2430) > 0) {
+					mes "[The Blacksmith]";
+					mes "The forest is dangerous. Be very careful in there!";
+					mes "Ah and you shouldn't be needing those Steel Boots anymore. Good luck!";
+					delitem 2430,1;
+					set rhea_rus_main,9;
+					close;
+				}
+				else {
+					mes "[The Blacksmith]";
+					mes "The forest is dangerous. Be very careful in there!";
+					mes "Ah, and your steel boots..?";
+					next;
+					mes "[The Blacksmith]";
+					mes "Where are they?";
+					close;
+				}
+			}else{
+				mes "[The Blacksmith]";
+				mes "You need ^0000ff2 Cursed Ruby, 3 Gold, 1 Red Ring, 2 Lusalka's Hair, 10 Golden Thread^000000 to make the key.";
+				next;
+				switch(select("Red Ring?:Lusalka's Hair?:Golden_Thread?")) {
+				case 1:
+					mes "[The Blacksmith]";
+					mes "The Red Ring has powerful enchanting powers. I had one before, but I gave it to my friend, Vassili, as a gift.";
+					next;
+					mes "[The Blacksmith]";
+					mes "I think it would be odd to ask him to give it back to me. So uh you've got to ask him if he would give it to you.";
+					next;
+					break;
+				case 2:
+					mes "[The Blacksmith]";
+					mes "It's said that a bride who drowns to death just before her wedding becomes Lusalka, the aqua fairy.";
+					mes "You must find Lusalka's hair.";
+					next;
+					mes "[The Blacksmith]";
+					mes "I heard that a young maid has been lost recently.";
+					mes "It's very unfortunate but...";
+					mes "she might be Lusalka...";
+					next;
+					mes "[The Blacksmith]";
+					mes "Her mother is somewhere in this village asking for people to help her find her missing daughter.";
+					next;
+					break;
+				case 3:
+					mes "[The Blacksmith]";
+					mes "Golden Thread is made from gold by using a special spinning wheel technique. I don't know exactly how it's done. But I know who does.";
+					next;
+					mes "[The Blacksmith]";
+					mes "Find a man named Marozka. He is the only one who knows how to use the spinning wheel to make the Golden Thread.";
+					next;
+					mes "[The Blacksmith]";
+					mes "Maria should know where he is.";
+					next;
+				}
+				mes "[The Blacksmith]";
+				mes "Ah, and... You still have the boots that I made right? ^ff0000Without them, you cannot get anything for the key, I swear. You must put on them.^000000";
+				next;
+				mes "[The Blacksmith]";
+				mes "Well, you know what to do now. I will be waiting here.";
+				close;
+			}
+		}else{
+			mes "[The Blacksmith]";
+			mes "You need ^0000ff2 Cursed Ruby, 3 Gold, 1 Red Ring, 2 Lusalka's Hair, 10 Golden Thread^000000 to make the key.";
+			next;
+			switch(select("Red Ring?:Lusalka's Hair?:Golden_Thread?")) {
+			case 1:
+				mes "[The Blacksmith]";
+				mes "The Red Ring has powerful enchanting powers. I had one before, but I gave it to my friend, Vassili, as a gift.";
+				next;
+				mes "[The Blacksmith]";
+				mes "I think it would be odd to ask him to give it back to me. So uh you've got to ask him if he would give it to you.";
+				next;
+				break;
+			case 2:
+				mes "[The Blacksmith]";
+				mes "It's said that a bride who drowns to death just before her wedding becomes Lusalka, the aqua fairy.";
+				mes "You must find Lusalka's hair.";
+				next;
+				mes "[The Blacksmith]";
+				mes "I heard that a young maid has been lost recently.";
+				mes "It's very unfortunate but...";
+				mes "she might be Lusalka...";
+				next;
+				mes "[The Blacksmith]";
+				mes "Her mother is somewhere in this village asking for people to help her find her missing daughter.";
+				next;
+				break;
+			case 3:
+				mes "[The Blacksmith]";
+				mes "Golden Thread is made from gold by using a special spinning wheel technique. I don't know exactly how it's done. But I know who does.";
+				next;
+				mes "[The Blacksmith]";
+				mes "Find a man named Marozka. He is the only one who knows how to use the spinning wheel to make the Golden Thread.";
+				next;
+				mes "[The Blacksmith]";
+				mes "Maria should know where he is.";
+				next;
+			}
+			mes "[The Blacksmith]";
+			mes "Ah, and... You still have the boots that I made right? ^ff0000Without them, you cannot get anything for the key, I swear. You must put on them.^000000";
+			next;
+			mes "[The Blacksmith]";
+			mes "Well, you know what to do now. I will be waiting here.";
+			close;
+		}
+	}
+	else if (rhea_rus_main == 9) {
+		mes "[The Blacksmith]";
+		mes "The keymaker is at a cabin deep inside of the forest.";
+		next;
+		mes "[The Blacksmith]";
+		mes "This person is no ordinary person. It is said that you can be cursed by the keymaker's words.";
+		next;
+		mes "[The Blacksmith]";
+		mes "Don't forget the spell, '^ff0000Spellshield Protection.^000000'";
+		close;
+	}
+	else if (rhea_rus_main > 9 && rhea_rus_main < 52) {
+		mes "[The Blacksmith]";
+		mes "He is in his cabin deep inside of the forest. There, the keymaker of the Golden Key is living.";
+		next;
+		mes "[The Blacksmith]";
+		mes "The Golden Key is able to release Maria. Good luck!";
+		close;
+	}
+	else if (rhea_rus_main > 51) {
+		mes "[The Blacksmith]";
+		mes "I heard the news. You have done well.";
+		next;
+		mes "[The Blacksmith]";
+		mes "Ah, the person living around that cabin wants you to see her. She seems to have something to tell you.";
+		close;
+	}
+}
+
+//----------------------------------------------------------------------------
+// Vassili Grandpapa (Red Ring)
+//----------------------------------------------------------------------------
+moscovia,206,81,0	script	Vassili Grandpapa#rus07	712,{
+	if (checkweight(1201,1) == 0) {
+		mes "[Vassili Grandpapa]";
+		mes "Why are you carring that much?";
+		mes "Are you training for something?";
+		close;
+	}
+	if ((MaxWeight-Weight) < 3500) {
+		mes "[Vassili Grandpapa]";
+		mes "Why are you carring that much?";
+		mes "Are you training for something?";
+		close;
+	}
+	if (rhea_rus_main < 8) {
+		mes "[Vassili Grandpapa]";
+		mes "Hmm, are you an adventurer? So, how do you like it here?";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "It's not too bad.";
+		mes "The weather here is great!";
+		next;
+		mes "[Vassili Grandpapa]";
+		mes "Even though it is fine now in Moscovia, it is not such a great place during the harsh winter season.";
+		next;
+		mes "[Vassili Grandpapa]";
+		mes "Eeee, I don't want to experience that coldness any more.";
+		close;
+	}
+	else if (rhea_rus_main == 8) {
+		if (rhea_rus_ring < 1) {
+			if(getequipid(EQI_SHOES) != 2429 || getequipid(EQI_SHOES) != 2430) {
+				mes "["+ strcharinfo(0) +"]";
+				mes "...Hmm, did I forget to wear something...?";
+				close;
+			}
+			mes "[Vassili Grandpapa]";
+			mes "Hmm, are you an adventurer? So, how do you like it here?";
+			next;
+			if(select("It's so-so:I have something to ask...") == 1) {
+				mes "[Vassili Grandpapa]";
+				mes "Hmm, you have traveled so much. I guess if you're tired from your trip then it's only natural, huhu.";
+				close;
+			}
+			mes "[Vassili Grandpapa]";
+			mes "Eh? What do you want to ask me about?";
+			next;
+			input .@input$;
+			if (.@input$ == "Red Ring") {
+				mes "[Vassili Grandpapa]";
+				mes "Red Ring?! Why are you looking for that?";
+				next;
+			}else{
+				mes "[Vassili Grandpapa]";
+				mes "Mmm, what? I don't understand you.";
+				close;
+			}
+			mes "- You tell him about the -";
+			mes "- Gray Wolf and Maria -";
+			next;
+			mes "[Vassili Grandpapa]";
+			mes "Huuuh, I see.";
+			next;
+			mes "[Vassili Grandpapa]";
+			mes "What should I do?";
+			mes "I want to help but I can't.";
+			mes "I gave it to my youngest";
+			mes "daughter, Mashenka,";
+			mes "as a present. But... she...";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "Are you ok?";
+			next;
+			mes "[Vassili Grandpapa]";
+			mes "It's just that Mashenka...";
+			mes "..........";
+			mes "....she died...";
+			next;
+			mes "[Vassili Grandpapa]";
+			mes "She was really pretty and smart. My first daughter, Ryubaba, is also pretty and smart but her temper is...";
+			mes "hotter than Ifrit's flames!";
+			mes "Do you know what I mean?";
+			next;
+			mes "[Vassili Grandpapa]";
+			mes "Anyway, Mashenka was such a kind and tender daughter. On cold winter nights, when I came back home late, she would wait for me with a hot bowl of my favorite stew.";
+			next;
+			mes "[Vassili Grandpapa]";
+			mes "How couldn't I be touched by such kindness? So, I gave the Red Ring to her as a gift.";
+			mes "I can still remember how happy she was when I gave it to her.";
+			next;
+			mes "[Vassili Grandpapa]";
+			mes "She disappeared soon... after Now all I have is Ryubaba. She is also pretty and smart but nothing can relieve the sadnesss in my heart from losing Mashenka...";
+			set rhea_rus_ring,1;
+			close;
+		}
+		else if (rhea_rus_ring > 0 && rhea_rus_ring < 8) {
+			mes "[Vassili Grandpapa]";
+			mes "I can still remember how happy she was when I gave it to her.";
+			next;
+			mes "[Vassili Grandpapa]";
+			mes "She disappeared soon... after Now all I have is Ryubaba. She is also pretty and smart but nothing can relieve the sadnesss in my heart from losing Mashenka...";
+			close;
+		}
+		else if (rhea_rus_ring == 8) {
+			if(getequipid(EQI_SHOES) != 2429 || getequipid(EQI_SHOES) != 2430) {
+				mes "["+ strcharinfo(0) +"]";
+				mes "...Hmm, did I forget to wear something...?";
+				close;
+			}
+			mes "[Vassili Grandpapa]";
+			mes "Ehh? you are the adventurer that I met before. Something to tell me?";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "...Listen to... this.";
+			next;
+			if (countitem(7883) > 0) {
+				mes "- You play the flute -";
+				next;
+				mes "^ff0000Red ring that my father gave me^000000";
+				mes "^ff0000Red ring that my father gave me^000000";
+				mes "^ff0000The red ring enchanted^000000";
+				mes "^ff0000For the loveliest daughter^000000";
+				next;
+				mes "^ff0000Red ring bringing up jealousy^000000";
+				mes "^ff0000Red ring bringing up jealousy^000000";
+				mes "^ff0000Red ring enchanted^000000";
+				mes "^ff0000My sister envies^000000";
+				next;
+				mes "^ff0000Cold hand tightening my neck^000000";
+				mes "^ff0000Cold eyes tightening my heart^000000";
+				mes "^ff0000Cold marsh swallowing my body^000000";
+				mes "^ff0000Red ring taken away^000000";
+				mes "^ff0000Red ring enchanted^000000";
+				emotion 23;
+				emotion 9,1;
+				next;
+				mes "[Vassili Grandpapa]";
+				mes "...W, what is this? Ehh??";
+				mes "My daughter, Mashenka, was.. by Ryubaba...!?";
+				next;
+				mes "[Vassili Grandpapa]";
+				mes "No... this isn't true?";
+				mes "Don't try to trick me... Why are you telling... That flute is... Mashenka...";
+				next;
+				mes "["+ strcharinfo(0) +"]";
+				mes "Isn't this.. isn't this Mashenka's voice?";
+				next;
+				mes "[Vassili Grandpapa]";
+				mes "Don't tell me those lies about..!! My daughters... That...";
+				next;
+				mes "[Vassili Grandpapa]";
+				mes ".............................";
+				next;
+				mes "[Vassili Grandpapa]";
+				mes ".............................";
+				next;
+				mes "[Vassili Grandpapa]";
+				mes ".............................";
+				next;
+				mes "[Vassili Grandpapa]";
+				mes ".............................";
+				next;
+				mes "[Vassili Grandpapa]";
+				mes ".............................";
+				next;
+				mes "[Vassili Grandpapa]";
+				mes ".............................";
+				next;
+				mes "[Vassili Grandpapa]";
+				mes ".............................";
+				next;
+				mes "["+ strcharinfo(0) +"]";
+				mes "...Uh... I'm so sorry...";
+				next;
+				mes "[Vassili Grandpapa]";
+				mes "... Can you please... play the flute again?";
+				next;
+				mes "- You play the flute -";
+				mes "- with Mashenka's voice -";
+				next;
+				mes "^ff0000Red ring that my father gave me^000000";
+				mes "^ff0000Red ring that my father gave me^000000";
+				mes "^ff0000The red ring enchanted^000000";
+				mes "^ff0000For the loveliest daughter^000000";
+				next;
+				mes "^ff0000Red ring bringing up jealousy^000000";
+				mes "^ff0000Red ring bringing up jealousy^000000";
+				mes "^ff0000Red ring enchanted^000000";
+				mes "^ff0000My sister envies^000000";
+				next;
+				mes "^ff0000Cold hand tightening my neck^000000";
+				mes "^ff0000Cold eyes tightening my heart^000000";
+				mes "^ff0000Cold marsh swallowing my body^000000";
+				mes "^ff0000Red ring taken away^000000";
+				mes "^ff0000Red ring enchanted^000000";
+				emotion 9;
+				emotion 9,1;
+				next;
+				mes "[Vassili Grandpapa]";
+				mes "It is.. It is true...";
+				mes "When I saw this ring in Ryubaba's room, I never thought that. But, it has to be true...";
+				next;
+				mes "[Vassili Grandpapa]";
+				mes "Damn this cursed ring!!! Why did my daughters have this tragedy....? ~Sob!";
+				next;
+				mes "["+ strcharinfo(0) +"]";
+				mes "......................";
+				next;
+				mes "[Vassili Grandpapa]";
+				mes "........i'm sorry. ...I know that this wasn't easy for you to tell me. Thank you for the truth.";
+				next;
+				mes "[Vassili Grandpapa]";
+				mes "You said you needed this ring, right? Take it...";
+				mes "It has brought me nothing but grief.";
+				next;
+				mes "[Vassili Grandpapa]";
+				mes "...It is my fault that this tragedy between my daughters happened. I will spend the rest of my life trying to make up for it...";
+				delitem 7883,1;
+				set rhea_rus_ring,10;
+				getitem 7877,1;
+				if (BaseLevel < 56) {
+					getexp 4700,0;
+				}
+				else if (BaseLevel > 55 && BaseLevel < 61) {
+					getexp 6150,0;
+				}
+				else if (BaseLevel > 60 && BaseLevel < 66) {
+					getexp 10605,0;
+				}
+				else if (BaseLevel > 65 && BaseLevel < 71) {
+					getexp 16223,0;
+				}
+				else if (BaseLevel > 70 && BaseLevel < 76) {
+					getexp 41227,0;
+				}
+				else if (BaseLevel > 75 && BaseLevel < 81) {
+					getexp 69073,0;
+				}
+				else if (BaseLevel > 80 && BaseLevel < 86) {
+					getexp 85102,0;
+				}
+				else if (BaseLevel > 85 && BaseLevel < 91) {
+					getexp 104615,0;
+				}
+				else if (BaseLevel > 90 && BaseLevel < 99) {
+					getexp 222035,0;
+				}
+				else {
+					getitem 607,1;
+				}
+				close;
+			}else{
+				mes "[Vassili Grandpapa]";
+				mes "...............................";
+				mes "...............................";
+				mes "...What did you say?";
+				next;
+				mes "["+ strcharinfo(0) +"]";
+				mes "Ehh?! This is weird. Where is the flute?!";
+				emotion 23,1;
+				close;
+			}
+		}
+		else if (rhea_rus_ring == 9) {
+			mes "[Vassili Grandpapa]";
+			mes "You may think it is foolish but I cannot relieve the sadness of my lost daughter.";
+			next;
+			mes "[Vassili Grandpapa]";
+			mes "It is parents that wander around the entrance of the village to wait for their children...";
+			close;
+		}
+		else {
+			mes "[Vassili Grandpapa]";
+			mes "..It is my fault that this tragedy between my daughters happened. I will spend the rest of my life trying to make up for it...";
+			close;
+		}
+	}
+	else {
+		mes "[Vassili Grandpapa]";
+		mes "..It is my fault that this tragedy between my daughters happened. I will spend the rest of my life trying to make up for it...";
+		close;
+	}
+}
+
+//----------------------------------------------------------------------------
+// Ryubaba (Red Ring)
+//----------------------------------------------------------------------------
+moscovia,213,216,3	script	Ryubaba#rus08	960,{
+	if (checkweight(1201,1) == 0) {
+		mes "[Ryubaba]";
+		mes "What on earth do you have in your bag?";
+		mes "Are you training for something?";
+		close;
+	}
+	if ((MaxWeight-Weight) < 3500) {
+		mes "[Ryubaba]";
+		mes "What on earth do you have in your bag?";
+		mes "Are you training for something?";
+		close;
+	}
+	if (rhea_rus_main < 8) {
+		mes "[Ryubaba]";
+		mes "Ah, how beautiful I am.";
+		next;
+		mes "[Ryubaba]";
+		mes "Mmm, you must be an adventurer? What would you say? Have you seen somebody more beautiful than me? I doubt it. How can you find anyone more beautiful than me?";
+		emotion 18;
+		close;
+	}
+	else if (rhea_rus_main == 8) {
+		if (rhea_rus_ring < 1) {
+			mes "[Ryubaba]";
+			mes "Ah, how beautiful I am.";
+			next;
+			mes "[Ryubaba]";
+			mes "Mmm, you must be an adventurer? What would you say? Have you seen somebody more beautiful than me? I doubt it. How can you find anyone more beautiful than me?";
+			emotion 18;
+			close;
+		}
+		else if (rhea_rus_ring == 1) {
+			if(getequipid(EQI_SHOES) != 2429 || getequipid(EQI_SHOES) != 2430) {
+				mes "["+ strcharinfo(0) +"]";
+				mes "...Hmm, did I forget to wear something...?";
+				close;
+			}
+			mes "[Ryubaba]";
+			mes "Ah, how beautiful I am.";
+			next;
+			mes "[Ryubaba]";
+			mes "Mmm, you must be an adventurer? What would you say? Have you seen somebody more beautiful than me? I doubt it. How can you find anyone more beautiful than me?";
+			next;
+			if(select("Are you crazy!:Yes, you are right.") == 1) {
+				if (Sex == 0) {
+					mes "["+ strcharinfo(0) +"]";
+					mes "Are you crazy!? Don't you know how wide the world is and how many beautiful people there are? You're pretty full of it, country girl!";
+					next;
+					mes "["+ strcharinfo(0) +"]";
+					mes "Besides, if there was a most beautiful girl in the world it would be me, me, me!";
+					next;
+				}else{
+					mes "["+ strcharinfo(0) +"]";
+					mes "Are you crazy!? Don't you know how wide the world is and how many beautiful people there are? You're pretty full of it, country girl!";
+					next;
+					mes "["+ strcharinfo(0) +"]";
+					mes "Have you seen dancers dancing? Have you seen beautiful and pure priests?!";
+					mes "And nothing is like the kind Kafra Employees!!!";
+					next;
+				}
+				mes "[Ryubaba]";
+				mes "What!? You bastard!!";
+				mes "I hate you! Get out of my face!";
+				set rhea_rus_ring,2;
+				close2;
+				warp "moscovia",220,210;
+				end;
+			}
+			mes "["+ strcharinfo(0) +"]";;
+			mes "Yes, you are really beautiful.";
+			emotion 18,1;
+			next;
+			mes "[Ryubaba]";
+			mes "Huhu, oh you jest. You know what you're talking about. Ah, this is a Choco drink that I have made. Give it a taste, isn't it good?";
+			set rhea_rus_ring,4;
+			getitem 573,1;
+			close;
+		}
+		else if (rhea_rus_ring == 2) {
+			mes "[Ryubaba]";
+			mes "I have never met a person ruder than you!";
+			mes "I hate you! Get out of my face!";
+			close2;
+			warp "moscovia",220,210;
+			end;
+		}
+		else if (rhea_rus_ring == 3) {
+			if (countitem(748) > 0 || countitem(749) > 0) {
+				mes "[Ryubaba]";
+				mes "What? Why are you here? You get of my...";
+				next;
+				mes "[Ryubaba]";
+				mes "...Is that for me?";
+				next;
+				if (countitem(748) > 0) {
+					mes "[Ryubaba]";
+					mes "Ok. Well, I forgive you.";
+					delitem 748,1;
+					set rhea_rus_ring,4;
+					close;
+				}
+				else if (countitem(749) > 0) {
+					mes "[Ryubaba]";
+					mes "Ok. Well, I forgive you.";
+					delitem 749,1;
+					set rhea_rus_ring,4;
+					close;
+				}
+				else {
+					mes "[Ryubaba]";
+					mes "Well, I forgive.. eh?";
+					next;
+					mes "[Ryubaba]";
+					mes "What? Are you trying to trick me!?";
+					mes "I have never met a person ruder than you!";
+					mes "I hate you! Get out of my face!";
+					close2;
+					warp "moscovia",220,210;
+					end;
+				}
+			}else{
+				mes "[Ryubaba]";
+				mes "I have never met a person ruder than you!";
+				mes "I hate you! Get out of my face!";
+				close2;
+				warp "moscovia",220,210;
+				end;
+			}
+		}
+		else if (rhea_rus_ring == 4) {
+			mes "[Ryubaba]";
+			mes "Huhu, have you ever met anyone as beautiful as I am?";
+			next;
+			select("You are...");
+			mes "["+ strcharinfo(0) +"]";
+			mes "...You are the most beautiful...";
+			next;
+			mes "[Ryubaba]";
+			mes "Really? Everybody thinks so.";
+			mes "Ah, I forgot asking you.";
+			mes "Why are you here?";
+			next;
+			input .@input$;
+			if (.@input$ == "Red Ring") {
+				mes "[Ryubaba]";
+				mes "A Red Ring?!";
+				next;
+			}else{
+				mes "[Ryubaba]";
+				mes "Heh, what are you talking about? What is that?";
+				close;
+			}
+			mes "[Ryubaba]";
+			mes "Ah, that ring... Yes, my father gave it to my baby sister, Mashenka.";
+			mes "But, she went out to take a stroll and disappeared around the marsh.";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "Wait, your father told me that she died!";
+			next;
+			mes "[Ryubaba]";
+			mes "Right... Let me finish talking. We tried searching for her but we couldn't find her. She must have been wearing the ring when she disappeared around the marsh.";
+			set rhea_rus_ring,5;
+			close;
+		}
+		else if (rhea_rus_ring > 4 && rhea_rus_ring < 7) {
+			mes "[Ryubaba]";
+			mes "Ah, that ring... Yes, my father gave it to my baby sister, Mashenka.";
+			mes "But, she went out to take a stroll and disappeared around the marsh.";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "Wait, your father told me that she died!";
+			next;
+			mes "[Ryubaba]";
+			mes "Right... Let me finish talking. We tried searching for her but we couldn't find her. She must have been wearing the ring when she disappeared around the marsh.";
+			close;
+		}
+		else if (rhea_rus_ring == 7) {
+			if(getequipid(EQI_SHOES) != 2429 || getequipid(EQI_SHOES) != 2430) {
+				mes "["+ strcharinfo(0) +"]";
+				mes "...Hmm, did I forget to wear something...?";
+				close;
+			}
+			mes "[Ryubaba]";
+			mes "Ah, you come here again. What can I do for you?";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "... Listen to this song.";
+			next;
+			if (countitem(7883) > 0) {
+				mes "- You play the flute -";
+				next;
+				mes "^ff0000Red ring that my father gave me^000000";
+				mes "^ff0000Red ring that my father gave me^000000";
+				mes "^ff0000The red ring enchanted^000000";
+				mes "^ff0000For the loveliest daughter^000000";
+				next;
+				mes "^ff0000Red ring bringing up jealousy^000000";
+				mes "^ff0000Red ring bringing up jealousy^000000";
+				mes "^ff0000Red ring enchanted^000000";
+				mes "^ff0000My sister envies^000000";
+				next;
+				mes "^ff0000Cold hand tightening my neck^000000";
+				mes "^ff0000Cold eyes tightening my heart^000000";
+				mes "^ff0000Cold marsh swallowing my body^000000";
+				mes "^ff0000Red ring taken away^000000";
+				mes "^ff0000Red ring enchanted^000000";
+				emotion 23;
+				emotion 9,1;
+				next;
+				mes "[Ryubaba]";
+				mes "S, stop! You'd better stop!?";
+				next;
+				mes "["+ strcharinfo(0) +"]";
+				mes "Isn't this voice Mashenka's!? What did you do to her!?";
+				next;
+				mes "[Ryubaba]";
+				mes "... I hated her. My father... father loved only her! He didn't talk to me, only to her!";
+				next;
+				mes "[Ryubaba]";
+				mes "I asked her to show me the ring. But, she wouldn't let me see it. She always got on my nerves! Stupid girl!";
+				next;
+				mes "["+ strcharinfo(0) +"]";
+				mes "She was your sister! How can you speak like that!?";
+				mes "Your father needs to know about all of this!";
+				next;
+				mes "[Ryubaba]";
+				mes "No!!!";
+				mes "Give me that flute!";
+				next;
+				mes "["+ strcharinfo(0) +"]";
+				mes "No! Your father has to know!";
+				next;
+				mes "[Ryubaba]";
+				mes "Please, I am begging you... Don't tell my father...";
+				emotion 28;
+				next;
+				mes "- Suddenly, she sheds -";
+				mes "- tears and kneels down -";
+				next;
+				mes "[Ryubaba]";
+				mes "I have been always worried that someone would find out... He has been feeling bad ever since what happened. How much worse would he feel if he knew the truth...?";
+				next;
+				mes "[Ryubaba]";
+				mes "Could you please ignore this? Give me that flute... Ah... The red ring? How about exchanging it for the ring? Don't you need this?";
+				next;
+				mes "["+ strcharinfo(0) +"]";
+				mes "But...";
+				next;
+				mes "[Ryubaba]";
+				mes "Oh, please.. This is not only for my sake, but also for my old father.... please I beg you.";
+				next;
+				mes "["+ strcharinfo(0) +"]";
+				mes "...Mmmm, what should I do...";
+				next;
+				if(select("Exchange:Not exchange") == 1) {
+					mes "["+ strcharinfo(0) +"]";
+					mes "...Mmmm, what should I do...";
+					mes "Ok, I will do it.";
+					next;
+				}else{
+					mes "["+ strcharinfo(0) +"]";
+					mes "...Mmmm, what should I do...";
+					mes "No, I can't do it!";
+					next;
+					mes "[Ryubaba]";
+					mes "What!!!";
+					next;
+					mes "["+ strcharinfo(0) +"]";
+					mes "I have to let your father know the truth! He has to know what you have done!";
+					next;
+					mes "[Ryubaba]";
+					mes "W, wait!!!";
+					set rhea_rus_ring,8;
+					close2;
+					warp "moscovia",203,80;
+					end;
+				}
+				mes "[Ryubaba]";
+				mes "Are you sure!? Thank you!";
+				next;
+				mes "[Ryubaba]";
+				mes "I have to repent for my sins and atone for them for the rest of my life.";
+				delitem 7883,1;
+				set rhea_rus_ring,9;
+				getitem 7877,1;
+				if (BaseLevel < 56) {
+					getexp 4700,0;
+				}
+				else if (BaseLevel > 55 && BaseLevel < 61) {
+					getexp 6150,0;
+				}
+				else if (BaseLevel > 60 && BaseLevel < 66) {
+					getexp 10605,0;
+				}
+				else if (BaseLevel > 65 && BaseLevel < 71) {
+					getexp 16223,0;
+				}
+				else if (BaseLevel > 70 && BaseLevel < 76) {
+					getexp 41227,0;
+				}
+				else if (BaseLevel > 75 && BaseLevel < 81) {
+					getexp 69073,0;
+				}
+				else if (BaseLevel > 80 && BaseLevel < 86) {
+					getexp 85102,0;
+				}
+				else if (BaseLevel > 85 && BaseLevel < 91) {
+					getexp 104615,0;
+				}
+				else if (BaseLevel > 90 && BaseLevel < 99) {
+					getexp 222035,0;
+				}
+				else{
+					getitem 607,1;
+				}
+				close;
+			}else{
+				mes "["+ strcharinfo(0) +"]";
+				mes "...!? Where is the flute!?";
+				emotion 23,1;
+				close;
+			}
+		}
+		else if (rhea_rus_ring == 8) {
+			mes "[Ryubaba]";
+			mes "You give it back to me!";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "I have to let your father know the truth! He has to know what you have done!";
+			next;
+			mes "[Ryubaba]";
+			mes "W, wait!!!";
+			close2;
+			warp "moscovia",203,80;
+			end;
+		}else{
+			mes "[Ryubaba]";
+			mes "................................";
+			mes "I was stupid...";
+			next;
+			mes "[Ryubaba]";
+			mes "I have to repent for my sins and atone for them for the rest of my life.";
+			close;
+		}
+	}
+	else {
+		mes "[Ryubaba]";
+		mes "................................";
+		mes "I was stupid...";
+		next;
+		mes "[Ryubaba]";
+		mes "I have to repent for my sins and atone for them for the rest of my life.";
+		close;
+	}
+}
+
+//----------------------------------------------------------------------------
+// Little Boy (Ryubaba Info)
+//----------------------------------------------------------------------------
+moscovia,223,210,3	script	Little Boy#rus09	962,{
+	if (rhea_rus_main < 8) {
+		mes "[Little Boy]";
+		mes "I will be an adventer and will marry the most beautiful bride!";
+		mes "A bride more beautiful than sister Ryubaba!";
+		close;
+	}
+	else if (rhea_rus_main == 8) {
+		if (rhea_rus_ring == 2) {
+			mes "[Little Boy]";
+			mes "Hehe, you have done by her?";
+			next;
+			mes "[Little Boy]";
+			mes "Everyone knows her. She is beautiful. My borther told me that he wanted to marry her.";
+			mes "But her temper makes people hesitate.";
+			next;
+			mes "[Little Boy]";
+			mes "I don't like her cause she doesn't give me candies or cookies. Although she is beautiful, her temper is so bad...";
+			next;
+			if (countitem(529) > 0 || countitem(538) > 0) {
+				mes "[Little Boy]";
+				mes "Ah, do you have candies or cookies?";
+				next;
+				if(select("Give some:Don't give") == 2) {
+					mes "[Little Boy]";
+					mes "Hm! Hmph! Pish! !";
+					mes "You are the same as Sister Ryubaba!";
+					close;
+				}
+				mes "[Little Boy]";
+				mes "Wow, really?";
+				mes "That is very kind of you!";
+				next;
+				mes "[Little Boy]";
+				mes "Ah, I will inform you of something!";
+				next;
+				if (countitem(529) > 0) {
+					mes "[Little Boy]";
+					mes "Sister Ryubaba likes presents! Especially flowers such as roses. She believes that they resemble her.";
+					delitem 529,1;
+					set rhea_rus_ring,3;
+					close;
+				}
+				else if (countitem(538) > 0) {
+					mes "[Little Boy]";
+					mes "Sister Ryubaba likes presents! Especially flowers such as roses. She believes that they resemble her.";
+					delitem 538,1;
+					set rhea_rus_ring,3;
+					close;
+				}
+				else {
+					mes "[Little Boy]";
+					mes "Sister Ryubaba likes.. eh?";
+					mes "Don't you have candies or cookies? Don't you want to give them to me?";
+					close;
+				}
+			}else{
+				mes "[Little Boy]";
+				mes "I love candy and cookies most.";
+				close;
+			}
+		}
+		else if (rhea_rus_ring == 3) {
+			mes "[Little Boy]";
+			mes "Sister Ryubaba likes presents! Especially flowers such as roses. She believes that they resemble her.";
+			close;
+		}
+		else {
+			mes "[Little Boy]";
+			mes "I will be an adventer and will marry the most beautiful bride!";
+			mes "A bride more beautiful than sister Ryubaba!";
+			close;
+		}
+	}
+	else {
+		mes "[Little Boy]";
+		mes "I will be an adventer and will marry the most beautiful bride!";
+		mes "A bride more beautiful than sister Ryubaba!";
+		close;
+	}
+}
+
+//----------------------------------------------------------------------------
+// Shepherdess (Wooden Flute for Red Ring)
+//----------------------------------------------------------------------------
+mosk_fild02,157,233,0	script	Shepherdess#rus10	69,{
+	if (rhea_rus_main < 8) {
+		mes "[Shepherdess]";
+		mes "Haaaa, boring, boring! Herding sheep is really boring!";
+		next;
+		mes "[Shepherdess]";
+		mes "I wish that I could listen to music all the time.";
+		close;
+	}
+	else if (rhea_rus_main == 8) {
+		if (rhea_rus_ring < 5) {
+			mes "[Shepherdess]";
+			mes "Haaaa, boring, boring! Herding sheep is really boring!";
+			next;
+			mes "[Shepherdess]";
+			mes "I wish that I could listen to music all the time.";
+			close;
+		}
+		else if (rhea_rus_ring == 5) {
+			if(getequipid(EQI_SHOES) != 2429 || getequipid(EQI_SHOES) != 2430) {
+				mes "["+ strcharinfo(0) +"]";
+				mes "...Hmm, did I forget to wear something...?";
+				close;
+			}
+			mes "[Shepherdess]";
+			mes "Haaaa, boring, boring! Herding sheep is really boring!";
+			next;
+			mes "[Shepherdess]";
+			mes "I wish that I could listen to music all the time.";
+			next;
+			select("Excuse me...");
+			mes "["+ strcharinfo(0) +"]";
+			mes "Excuse me... Have you seen a girl named, Mashenka?";
+			mes "She was last seen walking towards the marsh.";
+			next;
+			mes "[Shepherdess]";
+			mes "Hm, I think I might have heard something about her but I don't remember...";
+			mes "You should check around the marsh yourself to see if you find something.";
+			next;
+			mes "[Shepherdess]";
+			mes "Ah, right! While you're searching, can you gather some Pointed Branches for me? Could you please get me ^0000ff50 Pointed Branches^000000?";
+			next;
+			mes "[Shepherdess]";
+			mes "I am an excellent flute player! If you get me enough Pointed Branches, I will make a flute from them and play beautiful music for you. Please~!";
+			set rhea_rus_ring,6;
+			close;
+		}
+		else if (rhea_rus_ring == 6) {
+			if (countitem(7882) > 24) {
+				if(getequipid(EQI_SHOES) != 2429 || getequipid(EQI_SHOES) != 2430) {
+					mes "["+ strcharinfo(0) +"]";
+					mes "...Hmm, did I forget to wear something...?";
+					close;
+				}
+				mes "[Shepherdess]";
+				mes "Wow, did you get the Pointed Branches!?";
+				next;
+				mes "[Shepherdess]";
+				mes "Ok! I will make a flute and play you the most beautiful music you've ever heard!";
+				next;
+				mes "- She begins to cut and trim -";
+				mes "- the Pointed Branches and -";
+				mes "- finally makes a good flute! -";
+				next;
+				mes "[Shepherdess]";
+				mes "Ok, good! Let me play it to test its sound!";
+				next;
+				mes "- She closes her eyes -";
+				mes "- and plays the flute -";
+				next;
+				mes "^ff0000Red ring that my father gave me^000000";
+				mes "^ff0000Red ring that my father gave me^000000";
+				mes "^ff0000The red ring enchanted^000000";
+				mes "^ff0000For the loveliest daughter^000000";
+				next;
+				mes "^ff0000Red ring bringing up jealousy^000000";
+				mes "^ff0000Red ring bringing up jealousy^000000";
+				mes "^ff0000Red ring enchanted^000000";
+				mes "^ff0000My sister envies^000000";
+				next;
+				mes "^ff0000Cold hand tightening my neck^000000";
+				mes "^ff0000Cold eyes tightening my heart^000000";
+				mes "^ff0000Cold marsh swallowing my body^000000";
+				mes "^ff0000Red ring taken away^000000";
+				mes "^ff0000Red ring enchanted^000000";
+				emotion 23;
+				emotion 23,1;
+				next;
+				mes "[Shepherdess]";
+				mes "W, what is this? Horrible! Why did this flute play a voice?";
+				next;
+				mes "[Shepherdess]";
+				mes "I've never seen this before! This doesn't feel right! You! Take this away!";
+				next;
+				mes "- ^0000ffShepherdess gives me the^000000 -";
+				mes "- ^0000ff'Pointed Wooden Flute'!!^000000 -";
+				delitem 7882,25;
+				set rhea_rus_ring,7;
+				getitem 7883,1;
+				close;
+			}else{
+				mes "[Shepherdess]";
+				mes "Hm, I think I might have heard something about her but I don't remember...";
+				mes "You should check around the marsh yourself to see if you find something.";
+				next;
+				mes "[Shepherdess]";
+				mes "Ah, right! While you're searching, can you gather some Pointed Branches for me? Could you please get me ^0000ff50 Pointed Branches^000000?";
+				next;
+				mes "[Shepherdess]";
+				mes "I am an excellent flute player! If you get me enough Pointed Branches, I will make a flute from them and play beautiful music for you. Please~!";
+				close;
+			}
+		}
+		else if (rhea_rus_ring > 6) {
+			mes "[Shepherdess]";
+			mes "I will never play a flute made from the Pointed Branches around the marsh ever again!";
+			close;
+		}
+		else {
+			mes "[Shepherdess]";
+			mes "Haaaa, boring, boring! Herding sheep is really boring!";
+			next;
+			mes "[Shepherdess]";
+			mes "I wish that I could listen to music all the time.";
+			close;
+		}
+	}
+	else {
+		mes "[Shepherdess]";
+		mes "Haaaa, boring, boring! Herding sheep is really boring!";
+		next;
+		mes "[Shepherdess]";
+		mes "I wish that I could listen to music all the time.";
+		close;
+	}
+}
+
+//----------------------------------------------------------------------------
+// Pointed Trees (Wooden Flute)
+//----------------------------------------------------------------------------
+mosk_fild02,151,188,0	script	Pointed Tree#rus11	111,{
+	if (rhea_rus_ring == 6) {
+		if (countitem(7882) < 50) {
+			set .@branch01,rand(1,3);
+			if (.@branch01 == 2) {
+				mes "- I avoid the thorns and -";
+				mes "- cut off a branch!! -";
+				getitem 7882,1;
+				donpcevent "Pointed Tree#rus11::OnDisable";
+				close;
+			}else{
+				mes "- My hand is pricked by thorns! -";
+				specialeffect2 1;
+				percentheal -5,0;
+				close;
+			}
+		}
+	}
+
+OnInit:
+	enablenpc "Pointed Tree#rus11";
+	end;
+
+OnEnable:
+	stopnpctimer;
+	enablenpc "Pointed Tree#rus11";
+	end;
+
+OnDisable:
+	initnpctimer;
+	disablenpc "Pointed Tree#rus11";
+	end;
+
+OnTimer60000:
+	donpcevent "Pointed Tree#rus11::OnEnable";
+	end;
+}
+
+mosk_fild02,160,227,0	script	Pointed Tree#rus12	111,{
+	if (rhea_rus_ring == 6) {
+		if (countitem(7882) < 50) {
+			set .@branch01,rand(1,3);
+			if (.@branch01 == 2) {
+				mes "- I avoid the thorns and -";
+				mes "- cut off a branch!! -";
+				getitem 7882,1;
+				donpcevent "Pointed Tree#rus12::OnDisable";
+				close;
+			}else{
+				mes "- My hand is pricked by thorns! -";
+				specialeffect2 1;
+				percentheal -5,0;
+				close;
+			}
+		}
+	}
+	
+OnInit:
+	enablenpc "Pointed Tree#rus12";
+	end;
+
+OnEnable:
+	stopnpctimer;
+	enablenpc "Pointed Tree#rus12";
+	end;
+
+OnDisable:
+	initnpctimer;
+	disablenpc "Pointed Tree#rus12";
+	end;
+
+OnTimer60000:
+	donpcevent "Pointed Tree#rus12::OnEnable";
+	end;
+}
+
+mosk_fild02,160,179,0	script	Pointed Tree#rus13	111,{
+	if (rhea_rus_ring == 6) {
+		if (countitem(7882) < 50) {
+			set .@branch01,rand(1,3);
+			if (.@branch01 == 2) {
+				mes "- I avoid the thorns and -";
+				mes "- cut off a branch!! -";
+				getitem 7882,1;
+				donpcevent "Pointed Tree#rus13::OnDisable";
+				close;
+			}else{
+				mes "- My hand is pricked by thorns! -";
+				specialeffect2 1;
+				percentheal -5,0;
+				close;
+			}
+		}
+	}
+	
+OnInit:
+	enablenpc "Pointed Tree#rus13";
+	end;
+
+OnEnable:
+	stopnpctimer;
+	enablenpc "Pointed Tree#rus13";
+	end;
+
+OnDisable:
+	initnpctimer;
+	disablenpc "Pointed Tree#rus13";
+	end;
+
+OnTimer60000:
+	donpcevent "Pointed Tree#rus13::OnEnable";
+	end;
+}
+
+mosk_fild02,142,247,0	script	Pointed Tree#rus14	111,{
+	if (rhea_rus_ring == 6) {
+		if (countitem(7882) < 50) {
+			set .@branch01,rand(1,3);
+			if (.@branch01 == 2) {
+				mes "- I avoid the thorns and -";
+				mes "- cut off a branch!! -";
+				getitem 7882,1;
+				donpcevent "Pointed Tree#rus14::OnDisable";
+				close;
+			}else{
+				mes "- My hand is pricked by thorns! -";
+				specialeffect2 1;
+				percentheal -5,0;
+				close;
+			}
+		}
+	}
+	
+OnInit:
+	enablenpc "Pointed Tree#rus14";
+	end;
+
+OnEnable:
+	stopnpctimer;
+	enablenpc "Pointed Tree#rus14";
+	end;
+
+OnDisable:
+	initnpctimer;
+	disablenpc "Pointed Tree#rus14";
+	end;
+
+OnTimer60000:
+	donpcevent "Pointed Tree#rus14::OnEnable";
+	end;
+}
+
+mosk_fild02,149,223,0	script	Pointed Tree#rus15	111,{
+	if (rhea_rus_ring == 6) {
+		if (countitem(7882) < 50) {
+			set .@branch01,rand(1,3);
+			if (.@branch01 == 2) {
+				mes "- I avoid the thorns and -";
+				mes "- cut off a branch!! -";
+				getitem 7882,1;
+				donpcevent "Pointed Tree#rus15::OnDisable";
+				close;
+			}else{
+				mes "- My hand is pricked by thorns! -";
+				specialeffect2 1;
+				percentheal -5,0;
+				close;
+			}
+		}
+	}
+	
+OnInit:
+	enablenpc "Pointed Tree#rus15";
+	end;
+
+OnEnable:
+	stopnpctimer;
+	enablenpc "Pointed Tree#rus15";
+	end;
+
+OnDisable:
+	initnpctimer;
+	disablenpc "Pointed Tree#rus15";
+	end;
+
+OnTimer60000:
+	donpcevent "Pointed Tree#rus15::OnEnable";
+	end;
+}
+
+mosk_fild02,114,223,0	script	Pointed Tree#rus16	111,{
+	if (rhea_rus_ring == 6) {
+		if (countitem(7882) < 50) {
+			set .@branch01,rand(1,3);
+			if (.@branch01 == 2) {
+				mes "- I avoid the thorns and -";
+				mes "- cut off a branch!! -";
+				getitem 7882,1;
+				donpcevent "Pointed Tree#rus16::OnDisable";
+				close;
+			}else{
+				mes "- My hand is pricked by thorns! -";
+				specialeffect2 1;
+				percentheal -5,0;
+				close;
+			}
+		}
+	}
+	
+OnInit:
+	enablenpc "Pointed Tree#rus16";
+	end;
+
+OnEnable:
+	stopnpctimer;
+	enablenpc "Pointed Tree#rus16";
+	end;
+
+OnDisable:
+	initnpctimer;
+	disablenpc "Pointed Tree#rus16";
+	end;
+
+OnTimer60000:
+	donpcevent "Pointed Tree#rus16::OnEnable";
+	end;
+}
+
+mosk_fild02,101,197,0	script	Pointed Tree#rus17	111,{
+	if (rhea_rus_ring == 6) {
+		if (countitem(7882) < 50) {
+			set .@branch01,rand(1,3);
+			if (.@branch01 == 2) {
+				mes "- I avoid the thorns and -";
+				mes "- cut off a branch!! -";
+				getitem 7882,1;
+				donpcevent "Pointed Tree#rus17::OnDisable";
+				close;
+			}else{
+				mes "- My hand is pricked by thorns! -";
+				specialeffect2 1;
+				percentheal -5,0;
+				close;
+			}
+		}
+	}
+	
+OnInit:
+	enablenpc "Pointed Tree#rus17";
+	end;
+
+OnEnable:
+	stopnpctimer;
+	enablenpc "Pointed Tree#rus17";
+	end;
+
+OnDisable:
+	initnpctimer;
+	disablenpc "Pointed Tree#rus17";
+	end;
+
+OnTimer60000:
+	donpcevent "Pointed Tree#rus17::OnEnable";
+	end;
+}
+
+mosk_fild02,125,182,0	script	Pointed Tree#rus18	111,{
+	if (rhea_rus_ring == 6) {
+		if (countitem(7882) < 50) {
+			set .@branch01,rand(1,3);
+			if (.@branch01 == 2) {
+				mes "- I avoid the thorns and -";
+				mes "- cut off a branch!! -";
+				getitem 7882,1;
+				donpcevent "Pointed Tree#rus18::OnDisable";
+				close;
+			}else{
+				mes "- My hand is pricked by thorns! -";
+				specialeffect2 1;
+				percentheal -5,0;
+				close;
+			}
+		}
+	}
+	
+OnInit:
+	enablenpc "Pointed Tree#rus18";
+	end;
+
+OnEnable:
+	stopnpctimer;
+	enablenpc "Pointed Tree#rus18";
+	end;
+
+OnDisable:
+	initnpctimer;
+	disablenpc "Pointed Tree#rus18";
+	end;
+
+OnTimer60000:
+	donpcevent "Pointed Tree#rus18::OnEnable";
+	end;
+}
+
+//----------------------------------------------------------------------------
+// Worried Mother (Lusalka's Hair)
+//----------------------------------------------------------------------------
+moscovia,166,145,1	script	Worried Mother#rus19	961,{
+	if (rhea_rus_main < 8) {
+		mes "[Worried Mother]";
+		mes "Where is she...";
+		next;
+		mes "[Worried Mother]";
+		mes "Have you heard of the bridge who drowned to death just before her wedding and became Lusalka, an aqua nymph?";
+		next;
+		mes "[Worried Mother]";
+		mes "My daughter disappeared some days ago and now i'm really worried. I hope nothing happened to her...";
+		close;
+	}
+	else if (rhea_rus_main == 8) {
+		if (rhea_rus_hair < 1) {
+			if(getequipid(EQI_SHOES) != 2429 || getequipid(EQI_SHOES) != 2430) {
+				mes "["+ strcharinfo(0) +"]";
+				mes "...Hmm, did I forget to wear something...?";
+				close;
+			}
+			mes "[Worried Mother]";
+			mes "Where is she...";
+			next;
+			mes "[Worried Mother]";
+			mes "Have you heard of the bridge who drowned to death just before her wedding and became Lusalka, an aqua nymph?";
+			next;
+			mes "[Worried Mother]";
+			mes "My daughter disappeared some days ago and now i'm really worried. I hope nothing happened to her...";
+			next;
+			mes "[Worried Mother]";
+			mes "Did you go to the marsh in the Moscovia field? Did you see my daughter? I don't care even if she became Lusalka. I just want to know where she is.";
+			next;
+			if(select("Calm her down.:I will find her.") == 1) {
+				mes "["+ strcharinfo(0) +"]";
+				mes "She should be ok.";
+				mes "She will be back soon.";
+				next;
+				mes "[Worried Mother]";
+				mes "Will she? I really hope so.";
+				close;
+			}
+			mes "[Worried Mother]";
+			mes "Ah, will you?";
+			next;
+			mes "[Worried Mother]";
+			mes "I tried to find her but, I couldn't approach the marsh due to all of the monsters.";
+			next;
+			mes "[Worried Mother]";
+			mes "Please, please find my daughter.";
+			set rhea_rus_hair,1;
+			close;
+		}
+		else if (rhea_rus_hair == 1) {
+			mes "[Worried Mother]";
+			mes "Ah, there are some things that you have to know.";
+			next;
+			mes "[Worried Mother]";
+			mes "If my daughter has became the water nymph Lusalka you need to listen to what I know about her.";
+			next;
+			mes "[Worried Mother]";
+			mes "Lusalka is a good aqua nymph but is not completely harmless. Her stare will seriously hurt anyone who makes eye contact with her.";
+			next;
+			mes "[Worried Mother]";
+			mes "You must have something to protect yourself from Lusalka. '^0000ffHoly Water^000000' will protect you from Lusalka'a gaze.";
+			next;
+			mes "[Worried Mother]";
+			mes "And Lusalka is noctournal. You should be able to find here from ^ff00005 pm to 6 am PST^000000.";
+			next;
+			mes "[Worried Mother]";
+			mes "Don't forget. You have to bring '^0000ffHoly Water^000000' with you, and find her from ^ff00005 pm to 6 am PST^000000.";
+			next;
+			mes "[Worried Mother]";
+			mes "I'm not sure where she would be but it has to be somewhere near water. Please, find where my daughter is. I beg of you.";
+			set rhea_rus_hair,2;
+			close;
+		}
+		else if (rhea_rus_hair > 1 && rhea_rus_hair < 9) {
+			mes "[Worried Mother]";
+			mes "Lusalka is a good aqua nymph but is not completely harmless. Her stare will seriously hurt anyone who makes eye contact with her.";
+			next;
+			mes "[Worried Mother]";
+			mes "You must have something to protect yourself from Lusalka. '^0000ffHoly Water^000000' will protect you from Lusalka'a gaze.";
+			next;
+			mes "[Worried Mother]";
+			mes "And Lusalka is noctournal. You should be able to find here from ^ff00005 pm to 6 am PST^000000.";
+			next;
+			mes "[Worried Mother]";
+			mes "Don't forget. You have to bring '^0000ffHoly Water^000000' with you, and find her from ^ff00005 pm to 6 am PST^000000.";
+			next;
+			mes "[Worried Mother]";
+			mes "I'm not sure where she would be but it has to be somewhere near water. Please, find where my daughter is. I beg of you.";
+			close;
+		}
+		else {
+			mes "[Worried Mother]";
+			mes "I am able to do nothing recently.";
+			next;
+			mes "[Worried Mother]";
+			mes "It seems that I lost something, but I don't know what it is...";
+			close;
+		}
+	}
+	else {
+		mes "[Worried Mother]";
+		mes "I am able to do nothing recently.";
+		next;
+		mes "[Worried Mother]";
+		mes "It seems that I lost something, but I don't know what it is...";
+		close;
+	}
+}
+
+//----------------------------------------------------------------------------
+// Marsh Warning Signs
+//----------------------------------------------------------------------------
+-	script	Caution#07rus::NoSwim	837,{
+	mes " WARNING !! ";
+	mes "No Swimming";
+	close;
+}
+mosk_fild02,101,204,0	duplicate(NoSwim)	Caution#rus01	837
+mosk_fild02,101,200,0	duplicate(NoSwim)	Caution#rus02	837
+
+//----------------------------------------------------------------------------
+// Lusalka Trigger (Lusalka's Hair)
+//----------------------------------------------------------------------------
+mosk_fild02,116,202,3	script	Lusalka#07russai_22	-1,3,3,{
+	end;
+	
+OnTouch:
+	if (rhea_rus_main < 8) {
+		emotion 1,1;
+		close;
+	}
+	else if (rhea_rus_main == 8) {
+		if (rhea_rus_hair < 2) {
+			emotion 1,1;
+			close;
+		}
+		else if (rhea_rus_hair == 2) {
+			if (gettime(3)>=23 || gettime(3)<=5) {
+				mes "- Splash !! -";
+				next;
+				if (countitem(523) > 0) {
+					mes "- You hear a splashing sound -";
+					mes "- and see something gleaming -";
+					donpcevent "Lusalka#rus23::OnEnable";
+					close;
+				}else{
+					mes "- You hear a splashing as -";
+					mes "- something gleaming -";
+					mes "- seems to stare at you!! -";
+					next;
+					specialeffect2 99;
+					percentheal -100,0;
+					close;
+				}
+			}else{
+				emotion 1,1;
+				close;
+			}
+		}
+		else if (rhea_rus_hair > 2 && rhea_rus_hair < 7) {
+			mes "[Lusalka's Voice]";
+			mes "His name is 'Igor'.. He has gone to the capital of Rune Midgarts. Give him my golden earrings.";
+			next;
+			mes "[Lusalka's Voice]";
+			mes "And please, tell him to stop suffering and to be happy. This is my request.";
+			close;
+		}
+		else if (rhea_rus_hair == 7) {
+			if (gettime(3)>=23 || gettime(3)<=5) {
+				mes "- Splash !! -";
+				next;
+				if (countitem(523) > 0) {
+					mes "-You hear splashing sound and see something gleaming-";
+					donpcevent "Lusalka#rus23::OnEnable";
+					close;
+				}else{
+					mes "-You seem to hear the splash but something gleaming raids on you!!-";
+					specialeffect2 99;
+					percentheal -100,0;
+					close;
+				}
+			}else{
+				emotion 1,1;
+				close;
+			}
+		}
+		else if (rhea_rus_hair == 8) {
+			mes "["+ strcharinfo(0) +"]";
+			mes "What was that?!";
+			mes "Why am I here?";
+			next;
+			mes "- After standing up, you see -";
+			mes "- the wet hair in front of you -";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "...This.. is Lusalka's hair?";
+			mes "Ah, right.. I came here to get her hair.";
+			next;
+			mes "- You pick up the hair -";
+			next;
+			mes "- As soon as you touch the -";
+			mes "- cool damp hair, you seem -";
+			mes "- the feel the sadness within -";
+			set rhea_rus_hair,9;
+			getitem 7878,2;
+			close;
+		}
+		else if (rhea_rus_hair > 8) {
+			mes "- You feel that someone -";
+			mes "- is watching you -";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "Who's there? Anybody here?";
+			next;
+			mes "- The splashing sound -";
+			mes "- fades away, but you -";
+			mes "- still feel the sadness -";
+			close;
+		}
+		else {
+			emotion 1,1;
+			close;
+		}
+	}
+	else {
+		emotion 1,1;
+		close;
+	}
+}
+
+//----------------------------------------------------------------------------
+// Lusalka (Lusalka's Hair)
+//----------------------------------------------------------------------------
+mosk_fild02,124,202,3	script	Lusalka#rus23	971,{
+	if (countitem(523) > 0) {
+		if (rhea_rus_main < 8) {
+			mes "[Lusalka]";
+			mes "...Your alive...";
+			mes "My stare didn't...";
+			mes "What are you doing here...?";
+			close;
+		}
+		else if (rhea_rus_main == 8) {
+			if (rhea_rus_hair < 2) {
+				mes "...Your alive...";
+				mes "My stare didn't...";
+				mes "What are you doing here...?";
+				close;
+			}
+			else if (rhea_rus_hair == 2) {
+				if(getequipid(EQI_SHOES) != 2429 || getequipid(EQI_SHOES) != 2430) {
+					mes "["+ strcharinfo(0) +"]";
+					mes "...Hmm, did I forget to wear something...?";
+					close;
+				}
+				mes "...Your alive...";
+				mes "My stare didn't...";
+				mes "What are you doing here...?";
+				next;
+				mes "[Lusalka]";
+				mes "Nighttime for the aqua nymph.";
+				mes "Haven't you heard that Lusalka's stare can kill people. If you didn't have the 'Holy Water', you would surely have died.";
+				next;
+				select("I am an adventurer and...");
+				mes "[Lusalka]";
+				mes "...An adventurer...?";
+				mes "If so, you came here from another continent, not Moscovia...?";
+				next;
+				mes "["+ strcharinfo(0) +"]";
+				mes "I'm from Rune Midgarts.";
+				next;
+				mes "[Lusalka]";
+				mes "...Rune... Midgarts...";
+				mes "A few days ago, my lover left for Rune Midgarts.. Can you find him for me? I want to talk with him...";
+				next;
+				mes "[Lusalka]";
+				mes "...I don't know why but, I can't remember how I became Lusalka. When I woke up, I was lying down on the bottom of the river.";
+				next;
+				mes "[Lusalka]";
+				mes "I forgot everything, but not him. His smile and warm hand. I remember everything about him.";
+				next;
+				mes "[Lusalka]";
+				mes "I watched him from the bottom of the river sitting randomly around the river and staring into the marsh. With very sad eyes.";
+				next;
+				mes "[Lusalka]";
+				mes "I suffered seeing him grieve, but wasn't able to meet him. Ordinary people are killed immediately when they see Lusalka's stare...";
+				next;
+				mes "[Lusalka]";
+				mes "I saw him coming to the marsh everyday and heard him mourning. And his assurance to go to Rune Midgarts.";
+				next;
+				mes "[Lusalka]";
+				mes "Adventurer, can you find him for me? I can't leave this marsh. Please, find him for me?";
+				next;
+				mes "[Lusalka]";
+				mes "I don't want him to come back or to meet me again. But, Please tell him that I hope he'll stop suffering and to be happy.";
+				next;
+				mes "[Lusalka]";
+				mes "I became Lusalka, but it is ok. I'm not sad. But, I can feel his sadness around this river that surrounds me. I feel sorry about it.";
+				next;
+				mes "[Lusalka]";
+				mes "Please, find him and tell him that I am ok and to stop suffering...";
+				next;
+				mes "["+ strcharinfo(0) +"]";
+				mes "Where can I find him?";
+				next;
+				mes "[Lusalka]";
+				mes "The night when he left, he said that he would go to the capital of Rune Midgarts. I am not sure if he is still there...";
+				next;
+				if(select("Ok, I will do it:I don't think I can do it...") == 2) {
+					mes "["+ strcharinfo(0) +"]";
+					mes "Rune Midgarts is large! I don't think I can do it.";
+					next;
+					mes "["+ strcharinfo(0) +"]";
+					mes "There's nothing we can do. Just give it up.";
+					next;
+					mes "[Lusalka]";
+					mes "Ah... but...";
+					emotion 28;
+					donpcevent "Lusalka#rus23::OnDisable";
+					close;
+				}
+				mes "[Lusalka]";
+				mes "Ah! Thank you so much! His name is '^0000ffIgor^000000'. Ah, give these earrings to him. He gave them to me as a present.";
+				next;
+				mes "- ^0000ffI recieve the^000000 -";
+				mes "- ^0000ffgolden earrings^000000 -";
+				mes "- ^0000fffrom Lusalka!^000000 -";
+				set rhea_rus_hair,3;
+				donpcevent "Lusalka#rus23::OnDisable";
+				close;
+			}
+			else if (rhea_rus_hair > 2 && rhea_rus_hair < 7) {
+				mes "[Lusalka]";
+				mes "His name is 'Igor'.. He has gone to the capital of Rune Midgarts. Give him my golden earrings.";
+				next;
+				mes "[Lusalka]";
+				mes "And please, tell him to stop suffering and to be happy. This is my request.";
+				close;
+			}
+			else if (rhea_rus_hair == 7) {
+				if(getequipid(EQI_SHOES) != 2429 || getequipid(EQI_SHOES) != 2430) {
+					mes "["+ strcharinfo(0) +"]";
+					mes "...Hmm, did I forget to wear something...?";
+					close;
+				}
+				mes "[Lusalka]";
+				mes "Have you seen him? How was he?";
+				next;
+				mes "["+ strcharinfo(0) +"]";
+				mes "This is a message from Igor.";
+				mes "He said that he remembers every moment with you and still loves you.";
+				next;
+				mes "["+ strcharinfo(0) +"]";
+				mes "And he would come back to Moscovia until the full moon and wanted you to meet him. He told me that he will be strong enough not to make you suffer.";
+				next;
+				mes "[Lusalka]";
+				mes "Igor...";
+				next;
+				mes "[Lusalka]";
+				mes "Thank you very much. I really appreciate it.";
+				mes "How can I thank you? Let me know what I can do for you.";
+				next;
+				mes "["+ strcharinfo(0) +"]";
+				mes "Can I ask a favor of you?";
+				next;
+				mes "[Lusalka]";
+				mes "If I can, I will do it.";
+				next;
+				mes "["+ strcharinfo(0) +"]";
+				mes "If so!!";
+				mes "....I need some of your hair.";
+				next;
+				mes "[Lusalka]";
+				mes "...Eh, hair? Is that all?";
+				next;
+				mes "["+ strcharinfo(0) +"]";
+				mes "Actually it's not all.";
+				mes "I need 2 lockes!";
+				next;
+				mes "[Lusalka]";
+				mes "Ah, hahaha.";
+				mes "Is that what you wanted? Huhu, sure take what you want.";
+				next;
+				mes "- Lusalka cuts some -";
+				mes "- of her hair with her -";
+				mes "- sharp nails -";
+				next;
+				mes "[Lusalka]";
+				mes "Here, my hair...?!";
+				mes "Aaaaaaaah!??!?!";
+				sc_start SC_CURSE,60000,0;
+				specialeffect2 90;
+				emotion 23,1;
+				percentheal -30,0;
+				next;
+				mes "["+ strcharinfo(0) +"]";
+				mes "W, what was that!?";
+				mes "Who's there?!";
+				next;
+				mes "[Voice unidentified]";
+				mes "Don't think that you've succeeded in keeping me sealed in this prison you fool!";
+				mes "You will never stop me!!!";
+				mes "hahahaha!!!";
+				next;
+				mes "["+ strcharinfo(0) +"]";
+				mes "W, who are you!? Ahkkk!!";
+				sc_start SC_BLIND,10000,0;
+				set rhea_rus_hair,8;
+				donpcevent "Lusalka#rus23::OnDisable";
+				close;
+			}
+			else if (rhea_rus_hair > 7) {
+				mes "["+ strcharinfo(0) +"]";
+				mes "...?! What are you? The marsh ghost?";
+				next;
+				mes "[Lusalka]";
+				mes "..........................";
+				next;
+				mes "- The green thing seems to open its mouth to say something but closes it soon after and watches you with its sad eyes-";
+				close;
+			}
+			else {
+				mes "["+ strcharinfo(0) +"]";
+				mes "...?! What are you? The marsh ghost?";
+				next;
+				mes "[Lusalka]";
+				mes "..........................";
+				next;
+				mes "- The green thing seems to open its mouth to say something but closes it soon after and watches you with its sad eyes-";
+				close;
+			}
+		}
+		else {
+			end;
+		}
+	}else{
+		mes "-When Lusalka watches you, you are blacked out-";
+		specialeffect2 99;
+		percentheal -100,0;
+		donpcevent "Lusalka#rus23::OnDisable";
+		close;
+	}
+	
+OnInit:
+	disablenpc "Lusalka#rus23";
+	end;
+
+OnEnable:
+	initnpctimer;
+	enablenpc "Lusalka#rus23";
+	end;
+
+OnDisable:
+	stopnpctimer;
+	disablenpc "Lusalka#rus23";
+	end;
+
+OnTimer300000:
+	stopnpctimer;
+	donpcevent "Lusalka#rus23::OnDisable";
+	end;
+}
+
+//----------------------------------------------------------------------------
+// Wanderer (Lusalka's Hair)
+//----------------------------------------------------------------------------
+prontera,228,279,3	script	Wanderer#rus24	968,{
+	if (rhea_rus_main < 8) {
+		mes "[A Wanderer from a strange land]";
+		mes "Hey, there are so many adventurers around here. I can see why this is the capital of the Rune Midgarts Kingdom!";
+		next;
+		mes "[A Wanderer from a strange land]";
+		mes "In your free time, come to see me! The weather here is even more favorable than our the best summer back home.";
+		close;
+	}
+	else if (rhea_rus_main == 8) {
+		if (rhea_rus_hair < 3) {
+			mes "[A Wanderer from a strange land]";
+			mes "Hey, there are so many adventurers around here. I can see why this is the capital of the Rune Midgarts Kingdom!";
+			next;
+			mes "[A Wanderer from a strange land]";
+			mes "In your free time, come to see me! The weather here is even more favorable than our the best summer back home.";
+			close;
+		}
+		else if (rhea_rus_hair == 3) {
+			if(getequipid(EQI_SHOES) != 2429 || getequipid(EQI_SHOES) != 2430) {
+				mes "["+ strcharinfo(0) +"]";
+				mes "...Hmm, did I forget to wear something...?";
+				close;
+			}
+			mes "[A Wanderer from a strange land]";
+			mes "Hey, there are so many adventurers around here. I can see why this is the capital of the Rune Midgarts Kingdom!";
+			next;
+			mes "[A Wanderer from a strange land]";
+			mes "In your free time, come to see me! The weather here is even more favorable than our the best summer back home.";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "Back home?";
+			mes "Excuse me for asking, but are you from Moscovia?";
+			next;
+			mes "[A Wanderer from a strange land]";
+			mes "Ho, how did you know that?";
+			mes "Have you been there before?";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "Ah, yes. I have been there...";
+			mes "By the way, the important thing is.. are you.....";
+			next;
+			input .@input$;
+			if (.@input$ == "Igor") {
+				mes "["+ strcharinfo(0) +"]";
+				mes "Ah, yes. I have been there...";
+				mes "By the way, the important thing is.. are you..... "+ .@input$ +"?";
+				next;
+			}else{
+				mes "["+ strcharinfo(0) +"]";
+				mes "Ah, yes. I have been there...";
+				mes "By the way, the important thing is.. are you..... "+ .@input$ +"?";
+				next;
+				mes "[A Wanderer from a strange land]";
+				mes "Hmm, no.";
+				mes "I have never heard that name.";
+				close;
+			}
+			mes "[A Wanderer from a strange land]";
+			mes "Hmm, no. But, that name is familiar.";
+			next;
+			mes "[A Wanderer from a strange land]";
+			mes "Ah, oh yes! How could I forget?";
+			emotion 5;
+			next;
+			mes "[A Wanderer from a strange land]";
+			mes "We came here from Moscovia together. He called himself Igg. I came here with him but parted with him quite a while ago. He was sad because he couldn't forget about his lost lover.";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "Ah, yes that must be Igor.";
+			mes "I am looking for him!";
+			mes "Do you know where he is now?";
+			next;
+			mes "[A Wanderer from a strange land]";
+			mes "Hmm, I don't know";
+			mes "exactly where he is.";
+			mes "Though, he did tell";
+			mes "me that he wanted";
+			mes "to travel to a desert.";
+			set rhea_rus_hair,4;
+			close;
+		}
+		else if (rhea_rus_hair > 3 && rhea_rus_hair < 7) {
+			mes "[A Wanderer from a strange land]";
+			mes "He called himself Igg. I came here with him but parted with him quite a while ago. He was sad because he couldn't forget about his lost lover.";
+			next;
+			mes "[A Wanderer from a strange land]";
+			mes "Hmm, I don't know";
+			mes "exactly where he is.";
+			mes "Though, he did tell";
+			mes "me that he wanted";
+			mes "to travel to a desert.";
+			close;
+		}
+		else {
+			mes "[A Wanderer from a strange land]";
+			mes "Is there anywhere I should go? Where have you been with him?";
+			next;
+			mes "[A Wanderer from a strange land]";
+			mes "Let me know somewhere.";
+			close;
+		}
+	}
+	else {
+		mes "[A Wanderer from a strange land]";
+		mes "Is there anywhere I should go? Where have you been with him?";
+		next;
+		mes "[A Wanderer from a strange land]";
+		mes "Let me know somewhere.";
+		close;
+	}
+}
+
+//----------------------------------------------------------------------------
+// Morroc Villager (Lusalka's Hair)
+//----------------------------------------------------------------------------
+morocc,165,82,0	script	Morroc Villager#rus25	48,{
+	if (rhea_rus_main < 8) {
+		mes "[Morroc Villager]";
+		mes "Huh, more and more adventurers are settling here recently, so it's hard to tell who is a villager or an adventurer.";
+		next;
+		mes "[Morroc Villager]";
+		mes "But natives, like me, can tell the difference.";
+		close;
+	}
+	else if (rhea_rus_main == 8) {
+		if (rhea_rus_hair < 4) {
+			mes "[Morroc Villager]";
+			mes "Huh, more and more adventurers are settling here recently, so it's hard to tell who is a villager or an adventurer.";
+			next;
+			mes "[Morroc Villager]";
+			mes "But natives, like me, can tell the difference.";
+			close;
+		}
+		else if (rhea_rus_hair == 4) {
+			if(getequipid(EQI_SHOES) != 2429 || getequipid(EQI_SHOES) != 2430) {
+				mes "["+ strcharinfo(0) +"]";
+				mes "...Hmm, did I forget to wear something...?";
+				close;
+			}
+			mes "[Morroc Villager]";
+			mes "Huh, more and more adventurers are settling here recently, so it's hard to tell who is a villager or an adventurer.";
+			next;
+			mes "[Morroc Villager]";
+			mes "But natives, like me, can tell the difference.";
+			next;
+			mes "[Morroc Villager]";
+			mes "As I was saying, I like this village. The desert is hot and Kafra staff is even hotter!!! *hack* *cough*!!";
+			next;
+			mes "[Morroc Villager]";
+			mes "Ah, but don't get me wrong! I'm not coughing because of the Kafra Staffers. It's uhh the heat, it's getting to me... ya...";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "................................";
+			mes "The hell you talking about..? I'm looking for someone.";
+			next;
+			mes "[Morroc Villager]";
+			mes "I see so many adventurers around here, how can I remember everybody? Got any descriptions of this someone..? Or traits..? anything to help me remember.";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "Hmm... I don't know how he looks like but he is from a land called Moscovia.";
+			next;
+			mes "[Morroc Villager]";
+			mes "Ah, are you talking about a guy that's always sad and dresses funny? I figured his accent wasn't from around here...";
+			next;
+			mes "[Morroc Villager]";
+			mes "He was here a coupla days ago but he left to see the Pyramid. I never saw him after that. I said it would be dangerous but he went anyways.";
+			next;
+			mes "[Morroc Villager]";
+			mes "Yep that's gotta be who you're looking for. I can see his gloomy face right now... that poor sad man.";
+			set rhea_rus_hair,5;
+			close;
+		}
+		else if (rhea_rus_hair > 4 && rhea_rus_hair < 7) {
+			mes "[Morroc Villager]";
+			mes "He was here a coupla days ago but he left to see the Pyramid. I never saw him after that. I said it would be dangerous but he went anyways.";
+			next;
+			mes "[Morroc Villager]";
+			mes "Yep that's gotta be who you're looking for. I can see his gloomy face right now... that poor sad man.";
+			close;
+		}
+		else {
+			mes "[Morroc Villager]";
+			mes "Many travellers in the village and I feel fun to see them. Even though I am here, I feel like that I travel all around the world?";
+			close;
+		}
+	}
+	else {
+		mes "[Morroc Villager]";
+		mes "Many travellers in the village and I feel fun to see them. Even though I am here, I feel like that I travel all around the world?";
+		close;
+	}
+}
+
+//----------------------------------------------------------------------------
+// Soldier/Igor (Lusalka's Hair)
+//----------------------------------------------------------------------------
+moc_pryd04,126,120,0	script	Soldier#rus26	967,{
+	if (rhea_rus_main < 8) {
+		mes "[A gloomy looking soldier]";
+		mes "............................";
+		close;
+	}
+	else if (rhea_rus_main == 8) {
+		if (rhea_rus_hair < 5) {
+			mes "[A gloomy looking soldier]";
+			mes "............................";
+			close;
+		}
+		else if (rhea_rus_hair == 4 || rhea_rus_hair == 5) {
+			if(getequipid(EQI_SHOES) != 2429 || getequipid(EQI_SHOES) != 2430) {
+				mes "["+ strcharinfo(0) +"]";
+				mes "...Hmm, did I forget to wear something...?";
+				close;
+			}
+			mes "[A gloomy looking soldier]";
+			mes "............................";
+			next;
+			mes "[A gloomy looking soldier]";
+			mes "...I don't know who you are. Just get outta my face. I don't want to talk...";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "It's pretty dangerous here. There are fierce monsters all over the place.";
+			next;
+			mes "[A gloomy looking soldier]";
+			mes "... Good. Let them come. I want to die here alone.";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "A-Are you Igor? What're you talking about? Have you gone nuts?";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "Do you have any idea how much your lover is suffering?";
+			next;
+			mes "[A gloomy looking soldier]";
+			mes "My... lover...?";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "I brought a message from her. She says not to suffer anymore and to just be happy...";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "The more you suffer, the deeper she sinks into sadness. Don't think that you're the only one that's suffering...";
+			next;
+			mes "[A gloomy looking soldier]";
+			mes "...Svetlana?!";
+			mes "Wait, how could you...? She... how do I know that she really spoke to you?!";
+			next;
+			mes "-^0000ff Without a word, ^000000-";
+			mes "-^0000ff you give him Lusalka's ^000000-";
+			mes "-^0000ff golden earrings ^000000-";
+			next;
+			mes "[A gloomy looking soldier]";
+			mes "T, this is Svetlana's...?!";
+			mes "H, how did you!?";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "I met her by accident. She became Lusalka in the marsh of Moscovia.";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "She told me that you wouldn't believe me so she gave me these earrings as proof... The present that you gave to her.";
+			next;
+			mes "[A gloomy looking soldier]";
+			mes "Is that true?";
+			mes "Did she really become Lusalka?";
+			next;
+			mes "[A gloomy looking soldier]";
+			mes "It was near the end of the harsh Moscovia winter... She... didn't realize that the ice on the marsh was already melting...";
+			next;
+			mes "[A gloomy looking soldier]";
+			mes "By then, it was too late the ice cracked where she was and she fell into the freezing cold marsh.";
+			next;
+			mes "[A gloomy looking soldier]";
+			mes "She wasn't able to swim. I tried to get her out but it was impossible.";
+			next;
+			mes "[A gloomy looking soldier]";
+			mes "She sunk quickly into the marsh. I was able to reach her hand but, she realized that it would kill both of us and she released my hand... I regret that moment every single day.";
+			next;
+			mes "[A gloomy looking soldier]";
+			mes "My last memory of her was of her smiling, as she sunk into the cold, wet marsh. As if to say, 'You will be ok.'";
+			next;
+			mes "[A gloomy looking soldier]";
+			mes "I, I was a coward. I was too afraid of drowning to pull her out of the marsh. Too afraid of....";
+			mes "Oh... Svetlana!!!";
+			set rhea_rus_hair,6;
+			close;
+		}
+		else if (rhea_rus_hair == 6) {
+			if(getequipid(EQI_SHOES) != 2429 || getequipid(EQI_SHOES) != 2430) {
+				mes "["+ strcharinfo(0) +"]";
+				mes "...Hmm, did I forget to wear something...?";
+				close;
+			}
+			mes "[A gloomy looking soldier]";
+			mes "I knew that she had become the cursed nymph Lusalka. But, I still went every night... to find her. I just wanted to see her and talk to her.";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "She told me that she also wanted to see you. But, she was afraid that Lusalka's curse would kill you if you saw her.";
+			mes "And so she hid...";
+			next;
+			mes "[A gloomy looking soldier]";
+			mes "How could she think of me...";
+			mes "...I, how should I.. Should I...";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "Don't be sad. She still loves you. Your suffering is her suffering.";
+			next;
+			mes "[A gloomy looking soldier]";
+			mes "................................................She is? Thank you. You've encouraged me.";
+			next;
+			mes "[A gloomy looking soldier]";
+			mes "I will go back to Moscovia. But, I'm not well enough at the moment to go back.";
+			next;
+			mes "[A gloomy looking soldier]";
+			mes "Could you please go to her and tell her my message?";
+			mes "I remember every moment I've had with her and... I still love her.";
+			next;
+			mes "[A gloomy looking soldier]";
+			mes "Before the full moon, I will be back to Moscovia and meet her. I will come back so strong and happy that when I go to see her she will not suffer anymore.";
+			set rhea_rus_hair,7;
+			close;
+		}
+		else if (rhea_rus_hair == 7) {
+			mes "[A gloomy looking soldier]";
+			mes "Could you please go to her and tell her my message?";
+			mes "I remember every moment I've had with her and... I still love her.";
+			next;
+			mes "[A gloomy looking soldier]";
+			mes "Before the full moon, I will be back to Moscovia and meet her. I will come back so strong and happy that when I go to see her she will not suffer anymore.";
+			close;
+		}
+		else if (rhea_rus_main > 7) {
+			mes "[A gloomy looking soldier]";
+			mes "... I feel like I lost something precious.";
+			next;
+			mes "- He looks down at the golden earrings and rubs it carefully -";
+			close;
+		}
+		else {
+			mes "[A gloomy looking soldier]";
+			mes "... I feel like I lost something precious.";
+			next;
+			mes "- He looks down at the golden earrings and rubs it carefully -";
+			close;
+		}
+	}
+	else {
+		mes "[A gloomy looking soldier]";
+		mes "... I feel like I lost something precious.";
+		next;
+		mes "- He looks down at the golden earrings and rubs it carefully -";
+		close;
+	}
+}
+
+//----------------------------------------------------------------------------
+// Marozka's Dungeon (Golden Thread)
+//----------------------------------------------------------------------------
+mosk_dun01,45,250,3	script	1#rus27	45,3,3,{
+	end;
+
+OnTouch:
+	warp "mosk_que",49,22;
+	end;
+	
+OnInit:
+	disablenpc "1#rus27";
+	end;
+
+OnEnable:
+	initnpctimer;
+	specialeffect 317;
+	enablenpc "1#rus27";
+	end;
+
+OnDisable:
+	stopnpctimer;
+	disablenpc "1#rus27";
+	end;
+
+OnTimer30000:
+	stopnpctimer;
+	donpcevent "1#rus27::OnDisable";
+	end;
+}
+
+mosk_que,0,0,0,0	monster	Freezer	1887,10,20000,0,0
+mosk_que,0,0,0,0	monster	Hatii Baby	1888,3,300000,0,0
+mosk_que,0,0,0,0	monster	Sasquatch	1243,15,10000,0,0
+
+mosk_que,49,22,3	script	#rus27	-1,3,3,{
+	end;
+
+OnTouch:
+	if (rhea_rus_main < 8) {
+		emotion 1,1;
+		close;
+	}
+	else if (rhea_rus_main == 8) {
+		if (rhea_rus_quiz < 1) {
+			mes "[Voice unidentified]";
+			mes "Who dares to come into my cave!";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "Are you Marozka? Maria sent me! I need your 'Golden Thread' to make a 'Golden Key' to release her from the wall!";
+			next;
+			mes "[Voice unidentified]";
+			mes "...To make a 'Golden Key'?";
+			mes "Do you think that you are right for this job?";
+			next;
+			mes "[Voice unidentified]";
+			mes "You must be fighting against 'Koshei' if you are asking about the 'Golden Key' and Maria! Do you think that you are strong enough to fight against him?";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "Of course I'm strong enough!";
+			next;
+			mes "[Voice unidentified]";
+			mes "You are very confident.";
+			mes "But, I need to test you to see if you truly are capable.";
+			next;
+			mes "[Voice unidentified]";
+			mes "In this cave, there is a 'Stone Furnace' and an 'Apple Tree'.";
+			mes "You can escape from the cave with ^0000ff100 Well Baked Cookies^000000 from the Stone Furnace and ^0000ff100 Apples^000000 from the Apple Tree.";
+			next;
+			mes "[Voice unidentified]";
+			mes "It won't be easy. Monsters are wandering around the Stone Furnace and the Apple Tree.";
+			next;
+			mes "[Voice unidentified]";
+			mes "Show me what you can do.";
+			set rhea_rus_quiz,1;
+			close;
+		}
+	}
+	else {
+		emotion 1,1;
+		close;
+	}
+}
+
+mosk_que,45,131,0	script	Stone Furnace#rus28	111,{
+	if (rhea_rus_main < 8) {
+		emotion 1,1;
+		close;
+	}
+	else if (rhea_rus_main == 8) {
+		if (rhea_rus_quiz == 1) {
+			if(getequipid(EQI_SHOES) != 2429 || getequipid(EQI_SHOES) != 2430) {
+				mes "["+ strcharinfo(0) +"]";
+				mes "...Hmm, did I forget to wear something...?";
+				close;
+			}
+			mes "- You can see the -";
+			mes "- well baked cookies. -";
+			mes "- Be careful and -";
+			mes "- don't get burned -";
+			next;
+			set .@rus_pie01,rand(1,3);
+			if (.@rus_pie01 == 2) {
+				mes "- You quickly stretch out -";
+				mes "- your hand and pick up -";
+				mes "- the well baked cookies! -";
+				next;
+				mes "- ^0000ffYou got 100^000000 -";
+				mes "- ^0000ffWell Baked Cookies!!^000000 -";
+				next;
+			}else{
+				mes "- You quickly stretch out -";
+				mes "- your hand and pick up -";
+				mes "- the well baked cookies! -";
+				next;
+				mes "["+ strcharinfo(0) +"]";
+				mes "Oops, it's hot, hot!!!";
+				specialeffect2 49;
+				emotion 23,1;
+				percentheal -5,0;
+				close;
+			}
+			if ($@rus_req01 == 0) {
+				mes "[Marozka's Guard]";
+				mes "How did this rat get inside the cave?!";
+				announce "Marozka's Guard : Invader! Search the whole cave!!",bc_map,0x87CEEB;
+				set rhea_rus_quiz,2;
+				initnpctimer;
+				monster "mosk_que",49,156,"Marozka's Guard",1889,1,"Stone Furnace#rus28::OnMyMobDead";
+				set $@rus_req01,1;
+				close;
+			}else{
+				mes "[Marozka's Guard]";
+				mes "How did this rat get inside the cave?!";
+				announce "Marozka's Guard : Invader! Search the whole cave!!",bc_map,0x87CEEB;
+				set rhea_rus_quiz,2;
+				close;
+			}
+		}
+	}
+	else {
+		emotion 1,1;
+		close;
+	}
+	
+OnInit:
+	set $@rus_req01,0;
+	end;
+
+OnMyMobDead:
+	stopnpctimer;
+	set $@rus_req01,0;
+	announce "Mazroka : You are truly brave. When you get the cookies and apples, come to see me.",bc_map,0x87CEEB;
+	end;
+
+OnTimer300000:
+	set $@rus_req01,0;
+	killmonster "mosk_que","Stone Furnace#rus28::OnMyMobDead";
+	end;
+}
+
+mosk_que,56,202,0	script	Occult Apple Tree#rus29	111,{
+	if (rhea_rus_main < 8) {
+		emotion 1,1;
+		close;
+	}
+	else if (rhea_rus_main == 8) {
+		if (rhea_rus_quiz == 2) {
+			if(getequipid(EQI_SHOES) != 2429 || getequipid(EQI_SHOES) != 2430) {
+				mes "["+ strcharinfo(0) +"]";
+				mes "...Hmm, did I forget to wear something...?";
+				close;
+			}
+			mes "- There are Ripe Apples -";
+			mes "- growing in clusters. -";
+			mes "- But they are higher than -";
+			mes "- you expected them to be -";
+			next;
+			set .@rus_apple01,rand(1,5);
+			if (.@rus_apple01 == 2) {
+				mes "- You hit the tree firmly, -";
+				mes "- and the apples fall down! -";
+				next;
+			}else{
+				mes "- You hit the tree firmly, -";
+				mes "- worms fall down! -";
+				next;
+				mes "["+ strcharinfo(0) +"]";
+				mes "Ahhhhhhhh!!!";
+				emotion 23,1;
+				close;
+			}
+			mes "- ^0000ff You get 100 Apples !!^000000 -";
+			announce "Mazroka : You are truly brave. When you get the cookies and apples, come to see me.",bc_map,0x87CEEB;
+			set rhea_rus_quiz,3;
+			close;
+		}
+	}
+	else {
+		emotion 1,1;
+		close;
+	}
+}
+
+mosk_que,47,217,0	warp	Escape#rus30	1,1,mosk_fild02,237,266
+
+//----------------------------------------------------------------------------
+// Marozka (Golden Thread)
+//----------------------------------------------------------------------------
+mosk_fild02,243,270,0	script	Marozka#rus31	866,{
+	if (rhea_rus_main < 8) {
+		mes "[Marozka]";
+		mes "...........................";
+		close;
+	}
+	else if (rhea_rus_main == 8) {
+		if (rhea_rus_quiz < 3) {
+			mes "[Marozka]";
+			mes "...........................";
+			close;
+		}
+		else if (rhea_rus_quiz == 3) {
+			if(getequipid(EQI_SHOES) != 2429 || getequipid(EQI_SHOES) != 2430) {
+				mes "["+ strcharinfo(0) +"]";
+				mes "...Hmm, did I forget to wear something...?";
+				close;
+			}
+			mes "[Marozka]";
+			mes ".....................you came.";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "Are you Marozka? Here, I've proven to you my strength now can you make me the 'Golden Thread'?";
+			mes "I need it to get Maria out of that wall.";
+			next;
+			mes "- You put the cookies and -";
+			mes "- apples in front of him -";
+			mes "- and he slowly utters -";
+			next;
+			mes "[Marozka]";
+			mes "As you've heard, to make the 'Golden Thread' is very difficult and takes a very long time.";
+			next;
+			mes "[Marozka]";
+			mes "I will begin making it now... let me see... Could you please come back to me in an hour?";
+			set rhea_rus_quiz,4;
+			set rus_time01,gettime(3);
+			close;
+		}
+		else if (rhea_rus_quiz == 4) {
+			if (rus_time01 < gettime(3)) {
+				mes "[Marozka]";
+				mes "Ah, just in time.";
+				mes "I have finally finished making the 'Golden Thread'. Just wait one more second and it'll be ready.";
+				set rhea_rus_quiz,28;
+				close;
+			}else{
+				mes "[Marozka]";
+				mes "As you've heard, to make the 'Golden Thread' is very difficult and takes a very long time.";
+				next;
+				mes "[Marozka]";
+				mes "I will begin making it now... let me see... Could you please come back to me in an hour?";
+				close;
+			}
+		}
+		else if (rhea_rus_quiz == 28) {
+			mes "[Marozka]";
+			mes "As promised, here's the 'Golden Thread'.";
+			mes "So, you are really going to fight Koshei the Immportal, eh?";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "I don't know but I promised to get Maria out of there.";
+			next;
+			mes "[Marozka]";
+			mes "Huh, Koshei is not your average adversary. Strength alone cannot beat him. You will need wisdom and an unfaltering spirit in order to win.";
+			next;
+			mes "[Marozka]";
+			mes "Koshei will be extremely hostile to you because you are helping Maria.";
+			next;
+			mes "[Marozka]";
+			mes "Do you still want the Golden Thread? Ok, I will give it to you! But, there is one more test.";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "One more test?";
+			mes "Didn't I already prove my worth?";
+			next;
+			mes "[Marozka]";
+			mes "That was a test of your strength. Now you must pass the test of mind and wisdom.";
+			set rhea_rus_quiz,29;
+			close;
+		}
+		else if (rhea_rus_quiz == 29) {
+			if(getequipid(EQI_SHOES) != 2429 || getequipid(EQI_SHOES) != 2430) {
+				mes "["+ strcharinfo(0) +"]";
+				mes "...Hmm, did I forget to wear something...?";
+				close;
+			}
+			mes "[Marozka]";
+			mes "...So? Have you decided?";
+			next;
+			if(select("I need more time...:I will take it!") == 1) {
+				mes "[Marozka]";
+				mes "Ok then. Come back when you are ready.";
+				close;
+			}
+			mes "[Marozka]";
+			mes "You will... Ok, let's get to it. You must answer all of these questions correctly in order to pass the test.";
+			next;
+			set .@rus_quiz01,0;
+			mes "[Marozka]";
+			mes "What is deaf, dumb, and blind and always tells the truth?";
+			next;
+			switch(select("A Poring:A Picky:A Mirror:A Tree")) {
+			case 1:
+				set .@rus_quiz01,.@rus_quiz01;
+				break;
+			case 2:
+				set .@rus_quiz01,.@rus_quiz01;
+				break;
+			case 3:
+				set .@rus_quiz01,.@rus_quiz01+1;
+				break;
+			case 4:
+				set .@rus_quiz01,.@rus_quiz01;
+			}
+			mes "[Marozka]";
+			mes "If 4 cats can catch 4 mice every 4 minutes, what is the minimum number of cats needed to get 10 mice in 10 minutes?";
+			next;
+			switch(select("4:5:6:10")) {
+			case 1:
+				set .@rus_quiz01,.@rus_quiz01+1;
+				break;
+			case 2:
+				set .@rus_quiz01,.@rus_quiz01;
+				break;
+			case 3:
+				set .@rus_quiz01,.@rus_quiz01;
+				break;
+			case 4:
+				set .@rus_quiz01,.@rus_quiz01;
+			}
+			mes "[Marozka]";
+			mes "Which of these gets shorter during winter and longer during summer?";
+			next;
+			switch(select("Sky:Day:Waves:Wind")) {
+			case 1:
+				set .@rus_quiz01,.@rus_quiz01;
+				break;
+			case 2:
+				set .@rus_quiz01,.@rus_quiz01+1;
+				break;
+			case 3:
+				set .@rus_quiz01,.@rus_quiz01;
+				break;
+			case 4:
+				set .@rus_quiz01,.@rus_quiz01;
+			}
+			mes "[Marozka]";
+			mes "Doris Etticoat, wears a petticoat and has a red nose; the longer she stands, the shorter she grows. What is she?";
+			next;
+			switch(select("A Star:A Candle:A Sword:The Moon")) {
+			case 1:
+				set .@rus_quiz01,.@rus_quiz01;
+				break;
+			case 2:
+				set .@rus_quiz01,.@rus_quiz01+1;
+				break;
+			case 3:
+				set .@rus_quiz01,.@rus_quiz01;
+				break;
+			case 4:
+				set .@rus_quiz01,.@rus_quiz01;
+			}
+			mes "[Marozka]";
+			mes "My top and bottom are twins of a kind. The middle of me makes one body combined. If I stand tall and still, run faster I will. What am I?";
+			next;
+			switch(select("A Woman:Valkyrie:The Moon:An Hourglass")) {
+			case 1:
+				set .@rus_quiz01,.@rus_quiz01;
+				break;
+			case 2:
+				set .@rus_quiz01,.@rus_quiz01;
+				break;
+			case 3:
+				set .@rus_quiz01,.@rus_quiz01;
+				break;
+			case 4:
+				set .@rus_quiz01,.@rus_quiz01+1;
+			}
+			mes "[Marozka]";
+			mes "Now let's see how you did.";
+			next;
+			if (.@rus_quiz01 > 4) {
+				mes "[Marozka]";
+				mes "You got all of them correct.";
+				next;
+			}else{
+				mes "[Marozka]";
+				mes "I told you before that I wouldn't give you the Golden Thread until you got all questions correct.";
+				next;
+				mes "[Marozka]";
+				mes "It is not too late to try again. With wisdom comes patience.";
+				close;
+			}
+			mes "[Marozka]";
+			mes "I know that a quiz is a strange way of evaluating a person's wisdom. But, it is my way of knowing if you are truly committed to fighting Koshei.";
+			next;
+			mes "[Marozka]";
+			mes "I hope you help Maria with your strength and kindness.";
+			set rhea_rus_quiz,30;
+			getitem 7879,10;
+			close;
+		}
+		else {
+			mes "[Marozka]";
+			mes "...............................";
+			next;
+			mes "- He closes his eyes -";
+			mes "- and stands still -";
+			close;
+		}
+	}
+	else {
+		mes "[Marozka]";
+		mes "...............................";
+		next;
+		mes "- He closes his eyes -";
+		mes "- and stands still -";
+		close;
+	}
+}
+
+//----------------------------------------------------------------------------
+// Baba Yaga (Golden Key)
+//----------------------------------------------------------------------------
+mosk_dun02,48,214,5	script	Baba Yaga#rus32	970,{
+	if (rhea_rus_main < 9) {
+		mes "[Baba Yaga]";
+		mes "...........................";
+		mes "If you lotter around here any longer, I will make myself some tasty human soup! Hehehehehe.";
+		emotion 29;
+		emotion 23,1;
+		close;
+	}
+	else if (rhea_rus_main == 9) {
+		mes "[Baba Yaga]";
+		mes "Why are you here, you yummy looking human? If you lotter around here any longer, I will make myself some tasty human soup! Hehehehehe";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "I, ah, I.. Gold.. golden...";
+		next;
+		mes "[Baba Yaga]";
+		mes "What are you babbling about?";
+		mes "Do you want me to transform you into a savage beast?!";
+		next;
+		mes "[Baba Yaga]";
+		mes "'Presto Change-o!!'";
+		mes "'Turn into a pig!!'";
+		specialeffect2 63;
+		emotion 23;
+		next;
+		mes "[Baba Yaga]";
+		mes "Hmm? You are protected by a Protection Spell?";
+		mes "But, it was weake. My spell destroyed it.";
+		next;
+		mes "[Baba Yaga]";
+		mes "Leave now, or I will curse you again! 'Presto...'";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "Eh, eh.. I mean.. I say.. spell...";
+		next;
+		input .@input$;
+		if (.@input$ == "Spellshield Protection") {
+			mes "["+ strcharinfo(0) +"]";
+			mes "Eh, eh.. I mean.. I say.. spell...";
+			mes ""+ .@input$ +" !!!";
+			specialeffect2 253;
+			next;
+		}else{
+			mes "["+ strcharinfo(0) +"]";
+			mes "Eh, eh.. I mean.. I say.. spell...";
+			mes ""+ .@input$ +" !!!";
+			next;
+			mes "[Baba Yaga]";
+			mes "What are you planning to do with that weak spell!?";
+			mes "Get away, child!";
+			close2;
+			warp "mosk_dun02",135,163;
+			end;
+		}
+		mes "[Baba Yaga]";
+		mes "Ho, you are protected by a Protection Spell. You are no ordinary kid.";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "I heard that you are able to make the 'Golden Key' and that's why I am here!";
+		next;
+		mes "[Baba Yaga]";
+		mes "'Golden Key'? Why do you need it?";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "I need it to release Maria Mobrena from her dark wall prison.";
+		next;
+		mes "[Baba Yaga]";
+		mes "...Maria Morebna...";
+		mes "Are you fighting against Koshei?";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "If he gets in my way of keeping my promise to her, I guess that I will fight him.";
+		next;
+		mes "[Baba Yaga]";
+		mes "Ho, kiheeheheheheheh. Ehehehehehehe.";
+		mes "You are interesting. You don't seem to be scared of Koshei.";
+		next;
+		mes "[Baba Yaga]";
+		mes "Ok, the materials for the key are...";
+		next;
+		if (countitem(724) > 1 && countitem(969) > 2 && countitem(7877) > 0 && countitem(7878) > 1 && countitem(7879) > 9) {
+			mes "[Baba Yaga]";
+			mes "You have already gatered all the materials?";
+			next;
+		}else{
+			mes "[Baba Yaga]";
+			mes "What? I cannot make you the 'Golden Key' without the materials.";
+			next;
+			mes "[Baba Yaga]";
+			mes "Go and find ^0000ff2 Cursed Ruby, 3 Gold, 1 Red Ring, 2 Lusalka's Hair, 10 Golden Thread^000000!";
+			close;
+		}
+		mes "[Baba Yaga]";
+		mes "Ok, let's begin. Ah, before that... Wait here!";
+		delitem 724,2;
+		delitem 969,3;
+		delitem 7877,1;
+		delitem 7878,2;
+		delitem 7879,10;
+		set rhea_rus_main,10;
+		close;
+	}
+	else if (rhea_rus_main == 10) {
+		mes "[Baba Yaga]";
+		mes "You come here!";
+		next;
+		mes "- Baba Yaga looks -";
+		mes "- at you carefully -";
+		next;
+		mes "[Baba Yaga]";
+		mes "Hmmm, you look energetic and strong. Ok, while I make the 'Golden Key', you must first do a favor for me!";
+		next;
+		if (Class == Job_Archer || Class == Job_Archer_High || Class == Job_Hunter || ADVJOB == Job_Sniper || Class == Job_Dancer || ADVJOB == Job_Gypsy || Class == Job_Bard || ADVJOB == Job_Clown) {
+			mes "[Baba Yaga]";
+			mes "My cow has run away. Find her and cast a Return Spell on her. The spell is '^ff0000Good feed is orange-flavored^000000'. You sould remember it.";
+			next;
+			mes "[Baba Yaga]";
+			mes "Ok! Move, move! You better be quick or I will find a way to punish you. Ehehehehehe.";
+			set rhea_rus_main,11;
+			close;
+		}
+		else if (Class == Job_Acolyte || Class == Job_Acolyte_High || Class == Job_Priest || ADVJOB == Job_High_Priest || Class == Job_Monk || ADVJOB == Job_Champion) {
+			mes "[Baba Yaga]";
+			mes "Behind my house, there is noisy coffin. It has been so nosiy recently that I can't sleep. Silence it.";
+			next;
+			mes "[Baba Yaga]";
+			mes "Ok! Move, move! You better be quick or I will find a way to punish you. Ehehehehehe.";
+			set rhea_rus_main,16;
+			close;
+		}
+		else if (Class == Job_Thief || Class == Job_Thief_High || Class == Job_Assassin || ADVJOB == Job_Assassin_Cross || Class == Job_Rogue || ADVJOB == Job_Stalker) {
+			mes "[Baba Yaga]";
+			mes "Please find my silver spoons. Those bad pirates stole them. I can feel them around the wrecked ship. Bring them to me.";
+			next;
+			mes "[Baba Yaga]";
+			mes "Ok! Move, move! You better be quick or I will find a way to punish you. Ehehehehehe.";
+			set rhea_rus_main,21;
+			close;
+		}
+		else if (Class == Job_Mage || Class == Job_Mage_High || Class == Job_Wizard || ADVJOB == Job_High_Wizard || Class == Job_Sage || ADVJOB == Job_Professor) {
+			mes "[Baba Yaga]";
+			mes "Buy me a magic book. It is published by Momotaro in Amatsu. Go there and buy it for me.";
+			next;
+			mes "[Baba Yaga]";
+			mes "Ok! Move, move! You better be quick or I will find a way to punish you. Ehehehehehe.";
+			set rhea_rus_main,26;
+			close;
+		}
+		else if (Class == Job_Swordman || Class == Job_Swordman_High || Class == Job_Knight || ADVJOB == Job_Lord_Knight || Class == Job_Crusader || ADVJOB == Job_Paladin) {
+			mes "[Baba Yaga]";
+			mes "Can you see a jar next to the cabin? There is a House ghost living in there. Drive him out of there. He irritates me a lot.";
+			next;
+			mes "[Baba Yaga]";
+			mes "Ok! Move, move! You better be quick or I will find a way to punish you. Ehehehehehe.";
+			set rhea_rus_main,31;
+			close;
+		}
+		else {
+			mes "[Baba Yaga]";
+			mes "Go to the Broom Grandmother in Payon and buy me a broom. It is best for cleaning but I don't have time to go there.";
+			next;
+			mes "[Baba Yaga]";
+			mes "Ok! Move, move! You better be quick or I will find a way to punish you. Ehehehehehe.";
+			set rhea_rus_main,36;
+			close;
+		}
+	}
+	else if (rhea_rus_main > 10 && rhea_rus_main < 16) {
+		mes "[Baba Yaga]";
+		mes "My cow has run away. Find her and cast a Return Spell on her. The spell is '^ff0000Good feed is orange-flavored^000000'. You sould remember it.";
+		next;
+		mes "[Baba Yaga]";
+		mes "Ok! Move, move! You better be quick or I will find a way to punish you. Ehehehehehe.";
+		close;
+	}
+	else if (rhea_rus_main > 15 && rhea_rus_main < 21) {
+		mes "[Baba Yaga]";
+		mes "Can you see a jar next to the cabin? There is a House ghost living in there. Drive him out of there. He irritates me a lot.";
+		next;
+		mes "[Baba Yaga]";
+		mes "Ok! Move, move! You better be quick or I will find a way to punish you. Ehehehehehe.";
+		close;
+	}
+	else if (rhea_rus_main > 20 && rhea_rus_main < 26) {
+		mes "[Baba Yaga]";
+		mes "Please find my silver spoons. Those bad pirates stole them. I can feel them around the wrecked ship. Bring them to me.";
+		next;
+		mes "[Baba Yaga]";
+		mes "Ok! Move, move! You better be quick or I will find a way to punish you. Ehehehehehe.";
+		close;
+	}
+	else if (rhea_rus_main == 26) {
+		mes "[Baba Yaga]";
+		mes "Buy me a magic book. It is published by Momotaro in Amatsu. Go there and buy it for me.";
+		next;
+		mes "[Baba Yaga]";
+		mes "Ok! Move, move! You better be quick or I will find a way to punish you. Ehehehehehe.";
+		close;
+	}
+	else if (rhea_rus_main == 27) {
+		if (countitem(7881) > 0) {
+			mes "[Baba Yaga]";
+			mes "Ho, did you buy the magic book? Give it to me. I will try it out.";
+			next;
+			mes "- Baba Yaga takes the book, -";
+			mes "reads one of the pages, -";
+			mes "and casts something -";
+			next;
+			mes "[Baba Yaga]";
+			mes "Ok.. Let's do this.";
+			mes "'Keep off the grass!!!'";
+			specialeffect 56;
+			delitem 7881,1;
+			set rhea_rus_main,28;
+			monster "mosk_dun02",52,210,"Violent Gardener",1493,1,"Baba Yaga#rus32::OnMyMobDead";
+			monster "mosk_dun02",53,210,"Dangerous Gardener",1500,1,"Baba Yaga#rus32::OnMyMobDead";
+			monster "mosk_dun02",54,210,"Brutal Gardener",1497,1,"Baba Yaga#rus32::OnMyMobDead";
+			donpcevent "Baba Yaga#rus32::OnDisable";
+			close;
+		}else{
+			mes "[Baba Yaga]";
+			mes "Buy me a magic book. It is published by Momotaro in Amatsu. Go there and buy it for me.";
+			next;
+			mes "[Baba Yaga]";
+			mes "Ok! Move, move! You better be quick or I will find a way to punish you. Ehehehehehe.";
+			close;
+		}
+	}
+	else if (rhea_rus_main == 28) {
+		mes "["+ strcharinfo(0) +"]";
+		mes "W, what is this, suddenly?!";
+		next;
+		mes "[Baba Yaga]";
+		mes "Ho.. this is for a beautiful garden. This is better than I expected. Ok then, let's do this.";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "Hey, are you listening to me?";
+		next;
+		mes "[Baba Yaga]";
+		mes "'There is an order for you to open your eyes!!!'";
+		specialeffect2 55;
+		set rhea_rus_main,29;
+		monster "mosk_dun02",52,210,"Alarm to 5 minutes",1193,1,"Baba Yaga#rus32::OnMyMobDead";
+		monster "mosk_dun02",53,210,"Alarm on time",1193,1,"Baba Yaga#rus32::OnMyMobDead";
+		monster "mosk_dun02",54,210,"Alarm past 5 minutes",1193,1,"Baba Yaga#rus32::OnMyMobDead";	
+		donpcevent "Baba Yaga#rus32::OnDisable";
+		close;
+	}
+	else if (rhea_rus_main == 29) {
+		mes "["+ strcharinfo(0) +"]";
+		mes "What are you doing!!";
+		next;
+		mes "[Baba Yaga]";
+		mes "Hmm, this one makes people deligent and doesn't look effective. Ok then, next is a House Ghost...";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "Hey, I am talking...";
+		emotion 28,1;
+		next;
+		mes "[Baba Yaga]";
+		mes "'In the corner...'";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "!!!!!!!!!!!!!!!!!!!!!!!!!";
+		emotion 23;
+		next;
+		mes "[Baba Yaga]";
+		mes "What, child? Do you feel bad?";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "When will you give me the key?!";
+		next;
+		mes "[Baba Yaga]";
+		mes "Huh, I can make it for you right now. You have a violent temper.";
+		set rhea_rus_main,44;
+		close;
+	}
+	else if (rhea_rus_main > 30 && rhea_rus_main < 36) {
+		mes "[Baba Yaga]";
+		mes "Can you see a jar next to the cabin? There is a House ghost living in there. Drive him out of there. He irritates me a lot.";
+		next;
+		mes "[Baba Yaga]";
+		mes "Ok! Move, move! You better be quick or I will find a way to punish you. Ehehehehehe.";
+		close;
+	}
+	else if (rhea_rus_main > 35 && rhea_rus_main < 41) {
+		mes "[Baba Yaga]";
+		mes "Go to the Broom Grandmother in Payon and buy me a broom. It is best for cleaning but I don't have time to go there.";
+		next;
+		mes "[Baba Yaga]";
+		mes "Ok! Move, move! You better be quick or I will find a way to punish you. Ehehehehehe.";
+		close;
+	}
+	else if (rhea_rus_main == 41) {
+		mes "["+ strcharinfo(0) +"]";
+		mes "I have done your favor! I got the cow!";
+		next;
+		mes "[Baba Yaga]";
+		mes "Oh, great. I just finished making the 'Golden Key'!";
+		next;
+		mes "[Baba Yaga]";
+		mes "Here, help Maria with this key and watch out for Koshei. He is very dangerous. Kehehehehehe.";
+		set rhea_rus_main,47;
+		getitem 7876,1;
+		close;
+	}
+	else if (rhea_rus_main == 42) {
+		mes "["+ strcharinfo(0) +"]";
+		mes "I have done your favor! The coffin is now silenced!";
+		next;
+		mes "[Baba Yaga]";
+		mes "Oh, yes. I can sleep at night now. Kehehehehe.";
+		next;
+		mes "[Baba Yaga]";
+		mes "You are on time. I just finished making the 'Golden Key'!";
+		next;
+		mes "[Baba Yaga]";
+		mes "Here, help Maria with this key and watch out for Koshei. He is very dangerous. Kehehehehehe.";
+		set rhea_rus_main,47;
+		getitem 7876,1;
+		close;
+	}
+	else if (rhea_rus_main == 43) {
+		if (countitem(7880) > 0) {
+			mes "["+ strcharinfo(0) +"]";
+			mes "I have done your favor! I found and got the silver spoons!";
+			next;
+			mes "[Baba Yaga]";
+			mes "Oh, yes. They are expensive ones. Those bad pirates.. Kehehehehe.";
+			next;
+			mes "[Baba Yaga]";
+			mes "You are on time. I just finished making the 'Golden Key'!";
+			next;
+			mes "[Baba Yaga]";
+			mes "Here, help Maria with this key and watch out for Koshei. He is very dangerous. Kehehehehehe.";
+			delitem 7880,1;
+			set rhea_rus_main,47;
+			getitem 7876,1;
+			close;
+		}else{
+			mes "["+ strcharinfo(0) +"]";
+			mes "I have done your favor! I found and got the silver spoons!";
+			next;
+			mes "[Baba Yaga]";
+			mes "Oh, yes, yes. Give them to me.";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "Here they.. They..?!";
+			next;
+			mes "[Baba Yaga]";
+			mes "You fool! Where did you sell my spoons!? Get them for me right now!";
+			close;
+		}
+	}
+	else if (rhea_rus_main == 44) {
+		mes "["+ strcharinfo(0) +"]";
+		mes "I have done your favor. Give me the key!";
+		next;
+		mes "[Baba Yaga]";
+		mes "Oh, yes, you violent tempered child. I just finished making the 'Golden Key'.";
+		next;
+		mes "[Baba Yaga]";
+		mes "Here, help Maria with this key and watch out for Koshei. He is very dangerous. Kehehehehehe.";
+		set rhea_rus_main,47;
+		getitem 7876,1;
+		close;
+	}
+	else if (rhea_rus_main == 45) {
+		mes "["+ strcharinfo(0) +"]";
+		mes "I have done your favor! The House ghost is now quiet!";
+		next;
+		mes "[Baba Yaga]";
+		mes "Oh, yes. That irritating ghost is gone. Kehehehehe.";
+		next;
+		mes "[Baba Yaga]";
+		mes "You are on time. I just finished making the 'Golden Key'!";
+		next;
+		mes "[Baba Yaga]";
+		mes "Here, help Maria with this key and watch out for Koshei. He is very dangerous. Kehehehehehe.";
+		set rhea_rus_main,47;
+		getitem 7876,1;
+		close;
+	}
+	else if (rhea_rus_main == 46) {
+		mes "["+ strcharinfo(0) +"]";
+		mes "I have done your favor! Here, the best broom from Payon!";
+		next;
+		mes "[Baba Yaga]";
+		mes "Ooh, yes. Well done. My flying broom was getting old. Kehehehehe.";
+		next;
+		mes "[Baba Yaga]";
+		mes "You are on time. I just finished making the 'Golden Key'!";
+		next;
+		mes "[Baba Yaga]";
+		mes "Here, help Maria with this key and watch out for Koshei. He is very dangerous. Kehehehehehe.";
+		set rhea_rus_main,47;
+		getitem 7876,1;
+		close;
+	}
+	else if (rhea_rus_main > 46 && rhea_rus_main < 49) {
+		mes "[Baba Yaga]";
+		mes "You got the key and went to Maria immedately, right?";
+		next;
+		mes "[Baba Yaga]";
+		mes "Take care of yourself. When you release her, Koshei will come out and bring destruction.";
+		close;
+	}
+	else if (rhea_rus_main == 49) {
+		mes "[Baba Yaga]";
+		mes "What are you doing here? Kehehehe.";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "Koshei... suddenly appeared.. and Maria.. Wolf... killed...";
+		next;
+		mes "[Baba Yaga]";
+		mes "Calm down and speak slowly. I cannot hear you at all. Drink some water.";
+		next;
+		mes "- You drink some water and -";
+		mes "- tell her the story slowly -";
+		next;
+		mes "[Baba Yaga]";
+		mes "You beat Koshei? Did you?";
+		mes "Kehehe, you are no ordinary kid.";
+		next;
+		mes "[Baba Yaga]";
+		mes "Water to enliven Maria...";
+		next;
+		mes "[Baba Yaga]";
+		mes "'Living Water'... I just need the ingredients.  I need ^0000ff1 Holy Water^000000 and ^0000ff2 Yggdrasil Leaves^000000.";
+		next;
+		mes "[Baba Yaga]";
+		mes "And 'Dead Water'.. I need ^0000ff1 Cursed Water^000000 and ^0000ff10 Hinalle Leaflets^000000.";
+		next;
+		mes "[Baba Yaga]";
+		mes "Bring them to me quickly! Time is running out!";
+		set rhea_rus_main,50;
+		close;
+	}
+	else if (rhea_rus_main == 50) {
+		if (countitem(523) > 0 && countitem(12020) > 0 && countitem(610) > 1 && countitem(520) > 9) {
+			mes "[Baba Yaga]";
+			mes "Kehe, you are very quick.";
+			next;
+			mes "[Baba Yaga]";
+			mes "Ok, let's make the 'Living Water' first...";
+			next;
+			mes "- Baba Yaga brings a big pot, -";
+			mes "- pours the Holy Water in it, -";
+			mes "- puts the Yggdrasil Leaves -";
+			mes "- in it and stirs them up -";
+			mes "- as it casts strange spells -";
+			next;
+			mes "[Baba Yaga]";
+			mes "Yg~ Yg~ Yggdrasil~ Yggdrasil has lots of iron~";
+			specialeffect 305;
+			next;
+			mes "[Baba Yaga]";
+			mes "Here, I made the 'Living Water' so now let's make the 'Dead Water'...";
+			next;
+			mes "- Baba Yaga pours the cursed -";
+			mes "- water in another pot, then -";
+			mes "- pounds the Hinalle leaflets, -";
+			mes "- puts their juice in the pot -";
+			mes "- and stirs them together -";
+			mes "- as it casts strange spells -";
+			next;
+			mes "[Baba Yaga]";
+			mes "Hi~ hi~ hi~ hi~ na~ lle~ Stir with right hand~ Stir with left hand~ Both hands will be ok~";
+			specialeffect 305;
+			next;
+			mes "[Baba Yaga]";
+			mes "Here, it's done.";
+			next;
+			mes "[Baba Yaga]";
+			mes "Take this and help Maria. Kehehehehehe.";
+			next;
+			mes "[Baba Yaga]";
+			mes "First, pour the 'Dead Water' to remove the wound and curse on her and then pour the 'Living Water' to enliven her.";
+			next;
+			mes "[Baba Yaga]";
+			mes "Go there right now! Kehehehehe";
+			next;
+			mes "- ^0000ffYou get the 'Living Water'^000000 -";
+			mes "- ^0000ffand the 'Dead Water' !!^000000 -";
+			delitem 523,1;
+			delitem 12020,1;
+			delitem 610,2;
+			delitem 520,10;
+			set rhea_rus_main,51;
+			close;
+		}else{
+			mes "[Baba Yaga]";
+			mes "'Living Water'... I just need the ingredients.  I need ^0000ff1 Holy Water^000000 and ^0000ff2 Yggdrasil Leaves^000000.";
+			next;
+			mes "[Baba Yaga]";
+			mes "And 'Dead Water'.. I need ^0000ff1 Cursed Water^000000 and ^0000ff10 Hinalle Leaflets^000000.";
+			next;
+			mes "[Baba Yaga]";
+			mes "Bring them to me quickly! Time is running out!";
+			close;
+		}
+	}
+	else if (rhea_rus_main == 51) {
+		mes "[Baba Yaga]";
+		mes "Go to Maria to help her.";
+		next;
+		mes "[Baba Yaga]";
+		mes "First, pour the 'Dead Water' to remove the wound and curse on her and then pour the 'Living Water' to enliven her.";
+		next;
+		mes "[Baba Yaga]";
+		mes "Go there right now! Kehehehehe";
+		close;
+	}
+	else if (rhea_rus_main == 52) {
+		mes "[Baba Yaga]";
+		mes "You are more useful than I thought, kid.";
+		next;
+		mes "[Baba Yaga]";
+		mes "I thank you for helping Maria. To tell the truth, it was me that connected her with Koshei. In order to seal Koshei, I needed a sacrfice...";
+		next;
+		mes "[Baba Yaga]";
+		mes "I succeeded in sealing Koshei away by using a girl who was magically strong. Sadly the girl also had to remain in the same condition as Koshei in order to maintain the seal.";
+		next;;
+		mes "[Baba Yaga]";
+		mes "However, after so many years it was impossible to keep him sealed with Maria's power alone.";
+		next;
+		mes "[Baba Yaga]";
+		mes "So that's when I decided that if you could subdue Koshei, it would be the only way to release Maria instead of using her to maintain the seal.";
+		next;
+		mes "[Baba Yaga]";
+		mes "So, that is why I helped you out by making the 'Golden Key'.";
+		next;
+		mes "[Baba Yaga]";
+		mes "Koshei is still alive, but he is weaker than before. So I don't need to use Maria anymore to seal Koshei.";
+		next;
+		mes "[Baba Yaga]";
+		mes "Thank you so much for helping Maria...";
+		next;
+		mes "[Baba Yaga]";
+		mes "I want to give anything helpful for you.";
+		next;
+		mes "[Baba Yaga]";
+		mes "Whenever you come to me, I will make you potions with just a few materials and a small fee. I hope that this will be of help to you. Kehehehehehe.";
+		set rhea_rus_main,53;
+		close;
+	}
+	else if (rhea_rus_main > 52) {
+		mes "[Baba Yaga]";
+		mes "Oh, you are back. What can I do for you?";
+		next;
+		switch(select("Condensed Red Potion:Condensed Yellow Potion:Cancel")) {
+		case 1:
+			if (countitem(501) > 0 && countitem(1092) > 0 && countitem(7134) > 0 && countitem(512) > 4) {
+				if (Zeny > 19) {
+					set .@red_potion01,countitem(501);
+					set .@red_tube01,countitem(1092);
+					set .@red_cup01,countitem(7134);
+					set .@red_apple01,countitem(512);
+					set .@red_zeny01,Zeny;
+					while(1) {
+						if (.@red_potion01 == 0 || .@red_tube01 == 0 || .@red_cup01 == 0 || .@red_apple01 < 5 || .@red_zeny01 < 20) {
+							break;
+						}else{
+							set .@red_slim01,.@red_slim01+1;
+							set .@red_potion01,.@red_potion01-1;
+							set .@redpotion_send,.@redpotion_send+1;
+							set .@red_tube01,.@red_tube01-1;
+							set .@redtube_send,.@redtube_send+1;
+							set .@red_cup01,.@red_cup01-1;
+							set .@redcup_send,.@redcup_send+1;
+							set .@red_apple01,.@red_apple01-5;
+							set .@redapple_send,.@redapple_send+5;
+							set .@red_zeny01,.@red_zeny01-20;
+							set .@redzeny_sen,.@redzeny_send+20;
+						}
+					}
+					mes "[Baba Yaga]";
+					mes "To make Condensed Red Potions, I need ^0000ff1 Red Potion, 1 Empty Test Tube, 1 Medicine Bowl, 5 Apples and 20 Zeny^000000.";
+					next;
+					mes "[Baba Yaga]";
+					mes "With your materials, I can make ^0000ff"+ red_slim01 +"^000000 Condensed Red Potions.";
+					next;
+					mes "[Baba Yaga]";
+					mes "How many do you want me to make? I can only make 100 at a time. If you don't want any, then just say '0'. Kehehehehe.";
+					next;
+					while(1) {
+						input .@input;
+						if (.@input$ == 0) {
+							mes "[Baba Yaga]";
+							mes "You don't want it?";
+							next;
+							mes "[Baba Yaga]";
+							mes "I don't understand you. What do you want? Kehehehehe.";
+							close;
+						}
+						else if (.@input$ > 100) {
+							mes "[Baba Yaga]";
+							mes "I said no more then 100 at a time. Kehehehehe.";
+							next;
+						}
+						else {
+							break;
+						}
+					}
+					set .@redpotion_send,.@input;
+					set .@redtube_send,.@input;
+					set .@redcup_send,.@input;
+					set .@redapple_send,.@input * 5;
+					set .@redzeny_send,.@input * 20;
+					set .@total_red01,.@input;
+					if (countitem(501) < .@redpotion_send || countitem(1092) < .@redtube_send || countitem(7134) < .@redcup_send || countitem(512) < .@redapple_send || Zeny < .@redzeny_send) {
+						mes "[Baba Yaga]";
+						mes "Where are the materials?";
+						mes "They are not enough! Check them and come back again! Kehehehehe.";
+						close;
+					}else{
+						mes "[Baba Yaga]";
+						mes "Ho, you want "+ .@input +". Ok, wait here for a while.";
+						next;
+						mes "- Baba Yaga grinds the Apples -";
+						mes "- and pours the Red Potion -";
+						mes "- into the Medicine Bowl, -";
+						mes "- boils and cools it down -";
+						mes "- and puts it in the Test Tube -";
+						next;
+					}
+					mes "[Baba Yaga]";
+					mes "Here, done!";
+					specialeffect 305;
+					next;
+					mes "[Baba Yaga]";
+					mes "Whenever you want more, come to me.";
+					delitem 501,.@redpotion_send;
+					delitem 1092,.@redtube_send;
+					delitem 7134,.@redcup_send;
+					delitem 512,.@redapple_send;
+					set Zeny,Zeny-.@redzeny_send;
+					getitem 545,.@total_red01;
+					close;
+				}else{
+					mes "[Baba Yaga]";
+					mes "To make Condensed Red Potions, I need ^0000ff1 Red Potion, 1 Empty Test Tube, 1 Medicine Bowl, 5 Apples and 20 Zeny^000000.";
+					close;
+				}
+			}else{
+				mes "[Baba Yaga]";
+				mes "To make Condensed Red Potions, I need ^0000ff1 Red Potion, 1 Empty Test Tube, 1 Medicine Bowl, 5 Apples and 20 Zeny^000000.";
+				close;
+			}
+			break;
+		case 2:
+			if (countitem(503) > 0 && countitem(1092) > 0 && countitem(7134) > 0 && countitem(513) > 9) {
+				if (Zeny > 49) {
+					set .@yell_potion01,countitem(503);
+					set .@yell_tube01,countitem(1092);
+					set .@yell_cup01,countitem(7134);
+					set .@yell_banana01,countitem(513);
+					set .@yell_zeny01,Zeny;
+					while(1) {
+						if (.@yell_potion01 == 0 || .@yell_tube01 == 0 || .@yell_cup01 == 0 || .@yell_banana01 < 10 || .@yell_zeny01 < 50) {
+							break;
+						}else{
+							set .@yell_slim01,.@yell_slim01+1;
+							set .@yell_potion01,.@yell_potion01-1;
+							set .@yellpotion_send,.@yellpotion_send+1;
+							set .@yell_tube01,.@yell_tube01-1;
+							set .@yelltube_send,.@yelltube_send+1;
+							set .@yell_cup01,.@yell_cup01-1;
+							set .@yellcup_send,.@yellcup_send+1;
+							set .@yell_banana01,.@yell_banana01-10;
+							set .@yellbanana_send,.@yellbanana_send+10;
+							set .@yell_zeny01,.@yell_zeny01-50;
+							set .@yellzeny_send,.@yellzeny_send+50;
+						}
+					}
+					mes "[Baba Yaga]";
+					mes "To make Condensed Yellow Potions, I need ^0000ff1 Yellow Potion, 1 Test Tube, 1 Medicine_Bowl, 10 Bananas and 50 Zeny^000000.";
+					next;
+					mes "[Baba Yaga]";
+					mes "With your materials, I can make ^0000ff"+ .@yell_slim01+"^000000.";
+					next;
+					mes "[Baba Yaga]";
+					mes "How many do you want me to make? Tell me the number less than 100. If you don't want, tell me zero. Kehehehehe.";
+					next;
+					while(1) {
+						input .@input;
+						if (.@input == 0) {
+							mes "[Baba Yaga]";
+							mes "You don't want it?";
+							next;
+							mes "[Baba Yaga]";
+							mes "I don't understand you. What do you want? Kehehehehe.";
+							close;
+						}
+						else if (.@input > 100) {
+							mes "[Baba Yaga]";
+							mes "I said no more then 100 at a time. Kehehehehe.";
+							next;
+						}
+						else {
+							break;
+						}
+					}
+					set .@yellpotion_send,.@input;
+					set .@yelltube_send,.@input;
+					set .@yellcup_send,.@input;
+					set .@yellbanana_send,.@input*10;
+					set .@yellzeny_send,.@input*50;
+					set .@total_yell01,.@input;
+					if (countitem(503) < .@yellpotion_send || countitem(1092) < .@yelltube_send || countitem(7134) < .@yellcup_send || countitem(513) < .@yellbanana_send || Zeny < .@yellzeny_send) {
+						mes "[Baba Yaga]";
+						mes "Where are the materials?";
+						mes "They are not enough! Check them and come back again! Kehehehehe.";
+						close;
+					}else{
+						mes "[Baba Yaga]";
+						mes "Ho, you want "+ .@input +". Ok, wait here for a while.";
+						next;
+						mes "- Baba Yaga grinds the Banannas -";
+						mes "- and pours the Yellow Potion -";
+						mes "- into the Medicine Bowl, -";
+						mes "- boils and cools it down -";
+						mes "- and puts it in the Test Tube -";
+						next;
+					}
+					mes "[Baba Yaga]";
+					mes "Here, done!";
+					specialeffect 305;
+					next;
+					mes "[Baba Yaga]";
+					mes "Whenever you want more, come to me.";
+					delitem 503,.@yellpotion_send;
+					delitem 1092,.@yelltube_send;
+					delitem 7134,.@yellcup_send;
+					delitem 513,.@yellbanana_send;
+					set Zeny,Zeny-.@yellzeny_send;
+					getitem 546,.@total_yell01;
+					close;
+				}else{
+					mes "[Baba Yaga]";
+					mes "To make Condensed Yellow Potions, I need ^0000ff1 Yellow Potion, 1 Test Tube, 1 Medicine_Bowl, 10 Bananas and 50 Zeny^000000.";
+					close;
+				}
+			}else{
+				mes "[Baba Yaga]";
+				mes "To make Condensed Yellow Potions, I need ^0000ff1 Yellow Potion, 1 Test Tube, 1 Medicine_Bowl, 10 Bananas and 50 Zeny^000000.";
+				close;
+			}
+			break;
+		case 3:
+			mes "[Baba Yaga]";
+			mes "You don't want anything?";
+			next;
+			mes "[Baba Yaga]";
+			mes "I don't understand you. What do you want? kehehehehe.";
+			close;
+		}
+	}
+	else {
+		mes "[Baba Yaga]";
+		mes "What are you, human child.";
+		close;
+	}
+
+OnInit:
+	enablenpc "Baba Yaga#rus32";
+	end;
+
+OnEnable:
+	enablenpc "Baba Yaga#rus32";
+	end;
+
+OnDisable:
+	initnpctimer;
+	disablenpc "Baba Yaga#rus32";
+	end;
+
+OnTimer180000:
+	stopnpctimer;
+	killmonster "mosk_dun02","Baba Yaga#rus32::OnMyMobDead";
+	donpcevent "Baba Yaga#rus32::OnEnable";
+	end;
+
+OnMyMobDead:
+	donpcevent "Baba Yaga#rus32::OnEnable";
+	end;
+}
+
+//----------------------------------------------------------------------------
+// Baba Yaga's Tasks (Golden Key)
+//----------------------------------------------------------------------------
+mosk_dun02,257,193,0	script	Cow#rus33	889,3,3,{
+	end;
+	
+OnInit:
+	enablenpc "Cow#rus33";
+	end;
+
+OnEnable:
+	enablenpc "Cow#rus33";
+	end;
+
+OnDisable:
+	disablenpc "Cow#rus33";
+	end;
+
+OnTouch:
+	if (rhea_rus_main < 11) {
+		mes "[Cow]";
+		mes "Mooo...";
+		close;
+	}
+	else if (rhea_rus_main == 11) {
+		mes "[Cow]";
+		mes "Moo..";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "Hah, t, that is Baba Yaga's cow?!";
+		mes "Y, you...";
+		next;
+		mes "- You approach to the cow carefully and hold its nape -";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "You! Go home now!";
+		emotion 23;
+		next;
+		mes "- The cow seems surprised, jumps and tries to attack you !! -";
+		next;
+		set .@russ_cow01,rand(1,4);
+		if (.@russ_cow01 == 3) {
+			mes "- You almost get hit and dodge its attack and cast the spell !! -";
+			next;
+			input .@input$;
+			if (.@input$ == "Good feed is orange-flavored") {
+				mes "["+ strcharinfo(0) +"]";
+				mes ""+ inputstr +" !!!";
+				specialeffect 304;
+				next;
+				mes "- You cast the spell in a hurry and the cow is surronded by the light and disappears !! -";
+				donpcevent "Cow#rus33::OnDisable";
+				donpcevent "Cow#rus34::OnEnable";
+				next;
+			}else{
+				mes "["+ strcharinfo(0) +"]";
+				mes ""+ inputstr +" !!!";
+				next;
+				mes "[Cow]";
+				mes "...Moo...";
+				emotion 9;
+				next;
+				set .@run_cow01,rand(1,2);
+				if (.@run_cow01 == 1) {
+					mes "- The cow, seems to gibe at you, looks at you quickly and runs to bushes !! -";
+					donpcevent "Cow#rus33::OnDisable";
+					donpcevent "Cow#rus34::OnEnable";
+					close;
+				}else{
+					mes "- The cow, seems to gibe at you, looks at you quickly and runs to bushes !! -";
+					donpcevent "Cow#rus33::OnDisable";
+					donpcevent "Cow#rus35::OnEnable";
+					close;
+				}
+			}
+		}else{
+			mes "["+ strcharinfo(0) +"]";
+			mes "Akkkk?! Eh!? The s-spell...";
+			next;
+			set .@run_cow02,rand(1,2);
+			if (.@run_cow02 == 1) {
+				mes "- You hesitate, the cow, seems to gibe at you, passes by you and runs to bushes !! -";
+				donpcevent "Cow#rus33::OnDisable";
+				donpcevent "Cow#rus34::OnEnable";
+				close;
+			}else{
+				mes "- You hesitate, the cow, seems to gibe at you, passes by you and runs to bushes !! -";
+				donpcevent "Cow#rus33::OnDisable";
+				donpcevent "Cow#rus35::OnEnable";
+				close;
+			}
+		}
+		mes "["+ strcharinfo(0) +"]";
+		mes "What a surprise. The cow is bad like its owner.";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "Ok, then. Let's get back to Baba Yaga...";
+		set rhea_rus_main,41;
+		close;
+	}
+	else if (rhea_rus_main == 41) {
+		mes "[Cow]";
+		mes "Moo...";
+		next;
+		mes "- The cow is tied around its neck and eats grass comfortably -";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "I must return to Baba Yaga...";
+		close;
+	}
+	else {
+		mes "[Cow]";
+		mes "Moo...";
+		close;
+	}
+}
+
+mosk_dun02,257,193,0	script	Cow#rus34	889,3,3,{
+	end;
+	
+OnInit:
+	enablenpc "Cow#rus34";
+	end;
+
+OnEnable:
+	enablenpc "Cow#rus34";
+	end;
+
+OnDisable:
+	disablenpc "Cow#rus34";
+	end;
+
+OnTouch:
+	if (rhea_rus_main < 11) {
+		mes "[Cow]";
+		mes "Mooo...";
+		close;
+	}
+	else if (rhea_rus_main == 11) {
+		mes "[Cow]";
+		mes "Moo..";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "Hah, t, that is Baba Yaga's cow?!";
+		mes "Y, you...";
+		next;
+		mes "- You approach to the cow carefully and hold its nape -";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "You! Go home now!";
+		emotion 23;
+		next;
+		mes "- The cow seems surprised, jumps and tries to attack you !! -";
+		next;
+		set .@russ_cow01,rand(1,4);
+		if (.@russ_cow01 == 3) {
+			mes "- You almost get hit and dodge its attack and cast the spell !! -";
+			next;
+			input .@input$;
+			if (.@input$ == "Good feed is orange-flavored") {
+				mes "["+ strcharinfo(0) +"]";
+				mes ""+ inputstr +" !!!";
+				specialeffect 304;
+				next;
+				mes "- You cast the spell in a hurry and the cow is surronded by the light and disappears !! -";
+				donpcevent "Cow#rus34::OnDisable";
+				donpcevent "Cow#rus34::OnEnable";
+				next;
+			}else{
+				mes "["+ strcharinfo(0) +"]";
+				mes ""+ inputstr +" !!!";
+				next;
+				mes "[Cow]";
+				mes "...Moo...";
+				emotion 9;
+				next;
+				set .@run_cow01,rand(1,2);
+				if (.@run_cow01 == 1) {
+					mes "- The cow, seems to gibe at you, looks at you quickly and runs to bushes !! -";
+					donpcevent "Cow#rus34::OnDisable";
+					donpcevent "Cow#rus34::OnEnable";
+					close;
+				}else{
+					mes "- The cow, seems to gibe at you, looks at you quickly and runs to bushes !! -";
+					donpcevent "Cow#rus34::OnDisable";
+					donpcevent "Cow#rus35::OnEnable";
+					close;
+				}
+			}
+		}else{
+			mes "["+ strcharinfo(0) +"]";
+			mes "Akkkk?! Eh!? The s-spell...";
+			next;
+			set .@run_cow02,rand(1,2);
+			if (.@run_cow02 == 1) {
+				mes "- You hesitate, the cow, seems to gibe at you, passes by you and runs to bushes !! -";
+				donpcevent "Cow#rus34::OnDisable";
+				donpcevent "Cow#rus34::OnEnable";
+				close;
+			}else{
+				mes "- You hesitate, the cow, seems to gibe at you, passes by you and runs to bushes !! -";
+				donpcevent "Cow#rus34::OnDisable";
+				donpcevent "Cow#rus35::OnEnable";
+				close;
+			}
+		}
+		mes "["+ strcharinfo(0) +"]";
+		mes "What a surprise. The cow is bad like its owner.";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "Ok, then. Let's get back to Baba Yaga...";
+		set rhea_rus_main,41;
+		close;
+	}
+	else if (rhea_rus_main == 41) {
+		mes "[Cow]";
+		mes "Moo...";
+		next;
+		mes "- The cow is tied around its neck and eats grass comfortably -";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "I must return to Baba Yaga...";
+		close;
+	}
+	else {
+		mes "[Cow]";
+		mes "Moo...";
+		close;
+	}
+}
+
+mosk_dun02,257,193,0	script	Cow#rus35	889,3,3,{
+	end;
+	
+OnInit:
+	enablenpc "Cow#rus35";
+	end;
+
+OnEnable:
+	enablenpc "Cow#rus35";
+	end;
+
+OnDisable:
+	disablenpc "Cow#rus35";
+	end;
+
+OnTouch:
+	if (rhea_rus_main < 11) {
+		mes "[Cow]";
+		mes "Mooo...";
+		close;
+	}
+	else if (rhea_rus_main == 11) {
+		mes "[Cow]";
+		mes "Moo..";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "Hah, t, that is Baba Yaga's cow?!";
+		mes "Y, you...";
+		next;
+		mes "- You approach to the cow carefully and hold its nape -";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "You! Go home now!";
+		emotion 23;
+		next;
+		mes "- The cow seems surprised, jumps and tries to attack you !! -";
+		next;
+		set .@russ_cow01,rand(1,4);
+		if (.@russ_cow01 == 3) {
+			mes "- You almost get hit and dodge its attack and cast the spell !! -";
+			next;
+			input .@input$;
+			if (.@input$ == "Good feed is orange-flavored") {
+				mes "["+ strcharinfo(0) +"]";
+				mes ""+ inputstr +" !!!";
+				specialeffect 304;
+				next;
+				mes "- You cast the spell in a hurry and the cow is surronded by the light and disappears !! -";
+				donpcevent "Cow#rus35::OnDisable";
+				donpcevent "Cow#rus35::OnEnable";
+				next;
+			}else{
+				mes "["+ strcharinfo(0) +"]";
+				mes ""+ inputstr +" !!!";
+				next;
+				mes "[Cow]";
+				mes "...Moo...";
+				emotion 9;
+				next;
+				set .@run_cow01,rand(1,2);
+				if (.@run_cow01 == 1) {
+					mes "- The cow, seems to gibe at you, looks at you quickly and runs to bushes !! -";
+					donpcevent "Cow#rus35::OnDisable";
+					donpcevent "Cow#rus35::OnEnable";
+					close;
+				}else{
+					mes "- The cow, seems to gibe at you, looks at you quickly and runs to bushes !! -";
+					donpcevent "Cow#rus35::OnDisable";
+					donpcevent "Cow#rus35::OnEnable";
+					close;
+				}
+			}
+		}else{
+			mes "["+ strcharinfo(0) +"]";
+			mes "Akkkk?! Eh!? The s-spell...";
+			next;
+			set .@run_cow02,rand(1,2);
+			if (.@run_cow02 == 1) {
+				mes "- You hesitate, the cow, seems to gibe at you, passes by you and runs to bushes !! -";
+				donpcevent "Cow#rus35::OnDisable";
+				donpcevent "Cow#rus35::OnEnable";
+				close;
+			}else{
+				mes "- You hesitate, the cow, seems to gibe at you, passes by you and runs to bushes !! -";
+				donpcevent "Cow#rus35::OnDisable";
+				donpcevent "Cow#rus35::OnEnable";
+				close;
+			}
+		}
+		mes "["+ strcharinfo(0) +"]";
+		mes "What a surprise. The cow is bad like its owner.";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "Ok, then. Let's get back to Baba Yaga...";
+		set rhea_rus_main,41;
+		close;
+	}
+	else if (rhea_rus_main == 41) {
+		mes "[Cow]";
+		mes "Moo...";
+		next;
+		mes "- The cow is tied around its neck and eats grass comfortably -";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "I must return to Baba Yaga...";
+		close;
+	}
+	else {
+		mes "[Cow]";
+		mes "Moo...";
+		close;
+	}
+}
+
+mosk_dun02,65,232,0	script	Noisy Coffin#rus36	801,{
+	if (rhea_rus_main < 16) {
+		mes "[Noisy Coffin]";
+		mes "Isn't it good to be alive? Isn't it good to live?";
+		next;
+		mes "[Noisy Coffin]";
+		mes "Don't you want to exchange lives with me? Exchange with me, exchange!";
+		close;
+	}
+	else if (rhea_rus_main > 15 && rhea_rus_main < 19) {
+		mes "[Noisy Coffin]";
+		mes "Isn't it good to be alive? Isn't it to live?";
+		next;
+		mes "[Noisy Coffin]";
+		mes "Don't you want to exchange lives with me? Exchange with me, exchange!";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "Ehh, that's one noisy coffin.";
+		next;
+		mes "[Noisy Coffin]";
+		mes "I was alive! I was alive!";
+		mes "What is different between you and me? Why are you still alive? Why didn't you die? Why did I die?";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "... How can I silence him...";
+		next;
+		while(1) {
+			switch(select("Pray:Sing a hymn:Pour Holy Water on him:Kick him")) {
+			case 1:
+				if (rhea_rus_main == 17) {
+					mes "["+ strcharinfo(0) +"]";
+					mes "...I'll pray.";
+					next;
+					mes "["+ strcharinfo(0) +"]";
+					mes "Heaven, earth, and wind belong to God, there is no place for evil.";
+					specialeffect 42;
+					next;
+					mes "[Noisy Coffin]";
+					mes "Heek, heeee! Heeeeeek!";
+					set rhea_rus_main,18;
+					next;
+				}else{
+					mes "["+ strcharinfo(0) +"]";
+					mes "...I'll pray.";
+					next;
+					mes "["+ strcharinfo(0) +"]";
+					mes "Heaven, earth, and wind belong to God, there is no place for evil.";
+					specialeffect 42;
+					next;
+					mes "[Noisy Coffin]";
+					mes "What was that? What was that for? Was it fun?";
+					next;
+					mes "["+ strcharinfo(0) +"]";
+					mes "......................................";
+					next;
+					break;
+				}
+				break;
+			case 2:
+				if (rhea_rus_main == 18) {
+					mes "["+ strcharinfo(0) +"]";
+					mes "Hmm, hmm! I'll sing a hymn. The first phrase 'Holy god against evils'!!";
+					next;
+					mes "["+ strcharinfo(0) +"]";
+					mes "- The covetous, the perverse -";
+					mes "- All the evils hateful -";
+					mes "- Will be droven off this land -";
+					specialeffect 75;
+					next;
+					mes "[Noisy Coffin]";
+					mes "Heek, heeee! Heeeeeek!";
+					set rhea_rus_main,19;
+					next;
+				}else{
+					mes "["+ strcharinfo(0) +"]";
+					mes "Hmm, hmm! I'll sing a hymn. The first phrase 'Good looks down at us'!!";
+					next;
+					mes "["+ strcharinfo(0) +"]";
+					mes "- The covetous, the perverse -";
+					mes "- All the evils hateful -";
+					mes "- Will be droven off this land -";
+					specialeffect 75;
+					next;
+					mes "[Noisy Coffin]";
+					mes "Perverse! The perverse!! Drive away!! What was that song?! Was it fun?!";
+					next;
+					mes "["+ strcharinfo(0) +"]";
+					mes "......................................";
+					next;
+					break;
+				}
+				break;
+			case 3:
+				if (countitem(523) > 0) {
+					if (rhea_rus_main == 16) {
+						mes "["+ strcharinfo(0) +"]";
+						mes "If you don't shut up, I will pour Holy Water on you!";
+						next;
+						mes "- You open the bottle of Holy Water and pour it around the coffin carefully !! -";
+						specialeffect 72;
+						next;
+						mes "[Noisy Coffin]";
+						mes "Heek, heeee! Heeeeeek!";
+						delitem 523,1;
+						set rhea_rus_main,17;
+						next;
+					}else{
+						mes "["+ strcharinfo(0) +"]";
+						mes "If you don't shut up, I will pour Holy Water on you!";
+						next;
+						mes "- You open the bottle of Holy Water and pour it around the coffin carefully !! -";
+						specialeffect 72;
+						next;
+						mes "[Noisy Coffin]";
+						mes "Ah, cold! No, it's cool! Was it fun? Was it fun?!";
+						delitem 523,1;
+						next;
+						mes "["+ strcharinfo(0) +"]";
+						mes "......................................";
+						next;
+						break;
+					}
+				}else{
+					mes "["+ strcharinfo(0) +"]";
+					mes "Yeah, where's the Holy water?";
+					next;
+					mes "["+ strcharinfo(0) +"]";
+					mes "...... I don't have any...";
+					next;
+					mes "["+ strcharinfo(0) +"]";
+					mes "......................................";
+					next;
+					break;
+				}
+				break;
+			case 4:
+				if (rhea_rus_main == 19) {
+					mes "["+ strcharinfo(0) +"]";
+					mes "...If you don't shut up...";
+					mes "......I will kick you!!";
+					next;
+					mes "- You close your eyes, take a deep breathe and kick the coffin with the might of God !! -";
+					next;
+					mes "[Noisy Coffin]";
+					mes "Heeeek! Heeeeeee!!!! I am scared! Stop it!!";
+					specialeffect 152;
+					set rhea_rus_main,20;
+					next;
+					break;
+				}else{
+					mes "["+ strcharinfo(0) +"]";
+					mes "...If you don't shut up...";
+					mes "......I will kick you!!";
+					next;
+					mes "- You close your eyes, take a deep breathe and kick the coffin with the might of God !! -";
+					specialeffect 152;
+					next;
+					mes "[Noisy Coffin]";
+					mes "Slam! Slam! I like noise! Do it more, more, more!";
+					next;
+					mes "["+ strcharinfo(0) +"]";
+					mes "......................................";
+					next;
+					break;
+				}
+			}
+		}
+		if (rhea_rus_main < 20) {
+			mes "["+ strcharinfo(0) +"]";
+			mes "... Not effective...";
+			set rhea_rus_main,16;
+			close;
+		}else{
+			mes "["+ strcharinfo(0) +"]";
+			mes ".............If you make noise once more, you will see more than you imagine...";
+			next;
+			mes "[Noisy Coffin]";
+			mes "................................";
+			emotion 9;
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "Hu, the job has been done.";
+			mes "Let's get back to Baba Yaga.";
+			set rhea_rus_main,42;
+			close;
+		}
+	}
+	else if (rhea_rus_main == 20) {
+		mes "["+ strcharinfo(0) +"]";
+		mes ".............If you make noise once more, you will see more than you imagine...";
+		next;
+		mes "[Noisy Coffin]";
+		mes "................................";
+		emotion 9;
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "Hu, the job has been done.";
+		mes "Let's get back to Baba Yaga.";
+		set rhea_rus_main,42;
+		close;
+	}
+	else if (rhea_rus_main == 42) {
+		mes "["+ strcharinfo(0) +"]";
+		mes ".............If you make noise once more, you will see more than you imagine...";
+		next;
+		mes "[Noisy Coffin]";
+		mes "................................";
+		emotion 9;
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "Hu, the job has been done.";
+		mes "Let's get back to Baba Yaga.";
+		close;
+	}
+	else {
+		mes "[Noisy Coffin]";
+		mes ".............................";
+		close;
+	}
+}
+
+treasure01,165,58,0	script	Old Treasure Box#rus37	111,{
+	if (checkweight(1201,1) == 0) {
+		mes "You are carrying too much!";
+		mes "Lose some weight and try again.";
+		close;
+	}
+	if ((MaxWeight-Weight) < 3500) {
+		mes "You are carrying too much!";
+		mes "Lose some weight and try again.";
+		close;
+	}
+	if (rhea_rus_main > 20 && rhea_rus_main < 25) {
+		mes "- It is locked -";
+		close;
+	}
+	else if (rhea_rus_main == 25) {
+		mes "- Around the locked box, a women having snakes on her head is engraved -";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "Does this work...";
+		next;
+		select("Insert the key into the lock");
+		mes "- As soon as you insert the key into the lock, the eyes of the woman moves and she looks at you -";
+		next;
+		if (countitem(747) > 0) {
+			mes "- Her eyes are made from jewels !! -";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "Arrrrrk? What is this!!";
+			specialeffect 99;
+			next;
+		}else{
+			mes "- Her eyes are made from jewels !! -";
+			sc_start SC_BLIND,60000,0;
+			donpcevent "Old Treasure Box#rus37::OnCall";
+			close2;
+			donpcevent "Old Treasure Box#rus37::OnDisable";
+			end;
+		}
+		mes "- You wave your arms and cover your eyes. The mirror inside your bag reflects the light from her eyes accidentally !! -";
+		specialeffect 99;
+		next;
+		mes "- The light reflected goes to the woman shape and fumes comes from the box and it opens !! -";
+		next;
+		mes "- ^0000ff You find Baba Yaga's spoon !!^000000 -";
+		set rhea_rus_main,43;
+		getitem 7880,1;
+		close;
+	}
+	else if (rhea_rus_main == 43) {
+		mes "- The treasure box where you found the silver spoons -";
+		close;
+	}
+	else {
+		end;
+	}
+	
+OnInit:
+	enablenpc "Old Treasure Box#rus37";
+	end;
+
+OnCall:
+	initnpctimer;
+	monster "treasure01",164,58,"Medusa",1148,1,"Old Treasure Box#rus37::OnMyMobDead";
+	monster "treasure01",157,59,"Obeaune",1044,1,"Old Treasure Box#rus37::OnMyMobDead";
+	monster "treasure01",164,54,"Obeaune",1044,1,"Old Treasure Box#rus37::OnMyMobDead";
+	monster "treasure01",163,63,"Obeaune",1044,1,"Old Treasure Box#rus37::OnMyMobDead";
+	monster "treasure01",168,59,"Obeaune",1044,1,"Old Treasure Box#rus37::OnMyMobDead";
+	end;
+
+OnReset:
+	stopnpctimer;
+	killmonster "treasure01","Old Treasure Box#rus37::OnMyMobDead";
+	end;
+
+OnEnable:
+	enablenpc "Old Treasure Box#rus37";
+	end;
+
+OnDisable:
+	initnpctimer;
+	disablenpc "Old Treasure Box#rus37";
+	end;
+
+OnMyMobDead:
+	donpcevent "Old Treasure Box#rus37::OnEnable";
+	end;
+
+OnTimer180000:
+	stopnpctimer;
+	donpcevent "Old Treasure Box#rus37::OnReset";
+	donpcevent "Old Treasure Box#rus37::OnEnable";
+	end;
+}
+
+treasure01,24,39,0	script	Old Bed#rus38	111,{
+	if (rhea_rus_main == 21) {
+		mes "- An old bed covered with dust and must -";
+		next;
+		switch(select("On the bed:Under the bed:Bed sheet")) {
+		case 1:
+			mes "- Mushrooms grow on the bed -";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "...Life......";
+			close;
+			break;
+		case 2:
+			mes "- You look at the under the bed -";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "Ouch?!";
+			specialeffect2 1;
+			percentheal -5,0;
+			next;
+			mes "- Something unidentified bites your hand !! -";
+			close;
+			break;
+		case 3:
+			break;
+		}
+		mes "- You raise the dirty sheet that has many holes -";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "...?! What is this?";
+		next;
+		mes "- There is a scar on the sheet that seems to have the location !! -";
+		viewpoint 1,165,58,1,0xFFFF0000;
+		viewpoint 1,61,183,2,0xFFFF0000;
+		viewpoint 1,98,118,3,0xFFFF0000;
+		viewpoint 1,27,115,4,0xFFFF0000;
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "...This may be?!";
+		next;
+		mes "[Voice unidentified]";
+		mes "Who is there!?";
+		viewpoint 2,165,58,1,0xFF00FF00;
+		viewpoint 2,61,183,2,0xFF00FF00;
+		viewpoint 2,98,118,3,0xFF00FF00;
+		viewpoint 2,27,115,4,0xFF00FF00;
+		emotion 23,1;
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "Eek, it would be best to run away now!";
+		set rhea_rus_main,22;
+		close2;
+		warp "treasure01",68,28;
+		end;
+	}
+	else if (rhea_rus_main > 21 && rhea_rus_main < 26) {
+		mes "- An old bed covered with dust and must -";
+		next;
+		switch(select("On the bed:Under the bed:Bed sheet")) {
+		case 1:
+			mes "- Mushrooms grow on the bed -";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "...Life......";
+			close;
+			break;
+		case 2:
+			mes "- You look at the under the bed -";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "Ouch?!";
+			specialeffect2 1;
+			percentheal -5,0;
+			next;
+			mes "- Something unidentified bites your hand !! -";
+			close;
+			break;
+		case 3:
+			break;
+		}
+		mes "- While running in a hurry, the sheet is a bit torn -";
+		close;
+	}
+	else {
+		end;
+	}
+}
+
+treasure01,98,119,0	script	Dirty Wall#rus39	111,{
+	if (rhea_rus_main == 22) {
+		mes "- Something is engraved on the wall -";
+		next;
+		mes "- ^ff0000Her... careful.. Mermaid's song.. sleeping.. the eyes.. protect your.. mirror^000000 -";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "...What is this talking about...?";
+		set rhea_rus_main,23;
+		close;
+	}
+	else if (rhea_rus_main > 22 && rhea_rus_main < 26) {
+		mes "- Something is engraved on the wall -";
+		next;
+		mes "- ^ff0000Her... careful.. Mermaid's song.. sleeping.. the eyes.. protect your.. mirror^000000 -";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "...What is this talking about...?";
+		close;
+	}
+	else {
+		end;
+	}
+}
+
+treasure01,61,183,0	script	Old_Wooden_Box#rus40	111,{
+	if (rhea_rus_main == 23) {
+		mes "- Something is glimmering inside of the box -";
+		next;
+		select("Put hand inside the box");
+		set .@russ_key01,rand(1,7);
+		if (.@russ_key01 == 4) {
+			mes "- You take out something glimmering from the box -";
+			next;
+			mes "- ^0000ffYou find the handle of a broken key !!^000000 -";
+			set rhea_rus_main,24;
+			close;
+		}else{
+			mes "- You try to put your hand inside it but the gap is too small to do it -";
+			next;
+			mes "- You ruin the box a little -";
+			close;
+		}
+	}
+	else if (rhea_rus_main > 23 && rhea_rus_main < 26) {
+		mes "- The old box that contained the handle of a broken key -";
+		close;
+	}
+	else {
+		end;
+	}
+}
+
+treasure01,27,115,0	script	Opened Treasure Chest#41	111,{
+	if (rhea_rus_main == 24) {
+		mes "- You open the box, junk is in it -";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "... Should I search this...?";
+		next;
+		mes "- You sigh and stretch your hand into the box -";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "...!? What is this?!";
+		next;
+		set .@russ_key02,rand(1,7);
+		if (.@russ_key02 == 3) {
+			mes "- ^0000ffYou find the handle of a broken key in the junk !!^000000 -";
+			next;
+		}
+		else if (.@russ_key02 == 1) {
+			mes "- You find the cuticle of Kukre !! -";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "W, what is this!?";
+			emotion 23,1;
+			close;
+		}
+		else if (.@russ_key02 == 2) {
+			mes "- You find the egg of a Theif Bug !! -";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "W, what is this!?";
+			emotion 23,1;
+			close;
+		}
+		else if (.@russ_key02 == 4) {
+			mes "- You find something that seems to be a banana before !! -";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "W, what is this!?";
+			emotion 23,1;
+			close;
+		}
+		else if (.@russ_key02 == 5) {
+			mes "- You find the tentacles of a Jelly Fish !! -";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "W, what is this!?";
+			emotion 23,1;
+			close;
+		}
+		else if (.@russ_key02 == 6) {
+			mes "- You find pieces of cloth with must on it !! -";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "W, what is this!?";
+			emotion 23,1;
+			close;
+		}
+		else {
+			mes "- You find a bone !! -";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "W, what is this!?";
+			emotion 23,1;
+			close;
+		}
+		mes "["+ strcharinfo(0) +"]";
+		mes "Eh, this may be...";
+		next;
+		mes "- You adjust the piece of the broken key with the its handle and they make a sound and become a key !!-";
+		set rhea_rus_main,25;
+		close;
+	}
+	else if (rhea_rus_main > 24 && rhea_rus_main < 26) {
+		mes "- The junk box containig the piece of the broken key -";
+		close;
+	}
+	else {
+		end;
+	}
+}
+
+amatsu,233,234,3	script	Momotoro Publisher#rus42	757,{
+	if (checkweight(1201,1) == 0) {
+		mes "[Momotoro Publisher]";
+		mes "What on earth do you have in your bag?";
+		mes "Are you training for something?";
+		close;
+	}
+	if ((MaxWeight-Weight) < 3500) {
+		mes "[Momotoro Publisher]";
+		mes "What on earth do you have in your bag?";
+		mes "Are you training for something?";
+		close;
+	}
+	if (rhea_rus_main < 26) {
+		mes "[Momotoro Publisher]";
+		mes "Did you order a book?";
+		next;
+		mes "[Momotoro Publisher]";
+		mes "Someone ordered a book but did not pick it up.";
+		close;
+	}
+	else if (rhea_rus_main == 26) {
+		mes "[Momotoro Publisher]";
+		mes "Did you order a book?";
+		next;
+		mes "[Momotoro Publisher]";
+		mes "Someone ordered a book but did not pick it up.";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "Ah, I.. a magic book...";
+		next;
+		mes "[Momotoro Publisher]";
+		mes "What? Ah, did you come here to pick up the book? Please, let me know your name?";
+		next;
+		input .@input$;
+		if (.@input$ == "Baba Yaga") {
+			mes "["+ strcharinfo(0) +"]";
+			mes "I am "+ inputstr +".";
+			next;
+			mes "[Momotoro Publisher]";
+			mes ""+ inputstr +" ... Ah, here it is.";
+			next;
+		}else{
+			mes "["+ strcharinfo(0) +"]";
+			mes "I am "+ inputstr +" ";
+			next;
+			mes "[Momotoro Publisher]";
+			mes ""+ inputstr +" ... Let's see...";
+			next;
+			mes "[Momotoro Publisher]";
+			mes "Hmm? I am sorry but there is no book reserved for "+ inputstr +". Can you check again please?";
+			close;
+		}
+		mes "[Momotoro Publisher]";
+		mes "Are these the right ones? 'Magic to destroy time', 'The story of the house ghost around the world', 'Strange and weird world of Herbs";
+		mes "Hmm, the price for all is 5,000 Zeny.";
+		next;
+		if (Zeny > 4999) {
+			mes "[Momotoro Publisher]";
+			mes "Eh, yep this is 5,000 Zeny.";
+			next;
+		}else{
+			mes "[Momotoro Publisher]";
+			mes "You don't have enough money?";
+			mes "Check it again and come to me, please";
+			close;
+		}
+		mes "[Momotoro Publisher]";
+		mes "Thank you for buying our books. If you need more books, contact us please.";
+		set Zeny,Zeny-5000;
+		set rhea_rus_main,27;
+		getitem 7881,1;
+		close;
+	}
+	else if (rhea_rus_main > 26 && rhea_rus_main < 31) {
+		mes "[Momotoro Publisher]";
+		mes "Thank you for buying our books. If you need more books, contact us please.";
+		close;
+	}
+	else {
+		mes "[Momotoro Publisher]";
+		mes "Did you order a book?";
+		next;
+		mes "[Momotoro Publisher]";
+		mes "Someone ordered a book but did not pick it up.";
+		close;
+	}
+}
+
+mosk_dun02,57,220,0	script	House Ghost Jar#rus43	111,{
+	if (rhea_rus_main == 31) {
+		mes "["+ strcharinfo(0) +"]";
+		mes "... Is it in here..? Hey, hey...";
+		next;
+		mes "- You tap the jar -";
+		mes "- with your hand -";
+		specialeffect 62;
+		emotion 23,1;
+		next;
+		mes "- A voice laughs in the jar as -";
+		mes "- it shakes from right to left -";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "You! No more games! Come out of there!";
+		specialeffect 1;
+		next;
+		mes "- You kick the jar -";
+		mes "- it rolls to the floor -";
+		mes "- as bugs come out!! -";
+		set rhea_rus_main,32;
+		monster "mosk_dun02",58,220,"Thief Bug Male",1054,1,"House Ghost Jar#rus43::OnMyMobDead";
+		monster "mosk_dun02",59,220,"Ancient Worm",1305,1,"House Ghost Jar#rus43::OnMyMobDead";
+		monster "mosk_dun02",60,220,"Thief Bug Male",1054,1,"House Ghost Jar#rus43::OnMyMobDead";
+		donpcevent "House Ghost Jar#rus43::OnDisable";
+		close;
+	}
+	else if (rhea_rus_main == 32) {
+		mes "["+ strcharinfo(0) +"]";
+		mes "Ehh.. you, what are you doing!!";
+		next;
+		mes "- As you plan to kick the jar -";
+		mes "- again, something scared -";
+		mes "- utters in a shaky voice -";
+		specialeffect 196;
+		next;
+		mes "[House Ghost]";
+		mes "No! Please stop it! I was wrong!";
+		next;
+		mes "[House Ghost]";
+		mes "I have been bored. After dying, I've had nothing to do and no friends to play with..";
+		next;
+		mes "[House Ghost]";
+		mes "When I was alive, I always stayed still, but now it's too boring...";
+		next;
+		mes "[House Ghost]";
+		mes "I can't even drink my favorite milk... Being a ghost is too inconvenient.";
+		next;
+		if(select("Can I play with you?:So what can I do for you?") == 1) {
+			mes "[House Ghost]";
+			mes "Ehhh, are you sure?";
+			next;
+		}else{
+			mes "[House Ghost]";
+			mes "Hmm, can you do something for me? It won't take much time.";
+			next;
+		}
+		mes "[House Ghost]";
+		mes "What about a card game? I was good at those games! Ah, where are my cards? Wait here! I'll find them!";
+		set rhea_rus_main,33;
+		close;
+	}
+	else if (rhea_rus_main == 33) {
+		mes "[House Ghost]";
+		mes "Hehe, what about a card game? I have an Angeling, Ghostring and a Poring Card.";
+		mes "All you have to do is just guess which card I pick up!";
+		next;
+		mes "[House Ghost]";
+		mes "Let's play best out of 5. So if you win 3 games, I promise to stay quiet!";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "Ok! It will be fun. Let's do it.";
+		next;
+		set .@rugame_turn01,0;
+		set .@ruuser_score01,0;
+		while(.@rugame_turn01 != 5) {
+			mes "[House Ghost]";
+			mes "Ok, first let me shuffle these cards around.";
+			mes "Ready!";
+			emotion 56;
+			next;
+			mes "[House Ghost]";
+			mes "One!";
+			specialeffect 0;
+			next;
+			mes "[House Ghost]";
+			mes "One! Two!";
+			specialeffect 1;
+			next;
+			mes "[House Ghost]";
+			mes "One! Two! Three!";
+			specialeffect 2;
+			next;
+			mes "[House Ghost]";
+			mes "Ok! I will pick one of them up!";
+			specialeffect 18;
+			next;
+			mes "[House Ghost]";
+			mes "Ok! I will pick one of them up!";
+			mes "What is this card?";
+			cutin "sorry.bmp",4;
+			next;
+			set .@rucard_game01,rand(1,3);
+			switch(select("Poring:Angeling:Ghostring")) {
+			case 1:
+				mes "["+ strcharinfo(0) +"]";
+				mes "Hmmm, I think it is the Poring Card!";
+				next;
+				mes "[House Ghost]";
+				mes "Ok, time to find out!";
+				mes "One! Two! Three!!";
+				next;
+				if (.@rucard_game01 == 1) {
+					cutin "포링카드",4;
+					emotion 0;
+					emotion 5,1;
+					next;
+					mes "[House Ghost]";
+					mes "You got it right. You are good.";
+					mes "Can you do it next time?";
+					set .@rugame_turn01,.@rugame_turn01+1;
+					set .@ruuser_score01,.@ruuser_score01+1;
+					cutin "",255;
+					next;
+				}else{
+					if (.@rucard_game01 == 1) {
+						cutin "포링카드",4;
+					}
+					else if (.@rucard_game01 == 2) {
+						cutin "엔젤링카드",4;
+					}
+					else if (.@rucard_game01 == 3) {
+						cutin "고스트링카드",4;
+					}
+					emotion 0;
+					emotion 23,1;
+					next;
+					mes "[House Ghost]";
+					mes "Huuu...";
+					mes "Better luck next time!";
+					set .@rugame_turn01,.@rugame_turn01+1;
+					cutin "",255;
+					next;
+				}
+				break;
+			case 2:
+				mes "["+ strcharinfo(0) +"]";
+				mes "Hmmm, I think it is the Angeling Card!";
+				next;
+				mes "[House Ghost]";
+				mes "Ok, time to find out!";
+				mes "One! Two! Three!!";
+				next;
+				if (.@rucard_game01 == 2) {
+					cutin "엔젤링카드",4;
+					emotion 0;
+					emotion 5,1;
+					next;
+					mes "[House Ghost]";
+					mes "You got it right. You are good.";
+					mes "Can you do it next time?";
+					set .@rugame_turn01,.@rugame_turn01+1;
+					set .@ruuser_score01,.@ruuser_score01+1;
+					cutin "",255;
+					next;
+				}else{
+					if (.@rucard_game01 == 1) {
+						cutin "포링카드",4;
+					}
+					else if (.@rucard_game01 == 2) {
+						cutin "엔젤링카드",4;
+					}
+					else if (.@rucard_game01 == 3) {
+						cutin "고스트링카드",4;
+					}
+					emotion 0;
+					emotion 23,1;
+					next;
+					mes "[House Ghost]";
+					mes "Huuu...";
+					mes "Better luck next time!";
+					set .@rugame_turn01,.@rugame_turn01+1;
+					cutin "",255;
+					next;
+				}
+				break;
+			case 3:
+				mes "["+ strcharinfo(0) +"]";
+				mes "Hmmm, I think it is the Ghostring Card!";
+				next;
+				mes "[House Ghost]";
+				mes "Ok, time to find out!";
+				mes "One! Two! Three!!";
+				next;
+				if (.@rucard_game01 == 3) {
+					cutin "고스트링카드",4;
+					emotion 0;
+					emotion 5,1;
+					next;
+					mes "[House Ghost]";
+					mes "You got it right. You are good.";
+					mes "Can you do it next time?";
+					set .@rugame_turn01,.@rugame_turn01+1;
+					set .@ruuser_score01,.@ruuser_score01+1;
+					cutin "",255;
+					next;
+				}else{
+					if (.@rucard_game01 == 1) {
+						cutin "포링카드",4;
+					}
+					else if (.@rucard_game01 == 2) {
+						cutin "엔젤링카드",4;
+					}
+					else if (.@rucard_game01 == 3) {
+						cutin "고스트링카드",4;
+					}
+					emotion 0;
+					emotion 23,1;
+					next;
+					mes "[House Ghost]";
+					mes "Huuu...";
+					mes "Better luck next time!";
+					set .@rugame_turn01,.@rugame_turn01+1;
+					cutin "",255;
+					next;
+				}
+			}
+		}
+		if (.@ruuser_score01 == 3) {
+			mes "[House Ghost]";
+			mes "You are better than I thought.";
+			set rhea_rus_main,34;
+			close;
+		}else{
+			mes "["+ strcharinfo(0) +"]";
+			mes "I was not thinking correctly! Let's do it again!";
+			next;
+			mes "[House Ghost]";
+			mes "Huhu, ok. Let's do it again?";
+			close;
+		}
+	}
+	else if (rhea_rus_main == 34) {
+		mes "[House Ghost]";
+		mes "Ah, it was fun. It has been a long time since I've been able to play a game like that.";
+		next;
+		mes "[House Ghost]";
+		mes "As promised, I will be quiet now. Thank you for playing with me.";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "Oh and by the way, I have a present for you!";
+		next;
+		if (countitem(519) > 0) {
+			mes "["+ strcharinfo(0) +"]";
+			mes "You said you like milk. Here, take this.";
+			next;
+		}else{
+			mes "["+ strcharinfo(0) +"]";
+			mes "You said you like milk. Here, take.. Eh?";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "W, where is this? Wait here. I will bring it soon!!";
+			close;
+		}
+		mes "[House Ghost]";
+		mes "Ah, wow!! Can I have this?";
+		next;
+		mes "[House Ghost]";
+		mes "Thank you so much!!";
+		mes "I promise I wil be quiet now. I will be the acting guardian for this house!";
+		next;
+		mes "[House Ghost]";
+		mes "I will never forget your kindness of entertaining me.";
+		set rhea_rus_main,45;
+		close;
+	}
+	else if (rhea_rus_main == 45) {
+		mes "[House Ghost]";
+		mes "Thank you so much!!";
+		mes "I promise I wil be quiet now. I will be the acting guardian for this house!";
+		next;
+		mes "[House Ghost]";
+		mes "I will never forget your kindness of entertaining me.";
+		close;
+	}
+	else {
+		end;
+	}
+
+OnInit:
+	enablenpc "House Ghost Jar#rus43";
+	end;
+
+OnEnable:
+	enablenpc "House Ghost Jar#rus43";
+	end;
+
+OnDisable:
+	initnpctimer;
+	disablenpc "House Ghost Jar#rus43";
+	end;
+
+OnTimer180000:
+	stopnpctimer;
+	killmonster "mosk_dun02","House Ghost Jar#rus43::OnMyMobDead";
+	donpcevent "House Ghost Jar#rus43::OnEnable";
+	end;
+
+OnMyMobDead:
+	donpcevent "House Ghost Jar#rus43::OnEnable";
+	end;
+}
+
+payon,65,119,0	script	Broom Grandma#rus44	78,{
+	if (rhea_rus_main < 36) {
+		mes "[Broom Grandma]";
+		mes "A broom from Payon is the best!";
+		next;
+		mes "[Broom Grandma]";
+		mes "It is so good that even ghosts want only a Payon broom.";
+		close;
+	}
+	else if (rhea_rus_main == 36) {
+		mes "[Broom Grandma]";
+		mes "A broom from Payon is best!";
+		next;
+		mes "[Broom Grandma]";
+		mes "It is so good that even ghosts want only a Payon broom.";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "I want to buy a broom.";
+		next;
+		mes "[Broom Grandma]";
+		mes "Oh, you are a guest. Yes, you need a broom?";
+		next;
+		mes "[Broom Grandma]";
+		mes "But, I have no broom. Ghosts stole all my newly made brooms. I was pleased because they were nice even for ghosts. But...";
+		next;
+		mes "[Broom Grandma]";
+		mes "My son went to their place to get back the brooms, but he failed since the ghosts tricked him.";
+		next;
+		mes "[Broom Grandma]";
+		mes "Ah.. What should I do...";
+		set rhea_rus_main,37;
+		close;
+	}
+	else if (rhea_rus_main > 36 && rhea_rus_main < 41) {
+		mes "[Broom Grandma]";
+		mes "There are ghosts inside the dungeon of Payon. There is a tree there where the ghosts is hiding.";
+		next;
+		mes "[Broom Grandma]";
+		mes "My son went to their place to get back the brooms, but he failed since the ghosts tricked him.";
+		next;
+		mes "[Broom Grandma]";
+		mes "Ah.. What should I do...";
+		close;
+	}
+	else if (rhea_rus_main == 46) {
+		mes "[Broom Grandma]";
+		mes "Ah, you have taken them back. You are a great adventurer.";
+		next;
+		mes "[Broom Grandma]";
+		mes "You can have that broom. I believe it is its destiny.";
+		close;
+	}
+	else {
+		mes "[Broom Grandma]";
+		mes "A broom from Payon is the best!";
+		next;
+		mes "[Broom Grandma]";
+		mes "It is so good that even ghosts want only a Payon broom.";
+		close;
+	}
+}
+
+pay_dun04,163,186,0	script	Ghost Tree#rus45	111,{
+	if (rhea_rus_main == 37) {
+		mes "[Ghost Tree]";
+		mes "Errr, a human? What are you doing here? Do you want to play with me?";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "Return the broom.";
+		next;
+		mes "[Ghost Tree]";
+		mes "Kuhuhuhu, if you want it, you must give me the correct answers to my questions!";
+		next;
+		if(select("Ok, ask me!:No, just give it to me!") == 2) {
+			mes "[Ghost Tree]";
+			mes "What!? You are rude to ask for what you want by doing nothing!";
+			next;
+			mes "[Ghost Tree]";
+			mes "Get away! You must be punished!";
+			sc_start SC_CONFUSION,60000,0;
+			close2;
+			warp "pay_dun04",46,43;
+			end;
+		}
+		mes "[Ghost Tree]";
+		mes "Kuhuhu, you a cool kid?!";
+		mes "I like a person confident as talented. Let's begin the test!";
+		next;
+		mes "[Ghost Tree]";
+		mes "Eh.. Let's see. This will be a good start! Let's get started if you are ready!";
+		set rhea_rus_main,38;
+		close;
+	}
+	else if (rhea_rus_main == 38) {
+		mes "[Ghost Tree]";
+		mes "First question. Listen to me carefully and answer the question!";
+		next;
+		mes "[Ghost Tree]";
+		mes "Kafra sisters had a race. Listen to what they say and guess their ranking in the race. Understand?";
+		next;
+		mes "[Ghost Tree]";
+		mes "Ok, then, listen to them.";
+		next;
+		mes "[Kafra Roxie]";
+		mes "I am not good at running but Jasmine won over me and I won over Blossom.";
+		next;
+		mes "[Kafra Blossom]";
+		mes "I think that the smaller you are, the less the air disturbs you. Curly Sue was so fast that I couldn't follow her.";
+		next;
+		mes "[Kafra Jasmine]";
+		mes "I won over Pavianne, but not Curly Sue. Huhu.";
+		next;
+		mes "[Kafra Curly Sue]";
+		mes "Wohuhu, it was difficult to race with the fast runners. Anyway, I am pleased to win over Roxie!";
+		next;
+		mes "[Kafra Pavianne]";
+		mes "...I wasn't the last one even though Roxie won over me...";
+		next;
+		mes "[Ghost Tree]";
+		mes "Ok then, who was the first?!";
+		next;
+		set .@rus_kafra01,0;
+		input .@input$;
+		if (.@input$ == "Curly Sue") {
+			set .@rus_kafra01,.@rus_kafra01+1;
+			mes "["+ strcharinfo(0) +"]";
+			mes ""+ .@input$ +" !!";
+			next;
+		}else{
+			set .@rus_kafra01,.@rus_kafra01;
+			mes "["+ strcharinfo(0) +"]";
+			mes ""+ .@input$ +"!!";
+			next;
+		}
+		mes "[Ghost Tree]";
+		mes "Who was the second?";
+		next;
+		input .@input$;
+		if (.@input$ == "Jasmine") {
+			set .@rus_kafra01,.@rus_kafra01+1;
+			mes "["+ strcharinfo(0) +"]";
+			mes ""+ .@input$ +" !!";
+			next;
+		}else{
+			set .@rus_kafra01,.@rus_kafra01;
+			mes "["+ strcharinfo(0) +"]";
+			mes ""+ .@input$ +"!!";
+			next;
+		}
+		mes "[Ghost Tree]";
+		mes "Who was the third?";
+		next;
+		input .@input$;
+		if (.@input$ == "Roxie") {
+			set .@rus_kafra01,.@rus_kafra01+1;
+			mes "["+ strcharinfo(0) +"]";
+			mes ""+ .@input$ +" !!";
+			next;
+		}else{
+			set .@rus_kafra01,.@rus_kafra01;
+			mes "["+ strcharinfo(0) +"]";
+			mes ""+ .@input$ +"!!";
+			next;
+		}
+		mes "[Ghost Tree]";
+		mes "And then who was the forth?";
+		next;
+		input .@input$;
+		if (.@input$ == "Pavianne") {
+			set .@rus_kafra01,.@rus_kafra01+1;
+			mes "["+ strcharinfo(0) +"]";
+			mes ""+ .@input$ +" !!";
+			next;
+		}else{
+			set .@rus_kafra01,.@rus_kafra01;
+			mes "["+ strcharinfo(0) +"]";
+			mes ""+ .@input$ +"!!";
+			next;
+		}
+		mes "[Ghost Tree]";
+		mes "And who was the last?!";
+		next;
+		input .@input$;
+		if (.@input$ == "Blossom") {
+			set .@rus_kafra01,.@rus_kafra01+1;
+			mes "["+ strcharinfo(0) +"]";
+			mes ""+ .@input$ +" !!";
+			next;
+		}else{
+			set .@rus_kafra01,.@rus_kafra01;
+			mes "["+ strcharinfo(0) +"]";
+			mes ""+ .@input$ +"!!";
+			next;
+		}
+		if (.@rus_kafra01 > 4) {
+			mes "[Ghost Tree]";
+			mes "Ho, you are good!";
+			next;
+		}else{
+			mes "[Ghost Tree]";
+			mes "Ah, you are wrong, wrong!";
+			mes "Do you really think that you can take the brooms back?";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "I was not thinking correctly! I will try it again!";
+			next;
+			mes "[Ghost Tree]";
+			mes "Kuhuhu, ok. Let's do it again. Try your best.";
+			close;
+		}
+		mes "[Ghost Tree]";
+		mes "Ok, let's see if you are good next time.";
+		mes "Gear yourself up!";
+		set rhea_rus_main,39;
+		close;
+	}
+	else if (rhea_rus_main == 39) {
+		mes "[Ghost Tree]";
+		mes "The second question. Listen carefully and answer!";
+		next;
+		mes "[Ghost Tree]";
+		mes "One day, you, "+ strcharinfo(0) +", upgraded your 'Hat of the Sun God', your ancestral treasure.";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "Eh? I didn't...";
+		next;
+		mes "[Ghost Tree]";
+		mes "Shut up! Listen to me!";
+		mes "While Aragam, Antonio, Hermanthorn, and Holgren, 4 blacksmiths, upgraded the 'Hat of the Sun God' in turn, it was broken!";
+		next;
+		mes "[Ghost Tree]";
+		mes "The stauts of 'Hat of the Sun God' was +7. Here, you guess who broke it!";
+		next;
+		mes "[Aragam]";
+		mes "I heard that Holgren upraded it up to +7. It was overpace.";
+		next;
+		mes "[Antonio]";
+		mes "...We upgraded it twice for each...";
+		next;
+		mes "[Hermanthorn]";
+		mes "Hogren worked after me.";
+		next;
+		mes "[Holgren]";
+		mes "I did it after Aragam!";
+		next;
+		mes "[Ghost Tree]";
+		mes "Have you heard all of them? Who broke the 'Hat of the Sun God'?!";
+		next;
+		input .@input$;
+		if (.@input$ == "Antonio") {
+			mes "["+ strcharinfo(0) +"]";
+			mes ""+ .@input$ +" !!";
+			next;
+		}else{
+			mes "["+ strcharinfo(0) +"]";
+			mes ""+ .@input$ +"!!";
+			next;
+			mes "[Ghost Tree]";
+			mes "You are wrong, wrong!";
+			mes "Look at this. In this way, it will take you a million years to take them back!";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "I was not thinking correctly!!!";
+			mes "Again, again!";
+			next;
+			mes "[Ghost Tree]";
+			mes "Kuhuhu, Ok then. You should do better next time!";
+			close;
+		}
+		mes "[Ghost Tree]";
+		mes "Good! Well done. The last one is to cast a dice with me! If you win over me, I will give you what you want!";
+		next;
+		mes "[Ghost Tree]";
+		mes "Gear yourself up and come to me again!";
+		set rhea_rus_main,40;
+		close;
+	}
+	else if (rhea_rus_main == 40) {
+		mes "[Ghost Tree]";
+		mes "Kuhuhu, you did good until now. If you win over me, I will give the brooms as promisied.";
+		next;
+		mes "[Ghost Tree]";
+		mes "The game is simple. Your number must be more than mine.";
+		next;
+		mes "[Ghost Tree]";
+		mes "Cast 3 times if you win once, I will give you what you want.";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "Ok! I will do it!";
+		next;
+		set .@rustree_turn01,0;
+		set .@rususer_score01,0;
+		while(.@rustree_turn01 != 3) {
+			mes "[Ghost Tree]";
+			mes "I cast first.";
+			next;
+			mes "- Ghost Tree casts a dice. The dice falls down, rotates and stops there-";
+			specialeffect 194;
+			next;
+			set .@tree_dice01,rand(1,6);
+			if (.@tree_dice01 == 1) {
+				mes "[Ghost Tree]";
+				mes "I've got ^0000ffNumber 1^000000.";
+				emotion 58;
+				next;
+			}
+			else if (.@tree_dice01 == 2) {
+				mes "[Ghost Tree]";
+				mes "I've got ^0000ffNumber 2^000000.";
+				emotion 59;
+				next;
+			}
+			else if (.@tree_dice01 == 3) {
+				mes "[Ghost Tree]";
+				mes "I've got ^0000ffNumber 3^000000.";
+				emotion 60;
+				next;
+			}
+			else if (.@tree_dice01 == 4) {
+				mes "[Ghost Tree]";
+				mes "I've got ^0000ffNumber 4^000000.";
+				emotion 61;
+				next;
+			}
+			else if (.@tree_dice01 == 5) {
+				mes "[Ghost Tree]";
+				mes "I've got ^0000ffNumber 5^000000.";
+				emotion 62;
+				next;
+			}
+			else if (.@tree_dice01 == 6) {
+				mes "[Ghost Tree]";
+				mes "I've got ^0000ffNumber 6^000000.";
+				emotion 63;
+				next;
+			}
+			mes "["+ strcharinfo(0) +"]";
+			mes "Ok, it is my turn?";
+			next;
+			mes "-You cast a dice. The dice falls down, rotates and stops there-";
+			specialeffect2 194;
+			next;
+			set .@rus_dice01,rand(1,6);
+			mes "["+ strcharinfo(0) +"]";
+			mes "Let's see...";
+			next;
+			if (.@rus_dice01 == 1) {
+				emotion 58,1;
+				mes "["+ strcharinfo(0) +"]";
+				if (.@rus_dice01 == .@tree_dice01) {
+					mes "Let's see... Wow, I got it! I've got ^0000ffNumber 1^000000!";
+				}else{
+					mes "Let's see................... It is ^0000ff 1 ^000000...";
+				}
+			}
+			else if (.@rus_dice01 == 2) {
+				emotion 59,1;
+				mes "["+ strcharinfo(0) +"]";
+				if (.@rus_dice01 == .@tree_dice01) {
+					mes "Let's see... Wow, I got it! I've got ^0000ffNumber 2^000000!";
+				}else{
+					mes "Let's see................... It is ^0000ff 2 ^000000...";
+				}
+			}
+			else if (.@rus_dice01 == 3) {
+				emotion 60,1;
+				mes "["+ strcharinfo(0) +"]";
+				if (.@rus_dice01 == .@tree_dice01) {
+					mes "Let's see... Wow, I got it! I've got ^0000ffNumber 3^000000!";
+				}else{
+					mes "Let's see................... It is ^0000ff 3 ^000000...";
+				}
+			}
+			else if (.@rus_dice01 == 4) {
+				emotion 61,1;
+				mes "["+ strcharinfo(0) +"]";
+				if (.@rus_dice01 == .@tree_dice01) {
+					mes "Let's see... Wow, I got it! I've got ^0000ffNumber 4^000000!";
+				}else{
+					mes "Let's see................... It is ^0000ff 4 ^000000...";
+				}
+			}
+			else if (.@rus_dice01 == 5) {
+				emotion 62,1;
+				mes "["+ strcharinfo(0) +"]";
+				if (.@rus_dice01 == .@tree_dice01) {
+					mes "Let's see... Wow, I got it! I've got ^0000ffNumber 5^000000!";
+				}else{
+					mes "Let's see................... It is ^0000ff 5 ^000000...";
+				}
+			}
+			else if (.@rus_dice01 == 6) {
+				emotion 63,1;
+				mes "["+ strcharinfo(0) +"]";
+				if (.@rus_dice01 == .@tree_dice01) {
+					mes "Let's see... Wow, I got it! I've got ^0000ffNumber 6^000000!";
+				}else{
+					mes "Let's see................... It is ^0000ff 6 ^000000...";
+				}
+			}
+			if (.@rus_dice01 == .@tree_dice01) {
+				emotion 0;
+				next;
+				mes "[Ghost Tree]";
+				mes "You seem lucky...";
+				set .@rustree_turn01,.@rustree_turn01+1;
+				set .@rususer_score01,.@rususer_score01+1;
+				next;
+			}else{
+				mes "[Ghost Tree]";
+				mes "Huuu...";
+				emotion 18;
+				set .@rustree_turn01,.@rustree_turn01+1;
+				next;		
+			}
+		}
+		if (.@rususer_score01 > 0) {
+			mes "[Ghost Tree]";
+			mes "Ah. I lost, but it was fun.";
+			next;
+			mes "[Ghost Tree]";
+			mes "For the fun play, I will give the broom to you as promised.";
+			next;
+			mes "[Ghost Tree]";
+			mes "I can say that you are fun. If possible, play with me again. And take them.";
+			next;
+			mes "- ^0000ff You receive the best broom from Payon !!^000000 - ";
+			set rhea_rus_main,46;
+			close;
+		}else{
+			mes "[Ghost Tree]";
+			mes "Kuhuhu, nobody is worse than you. Remember that you have to win over me to get what you want";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "I was not what I am! Let's do it again!";
+			next;
+			mes "[Ghost Tree]";
+			mes "Ok, let's play again. If prepared, try again?";
+			close;
+		}
+	}
+	else if (rhea_rus_main == 46) {
+		mes "[Ghost Tree]";
+		mes "Kuhuhu, I can say that you are fun. If possible, play with me again.";
+		close;
+	}
+	else {
+		end;
 	}
 }

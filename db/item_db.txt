@@ -160,7 +160,7 @@
 659,Heart_Of_Her,Her Heart,2,500,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1188; },{},{}
 660,Prohibition_Red_Candle,Forbidden Red Candle,2,20000,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1200; },{},{}
 661,Sway_Apron,Soft Apron,2,20000,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1275; },{},{}
-662,Inspector_Certificate,Authoritative Badge,2,1450,,30,,,,,0xFFFFFFFF,7,2,,,,,,{ specialeffect2 507; sc_start SC_SpeedUp0,180000,0; },{},{}
+662,Inspector_Certificate,Authoritative Badge,2,1450,,30,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_SpeedUp0,180000,0; },{},{}
 663,Korea_Rice_Cake,Korean Rice Cake,0,1,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 10,0; },{},{}
 // Item Givers
 664,Gift_Box_1,Gift Box,2,1000,,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_GiftBox_1),1; },{},{}
@@ -3526,7 +3526,7 @@
 12014,Imma_Arrow_Container,Immaterial Arrow Quiver,2,2,,250,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 1757,500; },{},{}
 12015,Rusty_Arrow_Container,Rusty Arrow Quiver,2,2,,250,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 1762,500; },{},{}
 // Speed Potions
-12016,Speed_Up_Potion,Speed Potion,0,2,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ specialeffect2 507; sc_start SC_SpeedUp1,5000,0; },{},{}
+12016,Speed_Up_Potion,Speed Potion,0,2,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_SpeedUp1,5000,0; },{},{}
 12017,Slow_Down_Potion,Slow Potion,0,2,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_SlowDown,5000,0; },{},{}
 12018,Fire_Cracker,Firecracker,2,2,,20,,,,,0xFFFFFFFF,7,2,,,,,,{ end; },{},{}
 12019,Holy_Egg,Holy Egg,11,2,,150,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill "ALL_RESURRECTION",2; },{},{}
@@ -3781,7 +3781,7 @@
 12259,Miracle_Medicine,Miracle Medicine,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12260,Cool_Summer_Outfit,Summer Event Suit,2,0,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_Summer,600000,0; },{},{}
 12261,Secret_Medicine,Secret Medicine,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-12262,Inspector_Certificate_,Authoritative Badge,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ specialeffect2 507; sc_start SC_SpeedUp0,180000,0; },{},{}
+12262,Inspector_Certificate_,Authoritative Badge,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_SpeedUp0,180000,0; },{},{}
 12263,Comp_Battle_Manual,Battle Manual,2,2,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_EXPBOOST,1800000,50; },{},{}
 12264,Comp_Bubble_Gum,Bubble Gum,2,2,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_ITEMBOOST,1800000,0; },{},{}
 12265,Comp_Insurance,Insurance,2,2,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_LIFEINSURANCE,1800000,0; },{},{}

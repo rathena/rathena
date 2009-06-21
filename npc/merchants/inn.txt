@@ -4,7 +4,7 @@
 //= Darkchild (1.1)
 //= Playtester (1.2)
 //===== Current Version: ===================================== 
-//= 2.7
+//= 2.8
 //===== Compatible With: ===================================== 
 //= eAthena 1.0+
 //===== Description: ========================================= 
@@ -42,6 +42,7 @@
 //= 2.5 Added Moskovia Gostinitsa (Inn) from jA
 //= 2.6 Updated Alberta inn to official. [L0ne_W0lf]
 //= 2.7 Removed Morroc Inns as per episode 12.1. [L0ne_W0lf]
+//= 2.8 Removed Moscovia Inn; Its in quests/quest_moscovia.txt [Kisuka]
 //============================================================ 
 
 
@@ -198,36 +199,6 @@ ve_in,157,219,5	script	Inn Master#Receptionist	709,{
 
 	Mend:
 		close;
-}
-
-//======================== Moscovia ====================================
-mosk_in,135,191,5	script	Landlord#mosk	961,{
-	mes "[Landlord]";
-	mes "Oh, welcome to the Inn 'Sticky Herb Tree'.";
-	mes "It is the most comfortable and";
-	mes "calmest place in all of Moscovia.";
-	next;
-	if (select("Save:Stay the night - 5000z") == 1) {
-		mes "[Landlord]";
-		mes "Your respawn point";
-		mes "has been saved.";
-		mes "Hope we can see you again next time hoho.";
-		savepoint "mosk_in",141,188;
-		close;
-	}
-	mes "[Landlord]";
-	if(Zeny < 5000) {
-		mes "The service charge is 5000z.";
-		mes "Please make sure you have enough";
-		mes "money for the service.";
-		close;
-	}
-	mes "Please be comfortable.";
-	close2;
-	set Zeny,Zeny - 5000;
-	percentheal 100,100;
-	warp "mosk_in",215,181;
-	end;
 }
 
 //======================= Inn Function ==============================
