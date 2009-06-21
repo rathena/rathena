@@ -5770,7 +5770,14 @@ int skill_castend_id(int tid, unsigned int tick, int id, intptr data)
 				break;
 			}
 		}
-		else
+
+		if( ud->skillid == PR_TURNUNDEAD )
+		{
+			struct status_data *tstatus = status_get_status_data(target);
+			if( !battle_check_undead(tstatus->race, tstatus->def_ele) )
+				break;
+		}
+
 		if( ud->skillid == PR_LEXDIVINA || ud->skillid == MER_LEXDIVINA )
 		{
 			sc = status_get_sc(target);
@@ -5779,13 +5786,6 @@ int skill_castend_id(int tid, unsigned int tick, int id, intptr data)
 				clif_skill_nodamage (src, target, ud->skillid, ud->skilllv, 0);
 				break;
 			}
-		}
-		else
-		if( ud->skillid == PR_TURNUNDEAD )
-		{
-			struct status_data *tstatus = status_get_status_data(target);
-			if( !battle_check_undead(tstatus->race, tstatus->def_ele) )
-				break;
 		}
 		else
 		{ // Check target validity.
