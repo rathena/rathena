@@ -999,6 +999,7 @@ From here on, we will have the commands sorted as follow:
 4.- Player-related commands.
 5.- Mob / NPC -related commands.
 6.- Other commands.
+7.- Instance Commands.
 
 =====================
 |1.- Basic commands.|
@@ -6336,6 +6337,95 @@ this one update client part too to avoid the glith problem.
 *readbook <book id>,<page>;
 
 This will open a book item at the specified page
+
+---------------------------------------
+
+========================
+|7.- Instance commands.|
+========================
+---------------------------------------
+
+*instance_create("<Instance Name>",<Party ID>,<Instance>)
+
+Create an instance using the name "<Instance Name>" for the Party of <Party ID>.
+Instance ID currently will only be ID_ENDLESS (5) or ID_CATACOMBS (6)
+Most Instance_* commands are used in conjunction with this command and depend
+on the ID this command returns.
+
+Example: 
+	// Store the Party ID of the invoking character.
+	set .@party_id, getcharid(1);
+	// Atempt to create an instance using that party ID.
+	set .@id, instance_create("Endless Tower", .@party_id, ID_ENDLESS);
+	if (.@id == -1) { // Party ID is in use by another instance.
+		...
+	}
+	else (.@id < 0) { // Unspecified error while queuing instance.
+		...
+	}
+---------------------------------------
+
+*instance_destroy(<Instance ID>)
+
+Destroys instance with the ID <Instance ID>.
+
+---------------------------------------
+
+*instance_attachmap(<Instance ID>,"<Map Name>")
+*instance_detachmap(<Instance ID>,"<Map Name>")
+
+Attach or detach the map "<Map Name>" to the instance with the <Instance ID>.
+
+---------------------------------------
+
+*instance_init(<Instance ID>);
+
+Initiate the instance of <Instance ID>.
+
+---------------------------------------
+
+*instance_announce <Instance ID>,"<text>",<flag>{,<color>};
+
+Works like announce, but has the <Instance ID> paramter, where 0 = active instance?
+
+---------------------------------------
+
+*instance_attach(<Instance ID>);
+
+Attaches a script to the proviced <Instance ID>?
+
+---------------------------------------
+
+*instance_npcname("<NPC Name>",<Instance ID>)
+
+Retrieve the unique name given to a copy of an NPC for an instance, the given
+"<NPC Name>" that belonds to instance <Instance ID>. Can be used with such commands
+as enablenpc and disablenpc, donpcevent, etc.
+
+---------------------------------------
+
+*has_instance("<Map Name>")
+
+Check if the player has been queued for the <Map Name> instance.
+
+---------------------------------------
+
+*instance_id(<?>)
+
+Apparantly returns the ID the player is currently attached too.
+
+---------------------------------------
+
+*instance_warpall "<Map Name>",<x>,<y>;
+
+Warp all palyers in the instance to <map name> and given coordinates.
+
+---------------------------------------
+
+*instance_set_timeout <Time1>,<Time2>,<Instance ID>;
+
+Lifetime of <Time1> for <Instance ID>, while <Time2> is how long until the 
+instance times out while inactive. 
 
 ---------------------------------------
 
