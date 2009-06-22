@@ -99,8 +99,6 @@ lhz_in03	mapflag	nomemo
 hu_in01	mapflag	nomemo
 auction_01	mapflag	nomemo
 auction_02	mapflag	nomemo
-p_track01	mapflag	nomemo
-p_track02	mapflag	nomemo
 ra_in01	mapflag	nomemo
 ra_temin	mapflag	nomemo
 ra_temsky	mapflag	nomemo

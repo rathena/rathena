@@ -58,7 +58,6 @@ ein_in01	mapflag	indoors
 airport	mapflag	indoors
 airplane	mapflag	indoors
 airplane_01	mapflag	indoors
-hu_in01	mapflag	indoors
 y_airport	mapflag	indoors
 lhz_airport	mapflag	indoors
 lhz_in01	mapflag	indoors

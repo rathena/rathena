@@ -87,8 +87,6 @@ lhz_cube	mapflag	nobranch
 hu_in01	mapflag	nobranch
 auction_01	mapflag	nobranch
 auction_02	mapflag	nobranch
-p_track01	mapflag	nobranch
-p_track02	mapflag	nobranch
 ra_in01	mapflag	nobranch
 ra_temin	mapflag	nobranch
 ra_temple	mapflag	nobranch

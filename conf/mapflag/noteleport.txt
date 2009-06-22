@@ -208,7 +208,6 @@ force_4-1	mapflag	noteleport
 force_5-1	mapflag	noteleport
 force_1-2	mapflag	noteleport
 force_1-3	mapflag	noteleport
-prt_are_in	mapflag	noteleport
 sec_in01	mapflag	noteleport
 sec_in02	mapflag	noteleport
 

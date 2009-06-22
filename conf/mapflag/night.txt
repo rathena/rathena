@@ -204,7 +204,7 @@ yuno_fild06	mapflag	nightenabled
 tha_scene01	mapflag	nightenabled
 hugel	mapflag	nightenabled
 p_track01	mapflag	nightenabled
-p_track01	mapflag	nightenabled
+p_track02	mapflag	nightenabled
 odin_tem01	mapflag	nightenabled
 odin_tem02	mapflag	nightenabled
 odin_tem03	mapflag	nightenabled
