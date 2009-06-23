@@ -3347,7 +3347,10 @@ int atcommand_char_ban(const int fd, struct map_session_data* sd, const char* co
 			if (modif_p[0] == 's') {
 				second = value;
 				modif_p++;
-			} else if (modif_p[0] == 'n' || (modif_p[0] == 'm' && modif_p[1] == 'n')) {
+			} else if (modif_p[0] == 'n') {
+				minute = value;
+				modif_p++;
+			} else if (modif_p[0] == 'm' && modif_p[1] == 'n') {
 				minute = value;
 				modif_p = modif_p + 2;
 			} else if (modif_p[0] == 'h') {
@@ -5010,7 +5013,10 @@ int atcommand_jailfor(const int fd, struct map_session_data* sd, const char* com
 				modif_p++;
 			while (modif_p[0] >= '0' && modif_p[0] <= '9')
 				modif_p++;
-			if (modif_p[0] == 'n' || (modif_p[0] == 'm' && modif_p[1] == 'n')) {
+			if (modif_p[0] == 'n') {
+				minute = value;
+				modif_p++;
+			} else if (modif_p[0] == 'm' && modif_p[1] == 'n') {
 				minute = value;
 				modif_p = modif_p + 2;
 			} else if (modif_p[0] == 'h') {

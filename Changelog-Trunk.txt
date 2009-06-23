@@ -3,6 +3,8 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+09/06/23
+	* Minor update to atcommand_jailfor and atcommand_char_ban's modif_p var incrementation for minute-based bans/jails. [Paradox924X]
 09/06/20
 	* Changed Asura Strike/Jump Kick to target skill to get rid of the "target delay". (bugreport:2174) [Inkfish]
 09/06/19
