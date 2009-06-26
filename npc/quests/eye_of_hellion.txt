@@ -1466,9 +1466,9 @@ payon,182,132,3	script	Grout'he Tuccok#hellion	48,{
 	else if (HELLIONQ == 52) {
 		mes "[Grout'he]";
 		mes "Oh, you need some help";
-		mes "Win figuring out the clues?";
+		mes "in figuring out the clues?";
 		mes "Heh. Alright, let's see.";
-		mes "You want I should help";
+		mes "You want me to help";
 		mes "you in making sense of";
 		mes "this weird riddle?";
 		next;

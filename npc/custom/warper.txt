@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Darkchild
 //===== Current Version: =====================================
-//= 2.0
+//= 2.1
 //===== Compatible With: =====================================
 //= Any eAthena Version;
 //===== Description: =========================================
@@ -24,6 +24,7 @@
 //= 1.8 Removed Duplicates [Silent]
 //= 1.9 Optimized for the greater good. [Kisuka]
 //= 2.0 Fixed warp for AntHell and Yuno. [Kisuka]
+//= 2.1 Moved AntHell warp agent to the new anthell entrance. [brianluau]
 //============================================================
 //============================================================
 //= To allow selecting the Level of the Dungeon you want to
@@ -48,175 +49,137 @@
 			switch(select("Alberta:Aldebaran:Amatsu:Ayothaya:Comodo:Einbroch:Einbech:Geffen:Gonryun:Hugel:Izlude:Lighthalzen:Louyang:Lutie:Morroc:Payon:Prontera:Umbala:Yuno")) {
 				case 1:
 					warp "alberta",27,236;
-					end;
 					break;
 				case 2:
 					warp "aldebaran",145,120;
-					end;
 					break;
 				case 3:
 					warp "amatsu",197,86;
-					end;
 					break;
 				case 4:
 					warp "ayothaya",149,118;
-					end;
 					break;
 				case 5:
 					warp "comodo",188,161;
-					end;
 					break;
 				case 6:
 					warp "einbroch",64,200;
-					end;
 					break;
 				case 7:
 					warp "einbech",70,95;
-					end;
 					break;
 				case 8:
 					warp "geffen",119,66;
-					end;
 					break;
 				case 9:
 					warp "gonryun",150,130;
-					end;
 					break;
 				case 10:
 					warp "hugel",96,145;
-					end;
 					break;
 				case 11:
 					warp "izlude",128,111;
-					end;
 					break;
 				case 12:
 					warp "lighthalzen",158,92;
-					end;
 					break;
 				case 13:
 					warp "louyang",210,108;
-					end;
 					break;
 				case 14:
 					warp "xmas",150,133;
-					end;
 					break;
 				case 15:
 					warp "morocc",159,93;
-					end;
 					break;
 				case 16:
 					warp "payon",152,75;
-					end;
 					break;
 				case 17:
 					warp "prontera",156,187;
-					end;
 					break;
 				case 18:
 					warp "umbala",130,130;
-					end;
 					break;
 				case 19:
 					warp "yuno",160,168;
-					end;
+					break;
 			}
 			break;
-		case 2:		
+		case 2:
 			mes "[Warp Agent]";
 			mes "Please select which dungeon you would like to be teleported to.";
 			next;
 			switch(select("Abyss Lake:Amatsu Dungeon:Anthell:Ayothaya Dungeon:Bibilan Dungeon:Coal Mine (Dead Pit):Culvert:Einbech Dungeon:Glast Heim:Gonryun Dungeon:Juperos:Lighthalzen Bio Lab:Magma Dungeon:Niflheim:Odin Temple:Orc Dungeon:Payon Dungeon:Pyramids:Sphinx:Sunken Ship:Thanatos Tower:Turtle Dungeon")) {
 				case 1:
 					warp "hu_fild05",189,207;
-					end;
 					break;
 				case 2:
 					warp "ama_dun01",229,12;
-					end;
 					break;
 				case 3:
-					warp "moc_fild20",148,141;
-					end;
+					warp "moc_fild20",164,145;
 					break;
 				case 4:
 					warp "ayo_fild02",280,149;
-					end;
 					break;
 				case 5:
 					warp "izlu2dun",106,88;
-					end;
 					break;
 				case 6:
 					warp "prt_sewb1",126,248;
-					end;
 					break;
 				case 7:
 					warp "mjolnir_02",81,359;
-					end;
 					break;
 				case 8:
 					warp "einbech",135,249;
-					end;
 					break;
 				case 9:
 					warp "glast_01",368,303;
-					end;
 					break;
 				case 10:
 					warp "gonryun",160,195;
-					end;
 					break;
 				case 11:
 					warp "yuno_fild07",218,176;
-					end;
 					break;
 				case 12:
 					warp "lighthalzen",158,285;
-					end;
 					break;
 				case 13:
 					warp "yuno_fild03",39,140;
-					end;
 					break;
 				case 14:
 					warp "niflheim",35,161;
-					end;
 					break;
 				case 15:
 					warp "odin_tem01",98,144;
-					end;
 					break;
 				case 16:
 					warp "gef_fild10",70,332;
-					end;
 					break;
 				case 17:
 					warp "pay_arche",43,132;
-					end;
 					break;
 				case 18:
 					warp "moc_ruins",62,162;
-					end;
 					break;
 				case 19:
 					warp "moc_fild19",107,100;
-					end;
 					break;
 				case 20:
 					warp "alb2trea",75,98;
-					end;
 					break;
 				case 21:
 					warp "tha_scene01",131,223;
-					end;
 					break;
 				case 22:
 					warp "tur_dun01",149,238;
-					end;
 			}
+			break;
 	}
+	end;
 }
 
 // --------- NPC Clones ------------
@@ -246,7 +209,7 @@ yuno,137,162,4	duplicate(warpra)	Warp Agent#21	859
 
 // ------------ Dungeons ------------
 ama_dun01,233,9,1	duplicate(warpra)	Warp Agent#22	859
-moc_fild04,207,331,4	duplicate(warpra)	Warp Agent#23	859
+moc_fild20,162,139,6	duplicate(warpra)	Warp Agent#23	859
 ayo_fild02,279,154,4	duplicate(warpra)	Warp Agent#24	859
 izlu2dun,104,82,4	duplicate(warpra)	Warp Agent#25	859
 prt_sewb1,125,253,4	duplicate(warpra)	Warp Agent#26	859

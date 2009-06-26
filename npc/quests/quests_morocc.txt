@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 
-//= 2.5
+//= 2.6
 //===== Compatible With: ===================================== 
 //= eAthena 7.15 +
 //===== Description: ========================================= 
@@ -29,6 +29,7 @@
 //=     Moved Dandelion's Request to a it's own file.
 //=     Added support NPCs required to finish Gaebolg quest.
 //= 2.5 Fixed Group of Evil never re-enabling. [L0ne_W0lf]
+//= 2.6 Removed Ontouch trigger area from NPCs. [brianluau]
 //============================================================ 
 
 //==================================================================================//
@@ -876,7 +877,7 @@ que_job01,70,84,1	script	Girl#moc_ex002	882,{
 
 // Continental Guard Quest
 // ============================================================
-moc_fild20,354,183,3	script	Continental Guard#01::MocConGuard	707,3,3,{
+moc_fild20,354,183,3	script	Continental Guard#01::MocConGuard	707,{
 	if ((rebirth_moc_edq == 0) && (rebirth_moc_edq < 4)) {
 		mes "[Continental Guard]";
 		mes "No commoners are allowed in the area beyond this point.";
@@ -1063,15 +1064,15 @@ OnTouch:
 	end;
 }
 
-moc_fild20,354,174,3	duplicate(MocConGuard)	Continental Guard#02	707,3,3
-moc_fild20,38,174,5	duplicate(MocConGuard)	Continental Guard#03	707,3,3
-moc_fild20,38,183,5	duplicate(MocConGuard)	Continental Guard#04	707,3,3
-moc_fild20,189,21,7	duplicate(MocConGuard)	Continental Guard#05	707,3,3
-moc_fild20,200,21,7	duplicate(MocConGuard)	Continental Guard#06	707,3,3
-moc_fild20,203,336,5	duplicate(MocConGuard)	Continental Guard#07	707,3,3
-moc_fild20,215,336,3	duplicate(MocConGuard)	Continental Guard#08	707,3,3
+moc_fild20,354,174,3	duplicate(MocConGuard)	Continental Guard#02	707
+moc_fild20,38,174,5	duplicate(MocConGuard)	Continental Guard#03	707
+moc_fild20,38,183,5	duplicate(MocConGuard)	Continental Guard#04	707
+moc_fild20,189,21,7	duplicate(MocConGuard)	Continental Guard#05	707
+moc_fild20,200,21,7	duplicate(MocConGuard)	Continental Guard#06	707
+moc_fild20,203,336,5	duplicate(MocConGuard)	Continental Guard#07	707
+moc_fild20,215,336,3	duplicate(MocConGuard)	Continental Guard#08	707
 
-prontera,164,304,3	script	Continental Messenger#01::ConMessenger	997,3,3,{
+prontera,164,304,3	script	Continental Messenger#01::ConMessenger	997,{
 	set .@area$,strnpcinfo(2);
 	if (.@area$ == "01") { set .@area$,"Prontera"; }
 	else if (.@area$ == "02") { set .@area$,"Geffen"; }
@@ -1156,10 +1157,10 @@ OnTouch:
 	end;
 }
 
-geffen,128,90,3	duplicate(ConMessenger)	Continental Messenger#02	997,3,3
-payon,200,113,3	duplicate(ConMessenger)	Continental Messenger#03	997,3,3
-alberta,127,64,3	duplicate(ConMessenger)	Continental Messenger#04	998,3,3
-aldebaran,135,128,3	duplicate(ConMessenger)	Continental Messenger#05	998,3,3
+geffen,128,90,3	duplicate(ConMessenger)	Continental Messenger#02	997
+payon,200,113,3	duplicate(ConMessenger)	Continental Messenger#03	997
+alberta,127,64,3	duplicate(ConMessenger)	Continental Messenger#04	998
+aldebaran,135,128,3	duplicate(ConMessenger)	Continental Messenger#05	998
 
 morocc,176,103,3	script	Continental Official	754,{
 	if (rebirth_moc_edq > 3) {

@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= kobra_k88
 //===== Current Version: =====================================
-//= 1.3
+//= 1.3b
 //===== Compatible With: =====================================
 //= eAthena 0.1+; RO Episode 4+
 //===== Description: =========================================
@@ -12,6 +12,7 @@
 //= Based off existing guild scripts.  Do not know if it is accurate.[kobra_k88]
 //= 1.2 Official treasure spawn [Lupus]
 //= 1.3 Added F_GldTreas function. (bugreport:1788) [L0ne_W0lf]
+//= 1.3b Added F_GldTreasSw function. (bugreport:3292) [brianluau]
 //============================================================
 
 
@@ -46,6 +47,21 @@ function	script	F_GldTreas	{
 		areamonster getarg(0),getarg(6),getarg(7),getarg(8),getarg(9),"Treasure Chest",getarg(4),1,"Treasure_"+getarg(1)+"::OnDied";
 	}
 	return;
+}
+
+//==============================================================
+//  Treasure Room Switch 
+//===============================================================
+function	script	F_GldTreasSw	{
+	mes " ";
+	mes "There's a small lever. Will you pull it?";
+	next;
+
+	if (select("Pull.:Do not.") == 1) {
+		warp getarg(0),getarg(1),getarg(2);
+		return;
+	}
+	close;
 }
 
 //<=============================== Castle 1 =================================>\\
