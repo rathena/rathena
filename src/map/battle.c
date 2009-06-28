@@ -1786,12 +1786,6 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 			}
 		}
 
-		if( sc && sc->count && sc->data[SC_DEFRATIOATK] 
-			&& !is_boss(target)
-			&& skill_num != PA_SACRIFICE && skill_num != CR_GRANDCROSS && skill_num != NPC_GRANDDARKNESS && skill_num != PA_SHIELDCHAIN
-			&& !flag.cri )
-			flag.pdef = flag.pdef2 = sc->data[SC_DEFRATIOATK]->val1; // Occult Impact Effect
-
 		if (!flag.idef || !flag.idef2)
 		{	//Defense reduction
 			short vit_def;
@@ -1806,17 +1800,8 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 				{
 					if( i > 100 ) i = 100;
 					def1 -= def1 * i / 100;
-					// def2 -= def2 * i / 100;
+					def2 -= def2 * i / 100;
 				}
-			}
-
-			if( sc && sc->count && sc->data[SC_IGNOREDEF] 
-				&& !is_boss(target)
-				&& skill_num != CR_GRANDCROSS && skill_num != NPC_GRANDDARKNESS )
-			{
-				i = cap_value(sc->data[SC_IGNOREDEF]->val1,1,100);
-				def1 -= def1 * i / 100;
-				def2 -= def2 * i / 100;
 			}
 
 			if( battle_config.vit_penalty_type && battle_config.vit_penalty_target&target->type )

@@ -1042,20 +1042,22 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 		}
 	}
 
-	//Auto-script when attacking
-	if( sd && sd->autoscript[0].script )
+	//Autobonus when attacking
+	if( sd && sd->autobonus[0].rate )
 	{
 		int i;
-		for( i = 0; i < ARRAYLENGTH(sd->autoscript) && sd->autoscript[i].script; i++ )
+		for( i = 0; i < ARRAYLENGTH(sd->autobonus); i++ )
 		{
-			if(!(sd->autoscript[i].flag&attack_type&BF_WEAPONMASK &&
-				 sd->autoscript[i].flag&attack_type&BF_RANGEMASK &&
-				 sd->autoscript[i].flag&attack_type&BF_SKILLMASK))
-				continue; // one or more trigger conditions were not fulfilled
-			if( rand()%1000 > sd->autoscript[i].rate )
+			if( rand()%1000 > sd->autobonus[i].rate )
 				continue;
+			if( sd->autobonus[i].active != INVALID_TIMER )
+				continue;
+			if(!(sd->autobonus[i].atk_type&attack_type&BF_WEAPONMASK &&
+				 sd->autobonus[i].atk_type&attack_type&BF_RANGEMASK &&
+				 sd->autobonus[i].atk_type&attack_type&BF_SKILLMASK))
+				continue; // one or more trigger conditions were not fulfilled
 			sd->state.autocast = 1;
-			run_script(sd->autoscript[i].script,0,sd->autoscript[i].target?bl->id:src->id,0);
+			pc_exeautobonus(sd,&sd->autobonus[i]);
 			sd->state.autocast = 0;
 		}
 	}
@@ -1128,18 +1130,18 @@ int skill_onskillusage(struct map_session_data *sd, struct block_list *bl, int s
 		sd->state.autocast = 0;
 	}
 
-	if( sd->autoscript3[0].script )
+	if( sd && sd->autobonus3[0].rate )
 	{
-		for( i = 0; i < ARRAYLENGTH(sd->autoscript3) && sd->autoscript3[i].script; i++ )
+		for( i = 0; i < ARRAYLENGTH(sd->autobonus3); i++ )
 		{
-			if( sd->autoscript3[i].flag != skillid )
+			if( rand()%1000 > sd->autobonus3[i].rate )
 				continue;
-			if( sd->autoscript3[i].target && bl == NULL )
+			if( sd->autobonus3[i].active != INVALID_TIMER )
 				continue;
-			if( rand()%1000 > sd->autoscript3[i].rate )
+			if( sd->autobonus3[i].atk_type != skillid )
 				continue;
 			sd->state.autocast = 1;
-			run_script(sd->autoscript3[i].script,0,sd->bl.id,0);
+			pc_exeautobonus(sd,&sd->autobonus3[i]);
 			sd->state.autocast = 0;
 		}
 	}
@@ -1316,20 +1318,23 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 			}
 		}
 	}
-	//Auto-script when attacked
-	if( dstsd && !status_isdead(bl) && dstsd->autoscript2[0].script && !(skillid && skill_get_nk(skillid)&NK_NO_DAMAGE) )
+
+	//Autobonus when attacked
+	if( dstsd && !status_isdead(bl) && dstsd->autobonus2[0].rate && !(skillid && skill_get_nk(skillid)&NK_NO_DAMAGE) )
 	{
 		int i;
-		for( i = 0; i < ARRAYLENGTH(dstsd->autoscript2) && dstsd->autoscript2[i].script; i++ )
+		for( i = 0; i < ARRAYLENGTH(dstsd->autobonus2); i++ )
 		{
-			if(!(dstsd->autoscript2[i].flag&attack_type&BF_WEAPONMASK &&
-				 dstsd->autoscript2[i].flag&attack_type&BF_RANGEMASK &&
-				 dstsd->autoscript2[i].flag&attack_type&BF_SKILLMASK))
-				continue; // one or more trigger conditions were not fulfilled
-			if( rand()%1000 > dstsd->autoscript2[i].rate )
+			if( rand()%1000 > dstsd->autobonus2[i].rate )
 				continue;
+			if( dstsd->autobonus2[i].active != INVALID_TIMER )
+				continue;
+			if(!(dstsd->autobonus2[i].atk_type&attack_type&BF_WEAPONMASK &&
+				 dstsd->autobonus2[i].atk_type&attack_type&BF_RANGEMASK &&
+				 dstsd->autobonus2[i].atk_type&attack_type&BF_SKILLMASK))
+				continue; // one or more trigger conditions were not fulfilled
 			dstsd->state.autocast = 1;
-			run_script(dstsd->autoscript2[i].script,0,dstsd->autoscript2[i].target?src->id:bl->id,0);
+			pc_exeautobonus(dstsd,&dstsd->autobonus2[i]);
 			dstsd->state.autocast = 0;
 		}
 	}
@@ -8984,9 +8989,6 @@ int skill_castfix (struct block_list *bl, int skill_id, int skill_lv)
 		}
 	}
 
-	if( sc && sc->count && sc->data[SC_SKILLCASTRATE] && (sc->data[SC_SKILLCASTRATE]->val1 == skill_id || sc->data[SC_SKILLCASTRATE]->val2 == skill_id || sc->data[SC_SKILLCASTRATE]->val3 == skill_id) )
-		time += time * sc->data[SC_SKILLCASTRATE]->val4 / 100;
-
 	// config cast time multiplier
 	if (battle_config.cast_rate != 100)
 		time = time * battle_config.cast_rate / 100;
@@ -9005,8 +9007,6 @@ int skill_castfix_sc (struct block_list *bl, int time)
 	if (sc && sc->count) {
 		if (sc->data[SC_SLOWCAST])
 			time += time * sc->data[SC_SLOWCAST]->val2 / 100;
-		if (sc->data[SC_FASTCAST])
-			time -= time * sc->data[SC_FASTCAST]->val1 / 100;
 		if (sc->data[SC_SUFFRAGIUM]) {
 			time -= time * sc->data[SC_SUFFRAGIUM]->val2 / 100;
 			status_change_end(bl, SC_SUFFRAGIUM, -1);

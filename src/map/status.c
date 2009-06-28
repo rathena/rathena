@@ -518,14 +518,11 @@ void initChangeTables(void)
 	StatusChangeFlagTable[SC_INCFLEERATE] |= SCB_FLEE;
 	StatusChangeFlagTable[SC_INCCRI] |= SCB_CRI;
 	StatusChangeFlagTable[SC_INCFLEE2] |= SCB_FLEE2;
-	StatusChangeFlagTable[SC_INCDEF] |= SCB_DEF;
 	StatusChangeFlagTable[SC_INCMHPRATE] |= SCB_MAXHP;
 	StatusChangeFlagTable[SC_INCMSPRATE] |= SCB_MAXSP;
-	StatusChangeFlagTable[SC_INCASPDRATE] |= SCB_ASPD;
 	StatusChangeFlagTable[SC_INCATKRATE] |= SCB_BATK|SCB_WATK;
 	StatusChangeFlagTable[SC_INCMATKRATE] |= SCB_MATK;
 	StatusChangeFlagTable[SC_INCDEFRATE] |= SCB_DEF;
-	StatusChangeFlagTable[SC_INCBASEATK] |= SCB_BATK;
 	StatusChangeFlagTable[SC_STRFOOD] |= SCB_STR;
 	StatusChangeFlagTable[SC_AGIFOOD] |= SCB_AGI;
 	StatusChangeFlagTable[SC_VITFOOD] |= SCB_VIT;
@@ -1782,8 +1779,6 @@ int status_calc_pc_(struct map_session_data* sd, bool first)
 		+ sizeof(sd->add_drop)
 		+ sizeof(sd->itemhealrate)
 	);
-	// clear autoscripts...
-	pc_autoscript_clear(sd);
 	
 	// vars zeroing. ints, shorts, chars. in that order.
 	memset (&sd->arrow_atk, 0,sizeof(sd->arrow_atk)
@@ -1834,6 +1829,11 @@ int status_calc_pc_(struct map_session_data* sd, bool first)
 		+ sizeof(sd->unbreakable_equip)
 		+ sizeof(sd->unstripable_equip)
 		);
+
+	// Autobonus
+	pc_delautobonus(sd,sd->autobonus,ARRAYLENGTH(sd->autobonus),true);
+	pc_delautobonus(sd,sd->autobonus2,ARRAYLENGTH(sd->autobonus),true);
+	pc_delautobonus(sd,sd->autobonus3,ARRAYLENGTH(sd->autobonus),true);
 
 	// Parse equipment.
 	for(i=0;i<EQI_MAX-1;i++) {
@@ -3382,8 +3382,6 @@ static unsigned short status_calc_batk(struct block_list *bl, struct status_chan
 	if(!sc || !sc->count)
 		return cap_value(batk,0,USHRT_MAX);
 
-	if(sc->data[SC_INCBASEATK])
-		batk += sc->data[SC_INCBASEATK]->val1;
 	if(sc->data[SC_ATKPOTION])
 		batk += sc->data[SC_ATKPOTION]->val1;
 	if(sc->data[SC_BATKFOOD])
@@ -3602,8 +3600,6 @@ static signed char status_calc_def(struct block_list *bl, struct status_change *
 		return 90;
 	if(sc->data[SC_STEELBODY])
 		return 90;
-	if(sc->data[SC_INCDEF])
-		def += sc->data[SC_INCDEF]->val1;
 	if(sc->data[SC_ARMORCHANGE])
 		def += sc->data[SC_ARMORCHANGE]->val2;
 	if(sc->data[SC_DRUMBATTLE])
@@ -3914,8 +3910,6 @@ static short status_calc_aspd_rate(struct block_list *bl, struct status_change *
 			aspd_rate -= 200;
 	}
 
-	if(sc->data[SC_INCASPDRATE])
-		aspd_rate -= sc->data[SC_INCASPDRATE]->val2;
 	if(sc->data[i=SC_ASPDPOTION3] ||
 		sc->data[i=SC_ASPDPOTION2] ||
 		sc->data[i=SC_ASPDPOTION1] ||
@@ -5023,9 +5017,6 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 				if (sce->val2 > val2)
 					return 0;
 				break;
-			case SC_HPREGEN:
-			case SC_HPDRAIN:
-			case SC_SPREGEN:
 			case SC_S_LIFEPOTION:
 			case SC_L_LIFEPOTION:
 			case SC_BOSSMAPINFO:
@@ -5355,9 +5346,6 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			if (!val4) val4 = 1;
 			tick = 10000;
 			break;
-		case SC_HPREGEN:
-		case SC_HPDRAIN:
-		case SC_SPREGEN:
 		case SC_S_LIFEPOTION:
 		case SC_L_LIFEPOTION:
 			if( val1 == 0 ) return 0;
@@ -5897,7 +5885,6 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			if (val1 < 0)
 				val1 = 0;
 			break;
-		case SC_INCASPDRATE:
 		case SC_INCFLEE2:
 		case SC_INCCRI:
 			val2 = val1*10; //Actual boost (since 100% = 1000)
@@ -5923,7 +5910,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			// Mod your resistance against elements:
 			// val1 = water | val2 = earth | val3 = fire | val4 = wind
 			// break;
-		case SC_FASTCAST:
+		//case ????:
 			//Place here SCs that have no SCB_* data, no skill associated, no ICON
 			//associated, and yet are not wrong/unknown. [Skotlex]
 			break;
@@ -6994,20 +6981,6 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr data)
 		}
 		break;
 
-	case SC_HPDRAIN:
-		if( --(sce->val4) >= 0 )
-		{
-			int flag, hp = (sce->val1 < 0) ? (int)(status->max_hp * -1 * sce->val1 / 100.) : sce->val1;
-			map_freeblock_lock();
-			status_fix_damage(NULL, bl, hp, 0);
-			flag = !sc->data[type];
-			map_freeblock_unlock();
-			if( flag ) return 0;
-			sc_timer_next((sce->val2 * 1000) + tick, status_change_timer, bl->id, data);
-		}
-		break;
-
-	case SC_HPREGEN:
 	case SC_S_LIFEPOTION:
 	case SC_L_LIFEPOTION:
 		if( sd && --(sce->val4) >= 0 )
@@ -7017,19 +6990,6 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr data)
 			if( status->hp < status->max_hp )
 				hp = (sce->val1 < 0) ? (int)(sd->status.max_hp * -1 * sce->val1 / 100.) : sce->val1 ;
 			status_heal(bl, hp, 0, 2);
-			sc_timer_next((sce->val2 * 1000) + tick, status_change_timer, bl->id, data);
-			return 0;
-		}
-		break;
-
-	case SC_SPREGEN:
-		if( sd && --(sce->val4) >= 0 )
-		{
-			// val1 < 0 = per max% | val1 > 0 = exact amount
-			int sp = 0;
-			if( status->sp < status->max_sp )
-				sp = (sce->val1 < 0) ? (int)(sd->status.max_sp * -1 * sce->val1 / 100.) : sce->val1 ;
-			status_heal(bl, 0, sp, 2);
 			sc_timer_next((sce->val2 * 1000) + tick, status_change_timer, bl->id, data);
 			return 0;
 		}

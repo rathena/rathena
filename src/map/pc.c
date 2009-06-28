@@ -804,7 +804,7 @@ bool pc_authok(struct map_session_data *sd, int login_id2, time_t expiration_tim
 
 	sd->followtimer = INVALID_TIMER; // [MouseJstr]
 	sd->invincible_timer = INVALID_TIMER;
-	sd->npc_timer_id = -1;
+	sd->npc_timer_id = INVALID_TIMER;
 	sd->pvp_timer = INVALID_TIMER;
 	
 	sd->canuseitem_tick = tick;
@@ -813,7 +813,13 @@ bool pc_authok(struct map_session_data *sd, int login_id2, time_t expiration_tim
 	sd->cansendmail_tick = tick;
 
 	for(i = 0; i < MAX_SKILL_LEVEL; i++)
-		sd->spirit_timer[i] = -1;
+		sd->spirit_timer[i] = INVALID_TIMER;
+	for(i = 0; i < ARRAYLENGTH(sd->autobonus); i++)
+		sd->autobonus[i].active = INVALID_TIMER;
+	for(i = 0; i < ARRAYLENGTH(sd->autobonus2); i++)
+		sd->autobonus2[i].active = INVALID_TIMER;
+	for(i = 0; i < ARRAYLENGTH(sd->autobonus3); i++)
+		sd->autobonus3[i].active = INVALID_TIMER;
 
 	if (battle_config.item_auto_get)
 		sd->state.autoloot = 10000;
@@ -1406,59 +1412,6 @@ int pc_disguise(struct map_session_data *sd, int class_)
 	return 1;
 }
 
-int pc_autoscript_add(struct s_autoscript *scripts, int max, short rate, short flag, short target, struct script_code *script, bool onskill)
-{
-	int i;
-	ARR_FIND(0, max, i, scripts[i].script == NULL);
-	if( i == max )
-	{
-		ShowWarning("pc_autoscript_bonus: Reached max (%d) number of autoscripts per character!\n", max);
-		return 0;
-	}
-
-	scripts[i].script = script;
-	scripts[i].rate = rate;
-	scripts[i].target = target; // 0 = Script on Self 1 = Script on Target
-
-	if( !onskill )
-	{ // Auto-update flag value.
-		if( !(flag&BF_RANGEMASK) )
-			flag|=BF_SHORT|BF_LONG; //No range defined? Use both.
-		if( !(flag&BF_WEAPONMASK) )
-			flag|=BF_WEAPON; //No attack type defined? Use weapon.
-		if( !(flag&BF_SKILLMASK) )
-		{
-			if( flag&(BF_MAGIC|BF_MISC) )
-				flag|=BF_SKILL; //These two would never trigger without BF_SKILL
-			if( flag&BF_WEAPON )
-				flag|=BF_NORMAL|BF_SKILL;
-		}
-	}
-	scripts[i].flag = flag;
-	return 1;
-}
-
-void pc_autoscript_clear(struct map_session_data *sd)
-{
-	int i;
-
-	if( sd->state.autocast )
-		return;
-
-	for (i = 0; i < MAX_PC_BONUS && sd->autoscript[i].script; i++)
-		script_free_code(sd->autoscript[i].script);
-
-	for (i = 0; i < MAX_PC_BONUS && sd->autoscript2[i].script; i++)
-		script_free_code(sd->autoscript2[i].script);
-
-	for (i = 0; i < MAX_PC_BONUS && sd->autoscript3[i].script; i++)
-		script_free_code(sd->autoscript3[i].script);
-
-	memset(&sd->autoscript, 0, sizeof(sd->autoscript));
-	memset(&sd->autoscript2, 0, sizeof(sd->autoscript2));
-	memset(&sd->autoscript3, 0, sizeof(sd->autoscript3));
-}
-
 static int pc_bonus_autospell(struct s_autospell *spell, int max, short id, short lv, short rate, short flag, short card_id)
 {
 	int i;
@@ -1624,6 +1577,107 @@ static int pc_bonus_item_drop(struct s_add_drop *drop, const short max, short id
 	drop[i].race |= race;
 	drop[i].rate = rate;
 	return 1;
+}
+
+int pc_addautobonus(struct s_autobonus *bonus,char max,struct script_code *script,short rate,unsigned int dur,short flag,struct script_code *other_script,unsigned short pos,bool onskill)
+{
+	int i;
+
+	ARR_FIND(0, max, i, bonus[i].rate == 0);
+	if( i == max )
+	{
+		ShowWarning("pc_addautobonus: Reached max (%d) number of autobonus per character!\n", max);
+		return 0;
+	}
+
+	if( !onskill )
+	{
+		if( !(flag&BF_RANGEMASK) )
+			flag|=BF_SHORT|BF_LONG; //No range defined? Use both.
+		if( !(flag&BF_WEAPONMASK) )
+			flag|=BF_WEAPON; //No attack type defined? Use weapon.
+		if( !(flag&BF_SKILLMASK) )
+		{
+			if( flag&(BF_MAGIC|BF_MISC) )
+				flag|=BF_SKILL; //These two would never trigger without BF_SKILL
+			if( flag&BF_WEAPON )
+				flag|=BF_NORMAL|BF_SKILL;
+		}
+	}
+
+	bonus[i].rate = rate;
+	bonus[i].duration = dur;
+	bonus[i].active = INVALID_TIMER;
+	bonus[i].atk_type = flag;
+	bonus[i].pos = pos;
+	bonus[i].bonus_script = script;
+	bonus[i].other_script = other_script;
+	return 1;
+}
+
+int pc_delautobonus(struct map_session_data* sd, struct s_autobonus *autobonus,char max,bool restore)
+{
+	int i;
+	nullpo_retr(0, sd);
+
+	for( i = 0; i < max; i++ )
+	{
+		if( autobonus[i].active != INVALID_TIMER && ( !restore || (autobonus[i].pos && !(sd->state.autobonus&autobonus[i].pos)) ) )
+		{ // Logout / Unequipped an item with an activated bonus
+			delete_timer(autobonus[i].active,pc_endautobonus);
+			autobonus[i].active = INVALID_TIMER;
+		}
+
+		if( restore && sd->state.autobonus&autobonus[i].pos )
+		{
+			if( autobonus[i].active != INVALID_TIMER )
+				run_script(autobonus[i].bonus_script,0,sd->bl.id,0);
+			continue;
+		}
+
+		if( sd->state.autocast )
+			continue;
+
+		if( autobonus[i].bonus_script )
+			script_free_code(autobonus[i].bonus_script);
+		if( autobonus[i].other_script )
+			script_free_code(autobonus[i].other_script);
+		autobonus[i].rate = autobonus[i].atk_type = autobonus[i].duration = autobonus[i].pos = 0;
+		autobonus[i].bonus_script = autobonus[i].other_script = NULL;
+		autobonus[i].active = INVALID_TIMER;
+	}
+
+	return 0;
+}
+
+int pc_exeautobonus(struct map_session_data *sd,struct s_autobonus *autobonus)
+{
+	nullpo_retr(0, sd);
+	nullpo_retr(0, autobonus);
+
+	if( autobonus->bonus_script )
+		run_script(autobonus->bonus_script,0,sd->bl.id,0);
+	if( autobonus->other_script )
+		run_script(autobonus->other_script,0,sd->bl.id,0);
+
+	autobonus->active = add_timer(gettick()+autobonus->duration, pc_endautobonus, sd->bl.id, (intptr)autobonus);
+	sd->state.autobonus |= autobonus->pos;
+
+	return 0;
+}
+
+int pc_endautobonus(int tid, unsigned int tick, int id, intptr data)
+{
+	struct map_session_data *sd = map_id2sd(id);
+	struct s_autobonus *autobonus = (struct s_autobonus *)data;
+
+	nullpo_retr(0, sd);
+	nullpo_retr(0, autobonus);
+
+	autobonus->active = INVALID_TIMER;
+	sd->state.autobonus &= ~autobonus->pos;
+	status_calc_pc(sd,0);
+	return 0;
 }
 
 /*==========================================
@@ -5240,16 +5294,6 @@ int pc_skillatk_bonus(struct map_session_data *sd, int skill_num)
 	ARR_FIND(0, ARRAYLENGTH(sd->skillatk), i, sd->skillatk[i].id == skill_num);
 	if( i < ARRAYLENGTH(sd->skillatk) ) bonus = sd->skillatk[i].val;
 
-	if( sd->sc.data[SC_SKILLATKBONUS] )
-	{
-		if( sd->sc.data[SC_SKILLATKBONUS]->val1 && sd->sc.data[SC_SKILLATKBONUS]->val1 == skill_num )
-			bonus += sd->sc.data[SC_SKILLATKBONUS]->val4;
-		if( sd->sc.data[SC_SKILLATKBONUS]->val2 && sd->sc.data[SC_SKILLATKBONUS]->val2 == skill_num )
-			bonus += sd->sc.data[SC_SKILLATKBONUS]->val4;
-		if( sd->sc.data[SC_SKILLATKBONUS]->val3 && sd->sc.data[SC_SKILLATKBONUS]->val3 == skill_num )
-			bonus += sd->sc.data[SC_SKILLATKBONUS]->val4;
-	}
-
 	return bonus;
 }
 
@@ -6966,6 +7010,9 @@ int pc_unequipitem(struct map_session_data *sd,int n,int flag)
 			status_change_end(&sd->bl, SC_ARMOR_RESIST, -1);
 	}
 
+	if( sd->state.autobonus&sd->status.inventory[n].equip )
+		sd->state.autobonus &= ~sd->status.inventory[n].equip; //Check for activated autobonus [Inkfish]
+
 	sd->status.inventory[n].equip=0;
 
 	if(flag&1) {
@@ -7920,6 +7967,7 @@ int do_init_pc(void)
 	add_timer_func_list(pc_autosave, "pc_autosave");
 	add_timer_func_list(pc_spiritball_timer, "pc_spiritball_timer");
 	add_timer_func_list(pc_follow_timer, "pc_follow_timer");
+	add_timer_func_list(pc_endautobonus, "pc_endautobonus");
 
 	add_timer(gettick() + autosave_interval, pc_autosave, 0, 0);
 

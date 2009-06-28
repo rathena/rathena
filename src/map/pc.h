@@ -67,9 +67,13 @@ struct s_add_drop {
 	int race, rate;
 };
 
-struct s_autoscript {
-	unsigned short rate, flag, target;
-	struct script_code *script;
+struct s_autobonus {
+	short rate,atk_type;
+	unsigned int duration;
+	struct script_code *bonus_script;
+	struct script_code *other_script;
+	int active;
+	unsigned short pos;
 };
 
 struct map_session_data {
@@ -126,6 +130,7 @@ struct map_session_data {
 		unsigned int bg_id;
 		unsigned skillonskill : 1;
 		unsigned short user_font;
+		unsigned short autobonus;
 	} state;
 	struct {
 		unsigned char no_weapon_damage, no_magic_damage, no_misc_damage;
@@ -243,7 +248,7 @@ struct map_session_data {
 	} itemhealrate[MAX_PC_BONUS];
 	// zeroed structures end here
 	// manually zeroed structures start here.
-	struct s_autoscript autoscript[MAX_PC_BONUS], autoscript2[MAX_PC_BONUS], autoscript3[MAX_PC_BONUS]; //Auto script on attack, when attacked, on skill usage
+	struct s_autobonus autobonus[MAX_PC_BONUS], autobonus2[MAX_PC_BONUS], autobonus3[MAX_PC_BONUS]; //Auto script on attack, when attacked, on skill usage
 	// manually zeroed structures end here.
 	// zeroed vars start here.
 	int arrow_atk,arrow_ele,arrow_cri,arrow_hit;
@@ -571,8 +576,10 @@ bool pc_adoption(struct map_session_data *p1_sd, struct map_session_data *p2_sd,
 
 int pc_updateweightstatus(struct map_session_data *sd);
 
-int pc_autoscript_add(struct s_autoscript *scripts, int max, short rate, short flag, short target, struct script_code *script, bool onskill);
-void pc_autoscript_clear(struct map_session_data *sd);
+int pc_addautobonus(struct s_autobonus *bonus,char max,struct script_code *script,short rate,unsigned int dur,short atk_type,struct script_code *other_script,unsigned short pos,bool onskill);
+int pc_exeautobonus(struct map_session_data* sd,struct s_autobonus *bonus);
+int pc_endautobonus(int tid, unsigned int tick, int id, intptr data);
+int pc_delautobonus(struct map_session_data* sd,struct s_autobonus *bonus,char max,bool restore);
 
 int pc_bonus(struct map_session_data*,int,int);
 int pc_bonus2(struct map_session_data *sd,int,int,int);

@@ -6624,87 +6624,121 @@ BUILDIN_FUNC(bonus)
 	return 0;
 }
 
-/// Bonus script that has a chance of being executed on attack.
-BUILDIN_FUNC(bonusautoscript)
+BUILDIN_FUNC(autobonus)
 {
-	int rate, flag = 0, target = 0;
-	const char *str;
-	struct script_code *script;
+	unsigned int dur;
+	short rate;
+	short atk_type = 0;
 	TBL_PC* sd;
+	struct script_code *bonus_script;
+	struct script_code *other_script = NULL;
 
 	sd = script_rid2sd(st);
 	if( sd == NULL )
-		return 0;// no player attached, report source
+		return 0; // no player attached
+	if( sd->state.autocast )
+		return 0;
+	if( sd->state.autobonus&sd->status.inventory[current_equip_item_index].equip )
+		return 0;
 
-	str  = script_getstr(st,2);
+	bonus_script = parse_script(script_getstr(st,2), "autobonus bonus", 0, 0);
 	rate = script_getnum(st,3);
-	if( script_hasdata(st,4) )
-		flag = script_getnum(st,4);
+	dur = script_getnum(st,4);
+
+	if( !bonus_script || !rate || !dur )
+		return 0;
+
 	if( script_hasdata(st,5) )
-		target = script_getnum(st,5);
-	script = parse_script(str, "autoscript bonus", 0, 0);
-	if( !script )
-		return 1;
-	if( sd->state.autocast || !pc_autoscript_add(sd->autoscript, ARRAYLENGTH(sd->autoscript), rate, flag, target, script, false) )
+		atk_type = script_getnum(st,5);
+	if( script_hasdata(st,6) )
+		other_script = parse_script(script_getstr(st,6), "autobonus other", 0, 0);
+
+	if( !pc_addautobonus(sd->autobonus,ARRAYLENGTH(sd->autobonus),bonus_script,rate,dur,atk_type,other_script,sd->status.inventory[current_equip_item_index].equip,false) )
 	{
-		script_free_code(script);
-		return 1;
+		if( bonus_script )
+			script_free_code(bonus_script);
+		if( other_script )
+			script_free_code(other_script);
 	}
-	return 0;	
+
+	return 0;
 }
-/// Bonus script that has a chance of being executed when attacked.
-BUILDIN_FUNC(bonusautoscript2)
+
+BUILDIN_FUNC(autobonus2)
 {
-	int rate, flag = 0, target = 0;
-	const char *str;
-	struct script_code *script;
+	unsigned int dur;
+	short rate;
+	short atk_type = 0;
 	TBL_PC* sd;
+	struct script_code *bonus_script;
+	struct script_code *other_script = NULL;
 
 	sd = script_rid2sd(st);
 	if( sd == NULL )
-		return 0;// no player attached, report source
+		return 0; // no player attached
+	if( sd->state.autocast )
+		return 0;
+	if( sd->state.autobonus&sd->status.inventory[current_equip_item_index].equip )
+		return 0;
 
-	str  = script_getstr(st,2);
+	bonus_script = parse_script(script_getstr(st,2), "autobonus bonus", 0, 0);
 	rate = script_getnum(st,3);
-	if( script_hasdata(st,4) )
-		flag = script_getnum(st,4);
+	dur = script_getnum(st,4);
+
+	if( !bonus_script || !rate || !dur )
+		return 0;
+
 	if( script_hasdata(st,5) )
-		target = script_getnum(st,5);
-	script = parse_script(str, "autoscript2 bonus", 0, 0);
-	if (!script)
-		return 1;
-	if( sd->state.autocast || !pc_autoscript_add(sd->autoscript2, ARRAYLENGTH(sd->autoscript2), rate, flag, target, script, false) )
+		atk_type = script_getnum(st,5);
+	if( script_hasdata(st,6) )
+		other_script = parse_script(script_getstr(st,6), "autobonus2 other", 0, 0);
+
+	if( !pc_addautobonus(sd->autobonus2,ARRAYLENGTH(sd->autobonus2),bonus_script,rate,dur,atk_type,other_script,sd->status.inventory[current_equip_item_index].equip,false) )
 	{
-		script_free_code(script);
-		return 1;
+		if( bonus_script )
+			script_free_code(bonus_script);
+		if( other_script )
+			script_free_code(other_script);
 	}
-	return 0;	
+
+	return 0;
 }
-/// Bonus script that has a chance of being executed when used a skill
-BUILDIN_FUNC(bonusautoscript3)
+
+BUILDIN_FUNC(autobonus3)
 {
-	int rate, skill, target = 0;
-	const char *str;
-	struct script_code *script;
+	unsigned int dur;
+	short rate,atk_type;
 	TBL_PC* sd;
+	struct script_code *bonus_script;
+	struct script_code *other_script = NULL;
 
 	sd = script_rid2sd(st);
 	if( sd == NULL )
-		return 0;// no player attached, report source
+		return 0; // no player attached
+	if( sd->state.autocast )
+		return 0;
+	if( sd->state.autobonus&sd->status.inventory[current_equip_item_index].equip )
+		return 0;
 
-	str  = script_getstr(st,2);
+	bonus_script = parse_script(script_getstr(st,2), "autobonus bonus", 0, 0);
 	rate = script_getnum(st,3);
-	skill = ( script_isstring(st,4) ? skill_name2id(script_getstr(st,4)) : script_getnum(st,4) );
-	if( script_hasdata(st,5) )
-		target = script_getnum(st,5);
-	script = parse_script(str, "autoscript3 bonus", 0, 0);
-	if( !script )
-		return 1;
-	if( sd->state.autocast || !pc_autoscript_add(sd->autoscript3, ARRAYLENGTH(sd->autoscript3), rate, skill, target, script, true) )
+	dur = script_getnum(st,4);
+	atk_type = ( script_isstring(st,5) ? skill_name2id(script_getstr(st,5)) : script_getnum(st,5) );
+
+	if( !bonus_script || !rate || !dur || !atk_type )
+		return 0;
+
+	if( script_hasdata(st,6) )
+		other_script = parse_script(script_getstr(st,6), "autobonus3 other", 0, 0);
+
+	if( !pc_addautobonus(sd->autobonus3,ARRAYLENGTH(sd->autobonus3),bonus_script,rate,dur,atk_type,other_script,sd->status.inventory[current_equip_item_index].equip,true) )
 	{
-		script_free_code(script);
-		return 1;
+		if( bonus_script )
+			script_free_code(bonus_script);
+		if( other_script )
+			script_free_code(other_script);
 	}
+
 	return 0;
 }
 
@@ -14029,7 +14063,7 @@ static int buildin_mobuseskill_sub(struct block_list *bl,va_list ap)
 	int skillid		= va_arg(ap,int);
 	int skilllv		= va_arg(ap,int);
 	int casttime	= va_arg(ap,int);
-	bool cancel		= va_arg(ap,bool);
+	int cancel		= va_arg(ap,int);
 	int emotion		= va_arg(ap,int);
 	int target		= va_arg(ap,int);
 
@@ -14066,8 +14100,7 @@ static int buildin_mobuseskill_sub(struct block_list *bl,va_list ap)
 BUILDIN_FUNC(areamobuseskill)
 {
 	struct block_list center;
-	int m,range,mobid,skillid,skilllv,casttime,emotion,target;
-	bool cancel;
+	int m,range,mobid,skillid,skilllv,casttime,emotion,target,cancel;
 
 	if( (m = map_mapname2mapid(script_getstr(st,2))) < 0 )
 	{
@@ -14185,9 +14218,9 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF2(bonus,"bonus3","ivii"),
 	BUILDIN_DEF2(bonus,"bonus4","ivvii"),
 	BUILDIN_DEF2(bonus,"bonus5","ivviii"),
-	BUILDIN_DEF(bonusautoscript,"si??"),
-	BUILDIN_DEF(bonusautoscript2,"si??"),
-	BUILDIN_DEF(bonusautoscript3,"siv?"),
+	BUILDIN_DEF(autobonus,"sii??"),
+	BUILDIN_DEF(autobonus2,"sii??"),
+	BUILDIN_DEF(autobonus3,"siiv?"),
 	BUILDIN_DEF(skill,"vi?"),
 	BUILDIN_DEF(addtoskill,"vi?"), // [Valaris]
 	BUILDIN_DEF(guildskill,"vi"),

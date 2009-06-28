@@ -1955,12 +1955,15 @@ int unit_free(struct block_list *bl, int clrtype)
 		case BL_PC:
 		{
 			struct map_session_data *sd = (struct map_session_data*)bl;
+
 			if( status_isdead(bl) )
 				pc_setrestartvalue(sd,2);
 
 			pc_delinvincibletimer(sd);
-			pc_autoscript_clear(sd);
-
+			pc_delautobonus(sd,sd->autobonus,ARRAYLENGTH(sd->autobonus),false);
+			pc_delautobonus(sd,sd->autobonus2,ARRAYLENGTH(sd->autobonus),false);
+			pc_delautobonus(sd,sd->autobonus3,ARRAYLENGTH(sd->autobonus),false);
+			
 			if( sd->followtimer != -1 )
 				pc_stop_following(sd);
 				
