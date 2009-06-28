@@ -1630,7 +1630,7 @@ int pc_delautobonus(struct map_session_data* sd, struct s_autobonus *autobonus,c
 
 		if( restore && sd->state.autobonus&autobonus[i].pos )
 		{
-			if( autobonus[i].active != INVALID_TIMER )
+			if( autobonus[i].active != INVALID_TIMER && autobonus[i].bonus_script )
 				run_script(autobonus[i].bonus_script,0,sd->bl.id,0);
 			continue;
 		}

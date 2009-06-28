@@ -5913,7 +5913,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 		//case ????:
 			//Place here SCs that have no SCB_* data, no skill associated, no ICON
 			//associated, and yet are not wrong/unknown. [Skotlex]
-			break;
+			//break;
 
 		case SC_MERC_FLEEUP:
 		case SC_MERC_ATKUP:
