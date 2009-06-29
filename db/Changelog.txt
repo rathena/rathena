@@ -34,6 +34,8 @@
 	2385 Recuvative_Armor		Should trigger HP/SP return with magical kills as well.
 
 =======================
+2009/06/29
+	* Updated drops to the released official bRO 12.1 drops [Playtester]
 2009/06/15
 	* Updated mob_db [Playtester]
 	- fixed various ATK2 values (bugreport:3185)
