@@ -2790,6 +2790,8 @@ struct Damage battle_calc_attack(int attack_type,struct block_list *bl,struct bl
 			d.dmg_lv = ATK_MISS;
 		d.dmotion = 0;
 	}
+	else // Some skills like Weaponry Research will cause damage even if attack is dodged
+		d.dmg_lv = ATK_DEF;
 	return d;
 }
 

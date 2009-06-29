@@ -3,6 +3,8 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+09/06/29
+	* Fixed attack not counted as connect when dodged and got damage from skill bonus like Weaponry Research. [Inkfish]
 09/06/28
 	* Implemented script command "autobonus". [Inkfish]
 	- "autobonus" is similar to "bonusautoscript", however it has a timer of its own.
