@@ -3147,6 +3147,11 @@ int npc_reload(void)
 					aFree(map[m].moblist[i]);
 					map[m].moblist[i] = NULL;
 				}
+				if( map[m].mob_delete_timer != INVALID_TIMER )
+				{ // Mobs were removed anyway,so delete the timer [Inkfish]
+					delete_timer(map[m].mob_delete_timer, map_removemobs_timer);
+					map[m].mob_delete_timer = INVALID_TIMER;
+				}
 			}
 		}
 		if (map[m].npc_num > 0)
