@@ -8221,238 +8221,173 @@ int atcommand_resetskill(const int fd, struct map_session_data* sd, const char* 
 }
 
 /*==========================================
- * #storagelist <character>: Displays the items list of a player's storage.
+ * #storagelist: Displays the items list of a player's storage.
+ * #cartlist: Displays contents of target's cart.
+ * #itemlist: Displays contents of target's inventory.
  *------------------------------------------*/
-int atcommand_storagelist(const int fd, struct map_session_data* sd, const char* command, const char* message)
-{
-	struct item_data *item_data, *item_temp;
-	int i, j, count = 0, counter = 0, counter2 = 0;
-	char character[NAME_LENGTH], output[200], outputtmp[200];
-	nullpo_retr(-1, sd);
-
-	memset(character, '\0', sizeof(character));
-	memset(output, '\0', sizeof(output));
-	memset(outputtmp, '\0', sizeof(outputtmp));
-
-	for (i = 0; i < MAX_STORAGE; i++)
-	{
-		struct item* it = &sd->status.storage.items[i];
-		if( it->nameid > 0 && (item_data = itemdb_search(it->nameid)) != NULL )
-		{
-			counter = counter + it->amount;
-			count++;
-			if (count == 1) {
-				sprintf(output, "------ Storage items list of '%s' ------", sd->status.name);
-				clif_displaymessage(fd, output);
-			}
-			if (it->refine)
-				sprintf(output, "%d %s %+d (%s %+d, id: %d)", it->amount, item_data->name, it->refine, item_data->jname, it->refine, it->nameid);
-			else
-				sprintf(output, "%d %s (%s, id: %d)", it->amount, item_data->name, item_data->jname, it->nameid);
-			clif_displaymessage(fd, output);
-
-			memset(output, '\0', sizeof(output));
-			counter2 = 0;
-			for (j = 0; j < item_data->slot; j++) {
-				if (it->card[j]) {
-					if ((item_temp = itemdb_search(it->card[j])) != NULL) {
-						if (output[0] == '\0')
-							sprintf(outputtmp, " -> (card(s): #%d %s (%s), ", ++counter2, item_temp->name, item_temp->jname);
-						else
-							sprintf(outputtmp, "#%d %s (%s), ", ++counter2, item_temp->name, item_temp->jname);
-						strcat(output, outputtmp);
-					}
-				}
-			}
-			if (output[0] != '\0') {
-				output[strlen(output) - 2] = ')';
-				output[strlen(output) - 1] = '\0';
-				clif_displaymessage(fd, output);
-			}
-		}
-	}
-
-	if (count == 0)
-		clif_displaymessage(fd, "No item found in the storage of this player.");
-	else {
-		sprintf(output, "%d item(s) found in %d kind(s) of items.", counter, count);
-		clif_displaymessage(fd, output);
-	}
-
-	return 0;
-}
-
-/*==========================================
- * Displays contents of target's cart [HiddenDragon]
- *------------------------------------------*/
-int atcommand_cart_list(const int fd, struct map_session_data* sd, const char* command, const char* message)
-{
-	char outputtmp[200];
-	char output[200];
-	char character[NAME_LENGTH];
-	struct item_data *item_data, *item_temp;
-	int i, j, count = 0, counter = 0, counter2;
-	nullpo_retr(-1, sd);
-
-	memset(character, '\0', sizeof(character));
-	memset(output, '\0', sizeof(output));
-	memset(outputtmp, '\0', sizeof(outputtmp));
-
-	for (i = 0; i < MAX_CART; i++) {
-		if (sd->status.cart[i].nameid > 0 && (item_data = itemdb_search(sd->status.cart[i].nameid)) != NULL) {
-			counter = counter + sd->status.cart[i].amount;
-			count++;
-			if (count == 1) {
-				sprintf(output, "------ Cart items list of '%s' ------", sd->status.name);
-				clif_displaymessage(fd, output);
-			}
-			if (sd->status.cart[i].refine)
-				sprintf(output, "%d %s %+d (%s %+d, id: %d)", sd->status.cart[i].amount, item_data->name, sd->status.cart[i].refine, item_data->jname, sd->status.cart[i].refine, sd->status.cart[i].nameid);
-			else
-				sprintf(output, "%d %s (%s, id: %d)", sd->status.cart[i].amount, item_data->name, item_data->jname, sd->status.cart[i].nameid);
-			clif_displaymessage(fd, output);
-			memset(output, '\0', sizeof(output));
-			counter2 = 0;
-			for (j = 0; j < item_data->slot; j++) {
-				if (sd->status.cart[i].card[j]) {
-					if ( (item_temp = itemdb_search(sd->status.cart[i].card[j])) != NULL) {
-						if (output[0] == '\0')
-							sprintf(outputtmp, " -> (card(s): #%d %s (%s), ", ++counter2, item_temp->name, item_temp->jname);
-						else
-							sprintf(outputtmp, "#%d %s (%s), ", ++counter2, item_temp->name, item_temp->jname);
-						strcat(output, outputtmp);
-					}
-				}
-			}
-			if (output[0] != '\0') {
-				output[strlen(output) - 2] = ')';
-				output[strlen(output) - 1] = '\0';
-				clif_displaymessage(fd, output);
-			}
-		}
-	}
-	if (count == 0)
-		clif_displaymessage(fd, "No item found in the cart of this player.");
-	else {
-		sprintf(output, "%d item(s) found in %d kind(s) of items.", counter, count);
-		clif_displaymessage(fd, output);
-	}
-
-	return 0;
-}
-
 int atcommand_itemlist(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
-	struct item_data *item_data, *item_temp;
-	int i, j, equip, count, counter, counter2;
-	char character[NAME_LENGTH], output[200], equipstr[100], outputtmp[200];
-	struct item *i_item; //Current inventory item.
+	int i, j, count, counter;
+	const char* location;
+	const struct item* items;
+	int size;
+	StringBuf buf;
+
 	nullpo_retr(-1, sd);
 
-	memset(character, '\0', sizeof(character));
-	memset(output, '\0', sizeof(output));
-	memset(equipstr, '\0', sizeof(equipstr));
-	memset(outputtmp, '\0', sizeof(outputtmp));
-
-	counter = 0;
-	count = 0;
-	for (i = 0; i < MAX_INVENTORY; i++) {
-		i_item = &sd->status.inventory[i];
-		if (sd->status.inventory[i].nameid > 0 && (item_data = itemdb_exists(i_item->nameid)) != NULL) {
-			counter = counter + i_item->amount;
-			count++;
-			if (count == 1) {
-				sprintf(output, "------ Items list of '%s' ------", sd->status.name);
-				clif_displaymessage(fd, output);
-			}
-			if ((equip = i_item->equip)) {
-				strcpy(equipstr, "| equiped: ");
-				if (equip & EQP_GARMENT)
-					strcat(equipstr, "robe/gargment, ");
-				if (equip & EQP_ACC_L)
-					strcat(equipstr, "left accessory, ");
-				if (equip & EQP_ARMOR)
-					strcat(equipstr, "body/armor, ");
-				if ((equip & EQP_ARMS) == EQP_HAND_R)
-					strcat(equipstr, "right hand, ");
-				if ((equip & EQP_ARMS) == EQP_HAND_L)
-					strcat(equipstr, "left hand, ");
-				if ((equip & EQP_ARMS) == EQP_ARMS)
-					strcat(equipstr, "both hands, ");
-				if (equip & EQP_SHOES)
-					strcat(equipstr, "feet, ");
-				if (equip & EQP_ACC_R)
-					strcat(equipstr, "right accessory, ");
-				if ((equip & EQP_HELM) == EQP_HEAD_LOW)
-					strcat(equipstr, "lower head, ");
-				if ((equip & EQP_HELM) == EQP_HEAD_TOP)
-					strcat(equipstr, "top head, ");
-				if ((equip & EQP_HELM) == (EQP_HEAD_LOW|EQP_HEAD_TOP))
-					strcat(equipstr, "lower/top head, ");
-				if ((equip & EQP_HELM) == EQP_HEAD_MID)
-					strcat(equipstr, "mid head, ");
-				if ((equip & EQP_HELM) == (EQP_HEAD_LOW|EQP_HEAD_MID))
-					strcat(equipstr, "lower/mid head, ");
-				if ((equip & EQP_HELM) == EQP_HELM)
-					strcat(equipstr, "lower/mid/top head, ");
-				// remove final ', '
-				equipstr[strlen(equipstr) - 2] = '\0';
-			} else
-				memset(equipstr, '\0', sizeof(equipstr));
-			if (i_item->refine)
-				sprintf(output, "%d %s %+d (%s %+d, id: %d) %s", i_item->amount, item_data->name, i_item->refine, item_data->jname, i_item->refine, i_item->nameid, equipstr);
-			else
-				sprintf(output, "%d %s (%s, id: %d) %s", i_item->amount, item_data->name, item_data->jname, i_item->nameid, equipstr);
-			clif_displaymessage(fd, output);
-			memset(output, '\0', sizeof(output));
-			counter2 = 0;
-
-			if(i_item->card[0]==CARD0_PET) { //pet eggs
-				if (i_item->card[3])
-					sprintf(outputtmp, " -> (pet egg, pet id: %u, named)", (unsigned int)MakeDWord(i_item->card[1], i_item->card[2]));
-				else
-					sprintf(outputtmp, " -> (pet egg, pet id: %u, unnamed)", (unsigned int)MakeDWord(i_item->card[1], i_item->card[2]));
-				strcat(output, outputtmp);
-			} else
-			if(i_item->card[0]==CARD0_FORGE) { //forged items.
-				sprintf(outputtmp, " -> (crafted item, creator id: %u, star crumbs %d, element %d)", (unsigned int)MakeDWord(i_item->card[2], i_item->card[3]), i_item->card[1]>>8, i_item->card[1]&0x0f);
-			} else
-			if(i_item->card[0]==CARD0_CREATE) { //created items.
-				sprintf(outputtmp, " -> (produced item, creator id: %u)", (unsigned int)MakeDWord(i_item->card[2], i_item->card[3]));
-				strcat(output, outputtmp);
-			} else //Normal slots
-			for (j = 0; j < item_data->slot; j++) {
-				if (sd->status.inventory[i].card[j]) {
-					if ((item_temp = itemdb_exists(i_item->card[j])) != NULL) {
-						if (output[0] == '\0')
-							sprintf(outputtmp, " -> (card(s): #%d %s (%s), ", ++counter2, item_temp->name, item_temp->jname);
-						else
-							sprintf(outputtmp, "#%d %s (%s), ", ++counter2, item_temp->name, item_temp->jname);
-						strcat(output, outputtmp);
-					}
-				}
-			}
-			if (output[0] != '\0') {
-				output[strlen(output) - 2] = ')';
-				output[strlen(output) - 1] = '\0';
-				clif_displaymessage(fd, output);
-			}
-		}
-	}
-	if (count == 0)
+	if( strcmp(command+1, "storagelist") == 0 )
 	{
-		clif_displaymessage(fd, "No item found on this player.");
-		return -1;
+		location = "storage";
+		items = sd->status.storage.items;
+		size = MAX_STORAGE;
+	}
+	else
+	if( strcmp(command+1, "cartlist") == 0 )
+	{
+		location = "cart";
+		items = sd->status.cart;
+		size = MAX_CART;
+	}
+	else
+	if( strcmp(command+1, "itemlist") == 0 )
+	{
+		location = "inventory";
+		items = sd->status.inventory;
+		size = MAX_INVENTORY;
+	}
+	else
+		return 1;
+
+	StringBuf_Init(&buf);
+
+	count = 0; // total slots occupied
+	counter = 0; // total items found
+	for( i = 0; i < size; ++i )
+	{
+		const struct item* it = &items[i];
+		struct item_data* itd;
+
+		if( it->nameid == 0 || (itd = itemdb_search(it->nameid)) == NULL )
+			continue;
+
+		counter += it->amount;
+		count++;
+
+		if( count == 1 )
+		{
+			StringBuf_Printf(&buf, "------ %s items list of '%s' ------", location, sd->status.name);
+			clif_displaymessage(fd, StringBuf_Value(&buf));
+			StringBuf_Clear(&buf);
+		}
+
+		if( it->refine )
+			StringBuf_Printf(&buf, "%d %s %+d (%s, id: %d)", it->amount, itd->jname, it->refine, itd->name, it->nameid);
+		else
+			StringBuf_Printf(&buf, "%d %s (%s, id: %d)", it->amount, itd->jname, itd->name, it->nameid);
+
+		if( it->equip )
+		{
+			char equipstr[200];
+			strcpy(equipstr, " | equipped: ");
+			if( it->equip & EQP_GARMENT )
+				strcat(equipstr, "garment, ");
+			if( it->equip & EQP_ACC_L )
+				strcat(equipstr, "left accessory, ");
+			if( it->equip & EQP_ARMOR )
+				strcat(equipstr, "body/armor, ");
+			if( (it->equip & EQP_ARMS) == EQP_HAND_R )
+				strcat(equipstr, "right hand, ");
+			if( (it->equip & EQP_ARMS) == EQP_HAND_L )
+				strcat(equipstr, "left hand, ");
+			if( (it->equip & EQP_ARMS) == EQP_ARMS )
+				strcat(equipstr, "both hands, ");
+			if( it->equip & EQP_SHOES )
+				strcat(equipstr, "feet, ");
+			if( it->equip & EQP_ACC_R )
+				strcat(equipstr, "right accessory, ");
+			if( (it->equip & EQP_HELM) == EQP_HEAD_LOW )
+				strcat(equipstr, "lower head, ");
+			if( (it->equip & EQP_HELM) == EQP_HEAD_TOP )
+				strcat(equipstr, "top head, ");
+			if( (it->equip & EQP_HELM) == (EQP_HEAD_LOW|EQP_HEAD_TOP) )
+				strcat(equipstr, "lower/top head, ");
+			if( (it->equip & EQP_HELM) == EQP_HEAD_MID )
+				strcat(equipstr, "mid head, ");
+			if( (it->equip & EQP_HELM) == (EQP_HEAD_LOW|EQP_HEAD_MID) )
+				strcat(equipstr, "lower/mid head, ");
+			if( (it->equip & EQP_HELM) == EQP_HELM )
+				strcat(equipstr, "lower/mid/top head, ");
+			// remove final ', '
+			equipstr[strlen(equipstr) - 2] = '\0';
+			StringBuf_AppendStr(&buf, equipstr);
+		}
+
+		clif_displaymessage(fd, StringBuf_Value(&buf));
+		StringBuf_Clear(&buf);
+
+		if( it->card[0] == CARD0_PET )
+		{// pet egg
+			if (it->card[3])
+				StringBuf_Printf(&buf, " -> (pet egg, pet id: %u, named)", (unsigned int)MakeDWord(it->card[1], it->card[2]));
+			else
+				StringBuf_Printf(&buf, " -> (pet egg, pet id: %u, unnamed)", (unsigned int)MakeDWord(it->card[1], it->card[2]));
+		}
+		else
+		if(it->card[0] == CARD0_FORGE)
+		{// forged item
+			StringBuf_Printf(&buf, " -> (crafted item, creator id: %u, star crumbs %d, element %d)", (unsigned int)MakeDWord(it->card[2], it->card[3]), it->card[1]>>8, it->card[1]&0x0f);
+		}
+		else
+		if(it->card[0] == CARD0_CREATE)
+		{// created item
+			StringBuf_Printf(&buf, " -> (produced item, creator id: %u)", (unsigned int)MakeDWord(it->card[2], it->card[3]));
+		}
+		else
+		{// normal item
+			int counter2 = 0;
+
+			for( j = 0; j < itd->slot; ++j )
+			{
+				struct item_data* card;
+
+				if( it->card[j] == 0 || (card = itemdb_search(it->card[j])) == NULL )
+					continue;
+
+				counter2++;
+
+				if( counter2 == 1 )
+					StringBuf_AppendStr(&buf, " -> (card(s): ");
+
+				if( counter2 != 1 )
+					StringBuf_AppendStr(&buf, ", ");
+
+				StringBuf_Printf(&buf, "#%d %s (id: %d)", counter2, card->jname, card->nameid);
+			}
+
+			if( counter2 > 0 )
+				StringBuf_AppendStr(&buf, ")");
+		}
+
+		if( StringBuf_Length(&buf) > 0 )
+			clif_displaymessage(fd, StringBuf_Value(&buf));
+
+		StringBuf_Clear(&buf);
 	}
 
-	sprintf(output, "%d item(s) found in %d kind(s) of items.", counter, count);
-	clif_displaymessage(fd, output);
+	if( count == 0 )
+		StringBuf_Printf(&buf, "No item found in this player's %s.", location);
+	else
+		StringBuf_Printf(&buf, "%d item(s) found in %d %s slots.", counter, count, location);
+
+	clif_displaymessage(fd, StringBuf_Value(&buf));
+
+	StringBuf_Destroy(&buf);
+
 	return 0;
 }
 
 int atcommand_stats(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
-	char character[NAME_LENGTH];
 	char job_jobname[100];
 	char output[200];
 	int i;
@@ -8478,7 +8413,6 @@ int atcommand_stats(const int fd, struct map_session_data* sd, const char* comma
 		{ NULL, 0 }
 	};
 
-	memset(character, '\0', sizeof(character));
 	memset(job_jobname, '\0', sizeof(job_jobname));
 	memset(output, '\0', sizeof(output));
 
@@ -8907,8 +8841,8 @@ AtCommandInfo atcommand_info[] = {
 	{ "agitend2",          60,60,     atcommand_agitend2 },
 	{ "skreset",           60,60,     atcommand_resetskill },
 	{ "streset",           60,60,     atcommand_resetstat },
-	{ "storagelist",       40,40,     atcommand_storagelist },
-	{ "cartlist",          40,40,     atcommand_cart_list },
+	{ "storagelist",       40,40,     atcommand_itemlist },
+	{ "cartlist",          40,40,     atcommand_itemlist },
 	{ "itemlist",          40,40,     atcommand_itemlist },
 	{ "stats",             40,40,     atcommand_stats },
 	{ "delitem",           60,60,     atcommand_delitem },
@@ -9061,7 +8995,7 @@ bool is_atcommand(const int fd, struct map_session_data* sd, const char* message
 	//Attempt to use the command
 	if ( (info->func(fd, (*atcmd_msg == atcommand_symbol) ? sd : ssd, command, params) != 0) )
 	{
-		sprintf(output,msg_txt(154), command);
+		sprintf(output,msg_txt(154), command); // %s failed.
 		clif_displaymessage(fd, output);
 	}
 	

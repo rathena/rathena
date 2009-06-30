@@ -636,7 +636,7 @@ int unit_warp(struct block_list *bl,short m,short x,short y,int type)
  * &0x1: Issue a fixpos packet afterwards
  * &0x2: Force the unit to move one cell if it hasn't yet
  * &0x4: Enable moving to the next cell when unit was already half-way there
- *       (could trigger additional on-touch/place code)
+ *       (may cause on-touch/place side-effects, such as a scripted map change)
  *------------------------------------------*/
 int unit_stop_walking(struct block_list *bl,int type)
 {
@@ -656,9 +656,9 @@ int unit_stop_walking(struct block_list *bl,int type)
 	ud->walktimer = INVALID_TIMER;
 	ud->state.change_walk_target = 0;
 	tick = gettick();
-	if ((type&0x02 && !ud->walkpath.path_pos) //Force moving at least one cell.
-		|| (!(type&0x04) && td && DIFF_TICK(td->tick, tick) <= td->data/2)) //Enough time has passed to cover half-cell
-	{	
+	if( (type&0x02 && !ud->walkpath.path_pos) //Force moving at least one cell.
+	||  (type&0x04 && td && DIFF_TICK(td->tick, tick) <= td->data/2) //Enough time has passed to cover half-cell
+	) {	
 		ud->walkpath.path_len = ud->walkpath.path_pos+1;
 		unit_walktoxy_timer(-1, tick, bl->id, ud->walkpath.path_pos);
 	}
