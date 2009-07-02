@@ -8418,11 +8418,12 @@ void clif_parse_GlobalMessage(int fd, struct map_session_data* sd)
 				if( strstr(message, msg_txt(504)) ) // "Guardian Angel, can you hear my voice? ^^;"
 					sd->state.snovice_call_flag++;
 				break;
-			case 1:
+			case 1: {
 				char buf[256];
 				sprintf(buf, msg_txt(505), sd->status.name);
 				if( strstr(message, buf) ) // "My name is %s, and I'm a Super Novice~"
 					sd->state.snovice_call_flag++;
+				}
 				break;
 			case 2:
 				if( strstr(message, msg_txt(506)) ) // "Please help me~ T.T"
