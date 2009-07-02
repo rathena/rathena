@@ -1056,9 +1056,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 				 sd->autobonus[i].atk_type&attack_type&BF_RANGEMASK &&
 				 sd->autobonus[i].atk_type&attack_type&BF_SKILLMASK))
 				continue; // one or more trigger conditions were not fulfilled
-			sd->state.autocast = 1;
 			pc_exeautobonus(sd,&sd->autobonus[i]);
-			sd->state.autocast = 0;
 		}
 	}
 
@@ -1140,9 +1138,7 @@ int skill_onskillusage(struct map_session_data *sd, struct block_list *bl, int s
 				continue;
 			if( sd->autobonus3[i].atk_type != skillid )
 				continue;
-			sd->state.autocast = 1;
 			pc_exeautobonus(sd,&sd->autobonus3[i]);
-			sd->state.autocast = 0;
 		}
 	}
 
@@ -1333,9 +1329,7 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 				 dstsd->autobonus2[i].atk_type&attack_type&BF_RANGEMASK &&
 				 dstsd->autobonus2[i].atk_type&attack_type&BF_SKILLMASK))
 				continue; // one or more trigger conditions were not fulfilled
-			dstsd->state.autocast = 1;
 			pc_exeautobonus(dstsd,&dstsd->autobonus2[i]);
-			dstsd->state.autocast = 0;
 		}
 	}
 

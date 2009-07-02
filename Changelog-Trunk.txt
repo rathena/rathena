@@ -3,6 +3,10 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+09/07/02
+	* Updated autobonus [Inkfish]
+	- added documentation for autobonus.
+	- invoke status_calc_pc after execution so that client display gets refreshed if neccessary.
 09/06/30
 	* Fixed when dynamic_mobs is active, reloading script right after the last player having left a map leads to permanet mobs not spawning on that map. [Inkfish]
 09/06/29

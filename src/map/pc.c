@@ -1655,13 +1655,16 @@ int pc_exeautobonus(struct map_session_data *sd,struct s_autobonus *autobonus)
 	nullpo_retr(0, sd);
 	nullpo_retr(0, autobonus);
 
-	if( autobonus->bonus_script )
-		run_script(autobonus->bonus_script,0,sd->bl.id,0);
 	if( autobonus->other_script )
+	{
+		sd->state.autocast = 1;
 		run_script(autobonus->other_script,0,sd->bl.id,0);
+		sd->state.autocast = 0;
+	}
 
 	autobonus->active = add_timer(gettick()+autobonus->duration, pc_endautobonus, sd->bl.id, (intptr)autobonus);
 	sd->state.autobonus |= autobonus->pos;
+	status_calc_pc(sd,0);
 
 	return 0;
 }
