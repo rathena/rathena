@@ -34,6 +34,8 @@
 	2385 Recuvative_Armor		Should trigger HP/SP return with magical kills as well.
 
 =======================
+2009/07/02
+	* Fixed a bug in Ifrit's drops (bugreport:3319) [Playtester]
 2009/06/29
 	* Updated drops to the released official bRO 12.1 drops [Playtester]
 2009/06/15
