@@ -4447,7 +4447,7 @@ character.
 
 ---------------------------------------
 
-*specialeffect <effect number>;
+*specialeffect <effect number>{,<send_target>};
 
 This command will display special effect with the given number, centered on the 
 specified NPCs coordinates, if any. For a full list of special effect numbers 
@@ -4457,7 +4457,7 @@ released after April 2005.)
 
 ---------------------------------------
 
-*specialeffect2 <effect number>;
+*specialeffect2 <effect number>{,<send_target>};
 
 This command behaves identically to the 'specialeffect', but the effect will be 
 centered on the invoking character's sprite.

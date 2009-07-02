@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= SinSloth
 //===== Current Version: ===================================== 
-//= 1.8
+//= 1.9
 //===== Compatible With: ===================================== 
 //= eAthena
 //===== Description: ========================================= 
@@ -18,6 +18,7 @@
 //= 1.6 Corrected mismatched variables. [L0ne_W0lf]
 //= 1.7 Replaced effect numerics with constants. [Samuray22]
 //= 1.8 Corrected how exp reward is applied. [L0ne_W0lf]
+//= 1.9 Fixed some input checks and variable types. [brianluau]
 //============================================================
 
 prt_castle,44,151,0	script	Rebarev Doug	56,{
@@ -978,7 +979,6 @@ prt_in,172,106,0	script	Librarian#megin	833,{
 				mes "Since I have worked under a dim light for a long time, my eyes have gone bad.";
 				mes "They should get me a new light, otherwise I will be gone blind sooner or later...";
 				close;
-			break;
 			case 3:
 				mes "[Librarian Jekan]";
 				mes "Um? How do you know what file I am looking for?";
@@ -1144,21 +1144,21 @@ prt_in,172,106,0	script	Librarian#megin	833,{
 						mes "^663300[Keyword: ^996633Crusader^663300]";
 						mes "Crusaders are warriors preparing for the upcoming Holy War against Evil. Experienced swordsmen, usually with remarkable spiritual prowess.^000000";
 						close2;
-						if (compare(.@input$,"3rd company") == 1) {
+						if (compare(.@input$,"3rd_company") == 1) {
 							mes "^663300[Keyword: ^9966333rd Company^663300]";
 							mes "Only the best Crusaders are selected to form the ranks of all squads in the 3rd Company. Most transfer records for 3rd Company Squads are unavailable.^000000";
 							next;
 							mes "^663300[Keyword: ^9966333rd Company^663300]";
 							mes "The 1st Squad of the 3rd Platoon is an exception, as all members retired or were transferred to other forces. More specific information can be found by searching ^9966333rd Platoon^663300.";
 							close2;
-							if (compare(.@input$,"3rd platoon") == 1) {
+							if (compare(.@input$,"3rd_platoon") == 1) {
 								mes "^663300[Keyword: ^9966333rd Platoon^663300]";
 								mes "The 3rd Platoon is considered the elite force in the 3rd Company. Only records for the 1st Squad in the 3rd Platoon currently exist due to special circumstances.^000000";
 								next;
 								mes "^663300[Keyword: ^9966333rd Platoon^663300]";
 								mes "More specific information can be found by searching ^9966331st Squad^663300.";
 								close2;
-								if (compare(.@input$,"1st squad") == 1) {
+								if (compare(.@input$,"1st_squad") == 1) {
 									mes "^663300[Keyword: ^9966331st Squad^663300]";
 									mes "1st Squad.";
 									mes "Complete";
@@ -1208,7 +1208,7 @@ prt_in,172,106,0	script	Librarian#megin	833,{
 								}
 							}
 						}
-						else if(compare(.@input$,"3rd platoon") == 1) {
+						else if(compare(.@input$,"3rd_platoon") == 1) {
 							mes "^663300[Keyword: ^996633"+.@input$+"^663300]";
 							mes "Each Company consists";
 							mes "of 4 Platoons. Please";
@@ -1216,7 +1216,7 @@ prt_in,172,106,0	script	Librarian#megin	833,{
 							next;
 							close2;
 						}
-						else if(compare(.@input$,"1st squad") == 1) {
+						else if(compare(.@input$,"1st_squad") == 1) {
 							mes "^663300[Keyword: ^996633"+.@input$+"^663300]";
 							mes "The 1st Squad : Crusaders.";
 							mes "Each platoon consists of 4 squads. Please specify Company and Platoon for information on a specific squad.^000000";
@@ -1235,7 +1235,7 @@ prt_in,172,106,0	script	Librarian#megin	833,{
 							close2;
 						}
 					}
-					else if (compare(.@input$,"3rd company") == 1) {
+					else if (compare(.@input$,"3rd_company") == 1) {
 						mes "^663300[Keyword: ^996633"+.@input$+"^663300]";
 						mes "^663300[Keyword: ^9966333rd Company^663300]";
 						mes "Only the best Crusaders are selected to form the ranks of all squads in the 3rd Company. Most transfer records for 3rd Company Squads are unavailable.^000000";
@@ -1243,14 +1243,14 @@ prt_in,172,106,0	script	Librarian#megin	833,{
 						mes "^663300[Keyword: ^9966333rd Company^663300]";
 						mes "The 1st Squad of the 3rd Platoon is an exception, as all members retired or were transferred to other forces. More specific information can be found by searching ^9966333rd Platoon^663300.";
 						close2;
-						if (compare(.@input$,"3rd platoon") == 1) {
+						if (compare(.@input$,"3rd_platoon") == 1) {
 							mes "^663300[Keyword: ^9966333rd Platoon^663300]";
 							mes "The 3rd Platoon is considered the elite force in the 3rd Company. Only records for the 1st Squad in the 3rd Platoon currently exist due to special circumstances.^000000";
 							next;
 							mes "^663300[Keyword: ^9966333rd Platoon^663300]";
 							mes "More specific information can be found by searching ^9966331st Squad^663300.";
 							close2;
-							if (compare(.@input$,"1st squad") == 1) {
+							if (compare(.@input$,"1st_squad") == 1) {
 								mes "^663300[Keyword: ^9966331st Squad^663300]";
 								mes "1st Squad.";
 								mes "Complete";
@@ -1300,14 +1300,14 @@ prt_in,172,106,0	script	Librarian#megin	833,{
 							}
 						}
 					}
-					else if(compare(.@input$,"3rd platoon") == 1) {
+					else if(compare(.@input$,"3rd_platoon") == 1) {
 						mes "^663300[Keyword: ^996633"+.@input$+"^663300]";
 						mes "The 3rd Platoon : ";
 						mes "- No result has been found.-";
 						mes "- Suggested to enter a more specific keyword.-";
 						close2;
 					}
-					else if(compare(.@input$,"1st squad") == 1) {
+					else if(compare(.@input$,"1st_squad") == 1) {
 						mes "^663300[Keyword: ^996633"+.@input$+"^663300]";
 						mes "The 3rd Company : ";
 						mes "- No result has been found.-";
@@ -1321,7 +1321,7 @@ prt_in,172,106,0	script	Librarian#megin	833,{
 						next;
 						close2;
 					}
-					else if(compare(.@input$,"rebarev doug") == 1) {
+					else if(compare(.@input$,"rebarev_doug") == 1) {
 						mes "^663300[Keyword: ^996633"+.@input$+"^663300]";
 						mes "Former leader of";
 						mes "3rd Company, 3rd Platoon,";
@@ -1350,7 +1350,7 @@ prt_in,172,106,0	script	Librarian#megin	833,{
 						mes "^996633Blacksmith Guild, Geffen^663300.^000000";
 						close2;
 					}
-					else if(compare(.@input$,"cuaque donon") == 1) {
+					else if(compare(.@input$,"cuaque_donon") == 1) {
 						mes "^663300[Keyword: ^996633"+.@input$+"^663300]";
 						mes "Former member of";
 						mes "3rd Company, 3rd Platoon";
@@ -1362,7 +1362,7 @@ prt_in,172,106,0	script	Librarian#megin	833,{
 						mes "^996633Inn, Morroc^663300.^000000";
 						close2;
 					}
-					else if(compare(.@input$,"jack o") == 1) {
+					else if(compare(.@input$,"jack_o") == 1) {
 						mes "^663300[Keyword: ^996633"+.@input$+"^663300]";
 						mes "Former member of";
 						mes "3rd Company, 3rd Platoon";
@@ -1373,7 +1373,7 @@ prt_in,172,106,0	script	Librarian#megin	833,{
 						mes "^996633Alberta Port^663300.^000000";
 						close2;
 					}
-					else if(compare(.@input$,"emma searth") == 1) {
+					else if(compare(.@input$,"emma_searth") == 1) {
 						mes "^663300[Keyword: ^996633"+.@input$+"^663300]";
 						mes "Former member of";
 						mes "3rd Company, 3rd Platoon";
@@ -1385,7 +1385,7 @@ prt_in,172,106,0	script	Librarian#megin	833,{
 						mes "^996633Al De Baran^663300.^000000";
 						close2;
 					}
-					else if(compare(.@input$,"royal myst") == 1) {
+					else if(compare(.@input$,"royal_myst") == 1) {
 						mes "^663300[Keyword: ^996633"+.@input$+"^663300]";
 						mes "Former member of";
 						mes "3rd Company, 3rd Platoon";
@@ -1396,7 +1396,7 @@ prt_in,172,106,0	script	Librarian#megin	833,{
 						mes "^996633Casino, Comodo^663300.^000000";
 						close2;
 					}
-					else if(compare(.@input$,"the nineball") == 1) {
+					else if(compare(.@input$,"the_nineball") == 1) {
 						mes "^663300[Keyword: ^996633"+.@input$+"^663300]";
 						mes "Former member of";
 						mes "3rd Company, 3rd Platoon";
@@ -1532,7 +1532,7 @@ prt_in,172,106,0	script	Librarian#megin	833,{
 			close;
 		}
 	}
-	end;
+	close;
 }
 
 geffen_in,109,161,3	script	Crusader#God1	751,{
@@ -2018,39 +2018,39 @@ in_rogue,243,61,0	script	Suspicious Man#megin	748,{
 				next;
 				if ((countitem(740) > 0) || (countitem(741) > 0) || (countitem(742) > 0) || (countitem(743) > 0) || (countitem(750) > 0) || (countitem(751) > 0) || (countitem(752) > 0) || (countitem(753) > 0) || (countitem(754) > 0) || (countitem(7206) > 0) || (countitem(7212) > 0)){
 					if (countitem(740) > 0) {
-						set .@toy,"Puppet";
+						set .@toy$,"Puppet";
 					}
 					else if(countitem(741) > 0) {
-						set .@toy,"Poring Doll";
+						set .@toy$,"Poring Doll";
 					}
 					else if(countitem(742) > 0) {
-						set .@toy,"Chonchon Doll";
+						set .@toy$,"Chonchon Doll";
 					}
 					else if(countitem(743) > 0) {
-						set .@toy,"Spore Doll";
+						set .@toy$,"Spore Doll";
 					}
 					else if (countitem(744) > 0) {
-						set .@toy,"Baphomet Doll";
+						set .@toy$,"Baphomet Doll";
 					}
 					else if(countitem(751) > 0) {
-						set .@toy,"Osiris Doll";
+						set .@toy$,"Osiris Doll";
 					}
 					else if(countitem(752) > 0) {
-						set .@toy,"Rocker Doll";
+						set .@toy$,"Rocker Doll";
 					}
 					else if(countitem(753) > 0) {
-						set .@toy,"Yoyo Doll";
+						set .@toy$,"Yoyo Doll";
 					}
 					else if(countitem(754) > 0) {
-						set .@toy,"Racoon Doll";
+						set .@toy$,"Racoon Doll";
 					}
 					else if(countitem(7206) > 0) {
-						set .@toy,"Black Cat Doll";
+						set .@toy$,"Black Cat Doll";
 					}
 					else {
-						set .@toy,"Hung Doll";
+						set .@toy$,"Hung Doll";
 					}
-					mes "^3355FFYou pulled out a "+ .@toy +"";
+					mes "^3355FFYou pulled out a "+ .@toy$ +"";
 					mes "to cover your face, and wiggled its arms as if it were talking.^000000";
 				}
 				else {

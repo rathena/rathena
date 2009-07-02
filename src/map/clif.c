@@ -8415,28 +8415,27 @@ void clif_parse_GlobalMessage(int fd, struct map_session_data* sd)
 		{
 			switch (sd->state.snovice_call_flag) {
 			case 0:
-					if( strstr(message, msg_txt(504)) ) // "Guardian Angel, can you hear my voice? ^^;"
-						sd->state.snovice_call_flag++;
-			break;
-			case 1: {
-					char buf[256];
-					sprintf(buf, msg_txt(505), sd->status.name);
-					if( strstr(message, buf) ) // "My name is %s, and I'm a Super Novice~"
-						sd->state.snovice_call_flag++;
-					}
-			break;
+				if( strstr(message, msg_txt(504)) ) // "Guardian Angel, can you hear my voice? ^^;"
+					sd->state.snovice_call_flag++;
+				break;
+			case 1:
+				char buf[256];
+				sprintf(buf, msg_txt(505), sd->status.name);
+				if( strstr(message, buf) ) // "My name is %s, and I'm a Super Novice~"
+					sd->state.snovice_call_flag++;
+				break;
 			case 2:
-					if( strstr(message, msg_txt(506)) ) // "Please help me~ T.T"
-						sd->state.snovice_call_flag++;
-			break;
+				if( strstr(message, msg_txt(506)) ) // "Please help me~ T.T"
+					sd->state.snovice_call_flag++;
+				break;
 			case 3:
-					if( skillnotok(MO_EXPLOSIONSPIRITS,sd) )
-						break; //Do not override the noskill mapflag. [Skotlex]
-					clif_skill_nodamage(&sd->bl,&sd->bl,MO_EXPLOSIONSPIRITS,-1,
-						sc_start(&sd->bl,status_skill2sc(MO_EXPLOSIONSPIRITS),100,
-						17,skill_get_time(MO_EXPLOSIONSPIRITS,1))); //Lv17-> +50 critical (noted by Poki) [Skotlex]
-					sd->state.snovice_call_flag = 0;
-			break;
+				if( skillnotok(MO_EXPLOSIONSPIRITS,sd) )
+					break; //Do not override the noskill mapflag. [Skotlex]
+				clif_skill_nodamage(&sd->bl,&sd->bl,MO_EXPLOSIONSPIRITS,-1,
+					sc_start(&sd->bl,status_skill2sc(MO_EXPLOSIONSPIRITS),100,
+					17,skill_get_time(MO_EXPLOSIONSPIRITS,1))); //Lv17-> +50 critical (noted by Poki) [Skotlex]
+				sd->state.snovice_call_flag = 0;
+				break;
 			}
 		}
 	}
