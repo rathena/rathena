@@ -526,10 +526,13 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 					rate += sd->addeff[i].arrow_rate;
 				if( !rate ) continue;
 
-				if( (sd->addeff[i].flag&(ATF_WEAPON|ATF_SKILL)) != (ATF_WEAPON|ATF_SKILL) )
-				{ // Trigger has attack type consideration.
-					if( (sd->addeff[i].flag&ATF_WEAPON && !(attack_type&BF_WEAPON)) || (sd->addeff[i].flag&ATF_SKILL && !(attack_type&(BF_MAGIC|BF_MISC))) )
-						continue;
+				if( (sd->addeff[i].flag&(ATF_WEAPON|ATF_MAGIC|ATF_MISC)) != (ATF_WEAPON|ATF_MAGIC|ATF_MISC) ) 
+				{ // Trigger has attack type consideration. 
+					if( (sd->addeff[i].flag&ATF_WEAPON && attack_type&BF_WEAPON) ||
+						(sd->addeff[i].flag&ATF_MAGIC && attack_type&BF_MAGIC) ||
+						(sd->addeff[i].flag&ATF_MISC && attack_type&BF_MISC) ) ;
+					else
+						continue; 
 				}
 
 				if( (sd->addeff[i].flag&(ATF_LONG|ATF_SHORT)) != (ATF_LONG|ATF_SHORT) )

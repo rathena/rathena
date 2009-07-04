@@ -1487,7 +1487,7 @@ static int pc_bonus_addeff(struct s_addeffect* effect, int max, enum sc_type id,
 		flag|=ATF_SHORT|ATF_LONG; //Default range: both
 	if (!(flag&(ATF_TARGET|ATF_SELF)))
 		flag|=ATF_TARGET; //Default target: enemy.
-	if (!(flag&(ATF_WEAPON|ATF_SKILL)))
+	if (!(flag&(ATF_WEAPON|ATF_MAGIC|ATF_MISC)))
 		flag|=ATF_WEAPON; //Defatul type: weapon.
 
 	for (i = 0; i < max && effect[i].flag; i++) {

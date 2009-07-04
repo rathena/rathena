@@ -226,7 +226,8 @@ enum auto_trigger_flag {
 	ATF_SHORT=0x04,
 	ATF_LONG=0x08,
 	ATF_WEAPON=0x10,
-	ATF_SKILL=0x20,
+	ATF_MAGIC=0x20,
+	ATF_MISC=0x40,
 };
 
 struct block_list {
