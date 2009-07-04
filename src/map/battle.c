@@ -1031,7 +1031,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 	} else //Range for normal attacks.
 		wd.flag |= flag.arrow?BF_LONG:BF_SHORT;
 	
-	if (!skill_num && tstatus->flee2 && rand()%1000 < tstatus->flee2)
+	if ( (!skill_num || skill_num == PA_SACRIFICE) && tstatus->flee2 && rand()%1000 < tstatus->flee2 )
 	{	//Check for Lucky Dodge
 		wd.type=0x0b;
 		wd.dmg_lv=ATK_LUCKY;
@@ -1614,7 +1614,11 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 					if (sc && sc->data[SC_COMBO] && sc->data[SC_COMBO]->val1 == skill_num)
 						skillratio += 10*status_get_lv(src)/3; //Tumble bonus
 					if (wflag)
+					{
 						skillratio += 10*status_get_lv(src)/3; //Running bonus (TODO: What is the real bonus?)
+						if( sc && sc->data[SC_SPURT] )  // Spurt bonus
+							skillratio *= 2;
+					}
 					break;
 				case GS_TRIPLEACTION:
 					skillratio += 50*skill_lv;
