@@ -228,7 +228,7 @@ yuno_in02,88,164,5	script	Metheus Sylphe#Library	742,{
 			mes "1,285,000 zeny.";
 			next;
 			if (select("Donate.:Cancel.") == 1) {
-				if (Zeny > 1284449) {
+				if (Zeny >= 1285000) {
 					set zeny,zeny-1285000;
 					set valkyrie_Q,1;
 					mes "[Metheus Sylphe]";

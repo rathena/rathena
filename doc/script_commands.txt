@@ -5083,7 +5083,7 @@ If this behavior is undesirable, use some other timer mechanism (like 'sleep').
 *startnpctimer{ "<NPC name>" {, <Attach Flag>} } |
               { "<NPC name>" | <Attach Flag> };
 *setnpctimer <tick>{,"<NPC name>"};
-*getnpctimer(<type of information>{,"<NPC name>"});
+*getnpctimer(<type of information>{,"<NPC name>"})
 *attachnpctimer {"<character name>"};
 *detachnpctimer {"<NPC name>"};
 
@@ -5522,8 +5522,22 @@ mf_fireworks) and whether day/night will be in effect on this map (mf_indoors).
 
 ---------------------------------------
 
+*removemapflag "<map name>",<flag>;
+
+This command removes a mapflag from a specified map. 
+See 'setmapflag' for a list of mapflags.
+
+---------------------------------------
+
+*getmapflag("<map name>",<flag>)
+
+This command checks the status of a given mapflag. 
+Returns 1 for ON, 0 for OFF. See 'setmapflag' for a list of mapflags.
+
+---------------------------------------
+
 *setbattleflag "<battle flag>",<value>;
-*getbattleflag "<battle flag>";
+*getbattleflag("<battle flag>)
 
 Sets or gets the value of the given battle flag.
 Battle flags are the flags found in the battle/*.conf files and is also used in Lupus' variable rates script.
@@ -5535,12 +5549,6 @@ Example(s):
 	
 //will return the value of the base experience rate (when used after the above example, it would return 2000).
 	getBattleFlag "base_exp_rate";
-
----------------------------------------
-
-*removemapflag "<map name>",<flag>;
-
-This command removes a mapflag from a specified map. See 'setmapflag'.
 
 ---------------------------------------
 
@@ -5798,7 +5806,7 @@ memory of where the points are set whatsoever.
 This command will display a picture stored in the GRF file in the client for the 
 player. 
 
-The files are taken from '\data\texture\A_A쥱I뢎뭵AIェ\illust' directory in the 
+The files are taken from '\data\texture\유저인터페이스\illust' directory in the 
 GRF file. Also it seems that card cutins from \cardbmp will work here as well. 
 Only bitmaps (images stored in the bitmap format) will actually get displayed. 
 The '.bmp' extension is optional. 
