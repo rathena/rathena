@@ -5,6 +5,7 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 09/07/04
 	* TK_POWER shouldn't count the player him/herself for the skill. [Inkfish]
+	* Fixed a wrong check of Intimidate on hp. (bugreport:3305)[Inkfish]
 09/07/03
 	* Martyr's Reckoning can be perfect dodged. [Inkfish]
 	* Casting Flying Kick while running and in the spurt status doubles the damage dealt without spurt status. (bugreport:1898) [Inkfish]
