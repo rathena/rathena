@@ -1265,14 +1265,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 				break;
 			case PA_SACRIFICE:
 				wd.damage = sstatus->max_hp* 9/100;
-				status_zap(src, wd.damage, 0);//Damage to self is always 9%
 				wd.damage2 = 0;
-
-				if (sc && sc->data[SC_SACRIFICE])
-				{
-					if (--sc->data[SC_SACRIFICE]->val2 <= 0)
-						status_change_end(src, SC_SACRIFICE,-1);
-				}
 				break;
 			case LK_SPIRALPIERCE:
 			case ML_SPIRALPIERCE:
@@ -2995,8 +2988,17 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 	if (sc)
 	{
 		if (sc->data[SC_SACRIFICE])
+		{
+			int skilllv = sc->data[SC_SACRIFICE]->val1;
+
+			if( --sc->data[SC_SACRIFICE]->val2 <= 0 )
+				status_change_end(src, SC_SACRIFICE,-1);
+
+			status_zap(src, sstatus->max_hp*9/100, 0);//Damage to self is always 9%
+
 			//FIXME: invalid return type!
-			return (damage_lv)skill_attack(BF_WEAPON,src,src,target,PA_SACRIFICE,sc->data[SC_SACRIFICE]->val1,tick,0);
+			return (damage_lv)skill_attack(BF_WEAPON,src,src,target,PA_SACRIFICE,skilllv,tick,0);
+		}
 		if (sc->data[SC_MAGICALATTACK])
 			//FIXME: invalid return type!
 			return (damage_lv)skill_attack(BF_MAGIC,src,src,target,NPC_MAGICALATTACK,sc->data[SC_MAGICALATTACK]->val1,tick,0);
