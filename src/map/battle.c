@@ -2088,9 +2088,9 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 	if( flag.infdef )
 	{ //Plants receive 1 damage when hit
 		if( flag.hit || wd.damage > 0 )
-			wd.damage = 1; // In some cases, right hand no need to have a weapon to increase damage
+			wd.damage = wd.div_; // In some cases, right hand no need to have a weapon to increase damage
 		if( flag.lh && (flag.hit || wd.damage2 > 0) )
-			wd.damage2 = 1;
+			wd.damage2 = wd.div_;
 		if( !(battle_config.skill_min_damage&1) )
 			//Do not return if you are supposed to deal greater damage to plants than 1. [Skotlex]
 			return wd;
