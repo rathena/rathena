@@ -1,5 +1,13 @@
 Date		Added
 ======
+2009/07/07
+	* Rev. 13940 A few minor bugs fixed. :3 [L0ne_W0lf]
+	- Fixed npc in okolnir quest using non-existant event. (Bugreport:3085)
+	- Translated non-translated lines in Okolnir quest.
+	- Fixed Asprika quest giving Brynhild requirement message.
+	- Added missing warps for The Sign quest. (Bugreport:3295)
+	- Corrected time check for Sir Jore in the Sign Quest.
+	* Updated warps for 13.1 maps.
 2009/06/09
 	* Rev. 13878 Implemented rewrite of the quest "The Sign". [L0ne_W0lf]
 	- Attempts to save player progress when quest npcs are talked too. This is Untested.

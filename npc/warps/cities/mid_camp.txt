@@ -3,42 +3,45 @@
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
-//= 1.2
+//= 1.3
 //===== Compatible With: =====================================
 //= Any Athena Version
 //===== Description: =========================================
+//= [Aegis Conversion]
 //= Warp Points for Another World
+//= Warp points to and from fild22b and mid_camp are temporary.
 //===== Additional Comments: =================================
 //= 1.0 First Version.
 //= 1.1 Fixed a small bug by brianlew, bugreport:1824 [Brainstorm]
 //= 1.2 Corrected the observatory warp portal, thanks to Ziu. [brianluau]
+//= 1.3 Added warps, and also Updated warp positions. [L0ne_W0lf]
 //============================================================
 
-moc_fild22b,233,197,0	warp	moc_fild22b1-1	1,1,mid_camp,210,290
 mid_camp,210,293,0	warp	moc_fild22b1-2	1,1,moc_fild22b,241,195
-mid_camp,205,211,0	warp	mid_weapon1-1	1,1,mid_campin,230,124
-mid_campin,233,124,0	warp	mid_weapon1-2	1,1,mid_camp,207,211
-mid_campin,222,108,0	warp	mid_weapon1-3	1,1,mid_camp,198,205
-mid_camp,196,204,0	warp	mid_weapon1-4	1,1,mid_campin,221,111
-mid_camp,214,249,0	warp	mid_meeting1-1	1,1,mid_campin,90,101
-mid_campin,90,98,0	warp	mid_meeting1-2	1,1,mid_camp,215,246
-mid_campin,113,113,0	warp	mid_meeting2-1	1,1,mid_campin,164,82
-mid_campin,162,82,0	warp	mid_meeting2-2	1,1,mid_campin,110,113
-mid_campin,113,119,0	warp	mid_meeting3-1	1,1,mid_campin,164,126
-mid_campin,162,126,0	warp	mid_meeting3-2	1,1,mid_campin,110,119
-mid_campin,111,127,0	warp	mid_meeting4-1	1,1,mid_campin,164,170
-mid_campin,162,170,0	warp	mid_meeting4-2	1,1,mid_campin,109,127
-mid_campin,93,141,0	warp	mid_meeting5-1	1,1,mid_campin,65,180
-mid_campin,65,178,0	warp	mid_meeting5-2	1,1,mid_campin,93,138
-mid_campin,85,141,0	warp	mid_meeting6-1	1,1,mid_campin,117,180
-mid_campin,117,178,0	warp	mid_meeting6-2	1,1,mid_campin,85,138
-mid_campin,68,127,0	warp	mid_meeting7-1	1,1,mid_campin,23,168
-mid_campin,25,168,0	warp	mid_meeting7-2	1,1,mid_campin,70,127
-mid_campin,66,119,0	warp	mid_meeting8-1	1,1,mid_campin,23,124
-mid_campin,25,124,0	warp	mid_meeting8-2	1,1,mid_campin,69,119
-mid_campin,66,113,0	warp	mid_meeting9-1	1,1,mid_campin,23,80
-mid_campin,25,80,0	warp	mid_meeting9-2	1,1,mid_campin,69,113
+mid_camp,205,211,0	warp	mid_weapon1-1	1,1,mid_campin,229,123
+mid_campin,232,123,0	warp	mid_weapon1-2	1,1,mid_camp,208,211
+mid_camp,196,204,0	warp	mid_weapon2-1	1,1,mid_campin,220,109
+mid_campin,223,109,0	warp	mid_weapon2-2	1,1,mid_camp,198,205
+mid_camp,214,249,0	warp	mid_meeting1-1	1,1,mid_campin,89,102
+mid_campin,89,99,0	warp	mid_meeting1-2	1,1,mid_camp,215,247
+mid_campin,66,114,0	warp	mid_meeting2-1	1,1,mid_campin,22,80
+mid_campin,25,80,0	warp	mid_meeting2-2	1,1,mid_campin,70,114
+mid_campin,66,120,0	warp	mid_meeting3-1	1,1,mid_campin,22,124
+mid_campin,25,124,0	warp	mid_meeting3-2	1,1,mid_campin,70,120
+mid_campin,68,128,0	warp	mid_meeting4-1	1,1,mid_campin,22,168
+mid_campin,25,168,0	warp	mid_meeting4-2	1,1,mid_campin,71,128
+mid_campin,86,141,0	warp	mid_meeting5-1	1,1,mid_campin,66,181
+mid_campin,65,178,0	warp	mid_meeting5-2	1,1,mid_campin,86,138
+mid_campin,94,141,0	warp	mid_meeting6-1	1,1,mid_campin,117,181
+mid_campin,117,178,0	warp	mid_meeting6-2	1,1,mid_campin,94,138
+mid_campin,111,128,0	warp	mid_meeting7-1	1,1,mid_campin,165,170
+mid_campin,162,170,0	warp	mid_meeting7-2	1,1,mid_campin,108,128
+mid_campin,113,120,0	warp	mid_meeting8-1	1,1,mid_campin,165,126
+mid_campin,162,126,0	warp	mid_meeting8-2	1,1,mid_campin,110,120
+mid_campin,113,114,0	warp	mid_meeting9-1	1,1,mid_campin,165,82
+mid_campin,162,82,0	warp	mid_meeting9-2	1,1,mid_campin,110,114
 mid_camp,266,260,0	warp	mid_house1-1	1,1,mid_campin,284,124
 mid_campin,282,124,0	warp	mid_house1-2	1,1,mid_camp,263,260
-mid_camp,163,231,0	warp	mid_house2-1	1,1,mid_campin,376,134
-mid_campin,376,137,0	warp	mid_house2-2	1,1,mid_camp,163,233
+mid_camp,163,231,0	warp	mid_house2-1	1,1,mid_campin,376,133
+mid_campin,376,136,0	warp	mid_house2-2	1,1,mid_camp,163,234
+

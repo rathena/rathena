@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= SinSloth(Most of the NPCs), MasterOfMuppets(Some of the NPCs + bug fixes) & Kargha(The quiz NPCs)
 //===== Current Version: ===================================== 
-//= 3.0
+//= 3.1
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -16,6 +16,7 @@
 //=     Due to the incompatabity of the old script with this
 //=     version, variables will attmept to be translated to the
 //=     new version, however it is untested.
+//= 3.1 Corrected time check for Sir Jore. [L0ne_W0lf]
 //============================================================ 
 
 //============================================================ 
@@ -2648,7 +2649,7 @@ aldeba_in,139,103,5	script	Monograph#sign	111,{
 
 aldeba_in,155,101,3	script	Sir Jore#sign	805,7,7,{
 	callfunc "F_UpdateSignVars";
-	if ((gettime(3) > 17) && (gettime(3) < 22)) {
+	if ((gettime(3) > 16) && (gettime(3) < 22)) {
 		if (sign_q == 15) {
 			mes "["+ strcharinfo(0) +"]";
 			mes "Excuse me...";

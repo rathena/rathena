@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.1
+//= 1.2
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -17,6 +17,9 @@
 //=     Fixed the Wish Maiden not enabling when the boss is killed.
 //=     fixed two NPC named that were missed when translating.
 //=     Fixed Dialog that was overlooked in some files and not others.
+//= 1.2 More bug fixes, sorry it took so long. [L0ne_W0lf]
+//=     Fixed message on the portal when the okolnir section is full.
+//=     Corrected non-angry Piamette not disabling.
 //============================================================ 
 
 schg_cas01,376,307,3	script	Guide#gq_sch01	899,{
@@ -882,7 +885,7 @@ OnTouch:
 		}
 	}
 	else {
-		mes "정원을 초과하였습니다. 더이상 진입할 수 없습니다.";
+		mes "There are too many people, you can't enter.";
 		close;
 	}
 	end;
@@ -1839,7 +1842,7 @@ OnTimer1000:
 
 OnTimer5000:
 	mapannounce "que_qsch01","Piamette : I'm pissed off now!",bc_map,"0xdb7093";
-	donpcevent "Piamette#sch01::OnDisable";
+	disablenpc "Piamette#sch01";
 	monster "que_qsch01",131,135,"Angry Piamette",1930,1,"#piamette_sch01::OnMyMobDead";
 	stopnpctimer;
 	end;

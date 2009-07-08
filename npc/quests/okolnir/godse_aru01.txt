@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.1
+//= 1.2
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -17,6 +17,10 @@
 //=     Fixed the Wish Maiden not enabling when the boss is killed.
 //=     Fixed two NPC named that were missed when translating.
 //=     Fixed Dialog that was overlooked in some files and not others.
+//= 1.2 More bug fixes, sorry it took so long. [L0ne_W0lf]
+//=     Fixed message on the portal when the okolnir section is full.
+//=     Corrected non-angry Piamette not disabling.
+//=     Removed extra dialog that was used in the Brynhild quest.
 //============================================================ 
 
 arug_cas01,161,371,3	script	Guide#gq_aru01	899,{
@@ -260,10 +264,6 @@ que_qaru01,345,82,3	script	Wish Maiden#gq_aru01	403,{
 				mes "[Wish Maiden]";
 				mes "Please bring those four things, 10 Agate, 10 Rose Quartz, and 20 Elunium,";
 				mes "a Heavenly Maiden's Robe, as well as Soft feathers.";
-				next;
-				mes "[Wish Maiden]";
-				mes "You must bring those six things, 10 Gold, and 20 Elunium.";
-				mes "Many Valhala's Flowers are also required as an offering.";
 				next;
 				mes "[Wish Maiden]";
 				mes "Once all of those are prepared, the gate will open.";
@@ -884,7 +884,7 @@ OnTouch:
 		}
 	}
 	else {
-		mes "정원을 초과하였습니다. 더이상 진입할 수 없습니다.";
+		mes "There are too many people, you can't enter.";
 		close;
 	}
 	end;
@@ -1841,7 +1841,7 @@ OnTimer1000:
 
 OnTimer5000:
 	mapannounce "que_qaru01","Piamette : I'm pissed off now!",bc_map,"0xdb7093";
-	donpcevent "Piamette#aru01::OnDisable";
+	disablenpc "Piamette#aru01";
 	monster "que_qaru01",131,135,"Angry Piamette",1930,1,"#piamette_aru01::OnMyMobDead";
 	stopnpctimer;
 	end;
