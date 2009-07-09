@@ -3011,6 +3011,56 @@ Check sample in nps\sample\getmonsterinfo.txt
 
 ---------------------------------------
 
+*getmobdrops(<mob id>)
+
+This command will find all drops of the specified mob and return the item IDs 
+and drop percentages into arrays of temporary global variables. 
+'getmobdrops' returns 1 if successful and 0 if the mob ID doesn't exist.
+
+Upon executing this,
+
+$@MobDrop_item[] is a global temporary number array which contains the 
+                 item IDs of the monster's drops.
+
+$@MobDrop_rate[] is a global temporary number array which contains the 
+                 drop percentages of each item. (1 = .01%)
+
+$@MobDrop_count  is the number of item drops found.
+
+Be sure to use $@MobDrop_count to go through the arrays, and not 
+'getarraysize', because the temporary global arrays are not cleared between 
+runs of 'getmobdrops'. If a mob with 7 item drops is looked up, the arrays would 
+have 7 elements. But if another mob is looked up and it only has 5 item drops, 
+the server will not clear the arrays for you, overwriting the values instead. So 
+in addition to returning the 5 item drops, the 6th and 7th elements from the 
+last call remain, and you will get 5+2 item drops, of which the last 2 don't 
+belong to the new mob. $@MobDrop_count will always contain the correct number 
+(5), unlike 'getarraysize()' which would return 7 in this case.
+
+Example:
+
+	// get a Mob ID from the user
+	input .@mob_id;
+	
+	if (getmobdrops(.@mob_id)) {	// 'getmobdrops' returns 1 on success
+		// immediately copy global temporary variables into scope variables, 
+		// since we don't know when 'getmobdrops' will get called again for 
+		// another mob, overwriting your global temporary variables
+		set .@count, $@MobDrop_count;
+		copyarray .@item[0],$@MobDrop_item[0],.@count;
+		copyarray .@rate[0],$@MobDrop_rate[0],.@count;
+		
+		mes getmonsterinfo(.@mob_id,MOB_NAME) + " - " + .@count + " drops found:";
+		for( set .@i,0; .@i < .@count; set .@i,.@i +1 ) {
+			mes .@item[.@i] + " (" + getitemname(.@item[.@i]) + ") " + .@rate[.@i]/100 + ((.@rate[.@i]%100 < 10) ? ".0":".") + .@rate[.@i]%100 + "%";
+		}
+	} else {
+		mes "Unknown monster ID.";
+	}
+	close;
+
+---------------------------------------
+
 *getmapmobs("<map name>")
 
 This function will return the total count of monsters currently located on the 
@@ -4248,9 +4298,9 @@ invoking character.
 
 This will open the Auction window on the client connected to the invoking character.
 
-    mes "Close this window to open your mail inbox.";
+    mes "Close this window to open the Auction window.";
     close2;
-    openmail;
+    openauction;
     end;
 
 ---------------------------------------
@@ -4328,10 +4378,11 @@ Advanced jobs, which will reset the invoking character's stats and level
 depending on the action type given. Valid action types are:
 
  1 - Base level 1, Job level 1, 0 skill points, 0 base xp, 0 job xp, wipes the 
-     status effects, sets all stats to 1. If the new job is 'Novice High', give 
-     100 status points, give First Aid and Play Dead skills.
- 2 - Base level 1, Job level 1, 0 skill points, 0 XP/JXP. Skills and attribute 
-     values are not altered.
+     status effects (only the ones settable by 'setoption'), sets all stats to 1. 
+     If the new job is 'Novice High', give 100 status points, give First Aid and 
+     Play Dead skills.
+ 2 - Base level 1, Job level 1, 0 skill points, 0 base xp, 0 job xp. 
+     Skills and attribute values are not altered.
  3 - Base level 1, base xp 0. Nothing else is changed.
  4 - Job level 1, job xp 0. Nothing else is changed.
 
@@ -4694,7 +4745,7 @@ Example(s):
 //prevents the current char from moving away;
 	pcblockmove getcharid(3),1;
 	
-//enables the current char to move again.	
+//enables the current char to move again.
 	pcblockmove getcharid(3),0;
 
 --------------------------------------- 
@@ -4755,7 +4806,7 @@ Simple monster killing script:
         mes "Now go and kill all the Poring I summoned";
         // He summoned ten.
         close;
-    L_PoringKilled:
+    OnPoringKilled:
         set $PoringKilled,$PoringKilled+1;
         if ($PoringKilled==10) goto L_AllDead;
         end;
@@ -4765,6 +4816,30 @@ Simple monster killing script:
         end;
 
 For more good examples see just about any official 2-1 or 2-2 job quest script.
+
+---------------------------------------
+
+*areamobuseskill "<map name>",<x>,<y>,<range>,<mob id>,<skill id>,<skill level>,<cast time>,<cancelable>,<emotion>,<target type>;
+*areamobuseskill "<map name>",<x>,<y>,<range>,<mob id>,"<skill name>",<skill level>,<cast time>,<cancelable>,<emotion>,<target type>;
+
+This command will make all monsters of the specified mob ID in the specified 
+area use the specified skill. Map name, x, and y define the center of the area, 
+which extending <range> cells in each direction (ex: a range of 3 would create 
+a 7x7 square). The skill can be specified by skill ID or name. <cast time> is in 
+milliseconds (1000 = 1 second), and the rest should be self-explanatory. 
+
+<target type> can be: 
+	0 = self
+	1 = the mob's current target
+	2 = the mob's master
+	3 = random target
+
+Example:
+
+	// spawn 1 Shining Plant in the 5x5 area centered on (155,188)
+	areamonster "prontera",153,186,157,190,"Shining Plant",1083,1;
+	// make the plant cast level 10 Cold Bolt on a random target
+	areamobuseskill "prontera",155,188,2,1083,"MG_COLDBOLT",10,3000,1,e_gg,3;
 
 ---------------------------------------
 
@@ -4889,7 +4964,7 @@ the homunculus must be on at least 91000/100000 intimacy with it's owner.
 ---------------------------------------
 
 *unitwalk <GID>,<x>,<y>;
-* unitwalk <GID>,<mapid>;
+*unitwalk <GID>,<mapid>;
 
 This is one command, but can be used in two ways. If only the first argument is given,
 the unit whose GID is given will start walking towards the map with the given mapid 
@@ -5531,13 +5606,13 @@ See 'setmapflag' for a list of mapflags.
 
 *getmapflag("<map name>",<flag>)
 
-This command checks the status of a given mapflag. 
-Returns 1 for ON, 0 for OFF. See 'setmapflag' for a list of mapflags.
+This command checks the status of a given mapflag and returns the mapflag's state. 
+0 means OFF, and 1 means ON. See 'setmapflag' for a list of mapflags.
 
 ---------------------------------------
 
 *setbattleflag "<battle flag>",<value>;
-*getbattleflag("<battle flag>)
+*getbattleflag("<battle flag>")
 
 Sets or gets the value of the given battle flag.
 Battle flags are the flags found in the battle/*.conf files and is also used in Lupus' variable rates script.

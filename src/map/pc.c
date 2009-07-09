@@ -5039,25 +5039,26 @@ int pc_resetlvl(struct map_session_data* sd,int type)
 		pc_resetskill(sd, 0);
 
 	if(type == 1){
-	sd->status.skill_point=0;
-	sd->status.base_level=1;
-	sd->status.job_level=1;
-	sd->status.base_exp=sd->status.base_exp=0;
-	sd->status.job_exp=sd->status.job_exp=0;
-	if(sd->sc.option !=0)
-		sd->sc.option = 0;
+		sd->status.skill_point=0;
+		sd->status.base_level=1;
+		sd->status.job_level=1;
+		sd->status.base_exp=sd->status.base_exp=0;
+		sd->status.job_exp=sd->status.job_exp=0;
+		if(sd->sc.option !=0)
+			sd->sc.option = 0;
 
-	sd->status.str=1;
-	sd->status.agi=1;
-	sd->status.vit=1;
-	sd->status.int_=1;
-	sd->status.dex=1;
-	sd->status.luk=1;
-	if(sd->status.class_ == JOB_NOVICE_HIGH)
-		sd->status.status_point=100;	// not 88 [celest]
-		// give platinum skills upon changing
-		pc_skill(sd,142,1,0);
-		pc_skill(sd,143,1,0);
+		sd->status.str=1;
+		sd->status.agi=1;
+		sd->status.vit=1;
+		sd->status.int_=1;
+		sd->status.dex=1;
+		sd->status.luk=1;
+		if(sd->status.class_ == JOB_NOVICE_HIGH) {
+			sd->status.status_point=100;	// not 88 [celest]
+			// give platinum skills upon changing
+			pc_skill(sd,142,1,0);
+			pc_skill(sd,143,1,0);
+		}
 	}
 
 	if(type == 2){
