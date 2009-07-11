@@ -3,6 +3,11 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+09/07/11
+	* Some updates for range check. (bugreport:3339) [Inkfish]
+	- Monsters shouldn't use skills if the target is within its attack range but is out of the skill range.
+	- Monsters' skill range is no longer 9 by default. 
+	- Range for players' attacks and skills should always have a circular check.
 09/07/07
 	* Skills with multiple hits should do 1 damage per hit to plants. [Inkfish]
 09/07/04

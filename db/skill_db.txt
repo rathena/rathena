@@ -330,7 +330,7 @@
 285,2,6,2,3,0x1,0,5,1,yes,0,0,0,magic,0,		SA_VOLCANO,Volcano
 286,2,6,2,1,0x1,0,5,1,yes,0,0,0,magic,0,		SA_DELUGE,Deluge
 287,2,6,2,4,0x1,0,5,1,yes,0,0,0,magic,0,		SA_VIOLENTGALE,Whirlwind
-288,3,6,2,0,0x1,0,5,1,yes,0,0,0,magic,0,		SA_LANDPROTECTOR,Magnetic Earth
+288,2,6,2,0,0x1,0,5,1,yes,0,0,0,magic,0,		SA_LANDPROTECTOR,Magnetic Earth
 289,9,6,1,0,0x1,0:0:0:0:0:-1,5,1,yes,0,0xE00,0,magic,0,	SA_DISPELL,Dispell
 290,0,6,4,0,0x1,0,10,1,yes,0,0,0,magic,0,	SA_ABRACADABRA,Hocus-pocus
 291,9,6,1,0,0x1,0,1,1,yes,0,0x2,0,magic,0,	SA_MONOCELL,Monocell

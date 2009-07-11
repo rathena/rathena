@@ -9516,7 +9516,7 @@ void clif_parse_UseSkillToId(int fd, struct map_session_data *sd)
 	{
 		if( skilllv != sd->skillitemlv )
 			skilllv = sd->skillitemlv;
-		if( !(skill_get_inf(skillnum)&INF_SELF_SKILL) )
+		if( !(tmp&INF_SELF_SKILL) )
 			pc_delinvincibletimer(sd); // Target skills thru items cancel invincibility. [Inkfish]
 		unit_skilluse_id(&sd->bl, target_id, skillnum, skilllv);
 		return;

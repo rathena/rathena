@@ -34,6 +34,8 @@
 	2385 Recuvative_Armor		Should trigger HP/SP return with magical kills as well.
 
 =======================
+2009/07/11
+	* The range of Magnetic Earth should be 2. (bugreport:3339) [Inkfish]
 2009/07/02
 	* Fixed a bug in Ifrit's drops (bugreport:3319) [Playtester]
 2009/06/29

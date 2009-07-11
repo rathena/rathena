@@ -218,7 +218,7 @@ int skill_get_casttype (int id)
 int skill_get_range2 (struct block_list *bl, int id, int lv)
 {
 	int range;
-	if( bl->type == BL_MOB && !(battle_config.mob_ai&0x400) )
+	if( bl->type == BL_MOB && battle_config.mob_ai&0x400 )
 		return 9; //Mobs have a range of 9 regardless of skill used.
 
 	range = skill_get_range(id, lv);
