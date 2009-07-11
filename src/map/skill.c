@@ -7189,7 +7189,6 @@ static int skill_unit_onplace (struct skill_unit *src, struct block_list *bl, un
 		}
 		break;
 	case UNT_SAFETYWALL:
-		//TODO: Find a more reliable way to handle the link to sg, this could cause dangling pointers. [Skotlex]
 		if (!sce)
 			sc_start4(bl,type,100,sg->skill_lv,sg->group_id,sg->group_id,0,sg->limit);
 		break;

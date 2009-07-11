@@ -197,7 +197,7 @@ void set_char_online(int map_id, int char_id, int account_id)
 	struct online_char_data* character;
 	
 	character = (struct online_char_data*)idb_ensure(online_char_db, account_id, create_online_char_data);
-	if( character->char_id != -1 && character->server > -1 && character->server != map_id && map_id != -3 )
+	if( character->char_id != -1 && character->server > -1 && character->server != map_id )
 	{
 		//char == 99 <- Character logging in, so someone has logged in while one
 		//char is still on map-server, so kick him out, but don't print "error"
@@ -253,7 +253,8 @@ void set_char_offline(int char_id, int account_id)
 
 		//FIXME? Why Kevin free'd the online information when the char was effectively in the map-server?
 	}
-	
+
+	//Remove char if 1- Set all offline, or 2- character is no longer connected to char-server.
 	if (login_fd > 0 && !session[login_fd]->flag.eof && (char_id == -1 || character == NULL || character->fd == -1))
 	{
 		WFIFOHEAD(login_fd,6);
@@ -1748,10 +1749,12 @@ int char_divorce(struct mmo_charstatus *cs)
 				cs->partner_id = 0;
 				char_dat[i].status.partner_id = 0;
 				for(j = 0; j < MAX_INVENTORY; j++)
+				{
 					if (char_dat[i].status.inventory[j].nameid == WEDDING_RING_M || char_dat[i].status.inventory[j].nameid == WEDDING_RING_F)
 						memset(&char_dat[i].status.inventory[j], 0, sizeof(char_dat[i].status.inventory[0]));
 					if (cs->inventory[j].nameid == WEDDING_RING_M || cs->inventory[j].nameid == WEDDING_RING_F)
 						memset(&cs->inventory[j], 0, sizeof(cs->inventory[0]));
+				}
 				return 0;
 			}
 		}

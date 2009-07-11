@@ -174,7 +174,7 @@ static bool account_db_txt_init(AccountDB* self)
 		memcpy(tmp, &acc, sizeof(struct mmo_account));
 		idb_put(accounts, acc.account_id, tmp);
 
-		if( db->next_account_id < acc.account_id)
+		if( acc.account_id >= db->next_account_id )
 			db->next_account_id = acc.account_id + 1;
 	}
 

@@ -108,7 +108,7 @@ typedef enum _UdtKind
     UdtClass,
     UdtUnion
 } UdtKind;
-
+/*
 typedef enum _SymTag { 
    SymTagNull             = 0,
    SymTagExe              = 1,
@@ -142,7 +142,7 @@ typedef enum _SymTag {
    SymTagManagedType      = 29,
    SymTagDimension        = 30
 } SymTag;
-
+*/
 #endif /* _NO_CVCONST_H */
 
 
