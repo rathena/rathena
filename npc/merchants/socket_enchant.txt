@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= eAthena dev team
 //===== Current Version: =====================================
-//= 1.7
+//= 1.8
 //===== Compatible With: =====================================
 //= eAthena SVN
 //===== Description: =========================================
@@ -23,6 +23,7 @@
 //= 1.5 Removed Ontouch trigger area from NPCs. [L0ne_W0lf]
 //= 1.6 Replaced effect numerics with constants. [Samuray22]
 //= 1.7 Adjusted prices on some armor and weapons. [L0ne_W0lf]
+//= 1.8 Added missing Gae Bolg and Dragon Slayer. [Kisuka]
 //============================================================
 
 payon,140,151,5	script	Seiyablem	84,{
@@ -92,7 +93,7 @@ payon,140,151,5	script	Seiyablem	84,{
 					mes "This is some high risk territory!";
 					mes "Alright, which weapon would you like me to try adding a Slot?";
 					next;
-					switch( select( "Hunter Bow","Survivor's Rod(INT)","Zweihander","Flamberge","Infiltrator","Ballista","Stunner","Berserk","Claymore","Dragon Killer","Katar of Frozen Icicle","Katar of Quaking","Katar of Raging Blaze","Katar of Piercing Wind","Golden Mace","Oriental Lute","Queen's Whip","Phantom Spear","Schweizersabel" ) )
+					switch( select( "Hunter Bow","Survivor's Rod(INT)","Zweihander","Flamberge","Infiltrator","Ballista","Stunner","Berserk","Claymore","Dragon Killer","Katar of Frozen Icicle","Katar of Quaking","Katar of Raging Blaze","Katar of Piercing Wind","Golden Mace","Oriental Lute","Queen's Whip","Phantom Spear","Gae Bolg","Schweizersabel" ) )
 					{
 						case 1: callfunc "Func_Socket",2,1718,1726,40,61,500,984,2,999,10; break;
 						case 2: callfunc "Func_Socket",2,1619,1620,40,61,500,984,5,999,10; break;
@@ -112,7 +113,8 @@ payon,140,151,5	script	Seiyablem	84,{
 						case 16: callfunc "Func_Socket",1,1918,1922,40,61,500,984,2; break;
 						case 17: callfunc "Func_Socket",1,1970,1976,40,61,500,984,2; break;
 						case 18: callfunc "Func_Socket",1,1477,1479,40,61,500,984,2; break;
-						case 19: callfunc "Func_Socket",1,1167,1178,40,61,500,984,2; break;
+						case 19: callfunc "Func_Socket",1,1474,1480,40,61,500,984,2; break;
+						case 20: callfunc "Func_Socket",1,1167,1178,40,61,500,984,2; break;
 					}
 				break;
 				
@@ -123,7 +125,7 @@ payon,140,151,5	script	Seiyablem	84,{
 					mes "It'd be a near miracle if I can actually pull this off.";
 					mes "Okay... Which weapon shall we try adding a Slot to?";
 					next;
-					switch( select( "Gungnir","Poison Knife","Ice Pick","Sucsamad","Ginnungagap","Cutlas","Crescent Scythe","Survivor's Rod(DEX)","Zephyrus","Mailbreaker","Swordbreaker","Assassin Dagger","Grand Cross","Executioner" ) )
+					switch( select( "Gungnir","Poison Knife","Ice Pick","Sucsamad","Ginnungagap","Cutlas","Crescent Scythe","Survivor's Rod(DEX)","Zephyrus","Mailbreaker","Dragon Slayer","Swordbreaker","Assassin Dagger","Grand Cross","Executioner" ) )
 					{
 						case 1: callfunc "Func_Socket",2,1413,1418,40,51,1000,984,5,999,10; break;
 						case 2: callfunc "Func_Socket",2,1239,13016,40,51,1000,984,5,999,10; break;
@@ -135,10 +137,11 @@ payon,140,151,5	script	Seiyablem	84,{
 						case 8: callfunc "Func_Socket",2,1617,1618,40,51,2000,984,5,999,10; break;
 						case 9: callfunc "Func_Socket",2,1468,1481,40,51,1000,984,5,999,10; break;
 						case 10: callfunc "Func_Socket",2,1225,13032,40,51,1000,984,5,999,10; break;
-						case 11: callfunc "Func_Socket",2,1224,13031,40,51,1000,984,5,999,10; break;
-						case 12: callfunc "Func_Socket",2,1232,13033,40,51,1000,984,5,999,10; break;
-						case 13: callfunc "Func_Socket",2,1528,1540,40,51,1000,984,5,999,10; break;
-						case 14: callfunc "Func_Socket",2,1169,1179,40,51,1000,984,5,999,10; break;
+						case 11: callfunc "Func_Socket",2,1166,1180,40,51,1000,984,5,999,10; break;
+						case 12: callfunc "Func_Socket",2,1224,13031,40,51,1000,984,5,999,10; break;
+						case 13: callfunc "Func_Socket",2,1232,13033,40,51,1000,984,5,999,10; break;
+						case 14: callfunc "Func_Socket",2,1528,1540,40,51,1000,984,5,999,10; break;
+						case 15: callfunc "Func_Socket",2,1169,1179,40,51,1000,984,5,999,10; break;
 					}
 				break;
 			}

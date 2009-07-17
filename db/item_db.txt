@@ -4013,7 +4013,7 @@
 13034,Twilight_Desert,Desert Twilight,4,20,,600,130,,1,2,0x00001000,2,2,2,2,70,1,1,{ if (isequipped(13035)) { bonus bMaxSP,20; bonus bMaxHPRate,5; bonus bHit,10; bonus2 bAddSize,2,30; autobonus "{ bonus bAspdRate,100; }",1,7000,0,"{ specialeffect2 EF_POTION_BERSERK; }"; } },{},{}
 13035,Sandstorm,Sandstorm,4,20,,600,50,,1,4,0x00001000,2,2,2,2,70,1,1,{},{},{}
 13036,Brave_Assassin's_Damascus,Brave Assassin's Damascus,4,0,,0,120,,1,0,0x028F5EEF,7,2,2,3,80,1,1,{ bonus bStr,1; bonus bAgi,1; bonus2 bAddRace,RC_DemiHuman,75; bonus2 bIgnoreDefRate,RC_DemiHuman,20; bonus bUnbreakableWeapon,0; if (Class == Job_Ninja || Class == Job_Rogue || Class == Job_Stalker) bonus bMatkRate,15; },{},{}
-13037,Valorous_Assassin's_Damascus,Valorous Assassin's Damascus,4,0,,0,120,,1,0,0x029E7CEB,7,2,2,3,80,1,1,{ bonus bStr,1; bonus bAgi,1; bonus2 bAddRace,RC_DemiHuman,75; bonus bUnbreakableWeapon,0; autobonus "{ bonus bDefRatioAtkRace,RC_NonBoss,1; }",50,6000; if (Class == Job_Ninja || Class == Job_Rogue || Class == Job_Stalker) bonus bMatkRate,15; },{},{}
+13037,Valorous_Assassin's_Damascus,Valorous Assassin's Damascus,4,0,,0,120,,1,0,0x029E7CEB,7,2,2,3,80,1,1,{ bonus bStr,1; bonus bAgi,1; bonus2 bAddRace,RC_DemiHuman,75; bonus bUnbreakableWeapon,0; autobonus "{ bonus bDefRatioAtkRace,RC_NonBoss; }",50,6000; if (Class == Job_Ninja || Class == Job_Rogue || Class == Job_Stalker) bonus bMatkRate,15; },{},{}
 //13038#Trackers_Dagger#
 //13039#Ivory_Knife#
 13040,Novice_Cutter,Novice Cutter,4,1,,0,50,,1,0,0xFE9F7EEF,7,2,2,1,1,0,1,{},{},{}
