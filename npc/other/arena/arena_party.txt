@@ -12,6 +12,7 @@
 //= 1.0 First version.
 //= 1.0a Fixed a typo.
 //= 1.1 Replaced effect numerics with constants. [Samuray22]
+//= 1.2 Fixed "OnMobDeath" doesn't work sometime. [Inkfish]
 //============================================================
 
 arena_room,162,88,3	script	Ponox	124,{
@@ -1406,17 +1407,17 @@ Onon:
 	donpcevent "force_10-1mob#party::OnReset";
 	donpcevent "force_10-2mob#party::OnReset";
 	donpcevent "force_exitmob#party::OnReset";
-	disablenpc "force_01mob#party";
-	disablenpc "force_02mob#party";
-	disablenpc "force_03mob#party";
-	disablenpc "force_04mob#party";
-	disablenpc "force_05mob#party";
-	disablenpc "force_06mob#party";
-	disablenpc "force_07mob#party";
-	disablenpc "force_08mob#party";
-	disablenpc "force_09mob#party";
-	disablenpc "force_10mob-1#party";
-	disablenpc "force_10mob-2#party";
+	//disablenpc "force_01mob#party";
+	//disablenpc "force_02mob#party";
+	//disablenpc "force_03mob#party";
+	//disablenpc "force_04mob#party";
+	//disablenpc "force_05mob#party";
+	//disablenpc "force_06mob#party";
+	//disablenpc "force_07mob#party";
+	//disablenpc "force_08mob#party";
+	//disablenpc "force_09mob#party";
+	//disablenpc "force_10mob-1#party";
+	//disablenpc "force_10mob-2#party";
 	enablenpc "force_01start#party";
 	enablenpc "force_02start#party";
 	enablenpc "force_03start#party";

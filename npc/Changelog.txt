@@ -1,5 +1,7 @@
 Date		Added
 ======
+2009/07/18
+	* Fixed "OnMobDeath" doesn't work sometime in Izlude Party Arena. [Inkfish]
 2009/07/07
 	* Rev. 13940 A few minor bugs fixed. :3 [L0ne_W0lf]
 	- Fixed npc in okolnir quest using non-existant event. (Bugreport:3085)
