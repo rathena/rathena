@@ -411,7 +411,7 @@ int mob_once_spawn(struct map_session_data* sd, int m, short x, short y, const c
 
 	for (count = 0; count < amount; count++)
 	{
-		int c = ( class_ >= 0 ) ? class_ : mob_get_random_id(-class_-1, battle_config.random_monster_checklv?3:1, lv);
+		int c = ( class_ >= 0 ) ? class_ : mob_get_random_id(-class_-1, !battle_config.random_monster_checklv?3:1, lv);
 		md = mob_once_spawn_sub(sd?&sd->bl:NULL, m, x, y, mobname, c, event);
 
 		if (!md) continue;

@@ -5332,7 +5332,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 					break;
 				case 5:	// 2000HP heal, random teleported
 					status_heal(bl, 2000, 0, 0);
-					unit_warp(bl, -1,-1,-1, 3);
+					if( !map_flag_vs(bl->m) )
+						unit_warp(bl, -1,-1,-1, 3);
 					break;
 				case 6:	// random 2 other effects
 					if (count == -1)
