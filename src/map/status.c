@@ -637,12 +637,12 @@ int status_damage(struct block_list *src,struct block_list *target,int hp, int s
 		sp = 0; //Not a valid SP target.
 
 	if (hp < 0) { //Assume absorbed damage.
-		status_heal(target, -hp, 0, 1);
+		status_heal(target, cap_value(-hp, INT_MIN, INT_MAX), 0, 1);
 		hp = 0;
 	}
 
 	if (sp < 0) {
-		status_heal(target, 0, -sp, 1);
+		status_heal(target, 0, cap_value(-sp, INT_MIN, INT_MAX), 1);
 		sp = 0;
 	}
 
@@ -859,7 +859,7 @@ int status_heal(struct block_list *bl,int hp,int sp, int flag)
 		sc = NULL;
 
 	if (hp < 0) {
-		status_damage(NULL, bl, -hp, 0, 0, 1);
+		status_damage(NULL, bl, cap_value(-hp, INT_MIN, INT_MAX), 0, 0, 1);
 		hp = 0;
 	}
 
@@ -872,7 +872,7 @@ int status_heal(struct block_list *bl,int hp,int sp, int flag)
 	}
 
 	if(sp < 0) {
-		status_damage(NULL, bl, 0, -sp, 0, 1);
+		status_damage(NULL, bl, 0, cap_value(-sp, INT_MIN, INT_MAX), 0, 1);
 		sp = 0;
 	}
 
