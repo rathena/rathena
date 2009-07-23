@@ -4050,7 +4050,7 @@ ra_temple,116,174,3	script	Nemma#ra_temple	920,{
 				mes "donation? Splendid! How much";
 				mes "would you like to donate this";
 				mes "time? Remember that we can only";
-				mes "accept donations in inrements of";
+				mes "accept donations in increments of";
 				mes "50,000 zeny up to 150,000 zeny.";
 				next;
 
