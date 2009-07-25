@@ -130,6 +130,8 @@
 //=       Extended the behaviour of duplicates (warps/shops/cashshops). [FlavioJS]
 //= 3.26.20090702
 //=       Replaced 'bonusautoscript' by 'autobonus'. [Inkfish]
+//= 3.27.20090725
+//=       Added Quest Log related commands. [Inkfish]
 //=========================================================
 
 This document is a reference manual for all the scripting commands and functions 
@@ -6524,6 +6526,58 @@ Warp all palyers in the instance to <map name> and given coordinates.
 
 Lifetime of <Time1> for <Instance ID>, while <Time2> is how long until the 
 instance times out while inactive. 
+
+---------------------------------------
+
+========================
+|8.- Quest Log commands.|
+========================
+---------------------------------------
+
+*setquest <ID>;
+
+Place quest of <ID> in the users quest log, the state of which is "active".
+
+---------------------------------------
+
+*completequest <ID>;
+
+Change the state for the given quest <ID> to "complete" and remove from the users quest log.
+
+---------------------------------------
+
+*erasequest <ID>;
+
+Remove the quest of the given <ID> from the user's quest log.
+
+---------------------------------------
+
+*changequest <ID>,<ID2>;
+
+Remove quest of the given <ID> from the user's quest log, and change state to "complete".
+Add quest of the <ID2> to the the quest log, and the state is "active".
+
+---------------------------------------
+
+checkquest(<ID>{,PLAYTIME|HUNTING});
+
+If no additonal argument supplied, return the state of the quest: 
+	-1 = Quest not started (not in quest log)
+	0  = Quest has been given, but the state is "inactive"
+	1  = Quest has been given, and the state is "active"
+	2  = Quest comepleted
+	
+If parameter "PLAYTIME" is supplied:
+	-1 = Quest not started (not in quest log)
+	0  = the time limit has not yet been reached
+	1  = the time limit has not been reached but the quest is marked as complete
+	2  = the time limit has been reached
+	
+If parameter "HUNTING" is supplied:
+	-1 = Quest not started (not in quest log)
+	0  = you haven't killed all of the target monsters and the time limit has not been reached.
+	1  = you haven't killed all of the target monsters but the time limit has been reached.
+	2  = you've killed all of the target monsters
 
 ---------------------------------------
 

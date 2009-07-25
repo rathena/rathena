@@ -58,8 +58,7 @@ char mail_db[256] = "mail"; // MAIL SYSTEM
 char auction_db[256] = "auction"; // Auctions System
 char friend_db[256] = "friends";
 char hotkey_db[256] = "hotkey";
-char quest_db[256] = "quest";
-char quest_obj_db[256] = "quest_objective";
+char quest_db[256] = "questlog";
 
 //If your code editor is having problems syntax highlighting this file, uncomment this and RECOMMENT IT BEFORE COMPILING
 //#undef TXT_SQL_CONVERT
@@ -3639,8 +3638,6 @@ void sql_config_read(const char* cfgName)
 			strcpy(hotkey_db,w2);
 		else if(!strcmpi(w1,"quest_db"))
 			strcpy(quest_db,w2);
-		else if(!strcmpi(w1,"quest_obj_db"))
-			strcpy(quest_obj_db, w2);
 #ifndef TXT_SQL_CONVERT
 		else if(!strcmpi(w1,"db_path"))
 			strcpy(db_path,w2);

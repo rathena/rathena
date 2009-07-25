@@ -50,7 +50,7 @@
 #define MAX_GUILDCASTLE 34	// Updated to include new entries for WoE:SE. [L0ne_W0lf]
 #define MAX_GUILDLEVEL 50
 #define MAX_GUARDIANS 8	//Local max per castle. [Skotlex]
-#define MAX_QUEST 25 //Max quests for a PC
+#define MAX_QUEST_DB 500 //Max quests that the server will load
 #define MAX_QUEST_OBJECTIVES 3 //Max quest objectives for a quest
 
 #define MIN_HAIR_STYLE battle_config.min_hair_style
@@ -126,24 +126,17 @@ enum item_types {
 };
 
 
-//Questlog system [Kevin]
-typedef enum quest_state { Q_INACTIVE, Q_ACTIVE } quest_state;
-
-struct quest_objective {
-
-	char name[NAME_LENGTH];
-	int count;
-
-};
+//Questlog system [Kevin] [Inkfish]
+typedef enum quest_state { Q_INACTIVE, Q_ACTIVE, Q_COMPLETE } quest_state;
 
 struct quest {
-
 	int quest_id;
+	unsigned int time;
+	int mob[MAX_QUEST_OBJECTIVES];
+	int count[MAX_QUEST_OBJECTIVES];
 	quest_state state;
-	int num_objectives;
-	int time;
-	struct quest_objective objectives[MAX_QUEST_OBJECTIVES];
 
+	int num_objectives;
 };
 
 struct item {

@@ -32,6 +32,8 @@
 #include "script.h"
 #include "atcommand.h"
 #include "date.h"
+#include "quest.h"
+
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -1992,6 +1994,8 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 			}
 			pc_setglobalreg(sd,"TK_MISSION_COUNT", sd->mission_count);
 		}
+		if( sd->avail_quests )
+			quest_update_objective(sd, md->class_);
 	}
 
 	// filter out entries not eligible for exp distribution

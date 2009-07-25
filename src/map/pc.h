@@ -377,9 +377,11 @@ struct map_session_data {
 		bool changed; // if true, should sync with charserver on next mailbox request
 	} mail;
 
-	//Quest log system [Kevin]
+	//Quest log system [Kevin] [Inkfish]
 	int num_quests;
-	struct quest quest_log[MAX_QUEST];
+	int avail_quests;
+	bool save_quest[MAX_QUEST_DB];
+	struct quest quest_log[MAX_QUEST_DB];
 
 	// temporary debug [flaviojs]
 	const char* debug_file;

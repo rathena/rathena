@@ -431,13 +431,12 @@ void clif_viewequip_ack(struct map_session_data* sd, struct map_session_data* ts
 void clif_viewequip_fail(struct map_session_data* sd);
 void clif_equipcheckbox(struct map_session_data* sd);
 
-//quest system [Kevin]
+//quest system [Kevin] [Inkfish]
 void clif_send_questlog(struct map_session_data * sd);
 void clif_send_questlog_info(struct map_session_data * sd);
 void clif_send_quest_info(struct map_session_data * sd, struct quest * qd);
 void clif_send_quest_delete(struct map_session_data * sd, int quest_id);
 void clif_send_quest_status(struct map_session_data * sd, int quest_id, bool active);
-
 
 int clif_send(const uint8* buf, int len, struct block_list* bl, enum send_target type);
 int do_final_clif(void);

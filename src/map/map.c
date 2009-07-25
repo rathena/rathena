@@ -32,6 +32,7 @@
 #include "unit.h"
 #include "battle.h"
 #include "battleground.h"
+#include "quest.h"
 #include "script.h"
 #include "mapreg.h"
 #include "guild.h"
@@ -4081,6 +4082,7 @@ int do_init(int argc, char *argv[])
 	do_init_pet();
 	do_init_merc();
 	do_init_mercenary();
+	do_init_quest();
 	do_init_npc();
 	do_init_unit();
 	do_init_battleground();

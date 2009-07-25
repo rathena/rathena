@@ -4,19 +4,34 @@
 #ifndef _QUEST_H_
 #define _QUEST_H_
 
-int quest_pc_login(TBL_PC * sd);
-int quest_load_info(TBL_PC * sd, struct mmo_charstatus * st);
-int quest_make_savedata(TBL_PC * sd);
+typedef enum quest_check_type { HAVEQUEST, PLAYTIME, HUNTING } quest_check_type;
 
-int quest_add(TBL_PC * sd, struct quest * qd);
+struct s_quest_db {
+	int id;
+	unsigned int time;
+	int mob[MAX_QUEST_OBJECTIVES];
+	int count[MAX_QUEST_OBJECTIVES];
+	//char name[NAME_LENGTH];
+};
+struct s_quest_db quest_db[MAX_QUEST_DB];
+
+int quest_pc_login(TBL_PC * sd);
+
+int quest_add(TBL_PC * sd, int quest_id);
 int quest_add_ack(int char_id, int quest_id, int success);
 
 int quest_delete(TBL_PC * sd, int quest_id);
 int quest_delete_ack(int char_id, int quest_id, int success);
 
-int quest_update_objective(TBL_PC * sd, int quest_id, int objective_num, const char * name, int count);
-int quest_update_status(TBL_PC * sd, int quest_id, bool status);
+void quest_update_objective(TBL_PC * sd, int mob);
+int quest_update_status(TBL_PC * sd, int quest_id, int status);
+int quest_save(TBL_PC * sd);
+int quest_save_ack(int char_id, int quest_id, int success);
 
-bool quest_has_quest(TBL_PC * sd, int quest_id);
+int quest_check_quest(TBL_PC * sd, int quest_id, quest_check_type type);
+
+int quest_search_db(int quest_id);
+
+void do_init_quest();
 
 #endif

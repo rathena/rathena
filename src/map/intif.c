@@ -38,7 +38,7 @@ static const int packet_len_table[]={
 	10,-1,15, 0, 79,19, 7,-1,  0,-1,-1,-1, 14,67,186,-1, //0x3830
 	 9, 9,-1,14,  0, 0, 0, 0, -1,74,-1,11, 11,-1,  0, 0, //0x3840
 	-1,-1, 7, 7,  7,11, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0, //0x3850  Auctions [Zephyrus]
-	-1,11,11, 0,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0, //0x3860  Quests [Kevin]
+	-1,11,11,11,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0, //0x3860  Quests [Kevin] [Inkfish]
 	-1, 3, 3, 0,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0, //0x3870  Mercenaries [Zephyrus]
 	11,-1, 7, 3,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0, //0x3880
 	-1,-1, 7, 3,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0, //0x3890  Homunculus [albator]
@@ -1340,21 +1340,26 @@ int intif_request_questlog(TBL_PC *sd)
 
 int intif_parse_questlog(int fd)
 {
-
-	int num_quests = (RFIFOB(fd, 2)-8)/sizeof(struct quest);
 	int char_id = RFIFOL(fd, 4);
 	int i;
 	TBL_PC * sd = map_charid2sd(char_id);
 
 	//User not online anymore
 	if(!sd)
-		return 0;
+		return -1;
 
-	for(i=0; i<num_quests; i++)
+	sd->avail_quests = sd->num_quests = (RFIFOB(fd, 2)-8)/sizeof(struct quest);
+
+	memset(&sd->quest_log, 0, sizeof(sd->quest_log));
+
+	for( i = 0; i < sd->num_quests; i++ )
 	{
 		memcpy(&sd->quest_log[i], RFIFOP(fd, i*sizeof(struct quest)+8), sizeof(struct quest));
+		if( sd->quest_log[i].state == Q_COMPLETE )
+			sd->avail_quests--;
 	}
-	sd->num_quests = num_quests;
+
+	quest_pc_login(sd);
 
 	return 0;
 }
@@ -1398,6 +1403,27 @@ int intif_quest_add(int char_id, struct quest * qd)
 	memcpy(WFIFOP(inter_fd,8), qd, sizeof(struct quest));
 	WFIFOSET(inter_fd,  WFIFOW(inter_fd,2));
 
+	return 0;
+}
+
+int intif_quest_save(int char_id, struct quest * qd)
+{
+	if(CheckForCharServer())
+		return 0;
+
+	WFIFOHEAD(inter_fd, sizeof(struct quest) + 8);
+	WFIFOW(inter_fd,0) = 0x3063;
+	WFIFOW(inter_fd,2) = sizeof(struct quest) + 8;
+	WFIFOL(inter_fd,4) = char_id;
+	memcpy(WFIFOP(inter_fd,8), qd, sizeof(struct quest));
+	WFIFOSET(inter_fd,  WFIFOW(inter_fd,2));
+
+	return 0;
+}
+
+int intif_parse_questSave(int fd)
+{
+	quest_save_ack(RFIFOL(fd, 2), RFIFOL(fd, 6), RFIFOB(fd, 10));
 	return 0;
 }
 
@@ -2038,6 +2064,7 @@ int intif_parse(int fd)
 	case 0x3860:	intif_parse_questlog(fd); break;
 	case 0x3861:	intif_parse_questAdd(fd); break;
 	case 0x3862:	intif_parse_questDelete(fd); break;
+	case 0x3863:	intif_parse_questSave(fd); break;
 
 #ifndef TXT_ONLY
 // Mail System
