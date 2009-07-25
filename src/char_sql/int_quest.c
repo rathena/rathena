@@ -33,7 +33,7 @@ int mapif_quests_fromsql(int char_id, struct quest questlog[])
 
 	memset(&tmp_quest, 0, sizeof(struct quest));
 
-	if( SQL_ERROR == SqlStmt_Prepare(stmt, "SELECT `quest_id`, `state`, `time`, `mob1`, `count1`, `mob2`, `count2`, `mob3`, `count3` FROM `%s` WHERE `char_id`=? LIMIT %d", quest_db, MAX_QUEST)
+	if( SQL_ERROR == SqlStmt_Prepare(stmt, "SELECT `quest_id`, `state`, `time`, `mob1`, `count1`, `mob2`, `count2`, `mob3`, `count3` FROM `%s` WHERE `char_id`=? LIMIT %d", quest_db, MAX_QUEST_DB)
 	||	SQL_ERROR == SqlStmt_BindParam(stmt, 0, SQLDT_INT, &char_id, 0)
 	||	SQL_ERROR == SqlStmt_Execute(stmt)
 	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 0, SQLDT_INT,    &tmp_quest.quest_id, 0, NULL, NULL)
@@ -47,7 +47,7 @@ int mapif_quests_fromsql(int char_id, struct quest questlog[])
 	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 8, SQLDT_INT,    &tmp_quest.count[2], 0, NULL, NULL) )
 		SqlStmt_ShowDebug(stmt);
 
-	for( i = 0; i < MAX_QUEST && SQL_SUCCESS == SqlStmt_NextRow(stmt); ++i )
+	for( i = 0; i < MAX_QUEST_DB && SQL_SUCCESS == SqlStmt_NextRow(stmt); ++i )
 	{
 		memcpy(&questlog[i], &tmp_quest, sizeof(tmp_quest));
 		questlog[i].num_objectives = (!questlog[i].mob[0] ? 0 : !questlog[i].mob[1] ? 1 : !questlog[i].mob[2] ? 2 : 3);
@@ -151,9 +151,9 @@ int mapif_parse_quest_update(int fd)
 //Send questlog to map server
 int mapif_send_quests(int fd, int char_id)
 {
-	struct quest tmp_questlog[MAX_QUEST];
+	struct quest tmp_questlog[MAX_QUEST_DB];
 	int num_quests, i, num_complete = 0;
-	int complete[MAX_QUEST];
+	int complete[MAX_QUEST_DB];
 
 	memset(tmp_questlog, 0, sizeof(tmp_questlog));
 	memset(complete, 0, sizeof(complete));
