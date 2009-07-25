@@ -94,7 +94,7 @@ lhz_dun02,0,0,0,0	monster	Laurell Weinder	1657,10,300000,150000,1
 lhz_dun02,0,0,0,0	monster	Remover	1682,20,300000,150000,1
 lhz_dun02,0,0,0,0	monster	Eremes Guile	1635,1,180000,120000,0
 lhz_dun02,0,0,0,0	monster	Gemini-S58	1681,10,5400000,180000,0
-lhz_dun02,0,0,0,0	monster	Egnigem Cenia	1658,1,7200000,600000,1
+lhz_dun02,0,0,0,0	boss_monster	Egnigem Cenia	1658,1,7200000,600000,1
 
 //========================================================================================
 // lhz_dun03 - Bio-life Labs 3F
