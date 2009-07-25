@@ -13455,7 +13455,7 @@ BUILDIN_FUNC(changequest)
 	TBL_PC * sd = script_rid2sd(st);
 	int q1 = script_getnum(st, 2), q2 = script_getnum(st, 3);
 
-	if( quest_check_quest(sd, q1, HAVEQUEST) == Q_ACTIVE && quest_add(sd, q2) >= 0 )
+	if( quest_check_quest(sd, q1, HAVEQUEST) == Q_ACTIVE && !quest_add(sd, q2) )
 	{
 		quest_update_status(sd, q1, Q_COMPLETE);
 		intif_quest_save(sd->status.char_id, &sd->quest_log[sd->avail_quests]);

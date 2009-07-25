@@ -3796,7 +3796,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			return 1;
 		}
 		//TODO: How much does base level affects? Dummy value of 1% per level difference used. [Skotlex]
-		clif_skill_nodamage(src,bl,skillid,skilllv,
+		clif_skill_nodamage(src,bl,skillid == SM_SELFPROVOKE ? SM_PROVOKE : skillid,skilllv,
 			(i = sc_start(bl,type, skillid == SM_SELFPROVOKE ? 100:( 50 + 3*skilllv + status_get_lv(src) - status_get_lv(bl)), skilllv, skill_get_time(skillid,skilllv))));
 		if( !i )
 		{
@@ -4507,9 +4507,21 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			location = EQP_WEAPON|EQP_SHIELD|EQP_ARMOR|EQP_HELM;
 			break;
 		}
+
+		//Special message when trying to use strip on FCP [Jobbie]
+		if( sd && skillid == ST_FULLSTRIP && tsc && tsc->data[SC_CP_WEAPON] && tsc->data[SC_CP_HELM] && tsc->data[SC_CP_ARMOR] && tsc->data[SC_CP_SHIELD] )
+		{
+			clif_gospel_info(sd, 0x28);
+			break;
+		}
+
 		//Attempts to strip at rate i and duration d
-		if (!clif_skill_nodamage(src,bl,skillid,skilllv,skill_strip_equip(bl, location, i, skilllv, d)) && sd)
-			clif_skill_fail(sd,skillid,0,0); //Nothing stripped.
+		if( (i = skill_strip_equip(bl, location, i, skilllv, d)) || skillid != ST_FULLSTRIP )
+			clif_skill_nodamage(src,bl,skillid,skilllv,i); 
+
+		//Nothing stripped.
+		if( sd && !i )
+			clif_skill_fail(sd,skillid,0,0);
 	}
 		break;
 
