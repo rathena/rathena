@@ -13447,6 +13447,7 @@ BUILDIN_FUNC(completequest)
 	TBL_PC * sd = script_rid2sd(st);
 
 	quest_update_status(sd, script_getnum(st, 2), Q_COMPLETE);
+	intif_quest_save(sd->status.char_id, &sd->quest_log[sd->avail_quests]);
 	return 0;
 }
 

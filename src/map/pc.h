@@ -380,7 +380,6 @@ struct map_session_data {
 	//Quest log system [Kevin] [Inkfish]
 	int num_quests;
 	int avail_quests;
-	bool save_quest[MAX_QUEST_DB];
 	struct quest quest_log[MAX_QUEST_DB];
 
 	// temporary debug [flaviojs]

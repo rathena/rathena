@@ -135,7 +135,7 @@ struct quest {
 	int mob[MAX_QUEST_OBJECTIVES];
 	int count[MAX_QUEST_OBJECTIVES];
 	quest_state state;
-
+	bool save_quest;
 	int num_objectives;
 };
 

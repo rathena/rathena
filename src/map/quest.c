@@ -184,7 +184,7 @@ void quest_update_objective(TBL_PC * sd, int mob)
 			if( sd->quest_log[i].mob[j] == mob )
 			{
 				sd->quest_log[i].count[j]++;
-				sd->save_quest[i] = true;
+				sd->quest_log[i].save_quest = true;
 				//clif_send_quest_info(sd, &sd->quest_log[i]); //TODO: Figure out the real packet [Inkfish]
 				//break;
 			}
@@ -207,7 +207,7 @@ int quest_update_status(TBL_PC * sd, int quest_id, int status)
 	if( status != Q_COMPLETE )
 	{
 		clif_send_quest_status(sd, quest_id, (bool)status);
-		sd->save_quest[i] = true;
+		sd->quest_log[i].save_quest = true;
 	}
 	else
 	{
@@ -220,7 +220,7 @@ int quest_update_status(TBL_PC * sd, int quest_id, int status)
 		memcpy(&sd->quest_log[i], &sd->quest_log[sd->avail_quests],sizeof(struct quest));
 		memcpy(&sd->quest_log[sd->avail_quests], &tmp_quest,sizeof(struct quest));
 
-		sd->save_quest[sd->avail_quests] = true;
+		sd->quest_log[sd->avail_quests].save_quest = true;
 	}
 
 	return 0;
@@ -231,7 +231,7 @@ int quest_save(TBL_PC * sd)
 	int i;
 
 	for( i = 0; i < sd->num_quests; i++ )
-		if( sd->save_quest[i] )
+		if( sd->quest_log[i].save_quest )
 			intif_quest_save(sd->status.char_id, &sd->quest_log[i]);
 
 	return 0;
@@ -253,7 +253,7 @@ int quest_save_ack(int char_id, int quest_id, int success)
 		return -1;
 
 	if(success)
-		sd->save_quest[i] = false;
+		sd->quest_log[i].save_quest = false;
 	else
 	{
 		ShowError("Quest %d for character %d could not be saved!\n", quest_id, char_id);
