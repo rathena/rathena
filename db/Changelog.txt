@@ -34,6 +34,11 @@
 	2385 Recuvative_Armor		Should trigger HP/SP return with magical kills as well.
 
 =======================
+2009/07/25
+	* Rev. 13965 Extreme update to the quest_db file. [L0ne_W0lf]
+	- Added many new quests, although they are all unused by scripts currently.
+	- Changed several of the old quest names to match the names on iRO
+	- Removed garbage "quest(" remainants from several of the quests...
 2009/07/11
 	* The range of Magnetic Earth should be 2. (bugreport:3339) [Inkfish]
 2009/07/02
