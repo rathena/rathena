@@ -33,7 +33,14 @@
 #include <stdarg.h>
 #include <time.h>
 
-#define MAX_QUEST 25
+struct s_quest_db {
+	int id;
+	unsigned int time;
+	int mob[MAX_QUEST_OBJECTIVES];
+	int count[MAX_QUEST_OBJECTIVES];
+	//char name[NAME_LENGTH];
+};
+struct s_quest_db quest_db[MAX_QUEST_DB];
 
 //Send quest info on login
 int quest_pc_login(TBL_PC * sd)
@@ -64,9 +71,9 @@ int quest_add(TBL_PC * sd, int quest_id)
 		return -1;
 	}
 
-	if( sd->num_quests >= MAX_QUEST_DB || sd->avail_quests >= MAX_QUEST )
+	if( sd->num_quests >= MAX_QUEST_DB )
 	{
-		ShowError("quest_add: your quest log is full.(max quests: %d, max incompleted quests: %d)\n", MAX_QUEST_DB, MAX_QUEST);
+		ShowError("quest_add: your quest log is full.(max quests: %d)\n", MAX_QUEST_DB);
 		return 1;
 	}
 

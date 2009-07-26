@@ -58,7 +58,7 @@ char mail_db[256] = "mail"; // MAIL SYSTEM
 char auction_db[256] = "auction"; // Auctions System
 char friend_db[256] = "friends";
 char hotkey_db[256] = "hotkey";
-char quest_db[256] = "questlog";
+char quest_db[256] = "quest";
 
 //If your code editor is having problems syntax highlighting this file, uncomment this and RECOMMENT IT BEFORE COMPILING
 //#undef TXT_SQL_CONVERT

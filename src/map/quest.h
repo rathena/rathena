@@ -6,15 +6,6 @@
 
 typedef enum quest_check_type { HAVEQUEST, PLAYTIME, HUNTING } quest_check_type;
 
-struct s_quest_db {
-	int id;
-	unsigned int time;
-	int mob[MAX_QUEST_OBJECTIVES];
-	int count[MAX_QUEST_OBJECTIVES];
-	//char name[NAME_LENGTH];
-};
-struct s_quest_db quest_db[MAX_QUEST_DB];
-
 int quest_pc_login(TBL_PC * sd);
 
 int quest_add(TBL_PC * sd, int quest_id);

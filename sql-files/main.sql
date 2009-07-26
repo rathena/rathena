@@ -556,21 +556,15 @@ CREATE TABLE IF NOT EXISTS `pet` (
 CREATE TABLE IF NOT EXISTS `quest` (
   `char_id` int(11) unsigned NOT NULL default '0',
   `quest_id` int(10) unsigned NOT NULL,
-  `state` enum('1','0') NOT NULL default '0',
-  PRIMARY KEY  USING BTREE (`char_id`,`quest_id`)
-) ENGINE=MyISAM;
-
---
--- Table structure for table `quest_mob`
---
-
-CREATE TABLE IF NOT EXISTS `quest_objective` (
-  `quest_id` int(11) unsigned NOT NULL,
-  `count` mediumint(8) unsigned NOT NULL default '0',
-  `name` varchar(255) NOT NULL default '',
-  `num` tinyint(3) unsigned NOT NULL,
-  `char_id` int(10) unsigned NOT NULL,
-  PRIMARY KEY  USING BTREE (`quest_id`,`num`,`char_id`)
+  `state` enum('0','1','2') NOT NULL default '0',
+  `time` int(11) unsigned NOT NULL default '0',
+  `mob1` mediumint(9) unsigned NOT NULL default '0',
+  `count1` mediumint(8) unsigned NOT NULL default '0',
+  `mob2` mediumint(9) unsigned NOT NULL default '0',
+  `count2` mediumint(8) unsigned NOT NULL default '0',
+  `mob3` mediumint(9) unsigned NOT NULL default '0',
+  `count3` mediumint(8) unsigned NOT NULL default '0',
+  PRIMARY KEY  (`char_id`,`quest_id`)
 ) ENGINE=MyISAM;
 
 --

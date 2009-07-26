@@ -1348,7 +1348,7 @@ int intif_parse_questlog(int fd)
 	if(!sd)
 		return -1;
 
-	sd->avail_quests = sd->num_quests = (RFIFOB(fd, 2)-8)/sizeof(struct quest);
+	sd->avail_quests = sd->num_quests = (RFIFOW(fd, 2)-8)/sizeof(struct quest);
 
 	memset(&sd->quest_log, 0, sizeof(sd->quest_log));
 
