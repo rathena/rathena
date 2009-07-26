@@ -696,7 +696,7 @@
 1418,Gungnir_,Gungnir,4,20,,500,120,,3,2,0x00004082,7,2,2,4,4,1,4,{ bonus bAtkEle,Ele_Wind; bonus bPerfectHitRate,25; bonus bHit,30; },{},{}
 1419,Pole_Axe_C,Refined Pole Axe,4,1,,4800,159,,3,0,0x00004082,7,2,2,3,1,0,4,{ bonus bStr,1; bonus bInt,2; bonus bDex,1; },{},{}
 1420,Long_Horn,Long Horn,4,20,,1000,150,,3,1,0x00004082,2,2,2,4,65,1,4,{ bonus bAtkEle,Ele_Holy; bonus2 bAddEff,Eff_Bleeding,500; skill "TF_DETOXIFY",1; bonus bUnbreakableWeapon,0; if(isequipped(2115)) bonus3 bAutoSpellWhenHit,"HP_ASSUMPTIO",2,5; },{},{}
-1421,Battle_Hook,Battle Hook,4,20,,900,140,,3,1,0x00004082,2,2,2,4,65,1,4,{ bonus2 bAddEff,Eff_Stun,500; bonus2 bAddRace,RC_DemiHuman,10; skill "KN_PIERCE",3; },{},{}
+1421,Battle_Hook,Battle Hook,4,20,,900,140,,3,1,0x00004082,2,2,2,4,65,1,4,{ bonus2 bAddEff,Eff_Stun,500; bonus2 bAddRace,RC_DemiHuman,20; skill "KN_PIERCE",3; },{},{}
 1422,Hunting_Spear,Hunting Spear,4,20,,4200,180,,3,1,0x00004082,2,2,2,4,60,1,4,{ bonus bIgnoreDefRace,RC_Brute; bonus3 bAddMonsterDropItem,517,RC_Brute,1000; bonus3 bAutoSpell,"LK_JOINTBEAT",3,100; },{},{}
 1423,Pole_XO,Pole XO,4,20,,0,120,,3,0,0x00004082,7,2,2,1,1,0,4,{ bonus2 bAddRace,RC_Boss,50; bonus2 bAddRace,RC_NonBoss,50; },{},{}
 1424,Skewer_C,Refined Brocca,4,1,,0,149,,3,0,0x00004082,7,2,2,4,1,0,4,{ bonus bIgnoreDefRace,RC_NonBoss; bonus2 bAddSize,1,20; },{},{}
