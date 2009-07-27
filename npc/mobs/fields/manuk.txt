@@ -1,0 +1,27 @@
+//===== eAthena Script =======================================
+//= Manuk Fields Monster Spawn Script
+//===== By: ==================================================
+//= alexx, MaC
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= Any Athena Version
+//===== Additional Comments: =================================
+//= 1.0 Official spawn ammounts from Aegis script [alexx]
+//============================================================
+
+//============================================================
+// man_fild01 - Manuk Field
+//============================================================
+man_fild01,0,0,0,0	monster	Nepenthes	1988,105,0,0,0
+man_fild01,0,0,0,0	monster	Hillthion	1989,10,0,0,0
+man_fild01,0,0,0,0	monster	Centipede Larva	1999,30,0,0,0
+man_fild01,0,0,0,0	monster	Centipede	1987,2,0,0,0
+
+//============================================================
+// man_fild03 - Manuk Field
+//============================================================
+man_fild03,0,0,0,0	monster	Hillthion	1989,25,0,0,0
+man_fild03,0,0,0,0	monster	Tatacho	1986,25,0,0,0
+man_fild03,0,0,0,0	monster	Centipede	1987,25,0,0,0
+man_fild03,0,0,0,0	monster	Hardrock Mammoth	1990,1,14400000,0,0

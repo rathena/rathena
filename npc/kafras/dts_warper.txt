@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Evera
 //===== Current Version: ===================================== 
-//= 2.5
+//= 2.6
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: =========================================
@@ -50,6 +50,7 @@
 //= 2.3b corrected Glast warp coords [Lupus] 2.3c Bailand -> Bayalan
 //= 2.4 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
 //= 2.5 Converted from Aegis file. (11.3) [L0ne_W0lf]
+//= 2.6 Moved Morroc NPCs to Morroc Ruins. [L0ne_W0lf]
 //============================================================ 
 
 einbroch,246,70,0	script	Vote Timer#ein	-1,{
@@ -686,7 +687,7 @@ yuno,162,191,4	script	Kafra Voting Staff#yuno	861,{
 prontera,164,125,4	script	Kafra Voting Staff#prt	116,{
 	callfunc "F_VoteKafra",2;
 }
-morocc,164,114,4	script	Kafra Voting Staff#moc	116,{
+moc_ruins,97,133,4	script	Kafra Voting Staff#moc	116,{
 	callfunc "F_VoteKafra",2;
 }
 geffen,122,37,4	script	Kafra Voting Staff#gef	116,{
@@ -1098,7 +1099,7 @@ yuno,153,191,6	script	Cool Event Staff#yuno::VotingStaffCCE	874,{
 }
 
 prontera,147,125,6	duplicate(VotingStaffCCE)	Cool Event Staff#prt	874
-morocc,155,114,6	duplicate(VotingStaffCCE)	Cool Event Staff#moc	874
+moc_ruins,104,133,6	duplicate(VotingStaffCCE)	Cool Event Staff#moc	874
 geffen,117,37,6	duplicate(VotingStaffCCE)	Cool Event Staff#gef	874
 payon,153,182,6	duplicate(VotingStaffCCE)	Cool Event Staff#pay	874
 alberta,114,70,6	duplicate(VotingStaffCCE)	Cool Event Staff#alb	874
