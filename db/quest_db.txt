@@ -964,7 +964,7 @@
 16047,0,0,0,0,0,0,0,"Into the Tree"
 16048,0,0,0,0,0,0,0,"Ancient Papers"
 16049,0,0,0,0,0,0,0,"Record of Ancient Language"
-16050,0,0,0,0,0,0,0,"The Fastidious Old Man,0,0,0,0,0,0,0,"SG_FEEL,0,0,0,0,0,0,0,"QUE_IMAGE,0,0,0,0,0,0,0,"
+16050,0,0,0,0,0,0,0,"The Fastidious Old Man"
 16051,0,0,0,0,0,0,0,"Blurry Vision"
 16052,0,0,0,0,0,0,0,"Translating the Document"
 16053,0,0,0,0,0,0,0,"Translated Ancient Language"

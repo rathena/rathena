@@ -34,6 +34,11 @@
 	2385 Recuvative_Armor		Should trigger HP/SP return with magical kills as well.
 
 =======================
+2009/07/26
+	* Rev. 13971 Updated item database with 13.1 content. [L0ne_W0lf]
+	- Added equipment using various sources, and iRO descs.
+	- Added ETC items based on personal experiences in game.
+	* Removed garbage text from the quest database.
 2009/07/25
 	* Rev. 13965 Extreme update to the quest_db file. [L0ne_W0lf]
 	- Added many new quests, although they are all unused by scripts currently.
