@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88; L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 2.0
+//= 2.1
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -26,6 +26,7 @@
 //= 1.8a More bug fixes care of Crashy. [L0ne_W0lf]
 //= 1.9 Changed Marthilda to Mathilda. [L0ne_W0llf]
 //= 2.0 Fixed High Acolytesnot being given holy light. [L0ne_W0lf]
+//= 2.1 Added Quest Log commands. [L0ne_W0lf]
 //============================================================ 
 
 prt_church,184,41,4	script	Cleric#aco	60,{
@@ -106,14 +107,17 @@ prt_church,184,41,4	script	Cleric#aco	60,{
 				default:
 					set job_acolyte_q,2;
 					mes "Please visit ^000077Father Rubalkabara^000000, a member of the Prontera Parish, and return here. He has been practicing asceticism in the ^000077Relics NorthEast of Prontera City^000000.";
+					setquest 1001;
 					break;
 				case 1:
 					set job_acolyte_q,3;
 					mes "Please visit ^000077Mother Mathilda^000000 and then return to me. She has been practicing asceticism near ^000077Morroc Town, SouthWest of Prontera City^000000.";
+					setquest 1002;
 					break;
 				case 2:
 					set job_acolyte_q,4;
 					mes "Please visit ^000077Father Yosuke^000000 and return here. He has been practicing asceticism around ^000077a bridge somewhere NorthWest of Prontera^000000.";
+					setquest 1003;
 					break;
 				}
 				next;
@@ -179,6 +183,9 @@ prt_church,184,41,4	script	Cleric#aco	60,{
 		skill 143,0,0;
 		callfunc "Job_Change",Job_Acolyte;
 		callfunc "F_ClearJobVar";
+		completequest 1001;
+		completequest 1002;
+		completequest 1003;
 		mes "[Father Mareusis]";
 		mes "Always remember to be thankful to God, who is taking care of us all the time.";
 		next;

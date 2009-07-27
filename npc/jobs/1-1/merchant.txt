@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88; L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 2.1
+//= 2.2
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -26,6 +26,7 @@
 //= 1.9b Typo. "nextl" -> "next;" (Barron-Monster) [L0ne_W0lf]
 //= 2.0 Should "fix" the problem with the Biliban Kafra. [L0ne_W0lf]
 //= 2.1 Fixed mistake in condition check. [L0ne_W0lf]
+//= 2.2 Added Quest Log commands. [L0ne_W0lf]
 //============================================================ 
 
 alberta_in,53,43,6	script	Merchant#mer	86,{
@@ -151,6 +152,10 @@ alberta_in,53,43,6	script	Merchant#mer	86,{
 		mes "Congratulations!";
 		callfunc "Job_Change",Job_Merchant;
 		callfunc "F_ClearJobVar";
+		completequest 1009;
+		completequest 1010;
+		completequest 1011;
+		completequest 1012;
 		mes "I'm very pleased that you are joining the Merchant Guild and hope that you will play an active part in Rune-Midgarts' economy.";
 		next;
 		if (quest_alb_01 == 1) {
@@ -184,10 +189,12 @@ alberta_in,53,43,6	script	Merchant#mer	86,{
 			if (job_merchant_q2 == 1) {
 				mes "[Chief Mahnsoo]";
 				mes "Remember, the Serial Number of the package is ^3355FF2485741^000000.";
+				setquest 1009;
 			}
 			else {
 				mes "[Chief Mahnsoo]";
 				mes "Remember, the Serial Number of the package is ^3355FF2328137^000000.";
+				setquest 1009;
 			}
 		}
 		else if (job_merchant_q2 == 3 || job_merchant_q2 == 4) {
@@ -196,10 +203,12 @@ alberta_in,53,43,6	script	Merchant#mer	86,{
 			if (job_merchant_q2 == 3) {
 				mes "[Chief Mahnsoo]";
 				mes "When you get there, give the package to the Mage Guildsman in charge. Remember, the packages Serial Number is ^3355FF2989396^000000.";
+				setquest 1010;
 			}
 			else {
 				mes "[Chief Mahnsoo]";
 				mes "When you get there, give the package to the Mage Guildsman in charge. Remember, the packages Serial Number is ^3355FF2191737^000000.";
+				setquest 1010;
 			}
 		}
 		else if (job_merchant_q2 == 5 || job_merchant_q2 == 6) {
@@ -211,10 +220,12 @@ alberta_in,53,43,6	script	Merchant#mer	86,{
 			if (job_merchant_q2 == 5) {
 				mes "[Chief Mahnsoo]";
 				mes "But he's a little forgetful, so give it to one of his students. Remember, the package's Serial Number is ^3355FF3012685^000000.";
+				setquest 1011;
 			}
 			else {
 				mes "[Chief Mahnsoo]";
 				mes "But he's a little forgetful, give it to one of his students. Remember, the package's Serial Number is ^3355FF3487372^000000.";
+				setquest 1011;
 			}
 		}
 		else if (job_merchant_q2 == 7 || job_merchant_q2 == 8) {
@@ -223,10 +234,12 @@ alberta_in,53,43,6	script	Merchant#mer	86,{
 			if (job_merchant_q2 == 7) {
 				mes "[Chief Mahnsoo]";
 				mes "Remember, the package's Serial Number is ^3355FF3318702^000000.";
+				setquest 1012;
 			}
 			else {
 				mes "[Chief Mahnsoo]";
 				mes "Remember, the package's Serial Number is ^3355FF3543625^000000.";
+				setquest 1012;
 			}
 		}
 		if (job_merchant_q2 == 7 || job_merchant_q2 == 8) {

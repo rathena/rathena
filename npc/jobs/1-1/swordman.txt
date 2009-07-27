@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88; L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 2.2
+//= 2.3
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -35,6 +35,7 @@
 //= 2.0 Corrected NPC names to fall within proper resctrictions. [L0ne_W0lf]
 //= 2.1 Fixed mistake in condition check. [L0ne_W0lf]
 //= 2.2 Warp portals dont end with ; [Yommy]
+//= 2.3 Added Quest Log commands. [L0ne_W0lf]
 //============================================================ 
 
 izlude_in,74,172,4	script	Swordman#swd_1	119,{
@@ -112,6 +113,7 @@ izlude_in,74,172,4	script	Swordman#swd_1	119,{
 			if (select("Sign up.:Cancel.") == 1) {
 				savepoint "izlude_in",65,165;
 				set job_sword_q,1;
+				setquest 1014;
 				mes "[Swordman]";
 				mes "Ah, yes. Your application will be reviewed as soon as possible.";
 				next;
@@ -156,6 +158,7 @@ izlude_in,74,172,4	script	Swordman#swd_1	119,{
 			next;
 			callfunc "Job_Change",Job_Swordman;
 			set job_sword_q,0;
+			completequest 1014;
 			mes "[Swordman]";
 			mes "Once again, congratulations. I expect that you will be a good representative of the Swordman Association.";
 			close;
