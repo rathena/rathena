@@ -75,9 +75,7 @@ int intif_homunculus_requestdelete(int homun_id);
 
 /******QUEST SYTEM*******/
 int intif_request_questlog(struct map_session_data * sd);
-int intif_quest_delete(int char_id, int quest_id);
-int intif_quest_add(int char_id, struct quest * qd);
-int intif_quest_save(int char_id, struct quest * qd);
+int intif_quest_save(struct map_session_data * sd);
 
 // MERCENARY SYSTEM
 int intif_mercenary_create(struct s_mercenary *merc);

@@ -38,7 +38,7 @@ static const int packet_len_table[]={
 	10,-1,15, 0, 79,19, 7,-1,  0,-1,-1,-1, 14,67,186,-1, //0x3830
 	 9, 9,-1,14,  0, 0, 0, 0, -1,74,-1,11, 11,-1,  0, 0, //0x3840
 	-1,-1, 7, 7,  7,11, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0, //0x3850  Auctions [Zephyrus]
-	-1,11,11,11,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0, //0x3860  Quests [Kevin] [Inkfish]
+	-1,-1, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0, //0x3860  Quests [Kevin] [Inkfish]
 	-1, 3, 3, 0,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0, //0x3870  Mercenaries [Zephyrus]
 	11,-1, 7, 3,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0, //0x3880
 	-1,-1, 7, 3,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0, //0x3890  Homunculus [albator]
@@ -1364,66 +1364,48 @@ int intif_parse_questlog(int fd)
 	return 0;
 }
 
-int intif_parse_questDelete(int fd)
+int intif_parse_questsave(int fd)
 {
-	quest_delete_ack(RFIFOL(fd, 2), RFIFOL(fd, 6), RFIFOB(fd, 10));
+	TBL_PC * sd = map_charid2sd(RFIFOL(fd, 4));
+	int i,j;
+	int count = (RFIFOW(fd, 2) - 8) / 4;
+
+	if( !sd )
+		return -1;
+
+	for( i = 0; i < count; i++ )
+	{
+		int qid = RFIFOL(fd, 4*i+8);
+		
+		ARR_FIND(0, sd->avail_quests, j, sd->quest_log[j].quest_id == qid);
+		if(j == sd->avail_quests) //shouldn't happen
+		{
+			ShowError("intif_parse_questsave: Quest %d not found in your quest log!\n", qid);
+			continue;
+		}
+		//This packet can't go before 'close' and 'next'. That's weird and why I send it here. [Inkfish]
+		clif_send_quest_info(sd, &sd->quest_log[j]);
+	}
+
 	return 0;
 }
 
-int intif_quest_delete(int char_id, int quest_id)
+int intif_quest_save(TBL_PC *sd)
 {
+	int len;
+
 	if(CheckForCharServer())
 		return 0;
 
-	WFIFOHEAD(inter_fd, 10);
-	WFIFOW(inter_fd,0) = 0x3062;
-	WFIFOL(inter_fd,2) = char_id;
-	WFIFOL(inter_fd,6) = quest_id;
-	WFIFOSET(inter_fd, 10);
+	len = sizeof(struct quest)*sd->num_quests + 8;
 
-	return 0;
-}
-
-int intif_parse_questAdd(int fd)
-{
-	quest_add_ack(RFIFOL(fd, 2), RFIFOL(fd, 6), RFIFOB(fd, 10));
-	return 0;
-}
-
-int intif_quest_add(int char_id, struct quest * qd)
-{
-
-	if(CheckForCharServer())
-		return 0;
-
-	WFIFOHEAD(inter_fd, sizeof(struct quest) + 8);
+	WFIFOHEAD(inter_fd, len);
 	WFIFOW(inter_fd,0) = 0x3061;
-	WFIFOW(inter_fd,2) = sizeof(struct quest) + 8;
-	WFIFOL(inter_fd,4) = char_id;
-	memcpy(WFIFOP(inter_fd,8), qd, sizeof(struct quest));
-	WFIFOSET(inter_fd,  WFIFOW(inter_fd,2));
+	WFIFOW(inter_fd,2) = len;
+	WFIFOL(inter_fd,4) = sd->status.char_id;
+	memcpy(WFIFOP(inter_fd,8), &sd->quest_log, sizeof(struct quest)*sd->num_quests);
+	WFIFOSET(inter_fd,  len);
 
-	return 0;
-}
-
-int intif_quest_save(int char_id, struct quest * qd)
-{
-	if(CheckForCharServer())
-		return 0;
-
-	WFIFOHEAD(inter_fd, sizeof(struct quest) + 8);
-	WFIFOW(inter_fd,0) = 0x3063;
-	WFIFOW(inter_fd,2) = sizeof(struct quest) + 8;
-	WFIFOL(inter_fd,4) = char_id;
-	memcpy(WFIFOP(inter_fd,8), qd, sizeof(struct quest));
-	WFIFOSET(inter_fd,  WFIFOW(inter_fd,2));
-
-	return 0;
-}
-
-int intif_parse_questSave(int fd)
-{
-	quest_save_ack(RFIFOL(fd, 2), RFIFOL(fd, 6), RFIFOB(fd, 10));
 	return 0;
 }
 
@@ -2062,9 +2044,7 @@ int intif_parse(int fd)
 
 	//Quest system
 	case 0x3860:	intif_parse_questlog(fd); break;
-	case 0x3861:	intif_parse_questAdd(fd); break;
-	case 0x3862:	intif_parse_questDelete(fd); break;
-	case 0x3863:	intif_parse_questSave(fd); break;
+	case 0x3861:	intif_parse_questsave(fd); break;
 
 #ifndef TXT_ONLY
 // Mail System

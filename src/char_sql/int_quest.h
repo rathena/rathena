@@ -8,6 +8,9 @@
 struct quest;
 
 int inter_quest_parse_frommap(int fd);
+int mapif_quest_delete(int char_id, int quest_id);
+int mapif_quest_add(int char_id, struct quest qd);
+int mapif_quest_update(int char_id, struct quest qd);
 
 #endif
 

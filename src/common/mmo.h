@@ -50,7 +50,7 @@
 #define MAX_GUILDCASTLE 34	// Updated to include new entries for WoE:SE. [L0ne_W0lf]
 #define MAX_GUILDLEVEL 50
 #define MAX_GUARDIANS 8	//Local max per castle. [Skotlex]
-#define MAX_QUEST_DB 500 //Max quests that the server will load
+#define MAX_QUEST_DB 1200 //Max quests that the server will load
 #define MAX_QUEST_OBJECTIVES 3 //Max quest objectives for a quest
 
 #define MIN_HAIR_STYLE battle_config.min_hair_style
@@ -135,7 +135,6 @@ struct quest {
 	int mob[MAX_QUEST_OBJECTIVES];
 	int count[MAX_QUEST_OBJECTIVES];
 	quest_state state;
-	bool save_quest;
 	int num_objectives;
 };
 

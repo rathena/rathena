@@ -12,7 +12,6 @@
 #include "../common/utils.h"
 
 #include "map.h"
-#include "chrif.h"
 #include "pc.h"
 #include "npc.h"
 #include "itemdb.h"
@@ -26,6 +25,7 @@
 #include "clif.h"
 #include "quest.h"
 #include "intif.h"
+#include "chrif.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -45,7 +45,7 @@ struct s_quest_db quest_db[MAX_QUEST_DB];
 //Send quest info on login
 int quest_pc_login(TBL_PC * sd)
 {
-	if(sd->num_quests == 0)
+	if(sd->avail_quests == 0)
 		return 1;
 
 	clif_send_questlog(sd);
@@ -59,7 +59,13 @@ int quest_add(TBL_PC * sd, int quest_id)
 
 	int i, j, count;
 
-	if( quest_check_quest(sd, quest_id, HAVEQUEST) >= 0 )
+	if( sd->num_quests >= MAX_QUEST_DB )
+	{
+		ShowError("quest_add: your quest log is full.(max quests: %d)\n", MAX_QUEST_DB);
+		return 1;
+	}
+
+	if( quest_check(sd, quest_id, HAVEQUEST) >= 0 )
 	{
 		ShowError("quest_add: you already have quest %d.\n",quest_id);
 		return -1;
@@ -71,14 +77,9 @@ int quest_add(TBL_PC * sd, int quest_id)
 		return -1;
 	}
 
-	if( sd->num_quests >= MAX_QUEST_DB )
-	{
-		ShowError("quest_add: your quest log is full.(max quests: %d)\n", MAX_QUEST_DB);
-		return 1;
-	}
-
 	i = sd->avail_quests;
 	memmove(&sd->quest_log[i+1], &sd->quest_log[i], sizeof(struct quest)*(sd->num_quests-sd->avail_quests));
+
 	memset(&sd->quest_log[i], 0, sizeof(struct quest));
 	sd->quest_log[i].quest_id = quest_db[j].id;
 	if( quest_db[j].time )
@@ -91,82 +92,99 @@ int quest_add(TBL_PC * sd, int quest_id)
 	sd->num_quests++;
 	sd->avail_quests++;
 
-	//Notify inter server
-	intif_quest_add(sd->status.char_id, &sd->quest_log[i]);
+	if( save_settings&64 )
+		chrif_save(sd,0);
+	else
+		intif_quest_save(sd);
 
 	return 0;
 }
 
-int quest_add_ack(int char_id, int quest_id, int success)
+int quest_change(TBL_PC * sd, int qid1, int qid2)
 {
-	int i;
-	TBL_PC * sd = map_charid2sd(char_id);
 
-	///Player no longer on map
-	if(!sd)
-		return -1;
-	
-	ARR_FIND(0, sd->avail_quests, i, sd->quest_log[i].quest_id == quest_id);
-	if( i == sd->avail_quests )
-		return -1; //Shouldn't happen!
+	int i, j, count;
 
-	if( success )
-		clif_send_quest_info(sd, &sd->quest_log[i]); //Notify client
-	else
+	if( sd->num_quests >= MAX_QUEST_DB )
 	{
-		sd->avail_quests--;
-		if( sd->num_quests < MAX_QUEST_DB && sd->quest_log[i+1].quest_id )
-			memmove(&sd->quest_log[i], &sd->quest_log[i+1], sizeof(struct quest)*(sd->num_quests-i));
-		memset(&sd->quest_log[--sd->num_quests], 0, sizeof(struct quest));
-		ShowError("Quest %d for character %d could not be added!\n", quest_id, char_id);
+		ShowError("quest_change: your quest log is full.(max quests: %d)\n", MAX_QUEST_DB);
 		return 1;
 	}
+
+	if( quest_check(sd, qid2, HAVEQUEST) >= 0 )
+	{
+		ShowError("quest_change: you already have quest %d.\n",qid2);
+		return -1;
+	}
+
+	if( quest_check(sd, qid1, HAVEQUEST) < 0 )
+	{
+		ShowError("quest_change: you don't have quest %d.\n",qid1);
+		return -1;
+	}
+
+	if( (j = quest_search_db(qid2)) < 0 )
+	{
+		ShowError("quest_change: quest %d not found in DB.\n",qid2);
+		return -1;
+	}
+
+	ARR_FIND(0, sd->avail_quests, i, sd->quest_log[i].quest_id == qid1);
+	if(i == sd->avail_quests)
+	{
+		ShowError("quest_change: Quest %d not found in your quest log!\n", qid1);
+		return -1;
+	}
+
+	// Complete quest
+	sd->quest_log[i].state = Q_COMPLETE;
+	memcpy(&sd->quest_log[sd->num_quests], &sd->quest_log[i],sizeof(struct quest));
+	clif_send_quest_delete(sd, qid1);
+
+	// Add new quest
+	memset(&sd->quest_log[i], 0, sizeof(struct quest));
+	sd->quest_log[i].quest_id = quest_db[j].id;
+	if( quest_db[j].time )
+		sd->quest_log[i].time = (unsigned int)(time(NULL) + quest_db[j].time);
+	sd->quest_log[i].state = Q_ACTIVE;
+	for( count = 0; count < MAX_QUEST_OBJECTIVES && quest_db[j].mob[count]; count++ )
+		sd->quest_log[i].mob[count] = quest_db[j].mob[count];
+	sd->quest_log[i].num_objectives = count;
+
+	sd->num_quests++;
+
+	if( save_settings&64 )
+		chrif_save(sd,0);
+	else
+		intif_quest_save(sd);
 
 	return 0;
 }
 
 int quest_delete(TBL_PC * sd, int quest_id)
 {
+	int i;
+
 	//Search for quest
-	if( quest_check_quest(sd, quest_id, HAVEQUEST) < 0 ) //Quest not found
+	ARR_FIND(0, sd->num_quests, i, sd->quest_log[i].quest_id == quest_id);
+	if(i == sd->num_quests)
 	{
 		ShowError("quest_delete: quest %d not found in your quest log.\n",quest_id);
 		return -1;
 	}
 
-	intif_quest_delete(sd->status.char_id, quest_id);
+	if( sd->quest_log[i].state != Q_COMPLETE )
+		sd->avail_quests--;
+	if( sd->num_quests-- < MAX_QUEST_DB && sd->quest_log[i+1].quest_id )
+		memmove(&sd->quest_log[i], &sd->quest_log[i+1], sizeof(struct quest)*(sd->num_quests-i));
+	memset(&sd->quest_log[sd->num_quests], 0, sizeof(struct quest));
 
-	return 0;
-}
+	clif_send_quest_delete(sd, quest_id);
 
-int quest_delete_ack(int char_id, int quest_id, int success)
-{
-	int i;
-	TBL_PC * sd = map_charid2sd(char_id);
-
-	///Player no longer on map
-	if(!sd)
-		return -1;
-
-	//Search for quest
-	ARR_FIND(0, sd->num_quests, i, sd->quest_log[i].quest_id == quest_id);
-	if(i == sd->num_quests) //Shouldn't happen!
-		return -1;
-
-	if(success)
-	{
-		if( sd->quest_log[i].state != Q_COMPLETE )
-			sd->avail_quests--;
-		if( sd->num_quests < MAX_QUEST_DB && sd->quest_log[i+1].quest_id )
-			memmove(&sd->quest_log[i], &sd->quest_log[i+1], sizeof(struct quest)*(sd->num_quests-i));
-		memset(&sd->quest_log[--sd->num_quests], 0, sizeof(struct quest));
-		clif_send_quest_delete(sd, quest_id);
-	}
+	if( save_settings&64 )
+		chrif_save(sd,0);
 	else
-	{
-		ShowError("Quest %d for character %d could not be deleted!\n", quest_id, char_id);
-		return 1;
-	}
+		intif_quest_save(sd);
 
 	return 0;
 }
@@ -184,87 +202,54 @@ void quest_update_objective(TBL_PC * sd, int mob)
 			if( sd->quest_log[i].mob[j] == mob )
 			{
 				sd->quest_log[i].count[j]++;
-				sd->quest_log[i].save_quest = true;
-				//clif_send_quest_info(sd, &sd->quest_log[i]); //TODO: Figure out the real packet [Inkfish]
+
+				// Should figure out the real packet.
+				clif_send_quest_delete(sd, sd->quest_log[i].quest_id);
+				clif_send_quest_info(sd, &sd->quest_log[i]);
 				//break;
 			}
 	}
 }
 
-int quest_update_status(TBL_PC * sd, int quest_id, int status)
+int quest_update_status(TBL_PC * sd, int quest_id, quest_state status)
 {
 	int i;
 
-	//Search for quest
-	ARR_FIND(0, sd->avail_quests, i, sd->quest_log[i].quest_id == quest_id); // Only status of active and inactive quests can't be updated and completed quests can't [Inkfish]
-	if(i == sd->avail_quests) //Quest not found
+	//Only status of active and inactive quests can be updated. Completed quests can't (for now). [Inkfish]
+	ARR_FIND(0, sd->avail_quests, i, sd->quest_log[i].quest_id == quest_id);
+	if(i == sd->avail_quests)
 	{
-		ShowError("Quest %d not found in your quest log!\n", quest_id);
+		ShowError("quest_update_status: Quest %d not found in your quest log!\n", quest_id);
 		return -1;
 	}
 
-	sd->quest_log[i].state = (quest_state)status;
-	if( status != Q_COMPLETE )
+	sd->quest_log[i].state = status;
+
+	if( status < Q_COMPLETE )
 	{
 		clif_send_quest_status(sd, quest_id, (bool)status);
-		sd->quest_log[i].save_quest = true;
+		return 0;
 	}
-	else
+
+	if( i != (--sd->avail_quests) )
 	{
 		struct quest tmp_quest;
-
-		clif_send_quest_delete(sd, quest_id);
-		sd->avail_quests--;
-
 		memcpy(&tmp_quest, &sd->quest_log[i],sizeof(struct quest));
 		memcpy(&sd->quest_log[i], &sd->quest_log[sd->avail_quests],sizeof(struct quest));
 		memcpy(&sd->quest_log[sd->avail_quests], &tmp_quest,sizeof(struct quest));
-
-		sd->quest_log[sd->avail_quests].save_quest = true;
 	}
 
-	return 0;
-}
+	clif_send_quest_delete(sd, quest_id);
 
-int quest_save(TBL_PC * sd)
-{
-	int i;
-
-	for( i = 0; i < sd->num_quests; i++ )
-		if( sd->quest_log[i].save_quest )
-			intif_quest_save(sd->status.char_id, &sd->quest_log[i]);
-
-	return 0;
-}
-
-int quest_save_ack(int char_id, int quest_id, int success)
-{
-
-	int i;
-	TBL_PC * sd = map_charid2sd(char_id);
-
-	///Player no longer on map
-	if(!sd)
-		return -1;
-
-	//Search for quest
-	ARR_FIND(0, sd->num_quests, i, sd->quest_log[i].quest_id == quest_id);
-	if(i == sd->num_quests) //Quest not found
-		return -1;
-
-	if(success)
-		sd->quest_log[i].save_quest = false;
+	if( save_settings&64 )
+		chrif_save(sd,0);
 	else
-	{
-		ShowError("Quest %d for character %d could not be saved!\n", quest_id, char_id);
-		return 1;
-	}
+		intif_quest_save(sd);
 
 	return 0;
-
 }
 
-int quest_check_quest(TBL_PC * sd, int quest_id, quest_check_type type)
+int quest_check(TBL_PC * sd, int quest_id, quest_check_type type)
 {
 	int i;
 

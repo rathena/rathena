@@ -289,7 +289,7 @@ int chrif_save(struct map_session_data *sd, int flag)
 	if( sd->md && mercenary_get_lifetime(sd->md) > 0 )
 		mercenary_save(sd->md);
 	if( sd->num_quests )
-		quest_save(sd);
+		intif_quest_save(sd);
 
 	return 0;
 }

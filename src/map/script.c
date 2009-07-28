@@ -13447,21 +13447,14 @@ BUILDIN_FUNC(completequest)
 	TBL_PC * sd = script_rid2sd(st);
 
 	quest_update_status(sd, script_getnum(st, 2), Q_COMPLETE);
-	intif_quest_save(sd->status.char_id, &sd->quest_log[sd->avail_quests]);
 	return 0;
 }
 
 BUILDIN_FUNC(changequest)
 {
 	TBL_PC * sd = script_rid2sd(st);
-	int q1 = script_getnum(st, 2), q2 = script_getnum(st, 3);
 
-	if( quest_check_quest(sd, q1, HAVEQUEST) == Q_ACTIVE && !quest_add(sd, q2) )
-	{
-		quest_update_status(sd, q1, Q_COMPLETE);
-		intif_quest_save(sd->status.char_id, &sd->quest_log[sd->avail_quests]);
-	}
-
+	quest_change(sd, script_getnum(st, 2),script_getnum(st, 3));
 	return 0;
 }
 
@@ -13473,7 +13466,7 @@ BUILDIN_FUNC(checkquest)
 	if( script_hasdata(st, 3) )
 		type = (quest_check_type)script_getnum(st, 3);
 
-	script_pushint(st, quest_check_quest(sd, script_getnum(st, 2), type));
+	script_pushint(st, quest_check(sd, script_getnum(st, 2), type));
 
 	return 0;
 }
