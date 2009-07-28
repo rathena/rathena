@@ -214,7 +214,7 @@
 3062,0,0,0,0,0,0,0,"Kids in Veins - Find the Locksmith!"
 3063,0,0,0,0,0,0,0,"Kids in Veins - Mr. Lockenlock?"
 3064,0,0,0,0,0,0,0,"Kids in Veins - Organic Chamelepu Soap"
-3065,0,0,0,0,0,0,0,"#Kids in Veins - Soap Ingredients"
+3065,0,0,0,0,0,0,0,"Kids in Veins - Soap Ingredients"
 3066,0,0,0,0,0,0,0,"Kids in Veins - To make a Chamelepu Soap..."
 3067,0,0,0,0,0,0,0,"Kids in Veins - Camel Appetite Stimulants"
 3068,0,0,0,0,0,0,0,"Kids in Veins - Getting the Camel Dung"

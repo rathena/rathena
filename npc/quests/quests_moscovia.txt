@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Kisuka
 //===== Current Version: ===================================== 
-//= 1.5
+//= 1.6
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -17,6 +17,7 @@
 //= 1.3 Replaced occurrences of PcName. [brianluau]
 //= 1.4 Added 'Koshei the Immortal' quest. [Kisuka]
 //= 1.5 Fixes to 'Koshei the Immortal' quest. [Kisuka]
+//= 1.6 Added 'tides' to Ibanoff & Fixed time check for Marozka. [Kisuka]
 //============================================================ 
 
 //============================================================================
@@ -247,6 +248,26 @@ moscovia,171,71,3	script	Berbayeff#npc	968,{
 		mes "there. You'll probably love this town.";
 		close;
 	}
+}
+
+//----------------------------------------------------------------------------
+// Bulletin Board - List Tide Times
+//----------------------------------------------------------------------------
+moscovia,135,52,0	script	Bulletin Board#npc	837,{
+	mes "[Charabel Schedule]";
+	mes "NOTICE, due to the varying";
+	mes "tides here in Moscovia,";
+	mes "the charabel can only";
+	mes "depart when the tide is low.";
+	next;
+	mes "[Charabel Schedule]";
+	mes "The Charabel can depart";
+	mes "between the following times:";
+	mes "^0000FF12:00am PST^000000 to ^0000FF3:00am PST";
+	mes "^0000FF6:00am PST^000000 to ^0000FF9:00am PST";
+	mes "^0000FF12:00pm PST^000000 to ^0000FF3:00pm PST";
+	mes "^0000FF6:00pm PST^000000 to ^0000FF9:00pm PST";
+	close;
 }
 
 //----------------------------------------------------------------------------
@@ -489,26 +510,63 @@ moscovia,135,49,5	script	Mr. Ibanoff#npc	964,{
 		mes "Oh. Are you ready to depart?";
 		mes "Good, let's see...";
 		next;
-		if (gettime(3)>=7 && gettime(3)<20) {
+		if (gettime(3) >= 0 && gettime(3) < 3) {
 			mes "[Mr. Ibanoff]";
 			mes "Hmm. It's not a bad time.";
 			mes "We should hurry up";
-			mes "before the sun sets.";
+			mes "while the tides are low.";
 			mes "The ship is prepared already";
 			mes "at a dock nearby, so we can depart";
 			mes "right away.";
 			close2;
 			warp "mosk_ship",94,110;
 			end;
-		}else{
+		}
+		else if (gettime(3) >= 6 && gettime(3) < 9) {
 			mes "[Mr. Ibanoff]";
-			mes "Gee. The sun has already set.";
+			mes "Hmm. It's not a bad time.";
+			mes "We should hurry up";
+			mes "while the tides are low.";
+			mes "The ship is prepared already";
+			mes "at a dock nearby, so we can depart";
+			mes "right away.";
+			close2;
+			warp "mosk_ship",94,110;
+			end;
+		}
+		else if (gettime(3) >= 12 && gettime(3) < 15) {
+			mes "[Mr. Ibanoff]";
+			mes "Hmm. It's not a bad time.";
+			mes "We should hurry up";
+			mes "while the tides are low.";
+			mes "The ship is prepared already";
+			mes "at a dock nearby, so we can depart";
+			mes "right away.";
+			close2;
+			warp "mosk_ship",94,110;
+			end;
+		}
+		else if (gettime(3) >= 18 && gettime(3) < 21) {	
+			mes "[Mr. Ibanoff]";
+			mes "Hmm. It's not a bad time.";
+			mes "We should hurry up";
+			mes "while the tides are low.";
+			mes "The ship is prepared already";
+			mes "at a dock nearby, so we can depart";
+			mes "right away.";
+			close2;
+			warp "mosk_ship",94,110;
+			end;
+		}
+		else {
+			mes "[Mr. Ibanoff]";
+			mes "Gee. The tide is too high.";
 			mes "It's too dangerous to depart";
-			mes "at night because of the waves";
+			mes "right now because of the waves";
 			mes "getting too rugged.";
 			next;
 			mes "[Mr. Ibanoff]";
-			mes "When the sun rises again tomorrow,";
+			mes "When the sea calmes down a bit,";
 			mes "you can come back. We can't depart";
 			mes "right now.";
 			close;
@@ -535,27 +593,63 @@ moscovia,135,49,5	script	Mr. Ibanoff#npc	964,{
 			mes "When you are ready to depart, tell me.";
 			close;
 		}
-		if (gettime(3)>=7 && gettime(3)<20) {
-			set mos_whale_edq,4;
+		if (gettime(3) >= 0 && gettime(3) < 3) {
 			mes "[Mr. Ibanoff]";
 			mes "Hmm. It's not a bad time.";
 			mes "We should hurry up";
-			mes "before the sun sets.";
+			mes "while the tides are low.";
 			mes "The ship is prepared already";
 			mes "at a dock nearby, so we can depart";
 			mes "right away.";
 			close2;
 			warp "mosk_ship",94,110;
 			end;
-		}else{
+		}
+		else if (gettime(3) >= 6 && gettime(3) < 9) {
 			mes "[Mr. Ibanoff]";
-			mes "Gee. The sun has already set.";
+			mes "Hmm. It's not a bad time.";
+			mes "We should hurry up";
+			mes "while the tides are low.";
+			mes "The ship is prepared already";
+			mes "at a dock nearby, so we can depart";
+			mes "right away.";
+			close2;
+			warp "mosk_ship",94,110;
+			end;
+		}
+		else if (gettime(3) >= 12 && gettime(3) < 15) {
+			mes "[Mr. Ibanoff]";
+			mes "Hmm. It's not a bad time.";
+			mes "We should hurry up";
+			mes "while the tides are low.";
+			mes "The ship is prepared already";
+			mes "at a dock nearby, so we can depart";
+			mes "right away.";
+			close2;
+			warp "mosk_ship",94,110;
+			end;
+		}
+		else if (gettime(3) >= 18 && gettime(3) < 21) {	
+			mes "[Mr. Ibanoff]";
+			mes "Hmm. It's not a bad time.";
+			mes "We should hurry up";
+			mes "while the tides are low.";
+			mes "The ship is prepared already";
+			mes "at a dock nearby, so we can depart";
+			mes "right away.";
+			close2;
+			warp "mosk_ship",94,110;
+			end;
+		}
+		else {
+			mes "[Mr. Ibanoff]";
+			mes "Gee. The tide is too high.";
 			mes "It's too dangerous to depart";
-			mes "at night because of the waves";
+			mes "right now because of the waves";
 			mes "getting too rugged.";
 			next;
 			mes "[Mr. Ibanoff]";
-			mes "When the sun rises again tomorrow,";
+			mes "When the sea calmes down a bit,";
 			mes "you can come back. We can't depart";
 			mes "right now.";
 			close;
@@ -686,26 +780,63 @@ moscovia,135,49,5	script	Mr. Ibanoff#npc	964,{
 			mes "When you are ready to depart, tell me.";
 			close;
 		}
-		if (gettime(3)>=7 && gettime(3)<20) {
+		if (gettime(3) >= 0 && gettime(3) < 3) {
 			mes "[Mr. Ibanoff]";
 			mes "Hmm. It's not a bad time.";
 			mes "We should hurry up";
-			mes "before the sun sets.";
+			mes "while the tides are low.";
 			mes "The ship is prepared already";
 			mes "at a dock nearby, so we can depart";
 			mes "right away.";
 			close2;
 			warp "mosk_ship",94,110;
 			end;
-		}else{
+		}
+		else if (gettime(3) >= 6 && gettime(3) < 9) {
 			mes "[Mr. Ibanoff]";
-			mes "Gee. The sun has already set.";
+			mes "Hmm. It's not a bad time.";
+			mes "We should hurry up";
+			mes "while the tides are low.";
+			mes "The ship is prepared already";
+			mes "at a dock nearby, so we can depart";
+			mes "right away.";
+			close2;
+			warp "mosk_ship",94,110;
+			end;
+		}
+		else if (gettime(3) >= 12 && gettime(3) < 15) {
+			mes "[Mr. Ibanoff]";
+			mes "Hmm. It's not a bad time.";
+			mes "We should hurry up";
+			mes "while the tides are low.";
+			mes "The ship is prepared already";
+			mes "at a dock nearby, so we can depart";
+			mes "right away.";
+			close2;
+			warp "mosk_ship",94,110;
+			end;
+		}
+		else if (gettime(3) >= 18 && gettime(3) < 21) {	
+			mes "[Mr. Ibanoff]";
+			mes "Hmm. It's not a bad time.";
+			mes "We should hurry up";
+			mes "while the tides are low.";
+			mes "The ship is prepared already";
+			mes "at a dock nearby, so we can depart";
+			mes "right away.";
+			close2;
+			warp "mosk_ship",94,110;
+			end;
+		}
+		else {
+			mes "[Mr. Ibanoff]";
+			mes "Gee. The tide is too high.";
 			mes "It's too dangerous to depart";
-			mes "at night because of the waves";
+			mes "right now because of the waves";
 			mes "getting too rugged.";
 			next;
 			mes "[Mr. Ibanoff]";
-			mes "When the sun rises again tomorrow,";
+			mes "When the sea calmes down a bit,";
 			mes "you can come back. We can't depart";
 			mes "right now.";
 			close;
@@ -728,26 +859,63 @@ moscovia,135,49,5	script	Mr. Ibanoff#npc	964,{
 		mes "I can guess you'd like to go to";
 		mes "Whale Island once again...";
 		next;
-		if (gettime(3)>=7 && gettime(3)<20) {
+		if (gettime(3) >= 0 && gettime(3) < 3) {
 			mes "[Mr. Ibanoff]";
 			mes "Hmm. It's not a bad time.";
 			mes "We should hurry up";
-			mes "before the sun sets.";
+			mes "while the tides are low.";
 			mes "The ship is prepared already";
 			mes "at a dock nearby, so we can depart";
 			mes "right away.";
 			close2;
 			warp "mosk_ship",94,110;
 			end;
-		}else{
+		}
+		else if (gettime(3) >= 6 && gettime(3) < 9) {
 			mes "[Mr. Ibanoff]";
-			mes "Gee. The sun has already set.";
+			mes "Hmm. It's not a bad time.";
+			mes "We should hurry up";
+			mes "while the tides are low.";
+			mes "The ship is prepared already";
+			mes "at a dock nearby, so we can depart";
+			mes "right away.";
+			close2;
+			warp "mosk_ship",94,110;
+			end;
+		}
+		else if (gettime(3) >= 12 && gettime(3) < 15) {
+			mes "[Mr. Ibanoff]";
+			mes "Hmm. It's not a bad time.";
+			mes "We should hurry up";
+			mes "while the tides are low.";
+			mes "The ship is prepared already";
+			mes "at a dock nearby, so we can depart";
+			mes "right away.";
+			close2;
+			warp "mosk_ship",94,110;
+			end;
+		}
+		else if (gettime(3) >= 18 && gettime(3) < 21) {	
+			mes "[Mr. Ibanoff]";
+			mes "Hmm. It's not a bad time.";
+			mes "We should hurry up";
+			mes "while the tides are low.";
+			mes "The ship is prepared already";
+			mes "at a dock nearby, so we can depart";
+			mes "right away.";
+			close2;
+			warp "mosk_ship",94,110;
+			end;
+		}
+		else {
+			mes "[Mr. Ibanoff]";
+			mes "Gee. The tide is too high.";
 			mes "It's too dangerous to depart";
-			mes "at night because of the waves";
+			mes "right now because of the waves";
 			mes "getting too rugged.";
 			next;
 			mes "[Mr. Ibanoff]";
-			mes "When the sun rises again tomorrow,";
+			mes "When the sea calmes down a bit,";
 			mes "you can come back. We can't depart";
 			mes "right now.";
 			close;
@@ -13694,10 +13862,11 @@ mosk_fild02,243,270,0	script	Marozka#rus31	866,{
 			mes "I will begin making it now... let me see... Could you please come back to me in an hour?";
 			set rhea_rus_quiz,4;
 			set rus_time01,gettime(3);
+			set rus_time02,gettime(4);
 			close;
 		}
 		else if (rhea_rus_quiz == 4) {
-			if (rus_time01 < gettime(3)) {
+			if (rus_time01 < gettime(3) || rus_time02 < gettime(4) || (rus_time02 == 6 && gettime(4) == 0)) {
 				mes "[Marozka]";
 				mes "Ah, just in time.";
 				mes "I have finally finished making the 'Golden Thread'. Just wait one more second and it'll be ready.";
