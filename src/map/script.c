@@ -4140,8 +4140,8 @@ BUILDIN_FUNC(areapercentheal)
 	y0=script_getnum(st,4);
 	x1=script_getnum(st,5);
 	y1=script_getnum(st,6);
-	hp=script_getnum(st,8);
-	sp=script_getnum(st,9);
+	hp=script_getnum(st,7);
+	sp=script_getnum(st,8);
 
 	if( (m=map_mapname2mapid(mapname))< 0)
 		return 0;

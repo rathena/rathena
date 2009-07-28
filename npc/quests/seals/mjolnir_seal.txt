@@ -1275,7 +1275,7 @@ mjolnir_09,209,341,3	script	Dwarf Blacksmith#south	826,{
 							specialeffect2 EF_CRASHEARTH;
 							set .@p_vit,.@p_vit - 30;
 							mes "You've taken";
-							mes "critical .@damage";
+							mes "critical damage";
 							mes "on your weak spot!";
 							mes "--------------------";
 							mes "" + strcharinfo(0) + " has lost 30 HP!";
@@ -1682,7 +1682,7 @@ mjolnir_09,209,341,3	script	Dwarf Blacksmith#south	826,{
 							specialeffect2 EF_CRASHEARTH;
 							set .@p_vit,.@p_vit - 30;
 							mes "You've taken";
-							mes "critical .@damage";
+							mes "critical damage";
 							mes "on your weak spot!";
 							mes "--------------------";
 							mes "" + strcharinfo(0) + " has lost 30 HP!";

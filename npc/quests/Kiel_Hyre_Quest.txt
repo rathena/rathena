@@ -3049,6 +3049,7 @@ kh_vila,123,170,0	script	Medicine Chest#khp1	111,{
 		mes "ink on the blank piece of paper";
 		mes "with the Kiel Hyre Foundation";
 		mes "seal. Would you like read it?^000000";
+		next;
 		switch(select("No time!:Read")) {
 		case 1:
 			mes "^3355FFYou're running out of";
