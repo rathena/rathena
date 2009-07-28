@@ -1992,10 +1992,10 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 				clif_mission_info(sd, temp, 0);
 			}
 			pc_setglobalreg(sd,"TK_MISSION_COUNT", sd->mission_count);
-
-			if( sd->avail_quests )
-				quest_update_objective(sd, md->class_);
 		}
+		//Move to status.c, and send a delete quest packet and then an add quest packet can refresh the kill counts. Just a trick. :P[Inkfish]
+		if( sd->avail_quests )
+			quest_update_objective(sd, md->class_);
 	}
 
 	// filter out entries not eligible for exp distribution

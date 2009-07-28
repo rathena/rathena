@@ -204,8 +204,8 @@ void quest_update_objective(TBL_PC * sd, int mob)
 				sd->quest_log[i].count[j]++;
 
 				// Should figure out the real packet.
-				clif_send_quest_delete(sd, sd->quest_log[i].quest_id);
-				clif_send_quest_info(sd, &sd->quest_log[i]);
+				//clif_send_quest_delete(sd, sd->quest_log[i].quest_id);
+				//clif_send_quest_info(sd, &sd->quest_log[i]);
 				//break;
 			}
 	}
