@@ -1206,12 +1206,6 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 	}
 
 	switch(skillid){
-	case 0: //Normal Attack
-		if(tsc && tsc->data[SC_KAAHI] && tsc->data[SC_KAAHI]->val4 == -1)
-			tsc->data[SC_KAAHI]->val4 = add_timer(
-				tick+skill_get_time2(SL_KAAHI,tsc->data[SC_KAAHI]->val1),
-				kaahi_heal_timer, bl->id, SC_KAAHI); //Activate heal.
-		break;
 	case MO_EXTREMITYFIST:
 		sc_start(src,status_skill2sc(skillid),100,skilllv,skill_get_time2(skillid,skilllv));
 		break;
