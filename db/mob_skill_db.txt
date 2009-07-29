@@ -5079,3 +5079,133 @@
 1961,Thorn of Purification@SA_DISPELL,attack,289,5,500,2000,30000,yes,target,always,0,,,,,,
 1961,Thorn of Purification@NPC_DEFENDER,idle,205,5,10000,0,180000,no,self,always,0,,,,,,29
 1961,Thorn of Purification@NPC_DEFENDER,attack,205,5,10000,0,180000,no,self,always,0,,,,,,29
+
+1986,Tatacho@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
+1986,Tatacho@BS_HAMMERFALL,chase,110,5,2000,0,5000,yes,target,always,,,,,,,
+1986,Tatacho@BS_HAMMERFALL,attack,110,5,2000,0,5000,yes,target,always,,,,,,,
+1986,Tatacho@NPC_STUNATTACK,attack,179,5,1000,0,5000,yes,target,always,0,,,,,,
+1986,Tatacho@HW_GANBANTEIN,attack,483,5,10000,500,7000,no,target,always,0,,,,,,
+1987,Centipede@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
+1987,Centipede@AS_VENOMDUST,idle,140,1,2000,0,10000,yes,randomtarget,always,0,,,,,,29
+1987,Centipede@AS_VENOMDUST,attack,140,1,2000,0,10000,yes,target,always,0,,,,,,29
+1987,Centipede@NPC_POISON,attack,176,5,500,800,5000,no,target,always,0,,,,,,
+1987,Centipede@NPC_POISONATTACK,attack,188,10,1000,0,5000,yes,target,always,0,,,,,,
+1987,Centipede@NPC_COMBOATTACK,angry,171,5,500,700,5000,no,target,always,0,,,,,,
+1987,Centipede@WZ_QUAGMIRE,attack,92,5,500,700,5000,no,target,always,0,,,,,,11
+1987,Centipede@WZ_QUAGMIRE,chase,92,5,500,700,5000,no,target,always,0,,,,,,11
+1987,Centipede@HW_GANBANTEIN,attack,483,5,10000,500,7000,no,target,always,0,,,,,,
+1987,Centipede@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,0x81,,,,
+1987,Centipede@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,36,0x3795,,,,
+1988,Nepenthes@NPC_GROUNDATTACK,angry,185,10,500,500,5000,no,target,always,0,,,,,,
+1988,Nepenthes@NPC_GROUNDATTACK,attack,185,8,500,500,5000,yes,target,always,0,,,,,,
+1988,Nepenthes@NPC_ENERGYDRAIN,attack,200,1,1000,0,5000,yes,target,always,0,,,,,,
+1988,Nepenthes@NPC_ENERGYDRAIN,angry,200,1,500,0,5000,yes,target,always,0,,,,,,
+1988,Nepenthes@NPC_STUNATTACK,attack,179,5,1000,0,5000,yes,target,always,0,,,,,,
+1988,Nepenthes@NPC_POISONATTACK,attack,188,10,1000,0,5000,yes,target,always,0,,,,,,
+1989,Hill Lion@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
+1989,Hill Lion@SM_PROVOKE,chase,6,10,1000,600,5000,no,target,always,0,,,,,,4
+1989,Hill Lion@NPC_CRITICALWOUND,attack,673,5,3000,0,5000,yes,target,always,0,,,,,,
+1989,Hill Lion@NPC_CRITICALSLASH,attack,170,1,3000,0,5000,yes,target,always,0,,,,,,
+1989,Hill Lion@NPC_COMBOATTACK,angry,171,5,500,700,5000,no,target,always,0,,,,,,
+1990,Hardrock Mammoth@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
+1990,Hardrock Mammoth@NPC_STONESKIN,idle,675,5,10000,0,30000,yes,self,always,0,,,,,,6
+1990,Hardrock Mammoth@NPC_STONESKIN,chase,675,5,10000,0,30000,yes,self,always,0,,,,,,6
+1990,Hardrock Mammoth@NPC_STONESKIN,attack,675,5,10000,0,30000,yes,self,always,0,,,,,,6
+1990,Hardrock Mammoth@NPC_SUMMONSLAVE,attack,196,3,10000,2000,5000,no,self,slavele,4,1997,1997,1997,,,
+1990,Hardrock Mammoth@NPC_CALLSLAVE,attack,352,1,10000,0,30000,yes,self,always,,,,,,,
+1990,Hardrock Mammoth@NPC_CALLSLAVE,idle,352,1,10000,0,30000,yes,self,always,,,,,,,
+// 1990,Hardrock Mammoth@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,0x81,,,,
+// 1990,Hardrock Mammoth@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,36,0x37B5,,,,
+1990,Hardrock Mammoth@WZ_WATERBALL,chase,86,10,2000,2000,10000,no,target,always,0,,,,,,
+1990,Hardrock Mammoth@WZ_WATERBALL,attack,86,10,2000,2000,10000,no,target,always,0,,,,,,
+1990,Hardrock Mammoth@LK_SPIRALPIERCE,attack,397,5,2000,500,5000,yes,target,always,0,,,,,,
+1990,Hardrock Mammoth@KN_TWOHANDQUICKEN,attack,60,20,10000,0,120000,yes,self,myhpltmaxrate,30,,,,,,36
+1990,Hardrock Mammoth@NPC_WIDESTUN,chase,678,5,10000,1300,180000,no,self,always,0,,,,,,36
+1990,Hardrock Mammoth@NPC_WIDESTUN,attack,678,5,10000,1300,180000,no,self,always,0,,,,,,36
+1990,Hardrock Mammoth@SM_PROVOKE,chase,6,10,500,600,5000,no,target,always,0,,,,,,4
+1990,Hardrock Mammoth@NPC_CRITICALWOUND,attack,673,5,10,0,5000,yes,target,always,0,,,,,,
+1990,Hardrock Mammoth@WZ_EARTHSPIKE,chase,90,5,3000,0,10000,yes,target,always,0,,,,,,
+1990,Hardrock Mammoth@WZ_EARTHSPIKE,attack,90,5,3000,0,10000,yes,target,always,0,,,,,,
+1990,Hardrock Mammoth@NPC_DRAGONFEAR,attack,659,5,10000,0,10000,yes,self,always,,,,,,,
+1990,Hardrock Mammoth@NPC_DRAGONFEAR,chase,659,5,10000,0,10000,yes,self,always,,,,,,,
+1990,Hardrock Mammoth@NPC_EARTHQUAKE,chase,653,10,10000,2000,20000,no,self,myhpltmaxrate,75,,,,,,
+1990,Hardrock Mammoth@NPC_EARTHQUAKE,attack,653,10,10000,2000,20000,no,self,myhpltmaxrate,50,,,,,,
+1990,Hardrock Mammoth@HW_GANBANTEIN,attack,483,5,10000,500,7000,no,target,always,0,,,,,,
+1990,Hardrock Mammoth@NPC_ALLHEAL,idle,687,1,3000,10000,30000,yes,self,myhpltmaxrate,50,,,,,,
+1990,Hardrock Mammoth@NPC_ALLHEAL,walk,687,1,3000,10000,30000,yes,self,myhpltmaxrate,50,,,,,,
+1991,Tendril Lion@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
+1991,Tendril Lion@SM_PROVOKE,chase,6,10,500,600,5000,no,target,always,0,,,,,,4
+// 1991,Tendril Lion@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,0x81,,,,
+// 1991,Tendril Lion@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,36,0x37B5,,,,
+1991,Tendril Lion@NPC_CRITICALWOUND,attack,673,5,10,0,5000,yes,target,always,0,,,,,,
+1991,Tendril Lion@MO_BODYRELOCATION,chase,264,1,2000,500,5000,no,target,always,0,,,,,,29
+1991,Tendril Lion@NPC_WIDESLEEP,chase,668,5,10000,700,35000,no,self,always,0,,,,,,
+1991,Tendril Lion@NPC_WIDESLEEP,attack,668,5,10000,700,35000,no,self,myhpltmaxrate,80,,,,,,
+1991,Tendril Lion@NPC_WIDEBLEEDING,attack,665,2,10000,500,100000,no,self,myhpltmaxrate,30,,,,,,
+1991,Tendril Lion@SM_MAGNUM,attack,7,20,3000,0,2000,no,self,always,0,,,,,,
+1991,Tendril Lion@WZ_EARTHSPIKE,attack,90,6,2500,200,5000,no,target,always,0,,,,,,,
+1991,Tendril Lion@WZ_EARTHSPIKE,chase,90,6,2500,200,5000,no,target,always,0,,,,,,,
+1991,Tendril Lion@NPC_CRITICALSLASH,attack,170,1,1000,0,5000,yes,target,always,0,,,,,,
+1991,Tendril Lion@NPC_COMBOATTACK,angry,171,5,500,700,5000,no,target,always,0,,,,,,
+1991,Tendril Lion@HW_GANBANTEIN,attack,483,5,10000,500,7000,no,target,always,0,,,,,,
+1991,Tendril Lion@AS_SONICBLOW,attack,136,10,500,800,5000,no,target,always,0,,,,,,3
+1991,Tendril Lion@NPC_DRAGONFEAR,attack,659,5,10000,0,10000,yes,self,always,,,,,,,
+1991,Tendril Lion@NPC_DRAGONFEAR,chase,659,5,10000,0,10000,yes,self,always,,,,,,,
+1991,Tendril Lion@NPC_GROUNDATTACK,attack,185,5,2000,0,5000,no,target,always,0,,,,,,
+1991,Tendril Lion@PF_SPIDERWEB,idle,405,1,3000,0,10000,yes,target,always,0,,,,,,
+1991,Tendril Lion@PF_SPIDERWEB,attack,405,1,2000,0,10000,yes,target,always,0,,,,,,
+1991,Tendril Lion@NPC_CALLSLAVE,attack,352,1,10000,0,30000,yes,self,always,0,,,,,
+1991,Tendril Lion@NPC_CALLSLAVE,idle,352,1,10000,0,30000,yes,self,always,0,,,,,,
+1991,Tendril Lion@NPC_SUMMONSLAVE,attack,196,5,10000,700,30000,no,self,slavele,3,1998,,,,,
+1991,Tendril Lion@NPC_SUMMONSLAVE,idle,196,5,10000,700,30000,no,self,slavele,3,1998,,,,,
+1991,Tendril Lion@NPC_SUMMONSLAVE,chase,196,5,10000,700,30000,no,self,slavele,3,1998,,,,,
+1991,Tendril Lion@NPC_ALLHEAL,idle,687,1,3000,10000,30000,yes,self,myhpltmaxrate,50,,,,,,
+1991,Tendril Lion@NPC_ALLHEAL,walk,687,1,3000,10000,30000,yes,self,myhpltmaxrate,50,,,,,,
+1992,Cornus@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
+1992,Cornus@CR_REFLECTSHIELD,attack,252,6,10000,0,300000,yes,self,always,0,,,,,,32
+1992,Cornus@SM_PROVOKE,chase,6,10,500,600,5000,no,target,always,0,,,,,,4
+1992,Cornus@NPC_CRITICALWOUND,attack,673,4,10,0,5000,yes,target,always,0,,,,,,
+1992,Cornus@NPC_CRITICALSLASH,attack,170,1,1000,0,5000,yes,target,always,0,,,,,,
+1992,Cornus@NPC_COMBOATTACK,angry,171,4,500,700,5000,no,target,always,0,,,,,,
+1992,Cornus@NPC_PULSESTRIKE,attack,661,5,2000,0,30000,yes,self,always,0,,,,,,32
+1992,Cornus@NPC_ALLHEAL,idle,687,1,3000,5000,30000,yes,self,always,0,,,,,,
+1992,Cornus@NPC_ALLHEAL,walk,687,1,3000,5000,30000,yes,self,always,0,,,,,,
+1993,Naga@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
+1993,Naga@KN_SPEARBOOMERANG,chase,59,5,500,0,5000,yes,target,always,0,,,,,,29
+1993,Naga@KN_PIERCE,attack,56,10,500,700,5000,no,target,always,0,,,,,,6
+1993,Naga@KN_BRANDISHSPEAR,attack,57,20,2000,500,5000,no,target,always,0,,,,,,29
+1993,Naga@SM_PROVOKE,chase,6,10,500,600,5000,no,target,always,0,,,,,,4
+1993,Naga@WZ_WATERBALL,chase,86,4,3000,600,5000,yes,target,always,0,,,,,,,
+1993,Naga@WZ_WATERBALL,attack,86,4,3000,600,5000,yes,target,always,0,,,,,,,
+1994,Luciola Vespa@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
+1994,Luciola Vespa@NPC_PIERCINGATT,attack,158,10,500,0,5000,yes,target,always,0,,,,,,
+1994,Luciola Vespa@NPC_POISONATTACK,attack,188,10,1000,0,5000,yes,target,always,0,,,,,,
+1994,Luciola Vespa@NPC_PULSESTRIKE,attack,661,5,2000,0,30000,yes,self,always,0,,,,,,32
+1994,Luciola Vespa@NPC_COMBOATTACK,angry,171,4,500,700,5000,no,target,always,0,,,,,,
+1995,Pinguicula@AL_HEAL,chase,28,8,10000,500,5000,no,friend,friendhpltmaxrate,80,,,,,,18
+1995,Pinguicula@AL_HEAL,attack,28,8,10000,500,5000,no,friend,friendhpltmaxrate,80,,,,,,18
+1995,Pinguicula@AL_HEAL,chase,28,8,10000,500,5000,no,self,myhpltmaxrate,60,,,,,,18
+1995,Pinguicula@AL_HEAL,attack,28,8,10000,500,5000,no,self,myhpltmaxrate,60,,,,,,18
+1995,Pinguicula@AL_HEAL,idle,28,8,3000,0,1500,yes,friend,friendhpltmaxrate,99,,,,,,3
+1995,Pinguicula@AL_HEAL,idle,28,8,3000,0,1500,yes,self,myhpltmaxrate,99,,,,,,3
+1995,Pinguicula@NPC_SPLASHATTACK,attack,174,1,2000,0,5000,yes,target,attackpcge,2,,,,,,9
+1995,Pinguicula@NPC_GROUNDATTACK,attack,185,5,2000,0,5000,no,target,always,0,,,,,,
+1995,Pinguicula@NPC_STUNATTACK,attack,179,5,500,1500,5000,no,target,always,0,,,,,,6
+1995,Pinguicula@NPC_SLEEPATTACK,attack,182,5,500,0,5000,yes,target,always,0,,,,,,9
+1997,Tatacho@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
+1997,Tatacho@BS_HAMMERFALL,chase,110,5,2000,0,5000,yes,target,always,,,,,,,
+1997,Tatacho@BS_HAMMERFALL,attack,110,5,2000,0,5000,yes,target,always,,,,,,,
+1997,Tatacho@NPC_STUNATTACK,attack,179,5,1000,0,5000,yes,target,always,0,,,,,,
+1997,Tatacho@HW_GANBANTEIN,attack,483,5,10000,500,7000,no,target,always,0,,,,,,
+1998,Hill Lion@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
+1998,Hill Lion@SM_PROVOKE,chase,6,10,500,600,5000,no,target,always,0,,,,,,4
+1998,Hill Lion@NPC_CRITICALWOUND,attack,673,5,10,0,5000,yes,target,always,0,,,,,,
+1998,Hill Lion@NPC_CRITICALSLASH,attack,170,1,1000,0,5000,yes,target,always,0,,,,,,
+1998,Hill Lion@NPC_COMBOATTACK,angry,171,5,500,700,5000,no,target,always,0,,,,,,
+1999,Centipede Larva@AS_VENOMDUST,idle,140,1,2000,0,10000,yes,randomtarget,always,0,,,,,,29
+1999,Centipede Larva@AS_VENOMDUST,attack,140,1,2000,0,10000,yes,target,always,0,,,,,,29
+1999,Centipede Larva@NPC_POISON,attack,176,5,500,800,5000,no,target,always,0,,,,,,
+1999,Centipede Larva@NPC_POISONATTACK,attack,188,10,1000,0,5000,yes,target,always,0,,,,,,
+1999,Centipede Larva@NPC_COMBOATTACK,angry,171,5,500,700,5000,no,target,always,0,,,,,,
+
+
