@@ -557,7 +557,10 @@ int party_broken(int party_id)
 		return 0;
 		
 	if( p->instance_id )
+	{
+		instance[p->instance_id].party_id = 0;
 		map_instance_destroy( p->instance_id );
+	}
 
 	for(i=0;i<MAX_PARTY;i++){
 		if(p->data[i].sd!=NULL){

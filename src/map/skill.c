@@ -1112,13 +1112,10 @@ int skill_onskillusage(struct map_session_data *sd, struct block_list *bl, int s
 			continue; // No target
 		if( rand()%1000 > sd->autospell3[i].rate )
 			continue;
-		if( !battle_check_range(&sd->bl, bl, skill_get_range2(&sd->bl, skill,skilllv) + (skill == RG_CLOSECONFINE?0:1)) )
-			continue;
+		tbl = (sd->autospell3[i].id < 0) ? &sd->bl : bl;
 
-		if( sd->autospell3[i].id < 0 )
-			tbl = &sd->bl;
-		else
-			tbl = bl;
+		if( !battle_check_range(&sd->bl, tbl, skill_get_range2(&sd->bl, skill,skilllv) + (skill == RG_CLOSECONFINE?0:1)) )
+			continue;
 
 		sd->state.autocast = 1;
 		skill_consume_requirement(sd,skill,skilllv,1);

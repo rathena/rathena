@@ -1976,6 +1976,7 @@ int unit_free(struct block_list *bl, int clrtype)
 			guild_send_memberinfoshort(sd,0);
 			pc_cleareventtimer(sd);
 			pc_inventory_rental_clear(sd);
+			if( sd->state.bg_id ) bg_team_leave(sd,1);
 			pc_delspiritball(sd,sd->spiritball,1);
 
 			if( sd->reg )

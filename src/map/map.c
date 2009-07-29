@@ -1518,8 +1518,6 @@ int map_quit(struct map_session_data *sd)
 	if (sd->npc_timer_id != -1) //Cancel the event timer.
 		npc_timerevent_quit(sd);
 
-	if( sd->state.bg_id )
-		bg_team_leave(sd,1);
 	npc_script_event(sd, NPCE_LOGOUT);
 
 	//Unit_free handles clearing the player related data, 
@@ -3275,6 +3273,7 @@ int map_instance_destroy_timer(int tid, unsigned int tick, int id, intptr data)
 void map_instance_destroy(int instance_id)
 {
 	int last = 0, type;
+	struct party_data *p;
 	time_t now = time(NULL);
 
 	if( !instance_id || !instance[instance_id].name_id )
@@ -3311,6 +3310,9 @@ void map_instance_destroy(int instance_id)
 
 	instance[instance_id].ivar = NULL;
 	instance[instance_id].svar = NULL;
+
+	if( instance[instance_id].party_id && (p = party_search(instance[instance_id].party_id)) != NULL )
+		p->instance_id = 0;
 
 	ShowInfo("[Instance] Destroyed %s.\n", instance[instance_id].name);
 	memset( &instance[instance_id], 0x00, sizeof(instance[0]) );

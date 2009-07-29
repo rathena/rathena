@@ -1188,8 +1188,7 @@ OnDisable:
 // Barrier Summoners
 schg_cas01,2,1,0	script	#sch01_RL00	-1,{
 OnEnable:
-	setcell "schg_cas01",114,48,126,48,cell_walkable,0;
-	setcell "schg_cas01",114,48,126,48,cell_shootable,0;
+	setwall "schg_cas01",114,48,13,6,0,"sch01_RL00";
 	guardian "schg_cas01",115,49," ",1905,"#sch01_RL00::OnBarrierDestroyed"; //24;
 	guardian "schg_cas01",117,49," ",1905,"#sch01_RL00::OnBarrierDestroyed"; //25;
 	guardian "schg_cas01",119,49," ",1905,"#sch01_RL00::OnBarrierDestroyed"; //26;
@@ -1199,8 +1198,7 @@ OnEnable:
 	end;
 
 OnDisable:
-	setcell "schg_cas01",114,48,126,48,cell_walkable,1;
-	setcell "schg_cas01",114,48,126,48,cell_shootable,1;
+	delwall "sch01_RL00";
 	killmonster "schg_cas01","#sch01_RL00::OnBarrierDestroyed";
 	end;
 
@@ -1211,7 +1209,7 @@ OnBarrierDestroyed:
 schg_cas01,2,2,0	script	#sch01_RL01	-1,{
 OnEnable:
 	set .MyMobCount,6;
-	setcell "schg_cas01",114,51,126,51,cell_walkable,0;
+	setwall "schg_cas01",114,51,13,6,1,"sch01_RL01";
 	guardian "schg_cas01",115,50," ",1905,"#sch01_RL01::OnBarrierDestroyed"; //30;
 	guardian "schg_cas01",117,50," ",1905,"#sch01_RL01::OnBarrierDestroyed"; //31;
 	guardian "schg_cas01",119,50," ",1905,"#sch01_RL01::OnBarrierDestroyed"; //32;
@@ -1225,12 +1223,12 @@ OnBarrierDestroyed:
 	if (.MyMobCount == 0) {
 		setarray $agit_sc01[2],1;
 		mapannounce "schg_cas01","The 1st Fortress Gate is destroyed.",bc_map,"0x00ff00";
-		setcell "schg_cas01",114,51,126,51,cell_walkable,1;
+		delwall "sch01_RL01";
 	}
 	end;
 
 OnDisable:
-	setcell "schg_cas01",114,51,126,51,cell_walkable,1;
+	delwall "sch01_RL01";
 	killmonster "schg_cas01","#sch01_RL01::OnBarrierDestroyed";
 	end;
 }
@@ -1238,7 +1236,7 @@ OnDisable:
 schg_cas01,2,3,0	script	#sch01_RL02	-1,{
 OnEnable:
 	set .MyMobCount,6;
-	setcell "schg_cas01",114,154,126,154,cell_walkable,0;
+	setwall "schg_cas01",114,154,13,6,1,"sch01_RL02";
 	guardian "schg_cas01",115,153," ",1905,"#sch01_RL02::OnBarrierDestroyed"; //36;
 	guardian "schg_cas01",117,153," ",1905,"#sch01_RL02::OnBarrierDestroyed"; //37;
 	guardian "schg_cas01",119,153," ",1905,"#sch01_RL02::OnBarrierDestroyed"; //38;
@@ -1252,12 +1250,12 @@ OnBarrierDestroyed:
 	if (.MyMobCount == 0) {
 		setarray $agit_sc01[3],1;
 		mapannounce "schg_cas01","The 2nd Fortress Gate is destroyed.",bc_map,"0x00ff00";
-		setcell "schg_cas01",114,154,126,154,cell_walkable,1;
+		delwall "sch01_RL02";
 	}
 	end;
 
 OnDisable:
-	setcell "schg_cas01",114,154,126,154,cell_walkable,1;
+	delwall "sch01_RL02";
 	killmonster "schg_cas01","#sch01_RL02::OnBarrierDestroyed";
 	end;
 }
@@ -1265,7 +1263,7 @@ OnDisable:
 schg_cas01,2,4,0	script	#sch01_RL03	-1,{
 OnEnable:
 	set .MyMobCount,4;
-	setcell "schg_cas01",116,241,126,241,cell_walkable,0;
+	setwall "schg_cas01",116,241,11,6,1,"sch01_RL03";
 	guardian "schg_cas01",116,240," ",1905,"#sch01_RL03::OnBarrierDestroyed"; //42;
 	guardian "schg_cas01",118,240," ",1905,"#sch01_RL03::OnBarrierDestroyed"; //43;
 	guardian "schg_cas01",120,240," ",1905,"#sch01_RL03::OnBarrierDestroyed"; //44;
@@ -1277,12 +1275,12 @@ OnBarrierDestroyed:
 	if (.MyMobCount == 0) {
 		setarray $agit_sc01[4],1;
 		mapannounce "schg_cas01","The 3rd Fortress Gate is destroyed!",bc_map,"0x00ff00";
-		setcell "schg_cas01",116,241,126,241,cell_walkable,1;
+		delwall "sch01_RL03";
 	}
 	end;
 
 OnDisable:
-	setcell "schg_cas01",116,241,126,241,cell_walkable,1;
+	delwall "sch01_RL03";
 	killmonster "schg_cas01","#sch01_RL03::OnBarrierDestroyed";
 	end;
 }
