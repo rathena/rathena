@@ -6,6 +6,8 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 09/07/28
 	* Kaahi heals no matter if attack connects. (bugreport:2440) [Inkfish]
 	* Fixed a typo causing skillitem always resets skill delay. (bugreport:3431) [Inkfish]
+	* Fixed damage_level is not calculated properly on normal attack. [Inkfish]
+	* Kaahi is supposed to be canceled on logout. [Inkfish]
 09/07/25
 	* Rewrote Quest Log system. [Inkfish]
 	* Fixed message display for FullStrip and SelfProvoke. (bugreport: 3011, bugreport: 3415) [Inkfish]

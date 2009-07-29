@@ -3007,7 +3007,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 	if(tsc && tsc->data[SC_KAAHI] && tsc->data[SC_KAAHI]->val4 == -1)
 		tsc->data[SC_KAAHI]->val4 = add_timer(tick + skill_get_time2(SL_KAAHI,tsc->data[SC_KAAHI]->val1), kaahi_heal_timer, target->id, SC_KAAHI); //Activate heal.
 
-	wd = battle_calc_weapon_attack(src, target, 0, 0, flag);
+	wd = battle_calc_attack(BF_WEAPON, src, target, 0, 0, flag);	
 
 	if (sd && sd->state.arrow_atk) //Consume arrow.
 		battle_consume_ammo(sd, 0, 0);

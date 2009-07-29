@@ -1578,6 +1578,8 @@ int map_quit(struct map_session_data *sd)
 				status_change_end(&sd->bl,SC_STEELBODY,-1);
 			if(sd->sc.data[SC_PRESERVE])
 				status_change_end(&sd->bl,SC_PRESERVE,-1);
+			if(sd->sc.data[SC_KAAHI])
+				status_change_end(&sd->bl,SC_KAAHI,-1);
 		}
 	}
 	
