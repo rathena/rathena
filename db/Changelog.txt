@@ -8,32 +8,12 @@
 	1475 Equestrian's Spear:	NEED INFO.
 	13005 Angelic Wing Dagger:	NEED INFO.
 	-----
-	Missing Effects:
-	12214 Convex_Mirror:		Detect MVP spawn on minimap; doesn't work with special condition MVPs. (Recommend constant: SC_DetectMVPSpawn)
-
-	Battleground Reward items:
-	Various weapons			Some weapons require a bonus to bypass 20% defense on demi-human opponents.
-	13037 Assassin_Dagger_		When attacking, chance to gain occult impaction/icepick effect for 6 seconds, .
-	1380 Elite_Soldier's_Battle_Axe_	When attacking, chance to destroy (100%) the opponents armor for 3 seconds.
-	1543 Millitant_Morning_Star	When attacking, chance to stun (50%) the opponent for 6 seconds.
-	1824,Champion's_Battle_Fist_	When attacking, chance to negate the cast time on Guillotine Fist for 10 seconds.
-	1632 Wolong's_Magic_Staff	Adds a 5% chance to stun opponents with your magic.
-	1633 Wolong's_Magic_Staff_
-	13172 Soldier_Gatling_Gun	HP should drain gradually at 120hp/second while ATK boost is in effect.
-	13174 Soldier_Grenade_Launcher	
-	13173 Soldier_Shotgun		HP should drain gradually at 100hp/second while ATK boost is in effect.
-	13306 Battleground_Shuriken_	When attacking, chance to raise attack power of Throw Huuma Shuriken and Final Strike by 100% for 10 seconds
-	2379 Wolong's_Battle_Robe	chance to stone enemies for 10 seconds when receiving physical damage
-	2380 Robe_of_Order
-	2376 General's_Plate_Mail	Increases heal recovery effectiveness on you by 10%
-
 	Endless Tower+
-	13412 Naght_Seiger_Twin_Edge	5% chance to activate defense bypassing on normal (non boss) targets for 5 seconds (no visual).
-	13413 Naght_Seiger_Twin_Edge_	5% chance to activate defense bypassing on normal (non boss) targets for 5 seconds (no visual).
-	1185 Violet_Fear		5% chance to activate defense bypassing on normal (non boss) targets for 5 seconds (no visual).
 	2385 Recuvative_Armor		Should trigger HP/SP return with magical kills as well.
 
 =======================
+2009/07/30
+	Rev. 13983 Updated several 12.1 and 13.1 equipment effects and proc rates. [L0ne_W0lf]
 2009/07/26
 	* Rev. 13971 Updated item database with 13.1 content. [L0ne_W0lf]
 	- Added equipment using various sources, and iRO descs.
