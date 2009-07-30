@@ -665,13 +665,12 @@ function	script	F_EntKafCode	{
 		set @kafcode_try,0;
 		logmes "Hack: Tried to fit storage password.";
 	}
-	input @code_;
-	if(@code_<1000) {
-		mes "You shouldn't use such short password.";
+	if(input(@code_) == 1) {
+		mes "You can't use such big password.";
 		return 0;
 	}
-	if(@code_>10000000) {
-		mes "You can't use such big password.";
+	if(@code_<1000) {
+		mes "You shouldn't use such short password.";
 		return 0;
 	}
 	return @code_;

@@ -46,10 +46,9 @@ L_NoIncomeToday:
  mes"[Maniss]";
  mes "Please, tell me how much zeny you would like to deposit.";
  next;
- input @kafrabank;
+ if(input(@kafrabank) == 1) goto L_TOO_BIG_AMOUNT;
   
  if(@kafrabank<1000) goto L_LESS_1000;
- if(@kafrabank>10000000) goto L_TOO_BIG_AMOUNT;
  if(@kafrabank>zeny) goto L_NOT_ENOUGH;
  set zeny,zeny-@kafrabank;
  set #kafrabank,#kafrabank+@kafrabank;
@@ -65,10 +64,9 @@ M_WITHDRAW:
  mes "Your account: ^135445" + #kafrabank + "^000000 zeny.";
  mes "How much zeny would you like to withdraw?";
  next;
- input @kafrabank;
+ if(input(@kafrabank) == 1) goto L_TOO_BIG_AMOUNT;
   
  if(@kafrabank<1) goto B_EXIT2;
- if(@kafrabank>10000000) goto L_TOO_BIG_AMOUNT;
  if(@kafrabank>#kafrabank) goto L_NOT_ENOUGH;
  set #kafrabank,#kafrabank-@kafrabank;
  set zeny,zeny+@kafrabank;
