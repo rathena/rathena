@@ -3507,21 +3507,23 @@ payon_in03,75,129,5	script	Poring Fortune Teller	704,{
 				mes " Bear that in mind! Then, until we meet again.. *poof*! ";
 				break;
 			}
-			case 2:
-				mes "[Chocarle]";
-				mes " Ok then! Come again next time! We'll do a good job! Bye-bye~! ";
-				break;
-			}
-			case 2:
-				mes "[Chocarle]";
-				mes " Poring card readings focus on cards with cute Porings..! ";
-				mes " Poke~poke~ they tell you your fortune! It is not traditional, but the liveliness is the best! ";
-				next;
-				mes "[Chocarle]";
-				mes " The fortunes are simple and refreshing. It is perfect when you would like your fortune told with a light heart and not be burdensome! ";
-				break;
+			break;
+		case 2:
+			mes "[Chocarle]";
+			mes " Ok then! Come again next time! We'll do a good job! Bye-bye~! ";
+			break;
 		}
-		close;
+		break;
+	case 2:
+		mes "[Chocarle]";
+		mes " Poring card readings focus on cards with cute Porings..! ";
+		mes " Poke~poke~ they tell you your fortune! It is not traditional, but the liveliness is the best! ";
+		next;
+		mes "[Chocarle]";
+		mes " The fortunes are simple and refreshing. It is perfect when you would like your fortune told with a light heart and not be burdensome! ";
+		break;
+	}
+	close;
 }
 	
 payon_in03,118,119,1	script	Ascetic	101,2,2,{
