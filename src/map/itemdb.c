@@ -603,7 +603,7 @@ static int itemdb_read_noequip(void)
 		if(nameid<=0 || !(id=itemdb_exists(nameid)))
 			continue;
 
-		id->flag.no_equip=atoi(str[1]);
+		id->flag.no_equip |= atoi(str[1]);
 
 		ln++;
 

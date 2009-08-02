@@ -479,4 +479,7 @@ void clif_rental_expired(int fd, int nameid);
 // BOOK READING
 void clif_readbook(int fd, int book_id, int page);
 
+// Show Picker
+void clif_party_show_picker(struct map_session_data * sd, struct item * item_data);
+
 #endif /* _CLIF_H_ */

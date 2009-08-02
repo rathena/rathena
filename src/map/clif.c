@@ -13139,6 +13139,27 @@ void clif_instance_leave(int fd)
 	WFIFOSET(fd,packet_len(0x02CE));
 }
 
+void clif_party_show_picker(struct map_session_data * sd, struct item * item_data)
+{
+	unsigned char buf[22];
+
+	WBUFW(buf,0)=0x2b8;
+	WBUFL(buf,2) = sd->status.account_id;
+	WBUFW(buf,6) = item_data->nameid;
+	WBUFB(buf,8) = item_data->identify;
+	WBUFB(buf,9) = item_data->attribute;
+	WBUFB(buf,10) = item_data->refine;
+	WBUFW(buf,11) = item_data->card[0];
+	WBUFW(buf,13) = item_data->card[1];
+	WBUFW(buf,15) = item_data->card[2];
+	WBUFW(buf,17) = item_data->card[3];
+	//Unknown
+	//WBUFB(buf,19) = 0;
+	//WBUFB(buf,20) = 0;
+	//WBUFB(buf,21) = 0;
+	clif_send(buf, packet_len(0x2b8), &sd->bl, PARTY_SAMEMAP_WOS);
+}
+
 /*==========================================
  * パケットデバッグ
  *------------------------------------------*/
@@ -13409,7 +13430,7 @@ static int packetdb_readdb(void)
 	    0,  0,  0,  6,  0,  0,  0,  0,  0,  8, 18,  0,  0,  0,  0,  0,
 	    0,  4,  0, 70,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-	    0,  0,  0,117,  6,  0,  7,  7,  0,191,  0,  0,  0,  0,  0,  0,
+	    0,  0,  0,117,  6,  0,  7,  7, 22,191,  0,  0,  0,  0,  0,  0,
 	//#0x02C0
 	    0,  0,  0,  0,  0, 30,  0,  0,  0,  3,  0, 65,  4, 71, 10,  0,
 	    0,  0,  0,  0,  0,  0,  6, -1, 10, 10,  3,  0, -1, 32,  6,  0,

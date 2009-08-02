@@ -15,8 +15,6 @@ void quest_update_objective(TBL_PC * sd, int mob);
 int quest_update_status(TBL_PC * sd, int quest_id, quest_state status);
 int quest_check(TBL_PC * sd, int quest_id, quest_check_type type);
 
-int quest_search_db(int quest_id);
-
 void do_init_quest();
 
 #endif

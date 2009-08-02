@@ -1010,13 +1010,10 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 			if (rand()%1000 > rate)
 				continue;
 
-			if( !battle_check_range(src, bl, skill_get_range2(src, skill,skilllv) + (skill == RG_CLOSECONFINE?0:1)) )
-				continue; //Autocasts should always fail if the target is outside the skill range or an obstacle is in between.[Inkfish]
+			tbl = (sd->autospell[i].id < 0) ? src : bl;
 
-			if (sd->autospell[i].id < 0)
-				tbl = src;
-			else
-				tbl = bl;
+			if( !battle_check_range(src, tbl, skill_get_range2(src, skill,skilllv) + (skill == RG_CLOSECONFINE?0:1)) )
+				continue; //Autocasts should always fail if the target is outside the skill range or an obstacle is in between.[Inkfish]
 
 			sd->state.autocast = 1;
 			skill_consume_requirement(sd,skill,skilllv,1);
@@ -1275,12 +1272,11 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 				continue;
 			if (rand()%1000 > rate)
 				continue;
-			if( !battle_check_range(src, bl, skill_get_range2(src, skillid,skilllv) + (skillid == RG_CLOSECONFINE?0:1)) )
+
+			tbl = (dstsd->autospell2[i].id < 0) ? bl : src;
+
+			if( !battle_check_range(src, tbl, skill_get_range2(src, skillid,skilllv) + (skillid == RG_CLOSECONFINE?0:1)) )
 				continue;
-			if (dstsd->autospell2[i].id < 0)
-				tbl = bl;
-			else
-				tbl = src;
 
 			dstsd->state.autocast = 1;
 			skill_consume_requirement(dstsd,skillid,skilllv,1);

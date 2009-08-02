@@ -42,6 +42,17 @@ struct s_quest_db {
 };
 struct s_quest_db quest_db[MAX_QUEST_DB];
 
+int quest_search_db(int quest_id)
+{
+	int i;
+
+	ARR_FIND(0, MAX_QUEST_DB,i,quest_id == quest_db[i].id);
+	if( i == MAX_QUEST_DB )
+		return -1;
+
+	return i;
+}
+
 //Send quest info on login
 int quest_pc_login(TBL_PC * sd)
 {
@@ -61,19 +72,19 @@ int quest_add(TBL_PC * sd, int quest_id)
 
 	if( sd->num_quests >= MAX_QUEST_DB )
 	{
-		ShowError("quest_add: your quest log is full.(max quests: %d)\n", MAX_QUEST_DB);
+		ShowError("quest_add: Character %d has got all the quests.(max quests: %d)\n", sd->status.char_id, MAX_QUEST_DB);
 		return 1;
 	}
 
 	if( quest_check(sd, quest_id, HAVEQUEST) >= 0 )
 	{
-		ShowError("quest_add: you already have quest %d.\n",quest_id);
+		ShowError("quest_add: Character %d already has quest %d.\n", sd->status.char_id, quest_id);
 		return -1;
 	}
 
 	if( (j = quest_search_db(quest_id)) < 0 )
 	{
-		ShowError("quest_add: quest %d not found in DB.\n",quest_id);
+		ShowError("quest_add: quest %d not found in DB.\n", quest_id);
 		return -1;
 	}
 
@@ -107,19 +118,19 @@ int quest_change(TBL_PC * sd, int qid1, int qid2)
 
 	if( sd->num_quests >= MAX_QUEST_DB )
 	{
-		ShowError("quest_change: your quest log is full.(max quests: %d)\n", MAX_QUEST_DB);
+		ShowError("quest_change: Character %d has got all the quests.(max quests: %d)\n", sd->status.char_id, MAX_QUEST_DB);
 		return 1;
 	}
 
 	if( quest_check(sd, qid2, HAVEQUEST) >= 0 )
 	{
-		ShowError("quest_change: you already have quest %d.\n",qid2);
+		ShowError("quest_change: Character %d already has quest %d.\n", sd->status.char_id, qid2);
 		return -1;
 	}
 
 	if( quest_check(sd, qid1, HAVEQUEST) < 0 )
 	{
-		ShowError("quest_change: you don't have quest %d.\n",qid1);
+		ShowError("quest_change: Character %d doesn't have quest %d.\n", sd->status.char_id, qid1);
 		return -1;
 	}
 
@@ -132,7 +143,7 @@ int quest_change(TBL_PC * sd, int qid1, int qid2)
 	ARR_FIND(0, sd->avail_quests, i, sd->quest_log[i].quest_id == qid1);
 	if(i == sd->avail_quests)
 	{
-		ShowError("quest_change: Quest %d not found in your quest log!\n", qid1);
+		ShowError("quest_change: Character %d has completed quests %d.\n", sd->status.char_id, qid1);
 		return -1;
 	}
 
@@ -169,7 +180,7 @@ int quest_delete(TBL_PC * sd, int quest_id)
 	ARR_FIND(0, sd->num_quests, i, sd->quest_log[i].quest_id == quest_id);
 	if(i == sd->num_quests)
 	{
-		ShowError("quest_delete: quest %d not found in your quest log.\n",quest_id);
+		ShowError("quest_delete: Character %d doesn't have quest %d.\n", sd->status.char_id, quest_id);
 		return -1;
 	}
 
@@ -219,7 +230,7 @@ int quest_update_status(TBL_PC * sd, int quest_id, quest_state status)
 	ARR_FIND(0, sd->avail_quests, i, sd->quest_log[i].quest_id == quest_id);
 	if(i == sd->avail_quests)
 	{
-		ShowError("quest_update_status: Quest %d not found in your quest log!\n", quest_id);
+		ShowError("quest_update_status: Character %d doesn't have quest %d.\n", sd->status.char_id, quest_id);
 		return -1;
 	}
 
@@ -269,7 +280,7 @@ int quest_check(TBL_PC * sd, int quest_id, quest_check_type type)
 
 			if( j < 0 )
 			{
-				ShowError("quest_check_quest: quest not found in DB\n");
+				ShowError("quest_check_quest: quest %d not found in DB.\n",quest_id);
 				return -1;
 			}
 
@@ -289,17 +300,6 @@ int quest_check(TBL_PC * sd, int quest_id, quest_check_type type)
 	}
 
 	return -1;
-}
-
-int quest_search_db(int quest_id)
-{
-	int i;
-
-	ARR_FIND(0, MAX_QUEST_DB,i,quest_id == quest_db[i].id);
-	if( i == MAX_QUEST_DB )
-		return -1;
-
-	return i;
 }
 
 int quest_read_db(void)

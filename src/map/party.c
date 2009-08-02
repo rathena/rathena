@@ -921,11 +921,9 @@ int party_share_loot(struct party_data* p, struct map_session_data* sd, struct i
 	if(log_config.enable_logs&0x8) //Logs items, taken by (P)layers [Lupus]
 		log_pick_pc(target, "P", item_data->nameid, item_data->amount, item_data);
 	
-	if(battle_config.party_show_share_picker && target != sd) {
-		char output[80];
-		sprintf(output, "%s acquired %s.",target->status.name, itemdb_jname(item_data->nameid));
-		clif_disp_onlyself(sd,output,strlen(output));
-	}
+	if( p && battle_config.party_show_share_picker && battle_config.show_picker_item_type&(1<<itemdb_type(item_data->nameid)) )
+		clif_party_show_picker(target, item_data);
+
 	return 0;
 }
 
