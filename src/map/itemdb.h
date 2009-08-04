@@ -6,7 +6,7 @@
 
 #include "../common/mmo.h" // ITEM_NAME_LENGTH
 
-#define MAX_RANDITEM	10000
+#define MAX_RANDITEM	11000
 
 #define MAX_SEARCH	5  //Designed for search functions, species max number of matches to display.
 

@@ -2062,6 +2062,17 @@
 4439,Flame_Skull_Card,Flame Skull Card,6,20,,10,,,,,,,,32,,,,,{ bonus2 bResEff,Eff_Blind,3000; bonus2 bResEff,Eff_Stun,3000; bonus2 bResEff,Eff_Curse,3000; bonus2 bResEff,Eff_Stone,3000; bonus2 bAddEffWhenHit,Eff_Blind,500; bonus2 bAddEffWhenHit,Eff_Stun,500; bonus2 bAddEffWhenHit,Eff_Curse,500; bonus2 bAddEffWhenHit,Eff_Stone,500; },{},{}
 4440,Necromancer_Card,Necromancer Card,6,20,,10,,,,,,,,2,,,,,{ if (getiteminfo(getequipid(EQI_HAND_R),11) == 10) { bonus bInt,1; bonus bIgnoreMdefRate,2; } },{},{}
 4441,Fallen_Bishop_Card,Fallen Bishop Hibram Card,6,20,,10,,,,,,,,64,,,,,{ bonus bMatkRate,10; bonus bMaxSPrate,-50; bonus2 bMagicAddRace,RC_Angel,50; bonus2 bMagicAddRace,RC_DemiHuman,50; },{},{}
+4442,Tatacho_Card,Tatacho Card,6,20,,10,,,,,,,,32,,,,,{ bonus2 bSubEle,Ele_Earth,15; },{},{}
+4443,Aqua_Elemental_Card,Aqua Elemental Card,6,20,,10,,,,,,,,32,,,,,{ bonus2 bSubEle,Ele_Water,15; },{},{}
+4444,Draco_Card,Draco Card,6,20,,10,,,,,,,,32,,,,,{ bonus2 bSubEle,Ele_Fire,15; },{},{}
+4445,Luciola_Vespa_Card,Luciola Vespa Card,6,20,,10,,,,,,,,32,,,,,{ bonus2 bSubEle,Ele_Wind,15; },{},{}
+4447,Centipede_Card,Centipede Card,6,20,,10,,,,,,,,32,,,,,{ bonus2 bSubEle,Ele_Poison,15; },{},{}
+4448,Cornus_Card,Cornus Card,6,20,,10,,,,,,,,32,,,,,{ bonus2 bSubEle,Ele_Holy,15; },{},{}
+4449,Dark_Shadow_Card,Dark Shadow Card,6,20,,10,,,,,,,,32,,,,,{ bonus2 bSubEle,Ele_Dark,15; },{},{}
+4450,Banshee_Master_Card,Banshee Master Card,6,20,,10,,,,,,,,16,,,,,{},{},{}
+4451,Entweihen_Card,Entweihen Card,6,20,,10,,,,,,,,2,,,,,{},{},{}
+4452,Centipede_Larva_Card,Centipede Larva Card,6,20,,10,,,,,,,,2,,,,,{},{},{}
+4453,Hillsrion_Card,Hillsrion Card,6,20,,10,,,,,,,,2,,,,,{ bonus bAtk,25; },{},{}
 // Armor Enchant System
 //===================================================================
 4700,Strength1,STR+1,6,20,,10,,,,,,,,16,,,,,{ bonus bStr,1; },{},{}
@@ -2580,9 +2591,9 @@
 //5451,Dragonhelm_Gold
 //5452,Dragonhelm_Silver
 //5453,Dragonhelm_Copper
-//5454,Dog_Cap_
-//5455,Geographer_Band_
-//5456,Vacation_Hat_
+5454,Dog_Cap_,Puppy Hat,5,,,500,,3,,1,0xFFFFFFFF,7,2,256,,0,1,455,{},{},{}
+5455,Geographer_Band_,Decorative Geographer,5,,,500,,1,,1,0xFFFFFFFF,7,2,256,,0,1,456,{},{},{}
+5456,Vacation_Hat_,Summer Hat,5,,,200,,0,,1,0xFFFFFFFF,7,2,256,,0,1,457,{},{},{}
 //5457,Spring_Rabbit_Hat
 //5458,Pinwheel_Cap
 //5459,Drooping_Bunny_Chusuk
