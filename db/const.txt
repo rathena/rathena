@@ -542,6 +542,12 @@ IG_OldGiftBox	43
 IG_MagicCardAlbum	44
 IG_HometownGift	45
 IG_Masquerade	46
+IG_Tresure_Box_WoE	47
+IG_Masquerade_2	48
+IG_Easter_Scroll	49
+IG_Pierre_Treasurebox	50
+IG_Cherish_Box	51
+IG_Cherish_Box_Ori	52
 
 SC_ALL -1
 SC_STONE	0

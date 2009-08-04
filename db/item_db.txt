@@ -2431,7 +2431,7 @@
 5302,Lotus_Flower_Hat,Flower Lily,5,0,,100,,1,,0,0xFFFFFFFF,7,2,256,,30,0,324,{},{},{}
 5303,Flower_Coronet,Flower Crown,5,20,,300,,1,,0,0xFFFFFFFF,7,2,256,,0,1,325,{ bonus bMdef,3; bonus bMaxHP,50; },{},{}
 5304,Cap_Of_Blindness,Executioner Hood,5,20,,800,,4,,1,0xFFFFFFFF,7,2,769,,50,1,326,{ bonus2 bResEff,Eff_Curse,700; bonus2 bResEff,Eff_Blind,10000; },{},{}
-//5305,Pirate_Dagger,Pirate Dagger,5,20,,100,,0,,0,0xFFFFFFFF,7,2,1,,0,0,327,{ bonus bBaseAtk,5; },{},{}
+5305,Pirate_Dagger,Pirate Dagger,5,20,,100,,0,,0,0xFFFFFFFF,7,2,1,,0,0,327,{ bonus bBaseAtk,5; },{},{}
 //5306,Freyja_Crown,Freya's Crown,5,0,,500,,12,,0,0xFFFFFFFE,7,2,256,,0,0,328,{ bonus2 bSubRace,RC_DemiHuman,5; },{},{}
 //5307,Carmen_Miranda's_Hat,Carmen Miranda's Hat,5,20,,400,,3,,0,0xFFFFFFFF,7,0,256,,0,1,329,{ bonus bMdef,3; bonus3 bAutoSpellWhenHit,"DC_WINKCHARM",1,50; },{},{}
 //5308,Brazilian_Flag_Hat,Brazil National Flag Hat,5,20,,300,,3,,1,0xFFFFFFFF,7,0,256,,0,1,330,{ bonus bSpeedAddRate,25; },{},{}

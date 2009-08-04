@@ -1115,8 +1115,8 @@
 18120,0,0,0,0,0,0,0,"Gusli"
 18121,0,0,0,0,0,0,0,"Shafka"
 // Unknown
-//12000,0,0,0,0,0,0,0,"Infiltrating Endless Rower"
-//12001,0,0,0,0,0,0,0,"Defeat Nacht Sieger"
+//12000,0,0,0,0,0,0,0,"Infiltrating Endless Tower"
+//12001,0,0,0,0,0,0,0,"Defeat Naght Sieger"
 //12002,0,0,0,0,0,0,0,"The Curse of Endless Tower"
 //43200,0,0,0,0,0,0,0,""
 //60000,0,0,0,0,0,0,0,"60000"
