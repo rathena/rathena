@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Kisuka
 //===== Current Version: ===================================== 
-//= 1.6
+//= 1.7
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -18,6 +18,7 @@
 //= 1.4 Added 'Koshei the Immortal' quest. [Kisuka]
 //= 1.5 Fixes to 'Koshei the Immortal' quest. [Kisuka]
 //= 1.6 Added 'tides' to Ibanoff & Fixed time check for Marozka. [Kisuka]
+//= 1.7 Fixes on donpcevents and fixed some left over aegis stuff. [Kisuka]
 //============================================================ 
 
 //============================================================================
@@ -10800,13 +10801,13 @@ mosk_dun01,45,259,0	script	Wall#rus04	111,{
 				mes "- The wind disappears and -";
 				mes "- a very young girl appears -";
 				donpcevent "Maria Morebna#rus46::OnEnable";
-				donpcevent "Maria Morebna#rus46::Freezed";
+				donpcevent "Maria Morebna#rus46::OnFreezed";
 				next;
 				mes "[Maria Morebna]";
 				mes "Thank you!";
 				mes "I'm finally out of there! Now I can.....................aaaaak!!!....";
 				next;
-				donpcevent "Maria Morebna#rus46::Death";
+				donpcevent "Maria Morebna#rus46::OnDeath";
 				mes "- Maria is attacked -";
 				mes "- and falls down!! -";
 				next;
@@ -10835,7 +10836,7 @@ mosk_dun01,45,259,0	script	Wall#rus04	111,{
 				mes "Gray Wolf...";
 				mes "You think you can fight me?!";
 				next;
-				donpcevent "Gray Wolf#rus05::Firehit";
+				donpcevent "Gray Wolf#rus05::OnFirehit";
 				mes "- Staggering from -";
 				mes "- Koshei's flames, -";
 				mes "- Gray Wolf quickly tell me -";
@@ -10967,7 +10968,7 @@ mosk_dun01,45,259,0	script	Wall#rus04	111,{
 			mes "- The wounds and -";
 			mes "- curses on her body -";
 			mes "- are removed !! -";
-			donpcevent "Maria Morebna#rus46::Absorbspirits";
+			donpcevent "Maria Morebna#rus46::OnAbsorbspirits";
 			next;
 			mes "["+ strcharinfo(0) +"]";
 			mes "Ok! Next...";
@@ -10997,7 +10998,7 @@ mosk_dun01,45,259,0	script	Wall#rus04	111,{
 				next;
 			}
 			mes "- !! -";
-			donpcevent "Maria Morebna#rus46::Resurrection";
+			donpcevent "Maria Morebna#rus46::OnResurrection";
 			next;
 			mes "[Gray Wolf]";
 			mes "Success!!";
@@ -11181,7 +11182,7 @@ OnDisable:
 	disablenpc "Gray Wolf#rus05";
 	end;
 
-Firehit:
+OnFirehit:
 	specialeffect 49;
 	end;
 
@@ -11211,21 +11212,21 @@ OnDisable:
 	disablenpc "Maria Morebna#rus46";
 	end;
 
-Freezed:
+OnFreezed:
 	specialeffect 134;
 	end;
 
-Death:
+OnDeath:
 	specialeffect 1;
 	specialeffect 212;
 	specialeffect 372;
 	end;
 
-Absorbspirits:
+OnAbsorbspirits:
 	specialeffect 253;
 	end;
 
-Resurrection:
+OnResurrection:
 	specialeffect 77;
 	end;
 
@@ -12367,7 +12368,7 @@ mosk_fild02,157,233,0	script	Shepherdess#rus10	69,{
 			mes "You should check around the marsh yourself to see if you find something.";
 			next;
 			mes "[Shepherdess]";
-			mes "Ah, right! While you're searching, can you gather some Pointed Branches for me? Could you please get me ^0000ff50 Pointed Branches^000000?";
+			mes "Ah, right! While you're searching, can you gather some Pointed Branches for me? Could you please get me ^0000ff25 Pointed Branches^000000?";
 			next;
 			mes "[Shepherdess]";
 			mes "I am an excellent flute player! If you get me enough Pointed Branches, I will make a flute from them and play beautiful music for you. Please~!";
@@ -14889,7 +14890,7 @@ OnTouch:
 			input .@input$;
 			if (.@input$ == "Good feed is orange-flavored") {
 				mes "["+ strcharinfo(0) +"]";
-				mes ""+ inputstr +" !!!";
+				mes ""+ .@input$ +" !!!";
 				specialeffect 304;
 				next;
 				mes "- You cast the spell in a hurry and the cow is surronded by the light and disappears !! -";
@@ -14898,7 +14899,7 @@ OnTouch:
 				next;
 			}else{
 				mes "["+ strcharinfo(0) +"]";
-				mes ""+ inputstr +" !!!";
+				mes ""+ .@input$ +" !!!";
 				next;
 				mes "[Cow]";
 				mes "...Moo...";
@@ -15003,7 +15004,7 @@ OnTouch:
 			input .@input$;
 			if (.@input$ == "Good feed is orange-flavored") {
 				mes "["+ strcharinfo(0) +"]";
-				mes ""+ inputstr +" !!!";
+				mes ""+ .@input$ +" !!!";
 				specialeffect 304;
 				next;
 				mes "- You cast the spell in a hurry and the cow is surronded by the light and disappears !! -";
@@ -15012,7 +15013,7 @@ OnTouch:
 				next;
 			}else{
 				mes "["+ strcharinfo(0) +"]";
-				mes ""+ inputstr +" !!!";
+				mes ""+ .@input$ +" !!!";
 				next;
 				mes "[Cow]";
 				mes "...Moo...";
@@ -15117,7 +15118,7 @@ OnTouch:
 			input .@input$;
 			if (.@input$ == "Good feed is orange-flavored") {
 				mes "["+ strcharinfo(0) +"]";
-				mes ""+ inputstr +" !!!";
+				mes ""+ .@input$ +" !!!";
 				specialeffect 304;
 				next;
 				mes "- You cast the spell in a hurry and the cow is surronded by the light and disappears !! -";
@@ -15126,7 +15127,7 @@ OnTouch:
 				next;
 			}else{
 				mes "["+ strcharinfo(0) +"]";
-				mes ""+ inputstr +" !!!";
+				mes ""+ .@input$ +" !!!";
 				next;
 				mes "[Cow]";
 				mes "...Moo...";
@@ -15762,20 +15763,20 @@ amatsu,233,234,3	script	Momotoro Publisher#rus42	757,{
 		input .@input$;
 		if (.@input$ == "Baba Yaga") {
 			mes "["+ strcharinfo(0) +"]";
-			mes "I am "+ inputstr +".";
+			mes "I am "+ .@input$ +".";
 			next;
 			mes "[Momotoro Publisher]";
-			mes ""+ inputstr +" ... Ah, here it is.";
+			mes ""+ .@input$ +" ... Ah, here it is.";
 			next;
 		}else{
 			mes "["+ strcharinfo(0) +"]";
-			mes "I am "+ inputstr +" ";
+			mes "I am "+ .@input$ +" ";
 			next;
 			mes "[Momotoro Publisher]";
-			mes ""+ inputstr +" ... Let's see...";
+			mes ""+ .@input$ +" ... Let's see...";
 			next;
 			mes "[Momotoro Publisher]";
-			mes "Hmm? I am sorry but there is no book reserved for "+ inputstr +". Can you check again please?";
+			mes "Hmm? I am sorry but there is no book reserved for "+ .@input$ +". Can you check again please?";
 			close;
 		}
 		mes "[Momotoro Publisher]";
@@ -15836,7 +15837,7 @@ mosk_dun02,57,220,0	script	House Ghost Jar#rus43	111,{
 		mes "- as bugs come out!! -";
 		set rhea_rus_main,32;
 		monster "mosk_dun02",58,220,"Thief Bug Male",1054,1,"House Ghost Jar#rus43::OnMyMobDead";
-		monster "mosk_dun02",59,220,"Ancient Worm",1305,1,"House Ghost Jar#rus43::OnMyMobDead";
+		monster "mosk_dun02",59,220,"Ancient Worm",1305,1,"House Ghost Jar#rus43iOnMyMobDead";
 		monster "mosk_dun02",60,220,"Thief Bug Male",1054,1,"House Ghost Jar#rus43::OnMyMobDead";
 		donpcevent "House Ghost Jar#rus43::OnDisable";
 		close;

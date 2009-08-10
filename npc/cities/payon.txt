@@ -684,7 +684,7 @@ payon_in01,47,59,2	script	Archer Wolt#payon	88,{
 		next;
 		mes "[Archer Wolt]";
 		mes "But we've gotta make do";
-		mes "do with what we've got!";
+		mes "with what we've got!";
 		mes "An Archer's life is";
 		mes "endless training!";
 		mes "Endless practice!";
