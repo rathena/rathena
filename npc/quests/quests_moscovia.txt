@@ -15837,7 +15837,7 @@ mosk_dun02,57,220,0	script	House Ghost Jar#rus43	111,{
 		mes "- as bugs come out!! -";
 		set rhea_rus_main,32;
 		monster "mosk_dun02",58,220,"Thief Bug Male",1054,1,"House Ghost Jar#rus43::OnMyMobDead";
-		monster "mosk_dun02",59,220,"Ancient Worm",1305,1,"House Ghost Jar#rus43iOnMyMobDead";
+		monster "mosk_dun02",59,220,"Ancient Worm",1305,1,"House Ghost Jar#rus43::OnMyMobDead";
 		monster "mosk_dun02",60,220,"Thief Bug Male",1054,1,"House Ghost Jar#rus43::OnMyMobDead";
 		donpcevent "House Ghost Jar#rus43::OnDisable";
 		close;
