@@ -13141,6 +13141,7 @@ void clif_instance_leave(int fd)
 
 void clif_party_show_picker(struct map_session_data * sd, struct item * item_data)
 {
+#if PACKETVER >= 20071002
 	unsigned char buf[22];
 
 	WBUFW(buf,0)=0x2b8;
@@ -13158,6 +13159,7 @@ void clif_party_show_picker(struct map_session_data * sd, struct item * item_dat
 	//WBUFB(buf,20) = 0;
 	//WBUFB(buf,21) = 0;
 	clif_send(buf, packet_len(0x2b8), &sd->bl, PARTY_SAMEMAP_WOS);
+#endif
 }
 
 /*==========================================

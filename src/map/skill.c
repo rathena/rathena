@@ -1007,7 +1007,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 
 			rate = (!sd->state.arrow_atk) ? sd->autospell[i].rate : sd->autospell[i].rate / 2;
 
-			if (rand()%1000 > rate)
+			if (rand()%1000 >= rate)
 				continue;
 
 			tbl = (sd->autospell[i].id < 0) ? src : bl;
@@ -1048,7 +1048,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 		int i;
 		for( i = 0; i < ARRAYLENGTH(sd->autobonus); i++ )
 		{
-			if( rand()%1000 > sd->autobonus[i].rate )
+			if( rand()%1000 >= sd->autobonus[i].rate )
 				continue;
 			if( sd->autobonus[i].active != INVALID_TIMER )
 				continue;
@@ -1107,7 +1107,7 @@ int skill_onskillusage(struct map_session_data *sd, struct block_list *bl, int s
 
 		if( sd->autospell3[i].id >= 0 && bl == NULL )
 			continue; // No target
-		if( rand()%1000 > sd->autospell3[i].rate )
+		if( rand()%1000 >= sd->autospell3[i].rate )
 			continue;
 		tbl = (sd->autospell3[i].id < 0) ? &sd->bl : bl;
 
@@ -1129,7 +1129,7 @@ int skill_onskillusage(struct map_session_data *sd, struct block_list *bl, int s
 	{
 		for( i = 0; i < ARRAYLENGTH(sd->autobonus3); i++ )
 		{
-			if( rand()%1000 > sd->autobonus3[i].rate )
+			if( rand()%1000 >= sd->autobonus3[i].rate )
 				continue;
 			if( sd->autobonus3[i].active != INVALID_TIMER )
 				continue;
@@ -1270,7 +1270,7 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 
 			if (skillnotok(skillid, dstsd))
 				continue;
-			if (rand()%1000 > rate)
+			if (rand()%1000 >= rate)
 				continue;
 
 			tbl = (dstsd->autospell2[i].id < 0) ? bl : src;
@@ -1311,7 +1311,7 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 		int i;
 		for( i = 0; i < ARRAYLENGTH(dstsd->autobonus2); i++ )
 		{
-			if( rand()%1000 > dstsd->autobonus2[i].rate )
+			if( rand()%1000 >= dstsd->autobonus2[i].rate )
 				continue;
 			if( dstsd->autobonus2[i].active != INVALID_TIMER )
 				continue;
@@ -3815,7 +3815,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case CR_DEVOTION:
 		{
 			int count, lv;
-			if( !dstsd )
+			if( !dstsd || (!sd && !mer) )
 			{ // Only players can be devoted
 				if( sd )
 					clif_skill_fail(sd, skillid, 0, 0);
