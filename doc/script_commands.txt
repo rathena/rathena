@@ -1198,7 +1198,7 @@ with other command, such as "if", but often used on it's own.
 Label:
 	mes "This will be seen";
 
-Note by FlavioJS: goto's are "evil" and should be avoided if possible (ò_ó)
+Note by FlavioJS: goto's are "evil" and should be avoided if possible (ò_?
 
 ---------------------------------------
 
@@ -6554,7 +6554,7 @@ Remove the quest of the given <ID> from the user's quest log.
 
 *changequest <ID>,<ID2>;
 
-Remove quest of the given <ID> from the user's quest log, and change state to "complete".
+Remove quest of the given <ID> from the user's quest log.
 Add quest of the <ID2> to the the quest log, and the state is "active".
 
 ---------------------------------------

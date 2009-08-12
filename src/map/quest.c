@@ -116,12 +116,6 @@ int quest_change(TBL_PC * sd, int qid1, int qid2)
 
 	int i, j, count;
 
-	if( sd->num_quests >= MAX_QUEST_DB )
-	{
-		ShowError("quest_change: Character %d has got all the quests.(max quests: %d)\n", sd->status.char_id, MAX_QUEST_DB);
-		return 1;
-	}
-
 	if( quest_check(sd, qid2, HAVEQUEST) >= 0 )
 	{
 		ShowError("quest_change: Character %d already has quest %d.\n", sd->status.char_id, qid2);
@@ -147,12 +141,6 @@ int quest_change(TBL_PC * sd, int qid1, int qid2)
 		return -1;
 	}
 
-	// Complete quest
-	sd->quest_log[i].state = Q_COMPLETE;
-	memcpy(&sd->quest_log[sd->num_quests], &sd->quest_log[i],sizeof(struct quest));
-	clif_send_quest_delete(sd, qid1);
-
-	// Add new quest
 	memset(&sd->quest_log[i], 0, sizeof(struct quest));
 	sd->quest_log[i].quest_id = quest_db[j].id;
 	if( quest_db[j].time )
@@ -162,7 +150,7 @@ int quest_change(TBL_PC * sd, int qid1, int qid2)
 		sd->quest_log[i].mob[count] = quest_db[j].mob[count];
 	sd->quest_log[i].num_objectives = count;
 
-	sd->num_quests++;
+	clif_send_quest_delete(sd, qid1);
 
 	if( save_settings&64 )
 		chrif_save(sd,0);
