@@ -13,6 +13,7 @@
 #include "mob.h"
 #include "pet.h"
 #include "homunculus.h"
+#include "instance.h"
 #include "mercenary.h"
 #include "skill.h"
 #include "clif.h"
@@ -1843,7 +1844,7 @@ int unit_remove_map_(struct block_list *bl, int clrtype, const char* file, int l
 		if( map[bl->m].instance_id )
 		{
 			instance[map[bl->m].instance_id].users--;
-			map_instance_check_idle(map[bl->m].instance_id);
+			instance_check_idle(map[bl->m].instance_id);
 		}
 		sd->state.debug_remove_map = 1; // temporary state to track double remove_map's [FlavioJS]
 		sd->debug_file = file;

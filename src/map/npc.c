@@ -21,6 +21,7 @@
 #include "script.h"
 #include "mob.h"
 #include "pet.h"
+#include "instance.h"
 #include "battle.h"
 #include "skill.h"
 #include "unit.h"
@@ -2301,6 +2302,80 @@ const char* npc_parse_duplicate(char* w1, char* w2, char* w3, char* w4, const ch
 	nd->u.scr.timerid = -1;
 
 	return end;
+}
+
+int npc_duplicate4instance(struct npc_data *snd, int m)
+{
+	char newname[NAME_LENGTH];
+	int i = 0;
+
+	if( map[m].instance_id == 0 )
+		return 1;
+
+	snprintf(newname, ARRAYLENGTH(newname), "dup_%d_%d", map[m].instance_id, snd->bl.id);
+	if( npc_name2id(newname) != NULL )
+	{ // Name already in use
+		ShowError("npc_duplicate4instance: the npcname (%s) is already in use while trying to duplicate npc %s in instance %d.\n", newname, snd->exname, map[m].instance_id);
+		return 1;
+	}
+
+	if( snd->subtype == WARP )
+	{ // Adjust destination, if instanced
+		struct npc_data *wnd = NULL; // New NPC
+		int dm = map_mapindex2mapid(snd->u.warp.mapindex), im;
+		if( dm < 0 ) return 1;
+
+		im = instance_mapid2imapid(dm, map[m].instance_id);
+		if( im == -1 )
+		{
+			ShowError("npc_duplicate4instance: warp (%s) leading to instanced map (%s), but instance map is not attached to current instance.\n", map[dm].name, snd->exname);
+			return 1;
+		}
+
+		CREATE(wnd, struct npc_data, 1);
+		wnd->bl.id = npc_get_new_npc_id();
+		map_addnpc(m, wnd);
+		wnd->bl.prev = wnd->bl.next = NULL;
+		wnd->bl.m = m;
+		wnd->bl.x = snd->bl.x;
+		wnd->bl.y = snd->bl.y;
+		safestrncpy(wnd->name, "", ARRAYLENGTH(wnd->name));
+		safestrncpy(wnd->exname, newname, ARRAYLENGTH(wnd->exname));
+		wnd->class_ = WARP_CLASS;
+		wnd->speed = 200;
+		wnd->u.warp.mapindex = map_id2index(im);
+		wnd->u.warp.x = snd->u.warp.x;
+		wnd->u.warp.y = snd->u.warp.y;
+		wnd->u.warp.xs = snd->u.warp.xs;
+		wnd->u.warp.ys = snd->u.warp.ys;
+		wnd->bl.type = BL_NPC;
+		wnd->subtype = WARP;
+		npc_setcells(wnd);
+		map_addblock(&wnd->bl);
+		status_set_viewdata(&wnd->bl, wnd->class_);
+		status_change_init(&wnd->bl);
+		unit_dataset(&wnd->bl);
+		clif_spawn(&wnd->bl);
+		strdb_put(npcname_db, wnd->exname, wnd);
+	}
+	else
+	{
+		static char w1[50], w2[50], w3[50], w4[50];
+		const char* stat_buf = "- call from instancing subsystem -\n";
+
+		snprintf(w1, sizeof(w1), "%s,%d,%d,%d", map[m].name, snd->bl.x, snd->bl.y, snd->ud.dir);
+		snprintf(w2, sizeof(w2), "duplicate(%s)", snd->exname);
+		snprintf(w3, sizeof(w3), "%s::%s", snd->name, newname);
+
+		if( snd->u.scr.xs >= 0 && snd->u.scr.ys >= 0 )
+			snprintf(w4, sizeof(w4), "%d,%d,%d", snd->class_, snd->u.scr.xs, snd->u.scr.ys); // Touch Area
+		else
+			snprintf(w4, sizeof(w4), "%d", snd->class_);
+
+		npc_parse_duplicate(w1, w2, w3, w4, stat_buf, stat_buf, "INSTANCING");
+	}
+
+	return 0;
 }
 
 void npc_setcells(struct npc_data* nd)

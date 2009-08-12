@@ -166,6 +166,4 @@ int add_str(const char* p);
 const char* get_str(int id);
 int script_reload(void);
 
-uint32 crc32(char *dat, int len);
-
 #endif /* _SCRIPT_H_ */

@@ -45,8 +45,6 @@ struct item_data;
 #define MAX_IGNORE_LIST 20 // official is 14
 #define MAX_VENDING 12
 #define MOBID_EMPERIUM 1288
-#define MAX_MAP_PER_INSTANCE 10
-#define MAX_INSTANCE 500
 
 //The following system marks a different job ID system used by the map server,
 //which makes a lot more sense than the normal one. [Skotlex]
@@ -463,6 +461,7 @@ struct map_data {
 		unsigned nochat :1;
 		unsigned partylock :1;
 		unsigned guildlock :1;
+		unsigned src4instance : 1; // To flag this map when it's used as a src map for instances
 	} flag;
 	struct point save;
 	struct npc_data *npc[MAX_NPC_PER_MAP];
@@ -478,8 +477,9 @@ struct map_data {
 	int jexp;	// map experience multiplicator
 	int bexp;	// map experience multiplicator
 	int nocommand; //Blocks @/# commands for non-gms. [Skotlex]
+	// Instance Variables
 	int instance_id;
-	int instance_map[1000];
+	int instance_src_map;
 };
 
 /// Stores information about a remote map (for multi-mapserver setups).
@@ -492,22 +492,6 @@ struct map_data_other_server {
 	uint16 port;
 };
 
-// Instancing
-struct map_instance {
-	char name[61];
-	unsigned int name_id;
-//	int m;
-	unsigned int instance_id;
-	int party_id;
-	int map[MAX_MAP_PER_INSTANCE];
-	int num_map;
-	struct linkdb_node *ivar, *svar;
-	time_t progress_timeout, idle_timeout;
-	time_t progress_timeoutval, idle_timeoutval;
-	int progress_timer, idle_timer;
-	int users;
-};
-
 int map_getcell(int,int,int,cell_chk);
 int map_getcellp(struct map_data*,int,int,cell_chk);
 void map_setcell(int m, int x, int y, cell_t cell, bool flag);
@@ -515,7 +499,6 @@ void map_setgatcell(int m, int x, int y, int gat);
 
 extern struct map_data map[];
 extern int map_num;
-extern int map_instance_start;
 
 extern int autosave_interval;
 extern int minsave_interval;
@@ -637,21 +620,8 @@ int map_addmobtolist(unsigned short m, struct spawn_data *spawn);	// [Wizputer]
 void map_spawnmobs(int); // [Wizputer]
 void map_removemobs(int); // [Wizputer]
 void do_reconnect_map(void); //Invoked on map-char reconnection [Skotlex]
-
-// Instancing
-int map_instance_map(const char *name, int instance_id);
-void map_instance_del(int m);
-int map_instance_create(int party_id, int name_id, const char *name);
-void map_instance_init(int instance_id);
-int map_instance_mapid2imapid(int m, int instance_id);
-int map_instance_map2imap(int m, struct map_session_data *sd, int type);
-void map_instance_destroy(int instance_id);
-void map_instance_check_idle(int instance_id);
-void map_instance_check_kick(struct map_session_data *sd);
-char *map_instance_npcname(char *name, int instance_id);
-void map_instance_set_timeout(int instance_id, unsigned int progress_timeout, unsigned int idle_timeout);
-
-extern struct map_instance instance[MAX_INSTANCE];
+void map_addmap2db(struct map_data *m);
+void map_removemapdb(struct map_data *m);
 
 extern char *INTER_CONF_NAME;
 extern char *LOG_CONF_NAME;

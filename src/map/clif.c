@@ -33,6 +33,7 @@
 #include "vending.h"
 #include "pet.h"
 #include "homunculus.h"
+#include "instance.h"
 #include "mercenary.h"
 #include "log.h"
 #include "clif.h"
@@ -7988,12 +7989,12 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 			pc_setinvincibletimer(sd,battle_config.pc_invincible_time);
 	}
 
-	if (map[sd->bl.m].users++ == 0 && battle_config.dynamic_mobs)	//Skotlex
+	if( map[sd->bl.m].users++ == 0 && battle_config.dynamic_mobs )
 		map_spawnmobs(sd->bl.m);
 	if( map[sd->bl.m].instance_id )
 	{
 		instance[map[sd->bl.m].instance_id].users++;
-		map_instance_check_idle(map[sd->bl.m].instance_id);
+		instance_check_idle(map[sd->bl.m].instance_id);
 	}
 	sd->state.debug_remove_map = 0; // temporary state to track double remove_map's [FlavioJS]
 

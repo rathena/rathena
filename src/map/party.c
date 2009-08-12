@@ -14,6 +14,7 @@
 #include "atcommand.h"	//msg_txt()
 #include "pc.h"
 #include "map.h"
+#include "instance.h"
 #include "battle.h"
 #include "intif.h"
 #include "clif.h"
@@ -540,7 +541,7 @@ int party_member_leaved(int party_id, int account_id, int char_id)
 		clif_charnameupdate(sd); //Update name display [Skotlex]
 		//TODO: hp bars should be cleared too
 		if( p->instance_id )
-			map_instance_check_kick(sd);
+			instance_check_kick(sd);
 	}
 
 	return 0;
@@ -559,15 +560,18 @@ int party_broken(int party_id)
 	if( p->instance_id )
 	{
 		instance[p->instance_id].party_id = 0;
-		map_instance_destroy( p->instance_id );
+		instance_destroy( p->instance_id );
 	}
 
-	for(i=0;i<MAX_PARTY;i++){
-		if(p->data[i].sd!=NULL){
+	for( i = 0; i < MAX_PARTY; i++ )
+	{
+		if( p->data[i].sd!=NULL )
+		{
 			clif_party_leaved(p,p->data[i].sd,p->party.member[i].account_id,p->party.member[i].name,0x10);
 			p->data[i].sd->status.party_id=0;
 		}
 	}
+
 	idb_remove(party_db,party_id);
 	return 0;
 }

@@ -274,6 +274,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\src\map\instance.c"
+				>
+			</File>
+			<File
+				RelativePath="..\src\map\instance.h"
+				>
+			</File>
+			<File
 				RelativePath="..\src\map\intif.c"
 				>
 			</File>

@@ -431,10 +431,9 @@ int intif_party_changemap(struct map_session_data *sd,int online)
 		return 0;
 
 	if( (m=map_mapindex2mapid(sd->mapindex)) >= 0 && map[m].instance_id )
-		mapindex = map[map[m].instance_map[0]].index;
+		mapindex = map[map[m].instance_src_map].index;
 	else
 		mapindex = sd->mapindex;
-	
 
 	WFIFOHEAD(inter_fd,19);
 	WFIFOW(inter_fd,0)=0x3025;

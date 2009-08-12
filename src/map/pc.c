@@ -25,6 +25,7 @@
 #include "map.h"
 #include "path.h"
 #include "homunculus.h"
+#include "instance.h"
 #include "mercenary.h"
 #include "mob.h" // MAX_MOB_RACE_DB
 #include "npc.h" // fake_nd
@@ -3868,11 +3869,13 @@ int pc_steal_coin(struct map_session_data *sd,struct block_list *target)
  *------------------------------------------*/
 int pc_setpos(struct map_session_data* sd, unsigned short mapindex, int x, int y, uint8 clrtype)
 {
+	struct party_data *p;
 	int m;
 
 	nullpo_retr(0, sd);
 
-	if (!mapindex || !mapindex_id2name(mapindex)) {
+	if( !mapindex || !mapindex_id2name(mapindex) )
+	{
 		ShowDebug("pc_setpos: Passed mapindex(%d) is invalid!\n", mapindex);
 		return 1;
 	}
@@ -3884,17 +3887,17 @@ int pc_setpos(struct map_session_data* sd, unsigned short mapindex, int x, int y
 	}
 
 	m = map_mapindex2mapid(mapindex);
-	if( map[m].instance_map[0] && map[m].instance_id == 0 )
-	{ // Source Instance Map
-		int im = map_instance_map2imap(m, sd, 0);
-		if( im <= 0 )
-		{
-			ShowError("pc_setpos: player %s trying to enter instance map '%s' without instanced copy.\n", sd->status.name, map[m].name);
-			return 2; // map not found
+	if( map[m].flag.src4instance && sd->status.party_id && (p = party_search(sd->status.party_id)) != NULL && p->instance_id )
+	{
+		// Request the mapid of this src map into the instance of the party
+		int im = instance_map2imap(m, sd->status.party_id, 0);
+		if( im < 0 )
+			; // Player will enter the src map for instances
+		else
+		{ // Changes destiny to the instance map, not the source map
+			m = im;
+			mapindex = map_id2index(m);
 		}
-
-		m = im;
-		mapindex = map_id2index(m);
 	}
 
 	sd->state.changemap = (sd->mapindex != mapindex);

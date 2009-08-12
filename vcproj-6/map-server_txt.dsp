@@ -255,6 +255,10 @@ SOURCE=..\src\map\homunculus.c
 # End Source File
 # Begin Source File
 
+SOURCE=..\src\map\instance.c
+# End Source File
+# Begin Source File
+
 SOURCE=..\src\map\mercenary.c
 # End Source File
 # Begin Source File
@@ -380,6 +384,10 @@ SOURCE=..\src\map\mapreg_txt.c
 # Begin Source File
 
 SOURCE=..\src\map\homunculus.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\map\instance.h
 # End Source File
 # Begin Source File
 

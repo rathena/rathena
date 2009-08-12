@@ -145,11 +145,9 @@ int npc_reload(void);
 void npc_read_event_script(void);
 int npc_script_event(struct map_session_data* sd, enum npce_event type);
 
-const char* npc_parse_duplicate(char* w1, char* w2, char* w3, char* w4, const char* start, const char* buffer, const char* filepath);
-
+int npc_duplicate4instance(struct npc_data *snd, int m);
 int npc_cashshop_buy(struct map_session_data *sd, int nameid, int amount, int points);
 
 extern struct npc_data* fake_nd;
-extern DBMap* npcname_db;
 
 #endif /* _NPC_H_ */
