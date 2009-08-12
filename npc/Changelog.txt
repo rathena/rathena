@@ -1,5 +1,10 @@
 Date		Added
 ======
+2009/09/11
+	* Rev. 14001 More episode 12.1 updates, mainly to morroc quests. [L0ne_W0lf]
+	- Updated Satan Morroc to allow people who have finished it to return to the previous map.
+	- Added quest log commands for Resurrection of Satan Morocc.
+	- Added the two remaining episode 12.1 quests. 
 2009/07/26
 	* Rev. 13970 Another Episode 12 change, and more 13.1 content. [L0ne_W0lf]
 	- Moved Voting staff in Morroc to Morroc Ruins.
