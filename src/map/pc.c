@@ -3890,7 +3890,7 @@ int pc_setpos(struct map_session_data* sd, unsigned short mapindex, int x, int y
 	if( map[m].flag.src4instance && sd->status.party_id && (p = party_search(sd->status.party_id)) != NULL && p->instance_id )
 	{
 		// Request the mapid of this src map into the instance of the party
-		int im = instance_map2imap(m, sd->status.party_id, 0);
+		int im = instance_map2imap(m, p->instance_id);
 		if( im < 0 )
 			; // Player will enter the src map for instances
 		else

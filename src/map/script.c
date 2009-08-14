@@ -13780,10 +13780,14 @@ BUILDIN_FUNC(instance_attachmap)
 	const char *name;
 	int m;
 	int instance_id;
+	bool usebasename = false;
 	
-	name = script_getstr(st, 2);
-	instance_id = script_getnum(st, 3);
-	if( (m = instance_add_map(name, instance_id)) < 0 )
+	name = script_getstr(st,2);
+	instance_id = script_getnum(st,3);
+	if( script_hasdata(st,4) && script_getnum(st,4) > 0)
+		usebasename = true;
+
+	if( (m = instance_add_map(name, instance_id, usebasename)) < 0 ) // [Saithis]
 	{
 		ShowError("buildin_instance_attachmap: instance creation failed (%s): %d\n", name, m);
 		script_pushconststr(st, "");
@@ -13810,7 +13814,7 @@ BUILDIN_FUNC(instance_detachmap)
 		instance_id = p->instance_id;
 	else return 0;
  	
-	if( (m = map_mapname2mapid(str)) < 0 || (m = instance_map2imap(m,instance_id,0)) < 0 )
+	if( (m = map_mapname2mapid(str)) < 0 || (m = instance_map2imap(m,instance_id)) < 0 )
  	{
 		ShowError("buildin_instance_detachmap: Trying to detach invalid map %s\n", str);
  		return 0;
@@ -13920,7 +13924,7 @@ BUILDIN_FUNC(instance_announce)
 BUILDIN_FUNC(instance_npcname)
 {
 	const char *str;
-	int instance_id;
+	int instance_id = 0;
 
 	struct map_session_data *sd;
 	struct party_data *p;
@@ -13933,13 +13937,12 @@ BUILDIN_FUNC(instance_npcname)
 		instance_id = st->instance_id;
 	else if( (sd = script_rid2sd(st)) != NULL && sd->status.party_id && (p = party_search(sd->status.party_id)) != NULL && p->instance_id )
 		instance_id = p->instance_id;
-	else return 0;
 
-	if( (nd = npc_name2id(str)) != NULL )
-	{
-		char npcname[NAME_LENGTH];
-		snprintf(npcname, ARRAYLENGTH(npcname), "dup_%d_%d", instance_id, nd->bl.id);
-		script_pushconststr(st,npcname);
+	if( instance_id && (nd = npc_name2id(str)) != NULL )
+ 	{
+		static char npcname[NAME_LENGTH+1];
+		snprintf(npcname, sizeof(npcname), "dup_%d_%d", instance_id, nd->bl.id);
+ 		script_pushconststr(st,npcname);
 	}
 	else
 		script_pushconststr(st,"");
@@ -13949,13 +13952,20 @@ BUILDIN_FUNC(instance_npcname)
 
 BUILDIN_FUNC(has_instance)
 {
-	struct map_session_data *sd = script_rid2sd(st);
-	const char *str;
-	int m;
+	struct map_session_data *sd;
+	struct party_data *p;
+ 	const char *str;
+	int m, instance_id = 0;
+ 
+ 	str = script_getstr(st, 2);
+	if( script_hasdata(st, 3) )
+		instance_id = script_getnum(st, 3);
+	else if( st->instance_id )
+		instance_id = st->instance_id;
+	else if( (sd = script_rid2sd(st)) != NULL && sd->status.party_id && (p = party_search(sd->status.party_id)) != NULL && p->instance_id )
+		instance_id = p->instance_id;
 
-	str = script_getstr(st, 2);
-	
-	if( !sd || (m = map_mapname2mapid(str)) < 0 || (m = instance_map2imap(m, sd->status.party_id, 0)) < 0 )
+	if( !instance_id || (m = map_mapname2mapid(str)) < 0 || (m = instance_map2imap(m, instance_id)) < 0 )
 	{
 		script_pushconststr(st, "");
 		return 0;
@@ -14467,7 +14477,7 @@ struct script_function buildin_func[] = {
 	// Instancing
 	BUILDIN_DEF(instance_create,"si"),
 	BUILDIN_DEF(instance_destroy,"?"),
-	BUILDIN_DEF(instance_attachmap,"si"),
+	BUILDIN_DEF(instance_attachmap,"si?"),
 	BUILDIN_DEF(instance_detachmap,"s?"),
 	BUILDIN_DEF(instance_attach,"i"),
 	BUILDIN_DEF(instance_id,"?"),
@@ -14475,7 +14485,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(instance_init,"i"),
 	BUILDIN_DEF(instance_announce,"isi*"),
 	BUILDIN_DEF(instance_npcname,"s?"),
-	BUILDIN_DEF(has_instance,"s"),
+	BUILDIN_DEF(has_instance,"s?"),
 	BUILDIN_DEF(instance_warpall,"sii?"),
 
 	//Quest Log System [Inkfish]

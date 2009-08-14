@@ -3259,6 +3259,9 @@ int npc_reload(void)
 		"\t-'"CL_WHITE"%d"CL_RESET"' Mobs Not Cached\n",
 		npc_id - npc_new_min, npc_warp, npc_shop, npc_script, npc_mob, npc_cache_mob, npc_delay_mob);
 
+	for( i = 0; i < ARRAYLENGTH(instance); ++i )
+		if( instance[i].instance_id ) instance_init(instance[i].instance_id);
+
 	//Re-read the NPC Script Events cache.
 	npc_read_event_script();
 

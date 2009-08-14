@@ -75,7 +75,7 @@ int instance_create(int party_id, const char *name)
 /*--------------------------------------
  * Add a map to the instance using src map "name"
  *--------------------------------------*/
-int instance_add_map(const char *name, int instance_id)
+int instance_add_map(const char *name, int instance_id, bool usebasename)
 {
 	int m = map_mapname2mapid(name), i, im = -1;
 	size_t num_cell, size;
@@ -109,7 +109,7 @@ int instance_add_map(const char *name, int instance_id)
 	else im = map_num++; // Using next map index
 
 	memcpy( &map[im], &map[m], sizeof(struct map_data) ); // Copy source map
-	snprintf(map[im].name, MAP_NAME_LENGTH, "%.3d%s", instance_id, name); // Generate Name for Instance Map
+	snprintf(map[im].name, MAP_NAME_LENGTH, (usebasename ? "%.3d#%s" : "%.3d%s"), instance_id, name); // Generate Name for Instance Map
 	map[im].index = mapindex_addmap(-1, map[im].name); // Add map index
 
 	if( !map[im].index )
@@ -150,24 +150,15 @@ int instance_add_map(const char *name, int instance_id)
  * party_id : source party of this instance
  * type : result (0 = map id | 1 = instance id)
  *--------------------------------------*/
-int instance_map2imap(int m, int party_id, int type)
+int instance_map2imap(int m, int instance_id)
 {
-	int i;
-	struct party_data *p;
-	if( (p = party_search(party_id)) == NULL || !p->instance_id )
-		return -1;
-
-	for( i = 0; i < instance[p->instance_id].num_map; i++ )
-	{
-		if( instance[p->instance_id].map[i] && map[instance[p->instance_id].map[i]].instance_src_map == m )
-		{
-			if( type == 0 )
-				return instance[p->instance_id].map[i];
-			else
-				return p->instance_id;
-		}
-	}
-	return -1;
+ 	int i;
+	for( i = 0; i < instance[instance_id].num_map; i++ )
+ 	{
+		if( instance[instance_id].map[i] && map[instance[instance_id].map[i]].instance_src_map == m )
+			return instance[instance_id].map[i];
+ 	}
+ 	return -1;
 }
 
 /*--------------------------------------

@@ -32,9 +32,9 @@ extern int instance_start;
 extern struct s_instance instance[MAX_INSTANCE];
 
 int instance_create(int party_id, const char *name);
-int instance_add_map(const char *name, int instance_id);
+int instance_add_map(const char *name, int instance_id, bool usebasename);
 void instance_del_map(int m);
-int instance_map2imap(int m, int party_id, int type);
+int instance_map2imap(int m, int instance_id);
 int instance_mapid2imapid(int m, int instance_id);
 void instance_destroy(int instance_id);
 void instance_init(int instance_id);
