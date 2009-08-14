@@ -1198,7 +1198,7 @@ with other command, such as "if", but often used on it's own.
 Label:
 	mes "This will be seen";
 
-Note by FlavioJS: goto's are "evil" and should be avoided if possible (ò_?
+Note by FlavioJS: goto's are "evil" and should be avoided if possible (Ã²_Ã³)
 
 ---------------------------------------
 
@@ -5883,7 +5883,7 @@ memory of where the points are set whatsoever.
 This command will display a picture stored in the GRF file in the client for the 
 player. 
 
-The files are taken from '\data\texture\À¯ÀúÀÎÅÍÆäÀÌ½º\illust' directory in the 
+The files are taken from '\data\texture\ìœ ì €ì¸í„°í˜ì´ìŠ¤\illust' directory in the 
 GRF file. Also it seems that card cutins from \cardbmp will work here as well. 
 Only bitmaps (images stored in the bitmap format) will actually get displayed. 
 The '.bmp' extension is optional. 
