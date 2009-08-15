@@ -169,7 +169,7 @@ int instance_map2imap(int m, int instance_id)
 int instance_mapid2imapid(int m, int instance_id)
 {
 	int i, max;
-	if( map[m].instance_src_map == 0 )
+	if( map[m].flag.src4instance == 0 )
 		return m; // not instances found for this map
 	else if( map[m].instance_id )
 	{ // This map is a instance, not a src map instance
