@@ -19,6 +19,12 @@
 #include "party.h"
 #include "pc.h"
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <stdarg.h>
+#include <time.h>
+
 int instance_start = 0; // To keep the last index + 1 of normal map inserted in the map[ARRAY]
 struct s_instance instance[MAX_INSTANCE];
 
