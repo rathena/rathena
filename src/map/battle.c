@@ -1807,10 +1807,12 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 				target_count = unit_counttargeted(target,battle_config.vit_penalty_count_lv);
 				if(target_count >= battle_config.vit_penalty_count) {
 					if(battle_config.vit_penalty_type == 1) {
-						def1 = (def1 * (100 - (target_count - (battle_config.vit_penalty_count - 1))*battle_config.vit_penalty_num))/100;
+						if( !tsc || !tsc->data[SC_STEELBODY] )
+							def1 = (def1 * (100 - (target_count - (battle_config.vit_penalty_count - 1))*battle_config.vit_penalty_num))/100;
 						def2 = (def2 * (100 - (target_count - (battle_config.vit_penalty_count - 1))*battle_config.vit_penalty_num))/100;
 					} else { //Assume type 2
-						def1 -= (target_count - (battle_config.vit_penalty_count - 1))*battle_config.vit_penalty_num;
+						if( !tsc || !tsc->data[SC_STEELBODY] )
+							def1 -= (target_count - (battle_config.vit_penalty_count - 1))*battle_config.vit_penalty_num;
 						def2 -= (target_count - (battle_config.vit_penalty_count - 1))*battle_config.vit_penalty_num;
 					}
 				}
