@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
-//= 1.3
+//= 1.4
 //===== Compatible With: =====================================
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -14,6 +14,7 @@
 //= 1.1 Fixed small official bug. [L0ne_W0lf]
 //= 1.2 Replaced effect numerics with constants. [L0ne_W0lf]
 //= 1.3 Fixed a little mistake [akrus]
+//= 1.4 Corrected issue with top record setting. [L0ne_W0lf]
 //============================================================
 
 turbo_room,91,135,3	script	Normal mode - 16 person	124,{
@@ -959,7 +960,7 @@ turbo_n_16,384,167,1	script	Winner Helper#TBT_n_16	47,{
 		next;
 		if (tt_rank > $ttranks[1]) {
 			setarray $ttranks[0],$ttranks[0],tt_rank,$ttranks[1],$ttranks[2],$ttranks[3],$ttranks[4];
-			setarray $ttnames[9],strcharinfo(0);
+			setarray $ttnames$[9],strcharinfo(0);
 			mes "[Guide]";
 			mes "Congratulations!";
 			mes "You are ranked as";
@@ -983,7 +984,7 @@ turbo_n_16,384,167,1	script	Winner Helper#TBT_n_16	47,{
 		}
 		else if (tt_rank > $ttranks[2]) {
 			setarray $ttranks[0],$ttranks[0],$ttranks[1],tt_rank,$ttranks[3],$ttranks[4],$ttranks[5];
-			setarray $ttnames[10],strcharinfo(0);
+			setarray $ttnames$[10],strcharinfo(0);
 			mes "[Guide]";
 			mes "Congratulations!";
 			mes "You've ranked Second";
@@ -1007,7 +1008,7 @@ turbo_n_16,384,167,1	script	Winner Helper#TBT_n_16	47,{
 		}
 		else if (tt_rank > $ttranks[3]) {
 			setarray $ttranks[0],$ttranks[0],$ttranks[1],$ttranks[2],tt_rank,$ttranks[4],$ttranks[5];
-			setarray $ttnames[11],strcharinfo(0);
+			setarray $ttnames$[11],strcharinfo(0);
 			mes "[Guide]";
 			mes "Congratulations!";
 			mes "You've ranked Third";
@@ -1031,7 +1032,7 @@ turbo_n_16,384,167,1	script	Winner Helper#TBT_n_16	47,{
 		}
 		else if (tt_rank > $ttranks[4]) {
 			setarray $ttranks[0],$ttranks[0],$ttranks[1],$ttranks[2],$ttranks[3],tt_rank,$ttranks[5];
-			setarray $ttnames[12],strcharinfo(0);
+			setarray $ttnames$[12],strcharinfo(0);
 			mes "[Guide]";
 			mes "Congratulations!";
 			mes "You've ranked Fourth";
@@ -1055,7 +1056,7 @@ turbo_n_16,384,167,1	script	Winner Helper#TBT_n_16	47,{
 		}
 		else if (tt_rank > $ttranks[5]) {
 			setarray $ttranks[0],$ttranks[0],$ttranks[1],$ttranks[2],$ttranks[3],$ttranks[4],tt_rank;
-			setarray $ttnames[13],strcharinfo(0);
+			setarray $ttnames$[13],strcharinfo(0);
 			mes "[Guide]";
 			mes "Congratulations!";
 			mes "You've ranked Fifth";

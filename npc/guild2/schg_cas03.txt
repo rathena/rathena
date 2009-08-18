@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
-//= 2.2
+//= 2.3
 //===== Compatible With: =====================================
 //= eAthena SVN
 //===== Description: =========================================
@@ -28,6 +28,7 @@
 //= 2.1 Applied updated eco/def systems. [L0ne_W0lf]
 //= 2.2 Fixed eco/def not actually incrementing. [L0ne_W0lf]
 //=     Can no longer gain eco/def higher than 100.
+//= 2.3 Fixed invalid corridinates when spawning a guardian. [L0ne_W0lf]
 //============================================================
 
 schg_cas03,1,1,0	script	Manager#sch03_02	111,{
@@ -488,7 +489,7 @@ OnGuardianDied:
 	set .MyMobCount,.MyMobCount-1;
 	if (.MyMobCount < 2) {
 		set .MyMobCount,.MyMobCount+1;
-		guardian "schg_cas03",120,37,"Guardian",1899,"#sch03_gard01::OnGuardianDied"; //10;
+		guardian "schg_cas03",273,309,"Guardian",1899,"#sch03_gard01::OnGuardianDied"; //10;
 	}
 	end;
 

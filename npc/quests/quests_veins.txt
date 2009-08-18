@@ -21,7 +21,7 @@
 //= - Help a boy save his little sister.
 //= - Dialog partially obtained from iRO.
 //= - Variable in use: rachel_camel (max 25)
-//= Thor Volcano Base Quest (Disabled):
+//= Thor Volcano Base Quest:
 //= - Missing addition to High Priest Zhed to start quest.
 //= - Infiltrate Thor Volcano Base. What is Arunafeltz up to?
 //= - Variable in use: rachel_camel (max 27)

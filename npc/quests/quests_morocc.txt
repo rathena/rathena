@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 
-//= 2.6
+//= 2.7
 //===== Compatible With: ===================================== 
 //= eAthena 7.15 +
 //===== Description: ========================================= 
@@ -39,6 +39,7 @@
 //=     Added the two remaining episode 12.1 quests. 
 //=     Updated Satan Morroc Quest to allow peopel who have
 //=     finished it to return to the previous map.
+//= 2.7 Corrected weight checks, they only check for inventory slots. [L0ne_W0lf]
 //============================================================ 
 
 // Stop Post Quest
@@ -2017,7 +2018,7 @@ OnTimer5415000:
 // ============================================================
 moc_ruins,137,70,3	script	Book-Touching Man#garas	48,{
 	if (BaseLevel > 59) {
-		if ((wt_inven == 2) || (wt_inven == 3)) {
+		if (checkweight(703,3) == 0) {
 			mes "- You have too many items in your inventory to proceed with this quest. -";
 			close;
 		}
@@ -3030,7 +3031,7 @@ yuno_in04,117,102,3	script	Old News Scrapbook	844,{
 }
 
 yuno_in04,169,123,3	script	Suspicious Man#oliver_h	407,{
-	if ((wt_inven == 2) || (wt_inven == 3)) {
+	if (checkweight(617,3) == 0) {
 		mes "- You have too many items in your inventory to proceed with this quest. -";
 		close;
 	}
@@ -3243,7 +3244,7 @@ yuno_in04,169,123,3	script	Suspicious Man#oliver_h	407,{
 }
 
 yuno_in04,167,120,3	script	Worn-out Book#garas	111,{
-	if ((wt_inven == 2) || (wt_inven == 3)) {
+	if (checkweight(617,3) == 0) {
 		mes "- You have too many items in your inventory to proceed with this quest. -";
 		close;
 	}

@@ -1,5 +1,9 @@
 Date	Added
 
+2009/08/18
+	* Rev. 14013 Just a conf update, and mapflags! [L0ne_W0lf]
+	* Changed attribute_recover to no, being hit by the same element should not recover HP.
+	* Added monster_noteleport to Okolnir quest maps. Will fix the tarot card issue.
 2009/04/10
 	* Rev. 13668 Inverted the way monster_ai 0x200 works, default is 0 again. [ultramage]
 	* Rev. 13667 Default value for monster_ai is now 0x200. [L0ne_W0lf]

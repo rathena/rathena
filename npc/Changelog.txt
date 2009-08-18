@@ -1,6 +1,14 @@
 Date		Added
 ======
-2009/09/11
+2009/08/18
+	* Rev. 14013 Bug fixes mostly. [L0ne_W0lf]
+	- Fixed Brynhild dialog in the Asprika quests. (bugreport:3085)
+	- Removed "Disabled" tag from Volcano base quest. (bugreport:3342)
+	- Attempted to fix the sign quest dancing portion. (bugreport:3382)
+	- Fixed Guardian in schg_cas03 using invalid coords. (bugreport:3462)
+	- Fixed Turbo Track records using wrong variable type. (bugreport:3484)
+	- Fixed the checkweights in the Crow of Fate quest. (bugreport:3500)
+2009/08/11
 	* Rev. 14001 More episode 12.1 updates, mainly to morroc quests. [L0ne_W0lf]
 	- Updated Satan Morroc to allow people who have finished it to return to the previous map.
 	- Added quest log commands for Resurrection of Satan Morocc.

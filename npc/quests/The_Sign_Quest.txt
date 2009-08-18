@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= SinSloth(Most of the NPCs), MasterOfMuppets(Some of the NPCs + bug fixes) & Kargha(The quiz NPCs)
 //===== Current Version: ===================================== 
-//= 3.1
+//= 3.2
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -17,6 +17,8 @@
 //=     version, variables will attmept to be translated to the
 //=     new version, however it is untested.
 //= 3.1 Corrected time check for Sir Jore. [L0ne_W0lf]
+//= 3.2 Removed mapannounce used while debugging. [L0ne_W0lf]
+//=     Moved the disablewaitingroomevent in dancing portion.
 //============================================================ 
 
 //============================================================ 
@@ -5219,11 +5221,11 @@ OnInit:
 	end;
 
 OnStartArena:
-	disablewaitingroomevent;
 	donpcevent "s_dance_timer::Onbutton_off";
 	donpcevent "Examiner#sd::OnDisable";
 	warpwaitingpc "cmd_in01",16,15,1;
 	donpcevent "s_dance_timer::OnEnable";
+	disablewaitingroomevent;
 	end;
 
 Onreset:
@@ -5731,7 +5733,6 @@ OnTouch:
 
 Onup:
 	set .s_check,.s_check + 1;
-mapannounce "cmd_in01", "check: "+.s_check,bc_map,"0x00FF00";
 	end;
 
 OnDisable:

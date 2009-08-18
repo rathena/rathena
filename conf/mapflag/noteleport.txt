@@ -312,12 +312,22 @@ p_track02	mapflag	noteleport
 
 //Vision of Okolnir ==============
 que_qsch01	mapflag	noteleport
+que_qsch01	mapflag	monster_noteleport
 que_qsch02	mapflag	noteleport
+que_qsch02	mapflag	monster_noteleport
 que_qsch03	mapflag	noteleport
+que_qsch03	mapflag	monster_noteleport
 que_qsch04	mapflag	noteleport
+que_qsch04	mapflag	monster_noteleport
 que_qsch05	mapflag	noteleport
+que_qsch05	mapflag	monster_noteleport
 que_qaru01	mapflag	noteleport
+que_qaru01	mapflag	monster_noteleport
 que_qaru02	mapflag	noteleport
+que_qaru02	mapflag	monster_noteleport
 que_qaru03	mapflag	noteleport
+que_qaru03	mapflag	monster_noteleport
 que_qaru04	mapflag	noteleport
+que_qaru04	mapflag	monster_noteleport
 que_qaru05	mapflag	noteleport
+que_qaru05	mapflag	monster_noteleport

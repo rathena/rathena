@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.2
+//= 1.2a
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -21,6 +21,7 @@
 //=     Fixed message on the portal when the okolnir section is full.
 //=     Corrected non-angry Piamette not disabling.
 //=     Removed extra dialog that was used in the Brynhild quest.
+//= 1.2a Fixed Wish maiden asking for soft feathers. [L0ne_W0lf]
 //============================================================ 
 
 arug_cas03,324,161,3	script	Guide#gq_aru03	899,{
@@ -274,7 +275,7 @@ que_qaru03,345,82,3	script	Wish Maiden#gq_aru03	403,{
 				next;
 				mes "[Wish Maiden]";
 				mes "Remember...";
-				mes "You need to collect many Valhalla flowers.";
+				mes "You need to collect many soft feathers.";
 				mes "I hope that your dreams come true.";
 				next;
 				mes "[Wish Maiden]";
