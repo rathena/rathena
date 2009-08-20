@@ -1739,7 +1739,8 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 				unit_cancel_combo(src); // Cancel combo wait
 				break;
 			default:
-				status_change_end(src,SC_COMBO,-1);
+				if( src == dsrc ) // Ground skills are exceptions. [Inkfish]
+					status_change_end(src,SC_COMBO,-1);
 			}
 		}
 		switch(skillid)
@@ -1917,7 +1918,8 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 	if(skillid == CR_GRANDCROSS || skillid == NPC_GRANDDARKNESS)
 		dmg.flag |= BF_WEAPON;
 
-	if(sd && dmg.flag&BF_WEAPON && src != bl && src == dsrc && damage > 0) {
+	if( sd && dmg.flag&BF_WEAPON && src != bl && ( src == dsrc || ( dsrc->type == BL_SKILL && ( skillid == SG_SUN_WARM || skillid == SG_MOON_WARM || skillid == SG_STAR_WARM ) ) )  && damage > 0 )
+	{
 		if (battle_config.left_cardfix_to_right)
 			battle_drain(sd, bl, dmg.damage, dmg.damage, tstatus->race, tstatus->mode&MD_BOSS);
 		else
@@ -7464,8 +7466,12 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 							status_zap(bl, 0, 15); // sp damage to players
 						else // mobs
 						if( status_charge(ss, 0, 2) ) // costs 2 SP per hit
-							skill_attack(BF_WEAPON,ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick+count*sg->interval,0);
-						else { //should end when out of sp.
+						{
+							if( !skill_attack(BF_WEAPON,ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick+count*sg->interval,0) )
+								status_charge(ss, 0, 8); //costs additional 8 SP if miss
+						}
+						else
+						{ //should end when out of sp.
 							sg->limit = DIFF_TICK(tick,sg->tick);
 							break;
 						}

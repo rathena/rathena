@@ -3,6 +3,11 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+09/08/18
+	* Some fixes for Heat [Inkfish]
+	- Heat and other ground skills' activation won't cancel combo wait. (bugreport:3228)
+	- Heat should work with hp/sp drain bonus. (bugreport:3507)
+	- Heat consumes 10 sp if the attack doesn't connect. (bugreport:3038)
 09/08/17
 	* Equipment DEF penalty shouldn't be applied to players in Mental Strength. (bugreport:3454) [Inkfish]
 09/08/14
