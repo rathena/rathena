@@ -1234,13 +1234,21 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 		status_heal(src, 0, status_get_lv(bl)*(95+15*rate)/100, 2);
 	}
 
-	if( sd && status_isdead(bl) && attack_type&BF_WEAPON )
+	if( sd && status_isdead(bl) )
 	{
 		int sp = 0, hp = 0;
-		sp += sd->sp_gain_value;
-		sp += sd->sp_gain_race[status_get_race(bl)];
-		sp += sd->sp_gain_race[is_boss(bl)?RC_BOSS:RC_NONBOSS];
-		hp += sd->hp_gain_value;
+		if( attack_type&BF_WEAPON )
+		{
+			sp += sd->sp_gain_value;
+			sp += sd->sp_gain_race[status_get_race(bl)];
+			sp += sd->sp_gain_race[is_boss(bl)?RC_BOSS:RC_NONBOSS];
+			hp += sd->hp_gain_value;
+		}
+		if( attack_type&BF_MAGIC )
+		{
+			sp += sd->magic_sp_gain_value;
+			hp += sd->magic_hp_gain_value;
+		}
 		if( hp || sp )
 			status_heal(src, hp, sp, battle_config.show_hp_sp_gain?2:0);
 	}

@@ -2225,6 +2225,14 @@ int pc_bonus(struct map_session_data *sd,int type,int val)
 		if(!sd->state.lr_flag)
 			sd->hp_gain_value += val;
 		break;
+	case SP_MAGIC_SP_GAIN_VALUE:
+		if(!sd->state.lr_flag)
+			sd->magic_sp_gain_value += val;
+		break;
+	case SP_MAGIC_HP_GAIN_VALUE:
+		if(!sd->state.lr_flag)
+			sd->magic_hp_gain_value += val;
+		break;
 	case SP_ADD_HEAL_RATE:
 		if(sd->state.lr_flag != 2)
 			sd->add_heal_rate += val;
