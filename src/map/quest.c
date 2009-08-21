@@ -103,10 +103,10 @@ int quest_add(TBL_PC * sd, int quest_id)
 	sd->num_quests++;
 	sd->avail_quests++;
 
+	clif_send_quest_info(sd, &sd->quest_log[i]);
+
 	if( save_settings&64 )
 		chrif_save(sd,0);
-	else
-		intif_quest_save(sd);
 
 	return 0;
 }
@@ -151,11 +151,10 @@ int quest_change(TBL_PC * sd, int qid1, int qid2)
 	sd->quest_log[i].num_objectives = count;
 
 	clif_send_quest_delete(sd, qid1);
+	clif_send_quest_info(sd, &sd->quest_log[i]);
 
 	if( save_settings&64 )
 		chrif_save(sd,0);
-	else
-		intif_quest_save(sd);
 
 	return 0;
 }
@@ -182,8 +181,6 @@ int quest_delete(TBL_PC * sd, int quest_id)
 
 	if( save_settings&64 )
 		chrif_save(sd,0);
-	else
-		intif_quest_save(sd);
 
 	return 0;
 }
@@ -242,8 +239,6 @@ int quest_update_status(TBL_PC * sd, int quest_id, quest_state status)
 
 	if( save_settings&64 )
 		chrif_save(sd,0);
-	else
-		intif_quest_save(sd);
 
 	return 0;
 }

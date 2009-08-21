@@ -5,6 +5,7 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 09/08/20
 	* Added bMagicHPGainValue and bMagicSPGainValue. [Inkfish]
+	* Fixed the wrong packet length makes client choke when add_quest packets are sent. [Inkfish]
 09/08/18
 	* Some fixes for Heat [Inkfish]
 	- Heat and other ground skills' activation won't cancel combo wait. (bugreport:3228)

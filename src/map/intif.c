@@ -38,7 +38,7 @@ static const int packet_len_table[]={
 	10,-1,15, 0, 79,19, 7,-1,  0,-1,-1,-1, 14,67,186,-1, //0x3830
 	 9, 9,-1,14,  0, 0, 0, 0, -1,74,-1,11, 11,-1,  0, 0, //0x3840
 	-1,-1, 7, 7,  7,11, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0, //0x3850  Auctions [Zephyrus]
-	-1,-1, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0, //0x3860  Quests [Kevin] [Inkfish]
+	-1, 7, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0, //0x3860  Quests [Kevin] [Inkfish]
 	-1, 3, 3, 0,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0, //0x3870  Mercenaries [Zephyrus]
 	11,-1, 7, 3,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0, //0x3880
 	-1,-1, 7, 3,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0, //0x3890  Homunculus [albator]
@@ -1365,26 +1365,8 @@ int intif_parse_questlog(int fd)
 
 int intif_parse_questsave(int fd)
 {
-	TBL_PC * sd = map_charid2sd(RFIFOL(fd, 4));
-	int i,j;
-	int count = (RFIFOW(fd, 2) - 8) / 4;
-
-	if( !sd )
-		return -1;
-
-	for( i = 0; i < count; i++ )
-	{
-		int qid = RFIFOL(fd, 4*i+8);
-		
-		ARR_FIND(0, sd->avail_quests, j, sd->quest_log[j].quest_id == qid);
-		if(j == sd->avail_quests) //shouldn't happen
-		{
-			ShowError("intif_parse_questsave: Quest %d not found in your quest log!\n", qid);
-			continue;
-		}
-		//This packet can't go before 'close' and 'next'. That's weird and why I send it here. [Inkfish]
-		clif_send_quest_info(sd, &sd->quest_log[j]);
-	}
+	if( !RFIFOB(fd, 6) )
+		ShowError("intif_parse_questsave: Failed to save quest(s) for character %d!\n", RFIFOL(fd, 2));
 
 	return 0;
 }

@@ -59,19 +59,19 @@ int mapif_quests_fromsql(int char_id, struct quest questlog[])
 }
 
 //Delete a quest
-int mapif_quest_delete(int char_id, int quest_id)
+bool mapif_quest_delete(int char_id, int quest_id)
 {
 	if ( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `quest_id` = '%d' AND `char_id` = '%d'", quest_db, quest_id, char_id) )
 	{
 		Sql_ShowDebug(sql_handle);
-		return -1;
+		return false;
 	}
 
-	return 1;
+	return true;
 }
 
 //Add a quest to a questlog
-int mapif_quest_add(int char_id, struct quest qd)
+bool mapif_quest_add(int char_id, struct quest qd)
 {
 	StringBuf buf;
 
@@ -81,16 +81,16 @@ int mapif_quest_add(int char_id, struct quest qd)
 	if ( SQL_ERROR == Sql_QueryStr(sql_handle, StringBuf_Value(&buf)) ) 
 	{
 		Sql_ShowDebug(sql_handle);
-		return -1;
+		return false;
 	}
 
 	StringBuf_Destroy(&buf);
 
-	return 1;
+	return true;
 }
 
 //Update a questlog
-int mapif_quest_update(int char_id, struct quest qd)
+bool mapif_quest_update(int char_id, struct quest qd)
 {
 	StringBuf buf;
 
@@ -100,12 +100,12 @@ int mapif_quest_update(int char_id, struct quest qd)
 	if ( SQL_ERROR == Sql_QueryStr(sql_handle, StringBuf_Value(&buf)) ) 
 	{
 		Sql_ShowDebug(sql_handle);
-		return -1;
+		return false;
 	}
 
 	StringBuf_Destroy(&buf);
 
-	return 1;
+	return true;
 }
 
 //Save quests
@@ -114,8 +114,7 @@ int mapif_parse_quest_save(int fd)
 	int i, j, num2, num1 = (RFIFOW(fd,2)-8)/sizeof(struct quest);
 	int char_id = RFIFOL(fd,4);
 	struct quest qd1[MAX_QUEST_DB],qd2[MAX_QUEST_DB];
-	int buf[MAX_QUEST_DB];
-	int count = 0;
+	bool success = true;
 
 	memset(qd1, 0, sizeof(qd1));
 	memset(qd2, 0, sizeof(qd2));
@@ -128,7 +127,7 @@ int mapif_parse_quest_save(int fd)
 		if( j < num2 ) // Update existed quests
 		{	// Only states and counts are changable.
 			if( qd1[i].state != qd2[j].state || qd1[i].count[0] != qd2[j].count[0] || qd1[i].count[1] != qd2[j].count[1] || qd1[i].count[2] != qd2[j].count[2] )
-				mapif_quest_update(char_id, qd1[i]);
+				success &= mapif_quest_update(char_id, qd1[i]);
 
 			if( j < (--num2) )
 			{
@@ -138,23 +137,17 @@ int mapif_parse_quest_save(int fd)
 
 		}
 		else // Add new quests
-		{
-			mapif_quest_add(char_id, qd1[i]);
-
-			WBUFL(buf,count*4) = qd1[i].quest_id;
-			count++;
-		}
+			success &= mapif_quest_add(char_id, qd1[i]);
 	}
 
 	for( i = 0; i < num2; i++ ) // Quests not in qd1 but in qd2 are to be erased.
-		mapif_quest_delete(char_id, qd2[i].quest_id);
+		success &= mapif_quest_delete(char_id, qd2[i].quest_id);
 
-	WFIFOHEAD(fd,8+4*count);
+	WFIFOHEAD(fd,7);
 	WFIFOW(fd,0) = 0x3861;
-	WFIFOW(fd,2) = 8+4*count;
-	WFIFOL(fd,4) = char_id;
-	memcpy(WFIFOP(fd,8), buf, count*4);
-	WFIFOSET(fd,WFIFOW(fd,2));
+	WFIFOL(fd,2) = char_id;
+	WFIFOB(fd,6) = success?1:0;
+	WFIFOSET(fd,7);
 
 	return 0;
 }
