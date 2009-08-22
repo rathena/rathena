@@ -4408,7 +4408,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				break;
 			}
 
-			if( sd->state.autocast || sd->skillitem == AL_TELEPORT || (battle_config.skip_teleport_lv1_menu && skilllv == 1) || skilllv > 2 )
+			if( sd->state.autocast || ( (sd->skillitem == AL_TELEPORT || battle_config.skip_teleport_lv1_menu) && skilllv == 1 ) || skilllv == 3 )
 			{
 				if( skilllv == 1 )
 					pc_randomwarp(sd,3);
