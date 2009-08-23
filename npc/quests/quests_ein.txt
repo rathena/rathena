@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Evera and The eAthena Dev Team
 //===== Current Version: ===================================== 
-//= 2.3
+//= 2.4
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -45,6 +45,7 @@
 //=     Full overhual of the Uwe Kleine quest.
 //= 2.2a Fixed typos in var names from EIN_LOVERQRQ to EIN_LOVERQ. (bugreport:2464) [Paradox924X]
 //= 2.3 Removed occurance of PcName. [L0ne_W0lf]
+//= 2.4 Added missing remove cutin. [Kisuka]
 //============================================================ 
 
 // Oridecon Stone OR Mineral Stone Quest
@@ -4702,6 +4703,7 @@ einbech,165,105,7	script	Buender Hikeman#ein	847,{
 		mes "from the look of discomfort";
 		mes "on his face, he seems to be";
 		mes "having a nightmare.";
+		cutin "ein_hicman",255;
 		close;
 	}
 }
