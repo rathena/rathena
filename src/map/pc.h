@@ -171,6 +171,11 @@ struct map_session_data {
 	time_t idletime;
 
 	struct{
+		int npc_id;
+		unsigned int timeout;
+	} progressbar; //Progress Bar [Inkfish]
+
+	struct{
 		char name[NAME_LENGTH];
 	} ignore[MAX_IGNORE_LIST];
 

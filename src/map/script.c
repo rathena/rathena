@@ -14101,6 +14101,30 @@ BUILDIN_FUNC(areamobuseskill)
 	return 0;
 }
 
+
+BUILDIN_FUNC(progressbar)
+{
+#if PACKETVER >= 20080318
+	struct map_session_data * sd = script_rid2sd(st);
+	const char * color;
+	unsigned int second;
+
+	if( !st || !sd )
+		return 0;
+
+	st->state = STOP;
+
+	color = script_getstr(st,2);
+	second = script_getnum(st,3);
+
+	sd->progressbar.npc_id = st->oid;
+	sd->progressbar.timeout = gettick() + second*1000;
+
+	clif_progressbar(sd, strtol(color, (char **)NULL, 0), second);
+#endif
+    return 0;
+}
+
 // declarations that were supposed to be exported from npc_chat.c
 #ifdef PCRE_SUPPORT
 BUILDIN_FUNC(defpattern);
@@ -14456,6 +14480,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(readbook,"ii"),
 	BUILDIN_DEF(setfont,"i"),
 	BUILDIN_DEF(areamobuseskill,"siiiiviiiii"),
+	BUILDIN_DEF(progressbar, "si"),
 	// WoE SE
 	BUILDIN_DEF(agitstart2,""),
 	BUILDIN_DEF(agitend2,""),

@@ -482,4 +482,7 @@ void clif_readbook(int fd, int book_id, int page);
 // Show Picker
 void clif_party_show_picker(struct map_session_data * sd, struct item * item_data);
 
+// Progress Bar [Inkfish]
+void clif_progressbar(struct map_session_data * sd, unsigned long color, unsigned int second);
+
 #endif /* _CLIF_H_ */
