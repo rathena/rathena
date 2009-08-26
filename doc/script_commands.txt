@@ -2282,7 +2282,7 @@ You can also use it to make sure people don't pass a point before removing an
 item totally from them. Let's say you don't want people to wear Legion Plate 
 armor, but also don't want them to equip if after the check, you would do this:
 
-        if ((getequipid(EQI_ARMOR) == 2341) || (getequipid(EQI_ARMOR) == 2342) goto L_EquipedLegionPlate; 
+        if ((getequipid(EQI_ARMOR) == 2341) || (getequipid(EQI_ARMOR) == 2342) goto L_EquipedLegionPlate;
     // the || is used as an or argument, there is 2341 and 2342 cause there are 
     // two different legion plate armors, one with a slot one without.
         if ((countitem(2341) > 0) || (countitem(2432) > 0) goto L_InventoryLegionPlate;
@@ -3080,7 +3080,7 @@ other length limits and asking them to try to input something else.
 
 ---------------------------------------
 
-*skillpointcount; 
+*skillpointcount()
 
 Returns the total amount of skill points a character posesses (SkillPoint+SP's used in skills)
 This command can be used to check the currently attached characters total amount of skillpoints.
@@ -3095,7 +3095,7 @@ Example:
 	
 //Self-explanatory... :P
 	if (skillPointCount() > 20)
-		mes "Wow, you have more then 20 Skill Points in total!"; 
+		mes "Wow, you have more then 20 Skill Points in total!";
 
 ---------------------------------------
 
@@ -3592,7 +3592,7 @@ There is also a nice example on using this with the 'rand' function, to give you
 a random ammount of healing.
 
     // This will heal anything thing from 100 to 150 HP and no SP
-    itemheal rand(100,150),0; 
+    itemheal rand(100,150),0;
 
 ---------------------------------------
 
@@ -3629,9 +3629,9 @@ list of job names and the numbers they correspond to can be found in
 'db/const.txt'.
 
     // This would change your player into a Swordman
-    jobchange Job_Swordman; 
+    jobchange Job_Swordman;
     // This would change your player into a Swordman High
-    jobchange Job_Swordman_High; 
+    jobchange Job_Swordman_High;
 
 'upper flag' can alternatively be used to specify the type of job one changes
 to. For example, jobchange Job_Swordman,1; will change the character to a high
@@ -3784,12 +3784,12 @@ a palette number that exists/is usable by the client you use.
     // This will change your hair(6), so that it uses palette 8, what ever your 
     // palette 8 is, your hair will use that colour
 
-    setlook 6,8; 
+    setlook 6,8;
 
     // This will change your clothes(7), so they are using palette 1, whatever 
     // your palette 1 is, your clothes will then use that set of colours.
     
-    setlook 7,1; 
+    setlook 7,1;
 
 Here are the possible look types:
  
@@ -3991,11 +3991,11 @@ Failure occurs when there is:
 Example:
 
 //This will give the currently attached player a Aaron's Apple (if Aaron is online).
-	getnameditem "Apple","Aaron"; 
+	getnameditem "Apple","Aaron";
 	
 //Self-explanatory (I hope).
 	if (getnameitem("Apple","Aaron")) {
-		mes "You now have a Aaron's Apple!"; 
+		mes "You now have a Aaron's Apple!";
 	}
 
 ---------------------------------------
@@ -4633,11 +4633,11 @@ previously, they will now at 0+the level given.
 
 // This will permanently give the character Stone Throw (TF_THROWSTONE,152), at 
 // level 1.
-    skill 152,1,0; 
+    skill 152,1,0;
 
 ---------------------------------------
 
-*nude; 
+*nude;
 
 This command will unequip anything equipped on the invoking character.
 
@@ -4722,7 +4722,7 @@ online.
 ---------------------------------------
 
 *pcfollow <id>,<target id>;
-*pcstopfollow <id>; 
+*pcstopfollow <id>;
 
 Makes a character follow or stop following someone. This command does the same as the @follow command.
 The main difference is that @follow can use character names, and this commands needs the Account ID for the target.
@@ -5263,7 +5263,7 @@ Example 4:
     mes "[Man]";
     mes "Ok I will let you have 30 sec more";
     close2;
-    setnpctimer (getnpctimer(0)-30000); 
+    setnpctimer (getnpctimer(0)-30000);
     // Notice the 'close2'. If there were a 'next' there the timer would be 
     // changed only after the player pressed the 'next' button.
     end;
@@ -5715,7 +5715,7 @@ returns a guild id:
 // This will change the emblem on the flag to that of the guild that owns
 // "guildcastle"
 
-    flagemblem GetCastleData("guildcastle",1); 
+    flagemblem GetCastleData("guildcastle",1);
 
 ---------------------------------------
 
@@ -6559,7 +6559,7 @@ Add quest of the <ID2> to the the quest log, and the state is "active".
 
 ---------------------------------------
 
-checkquest(<ID>{,PLAYTIME|HUNTING});
+*checkquest(<ID>{,PLAYTIME|HUNTING})
 
 If no additonal argument supplied, return the state of the quest: 
 	-1 = Quest not started (not in quest log)

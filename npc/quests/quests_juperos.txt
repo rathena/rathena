@@ -1782,6 +1782,7 @@ OnTouch:
 		close2;
 		stopnpctimer;
 		warp "juperos_02",128,278;
+		break;
 	case 2:
 		mes "^777777["+ strcharinfo(0) +"]^000000";
 		mes "N-No! This is";
@@ -1791,6 +1792,7 @@ OnTouch:
 		close2;
 		stopnpctimer;
 		warp "juperos_01",96,91;
+		break;
 	}
 	end;
 
@@ -5068,6 +5070,7 @@ OnTouch:
 		close2;
 		stopnpctimer;
 		warp "juperos_02",130,142;
+		break;
 	case 2:
 		mes "[" + strcharinfo(0) + "]";
 		mes "Not now!";
@@ -5075,6 +5078,7 @@ OnTouch:
 		close2;
 		stopnpctimer;
 		warp "jupe_gate",50,168;
+		break;
 	}
 	end;
 
