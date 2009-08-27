@@ -11959,7 +11959,7 @@ void clif_parse_Mail_getattach(int fd, struct map_session_data *sd)
 		}
 
 		weight = data->weight * sd->mail.inbox.msg[i].item.amount;
-		if( weight > sd->max_weight - sd->weight )
+		if( sd->weight + weight > sd->max_weight )
 		{
 			clif_Mail_getattachment(fd, 2);
 			return;

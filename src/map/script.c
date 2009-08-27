@@ -13476,8 +13476,8 @@ BUILDIN_FUNC(waitingroom2bg)
 	int x, y, i, mapindex = 0, bg_id, n;
 	struct map_session_data *sd;
 
-	if( script_hasdata(st,8) )
-		nd = npc_name2id(script_getstr(st,8));
+	if( script_hasdata(st,7) )
+		nd = npc_name2id(script_getstr(st,7));
 	else
 		nd = (struct npc_data *)map_id2bl(st->oid);
 
