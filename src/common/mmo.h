@@ -132,10 +132,8 @@ typedef enum quest_state { Q_INACTIVE, Q_ACTIVE, Q_COMPLETE } quest_state;
 struct quest {
 	int quest_id;
 	unsigned int time;
-	int mob[MAX_QUEST_OBJECTIVES];
 	int count[MAX_QUEST_OBJECTIVES];
 	quest_state state;
-	int num_objectives;
 };
 
 struct item {

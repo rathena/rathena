@@ -34,25 +34,19 @@ int mapif_quests_fromsql(int char_id, struct quest questlog[])
 
 	memset(&tmp_quest, 0, sizeof(struct quest));
 
-	if( SQL_ERROR == SqlStmt_Prepare(stmt, "SELECT `quest_id`, `state`, `time`, `mob1`, `count1`, `mob2`, `count2`, `mob3`, `count3` FROM `%s` WHERE `char_id`=? LIMIT %d", quest_db, MAX_QUEST_DB)
+	if( SQL_ERROR == SqlStmt_Prepare(stmt, "SELECT `quest_id`, `state`, `time`, `count1`, `count2`, `count3` FROM `%s` WHERE `char_id`=? LIMIT %d", quest_db, MAX_QUEST_DB)
 	||	SQL_ERROR == SqlStmt_BindParam(stmt, 0, SQLDT_INT, &char_id, 0)
 	||	SQL_ERROR == SqlStmt_Execute(stmt)
 	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 0, SQLDT_INT,    &tmp_quest.quest_id, 0, NULL, NULL)
 	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 1, SQLDT_INT,    &tmp_quest.state, 0, NULL, NULL)
 	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 2, SQLDT_UINT,   &tmp_quest.time, 0, NULL, NULL)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 3, SQLDT_INT,    &tmp_quest.mob[0], 0, NULL, NULL)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 4, SQLDT_INT,    &tmp_quest.count[0], 0, NULL, NULL)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 5, SQLDT_INT,    &tmp_quest.mob[1], 0, NULL, NULL)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 6, SQLDT_INT,    &tmp_quest.count[1], 0, NULL, NULL)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 7, SQLDT_INT,    &tmp_quest.mob[2], 0, NULL, NULL)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 8, SQLDT_INT,    &tmp_quest.count[2], 0, NULL, NULL) )
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 3, SQLDT_INT,    &tmp_quest.count[0], 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 4, SQLDT_INT,    &tmp_quest.count[1], 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 5, SQLDT_INT,    &tmp_quest.count[2], 0, NULL, NULL) )
 		SqlStmt_ShowDebug(stmt);
 
 	for( i = 0; i < MAX_QUEST_DB && SQL_SUCCESS == SqlStmt_NextRow(stmt); ++i )
-	{
 		memcpy(&questlog[i], &tmp_quest, sizeof(tmp_quest));
-		questlog[i].num_objectives = (!questlog[i].mob[0] ? 0 : !questlog[i].mob[1] ? 1 : !questlog[i].mob[2] ? 2 : 3);
-	}
 
 	SqlStmt_Free(stmt);
 	return i;
@@ -76,7 +70,7 @@ bool mapif_quest_add(int char_id, struct quest qd)
 	StringBuf buf;
 
 	StringBuf_Init(&buf);
-	StringBuf_Printf(&buf, "INSERT INTO `%s`(`quest_id`, `char_id`, `state`, `time`, `mob1`, `count1`, `mob2`, `count2`, `mob3`, `count3`) VALUES ('%d', '%d', '%d','%d', '%d', '%d', '%d', '%d', '%d', '%d')", quest_db, qd.quest_id, char_id, qd.state, qd.time, qd.mob[0], qd.count[0], qd.mob[1], qd.count[1], qd.mob[2], qd.count[2]);
+	StringBuf_Printf(&buf, "INSERT INTO `%s`(`quest_id`, `char_id`, `state`, `time`, `count1`, `count2`, `count3`) VALUES ('%d', '%d', '%d','%d', '%d', '%d', '%d')", quest_db, qd.quest_id, char_id, qd.state, qd.time, qd.count[0], qd.count[1], qd.count[2]);
 
 	if ( SQL_ERROR == Sql_QueryStr(sql_handle, StringBuf_Value(&buf)) ) 
 	{

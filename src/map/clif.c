@@ -12626,12 +12626,12 @@ void clif_send_questlog_info(struct map_session_data * sd)
 	{
 		WFIFOL(fd, i*104+8) = sd->quest_log[i].quest_id;
 		WFIFOL(fd, i*104+16) = sd->quest_log[i].time;
-		WFIFOW(fd, i*104+20) = sd->quest_log[i].num_objectives;
+		WFIFOW(fd, i*104+20) = quest_db[sd->quest_index[i]].num_objectives;
 
-		for( j = 0 ; j < sd->quest_log[i].num_objectives; j++ )
+		for( j = 0 ; j < quest_db[sd->quest_index[i]].num_objectives; j++ )
 		{
 			WFIFOW(fd, i*104+26+j*30) = sd->quest_log[i].count[j];
-			mob = mob_db(sd->quest_log[i].mob[j]);
+			mob = mob_db(quest_db[sd->quest_index[i]].mob[j]);
 			memcpy(WFIFOP(fd, i*104+28+j*30), mob?mob->jname:"NULL", NAME_LENGTH);
 		}
 	}
@@ -12641,7 +12641,7 @@ void clif_send_questlog_info(struct map_session_data * sd)
 
 //Send info when objective info needs an update
 //* 02B3 <quest_id>.L <state>.B <ignored>.L <time>.L <num mobs>.W {<ignored>.L <mob count>.W <Mob Name>.24B}.30B[3]
-void clif_send_quest_info(struct map_session_data * sd, struct quest * qd)
+void clif_send_quest_info(struct map_session_data * sd, struct quest * qd, int index)
 {
 	int fd = sd->fd;
 	int i;
@@ -12653,12 +12653,12 @@ void clif_send_quest_info(struct map_session_data * sd, struct quest * qd)
 	WFIFOL(fd, 2) = qd->quest_id;
 	WFIFOB(fd, 6) = qd->state;
 	WFIFOL(fd, 11) = qd->time;
-	WFIFOW(fd, 15) = qd->num_objectives;
+	WFIFOW(fd, 15) = quest_db[index].num_objectives;
 
-	for( i = 0; i < qd->num_objectives; i++ )
+	for( i = 0; i < quest_db[index].num_objectives; i++ )
 	{
 		WFIFOW(fd, i*30+21) = qd->count[i];
-		mob = mob_db(qd->mob[i]);
+		mob = mob_db(quest_db[index].mob[i]);
 		memcpy(WFIFOP(fd, i*30+23), mob?mob->jname:"NULL", NAME_LENGTH);
 	}
 

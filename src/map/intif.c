@@ -1354,6 +1354,18 @@ int intif_parse_questlog(int fd)
 	for( i = 0; i < sd->num_quests; i++ )
 	{
 		memcpy(&sd->quest_log[i], RFIFOP(fd, i*sizeof(struct quest)+8), sizeof(struct quest));
+
+		sd->quest_index[i] = quest_search_db(sd->quest_log[i].quest_id);
+
+		if( sd->quest_index[i] < 0 )
+		{  
+			ShowError("intif_parse_questlog: quest %d not found in DB.\n",sd->quest_log[i].quest_id);
+			sd->avail_quests--;
+			sd->num_quests--;
+			i--;
+			continue;
+		}
+
 		if( sd->quest_log[i].state == Q_COMPLETE )
 			sd->avail_quests--;
 	}

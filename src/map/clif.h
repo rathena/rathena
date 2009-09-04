@@ -434,7 +434,7 @@ void clif_equipcheckbox(struct map_session_data* sd);
 //quest system [Kevin] [Inkfish]
 void clif_send_questlog(struct map_session_data * sd);
 void clif_send_questlog_info(struct map_session_data * sd);
-void clif_send_quest_info(struct map_session_data * sd, struct quest * qd);
+void clif_send_quest_info(struct map_session_data * sd, struct quest * qd, int index);
 void clif_send_quest_delete(struct map_session_data * sd, int quest_id);
 void clif_send_quest_status(struct map_session_data * sd, int quest_id, bool active);
 
