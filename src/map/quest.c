@@ -81,6 +81,7 @@ int quest_add(TBL_PC * sd, int quest_id)
 
 	i = sd->avail_quests;
 	memmove(&sd->quest_log[i+1], &sd->quest_log[i], sizeof(struct quest)*(sd->num_quests-sd->avail_quests));
+	memmove(sd->quest_index+i+1, sd->quest_log+i, sizeof(int)*(sd->num_quests-sd->avail_quests));
 
 	memset(&sd->quest_log[i], 0, sizeof(struct quest));
 	sd->quest_log[i].quest_id = quest_db[j].id;
