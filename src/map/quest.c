@@ -162,8 +162,12 @@ int quest_delete(TBL_PC * sd, int quest_id)
 	if( sd->quest_log[i].state != Q_COMPLETE )
 		sd->avail_quests--;
 	if( sd->num_quests-- < MAX_QUEST_DB && sd->quest_log[i+1].quest_id )
+	{
 		memmove(&sd->quest_log[i], &sd->quest_log[i+1], sizeof(struct quest)*(sd->num_quests-i));
+		memmove(sd->quest_index+i, sd->quest_index+i+1, sizeof(int)*(sd->num_quests-i));
+	}
 	memset(&sd->quest_log[sd->num_quests], 0, sizeof(struct quest));
+	sd->quest_index[sd->num_quests] = 0;
 
 	clif_send_quest_delete(sd, quest_id);
 
