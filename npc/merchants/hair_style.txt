@@ -231,7 +231,7 @@ alberta_in,55,142,7	script	Hair Dresser	91,{
 					mes "care how I look at all.'";
 					close2; cutin "",255; end;
 				}
-					mes "Oh, that's 'Intimidate' style!"";
+					mes "Oh, that's 'Intimidate' style!";
 					mes "The Rogue women seem to like";
 					mes "this style...although I imagine";
 					mes "that more of them would prefer";
@@ -353,6 +353,7 @@ alberta_in,55,142,7	script	Hair Dresser	91,{
 					mes "casting those windy spells.";
 					close2; cutin "",255; end;
 			}
+		}
 	case 2:
 		if(BaseLevel < 60) {
 			mes "[Veronica]";
@@ -410,7 +411,7 @@ alberta_in,55,142,7	script	Hair Dresser	91,{
 		}
 			callsub L_cutin,.@style;
 			mes "[Veronica]";
-			mes "You have chosen style no. (" + input + ").";
+			mes "You have chosen style no. (" + .@style + ").";
 			mes "I shall proceed with your request.";
 			mes "Would you mind?";
 			next;
@@ -484,7 +485,7 @@ alberta_in,55,142,7	script	Hair Dresser	91,{
 				mes "[Veronica]";
 				mes "Alright, it's done~";
 				mes "I hope you like";
-				mes "this style no.(" + input + ").";
+				mes "this style no.(" + .@style + ").";
 				mes "Feel free to come back anytime";
 				mes "when you want a new hairstyle. Hohohohohoho~";
 				setlook 1,.@style;

@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88; L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 2.1
+//= 2.2
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -27,6 +27,7 @@
 //= 1.9 Changed Marthilda to Mathilda. [L0ne_W0llf]
 //= 2.0 Fixed High Acolytesnot being given holy light. [L0ne_W0lf]
 //= 2.1 Added Quest Log commands. [L0ne_W0lf]
+//= 2.2 Fixed an issue with completequest by adding checkquest. [Kisuka]
 //============================================================ 
 
 prt_church,184,41,4	script	Cleric#aco	60,{
@@ -183,9 +184,15 @@ prt_church,184,41,4	script	Cleric#aco	60,{
 		skill 143,0,0;
 		callfunc "Job_Change",Job_Acolyte;
 		callfunc "F_ClearJobVar";
-		completequest 1001;
-		completequest 1002;
-		completequest 1003;
+		if(checkquest(1001) != "-1") {
+			completequest 1001;
+		}
+		else if(checkquest(1002) != "-1") {
+			completequest 1002;
+		}
+		else {
+			completequest 1003;
+		}
 		mes "[Father Mareusis]";
 		mes "Always remember to be thankful to God, who is taking care of us all the time.";
 		next;

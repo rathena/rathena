@@ -19,6 +19,8 @@
 1012,0,0,0,0,0,0,0,"Job Change to Merchant"
 1013,0,0,0,0,0,0,0,"Job Change to Thief"
 1014,0,0,0,0,0,0,0,"Job Change to Swordman"
+1015,0,0,0,0,0,0,0,"Your first quest"
+1016,0,0,0,0,0,0,0,"Gaining base levels"
 2000,0,0,0,0,0,0,0,"Job Change to Blacksmith"
 2001,0,0,0,0,0,0,0,"Job Change to Blacksmith"
 2002,0,0,0,0,0,0,0,"Job Change to Blacksmith"

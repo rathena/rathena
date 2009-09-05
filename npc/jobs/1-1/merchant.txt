@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88; L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 2.2
+//= 2.3
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -27,6 +27,7 @@
 //= 2.0 Should "fix" the problem with the Biliban Kafra. [L0ne_W0lf]
 //= 2.1 Fixed mistake in condition check. [L0ne_W0lf]
 //= 2.2 Added Quest Log commands. [L0ne_W0lf]
+//= 2.3 Fixed an issue with completequest by adding checkquest. [Kisuka]
 //============================================================ 
 
 alberta_in,53,43,6	script	Merchant#mer	86,{
@@ -152,10 +153,18 @@ alberta_in,53,43,6	script	Merchant#mer	86,{
 		mes "Congratulations!";
 		callfunc "Job_Change",Job_Merchant;
 		callfunc "F_ClearJobVar";
-		completequest 1009;
-		completequest 1010;
-		completequest 1011;
-		completequest 1012;
+		if(checkquest(1009) != "-1") {
+			completequest 1009;
+		}
+		else if(checkquest(1010) != "-1") {
+			completequest 1010;
+		}
+		else if(checkquest(1011) != "-1") {
+			completequest 1011;
+		}
+		else {
+			completequest 1012;
+		}
 		mes "I'm very pleased that you are joining the Merchant Guild and hope that you will play an active part in Rune-Midgarts' economy.";
 		next;
 		if (quest_alb_01 == 1) {
