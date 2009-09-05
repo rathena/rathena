@@ -4,9 +4,9 @@
 //= vicious_pucca, Poki#3, erKURITA, Munin, and everybody in the
 //= comments
 //===== Current Version: =====================================
-//= 1.6
+//= 1.7
 //===== Compatible With: =====================================
-//= eAthena 1.0
+//= eAthena SVN
 //===== Description: =========================================
 //= NPC's for the City of Hugel.
 //===== Additional Comments: =================================
@@ -26,16 +26,12 @@
 //= 1.4 Optimized the Party Supplies Shop [DZeroX]
 //= 1.5 Fixed Party Supplies Shop. [L0ne_W0lf]
 //= 1.6 Removed duplicate "Mudie". [L0ne_W0lf]
+//= 1.7 Removed whitespace and junk. [Kisuka]
 //============================================================
 
-//---------------------------------------------------------------------------
-// Hugel Town NPCs  - Outside
-//---------------------------------------------------------------------------
-
-//Young Man
-//---------------------------------------------------------------------------
+// Hugel
+//============================================================
 hugel,189,143,5	script	Young Man	898,{
-
 	mes "[Young Man]";
 	mes "Huh. So that giant";
 	mes "air pouch can make";
@@ -43,14 +39,9 @@ hugel,189,143,5	script	Young Man	898,{
 	mes "Would filling my tummy";
 	mes "with air work the same way?";
 	close;
-	
 }
 
-
-//Emily
-//---------------------------------------------------------------------------
 hugel,126,151,3	script	Emily	90,{
-
 	mes "[Emily]";
 	mes "I feel so blessed to";
 	mes "live in this quant, little";
@@ -65,13 +56,9 @@ hugel,126,151,3	script	Emily	90,{
 	mes "out by the people that live here.";
 	mes "Don't you think that sounds weird?";
 	close;
-	
 }
  
-//Kayplas
-//---------------------------------------------------------------------------
 hugel,86,165,5	script	Kayplas	896,{
-
 	mes "[Kayplas]";
 	mes "Ooh, I really want to";
 	mes "have that red bottle.";
@@ -79,13 +66,9 @@ hugel,86,165,5	script	Kayplas	896,{
 	mes "to buy me one. It doesn't";
 	mes "look too expensive, does it?";
 	close;
-	
 }
 
-//Lisa
-//---------------------------------------------------------------------------
 hugel,71,197,3	script	Lisa	90,{
-
 	mes "[Lisa]";
 	mes "Hugel is a pretty";
 	mes "small, homely village.";
@@ -100,13 +83,9 @@ hugel,71,197,3	script	Lisa	90,{
 	mes "I wanna go out and";
 	mes "live in the big city~";
 	close;
-	
 }
 
-//Old Nikki 
-//---------------------------------------------------------------------------
 hugel,169,112,5	script	Old Nikki	892,{
-
 	mes "[Old Nikki]";
 	mes "You must not be from";
 	mes "around here. Ah, you're";
@@ -121,13 +100,9 @@ hugel,169,112,5	script	Old Nikki	892,{
 	mes "as old as us. Well, have";
 	mes "a nice day, adventurer~";
 	close;
-	
 }
 
-//Bismarc
-//---------------------------------------------------------------------------
 hugel,168,183,5	script	Bismarc	118,{
-
 	mes "[Bismarc]";
 	mes "^808080*Ghyklk*";
 	mes "*Huk Hukk*^000000";
@@ -144,11 +119,9 @@ hugel,168,183,5	script	Bismarc	118,{
 	mes "antidote gonna";
 	mes "get here?!";
 	close;
-	
 }
 
 hugel,175,115,5	script	Marius	897,{
-
 	mes "[Marius]";
 	mes "Yes, I'm an old man, but";
 	mes "I can lick a whippersnapper";
@@ -164,17 +137,11 @@ hugel,175,115,5	script	Marius	897,{
 	mes "you how strong I am! Let's";
 	mes "wrestle or something, kid~";
 	close;
-	
 }
 
-//-------------------------------------------------------------------------
-// Hugel Town NPCs - Inside 
-//-------------------------------------------------------------------------
-
-//Chris
-//---------------------------------------------------------------------------
+// Inside Hugel
+//============================================================
 hu_in01,111,386,4	script	Chris	86,{
-
 	mes "[Chris]";
 	mes "You know, the people don't";
 	mes "fight harmful monsters, they";
@@ -188,15 +155,9 @@ hu_in01,111,386,4	script	Chris	86,{
 	mes "then I suggest buying";
 	mes "some in a bigger city.";
 	close;
-	
 }
 
-//--------------------------------------------------------------
-// Party Supplies/Firecracker Seller
-//--------------------------------------------------------------
-
 hu_in01,23,311,4	script	Party Supplies Shop	898,{
-
 	mes "[Shopkeeper]";
 	mes "Welcome to the party supplies";
 	mes "shop!";
@@ -215,7 +176,7 @@ hu_in01,23,311,4	script	Party Supplies Shop	898,{
 				close;
 			}
 			set Zeny,Zeny-500;
-			getitem 12018,5;
+			getitem 12018,5;	// Fire_Cracker
 			mes "[Shopkeeper]";
 			mes "Here you go!";
 			mes "Have fun with them!";
@@ -224,12 +185,10 @@ hu_in01,23,311,4	script	Party Supplies Shop	898,{
 			mes "[Shopkeeper]";
 			mes "Thank you, please come again.";
 			close;
-	}
-		
+	}	
 }
 
 hu_in01,18,94,0	script	A Part-Timer#1	49,{
-
 	mes "[Luda]";
 	mes "Welcome to the";
 	mes "Shrine Expedition Office.";
@@ -254,45 +213,12 @@ hu_in01,18,94,0	script	A Part-Timer#1	49,{
 	mes "can't really pay you, but it's";
 	mes "a great chance to explore~";
 	close;
-	
 }
 
 hu_in01,26,77,4	script	A Part-Timer#2	50,{
-
 	mes "^3355FFThis part-timer is";
 	mes "completely engrossed";
 	mes "in his task of organizing";
 	mes "files and books.^000000";
 	close;
-	
 }
-
-//Should be moved later on to Bulletin Boards.txt
-//hugel,91,152,4	script	Bulletin Board	837,{end;}
-
-
-//= New Npcs
-//hugel,71,137,5	script	Jamira	879,{end;}
-//hugel,191,172,4	script	Yanhe	895,{end;}
-//hugel,196,164,3	script	Amnot	50,{end;}
-//hugel,168,183,5	script	Thief	118,{end;}
-//hugel,126,151,4	script	Tanyee	90,{end;}
-//hugel,88,168,4	script	Zondaman	874,{end;}
-//hugel,71,198,3	script	Kampia	90,{end;}
-//= End of new npcs
-
-//hugel,100,102,3	script	Grandpa Hohi	866,{end;}
-//hugel,85,93,3	script	Grandpa Hiho	866,{end;}
-//hugel,85,165,5	script	Cudy	896,{end;}
-//hugel,107,67,3	script	Kiddy the Kid	706,{end;}
-
-//hugel,71,83,4	script	Hon Kiki	900,{end;}
-//hugel,169,112,5	script	Sani	892,{end;}
-//hu_in01,16,20,4	script	Jamie	70,{end;}
-//hu_in01,14,11,4	script	Jana	49,{end;}
-//hu_in01,19,161,2	script	Matilda	803,{end;}
-//hu_in01,18,167,4	script	Gin	86,{end;}
-//hu_in01,381,304,5	script	Soldier	105,{end;}
-//hu_in01,111,386,4	script	Jino	86,{end;}
-//hu_in01,246,107,2	script	Receptionist	53,{end;}
-//hu_in01,256,40,2	script	Garud	897,{end;}

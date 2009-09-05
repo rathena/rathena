@@ -1,11 +1,11 @@
 //===== eAthena Script ======================================= 
 //= Lutie Town
 //===== By: ================================================== 
-//=
+//= eAthena dev team
 //===== Current Version: ===================================== 
-//= 1.6
+//= 1.7
 //===== Compatible With: ===================================== 
-//= eAthena 1.0
+//= eAthena SVN
 //===== Description: ========================================= 
 //= Lutie - City NPCs
 //===== Additional Comments: ================================= 
@@ -16,891 +16,901 @@
 //= 1.4 Fixed exploit [Lupus]
 //= 1.5 Fixed a bug that could reset Lutie quest state [Lupus]
 //= 1.6 Heavy optimization to all the NPCs [DZeroX]
+//= 1.7 Updated to match AEGIS script. [Kisuka]
 //============================================================
 
-//=====================================================
-//		Getting To Lutie
-//=====================================================
-aldebaran,168,168,4	script	Mr. Claus	718,{
+// Teleport to Lutie
+//============================================================
+aldebaran,223,222,4	script	Mr. Claus	718,{
 	mes "[Mr. Claus]";
+	mes "Ho Ho Ho~";
 	mes "Merry Christmas!!";
-	mes "I wish you all happiness!";
+	mes "I wish all of you joy";
+	mes "and Christmas cheer!";
 	next;
-	switch (select("Where are you from?:Take me to ^5533FF'Lutie'^000000:Cancel")) {
+	switch(select("Info about Lutie:Move to 'Lutie':Cancel")) {
 		case 1:
 			mes "[Mr. Claus]";
-			mes "I come from ^3355FF'Lutie'^000000,the Fantastic Christmas Town!!";
-			mes "There it is Christmas all year round, with delicious cakes,";
-			mes "and toys as far as the eye can see.";
+			mes "^3355FFLutie^000000, the fantastic Christmas Town! Always filled with the spirit of giving, Lutie is filled with appetizing cakes, tiny toy soldiers, and all sorts of wonderful things~!";
 			next;
 			mes "[Mr. Claus]";
-			mes "Happiness and joy fills the city! It is a magical place to be!";
-			mes "Doesn't this place sound fantastic?";
+			mes "Ho Ho Ho~";
+			mes "It's an amazing land blessed with the beauty of winter, and a year round atmosphere of festivity!";
 			next;
 			mes "[Mr. Claus]";
-			mes "Then what are you waiting for?! Just say the word and I'll take";
-			mes "you to Lutie right away! You might even meet the big boss Santa";
-			mes "Claus.";
+			mes "I'm a Santa that will guide people to Lutie, the Christmas Town. Ask me at any time, and I'll magically send you there~";
 			close;
 		case 2:
 			mes "[Mr. Claus]";
-			mes "So you're ready to go to the greatest place in the world?";
+			mes "Ho Ho Ho~";
+			mes "The only way to get to Lutie is here in Al de Baran!";
 			next;
 			mes "[Mr. Claus]";
-			mes "Ok then, off you go to enjoy the fun and excitement that Lutie";
-			mes "Has to offer!";
+			mes "I keep this place and personally transport people who want to visit Lutie. Please ask Santa Claus over there if you want to leave town. He will let you know the way out of Lutie.";
+			next;
+			mes "[Mr. Claus]";
+			mes "Ho Ho Ho~";
+			mes "Well, are you ready?";
+			mes "Have a nice trip!";
+			mes "Meeeeerry Christmas!";
 			close2;
 			warp "xmas_fild01",78,68;
 			end;
 		case 3:
 			mes "[Mr. Claus]";
-			mes "Well... if you want to visit Lutie, just let me know anytime.";
-			mes "Merry Christmas!! Merry Christmas!!";
+			mes "Ho Ho Ho~";
+			mes "Whenever you want to visit Lutie, be my guest. Just let me know when you want to leave.";
+			next;
+			mes "[Mr. Claus]";
+			mes "Ho ho hooooo!!";
+			mes "Haaaaappy Holidays!";
 			close;
 	}
 }
 
 
-//=====================================================================
-//		NPCs inside
-//=====================================================================
-
-// Mima
+// Inside Lutie
 //============================================================
-xmas_in,27,103,4	script	Mima	701,{
+xmas_in,100,96,4	script	Santa Claus	718,{
+	mes "[Santa Claus]";
+	mes "Ho Ho Ho~";
+	mes "Meeeerry Christmas !!";
+	next;
+	mes "^3355FFIt's...^000000";
+	mes "^3355FFIt's the original Santa Claus!^000000";
+	next;
+	mes "[Santa Claus]";
+	mes "Ho Ho Ho~";
+	mes "I'm Santa Claus, and I bring gifts to every good boy and girl on Christmas!";
+	next;
+	mes "[Santa Claus]";
+	mes "If you want to leave Lutie, go outside town and head south to the first field that you see. You'll be able to find a magical warp that will take you to Al de Baran.";
+	next;
+	mes "[Santa Claus]";
+	mes "Ho ho ho~";
+	mes "Meeeeeeerry Christmas!";
+	close;
+}
+
+xmas_in,167,173,4	script	Duffle	711,{
+	if(xmas_npc == 1) {
+		mes "[Duffle]";
+		mes "Merry Christmas!";
+		mes "Welcome to Lutie!";
+		next;
+		mes "[Duffle]";
+		mes "You got a present";
+		mes "from Santa Claus?!";
+		mes "Ha ha, you must";
+		mes "be really excited!";
+		next;
+		mes "[Duffle]";
+		mes "Hey, have you heard that here in Lutie, we have an attraction that's equally as famous as Santa himself?";
+		next;
+		mes "[Duffle]";
+		mes "It's ^3355FFSnowysnow^000000,";
+		mes "the magical";
+		mes "talking snowman!";
+		next;
+		mes "[Duffle]";
+		mes "Before you leave, you really should meet and talk to Snowysnow, even if it's only once. He's really a nice guy and fun to talk to.";
+		next;
+		mes "[Duffle]";
+		mes "Well then...";
+		mes "Merry Christmas!!";
+		set xmas_npc,2;
+		close;
+	}
+	else if (xmas_npc > 1) {
+		mes "[Duffle]";
+		mes "Have you ever talked to the snowman in front of this town? The lonely snowman who stands in solitude...";
+		next;
+		mes "[Duffle]";
+		mes "But he's so warm hearted~! Sometimes, I talk to Snowysnow the snowman. For some weird reason, he can talk just like us!";
+		next;
+		mes "[Duffle]";
+		mes "When I talk to Snowysnow, I get to wondering how he came to be. I guess if you talk to him too, you'll feel the same way.";
+		next;
+		mes "[Duffle]";
+		mes "How he was created, and how he thinks and talks like a human is such a mystery...";
+		next;
+		mes "[Duffle]";
+		mes "Where did he come from and what kind of place was it? And how did he come to Lutie without any legs...?";
+		next;
+		mes "[Duffle]";
+		mes "Lately, it seems more and more people are coming to this town to see Snowysnow.";
+		next;
+		mes "[Duffle]";
+		mes "I guess you should talk to the other people living in Lutie if you want to learn more about the mystery of Snowysnow...";
+		close;
+	}
+	else {
+		mes "[Duffle]";
+		mes "Oh...!";
+		mes "While you're here, don't forget to visit the original Santa Claus here in Lutie.";
+		close;
+	}
+}
+
+xmas_in,27,103,4	script	Lenient Aunt	701,{
 switch (xmas_npc) {
 	case 5:
-		mes "[Mima]";
-		mes "Hmmm? Hairy Uncle Ken told you about me, didn't he? Well well, I";
-		mes "know what he's thinking... Hoo hoo! He intends to make me feel";
-		mes "happy and expects me to give him some free jars of kimchi!";
-		mes "Hoo hoo, oh well.";
+		mes "[Thachentze]";
+		mes "Hmm? The Hairy guy";
+		mes "spoke well of me,";
+		mes "did he? Well well...";
 		next;
-		mes "[Mima]";
-		mes "He knows too much about me... I can't stop him from getting some";
-		mes "of my kimchi.  Yes yes. Even I know my kimchi is the best in town!";
-		mes "Whoo? The story of ^3355FF'Jack Frost'^000000? Oh... Yes yes, I see.";
+		mes "[Thachentze]";
+		mes "I know what he thinks... Ho ho ho~! He intends to make me feel happy so that I'll give him some free jars of pickles! Oh well~!";
 		next;
-		mes "[Mima]";
-		mes "But I can't just tell you his story.... As you know the most";
-		mes "powerful human beings are aunties! And I'm one of them! They never";
-		mes "allow others to take advantage of them.  As they say, 'There is no";
-		mes "such thing as a free lunch'.  So I have a favour to ask of you.";
-		mes "Jack Frost has been keeping something for me.....";
+		mes "[Thachentze]";
+		mes "He knows me too well. I almost can't stop from giving that man some pickles. Yes, even I know my pickles are the best in town!";
 		next;
-		mes "[Mima]";
-		mes "Would you please bring it back to me? ^3355FF'The roughest salt in";
-		mes "the world'^000000.  It is an essential ingredient for pickling";
-		mes "cabbages.  Just tell him I sent you and he will understand.";
+		mes "[Thachentze]";
+		mes "Hmmm~?";
+		mes "You want to know";
+		mes "about ^3355FFSnowysnow^000000?";
+		mes "Oh. Yes, yes, I see...";
 		next;
-		mes "[Mima]";
-		mes "He will give you my salt.  Now dear, hurry up.  Return Quickly.";
+		mes "[Thachentze]";
+		mes "Well, I can't just let anyone know something so important about Snowysnow. Hmmm...";
+		next;
+		mes "[Thachentze]";
+		mes "Snowysnow has been holding something for me as a favor, the ^3355FFroughest salt in the world^000000 which I use to pickle cabbages.";
+		next;
+		mes "[Thachentze]";
+		mes "I suppose if you're really Snowysnow's friend, he will trust you enough to give it to you so you can deliver it to me. And in any case, I'll need more of it soon.";
+		next;
+		mes "[Thachentze]";
+		mes "Now be a dear";
+		mes "and hurry up.";
+		mes "Come back quickly~";
 		set xmas_npc,6;
 		close;	
 	case 6:
-		mes "[Mima]";
-		mes "Hohohoho -";
-		mes "Let's see... Huh? Didn't you yet bring it?";
-		mes "Oh my goodness, my cabbages will get sour soon!";
-		mes "( ? )";
-		mes "Hurry up, Chop Chop -!!";
+		mes "[Thachentze]";
+		mes "Hohohoho~";
+		mes "You're back!";
 		next;
-		mes "[Mima]";
-		mes "*sigh* You are really a scatterbrained person, my dear...";
-		mes "I said BRING ME ^3355FF' THE ROUGHEST SALT IN THE WORLD '^000000";
-		mes "!!!!!!!! Leave now and hurry up!";
+		mes "[Thachentze]";
+		mes "Did you bring it?";
+		mes "Oh goodness...!";
+		mes "My cabbages will";
+		mes "get sour soon!";
+		next;
+		mes "[Thachentze]";
+		mes "You...";
+		mes "Don't have it?";
+		next;
+		mes "[Thachentze]";
+		mes "*Sigh*";
+		mes "You are really a scatter-brained person, my dear. Now hurry over to Snowysnow and bring me the ^3355FFroughest salt in the world^000000.";
+		next;
+		mes "[Thachentze]";
+		mes "Hurry now, dear,";
+		mes "Chop Chop~!";
 		close;
 	case 7:
-		mes "[Mima]";
+		mes "[Thachentze]";
 		mes "Hohohohoh hohohohoho !";
-		mes "Let's see Let's see...... Thank you my dear, Thank you!";
+		mes "Let's see, let's see...";
+		mes "Thank you dear,Thank you.";
 		next;
-		mes "-Handed ^3355FF' The roughest salt in the world'^000000 to her-";
 		set xmas_npc,8;
+		mes "^3355FFYou gave her the";
+		mes "roughest salt in the world.^000000";
 		next;
-		mes "[Mima]";
-		mes "Now I am able to pickle my cabbages properly. Thank you my dear,";
-		mes "Thank you . . . . . Hooo? Ahhh yes, sorry, I almost forgot I";
-		mes "promised you... Yes I remember you asked me about Jack Frost's";
-		mes "gift bag, didn't you?";
+		mes "[Thachentze]";
+		mes "Now I am able to pickle my cabbages properly. Thank you, my dear. Thank you...";
 		next;
-		mes "[Mima]";
-		mes "If you already met Uncle Hairy Uncle Ken you must know by now,"; 
-		mes "Jack Frost has been made out of some mysterious snow covering up";
-		mes "a thick-grass filed of magical force,";
+		mes "...";
 		next;
-		mes "[Mima]";
-		mes "I can't tell you what the reason was, but I figured out Jack Frost";
-		mes "came to possess the gift bag within, due to the strange reaction";
-		mes "between alchemy items used by Great alchemist and its original";
-		mes "structure material, the mysterious snow.";
+		mes "...";
+		mes "......";
 		next;
-		mes "[Mima]";
-		mes "Aside from it, the gift bag creates present as many as Jack Frost";
-		mes "wants.  It seems like something magical grants Jack Frost with";
-		mes "the same ability of Santa Claus.  If this power fell into bad man's";
-		mes "hands, we would probably be in trouble, but everybody knows that";
-		mes "Jack Frost is very nice and innocent creature... We've never";
-		mes "worried about his unique ability...";
-		next;	
-	case 8:
-		mes "[Mima]";
-		mes "Hohohoho . . Ah and, lately I've heard some surprising news from";
-		mes "^3355FF'Howie'^000000 the clown.  It is an interesting story... If you're";
-		mes "interested, why don't you go meet him?";
+		mes "[Thachentze]";
+		mes "Oh yes, I'm sorry. I almost forgot what I promised you. You asked me about Snowysnow's magical gift bag, didn't you?";
+		next;
+		mes "[Thachentze]";
+		mes "If you already met Uncle Cantata, you must know by now that Snowysnow has been made out of some mysterious snow that covered a thick field of magical flowers.";
+		next;
+		mes "[Thachentze]";
+		mes "I can't tell you how, but when Snowysnow was revived, there was a reaction between the Alchemist's materials and the energies of Snowysnow's snow.";
+		next;
+		mes "[Thachentze]";
+		mes "For some reason, Snowysnow's gift bag can now create as many presents as Snowysnow wants, just like Santa Claus.";
+		next;
+		mes "[Thachentze]";
+		mes "Of course, if this power were to fall into the hands of evil, we would all be in trouble.";
+		next;
+		mes "[Thachentze]";
+		mes "However, everyone knows that Snowysnow is kind and loving towards others. So we're never worried about Snowysnow's powers.";
+		next;
+		mes "[Thachentze]";
+		mes "Oh, and I've just heard some shocking news from ^3355FFHashokii^000000 the clown. It's quite an interesting story, actually. Why don't you ask him more about it?";
 		close;
 	default:
-		mes "[Mima]";
-		mes "Merry Christmas!";
-		mes "I can feel the spirit of Christmas surrounding me whenever I look,";
-		mes "at the young strangers out there... I wish you a merry Christmas!";
+		mes "[Thachentze]";
+		mes "Merry Christmas~";
+		mes "Ho! Ho! Ho!";
 		next;
-		mes "[Mima]";
-		mes "There is an abandoned ^5533FFToy Factory^000000 here in town.  It";
-		mes "looks quite interesting, however....";
+		mes "[Thachentze]";
+		mes "I can feel the Christmas spirit all around me! It's even in the eyes of the young travelers who've come out here all the way to Lutie. Hoho, I wish you a Merry Christmas!";
 		next;
-		mes "[Mima]";
-		mes "Recently I've noticed that many monsters have taken residence";
-		mes "inside of the factory.  Some of them look like the monsters found";
-		mes "outside of town... I mean they look completely identical!!";
+		mes "[Thachentze]";
+		mes "We have a dungeon named";
+		mes "'Christmas dungeon' around here. Well, I guess I don't need to tell you much if you've heard about it already.";
+		mes "Oh well...";
 		next;
-		mes "[Mima]";
-		mes "Even though they look similar, they actually are not the same.  For";
-		mes "some reason these monsters have different characteristics from the";
-		mes "ones found outside.  Some of them are very unique and it seems that";
-		mes "their offspring are adapting to the environment here.";
+		mes "[Thachentze]";
+		mes "I figured something out a few days ago. In the Christmas dungeon, you'll run into creatures that are similar to those outside of town.";
 		next;
-		mes "[Mima]";
-		mes "... Oh I almost forgot, I have to go make some";
-		mes "kimchi(spicy pickled cabbage)... mmm.. Chocolate kimchi is my";
-		mes "favorite!";
+		mes "[Thachentze]";
+		mes "I'm guessing that monsters wandered here from outside of town, and were changed by the cold weather here. So monsters adapted to live in this environment.";
 		next;
-		mes "[Mima]";
-		mes "Between each slice of kimchi, I spread on a special chocolate which";
-		mes "melts rather easily.  The rest is a family secret.... hehe.";
+		mes "[Thachentze]";
+		mes "...";
+		mes "Okay, now I think I better be ready to pickle some cabbages. If you didn't know already, I make the best pickles around! Why don't you visit me later and try some?";
 		close;
 	}
 }
 
-// Santa Claus
-//===================================================================
-xmas_in,100,96,4	script	Father Christmas::Santa1	718,{
-switch (@talkedsanta) {
-	case 1:
-		mes "[Santa]";
-		mes "I'm Santa Claus.";
-		mes "I have a present for you, let me look in my bag.";
+// Lutie
+//============================================================
+xmas,117,304,4	script	Poze	713,{
+	if(xmas_npc == 3 || xmas_npc == 4) {
+		mes "[Poze]";
+		mes "You've gone to";
+		mes "^3355FFSnowysnow^000000 and he";
+		mes "mentioned me?";
 		next;
-		mes "[Santa]";
-		mes "Yep, I've got a present with your name on it.";
-		mes "Here you are!";
+		mes "[Poze]";
+		mes "Oh I see...";
+		mes "He's a snowman that doesn't have any legs. No wonder he hasn't come to visit me. What a shame, what a shame. I guess I better go visit him instead.";
 		next;
-		switch (rand(1,5)) {
-			case 1:
-				getitem 529,5;
-				break;
-			case 2:
-				getitem 530,3;
-				break;
-			case 3:
-				getitem 528,1;
-				if (xmas_npc == 0) set xmas_npc, 1;
-				set @talkedsanta, 0;
-				mes "[Santa]";
-				mes "Hmm, you must not have been a very good";
-				mes "person this year.  Do better!";
-				close;
-			case 4:
-				getitem 539,2;
-				break;
-			case 5:
-				getitem 539,1;
-				break;
-		}
-		if (xmas_npc == 0) set xmas_npc, 1;
-		set @talkedsanta, 0;
-		mes "[Santa]";
-		mes "Hope you like your present!";
-		mes "My elves made it especially for you.";
-		close;
-	default:
-		mes "[Santa Claus]";
-		mes "Ho Ho Ho~";
-		mes "Meeerry Christmas !!";
+		mes "[Poze]";
+		mes "Oh, there is someone who knows how Snowysnow came to be able to speak. That person would be ^3355FFUncle Hairy Cantata^000000...";
 		next;
-		mes "[Santa Claus]";
-		mes "Ho Ho Ho~";
-		mes "I am a Santa Claus, and I bring gifts to every boy and girl on";
-		mes "Christmas!";
+		mes "[Poze]";
+		mes "One day when apprentice of the great alchemist visted Lutie, I came to listen in on a conversation between him and Uncle Hairy.";
 		next;
-		mes "[Santa Claus]";
-		mes "Ho Ho Ho~";
-		mes "If for some reason you wish to leave the wonderful town of Lutie,";
-		mes "just head south of town.  You'll find a warp that will lead you";
-		mes "back to Al De Baran.";
+		mes "[Poze]";
+		mes "Long ago, a great alchemist came by Snowysnow's hometown and happened to meet Snowysnow dying, melting down into water. However, Snowysnow was miraculously revived by that Alchemist.";
 		next;
-		mes "[Santa Claus]";
-		mes "Ho Ho Ho~ Merry Christmas !!";
-		mes "Merry Christmas!!";
-		if (xmas_npc == 0) set @talkedsanta,1;
-		close;
-	}
-}
-
-// Debra
-//==================================================================
-xmas_in,165,173,4	script	Debra	711,{
-switch (xmas_npc) {
-	case 1:
-	case 2:
-		mes "[Debra]";
-		mes "Merry Christmas!";
-		mes "Welcome to Lutie!";
-		next;
-		mes "[Debra]";
-		mes "You got a present from Santa Claus?! You must be really excited!";
-		mes "Ha ha! Have you ever heard that we have a person equally as";
-		mes "famous as Santa Claus here?";
-		next;
-		mes "[Debra]";
-		mes "That person is ^3355FF'Jack Frost'^000000 the mysterious snowman,";
-		mes "who can communicate with humans.";
-		next;
-		mes "[Debra]";
-		mes "You haven't meet Jack Frost yet? I think you should try to";
-		mes "talk to him at least once...  Well then, Merry Christmas!!";
-		set xmas_npc,2;
-		close;
-	default:
-		mes "[Debra]";
-		mes "Merry Christmas!";
-		mes "Welcome to Lutie!";
-		next;
-		mes "[Debra]";
-		mes "Have you ever talked to the snowman in front of this town?";
-		mes "Snowman in solitude, made of White Snow....";
-		next;
-		mes "[Debra]";
-		mes "However he got a warm heart.  Sometimes I talk to ' Jack Frost '";
-		mes "the snowman.  Without reason.. even though he is a snowman,";
-		mes "He can understand and stand to listen to us";
-		next;
-		mes "[Debra]";
-		mes ". . . . .";
-		mes "When I talk to Jack Frost, I get to wonder about many things of";
-		mes "him and feel something mysterious, I assume you will be the same";
-		mes "as me, if you try to talk to him.";
-		next;
-		mes "[Debra]";	
-		mes "like how he has been created, who granted him to posses the heart";
-		mes "of human and can talk,";
-		next;
-		mes "[Debra]";
-		mes "Where he was from, That place has a lot of snow all the time or";
-		mes "not... how he came to arrive this town without legs...";
-		next;
-		mes "[Debra]";
-		mes "Lately in this town,";
-		mes "it seems the number of curious people coming to him gets increased.";
-		mes "If you still couldn't solve his secret after talking with him";
-		next;
-		mes "[Debra]";
-		mes "I suggest you to talk to other towners...";
-		if (xmas_npc != 0) close;
-		mes "Ah!... I almost forgot you to tell... Santa Claus lives here in";
-		mes "this town....";
-		next;
-		mes "[Debra]";
-		mes "Didn't you see him yet? Why don't you go meet him then? Take";
-		mes "care now! Merry Christmas!!";
-		close;
-	}
-}
-
-//=======================================================================
-//		NPC's Outside
-//=======================================================================
-
-// Peterson
-//=========================================================
-xmas,117,304,4	script	Peterson	713,{
-switch (xmas_npc) {
-	case 3:
-	case 4:
-		mes "[Peterson]";
-		mes "Did ^3355FF'Jack Frost'^000000 tell you about me? Oh I see... he is a";
-		mes "snowman who has no legs.  It's a shame he can't come here to see";
-		mes "me... I appreciate you to coming here for him. I will visit him";
-		mes "someday.";
-		next;
-		mes "[Peterson]";
-		mes "There is a man who knows about Jack Frost's secret.....";
-		mes "That man is ^3355FF'Hairy Uncle Ken'^000000... Yes, he definitely knows...";	
-		next;
-		mes "[Peterson]";
-		mes "One day when an apprentice of the great alchemist visited Lutie,";
-		mes "I listened to the conversation between Hairy Uncle Ken and";
-		mes "Jack Frost.";
-		next;
-		mes "[Peterson]";
-		mes "Once upon a time, a great alchemist came to Jack Frost's home";
-		mes "land and found him dying and melting away into water.  He revived";
-		mes "him with several ores of magic and some other things.....";
-		next;
-		mes "[Peterson]";
-		mes "Well, as far as the details of the story, I recommend you listen";
-		mes "to what ^3355FF'Hairy Uncle Ken'^000000 has to say.";
+		mes "[Poze]";
+		mes "But that's pretty much all I know. For the actual details, you should ask ^3355FFUncle Hairy Cantata^000000.";
 		set xmas_npc,4;
 		close;
-	default:
-		mes "[Peterson]";
-		mes "Merry Christmas!";
+	}else{
+		mes "[Poze]";
+		mes "Welcome to Lutie,";
+		mes "the town which blesses";
+		mes "all of its visitors with";
+		mes "the spirit of Christmas!";
+		mes "Merry Christmas !";
 		next;
-		mes "[Peterson]";
-		mes "Here in Lutie, it's always Christmas 24 hours a day and 365";
-		mes "days a year, Christmas is celebrated non stop here!  This beautiful";
-		mes "city fills your heart with the joyous spirit of Christmas...";
+		mes "[Poze]";
+		mes "Here in this magical land of fun and fancy, you can enjoy the spirit of Christmas all year round~! Isn't that wonderful?";
 		next;
-		mes "[Peterson]";
-		mes "Walk around town and you will see... this city has some of the";
-		mes "best facilities and attractions of any other place.";
+		mes "[Poze]";
+		mes "Lutie isn't merely just a simple attraction. We have convenient facilities like the other towns, but in a festive environment.";
 		next;
-		mes "[Peterson]";
-		mes "Lutie is a great place for those who don't want to worry about";
-		mes "anything.  So may happiness be with you... Merry Christmas!!";
+		mes "[Poze]";
+		mes "So if you decide to stay here for a while, you should have all the comforts that you need. Merry Christmas~";
 		close;
 	}
 }
 
-// Hairy Uncle Ken
-//==========================================================
-xmas,176,236,4	script	Hairy Uncle Ken	712,{
-switch (xmas_npc) {
-	case 4:
+xmas,176,236,4	script	Uncle Hairy	712,{
+	if(xmas_npc == 4) {
 		if(countitem(1024) > 0 && countitem(938) > 0) {
-			delitem 1024,1;
-			delitem 938,1;
-			mes "[Hairy Uncle Ken]";
-			mes "Oh ?! *Chuckles* !! You seem to be a reliable person..";
-			mes "Good! Ok, first I need something to drink....";
+			mes "[Cantata]";
+			mes "Oh? Y-y-you've got the stuff? Goooooooood. It's been so long since I've been able to have some of this... G-give it to me!";
 			next;
-			mes "^3355FF- Handed him Squid Ink and  -^000000";
-			mes "^3355FF- Sticky Muscus. -^000000";
+			delitem 1024,1;	// Chinese_Ink
+			delitem 938,1;	// Sticky_Mucus
+			mes "^3355FFYou quickly handed him the Squid Ink and Sticky Mucus and watched with a little disgust as he relished the flavor.^000000";
 			next;
-			mes "[Hairy Uncle Ken]";
-			mes "Burrrrpppp - Ok now ! Well now, it's the time for my story...";
-			mes "Keep in mind this is the story from what I know......";
-			mes "I am not sure how much you heard about this though . .";
+			mes "[Cantata]";
+			mes "*Burrrrpppp~*";
+			mes "Well, now it's the time for my story. Keep in mind that this is the whole story from what I know. I'm not sure how much you've already heard though...";
 			next;
-			mes "[Hairy Uncle Ken]";
-			mes "A long, long, time ago, there was a great Alchemist living in";
-			mes "the far north.  His name was ^3355FF' Philip Varsez '^000000 !!";
+			mes "[Cantata]";
+			mes "A long time ago,";
+			mes "there was a great";
+			mes "Alchemist living";
+			mes "in the far north.";
+			mes "His name was";
+			mes "^3355FFPhilip Varsez^000000!";
 			next;
-			mes "[Hairy Uncle Ken]";
-			mes "He was eager to keep beyond the bounds of new alchemy,";
-			mes "and new alchemy needed rare materials to be accomplished as";
-			mes "he wanted.  So he decided to go travel all over the world to";
-			mes "look for items possessing Strong Magic Force within.";
-			mes "Eventually he arrived at a village of freezing weather,";
-			mes "somewhere up north...";
+			mes "[Cantata]";
+			mes "He was always foremost in the research of alchemy and needed rare materials to conduct his studies. Because of that, he had to travel the world in search of materials containing magical energies...";
 			next;
-			mes "[Hairy Uncle Ken]";
-			mes "As immediately came inside the village he encountered a grim";
-			mes "scene..... Everything was destroyed.... there was nothing left.";
-			mes "People groaned and moaned in pain, and were dying...";
-			mes "It was the worst scene he'd ever witnessed.";
+			mes "[Cantata]";
+			mes "One day, his travels brought him to a northern village known for its freezing weather. But when he arrived, he was welcomed by a smouldering town that had recently been destroyed.";
 			next;
-			mes "[Hairy Uncle Ken]";
-			mes "Suddenly some strange force caught his attention.... That";
-			mes "strange thing was a snowman that was melting down into water";
-			mes "....^3355FF' Jack Frost '^000000! Even more astonishing was";
-			mes "the fact that it held 2 crying babies in its arms.  So the";
-			mes "great alchemist could assumed the snowman sacrificed itself to";
-			mes "protect them from great danger.";
+			mes "[Cantata]";
+			mes "It was a grim sight: People were lying at the roadside, groaning in agony. As Varsez walked by, each villager would beg, 'K-Kill me...' and plead for him to put them out of their misery.";
 			next;
-			mes "[Hairy Uncle Ken]";
-			mes "It touched the Alchemist to see that, and he decided to save";
-			mes "the life of snowman with his great power of alchemy.  He";
-			mes "transported the snowman to Lutie, this Christmas Town, the";
-			mes "safest place in this world.";
+			mes "[Cantata]";
+			mes "Amidst the woeful cries of despair, the wails of two infants reached the ears of Philip Varsez. He rushed to investigate and found two babies cushioned in the bosom of a melting snowman.";
 			next;
-			mes "[Hairy Uncle Ken]";
-			mes "Some time later, rumors began to circulate that not only was";
-			mes "Jack Frost saved by the mercy of the Alchemist, but also";
-			mes "because of the snow that Jack Frost was made out of.";
+			mes "[Cantata]";
+			mes "That snowman...";
+			mes "was ^3355FFSnowysnow^000000.";
 			next;
-			mes "[Hairy Uncle Ken]";
-			mes "The truth is, Jack Frost was made out of snow covering up the";
-			mes "mysterious field where Magical flowers and plants grew all";
-			mes "over.";
+			mes "[Cantata]";
+			mes "Being the wise Alchemist that he is, Varsez deduced that Snowysnow sacrificed himself to protect those two babies from the great disaster that had destroyed the village.";
 			next;
-			mes "[Hairy Uncle Ken]";
-			mes "Muhahaha -";
-			mes "Alrighty then... this is the whole story as far as I know.";
-			mes "How about you now? Did my story satisfy you? Haw Haw Haw!!";
+			mes "[Cantata]";
+			mes "Varsez was touched, and was determined to save the life of this snowman with his alchemy. He would then transport him here to Lutie, the safest place in the world.";
 			next;
-			mes "[Hairy Uncle Ken]";
-			mes "Oh well... Now I regret to say, I have no idea about the";
-			mes "special ability that Jack Frost has that creates unlimited";
-			mes "Christmas presents...";
+			mes "[Cantata]";
+			mes "Of course, there was another rumor that, in addition to the mercy from that Alchemist, Snowysnow was able to survive due to the special properties of his snow.";
+			next;
+			mes "[Cantata]";
+			mes "It's believed that Snowysnow's snow used to cover a mysterious field that would be filled with the bloom of magical flowers.";
+			next;
+			mes "[Cantata]";
+			mes "Muhahaha~";
+			mes "Well, that's pretty much all I know. I hope you were able to learn what you wanted from my story! Haw haw haw!";
+			next;
+			mes "[Cantata]";
+			mes "Well...";
+			mes "Now that I think about it...";
+			next;
+			mes "[Cantata]";
+			mes "Snowysnow can not only speak, but he also seems to be able to create an endless supply of Christmas presents. Or at least, that's what I hear.";
+			next;
+			mes "[Cantata]";
+			mes "^3355FFThachentze^000000, that lovely pickle maker, knows more about it. So if you're curious, you should go talk to her. Alrighty then, Merry Christmas!";
 			set xmas_npc,5;
-			next;		
-		}
-		if (xmas_npc == 4) {
-			mes "[Hairy Uncle Ken]";
-			mes "Oh yeah ? Peterson told you to come speak to me, did he?";
-			mes "Haw Haw Haw ! ! Yeah, yeah, I know him a little bit . .";
-			mes "To be honest, you can say I'm his weak point!";
-			mes "Cause I know the secret of ^3355FF'Jack Frost's birth'^000000!!";
+			close;		
+		}else{
+			mes "[Cantata]";
+			mes "Oh yeah? Heard about me from Poze, did you? Haw haw haw! Yeah, I know a little bit about Snowysnow. In fact, I may even be his weak point, since...";
 			next;
-			mes "[Hairy Uncle Ken]";
-			mes "Are you curious about it? *Chuckles* Yeah, I can tell by your face.";
-			mes "However! Don't think that I'd tell you this secret for nothing...";
-			mes "Come to think of it... I am feeling really thirsty now....";
-			mes "Bring me ^3355FF'1 Squid Ink'^000000 and ^3355FF'1 Sticky Mucus'^000000!!!";
+			mes "[Cantata]";
+			mes "I know";
+			mes "the secret of";
+			mes "^3355FFSnowysnow's birth^000000!!";
 			next;
-			mes "[Hairy Uncle Ken]";
-			mes "Wahhahaha! Don't look at me like that! My tastes are none of your";
-			mes "business!!! Start finding a way to get me what I want, otherwise";
-			mes "...... you won't get what YOU want.... *Chuckles*";
+			mes "[Cantata]";
+			mes "Are you curious?";
+			mes "Heh heh heh~ Well, don't think I'll let you know unless you give me something in return!";
+			next;
+			mes "[Cantata]";
+			mes "Living in this";
+			mes "town doesn't give me";
+			mes "much of a chance to enjoy";
+			mes "a man's drink. Hmmm, bring me...";
+			next;
+			mes "[Cantata]";
+			mes "^3355FF1 Squid Ink^000000 and";
+			mes "^3355FF1 Sticky Muscus^000000!";
+			next;
+			mes "[Cantata]";
+			mes "Wahhahaha! What the hell is that look for?! Never you mind my gourmet sense of taste! Now get to work~!";
 			close;
 		}
-		
-	case 5:
-		mes "[Hairy Uncle Ken]";
-		mes " ^3355FF' Mima '^000000 the excellent kimchi maker";
-		mes "knows about it through and through... If you're interested";
-		mes "you'd better to go visit her.  Alrighty, Merry Christmas !!";
-		close;
-		
-	default:
-		mes "[Hairy Uncle Ken]";
-		mes "Meeeerrrrrrryyyy Christmas !";
-		mes "Welcome to the Christmas Town!!";
-		mes "Your face is glowing... The weather here is really ... Cold!";
-		mes "And it's so cold that it makes you look like........";
+	}
+	else {
+		mes "[Cantata]";
+		mes "Merry Christmas!";
+		mes "Welcome to Lutie!";
 		next;
-		mes "[Hairy Uncle Ken]";
-		mes "A ^3355FF' Red Little Apple '^000000,";
-		mes "HarHarHarHar!";
-		mes "Try not to catch a cold.  The flu in Lutie is very strong.......";
+		mes "[Cantata]";
+		mes "It looks like the cold has brought a rosiness to your cheeks.";
+		mes "Haw haw haw!";
 		next;
-		mes "[Hairy Uncle Ken]";
-		mes "... Speaking of the cold, that reminds me...";
+		mes "[Cantata]";
+		mes "Be careful, it wouldn't be good for you to catch the Lutie Flu.";
+		mes "...";
 		next;
-		mes "[Hairy Uncle Ken]";
-		mes "My kid recently caught a serious cold.... It happened at midnight";
-		mes "and all the pharmacies were closed.  I was desperate so I went to";
-		mes "the abandoned ^5533FFToy Factory^000000 .......";
+		mes "[Cantata]";
+		mes "*Sigh* That reminds me...";
+		mes "My little boy had a terrible case of the Lutie Flu a while ago.";
 		next;
-		mes "[Hairy Uncle Ken]";
-		mes "Little monster were running around all over... even ^5533FFIce Porings^000000!";
-		mes "People here often call them Ice Ball Porings... anyways I grabbed";
-		mes "one of them and ran back to the house.  I put it on top of my";
-		mes "childs head...";
+		mes "[Cantata]";
+		mes "It was during the night, and there was no place I could get any medicine. It seemed I could do nothing for my little boy.";
 		next;
-		mes "[Hairy Uncle Ken]";
-		mes "And what do you know... his fever cooled down right away! Heh! This";
-		mes "is such a convenient village to live in.  I've talked too much....";
-		mes "Good luck to you!";
+		mes "[Cantata]";
+		mes "I thought the least I could do for my son was get something cold to bring down his fever, but the snow of Lutie kept on melting after being placed on his forehead. He was burning up, and I was failing to relieve him.";
+		next;
+		mes "[Cantata]";
+		mes "It was then that";
+		mes "I knew I needed";
+		mes "some magic ice.";
+		next;
+		mes "[Cantata]";
+		mes "Eventually, I found myself in the Christmas dungeon without any goal in mind. Inside I found, thank God, a certain creature made entirely of ice!";
+		next;
+		mes "[Cantata]";
+		mes "It was an ^3355FFIceporing^000000! The local people used to call it 'Icepantzering.' Anyway, I was able to save my boy's life with it. Thank goodness something like that was around in this town.";
+		next;
+		mes "[Cantata]";
+		mes "Oops, I think I've talked a bit much. Merry Christmas~!";
 		close;
 	}
 }
 
-// Jack Frost
-//====================================================================
-xmas,134,112,4	script	Jack Frost	710,{
-	mes "[Jack Frost]";
-	switch (xmas_npc) {
-		case 2:
-			mes "Did you hear something from 'Debra'? Heh heh... the people of";
-			mes "Lutie call me a mysterious Snowman... honestly I am nothing but";
-			mes "a simple snowman... heh heh.";
+xmas,134,112,4	script	Snowman	710,{
+	if (checkweight(1201,1) == 0 ) {
+		cutin "rutie_snownow01.bmp",2;
+		mes "- Wait a minute !! -";
+		mes "- Currently you're carrying -";
+		mes "- too many items with you. -";
+		mes "- Please try again -";
+		mes "- after you loose some weight. -";
+		close2;	cutin "",255;	end;
+	}
+	cutin "rutie_snownow03.bmp",2;
+	mes "[Snowysnow]";
+	mes "I'm...";
+	mes "I'm so lonely!";
+	next;
+	mes "[Snowysnow]";
+	mes "Always stuck here...";
+	mes "On the same spot...";
+	mes "Day after day after day after day after day after day after day after day after day after day...";
+	next;
+	switch(select("^3355FFSnowysnow?^000000:Info about the Christmas dungeon:Quit this conversation")) {
+	case 1:
+		if (xmas_npc < 2) {
+			cutin "rutie_snownow01.bmp",2;
+			mes "[Snowysnow]";
+			mes "I was born in an area to the north where it snowed all the time, and was much colder than Lutie, if you can believe that.";
 			next;
-			mes "[Jack Frost]";
-			mes "Besides I don't even know who I really am. Maybe I know as much";
-			mes "about myself as do the people here.";
+			mes "[Snowysnow]";
+			mes "I was made with love by a human, and I was really happy there. Life was simple, but it was full of quiet bliss.";
 			next;
-			mes "[Jack Frost]";
-			mes "Mr.^3355FF'Peterson'^000000 gave me his name card and told me to visit";
-			mes "him whenever I wanted to.... but as you can see.....";
+			mes "[Snowysnow]";
+			mes "I thought I could live the rest of my life in that kind of contentment. But... It was not to be.";
 			next;
-			mes "[Jack Frost]";
-			mes "I don't have any legs so I can't go anywhere..... ";
-			emotion e_sob;
+			cutin "rutie_snownow01.bmp",2;
+			mes "[Snowysnow]";
+			mes "One fateful day, some ugly old woman came to our town. People say her name was 'Merlophechum,' and that she was from some strange cave town where the weather was always hot.";
 			next;
-			mes "[Jack Frost]";
-			mes "How did I get here...? Why can I communicate with humans...?";
-			mes "How can I......??";
+			mes "[Snowysnow]";
+			mes "On the third night she was there, she set the town on fire with frightening magic. Everyone was running in panic amongst the fear and chaos. And somehow, I was knocked out.";
 			next;
-			mes "^3355FF- Jack Frost falls deep into his thoughts -^000000";
-			mes "^3355FF- He is looking at 'Peterson's' name card -^000000";
-			set xmas_npc,3;
-			close;
-		case 3:
-			mes ". . . . . . . . . . . . . . .";
+			cutin "rutie_snownow02.bmp",2;
+			mes "[Snowysnow]";
+			mes "I didn't notice how much time passed after that, but when I woke up, I was here. Well, I can say that this place, Lutie, is pretty much like heaven.";
 			next;
-			mes "^3355FF- Jack Frost falls deep into his thoughts -^000000";
-			mes "^3355FF- He is looking at 'Peterson's' name card -^000000";
-			close;
-		case 4:
-			mes "Did you meet 'Peterson'? He is a honest and diligent guy . .";
-			mes "And I know . . He fell in love with 'Debra'....";
-			mes "hehehehehe...";
+			mes "[Snowysnow]";
+			mes "Everyone here is never worried, and I'm always hearing Christmas carols and stuff.";
 			next;
-			mes "[Jack Frost]";
-			mes "I think 'Debra' needs to be more generous. She is very kind to";
-			mes "everyone, except Peterson.  But I know... Debra likes Peterson";
-			mes "as much as he does here...";
-			close;
-		case 5:
-			mes "You spoke with ^3355FF'Hairy Uncle Ken '^000000?";
-			mes "Hairy Uncle Ken has loud voice, and doesn't take showers.....";
-			mes "he smells kinda bad.... but he is a very funny and diligent guy.";
-			mes "Everybody likes him.";
+			cutin "rutie_snownow03.bmp",2;
+			mes "[Snowysnow]";;
+			mes "But still...";
+			mes "Sometimes all that Christmas joy somehow doesn't cure the dark loneliness that wells deep inside of me.";
 			next;
-			mes "[Jack Frost]";
-			mes "He enjoys drinking some strange kind of drink......";
-			mes "They say it is a miracle that he doesn't have a stomachache.";
-			mes "Heh~ . .I love this guy too . .";
-			close;
-		case 6:
-			mes "Hmmm you did you meet ^3355FF'Mima'^000000, the kimchi expert?";
-			mes "Yeah yeah.  I've been keeping this for here.  Here you go, It is";
-			mes "the salt she wants.";
-			next;
-			set xmas_npc,7;
-			mes "^3355FF' Got the roughest salt in the world'^000000.";
-			next;
-			mes "[Jack Frost]";
-			mes "I like her cooking because it is so delicious.";
-			mes "Sometimes she offers me cups of ice flakes with grape syrup...";
-			next;
-			mes "[Jack Frost]";
-		case 7:
-			mes "^3355FF' The roughest salt in the world '^000000";
-			mes "hopefully you will deliver it safely to her . .";
-			close;
-		case 8:
-			mes "Boring Clown 'Howie'... At first glance, he looks a dumb,";
-			mes "talent less clown..... But he has a pure heart and is always";
-			mes "taking care of the 2 orphans...";
-			close;
-		case 9:
-			mes "'Charlie ' the boy of optimism.";
-			mes "He will become a big shot in future . .";
-			mes "Just like me ! -";
-			mes "Hahahaha . . . . .";
-			close;
-		case 10:
-			mes ". . . . . Thank you for listening to me so far.";
-			mes "I very much appreciate you trying to understand me,";
-			mes "even though you are a stranger here.";
-			next;
-			mes "[Jack Frost]";
-			mes "I think you know more about me than anyone else in this town.";
-			mes "Hahahaha.... I want to give you a small present in return.";
-			next;
-			mes "[Jack Frost]";
-			mes "Tah dah!! Pick up anything you want in here - !!";
-			next;
-			mes "^3355FF- Stir the gift bag -^000000";
-			next;
-
-			// Part of the Bard Job Quest
-			set xmas_npc,11;
-			
-			mes "[Jack Frost]";
-			mes "Wow -Congratulations!!";
-			switch (rand(1,8)) {
+			mes "[Snowysnow]";
+			mes "So will you be my friend? If you do, I'll be your friend too~";
+			close2;	cutin "",255;	end;
+		}else{
+			switch(xmas_npc) {
+			case 2:
+				cutin "rutie_snownow01.bmp",2;
+				mes "[Snowysnow]";
+				mes "Oh...?";
+				mes "So you've met Duffle?";
+				mes "Yeah, sometimes she";
+				mes "stops by and says 'hi...'";
+				next;
+				mes "[Snowysnow]";
+				mes "It's weird that the people of Lutie call me a mysterious, magical snowman. I mean, inside, aren't I just the same as regular people?";
+				next;
+				mes "[Snowysnow]";
+				mes "*Sniff* S-sometimes,";
+				mes "I don't even know what I am. But even so, the people of Lutie try to accept me no matter what.";
+				next;
+				mes "[Snowysnow]";
+				mes "^3355FFPoze^000000 gave me his glamour photo with his address on it, and told me to visit him whenever I'm feeling blue. I was so happy to hear that...";
+				next;
+				mes "[Snowysnow]";
+				mes "But then fate played its cruel joke on me once again, and I realized that I had no legs to visit him with.";
+				next;
+				mes "[Snowysnow]";
+				mes "How did I ever get to this town? And how in the world am I able to talk?! I-It's not natural, is it? Does... Does that make me a monster?";
+				next;
+				mes "^3355FFSnowysnow is immersed in his deep thoughts, and seems^000000";
+				mes "^3355FFfixated on Poze's memento.^000000";
+				set xmas_npc,3;
+				close2;	cutin "",255; end;
+			case 3:
+				cutin "rutie_snownow01.bmp",2;
+				mes "[Snowysnow]";
+				mes "...";
+				next;
+				mes "^3355FFSnowysnow is immersed in his deep thoughts, and seems^000000";
+				mes "^3355FFfixated on Poze's memento.^000000";
+				close2;	cutin "",255;	end;
+			case 4:
+				cutin "rutie_snownow01.bmp",2;
+				mes "[Snowysnow]";
+				mes "Oh goody!";
+				mes "You've met Poze!";
+				next;
+				mes "[Snowysnow]";
+				mes "He's such an honest, good hearted guy. I hope he and Duffle get together someday.";
+				next;
+				mes "[Snowysnow]";
+				mes "...Oh no~!";
+				mes "Did I say that out loud? That was supposed to stay in my head! I'm soooo sorry! Boy, I can be a real dum-dum head, huh?";
+				next;
+				mes "[Snowysnow]";
+				mes "Yeah...";
+				mes "Poze is in love with Duffle. And she's kind to everybody, except for Poze.";
+				next;
+				mes "[Snowysnow]";
+				mes "But I know that's because she likes him a whole whole lot! Hee hee hee!";
+				close2;	cutin "",255;	end;
+			case 5:
+				cutin "rutie_snownow01.bmp",2;
+				mes "[Snowysnow]";
+				mes "Oh...?";
+				mes "You've met";
+				mes "^3355FFUncle Hairy Cantata^000000?";
+				next;
+				cutin "rutie_snownow02.bmp",2;
+				mes "[Snowysnow]";
+				mes "Sure, he has a loud voice, doesn't take showers and smells like rotting food. But he's a funny guy with a warm heart. Everybody loves him!";
+				next;
+				mes "[Snowysnow]";
+				mes "Of course, he still enjoys drinking strange things. They say it's a miracle that he doesn't have a tummyache. Hee hee~! Oh, I love that guy!";
+				close2;	cutin "",255;	end;
+			case 6:
+				cutin "rutie_snownow01.bmp",2;
+				mes "[Snowysnow]";
+				mes "Oh...?";
+				mes "You've met";
+				mes "^3355FFAunt Thachentze^000000?";
+				next;
+				mes "[Snowysnow]";
+				mes "Yeah, she's a pickle expert, alright. Oh right, would you give this to her? I've been keeping the roughest salt in the world for her as a bit of a favor.";
+				next;
+				set xmas_npc,7;
+				mes "^3355FFSnowysnow gave you the roughest salt in the world^000000.";
+				next;
+				mes "[Snowysnow]";
+				mes "I like her cooking because it's soooo delicious! Sometimes, she gives me grape syrup on snow flakes. Anyway, please deliver that salt for me, buddy~!";
+				close2;	cutin "",255;	end;
+			case 7:
+				cutin "rutie_snownow01.bmp",2;
+				mes "[Snowysnow]";
+				mes "'^3355FFThe roughest";
+				mes "salt in the world^000000...'";
+				mes "Wow. Now, that's rough! Aunt Tachentze is always making pickles, so she sure could use it soon!";
+				close2;	cutin "",255;	end;
+			case 8:
+				cutin "rutie_snownow01.bmp",2;
+				mes "[Snowysnow]";
+				mes "Hashokii, the boring clown? At first, he seems kind of dumb and not really that funny. But deep inside, he cares a lot about other people.";
+				next;
+				mes "[Snowysnow]";
+				mes "He's always trying his best to make those two orphans laugh and forget their troubles...";
+				close2;	cutin "",255;	end;
+			case 9:
+				cutin "rutie_snownow01.bmp",2;
+				mes "[Snowysnow]";
+				mes "Ah...";
+				mes "So you've met Charu Charu? That boy is so full of optimism and always looking forward. When he grows up, he's going to be a big shot!";
+				next;
+				mes "[Snowysnow]";
+				mes "I'm sure of it!";
+				mes "Hee hee hee~!";
+				close2;	cutin "",255;	end;
+			case 10:
+				cutin "rutie_snownow01.bmp",2;
+				mes "[Snowysnow]";
+				mes "Thank you for listening to me so far. I really appreciate that you try to understand me, even though you're a stranger here.";
+				next;
+				mes "[Snowysnow]";
+				mes "Now, you know me better than anyone else in this town. So, in return, I want to give you a small present.";
+				next;
+				mes "[Snowysnow]";
+				mes "Tah dah!";
+				mes "Pick anything";
+				mes "you want in here~";
+				next;
+				mes "^3355FFYou gingerly stir";
+				mes "your hand around in";
+				mes "Snowysnow's magical gift bag^000000.";
+				set .@snownow,rand(1,8);
+				next;
+				switch(.@snownow) {
 				case 1:
-					getitem 529,5;
-					mes "^3355FF- 5 Candies -^000000!";
+					set xmas_npc,11;
+					getitem 529,5;	// Candy
+					cutin "rutie_snownow02.bmp",2;
+					mes "[Snowysnow]";
+					mes "Wow~!";
+					mes "^3355FF5 Candy^000000!";
+					mes "Congratulations!";
 					break;
 				case 2:
-					getitem 529,10;
-					mes "^3355FF- 10 Candies -^000000!";
+					set xmas_npc,11;
+					getitem 529,10;	// Candy
+					cutin "rutie_snownow02.bmp",2;
+					mes "[Snowysnow]";
+					mes "Ooh~!";
+					mes "^3355FF10 Candy^000000!";
 					break;
 				case 3:
-					getitem 530,5;
-					mes "^3355FF- 5 Candy Canes-^000000!";
+					set xmas_npc,11;
+					getitem 530,5;	// Candy_Striper
+					cutin "rutie_snownow02.bmp",2;
+					mes "[Snowysnow]";
+					mes "Hoooraaaay~!";
+					mes "^3355FF5 Candy Cane^000000!";
 					break;
 				case 4:
-					getitem 530,10;
-					mes "^3355FF- 10 Candy Canes-^000000!";
+					set xmas_npc,11;
+					getitem 530,10;	// Candy_Striper
+					cutin "rutie_snownow02.bmp",2;
+					mes "[Snowysnow]";
+					mes "Wow, that's so great!";
+					mes "^3355FF10 Candy Cane^000000!";
 					break;
 				case 5:
-					getitem 539,1;
-					mes "^3355FF- 1 Piece of Cake-^000000!";
+					set xmas_npc,11;
+					getitem 539,1;	// Piece_Of_Cake
+					cutin "rutie_snownow02.bmp",2;
+					mes "[Snowysnow]";
+					mes "Aren't you lucky!";
+					mes "^3355FF1 Piece Of Cake^000000!";
 					break;
 				case 6:
-					getitem 539,2;
-					mes "^3355FF- 2 Pieces of Cake-^000000!";
+					set xmas_npc,11;
+					getitem 539,2;	// Piece_Of_Cake
+					cutin "rutie_snownow02.bmp",2;
+					mes "[Snowysnow]";
+					mes "Now, isn't that nice?";
+					mes "^3355FF2 Piece Of Cake^000000!";
 					break;
 				case 7:
-					getitem 538,5;
-					mes "^3355FF- 5 Cookies-^000000!";
+					set xmas_npc,11;
+					getitem 538,5;	// Well_Baked_Cookie
+					cutin "rutie_snownow02.bmp",2;
+					mes "[Snowysnow]";
+					mes "Oh woooooow~!";
+					mes "^3355FF5 Cookie^000000!";
 					break;
 				case 8:
-					getitem 538,10;
-					mes "^3355FF- 10 Cookies-^000000!";
+					set xmas_npc,11;
+					getitem 538,10;	// Well_Baked_Cookie
+					cutin "rutie_snownow02.bmp",2;
+					mes "[Snowysnow]";
+					mes "*Gasp!* Ooh~";
+					mes "^3355FF10 Cookie^000000!";
 					break;
+				}
+				next;
+				mes "[Snowysnow]";
+				mes "My dear friend, please visit me from time to time, so that we can chitchat, okay? See you soon! And Merry Christmas!";
+				close2;	cutin "",255;	end;
+			case 11:
+				cutin "rutie_snownow02.bmp",2;
+				mes "[Snowysnow]";
+				mes "Hello hello!";
+				next;
+				mes "[Snowysnow]";
+				mes "You're always welcome in Lutie, especially by me, Snowysnow! Happy Kwanza, Happy Hannukah and Merry Christmas~!";
+				close2;	cutin "",255;	end;
 			}
-			mes "My dear friend,";
-			mes "Please visit me from time to time, and take a chitchat with me.";
-			mes "See you soon -";
-			mes "Merry Christmas!!";
-			close;
-	case 11:
-		mes "Welcome dear my friend -";
-		mes "You are always welcomed in this Christmas Town.";
-		mes "Especially by me, Jack Frost !";
-		mes "Merry Christmas !!";
-		close;
-	default:
-		mes "*sob*sob*........ I'm so lonely..... I can't go anywhere! I";
-		mes "am stuck here day and night... frozen to this cold earth....";
-		emotion e_sob;
-		next;
-		switch (select("^0000FFJack Frost?^000000:A secret Toy Factory?:...............")) {
-			case 1:
-				mes "[Jack Frost]";
-				mes "I was created by a human..... A giant snow doll is what some call me.....";
-				mes "I remember being born somewhere very cold......";
-				next;
-				mes "[Jack Frost]";
-				mes "Just like Lutie, this is a chilly little town.... I used to be happy up north but.......";
-				next;
-				mes "[Jack Frost]";
-				mes "On day a horrible old lady came to my village...... Her name was.... ^790079'Mariposum'^000000......";
-				mes "I heard she came from some place extremely hot..... Some weird village in some kind of cave.";
-				next;
-				mes "[Jack Frost]";
-				mes "On the fourth night after she arrived here, she went to central square.......";
-				mes "Without warning she started casting horrible spells....... Suddenly a huge storm emerged.....";
-				next;
-				mes "[Jack Frost]";
-				mes "Almost immediately the powerful storm knocked my friend and I unconscious........";
-				next;
-				mes "[Jack Frost]";
-				mes "I don't know how long I was out, but when I woke up I found myself right here in Lutie..........";
-				next;
-				mes "[Jack Frost]";
-				mes "But my friends were not...... I have lost all of my friends.......... I feel so lonely.......";
-				emotion e_sob;
-				close;
-			case 2:
-				mes "[Jack Frost]";
-				mes "Somewhere in Lutie there is a place that looks just like a ^5533FFToy";
-				mes "Factory^000000....... It's well decorated and looks like a lot of";
-				mes "fun but.......";
-				next;
-				mes "[Jack Frost]";
-				mes "I heard that it is overrun with possessed toy soldiers and gift";
-				mes "boxes........";
-				next;
-				mes "[Jack Frost]";
-				mes "Part of me is intrigued by this place and I would like to see it";
-				mes "just once..... But part of me is also a little frighten of the";
-				mes "possessed toys.....";
-				close;
-			case 3:
-				mes "[Jack Frost]";
-				mes "So long! Come visit me any time.  Merry Christmas!";
-				close;
 		}
-	}	
+		case 2:
+			cutin "rutie_snownow01.bmp",2;
+			mes "[Snowysnow]";
+			mes "Around this wonderful town, eternally blessed with Christmas, there is a horrible dungeon, eternally cursed with Christmas.";
+			next;
+			mes "[Snowysnow]";
+			mes "I've heard that it's well decorated and looks just like a Toy Factory inside, where everything is so cute and pretty. They are Toy Soldiers and Gift Boxes as far as the eye can see!";
+			next;
+			cutin "rutie_snownow01.bmp",2;
+			mes "[Snowysnow]";
+			mes "Isn't that soooo exciting?! *Sigh* Even if it is a dungeon, I would like to go inside just to look. If only I was a real boy, or even had legs...";
+			close2;	cutin "",255;	end;
+		case 3:
+			cutin "rutie_snownow03.bmp",2;
+			mes "[Snowysnow]";
+			mes "Bye bye, friend~!";
+			mes "Thank you for listening me~";
+			mes "I'll see you again, someday! You'll always be in my heart~";
+			close2;	cutin "",255;	end;
+		}
 }
 
-// Howie the Clown
-//=====================================================================
-xmas,146,136,4	script	Howie the Clown	715,{
-	mes "[Howie]";
+xmas,146,136,4	script	Hashokii	715,{
+	mes "[Hashokii]";
 	mes "Meeee~RrrrrYYYY Christmas~!";
-	mes "La La La! La La La La!~";
-	mes "Dum di Dum di Dum";
+	mes "La La La~!";
+	mes "Dum di Dum di Dum!";
 	next;
-	switch (select("Hey, Clown, what are you doing?:About the Snowman:Quit conversation")) {
-		case 1:
-			mes "[Howie]";
-			mes "La La La~ Dum di Dum di Dum........ Huh?.....";
+	switch(select("Yo Clown boy, what's up?:About Snowysnow:Quit conversation")) {
+	case 1:
+		mes "[Hashokii]";
+		mes "La La La~!";
+		mes "Dum di Dum di Dum!";
+		mes "Ooh, I'm trying to think of a good show to put on for Charu Charu and Marcell!";
+		next;
+		mes "[Hashokii]";
+		mes "They are getting smarter and wittier everyday, and now it seems that they don't laugh at my best jokes anymore. How did they get to be so clever?";
+		next;
+		mes "[Hashokii]";
+		mes "Well, if I work hard enough, they can't help but laugh at my hilarious jokes! So... I better start inventing better jokes. Like, pronto.";
+		next;
+		mes "[Hashokii]";
+		mes "La La La~!";
+		mes "Dum di Dum di Dum";
+		mes "Merry Christmas!";
+		close;
+	case 2:
+		if (xmas_npc == 8) {
+			mes "[Hashokii]";
+			mes "Dum di Dum di Dum";
+			mes "Ah ha! So you wanna learn more about Snowyshow! Let's see...";
 			next;
-			mes "[Howie]";
-			mes "Oh, I'm working on a show to entertain two lovely kids....";
-			mes "^5533FFCharlie and Marsha^000000.... and it's not easy!";
+			mes "[Hashokii]";
+			mes "Well, there are two naughty kids,";
+			mes "^3355FF' Charu Charu '^000000 and";
+			mes "^3355FF' Marcell '^000000. They attend my show regularly. I'm guessing you've heard the story from Cantata?";
 			next;
-			mes "[Howie]";
-			mes "Beleive it or not you have to be smart, talented, and of course";
-			mes "funny to be a clown.  It's getting tougher and tougher to make kids";
-			mes "laugh nowadays.... they just get bored so easily.... *sigh*";
+			mes "[Hashokii]";
+			mes "Anyway, the two babies that were protected in Snowysnow's bosom? Yup, that's them. But Charu Charu and Marcell don't seem to know that Snowysnow saved them.";
 			next;
-			mes "[Howie]";
-			mes "So I have to push myself to be more creative.... to act funnier and";
-			mes "talk funnier...... to make them laugh out loud!!";
+			mes "[Hashokii]";
+			mes "Snowysnow told me the story of how he let his body fly into the air to block the giant fire ball that was about to hit them when they were babies. For their sake, he was willing to sacrifice himself.";
 			next;
-			mes "[Howie]";
-			mes "HaHaHaHa! HeHeHeHeHe! HoHoHoHoHo! Merry Christmas!!"; 
+			mes "[Hashokii]";
+			mes "Why don't you go meet those 2 children? They might tell you the story we've never got the chance to hear. Okay then, good luck~! Bye bye!";
+			set xmas_npc,9;
 			close;
-		case 2:
-			if (xmas_npc == 8 || xmas_npc == 9) {
-				mes "[Howie]";
-				mes "Dum di Dum di Dum... Ah ha ! I assume you're here because of";
-				mes "Jack Frost? Well, after all it is nothing peculiar....";
-				next;
-				mes "[Howie]";
-				mes "It's about two naughty kids, ^3355FF'Charlie'^000000 and ^3355FF'Marsha'^000000,";
-				mes "they are regular viewers of my show.  Did you heard about the";
-				mes "incindent happened in the northland from Hairy Uncle Ken by any";
-				mes "chance?";
-				next;
-				mes "[Howie]";
-				mes ". . . . . Then hopefully you will remember the 2 babies, whom";
-				mes "Jack Frost carried in his arms...while his body melted away...";
-				next;
-				mes "[Howie]";
-				mes "You guessed it... the 2 babies were Charlie and Marsha. They";
-				mes "don't seem to know about this.  Jack Frost told me their story...";
-				mes "He used his body to block the big giant fire ball rushing towards";
-				mes "the 2 babies....";
-				next;
-				mes "[Howie]";
-				mes "Jack Frost made the ultimate sacrifice for Charlie and Marsha....";
-				mes "I can see you are quite interested in the story of Jack Frost,";
-				mes "why don't you go meet those 2 children for more information?";
-				next;
-				mes "[Howie]";
-				mes "They might tell you some story we've never got the chance to hear.";
-				mes "Ok then, good luck! Bye bye!";
-				set xmas_npc,9;
-				close;
-			}
-			mes "[Howie]";
-			mes "You mean ^5533FF' Jack Frost '^000000? Of course I know him.  Everyone";
-			mes "knows Jack Frost the Snowman.  Sometimes I go and chat with him.";
+		}else{
+			mes "[Hashokii]";
+			mes "Ah... ^3355FFSnowysnow^000000?";
+			mes "Of course I know him! Anyone who doesn't know Snowysnow is a total stranger around here! Sometimes, he and I share a nice chat...";
 			next;
-			mes "[Howie]";
-			mes "I even do performances for him.  But I'm not quite sure if he likes";
-			mes "them.... cause whenever I finish my act.... He doesn't seem to have";
-			mes "any kind of reaction to it.....";
+			mes "[Hashokii]";
+			mes "He makes such a a good audience for my show. But to be honest, I'm not sure if he really likes it or not. Most people don't seem to care for my jokes.";
 			next;
-			mes "[Howie]";
-			mes "How could he not like an amazing show like mine??";
-			emotion e_hmm;
+			mes "[Hashokii]";
+			mes "It totally baffles me! How could they not like the best jokes in the world?! Sheeeeesh~";
 			next;
-			mes "[Howie]";
-			mes "There's something strange about Jack Frost.... anyways...";
-			mes "La La La~ Dum di Dum di Dum";
+			mes "[Hashokii]";
+			mes "Hmmm, sorry!";
+			mes "Anyway, Snowysnow";
+			mes "is a great guy!";
+			mes "La La La~!";
+			mes "Dum di Dum di Dum";
 			mes "Merry Christmas- !!";
 			close;
-		case 3:
-			mes "[Howie]";
-			mes "La La La... Dum di Dum di Dum";
-			mes "Merry Christmas! Have a great day!";
+		}
+	case 3:
+		mes "[Hashokii]";
+		mes "La La La~!";
+		mes "Dum di Dum di Dum";
+		mes "Merry Christmas~!";
+		close;
+	}
+}
+
+xmas,206,168,4	script	Little Boy	706,{
+	if (xmas_npc == 9) {
+		mes "[Charu Charu]";
+		mes "Errrm?";
+		mes "Snowysnow?";
+		next;
+		mes "[Charu Charu]";
+		mes "Hmmm, well...";
+		mes "He's a nice snowman!";
+		mes "You want to know more about Snowysnow? Ummm, I'm not that smart! Ask Marcell!";
+		close;
+	}else{
+		mes "[Charu Charu]";
+		mes "Merry Merry Christmas!";
+		mes "Heheheheheh~!";
+		next;
+		mes "[Charu Charu]";
+		mes "Did you talk to that clown guy over there? Isn't he soooooo booooring? (-.-)";
+		next;
+		mes "[Charu Charu]";
+		mes "When Marcell and I watch his show, we feel like we're getting dumber and dumber~";
+		next;
+		mes "[Marcell]";
+		mes "Charu Charu!! Watch your mouth! How dare you say that about poor Hashokii?! He's always trying hard to make us happy!";
+		next;
+		mes "[Charu Charu]";
+		mes "Yeah, yeah.";
+		mes "Whatever~";
+		mes "I already know that!";
+		mes "But he's not funny at all!";
+		mes "I'd rather stay with ^3355FFSnowysnow^000000~";
+		next;
+		mes "[Charu Charu]";
+		mes "Oh well, if you didn't visit Snowysnow yet, you should see him at least once. He's funny!";
+		next;
+		mes "[Charu Charu]";
+		mes "Merry Christmas!";
+		mes "Enjoy your Holiday in Lutie~!";
+		close;
+	}
+}
+
+xmas,208,168,4	script	Little Girl	703,{
+	if (xmas_npc == 9 || xmas_npc == 10) {
+		switch(xmas_npc) {
+		case 9:
+			mes "[Marcell]";
+			mes "You mean Snowysnow?";
+			mes "Of course I know him!";
+			next;
+			mes "[Marcell]";
+			mes "He's a nice and funny guy!";
+			mes "And as Charu Charu always insists, he's funnier than Hashokii~ (But please don't let Hashokii know!)";
+			next;
+			mes "[Marcell]";
+			mes "Well, Charu Charu and I are orphans, and don't remember our parents at all. We've been brought up by the people here in Lutie.";
+			next;
+			mes "[Marcell]";
+			mes "Uncle Cantata and Auntie Thachentze treated us like their own children, and Poze and Duffle have been like a brother and sister to us!";
+			next;
+			mes "[Marcell]";
+			mes "They're all nice and generous, and we always appreciate what they've done to take care of us.";
+			next;
+			mes "[Marcell]";
+			mes "I also heard Snowysnow doesn't have a mommy or daddy too. And I also heard Snowysnow and us weren't born here, but somewhere else.";
+			next;
+			mes "[Marcell]";
+			mes "I've heard that Snowysnow and us actually come from the same place, although I'm not sure yet. But I know that Snowysnow and me have the same kind of burns on our body.";
+			next;
+			mes "[Marcell]";
+			mes "Charu Charu and I have these old burns on our backs, and Snowysnow has a dark smudge on his tummy. So I think we got burned all at the same time...";
+			next;
+			mes "[Marcell]";
+			mes "Oh, now I see . . . . .";
+			mes "You wanna learn all about Snowysnow because you want to become his friend! He'll be so happy to know that! Ooh! Maybe he'll give you a present! Good luck!";
+			set xmas_npc,10;
 			close;
-	}
-}
-
-// Charlie
-//================================================================
-xmas,206,168,4	script	Charlie	706,{
-switch (xmas_npc) {
-	case 9:
-		mes "[Charlie]";
-		mes "Errr ? Jack Frost? Hmmm - Let me see....A nice snowman...";
-		mes "You want to know about Jack Frost.... Is this what you want? Ummm";
-		mes "let me see again... Argh - I am not that smart . . . . .";
-		mes "Better ask of Marsha though !";
-		close;
-	default:
-		mes "[Charlie]";
-		mes "Merry, Merry Christmas! Did you talk to that clown, ^5533FFHowie^000000 yet? Man that";
-		mes "clown is REALLY boring......";
+		case 10:
+			mes "[Marcell]";
+			mes "More than anybody else, you know the most about Snowysnow! Please talk to Mr.Snowysnow, he'll be happy to know you care about him. Merry Christmas!";
+			close;
+		}
+	}else{
+		mes "[Marcell]";
+		mes "Merry Christmas~!";
 		next;
-		mes "[Charlie]";
-		mes "After watching his show, me and Marsha felt like we had wasted our time.....";
+		mes "[Marcell]";
+		mes "It's freezing out here...! And Charu Charu makes me colder with his unbearable jokes. And the wind's blowing so hard!";
 		next;
-		mes "[Marsha]";
-		mes "How can you say that? You know he always tries his best to make us happy.....";
+		mes "[Marcell]";
+		mes "You know what? Snowysnow has a special power. He can make as many presents as Santa Claus! Isn't that great?";
 		next;
-		mes "[Charlie]";
-		mes "Meh.... whatever.... I still think he's boring....... I'd rather talk";
-		mes "to ^3355FF' Jack Frost '^000000.  He's a LOT more fun.";
-		next;
-		mes "[Charlie]";
-		mes "Have you met the Snowman, Jack Frost, yet...... if not go find him.";
-		mes "He's a really funny guy."; 
-		next;
-		mes "[Charlie]";
-		mes "Anyways, Merry Christmas! Enjoy your stay in Lutie!";
-		close;
-	}
-}
-
-// Marsha
-//================================================================
-xmas,208,168,4	script	Marsha	703,{
-switch (xmas_npc) {
-	case 9:
-		mes "[Marsha]";
-		mes "You mean Jack Frost? Of course I know.. He is nice and funny guy.";
-		mes "As Charlie always insists, he is better than Howie.....";
-		mes "(But please don't tell it to Howie~)";
-		next;
-		mes "[Marsha]";
-		mes "Charlie and I are Orphans.  We don't remember our parents at all.";
-		mes "We've been brought up by the kind people of Lutie, including";
-		mes "Hairy Uncle Ken and Auntie Mima.";
-		next;
-		mes "[Marsha]";
-		mes "They are all nice and generous, and we appreciate all of them for";
-		mes "taking care of us.  By the way I heard Jack Frost doesn't have a";
-		mes "mom or dad either... and I also heard that neither we nor Jack";
-		mes "Frost were born in this Christmas Town.";
-		next;
-		mes "[Marsha]";
-		mes "There is a rumor that myself, Charlie, and Jack Frost came here";
-		mes "from somewhere else.  I am not actually sure about that but,";
-		mes "at least I know that all of us have the same types of burns on";
-		mes "our bodies.  Charlie and I have it on our backs.";
-		next;
-		mes "[Marsha]";
-		mes "Jack Frost has a dark smudge on his tummy.... It makes me feel as";
-		mes "if we are somehow connected to each other...";
-		next;
-	case 10:
-		mes "[Marsha]";
-		mes "Oh? Now I see.... You've come to know a lot about Jack Frost....";
-		mes "Maybe even more than any one person in this town.  Please try to";
-		mes "talk to Mr. Jack Frost.  He will probably be delighted that you";
-		mes "are so interested in him.  Maybe you will even be able to get a";
-		mes "present from him.";
-		next;
-		mes "[Marsha]";
-		mes "I wish you the best of luck.  Merry Christmas!!";
-		set xmas_npc,10;
-		close;
-	default:
-		mes "[Marsha]";
-		mes "Merry Christmas to you!";
-		next;
-		mes "[Marsha]";
-		mes "I don't know if this is true... but I heard that the Snowman has";
-		mes "something special that is un imaginable..... a special power of sorts..";
-		next;
-		mes "[Marsha]";
-		mes "Oh by the way..... Have you met ^5533FFSanta Claus^000000 yet? He";
-		mes "carries TONS and tons of gifts is his BIG bag! I heard that the Snowman";
-		mes "also does that.... Isn't that AMAZING!?? So exciting!!";
-		emotion e_ic;
-		next;
-		mes "[Marsha]";
-		mes "I mean he has a big bag full of gifts too.... those how have been";
-		mes "friendly to the Snowman have gotten cool gifts from him!";
-		next;
-		mes "[Marsha]";
-		mes "..... Well at least that's what people say... but still.... isn't it";
-		mes "AMAZING!!";
-		emotion e_hmm;
+		mes "[Marcell]";
+		mes "Huh? What's that look on your face for? Snowysnow has a big gift bag inside of his body, and gives gifts whenever he feels like it. What's so hard to believe about that?";
 		close;
 	}
 }

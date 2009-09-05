@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= DZeroX
 //===== Current Version: =====================================
-//= 1.3
+//= 1.4
 //===== Compatible With: =====================================
 //= eAthena SVN Trunk
 //===== Description: =========================================
@@ -22,9 +22,10 @@
 //= 1.1b Fixed a bug in Orange Potion creating. Copy&Pasting = bad. [L0ne_W0lf]
 //= 1.2 Added checkweight, and input min/max values. [L0ne_W0lf]
 //= 1.3 Fixed minor condition check bug. (bugreport:597) [L0ne_W0lf]
+//= 1.4 Updated to match AEGIS script. [Kisuka]
 //============================================================
 
-alberta_in,16,28,4	script	Old Pharmacist	61,{
+alberta_in,16,28,4	script	Pharmacist	61,{
 	if (checkweight(1201,1) == 0) {
 		mes "- Wait a moment! -";
 		mes "- Currently you're carrying -";
@@ -34,12 +35,13 @@ alberta_in,16,28,4	script	Old Pharmacist	61,{
 		close;
 	}
 	mes "[Old Pharmacist]";
-	mes "Err....Are you a customer...?";
-	switch(select("Make Potion","Talk.","Instruction of making potions","Cancel")) {
+	mes "Ummmm...";
+	mes "What brings you here...?";
+	switch(select("Make Potion","Talk.","Mixing Information","Cancel")) {
 		case 1:
 			next;
 			set .@weight,MaxWeight-Weight;
-			if ((.@weight) < 10000) {
+			if ((.@weight) < 5000) {
 				mes "[Old Pharmacist]";
 				mes "Why are you carrying these so many!";
 				mes "Don't be greedy, carry only as much you need!";
@@ -86,14 +88,11 @@ alberta_in,16,28,4	script	Old Pharmacist	61,{
 									close;
 								}
 								set Zeny,Zeny-(.@max*5);
-								delitem 507,.@max;
-								delitem 508,.@max;
-								delitem 713,.@max;
-								getitem 502,.@max; 
-								mes "[Old Pharmacist]";
-								mes "Here. Take them.";
-								mes "Here you go. It's all done so you can take it. But remember! Abusing medicine is not good.";
-								close;
+								delitem 507,.@max;	// Red_Herb
+								delitem 508,.@max;	// Yellow_Herb
+								delitem 713,.@max;	// Empty_Bottle
+								getitem 502,.@max;	// Orange_Potion
+								break;
 							case 2:
 								next;
 								mes "[Old Pharmacist]";
@@ -119,13 +118,11 @@ alberta_in,16,28,4	script	Old Pharmacist	61,{
 								}
 								next;
 								set Zeny,Zeny-(.@amount*5);
-								delitem 507,.@amount;
-								delitem 508,.@amount;
-								delitem 713,.@amount;
-								getitem 502,.@amount; 
-								mes "[Old Pharmacist]";
-								mes "Here you go. It's all done so you can take it. But remember! Abusing medicine is not good.";
-								close;
+								delitem 507,.@amount;	// Red_Herb
+								delitem 508,.@amount;	// Yellow_Herb
+								delitem 713,.@amount;	// Empty_Bottle
+								getitem 502,.@amount; 	// Orange_Potion
+								break;
 							case 3:
 								next;
 								mes "[Old Pharmacist]";
@@ -135,6 +132,9 @@ alberta_in,16,28,4	script	Old Pharmacist	61,{
 								mes "Get lost!";
 								close;
 						}
+							mes "[Old Pharmacist]";
+							mes "Here you go. It's all done so you can take it. But remember! Abusing medicine is not good.";
+							close;
 					case 3:
 						callsub L_making,508,10,503;
 					case 4:
@@ -150,8 +150,8 @@ alberta_in,16,28,4	script	Old Pharmacist	61,{
 						mes "Bleh!";
 						mes "Get lost!";
 						close;
-					}
 				}
+			}
 		case 2:
 			mes "[Old Pharmacist]";
 			mes "With medicine, you can increase a person's ability to regenerate. But, they're only good up to a point. *Sigh* I'm starting to think of the days when I was young. I must be getting old.";
@@ -215,12 +215,9 @@ L_making:
 			}
 			set Zeny,Zeny-(.@max*getarg(1));
 			delitem getarg(0),.@max*2;
-			delitem 713,.@max;
+			delitem 713,.@max;	// Empty_Bottle
 			getitem getarg(2),.@max; 
-			mes "[Old Pharmacist]";
-			mes "Here. Take them.";
-			mes "Here you go. It's all done so you can take it. But remember! Abusing medicine is not good.";
-			close;
+			break;
 		case 2:
 			next;
 			mes "[Old Pharmacist]";
@@ -247,11 +244,9 @@ L_making:
 			next;
 			set Zeny,Zeny-(.@amount*getarg(1));
 			delitem getarg(0),.@amount*2;
-			delitem 713,.@amount;
+			delitem 713,.@amount;	// Empty_Bottle
 			getitem getarg(2),.@amount; 
-			mes "[Old Pharmacist]";
-			mes "Here you go. It's all done so you can take it. But remember! Abusing medicine is not good.";
-			close;
+			break;
 		case 3:
 			next;
 			mes "[Old Pharmacist]";
@@ -261,4 +256,7 @@ L_making:
 			mes "Get lost!";
 			close;
 	}
+		mes "[Old Pharmacist]";
+		mes "Here you go. It's all done so you can take it. But remember! Abusing medicine is not good.";
+		close;
 }

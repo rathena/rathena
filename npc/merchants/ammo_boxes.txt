@@ -3,125 +3,133 @@
 //===== By: ==================================================
 //= eAthena dev team
 //===== Current Version: =====================================
-//= 1.2a
+//= 1.3
 //===== Compatible With: =====================================
-//= eAthena 1.0+
+//= eAthena SVN
 //===== Description: =========================================
-//= Turns bullets/spheres into packs/casings.
+//= Turns bullets into magazines/packs.
 //===== Additional Comments: =================================
 //= 1.0 First version. [SinSloth]
 //= 1.1 Optimized version - Reduced to only one function [SinSloth]
 //= 1.2 Optimized^2, corrected npc's name [ultramage]
 //= 1.2a Optimized. Please, ommit extra NPC names [Lupus]
+//= 1.3 Updated to match AEGIS script. [Kisuka]
 //============================================================
 
 que_ng,187,149,3	script	Magazine Dealer Kenny	83,{
-
-	mes "[Kenny]";	
-	mes "I am the Casing Dealer, Kenny!";
-	if(BaseJob != Job_Gunslinger) {
-		mes "I'm here to package the Shells";
-		mes "and Bullets for Gunslingers.";
-		next;
+	if(BaseJob == Job_Gunslinger) {
 		mes "[Kenny]";
-		mes "But you don't look like a";
-		mes "Gunslinger to me. I'm afraid";
-		mes "that I must ask you to leave";
-		mes "after you're done looking around.";
-		close;
+		mes "Welcome to my Magazine Shop.";
+		mes "As you may know, large numbers";
+		mes "of bullets can be carried more";
+		mes "easily when they're in Magazines. Now, can I interest you in";
+		mes "anything in particular?";
+		next;
+		switch(select("Wind Sphere Pack:Shadow Sphere Pack:Poison Sphere Pack:Water Sphere Pack:Fire Sphere Pack:Cartridge:Blood Cartridge:Silver Cartridge:Cancel")) {
+		case 1: callfunc "Func_Casing",13204,12144; break;
+		case 2: callfunc "Func_Casing",13206,12145; break;
+		case 3: callfunc "Func_Casing",13205,12146; break;
+		case 4: callfunc "Func_Casing",13207,12147; break;
+		case 5: callfunc "Func_Casing",13203,12148; break;
+		case 6: callfunc "Func_Casing",13200,12149; break;
+		case 7: callfunc "Func_Casing",13202,12150; break;
+		case 8: callfunc "Func_Casing",13201,12151; break;
+		case 9:
+			mes "[Kenny]";
+			mes "Well, if you ever find";
+			mes "that you have too many";
+			mes "bullets, come and see me.";
+			mes "It's a smart idea to store";
+			mes "bullets with my Magazines.";
+			close;
+		}
 	}
-	mes "If your bullets are getting";
-	mes "too heavy, come to me!";
+	mes "[Kenny]";
+	mes "Welcome to my shop.";
+	mes "Here, I provide Magazines";
+	mes "and Cartridges for Gunslingers.";
+	mes "Sorry, but it doesn't look like";
+	mes "my services would be of any";
+	mes "use to you, adventurer.";
 	next;
 	mes "[Kenny]";
-	mes "I can make you Casings and Packs,";
-	mes "which will let you carry the";
-	mes "Spheres at a lower weight!";
-	mes "Come on! Take a look!";
-	next;
-	switch(select("Lightning Sphere Pack","Blind Sphere Pack","Poison Sphere Pack","Freezing Sphere Pack","Flare Sphere Pack","Bullet Casing","Shell of Blood Casing","Silver Bullet Casing","Cancel")) {
-	case 1: callfunc "Func_Casing",13204,12144; break;
-	case 2: callfunc "Func_Casing",13206,12145; break;
-	case 3: callfunc "Func_Casing",13205,12146; break;
-	case 4: callfunc "Func_Casing",13207,12147; break;
-	case 5: callfunc "Func_Casing",13203,12148; break;
-	case 6: callfunc "Func_Casing",13200,12149; break;
-	case 7: callfunc "Func_Casing",13202,12150; break;
-	case 8: callfunc "Func_Casing",13201,12151; break;
-	default:
-		mes "[Kenny]";
-		mes "Alright. If there's";
-		mes "something else I can help";
-		mes "you with, please tell me.";
-		close;
-	}
+	mes "Eh, but if you happen to";
+	mes "know any Gunslingers, send";
+	mes "them my way. You can never";
+	mes "have too many bullets.";
 	close;
 }
 
 function	script	Func_Casing	{
-
 	mes "[Kenny]";
-	mes "Please input the amount you want.";
+	mes "Now, you can trade";
+	mes "500 "+getitemname(getarg(1))+"s";
+	mes "and 500 zeny for 1 "+getitemname(getarg(0))+", so make sure";
+	mes "you have sufficient bullets";
+	mes "and zeny for this exchange.";
 	next;
 	mes "[Kenny]";
-	mes "" +getitemname(getarg(1))+ " will";
-	if(getarg(0) == 13202) 
-		mes "cost 500 Shells of Blood";
-	else
-		mes "cost 500 " +getitemname(getarg(0))+ "s";
-	mes "and 500 zeny each.";
+	mes "You can exchange 500 "+getitemname(getarg(1))+"s and 500 zeny";
+	mes "with 1 "+getitemname(getarg(0))+".";
 	next;
 	mes "[Kenny]";
-	mes "You can trade a maximum of 50.";
-	mes "Input 0 if you want to cancel.";
+	mes "Remember that I can't give";
+	mes "you more than 50 Magazines";
+	mes "at a time. Now please enter";
+	mes "the number of Magazines you";
+	mes "want to receive. If you want to cancel, then just enter ''0.''";
 	next;
 	input .@amount;
-	mes "[Kenny]";
-	if(.@amount < 1) {
-		mes "Alright. If there's";
-		mes "something else I can help";
-		mes "you with, please tell me.";
+	if(.@amount > 50 || .@amount == 0) {
+		mes "[Kenny]";
+		mes "Hey, I can't give you";
+		mes "that many Magazines.";
+		mes "Please try again, and";
+		mes "enter a number no";
+		mes "greater than 50.";
 		close;
 	}
-	if(.@amount > 50)	{
-		mes "You've exceeded the limit!";
-		mes "Try again next time?";
+	if (countitem(getarg(1)) >= (500*.@amount)) {
+		if (Zeny >= (500*.@amount)) {
+			if (checkweight(getarg(1),.@amount) == 0) {
+				mes "[Kenny]";
+				mes "Hey, you've got a lot";
+				mes "of junk crammed in your";
+				mes "Inventory. Free up some";
+				mes "space, and then come back";
+				mes "and trade your bullets for";
+				mes "some Magazines later, okay?";
+				close;
+			}else{
+				mes "[Kenny]";
+				mes "Alright, here are";
+				mes "your Magazines. Thanks";
+				mes "for visiting my shop, and";
+				mes "I hope that you use all";
+				mes "of your ammo wisely.";
+				set Zeny,Zeny-500*.@amount;
+				delitem getarg(0),500*.@amount;
+				getitem getarg(1),.@amount;
+				close;
+			}
+		}else{
+			mes "[Kenny]";
+			mes "Sorry, but you don't";
+			mes "have enough zeny for";
+			mes "this Magazine exchange.";
+			mes "Come back to my shop";
+			mes "after you've saved up";
+			mes "some more money.";
+			close;
+		}
+	}else{
+		mes "[Kenny]";
+		mes "Sorry, but you don't";
+		mes "have enough bullets for";
+		mes "this Magazine exchange.";
+		mes "Maybe you should double";
+		mes "check your Inventory, and";
+		mes "then come back to me later.";
 		close;
 	}
-	//Weight checking
-	if(checkweight(getarg(1), .@amount) != 1)	{
-		mes "You are overweight.";
-		mes "Please clear your inventory.";
-		close;
-	}
-	
-	//Materials checking
-	if(countitem(getarg(0)) < .@amount * 500) {
-		mes "Huh......";
-		mes "You don't have enough";
-		mes "materials to trade for";
-		mes "the number of items you";
-		mes "want. Please come with the";
-		mes "correct amount of items.";
-		close;
-	}
-	
-	//Zeny checking
-	if(Zeny < .@amount * 500) {
-		mes "Erm... You don't have enough money.";
-		mes "The fee is 500 zeny";
-		mes "Check your zeny and come again.";
-		close;
-	}
-
-	mes "Ah very well!";
-	mes "The number is confirmed!";
-	if(getarg(1) < 12149)
-		mes "I'll get you the Packs right away.";
-	else
-		mes "I'll get you the Casings right away.";
-	set Zeny, Zeny - .@amount * 500;
-	delitem getarg(0), .@amount * 500;
-	getitem getarg(1), .@amount;
-	close;
 }

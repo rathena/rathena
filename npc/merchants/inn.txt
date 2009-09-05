@@ -4,7 +4,7 @@
 //= Darkchild (1.1)
 //= Playtester (1.2)
 //===== Current Version: ===================================== 
-//= 2.8
+//= 2.9
 //===== Compatible With: ===================================== 
 //= eAthena 1.0+
 //===== Description: ========================================= 
@@ -43,6 +43,7 @@
 //= 2.6 Updated Alberta inn to official. [L0ne_W0lf]
 //= 2.7 Removed Morroc Inns as per episode 12.1. [L0ne_W0lf]
 //= 2.8 Removed Moscovia Inn; Its in quests/quest_moscovia.txt [Kisuka]
+//= 2.9 Added switch menus, updated to match AEGIS scripts. [Kisuka]
 //============================================================ 
 
 
@@ -113,7 +114,6 @@ ra_in01,376,69,4	script	Inn Keeper#Annie	931,{
 
 //====================== Lighthalzen =================================
 lhz_in02,230,284,4	script	Hotel Employee#01	86,{
-
 	mes "[Hotel Employee]";
 	mes "Welcome to";
 	mes "the Royal Dragon,";
@@ -121,43 +121,41 @@ lhz_in02,230,284,4	script	Hotel Employee#01	86,{
 	mes "finest accomodations";
 	mes "and the best service.";
 	next;
-	menu "Save Point",s_Save,"Rest - 5,000 zeny",s_Rest,"Cancel",-;
-
-	mes "[Hotel Employee]";
-	mes "Thank you and";
-	mes "have a nice day.";
-	close;
-
-s_Save:
-	savepoint "lhz_in02",209,275;
-	mes "[Hotel Employee]";
-	mes "Thank you, your";
-	mes "Respawn Point has";
-	mes "been saved here in";
-	mes "the Royal Dragon.";
-	close;
-
-s_Rest:
-	if(Zeny < 5000)goto s_NEnoughZ;
-	set Zeny,Zeny - 5000;
-	mes "[Hotel Employee]";
-	mes "Thank you~";
-	mes "I hope you enjoy";
-	mes "your stay in the";
-	mes "Royal Dragon.";
-	close2;
-	warp "lhz_in02",219,150;
-	percentheal 100,100;
-	sc_start SC_BLESSING,240000,10;
-	skilleffect AL_BLESSING,0;
-	end;
-
-s_NEnoughZ:
-	mes "[Hotel Employee]";
-	mes "I'm sorry but you do not";
-	mes "have enough zeny, please";
-	mes "come back when you do!";
-	close;
+	switch(select("Save Point:Rest - 5,000 zeny:Cancel")) {
+	case 1:
+		savepoint "lhz_in02",209,275;
+		mes "[Hotel Employee]";
+		mes "Thank you, your";
+		mes "Respawn Point has";
+		mes "been saved here in";
+		mes "the Royal Dragon.";
+		close;
+	case 2:
+		if(Zeny < 5000) {
+			mes "[Hotel Employee]";
+			mes "I'm sorry, but";
+			mes "you need 5,000 zeny";
+			mes "in order to check in.";
+			close;
+		}
+		set Zeny,Zeny - 5000;
+		mes "[Hotel Employee]";
+		mes "Thank you~";
+		mes "I hope you enjoy";
+		mes "your stay in the";
+		mes "Royal Dragon.";
+		close2;
+		warp "lhz_in02",219,150;
+		percentheal 100,100;
+		sc_start SC_BLESSING,240000,10;
+		skilleffect AL_BLESSING,0;
+		end;
+	case 3:
+		mes "[Hotel Employee]";
+		mes "Thank you and";
+		mes "have a nice day.";
+		close;
+	}
 }
 
 //======================== Hugel ====================================
@@ -175,20 +173,21 @@ ve_in,157,219,5	script	Inn Master#Receptionist	709,{
 	mes "most comfortable";
 	mes "inn here in Veins~";
 	next;
-	menu "Save",Msave, "Take a Rest -> 5000 zeny",Mrent, "Cancel",Mend;
-
-	Msave:
+	switch(select("Save:Take a Rest -> 5000 zeny:Quit")) {
+	case 1:
 		mes "[Inn Master]";
-		mes "Your respawn point";
+		mes "Your Respawn Point";
 		mes "has been saved in Veins.";
 		mes "Enjoy your stay in town~";
 		savepoint "ve_in",157,209;
 		close;
-	Mrent:
+	case 2:
 		mes "[Inn Master]";
 		if(Zeny < 5000){
-			mes "I'm sorry, but you don't have enough money to check in.";
-			mes "The service charge is 5,000 zeny.";
+			mes "I'm sorry, but I don't";
+			mes "think you have enough";
+			mes "money to check in. The";
+			mes "service charge is 5,000 zeny.";
 			close;
 		}
 		mes "Enjoy your stay~";
@@ -196,9 +195,11 @@ ve_in,157,219,5	script	Inn Master#Receptionist	709,{
 		set Zeny,Zeny - 5000;
 		percentheal 100,100;
 		warp "ve_in",184,228;
-
-	Mend:
+	case 3:
+		mes "[Inn Master]";
+		mes "Please come again.";
 		close;
+	}
 }
 
 //======================= Inn Function ==============================
@@ -208,9 +209,8 @@ function	script	F_InnMaid	{
 	mes getarg(1) + ".";
 	mes "How may I help you?";
 	next;
-	menu "Save",Msave, "Take a Rest -> 5000 zeny",Mrent, "Cancel",Mend;
-
-	Msave:
+	switch(select("Save:Take a Rest -> 5000 zeny:Cancel")) {
+	case 1:
 		mes getarg(0);
 		mes "Your respawn point";
 		mes "has been saved.";
@@ -218,13 +218,10 @@ function	script	F_InnMaid	{
 		mes "please come again.";
 		savepoint getarg(2),getarg(3),getarg(4);
 		close;
-	Mrent:
+	case 2:
 		mes getarg(0);
 		if(Zeny < 5000){
-			mes "I'm sorry, but the service charge";
-			mes "is 5,000 zeny. Please make sure";
-			mes "that you have enough money to check";
-			mes "in next time, okay?";
+			mes "I'm sorry, but the service charge is 5,000 zeny. Please make sure that you have enough money to check in next time, okay?";
 			close;
 		}
 		mes "Thank you.";
@@ -234,7 +231,7 @@ function	script	F_InnMaid	{
 		set Zeny,Zeny - 5000;
 		percentheal 100,100;
 		return;
-
-	Mend:
+	case 3:
 		close;
+	}
 }
