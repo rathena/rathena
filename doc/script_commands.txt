@@ -3153,7 +3153,7 @@ currently work due to a bug.
 ========================
 -------------------------
 
-*playerattached;
+*playerattached()
 
 Returns the ID of the player currently attached to the script. It will return
 0 if noone is attached, or if the attached player no longer exists on the map
@@ -3164,7 +3164,7 @@ account ID.
 
 ---------------------------------------
 
-*isloggedin(<account id>{,<char id>});
+*isloggedin(<account id>{,<char id>})
 
 This function returns 1 if the specified account is logged in and 0 if they 
 aren't. You can also pass the char_id to check for both account and char id.
@@ -5168,20 +5168,31 @@ Since trunk r11779
 *deltimer "<NPC object name>::<event label>";
 *addtimercount <ticks>,"<NPC object name>::<event label>";
 
-These commands will create, destroy, and delay a countdown timer - 'addtimer' to 
+These commands will create and manage a player-based timer: 'addtimer' to 
 create, 'deltimer' to destroy and 'addtimercount' to delay it by the specified 
 number of ticks. For all three cases, the event label given is the identifier of 
-that timer.
+that timer. A player can have multiple timers running at the same time, and 
+there can even be multiple timers referencing the same label.
 
 When this timer runs out, a new execution thread will start in the specified NPC 
-object at the specified label. If no such label is found in the NPC object, it 
-will run as if clicked. In either case, the script runs with no RID attached.
+object at the specified label, and the script will run attached to that player. 
+If the specified label is not found, the map server will happily print an error.
 
 The ticks are given in 1/1000ths of a second.
 
 One more thing. These timers are stored as part of player data. If the player
 logs out, all of these get immediately deleted, without executing the script.
 If this behavior is undesirable, use some other timer mechanism (like 'sleep').
+
+Example 1:
+<NPC Header> {
+	dispbottom "Starting a 5 second timer...";
+	addtimer 5000, strnpcinfo(3)+"::On5secs";
+	end;
+On5secs:
+	dispbottom "5 seconds have passed!";
+	end;
+}
 
 ---------------------------------------
 

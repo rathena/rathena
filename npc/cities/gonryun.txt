@@ -361,7 +361,7 @@ gonryun,166,196,3	script	Soldier#gon	780,{
 		mes "looked human. I wonder";
 		mes "what it was...";
 		next;
-		mes "[Wa Qiu Wi]";
+		mes "[Wa Qiu Wu]";
 		mes "It might have been the";
 		mes "thief, but it moved";
 		mes "so fast, it seemed like";
