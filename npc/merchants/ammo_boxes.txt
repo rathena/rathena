@@ -63,14 +63,14 @@ que_ng,187,149,3	script	Magazine Dealer Kenny	83,{
 function	script	Func_Casing	{
 	mes "[Kenny]";
 	mes "Now, you can trade";
-	mes "500 "+getitemname(getarg(1))+"s";
-	mes "and 500 zeny for 1 "+getitemname(getarg(0))+", so make sure";
+	mes "500 "+getitemname(getarg(0))+"s";
+	mes "and 500 zeny for 1 "+getitemname(getarg(1))+", so make sure";
 	mes "you have sufficient bullets";
 	mes "and zeny for this exchange.";
 	next;
 	mes "[Kenny]";
-	mes "You can exchange 500 "+getitemname(getarg(1))+"s and 500 zeny";
-	mes "with 1 "+getitemname(getarg(0))+".";
+	mes "You can exchange 500 "+getitemname(getarg(0))+"s and 500 zeny";
+	mes "with 1 "+getitemname(getarg(1))+".";
 	next;
 	mes "[Kenny]";
 	mes "Remember that I can't give";
@@ -89,7 +89,7 @@ function	script	Func_Casing	{
 		mes "greater than 50.";
 		close;
 	}
-	if (countitem(getarg(1)) >= (500*.@amount)) {
+	if (countitem(getarg(0)) >= (500*.@amount)) {
 		if (Zeny >= (500*.@amount)) {
 			if (checkweight(getarg(1),.@amount) == 0) {
 				mes "[Kenny]";

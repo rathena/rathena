@@ -11666,8 +11666,8 @@ in_rogue,355,28,5	script	Rogue Agent	118,{
 				mes "of a trip for me, so get";
 				mes "some provisions ready, yeah?";
 				set rumour_nd,2;
-				close;
 			}
+			close;
 		}
 	}
 	else if (rumour_nd == 2) {
