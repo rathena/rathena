@@ -12,6 +12,10 @@
 	2385 Recuvative_Armor		Should trigger HP/SP return with magical kills as well.
 
 =======================
+2009/09/10
+	* Rev. 14052 Updated monster info 13.1 mobs. [L0ne_W0lf]
+	- Updated some stats and implemented Luciola Vespa AI use.
+	- Tweaked the skills for them, still custom though.
 2009/08/24
 	* Fixed items other than Masamune using bAspd. (only Masamune use bAspd in Aegis) [Inkfish]
 	* Fixed Cold Heart not checking weapon refinery count. (bugreport:3525) [Inkfish]

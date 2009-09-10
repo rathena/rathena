@@ -1,5 +1,7 @@
 Date		Added
 ======
+2009/09/10
+	* Rev. 14052 Added some, and enabled existing episode 13.1 content. [L0ne_W0lf]
 2009/08/18
 	* Rev. 14013 Bug fixes mostly. [L0ne_W0lf]
 	- Fixed Brynhild dialog in the Asprika quests. (bugreport:3085)
