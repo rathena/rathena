@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Dino9021, Edited / Translated by Celest
 //===== Current Version: ===================================== 
-//= 2.3a
+//= 2.4
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -14,6 +14,7 @@
 //=	No longer uses function "F_BlockHigh"
 //= 2.3 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
 //= 2.3a Deleted unused variables. [Samuray22]
+//= 2.4 Added Quest Log commands. [Kisuka]
 //============================================================ 
 
 prt_monk,59,247,1	script	Guarding Monk#mk	120,6,2,{
@@ -76,6 +77,7 @@ prt_monk,59,247,1	script	Guarding Monk#mk	120,6,2,{
 				mes "That is good. Go see our sensei Moohae. Speak with him.";
 				mes "He will help you start your training.";
 				set MONK_Q,2;
+				setquest 3016;
 				close;
 			}
 			else if (BaseJob == Job_Acolyte && JobLevel < 40) {
@@ -138,6 +140,7 @@ prt_monk,59,247,1	script	Guarding Monk#mk	120,6,2,{
 					mes "That is good. Go see our sensei Moohae. Speak with him.";
 					mes "He will help you start your training.";
 					set MONK_Q,2;
+					setquest 3016;
 					close;
 				}
 				else if (BaseJob == Job_Acolyte && JobLevel < 40) {
@@ -220,6 +223,7 @@ prt_monk,59,247,1	script	Guarding Monk#mk	120,6,2,{
 					mes "That is good. Go see our sensei Moohae, speak with him";
 					mes "and he will help you start new training.";
 					set MONK_Q,2;
+					setquest 3016;
 					close;
 				}
 				else if (BaseJob == Job_Acolyte && JobLevel < 40) {
@@ -375,13 +379,13 @@ monk_in,99,58,1	script	Sensei Moohae#mk	60,{
 		mes "Let us start with a simple task.";
 		next;
 		switch(rand(1,7)) {
-		case 1: setarray .@items[0], 938,5, 1055,10, 511,20, 3; break;
-		case 2: setarray .@items[0], 942,20, 1002,5, 510,3, 4; break;
-		case 3: setarray .@items[0], 905,30, 909,5, 955,10, 5; break;
-		case 4: setarray .@items[0], 943,5, 935,20, 912,5, 6; break;
-		case 5: setarray .@items[0], 7053,5, 509,10, 508,10, 7; break;
-		case 6: setarray .@items[0], 913,10, 948,4, 7033,20, 8; break;
-		case 7: setarray .@items[0], 1027,5, 1025,20, 1042,10, 9; break;
+		case 1: setarray .@items[0], 938,5, 1055,10, 511,20, 3; changequest 3016,3017; break;
+		case 2: setarray .@items[0], 942,20, 1002,5, 510,3, 4; changequest 3016,3018; break;
+		case 3: setarray .@items[0], 905,30, 909,5, 955,10, 5; changequest 3016,3019; break;
+		case 4: setarray .@items[0], 943,5, 935,20, 912,5, 6; changequest 3016,3020; break;
+		case 5: setarray .@items[0], 7053,5, 509,10, 508,10, 7; changequest 3016,3021; break;
+		case 6: setarray .@items[0], 913,10, 948,4, 7033,20, 8; changequest 3016,3022; break;
+		case 7: setarray .@items[0], 1027,5, 1025,20, 1042,10, 9; changequest 3016,3023; break;
 		}
 		mes "[Sensei Moohae]";
 		mes .@items[1]+" "+getitemname(.@items[0])+",";
@@ -416,6 +420,7 @@ monk_in,99,58,1	script	Sensei Moohae#mk	60,{
 			mes "Well done, you found all the items.";
 			mes "I will tell this to the elders.";
 			set MONK_Q,10;
+			changequest 3017,3024;
 			delitem 938,5; //Sticky_Mucus
 			delitem 1055,10; //Earthworm_Peeling
 			delitem 511,20; //Green_Herb
@@ -446,6 +451,7 @@ monk_in,99,58,1	script	Sensei Moohae#mk	60,{
 			mes "Very good, you found all the items.";
 			mes "I will tell this to the elders.";
 			set MONK_Q,10;
+			changequest 3018,3024;
 			delitem 942,20; //Yoyo_Tail
 			delitem 1002,5; //Iron_Ore
 			delitem 510,3; //Blue_Herb
@@ -476,6 +482,7 @@ monk_in,99,58,1	script	Sensei Moohae#mk	60,{
 			mes "See, that wasn't so bad you real found all the items.";
 			mes "I will tell this to the elders.";
 			set MONK_Q,10;
+			changequest 3019,3024;
 			delitem 905,30; //Stem
 			delitem 909,5; //Jellopy
 			delitem 955,10; //Worm_Peelings
@@ -506,6 +513,7 @@ monk_in,99,58,1	script	Sensei Moohae#mk	60,{
 			mes "Impressive, you really found all the items.";
 			mes "I will tell this to the elders.";
 			set MONK_Q,10;
+			changequest 3020,3024;
 			delitem 943,5; //Solid_Shell
 			delitem 935,20; //Shell
 			delitem 912,5; //Zargon
@@ -536,6 +544,7 @@ monk_in,99,58,1	script	Sensei Moohae#mk	60,{
 			mes "Very nice, you found all the items.";
 			mes "I will tell this to the elders.";
 			set MONK_Q,10;
+			changequest 3021,3024;
 			delitem 7053,5; //Cyfar
 			delitem 509,10; //White_Herb
 			delitem 508,10; //Yellow_Herb
@@ -566,6 +575,7 @@ monk_in,99,58,1	script	Sensei Moohae#mk	60,{
 			mes "Excellent, all the items I asked for.";
 			mes "I will tell this to the elders.";
 			set MONK_Q,10;
+			changequest 3022,3024;
 			delitem 913,10; //Tooth_Of_Bat
 			delitem 948,5; //Bear's_Foot
 			delitem 7033,20; //Poison_Spore
@@ -596,6 +606,7 @@ monk_in,99,58,1	script	Sensei Moohae#mk	60,{
 			mes "Wow, you found all the items!!";
 			mes "I will tell this to the elders.";
 			set MONK_Q,10;
+			changequest 3023,3024;
 			delitem 1027,5; //Porcupine_Spike
 			delitem 1025,20; //Spiderweb
 			delitem 1042,10; //Short_Leg
@@ -830,6 +841,7 @@ monk_in,99,58,1	script	Sensei Moohae#mk	60,{
 			mes "....and see life through the eyes of a monk.";
 			next;
 			set .@jlevel,JobLevel;
+			completequest 3032;
 			callfunc "Job_Change",Job_Monk;
 			callfunc "F_ClearJobVar";
 			mes "[Sensei Moohae]";
@@ -924,6 +936,7 @@ prt_monk,251,255,1	script	Touha#mk	79,{
 		mes "Please repeat after me.";
 		next;
 		mes "[Touha]";
+		changequest 3024,3025;
 		switch(rand(1,3)) {
 		case 1:
 			set MONK_Q,11;
@@ -1580,6 +1593,7 @@ L_MonkOath3:
 		next;
 		if (.@monk_t > 90) {
 			set MONK_Q,14;
+			changequest 3025,3026;
 			mes "[Touha]";
 			mes "...well done, that was perfect. You pay attention well...";
 			next;
@@ -1868,12 +1882,14 @@ prt_monk,57,179,1	script	Boohae#mk	110,{
 		next;
 		if (select("Gathering mushrooms:Marathon") == 1) {
 			set MONK_Q,15;
+			changequest 3026,3027;
 			mes "[Boohae]";
 			mes "Hmm....gathering mushrooms. So you want to test your tolerance huh?";
 			mes "Go prepare and come back later when you're ready.";
 			close;
 		}
 		set MONK_Q,16;
+		changequest 3026,3028;
 		mes "[Boohae]";
 		mes "Good choice. Forcing your physical limits to their boundaries and grants a higher amount of self control.";
 		mes "Go prepare and come back later when you're ready.";
@@ -2046,6 +2062,7 @@ monk_test,386,388,4	script	Apprentice Monk#mk	110,{
 		mapannounce "monk_test","" + strcharinfo(0) + "...q.q..q. .quit! ...the marathon!! Y...you do not have what it takes to be a m... monk!",bc_map;
 		close2;
 		set MONK_Q,15;
+		changequest 3028,3027;
 		warp "prt_monk",194,168;
 		end;
 	}
@@ -2064,6 +2081,7 @@ OnTouch:
 	}
 	else if (MONK_Q == 24) {
 		set MONK_Q,25;
+		changequest 3028,3029;
 		mapannounce "monk_test","Now! This is the last lap!! If you make it you need to go visit Tomoon for the next test!",bc_map;
 		warp "monk_test",385,388;
 		end;
@@ -2130,6 +2148,7 @@ job_monk,225,180,1	script	Hyunmoo#mk	89,{
 		mapannounce "job_monk","" + strcharinfo(0) + ", has quit his testing to become a monk.",bc_map;
 		close2;
 		set MONK_Q,16;
+		changequest 3027,3028;
 		warp "prt_monk",194,168;
 		end;
 	}
@@ -2176,6 +2195,7 @@ job_monk,225,180,1	script	Hyunmoo#mk	89,{
 		mapannounce "job_monk","" + strcharinfo(0) + ", has quit his training to become a monk.",bc_map;
 		warp "prt_monk",194,168;
 		set MONK_Q,16;
+		changequest 3027,3028;
 		end;
 	}
 	else if (MONK_Q > 14 && MONK_Q < 25 && (countitem(1069) > 29 || countitem(1070) > 29)) {
@@ -2187,6 +2207,7 @@ job_monk,225,180,1	script	Hyunmoo#mk	89,{
 		mes "Go meet Tomoon for your next test.";
 		mes "Tomoon is staying in the deepest room inside a building near this abbey.";
 		set MONK_Q,25;
+		changequest 3027,3029;
 		delitem 1069,countitem(1069); //Mushroom_Of_Thief_1
 		delitem 1070,countitem(1070); //Mushroom_Of_Thief_2
 		close2;
@@ -2268,6 +2289,7 @@ monk_test,319,139,1	script	Tomoon#mk	52,{
 		mes "Let's see if you got what it takes to be a true monk!!";
 		close2;
 		set MONK_Q,26;
+		changequest 3029,3031;
 		warp "monk_test",88,74;
 		end;
 	}
@@ -2290,6 +2312,7 @@ monk_test,319,139,1	script	Tomoon#mk	52,{
 		mes "Drink this potion and you will be able to become a monk!!!";
 		mes "... now go back to sensei Moohae!!!";
 		set MONK_Q,28;
+		changequest 3031,3032;
 		close;
 	}
 	else if (MONK_Q == 28) {

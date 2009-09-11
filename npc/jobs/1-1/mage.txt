@@ -209,13 +209,13 @@ geffen_in,164,124,4	script	Mage Guildsman	123,{
 		callfunc "Job_Change",Job_Mage;
 		callfunc "F_ClearJobVar";
 		set Zeny,Zeny+50;
-		if(checkquest(1005) != "-1") {
+		if(checkquest(1005) != -1) {
 			completequest 1005;
 		}
-		else if(checkquest(1006) != "-1") {
+		else if(checkquest(1006) != -1) {
 			completequest 1006;
 		}
-		else if(checkquest(1007) != "-1") {
+		else if(checkquest(1007) != -1) {
 			completequest 1007;
 		}
 		else {

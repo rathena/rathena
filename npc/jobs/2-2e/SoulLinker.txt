@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Celestria & Samuray22
 //===== Current Version: ===================================== 
-//= 1.4
+//= 1.5
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -19,6 +19,7 @@
 //=	No longer used a global var, uses an NPC var instead.
 //= 1.3a Deleted Empty Color Tag. (bugreport:1572) [Samuray22]
 //= 1.4 Replaced effect numerics with constants. [L0ne_W0lf]
+//= 1.5 Added Quest Log commands. [Kisuka]
 //============================================================ 
 
 morocc_in,174,30,6	script	Kid#link1	716,{
@@ -157,6 +158,7 @@ morocc_in,174,30,6	script	Kid#link1	716,{
 					close;
 				}
 				set SOUL_Q,1;
+				setquest 6005;
 				mes "[Kid]";
 				mes "So you want to become";
 				mes "a Soul Linker? Great!";
@@ -197,6 +199,7 @@ morocc_in,174,30,6	script	Kid#link1	716,{
 						delitem 929,1; //Immortal_Heart
 						delitem 748,1; //Witherless_Rose
 						set SOUL_Q,2;
+						changequest 6005,6006;
 						mes "[Kid]";
 						mes "Great, I see that you've";
 						mes "brought everything. But";
@@ -359,6 +362,7 @@ OnTouch:
 			mes "more spirits as a Soul Linker.";
 			next;
 			set SOUL_Q,3;
+			changequest 6006,6007;
 			mes "[Maia]";
 			mes "We can only remain in";
 			mes "your mind for 3 minutes.";
@@ -428,6 +432,7 @@ OnTouch:
 			mes "powers as a Soul Linker";
 			mes "wisely and for just purposes.";
 			next;
+			completequest 6008;
 			callfunc "Job_Change",Job_Soul_Linker;
 			callfunc "F_ClearJobVar";		// clears all job variables for the current player
 			set SOUL_Q,0;
@@ -509,6 +514,9 @@ job_soul,30,35,6	script	Monk Spirit#link4	827,{
 		mes "possibly have to do this.";
 		next;
 		set SOUL_Q,4;
+		if(checkquest(6008) == -1) {
+			changequest 6007,6008;
+		}
 		mes "[Monk Spirit]";
 		mes "I beg of you...";
 		mes "I need you to help";
@@ -555,6 +563,9 @@ job_soul,30,25,7	script	Sage Spirit#link5	754,{
 		mes "require your help. I beg you,";
 		mes "let me become your spirit ally.";
 		set SOUL_Q,4;
+		if(checkquest(6008) == -1) {
+			changequest 6007,6008;
+		}
 		next;
 		mes "[Sage Spirit]";
 		mes "I believe that you";
@@ -596,6 +607,9 @@ job_soul,25,30,5	script	Alchemist Spirit#link7	744,{
 		mes "on to the next world until I've";
 		mes "passed on my techniques...";
 		set SOUL_Q,4;
+		if(checkquest(6008) == -1) {
+			changequest 6007,6008;
+		}
 		next;
 		mes "[Alchemist Spirit]";
 		mes "I'm powerless as a spirit,";

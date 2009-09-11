@@ -5,7 +5,7 @@
 //= Converted by kobra_k88
 //= Further bugfixed and tested by Lupus
 //===== Current Version: ===================================== 
-//= 3.4
+//= 3.5
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -50,6 +50,7 @@
 //= 3.3 Added missing next. [L0ne_W0lf]
 //= 3.4 Corrected some Issues with the Waiting Room. (bugreport:1890) [Samuray22]
 //=	-Deleted a Unnecesary Next; on Hunter Guildsman#hnt. (bugreports:1665,2239,2179)
+//= 3.5 Added Quest Log commands. [Kisuka]
 //============================================================ 
 
 // Notices in the old Hunter Guild.
@@ -180,6 +181,7 @@ hu_in01,386,373,4	script	Hunter Guildsman#hnt	727,{
 			mes "Tada~ Congratulations!";
 			mes "You look great as a Hunter!!";
 			set .@joblvl,joblevel;
+			completequest 4013;
 			callfunc "Job_Change",Job_Hunter;
 			callfunc "F_ClearJobVar";		// clears all job variables for the current player
 			next;
@@ -220,6 +222,9 @@ hu_in01,386,373,4	script	Hunter Guildsman#hnt	727,{
 				mes "shall we begin?";
 				next;
 				if (select("Yes~ Let's start now.:No, I'll be back later.") == 1) {
+					if(checkquest(4000) == -1) {
+						setquest 4000;
+					}
 					mes "[Hunter Sherin]";
 					mes "Listen carefully to the scenarios I describe. When I ask a question, you choose an answer. Pretty simple, don't you think?";
 					next;
@@ -346,6 +351,7 @@ L_AskQuestions:
 					next;
 					if (.@hunter_t == 100) {
 						set HNTR_Q,2;
+						changequest 4000,4001;
 						mes "[Hunter Sherin]";
 						mes "Well done! Your answers show you've got the right outlook on life. You definitely have the right qualities to become a Hunter~";
 						next;
@@ -355,6 +361,7 @@ L_AskQuestions:
 					}
 					else if (.@hunter_t == 90) {
 						set HNTR_Q,2;
+						changequest 4000,4001;
 						mes "[Hunter Sherin]";
 						mes "Well, I'm looking at your answers and your score isn't perfect. But I'll let you pass anyway. I don't know what our Guildmaster will think, though.";
 						next;
@@ -464,19 +471,19 @@ L_GiveQuestItems:
 			next;
 			switch(rand(1,7)) {
 			//Claw_Of_Desert_Wolf, Wooden_Block, White_Herb
-			case 1: setarray .@items[0], 7030,5, 1019,5, 509,3, 3; break;
+			case 1: setarray .@items[0], 7030,5, 1019,5, 509,3, 3; changequest 4001,4002; break;
 			//Bill_Of_Birds, Skel_Bonem Green_Herb
-			case 2: setarray .@items[0], 925,3, 932,5, 511,3, 4; break;
+			case 2: setarray .@items[0], 925,3, 932,5, 511,3, 4; changequest 4001,4003; break;
 			//Posionous_Canine, Animal's_Skin, Red_Herb
-			case 3: setarray .@items[0], 937,3, 919,3, 507,5, 5; break;
+			case 3: setarray .@items[0], 937,3, 919,3, 507,5, 5; changequest 4001,4004; break;
 			//Dokkaebi_Horn, Piece_Of_Egg_Shell, Fluff
-			case 4: setarray .@items[0], 1021,3, 7032,3, 914,10, 6; break;
+			case 4: setarray .@items[0], 1021,3, 7032,3, 914,10, 6; changequest 4001,4005; break;
 			//Shell, Worm_Peelings, Yellow_Herb
-			case 5: setarray .@items[0], 935,9, 955,9, 508,9, 7; break;
+			case 5: setarray .@items[0], 935,9, 955,9, 508,9, 7; changequest 4001,4006; break;
 			//Tooth_Of_Bat, Sticky_Mucus, Bear's_Foot
-			case 6: setarray .@items[0], 913,3, 938,1, 948,1, 8; break;
+			case 6: setarray .@items[0], 913,3, 938,1, 948,1, 8; changequest 4001,4007; break;
 			//Porcupine_Spike, Yoyo_Tailm Acorn
-			case 7: setarray .@items[0], 1027,2, 942,1, 1026,1, 9; break;
+			case 7: setarray .@items[0], 1027,2, 942,1, 1026,1, 9; changequest 4001,4008; break;
 			}
 			mes "[Demon Hunter]";
 			mes "Hmm. ^660000"+.@items[1]+" "+getitemname(.@items[0])+"^000000 to use for arrow tips. ^660000"+.@items[3]+" "+getitemname(.@items[2])+"^000000 to use here and there. And ^660000"+.@items[5]+" "+getitemname(.@items[4])+"^000000 please.";
@@ -532,6 +539,27 @@ L_GiveQuestItems:
 			mes "[Demon Hunter]";
 			mes "You brought all of the necessary materials... You can get directions to the testing area from our Guildmaster who is currently in the Payon Central Palace.";
 			set HNTR_Q,.@items[6];
+			if(checkquest(4002) != -1) {
+				changequest 4002,4009;
+			}
+			else if(checkquest(4003) != -1) {
+				changequest 4003,4009;
+			}
+			else if(checkquest(4004) != -1) {
+				changequest 4004,4009;
+			}
+			else if(checkquest(4005) != -1) {
+				changequest 4005,4009;
+			}
+			else if(checkquest(4006) != -1) {
+				changequest 4006,4010;
+			}
+			else if(checkquest(4007) != -1) {
+				changequest 4007,4010;
+			}
+			else {
+				changequest 4008,4010;
+			}
 			delitem .@items[0],.@items[1];
 			delitem .@items[2],.@items[3];
 			delitem .@items[4],.@items[5];
@@ -611,6 +639,7 @@ payon_in03,131,7,3	script	Hunter#htnGM	59,{
 		mes "[Hunter Guildmaster]";
 		mes "Well, then. Your arrows are probably still being made, so you can use mine to take the test.";
 		set HNTR_Q,12;
+		changequest 4009,4011;
 		getitem 1751,200; //Silver_Arrow
 		close2;
 		warp "job_hunte",176,22;
@@ -697,6 +726,7 @@ payon_in03,131,7,3	script	Hunter#htnGM	59,{
 		set HNTR_Q,17;
 		savepoint "payon",104,99;
 		getitem 1007,1; //Penetration
+		changequest 4012,4013;
 		next;
 		mes "[Hunter Guildmaster]";
 		mes "Okay, here it is. Now, go back to the Hunter Guild. I have some more business left to do here, but I hope you can become a Hunter soon.";
@@ -773,6 +803,7 @@ payon_in02,21,31,1	script	Hunter#htnGM2	59,{
 		mes "[Hunter Guildmaster]";
 		mes "Good luck.";
 		set HNTR_Q,12;
+		changequest 4010,4011;
 		warp "job_hunte",176,22;
 		cutin "job_huntermaster",255;
 		end;
@@ -1207,6 +1238,7 @@ OnTouch:
 	donpcevent "Manager#hnt::OnReset";
 	donpcevent "Waiting Room#hnt::OnStart";
 	set HNTR_Q,16;
+	changequest 4011,4012;
 	savepoint "payon",104,99;
 	if (rand(1))
 		warp "payon_in02",21,27;

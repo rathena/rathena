@@ -4,7 +4,7 @@
 //= Made by: Black Dragon
 //= Converted by: Shin
 //===== Current Version: ===================================== 
-//= 3.1
+//= 3.2
 //===== Compatible With: ===================================== 
 //= eAthena  SVN
 //===== Description: ========================================= 
@@ -30,6 +30,7 @@
 //= 2.9a Deleted unused variables. [Samuray22]
 //= 3.0 Updated waiting room. (Removes global var) [L0ne_W0lf]
 //= 3.1 Adding Hermemton's changes. [L0ne_W0lf]
+//= 3.2 Added Quest Log commands. [Kisuka]
 //============================================================
 
 
@@ -150,6 +151,7 @@ prt_castle,45,169,5	script	Senior Crusader	752,{
 					delitem 1004, 1;
 					delitem 1009, 1;
 					set CRUS_Q,4;
+					setquest 3009;
 					mes "[Michael Halig]";
 					mes "Moorenak and others like him will test the limits of your capabilities and help you find your path. Return to me after you have completed their tests...";
 					close;
@@ -165,6 +167,7 @@ prt_castle,45,169,5	script	Senior Crusader	752,{
 				set .@cru_m1,rand(1,3);
 				if(.@cru_m1 == 1) {
 					set CRUS_Q, 1;
+					setquest 3006;
 					mes "10 ^3355FF"+getitemname(957)+"^000000";
 					mes "10 ^3355FF"+getitemname(959)+"^000000";
 					mes "10 ^3355FF"+getitemname(1099)+"^000000";
@@ -173,6 +176,7 @@ prt_castle,45,169,5	script	Senior Crusader	752,{
 				}
 				else if(.@cru_m1 == 2) {
 					set CRUS_Q, 2;
+					setquest 3007;
 					mes "10 ^3355FF"+getitemname(932)+"^000000";
 					mes "10 ^3355FF"+getitemname(1043)+"^000000";
 					mes "10 ^3355FF"+getitemname(1098)+"^000000";
@@ -181,6 +185,7 @@ prt_castle,45,169,5	script	Senior Crusader	752,{
 				}
 				else {
 					set CRUS_Q, 3;
+					setquest 3008;
 					mes "10 ^3355FF"+getitemname(958)+"^000000";
 					mes "10 ^3355FF"+getitemname(930)+"^000000";
 					mes "10 ^3355FF"+getitemname(1041)+"^000000";
@@ -241,6 +246,15 @@ prt_castle,45,169,5	script	Senior Crusader	752,{
 			delitem @item3, 10;
 			delitem @item4, 10;
 			set CRUS_Q, 4;
+			if(checkquest(3006) != -1) {
+				changequest 3006,3009;
+			}
+			else if(checkquest(3007) != -1) {
+				changequest 3007,3009;
+			}
+			else {
+				changequest 3008,3009;
+			}
 			mes "[Michael Halig]";
 			mes "Moorenak and others like him will test the limits of your capabilities and help you find your path. Return to me after you have completed their tests...";
 			close;
@@ -269,6 +283,7 @@ prt_castle,45,169,5	script	Senior Crusader	752,{
 		mes "Together, let us ready ourselves and be victorious over evil and tyranny!";
 		next;
 		set .@Joblevel,JobLevel;
+		completequest 3015;
 		callfunc "Job_Change",Job_Crusader;
 		callfunc "F_ClearJobVar";		//clears all job variables for the current player
 		mes "[Michael Halig]";
@@ -363,6 +378,7 @@ prt_castle,164,32,1	script	Man in Anguish	733,{
 			mes "You must keep one thing in mind. Under no condition are you allowed to kill the monsters.";
 			next;
 			set CRUS_Q,5;
+			changequest 3009,3010;
 			mes "[Murnak Mijoul]";
 			mes "Well then...";
 			mes "Good luck.";
@@ -706,6 +722,7 @@ C_Questions:
 		mes "is " + .@cru_t + " points...";
 		if(.@cru_t == 100) {
 			set CRUS_Q, 8;
+			changequest 3011,3013;
 			mes "Superb! Now, it's time for";
 			mes "you to take the next test.";
 			next;
@@ -718,6 +735,7 @@ C_Questions:
 		}
 		else if(.@cru_t == 90) {
 			set CRUS_Q, 8;
+			changequest 3011,3013;
 			mes "Well done~ Now, it's time for";
 			mes "you to take the next test.";
 			next;
@@ -730,6 +748,7 @@ C_Questions:
 		}
 		else if (.@cru_t == 80 && CRUS_Q == 7) {
 			set CRUS_Q,8;
+			changequest 3011,3013;
 			mes "Seems like you prepared a lot so I'll let you pass this time.";
 			mes "Hurry now and go take the next test.";
 			next;
@@ -739,6 +758,9 @@ C_Questions:
 			close;
 		}
 		set CRUS_Q,7;
+		if(checkquest(3011) != -1) {
+			changequest 3011,3012;
+		}
 		mes "Hmmm... What a pity.";
 		mes "Go study some more and";
 		mes "take this test again, okay?";
@@ -842,6 +864,9 @@ prt_castle,35,151,5	script	Patron Knight	751,{
 			mes "[Bliant Piyord]";
 			mes "To take the battle test, bring";
 			mes "1 ^3355FFHoly Water^000000. This will be used to purify you prior to taking the test.";
+			if(checkquest(3013) != -1) {
+				changequest 3013,3014;
+			}
 			next;
 			mes "[Bliant Piyord]";
 			mes "Well then...";
@@ -1174,6 +1199,7 @@ OnDead:
 job_cru,98,105,4	script	 Summoner#cr5	45,3,3,{
 OnTouch:
 	set CRUS_Q,6;
+	changequest 3010,3011;
 	warp "prt_castle",164,28;
 	end;
 }
@@ -1268,7 +1294,10 @@ OnMonster3:
 
 OnDead:
 	set .MyMonsterCount,.MyMonsterCount+1;
-	if (.MyMonsterCount >= 10) set CRUS_Q,10;
+	if (.MyMonsterCount >= 10) {
+		set CRUS_Q,10;
+		changequest 3014,3015;
+	}
 	end;
 
 OnEnd:

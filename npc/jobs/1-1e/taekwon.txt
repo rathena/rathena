@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Tsuyuki & Samuray22
 //===== Current Version: ===================================== 
-//= 1.2
+//= 1.3
 //===== Compatible With: ===================================== 
 //= eAthena/Freya
 //===== Description: ========================================= 
@@ -12,6 +12,7 @@
 //= 1.0 Replaced previous TK Job Quest with this one [Tsuyuki]
 //= 1.1 Rewrote to the Aegis Standars. [Samuray22]
 //= 1.2 Fixed position the npc is facing. [Kisuka]
+//= 1.3 Added Quest Log commands. [Kisuka]
 //============================================================ 
 
 
@@ -106,6 +107,7 @@ L_change:
 				mes "spiritual training. Take a deep";
 				mes "breath, speak to me when ready.";
 				set TK_Q, 2;
+				setquest 6001;
 				close;
 			}
 			mes "[Phoenix]";
@@ -116,6 +118,7 @@ L_change:
 			next;
 			set TAEK_Q, BaseLevel;
 			set TK_Q, 1;
+			setquest 6000;
 			mes "[Phoenix]";
 			mes "I understand this is not an";
 			mes "easy task for Novices, but you";
@@ -138,6 +141,7 @@ L_change:
 	case 1:
 		if(BaseLevel > TAEK_Q) {
 			set TK_Q, 2;
+			changequest 6000,6001;
 			mes "[Phoenix]";
 			mes "Good. I sense that you";
 			mes "are more in tune with your";
@@ -176,6 +180,30 @@ L_change:
 		mes "you generally respond?";
 		next;
 		switch(select( "I face it head on.:Avoid it somehow.:Regroup and analyze the problem.")) {
+		case 1:
+			mes "[Phoenix]";
+			mes "Yes, that is the answer";
+			mes "I wanted. Even if you cannot";
+			mes "handle a problem at first, we";
+			mes "can only benefit from such";
+			mes "strong determination. Don't";
+			mes "let any obstacle stop you.";
+			next;
+			mes "[Phoenix]";
+			mes "Even if you fail, you";
+			mes "can only learn from the";
+			mes "experience when you give";
+			mes "your all. Half-hearted";
+			mes "attempts rarely yield";
+			mes "fruitful results.";
+			next;
+			mes "[Phoenix]";
+			mes "Seeing as you already";
+			mes "understand the importance";
+			mes "of one's will, we'll proceed";
+			mes "to the next question.";
+			next;
+			break;
 		case 2:
 			mes "[Phoenix]";
 			mes "Fool! How do you expect";
@@ -210,29 +238,6 @@ L_change:
 			mes "as well as what you define as";
 			mes "failure. Then, return to me.";
 			close;
-		case 1:
-			mes "[Phoenix]";
-			mes "Yes, that is the answer";
-			mes "I wanted. Even if you cannot";
-			mes "handle a problem at first, we";
-			mes "can only benefit from such";
-			mes "strong determination. Don't";
-			mes "let any obstacle stop you.";
-			next;
-			mes "[Phoenix]";
-			mes "Even if you fail, you";
-			mes "can only learn from the";
-			mes "experience when you give";
-			mes "your all. Half-hearted";
-			mes "attempts rarely yield";
-			mes "fruitful results.";
-			next;
-			mes "[Phoenix]";
-			mes "Seeing as you already";
-			mes "understand the importance";
-			mes "of one's will, we'll proceed";
-			mes "to the next question.";
-			next;
 		}
 		mes "[Phoenix]";
 		mes "On your travels, you will";
@@ -331,6 +336,7 @@ L_change:
 		mes "while. When your mind is calm,";
 		mes "come and speak to me.";
 		set TK_Q, 3;
+		changequest 6001,6002;
 		close;
 	case 3:
 		mes "[Phoenix]";
@@ -369,6 +375,7 @@ L_change:
 			mes "shirk your training, or bring";
 			mes "shame to Taekwon Do.";
 			next;
+			completequest 6002;
 			callfunc "Job_Change",Job_Taekwon;
 			callfunc "F_ClearJobVar";
 			getitem 2101,1; // Guard[0]

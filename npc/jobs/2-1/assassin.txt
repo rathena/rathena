@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 
-//= 3.2
+//= 3.3
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -45,6 +45,7 @@
 //= 3.1a Follow up fix. Forgot to replace a label. [L0ne_W0lf]
 //= 3.1b Fixed waiting room not enabled in some situations [Zephyrus]
 //= 3.2 Fixed a question having all correct answers. [brianluau]
+//= 3.3 Added Quest Log commands. [Kisuka]
 //============================================================ 
 
 in_moc_16,19,33,1	script	Guildsman#asn	55,{
@@ -123,10 +124,12 @@ in_moc_16,19,33,1	script	Guildsman#asn	55,{
 		mes "......";
 		next;
 		delitem 1008,1; //Frozen_Heart
+		changequest 8007,8008;
 		mes "[Assassin Expert 'Huey']";
 		mes "Alright!";
 		mes "You've been approved!";
 		next;
+		completequest 8008;
 		callfunc "Job_Change",Job_Assassin;
 		callfunc "F_ClearJobVar";		// clears all job variables for the current player
 		mes "[Assassin Expert 'Huey']";
@@ -250,6 +253,11 @@ in_moc_16,19,33,1	script	Guildsman#asn	55,{
 					mes "you to the office.";
 					close2;
 					set ASSIN_Q,0;
+					if(checkquest(8000) != -1) {
+						changequest 8000,8001;
+					}else{
+						setquest 8001;
+					}
 					warp "in_moc_16",19,76;
 					end;
 				case 2:
@@ -542,6 +550,7 @@ OnTouch:
 				close2;
 				set ASSIN_Q3,1;
 				set ASSIN_Q,1;
+				changequest 8001,8002;
 				warp "in_moc_16",19,144;
 				end;
 			}
@@ -564,6 +573,7 @@ OnTouch:
 				close2;
 				set ASSIN_Q3,2;
 				set ASSIN_Q,1;
+				changequest 8001,8002;
 				warp "in_moc_16",19,144;
 				end;
 			}
@@ -590,6 +600,7 @@ OnTouch:
 				set ASSIN_Q,0;
 				set ASSIN_Q3,0;
 				set ASSIN_Q2,0;
+				erasequest 8001;
 				warp "moc_fild16",206,229;
 				end;
 			}
@@ -616,6 +627,7 @@ OnTouch:
 				next;
 				set ASSIN_Q3,1;
 				set ASSIN_Q,1;
+				changequest 8001,8002;
 				warp "in_moc_16",19,144;
 				end;
 			}
@@ -629,6 +641,7 @@ OnTouch:
 				next;
 				set ASSIN_Q3,2;
 				set ASSIN_Q,1;
+				changequest 8001,8002;
 				warp "in_moc_16",19,144;
 				end;
 			}
@@ -976,6 +989,7 @@ L_AskQuestions:
 			mes "" + .@assassin_t + " percent...";
 			if (.@assassin_t > 80) {
 				set ASSIN_Q2,5;
+				changequest 8002,8003;
 				mes "Well done.";
 				mes "You pass.";
 				next;
@@ -1012,6 +1026,7 @@ L_AskQuestions:
 			mes "" + .@assassin_t + " points...";
 			if (.@assassin_t > 80) {
 				set ASSIN_Q2,5;
+				changequest 8002,8003;
 				next;
 				mes "[The Anonymous One]";
 				mes "You didn't fail this time! But you're not done just yet. You have another test ahead of you. Once you proceed, you will be informed about your next trial.";
@@ -1173,6 +1188,7 @@ OnTouch:
 		set ASSIN_Q,0;
 		set ASSIN_Q3,0;
 		set ASSIN_Q2,0;
+		changequest 8003,8000;
 		warp "in_moc_16",19,13;
 		end;
 	}
@@ -1246,6 +1262,7 @@ OnMyMobDead:
 	if (.MyMobs < 1) {
 		mapannounce "in_moc_16","You seem to be doing quite well. Keep it up!",bc_map;
 		set ASSIN_Q,3;
+		changequest 8003,8004;
 		donpcevent "timestopper#1::OnEnable";
 		donpcevent "Keeper of the Door#ASN::OnEnable";
 		donpcevent "Beholder#ASNTEST::OnResetmob";
@@ -1502,6 +1519,7 @@ OnTouch:
 			set ASSIN_Q,0;
 			set ASSIN_Q2,0;
 			set ASSIN_Q3,0;
+			changequest 8004,8000;
 			savepoint "in_moc_16",18,14;
 			warp "in_moc_16",18,14;
 			donpcevent "Standby Room#ASNTEST::OnStart";
@@ -1569,6 +1587,7 @@ OnTouch:
 	mes "You may now proceed to our Guildmaster's room. Good luck!!";
 	close2;
 	set ASSIN_Q,5;
+	changequest 8004,8005;
 	warp "in_moc_16",181,183;
 	end;
 }
@@ -1578,6 +1597,7 @@ OnTouch:
 	if (ASSIN_Q == 5 || ASSIN_Q == 6) {
 		warp "in_moc_16",181,183;
 		set ASSIN_Q,ASSIN_Q+1;
+		changequest 8005,8006;
 	}
 	else {
 		mapannounce "in_moc_16",strcharinfo(0)+" has entered 'Guildmaster's room.'",bc_map;
@@ -2100,6 +2120,7 @@ OnTouch:
 		mes "You, " + strcharinfo(0) + ", have chosen to live as an Assassin. May you learn our ways and be an honorable example to others.";
 		savepoint "morocc",100,100;
 		getitem 1008,1; //Frozen_Heart
+		changequest 8006,8007;
 		next;
 		mes "[Guildmaster]";
 		mes "Okay, all of you may go back to your positions. I will send you to the entrance as well. Let's move...";

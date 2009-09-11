@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 
-//= 2.8
+//= 2.9
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -20,6 +20,7 @@
 //= 2.6 Fixed a few bugs in the Rogue Guildsman. [L0ne_W0lf]
 //= 2.7 Fixed a bug on Markie question 5, bugreport:1600 [Brainstorm]
 //= 2.8 Moved "Thug" to Morroc Ruins. [L0ne_W0lf]
+//= 2.9 Added Quest Log commands. [Kisuka]
 //============================================================ 
 
 moc_ruins,86,103,1	script	Thug#rg	118,{
@@ -146,6 +147,7 @@ in_rogue,363,122,4	script	Rogue Guildsman#rg	747,{
 				close;
 			}
 			else if (ROGUE_Q == 16 || ROGUE_Q == 17) {
+				changequest 2026,2027;
 				mes "[Markie]";
 				if (ROGUE_Q == 16) {
 					mes "Oh hey, it's you!";
@@ -171,6 +173,7 @@ in_rogue,363,122,4	script	Rogue Guildsman#rg	747,{
 				set .@jlevel,JobLevel;
 				callfunc "Job_Change",Job_Rogue;
 				callfunc "F_ClearJobVar";
+				completequest 2027;
 				next;
 				mes "[Markie]";
 				mes "Now...";
@@ -419,6 +422,7 @@ in_rogue,363,122,4	script	Rogue Guildsman#rg	747,{
 			mes "" + .@assassin_t + " points.";
 			if (.@assassin_t > 80) {
 				set ROGUE_Q,2;
+				setquest 2017;
 				mes "Good. You passed.";
 				mes "We don't gotta";
 				mes "do that again.";
@@ -512,6 +516,7 @@ in_rogue,376,23,1	script	Mr. Smith#rg	57,{
 			mes "[Mr. Smith]";
 			mes "I will let you know...";
 			set ROGUE_Q,6;
+			changequest 2017,2021;
 			next;
 			mes "[Mr. Smith]";
 			mes "I will let you know......";
@@ -684,6 +689,7 @@ in_rogue,376,23,1	script	Mr. Smith#rg	57,{
 				mes "^CCCCCC- Middle Finger -^000000'";
 				mes "*Grins*";
 				set ROGUE_Q,8;
+				changequest 2021,2025;
 				next;
 				mes "[Mr. Smith]";
 				mes "Since you showed such great effort, I'm going to write a recommendation letter for you. I usually don't do that, you know.";
@@ -753,6 +759,15 @@ in_rogue,376,23,1	script	Mr. Smith#rg	57,{
 			switch(rand(1,3)) {
 			case 1:
 				set ROGUE_Q,9;
+				if(checkquest(2018) != -1) {
+					changequest 2018,2022;
+				}
+				else if(checkquest(2019) != -1) {
+					changequest 2019,2022;
+				}
+				else {
+					changequest 2020,2022;
+				}
 				next;
 				mes "[Mr. Smith]";
 				mes "Right! I know";
@@ -781,6 +796,15 @@ in_rogue,376,23,1	script	Mr. Smith#rg	57,{
 				close;
 			case 2:
 				set ROGUE_Q,10;
+				if(checkquest(2018) != -1) {
+					changequest 2018,2023;
+				}
+				else if(checkquest(2019) != -1) {
+					changequest 2019,2023;
+				}
+				else {
+					changequest 2020,2023;
+				}
 				next;
 				mes "[Mr. Smith]";
 				mes "Hmm...";
@@ -808,6 +832,15 @@ in_rogue,376,23,1	script	Mr. Smith#rg	57,{
 				close;
 			case 3:
 				set ROGUE_Q,11;
+				if(checkquest(2018) != -1) {
+					changequest 2018,2024;
+				}
+				else if(checkquest(2019) != -1) {
+					changequest 2019,2024;
+				}
+				else {
+					changequest 2020,2024;
+				}
 				next;
 				mes "[Mr. Smith]";
 				mes "Hmm...";
@@ -914,6 +947,15 @@ S_Req:
 	mes "^FF0000"+getarg(2)+"^000000 and";
 	mes "^FF0000"+getarg(3)+"^000000.";
 	set ROGUE_Q,getarg(4);
+	if(getarg(4) == 3) {
+		changequest 2017,2018;
+	}
+	else if(getarg(4) == 4) {
+		changequest 2017,2019;
+	}
+	else {
+		changequest 2017,2020;
+	}
 	next;
 	mes "[Mr. Smith]";
 	mes "Hmm...?";
@@ -1211,6 +1253,7 @@ in_rogue,272,135,1	script	Hermanthorn Jr#rg	85,{
 		mes "Well...";
 		mes "Just make it back to the Rogue Guild alive. That's all you have to do!";
 		set ROGUE_Q,12;
+		changequest 2025,2026;
 		close;
 	}
 	else if (ROGUE_Q == 12) {
@@ -1383,6 +1426,7 @@ in_rogue,244,39,1	script	Aragham Junior#rg	99,{
 			close2;
 			warp "in_rogue",15,105;
 			set ROGUE_Q,13;
+			changequest 2022,2026;
 			end;
 		}
 		mes "[Aragham Jr.]";
@@ -1463,6 +1507,7 @@ in_rogue,160,34,1	script	Hollgrehenn junior#rg	85,{
 			close2;
 			warp "in_rogue",15,105;
 			set ROGUE_Q,15;
+			changequest 2024,2026;
 			end;
 		}
 		mes "[Hollgrehenn Jr.]";
@@ -1549,6 +1594,7 @@ in_rogue,177,109,1	script	Antonio junior#rg	88,{
 			close2;
 			warp "in_rogue",15,105;
 			set ROGUE_Q,14;
+			changequest 2023,2026;
 			end;
 		}
 		mes "[Antonio Jr.]";

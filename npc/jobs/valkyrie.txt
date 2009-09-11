@@ -232,7 +232,6 @@ yuno_in02,88,164,5	script	Metheus Sylphe#Library	742,{
 				if (Zeny >= 1285000) {
 					set zeny,zeny-1285000;
 					set valkyrie_Q,1;
-					setquest 1000;
 					mes "[Metheus Sylphe]";
 					mes "Thank you, your donation will be used for a good cause. You may";
 					mes "now go in and read the book.";
@@ -325,6 +324,9 @@ yuno_in02,93,207,1	script	Book of Ymir	111,{
 			mes "can confirm that Valkyrie and Valhalla actually exist...";
 			next;
 			set valkyrie_Q,2;
+			if(checkquest(1000) == -1) {
+				setquest 1000;
+			}
 			mes "[The Book of Ymir]";
 			mes "Let the heroes live new lives";
 			mes "so they can protect the world";

@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= nestor_zulueta (Fusion), converted by Darkchild
 //===== Current Version: ===================================== 
-//= 2.8
+//= 2.9
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -15,6 +15,7 @@
 //= 2.6 Corrected a bug in advanced class checking. [L0ne_W0lf]
 //= 2.7 Added missing checkweights. [L0ne_W0lf]
 //= 2.8 Fixed minor typo in test section. [L0ne_W0lf]
+//= 2.9 Added Quest Log commands. [Kisuka]
 //============================================================ 
 
 alde_alche,27,185,5	script	Alchemist Guildsman#am	744,{
@@ -183,14 +184,17 @@ alde_alche,27,185,5	script	Alchemist Guildsman#am	744,{
 				switch(rand(1,3)) {
 				case 1:
 					set ALCH_Q,1;
+					setquest 2028;
 					mes "^551A8B7 Berserk Potions^000000.";
 					break;
 				case 2:
 					set ALCH_Q,2;
+					setquest 2029;
 					mes "^551A8B100 Mini Furnaces^000000.";
 					break;
 				case 3:
 					set ALCH_Q,3;
+					setquest 2030;
 					mes "^551A8B7,500 Fire Arrows^000000.";
 				}
 				next;
@@ -230,6 +234,15 @@ alde_alche,27,185,5	script	Alchemist Guildsman#am	744,{
 			mes "Okay, now you need to learn";
 			mes "the basics to being an Alchemist and learn the procedures for mixing chemicals and medicines.";
 			set ALCH_Q,4;
+			if(checkquest(2028) != -1) {
+				changequest 2028,2031;
+			}
+			else if(checkquest(2029) != -1) {
+				changequest 2029,2031;
+			}
+			else {
+				changequest 2030,2031;
+			}
 			next;
 			mes "[Parmy Gianino]";
 			mes "But before all of that, you need to speak to Raspuchin. I'm not really sure what you'll be talking about with him...";
@@ -254,6 +267,15 @@ alde_alche,27,185,5	script	Alchemist Guildsman#am	744,{
 			mes "Okay, now you need to learn";
 			mes "the basics to being an Alchemist and learn the procedures for mixing chemicals and medicines.";
 			set ALCH_Q,4;
+			if(checkquest(2028) != -1) {
+				changequest 2028,2031;
+			}
+			else if(checkquest(2029) != -1) {
+				changequest 2029,2031;
+			}
+			else {
+				changequest 2030,2031;
+			}
 			next;
 			mes "[Parmy Gianino]";
 			mes "But before all of that, you need to speak to Raspuchin. I'm not really sure what you'll be talking about with him...";
@@ -724,6 +746,7 @@ L_AskQuestions:
 		mes "He'll teach you how to do the experiments. Just tell him that";
 		mes "I sent you.";
 		set ALCH_Q,6;
+		changequest 2031,2032;
 		close;
 	}
 	else if (ALCH_Q == 5) {
@@ -889,6 +912,7 @@ alde_alche,13,15,7	script	Studying Man#am	750,{
 			mes "^551A8B1 Yellow Herb^000000 and";
 			mes "^551A8B1 White Herb^000000.";
 			set ALCH_Q,7;
+			changequest 2032,2033;
 			next;
 			mes "[Darwin]";
 			mes "Once you have";
@@ -1229,6 +1253,7 @@ alde_alche,13,15,7	script	Studying Man#am	750,{
 			mes "Good job.";
 			mes "It came out pretty well considering it's your first time. Go ahead and keep the medicines that you've just made.";
 			set ALCH_Q,8;
+			changequest 2033,2035;
 			next;
 			mes "[Darwin]";
 			mes "Now, go into the next room";
@@ -1405,6 +1430,7 @@ alde_alche,79,19,5	script	Experiment Expert#am	748,{
 			next;
 			mes "[Van Helmont]";
 			set ALCH_Q,9;
+			changequest 2035,2036;
 			mes "Well then, see you later.";
 			mes "You'd better get going as";
 			mes "soon as you can.";
@@ -1499,6 +1525,7 @@ alde_alche,79,19,5	script	Experiment Expert#am	748,{
 			mes "to this one and talk to Nicholas. He'll continue your training.";
 			next;
 			set ALCH_Q,20;
+			changequest 2036,2037;
 			mes "[Van Helmont]";
 			mes "What are you";
 			mes "still doing here?";
@@ -1656,12 +1683,16 @@ alde_alche,101,184,4	script	Master Alchemist#am	122,{
 			cutin "",255;
 			end;
 		}
+		if(checkquest(2039) != -1) {
+			changequest 2039,2040;
+		}
 		mes "Ah, well done.";
 		mes "I can see that you";
 		mes "have learned all of";
 		mes "the basics of Alchemy.";
 		next;
 		set ALCH_Q,0;
+		completequest 2040;
 		set .@jlevel,JobLevel;
 		callfunc "Job_Change",Job_Alchemist;
 		callfunc "F_ClearJobVar";
@@ -1878,6 +1909,7 @@ alde_alche,145,19,1	script	Chief Researcher#am	57,{
 		mes "help them out. They'll need all of these items to continue their experiments.";
 		next;
 		set ALCH_Q,23;
+		changequest 2037,2038;
 		mes "[Nicholas Flamel]";
 		mes "1 Mixture,";
 		mes "5 Burnt Tree,";
@@ -1907,6 +1939,7 @@ alde_alche,145,19,1	script	Chief Researcher#am	57,{
 	}
 	else if (ALCH_Q == 24) {
 		set ALCH_Q,40;
+		changequest 2038,2039;
 		mes "[Nicholas Flamel]";
 		mes "Ah, you're back!";
 		mes "I just got a message from Bain";

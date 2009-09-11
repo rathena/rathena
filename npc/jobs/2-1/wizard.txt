@@ -4,7 +4,7 @@
 //= (Aegis) Translated by yoshiki, converted by kobra_k88
 //= Further bugfixed and tested by Lupus
 //===== Current Version: ===================================== 
-//= 2.9
+//= 3.0
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -23,6 +23,7 @@
 //= 2.8 Fixed donpcevent to doevent. (bugreport:2311) [SoulBlaker]
 //= 2.9 Reverted the change of donpcevent to doevent. [L0ne_W0lf]
 //=     Was probably cuased by a warp BEFORE a percentheal
+//= 3.0 Added Quest Log commands. [Kisuka]
 //============================================================ 
 
 gef_tower,111,37,4	script	Wizard Guildsman	70,{
@@ -139,6 +140,7 @@ gef_tower,111,37,4	script	Wizard Guildsman	70,{
 					mes "Go talk to the man in the corner and he will give you the remaining exams.";
 					mes "Be careful. We have lost many Mages due to the difficulty of the exams.";
 					set WIZ_Q,3;
+					setquest 9015;
 					close;
 				}
 				mes "[Catherine]";
@@ -154,12 +156,14 @@ gef_tower,111,37,4	script	Wizard Guildsman	70,{
 				mes "The items you must collect are...";
 				if (rand(1)) {
 					set WIZ_Q,1;
+					setquest 9013;
 					mes "^3355FFRed Gemstone^000000 10 each,";
 					mes "^3355FFBlue Gemstone^000000 10 each,";
 					mes "^3355FFYellow Gemstone^000000 10 each,";
 				}
 				else {
 					set WIZ_Q,2;
+					setquest 9014;
 					mes "^3355FFCrystal Blue^000000 5 each,";
 					mes "^3355FFGreen Live^000000 5 each,";
 					mes "^3355FFRed Blood^000000 5 each,";
@@ -196,6 +200,7 @@ gef_tower,111,37,4	script	Wizard Guildsman	70,{
 			delitem 717,10; //Blue_Gemstone
 			delitem 715,10; //Yellow_Gemstone
 			set WIZ_Q,3;
+			changequest 9013,9015;
 			mes "[Catherine]";
 			mes "Good for you! You passed the first test.";
 			mes "But there are still two more left, so don't get too relaxed.";
@@ -234,6 +239,7 @@ gef_tower,111,37,4	script	Wizard Guildsman	70,{
 			delitem 990,5; //Boody_Red
 			delitem 992,5; //Wind_Of_Verdure
 			set WIZ_Q,3;
+			changequest 9014,9015;
 			mes "[Catherine]";
 			mes "Good. You've passed the first test now.";
 			mes "But you still have two more tests to go, so don't get too laid back, because it only gets harder from here. ~Hehehe";
@@ -409,6 +415,7 @@ gef_tower,111,37,4	script	Wizard Guildsman	70,{
 		mes "[Catherine]";
 		mes "Well, no need to wait, I congratulate you. I hearby deem you Wizard.";
 		next;
+		completequest 9018;
 		callfunc "Job_Change",Job_Wizard;
 		callfunc "F_ClearJobVar";		// clears all job variables for the current player
 		mes "[Catherine]";
@@ -538,6 +545,9 @@ gef_tower,102,24,2	script	Gloomy Wizard	735,{
 		mes "[Raulel]";
 		mes "I'll give you 10 questions so give me the right answers.";
 		mes "If you get something wrong, I won't tell you what it is!";
+		if(checkquest(9016) == -1) {
+			changequest 9015,9016;
+		}
 		next;
 		mes "[Raulel]";
 		mes "*Cough* *cough* Then here go the questions!";
@@ -708,6 +718,7 @@ L_AskQuestions:
 			mes "Your score is... " + .@wizard_t + "points.....";
 			if (.@wizard_t == 100) {
 				set WIZ_Q,5;
+				changequest 9016,9017;
 				mes "Hahahahahahah~ Well done, you passed the second test.";
 				mes "It wasn't done in one try like mine was, but I'll let you slide...";
 				next;
@@ -718,6 +729,7 @@ L_AskQuestions:
 			}
 			else if (.@wizard_t == 90) {
 				set WIZ_Q,5;
+				changequest 9016,9017;
 				mes "Hahaha~ Since you only missed one problem, you passed the second test.";
 				mes "It wasn't done in one try like mine was, but I'll let you slide...";
 				next;
@@ -728,6 +740,7 @@ L_AskQuestions:
 			}
 			else if (.@wizard_t == 80) {
 				set WIZ_Q,5;
+				changequest 9016,9017;
 				mes "Sheez... You didn't do very well, but you passed the second test.";
 				mes "It wasn't done in one try like mine was, but I'll let you slide...";
 				next;
@@ -751,6 +764,7 @@ L_AskQuestions:
 		mes "Your score is... " + .@wizard_t + " points!";
 		if (.@wizard_t == 100) {
 			set WIZ_Q,5;
+			changequest 9016,9017;
 			mes "*cough* *Cough* Well done, you passed the second test.";
 			next;
 			mes "[Raulel]";
@@ -760,6 +774,7 @@ L_AskQuestions:
 		}
 		else if (.@wizard_t == 90) {
 			set WIZ_Q,5;
+			changequest 9016,9017;
 			mes "Hahahaha~ I'll let you slide by since you only missed one problem. You passed the second test.";
 			next;
 			mes "[Raulel]";
@@ -1528,6 +1543,7 @@ OnMyMobDead:
 	if (.MyMobs < 1) {
 		mapannounce "job_wiz","Congratulations, " + strcharinfo(0) + ". You have passed the job change test.",bc_map;
 		set WIZ_Q,7;
+		changequest 9017,9018;
 		donpcevent "Room of Fire#Door::OnDisable";
 		donpcevent "Test Helper#wiz::OnEnable";
 		stopnpctimer;

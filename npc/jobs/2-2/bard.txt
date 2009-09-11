@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Muad_Dib(The Prometheus Project), Lupus, Samuray22
 //===== Current Version: ===================================== 
-//= 2.4
+//= 2.5
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -21,6 +21,7 @@
 //=	- Fixed some indentation.
 //=	- Changed item names to item IDs
 //= 2.4 Fixed hang up on bard quest. ($kiN.) [L0ne_W0lf]
+//= 2.5 Added Quest Log commands. [Kisuka]
 //============================================================
 
 //=============== Ayealo ============================
@@ -151,6 +152,7 @@ comodo,226,123,5	script	Wandering Bard	741,{
 					mes "It would be nice if more people went around and sang...";
 					mes "Well, it's quite ok as it is now... hmmhmm.";
 					set BARD_Q,1;
+					setquest 3000;
 					close2;
 					cutin "job_bard_aiolo01",255;
 					end;
@@ -207,6 +209,7 @@ comodo,226,123,5	script	Wandering Bard	741,{
 				mes "It doesn't really matter which Flower, but try to bring one that I like.";
 				mes "And don't just buy any random Flower, ok?";
 				set BARD_Q,2;
+				changequest 3000,3001;
 				close2;
 				cutin "job_bard_aiolo01",255;
 				end;
@@ -409,6 +412,7 @@ comodo,226,123,5	script	Wandering Bard	741,{
 		mes "Go there and bring back a present.";
 		next;
 		set BARD_Q,3;
+		changequest 3001,3002;
 		set xmas_npc,1;
 		mes "[Lalo]";
 		mes "if you become friends with ^008800Jack Frost^000000, you will receive something.";
@@ -428,6 +432,9 @@ comodo,226,123,5	script	Wandering Bard	741,{
 			mes "Then, do you want to try singing...?";
 			mes "I'll sing a short melody...";
 			mes "and you try after.";
+			if(checkquest(3003) == -1) {
+				changequest 3002,3003;
+			}
 			next;
 			mes "[Lalo]";
 			mes "Here I go.";
@@ -817,6 +824,7 @@ B_Change:
 					cutin "job_bard_aiolo01",255;
 					end;
 				}
+				completequest 3003;
 				callfunc "Job_Change",Job_Bard;
 				callfunc "F_ClearJobVar";		//clears all job variables for the current player
 				mes "[Lalo]";
@@ -829,6 +837,7 @@ B_Change:
 				cutin "job_bard_aiolo01",255;
 				end;
 			}
+			changequest 3003,3004;
 			mes "[Lalo]";
 			mes "Hmm... very well, bring some trunks.";
 			mes "It doesn't matter what kind, as long as they are 60 of the same kind...";
@@ -918,6 +927,7 @@ B_Change:
 	end;
 
 S_ChangeJob:
+		completequest 3004;
 		callfunc "Job_Change",Job_Bard;
 		callfunc "F_ClearJobVar";
 		mes "[Lalo]";

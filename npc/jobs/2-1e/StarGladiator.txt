@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Celestria, Samuray22
 //===== Current Version: ===================================== 
-//= 1.2
+//= 1.3
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -16,6 +16,7 @@
 //= 1.1c Changed item names to item IDs. [Samuray22]
 //= 1.2 Another round of updates to the script. [L0ne_W0lf]
 //=	Removes the use of labels, and correcets other errors.
+//= 1.3 Added Quest Log commands. [Kisuka]
 //============================================================
 
 payon,215,102,3	script	Moohyun#job_star	828,3,3,{
@@ -103,6 +104,7 @@ payon,215,102,3	script	Moohyun#job_star	828,3,3,{
 							mes "letter of recommendation that";
 							mes "I'll send to him for you.";
 							set STGL_Q,1;
+							setquest 7007;
 							close;
 						}					
 						mes "[Moohyun]";
@@ -421,6 +423,7 @@ comodo,172,230,3	script	Wandering Master#job_sta	730,{
 				mes "^4D4DFFFlame Heart^000000.";
 				mes "Now go...";
 				set STGL_Q,2;
+				changequest 7007,7008;
 				close;
 			}
 			mes "[Moogang]";
@@ -485,6 +488,7 @@ comodo,172,230,3	script	Wandering Master#job_sta	730,{
 				delitem 995,1; //Mistic_Frozen
 				delitem 994,1; //Flame_Heart
 				set STGL_Q,3;
+				changequest 7008,7009;
 				close;
 			}
 			mes "[Moogang]";
@@ -672,6 +676,7 @@ comodo,172,230,3	script	Wandering Master#job_sta	730,{
 			mes "of the Sun, the Moon and";
 			mes "the Stars. Welcome to our";
 			mes "way of martial arts, friend.";
+			completequest 7011;
 			callfunc "Job_Change",Job_Star_Gladiator;
 			callfunc "F_ClearJobVar";		//clears all job variables for the current player
 			next;
@@ -1431,6 +1436,7 @@ job_star,161,33,0	script	Cheehee#job_star	77,{
 				mes "this earth that come from";
 				mes "the stars. Bring me a piece of a star and the sand of a star...";
 				set STGL_Q,10;
+				changequest 7009,7010;
 				close;
 			}
 			mes "[Cheehee]";
@@ -1531,6 +1537,7 @@ job_star,161,33,0	script	Cheehee#job_star	77,{
 				mes "let him know that you";
 				mes "completed our testing.";
 				set STGL_Q,12;
+				changequest 7010,7011;
 				close;
 			}
 			mes "[Cheehee]";
@@ -1563,6 +1570,7 @@ job_star,161,33,0	script	Cheehee#job_star	77,{
 			mes "let him know that you";
 			mes "completed our testing.";
 			set STGL_Q,12;
+			changequest 7010,7011;
 			close;
 		}
 		else if (STGL_Q == 12) {

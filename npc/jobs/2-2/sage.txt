@@ -5,7 +5,7 @@
 //= Unknown Translator (1.0)
 //= Darkchild (1.2)
 //===== Current Version: ===================================== 
-//= 2.6a
+//= 2.7
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -25,6 +25,7 @@
 //	-And Small Typo Error
 //= 2.6 Fixed Kayron Grik cutin not being removed as reported by jc1991, bugreport:1825 [Brainstorm]
 //= 2.6a Fixed a Little Bug with Whispers Summoned in the Last Test. (bugreport:2253) [Samuray22]
+//= 2.7 Added Quest Log commands. [Kisuka]
 //============================================================ 
 
 yuno_in02,38,61,5	script	Dean of the Academy#sa	743,{
@@ -156,6 +157,7 @@ yuno_in02,38,61,5	script	Dean of the Academy#sa	743,{
 			mes "Although it's roughly written, it's well done for a beginner.";
 			mes "Ah yes...you seem to be proficient in studying.";
 			next;
+			completequest 2052;
 			callfunc "Job_Change",Job_Sage;
 			callfunc "F_ClearJobVar";
 			mes "[Kayron Grik]";
@@ -329,6 +331,7 @@ yuno_in03,154,35,4	script	Staff of the Academy#a	742,{
 					mes "Yes, everything's ready.";
 					mes "Next, you will take an entrance test.";
 					set SAGE_Q,4;
+					setquest 2041;
 					next;
 					mes "[Metheus Sylphe]";
 					mes "Please visit Professor Claytos.";
@@ -346,6 +349,7 @@ yuno_in03,154,35,4	script	Staff of the Academy#a	742,{
 						mes "Thank you, your application has been accepted.";
 						mes "Next, you will take an entrance test.";
 						set SAGE_Q,4;
+						setquest 2041;
 						next;
 						mes "[Metheus Sylphe]";
 						mes "Please visit Professor Claytos.";
@@ -364,6 +368,7 @@ yuno_in03,154,35,4	script	Staff of the Academy#a	742,{
 					mes "Thank you, your application has been accepted.";
 					mes "Next, you will take the entrance test.";
 					set SAGE_Q,4;
+					setquest 2041;
 					next;
 					mes "[Metheus Sylphe]";
 					mes "Please visit Professor Claytos.";
@@ -402,6 +407,7 @@ yuno_in03,154,35,4	script	Staff of the Academy#a	742,{
 					mes "Yes, everything's ready.";
 					mes "Next, you will take the entrance test.";
 					set SAGE_Q,4;
+					setquest 2041;
 					next;
 					mes "[Metheus Sylphe]";
 					mes "Please visit professor Claytos.";
@@ -434,6 +440,7 @@ yuno_in03,154,35,4	script	Staff of the Academy#a	742,{
 						switch(rand(1,3)) {
 						case 1:
 							set SAGE_Q,1;
+							setquest 2043;
 							mes "[Metheus Sylphe]";
 							mes "Please gather the following items.";
 							mes "50 ^3355FFFeather of Birds^000000";
@@ -445,6 +452,7 @@ yuno_in03,154,35,4	script	Staff of the Academy#a	742,{
 							break;
 						case 2:
 							set SAGE_Q,2;
+							setquest 2044;
 							mes "[Metheus Sylphe]";
 							mes "Please gather the following items.";
 							mes "50 ^3355FFClover^000000";
@@ -456,6 +464,7 @@ yuno_in03,154,35,4	script	Staff of the Academy#a	742,{
 							break;
 						case 3:
 							set SAGE_Q,3;
+							setquest 2045;
 							mes "[Metheus Sylphe]";
 							mes "Please gather the following items.";
 							mes "50 ^3355FFFeather of Birds^000000";
@@ -587,6 +596,18 @@ yuno_in03,154,35,4	script	Staff of the Academy#a	742,{
 		mes "Ah yes, everything is in readiness.";
 		mes "Next, you will take an entrance test.";
 		set SAGE_Q,4;
+		if(checkquest(2043) != -1) {
+			changequest 2043,2041;
+		}
+		else if(checkquest(2044) != -1) {
+			changequest 2044,2041;
+		}
+		else if(checkquest(2045) != -1) {
+			changequest 2045,2041;
+		}
+		else {
+			setquest 2041;
+		}
 		next;
 		mes "[Metheus Sylphe]";
 		mes "Please visit Professor Claytos.";
@@ -958,6 +979,7 @@ L_AskQuestions:
 			else
 				mes "Excellent! You must have studed really hard for this test!";
 			set SAGE_Q,6;
+			changequest 2041,2046;
 			next;
 			mes "[Claytos Verdo]";
 			mes "You have passed the written test.";
@@ -965,6 +987,7 @@ L_AskQuestions:
 		}
 		else if (.@sage_t >= 80) {
 			set SAGE_Q,6;
+			changequest 2041,2046;
 			mes "Yeah, not bad. I assume that you will at least understand what you're going to learn in class.";
 			next;
 			mes "[Claytos Verdo]";
@@ -1152,6 +1175,7 @@ yuno_in03,169,180,3	script	Practical Examination P	755,{
 		switch(rand(1,3)) {
 		case 1:
 			set SAGE_Q,9;
+			changequest 2046,2047;
 			mes "[Hermes Tris]";
 			mes "Now, you will study Yggdrasil.";
 			mes "Yggdrasil is the tree that was rumored to be the source of life for this world.";
@@ -1165,6 +1189,7 @@ yuno_in03,169,180,3	script	Practical Examination P	755,{
 			close;
 		case 2:
 			set SAGE_Q,11;
+			changequest 2046,2048;
 			mes "[Hermes Tris]";
 			mes "Now, you will study monsters.";
 			mes "The purpose of this study is to learn and understand more about creatures existing all over the continent.";
@@ -1178,6 +1203,7 @@ yuno_in03,169,180,3	script	Practical Examination P	755,{
 			close;
 		case 3:
 			set SAGE_Q,13;
+			changequest 2046,2049;
 			mes "[Hermes Tris]";
 			mes "Now, you will study magic skills that have certain properties.";
 			mes "The purpose of this study is to better understand basic magic skills that we use in everyday life.";
@@ -1322,6 +1348,7 @@ yuno_in03,62,176,2	script	History Professor#sa	109,{
 			mes "Seeds or fruits of the tree would be good. I know it's difficult to find, but please try.";
 			next;
 			set SAGE_Q2,1;
+			changequest 2047,2050;
 			mes "[Saphien Layless]";
 			mes "When we have the reserve items, we will start the class.";
 			mes "Please come back.";
@@ -1447,6 +1474,7 @@ yuno_in03,62,176,2	script	History Professor#sa	109,{
 			next;
 			set SAGE_Q2,0;
 			set SAGE_Q,10;
+			changequest 2050,2051;
 			mes "[Saphien Layless]";
 			mes "I will help you to write your thesis when you're ready with all those items.";
 			mes "I am looking forward to the next class with you.";
@@ -1625,6 +1653,7 @@ yuno_in03,62,176,2	script	History Professor#sa	109,{
 			mes ".................................";
 			next;
 			set SAGE_Q,15;
+			changequest 2051,2052;
 			mes "[Saphien Layless]";
 			mes "Oh, did you finish already? Well done.";
 			mes "Please handle this with care, because you won't be able to do this ever again.";
@@ -1737,6 +1766,7 @@ yuno_in03,32,102,1	script	Biology Professor#sa	755,{
 			next;
 			if (sage_m4 == 1) {
 				set SAGE_Q2,1;
+				changequest 2048,2053;
 				mes "[Lucius Celsus]";
 				mes "Go bring the following items to me.";
 				mes "5 ^3355FFTentacle^000000,";
@@ -1745,6 +1775,7 @@ yuno_in03,32,102,1	script	Biology Professor#sa	755,{
 			}
 			else if (sage_m4 == 2) {
 				set SAGE_Q2,2;
+				changequest 2048,2054;
 				mes "[Lucius Celsus]";
 				mes "Go bring the following items to me.";
 				mes "5 ^3355FFNipper^000000,";
@@ -1753,6 +1784,7 @@ yuno_in03,32,102,1	script	Biology Professor#sa	755,{
 			}
 			else {
 				set SAGE_Q2,3;
+				changequest 2048,2054;
 				mes "[Lucius Celsus]";
 				mes "Go bring following items to me.";
 				mes "5 ^3355FFTendon^000000,";
@@ -1850,24 +1882,60 @@ yuno_in03,32,102,1	script	Biology Professor#sa	755,{
 				switch(rand(1,4)) {
 				case 1:
 					set SAGE_Q2,4;
+					if(checkquest(2053) != -1) {
+						changequest 2053,2056;
+					}
+					else if(checkquest(2054) != -1) {
+						changequest 2054,2056;
+					}
+					else {
+						changequest 2055,2056;
+					}
 					mes "5 ^3355FFCobweb^000000,";
 					mes "5 ^3355FFShell^000000,";
 					mes "5 ^3355FFInsect Feeler^000000.";
 					break;
 				case 2:
 					set SAGE_Q2,5;
+					if(checkquest(2053) != -1) {
+						changequest 2053,2057;
+					}
+					else if(checkquest(2054) != -1) {
+						changequest 2054,2057;
+					}
+					else {
+						changequest 2055,2057;
+					}
 					mes "5 ^3355FFHorn^000000,";
 					mes "5 ^3355FFSnail's Shell^000000,";
 					mes "5 ^3355FFMoth Dust^000000.";
 					break;
 				case 3:
 					set SAGE_Q2,6;
+					if(checkquest(2053) != -1) {
+						changequest 2053,2058;
+					}
+					else if(checkquest(2054) != -1) {
+						changequest 2054,2058;
+					}
+					else {
+						changequest 2055,2058;
+					}
 					mes "5 ^3355FFMantis Scythe^000000,";
 					mes "5 ^3355FFWorm Peeling^000000,";
 					mes "5 ^3355FFRainbow Shell^000000.";
 					break;
 				case 4:
 					set SAGE_Q2,7;
+					if(checkquest(2053) != -1) {
+						changequest 2053,2059;
+					}
+					else if(checkquest(2054) != -1) {
+						changequest 2054,2059;
+					}
+					else {
+						changequest 2055,2059;
+					}
 					mes "5 ^3355FFCobweb^000000,";
 					mes "5 ^3355FFMantis Scythe^000000,";
 					mes "5 ^3355FFSolid Shell^000000.";
@@ -1935,6 +2003,18 @@ yuno_in03,32,102,1	script	Biology Professor#sa	755,{
 				next;
 				set SAGE_Q2,0;
 				set SAGE_Q,12;
+				if(checkquest(2056) != -1) {
+					changequest 2056,2051;
+				}
+				else if(checkquest(2057) != -1) {
+					changequest 2057,2051;
+				}
+				else if(checkquest(2058) != -1) {
+					changequest 2058,2051;
+				}
+				else {
+					changequest 2059,2051;
+				}
 				mes "[Lucius Celsus]";
 				mes "I will help you in writing the thesis when you bring all of those items.";
 				mes "You're almost there. Isn't learning easy?";
@@ -1996,6 +2076,7 @@ yuno_in03,32,102,1	script	Biology Professor#sa	755,{
 			mes ".................................";
 			next;
 			set SAGE_Q,15;
+			changequest 2051,2052;
 			mes "[Lucius Celsus]";
 			mes "Are you done? Okay, then it's over.";
 			mes "You won't be able to write another thesis again, handle this with care.";
@@ -2100,6 +2181,7 @@ yuno_in03,244,31,3	script	Physics Professor#sa	120,{
 			mes "It's not so hard, isn't it?";
 			next;
 			set SAGE_Q2,1;
+			changequest 2049,2060;
 			mes "[Aebecee George]";
 			mes "Why don't you ask a thief pal for help?";
 			mes "We'll start the class when you bring me those stones~ Tee hee~";
@@ -2135,6 +2217,7 @@ yuno_in03,244,31,3	script	Physics Professor#sa	120,{
 				mes "I will give you these elemental ores...but...they are not for free.";
 				mes "Whoa there cowboy! Don't pull out so soon~ Listen, tee hee~";
 				set SAGE_Q2,2;
+				changequest 2060,2061;
 				next;
 				mes "[Aebecee George]";
 				mes "Please make arrows using these items and bring them to me, pretty please~";
@@ -2193,6 +2276,7 @@ yuno_in03,244,31,3	script	Physics Professor#sa	120,{
 				mes "When you come to the next class, bring ^3355FF1 Holy Water^000000~";
 				mes "I hope you have at least one Priest friend. Oh, you don't? Well, it couldn't hurt to get friendly with one.";
 				set SAGE_Q2,3;
+				changequest 2061,2062;
 				close;
 			}
 			else {
@@ -2242,6 +2326,7 @@ yuno_in03,244,31,3	script	Physics Professor#sa	120,{
 				mes "Tee hee~ yes! Yes! I am the best teacher in the world! Oh, I am on fire! Tee hee~";
 				set SAGE_Q2,0;
 				set SAGE_Q,14;
+				changequest 2062,2051;
 				next;
 				mes "[Aebecee George]";
 				mes "Okay, please gather these items so you can write the thesis, dear~ Tee hee~";
@@ -2408,6 +2493,7 @@ yuno_in03,244,31,3	script	Physics Professor#sa	120,{
 			mes ".................................";
 			next;
 			set SAGE_Q,15;
+			changequest 2051,2052;
 			mes "[Aebecee George]";
 			mes "Tee hee, so... are you done with your thesis? What do you think of your work? I think you did fine~";
 			mes "Don't forget, this is the first and the last time you'll write a thesis, okay? Tee hee~";

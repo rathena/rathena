@@ -5,7 +5,7 @@
 //= Converted by: kobra_k88.
 //= Further bugfixed and tested by Lupus
 //===== Current Version: ===================================== 
-//= 2.4b
+//= 2.5
 //===== Compatible With: ===================================== 
 //= eAthena  SVN
 //===== Description: ========================================= 
@@ -28,6 +28,7 @@
 //= 2.4 Changed Marthilda to Mathilda. [L0ne_W0llf]
 //= 2.4a Deleted unused variables. [Samuray22]
 //= 2.4b Corrected a Typo error ";;". [Samuray22]
+//= 2.5 Added Quest Log commands. [Kisuka]
 //==========================================================
 
 prt_church,16,41,4	script	High Bishop#prst	60,{
@@ -240,6 +241,7 @@ prt_church,16,41,4	script	High Bishop#prst	60,{
 					close;
 				}
 				set PRIEST_Q,1;
+				setquest 8009;
 					mes "[Bishop Paul]";
 				if (sex)
 					mes "Now I will explain the Three Trials of Priesthood. These tribulations will bring you much suffering, but I hope you can complete them, Brother " + strcharinfo(0) + ".";
@@ -269,6 +271,7 @@ prt_church,16,41,4	script	High Bishop#prst	60,{
 					mes "I have no doubt that you will do a good job by yourself. However, it will be easier with the aid of a Brother or Sister that has already become a Priest.";
 					next;
 					set PRIEST_Q,5;
+					changequest 8009,8011;
 					mes "[Bishop Paul]";
 					mes "Well, are you ready for the Spiritual Training?";
 					next;
@@ -309,6 +312,7 @@ prt_church,16,41,4	script	High Bishop#prst	60,{
 				mes "[Bishop Paul]";
 				mes "May God";
 				mes "bless you...";
+				changequest 8009,8010;
 				close;
 			}
 			mes "[Bishop Paul]";
@@ -388,6 +392,7 @@ prt_church,16,41,4	script	High Bishop#prst	60,{
 	}
 	else if (PRIEST_Q == 4) {
 		set PRIEST_Q,5;
+		changequest 8010,8011;
 		mes "[Bishop Paul]";
 		mes "You've accomplished";
 		mes "your pilgrimage.";
@@ -494,6 +499,7 @@ prt_church,16,41,4	script	High Bishop#prst	60,{
 		next;
 		mes "[Bishop Paul]";
 		mes "God, grant your power to your servant standing before you.";
+		changequest 8015,8016;
 		if (sex)
 			mes "Let him send your message throughout the ends of the earth.";
 		else
@@ -503,6 +509,7 @@ prt_church,16,41,4	script	High Bishop#prst	60,{
 		mes "Make this servant of yours an instrument of your miraculous works...";
 		next;
 		set .@joblvl,JobLevel;
+		completequest 8016;
 		callfunc "Job_Change",Job_Priest;
 		callfunc "F_ClearJobVar";		// clears all job variables for the current player
 		mes "[Bishop Paul]";
@@ -700,6 +707,9 @@ prt_church,27,24,1	script	Sister Cecilia	79,{
 		close;
 	}
 	else if (PRIEST_Q == 7) {
+		if(checkquest(8014) == -1) {
+			changequest 8013,8014;
+		}
 		mes "Welcome! I'm so glad to see you've come back! Now, there is one last trial left for you to complete.";
 		next;
 L_AskQuestions:
@@ -825,6 +835,7 @@ L_AskQuestions:
 		mes "......";
 		next;
 		set PRIEST_Q,8;
+		changequest 8014,8015;
 		mes "[Sister Cecilia]";
 		mes "You've come so far...";
 		mes "Why would you want";
@@ -954,6 +965,7 @@ job_prist,24,187,4	script	Peter S. Alberto	110,{
 			mes "Now...";
 			mes "Go for it!";
 			close2;
+			changequest 8011,8012;
 			warp "job_prist",24,44;
 			donpcevent "Zombie_Generator#prst::OnEnable";
 			donpcevent "Peter S. Alberto::OnDisable";
@@ -997,6 +1009,9 @@ job_prist,24,187,4	script	Peter S. Alberto	110,{
 			mes "Kill those";
 			mes "misbegotten creatures!";
 			close2;
+			if(checkquest(8012) == -1) {
+				changequest 8011,8012;
+			}
 			warp "job_prist",24,44;
 			donpcevent "Zombie_Generator#prst::OnEnable";
 			donpcevent "Peter S. Alberto::OnDisable";
@@ -1716,6 +1731,9 @@ OnTouch:
 	}
 	else if (BaseClass == Job_Acolyte) {
 		set PRIEST_Q,7;
+		if(checkquest(8012) != -1) {
+			changequest 8012,8013;
+		}
 		warp "prt_church",16,37;
 		donpcevent "Mummy_Generator::OnDisable";
 	}

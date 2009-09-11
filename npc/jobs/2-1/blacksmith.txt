@@ -7,7 +7,7 @@
 //= Optimized and further edited by kobra_k88.
 //= Further bugfixed and tested by Lupus
 //===== Current Version: =====================================
-//= 2.6
+//= 2.7
 //===== Compatible With: =====================================
 //= eAthena  SVN
 //===== Description: =========================================
@@ -38,6 +38,7 @@
 //= 2.5 Krongast is in Lighthalzen. (DarkValmir) [L0ne_W0lf]
 //= 2.6 Fixed 4 bugs [Lupus]
 //= 2.6a Typo fix [Yommy]
+//= 2.7 Added Quest Log commands. [Kisuka]
 //==============================================================
 
 ein_in01,18,28,4	script	Guildsman#BLS	731,{
@@ -163,6 +164,7 @@ ein_in01,18,28,4	script	Guildsman#BLS	731,{
 					mes "One of our Blacksmiths in Einbech, ^8E6B23Geschupenschte^000000 has sent us word that he's short on help. Your first test of character will be to help him out.";
 					next;
 					set BSMITH_Q,1;
+					setquest 2000;
 					mes "[Altiregen]";
 					mes "Be careful";
 					mes "and good luck!";
@@ -217,6 +219,7 @@ ein_in01,18,28,4	script	Guildsman#BLS	731,{
 			next;
 			if (select("I want to change my job quickly! But...oh well.:Grrr! Enough is enough!") == 1) {
 				set BSMITH_Q,16;
+				changequest 2013,2014;
 				mes "[Altiregen]";
 				mes "I'm sorry, but I'm sure you understand, right? We can't just casually accept anybody into";
 				mes "our guild!";
@@ -246,6 +249,9 @@ ein_in01,18,28,4	script	Guildsman#BLS	731,{
 		else if (BSMITH_Q == 17 && countitem(1005) > 0 && JobLevel > 39) {
 			mes "[Altiregen]";
 			mes "Excellent, I can tell by the twinkle in your eye that you were successful. I can now bestow upon you the gift of the smithing, the art of the Blacksmith.";
+			if(checkquest(2015) != -1) {
+				changequest 2015,2016;
+			}
 			next;
 			set .@joblvl,JobLevel;
 			callfunc "Job_Change",Job_Blacksmith;
@@ -255,6 +261,7 @@ ein_in01,18,28,4	script	Guildsman#BLS	731,{
 			mes "and greed.";
 			next;
 			delitem 1005,1; //Hammer_Of_Blacksmith
+			completequest 2016;
 			mes "[Altiregen]";
 			mes "Here is a little";
 			mes "gift to mark the";
@@ -458,6 +465,11 @@ L_AskQuestions:
 				mes "Let's see...your score is..." + .@black_q + " points.";
 				if (.@black_q == 100) {
 					set BSMITH_Q,3;
+					if(checkquest(2001) != -1) {
+						changequest 2001,2002;
+					}else{
+						changequest 2000,2002;
+					}
 					mes "Oh ho ho~";
 					mes "You'll have";
 					mes "no problem";
@@ -470,6 +482,9 @@ L_AskQuestions:
 					close;
 				}
 				set BSMITH_Q,2;
+				if(checkquest(2001) == -1) {
+					changequest 2000,2001;
+				}
 				mes ".............";
 				next;
 				mes "[Geschupenschte]";
@@ -531,15 +546,15 @@ L_AskQuestions:
 			next;
 			switch(rand(1,5)) {
 			//Steel, Rotten_Bandage, Blue_Gemstone, Arc_Wand
-			case 1: setarray .@items[0], 999,1, 930,1, 717,2, 1610,1, 4; break;
+			case 1: setarray .@items[0], 999,1, 930,1, 717,2, 1610,1, 4; changequest 2002,2003; break;
 			//Sparkling_Dust, Skel_Bone, Zargon, Gladius
-			case 2: setarray .@items[0], 1001,2, 932,1, 912,1, 1219,1, 5; break;
+			case 2: setarray .@items[0], 1001,2, 932,1, 912,1, 1219,1, 5; changequest 2002,2004; break;
 			//Coal, Shell, Boody_Red, Tsurugi
-			case 3: setarray .@items[0], 1003,1, 935,2, 990,2, 1119,1, 6; break;
+			case 3: setarray .@items[0], 1003,1, 935,2, 990,2, 1119,1, 6; changequest 2002,2005; break;
 			//Iron_Ore, Eye_Bandage, Blue_Gemstone, Arbalest
-			case 4: setarray .@items[0], 1002,1, 2212,1, 717,2, 1713,1, 7; break;
+			case 4: setarray .@items[0], 1002,1, 2212,1, 717,2, 1713,1, 7; changequest 2002,2006; break;
 			//Iron, Green_Herb, Animal's_Skin, Ring_Pommel_Saber
-			default: setarray .@items[0], 998,1, 511,1, 919,2, 1122,1, 8; break;
+			default: setarray .@items[0], 998,1, 511,1, 919,2, 1122,1, 8; changequest 2002,2007; break;
 			}
 			set BSMITH_Q,.@items[8];
 			mes "[Geschupenschte]";
@@ -618,6 +633,9 @@ L_AskQuestions:
 				case 9:
 					mes "Okay, now take this to ^8E6B23Baisulist^000000 in Geffen of Rune-Midgarts Kingdom. Simply deliver it and bring me the receipt.";
 					getitem 1610,1; //Arc_Wand
+					if(checkquest(2003) != -1) {
+						changequest 2003,2008;
+					}
 					next;
 					mes "[Geschupenschte]";
 					mes "Hmm...?";
@@ -640,6 +658,9 @@ L_AskQuestions:
 				case 10:
 					mes "Okay, now take this to ^8E6B23Wickebine^000000 in Morroc of Rune-Midgarts Kingdom. Simply deliver it and bring me the receipt.";
 					getitem 1219,1; //Gladius
+					if(checkquest(2004) != -1) {
+						changequest 2004,2009;
+					}
 					next;
 					mes "[Geschupenschte]";
 					mes "Hmm...?";
@@ -662,6 +683,9 @@ L_AskQuestions:
 				Case 11:
 					mes "Okay, now take this to ^8E6B23Krongast^000000 in Lighthalzen. Simply deliver it and bring me the receipt.";
 					getitem 1119,1; //Tsurugi
+					if(checkquest(2005) != -1) {
+						changequest 2005,2010;
+					}
 					next;
 					mes "[Geschupenschte]";
 					mes "Hmm...?";
@@ -685,6 +709,9 @@ L_AskQuestions:
 				case 12:
 					mes "Okay, now take this to ^8E6B23Talpiz^000000 in Payon of Rune-Midgarts Kingdom. Simply deliver this and bring me the receipt.";
 					getitem 1713,1; //Arbalest
+					if(checkquest(2006) != -1) {
+						changequest 2006,2011;
+					}
 					next;
 					mes "[Geschupenschte]";
 					mes "Hmm...?";
@@ -706,6 +733,9 @@ L_AskQuestions:
 				case 13:
 					mes "Okay, now take this to ^8E6B23Bismarc^000000 in Hugel. Simply deliver this and bring back the receipt.";
 					getitem 1122,1; //Ring_Pommel_Saber
+					if(checkquest(2007) != -1) {
+						changequest 2007,2012;
+					}
 					next;
 					mes "[Geschupenschte]";
 					mes "Hmm...?";
@@ -800,6 +830,21 @@ L_AskQuestions:
 				if (countitem(1073) > 0) {
 					set BSMITH_Q,15;
 					delitem 1073,1; //Merchant_Voucher_1
+					if(checkquest(2008) != -1) {
+						changequest 2008,2013;
+					}
+					else if(checkquest(2009) != -1) {
+						changequest 2009,2013;
+					}
+					else if(checkquest(2010) != -1) {
+						changequest 2010,2013;
+					}
+					else if(checkquest(2011) != -1) {
+						changequest 2011,2013;
+					}
+					else {
+						changequest 2012,2013;
+					}
 					mes "[Geschupenschte]";
 					mes "Oh ho ho~";
 					mes "Great!";
@@ -1460,6 +1505,7 @@ ein_in01,24,41,5	script	Blacksmith Guildsman#moc	726,{
 				mes "However, don't let your early success make you overconfident. A Blacksmith's life isn't a picnic. As proof that you have passed the test, I give you this Hammer of Blacksmith.";
 				set BSMITH_Q,17;
 				getitem 1005,1; //Hammer_Of_Blacksmith
+				changequest 2014,2015;
 				next;
 				mes "[Mitehmaeeuh]";
 				mes "Take this Hammer";

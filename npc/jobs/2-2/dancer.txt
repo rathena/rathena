@@ -4,7 +4,7 @@
 //= Kalen - Original jAthena
 //= Fredzilla - Converted, Lupus
 //===== Current Version: ===================================== 
-//= 3.6a
+//= 3.7
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -19,6 +19,7 @@
 //= 3.5 Minor corrections to script. (bugreport:1766) [L0ne_W0lf]
 //= 3.6 Applied Correction bug with for loop. [L0ne_W0lf]
 //= 3.6a Fixed a little Exploit to bug the quest with a timeout. (bugreport:2252) [Samuray22]
+//= 3.7 Added Quest Log commands. [Kisuka]
 //============================================================
 
 comodo,180,153,4	script	Sonotora#1	90,{
@@ -177,6 +178,7 @@ job_duncer,43,93,4	script	Aile#da	724,{
 				close2;
 				cutin "",255;
 				set DANC_Q,1;
+				setquest 7000;
 				end;
 			}
 			else {
@@ -232,6 +234,7 @@ job_duncer,43,93,4	script	Aile#da	724,{
 		set .@item_nd,rand(1,10);
 		if (.@item_nd > 0 && .@item_nd < 3) {
 			set DANC_Q,2;
+			changequest 7000,7001;
 			mes "[Aile]";
 			mes "First, there's the tuition fee of ^CD688910,000 Zeny^000000. Then, you'll about ^CD688920 Sticky Mucus^000000 for shoe polish.";
 			next;
@@ -248,6 +251,7 @@ job_duncer,43,93,4	script	Aile#da	724,{
 		}
 		else if (.@item_nd == 4) {
 			set DANC_Q,3;
+			changequest 7000,7002;
 			mes "[Aile]";
 			mes "First, there's the tuition fee of ^CD688910,000 Zeny^000000. Then, bring ^CD68895 Earthworm Peelings^000000 for polishing the floor and, of course, a pair of ^CD6889Boots^000000.";
 			next;
@@ -259,6 +263,7 @@ job_duncer,43,93,4	script	Aile#da	724,{
 		}
 		else {
 			set DANC_Q,4;
+			changequest 7000,7003;
 			mes "[Aile]";
 			mes "First, there's the tuition fee of ^CD688910,000 Zeny^000000. Then, bring ^CD68892 Clam Shells^000000 for your costume, ^CD68895 Yellow Potions^000000 and ^CD688920 Jellopy^000000 to treat foot injuries.";
 			next;
@@ -316,6 +321,15 @@ job_duncer,43,93,4	script	Aile#da	724,{
 			mes "[Aile]";
 			mes "Next, go to ^CD6889Bijou^000000, who is in charge of the interviewing process. She will have a couple of things she'll need to ask you.";
 			set DANC_Q,5;
+			if(checkquest(7001) != -1) {
+				changequest 7001,7004;
+			}
+			else if(checkquest(7002) != -1) {
+				changequest 7002,7004;
+			}
+			else {
+				changequest 7003,7004;
+			}
 			close2;
 			cutin "",255;
 			end;
@@ -817,6 +831,7 @@ job_duncer,95,93,4	script	Bijou#da	101,{
 		mes "[Bijou]";
 		mes "Well then~";
 		mes "Good luck...!!";
+		changequest 7004,7005;
 		set DANC_Q,8;
 		close2;
 		warp "job_duncer",105,109;
@@ -856,6 +871,7 @@ job_duncer,95,93,4	script	Bijou#da	101,{
 		next;
 		set .@jlevel,JobLevel;
 		mes "[Bijou]";
+		completequest 7006;
 		callfunc "Job_Change",Job_Dancer;
 		callfunc "F_ClearJobVar";
 		mes "Ooh...!";
@@ -1220,6 +1236,7 @@ job_duncer,69,110,0	script	dance#return	-1,1,4,{
 OnTouch:
 	mapannounce "job_duncer","Good! Well done! Go back to Bijou!",bc_map;
 	set DANC_Q,9;
+	changequest 7005,7006;
 	warp "comodo",188,162;
 	end;
 
