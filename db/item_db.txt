@@ -1422,7 +1422,7 @@
 2611,Silver_Ring,Silver Ring,5,20000,,100,,0,,0,0xFFFFFFFF,7,2,136,,0,0,0,{},{},{}
 2612,Flower_Ring,Flower Ring,5,1500,,100,,0,,0,0xFFFFFFFF,7,2,136,,0,0,0,{},{},{}
 2613,Diamond_Ring,Diamond Ring,5,45000,,100,,0,,0,0xFFFFFFFF,7,2,136,,0,0,0,{},{},{}
-2614,An_Eye_Of_Dullahan,Eye of Dullahan,5,90000,,100,,0,,0,0xFFFFFFFE,7,2,136,,50,0,0,{},{},{}
+2614,An_Eye_Of_Dullahan,Eye of Dullahan,5,90000,,100,,0,,0,0xFFFFFFFE,7,2,136,,50,0,0,{ bonus2 bResEff,Eff_Poison,10000; bonus2 bSubRace,RC_Undead,4; bonus2 bSubRace,RC_Demon,4; },{},{}
 2615,Safety_Ring,Safety Ring,5,75000,,100,,3,,0,0xFFFFFFFE,7,2,136,,40,0,0,{ bonus bMdef,3; },{},{}
 2616,Critical_Ring,Critical Ring,5,75000,,100,,0,,0,0xFFFFFFFE,7,2,136,,40,0,0,{ bonus bCritical,5; },{},{}
 2617,Mitten_Of_Presbyter,Celebrant's Mitten,5,2,,100,,1,,0,0xFFFFFFFE,7,2,136,,35,0,0,{ bonus bInt,1; },{},{}
@@ -2070,7 +2070,7 @@
 4448,Cornus_Card,Cornus Card,6,20,,10,,,,,,,,32,,,,,{ bonus2 bSubEle,Ele_Holy,15; },{},{}
 4449,Dark_Shadow_Card,Dark Shadow Card,6,20,,10,,,,,,,,32,,,,,{ bonus2 bSubEle,Ele_Dark,15; },{},{}
 4450,Banshee_Master_Card,Banshee Master Card,6,20,,10,,,,,,,,16,,,,,{},{},{}
-4451,Entweihen_Card,Entweihen Card,6,20,,10,,,,,,,,2,,,,,{},{},{}
+4451,Entweihen_Card,Entweihen Card,6,20,,10,,,,,,,,16,,,,,{},{},{}
 4452,Centipede_Larva_Card,Centipede Larva Card,6,20,,10,,,,,,,,2,,,,,{},{},{}
 4453,Hillsrion_Card,Hillsrion Card,6,20,,10,,,,,,,,2,,,,,{ bonus bAtk,25; },{},{}
 // Armor Enchant System
