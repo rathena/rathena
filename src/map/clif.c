@@ -12585,9 +12585,8 @@ void clif_parse_EquipTick(int fd, struct map_session_data* sd)
 /*==========================================
  * Questlog System [Kevin] [Inkfish]
  *------------------------------------------*/
-//Send simple list of quests upon login
-//* 02B1 <packet_len>.W <ignored>.L { <quest_id>.L <state>.B }.5B*
-void clif_send_questlog(struct map_session_data * sd)
+//* 02B1 <packet_len>.W <quest_num>.L { <quest_id>.L <state>.B }.5B*
+void clif_quest_send_list(struct map_session_data * sd)
 {
 	int fd = sd->fd;
 	int i;
@@ -12608,9 +12607,8 @@ void clif_send_questlog(struct map_session_data * sd)
 
 }
 
-//Send objective info on login
-//* 02B2 <packet_len>.W <ignored>.L { <quest_id>.L <ignored>.L <time>.L <num mobs>.W {<ignored>.L <mob count>.W <Mob Name>.24B}.30B[3] }.104B*
-void clif_send_questlog_info(struct map_session_data * sd)
+//* 02B2 <packet_len>.W <quest_num>.L { <quest_id>.L <start time>.L <expire time>.L <num mobs>.W {<mob id>.L <mob count>.W <Mob Name>.24B}.30B[3] }.104B*
+void clif_quest_send_mission(struct map_session_data * sd)
 {
 	int fd = sd->fd;
 	int i, j;
@@ -12625,11 +12623,13 @@ void clif_send_questlog_info(struct map_session_data * sd)
 	for( i = 0; i < sd->avail_quests; i++ )
 	{
 		WFIFOL(fd, i*104+8) = sd->quest_log[i].quest_id;
+		WFIFOL(fd, i*104+12) = sd->quest_log[i].time - quest_db[sd->quest_index[i]].time;
 		WFIFOL(fd, i*104+16) = sd->quest_log[i].time;
 		WFIFOW(fd, i*104+20) = quest_db[sd->quest_index[i]].num_objectives;
 
 		for( j = 0 ; j < quest_db[sd->quest_index[i]].num_objectives; j++ )
 		{
+			WFIFOL(fd, i*104+22+j*30) = quest_db[sd->quest_index[i]].mob[j];
 			WFIFOW(fd, i*104+26+j*30) = sd->quest_log[i].count[j];
 			mob = mob_db(quest_db[sd->quest_index[i]].mob[j]);
 			memcpy(WFIFOP(fd, i*104+28+j*30), mob?mob->jname:"NULL", NAME_LENGTH);
@@ -12639,24 +12639,24 @@ void clif_send_questlog_info(struct map_session_data * sd)
 	WFIFOSET(fd, len);
 }
 
-//Send info when objective info needs an update
-//* 02B3 <quest_id>.L <state>.B <ignored>.L <time>.L <num mobs>.W {<ignored>.L <mob count>.W <Mob Name>.24B}.30B[3]
-void clif_send_quest_info(struct map_session_data * sd, struct quest * qd, int index)
+//* 02B3 <quest_id>.L <state>.B <start time>.L <expire time>.L <num mobs>.W {<mob id>.L <mob count>.W <Mob Name>.24B}.30B[3]
+void clif_quest_add(struct map_session_data * sd, struct quest * qd, int index)
 {
 	int fd = sd->fd;
 	int i;
-	//int len = MAX_QUEST_OBJECTIVES*30+17;
 	struct mob_db *mob;
 
 	WFIFOHEAD(fd, packet_len(0x02B3));
 	WFIFOW(fd, 0) = 0x02B3;
 	WFIFOL(fd, 2) = qd->quest_id;
 	WFIFOB(fd, 6) = qd->state;
+	WFIFOB(fd, 7) = qd->time - quest_db[index].time;
 	WFIFOL(fd, 11) = qd->time;
 	WFIFOW(fd, 15) = quest_db[index].num_objectives;
 
 	for( i = 0; i < quest_db[index].num_objectives; i++ )
 	{
+		WFIFOL(fd, i*30+17) = quest_db[index].mob[i];
 		WFIFOW(fd, i*30+21) = qd->count[i];
 		mob = mob_db(quest_db[index].mob[i]);
 		memcpy(WFIFOP(fd, i*30+23), mob?mob->jname:"NULL", NAME_LENGTH);
@@ -12665,9 +12665,8 @@ void clif_send_quest_info(struct map_session_data * sd, struct quest * qd, int i
 	WFIFOSET(fd, packet_len(0x02B3));
 }
 
-//Send delete msg
 //* 02B4 <quest_id>.L
-void clif_send_quest_delete(struct map_session_data * sd, int quest_id)
+void clif_quest_delete(struct map_session_data * sd, int quest_id)
 {
 	int fd = sd->fd;
 
@@ -12677,17 +12676,36 @@ void clif_send_quest_delete(struct map_session_data * sd, int quest_id)
 	WFIFOSET(fd, packet_len(0x02B4));
 }
 
-// * 02B5 <packet_len>.W <ignored>.L {         }.10B* <-- UNKOWN PACKET
+//* 02b5 <packet_len>.w <mob_num>.w { <quest_id>.d <mob_id>.d <count>.w }.mob_num
+void clif_quest_update_objective(struct map_session_data * sd, struct quest * qd, int index)
+{
+	int fd = sd->fd;
+	int i;
+	int len = quest_db[index].num_objectives*10+6;
 
-// * 02B6 <quest_id>.L <state>.B
+	WFIFOHEAD(fd, len);
+	WFIFOW(fd, 0) = 0x02B5;
+	WFIFOW(fd, 2) = len;
+	WFIFOW(fd, 4) = quest_db[index].num_objectives;
+
+	for( i = 0; i < quest_db[index].num_objectives; i++ )
+	{
+		WFIFOL(fd, i*10+6) = qd->quest_id;
+		WFIFOL(fd, i*10+10) = quest_db[index].mob[i];
+		WFIFOW(fd, i*10+14) = qd->count[i];
+	}
+
+	WFIFOSET(fd, len);
+}
+
+//* 02B6 <quest_id>.L <state>.B
 void clif_parse_questStateAck(int fd, struct map_session_data * sd)
 {
 	quest_update_status(sd, RFIFOL(fd,2), RFIFOB(fd,6)?Q_ACTIVE:Q_INACTIVE);
 }
 
-//Change active state of the quest
 //* 02B7 <quest_id>.L <state_to>.B
-void clif_send_quest_status(struct map_session_data * sd, int quest_id, bool active)
+void clif_quest_update_status(struct map_session_data * sd, int quest_id, bool active)
 {
 	int fd = sd->fd;
 

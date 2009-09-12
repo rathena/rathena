@@ -50,8 +50,8 @@ int quest_pc_login(TBL_PC * sd)
 	if(sd->avail_quests == 0)
 		return 1;
 
-	clif_send_questlog(sd);
-	clif_send_questlog_info(sd);
+	clif_quest_send_list(sd);
+	clif_quest_send_mission(sd);
 
 	return 0;
 }
@@ -93,7 +93,7 @@ int quest_add(TBL_PC * sd, int quest_id)
 	sd->num_quests++;
 	sd->avail_quests++;
 
-	clif_send_quest_info(sd, &sd->quest_log[i], sd->quest_index[i]);
+	clif_quest_add(sd, &sd->quest_log[i], sd->quest_index[i]);
 
 	if( save_settings&64 )
 		chrif_save(sd,0);
@@ -139,8 +139,8 @@ int quest_change(TBL_PC * sd, int qid1, int qid2)
 
 	sd->quest_index[i] = j;
 
-	clif_send_quest_delete(sd, qid1);
-	clif_send_quest_info(sd, &sd->quest_log[i], sd->quest_index[i]);
+	clif_quest_delete(sd, qid1);
+	clif_quest_add(sd, &sd->quest_log[i], sd->quest_index[i]);
 
 	if( save_settings&64 )
 		chrif_save(sd,0);
@@ -170,7 +170,7 @@ int quest_delete(TBL_PC * sd, int quest_id)
 	memset(&sd->quest_log[sd->num_quests], 0, sizeof(struct quest));
 	sd->quest_index[sd->num_quests] = 0;
 
-	clif_send_quest_delete(sd, quest_id);
+	clif_quest_delete(sd, quest_id);
 
 	if( save_settings&64 )
 		chrif_save(sd,0);
@@ -191,11 +191,7 @@ void quest_update_objective(TBL_PC * sd, int mob)
 			if( quest_db[sd->quest_index[i]].mob[j] == mob && sd->quest_log[i].count[j] < quest_db[sd->quest_index[i]].count[j] ) 
 			{
 				sd->quest_log[i].count[j]++;
-
-				// Should figure out the real packet.
-				//clif_send_quest_delete(sd, sd->quest_log[i].quest_id);
-				//clif_send_quest_info(sd, &sd->quest_log[i]);
-				//break;
+				clif_quest_update_objective(sd,&sd->quest_log[i],sd->quest_index[i]);
 			}
 	}
 }
@@ -216,7 +212,7 @@ int quest_update_status(TBL_PC * sd, int quest_id, quest_state status)
 
 	if( status < Q_COMPLETE )
 	{
-		clif_send_quest_status(sd, quest_id, (bool)status);
+		clif_quest_update_status(sd, quest_id, (bool)status);
 		return 0;
 	}
 
@@ -228,7 +224,7 @@ int quest_update_status(TBL_PC * sd, int quest_id, quest_state status)
 		memcpy(&sd->quest_log[sd->avail_quests], &tmp_quest,sizeof(struct quest));
 	}
 
-	clif_send_quest_delete(sd, quest_id);
+	clif_quest_delete(sd, quest_id);
 
 	if( save_settings&64 )
 		chrif_save(sd,0);
