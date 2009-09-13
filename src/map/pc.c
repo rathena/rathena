@@ -5375,23 +5375,25 @@ static int pc_respawn_timer(int tid, unsigned int tick, int id, intptr data)
 void pc_damage(struct map_session_data *sd,struct block_list *src,unsigned int hp, unsigned int sp)
 {
 	if (sp) clif_updatestatus(sd,SP_SP);
-	if (!hp) return;
+	if (hp) clif_updatestatus(sd,SP_HP);
+	else return;
+	
+	if( !src || src == &sd->bl )
+		return;
 
-	if(pc_issit(sd)) {
+	if( pc_issit(sd) )
+	{
 		pc_setstand(sd);
 		skill_sit(sd,0);
 	}
 
-	clif_updatestatus(sd,SP_HP);
+	if( sd->progressbar.npc_id )
+		clif_progressbar_abort(sd);
 
-	if(!src || src == &sd->bl)
-		return;
-	
-	if(sd->status.pet_id > 0 && sd->pd && battle_config.pet_damage_support)
+	if( sd->status.pet_id > 0 && sd->pd && battle_config.pet_damage_support )
 		pet_target_check(sd,src,1);
 
 	sd->canlog_tick = gettick();
-	return;
 }
 
 int pc_dead(struct map_session_data *sd,struct block_list *src)

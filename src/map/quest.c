@@ -178,6 +178,28 @@ int quest_delete(TBL_PC * sd, int quest_id)
 	return 0;
 }
 
+int quest_update_objective_sub(struct block_list *bl, va_list ap)
+{
+	struct map_session_data * sd;
+	int mob, party;
+
+	nullpo_retr(0, bl);
+	nullpo_retr(0, sd = (struct map_session_data *)bl);
+
+	party = va_arg(ap,int);
+	mob = va_arg(ap,int);
+
+	if( !sd->avail_quests )
+		return 0;
+	if( sd->status.party_id != party )
+		return 0;
+
+	quest_update_objective(sd, mob);
+
+	return 1;
+}
+
+
 void quest_update_objective(TBL_PC * sd, int mob)
 {
 	int i,j;

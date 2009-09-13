@@ -1274,7 +1274,7 @@ int mob_warpchase(struct mob_data *md, struct block_list *target)
 	map_foreachinrange (mob_warpchase_sub, &md->bl,
 		md->db->range2, BL_NPC, md, target, &warp, &distance);
 
-	if (warp && unit_walktobl(&md->bl, &warp->bl, 0, 1))
+	if (warp && unit_walktobl(&md->bl, &warp->bl, 1, 1))
 		return 1;
 	return 0;
 }
@@ -1456,7 +1456,7 @@ static bool mob_ai_sub_hard(struct mob_data *md, unsigned int tick)
 			if (!can_move) //Stuck. Wait before walking.
 				return true;
 			md->state.skillstate = MSS_LOOT;
-			if (!unit_walktobl(&md->bl, tbl, 0, 1))
+			if (!unit_walktobl(&md->bl, tbl, 1, 1))
 				mob_unlocktarget(md, tick); //Can't loot...
 			return true;
 		}
@@ -1993,7 +1993,9 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 			}
 			pc_setglobalreg(sd,"TK_MISSION_COUNT", sd->mission_count);
 		}
-		//Move to status.c, and send a delete quest packet and then an add quest packet can refresh the kill counts. Just a trick. :P[Inkfish]
+		if( sd->status.party_id )
+			map_foreachinrange(quest_update_objective_sub,&md->bl,AREA_SIZE,BL_PC,sd->status.party_id,md->class_);
+		else
 		if( sd->avail_quests )
 			quest_update_objective(sd, md->class_);
 	}

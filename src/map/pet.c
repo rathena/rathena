@@ -908,7 +908,7 @@ static int pet_ai_sub_hard(struct pet_data *pd, struct map_session_data *sd, uns
 	} else {	//Item Targeted, attempt loot
 		if (!check_distance_bl(&pd->bl, target, 1))
 		{	//Out of range
-			if(!unit_walktobl(&pd->bl, target, 0, 1)) //Unreachable target.
+			if(!unit_walktobl(&pd->bl, target, 1, 1)) //Unreachable target.
 				pet_unlocktarget(pd);
 			return 0;
 		} else{

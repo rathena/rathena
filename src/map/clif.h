@@ -485,5 +485,6 @@ void clif_party_show_picker(struct map_session_data * sd, struct item * item_dat
 
 // Progress Bar [Inkfish]
 void clif_progressbar(struct map_session_data * sd, unsigned long color, unsigned int second);
+void clif_progressbar_abort(struct map_session_data * sd);
 
 #endif /* _CLIF_H_ */
