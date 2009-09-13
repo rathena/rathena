@@ -2781,7 +2781,7 @@
 6076,Portable_Toolbox,Portable Toolbox,3,0,,10,,,,,,,,,,,,,{},{},{}
 6077,Rough_Mineral,Rough Mineral,3,0,,10,,,,,,,,,,,,,{},{},{}
 6078,Stone_Fragments,Stone Fragments,3,0,,10,,,,,,,,,,,,,{},{},{}
-6079,Flower_Of_Alfheim,FLower of Alfheim,3,0,,10,,,,,,,,,,,,,{},{},{}
+6079,Flower_Of_Alfheim,Flower of Alfheim,3,0,,10,,,,,,,,,,,,,{},{},{}
 6080,Manuk_Coin,Manuk Coin,3,0,,10,,,,,,,,,,,,,{},{},{}
 6081,Splendide_Coin,Splendide Coin,3,0,,10,,,,,,,,,,,,,{},{},{}
 6082,Spirit_Of_Alfheim,Spirit of Alfheim,3,0,,10,,,,,,,,,,,,,{},{},{}

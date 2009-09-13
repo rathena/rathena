@@ -1239,6 +1239,9 @@ prt_in,79,94,4	script	Sir Windsor#knt	733,{
 				mes "...This way.";
 			}
 			close2;
+			if(checkquest(9006) == -1) {
+				changequest 9005,9006;
+			}
 			warp "job_knt",89,101;
 			end;
 		}
@@ -1299,9 +1302,6 @@ job_knt,89,106,4	script	Knight Windsor#knt	733,{
 		next;
 		mes "[Sir Windsor]";
 		mes "..........";
-		if(checkquest(9006) == -1) {
-			changequest 9005,9006;
-		}
 		close;
 	case 2:
 		mes "[Sir Windsor]";
@@ -1332,9 +1332,6 @@ job_knt,89,106,4	script	Knight Windsor#knt	733,{
 		next;
 		mes "[Sir Windsor]";
 		mes "...";
-		if(checkquest(9006) == -1) {
-			changequest 9005,9006;
-		}
 		close;
 	case 3:
 		mes "[Sir Windsor]";
@@ -1364,9 +1361,6 @@ OnStartArena:
 	killmonster "job_knt", "Knight1::OnMyMobDead";
 	killmonster "job_knt", "Knight2::OnMyMobDead";
 	killmonster "job_knt", "Knight3::OnMyMobDead";
-	if(checkquest(9006) == -1) {
-		changequest 9005,9006;
-	}
 	warpwaitingpc "job_knt",43,146;
 	donpcevent "Knight1::OnEnable";
 	disablewaitingroomevent;
