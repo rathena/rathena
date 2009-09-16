@@ -13,6 +13,7 @@
 
 =======================
 2009/09/16
+	* Rev, 14061 Re-added missing mercenary scrolls to item_trade database, must have gotten lost while diffing. [L0ne_W0lf]
 	* Rev. 14060 Fixed the AI mode for Zombie, change I made while testing new the Luciola AI. [L0ne_W0lf]
 	* Updated item_trade with several new items, hopefully retaining most white space.
 2009/09/10
