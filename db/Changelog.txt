@@ -12,6 +12,9 @@
 	2385 Recuvative_Armor		Should trigger HP/SP return with magical kills as well.
 
 =======================
+2009/09/16
+	* Rev. 14060 Fixed the AI mode for Zombie, change I made while testing new the Luciola AI. [L0ne_W0lf]
+	* Updated item_trade with several new items, hopefully retaining most white space.
 2009/09/10
 	* Rev. 14052 Updated monster info 13.1 mobs. [L0ne_W0lf]
 	- Updated some stats and implemented Luciola Vespa AI use.

@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.0
+//= 1.1
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -20,6 +20,7 @@
 //= - Contains untranslated dialog.
 //===== Additional Comments: ================================= 
 //= 1.0 First Version. [L0ne_W0lf]
+//= 1.1 I missed an end in one of the lhz guards. [L0ne_W0lf]
 //============================================================ 
 
 // Onward to the New World
@@ -1533,6 +1534,7 @@ OnTouch:
 		mes "This is a restricted area.";
 		close2;
 		warp "lhz_in01",123,229;
+		end;
 	}
 	if (ep13_ryu > 8) {
 		mes "[Guard]";

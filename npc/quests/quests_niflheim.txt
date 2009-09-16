@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= The eAthena Dev Team
 //===== Current Version: ===================================== 
-//= 1.4
+//= 1.5
 //===== Compatible With: ===================================== 
 //= eAthena 7.15 +
 //===== Description: ========================================= 
@@ -24,6 +24,8 @@
 //=	Updated to Aegis 10.3 Standed, added Message Delivery Quest.
 //=	Rescripted Piano Quest. Prior quest progress will be lost.
 //= 1.4 Fixed NPCs using ID 111 when it shoudl have been 139. [L0ne_W0lf]
+//= 1.5 Swapped NPC IDs back from last change (139 back to 111). [L0ne_W0lf]
+//=     Clicking will do nothing, you have to still "touch" the npc. 
 //============================================================ 
 
 //=============================================================
@@ -178,7 +180,9 @@ nif_in,31,20,3	script	Kuzkahina#nif	794,{
 	close;
 }
 
-niflheim,208,103,1	script	#Graveyard1	139,1,1,{
+niflheim,208,103,1	script	#Graveyard1	111,1,1,{
+	end;
+
 OnTouch:
 	if (nif_esc == 5 || nif_esc == 7 || nif_esc == 8 || nif_esc == 10) {
 		mes "^3355FFYou found something";
@@ -200,7 +204,9 @@ OnTouch:
 	end;
 }
 
-niflheim,169,71,1	script	#Graveyard2	139,1,1,{
+niflheim,169,71,1	script	#Graveyard2	111,1,1,{
+	end;
+
 OnTouch:
 	if (nif_esc == 6 || nif_esc == 9) {
 		mes "^3355FFYou found something";
@@ -217,7 +223,9 @@ OnTouch:
 	end;
 }
 
-nif_in,115,181,0	script	#Piano	139,1,1,{
+nif_in,115,181,0	script	#Piano	111,1,1,{
+	end;
+
 OnTouch:
 	if (nif_esc == 0 && (MISC_QUEST & 32) == 0) {
 		mes "^3355FFYou see a big, heavy piano.";
@@ -248,7 +256,9 @@ OnTouch:
 	end;
 }
 
-nif_in,114,181,0	script	#Piano3	139,1,1,{
+nif_in,114,181,0	script	#Piano3	111,1,1,{
+	end;
+
 OnTouch:
 	if (nif_esc == 12 || nif_esc == 13 || MISC_QUEST & 32) {
 		mes "^3355FFAs you bend towards";

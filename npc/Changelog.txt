@@ -1,5 +1,8 @@
 Date		Added
 ======
+2009/09/16
+	* Rev. 14060 Added messing 'end;' in one of the 13.1 lighthalzen guard. [L0ne_W0lf]
+	* Fixed NPC IDs in niflheim quests again. Should be 111 and "non-clickable"
 2009/09/10
 	* Rev. 14052 Added some, and enabled existing episode 13.1 content. [L0ne_W0lf]
 2009/08/18
