@@ -84,8 +84,8 @@ payon,173,141,4	script	Ripped Cabus#GymPass	899,{
 			next;
 			specialeffect2 EF_SIGHTRASHER;
 			next;
-			skill "ALL_INCCARRY",getskilllv("ALL_INCCARRY")+1,0;
 			delitem 7776,1;
+			skill "ALL_INCCARRY",getskilllv("ALL_INCCARRY")+1,0;
 			set gympassmemory,gympassmemory+1;
 			mes "[Ripped]";
 			mes "There, you should be able";

@@ -3581,7 +3581,7 @@ kh_school,122,186,4	script	Beautiful Lady#kh6	894,{
 		case 2:
 			mes "[Allysia]";
 			mes "^3355FFKiehl^000000 has proceeded to";
-			mes "proform abnormal modifications";
+			mes "perform abnormal modifications";
 			mes "to the humanoid robots. This";
 			mes "has been reported to Kiel Hyre,";
 			mes "who has left to stop Kiehl.";
@@ -4683,6 +4683,7 @@ kh_mansion,22,28,4	script	Kiel Hyre#kh	903,{
 			close2;
 			enablenpc "Kiehl_Room_Warp";
 			donpcevent "Kiehl_Room_Warp::OnEnable";
+			cutin "",255;
 			end;
 			break;
 		case 2:
@@ -5156,7 +5157,7 @@ OnTouch:
 		next;
 		mes "[Mitchell]";
 		mes "This is too much of a";
-		mes "coincidense. I want you to";
+		mes "coincidence. I want you to";
 		mes "go to Juno and investigate.";
 		mes "When you're done, talk to";
 		mes "Kiel Hyre's steward, and";
