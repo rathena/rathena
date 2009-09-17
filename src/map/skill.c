@@ -4241,8 +4241,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			}
 			if(status_isimmune(bl) || !tsc)
 				break;
-			if (dstmd)
-				mob_target(dstmd,src,skill_get_range2(src,skillid,skilllv));
 
 			if (tsc->data[SC_STONE]) {
 				status_change_end(bl,SC_STONE,-1);

@@ -3,6 +3,10 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+09/09/17
+	* Duration of SC_STONE is not reduced by MDEF. [Inkfish]
+	* LexAeterna is allowed to be used on petrifying targets. [Inkfish]
+	* Mobs won't attack back if StoneCurse fails. [Inkfish]
 09/09/13
 	* Progressbar aborts when player is attacked. [Inkfish]
 	* Do not stand if damage is from yourself or has no source.(bugreport:3582) [Inkfish]
