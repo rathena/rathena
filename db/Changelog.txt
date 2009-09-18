@@ -7,11 +7,9 @@
 	1308 Golden Axe:		NEED INFO
 	1475 Equestrian's Spear:	NEED INFO.
 	13005 Angelic Wing Dagger:	NEED INFO.
-	-----
-	Endless Tower+
-	2385 Recuvative_Armor		Should trigger HP/SP return with magical kills as well.
-
 =======================
+2009/09/18
+	* Storm Gust's freeze duration should be 12 seconds at any levels. [Inkfish]
 2009/09/16
 	* Rev, 14061 Re-added missing mercenary scrolls to item_trade database, must have gotten lost while diffing. [L0ne_W0lf]
 	* Rev. 14060 Fixed the AI mode for Zombie, change I made while testing new the Luciola AI. [L0ne_W0lf]
