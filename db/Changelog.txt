@@ -8,6 +8,8 @@
 	1475 Equestrian's Spear:	NEED INFO.
 	13005 Angelic Wing Dagger:	NEED INFO.
 =======================
+2009/09/19
+	* Stone Curse's petrify duration should be 20 seconds at any levels. [Inkfish]
 2009/09/18
 	* Storm Gust's freeze duration should be 12 seconds at any levels. [Inkfish]
 2009/09/16
