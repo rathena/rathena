@@ -411,8 +411,8 @@ int parse_fromchar(int fd)
 			    node->account_id == account_id &&
 				node->login_id1  == login_id1 &&
 				node->login_id2  == login_id2 &&
-				node->sex        == sex_num2str(sex) &&
-				node->ip         == ip_ )
+				node->sex        == sex_num2str(sex) /*&&
+				node->ip         == ip_*/ )
 			{// found
 				//ShowStatus("Char-server '%s': authentication of the account %d accepted (ip: %s).\n", server[id].name, account_id, ip);
 

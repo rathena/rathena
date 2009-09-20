@@ -2763,8 +2763,8 @@ int parse_frommap(int fd)
 				node->account_id == account_id &&
 				node->char_id == char_id &&
 				node->login_id1 == login_id1 &&
-				node->sex == sex &&
-				node->ip == ip )
+				node->sex == sex /*&&
+				node->ip == ip*/ )
 			{// auth ok
 				cd->sex = sex;
 
@@ -2943,8 +2943,8 @@ int parse_char(int fd)
 			if( node != NULL &&
 			    node->account_id == account_id &&
 				node->login_id1  == login_id1 &&
-				node->login_id2  == login_id2 &&
-				node->ip         == ipl )
+				node->login_id2  == login_id2 /*&&
+				node->ip         == ipl*/ )
 			{// authentication found (coming from map server)
 				idb_remove(auth_db, account_id);
 				char_auth_ok(fd, sd);
