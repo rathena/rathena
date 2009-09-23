@@ -1949,7 +1949,7 @@ int status_calc_pc_(struct map_session_data* sd, bool first)
 			//Card script execution.
 			if(itemdb_isspecial(sd->status.inventory[index].card[0]))
 				continue;
-			for(j=0;j<sd->inventory_data[index]->slot;j++){	
+			for(j=0;j<MAX_SLOTS;j++){ // Uses MAX_SLOTS to support Soul Bound system [Inkfish]
 				current_equip_card_id= c= sd->status.inventory[index].card[j];
 				if(!c)
 					continue;

@@ -9650,7 +9650,7 @@ BUILDIN_FUNC(getequipcardcnt)
 	if (num > 0 && num <= ARRAYLENGTH(equip))
 		i=pc_checkequip(sd,equip[num-1]);
 
-	if (i < 0) {
+	if (i < 0 || !sd->inventory_data[i]) {
 		script_pushint(st,0);
 		return 0;
 	}
@@ -9662,7 +9662,7 @@ BUILDIN_FUNC(getequipcardcnt)
 	}
 
 	count = 0;
-	for( j = 0; j < MAX_SLOTS; j++ )
+	for( j = 0; j < sd->inventory_data[i]->slot; j++ )
 		if( sd->status.inventory[i].card[j] && itemdb_type(sd->status.inventory[i].card[j]) == IT_CARD )
 			count++;
 
@@ -9683,14 +9683,14 @@ BUILDIN_FUNC(successremovecards)
 	if (num > 0 && num <= ARRAYLENGTH(equip))
 		i=pc_checkequip(sd,equip[num-1]);
 
-	if (i < 0) {
+	if (i < 0 || !sd->inventory_data[i]) {
 		return 0;
 	}
 
 	if(itemdb_isspecial(sd->status.inventory[i].card[0])) 
 		return 0;
 
-	for( c = MAX_SLOTS - 1; c >= 0; --c )
+	for( c = sd->inventory_data[i]->slot - 1; c >= 0; --c )
 	{
 		if( sd->status.inventory[i].card[c] && itemdb_type(sd->status.inventory[i].card[c]) == IT_CARD )
 		{// extract this card from the item
@@ -9761,13 +9761,13 @@ BUILDIN_FUNC(failedremovecards)
 	if (num > 0 && num <= ARRAYLENGTH(equip))
 		i=pc_checkequip(sd,equip[num-1]);
 
-	if (i < 0)
+	if (i < 0 || !sd->inventory_data[i])
 		return 0;
 
 	if(itemdb_isspecial(sd->status.inventory[i].card[0]))
 		return 0;
 
-	for( c = MAX_SLOTS - 1; c >= 0; --c )
+	for( c = sd->inventory_data[i]->slot - 1; c >= 0; --c )
 	{
 		if( sd->status.inventory[i].card[c] && itemdb_type(sd->status.inventory[i].card[c]) == IT_CARD )
 		{
@@ -11098,8 +11098,8 @@ BUILDIN_FUNC(checkequipedcard)
 
 	if(sd){
 		for(i=0;i<MAX_INVENTORY;i++){
-			if(sd->status.inventory[i].nameid > 0 && sd->status.inventory[i].amount){
-				for(n=0;n<MAX_SLOTS;n++){
+			if(sd->status.inventory[i].nameid > 0 && sd->status.inventory[i].amount && sd->inventory_data[i]){
+				for(n=0;n<sd->inventory_data[i]->slot;n++){
 					if(sd->status.inventory[i].card[n]==c){
 						script_pushint(st,1);
 						return 0;
