@@ -1453,7 +1453,7 @@ REPLACE INTO `item_db` VALUES (2610,'Gold_Ring','Gold Ring',5,30000,NULL,100,NUL
 REPLACE INTO `item_db` VALUES (2611,'Silver_Ring','Silver Ring',5,20000,NULL,100,NULL,0,NULL,0,0xFFFFFFFF,7,2,136,NULL,0,0,0,NULL,NULL,NULL);
 REPLACE INTO `item_db` VALUES (2612,'Flower_Ring','Flower Ring',5,1500,NULL,100,NULL,0,NULL,0,0xFFFFFFFF,7,2,136,NULL,0,0,0,NULL,NULL,NULL);
 REPLACE INTO `item_db` VALUES (2613,'Diamond_Ring','Diamond Ring',5,45000,NULL,100,NULL,0,NULL,0,0xFFFFFFFF,7,2,136,NULL,0,0,0,NULL,NULL,NULL);
-REPLACE INTO `item_db` VALUES (2614,'An_Eye_Of_Dullahan','Eye of Dullahan',5,90000,NULL,100,NULL,0,NULL,0,0xFFFFFFFE,7,2,136,NULL,50,0,0,NULL,NULL,NULL);
+REPLACE INTO `item_db` VALUES (2614,'An_Eye_Of_Dullahan','Eye of Dullahan',5,90000,NULL,100,NULL,0,NULL,0,0xFFFFFFFE,7,2,136,NULL,50,0,0,'bonus2 bResEff,Eff_Poison,10000; bonus2 bSubRace,RC_Undead,4; bonus2 bSubRace,RC_Demon,4;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (2615,'Safety_Ring','Safety Ring',5,75000,NULL,100,NULL,3,NULL,0,0xFFFFFFFE,7,2,136,NULL,40,0,0,'bonus bMdef,3;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (2616,'Critical_Ring','Critical Ring',5,75000,NULL,100,NULL,0,NULL,0,0xFFFFFFFE,7,2,136,NULL,40,0,0,'bonus bCritical,5;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (2617,'Mitten_Of_Presbyter','Celebrant\'s Mitten',5,2,NULL,100,NULL,1,NULL,0,0xFFFFFFFE,7,2,136,NULL,35,0,0,'bonus bInt,1;',NULL,NULL);
@@ -1564,7 +1564,7 @@ REPLACE INTO `item_db` VALUES (2721,'Medal_Thief','Medal of Honor',5,0,NULL,0,NU
 REPLACE INTO `item_db` VALUES (2722,'Medal_Acolyte','Medal of Honor',5,0,NULL,0,NULL,1,NULL,0,0x00008110,7,2,136,NULL,70,0,0,'bonus bAtkRate,5; bonus bMatkRate,5; bonus bMdef,6; bonus bMaxHP,600; bonus3 bAddEff,Eff_Silence,1000,ATF_SHORT;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (2723,'Medal_Mage','Medal of Honor',5,0,NULL,0,NULL,1,NULL,0,0x00810204,7,2,136,NULL,70,0,0,'bonus bAtkRate,5; bonus bMatkRate,5; bonus bMdef,6; bonus bMaxHP,600; bonus2 bAddEffWhenHit,Eff_Stone,1000;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (2724,'Medal_Archer','Medal of Honor',5,0,NULL,0,NULL,1,NULL,0,0x00080808,7,2,136,NULL,70,0,0,'bonus bAtkRate,5; bonus bMatkRate,5; bonus bCritical,10; bonus bMaxHP,300; bonus bMaxSP,80; bonus3 bAddEff,Eff_Blind,1000,ATF_LONG;',NULL,NULL);
-REPLACE INTO `item_db` VALUES (2725,'Medal_Merchant','Medal of Honor',5,0,NULL,0,NULL,1,NULL,0,0x00040420,7,2,136,NULL,70,0,0,'bonus bAtkRate,5; bonus bMatkRate,5; bonus bAspd,10; bonus bMaxHP,500; bonus bMaxSP,50; bonus3 bAddEff,Eff_Curse,1000,ATF_SHORT;',NULL,NULL);
+REPLACE INTO `item_db` VALUES (2725,'Medal_Merchant','Medal of Honor',5,0,NULL,0,NULL,1,NULL,0,0x00040420,7,2,136,NULL,70,0,0,'bonus bAtkRate,5; bonus bMatkRate,5; bonus bAspdRate,10; bonus bMaxHP,500; bonus bMaxSP,50; bonus3 bAddEff,Eff_Curse,1000,ATF_SHORT;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (2726,'Icarus_Wing','Icarus Wings',5,20,NULL,100,NULL,0,NULL,0,0x00000800,2,2,136,NULL,70,0,0,'bonus bMaxSP,50; bonus bDex,3;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (2727,'Bowman_Scarf','Bowman Scarf',5,20,NULL,200,NULL,0,NULL,0,0x00000800,2,2,136,NULL,0,0,0,'bonus bMaxSP,50; bonus bDex,3; if (isequipped(2726)) bonus bUseSPrate,-25;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (2728,'Cursed_Hand','Cursed Hand',5,0,NULL,50,NULL,0,NULL,1,0xFFFFFFFE,7,2,136,NULL,80,0,0,'bonus3 bAutoSpell,\"NPC_CRITICALWOUND\",1,30; bonus bHit,10; bonus bHPrecovRate,20;',NULL,NULL);
@@ -2101,7 +2101,7 @@ REPLACE INTO `item_db` VALUES (4447,'Centipede_Card','Centipede Card',6,20,NULL,
 REPLACE INTO `item_db` VALUES (4448,'Cornus_Card','Cornus Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,32,NULL,NULL,NULL,NULL,'bonus2 bSubEle,Ele_Holy,15;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (4449,'Dark_Shadow_Card','Dark Shadow Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,32,NULL,NULL,NULL,NULL,'bonus2 bSubEle,Ele_Dark,15;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (4450,'Banshee_Master_Card','Banshee Master Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-REPLACE INTO `item_db` VALUES (4451,'Entweihen_Card','Entweihen Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `item_db` VALUES (4451,'Entweihen_Card','Entweihen Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `item_db` VALUES (4452,'Centipede_Larva_Card','Centipede Larva Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `item_db` VALUES (4453,'Hillsrion_Card','Hillsrion Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,'bonus bAtk,25;',NULL,NULL);
 #  Armor Enchant System
@@ -2812,7 +2812,7 @@ REPLACE INTO `item_db` VALUES (6075,'Crystalized_Teardrop','Crystalized Teardrop
 REPLACE INTO `item_db` VALUES (6076,'Portable_Toolbox','Portable Toolbox',3,0,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `item_db` VALUES (6077,'Rough_Mineral','Rough Mineral',3,0,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `item_db` VALUES (6078,'Stone_Fragments','Stone Fragments',3,0,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-REPLACE INTO `item_db` VALUES (6079,'Flower_Of_Alfheim','FLower of Alfheim',3,0,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `item_db` VALUES (6079,'Flower_Of_Alfheim','Flower of Alfheim',3,0,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `item_db` VALUES (6080,'Manuk_Coin','Manuk Coin',3,0,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `item_db` VALUES (6081,'Splendide_Coin','Splendide Coin',3,0,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `item_db` VALUES (6082,'Spirit_Of_Alfheim','Spirit of Alfheim',3,0,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);

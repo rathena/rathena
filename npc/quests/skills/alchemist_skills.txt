@@ -9,7 +9,7 @@
 //===== Description: ========================================= 
 //= [Aegis COnversion]
 //= Quests for item: Elemental_Create_Book
-//= QUest for skill: Bioethics
+//= Quest for skill: Bioethics
 //===== Additional Comments: ================================= 
 //= 1.9 Rescripted to Aegis 10.3 stadards. [L0ne_W0lf]
 //= 2.0 Rescripted (and re-added) Bio Ethics quest. [L0ne_W0lf]
@@ -1328,7 +1328,7 @@ lhz_in01,224,140,3	script	Kellasus#qsk_al	57,{
 		mes "study of Homunculi";
 		mes "could help us discover";
 		mes "the secret of life. There";
-		mes "is just too much too much";
+		mes "is just too much";
 		mes "potential to do good to ignore.";
 		next;
 		mes "["+ strcharinfo(0) +"]";
