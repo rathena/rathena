@@ -8,13 +8,15 @@
 	1475 Equestrian's Spear:	NEED INFO.
 	13005 Angelic Wing Dagger:	NEED INFO.
 =======================
+2009/09/27
+	* Rev. 14076 Fixed typos in skill_nocast_db from r13840 (Extra ';' and spelled assuptio wrong.) [L0ne_W0lf]
 2009/09/19
 	* Stone Curse's petrify duration should be 20 seconds at any levels. [Inkfish]
 2009/09/18
 	* Storm Gust's freeze duration should be 12 seconds at any levels. [Inkfish]
 2009/09/16
 	* Rev, 14061 Re-added missing mercenary scrolls to item_trade database, must have gotten lost while diffing. [L0ne_W0lf]
-	* Rev. 14060 Fixed the AI mode for Zombie, change I made while testing new the Luciola AI. [L0ne_W0lf]
+	* Rev. 14060 Fixed the AI mode for Zombie, change I made while testing the Luciola AI. [L0ne_W0lf]
 	* Updated item_trade with several new items, hopefully retaining most white space.
 2009/09/10
 	* Rev. 14052 Updated monster info 13.1 mobs. [L0ne_W0lf]
