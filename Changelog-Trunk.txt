@@ -5,6 +5,7 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 09/10/02
 	* Fixed a damage underflow.(bugreport:3624) [Inkfish]
+	* Marionette Control now has an infinite duration.(bugreport:2542) [Inkfish]
 09/09/23
 	* Added supports for Soul Bound. [Inkfish]
 09/09/21

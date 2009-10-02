@@ -5516,7 +5516,6 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 		{
 			int stat;
 
-			val2 = tick / 1000;
 			val3 = 0;
 			val4 = 0;
 			stat = ( sd ? sd->status.str : status_get_base_status(bl)->str ) / 2; val3 |= cap_value(stat,0,0xFF)<<16;
@@ -5525,7 +5524,6 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			stat = ( sd ? sd->status.int_: status_get_base_status(bl)->int_) / 2; val4 |= cap_value(stat,0,0xFF)<<16;
 			stat = ( sd ? sd->status.dex : status_get_base_status(bl)->dex ) / 2; val4 |= cap_value(stat,0,0xFF)<<8;
 			stat = ( sd ? sd->status.luk : status_get_base_status(bl)->luk ) / 2; val4 |= cap_value(stat,0,0xFF);
-			tick = 1000;
 			break;
 		}
 		case SC_MARIONETTE2:
@@ -5541,7 +5539,6 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			if (!psce)
 				return 0;
 
-			val2 = tick / 1000;
 			val3 = 0;
 			val4 = 0;
 			max_stat = battle_config.max_parameter; //Cap to 99 (default)
@@ -5551,7 +5548,6 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			stat = (psce->val4 >>16)&0xFF; stat = min(stat, max_stat - status->int_); val4 |= cap_value(stat,0,0xFF)<<16;
 			stat = (psce->val4 >> 8)&0xFF; stat = min(stat, max_stat - status->dex ); val4 |= cap_value(stat,0,0xFF)<<8;
 			stat = (psce->val4 >> 0)&0xFF; stat = min(stat, max_stat - status->luk ); val4 |= cap_value(stat,0,0xFF);
-			tick = 1000;
 			break;
 		}
 		case SC_REJECTSWORD:
@@ -7114,7 +7110,7 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr data)
 	case SC_MARIONETTE2:
 		{
 			struct block_list *pbl = map_id2bl(sce->val1);
-			if (pbl && check_distance_bl(bl, pbl, 7) && (sce->val2)-->0)
+			if( pbl && check_distance_bl(bl, pbl, 7) )
 			{
 				sc_timer_next(1000 + tick, status_change_timer, bl->id, data);
 				return 0;
