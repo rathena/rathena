@@ -8,8 +8,10 @@
 	1475 Equestrian's Spear:	NEED INFO.
 	13005 Angelic Wing Dagger:	NEED INFO.
 =======================
+2009/10/02
+	* Rev. 14080 Updated Crystal 6 through 9 monsters for Valkyie Gift event. [L0ne_W0lf]
 2009/09/27
-	* Rev. 14076 Fixed typos in skill_nocast_db from r13840 (Extra ';' and spelled assuptio wrong.) [L0ne_W0lf]
+	* Rev. 14076 Fixed typos in skill_nocast_db from r13840 (Extra ';' and spelled assumptio wrong.) [L0ne_W0lf]
 2009/09/19
 	* Stone Curse's petrify duration should be 20 seconds at any levels. [Inkfish]
 2009/09/18

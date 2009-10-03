@@ -1,5 +1,7 @@
 Date		Added
 ======
+2009/10/02
+	* Rev. 14080 Added Ravies sisters, people can now turn in the "Valkyrie Gift" items. [L0ne_W0lf]
 2009/09/16
 	* Rev. 14060 Added messing 'end;' in one of the 13.1 lighthalzen guard. [L0ne_W0lf]
 	* Fixed NPC IDs in niflheim quests again. Should be 111 and "non-clickable"
