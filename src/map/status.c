@@ -6246,6 +6246,7 @@ int status_change_clear(struct block_list* bl, int type)
 		case SC_ITEMBOOST:
 		case SC_HELLPOWER:
 		case SC_JEXPBOOST:
+		case SC_AUTOTRADE:
 			continue;
 		}
 

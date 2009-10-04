@@ -5870,6 +5870,12 @@ int atcommand_autotrade(const int fd, struct map_session_data* sd, const char* c
 	nullpo_retr(-1, sd);
 	if( sd->vender_id ) //check if player's vending
 	{
+		if( pc_isdead(sd) )
+		{
+			clif_displaymessage(fd, "Cannot Autotrade if you are dead.");
+			return -1;
+		}
+
 		if( map[sd->bl.m].flag.autotrade == battle_config.autotrade_mapflag )
 		{
 			sd->state.autotrade = 1;

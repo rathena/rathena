@@ -39,7 +39,7 @@ int storage_fromsql(int account_id, struct storage_data* p)
 
 	// storage {`account_id`/`id`/`nameid`/`amount`/`equip`/`identify`/`refine`/`attribute`/`card0`/`card1`/`card2`/`card3`}
 	StringBuf_Init(&buf);
-	StringBuf_AppendStr(&buf, "SELECT `id`,`nameid`,`amount`,`equip`,`identify`,`refine`,`attribute`");
+	StringBuf_AppendStr(&buf, "SELECT `id`,`nameid`,`amount`,`equip`,`identify`,`refine`,`attribute`,`expire_time`");
 	for( j = 0; j < MAX_SLOTS; ++j )
 		StringBuf_Printf(&buf, ",`card%d`", j);
 	StringBuf_Printf(&buf, " FROM `%s` WHERE `account_id`='%d' ORDER BY `nameid`", storage_db, account_id);
@@ -59,10 +59,10 @@ int storage_fromsql(int account_id, struct storage_data* p)
 		Sql_GetData(sql_handle, 4, &data, NULL); item->identify = atoi(data);
 		Sql_GetData(sql_handle, 5, &data, NULL); item->refine = atoi(data);
 		Sql_GetData(sql_handle, 6, &data, NULL); item->attribute = atoi(data);
-		item->expire_time = 0;
+		Sql_GetData(sql_handle, 7, &data, NULL); item->expire_time = (unsigned int)atoi(data);
 		for( j = 0; j < MAX_SLOTS; ++j )
 		{
-			Sql_GetData(sql_handle, 7+j, &data, NULL); item->card[j] = atoi(data);
+			Sql_GetData(sql_handle, 8+j, &data, NULL); item->card[j] = atoi(data);
 		}
 	}
 	p->storage_amount = i;

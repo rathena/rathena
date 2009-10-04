@@ -330,7 +330,7 @@ void pc_inventory_rentals(struct map_session_data *sd)
 	unsigned int expire_tick, next_tick = UINT_MAX;
 
 	for( i = 0; i < MAX_INVENTORY; i++ )
-	{
+	{ // Check for Rentals on Inventory
 		if( sd->status.inventory[i].nameid == 0 )
 			continue; // Nothing here
 		if( sd->status.inventory[i].expire_time == 0 )
@@ -345,6 +345,48 @@ void pc_inventory_rentals(struct map_session_data *sd)
 		{
 			expire_tick = (unsigned int)(sd->status.inventory[i].expire_time - time(NULL)) * 1000;
 			clif_rental_time(sd->fd, sd->status.inventory[i].nameid, (int)(expire_tick / 1000));
+			next_tick = min(expire_tick, next_tick);
+			c++;
+		}
+	}
+
+	for( i = 0; i < MAX_CART; i++ )
+	{ // Check for Rentals on Cart
+		if( sd->status.cart[i].nameid == 0 )
+			continue; // Nothing here
+		if( sd->status.cart[i].expire_time == 0 )
+			continue;
+
+		if( sd->status.cart[i].expire_time <= time(NULL) )
+		{
+			clif_rental_expired(sd->fd, sd->status.cart[i].nameid);
+			pc_cart_delitem(sd, i, 1, 0);
+		}
+		else
+		{
+			expire_tick = (unsigned int)(sd->status.cart[i].expire_time - time(NULL)) * 1000;
+			clif_rental_time(sd->fd, sd->status.cart[i].nameid, (int)(expire_tick / 1000));
+			next_tick = min(expire_tick, next_tick);
+			c++;
+		}
+	}
+
+	for( i = 0; i < MAX_STORAGE; i++ )
+	{ // Check for Rentals on Storage
+		if( sd->status.storage.items[i].nameid == 0 )
+			continue;
+		if( sd->status.storage.items[i].expire_time == 0 )
+			continue;
+
+		if( sd->status.storage.items[i].expire_time <= time(NULL) )
+		{
+			clif_rental_expired(sd->fd, sd->status.storage.items[i].nameid);
+			storage_delitem(sd, i, 1);
+		}
+		else
+		{
+			expire_tick = (unsigned int)(sd->status.storage.items[i].expire_time - time(NULL)) * 1000;
+			clif_rental_time(sd->fd, sd->status.storage.items[i].nameid, (int)(expire_tick / 1000));
 			next_tick = min(expire_tick, next_tick);
 			c++;
 		}
@@ -374,7 +416,7 @@ void pc_inventory_rental_add(struct map_session_data *sd, int seconds)
 		}
 	}
 	else
-		sd->rental_timer = add_timer(gettick() + tick, pc_inventory_rental_end, sd->bl.id, 0);
+		sd->rental_timer = add_timer(gettick() + min(tick,3600000), pc_inventory_rental_end, sd->bl.id, 0);
 }
 
 /*==========================================
@@ -3603,7 +3645,7 @@ int pc_cart_additem(struct map_session_data *sd,struct item *item_data,int amoun
 		return 1;
 	data = itemdb_search(item_data->nameid);
 
-	if( item_data->expire_time || !itemdb_cancartstore(item_data, pc_isGM(sd)) )
+	if( !itemdb_cancartstore(item_data, pc_isGM(sd)) )
 	{ // Check item trade restrictions	[Skotlex]
 		clif_displaymessage (sd->fd, msg_txt(264));
 		return 1;
@@ -3686,7 +3728,7 @@ int pc_putitemtocart(struct map_session_data *sd,int idx,int amount)
 	
 	item_data = &sd->status.inventory[idx];
 
-	if( item_data->nameid == 0 || amount < 1 || item_data->amount < amount || sd->vender_id || item_data->expire_time )
+	if( item_data->nameid == 0 || amount < 1 || item_data->amount < amount || sd->vender_id )
 		return 1;
 
 	if( pc_cart_additem(sd,item_data,amount) == 0 )
@@ -7072,83 +7114,89 @@ int pc_checkitem(struct map_session_data *sd)
 
 	nullpo_retr(0, sd);
 
-	if (sd->vender_id) //Avoid reorganizing items when we are vending, as that leads to exploits (pointed out by End of Exam)
+	if( sd->vender_id ) //Avoid reorganizing items when we are vending, as that leads to exploits (pointed out by End of Exam)
 		return 0;
 	
-	// 所持品空き詰め
-	for(i=j=0;i<MAX_INVENTORY;i++){
-		if( (id=sd->status.inventory[i].nameid)==0)
+	for( i = j = 0; i < MAX_INVENTORY; i++ )
+	{
+		if( (id = sd->status.inventory[i].nameid) == 0 )
 			continue;
-		if( battle_config.item_check && !itemdb_available(id) ){
+
+		if( battle_config.item_check && !itemdb_available(id) )
+		{
 			ShowWarning("illegal item id %d in %d[%s] inventory.\n",id,sd->bl.id,sd->status.name);
 			pc_delitem(sd,i,sd->status.inventory[i].amount,3);
 			continue;
 		}
-		if(i>j){
-			memcpy(&sd->status.inventory[j],&sd->status.inventory[i],sizeof(struct item));
+		if( i > j )
+		{
+			memcpy(&sd->status.inventory[j], &sd->status.inventory[i], sizeof(struct item));
 			sd->inventory_data[j] = sd->inventory_data[i];
 		}
 		j++;
 	}
-	if(j < MAX_INVENTORY)
-		memset(&sd->status.inventory[j],0,sizeof(struct item)*(MAX_INVENTORY-j));
-	for(k=j;k<MAX_INVENTORY;k++)
+
+	if( j < MAX_INVENTORY )
+		memset(&sd->status.inventory[j], 0, sizeof(struct item)*(MAX_INVENTORY-j));
+	for( k = j ; k < MAX_INVENTORY; k++ )
 		sd->inventory_data[k] = NULL;
 
-	// カ?ト?空き詰め
-	for(i=j=0;i<MAX_CART;i++){
-		if( (id=sd->status.cart[i].nameid)==0 )
+	for( i = j = 0; i < MAX_CART; i++ )
+	{
+		if( (id=sd->status.cart[i].nameid) == 0 )
 			continue;
 		if( battle_config.item_check &&  !itemdb_available(id) ){
 			ShowWarning("illegal item id %d in %d[%s] cart.\n",id,sd->bl.id,sd->status.name);
 			pc_cart_delitem(sd,i,sd->status.cart[i].amount,1);
 			continue;
 		}
-		if(i>j){
+		if( i > j )
+		{
 			memcpy(&sd->status.cart[j],&sd->status.cart[i],sizeof(struct item));
 		}
 		j++;
 	}
-	if(j < MAX_CART)
+	if( j < MAX_CART )
 		memset(&sd->status.cart[j],0,sizeof(struct item)*(MAX_CART-j));
 
-	// ? 備位置チェック
+	for( i = 0; i < MAX_INVENTORY; i++)
+	{
+		it = sd->inventory_data[i];
 
-	for(i=0;i<MAX_INVENTORY;i++){
-
-		it=sd->inventory_data[i];
-
-		if(sd->status.inventory[i].nameid==0)
+		if( sd->status.inventory[i].nameid == 0 )
 			continue;
 
-		if(!sd->status.inventory[i].equip)
+		if( !sd->status.inventory[i].equip )
 			continue;
 
-		if(sd->status.inventory[i].equip&~pc_equippoint(sd,i)) {
-			sd->status.inventory[i].equip=0;
+		if( sd->status.inventory[i].equip&~pc_equippoint(sd,i) )
+		{
+			pc_unequipitem(sd, i, 2);
 			calc_flag = 1;
 			continue;
 		}
-		if(it) {
-			//check for forbiden items.
+
+		if( it )
+		{ // check for forbiden items.
 			int flag =
 					(map[sd->bl.m].flag.restricted?map[sd->bl.m].zone:0)
 					| (map[sd->bl.m].flag.pvp?1:0)
 					| (map_flag_gvg(sd->bl.m)?2:0);
-			if (flag && (it->flag.no_equip&flag || !pc_isAllowedCardOn(sd,it->slot,i,flag)))
+			if( flag && (it->flag.no_equip&flag || !pc_isAllowedCardOn(sd,it->slot,i,flag)) )
 			{
-				sd->status.inventory[i].equip=0;
+				pc_unequipitem(sd, i, 2);
 				calc_flag = 1;
 			}
 		}
 	}
 
 	pc_setequipindex(sd);
-	if(calc_flag && sd->state.active)
+	if( calc_flag && sd->state.active )
 	{
+		pc_checkallowskill(sd);
 		status_calc_pc(sd,0);
-		pc_equiplookall(sd);
 	}
+
 	return 0;
 }
 

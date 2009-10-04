@@ -182,7 +182,7 @@ static int storage_additem(struct map_session_data* sd, struct item* item_data, 
 /*==========================================
  * Internal del-item function
  *------------------------------------------*/
-static int storage_delitem(struct map_session_data* sd, int n, int amount)
+int storage_delitem(struct map_session_data* sd, int n, int amount)
 {
 	if( sd->status.storage.items[n].nameid == 0 || sd->status.storage.items[n].amount < amount )
 		return 1;
@@ -196,9 +196,9 @@ static int storage_delitem(struct map_session_data* sd, int n, int amount)
 	{
 		memset(&sd->status.storage.items[n],0,sizeof(sd->status.storage.items[0]));
 		sd->status.storage.storage_amount--;
-		clif_updatestorageamount(sd,sd->status.storage.storage_amount);
+		if( sd->state.storage_flag == 1 ) clif_updatestorageamount(sd,sd->status.storage.storage_amount);
 	}
-	clif_storageitemremoved(sd,n,amount);
+	if( sd->state.storage_flag == 1 ) clif_storageitemremoved(sd,n,amount);
 	return 0;
 }
 
@@ -218,9 +218,6 @@ int storage_storageadd(struct map_session_data* sd, int index, int amount)
 	if( sd->status.inventory[index].nameid <= 0 )
 		return 0; // No item on that spot
 
-	if( sd->status.inventory[index].expire_time )
-		return 0; // Cannot Store Rental Items
-	
 	if( amount < 1 || amount > sd->status.inventory[index].amount )
   		return 0;
 
@@ -270,9 +267,6 @@ int storage_storageaddfromcart(struct map_session_data* sd, int index, int amoun
 	if( sd->status.cart[index].nameid <= 0 )
 		return 0; //No item there.
 	
-	if( sd->status.inventory[index].expire_time )
-		return 0; // Cannot Store Rental Items
-
 	if( amount < 1 || amount > sd->status.cart[index].amount )
 		return 0;
 
