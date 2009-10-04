@@ -20,7 +20,7 @@ turbo_room,124,135,3	script	Expert mode - 16 person	124,{
 	end;
 
 OnInit:
-	waitingroom "Expert mode - 16 person",60,"Expert mode - 8 person::OnStartArena",16;
+	waitingroom "Expert mode - 16 person",60,"Expert mode - 16 person::OnStartArena",16;
 	//SetFeeZeny 1000
 	enablewaitingroomevent "Expert mode - 16 person";
 	end;

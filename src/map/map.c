@@ -2785,7 +2785,6 @@ int map_readgat (struct map_data* m)
 }
 
 /*======================================
-/*======================================
  * Add/Remove map to the map_db
  *--------------------------------------*/
 void map_addmap2db(struct map_data *m)

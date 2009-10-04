@@ -97,7 +97,7 @@
  40:	4 Sleeping    04 Silenced   08 Level 1 Cart   256 Level 3 Cart
  40:	6 darkness    08 ???        16 Falcon         512 Level 4 Cart
  40:	              16 darkness                    1024 Level 5 Cart
- 40:
+ 40: 
  40:@heal [<HP> <SP>] - Heals the desired amount of HP and SP. No value specified will do a full heal.
  40:@option <param1> <param2> <param3> - Adds different visual effects on or around your character
  40:@dye/@ccolor <clothes color: 0-4> - Changes your characters appearence (only clothes color).

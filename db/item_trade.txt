@@ -311,36 +311,6 @@
 12180,115,100	// SpearMercenary_Scroll8
 12181,115,100	// SpearMercenary_Scroll9
 12182,115,100	// SpearMercenary_Scroll10
-12153,115,100	// Bow_Mercenary_Scroll1
-12154,115,100	// Bow_Mercenary_Scroll2
-12155,115,100	// Bow_Mercenary_Scroll3
-12156,115,100	// Bow_Mercenary_Scroll4
-12157,115,100	// Bow_Mercenary_Scroll5
-12158,115,100	// Bow_Mercenary_Scroll6
-12159,115,100	// Bow_Mercenary_Scroll7
-12160,115,100	// Bow_Mercenary_Scroll8
-12161,115,100	// Bow_Mercenary_Scroll9
-12162,115,100	// Bow_Mercenary_Scroll10
-12163,115,100	// SwordMercenary_Scroll1
-12164,115,100	// SwordMercenary_Scroll2
-12165,115,100	// SwordMercenary_Scroll3
-12166,115,100	// SwordMercenary_Scroll4
-12167,115,100	// SwordMercenary_Scroll5
-12168,115,100	// SwordMercenary_Scroll6
-12169,115,100	// SwordMercenary_Scroll7
-12170,115,100	// SwordMercenary_Scroll8
-12171,115,100	// SwordMercenary_Scroll9
-12172,115,100	// SwordMercenary_Scroll10
-12173,115,100	// SpearMercenary_Scroll1
-12174,115,100	// SpearMercenary_Scroll2
-12175,115,100	// SpearMercenary_Scroll3
-12176,115,100	// SpearMercenary_Scroll4
-12177,115,100	// SpearMercenary_Scroll5
-12178,115,100	// SpearMercenary_Scroll6
-12179,115,100	// SpearMercenary_Scroll7
-12180,115,100	// SpearMercenary_Scroll8
-12181,115,100	// SpearMercenary_Scroll9
-12182,115,100	// SpearMercenary_Scroll10
 
 // Additonal mixed items
 7713,115,100	// BlueCard_A_
@@ -355,8 +325,6 @@
 7466,115,100	// BlueCard_N
 7467,115,100	// BlueCard_O
 7854,64,100	// Pass_CF
-7865,115,100	// Gold_Pouch
-7866,115,100	// Certificate
 5189,72,100	// Fallen_Leaves
 5188,72,100	// Minstrel_Hat
 5150,72,100	// Joker_Jester_
@@ -1343,7 +1311,6 @@
 12332,123,100	// Fruit_Juice
 7928,123,100	// Brazilian_Flag_
 7929,123,100	// Golden_Coin_
-12333,123,100	// Ansila
 5450,91,100	// Sun_Cap
 5451,91,100	// Dragonhelm_Gold
 5452,91,100	// Dragonhelm_Silver
