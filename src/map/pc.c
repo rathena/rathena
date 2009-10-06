@@ -3334,7 +3334,7 @@ int pc_dropitem(struct map_session_data *sd,int n,int amount)
 		return 0; //Can't drop items in nodrop mapflag maps.
 	}
 	
-	if( !pc_candrop(sd,&sd->status.inventory[n]) || sd->status.inventory[n].expire_time )
+	if( !pc_candrop(sd,&sd->status.inventory[n]) )
 	{
 		clif_displaymessage (sd->fd, msg_txt(263));
 		return 0;
@@ -6377,7 +6377,9 @@ int pc_setriding(TBL_PC* sd, int flag)
 int pc_candrop(struct map_session_data *sd,struct item *item)
 {
 	int level = pc_isGM(sd);
-	if ( !pc_can_give_items(level) ) //check if this GM level can drop items
+	if( item && item->expire_time )
+		return 0;
+	if( !pc_can_give_items(level) ) //check if this GM level can drop items
 		return 0;
 	return (itemdb_isdropable(item, level));
 }

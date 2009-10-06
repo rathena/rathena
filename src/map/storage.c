@@ -398,7 +398,7 @@ int guild_storage_additem(struct map_session_data* sd, struct guild_storage* sto
 	if(item_data->nameid <= 0 || amount <= 0)
 		return 1;
 
-	if (!itemdb_canguildstore(item_data, pc_isGM(sd)))
+	if( !itemdb_canguildstore(item_data, pc_isGM(sd)) || item_data->expire_time )
 	{	//Check if item is storable. [Skotlex]
 		clif_displaymessage (sd->fd, msg_txt(264));
 		return 1;
@@ -475,9 +475,6 @@ int storage_guild_storageadd(struct map_session_data* sd, int index, int amount)
 	if( amount < 1 || amount > sd->status.inventory[index].amount )
 		return 0;
 
-	if( sd->status.inventory[index].expire_time )
-		return 0;
-
 //	log_tostorage(sd, index, 1);
 	if(guild_storage_additem(sd,stor,&sd->status.inventory[index],amount)==0)
 		pc_delitem(sd,index,amount,0);
@@ -531,9 +528,6 @@ int storage_guild_storageaddfromcart(struct map_session_data* sd, int index, int
 		return 0;
 	
 	if( amount < 1 || amount > sd->status.cart[index].amount )
-		return 0;
-
-	if( sd->status.inventory[index].expire_time )
 		return 0;
 
 	if(guild_storage_additem(sd,stor,&sd->status.cart[index],amount)==0)

@@ -92,8 +92,6 @@ unsigned char mail_setitem(struct map_session_data *sd, int idx, int amount)
 			return 1;
 		if( !pc_candrop(sd, &sd->status.inventory[idx]) )
 			return 1;
-		if( sd->status.inventory[idx].expire_time )
-			return 1; // Rental System
 
 		sd->mail.index = idx;
 		sd->mail.nameid = sd->status.inventory[idx].nameid;
