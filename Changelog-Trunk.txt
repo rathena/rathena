@@ -5,6 +5,7 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 09/10/10
 	* Added character rename function. [Inkfish]
+	* NPCs' names should only be 24 characters long including EOS. [Inkfish]
 09/10/06
 	* Fixed rental items can be moved into guild storage from cart. [Inkfish]
 09/10/04
