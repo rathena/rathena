@@ -100,6 +100,7 @@ char unknown_char_name[NAME_LENGTH] = "Unknown"; // Name to use when the request
 #define TRIM_CHARS "\032\t\x0A\x0D " //The following characters are trimmed regardless because they cause confusion and problems on the servers. [Skotlex]
 char char_name_letters[1024] = ""; // list of letters/symbols used to authorise or not a name of a character. by [Yor]
 bool char_rename = true;
+int char_max_rename = 1;
 
 int char_per_account = 0; //Maximum charas per account (default unlimited) [Sirius]
 int char_del_level = 0; //From which level u can delete character [Lupus]
@@ -130,6 +131,7 @@ struct char_session_data {
 	int gmlevel;
 	uint32 version;
 	uint8 clienttype;
+	char new_name[NAME_LENGTH];
 };
 
 int char_num, char_max;
@@ -477,7 +479,7 @@ int mmo_char_tosql(int char_id, struct mmo_charstatus* p)
 			"`str`='%d',`agi`='%d',`vit`='%d',`int`='%d',`dex`='%d',`luk`='%d',"
 			"`option`='%d',`party_id`='%d',`guild_id`='%d',`pet_id`='%d',`homun_id`='%d',"
 			"`weapon`='%d',`shield`='%d',`head_top`='%d',`head_mid`='%d',`head_bottom`='%d',"
-			"`last_map`='%s',`last_x`='%d',`last_y`='%d',`save_map`='%s',`save_x`='%d',`save_y`='%d'"
+			"`last_map`='%s',`last_x`='%d',`last_y`='%d',`save_map`='%s',`save_x`='%d',`save_y`='%d', `rename`='%d'"
 			" WHERE  `account_id`='%d' AND `char_id` = '%d'",
 			char_db, p->base_level, p->job_level,
 			p->base_exp, p->job_exp, p->zeny,
@@ -486,7 +488,7 @@ int mmo_char_tosql(int char_id, struct mmo_charstatus* p)
 			p->option, p->party_id, p->guild_id, p->pet_id, p->hom_id,
 			p->weapon, p->shield, p->head_top, p->head_mid, p->head_bottom,
 			mapindex_id2name(p->last_point.map), p->last_point.x, p->last_point.y,
-			mapindex_id2name(p->save_point.map), p->save_point.x, p->save_point.y,
+			mapindex_id2name(p->save_point.map), p->save_point.x, p->save_point.y, p->rename,
 			p->account_id, p->char_id) )
 		{
 			Sql_ShowDebug(sql_handle);
@@ -835,7 +837,7 @@ int mmo_chars_fromsql(struct char_session_data* sd, uint8* buf)
 		"`char_id`,`char_num`,`name`,`class`,`base_level`,`job_level`,`base_exp`,`job_exp`,`zeny`,"
 		"`str`,`agi`,`vit`,`int`,`dex`,`luk`,`max_hp`,`hp`,`max_sp`,`sp`,"
 		"`status_point`,`skill_point`,`option`,`karma`,`manner`,`hair`,`hair_color`,"
-		"`clothes_color`,`weapon`,`shield`,`head_top`,`head_mid`,`head_bottom`"
+		"`clothes_color`,`weapon`,`shield`,`head_top`,`head_mid`,`head_bottom`,`rename`"
 		" FROM `%s` WHERE `account_id`='%d' AND `char_num` < '%d'", char_db, sd->account_id, MAX_CHARS)
 	||	SQL_ERROR == SqlStmt_Execute(stmt)
 	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 0,  SQLDT_INT,    &p.char_id, 0, NULL, NULL)
@@ -870,6 +872,7 @@ int mmo_chars_fromsql(struct char_session_data* sd, uint8* buf)
 	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 29, SQLDT_SHORT,  &p.head_top, 0, NULL, NULL)
 	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 30, SQLDT_SHORT,  &p.head_mid, 0, NULL, NULL)
 	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 31, SQLDT_SHORT,  &p.head_bottom, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 32, SQLDT_SHORT,	&p.rename, 0, NULL, NULL)
 	)
 	{
 		SqlStmt_ShowDebug(stmt);
@@ -883,6 +886,8 @@ int mmo_chars_fromsql(struct char_session_data* sd, uint8* buf)
 	}
 	for( ; i < MAX_CHARS; i++ )
 		sd->found_char[i] = -1;
+
+	memset(sd->new_name,0,sizeof(sd->new_name));
 
 	SqlStmt_Free(stmt);
 	return j;
@@ -925,7 +930,7 @@ int mmo_char_fromsql(int char_id, struct mmo_charstatus* p, bool load_everything
 		"`str`,`agi`,`vit`,`int`,`dex`,`luk`,`max_hp`,`hp`,`max_sp`,`sp`,"
 		"`status_point`,`skill_point`,`option`,`karma`,`manner`,`party_id`,`guild_id`,`pet_id`,`homun_id`,`hair`,"
 		"`hair_color`,`clothes_color`,`weapon`,`shield`,`head_top`,`head_mid`,`head_bottom`,`last_map`,`last_x`,`last_y`,"
-		"`save_map`,`save_x`,`save_y`,`partner_id`,`father`,`mother`,`child`,`fame`"
+		"`save_map`,`save_x`,`save_y`,`partner_id`,`father`,`mother`,`child`,`fame`,`rename`"
 		" FROM `%s` WHERE `char_id`=? LIMIT 1", char_db)
 	||	SQL_ERROR == SqlStmt_BindParam(stmt, 0, SQLDT_INT, &char_id, 0)
 	||	SQL_ERROR == SqlStmt_Execute(stmt)
@@ -976,7 +981,9 @@ int mmo_char_fromsql(int char_id, struct mmo_charstatus* p, bool load_everything
 	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 44, SQLDT_INT,    &p->father, 0, NULL, NULL)
 	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 45, SQLDT_INT,    &p->mother, 0, NULL, NULL)
 	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 46, SQLDT_INT,    &p->child, 0, NULL, NULL)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 47, SQLDT_INT,    &p->fame, 0, NULL, NULL) )
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 47, SQLDT_INT,    &p->fame, 0, NULL, NULL)
+	||  SQL_ERROR == SqlStmt_BindColumn(stmt, 48, SQLDT_SHORT,	&p->rename, 0, NULL, NULL)
+	)
 	{
 		SqlStmt_ShowDebug(stmt);
 		SqlStmt_Free(stmt);
@@ -1173,18 +1180,73 @@ int mmo_char_sql_init(void)
 }
 
 //-----------------------------------
-// Function to create a new character
+// Function to change chararcter's names
 //-----------------------------------
-int make_new_char_sql(struct char_session_data* sd, char* name_, int str, int agi, int vit, int int_, int dex, int luk, int slot, int hair_color, int hair_style)
+int rename_char_sql(struct char_session_data *sd, int char_id)
 {
-	char name[NAME_LENGTH];
+	StringBuf buf;
+	struct mmo_charstatus char_dat;
 	char esc_name[NAME_LENGTH*2+1];
-	unsigned int i;
-	int char_id;
 
-	safestrncpy(name, name_, NAME_LENGTH);
-	normalize_name(name,TRIM_CHARS);
-	Sql_EscapeStringLen(sql_handle, esc_name, name, strnlen(name, NAME_LENGTH));
+	if( sd->new_name[0] == 0 ) // Not ready for rename
+		return 2;
+	
+	if( !mmo_char_fromsql(char_id, &char_dat, false) ) // Only the short data is needed.
+		return 2;
+
+	if( char_dat.rename >= char_max_rename && char_max_rename != 0 )
+		return 1;
+
+	Sql_EscapeStringLen(sql_handle, esc_name, sd->new_name, strnlen(sd->new_name, NAME_LENGTH));
+
+	// check if the char exist
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT 1 FROM `%s` WHERE `name` LIKE '%s'", char_db, esc_name) ) {
+		Sql_ShowDebug(sql_handle);
+		return 4;
+	}
+
+	StringBuf_Init(&buf);
+	StringBuf_Printf(&buf, "UPDATE `%s` SET `name` = '%s'", char_db, esc_name);
+	
+	if( char_max_rename )
+	{
+		char_dat.rename++;
+		StringBuf_Printf(&buf, ", `rename` = '%d'", char_dat.rename);
+	}
+
+	StringBuf_Printf(&buf, " WHERE `char_id` = '%d'", char_id);
+
+	if( SQL_ERROR == Sql_QueryStr(sql_handle, StringBuf_Value(&buf)) )
+	{
+		Sql_ShowDebug(sql_handle);
+		StringBuf_Destroy(&buf);
+		return 3;
+	}
+
+	StringBuf_Destroy(&buf);
+
+	// Change character's name into guild_db.
+	if( char_dat.guild_id )
+		inter_guild_charname_changed(char_dat.guild_id, sd->account_id, char_id, sd->new_name);
+
+	safestrncpy(char_dat.name, sd->new_name, NAME_LENGTH);
+	memset(sd->new_name,0,sizeof(sd->new_name));
+
+	// log change
+	if( log_char )
+	{
+		if( SQL_ERROR == Sql_Query(sql_handle, "INSERT INTO `%s` (`time`, `char_msg`,`account_id`,`char_num`,`name`,`str`,`agi`,`vit`,`int`,`dex`,`luk`,`hair`,`hair_color`)"
+			"VALUES (NOW(), '%s', '%d', '%d', '%s', '0', '0', '0', '0', '0', '0', '0', '0')",
+			charlog_db, "change char name", sd->account_id, char_dat.slot, esc_name) )
+			Sql_ShowDebug(sql_handle);
+	}
+
+	return 0;
+}
+
+int check_char_name(char * name, char * esc_name)
+{
+	int i;
 
 	// check length of character name
 	if( name[0] == '\0' )
@@ -1197,26 +1259,48 @@ int make_new_char_sql(struct char_session_data* sd, char* name_, int str, int ag
 	// check for reserved names
 	if( strcmpi(name, main_chat_nick) == 0 || strcmpi(name, wisp_server_name) == 0 )
 		return -1; // nick reserved for internal server messages
-
+	
 	// Check Authorised letters/symbols in the name of the character
-	if( char_name_option == 1 ) { // only letters/symbols in char_name_letters are authorised
+	if( char_name_option == 1 )
+	{ // only letters/symbols in char_name_letters are authorised
 		for( i = 0; i < NAME_LENGTH && name[i]; i++ )
 			if( strchr(char_name_letters, name[i]) == NULL )
 				return -2;
-	} else
-	if( char_name_option == 2 ) { // letters/symbols in char_name_letters are forbidden
+	}
+	else if( char_name_option == 2 )
+	{ // letters/symbols in char_name_letters are forbidden
 		for( i = 0; i < NAME_LENGTH && name[i]; i++ )
 			if( strchr(char_name_letters, name[i]) != NULL )
 				return -2;
-	} // else, all letters/symbols are authorised (except control char removed before)
+	}
 
-	// check name (already in use?)
-	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT 1 FROM `%s` WHERE `name` = '%s'", char_db, esc_name) ) {
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT 1 FROM `%s` WHERE `name` = '%s'", char_db, esc_name) )
+	{ // check name (already in use?)
 		Sql_ShowDebug(sql_handle);
 		return -2;
 	}
 	if( Sql_NumRows(sql_handle) > 0 )
 		return -1; //  name already exists
+
+	return 0;
+}
+
+//-----------------------------------
+// Function to create a new character
+//-----------------------------------
+int make_new_char_sql(struct char_session_data* sd, char* name_, int str, int agi, int vit, int int_, int dex, int luk, int slot, int hair_color, int hair_style)
+{
+	char name[NAME_LENGTH];
+	char esc_name[NAME_LENGTH*2+1];
+	int char_id, flag;
+
+	safestrncpy(name, name_, NAME_LENGTH);
+	normalize_name(name,TRIM_CHARS);
+	Sql_EscapeStringLen(sql_handle, esc_name, name, strnlen(name, NAME_LENGTH));
+
+	flag = check_char_name(name,esc_name);
+	if( flag < 0 )
+		return flag;
 
 	//check other inputs
 	if((slot >= MAX_CHARS) // slots
@@ -1512,7 +1596,7 @@ int mmo_char_tobuf(uint8* buf, struct mmo_charstatus* p)
 	WBUFB(buf,103) = min(p->luk, UCHAR_MAX);
 	WBUFW(buf,104) = p->slot;
 	if (char_rename) {
-		WBUFW(buf,106) = 1;// Rename bit (0=rename,1=no rename)
+		WBUFW(buf,106) = (p->rename >= char_max_rename && char_max_rename != 0) ? 1 : 0;// Rename bit (0=rename,1=no rename)
 		return 108;
 	} else {
 		return 106;
@@ -3142,7 +3226,7 @@ int parse_char(int fd)
 				// add new entry to the chars list
 				ARR_FIND( 0, MAX_CHARS, ch, sd->found_char[ch] == -1 );
 				if( ch < MAX_CHARS )
-						sd->found_char[ch] = i; // the char_id of the new char
+					sd->found_char[ch] = i; // the char_id of the new char
 			}
 
 			RFIFOSKIP(fd,37);
@@ -3220,9 +3304,60 @@ int parse_char(int fd)
 		// R 028d <account ID>.l <char ID>.l <new name>.24B 
 		case 0x28d:
 			FIFOSD_CHECK(34);
-			//not implemented
-			RFIFOSKIP(fd,34);
-		break;
+			{
+				int i, aid = RFIFOL(fd,2), cid =RFIFOL(fd,6);
+				char name[NAME_LENGTH];
+ 				char esc_name[NAME_LENGTH*2+1];
+				safestrncpy(name, (char *)RFIFOP(fd,10), NAME_LENGTH);
+				RFIFOSKIP(fd,34);
+
+				if( aid != sd->account_id )
+					break;
+				ARR_FIND( 0, MAX_CHARS, i, sd->found_char[i] == cid );
+				if( i == MAX_CHARS )
+					break;
+
+				normalize_name(name,TRIM_CHARS);
+				Sql_EscapeStringLen(sql_handle, esc_name, name, strnlen(name, NAME_LENGTH));
+				if( !check_char_name(name,esc_name) )
+				{
+					i = 1;
+					safestrncpy(sd->new_name, name, NAME_LENGTH);
+				}
+				else 
+					i = 0;
+
+				WFIFOHEAD(fd, 4);
+				WFIFOW(fd,0) = 0x28e;
+				WFIFOW(fd,2) = i;
+				WFIFOSET(fd,4);
+			}
+			break;
+		//Confirm change name.
+		// 0x28f <char_id>.L
+		case 0x28f:
+			// 0: Sucessfull
+			// 1: This character's name has already been changed. You cannot change a character's name more than once.
+			// 2: User information is not correct.
+			// 3: You have failed to change this character's name.
+			// 4: Another user is using this character name, so please select another one.
+			FIFOSD_CHECK(6);
+			{
+				int i;
+				int cid = RFIFOL(fd,2);
+				RFIFOSKIP(fd,6);
+
+				ARR_FIND( 0, MAX_CHARS, i, sd->found_char[i] == cid );
+				if( i == MAX_CHARS )
+					break;
+				i = rename_char_sql(sd, cid);
+
+				WFIFOHEAD(fd, 4);
+				WFIFOW(fd,0) = 0x290;
+				WFIFOW(fd,2) = i;
+				WFIFOSET(fd,4);
+			}
+			break;
 
 		// log in as map-server
 		case 0x2af8:
@@ -3772,6 +3907,8 @@ int char_config_read(const char* cfgName)
 			strcpy(char_name_letters, w2);
 		} else if (strcmpi(w1, "char_rename") == 0) {
 			char_rename = config_switch(w2);
+		} else if (strcmpi(w1, "char_max_rename") == 0) {
+			char_max_rename = atoi(w2);
 		} else if (strcmpi(w1, "chars_per_account") == 0) { //maxchars per account [Sirius]
 			char_per_account = atoi(w2);
 		} else if (strcmpi(w1, "char_del_level") == 0) { //disable/enable char deletion by its level condition [Lupus]

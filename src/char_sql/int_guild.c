@@ -1673,6 +1673,42 @@ int inter_guild_sex_changed(int guild_id,int account_id,int char_id, int gender)
 	return mapif_parse_GuildMemberInfoChange(0, guild_id, account_id, char_id, GMI_GENDER, (const char*)&gender, sizeof(gender));
 }
 
+int inter_guild_charname_changed(int guild_id,int account_id, int char_id, char *name)
+{
+	struct guild *g;
+	int i, flag = 0;
+
+	g = inter_guild_fromsql(guild_id);
+	if( g == NULL )
+	{
+		ShowError("inter_guild_charrenamed: Can't find guild %d.\n", guild_id);
+		return 0;
+	}
+
+	ARR_FIND(0, g->max_member, i, g->member[i].char_id == char_id);
+	if( i == g->max_member )
+	{
+		ShowError("inter_guild_charrenamed: Can't find character %d in the guild\n", char_id);
+		return 0;
+	}
+
+	if( !strcmp(g->member[i].name, g->master) )
+	{
+		safestrncpy(g->master, name, NAME_LENGTH);
+		flag |= GS_BASIC;
+	}
+	safestrncpy(g->member[i].name, name, NAME_LENGTH);
+	g->member[i].modified = GS_MEMBER_MODIFIED;
+	flag |= GS_MEMBER;
+
+	if( !inter_guild_tosql(g, flag) )
+		return 0;			
+
+	mapif_guild_info(-1,g);
+	
+	return 0;
+}
+
 // Change a position desc
 int mapif_parse_GuildPosition(int fd,int guild_id,int idx,struct guild_position *p)
 {

@@ -3,8 +3,15 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+09/10/10
+	* Added character rename function. [Inkfish]
 09/10/06
 	* Fixed rental items can be moved into guild storage from cart. [Inkfish]
+09/10/04
+	* Implemented new packets for rental items (from Jobbie and Natz and fixed by me). [zephyrus]
+	* Rental items now can be moved to storage and cart. [zephyrus]
+	* Autotrade cannot be used when user is dead, and it's not dispelled if user dies to prevent abuse. [zephyrus]
+	* Fixed pc_checkitem to do a proper item check and remove. [zephyrus]
 09/10/02
 	* Fixed a damage underflow.(bugreport:3624) [Inkfish]
 	* Marionette Control now has an infinite duration.(bugreport:2542) [Inkfish]

@@ -296,6 +296,7 @@ struct mmo_charstatus {
 	struct hotkey hotkeys[MAX_HOTKEYS];
 #endif
 	bool show_equip;
+	short rename;
 };
 
 typedef enum mail_status {
