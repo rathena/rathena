@@ -100,6 +100,7 @@ CREATE TABLE IF NOT EXISTS `char` (
   `mother` int(11) unsigned NOT NULL default '0',
   `child` int(11) unsigned NOT NULL default '0',
   `fame` int(11) unsigned NOT NULL default '0',
+  `rename` SMALLINT(3) unsigned NOT NULL default '0',
   PRIMARY KEY  (`char_id`),
   KEY `account_id` (`account_id`),
   KEY `party_id` (`party_id`),
