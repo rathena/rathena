@@ -1595,12 +1595,11 @@ int mmo_char_tobuf(uint8* buf, struct mmo_charstatus* p)
 	WBUFB(buf,102) = min(p->dex, UCHAR_MAX);
 	WBUFB(buf,103) = min(p->luk, UCHAR_MAX);
 	WBUFW(buf,104) = p->slot;
-	if (char_rename) {
-		WBUFW(buf,106) = (p->rename >= char_max_rename && char_max_rename != 0) ? 1 : 0;// Rename bit (0=rename,1=no rename)
-		return 108;
-	} else {
-		return 106;
-	}
+	if( char_rename && (!char_max_rename || p->rename < char_max_rename) )
+		WBUFW(buf,106) = 1;
+	else
+		WBUFW(buf,106) = 0;
+	return 108;
 }
 
 int mmo_char_send006b(int fd, struct char_session_data* sd)
