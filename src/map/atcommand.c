@@ -4730,12 +4730,12 @@ int atcommand_loadnpc(const int fd, struct map_session_data* sd, const char* com
 int atcommand_unloadnpc(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
 	struct npc_data *nd;
-	char NPCname[NAME_LENGTH];
+	char NPCname[NAME_LENGTH+1];
 	nullpo_retr(-1, sd);
 
 	memset(NPCname, '\0', sizeof(NPCname));
 
-	if (!message || !*message || sscanf(message, "%23[^\n]", NPCname) < 1) {
+	if (!message || !*message || sscanf(message, "%24[^\n]", NPCname) < 1) {
 		clif_displaymessage(fd, "Please, enter a NPC name (usage: @npcoff <NPC_name>).");
 		return -1;
 	}
