@@ -99,8 +99,7 @@ int char_name_option = 0; // Option to know which letters/symbols are authorised
 char unknown_char_name[NAME_LENGTH] = "Unknown"; // Name to use when the requested name cannot be determined
 #define TRIM_CHARS "\032\t\x0A\x0D " //The following characters are trimmed regardless because they cause confusion and problems on the servers. [Skotlex]
 char char_name_letters[1024] = ""; // list of letters/symbols used to authorise or not a name of a character. by [Yor]
-bool char_rename = true;
-int char_max_rename = 1;
+short char_rename = 1;
 
 int char_per_account = 0; //Maximum charas per account (default unlimited) [Sirius]
 int char_del_level = 0; //From which level u can delete character [Lupus]
@@ -1184,7 +1183,6 @@ int mmo_char_sql_init(void)
 //-----------------------------------
 int rename_char_sql(struct char_session_data *sd, int char_id)
 {
-	StringBuf buf;
 	struct mmo_charstatus char_dat;
 	char esc_name[NAME_LENGTH*2+1];
 
@@ -1194,36 +1192,23 @@ int rename_char_sql(struct char_session_data *sd, int char_id)
 	if( !mmo_char_fromsql(char_id, &char_dat, false) ) // Only the short data is needed.
 		return 2;
 
-	if( char_dat.rename >= char_max_rename && char_max_rename != 0 )
+	if( char_dat.rename >= char_rename )
 		return 1;
 
 	Sql_EscapeStringLen(sql_handle, esc_name, sd->new_name, strnlen(sd->new_name, NAME_LENGTH));
 
 	// check if the char exist
-	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT 1 FROM `%s` WHERE `name` LIKE '%s'", char_db, esc_name) ) {
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT 1 FROM `%s` WHERE `name` LIKE '%s'", char_db, esc_name) )
+	{
 		Sql_ShowDebug(sql_handle);
 		return 4;
 	}
 
-	StringBuf_Init(&buf);
-	StringBuf_Printf(&buf, "UPDATE `%s` SET `name` = '%s'", char_db, esc_name);
-	
-	if( char_max_rename )
-	{
-		char_dat.rename++;
-		StringBuf_Printf(&buf, ", `rename` = '%d'", char_dat.rename);
-	}
-
-	StringBuf_Printf(&buf, " WHERE `char_id` = '%d'", char_id);
-
-	if( SQL_ERROR == Sql_QueryStr(sql_handle, StringBuf_Value(&buf)) )
+	if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `name` = '%s', `rename` = '%d' WHERE `char_id` = '%d'", char_db, esc_name, ++char_dat.rename, char_id) )
 	{
 		Sql_ShowDebug(sql_handle);
-		StringBuf_Destroy(&buf);
 		return 3;
 	}
-
-	StringBuf_Destroy(&buf);
 
 	// Change character's name into guild_db.
 	if( char_dat.guild_id )
@@ -1595,11 +1580,15 @@ int mmo_char_tobuf(uint8* buf, struct mmo_charstatus* p)
 	WBUFB(buf,102) = min(p->dex, UCHAR_MAX);
 	WBUFB(buf,103) = min(p->luk, UCHAR_MAX);
 	WBUFW(buf,104) = p->slot;
-	if( char_rename && (!char_max_rename || p->rename < char_max_rename) )
-		WBUFW(buf,106) = 1;
-	else
-		WBUFW(buf,106) = 0;
-	return 108;
+	if( char_rename )
+	{
+		if( p->rename < char_rename )
+			WBUFW(buf,106) = 0;
+		else
+			WBUFW(buf,106) = 1;
+		return 108;
+	}
+	return 106;
 }
 
 int mmo_char_send006b(int fd, struct char_session_data* sd)
@@ -3905,9 +3894,7 @@ int char_config_read(const char* cfgName)
 		} else if (strcmpi(w1, "char_name_letters") == 0) {
 			strcpy(char_name_letters, w2);
 		} else if (strcmpi(w1, "char_rename") == 0) {
-			char_rename = config_switch(w2);
-		} else if (strcmpi(w1, "char_max_rename") == 0) {
-			char_max_rename = atoi(w2);
+			char_rename = atoi(w2);
 		} else if (strcmpi(w1, "chars_per_account") == 0) { //maxchars per account [Sirius]
 			char_per_account = atoi(w2);
 		} else if (strcmpi(w1, "char_del_level") == 0) { //disable/enable char deletion by its level condition [Lupus]
