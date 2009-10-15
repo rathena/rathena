@@ -239,3 +239,57 @@ ve_fild04	mapflag	nightenabled
 ve_fild05	mapflag	nightenabled
 ve_fild06	mapflag	nightenabled
 ve_fild07	mapflag	nightenabled
+
+//Episode 12 ====================
+poring_c01	mapflag	nightenabled
+poring_c02	mapflag	nightenabled
+nameless_i	mapflag	nightenabled
+nameless_n	mapflag	nightenabled
+poring_w01	mapflag	nightenabled
+poring_w02	mapflag	nightenabled
+moscovia	mapflag	nightenabled
+mosk_ship	mapflag	nightenabled
+mosk_fild01	mapflag	nightenabled
+mosk_fild02	mapflag	nightenabled
+mosk_dun01	mapflag	nightenabled
+mosk_dun02	mapflag	nightenabled
+mosk_dun03	mapflag	nightenabled
+que_temsky	mapflag	nightenabled
+sch_gld	mapflag	nightenabled
+moc_fild20	mapflag	nightenabled
+moc_fild21	mapflag	nightenabled
+moc_fild22	mapflag	nightenabled
+aru_gld	mapflag	nightenabled
+que_qsch01	mapflag	nightenabled
+que_qsch02	mapflag	nightenabled
+que_qsch03	mapflag	nightenabled
+que_qsch04	mapflag	nightenabled
+que_qsch05	mapflag	nightenabled
+que_qaru01	mapflag	nightenabled
+que_qaru02	mapflag	nightenabled
+que_qaru03	mapflag	nightenabled
+que_qaru04	mapflag	nightenabled
+que_qaru05	mapflag	nightenabled
+
+// Episode 13 ====================
+mid_camp	mapflag	nightenabled
+man_fild01	mapflag	nightenabled
+man_fild03	mapflag	nightenabled
+spl_fild02	mapflag	nightenabled
+spl_fild03	mapflag	nightenabled
+moc_fild22b	mapflag	nightenabled
+que_dan01	mapflag	nightenabled
+schg_que01	mapflag	nightenabled
+arug_que01	mapflag	nightenabled
+nyd_dun01	mapflag	nightenabled
+nyd_dun02	mapflag	nightenabled
+manuk	mapflag	nightenabled
+man_fild02	mapflag	nightenabled
+splendide	mapflag	nightenabled
+spl_fild01	mapflag	nightenabled
+bat_c01	mapflag	nightenabled
+bat_c02	mapflag	nightenabled
+bat_c03	mapflag	nightenabled
+
+//Endless Tower ==================
+e_tower	mapflag	nightenabled

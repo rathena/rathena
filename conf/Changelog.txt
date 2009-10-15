@@ -1,5 +1,7 @@
 Date	Added
 
+2009/10/15
+	* Rev. 14092 Added several 13.x and 12.1 map mapflags, might have missed some. [L0ne_w0lf]
 2009/08/18
 	* Rev. 14013 Just a conf update, and mapflags! [L0ne_W0lf]
 	* Changed attribute_recover to no, being hit by the same element should not recover HP.

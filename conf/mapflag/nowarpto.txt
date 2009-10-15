@@ -85,3 +85,46 @@ que_qaru02	mapflag	nowarpto
 que_qaru03	mapflag	nowarpto
 que_qaru04	mapflag	nowarpto
 que_qaru05	mapflag	nowarpto
+
+//Sealed Shrine ==================
+1@cata	mapflag	nowarpto
+2@cata	mapflag	nowarpto
+
+//Endless Tower ==================
+e_tower	mapflag	nowarpto
+1@tower	mapflag	nowarpto
+2@tower	mapflag	nowarpto
+3@tower	mapflag	nowarpto
+4@tower	mapflag	nowarpto
+5@tower	mapflag	nowarpto
+6@tower	mapflag	nowarpto
+
+// Episode 13 ====================
+mid_campin	mapflag	nowarpto
+man_fild01	mapflag	nowarpto
+man_fild03	mapflag	nowarpto
+spl_fild02	mapflag	nowarpto
+spl_fild03	mapflag	nowarpto
+moc_fild22b	mapflag	nowarpto
+que_dan01	mapflag	nowarpto
+que_dan02	mapflag	nowarpto
+schg_que01	mapflag	nowarpto
+schg_dun01	mapflag	nowarpto
+arug_que01	mapflag	nowarpto
+arug_dun01	mapflag	nowarpto
+nyd_dun01	mapflag	nowarpto
+nyd_dun02	mapflag	nowarpto
+manuk	mapflag	nowarpto
+man_fild02	mapflag	nowarpto
+man_in01	mapflag	nowarpto
+splendide	mapflag	nowarpto
+spl_fild01	mapflag	nowarpto
+spl_in01	mapflag	nowarpto
+
+//Orc's Memory ===================
+1@cata	mapflag	nowarpto
+2@cata	mapflag	nowarpto
+
+// Nidhoggr's Instance ===========
+1@nyd	mapflag	nowarpto
+2@nyd	mapflag	nowarpto

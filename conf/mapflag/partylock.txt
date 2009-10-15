@@ -1,0 +1,27 @@
+//===== eAthena Script =======================================
+//= Map flag that disable party modification.
+//= Currently not used.
+//===== By: ==================================================
+//= eAthena Dev Team
+//= v 1.0
+//===== Current Version: =====================================
+
+//Sealed Shrine ==================
+1@cata	mapflag	partylock
+2@cata	mapflag	partylock
+
+//Endless Tower ==================
+1@tower	mapflag	partylock
+2@tower	mapflag	partylock
+3@tower	mapflag	partylock
+4@tower	mapflag	partylock
+5@tower	mapflag	partylock
+6@tower	mapflag	partylock
+
+//Orc's Memory ===================
+1@orcs	mapflag	partylock
+2@orcs	mapflag	partylock
+
+// Nidhoggr's Instance ===========
+1@nyd	mapflag	partylock
+2@nyd	mapflag	partylock

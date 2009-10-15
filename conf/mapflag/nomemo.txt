@@ -623,3 +623,45 @@ que_qaru02	mapflag	nomemo
 que_qaru03	mapflag	nomemo
 que_qaru04	mapflag	nomemo
 que_qaru05	mapflag	nomemo
+
+//Sealed Shrine ==================
+1@cata	mapflag	nomemo
+2@cata	mapflag	nomemo
+
+//Endless Tower ==================
+1@tower	mapflag	nomemo
+2@tower	mapflag	nomemo
+3@tower	mapflag	nomemo
+4@tower	mapflag	nomemo
+5@tower	mapflag	nomemo
+6@tower	mapflag	nomemo
+
+// Episode 13 ====================
+mid_campin	mapflag	nomemo
+man_fild01	mapflag	nomemo
+man_fild03	mapflag	nomemo
+spl_fild02	mapflag	nomemo
+spl_fild03	mapflag	nomemo
+moc_fild22b	mapflag	nomemo
+que_dan01	mapflag	nomemo
+que_dan02	mapflag	nomemo
+schg_que01	mapflag	nomemo
+schg_dun01	mapflag	nomemo
+arug_que01	mapflag	nomemo
+arug_dun01	mapflag	nomemo
+nyd_dun01	mapflag	nomemo
+nyd_dun02	mapflag	nomemo
+manuk	mapflag	nomemo
+man_fild02	mapflag	nomemo
+man_in01	mapflag	nomemo
+splendide	mapflag	nomemo
+spl_fild01	mapflag	nomemo
+spl_in01	mapflag	nomemo
+
+//Orc's Memory ===================
+1@orcs	mapflag	nomemo
+2@orcs	mapflag	nomemo
+
+// Nidhoggr's Instance ===========
+1@nyd	mapflag	nomemo
+2@nyd	mapflag	nomemo

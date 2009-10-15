@@ -41,3 +41,7 @@ arug_cas02	mapflag	restricted	4
 arug_cas03	mapflag	restricted	4
 arug_cas04	mapflag	restricted	4
 arug_cas05	mapflag	restricted	4
+
+//Sealed Shrine ==================
+1@cata	mapflag	restricted	5
+2@cata	mapflag	restricted	5

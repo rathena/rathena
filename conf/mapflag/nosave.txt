@@ -225,3 +225,33 @@ que_qaru02	mapflag	nosave	SavePoint
 que_qaru03	mapflag	nosave	SavePoint
 que_qaru04	mapflag	nosave	SavePoint
 que_qaru05	mapflag	nosave	SavePoint
+
+//Sealed Shrine ==================
+1@cata	mapflag	nosave	SavePoint
+2@cata	mapflag	nosave	SavePoint
+
+//Endless Tower ==================
+e_tower	mapflag	nosave	SavePoint
+1@tower	mapflag	nosave	SavePoint
+2@tower	mapflag	nosave	SavePoint
+3@tower	mapflag	nosave	SavePoint
+4@tower	mapflag	nosave	SavePoint
+5@tower	mapflag	nosave	SavePoint
+6@tower	mapflag	nosave	SavePoint
+
+// Episode 13 ====================
+moc_fild22b	mapflag	nosave	SavePoint
+que_dan01	mapflag	nosave	SavePoint
+que_dan02	mapflag	nosave	SavePoint
+schg_que01	mapflag	nosave	SavePoint
+schg_dun01	mapflag	nosave	SavePoint
+arug_que01	mapflag	nosave	SavePoint
+arug_dun01	mapflag	nosave	SavePoint
+
+//Orc's Memory ===================
+1@orcs	mapflag	nosave	SavePoint
+2@orcs	mapflag	nosave	SavePoint
+
+// Nidhoggr's Instance ===========
+1@nyd	mapflag	nosave	SavePoint
+2@nyd	mapflag	nosave	SavePoint

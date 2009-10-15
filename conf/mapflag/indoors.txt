@@ -82,3 +82,38 @@ que_bingo	mapflag	indoors
 que_ng	mapflag	indoors
 ve_in	mapflag	indoors
 ve_in02	mapflag	indoors
+
+//Episdoe 12 =====================
+nameless_in	mapflag	indoors
+abbey01	mapflag	indoors
+abbey02	mapflag	indoors
+abbey03	mapflag	indoors
+que_san04	mapflag	indoors
+mosk_in	mapflag	indoors
+z_agit	mapflag	indoors
+cave	mapflag	indoors
+que_ba	mapflag	indoors
+que_moc_16	mapflag	indoors
+que_moon	mapflag	indoors
+bat_room	mapflag	indoors
+
+//Sealed Shrine ==================
+1@cata	mapflag	indoors
+2@cata	mapflag	indoors
+
+//Endless Tower ==================
+1@tower	mapflag	indoors
+2@tower	mapflag	indoors
+3@tower	mapflag	indoors
+4@tower	mapflag	indoors
+5@tower	mapflag	indoors
+6@tower	mapflag	indoors
+
+//Episode 13 =====================
+mid_campin	mapflag	indoors
+schg_dun01	mapflag	indoors
+arug_dun01	mapflag	indoors
+man_in01	mapflag	indoors
+spl_in01	mapflag	indoors
+spl_in02	mapflag	indoors
+

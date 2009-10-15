@@ -331,3 +331,46 @@ que_qaru04	mapflag	noteleport
 que_qaru04	mapflag	monster_noteleport
 que_qaru05	mapflag	noteleport
 que_qaru05	mapflag	monster_noteleport
+
+//Sealed Shrine ==================
+1@cata	mapflag	noteleport
+1@cata	mapflag	monster_noteleport
+2@cata	mapflag	noteleport
+2@cata	mapflag	monster_noteleport
+
+//Endless Tower ==================
+e_tower	mapflag	noteleport
+1@tower	mapflag	noteleport
+1@tower	mapflag	monster_noteleport
+2@tower	mapflag	noteleport
+2@tower	mapflag	monster_noteleport
+3@tower	mapflag	noteleport
+3@tower	mapflag	monster_noteleport
+4@tower	mapflag	noteleport
+4@tower	mapflag	monster_noteleport
+5@tower	mapflag	noteleport
+5@tower	mapflag	monster_noteleport
+6@tower	mapflag	noteleport
+6@tower	mapflag	monster_noteleport
+
+// Episode 13 ====================
+mid_campin	mapflag	noteleport
+moc_fild22b	mapflag	noteleport
+que_dan01	mapflag	noteleport
+que_dan02	mapflag	noteleport
+schg_que01	mapflag	noteleport
+arug_que01	mapflag	noteleport
+man_in01	mapflag	noteleport
+spl_in01	mapflag	noteleport
+
+//Orc's Memory ===================
+1@orcs	mapflag	noteleport
+1@orcs	mapflag	monster_noteleport
+2@orcs	mapflag	noteleport
+2@orcs	mapflag	monster_noteleport
+
+// Nidhoggr's Instance ===========
+1@nyd	mapflag	noteleport
+1@nyd	mapflag	monster_noteleport
+2@nyd	mapflag	noteleport
+2@nyd	mapflag	monster_noteleport
