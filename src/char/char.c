@@ -192,6 +192,33 @@ static void* create_online_char_data(DBKey key, va_list args)
 	return character;
 }
 
+void set_char_charselect(int account_id)
+{
+	struct online_char_data* character;
+
+	character = (struct online_char_data*)idb_ensure(online_char_db, account_id, create_online_char_data);
+
+	if( character->server > -1 )
+		server[character->server].users--;
+
+	character->char_id = -1;
+	character->server = -1;
+
+	if(character->waiting_disconnect != -1) {
+		delete_timer(character->waiting_disconnect, chardb_waiting_disconnect);
+		character->waiting_disconnect = -1;
+	}
+
+	if (login_fd > 0 && !session[login_fd]->flag.eof)
+	{
+		WFIFOHEAD(login_fd,6);
+		WFIFOW(login_fd,0) = 0x272b;
+		WFIFOL(login_fd,2) = account_id;
+		WFIFOSET(login_fd,6);
+	}
+
+}
+
 void set_char_online(int map_id, int char_id, int account_id)
 {
 	struct online_char_data* character;
@@ -199,14 +226,14 @@ void set_char_online(int map_id, int char_id, int account_id)
 	character = (struct online_char_data*)idb_ensure(online_char_db, account_id, create_online_char_data);
 	if( character->char_id != -1 && character->server > -1 && character->server != map_id )
 	{
-		//char == 99 <- Character logging in, so someone has logged in while one
-		//char is still on map-server, so kick him out, but don't print "error"
-		//as this is normal behaviour. [Skotlex]
-		if (char_id != 99)
-			ShowNotice("set_char_online: Character %d:%d marked in map server %d, but map server %d claims to have (%d:%d) online!\n",
-				character->account_id, character->char_id, character->server, map_id, account_id, char_id);
+		ShowNotice("set_char_online: Character %d:%d marked in map server %d, but map server %d claims to have (%d:%d) online!\n",
+			character->account_id, character->char_id, character->server, map_id, account_id, char_id);
 		mapif_disconnectplayer(server[character->server].fd, character->account_id, character->char_id, 2);
 	}
+
+	//Update state data
+	character->char_id = char_id;
+	character->server = map_id;
 
 	if( character->server > -1 )
 		server[character->server].users++;
@@ -214,12 +241,6 @@ void set_char_online(int map_id, int char_id, int account_id)
 	if(character->waiting_disconnect != -1) {
 		delete_timer(character->waiting_disconnect, chardb_waiting_disconnect);
 		character->waiting_disconnect = -1;
-	}
-
-	//If user is NOT at char screen, delete entry [Kevin]
-	if(character->char_id != -1)
-	{
-		idb_remove(online_char_db, account_id);
 	}
 
 	if (login_fd > 0 && !session[login_fd]->flag.eof)
@@ -1916,7 +1937,7 @@ static void char_auth_ok(int fd, struct char_session_data *sd)
 	sd->auth = true;
 
 	// set char online on charserver
-	set_char_online(-1, 99, sd->account_id);
+	set_char_charselect(sd->account_id);
 
 	// continues when account data is received...
 }
@@ -2764,7 +2785,7 @@ int parse_frommap(int fd)
 			idb_put(auth_db, account_id, node);
 
 			//Set char to "@ char select" in online db [Kevin]
-			set_char_online(-3, 99, account_id);
+			set_char_charselect(account_id);
 
 			WFIFOHEAD(fd,7);
 			WFIFOW(fd,0) = 0x2b03;
