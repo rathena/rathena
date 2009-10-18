@@ -1,5 +1,7 @@
 Date	Added
 
+2009/10/18
+	* Removed char_rename config setting, now hardcoded [ultramage]
 2009/10/15
 	* Rev. 14092 Added several 13.x and 12.1 map mapflags, might have missed some. [L0ne_w0lf]
 2009/08/18

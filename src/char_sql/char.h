@@ -17,6 +17,12 @@ enum {
 	TABLE_GUILD_STORAGE,
 };
 
+// server->client protocol version
+// 20061023 - 2006-10-23aSakexe+ - 0x6b, 0x6d
+#ifndef PACKETVER
+	#define PACKETVER	20061023
+#endif
+
 int memitemdata_to_sql(const struct item items[], int max, int id, int tableswitch);
 
 int mapif_sendall(unsigned char *buf,unsigned int len);

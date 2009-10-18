@@ -99,7 +99,6 @@ int char_name_option = 0; // Option to know which letters/symbols are authorised
 char unknown_char_name[NAME_LENGTH] = "Unknown"; // Name to use when the requested name cannot be determined
 #define TRIM_CHARS "\032\t\x0A\x0D " //The following characters are trimmed regardless because they cause confusion and problems on the servers. [Skotlex]
 char char_name_letters[1024] = ""; // list of letters/symbols used to authorise or not a name of a character. by [Yor]
-short char_rename = 1;
 
 int char_per_account = 0; //Maximum charas per account (default unlimited) [Sirius]
 int char_del_level = 0; //From which level u can delete character [Lupus]
@@ -1192,7 +1191,7 @@ int rename_char_sql(struct char_session_data *sd, int char_id)
 	if( !mmo_char_fromsql(char_id, &char_dat, false) ) // Only the short data is needed.
 		return 2;
 
-	if( char_dat.rename >= char_rename )
+	if( char_dat.rename == 0 )
 		return 1;
 
 	Sql_EscapeStringLen(sql_handle, esc_name, sd->new_name, strnlen(sd->new_name, NAME_LENGTH));
@@ -1204,7 +1203,7 @@ int rename_char_sql(struct char_session_data *sd, int char_id)
 		return 4;
 	}
 
-	if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `name` = '%s', `rename` = '%d' WHERE `char_id` = '%d'", char_db, esc_name, ++char_dat.rename, char_id) )
+	if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `name` = '%s', `rename` = '%d' WHERE `char_id` = '%d'", char_db, esc_name, --char_dat.rename, char_id) )
 	{
 		Sql_ShowDebug(sql_handle);
 		return 3;
@@ -1542,6 +1541,8 @@ int count_users(void)
 /// Returns the size (106 or 108)
 int mmo_char_tobuf(uint8* buf, struct mmo_charstatus* p)
 {
+	int size = 106;
+
 	if( buf == NULL || p == NULL )
 		return 0;
 
@@ -1580,15 +1581,12 @@ int mmo_char_tobuf(uint8* buf, struct mmo_charstatus* p)
 	WBUFB(buf,102) = min(p->dex, UCHAR_MAX);
 	WBUFB(buf,103) = min(p->luk, UCHAR_MAX);
 	WBUFW(buf,104) = p->slot;
-	if( char_rename )
-	{
-		if( p->rename < char_rename )
-			WBUFW(buf,106) = 0;
-		else
-			WBUFW(buf,106) = 1;
-		return 108;
-	}
-	return 106;
+#if PACKETVER >= 20061023
+	WBUFW(buf,106) = ( p->rename > 0 ) ? 0 : 1;
+	size += 2;
+#endif
+
+	return size;
 }
 
 int mmo_char_send006b(int fd, struct char_session_data* sd)
@@ -3893,8 +3891,6 @@ int char_config_read(const char* cfgName)
 			char_name_option = atoi(w2);
 		} else if (strcmpi(w1, "char_name_letters") == 0) {
 			strcpy(char_name_letters, w2);
-		} else if (strcmpi(w1, "char_rename") == 0) {
-			char_rename = atoi(w2);
 		} else if (strcmpi(w1, "chars_per_account") == 0) { //maxchars per account [Sirius]
 			char_per_account = atoi(w2);
 		} else if (strcmpi(w1, "char_del_level") == 0) { //disable/enable char deletion by its level condition [Lupus]

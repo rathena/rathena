@@ -88,7 +88,6 @@ int char_name_option = 0; // Option to know which letters/symbols are authorised
 char unknown_char_name[1024] = "Unknown"; // Name to use when the requested name cannot be determined
 #define TRIM_CHARS "\032\t\x0A\x0D " //The following characters are trimmed regardless because they cause confusion and problems on the servers. [Skotlex]
 char char_name_letters[1024] = ""; // list of letters/symbols authorised (or not) in a character name. by [Yor]
-bool char_rename = true;
 
 int log_char = 1;	// loggin char or not [devil]
 int log_inter = 1;	// loggin inter or not [devil]
@@ -1681,6 +1680,8 @@ int count_users(void)
 /// Returns the size (106 or 108)
 int mmo_char_tobuf(uint8* buf, struct mmo_charstatus* p)
 {
+	int size = 106;
+
 	if( buf == NULL || p == NULL )
 		return 0;
 
@@ -1719,12 +1720,12 @@ int mmo_char_tobuf(uint8* buf, struct mmo_charstatus* p)
 	WBUFB(buf,102) = min(p->dex, UCHAR_MAX);
 	WBUFB(buf,103) = min(p->luk, UCHAR_MAX);
 	WBUFW(buf,104) = p->slot;
-	if (char_rename) {
-		WBUFW(buf,106) = 1;// Rename bit (0=rename,1=no rename)
-		return 108;
-	} else {
-		return 106;
-	}
+#if PACKETVER >= 20061023
+	WBUFW(buf,106) = ( p->rename > 0 ) ? 0 : 1;
+	size += 2;
+#endif
+
+	return size;
 }
 
 //----------------------------------------
@@ -4096,8 +4097,6 @@ int char_config_read(const char *cfgName)
 			char_name_option = atoi(w2);
 		} else if (strcmpi(w1, "char_name_letters") == 0) {
 			strcpy(char_name_letters, w2);
-		} else if (strcmpi(w1, "char_rename") == 0) {
-			char_rename = config_switch(w2);
 // online files options
 		} else if (strcmpi(w1, "online_txt_filename") == 0) {
 			strcpy(online_txt_filename, w2);

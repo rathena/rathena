@@ -3,6 +3,10 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+09/10/18
+	* Removed the char_rename setting in favor of a PACKETVER define [ultramage]
+	* Inverted the way renames are counted: '0' now means 'no renames left' (the default)
+	* Please make sure your database matches this new behavior before starting the server.
 09/10/10
 	* Added character rename function. [Inkfish]
 	* NPCs' names should only be 24 characters long including EOS. [Inkfish]
