@@ -416,9 +416,6 @@ int parse_fromchar(int fd)
 			{// found
 				//ShowStatus("Char-server '%s': authentication of the account %d accepted (ip: %s).\n", server[id].name, account_id, ip);
 
-				// each auth entry can only be used once
-				idb_remove(auth_db, account_id);
-
 				// send ack
 				WFIFOHEAD(fd,25);
 				WFIFOW(fd,0) = 0x2713;
@@ -431,6 +428,9 @@ int parse_fromchar(int fd)
 				WFIFOL(fd,20) = node->version;
 				WFIFOB(fd,24) = node->clienttype;
 				WFIFOSET(fd,25);
+
+				// each auth entry can only be used once
+				idb_remove(auth_db, account_id);
 			}
 			else
 			{// authentication not found
