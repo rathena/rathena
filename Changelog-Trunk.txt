@@ -3,6 +3,9 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+09/10/24
+	* 'OnTouch' script shouldn't trigger when you are invisible.(same as warps) [Inkfish]
+	* Fixed character doesn't stop walking when walking into OnTouch area of an NPC who doesn't have an OnTouch label. [Inkfish]
 09/10/18
 	* Removed the char_rename setting in favor of a PACKETVER define [ultramage]
 	* Inverted the way renames are counted: '0' now means 'no renames left' (the default)

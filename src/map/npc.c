@@ -776,6 +776,9 @@ int npc_touch_areanpc(struct map_session_data* sd, int m, int x, int y)
 	if(sd->npc_id)
 		return 1;
 
+	if (sd->sc.option&(OPTION_HIDE|OPTION_CLOAK|OPTION_CHASEWALK))
+		return 0;
+
 	for(i=0;i<map[m].npc_num;i++)
 	{
 		if (map[m].npc[i]->sc.option&OPTION_INVISIBLE) {
@@ -807,9 +810,6 @@ int npc_touch_areanpc(struct map_session_data* sd, int m, int x, int y)
 	}
 	switch(map[m].npc[i]->subtype) {
 		case WARP:
-			// hidden chars cannot use warps -- is it the same for scripts too?
-			if (sd->sc.option&(OPTION_HIDE|OPTION_CLOAK|OPTION_CHASEWALK))
-				break;
 			pc_setpos(sd,map[m].npc[i]->u.warp.mapindex,map[m].npc[i]->u.warp.x,map[m].npc[i]->u.warp.y,0);
 			break;
 		case SCRIPT:
@@ -824,10 +824,14 @@ int npc_touch_areanpc(struct map_session_data* sd, int m, int x, int y)
 
 			if( npc_event(sd,name,0) > 0 )
 			{// failed to run OnTouch event, so just click the npc
+				struct unit_data *ud = unit_bl2ud(&sd->bl);
+				if( ud && ud->walkpath.path_pos < ud->walkpath.path_len )
+				{ // Since walktimer always == -1 at this time, we stop walking manually. [Inkfish]
+					clif_fixpos(&sd->bl);
+					ud->walkpath.path_pos = ud->walkpath.path_len;
+				}
 				npc_click(sd,map[m].npc[i]);
 			}
-
-			pc_stop_walking(sd,1); //Make it stop walking!
 			break;
 		}
 	}
