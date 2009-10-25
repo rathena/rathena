@@ -217,8 +217,8 @@ struct Script_Config script_config = {
 	"OnPCLoadMapEvent", //loadmap_event_name
 	"OnPCBaseLvUpEvent", //baselvup_event_name
 	"OnPCJobLvUpEvent", //joblvup_event_name
-	"OnTouch",	//Official version of OnTouch
-	"OnTouch2",	//Official version of OnTouch2
+	"OnTouch_",	//ontouch_name (runs on first visible char to enter area, picks another char if the first char leaves)
+	"OnTouch",	//ontouch2_name (run whenever a char walks into the OnTouch area)
 };
 
 static jmp_buf     error_jump;
@@ -3339,12 +3339,6 @@ int script_config_read(char *cfgName)
 		}
 		else if(strcmpi(w1,"input_max_value")==0) {
 			script_config.input_max_value = config_switch(w2);
-		}
-		else if(strcmpi(w1, "OnTouch_Label") == 0) {
-			safestrncpy(script_config.ontouch_name, w2, NAME_LENGTH);
-		}
-		else if(strcmpi(w1, "OnTouch2_Label") == 0) {
-			safestrncpy(script_config.ontouch2_name, w2, NAME_LENGTH);
 		}
 		else if(strcmpi(w1,"import")==0){
 			script_config_read(w2);
