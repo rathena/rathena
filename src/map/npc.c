@@ -161,7 +161,7 @@ int npc_enable(const char* name, int flag)
 		clif_changeoption(&nd->bl);
 		
 	if( flag&3 && (nd->u.scr.xs >= 0 || nd->u.scr.ys >= 0) )
-		map_forsomeinarea( npc_enable_sub, nd->bl.m, nd->bl.x-nd->u.scr.xs, nd->bl.y-nd->u.scr.ys, nd->bl.x+nd->u.scr.xs, nd->bl.y+nd->u.scr.ys, 0, BL_PC, nd );
+		map_foreachinarea( npc_enable_sub, nd->bl.m, nd->bl.x-nd->u.scr.xs, nd->bl.y-nd->u.scr.ys, nd->bl.x+nd->u.scr.xs, nd->bl.y+nd->u.scr.ys, BL_PC, nd );
 
 	return 0;
 }
@@ -838,7 +838,7 @@ int npc_touchnext_areanpc(struct map_session_data* sd, bool logout)
 		memset(&sd->ontouch,0,sizeof(sd->ontouch));
 		nd->touching_id = 0;
 		snprintf(name, ARRAYLENGTH(name), "%s::%s", nd->exname, script_config.ontouch_name);
-		map_forsomeinarea(npc_touch_areanpc_sub,nd->bl.m,nd->bl.m - xs,nd->bl.y - ys,nd->bl.x + xs,nd->bl.y + ys,1,BL_PC,sd->bl.id,nd->bl.id,name);
+		map_forcountinarea(npc_touch_areanpc_sub,nd->bl.m,nd->bl.m - xs,nd->bl.y - ys,nd->bl.x + xs,nd->bl.y + ys,1,BL_PC,sd->bl.id,nd->bl.id,name);
 	}
 	return 0;
 }
@@ -2535,7 +2535,7 @@ void npc_unsetcells(struct npc_data* nd)
 			map_setcell(m, j, i, CELL_NPC, false);
 
 	//Re-deploy NPC cells for other nearby npcs.
-	map_forsomeinarea( npc_unsetcells_sub, m, x0, y0, x1, y1, 0, BL_NPC, nd->bl.id );
+	map_foreachinarea( npc_unsetcells_sub, m, x0, y0, x1, y1, BL_NPC, nd->bl.id );
 }
 
 void npc_movenpc(struct npc_data* nd, int x, int y)

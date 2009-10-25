@@ -650,7 +650,7 @@ int map_foreachinshootrange(int (*func)(struct block_list*,va_list),struct block
  * funcを呼ぶ
  * type!=0 ならその種類のみ
  *------------------------------------------*/
-int map_forsomeinarea(int (*func)(struct block_list*,va_list), int m, int x0, int y0, int x1, int y1, int count, int type, ...)
+int map_foreachinarea(int (*func)(struct block_list*,va_list), int m, int x0, int y0, int x1, int y1, int type, ...)
 {
 	int bx,by;
 	int returnCount =0;	//total sum of returned values of func() [Skotlex]
@@ -702,7 +702,67 @@ int map_forsomeinarea(int (*func)(struct block_list*,va_list), int m, int x0, in
 			va_start(ap, type);
 			returnCount += func(bl_list[i], ap);
 			va_end(ap);
-			if( count && returnCount >= count)
+		}
+
+	map_freeblock_unlock();	// 解放を許可する
+
+	bl_list_count = blockcount;
+	return returnCount;	//[Skotlex]
+}
+
+int map_forcountinarea(int (*func)(struct block_list*,va_list), int m, int x0, int y0, int x1, int y1, int count, int type, ...)
+{
+	int bx,by;
+	int returnCount =0;	//total sum of returned values of func() [Skotlex]
+	struct block_list *bl;
+	int blockcount=bl_list_count,i;
+
+	if (m < 0)
+		return 0;
+	if (x1 < x0)
+	{	//Swap range
+		bx = x0;
+		x0 = x1;
+		x1 = bx;
+	}
+	if (y1 < y0)
+	{
+		bx = y0;
+		y0 = y1;
+		y1 = bx;
+	}
+	if (x0 < 0) x0 = 0;
+	if (y0 < 0) y0 = 0;
+	if (x1 >= map[m].xs) x1 = map[m].xs-1;
+	if (y1 >= map[m].ys) y1 = map[m].ys-1;
+	
+	if (type&~BL_MOB)
+		for(by = y0 / BLOCK_SIZE; by <= y1 / BLOCK_SIZE; by++)
+			for(bx = x0 / BLOCK_SIZE; bx <= x1 / BLOCK_SIZE; bx++)
+				for( bl = map[m].block[bx+by*map[m].bxs] ; bl != NULL ; bl = bl->next )
+					if(bl->type&type && bl->x>=x0 && bl->x<=x1 && bl->y>=y0 && bl->y<=y1 && bl_list_count<BL_LIST_MAX)
+						bl_list[bl_list_count++]=bl;
+
+	if(type&BL_MOB)
+		for(by=y0/BLOCK_SIZE;by<=y1/BLOCK_SIZE;by++)
+			for(bx=x0/BLOCK_SIZE;bx<=x1/BLOCK_SIZE;bx++)
+				for( bl = map[m].block_mob[bx+by*map[m].bxs] ; bl != NULL ; bl = bl->next )
+					if(bl->x>=x0 && bl->x<=x1 && bl->y>=y0 && bl->y<=y1 && bl_list_count<BL_LIST_MAX)
+						bl_list[bl_list_count++]=bl;
+
+	if(bl_list_count>=BL_LIST_MAX)
+		ShowWarning("map_foreachinarea: block count too many!\n");
+
+	map_freeblock_lock();	// メモリからの解放を禁止する
+
+	for(i=blockcount;i<bl_list_count;i++)
+		if(bl_list[i]->prev)	// 有?かどうかチェック
+		{
+			va_list ap;
+			va_start(ap, type);
+			returnCount += func(bl_list[i], ap);
+			va_end(ap);
+			if( count && returnCount >= count )
 				break;
 		}
 
@@ -1297,9 +1357,9 @@ int map_search_freecell(struct block_list *src, int m, short *x,short *y, int rx
 			if(flag&4) {
 				if (spawn >= 100) return 0; //Limit of retries reached.
 				if (spawn++ < battle_config.no_spawn_on_player &&
-					map_forsomeinarea(map_count_sub, m,
+					map_foreachinarea(map_count_sub, m,
 						*x-AREA_SIZE, *y-AREA_SIZE,
-					  	*x+AREA_SIZE, *y+AREA_SIZE, 0, BL_PC)
+					  	*x+AREA_SIZE, *y+AREA_SIZE, BL_PC)
 				)
 				continue;
 			}

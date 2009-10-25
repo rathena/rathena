@@ -4118,7 +4118,7 @@ BUILDIN_FUNC(areawarp)
 	else if(!(index=mapindex_name2id(str)))
 		return 0;
 
-	map_forsomeinarea(buildin_areawarp_sub, m,x0,y0,x1,y1,0,BL_PC, index,x,y);
+	map_foreachinarea(buildin_areawarp_sub, m,x0,y0,x1,y1,BL_PC, index,x,y);
 	return 0;
 }
 
@@ -4150,7 +4150,7 @@ BUILDIN_FUNC(areapercentheal)
 	if( (m=map_mapname2mapid(mapname))< 0)
 		return 0;
 
-	map_forsomeinarea(buildin_areapercentheal_sub,m,x0,y0,x1,y1,0,BL_PC,hp,sp);
+	map_foreachinarea(buildin_areapercentheal_sub,m,x0,y0,x1,y1,BL_PC,hp,sp);
 	return 0;
 }
 
@@ -8178,8 +8178,8 @@ BUILDIN_FUNC(areaannounce)
 	if( (m=map_mapname2mapid(map))<0 )
 		return 0;
 
-	map_forsomeinarea(buildin_mapannounce_sub,
-		m,x0,y0,x1,y1,0,BL_PC, str,strlen(str)+1,flag&0x10, color);
+	map_foreachinarea(buildin_mapannounce_sub,
+		m,x0,y0,x1,y1,BL_PC, str,strlen(str)+1,flag&0x10, color);
 	return 0;
 }
 
@@ -8289,8 +8289,8 @@ BUILDIN_FUNC(getareausers)
 		script_pushint(st,-1);
 		return 0;
 	}
-	map_forsomeinarea(buildin_getareausers_sub,
-		m,x0,y0,x1,y1,0,BL_PC,&users);
+	map_foreachinarea(buildin_getareausers_sub,
+		m,x0,y0,x1,y1,BL_PC,&users);
 	script_pushint(st,users);
 	return 0;
 }
@@ -8336,8 +8336,8 @@ BUILDIN_FUNC(getareadropitem)
 		script_pushint(st,-1);
 		return 0;
 	}
-	map_forsomeinarea(buildin_getareadropitem_sub,
-		m,x0,y0,x1,y1,0,BL_ITEM,item,&amount);
+	map_foreachinarea(buildin_getareadropitem_sub,
+		m,x0,y0,x1,y1,BL_ITEM,item,&amount);
 	script_pushint(st,amount);
 	return 0;
 }
@@ -10647,7 +10647,7 @@ BUILDIN_FUNC(soundeffectall)
 		int y0 = script_getnum(st,6);
 		int x1 = script_getnum(st,7);
 		int y1 = script_getnum(st,8);
-		map_forsomeinarea(soundeffect_sub, map_mapname2mapid(map), x0, y0, x1, y1, 0, BL_PC, name, type);
+		map_foreachinarea(soundeffect_sub, map_mapname2mapid(map), x0, y0, x1, y1, BL_PC, name, type);
 	}
 	else
 	{

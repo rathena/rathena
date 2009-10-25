@@ -6367,9 +6367,9 @@ static int atcommand_cleanmap_sub(struct block_list *bl, va_list ap)
 
 int atcommand_cleanmap(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
-	map_forsomeinarea(atcommand_cleanmap_sub, sd->bl.m,
+	map_foreachinarea(atcommand_cleanmap_sub, sd->bl.m,
 		sd->bl.x-AREA_SIZE*2, sd->bl.y-AREA_SIZE*2,
-		sd->bl.x+AREA_SIZE*2, sd->bl.y+AREA_SIZE*2,0,
+		sd->bl.x+AREA_SIZE*2, sd->bl.y+AREA_SIZE*2,
 		BL_ITEM);
 	clif_displaymessage(fd, "All dropped items have been cleaned up.");
 	return 0;
@@ -7593,9 +7593,9 @@ int atcommand_mutearea(const int fd, struct map_session_data* sd, const char* co
 	
 	time = atoi(message);
 
-	map_forsomeinarea(atcommand_mutearea_sub,sd->bl.m, 
+	map_foreachinarea(atcommand_mutearea_sub,sd->bl.m, 
 		sd->bl.x-AREA_SIZE, sd->bl.y-AREA_SIZE, 
-		sd->bl.x+AREA_SIZE, sd->bl.y+AREA_SIZE, 0, BL_PC, sd->bl.id, time);
+		sd->bl.x+AREA_SIZE, sd->bl.y+AREA_SIZE, BL_PC, sd->bl.id, time);
 
 	return 0;
 }
