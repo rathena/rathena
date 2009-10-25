@@ -3,6 +3,9 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+09/10/25
+	* Implemented the official version of 'OnTouch' named as 'OnTouch_' and it can be defined in script_athena.conf. [Inkfish]
+	* Adapted 'map_foreachinarea' to 'map_forsomeinarea' so that it allows you to specify the count of bl you wanna operate on. [Inkfish]
 09/10/24
 	* Reverted the previous change to OnTouch not triggering for invisible chars [ultramage]
 	* 'OnTouch' script shouldn't trigger when you are invisible.(same as warps) [Inkfish]

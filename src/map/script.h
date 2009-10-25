@@ -25,6 +25,9 @@ extern struct Script_Config {
 	const char *loadmap_event_name;
 	const char *baselvup_event_name;
 	const char *joblvup_event_name;
+
+	char ontouch_name[NAME_LENGTH];
+	char ontouch2_name[NAME_LENGTH];
 } script_config;
 
 typedef enum c_op {

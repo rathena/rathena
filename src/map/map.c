@@ -650,7 +650,7 @@ int map_foreachinshootrange(int (*func)(struct block_list*,va_list),struct block
  * func‚ğŒÄ‚Ô
  * type!=0 ‚È‚ç‚»‚Ìí—Ş‚Ì‚İ
  *------------------------------------------*/
-int map_foreachinarea(int (*func)(struct block_list*,va_list), int m, int x0, int y0, int x1, int y1, int type, ...)
+int map_forsomeinarea(int (*func)(struct block_list*,va_list), int m, int x0, int y0, int x1, int y1, int count, int type, ...)
 {
 	int bx,by;
 	int returnCount =0;	//total sum of returned values of func() [Skotlex]
@@ -702,6 +702,8 @@ int map_foreachinarea(int (*func)(struct block_list*,va_list), int m, int x0, in
 			va_start(ap, type);
 			returnCount += func(bl_list[i], ap);
 			va_end(ap);
+			if( count && returnCount >= count)
+				break;
 		}
 
 	map_freeblock_unlock();	// ‰ğ•ú‚ğ‹–‰Â‚·‚é
@@ -1295,9 +1297,9 @@ int map_search_freecell(struct block_list *src, int m, short *x,short *y, int rx
 			if(flag&4) {
 				if (spawn >= 100) return 0; //Limit of retries reached.
 				if (spawn++ < battle_config.no_spawn_on_player &&
-					map_foreachinarea(map_count_sub, m,
+					map_forsomeinarea(map_count_sub, m,
 						*x-AREA_SIZE, *y-AREA_SIZE,
-					  	*x+AREA_SIZE, *y+AREA_SIZE, BL_PC)
+					  	*x+AREA_SIZE, *y+AREA_SIZE, 0, BL_PC)
 				)
 				continue;
 			}

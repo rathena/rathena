@@ -1539,8 +1539,14 @@ int skill_blown(struct block_list* src, struct block_list* target, int count, in
 	if(!(flag&0x1))
 		clif_blown(target);
 
-	if(target->type == BL_PC && map_getcell(target->m, target->x, target->y, CELL_CHKNPC))
-		npc_touch_areanpc((TBL_PC*)target, target->m, target->x, target->y); //Invoke area NPC
+	if( target->type == BL_PC )
+	{
+		if( map_getcell(target->m, target->x, target->y, CELL_CHKNPC) )
+			npc_touch_areanpc((TBL_PC*)target, target->m, target->x, target->y); //Invoke area NPC
+
+		if( ((TBL_PC*)target)->ontouch.npc_id )
+			npc_touchnext_areanpc(((TBL_PC*)target),false);
+	}
 
 	return count; //Return amount of knocked back cells.
 }
@@ -2067,7 +2073,7 @@ static int skill_check_unit_range (struct block_list *bl, int x, int y, int skil
 	}
 
 	range += layout_type;
-	return map_foreachinarea(skill_check_unit_range_sub,bl->m,x-range,y-range,x+range,y+range,BL_SKILL,skillid);
+	return map_forsomeinarea(skill_check_unit_range_sub,bl->m,x-range,y-range,x+range,y+range,0,BL_SKILL,skillid);
 }
 
 static int skill_check_unit_range2_sub (struct block_list *bl, va_list ap)
@@ -2117,8 +2123,8 @@ static int skill_check_unit_range2 (struct block_list *bl, int x, int y, int ski
 	else
 		type = BL_PC;
 
-	return map_foreachinarea(skill_check_unit_range2_sub, bl->m,
-		x - range, y - range, x + range, y + range,
+	return map_forsomeinarea(skill_check_unit_range2_sub, bl->m,
+		x - range, y - range, x + range, y + range,0,
 		type, skillid);
 }
 
@@ -2328,8 +2334,8 @@ static int skill_timerskill(int tid, unsigned int tick, int id, intptr data)
 				case BA_FROSTJOKER:
 				case DC_SCREAM:
 					range= skill_get_splash(skl->skill_id, skl->skill_lv);
-					map_foreachinarea(skill_frostjoke_scream,skl->map,skl->x-range,skl->y-range,
-						skl->x+range,skl->y+range,BL_CHAR,src,skl->skill_id,skl->skill_lv,tick);
+					map_forsomeinarea(skill_frostjoke_scream,skl->map,skl->x-range,skl->y-range,
+						skl->x+range,skl->y+range,0,BL_CHAR,src,skl->skill_id,skl->skill_lv,tick);
 					break;
 				case NPC_EARTHQUAKE:
 					skill_area_temp[0] = map_foreachinrange(skill_area_sub, src, skill_get_splash(skl->skill_id, skl->skill_lv), BL_CHAR, src, skl->skill_id, skl->skill_lv, tick, BCT_ENEMY, skill_area_sub_count);
@@ -6173,32 +6179,32 @@ int skill_castend_pos2(struct block_list* src, int x, int y, int skillid, int sk
 	case PR_BENEDICTIO:
 		skill_area_temp[1] = src->id;
 		i = skill_get_splash(skillid, skilllv);
-		map_foreachinarea(skill_area_sub,
-			src->m, x-i, y-i, x+i, y+i, BL_PC,
+		map_forsomeinarea(skill_area_sub,
+			src->m, x-i, y-i, x+i, y+i, 0,BL_PC,
 			src, skillid, skilllv, tick, flag|BCT_ALL|1,
 			skill_castend_nodamage_id);
-		map_foreachinarea(skill_area_sub,
-			src->m, x-i, y-i, x+i, y+i, BL_CHAR,
+		map_forsomeinarea(skill_area_sub,
+			src->m, x-i, y-i, x+i, y+i, 0,BL_CHAR,
 			src, skillid, skilllv, tick, flag|BCT_ENEMY|1,
 			skill_castend_damage_id);
 		break;
 
 	case BS_HAMMERFALL:
 		i = skill_get_splash(skillid, skilllv);
-		map_foreachinarea (skill_area_sub,
-			src->m, x-i, y-i, x+i, y+i, BL_CHAR,
+		map_forsomeinarea (skill_area_sub,
+			src->m, x-i, y-i, x+i, y+i, 0,BL_CHAR,
 			src, skillid, skilllv, tick, flag|BCT_ENEMY|2,
 			skill_castend_nodamage_id);
 		break;
 
 	case HT_DETECTING:
 		i = skill_get_splash(skillid, skilllv);
-		map_foreachinarea( status_change_timer_sub,
-			src->m, x-i, y-i, x+i,y+i,BL_CHAR,
+		map_forsomeinarea( status_change_timer_sub,
+			src->m, x-i, y-i, x+i,y+i,0,BL_CHAR,
 			src,NULL,SC_SIGHT,tick);
 		if(battle_config.traps_setting&1)
-		map_foreachinarea( skill_reveal_trap,
-			src->m, x-i, y-i, x+i,y+i,BL_SKILL);
+		map_forsomeinarea( skill_reveal_trap,
+			src->m, x-i, y-i, x+i,y+i,0,BL_SKILL);
 		break;
 
 	case SA_VOLCANO:
@@ -6313,7 +6319,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, int skillid, int sk
 		break;
 	case RG_CLEANER: // [Valaris]
 		i = skill_get_splash(skillid, skilllv);
-		map_foreachinarea(skill_graffitiremover,src->m,x-i,y-i,x+i,y+i,BL_SKILL);
+		map_forsomeinarea(skill_graffitiremover,src->m,x-i,y-i,x+i,y+i,0,BL_SKILL);
 		break;
 
 	case WZ_METEOR:
@@ -6418,8 +6424,8 @@ int skill_castend_pos2(struct block_list* src, int x, int y, int skillid, int sk
 
 			if(potion_hp > 0 || potion_sp > 0) {
 				i = skill_get_splash(skillid, skilllv);
-				map_foreachinarea(skill_area_sub,
-					src->m,x-i,y-i,x+i,y+i,BL_CHAR,
+				map_forsomeinarea(skill_area_sub,
+					src->m,x-i,y-i,x+i,y+i,0,BL_CHAR,
 					src,skillid,skilllv,tick,flag|BCT_PARTY|BCT_GUILD|1,
 					skill_castend_nodamage_id);
 			}
@@ -6440,8 +6446,8 @@ int skill_castend_pos2(struct block_list* src, int x, int y, int skillid, int sk
 
 			if(potion_hp > 0 || potion_sp > 0) {
 				i = skill_get_splash(skillid, skilllv);
-				map_foreachinarea(skill_area_sub,
-					src->m,x-i,y-i,x+i,y+i,BL_CHAR,
+				map_forsomeinarea(skill_area_sub,
+					src->m,x-i,y-i,x+i,y+i,0,BL_CHAR,
 					src,skillid,skilllv,tick,flag|BCT_PARTY|BCT_GUILD|1,
 						skill_castend_nodamage_id);
 			}
@@ -6453,7 +6459,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, int skillid, int sk
 			int dummy = 1;
 			clif_skill_poseffect(src,skillid,skilllv,x,y,tick);
 			i = skill_get_splash(skillid, skilllv);
-			map_foreachinarea(skill_cell_overlap, src->m, x-i, y-i, x+i, y+i, BL_SKILL, HW_GANBANTEIN, &dummy, src);
+			map_forsomeinarea(skill_cell_overlap, src->m, x-i, y-i, x+i, y+i, BL_SKILL, HW_GANBANTEIN, &dummy, src);
 		} else {
 			if (sd) clif_skill_fail(sd,skillid,0,0);
 			return 1;

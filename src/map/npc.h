@@ -34,6 +34,7 @@ struct npc_data {
 	char name[NAME_LENGTH+1];// display name
 	char exname[NAME_LENGTH+1];// unique npc name
 	int chat_id;
+	int touching_id;
 	unsigned int next_walktime;
 
 	unsigned size : 2;
@@ -101,6 +102,7 @@ int npc_event(struct map_session_data* sd, const char* eventname, int mob_kill);
 int npc_touch_areanpc(struct map_session_data* sd, int m, int x, int y);
 int npc_touch_areanpc2(struct mob_data *md); // [Skotlex]
 int npc_check_areanpc(int flag, int m, int x, int y, int range);
+int npc_touchnext_areanpc(struct map_session_data* sd,bool logout);
 int npc_click(struct map_session_data* sd, struct npc_data* nd);
 int npc_scriptcont(struct map_session_data* sd, int id);
 struct npc_data* npc_checknear(struct map_session_data* sd, struct block_list* bl);
