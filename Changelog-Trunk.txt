@@ -4,6 +4,10 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 09/10/25
+	* Rev. 14101 The status SC_INVINCIBLE now reduces all damage to 1. [L0ne_W0lf]
+	- Official behavior, and allows players to cancel NPC_ALLHEAL casts.
+	- If battle_config.invincible_nodamage is true, reflected damage is still 0.
+09/10/25
 	* Implemented the official version of 'OnTouch' named as 'OnTouch_' and it can be defined in script_athena.conf. [Inkfish]
 	* Adapted 'map_foreachinarea' to 'map_forsomeinarea' so that it allows you to specify the count of bl you wanna operate on. [Inkfish]
 09/10/24

@@ -2,7 +2,6 @@
 //
 // Structure of Database :
 // Quest ID,Time Limit,Target1,Val1,Target2,Val2,Target3,Val3,Quest Title
-// Note: Work in progress. Hardly ready for actual use.
 //
 1000,0,0,0,0,0,0,0,"Transcend"
 1001,0,0,0,0,0,0,0,"Job Change to Acolyte"
@@ -204,6 +203,10 @@
 3041,180,0,0,0,0,0,0,"The curse of Baphomet - Dearth of magical power"
 3042,0,0,0,0,0,0,0,"The identity of the Cursed Baphomet Doll - Finding Rust Blackhand..."
 3043,0,0,0,0,0,0,0,"The identity of the Cursed Baphomet Doll - The true Gigantic Magestic Goat?"
+3044,0,0,0,0,0,0,0,"The Gigantic Magestic Goat"
+3045,9600,0,0,0,0,0,0,"Sealed Shrine"
+3046,0,0,0,0,0,0,0,"Sealed Shrine After-effect"
+//
 3050,0,0,0,0,0,0,0,"Resurrection of Satan Morocc - News about Morocc Village"
 3051,0,0,0,0,0,0,0,"Resurrection of Satan Morocc - Test of Quealification"
 3052,0,0,0,0,0,0,0,"Resurrection of Satan Morocc - Test of Quealification2"
@@ -910,7 +913,7 @@
 12056,0,0,0,0,0,0,0,"Job Quest - Assassin"
 12057,0,0,0,0,0,0,0,"Pass to the Lab"
 12058,0,0,0,0,0,0,0,"Admission Restricted to the 102 Tower"
-12059,0,0,0,0,0,0,0,"Orc's Memory Time Limit"
+12059,9600,0,0,0,0,0,0,"Orc's Memory Time Limit"
 12060,86400,0,0,0,0,0,0,"Today's Fishing Closed"
 12061,0,0,0,0,0,0,0,"Concentration"
 12062,86400,0,0,0,0,0,0,"Today's Mining Closed"

@@ -8,6 +8,12 @@
 	1475 Equestrian's Spear:	NEED INFO.
 	13005 Angelic Wing Dagger:	NEED INFO.
 =======================
+2009/10/25
+	* Rev. 14101 Minor updates and supporting data for Sealed Shrine. [L0ne_W0lf]
+	- Zone 5 is now designated for sealed shrine restricted skills.
+	- Added new quest_db entries for Sealed Shine cooldown.
+	- Updated mob_db entries for Orc's Memory Instance. (improper stats)
+	- Updated Land Mine to have a splash effect. (Provided by Daegaladh)
 2009/10/02
 	* Rev. 14080 Updated Crystal 6 through 9 monsters for Valkyie Gift event. [L0ne_W0lf]
 2009/09/27

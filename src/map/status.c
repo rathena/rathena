@@ -668,7 +668,7 @@ int status_damage(struct block_list *src,struct block_list *target,int hp, int s
 	{
 		if( !sp )
 			return 0;
-		hp = 0;
+		hp = 1;
 	}
 
 	if( hp && !(flag&1) ) {

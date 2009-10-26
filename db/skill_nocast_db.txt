@@ -91,3 +91,10 @@
 
 //Zone 4 - WoE:SE
 426,256 //High Jump
+
+//Zone 5 - Sealed Shrine
+12,512	//MG_SAFETYWALL
+26,512	//AL_TELEPORT
+219,512	//Snatch
+361,512	//HP_ASSUMPTIO
+691,512	//CASH_ASSUMPTIO
