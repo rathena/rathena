@@ -614,8 +614,8 @@
 676,0,6,4,0,0x1,0,5,1,no,0,0x2,0,magic,0,	NPC_ANTIMAGIC,Anti Magic
 677,0,6,4,0,0x3,2:5:8:11:14,5,1,no,0,0x2,0,none,0,	NPC_WIDECURSE,Wide Curse
 678,0,6,4,0,0x3,2:5:8:11:14,5,1,no,0,0x2,0,none,0,	NPC_WIDESTUN,Wide Stun
-679,0,0,4,0,0x1,0,10,1,no,0,0x2,0,none,0,	NPC_VAMPIRE_GIFT,Vampire Gift
-680,0,0,4,0,0x1,0,10,1,no,0,0x2,0,none,0,	NPC_WIDESOULDRAIN,Wide Soul Drain
+679,0,6,4,0,0x2,5:7:9:11:13:13:13:13:13:13,10,1,no,0,0x2,0,weapon,0,	NPC_VAMPIRE_GIFT,Vampire Gift
+680,0,6,4,0,0x3,5:7:9:11:13:13:13:13:13:13,10,1,no,0,0x2,0,none,0,	NPC_WIDESOULDRAIN,Wide Soul Drain
 
 // Cash Shop Skill
 681,0,0,0,0,0,0,10,0,no,0,0x1,0,none,0,		ALL_INCCARRY,Increase Weight Limit R

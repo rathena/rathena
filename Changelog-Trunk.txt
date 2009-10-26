@@ -3,6 +3,8 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+09/10/26
+	* Implemented NPC_VAMPIREGIFT and NPC_WIDESOULDRAIN. [Inkfish]
 09/10/25
 	* Rev. 14101 The status SC_INVINCIBLE now reduces all damage to 1. [L0ne_W0lf]
 	- Official behavior, and allows players to cancel NPC_ALLHEAL casts.

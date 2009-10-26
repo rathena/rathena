@@ -1674,6 +1674,9 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 				case HFLI_SBR44:	//[orn]
 					skillratio += 100 *(skill_lv-1);
 					break;
+				case NPC_VAMPIRE_GIFT:
+					skillratio += ((skill_lv-1)%5+1)*100;
+					break;
 			}
 
 			ATK_RATE(skillratio);

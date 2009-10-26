@@ -654,7 +654,7 @@ int status_damage(struct block_list *src,struct block_list *target,int hp, int s
 
 	status = status_get_status_data(target);
 
-	if (status == &dummy_status || !status->hp)
+	if( status == &dummy_status || (!status->hp && hp) )
 		return 0; //Invalid targets: no damage or dead
 
 // Let through. battle.c/skill.c have the whole logic of when it's possible or

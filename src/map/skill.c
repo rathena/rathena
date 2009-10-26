@@ -2786,18 +2786,24 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 	case NPC_EARTHQUAKE:
 	case NPC_PULSESTRIKE:
 	case NPC_HELLJUDGEMENT:
+	case NPC_VAMPIRE_GIFT:
 		if( flag&1 )
 		{	//Recursive invocation
 			// skill_area_temp[0] holds number of targets in area
 			// skill_area_temp[1] holds the id of the original target
 			// skill_area_temp[2] counts how many targets have already been processed
-			int sflag = skill_area_temp[0] & 0xFFF;
+			int sflag = skill_area_temp[0] & 0xFFF, heal;
 			if( flag&SD_LEVEL )
 				sflag |= SD_LEVEL; // -1 will be used in packets instead of the skill level
 			if( skill_area_temp[1] != bl->id && !(skill_get_inf2(skillid)&INF2_NPC_SKILL) )
 				sflag |= SD_ANIMATION; // original target gets no animation (as well as all NPC skills)
 
-			skill_attack(skill_get_type(skillid), src, src, bl, skillid, skilllv, tick, sflag);
+			heal = skill_attack(skill_get_type(skillid), src, src, bl, skillid, skilllv, tick, sflag);
+			if( skillid == NPC_VAMPIRE_GIFT && heal > 0 )
+			{
+				clif_skill_nodamage(NULL, src, AL_HEAL, heal, 1);
+				status_heal(src,heal,0,0);
+			}
 		}
 		else
 		{
@@ -3155,7 +3161,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	if(status_isdead(src))
 		return 1;
 
-	if(src!=bl && status_isdead(bl) && skillid != ALL_RESURRECTION && skillid != PR_REDEMPTIO)
+	if( src != bl && status_isdead(bl) && skillid != ALL_RESURRECTION && skillid != PR_REDEMPTIO && skillid != NPC_WIDESOULDRAIN )
 		return 1;
 
 	tstatus = status_get_status_data(bl);
@@ -3961,6 +3967,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case GS_SPREADATTACK:
 	case NPC_EARTHQUAKE:
 		clif_skill_nodamage(src,bl,skillid,skilllv,1);
+	case NPC_VAMPIRE_GIFT:
 	case NPC_HELLJUDGEMENT:
 	case NPC_PULSESTRIKE:
 		skill_castend_damage_id(src, src, skillid, skilllv, tick, flag);
@@ -5663,8 +5670,14 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case NPC_WIDESTUN:
 	case NPC_SLOWCAST:
 	case NPC_WIDEHELLDIGNITY:
+	case NPC_WIDESOULDRAIN:
 		if (flag&1)
-			sc_start(bl,type,100,skilllv,skill_get_time2(skillid,skilllv));
+		{
+			if( skillid == NPC_WIDESOULDRAIN )
+				status_percent_damage(src,bl,0,((skilllv-1)%5+1)*20,false);
+			else
+				sc_start(bl,type,100,skilllv,skill_get_time2(skillid,skilllv));
+		}
 		else {
 			skill_area_temp[2] = 0; //For SD_PREAMBLE
 			clif_skill_nodamage(src,bl,skillid,skilllv,1);

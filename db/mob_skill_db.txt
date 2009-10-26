@@ -4501,7 +4501,7 @@
 1867,Banshee@NPC_CRITICALWOUND,attack,673,2,500,0,5000,yes,target,always,0,,,,,,
 1867,Banshee@NPC_DARKSTRIKE,chase,340,9,2000,0,5000,yes,target,always,0,,,,,,
 1867,Banshee@NPC_DARKSTRIKE,attack,340,9,2000,0,5000,yes,target,always,0,,,,,,
-//1867,Banshee@NPC_VAMPIRE_GIFT,attack,679,1,500,0,5000,yes,self,always,0,,,,,,
+1867,Banshee@NPC_VAMPIRE_GIFT,attack,679,1,500,0,5000,yes,self,always,0,,,,,,
 1867,Banshee@NPC_DARKNESSATTACK,attack,190,3,1000,0,5000,yes,target,always,0,,,,,,21
 1867,Banshee@NPC_EVILLAND,attack,670,1,500,0,5000,yes,target,always,0,,,,,,
 1867,Banshee@NPC_EMOTION,chase,197,1,1000,0,5000,yes,self,always,0,7,0x81,,,,
@@ -4511,7 +4511,7 @@
 1868,Banshee@NPC_CRITICALWOUND,attack,673,2,500,0,5000,yes,target,always,0,,,,,,
 1868,Banshee@NPC_DARKSTRIKE,chase,340,9,2000,0,5000,yes,target,always,0,,,,,,
 1868,Banshee@NPC_DARKSTRIKE,attack,340,9,2000,0,5000,yes,target,always,0,,,,,,
-//1868,Banshee@NPC_VAMPIRE_GIFT,attack,679,1,500,0,5000,yes,self,always,0,,,,,,
+1868,Banshee@NPC_VAMPIRE_GIFT,attack,679,1,500,0,5000,yes,self,always,0,,,,,,
 1868,Banshee@NPC_DARKNESSATTACK,attack,190,3,1000,0,5000,yes,target,always,0,,,,,,21
 1868,Banshee@NPC_EMOTION,chase,197,1,1000,0,5000,yes,self,always,0,7,0x81,,,,
 1868,Banshee@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,NEED_EMO,0x3095,,,,
@@ -4567,7 +4567,7 @@
 1871,Falling Bishop@NPC_GRANDDARKNESS,attack,339,10,500,1300,5000,no,self,always,0,,,,,,
 1871,Falling Bishop@CR_GRANDCROSS,chase,254,10,500,1000,5000,no,self,always,0,,,,,,
 1871,Falling Bishop@CR_GRANDCROSS,attack,254,10,500,1000,5000,no,self,always,0,,,,,,
-//1871,Falling Bishop@NPC_VAMPIRE_GIFT,attack,679,2,500,0,5000,yes,self,always,0,,,,,,
+1871,Falling Bishop@NPC_VAMPIRE_GIFT,attack,679,2,500,0,5000,yes,self,always,0,,,,,,
 1871,Falling Bishop@NPC_SLOWCAST,chase,672,5,2000,300,30000,no,self,always,0,,,,,,36
 1871,Falling Bishop@NPC_SLOWCAST,attack,672,5,2000,800,30000,no,self,always,0,,,,,,36
 1871,Falling Bishop@NPC_EVILLAND,attack,670,10,10000,1000,600000,no,target,myhpltmaxrate,44,,,,,,
@@ -4611,7 +4611,7 @@
 1873,Beelzebub@NPC_HELLJUDGEMENT,attack,662,5,10000,700,15000,no,self,always,0,,,,,,
 1873,Beelzebub@NPC_HELLJUDGEMENT,chase,662,5,10000,700,15000,no,self,always,0,,,,,,
 1873,Beelzebub@NPC_EXPULSION,attack,674,1,100,1000,30000,no,target,always,0,,,,,,
-//1873,Beelzebub@NPC_VAMPIRE_GIFT,attack,679,10,10000,1000,10000,no,self,myhpltmaxrate,70,,,,,,47
+1873,Beelzebub@NPC_VAMPIRE_GIFT,attack,679,10,10000,1000,10000,no,self,myhpltmaxrate,70,,,,,,47
 1873,Beelzebub@NPC_AGIUP,attack,350,5,10000,0,30000,yes,self,myhpltmaxrate,60,,,,,,
 1873,Beelzebub@NPC_AGIUP,chase,350,5,10000,0,30000,yes,self,myhpltmaxrate,60,,,,,,
 1874,Beelzebub@NPC_RUN,attack,354,1,10000,0,0,yes,self,myhpltmaxrate,1,,,,,,26
@@ -4643,8 +4643,8 @@
 1874,Beelzebub@NPC_HELLJUDGEMENT,attack,662,2,2000,500,5000,no,self,always,0,,,,,,
 1874,Beelzebub@NPC_ACIDBREATH,attack,657,1,2000,1000,5000,no,target,always,0,,,,,,
 1874,Beelzebub@NPC_ACIDBREATH,chase,657,1,2000,1000,5000,no,target,always,0,,,,,,
-//1874,Beelzebub@NPC_VAMPIRE_GIFT,attack,679,1,1000,500,5000,no,self,myhpltmaxrate,50,,,,,,47
-//1874,Beelzebub@NPC_WIDESOULDRAIN,attack,680,7,1000,500,5000,no,self,myhpltmaxrate,50,,,,,,42
+1874,Beelzebub@NPC_VAMPIRE_GIFT,attack,679,1,1000,500,5000,no,self,myhpltmaxrate,50,,,,,,47
+1874,Beelzebub@NPC_WIDESOULDRAIN,attack,680,7,1000,500,5000,no,self,myhpltmaxrate,50,,,,,,42
 1875,Tristan@NPC_BLOODDRAIN,attack,199,1,2000,0,5000,yes,target,always,0,,,,,,
 
 // Moscovia (12.1)
@@ -4735,10 +4735,10 @@
 1916,Satan Morroc@NPC_WIDESTONE,attack,666,5,10000,0,60000,yes,self,myhpltmaxrate,40,,,,,,
 1916,Satan Morroc@WZ_METEOR,chase,83,5,10000,800,60000,no,target,myhpltmaxrate,40,,,,,,
 1916,Satan Morroc@WZ_METEOR,attack,83,5,10000,800,60000,no,target,myhpltmaxrate,40,,,,,,
-//1916,Satan Morroc@NPC_VAMPIRE_GIFT,chase,679,9,10000,1000,50000,no,self,myhpltmaxrate,50,,,,,,
-//1916,Satan Morroc@NPC_VAMPIRE_GIFT,attack,679,9,10000,1000,50000,no,self,myhpltmaxrate,50,,,,,,
-//1916,Satan Morroc@NPC_WIDESOULDRAIN,chase,680,10,10000,1000,50000,no,self,myhpltmaxrate,50,,,,,,
-//1916,Satan Morroc@NPC_WIDESOULDRAIN,attack,680,10,10000,1000,50000,no,self,myhpltmaxrate,50,,,,,,
+1916,Satan Morroc@NPC_VAMPIRE_GIFT,chase,679,9,10000,1000,50000,no,self,myhpltmaxrate,50,,,,,,
+1916,Satan Morroc@NPC_VAMPIRE_GIFT,attack,679,9,10000,1000,50000,no,self,myhpltmaxrate,50,,,,,,
+1916,Satan Morroc@NPC_WIDESOULDRAIN,chase,680,10,10000,1000,50000,no,self,myhpltmaxrate,50,,,,,,
+1916,Satan Morroc@NPC_WIDESOULDRAIN,attack,680,10,10000,1000,50000,no,self,myhpltmaxrate,50,,,,,,
 1916,Satan Morroc@NPC_EVILLAND,chase,670,10,10000,1000,50000,no,target,myhpltmaxrate,50,,,,,,
 1916,Satan Morroc@NPC_EVILLAND,attack,670,10,10000,1000,50000,no,target,myhpltmaxrate,50,,,,,,
 1916,Satan Morroc@NPC_WIDESLEEP,chase,668,5,10000,700,35000,no,self,myhpltmaxrate,60,,,,,,
@@ -4784,10 +4784,10 @@
 1917,Wounded Morroc@NPC_WIDESTONE,attack,666,5,10000,0,60000,yes,self,myhpltmaxrate,40,,,,,,
 1917,Wounded Morroc@WZ_METEOR,chase,83,5,10000,800,60000,no,target,myhpltmaxrate,40,,,,,,
 1917,Wounded Morroc@WZ_METEOR,attack,83,5,10000,800,60000,no,target,myhpltmaxrate,40,,,,,,
-//1917,Wounded Morroc@NPC_VAMPIRE_GIFT,chase,679,9,10000,1000,50000,no,self,myhpltmaxrate,50,,,,,,
-//1917,Wounded Morroc@NPC_VAMPIRE_GIFT,attack,679,9,10000,1000,50000,no,self,myhpltmaxrate,50,,,,,,
-//1917,Wounded Morroc@NPC_WIDESOULDRAIN,chase,680,10,10000,1000,50000,no,self,myhpltmaxrate,50,,,,,,
-//1917,Wounded Morroc@NPC_WIDESOULDRAIN,attack,680,10,10000,1000,50000,no,self,myhpltmaxrate,50,,,,,,
+1917,Wounded Morroc@NPC_VAMPIRE_GIFT,chase,679,9,10000,1000,50000,no,self,myhpltmaxrate,50,,,,,,
+1917,Wounded Morroc@NPC_VAMPIRE_GIFT,attack,679,9,10000,1000,50000,no,self,myhpltmaxrate,50,,,,,,
+1917,Wounded Morroc@NPC_WIDESOULDRAIN,chase,680,10,10000,1000,50000,no,self,myhpltmaxrate,50,,,,,,
+1917,Wounded Morroc@NPC_WIDESOULDRAIN,attack,680,10,10000,1000,50000,no,self,myhpltmaxrate,50,,,,,,
 1917,Wounded Morroc@NPC_EVILLAND,chase,670,10,10000,1000,50000,no,target,myhpltmaxrate,50,,,,,,
 1917,Wounded Morroc@NPC_EVILLAND,attack,670,10,10000,1000,50000,no,target,myhpltmaxrate,50,,,,,,
 1917,Wounded Morroc@NPC_WIDESLEEP,chase,668,5,10000,700,35000,no,self,myhpltmaxrate,60,,,,,,
