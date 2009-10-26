@@ -157,7 +157,7 @@
 113,0,6,4,0,0x3,-1,5,1,no,0,0,0,weapon,0,	BS_OVERTHRUST,Power-Thrust
 114,0,6,4,0,0x1,0,5,1,no,0,0,0,weapon,0,		BS_MAXIMIZE,Maximize Power
 115,3,6,2,0,0x1,0,5,1,no,0,0x80,0,misc,6:7:8:9:10,	HT_SKIDTRAP,Skid Trap
-116,3,6,2,2,0x42,0,5,1,no,0,0x80,0,misc,0,	HT_LANDMINE,Land Mine
+116,3,6,2,2,0x42,1,5,1,no,0,0x80,0,misc,0,	HT_LANDMINE,Land Mine
 117,3,6,2,0,0x1,0,5,1,no,0,0x80,0,misc,0,	HT_ANKLESNARE,Ankle Snare
 118,3,6,2,0,0x2,1,5,1,no,0,0x80,0,misc,0,	HT_SHOCKWAVE,Shockwave Trap
 119,3,6,2,0,0x3,2,5,1,no,0,0x80,0,misc,0,	HT_SANDMAN,Sandman
