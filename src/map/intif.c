@@ -1377,8 +1377,12 @@ int intif_parse_questlog(int fd)
 
 int intif_parse_questsave(int fd)
 {
+	TBL_PC *sd = map_id2sd(RFIFOL(fd, 2));
+
 	if( !RFIFOB(fd, 6) )
-		ShowError("intif_parse_questsave: Failed to save quest(s) for character %d!\n", RFIFOL(fd, 2));
+		ShowError("intif_parse_questsave: Failed to save quest(s) for character %d!\n", sd->status.char_id);
+	else if( sd )
+		sd->save_quest = false;
 
 	return 0;
 }
@@ -1396,7 +1400,8 @@ int intif_quest_save(TBL_PC *sd)
 	WFIFOW(inter_fd,0) = 0x3061;
 	WFIFOW(inter_fd,2) = len;
 	WFIFOL(inter_fd,4) = sd->status.char_id;
-	memcpy(WFIFOP(inter_fd,8), &sd->quest_log, sizeof(struct quest)*sd->num_quests);
+	if( sd->num_quests )
+		memcpy(WFIFOP(inter_fd,8), &sd->quest_log, sizeof(struct quest)*sd->num_quests);
 	WFIFOSET(inter_fd,  len);
 
 	return 0;

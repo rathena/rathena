@@ -5670,14 +5670,20 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case NPC_WIDESTUN:
 	case NPC_SLOWCAST:
 	case NPC_WIDEHELLDIGNITY:
+		if (flag&1)
+			sc_start(bl,type,100,skilllv,skill_get_time2(skillid,skilllv));
+		else {
+			skill_area_temp[2] = 0; //For SD_PREAMBLE
+			clif_skill_nodamage(src,bl,skillid,skilllv,1);
+			map_foreachinrange(skill_area_sub, bl,
+				skill_get_splash(skillid, skilllv),BL_CHAR,
+				src,skillid,skilllv,tick, flag|BCT_ENEMY|SD_PREAMBLE|1,
+				skill_castend_nodamage_id);
+		}
+		break;
 	case NPC_WIDESOULDRAIN:
 		if (flag&1)
-		{
-			if( skillid == NPC_WIDESOULDRAIN )
-				status_percent_damage(src,bl,0,((skilllv-1)%5+1)*20,false);
-			else
-				sc_start(bl,type,100,skilllv,skill_get_time2(skillid,skilllv));
-		}
+			status_percent_damage(src,bl,0,((skilllv-1)%5+1)*20,false);
 		else {
 			skill_area_temp[2] = 0; //For SD_PREAMBLE
 			clif_skill_nodamage(src,bl,skillid,skilllv,1);

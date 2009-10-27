@@ -112,7 +112,7 @@ int mapif_parse_quest_save(int fd)
 
 	memset(qd1, 0, sizeof(qd1));
 	memset(qd2, 0, sizeof(qd2));
-	memcpy(&qd1, RFIFOP(fd,8), RFIFOW(fd,2)-8);
+	if( num1 ) memcpy(&qd1, RFIFOP(fd,8), RFIFOW(fd,2)-8);
 	num2 = mapif_quests_fromsql(char_id, qd2);
 
 	for( i = 0; i < num1; i++ )

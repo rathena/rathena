@@ -391,6 +391,7 @@ struct map_session_data {
 	int avail_quests;
 	int quest_index[MAX_QUEST_DB];
 	struct quest quest_log[MAX_QUEST_DB];
+	bool save_quest;
 
 	// temporary debug [flaviojs]
 	const char* debug_file;
