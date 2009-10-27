@@ -5,6 +5,8 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 09/10/27
 	* Fixed quest will never get erased when it's the only quest you have. [Inkfish]
+	* Cast time of Emergency Call is doubled if you master of High Jump. [Inkfish]
+	* High Jump can't be used on PvP maps. [Inkfish]
 09/10/26
 	* Implemented NPC_VAMPIREGIFT and NPC_WIDESOULDRAIN. [Inkfish]
 09/10/25

@@ -1377,10 +1377,11 @@ int intif_parse_questlog(int fd)
 
 int intif_parse_questsave(int fd)
 {
-	TBL_PC *sd = map_id2sd(RFIFOL(fd, 2));
+	int cid = RFIFOL(fd, 2);
+	TBL_PC *sd = map_id2sd(cid);
 
 	if( !RFIFOB(fd, 6) )
-		ShowError("intif_parse_questsave: Failed to save quest(s) for character %d!\n", sd->status.char_id);
+		ShowError("intif_parse_questsave: Failed to save quest(s) for character %d!\n", cid);
 	else if( sd )
 		sd->save_quest = false;
 
