@@ -2490,7 +2490,7 @@
 5350,Pirate_Bandana_,Pirate Bandana,5,20,,100,,3,,1,0xFFFFFFFE,7,2,256,,0,1,74,{ bonus bStr,1; },{},{}
 5351,Sunflower_,Sunflower,5,20,,100,,1,,1,0xFFFFFFFF,7,2,256,,0,0,37,{ bonus2 bSubRace,RC_Insect,10; },{},{}
 5352,Poporing_Cap,Poporing Hat,5,20,,700,,2,,0,0xFFFFFFFE,7,2,256,,38,1,361,{},{},{}
-//5353,Helm_Of_Sun_
+5353,Helm_Of_Sun_,Hat of the Sun God,5,20,,2400,,4,,1,0x00CFDF80,7,2,768,,0,1,138,{ bonus bStr,3; bonus bInt,2; },{},{}
 //5354,Muslim_Hat_M,Songkok,5,20,,100,,2,,0,0xFFFFFFFE,7,1,256,,0,1,362,{ bonus bCastrate,-5; },{},{}
 //5355,Muslim_Hat_F,Selendang,5,20,,100,,2,,0,0xFFFFFFFE,7,0,256,,0,1,363,{ bonus bCastrate,-5; },{},{}
 5356,Pumpkin_Hat_H,Pumpkin Hat,5,20,,200,,2,,0,0xFFFFFFFF,7,2,256,,0,1,206,{ bonus2 bSubRace,RC_Demon,5; },{},{}
