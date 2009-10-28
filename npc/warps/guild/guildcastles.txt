@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Athena (1.0)
 //===== Current Version: =====================================
-//= 2.5
+//= 2.6
 //===== Compatible With: =====================================
 //= Any Athena Version
 //===== Description: =========================================
@@ -22,6 +22,7 @@
 //=	as I get more information.
 //= 2.4b Corrected Warp points for Juno castles 1, 4 and 5. [L0ne_W0lf]
 //= 2.5 Updated Schwaltzvalt warps and added Arunafeltz. [L0ne_W0lf]
+//= 2.6 Fixed warp position between Juno and Schwaltzvalt Realm. [Gepard]
 //============================================================
 
 
@@ -404,10 +405,8 @@ prtg_cas05,76,242,0	warp	prtg502	1,1,prtg_cas05,288,13
 
 // Episode 12: WoE:SE
 // Schwaltzvalt Guild Castles Map Connection
-// Original Coordinates were on a non-walkable cell.
-// Will update when we get the mapcache rebuilt.
-yuno,22,126,0	warp	schg001	1,1,sch_gld,351,89
-sch_gld,354,89,0	warp	schg002	1,1,yuno,25,126
+yuno,13,126,0	warp	schg001	1,1,sch_gld,351,89
+sch_gld,354,89,0	warp	schg002	1,1,yuno,16,126
 
 // Schwaltzvalt Castle Maps
 schg_cas01,119,4,0	warp	schg101	1,1,sch_gld,293,100
