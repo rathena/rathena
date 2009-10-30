@@ -122,8 +122,8 @@ spl_fild01	mapflag	nowarpto
 spl_in01	mapflag	nowarpto
 
 //Orc's Memory ===================
-1@cata	mapflag	nowarpto
-2@cata	mapflag	nowarpto
+1@orcs	mapflag	nowarpto
+2@orcs	mapflag	nowarpto
 
 // Nidhoggr's Instance ===========
 1@nyd	mapflag	nowarpto

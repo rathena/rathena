@@ -2115,7 +2115,7 @@ S_SellSets:
 	set .@item_cost,getiteminfo(getarg(0),0);
 	set .@item_weight,getiteminfo(getarg(0),6);
 	mes "[Madeleine Chu]";
-	mes "How many Outdoor";
+	mes "How many " + (getarg(0)==12125 ? "Outdoor":"Indoor");
 	mes "Cooking Kits would";
 	mes "you like to buy? If you";
 	mes "want to cancel, please";

@@ -688,6 +688,7 @@ L_AskQuestions:
 			mes "price, how much profit would";
 			mes "you make from this sale?";
 			next;
+			input .@input;
 			if (.@input != 7680) set w_point,w_point+1;
 		}
 		if (.@w_point == 0) {

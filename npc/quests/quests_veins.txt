@@ -3402,7 +3402,7 @@ que_thor,36,66,5	script	Little Curdie	941,{
 		mes "to hurry a little bit.";
 		mes "Alright, it's time to go.";
 		next;
-		mes "^3355FFYou extract the soup";
+		mes "^3355FFYou extract the soap";
 		mes "from the lock, and";
 		mes "carefully wrap it.";
 		mes "Now you need to take";
@@ -3959,6 +3959,7 @@ veins,181,166,3	script	Lockenlock	900,{
 			mes "the key, so I can get it done";
 			mes "as soon as you can bring";
 			mes "me the Steel. I'll be waiting.";
+			close;
 		}
 	}
 	else if (rachel_camel == 23) {

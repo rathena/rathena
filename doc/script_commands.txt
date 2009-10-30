@@ -4041,7 +4041,7 @@ the character will receive a message in their chat window. The character will
 also receive warning messages in their chat window before the item disappears.
 
 This command can not be used to rent stackable items. Rental items cannot be 
-removed from the character's inventory. (i.e. trade mask 123 in ../db/item_trade.txt)
+dropped, traded, sold to npcs, or placed in guild storage. (i.e. trade mask 75)
 Note: 'delitem' in an NPC script can still remove rental items.
 
 ---------------------------------------
