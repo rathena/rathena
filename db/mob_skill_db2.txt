@@ -131,4 +131,10 @@
 //1239,Fire Poring@RG_STRIPSHIELD,attack,216,5,2000,0,3000,yes,target,always,0,,,,,,
 //1239,Fire Poring@RG_STRIPWEAPON,attack,215,5,2000,0,3000,yes,target,always,0,,,,,,
 
+//iRO Halloween Event 2009
+//3000,Halloween Whisper@AS_CLOAKING,idle,135,1,2000,200,5000,yes,self,always,0,,,,,,
+//3000,Halloween Whisper@AS_CLOAKING,chase,135,1,2000,200,5000,yes,self,always,0,,,,,,
+//3000,Halloween Whisper@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,,,,,,
+//3000,Halloween Whisper@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,0x81,,,,
+
 // Here you can place your custom mob skills
