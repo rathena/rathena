@@ -4302,8 +4302,8 @@
 12393,RepairB,RepairB,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12394,RepairC,RepairC,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12395,Tantanmen,Tantanmen,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-12396,Fools_Day_Box,Fools Day Box,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-12397,Fools_Day_Box2,Fools Day Box2,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12396,Fools_Day_Box,Fools Day Box,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ if(rand(1,10)==1) itemskill "AL_TELEPORT",1; else if(rand(1,10)==2) itemskill "AL_TELEPORT",3; else if(rand(1,10)==3) percentheal 50,0; else if(rand(1,10)==4) percentheal 0,50; else if(rand(1,10)==5) end; else if(rand(1,10)==6) getitem 512,1; else if(rand(1,10)==7) itemskill "ALL_REVERSEORCISH",1; else if(rand(1,10)==8) specialeffect2 247; else if(rand(1,10)==9) specialeffect2 338; else specialeffect2 10; },{},{}
+12397,Fools_Day_Box2,Fools Day Box2,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ if(rand(1,10)==1) itemskill "TF_DETOXIFY",1; else if(rand(1,10)==2) itemskill "TF_PICKSTONE",1; else if(rand(1,10)==3) itemskill "BA_FROSTJOKER",1; else if(rand(1,10)==4) itemskill "DC_SCREAM",1; else if(rand(1,10)==5) end; else if(rand(1,10)==6) getitem 909,1; else if(rand(1,10)==7) itemskill "AL_RUWACH",1; else if(rand(1,10)==8) specialeffect2 328; else if(rand(1,10)==9) specialeffect2 68; else specialeffect2 196; },{},{}
 12701,Old_Blue_Box_F,Old Blue Box,2,,,200,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12702,Old_Bleu_Box,Old Bleu Box,2,0,,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_BleuBox),1; getitem groupranditem(IG_BleuBox),1; },{},{}
 12703,Holy_Egg_2,Holy Egg,11,0,,50,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
