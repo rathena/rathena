@@ -45,6 +45,11 @@ struct item_data;
 #define MAX_IGNORE_LIST 20 // official is 14
 #define MAX_VENDING 12
 #define MOBID_EMPERIUM 1288
+// Added definitions for WoESE objects. [L0ne_W0lf]
+#define MOBID_BARRICADE1 1905
+#define MOBID_BARRICADE2 1906
+#define MOBID_GUARIDAN_STONE1 1907
+#define MOBID_GUARIDAN_STONE2 1908
 
 //The following system marks a different job ID system used by the map server,
 //which makes a lot more sense than the normal one. [Skotlex]

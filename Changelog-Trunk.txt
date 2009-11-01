@@ -3,6 +3,9 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+09/11/01
+	* Rev. 14115 Implemented the fix for Slim Pitcher working on WoESE objects (bugreport:3618). [L0ne_W0lf]
+	* Added SC_SPIRIT to the list of buffs that are dispelled when the player logs out.
 09/10/27
 	* Fixed quest will never get erased when it's the only quest you have. [Inkfish]
 	* Cast time of Emergency Call is doubled if you master of High Jump. [Inkfish]

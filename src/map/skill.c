@@ -5255,7 +5255,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 
 	// Slim Pitcher
 	case CR_SLIMPITCHER:
-		if( dstmd && dstmd->class_ == MOBID_EMPERIUM )
+		// Updated to block Slim Pitcher from working on barricades and guardian stones.
+		if( ( dstmd && dstmd->class_ == MOBID_EMPERIUM ) || ( dstmd && dstmd->class_ >= MOBID_BARRICADE1 && dstmd && dstmd->class_ <= MOBID_GUARIDAN_STONE2 ) )
 			break;
 		if (potion_hp || potion_sp) {
 			int hp = potion_hp, sp = potion_sp;
