@@ -379,7 +379,7 @@ prontera,220,72,5	duplicate(09Treats)	Trick or Treater#iRO8	706,2,2
 					}
 					if(.@worn > 0 && .@input != 0) {
 						if(.@worn >= .@input) {
-							delitem 6299,.@fabric;
+							delitem 6299,.@input;
 							set .@whispers,.@whispers+.@input;
 							set .@input,0;
 						}

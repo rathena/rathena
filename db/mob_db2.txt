@@ -34,8 +34,8 @@
 
 //iRO Halloween 2009 Event
 //Uncomment if event is enabled. Uncomment the skills for Halloween Whisper in mob_skill_db2.
-//3000,HALLOWEEN_WHISPER,Halloween Whisper,Halloween Whisper,1,800,0,0,0,1,10,13,0,45,1,51,14,0,60,0,10,12,0,6,68,0x81,150,1960,960,504,0,0,0,0,0,0,0,0,12396,150,6299,5335,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-//3001,HALLOWEEN_DARK_LORD,Halloween Dark Lord,Halloween Dark Lord,1,45,0,0,0,1,10,13,0,45,1,51,14,0,60,0,10,12,2,6,89,0x81,100,868,768,480,0,0,0,0,0,0,0,0,12396,800,12397,5335,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+//3014,HALLOWEEN_WHISPER,Halloween Whisper,Halloween Whisper,1,800,0,0,0,1,10,13,0,45,1,51,14,0,60,0,10,12,0,6,68,0x81,150,1960,960,504,0,0,0,0,0,0,0,0,12396,150,6299,5335,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+//3015,HALLOWEEN_DARK_LORD,Halloween Dark Lord,Halloween Dark Lord,1,45,0,0,0,1,10,13,0,45,1,51,14,0,60,0,10,12,2,6,89,0x81,100,868,768,480,0,0,0,0,0,0,0,0,12396,800,12397,5335,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 
 //iRO Halloween 2008 Event
 //Uncomment if event is enabled.
