@@ -528,7 +528,13 @@ int atcommand_jumpto(const int fd, struct map_session_data* sd, const char* comm
 		clif_displaymessage(fd, msg_txt(248));	// You are not authorized to warp from your current map.
 		return -1;
 	}
-	
+
+	if( pc_isdead(sd) )
+	{
+		clif_displaymessage(fd, "You cannot use this command when dead.");
+		return -1;
+	}
+
 	pc_setpos(sd, pl_sd->mapindex, pl_sd->bl.x, pl_sd->bl.y, 3);
 	sprintf(atcmd_output, msg_txt(4), pl_sd->status.name); // Jumped to %s
  	clif_displaymessage(fd, atcmd_output);
@@ -551,6 +557,12 @@ int atcommand_jump(const int fd, struct map_session_data* sd, const char* comman
 
 	if (map[sd->bl.m].flag.noteleport && battle_config.any_warp_GM_min_level > pc_isGM(sd)) {
 		clif_displaymessage(fd, msg_txt(248));	// You are not authorized to warp from your current map.
+		return -1;
+	}
+
+	if( pc_isdead(sd) )
+	{
+		clif_displaymessage(fd, "You cannot use this command when dead.");
 		return -1;
 	}
 
@@ -8894,6 +8906,7 @@ bool is_atcommand(const int fd, struct map_session_data* sd, const char* message
 	char command[100];
 	char output[200];
 	int x, y, z;
+	int lv = 0;
 	
 	//Reconstructed message
 	char atcmd_msg[200];
@@ -8999,11 +9012,13 @@ bool is_atcommand(const int fd, struct map_session_data* sd, const char* message
 	}
 	
 	//Attempt to use the command
+	if( strcmpi("adjgmlvl",command+1) && ssd ) { lv = ssd->gmlevel; ssd->gmlevel = sd->gmlevel; }
 	if ( (info->func(fd, (*atcmd_msg == atcommand_symbol) ? sd : ssd, command, params) != 0) )
 	{
 		sprintf(output,msg_txt(154), command); // %s failed.
 		clif_displaymessage(fd, output);
 	}
+	if( strcmpi("adjgmlvl",command+1) && ssd ) ssd->gmlevel = lv;
 	
 	//Log atcommands
 	if( log_config.gm && info->level >= log_config.gm && *atcmd_msg == atcommand_symbol )
