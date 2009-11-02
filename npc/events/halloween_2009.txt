@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Kisuka
 //===== Current Version: =====================================
-//= 1.0
+//= 1.1
 //===== Compatible With: =====================================
 //= eAthena SVN
 //===== Description: =========================================
@@ -17,6 +17,7 @@
 //= their skills in mob_skill_db2.
 //===== Additional Comments: =================================
 //= 1.0 First version. [Kisuka]
+//= 1.1 Fixed even exploit, fixed mobs overlap. [Lupus]
 //============================================================
 
 // Headgear Quest - Pumpkin Hat

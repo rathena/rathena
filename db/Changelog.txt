@@ -8,6 +8,8 @@
 	1475 Equestrian's Spear:	NEED INFO.
 	13005 Angelic Wing Dagger:	NEED INFO.
 =======================
+2009/11/02
+	* Rev. 14112 Fixed overlapped HW2009 even mobs IDs [Lupus]
 2009/10/26
 	* Rev. 14103 Forgot to add the splash range for HT_LANDMINE (skill_db) in r14101. [L0ne_W0lf]
 2009/10/25
