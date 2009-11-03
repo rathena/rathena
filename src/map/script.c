@@ -8134,10 +8134,10 @@ static int buildin_announce_sub(struct block_list *bl, va_list ap)
 	int   len       = va_arg(ap, int);
 	int   type      = va_arg(ap, int);
 	char *fontColor = va_arg(ap, char *);
-	short fontType  = va_arg(ap, short);
-	short fontSize  = va_arg(ap, short);
-	short fontAlign = va_arg(ap, short);
-	short fontY     = va_arg(ap, short);
+	short fontType  = (short)va_arg(ap, int);
+	short fontSize  = (short)va_arg(ap, int);
+	short fontAlign = (short)va_arg(ap, int);
+	short fontY     = (short)va_arg(ap, int);
 	if (fontColor)
 		clif_broadcast2(bl, mes, len, strtol(fontColor, (char **)NULL, 0), fontType, fontSize, fontAlign, fontY, SELF);
 	else
