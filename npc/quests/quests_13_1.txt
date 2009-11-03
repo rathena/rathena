@@ -18,6 +18,8 @@
 //= The Tripartite Union's Feud
 //= Cat Hand Agent
 //= - Contains untranslated dialog.
+//= Part Time Work
+//= - COntains Custom translated dialog.
 //===== Additional Comments: ================================= 
 //= 1.0 First Version. [L0ne_W0lf]
 //= 1.1 I missed an end in one of the lhz guards. [L0ne_W0lf]
@@ -8159,6 +8161,598 @@ OnTimer300000:
 	end;
 }
 
+// Part Time Work
+//============================================================ 
+mid_camp,1,1,0	script	#timer_alba01	844,{
+	/*
+	mes "Please enter the password";
+	next;
+	input .@input;
+	if (.@input == "1854") {
+		mes "Current Status:";
+		if ($@PartTimeOn == 1) {
+			mes "Recruiting.";
+		}
+		else {
+			mes "Not Recruiting.";
+		}
+		mes "Recruited part-timers" + $@PartTimeSlots + "part-timers.";
+		mes "What do you want to do?";
+		next;
+		switch(select("Reset the recruiting.:Cancel.")) {
+		case 1:
+			mes "Recruiting has been reset.";
+			mes "Timer has stopped!";
+			stopnpctimer;
+			next;
+			mes "Global values have been reset.";
+			set $@PartTimeOn,0;
+			set $@PartTimeSlots,0;
+			next;
+			mes "Recruiting has been reset.";
+			mes "Timer has started!";
+			donpcevent "#timer_alba01::OnEnable";
+			close;
+		case 2:
+			mes "Canceled.";
+			close;
+		}
+	}
+	else {
+		mes "Wrong password.";
+		close;
+	}
+	end;
+	*/
+
+OnInit:
+	set $@PartTimeOn,0;
+	set $@PartTimeSlots,0;
+	initnpctimer;
+	end;
+
+OnEnable:
+	initnpctimer;
+	end;
+
+Onstop:
+	stopnpctimer;
+	end;
+
+OnTimer1000:
+	set $@PartTimeSlots,0;
+	set $@PartTimeOn,1;
+	mapannounce "mid_camp", "Breeder Taab: Attention adventurers in the camp! I'm recruiting 5 part-timers for my breeding farm. Only the first to arrive here will be hired!",bc_map,"0x00ff00";
+	end;
+
+OnTimer180000:
+	if ($@PartTimeOn < 5) {
+		mapannounce "mid_camp", "Breeder Taab: I'm looking for a part-timer who can work for my breeding farm. If you're interested, please visit me at the farm.",bc_map,"0x00ff00";
+	}
+	else {
+		mapannounce "mid_camp", "Breeder Taab: The recruitment for my breeding farm has ended. I'll see you next time. Thanks!",bc_map,"0x00ff00";
+	}
+	end;
+
+OnTimer360000:
+	if ($@PartTimeOn < 5) {
+		mapannounce "mid_camp", "Breeder Taab: I'm looking for a part-timer who can work for my breeding farm. If you're interested, please visit me at the farm.",bc_map,"0x00ff00";
+	}
+	else {
+		mapannounce "mid_camp", "Breeder Taab: The recruitment for my breeding farm has ended. I'll see you next time. Thanks!",bc_map,"0x00ff00";
+	}
+	end;
+
+OnTimer600000:
+	mapannounce "mid_camp", "Breeder Taab: The recruitment for my breeding farm has ended. I'll see you next time. Thanks!",bc_map,"0x00ff00";
+	set $@PartTimeOn,0;
+	end;
+
+OnTimer7800000:
+	donpcevent "#timer_alba01::OnEnable";
+	donpcevent "#monster_master::OnEnable";
+	end;
+}
+
+mid_camp,143,306,5	script	Breeder Taab#ep13_alba	946,{
+	if (ep13_ryu > 99) {
+		if (ep13_alba < 1) {
+			mes "[Taab]";
+			mes "How may I help you?";
+			next;
+			switch(select("What is this place?:I'm here for a job.:No, thanks.")) {
+			case 1:
+				mes "[Taab]";
+				mes "This is where we keep creatures";
+				mes "captured here in Ash Vacuum.";
+				mes "We study them to understand";
+				mes "their characteristics and habits.";
+				next;
+				mes "[Taab]";
+				mes "Of course, scholars and";
+				mes "specialists perform the studies.";
+				mes "I'm here to tame and breed";
+				mes "dangerous monsters.";
+				next;
+				mes "[Taab]";
+				mes "...I hope I can carry them";
+				mes "around as my pets.";
+				mes "Hillstions are so cute.";
+				mes "You can't find such an";
+				mes "animal on the mainland,";
+				mes "you know?";
+				close;
+			case 2:
+				if ($@PartTimeOn == 0) {
+					mes "[Taab]";
+					mes "I'm sorry, but I don't need any assistance right now.";
+					mes "I'll make an official anouncement if I need help.";
+					mes "Please come back then.";
+					close;
+				}
+				else {
+					if ($@PartTimeSlots < 5) {
+						set $@PartTimeSlots,$@PartTimeSlots+1;
+						mes "[Taab]";
+						mes "Welcome.";
+						mes "Your job is simple:";
+						mes "help me out by gathering";
+						mes "the animals' feed or by";
+						mes "cleaning their cages.";
+						mes "These are the available jobs.";
+						next;
+						if ($@PartTimeSlots == 1) {
+							set ep13_alba,1;
+							setquest 7042;
+							mes "[Taab]";
+							mes "Please bring me 50 Fresh Fish.";
+							mes "They're feed for Tatachoes.";
+							mes "I'm fresh out, and I'll need to restock very soon.";
+							next;
+							mes "[Taab]";
+							mes "You can find them from Tatachoes in the fields.";
+							mes "Strange, isn't it?";
+							mes "I don't know where they've caught the fish.";
+							next;
+							mes "[Taab]";
+							mes "Thank you in advance.";
+							mes "Please bring me feed for Tatachoes: ^4d4dff50 Fresh Fish^000000.";
+							close;
+						}
+						else if ($@PartTimeSlots == 2) {
+							set ep13_alba,2;
+							setquest 7043;
+							mes "[Taab]";
+							mes "I've just run out of";
+							mes "feed for Cornuses.";
+							mes "Can you please bring me";
+							mes "^4d4dff30 Great Leaves and 30 Brown Roots^000000?";
+							next;
+							mes "[Taab]";
+							mes "You can find them from";
+							mes "Pinguiculas in the fields.";
+							mes "Thank you in advance.";
+							close;
+						}
+						else if ($@PartTimeSlots == 3) {
+							set ep13_alba,3;
+							setquest 7044;
+							mes "[Taab]";
+							mes "I've just run out of";
+							mes "feed for Hillsrions.";
+							mes "Scholars think these";
+							mes "guys are members";
+							mes "of the cat family.";
+							mes "I've been trying to feed";
+							mes "them various things.";
+							next;
+							mes "[Taab]";
+							mes "This time... I'd like to";
+							mes "try Monster's Feed.";
+							mes "Can you please bring me";
+							mes "^4d4dff20 Monster's Feeds and 30 Pet Foods^000000?";
+							next;
+							mes "[Taab]";
+							mes "Thank you in advance.";
+							mes "Don't forget the";
+							mes "20 Monster's Feeds";
+							mes "and 30 Pet Foods.";
+							mes "I hope the Hallsrions";
+							mes "will like them.";
+							close;
+						}
+						else if ($@PartTimeSlots == 4) {
+							set ep13_alba,4;
+							setquest 7045;
+							mes "[Taab]";
+							mes "This is perfect because";
+							mes "I was going to try some";
+							mes "new feed for Hillsrions.";
+							mes "I tried Monster's Feed,";
+							mes "but I don't know if they";
+							mes "liked it or not.";
+							next;
+							mes "[Taab]";
+							mes "I want to try Meat this time.";
+							mes "Can you please bring me";
+							mes "^4d4dff50 Meat^000000 and ^4d4dff30 Pet Foods^000000?";
+							next;
+							mes "[Taab]";
+							mes "Thank you in advance.";
+							mes "Don't forget the";
+							mes "^4d4dff50 Meat^000000 and ^4d4dff30 Pet Foods^000000";
+							mes "I really hope they'll like the Meat.";
+							close;
+						}
+						else {
+							// Custom Translation
+							set ep13_alba,5;
+							setquest 7046;
+							mes "[Taab]";
+							mes "I would like to place something on the floor of the cage. Something soft, and fur-like should be good. Something to keep the ground dry.";
+							next;
+							mes "[Taab]";
+							mes "Would you collect ^4d4dff30 Fur^000000. This should be very simple, right? I've heard Tatacho and Hillsrion fur is quite durable.";
+							next;
+							mes "[Taab]";
+							mes "Of course, I do not intend to put them into the Hillsrion and Tatacho cage on the ground. I would put them on the ground of the Cornus cage.";
+							next;
+							mes "[Taab]";
+							mes "The Cornus seem to like a warmer climate, and the climate is very unusual here... so it hasn't been very easy for them here.";
+							next;
+							mes "[Taab]";
+							mes "Thank you in advance.";
+							mes "Don't forget the";
+							mes "^4d4dff30 Fur^000000.";
+							close;
+						}
+					}
+					else {
+						mes "[Taab]";
+						mes "I'm sorry, but I don't need any assistance right now.";
+						mes "I'll make an official anouncement if I need help.";
+						mes "Please come back then.";
+						close;
+					}
+				}
+			case 3:
+				mes "[Taab]";
+				mes "Please stay far away from the cages.";
+				mes "Sometimes, the creatures try to escape their cages.";
+				close;
+			}
+		}
+		else if (ep13_alba == 1) {
+			if (countitem(579) > 49) {
+				mes "[Taab]";
+				mes "Oh, thanks!";
+				mes "You brought them their food!";
+				mes "Just in time too: they look";
+				mes "like they're ready to chow down.";
+				mes "The Tatachoes will love these.";
+				next;
+				mes "[Taab]";
+				mes "I really want to give you";
+				mes "something in return...";
+				mes "But I have nothing";
+				mes "material to give you.";
+				mes "How about a spiritual reward?";
+				next;
+				mes "^4d4dff You have received 80,000 EXP";
+				mes "and 30000 JEXP.^000000.";
+				delitem 579,50; //Delicious_Fish
+				set ep13_alba,6;
+				getexp 80000,30000;
+				erasequest 7042;
+				setquest 7047;
+				close;
+			}
+			else {
+				mes "[Taab]";
+				mes "Please bring me 50 Fresh Fish for Tatachoes.";
+				mes "You should hurry up because they get impatient when they're hungry.";
+				close;
+			}
+		}
+		else if (ep13_alba == 2) {
+			if ((countitem(7198) > 29) && (countitem(7188) > 29)) {
+				mes "[Taab]";
+				mes "Oh, thanks!";
+				mes "You brought them their food!";
+				mes "Just in time too: they look";
+				mes "like they're ready to chow down.";
+				mes "The Cornus will love these.";
+				next;
+				mes "[Taab]";
+				mes "I really want to give you";
+				mes "something in return...";
+				mes "But I have nothing";
+				mes "material to give you.";
+				mes "How about a spiritual reward?";
+				next;
+				mes "^4d4dff You have received 90,000 EXP";
+				mes "and 40000 JEXP.^000000.";
+				delitem 7198,30; //Great_Leaf
+				delitem 7188,30; //Browny_Root
+				set ep13_alba,6;
+				getexp 90000,40000;
+				erasequest 7043;
+				setquest 7047;
+				close;
+			}
+			else {
+				mes "[Taab]";
+				mes "Don't forget the 30 Great";
+				mes "Leaves and 30 Brown Roots.";
+				mes "I need to stock as much";
+				mes "of them as possible";
+				mes "because the Cornuses";
+				mes "get hungry quite often.";
+				close;
+			}
+		}
+		else if (ep13_alba == 3) {
+			if ((countitem(528) > 19) && (countitem(537) > 29)) {
+				mes "[Taab]";
+				mes "Oh, thanks!";
+				mes "You brought them their";
+				mes "food! Just in time too,";
+				mes "they look like they're";
+				mes "ready to chow down.";
+				mes "The Hillsrions will love these.";
+				next;
+				mes "[Taab]";
+				mes "I really want to give you";
+				mes "something in return...";
+				mes "But I have nothing";
+				mes "material to give you.";
+				mes "How about a spiritual reward?";
+				next;
+				mes "^4d4dff You have received 80,000 EXP";
+				mes "and 30000 JEXP.^000000.";
+				delitem 528,20; //Monster's_Feed
+				delitem 537,30; //Pet_Food
+				set ep13_alba,6;
+				getexp 80000,30000;
+				erasequest 7044;
+				setquest 7047;
+				close;
+			}
+			else {
+				mes "[Taab]";
+				mes "Don't forget the";
+				mes "20 Monster's Feeds";
+				mes "and 30 Pet Foods.";
+				mes "They're for the Hillsrions.";
+				close;
+			}
+		}
+		else if (ep13_alba == 4) {
+			if ((countitem(517) > 49) && (countitem(537) > 29)) {
+				mes "Oh, thanks!";
+				mes "You brought them their";
+				mes "food! Just in time too,";
+				mes "they look like they're";
+				mes "ready to chow down.";
+				mes "The Hillsrions will love these.";
+				next;
+				mes "[Taab]";
+				mes "I really want to give you";
+				mes "something in return...";
+				mes "But I have nothing";
+				mes "material to give you.";
+				mes "How about a spiritual reward?";
+				next;
+				mes "^4d4dff You have received 80,000 EXP";
+				mes "and 30000 JEXP.^000000.";
+				delitem 517,50; //Meat
+				delitem 537,30; //Pet_Food
+				set ep13_alba,6;
+				getexp 80000,30000;
+				erasequest 7045;
+				setquest 7047;
+				close;
+			}
+			else {
+				mes "[Taab]";
+				mes "Don't forget the";
+				mes "50 Meat and";
+				mes "30 Pet Foods.";
+				mes "They're for the Hillsrions.";
+				close;
+			}
+		}
+		else if (ep13_alba == 5) {
+			if (countitem(6020) > 29) {
+				mes "[Taab]";
+				mes "Oh, thanks!";
+				mes "You brought me the Furs!";
+				mes "Just in time too!";
+				next;
+				mes "[Taab]";
+				mes "I really want to give you";
+				mes "something in return...";
+				mes "But I have nothing";
+				mes "material to give you.";
+				mes "How about a spiritual reward?";
+				next;
+				mes "^4d4dff You have received 80,000 EXP";
+				mes "and 30000 JEXP.^000000.";
+				delitem 6020,30; //Fur
+				set ep13_alba,6;
+				getexp 80000,30000;
+				erasequest 7046;
+				setquest 7047;
+				close;
+			}
+			else {
+				mes "[Taab]";
+				mes "Don't forget the";
+				mes "30 Furs. They're for the Cornus' cage.";
+				close;
+			}
+		}
+		else if (ep13_alba == 6) {
+			set .@alba_check,checkquest(7047,PLAYTIME);
+			if (.@alba_check == -1) {
+				mes "[Taab]";
+				mes "Thank you for";
+				mes "helping me last time.";
+				mes "We have a constant";
+				mes "flow of part-time work.";
+				mes "I hope you'll come by";
+				mes "to help me again.";
+				erasequest 7047;
+				set ep13_alba,0;
+				close;
+			}
+			else if ((.@alba_check == 0) || (.@alba_check == 1)) {
+				mes "[Taab]";
+				mes "I've got enough feed";
+				mes "and supplies to last a while.";
+				mes "Thank you for your";
+				mes "help last time.";
+				next;
+				mes "[Taab]";
+				mes "I don't think I need";
+				mes "any assistance for now...";
+				mes "" + strcharinfo(0) + ",";
+				mes "why don't you go rest?";
+				close;
+			}
+			else if (.@alba_check == 2) {
+				mes "[Taab]";
+				mes "Thank you for";
+				mes "helping me last time.";
+				mes "We have a constant";
+				mes "flow of part-time work.";
+				mes "I hope you'll come by";
+				mes "to help me again.";
+				erasequest 7047;
+				set ep13_alba,0;
+				close;
+			}
+		}
+	}
+	else {
+		mes "[Taab]";
+		mes "Please step aside! It's dangerous";
+		mes "to get too close to those";
+		mes "creatures. You don't look like a";
+		mes "member of the expedition.";
+		mes "I guess you're not allowed";
+		mes "to be here. Please leave.";
+		close;
+	}
+}
+
+mid_camp,152,316,3	script	Hillsrion#alba01	1989,3,3,{
+OnEnable:
+	enablenpc "Hillsrion#alba01";
+	end;
+
+OnDisable:
+	disablenpc "Hillsrion#alba01";
+	end;
+
+//OnTouch2:
+OnTouch:
+	mes "It is hissing in a low voice.";
+	mes "Sometimes it purrs, too.";
+	mes "It must be in a happy mood.";
+	close;
+}
+
+mid_camp,145,313,5	script	Tatacho#alba02	1986,3,3,{
+OnEnable:
+	enablenpc "Tatacho#alba02";
+	end;
+
+OnDisable:
+	disablenpc "Tatacho#alba02";
+	end;
+
+//OnTouch2:
+OnTouch:
+	mes "[Taab]";
+	mes "Oh, please don't disturb";
+	mes "it's sleep. It hates that.";
+	mes "By the way, doesn't it";
+	mes "remind you of somehing?";
+	mes "I mean, like maybe";
+	mes "a vagrant or a hobo?";
+	close;
+}
+
+mid_camp,162,306,3	script	Cornus#alba03	1992,5,5,{
+OnEnable:
+	enablenpc "Cornus#alba03";
+	end;
+
+OnDisable:
+	disablenpc "Cornus#alba03";
+	end;
+
+//OnTouch2:
+OnTouch:
+	mes "[Taab]";
+	mes "Oh, please don't get";
+	mes "too close to it or try to";
+	mes "feed something strange.";
+	mes "It's pretty sensitive...";
+	close;
+}
+
+mid_camp,1,2,0	script	#monster_master	844,{
+OnEnable:
+	if (rand(1,3) > 1) {
+		initnpctimer;
+	}
+	end;
+
+Onstop:
+	killmonster "mid_camp","#monster_master::OnMyMobDead";
+	stopnpctimer;
+	end;
+
+OnTimer3600000:
+	set .@monster,rand(1,3);
+	if (.@monster == 1) {
+		monster "mid_camp",149,291,"Escaped Tatacho",1986,1,"#monster_master::OnMyMobDead";
+		mapannounce "mid_camp", "Breeder Taab: Argh! My Tatacho ran away!",bc_map,"0x00ff00";
+		donpcevent "Tatacho#alba02::OnDisable";
+	}
+	else if (.@monster == 2) {
+		monster "mid_camp",154,273,"Escaped Hillsrion",1989,1,"#monster_master::OnMyMobDead";
+		mapannounce "mid_camp", "Breeder Taab: Argh! My Hillsrion ran away!",bc_map,"0x00ff00";
+		donpcevent "Hillsrion#alba01::OnDisable";
+	}
+	else {
+		monster "mid_camp",184,246,"Escaped Cornus",1992,1,"#monster_master::OnMyMobDead";
+		mapannounce "mid_camp", "Breeder Taab: Argh! My Cornus ran away!",bc_map,"0x00ff00";
+		donpcevent "Cornus#alba03::OnDisable";
+	}
+	end;
+
+OnTimer3960000:
+	killmonster "mid_camp","#monster_master::OnMyMobDead";
+	mapannounce "mid_camp", "Breeder Taab: I've captured an escaped creature safely. Sorry for yelling so loud.",bc_map,"0x00ff00";
+	donpcevent "Hillsrion#alba01::OnEnable";
+	donpcevent "Tatacho#alba02::OnEnable";
+	donpcevent "Cornus#alba03::OnEnable";
+	stopnpctimer;
+	end;
+
+OnMyMobDead:
+	mapannounce "mid_camp", "Breeder Taab: I've captured an escaped creature safely. Sorry for yelling so loud.",bc_map,"0x00ff00";
+	donpcevent "Hillsrion#alba01::OnEnable";
+	donpcevent "Tatacho#alba02::OnEnable";
+	donpcevent "Cornus#alba03::OnEnable";
+	killmonster "mid_camp","#monster_master::OnMyMobDead";
+	stopnpctimer;
+	end;
+}
+
 // Cat Hand Trading Post
 //============================================================ 
 mid_camp,62,125,4	script	Cat Hand Agent	421,{
@@ -9565,7 +10159,6 @@ mid_camp,66,122,55	script	Henry Clifford	712,{
 	}
 }
 
-//----------------- ²É¿ó -----------------------
 mid_camp,88,100,55	script	Cat Hand Mining Agent	876,{
 	if (checkquest(12062,PLAYTIME) == -1) {
 		if ((countitem(6048) > 2) && (ep13_yong1 > 9)) {

@@ -1,6 +1,8 @@
 Date		Added
 ======
 2009/11/02
+	* Rev. 14118 Implemented "Part-Time Work", another 13.1 quest and related NPCs. [L0ne_W0lf]
+2009/11/02
 	* Rev. 14112 Fixed halloween_2009 bug, fixed overlapped/wrong event mobs IDs [Lupus]
 2009/10/02
 	* Rev. 14080 Added Ravies sisters, people can now turn in the "Valkyrie Gift" items. [L0ne_W0lf]
