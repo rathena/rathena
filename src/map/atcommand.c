@@ -1489,7 +1489,7 @@ int atcommand_kami(const int fd, struct map_session_data* sd, const char* comman
 		}
 
 		sscanf(message, "%199[^\n]", atcmd_output);
-		intif_GMmessage(atcmd_output, strlen(atcmd_output) + 1, (*(command + 5) == 'b' || *(command + 5) == 'B') ? 0x10 : 0);
+		intif_broadcast(atcmd_output, strlen(atcmd_output) + 1, (*(command + 5) == 'b' || *(command + 5) == 'B') ? 0x10 : 0);
 	
 	} else {
 	
@@ -1503,7 +1503,7 @@ int atcommand_kami(const int fd, struct map_session_data* sd, const char* comman
 			return -1;
 		}
 	
-		intif_announce(atcmd_output, strlen(atcmd_output) + 1, color, 0);
+		intif_broadcast2(atcmd_output, strlen(atcmd_output) + 1, color, 0x190, 12, 0, 0);
 	}
 	return 0;
 }
@@ -5294,7 +5294,7 @@ int atcommand_broadcast(const int fd, struct map_session_data* sd, const char* c
 	}
 
 	sprintf(atcmd_output, "%s: %s", sd->status.name, message);
-	intif_GMmessage(atcmd_output, strlen(atcmd_output) + 1, 0);
+	intif_broadcast(atcmd_output, strlen(atcmd_output) + 1, 0);
 
 	return 0;
 }
@@ -5315,7 +5315,7 @@ int atcommand_localbroadcast(const int fd, struct map_session_data* sd, const ch
 
 	sprintf(atcmd_output, "%s: %s", sd->status.name, message);
 
-	clif_GMmessage(&sd->bl, atcmd_output, strlen(atcmd_output) + 1, 1); // 1: ALL_SAMEMAP
+	clif_broadcast(&sd->bl, atcmd_output, strlen(atcmd_output) + 1, 0, ALL_SAMEMAP);
 
 	return 0;
 }
@@ -6855,7 +6855,7 @@ int atcommand_gmotd(const int fd, struct map_session_data* sd, const char* comma
 						break;
 					}
 				}
-				intif_GMmessage(buf,strlen(buf)+1,8);
+				intif_broadcast(buf, strlen(buf)+1, 0);
 			}
 			fclose(fp);
 		}
@@ -8087,7 +8087,7 @@ int atcommand_main(const int fd, struct map_session_data* sd, const char* comman
 			// I use 0xFE000000 color for signalizing that this message is
 			// main chat message. 0xFE000000 is invalid color, same using
 			// 0xFF000000 for simple (not colored) GM messages. [LuzZza]
-			intif_announce(atcmd_output, strlen(atcmd_output) + 1, 0xFE000000, 0);
+			intif_broadcast2(atcmd_output, strlen(atcmd_output) + 1, 0xFE000000, 0, 0, 0, 0);
 
 			// Chat logging type 'M' / Main Chat
 			if( log_config.chat&1 || (log_config.chat&32 && !((agit_flag || agit2_flag) && log_config.chat&64)) )

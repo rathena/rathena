@@ -176,6 +176,7 @@ bc_pc	0
 bc_npc	8
 bc_yellow	0
 bc_blue	16
+bc_woe	32
 
 mf_nomemo	0
 mf_noteleport	1

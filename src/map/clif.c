@@ -4739,27 +4739,25 @@ int clif_displaymessage(const int fd, const char* mes)
 
 /*==========================================
  * ìVÇÃê∫ÇëóêMÇ∑ÇÈ
+ * Send broadcast message in yellow or blue (without font formatting).
+ * S 009A <len>.W <message>.?B
  *------------------------------------------*/
-int clif_GMmessage(struct block_list* bl, const char* mes, int len, int flag)
+int clif_broadcast(struct block_list* bl, const char* mes, int len, int type, enum send_target target)
 {
-	unsigned char *buf;
-	int lp;
-
-	lp = (flag & 0x10) ? 8 : 4;
-	buf = (unsigned char*)aMallocA((len + lp + 8)*sizeof(unsigned char));
+	int            lp  = type ? 4 : 0;
+	unsigned char *buf = (unsigned char*)aMallocA((4 + lp + len)*sizeof(unsigned char));
 
 	WBUFW(buf,0) = 0x9a;
-	WBUFW(buf,2) = len + lp;
-	WBUFL(buf,4) = 0x65756c62; //"blue":
-	memcpy(WBUFP(buf,lp), mes, len);
-	flag &= 0x07;
-	clif_send(buf, WBUFW(buf,2), bl,
-	          (flag == 1) ? ALL_SAMEMAP :
-	          (flag == 2) ? AREA :
-	          (flag == 3) ? SELF :
-	          ALL_CLIENT);
-	if(buf) aFree(buf);
-
+	WBUFW(buf,2) = 4 + lp + len;
+	if (type == 0x10) // bc_blue
+		WBUFL(buf,4) = 0x65756c62; //If there's "blue" at the beginning of the message, game client will display it in blue instead of yellow.
+	else if (type == 0x20) // bc_woe
+		WBUFL(buf,4) = 0x73737373; //If there's "ssss", game client will recognize message as 'WoE broadcast'.
+	memcpy(WBUFP(buf, 4 + lp), mes, len);
+	clif_send(buf, WBUFW(buf,2), bl, target);
+	
+	if (buf)
+		aFree(buf);
 	return 0;
 }
 
@@ -4809,33 +4807,30 @@ void clif_MainChatMessage(const char* message)
 }
 
 /*==========================================
- * Does an announce message in the given color. 
+ * Send broadcast message with font formatting.
+ * S 01C3 <len>.W <fontColor>.L <fontType>.W <fontSize>.W <fontAlign>.W <fontY>.W <message>.?B
+ * S 040C <len>.W <fontColor>.L <fontType>.W <fontSize>.W <fontAlign>.W <fontY>.W <message>.?B
  *------------------------------------------*/
-int clif_announce(struct block_list* bl, const char* mes, int len, unsigned long color, int flag)
+int clif_broadcast2(struct block_list* bl, const char* mes, int len, unsigned long fontColor, short fontType, short fontSize, short fontAlign, short fontY, enum send_target target)
 {
-	return clif_announce_ex(bl, mes, len, color, flag, 12);
-}
+	unsigned char *buf = (unsigned char*)aMallocA((16 + len)*sizeof(unsigned char));
 
-int clif_announce_ex(struct block_list* bl, const char* mes, int len, unsigned long color, int flag, int size)
-{
-	unsigned char *buf;
-	buf = (unsigned char*)aMallocA((len + 16)*sizeof(unsigned char));
-	WBUFW(buf,0) = 0x1c3;
-	WBUFW(buf,2) = len + 16;
-	WBUFL(buf,4) = color;
-	WBUFW(buf,8) = 0x190; //Font style? Type?
-	WBUFW(buf,10) = size;  // Font size
-	WBUFL(buf,12) = 0;	//Unknown!
+#if PACKETVER < 20080820
+	WBUFW(buf,0)  = 0x1c3;
+#else
+	WBUFW(buf,0)  = 0x40c;
+#endif
+	WBUFW(buf,2)  = len + 16;
+	WBUFL(buf,4)  = fontColor;
+	WBUFW(buf,8)  = fontType;
+	WBUFW(buf,10) = fontSize;
+	WBUFW(buf,12) = fontAlign;
+	WBUFW(buf,14) = fontY;
 	memcpy(WBUFP(buf,16), mes, len);
-	
-	flag &= 0x07;
-	clif_send(buf, WBUFW(buf,2), bl,
-	          (flag == 1) ? ALL_SAMEMAP :
-	          (flag == 2) ? AREA :
-	          (flag == 3) ? SELF :
-	          ALL_CLIENT);
+	clif_send(buf, WBUFW(buf,2), bl, target);
 
-	if(buf) aFree(buf);
+	if (buf)
+		aFree(buf);
 	return 0;
 }
 /*==========================================
@@ -8273,7 +8268,7 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 		{
 			char output[128];
 			sprintf(output, "[ Kill Steal Protection Disable. KS is allowed in this map ]");
-			clif_announce(&sd->bl, output, strlen(output) + 1, 0x00CC66, 3);
+			clif_broadcast(&sd->bl, output, strlen(output) + 1, 0x10, SELF);
 		}
 
 		map_iwall_get(sd); // Updates Walls Info on this Map to Client
@@ -8879,7 +8874,7 @@ void clif_parse_WisMessage(int fd, struct map_session_data* sd)
 		else {
 			char output[256];
 			snprintf(output, ARRAYLENGTH(output), msg_txt(386), sd->status.name, message);
-			intif_announce(output, strlen(output) + 1, 0xFE000000, 0);
+			intif_broadcast2(output, strlen(output) + 1, 0xFE000000, 0, 0, 0, 0);
 		}
 
 		// Chat logging type 'M' / Main Chat
@@ -8954,7 +8949,7 @@ void clif_parse_WisMessage(int fd, struct map_session_data* sd)
  * /b /nb
  * S 0099 <packet len>.w <text>.?B 00
  *------------------------------------------*/
-void clif_parse_GMmessage(int fd, struct map_session_data* sd)
+void clif_parse_Broadcast(int fd, struct map_session_data* sd)
 {
 	char* msg = (char*)RFIFOP(fd,4);
 	unsigned int len = RFIFOW(fd,2)-4;
@@ -8968,7 +8963,7 @@ void clif_parse_GMmessage(int fd, struct map_session_data* sd)
 	// as the length varies depending on the command used, just block unreasonably long strings
 	mes_len_check(msg, len, CHAT_SIZE_MAX);
 
-	intif_GMmessage(msg, len, 0);
+	intif_broadcast(msg, len, 0);
 
 	if(log_config.gm && lv >= log_config.gm) {
 		char logmsg[CHAT_SIZE_MAX+4];
@@ -10036,7 +10031,7 @@ void clif_parse_ResetChar(int fd, struct map_session_data *sd)
  * /lb /nlb
  * S 019c <packet len>.w <text>.?B 00
  *------------------------------------------*/
-void clif_parse_LGMmessage(int fd, struct map_session_data* sd)
+void clif_parse_LocalBroadcast(int fd, struct map_session_data* sd)
 {
 	char* msg = (char*)RFIFOP(fd,4);
 	unsigned int len = RFIFOW(fd,2)-4;
@@ -10051,7 +10046,7 @@ void clif_parse_LGMmessage(int fd, struct map_session_data* sd)
 	// as the length varies depending on the command used, just block unreasonably long strings
 	mes_len_check(msg, len, CHAT_SIZE_MAX);
 
-	clif_GMmessage(&sd->bl, msg, len, 1);
+	clif_broadcast(&sd->bl, msg, len, 0, ALL_SAMEMAP);
 
 	if( log_config.gm && lv >= log_config.gm ) {
 		char logmsg[CHAT_SIZE_MAX+5];
@@ -13641,7 +13636,7 @@ static int packetdb_readdb(void)
 		{clif_parse_ActionRequest,"actionrequest"},
 		{clif_parse_Restart,"restart"},
 		{clif_parse_WisMessage,"wis"},
-		{clif_parse_GMmessage,"gmmessage"},
+		{clif_parse_Broadcast,"broadcast"},
 		{clif_parse_TakeItem,"takeitem"},
 		{clif_parse_DropItem,"dropitem"},
 		{clif_parse_UseItem,"useitem"},
@@ -13691,7 +13686,7 @@ static int packetdb_readdb(void)
 		{clif_parse_WeaponRefine,"weaponrefine"},
 		{clif_parse_SolveCharName,"solvecharname"},
 		{clif_parse_ResetChar,"resetchar"},
-		{clif_parse_LGMmessage,"lgmmessage"},
+		{clif_parse_LocalBroadcast,"localbroadcast"},
 		{clif_parse_MoveToKafra,"movetokafra"},
 		{clif_parse_MoveFromKafra,"movefromkafra"},
 		{clif_parse_MoveToKafraFromCart,"movetokafrafromcart"},

@@ -3878,7 +3878,7 @@ int pc_steal_item(struct map_session_data *sd,struct block_list *bl, int lv)
 		i_data = itemdb_search(itemid);
 		sprintf (message, msg_txt(542), (sd->status.name != NULL)?sd->status.name :"GM", md->db->jname, i_data->jname, (float)md->db->dropitem[i].p/100);
 		//MSG: "'%s' stole %s's %s (chance: %0.02f%%)"
-		intif_GMmessage(message,strlen(message)+1,0);
+		intif_broadcast(message,strlen(message)+1,0);
 	}
 	return 1;
 }
@@ -7496,7 +7496,7 @@ int map_day_timer(int tid, unsigned int tick, int id, intptr data)
 	night_flag = 0; // 0=day, 1=night [Yor]
 	map_foreachpc(pc_daynight_timer_sub);
 	strcpy(tmp_soutput, (data == 0) ? msg_txt(502) : msg_txt(60)); // The day has arrived!
-	intif_GMmessage(tmp_soutput, strlen(tmp_soutput) + 1, 0);
+	intif_broadcast(tmp_soutput, strlen(tmp_soutput) + 1, 0);
 	return 0;
 }
 
@@ -7517,7 +7517,7 @@ int map_night_timer(int tid, unsigned int tick, int id, intptr data)
 	night_flag = 1; // 0=day, 1=night [Yor]
 	map_foreachpc(pc_daynight_timer_sub);
 	strcpy(tmp_soutput, (data == 0) ? msg_txt(503) : msg_txt(59)); // The night has fallen...
-	intif_GMmessage(tmp_soutput, strlen(tmp_soutput) + 1, 0);
+	intif_broadcast(tmp_soutput, strlen(tmp_soutput) + 1, 0);
 	return 0;
 }
 
@@ -7630,7 +7630,7 @@ int duel_invite(const unsigned int did, struct map_session_data* sd, struct map_
 	
 	// "Blue -- Player %s invites you to PVP duel (@accept/@reject) --"
 	sprintf(output, msg_txt(374), sd->status.name);
-	clif_GMmessage((struct block_list *)target_sd, output, strlen(output)+1, 3);
+	clif_broadcast((struct block_list *)target_sd, output, strlen(output)+1, 0x10, SELF);
 	return 0;
 }
 

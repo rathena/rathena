@@ -336,17 +336,23 @@ int inter_mapif_init(int fd)
 
 //--------------------------------------------------------
 
-// GM message sending
-int mapif_GMmessage(unsigned char *mes, int len, unsigned long color, int sfd)
+// broadcast sending
+int mapif_broadcast(unsigned char *mes, int len, unsigned long fontColor, short fontType, short fontSize, short fontAlign, short fontY, int sfd)
 {
-	unsigned char buf[2048];
+	unsigned char *buf = (unsigned char*)aMallocA((len)*sizeof(unsigned char));
 
-	if (len > 2048) len = 2047; //Make it fit to avoid crashes. [Skotlex]
 	WBUFW(buf,0) = 0x3800;
 	WBUFW(buf,2) = len;
-	WBUFL(buf,4) = color;
-	memcpy(WBUFP(buf,8), mes, len - 8);
+	WBUFL(buf,4) = fontColor;
+	WBUFW(buf,8) = fontType;
+	WBUFW(buf,10) = fontSize;
+	WBUFW(buf,12) = fontAlign;
+	WBUFW(buf,14) = fontY;
+	memcpy(WBUFP(buf,16), mes, len - 16);
 	mapif_sendallwos(sfd, buf, len);
+
+	if (buf)
+		aFree(buf);
 	return 0;
 }
 
@@ -465,10 +471,10 @@ int check_ttl_wisdata(void)
 
 //--------------------------------------------------------
 
-// GM message sending
-int mapif_parse_GMmessage(int fd)
+// broadcast sending
+int mapif_parse_broadcast(int fd)
 {
-	mapif_GMmessage(RFIFOP(fd,8), RFIFOW(fd,2), RFIFOL(fd,4), fd);
+	mapif_broadcast(RFIFOP(fd,16), RFIFOW(fd,2), RFIFOL(fd,4), RFIFOW(fd,8), RFIFOW(fd,10), RFIFOW(fd,12), RFIFOW(fd,14), fd);
 	return 0;
 }
 
@@ -709,7 +715,7 @@ int inter_parse_frommap(int fd)
 		return 2;
 
 	switch(cmd) {
-	case 0x3000: mapif_parse_GMmessage(fd); break;
+	case 0x3000: mapif_parse_broadcast(fd); break;
 	case 0x3001: mapif_parse_WisRequest(fd); break;
 	case 0x3002: mapif_parse_WisReply(fd); break;
 	case 0x3003: mapif_parse_WisToGM(fd); break;

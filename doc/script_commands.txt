@@ -5334,62 +5334,78 @@ Examples:
 5,1.- End of time-related commands
 //
 
-*announce "<text>",<flag>{,<color>};
+*announce "<text>",<flag>{,<fontColor>{,<fontType>{,<fontSize>{,<fontAlign>{,<fontY>}}}}}};
 
 This command will broadcast a message to all or most players, similar to 
 @kami/@kamib GM commands.
 
-The region the broadcast is heard in and the color the message will come up as 
-will be determined by the flags:
-
     announce "This will be shown to everyone at all in yellow.",0;
 
-The flag values are coded as constants in db/const.txt to make them easier to use:
-- bc_all: Broadcast message is sent server-wide
-- bc_map: Message is sent to everyone in the same map
+The region the broadcast is heard in (target), source of the broadcast
+and the color the message will come up as is determined by the flags.
+
+The flag values are coded as constants in db/const.txt to make them easier to use.
+
+Target flags:
+- bc_all: Broadcast message is sent server-wide (default).
+- bc_map: Message is sent to everyone in the same map as the source of the broadcast (see below).
 - bc_area: Message is sent to players in the vecinity of the source.
 - bc_self: Message is sent only to current player.
+You cannot use more than one target flag.
 
-- bc_npc: Broadcast source is the npc, not the player attached to the script
+Source flags:
+- bc_pc: Broadcast source is the attached player (default).
+- bc_npc: Broadcast source is the NPC, not the player attached to the script
   (useful when a player is not attached or the message should be sent to those
-  nearby the npc)
+  nearby the npc).
+You cannot use more than one source flag.
 
-- bc_yellow: The default is to send broadcasts in yellow color.
-- bc_blue: Alternate broadcast is displayed in blue color.
+Special flags:
+- bc_yellow: Broadcast will be displayed in yellow color (default).
+- bc_blue: Broadcast will be displayed in blue color.
+- bc_woe: Indicates that this broadcast is 'WoE Information' that can be disabled client-side.
+Due to the way client handles broadcasts, it is impossible to set both bc_blue and bc_woe.
 
-The optional parameter, color, allows usage of broadcasts in any custom color.
+The optional parameters allow usage of broadcasts in custom colors, font-weights, sizes etc.
+If any of the optional parameters is used, special flag is ignored.
+Optional parameters may not work well (or at all) depending on a game client used.
+
 The color parameter is a single number which can be in hexadecimal notation.
 For example:
-    announce "This will be shown to everyone at all in yellow.",bc_all,0xFFFF00;
-Will display a global announce in yellow. The color format is in RGB (0xRRGGBB).
+    announce "This will be shown to everyone at all in green.",bc_all,0x00FF00;
+Will display a global announce in green. The color format is in RGB (0xRRGGBB).
+
+In official scripts only two font-weights (types) are used:
+ - normal (FW_NORMAL = 400, default),
+ - bold (FW_BOLD = 700).
+
+Default font size is 12.
 
 Using this for private messages to players is probably not that good an idea,
 but it can be used instead in NPCs to "preview" an announce.
 
     // This will be a private message to the player using the NPC that made the 
-    // annonucement
+    // announcement
     announce "This is my message just for you",bc_blue|bc_self;
 
     // This will be shown on everyones screen that is in sight of the NPC.
-    announce "This is my message just for you people here",bc_area;
+    announce "This is my message just for you people here",bc_npc|bc_area;
 
 ---------------------------------------
 
-*mapannounce "<map name>","<text>",<flag>{,<color>};
+*mapannounce "<map name>","<text>",<flag>{,<fontColor>{,<fontType>{,<fontSize>{,<fontAlign>{,<fontY>}}}}}};
 
 This command will work like 'announce' but will only broadcast to characters 
-currently residing on the specified map. The flag and optional color
-parameters are the same as in 'announce', even though the only ones that make
-sense are the color related ones.
+currently residing on the specified map. The flag and optional paramaters
+parameters are the same as in 'announce', but target and source flags are ignored.
 
 ---------------------------------------
 
-*areaannounce "<map name>",<x1>,<y1>,<x2>,<y2>,"<text>",<flag>[,<color>];
+*areaannounce "<map name>",<x1>,<y1>,<x2>,<y2>,"<text>",<flag>{,<fontColor>{,<fontType>{,<fontSize>{,<fontAlign>{,<fontY>}}}}}};
 
 This command works like 'announce' but will only broadcast to characters 
-residing in the specified x1/y1-x2/y2 square on the map given. The flags and
-color parameter given are the same as in 'announce', but only the color
-related ones have effect.
+residing in the specified x1/y1-x2/y2 rectangle on the map given. The flags and
+optional parameters are the same as in 'announce', but target and source flags are ignored.
 
     areaannounce "prt_church",0,0,350,350,"God's in his heaven, all right with the world",0;
 

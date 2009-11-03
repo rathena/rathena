@@ -2220,7 +2220,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 				i_data = itemdb_search(ditem->item_data.nameid);
 				sprintf (message, msg_txt(541), (mvp_sd?mvp_sd->status.name:"???"), md->name, i_data->jname, (float)drop_rate/100);
 				//MSG: "'%s' won %s's %s (chance: %0.02f%%)"
-				intif_GMmessage(message,strlen(message)+1,0);
+				intif_broadcast(message,strlen(message)+1,0);
 			}
 			// Announce first, or else ditem will be freed. [Lance]
 			// By popular demand, use base drop rate for autoloot code. [Skotlex]
@@ -2346,7 +2346,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 				i_data = itemdb_exists(item.nameid);
 				sprintf (message, msg_txt(541), mvp_sd->status.name, md->name, i_data->jname, temp/100.);
 				//MSG: "'%s' won %s's %s (chance: %0.02f%%)"
-				intif_GMmessage(message,strlen(message)+1,0);
+				intif_broadcast(message,strlen(message)+1,0);
 			}
 
 			if((temp = pc_additem(mvp_sd,&item,1)) != 0) {

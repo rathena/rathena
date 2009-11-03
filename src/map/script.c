@@ -8091,63 +8091,77 @@ BUILDIN_FUNC(playerattached)
  *------------------------------------------*/
 BUILDIN_FUNC(announce)
 {
-	const char *str, *color=NULL;
-	int flag;
-	str=script_getstr(st,2);
-	flag=script_getnum(st,3);
-	if (script_hasdata(st,4))
-		color=script_getstr(st,4);
-
-	if(flag&0x0f){
-		struct block_list *bl=(flag&0x08)? map_id2bl(st->oid) :
-			(struct block_list *)script_rid2sd(st);
-		if( bl == NULL )
+	const char *mes       = script_getstr(st,2);
+	int         flag      = script_getnum(st,3);
+	const char *fontColor = script_hasdata(st,4) ? script_getstr(st,4) : NULL;
+	int         fontType  = script_hasdata(st,5) ? script_getnum(st,5) : 0x190; // default fontType (FW_NORMAL)
+	int         fontSize  = script_hasdata(st,6) ? script_getnum(st,6) : 12;    // default fontSize
+	int         fontAlign = script_hasdata(st,7) ? script_getnum(st,7) : 0;     // default fontAlign
+	int         fontY     = script_hasdata(st,8) ? script_getnum(st,8) : 0;     // default fontY
+	
+	if (flag&0x0f) // Broadcast source or broadcast region defined
+	{
+		send_target target;
+		struct block_list *bl = (flag&0x08) ? map_id2bl(st->oid) : (struct block_list *)script_rid2sd(st); // If bc_npc flag is set, use NPC as broadcast source
+		if (bl == NULL)
 			return 0;
-		if (color)
-			clif_announce(bl,str,(int)strlen(str)+1, strtol(color, (char **)NULL, 0),flag);
+		
+		flag &= 0x07;
+		target = (flag == 1) ? ALL_SAMEMAP :
+		         (flag == 2) ? AREA :
+		         (flag == 3) ? SELF :
+		                       ALL_CLIENT;
+		if (fontColor)
+			clif_broadcast2(bl, mes, (int)strlen(mes)+1, strtol(fontColor, (char **)NULL, 0), fontType, fontSize, fontAlign, fontY, target);
 		else
-			clif_GMmessage(bl,str,(int)strlen(str)+1,flag);
-	}else {
-		if (color)
-			intif_announce(str,(int)strlen(str)+1, strtol(color, (char **)NULL, 0), flag);
+			clif_broadcast(bl, mes, (int)strlen(mes)+1, flag&0xf0, target);
+	}
+	else
+	{
+		if (fontColor)
+			intif_broadcast2(mes, (int)strlen(mes)+1, strtol(fontColor, (char **)NULL, 0), fontType, fontSize, fontAlign, fontY);
 		else
-			intif_GMmessage(str,(int)strlen(str)+1,flag);
+			intif_broadcast(mes, (int)strlen(mes)+1, flag&0xf0);
 	}
 	return 0;
 }
 /*==========================================
  * 天の声アナウンス（特定マップ）
  *------------------------------------------*/
-static int buildin_mapannounce_sub(struct block_list *bl,va_list ap)
+static int buildin_announce_sub(struct block_list *bl, va_list ap)
 {
-	char *str, *color;
-	int len,flag;
-	str=va_arg(ap,char *);
-	len=va_arg(ap,int);
-	flag=va_arg(ap,int);
-	color=va_arg(ap,char *);
-	if (color)
-		clif_announce(bl,str,len, strtol(color, (char **)NULL, 0), flag|3);
+	char *mes       = va_arg(ap, char *);
+	int   len       = va_arg(ap, int);
+	int   type      = va_arg(ap, int);
+	char *fontColor = va_arg(ap, char *);
+	short fontType  = va_arg(ap, short);
+	short fontSize  = va_arg(ap, short);
+	short fontAlign = va_arg(ap, short);
+	short fontY     = va_arg(ap, short);
+	if (fontColor)
+		clif_broadcast2(bl, mes, len, strtol(fontColor, (char **)NULL, 0), fontType, fontSize, fontAlign, fontY, SELF);
 	else
-		clif_GMmessage(bl,str,len,flag|3);
+		clif_broadcast(bl, mes, len, type, SELF);
 	return 0;
 }
+
 BUILDIN_FUNC(mapannounce)
 {
-	const char *mapname,*str, *color=NULL;
-	int flag,m;
+	const char *mapname   = script_getstr(st,2);
+	const char *mes       = script_getstr(st,3);
+	int         flag      = script_getnum(st,4);
+	const char *fontColor = script_hasdata(st,5) ? script_getstr(st,5) : NULL;
+	int         fontType  = script_hasdata(st,6) ? script_getnum(st,6) : 0x190; // default fontType (FW_NORMAL)
+	int         fontSize  = script_hasdata(st,7) ? script_getnum(st,7) : 12;    // default fontSize
+	int         fontAlign = script_hasdata(st,8) ? script_getnum(st,8) : 0;     // default fontAlign
+	int         fontY     = script_hasdata(st,9) ? script_getnum(st,9) : 0;     // default fontY
+	int m;
 
-	mapname=script_getstr(st,2);
-	str=script_getstr(st,3);
-	flag=script_getnum(st,4);
-	if (script_hasdata(st,5))
-		color=script_getstr(st,5);
-
-	if( (m=map_mapname2mapid(mapname))<0 )
+	if ((m = map_mapname2mapid(mapname)) < 0)
 		return 0;
 
-	map_foreachinmap(buildin_mapannounce_sub,
-		m, BL_PC, str,strlen(str)+1,flag&0x10, color);
+	map_foreachinmap(buildin_announce_sub, m, BL_PC,
+			mes, strlen(mes)+1, flag&0xf0, fontColor, fontType, fontSize, fontAlign, fontY);
 	return 0;
 }
 /*==========================================
@@ -8155,25 +8169,25 @@ BUILDIN_FUNC(mapannounce)
  *------------------------------------------*/
 BUILDIN_FUNC(areaannounce)
 {
-	const char *map,*str,*color=NULL;
-	int flag,m;
-	int x0,y0,x1,y1;
+	const char *mapname   = script_getstr(st,2);
+	int         x0        = script_getnum(st,3);
+	int         y0        = script_getnum(st,4);
+	int         x1        = script_getnum(st,5);
+	int         y1        = script_getnum(st,6);
+	const char *mes       = script_getstr(st,7);
+	int         flag      = script_getnum(st,8);
+	const char *fontColor = script_hasdata(st,9) ? script_getstr(st,9) : NULL;
+	int         fontType  = script_hasdata(st,10) ? script_getnum(st,10) : 0x190; // default fontType (FW_NORMAL)
+	int         fontSize  = script_hasdata(st,11) ? script_getnum(st,11) : 12;    // default fontSize
+	int         fontAlign = script_hasdata(st,12) ? script_getnum(st,12) : 0;     // default fontAlign
+	int         fontY     = script_hasdata(st,13) ? script_getnum(st,13) : 0;     // default fontY
+	int m;
 
-	map=script_getstr(st,2);
-	x0=script_getnum(st,3);
-	y0=script_getnum(st,4);
-	x1=script_getnum(st,5);
-	y1=script_getnum(st,6);
-	str=script_getstr(st,7);
-	flag=script_getnum(st,8);
-	if (script_hasdata(st,9))
-		color=script_getstr(st,9);
-
-	if( (m=map_mapname2mapid(map))<0 )
+	if ((m = map_mapname2mapid(mapname)) < 0)
 		return 0;
 
-	map_foreachinarea(buildin_mapannounce_sub,
-		m,x0,y0,x1,y1,BL_PC, str,strlen(str)+1,flag&0x10, color);
+	map_foreachinarea(buildin_announce_sub, m, x0, y0, x1, y1, BL_PC,
+		mes, strlen(mes)+1, flag&0xf0, fontColor, fontType, fontSize, fontAlign, fontY);
 	return 0;
 }
 
@@ -13894,16 +13908,18 @@ BUILDIN_FUNC(instance_init)
 
 BUILDIN_FUNC(instance_announce)
 {
-	const char *str, *color=NULL;
-	int flag,instance_id,i;
+	int         instance_id = script_getnum(st,2);
+	const char *mes         = script_getstr(st,3);
+	int         flag        = script_getnum(st,4);
+	const char *fontColor   = script_hasdata(st,5) ? script_getstr(st,5) : NULL;
+	int         fontType    = script_hasdata(st,6) ? script_getnum(st,6) : 0x190; // default fontType (FW_NORMAL)
+	int         fontSize    = script_hasdata(st,7) ? script_getnum(st,7) : 12;    // default fontSize
+	int         fontAlign   = script_hasdata(st,8) ? script_getnum(st,8) : 0;     // default fontAlign
+	int         fontY       = script_hasdata(st,9) ? script_getnum(st,9) : 0;     // default fontY
+
+	int i;
 	struct map_session_data *sd;
 	struct party_data *p;
-	
-	instance_id = script_getnum(st,2);
-	str = script_getstr(st,3);
-	flag = script_getnum(st,4);
-	if( script_hasdata(st,5) )
-		color = script_getstr(st,5);
 
 	if( instance_id == 0 )
 	{
@@ -13918,7 +13934,8 @@ BUILDIN_FUNC(instance_announce)
 		return 0;
 		
 	for( i = 0; i < instance[instance_id].num_map; i++ )
-		map_foreachinmap(buildin_mapannounce_sub, instance[instance_id].map[i], BL_PC, str, strlen(str) + 1, flag&0x10, color);
+		map_foreachinmap(buildin_announce_sub, instance[instance_id].map[i], BL_PC,
+			mes, strlen(mes)+1, flag&0xf0, fontColor, fontType, fontSize, fontAlign, fontY);
 
 	return 0;
 }

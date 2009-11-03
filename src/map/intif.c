@@ -135,12 +135,12 @@ int intif_rename(struct map_session_data *sd, int type, char *name)
 }
 
 // GMメッセージを送信
-int intif_GMmessage(const char* mes,int len,int flag)
+int intif_broadcast(const char* mes, int len, int type)
 {
-	int lp = (flag&0x10) ? 8 : 4;
+	int lp = type ? 4 : 0;
 
 	// Send to the local players
-	clif_GMmessage(NULL, mes, len, flag);
+	clif_broadcast(NULL, mes, len, type, ALL_CLIENT);
 
 	if (CheckForCharServer())
 		return 0;
@@ -148,23 +148,30 @@ int intif_GMmessage(const char* mes,int len,int flag)
 	if (other_mapserver_count < 1)
 		return 0; //No need to send.
 
-	WFIFOHEAD(inter_fd,lp + len + 4);
-	WFIFOW(inter_fd,0) = 0x3000;
-	WFIFOW(inter_fd,2) = lp + len + 4;
-	WFIFOL(inter_fd,4) = 0xFF000000; //"invalid" color signals standard broadcast.
-	WFIFOL(inter_fd,8) = 0x65756c62;
-	memcpy(WFIFOP(inter_fd,4+lp), mes, len);
+	WFIFOHEAD(inter_fd, 16 + lp + len);
+	WFIFOW(inter_fd,0)  = 0x3000;
+	WFIFOW(inter_fd,2)  = 16 + lp + len;
+	WFIFOL(inter_fd,4)  = 0xFF000000; // 0xFF000000 color signals standard broadcast
+	WFIFOW(inter_fd,8)  = 0; // fontType not used with standard broadcast
+	WFIFOW(inter_fd,10) = 0; // fontSize not used with standard broadcast
+	WFIFOW(inter_fd,12) = 0; // fontAlign not used with standard broadcast
+	WFIFOW(inter_fd,14) = 0; // fontY not used with standard broadcast
+	if (type == 0x10) // bc_blue
+		WFIFOL(inter_fd,16) = 0x65756c62; //If there's "blue" at the beginning of the message, game client will display it in blue instead of yellow.
+	else if (type == 0x20) // bc_woe
+		WFIFOL(inter_fd,16) = 0x73737373; //If there's "ssss", game client will recognize message as 'WoE broadcast'.
+	memcpy(WFIFOP(inter_fd,16 + lp), mes, len);
 	WFIFOSET(inter_fd, WFIFOW(inter_fd,2));
 	return 0;
 }
 
-int intif_announce(const char* mes,int len, unsigned long color, int flag)
+int intif_broadcast2(const char* mes, int len, unsigned long fontColor, short fontType, short fontSize, short fontAlign, short fontY)
 {
 	// Send to the local players
-	if(color == 0xFE000000) // This is main chat message [LuzZza]
+	if (fontColor == 0xFE000000) // This is main chat message [LuzZza]
 		clif_MainChatMessage(mes);
 	else
-		clif_announce(NULL, mes, len, color, flag);
+		clif_broadcast2(NULL, mes, len, fontColor, fontType, fontSize, fontAlign, fontY, ALL_CLIENT);
 
 	if (CheckForCharServer())
 		return 0;
@@ -172,11 +179,15 @@ int intif_announce(const char* mes,int len, unsigned long color, int flag)
 	if (other_mapserver_count < 1)
 		return 0; //No need to send.
 
-	WFIFOHEAD(inter_fd, 8 + len);
-	WFIFOW(inter_fd,0) = 0x3000;
-	WFIFOW(inter_fd,2) = 8 + len;
-	WFIFOL(inter_fd,4) = color;
-	memcpy(WFIFOP(inter_fd,8), mes, len);
+	WFIFOHEAD(inter_fd, 16 + len);
+	WFIFOW(inter_fd,0)  = 0x3000;
+	WFIFOW(inter_fd,2)  = 16 + len;
+	WFIFOL(inter_fd,4)  = fontColor;
+	WFIFOW(inter_fd,8)  = fontType;
+	WFIFOW(inter_fd,10) = fontSize;
+	WFIFOW(inter_fd,12) = fontAlign;
+	WFIFOW(inter_fd,14) = fontY;
+	memcpy(WFIFOP(inter_fd,16), mes, len);
 	WFIFOSET(inter_fd, WFIFOW(inter_fd,2));
 	return 0;
 }
@@ -2001,11 +2012,11 @@ int intif_parse(int fd)
 	switch(cmd){
 	case 0x3800:
 		if (RFIFOL(fd,4) == 0xFF000000) //Normal announce.
-			clif_GMmessage(NULL,(char *) RFIFOP(fd,8),packet_len-8,0);
+			clif_broadcast(NULL, (char *) RFIFOP(fd,16), packet_len-16, 0, ALL_CLIENT);
 		else if (RFIFOL(fd,4) == 0xFE000000) //Main chat message [LuzZza]
-			clif_MainChatMessage((char *)RFIFOP(fd,8));
+			clif_MainChatMessage((char *)RFIFOP(fd,16));
 		else //Color announce.
-			clif_announce(NULL,(char *) RFIFOP(fd,8),packet_len-8,RFIFOL(fd,4),0);
+			clif_broadcast2(NULL, (char *) RFIFOP(fd,16), packet_len-16, RFIFOL(fd,4), RFIFOW(fd,8), RFIFOW(fd,10), RFIFOW(fd,12), RFIFOW(fd,14), ALL_CLIENT);
 		break;
 	case 0x3801:	intif_parse_WisMessage(fd); break;
 	case 0x3802:	intif_parse_WisEnd(fd); break;

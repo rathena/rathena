@@ -363,10 +363,9 @@ int clif_font_single(int fd, struct map_session_data *sd);
 int clif_displaymessage(const int fd,const char* mes);
 int clif_disp_onlyself(struct map_session_data *sd,const char *mes,int len);
 void clif_disp_message(struct block_list* src, const char* mes, int len, enum send_target target);
-int clif_GMmessage(struct block_list* bl, const char* mes, int len, int flag);
+int clif_broadcast(struct block_list *bl, const char* mes, int len, int type, enum send_target target);
 void clif_MainChatMessage(const char* message); //luzza
-int clif_announce(struct block_list *bl, const char* mes, int len, unsigned long color, int flag);
-int clif_announce_ex(struct block_list *bl, const char* mes, int len, unsigned long color, int flag, int size);
+int clif_broadcast2(struct block_list *bl, const char* mes, int len, unsigned long fontColor, short fontType, short fontSize, short fontAlign, short fontY, enum send_target target);
 int clif_heal(int fd,int type,int val);
 int clif_resurrection(struct block_list *bl,int type);
 void clif_set0199(struct map_session_data* sd, int mode);
