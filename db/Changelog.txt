@@ -8,6 +8,8 @@
 	1475 Equestrian's Spear:	NEED INFO.
 	13005 Angelic Wing Dagger:	NEED INFO.
 =======================
+2009/11/03
+	* Rev. 14122 Added font weight constants, although they don't seem to do anything. [L0ne_W0lf]
 2009/11/02
 	* Rev. 14112 Fixed overlapped HW2009 even mobs IDs [Lupus]
 2009/10/26

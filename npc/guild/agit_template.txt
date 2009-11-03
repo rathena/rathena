@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
-//= 1.6a
+//= 1.7
 //===== Compatible With: =====================================
 //= eAthena SVN
 //===== Description: =========================================
@@ -47,6 +47,8 @@
 //=     Investing now happens at the turn of the day.
 //= 1.6a Corrected conditions in the new investing blocks. [L0ne_W0lf]
 //= 1.6b Moved where investments are added to eco/def. [L0ne_W0lf]
+//= 1.7 Updated Agitbreak announcements, added bc_woe [L0ne_W0lf]
+//=     and added extended anouncement format for mapannounce.
 //============================================================
 
 // AGIT Manager Template
@@ -121,7 +123,7 @@ OnAgitBreak:
 	SetCastleData strnpcinfo(2),1, .@GID;
 
 	// Announce that the Emperium is destroyed, and respawn all but new castle-occupants.
-	mapannounce strnpcinfo(2),"The emperium has been destroyed.",bc_map,"0x00CCFF";
+	mapannounce strnpcinfo(2),"The emperium has been destroyed.",bc_map|bc_woe,"0x00CCFF",FW_NORMAL,12;
 	MapRespawnGuildID strnpcinfo(2),.@GID,2;
 
 	// Refresh castle data, disable Kafra and reset Invest information.
@@ -141,7 +143,7 @@ OnAgitBreak:
 	if( agitcheck() )
 		donpcevent "Agit#"+strnpcinfo(2)+"::OnStartArena";
 	sleep getbattleflag("gvg_eliminate_time");
-	announce "The [" + getcastlename(strnpcinfo(2)) + "] castle has been conquered by the [" + getguildName(.@GID) + "] guild.",bc_all;
+	announce "The [" + getcastlename(strnpcinfo(2)) + "] castle has been conquered by the [" + getguildName(.@GID) + "] guild.",bc_all|bc_woe;
 	end;
 
 // War of Emperium has ended.

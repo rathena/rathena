@@ -2684,12 +2684,12 @@ OnStartArena:
 
 	set .msg,2;
 	if (.msg == 1) {
-		announce "Fortress [" + GetCastleName("arug_cas03") + "]'s 'Valfreyja' was captured by [" + getguildname(.@gid) + "] Guild.",bc_all;
+		announce "Fortress [" + GetCastleName("arug_cas03") + "]'s 'Valfreyja' was captured by [" + getguildname(.@gid) + "] Guild.",bc_all|bc_woe;
 		donpcevent "Manager#aru03_02::Onstart";
 	}
 	else if (.msg == 2) {
-		announce "The [" + getguildname(.@gid) + "] conquered the [Valfreyja 3] stronghold of "+GetCastleName("arug_cas03"),bc_all;
-		mapannounce "arug_cas03","The emperium has been shattered!",bc_map,"0x00FF00";
+		announce "The [" + getguildname(.@gid) + "] conquered the [Valfreyja 3] stronghold of "+GetCastleName("arug_cas03"),bc_all|bc_woe;
+		mapannounce "arug_cas03","The emperium has been shattered!",bc_map,"0x00FF00",FW_NORMAL,20,0,40;
 		if (agitcheck2()) {
 			donpcevent "Manager#aru03_02::Onreset";
 			initnpctimer;
@@ -2700,7 +2700,7 @@ OnStartArena:
 		}
 	}
 	else if (.msg == 0) {
-		announce "Fortress [" + GetCastleName("arug_cas03") + "]'s 'Valfreyja' was captured by [" + getguildname(.@gid) + "] Guild.",bc_all;
+		announce "Fortress [" + GetCastleName("arug_cas03") + "]'s 'Valfreyja' was captured by [" + getguildname(.@gid) + "] Guild.",bc_all|bc_woe;
 		donpcevent "Manager#aru03_02::Onreset";
 		stopnpctimer;
 		end;
@@ -2711,7 +2711,7 @@ OnStartArena:
 
 OnTimer10000:
 	donpcevent "Manager#aru03_02::Onchange";
-	mapannounce "arug_cas03","Rebuild this stonghold's Guardian Stones and Fortress Gates to secure your guild's new aquisition!",bc_map,"0x00FF00";
+	mapannounce "arug_cas03","Rebuild this stonghold's Guardian Stones and Fortress Gates to secure your guild's new aquisition!",bc_map,"0x00FF00",FW_NORMAL,20,0,40;
 	end;
 }
 
