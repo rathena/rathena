@@ -468,6 +468,7 @@ extern struct Battle_Config
 	int skill_add_heal_rate;	//skills that bHealPower has effect on [Inkfish]
 	int eq_single_target_reflectable;
 	int invincible_nodamage;
+	int mob_slave_keep_target;
 
 	// [BattleGround Settings]
 	int bg_update_interval;

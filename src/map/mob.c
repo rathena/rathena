@@ -792,8 +792,8 @@ int mob_setdelayspawn(struct mob_data *md)
 	if (md->spawn->delay2) //random variance
 		spawntime+= rand()%md->spawn->delay2;
 
-	if (spawntime < 5000) //Min respawn time (is it needed?)
-		spawntime = 5000;
+	if (spawntime < 500) //Min respawn time (is it needed?)
+		spawntime = 500;
 
 	if( md->spawn_timer != INVALID_TIMER )
 		delete_timer(md->spawn_timer, mob_delayspawn);

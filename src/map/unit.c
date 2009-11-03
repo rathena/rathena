@@ -1874,7 +1874,10 @@ int unit_remove_map_(struct block_list *bl, int clrtype, const char* file, int l
 	case BL_MOB:
 	{
 		struct mob_data *md = (struct mob_data*)bl;
-		md->target_id=0;
+		// Drop previous target mob_slave_keep_target: no.
+		if (!battle_config.mob_slave_keep_target)
+			md->target_id=0;
+
 		md->attacked_id=0;
 		md->state.skillstate= MSS_IDLE;
 
