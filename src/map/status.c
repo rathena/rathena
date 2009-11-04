@@ -5841,7 +5841,6 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 		case SC_SPIDERWEB:
 			if( bl->type == BL_PC )
 				tick /= 2;
-			val1 = val2 = 1;
 			break;
 		case SC_ARMOR:
 			//NPC_DEFENDER:

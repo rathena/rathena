@@ -5947,6 +5947,9 @@ int skill_castend_id(int tid, unsigned int tick, int id, intptr data)
 				sc->data[SC_SPIRIT]->val3 == ud->skillid &&
 			  	ud->skillid != WZ_WATERBALL)
 				sc->data[SC_SPIRIT]->val3 = 0; //Clear bounced spell check.
+
+			if( sc->data[SC_DANCING] && skill_get_inf2(ud->skillid)&INF2_SONG_DANCE && sd )
+				skill_blockpc_start(sd,BD_ADAPTATION,3000);
 		}
 
 		if( sd && ud->skillid != SA_ABRACADABRA ) // Hocus-Pocus has just set the data so leave it as it is.[Inkfish]
@@ -7208,7 +7211,7 @@ static int skill_unit_onplace (struct skill_unit *src, struct block_list *bl, un
 		else if( sc )
 		{
 			int sec = skill_get_time2(sg->skill_id,sg->skill_lv);
-			if( status_change_start(bl,type,10000,sg->skill_lv,sg->group_id,0,0,sec,8) )
+			if( status_change_start(bl,type,10000,sg->skill_lv,1,sg->group_id,0,sec,8) )
 			{
 				const struct TimerData* td = sc->data[type]?get_timer(sc->data[type]->timer):NULL; 
 				if( td )
@@ -7794,8 +7797,8 @@ int skill_unit_onout (struct skill_unit *src, struct block_list *bl, unsigned in
 	type = status_skill2sc(sg->skill_id);
 	sce = (sc && type != -1)?sc->data[type]:NULL;
 
-	if (bl->prev==NULL || !src->alive || //Need to delete the trap if the source died.
-		(status_isdead(bl) && sg->unit_id != UNT_ANKLESNARE && sg->unit_id != UNT_SPIDERWEB))
+	if( bl->prev==NULL ||
+		(status_isdead(bl) && sg->unit_id != UNT_ANKLESNARE && sg->unit_id != UNT_SPIDERWEB) ) //Need to delete the trap if the source died.
 		return 0;
 
 	switch(sg->unit_id){
@@ -7820,7 +7823,7 @@ int skill_unit_onout (struct skill_unit *src, struct block_list *bl, unsigned in
 			struct block_list *target = map_id2bl(sg->val2);
 			if (target && target==bl)
 			{
-				if (sce && sce->val2 == sg->group_id)
+				if (sce && sce->val3 == sg->group_id)
 					status_change_end(bl,type,-1);
 				sg->limit = DIFF_TICK(tick,sg->tick)+1000;
 			}
