@@ -1,5 +1,7 @@
 Date	Added
 
+2009/11/03
+	* Rev. 14123 Added mapflags for WoESE guild dungeon. [L0ne_W0lf]
 2009/10/18
 	* Removed char_rename config setting, now hardcoded [ultramage]
 2009/10/15

@@ -1,0 +1,172 @@
+//===== eAthena Script =======================================
+//= War of Emperium Second Edition
+//===== By: ==================================================
+//= L0ne_W0lf
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= eAthena SVN
+//===== Description: =========================================
+//= WoE SE Guild dungeon entrances in Juno and Rachel
+//===== Additional Comments: =================================
+//= 1.0 First Version [L0ne_W0lf]
+//============================================================
+
+schg_cas01,280,391,3	script	Mysterious Sunflower#01	976,{
+	set .@GID, GetCastleData("schg_cas01",1);
+	if (getcharid(2) == .@GID) {
+		mes "-It's an amazingly huge sunflower; as big as a human! ... You feel something mysterious emanating from the flower.-";
+		next;
+		switch(select("Hold the stem.:Do nothing.")) {
+		case 1:
+			warp "schg_dun01",262,314;
+			end;
+		case 2:
+			mes "It's too scary to touch unknown things.";
+			close;
+		}
+	}
+}
+
+schg_cas02,174,328,3	script	Mysterious Sunflower#02	976,{
+	set .@GID, GetCastleData("schg_cas02",1);
+	if (getcharid(2) == .@GID) {
+		mes "-It's an amazingly huge sunflower; as big as a human! ... You feel something mysterious emanating from the flower.-";
+		next;
+		switch(select("Hold the stem.:Do nothing.")) {
+		case 1:
+			warp "schg_dun01",94,284;
+			end;
+		case 2:
+			mes "It's too scary to touch unknown things.";
+			close;
+		}
+	}
+}
+
+schg_cas03,25,22,3	script	Mysterious Sunflower#03	976,{
+	set .@GID, GetCastleData("schg_cas03",1);
+	if (getcharid(2) == .@GID) {
+		mes "-It's an amazingly huge sunflower; as big as a human! ... You feel something mysterious emanating from the flower.-";
+		next;
+		switch(select("Hold the stem.:Do nothing.")) {
+		case 1:
+			warp "schg_dun01",79,140;
+			end;
+		case 2:
+			mes "It's too scary to touch unknown things.";
+			close;
+		}
+	}
+}
+
+schg_cas04,280,391,3	script	Mysterious Sunflower#04	976,{
+	set .@GID, GetCastleData("schg_cas04",1);
+	if (getcharid(2) == .@GID) {
+		mes "-It's an amazingly huge sunflower; as big as a human! ... You feel something mysterious emanating from the flower.-";
+		next;
+		switch(select("Hold the stem.:Do nothing.")) {
+		case 1:
+			warp "schg_dun01",212,70;
+			end;
+		case 2:
+			mes "It's too scary to touch unknown things.";
+			close;
+		}
+	}
+}
+
+schg_cas05,280,391,3	script	Mysterious Sunflower#05	976,{
+	set .@GID, GetCastleData("schg_cas05",1);
+	if (getcharid(2) == .@GID) {
+		mes "-It's an amazingly huge sunflower; as big as a human! ... You feel something mysterious emanating from the flower.-";
+		next;
+		switch(select("Hold the stem.:Do nothing.")) {
+		case 1:
+			warp "schg_dun01",322,166;
+			end;
+		case 2:
+			mes "It's too scary to touch unknown things.";
+			close;
+		}
+	}
+}
+
+arug_cas01,157,345,3	script	Mysterious Sunflower#06	977,{
+	set .@GID, GetCastleData("arug_cas01",1);
+	if (getcharid(2) == .@GID) {
+		mes "-It's an amazingly huge sunflower; as big as a human! ... You feel something mysterious emanating from the flower.-";
+		next;
+		switch(select("Hold the stem.:Do nothing.")) {
+			case 1:
+			warp "arug_dun01",350,350;
+			end;
+		case 2:
+			mes "It's too scary to touch unknown things.";
+			close;
+		}
+	}
+}
+
+arug_cas02,350,294,3	script	Mysterious Sunflower#07	977,{
+	set .@GID, GetCastleData("arug_cas02",1);
+	if (getcharid(2) == .@GID) {
+		mes "-It's an amazingly huge sunflower; as big as a human! ... You feel something mysterious emanating from the flower.-";
+		next;
+		switch(select("Hold the stem.:Do nothing.")) {
+		case 1:
+			warp "arug_dun01",350,50;
+			end;
+		case 2:
+			mes "It's too scary to touch unknown things.";
+			close;
+		}
+	}
+}
+arug_cas03,312,154,3	script	Mysterious Sunflower#08	977,{
+	set .@GID, GetCastleData("arug_cas03",1);
+	if (getcharid(2) == .@GID) {
+		mes "-It's an amazingly huge sunflower; as big as a human! ... You feel something mysterious emanating from the flower.-";
+		next;
+		switch(select("Hold the stem.:Do nothing.")) {
+		case 1:
+			warp "arug_dun01",50,50;
+			end;
+		case 2:
+			mes "It's too scary to touch unknown things.";
+			close;
+		}
+	}
+}
+
+arug_cas04,312,154,3	script	Mysterious Sunflower#09	977,{
+	set .@GID, GetCastleData("arug_cas04",1);
+	if (getcharid(2) == .@GID) {
+		mes "-It's an amazingly huge sunflower; as big as a human! ... You feel something mysterious emanating from the flower.-";
+		next;
+		switch(select("Hold the stem.:Do nothing.")) {
+		case 1:
+			warp "arug_dun01",50,350;
+			end;
+		case 2:
+			mes "It's too scary to touch unknown things.";
+			close;
+		}
+	}
+}
+
+arug_cas05,312,154,3	script	Mysterious Sunflower#10	977,{
+	set .@GID, GetCastleData("arug_cas05",1);
+	if (getcharid(2) == .@GID) {
+		mes "-It's an amazingly huge sunflower; as big as a human! ... You feel something mysterious emanating from the flower.-";
+		next;
+		switch(select("Hold the stem.:Do nothing.")) {
+		case 1:
+			warp "arug_dun01",200,386;
+			end;
+		case 2:
+			mes "It's too scary to touch unknown things.";
+			close;
+		}
+	}
+}

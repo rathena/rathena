@@ -1,6 +1,8 @@
 Date		Added
 ======
 2009/11/03
+	* Rev. 14123 Added official WoESE Guild Dungeon NPCs, and custom spawns. [L0ne_W0lf]
+	- As the mobs are not 100% (missing stats, no drops, etc) they are disabled by default.
 	* Rev. 14122 Added new broadcasting support from r14120 to WoE scripts. [L0ne_W0lf]
 	- "Conquered" messages can now be effectively toggled off in Battle log
 	- Added fontsizes for WoESE messages. (At least the non-default sizes.)

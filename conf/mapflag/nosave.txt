@@ -255,3 +255,6 @@ arug_dun01	mapflag	nosave	SavePoint
 // Nidhoggr's Instance ===========
 1@nyd	mapflag	nosave	SavePoint
 2@nyd	mapflag	nosave	SavePoint
+
+arug_dun01	mapflag	nosave	SavePoint
+schg_dun01	mapflag	nosave	SavePoint

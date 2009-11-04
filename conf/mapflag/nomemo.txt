@@ -665,3 +665,6 @@ spl_in01	mapflag	nomemo
 // Nidhoggr's Instance ===========
 1@nyd	mapflag	nomemo
 2@nyd	mapflag	nomemo
+
+arug_dun01	mapflag	nomemo
+schg_dun01	mapflag	nomemo
