@@ -6641,11 +6641,12 @@ BUILDIN_FUNC(autobonus)
 	if( sd->state.script_parsed&sd->status.inventory[current_equip_item_index].equip )
 		return 0;
 
-	bonus_script = parse_script(script_getstr(st,2), "autobonus bonus", 0, 0);
 	rate = script_getnum(st,3);
 	dur = script_getnum(st,4);
-
-	if( !bonus_script || !rate || !dur )
+	if( !rate || !dur )
+		return 0;
+	bonus_script = parse_script(script_getstr(st,2), "autobonus bonus", 0, 0);
+	if( !bonus_script )
 		return 0;
 
 	if( script_hasdata(st,5) )
@@ -6683,11 +6684,12 @@ BUILDIN_FUNC(autobonus2)
 	if( sd->state.script_parsed&sd->status.inventory[current_equip_item_index].equip )
 		return 0;
 
-	bonus_script = parse_script(script_getstr(st,2), "autobonus bonus", 0, 0);
 	rate = script_getnum(st,3);
 	dur = script_getnum(st,4);
-
-	if( !bonus_script || !rate || !dur )
+	if( !rate || !dur )
+		return 0;
+	bonus_script = parse_script(script_getstr(st,2), "autobonus2 bonus", 0, 0);
+	if( !bonus_script )
 		return 0;
 
 	if( script_hasdata(st,5) )
@@ -6724,12 +6726,13 @@ BUILDIN_FUNC(autobonus3)
 	if( sd->state.script_parsed&sd->status.inventory[current_equip_item_index].equip )
 		return 0;
 
-	bonus_script = parse_script(script_getstr(st,2), "autobonus bonus", 0, 0);
 	rate = script_getnum(st,3);
 	dur = script_getnum(st,4);
 	atk_type = ( script_isstring(st,5) ? skill_name2id(script_getstr(st,5)) : script_getnum(st,5) );
-
-	if( !bonus_script || !rate || !dur || !atk_type )
+	if( !rate || !dur || !atk_type )
+		return 0;
+	bonus_script = parse_script(script_getstr(st,2), "autobonus3 bonus", 0, 0);
+	if( !bonus_script )
 		return 0;
 
 	if( script_hasdata(st,6) )
