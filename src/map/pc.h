@@ -130,7 +130,8 @@ struct map_session_data {
 		unsigned int bg_id;
 		unsigned skillonskill : 1;
 		unsigned short user_font;
-		unsigned short autobonus;
+		unsigned short script_parsed; //flag to indicate if the script of an autobonus is parsed. [Inkfish]
+		unsigned short autobonus; //flag to indicate if an autobonus is activated. [Inkfish]
 	} state;
 	struct {
 		unsigned char no_weapon_damage, no_magic_damage, no_misc_damage;

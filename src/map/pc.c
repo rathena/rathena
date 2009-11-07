@@ -1665,7 +1665,7 @@ int pc_delautobonus(struct map_session_data* sd, struct s_autobonus *autobonus,c
 
 	for( i = 0; i < max; i++ )
 	{
-		if( autobonus[i].active != INVALID_TIMER && ( !restore || (autobonus[i].pos && !(sd->state.autobonus&autobonus[i].pos)) ) )
+		if( autobonus[i].active != INVALID_TIMER && !(restore && sd->state.autobonus&autobonus[i].pos) )
 		{ // Logout / Unequipped an item with an activated bonus
 			delete_timer(autobonus[i].active,pc_endautobonus);
 			autobonus[i].active = INVALID_TIMER;
@@ -1679,6 +1679,9 @@ int pc_delautobonus(struct map_session_data* sd, struct s_autobonus *autobonus,c
 		}
 
 		if( sd->state.autocast )
+			continue;
+
+		if( autobonus[i].pos&sd->state.script_parsed && restore )
 			continue;
 
 		if( autobonus[i].bonus_script )
@@ -6999,6 +7002,7 @@ int pc_equipitem(struct map_session_data *sd,int n,int req_pos)
  * 0 - only unequip
  * 1 - calculate status after unequipping
  * 2 - force unequip
+ * 4 - ignore autobonus flags
  *------------------------------------------*/
 int pc_unequipitem(struct map_session_data *sd,int n,int flag)
 {
@@ -7071,8 +7075,13 @@ int pc_unequipitem(struct map_session_data *sd,int n,int flag)
 			status_change_end(&sd->bl, SC_ARMOR_RESIST, -1);
 	}
 
-	if( sd->state.autobonus&sd->status.inventory[n].equip )
-		sd->state.autobonus &= ~sd->status.inventory[n].equip; //Check for activated autobonus [Inkfish]
+	if( !(flag&4) )
+	{
+		if( sd->state.script_parsed&sd->status.inventory[n].equip )
+			sd->state.script_parsed &= ~sd->status.inventory[n].equip;
+		if( sd->state.autobonus&sd->status.inventory[n].equip )
+			sd->state.autobonus &= ~sd->status.inventory[n].equip; //Check for activated autobonus [Inkfish]
+	}
 
 	sd->status.inventory[n].equip=0;
 

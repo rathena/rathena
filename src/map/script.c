@@ -6436,7 +6436,7 @@ BUILDIN_FUNC(successrefitem)
 			log_pick_pc(sd, "N", sd->status.inventory[i].nameid, -1, &sd->status.inventory[i]);
 
 		sd->status.inventory[i].refine++;
-		pc_unequipitem(sd,i,2); // status calc will happen in pc_equipitem() below
+		pc_unequipitem(sd,i,2|4); // status calc will happen in pc_equipitem() below
 
 		clif_refine(sd->fd,0,i,sd->status.inventory[i].refine);
 		clif_delitem(sd,i,1);
@@ -6638,6 +6638,8 @@ BUILDIN_FUNC(autobonus)
 		return 0;
 	if( sd->state.autobonus&sd->status.inventory[current_equip_item_index].equip )
 		return 0;
+	if( sd->state.script_parsed&sd->status.inventory[current_equip_item_index].equip )
+		return 0;
 
 	bonus_script = parse_script(script_getstr(st,2), "autobonus bonus", 0, 0);
 	rate = script_getnum(st,3);
@@ -6678,6 +6680,8 @@ BUILDIN_FUNC(autobonus2)
 		return 0;
 	if( sd->state.autobonus&sd->status.inventory[current_equip_item_index].equip )
 		return 0;
+	if( sd->state.script_parsed&sd->status.inventory[current_equip_item_index].equip )
+		return 0;
 
 	bonus_script = parse_script(script_getstr(st,2), "autobonus bonus", 0, 0);
 	rate = script_getnum(st,3);
@@ -6716,6 +6720,8 @@ BUILDIN_FUNC(autobonus3)
 	if( sd->state.autocast )
 		return 0;
 	if( sd->state.autobonus&sd->status.inventory[current_equip_item_index].equip )
+		return 0;
+	if( sd->state.script_parsed&sd->status.inventory[current_equip_item_index].equip )
 		return 0;
 
 	bonus_script = parse_script(script_getstr(st,2), "autobonus bonus", 0, 0);
