@@ -1954,7 +1954,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 	int i,temp,count,pnum=0,m=md->bl.m;
 	unsigned int mvp_damage, tick = gettick();
 	unsigned short flaghom = 1; // [Zephyrus] Does the mob only received damage from homunculus?
-	bool rebirth = ( md->sc.data[SC_KAIZEL] || (md->sc.data[SC_REBIRTH] && !md->state.rebirth) );
+	bool rebirth;
 
 	status = &md->status;
 
@@ -2371,6 +2371,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 	  	//Emperium destroyed by script. Discard mvp character. [Skotlex]
 		mvp_sd = NULL;
 
+	rebirth =  ( md->sc.data[SC_KAIZEL] || (md->sc.data[SC_REBIRTH] && !md->state.rebirth) );
 	if( !rebirth )
 	{ // Only trigger event on final kill
 		md->status.hp = 0; //So that npc_event invoked functions KNOW that mob is dead
