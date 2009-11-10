@@ -1273,7 +1273,7 @@ OnClock0001:
 	setcastledata strnpcinfo(2),5,0;
 
 	// Spawn boxes in proper order.
-	for (set .@i,0; .@i <= .@Treasure ; set .@i,.@i+1) {
+	for (set .@i,0; .@i < .@Treasure ; set .@i,.@i+1) {
 		// set treasure box ID
 		set .@boxid, .@treasurebox + (.@i+2) % 2;
 		set .@box,1 << .@i;
