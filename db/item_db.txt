@@ -4225,7 +4225,7 @@
 12316,Angel_Bless,Angel Bless,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12317,Powder_Snow,Powder Snow,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12318,Little_Heart,Little Heart,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-12319,Strawberry_Cake,Rune Strawberry Cake,0,0,,300,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_INCATKRATE,6000000,5; sc_start INCMATKRATE,6000000,5; },{},{}
+12319,Strawberry_Cake,Rune Strawberry Cake,0,0,,300,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_INCATKRATE,6000000,5; sc_start SC_INCMATKRATE,6000000,5; },{},{}
 12320,Pineapple_Juice,Schwartzwald Pine Jubilee,0,0,,300,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_INCHIT,6000000,10; sc_start SC_INCFLEE2,600000,10; },{},{}
 12321,Spicy_Sandwich,Arunafeltz Desert Sandwich,0,0,,300,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_INCCRI,6000000,7; },{},{}
 12322,Chocolate_Pie,Chocolate Pie,0,0,,300,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}

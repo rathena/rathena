@@ -66,9 +66,13 @@ CREATE TABLE `item_db2` (
 # REPLACE INTO `item_db2` VALUES (12200,'Event_Cake','Event Cake',2,20,NULL,50,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'itemskill \"PR_MAGNIFICAT\",3;',NULL,NULL);
 # REPLACE INTO `item_db2` VALUES (12238,'New_Year_Rice_Cake_1','New Year Rice Cake',0,20,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'percentheal 20,15; sc_start SC_STRFood,1200000,3; sc_start SC_INTFood,1200000,3; sc_start SC_LUKFood,1200000,3; sc_start SC_SpeedUp1,5000,0;',NULL,NULL);
 # REPLACE INTO `item_db2` VALUES (12239,'New_Year_Rice_Cake_2','New Year Rice Cake',0,20,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'percentheal 20,15; sc_start SC_DEXFood,1200000,3; sc_start SC_AGIFood,1200000,3; sc_start SC_VITFood,1200000,3; sc_start SC_SpeedUp1,5000,0;',NULL,NULL);
-# Required for St. Patrick's Day (2008) event script.
+
+#  iRO St. Patrick's Day Event 2008
+# =============================================================
 # REPLACE INTO `item_db2` VALUES (12715,'Black_Treasure_Chest','Black Treasure Chest',2,0,NULL,200,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'callfunc \"F_08stpattyseventbox\";',NULL,NULL);
-# Required for Valentine's Day (2009) event script.
+
+#  iRO Valentine's Day Event 2009
+# =============================================================
 # REPLACE INTO `item_db2` VALUES (12742,'Valentine_Gift_Box_M','Valentine Gift Box',2,10,NULL,0,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getitem 7946,1;',NULL,NULL);
 # REPLACE INTO `item_db2` VALUES (12743,'Valentine_Gift_Box_F','Valentine Gift Box',2,10,NULL,0,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getitem 7947,1;',NULL,NULL);
 # REPLACE INTO `item_db2` VALUES (12744,'Chocolate_Box','Chocolate Box',2,10,NULL,0,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getitem 558,1;',NULL,NULL);
@@ -78,6 +82,13 @@ CREATE TABLE `item_db2` (
 # REPLACE INTO `item_db2` VALUES (7948,'Box','Box',3,10,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 # REPLACE INTO `item_db2` VALUES (5817,'Valentine\'s_Emblem','Valentine\'s Emblem',5,10,NULL,0,NULL,3,NULL,0,0xFFFFFFFF,7,2,136,NULL,0,0,0,'bonus bAtkRate,3; bonus bMatkRate,3; bonus bAllStats,2; bonus bFlee,10; bonus bAspd,1; bonus bMdef,3; bonus2 bSkillAtk,\"AL_HEAL\",10; bonus2 bSkillHeal,\"AL_HEAL\",10; bonus2 bSkillHeal,\"AM_POTIONPITCHER\",10; bonus2 bAddItemHealRate,IG_Potion,10;',NULL,NULL);
 
-#  Old Tuxedo and Wedding Dress, will display the outfit when worn, un-comment to enable it
+#  iRO Halloween Event 2009
+# =============================================================
+# REPLACE INTO `item_db2` VALUES (5668,'Weird_Pumpkin_Hat','Weird Pumpkin Hat',5,20,NULL,0,NULL,5,NULL,0,0xFFFFFFFF,7,2,256,NULL,0,1,206,'bonus bMdef,5; bonus2 bAddMonsterDropItem,12192,2500;',NULL,NULL);
+# REPLACE INTO `item_db2` VALUES (6298,'Crushed_Pumpkin','Crushed Pumpkin',3,0,NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+# REPLACE INTO `item_db2` VALUES (6299,'Worn_Fabric','Worn Fabric',3,0,NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+
+#  Old Tuxedo and Wedding Dress, will display the outfit when worn.
+# ==================================================================
 # REPLACE INTO `item_db2` VALUES (2338,'Wedding_Dress','Wedding Dress',5,43000,NULL,500,NULL,0,NULL,0,0xFFFFFFFE,7,0,16,NULL,0,1,0,NULL,'setoption Option_Wedding,1;','setoption Option_Wedding,0;');
 # REPLACE INTO `item_db2` VALUES (7170,'Tuxedo','Tuxedo',5,43000,NULL,10,NULL,0,NULL,0,0xFFFFFFFE,7,1,16,NULL,0,1,0,NULL,'setoption Option_Wedding,1;','setoption Option_Wedding,0;');

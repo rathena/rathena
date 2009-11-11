@@ -4637,7 +4637,7 @@ int atcommand_nuke(const int fd, struct map_session_data* sd, const char* comman
  *------------------------------------------*/
 int atcommand_tonpc(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
-	char npcname[NAME_LENGTH];
+	char npcname[NAME_LENGTH+1];
 	struct npc_data *nd;
 
 	nullpo_retr(-1, sd);
@@ -4667,7 +4667,7 @@ int atcommand_tonpc(const int fd, struct map_session_data* sd, const char* comma
  *------------------------------------------*/
 int atcommand_shownpc(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
-	char NPCname[NAME_LENGTH];
+	char NPCname[NAME_LENGTH+1];
 	nullpo_retr(-1, sd);
 
 	memset(NPCname, '\0', sizeof(NPCname));
@@ -4693,7 +4693,7 @@ int atcommand_shownpc(const int fd, struct map_session_data* sd, const char* com
  *------------------------------------------*/
 int atcommand_hidenpc(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
-	char NPCname[NAME_LENGTH];
+	char NPCname[NAME_LENGTH+1];
 	nullpo_retr(-1, sd);
 
 	memset(NPCname, '\0', sizeof(NPCname));
