@@ -13416,15 +13416,21 @@ int clif_parse(int fd)
 	if ((int)RFIFOREST(fd) < packet_len)
 		return 0; // not enough data received to form the packet
 
-	if (packet_db[packet_ver][cmd].func) {
-		if (sd && sd->bl.prev == NULL && packet_db[packet_ver][cmd].func != clif_parse_LoadEndAck)
-			; //Only valid packet when player is not on a map is the finish-loading packet.
+	if( packet_db[packet_ver][cmd].func == clif_parse_debug )
+		packet_db[packet_ver][cmd].func(fd, sd);
+	else
+	if( packet_db[packet_ver][cmd].func != NULL )
+	{
+		if( !sd && packet_db[packet_ver][cmd].func != clif_parse_WantToConnection )
+			; //Only valid packet when there is no session
 		else
-		if ((sd && sd->state.active)
-			|| packet_db[packet_ver][cmd].func == clif_parse_WantToConnection
-			|| packet_db[packet_ver][cmd].func == clif_parse_debug
-		)	//Only execute the function when there's an active sd (except for debug/wanttoconnect packets)
-			packet_db[packet_ver][cmd].func(fd, sd);
+		if( sd && sd->bl.prev == NULL && packet_db[packet_ver][cmd].func != clif_parse_LoadEndAck )
+			; //Only valid packet when player is not on a map
+		else
+		if( sd && session[sd->fd]->flag.eof )
+			; //No more packets accepted
+		else
+			packet_db[packet_ver][cmd].func(fd, sd); 
 	}
 #if DUMP_UNKNOWN_PACKET
 	else if (battle_config.error_log)

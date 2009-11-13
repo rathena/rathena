@@ -1086,7 +1086,7 @@ int pc_reg_received(struct map_session_data *sd)
 	intif_request_questlog(sd);
 #endif
 
-	if (!sd->state.connect_new && sd->fd)
+	if (sd->state.connect_new == 0 && sd->fd)
 	{	//Character already loaded map! Gotta trigger LoadEndAck manually.
 		sd->state.connect_new = 1;
 		clif_parse_LoadEndAck(sd->fd, sd);
@@ -7467,6 +7467,7 @@ int pc_autosave(int tid, unsigned int tick, int id, intptr data)
 		save_flag = 2;
 
 		chrif_save(sd,0);
+		break;
 	}
 	mapit_free(iter);
 

@@ -47,7 +47,7 @@ const char* mapindex_getmapname(const char* string, char* output)
 /// Result gets placed either into 'buf' or in a static local buffer.
 const char* mapindex_getmapname_ext(const char* string, char* output)
 {
-	char buf[MAP_NAME_LENGTH_EXT];
+	static char buf[MAP_NAME_LENGTH_EXT];
 	char* dest = (output != NULL) ? output : buf;
 
 	size_t len;
