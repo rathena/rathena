@@ -9,6 +9,8 @@
 	13005 Angelic Wing Dagger:	NEED INFO.
 =======================
 2009/11/03
+	* Rev. 14147 Added Ifrit, Beelzebub, and Hibram to mob_boss, and a second Atroce. [L0ne_W0lf]
+2009/11/03
 	* Rev. 14123 Added known info for WoE SE Guild Dungeon monsters. [L0ne_W0lf]
 	- Movement speed, and attack delays are not official. (copy/pasted)
 	- Skills are, like above, copy, pasted, edited. Not official.
