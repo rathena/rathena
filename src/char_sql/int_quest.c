@@ -67,18 +67,11 @@ bool mapif_quest_delete(int char_id, int quest_id)
 //Add a quest to a questlog
 bool mapif_quest_add(int char_id, struct quest qd)
 {
-	StringBuf buf;
-
-	StringBuf_Init(&buf);
-	StringBuf_Printf(&buf, "INSERT INTO `%s`(`quest_id`, `char_id`, `state`, `time`, `count1`, `count2`, `count3`) VALUES ('%d', '%d', '%d','%d', '%d', '%d', '%d')", quest_db, qd.quest_id, char_id, qd.state, qd.time, qd.count[0], qd.count[1], qd.count[2]);
-
-	if ( SQL_ERROR == Sql_QueryStr(sql_handle, StringBuf_Value(&buf)) ) 
+	if ( SQL_ERROR == Sql_Query(sql_handle, "INSERT INTO `%s`(`quest_id`, `char_id`, `state`, `time`, `count1`, `count2`, `count3`) VALUES ('%d', '%d', '%d','%d', '%d', '%d', '%d')", quest_db, qd.quest_id, char_id, qd.state, qd.time, qd.count[0], qd.count[1], qd.count[2]) ) 
 	{
 		Sql_ShowDebug(sql_handle);
 		return false;
 	}
-
-	StringBuf_Destroy(&buf);
 
 	return true;
 }
@@ -86,18 +79,11 @@ bool mapif_quest_add(int char_id, struct quest qd)
 //Update a questlog
 bool mapif_quest_update(int char_id, struct quest qd)
 {
-	StringBuf buf;
-
-	StringBuf_Init(&buf);
-	StringBuf_Printf(&buf, "UPDATE `%s` SET `state`='%d', `count1`='%d', `count2`='%d', `count3`='%d' WHERE `quest_id` = '%d' AND `char_id` = '%d'", quest_db, qd.state, qd.count[0], qd.count[1], qd.count[2], qd.quest_id, char_id);
-
-	if ( SQL_ERROR == Sql_QueryStr(sql_handle, StringBuf_Value(&buf)) ) 
+	if ( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `state`='%d', `count1`='%d', `count2`='%d', `count3`='%d' WHERE `quest_id` = '%d' AND `char_id` = '%d'", quest_db, qd.state, qd.count[0], qd.count[1], qd.count[2], qd.quest_id, char_id) ) 
 	{
 		Sql_ShowDebug(sql_handle);
 		return false;
 	}
-
-	StringBuf_Destroy(&buf);
 
 	return true;
 }
