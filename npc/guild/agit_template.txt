@@ -693,6 +693,7 @@ OnRecvCastle:
 					cutin "kafra_01",255;
 					end;
 				}
+				break;
 			case 2:
 				mes "[ Steward " + .@name$ + " ]";
 				mes "Those Kafra are hard workers. I thought it would be best to keep the staff.";

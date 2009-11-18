@@ -666,7 +666,7 @@ OnInit:
 
 OnEnable:
 	enablenpc "Am Mut#ama";
-	set .MyMobs,.MyMobs-1;
+	set .MyMobs,3;
 	monster "ama_test",35,102,"Am Mut",1301,1,"Am Mut#ama::OnMyMobDead";
 	monster "ama_test",40,91,"Am Mut",1301,1,"Am Mut#ama::OnMyMobDead";
 	monster "ama_test",56,108,"Am Mut",1301,1,"Am Mut#ama::OnMyMobDead";
@@ -706,8 +706,7 @@ OnInit:
 OnTouch:
 	mes "[Coach]";
 	mes "( Clap- Clap- Clap- )";
-	close;
-	end;
+	next;
 	mes "[Coach]";
 	mes "Hohoho~ You are really something.";
 	mes "You've got the moves, kiddo.";
