@@ -821,11 +821,17 @@ static int clif_set_unit_idle(struct block_list* bl, unsigned char* buffer, bool
 	WBUFW(buf,30) = vd->cloth_color;
 	WBUFW(buf,32) = (sd)? sd->head_dir : 0;
 	if (type&&spawn) { //End of packet 0x7c
-		WBUFB(buf,34) = 0; // karma
+		WBUFB(buf,34) = (sd)?sd->status.karma:0; // karma
 		WBUFB(buf,35) = vd->sex;
 		WBUFPOS(buf,36,bl->x,bl->y,unit_getdir(bl));
 		WBUFB(buf,39) = 0;
+#if PACKETVER >= 20071106
 		WBUFB(buf,40) = 0;
+#endif
+#if PACKETVER > 20081217
+		WBUFB(buf,41) = 0;
+		WBUFB(buf,42) = 0;
+#endif
 		return packet_len(0x7c);
 	}
 	WBUFL(buf,34) = status_get_guild_id(bl);
@@ -4061,7 +4067,7 @@ int clif_skillinfo(struct map_session_data *sd,int skillid,int type,int range)
 int clif_skillinfoblock(struct map_session_data *sd)
 {
 	int fd;
-	int i,c,len,id;
+	int i,len,id;
 
 	nullpo_retr(0, sd);
 
@@ -4070,7 +4076,7 @@ int clif_skillinfoblock(struct map_session_data *sd)
 
 	WFIFOHEAD(fd, MAX_SKILL * 37 + 4);
 	WFIFOW(fd,0) = 0x10f;
-	for ( i = 0, c = 0, len = 4; i < MAX_SKILL; i++)
+	for ( i = 0, len = 4; i < MAX_SKILL; i++)
 	{
 		if( (id = sd->status.skill[i].id) != 0 )
 		{
@@ -4089,7 +4095,6 @@ int clif_skillinfoblock(struct map_session_data *sd)
 			else
 				WFIFOB(fd,len+36) = 0;
 			len += 37;
-			c++;
 		}
 	}
 	WFIFOW(fd,2)=len;
@@ -4226,6 +4231,27 @@ int clif_skill_fail(struct map_session_data *sd,int skill_id,int type,int btype)
 	WFIFOSET(fd,packet_len(0x110));
 
 	return 1;
+}
+
+/*==========================================
+ * skill cooldown display icon
+ * R 043d <skill ID>.w <tick>.l
+ *------------------------------------------*/
+int clif_skill_cooldown(struct map_session_data *sd, int skillid, unsigned int tick)
+{
+#if PACKETVER>=20081112
+	int fd;
+
+	nullpo_retr(0, sd);
+
+	fd=sd->fd;
+	WFIFOHEAD(fd,packet_len(0x043d));
+	WFIFOW(fd,0) = 0x043d;
+	WFIFOW(fd,2) = skillid;
+	WFIFOL(fd,4) = tick;
+	WFIFOSET(fd,packet_len(0x043d));
+#endif
+	return 0;
 }
 
 /*==========================================
@@ -5681,6 +5707,11 @@ void clif_party_inviteack(struct map_session_data* sd, const char* nick, int fla
 int clif_party_option(struct party_data *p,struct map_session_data *sd,int flag)
 {
 	unsigned char buf[16];
+#if PACKETVER<20090603
+	const int cmd = 0x101;
+#else
+	const int cmd = 0x7d8;
+#endif
 
 	nullpo_retr(0, p);
 
@@ -5691,14 +5722,18 @@ int clif_party_option(struct party_data *p,struct map_session_data *sd,int flag)
 			sd = p->data[i].sd;
 	}
 	if(!sd) return 0;
-	WBUFW(buf,0)=0x101;
+	WBUFW(buf,0)=cmd;
 	// WBUFL(buf,2) // that's how the client reads it, still need to check it's uses [FlavioJS]
 	WBUFW(buf,2)=((flag&0x01)?2:p->party.exp);
 	WBUFW(buf,4)=0;
+#if PACKETVER>=20090603
+	WBUFB(buf,6)=(p->party.item&1)?1:0;
+	WBUFB(buf,7)=(p->party.item&2)?1:0;
+#endif
 	if(flag==0)
-		clif_send(buf,packet_len(0x101),&sd->bl,PARTY);
+		clif_send(buf,packet_len(cmd),&sd->bl,PARTY);
 	else
-		clif_send(buf,packet_len(0x101),&sd->bl,SELF);
+		clif_send(buf,packet_len(cmd),&sd->bl,SELF);
 	return 0;
 }
 /*==========================================
@@ -8328,15 +8363,20 @@ void clif_hotkeys_send(struct map_session_data *sd) {
 #ifdef HOTKEY_SAVING
 	const int fd = sd->fd;
 	int i;
+#if PACKETVER<20090603
+	const int cmd = 0x02b9;
+#else
+	const int cmd = 0x07d9;
+#endif
 	if (!fd) return;
 	WFIFOHEAD(fd, 2+MAX_HOTKEYS*7);
-	WFIFOW(fd, 0) = 0x02b9;
+	WFIFOW(fd, 0) = cmd;
 	for(i = 0; i < MAX_HOTKEYS; i++) {
 		WFIFOB(fd, 2 + 0 + i * 7) = sd->status.hotkeys[i].type; // type: 0: item, 1: skill
 		WFIFOL(fd, 2 + 1 + i * 7) = sd->status.hotkeys[i].id; // item or skill ID
 		WFIFOW(fd, 2 + 5 + i * 7) = sd->status.hotkeys[i].lv; // skill level
 	}
-	WFIFOSET(fd, packet_len(0x02b9));
+	WFIFOSET(fd, packet_len(cmd));
 #endif
 }
 
@@ -10343,6 +10383,15 @@ void clif_parse_PartyMessage(int fd, struct map_session_data* sd)
 	}
 
 	party_send_message(sd, text, textlen);
+}
+
+/*
+ * Changes Party Leader
+ * S 07da <account ID>.L
+ *------------------------------------------*/
+void clif_parse_PartyChangeLeader(int fd, struct map_session_data* sd)
+{
+	party_changeleader(sd, map_id2sd(RFIFOL(fd,2)));
 }
 
 /*==========================================
@@ -12800,6 +12849,22 @@ void clif_quest_update_status(struct map_session_data * sd, int quest_id, bool a
 	WFIFOSET(fd, packet_len(0x02B7));
 }
 
+void clif_quest_show_event(struct map_session_data *sd, struct block_list *bl, short state, short color)
+{
+#if PACKETVER >= 20090218
+	int fd = sd->fd;
+
+	WFIFOHEAD(fd, packet_len(0x446));
+	WFIFOW(fd, 0) = 0x446;
+	WFIFOL(fd, 2) = bl->id;
+	WFIFOW(fd, 6) = bl->x;                                                                                 
+	WFIFOW(fd, 8) = bl->y;
+	WFIFOW(fd, 10) = state;
+	WFIFOW(fd, 12) = color;
+	WFIFOSET(fd, packet_len(0x446));
+#endif
+}
+
 /*==========================================
  * Mercenary System
  *==========================================*/
@@ -13513,13 +13578,19 @@ static int packetdb_readdb(void)
 	//#0x0040
 	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-	    0,  0,  0,  0, 55, 17,  3, 37, 46, -1, 23, -1,  3,108,  3,  2,
+#if PACKETVER <= 20081217
+	    0,  0,  0,  0, 55, 17,  3, 37,  46, -1, 23, -1,  3,110,  3,  2,
+#else
+	    0,  0,  0,  0, 55, 17,  3, 37,  46, -1, 23, -1,  3,114,  3,  2,
+#endif
 #if PACKETVER < 2
 	    3, 28, 19, 11,  3, -1,  9,  5, 52, 51, 56, 58, 41,  2,  6,  6,
 #elif PACKETVER < 20071106	// 78-7b 亀島以降 lv99エフェクト用
 	    3, 28, 19, 11,  3, -1,  9,  5, 54, 53, 58, 60, 41,  2,  6,  6,
-#else // change in 0x78 and 0x7c
+#elif PACKETVER <= 20081217 // change in 0x78 and 0x7c
 	    3, 28, 19, 11,  3, -1,  9,  5, 55, 53, 58, 60, 42,  2,  6,  6,
+#else
+	    3, 28, 19, 11,  3, -1,  9,  5, 55, 53, 58, 60, 44,  2,  6,  6,
 #endif
 	//#0x0080
 	    7,  3,  2,  2,  2,  5, 16, 12, 10,  7, 29,  2, -1, -1, -1,  0, // 0x8b changed to 2 (was 23)
@@ -13577,7 +13648,7 @@ static int packetdb_readdb(void)
 	    0,  0,  0,  6,  0,  0,  0,  0,  0,  8, 18,  0,  0,  0,  0,  0,
 	    0,  4,  0, 70,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-	    0,  0,  0,107,  6,  0,  7,  7, 22,191,  0,  0,  0,  0,  0,  0,
+	   85, -1, -1,107,  6, -1,  7,  7, 22,191,  0,  0,  0,  0,  0,  0,
 	//#0x02C0
 	    0,  0,  0,  0,  0, 30,  0,  0,  0,  3,  0, 65,  4, 71, 10,  0,
 	    0,  0,  0,  0, 29,  0,  6, -1, 10, 10,  3,  0, -1, 32,  6,  0,
@@ -13607,9 +13678,9 @@ static int packetdb_readdb(void)
 	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 25,
+	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  8,  0, 25,
 	//#0x0440
-	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+	    0,  0,  0,  0,  0,  0, 14,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
@@ -13622,6 +13693,70 @@ static int packetdb_readdb(void)
 	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+	//#0x0500
+	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 25,
+	//#0x0540
+	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+	//#0x0580
+	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+	 //#0x05C0
+	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+	 //#0x0600
+	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 25,
+	 //#0x0640
+	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+	 //#0x0680
+	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+	 //#0x06C0
+	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+	 //#0x0700
+	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 25,
+	 //#0x0740
+	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+	 //#0x0780
+	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+	 //#0x07C0
+	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+#if PACKETVER < 20090617
+	    6,  2, -1,  4,  4,  4,  4,  8,  8,254,  6,  8,  6, 54, 30, 54,
+#else // 0x7d9 changed
+	    6,  2, -1,  4,  4,  4,  4,  8,  8,268,  6,  8,  6, 54, 30, 54,
+#endif
+	    0,  0,  0,  0,  0,  8,  8, 32, -1,  5,  0,  0,  0,  0,  0,  0,
 	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 	};
 	struct {
@@ -13708,6 +13843,7 @@ static int packetdb_readdb(void)
 		{clif_parse_RemovePartyMember,"removepartymember"},
 		{clif_parse_PartyChangeOption,"partychangeoption"},
 		{clif_parse_PartyMessage,"partymessage"},
+		{clif_parse_PartyChangeLeader,"partychangeleader"},
 		{clif_parse_CloseVending,"closevending"},
 		{clif_parse_VendingListReq,"vendinglistreq"},
 		{clif_parse_PurchaseReq,"purchasereq"},

@@ -132,7 +132,6 @@ struct char_session_data {
 	char new_name[NAME_LENGTH];
 };
 
-int char_num, char_max;
 int max_connect_user = 0;
 int gm_allow_level = 99;
 int autosave_interval = DEFAULT_AUTOSAVE_INTERVAL;
@@ -811,6 +810,7 @@ int memitemdata_to_sql(const struct item items[], int max, int id, int tableswit
 	return 0;
 }
 
+#define MAX_CHAR_BUF 110 //Max size (for WFIFOHEAD calls)
 int mmo_char_tobuf(uint8* buf, struct mmo_charstatus* p);
 
 #ifndef TXT_SQL_CONVERT
@@ -1538,14 +1538,16 @@ int count_users(void)
 
 /// Writes char data to the buffer in the format used by the client.
 /// Used in packets 0x6b (chars info) and 0x6d (new char info)
-/// Returns the size (106 or 108)
-int mmo_char_tobuf(uint8* buf, struct mmo_charstatus* p)
+// Returns the size
+int mmo_char_tobuf(uint8* buffer, struct mmo_charstatus* p)
 {
-	int size = 106;
+	unsigned short offset = 0;
+	uint8* buf;
 
-	if( buf == NULL || p == NULL )
+	if( buffer == NULL || p == NULL )
 		return 0;
 
+	buf = WBUFP(buffer,0);
 	WBUFL(buf,0) = p->char_id;
 	WBUFL(buf,4) = min(p->base_exp, LONG_MAX);
 	WBUFL(buf,8) = p->zeny;
@@ -1557,8 +1559,15 @@ int mmo_char_tobuf(uint8* buf, struct mmo_charstatus* p)
 	WBUFL(buf,32) = p->karma;
 	WBUFL(buf,36) = p->manner;
 	WBUFW(buf,40) = min(p->status_point, SHRT_MAX);
+#if PACKETVER > 20081217
+	WBUFL(buf,42) = p->hp;
+	WBUFL(buf,46) = p->max_hp;
+	offset+=4;
+	buf = WBUFP(buffer,offset);
+#else
 	WBUFW(buf,42) = min(p->hp, SHRT_MAX);
 	WBUFW(buf,44) = min(p->max_hp, SHRT_MAX);
+#endif
 	WBUFW(buf,46) = min(p->sp, SHRT_MAX);
 	WBUFW(buf,48) = min(p->max_sp, SHRT_MAX);
 	WBUFW(buf,50) = DEFAULT_WALK_SPEED; // p->speed;
@@ -1583,10 +1592,9 @@ int mmo_char_tobuf(uint8* buf, struct mmo_charstatus* p)
 	WBUFW(buf,104) = p->slot;
 #if PACKETVER >= 20061023
 	WBUFW(buf,106) = ( p->rename > 0 ) ? 0 : 1;
-	size += 2;
+	offset+=2;
 #endif
-
-	return size;
+	return 106+offset;
 }
 
 int mmo_char_send006b(int fd, struct char_session_data* sd)
@@ -1597,7 +1605,7 @@ int mmo_char_send006b(int fd, struct char_session_data* sd)
 		ShowInfo("Loading Char Data ("CL_BOLD"%d"CL_RESET")\n",sd->account_id);
 
 	j = 24; // offset
-	WFIFOHEAD(fd,j + MAX_CHARS*108); // or 106(!)
+	WFIFOHEAD(fd,j + MAX_CHARS*MAX_CHAR_BUF);
 	WFIFOW(fd,0) = 0x6b;
 	memset(WFIFOP(fd,4), 0, 20); // unknown bytes
 	j+=mmo_chars_fromsql(sd, WFIFOP(fd,j));
@@ -3204,7 +3212,7 @@ int parse_char(int fd)
 				mmo_char_fromsql(i, &char_dat, false); //Only the short data is needed.
 
 				// send to player
-				WFIFOHEAD(fd,110);
+				WFIFOHEAD(fd,2+MAX_CHAR_BUF);
 				WFIFOW(fd,0) = 0x6d;
 				len = 2 + mmo_char_tobuf(WFIFOP(fd,2), &char_dat);
 				WFIFOSET(fd,len);
@@ -3344,6 +3352,28 @@ int parse_char(int fd)
 				WFIFOSET(fd,4);
 			}
 			break;
+
+		// captcha code request (not implemented)
+		// R 07e5 <?>.w <aid>.l
+		case 0x7e5:
+			WFIFOHEAD(fd,5);
+			WFIFOW(fd,0) = 0x7e9;
+			WFIFOW(fd,2) = 5;
+			WFIFOB(fd,4) = 1;
+			WFIFOSET(fd,5);
+			RFIFOSKIP(fd,8);
+			break;
+
+		// captcha code check (not implemented)
+		// R 07e7 <len>.w <aid>.l <code>.b10 <?>.b14
+		case 0x7e7:
+			WFIFOHEAD(fd,5);
+			WFIFOW(fd,0) = 0x7e9;
+			WFIFOW(fd,2) = 5;
+			WFIFOB(fd,4) = 1;
+			WFIFOSET(fd,5);
+			RFIFOSKIP(fd,32);
+		break;
 
 		// log in as map-server
 		case 0x2af8:

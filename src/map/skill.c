@@ -11195,6 +11195,9 @@ int skill_blockpc_start(struct map_session_data *sd, int skillid, int tick)
 		return -1;
 	}
 
+	if( battle_config.display_status_timers )
+		clif_skill_cooldown(sd, skillid, tick);
+
 	sd->blockskill[skillid] = 0x1|(0xFE&add_timer(gettick()+tick,skill_blockpc_end,sd->bl.id,skillid));
 	return 0;
 }

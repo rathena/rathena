@@ -7,6 +7,41 @@
 #include "cbasetypes.h"
 #include <time.h>
 
+// server->client protocol version
+//        0 - pre-?
+//        1 - ?                    - 0x196
+//        2 - ?                    - 0x78, 0x79
+//        3 - ?                    - 0x1c8, 0x1c9, 0x1de
+//        4 - ?                    - 0x1d7, 0x1d8, 0x1d9, 0x1da
+//        5 - 2003-12-18aSakexe+   - 0x1ee, 0x1ef, 0x1f0, ?0x1c4, 0x1c5?
+//        6 - 2004-03-02aSakexe+   - 0x1f4, 0x1f5
+//        7 - 2005-04-11aSakexe+   - 0x229, 0x22a, 0x22b, 0x22c
+// 20070521 - 2007-05-21aSakexe+   - 0x283
+// 20070821 - 2007-08-21aSakexe+   - 0x2c5
+// 20070918 - 2007-09-18aSakexe+   - 0x2d7, 0x2d9, 0x2da
+// 20071106 - 2007-11-06aSakexe+   - 0x78, 0x7c, 0x22c
+// 20081126 - 2008-11-26aSakexe+   - 0x1a2
+// 20090408 - 2009-04-08aSakexe+   - 0x44a (dont use as it overlaps with RE client packets)
+// 20080827 - 2008-08-27aRagexeRE+ - First RE Client
+// 20081217 - 2008-12-17aRagexeRE+ - 0x6d (Note: This one still use old Char Info Packet Structure)
+// 20081218 - 2008-12-17bRagexeRE+ - 0x6d (Note: From this one client use new Char Info Packet Structure)
+// 20090603 - 2009-06-03aRagexeRE+ - 0x7d7, 0x7d8, 0x7d9, 0x7da
+// 20090617 - 2009-06-17aRagexeRE+ - 0x7d9
+// 20090922 - 2009-09-22aRagexeRE+ - 0x7e5, 0x7e7, 0x7e8, 0x7e9
+#ifndef PACKETVER
+	#define PACKETVER	20081126
+	//#define PACKETVER 20090922
+#endif
+// backward compatible PACKETVER 8 and 9
+#if PACKETVER == 8
+#undef PACKETVER
+#define PACKETVER 20070521
+#endif
+#if PACKETVER == 9
+#undef PACKETVER
+#define PACKETVER 20071106
+#endif
+
 #define FIFOSIZE_SERVERLINK	256*1024
 
 //Remove/Comment this line to disable sc_data saving. [Skotlex]
@@ -15,8 +50,17 @@
 //Note that newer clients no longer save hotkeys in the registry!
 #define HOTKEY_SAVING
 
-//The number is the max number of hotkeys to save (27 = 9 skills x 3 bars)
-#define MAX_HOTKEYS 27
+//The number is the max number of hotkeys to save
+#if PACKETVER < 20090603
+	// (27 = 9 skills x 3 bars)               (0x02b9,191)
+	#define MAX_HOTKEYS 27
+#elif PACKETVER < 20090617
+	// (36 = 9 skills x 4 bars)               (0x07d9,254)
+	#define MAX_HOTKEYS 36
+#else
+	// (38 = 9 skills x 4 bars & 2 Quickslots)(0x07d9,268)
+	#define MAX_HOTKEYS 38
+#endif
 
 #define MAX_MAP_PER_SERVER 1500 // Increased to allow creation of Instance Maps
 #define MAX_INVENTORY 100
@@ -172,7 +216,7 @@ struct accreg {
 //For saving status changes across sessions. [Skotlex]
 struct status_change_data {
 	unsigned short type; //SC_type
-	int val1, val2, val3, val4, tick; //Remaining duration.
+	long val1, val2, val3, val4, tick; //Remaining duration.
 };
 
 struct storage_data {

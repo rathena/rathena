@@ -26,36 +26,8 @@ struct guild;
 struct battleground_data;
 struct quest;
 #include <stdarg.h>
-
-// server->client protocol version
-//        0 - pre-?
-//        1 - ?                  - 0x196
-//        2 - ?                  - 0x78, 0x79
-//        3 - ?                  - 0x1c8, 0x1c9, 0x1de
-//        4 - ?                  - 0x1d7, 0x1d8, 0x1d9, 0x1da
-//        5 - 2003-12-18aSakexe+ - 0x1ee, 0x1ef, 0x1f0, ?0x1c4, 0x1c5?
-//        6 - 2004-03-02aSakexe+ - 0x1f4, 0x1f5
-//        7 - 2005-04-11aSakexe+ - 0x229, 0x22a, 0x22b, 0x22c
-// 20070521 - 2007-05-21aSakexe+ - 0x283
-// 20070821 - 2007-08-21aSakexe+ - 0x2c5
-// 20070918 - 2007-09-18aSakexe+ - 0x2d7, 0x2d9, 0x2da
-// 20071106 - 2007-11-06aSakexe+ - 0x78, 0x7c, 0x22c
-// 20081126 - 2008-11-26aSakexe+ - 0x1a2
-#ifndef PACKETVER
-	#define PACKETVER	20081126
-#endif
-// backward compatible PACKETVER 8 and 9
-#if PACKETVER == 8
-#undef PACKETVER
-#define PACKETVER 20070521
-#endif
-#if PACKETVER == 9
-#undef PACKETVER
-#define PACKETVER 20071106
-#endif
-
 // packet DB
-#define MAX_PACKET_DB		0x500
+#define MAX_PACKET_DB		0x800
 #define MAX_PACKET_VER		25
 
 struct s_packet_db {
@@ -224,6 +196,7 @@ int clif_skillup(struct map_session_data *sd,int skill_num);
 int clif_skillcasting(struct block_list* bl,int src_id,int dst_id,int dst_x,int dst_y,int skill_num,int pl,int casttime);
 int clif_skillcastcancel(struct block_list* bl);
 int clif_skill_fail(struct map_session_data *sd,int skill_id,int type,int btype);
+int clif_skill_cooldown(struct map_session_data *sd, int skillid, unsigned int tick);
 int clif_skill_damage(struct block_list *src,struct block_list *dst,unsigned int tick,int sdelay,int ddelay,int damage,int div,int skill_id,int skill_lv,int type);
 //int clif_skill_damage2(struct block_list *src,struct block_list *dst,unsigned int tick,int sdelay,int ddelay,int damage,int div,int skill_id,int skill_lv,int type);
 int clif_skill_nodamage(struct block_list *src,struct block_list *dst,int skill_id,int heal,int fail);
@@ -437,6 +410,7 @@ void clif_quest_add(struct map_session_data * sd, struct quest * qd, int index);
 void clif_quest_delete(struct map_session_data * sd, int quest_id);  
 void clif_quest_update_status(struct map_session_data * sd, int quest_id, bool active); 
 void clif_quest_update_objective(struct map_session_data * sd, struct quest * qd, int index); 
+void clif_quest_show_event(struct map_session_data *sd, struct block_list *bl, short state, short color);
 
 int clif_send(const uint8* buf, int len, struct block_list* bl, enum send_target type);
 int do_final_clif(void);

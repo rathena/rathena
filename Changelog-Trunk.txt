@@ -3,6 +3,17 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2009/11/19
+	* Applied the renewal client support patch from Diablo (eA forum topic 222623).
+	  By default eA still supports sakexe/ragexe clients. In order to support the 
+	  renewal clients you must:
+	- 1: Change the default packet version to "default" in db/packet_db.txt
+	- 2: Change the supported PACKETVER in src/common/mmo.h to the most recent one 
+	- 3: recompile. [Skotlex]
+	* Added support for strcharinfo(3) to retrieve the player's map, as getmapxy 
+	  can be a bit unwieldy when you just want this information. [Skotlex]
+	* Added script command "searchitem" which enables scripts to do item searches 
+	  based on name (can be useful for creating query NPCs). [Skotlex]
 09/11/09
 	* Fixed mob is removed from map right after his rebirth. [Inkfish]
 	* Fixed dead event does not trigger when a mob has rebirth skill and dies for the second time. [Inkfish]

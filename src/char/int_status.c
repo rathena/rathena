@@ -54,7 +54,7 @@ static void inter_status_tostr(char* line, struct scdata *sc_data)
 
 	len = sprintf(line, "%d,%d,%d\t", sc_data->account_id, sc_data->char_id, sc_data->count);
 	for(i = 0; i < sc_data->count; i++) {
-		len += sprintf(line + len, "%d,%d,%d,%d,%d,%d\t", sc_data->data[i].type, sc_data->data[i].tick,
+		len += sprintf(line + len, "%d,%ld,%ld,%ld,%ld,%ld\t", sc_data->data[i].type, sc_data->data[i].tick,
 			sc_data->data[i].val1, sc_data->data[i].val2, sc_data->data[i].val3, sc_data->data[i].val4);
 	}
 	return;
@@ -74,7 +74,7 @@ static int inter_scdata_fromstr(char *line, struct scdata *sc_data)
 
 	for (i = 0; i < sc_data->count; i++)
 	{
-		if (sscanf(line + next, "%hu,%d,%d,%d,%d,%d\t%n", &sc_data->data[i].type, &sc_data->data[i].tick,
+		if (sscanf(line + next, "%hu,%ld,%ld,%ld,%ld,%ld\t%n", &sc_data->data[i].type, &sc_data->data[i].tick,
 			&sc_data->data[i].val1, &sc_data->data[i].val2, &sc_data->data[i].val3, &sc_data->data[i].val4, &len) < 6)
 		{
 			aFree(sc_data->data);

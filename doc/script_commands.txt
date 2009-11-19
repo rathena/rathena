@@ -4,7 +4,7 @@
 //= A reference manual for the eAthena scripting language.
 //= Commands are sorted depending on their functionality.
 //===== Version ===========================================
-//= 3.25.20081220
+//= 3.28.20091119
 //=========================================================
 //= 1.0 - First release, filled will as much info as I could
 //=       remember or figure out, most likely there are errors,
@@ -132,6 +132,9 @@
 //=       Replaced 'bonusautoscript' by 'autobonus'. [Inkfish]
 //= 3.27.20090725
 //=       Added Quest Log related commands. [Inkfish]
+//= 3.28.20091119
+//=       Added showevent and itemsearch commands [Skotlex]
+//=       Added info on strcharinfo(3) [Skotlex]
 //=========================================================
 
 This document is a reference manual for all the scripting commands and functions 
@@ -2013,6 +2016,7 @@ invoking character. Whatever it returns is determined by type.
  0 - Character's name.
  1 - The name of the party they're in if any.
  2 - The name of the guild they're in if any.
+ 3 - The name of the map the character is in.
  
 If a character is not a member of any party or guild, an empty string will be 
 returned when requesting that information.
@@ -4062,6 +4066,20 @@ This item will still disappear just like any other dropped item. Like 'getitem',
 it also accepts an 'english name' field from the database and creates apples if 
 the name isn't found.
 If the map name is given as "this", the map the invoking character is on will be used.
+
+---------------------------------------
+
+*searchitem <array name>,"<item name>";
+
+This command will fill the given array with the ID of items whose name matches the given one. It returns the number of items found. For performance reasons, the results array is limited to 10 items.
+
+	mes "What item are you looking for?";
+	input @name$;
+	set @qty, searchitem(@matches[0],@name$);
+	mes "I found "+@qty+" items:";
+	for (set @i, 0; @i < @qty; set @i, @i+1)
+		//Display name (eg: "Apple[0]")
+		mes getitemname(@matches[@i])+"["+getitemslots(@matches[@i])+"]";
 
 ---------------------------------------
 
@@ -6639,6 +6657,25 @@ If parameter "HUNTING" is supplied:
 	2  = you've killed all of the target monsters
 
 ---------------------------------------
+*showevent <state>, <color>;
+
+Show a colored mark in the mini-map like "viewpoint" and an emoticon on top of a NPC.
+This is used to indicate that a NPC has a quest or an event to certain player/s.
+
+state can be:
+	0 = disable ( Used to disable and remove the mark and the emoticon from the NPC. )
+	1 = exclamation emoticon ( Used to show an important quest event to certain player. )
+	2 = interrogation emoticon ( Used to show an non-important quest event to certain player. )
+	Other value may cause client crashes.
+
+color can be:
+	0 = yellow
+	1 = orange
+	2 = green
+	3 = blue
+	other values show a transparent mark in the mini-map.
+
+----------------------------------------
 
 Whew.
 That's about all of them.

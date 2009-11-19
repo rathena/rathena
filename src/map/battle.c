@@ -3345,7 +3345,7 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 		else
 			return -1;
 	}
-	else if( flag == BCT_NOONE ) //Why would someone use this? no clue.
+	if( flag == BCT_NOONE ) //Why would someone use this? no clue.
 		return -1;
 	
 	if( t_bl == s_bl )
@@ -3730,7 +3730,7 @@ static const struct _battle_data {
 	{ "hack_info_GM_level",                 &battle_config.hack_info_GM_level,              60,     0,      100,            },
 	{ "any_warp_GM_min_level",              &battle_config.any_warp_GM_min_level,           20,     0,      100,            },
 	{ "who_display_aid",                    &battle_config.who_display_aid,                 40,     0,      100,            },
-	{ "packet_ver_flag",                    &battle_config.packet_ver_flag,                 0xFFFF, 0x0000, 0xFFFF,         },
+	{ "packet_ver_flag",                    &battle_config.packet_ver_flag,                 0xFFFFFF,0x0000,INT_MAX,        },
 	{ "min_hair_style",                     &battle_config.min_hair_style,                  0,      0,      INT_MAX,        },
 	{ "max_hair_style",                     &battle_config.max_hair_style,                  23,     0,      INT_MAX,        },
 	{ "min_hair_color",                     &battle_config.min_hair_color,                  0,      0,      INT_MAX,        },
