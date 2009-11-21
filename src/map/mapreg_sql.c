@@ -44,7 +44,7 @@ bool mapreg_setreg(int uid, int val)
 	{
 		if( idb_put(mapreg_db,uid,(void*)val) )
 			mapreg_dirty = true; // already exists, delay write
-		else if(name[1] != '@') { 
+		else if(name[1] != '@')
 		{// write new wariable to database
 			char tmp_str[32*2+1];
 			Sql_EscapeStringLen(mmysql_handle, tmp_str, name, strnlen(name, 32));
