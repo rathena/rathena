@@ -43,11 +43,8 @@ bool mapreg_setreg(int uid, int val)
 	if( val != 0 )
 	{
 		if( idb_put(mapreg_db,uid,(void*)val) )
-			; // already exists, delay write
-		else
-		if( name[1] == '@' )
-			; // nothing more to do
-		else
+			mapreg_dirty = true; // already exists, delay write
+		else if(name[1] != '@') { 
 		{// write new wariable to database
 			char tmp_str[32*2+1];
 			Sql_EscapeStringLen(mmysql_handle, tmp_str, name, strnlen(name, 32));
@@ -59,16 +56,13 @@ bool mapreg_setreg(int uid, int val)
 	{
 		idb_remove(mapreg_db,uid);
 
-		if( name[1] == '@' )
-			; // nothing more to do
-		else
+		if( name[1] != '@' )
 		{// Remove from database because it is unused.
 			if( SQL_ERROR == Sql_Query(mmysql_handle, "DELETE FROM `%s` WHERE `varname`='%s' AND `index`='%d'", mapreg_table, name, i) )
 				Sql_ShowDebug(mmysql_handle);
 		}
 	}
 
-	mapreg_dirty = true;
 	return true;
 }
 
@@ -90,7 +84,7 @@ bool mapreg_setregstr(int uid, const char* str)
 	else
 	{
 		if (idb_put(mapregstr_db,uid, aStrdup(str)))
-			;
+			mapreg_dirty = true;
 		else if(name[1] != '@') { //put returned null, so we must insert.
 			// Someone is causing a database size infinite increase here without name[1] != '@' [Lance]
 			char tmp_str[32*2+1];
@@ -102,7 +96,6 @@ bool mapreg_setregstr(int uid, const char* str)
 		}
 	}
 
-	mapreg_dirty = true;
 	return true;
 }
 
