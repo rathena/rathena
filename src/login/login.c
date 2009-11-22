@@ -1474,6 +1474,7 @@ void login_set_defaults()
 {
 	login_config.login_ip = INADDR_ANY;
 	login_config.login_port = 6900;
+	login_config.ipban_cleanup_interval = 60;
 	login_config.ip_sync_interval = 0;
 	login_config.log_login = true;
 	safestrncpy(login_config.date_format, "%Y-%m-%d %H:%M:%S", sizeof(login_config.date_format));
@@ -1559,6 +1560,8 @@ int login_config_read(const char* cfgName)
 			login_config.use_dnsbl = (bool)config_switch(w2);
 		else if(!strcmpi(w1, "dnsbl_servers"))
 			safestrncpy(login_config.dnsbl_servs, w2, sizeof(login_config.dnsbl_servs));
+		else if(!strcmpi(w1, "ipban_cleanup_interval"))
+			login_config.ipban_cleanup_interval = (unsigned int)atoi(w2);
 		else if(!strcmpi(w1, "ip_sync_interval"))
 			login_config.ip_sync_interval = (unsigned int)1000*60*atoi(w2); //w2 comes in minutes.
 
