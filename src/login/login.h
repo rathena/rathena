@@ -48,6 +48,7 @@ struct Login_Config {
 
 	uint32 login_ip;                                // the address to bind to
 	uint16 login_port;                              // the port to bind to
+	unsigned int ipban_cleanup_interval;            // interval (in seconds) to clean up expired IP bans
 	unsigned int ip_sync_interval;                  // interval (in minutes) to execute a DNS/IP update (for dynamic IPs)
 	bool log_login;                                 // whether to log login server actions or not
 	char date_format[32];                           // date format used in messages
