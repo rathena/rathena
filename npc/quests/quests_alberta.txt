@@ -2219,7 +2219,7 @@ tur_dun03,104,171,4	script	Knight#tur3	105,{
 	mes "[Squall]";
 	mes "Am I the only one left? Where are all my comrades?! I... I'm about to go crazy!";
 	next;
-	if(select("Maybe they ran away?:What happened?")) {
+	if(select("Maybe they ran away?:What happened?") == 1) {
 		mes "[Squall]";
 		mes "No, we would never run away from the face of danger.";
 		next;

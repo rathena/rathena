@@ -7369,6 +7369,9 @@ void pc_bleeding (struct map_session_data *sd, unsigned int diff_tick)
 {
 	int hp = 0, sp = 0;
 
+	//if( pc_isdead(sd) )
+	//	return;
+
 	if (sd->hp_loss.value) {
 		sd->hp_loss.tick += diff_tick;
 		while (sd->hp_loss.tick >= sd->hp_loss.rate) {

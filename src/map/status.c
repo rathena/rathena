@@ -628,6 +628,7 @@ int status_charge(struct block_list* bl, int hp, int sp)
 //If flag&1, damage is passive and does not triggers cancelling status changes.
 //If flag&2, fail if target does not has enough to substract.
 //If flag&4, if killed, mob must not give exp/loot.
+//If flag&8, sp loss on dead target.
 int status_damage(struct block_list *src,struct block_list *target,int hp, int sp, int walkdelay, int flag)
 {
 	struct status_data *status;
@@ -653,9 +654,11 @@ int status_damage(struct block_list *src,struct block_list *target,int hp, int s
 		return skill_unit_ondamaged((struct skill_unit *)target, src, hp, gettick());
 
 	status = status_get_status_data(target);
+	if( status == &dummy_status )
+		return 0;
 
-	if( status == &dummy_status || (!status->hp && hp) )
-		return 0; //Invalid targets: no damage or dead
+	if( !status->hp )
+		flag |= 8;
 
 // Let through. battle.c/skill.c have the whole logic of when it's possible or
 // not to hurt someone (and this check breaks pet catching) [Skotlex]
@@ -663,15 +666,10 @@ int status_damage(struct block_list *src,struct block_list *target,int hp, int s
 //		return 0; //Cannot damage a bl not on a map, except when "charging" hp/sp
 
 	sc = status_get_sc(target);
-
 	if( battle_config.invincible_nodamage && src && sc && sc->data[SC_INVINCIBLE] && !sc->data[SC_INVINCIBLEOFF] )
-	{
-		if( !sp )
-			return 0;
 		hp = 1;
-	}
 
-	if( hp && !(flag&1) ) {
+	if( hp && !(flag&1|8) ) {
 		if( sc ) {
 			struct status_change_entry *sce;
 			if( (sce = sc->data[SC_DEVOTION]) && src && battle_getcurrentskill(src) != PA_PRESSURE )
@@ -751,8 +749,8 @@ int status_damage(struct block_list *src,struct block_list *target,int hp, int s
 		case BL_MER: mercenary_damage((TBL_MER*)target,src,hp,sp); break;
 	}
 
-	if (status->hp)
-  	{	//Still lives!
+	if( status->hp || flag&8 )
+  	{	//Still lives or has been dead before this damage.
 		if (walkdelay)
 			unit_set_walkdelay(target, gettick(), walkdelay, 0);
 		return hp+sp;
