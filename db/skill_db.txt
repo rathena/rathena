@@ -166,7 +166,7 @@
 122,3,6,2,4,0x42,1,5,1,no,0,0x80,0,misc,0,	HT_BLASTMINE,Blast Mine
 123,3,6,2,3,0x42,2,5,1,no,0,0x80,0,misc,0,	HT_CLAYMORETRAP,Claymore Trap
 124,3,6,32,0,0x1,0,1,1,no,0,0,0,misc,0,		HT_REMOVETRAP,Remove Trap
-125,3,6,2,0,0x1,0,1,1,no,0,0,0,misc,0,		HT_TALKIEBOX,Talkie Box
+125,3,6,2,0,0x1,0,1,1,no,0,0x80,0,misc,0,		HT_TALKIEBOX,Talkie Box
 126,0,0,0,0,0,0,10,0,no,0,0,0,weapon,0,		HT_BEASTBANE,Beast Bane
 127,0,0,0,0,0,0,1,0,no,0,0,0,misc,0,		HT_FALCON,Falconry Mastery
 128,0,0,0,0,0,0,10,0,no,0,0,0,misc,0,		HT_STEELCROW,Steel Crow
