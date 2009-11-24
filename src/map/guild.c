@@ -1771,7 +1771,7 @@ int guild_castledataloadack(int castle_id,int index,int value)
 	case 17:
 		gc->guardian[index-10].visible = value; break;
 	default:
-		ShowError("guild_castledataloadack ERROR!! (Not found index=%d)\n", index);
+		ShowError("guild_castledataloadack ERROR!! (Not found castle_id=%d index=%d)\n", castle_id, index);
 		return 0;
 	}
 

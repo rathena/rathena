@@ -16,12 +16,6 @@ struct character_data {
 	struct global_reg global[GLOBAL_REG_NUM];
 };
 
-// server->client protocol version
-// 20061023 - 2006-10-23aSakexe+ - 0x6b, 0x6d
-#ifndef PACKETVER
-	#define PACKETVER	20061023
-#endif
-
 struct mmo_charstatus* search_character(int aid, int cid);
 struct mmo_charstatus* search_character_byname(char* character_name);
 int search_character_index(char* character_name);
