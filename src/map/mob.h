@@ -121,7 +121,7 @@ struct mob_data {
 	struct {
 		int id;
 		unsigned int dmg;
-		unsigned flag : 1; //0: Normal. 1: Homunc exp
+		unsigned flag : 2; //0: Normal. 1: Homunc exp. 2: Pet exp
 	} dmglog[DAMAGELOG_SIZE];
 	struct spawn_data *spawn; //Spawn data.
 	int spawn_timer; //Required for Convex Mirror
