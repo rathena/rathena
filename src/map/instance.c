@@ -214,12 +214,9 @@ int instance_map_npcsub(struct block_list* bl, va_list args)
 void instance_init(int instance_id)
 {
 	int i;
-	if( !instance_id ) return;
-	if( instance[instance_id].state != INSTANCE_IDLE )
-	{
-		ShowError("instance_init: instance already initialited.\n");
-		return;
-	}
+
+	if( !instance_id )
+		return; // nothing to do
 
 	for( i = 0; i < instance[instance_id].num_map; i++ )
 		map_foreachinmap(instance_map_npcsub, map[instance[instance_id].map[i]].instance_src_map, BL_NPC, instance[instance_id].map[i]);
@@ -314,7 +311,7 @@ void instance_destroy(int instance_id)
 	time_t now = time(NULL);
 
 	if( !instance_id || instance[instance_id].state == INSTANCE_FREE )
-		return;
+		return; // nothing to do
 
 	if( instance[instance_id].progress_timeout && instance[instance_id].progress_timeout <= now )
 		type = 1;

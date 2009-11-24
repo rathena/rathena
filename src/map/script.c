@@ -14004,6 +14004,13 @@ BUILDIN_FUNC(instance_set_timeout)
 BUILDIN_FUNC(instance_init)
 {
 	int instance_id = script_getnum(st, 2);
+
+	if( instance[instance_id].state != INSTANCE_IDLE )
+	{
+		ShowError("instance_init: instance already initialized.\n");
+		return 0;
+	}
+
 	instance_init(instance_id);
 	return 0;
 }

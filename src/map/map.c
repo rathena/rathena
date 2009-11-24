@@ -3371,7 +3371,7 @@ void do_final(void)
 	mapit_free(iter);
 	
 	for( i = 0; i < MAX_INSTANCE; i++ )
-		if( instance[i].state != INSTANCE_FREE ) instance_destroy(i);
+		instance_destroy(i);
 
 	id_db->foreach(id_db,cleanup_db_sub);
 	chrif_char_reset_offline();
