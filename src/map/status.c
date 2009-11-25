@@ -669,7 +669,7 @@ int status_damage(struct block_list *src,struct block_list *target,int hp, int s
 	if( battle_config.invincible_nodamage && src && sc && sc->data[SC_INVINCIBLE] && !sc->data[SC_INVINCIBLEOFF] )
 		hp = 1;
 
-	if( hp && !(flag&1|8) ) {
+	if( hp && !(flag&(1|8)) ) {
 		if( sc ) {
 			struct status_change_entry *sce;
 			if( (sce = sc->data[SC_DEVOTION]) && src && battle_getcurrentskill(src) != PA_PRESSURE )
