@@ -3595,6 +3595,8 @@ int do_init(int argc, char *argv[])
 
 #ifndef TXT_ONLY
 	map_sql_init();
+	if (log_config.sql_logs)
+		log_sql_init();
 #endif /* not TXT_ONLY */
 
 	mapindex_init();
@@ -3629,10 +3631,6 @@ int do_init(int argc, char *argv[])
 	do_init_npc();
 	do_init_unit();
 	do_init_battleground();
-#ifndef TXT_ONLY /* mail system [Valaris] */
-	if (log_config.sql_logs)
-		log_sql_init();
-#endif /* not TXT_ONLY */
 
 	npc_event_do_oninit();	// npcのOnInitイベント?行
 
