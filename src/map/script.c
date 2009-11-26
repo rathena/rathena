@@ -6118,12 +6118,13 @@ BUILDIN_FUNC(strnpcinfo)
 		case 0: // display name
 			name = aStrdup(nd->name);
 			break;
-		case 1: // visible part of display name name
+		case 1: // visible part of display name
 			if((buf = strchr(nd->name,'#')) != NULL)
 			{
 				name = aStrdup(nd->name);
 				name[buf - nd->name] = 0;
-			}
+			} else // Return the name, there is no '#' present
+				name = aStrdup(nd->name);
 			break;
 		case 2: // # fragment
 			if((buf = strchr(nd->name,'#')) != NULL)
