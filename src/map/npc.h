@@ -98,11 +98,11 @@ enum npce_event {
 struct view_data* npc_get_viewdata(int class_);
 int npc_chat_sub(struct block_list* bl, va_list ap);
 int npc_event_dequeue(struct map_session_data* sd);
-int npc_event(struct map_session_data* sd, const char* eventname, int mob_kill);
+int npc_event(struct map_session_data* sd, const char* eventname, int ontouch);
 int npc_touch_areanpc(struct map_session_data* sd, int m, int x, int y);
 int npc_touch_areanpc2(struct mob_data *md); // [Skotlex]
 int npc_check_areanpc(int flag, int m, int x, int y, int range);
-int npc_touchnext_areanpc(struct map_session_data* sd,bool logout);
+int npc_touchnext_areanpc(struct map_session_data* sd,bool leavemap);
 int npc_click(struct map_session_data* sd, struct npc_data* nd);
 int npc_scriptcont(struct map_session_data* sd, int id);
 struct npc_data* npc_checknear(struct map_session_data* sd, struct block_list* bl);

@@ -165,15 +165,14 @@ static int unit_walktoxy_timer(int tid, unsigned int tick, int id, intptr data)
 	ud->walktimer = INVALID_TIMER;
 	
 	if(sd) {
+		if( sd->touching_id )
+			npc_touchnext_areanpc(sd,false);
 		if(map_getcell(bl->m,x,y,CELL_CHKNPC)) {
 			npc_touch_areanpc(sd,bl->m,x,y);
 			if (bl->prev == NULL) //Script could have warped char, abort remaining of the function.
 				return 0;
 		} else
 			sd->areanpc_id=0;
-
-		if( sd->ontouch.npc_id )
-			npc_touchnext_areanpc(sd,false);
 
 		if (sd->state.gmaster_flag &&
 			(battle_config.guild_aura&((agit_flag || agit2_flag)?2:1)) &&
@@ -518,15 +517,14 @@ int unit_movepos(struct block_list *bl, short dst_x, short dst_y, int easy, bool
 	ud->walktimer = INVALID_TIMER;
 		
 	if(sd) {
+		if( sd->touching_id )
+			npc_touchnext_areanpc(sd,false);
 		if(map_getcell(bl->m,bl->x,bl->y,CELL_CHKNPC)) {
 			npc_touch_areanpc(sd,bl->m,bl->x,bl->y);
 			if (bl->prev == NULL) //Script could have warped char, abort remaining of the function.
 				return 0;
 		} else
 			sd->areanpc_id=0;
-
-		if( sd->ontouch.npc_id )
-			npc_touchnext_areanpc(sd,false);
 
 		if( sd->status.pet_id > 0 && sd->pd && sd->pd->pet.intimate > 0 )
 		{ // Check if pet needs to be teleported. [Skotlex]
@@ -1816,7 +1814,7 @@ int unit_remove_map_(struct block_list *bl, int clrtype, const char* file, int l
 			guild_reply_reqalliance(sd,sd->guild_alliance_account,0);
 		if(sd->menuskill_id)
 			sd->menuskill_id = sd->menuskill_val = 0;
-		if( sd->ontouch.npc_id )
+		if( sd->touching_id )
 			npc_touchnext_areanpc(sd,true);
 
 		sd->npc_shopid = 0;

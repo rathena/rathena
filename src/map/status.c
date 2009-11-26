@@ -6093,12 +6093,15 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 		//OPTION
 		case SC_HIDING:
 			sc->option |= OPTION_HIDE;
+			opt_flag = 2;
 			break;
 		case SC_CLOAKING:
 			sc->option |= OPTION_CLOAK;
+			opt_flag = 2;
 			break;
 		case SC_CHASEWALK:
 			sc->option |= OPTION_CHASEWALK|OPTION_CLOAK;
+			opt_flag = 2;
 			break;
 		case SC_SIGHT:
 			sc->option |= OPTION_SIGHT;
@@ -6198,7 +6201,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			break;
 	}
 
-	if( sd && sd->ontouch.npc_id )
+	if( opt_flag&2 && sd && sd->touching_id )
 		npc_touchnext_areanpc(sd,false);
 
 	return 1;

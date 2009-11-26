@@ -4832,9 +4832,6 @@ attached at this execution will be the RID of the killing character.
 
     monster "place",60,100,"Poring",1002,1,"NPCNAME::OnLabel";
 
-If you do not specify any event label, a label in the NPC object that ran this 
-command, called 'OnMyMobDead:' will execute anyway, if present.
-
 The coordinates of 0,0 will spawn the monster on a random place on the map.
 
 The 'areamonster' command works much like the 'monster' command and is not 

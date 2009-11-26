@@ -1541,11 +1541,13 @@ int skill_blown(struct block_list* src, struct block_list* target, int count, in
 
 	if( target->type == BL_PC )
 	{
-		if( map_getcell(target->m, target->x, target->y, CELL_CHKNPC) )
-			npc_touch_areanpc((TBL_PC*)target, target->m, target->x, target->y); //Invoke area NPC
-
-		if( ((TBL_PC*)target)->ontouch.npc_id )
-			npc_touchnext_areanpc(((TBL_PC*)target),false);
+		TBL_PC *sd = (TBL_PC*)target;
+		if( sd->touching_id )
+			npc_touchnext_areanpc(sd,false);
+		if( map_getcell(target->m,target->x,target->y,CELL_CHKNPC) )
+			npc_touch_areanpc(sd,target->m,target->x,target->y);
+		else
+			sd->areanpc_id=0;
 	}
 
 	return count; //Return amount of knocked back cells.

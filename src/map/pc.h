@@ -161,11 +161,7 @@ struct map_session_data {
 	unsigned short mapindex;
 	unsigned char head_dir; //0: Look forward. 1: Look right, 2: Look left.
 	unsigned int client_tick;
-	int npc_id,areanpc_id,npc_shopid;
-	struct {
-		int npc_id;
-		short x,y;
-	} ontouch;
+	int npc_id,areanpc_id,npc_shopid,touching_id;
 	int npc_item_flag; //Marks the npc_id with which you can use items during interactions with said npc (see script command enable_itemuse)
 	int npc_menu; // internal variable, used in npc menu handling
 	int npc_amount;
@@ -358,7 +354,7 @@ struct map_session_data {
 	unsigned short pvp_rank, pvp_lastusers;
 	unsigned short pvp_won, pvp_lost;
 
-	char eventqueue[MAX_EVENTQUEUE][50];
+	char eventqueue[MAX_EVENTQUEUE][NAME_LENGTH*2+3];
 	int eventtimer[MAX_EVENTTIMER];
 	unsigned short eventcount; // [celest]
 
