@@ -5481,15 +5481,6 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 			duel_reject(sd->duel_invite, sd);
 	}
 
-	pc_setdead(sd);
-	//Reset menu skills/item skills
-	if (sd->skillitem)
-		sd->skillitem = sd->skillitemlv = 0;
-	if (sd->menuskill_id)
-		sd->menuskill_id = sd->menuskill_val = 0;
-	//Reset ticks.
-	sd->hp_loss.tick = sd->sp_loss.tick = sd->hp_regen.tick = sd->sp_regen.tick = 0;
-
 	pc_setglobalreg(sd,"PC_DIE_COUNTER",sd->die_counter+1);
 	pc_setglobalreg(sd,"killerrid",src?src->id:0);
 	if( sd->state.bg_id )
@@ -5498,8 +5489,16 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 		if( (bg = bg_team_search(sd->state.bg_id)) != NULL && bg->die_event[0] )
 			npc_event(sd, bg->die_event, 0);
 	}
-
 	npc_script_event(sd,NPCE_DIE);
+
+	pc_setdead(sd);
+	//Reset menu skills/item skills
+	if (sd->skillitem)
+		sd->skillitem = sd->skillitemlv = 0;
+	if (sd->menuskill_id)
+		sd->menuskill_id = sd->menuskill_val = 0;
+	//Reset ticks.
+	sd->hp_loss.tick = sd->sp_loss.tick = sd->hp_regen.tick = sd->sp_regen.tick = 0;
 
 	if ( sd && sd->spiritball )
 		pc_delspiritball(sd,sd->spiritball,0);

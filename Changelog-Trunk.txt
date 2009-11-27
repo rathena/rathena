@@ -10,6 +10,7 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 	- removed the 'feature' that events only trigger when the player is in the OnTouch area IF it's specified. 
 		It's never documented and breaks official scripts.
 	- some cleanups and bug fixes to OnTouch_.
+	* Fixed warping in OnPCDieEvent revives people with 0 hp.
 2009/11/25
 	* Fixed strnpcinfo(1) returning blank strings when NPC names did not have a hidden portion of the display name. (bugreport:3758) [Paradox924X]
 2009/11/23
