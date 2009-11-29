@@ -2666,7 +2666,7 @@ OnStartArena:
 
 OnTimer10000:
 	donpcevent "Manager#aru02_02::Onchange";
-	mapannounce "arug_cas02","Rebuild this stonghold's Guardian Stones and Fortress Gates to secure your guild's new aquisition!",bc_map,"0x00FF00",FW_NORMAL,20,0,40;
+	mapannounce "arug_cas02","Rebuild this stronghold's Guardian Stones and Fortress Gates to secure your guild's new aquisition!",bc_map,"0x00FF00",FW_NORMAL,20,0,40;
 	end;
 }
 

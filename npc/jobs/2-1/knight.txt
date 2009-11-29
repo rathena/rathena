@@ -653,6 +653,7 @@ prt_in,75,107,4	script	Sir Andrew#knt	65,{
 				mes "[Sir Andrew]";
 				mes "Please go to my fellow Knight, Sir Siracuse, as he will give you your next test. Well done in mastering the Swordman job.";
 				set KNIGHT_Q,4;
+				changequest 9000,9003;
 				close;
 			}
 			mes "[Sir Andrew]";

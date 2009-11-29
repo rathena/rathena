@@ -2710,7 +2710,7 @@ OnStartArena:
 
 OnTimer10000:
 	donpcevent "Manager#sch04_02::Onchange";
-	mapannounce "schg_cas04","Rebuild this stonghold's Guardian Stones and Fortress Gates to secure your guild's new aquisition!",bc_map,"0x00FF00",FW_NORMAL,20,0,40;
+	mapannounce "schg_cas04","Rebuild this stronghold's Guardian Stones and Fortress Gates to secure your guild's new aquisition!",bc_map,"0x00FF00",FW_NORMAL,20,0,40;
 	end;
 }
 

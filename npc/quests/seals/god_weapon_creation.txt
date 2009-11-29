@@ -809,7 +809,7 @@ que_god01,293,3,0	script	Godly Item Quests Related#god	90,{
 	mes "If you wish to cancel, please enter 0.";
 	next;
 	input .@input,0,4001;
-	if (.@iput < 0 || .@input > 4000) {
+	if (.@input < 0 || .@input > 4000) {
 		mes "[Use in case of emergency]";
 		mes "Password is incorrect.";
 		close;
