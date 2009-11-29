@@ -1385,6 +1385,8 @@ int status_calc_mob_(struct mob_data* md, bool first)
 
 	if (md->guardian_data && md->guardian_data->guardup_lv)
 		flag|=4;
+	if (md->class_ == MOBID_EMPERIUM)
+		flag|=4;
 
 	if (battle_config.slaves_inherit_speed && md->master_id)
 		flag|=8;
@@ -1497,15 +1499,30 @@ int status_calc_mob_(struct mob_data* md, bool first)
 		if (!gc)
 			ShowError("status_calc_mob: No castle set at map %s\n", map[md->bl.m].name);
 		else {
-			status->max_hp += 2000 * gc->defense;
-			status->max_sp += 200 * gc->defense;
-			status->hp = status->max_hp;
-			status->sp = status->max_sp;
+			if(gc->castle_id > 23) {
+				if(md->class_ == MOBID_EMPERIUM) {
+					status->max_hp += 1000 * gc->defense;
+					status->max_sp += 200 * gc->defense;
+					status->hp = status->max_hp;
+					status->sp = status->max_sp;
+					status->def += (gc->defense+2)/3;
+					status->mdef += (gc->defense+2)/3;
+				}
+			}else{
+				status->max_hp += 1000 * gc->defense;
+				status->max_sp += 200 * gc->defense;
+				status->hp = status->max_hp;
+				status->sp = status->max_sp;
+				status->def += (gc->defense+2)/3;
+				status->mdef += (gc->defense+2)/3;
+			}
 		}
-		status->batk += status->batk * 10*md->guardian_data->guardup_lv/100;
-		status->rhw.atk += status->rhw.atk * 10*md->guardian_data->guardup_lv/100;
-		status->rhw.atk2 += status->rhw.atk2 * 10*md->guardian_data->guardup_lv/100;
-		status->aspd_rate -= 100*md->guardian_data->guardup_lv;
+		if(md->class_ != MOBID_EMPERIUM) {
+			status->batk += status->batk * 10*md->guardian_data->guardup_lv/100;
+			status->rhw.atk += status->rhw.atk * 10*md->guardian_data->guardup_lv/100;
+			status->rhw.atk2 += status->rhw.atk2 * 10*md->guardian_data->guardup_lv/100;
+			status->aspd_rate -= 100*md->guardian_data->guardup_lv;
+		}
 	}
 
 	if( first ) //Initial battle status
