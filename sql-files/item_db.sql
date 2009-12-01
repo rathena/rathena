@@ -1615,7 +1615,7 @@ REPLACE INTO `item_db` VALUES (2772,'Krieger_Ring1','Glorious Ring',5,0,NULL,0,N
 REPLACE INTO `item_db` VALUES (2773,'Krieger_Ring2','Glorious Pupularized Ring',5,0,NULL,0,NULL,0,NULL,0,0xFFFFFFFE,7,2,136,NULL,61,0,0,'bonus bAllStats,2;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (2774,'Krieger_Ring3','Glorious Mass-Production Ring',5,0,NULL,0,NULL,0,NULL,0,0xFFFFFFFE,7,2,136,NULL,61,0,0,'bonus bAllStats,1;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (2775,'Lure','Lure',5,0,NULL,100,NULL,0,NULL,0,0xFFFFFFFF,7,2,136,NULL,0,0,0,NULL,NULL,NULL);
-# 2776,Cool_Towel
+# REPLACE INTO `item_db` VALUES (2776,'Cool_Towel','Adventurer\'s Trusty Towel',5,0,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,136,NULL,NULL,NULL,NULL,NULL,'setoption Option_Summer,1;','setoption Option_Summer,0;');
 # 2777,Shaman_Ring
 # 2778,Shaman_Earing
 # 2779,Dark_Knight_Belt
@@ -2567,7 +2567,7 @@ REPLACE INTO `item_db` VALUES (5389,'Angel_Spirit','Mask Of Goddess',5,20,NULL,2
 # REPLACE INTO `item_db` VALUES (5396,'Jasper_Crest','Jasper Crest',5,20,NULL,700,NULL,2,NULL,0,0xFFFFFFFF,7,2,256,NULL,0,1,399,'bonus bDex,3; bonus bVit,1;',NULL,NULL);
 # REPLACE INTO `item_db` VALUES (5397,'Scuba_Mask','Scuba Gear',5,20,NULL,100,NULL,0,NULL,0,0xFFFFFFFF,7,2,512,NULL,0,0,400,'bonus2 bSubEle,Ele_Water,10;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (5398,'Bone_Head','Bone Head',5,20,NULL,1200,NULL,5,NULL,1,0x000444A2,2,2,256,NULL,85,1,401,'bonus bStr,2; bonus bMdef,5; bonus2 bResEff,Eff_Stun,500; bonus2 bResEff,Eff_Bleeding,500;',NULL,NULL);
-REPLACE INTO `item_db` VALUES (5399,'Mandragora_Cap','Mandragora Cap',5,20,NULL,3000,NULL,1,NULL,1,0xFFFFFFFF,2,2,256,NULL,85,0,402,'bonus bVit,3; bonus3 bAutoSpellWhenHit,\"DC_SCREAM\",5,10;',NULL,NULL);
+REPLACE INTO `item_db` VALUES (5399,'Mandragora_Cap','Mandragora Cap',5,20,NULL,300,NULL,1,NULL,1,0xFFFFFFFF,2,2,256,NULL,85,0,402,'bonus bVit,3; bonus3 bAutoSpellWhenHit,\"DC_SCREAM\",5,10;',NULL,NULL);
 # REPLACE INTO `item_db` VALUES (5400,'Fox_Hat','Fox Mask',5,20,NULL,200,NULL,1,NULL,0,0xFFFFFFFF,7,0,769,NULL,0,1,403,'bonus bLuk,1;',NULL,NULL);
 # REPLACE INTO `item_db` VALUES (5401,'Black_Glasses','Black Glasses',5,20,NULL,200,NULL,1,NULL,0,0xFFFFFFFF,7,2,512,NULL,70,0,404,'bonus bInt,1; bonus bMdef,2;',NULL,NULL);
 # REPLACE INTO `item_db` VALUES (5402,'Mischievous_Fairy','Naughty Fairy',5,20,NULL,200,NULL,1,NULL,0,0xFFFFFFFF,7,2,512,NULL,70,0,405,'bonus bFlee2,3;',NULL,NULL);
@@ -2622,10 +2622,10 @@ REPLACE INTO `item_db` VALUES (5418,'Soldier_Hat','Legionnaire Hat',5,20,NULL,40
 # 5451,Dragonhelm_Gold
 # 5452,Dragonhelm_Silver
 # 5453,Dragonhelm_Copper
-REPLACE INTO `item_db` VALUES (5454,'Dog_Cap_','Puppy Hat',5,NULL,NULL,500,NULL,3,NULL,1,0xFFFFFFFF,7,2,256,NULL,0,1,455,NULL,NULL,NULL);
+REPLACE INTO `item_db` VALUES (5454,'Dog_Cap_','Puppy Hat',5,NULL,NULL,500,NULL,3,NULL,1,0xFFFFFFFF,7,2,256,NULL,0,1,234,NULL,NULL,NULL);
 REPLACE INTO `item_db` VALUES (5455,'Geographer_Band_','Decorative Geographer',5,NULL,NULL,500,NULL,1,NULL,1,0xFFFFFFFF,7,2,256,NULL,0,1,456,NULL,NULL,NULL);
 REPLACE INTO `item_db` VALUES (5456,'Vacation_Hat_','Summer Hat',5,NULL,NULL,200,NULL,0,NULL,1,0xFFFFFFFF,7,2,256,NULL,0,1,457,NULL,NULL,NULL);
-# 5457,Spring_Rabbit_Hat
+# REPLACE INTO `item_db` VALUES (5457,'Spring_Rabbit_Hat','Spring Rabbit Hat',5,NULL,NULL,300,NULL,2,NULL,0,0xFFFFFFFE,7,2,256,NULL,0,1,455,'bonus bAgi,3;',NULL,NULL);
 # 5458,Pinwheel_Cap
 # 5459,Drooping_Bunny_Chusuk
 # 5460,Adv_Dragon_Skull
@@ -2633,18 +2633,18 @@ REPLACE INTO `item_db` VALUES (5456,'Vacation_Hat_','Summer Hat',5,NULL,NULL,200
 # 5462,Spiked_Scarf
 # 5463,Rainbow_Scarf
 # 5464,Zaha_Doll_Hat
-# 5465,Celestial_Hat
-# 5466,Wind_Milestone
-# 5467,Helm_Of_Dragoon
-# 5468,Parade_Cap
-# 5469,Noble_Hat
-# 5470,Eyes_Of_Darkness
-# 5471,Hairband_Of_Reginleif
-# 5472,Red_White_Hat
-# 5473,Forceps_Hairpin
-# 5474,Notice_Board
-# 5475,Cube_Mask
-# 5476,Hairband_Of_Grandpeco
+# REPLACE INTO `item_db` VALUES (5465,'Celestial_Hat','Sky Hat',5,NULL,NULL,500,NULL,3,NULL,1,0xFFFFFFFF,7,2,256,NULL,40,1,462,'bonus bLuk,2; bonus bMdef,5; if(getrefine()>4) bonus bLuk,getrefine();',NULL,NULL);
+# REPLACE INTO `item_db` VALUES (5466,'Wind_Milestone','Wind Milestone',5,NULL,NULL,100,NULL,2,NULL,0,0xFFFFFFFF,7,2,256,NULL,30,1,463,'bonus bAgi,2; skill \"AL_TELEPORT\",1;',NULL,NULL);
+# REPLACE INTO `item_db` VALUES (5467,'Helm_Of_Dragoon','Dragoon Helm',5,NULL,NULL,200,NULL,5,NULL,0,0xFFFFFFFF,7,2,256,NULL,50,1,464,'bonus2 bAddRace,RC_Dragon,20; bonus3 bAutoSpell,\"NPC_WIDEBLEEDING\",1,30; bonus3 bAutoSpell,\"NPC_WIDEFREEZE\",1,30; bonus3 bAutoSpell,\"NPC_WIDESILENCE\",1,30; bonus3 bAutoSpell,\"NPC_WIDESTONE\",1,30; bonus3 bAutoSpell,\"NPC_WIDECONFUSE\",1,30; bonus3 bAutoSpell,\"NPC_WIDESLEEP\",1,30;',NULL,NULL);
+# REPLACE INTO `item_db` VALUES (5468,'Parade_Cap','Parade Hat',5,NULL,NULL,800,NULL,3,NULL,0,0xFFFFFFFF,7,2,256,NULL,1,1,465,'bonus bDelayRate,-5; bonus bMdef,2; if(getrefine()>5) bonus bCastrate,-5;',NULL,NULL);
+# REPLACE INTO `item_db` VALUES (5469,'Noble_Hat','Noble Hat',5,NULL,NULL,300,NULL,2,NULL,0,0xFFFFFFFF,7,2,256,NULL,30,1,466,'bonus bStr,2; bonus3 bAutoSpellWhenHit,\"BS_ADRENALINE\",1,100;',NULL,NULL);
+# REPLACE INTO `item_db` VALUES (5470,'Eyes_Of_Darkness','Eye Of Darkness',5,NULL,NULL,100,NULL,1,NULL,0,0xFFFFFFFF,7,2,512,NULL,50,1,467,'bonus bDex,1; bonus2 bResEff,Eff_Blind,10000;',NULL,NULL);
+# REPLACE INTO `item_db` VALUES (5471,'Hairband_Of_Reginleif','Hairband Of Reginleif',5,NULL,NULL,800,NULL,1,NULL,0,0xFFFFFFFF,7,2,512,NULL,50,1,468,'bonus2 bSubEle,Ele_Water,3; bonus2 bSubEle,Ele_Fire,3; bonus2 bSubEle,Ele_Undead,3; bonus2 bSubEle,Ele_Ghost,3;',NULL,NULL);
+# REPLACE INTO `item_db` VALUES (5472,'Red_White_Hat','Red White Hat',5,NULL,NULL,100,NULL,0,NULL,0,0xFFFFFFFF,7,2,256,NULL,0,1,469,'bonus3 bAddMonsterDropItem,550,RC_DemiHuman,3;',NULL,NULL);
+# REPLACE INTO `item_db` VALUES (5473,'Forceps_Hairpin','Nipper Crab Hairpin',5,NULL,NULL,500,NULL,4,NULL,0,0xFFFFFFFF,7,2,256,NULL,30,1,470,'bonus3 bAutoSpellWhenHit,\"MG_COLDBOLT\",1,100; bonus3 bAddMonsterDropItem,991,RC_Fish,3;',NULL,NULL);
+# REPLACE INTO `item_db` VALUES (5474,'Notice_Board','Notice Board',5,NULL,NULL,700,NULL,2,NULL,0,0xFFFFFFFF,7,2,256,NULL,10,1,471,NULL,NULL,NULL);
+# REPLACE INTO `item_db` VALUES (5475,'Cube_Mask','Cube Mask',5,NULL,NULL,100,NULL,1,NULL,0,0xFFFFFFFF,7,2,513,NULL,0,1,472,NULL,NULL,NULL);
+# REPLACE INTO `item_db` VALUES (5476,'Hairband_Of_Grandpeco','Grand Peco Hairband',5,NULL,NULL,800,NULL,2,NULL,0,0xFFFFFFFF,7,2,768,NULL,30,1,473,'bonus bStr,2; bonus bMaxHPrate,-10; bonus2 bAddRace2,3,15;',NULL,NULL);
 # 5477,Bro_Flag
 # 5478,Classic_Hat
 # 5479,Shaman's_Hair_Ornament
@@ -2706,6 +2706,11 @@ REPLACE INTO `item_db` VALUES (5456,'Vacation_Hat_','Summer Hat',5,NULL,NULL,200
 # 5535,Side_Cap
 # 5565,Dragon_Arhat_Mask
 # 5566,Tiger_Arhat_Mask
+# REPLACE INTO `item_db` VALUES (5653,'J_Darkness_Helm','Darkness Helm',5,NULL,NULL,500,NULL,3,NULL,1,0xFFFFFFFF,7,2,256,NULL,70,1,586,'if(isequipped(5074)) { bonus bStr,1; bonus bAspdRate,2; } else if(isequipped(5068)) { bonus bStr,1; bonus bAtkRate,5; } else if(isequipped(5358)) { bonus bAgi,1; bonus bFlee,3; } else if(isequipped(5401)) { bonus bInt,1; bonus bMatkRate,2; } else if(isequipped(5470)) { bonus bDex,1; bonus bLongAtkRate,3; }',NULL,NULL);
+# REPLACE INTO `item_db` VALUES (5654,'Red_Marcher_Hat','Red Marcher Hat',5,NULL,NULL,200,NULL,2,NULL,1,0xFFFFFFFF,7,2,256,NULL,10,1,587,'bonus bStr,2; bonus3 bAutoSpell,\"PR_ASPERSIO\",2,30;',NULL,NULL);
+# REPLACE INTO `item_db` VALUES (5655,'Evil_Snake_Lord_Hat','Evil Snake Lord Hat',5,NULL,NULL,500,NULL,2,NULL,0,0xFFFFFFFF,7,2,256,NULL,50,1,372,'bonus bInt,2; bonus bAgi,2; bonus bDex,-2; autobonus \"{ bonus bCastrate,-50; bonus bFlee,30; }\",50,5000,BF_MAGIC,\"{ specialeffect2 EF_SUFFRAGIUM; }\";',NULL,NULL);
+# REPLACE INTO `item_db` VALUES (5656,'Scooter_Helmet','Scooter Helmet',5,NULL,NULL,1000,NULL,7,NULL,1,0xFFFFFFFF,7,2,256,NULL,50,1,588,'bonus bUnbreakableHelm,0;',NULL,NULL);
+# REPLACE INTO `item_db` VALUES (5657,'Captain\'s_Pipe','Captain\'s Pipe',5,NULL,NULL,100,NULL,0,NULL,0,0xFFFFFFFF,7,2,1,NULL,30,1,383,'if(isequipped(5184)) bonus bLongAtkRate,getrefine();',NULL,NULL);
 REPLACE INTO `item_db` VALUES (5800,'Blush_Of_Groom','Blush of Groom',5,20,NULL,50,NULL,0,NULL,0,0xFFFFFFFF,7,2,512,NULL,0,0,125,'bonus2 bSubRace,RC_DemiHuman,3;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (5801,'Ribbon_Of_Bride','Red Tailed Ribbon',5,20,NULL,100,NULL,5,NULL,0,0xFFFFFFFF,7,2,256,NULL,0,1,167,'bonus bAllStats,2; bonus2 bSubRace,RC_DemiHuman,10; if (getskilllv(\"AL_HEAL\") == 10) { bonus3 bAutoSpellWhenHit,\"AL_HEAL\",10,20; } else { bonus3 bAutoSpellWhenHit,\"AL_HEAL\",5,20; }',NULL,NULL);
 REPLACE INTO `item_db` VALUES (5802,'Upgrade_Elephant_Hat','Upgraded Elephant Hat',5,0,NULL,500,NULL,3,NULL,1,0xFFFFFFFF,7,2,256,NULL,0,1,215,NULL,NULL,NULL);

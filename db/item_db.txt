@@ -2536,7 +2536,7 @@
 //5396,Jasper_Crest,Jasper Crest,5,20,,700,,2,,0,0xFFFFFFFF,7,2,256,,0,1,399,{ bonus bDex,3; bonus bVit,1; },{},{}
 //5397,Scuba_Mask,Scuba Gear,5,20,,100,,0,,0,0xFFFFFFFF,7,2,512,,0,0,400,{ bonus2 bSubEle,Ele_Water,10; },{},{}
 5398,Bone_Head,Bone Head,5,20,,1200,,5,,1,0x000444A2,2,2,256,,85,1,401,{ bonus bStr,2; bonus bMdef,5; bonus2 bResEff,Eff_Stun,500; bonus2 bResEff,Eff_Bleeding,500; },{},{}
-5399,Mandragora_Cap,Mandragora Cap,5,20,,3000,,1,,1,0xFFFFFFFF,2,2,256,,85,0,402,{ bonus bVit,3; bonus3 bAutoSpellWhenHit,"DC_SCREAM",5,10; },{},{}
+5399,Mandragora_Cap,Mandragora Cap,5,20,,300,,1,,1,0xFFFFFFFF,2,2,256,,85,0,402,{ bonus bVit,3; bonus3 bAutoSpellWhenHit,"DC_SCREAM",5,10; },{},{}
 //5400,Fox_Hat,Fox Mask,5,20,,200,,1,,0,0xFFFFFFFF,7,0,769,,0,1,403,{ bonus bLuk,1; },{},{}
 //5401,Black_Glasses,Black Glasses,5,20,,200,,1,,0,0xFFFFFFFF,7,2,512,,70,0,404,{ bonus bInt,1; bonus bMdef,2; },{},{}
 //5402,Mischievous_Fairy,Naughty Fairy,5,20,,200,,1,,0,0xFFFFFFFF,7,2,512,,70,0,405,{ bonus bFlee2,3; },{},{}
