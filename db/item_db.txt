@@ -1590,9 +1590,9 @@
 //2779,Dark_Knight_Belt
 //2780,Dark_Knight_Glove
 //2781,Aumdura's_Grace
-//2782,Ring_Of_Wise_King
+2782,Ring_Of_Wise_King,Ring Of Wise King,5,0,,100,,0,,0,0xFFFFFFFF,7,2,136,,0,0,0,{},{},{}
 //2783,Eyes_Stone_Ring
-//2784,Oh_Holy_Night
+2784,Oh_Holy_Night,Christmas Musicbox,5,0,,100,,0,,0,0xFFFFFFFF,7,2,136,,0,0,0,{ skill "ALL_WEWISH",1; },{},{}
 //2785,Orleans_Glove_M
 //2786,Spiritual_Ring_M
 //2787,Waterdrop_Brooch
