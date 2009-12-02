@@ -199,12 +199,15 @@ int str_hash[SCRIPT_HASH_SIZE];
 //#define SCRIPT_HASH_SDBM
 #define SCRIPT_HASH_ELF
 
-
 static DBMap* scriptlabel_db=NULL; // const char* label_name -> int script_pos
 static DBMap* userfunc_db=NULL; // const char* func_name -> struct script_code*
 static int parse_options=0;
 DBMap* script_get_label_db(){ return scriptlabel_db; }
 DBMap* script_get_userfunc_db(){ return userfunc_db; }
+
+// Caches compiled autoscript item code. 
+// Note: This is not cleared when reloading itemdb.
+static DBMap* autobonus_db=NULL; // char* script -> char* bytecode
 
 struct Script_Config script_config = {
 	1, 65535, 2048, //warn_func_mismatch_paramnum/check_cmdcount/check_gotocount
@@ -3360,6 +3363,38 @@ static int do_final_userfunc_sub (DBKey key,void *data,va_list ap)
 	return 0;
 }
 
+static int do_final_autobonus_sub (DBKey key,void *data,va_list ap)
+{
+	struct script_code *script = (struct script_code *)data;
+
+	if( script )
+		script_free_code(script);
+
+	return 0;
+}
+
+void script_run_autobonus(const char *autobonus, int id, int pos)
+{
+	struct script_code *script = (struct script_code *)strdb_get(autobonus_db, autobonus);
+
+	if( script )
+	{
+		current_equip_item_index = pos;
+		run_script(script,0,id,0);
+	}
+}
+
+void script_add_autobonus(const char *autobonus)
+{
+	if( strdb_get(autobonus_db, autobonus) == NULL )
+	{
+		struct script_code *script = parse_script(autobonus, "autobonus", 0, 0);
+
+		if( script )
+			strdb_put(autobonus_db, autobonus, script);
+	}
+}
+
 /*==========================================
  * I—¹
  *------------------------------------------*/
@@ -3424,6 +3459,7 @@ int do_final_script()
 
 	scriptlabel_db->destroy(scriptlabel_db,NULL);
 	userfunc_db->destroy(userfunc_db,do_final_userfunc_sub);
+	autobonus_db->destroy(autobonus_db, do_final_autobonus_sub);
 	if(sleep_db) {
 		struct linkdb_node *n = (struct linkdb_node *)sleep_db;
 		while(n) {
@@ -3448,6 +3484,7 @@ int do_init_script()
 {
 	userfunc_db=strdb_alloc(DB_OPT_DUP_KEY,0);
 	scriptlabel_db=strdb_alloc((DBOptions)(DB_OPT_DUP_KEY|DB_OPT_ALLOW_NULL_DATA),50);
+	autobonus_db = strdb_alloc(DB_OPT_DUP_KEY,0);
 
 	mapreg_init();
 	
@@ -3472,7 +3509,6 @@ int script_reload()
 	mapreg_reload();
 	return 0;
 }
-
 
 //-----------------------------------------------------------------------------
 // buildin functions
@@ -6440,7 +6476,7 @@ BUILDIN_FUNC(successrefitem)
 			log_pick_pc(sd, "N", sd->status.inventory[i].nameid, -1, &sd->status.inventory[i]);
 
 		sd->status.inventory[i].refine++;
-		pc_unequipitem(sd,i,2|4); // status calc will happen in pc_equipitem() below
+		pc_unequipitem(sd,i,2); // status calc will happen in pc_equipitem() below
 
 		clif_refine(sd->fd,0,i,sd->status.inventory[i].refine);
 		clif_delitem(sd,i,1);
@@ -6632,38 +6668,32 @@ BUILDIN_FUNC(autobonus)
 	short rate;
 	short atk_type = 0;
 	TBL_PC* sd;
-	struct script_code *bonus_script;
-	struct script_code *other_script = NULL;
+	const char *bonus_script, *other_script = NULL;
 
 	sd = script_rid2sd(st);
 	if( sd == NULL )
 		return 0; // no player attached
-	if( sd->state.autocast )
-		return 0;
+
 	if( sd->state.autobonus&sd->status.inventory[current_equip_item_index].equip )
-		return 0;
-	if( sd->state.script_parsed&sd->status.inventory[current_equip_item_index].equip )
 		return 0;
 
 	rate = script_getnum(st,3);
 	dur = script_getnum(st,4);
-	if( !rate || !dur )
-		return 0;
-	bonus_script = parse_script(script_getstr(st,2), "autobonus bonus", 0, 0);
-	if( !bonus_script )
+	bonus_script = script_getstr(st,2);
+	if( !rate || !dur || !bonus_script )
 		return 0;
 
 	if( script_hasdata(st,5) )
 		atk_type = script_getnum(st,5);
 	if( script_hasdata(st,6) )
-		other_script = parse_script(script_getstr(st,6), "autobonus other", 0, 0);
+		other_script = script_getstr(st,6);
 
-	if( !pc_addautobonus(sd->autobonus,ARRAYLENGTH(sd->autobonus),bonus_script,rate,dur,atk_type,other_script,sd->status.inventory[current_equip_item_index].equip,false) )
+	if( pc_addautobonus(sd->autobonus,ARRAYLENGTH(sd->autobonus),
+		bonus_script,rate,dur,atk_type,other_script,sd->status.inventory[current_equip_item_index].equip,false) )
 	{
-		if( bonus_script )
-			script_free_code(bonus_script);
+		script_add_autobonus(bonus_script);
 		if( other_script )
-			script_free_code(other_script);
+			script_add_autobonus(other_script);
 	}
 
 	return 0;
@@ -6675,38 +6705,32 @@ BUILDIN_FUNC(autobonus2)
 	short rate;
 	short atk_type = 0;
 	TBL_PC* sd;
-	struct script_code *bonus_script;
-	struct script_code *other_script = NULL;
+	const char *bonus_script, *other_script = NULL;
 
 	sd = script_rid2sd(st);
 	if( sd == NULL )
 		return 0; // no player attached
-	if( sd->state.autocast )
-		return 0;
+
 	if( sd->state.autobonus&sd->status.inventory[current_equip_item_index].equip )
-		return 0;
-	if( sd->state.script_parsed&sd->status.inventory[current_equip_item_index].equip )
 		return 0;
 
 	rate = script_getnum(st,3);
 	dur = script_getnum(st,4);
-	if( !rate || !dur )
-		return 0;
-	bonus_script = parse_script(script_getstr(st,2), "autobonus2 bonus", 0, 0);
-	if( !bonus_script )
+	bonus_script = script_getstr(st,2);
+	if( !rate || !dur || !bonus_script )
 		return 0;
 
 	if( script_hasdata(st,5) )
 		atk_type = script_getnum(st,5);
 	if( script_hasdata(st,6) )
-		other_script = parse_script(script_getstr(st,6), "autobonus2 other", 0, 0);
+		other_script = script_getstr(st,6);
 
-	if( !pc_addautobonus(sd->autobonus2,ARRAYLENGTH(sd->autobonus2),bonus_script,rate,dur,atk_type,other_script,sd->status.inventory[current_equip_item_index].equip,false) )
+	if( pc_addautobonus(sd->autobonus2,ARRAYLENGTH(sd->autobonus2),
+		bonus_script,rate,dur,atk_type,other_script,sd->status.inventory[current_equip_item_index].equip,false) )
 	{
-		if( bonus_script )
-			script_free_code(bonus_script);
+		script_add_autobonus(bonus_script);
 		if( other_script )
-			script_free_code(other_script);
+			script_add_autobonus(other_script);
 	}
 
 	return 0;
@@ -6717,37 +6741,31 @@ BUILDIN_FUNC(autobonus3)
 	unsigned int dur;
 	short rate,atk_type;
 	TBL_PC* sd;
-	struct script_code *bonus_script;
-	struct script_code *other_script = NULL;
+	const char *bonus_script, *other_script = NULL;
 
 	sd = script_rid2sd(st);
 	if( sd == NULL )
 		return 0; // no player attached
-	if( sd->state.autocast )
-		return 0;
+
 	if( sd->state.autobonus&sd->status.inventory[current_equip_item_index].equip )
-		return 0;
-	if( sd->state.script_parsed&sd->status.inventory[current_equip_item_index].equip )
 		return 0;
 
 	rate = script_getnum(st,3);
 	dur = script_getnum(st,4);
 	atk_type = ( script_isstring(st,5) ? skill_name2id(script_getstr(st,5)) : script_getnum(st,5) );
-	if( !rate || !dur || !atk_type )
-		return 0;
-	bonus_script = parse_script(script_getstr(st,2), "autobonus3 bonus", 0, 0);
-	if( !bonus_script )
+	bonus_script = script_getstr(st,2);
+	if( !rate || !dur || !atk_type || !bonus_script )
 		return 0;
 
 	if( script_hasdata(st,6) )
-		other_script = parse_script(script_getstr(st,6), "autobonus3 other", 0, 0);
+		other_script = script_getstr(st,6);
 
-	if( !pc_addautobonus(sd->autobonus3,ARRAYLENGTH(sd->autobonus3),bonus_script,rate,dur,atk_type,other_script,sd->status.inventory[current_equip_item_index].equip,true) )
+	if( pc_addautobonus(sd->autobonus3,ARRAYLENGTH(sd->autobonus3),
+		bonus_script,rate,dur,atk_type,other_script,sd->status.inventory[current_equip_item_index].equip,true) )
 	{
-		if( bonus_script )
-			script_free_code(bonus_script);
+		script_add_autobonus(bonus_script);
 		if( other_script )
-			script_free_code(other_script);
+			script_add_autobonus(other_script);
 	}
 
 	return 0;

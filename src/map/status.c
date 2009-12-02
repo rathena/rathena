@@ -1871,7 +1871,6 @@ int status_calc_pc_(struct map_session_data* sd, bool first)
 		if(first && sd->inventory_data[index]->equip_script)
 	  	{	//Execute equip-script on login
 			run_script(sd->inventory_data[index]->equip_script,0,sd->bl.id,0);
-			sd->state.script_parsed |= sd->status.inventory[index].equip;
 			if (!calculating)
 				return 1;
 		}

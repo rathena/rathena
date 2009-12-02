@@ -70,8 +70,7 @@ struct s_add_drop {
 struct s_autobonus {
 	short rate,atk_type;
 	unsigned int duration;
-	struct script_code *bonus_script;
-	struct script_code *other_script;
+	char *bonus_script, *other_script;
 	int active;
 	unsigned short pos;
 };
@@ -130,7 +129,6 @@ struct map_session_data {
 		unsigned int bg_id;
 		unsigned skillonskill : 1;
 		unsigned short user_font;
-		unsigned short script_parsed; //flag to indicate if the script of an autobonus is parsed. [Inkfish]
 		unsigned short autobonus; //flag to indicate if an autobonus is activated. [Inkfish]
 	} state;
 	struct {
@@ -585,7 +583,7 @@ bool pc_adoption(struct map_session_data *p1_sd, struct map_session_data *p2_sd,
 
 int pc_updateweightstatus(struct map_session_data *sd);
 
-int pc_addautobonus(struct s_autobonus *bonus,char max,struct script_code *script,short rate,unsigned int dur,short atk_type,struct script_code *other_script,unsigned short pos,bool onskill);
+int pc_addautobonus(struct s_autobonus *bonus,char max,const char *script,short rate,unsigned int dur,short atk_type,const char *o_script,unsigned short pos,bool onskill);
 int pc_exeautobonus(struct map_session_data* sd,struct s_autobonus *bonus);
 int pc_endautobonus(int tid, unsigned int tick, int id, intptr data);
 int pc_delautobonus(struct map_session_data* sd,struct s_autobonus *bonus,char max,bool restore);
