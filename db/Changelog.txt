@@ -9,6 +9,7 @@
 	13005 Angelic Wing Dagger:	NEED INFO.
 =======================
 2009/12/02
+	* Rev. 14184 Added customized iRO Christmas 2008 Event mob overrides to mob_db2.txt. [L0ne_W0lf]
 	* Rev. 14182 Added ALL_WEWISH to the skill databases, and enabled the Christmas Musicbox item. [L0ne_W0lf]
 2009/11/24
 	* Rev. 14165 Changed Talkie Box to trap type, and removed the UF_NOREITERRATION flag. (Partial fix for Bugreport:3748) [L0ne_W0lf]

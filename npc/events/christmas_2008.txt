@@ -12,9 +12,7 @@
 //= Play card game with Santa.
 //= Create Santa Suits.
 //==========================================
-//= Must enable X-mas08 items in item_db2 (not in databases).
-//= Must have 'Christmas Carol' skill (not in databases).
-//= Must enable X-mas08 mobs in mob_avail (not in databases).
+//= Must enable X-mas08 mobs in mob_db2.
 //===== Additional Comments: =================================
 //= 1.0 First version. [Kisuka]
 //============================================================
