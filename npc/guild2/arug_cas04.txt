@@ -1720,7 +1720,7 @@ arug_cas04,135,212,0	script	Control Device02#aru04	111,{
 							mapannounce "arug_cas04","The 2nd Fortress Gate has been reconstructed!",bc_map,"0x00ff00";
 							setarray $agit_ar04[3],0; //Global Variable
 							setarray $agit_ar04[2],2; //Global Variable
-							donpcevent "Control Device01#aru04::Enable";
+							donpcevent "Control Device01#aru04::OnEnable";
 							end;
 						}
 						else {
