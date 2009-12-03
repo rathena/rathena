@@ -3,6 +3,8 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2009/12/03
+	* Prevented online user count from going negative. (bugreport:3913) [Paradox924X]
 2009/12/02
 	* Rev. 14183 Semi-revert of 14182, moved ALL_WEWISH up under SA_GRAVITY instead, as I hadn't noticed it does exactly what the new case did. [L0ne_W0lf]
 	* Rev. 14182 Added skill ALL_WEWISH. This skill in older clients plays a song, however in current clients it does not. The effect (AL_ANGELUS) still shows. [L0ne_W0lf]

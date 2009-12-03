@@ -212,7 +212,8 @@ void set_char_charselect(int account_id)
 	character = (struct online_char_data*)idb_ensure(online_char_db, account_id, create_online_char_data);
 
 	if( character->server > -1 )
-		server[character->server].users--;
+		if( server[character->server].users > 0 ) // Prevent this value from going negative.
+			server[character->server].users--;
 
 	character->char_id = -1;
 	character->server = -1;
@@ -300,7 +301,8 @@ void set_char_offline(int char_id, int account_id)
 	if ((character = (struct online_char_data*)idb_get(online_char_db, account_id)) != NULL)
 	{	//We don't free yet to avoid aCalloc/aFree spamming during char change. [Skotlex]
 		if( character->server > -1 )
-			server[character->server].users--;
+			if( server[character->server].users > 0 ) // Prevent this value from going negative.
+				server[character->server].users--;
 
 		if(character->waiting_disconnect != -1){
 			delete_timer(character->waiting_disconnect, chardb_waiting_disconnect);
