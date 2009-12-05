@@ -8,6 +8,13 @@
 	1475 Equestrian's Spear:	NEED INFO.
 	13005 Angelic Wing Dagger:	NEED INFO.
 =======================
+2009/12/04
+	* Rev. 14188 A rather hefty updates to the mob_skill_db and added some more info for newer pets. [L0ne_W0lf]
+	- Added official skills for 13.1 monsters. (Orc instance, 13.1 field, WoESE Guild dungeon.)
+	- Added new skills for some older monsters (mostly alternate types of pre-existing ones.)
+	- Uncommented some mob_db entries as there are now skills assosiated with those mobs.
+	- Rearranged some skills/commented out others to match official files better.
+	- Updated existing pet data, most data should now be official.
 2009/12/02
 	* Rev. 14184 Added customized iRO Christmas 2008 Event mob overrides to mob_db2.txt. [L0ne_W0lf]
 	* Rev. 14182 Added ALL_WEWISH to the skill databases, and enabled the Christmas Musicbox item. [L0ne_W0lf]
