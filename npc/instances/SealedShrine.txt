@@ -1,0 +1,2471 @@
+//===== eAthena Script ======================================= 
+//= Sealed Shrine
+//===== By: ================================================== 
+//= L0ne_W0lf
+//===== Current Version: ===================================== 
+//= 1.0
+//===== Compatible With: ===================================== 
+//= eAthena SVN
+//===== Description: ========================================= 
+//= [Aegis Conversion]
+//= Seal away the Great Demon Baphomet.
+//===== Additional Comments: ================================= 
+//= 1.0 First version. [L0ne_W0lf]
+//============================================================ 
+
+// Sealed Catacomb Entrance
+monk_test,309,146,3	script	Friar Patrick#edq	412,{
+	cutin "ins_cata_pri_n",2;
+	mes "[Friar Patrick]";
+	mes "The peace of this world cannot last forever... The hands of Evil are reaching into the world again...";
+	next;
+	mes "[Friar Patrick]";
+	mes "What brought you to this place?";
+	next;
+	if (countitem(6004) > 0) {
+		set .@doll,1;
+		set .@selection,select("What is this place?:I want to enter here.:About the Cursed Baphomet Doll.:Cancel.");
+	}
+	else {
+		set .@selection,select("What is this place?:I want to enter here.:Cancel.");
+	}
+	switch(.@selection) {
+	case 1:
+		mes "[Friar Patrick]";
+		mes "Huh... Don't you know? This is St. Capitolina monastery where the Brothers who wish to become monks train and pray.";
+		next;
+		mes "[Friar Patrick]";
+		mes "And this place is... What can I say... Yes. It's grave of the Devil. Grave...";
+		next;
+		mes "[Friar Patrick]";
+		mes "The very place where the great Devil who once demolished this world is sleeping.";
+		next;
+		switch(select("Tell me more.:Stop talikng.")) {
+		case 1:
+			cutin "ins_cata_pri_n",2;
+			mes "[Friar Patrick]";
+			mes "Baphomet... It is the name of the Devil... I think you have heard of his name.";
+			next;
+			mes "[Friar Patrick]";
+			mes "Numerous brave men and brothers have trained in this monastery...";
+			next;
+			mes "[Friar Patrick]";
+			mes "Under this gravestone in front of you... Baphomet is sealed.";
+			next;
+			mes "[Friar Patrick]";
+			mes "But... As we speak Satan Morocc is marshalling his powerful magical power in order to affect all life on this continent.";
+			next;
+			mes "[Friar Patrick]";
+			mes "Baphomet also... has awakened and is preparing for his revival, into this world, by weakening the power of the seal through the magical power of Satan Morocc...";
+			next;
+			mes "[Friar Patrick]";
+			mes "Now... I'm looking for one brave enough to reseal Baphomet in it's grave... as we once did many years ago...";
+			next;
+			mes "[Friar Patrick]";
+			mes "Anyone who fights for good will know, deep inside, that evil is threatening to conquer this world...";
+			next;
+			mes "[Friar Patrick]";
+			mes "Train more and use your skills to prevent the world from evil's looming presence...";
+			close2;
+			cutin "ins_cata_pri_n",255;
+			end;
+		case 2:
+			cutin "ins_cata_pri_n",2;
+			mes "[Friar Patrick]";
+			mes "Anyone who fights for good will know, deep inside, that evil is threatening to conquer this world...";
+			next;
+			mes "[Friar Patrick]";
+			mes "Train more and use your skills to prevent the world from evil's looming presence...";
+			close2;
+			cutin "ins_cata_pri_n",255;
+			end;
+		}
+	case 2:
+		if (BaseLevel > 74) {
+
+			set .@party_id,getcharid(1);
+			getpartymember(.@party_id);
+			set .@partymembercount,$@partymembercount;
+			copyarray .@partymembername$[0],$@partymembername$[0],.@partymembercount;
+
+			mes "[Friar Patrick]";
+			mes "Do you mean you'll go to the grave and reseal Baphomet?";
+			next;
+			set .@ins_bapho_check,checkquest(3040,PLAYTIME);
+			set .@ins_bapho_check2,checkquest(3045,PLAYTIME);
+
+			if ((.@ins_bapho_check != 2) && (.@ins_bapho_check2 == 2)) {
+				mes "[Friar Patrick]";
+				mes "It seems you have entered this grave recently... You cannot enter because Baphomet's Curse still remains. Baphomet's Curse disappears only after a certain amount of time has passed.";
+				close2;
+				cutin "ins_cata_pri_n",255;
+				end;
+			}
+
+			if (.@ins_bapho_check == -1) {
+				if ((getpartyleader(.@party_id,2) == getcharid(0)) && (.@partymembercount > 1)) {
+					set .@instance, instance_create("Sealed Catacombs", .@party_id);
+					if (.@instance < 0) {
+						mes "[Friar Patrick]";
+						mes "Party name is "+getpartyname(.@party_id)+"...";
+						mes "Name of the leader is "+.@partymembername$[0]+"...";
+						mes "Umm... But it seems that there is an unknown problem here... I'll check quickly. Please wait.";
+						close2;
+						cutin "ins_cata_pri_n",255;
+					}
+					else {
+
+						for( set .@i, 1; .@i <= 2; set .@i, .@i + 1 ) {
+							if( instance_attachmap("" + .@i + "@cata", .@instance) == "" )
+								break;
+						}
+						if( .@i < 2 ) {
+							instance_destroy(.@instance);
+							close;
+						}
+
+						instance_attach(.@instance);
+						instance_set_timeout 14400,300,.@instance;
+						instance_init(.@instance);
+
+						// First Floor
+						disablenpc instance_npcname("Soul of Ancient Hero#1F", instance_id());
+						disablenpc instance_npcname("ins_bapho_to_2f", instance_id());
+
+						for( set .@i, 1; .@i < 13; set .@i, .@i + 1 ) {
+							disablenpc instance_npcname("Gravestone#1F_"+.@i+"T", instance_id());
+							disablenpc instance_npcname("Gravestone#1F_"+.@i+"F", instance_id());
+						}
+						for( set .@i, 1; .@i < 12; set .@i, .@i + 1 ) {
+							disablenpc instance_npcname("Bobbing Torch#"+.@i, instance_id());
+						}
+
+						// Second Floor
+						disablenpc instance_npcname("ins_baphomet_1f_timer", instance_id());
+						disablenpc instance_npcname("ins_2f_enter_broad", instance_id());
+						disablenpc instance_npcname("Magical Seal#0", instance_id());
+						disablenpc instance_npcname("Magical Seal#2", instance_id());
+						disablenpc instance_npcname("Magical Seal#4", instance_id());
+						disablenpc instance_npcname("Magical Seal#8", instance_id());
+						disablenpc instance_npcname("Magical Seal#10", instance_id());
+						disablenpc instance_npcname("Soul of Ancient Hero#2F", instance_id());
+						disablenpc instance_npcname("control_baphomet", instance_id());
+						disablenpc instance_npcname("ins_2f_hero_broad2", instance_id());
+						disablenpc instance_npcname("2f_callmon_pattern_c", instance_id());
+						disablenpc instance_npcname("2f_callmon_pattern", instance_id());
+						disablenpc instance_npcname("ins_2f_hero_pattern_c", instance_id());
+						disablenpc instance_npcname("ins_2f_hero_pattern", instance_id());
+
+						// Pick proper grave
+						donpcevent instance_npcname("ins_baphomet_lotto", instance_id())+"::OnEnable";
+
+						// Spawn monsters.
+						donpcevent instance_npcname("ins_1f_spawn_mobs", instance_id())+"::OnEnable";
+
+						mes "[Friar Patrick]";
+						mes "Party name is "+getpartyname(.@party_id)+"...";
+						mes "Name of the leader is "+.@partymembername$[0]+"...";
+						mes "Okay... I'll adjust the seal of the grave so that you and your company can enter.";
+						next;
+						mes "[Friar Patrick]";
+						mes "You will see a sign when the control of the seal is finished. Please wait until the sign shows...";
+						next;
+						mes "[Friar Patrick]";
+						mes "When you see the sign, put your hands on the altar of the grave... Then you can move to inside of the grave.";
+						next;
+						mes "[Friar Patrick]";
+						mes "One thing that you should remember is... Anyone who enters this grave, will be cursed by Baphomet and they can't enter or leave this grave while they are cursed.";
+						next;
+						mes "[Friar Patrick]";
+						mes "And one more thing... In this cursed area, some skills, which are protected by outer physical power, are prohibited by the effect of the seal.";
+						next;
+						mes "[Friar Patrick]";
+						mes "For example, the skills like^0000FFSafety wall, Assumptio^000000... So you'd better to prepare enoughly before enter the grave.";
+						close2;
+						cutin "ins_cata_pri_n",255;
+					}
+					end;
+				}
+				else {
+					mes "[Friar Patrick]";
+					mes "Umm... I recognize your courage, but... I can't permit anyone to enter this place. I can only permit the leader of a party to enter first.";
+					next;
+					mes "[Friar Patrick]";
+					mes "Once the party leader is permitted, the rest of the party can enter. This is a rule of this monastery, so please understand.";
+					close2;
+					cutin "ins_cata_pri_n",255;
+					end;
+				}
+			}
+			else if ((.@ins_bapho_check == 0) || (.@ins_bapho_check == 1)) {
+				mes "[Friar Patrick]";
+				mes "It seems you have entered this grave recently... You cannot enter because Baphomet's Curse still remains. Baphomet's Curse disappears only after a certain amount of time has passed.";
+				close2;
+				cutin "ins_cata_pri_n",255;
+				end;
+			}
+			else if (.@ins_bapho_check == 2) {
+				mes "[Friar Patrick]";
+				mes "Umm... It seems that Baphomet's Curse has weakened. I can remove it now.";
+				next;
+				mes "[Friar Patrick]";
+				mes "Haaaaaaap... Hocus Pocus Wingardium Abracadabra!!!!!";
+				next;
+				erasequest 3040;
+				erasequest 3041;
+				erasequest 3045;
+				mes "[Friar Patrick]";
+				mes "Huu... It's over. Now that I've released Baphomet's Curse, you can enter again.";
+				close2;
+				cutin "ins_cata_pri_n",255;
+				end;
+			}
+		}
+		else {
+			mes "[Friar Patrick]";
+			mes "Umm... You should train more to enter this dangerous place... You should reach at least Lv 75 to enter here.";
+			next;
+			mes "[Friar Patrick]";
+			mes "Please train more and come again.";
+			close2;
+			cutin "ins_cata_pri_n",255;
+		}
+		end;
+	case 3:
+		if (.@doll == 1) {
+			mes "[Friar Patrick]";
+			mes "That is... the villainous doll that you are holding... Let me see it.";
+			next;
+			mes "[Friar Patrick]";
+			mes "... ... ...";
+			next;
+			mes "[Friar Patrick]";
+			mes "That's correct... I can feel the bad feeling of Baphomet... So, what will you do with the doll?";
+			next;
+			mes "[Friar Patrick]";
+			mes "It is just a dangerous and useless thing if you do nothing with it... I'll introduce someone who can help you... Do you want to see him?";
+			next;
+			mes "[Friar Patrick]";
+			mes "Go to see ^0000FFRust Blackhand^000000 who is near the main building of the monastery... Then he will make this doll helpful to you.";
+			setquest 3042;
+			close2;
+			cutin "ins_cata_pri_n",255;
+			end;
+		}
+	case 4:
+		mes "[Friar Patrick]";
+		mes "Anyone who fights for good will know, deep inside, that evil is threatening to conquer this world...";
+		next;
+		mes "[Friar Patrick]";
+		mes "Train more and use your skills to prevent the world from evil's looming presence...";
+		close2;
+		cutin "ins_cata_pri_n",255;
+		end;
+	}
+}
+
+monk_test,306,151,3	script	Grave of Baphomet#edq	111,{
+	if (countitem(6002) > 0) {
+		delitem 6002,countitem(6002); //Token_Of_Apostle
+	}
+	mes "This stone-grave has a carving of a wicked devil with large horns. An ominous feeling emits from it.";
+	next;
+	switch(select("Touch this.:Step back.")) {
+	case 1:
+
+		set .@party_id,getcharid(1);
+		getpartymember(.@party_id);
+		set .@partymembercount,$@partymembercount;
+		copyarray .@partymembername$[0],$@partymembername$[0],.@partymembercount;
+
+		set .@instance, instance_id(1);
+		instance_attach(.@instance);
+
+		set .@ins_bapho_check,checkquest(3040,PLAYTIME);
+		set .@ins_bapho_check2,checkquest(3045,PLAYTIME);
+
+		if ((.@ins_bapho_check != 2) && (.@ins_bapho_check2 == 2)) {
+			mes "[Friar Patrick]";
+			mes "It seems you have entered this grave recently... You cannot enter because Baphomet's Curse still remains. Baphomet's Curse disappears only after a certain amount of time has passed.";
+			close;
+		}
+
+		if (.@ins_bapho_check == -1) {
+			if (has_instance("1@cata") == "") {
+				mes "It's cold to the touch. But, there is no response.";
+				close;
+			}
+			//else if (ret == 2) {
+			//	mes "It's cold to the touch. But, there is no response.";
+			//	close;
+			//}
+			else if ((has_instance("1@cata") != "") && (.@partymembercount < 2)) {
+				mes "[Friar Patrick]";
+				mes "To enter this dangerous place, you can't go alone. Come again after you join a party.";
+				close;
+			}
+			//else if (ret == 0) {
+			else {
+				mapannounce "monk_test","[" + strcharinfo(0) + "] member of [" + getpartyname(.@party_id) + "] party enters the Sealed catacombs.",bc_map,"0x00ff99";
+				warp "1@cata",100,224;
+				close;
+			}
+		}
+		else if ((.@ins_bapho_check == 0) || (.@ins_bapho_check == 1)) {
+			mes "[Friar Patrick]";
+			mes "It seems you have entered this grave recently... You cannot enter because the curse of Baphomet still remains.";
+			mes "The curse of Baphomet disappears after a certain amount of time after you entered.";
+			close;
+		}
+		else if (.@ins_bapho_check == 2) {
+			mes "[Friar Patrick]";
+			mes "Umm... It seems the curse of Baphomet weakened. I'll clear the bad curse.";
+			next;
+			mes "[Friar Patrick]";
+			mes "Haaaaaaap... Wingardium Leviosa Expecto Patronum !!!!!";
+			specialeffect2 EF_HOLYHIT;
+			erasequest 3040;
+			erasequest 3041;
+			erasequest 3045;
+			next;
+			mes "[Friar Patrick]";
+			mes "Huu... It's over. Now I released all the curses on you. You can enter again.";
+			close;
+		}
+	case 2:
+		close;
+	}
+}
+
+prt_monk,261,91,3	script	Rust Blackhand#edq	826,{
+	set .@new_maje,checkquest(3043);
+	mes "[Rust Blackhand]";
+	mes "Who are you? What do you want me for?";
+	next;
+	mes "[Rust Blackhand]";
+	mes "You're not a monk, then what do you want?";
+	next;
+	if ((.@new_maje == 0) || (.@new_maje == 1)) {
+		mes "[Rust Blackhand]";
+		mes "Do you bring all the materials?";
+		next;
+		if ((countitem(6004) > 0) && (countitem(2256) > 0) && (countitem(7799) > 29) && (countitem(7798) > 49) && (Zeny > 990000)) {
+			mes "[Rust Blackhand]";
+			mes "kkk... You prepared the materials well. Why don't you leave it there and wait?";
+			next;
+			mes "[Rust Blackhand]";
+			mes "Hmm... It is so long time to see this wicked horn... kkk... Let me start...";
+			next;
+			mes "...";
+			next;
+			mes "... ...";
+			next;
+			mes "... ... ...";
+			next;
+			delitem 6004,1; //Bapho_Doll
+			delitem 2256,1; //Magestic_Goat
+			delitem 7799,30; //Dark_Crystal
+			delitem 7798,50; //Dark_Debris
+			set zeny,zeny-990000;
+			completequest 3043;
+			getitem 5374,1; //L_Magestic_Goat
+			mes "[Rust Blackhand]";
+			mes "It's done. You would be touched and excited, of course. I understand...";
+			next;
+			mes "[Rust Blackhand]";
+			mes "I don't accept complains or A/S request, so use it with care. I got to go...";
+			close;
+		}
+		else {
+			mes "[Rust Blackhand]";
+			mes "Huu... You couldn't understand what I said. With this materials, you can make nothing.";
+			next;
+			mes "[Rust Blackhand]";
+			mes "I'll tell you the materials one more time, so gather them correctly.";
+			next;
+			mes "[Rust Blackhand]";
+			mes "^0000FFCursed Baphomet Doll, Magestic Goat, 30 Crystal of Darkness, 50 Fragment of Darkness^000000, and the most important, production cost is ^0000FF 990000^000000 Zeny.";
+			close;
+		}
+	}
+	else if ((.@new_maje == -1) && (countitem(6004) > 0)) {
+		switch(select("About the Cursed Baphomet Doll:Stop talking.")) {
+		case 1:
+			mes "[Rust Blackhand]";
+			mes "What?... Hmmm... Did you get the doll? You are pretty good unlike your apperance...";
+			next;
+			mes "[Rust Blackhand]";
+			mes "Let me see... Needless to say, Patric must be sent you here to deal with the doll, right?";
+			next;
+			mes "[Rust Blackhand]";
+			mes "Cool... I'll help you to make the bad doll useful. What? What can I do?";
+			next;
+			mes "[Rust Blackhand]";
+			mes "I can make you to have the strong and large horn of the wicked devil. A helm that has power of Baphomet.";
+			next;
+			mes "[Rust Blackhand]";
+			mes "It is to say ^4d4dffGigantic Magestic Goat^000000. You'll realize that the Magestic Goat you know is just a green apple to ripe.";
+			next;
+			mes "[Rust Blackhand]";
+			mes "The Cursed Baphomet Doll is the most important material... I'll make you if you want. What would you do?";
+			next;
+			switch(select("I want to make.:I don't need.")) {
+			case 1:
+				mes "[Rust Blackhand]";
+				mes "kkk... Yes, wise men get their chances when the chance comes. I'll tell you the materials. Not to forget and bring them all.";
+				next;
+				mes "[Rust Blackhand]";
+				mes "^0000FFCursed Baphomet Doll, Magestic Goat, 30 Crystal of Darkness, 50 Fragment of Darkness^000000, and the most important, production cost is ^0000FF 990000^000000 Zeny.";
+				next;
+				mes "[Rust Blackhand]";
+				mes "You can get the Magestic Goat from the weak Baphomet in Labyrinth Forest. Crystal of Darkness and Fragment of Darkness can get from Incarnation of Morocc.";
+				next;
+				mes "[Rust Blackhand]";
+				mes "I'm sure that you can get the materials because you sealed the real Baphomet. Can't you? kkk...";
+				next;
+				mes "[Rust Blackhand]";
+				mes "You'll never know how great is this before you see this. If you understood, go and get the materials.";
+				changequest 3042,3043;
+				close;
+			case 2:
+				mes "[Rust Blackhand]";
+				mes "Huh... Do you? Do whatever you want... Do you think you can even touch this not by this chance?";
+				next;
+				mes "[Rust Blackhand]";
+				mes "Tut, tut... I don't care if the wicked doll threatens your life all the time.";
+				close;
+			}
+		case 2:
+			mes "[Rust Blackhand]";
+			mes "What a dull boy he is... huh...";
+			close;
+		}
+	}
+	else if ((.@new_maje == -1) && (countitem(6004) == 0)) {
+		mes "[Rust Blackhand]";
+		mes "If you don't have a business on me, go away! As you see, I make equipments for Brothers at monastery, not for adventurers like you. Do you understand?";
+		close;
+	}
+	else if ((.@new_maje == 2) && (countitem(6004) > 0)) {
+		switch(select("About the Cursed Baphomet Doll:Stop talking.")) {
+		case 1:
+			mes "[Rust Blackhand]";
+			mes "What?... You again? What do you want this time?";
+			next;
+			mes "[Rust Blackhand]";
+			mes "What? You got another doll of the wicked devil? Umm... You're much better than I thought...";
+			next;
+			mes "[Rust Blackhand]";
+			mes "Alright... I'll help you again.";
+			next;
+			mes "[Rust Blackhand]";
+			mes "If you want to make the doll to a ^4d4dffGigantic Magestic Goat^000000 again, I can make you one more.";
+			next;
+			mes "[Rust Blackhand]";
+			mes "I'll tell you the materials again. So, do you want to make?";
+			next;
+			switch(select("I want.:No, I don't want.")) {
+			case 1:
+				mes "[Rust Blackhand]";
+				mes "kkk... Yes, wise men get their chances when the chance comes. I'll tell you the materials. Not to forget and bring them all.";
+				next;
+				mes "[Rust Blackhand]";
+				mes "^0000FFCursed Baphomet Doll, Magestic Goat, 30 Crystal of Darkness, 50 Fragment of Darkness^000000, and the most important, production cost is ^0000FF 990000^000000 Zeny.";
+				next;
+				mes "[Rust Blackhand]";
+				mes "You can get the Magestic Goat from the weak Baphomet in Labyrinth Forest. Crystal of Darkness and Fragment of Darkness can get from Incarnation of Morocc.";
+				next;
+				mes "[Rust Blackhand]";
+				mes "I'm sure that you can get the materials because you sealed the real Baphomet. Can't you? kkk...";
+				next;
+				mes "[Rust Blackhand]";
+				mes "You'll never know how great is this before you see this. If you understood, go and get the materials.";
+				//recall_completequest 3043
+				setquest 3043;
+				close;
+			case 2:
+				mes "[Rust Blackhand]";
+				mes "Huh... Do you? Do whatever you want... Do you think you can even touch this not by this chance?";
+				next;
+				mes "[Rust Blackhand]";
+				mes "Tut, tut... I don't care if the wicked doll threatens your life all the time.";
+				close;
+			}
+		case 2:
+			mes "[Rust Blackhand]";
+			mes "What a dull boy he is... huh...";
+			close;
+		}
+	}
+	else if ((.@new_maje == 2) && (countitem(6004) == 0)) {
+		mes "[Rust Blackhand]";
+		mes "Why are you hanging around here? If you won't make ^4d4dffGigantic Magestic Goat^000000, go away";
+		close;
+	}
+}
+
+// Inside Sealed Catacomb
+1@cata,1,2,0	script	ins_baphomet_lotto	-1,{
+OnEnable:
+	switch(rand(1,13)) {
+	case 1:
+		enablenpc instance_npcname("Gravestone#1F_1T", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_2F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_3F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_4F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_5F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_6F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_7F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_8F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_9F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_10F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_11F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_12F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_13F", instance_id());
+		end;
+	case 2:
+		enablenpc instance_npcname("Gravestone#1F_1F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_2T", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_3F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_4F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_5F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_6F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_7F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_8F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_9F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_10F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_11F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_12F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_13F", instance_id());
+		end;
+	case 3:
+		enablenpc instance_npcname("Gravestone#1F_1F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_2F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_3T", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_4F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_5F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_6F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_7F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_8F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_9F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_10F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_11F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_12F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_13F", instance_id());
+		end;
+	case 4:
+		enablenpc instance_npcname("Gravestone#1F_1F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_2F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_3F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_4T", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_5F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_6F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_7F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_8F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_9F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_10F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_11F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_12F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_13F", instance_id());
+		end;
+	case 5:
+		enablenpc instance_npcname("Gravestone#1F_1F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_2F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_3F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_4F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_5T", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_6F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_7F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_8F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_9F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_10F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_11F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_12F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_13F", instance_id());
+		end;
+	case 6:
+		enablenpc instance_npcname("Gravestone#1F_1F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_2F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_3F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_4F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_5F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_6T", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_7F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_8F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_9F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_10F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_11F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_12F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_13F", instance_id());
+		end;
+	case 7:
+		enablenpc instance_npcname("Gravestone#1F_1F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_2F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_3F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_4F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_5F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_6F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_7T", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_8F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_9F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_10F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_11F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_12F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_13F", instance_id());
+		end;
+	case 8:
+		enablenpc instance_npcname("Gravestone#1F_1F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_2F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_3F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_4F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_5F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_6F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_7F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_8T", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_9F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_10F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_11F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_12F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_13F", instance_id());
+		end;
+	case 9:
+		enablenpc instance_npcname("Gravestone#1F_1F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_2F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_3F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_4F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_5F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_6F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_7F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_8F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_9T", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_10F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_11F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_12F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_13F", instance_id());
+		end;
+	case 10:
+		enablenpc instance_npcname("Gravestone#1F_1F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_2F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_3F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_4F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_5F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_6F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_7F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_8F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_9F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_10T", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_11F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_12F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_13F", instance_id());
+		end;
+	case 11:
+		enablenpc instance_npcname("Gravestone#1F_1F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_2F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_3F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_4F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_5F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_6F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_7F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_8F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_9F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_10F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_11T", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_12F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_13F", instance_id());
+		end;
+	case 12:
+		enablenpc instance_npcname("Gravestone#1F_1F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_2F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_3F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_4F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_5F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_6F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_7F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_8F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_9F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_10F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_11F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_12T", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_13F", instance_id());
+		end;
+	case 13:
+		enablenpc instance_npcname("Gravestone#1F_1F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_2F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_3F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_4F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_5F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_6F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_7F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_8F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_9F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_10F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_11F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_12F", instance_id());
+		enablenpc instance_npcname("Gravestone#1F_13T", instance_id());
+		end;
+	}
+	end;
+}
+
+1@cata,3,2,0	script	ins_baphomet_lotto2	-1,{
+OnEnable:
+	enablenpc instance_npcname("Bobbing Torch#1", instance_id());
+	enablenpc instance_npcname("Bobbing Torch#2", instance_id());
+	enablenpc instance_npcname("Bobbing Torch#3", instance_id());
+	enablenpc instance_npcname("Bobbing Torch#4", instance_id());
+	enablenpc instance_npcname("Bobbing Torch#5", instance_id());
+	enablenpc instance_npcname("Bobbing Torch#6", instance_id());
+	enablenpc instance_npcname("Bobbing Torch#7", instance_id());
+	enablenpc instance_npcname("Bobbing Torch#8", instance_id());
+	enablenpc instance_npcname("Bobbing Torch#9", instance_id());
+	enablenpc instance_npcname("Bobbing Torch#10", instance_id());
+	enablenpc instance_npcname("Bobbing Torch#11", instance_id());
+	enablenpc instance_npcname("Bobbing Torch#12", instance_id());
+	end;
+}
+
+1@cata,4,2,0	script	ins_baphomet_lotto3	-1,{
+OnEnable:
+	monster "1@cata",0,0,"Apostle of Baphomet#1",1869,1,instance_npcname("ins_baphomet_lotto3", instance_id())+"::OnMyMobDead";
+	monster "1@cata",0,0,"Apostle of Baphomet#2",1291,1,instance_npcname("ins_baphomet_lotto3", instance_id())+"::OnMyMobDead";
+	monster "1@cata",0,0,"Apostle of Baphomet#3",1869,1,instance_npcname("ins_baphomet_lotto3", instance_id())+"::OnMyMobDead";
+	monster "1@cata",0,0,"Apostle of Baphomet#4",1291,1,instance_npcname("ins_baphomet_lotto3", instance_id())+"::OnMyMobDead";
+	monster "1@cata",0,0,"Apostle of Baphomet#5",1869,1,instance_npcname("ins_baphomet_lotto3", instance_id())+"::OnMyMobDead";
+	monster "1@cata",0,0,"Apostle of Baphomet#6",1291,1,instance_npcname("ins_baphomet_lotto3", instance_id())+"::OnMyMobDead";
+	monster "1@cata",0,0,"Apostle of Baphomet#7",1869,1,instance_npcname("ins_baphomet_lotto3", instance_id())+"::OnMyMobDead";
+	monster "1@cata",0,0,"Apostle of Baphomet#8",1132,1,instance_npcname("ins_baphomet_lotto3", instance_id())+"::OnMyMobDead";
+	monster "1@cata",0,0,"Apostle of Baphomet#9",1117,1,instance_npcname("ins_baphomet_lotto3", instance_id())+"::OnMyMobDead";
+	monster "1@cata",0,0,"Apostle of Baphomet#10",1132,1,instance_npcname("ins_baphomet_lotto3", instance_id())+"::OnMyMobDead";
+	monster "1@cata",0,0,"Apostle of Baphomet#11",1117,1,instance_npcname("ins_baphomet_lotto3", instance_id())+"::OnMyMobDead";
+	monster "1@cata",0,0,"Apostle of Baphomet#12",1132,1,instance_npcname("ins_baphomet_lotto3", instance_id())+"::OnMyMobDead";
+	monster "1@cata",0,0,"Apostle of Baphomet#13",1291,1,instance_npcname("ins_baphomet_lotto3", instance_id())+"::OnMyMobDead";
+	monster "1@cata",0,0,"Apostle of Baphomet#14",1117,1,instance_npcname("ins_baphomet_lotto3", instance_id())+"::OnMyMobDead";
+	monster "1@cata",0,0,"Apostle of Baphomet#15",1869,1,instance_npcname("ins_baphomet_lotto3", instance_id())+"::OnMyMobDead";
+	end;
+
+OnDisable:
+	killmonster "1@cata",instance_npcname("ins_baphomet_lotto3", instance_id())+"::OnMyMobDead";
+	end;
+
+OnMyMobDead:
+	if (mobcount("1@cata",instance_npcname("ins_baphomet_lotto3", instance_id())+"::OnMyMobDead") < 1) {
+		instance_announce 0, "All apostles of Baphomet are dead!",bc_map,"0x00ff99";
+	}
+	getitem 6002,1; //Token_Of_Apostle
+	end;
+}
+
+//===================== soul of hero near the north grave ========================
+1@cata,141,221,0	script	Gravestone#	844,3,3,{
+	set .@party_id,getcharid(1);
+	if ('ins_baphomet == 0) {
+		mes "The gravestone is trembling...";
+		next;
+		mes "By touching the gravestone, I hear a voice";
+		next;
+		specialeffect2 EF_CONE;
+		mes "[Voice of the Gravestone]";
+		mes "I have waited and waited for a brave adventurer like you who will come back here again...";
+		next;
+		while(1) {
+			switch(select("Who are you?:Waited for me?:Cancel.")) {
+			case 1:
+				mes "[Voice of the Gravestone]";
+				mes "I was one of the warriors to stop the Baphomet like you. Now, I'm dead and only my soul remains...";
+				next;
+				mes "[Voice of the Gravestone]";
+				mes "As you know... We don't have enough time. You can't stop the Baphomet by yourselves. The power of the devil has strengthened during the decades.";
+				next;
+				mes "[Voice of the Gravestone]";
+				mes "In the past, my companions and I sealed the Baphomet at the altar located on the 2nd basement and blocked the entrance.";
+				next;
+				mes "[Voice of the Gravestone]";
+				mes "I moved my soul's essence to my pendant, so that I could remain in this world. That's when I became this grave's guardian.";
+				next;
+				break;
+			case 2:
+				mes "[Voice of the Gravestone]";
+				mes "Baphomet's power is about to exceed the seal that we made. If you don't reactivate them... Baphomet's revival will only be a matter of time.";
+				next;
+				mes "[Voice of the Gravestone]";
+				mes "To open the entrance, you must substantialize my soul. I'll open the entrance and reactivate the weakened seals after I am substantilized.";
+				next;
+				mes "[Voice of the Gravestone]";
+				mes "To substantialize my soul, you should find my pendant. You can find my body near a grave here.";
+				next;
+				mes "[Voice of the Gravestone]";
+				mes "If your ^0000FFparty leader^000000 brings me the pendant, my soul can be substantialized. So, hurry up.";
+				set 'ins_baphomet,1;
+				close;
+			case 3:
+				mes "I can feel the voice becomming faint.";
+				close;
+			}
+		}
+	}
+	else if ('ins_baphomet == 1) {
+		mes "[Voice of the Gravestone]";
+		mes "To open the entrance, you must substantialize my soul. I'll open the entrance and reactivate the weakened seals after I am substantilized.";
+		next;
+		mes "[Voice of the Gravestone]";
+		mes "To substantialize my soul, you should find my pendant. You can find my body near a grave here.";
+		next;
+		mes "[Voice of the Gravestone]";
+		mes "If your ^0000FFparty leader^000000 brings me the pendant, my soul can be substantialized. So, hurry up.";
+		close;
+	}
+	else if (('ins_baphomet == 2) && (getpartyleader(.@party_id,2) == getcharid(0))) {
+		mes "[Voice of the Gravestone]";
+		mes "Did you find the pendant?";
+		next;
+		if (countitem(6003) > 0) {
+			specialeffect EF_MAPPILLAR;
+			mes "[Voice of the Gravestone]";
+			mes "Yes... This is... My pendant...";
+			next;
+			delitem 6003,1; //Soul_Pendant
+			enablenpc instance_npcname("Soul of Ancient Hero#1F", instance_id());
+			disablenpc instance_npcname("Gravestone#", instance_id());
+			mes "[Voice of the Gravestone]";
+			mes "Now I can substantialize my soul. I'll wait for you in front of the altar of fire located at the center of this grave. Let's meet there.";
+			next;
+			instance_announce 0, "Soul of Ancient Hero : I'll wait for you in front of the altar of fire located at the center",bc_map,"0xFFFF00";
+			mes "I can feel the voice becomming faint.";
+			close;
+		}
+		else {
+			mes "[Voice of the Gravestone]";
+			mes "Are you still there? Bring back my pendant as soon as possible.";
+			next;
+			mes "[Voice of the Gravestone]";
+			mes "You can find my body near a grave here. Go and get my pendant there.";
+			close;
+		}
+	}
+	else {
+		mes "[Voice of the Gravestone]";
+		mes "I want to talk to ^0000FFa representative among your party^000000. Others, wait here.";
+		close;
+	}
+	end;
+
+//OnTouch2:
+OnTouch:
+	if ('ins_baphomet == 0) {
+		mes "'Krrrr... Krrrr...'";
+		next;
+		mes "I can feel an odd feeling at the grave. It's like someone is calling something silently...";
+		close;
+	}
+	end;
+}
+
+1@cata,176,119,4	script	Soul of Ancient Hero#1F	411,{
+	set .@party_id,getcharid(1);
+	cutin "ins_cata_champ_n",2;
+	if ('ins_baphomet == 2) {
+		mes "[Soul of Ancient Hero]";
+		mes "By your help, my soul can be substantialized. I want to talk more, but we do not have enough time...";
+		next;
+		mes "[Soul of Ancient Hero]";
+		mes "I can be substantialized about one hour. To reach the Main Altar underground, you must help me perform the ceremony for opening each seal.";
+		next;
+		mes "[Soul of Ancient Hero]";
+		mes "Now I'll tell you what should you do. First, collect ^0000FFEssence of Fire^000000 from the torches of the graves...";
+		next;
+		mes "[Soul of Ancient Hero]";
+		mes "And second, all members who will enter the underground must carry a symbol which is called the Token of Apostle.";
+		next;
+		while(1) {
+			cutin "ins_cata_champ_n",2;
+			switch(select("What is Essence of Fire?:What is a Token of Apostle?:What should I do?:I am ready.")) {
+			case 1:
+				set .@ins_baphomet_1f_1,.@ins_baphomet_1f_1+1;
+				mes "[Soul of Ancient Hero]";
+				mes "You can see the torches here and there. These torches are the essence of Thor, the god of Thunder. They are inherited from our predecessors to stop the darkness of Baphomet...";
+				next;
+				mes "[Soul of Ancient Hero]";
+				mes "To open the sealed underground gate, I must be purified by the ^0000FFEssence of Fire^000000 which has the power of Thor. So collect ^0000FF10 Essence of Fire^000000 from the torches.";
+				next;
+				mes "[Soul of Ancient Hero]";
+				mes "One thing you must remember is... This ^0000FFEssence of Fire^000000 can only be collected by the Inheritor of Faith.";
+				next;
+				mes "[Soul of Ancient Hero]";
+				mes "I'll inscribe the token of the Inheritor of Faith to the party leader. Only the party leader can collect the ^0000FFEssence of Fire^000000.";
+				next;
+				break;
+			case 2:
+				set .@ins_baphomet_1f_2,.@ins_baphomet_1f_2+1;
+				mes "[Soul of Ancient Hero]";
+				mes "At that time, it was impossible to get rid of Devil Baphomet by ourselves. After numerous heroes sacrificed their lives, we could barely seal him under this Abbey.";
+				next;
+				mes "[Soul of Ancient Hero]";
+				mes "However, Baphomet never gave up. He continuously strengthened his power. And his power has brought new life to this grave.";
+				next;
+				mes "[Soul of Ancient Hero]";
+				mes "Some of these monsters have magical powers. Baphomet calls them his 'Apostles'.";
+				next;
+				mes "[Soul of Ancient Hero]";
+				mes "The apostles are cloning themselves to fill the grave with their evil energy. They are the monsters here in this catacomb.";
+				next;
+				mes "[Soul of Ancient Hero]";
+				mes "Kill the Apostles. They can only be distinguished from their clones because they will possess a ^0000FFToken of Apostle^000000...";
+				next;
+				mes "[Soul of Ancient Hero]";
+				mes "If each party member possesses a ^0000FFToken of Apostle^000000, Baphomet will not be able to perceive your entrance to the Main Altar underground.";
+				next;
+				mes "[Soul of Ancient Hero]";
+				mes "If Baphomet perceives you when you pass through the sealed gate, he may release his tremendous magical power. Then, this abbey will be demolished.";
+				next;
+				mes "[Soul of Ancient Hero]";
+				mes "Kill the apostles and get the ^0000FFToken of Apostle^000000.";
+				next;
+				break;
+			case 3:
+				set .@ins_baphomet_1f_3,.@ins_baphomet_1f_3+1;
+				if (getpartyleader(.@party_id,2) == getcharid(0)) {
+					mes "[Soul of Ancient Hero]";
+					mes "You look like the leader of this party. Then you need to go and get ^0000FF10 Essence of Fire^000000 from the torches.";
+					next;
+					mes "[Soul of Ancient Hero]";
+					mes "Now I'll carve you the symbol which shows you're a inheritor of faith. Be noticed that, no one can get the Essence of Fire exclude you in your party.";
+					next;
+					specialeffect2 EF_HOLYHIT;
+					mes "[Soul of Ancient Hero]";
+					mes "You should carry ^0000FFToken of Apostle^000000 also. So prepare your own.";
+					next;
+					mes "[Soul of Ancient Hero]";
+					mes "When all of you are ready to go, let me know. I'll open the sealed gate when you're ready.";
+					next;
+				}
+				else {
+					mes "[Soul of Ancient Hero]";
+					mes "Make sure that your party leader has listened to my explanation of what you and your companions must do";
+					next;
+					mes "[Soul of Ancient Hero]";
+					mes "Kill the Apostles of Baphomet and find their ^0000FFToken of Apostle^000000.";
+					next;
+					mes "[Soul of Ancient Hero]";
+					mes "It might be better to kill all of them because there is no way to differentiate them from their clones.";
+					next;
+					mes "[Soul of Ancient Hero]";
+					mes "Are you ready?";
+					mes "Make sure that you have listened to all that I have to say before saying that you are ready.";
+					next;
+				}
+				break;
+			case 4:
+				if ((.@ins_baphomet_1f_1 > 0) && (.@ins_baphomet_1f_2 > 0) && (.@ins_baphomet_1f_3 > 0)) {
+					cutin "ins_cata_champ_n",2;
+					mes "[Soul of Ancient Hero]";
+					mes "Are you ready to go? Then I'll open this sealed gate now.";
+					next;
+					set .@exitloop,1;
+				}
+				else {
+					cutin "ins_cata_champ_a",2;
+					mes "[Soul of Ancient Hero]";
+					mes "It may be difficult but I wish you luck braving the perils of this catacomb.";
+					next;
+					mes "[Soul of Ancient Hero]";
+					mes "Remember, you need to collect ^0000FF10 Essence of Fire^000000 from the torches and the ^0000FFToken of Apostle^000000 from the Apostles of Baphomet.";
+					next;
+				}
+				break;
+			}
+			if (.@exitloop) break;
+		}
+		if (getpartyleader(.@party_id,2) == getcharid(0)) {
+			mes "[Soul of Ancient Hero]";
+			mes "To remind you again, I can be substantialized in one hour. So everyone, finish your work within that time.";
+			set 'ins_baphomet,3;
+			donpcevent instance_npcname("ins_baphomet_1f_timer", instance_id())+"::OnEnable";
+			donpcevent instance_npcname("ins_baphomet_lotto2", instance_id())+"::OnEnable";
+			donpcevent instance_npcname("ins_baphomet_lotto3", instance_id())+"::OnEnable";
+		}
+		else {
+			mes "[Soul of Ancient Hero]";
+			mes "To remind you again, I can be substantialized in one hour. So everyone, finish your work within that time.";
+			set 'ins_baphomet,3;
+		}
+		close2;
+		cutin "",255;
+		end;
+	}
+	else if (('ins_baphomet == 3) && (getpartyleader(.@party_id,2) == getcharid(0))) {
+		cutin "ins_cata_champ_n",2;
+		mes "[Soul of Ancient Hero]";
+		mes "Did you get 10^0000FFEssence of Fire^000000 and ^0000FFToken of Apostle^000000?";
+		next;
+		if ((countitem(6001) > 9) && (countitem(6002) > 0)) {
+			delitem 6001,countitem(6001); //Essence_Of_Fire
+			set 'ins_baphomet,4;
+			mes "[Soul of Ancient Hero]";
+			mes "Okay. You've done your work. Now check your companies and tell me when everyone finished their work.";
+		}
+		else {
+			mes "[Soul of Ancient Hero]";
+			mes "Not ready yet? You should prepare 10 ^0000FFEssence of Fire^000000 and ^0000FFToken of Apostle^000000.";
+		}
+		close2;
+		cutin "",255;
+		end;
+	}
+	else if (('ins_baphomet == 3) && (getpartyleader(.@party_id,2) == getcharid(0))) {
+		cutin "ins_cata_champ_n",2;
+		mes "[Soul of Ancient Hero]";
+		mes "Do you have ^0000FFToken of Apostle^000000?";
+		next;
+		if (countitem(6002) > 0) {
+			set 'ins_baphomet,4;
+			mes "[Soul of Ancient Hero]";
+			mes "Okay. You've done your work. Tell your representative to check your companies and come to me when everyone finished their work.";
+		}
+		else {
+			mes "[Soul of Ancient Hero]";
+			mes "Not ready yet? You should prepare ^0000FFToken of Apostle^000000.";
+		}
+		close2;
+		cutin "",255;
+		end;
+	}
+	else if (('ins_baphomet == 4) && (getpartyleader(.@party_id,2) == getcharid(0))) {
+		cutin "ins_cata_champ_n",2;
+		mes "[Soul of Ancient Hero]";
+		mes "Are you ready? I opened the sealed gate right now. To pass the gate, you should carry ^0000FFToken of Apostle^000000.";
+		next;
+		set 'ins_baphomet,5;
+		specialeffect EF_TELEPORTATION;
+		enablenpc instance_npcname("ins_bapho_to_2f", instance_id());
+		mes "[Soul of Ancient Hero]";
+		mes "Now you can go to the main altar. It is located in the corner of right bottom of this floor.";
+		next;
+		mes "[Soul of Ancient Hero]";
+		mes "Your real battle will begin... I'll follow you soon and find a way to help you.";
+		next;
+		mes "[Soul of Ancient Hero]";
+		mes "Go ahead, warriors.";
+		cutin "ins_cata_champ_n",255;
+		instance_announce 0, "Soul of Ancient Hero : Now you can go to the Main Altar's gate. It is located in the Southeast",bc_map,"0xFFFF00";
+		close;
+	}
+	else if (('ins_baphomet == 4) && (getpartyleader(.@party_id,2) == getcharid(0))) {
+		cutin "ins_cata_champ_n",2;
+		mes "[Soul of Ancient Hero]";
+		mes "Are you ready? I opened the sealed gate right now. To pass the gate, you should carry ^0000FFToken of Apostle^000000.";
+		next;
+		mes "[Soul of Ancient Hero]";
+		mes "I'll complete opening the sealed gate when your representative tell me that you're ready.";
+		cutin "ins_cata_champ_n",255;
+		close;
+	}
+	else if ('ins_baphomet == 5) {
+		cutin "ins_cata_champ_n",2;
+		mes "[Soul of Ancient Hero]";
+		mes "What are you doing? The entrance of the mail altar is opened right now, go and fight! Entrance is near the bottom of rightside of this floor.";
+		cutin "ins_cata_champ_n",255;
+		close;
+	}
+	else {
+		cutin "ins_cata_champ_n",2;
+		mes "[Soul of Ancient Hero]";
+		mes "I have nothing to talk to you...";
+		cutin "ins_cata_champ_n",255;
+		close;
+	}
+}
+
+//===================== TO 2F Warp ========================
+1@cata,281,12,0	script	ins_bapho_to_2f	45,1,1,{
+//OnTouch2:
+OnTouch:
+	if (countitem(6002) > 0) {
+		delitem 6002,countitem(6002); //Token_Of_Apostle
+		set 'ins_baphomet,5;
+		warp "2@cata",80,144;
+		end;
+	}
+	else {
+		mes "[Soul of Ancient Hero]";
+		mes "Where is your Token_of_Apostle? I said you should carry the Token_of_Apostle to pass this gate.";
+		close;
+	}
+}
+
+1@cata,86,214,0	script	Gravestone#1F_1T	844,{
+	if ('ins_baphomet == 1) {
+		getitem 6003,1; //Soul_Pendant
+		set 'ins_baphomet,2;
+		mes "A small stuff is shining under a falling grave.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "I think this is the pendant...";
+		close;
+	}
+	else {
+		mes "I can only feel gloom from this Gravestone.";
+		close;
+	}
+}
+
+1@cata,86,214,0	script	Gravestone#1F_1F	844,{
+	mes "I can only feel gloom from this Gravestone.";
+	close;
+	end;
+}
+
+1@cata,200,209,0	script	Gravestone#1F_2T	844,{
+	if ('ins_baphomet == 1) {
+		getitem 6003,1; //Soul_Pendant
+		set 'ins_baphomet,2;
+		mes "A small stuff is shining under a falling grave.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "I think this is the pendant...";
+		close;
+	}
+	else {
+		mes "I can only feel gloom from this Gravestone.";
+		close;
+	}
+}
+
+1@cata,200,209,0	script	Gravestone#1F_2F	844,{
+	mes "I can only feel gloom from this Gravestone.";
+	close;
+}
+
+1@cata,230,195,0	script	Gravestone#1F_3T	844,{
+	if ('ins_baphomet == 1) {
+		getitem 6003,1; //Soul_Pendant
+		set 'ins_baphomet,2;
+		mes "A small stuff is shining under a falling grave.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "I think this is the pendant...";
+		close;
+	}
+	else {
+		mes "I can only feel gloom from this Gravestone.";
+		close;
+	}
+}
+
+1@cata,230,195,0	script	Gravestone#1F_3F	844,{
+	mes "I can only feel gloom from this Gravestone.";
+	close;
+}
+
+1@cata,118,182,0	script	Gravestone#1F_4T	844,{
+	if ('ins_baphomet == 1) {
+		getitem 6003,1; //Soul_Pendant
+		set 'ins_baphomet,2;
+		mes "A small stuff is shining under a falling grave.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "I think this is the pendant...";
+		close;
+	}
+	else {
+		mes "I can only feel gloom from this Gravestone.";
+		close;
+	}
+}
+
+1@cata,118,182,0	script	Gravestone#1F_4F	844,{
+	mes "I can only feel gloom from this Gravestone.";
+	close;
+}
+
+1@cata,193,182,0	script	Gravestone#1F_5T	844,{
+	if ('ins_baphomet == 1) {
+		getitem 6003,1; //Soul_Pendant
+		set 'ins_baphomet,2;
+		mes "A small stuff is shining under a falling grave.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "I think this is the pendant...";
+		close;
+	}
+	else {
+		mes "I can only feel gloom from this Gravestone.";
+		close;
+	}
+}
+
+1@cata,193,182,0	script	Gravestone#1F_5F	844,{
+	mes "I can only feel gloom from this Gravestone.";
+	close;
+}
+
+1@cata,253,156,0	script	Gravestone#1F_6T	844,{
+	if ('ins_baphomet == 1) {
+		getitem 6003,1; //Soul_Pendant
+		set 'ins_baphomet,2;
+		mes "A small stuff is shining under a falling grave.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "I think this is the pendant...";
+		close;
+	}
+	else {
+		mes "I can only feel gloom from this Gravestone.";
+		close;
+	}
+}
+
+1@cata,253,156,0	script	Gravestone#1F_6F	844,{
+	mes "I can only feel gloom from this Gravestone.";
+	close;
+}
+
+1@cata,88,154,0	script	Gravestone#1F_7T	844,{
+	if ('ins_baphomet == 1) {
+		getitem 6003,1; //Soul_Pendant
+		set 'ins_baphomet,2;
+		mes "A small stuff is shining under a falling grave.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "I think this is the pendant...";
+		close;
+	}
+	else {
+		mes "I can only feel gloom from this Gravestone.";
+		close;
+	}
+}
+
+1@cata,88,154,0	script	Gravestone#1F_7F	844,{
+	mes "I can only feel gloom from this Gravestone.";
+	close;
+}
+
+1@cata,127,116,0	script	Gravestone#1F_8T	844,{
+	if ('ins_baphomet == 1) {
+		getitem 6003,1; //Soul_Pendant
+		set 'ins_baphomet,2;
+		mes "A small stuff is shining under a falling grave.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "I think this is the pendant...";
+		close;
+	}
+	else {
+		mes "I can only feel gloom from this Gravestone.";
+		close;
+	}
+}
+
+1@cata,127,116,0	script	Gravestone#1F_8F	844,{
+	mes "I can only feel gloom from this Gravestone.";
+	close;
+}
+
+1@cata,90,98,0	script	Gravestone#1F_9T	844,{
+	if ('ins_baphomet == 1) {
+		getitem 6003,1; //Soul_Pendant
+		set 'ins_baphomet,2;
+		mes "A small stuff is shining under a falling grave.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "I think this is the pendant...";
+		close;
+	}
+	else {
+		mes "I can only feel gloom from this Gravestone.";
+		close;
+	}
+}
+
+1@cata,90,98,0	script	Gravestone#1F_9F	844,{
+	mes "I can only feel gloom from this Gravestone.";
+	close;
+	end;
+}
+
+1@cata,188,84,0	script	Gravestone#1F_10T	844,{
+	if ('ins_baphomet == 1) {
+		getitem 6003,1; //Soul_Pendant
+		set 'ins_baphomet,2;
+		mes "A small stuff is shining under a falling grave.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "I think this is the pendant...";
+		close;
+	}
+	else {
+		mes "I can only feel gloom from this Gravestone.";
+		close;
+	}
+}
+
+1@cata,188,84,0	script	Gravestone#1F_10F	844,{
+	mes "I can only feel gloom from this Gravestone.";
+	close;
+	end;
+}
+
+1@cata,244,42,0	script	Gravestone#1F_11T	844,{
+	if ('ins_baphomet == 1) {
+		getitem 6003,1; //Soul_Pendant
+		set 'ins_baphomet,2;
+		mes "A small stuff is shining under a falling grave.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "I think this is the pendant...";
+		close;
+	}
+	else {
+		mes "I can only feel gloom from this Gravestone.";
+		close;
+	}
+}
+
+1@cata,244,42,0	script	Gravestone#1F_11F	844,{
+	mes "I can only feel gloom from this Gravestone.";
+	close;
+}
+
+1@cata,127,32,0	script	Gravestone#1F_12T	844,{
+	if ('ins_baphomet == 1) {
+		getitem 6003,1; //Soul_Pendant
+		set 'ins_baphomet,2;
+		mes "A small stuff is shining under a falling grave.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "I think this is the pendant...";
+		close;
+	}
+	else {
+		mes "I can only feel gloom from this Gravestone.";
+		close;
+	}
+}
+
+1@cata,127,32,0	script	Gravestone#1F_12F	844,{
+	mes "I can only feel gloom from this Gravestone.";
+	close;
+}
+
+1@cata,267,30,0	script	Gravestone#1F_13T	844,{
+	if ('ins_baphomet == 1) {
+		getitem 6003,1; //Soul_Pendant
+		set 'ins_baphomet,2;
+		mes "A small stuff is shining under a falling grave.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "I think this is the pendant...";
+		close;
+	}
+	else {
+		mes "I can only feel gloom from this Gravestone.";
+		close;
+	}
+}
+
+1@cata,267,30,0	script	Gravestone#1F_13F	844,{
+	mes "I can only feel gloom from this Gravestone.";
+	close;
+}
+
+1@cata,267,210,0	script	Bobbing Torch#1	844,{
+	set .@party_id,getcharid(1);
+	if (getpartyleader(.@party_id,2) == getcharid(0)) {
+		if (('ins_baphomet == 3) && (countitem(6001) < 11)) {
+			mes "A huge torch which seems it can burn everything is bobbing up and down in front of me.";
+			next;
+			mes "The grand appearance and heat of the fire makes me step back... But I pluck up my courage and make a long arm to pick up the torch.";
+			next;
+			specialeffect2 EF_HOLYHIT;
+			getitem 6001,1; //Essence_Of_Fire
+			mes "The symbol of inheritor shines. Then a small crystal is fallen to my hand from the torch.";
+			disablenpc instance_npcname("Bobbing Torch#1", instance_id());
+			close;
+		}
+		else if (('ins_baphomet == 3) && (countitem(6001) > 10)) {
+			mes "You have 10 Essence of Fire already. So you don't need to collect it anymore.";
+			close;
+		}
+		else {
+			mes "You don't need to collect Essence of Fire anymore.";
+			close;
+		}
+	}
+	else {
+		mes "A huge torch which seems it can burn everything is bobbing up and down in front of me..";
+		next;
+		mes "[Unknown Voice]";
+		mes "You are not a inheritor of faith. Do not desecrate the Essence of Fire with your disrespectful hands.";
+		specialeffect2 EF_FIRESPLASHHIT;
+		percentheal -50,0;
+		close;
+	}
+}
+
+1@cata,85,182,0	script	Bobbing Torch#2	844,{
+	set .@party_id,getcharid(1);
+	if (getpartyleader(.@party_id,2) == getcharid(0)) {
+		if (('ins_baphomet == 3) && (countitem(6001) < 11)) {
+			mes "A huge torch which seems it can burn everything is bobbing up and down in front of me.";
+			next;
+			mes "The grand appearance and heat of the fire makes me step back... But I pluck up my courage and make a long arm to pick up the torch.";
+			next;
+			specialeffect2 EF_HOLYHIT;
+			getitem 6001,1; //Essence_Of_Fire
+			mes "The symbol of inheritor shines. Then a small crystal is fallen to my hand from the torch.";
+			disablenpc instance_npcname("Bobbing Torch#2", instance_id());
+			close;
+		}
+		else if (('ins_baphomet == 3) && (countitem(6001) > 10)) {
+			mes "You have 10 Essence of Fire already. So you don't need to collect it anymore.";
+			close;
+		}
+		else {
+			mes "You don't need to collect Essence of Fire anymore.";
+			close;
+		}
+	}
+	else {
+		mes "A huge torch which seems it can burn everything is bobbing up and down in front of me..";
+		next;
+		mes "[Unknown Voice]";
+		mes "You are not a inheritor of faith. Do not desecrate the Essence of Fire with your disrespectful hands.";
+		specialeffect2 EF_FIRESPLASHHIT;
+		percentheal -50,0;
+		close;
+	}
+}
+
+1@cata,267,154,0	script	Bobbing Torch#3	844,{
+	set .@party_id,getcharid(1);
+	if (getpartyleader(.@party_id,2) == getcharid(0)) {
+		if (('ins_baphomet == 3) && (countitem(6001) < 11)) {
+			mes "A huge torch which seems it can burn everything is bobbing up and down in front of me.";
+			next;
+			mes "The grand appearance and heat of the fire makes me step back... But I pluck up my courage and make a long arm to pick up the torch.";
+			next;
+			specialeffect2 EF_HOLYHIT;
+			getitem 6001,1; //Essence_Of_Fire
+			mes "The symbol of inheritor shines. Then a small crystal is fallen to my hand from the torch.";
+			disablenpc instance_npcname("Bobbing Torch#3", instance_id());
+			close;
+		}
+		else if (('ins_baphomet == 3) && (countitem(6001) > 10)) {
+			mes "You have 10 Essence of Fire already. So you don't need to collect it anymore.";
+			close;
+		}
+		else {
+			mes "You don't need to collect Essence of Fire anymore.";
+			close;
+		}
+	}
+	else {
+		mes "A huge torch which seems it can burn everything is bobbing up and down in front of me..";
+		next;
+		mes "[Unknown Voice]";
+		mes "You are not a inheritor of faith. Do not desecrate the Essence of Fire with your disrespectful hands.";
+		specialeffect2 EF_FIRESPLASHHIT;
+		percentheal -50,0;
+		close;
+	}
+}
+
+1@cata,157,139,0	script	Bobbing Torch#4	844,{
+	set .@party_id,getcharid(1);
+	if (getpartyleader(.@party_id,2) == getcharid(0)) {
+		if (('ins_baphomet == 3) && (countitem(6001) < 11)) {
+			mes "A huge torch which seems it can burn everything is bobbing up and down in front of me.";
+			next;
+			mes "The grand appearance and heat of the fire makes me step back... But I pluck up my courage and make a long arm to pick up the torch.";
+			next;
+			specialeffect2 EF_HOLYHIT;
+			getitem 6001,1; //Essence_Of_Fire
+			mes "The symbol of inheritor shines. Then a small crystal is fallen to my hand from the torch.";
+			disablenpc instance_npcname("Bobbing Torch#4", instance_id());
+			close;
+		}
+		else if (('ins_baphomet == 3) && (countitem(6001) > 10)) {
+			mes "You have 10 Essence of Fire already. So you don't need to collect it anymore.";
+			close;
+		}
+		else {
+			mes "You don't need to collect Essence of Fire anymore.";
+			close;
+		}
+	}
+	else {
+		mes "A huge torch which seems it can burn everything is bobbing up and down in front of me..";
+		next;
+		mes "[Unknown Voice]";
+		mes "You are not a inheritor of faith. Do not desecrate the Essence of Fire with your disrespectful hands.";
+		specialeffect2 EF_FIRESPLASHHIT;
+		percentheal -50,0;
+		close;
+	}
+}
+
+1@cata,193,138,0	script	Bobbing Torch#5	844,{
+	set .@party_id,getcharid(1);
+	if (getpartyleader(.@party_id,2) == getcharid(0)) {
+		if (('ins_baphomet == 3) && (countitem(6001) < 11)) {
+			mes "A huge torch which seems it can burn everything is bobbing up and down in front of me.";
+			next;
+			mes "The grand appearance and heat of the fire makes me step back... But I pluck up my courage and make a long arm to pick up the torch.";
+			next;
+			specialeffect2 EF_HOLYHIT;
+			getitem 6001,1; //Essence_Of_Fire
+			mes "The symbol of inheritor shines. Then a small crystal is fallen to my hand from the torch.";
+			disablenpc instance_npcname("Bobbing Torch#5", instance_id());
+			close;
+		}
+		else if (('ins_baphomet == 3) && (countitem(6001) > 10)) {
+			mes "You have 10 Essence of Fire already. So you don't need to collect it anymore.";
+			close;
+		}
+		else {
+			mes "You don't need to collect Essence of Fire anymore.";
+			close;
+		}
+	}
+	else {
+		mes "A huge torch which seems it can burn everything is bobbing up and down in front of me..";
+		next;
+		mes "[Unknown Voice]";
+		mes "You are not a inheritor of faith. Do not desecrate the Essence of Fire with your disrespectful hands.";
+		specialeffect2 EF_FIRESPLASHHIT;
+		percentheal -50,0;
+		close;
+	}
+}
+
+1@cata,193,102,0	script	Bobbing Torch#6	844,{
+	set .@party_id,getcharid(1);
+	if (getpartyleader(.@party_id,2) == getcharid(0)) {
+		if (('ins_baphomet == 3) && (countitem(6001) < 11)) {
+			mes "A huge torch which seems it can burn everything is bobbing up and down in front of me.";
+			next;
+			mes "The grand appearance and heat of the fire makes me step back... But I pluck up my courage and make a long arm to pick up the torch.";
+			next;
+			specialeffect2 EF_HOLYHIT;
+			getitem 6001,1; //Essence_Of_Fire
+			mes "The symbol of inheritor shines. Then a small crystal is fallen to my hand from the torch.";
+			disablenpc instance_npcname("Bobbing Torch#6", instance_id());
+			close;
+		}
+		else if (('ins_baphomet == 3) && (countitem(6001) > 10)) {
+			mes "You have 10 Essence of Fire already. So you don't need to collect it anymore.";
+			close;
+		}
+		else {
+			mes "You don't need to collect Essence of Fire anymore.";
+			close;
+		}
+	}
+	else {
+		mes "A huge torch which seems it can burn everything is bobbing up and down in front of me..";
+		next;
+		mes "[Unknown Voice]";
+		mes "You are not a inheritor of faith. Do not desecrate the Essence of Fire with your disrespectful hands.";
+		specialeffect2 EF_FIRESPLASHHIT;
+		percentheal -50,0;
+		close;
+	}
+}
+
+1@cata,157,102,0	script	Bobbing Torch#7	844,{
+	set .@party_id,getcharid(1);
+	if (getpartyleader(.@party_id,2) == getcharid(0)) {
+		if (('ins_baphomet == 3) && (countitem(6001) < 11)) {
+			mes "A huge torch which seems it can burn everything is bobbing up and down in front of me.";
+			next;
+			mes "The grand appearance and heat of the fire makes me step back... But I pluck up my courage and make a long arm to pick up the torch.";
+			next;
+			specialeffect2 EF_HOLYHIT;
+			getitem 6001,1; //Essence_Of_Fire
+			mes "The symbol of inheritor shines. Then a small crystal is fallen to my hand from the torch.";
+			disablenpc instance_npcname("Bobbing Torch#7", instance_id());
+			close;
+		}
+		else if (('ins_baphomet == 3) && (countitem(6001) > 10)) {
+			mes "You have 10 Essence of Fire already. So you don't need to collect it anymore.";
+			close;
+		}
+		else {
+			mes "You don't need to collect Essence of Fire anymore.";
+			close;
+		}
+	}
+	else {
+		mes "A huge torch which seems it can burn everything is bobbing up and down in front of me..";
+		next;
+		mes "[Unknown Voice]";
+		mes "You are not a inheritor of faith. Do not desecrate the Essence of Fire with your disrespectful hands.";
+		specialeffect2 EF_FIRESPLASHHIT;
+		percentheal -50,0;
+		close;
+	}
+}
+
+1@cata,113,112,0	script	Bobbing Torch#8	844,{
+	set .@party_id,getcharid(1);
+	if (getpartyleader(.@party_id,2) == getcharid(0)) {
+		if (('ins_baphomet == 3) && (countitem(6001) < 11)) {
+			mes "A huge torch which seems it can burn everything is bobbing up and down in front of me.";
+			next;
+			mes "The grand appearance and heat of the fire makes me step back... But I pluck up my courage and make a long arm to pick up the torch.";
+			next;
+			specialeffect2 EF_HOLYHIT;
+			getitem 6001,1; //Essence_Of_Fire
+			mes "The symbol of inheritor shines. Then a small crystal is fallen to my hand from the torch.";
+			disablenpc instance_npcname("Bobbing Torch#8", instance_id());
+			close;
+		}
+		else if (('ins_baphomet == 3) && (countitem(6001) > 10)) {
+			mes "You have 10 Essence of Fire already. So you don't need to collect it anymore.";
+			close;
+		}
+		else {
+			mes "You don't need to collect Essence of Fire anymore.";
+			close;
+		}
+	}
+	else {
+		mes "A huge torch which seems it can burn everything is bobbing up and down in front of me..";
+		next;
+		mes "[Unknown Voice]";
+		mes "You are not a inheritor of faith. Do not desecrate the Essence of Fire with your disrespectful hands.";
+		specialeffect2 EF_FIRESPLASHHIT;
+		percentheal -50,0;
+		close;
+	}
+}
+
+1@cata,253,56,0	script	Bobbing Torch#9	844,{
+	set .@party_id,getcharid(1);
+	if (getpartyleader(.@party_id,2) == getcharid(0)) {
+		if (('ins_baphomet == 3) && (countitem(6001) < 11)) {
+			mes "A huge torch which seems it can burn everything is bobbing up and down in front of me.";
+			next;
+			mes "The grand appearance and heat of the fire makes me step back... But I pluck up my courage and make a long arm to pick up the torch.";
+			next;
+			specialeffect2 EF_HOLYHIT;
+			getitem 6001,1; //Essence_Of_Fire
+			mes "The symbol of inheritor shines. Then a small crystal is fallen to my hand from the torch.";
+			disablenpc instance_npcname("Bobbing Torch#9", instance_id());
+			close;
+		}
+		else if (('ins_baphomet == 3) && (countitem(6001) > 10)) {
+			mes "You have 10 Essence of Fire already. So you don't need to collect it anymore.";
+			close;
+		}
+		else {
+			mes "You don't need to collect Essence of Fire anymore.";
+			close;
+		}
+	}
+	else {
+		mes "A huge torch which seems it can burn everything is bobbing up and down in front of me..";
+		next;
+		mes "[Unknown Voice]";
+		mes "You are not a inheritor of faith. Do not desecrate the Essence of Fire with your disrespectful hands.";
+		specialeffect2 EF_FIRESPLASHHIT;
+		percentheal -50,0;
+		close;
+	}
+}
+
+1@cata,239,56,0	script	Bobbing Torch#10	844,{
+	set .@party_id,getcharid(1);
+	if (getpartyleader(.@party_id,2) == getcharid(0)) {
+		if (('ins_baphomet == 3) && (countitem(6001) < 11)) {
+			mes "A huge torch which seems it can burn everything is bobbing up and down in front of me.";
+			next;
+			mes "The grand appearance and heat of the fire makes me step back... But I pluck up my courage and make a long arm to pick up the torch.";
+			next;
+			specialeffect2 EF_HOLYHIT;
+			getitem 6001,1; //Essence_Of_Fire
+			mes "The symbol of inheritor shines. Then a small crystal is fallen to my hand from the torch.";
+			disablenpc instance_npcname("Bobbing Torch#10", instance_id());
+			close;
+		}
+		else if (('ins_baphomet == 3) && (countitem(6001) > 10)) {
+			mes "You have 10 Essence of Fire already. So you don't need to collect it anymore.";
+			close;
+		}
+		else {
+			mes "You don't need to collect Essence of Fire anymore.";
+			close;
+		}
+	}
+	else {
+		mes "A huge torch which seems it can burn everything is bobbing up and down in front of me..";
+		next;
+		mes "[Unknown Voice]";
+		mes "You are not a inheritor of faith. Do not desecrate the Essence of Fire with your disrespectful hands.";
+		specialeffect2 EF_FIRESPLASHHIT;
+		percentheal -50,0;
+		close;
+	}
+}
+
+1@cata,71,42,0	script	Bobbing Torch#11	844,{
+	set .@party_id,getcharid(1);
+	if (getpartyleader(.@party_id,2) == getcharid(0)) {
+		if (('ins_baphomet == 3) && (countitem(6001) < 11)) {
+			mes "A huge torch which seems it can burn everything is bobbing up and down in front of me.";
+			next;
+			mes "The grand appearance and heat of the fire makes me step back... But I pluck up my courage and make a long arm to pick up the torch.";
+			next;
+			specialeffect2 EF_HOLYHIT;
+			getitem 6001,1; //Essence_Of_Fire
+			mes "The symbol of inheritor shines. Then a small crystal is fallen to my hand from the torch.";
+			disablenpc instance_npcname("Bobbing Torch#11", instance_id());
+			close;
+		}
+		else if (('ins_baphomet == 3) && (countitem(6001) > 10)) {
+			mes "You have 10 Essence of Fire already. So you don't need to collect it anymore.";
+			close;
+		}
+		else {
+			mes "You don't need to collect Essence of Fire anymore.";
+			close;
+		}
+	}
+	else {
+		mes "A huge torch which seems it can burn everything is bobbing up and down in front of me..";
+		next;
+		mes "[Unknown Voice]";
+		mes "You are not a inheritor of faith. Do not desecrate the Essence of Fire with your disrespectful hands.";
+		specialeffect2 EF_FIRESPLASHHIT;
+		percentheal -50,0;
+		close;
+	}
+}
+
+1@cata,155,14,0	script	Bobbing Torch#12	844,{
+	set .@party_id,getcharid(1);
+	if (getpartyleader(.@party_id,2) == getcharid(0)) {
+		if (('ins_baphomet == 3) && (countitem(6001) < 11)) {
+			mes "A huge torch which seems it can burn everything is bobbing up and down in front of me.";
+			next;
+			mes "The grand appearance and heat of the fire makes me step back... But I pluck up my courage and make a long arm to pick up the torch.";
+			next;
+			specialeffect2 EF_HOLYHIT;
+			getitem 6001,1; //Essence_Of_Fire
+			mes "The symbol of inheritor shines. Then a small crystal is fallen to my hand from the torch.";
+			disablenpc instance_npcname("Bobbing Torch#12", instance_id());
+			close;
+		}
+		else if (('ins_baphomet == 3) && (countitem(6001) > 10)) {
+			mes "You have 10 Essence of Fire already. So you don't need to collect it anymore.";
+			close;
+		}
+		else {
+			mes "You don't need to collect Essence of Fire anymore.";
+			close;
+		}
+	}
+	else {
+		mes "A huge torch which seems it can burn everything is bobbing up and down in front of me..";
+		next;
+		mes "[Unknown Voice]";
+		mes "You are not a inheritor of faith. Do not desecrate the Essence of Fire with your disrespectful hands.";
+		specialeffect2 EF_FIRESPLASHHIT;
+		percentheal -50,0;
+		close;
+	}
+}
+
+1@cata,1,1,0	script	ins_baphomet_1f_timer	-1,{
+OnEnable:
+	enablenpc instance_npcname("ins_baphomet_1f_timer", instance_id());
+	initnpctimer;
+	end;
+
+OnDisable:;
+	disablenpc instance_npcname("ins_baphomet_1f_timer", instance_id());
+	stopnpctimer;
+	end;
+
+OnTimer1800000:
+	instance_announce 0, "Soul of Ancient Hero : We don't have enough time. Hurry up.",bc_map,"0xFFFF00";
+	end;
+
+OnTimer2400000:
+	instance_announce 0, "Soul of Ancient Hero : My body is disappearing... Hurry up.",bc_map,"0xFFFF00";
+	end;
+
+OnTimer3000000:
+	instance_announce 0, "Soul of Ancient Hero : Everything is over... Is there no other way than to wait next chance...",bc_map,"0xFFFF00";
+	end;
+
+OnTimer3050000:
+	instance_announce 0, "Soul of Ancient Hero : We failed... However... We still have chances. I hope you to train yourselves until the time comes.",bc_map,"0xFFFF00";
+	end;
+
+OnTimer3100000:
+	instance_announce 0, "You've failed to open the seal of main altar.",bc_map,"0xFFFF00";
+	end;
+
+OnTimer3500000:
+	instance_warpall "monk_test",310,150;
+	stopnpctimer;
+	end;
+}
+
+2@cata,80,144,0	script	ins_2f_enter	-1,3,3,{
+OnTouch:
+	donpcevent instance_npcname("ins_2f_enter_broad", instance_id())+"::OnEnable";
+	disablenpc instance_npcname("ins_2f_enter", instance_id());
+	end;
+}
+
+2@cata,1,1,0	script	ins_2f_enter_broad	-1,{
+OnEnable:
+	enablenpc instance_npcname("ins_2f_enter_broad", instance_id());
+	initnpctimer;
+	end;
+
+OnDisable:
+	disablenpc instance_npcname("ins_2f_enter_broad", instance_id());
+	end;
+
+OnTimer10000:
+	instance_announce 0, "Baphomet : Humans... interfering again...",bc_map,"0xdb7093";
+	end;
+
+OnTimer13000:
+	instance_announce 0, "Apostle of Baphomet : Humans! Humans have invaded our sanctum!",bc_map,"0xFFFF00";
+	end;
+
+OnTimer16000:
+	instance_announce 0, "Apostle of Baphomet : Kill the humans! Do not stop the revival of our Master!",bc_map,"0xFFFF00";
+	end;
+
+OnTimer18000:
+	instance_announce 0, "Apostle of Baphomet : Hurry up and release the seals of the altars! Our Master's return is upon us.",bc_map,"0xFFFF00";
+	stopnpctimer;
+	disablenpc instance_npcname("ins_2f_enter_broad", instance_id());
+	end;
+}
+
+2@cata,50,67,0	script	slave_left	-1,5,5,{
+OnTouch:
+	disablenpc instance_npcname("slave_left", instance_id());
+	instance_announce 0, "Apostle of Baphomet : Kill the humans! Don't let them interrupt the revival of our Master!",bc_map,"0xFFFF00";
+	monster "2@cata",55,67,"Apostle of Baphomet",1869,1;
+	monster "2@cata",51,67,"Apostle of Baphomet",1291,1;
+	monster "2@cata",58,67,"Apostle of Baphomet",1292,1;
+	monster "2@cata",53,67,"Apostle of Baphomet",1291,1;
+	monster "2@cata",54,67,"Apostle of Baphomet",1869,1;
+	monster "2@cata",55,67,"Apostle of Baphomet",1291,1;
+	monster "2@cata",56,67,"Apostle of Baphomet",1117,1;
+	monster "2@cata",58,66,"Apostle of Baphomet",1869,1;
+	monster "2@cata",56,66,"Apostle of Baphomet",1117,1;
+	monster "2@cata",60,66,"Apostle of Baphomet",1132,1;
+	monster "2@cata",59,66,"Apostle of Baphomet",1117,1;
+	monster "2@cata",54,66,"Apostle of Baphomet",1132,1;
+	monster "2@cata",55,66,"Apostle of Baphomet",1292,1;
+	monster "2@cata",56,66,"Apostle of Baphomet",1132,1;
+	monster "2@cata",50,65,"Apostle of Baphomet",1867,1;
+	monster "2@cata",61,65,"Apostle of Baphomet",1292,1;
+	end;
+}
+
+2@cata,109,67,0	script	slave_right	-1,5,5,{
+OnTouch:
+	disablenpc instance_npcname("slave_right", instance_id());
+	instance_announce 0, "Apostle of Baphomet : Kill the humans! Don't let them interrupt the revival of our Master!",bc_map,"0xFFFF00";
+	monster "2@cata",105,67,"Apostle of Baphomet",1869,1;
+	monster "2@cata",104,67,"Apostle of Baphomet",1291,1;
+	monster "2@cata",107,67,"Apostle of Baphomet",1869,1;
+	monster "2@cata",106,67,"Apostle of Baphomet",1291,1;
+	monster "2@cata",102,67,"Apostle of Baphomet",1869,1;
+	monster "2@cata",103,67,"Apostle of Baphomet",1291,1;
+	monster "2@cata",103,67,"Apostle of Baphomet",1117,1;
+	monster "2@cata",109,66,"Apostle of Baphomet",1117,1;
+	monster "2@cata",108,66,"Apostle of Baphomet",1132,1;
+	monster "2@cata",101,66,"Apostle of Baphomet",1117,1;
+	monster "2@cata",106,66,"Apostle of Baphomet",1292,1;
+	monster "2@cata",102,66,"Apostle of Baphomet",1132,1;
+	monster "2@cata",104,66,"Apostle of Baphomet",1292,1;
+	monster "2@cata",103,66,"Apostle of Baphomet",1132,1;
+	monster "2@cata",109,65,"Apostle of Baphomet",1867,1;
+	monster "2@cata",108,65,"Apostle of Baphomet",1292,1;
+	end;
+}
+
+2@cata,79,39,0	script	slave_down	-1,5,5,{
+OnTouch:
+	disablenpc instance_npcname("slave_down", instance_id());
+	instance_announce 0, "Apostle of Baphomet : Kill the humans! Don't let them interrupt the revival of our Master!",bc_map,"0xFFFF00";
+	monster "2@cata",78,41,"Apostle of Baphomet",1869,1;
+	monster "2@cata",79,42,"Apostle of Baphomet",1291,1;
+	monster "2@cata",78,46,"Apostle of Baphomet",1869,1;
+	monster "2@cata",81,41,"Apostle of Baphomet",1291,1;
+	monster "2@cata",81,42,"Apostle of Baphomet",1869,1;
+	monster "2@cata",79,43,"Apostle of Baphomet",1291,1;
+	monster "2@cata",77,40,"Apostle of Baphomet",1117,1;
+	monster "2@cata",79,41,"Apostle of Baphomet",1132,1;
+	monster "2@cata",79,42,"Apostle of Baphomet",1117,1;
+	monster "2@cata",79,43,"Apostle of Baphomet",1132,1;
+	monster "2@cata",79,48,"Apostle of Baphomet",1117,1;
+	monster "2@cata",78,49,"Apostle of Baphomet",1132,1;
+	monster "2@cata",78,41,"Apostle of Baphomet",1292,1;
+	monster "2@cata",74,42,"Apostle of Baphomet",1292,1;
+	monster "2@cata",72,48,"Apostle of Baphomet",1867,1;
+	monster "2@cata",72,38,"Apostle of Baphomet",1292,1;
+	end;
+}
+
+2@cata,79,81,0	script	Magical Seal#0	844,{
+	set .@seal_check,checkquest(3041,PLAYTIME);
+	if (.@seal_check == -1) {
+		specialeffect EF_LEXDIVINA;
+		disablenpc instance_npcname("Magical Seal#0", instance_id());
+		areamobuseskill "2@cata",79,81,10,1929,686,1,0,0,26,0;
+		percentheal -50,0;
+		sc_start Eff_Stone,20000,0;
+		setquest 3041;
+		instance_announce 0, "The seal activated by putting magical power into the altar.",bc_map,"0x87ceeb";
+		mes "I can feel the power of the altar came back by putting magical power.";
+		next;
+		mes "But you can't put your magical power during 3 minutes because you spent your SP on the altar.";
+		close;
+	}
+	else if ((.@seal_check == 0) || (.@seal_check == 1)) {
+		specialeffect2 EF_SILENCEATTACK;
+		percentheal -50,0;
+		sc_start Eff_Stone,30000,0;
+		mes "Your SP is not recovered yet. You lost your SP on the altar, but it seems the power of the seal doesn't came back.";
+		close;
+	}
+	else if (.@seal_check == 2) {
+		erasequest 3041;
+		specialeffect EF_LEXDIVINA;
+		disablenpc instance_npcname("Magical Seal#0", instance_id());
+		areamobuseskill "2@cata",79,81,10,1929,686,1,0,0,26,0;
+		percentheal -50,0;
+		sc_start Eff_Stone,20000,0;
+		setquest 3041;
+		instance_announce 0, "The seal activated by putting magical power into the altar.",bc_map,"0x87ceeb";
+		mes "I can feel the power of the altar came back by putting magical power.";
+		next;
+		mes "But you can't put your magical power during 3 minutes because you spent your SP on the altar.";
+		close;
+	}
+	end;
+}
+
+2@cata,123,109,0	script	Magical Seal#2	844,{
+	set .@seal_check,checkquest(3041,PLAYTIME);
+	if (.@seal_check == -1) {
+		specialeffect EF_LEXDIVINA;
+		disablenpc instance_npcname("Magical Seal#2", instance_id());
+		areamobuseskill "2@cata",123,109,10,1929,686,1,0,0,26,0;
+		percentheal -50,0;
+		sc_start Eff_Stone,20000,0;
+		setquest 3041;
+		instance_announce 0, "The seal activated by putting magical power into the altar.",bc_map,"0x87ceeb";
+		mes "I can feel the power of the altar came back by putting magical power.";
+		next;
+		mes "But you can't put your magical power during 3 minutes because you spent your SP on the altar.";
+		close;
+	}
+	else if ((.@seal_check == 0) || (.@seal_check == 1)) {
+		specialeffect2 EF_SILENCEATTACK;
+		percentheal -50,0;
+		sc_start Eff_Stone,30000,0;
+		mes "Your SP is not recovered yet. You lost your SP on the altar, but it seems the power of the seal doesn't came back.";
+		close;
+	}
+	else if (.@seal_check == 2) {
+		erasequest 3041;
+		specialeffect EF_LEXDIVINA;
+		disablenpc instance_npcname("Magical Seal#2", instance_id());
+		areamobuseskill "2@cata",123,109,10,1929,686,1,0,0,26,0;
+		percentheal -50,0;
+		sc_start Eff_Stone,20000,0;
+		setquest 3041;
+		instance_announce 0, "The seal activated by putting magical power into the altar.",bc_map,"0x87ceeb";
+		mes "I can feel the power of the altar came back by putting magical power.";
+		next;
+		mes "But you can't put your magical power during 3 minutes because you spent your SP on the altar.";
+		close;
+	}
+	end;
+}
+
+2@cata,123,22,0	script	Magical Seal#4	844,{
+	set .@seal_check,checkquest(3041,PLAYTIME);
+	if (.@seal_check == -1) {
+		specialeffect EF_LEXDIVINA;
+		disablenpc instance_npcname("Magical Seal#4", instance_id());
+		areamobuseskill "2@cata",123,22,10,1929,686,1,0,0,26,0;
+		percentheal -50,0;
+		sc_start Eff_Stone,20000,0;
+		setquest 3041;
+		instance_announce 0, "The seal activated by putting magical power into the altar.",bc_map,"0x87ceeb";
+		mes "I can feel the power of the altar came back by putting magical power.";
+		next;
+		mes "But you can't put your magical power during 3 minutes because you spent your SP on the altar.";
+		close;
+	}
+	else if ((.@seal_check == 0) || (.@seal_check == 1)) {
+		specialeffect2 EF_SILENCEATTACK;
+		percentheal -50,0;
+		sc_start Eff_Stone,30000,0;
+		mes "Your SP is not recovered yet. You lost your SP on the altar, but it seems the power of the seal doesn't came back.";
+		close;
+	}
+	else if (.@seal_check == 2) {
+		erasequest 3041;
+		specialeffect EF_LEXDIVINA;
+		disablenpc instance_npcname("Magical Seal#4", instance_id());
+		areamobuseskill "2@cata",123,22,10,1929,686,1,0,0,26,0;
+		percentheal -50,0;
+		sc_start Eff_Stone,20000,0;
+		setquest 3041;
+		instance_announce 0, "The seal activated by putting magical power into the altar.",bc_map,"0x87ceeb";
+		mes "I can feel the power of the altar came back by putting magical power.";
+		next;
+		mes "But you can't put your magical power during 3 minutes because you spent your SP on the altar.";
+		close;
+	}
+	end;
+}
+
+2@cata,35,21,0	script	Magical Seal#8	844,{
+	set .@seal_check,checkquest(3041,PLAYTIME);
+	if (.@seal_check == -1) {
+		specialeffect EF_LEXDIVINA;
+		disablenpc instance_npcname("Magical Seal#8", instance_id());
+		areamobuseskill "2@cata",35,21,10,1929,686,1,0,0,26,0;
+		percentheal -50,0;
+		sc_start Eff_Stone,20000,0;
+		setquest 3041;
+		instance_announce 0, "The seal activated by putting magical power into the altar.",bc_map,"0x87ceeb";
+		mes "I can feel the power of the altar came back by putting magical power.";
+		next;
+		mes "But you can't put your magical power during 3 minutes because you spent your SP on the altar.";
+		close;
+	}
+	else if ((.@seal_check == 0) || (.@seal_check == 1)) {
+		specialeffect2 EF_SILENCEATTACK;
+		percentheal -50,0;
+		sc_start Eff_Stone,30000,0;
+		mes "Your SP is not recovered yet. You lost your SP on the altar, but it seems the power of the seal doesn't came back.";
+		close;
+	}
+	else if (.@seal_check == 2) {
+		erasequest 3041;
+		specialeffect EF_LEXDIVINA;
+		disablenpc instance_npcname("Magical Seal#8", instance_id());
+		areamobuseskill "2@cata",35,21,10,1929,686,1,0,0,26,0;
+		percentheal -50,0;
+		sc_start Eff_Stone,20000,0;
+		setquest 3041;
+		instance_announce 0, "The seal activated by putting magical power into the altar.",bc_map,"0x87ceeb";
+		mes "I can feel the power of the altar came back by putting magical power.";
+		next;
+		mes "But you can't put your magical power during 3 minutes because you spent your SP on the altar.";
+		close;
+	}
+	end;
+}
+
+2@cata,35,109,0	script	Magical Seal#10	844,{
+	set .@seal_check,checkquest(3041,PLAYTIME);
+	if (.@seal_check == -1) {
+		specialeffect EF_LEXDIVINA;
+		disablenpc instance_npcname("Magical Seal#10", instance_id());
+		areamobuseskill "2@cata",35,109,10,1929,686,1,0,0,26,0;
+		percentheal -50,0;
+		sc_start Eff_Stone,20000,0;
+		setquest 3041;
+		instance_announce 0, "The seal activated by putting magical power into the altar.",bc_map,"0x87ceeb";
+		mes "I can feel the power of the altar came back by putting magical power.";
+		next;
+		mes "But you can't put your magical power during 3 minutes because you spent your SP on the altar.";
+		close;
+	}
+	else if ((.@seal_check == 0) || (.@seal_check == 1)) {
+		specialeffect2 EF_SILENCEATTACK;
+		percentheal -50,0;
+		sc_start Eff_Stone,30000,0;
+		mes "Your SP is not recovered yet. You lost your SP on the altar, but it seems the power of the seal doesn't came back.";
+		close;
+	}
+	else if (.@seal_check == 2) {
+		erasequest 3041;
+		specialeffect EF_LEXDIVINA;
+		disablenpc instance_npcname("Magical Seal#10", instance_id());
+		areamobuseskill "2@cata",35,109,10,1929,686,1,0,0,26,0;
+		percentheal -50,0;
+		sc_start Eff_Stone,20000,0;
+		setquest 3041;
+		instance_announce 0, "The seal activated by putting magical power into the altar.",bc_map,"0x87ceeb";
+		mes "I can feel the power of the altar came back by putting magical power.";
+		next;
+		mes "But you can't put your magical power during 3 minutes because you spent your SP on the altar.";
+		close;
+	}
+	end;
+}
+
+2@cata,79,65,0	script	The Main Altar#ss	844,{
+	set .@party_id,getcharid(1);
+	if (('ins_baphomet == 5) && (getpartyleader(.@party_id,2) == getcharid(0))) {
+		mes "An evil power, too terrible to describe, lies under the great altar radiating a violet color.";
+		next;
+		mes "Complicated Magical Rune letters blink rapidly, attempting to suppress the dreadful power within.";
+		next;
+		mes "The bottom of the Main Altar trembles furiously.";
+		next;
+		specialeffect EF_METEORSTORM;
+		specialeffect EF_METEORSTORM;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Watch out! Something... Something is comming.";
+		set 'ins_baphomet,6;
+		donpcevent instance_npcname("ins_2f_hero_broad", instance_id())+"::OnEnable";
+		disablenpc instance_npcname("The Main Altar#ss", instance_id());
+		close;
+	}
+	else if (('ins_baphomet == 5) && (getpartyleader(.@party_id,2) != getcharid(0))) {
+		mes "An evil power, too terrible to describe, lies under the great altar radiating a violet color.";
+		next;
+		mes "Complicated Magical Rune letters blink rapidly, attempting to suppress the dreadful power within.";
+		close;
+	}
+	else {
+		mes "An evil power, too terrible to describe, lies under the great altar radiating a violet color.";
+		next;
+		mes "Complicated Magical Rune letters blink rapidly, attempting to suppress the dreadful power within.";
+		close;
+	}
+	end;
+}
+
+2@cata,80,63,4	script	Soul of Ancient Hero#2F	411,{
+	cutin "ins_cata_champ_s",2;
+	erasequest 3041;
+	erasequest 3040;
+	setquest 3040;
+	mes "[Soul of Ancient Hero]";
+	mes "Good job, my descendants... You've satisfied our long-cherished desire that me and my companies can't accomplish.";
+	next;
+	mes "[Soul of Ancient Hero]";
+	next;
+	mes "[Soul of Ancient Hero]";
+	mes "I really appreciate your help.";
+	mes "Our souls can finally rest in peace...";
+	next;
+	mes "[Soul of Ancient Hero]";
+	mes "The struggle for peace on this world will never end. But... my role here is finally over because there are brave heroes like you.";
+	next;
+	switch(select("Let me leave the monastery.:Stop talking.")) {
+	case 1:
+		mes "[Soul of Ancient Hero]";
+		mes "Okay. I'll let you and your company leave here safely.";
+		next;
+		mes "[Soul of Ancient Hero]";
+		mes "If you leave, please say hello to Patrick for me.";
+		cutin "ins_cata_champ_n",255;
+		set 'ins_baphomet,0;
+		warp "monk_test",310,150;
+		close;
+	case 2:
+		mes "[Soul of Ancient Hero]";
+		mes "Do you still have something to do here? If you're done I'll let you leave here safely...";
+		cutin "ins_cata_champ_n",255;
+		close;
+	}
+}
+
+2@cata,1,2,0	script	ins_2f_hero_broad	-1,{
+OnEnable:
+	enablenpc instance_npcname("ins_2f_hero_broad", instance_id());
+	initnpctimer;
+	end;
+
+OnDisable:
+	disablenpc instance_npcname("ins_2f_hero_broad", instance_id());
+	end;
+
+OnTimer3000:
+	instance_announce 0, "Soul of Ancient Hero : My God! The seal of the Main Altar is weakening.",bc_map,"0xFFFF00";
+	end;
+
+OnTimer6000:
+	instance_announce 0, "Soul of Ancient Hero : My descendants... Listen carefully to what I'm going to say.",bc_map,"0xFFFF00";
+	end;
+
+OnTimer9000:
+	instance_announce 0, "Soul of Ancient Hero : The altars, that control the Main Altar's power, are located in the Northeast, Southeast, Southwest and Northwest corners of this room.",bc_map,"0xFFFF00";
+	end;
+
+OnTimer12000:
+	instance_announce 0, "Soul of Ancient Hero : Find these altars and activate their seals before Baphomet revives.",bc_map,"0xFFFF00";
+	end;
+
+OnTimer15000:
+	instance_announce 0, "Baphomet : It's too late, weaklings... Now, you'll feel the despair of death.",bc_map,"0xdb7093";
+	end;
+
+OnTimer17000:
+	instance_announce 0, "Baphomet : No one can harm me here. You will be my first sacrifice.",bc_map,"0xdb7093";
+	donpcevent instance_npcname("control_baphomet", instance_id())+"::OnEnable";
+	donpcevent instance_npcname("ins_2f_hero_broad2", instance_id())+"::OnEnable";
+	stopnpctimer;
+	disablenpc instance_npcname("ins_2f_hero_broad", instance_id());
+	end;
+}
+
+2@cata,3,3,0	script	control_baphomet	-1,{
+OnEnable:
+	enablenpc instance_npcname("control_baphomet", instance_id());
+	donpcevent instance_npcname("2f_callmon_pattern_c", instance_id())+"::OnEnable";
+	monster "2@cata",79,64,"Baphomet#",1929,1,instance_npcname("control_baphomet", instance_id())+"::OnMyMobDead";
+	end;
+
+OnDisable:
+	disablenpc "control_baphomet";
+	end;
+
+OnMyMobDead:
+	if (mobcount("2@cata",instance_npcname("control_baphomet", instance_id())+"::OnMyMobDead") < 1) {
+		set 'ins_baphomet,7;
+		setquest 3040;
+		erasequest 3041;
+		instance_announce 0, "Baphomet : No! Nonono!I get this insult again from these trivial bugs... No...",bc_map,"0xdb7093";
+		enablenpc instance_npcname("Soul of Ancient Hero#2F", instance_id());
+		disablenpc instance_npcname("slave_down", instance_id());
+		disablenpc instance_npcname("slave_left", instance_id());
+		disablenpc instance_npcname("slave_right", instance_id());
+		donpcevent instance_npcname("ins_2f_hero_broad", instance_id())+"::OnDisable";
+		donpcevent instance_npcname("ins_2f_hero_broad2", instance_id())+"::OnDisable";
+		donpcevent instance_npcname("ins_2f_hero_pattern_c", instance_id())+"::OnDisable";
+		donpcevent instance_npcname("2f_callmon_pattern_c", instance_id())+"::OnDisable";
+		donpcevent instance_npcname("2f_callmon_pattern", instance_id())+"::OnDisable";
+		donpcevent instance_npcname("ins_2f_hero_pattern", instance_id())+"::OnDisable";
+		donpcevent instance_npcname("ins_2f_enter_broad", instance_id())+"::OnDisable";
+		donpcevent instance_npcname("control_baphomet", instance_id())+"::OnDisable";
+		disablenpc instance_npcname("control_baphomet", instance_id());
+	}
+	end;
+}
+
+2@cata,2,2,0	script	ins_2f_hero_broad2	-1,{
+OnEnable:
+	enablenpc instance_npcname("ins_2f_hero_broad2", instance_id());
+	initnpctimer;
+	end;
+
+OnDisable:
+	disablenpc instance_npcname("ins_2f_hero_broad2", instance_id());
+	end;
+
+OnTimer8000:
+	instance_announce 0, "Soul of Ancient Hero : Don't be discouraged, Baphomet can still be defeated.",bc_map,"0xFFFF00";
+	end;
+
+OnTimer11000:
+	instance_announce 0, "Soul of Ancient Hero : Go to the altars and activate their seals.",bc_map,"0xFFFF00";
+	end;
+
+OnTimer13000:
+	instance_announce 0, "Soul of Ancient Hero : Once the seals recover their power, Baphomet will be vulnerable.",bc_map,"0xFFFF00";
+	end;
+
+OnTimer16000:
+	instance_announce 0, "Soul of Ancient Hero : You should lure Baphomet to the unsealed Altars. Otherwise, your effort will be futile.",bc_map,"0xFFFF00";
+	end;
+
+OnTimer19000:
+	instance_announce 0, "Soul of Ancient Hero : We have only 1 hour to stop Baphomet. If the time passes, the power of the seals will be useless.",bc_map,"0xFFFF00";
+	end;
+
+OnTimer22000:
+	instance_announce 0, "Baphomet : It's useless. Make more seals. I'll crush them all. None of you'll survive.",bc_map,"0xdb7093";
+	end;
+
+OnTimer26000:
+	instance_announce 0, "Soul of Ancient Hero : The magical power of the central seal is running out. Go to the central seal and put the magical power.",bc_map,"0xFFFF00";
+	enablenpc instance_npcname("Magical Seal#0", instance_id());
+	disablenpc instance_npcname("Magical Seal#2", instance_id());
+	disablenpc instance_npcname("Magical Seal#4", instance_id());
+	disablenpc instance_npcname("Magical Seal#8", instance_id());
+	disablenpc instance_npcname("Magical Seal#10", instance_id());
+	donpcevent instance_npcname("ins_2f_hero_pattern_c", instance_id())+"::OnEnable";
+	stopnpctimer;
+	disablenpc instance_npcname("ins_2f_hero_broad2", instance_id());
+	end;
+}
+
+2@cata,4,1,0	script	2f_callmon_pattern_c	-1,{
+OnEnable:
+	enablenpc instance_npcname("2f_callmon_pattern_c", instance_id());
+	initnpctimer;
+	donpcevent instance_npcname("2f_callmon_pattern_c", instance_id())+"::Ongo";
+	end;
+
+OnDisable:
+	stopnpctimer;
+	disablenpc instance_npcname("2f_callmon_pattern_c", instance_id());
+	end;
+
+Ongo:
+	donpcevent instance_npcname("2f_callmon_pattern", instance_id())+"::OnEnable";
+	end;
+
+OnTimer3600000:
+	donpcevent instance_npcname("2f_callmon_pattern_c", instance_id())+"::OnDisable";
+	end;
+}
+
+2@cata,4,2,0	script	2f_callmon_pattern	-1,{
+OnEnable:
+	enablenpc instance_npcname("2f_callmon_pattern", instance_id());
+	stopnpctimer;
+	initnpctimer;
+	end;
+
+OnDisable:
+	disablenpc instance_npcname("2f_callmon_pattern", instance_id());
+	stopnpctimer;
+	end;
+
+OnTimer300000:
+	enablenpc instance_npcname("slave_down", instance_id());
+	enablenpc instance_npcname("slave_left", instance_id());
+	enablenpc instance_npcname("slave_right", instance_id());
+	donpcevent instance_npcname("2f_callmon_pattern_c", instance_id())+"::Ongo";
+	end;
+}
+
+2@cata,3,1,0	script	ins_2f_hero_pattern_c	-1,{
+OnEnable:
+	enablenpc instance_npcname("ins_2f_hero_pattern_c", instance_id());
+	initnpctimer;
+	donpcevent instance_npcname("ins_2f_hero_pattern_c", instance_id())+"::Ongo";
+	end;
+
+Ongo:
+	donpcevent instance_npcname("ins_2f_hero_pattern", instance_id())+"::OnEnable";
+	end;
+
+OnDisable:
+	stopnpctimer;
+	disablenpc instance_npcname("Magical Seal#0", instance_id());
+	disablenpc instance_npcname("Magical Seal#2", instance_id());
+	disablenpc instance_npcname("Magical Seal#4", instance_id());
+	disablenpc instance_npcname("Magical Seal#8", instance_id());
+	disablenpc instance_npcname("Magical Seal#10", instance_id());
+	donpcevent instance_npcname("ins_2f_hero_pattern", instance_id())+"::OnDisable";
+	disablenpc instance_npcname("ins_2f_hero_pattern_c", instance_id());
+	end;
+
+OnTimer3600000:
+	instance_announce 0, "Baphomet : krrrr... Now you can't stop me by such a seal. Just wait for your death.",bc_map,"0xdb7093";
+	end;
+
+OnTimer3605000:
+	instance_announce 0, "Soul of Ancient Hero : We can't stop Baphomet by the magical power of the seals anymore. Now everything is depend on God...",bc_map,"0xFFFF00";
+	donpcevent instance_npcname("ins_2f_hero_pattern_c", instance_id())+"::OnDisable";
+	end;
+}
+
+2@cata,3,2,0	script	ins_2f_hero_pattern	-1,{
+OnEnable:
+	enablenpc instance_npcname("ins_2f_hero_pattern", instance_id());
+	initnpctimer;
+	end;
+
+OnDisable:
+	disablenpc instance_npcname("ins_2f_hero_pattern", instance_id());
+	stopnpctimer;
+	end;
+
+OnTimer70000:
+	switch(rand(1,5)) {
+	case 1:
+		instance_announce 0, "Soul of Ancient Hero : The seal of the Main Altar is running out. Strengthen the Main Altar's seal!",bc_map,"0xFFFF00";
+		enablenpc instance_npcname("Magical Seal#0", instance_id());
+		disablenpc instance_npcname("Magical Seal#2", instance_id());
+		disablenpc instance_npcname("Magical Seal#4", instance_id());
+		disablenpc instance_npcname("Magical Seal#8", instance_id());
+		disablenpc instance_npcname("Magical Seal#10", instance_id());
+		break;
+	case 2:
+		instance_announce 0, "Soul of Ancient Hero : The magical power of the seal in the direction of 2o'clock is running out. Go to the direction of 2o'clock and put the magical power in the seal.",bc_map,"0xFFFF00";
+		disablenpc instance_npcname("Magical Seal#0", instance_id());
+		enablenpc instance_npcname("Magical Seal#2", instance_id());
+		disablenpc instance_npcname("Magical Seal#4", instance_id());
+		disablenpc instance_npcname("Magical Seal#8", instance_id());
+		disablenpc instance_npcname("Magical Seal#10", instance_id());
+		break;
+	case 3:
+		instance_announce 0, "Soul of Ancient Hero : The magical power of the seal in the direction of 4o'clock is running out. Go to the direction of 4o'clock and put the magical power in the seal.",bc_map,"0xFFFF00";
+		disablenpc instance_npcname("Magical Seal#0", instance_id());
+		disablenpc instance_npcname("Magical Seal#2", instance_id());
+		enablenpc instance_npcname("Magical Seal#4", instance_id());
+		disablenpc instance_npcname("Magical Seal#8", instance_id());
+		disablenpc instance_npcname("Magical Seal#10", instance_id());
+		break;
+	case 4:
+		instance_announce 0, "Soul of Ancient Hero : The magical power of the seal in the direction of 8o'clock is running out. Go to the direction of 8o'clock and put the magical power in the seal.",bc_map,"0xFFFF00";
+		disablenpc instance_npcname("Magical Seal#0", instance_id());
+		disablenpc instance_npcname("Magical Seal#2", instance_id());
+		disablenpc instance_npcname("Magical Seal#4", instance_id());
+		enablenpc instance_npcname("Magical Seal#8", instance_id());
+		disablenpc instance_npcname("Magical Seal#10", instance_id());
+		break;
+	case 5:
+		instance_announce 0, "Soul of Ancient Hero : The magical power of the seal in the direction of 10o'clock is running out. Go to the direction of 10o'clock and put the magical power in the seal.",bc_map,"0xFFFF00";
+		disablenpc instance_npcname("Magical Seal#0", instance_id());
+		disablenpc instance_npcname("Magical Seal#2", instance_id());
+		disablenpc instance_npcname("Magical Seal#4", instance_id());
+		disablenpc instance_npcname("Magical Seal#8", instance_id());
+		enablenpc instance_npcname("Magical Seal#10", instance_id());
+	}
+	stopnpctimer;
+	donpcevent instance_npcname("ins_2f_hero_pattern_c", instance_id())+"::Ongo";
+	end;
+}
+
+
+1@cata,1,1,0	script	ins_1f_spawn_mobs	-1,{
+OnEnable:
+	monster "1@cata",0,0,"Zombie Master",1298,10;
+	monster "1@cata",0,0,"Wraith Dead",1291,10;
+	//monster "1@cata",0,0,"Ancient Mimic",1699,10;
+	monster "1@cata",0,0,"Flame Skull",1869,10;
+	monster "1@cata",0,0,"Skeleton General",1290,10;
+	monster "1@cata",0,0,"Zombie Master",1298,10;
+	monster "1@cata",0,0,"Skeleton General",1290,10;
+	monster "1@cata",0,0,"Flame Skull",1869,10;
+	monster "1@cata",0,0,"Wraith Dead",1291,10;
+	monster "1@cata",0,0,"Wraith Dead",1291,10;
+	monster "1@cata",0,0,"Khalitzburg",1132,10;
+	monster "1@cata",0,0,"Khalitzburg",1132,10;
+	monster "1@cata",0,0,"Flame Skull",1869,10;
+	monster "1@cata",0,0,"Flame Skull",1869,10;
+	monster "1@cata",0,0,"Ancient Mimic",1699,10;
+	monster "1@cata",0,0,"Zombie Master",1298,10;
+	monster "1@cata",0,0,"Ancient Mimic",1699,10;
+	monster "1@cata",0,0,"Zombie Master",1298,10;
+	monster "1@cata",0,0,"Wraith Dead",1291,10;
+	monster "1@cata",0,0,"Skeleton General",1290,10;
+	monster "1@cata",0,0,"Skeleton General",1290,10;
+	monster "1@cata",0,0,"Wind Ghost",1263,10;
+	monster "1@cata",0,0,"Wind Ghost",1263,10;
+	monster "1@cata",0,0,"Wind Ghost",1263,10;
+	monster "1@cata",0,0,"Lude",1509,10;
+	monster "1@cata",0,0,"Lude",1509,10;
+	monster "1@cata",0,0,"Evil Druid",1117,10;
+	monster "1@cata",0,0,"Evil Druid",1117,10;
+	monster "1@cata",0,0,"Evil Druid",1117,10;
+	monster "1@cata",0,0,"Banshee",1867,10;
+	monster "1@cata",0,0,"Dark Illusion",1302,1;
+	end;
+}

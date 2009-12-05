@@ -1,5 +1,7 @@
 Date		Added
 ======
+2009/12/04
+	* Rev. 14189 Implemented the first version of Sealed Shrine. [L0ne_W0lf]
 2009/11/03
 	* Rev. 14123 Added official WoESE Guild Dungeon NPCs, and custom spawns. [L0ne_W0lf]
 	- As the mobs are not 100% (missing stats, no drops, etc) they are disabled by default.
