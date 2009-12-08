@@ -33,6 +33,10 @@
 #include <stdarg.h>
 #include <time.h>
 
+
+struct s_quest_db quest_db[MAX_QUEST_DB];
+
+
 int quest_search_db(int quest_id)
 {
 	int i;

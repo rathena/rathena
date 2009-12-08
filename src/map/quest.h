@@ -12,7 +12,7 @@ struct s_quest_db {
 	int num_objectives;
 	//char name[NAME_LENGTH];
 };
-struct s_quest_db quest_db[MAX_QUEST_DB];
+extern struct s_quest_db quest_db[MAX_QUEST_DB];
 
 typedef enum quest_check_type { HAVEQUEST, PLAYTIME, HUNTING } quest_check_type;
 

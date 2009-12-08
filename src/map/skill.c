@@ -3441,7 +3441,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		break;
 	case SA_QUESTION:
 	case SA_GRAVITY:
-	case ALL_WEWISH:
 		clif_skill_nodamage(src,bl,skillid,skilllv,1);
 		break;
 	case SA_CLASSCHANGE:
@@ -5696,6 +5695,9 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				src,skillid,skilllv,tick, flag|BCT_ENEMY|SD_PREAMBLE|1,
 				skill_castend_nodamage_id);
 		}
+		break;
+	case ALL_WEWISH:
+		clif_skill_nodamage(src,bl,skillid,skilllv,1);
 		break;
 	default:
 		ShowWarning("skill_castend_nodamage_id: Unknown skill used:%d\n",skillid);

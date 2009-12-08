@@ -2598,7 +2598,7 @@ void npc_parse_mob2(struct spawn_data* mob)
 
 static const char* npc_parse_mob(char* w1, char* w2, char* w3, char* w4, const char* start, const char* buffer, const char* filepath)
 {
-	int num, class_, mode, x,y,xs,ys, i,j;
+	int num, class_, mode, m,x,y,xs,ys, i,j;
 	char mapname[32];
 	struct spawn_data mob, *data;
 	struct mob_db* db;
@@ -2620,10 +2620,10 @@ static const char* npc_parse_mob(char* w1, char* w2, char* w3, char* w4, const c
 		ShowError("npc_parse_mob: Unknown map '%s' in file '%s', line '%d'.\n", mapname, filepath, strline(buffer,start-buffer));
 		return strchr(start,'\n');// skip and continue
 	}
-	mode =  map_mapname2mapid(mapname);
-	if( mode < 0 )//Not loaded on this map-server instance.
+	m =  map_mapname2mapid(mapname);
+	if( m < 0 )//Not loaded on this map-server instance.
 		return strchr(start,'\n');// skip and continue
-	mob.m = (unsigned short)mode;
+	mob.m = (unsigned short)m;
 
 	if( x < 0 || x >= map[mob.m].xs || y < 0 || y >= map[mob.m].ys )
 	{
