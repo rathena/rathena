@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.1
+//= 1.2
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -23,6 +23,7 @@
 //===== Additional Comments: ================================= 
 //= 1.0 First Version. [L0ne_W0lf]
 //= 1.1 I missed an end in one of the lhz guards. [L0ne_W0lf]
+//= 1.2 Fixed missing ends, wrong label and some typos [Gepard]
 //============================================================ 
 
 // Onward to the New World
@@ -6362,7 +6363,7 @@ OnTouch:
 			mes "Finally, the meeting's starting.";
 			mes "You should come in.";
 			next;
-			donpcevent "Research Official#ep131::OnOfficial#ep131_rhea00";
+			donpcevent "Research Official#ep131::Onmeet";
 			mes "[United Research Official]";
 			mes "So, everyone's here.";
 			mes "Let us begin our meeting.";
@@ -6498,7 +6499,8 @@ OnTouch:
 			next;
 			mes "[Ryosen]";
 			mes "Whatttttt!? Only a cake????";
-			mes "¹Aha, yeah, I just remembered. You people from Schwartzvalt don't ever appreciate food at all, right?";
+			mes "Aha, yeah, I just remembered. You people from Schwartzvalt don't ever appreciate food at all, right?";
+			next;
 			mes "[Ryosen]";
 			mes "Especially when the food is NOT yours, huh? That's why you people sneak a taste of other people's food like my strawberry cake!!!";
 			next;
@@ -8102,6 +8104,7 @@ mid_camp,222,218,3	script	Hansenne#ep131_rhea03	931,{
 }
 
 mid_campin,379,123,5	script	Ryosen#ep131_rhea05	748,{
+	end;
 OnInit:
 	disablenpc "Ryosen#ep131_rhea05";
 	end;
@@ -8122,6 +8125,7 @@ OnTimer300000:
 }
 
 mid_campin,372,123,5	script	Hue#ep131_rhea06	868,{
+	end;
 OnInit:
 	disablenpc "Hue#ep131_rhea06";
 	end;
@@ -8142,6 +8146,7 @@ OnTimer300000:
 }
 
 mid_campin,375,129,5	script	Hansenne#ep131_rhea07	931,{
+	end;
 OnInit:
 	disablenpc "Hansenne#ep131_rhea07";
 	end;
@@ -9957,7 +9962,7 @@ spl_fild02,314,165,0	script	School of Fish#1::Fishinghole	844,{
 				getitem 6037,1; //Rough_File
 				set ep13_1_rhea,14;
 				specialeffect EF_BUBBLE;
-				mapannounce "spl_fild02","" + strcharinfo(0) + "has caught a Messy File!!",bc_map,"0xff77ff";
+				mapannounce "spl_fild02","" + strcharinfo(0) + " has caught a Messy File!!",bc_map,"0xff77ff";
 			}
 		}
 		set .@rhea_ran,rand(1,70);
@@ -10049,7 +10054,7 @@ mid_camp,75,135,0	script	School of Fish#4	844,{
 				getitem 6037,1; //Rough_File
 				set ep13_1_rhea,14;
 				specialeffect EF_BUBBLE;
-				mapannounce "mid_camp","" + strcharinfo(0) + "has caught a Messy File!!",bc_map,"0xff77ff";
+				mapannounce "mid_camp","" + strcharinfo(0) + " has caught a Messy File!!",bc_map,"0xff77ff";
 			}
 		}
 		set .@rhea_ran,rand(1,70);
