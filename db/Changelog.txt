@@ -9,6 +9,7 @@
 	13005 Angelic Wing Dagger:	NEED INFO.
 =======================
 2009/12/10
+	* Rev. 14195 Uncommented the item 5374 (L_Magestic_Goat) as it's a quest reward given by an NPC assosiated with sealed shrine. (bugreport:3924) [L0ne_W0lf]
 	* Rev. 14194 Minor update to the Orc Instance mobs stats, very incomplete still. [L0ne_W0lf]
 2009/12/04
 	* Rev. 14188 A rather hefty updates to the mob_skill_db and added some more info for newer pets. [L0ne_W0lf]
