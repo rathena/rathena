@@ -1,5 +1,10 @@
 Date		Added
 ======
+2009/12/11
+	* Rev. 14196 First round of bugfixes for Orc's Memory. (bugreport:3928) [L0ne_W0lf]
+	- Fixed some npcs calling wrong events. 
+	- Fixed Depraved Orc Spirit spawn point
+	- Fixed an NPC that was never being enabled.
 2009/12/10
 	* Rev. 14194 Implemented the first version of Orc's Memory. [L0ne_W0lf]
 2009/12/07

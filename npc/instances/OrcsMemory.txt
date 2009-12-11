@@ -11,6 +11,10 @@
 //= Relive the memory of an orc.
 //===== Additional Comments: ================================= 
 //= 1.0 First version. [L0ne_W0lf]
+//= 1.1 First round of bugfixes. (bugreport:3928) [L0ne_W0lf]
+//=     Fixed some npcs calling wrong events. 
+//=     Fixed Depraved Orc Spirit spawn point
+//=     Fixed an NPC that was never being enabled.
 //============================================================ 
 
 // Entrance
@@ -1002,7 +1006,7 @@ OnContinue:
 	end;
 
 OnTimer10000:
-	areamonster "2@orcs",28,158,40,170,"Safeguard Chief",1981,1,instance_npcname("#Warp2-1", instance_id())+"::OnMyMobDead";
+	areamonster "2@orcs",28,158,40,170,"Safeguard Chief",1981,1,instance_npcname("#Mobs Control", instance_id())+"::OnMyMobDead1";
 	stopnpctimer;
 	end;
 
@@ -1119,7 +1123,7 @@ OnContinue:
 	end;
 
 OnTimer10000:
-	areamonster "2@orcs",40,91,52,103,"Orc Sniper",1982,1,instance_npcname("#Warp2-2", instance_id())+"::OnMyMobDead";
+	areamonster "2@orcs",40,91,52,103,"Orc Sniper",1982,1,instance_npcname("#Mobs Control", instance_id())+"::OnMyMobDead2";
 	stopnpctimer;
 	end;
 
@@ -1226,12 +1230,12 @@ OnInstanceInit:
 	end;
 
 OnEnable:
-	monster "2@orcs",0,0,"Depraved Orc Spirit",1982,1,instance_npcname("#Mobs Control", instance_id())+"::OnMyMobDead3";
+	monster "2@orcs",152,147,"Depraved Orc Spirit",1982,1,instance_npcname("#Mobs Control", instance_id())+"::OnMyMobDead3";
 	instance_announce 0, "Depraved Orc Spirit: I smell flesh! Hungry! Wanna try some human meat!!",bc_map,"0xff8888";
 	end;
 
 OnContinue:
-	monster "2@orcs",117,61,129,73,"Depraved Orc Spirit",1982,1,instance_npcname("#Warp2-3", instance_id())+"::OnMyMobDead";
+	areamonster "2@orcs",117,61,129,73,"Depraved Orc Spirit",1982,1,instance_npcname("#Mobs Control", instance_id())+"::OnMyMobDead3";
 	donpcevent instance_npcname("#Boss Control", instance_id())+"::OnEnable";
 	enablenpc instance_npcname("#Warp2-3", instance_id());
 	initnpctimer;
@@ -1269,6 +1273,7 @@ OnInstanceInit:
 OnEnable:
 	monster "2@orcs",185,8,"Shaman Cargalache",1983,1,instance_npcname("#Boss Control", instance_id())+"::OnMyMobDead";
 	monster "2@orcs",179,15,"Depraved Orc Hero",1087,1;
+	enablenpc instance_npcname("#Boss Control", instance_id());
 	end;
 
 OnMyMobDead:
@@ -1309,7 +1314,7 @@ OnTouch:
 	end;
 }
 
-2@orcs,172,13,0	script	Kruger#	433,{
+2@orcs,172,13,0	script	Kruger#	434,{
 	if (yong_odun < 2) {
 		mes "[Kruger]";
 		mes "*Coughing*";
