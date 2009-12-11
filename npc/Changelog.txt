@@ -1,5 +1,7 @@
 Date		Added
 ======
+2009/12/10
+	* Rev. 14194 Implemented the first version of Orc's Memory. [L0ne_W0lf]
 2009/12/07
 	* Rev. 14192 Implemented official armor enchanting NPC. [L0ne_W0lf]
 2009/12/04
