@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.0
+//= 1.1a
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -15,6 +15,13 @@
 //=     Fixed some npcs calling wrong events. 
 //=     Fixed Depraved Orc Spirit spawn point
 //=     Fixed an NPC that was never being enabled.
+//= 1.1a Second round from bugreport. (bugreport:3928) [L0ne_W0lf]
+//=     Fixed first warp never enabling, issue not seen
+//=     because of a local source mod.
+//=     Corrected the IDs for the Vengeful Orc Spirit and
+//=     Shaman Cargalache, copy/paste fail.
+//=     Changed spawn point for dungeon according to spawn
+//=     point on iRO.
 //============================================================ 
 
 // Entrance
@@ -121,7 +128,7 @@ gef_fild10,242,202,0	script	Dimensional Gorge Piece	406,{
 					//else if (move_md == 0) {
 					else {
 						mapannounce "gef_fild10", .@p_reader$ + " of the party, " + .@p_name$ + " is entering the " + .@md_name$ + ".",bc_map,"0x00ff99";
-						warp	"1@orcs",179,29;
+						warp	"1@orcs",179,15;
 						setquest 12059;
 						close;
 					}
@@ -151,7 +158,7 @@ gef_fild10,242,202,0	script	Dimensional Gorge Piece	406,{
 					else {
 						mapannounce "gef_fild10", .@p_name$ + " Party's member " + .@p_reader$ + " has entered the " + .@md_name$ + ".",bc_map,"0x00ff99";
 						setquest 12059;
-						warp "1@orcs",179,29;
+						warp "1@orcs",179,15;
 						close;
 					}
 				case 2:
@@ -183,7 +190,7 @@ gef_fild10,242,202,0	script	Dimensional Gorge Piece	406,{
 				else {
 					mapannounce "gef_fild10", .@p_name$ + " Party's member " + .@p_reader$ + " has entered the " + .@md_name$ + ".",bc_map,"0x00ff99";
 					setquest 12059;
-					warp "1@orcs",179,29;
+					warp "1@orcs",179,15;
 					close;
 				}
 			case 2:
@@ -547,13 +554,10 @@ OnTimer56310:
 	end;
 
 OnTimer60000:
-	areamonster "1@orcs",137,83,143,89,"Enchanted Orc",1023,1,instance_npcname("Kurger#1-2", instance_id())+"::OnMyMobDead";
+	areamonster "1@orcs",137,83,143,89,"Enchanted Orc",1023,1,instance_npcname("B1 Area Mobs", instance_id())+"::OnMyMobDead";
 	stopnpctimer;
 	end;
 
-OnMyMobDead:
-	donpcevent instance_npcname("B1 Area 1", instance_id())+"::OnEnable";
-	end;
 }
 
 1@orcs,168,125,0	script	B1 Area 1	45,3,3,{
@@ -607,6 +611,7 @@ OnContinue:
 OnTimer30300:
 	instance_announce 0, "Kruger's Whisper: I saw the bodies of our tribe. It seems that the Orc Shaman has used those Orcs for her rituals.",bc_map,"0xff4499";
 	end;
+
 OnTimer37600:
 	instance_announce 0, "Kruger's Whisper: ... It all has to do with me. I am responsible for this evilness.",bc_map,"0xff4499";
 	stopnpctimer;
@@ -661,6 +666,10 @@ OnTouch:
 }
 
 1@orcs,1,1,0	script	B1 Area Mobs	-1,{
+	end;
+
+OnMyMobDead:
+	donpcevent instance_npcname("B1 Area 1", instance_id())+"::OnEnable";
 	end;
 
 OnMyMobDead1:
@@ -1230,12 +1239,12 @@ OnInstanceInit:
 	end;
 
 OnEnable:
-	monster "2@orcs",152,147,"Depraved Orc Spirit",1982,1,instance_npcname("#Mobs Control", instance_id())+"::OnMyMobDead3";
+	monster "2@orcs",152,147,"Depraved Orc Spirit",1983,1,instance_npcname("#Mobs Control", instance_id())+"::OnMyMobDead3";
 	instance_announce 0, "Depraved Orc Spirit: I smell flesh! Hungry! Wanna try some human meat!!",bc_map,"0xff8888";
 	end;
 
 OnContinue:
-	areamonster "2@orcs",117,61,129,73,"Depraved Orc Spirit",1982,1,instance_npcname("#Mobs Control", instance_id())+"::OnMyMobDead3";
+	areamonster "2@orcs",117,61,129,73,"Depraved Orc Spirit",1983,1,instance_npcname("#Mobs Control", instance_id())+"::OnMyMobDead3";
 	donpcevent instance_npcname("#Boss Control", instance_id())+"::OnEnable";
 	enablenpc instance_npcname("#Warp2-3", instance_id());
 	initnpctimer;
@@ -1271,7 +1280,7 @@ OnInstanceInit:
 	end;
 
 OnEnable:
-	monster "2@orcs",185,8,"Shaman Cargalache",1983,1,instance_npcname("#Boss Control", instance_id())+"::OnMyMobDead";
+	monster "2@orcs",185,8,"Shaman Cargalache",1984,1,instance_npcname("#Boss Control", instance_id())+"::OnMyMobDead";
 	monster "2@orcs",179,15,"Depraved Orc Hero",1087,1;
 	enablenpc instance_npcname("#Boss Control", instance_id());
 	end;

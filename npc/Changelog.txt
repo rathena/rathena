@@ -1,6 +1,10 @@
 Date		Added
 ======
 2009/12/11
+	* Rev. 14196 Second round of bugfixes for Orc's Memory. (bugreport:3928) [L0ne_W0lf]
+	- Fixed first warp never enabling, issue not seen because of a local source mod.
+	- Corrected the IDs for the Vengeful Orc Spirit and Shaman Cargalache, copy/paste fail.
+	- Changed spawn point for dungeon according to spawn point on iRO.
 	* Rev. 14196 First round of bugfixes for Orc's Memory. (bugreport:3928) [L0ne_W0lf]
 	- Fixed some npcs calling wrong events. 
 	- Fixed Depraved Orc Spirit spawn point
