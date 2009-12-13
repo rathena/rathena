@@ -233,7 +233,7 @@ gef_fild10,238,202,6	script	Mad Scientist#orc	865,{
 		case 2:
 			mes "[Mad Scientist]";
 			mes "You are a pretty distrustful person, huh?";
-			return
+			next;
 			break;
 		}
 		switch(select("Oh? Like what, travel to alternate space?")) {
@@ -271,8 +271,8 @@ gef_fild10,238,202,6	script	Mad Scientist#orc	865,{
 	else {
 		mes "[Mad Scientist]";
 		mes "Hmm? Put your hand on that Monemus Statue if you want to experience traveling through dimensions!";
-		close;
 	}
+	close;
 }
 
 // Orc's Memory Floor 1
