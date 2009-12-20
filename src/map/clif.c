@@ -5009,15 +5009,26 @@ void clif_upgrademessage(int fd, int result, int item_id)
 /*==========================================
  * Wisp/page is transmitted to the destination player
  * R 0097 <len>.w <nick>.24B <message>.?B
+ * R 0097 <len>.w <nick>.24B <???>.L <message>.?B
  *------------------------------------------*/
 int clif_wis_message(int fd, const char* nick, const char* mes, int mes_len)
 {
+#if PACKETVER < 20091104
 	WFIFOHEAD(fd, mes_len + NAME_LENGTH + 4);
 	WFIFOW(fd,0) = 0x97;
 	WFIFOW(fd,2) = mes_len + NAME_LENGTH + 4;
 	safestrncpy((char*)WFIFOP(fd,4), nick, NAME_LENGTH);
 	safestrncpy((char*)WFIFOP(fd,28), mes, mes_len);
 	WFIFOSET(fd,WFIFOW(fd,2));
+#else
+	WFIFOHEAD(fd, mes_len + NAME_LENGTH + 8);
+	WFIFOW(fd,0) = 0x97;
+	WFIFOW(fd,2) = mes_len + NAME_LENGTH + 8;
+	safestrncpy((char*)WFIFOP(fd,4), nick, NAME_LENGTH);
+	WFIFOL(fd,28) = 0; // unknown; if nonzero, also displays text above char
+	safestrncpy((char*)WFIFOP(fd,32), mes, mes_len);
+	WFIFOSET(fd,WFIFOW(fd,2));
+#endif
 	return 0;
 }
 
