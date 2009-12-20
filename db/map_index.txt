@@ -754,6 +754,12 @@ bat_c01
 bat_c02
 bat_c03
 evt_zombie
+//evt_coke
+//ac_sl_area
+//ac_cl_hall
+//ac_cl_room
+//jp_s_dun11
+//moc_para01
 
 // Only add maps under this line if they are not standard maps!
 
@@ -769,6 +775,7 @@ evt_zombie
 //2009rwc_02
 //2009rwc_03
 //2009rwc_04
+//2008rwc_04
 //prontera_x
 //alberta_x
 //aldebaran_x
