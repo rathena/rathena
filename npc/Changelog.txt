@@ -1,5 +1,8 @@
 Date		Added
 ======
+2009/12/20
+	* Rev. 14209 More bugfixes, to orc dungeon instance, mostly typos. :O (bugreport:3944) [L0ne_W0lf]
+	- Also fixed some of the varaibles (types/values) as well.
 2009/12/11
 	* Rev. 14196 Second round of bugfixes for Orc's Memory. (bugreport:3928) [L0ne_W0lf]
 	- Fixed first warp never enabling, issue not seen because of a local source mod.
