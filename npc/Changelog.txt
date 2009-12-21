@@ -1,6 +1,11 @@
 Date		Added
 ======
 2009/12/20
+	* Rev. 14211 More Orc Instance updates, and some new 13.1 quests. :x [L0ne_W0lf]
+	- Disabled an exploit related to the orc hero spawn.
+	- Corrected the variable type for party leader name.
+	- Commented out the assassin pub NPCs in quests_morroc.
+	- Cat Hand Agents no longer ignore you with 300+ points.
 	* Rev. 14209 More bugfixes, to orc dungeon instance, mostly typos. :O (bugreport:3944) [L0ne_W0lf]
 	- Also fixed some of the varaibles (types/values) as well.
 2009/12/11

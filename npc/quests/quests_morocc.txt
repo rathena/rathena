@@ -3,14 +3,14 @@
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 
-//= 2.7
+//= 2.8
 //===== Compatible With: ===================================== 
 //= eAthena 7.15 +
 //===== Description: ========================================= 
 //= [Aegis Conversion]
 //= - Stop Post
 //= - Binoculars Quest
-//= - Assassin Pub NPCs/supporting quest NPCS.
+//= - Assassin Pub NPCs/supporting quest NPCS. [Disabled]
 //= - Resurrection of Satan Morroc
 //= - The Crow of the Fate
 //= - Succession of the Prince
@@ -40,6 +40,7 @@
 //=     Updated Satan Morroc Quest to allow peopel who have
 //=     finished it to return to the previous map.
 //= 2.7 Corrected weight checks, they only check for inventory slots. [L0ne_W0lf]
+//= 2.8 Disabled Assassin bar pub NPCs, as they are included in the 13.1 quests file. [L0ne_W0lf]
 //============================================================ 
 
 // Stop Post Quest
@@ -159,8 +160,9 @@ moc_ruins,118,176,4	script	Alchemist	64,{
 	}
 }
 
-// Morroc Assassin Guild Bar
+// Morroc Assassin Guild Bar [Disabled]
 // ============================================================
+/*
 morocc,43,108,5	script	Sharp-Looking Kid#dan_07	82,{
 	if (BaseClass == Job_Assassin) {
 		mes "[Jack]";
@@ -831,6 +833,7 @@ OnDisable:
 	disablenpc "Valdes#moc_master_1";
 	end;
 }
+*/
 
 yuno_in04,180,106,3	script	Reading Girl#moc_girl1	73,{
 	mes "[" + strcharinfo(0) + "]";

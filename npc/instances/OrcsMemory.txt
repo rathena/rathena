@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.2
+//= 1.3
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -24,6 +24,8 @@
 //=     point on iRO.
 //= 1.2 More bugfixes, mostly typos. :O (bugreport:3944) [L0ne_W0lf]
 //=     Fixed some varaibles (types/values) as well.
+//= 1.3 Disabled an exploit related to the orc hero spawn. [L0ne_W0lf]
+//=     Corrected the variable type for party leader name.
 //============================================================ 
 
 // Entrance
@@ -36,7 +38,7 @@ gef_fild10,242,202,0	script	Dimensional Gorge Piece	406,{
 	set .@party_id,getcharid(1);
 	set .@ins_mas,getpartyleader(.@party_id,2);
 	set .@p_name$,getpartyname(.@party_id);
-	set .@p_reader,strcharinfo(0);
+	set .@p_reader$,strcharinfo(0);
 	set .@md_name$,"Orc's Memory";
 
 	getpartymember(.@party_id);
@@ -54,7 +56,7 @@ gef_fild10,242,202,0	script	Dimensional Gorge Piece	406,{
 					set .@instance, instance_create(.@md_name$, .@party_id);
 					if (.@instance < 0) {
 						mes "Party Name: "+.@p_name$+"";
-						mes "Party Leader: "+.@p_reader+"";
+						mes "Party Leader: "+.@p_reader$+"";
 						mes "^0000ff"+.@md_name$+" ^000000 - Reservation Failed.";
 						close;
 					}
@@ -1246,7 +1248,7 @@ OnEnable:
 	end;
 
 OnContinue:
-	areamonster "2@orcs",117,61,129,73,"Depraved Orc Spirit",1983,1,instance_npcname("#Mobs Control", instance_id())+"::OnMyMobDead3";
+	//areamonster "2@orcs",117,61,129,73,"Depraved Orc Spirit",1983,1,instance_npcname("#Mobs Control", instance_id())+"::OnMyMobDead3";
 	donpcevent instance_npcname("#Boss Control", instance_id())+"::OnEnable";
 	enablenpc instance_npcname("#Warp2-3", instance_id());
 	initnpctimer;
