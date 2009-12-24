@@ -1,5 +1,7 @@
 Date		Added
 ======
+2009/12/24
+	* Rev. 14124 Applied Kazukin's fix for the dancing portion of The Sign Quest. (bugreport:3966) [L0ne_W0lf]
 2009/12/20
 	* Rev. 14211 More Orc Instance updates, and some new 13.1 quests. :x [L0ne_W0lf]
 	- Disabled an exploit related to the orc hero spawn.
