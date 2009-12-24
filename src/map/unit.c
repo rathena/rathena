@@ -2015,12 +2015,11 @@ int unit_free(struct block_list *bl, int clrtype)
 				sd->regstr = NULL;
 				sd->regstr_num = 0;
 			}
-			//Tell the script to end, not delete it, it will free itself when necessary [Kevin]
-			// TODO review this assumption, possible source of memory leaks [FlavioJS]
-			if( sd->st )
-			{
-				sd->st->rid = 0;
-				sd->st->state = END;
+			if( sd->st && sd->st->state != RUN )
+			{// free attached scripts that are waiting
+				script_free_state(sd->st);
+				sd->st = NULL;
+				sd->npc_id = 0;
 			}
 			break;
 		}
