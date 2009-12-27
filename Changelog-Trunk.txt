@@ -3,6 +3,8 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2009/12/27
+	* Fixed Meteor Assault and Spread Attack have twice the chance to trigger AutoSpellOnSkill. [Inkfish]
 2009/12/03
 	* Prevented online user count from going negative. (bugreport:3913) [Paradox924X]
 2009/12/02

@@ -3967,8 +3967,13 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 
 	case ASC_METEORASSAULT:
 	case GS_SPREADATTACK:
-	case NPC_EARTHQUAKE:
+		skill_area_temp[1] = 0;
 		clif_skill_nodamage(src,bl,skillid,skilllv,1);
+		map_foreachinrange(skill_area_sub, bl, skill_get_splash(skillid, skilllv), splash_target(src), 
+			src, skillid, skilllv, tick, flag|BCT_ENEMY|SD_SPLASH|1, skill_castend_damage_id);
+		break;
+
+	case NPC_EARTHQUAKE:
 	case NPC_VAMPIRE_GIFT:
 	case NPC_HELLJUDGEMENT:
 	case NPC_PULSESTRIKE:
