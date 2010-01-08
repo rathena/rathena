@@ -235,8 +235,8 @@ Lquote27:
 //   I can't 
 Lquote28:
 	switch(rand(2)) {
-		case 0: npctalk "Maybe you could "+$@p2$+" now"; break;
-		case 1: npctalk "What if you could "+$@p2$+" ?"; break;
+		case 0: npctalk "Maybe you could "+$@p3$+" now"; break;
+		case 1: npctalk "What if you could "+$@p3$+" ?"; break;
 	}
         end;
 
@@ -258,9 +258,9 @@ Lquote31:
 //   why don't you 
 Lquote32:
 	switch(rand(3)) {
-		case 0: npctalk "Should you "+$@p2$+" yourself?"; break;
-		case 1: npctalk "Do you believe I don't "+$@p2$+""; break;
-		case 2: npctalk "Perhaps I will "+$@p2$+" in good time"; break;
+		case 0: npctalk "Should you "+$@p3$+" yourself?"; break;
+		case 1: npctalk "Do you believe I don't "+$@p3$+""; break;
+		case 2: npctalk "Perhaps I will "+$@p3$+" in good time"; break;
 	}
         end;
 

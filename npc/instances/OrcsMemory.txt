@@ -223,7 +223,7 @@ gef_fild10,238,202,6	script	Mad Scientist#orc	865,{
 	}
 	else if (mad < 1) {
 		mes "[Mad Scientist]";
-		mes "Haha, no Orcs are coming neat me!";
+		mes "Haha, no Orcs are coming near me!";
 		mes "The power of the Dimensional Gorge is undefeatable!!";
 		next;
 		switch(select("Orcs don't attack you?:You wish!")) {

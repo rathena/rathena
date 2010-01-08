@@ -4222,7 +4222,7 @@ int atcommand_reloadscript(const int fd, struct map_session_data* sd, const char
 }
 
 /*==========================================
- * @mapinfo <map name> [0-3] by MC_Cameri
+ * @mapinfo [0-3] <map name> by MC_Cameri
  * => Shows information about the map [map name]
  * 0 = no additional information
  * 1 = Show users in that map and their location
