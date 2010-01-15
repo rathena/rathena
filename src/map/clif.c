@@ -4103,6 +4103,58 @@ int clif_skillinfoblock(struct map_session_data *sd)
 	return 1;
 }
 
+int clif_addskill(struct map_session_data *sd, int id )
+{
+	int fd;
+
+	nullpo_retr(0, sd);
+
+	fd = sd->fd;
+	if (!fd) return 0;
+
+	if( sd->status.skill[id].id <= 0 )
+		return 0;
+
+	WFIFOHEAD(fd, packet_len(0x111));
+	WFIFOW(fd,0) = 0x111;
+	WFIFOW(fd,2) = id;
+	WFIFOW(fd,4) = sd->status.skill[id].lv;
+	WFIFOW(fd,6) = 0;
+	if( (id == MO_EXTREMITYFIST && sd->state.combo&1) || (id == TK_JUMPKICK && sd->state.combo&2) )
+		WFIFOW(fd,8) = INF_SELF_SKILL;
+	else
+		WFIFOW(fd,8) = skill_get_inf(id);
+    WFIFOW(fd,10) = skill_get_sp(id,sd->status.skill[id].lv);
+    WFIFOW(fd,12)= skill_get_range2(&sd->bl, id,sd->status.skill[id].lv);
+    safestrncpy((char*)WFIFOP(fd,14), skill_get_name(id), NAME_LENGTH);
+    if( sd->status.skill[id].flag == 0 )
+        WFIFOB(fd,38) = (sd->status.skill[id].lv < skill_tree_get_max(id, sd->status.class_))? 1:0;
+    else
+        WFIFOB(fd,38) = 0;
+    WFIFOSET(fd,packet_len(0x111));
+
+    return 1;
+}
+
+int clif_deleteskill(struct map_session_data *sd, int id)
+{
+#if PACKETVER >= 20081217
+	int fd;
+
+	nullpo_retr(0, sd);
+	fd = sd->fd;
+	if( !fd ) return 0;
+
+	WFIFOHEAD(fd,packet_len(0x441));
+	WFIFOW(fd,0) = 0x441;
+	WFIFOW(fd,2) = id;
+	WFIFOSET(fd,packet_len(0x441));
+	return 1;
+#else
+	return clif_skillinfoblock(sd);
+#endif
+}
+
 /*==========================================
  * ÉXÉLÉãäÑÇËêUÇËí ím
  *------------------------------------------*/
@@ -9509,6 +9561,9 @@ void clif_parse_ChangeCart(int fd,struct map_session_data *sd)
 {
 	int type;
 
+	if( sd && pc_checkskill(sd, MC_CHANGECART) < 1 )
+		return;
+
 	type = (int)RFIFOW(fd,2);
 
 	if( (type == 5 && sd->status.base_level > 90) ||
@@ -13691,7 +13746,7 @@ static int packetdb_readdb(void)
 	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  8,  0, 25,
 	//#0x0440
-	    0,  0,  0,  0,  0,  0, 14,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+	    0,  4,  0,  0,  0,  0, 14,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,

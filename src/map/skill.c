@@ -1864,18 +1864,20 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 				tsd->status.skill[tsd->cloneskill_id].id = 0;
 				tsd->status.skill[tsd->cloneskill_id].lv = 0;
 				tsd->status.skill[tsd->cloneskill_id].flag = 0;
+				clif_deleteskill(tsd,tsd->cloneskill_id);
 			}
 
 			if ((type = pc_checkskill(tsd,RG_PLAGIARISM)) < lv)
 				lv = type;
 
 			tsd->cloneskill_id = skillid;
+			pc_setglobalreg(tsd, "CLONE_SKILL", skillid);
+			pc_setglobalreg(tsd, "CLONE_SKILL_LV", lv);
+
 			tsd->status.skill[skillid].id = skillid;
 			tsd->status.skill[skillid].lv = lv;
 			tsd->status.skill[skillid].flag = 13;//cloneskill flag
-			pc_setglobalreg(tsd, "CLONE_SKILL", skillid);
-			pc_setglobalreg(tsd, "CLONE_SKILL_LV", lv);
-			clif_skillinfoblock(tsd);
+			clif_addskill(tsd,skillid);
 		}
 	}
 	if( skillid != WZ_SIGHTRASHER &&
