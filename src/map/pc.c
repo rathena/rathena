@@ -2981,9 +2981,9 @@ int pc_skill(TBL_PC* sd, int id, int level, int flag)
 		sd->status.skill[id].lv += level;
 	break;
 	case 1: //Item bonus skill.
-		if( sd->status.skill[id].lv >= level )
-			return 0;
 		if( sd->status.skill[id].id == id ){
+			if( sd->status.skill[id].lv >= level )
+				return 0;
 			if( !sd->status.skill[id].flag ) //Non-granted skill, store it's level.
 				sd->status.skill[id].flag = sd->status.skill[id].lv + 2;
 		} else {
