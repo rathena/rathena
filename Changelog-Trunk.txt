@@ -5,6 +5,7 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2010/01/19
 	* Snatch should warp you anyway even if the target died. [Inkfish]
+	* Snatch now checks the distance between source and target in case it kills the target and then warps the respawned one. [Inkfish]
 2010/01/16
 	* Fixed items don't grant skill if you had this skill before and then changed your job. [Inkfish]
 2010/01/14

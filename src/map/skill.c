@@ -2313,7 +2313,7 @@ static int skill_timerskill(int tid, unsigned int tick, int id, intptr data)
 			break;
 		if(skl->target_id) {
 			target = map_id2bl(skl->target_id);
-			if( skl->skill_id == RG_INTIMIDATE && (!target || target->prev == NULL) )
+			if( skl->skill_id == RG_INTIMIDATE && (!target || target->prev == NULL || !check_distance_bl(src,target,AREA_SIZE)) )
 				target = src; //Required since it has to warp.
 			if(target == NULL)
 				break;
