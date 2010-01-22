@@ -8,6 +8,16 @@
 	1475 Equestrian's Spear:	NEED INFO.
 	13005 Angelic Wing Dagger:	NEED INFO.
 =======================
+2010/01/22
+	* Rev. 14223 Updating, and just trying to catch up on bug fixing. :P [L0ne_W0lf]
+	- Updated the item scripts for geographer_band_ and vacation_hat_.
+	- Added remaining monster IDs supported up until 2009-11-24aRagexeRE.
+	- Updated afro wig to have one slot. More may be outdated. (Bugreport:3090)
+	- Updated attack ranges for orc dungeon instance monsters. (Bugreport:3935)
+	- Updated Mandragora Cap and Sacred Scripture item scripts. (Bugreport:3950)
+	- Fixed the view IDs for geographer band and vacation hat. (bugreport:3974)
+	- Added INT and AGI bonuses to the Flying Angel headgear. (Bugreport:3991)
+	- Fixed Tournament Shield not reducing Lord Knight ASPD. (Bugreport:4003)
 2009/12/10
 	* Rev. 14195 Uncommented the item 5374 (L_Magestic_Goat) as it's a quest reward given by an NPC assosiated with sealed shrine. (bugreport:3924) [L0ne_W0lf]
 	* Rev. 14194 Minor update to the Orc Instance mobs stats, very incomplete still. [L0ne_W0lf]
