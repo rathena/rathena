@@ -1,5 +1,7 @@
 Date		Added
 ======
+2010/01/22
+	* Rev. 14224 Updated the Enlarge Weight Limit NPC. It is now a conversion of an aegis script, with iRO dialog. [L0ne_W0lf]
 2009/12/24
 	* Rev. 14124 Applied Kazukin's fix for the dancing portion of The Sign Quest. (bugreport:3966) [L0ne_W0lf]
 2009/12/20
