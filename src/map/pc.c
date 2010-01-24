@@ -2954,6 +2954,10 @@ int pc_skill(TBL_PC* sd, int id, int level, int flag)
 		ShowError("pc_skill: Skill level %d too high. Max lv supported is %d\n", level, MAX_SKILL_LEVEL);
 		return 0;
 	}
+	if( flag == 2 && sd->status.skill[id].lv + level > MAX_SKILL_LEVEL ) {
+		ShowError("pc_skill: Skill level bonus %d too high. Max lv supported is %d. Curr lv is %d\n", level, MAX_SKILL_LEVEL, sd->status.skill[id].lv);
+		return 0;
+	}
 
 	switch( flag ){
 	case 0: //Set skill data overwriting whatever was there before.
@@ -2970,16 +2974,6 @@ int pc_skill(TBL_PC* sd, int id, int level, int flag)
 		if( !skill_get_inf(id) ) //Only recalculate for passive skills.
 			status_calc_pc(sd, 0);
 	break;
-	case 2: //Add skill bonus on top of what you had.
-		if( sd->status.skill[id].id == id ){
-			if( !sd->status.skill[id].flag ) // Store previous level.
-				sd->status.skill[id].flag = sd->status.skill[id].lv + 2;
-		} else {
-			sd->status.skill[id].id   = id;
-			sd->status.skill[id].flag = 1; //Set that this is a bonus skill.
-		}
-		sd->status.skill[id].lv += level;
-	break;
 	case 1: //Item bonus skill.
 		if( sd->status.skill[id].id == id ){
 			if( sd->status.skill[id].lv >= level )
@@ -2991,6 +2985,16 @@ int pc_skill(TBL_PC* sd, int id, int level, int flag)
 			sd->status.skill[id].flag = 1;
 		}
 		sd->status.skill[id].lv = level;
+	break;
+	case 2: //Add skill bonus on top of what you had.
+		if( sd->status.skill[id].id == id ){
+			if( !sd->status.skill[id].flag ) // Store previous level.
+				sd->status.skill[id].flag = sd->status.skill[id].lv + 2;
+		} else {
+			sd->status.skill[id].id   = id;
+			sd->status.skill[id].flag = 1; //Set that this is a bonus skill.
+		}
+		sd->status.skill[id].lv += level;
 	break;
 	default: //Unknown flag?
 		return 0;
