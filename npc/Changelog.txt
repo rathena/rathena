@@ -1,6 +1,7 @@
 Date		Added
 ======
 2010/01/24
+	* Rev. 14230 Cleaned up missed files and conf file notes from r14229. [L0ne_W0lf]
 	* Removed npc/eamobs/. Reason: Old/Unsupported/Unofficial/Unused. [Paradox924X]
 2010/01/22
 	* Rev. 14224 Updated the Enlarge Weight Limit NPC. It is now a conversion of an aegis script, with iRO dialog. [L0ne_W0lf]
