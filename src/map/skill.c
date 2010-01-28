@@ -1905,7 +1905,7 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 		if( !status_isdead(bl) )
 			skill_additional_effect(src,bl,skillid,skilllv,dmg.flag,dmg.dmg_lv,tick);
 		if( damage > 0 ) //Counter status effects [Skotlex]
-			skill_counter_additional_effect(dsrc,bl,skillid,skilllv,dmg.flag,tick);
+			skill_counter_additional_effect(src,bl,skillid,skilllv,dmg.flag,tick);
 	}
 
 	//Only knockback if it's still alive, otherwise a "ghost" is left behind. [Skotlex]
