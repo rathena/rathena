@@ -423,7 +423,7 @@
 379,9,6,1,-1,0x8,0,10,1,yes,0,0,0,weapon,0,	ASC_BREAKER,Soul Destroyer
 380,0,6,4,0,0x1,0,10,1,no,0,0,0,weapon,0,	SN_SIGHT,Falcon Eyes
 381,5,8,1,0,0x40,0,5,1,yes,0,0,0,misc,0,		SN_FALCONASSAULT,Falcon Assault
-382,9,8,1,4,0,2,5,1,yes,0,0,13,weapon,0,	SN_SHARPSHOOTING,Focused Arrow Strike
+382,9,8,1,-1,0,2,5,1,yes,0,0,13,weapon,0,	SN_SHARPSHOOTING,Focused Arrow Strike
 383,0,6,4,0,0x3,-1,10,1,yes,0,0,0,weapon,0,	SN_WINDWALK,Wind Walker
 384,0,0,4,0,0x1,0,10,1,yes,0,0,0,weapon,0,	WS_MELTDOWN,Shattering Strike
 //385,0,0,4,0,0x1,0,1,1,yes,0,0,0,none,0,	WS_CREATECOIN,Create Coins
@@ -694,7 +694,7 @@
 8212,3,6,2,1,0x42,1,5,1,no,0,0x80,0,weapon,0,	MA_FREEZINGTRAP,Freezing_Trap
 8213,2,6,32,0,0x1,0,1,1,no,0,0,0,misc,0,	MA_REMOVETRAP,Remove_Trap
 8214,-9,6,1,-1,0x2,0,1,1,no,0,0x1,0,weapon,6,	MA_CHARGEARROW,Arrow_Repel
-8215,9,8,1,4,0,2,5,1,yes,0,0,13,weapon,0,	MA_SHARPSHOOTING,Focused_Arrow_Strike
+8215,9,8,1,-1,0,2,5,1,yes,0,0,13,weapon,0,	MA_SHARPSHOOTING,Focused_Arrow_Strike
 8216,-2,8,1,-1,0,0,10,3,no,0,0,0,weapon,0,	ML_PIERCE,Pierce
 8217,-2,6,1,-1,0x1,0,10,1,no,33,0,0,weapon,3,	ML_BRANDISH,Brandish_Spear
 8218,5,8,1,-1,0x20,0,5,5,no,0,0,0,weapon,0,	ML_SPIRALPIERCE,Spiral_Pierce
