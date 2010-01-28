@@ -8,6 +8,9 @@
 	1475 Equestrian's Spear:	NEED INFO.
 	13005 Angelic Wing Dagger:	NEED INFO.
 =======================
+2010/01/28
+	* Rev. 14232 Updated skill_db information for the skill SN_SHARPSHOOTING. (Bugreport:3909) [L0ne_w0lf]
+	- Updated the MA_SHARPSHOOTING to match SN_SHARPSHOOTING
 2010/01/22
 	* Rev. 14223 Updating, and just trying to catch up on bug fixing. :P [L0ne_W0lf]
 	- Updated the item scripts for geographer_band_ and vacation_hat_.

@@ -4,6 +4,8 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2010/01/28
+	* Rev. 14232 SN_SHARPSHOOTING is no longer affected by AC_VULTURE. (Bugreport:3909) [L0ne_W0lf]
+	- Removed the mercenary version from there as well, as it's not needed.
 	* Fixed target skill doesn't autocast on hit when hit by AoE. [Inkfish]
 2010/01/24
 	* Prevented the changing of alliances to oppositions during WoE. (bugreport:3923) [Paradox924X]

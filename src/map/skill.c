@@ -239,8 +239,6 @@ int skill_get_range2 (struct block_list *bl, int id, int lv)
 	case AC_CHARGEARROW:
 	case MA_CHARGEARROW:
 	case SN_FALCONASSAULT:
-	case SN_SHARPSHOOTING:
-	case MA_SHARPSHOOTING:
 	case HT_POWER:
 		if( bl->type == BL_PC )
 			range += pc_checkskill((TBL_PC*)bl, AC_VULTURE);
