@@ -56,14 +56,18 @@ void vending_vendinglistreq(struct map_session_data* sd, int id)
 /*==========================================
  * Purchase item(s) from a shop
  *------------------------------------------*/
-void vending_purchasereq(struct map_session_data* sd, int id, const uint8* data, int count)
+void vending_purchasereq(struct map_session_data* sd, int aid, int cid, const uint8* data, int count)
 {
 	int i, j, cursor, w, new_ = 0, blank, vend_list[MAX_VENDING];
 	double z;
 	struct s_vending vending[MAX_VENDING]; // against duplicate packets
-	struct map_session_data* vsd = map_id2sd(id);
+	struct map_session_data* vsd = map_id2sd(aid);
 
 	nullpo_retv(sd);
+#if PACKETVER >= 20100105
+	if( vsd->status.char_id != cid )
+		return; //Char-ID check
+#endif
 
 	if( vsd == NULL || vsd->vender_id == 0 || vsd->vender_id == sd->bl.id )
 		return; // invalid shop

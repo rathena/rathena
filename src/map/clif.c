@@ -5495,6 +5495,11 @@ void clif_vendinglist(struct map_session_data* sd, int id, struct s_vending* ven
 	int i,fd;
 	int count;
 	struct map_session_data* vsd;
+#if PACKETVER < 20100105
+	const int offset = 8;
+#else
+	const int offset = 12;
+#endif
 
 	nullpo_retv(sd);
 	nullpo_retv(vending);
@@ -5503,23 +5508,27 @@ void clif_vendinglist(struct map_session_data* sd, int id, struct s_vending* ven
 	fd = sd->fd;
 	count = vsd->vend_num;
 
-    WFIFOHEAD(fd, 8+count*22);
+	WFIFOHEAD(fd, offset+count*22);
 	WFIFOW(fd,0) = 0x133;
-	WFIFOW(fd,2) = 8+count*22;
+	WFIFOW(fd,2) = offset+count*22;
 	WFIFOL(fd,4) = id;
+#if PACKETVER >= 20100105
+	WFIFOL(fd,8) = vsd->status.char_id;
+#endif
+
 	for( i = 0; i < count; i++ )
 	{
 		int index = vending[i].index;
 		struct item_data* data = itemdb_search(vsd->status.cart[index].nameid);
-		WFIFOL(fd, 8+i*22) = vending[i].value;
-		WFIFOW(fd,12+i*22) = vending[i].amount;
-		WFIFOW(fd,14+i*22) = vending[i].index + 2;
-		WFIFOB(fd,16+i*22) = itemtype(data->type);
-		WFIFOW(fd,17+i*22) = ( data->view_id > 0 ) ? data->view_id : vsd->status.cart[index].nameid;
-		WFIFOB(fd,19+i*22) = vsd->status.cart[index].identify;
-		WFIFOB(fd,20+i*22) = vsd->status.cart[index].attribute;
-		WFIFOB(fd,21+i*22) = vsd->status.cart[index].refine;
-		clif_addcards(WFIFOP(fd, 22+i*22), &vsd->status.cart[index]);
+		WFIFOL(fd,offset+ 0+i*22) = vending[i].value;
+		WFIFOW(fd,offset+ 4+i*22) = vending[i].amount;
+		WFIFOW(fd,offset+ 6+i*22) = vending[i].index + 2;
+		WFIFOB(fd,offset+ 8+i*22) = itemtype(data->type);
+		WFIFOW(fd,offset+ 9+i*22) = ( data->view_id > 0 ) ? data->view_id : vsd->status.cart[index].nameid;
+		WFIFOB(fd,offset+11+i*22) = vsd->status.cart[index].identify;
+		WFIFOB(fd,offset+12+i*22) = vsd->status.cart[index].attribute;
+		WFIFOB(fd,offset+13+i*22) = vsd->status.cart[index].refine;
+		clif_addcards(WFIFOP(fd,offset+14+i*22), &vsd->status.cart[index]);
 	}
 	WFIFOSET(fd,WFIFOW(fd,2));
 }
@@ -10489,7 +10498,21 @@ void clif_parse_PurchaseReq(int fd, struct map_session_data* sd)
 	int id = (int)RFIFOL(fd,4);
 	const uint8* data = (uint8*)RFIFOP(fd,8);
 
-	vending_purchasereq(sd, id, data, len/4);
+	vending_purchasereq(sd, id, -1, data, len/4);
+}
+
+/*==========================================
+ * Shop item(s) purchase request
+ * S 0134 <len>.w <AID>.l <CID>.l {<amount>.w <index>.w}.4B*
+ *------------------------------------------*/
+void clif_parse_PurchaseReq2(int fd, struct map_session_data* sd)
+{
+	int len = (int)RFIFOW(fd,2) - 12;
+	int aid = (int)RFIFOL(fd,4);
+	int cid = (int)RFIFOL(fd,8);
+	const uint8* data = (uint8*)RFIFOP(fd,12);
+
+	vending_purchasereq(sd, aid, cid, data, len/4);
 }
 
 /*==========================================
@@ -12923,7 +12946,7 @@ void clif_quest_show_event(struct map_session_data *sd, struct block_list *bl, s
 	WFIFOHEAD(fd, packet_len(0x446));
 	WFIFOW(fd, 0) = 0x446;
 	WFIFOL(fd, 2) = bl->id;
-	WFIFOW(fd, 6) = bl->x;                                                                                 
+	WFIFOW(fd, 6) = bl->x;
 	WFIFOW(fd, 8) = bl->y;
 	WFIFOW(fd, 10) = state;
 	WFIFOW(fd, 12) = color;
@@ -13824,6 +13847,8 @@ static int packetdb_readdb(void)
 #endif
 	    0,  0,  0,  0,  0,  8,  8, 32, -1,  5,  0,  0,  0,  0,  0,  0,
 	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+	 //#0x800
+	    0, -1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 	};
 	struct {
 		void (*func)(int, struct map_session_data *);
@@ -13913,6 +13938,7 @@ static int packetdb_readdb(void)
 		{clif_parse_CloseVending,"closevending"},
 		{clif_parse_VendingListReq,"vendinglistreq"},
 		{clif_parse_PurchaseReq,"purchasereq"},
+		{clif_parse_PurchaseReq2,"purchasereq2"},
 		{clif_parse_OpenVending,"openvending"},
 		{clif_parse_CreateGuild,"createguild"},
 		{clif_parse_GuildCheckMaster,"guildcheckmaster"},

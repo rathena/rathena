@@ -133,7 +133,7 @@
 //= 3.27.20090725
 //=       Added Quest Log related commands. [Inkfish]
 //= 3.28.20091119
-//=       Added showevent and itemsearch commands [Skotlex]
+//=       Added showevent and searchitem commands [Skotlex]
 //=       Added info on strcharinfo(3) [Skotlex]
 //=========================================================
 
