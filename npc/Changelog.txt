@@ -1,5 +1,7 @@
 Date		Added
 ======
+2010/02/04
+	* Rev. 12439 Fixed donpcevent calling non-existant npc in Orc Instance. (bugreport:4039) [L0ne_W0lf]
 2010/01/24
 	* Rev. 14230 Cleaned up missed files and conf file notes from r14229. [L0ne_W0lf]
 	* Removed npc/eamobs/. Reason: Old/Unsupported/Unofficial/Unused. [Paradox924X]
