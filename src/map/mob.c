@@ -2151,7 +2151,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 			if(base_exp || job_exp)
 			{
 				if( md->dmglog[i].flag != 2 || battle_config.pet_attack_exp_to_master )
-					pc_gainexp(tmpsd[i], &md->bl, base_exp, job_exp);
+					pc_gainexp(tmpsd[i], &md->bl, base_exp, job_exp, false);
 			}
 			if(zeny) // zeny from mobs [Valaris]
 				pc_getzeny(tmpsd[i], zeny);
@@ -2320,7 +2320,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 
 		clif_mvp_effect(mvp_sd);
 		clif_mvp_exp(mvp_sd,mexp);
-		pc_gainexp(mvp_sd, &md->bl, mexp,0);
+		pc_gainexp(mvp_sd, &md->bl, mexp,0, false);
 		log_mvp[1] = mexp;
 		if(map[m].flag.nomvploot || type&1)
 			; //No drops.

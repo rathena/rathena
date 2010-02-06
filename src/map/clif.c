@@ -13455,6 +13455,30 @@ void clif_party_show_picker(struct map_session_data * sd, struct item * item_dat
 #endif
 }
 
+// Display gain exp
+// type = 1 -> base_exp
+// type = 2 -> job_exp
+// flag = 0 -> normal exp gain/lost
+// flag = 1 -> quest exp gain/lost
+void clif_displayexp(struct map_session_data *sd, unsigned int exp, char type, bool quest)
+{
+	int fd;
+
+	nullpo_retv(sd);
+
+	fd = sd->fd;
+
+	WFIFOHEAD(fd, packet_len(0x7f6));
+	WFIFOW(fd,0) = 0x7f6;
+	WFIFOL(fd,2) = sd->bl.id;
+	WFIFOL(fd,6) = exp;
+	WFIFOW(fd,10) = type;
+	WFIFOW(fd,12) = quest?1:0;// Normal exp is shown in yellow, quest exp is shown in purple.
+	WFIFOSET(fd,packet_len(0x7f6));
+
+    return;
+}
+
 /*==========================================
  * パケットデバッグ
  *------------------------------------------*/
@@ -13846,7 +13870,7 @@ static int packetdb_readdb(void)
 	    6,  2, -1,  4,  4,  4,  4,  8,  8,268,  6,  8,  6, 54, 30, 54,
 #endif
 	    0,  0,  0,  0,  0,  8,  8, 32, -1,  5,  0,  0,  0,  0,  0,  0,
-	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+	    0,  0,  0,  0,  0,  0, 14,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 	 //#0x800
 	    0, -1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 	};
