@@ -6990,13 +6990,15 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr data)
 
 	case SC_BLEEDING:
 		if (--(sce->val4) >= 0) {
-			int flag;
+			int flag, hp =  rand()%600 + 200;
 			map_freeblock_lock();
-			status_fix_damage(NULL, bl, rand()%600 + 200, 0);
+			status_fix_damage(NULL, bl, sd||hp<status->hp?hp:status->hp-1, 0);
 			flag = !sc->data[type];
 			map_freeblock_unlock();
-			if (flag) return 0; //SC already ended.
-			sc_timer_next(10000 + tick, status_change_timer, bl->id, data); 
+			if( !flag ) {
+				if( status->hp == 1 ) break;
+				sc_timer_next(10000 + tick, status_change_timer, bl->id, data);
+			}
 			return 0;
 		}
 		break;
