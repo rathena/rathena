@@ -425,7 +425,7 @@ struct map_session_data;
 struct guild_member {
 	int account_id, char_id;
 	short hair,hair_color,gender,class_,lv;
-	unsigned int exp;
+	uint64 exp;
 	int exp_payper;
 	short online,position;
 	char name[NAME_LENGTH];

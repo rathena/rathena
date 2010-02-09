@@ -48,7 +48,7 @@ struct eventlist {
 // ギルドのEXPキャッシュ
 struct guild_expcache {
 	int guild_id, account_id, char_id;
-	unsigned int exp;
+	uint64 exp;
 };
 static struct eri *expcache_ers; //For handling of guild exp payment.
 
@@ -343,8 +343,8 @@ int guild_payexp_timer_sub(DBKey dataid, void *data, va_list ap)
 		return 0;
 	}
 
-	if (g->member[i].exp > UINT_MAX - c->exp)
-		g->member[i].exp = UINT_MAX;
+	if (g->member[i].exp > UINT64_MAX - c->exp)
+		g->member[i].exp = UINT64_MAX;
 	else
 		g->member[i].exp+= c->exp;
 
@@ -1193,13 +1193,13 @@ unsigned int guild_payexp(struct map_session_data *sd,unsigned int exp)
 	
 
 	if (per < 100)
-		exp = (unsigned int) exp * per / 100;
+		exp = exp * per / 100;
 	//Otherwise tax everything.
 	
 	c = (struct guild_expcache*)guild_expcache_db->ensure(guild_expcache_db, i2key(sd->status.char_id), create_expcache, sd);
 
-	if (c->exp > UINT_MAX - exp)
-		c->exp = UINT_MAX;
+	if (c->exp > UINT64_MAX - exp)
+		c->exp = UINT64_MAX;
 	else
 		c->exp += exp;
 	
@@ -1217,8 +1217,8 @@ int guild_getexp(struct map_session_data *sd,int exp)
 		return 0;
 
 	c = (struct guild_expcache*)guild_expcache_db->ensure(guild_expcache_db, i2key(sd->status.char_id), create_expcache, sd);
-	if (c->exp > UINT_MAX - exp)
-		c->exp = UINT_MAX;
+	if (c->exp > UINT64_MAX - exp)
+		c->exp = UINT64_MAX;
 	else
 		c->exp += exp;
 	return exp;
