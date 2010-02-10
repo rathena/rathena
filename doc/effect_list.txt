@@ -578,8 +578,8 @@ number	description
 545.	Sound And... PUFF Client Crash :P
 546.	Another HP/SP Regeneration
 547.	Estin
-548.	Istant Red Sprite
-549.	Istant Blue Sprite
+548.	Instant Red Sprite
+549.	Instant Blue Sprite
 550.	Another Effect like Running Hit
 551.	Effect Like Estun but with Circle
 552.	(Nothing)
