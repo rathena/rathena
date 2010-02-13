@@ -161,8 +161,8 @@ prontera,155,188,3	script	Zacariath Madhat	872,{
 		menu "Yes, I want to exchange this much",-,"No, I want to exchange something else",L_CoinZeny,"No, I want to input another number",L_Inputing,"No, I dont want to exchange anything",L_Menu;
 		next;
 		set @price,getarg(1)*@coinamount;
-		set Zeny,Zeny+@price;
 		delitem getarg(0),@coinamount;
+		set Zeny,Zeny+@price;
 		mes @npcname$;
 		mes "There we go, here's your money";
 		next;
