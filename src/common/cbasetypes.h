@@ -234,6 +234,9 @@ typedef int32 intptr;
 #define strncmpi			strncasecmp
 #define strnicmp			strncasecmp
 #endif
+#if defined(_MSC_VER) && _MSC_VER > 1200
+#define strtoull			_strtoui64
+#endif
 
 // keyword replacement in windows
 #ifdef _WIN32

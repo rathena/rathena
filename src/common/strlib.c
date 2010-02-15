@@ -9,6 +9,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <errno.h>
 
 
 
@@ -248,6 +249,44 @@ size_t strnlen (const char* string, size_t maxlen)
 {
   const char* end = memchr (string, '\0', maxlen);
   return end ? (size_t) (end - string) : maxlen;
+}
+#endif
+
+#if defined(WIN32) && defined(_MSC_VER) && _MSC_VER <= 1200
+unsigned long long strtoull(const char* str, char** endptr, int base)
+{
+	unsigned long long result;
+	int count;
+	int n;
+
+	if( base == 0 )
+	{
+		if( str[0] == '0' && (str[1] == 'x' || str[1] == 'X') )
+			base = 16;
+		else
+		if( str[0] == '0' )
+			base = 8;
+	}
+
+	if( base == 10 )
+		count = sscanf(str, "%I64u%n", &result, &n);
+	else
+	if( base == 16 )
+		count = sscanf(str, "%I64x%n", &result, &n);
+	else
+		count = 0; // fail
+
+	if( count < 1 )
+	{
+		errno = EINVAL;
+		result = 0;
+		n = 0;
+	}
+
+	if( endptr )
+		*endptr = (char*)str + n;
+
+	return result;
 }
 #endif
 
