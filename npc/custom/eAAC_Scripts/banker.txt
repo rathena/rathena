@@ -242,8 +242,8 @@ prontera,155,188,3	script	Zacariath Madhat	872,{
 		}
 		set @itemid,getarg(0);
 		set @pricea,getarg(1)*getarg(2);
-		getitem @itemid,getarg(2);
 		set Zeny,Zeny-@pricea;
+		getitem @itemid,getarg(2);
 		mes @npcname$;
 		mes "There you go, here's your coins";
 		next;
