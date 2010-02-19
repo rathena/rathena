@@ -6616,7 +6616,7 @@ int clif_guild_memberlist(struct map_session_data *sd)
 		WFIFOW(fd,c*104+16)=m->gender;
 		WFIFOW(fd,c*104+18)=m->class_;
 		WFIFOW(fd,c*104+20)=m->lv;
-		WFIFOL(fd,c*104+22)=cap_value(m->exp,0,INT_MAX);
+		WFIFOL(fd,c*104+22)=(int)cap_value(m->exp,0,INT_MAX);
 		WFIFOL(fd,c*104+26)=m->online;
 		WFIFOL(fd,c*104+30)=m->position;
 		memset(WFIFOP(fd,c*104+34),0,50);	// ƒƒ‚H

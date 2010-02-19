@@ -3,6 +3,9 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2010/02/19
+	* Fixed NPC_INVINCIBLE can be dispelled. (bugreport:4046) [Inkfish]
+	* Fixed a compliation warning. [Inkfish]
 2010/02/09
 	* Expanded range for cached and stored-in-db guild member exp (devotion) from uint32 to uint64. (bugreport:3983) [Paradox924X]
 	* Capped value when sending to client to INT_MAX to prevent confusion. [Paradox924X]

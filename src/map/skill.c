@@ -4727,7 +4727,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				case SC_READYSTORM:  case SC_READYDOWN:   case SC_READYTURN:
 				case SC_READYCOUNTER:case SC_DODGE:       case SC_WARM:
 				case SC_SPEEDUP1:    case SC_AUTOTRADE:   case SC_CRITICALWOUND:
-				case SC_JEXPBOOST:
+				case SC_JEXPBOOST:	 case SC_INVINCIBLE:  case SC_INVINCIBLEOFF:	
 					continue;
 				case SC_ASSUMPTIO:
 					if( bl->type == BL_MOB )
