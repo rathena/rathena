@@ -2220,12 +2220,12 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 			ditem = mob_setdropitem(md->db->dropitem[i].nameid, 1);
 
 			//A Rare Drop Global Announce by Lupus
-			if( drop_rate <= battle_config.rare_drop_announce )
+			if( mvp_sd && drop_rate <= battle_config.rare_drop_announce )
 			{
 				struct item_data *i_data;
 				char message[128];
 				i_data = itemdb_search(ditem->item_data.nameid);
-				sprintf (message, msg_txt(541), (mvp_sd?mvp_sd->status.name:"???"), md->name, i_data->jname, (float)drop_rate/100);
+				sprintf (message, msg_txt(541), mvp_sd->status.name, md->name, i_data->jname, (float)drop_rate/100);
 				//MSG: "'%s' won %s's %s (chance: %0.02f%%)"
 				intif_broadcast(message,strlen(message)+1,0);
 			}
