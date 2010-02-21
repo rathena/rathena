@@ -10912,9 +10912,6 @@ void clif_parse_GMKick(int fd, struct map_session_data *sd)
 	if( battle_config.atc_gmonly && !pc_isGM(sd) )
 		return;
 
-	if( pc_isGM(sd) < (lv=get_atcommand_level(atcommand_kick)) )
-		return;
-
 	tid = RFIFOL(fd,2);
 	target = map_id2bl(tid);
 	if (!target) {
@@ -10926,7 +10923,15 @@ void clif_parse_GMKick(int fd, struct map_session_data *sd)
 	case BL_PC:
 	{
 		struct map_session_data *tsd = (struct map_session_data *)target;
-		if (pc_isGM(sd) <= pc_isGM(tsd)) {
+		if (pc_isGM(sd) <= pc_isGM(tsd))
+		{
+			clif_GM_kickack(sd, 0);
+			return;
+		}
+
+		lv = get_atcommand_level(atcommand_kick);
+		if( pc_isGM(sd) < lv )
+		{
 			clif_GM_kickack(sd, 0);
 			return;
 		}
@@ -10942,6 +10947,13 @@ void clif_parse_GMKick(int fd, struct map_session_data *sd)
 	break;
 	case BL_MOB:
 	{
+		lv = get_atcommand_level(atcommand_killmonster);
+		if( pc_isGM(sd) < lv )
+		{
+			clif_GM_kickack(sd, 0);
+			return;
+		}
+
 		if(log_config.gm && lv >= log_config.gm) {
 			char message[256];
 			sprintf(message, "/kick %s (%d)", status_get_name(target), status_get_class(target));
@@ -10956,7 +10968,10 @@ void clif_parse_GMKick(int fd, struct map_session_data *sd)
 		struct npc_data* nd = (struct npc_data *)target;
 		lv = get_atcommand_level(atcommand_unloadnpc);
 		if( pc_isGM(sd) < lv )
+		{
+			clif_GM_kickack(sd, 0);
 			return;
+		}
 
 		if( log_config.gm && lv >= log_config.gm ) {
 			char message[256];
@@ -13447,10 +13462,8 @@ void clif_party_show_picker(struct map_session_data * sd, struct item * item_dat
 	WBUFW(buf,13) = item_data->card[1];
 	WBUFW(buf,15) = item_data->card[2];
 	WBUFW(buf,17) = item_data->card[3];
-	//Unknown
-	//WBUFB(buf,19) = 0;
-	//WBUFB(buf,20) = 0;
-	//WBUFB(buf,21) = 0;
+	//WBUFW(buf,19) = 0; // equip location? 32+2 for left/right hand, 0x8000 for 'throw' (verify this)
+	//WBUFB(buf,21) = 0; // item type
 	clif_send(buf, packet_len(0x2b8), &sd->bl, PARTY_SAMEMAP_WOS);
 #endif
 }
