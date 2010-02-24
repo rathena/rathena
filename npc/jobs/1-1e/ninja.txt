@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Legionaire, Kisuka
 //===== Current Version: ===================================== 
-//= 1.5
+//= 1.6
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -14,6 +14,7 @@
 //= 1.3 Updated dialogs to official ones and optimized [SinSloth]
 //= 1.4 Fixed a minor bug [SinSloth]
 //= 1.5 Updated to match AEGIS script and Added Quest Log commands. [Kisuka]
+//= 1.6 Fixed AEGIS amatsu warp typo. [Kisuka]
 //============================================================ 
 
 alberta,30,65,3	script	Akagi	730,{
@@ -49,7 +50,7 @@ alberta,30,65,3	script	Akagi	730,{
 					warp "amatsu",216,188;
 					end;
 				default:
-					warp "amatsu",178,167;
+					warp "amatsu",178,176;
 					end;
 			}
 		}else{
