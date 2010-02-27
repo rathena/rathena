@@ -3,6 +3,8 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2010/02/27
+	* Fixed Posion Status killing monsters with low max hp(like plants). [Inkfish]
 2010/02/19
 	* Fixed racial bonuses for RC_NONDEMIHUMAN applying to right cardfix value (cardfix) instead of left cardfix value (cardfix_) in the case of melee attacks where left_cardfix_to_right is set to 'no'. [Paradox924X]
 	* Fixed NPC_INVINCIBLE can be dispelled. (bugreport:4046) [Inkfish]

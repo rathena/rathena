@@ -8,6 +8,8 @@
 	1475 Equestrian's Spear:	NEED INFO.
 	13005 Angelic Wing Dagger:	NEED INFO.
 =======================
+2010/02/27
+	* Mental Strenth costs 200 sp instead of 50% max sp. [Inkfish]
 2010/01/28
 	* Rev. 14233 Changed the element for SN/MA_SHARPSHOOTING back to -1 (weapon element.) [L0ne_w0lf]
 	* Rev. 14232 Updated skill_db information for the skill SN_SHARPSHOOTING. (Bugreport:3909) [L0ne_w0lf]

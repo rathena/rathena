@@ -6953,7 +6953,7 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr data)
 		break;
 
 	case SC_POISON:
-		if(status->hp <= status->max_hp>>2) //Stop damaging after 25% HP left.
+		if(status->hp <= max(status->max_hp>>2, sce->val4)) //Stop damaging after 25% HP left.
 			break;
 	case SC_DPOISON:
 		if (--(sce->val3) > 0) {
