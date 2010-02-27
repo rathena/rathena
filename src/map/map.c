@@ -179,15 +179,6 @@ int map_getusers(void)
  *------------------------------------------*/
 int map_usercount(void)
 {
-/*
-	int count = 0;
-	struct s_mapiterator* iter = mapit_getallusers();
-	for( mapit_first(iter); mapit_exists(iter); mapit_next(iter) )
-		count++;
-	mapit_free(iter);
-	return count;
-*/
-	// since pc_db now only holds fully authed players, this approach is equivalent:
 	return pc_db->size(pc_db);
 }
 

@@ -99,12 +99,6 @@ struct s_skill_db {
 };
 extern struct s_skill_db skill_db[MAX_SKILL_DB];
 
-struct skill_name_db { 
-	int id;	// skill id
-	char *name;	// search strings
-	char *desc;	// description that shows up for searches
-};
-
 #define MAX_SKILL_UNIT_LAYOUT	50
 #define MAX_SQUARE_LAYOUT		5	// 11*11のユニット配置が最大
 #define MAX_SKILL_UNIT_COUNT ((MAX_SQUARE_LAYOUT*2+1)*(MAX_SQUARE_LAYOUT*2+1))

@@ -6218,7 +6218,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 	}
 
 	if( opt_flag&2 && sd && sd->touching_id )
-		npc_touchnext_areanpc(sd,false);
+		npc_touchnext_areanpc(sd,false); // run OnTouch_ on next char in range
 
 	return 1;
 }

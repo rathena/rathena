@@ -1501,13 +1501,7 @@ int send_users_tochar(void)
 
 	chrif_check(-1);
 
-	// get user count (TODO: improve this)
-	iter = mapit_getallusers();
-	for( mapit_first(iter); mapit_exists(iter); mapit_next(iter) )
-		users++;
-	mapit_free(iter);
-
-	// build the packet
+	users = map_usercount();
 	WFIFOHEAD(char_fd, 6+8*users);
 	WFIFOW(char_fd,0) = 0x2aff;
 	iter = mapit_getallusers();
