@@ -378,6 +378,12 @@ static void mapif_parse_Auction_close(int fd)
 		return;
 	}
 
+	if( auction->seller_id != char_id )
+	{
+		mapif_Auction_close(fd, char_id, 1); // You cannot end the auction
+		return;
+	}
+
 	if( auction->buyer_id == 0 )
 	{
 		mapif_Auction_close(fd, char_id, 1); // You cannot end the auction
