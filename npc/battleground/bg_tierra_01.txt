@@ -352,7 +352,7 @@ bat_a01,45,19,3	script	Croix Vintenar#tv1	415,{
 			close2;
 		}
 
-		set Tierra_BG_Tick, gettimetick(2) + 300;
+		setquest 2069;
 		getitem 7828, .@Reward;
 		bg_leave;
 		warp "bat_room",155,150;
@@ -383,7 +383,7 @@ bat_a01,53,377,3	script	Guillaume Vintenar#tv1	419,{
 			close2;
 		}
 
-		set Tierra_BG_Tick, gettimetick(2) + 300;
+		setquest 2069;
 		getitem 7828, .@Reward;
 		bg_leave;
 		warp "bat_room",155,150;

@@ -197,7 +197,7 @@ bat_room,159,178,5	script	Guillaume Knight#1	417,{
 	close;
 }
 
-// Tierra Officerer - Guillaume
+// Tierra Officer - Guillaume
 // *********************************************************************
 bat_room,156,178,5	script	Tierra Valley Officer#1	418,{
 	mes "[Tierra Officer]";
@@ -225,12 +225,17 @@ bat_room,156,178,5	script	Tierra Valley Officer#1	418,{
 		mes "Because of running away, you need to wait ^0000FF" + callfunc("Time2Str",BG_Delay_Tick) + "^000000 to join again a BattleGround.";
 		close;
 	}
-	if( Tierra_BG_Tick >= gettimetick(2) )
+
+	if( checkquest(2069,PLAYTIME) == 2 ) erasequest 2069;
+	if( checkquest(2069,PLAYTIME) != -1 )
 	{
-		mes "Sorry, you can't join the battle right now.";
-		mes "You need to wait ^0000FF" + callfunc("Time2Str",Tierra_BG_Tick) + "^000000 to join again Tierra Valley.";
+		mes "You have received an indicator showing that you've participated in the Battle at Tierra Gorge. I can't let you participate in any other battles until the indicator goes off.";
+		next;
+		mes "[Tierra Officer]";
+		mes "Stand-by for Tierra Gorge Battle until the time limit passes.";
 		close;
 	}
+	
 	if( BaseLevel < 80 )
 	{
 		mes "I'm very please you want to join our army, but I'm sorry: I can't send a rookie like you to die on the cruel battlefield";
@@ -290,12 +295,17 @@ bat_room,156,121,1	script	Tierra Valley Officer#2	414,{
 		mes "Because of running away, you need to wait ^0000FF" + callfunc("Time2Str",BG_Delay_Tick) + "^000000 to join again a BattleGround.";
 		close;
 	}
-	if( Tierra_BG_Tick >= gettimetick(2) )
+
+	if( checkquest(2069,PLAYTIME) == 2 ) erasequest 2069;
+	if( checkquest(2069,PLAYTIME) != -1 )
 	{
-		mes "Sorry, you can't join the battle right now.";
-		mes "You need to wait ^0000FF" + callfunc("Time2Str",Tierra_BG_Tick) + "^000000 to join again Tierra Valley.";
+		mes "You have received an indicator showing that you've participated in the Battle at Tierra Gorge. I can't let you participate in any other battles until the indicator goes off.";
+		next;
+		mes "[Tierra Officer]";
+		mes "Stand-by for Tierra Gorge Battle until the time limit passes.";
 		close;
 	}
+
 	if( BaseLevel < 80 )
 	{
 		mes "I'm very please you want to join our army, but I'm sorry: I can't send a rookie like you to die on the cruel battlefield";
@@ -310,7 +320,7 @@ bat_room,156,121,1	script	Tierra Valley Officer#2	414,{
 
 // Guillaume Knight - Tierra
 // *********************************************************************
-bat_room,175,178,5	script	Guillaume Knight#2	417,{
+bat_room,167,178,5	script	Guillaume Knight#2	417,{
 	mes "[Guillaume Knight]";
 	mes "Tierra Gorge is a very steep canyon with two forts residing in the north and south ends of the map.";
 	next;
@@ -329,7 +339,7 @@ bat_room,175,178,5	script	Guillaume Knight#2	417,{
 
 // Tierra Officer - Guillaume
 // *********************************************************************
-bat_room,172,178,5	script	Tierra Valley Officer#3	418,{
+bat_room,164,178,5	script	Tierra Valley Officer#3	418,{
 	mes "[Tierra Officer]";
 	if( Bat_Team == 2 )
 	{
@@ -355,12 +365,17 @@ bat_room,172,178,5	script	Tierra Valley Officer#3	418,{
 		mes "Because of running away, you need to wait ^0000FF" + callfunc("Time2Str",BG_Delay_Tick) + "^000000 to join again a BattleGround.";
 		close;
 	}
-	if( Tierra_BG_Tick >= gettimetick(2) )
+
+	if( checkquest(2069,PLAYTIME) == 2 ) erasequest 2069;
+	if( checkquest(2069,PLAYTIME) != -1 )
 	{
-		mes "Sorry, you can't join the battle right now.";
-		mes "You need to wait ^0000FF" + callfunc("Time2Str",Tierra_BG_Tick) + "^000000 to join again Tierra Valley.";
+		mes "You have received an indicator showing that you've participated in the Battle at Tierra Gorge. I can't let you participate in any other battles until the indicator goes off.";
+		next;
+		mes "[Tierra Officer]";
+		mes "Stand-by for Tierra Gorge Battle until the time limit passes.";
 		close;
 	}
+
 	if( BaseLevel < 80 )
 	{
 		mes "I'm very please you want to join our army, but I'm sorry: I can't send a rookie like you to die on the cruel battlefield";
@@ -369,13 +384,13 @@ bat_room,172,178,5	script	Tierra Valley Officer#3	418,{
 
 	mes "Good luck!";
 	close2;
-	warp "bat_room",85,94;
+	warp "bat_room",57,94;
 	end;
 }
 
 // Croix Knight - Tierra
 // *********************************************************************
-bat_room,175,121,1	script	Croix Knight#2	413,{
+bat_room,167,121,1	script	Croix Knight#2	413,{
 	mes "[Croix Knight]";
 	mes "Tierra Gorge is a very steep canyon with two forts residing in the north and south ends of the map.";
 	next;
@@ -394,7 +409,7 @@ bat_room,175,121,1	script	Croix Knight#2	413,{
 
 // Tierra Officer - Croix
 // *********************************************************************
-bat_room,172,121,1	script	Tierra Valley Officer#4	414,{
+bat_room,164,121,1	script	Tierra Valley Officer#4	414,{
 	mes "[Tierra Officer]";
 	if( Bat_Team == 1 )
 	{
@@ -420,12 +435,159 @@ bat_room,172,121,1	script	Tierra Valley Officer#4	414,{
 		mes "Because of running away, you need to wait ^0000FF" + callfunc("Time2Str",BG_Delay_Tick) + "^000000 to join again a BattleGround.";
 		close;
 	}
-	if( Tierra_BG_Tick >= gettimetick(2) )
+
+	if( checkquest(2069,PLAYTIME) == 2 ) erasequest 2069;
+	if( checkquest(2069,PLAYTIME) != -1 )
 	{
-		mes "Sorry, you can't join the battle right now.";
-		mes "You need to wait ^0000FF" + callfunc("Time2Str",Tierra_BG_Tick) + "^000000 to join again Tierra Valley.";
+		mes "You have received an indicator showing that you've participated in the Battle at Tierra Gorge. I can't let you participate in any other battles until the indicator goes off.";
+		next;
+		mes "[Tierra Officer]";
+		mes "Stand-by for Tierra Gorge Battle until the time limit passes.";
 		close;
 	}
+
+	if( BaseLevel < 80 )
+	{
+		mes "I'm very please you want to join our army, but I'm sorry: I can't send a rookie like you to die on the cruel battlefield";
+		close;
+	}
+
+	mes "Good luck!";
+	close2;
+	warp "bat_room",57,77;
+	end;
+}
+
+// Guillaune Knight - Flavius
+// *********************************************************************
+bat_room,175,178,5	script	Guillaume Knight#3	417,{
+	mes "[Guillaume Knight]";
+	mes "The objective of the Flavius Battle is to score 2 points before your enemy by destroying their crystal.";
+	next;
+	mes "[Guillaume Knight]";
+	mes "The crystals for both armies are protected by special barricades that cannot be destroyed by direct attacks.";
+	next;
+	mes "[Guillaume Knight]";
+	mes "But they can be removed by destroying the Guardians that protect the enemy army base.";
+	next;
+	mes "[Guillaume Knight]";
+	mes "The crystals are immune to every type of skill; your physical attacks are the only choice for destroying your enemy's crystal.";
+	next;
+	mes "[Guillaume Knight]";
+	mes "Are you ready for battle? Then apply with the recruiter next to me!";
+	close;
+}
+
+// Flavius Officer - Guillaume
+// *********************************************************************
+bat_room,172,178,5	script	Flavius Officer#1	418,{
+	mes "[Flavius Officer]";
+	if( Bat_Team == 2 )
+	{
+		mes "Get out of here you stupid Croix!";
+		close;
+	}
+
+	if( Bat_Team == 0 )
+	{
+		mes "Please sign up for an army with Prince Croix or General Guillaume!";
+		close;
+	}
+
+	mes "Hello " + strcharinfo(0) + ", let's show the power of the Guillaume Army to those stinky Croixs!";
+	next;
+	if( select("I want to join your army!:End Conversation") == 2 )
+		close;
+
+	mes "[Flavius Officer]";
+	if( BG_Delay_Tick >= gettimetick(2) )
+	{
+		mes "You are a Deserter!!";
+		mes "Because of running away, you need to wait ^0000FF" + callfunc("Time2Str",BG_Delay_Tick) + "^000000 to join again a BattleGround.";
+		close;
+	}
+
+	if( checkquest(2070,PLAYTIME) == 2 ) erasequest 2070;
+	if( checkquest(2070,PLAYTIME) != -1 )
+	{
+		mes "You have received an indicator showing that you've participated in the Battle at Flavius. I can't let you participate in any other battles until the indicator goes off.";
+		next;
+		mes "[Flavius Officer]";
+		mes "Stand-by for Flavius Battle until the time limit passes.";
+		close;
+	}
+
+	if( BaseLevel < 80 )
+	{
+		mes "I'm very please you want to join our army, but I'm sorry: I can't send a rookie like you to die on the cruel battlefield";
+		close;
+	}
+
+	mes "Good luck!";
+	close2;
+	warp "bat_room",85,94;
+	end;
+}
+
+// Croix Knight - Flavius
+// *********************************************************************
+bat_room,175,121,1	script	Croix Knight#3	413,{
+	mes "[Croix Knight]";
+	mes "The objective of the Flavius Battle is to score 2 points before your enemy by destroying their crystal.";
+	next;
+	mes "[Croix Knight]";
+	mes "The crystals for both armies are protected by special barricades that cannot be destroyed by direct attacks.";
+	next;
+	mes "[Croix Knight]";
+	mes "But they can be removed by destroying the Guardians that protect the enemy army base.";
+	next;
+	mes "[Croix Knight]";
+	mes "The crystals are immune to every type of skill; your physical attacks are the only choice for destroying your enemy's crystal.";
+	next;
+	mes "[Croix Knight]";
+	mes "Are you ready for battle? Then apply with the recruiter next to me!";
+	close;
+}
+
+// Flavius Officerer - Croix
+// *********************************************************************
+bat_room,172,121,1	script	Flavius Officer#2	414,{
+	mes "[Flavius Officer]";
+	if( Bat_Team == 1 )
+	{
+		mes "Get out of here you stupid Guillaume!";
+		close;
+	}
+
+	if( Bat_Team == 0 )
+	{
+		mes "Please sign up for an army with Prince Croix or General Guillaume!";
+		close;
+	}
+
+	mes "Hello " + strcharinfo(0) + ", let's show the power of the Croix Army to those stinky Guillaumes!";
+	next;
+	if( select("I want to join your army!:End Conversation") == 2 )
+		close;
+
+	mes "[Flavius Officer]";
+	if( BG_Delay_Tick >= gettimetick(2) )
+	{
+		mes "You are a Deserter!!";
+		mes "Because of running away, you need to wait ^0000FF" + callfunc("Time2Str",BG_Delay_Tick) + "^000000 to join again a BattleGround.";
+		close;
+	}
+
+	if( checkquest(2070,PLAYTIME) == 2 ) erasequest 2070;
+	if( checkquest(2070,PLAYTIME) != -1 )
+	{
+		mes "You have received an indicator showing that you've participated in the Battle at Flavius. I can't let you participate in any other battles until the indicator goes off.";
+		next;
+		mes "[Flavius Officer]";
+		mes "Stand-by for Flavius Battle until the time limit passes.";
+		close;
+	}
+
 	if( BaseLevel < 80 )
 	{
 		mes "I'm very please you want to join our army, but I'm sorry: I can't send a rookie like you to die on the cruel battlefield";
@@ -440,7 +602,7 @@ bat_room,172,121,1	script	Tierra Valley Officer#4	414,{
 
 // Guillaune Knight - Flavius
 // *********************************************************************
-bat_room,151,178,5	script	Guillaume Knight#3	417,{
+bat_room,151,178,5	script	Guillaume Knight#4	417,{
 	mes "[Guillaume Knight]";
 	mes "The objective of the Flavius Battle is to score 2 points before your enemy by destroying their crystal.";
 	next;
@@ -460,7 +622,7 @@ bat_room,151,178,5	script	Guillaume Knight#3	417,{
 
 // Flavius Officerer - Guillaume
 // *********************************************************************
-bat_room,148,178,5	script	Flavius Officer#1	418,{
+bat_room,148,178,5	script	Flavius Officer#3	418,{
 	mes "[Flavius Officer]";
 	if( Bat_Team == 2 )
 	{
@@ -486,12 +648,17 @@ bat_room,148,178,5	script	Flavius Officer#1	418,{
 		mes "Because of running away, you need to wait ^0000FF" + callfunc("Time2Str",BG_Delay_Tick) + "^000000 to join again a BattleGround.";
 		close;
 	}
-	if( Flavius_BG_Tick >= gettimetick(2) )
+
+	if( checkquest(2070,PLAYTIME) == 2 ) erasequest 2070;
+	if( checkquest(2070,PLAYTIME) != -1 )
 	{
-		mes "Sorry, you can't join the battle right now.";
-		mes "You need to wait ^0000FF" + callfunc("Time2Str",Flavius_BG_Tick) + "^000000 to join again Flavius.";
+		mes "You have received an indicator showing that you've participated in the Battle at Flavius. I can't let you participate in any other battles until the indicator goes off.";
+		next;
+		mes "[Flavius Officer]";
+		mes "Stand-by for Flavius Battle until the time limit passes.";
 		close;
 	}
+
 	if( BaseLevel < 80 )
 	{
 		mes "I'm very please you want to join our army, but I'm sorry: I can't send a rookie like you to die on the cruel battlefield";
@@ -506,7 +673,7 @@ bat_room,148,178,5	script	Flavius Officer#1	418,{
 
 // Croix Knight - Flavius
 // *********************************************************************
-bat_room,151,121,1	script	Croix Knight#3	413,{
+bat_room,151,121,1	script	Croix Knight#4	413,{
 	mes "[Croix Knight]";
 	mes "The objective of the Flavius Battle is to score 2 points before your enemy by destroying their crystal.";
 	next;
@@ -526,7 +693,7 @@ bat_room,151,121,1	script	Croix Knight#3	413,{
 
 // Flavius Officerer - Croix
 // *********************************************************************
-bat_room,148,121,1	script	Flavius Officer#2	414,{
+bat_room,148,121,1	script	Flavius Officer#4	414,{
 	mes "[Flavius Officer]";
 	if( Bat_Team == 1 )
 	{
@@ -552,12 +719,17 @@ bat_room,148,121,1	script	Flavius Officer#2	414,{
 		mes "Because of running away, you need to wait ^0000FF" + callfunc("Time2Str",BG_Delay_Tick) + "^000000 to join again a BattleGround.";
 		close;
 	}
-	if( Flavius_BG_Tick >= gettimetick(2) )
+
+	if( checkquest(2070,PLAYTIME) == 2 ) erasequest 2070;
+	if( checkquest(2070,PLAYTIME) != -1 )
 	{
-		mes "Sorry, you can't join the battle right now.";
-		mes "You need to wait ^0000FF" + callfunc("Time2Str",Flavius_BG_Tick) + "^000000 to join again Flavius.";
+		mes "You have received an indicator showing that you've participated in the Battle at Flavius. I can't let you participate in any other battles until the indicator goes off.";
+		next;
+		mes "[Flavius Officer]";
+		mes "Stand-by for Flavius Battle until the time limit passes.";
 		close;
 	}
+
 	if( BaseLevel < 80 )
 	{
 		mes "I'm very please you want to join our army, but I'm sorry: I can't send a rookie like you to die on the cruel battlefield";
@@ -567,138 +739,6 @@ bat_room,148,121,1	script	Flavius Officer#2	414,{
 	mes "Good luck!";
 	close2;
 	warp "bat_room",253,77;
-	end;
-}
-
-// Guillaune Knight - Flavius
-// *********************************************************************
-bat_room,167,178,5	script	Guillaume Knight#4	417,{
-	mes "[Guillaume Knight]";
-	mes "The objective of the Flavius Battle is to score 2 points before your enemy by destroying their crystal.";
-	next;
-	mes "[Guillaume Knight]";
-	mes "The crystals for both armies are protected by special barricades that cannot be destroyed by direct attacks.";
-	next;
-	mes "[Guillaume Knight]";
-	mes "But they can be removed by destroying the Guardians that protect the enemy army base.";
-	next;
-	mes "[Guillaume Knight]";
-	mes "The crystals are immune to every type of skill; your physical attacks are the only choice for destroying your enemy's crystal.";
-	next;
-	mes "[Guillaume Knight]";
-	mes "Are you ready for battle? Then apply with the recruiter next to me!";
-	close;
-}
-
-// Flavius Officerer - Guillaume
-// *********************************************************************
-bat_room,164,178,5	script	Flavius Officer#3	418,{
-	mes "[Flavius Officer]";
-	if( Bat_Team == 2 )
-	{
-		mes "Get out of here you stupid Croix!";
-		close;
-	}
-
-	if( Bat_Team == 0 )
-	{
-		mes "Please sign up for an army with Prince Croix or General Guillaume!";
-		close;
-	}
-
-	mes "Hello " + strcharinfo(0) + ", let's show the power of the Guillaume Army to those stinky Croixs!";
-	next;
-	if( select("I want to join your army!:End Conversation") == 2 )
-		close;
-
-	mes "[Flavius Officer]";
-	if( BG_Delay_Tick >= gettimetick(2) )
-	{
-		mes "You are a Deserter!!";
-		mes "Because of running away, you need to wait ^0000FF" + callfunc("Time2Str",BG_Delay_Tick) + "^000000 to join again a BattleGround.";
-		close;
-	}
-	if( Flavius_BG_Tick >= gettimetick(2) )
-	{
-		mes "Sorry, you can't join the battle right now.";
-		mes "You need to wait ^0000FF" + callfunc("Time2Str",Flavius_BG_Tick) + "^000000 to join again Flavius.";
-		close;
-	}
-	if( BaseLevel < 80 )
-	{
-		mes "I'm very please you want to join our army, but I'm sorry: I can't send a rookie like you to die on the cruel battlefield";
-		close;
-	}
-
-	mes "Good luck!";
-	close2;
-	warp "bat_room",57,94;
-	end;
-}
-
-// Croix Knight - Flavius
-// *********************************************************************
-bat_room,167,121,1	script	Croix Knight#4	413,{
-	mes "[Croix Knight]";
-	mes "The objective of the Flavius Battle is to score 2 points before your enemy by destroying their crystal.";
-	next;
-	mes "[Croix Knight]";
-	mes "The crystals for both armies are protected by special barricades that cannot be destroyed by direct attacks.";
-	next;
-	mes "[Croix Knight]";
-	mes "But they can be removed by destroying the Guardians that protect the enemy army base.";
-	next;
-	mes "[Croix Knight]";
-	mes "The crystals are immune to every type of skill; your physical attacks are the only choice for destroying your enemy's crystal.";
-	next;
-	mes "[Croix Knight]";
-	mes "Are you ready for battle? Then apply with the recruiter next to me!";
-	close;
-}
-
-// Flavius Officerer - Croix
-// *********************************************************************
-bat_room,164,121,1	script	Flavius Officer#4	414,{
-	mes "[Flavius Officer]";
-	if( Bat_Team == 1 )
-	{
-		mes "Get out of here you stupid Guillaume!";
-		close;
-	}
-
-	if( Bat_Team == 0 )
-	{
-		mes "Please sign up for an army with Prince Croix or General Guillaume!";
-		close;
-	}
-
-	mes "Hello " + strcharinfo(0) + ", let's show the power of the Croix Army to those stinky Guillaumes!";
-	next;
-	if( select("I want to join your army!:End Conversation") == 2 )
-		close;
-
-	mes "[Flavius Officer]";
-	if( BG_Delay_Tick >= gettimetick(2) )
-	{
-		mes "You are a Deserter!!";
-		mes "Because of running away, you need to wait ^0000FF" + callfunc("Time2Str",BG_Delay_Tick) + "^000000 to join again a BattleGround.";
-		close;
-	}
-	if( Flavius_BG_Tick >= gettimetick(2) )
-	{
-		mes "Sorry, you can't join the battle right now.";
-		mes "You need to wait ^0000FF" + callfunc("Time2Str",Flavius_BG_Tick) + "^000000 to join again Flavius.";
-		close;
-	}
-	if( BaseLevel < 80 )
-	{
-		mes "I'm very please you want to join our army, but I'm sorry: I can't send a rookie like you to die on the cruel battlefield";
-		close;
-	}
-
-	mes "Good luck!";
-	close2;
-	warp "bat_room",57,77;
 	end;
 }
 
@@ -747,12 +787,17 @@ bat_room,140,178,5	script	KVM [80-99] Officer#1	418,{
 		mes "Because of running away, you need to wait ^0000FF" + callfunc("Time2Str",BG_Delay_Tick) + "^000000 to join again a BattleGround.";
 		close;
 	}
-	if( KvM_BG_Tick >= gettimetick(2) )
+
+	if( checkquest(6025,PLAYTIME) == 2 ) erasequest 6025;
+	if( checkquest(6025,PLAYTIME) != -1 )
 	{
-		mes "Sorry, you can't join the battle right now.";
-		mes "You need to wait ^0000FF" + callfunc("Time2Str",KvM_BG_Tick) + "^000000 to join KvM.";
+		mes "You have received an indicator showing that you've participated in the Battle at KvM. I can't let you participate in any other battles until the indicator goes off.";
+		next;
+		mes "[KVM Officer]";
+		mes "Stand-by for KvM Battle until the time limit passes.";
 		close;
 	}
+
 	if( BaseLevel < 80 )
 	{
 		mes "I'm very please you want to join our army, but I'm sorry: This arena is for players with baselevel from 80 to 99.";
@@ -810,12 +855,17 @@ bat_room,140,121,1	script	KVM [80-99] Officer#2	414,{
 		mes "Because of running away, you need to wait ^0000FF" + callfunc("Time2Str",BG_Delay_Tick) + "^000000 to join again a BattleGround.";
 		close;
 	}
-	if( KvM_BG_Tick >= gettimetick(2) )
+
+	if( checkquest(6025,PLAYTIME) == 2 ) erasequest 6025;
+	if( checkquest(6025,PLAYTIME) != -1 )
 	{
-		mes "Sorry, you can't join the battle right now.";
-		mes "You need to wait ^0000FF" + callfunc("Time2Str",KvM_BG_Tick) + "^000000 to join KvM.";
+		mes "You have received an indicator showing that you've participated in the Battle at KvM. I can't let you participate in any other battles until the indicator goes off.";
+		next;
+		mes "[KVM Officer]";
+		mes "Stand-by for KvM Battle until the time limit passes.";
 		close;
 	}
+
 	if( BaseLevel < 80 )
 	{
 		mes "I'm very please you want to join our army, but I'm sorry: This arena is for players with baselevel from 80 to 99.";
@@ -873,12 +923,17 @@ bat_room,132,178,5	script	KVM [60-79] Officer#1	418,{
 		mes "Because of running away, you need to wait ^0000FF" + callfunc("Time2Str",BG_Delay_Tick) + "^000000 to join again a BattleGround.";
 		close;
 	}
-	if( KvM_BG_Tick >= gettimetick(2) )
+
+	if( checkquest(6025,PLAYTIME) == 2 ) erasequest 6025;
+	if( checkquest(6025,PLAYTIME) != -1 )
 	{
-		mes "Sorry, you can't join the battle right now.";
-		mes "You need to wait ^0000FF" + callfunc("Time2Str",KvM_BG_Tick) + "^000000 to join KvM.";
+		mes "You have received an indicator showing that you've participated in the Battle at KvM. I can't let you participate in any other battles until the indicator goes off.";
+		next;
+		mes "[KVM Officer]";
+		mes "Stand-by for KvM Battle until the time limit passes.";
 		close;
 	}
+
 	if( BaseLevel < 60 || BaseLevel > 79 )
 	{
 		mes "I'm very please you want to join our army, but I'm sorry: This arena is for players with baselevel from 60 to 79.";
@@ -936,12 +991,17 @@ bat_room,132,121,1	script	KVM [60-79] Officer#2	414,{
 		mes "Because of running away, you need to wait ^0000FF" + callfunc("Time2Str",BG_Delay_Tick) + "^000000 to join again a BattleGround.";
 		close;
 	}
-	if( KvM_BG_Tick >= gettimetick(2) )
+
+	if( checkquest(6025,PLAYTIME) == 2 ) erasequest 6025;
+	if( checkquest(6025,PLAYTIME) != -1 )
 	{
-		mes "Sorry, you can't join the battle right now.";
-		mes "You need to wait ^0000FF" + callfunc("Time2Str",KvM_BG_Tick) + "^000000 to join KvM.";
+		mes "You have received an indicator showing that you've participated in the Battle at KvM. I can't let you participate in any other battles until the indicator goes off.";
+		next;
+		mes "[KVM Officer]";
+		mes "Stand-by for KvM Battle until the time limit passes.";
 		close;
 	}
+
 	if( BaseLevel < 60 || BaseLevel > 79 )
 	{
 		mes "I'm very please you want to join our army, but I'm sorry: This arena is for players with baselevel from 60 to 79.";
@@ -999,12 +1059,17 @@ bat_room,124,178,5	script	KVM [1-59] Officer#1	418,{
 		mes "Because of running away, you need to wait ^0000FF" + callfunc("Time2Str",BG_Delay_Tick) + "^000000 to join again a BattleGround.";
 		close;
 	}
-	if( KvM_BG_Tick >= gettimetick(2) )
+
+	if( checkquest(6025,PLAYTIME) == 2 ) erasequest 6025;
+	if( checkquest(6025,PLAYTIME) != -1 )
 	{
-		mes "Sorry, you can't join the battle right now.";
-		mes "You need to wait ^0000FF" + callfunc("Time2Str",KvM_BG_Tick) + "^000000 to join KvM.";
+		mes "You have received an indicator showing that you've participated in the Battle at KvM. I can't let you participate in any other battles until the indicator goes off.";
+		next;
+		mes "[KVM Officer]";
+		mes "Stand-by for KvM Battle until the time limit passes.";
 		close;
 	}
+
 	if( BaseLevel > 59 )
 	{
 		mes "I'm very please you want to join our army, but I'm sorry: This arena is for players with baselevel from 1 to 59.";
@@ -1062,12 +1127,17 @@ bat_room,124,121,1	script	KVM [1-59] Officer#2	414,{
 		mes "Because of running away, you need to wait ^0000FF" + callfunc("Time2Str",BG_Delay_Tick) + "^000000 to join again a BattleGround.";
 		close;
 	}
-	if( KvM_BG_Tick >= gettimetick(2) )
+
+	if( checkquest(6025,PLAYTIME) == 2 ) erasequest 6025;
+	if( checkquest(6025,PLAYTIME) != -1 )
 	{
-		mes "Sorry, you can't join the battle right now.";
-		mes "You need to wait ^0000FF" + callfunc("Time2Str",KvM_BG_Tick) + "^000000 to join KvM.";
+		mes "You have received an indicator showing that you've participated in the Battle at KvM. I can't let you participate in any other battles until the indicator goes off.";
+		next;
+		mes "[KVM Officer]";
+		mes "Stand-by for KvM Battle until the time limit passes.";
 		close;
 	}
+
 	if( BaseLevel > 59 )
 	{
 		mes "I'm very please you want to join our army, but I'm sorry: This arena is for players with baselevel from 1 to 59.";
@@ -1096,54 +1166,63 @@ bat_room,161,158,3	duplicate(bat_aid)	General Guillaume's Aid::bat_aid4	419
 
 // Exit from Registration
 // *********************************************************************
+-	script	warp2bat_room	-1,{
+	end;
+
+OnTouch:
+	set BG_Delay_Tick, gettimetick(2) + 30;
+	warp "bat_room",154,149;
+	end;
+}
+
 // Flavius bat_b02
-bat_room,57,81,0	warp	bat1	2,2,bat_room,154,149
-bat_room,57,90,0	warp	bat2	2,2,bat_room,154,149
+bat_room,57,81,0	duplicate(warp2bat_room)	bat1	45,1,1
+bat_room,57,90,0	duplicate(warp2bat_room)	bat2	45,1,1
 // Free BG
-bat_room,57,220,0	warp	bat3	2,2,bat_room,154,149
-bat_room,57,211,0	warp	bat4	2,2,bat_room,154,149
+bat_room,57,220,0	duplicate(warp2bat_room)	bat3	45,1,1
+bat_room,57,211,0	duplicate(warp2bat_room)	bat4	45,1,1
 // Tierra Valley bat_a02
-bat_room,85,81,0	warp	bat5	2,2,bat_room,154,149
-bat_room,85,90,0	warp	bat6	2,2,bat_room,154,149
+bat_room,85,81,0	duplicate(warp2bat_room)	bat5	45,1,1
+bat_room,85,90,0	duplicate(warp2bat_room)	bat6	45,1,1
 // Tierra Valley bat_a01
-bat_room,85,220,0	warp	bat7	2,2,bat_room,154,149
-bat_room,85,211,0	warp	bat8	2,2,bat_room,154,149
+bat_room,85,220,0	duplicate(warp2bat_room)	bat7	45,1,1
+bat_room,85,211,0	duplicate(warp2bat_room)	bat8	45,1,1
 // Free BG
-bat_room,113,81,0	warp	bat9	2,2,bat_room,154,149
-bat_room,113,90,0	warp	bat10	2,2,bat_room,154,149
+bat_room,113,81,0	duplicate(warp2bat_room)	bat9	45,1,1
+bat_room,113,90,0	duplicate(warp2bat_room)	bat10	45,1,1
 // Free BG
-bat_room,113,220,0	warp	bat11	2,2,bat_room,154,149
-bat_room,113,211,0	warp	bat12	2,2,bat_room,154,149
+bat_room,113,220,0	duplicate(warp2bat_room)	bat11	45,1,1
+bat_room,113,211,0	duplicate(warp2bat_room)	bat12	45,1,1
 // Free BG
-bat_room,141,81,0	warp	bat13	2,2,bat_room,154,149
-bat_room,141,90,0	warp	bat14	2,2,bat_room,154,149
+bat_room,141,81,0	duplicate(warp2bat_room)	bat13	45,1,1
+bat_room,141,90,0	duplicate(warp2bat_room)	bat14	45,1,1
 // Free BG
-bat_room,141,220,0	warp	bat15	2,2,bat_room,154,149
-bat_room,141,211,0	warp	bat16	2,2,bat_room,154,149
+bat_room,141,220,0	duplicate(warp2bat_room)	bat15	45,1,1
+bat_room,141,211,0	duplicate(warp2bat_room)	bat16	45,1,1
 // Free BG
-bat_room,169,81,0	warp	bat17	2,2,bat_room,154,149
-bat_room,169,90,0	warp	bat18	2,2,bat_room,154,149
+bat_room,169,81,0	duplicate(warp2bat_room)	bat17	45,1,1
+bat_room,169,90,0	duplicate(warp2bat_room)	bat18	45,1,1
 // Free BG
-bat_room,169,220,0	warp	bat19	2,2,bat_room,154,149
-bat_room,169,211,0	warp	bat20	2,2,bat_room,154,149
+bat_room,169,220,0	duplicate(warp2bat_room)	bat19	45,1,1
+bat_room,169,211,0	duplicate(warp2bat_room)	bat20	45,1,1
 // Free BG
-bat_room,197,81,0	warp	bat21	2,2,bat_room,154,149
-bat_room,197,90,0	warp	bat22	2,2,bat_room,154,149
+bat_room,197,81,0	duplicate(warp2bat_room)	bat21	45,1,1
+bat_room,197,90,0	duplicate(warp2bat_room)	bat22	45,1,1
 // KvM bat_c03
-bat_room,197,220,0	warp	bat23	2,2,bat_room,154,149
-bat_room,197,211,0	warp	bat24	2,2,bat_room,154,149
+bat_room,197,220,0	duplicate(warp2bat_room)	bat23	45,1,1
+bat_room,197,211,0	duplicate(warp2bat_room)	bat24	45,1,1
 // Free BG
-bat_room,225,81,0	warp	bat25	2,2,bat_room,154,149
-bat_room,225,90,0	warp	bat26	2,2,bat_room,154,149
+bat_room,225,81,0	duplicate(warp2bat_room)	bat25	45,1,1
+bat_room,225,90,0	duplicate(warp2bat_room)	bat26	45,1,1
 // KvM bat_c02
-bat_room,225,220,0	warp	bat27	2,2,bat_room,154,149
-bat_room,225,211,0	warp	bat28	2,2,bat_room,154,149
+bat_room,225,220,0	duplicate(warp2bat_room)	bat27	45,1,1
+bat_room,225,211,0	duplicate(warp2bat_room)	bat28	45,1,1
 // Flavius bat_b01
-bat_room,253,81,0	warp	bat29	2,2,bat_room,154,149
-bat_room,253,90,0	warp	bat30	2,2,bat_room,154,149
+bat_room,253,81,0	duplicate(warp2bat_room)	bat29	45,1,1
+bat_room,253,90,0	duplicate(warp2bat_room)	bat30	45,1,1
 // KvM bat_c01
-bat_room,253,220,0	warp	bat31	2,2,bat_room,154,149
-bat_room,253,211,0	warp	bat32	2,2,bat_room,154,149
+bat_room,253,220,0	duplicate(warp2bat_room)	bat31	45,1,1
+bat_room,253,211,0	duplicate(warp2bat_room)	bat32	45,1,1
 
 // Badges Repairman
 // *********************************************************************

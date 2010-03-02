@@ -302,7 +302,7 @@ bat_b02,390,13,5	script	Guillaume Vintenar#fl2	419,{
 			set .@Reward, 3;
 		}
 
-		set Flavius_BG_Tick, gettimetick(2) + 300;
+		setquest 2070;
 		getitem 7829, .@Reward;
 		bg_leave;
 		warp "bat_room",155,150;
@@ -333,7 +333,7 @@ bat_b02,10,293,5	script	Croix Vintenar#fl2	415,{
 			set .@Reward, 3;
 		}
 
-		set Flavius_BG_Tick, gettimetick(2) + 300;
+		setquest 2070;
 		getitem 7829, .@Reward;
 		bg_leave;
 		warp "bat_room",155,150;
