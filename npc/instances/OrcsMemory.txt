@@ -133,7 +133,7 @@ gef_fild10,242,202,0	script	Dimensional Gorge Piece	406,{
 					//else if (move_md == 0) {
 					else {
 						mapannounce "gef_fild10", .@p_reader$ + " of the party, " + .@p_name$ + " is entering the " + .@md_name$ + ".",bc_map,"0x00ff99";
-						warp	"1@orcs",179,15;
+						warp "1@orcs",179,15;
 						setquest 12059;
 						close;
 					}

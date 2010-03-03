@@ -1,5 +1,15 @@
 Date		Added
 ======
+2010/03/03
+	* Rev. 14257 Added some 13.2 content, and more 13.1 content. [L0ne_W0lf]
+	- Added "Otherworld language" quest.
+	- Added Cat Hand Trading NPCs for 13.2 maps.
+	- Added warps for Splendide and Manuk (town and field.)
+	- Added basic town NPCs for Manuk and Splendide.
+	- Added the guild dungeon SE events, though the pierre boxes do nothing.
+	- Corrected a minor issue in sealed shrine, lock out should work now.
+2010/03/02
+	* Rev. 14256 Added quest log stuff to battleground npcs, and KVM BGs. [zephyrus]
 2010/02/04
 	* Rev. 12439 Fixed donpcevent calling non-existant npc in Orc Instance. (bugreport:4039) [L0ne_W0lf]
 2010/01/24

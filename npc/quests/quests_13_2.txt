@@ -1,0 +1,3871 @@
+//===== eAthena Script =======================================
+//= Collection of episode 13.2 quests.
+//===== By: ==================================================
+//= L0ne_W0lf
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= eAthena SVN
+//===== Description: =========================================
+//= [Aegis Conversaion]
+//= Cat Hand Addition. (Leads to 13.2 areas)
+//= Otherworld language
+//===== Additional Comments: =================================
+//= 1.0 First version
+//============================================================ 
+
+// Cat Hand Addition. (Leads to 13.2 areas)
+//============================================================ 
+spl_fild02,25,211,4	script	Cat Hand Agent#spl	421,{
+	if (ep13_yong1 < 3) {
+		mes "[Cat Hand Agent]";
+		mes "Welcome to Cat Trading.";
+		mes "I guess you're a first-time customer, huh?";
+		next;
+		mes "[Cat Hand Agent]";
+		mes "For more details about our contract, you need to talk to our staff first.";
+		close;
+	}
+	else if ((ep13_yong1 > 2) && (ep13_yong1 < 20)) {
+		mes "[Cat Hand Agent]";
+		mes "Cat Trading's available services are as followed.";
+		mes "For additional services, please consult Agent Gyaruk.";
+		next;
+		switch(select("Save your location:Cancel")) {
+		case 1:
+			savepoint "spl_fild02",32,225;
+			mes "[Cat Hand Agent]";
+			mes "Thank you.";
+			mes "Your location has been saved.";
+			mes "You can now directly return to this camp.";
+			close;
+		case 2:
+			mes "[Cat Hand Agent]";
+			mes "Thank you for using our service.";
+			close;
+		}
+	}
+	else if ((ep13_yong1 > 19) && (ep13_yong1 < 40)) {
+		mes "[Cat Hand Agent]";
+		mes "Cat Trading's available services are as followed.";
+		mes "For additional services, please consult Agent Gyaruk.";
+		next;
+		switch(select("Save your location:Use Storage:Cancel")) {
+		case 1:
+			savepoint "spl_fild02",32,225;
+			mes "[Cat Hand Agent]";
+			mes "Thank you.";
+			mes "Your location has been saved.";
+			mes "You can now directly return to this camp.";
+			close;
+		case 2:
+			if(basicskillcheck() && getskilllv("NV_BASIC") < 6){
+				mes "[Cat Hand Agent]";
+				mes "I'm sorry, but you";
+				mes "need the Novice's";
+				mes "Basic Skill Level 6 to";
+				mes "use the Storage Service.";
+				close;
+			}
+			else if (Zeny >= 60) {
+				set zeny,zeny-60;
+				mes "[Cat Hand Agent]";
+				mes "Thank you.";
+				mes "Your storage will be opened shortly.";
+				close2;
+				openstorage;
+				end;
+			}
+			else {
+				mes "[Cat Hand Agent]";
+				mes "I'm sorry, but you don't";
+				mes "have enough money?";
+				mes "Cat Trading's storage";
+				mes "service is 60 zeny.";
+				mes "It's cheap, isn't it?";
+				close;
+			}
+		case 3:
+			mes "[Cat Hand Agent]";
+			mes "Thank you for using our service.";
+			close;
+		}
+	}
+	else if ((ep13_yong1 > 39) && (ep13_yong1 < 100)) {
+		mes "[Cat Hand Agent]";
+		mes "Cat Trading's available services are as followed.";
+		mes "For additional services, please consult Agent Gyaruk.";
+		next;
+		switch(select("Save your location:Use Storage:Use Cat Warp (Midgard):Cancel")) {
+		case 1:
+			savepoint "spl_fild02",32,225;
+			mes "[Cat Hand Agent]";
+			mes "Thank you.";
+			mes "Your location has been saved.";
+			mes "You can now directly return to this camp.";
+			close;
+		case 2:
+			if(basicskillcheck() && getskilllv("NV_BASIC") < 6){
+				mes "[Cat Hand Agent]";
+				mes "I'm sorry, but you";
+				mes "need the Novice's";
+				mes "Basic Skill Level 6 to";
+				mes "use the Storage Service.";
+				close;
+			}
+			else if (Zeny >= 60) {
+				set zeny,zeny-60;
+				mes "[Cat Hand Agent]";
+				mes "Thank you.";
+				mes "Your storage will be opened shortly.";
+				close2;
+				openstorage;
+				end;
+			}
+			else {
+				mes "[Cat Hand Agent]";
+				mes "I'm sorry, but you don't";
+				mes "have enough money?";
+				mes "Cat Trading's storage";
+				mes "service is 60 zeny.";
+				mes "It's cheap, isn't it?";
+				close;
+			}
+		case 3:
+			// Custom Translation.
+			mes "[Cat Hand Agent]";
+			mes "With " + ep13_yong1 + " credit points, we offer the following warp services. Please remember, you can't come back easily once you move to Midgard.";
+			next;
+			if ((ep13_yong1 > 39) && (ep13_yong1 < 49)) {
+				switch(select("Prontera -> 5500z:Cancel")) {
+				case 1:
+					if (Zeny >= 5500) {
+						set zeny,zeny-5500;
+						warp "prontera",116,72;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 2:
+					close;
+				}
+			}
+			else if ((ep13_yong1 > 49) && (ep13_yong1 < 59)) {
+				switch(select("Alberta -> 5500z:Prontera -> 5500z:Cancel")) {
+				case 1:
+					if (Zeny >= 5500) {
+						set zeny,zeny-5500;
+						warp "alberta",117,56;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 2:
+					if (Zeny >= 5500) {
+						set zeny,zeny-5500;
+						warp "prontera",116,72;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 3:
+					close;
+				}
+			}
+			else if ((ep13_yong1 > 59) && (ep13_yong1 < 69)) {
+				switch(select("Alberta -> 5025z:Prontera -> 5025z:Izlude -> 5025z:Cancel")) {
+				case 1:
+					if (Zeny >= 5025) {
+						set zeny,zeny-5025;
+						warp "alberta",117,56;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 2:
+					if (Zeny >= 5025) {
+						set zeny,zeny-5025;
+						warp "prontera",116,72;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 3:
+					if (Zeny >= 5025) {
+						set zeny,zeny-5025;
+						warp "izlude",91,105;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 4:
+					close;
+				}
+			}
+			else if ((ep13_yong1 > 69) && (ep13_yong1 < 79)) {
+				switch(select("Alberta -> 5025z:Prontera -> 5025z:Izlude -> 5025z:Geffen -> 5025z:Cancel")) {
+				case 1:
+					if (Zeny >= 5025) {
+						set zeny,zeny-5025;
+						warp "alberta",117,56;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 2:
+					if (Zeny >= 5025) {
+						set zeny,zeny-5025;
+						warp "prontera",116,72;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 3:
+					if (Zeny >= 5025) {
+						set zeny,zeny-5025;
+						warp "izlude",91,105;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 4:
+					if (Zeny >= 5025) {
+						set zeny,zeny-5025;
+						warp "geffen",120,39;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 5:
+					close;
+				}
+			}
+			else if ((ep13_yong1 > 79) && (ep13_yong1 < 89)) {
+				switch(select("Alberta -> 4765z:Prontera -> 4765z:Izlude -> 4765z:Geffen -> 4765z:Payon -> 4765z:Cancel")) {
+				case 1:
+					if (Zeny >= 4765) {
+						set zeny,zeny-4765;
+						warp "alberta",117,56;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 2:
+					if (Zeny >= 4765) {
+						set zeny,zeny-4765;
+						warp "prontera",116,72;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 3:
+					if (Zeny >= 4765) {
+						set zeny,zeny-4765;
+						warp "izlude",91,105;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 4:
+					if (Zeny >= 4765) {
+						set zeny,zeny-4765;
+						warp "geffen",120,39;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 5:
+					if (Zeny >= 4765) {
+						set zeny,zeny-4765;
+						warp "payon",161,58;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 6:
+					close;
+				}
+			}
+			else if ((ep13_yong1 > 89) && (ep13_yong1 < 99)) {
+				switch(select("Alberta -> 4765z:Prontera -> 4765z:Izlude -> 4765z:Geffen -> 4765z:Payon -> 4765z:Morroc -> 4765z:Cancel")) {
+				case 1:
+					if (Zeny >= 4765) {
+						set zeny,zeny-4765;
+						warp "alberta",117,56;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 2:
+					if (Zeny >= 4765) {
+						set zeny,zeny-4765;
+						warp "prontera",116,72;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 3:
+					if (Zeny >= 4765) {
+						set zeny,zeny-4765;
+						warp "izlude",91,105;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 4:
+					if (Zeny >= 4765) {
+						set zeny,zeny-4765;
+						warp "geffen",120,39;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 5:
+					if (Zeny >= 4765) {
+						set zeny,zeny-4765;
+						warp "payon",161,58;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 6:
+					if (Zeny >= 4765) {
+						set zeny,zeny-4765;
+						warp "morocc",156,46;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 7:
+					close;
+				}
+			}
+			else if (ep13_yong1 > 99) {
+				switch(select("Alberta -> 4590z:Prontera -> 4590z:Izlude -> 4590z:Geffen -> 4590z:Payon -> 4590z:Morroc -> 4590z:Al De Baran -> 4590z:Cancel")) {
+				case 1:
+					if (Zeny >= 4590) {
+						set zeny,zeny-4590;
+						warp "alberta",117,56;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 2:
+					if (Zeny >= 4590) {
+						set zeny,zeny-4590;
+						warp "prontera",116,72;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 3:
+					if (Zeny >= 4590) {
+						set zeny,zeny-4590;
+						warp "izlude",91,105;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 4:
+					if (Zeny >= 4590) {
+						set zeny,zeny-4590;
+						warp "geffen",120,39;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 5:
+					if (Zeny >= 4590) {
+						set zeny,zeny-4590;
+						warp "payon",161,58;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 6:
+					if (Zeny >= 4590) {
+						set zeny,zeny-4590;
+						warp "morocc",156,46;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 7:
+					if (Zeny >= 4590) {
+						set zeny,zeny-4590;
+						warp "aldebaran",168,112;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 8:
+					close;
+				}
+			}
+			else {
+				// Custom Translation.
+				mes "[Cat Hand Agent]";
+				mes "I am sorry, but you don't have enough credit points to use the warp service. Please come back when you have more points.";
+				close;
+			}
+		case 4:
+			mes "[Cat Hand Agent]";
+			mes "Thank you for using our service.";
+			close;
+		}
+	}
+	else if (ep13_yong1 > 99) {
+		mes "[Cat Hand Agent]";
+		mes "Cat Trading's available services are as followed.";
+		mes "For additional services, please consult Agent Gyaruk.";
+		next;
+		switch(select("Save your location:Use Storage:Use Cat Warp (Midgard):Use Cat Warp (Jottunheim):Cancel")) {
+		case 1:
+			savepoint "spl_fild02",32,225;
+			mes "[Cat Hand Agent]";
+			mes "Thank you.";
+			mes "Your location has been saved.";
+			mes "You can now directly return to this camp.";
+			close;
+		case 2:
+			if(basicskillcheck() && getskilllv("NV_BASIC") < 6){
+				mes "[Cat Hand Agent]";
+				mes "I'm sorry, but you";
+				mes "need the Novice's";
+				mes "Basic Skill Level 6 to";
+				mes "use the Storage Service.";
+				close;
+			}
+			else if (Zeny >= 60) {
+				set zeny,zeny-60;
+				mes "[Cat Hand Agent]";
+				mes "Thank you.";
+				mes "Your storage will be opened shortly.";
+				close2;
+				openstorage;
+				end;
+			}
+			else {
+				mes "[Cat Hand Agent]";
+				mes "I'm sorry, but you don't";
+				mes "have enough money?";
+				mes "Cat Trading's storage";
+				mes "service is 60 zeny.";
+				mes "It's cheap, isn't it?";
+				close;
+			}
+		case 3:
+			// Custom Translation.
+			mes "[Cat Hand Agent]";
+			mes "With " + ep13_yong1 + " credit points, we offer the following warp services. Please remember, you can't come back easily once you move to Midgard.";
+			next;
+			if ((ep13_yong1 > 99) && (ep13_yong1 < 200)) {
+				switch(select("Alberta -> 4590z:Prontera -> 4590z:Izlude -> 4590z:Geffen -> 4590z:Payon -> 4590z:Morroc -> 4590z:Al De Baran -> 4590z:Cancel")) {
+				case 1:
+					if (Zeny >= 4590) {
+						set zeny,zeny-4590;
+						warp "alberta",117,56;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 2:
+					if (Zeny >= 4590) {
+						set zeny,zeny-4590;
+						warp "prontera",116,72;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 3:
+					if (Zeny >= 4590) {
+						set zeny,zeny-4590;
+						warp "izlude",91,105;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 4:
+					if (Zeny >= 4590) {
+						set zeny,zeny-4590;
+						warp "geffen",120,39;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 5:
+					if (Zeny >= 4590) {
+						set zeny,zeny-4590;
+						warp "payon",161,58;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 6:
+					if (Zeny >= 4590) {
+						set zeny,zeny-4590;
+						warp "morocc",156,46;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 7:
+					if (Zeny >= 4590) {
+						set zeny,zeny-4590;
+						warp "aldebaran",168,112;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 8:
+					close;
+				}
+			}
+			else if ((ep13_yong1 > 199) && (ep13_yong1 < 250)) {
+				switch(select("Alberta -> 4170z:Prontera -> 4170z:Izlude -> 4170z:Geffen -> 4170z:Payon -> 4170z:Morroc -> 4170z:Al De Baran -> 4170z:Juno -> 4170z:Cancel")) {
+				case 1:
+					if (Zeny >= 4170) {
+						set zeny,zeny-4170;
+						warp "alberta",117,56;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 2:
+					if (Zeny >= 4170) {
+						set zeny,zeny-4170;
+						warp "prontera",116,72;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 3:
+					if (Zeny >= 4170) {
+						set zeny,zeny-4170;
+						warp "izlude",91,105;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 4:
+					if (Zeny >= 4170) {
+						set zeny,zeny-4170;
+						warp "geffen",120,39;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 5:
+					if (Zeny >= 4170) {
+						set zeny,zeny-4170;
+						warp "payon",161,58;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 6:
+					if (Zeny >= 4170) {
+						set zeny,zeny-4170;
+						warp "morocc",156,46;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 7:
+					if (Zeny >= 4170) {
+						set zeny,zeny-4170;
+						warp "aldebaran",168,112;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 8:
+					if (Zeny >= 4170) {
+						set zeny,zeny-4170;
+						warp "yuno",158,125;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 9:
+					close;
+				}
+				close;
+			}
+			else if ((ep13_yong1 > 249) && (ep13_yong1 < 300)) {
+				switch(select("Alberta -> 4025z:Prontera -> 4025z:Izlude -> 4025z:Geffen -> 4025z:Payon -> 4025z:Morroc -> 4025z:Al De Baran -> 4025z:Juno -> 4025z:Einbroch -> 4025z:Cancel")) {
+				case 1:
+					if (Zeny >= 4025) {
+						set zeny,zeny-4025;
+						warp "alberta",117,56;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 2:
+					if (Zeny >= 4025) {
+						set zeny,zeny-4025;
+						warp "prontera",116,72;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 3:
+					if (Zeny >= 4025) {
+						set zeny,zeny-4025;
+						warp "izlude",91,105;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 4:
+					if (Zeny >= 4025) {
+						set zeny,zeny-4025;
+						warp "geffen",120,39;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 5:
+					if (Zeny >= 4025) {
+						set zeny,zeny-4025;
+						warp "payon",161,58;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 6:
+					if (Zeny >= 4025) {
+						set zeny,zeny-4025;
+						warp "morocc",156,46;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 7:
+					if (Zeny >= 4025) {
+						set zeny,zeny-4025;
+						warp "aldebaran",168,112;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 8:
+					if (Zeny >= 4025) {
+						set zeny,zeny-4025;
+						warp "yuno",158,125;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 9:
+					if (Zeny >= 4025) {
+						set zeny,zeny-4025;
+						warp "einbroch",158,301;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 10:
+					close;
+				}
+				close;
+			}
+			else if (ep13_yong1 > 299) {
+				switch(select("Alberta -> 3970z:Prontera -> 3970z:Izlude -> 3970z:Geffen -> 3970z:Payon -> 3970z:Morroc -> 3970z:Al De Baran -> 3970z:Juno -> 3970z:Einbroch -> 3970z:Lighthalzen -> 3970z:Cancel")) {
+				case 1:
+					if (Zeny >= 3970) {
+						set zeny,zeny-3970;
+						warp "alberta",117,56;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 2:
+					if (Zeny >= 3970) {
+						set zeny,zeny-3970;
+						warp "prontera",116,72;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 3:
+					if (Zeny >= 3970) {
+						set zeny,zeny-3970;
+						warp "izlude",91,105;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 4:
+					if (Zeny >= 3970) {
+						set zeny,zeny-3970;
+						warp "geffen",120,39;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 5:
+					if (Zeny >= 3970) {
+						set zeny,zeny-3970;
+						warp "payon",161,58;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 6:
+					if (Zeny >= 3970) {
+						set zeny,zeny-3970;
+						warp "morocc",156,46;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 7:
+					if (Zeny >= 3970) {
+						set zeny,zeny-3970;
+						warp "aldebaran",168,112;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 8:
+					if (Zeny >= 3970) {
+						set zeny,zeny-3970;
+						warp "yuno",158,125;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 9:
+					if (Zeny >= 3970) {
+						set zeny,zeny-3970;
+						warp "einbroch",158,301;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 10:
+					if (Zeny >= 3970) {
+						set zeny,zeny-3970;
+						warp "lighthalzen",163,64;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 11:
+					close;
+				}
+				close;
+			}
+			else {
+				// Custom Translation
+				mes "[Cat Hand Agent]";
+				mes "I am sorry, but you don't have enough credit points to use the warp service. Please come back when you have more points.";
+				close;
+			}
+		case 4:
+			switch(select("Alliance Forces Post -> 5500z:Manuk Camp -> 7500z:Cancel")) {
+			case 1:
+				if (Zeny >= 5500) {
+					set zeny,zeny-5500;
+					warp "mid_camp",62,127;
+					close;
+				}
+				else {
+					mes "[Cat Hand Agent]";
+					mes "Don't play with money.";
+					close;
+				}
+			case 2:
+				if (Zeny >= 7500) {
+					set zeny,zeny-7500;
+					warp "man_fild02",129,61;
+					close;
+				}
+				else {
+					mes "[Cat Hand Agent]";
+					mes "Don't play with money.";
+					close;
+				}
+			case 3:
+				mes "[Cat Hand Agent]";
+				mes "Thank you for using our service.";
+				close;
+			}
+		case 5:
+			mes "[Cat Hand Agent]";
+			mes "Thank you for using our service.";
+			close;
+		}
+	}
+	else {
+		mes "[Cat Hand Agent]";
+		mes "... ... ... ...";
+		mes "Please give me some Piece of Fish.";
+		close;
+	}
+}
+
+man_fild02,132,47,4	script	Cat Hand Agent#man	421,{
+	if (ep13_yong1 < 3) {
+		mes "[Cat Hand Agent]";
+		mes "Welcome to Cat Trading.";
+		mes "I guess you're a first-time customer, huh?";
+		next;
+		mes "[Cat Hand Agent]";
+		mes "For more details about our contract, you need to talk to our staff first.";
+		close;
+	}
+	else if ((ep13_yong1 > 2) && (ep13_yong1 < 20)) {
+		mes "[Cat Hand Agent]";
+		mes "Cat Trading's available services are as followed.";
+		mes "For additional services, please consult Agent Gyaruk.";
+		next;
+		switch(select("Save your location:Cancel")) {
+		case 1:
+			savepoint "man_fild02",129,61;
+			mes "[Cat Hand Agent]";
+			mes "Thank you.";
+			mes "Your location has been saved.";
+			mes "You can now directly return to this camp.";
+			close;
+		case 2:
+			mes "[Cat Hand Agent]";
+			mes "Thank you for using our service.";
+			close;
+		}
+	}
+	else if ((ep13_yong1 > 19) && (ep13_yong1 < 40)) {
+		mes "[Cat Hand Agent]";
+		mes "Cat Trading's available services are as followed.";
+		mes "For additional services, please consult Agent Gyaruk.";
+		next;
+		switch(select("Save your location:Use Storage:Cancel")) {
+		case 1:
+			savepoint "man_fild02",129,61;
+			mes "[Cat Hand Agent]";
+			mes "Thank you.";
+			mes "Your location has been saved.";
+			mes "You can now directly return to this camp.";
+			close;
+		case 2:
+			if(basicskillcheck() && getskilllv("NV_BASIC") < 6){
+				mes "[Cat Hand Agent]";
+				mes "I'm sorry, but you";
+				mes "need the Novice's";
+				mes "Basic Skill Level 6 to";
+				mes "use the Storage Service.";
+				close;
+			}
+			else if (Zeny >= 60) {
+				set zeny,zeny-60;
+				mes "[Cat Hand Agent]";
+				mes "Thank you.";
+				mes "Your storage will be opened shortly.";
+				close2;
+				openstorage;
+				end;
+			}
+			else {
+				mes "[Cat Hand Agent]";
+				mes "I'm sorry, but you don't";
+				mes "have enough money?";
+				mes "Cat Trading's storage";
+				mes "service is 60 zeny.";
+				mes "It's cheap, isn't it?";
+				close;
+			}
+		case 3:
+			mes "[Cat Hand Agent]";
+			mes "Thank you for using our service.";
+			close;
+		}
+	}
+	else if ((ep13_yong1 > 39) && (ep13_yong1 < 100)) {
+		mes "[Cat Hand Agent]";
+		mes "Cat Trading's available services are as followed.";
+		mes "For additional services, please consult Agent Gyaruk.";
+		next;
+		switch(select("Save your location:Use Storage:Use Cat Warp (Midgard):Cancel")) {
+		case 1:
+			savepoint "man_fild02",129,61;
+			mes "[Cat Hand Agent]";
+			mes "Thank you.";
+			mes "Your location has been saved.";
+			mes "You can now directly return to this camp.";
+			close;
+		case 2:
+			if(basicskillcheck() && getskilllv("NV_BASIC") < 6){
+				mes "[Cat Hand Agent]";
+				mes "I'm sorry, but you";
+				mes "need the Novice's";
+				mes "Basic Skill Level 6 to";
+				mes "use the Storage Service.";
+				close;
+			}
+			else if (Zeny >= 60) {
+				set zeny,zeny-60;
+				mes "[Cat Hand Agent]";
+				mes "Thank you.";
+				mes "Your storage will be opened shortly.";
+				close2;
+				openstorage;
+				end;
+			}
+			else {
+				mes "[Cat Hand Agent]";
+				mes "I'm sorry, but you don't";
+				mes "have enough money?";
+				mes "Cat Trading's storage";
+				mes "service is 60 zeny.";
+				mes "It's cheap, isn't it?";
+				close;
+			}
+		case 3:
+			// Custom Translation.
+			mes "[Cat Hand Agent]";
+			mes "With " + ep13_yong1 + " credit points, we offer the following warp services. Please remember, you can't come back easily once you move to Midgard.";
+			next;
+			if ((ep13_yong1 > 39) && (ep13_yong1 < 49)) {
+				switch(select("Prontera -> 5500z:Cancel")) {
+				case 1:
+					if (Zeny >= 5500) {
+						set zeny,zeny-5500;
+						warp "prontera",116,72;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 2:
+					close;
+				}
+			}
+			else if ((ep13_yong1 > 49) && (ep13_yong1 < 59)) {
+				switch(select("Alberta -> 5500z:Prontera -> 5500z:Cancel")) {
+				case 1:
+					if (Zeny >= 5500) {
+						set zeny,zeny-5500;
+						warp "alberta",117,56;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 2:
+					if (Zeny >= 5500) {
+						set zeny,zeny-5500;
+						warp "prontera",116,72;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 3:
+					close;
+				}
+			}
+			else if ((ep13_yong1 > 59) && (ep13_yong1 < 69)) {
+				switch(select("Alberta -> 5025z:Prontera -> 5025z:Izlude -> 5025z:Cancel")) {
+				case 1:
+					if (Zeny >= 5025) {
+						set zeny,zeny-5025;
+						warp "alberta",117,56;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 2:
+					if (Zeny >= 5025) {
+						set zeny,zeny-5025;
+						warp "prontera",116,72;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 3:
+					if (Zeny >= 5025) {
+						set zeny,zeny-5025;
+						warp "izlude",91,105;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 4:
+					close;
+				}
+			}
+			else if ((ep13_yong1 > 69) && (ep13_yong1 < 79)) {
+				switch(select("Alberta -> 5025z:Prontera -> 5025z:Izlude -> 5025z:Geffen -> 5025z:Cancel")) {
+				case 1:
+					if (Zeny >= 5025) {
+						set zeny,zeny-5025;
+						warp "alberta",117,56;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 2:
+					if (Zeny >= 5025) {
+						set zeny,zeny-5025;
+						warp "prontera",116,72;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 3:
+					if (Zeny >= 5025) {
+						set zeny,zeny-5025;
+						warp "izlude",91,105;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 4:
+					if (Zeny >= 5025) {
+						set zeny,zeny-5025;
+						warp "geffen",120,39;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 5:
+					close;
+				}
+			}
+			else if ((ep13_yong1 > 79) && (ep13_yong1 < 89)) {
+				switch(select("Alberta -> 4765z:Prontera -> 4765z:Izlude -> 4765z:Geffen -> 4765z:Payon -> 4765z:Cancel")) {
+				case 1:
+					if (Zeny >= 4765) {
+						set zeny,zeny-4765;
+						warp "alberta",117,56;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 2:
+					if (Zeny >= 4765) {
+						set zeny,zeny-4765;
+						warp "prontera",116,72;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 3:
+					if (Zeny >= 4765) {
+						set zeny,zeny-4765;
+						warp "izlude",91,105;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 4:
+					if (Zeny >= 4765) {
+						set zeny,zeny-4765;
+						warp "geffen",120,39;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 5:
+					if (Zeny >= 4765) {
+						set zeny,zeny-4765;
+						warp "payon",161,58;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 6:
+					close;
+				}
+			}
+			else if ((ep13_yong1 > 89) && (ep13_yong1 < 99)) {
+				switch(select("Alberta -> 4765z:Prontera -> 4765z:Izlude -> 4765z:Geffen -> 4765z:Payon -> 4765z:Morroc -> 4765z:Cancel")) {
+				case 1:
+					if (Zeny >= 4765) {
+						set zeny,zeny-4765;
+						warp "alberta",117,56;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 2:
+					if (Zeny >= 4765) {
+						set zeny,zeny-4765;
+						warp "prontera",116,72;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 3:
+					if (Zeny >= 4765) {
+						set zeny,zeny-4765;
+						warp "izlude",91,105;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 4:
+					if (Zeny >= 4765) {
+						set zeny,zeny-4765;
+						warp "geffen",120,39;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 5:
+					if (Zeny >= 4765) {
+						set zeny,zeny-4765;
+						warp "payon",161,58;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 6:
+					if (Zeny >= 4765) {
+						set zeny,zeny-4765;
+						warp "morocc",156,46;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 7:
+					close;
+				}
+			}
+			else if (ep13_yong1 > 99) {
+				switch(select("Alberta -> 4590z:Prontera -> 4590z:Izlude -> 4590z:Geffen -> 4590z:Payon -> 4590z:Morroc -> 4590z:Al De Baran -> 4590z:Cancel")) {
+				case 1:
+					if (Zeny >= 4590) {
+						set zeny,zeny-4590;
+						warp "alberta",117,56;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 2:
+					if (Zeny >= 4590) {
+						set zeny,zeny-4590;
+						warp "prontera",116,72;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 3:
+					if (Zeny >= 4590) {
+						set zeny,zeny-4590;
+						warp "izlude",91,105;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 4:
+					if (Zeny >= 4590) {
+						set zeny,zeny-4590;
+						warp "geffen",120,39;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 5:
+					if (Zeny >= 4590) {
+						set zeny,zeny-4590;
+						warp "payon",161,58;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 6:
+					if (Zeny >= 4590) {
+						set zeny,zeny-4590;
+						warp "morocc",156,46;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 7:
+					if (Zeny >= 4590) {
+						set zeny,zeny-4590;
+						warp "aldebaran",168,112;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 8:
+					close;
+				}
+			}
+			else {
+				// Custom Translation.
+				mes "[Cat Hand Agent]";
+				mes "I am sorry, but you don't have enough credit points to use the warp service. Please come back when you have more points.";
+				close;
+			}
+		case 4:
+			mes "[Cat Hand Agent]";
+			mes "Thank you for using our service.";
+			close;
+		}
+	}
+	else if (ep13_yong1 > 99) {
+		mes "[Cat Hand Agent]";
+		mes "Cat Trading's available services are as followed.";
+		mes "For additional services, please consult Agent Gyaruk.";
+		next;
+		switch(select("Save your location:Use Storage:Use Cat Warp (Midgard):Use Cat Warp (Jottunheim):Cancel")) {
+		case 1:
+			savepoint "man_fild02",129,61;
+			mes "[Cat Hand Agent]";
+			mes "Thank you.";
+			mes "Your location has been saved.";
+			mes "You can now directly return to this camp.";
+			close;
+		case 2:
+			if(basicskillcheck() && getskilllv("NV_BASIC") < 6){
+				mes "[Cat Hand Agent]";
+				mes "I'm sorry, but you";
+				mes "need the Novice's";
+				mes "Basic Skill Level 6 to";
+				mes "use the Storage Service.";
+				close;
+			}
+			else if (Zeny >= 60) {
+				set zeny,zeny-60;
+				mes "[Cat Hand Agent]";
+				mes "Thank you.";
+				mes "Your storage will be opened shortly.";
+				close2;
+				openstorage;
+				end;
+			}
+			else {
+				mes "[Cat Hand Agent]";
+				mes "I'm sorry, but you don't";
+				mes "have enough money?";
+				mes "Cat Trading's storage";
+				mes "service is 60 zeny.";
+				mes "It's cheap, isn't it?";
+				close;
+			}
+		case 3:
+			// Custom Translation.
+			mes "[Cat Hand Agent]";
+			mes "With " + ep13_yong1 + " credit points, we offer the following warp services. Please remember, you can't come back easily once you move to Midgard.";
+			next;
+			if ((ep13_yong1 > 99) && (ep13_yong1 < 200)) {
+				switch(select("Alberta -> 4590z:Prontera -> 4590z:Izlude -> 4590z:Geffen -> 4590z:Payon -> 4590z:Morroc -> 4590z:Al De Baran -> 4590z:Cancel")) {
+				case 1:
+					if (Zeny >= 4590) {
+						set zeny,zeny-4590;
+						warp "alberta",117,56;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 2:
+					if (Zeny >= 4590) {
+						set zeny,zeny-4590;
+						warp "prontera",116,72;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 3:
+					if (Zeny >= 4590) {
+						set zeny,zeny-4590;
+						warp "izlude",91,105;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 4:
+					if (Zeny >= 4590) {
+						set zeny,zeny-4590;
+						warp "geffen",120,39;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 5:
+					if (Zeny >= 4590) {
+						set zeny,zeny-4590;
+						warp "payon",161,58;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 6:
+					if (Zeny >= 4590) {
+						set zeny,zeny-4590;
+						warp "morocc",156,46;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 7:
+					if (Zeny >= 4590) {
+						set zeny,zeny-4590;
+						warp "aldebaran",168,112;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 8:
+					close;
+				}
+			}
+			else if ((ep13_yong1 > 199) && (ep13_yong1 < 250)) {
+				switch(select("Alberta -> 4170z:Prontera -> 4170z:Izlude -> 4170z:Geffen -> 4170z:Payon -> 4170z:Morroc -> 4170z:Al De Baran -> 4170z:Juno -> 4170z:Cancel")) {
+				case 1:
+					if (Zeny >= 4170) {
+						set zeny,zeny-4170;
+						warp "alberta",117,56;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 2:
+					if (Zeny >= 4170) {
+						set zeny,zeny-4170;
+						warp "prontera",116,72;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 3:
+					if (Zeny >= 4170) {
+						set zeny,zeny-4170;
+						warp "izlude",91,105;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 4:
+					if (Zeny >= 4170) {
+						set zeny,zeny-4170;
+						warp "geffen",120,39;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 5:
+					if (Zeny >= 4170) {
+						set zeny,zeny-4170;
+						warp "payon",161,58;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 6:
+					if (Zeny >= 4170) {
+						set zeny,zeny-4170;
+						warp "morocc",156,46;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 7:
+					if (Zeny >= 4170) {
+						set zeny,zeny-4170;
+						warp "aldebaran",168,112;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 8:
+					if (Zeny >= 4170) {
+						set zeny,zeny-4170;
+						warp "yuno",158,125;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 9:
+					close;
+				}
+				close;
+			}
+			else if ((ep13_yong1 > 249) && (ep13_yong1 < 300)) {
+				switch(select("Alberta -> 4025z:Prontera -> 4025z:Izlude -> 4025z:Geffen -> 4025z:Payon -> 4025z:Morroc -> 4025z:Al De Baran -> 4025z:Juno -> 4025z:Einbroch -> 4025z:Cancel")) {
+				case 1:
+					if (Zeny >= 4025) {
+						set zeny,zeny-4025;
+						warp "alberta",117,56;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 2:
+					if (Zeny >= 4025) {
+						set zeny,zeny-4025;
+						warp "prontera",116,72;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 3:
+					if (Zeny >= 4025) {
+						set zeny,zeny-4025;
+						warp "izlude",91,105;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 4:
+					if (Zeny >= 4025) {
+						set zeny,zeny-4025;
+						warp "geffen",120,39;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 5:
+					if (Zeny >= 4025) {
+						set zeny,zeny-4025;
+						warp "payon",161,58;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 6:
+					if (Zeny >= 4025) {
+						set zeny,zeny-4025;
+						warp "morocc",156,46;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 7:
+					if (Zeny >= 4025) {
+						set zeny,zeny-4025;
+						warp "aldebaran",168,112;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 8:
+					if (Zeny >= 4025) {
+						set zeny,zeny-4025;
+						warp "yuno",158,125;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 9:
+					if (Zeny >= 4025) {
+						set zeny,zeny-4025;
+						warp "einbroch",158,301;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 10:
+					close;
+				}
+				close;
+			}
+			else if (ep13_yong1 > 299) {
+				switch(select("Alberta -> 3970z:Prontera -> 3970z:Izlude -> 3970z:Geffen -> 3970z:Payon -> 3970z:Morroc -> 3970z:Al De Baran -> 3970z:Juno -> 3970z:Einbroch -> 3970z:Lighthalzen -> 3970z:Cancel")) {
+				case 1:
+					if (Zeny >= 3970) {
+						set zeny,zeny-3970;
+						warp "alberta",117,56;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 2:
+					if (Zeny >= 3970) {
+						set zeny,zeny-3970;
+						warp "prontera",116,72;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 3:
+					if (Zeny >= 3970) {
+						set zeny,zeny-3970;
+						warp "izlude",91,105;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 4:
+					if (Zeny >= 3970) {
+						set zeny,zeny-3970;
+						warp "geffen",120,39;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 5:
+					if (Zeny >= 3970) {
+						set zeny,zeny-3970;
+						warp "payon",161,58;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 6:
+					if (Zeny >= 3970) {
+						set zeny,zeny-3970;
+						warp "morocc",156,46;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 7:
+					if (Zeny >= 3970) {
+						set zeny,zeny-3970;
+						warp "aldebaran",168,112;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 8:
+					if (Zeny >= 3970) {
+						set zeny,zeny-3970;
+						warp "yuno",158,125;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 9:
+					if (Zeny >= 3970) {
+						set zeny,zeny-3970;
+						warp "einbroch",158,301;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 10:
+					if (Zeny >= 3970) {
+						set zeny,zeny-3970;
+						warp "lighthalzen",163,64;
+						close;
+					}
+					else {
+						mes "[Cat Hand Agent]";
+						mes "Don't play with money.";
+						close;
+					}
+				case 11:
+					close;
+				}
+				close;
+			}
+			else {
+				// Custom Translation
+				mes "[Cat Hand Agent]";
+				mes "I am sorry, but you don't have enough credit points to use the warp service. Please come back when you have more points.";
+				close;
+			}
+		case 4:
+			switch(select("Alliance Forces Post -> 5500z:Splendide Camp -> 7500z:Cancel")) {
+			case 1:
+				if (Zeny >= 5500) {
+					set zeny,zeny-5500;
+					warp "mid_camp",62,127;
+					close;
+				}
+				else {
+					mes "[Cat Hand Agent]";
+					mes "Don't play with money.";
+					close;
+				}
+			case 2:
+				if (Zeny >= 7500) {
+					set zeny,zeny-7500;
+					warp "spl_fild02",32,225;
+					close;
+				}
+				else {
+					mes "[Cat Hand Agent]";
+					mes "Don't play with money.";
+					close;
+				}
+			case 3:
+				mes "[Cat Hand Agent]";
+				mes "Thank you for using our service.";
+				close;
+			}
+		case 5:
+			mes "[Cat Hand Agent]";
+			mes "Thank you for using our service.";
+			close;
+		}
+	}
+	else {
+		mes "[Cat Hand Agent]";
+		mes "... ... ... ...";
+		mes "Please give me some Piece of Fish.";
+		close;
+	}
+}
+
+man_fild02,146,81,0	script	Mysterious Rock#31	844,{
+	if ((countitem(6048) < 3) && (checkquest(12062,PLAYTIME) == -1)) {
+		specialeffect2 EF_REPAIRWEAPON;
+		progressbar "ffff00",10;
+		set .@rhea_ran,rand(1,20);
+		if (.@rhea_ran < 13) {
+			getitem 7049,1; //Stone
+		}
+		else if (.@rhea_ran == 13) {
+			getitem 990,1; //Boody_Red
+		}
+		else if (.@rhea_ran == 14) {
+			getitem 991,1; //Crystal_Blue
+		}
+		else if (.@rhea_ran == 15) {
+			getitem 992,1; //Wind_Of_Verdure
+		}
+		else if (.@rhea_ran == 16) {
+			getitem 993,1; //Yellow_Live
+		}
+		else if (.@rhea_ran > 17) {
+			getitem 6080,1; //Manuk_Coin
+		}
+		else if (.@rhea_ran > 18) {
+			getitem 6048,1; //Unidentified_Mineral
+		}
+		initnpctimer;
+		disablenpc "Mysterious Rock#31";
+		end;
+	}
+	else {
+		mes "This rock contains unidentified minerals.";
+		mes "It's not possible to mine more than the limit.";
+		close;
+	}
+	end;
+
+OnTimer120000:
+	enablenpc "Mysterious Rock#31";
+	stopnpctimer;
+	end;
+}
+
+man_fild02,140,148,0	script	Mysterious Rock#32	844,{
+	if ((countitem(6048) < 3) && (checkquest(12062,PLAYTIME) == -1)) {
+		specialeffect2 EF_REPAIRWEAPON;
+		progressbar "ffff00",10;
+		set .@rhea_ran,rand(1,20);
+		if (.@rhea_ran < 13) {
+			getitem 7049,1; //Stone
+		}
+		else if (.@rhea_ran == 13) {
+			getitem 990,1; //Boody_Red
+		}
+		else if (.@rhea_ran == 14) {
+			getitem 991,1; //Crystal_Blue
+		}
+		else if (.@rhea_ran == 15) {
+			getitem 992,1; //Wind_Of_Verdure
+		}
+		else if (.@rhea_ran == 16) {
+			getitem 993,1; //Yellow_Live
+		}
+		else if (.@rhea_ran == 17) {
+			getitem 6080,1; //Manuk_Coin
+		}
+		else if (.@rhea_ran > 18) {
+			getitem 6048,1; //Unidentified_Mineral
+		}
+		initnpctimer;
+		disablenpc "Mysterious Rock#32";
+		end;
+	}
+	else {
+		mes "This rock contains unidentified minerals.";
+		mes "It's not possible to mine more than the limit.";
+		close;
+	}
+	end;
+
+OnTimer120000:
+	enablenpc "Mysterious Rock#32";
+	stopnpctimer;
+	end;
+}
+
+man_fild02,88,263,0	script	Mysterious Rock#33	844,{
+	if ((countitem(6048) < 3) && (checkquest(12062,PLAYTIME) == -1)) {
+		specialeffect2 EF_REPAIRWEAPON;
+		progressbar "ffff00",10;
+		set .@rhea_ran,rand(1,20);
+		if (.@rhea_ran < 13) {
+			getitem 7049,1; //Stone
+		}
+		else if (.@rhea_ran == 13) {
+			getitem 990,1; //Boody_Red
+		}
+		else if (.@rhea_ran == 14) {
+			getitem 991,1; //Crystal_Blue
+		}
+		else if (.@rhea_ran == 15) {
+			getitem 992,1; //Wind_Of_Verdure
+		}
+		else if (.@rhea_ran == 16) {
+			getitem 993,1; //Yellow_Live
+		}
+		else if (.@rhea_ran == 17) {
+			getitem 6080,1; //Manuk_Coin
+		}
+		else if (.@rhea_ran > 18) {
+			getitem 6048,1; //Unidentified_Mineral
+		}
+		initnpctimer;
+		disablenpc "Mysterious Rock#33";
+		end;
+	}
+	else {
+		mes "This rock contains unidentified minerals.";
+		mes "It's not possible to mine more than the limit.";
+		close;
+	}
+	end;
+
+OnTimer120000:
+	enablenpc "Mysterious Rock#33";
+	stopnpctimer;
+	end;
+}
+
+man_fild02,146,365,0	script	Mysterious Rock#34	844,{
+	if ((countitem(6048) < 3) && (checkquest(12062,PLAYTIME) == -1)) {
+		specialeffect2 EF_REPAIRWEAPON;
+		progressbar "ffff00",10;
+		set .@rhea_ran,rand(1,20);
+		if (.@rhea_ran < 13) {
+			getitem 7049,1; //Stone
+		}
+		else if (.@rhea_ran == 13) {
+			getitem 990,1; //Boody_Red
+		}
+		else if (.@rhea_ran == 14) {
+			getitem 991,1; //Crystal_Blue
+		}
+		else if (.@rhea_ran == 15) {
+			getitem 992,1; //Wind_Of_Verdure
+		}
+		else if (.@rhea_ran == 16) {
+			getitem 993,1; //Yellow_Live
+		}
+		else if (.@rhea_ran == 17) {
+			getitem 6080,1; //Manuk_Coin
+		}
+		else if (.@rhea_ran > 18) {
+			getitem 6048,1; //Unidentified_Mineral
+		}
+		initnpctimer;
+		disablenpc "Mysterious Rock#34";
+		end;
+	}
+	else {
+		mes "This rock contains unidentified minerals.";
+		mes "It's not possible to mine more than the limit.";
+		close;
+	}
+	end;
+
+OnTimer120000:
+	enablenpc "Mysterious Rock#34";
+	stopnpctimer;
+	end;
+}
+
+man_fild02,336,305,0	script	Mysterious Rock#35	844,{
+	if ((countitem(6048) < 3) && (checkquest(12062,PLAYTIME) == -1)) {
+		specialeffect2 EF_REPAIRWEAPON;
+		progressbar "ffff00",10;
+		set .@rhea_ran,rand(1,20);
+		if (.@rhea_ran < 13) {
+			getitem 7049,1; //Stone
+		}
+		else if (.@rhea_ran == 13) {
+			getitem 990,1; //Boody_Red
+		}
+		else if (.@rhea_ran == 14) {
+			getitem 991,1; //Crystal_Blue
+		}
+		else if (.@rhea_ran == 15) {
+			getitem 992,1; //Wind_Of_Verdure
+		}
+		else if (.@rhea_ran == 16) {
+			getitem 993,1; //Yellow_Live
+		}
+		else if (.@rhea_ran == 17) {
+			getitem 6080,1; //Manuk_Coin
+		}
+		else if (.@rhea_ran > 18) {
+			getitem 6048,1; //Unidentified_Mineral
+		}
+		initnpctimer;
+		disablenpc "Mysterious Rock#35";
+		end;
+	}
+	else {
+		mes "This rock contains unidentified minerals.";
+		mes "It's not possible to mine more than the limit.";
+		close;
+	}
+	end;
+
+OnTimer120000:
+	enablenpc "Mysterious Rock#35";
+	stopnpctimer;
+	end;
+}
+
+man_fild02,248,124,0	script	Mysterious Rock#36	844,{
+	if ((countitem(6048) < 3) && (checkquest(12062,PLAYTIME) == -1)) {
+		specialeffect2 EF_REPAIRWEAPON;
+		progressbar "ffff00",10;
+		set .@rhea_ran,rand(1,20);
+		if (.@rhea_ran < 13) {
+			getitem 7049,1; //Stone
+		}
+		else if (.@rhea_ran == 13) {
+			getitem 990,1; //Boody_Red
+		}
+		else if (.@rhea_ran == 14) {
+			getitem 991,1; //Crystal_Blue
+		}
+		else if (.@rhea_ran == 15) {
+			getitem 992,1; //Wind_Of_Verdure
+		}
+		else if (.@rhea_ran == 16) {
+			getitem 993,1; //Yellow_Live
+		}
+		else if (.@rhea_ran == 17) {
+			getitem 6080,1; //Manuk_Coin
+		}
+		else if (.@rhea_ran > 18) {
+			getitem 6048,1; //Unidentified_Mineral
+		}
+		initnpctimer;
+		disablenpc "Mysterious Rock#36";
+		end;
+	}
+	else {
+		mes "This rock contains unidentified minerals.";
+		mes "It's not possible to mine more than the limit.";
+		close;
+	}
+	end;
+
+OnTimer120000:
+	enablenpc "Mysterious Rock#36";
+	stopnpctimer;
+	end;
+}
+
+man_fild02,285,115,0	script	Mysterious Rock#37	844,{
+	if ((countitem(6048) < 3) && (checkquest(12062,PLAYTIME) == -1)) {
+		specialeffect2 EF_REPAIRWEAPON;
+		progressbar "ffff00",10;
+		set .@rhea_ran,rand(1,20);
+		if (.@rhea_ran < 13) {
+			getitem 7049,1; //Stone
+		}
+		else if (.@rhea_ran == 13) {
+			getitem 990,1; //Boody_Red
+		}
+		else if (.@rhea_ran == 14) {
+			getitem 991,1; //Crystal_Blue
+		}
+		else if (.@rhea_ran == 15) {
+			getitem 992,1; //Wind_Of_Verdure
+		}
+		else if (.@rhea_ran == 16) {
+			getitem 993,1; //Yellow_Live
+		}
+		else if (.@rhea_ran == 17) {
+			getitem 6080,1; //Manuk_Coin
+		}
+		else if (.@rhea_ran > 18) {
+			getitem 6048,1; //Unidentified_Mineral
+		}
+		initnpctimer;
+		disablenpc "Mysterious Rock#37";
+		end;
+	}
+	else {
+		mes "This rock contains unidentified minerals.";
+		mes "It's not possible to mine more than the limit.";
+		close;
+	}
+	end;
+
+OnTimer120000:
+	enablenpc "Mysterious Rock#37";
+	stopnpctimer;
+	end;
+}
+
+man_fild02,346,116,0	script	Mysterious Rock#38	844,{
+	if ((countitem(6048) < 3) && (checkquest(12062,PLAYTIME) == -1)) {
+		specialeffect2 EF_REPAIRWEAPON;
+		progressbar "ffff00",10;
+		set .@rhea_ran,rand(1,20);
+		if (.@rhea_ran < 13) {
+			getitem 7049,1; //Stone
+		}
+		else if (.@rhea_ran == 13) {
+			getitem 990,1; //Boody_Red
+		}
+		else if (.@rhea_ran == 14) {
+			getitem 991,1; //Crystal_Blue
+		}
+		else if (.@rhea_ran == 15) {
+			getitem 992,1; //Wind_Of_Verdure
+		}
+		else if (.@rhea_ran == 16) {
+			getitem 993,1; //Yellow_Live
+		}
+		else if (.@rhea_ran == 17) {
+			getitem 6080,1; //Manuk_Coin
+		}
+		else if (.@rhea_ran > 18) {
+			getitem 6048,1; //Unidentified_Mineral
+		}
+		initnpctimer;
+		disablenpc "Mysterious Rock#38";
+		end;
+	}
+	else {
+		mes "This rock contains unidentified minerals.";
+		mes "It's not possible to mine more than the limit.";
+		close;
+	}
+	end;
+
+OnTimer120000:
+	enablenpc "Mysterious Rock#38";
+	stopnpctimer;
+	end;
+}
+
+man_fild02,358,174,0	script	Mysterious Rock#39	844,{
+	if ((countitem(6048) < 3) && (checkquest(12062,PLAYTIME) == -1)) {
+		specialeffect2 EF_REPAIRWEAPON;
+		progressbar "ffff00",10;
+		set .@rhea_ran,rand(1,20);
+		if (.@rhea_ran < 13) {
+			getitem 7049,1; //Stone
+		}
+		else if (.@rhea_ran == 13) {
+			getitem 990,1; //Boody_Red
+		}
+		else if (.@rhea_ran == 14) {
+			getitem 991,1; //Crystal_Blue
+		}
+		else if (.@rhea_ran == 15) {
+			getitem 992,1; //Wind_Of_Verdure
+		}
+		else if (.@rhea_ran == 16) {
+			getitem 993,1; //Yellow_Live
+		}
+		else if (.@rhea_ran == 17) {
+			getitem 6080,1; //Manuk_Coin
+		}
+		else if (.@rhea_ran > 18) {
+			getitem 6048,1; //Unidentified_Mineral
+		}
+		initnpctimer;
+		disablenpc "Mysterious Rock#39";
+		end;
+	}
+	else {
+		mes "This rock contains unidentified minerals.";
+		mes "It's not possible to mine more than the limit.";
+		close;
+	}
+	end;
+
+OnTimer120000:
+	enablenpc "Mysterious Rock#39";
+	stopnpctimer;
+	end;
+}
+
+man_fild02,241,227,0	script	Mysterious Rock#40	844,{
+	if ((countitem(6048) < 3) && (checkquest(12062,PLAYTIME) == -1)) {
+		specialeffect2 EF_REPAIRWEAPON;
+		progressbar "ffff00",10;
+		set .@rhea_ran,rand(1,20);
+		if (.@rhea_ran < 13) {
+			getitem 7049,1; //Stone
+		}
+		else if (.@rhea_ran == 13) {
+			getitem 990,1; //Boody_Red
+		}
+		else if (.@rhea_ran == 14) {
+			getitem 991,1; //Crystal_Blue
+		}
+		else if (.@rhea_ran == 15) {
+			getitem 992,1; //Wind_Of_Verdure
+		}
+		else if (.@rhea_ran == 16) {
+			getitem 993,1; //Yellow_Live
+		}
+		else if (.@rhea_ran == 17) {
+			getitem 6080,1; //Manuk_Coin
+		}
+		else if (.@rhea_ran > 18) {
+			set Unidentified_Coin,Unidentified_Coin+1;
+		}
+		initnpctimer;
+		disablenpc "Mysterious Rock#40";
+		end;
+	}
+	else {
+		mes "This rock contains unidentified minerals.";
+		mes "It's not possible to mine more than the limit.";
+		close;
+	}
+	end;
+
+OnTimer120000:
+	enablenpc "Mysterious Rock#40";
+	stopnpctimer;
+	end;
+}
+
+spl_fild03,226,151,0	script	School of Fish#5::FishingHole_spl3	844,{
+	if ((checkquest(12060,PLAYTIME) == -1) && (countitem(6039) < 20)) {
+		specialeffect2 EF_BUBBLE;
+		specialeffect2 EF_INVENOM;
+		set .@fcast,15;
+		if (isequipped(2550)) { //Fisher's_Muffler
+			set .@fcast,.@fcast - 2;
+		}
+		if (isequipped(2443)) { //Fish_Shoes
+			set .@fcast,.@fcast - 2;
+		}
+		if (isequipped(2764)) { //Small_Fishing_Rod
+			set .@fcast,.@fcast - 3;
+		}
+		if (isequipped(2775)) { //Lure
+			set .@fcast,.@fcast - 1;
+		}
+		if (isequipped(1599)) { //Ahura_Mazda
+			set .@fcast,.@fcast - 3;
+		}
+		if (isequipped(2199)) { //Angra_Manyu
+			set .@fcast,.@fcast - 4;
+		}
+		progressbar "ffff00",.@fcast;
+		if (ep13_1_rhea == 13) {
+			if (rand(1,20) == 2) {
+				getitem 6037,1; //Rough_File
+				set ep13_1_rhea,14;
+				specialeffect2 EF_BUBBLE;
+				mapannounce "spl_fild03","" + strcharinfo(0) + " has caught a Loose File.",bc_map,"0xff77ff";
+			}
+		}
+		set .@rhea_ran,rand(1,70);
+		if (.@rhea_ran < 20) {
+			getitem 6039,1; //Piece_Of_Fish
+		}
+		else if (.@rhea_ran == 20) {
+			getitem 908,1; //Spawn
+		}
+		else if (.@rhea_ran == 21) {
+			getitem 909,1; //Jellopy
+		}
+		else if (.@rhea_ran == 22) {
+			getitem 963,1; //Sharp_Scale
+		}
+		else if (.@rhea_ran == 23) {
+			getitem 956,1; //Gill
+		}
+		else if (.@rhea_ran == 24) {
+			getitem 6049,1; //Marlin
+		}
+		else if (.@rhea_ran == 25) {
+			getitem 918,1; //Sticky_Webfoot
+		}
+		else if (.@rhea_ran == 26) {
+			getitem 960,1; //Nipper
+		}
+		else if (.@rhea_ran == 27) {
+			getitem 910,1; //Garlet
+		}
+		else if (.@rhea_ran == 28) {
+			getitem 6081,1; //Splendide_Coin
+		}
+		else if ((.@rhea_ran > 28) && (.@rhea_ran < 40)) {
+			getitem 7049,1; //Stone
+		}
+		else {
+			mes "Nothing was caught.";
+			close;
+		}
+		set .@rhea_ran5,rand(1,200);
+		if (.@rhea_ran5 == 3) {
+			getitem 644,1; //Gift_Box
+			mapannounce "spl_fild03","" + strcharinfo(0) + " has caught a Gift Box.",bc_map,"0x00ffff";
+		}
+		set .@rhea_ran3,rand(1,500);
+		if (.@rhea_ran3 == 3) {
+			getitem 603,1; //Old_Blue_Box
+			mapannounce "spl_fild03","" + strcharinfo(0) + " has caught an Old Blue Box.",bc_map,"0x00ffff";
+		}
+		set .@rhea_ran4,rand(1,3000);
+		if (.@rhea_ran4 == 3) {
+			getitem 617,1; //Old_Violet_Box
+			mapannounce "spl_fild03","" + strcharinfo(0) + " has caught an Old Purple Box.",bc_map,"0x44ff44";
+		}
+	}
+	else {
+		mes "Fish are swimming in the water.";
+		close;
+	}
+	end;
+}
+
+spl_fild03,268,230,0	duplicate(FishingHole_spl3)	School of Fish#6	844
+spl_fild03,293,253,0	duplicate(FishingHole_spl3)	School of Fish#7	844
+spl_fild03,165,100,0	duplicate(FishingHole_spl3)	School of Fish#8	844
+spl_fild03,317,190,0	duplicate(FishingHole_spl3)	School of Fish#9	844
+
+spl_fild01,41,118,0	script	School of Fish#10::FishingHole_spl1	844,{
+	if ((checkquest(12060,PLAYTIME) == -1) && (countitem(6039) < 20)) {
+		specialeffect2 EF_BUBBLE;
+		specialeffect2 EF_INVENOM;
+		set .@fcast,15;
+		if (isequipped(2550)) { //Fisher's_Muffler
+			set .@fcast,.@fcast - 2;
+		}
+		if (isequipped(2443)) { //Fish_Shoes
+			set .@fcast,.@fcast - 2;
+		}
+		if (isequipped(2764)) { //Small_Fishing_Rod
+			set .@fcast,.@fcast - 3;
+		}
+		if (isequipped(2775)) { //Lure
+			set .@fcast,.@fcast - 1;
+		}
+		if (isequipped(1599)) { //Ahura_Mazda
+			set .@fcast,.@fcast - 3;
+		}
+		if (isequipped(2199)) { //Angra_Manyu
+			set .@fcast,.@fcast - 4;
+		}
+		progressbar "ffff00",.@fcast;
+		if (ep13_1_rhea == 13) {
+			if (rand(1,20) == 2) {
+				getitem 6037,1; //Rough_File
+				set ep13_1_rhea,14;
+				specialeffect2 EF_BUBBLE;
+				mapannounce "spl_fild01","" + strcharinfo(0) + " has caught a Loose File.",bc_map,"0xff77ff";
+			}
+		}
+		set .@rhea_ran,rand(1,70);
+		if (.@rhea_ran < 20) {
+			getitem 6039,1; //Piece_Of_Fish
+		}
+		else if (.@rhea_ran == 20) {
+			getitem 908,1; //Spawn
+		}
+		else if (.@rhea_ran == 21) {
+			getitem 909,1; //Jellopy
+		}
+		else if (.@rhea_ran == 22) {
+			getitem 963,1; //Sharp_Scale
+		}
+		else if (.@rhea_ran == 23) {
+			getitem 956,1; //Gill
+		}
+		else if (.@rhea_ran == 24) {
+			getitem 6049,1; //Marlin
+		}
+		else if (.@rhea_ran == 25) {
+			getitem 918,1; //Sticky_Webfoot
+		}
+		else if (.@rhea_ran == 26) {
+			getitem 960,1; //Nipper
+		}
+		else if (.@rhea_ran == 27) {
+			getitem 910,1; //Garlet
+		}
+		else if (.@rhea_ran == 28) {
+			getitem 6081,1; //Splendide_Coin
+		}
+		else if ((.@rhea_ran > 28) && (.@rhea_ran < 40)) {
+			getitem 7049,1; //Stone
+		}
+		else {
+			mes "Nothing was caught.";
+			close;
+		}
+		set .@rhea_ran5,rand(1,200);
+		if (.@rhea_ran5 == 3) {
+			getitem 644,1; //Gift_Box
+			mapannounce "spl_fild01","" + strcharinfo(0) + " has caught a Gift Box.",bc_map,"0x00ffff";
+		}
+		set .@rhea_ran3,rand(1,500);
+		if (.@rhea_ran3 == 3) {
+			getitem 603,1; //Old_Blue_Box
+			mapannounce "spl_fild01","" + strcharinfo(0) + " has caught a Old Blue Box.",bc_map,"0x00ffff";
+		}
+		set .@rhea_ran4,rand(1,3000);
+		if (.@rhea_ran4 == 3) {
+			getitem 617,1; //Old_Violet_Box
+			mapannounce "spl_fild01","" + strcharinfo(0) + " has caught a Old Purple Box.",bc_map,"0x44ff44";
+		}
+	}
+	else {
+		mes "Fish are swimming in the water.";
+		close;
+	}
+	end;
+}
+
+spl_fild01,317,361,0	duplicate(FishingHole_spl1)	School of Fish#11	844
+spl_fild01,55,269,0	duplicate(FishingHole_spl1)	School of Fish#12	844
+spl_fild01,332,131,0	duplicate(FishingHole_spl1)	School of Fish#13	844
+spl_fild01,170,74,0	duplicate(FishingHole_spl1)	School of Fish#14	844
+
+manuk,304,195,5	script	Soldier#ep13pa829	454,{
+	if (isequipped(2782) == 1) {
+		mes "[Food Provider]";
+		mes "The Manuk family subsists mostly on refining Gray Hollows that were burried a long time ago deep down under the ground.";
+		close;
+	}
+	else {
+		mes "[Food Provider]";
+		mes "Gdiios duuie Dssoas pogggd fdrul fdddoweet";
+		close;
+	}
+}
+
+manuk,274,239,5	script	Soldier#ep13_2	455,{
+	if (isequipped(2782) == 1) {
+		mes "[Injured Manuk Soldier]";
+		mes "I can't absorb Bradium Essence anymore because of my fatal injury.";
+		mes "Those wicked fairies attacked me and left me like this.";
+		close;
+		mes "[Injured Manuk Soldier]";
+		mes "I wish I could kill all the fairies...";
+		close;
+	}
+	else {
+		mes "[Injured Manuk Soldier";
+		mes "Bhiio aaas dgwer fdds rrrrrpppp Ee";
+		close;
+		mes "[Injured Manuk Soldier]";
+		mes "Foi dsddff gggeeeerr pqowe";
+		close;
+	}
+}
+
+manuk,107,233,5	script	Soldier#ep13_3	454,{
+	if (isequipped(2782) == 1) {
+		mes "[Anxious Soldier]";
+		mes "Hurry, I am in big trouble. I lost all the Manuk Coins. I think I dropped them somewhere on the snowfield. Gosh, I saw them right before I fell asleep!";
+		close;
+	}
+	else {
+		mes "[Anxious Soldier]";
+		mes "Qosi dhhui rffd poaner ouh.";
+		close;
+	}
+}
+
+splendide,218,193,3	script	Fairy#ep13_1	441,{
+	if (isequipped(2782) == 1) {
+		mes "[Exhausted Fairy]";
+		mes "Wait, don't come any closer. I can't stand your smell, it makes me feel dizzy.";
+		close;
+	}
+	else {
+		mes "[Exhausted Fairy]";
+		mes "OdesKoUor Ko NuffSharUden Ko CyaVenah An NudNuffser An KoRivehAdor Mu LarseorAnu O DorNe";
+		close;
+	}
+}
+
+splendide,180,223,3	script	Fairy#ep13_2	440,{
+	if (isequipped(2782) == 1) {
+		mes "[Kalua]";
+		mes "You don't look sophisticated, but I think you are better than those uncivilized guys who are around the snowfield.";
+		close;
+	}
+	else {
+		mes "[Kalua]";
+		mes "AlahCyamah U MeKoser Ir TimaurRiveh Di LarsRasTi Di AgolKones Or AlahUdenAndu Ee FusRe";
+		close;
+	}
+}
+
+splendide,125,227,3	script	Fairy#ep13_3	444,{
+	if (isequipped(2782) == 1) {
+		mes "[Flowa]";
+		mes "No offense, I was not looking at you with sympathy.";
+		mes "I just wondered how you could walk with that heavy body...";
+		close;
+	}
+	else {
+		mes "[Flowa]";
+		mes "AnuFuloUor Ko CyaWosnes Ha WosAnuAsh O WosDuAno O ";
+		mes "FuloAndueo Ie WosGothLars Ee Tinarmaur Or AlahnahVa Or narAnuFulo So KoCya";
+		close;
+	}
+}
+
+// Otherworld language
+//============================================================ 
+mid_camp,197,237,3	script	Schwartzvalt Mechanic#1	869,{
+	if (ep13_1_edq > 2) {
+		if (ep13_2_rhea < 1) {
+			mes "[Mechanic Engineer Dorance]";
+			mes "Do you know about the Ring of the Ancient Wise King? If you wear that Ring, you can talk to animals.";
+			next;
+			mes "[Mechanic Engineer Dorance]";
+			mes "I don't know if it is a legend based on truth or not... but something like that would come in pretty handy.";
+			next;
+			mes "[Mechanic Engineer Dorance]";
+			mes "Outside of the Expedition Camp, There's a race of animals which uses a mysterious language not used in Rune Midgard.";
+			next;
+			mes "[Mechanic Engineer Dorance]";
+			mes "We don't know if they are friend or foe, but it will be much easier for our research here if we could find out.";
+			next;
+			mes "[Mechanic Engineer Dorance]";
+			mes "So, the Triple Alliance Research Group is working together to find out. I would like to know how far the ^0000ff Arunafeltz Linguist^000000's decoding process is. Would you go and find out for me?";
+			next;
+			mes "[Mechanic Engineer Dorance]";
+			mes "The ^0000ff Arunafeltz Linguist^000000 should be on the second floor of the Alliance Headquarters.";
+			setquest 8243;
+			set ep13_2_rhea,1;
+			close;
+		}
+		else if ((ep13_2_rhea > 0) && (ep13_2_rhea < 7)) {
+			mes "[Mechanic Engineer Dorance]";
+			mes "Outside of the Expedition Camp, There's a race who uses a mysterious language which is not used in Rune Midgard";
+			next;
+			mes "[Mechanic Engineer Dorance]";
+			mes "We don't know if they are friend or foe, one thing for sure is it will be more easier for our research here.";
+			next;
+			mes "[Mechanic Engineer Dorance]";
+			mes "So, the Triple Alliance Research Group is working together to find out. I would like to know how far the ^0000ff Arunafeltz Linguist^000000's decoding process is. Would you go and find out for me?";
+			next;
+			mes "[Mechanic Engineer Dorance]";
+			mes "Go to a big building in center of the Expedition Camp and inside that building, meet ^0000ff Arunafeltz Linguist^000000 and ask him how far his progress is.";
+			next;
+			mes "[Mechanic Engineer Dorance]";
+			mes "The ^0000ff Arunafeltz Linguist^000000 should be on the second floor of the Alliance Headquarters.";
+			close;
+		}
+		else if (ep13_2_rhea == 7) {
+			mes "- He's making a grim face at a flooding pile of research documents. -";
+			next;
+			mes "[Mechanic Engineer Dorance]";
+			mes "Ah, You are here.";
+			next;
+			mes "[Mechanic Engineer Dorance]";
+			mes "t seems like you've done much for us. I thank you for that.";
+			mes "But...Sigh...";
+			next;
+			mes "[Mechanic Engineer Dorance]";
+			mes "Can you see this? The amount of these research documents?";
+			mes "It is a good thing that we finally decoded the other world's language... it's just too much.";
+			next;
+			mes "[Mechanic Engineer Dorance]";
+			mes "We can't always accompany a Linguist for an interpretion... We need to communicate with those other world races in order to explore this world...";
+			next;
+			mes "[Mechanic Engineer Dorance]";
+			mes "To store this amount of information will need a super computer the size of this headquarter building and its processing speed will be very very slow.";
+			next;
+			mes "[Mechanic Engineer Dorance]";
+			mes "Sigh... Anyways, If there's any way to store an enormous amount of data, I should be able to make a very-small portable translator.";
+			next;
+			mes "[Mechanic Engineer Dorance]";
+			mes "I heard that by using a Magical Spell of Rune-Midgart, you can transpose data to a magical power and lock it into a gem... I'd like some suggestions from the Rune-Midgarts Magician.";
+			next;
+			mes "[Mechanic Engineer Dorance]";
+			mes "Would you be kind to ask them for help?";
+			next;
+			mes "[Mechanic Engineer Dorance]";
+			mes "While you are gone, I be here organizing these documents.";
+			completequest 8248;
+			setquest 8249;
+			set ep13_2_rhea,8;
+			close;
+		}
+		else if ((ep13_2_rhea > 7) && (ep13_2_rhea < 11)) {
+			mes "[Mechanic Engineer Dorance]";
+			mes "To store this amount of information will need a super computer with a size of this headquarter building. and its processing speed will be very very slow...";
+			next;
+			mes "[Mechanic Engineer Dorance]";
+			mes "Sigh... Anyways, If there's any way to store an enormous amount of data, I could be able to make a very-small portable translator.";
+			next;
+			mes "[Mechanic Engineer Dorance]";
+			mes "I heard that by using the Magical Spell of Rune Midgarts, you could transpose a data to a magical power and lock it into a gem....I'd like to get some suggestion from the Magician of Rune Midgarts.";
+			next;
+			mes "[Mechanic Engineer Dorance]";
+			mes "Would you be kind to ask them for help?";
+			next;
+			mes "[Mechanic Engineer Dorance]";
+			mes "While you are gone, I be here organizing these documents.";
+			close;
+		}
+		else if (ep13_2_rhea == 11) {
+			mes "[Mechanic Engineer Dorance]";
+			mes "How'd it go?";
+			next;
+			select("Give him the Gem.");
+			mes "[Mechanic Engineer Dorance]";
+			mes "Ah, Looks like you've succeeded.";
+			mes "Inputting data into a gem with a magical power... It's something you can't do with a technology... It's a bit resentful to admit, but it's magnificent.";
+			next;
+			mes "[Mechanic Engineer Dorance]";
+			mes "Well then, I should be working on making a machine to read the magical data in this Gem so we could use them right away.";
+			next;
+			mes "[Mechanic Engineer Dorance]";
+			mes "Hmm...";
+			mes "Fortunately, It won't be as hard as we thought.";
+			next;
+			mes "[Mechanic Engineer Dorance]";
+			mes "If we transform a magical power wave to an eletric signal and connect it to a human body, then transmit a data to a brain directly. That will allow us to receive and understand a data without any loading process.";
+			next;
+			mes "[Mechanic Engineer Dorance]";
+			mes "I don't have time to explain everything. I have to start the work right away.";
+			mes "With all preperation done, allow me about one hour to finish this thing.";
+			completequest 8252;
+			setquest 8253;
+			set ep13_2_rhea,12;
+			close;
+		}
+		else if (ep13_2_rhea == 12) {
+			set .@trs_time01,checkquest(8253,PLAYTIME);
+			if (.@trs_time01 == 2) {
+				mes "[Mechanic Engineer Dorance]";
+				mes "Sigh, What should I do now?!";
+				next;
+				mes "- Dorance is walking here and there -";
+				mes "- in a dither. -";
+				next;
+				mes "["+ strcharinfo(0) +"]";
+				mes "Is something wrong?!";
+				next;
+				mes "[Mechanic Engineer Dorance]";
+				mes "What should I do?! Ain't I REALLY a genius?!";
+				next;
+				mes "[Mechanic Engineer Dorance]";
+				mes "I've made it!!!";
+				next;
+				mes "[Mechanic Engineer Dorance]";
+				mes "Convenient portable size!";
+				mes "Fashionable and practical design!";
+				mes "Features the Other World's Words / Idiom / Grammer / Phrases!!";
+				next;
+				mes "[Mechanic Engineer Dorance]";
+				mes "Have you experienced the loading speed?";
+				mes "Don't you even mention it if you haven't.";
+				next;
+				mes "[Mechanic Engineer Dorance]";
+				mes "That's not all!";
+				mes "For the Well-Being life, it will buff your strength and intelligence!!!!";
+				next;
+				mes "[Mechanic Engineer Dorance]";
+				mes "With all these marvelous features, it's just 39,900 zeny....!!!";
+				next;
+				mes "["+ strcharinfo(0) +"]";
+				mes "...Just what are you trying to imitate...";
+				next;
+				mes "[Mechanic Engineer Dorance]";
+				mes "Important thing is, I've made it!!";
+				next;
+				mes "[Mechanic Engineer Dorance]";
+				mes "Well, Seeing is believing.";
+				mes "Take a look.";
+				next;
+				mes "- He handed over the small ring. -";
+				next;
+				mes "[Mechanic Engineer Dorance]";
+				mes "The name is 'the Ring of Wise King'. I designed it after the Ring used by ancient king to communicate with animals.";
+				next;
+				mes "[Mechanic Engineer Dorance]";
+				mes "Do not just look at it like any other rings. You see this small gem here? This socket which holds a gem and a ring part are precisely crafted, it will transform a magical power wave to electric signal and trasmit it directly to our brain.";
+				next;
+				mes "[Mechanic Engineer Dorance]";
+				mes "Since this electric signal is same as the signal used by our body's nerve system, it will enable us to understand and use the language fluently.";
+				next;
+				mes "[Mechanic Engineer Dorance]";
+				mes "Once this translator gets popularized, it'd be just a matter of time for us to advance into the other world. Well, the problem is...we don't have enough quantity yet...";
+				next;
+				mes "[Mechanic Engineer Dorance]";
+				mes "Hmm...";
+				mes "Anyways, now we've got the idea, I will give you this first piece of work.";
+				next;
+				mes "[Mechanic Engineer Dorance]";
+				mes "Thank you for helping us out.";
+				mes "I hope this ring would be a big help for your journey through the other world.";
+				completequest 8253;
+				set ep13_2_rhea,100;
+				getexp 1000000,300000;
+				getitem 2782,1; //Ring_Of_Wise_King
+				close;
+			}
+			else {
+				mes "- He has scattered mechanical parts -";
+				mes "- all over the room and so wrapped up -";
+				mes "- in his work -";
+				next;
+				mes "- I might get bitten if I bother him -";
+				mes "- Let's leave him alone -";
+				close;
+			}
+		}
+		else {
+			mes "[Mechanic Engineer Dorance]";
+			mes "Thank you for your help.";
+			next;
+			mes "[Mechanic Engineer Dorance]";
+			mes "I hope this ring would be a big help for your journey through the other world.";
+			close;
+		}
+	}
+	else {
+		mes "[Mechanic Engineer Dorance]";
+		mes "Do you know about the Ring of Ancient Wise King? If you wear that Ring, you could talk to an animal.";
+		next;
+		mes "[Mechanic Engineer Dorance]";
+		mes "I don't know if it is a legend based on a truth or not... something like that will come in handy.";
+		next;
+		mes "[Mechanic Engineer Dorance]";
+		mes "By the way, Who are you? This building is under Commander's control. This place is not to be entered freely... Are you acquainted with our Commander?";
+		next;
+		mes "[Mechanic Engineer Dorance]";
+		mes "Are you looking for something to do? Perhaps I could use some help... Well, I don't know if you are trustworthy just yet.";
+		next;
+		mes "[Mechanic Engineer Dorance]";
+		mes "If you are good enough to solve some problems within the expedition camp, and carry out a mission given by Commander... then I think I could trust you.";
+		close;
+	}
+}
+
+mid_campin,168,82,3	script	Arunafeltz Linguist#1	935,{
+	if (ep13_2_rhea < 1) {
+		mes "[Linguist Dictionary]";
+		mes "Language distinguishes humans from animals. Every single intellectual life form has their own language.";
+		next;
+		mes "[Linguist Dictionary]";
+		mes "Language is a method / system which delievers one's feeling or thinking by voice or letters. Anyway, its purpose is to communicate.";
+		next;
+		mes "[Linguist Dictionary]";
+		mes "Difference between a language and a sound is that language is a socially implied promise by making common system of communication to make it possible to understand eachother.";
+		next;
+		mes "[Linguist Dictionary]";
+		mes "That Socially implied promise, if we could grasp the meaning of a system and structure, we will be able to understand other intellectual life form's language...";
+		mes "...................................And just who might you be?";
+		next;
+		mes "[Linguist Dictionary]";
+		mes "This is a restricted place under control of our Commander. No one could enter here without proper approval... Are you acquainted with our Commander?";
+		close;
+	}
+	else if (ep13_2_rhea == 1) {
+		mes "[Linguist Dictionary]";
+		mes "Language is a distinctive feature of human race compared to animals. Every single intellectual life form has their own language.";
+		next;
+		mes "[Linguist Dictionary]";
+		mes "Language is a method / system which delievers one's feeling or thinking by voice or letters. Anyway, its purpose is to communicate.";
+		next;
+		mes "[Linguist Dictionary]";
+		mes "Difference between a language and a sound is that language is a socially implied promise by making common system of communication to make it possible to understand eachother.";
+		next;
+		mes "[Linguist Dictionary]";
+		mes "That Socially implied promise, if we could grasp the meaning of a system and structure, we will be able to understand other intellectual life form's language...";
+		mes "...................................And just who might you be?";
+		next;
+		switch(select("I am Me!:I don't have a name to tell you!")) {
+		case 1:
+			break;
+		case 2:
+			mes "[Linguist Dictionary]";
+			mes "What the heck?";
+			mes "If you are so bored, why don't you go fishing?";
+			close;
+		}
+		mes "[Linguist Dictionary]";
+		mes "Ah~ I've heard from our Commander about you. You've done much for the Midgard Alliance Camp. Anyways, what brings you here?";
+		next;
+		switch(select("I though I've confused you a bit...:What were you doing?")) {
+		case 1:
+			mes "[Linguist Dictionary]";
+			mes "Confusion is a feeling that comes from distraction of one's mind when something that couldn't be predicted happens. I'm not a person who easily gets confused.";
+			next;
+			break;
+		case 2:
+			break;
+		}
+		mes "[Linguist Dictionary]";
+		mes "I'm a linguist from Arunafeltz. I'm a scholor who studies a system and a structure of every kinds of language in the world.";
+		mes "And...don't you think the reason man like me is here is that there's a predictable cause?";
+		next;
+		mes "[Linguist Dictionary]";
+		mes "From what I heard, you've done much for the Midgarts Alliance Research Group.";
+		mes "And while you were helping us, I believe you've seen and visited many places here in the other world.";
+		next;
+		mes "[Linguist Dictionary]";
+		mes "Have you met the other world's people by any chance?";
+		next;
+		set .@check_splque00,checkquest(2158);
+		set .@check_manque00,checkquest(2159);
+		if ((.@check_splque00 == 0) && (.@check_manque00 == 0)) {
+			// custom translation
+			mes "[Linguist Dictionary]";
+			mes "Looks like you haven't encountered them yet.";
+			next;
+			mes "[Linguist Dictionary]";
+			mes "Rumor here says that there's a fairy-looking and a giant wood people living out in the fields next to our camp here.";
+			next;
+			mes "[Linguist Dictionary]";
+			mes "Apparently these people are speaking in a strange languages that we humans can't understand...but no one seems to be able to remember how their languages sound like.";
+			next;
+			mes "[Linguist Dictionary]";
+			mes "A NEW language!! This is an exciting discovery for a linguist like myself, but as you know, there's dangerous monsters outside... It's not possible for a mere scholor to go out wandering around.";
+			next;
+			mes "[Linguist Dictionary]";
+			mes "I've said this much, I think you'd be able to guess what I'm going to ask you to do.";
+			next;
+			mes "[Linguist Dictionary]";
+			mes "The Alliance Research Group has great interest in other intelligent life. Each country's secret agents are making every effort to communicate with those two races, there's just not enough information.";
+			next;
+			mes "[Linguist Dictionary]";
+			mes "Do me a favor and go outside of the camp, find the fairies and wooden giants, and remember everything that they are saying, word for word so that I can hear what their language sounds like.";
+			completequest 8243;
+			setquest 8244;
+			set ep13_2_rhea,2;
+			close;
+		}
+		else {
+			mes "[Linguist Dictionary]";
+			mes "From the look on your face, I think you have something crossed in your mind.";
+			next;
+			mes "[Linguist Dictionary]";
+			mes "Rumor here says that there's a fairy-looking and a giant wood people living out in the fields next to our camp here.";
+			next;
+			mes "[Linguist Dictionary]";
+			mes "Apparently these people are speaking in a strange languages that we humans can't understand...but no one seems to be able to remember how their languages sound like.";
+			next;
+			mes "[Linguist Dictionary]";
+			mes "A NEW language!! This is an exciting discovery for a linguist like myself, but as you know, there's dangerous monsters outside... It's not possible for a mere scholor to go out wandering around.";
+			next;
+			mes "[Linguist Dictionary]";
+			mes "I've said this much, I think you'd be able to guess what I'm going to ask you to do.";
+			next;
+			mes "[Linguist Dictionary]";
+			mes "The Alliance Research Group has great interest in other intelligent life. Each country's secret agents are making every effort to communicate with those two races, there's just not enough information.";
+			next;
+			mes "[Linguist Dictionary]";
+			mes "Do me a favor and go outside of the camp, find the fairies and wooden giants, and remember everything that they are saying, word for word so that I can hear what their language sounds like.";
+			completequest 8243;
+			setquest 8244;
+			set ep13_2_rhea,2;
+			close;
+		}
+	}
+	else if (ep13_2_rhea == 2) {
+		set .@check_splque00,checkquest(2158);
+		set .@check_manque00,checkquest(2159);
+		if ((.@check_splque00 > 0) && (.@check_manque00 > 0)) {
+			mes "[Linguist Dictionary]";
+			mes "You are back!";
+			next;
+			mes "[Linguist Dictionary]";
+			mes "So, What were they saying?";
+			mes "Of course you remember them exactly as what they've said, right?";
+			next;
+			mes "[Linguist Dictionary]";
+			mes "Now, let's start with the Fairies! What is the fairy's language like? Please write them down here sentence by sentence!";
+			next;
+			set .@spl_score00,0;
+			input .@input$;
+			if (.@input$ == "TKANTLFDMS") {
+				mes "[Linguist Dictionary]";
+				mes ""+ .@input$ +"....";
+				mes "And?";
+				set .@spl_score01,.@spl_score00+1;
+				next;
+			}
+			else {
+				mes ""+ .@input$ +"....";
+				mes "Mmm... Hmm...?";
+				set .@spl_score01,.@spl_score00;
+				next;
+			}
+			input .@input$;
+			if (.@input$ == "TNAHRDNJSDMFH") {
+				mes ""+ .@input$ +"....";
+				mes "And?";
+				set .@spl_score02,.@spl_score01+1;
+				next;
+			}
+			else {
+				mes ""+ .@input$ +"....";
+				mes "I see...?";
+				set .@spl_score02,.@spl_score01;
+				next;
+			}
+			input .@input$;
+			if ((.@input$ == "!!") || (.@input$ == "WLSGHKWND")) {
+				mes ""+ .@input$ +"....";
+				mes "Is that all?";
+				set .@spl_score03,.@spl_score02+1;
+				next;
+			}
+			else {
+				mes ""+ .@input$ +"....";
+				mes "Is that all?";
+				set .@spl_score03,.@spl_score02;
+				next;
+			}
+			if (.@spl_score03 > 2) {
+				mes "[Linguist Dictionary]";
+				mes "So...If we put'em together,";
+				mes "RLGHLRXLA TKANTLFDMS";
+				mes "WJACK TNAHRDNJSDMFH";
+				mes "WLSGHKWND !!";
+				mes "It'd be like this.";
+				next;
+			}
+			else {
+				mes "[Linguist Dictionary]";
+				mes "Hmm...?";
+				next;
+				mes "[Linguist Dictionary]";
+				mes "You sure this is exactly what they've said?";
+				mes "I can't understand anything from this...";
+				next;
+				mes "[Linguist Dictionary]";
+				mes "Would you please go back again and check if it is exactly what they were saying?";
+				close;
+			}
+			mes "[Linguist Dictionary]";
+			mes "Good. then next is the Wooden Giants! What's their language like? Write them down sentence by sentence just as you did with the Fairy's.";
+			next;
+			set .@man_score00,0;
+			input .@input$;
+			if (.@input$ == "CJFDI") {
+				mes "[Linguist Dictionary]";
+				mes ""+ .@input$ +"....";
+				mes "And?";
+				set .@man_score01,.@man_score00+1;
+				next;
+			}
+			else {
+				mes ""+ .@input$ +"....";
+				mes "And?";
+				set .@man_score01,.@man_score00;
+				next;
+			}
+			input .@input$;
+			if (.@input$ == "QKATOS") {
+				mes ""+ .@input$ +"....";
+				mes "And?";
+				set .@man_score02,.@man_score01+1;
+				next;
+			}
+			else {
+				mes ""+ .@input$ +"....";
+				mes "And?";
+				set .@man_score02,.@man_score01;
+				next;
+			}
+			input .@input$;
+			if ((.@input$ == "DLFMADMS..") || (.@input$ == "DLFMADMS..")) {
+				mes ""+ .@input$ +"....";
+				mes "This is it?";
+				set .@man_score03,.@man_score02+1;
+				next;
+			}
+			else {
+				mes ""+ .@input$ +"....";
+				mes "Is that all?";
+				set .@man_score03,.@man_score02;
+				next;
+			}
+			if (.@man_score03 > 2) {
+				mes "[Linguist Dictionary]";
+				mes "So, If we put'em together,";
+				mes "TJDTMFJDNS CJFDI";
+				mes "TKADLFDMF QKATOS";
+				mes "EKDTLSDML DLFMADMS..";
+				mes "It will be like this.";
+				next;
+			}
+			else {
+				mes "[Linguist Dictionary]";
+				mes "Hmm...?";
+				next;
+				mes "[Linguist Dictionary]";
+				mes "You sure this is exactly what they've said?";
+				mes "Hmm...I don't get the idea...";
+				next;
+				mes "[Linguist Dictionary]";
+				mes "Would you please go back again and check if it is exactly what they were saying?";
+				close;
+			}
+			mes "[Linguist Dictionary]";
+			mes ".Hmm....Hm..I see...";
+			next;
+			mes "[Linguist Dictionary]";
+			mes "....Ummmm...";
+			next;
+			mes "- Dictionary stared at the paper intently. -";
+			set ep13_2_rhea,3;
+			close;
+		}
+		else {
+			// custom translation
+			mes "[Linguist Dictionary]";
+			mes "According to the Expedition Camp's investigation, there is a different ethnic race that is similar to fairy's, along with a different ethnic race that is similar to giants.";
+			next;
+			mes "[Linguist Dictionary]";
+			mes "It is said that they are using a language that cannot be understood by people from Midgart... ...Although we all say this, nobody is able to remember their conversation / words.";
+			next;
+			mes "[Linguist Dictionary]";
+			mes "A New language!!! As a linguist, I cannot sit here. But outside, there are many different monsters, as a scholar, it is too dangerous to go outside.";
+			next;
+			mes "[Linguist Dictionary]";
+			mes "and as our conversation has reached this point, you should have an idea of my request, right?";
+			next;
+			mes "[Linguist Dictionary]";
+			mes "The Tripple Alliance Research Group is very interested in other intelligent life. In order to try and talk to them, national officials have carried out secret effort in every possible way. However, because of lacking information, they are facing difficulties.";
+			next;
+			mes "[Linguist Dictionary]";
+			mes "If you've encountered those races around the Expedition Camp, you must memorize their conversation! Then report back to me!";
+			close;
+		}
+	}
+	else if (ep13_2_rhea == 3) {
+		mes "[Linguist Dictionary]";
+		mes "............................";
+		next;
+		mes "- Dictionary stared at the paper intently. -";
+		next;
+		switch(select("He looks serious, Let's leave him alone:Talk to him")) {
+		case 1:
+			mes "[Linguist Dictionary]";
+			mes "............................";
+			close;
+		case 2:
+			break;
+		}
+		mes "[Linguist Dictionary]";
+		mes "Ahhhhhhh!!!!!!!!";
+		next;
+		select("Have you figured something out?");
+		mes "[Linguist Dictionary]";
+		mes "I....CAN'T! UNDERSTAND IT!!!";
+		mes "Whaaaat~~iiis~~ thiiis~~~ Just how do you read thisssssss~~~ I can't understand a single rule in this~~~~ Huh?";
+		next;
+		mes "[Linguist Dictionary]";
+		mes "..................................";
+		next;
+		mes "[Linguist Dictionary]";
+		mes "Hmph!";
+		mes "Yes?";
+		next;
+		switch(select("He looks serious. Let's leave him alone.:Ask him what's going on.")) {
+		case 1:
+			mes "[Linguist Dictionary]";
+			mes "............................";
+			mes "...................Hmph...";
+			close;
+		case 2:
+			break;
+		}
+		mes "[Linguist Dictionary]";
+		mes "Ah! Well, It's not as easy as I thought. These languages can't be heard anywhere on the Midgard Continent. No known phonetic rules seem to apply here.";
+		next;
+		mes "[Linguist Dictionary]";
+		mes "It's hard to grasp their rule or system, and before everything else, I don't even know if this pronounciation is right. I've never heard of this kind of pronounciation.";
+		next;
+		mes "[Linguist Dictionary]";
+		mes "Ah, right, I heard that a ^0000ffRune-Midgarts Magician^000000 knows a way to conduct research based on a sample of language, would you go and ask him to help me?";
+		next;
+		mes "[Linguist Dictionary]";
+		mes "The ^0000ffRune-Midgarts Magician^000000 is wandering inside of the Expedition Camp.";
+		next;
+		mes "[Linguist Dictionary]";
+		mes "It's difficult to continue on a research without some more samples of language. Please do my favor.";
+		completequest 8244;
+		setquest 8245;
+		set ep13_2_rhea,4;
+		close;
+	}
+	else if ((ep13_2_rhea > 3) && (ep13_2_rhea < 6)) {
+		mes "[Linguist Dictionary]";
+		mes "I heard that ^0000ffRune Midgarts Magician^000000 knows a way to conduct a research from a sample of language, would you go see him and ask him to help me?";
+		next;
+		mes "[Linguist Dictionary]";
+		mes "The ^0000ff Rune Midgarts Magician^000000 is wandering inside of the Expedition Camp.";
+		next;
+		mes "[Linguist Dictionary]";
+		mes "It's difficult to continue this research without some more samples of language. Please do my favor.";
+		close;
+	}
+	else if (ep13_2_rhea == 6) {
+		mes "- The Linguist is writing on a paper as if he's obsessed by something -";
+		next;
+		mes "[Linguist Dictionary]";
+		mes "...Oh, Hello there.";
+		next;
+		mes "[Linguist Dictionary]";
+		mes "I heard that you brought us a Gem with the other world's language recorded within it. Thanks to your help, decoding process is going well.";
+		mes "Actually, it's going TOO well...";
+		next;
+		mes "[Linguist Dictionary]";
+		mes "It's a wonder that at the moment when I heard that language first-hand I could decode it flawlessly in spite of myself. It must be the blessing of Goddess Freya.";
+		next;
+		mes "[Linguist Dictionary]";
+		mes "But the problem is...";
+		mes "How are we going to put together this tremendous data and make it into a portable translator... I just can't figure out how.";
+		next;
+		mes "[Linguist Dictionary]";
+		mes "I wonder what the Mechanic Engineer from the Schwaltzvalt Republic would think... Would you be kind to go ask him?";
+		completequest 8247;
+		setquest 8248;
+		set ep13_2_rhea,7;
+		close;
+	}
+	else if ((ep13_2_rhea > 6) && (ep13_2_rhea < 13)) {
+		mes "[Linguist Dictionary]";
+		mes "Just how are we going to put together these tremendous data and make it into a portable translator...I just can't figure out how.";
+		next;
+		mes "[Linguist Dictionary]";
+		mes "I wonder what the Mechanic Engineer from the Republic of Schwartzwalt would think...Would you be kind to go ask him?";
+		close;
+	}
+	else if (ep13_2_rhea > 12) {
+		mes "[Linguist Dictionary]";
+		mes "So, Finally we were able to make a translator!";
+		mes "How is it working? Isn't there any problem with it?";
+		next;
+		mes "[Linguist Dictionary]";
+		mes "I hope this translator would help you with your journey.";
+		next;
+		mes "[Linguist Dictionary]";
+		mes "However, Although using a translator is important, the basics of language and communication is that you should try to understand others.";
+		next;
+		mes "[Linguist Dictionary]";
+		mes "You should not just rely everything on a mere machine...don't forget to be understanding. Enjoy your journey in the otherworld with that translator.";
+		close;
+	}
+	else {
+		mes "[Linguist Dictionary]";
+		mes "So, Finally we were able to make a translator!";
+		mes "How is it working? Isn't there any problem with it?";
+		next;
+		mes "[Linguist Dictionary]";
+		mes "I hope this translator would help you with your journey.";
+		next;
+		mes "[Linguist Dictionary]";
+		mes "However, Although using a translator is important, the basics of language and communication is that you should try to understand others.";
+		next;
+		mes "[Linguist Dictionary]";
+		mes "You should not just rely everything on a mere machine...don't forget to be understanding. Enjoy your journey in the otherworld with that translator.";
+		close;
+	}
+}
+
+mid_camp,147,256,3	script	Rune Midgarts Magician#1	735,{
+	if (ep13_2_rhea < 4) {
+		mes "[Magician Whisper]";
+		mes "To store a tremendous amount of information, well, it's impossible with existing technology.";
+		next;
+		mes "[Magician Whisper]";
+		mes "Ancient Rune Midgarts Kingdom used a some kind of magic onto a magical gem to store large information...Using a gem as a storage...";
+		next;
+		mes "[Magician Whisper]";
+		mes "Oh, pardon me, you have such a comfortable atmosphere and I involuntarily spoke to you. Who might you be?";
+		close;
+	}
+	else if (ep13_2_rhea == 4) {
+		mes "[Magician Whisper]";
+		mes "To store a tremendous amount of information, well, it's impossible with existing technology.";
+		next;
+		mes "[Magician Whisper]";
+		mes "The Ancient Rune-Midgarts Kingdom used some kind of magic on a magical gem to store large amounts of information... Using a gem as storage...";
+		next;
+		mes "[Magician Whisper]";
+		mes "Oh, pardon me, you have such a comfortable atmosphere and I involuntarily spoke to you. Who might you be?";
+		next;
+		select("Uh, Mr. Dictionary sent...");
+		mes "[Magician Whisper]";
+		mes "Oh? You mean that Linguist from the Arunafeltz. And that means we need a Recorded Language Sample.";
+		next;
+		mes "[Magician Whisper]";
+		mes "Hmmm... Actually, I've buried magical gems which records sound waves with its magical power, near their territory...to gather information about their language.";
+		next;
+		mes "[Magician Whisper]";
+		mes "But, Assassins who were in charge of burying those gems... They are working on some other mission, so they can't go and retrieve those gems.";
+		next;
+		mes "[Magician Whisper]";
+		mes "Without someone do us a favor and retrieve those gems, there's no way I could give you the sample.";
+		next;
+		switch(select("Then should I come back later?:What if I go and retrieve them?")) {
+		case 1:
+			mes "[Magician Whisper]";
+			mes ".............Sure, you could wait for 100 years...";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "What?";
+			next;
+			mes "[Magician Whisper]";
+			mes "Ah, No, No, It's nothing.";
+			next;
+			break;
+		case 2:
+			break;
+		}
+		mes "[Magician Whisper]";
+		mes "If you could do that, it will save us whole lot of time and that'd be good for us! Wouldn't it? Don't you think so?";
+		next;
+		mes "[Magician Whisper]";
+		mes "I belive you've met those two alien races out there?";
+		mes "Assassins buried Magical Gems near their villages without them noticing.";
+		next;
+		mes "[Magician Whisper]";
+		mes "First Gem is buried under the Mushroom-like structure near Fairy's village.";
+		next;
+		mes "[Magician Whisper]";
+		mes "And the Second Gem is buried under the tree near Giant's village.";
+		next;
+		mes "[Magician Whisper]";
+		mes "Bring back those two gems and that would help me greatly.";
+		next;
+		mes "[Magician Whisper]";
+		mes "Well, I can't force you to do it if you are too busy with other matters...";
+		next;
+		mes "[Magician Whisper]";
+		mes "There's an old saying, The one who's thirsty will dig for a well...";
+		next;
+		mes "[Magician Whisper]";
+		mes "I almost forgot! You should be careful when you dig for the Gem.";
+		mes "Assassins installed a trap to protect Gems as they bury them.";
+		completequest 8245;
+		setquest 8246;
+		set ep13_2_rhea,5;
+		close;
+	}
+	else if (ep13_2_rhea == 5) {
+		set .@check_spljew00,checkquest(8241);
+		set .@check_manjew00,checkquest(8242);
+		if ((.@check_spljew00 > 0) && (.@check_manjew00 > 0)) {
+			if (countitem(7575) > 0) && (countitem(7576) > 0) {
+				mes "[Magician Whisper]";
+				mes "Wow, You are back already!";
+				mes "Well then, let me see them!";
+				next;
+				mes "- As you handed over the Gem, -";
+				mes "- he examined it throughly-";
+				next;
+				mes "[Magician Whisper]";
+				mes "Hmm...";
+				mes "There's lots of noises caught in, but I think I could extract a voice in no time.";
+				next;
+				mes "[Magician Whisper]";
+				mes "I will extract a voice recorded in this gem and send them to the Linguist from Arunafeltz.";
+				next;
+				mes "[Magician Whisper]";
+				mes "It looks like there's many kind of convenient machines. Voices I've extracted can be sent directly to the Linguist from Arunafeltz by using this recording machine.";
+				next;
+				mes "[Magician Whisper]";
+				mes "So I will be ok by on my own. Thank you for your trouble.";
+				completequest 8241;
+				completequest 8242;
+				completequest 8246;
+				setquest 8247;
+				delitem 7575,1; //Red_Jewel_
+				delitem 7576,1; //Blue_Jewel_
+				set ep13_2_rhea,6;
+				close;
+			}
+			else {
+				// custom translation
+				mes "[Magician Whisper]";
+				mes "Ah, that was quick.";
+				next;
+				mes "[Magician Whisper]";
+				mes "Please give meh the gem. I will extract the voice record inside the gem, then give it to the Linguist from Arunafeltz.";
+				next;
+				mes "[Magician Whisper]";
+				mes "...... But.... where's the gem?";
+				close;
+			}
+		}
+		else {
+			mes "[Magician Whisper]";
+			mes "First Gem is buried under the Mushroom-like structure near Fairy's village.";
+			next;
+			mes "[Magician Whisper]";
+			mes "And the Second Gem is buried under the tree near Giant's village.";
+			next;
+			mes "[Magician Whisper]";
+			mes "Bring back those two gems and that would help me greatly.";
+			next;
+			mes "[Magician Whisper]";
+			mes "Well, I can't force you to do it if you are too busy with other matters...";
+			next;
+			mes "[Magician Whisper]";
+			mes "There's an old saying, The one who's thirsty will dig for a well...";
+			next;
+			mes "[Magician Whisper]";
+			mes "I almost forgot! You should be careful when you dig for the Gem.";
+			mes "Assassins installed a trap to protect Gems as they bury them.";
+			close;
+		}
+	}
+	else if ((ep13_2_rhea > 5) && (ep13_2_rhea < 8)) {
+		mes "[Magician Whisper]";
+		mes "Well, if you are not busy at the time, please go check how's the Linguist from Arunafeltz's research is coming up.";
+		next;
+		mes "[Magician Whisper]";
+		mes "I should be working on extracting voice data and send them to the Linguist from Arunafeltz.";
+		close;
+	}
+	else if (ep13_2_rhea == 8) {
+		mes "[Magician Whisper]";
+		mes "Hmm...There's more data than we thought...";
+		next;
+		mes "[Magician Whisper]";
+		mes "Of course it is a piece of cake to turn data into magical power and put'em into a gem...Most important thing is, I don't know if there's a jewl that has enough storage space to store that much of data...";
+		next;
+		mes "[Magician Whisper]";
+		mes "I heard that cold side of a field outside of the Expedition Camp, ^0000ff Mysterious Ore that can't be found in the Midgart.";
+		next;
+		mes "[Magician Whisper]";
+		mes "Only if we could find that ore, it would make this work much easier... What do you think about that? Do you think you could go and find one for me?";
+		next;
+		mes "[Magician Whisper]";
+		mes "While you are gone, I will organize the data to put into the Gem.";
+		completequest 8249;
+		setquest 8250;
+		set ep13_2_rhea,9;
+		close;
+	}
+	else if (ep13_2_rhea == 9) {
+		if (countitem(6048) > 0) {
+			mes "[Magician Whisper]";
+			mes "Oh! Is this that ore?";
+			next;
+			mes "[Magician Whisper]";
+			mes "This sure is interesting. It has not been refined yet, but I can sense mysterious power from this ore.";
+			next;
+			mes "[Magician Whisper]";
+			mes "It's something like... the special wave with a life force.";
+			next;
+			mes "[Magician Whisper]";
+			mes "Let's test and see see how much magical power it could store.";
+			next;
+			mes "- He closed his eyes and chanted a spell -";
+			mes "- with the ore on his hand. -";
+			next;
+			mes "[Magician Whisper]";
+			mes "Lumos Nox Densaugeo Dissendium Diffindo Engorgio Mobiliarbus Expecto patronum!!!!";
+			next;
+			specialeffect EF_FLASHER; // 99 : "Rune Midgarts Magician#ep132_rhea03" EF_FLASHER
+			emotion e_gasp;
+			mes "[Magician Whisper]";
+			mes "Wow!!! Th, This is unbelievable!";
+			next;
+			mes "[Magician Whisper]";
+			mes "An ore with this much storage space, only a size of fingernail could store both of two languages!";
+			next;
+			mes "[Magician Whisper]";
+			mes "Could you wait for a minute?";
+			mes "Take some rest while I craft this ore into a gem and put the magical data into it. You look exhausted...";
+			completequest 8250;
+			setquest 8251;
+			delitem 6048,1; //Unidentified_Mineral
+			set ep13_2_rhea,10;
+			close;
+		}
+		else {
+			mes "[Magician Whisper]";
+			mes "I heard that the cold side of the field outside of the Expedition Camp has a Unidentified Mineral that can't be found in Rune Midgard.";
+			next;
+			mes "[Magician Whisper]";
+			mes "Only if we could find that ore, it would make this work much easier... What do you think about that? Do you think you could go and find one for me?";
+			next;
+			mes "[Magician Whisper]";
+			mes "While you are gone, I will organize the data to put into the Gem.";
+			close;
+		}
+	}
+	else if (ep13_2_rhea == 10) {
+		if (rand(1,5) == 3) {
+			mes "- His face turned a bit pale, -";
+			mes "- He looked pleased as he saw you -";
+			next;
+			mes "[Magician Whisper]";
+			mes "Ah! Just in time!";
+			next;
+			mes "[Magician Whisper]";
+			mes "I've just finished infusing the magical power.";
+			mes "From now on, it's up to the Mechanic Engineer from Schwartzwalt to combined this gem with a machine to make it work as a real-time translator.";
+			next;
+			mes "[Magician Whisper]";
+			mes "I will ask you one last favor.";
+			mes "Please deliver this crafted gem to the Mechanic Engineer from Schwartzwalt.";
+			next;
+			mes "[Magician Whisper]";
+			mes "I'm really sorry to ask you so many favors..., Ah...I've used up too much magical power...I should rest for a while.";
+			next;
+			mes "- ^0000ff Received the Crafted Gem ^000000 -";
+			mes "- ^0000ff from Whisper !!^000000 -";
+			completequest 8251;
+			setquest 8252;
+			set ep13_2_rhea,11;
+			close;
+		}
+		else {
+			mes "[Magician Whisper]";
+			mes "Could you wait for a minute?";
+			mes "Take some rest while I craft this ore into a gem and put the magical data into it. You look exhausted...";
+			close;
+		}
+	}
+	else if (ep13_2_rhea == 11) {
+		mes "[Magician Whisper]";
+		mes "Please deliver this crafted gem to the Mechanic Engineer from Schwartzwalt.";
+		next;
+		mes "[Magician Whisper]";
+		mes "I'm really sorry to ask you so many favors..., Ah...I've used up too much magical power...I should rest for a while.";
+		next;
+		mes "- He looks so sleepy and said -";
+		mes "- as he rubbing his closing eyes. -";
+		close;
+	}
+	else if (ep13_2_rhea == 12) {
+		mes "[Magician Whisper]";
+		mes "How's the translator making process going?";
+		close;
+	}
+	else if (ep13_2_rhea > 12) {
+		mes "[Magician Whisper]";
+		mes "I've just received a message that the translator is finished!";
+		next;
+		mes "[Magician Whisper]";
+		mes "We are short on the amount just yet, still it will make our advance to the other world easier!";
+		close;
+	}
+	else {
+		mes "[Magician Whisper]";
+		mes "I've just received a message that the translator is finished!";
+		next;
+		mes "[Magician Whisper]";
+		mes "We are short on the amount just yet, still it will make our advance to the other world easier!";
+		close;
+	}
+}
+
+spl_fild02,27,218,0	script	Half-buried Gem#1	844,{
+	if (ep13_2_rhea < 5) {
+		mes "- Under a round pile of earth, -";
+		mes "- there's a Red Gem -";
+		mes "- half-buried. -";
+		close;
+	}
+	else if (ep13_2_rhea == 5) {
+		set .@check_spljew00,checkquest(8241);
+		if (.@check_spljew00 == -1) {
+			mes "- Under a round pile of earth, -";
+			mes "- there's a Red Gem -";
+			mes "- half-buried. -";
+			next;
+			switch(select("Dig out the Gem:Leave it alone")) {
+			case 1:
+				break;
+			case 2:
+				mes "- You overspread some earth over the Gem -";
+				mes "- and left the Gem as it was. -";
+				next;
+				mes "["+ strcharinfo(0) +"]";
+				mes "...What the heck am I doing now...";
+				close;
+			}
+			if (rand(1,4) == 2) {
+				mes "- You dug up a pile of earth -";
+				mes "- and pulled out the Red Gem -";
+				setquest 8241;
+				getitem 7575,1; //Red_Jewel_
+				close;
+			}
+			else {
+				mes "- As you dug up a pile of earth, -";
+				mes "- a Thief Bug attacks you! -";
+				donpcevent "Half-buried Gem#1::OnDisable";
+				next;
+				mes "["+ strcharinfo(0) +"]";
+				mes "What the heck is this?!?!?!";
+				close;
+			}
+		}
+		else {
+			mes "- Small pile of earth -";
+			mes "- which you dug up the Red Gem -";
+			close;
+		}
+	}
+	else {
+		mes "- Small pile of earth -";
+		mes "- which you dug up the Red Gem -";
+		close;
+	}
+	end;
+
+
+OnInit:
+	hideoffnpc "Half-buried Gem#ep132_rhea04";
+	end;
+
+OnEnable:
+	hideoffnpc "Half-buried Gem#ep132_rhea04";
+	stopnpctimer;
+	end;
+
+OnDisable:
+	initnpctimer;
+	monster "spl_fild02",25,220,"Thief Bug",1051,10,"Half-buried Gem#1::OnMyMobDead";
+	hideonnpc "Half-buried Gem#1";
+	end;
+
+OnMyMobDead:
+	if (mobcount("spl_fild02","Half-buried Gem#1::OnMyMobDead") < 1) {
+		donpcevent "Half-buried Gem#1::OnEnable";
+		stopnpctimer;
+	}
+	end;
+
+OnTimer300000:
+	killmonster "spl_fild02","Half-buried Gem#1::OnMyMobDead";
+	donpcevent "Half-buried Gem#1::OnEnable";
+	stopnpctimer;
+	end;
+}
+
+man_fild03,227,109,0	script	Half-buried Gem#2	844,{
+	if (ep13_2_rhea < 5) {
+		mes "- Under a round pile of earth, -";
+		mes "- there's a Blue Gem -";
+		mes "- half-buried. -";
+		close;
+	}
+	else if (ep13_2_rhea == 5) {
+		set .@check_manjew00,checkquest(8242);
+		if (.@check_manjew00 == -1) {
+			mes "- Under a round pile of earth, -";
+			mes "- there's a Red Gem -";
+			mes "- half-buried. -";
+			next;
+			switch(select("Dig out the Gem:Leave it alone")) {
+			case 1:
+				break;
+			case 2:
+				mes "- You overspread some earth over the Gem -";
+				mes "- and left the Gem as it was. -";
+				next;
+				mes "["+ strcharinfo(0) +"]";
+				mes "...What the heck am I doing now...";
+				close;
+			}
+			if (rand(1,4) == 2) {
+				mes "- You dug up a pile of earth -";
+				mes "- and pulled out the Blue Gem -";
+				setquest 8242;
+				getitem 7576,1; //Blue_Jewel_
+				close;
+			}
+			else {
+				mes "- As you dug up a pile of earth, -";
+				mes "- a Thief Bug attacks you! -";
+				donpcevent "Half-buried Gem#2::OnDisable";
+				next;
+				mes "["+ strcharinfo(0) +"]";
+				mes "What the heck is this?!?!?!";
+				close;
+			}
+		}
+		else {
+			mes "- Small pile of earth -";
+			mes "- which you dug up the Blue Gem -";
+			close;
+		}
+	}
+	else {
+		mes "- Small pile of earth -";
+		mes "- which you dug up the Blue Gem -";
+		close;
+	}
+	end;
+
+OnInit:
+	hideoffnpc "Half-buried Gem#2";
+	end;
+
+OnEnable:
+	hideoffnpc "Half-buried Gem#2";
+	stopnpctimer;
+	end;
+
+OnDisable:
+	initnpctimer;
+	monster "man_fild03",227,109,"Thief Bug",1051,10,"Half-buried Gem#2::OnMyMobDead";
+	hideonnpc "Half-buried Gem#2";
+	end;
+
+OnMyMobDead:
+	if (mobcount("man_fild03","Half-buried Gem#2::OnMyMobDead") < 1) {
+		donpcevent "Half-buried Gem#2::OnEnable";
+		stopnpctimer;
+	}
+	end;
+
+OnTimer300000:
+	killmonster "man_fild03","Half-buried Gem#2::OnMyMobDead";
+	donpcevent "Half-buried Gem#2::OnEnable";
+	stopnpctimer;
+	end;
+}
+
+/*
+mid_camp,7,3,0	script	Translator Preparation#1	708,{
+	mes "[Plot13 Translator Quest Preparation]";
+	mes "Input password.";
+	next;
+	input .@input; //,0,2000;
+	if (.@input == 0) {
+		mes "[EP 13 Translator Quest Preparation]";
+		mes "Cancelled";
+		close;
+	}
+	else if (.@input == 1854) {
+		mes "[EP 13 Translator Quest Preparation]";
+		mes "I'm the provider of ep13.2 Translator Quest's quest item's NPC" <--Not my fault, they used bad chinese grammar in first place;
+		next;
+		mes "What you want?";
+		next;
+		switch(select("Finish quest:Accept fairy / giant meetup quest")) {
+		case 1:
+			mes "[EP 13 Translator Quest Preparation]";
+			mes "Acquired the report's quest completion item";
+			next;
+			mes "[EP 13 Translator Quest Preparation]";
+			mes "Current report quest's item is "+ ep13_1_edq +" ";
+			mes "Start Quest?;
+			next;
+			switch(select("Yes:No")) {
+			case 1:
+				mes "[EP 13 Translator Quest Preparation]";
+				mes "Cancelled";
+				close;
+			case 2:
+				break;
+			}
+			mes "[EP 13 Translator Quest Preparation]";
+			mes "Acquired the report's quest completion item";
+			set ep13_1_edq,14;
+			close;
+		case 2:
+			mes "[EP 13 Translator Quest Preparation]";
+			mes "Accept the fairy / giant meetup quest";
+			next;
+			mes "[EP 13 Translator Quest Preparation]";
+			mes "Start Quest?";
+			next;
+			switch(select("Yes:No")) {
+			case 1:
+				mes "[EP 13 Translator Quest Preparation]";
+				mes "Cancelled";
+				close;
+			case 2:
+				break;
+			}
+			mes "[EP 13 Translator Quest Preparation]";
+			mes "Acquired the report's quest completion item";
+			setquest 2158;
+			setquest 2159;
+			close;
+		}
+	}
+	else {
+		mes "[EP 13 Translator Quest Preparation]";
+		mes "Please try again";
+		close;
+	}
+}
+*/

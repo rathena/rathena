@@ -1,0 +1,105 @@
+//===== eAthena Script ======================================= 
+//= Manuk Town
+//===== By: ================================================== 
+//= L0ne_W0lf
+//===== Current Version: ===================================== 
+//= 1.0
+//===== Compatible With: ===================================== 
+//= eAthena 1.0
+//===== Description: ========================================= 
+//= [Aegis Conversion]
+//= Town-specific NPCs for Manuk.
+//===== Additional Comments: ================================= 
+//= 1.0 First Version.
+//============================================================
+
+man_in01,346,135,0	script	 Worker#ep13bsg1	454,{
+	if (isequipped(2782) == 1) {
+		mes "[Worker]";
+		mes "It is dangerous if the valve is not checked properly every day.";
+		mes "In fact, there was an incident.";
+		mes "It gives me the creeps just thinking about it.";
+		close;
+	}
+	else {
+		mes "[Worker]";
+		mes "Gs df o aj ud pa";
+		mes "N sd asw ewt jj ";
+		mes "Ud aso pda s ";
+		close;
+	}
+}
+
+man_in01,393,134,3	script	Worker#ep13bsg2	454,{
+	if (isequipped(2782) == 1) {
+		mes "[Worker]";
+		mes "What!! Wh.. Oh... I... I didn't fall asleep!!";
+		mes "Let's get back to work... that's right work...";
+		close;
+	}
+	else {
+		mes "[Worker]";
+		mes "Ns ad jai osd";
+		mes "Rt odj as jo dp as";
+		close;
+	}
+}
+
+man_in01,377,143,5	script	Worker#ep13bsg3	454,{
+	if (isequipped(2782) == 1) {
+		mes "[Worker]";
+		mes "Hmm... It's working just fine... No probems at all...";
+		close;
+	}
+	else {
+		mes "[Worker]";
+		mes "Mou ii ros oa d d ";
+		close;
+	}
+}
+
+man_in01,333,128,5	script	Worker#ep13bsg4	454,{
+	if (isequipped(2782) == 1) {
+		mes "[Worker]";
+		mes "My eyesight is getting weaker these days.";
+		close;
+	}
+	else {
+		mes "[Worker]";
+		mes "Yw I eus ia d ap s";
+		close;
+	}
+}
+
+man_in01,336,128,5	script	Worker#ep13bsg5	454,{
+	if (isequipped(2782) == 1) {
+		mes "[Worker]";
+		mes "Isn't this fabulous?";
+		close;
+	}
+	else {
+		mes "[Worker]";
+		mes "R tt osj dj d";
+		close;
+	}
+}
+
+man_in01,283,288,3	script	Worker#ep13bsg6	454,{
+	if (isequipped(2782) == 1) {
+		mes "[Worker]";
+		mes "It is fortunate to have lots of fine quality Bradium today.";
+		next;
+		mes "[Worker]";
+		mes "This is all that is left for us.";
+		close;
+	}
+	else {
+		mes "[Worker]";
+		mes "Qw eI hs pado as d p ";
+		next;
+		mes "[Worker]";
+		mes "Too fn ish d fd";
+		close;
+	}
+}
+

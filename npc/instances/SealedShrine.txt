@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.0
+//= 1.1
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -11,6 +11,7 @@
 //= Seal away the Great Demon Baphomet.
 //===== Additional Comments: ================================= 
 //= 1.0 First version. [L0ne_W0lf]
+//= 1.1 Added setquest for instance cooldown. [L0ne_W0lf]
 //============================================================ 
 
 // Sealed Catacomb Entrance
@@ -289,7 +290,6 @@ monk_test,306,151,3	script	Grave of Baphomet#edq	111,{
 			mes "It seems you have entered this grave recently... You cannot enter because Baphomet's Curse still remains. Baphomet's Curse disappears only after a certain amount of time has passed.";
 			close;
 		}
-
 		if (.@ins_bapho_check == -1) {
 			if (has_instance("1@cata") == "") {
 				mes "It's cold to the touch. But, there is no response.";
@@ -307,6 +307,7 @@ monk_test,306,151,3	script	Grave of Baphomet#edq	111,{
 			//else if (ret == 0) {
 			else {
 				mapannounce "monk_test","[" + strcharinfo(0) + "] member of [" + getpartyname(.@party_id) + "] party enters the Sealed catacombs.",bc_map,"0x00ff99";
+				setquest 3040;
 				warp "1@cata",100,224;
 				close;
 			}

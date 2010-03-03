@@ -8,6 +8,8 @@
 	1475 Equestrian's Spear:	NEED INFO.
 	13005 Angelic Wing Dagger:	NEED INFO.
 =======================
+2010/03/03
+	* Rev. 14257 Added time limit to "Language translation device" quest. [L0ne_W0lf]
 2010/02/27
 	* Mental Strenth costs 200 sp instead of 50% max sp. [Inkfish]
 2010/01/28

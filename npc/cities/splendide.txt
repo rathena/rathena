@@ -1,0 +1,350 @@
+//===== eAthena Script ======================================= 
+//= Splendide Town
+//===== By: ================================================== 
+//= L0ne_W0lf
+//===== Current Version: ===================================== 
+//= 1.0
+//===== Compatible With: ===================================== 
+//= eAthena 1.0
+//===== Description: ========================================= 
+//= [Aegis Conversion]
+//= Town-specific NPCs for Splendide.
+//===== Additional Comments: ================================= 
+//= 1.0 First Version.
+//============================================================
+
+spl_in01,172,225,3	script	Wandering Poet#ep13	51,{
+	cutin "god_nelluad02",2;
+	mes "[Poet Nell]"	;
+	mes "Hi~~ do you hear the beautiful music comeing from afar~?";
+	next;
+	select("Who are you?");
+	cutin "god_nelluad01",2;
+	mes "[Poet Nell]";
+	mes "Who, me...?";
+	mes "I am just a poet enjoying the ambience...";
+	next;
+	mes "[Poet Nell]";
+	mes "I cam here the other day, requesting to take notes of this new world and they allow me to follow the adventurers here.";
+	next;
+	mes "[Poet Nell]";
+	mes "I became familliar with the Lapine.";
+	mes "It was quite awkward at first... Since I didn't knew their language.";
+	mes "But, one I started to play my instruments... they loved it.";
+	next;
+	mes "[Poet Nell]";
+	mes "They're fairies that know how to enjoy their lives..";
+	mes "How happy they are...";
+	mes "They are quite curious... I am honored to have met them...";
+	next;
+	mes "[Poet Nell]";
+	mes "So do you want to listen to my playing?";
+	next;
+	switch(select("Sure.:Not really.")) {
+	case 1:
+		mes "[Poet Nell]";
+		mes "What song do you want??";
+		next;
+		switch(select("Poet of Bragie:Chaos in Eternity:Sunset Assassin:Ring of Nibelungen")) {
+		case 1:
+			cutin "god_nelluad02",2;
+			mes "[Poet Nell]";
+			mes "Poet of Bragie!";
+			mes "You must have a keen ear.";
+			soundeffect "bragis_poem.wav",0;
+			break;
+		case 2:
+			cutin "god_nelluad02",2;
+			mes "[Poet Nell]";
+			mes "Chaos in Eternity...";
+			mes "This is a great piece but I wouldn't reccomend it while dining...";
+			soundeffect "chaos_of_eternity.wav",0;
+			break;
+		case 3:
+			cutin "god_nelluad02",2;
+			mes "[Poet Nell]";
+			mes "Sunset Assassin!";
+			mes "Do you like Assassins?";
+			mes "This song tells of a legendary Assassin Cross that lived in the desert.";
+			soundeffect "assassin_of_sunset.wav",0;
+			break;
+		case 4:
+			cutin "god_nelluad02",2;
+			mes "[Poet Nell]";
+			mes "Ring of Nibelungen...";
+			mes "This song has quite an interesting story~";
+			next;
+			soundeffect "ring_of_nibelungen.wav",0;
+			mes "^4d4dff There was a niver named Rhein that";
+			mes "that would shine as if made of gold.";
+			mes "It's secret hidden from all since";
+			mes "before this story was told...^000000";
+			next;
+			mes "^4d4dff Valhalla was born from the goddess Freya.";
+			mes "The envious Rocky destroyed the goddess of beauty.^000000";
+			mes "^4d4dff Out of it's depths was born a ring made of fire.";
+			mes "A ring so strong it held the god's desires~^000000";
+			next;
+			mes "^4d4dff Alberich's treasure now holds that power.";
+			mes "The power of the ring that held all the god's desires.^000000";
+			next;
+			mes "^4d4dff The treasure was used to buy the world's soul.";
+			mes "A soul purchased with the weight of gold.^000000";
+			next;
+			mes "^4d4dff Rocky afraid of losing control. transforms poor Alberich to the shape of a toad.";
+			next;
+			mes "^4d4dff Alberich swears with the last of his breath, that his treasured ring will curse it's wearer till death.";
+			next;
+			mes "^4d4dff Forever will the bearer be, cursed with Rocky's jealousy."				;
+			break;
+		}
+		break;
+	case 2:
+		cutin "god_nelluad03",2;
+		mes "[Poet Nell]";
+		mes "Why not?";
+		mes "Why would you stare at me like that if you didn't want to listen to my playing";
+		next;
+		select("You look like someone I know.");
+		cutin "god_nelluad04",2;
+		mes "[Poet Nell]";
+		mes "Eh?";
+		mes "No way!";
+		mes "Maybe you're confused..!";
+		next;
+		mes "[Poet Nell]";
+		mes "Yes, I look quite common...";
+		mes "But I doubt we've ever met before."		;
+		next;
+		cutin "god_nelluad01",255;
+		mes "- Nell seems embarrassed, then starts playing very complicated music -";
+		break;
+	}
+	close2;
+	cutin "god_nelluad01",255;
+	end;
+}
+
+spl_in01,182,213,1	script	Resting Laphine#ep13_1	438,{
+	if ((isequipped(2782) > 0) && (ep13_2_rhea > 99)) {
+		mes "[Resting Laphine]";
+		mes "The poet on the stagie is mysterious.";
+		mes "The moment you came here...";
+		mes "He arrived and started playing music.";
+		next;
+		mes "[Resting Laphine]";
+		mes "This is music from your country yes?";
+		mes "I think it sounds great.";
+		close;
+	}
+	else {
+		mes "[Resting Laphine]";
+		mes "IyazLarsSe Or An.";
+		mes "marLoOsa Yee NeiBur";
+		mes "Rinisehrnea Mu...? ";
+		close;
+	}
+}
+
+spl_in01,181,218,5	script	Resting Laphine#ep13_2	446,{
+	if ((isequipped(2782) > 0) && (ep13_2_rhea > 99)) {
+		mes "- He is nodding his head to the sound of the music -";
+		next;
+		mes "[Resting Laphine]";
+		mes "Do you know how to play a similar sound?";
+		mes "This tone is unbelievable.";
+		close;
+	}
+	else {
+		mes "- He is nodding his head to the sound of the music -";
+		next;
+		mes "[Resting Laphine]";
+		mes "GothTingNoth Di~ nar..";
+		mes "DiebIyazNud Yu FarAn";
+		mes "nesFarDor U ~";
+		close;
+	}
+}
+
+spl_in01,161,213,7	script	Dining Laphine#ep13	447,{
+	if ((isequipped(2782) > 0) && (ep13_2_rhea > 99)) {
+		mes "[Dining Laphine]";
+		mes "I got bored eating home cooked food.";
+		mes "The only thing that keeps me coming here is fruit soup...";
+		next;
+		mes "[Dining Laphine]";
+		mes "Hey you!";
+		mes "Why are you staring at me eating dinner?";
+		close;
+	}
+	else {
+		mes "[Dining Laphine]";
+		mes "NothFarLu Ra...? ";
+		mes "RuffYur..!";
+		next;
+		mes "- He is giving me a odd stare as he eats his dinner -";
+		close;
+	}
+}
+
+spl_in01,162,202,5	script	Laphine taking notes#1	436,{
+	if ((isequipped(2782) > 0) && (ep13_2_rhea > 99)) {
+		mes "[Laphine taking notes]";
+		mes "We are quite impressed by the poet.";
+		mes "We Laphine love music aswell.";
+		mes "I never imagined that I would ever hear such exotic music.";
+		next;
+		mes "[Laphine taking notes]";
+		mes "I want to study music someday.";
+		mes "I plan to write much about the study of instruments and music";
+		next;
+		mes "[Laphine taking notes]";
+		mes "Someday you should listen to mu people's music.";
+		close;
+	}
+	else {
+		mes "[Laphine taking notes]";
+		mes "TiTalLars Ur tasThorNoth O AnImanWha.";
+		mes "FusLuRuff..... Mu TingLuAla Yee AnmanAndu";
+		next;
+		mes "- He seems frustrated that you don't understand him -";
+		close;
+	}
+}
+
+spl_in01,167,207,7	script	Silent Laphine#ep13	445,{
+	mes "- He is almost sleeping but he is still managing to hold a cup with a drink in it. He must be really tired-";
+	close;
+}
+
+spl_in01,180,201,3	script	Laphine Soldier#ep13_1	461,{
+	if ((isequipped(2782) > 0) && (ep13_2_rhea > 99)) {
+		mes "[Laphine Soldier]";
+		mes "You are a stranger here, aren't you?";
+		mes "I am watching him to prevent anything bad from happening.";
+		next;
+		mes "[Laphine Soldier]";
+		mes "Definitely you are involved.";
+		mes "The upper side people allow you to pass here...";
+		mes "But nobody knows what's going to happen in this battlefield.";
+		next;
+		mes "[Laphine Soldier]";
+		mes "Anyway, whats that instrument over there?";
+		mes "We have a similar one...";
+		mes "But it sounds totally different.";
+		close;
+	}
+	else {
+		mes "[Laphine Soldier]";
+		mes "FusVohlAnu Ur Lon.";
+		mes "LoUdenFar Ha Dormaur?";
+		mes "...marAmanYur Mu.";
+		next;
+		mes "-The Laphine Soldier wants to tell you something, but just stops talking as you give him a blank stare -";
+		close;
+	}
+}
+
+spl_in01,189,207,3	script	Laphine Staff#ep13_1	439,{
+	if ((isequipped(2782) > 0) && (ep13_2_rhea > 99)) {
+		mes "[Laphine Staff]";
+		mes "Hm, what's up?";
+		mes "I'm sorry, but we don't sell food to strangers.";
+		next;
+		mes "[Laphine Staff]";
+		mes "You guys also need to be careful of food here.";
+		mes "Food is scarce here.";
+		next;
+		mes "[Laphine Staff]";
+		mes "You're going to have to find food somewhere else.";
+		close;
+	}
+	else {
+		mes "[Laphine Staff]";
+		mes "VeldAnoWeh Or ";
+		mes "TurWos";
+		mes "......ah...";
+		next;
+		mes "- You just grin and smile. It's frustrating not to be able to understand their language. -";
+		close;
+	}
+}
+
+spl_in01,154,207,5	script	Laphine Staff#ep13_2	440,{
+	if ((isequipped(2782) > 0) && (ep13_2_rhea > 99)) {
+		mes "[Laphine Staff]";
+		mes "his camp serves a military purpose. But we also have a need for bars.";
+		next;
+		mes "[Laphine Staff]";
+		mes "How else can a soldier release stress if not through drinking...";
+		next;
+		mes "[Laphine Staff]";
+		mes "We are here to support the laphine soldier by giving good drinks and entertainment.";
+		close;
+	}
+	else {
+		mes "[Laphine Staff]";
+		mes "NorVerNuff Ee Re!";
+		mes "remuDurOdes Mu AshFus~!";
+		mes "OdesTalWeh Ur??? ";
+		close;
+	}
+}
+
+spl_in01,122,314,5	script	High-Ranked Soldier#ep13	461,{
+	if ((isequipped(2782) > 0) && (ep13_2_rhea > 99)) {
+		mes "[High-Ranked Soldier]";
+		mes "Are ther any new supplies?";
+		next;
+		mes "[Laphine Soldier]";
+		mes "This sword just arrived...";
+		mes "This is inspired by stars, and we tested it by cutting the thread floating over the water.";
+		next;
+		mes "[High-Ranked Soldier]";
+		mes "Hmm, we rarely used swords. But it looks great as a decoration.";
+		next;
+		mes "- Seems their busy talking about weapons -";
+		close;
+	}
+	else {
+		mes "[High-Ranked Soldier]";
+		mes "NorVerNuff Ee Re....";
+		next;
+		mes "[Laphine Soldier]";
+		mes "FusVerAlah Di ";
+		mes "ModNorNor U DimVohlWeh O DimAmannea An WosAnoNoh An AnduMeOdes So TalAdor.";
+		next;
+		mes "[High-Ranked Soldier]";
+		mes "DurNohHir Ha UorVaThus Di AshNuffLon U mahNuffThus U RuAmanAgol Ir NohHir...?";
+		close;
+	}
+}
+
+spl_in01,122,311,1	script	Laphine Soldier#ep13_2	447,{
+	if ((isequipped(2782) > 0) && (ep13_2_rhea > 99)) {
+		mes "[Laphine Soldier]";
+		mes "Are you a stranger?";
+		mes "Have you come here to see the Laphine's military storage?";
+		next;
+		mes "[High-Ranked Soldier]";
+		mes "Nevermind. These are useless to them...";
+		mes "How can this delicate sword be used by those brutes...?";
+		next;
+		mes "[Laphine Soldier]";
+		mes "O";
+		close;
+	}
+	else {
+		mes "[High-Ranked Soldier]";
+		mes "NorVerNuff Ee Re....";
+		next;
+		mes "[Laphine Soldier]";
+		mes "FusVerAlah Di ";
+		mes "ModNorNor U DimVohlWeh O DimAmannea An WosAnoNoh An AnduMeOdes So TalAdor.";
+		next;
+		mes "[High-Ranked Soldier]";
+		mes "DurNohHir Ha UorVaThus Di AshNuffLon U mahNuffThus U RuAmanAgol Ir NohHir...?";
+		close;
+	}
+}
+

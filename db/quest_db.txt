@@ -656,7 +656,7 @@
 8250,0,0,0,0,0,0,0,"The stone in otherworld"
 8251,0,0,0,0,0,0,0,"Injection of magic"
 8252,0,0,0,0,0,0,0,"Handworked jewels"
-8253,0,0,0,0,0,0,0,"Language translation device"
+8253,3600,0,0,0,0,0,0,"Language translation device"
 //
 9000,0,0,0,0,0,0,0,"Job Change to Knight"
 9001,0,0,0,0,0,0,0,"Loyalty of a Knight"
