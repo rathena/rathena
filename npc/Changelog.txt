@@ -1,6 +1,10 @@
 Date		Added
 ======
 2010/03/03
+	* Rev. 14258 Some bug fixing! Hoorah for me not feeling lazy! [L0ne_W0lf]
+	- Fixed some issues related to the guild relay quests. (bugreport:3934)
+	- Disabled the warp back to moc_fild22b from mid_camp. (bugreport:3985)
+	- Loop in sealed shrine should disable all thorches. (bugreport:4044)
 	* Rev. 14257 Added some 13.2 content, and more 13.1 content. [L0ne_W0lf]
 	- Added "Otherworld language" quest.
 	- Added Cat Hand Trading NPCs for 13.2 maps.

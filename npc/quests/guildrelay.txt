@@ -3,23 +3,24 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.0
+//= 1.1
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
 //= [Aegis Conversion]
 //= Guild Relay Quest.
 //= Quest designed for multiple users at once.
-//= Luina Castle NPCs must remain enabled.
 //= Variable in use: guildrelay_q (Max: ??)
 //= Variable in use: guildtime (Max: ??)
 //===== Additional Comments: ================================= 
 //= 1.0 First version.
+//= 1.1 Fixed errors reported by NoHealing (Bugreport:3934) [L0ne_W0lf]
+//= NPCs now duplicate from FLOATING npcs instead of Luina 1 npcs.
 //============================================================ 
 
-// Luina 1
+// Floating NPCs to duplicate from.
 //============================================================
-aldeg_cas01,51,102,5	script	Buzz#01::GuildRelay1	754,{
+-	script	RelayDummy1::GuildRelay1	754,{
 	set .@name$,strnpcinfo(1);
 	if (.@name$ == "Buzz") {
 		set .@name2$,"Lenya";
@@ -805,7 +806,7 @@ aldeg_cas01,51,102,5	script	Buzz#01::GuildRelay1	754,{
 				}
 			}
 			else if (countitem(7238) > 0) {
-				if ((guildrelay_q == 86) && (BaseClass == Job_Alchemist)) {
+				if ((guildrelay_q == 86) && (BaseJob == Job_Alchemist)) {
 					mes "[" + .@name$ + "]";
 					mes "Hello," + strcharinfo(0) + ".";
 					mes "I commend you on your work.";
@@ -1219,11 +1220,10 @@ aldeg_cas01,51,102,5	script	Buzz#01::GuildRelay1	754,{
 	}
 }
 
-aldeg_cas01,75,39,3	script	Lenya#01::GuildRelay2	754,{
+-	script	RelayDummy2::GuildRelay2	754,{
 	set .@name$,strnpcinfo(1);
-	if (.@name$ == "Lenya") {
-		set .@GID, GetCastleData("aldeg_cas"+strnpcinfo(2),1);
-	}
+	getmapxy(.@m$,.@x,.@x,1);
+	set .@GID, GetCastleData(.@m$,1);
 	if (checkweight(1201,1) == 0) {
 		mes "^3355FFWait a minute! You're";
 		mes "carrying too many items";
@@ -1729,11 +1729,10 @@ aldeg_cas01,75,39,3	script	Lenya#01::GuildRelay2	754,{
 	}
 }
 
-aldeg_cas01,200,175,3	script	Gealuve#01::GuildRelay3	754,{
+-	script	RelayDummy3::GuildRelay3	754,{
 	set .@name$,strnpcinfo(1);
-	if (.@name$ == "Gealuve") {
-		set .@GID, GetCastleData("aldeg_cas"+strnpcinfo(2),1);
-	}
+	getmapxy(.@m$,.@x,.@x,1);
+	set .@GID, GetCastleData(.@m$,1);
 	if (checkweight(1201,1) == 0) {
 		mes "^3355FFWait a minute! You're";
 		mes "carrying too many items";
@@ -2415,11 +2414,10 @@ aldeg_cas01,200,175,3	script	Gealuve#01::GuildRelay3	754,{
 	close;
 }
 
-aldeg_cas01,59,224,3	script	Pariz#01::GuildRelay4	754,{
+-	script	GuildDummy4::GuildRelay4	754,{
 	set .@name$,strnpcinfo(1);
-	if (.@name$ == "Pariz") {
-		set .@GID, GetCastleData("aldeg_cas"+strnpcinfo(2),1);
-	}
+	getmapxy(.@m$,.@x,.@x,1);
+	set .@GID, GetCastleData(.@m$,1);
 	if (checkweight(1201,1) == 0) {
 		mes "^3355FFWait a minute! You're";
 		mes "carrying too many items";
@@ -3091,6 +3089,13 @@ aldeg_cas01,59,224,3	script	Pariz#01::GuildRelay4	754,{
 		}
 	}
 }
+
+// Luina 1
+//============================================================
+aldeg_cas01,51,102,5	duplicate(GuildRelay1)	Buzz#01	754,{
+aldeg_cas01,75,39,3	duplicate(GuildRelay2)	Lenya#01	754,{
+aldeg_cas01,200,175,3	duplicate(GuildRelay3)	Gealuve#01	754,{
+aldeg_cas01,59,224,3	duplicate(GuildRelay4)	Pariz#01	754,{
 
 // Luina 2
 //============================================================
