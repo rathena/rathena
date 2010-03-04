@@ -1,5 +1,7 @@
 Date		Added
 ======
+2010/-3/04
+	* Rev. 14259 Fixed unidentified_coin -> unidentified_mineral in quests_13_2. (bugreport:4086) [L0ne_W0lf]
 2010/03/03
 	* Rev. 14258 Some bug fixing! Hoorah for me not feeling lazy! [L0ne_W0lf]
 	- Fixed some issues related to the guild relay quests. (bugreport:3934)

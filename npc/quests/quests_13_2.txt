@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
-//= 1.0
+//= 1.1
 //===== Compatible With: =====================================
 //= eAthena SVN
 //===== Description: =========================================
@@ -12,6 +12,7 @@
 //= Otherworld language
 //===== Additional Comments: =================================
 //= 1.0 First version
+//= 1.1 Fixed unidentified_coin -> unidentified_mineral. (bugreport:4086)
 //============================================================ 
 
 // Cat Hand Addition. (Leads to 13.2 areas)
@@ -2381,7 +2382,7 @@ man_fild02,241,227,0	script	Mysterious Rock#40	844,{
 			getitem 6080,1; //Manuk_Coin
 		}
 		else if (.@rhea_ran > 18) {
-			set Unidentified_Coin,Unidentified_Coin+1;
+			getitem 6048,1; //Unidentified_Mineral
 		}
 		initnpctimer;
 		disablenpc "Mysterious Rock#40";
