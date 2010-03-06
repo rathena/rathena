@@ -1124,6 +1124,7 @@ of 'end' stops this, and ends the script.
 ---------------------------------------
 
 *set <variable>,<expression>;
+*set(<variable>,<expression>)
 
 This command will set a variable to the value that the expression results in. 
 This is the only way to set a variable directly.
@@ -2240,7 +2241,7 @@ Example:
 
 ---------------------------------------
 
-*getpartyleader(<party id>{,<type>});
+*getpartyleader(<party id>{,<type>})
 
 This function returns some information about the given party-id's leader.
 When type is ommitted, the default information retrieved is the leader's name.
@@ -2598,7 +2599,7 @@ Check sample in nps\sample\getiteminfo.txt
 
 ---------------------------------------
 
-*getequipcardid (<equipment slot>,<card slot>);
+*getequipcardid(<equipment slot>,<card slot>)
 
 Returns value from equipped item slot in the indicated slot:
 
@@ -2615,7 +2616,7 @@ when you want to check item cards or if it's signed. Useful for such quests as
 	
 ---------------------------------------
 
-*getitemslots (<item id>);
+*getitemslots(<item id>)
 
 Returns the amount of slots the item has.
 
@@ -2911,7 +2912,7 @@ the specified event as in a 'doevent' call.
 
 ---------------------------------------
 
-*getmapguildusers <mapname>,<guild id>;
+*getmapguildusers(<mapname>,<guild id>)
 
 Returns the amount of persons from the given guild that are on the given map.
 Example(s):
@@ -2919,7 +2920,7 @@ Example(s):
 //Will set the @persons variable to the amount of persons from the guild
 //which ID's = 10 and are at prontera.
 
-	set @persons,getMapGuildUsers "prontera",10;
+	set @persons,getMapGuildUsers("prontera",10);
 
 ---------------------------------------
 //
@@ -6483,7 +6484,8 @@ Example:
 
 Creates an invisible wall, an array of "setcell" starting from x,y and doing a
 line of the given size in the given direction. The difference with setcell is
-this one update client part too to avoid the glith problem.
+this one update client part too to avoid the glith problem. Directions are the 
+same as NPC sprite facing directions: 0=north, 1=northwest, 2=west, etc.
 
 ---------------------------------------
 

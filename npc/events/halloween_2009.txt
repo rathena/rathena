@@ -96,9 +96,9 @@ prontera,152,192,5	script	Pumpkin Hat Researcher	712,{
 
 // Buffs - Trick or Treaters
 // =========================
--	script	Trick or Treater::09Treats	706,2,2,{	
+-	script	Trick or Treater::09Treats	706,2,2,{
 OnTouch:
-	hideoffnpc ""+strnpcinfo(0)+"";
+	hideoffnpc strnpcinfo(3);
 	initnpctimer;
 	mes "[Trick or Treater]";
 	mes "Hooray! hooray! Hooray!";
@@ -197,17 +197,17 @@ OnInit:
 	end;
 	
 OnEnableTreat:
-	enablenpc ""+strnpcinfo(0)+"";
-	hideonnpc ""+strnpcinfo(0)+"";
+	enablenpc strnpcinfo(3);
+	hideonnpc strnpcinfo(3);
 	end;
 	
 OnTimer15000:
-	hideonnpc ""+strnpcinfo(0)+"";
-	disablenpc ""+strnpcinfo(0)+"";
+	hideonnpc strnpcinfo(3);
+	disablenpc strnpcinfo(3);
 	end;
 		
 OnTimer300000:
-	donpcevent ""+strnpcinfo(0)+"::OnEnableTreat";
+	donpcevent strnpcinfo(3)+"::OnEnableTreat";
 	stopnpctimer;
 	end;
 }
