@@ -1,6 +1,16 @@
 Date		Added
 ======
-2010/-3/04
+2010/03/13
+	* Rev. 14262 More bug fixing! Lots of little things, really. [L0ne_w0lf]
+	- Corrected some condition errors in quests_veins. (bugreport:4088)
+	- Corrected specialeffects so they play on the right NPC. (bugreport:4090)
+	- Corrected an item ID in the reward NPC in monster races. (bugreport:4092)
+	- Corrected NPCs overlapping with quests in msg_boards (bugreport:4093)
+	- Corrected some of the given errors in the 2007_relay quest. (bugreport:4094)
+	- Corrected hideonnpc to disablenpc in ice dungeon 4 warps. (bugreport:4102)
+	- Commented out duplicate library curator in prontera city. (bugreport:4105)
+	- Corrected cutins not being removed on NPC end in sealed shrine. (bugreport:4117)
+2010/03/04
 	* Rev. 14259 Fixed unidentified_coin -> unidentified_mineral in quests_13_2. (bugreport:4086) [L0ne_W0lf]
 2010/03/03
 	* Rev. 14258 Some bug fixing! Hoorah for me not feeling lazy! [L0ne_W0lf]

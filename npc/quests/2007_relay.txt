@@ -11,6 +11,7 @@
 //= Party Relay Quest.
 //===== Additional Comments: ================================= 
 //= 1.0 First version. [L0ne_W0lf]
+//= 1.1 Fixed a couple typos, npcs check area for PCs. [L0ne_W0lf]
 //============================================================
 
 payon,103,113,3	script	Ledrion#payon::RelayLedrion	109,{
@@ -2074,7 +2075,7 @@ payon,204,221,3	script	Bafhail#payon::RelayBafhail	731,{
 		mes "Don't forget now, alright?";
 		close;
 	}
-	if ((countitem(7739) > 0) && (.@relaytime >= 11) && (.@relaytime < 14) && ((Baseclass == Job_Thief) || (BaseClass == Jog_Acolyte))) {
+	if ((countitem(7739) > 0) && (.@relaytime >= 11) && (.@relaytime < 14) && ((Baseclass == Job_Thief) || (BaseClass == Job_Acolyte))) {
 		mes "[Bafhail]";
 		mes "Oh, isn't that ticket...?";
 		mes "Ah, good, good. Judging";
@@ -2101,7 +2102,7 @@ payon,204,221,3	script	Bafhail#payon::RelayBafhail	731,{
 		mes "I'll see you later~";
 		close;
 	}
-	else if ((countitem(7739) > 0) && (.@relaytime >= 0) && (.@relaytime < 3) && ((Baseclass == Job_Thief) || (BaseClass == Jog_Acolyte))) {
+	else if ((countitem(7739) > 0) && (.@relaytime >= 0) && (.@relaytime < 3) && ((Baseclass == Job_Thief) || (BaseClass == Job_Acolyte))) {
 		mes "[Bafhail]";
 		mes "Oh, isn't that ticket...?";
 		mes "Ah, good, good. Judging";
@@ -2129,7 +2130,7 @@ payon,204,221,3	script	Bafhail#payon::RelayBafhail	731,{
 		mes "I'll see you later~";
 		close;
 	}
-	if ((countitem(7739) > 0) && ((Baseclass == Job_Thief) || (BaseClass == Jog_Acolyte))) {
+	if ((countitem(7739) > 0) && ((Baseclass == Job_Thief) || (BaseClass == Job_Acolyte))) {
 		mes "[Bafhail]";
 		mes "Oh, isn't that ticket...?";
 		mes "Ah, good, good. Judging";
@@ -2374,7 +2375,7 @@ payon,204,221,3	script	Bafhail#payon::RelayBafhail	731,{
 		mes "I just described, okay?";
 		close;
 	}
-	if ((countitem(7735) > 0) && (.@relaytime >= 14) && (.@relaytime < 17) && (BaseClass == Jog_Acolyte)) {
+	if ((countitem(7735) > 0) && (.@relaytime >= 14) && (.@relaytime < 17) && (BaseClass == Job_Acolyte)) {
 		mes "[Bafhail]";
 		mes "Oh, isn't that ticket...?";
 		mes "Ah, good, good. Judging";
@@ -2406,7 +2407,7 @@ payon,204,221,3	script	Bafhail#payon::RelayBafhail	731,{
 		mes "I'll see you later~";
 		close;
 	}
-	else if ((countitem(7735) > 0) && (.@relaytime >= 18) && (.@relaytime < 21) && (BaseClass == Jog_Acolyte)) {
+	else if ((countitem(7735) > 0) && (.@relaytime >= 18) && (.@relaytime < 21) && (BaseClass == Job_Acolyte)) {
 		mes "[Bafhail]";
 		mes "Oh, isn't that ticket...?";
 		mes "Ah, good, good. Judging";
@@ -2438,7 +2439,7 @@ payon,204,221,3	script	Bafhail#payon::RelayBafhail	731,{
 		mes "I'll see you later~";
 		close;
 	}
-	if ((countitem(7735) > 0) && (BaseClass == Jog_Acolyte)) {
+	if ((countitem(7735) > 0) && (BaseClass == Job_Acolyte)) {
 		mes "[Bafhail]";
 		mes "Oh, isn't that ticket...?";
 		mes "Ah, good, good. Judging";
@@ -2752,7 +2753,8 @@ payon,168,314,3	script	Lospii#payon::RelayLospii	706,{
 		close;
 	}
 	set .@relaytime,gettime(3);
-	//set .@juwi,getusersinrange(7);
+	getmapxy(.@m$,.@x,.@y,1,strnpcinfo(3));
+	set .@juwi,getareausers(.@m$,.@x-8,.@y-8,.@x+8,.@y+8);
 	if (party_relay == 32) {
 		mes "[Lospii]";
 		mes "Hey! Did you give";

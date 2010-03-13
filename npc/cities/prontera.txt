@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 
-//= 2.0
+//= 2.1
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -20,6 +20,7 @@
 //= 1.8 Moved Culvert to quests/quests_prontera.txt
 //= 1.9 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
 //= 2.0 Removed "Hans Solo", as he is a Jawaii NPC. [L0ne_W0lf]
+//= 2.1 Disabled the Library Curator (bugreport:4105) [L0ne_W0lf]
 //============================================================
 
 // Prontera
@@ -238,6 +239,8 @@ prontera,78,150,3	script	Dairenne#pront	90,{
 
 // inside Prontera
 //============================================================
+/*
+//This NPC has been disabled officiall.
 prt_in,178,92,0	script	Curator of Library#pront	57,{
 	mes "[Curator Guiss]";
 	mes "Here, in the Western branch of the Prontera Library, ";
@@ -252,6 +255,7 @@ prt_in,178,92,0	script	Curator of Library#pront	57,{
 	mes "If you would like to peruse monster records organized by their properties, please visit the Eastern branch of our library.";
 	close;
 }
+*/
 
 prt_in,175,50,0	script	Library Girl#pront	71,{
 	mes "[Library Girl Ellen]";

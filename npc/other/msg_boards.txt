@@ -4,7 +4,7 @@
 //= kobra_k88
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.5
+//= 1.6
 //===== Compatible With: ===================================== 
 //= [Aegis Conversion]
 //= eAthena 7.15 +
@@ -23,6 +23,7 @@
 //= 1.4 Rescripted to Aegis 10.3 standard. [L0ne_W0lf]
 //= 1.5 Removed a duplicate related to the Sign Quest. [SinSloth]
 //= 1.5 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
+//= 1.6 COmmented out conflicting npcs. (bugreport:4093) [L0ne_W0lf]
 //============================================================
 
 // Prontera
@@ -59,13 +60,13 @@ prontera,278,212,1	script	Sign#Prt3	111,{
 	mes "Please help keep Prontera a clean place.";
 	close;
 }
-
+/*
 prontera,150,326,1	script	Sign#Prt4	111,{
 	mes "^993300- The Sign Reads -^000000";
 	mes "Citizens of Prontera are Welcomed in the Prontera Castle.";
 	close;
 }
-
+*/
 prontera,31,212,1	script	Billboard#Prt5	111,{
 	mes "^993300- The Billboard Reads -^000000";
 	mes "~WANTED~";
@@ -152,14 +153,13 @@ geffen,116,58,1	script	Geffen Bulletin#Gef1	111,{
 	mes "Remember Wizard's...It's not how many skills you know, it's the magic that counts!";
 	close;
 }
-
+/*
 geffen,61,174,1	script	Sign#Gef2	111,{
-OnClick:
 	mes "^993300- The Sign Reads -^000000";
 	mes "- Seems to be written in a language unfamiliar to you -";
 	close;
 }
-
+*/
 geffen,113,104,1	script	Billboard#Gef3	111,{
 	mes "^993300- The Billboard Reads -^000000";
 	mes "Selling: Brand new Chon Chon Doll!";

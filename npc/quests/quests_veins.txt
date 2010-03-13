@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.7
+//= 1.8
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -39,6 +39,7 @@
 //= 1.5a Corrected a couple typos in Nameless Addition. [L0ne_W0lf]
 //= 1.6 Replaced effect numerics with constants. [L0ne_W0lf]
 //= 1.7 Moved a couple NPCs related to the Spy quest. [L0ne_W0lf]
+//= 1.8 Fixed some typos and confusing condition checks. [L0ne_W0lf]
 //============================================================ 
 
 // Stone Quest
@@ -194,7 +195,7 @@ ve_fild05,257,130,4	script	Wincing Old Man#ve	945,{
 		mes "by the Tavern. A-auuugh!";
 		close;
 	}
-	else if (veins_stone < 4) {
+	else if ((veins_stone > 1) && (veins_stone < 4)) {
 		mes "[Zabaroo]";
 		mes "Geez, Absar sure can";
 		mes "be fussy. Still, do your";
@@ -260,7 +261,7 @@ ve_fild05,257,130,4	script	Wincing Old Man#ve	945,{
 	else if (veins_stone < 7) {
 		mes "[Zabaroo]";
 		mes "Thanks again for your help!";
-		mes "What did Asbar call this";
+		mes "What did Absar call this";
 		mes "thing again? A Tactile...";
 		mes "Extendable... Damn it...";
 		mes "Why's the name so long?";
@@ -289,7 +290,7 @@ ve_fild05,257,130,4	script	Wincing Old Man#ve	945,{
 	}
 	else if (veins_stone > 7) {
 		mes "[Zabaroo]";
-		mes "Thanks to you and Asbar,";
+		mes "Thanks to you and Absar,";
 		mes "my poor back hasn't been";
 		mes "bothering me at all lately.";
 		mes "I should be taking better";
@@ -2910,7 +2911,7 @@ veins,327,185,3	script	Kid#camelcamel	944,{
 			mes "if I want to free Curdie.";
 			close;
 		}
-		else if (rachel_camel <= 16) {
+		else if ((rachel_camel >= 12) && (rachel_camel <= 16)) {
 			mes "["+strcharinfo(0)+"]";
 			mes "Well... I found the";
 			mes "camel. Now I need to get";
@@ -6560,11 +6561,13 @@ OnTouch:
 		end;
 	}
 	else if (aru_vol == 14) {
+		enablenpc "Colonel Vito#1";
 		mes "[Colonel Vito]";
 		mes "What are you still";
 		mes "doing standing there?";
 		mes "Don't slack off! Come!";
 		close2;
+		disablenpc "Colonel Vito#1";
 		warp "thor_camp",156,68;
 		end;
 	}
@@ -6574,7 +6577,6 @@ OnTouch:
 thor_camp,162,182,0	script	#Colonel2	-1,7,7,{
 OnTouch:
 //OnTouch2:
-
 	if (aru_vol == 13) {
 		enablenpc "Colonel Vito#2";
 		mes "[????]";
@@ -6614,6 +6616,7 @@ OnTouch:
 		end;
 	}
 	else if (aru_vol == 14) {
+		enablenpc "Colonel Vito#1";
 		mes "[Colonel Vito]";
 		mes "What are you still";
 		mes "doing standing there?";
@@ -6627,12 +6630,16 @@ OnTouch:
 }
 
 thor_camp,187,228,5	script	Colonel Vito#1	946,{
+	end;
+
 OnInit:
 	disablenpc "Colonel Vito#1";
 	end;
 }
 
 thor_camp,155,175,7	script	Colonel Vito#2	946,{
+	end;
+
 OnInit:
 	disablenpc "Colonel Vito#2";
 	end;

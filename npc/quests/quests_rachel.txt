@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 3.3
+//= 3.3a
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -59,6 +59,7 @@
 //= 3.2 Added missing updates for Peace to the Arunafeltz quest. [L0ne_W0lf]
 //= 3.3 Fixed occurance of PcName. [L0ne_W0lf]
 //=     Fixed level 4 ID warps always being usable.
+//= 3.3a Fixed level 4 ID warps again. (Bugreport:4102) [L0ne_W0lf]
 //============================================================ 
 
 // Lost Child Quest (Prerequisite to High Priest quest)
@@ -3840,7 +3841,7 @@ OnTouch:
 	end;
 
 OnInit:
-	hideonnpc "#ice_4f_1";
+	disablenpc "#ice_4f_1";
 	end;
 
 OnEnable:
@@ -3855,7 +3856,7 @@ OnTouch:
 	end;
 
 OnInit:
-	hideonnpc "#ice_4f_2";
+	disablenpc "#ice_4f_2";
 	end;
 
 OnEnable:
@@ -3870,7 +3871,7 @@ OnTouch:
 	end;
 
 OnInit:
-	hideonnpc "#ice_4f_3";
+	disablenpc "#ice_4f_3";
 	end;
 
 OnEnable:
@@ -3885,7 +3886,7 @@ OnTouch:
 	end;
 
 OnInit:
-	hideonnpc "#ice_4f_4";
+	disablenpc "#ice_4f_4";
 	end;
 
 OnEnable:

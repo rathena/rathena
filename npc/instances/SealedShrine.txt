@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.2
+//= 1.3
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -13,6 +13,7 @@
 //= 1.0 First version. [L0ne_W0lf]
 //= 1.1 Added setquest for instance cooldown. [L0ne_W0lf]
 //= 1.2 Fixed Torch#12 not being disabled. (bugreport:4044) [L0ne_w0lf]
+//= 1.3 Fixed cutins not being removed. (bugreport:4117) [L0ne_w0lf]
 //============================================================ 
 
 // Sealed Catacomb Entrance
@@ -69,7 +70,7 @@ monk_test,309,146,3	script	Friar Patrick#edq	412,{
 			mes "[Friar Patrick]";
 			mes "Train more and use your skills to prevent the world from evil's looming presence...";
 			close2;
-			cutin "ins_cata_pri_n",255;
+			cutin "",255;
 			end;
 		case 2:
 			cutin "ins_cata_pri_n",2;
@@ -79,7 +80,7 @@ monk_test,309,146,3	script	Friar Patrick#edq	412,{
 			mes "[Friar Patrick]";
 			mes "Train more and use your skills to prevent the world from evil's looming presence...";
 			close2;
-			cutin "ins_cata_pri_n",255;
+			cutin "",255;
 			end;
 		}
 	case 2:
@@ -100,7 +101,7 @@ monk_test,309,146,3	script	Friar Patrick#edq	412,{
 				mes "[Friar Patrick]";
 				mes "It seems you have entered this grave recently... You cannot enter because Baphomet's Curse still remains. Baphomet's Curse disappears only after a certain amount of time has passed.";
 				close2;
-				cutin "ins_cata_pri_n",255;
+				cutin "",255;
 				end;
 			}
 
@@ -113,7 +114,7 @@ monk_test,309,146,3	script	Friar Patrick#edq	412,{
 						mes "Name of the leader is "+.@partymembername$[0]+"...";
 						mes "Umm... But it seems that there is an unknown problem here... I'll check quickly. Please wait.";
 						close2;
-						cutin "ins_cata_pri_n",255;
+						cutin "",255;
 					}
 					else {
 
@@ -184,7 +185,7 @@ monk_test,309,146,3	script	Friar Patrick#edq	412,{
 						mes "[Friar Patrick]";
 						mes "For example, the skills like^0000FFSafety wall, Assumptio^000000... So you'd better to prepare enoughly before enter the grave.";
 						close2;
-						cutin "ins_cata_pri_n",255;
+						cutin "",255;
 					}
 					end;
 				}
@@ -195,7 +196,7 @@ monk_test,309,146,3	script	Friar Patrick#edq	412,{
 					mes "[Friar Patrick]";
 					mes "Once the party leader is permitted, the rest of the party can enter. This is a rule of this monastery, so please understand.";
 					close2;
-					cutin "ins_cata_pri_n",255;
+					cutin "",255;
 					end;
 				}
 			}
@@ -203,7 +204,7 @@ monk_test,309,146,3	script	Friar Patrick#edq	412,{
 				mes "[Friar Patrick]";
 				mes "It seems you have entered this grave recently... You cannot enter because Baphomet's Curse still remains. Baphomet's Curse disappears only after a certain amount of time has passed.";
 				close2;
-				cutin "ins_cata_pri_n",255;
+				cutin "",255;
 				end;
 			}
 			else if (.@ins_bapho_check == 2) {
@@ -219,7 +220,7 @@ monk_test,309,146,3	script	Friar Patrick#edq	412,{
 				mes "[Friar Patrick]";
 				mes "Huu... It's over. Now that I've released Baphomet's Curse, you can enter again.";
 				close2;
-				cutin "ins_cata_pri_n",255;
+				cutin "",255;
 				end;
 			}
 		}
@@ -230,7 +231,7 @@ monk_test,309,146,3	script	Friar Patrick#edq	412,{
 			mes "[Friar Patrick]";
 			mes "Please train more and come again.";
 			close2;
-			cutin "ins_cata_pri_n",255;
+			cutin "",255;
 		}
 		end;
 	case 3:
@@ -251,7 +252,7 @@ monk_test,309,146,3	script	Friar Patrick#edq	412,{
 			mes "Go to see ^0000FFRust Blackhand^000000 who is near the main building of the monastery... Then he will make this doll helpful to you.";
 			setquest 3042;
 			close2;
-			cutin "ins_cata_pri_n",255;
+			cutin "",255;
 			end;
 		}
 	case 4:
@@ -261,7 +262,7 @@ monk_test,309,146,3	script	Friar Patrick#edq	412,{
 		mes "[Friar Patrick]";
 		mes "Train more and use your skills to prevent the world from evil's looming presence...";
 		close2;
-		cutin "ins_cata_pri_n",255;
+		cutin "",255;
 		end;
 	}
 }
@@ -1047,7 +1048,7 @@ OnTouch:
 		next;
 		mes "[Soul of Ancient Hero]";
 		mes "Go ahead, warriors.";
-		cutin "ins_cata_champ_n",255;
+		cutin "",255;
 		instance_announce 0, "Soul of Ancient Hero : Now you can go to the Main Altar's gate. It is located in the Southeast",bc_map,"0xFFFF00";
 		close;
 	}
@@ -1058,21 +1059,21 @@ OnTouch:
 		next;
 		mes "[Soul of Ancient Hero]";
 		mes "I'll complete opening the sealed gate when your representative tell me that you're ready.";
-		cutin "ins_cata_champ_n",255;
+		cutin "",255;
 		close;
 	}
 	else if ('ins_baphomet == 5) {
 		cutin "ins_cata_champ_n",2;
 		mes "[Soul of Ancient Hero]";
 		mes "What are you doing? The entrance of the mail altar is opened right now, go and fight! Entrance is near the bottom of rightside of this floor.";
-		cutin "ins_cata_champ_n",255;
+		cutin "",255;
 		close;
 	}
 	else {
 		cutin "ins_cata_champ_n",2;
 		mes "[Soul of Ancient Hero]";
 		mes "I have nothing to talk to you...";
-		cutin "ins_cata_champ_n",255;
+		cutin "",255;
 		close;
 	}
 }
@@ -2172,14 +2173,14 @@ OnTouch:
 		next;
 		mes "[Soul of Ancient Hero]";
 		mes "If you leave, please say hello to Patrick for me.";
-		cutin "ins_cata_champ_n",255;
+		cutin "",255;
 		set 'ins_baphomet,0;
 		warp "monk_test",310,150;
 		close;
 	case 2:
 		mes "[Soul of Ancient Hero]";
 		mes "Do you still have something to do here? If you're done I'll let you leave here safely...";
-		cutin "ins_cata_champ_n",255;
+		cutin "",255;
 		close;
 	}
 }

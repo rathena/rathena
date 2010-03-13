@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Brainstorm
 //===== Current Version: =====================================
-//= 1.3a
+//= 1.4
 //===== Compatible With: =====================================
 //= eAthena SVN
 //===== Description: =========================================
@@ -17,6 +17,7 @@
 //= 1.2 Added missing checkweights. [L0ne_W0lf]
 //= 1.3 Replaced effect numerics with constants. [L0ne_W0lf]
 //= 1.3a Replaced effect numerics with constants (1 was missed). [Samuray22]
+//= 1.4 Effects are now played by proper NPC. [L0ne_W0lf]
 //============================================================
 
 // Pumpkin Mojo quest (Event 1)
@@ -29,6 +30,14 @@ OnTouch:
 	mes "just talk to me.";
 	mes "You won't even understand what stupid pumkin headed Jack is saying.";
 	close;
+
+OnEffect:
+	specialeffect EF_LEVEL99;
+	end;
+
+OnEffect2:
+	specialeffect EF_HIT2;
+	end;
 }
 
 prontera,164,69,3	script	Cool Devi#06_hw	738,{
@@ -113,7 +122,7 @@ prontera,164,69,3	script	Cool Devi#06_hw	738,{
 			mes "[Cool Devi]";
 			mes "says he.";
 			next;
-			specialeffect EF_LEVEL99;
+			donpcevent "Gloomy Jack#06_hw::OnEffect";
 			mes "[Excited Jack]";
 			mes "Lalala~ lalala~";
 			mes " ";
@@ -122,7 +131,7 @@ prontera,164,69,3	script	Cool Devi#06_hw	738,{
 			delitem 5134,1; //Pumpkin_Hat
 			getitem 5202,1; //Pumpkin_Hat_
 			next;
-			specialeffect EF_HIT2;
+			donpcevent "Gloomy Jack#06_hw::OnEffect2";
 			mes "[Gloomy Jack]";
 			mes "My aura is not like it used to be. Maybe I need more Pumpkin Mojo.";
 			mes " ";
@@ -157,7 +166,7 @@ prontera,164,69,3	script	Cool Devi#06_hw	738,{
 			mes "[Cool Devi]";
 			mes "says he.";
 			next;
-			specialeffect EF_LEVEL99;
+			donpcevent "Gloomy Jack#06_hw::OnEffect";
 			mes "[Excited Jack]";
 			mes "Lalala~ lalala~";
 			mes " ";
@@ -167,7 +176,7 @@ prontera,164,69,3	script	Cool Devi#06_hw	738,{
 			delitem 2226, 1;//Cap
 			getitem 5202, 1;//Pumpkin_Hat_
 			next;
-			specialeffect EF_HIT2;
+			donpcevent "Gloomy Jack#06_hw::OnEffect2";
 			mes "[Gloomy Jack]";
 			mes "My aura is not like it used to be. Maybe I need more Pumpkin Mojo.";
 			mes " ";
