@@ -26,7 +26,7 @@ payon,189,104,3	script	Maroll Battle Recruiter::BatRecruit	728,{
 	if( select("Join:Don't Join") == 2 )
 	{
 		mes "[Maroll Battle Recruiter]";
-		mes "I'll always be stationed here for more soldiers. Fell free to come back whenever you're interested.";
+		mes "I'll always be stationed here for more soldiers. Feel free to come back whenever you're interested.";
 		close;
 	}
 	mes "[Maroll Battle Recruiter]";

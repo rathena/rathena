@@ -146,13 +146,13 @@ OnGuardian3: set .Guardian_3, 0; end;
 
 OnGuillaumeBreak:
 	set $@TierraBG1_Victory, 2;
-	mapannounce "bat_a01","Croix Vintenar Swandery: We destroyed Guillaume's food storehause. We won that! Wow!",1,0xFF0000;
+	mapannounce "bat_a01","Croix Vintenar Swandery: We destroyed Guillaume's food storehouse. We won that! Wow!",1,0xFF0000;
 	donpcevent "Tierra_BG1::OnStop";
 	end;
 
 OnCroixBreak:
 	set $@TierraBG1_Victory, 1;
-	mapannounce "bat_a01","Guillaume Vintenar Axl Rose: We destroyed Croix's food storehause. We won that! Wow!",1,0x0000FF;
+	mapannounce "bat_a01","Guillaume Vintenar Axl Rose: We destroyed Croix's food storehouse. We won that! Wow!",1,0x0000FF;
 	donpcevent "Tierra_BG1::OnStop";
 	end;
 
