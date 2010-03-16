@@ -74,6 +74,30 @@ AC_ARG_ENABLE(
 	[enable_debug="no"]
 )
 
+#
+# RDTSC as Tick Source 
+#
+AC_ARG_ENABLE(
+	[rdtsc],
+	AC_HELP_STRING(
+		[--enable-rdtsc],
+		[
+			Uses rdtsc as timing source (disabled by default)
+			Enable it when you've timing issues.
+
+			(For example:  in conjunction with XEN or Other Virtualization mechanisms)
+		
+			Note:
+				Please ensure that you've disabled dynamic CPU-Frequencys, such as power saving options.
+				(On the most modern Dedicated Servers cpufreq is preconfigured, see your distribution's manual
+				 how to disable it)
+		]
+	),
+	[
+		enable_rdtsc=1
+	],
+	[enable_rdtsc=0]
+)
 
 #
 # Profiler
@@ -379,6 +403,19 @@ case $enable_debug in
 		;;
 	"gdb")
 		CFLAGS="$CFLAGS -ggdb -DDEBUG"
+		;;
+esac
+
+
+#
+# RDTSC
+#
+case $enable_rdtsc in
+	0)
+		#default value
+		;;
+	1)
+		CFLAGS="$CFLAGS -DENABLE_RDTSC"
 		;;
 esac
 

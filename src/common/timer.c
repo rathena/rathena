@@ -100,11 +100,52 @@ char* search_timer_func_list(TimerFunc func)
  * 	Get tick time
  *----------------------------*/
 
+#if defined(ENABLE_RDTSC)
+static uint64 RDTSC_BEGINTICK = 0,   RDTSC_CLOCK = 0;
+
+static __inline uint64 _rdtsc(){
+	register union{
+		uint64	qw;
+		uint32 	dw[2];
+	} t;
+
+	asm volatile("rdtsc":"=a"(t.dw[0]), "=d"(t.dw[1]) );
+	
+	return t.qw;
+}
+
+static void rdtsc_calibrate(){
+	uint64 t1, t2;
+	int32 i;
+	
+	ShowStatus("Calibrating Timer Source, please wait... ");
+	
+	RDTSC_CLOCK = 0;
+	
+	for(i = 0; i < 5; i++){
+		t1 = _rdtsc();
+		usleep(1000000); //1000 MS
+		t2 = _rdtsc();
+		RDTSC_CLOCK += (t2 - t1) / 1000; 
+	}
+	RDTSC_CLOCK /= 5;
+	
+	RDTSC_BEGINTICK = _rdtsc();	
+	
+	ShowMessage(" done. (Frequency: %u Mhz)\n", (uint32)(RDTSC_CLOCK/1000) );
+}
+
+#endif
+
 /// platform-abstracted tick retrieval
 static unsigned int tick(void)
 {
 #if defined(WIN32)
 	return GetTickCount();
+#elif defined(ENABLE_RDTSC)
+	//
+		return (unsigned int)((_rdtsc() - RDTSC_BEGINTICK) / RDTSC_CLOCK);
+	//
 #elif (defined(_POSIX_TIMERS) && _POSIX_TIMERS > 0 && defined(_POSIX_MONOTONIC_CLOCK) /* posix compliant */) || (defined(__FreeBSD_cc_version) && __FreeBSD_cc_version >= 500005 /* FreeBSD >= 5.1.0 */)
 	struct timespec tval;
 	clock_gettime(CLOCK_MONOTONIC, &tval);
@@ -368,6 +409,10 @@ unsigned long get_uptime(void)
 
 void timer_init(void)
 {
+#if defined(ENABLE_RDTSC)
+	rdtsc_calibrate();
+#endif
+
 	time(&start_time);
 }
 
