@@ -2593,7 +2593,7 @@ Valid types are:
 		if = 0, then monsters don't drop it at all (rare or a quest item)
 		if = 10000, then this item is sold in NPC shops only
 	4 - sex; 5 - equip; 6 - weight; 7 - atk; 8 - def; 9 - range;
-	10 - slot; 11 - look; 12 - elv; 13 - wlv;
+	10 - slot; 11 - look; 12 - elv; 13 - wlv; 14 - view id
 
 Check sample in nps\sample\getiteminfo.txt
 
@@ -2993,6 +2993,7 @@ currently has active. Valid types are:
  3 - Pet friendly level (intimacy score). 1000 is full loyalty.
  4 - Pet hungry level. 100 is completely full.
  5 - Pet rename flag. 0 means this pet has not been named yet.
+
 ---------------------------------------
 
 *gethominfo(<type>)
@@ -3005,6 +3006,7 @@ This function works as a direct counterpart of 'getpetinfo':
  4 - Hungry level. 100 is completely full.
  5 - Rename flag. 0 means this homunculus has not been named yet.
  6 - Homunculus level
+
 ---------------------------------------
 
 
@@ -6239,10 +6241,30 @@ Example 1:
 
 ---------------------------------------
 
+*setiteminfo(<item id>,<type>,<value>)
+
+This function will set some value of an item.
+Returns the new value on success, or -1 on fail (item_id not found or invalid type).
+
+Valid types are:
+	0 - Buy Price; 1 - Sell Price; 2 - Item Type;
+	3 - maxchance (Max drop chance of this item e.g. 1 = 0.01% , etc..
+		if = 0, then monsters don't drop it at all (rare or a quest item)
+		if = 10000, then this item is sold in NPC shops only
+	4 - sex; 5 - equip; 6 - weight; 7 - atk; 8 - def; 9 - range;
+	10 - slot; 11 - look; 12 - elv; 13 - wlv; 14 - view id
+
+Example:
+
+setiteminfo 7049,6,999; // Stone now weighs 999
+
+---------------------------------------
+
 *setitemscript(<item id>,<"{ new item script }">{,<type>});
 
 Set a new script bonus to the Item. Very useful for game events.
 You can remove an item's itemscript by leaving the itemscript argument empty.
+Returns 1 on success, or 0 on fail (item_id not found or new item script is invalid).
 Type can optionally be used indicates which script to set (default is 0):
  0 - Script
  1 - OnEquip_Script

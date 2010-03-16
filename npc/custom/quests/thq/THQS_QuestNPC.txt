@@ -183,8 +183,8 @@ N_JobList2:
 	mes " ";
 	mes "A strange man came in here yesterday and asked me to deliver this ^FF0000Strange Letter^000000 to some woman in Morroc. Knowing us we do not ask questions so you must take care of this delivery.";
 	mes "The Woman is in located in Morroc and her name is Erika.";
-	set two_qset, 1;
 	getitem 1072,1; //Delivery_Message
+	set two_qset, 1;
 	goto L_QuestGiven;
 
 N_JurJeramiah:
@@ -356,8 +356,8 @@ N_JobList6:
 	mes "How ironic.";
 	mes " ";
 	mes "Deliver this Box to the Thiefs guild.";
-	set six_qset,1;
 	getitem 1083,1; //Delivery_Box__
+	set six_qset,1;
 	goto L_QuestGiven;
 
 N_PyrPRT2:
@@ -375,8 +375,8 @@ N_Delivery2:
 	mes "Well most of what we do is run packages, this is no different from other's.";
 	mes " ";
 	mes "Take this box, DO NOT OPEN IT! To a little girl in Lutie named Chirach she should be around santa.";
-	set six_qset,3;
 	getitem 1083,1; //Delivery_Box__
+	set six_qset,3;
 	goto L_QuestGiven;
 
 N_Gef:
@@ -450,8 +450,8 @@ N_Delivery4:
 	mes "Well yah box delivering is in high demand,lots of lazy people.";
 	mes " ";
 	mes "Take this package to a man in Morroc named Klye.";
-	set eight_qset,2;
 	getitem 1081,1; //Delivery_Box
+	set eight_qset,2;
 	goto L_QuestGiven;
 
 N_Bapho:

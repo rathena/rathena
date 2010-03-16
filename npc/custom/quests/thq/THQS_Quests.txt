@@ -52,12 +52,16 @@ pay_arche,86,129,6	script	Archer	732,{
 	close;
 N_QuestStart:
 	mes "[Kieth]";
+	if (countitem(1072) < 1) {
+		mes "Weren't you supposed to deliver me a box? Where is it?";
+		close;
+	}
 	mes "Ahh, you must be from the Treasure Hunter Agensy. Do you have my bow??";
 	mes " ";
 	mes "Ahh, good,thank you for your time. Take this Treasure Token.";
+	delitem 1072,1;
 	set one_qset,0;
 	set On_Quest,0;
-	delitem 1072,1;
 	set #Treasure_Token,#Treasure_Token+1;
 	close;
 }
@@ -74,13 +78,13 @@ N_QuestComp:
 	mes "Well those bugs can bugger off...";
 	mes " ";
 	mes "Well here take these 2 Treasure Tokens.";
-	set one_qset,0;
-	set #Treasure_Token,#Treasure_Token+2;
-	set On_Quest,0;
 	delitem 909,20;
 	delitem 955,20;
 	delitem 914,20;
 	delitem 705,20;
+	set one_qset,0;
+	set #Treasure_Token,#Treasure_Token+2;
+	set On_Quest,0;
 	close;
 N_QuestStart:
 	mes "[Billy-Bob]";
@@ -101,8 +105,8 @@ N_QuestComp:
 	next;
 	mes "[Old Lady]";
 	mes "Thank you sooo much here have these 3 Treasure Tokens.";
-	set #Treasure_Token,#Treasure_Token+3;
 	delitem 934,15;
+	set #Treasure_Token,#Treasure_Token+3;
 	set one_qset,0;
 	set On_Quest,0;
 	close;
@@ -164,9 +168,9 @@ N_QuestComp:
 	mes "Ahh hello, you must be from the Treasure Hunter Guild.";
 	mes "Do you have my Jur? Ahh good good. Thank you.";
 	mes "Here have this Treasure Hunter Token.";
+	delitem 1998,1;
 	set two_qset,0;
 	set On_Quest,0;
-	delitem 1998,1;
 	set #Treasure_Token,#Treasure_Token+1;
 	close;
 N_QuestStart:
@@ -213,10 +217,10 @@ N_QuestComp:
 	mes " ";
 	mes "I knew you looked strong, I have no idea how you could have killed that monster though.";
 	mes "thank you so much, here have these 3 Guild Tokens as a reward.";
+	delitem 7005,1;
 	set two_qset,0;
 	set On_Quest,0;
 	set #Treasure_Token,#Treasure_Token+3;
-	delitem 7005,1;
 	close;
 N_QuestStart:
 	mes "[Molly]";
@@ -243,8 +247,8 @@ N_QuestComp:
 	mes " ";
 	mes "I hope that this hole will go away 1 day, and I might have another quest for you in the future.";
 	mes "here take these 2 Treasure Tokens.";
-	set #Treasure_Token,#Treasure_Token+2;
 	delitem 1040,30;
+	set #Treasure_Token,#Treasure_Token+2;
 	set three_qset,0;
 	set On_Quest,0;
 	close;
@@ -273,8 +277,8 @@ N_QuestComp:
 	mes "[Flank]";
 	mes "Thanks";
 	mes "Have this Treasure Token";
-	set three_qset,0;
 	delitem 1082,1;
+	set three_qset,0;
 	set #Treasure_Token,#Treasure_Token+1;
 	set On_Quest,0;
 	close;
@@ -325,9 +329,9 @@ N_QuestComp:
 	mes "I had my doughts but thank you for your help.";
 	mes " ";
 	mes "Here have these 4 Treasure Tokens.";
+	delitem 1041,50;
 	set three_qset,0;
 	set On_Quest,0;
-	delitem 1041,50;
 	set #Treasure_Token,#Treasure_Token+4;
 	close;
 N_QuestStart:
@@ -351,8 +355,8 @@ N_QuestComp:
 	mes "[Flora]";
 	mes "Welcome back, good job you did it. (I wonder if that Flaming Bastard is still alive)";
 	mes "Well I hope that cut down a bit on the monsters and here have these 2 Tokens.";
-	set #Treasure_Token,#Treasure_Token+2;
 	delitem 957,50;
+	set #Treasure_Token,#Treasure_Token+2;
 	set four_qset,0;
 	set On_Quest,0;
 	killmonster "pay_dun00","Flora::OnMobDead";
@@ -389,9 +393,9 @@ N_QuestComp:
 	next;
 	mes "[Zed]";
 	mes "Well you can take this crapy Treausre Token.";
+	delitem 1999,1;
 	set On_Quest,0;
 	set four_qset,0;
-	delitem 1999,1;
 	set #Treasure_Token,#Treasure_Token+1;
 	close;
 N_QuestStart:
@@ -411,9 +415,9 @@ N_QuestComp:
 	mes "Yes! Now my pet will not starve!";
 	mes "Thank you so much!";
 	mes "Have this Treasure Token.";
+	delitem 711,20;
 	set On_Quest,0;
 	set four_qset,0;
-	delitem 711,20;
 	set #Treasure_Token,#Treasure_Token+1;
 	close;
 N_QuestStart:
@@ -442,10 +446,10 @@ N_QuestComp:
 	mes "[Czhore]";
 	mes "Here have these 2 Treasure Tokens.";
 	mes "And some of my old treasure...";
+	delitem 714,1;
 	monster "prt_gld",155,99,"Old Man's Treasure",1324,1;
 	set four_qset,0;
 	set On_Quest,0;
-	delitem 714,1;
 	set #Treasure_Token,#Treasure_Token+2;
 	close;
 N_QuestStart:
@@ -471,10 +475,10 @@ N_QuestComp:
 	mes "Oh thank you so much, but they will be back...";
 	next;
 	mes "Take these 2 Treasure Tokens";
+	delitem 1028,15;
 	set five_qset,0;
 	set On_Quest,0;
 	set #Treasure_Token,#Treasure_Token+2;
-	delitem 1028,15;
 	close;
 N_QuestStart:
 	mes "[Lithin]";
@@ -498,10 +502,10 @@ N_QuestComp:
 	mes "Much thanks I have for you.";
 	next;
 	mes "Take with you these 2 Treasure Token's.";
+	delitem 932,30;
 	set #Treasure_Token,#Treasure_Token+2;
 	set five_qset,0;
 	set On_Quest,0;
-	delitem 932,30;
 	close;
 N_QuestStart:
 	mes "[Strange Man]";
@@ -550,9 +554,9 @@ N_QuestComp:
 	next;
 	mes "[Wizard]";
 	mes "Here take these 4 Treasure Tokens.";
+	delitem 1059,50;
 	set five_qset,0;
 	set On_Quest,0;
-	delitem 1059,50;
 	set #Treasure_Token,#Treasure_Token+4;
 	close;
 N_QuestStart:
@@ -578,8 +582,8 @@ N_QuestComp:
 	next;
 	mes "[Thief]";
 	mes "Here take this Treasure Token as a reward.";
-	set six_qset,0;
 	delitem 1083,1;
+	set six_qset,0;
 	set On_Quest,0;
 	set #Treasure_Token,#Treasure_Token+1;
 	close;
@@ -605,8 +609,8 @@ N_QuestComp2:
 	next;
 	mes "[Strange Man]";
 	mes "Take with you these 3 tokens.";
-	set #Treasure_Token,#Treasure_Token+3;
 	delitem 930,30;
+	set #Treasure_Token,#Treasure_Token+3;
 	set On_Quest,0;
 	set six_qset,0;
 	close;
@@ -624,8 +628,8 @@ N_QuestComp:
 	next;
 	mes "[Chirach]";
 	mes "Here take this Treasure Token as a reward.";
-	set six_qset,0;
 	delitem 1083,1;
+	set six_qset,0;
 	set On_Quest,0;
 	set #Treasure_Token,#Treasure_Token+1;
 	close;
@@ -646,9 +650,9 @@ N_QuestComp:
 	mes "Thank you for helping me.";
 	next;
 	mes "Here take these 4 Treasure Tokens.";
+	delitem 944,20;
 	set six_qset,0;
 	set On_Quest,0;
-	delitem 944,20;
 	set #Treasure_Token,#Treasure_Token+4;
 	next;
 	mes "[Zuuzuu]";
@@ -680,9 +684,9 @@ N_QuestComp:
 	next;
 	mes "[Girl]";
 	mes "Have these 1 Treasure Tokens.";
+	delitem 531,5;
 	set seven_qset,0;
 	set On_Quest,0;
-	delitem 531,5;
 	set #Treasure_Token,#Treasure_Token+1;
 	close;
 N_QuestStart:
@@ -706,8 +710,8 @@ N_QuestComp:
 	next;
 	mes "[Charles]";
 	mes "Here take this Treasure Token as a reward.";
-	set seven_qset,0;
 	delitem 1082,1;
+	set seven_qset,0;
 	set On_Quest,0;
 	set #Treasure_Token,#Treasure_Token+1;
 	close;
@@ -730,9 +734,9 @@ N_QuestComp2:
 	next;
 	mes "[Sewer Managment]";
 	mes "Here take these 4 Treasure Tokens.";
+	delitem 969,1;
 	set seven_qset,0;
 	set On_Quest,0;
-	delitem 969,1;
 	set #Treasure_Token,#Treasure_Token+4;
 	close;
 }
@@ -749,9 +753,9 @@ N_QuestComp:
 	next;
 	mes "[Scarlet]";
 	mes "Here take these 4 Treasure Tokens.";
+	delitem 1127,1;
 	set seven_qset,0;
 	set On_Quest,0;
-	delitem 1127,1;
 	set #Treasure_Token,#Treasure_Token+4;
 	close;
 N_QuestStart:
@@ -775,9 +779,9 @@ N_QuestComp2:
 	next;
 	mes "[Girl]";
 	mes "Have these 1 Treasure Tokens.";
+	delitem 532,5;
 	set eight_qset,0;
 	set On_Quest,0;
-	delitem 532,5;
 	set #Treasure_Token,#Treasure_Token+1;
 	close;
 }
@@ -794,8 +798,8 @@ N_QuestComp:
 	next;
 	mes "[Klye]";
 	mes "Here take this Treasure Token as a reward.";
-	set eight_qset,0;
 	delitem 1081,1;
+	set eight_qset,0;
 	set On_Quest,0;
 	set #Treasure_Token,#Treasure_Token+1;
 	close;
@@ -818,9 +822,9 @@ N_QuestComp:
 	next;
 	mes "[Zack]";
 	mes "Here take these 5 Treasure Tokens.";
+	delitem 923,1;
 	set eight_qset,0;
 	set On_Quest,0;
-	delitem 923,1;
 	set #Treasure_Token,#Treasure_Token+5;
 	close;
 N_QuestStart:
@@ -844,9 +848,9 @@ N_QuestComp:
 	next;
 	mes "[Flower]";
 	mes "Here take these 2 Treasure Tokens.";
+	delitem 746,10;
 	set eight_qset,0;
 	set On_Quest,0;
-	delitem 746,10;
 	set #Treasure_Token,#Treasure_Token+2;
 	close;
 N_QuestStart:
@@ -870,8 +874,8 @@ N_QuestComp:
 	next;
 	mes "[Mage]";
 	mes "Here take this Treasure Token as a reward.";
-	set nine_qset,0;
 	delitem 1082,1;
+	set nine_qset,0;
 	set On_Quest,0;
 	set #Treasure_Token,#Treasure_Token+1;
 	close;
@@ -893,9 +897,9 @@ N_QuestComp:
 	next;
 	mes "[School Girl]";
 	mes "Here take these 4 Treasure Tokens.";
+	delitem 1020,20;
 	set nine_qset,0;
 	set On_Quest,0;
-	delitem 1020,20;
 	set #Treasure_Token,#Treasure_Token+4;
 	close;
 N_QuestStart:
@@ -922,9 +926,9 @@ N_QuestComp:
 	next;
 	mes "[Jack]";
 	mes "Here take these 4 Treasure Tokens.";
+	delitem 1022,1;
 	set nine_qset,0;
 	set On_Quest,0;
-	delitem 1022,1;
 	set #Treasure_Token,#Treasure_Token+4;
 	close;
 N_QuestStart:
@@ -947,9 +951,9 @@ N_QuestComp2:
 	next;
 	mes "[Jack]";
 	mes "Here take these 3 Treasure Tokens.";
+	delitem 901,40;
 	set nine_qset,0;
 	set On_Quest,0;
-	delitem 901,40;
 	set #Treasure_Token,#Treasure_Token+3;
 	close;
 }
@@ -967,8 +971,8 @@ N_QuestComp:
 	next;
 	mes "[Kreg]";
 	mes "Here take this Treasure Token as a reward.";
-	set ten_qset,0;
 	delitem 1082,1;
+	set ten_qset,0;
 	set On_Quest,0;
 	set #Treasure_Token,#Treasure_Token+1;
 	close;
@@ -990,9 +994,9 @@ N_QuestComp:
 	next;
 	mes "[Man]";
 	mes "Here take these 4 Treasure Tokens.";
+	delitem 1029,1;
 	set ten_qset,0;
 	set On_Quest,0;
-	delitem 1029,1;
 	set #Treasure_Token,#Treasure_Token+4;
 	close;
 N_QuestStart:
@@ -1015,9 +1019,9 @@ N_QuestComp:
 	next;
 	mes "[Caral]";
 	mes "Here take these 4 Treasure Tokens.";
+	delitem 1015,1;
 	set ten_qset,0;
 	set On_Quest,0;
-	delitem 1015,1;
 	set #Treasure_Token,#Treasure_Token+4;
 	close;
 N_QuestStart:
@@ -1040,9 +1044,9 @@ N_QuestComp:
 	next;
 	mes "[Jeni]";
 	mes "Here take these 3 Treasure Tokens.";
+	delitem 1096,1;
 	set ten_qset,0;
 	set On_Quest,0;
-	delitem 1096,1;
 	set #Treasure_Token,#Treasure_Token+3;
 	close;
 N_QuestStart:
