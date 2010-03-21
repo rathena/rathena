@@ -1156,6 +1156,12 @@ int npc_cashshop_buy(struct map_session_data *sd, int nameid, int amount, int po
 	struct item_data *item;
 	int i, price, w;
 
+	if( amount <= 0 )
+		return 5;
+
+	if( points < 0 )
+		return 6;
+
 	if( !nd || nd->subtype != CASHSHOP )
 		return 1;
 
@@ -1191,6 +1197,13 @@ int npc_cashshop_buy(struct map_session_data *sd, int nameid, int amount, int po
 	w = item->weight * amount;
 	if( w + sd->weight > sd->max_weight )
 		return 3;
+
+	if( (double)nd->u.shop.shop_item[i].value * amount > INT_MAX )
+	{
+		ShowWarning("npc_cashshop_buy: Item '%s' (%d) price overflow attempt!\n", item->name, nameid);
+		ShowDebug("(NPC:'%s' (%s,%d,%d), player:'%s' (%d/%d), value:%d, amount:%d)\n", nd->exname, map[nd->bl.m].name, nd->bl.x, nd->bl.y, sd->status.name, sd->status.account_id, sd->status.char_id, nd->u.shop.shop_item[i].value, amount);
+		return 5;
+	}
 
 	price = nd->u.shop.shop_item[i].value * amount;
 	if( points > price )
