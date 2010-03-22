@@ -2789,7 +2789,6 @@ OnEnable:
 	end;
 
 OnReset:
-	donpcevent "Arena#3::OnReset";
 	killmonsterall "job_sage";
 	end;
 

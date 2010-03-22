@@ -1,5 +1,7 @@
 Date		Added
 ======
+2010/03/22
+	* Removed unnecessary event call on a missing event. (bugreport:4140) [Paradox924X]
 2010/03/13
 	* Rev. 14262 More bug fixing! Lots of little things, really. [L0ne_w0lf]
 	- Corrected some condition errors in quests_veins. (bugreport:4088)
