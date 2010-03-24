@@ -120,6 +120,9 @@ bool mail_setattachment(struct map_session_data *sd, struct mail_message *msg)
 		if( sd->status.inventory[n].amount < sd->mail.amount )
 			return false;
 
+		if( sd->weight > sd->max_weight )
+			return false;
+
 		memcpy(&msg->item, &sd->status.inventory[n], sizeof(struct item));
 		msg->item.amount = sd->mail.amount;
 	}
