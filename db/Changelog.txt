@@ -8,6 +8,11 @@
 	1475 Equestrian's Spear:	NEED INFO.
 	13005 Angelic Wing Dagger:	NEED INFO.
 =======================
+2010/03/23
+	* Rev. 14269 More bugfixing here, too! [L0ne_W0lf]
+	- Corrected the mode of the crystal monsters (removed MD_CANATTRACK). (bugreport:3962)
+	- Implemented the full ice pick effect on the BG assassin damascus. (bugreport:4137)
+	- Updated nagan_c, ballista_c, and Muramasa_c, and harp_of_nepenthes. (bugreport:4138)
 2010/03/11
 	* Rev. 14261 Corrected SP requirement for Poison React (bugreport:4116) [L0ne_W0lf]
 2010/03/03

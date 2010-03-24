@@ -30,6 +30,7 @@
 //= 1.2 Fixed missing ends, wrong label and some typos [Gepard]
 //= 1.3 Added the two remaining 13.1 quests. [L0ne_W0lf]
 //=     Cat Hand Agents no longer ignore you with 300+ points.
+//= 1.4 Changed killmonsterall -> killmonster. (bugreport:4131)
 //============================================================ 
 
 // Onward to the New World
@@ -13530,7 +13531,7 @@ OnDisable:
 	end;
 
 OnTimer600000:
-	killmonsterall "spl_fild02";
+	killmonster "spl_fild02","ep13_spl_fild02_mon_edq::OnMyMobDead";
 	stopnpctimer;
 	donpcevent "ep13_spl_fild02_mon_edq::OnEnable";
 	end;
