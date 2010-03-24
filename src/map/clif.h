@@ -371,6 +371,7 @@ int clif_mob_hp(struct mob_data *md);
 void clif_weather(int m); // [Valaris]
 int clif_specialeffect(struct block_list* bl, int type, enum send_target target); // special effects [Valaris]
 void clif_specialeffect_single(struct block_list* bl, int type, int fd);
+int clif_messagecolor(struct block_list* bl, unsigned long color, const char* msg); // Mob/Npc color talk [SnakeDrak]
 int clif_message(struct block_list *bl, const char* msg); // messages (from mobs/npcs) [Valaris]
 
 int clif_GM_kickack(struct map_session_data *sd,int id);

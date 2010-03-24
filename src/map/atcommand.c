@@ -6343,20 +6343,31 @@ int atcommand_cleanmap(const int fd, struct map_session_data* sd, const char* co
 
 /*==========================================
  * make a NPC/PET talk
+ * @npctalkc [SnakeDrak]
  *------------------------------------------*/
 int atcommand_npctalk(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
 	char name[NAME_LENGTH],mes[100],temp[100];
 	struct npc_data *nd;
+	bool ifcolor=(*(command + 8) != 'c' && *(command + 8) != 'C')?0:1;
+	unsigned long color=0;
 
 	if (sd->sc.count && //no "chatting" while muted.
 		(sd->sc.data[SC_BERSERK] ||
 		(sd->sc.data[SC_NOCHAT] && sd->sc.data[SC_NOCHAT]->val1&MANNER_NOCHAT)))
 		return -1;
 
-	if (!message || !*message || sscanf(message, "%23[^,], %99[^\n]", name, mes) < 2) {
-		clif_displaymessage(fd, "Please, enter the correct info (usage: @npctalk <npc name>, <message>).");
-		return -1;
+	if(!ifcolor) {
+		if (!message || !*message || sscanf(message, "%23[^,], %99[^\n]", name, mes) < 2) {
+			clif_displaymessage(fd, "Please, enter the correct info (usage: @npctalk <npc name>, <message>).");
+			return -1;
+		}
+	}
+	else {
+		if (!message || !*message || sscanf(message, "%lx %23[^,], %99[^\n]", &color, name, mes) < 3) {
+			clif_displaymessage(fd, "Please, enter the correct info (usage: @npctalkc <color> <npc name>, <message>).");
+			return -1;
+		}
 	}
 
 	if (!(nd = npc_name2id(name))) {
@@ -6366,7 +6377,9 @@ int atcommand_npctalk(const int fd, struct map_session_data* sd, const char* com
 	
 	strtok(name, "#"); // discard extra name identifier if present
 	snprintf(temp, sizeof(temp), "%s : %s", name, mes);
-	clif_message(&nd->bl, temp);
+	
+	if(ifcolor) clif_messagecolor(&nd->bl,color,temp);
+	else clif_message(&nd->bl, temp);
 
 	return 0;
 }
@@ -8733,6 +8746,7 @@ AtCommandInfo atcommand_info[] = {
 	{ "mobsearch",         10,10,     atcommand_mobsearch },
 	{ "cleanmap",          40,40,     atcommand_cleanmap },
 	{ "npctalk",           20,20,     atcommand_npctalk },
+	{ "npctalkc",           20,20,     atcommand_npctalk },
 	{ "pettalk",           10,10,     atcommand_pettalk },
 	{ "users",             40,40,     atcommand_users },
 	{ "reset",             40,40,     atcommand_reset },

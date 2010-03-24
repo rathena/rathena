@@ -9,6 +9,9 @@
 	13005 Angelic Wing Dagger:	NEED INFO.
 =======================
 2010/03/23
+	* Rev. 14269 Added support for server-side NPC_TALK. [L0ne_W0lf]
+	- New column in the mob_skill_db/2, and new database to hold monster dialog.
+	- Sneaking in a fix to balister_c.
 	* Rev. 14269 More bugfixing here, too! [L0ne_W0lf]
 	- Corrected the mode of the crystal monsters (removed MD_CANATTRACK). (bugreport:3962)
 	- Implemented the full ice pick effect on the BG assassin damascus. (bugreport:4137)

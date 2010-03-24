@@ -911,7 +911,7 @@
 1725,Bow_Of_Minstrel,Minstrel Bow,4,20,,1700,120,,5,1,0x00080800,7,2,34,4,70,1,11,{ bonus bInt,2; bonus bSPrecovRate,10; },{},{}
 1726,Hunter_Bow_,Hunter Bow,4,64000,,1500,125,,5,1,0x00000800,7,2,34,3,33,1,11,{},{},{}
 1727,Balistar_,Ballista,4,124000,,3500,145,,5,1,0x00080800,7,2,34,4,77,1,11,{},{},{}
-1728,Balistar_C,Refined Ballista,4,1,,0,194,,5,0,0x00080800,7,2,34,4,1,0,11,{ bonus bLongAtkRate,40; },{},{}
+1728,Balistar_C,Refined Ballista,4,1,,0,194,,5,0,0x00080800,7,2,34,4,1,0,11,{ bonus bLongAtkRate,20; },{},{}
 1729,Bow_Of_Rudra_C,Refined Rudra Bow,4,2,,0,185,,5,0,0x000A0808,7,2,34,4,1,0,11,{ bonus bAtkEle,Ele_Holy; bonus bInt,5; skill "AL_CURE",1; skill "AL_HEAL",1; },{},{}
 1730,Burning_Bow,Burning Bow,4,20,,1400,95,,5,1,0x000A0808,7,2,34,3,55,1,11,{ bonus2 bSubEle,Ele_Fire,10; if(isequipped(1752)) bonus bLongAtkRate,25; },{},{}
 1731,Frozen_Bow,Freezing Bow,4,20,,1400,100,,5,1,0x000A0808,7,2,34,3,55,1,11,{ bonus2 bAddEff,Eff_Freeze,1000; if(isequipped(1754)) bonus bLongAtkRate,25; },{},{}

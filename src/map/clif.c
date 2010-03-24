@@ -7381,6 +7381,29 @@ void clif_specialeffect_single(struct block_list* bl, int type, int fd)
 	WFIFOSET(fd,10);
 }
 
+/******************************************************
+ * W.<packet> W.<LENGTH> L.<ID> L.<COLOR> S.<TEXT>
+ * Mob/NPC Color Talk [SnakeDrak]
+ ******************************************************/
+int clif_messagecolor(struct block_list* bl, unsigned long color, const char* msg)
+{
+	unsigned short msg_len = strlen(msg) + 1;
+	uint8 buf[256];
+	color = (color & 0x0000FF) << 16 | (color & 0x00FF00) | (color & 0xFF0000) >> 16; // RGB to BGR
+
+	nullpo_retr(0, bl);
+
+	WBUFW(buf,0) = 0x2C1;
+	WBUFW(buf,2) = msg_len + 12;
+	WBUFL(buf,4) = bl->id;
+	WBUFL(buf,8) = color;
+	memcpy(WBUFP(buf,12), msg, msg_len);
+
+	clif_send(buf, WBUFW(buf,2), bl, AREA_CHAT_WOC);
+
+	return 0;
+}
+
 // messages (from mobs/npcs) [Valaris]
 int clif_message(struct block_list* bl, const char* msg)
 {

@@ -62,6 +62,13 @@ struct mob_skill {
 	short target;
 	int val[5];
 	short emotion;
+	unsigned short msg_id;
+};
+
+struct mob_chat {
+	unsigned short msg_id;
+	unsigned long color;
+	char msg[CHAT_SIZE_MAX];
 };
 
 struct spawn_info {

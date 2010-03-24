@@ -51,12 +51,17 @@
 #define MOB_MAX_DELAY (24*3600*1000)
 #define MAX_MINCHASE 30	//Max minimum chase value to use for mobs.
 #define RUDE_ATTACKED_COUNT 2	//After how many rude-attacks should the skill be used?
+#define MAX_MOB_CHAT 250 //Max Skill's messages
 
 //Dynamic mob database, allows saving of memory when there's big gaps in the mob_db [Skotlex]
 struct mob_db *mob_db_data[MAX_MOB_DB+1];
 struct mob_db *mob_dummy = NULL;	//Dummy mob to be returned when a non-existant one is requested.
 
 struct mob_db *mob_db(int index) { if (index < 0 || index > MAX_MOB_DB || mob_db_data[index] == NULL) return mob_dummy; return mob_db_data[index]; }
+
+//Dynamic mob chat database
+struct mob_chat *mob_chat_db[MAX_MOB_CHAT+1];
+struct mob_chat *mob_chat(short id) { if(id<=0 || id>MAX_MOB_CHAT || mob_chat_db[id]==NULL) return (struct mob_chat*)NULL; return mob_chat_db[id]; }
 
 static struct eri *item_drop_ers; //For loot drops delay structures.
 static struct eri *item_drop_list_ers;
@@ -2978,6 +2983,13 @@ int mobskill_use(struct mob_data *md, unsigned int tick, int event)
 		if (!flag)
 			continue; //Skill requisite failed to be fulfilled.
 
+		if (ms[i].msg_id){ //Display color message [SnakeDrak]
+			struct mob_chat *mc = mob_chat(ms[i].msg_id);
+			char temp[CHAT_SIZE_MAX];
+			snprintf(temp, sizeof temp,"%s : %s", md->name, mc->msg);
+			clif_messagecolor(&md->bl, mc->color, temp);
+		}
+		
 		//Execute skill	
 		if (skill_get_casttype(ms[i].skill_id) == CAST_GROUND)
 		{	//Ground skill.
@@ -3869,6 +3881,103 @@ static int mob_read_randommonster(void)
 }
 
 /*==========================================
+ * processes one mob_chat_db entry [SnakeDrak]
+ * @param last_msg_id ensures that only one error message per mob id is printed
+ *------------------------------------------*/
+static bool mob_parse_row_chatdb(char** str, const char* source, int line, int* last_msg_id)
+{
+	struct mob_chat *ms;
+	int msg_id;
+
+	msg_id = atoi(str[0]);
+
+	if (msg_id <= 0 || msg_id > MAX_MOB_CHAT)
+	{
+		if (msg_id != *last_msg_id) {
+			ShowError("mob_chat: Invalid chat ID: %d at %s, line %d\n", msg_id, source, line);
+			*last_msg_id = msg_id;
+		}
+		return false;
+	}
+
+	if (mob_chat_db[msg_id] == NULL)
+		mob_chat_db[msg_id] = (struct mob_chat*)aCalloc(1, sizeof (struct mob_chat));
+
+	ms = mob_chat_db[msg_id];
+	//MSG ID
+	ms->msg_id=msg_id;
+	//Color
+	ms->color=strtoul(str[1],NULL,0);
+	//Message
+	if(strlen(str[2])>(CHAT_SIZE_MAX-1)){
+		if (msg_id != *last_msg_id) {
+			ShowError("mob_chat: readdb: Message too long! Line %d, id: %d\n", line, msg_id);
+			*last_msg_id = msg_id;
+		}
+		return false;
+	}
+	strncpy(ms->msg, str[2], CHAT_SIZE_MAX);
+
+	return true;
+}
+
+/*==========================================
+ * mob_chat_db.txt reading [SnakeDrak]
+ *-------------------------------------------------------------------------*/
+static void mob_readchatdb(void)
+{
+	char arc[]="mob_chat_db.txt";
+	uint32 lines=0, count=0;
+	char line[1024], path[256];
+	int i, tmp=0;
+	FILE *fp;
+	sprintf(path, "%s/%s", db_path, arc); 
+	fp=fopen(path, "r");
+	if(fp == NULL)
+	{
+		ShowWarning("mob_readchatdb: File not found \"%s\", skipping.\n", path);
+		return;
+	}
+	
+	while(fgets(line, sizeof(line), fp))
+	{
+		char *str[3], *p, *np;
+		int j=0;
+
+		lines++;
+		if(line[0] == '/' && line[1] == '/')
+			continue;
+		memset(str, 0, sizeof(str));
+
+		p=line;
+		while(ISSPACE(*p))
+			++p;
+		if(*p == '\0')
+			continue;// empty line
+		for(i = 0; i <= 2; i++)
+		{
+			str[i] = p;
+			if(i<2 && (np = strchr(p, ',')) != NULL) {
+				*np = '\0'; p = np + 1; j++;
+			}
+		}
+
+		if( j < 2 || str[2]==NULL)
+		{
+			ShowError("mob_readchatdb: Insufficient number of fields for skill at %s, line %d\n", arc, lines);
+			continue;
+		}
+
+		if( !mob_parse_row_chatdb(str, path, lines, &tmp) )
+			continue;
+
+		count++;
+	}
+	fclose(fp);
+	ShowStatus("Done reading '"CL_WHITE"%s"CL_RESET"'.\n", arc);
+}
+
+/*==========================================
  * processes one mob_skill_db entry
  * @param last_mob_id ensures that only one error message per mob id is printed
  *------------------------------------------*/
@@ -4092,6 +4201,12 @@ static bool mob_parse_row_mobskilldb(char** str, const char* source, int line, i
 		ms->emotion=atoi(str[17]);
 	else
 		ms->emotion=-1;
+		
+	if(str[18]!=NULL && mob_chat_db[atoi(str[18])]!=NULL)
+		ms->msg_id=atoi(str[18]);
+	else
+		ms->msg_id=0;
+
 	if (mob_id < 0)
 	{	//Set this skill to ALL mobs. [Skotlex]
 		mob_id *= -1;
@@ -4156,6 +4271,7 @@ static int mob_readskilldb(void)
 		while(fgets(line, sizeof(line), fp))
 		{
 			char *str[20], *p, *np;
+			int j=0;
 
 			lines++;
 			if(line[0] == '/' && line[1] == '/')
@@ -4167,15 +4283,15 @@ static int mob_readskilldb(void)
 				++p;
 			if( *p == '\0' )
 				continue;// empty line
-			for(i = 0; i < 18; i++)
+			for(i = 0; i < 19; i++)
 			{
 				str[i] = p;
 				if((np = strchr(p, ',')) != NULL) {
-					*np = '\0'; p = np + 1;
+					*np = '\0'; p = np + 1; j++;
 				}
 			}
 			
-			if( i < 18 )
+			if ( j < 18 || str[18]==NULL )
 			{
 				ShowError("mob_readskilldb: Insufficient number of fields for skill at %s, line %d\n", filename[fi], lines);
 				continue;
@@ -4262,6 +4378,7 @@ void mob_reload(void)
 			memset(&mob_db_data[i]->skill,0,sizeof(mob_db_data[i]->skill));
 			mob_db_data[i]->maxskill=0;
 		}
+	mob_readchatdb();
 	mob_readskilldb();
 	mob_readdb_race();
 }
@@ -4294,6 +4411,7 @@ int do_init_mob(void)
 
 	mob_readdb_mobavail();
 	mob_read_randommonster();
+	mob_readchatdb();
 	mob_readskilldb();
 	mob_readdb_race();
 
@@ -4327,6 +4445,14 @@ int do_final_mob(void)
 		{
 			aFree(mob_db_data[i]);
 			mob_db_data[i] = NULL;
+		}
+	}
+	for (i = 0; i <= MAX_MOB_CHAT; i++)
+	{
+		if (mob_chat_db[i] != NULL)
+		{
+			aFree(mob_chat_db[i]);
+			mob_chat_db[i] = NULL;
 		}
 	}
 	ers_destroy(item_drop_ers);

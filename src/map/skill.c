@@ -5701,6 +5701,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				skill_castend_nodamage_id);
 		}
 		break;
+	case NPC_TALK:
 	case ALL_WEWISH:
 		clif_skill_nodamage(src,bl,skillid,skilllv,1);
 		break;
