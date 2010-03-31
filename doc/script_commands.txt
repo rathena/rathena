@@ -2522,6 +2522,7 @@ recreate these items perfectly if they are destroyed. Here's what you get:
 @inventorylist_card3[]       inscribed on the items, so you can explicitly check
 @inventorylist_card4[]       if the character owns an item made by a specific 
                              craftsman.
+@inventorylist_expire[]    - expire time (Unix timestamp). 0 means never expires.
 @inventorylist_count       - the number of items in these lists.
 
 This could be handy to save/restore a character's inventory, since no other 
@@ -5605,7 +5606,7 @@ will be warped.
 This command can also keep track of who just got warped. It does this by setting 
 special variables:
 
-$@warpwaitingpc[] is an array containing the character id numbers of the 
+$@warpwaitingpc[] is an array containing the account_id numbers of the 
                   characters who were just warped.
 $@warpwaitingpcnum contains the number of the character it just warped.
 

@@ -10504,6 +10504,7 @@ BUILDIN_FUNC(getinventorylist)
 				sprintf(card_var, "@inventorylist_card%d",k+1);
 				pc_setreg(sd,add_str(card_var)+(j<<24),sd->status.inventory[i].card[k]);
 			}
+			pc_setreg(sd,add_str("@inventorylist_expire")+(j<<24),sd->status.inventory[i].expire_time);
 			j++;
 		}
 	}
