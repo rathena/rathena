@@ -1569,6 +1569,9 @@ int map_quit(struct map_session_data *sd)
 	if (sd->npc_timer_id != -1) //Cancel the event timer.
 		npc_timerevent_quit(sd);
 
+	if (sd->npc_id)
+		npc_event_dequeue(sd);
+
 	npc_script_event(sd, NPCE_LOGOUT);
 
 	//Unit_free handles clearing the player related data, 

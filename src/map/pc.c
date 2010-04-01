@@ -4005,6 +4005,9 @@ int pc_setpos(struct map_session_data* sd, unsigned short mapindex, int x, int y
 		if(!sd->mapindex || map_mapname2ipport(mapindex,&ip,&port))
 			return 2;
 
+		if (sd->npc_id)
+			npc_event_dequeue(sd);
+		npc_script_event(sd, NPCE_LOGOUT);
 		//remove from map, THEN change x/y coordinates
 		unit_remove_map_pc(sd,clrtype);
 		sd->mapindex = mapindex;
