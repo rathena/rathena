@@ -14642,7 +14642,7 @@ mosk_dun02,48,214,5	script	Baba Yaga#rus32	970,{
 					next;
 					while(1) {
 						input .@input;
-						if (.@input$ == 0) {
+						if (.@input == 0) {
 							mes "[Baba Yaga]";
 							mes "You don't want it?";
 							next;
@@ -14650,7 +14650,7 @@ mosk_dun02,48,214,5	script	Baba Yaga#rus32	970,{
 							mes "I don't understand you. What do you want? Kehehehehe.";
 							close;
 						}
-						else if (.@input$ > 100) {
+						else if (.@input > 100) {
 							mes "[Baba Yaga]";
 							mes "I said no more then 100 at a time. Kehehehehe.";
 							next;

@@ -61,6 +61,7 @@ aldeba_in,96,181,4	script	Kafra Service	113,{
 			mes "seems that you don't";
 			mes "have the 20 zeny to pay";
 			mes "the Storage access fee...";
+			close;
 		}
 		mes "[Kafra Leilah]";
 		mes "Although this facility is";
