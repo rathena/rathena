@@ -2632,26 +2632,26 @@ int atcommand_refine(const int fd, struct map_session_data* sd, const char* comm
 	memset(atcmd_output, '\0', sizeof(atcmd_output));
 
 	if (!message || !*message || sscanf(message, "%d %d", &position, &refine) < 2) {
-		clif_displaymessage(fd, "Please, enter a position and a amount (usage: @refine <equip position> <+/- amount>).");
-		sprintf(atcmd_output, "%d: Left Accessory", EQI_ACC_L);
+		clif_displaymessage(fd, "Please, enter a position and an amount (usage: @refine <equip position> <+/- amount>).");
+		sprintf(atcmd_output, "%d: Lower Headgear", EQP_HEAD_LOW);
 		clif_displaymessage(fd, atcmd_output);
-		sprintf(atcmd_output, "%d: Right Accessory", EQI_ACC_R);
+		sprintf(atcmd_output, "%d: Right Hand", EQP_HAND_R);
 		clif_displaymessage(fd, atcmd_output);
-		sprintf(atcmd_output, "%d: Shoes", EQI_SHOES);
+		sprintf(atcmd_output, "%d: Garment", EQP_GARMENT);
 		clif_displaymessage(fd, atcmd_output);
-		sprintf(atcmd_output, "%d: Garment", EQI_GARMENT);
+		sprintf(atcmd_output, "%d: Left Accessory", EQP_ACC_L);
 		clif_displaymessage(fd, atcmd_output);
-		sprintf(atcmd_output, "%d: Lower Headgear", EQI_HEAD_LOW);
+		sprintf(atcmd_output, "%d: Body Armor", EQP_ARMOR);
 		clif_displaymessage(fd, atcmd_output);
-		sprintf(atcmd_output, "%d: Mid Headgear", EQI_HEAD_MID);
+		sprintf(atcmd_output, "%d: Left Hand", EQP_HAND_L);
 		clif_displaymessage(fd, atcmd_output);
-		sprintf(atcmd_output, "%d: Top Headgear", EQI_HEAD_TOP);
+		sprintf(atcmd_output, "%d: Shoes", EQP_SHOES);
 		clif_displaymessage(fd, atcmd_output);
-		sprintf(atcmd_output, "%d: Body Armor", EQI_ARMOR);
+		sprintf(atcmd_output, "%d: Right Accessory", EQP_ACC_R);
 		clif_displaymessage(fd, atcmd_output);
-		sprintf(atcmd_output, "%d: Left Hand", EQI_HAND_L);
+		sprintf(atcmd_output, "%d: Top Headgear", EQP_HEAD_TOP);
 		clif_displaymessage(fd, atcmd_output);
-		sprintf(atcmd_output, "%d: Right Hand", EQI_HAND_R);
+		sprintf(atcmd_output, "%d: Mid Headgear", EQP_HEAD_MID);
 		clif_displaymessage(fd, atcmd_output);
 		return -1;
 	}

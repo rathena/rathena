@@ -1845,7 +1845,7 @@ comodo,68,195,0	script	Old Man#thai	120,{
 }
 
 moc_ruins,107,62,0	script	Tommy#thai	716,{
-	if (thai_head == 6 && thai_head == 11) {
+	if (thai_head >= 6 && thai_head <= 11) {
 		switch(thai_head) {
 		case 6:
 			mes "[Tommy]";
