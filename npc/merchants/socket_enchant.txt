@@ -195,7 +195,7 @@ payon,140,151,5	script	Seiyablem#pay	84,{
 					mes "[Seiyablem]";
 					mes "Um... S Class?";
 					mes "You sure about this?";
-					mes "Alright... Let me know the Armor to which you'd like to add a Sot, and I'll tell what I need to try it.";
+					mes "Alright... Let me know the Armor to which you'd like to add a Slot, and I'll tell what I need to try it.";
 					next;
 					switch(select("Majestic Goat:Spiky Band:Bone Helm:Corsair:Crown:Tiara:Sphinx Hat:Robe of Cast:Earring:Ring:Bow Thimble"))
 					{

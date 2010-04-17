@@ -34,6 +34,7 @@ ALTER TABLE `mercenary_owner` ENGINE = InnoDB;
 #ALTER TABLE `mob_db2` ENGINE = InnoDB;
 ALTER TABLE `party` ENGINE = InnoDB;
 ALTER TABLE `pet` ENGINE = InnoDB;
+ALTER TABLE `quest` ENGINE = InnoDB;
 ALTER TABLE `ragsrvinfo` ENGINE = InnoDB;
 ALTER TABLE `sc_data` ENGINE = InnoDB;
 ALTER TABLE `skill` ENGINE = InnoDB;
