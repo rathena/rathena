@@ -1601,15 +1601,23 @@ int mmo_char_tobuf(uint8* buffer, struct mmo_charstatus* p)
 
 int mmo_char_send006b(int fd, struct char_session_data* sd)
 {
-	int j;
+	int j, offset = 0;
+#if PACKETVER >= 20100413
+	offset += 3;
+#endif
 
 	if (save_log)
 		ShowInfo("Loading Char Data ("CL_BOLD"%d"CL_RESET")\n",sd->account_id);
 
-	j = 24; // offset
+	j = 24 + offset; // offset
 	WFIFOHEAD(fd,j + MAX_CHARS*MAX_CHAR_BUF);
 	WFIFOW(fd,0) = 0x6b;
-	memset(WFIFOP(fd,4), 0, 20); // unknown bytes
+#if PACKETVER >= 20100413
+	WFIFOB(fd,4) = MAX_CHARS; // Max slots.
+	WFIFOB(fd,5) = MAX_CHARS; // Available slots.
+	WFIFOB(fd,6) = MAX_CHARS; // Premium slots.
+#endif
+	memset(WFIFOP(fd,4 + offset), 0, 20); // unknown bytes
 	j+=mmo_chars_fromsql(sd, WFIFOP(fd,j));
 	WFIFOW(fd,2) = j; // packet len
 	WFIFOSET(fd,j);

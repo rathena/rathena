@@ -1744,7 +1744,10 @@ int mmo_char_tobuf(uint8* buffer, struct mmo_charstatus* p)
 //----------------------------------------
 int mmo_char_send006b(int fd, struct char_session_data* sd)
 {
-	int i, j, found_num;
+	int i, j, found_num, offset = 0;
+#if PACKETVER >= 20100413
+	offset += 3;
+#endif;
 
 	found_num = 0;
 	for(i = 0; i < char_num; i++) {
@@ -1757,10 +1760,15 @@ int mmo_char_send006b(int fd, struct char_session_data* sd)
 	for(i = found_num; i < MAX_CHARS; i++)
 		sd->found_char[i] = -1;
 
-	j = 24; // offset
+	j = 24 + offset; // offset
 	WFIFOHEAD(fd,j + found_num*MAX_CHAR_BUF);
 	WFIFOW(fd,0) = 0x6b;
-	memset(WFIFOP(fd,4), 0, 20); // unknown bytes
+#if PACKETVER >= 20100413
+	WFIFOB(fd,4) = MAX_CHARS; // Max slots.
+	WFIFOB(fd,5) = MAX_CHARS; // Available slots.
+	WFIFOB(fd,6) = MAX_CHARS; // Premium slots.
+#endif
+	memset(WFIFOP(fd,4 + offset), 0, 20); // unknown bytes
 	for(i = 0; i < found_num; i++)
 		j += mmo_char_tobuf(WFIFOP(fd,j), &char_dat[sd->found_char[i]].status);
 	WFIFOW(fd,2) = j; // packet len
