@@ -593,16 +593,18 @@ int party_optionchanged(int party_id,int account_id,int exp,int item,int flag)
 	if( (p=party_search(party_id))==NULL)
 		return 0;
 
-	if(!(flag&0x01) && p->party.exp != exp) {
+	//Flag&1: Exp change denied. Flag&2: Item change denied.
+	if(!(flag&0x01) && p->party.exp != exp)
 		p->party.exp=exp;
-		clif_party_option(p,sd,flag); //This packet doesn't updates item info anymore...
-	}
 	if(!(flag&0x10) && p->party.item != item) {
 		p->party.item=item;
+#if PACKETVER<20090603
+		//item changes aren't updated by clif_party_option for older clients.
 		clif_party_member_info(p,sd);
+#endif
 	}
-	if(flag&0x01) //Send denied message
-		clif_party_option(p,sd,flag);
+
+	clif_party_option(p,sd,flag);
 	return 0;
 }
 
