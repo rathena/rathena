@@ -107,8 +107,11 @@ int npc_ontouch_event(struct map_session_data *sd, struct npc_data *nd)
 {
 	char name[NAME_LENGTH*2+3];
 
-	if( nd->touching_id || pc_ishiding(sd) )
-		return 0;
+	if( nd->touching_id )
+		return 0; // Attached a player already. Can't trigger on anyone else.
+
+	if( pc_ishiding(sd) )
+		return 1; // Can't trigger 'OnTouch_'. try 'OnTouch' later.
 
 	snprintf(name, ARRAYLENGTH(name), "%s::%s", nd->exname, script_config.ontouch_name);
 	return npc_event(sd,name,1);
