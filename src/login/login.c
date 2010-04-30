@@ -1018,7 +1018,7 @@ int mmo_auth(struct login_session_data* sd)
 	sd->level = acc.level;
 
 	// update account data
-	timestamp2string(acc.lastlogin, sizeof(acc.lastlogin), time(NULL), login_config.date_format);
+	timestamp2string(acc.lastlogin, sizeof(acc.lastlogin), time(NULL), "%Y-%m-%d %H:%M:%S");
 	safestrncpy(acc.last_ip, ip, sizeof(acc.last_ip));
 	acc.unban_time = 0;
 	acc.logincount++;

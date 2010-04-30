@@ -1058,7 +1058,7 @@
 					mes "him to tell you again.";
 					close;
 				}
-				else if (BaseJob == Job_Preist) {
+				else if (BaseJob == Job_Priest) {
 					mes "[" + .@name$ + "]";
 					mes "Ah, " + strcharinfo(0) + ",";
 					mes "please take good care of";
