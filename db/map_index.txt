@@ -753,13 +753,43 @@ spl_in02
 bat_c01
 bat_c02
 bat_c03
-evt_zombie
+moc_para01
+job3_arch01
+job3_arch02
+job3_arch03
+job3_guil01
+job3_guil02
+job3_guil03
+job3_rang01
+job3_rang02
+job3_rune01
+job3_rune02
+job3_rune03
+job3_war01
+job3_war02
+jupe_core2
+brasilis
+bra_in01
+bra_fild01
+bra_dun01
+bra_dun02
+dicastes01
+dicastes02
+dic_in01
+dic_fild01
+dic_fild02
+dic_dun01
+dic_dun02
+job3_gen01
+s_atelier
+job3_sha01
+
+//evt_zombie
 //evt_coke
 //ac_sl_area
 //ac_cl_hall
 //ac_cl_room
 //jp_s_dun11
-//moc_para01
 
 // Only add maps under this line if they are not standard maps!
 

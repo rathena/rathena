@@ -8,6 +8,14 @@
 	1475 Equestrian's Spear:	NEED INFO.
 	13005 Angelic Wing Dagger:	NEED INFO.
 =======================
+2010/04/30
+	* Rev. r14293 Updates and additions, bugfixes. [L0ne_W0lf]
+	* Updated some information for new pet feed/taming items.
+	* Added some of the new maps up to episode 13.3 (El Discastes)
+	* Updated the bonuses for Lunakaligo to official. (bugreport:4149)
+	* Changed the the autbonus type forNaga Scale Armor. (bugreport:4151)
+	* Fixed bonuses for Kieger Fumma and Flamberge. (bugreport:4181)
+	* Changed Cordial bonus on Petite Pet to AspdRate. (bugreport:4184)
 2010/03/23
 	* Rev. 14269 Added support for server-side NPC_TALK. [L0ne_W0lf]
 	- New column in the mob_skill_db/2, and new database to hold monster dialog.
