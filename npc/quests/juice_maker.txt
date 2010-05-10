@@ -228,6 +228,8 @@ payon_in03,188,146,5	script	Marx Hansen#juice	86,{
 			switch(select("As many as I can.:I want a certain amount.:Cancel.")) {
 			case 1:
 				set .@make,countitem(.@fruit);
+				if (countitem(713) < .@make) set .@make, countitem(713);
+				if (Zeny/3 < .@make) set .@make, Zeny/3;
 				break;
 			case 2:
 				mes "[Merchant Marx Hansen]";

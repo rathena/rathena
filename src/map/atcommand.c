@@ -8746,7 +8746,7 @@ AtCommandInfo atcommand_info[] = {
 	{ "mobsearch",         10,10,     atcommand_mobsearch },
 	{ "cleanmap",          40,40,     atcommand_cleanmap },
 	{ "npctalk",           20,20,     atcommand_npctalk },
-	{ "npctalkc",           20,20,     atcommand_npctalk },
+	{ "npctalkc",          20,20,     atcommand_npctalk },
 	{ "pettalk",           10,10,     atcommand_pettalk },
 	{ "users",             40,40,     atcommand_users },
 	{ "reset",             40,40,     atcommand_reset },

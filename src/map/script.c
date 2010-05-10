@@ -11151,6 +11151,8 @@ BUILDIN_FUNC(checkequipedcard)
 	if(sd){
 		for(i=0;i<MAX_INVENTORY;i++){
 			if(sd->status.inventory[i].nameid > 0 && sd->status.inventory[i].amount && sd->inventory_data[i]){
+				if (itemdb_isspecial(sd->status.inventory[i].card[0]))
+					continue;
 				for(n=0;n<sd->inventory_data[i]->slot;n++){
 					if(sd->status.inventory[i].card[n]==c){
 						script_pushint(st,1);

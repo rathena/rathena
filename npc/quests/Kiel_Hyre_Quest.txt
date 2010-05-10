@@ -1714,7 +1714,6 @@ kh_school,178,180,4	script	Elly	895,{
 			mes "Grey Box you found inside";
 			mes "Kiel Hyre's Cottage.^000000";
 			next;
-			next;
 			mes "^3355FFYou successfully open the";
 			mes "Grey Box with the Golden Key,";
 			mes "and find a Blue Keycard, along";
