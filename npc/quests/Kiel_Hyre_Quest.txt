@@ -5941,7 +5941,6 @@ yuno_fild09,158,217,0	script	Wooden Board#kh	111,{
 		mes "wooden board carved";
 		mes "with the initials, ''K.H.''^000000";
 		next;
-		next;
 		cutin "kh_kyel_port",2;
 		mes "^3355FFYou find a portrait of";
 		mes "a young man, that looks";
