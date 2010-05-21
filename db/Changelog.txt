@@ -8,6 +8,16 @@
 	1475 Equestrian's Spear:	NEED INFO.
 	13005 Angelic Wing Dagger:	NEED INFO.
 =======================
+2010/05/20
+	* Rev. 14298 Lots of updates. Mostly mob related. [L0ne_W0lf]
+	- Added known stats and drops for 13.2 monsters.
+	- Added custom skills and mobchat for 13.2 mobs.
+	- Added known stats for Brasilis Mobs.
+	- Added new quest entries, and updated some old ones.
+	- Removed Itemskill from Large_spray_of_flowers.
+	- Added known names and ids for more mobs.
+	- Added homunculus IDs to homun database as placeholders.
+	- Added skill ids for 3rd jobs to skill_db as placeholders.
 2010/04/30
 	* Rev. r14293 Updates and additions, bugfixes. [L0ne_W0lf]
 	* Updated some information for new pet feed/taming items.

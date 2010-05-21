@@ -28,3 +28,6 @@
 24,0xFF0000,When are you going to learn your lesson? In death?
 25,0xFF0000,No... I can't lose! I won't beg for my life! I'm not running away! I don't accept this as defeat!
 26,0xFF0000,Argh... I... I'm weakening...
+27,0xFF0000,What do you want from me?
+28,0xFF0000,No! I didn't do this! He's the one who planned out all this!
+29,0xFF0000,I just wanted to find peace..!  That's why I have been fleeing away!

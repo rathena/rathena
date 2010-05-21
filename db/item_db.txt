@@ -4220,7 +4220,7 @@
 12308,Magic_Castle,Magic Magic Powder,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ setfont 8; },{},{}
 12309,Bulging_Head,JJangu Magic Powder,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ setfont 9; },{},{}
 12310,Spray_Of_Flowers,Spray Of Flowers,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_INCFLEE,600000,10; },{},{}
-12311,Large_Spray_Of_Flowers,Large Spray Of Flowers,11,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill "ALL_PARTYFLEE",10; },{},{}
+12311,Large_Spray_Of_Flowers,Large Spray Of Flowers,11,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12312,Thick_Manual50,Thick Battle Manual,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_EXPBOOST,3600000,50; },{},{}
 12313,Protection_Of_Angel,Guardian Angel,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12314,Noive_Box,Noive Box,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
@@ -4255,7 +4255,7 @@
 12343,Manuk's_Courage,Manuk's Courage,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12344,Pinguicula's_fruit_Jam,Pinguicula's fruit Jam,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12345,Luciola's_Honey_Jam,Luciola's Honey Jam,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-12346,Unripe_Acorn,Unripe Acorn,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12346,Unripe_Acorn,Unripe Acorn,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal -100,0; },{},{}
 12347,Acorn_Jelly,Acorn Jelly,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12348,Manuk's_Faith,Manuk's Faith,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12349,Cornus'_Tears,Cornus' Tears,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
