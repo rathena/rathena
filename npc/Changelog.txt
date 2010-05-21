@@ -1,6 +1,7 @@
 Date		Added
 ======
 2010/05/20
+	* Rev. 14300 Added more misc NPCs to Splendide and Manuk city files. [L0ne_W0lf]
 	* Rev. 14299 Added some Brasilis basic NPCs. [L0ne_W0lf]
 2010/03/23
 	* Rev. 14269 Fixed a couple bugs in the episode 13.x quests. [L0ne_W0lf]

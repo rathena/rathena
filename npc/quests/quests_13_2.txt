@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
-//= 1.2
+//= 1.3
 //===== Compatible With: =====================================
 //= eAthena SVN
 //===== Description: =========================================
@@ -14,6 +14,7 @@
 //= 1.0 First version
 //= 1.1 Fixed unidentified_coin -> unidentified_mineral. (bugreport:4086)
 //= 1.2 Fixed Half-buried Gem#1 not re-enabling. (bugreport:4129)
+//= 1.3 Moved misc NPCs to the their respective city file. [L0ne_W0lf]
 //============================================================ 
 
 // Cat Hand Addition. (Leads to 13.2 areas)
@@ -2597,93 +2598,6 @@ spl_fild01,317,361,0	duplicate(FishingHole_spl1)	School of Fish#11	844
 spl_fild01,55,269,0	duplicate(FishingHole_spl1)	School of Fish#12	844
 spl_fild01,332,131,0	duplicate(FishingHole_spl1)	School of Fish#13	844
 spl_fild01,170,74,0	duplicate(FishingHole_spl1)	School of Fish#14	844
-
-manuk,304,195,5	script	Soldier#ep13pa829	454,{
-	if (isequipped(2782) == 1) {
-		mes "[Food Provider]";
-		mes "The Manuk family subsists mostly on refining Gray Hollows that were burried a long time ago deep down under the ground.";
-		close;
-	}
-	else {
-		mes "[Food Provider]";
-		mes "Gdiios duuie Dssoas pogggd fdrul fdddoweet";
-		close;
-	}
-}
-
-manuk,274,239,5	script	Soldier#ep13_2	455,{
-	if (isequipped(2782) == 1) {
-		mes "[Injured Manuk Soldier]";
-		mes "I can't absorb Bradium Essence anymore because of my fatal injury.";
-		mes "Those wicked fairies attacked me and left me like this.";
-		close;
-		mes "[Injured Manuk Soldier]";
-		mes "I wish I could kill all the fairies...";
-		close;
-	}
-	else {
-		mes "[Injured Manuk Soldier";
-		mes "Bhiio aaas dgwer fdds rrrrrpppp Ee";
-		close;
-		mes "[Injured Manuk Soldier]";
-		mes "Foi dsddff gggeeeerr pqowe";
-		close;
-	}
-}
-
-manuk,107,233,5	script	Soldier#ep13_3	454,{
-	if (isequipped(2782) == 1) {
-		mes "[Anxious Soldier]";
-		mes "Hurry, I am in big trouble. I lost all the Manuk Coins. I think I dropped them somewhere on the snowfield. Gosh, I saw them right before I fell asleep!";
-		close;
-	}
-	else {
-		mes "[Anxious Soldier]";
-		mes "Qosi dhhui rffd poaner ouh.";
-		close;
-	}
-}
-
-splendide,218,193,3	script	Fairy#ep13_1	441,{
-	if (isequipped(2782) == 1) {
-		mes "[Exhausted Fairy]";
-		mes "Wait, don't come any closer. I can't stand your smell, it makes me feel dizzy.";
-		close;
-	}
-	else {
-		mes "[Exhausted Fairy]";
-		mes "OdesKoUor Ko NuffSharUden Ko CyaVenah An NudNuffser An KoRivehAdor Mu LarseorAnu O DorNe";
-		close;
-	}
-}
-
-splendide,180,223,3	script	Fairy#ep13_2	440,{
-	if (isequipped(2782) == 1) {
-		mes "[Kalua]";
-		mes "You don't look sophisticated, but I think you are better than those uncivilized guys who are around the snowfield.";
-		close;
-	}
-	else {
-		mes "[Kalua]";
-		mes "AlahCyamah U MeKoser Ir TimaurRiveh Di LarsRasTi Di AgolKones Or AlahUdenAndu Ee FusRe";
-		close;
-	}
-}
-
-splendide,125,227,3	script	Fairy#ep13_3	444,{
-	if (isequipped(2782) == 1) {
-		mes "[Flowa]";
-		mes "No offense, I was not looking at you with sympathy.";
-		mes "I just wondered how you could walk with that heavy body...";
-		close;
-	}
-	else {
-		mes "[Flowa]";
-		mes "AnuFuloUor Ko CyaWosnes Ha WosAnuAsh O WosDuAno O ";
-		mes "FuloAndueo Ie WosGothLars Ee Tinarmaur Or AlahnahVa Or narAnuFulo So KoCya";
-		close;
-	}
-}
 
 // Otherworld language
 //============================================================ 
