@@ -80,7 +80,7 @@
 #define MAX_FAME 1000000000
 #define MAX_CART 100
 #define MAX_SKILL 1020
-#define GLOBAL_REG_NUM 96
+#define GLOBAL_REG_NUM 256
 #define ACCOUNT_REG_NUM 64
 #define ACCOUNT_REG2_NUM 16
 //Should hold the max of GLOBAL/ACCOUNT/ACCOUNT2 (needed for some arrays that hold all three)
@@ -99,7 +99,7 @@
 #define MAX_GUILDCASTLE 34	// Updated to include new entries for WoE:SE. [L0ne_W0lf]
 #define MAX_GUILDLEVEL 50
 #define MAX_GUARDIANS 8	//Local max per castle. [Skotlex]
-#define MAX_QUEST_DB 1200 //Max quests that the server will load
+#define MAX_QUEST_DB 1500 //Max quests that the server will load
 #define MAX_QUEST_OBJECTIVES 3 //Max quest objectives for a quest
 
 #define MIN_HAIR_STYLE battle_config.min_hair_style

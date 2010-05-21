@@ -3,6 +3,10 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2010/05/20
+	* Rev. 14301 Increased gobal_reg_value to 256 from 96. [L0ne_W0lf]
+	* Upped the max quest db entries allowed to 1500.
+	* Added remaining status icons to status.h (mostly 3rd job icons.)
 2010/04/28
 	* Fixed OnTouch doesn't trigger on hiding character. (bugreport:4208) [Inkfish]
 2010/04/23
