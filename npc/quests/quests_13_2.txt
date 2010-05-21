@@ -7,17 +7,19 @@
 //===== Compatible With: =====================================
 //= eAthena SVN
 //===== Description: =========================================
-//= [Aegis Conversaion]
+//= [Aegis Conversion]
 //= Cat Hand Addition. (Leads to 13.2 areas)
+//= Two Tribes
 //= Otherworld language
 //===== Additional Comments: =================================
 //= 1.0 First version
 //= 1.1 Fixed unidentified_coin -> unidentified_mineral. (bugreport:4086)
 //= 1.2 Fixed Half-buried Gem#1 not re-enabling. (bugreport:4129)
 //= 1.3 Moved misc NPCs to the their respective city file. [L0ne_W0lf]
+//= 1.3 Added the "Two Tribes" quest. [L0ne_W0lf]
 //============================================================ 
 
-// Cat Hand Addition. (Leads to 13.2 areas)
+// Cat Hand Addition.
 //============================================================ 
 spl_fild02,25,211,4	script	Cat Hand Agent#spl	421,{
 	if (ep13_yong1 < 3) {
@@ -2598,6 +2600,2295 @@ spl_fild01,317,361,0	duplicate(FishingHole_spl1)	School of Fish#11	844
 spl_fild01,55,269,0	duplicate(FishingHole_spl1)	School of Fish#12	844
 spl_fild01,332,131,0	duplicate(FishingHole_spl1)	School of Fish#13	844
 spl_fild01,170,74,0	duplicate(FishingHole_spl1)	School of Fish#14	844
+
+// Two Tribes
+//============================================================
+spl_in01,32,306,3	script	Splendide Guard#ep13md01	447,2,2,{
+	if (checkweight(1201,2) == 0) {
+		mes "Wait a moment!!";
+		mes "You have too many items.";
+		mes "You can't receive this.";
+		mes "Lighten your weight and";
+		mes "try again.";
+		close;
+	}
+	if ((isequipped(2782) == 1) && (ep13_2_rhea > 99)) {
+		if (ep13_mdrama == 0) {
+			mes "[Splendide Guard]";
+			mes "Outsider?";
+			mes "Outsiders have been coming more frequently.";
+			next;
+			mes "[Splendide Guard]";
+			mes "It seems like our superiors have permitted your entrance, so I won't stop you either.";
+			next;
+			mes "[Arc]";
+			mes "My name is Arc.";
+			mes "By the way, hmm... Can you understand what I'm saying?";
+			next;
+			switch(select("Yes.:Shake my head")) {
+			case 1:
+				mes "[Arc]";
+				mes "What? Did you just say 'Yes'?";
+				mes "Can't believe we understand eachother!";
+				mes "When did you learn our language?";
+				mes "What is your race called?";
+				next;
+				mes "- I show my ring to Arc and explain everything including how I ended up here... -";
+				next;
+				mes "[Arc]";
+				mes "So...hmm, That's how it is...";
+				mes "The source of that huge shock and mysterious explosion...";
+				next;
+				mes "[Arc]";
+				mes "Quite an interesting story.";
+				mes "That's why you humans were exploring here and there...";
+				next;
+				mes "[Arc]";
+				mes "Now I clearly understand that you are not sent by the giants of Manuk.";
+				mes "Thank you for telling me these interesting stories.";
+				set ep13_mdrama,1;
+				close;
+			case 2:
+				mes "[Arc]";
+				mes "Oh? Is that so?";
+				mes "We use different languages as expected...";
+				mes "That's a bit frustrating.";
+				close;
+			}
+		}
+		else if (ep13_mdrama == 1) {
+			mes "[Arc]";
+			mes "By the way, you...";
+			mes "No, never mind...";
+			mes "What is your name?";
+			next;
+			select("" + strcharinfo(0) + "");
+			mes "[Arc]";
+			mes "Ah, right. " + strcharinfo(0) +"!";
+			mes "That's a strange pronunciation.";
+			mes "I might mispronunce it, so please understand...";
+			next;
+			mes "[Arc]";
+			mes "Anyways, I have a favor to ask you. Is it okay?";
+			next;
+			switch(select("What favor?:Not now.")) {
+			case 1:
+				mes "[Arc]";
+				mes "Um...Ah..It's...";
+				mes "A little...complicated...";
+				next;
+				mes "- Arc looks around to check if someone else is around. Satisfied you're alone he continues with his story in a low tone. -";
+				next;
+				mes "[Arc]";
+				mes "Frankly, I'm worried about a friend of mine who left without permission saying that she's going to check on your camp. She hasn't come back since then.";
+				next;
+				mes "[Arc]";
+				mes "But, I can't leave this post to look for her 'cause I have a duty to guard the research data stored here.";
+				next;
+				mes "[Arc]";
+				mes "Since she left without permission, I can't even report to my superiors... that will just end up as a bigger problem.";
+				next;
+				mes "[Arc]";
+				mes "The thought of it just worries me...";
+				mes "As a matter of fact, we are trying not to have any contact with the giants of Manuk so we stay away from each other's territory.";
+				next;
+				mes "[Arc]";
+				mes "That camp of yours is located in the area that has been acting as the neutral zone between our two races...";
+				next;
+				mes "[Arc]";
+				mes "If she has gotten close to their side then she might have gone over to the snow fields...";
+				mes "That will make it even more difficult for us to look for her...";
+				next;
+				mes "[Arc]";
+				mes "The Manuk giants might misunderstand this as provoking them...Couldn't they?";
+				next;
+				mes "[" + strcharinfo(0) + "]";
+				mes "So...the point is, you want me to look for your friend. Right?";
+				mes "Because you can't do it yourself from all these complicated situations?";
+				next;
+				mes "[Arc]";
+				mes "Exactly!";
+				mes "You're quite observant.";
+				next;
+				switch(select("Sure, I will do it.:Sorry, can't help you.")) {
+				case 1:
+					mes "[" + strcharinfo(0) + "]";
+					mes "But, I'm going to need more information if I'm going to look for her.";
+					next;
+					mes "[Arc]";
+					mes "You don't have to worry about that...";
+					mes "^4d4dffTerra^000000 has a habit of making a knot out of plants to mark her destination.";
+					next;
+					mes "[Arc]";
+					mes "She does it so that she won't get lost.";
+					mes "If you find a trail of knotted plants it should lead you to where she is.";
+					next;
+					mes "[Arc]";
+					mes "It can be hard to look for them, but it's better than doing nothing...";
+					mes "Please, I beg of you.";
+					next;
+					mes "[Arc]";
+					mes "Ah, and please keep this a secret from the other Laphines.";
+					next;
+					mes "[Arc]";
+					mes "Remember " + strcharinfo(0) + "... you must keep this to yourself...";
+					mes "Please, find her.";
+					set ep13_mdrama,2;
+					setquest 7056;
+					close;
+				case 2:
+					mes "[Arc]";
+					mes "It sure was an unreasonable favor...";
+					mes "You too were sent here to carry on a mission...";
+					mes "That was thoughtless of me...";
+					close;
+				}
+			case 2:
+				mes "[Arc]";
+				mes "Is that so? Of course.";
+				mes "You were sent here to carry on your own mission...";
+				close;
+			}
+		}
+		else if (ep13_mdrama == 2) {
+			mes "[Arc]";
+			mes "^4d4dffTerra^000000 has a habit of making a knot out of plants to mark her destination.";
+			mes "Keep that in mind when searching for her. And don't tell any other Laphine's about her missing.";
+			next;
+			mes "[Arc]";
+			mes "You " + strcharinfo(0) + " are the only one I could ask for help...";
+			mes "Do me this favor please.";
+			close;
+		}
+		else if ((ep13_mdrama > 3) && (ep13_mdrama < 7)) {
+			mes "[Arc]";
+			mes "Did you find anything?";
+			mes "Have you found any knotted plants?";
+			mes "Yeah, that's the mark";
+			mes "that Terra leaves.";
+			next;
+			mes "[Arc]";
+			mes "Keep it up and find her";
+			mes "for me.";
+			close;
+		}
+		else if (ep13_mdrama == 7) {
+			mes "[Arc]";
+			mes "Ah, Well met!";
+			mes "What do I do now?!";
+			next;
+			select("What? What happened?");
+			mes "- Arc looks like he was thrown into confusion about something. -";
+			next;
+			mes "[Arc]";
+			mes "Terra...";
+			next;
+			mes "[Arc]";
+			mes "Terra came back!!!";
+			mes "but, she was covered all over with wounds...";
+			next;
+			select("Covered with wounds?");
+			mes "[Arc]";
+			mes "She didn't even get treatment!";
+			mes "She just took the Bradium with that exhausted body!";
+			next;
+			mes "[Arc]";
+			mes "Didn't even tell me the reason!";
+			mes "I told her no, but she wouldn't listen to me!";
+			mes "It happened all of a sudden.";
+			next;
+			mes "[Arc]";
+			mes "" + strcharinfo(0) + "!";
+			mes "What shoud I do now?";
+			mes "What do I have to do?";
+			mes "Terra left again and she was hurt...";
+			next;
+			mes "[Arc]";
+			mes "And I just stood here...doing nothing.";
+			next;
+			select("You have a strong sense of responsibility.");
+			mes "[Arc]";
+			mes "......anyways.";
+			mes "I couldn't either stop her, or follow her...";
+			mes "What now...?";
+			mes "Why did she take the Bradium...?";
+			next;
+			mes "- You tell Arc about the Giant from the cave. -";
+			next;
+			mes "[Arc]";
+			mes "What? Is that what happened?";
+			mes "Bradium...is certainly a precious ore for Sapha.";
+			mes "They use a refined Bradium ore...";
+			next;
+			mes "[Arc]";
+			mes "You said that a Sapha was hurt?";
+			mes "And its body was already stiff?";
+			mes "Impossible!";
+			mes "Terra!!";
+			next;
+			mes "- Arc suddenly began gathering up his gear. -";
+			set ep13_mdrama,8;
+			close;
+		}
+		else if (ep13_mdrama == 8) {
+			mes "[Arc]";
+			mes "Where was that cave where you found that Sapha?";
+			mes "There was no such cave when we inspected our surrounding areas.";
+			next;
+			select("What are you trying to do?");
+			mes "[Arc]";
+			mes "Can't you see?";
+			mes "I'm going out to look for Terra. She took the Bradium with her, it has got to be something to do with that Sapha.";
+			next;
+			select("Is it okay for you to leave your post?");
+			mes "[Arc]";
+			mes "It's.. ...";
+			mes "...No....";
+			mes "Shit, then what should I do!!";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "I will go. I'm the one who knows exactly where that cave is.";
+			mes "I will go and bring her back.";
+			mes "If Terra headed for that cave, I should be able to find her.";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "Let's hear rest of the story from Terra.";
+			mes "It is important for you to guard this place, isn't it?";
+			mes "If Terra really took the Bradium without any permission...";
+			next;
+			mes "[Arc]";
+			mes "The higher ups won't just remain still...";
+			mes "I'm sorry to ask you but...";
+			mes "Please go and bring her back here...";
+			set ep13_mdrama,9;
+			changequest 7058,7059;
+			close;
+		}
+		else if ((ep13_mdrama > 8) && (ep13_mdrama < 13)) {
+			mes "[Arc]";
+			mes "I'm really sorry for getting you into this mess.....";
+			mes "...Please, find Terra.";
+			close;
+		}
+		else if (ep13_mdrama == 13) {
+			mes "[Arc]";
+			mes "What? A wounded Laphine in the Sapha's village?";
+			mes "Was it Terra?! Was she captured by those Sapha bastards?!";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "Calm down. I couldn't check out exactly who the captured Laphine was.";
+			mes "And they seem to have no intention of harming the Laphine.";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "Also, they were looking for something that can cure a wounded Laphine...";
+			mes "If we bring some medicine to them, we might have a chance to see who the Laphine is.";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "I understand how anxious you feel.. but that is the only way I can think of finding out who it is.";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "I will take some things to treat the wounds with me and if it turns out that the captured Laphine is Terra, I will bring her back.";
+			next;
+			mes "[Arc]";
+			mes "..........";
+			mes "OK, that seems like the best thing we can do for this situation...";
+			next;
+			mes "[Arc]";
+			mes "Do you by any chance know about the 'Yggdrasil'?";
+			mes "There's nothing better than the Yggdrasilberry to treat wounds...";
+			mes "Especially for us Laphine...";
+			next;
+			mes "[Arc]";
+			mes "If you have a Yggdrasilberry, you can use it to cure that Laphine...";
+			mes ".Yggdrasil is the tree of life... its roots are in touch with everything in this world.";
+			next;
+			mes "[Arc]";
+			mes "I have...";
+			mes "...only three Yggdrasilberries...";
+			next;
+			mes "[Arc]";
+			mes "I will give you these but they won't be enough...";
+			mes "Outside... there is a huge tree... where the root of the Yggdrasil is exposed.... it should be there.";
+			next;
+			mes "[Arc]";
+			mes "Sometimes you can find Yggdrasilberries around there.";
+			mes "Go find few more and bring them with you. Hurry!";
+			set ep13_mdrama,14;
+			getitem 607,3; //Yggdrasilberry
+			changequest 7062,7063;
+			close;
+		}
+		else if ((ep13_mdrama > 13) && (ep13_mdrama < 18)) {
+			mes "[Arc]";
+			mes "There's a huge root of the tree near a swamp at the outskirts of this area.";
+			mes "That's where the tree of life's root is exposed.";
+			next;
+			mes "[Arc]";
+			mes "You should be able to find some Yggdrasilberries there.";
+			next;
+			mes "[Arc]";
+			mes "You will need at least 6~7 of them...";
+			mes ".... .. I hope she is safe..";
+			next;
+			mes "[Arc]";
+			mes "As soon as you are done collecting the berries, bring them to the Sapha Village right away!!!";
+			mes "Terra... please be safe.";
+			close;
+		}
+		else if ((ep13_mdrama > 17) && (ep13_mdrama < 25)) {
+			mes "[Arc]";
+			mes "...Oh where is Terra...?";
+			close;
+		}
+		else if (ep13_mdrama == 25) {
+			mes "[Arc]";
+			mes "" + strcharinfo(0) + "!!";
+			mes "Terra's back!!!";
+			mes "She is back in one piece!";
+			mes "...She hasn't been saying a single word since her return, I told her to rest in Yai...";
+			next;
+			mes "[Arc]";
+			mes "Please come by if you don't mind...";
+			mes "Terra's Yai.";
+			mes "Which is her Private Residence... It's located at the Southeast direction from here.";
+			mes "I would like to hear a detailed account of what happened.";
+			set ep13_mdrama,26;
+			changequest 7070,7071;
+			close;
+		}
+		else if (ep13_mdrama == 26) {
+			mes "[Arc]";
+			mes "What happened....while she was gone?";
+			mes "I would like to hear a detailed account fn what happened...";
+			mes "Please go to Terra's Yai later.";
+			close;
+		}
+		else if (ep13_mdrama > 26) {
+			mes "[Arc]";
+			mes "I really appreciate what you've done for us.";
+			mes "But, I'm worried about Terra.";
+			mes "I hope she can be her old self...";
+			close;
+		}
+		else {
+			mes "[Arc]";
+			mes "Ah~Ah~Stop right there...";
+			mes "This area is off-limits to unauthorized personnel.";
+			close;
+		}
+	}
+	else {
+		if (ep13_mdrama > 0) {
+			mes "[Arc]";
+			mes "Yur,Dur AnoVa?";
+			mes "Wha? Dieb OsaDur .. ";
+			mes "ah..RuffThus NeAsh. man nesAsh OdesAlah ?";
+			next;
+			mes "- I can't understand what he's saying... Oh god how frustrating. -";
+			close;
+		}
+		else {
+			mes "[Splendide Guard]";
+			mes "NeiVil !";
+			mes "narNoth nesMush.";
+			mes "AnuDur AmanDana Goth nar!";
+			next;
+			mes "- We don't seem to understand eachother. -";
+			close;
+		}
+	}
+	end;
+
+OnTouch:
+	if (isequipped(2782) == 1) {
+		if (ep13_mdrama < 1) {
+			mes "[Splendide Guard]";
+			mes "Halt.";
+			mes "This area is restricted unless you have been given permission.";
+			mes "Especially to outsiders like you.";
+			close;
+		}
+	}
+	else {
+		mes "[Splendide Guard]";
+		mes "Tal-!";
+		mes "AnuDur AmanDana Goth nar!";
+		mes "Agoltas Me...";
+		next;
+		mes "- Looks like we don't understand each other. This could be troublesome... -";
+		close;
+	}
+	end;
+}
+
+spl_fild02,45,214,0	script	????#ep13_mdplant01	844,{
+	if (ep13_mdrama == 2) {
+		cutin "ep13_plant01",2;
+		mes "Weeds are easy to find around here...";
+		mes "A closer look reveals that there's one knotted stem...";
+		mes "It looks like this is Terra's trace that Arc told me about.";
+		next;
+		mes "A knotted leaf is pointing toward the^4d4dff Southern^000000 direction.";
+		set ep13_mdrama,3;
+		changequest 7056,7057;
+		close2;
+	}
+	else if (ep13_mdrama > 2) {
+		mes "This is a marking Terra left to remember the way back home.";
+		mes "A knotted leaf is pointing^4d4ff South^000000.";
+		close2;
+	}
+	else {
+		mes "Weeds are easy to find around here...";
+		mes "There's nothing too special about it.";
+		close2;
+	}
+	cutin "ep13_plant01",255;
+	end;
+}
+
+spl_fild02,122,106,0	script	????#ep13_mdplant02	844,{
+	if (ep13_mdrama > 2) {
+		cutin "ep13_plant01",2;
+		mes "Weeds are easy to find around here...";
+		mes "A closer look reveals that there's one knotted stem...";
+		mes "It looks like this is Terra's trace that Arc told me about.";
+		next;
+		mes "A knotted leaf is pointing ^4d4dff East^000000.";
+		close2;
+	}
+	else {
+		mes "Weeds are easy to find around here...";
+		mes "There's nothing too special about it.";
+		close2;
+	}
+	cutin "ep13_plant01",255;
+	end;
+}
+
+spl_fild02,329,191,0	script	????#ep13_mdplant03	844,{
+	if (ep13_mdrama > 2) {
+	cutin "ep13_plant01",2;
+		mes "Weeds are easy to find around here...";
+		mes "A closer look reveals that there's one knotted stem...";
+		mes "It looks like this is Terra's trace that Arc told me about.";
+		next;
+		mes "A knotted leaf is pointing ^4d4dff North^000000.";
+		close2;
+	}
+	else {
+		mes "Weeds are easy to find around here...";
+		mes "There's nothing too special about it.";
+		close2;
+	}
+	cutin "ep13_plant01",255;
+	end;
+}
+
+spl_fild02,328,323,0	script	????#ep13_mdplant04	844,{
+	if (ep13_mdrama == 3) {
+		mes "There are footprints here as well as signs that someone has fallen.";
+		mes "It looks like someone was fighting here?";
+		mes "But who?";
+		next;
+		mes "There are footprints heading ^4d4dffNorth^000000.";
+		set ep13_mdrama,4;
+		close;
+	}
+	else if (ep13_mdrama > 3) {
+		mes "Someone must have had a fight here.";
+		mes "There are footprints heading ^4d4dffNorth^000000.";
+		close;
+	}
+	else {
+		mes "There are footprints here that seem to be leading towards something.";
+		close;
+	}
+}
+
+spl_fild01,341,109,0	script	????#ep13_mdplant05	844,{
+	if (ep13_mdrama == 4) {
+		mes "There's evidence that there was a fight here too.";
+		mes "These footsteps can't be a Laphine's...";
+		next;
+		mes "There are footprints that lead to^4d4dff the Root of a huge tree^000000.";
+		set ep13_mdrama,5;
+		close;
+	}
+	else if (ep13_mdrama > 4) {
+		mes "There are footprints that lead to^4d4dff the Root of a huge tree^000000.";
+		close;
+	}
+	else {
+		mes "There are footprints here that seem to be leading towards something.";
+		close;
+	}
+}
+
+spl_fild01,375,109,0	script	to_dun01#ep13_2	-1,2,2,{
+OnTouch:
+	if (ep13_mdrama == 5) {
+		mes "There's a stem entangled inside an opening in the roots of a huge tree...";
+		mes "It looks like something slipped here.";
+		next;
+		mes "A cold breeze is blowing out from deep inside the tree.";
+		next;
+		switch(select("Follow the trace.:Looks dangerous... head back.")) {
+		case 1:
+			mes "You take a one step forward carefully through the muddy roots and slip.";
+			set ep13_mdrama,6;
+			close2;
+			percentheal -30,0;
+			warp "nyd_dun01",72,125;
+			end;
+		case 2:
+			mes "It's too dark to see anything inside...but it feels like there's a big hole at the bottom.";
+			mes "I'd better step back...It looks dangerous.";
+			close;
+		}
+	}
+	else if (ep13_mdrama > 5) {
+		mes "Between huge roots, there is a hole leads to the underground cave.";
+		next;
+		switch(select("Go inside.:I'm not going in there.")) {
+		case 1:
+			mes "Again, you slip through the muddy roots.";
+			close2;
+			percentheal -30,0;
+			warp "nyd_dun01",72,125;
+			end;
+		case 2:
+			mes "You decide to come back later.";
+			close;
+		}
+	}
+	else {
+		mes "Strange looking stems are entangled inside an opening of huge roots.";
+		mes "Surface looks unstable...I should step away before I slip on it.";
+		close;
+	}
+}
+
+nyd_dun01,58,223,0	script	Petrified Sapha#ep13md03	844,{
+	if (checkweight(1201,2) == 0) {
+		mes "Wait a moment!!";
+		mes "You have too many items.";
+		mes "You can't receive this.";
+		mes "Lighten your weight and";
+		mes "try again.";
+		close;
+	}
+	if (ep13_mdrama == 6) {
+		mes "This is the only spot where sunlight is shining down through a hole in the ceiling.";
+		next;
+		mes "Looking up I see the roots of the tree and stems digging up a mud-plastered wall, so the sunlight could shine through....2.j...There is a statue of Giant on the ground.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "A statue in a place like this...";
+		mes "Interesting.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Hm, This resembles... that giant tribe in Manuk...";
+		mes "Huh? It's wearing a muffler...";
+		mes "...It can't be!";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "It has a lot of scars on it... as if it had been in a severe fight...";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "And it appears like it's holding something in its arms...";
+		mes "Just what happened here?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "I can't imagine what happened here, but I don't see Terra's marks anymore...";
+		mes "and this cave looks unsafe... I'd better go back to Arc for now.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Could it be... Terra was fighting this Giant?";
+		set ep13_mdrama,7;
+		changequest 7057,7058;
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Anyways... How do I get out of here?";
+		mes "That hole I came in is too slippery to climb back out...";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Light is coming in from the ceiling above... Maybe I should just climb a stem around here...";
+		close;
+	}
+	else if ((ep13_mdrama == 7) || (ep13_mdrama == 8)) {
+		mes "[" + strcharinfo(0) + "]";
+		mes "I'm done with this place.";
+		mes "I should go back to Arc...";
+		mes "Let's find an exit.";
+		close;
+	}
+	else if (ep13_mdrama == 9) {
+		mes "I came back here, but there's no trace of Terra...";
+		mes "There's only one thing different from the last time..Small particles of an ore are sprinkled around the Sapha's dead body.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "So...Terra was here.....";
+		mes "Powdered Bradium...";
+		mes "What was she trying to do with this Sapha?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "I can't just go back to Arc without anything... he'd be so disappointed...";
+		mes "Hmm, Should I go to the Sapha's village?";
+		set ep13_mdrama,10;
+		changequest 7059,7060;
+		close;
+	}
+	else if (ep13_mdrama == 10) {
+		mes "[" + strcharinfo(0) + "]";
+		mes "I can't find any traces of Terra anymore.";
+		mes "One thing that bugs me is...These particles of an ore.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "I should go back to Arc and ask about it, or go to Sapha's Village and investigate some more.";
+		close;
+	}
+	else if ((ep13_mdrama > 10) && (ep13_mdrama < 21)) {
+		mes "A giant from the race called Sapha is petrified here.";
+		mes "It looks like it's dead...";
+		close;
+	}
+	else if (ep13_mdrama == 21) {
+		mes "I need to bring back some evidence of this giant in the cave.";
+		mes "What should I bring with me?";
+		next;
+		switch(select("Hair:Muffler:Pants:Fragment of Bradium")) {
+		case 1:
+			mes "It won't come off. It's as if it is a tree rooted on a rock.";
+			close;
+		case 2:
+			mes "You carefully strip a worn muffler off of the Sapha's neck.";
+			mes "We will see if this muffler belongs to Ogen or not.";
+			next;
+			mes "And...what else should I take?";
+			next;
+			switch(select("Hair:Pants:Fragment of Bradium")) {
+			case 1:
+				mes "It won't come off. It's as if it is a tree rooted on a rock.";
+				close;
+			case 2:
+				mes "... I don't want to take off a dead MAN's pants...";
+				close;
+			case 3:
+				mes "You pick up a fragment of Bradium scattered on the ground.";
+				mes "This should be enough.";
+				set ep13_mdrama,22;
+				getitem 6085,1; //Shaggy_Muffler
+				getitem 6084,1; //Bradium_Fragments
+				changequest 7066,7067;
+				close;
+			}
+		case 3:
+			mes "... I don't want to take off a dead MAN's pants...";
+			close;
+		case 4:
+			mes "You pick up a fragment of Bradium scattered on the ground.";
+			mes "This will prove Terra's effort...";
+			mes "And what else?";
+			next;
+			switch(select("Hair:Muffler:Pants")) {
+			case 1:
+				mes "It won't come off. It's as if it is a tree rooted on a rock.";
+				close;
+			case 2:
+				mes "You carefully strip a worn muffler off of the Sapha's neck.";
+				mes "We will see if this muffler belongs to Ogen or not...";
+				mes "This should be enough.";
+				set ep13_mdrama,22;
+				getitem 6085,1; //Shaggy_Muffler
+				getitem 6084,1; //Bradium_Fragments
+				changequest 7066,7067;
+				close;
+			case 3:
+				mes "... I don't want to take off a dead MAN's pants...";
+				close;
+			}
+		}
+	}
+	else if (ep13_mdrama == 22) {
+		mes "Petrified Sapha.";
+		mes "Now I have the muffler, let's go back to Luik and Snorren.";
+		close;
+	}
+	else if (ep13_mdrama == 23) {
+		if (isequipped(2782) == 1) {
+			donpcevent "Snorren#ep13md17::OnEnable";
+			mes "[Snorren]";
+			mes "Ogen!!!!!!";
+			mes "...Ogen... Ogen...";
+			mes "....Ogeeen......";
+			next;
+			select("You don't mean..?");
+			mes "[Snorren]";
+			mes "This.. is.. worse than I could have imagined.....";
+			mes "Ogen... this doesn't look like it can be reversed...";
+			next;
+			mes "[Snorren]";
+			mes "No matter how much bradium fluid we inject... Ogen can't come back alive...";
+			next;
+			mes "[Snorren]";
+			mes "Ogen... really was adament... about protecting that Laphine... to protect Terra.....";
+			mes "He did his best 'til the last...";
+			next;
+			mes "[Snorren]";
+			mes "Look at this, " + strcharinfo(0) + "...";
+			mes "His petrifyied body...";
+			mes "protected Terra...like this.";
+			next;
+			mes "[Snorren]";
+			mes "Ogen... made himself an unbreakable shield...";
+			next;
+			mes "[Snorren]";
+			mes "Ogen... you can now go back to the bosom of the Motherland...";
+			mes "This statue will be a monument to your courage...";
+			next;
+			mes "- - I can't begin to describe the sorrow of losing a close friend... -";
+			next;
+			mes "- All I could do was to keep tapping his shoulder... as he quietly sobbed... -";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "Let's.. go back...";
+			mes "Ogen wouldn't want you to be so sad and depressed.";
+			next;
+			mes "[Snorren]";
+			mes "I guess you are right...";
+			mes "There's... sunlight shining here...";
+			mes "This... must be a comfort resting place for Ogen.";
+			next;
+			mes "[Snorren]";
+			mes "I should go and tell Luik and the townspeople about this...";
+			mes "I will go on ahead.";
+			next;
+			donpcevent "Snorren#ep13md17::OnDisable";
+			mes "- Snorren stood up with a bitter smile...";
+			mes "...I should go back too... I'm worried about Terra. -";
+			set ep13_mdrama,24;
+			changequest 7068,7069;
+			close;
+		}
+		else {
+			mes "[" + strcharinfo(0) + "]";
+			mes "Whoa, I almost forgot the ring.";
+			close;
+		}
+	}
+	else if (ep13_mdrama > 23) {
+		mes "Ogen... was petrified as he covered Terra...";
+		mes "What was going on between them that they would see past their racial differences...?";
+		close;
+	}
+	else {
+		// custom translation
+		mes "Before you is a statue made of stone and wood. It's so life-like it's eerie.";
+		close;
+	}
+}
+
+nyd_dun01,55,223,5	script	Snorren#ep13md17	454,{
+	disablenpc "Snorren#ep13md17";
+	end;
+
+OnInit:
+	disablenpc "Snorren#ep13md17";
+	end;
+
+OnEnable:
+	enablenpc "Snorren#ep13md17";
+	end;
+
+OnDisable:
+	disablenpc "Snorren#ep13md17";
+	end;
+}
+
+nyd_dun01,62,233,0	script	Trunk of a Tree#ep13	844,2,2,{
+	mes "The trunk of a Tree moderately stretched upward.";
+	mes "There are big thorns here that should be enough to use as footholds to climb up.";
+	close;
+
+OnTouch:
+	mes "It's the trunk of a Tree stretched out toward a hole in the ceiling.";
+	mes "Big thorns can be used as footholds.";
+	next;
+	switch(select("Climb up.:Never mind.")) {
+		case 1:
+			warp "spl_fild01",376,65;
+			end;
+		case 2:
+			mes "I'll come back later.";
+			close;
+	}
+}
+manuk,278,177,5	script	Villager#ep13_11	454,{
+	if (checkweight(1201,2) == 0) {
+		mes "Wait a moment!!";
+		mes "You have too many items.";
+		mes "You can't receive this.";
+		mes "Lighten your weight and";
+		mes "try again.";
+		close;
+	}
+	if (isequipped(2782) == 1) {
+		if (ep13_mdrama == 10) {
+			mes "[Villager Lawine]";
+			mes "By the way, how did that Fairy come this far?";
+			mes "Is she captured?";
+			next;
+			mes "[Villager Rivier]";
+			mes "No, She's not.";
+			mes "That Fairy came here by her own accord.";
+			mes "How impudent. She was horribly wounded when she got here.";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "(Hmm? a Fairy? Wounded?";
+			mes "Are they talking about Terra..?!)";
+			next;
+			switch(select("Break into their conversation.:Keep quiet and listen.")) {
+			case 1:
+				mes "[" + strcharinfo(0) + "]";
+				mes "Excuse me for interrupting your conversation.";
+				mes "You were talking about a Fairy, would you be kind to tell me the details?";
+				next;
+				mes "[Villager Lawine]";
+				mes "Outsider!!";
+				mes "Why is he here?";
+				next;
+				mes "[Villager Rivier]";
+				mes "We weren't saying anything.";
+				mes "There's nothing to tell you.";
+				mes "Lawine, Come with me to the Refinery later.";
+				next;
+				mes "- The Sapha people are not willing to tell you anything. But the";
+				mes "captured Fairy may be Terra. -";
+				set ep13_mdrama,11;
+				changequest 7060,7061;
+				close;
+			case 2:
+				// Custom Translation
+				mes "[Villager Lawine]";
+				mes "I heard a fairy was crying and begging, she was badly hurt.";
+				next;
+				mes "[Villager Rivier]";
+				mes "No one understand the words of fairy...";
+				mes "In the end we had no idea what to do.";
+				next;
+				mes "[Villager Rivier]";
+				mes "Anyway, that fairy is now in prison.";
+				mes "By the way, pull within feather";
+				mes "Today we have to go to the refinery,";
+				mes "do not forget.";
+				next;
+				mes "[Villager Lawine]";
+				mes "You know, right?";
+				mes "Ahh! A foreign visitor!";
+				next;
+				mes "[Villager Rivier]";
+				mes "Nevermind him, he can not understand our words.";
+				next;
+				mes "- Fortunately, Sapha had thought I could not understand them,";
+				mes "but they must be talking about Terra... -";
+				set ep13_mdrama,11;
+				changequest 7060,7061;
+				close;
+			}
+		}
+		else if (ep13_mdrama > 10) {
+			mes "- The Sapha are having a conversation and not paying attention to my movements. -";
+			next;
+			mes "- They are talking mostly about common town matters, not much useful information. -";
+			next;
+			mes "- I'd better move away from them before they get suspicious of my presence. -";
+			close;
+		}
+		else {
+			mes "[Villager]";
+			mes "...Outsider?";
+			mes "Do you have a permission to come into our village?";
+			mes "That's right..Do you even understand me?";
+			close;
+		}
+	}
+	else {
+		mes "[Villager]";
+		mes "Das?";
+		mes "idh sd!";
+		mes "Dh apa sd¡­is Das idh.";
+		close;
+	}
+}
+
+manuk,281,177,3	script	Villager#ep13_12	449,{
+	if (checkweight(1201,2) == 0) {
+		mes "Wait a moment!!";
+		mes "You have too many items.";
+		mes "You can't receive this.";
+		mes "Lighten your weight and";
+		mes "try again.";
+		close;
+	}
+	if (isequipped(2782) == 1) {
+		if (ep13_mdrama == 10) {
+			mes "[Villager Lawine]";
+			mes "By the way, how did that Fairy come this far?";
+			mes "Is she captured?";
+			next;
+			mes "[Villager Rivier]";
+			mes "No, She's not.";
+			mes "That Fairy came here by her own accord.";
+			mes "How impudent. She was horribly wounded when she got here.";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "(Hmm? a Fairy? Wounded?";
+			mes "Are they talking about Terra..?!)";
+			next;
+			switch(select("Break into their conversation.:Keep quiet and listen.")) {
+			case 1:
+				mes "[" + strcharinfo(0) + "]";
+				mes "Excuse me for interrupting your conversation.";
+				mes "You were talking about a Fairy, would you be kind to tell me the details?";
+				next;
+				mes "[Villager Lawine]";
+				mes "Outsider!!";
+				mes "Why is he here?";
+				next;
+				mes "[Villager Rivier]";
+				mes "We weren't saying anything.";
+				mes "There's nothing to tell you.";
+				mes "Lawine, Come with me to the Refinery later.";
+				next;
+				mes "- The Sapha people are not willing to tell you anything. But the";
+				mes "captured Fairy may be Terra. -";
+				set ep13_mdrama,11;
+				changequest 7060,7061;
+				close;
+			case 2:
+				// Custom Translation
+				mes "[Villager Lawine]";
+				mes "I heard a fairy was crying and begging, she was badly hurt.";
+				next;
+				mes "[Villager Rivier]";
+				mes "No one understand the words of fairy...";
+				mes "In the end we had no idea what to do.";
+				next;
+				mes "[Villager Rivier]";
+				mes "Anyway, that fairy is now in prison.";
+				mes "By the way, pull within feather";
+				mes "Today we have to go to the refinery,";
+				mes "do not forget.";
+				next;
+				mes "[Villager Lawine]";
+				mes "You know, right?";
+				mes "Ahh! A foreign visitor!";
+				next;
+				mes "[Villager Rivier]";
+				mes "Nevermind him, he can not understand our words.";
+				next;
+				mes "- Fortunately, Sapha had thought I could not understand them,";
+				mes "but they must be talking about Terra... -";
+				set ep13_mdrama,11;
+				changequest 7060,7061;
+				close;
+			}
+		}
+		else if (ep13_mdrama > 10) {
+			mes "- The Sapha are having a conversation and not paying attention to my movements. -";
+			next;
+			mes "- They are talking mostly about common town matters, not much useful information. -";
+			next;
+			mes "- I'd better move away from them before they get suspicious of my presence. -";
+			close;
+		}
+		else {
+			mes "[Villager]";
+			mes "...Outsider, huh...";
+			mes "Since when did we allow outsiders to come and visit?";
+			mes "That's right..Do you even understand me?";
+			next;
+			mes "[Villager]";
+			mes "...I guess it doesn't matter....";
+			mes "Ah, Do we even understand each other?";
+			close;
+		}
+	}
+	else {
+		mes "[Villager]";
+		mes "Fsd a idh as?";
+		mes "Nsf iu ai sd a sd!";
+		mes "Asd fo sdj fso df.";
+		close;
+	}
+}
+
+man_in01,175,59,5	script	Snorren#ep13_13	454,{
+	if (checkweight(1201,2) == 0) {
+		mes "Wait a moment!!";
+		mes "You have too many items.";
+		mes "You can't receive this.";
+		mes "Lighten your weight and";
+		mes "try again.";
+		close;
+	}
+	if (isequipped(2782) == 1) {
+		if (ep13_mdrama == 11) {
+			mes "He seems anxious as he wanders back and forth..";
+			mes "Is he the guard of this prison?";
+			next;
+			mes "[Snorren]";
+			mes ".. Argh.. Why not?!";
+			mes "What a blockhead...";
+			mes "Hmm?";
+			mes "Who are you?!";
+			mes "How could an outsider be here...?";
+			next;
+			switch(select("About the Captured Fairy.:What is this place?")) {
+			case 1:
+				mes "[Snorren]";
+				mes "How does an outsider like you know that?";
+				mes "And..? What? How can you understand what I'm saying?";
+				next;
+				mes "[Snorren]";
+				mes "Helloo...?";
+				mes "Can you understand the words coming out of my mouth?";
+				next;
+				mes "- I show the ring to Snorren. -";
+				next;
+				mes "[Snorren]";
+				mes "Aha! Now I understand...";
+				mes "That's amazing. a ring capable of interpreting between different languages... and you were able to come all the way here.";
+				next;
+				mes "[Snorren]";
+				mes "I heard there are outsiders helping our people.";
+				mes "You must be one of them!";
+				next;
+				mes "[Snorren]";
+				mes "But where did you hear about that Fairy?";
+				mes "Frankly, I want to have a word with that Fairy.";
+				mes "But I don't understand their language.";
+				next;
+				switch(select("Why do you want to talk to her?:Do you need an interpreter?")) {
+				case 1:
+					break;
+				case 2:
+					mes "[Snorren]";
+					mes "An interpreter? Certainly!";
+					mes "But I can't just do it arbitrarily...";
+					mes "The reason why I want to have a word with that fairy, I mean Laphine...";
+					next;
+					break;
+				}
+				mes "[Snorren]";
+				mes "I... want to find out if she's got anything to do with my friend...";
+				next;
+				select("Your friend?");
+				mes "[Snorren]";
+				mes "Yeah. Ogen is missing.";
+				mes "He said he was curious about the area you are living in and went to check it out. How foolish of him.";
+				next;
+				mes "[Snorren]";
+				mes "And he never came back.";
+				mes "After quite a while, that fairy came.";
+				next;
+				mes "[Snorren]";
+				mes "I don't know what guts she had to just fly into our territory.";
+				mes "That fairy just kept on yelling 'a bradium!' 'a bradium!'";
+				next;
+				mes "[Snorren]";
+				mes "Our village's vigilantes are saying that fairy is affected by the power of bradium and went crazy.";
+				mes "That's what Laphine are all like!";
+				next;
+				mes "[Snorren]";
+				mes "They just try to make accesories out of the ore which is our source of life.";
+				mes "They collect anything that possesses magical power.";
+				next;
+				mes "[" + strcharinfo(0) + "]";
+				mes "You should calm down a bit... Tell me about that captured Laphine.";
+				next;
+				mes "[Snorren]";
+				mes "Right, I'm sorry.";
+				mes "Anyways, shortly after Ogen went missing the fairy appears... this is too suspicious...";
+				mes "and that fairy was severely wounded too.";
+				next;
+				mes "[Snorren]";
+				mes "I think...";
+				next;
+				mes "[Snorren]";
+				mes "That fairy attacked Ogen as he was trying to peek on your camp.";
+				mes "And she was drawn by Ogen's bradium and came all the way here to find more bradium!";
+				next;
+				switch(select("That could be right...:I don't see it that way...")) {
+				case 1:
+					mes "[" + strcharinfo(0) + "]";
+					mes "But does that Ore called bradium really possess an overwhelming magical power?";
+					mes "It didn't seem like that...";
+					next;
+					mes "[Snorren]";
+					mes "Really? But, we Sapha can't live without bradium.";
+					mes "This war with the Laphine... is to protect the bradium from them...";
+					next;
+					mes "[" + strcharinfo(0) + "]";
+					mes "I see...";
+					mes "Your people and their people are fighting over the bradium...";
+					next;
+					break;
+				case 2:
+					mes "[Snorren]";
+					mes "Is... Is that so?";
+					mes "Then how do you see this situation?";
+					next;
+					mes "[" + strcharinfo(0) + "]";
+					mes "It just occurred to me...";
+					mes "It's like some kind of forbidden area...";
+					next;
+					break;
+				}
+				mes "[" + strcharinfo(0) + "]";
+				mes "Anyhow, You are going to ask that fairy about Ogen, right?";
+				mes "If that's the case, I could interpret between you two...";
+				next;
+				mes "[Snorren]";
+				mes "Yeah?!";
+				mes "Then just wait here for a sec!";
+				mes "I will go and ask Luik about this!";
+				set ep13_mdrama,12;
+				close;
+			case 2:
+				mes "[Snorren]";
+				mes "Uh, Ah~!";
+				mes "This is a prison.";
+				mes "You need to obey the rules to keep a peaceful group life.";
+				next;
+				mes "[Snorren]";
+				mes "This is where people who break the rules are kept overnight.";
+				next;
+				mes "[Snorren]";
+				mes "Oh. I'm not one of them.";
+				mes "I just have some business here.";
+				mes "Snorren is a good Sapha.";
+				close;
+			}
+		}
+		else if (ep13_mdrama == 12) {
+			mes "[Snorren]";
+			mes "Umm.. Hold on a sec...";
+			mes "Luik. It's me. Snorren.";
+			next;
+			mes "[Voice through the door]";
+			mes "Ah, I told you it's not possible Snorren!";
+			mes "I can only put you in a cell for one night!";
+			next;
+			mes "[Snorren]";
+			mes "Yikes-! Luik, It's not that!";
+			mes "I brought someone who would interpret that fairy's words!";
+			mes "till, Can't I come in?";
+			next;
+			mes "[Luik's Voice]";
+			mes "Shut up! Anyway, we have more things to worry about. This Laphine, we need to treat her wounds...";
+			next;
+			mes "[Luik's Voice]";
+			mes "Her body is completely different from ours. What should we do?";
+			mes "Hey, Snorren! Bring me anything. Anything like herbs!";
+			next;
+			mes "[Snorren]";
+			mes "Herbs? Is her condition that bad?";
+			mes "Can't we fix her with bradium?";
+			mes "Oh right, She's not Sapha, ey?";
+			next;
+			select("Nothing gets past you...");
+			mes "[Snorren]";
+			mes "Do you have anything on your mind?";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "She's a Laphine, right? Then we should ask a Laphine about it...";
+			mes "Like what we need to treat her...";
+			mes "I can take care of it.";
+			next;
+			mes "[Snorren]";
+			mes "Really?";
+			mes "Then hurry up and bring something back...";
+			mes "We will wait.";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "(I think I have no choice but to go back and ask Arc....)";
+			set ep13_mdrama,13;
+			changequest 7061,7062;
+			close;
+		}
+		else if ((ep13_mdrama > 12) && (ep13_mdrama < 17)) {
+			mes "[Snorren]";
+			mes "Hurry up and go find a way to cure this Laphine...";
+			mes "Then Luik might let us in.";
+			close;
+		}
+		else if (ep13_mdrama == 17) {
+			if (countitem(607) > 5) {
+				mes "[Snorren]";
+				mes "Did you find a cure?";
+				mes "This.. is one strange looking fruit.";
+				mes "I saw this fruit from time to time, but never thought this would be a cure..?";
+				next;
+				mes "[Snorren]";
+				mes "I will take everything you've brought with you!";
+				set .@temp_ig,countitem(607);
+				delitem 607,.@temp_ig; //Yggdrasilberry
+				set ep13_mdrama,18;
+				next;
+				mes "[Snorren]";
+				mes "Now, Let's go inside!";
+				close;
+			}
+			else {
+				mes "[" + strcharinfo(0) + "]";
+				mes "Hmm...this won't be enough....";
+				mes "I would need at least 6~7 of these...";
+				next;
+				mes "[Snorren]";
+				mes "Is something wrong?";
+				next;
+				mes "[" + strcharinfo(0) + "]";
+				mes "Huh? Ah, I think we would need more than what I've brought here... I'll be back.";
+				close;
+			}
+		}
+		else if (ep13_mdrama == 18) {
+			mes "[Snorren]";
+			mes "I already told Luik everything about you...";
+			mes "Let's go inside.";
+			close;
+		}
+		else if (((ep13_mdrama > 18) && (ep13_mdrama < 21)) || (ep13_mdrama == 22)) {
+			mes "[Snorren]";
+			mes "I've been waiting for you...";
+			mes "Let's make haste.";
+			close;
+		}
+		else if (ep13_mdrama == 21) {
+			mes "[Snorren]";
+			mes "I'm really confused now...Should I believe your story or not.";
+			mes "If it is true that cave really exists and Ogen is hurt...";
+			close;
+		}
+		else if (ep13_mdrama == 23) {
+			mes "[Snorren]";
+			mes "The approximate location is...";
+			mes "Huge Roots of a tree. Got it.";
+			mes "You go ahead first. I will stop by at a refinery and be right after you.";
+			next;
+			mes "[Snorren]";
+			mes "Since that place is Laphine's territory, I will go quitely so they won't notice me.";
+			mes "You just go on ahead, I will be right behind you.";
+			close;
+		}
+		else if (ep13_mdrama == 24) {
+			mes "[Snorren]";
+			mes "You are back. .. Luik wanted me to tell you this...";
+			mes "Terra, that Laphine, is free now.";
+			next;
+			mes "[Snorren]";
+			mes "We are tired of fighting. We didn't even want to start...";
+			mes "And we saw her true intention before everything else.";
+			next;
+			mes "[Snorren]";
+			mes "Go and check if Terra went back to her home safely...";
+			mes "Ogen... He went back to Mother Nature.";
+			next;
+			mes "[Snorren]";
+			mes "I really don't think what Ogen did was the right thing to do...";
+			mes "But that was... Ogen...";
+			next;
+			mes "[Snorren]";
+			mes "Forgive me, I'm a bit depressed...";
+			mes "I'd rather just rest here.";
+			mes "I really appreciate what you've done.";
+			next;
+			mes "[Snorren]";
+			mes "Come back anytime...";
+			mes "Ok?";
+			set ep13_mdrama,25;
+			getitem 6080,15; //Manuk_Coin
+			changequest 7069,7070;
+			close;
+		}
+		else if (ep13_mdrama > 24) {
+			mes "[Snorren]";
+			mes "What do you think of this muffler?";
+			mes "This belonged to Ogen...";
+			mes "Does it look good on me?";
+			close;
+		}
+		else {
+			mes "[Snorren]";
+			mes "Outsiders shouldn't be here without permission.";
+			mes "Please get out of here.";
+			close;
+		}
+	}
+	else {
+		mes "[Snorren]";
+		mes "Ids ad?";
+		mes "Ns ai dha si asd!";
+		mes "Ms dfaa sd a.";
+		close;
+	}
+}
+
+man_in01,183,58,0	script	to_in013ep13mdwarp01	45,1,1,{
+OnTouch:
+	if ((ep13_mdrama > 17) && (ep13_mdrama < 24)) {
+		warp "man_in01",13,125;
+		end;
+	}
+	else if (ep13_mdrama > 23) {
+		warp "man_in01",68,125;
+		end;
+	}
+	else {
+		mes "The doors are locked... I can't get in.";
+		close;
+	}
+	end;
+}
+
+man_in01,10,125,0	warp	to_out1#ep13mdwarp02	1,1,man_in01,179,58
+man_in01,65,125,0	warp	to_out2#ep13mdwarp03	1,1,man_in01,179,58
+
+man_in01,22,126,3	script	Captured Laphine#ep13md	441,{
+	if (checkweight(1201,2) == 0) {
+		mes "Wait a moment!!";
+		mes "You have too many items.";
+		mes "You can't receive this.";
+		mes "Lighten your weight and";
+		mes "try again.";
+		close;
+	}
+	if (isequipped(2782) == 1) {
+		if (ep13_mdrama < 19) {
+			mes "She's unconscious.";
+			mes "I can see a bandage to stop the bleeding...";
+			mes "Looks like Luik did it.";
+			close;
+		}
+		else if (ep13_mdrama == 19) {
+			mes "Luik and Snorren did everything to extract juice out of a Yggdrasilberry";
+			mes "chopped and stuffed it into a mouth and paste them on the body...";
+			next;
+			mes "[Wounded Laphine]";
+			mes "Hmm...";
+			next;
+			mes "[Luik]";
+			mes "Finally she's coming to.";
+			mes "Ok, "+ strcharinfo(0) + ", it's up to you now.";
+			mes "And you better not fake any of the words she's saying.";
+			next;
+			mes "- I nod to Luik and began talking to the Laphine. -";
+			next;
+			mes "- After the Laphine gained her full consciousness, she gazed around and spoke in shaky voice. -";
+			next;
+			mes "[Wounded Laphine]";
+			mes "Where... am I?";
+			mes "Oh My! That's right! I need Bradium!";
+			mes "Get me out of here!";
+			next;
+			mes "[Wounded Laphine]";
+			mes "If I don't go back to him quickly, he... he is going to die!!";
+			next;
+			switch(select("Who is HE?:Is your name Terra?")) {
+			case 1:
+				mes "[Wounded Laphine]";
+				mes "A giant... a giant in a cave...";
+				mes "He...He got hurt trying to protect me...";
+				mes "He wouldn't move!";
+				mes "His body was getting cold.";
+				next;
+				mes "[Wounded Laphine]";
+				mes "We were each other's enemy......";
+				mes "but he saved me...";
+				mes "I heard they need a bradium to live!";
+				next;
+				mes "[Wounded Laphine]";
+				mes "Give me some bradium. Hurry!";
+				mes "I can't be late!";
+				next;
+				select("You are Terra. Right?");
+				mes "[Terra]";
+				mes "How...How do you know my name?";
+				mes "Who are you?";
+				next;
+				mes "[" + strcharinfo(0) + "]";
+				mes "Arc asked me to find you. So I came here.";
+				mes "By the way.. You were saying about a giant, do you mean a Sapha?";
+				next;
+				mes "[" + strcharinfo(0) + "]";
+				mes "The Sapha in the cave...";
+				mes "His body was already petrified when I got there.";
+				next;
+				mes "[Terra]";
+				mes "Giants.. It is said that the Sapha people are cursed to be petrified.";
+				mes "And that the Bradium is what prevents them from becoming petrified.";
+				next;
+				mes "[Terra]";
+				mes "So I tried to bring a bradium to him... ...";
+				mes "But he... Sob...";
+				next;
+				mes "- Terra couldn't continue to talk as she was agonizing in the pain from her wounds. -";
+				next;
+				mes "[Luik]";
+				mes "Why did she break down like that? What did she say?";
+				mes "Tell me what she said!!!";
+				set ep13_mdrama,20;
+				close;
+			case 2:
+				mes "[Terra]";
+				mes "How...How do you know my name?";
+				mes "Who are you?";
+				next;
+				mes "[" + strcharinfo(0) + "]";
+				mes "I came looking for you on behalf of Arc.";
+				mes "Just how did you end up here?";
+				next;
+				mes "[Terra]";
+				mes "To find a... Bra.. dium.";
+				mes "That's right. Bradium! Give me a bradium!!";
+				next;
+				mes "[Terra]";
+				mes "A giant... a giant in a cave...";
+				mes "He...He got hurt trying to protect me...";
+				mes "He wouldn't move!";
+				mes "His body was getting cold.";
+				next;
+				mes "[Terra]";
+				mes "We were each other's enemy......";
+				mes "but he saved me...";
+				mes "I heard they need a bradium to live!";
+				next;
+				mes "[Terra]";
+				mes "Give me some bradium. Hurry!";
+				mes "I can't be late!";
+				next;
+				mes "[" + strcharinfo(0) + "]";
+				mes "The Sapha in the cave...";
+				mes "His body was already petrified when I got there.";
+				next;
+				mes "[Terra]";
+				mes "Giants.. It is said that the Sapha people are cursed to be petrified.";
+				mes "And that the Bradium is what prevents them from becoming petrified.";
+				next;
+				mes "[Terra]";
+				mes "So I tried to bring a bradium to him... ...";
+				mes "But he... Sob...";
+				next;
+				mes "- Terra couldn't continue to talk as she was agonizing in the pain from her wounds. -";
+				next;
+				mes "[Luik]";
+				mes "Why did she break down like that? What did she say?";
+				mes "Tell me what she said!!!";
+				set ep13_mdrama,20;
+				close;
+			}
+		}
+		else if (ep13_mdrama == 20) {
+			mes "[Luik]";
+			mes "Let that Fairy rest for a while, now tell me what you were talking about.";
+			close;
+		}
+		else if ((ep13_mdrama > 20) && (ep13_mdrama < 24)) {
+			mes "[Luik]";
+			mes "She's just too exhausted and fell asleep...";
+			mes "Leave her alone.";
+			close;
+		}
+		else {
+			// custom translation
+			mes "[Luik]";
+			mes "She can leave any time she likes.";
+			mes "It feels so dry in here.";
+			mes "Oh well, that's normal.";
+			close;
+		}
+	}
+	else {
+		if (ep13_mdrama < 19) {
+			mes "She's unconscious.";
+			mes "I can see a bandage to stop the bleeding...";
+			mes "Looks like Luik did it.";
+			close;
+		}
+		else {
+			mes "[Luik]";
+			mes "Ier er ee ras d?";
+			mes "Ye ada sd?";
+			mes "Nffd..?";
+			next;
+			mes "[Wounded Laphine]";
+			mes "...Riveh...AshIman Or mah...";
+			mes "..ah..Thor..ThorOsa Yee Lu..ung...";
+			close;
+		}
+	}
+}
+
+man_in01,17,128,5	script	Snorren#ep13md_15	454,{
+	if (checkweight(1201,2) == 0) {
+		mes "Wait a moment!!";
+		mes "You have too many items.";
+		mes "You can't receive this.";
+		mes "Lighten your weight and";
+		mes "try again.";
+		close;
+	}
+	if (isequipped(2782) == 1) {
+		if (ep13_mdrama == 18) {
+			mes "[Snorren]";
+			mes "Here, Luik. He said this is a cure for Laphine.";
+			mes "Should we just let her eat it as it is?";
+			next;
+			mes "[Snorren]";
+			mes "Uh.. and your name was..?";
+			next;
+			select("" + strcharinfo(0) + "");
+			mes "[Snorren]";
+			mes "Yeah, Right.";
+			mes "" + strcharinfo(0) + ", you should try talking to that Laphine...";
+			mes "Let's hear her story.";
+			set ep13_mdrama,19;
+			changequest 7064,7065;
+			close;
+		}
+		else if (ep13_mdrama == 19) {
+			// custom translation
+			mes "[Snorren]";
+			mes "Please help me translater.";
+			mes "We'll be watching as you speak to her.";
+			mes "Right, Luik?";
+			next;
+			mes "[Luik]";
+			mes "Maybe.";
+			mes "Let's ask her what happened, before it is too late.";
+			close;
+		}
+		else if (ep13_mdrama == 20) {
+			mes "[Snorren]";
+			mes "Let's listen to her story.";
+			mes "Why don't we start from... Why does she want a bradium?";
+			next;
+			mes "[Snorren]";
+			mes "This part must be told to Luik in exact detail.";
+			close;
+		}
+		else if (ep13_mdrama == 21) {
+			mes "[Snorren]";
+			mes "What should I do if the Sapha in the Cave is really Ogen...?";
+			mes "Ogen... What should I do if anything happened to him...?";
+			close;
+		}
+		else if (ep13_mdrama == 22) {
+			if ((countitem(6085) > 0) && (countitem(6084) > 0)) {
+				mes "[Luik]";
+				mes "...This Bradium has not been refined properly...";
+				mes "This would be no help...";
+				mes "and, this muffler...";
+				next;
+				mes "[Snorren]";
+				mes "This is Ogen's! Ogen's muffler!";
+				mes "Luik! Ogen! This is Ogen!";
+				mes "Unrefined Bradium!";
+				next;
+				mes "[Snorren]";
+				mes "Lu.. Luik. Ogen.. Ogen...?!";
+				mes "I'm going to Ogen!";
+				mes "Where is that cave?! Where!";
+				next;
+				select("Calm down!");
+				mes "[Luik]";
+				mes "Yeah. Listen to him, calm down. Snorren.";
+				mes "If it is Ogen... We could be able to save him if we make haste.";
+				next;
+				mes "[Luik]";
+				mes "Snorren. Go to Refinery and get the finest bradium...";
+				mes "Save him.";
+				next;
+				mes "[Luik]";
+				mes "" + strcharinfo(0) + "...eh?...";
+				mes "Please look after Snorren...and Ogen.";
+				mes "This Laphine, I mean Terra...";
+				mes "She truly wanted to save Ogen...";
+				next;
+				mes "[Luik]";
+				mes "I will talk to my superiors to try and settle this matter...";
+				mes "Please save Ogen.";
+				delitem 6085,1; //Shaggy_Muffler
+				delitem 6084,1; //Bradium_Fragments
+				set ep13_mdrama,23;
+				changequest 7067,7068;
+				close;
+			}
+			else {
+				// custom translation
+				mes "[Luik]";
+				mes "You should bring something that can prove it?";
+				mes "... We have been fighting them for so long, it is hard for us to believe you.";
+				next;
+				mes "[Snorren]";
+				mes "...Yes... regardless of anything, just to prove what you say is true.";
+				close;
+			}
+		}
+		else if (ep13_mdrama == 23) {
+			mes "[Snorren]";
+			mes "Hurry up and take the lead!";
+			mes "Which way should we go now?";
+			close;
+		}
+		else {
+			// custom translation
+			mes "[Snorren]";
+			mes "How did you get in here?!";
+			mes "Get out!";
+			close;
+		}
+	}
+	else {
+		mes "[Snorren]";
+		mes "We rs...";
+		mes "F as d dd ";
+		mes "Tb ds dfw we!";
+		mes "Nd fs asd as...!";
+		close;
+	}
+}
+
+man_in01,19,126,3	script	Luik#ep13md16	450,{
+	if (checkweight(1201,2) == 0) {
+		mes "Wait a moment!!";
+		mes "You have too many items.";
+		mes "You can't receive this.";
+		mes "Lighten your weight and";
+		mes "try again.";
+		close;
+	}
+	if (isequipped(2782) == 1) {
+		if (ep13_mdrama < 20) {
+			mes "[Luik]";
+			mes "...I really look forward to drawing something useful out of her.";
+			mes "Your interpretion is trustworthy, right?";
+			close;
+		}
+		else if (ep13_mdrama == 20) {
+			mes "[Luik]";
+			mes "First of all, Why did that Laphine come here?";
+			mes "Why does she need a bradium?";
+			next;
+			select("To give it to a Sapha in a cave...");
+			mes "[Luik]";
+			mes "Sapha in a cave? What cave?";
+			mes "Nevermind.... Snorren. You must know something about that cave, right?";
+			next;
+			mes "[Luik]";
+			mes "Wait...";
+			mes "Why would a Laphine give a bradium to our ally?";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "They fought in the cave and your friend got hurt and began to petrify.";
+			mes "So she came here to get a bradium to try to save his life...";
+			next;
+			mes "[Luik]";
+			mes "They fought?";
+			mes "Snorren! What's that look on your face?";
+			mes "Spit if out if you have anything to say.";
+			next;
+			mes "[Snorren]";
+			mes "Frankly, Luik. I... told you... Ogen's missing.";
+			mes "Ogen's disappearance and that Laphine's arrival coincide...";
+			next;
+			mes "[Luik]";
+			mes "And?";
+			next;
+			mes "[Snorren]";
+			mes "Maybe the Sapha that Laphine is talking about is Ogen.";
+			mes "Or do we have any other comrades who go to strange caves?";
+			next;
+			mes "[Luik]";
+			mes "We don't, because there are no caves like that here.";
+			mes "First, we should find out about the cave they are talking about.";
+			next;
+			mes "[Luik]";
+			mes "You outsiders are in contact with the Laphine right?";
+			mes "What if this is an evil plot by them?";
+			next;
+			select("That's not true!");
+			mes "[Luik]";
+			mes "And how would you prove it?";
+			mes "We've been fighting them for a long time.";
+			mes "We don't have any reason to trust what you or they are saying.";
+			next;
+			mes "[Luik]";
+			mes "And talking about some cave that doesn't even exist.";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "That cave really exists, I swear!";
+			mes "I.. yeah. I saw a petrified Sapha in that cave.";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "I will bring back something that will make you believe.";
+			mes "I'm not sure if that Sapha is this Ogen you are looking for...";
+			mes "But I'll come back...";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "Don't you dare...try to do any harm to Terra.";
+			set ep13_mdrama,21;
+			changequest 7065,7066;
+			close;
+		}
+		else if (ep13_mdrama == 21) {
+			mes "[Luik]";
+			mes "...Anything will do. Try and make me believe you -Outsider- and that Laphine.";
+			mes "We Sapha are not stupid people.";
+			next;
+			mes "[Luik]";
+			mes "I promise you that we will continue to treat that Laphine as we did so far and will not do any harm to her.";
+			next;
+			mes "[Luik]";
+			mes "Hence, you just focus on finding a way to make us believe you.";
+			close;
+		}
+		else if (ep13_mdrama == 22) {
+			if ((countitem(6085) > 0) && (countitem(6084) > 0)) {
+				mes "[Luik]";
+				mes "...This Bradium has not been refined properly...";
+				mes "This would be no help...";
+				mes "and, this muffler...";
+				next;
+				mes "[Snorren]";
+				mes "This is Ogen's! Ogen's muffler!";
+				mes "Luik! Ogen! This is Ogen!";
+				mes "Unrefined Bradium!";
+				next;
+				mes "[Snorren]";
+				mes "Lu.. Luik. Ogen.. Ogen...?!";
+				mes "I'm going to Ogen!";
+				mes "Where is that cave?! Where!";
+				next;
+				select("Calm down!");
+				mes "[Luik]";
+				mes "Yeah. Listen to him, calm down. Snorren.";
+				mes "If it is Ogen... We could be able to save him if we make haste.";
+				next;
+				mes "[Luik]";
+				mes "Snorren. Go to Refinery and get the finest bradium...";
+				mes "Save him.";
+				next;
+				mes "[Luik]";
+				mes "" + strcharinfo(0) + "...eh?...";
+				mes "Please look after Snorren...and Ogen.";
+				mes "This Laphine, I mean Terra...";
+				mes "She truly wanted to save Ogen...";
+				next;
+				mes "[Luik]";
+				mes "I will talk to my superiors to try and settle this matter...";
+				mes "Please save Ogen.";
+				delitem 6085,1; //Shaggy_Muffler
+				delitem 6084,1; //Bradium_Fragments
+				set ep13_mdrama,23;
+				changequest 7067,7068;
+				close;
+			}
+			else {
+				// custom translation
+				mes "[Luik]";
+				mes "You should bring something that can prove it?";
+				mes "... We have been fighting them for so long, it is hard for us to believe you.";
+				next;
+				mes "[Snorren]";
+				mes "...Yes... regardless of anything, just to prove what you say is true.";
+				close;
+			}
+		}
+		else if (ep13_mdrama == 23) {
+			mes "[Luik]";
+			mes "Please... Help Ogen.";
+			close;
+		}
+		else {
+			// custom translation
+			mes "[Luik]";
+			mes "How did you get in here?";
+			mes "You shouldn't be here.";
+			close;
+		}
+	}
+	else {
+		mes "[Luik]";
+		mes "Na w ewe w";
+		mes "Aewrf sd fsd iyu. ";
+		mes "Ou uur?";
+		next;
+		mes "Looks like Luik is giving me a look of scorn.";
+		close;
+	}
+}
+
+man_in01,71,125,0	script	Terra gone	-1,3,3,{
+OnTouch:
+	mes "There's nothing else.";
+	mes "Only traces of the cage with something confined.";
+	close;
+}
+
+spl_in02,239,93,3	script	Terra#ep13md_l03	441,{
+	if (checkweight(1201,2) == 0) {
+		mes "Wait a moment!!";
+		mes "You have too many items.";
+		mes "You can't receive this.";
+		mes "Lighten your weight and";
+		mes "try again.";
+		close;
+	}
+	if (isequipped(2782) == 1) {
+		if (ep13_mdrama == 26) {
+			mes "[Terra]";
+			mes ".........";
+			next;
+			mes "[Arc]";
+			mes "I see. That's what happened.";
+			mes "But... That Sapha...What has he become to you in that short period of time?";
+			next;
+			select("Arc?");
+			mes "[Arc]";
+			mes "Ah, finally. I've been speaking with Terra while we waited for you.";
+			mes "Terra. This is who saved you...";
+			if (Sex == 0) {
+				mes "You should thank her.";
+			}
+			else {
+				mes "You should thank him.";
+			}
+			next;
+			mes "[Terra]";
+			mes "Thank you...";
+			mes "I'm sorry Arc... Sorry...";
+			mes "......";
+			next;
+			mes "[Arc]";
+			mes "So, this is the story.";
+			mes "Terra was wandering around your Camp and found a Sapha who was also wandering around your Camp at the time.";
+			next;
+			mes "[Arc]";
+			mes "They were both being cautious not to be seen by you humans but they caught sight of each other and started to fight.";
+			next;
+			mes "[Arc]";
+			mes "And then they eventually fell into that hole in the swamp and ended up in that cave.";
+			next;
+			mes "[Terra]";
+			mes "Yeah... We were both unconscious for some time..";
+			mes "And by the time we were able to wake up and see... We were surrounded.";
+			next;
+			mes "[Terra]";
+			mes "Our main concern was getting out of there...";
+			mes "Even though we couldn't understand each other's language... We made a temporary truce.";
+			next;
+			mes "[Terra]";
+			mes "And then.....";
+			mes ".........";
+			next;
+			select("So that's what happened.");
+			mes "[" + strcharinfo(0) + "]";
+			mes "You were outnumbered and at the last moment Ogen sacrificed himself to protect you.";
+			next;
+			mes "[Terra]";
+			mes "So... I wanted to help him...";
+			mes "I was just trying to repay him...";
+			next;
+			mes "[Terra]";
+			mes "Was I wrong...?";
+			mes "Was I thinking wrong?";
+			next;
+			mes "[Arc]";
+			mes "Repaying one's dept is a good thing.";
+			mes "Especially for a proud Laphine, It sure is.";
+			next;
+			mes "[Arc]";
+			mes "But Terra...";
+			mes "You've made two big mistakes.";
+			mes "First is, You went away without permission...";
+			mes "And secondly...";
+			next;
+			mes "[Arc]";
+			mes "You didn't ask for help.";
+			mes "If something like that happened... of course I would help...";
+			next;
+			mes "[Terra]";
+			mes "I'm sorry Arc... I'm sorry...";
+			mes "I won't act foolish ever again.";
+			next;
+			mes "[Arc]";
+			mes "Get some rest.";
+			mes "I will put in a good word to the superiors...";
+			mes "And " + strcharinfo(0) + "...";
+			mes "Thank you.";
+			next;
+			mes "[Arc]";
+			mes "Here, I will give you these to show my appreciation.";
+			mes "It's not much, but you will be able to buy things in Splendide with these.";
+			next;
+			mes "[Arc]";
+			mes "I'm sorry this is all I can give you for now.";
+			set ep13_mdrama,27;
+			getitem 6081,25; //Splendide_Coin
+			getexp 1200000,100000;
+			completequest 7071;
+			close;
+		}
+		else if (ep13_mdrama == 27) {
+			mes "[Terra]";
+			mes "Arc... I will get some rest...";
+			mes "I'm sorry... And. You...";
+			next;
+			mes "[Terra]";
+			mes "Originally.. we Laphine were extremely reluctant to have others in our area...";
+			mes "but you are ok...";
+			next;
+			mes "[Terra]";
+			// custom translation
+			mes "You are always welcome to visit us...";
+			set ep13_mdrama,28;
+			close;
+		}
+		else if (ep13_mdrama > 27) {
+			mes "[Terra]";
+			mes "I'm sorry...";
+			mes "My body is not fully recovered yet...";
+			close;
+		}
+		else {
+			// custom translation
+			mes "[Terra]";
+			mes "I'm sorry... I'm so sleepy...";
+			mes "...I want to sleep...";
+			close;
+		}
+	}
+	else {
+		mes "[Terra]";
+		mes "ModBurDana...? Mu AnduWehFus Yee OsaLoLars...";
+		mes "eoFusser....";
+		mes "maurNohser Ur...... ThorNuffLars So ";
+		close;
+	}
+}
+
+spl_in02,236,92,5	script	Arc#ep13md_l02	447,{
+	if (checkweight(1201,2) == 0) {
+		mes "Wait a moment!!";
+		mes "You have too many items.";
+		mes "You can't receive this.";
+		mes "Lighten your weight and";
+		mes "try again.";
+		close;
+	}
+	if (isequipped(2782) == 1) {
+		if (ep13_mdrama == 26) {
+			mes "[Terra]";
+			mes ".........";
+			next;
+			mes "[Arc]";
+			mes "I see. That's what happened.";
+			mes "But... That Sapha...What has he become to you in that short period of time?";
+			next;
+			select("Arc?");
+			mes "[Arc]";
+			mes "Ah, finally. I've been speaking with Terra while we waited for you.";
+			mes "Terra. This is who saved you...";
+			if (Sex == 0) {
+				mes "You should thank her.";
+			}
+			else {
+				mes "You should thank him.";
+			}
+			next;
+			mes "[Terra]";
+			mes "Thank you...";
+			mes "I'm sorry Arc... Sorry...";
+			mes "......";
+			next;
+			mes "[Arc]";
+			mes "So, this is the story.";
+			mes "Terra was wandering around your Camp and found a Sapha who was also wandering around your Camp at the time.";
+			next;
+			mes "[Arc]";
+			mes "They were both being cautious not to be seen by you humans but they caught sight of each other and started to fight.";
+			next;
+			mes "[Arc]";
+			mes "And then they eventually fell into that hole in the swamp and ended up in that cave.";
+			next;
+			mes "[Terra]";
+			mes "Yeah... We were both unconscious for some time..";
+			mes "And by the time we were able to wake up and see... We were surrounded.";
+			next;
+			mes "[Terra]";
+			mes "Our main concern was getting out of there...";
+			mes "Even though we couldn't understand each other's language... We made a temporary truce.";
+			next;
+			mes "[Terra]";
+			mes "And then.....";
+			mes ".........";
+			next;
+			select("So that's what happened.");
+			mes "[" + strcharinfo(0) + "]";
+			mes "You were outnumbered and at the last moment Ogen sacrificed himself to protect you.";
+			next;
+			mes "[Terra]";
+			mes "So... I wanted to help him...";
+			mes "I was just trying to repay him...";
+			next;
+			mes "[Terra]";
+			mes "Was I wrong...?";
+			mes "Was I thinking wrong?";
+			next;
+			mes "[Arc]";
+			mes "Repaying one's dept is a good thing.";
+			mes "Especially for a proud Laphine, It sure is.";
+			next;
+			mes "[Arc]";
+			mes "But Terra...";
+			mes "You've made two big mistakes.";
+			mes "First is, You went away without permission...";
+			mes "And secondly...";
+			next;
+			mes "[Arc]";
+			mes "You didn't ask for help.";
+			mes "If something like that happened... of course I would help...";
+			next;
+			mes "[Terra]";
+			mes "I'm sorry Arc... I'm sorry...";
+			mes "I won't act foolish ever again.";
+			next;
+			mes "[Arc]";
+			mes "Get some rest.";
+			mes "I will put in a good word to the superiors...";
+			mes "And " + strcharinfo(0) + "...";
+			mes "Thank you.";
+			next;
+			mes "[Arc]";
+			mes "Here, I will give you these to show my appreciation.";
+			mes "It's not much, but you will be able to buy things in Splendide with these.";
+			next;
+			mes "[Arc]";
+			mes "I'm sorry this is all I can give you for now.";
+			set ep13_mdrama,27;
+			getitem 6081,25; //Splendide_Coin
+			getexp 1200000,100000;
+			completequest 7071;
+			close;
+		}
+		else if (ep13_mdrama == 27) {
+			mes "[Arc]";
+			mes "Terra. Get some rest...";
+			mes "Rest easy...";
+			mes "And...";
+			next;
+			mes "[Arc]";
+			mes ".Originally.. we Laphine were extremely reluctant to have others in our area.";
+			mes "" + strcharinfo(0) + ", you will be a special exception.";
+			next;
+			mes "[Arc]";
+			mes "That's what Terra wants too.";
+			mes "It might be cramped, but you are always welcome to visit us.";
+			set ep13_mdrama,28;
+			close;
+		}
+		else if (ep13_mdrama > 27) {
+			mes "[Arc]";
+			mes "How are you adapting to Splendide?";
+			mes "Terra's still not fully recovered yet, so keep that in mind.";
+			close;
+		}
+		else {
+			// custom translation
+			mes "[Arc]";
+			mes "The back of the right ... ";
+			mes "......";
+			close;
+		}
+	}
+	else {
+		mes "[Arc]";
+		mes "HirWosWeh. Yee DiebVilFar U manTalVil.";
+		mes "LarsNeiser...??";
+		mes "VeldTiTal Ko SharDurYur Di ?";
+		close;
+	}
+}
+
+splendide,287,140,0	script	terrashome_in	45,1,1,{
+OnTouch:
+	if (ep13_mdrama > 25) {
+		warp "spl_in02",237,89;
+		end;
+	}
+	else {
+		mes "It's locked.";
+		close;
+	}
+}
+
+spl_in02,236,86,0	warp	terrashome_out	1,1,splendide,285,139;
+
+spl_fild01,357,44,0	script	???#ep13mdf01	844,{
+	if (checkweight(1201,2) == 0) {
+		mes "Wait a moment!!";
+		mes "You have too many items.";
+		mes "You can't receive this.";
+		mes "Lighten your weight and";
+		mes "try again.";
+		close;
+	}
+	if (ep13_mdrama == 14) {
+		mes "There's some kind of fruit lying on the ground.";
+		mes "I see a small berry inside of a big outer shell...";
+		mes "It is a Yggdrasil!";
+		set ep13_mdrama,15;
+		getitem 607,1; //Yggdrasilberry
+		getitem 522,1; //Fruit_Of_Mastela
+		close;
+	}
+	else if (ep13_mdrama == 15) {
+		mes "I've already pulled out a Yggdradsil... but is there anyting else..?";
+		next;
+		set .@apple,rand(1,100);
+		if (.@apple < 50) {
+			mes "I've been bitten by an unknown insect.";
+			mes "It hurts!";
+			percentheal -30,0;
+			close;
+		}
+		else if (.@apple == 50) {
+			mes "I found an apple.";
+			getitem 512,1; //Apple
+			close;
+		}
+		else {
+			mes "There's nothing else.";
+			close;
+		}
+	}
+	else if (ep13_mdrama > 15) {
+		mes "There's only an empty shell left.";
+		close;
+	}
+	else {
+		mes "A huge fruit is here.";
+		mes "I don't know what kind of fruit it is.";
+		close;
+	}
+}
+
+spl_fild01,312,79,0	script	???#ep13mdf02	844,{
+	if (checkweight(1201,2) == 0) {
+		mes "Wait a moment!!";
+		mes "You have too many items.";
+		mes "You can't receive this.";
+		mes "Lighten your weight and";
+		mes "try again.";
+		close;
+	}
+	if (ep13_mdrama == 15) {
+		mes "There's some kind of fruit lying on the ground.";
+		mes "I see a small berry inside of a big outer shell...";
+		mes "It is a Yggdrasil!";
+		set ep13_mdrama,16;
+		getitem 607,1; //Yggdrasilberry
+		getitem 522,1; //Fruit_Of_Mastela
+		close;
+	}
+	else if (ep13_mdrama == 16) {
+		mes "I've already pulled out a Yggdradsil... but is there anyting else..?";
+		next;
+		set .@apple,rand(1,100);
+		if (.@apple < 50) {
+			mes "I've been bitten by an unknown insect.";
+			mes "It hurts!";
+			percentheal -30,0;
+			close;
+		}
+		else if (.@apple == 50) {
+			mes "I found an apple.";
+			getitem 512,1; //Apple
+			close;
+		}
+		else {
+			mes "There's nothing else.";
+			close;
+		}
+	}
+	else if (ep13_mdrama > 16) {
+		mes "There's only an empty shell left.";
+		close;
+	}
+	else {
+		mes "A huge fruit is here.";
+		mes "I don't know what kind of fruit it is.";
+		close;
+	}
+}
+
+spl_fild01,329,29,0	script	???#ep13mdf03	844,{
+	if (checkweight(1201,2) == 0) {
+		mes "Wait a moment!!";
+		mes "You have too many items.";
+		mes "You can't receive this.";
+		mes "Lighten your weight and";
+		mes "try again.";
+		close;
+	}
+	if (ep13_mdrama == 16) {
+		mes "There's some kind of fruit lying on the ground.";
+		mes "I see a small berry inside of a big outer shell...";
+		mes "It is a Yggdrasil!";
+		set ep13_mdrama,17;
+		getitem 607,1; //Yggdrasilberry
+		getitem 522,1; //Fruit_Of_Mastela
+		changequest 7063,7064;
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Arc gave me three Yggdrasilberries and...";
+		mes "I've found... three. Six of them should be enough.";
+		mes "Let's go back to Snorren.";
+		close;
+	}
+	else if (ep13_mdrama == 17) {
+		mes "I've already pulled out a Yggdradsil... but is there anyting else..?";
+		next;
+		set .@apple,rand(1,100);
+		if (.@apple < 50) {
+			mes "I've been bitten by an unknown insect.";
+			mes "It hurts!";
+			percentheal -30,0;
+			close;
+		}
+		else if (.@apple == 50) {
+			mes "I found an apple.";
+			getitem 512,1; //Apple
+			close;
+		}
+		else {
+			mes "There's nothing else.";
+			close;
+		}
+	}
+	else if (ep13_mdrama > 17) {
+		mes "There's only an empty shell left.";
+		close;
+	}
+	else {
+		mes "A huge fruit is here.";
+		mes "I don't know what kind of fruit it is.";
+		close;
+	}
+}
 
 // Otherworld language
 //============================================================ 
