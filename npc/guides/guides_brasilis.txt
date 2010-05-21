@@ -1,0 +1,110 @@
+//===== eAthena Script ======================================= 
+//= Brasilis Guide
+//===== By: ================================================== 
+//= L0ne_W0lf
+//===== Current Version: ===================================== 
+//= 1.0
+//===== Compatible With: ===================================== 
+//= eAthena  SVN
+//===== Description: ========================================= 
+//= [Aegis Conversion]
+//= Guide for the city of Brasilis
+//===== Additional Comments: ================================= 
+//= 1.0 First Version.
+//============================================================ 
+
+brasilis,219,97,3	script	Brasilis Guide	478,{
+	mes "[Brasilis Guide]";
+	mes "Welcome to everyone that has come to Brasilis, a wonderfull land with";
+	mes "a warm sun shining down on us.";
+	mes "If you have any question, just ask me.";
+	next;
+	switch(select("Ask where you can go.:Delete marks on the mini-map.:Cancel.")) {
+	case 1:
+		set .@compass_check,0;
+		mes "[Brasilis Guide]";
+		mes "Where would you like to go?";
+		if (.@compass_check == 0) {
+			mes "Would you like me";
+			mes "to mark locations";
+			mes "on your Mini-Map?";
+			next;
+			switch(select("Yes:No")) {
+			case 1:
+				set .@compass_check,1;
+				break;
+			case 2:
+				set .@compass_check,2;
+				break;
+			}
+		}
+		next;
+		switch(select("Toucan Happy Inn:Jungle Cable:Art Museum:Brasilis Market:Cancel")) {
+		case 1:
+			mes "[Brasilis Guide]";
+			mes "The Toucan Happy Inn is near here, it's located here ^FF0000+^000000.";
+			if (.@compass_check == 1) {
+				viewpoint 1,273,149,2,0xFF0000;
+			}
+			else {
+				viewpoint 0,273,149,2,0xFF0000;
+			}
+			break;
+		case 2:
+			mes "[Brasilis Guide]";
+			mes "Want to travel to the Jungle? You can";
+			mes "go to the Jungle Cable located here ^0xCC6600+^000000.";
+			if (.@compass_check == 1) {
+				viewpoint 1,308,333,3,0xCC6600;
+			}
+			else {
+				viewpoint 0,308,333,3,0xCC6600;
+			}
+			break;
+		case 3:
+			mes "[Brasilis Guide]";
+			mes "The Art Museum, is the pride of Brasilis, it is located here ^00FF00+^000000.";
+			if (.@compass_check == 1) {
+				viewpoint 1,133,167,4,0x00FF00;
+			}
+			else {
+				viewpoint 0,133,167,4,0x00FF00;
+			}
+			break;
+		case 4:
+			mes "[Brasilis Guide]";
+			mes "You can buy many items in the Market located here ^00FF00+^000000.";
+			if (.@compass_check == 1) {
+				viewpoint 1,238,248,5,0x00FF00;
+			}
+			else {
+				viewpoint 0,238,248,5,0x00FF00;
+			}
+			break;
+		case 5:
+			mes "[Brasilis Guide]";
+			mes "If you want to delete the location";
+			mes "marks from your mini-map, please";
+			mes "choose 'Delete marks on the";
+			mes "mini-map' from the menu.";
+			close;
+		}
+		break;
+	case 2:
+		viewpoint 2,273,149,2,0xFF0000;
+		viewpoint 2,308,333,3,0xCC6600;
+		viewpoint 0,133,167,4,0x00FF00;
+		viewpoint 0,238,248,5,0x00FF00;
+		set .@compass_check,0;
+		mes "[Brasilis Guide]";
+		mes "I've deleted all marks on the mini-map.";
+		mes "Whenever you'd like to put marks";
+		mes "there, you can ask me.";
+		close;
+	case 3:
+		mes "[Brasilis Guide]";
+		mes "Exploring things here on your own can also be fun.";
+		mes "Anyway, take care.";
+		close;
+	}
+}

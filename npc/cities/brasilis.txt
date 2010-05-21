@@ -1,0 +1,88 @@
+//===== eAthena Script ======================================= 
+//= Brasilis Town
+//===== By: ================================================== 
+//= L0ne_W0lf
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: ===================================== 
+//= eAthena SVN
+//===== Description: ========================================= 
+//= [Aegis Conversion]
+//= Brasilis Town Script
+//===== Additional Comments: ================================= 
+//= 1.0 First version. Transportation and Basic NPCs.
+//============================================================ 
+
+alberta,247,115,3	script	Brute Sailor#bra2	100,{
+	mes "[Brute Sailor]";
+	mes "Hey, have you heard of the place called Brasilis?";
+	mes "It's a place that's as hot as the Morroc desert, and as dense as the forests of Payon.";
+	next;
+	mes "[Brute Sailor]";
+	mes "I have a map to get there, if you want I can take you to Brasilis.";
+	mes "It will only cost you 10,000 zeny. What do you say?";
+	next;
+	switch(select("Let's go to Brasilis!:Cancel.")) {
+	case 1:
+		if (Zeny > 9999	) {
+			mes "[Brute Sailor]";
+			mes "Great! Let's Go!";
+			close2;
+			warp "brasilis",314,60;
+			end;
+		}
+		else {
+			mes "[Brute Sailor]";
+			mes "I'm sorry but you don't have";
+			mes "enough zeny now";
+			mes "You need 10,000 zeny";
+			mes "to go to Brasilis";
+			mes "Thank you.";
+			close;
+		}
+	case 2:
+		mes "[Brute Sailor]";
+		mes "Let me know if you change your mind.";
+		close;
+	}
+}
+
+brasilis,316,57,3	script	Brute Sailor#bra1	100,{
+	mes "[Brute Sailor]";
+	mes "My ship will be heading back to Alberta soon, would you like to go back?";
+	next;
+	switch(select("Return to Alberta.:Cancel.")) {
+	case 1:
+		mes "[Brute Sailor]";
+		mes "Alright, lets get going!";
+		close2;
+		warp "alberta",244,115;
+		end;
+	case 2:
+		mes "[Brute Sailor]";
+		mes "Let me know if you change your mind.";
+		close;
+	}
+}
+
+brasilis,278,137,3	script	Bulletin Board#bra1	858,{
+	mes ":: Happy Toucan Inn ::";
+	close;
+}
+
+brasilis,244,248,1	script	Bulletin Board#bra2	858,{
+	mes ":: Brasilis Market ::";
+	close;
+}
+
+brasilis,155,165,3	script	Bulletin Board#bra3	858,{
+	mes ":: Brasilis Art Museum ::";
+	close;
+}
+
+brasilis,303,309,3	script	Bulletin Board#bra4	858,{
+	mes ":: Jungle Cable ::";
+	mes " ";
+	mes "- Not recommended for the faint hearted! -";
+	close;
+}
