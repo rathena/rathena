@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.2
+//= 1.3
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -20,6 +20,8 @@
 //= 1.2 More bug fixes, sorry it took so long. [L0ne_W0lf]
 //=     Fixed message on the portal when the okolnir section is full.
 //=     Corrected non-angry Piamette not disabling.
+//= 1.3 Corrected invalid coordinates in maze. (bugreport:4220)
+//=     Corrected typo in Guard of Shadow NPC.
 //============================================================ 
 
 schg_cas01,376,307,3	script	Guide#gq_sch01	899,{
@@ -802,7 +804,7 @@ OnTouch:
 				monster "que_qsch01",102,275,strcharinfo(0),1652,1,"#Gate_manager_sch01::OnMyMobDead";
 			}
 			set $gqse_sch01_miro,17;
-			warp "que_qsch01",102,281;
+			warp "que_qsch01",102,282;
 			end;
 		}
 		else if ($gqse_sch01_miro == 17) {
@@ -929,7 +931,7 @@ OnTimer6000:
 	monster "que_qsch01",63,282,"Seyren Windsor",1640,1,"#gq_miromob2_sch01::OnMyMobDead";
 	monster "que_qsch01",61,243,"Kathryne Keyron",1645,1,"#gq_miromob2_sch01::OnMyMobDead";
 	monster "que_qsch01",70,249,"Cecil Damon",1644,1,"#gq_miromob2_sch01::OnMyMobDead";
-	monster "que_qsch01",102,281,"Margaretha Sorin",1643,1,"#gq_miromob2_sch01::OnMyMobDead";
+	monster "que_qsch01",102,282,"Margaretha Sorin",1643,1,"#gq_miromob2_sch01::OnMyMobDead";
 	monster "que_qsch01",66,300,"Eremes Guile",1641,1,"#gq_miromob2_sch01::OnMyMobDead";
 	monster "que_qsch01",57,258,"Howard Alt-Eisen",1642,1,"#gq_miromob2_sch01::OnMyMobDead";
 	stopnpctimer;
@@ -1256,8 +1258,8 @@ OnEnable:
 	setcell "que_qsch01",94,256,97,256,cell_shootable,0;
 	setcell "que_qsch01",64,298,64,301,cell_walkable,0;
 	setcell "que_qsch01",64,298,64,301,cell_shootable,0;
-	setcell "que_qsch01",000,251,003,251,cell_walkable,0;
-	setcell "que_qsch01",000,251,003,251,cell_shootable,0;
+	setcell "que_qsch01",100,251,103,251,cell_walkable,0;
+	setcell "que_qsch01",100,251,103,251,cell_shootable,0;
 	end;
 
 OnDisable:
@@ -2864,7 +2866,7 @@ OnInit:
 	end;
 
 OnDisable:
-	killmonster "que_qsch01","Guard of Shadow#sch01_01::OnMyMobDead";
+	killmonster "que_qsch01","Guard of Shadow#sch01_02::OnMyMobDead";
 	disablenpc "Guard of Shadow#sch01_02";
 	end;
 

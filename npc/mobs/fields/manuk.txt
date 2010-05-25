@@ -3,12 +3,13 @@
 //===== By: ==================================================
 //= alexx, MaC
 //===== Current Version: =====================================
-//= 1.1
+//= 1.1a
 //===== Compatible With: =====================================
 //= Any Athena Version
 //===== Additional Comments: =================================
 //= 1.0 Official spawn ammounts from Aegis script [alexx]
 //= 1.1 Added 13.2 mob spawn update [scriptor]
+//= 1.1a Corrected fild2 mobs spawning on fild1. (bugreport:4248)
 //============================================================
 
 //============================================================
@@ -22,9 +23,9 @@ man_fild01,0,0,0,0	monster	Centipede	1987,2,0,0,0
 //============================================================
 // man_fild02 - Manuk Field
 //============================================================
-man_fild01,0,0,0,0	monster	Bradium Golem	2024,50,0,0,0
-man_fild01,0,0,0,0	monster	Centipede	1987,35,0,0,0
-man_fild01,0,0,0,0	monster	Tatacho	1986,25,0,0,0
+man_fild02,0,0,0,0	monster	Bradium Golem	2024,50,0,0,0
+man_fild02,0,0,0,0	monster	Centipede	1987,35,0,0,0
+man_fild02,0,0,0,0	monster	Tatacho	1986,25,0,0,0
 
 //============================================================
 // man_fild03 - Manuk Field

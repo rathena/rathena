@@ -1,5 +1,12 @@
 Date		Added
 ======
+2010/05/24
+	* Rev. 14305 Some bug fixing :x Nothing to new today folks! Stay tuned. [L0ne_W0lf]
+	- Fixed input checks in the 'Ring of Wise King' quest. (bugreport:4147)
+	- Fixed some of the erros reported in the Oolnir scripts. (bugreport:4220)
+	- Added Azoi's giant flywing update to not warp dead players. (bugreport:4242)
+	- Fixed confusing inconsistancy in the nyd_dun mob spawn file. (bugreport:4246)
+	- Fixed the Manuk field 2 monsters spawning on Manul field 1. (bugreport:4248)
 2010/05/22
 	* Rev. 14304 Added the warps for Brasilis, not sure how they got missed :x [L0ne_W0lf]
 2010/05/20
