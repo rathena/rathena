@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
-//= 1.5
+//= 1.6
 //===== Compatible With: =====================================
 //= eAthena SVN
 //===== Description: =========================================
@@ -14,6 +14,7 @@
 //= Daily Quests:
 //= - Midgard Ore
 //= - Alfheim Perfume
+//= Yggdrasil Dungeon Floor 2 puzzle.
 //===== Additional Comments: =================================
 //= 1.0 First version
 //= 1.1 Fixed unidentified_coin -> unidentified_mineral. (bugreport:4086)
@@ -22,6 +23,7 @@
 //= 1.3 Added the "Two Tribes" quest. [L0ne_W0lf]
 //= 1.4 Corrected issues with Otherworld Language. (Bugreport:4147)
 //= 1.5 Added daily quests: Midgard Ore, and Alfheim Perfume.
+//= 1.6 Added the Yggdrasil Dungeon floor 2 puzzle.
 //============================================================ 
 
 // Cat Hand Addition.
@@ -9666,3 +9668,2250 @@ OnTimer60000:
 	end;
 }
 
+// Yggdrasil Dungeon Floor 2 puzzle.
+//============================================================ 
+nyd_dun02,178,255,0	script	Strange Device#ep13_out	844,3,3,{
+	mes "There's something strange here.";
+	mes "Maybe that device can be controlled from here.";
+	next;
+	switch(select("Try to control.:Don't try to control it.")) {
+		case 1:
+			mes "You press the device buttons and it suddenly becomes dark.";
+			close2;
+			warp "nyd_dun02",139,268;
+			end;
+
+		case 2:
+			mes "You decide to leave it alone.";
+			close;
+	}
+
+OnTouch:
+	specialeffect EF_LEVEL99_4;
+	end;
+}
+
+nyd_dun02,139,274,0	script	Strange Device#ep13_in	844,3,3,{
+	//set go_to_2f,08_ep13nydun02_in;
+	if (go_to_2f == 1) {
+		mes "The device has already been activated.";
+		mes "You must wait for the controls to reset.";
+		close;
+	}
+	else {
+		mes "There's a controllable device here.";
+		mes "You might be able to control that device from here.";
+		next;
+		switch(select("Control.:Quit.")) {
+		case 1:
+			//set go_to_2f2,08_ep13nydun02_in;
+			if (go_to_2f2 == 1) {
+				mes "Seems to have been started.";
+				close;
+			}
+			else {
+				//set $@08_ep13nydun02_in,1; //Global Variable
+				set .@way_loot,rand(1,2);
+				if (.@way_loot == 1) {
+					donpcevent "ep13_warp_s1::OnDisable";
+					donpcevent "ep13_warp_11::OnDisable";
+					donpcevent "ep13_warp_21::OnDisable";
+					donpcevent "ep13_warp_22::OnDisable";
+					donpcevent "ep13_warp_22_2::OnEnable";
+				}
+				else {
+					donpcevent "ep13_warp_s3::OnDisable";
+					donpcevent "ep13_warp_13::OnDisable";
+					donpcevent "ep13_warp_14::OnDisable";
+					donpcevent "ep13_warp_24::OnDisable";
+					donpcevent "ep13_warp_24_2::OnEnable";
+				}
+				initnpctimer;
+				mes "The device is now on.";
+				mes "Panels have appeared across the ledge.";
+				close;
+			}
+		case 2:
+			mes "You decide not to control the device.";
+			close;
+		}
+	}
+	end;
+
+OnTimer70000:
+	donpcevent "ep13_nd2f_mng::Onreset";
+	//set $@08_ep13nydun02_in,0; //Global Variable
+	stopnpctimer;
+	end;
+
+OnInit:
+	//set $@08_ep13nydun02_in,0; //Global Variable
+	end;
+
+OnTouch:
+	specialeffect EF_LEVEL99_4;
+	end;
+}
+
+nyd_dun02,143,272,0	script	ep13_warp_s1	139,1,1,{
+
+OnEnable:
+	enablenpc "ep13_warp_s1";
+	end;
+
+OnDisable:
+	disablenpc "ep13_warp_s1";
+	initnpctimer;
+	specialeffect EF_WIND;
+	end;
+
+OnTouch:
+	warp "nyd_dun01",214,68;
+	end;
+
+OnTimer2000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer4000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer6000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer8000:
+	specialeffect EF_STEAL;
+	end;
+
+OnTimer10000:
+	enablenpc "ep13_warp_s1";
+	end;
+}
+
+nyd_dun02,143,269,0	script	ep13_warp_s2	139,1,1,{
+OnTouch:
+	warp "nyd_dun01",214,68;
+	end;
+}
+
+nyd_dun02,143,266,0	script	ep13_warp_s3	139,1,1,{
+
+OnEnable:
+	enablenpc "ep13_warp_s3";
+	end;
+
+OnDisable:
+	disablenpc "ep13_warp_s3";
+	initnpctimer;
+	specialeffect EF_WIND;
+	end;
+
+OnTouch:
+	warp "nyd_dun01",214,68;
+	end;
+
+OnTimer2000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer4000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer6000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer8000:
+	specialeffect EF_STEAL;
+	end;
+
+OnTimer10000:
+	enablenpc "ep13_warp_s3";
+	end;
+}
+
+nyd_dun02,143,263,0	script	ep13_warp_s4	139,1,1,{
+OnTouch:
+	warp "nyd_dun01",214,68;
+	end;
+}
+
+nyd_dun02,146,272,0	script	ep13_warp_11	139,1,1,{
+
+OnEnable:
+	enablenpc "ep13_warp_11";
+	end;
+
+OnDisable:
+	disablenpc "ep13_warp_11";
+	initnpctimer;
+	specialeffect EF_WIND;
+	end;
+
+OnTouch:
+	warp "nyd_dun01",214,68;
+	end;
+
+OnTimer2000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer4000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer6000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer8000:
+	specialeffect EF_STEAL;
+	end;
+
+OnTimer10000:
+	enablenpc "ep13_warp_11";
+	end;
+}
+
+nyd_dun02,146,269,0	script	ep13_warp_12	139,1,1,{
+OnTouch:
+	warp "nyd_dun01",214,68;
+	end;
+}
+
+nyd_dun02,146,266,0	script	ep13_warp_13	139,1,1,{
+
+OnEnable:
+	enablenpc "ep13_warp_13";
+	end;
+
+OnDisable:
+	disablenpc "ep13_warp_13";
+	initnpctimer;
+	specialeffect EF_WIND;
+	end;
+
+OnTouch:
+	warp "nyd_dun01",214,68;
+	end;
+
+OnTimer2000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer4000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer6000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer8000:
+	specialeffect EF_STEAL;
+	end;
+
+OnTimer10000:
+	enablenpc "ep13_warp_13";
+	end;
+}
+
+nyd_dun02,146,263,0	script	ep13_warp_14	139,1,1,{
+
+OnEnable:
+	enablenpc "ep13_warp_14";
+	end;
+
+OnDisable:
+	disablenpc "ep13_warp_14";
+	initnpctimer;
+	specialeffect EF_WIND;
+	end;
+
+OnTouch:
+	warp "nyd_dun01",214,68;
+	end;
+
+OnTimer2000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer4000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer6000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer8000:
+	specialeffect EF_STEAL;
+	end;
+
+OnTimer10000:
+	specialeffect EF_STEAL;
+	end;
+
+OnTimer12000:
+	enablenpc "ep13_warp_14";
+	end;
+}
+
+nyd_dun02,146,260,0	script	ep13_warp_15	139,1,1,{
+OnTouch:
+	warp "nyd_dun01",214,68;
+	end;
+}
+
+nyd_dun02,149,272,0	script	ep13_warp_21	139,1,1,{
+
+OnEnable:
+	enablenpc "ep13_warp_21";
+	end;
+
+OnDisable:
+	disablenpc "ep13_warp_21";
+	initnpctimer;
+	specialeffect EF_WIND;
+	end;
+
+OnTouch:
+	warp "nyd_dun01",214,68;
+	end;
+
+OnTimer2000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer4000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer6000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer8000:
+	specialeffect EF_STEAL;
+	end;
+
+OnTimer10000:
+	specialeffect EF_STEAL;
+	end;
+
+OnTimer12000:
+	enablenpc "ep13_warp_21";
+	end;
+}
+
+nyd_dun02,149,269,0	script	ep13_warp_22	139,1,1,{
+
+OnEnable:
+	enablenpc "ep13_warp_22";
+	end;
+
+OnDisable:
+	disablenpc "ep13_warp_22";
+	initnpctimer;
+	specialeffect EF_WIND;
+	end;
+
+OnTouch:
+	warp "nyd_dun01",214,68;
+	end;
+
+OnTimer2000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer4000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer6000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer8000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer10000:
+	specialeffect EF_STEAL;
+	end;
+
+OnTimer12000:
+	specialeffect EF_STEAL;
+	end;
+
+OnTimer15000:
+	enablenpc "ep13_warp_22";
+	end;
+}
+
+nyd_dun02,149,269,0	script	ep13_warp_22_2	139,1,1,{
+OnInit:
+	disablenpc "ep13_warp_22_2";
+	end;
+
+OnEnable:
+	enablenpc "ep13_warp_22_2";
+	end;
+
+OnDisable:
+	disablenpc "ep13_warp_22_2";
+	end;
+
+OnTouch:
+	disablenpc "ep13_warp_22_2";
+
+	donpcevent "ep13_warp_31::OnDisable";
+	donpcevent "ep13_warp_41::OnDisable";
+	donpcevent "ep13_warp_42::OnDisable";
+	donpcevent "ep13_warp_43::OnDisable";
+	donpcevent "ep13_warp_43_2::OnEnable";
+	end;
+}
+
+nyd_dun02,149,266,0	script	ep13_warp_23	139,1,1,{
+OnTouch:
+	warp "nyd_dun01",214,68;
+	end;
+}
+
+nyd_dun02,149,263,0	script	ep13_warp_24	139,1,1,{
+
+OnEnable:
+	enablenpc "ep13_warp_24";
+	end;
+
+OnDisable:
+	disablenpc "ep13_warp_24";
+	initnpctimer;
+	specialeffect EF_WIND;
+	end;
+
+OnTouch:
+	warp "nyd_dun01",214,68;
+	end;
+
+OnTimer2000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer4000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer6000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer8000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer10000:
+	specialeffect EF_STEAL;
+	end;
+
+OnTimer12000:
+	specialeffect EF_STEAL;
+	end;
+
+OnTimer15000:
+	enablenpc "ep13_warp_24";
+	end;
+}
+
+nyd_dun02,149,263,0	script	ep13_warp_24_2	139,1,1,{
+
+OnInit:
+	disablenpc "ep13_warp_24_2";
+	end;
+
+OnEnable:
+	enablenpc "ep13_warp_24_2";
+	end;
+
+OnDisable:
+	disablenpc "ep13_warp_24_2";
+	end;
+
+OnTouch:
+	set .@way_loot,rand(1,2);
+	if (.@way_loot == 1) {
+		donpcevent "ep13_warp_33::OnDisable";
+		donpcevent "ep13_warp_43::OnDisable";
+		donpcevent "ep13_warp_43_2::OnEnable";
+	}
+	else {
+		donpcevent "ep13_warp_25::OnDisable";
+		donpcevent "ep13_warp_26::OnDisable";
+		donpcevent "ep13_warp_35::OnDisable";
+		donpcevent "ep13_warp_45::OnDisable";
+		donpcevent "ep13_warp_45_2::OnEnable";
+	}
+	disablenpc "ep13_warp_24_2";
+	end;
+}
+
+nyd_dun02,149,260,0	script	ep13_warp_25	139,1,1,{
+
+OnEnable:
+	enablenpc "ep13_warp_25";
+	end;
+
+OnDisable:
+	disablenpc "ep13_warp_25";
+	initnpctimer;
+	specialeffect EF_WIND;
+	end;
+
+OnTouch:
+	warp "nyd_dun01",214,68;
+	end;
+
+OnTimer2000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer4000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer6000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer8000:
+	specialeffect EF_STEAL;
+	end;
+
+OnTimer10000:
+	enablenpc "ep13_warp_25";
+	end;
+}
+
+nyd_dun02,149,257,0	script	ep13_warp_26	139,1,1,{
+
+OnEnable:
+	enablenpc "ep13_warp_26";
+	end;
+
+OnDisable:
+	disablenpc "ep13_warp_26";
+	initnpctimer;
+	specialeffect EF_WIND;
+	end;
+
+OnTouch:
+	warp "nyd_dun01",214,68;
+	end;
+
+OnTimer2000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer4000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer6000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer8000:
+	specialeffect EF_STEAL;
+	end;
+
+OnTimer10000:
+	enablenpc "ep13_warp_26";
+	end;
+}
+
+nyd_dun02,152,270,0	script	ep13_warp_31	139,1,1,{
+
+OnEnable:
+	enablenpc "ep13_warp_31";
+	end;
+
+OnDisable:
+	disablenpc "ep13_warp_31";
+	initnpctimer;
+	specialeffect EF_WIND;
+	end;
+
+OnTouch:
+	warp "nyd_dun01",214,68;
+	end;
+
+OnTimer2000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer4000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer6000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer8000:
+	specialeffect EF_STEAL;
+	end;
+
+OnTimer10000:
+	enablenpc "ep13_warp_31";
+	end;
+}
+
+nyd_dun02,152,267,0	script	ep13_warp_32	139,1,1,{
+OnTouch:
+	warp "nyd_dun01",214,68;
+	end;
+}
+
+nyd_dun02,152,264,0	script	ep13_warp_33	139,1,1,{
+
+OnEnable:
+	enablenpc "ep13_warp_33";
+	end;
+
+OnDisable:
+	disablenpc "ep13_warp_33";
+	initnpctimer;
+	specialeffect EF_WIND;
+	end;
+
+OnTouch:
+	warp "nyd_dun01",214,68;
+	end;
+
+OnTimer2000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer4000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer6000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer8000:
+	specialeffect EF_STEAL;
+	end;
+
+OnTimer10000:
+	enablenpc "ep13_warp_33";
+	end;
+}
+
+nyd_dun02,152,261,0	script	ep13_warp_34	139,1,1,{
+OnTouch:
+	warp "nyd_dun01",214,68;
+	end;
+}
+
+nyd_dun02,152,258,0	script	ep13_warp_35	139,1,1,{
+
+OnEnable:
+	enablenpc "ep13_warp_35";
+	end;
+
+OnDisable:
+	disablenpc "ep13_warp_35";
+	initnpctimer;
+	specialeffect EF_WIND;
+	end;
+
+OnTouch:
+	warp "nyd_dun01",214,68;
+	end;
+
+OnTimer2000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer4000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer6000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer8000:
+	specialeffect EF_STEAL;
+	end;
+
+OnTimer10000:
+	specialeffect EF_STEAL;
+	end;
+
+OnTimer12000:
+	enablenpc "ep13_warp_35";
+	end;
+}
+
+nyd_dun02,155,269,0	script	ep13_warp_41	139,1,1,{
+
+OnEnable:
+	enablenpc "ep13_warp_41";
+	end;
+
+OnDisable:
+	disablenpc "ep13_warp_41";
+	initnpctimer;
+	specialeffect EF_WIND;
+	end;
+
+OnTouch:
+	warp "nyd_dun01",214,68;
+	end;
+
+OnTimer2000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer4000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer6000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer8000:
+	specialeffect EF_STEAL;
+	end;
+
+OnTimer10000:
+	enablenpc "ep13_warp_41";
+	end;
+}
+
+nyd_dun02,155,266,0	script	ep13_warp_42	139,1,1,{
+
+OnEnable:
+	enablenpc "ep13_warp_42";
+	end;
+
+OnDisable:
+	disablenpc "ep13_warp_42";
+	initnpctimer;
+	specialeffect EF_WIND;
+	end;
+
+OnTouch:
+	warp "nyd_dun01",214,68;
+	end;
+
+OnTimer2000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer4000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer6000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer8000:
+	specialeffect EF_STEAL;
+	end;
+
+OnTimer10000:
+	specialeffect EF_STEAL;
+	end;
+
+OnTimer12000:
+	enablenpc "ep13_warp_42";
+	end;
+}
+
+nyd_dun02,155,263,0	script	ep13_warp_43	139,1,1,{
+
+OnEnable:
+	enablenpc "ep13_warp_43";
+	end;
+
+OnDisable:
+	disablenpc "ep13_warp_43";
+	initnpctimer;
+	specialeffect EF_WIND;
+	end;
+
+OnTouch:
+	warp "nyd_dun01",214,68;
+	end;
+
+OnTimer2000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer4000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer6000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer8000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer10000:
+	specialeffect EF_STEAL;
+	end;
+
+OnTimer12000:
+	specialeffect EF_STEAL;
+	end;
+
+OnTimer15000:
+	enablenpc "ep13_warp_43";
+	end;
+}
+
+nyd_dun02,155,263,0	script	ep13_warp_43_2	139,1,1,{
+
+OnInit:
+	disablenpc "ep13_warp_43_2";
+	end;
+
+OnEnable:
+	enablenpc "ep13_warp_43_2";
+	end;
+
+OnDisable:
+	disablenpc "ep13_warp_43_2";
+	end;
+
+OnTouch:
+	disablenpc "ep13_warp_43_2";
+	donpcevent "ep13_warp_52::OnDisable";
+	donpcevent "ep13_warp_61::OnDisable";
+	donpcevent "ep13_warp_61_2::OnEnable";
+	end;
+}
+
+nyd_dun02,155,260,0	script	ep13_warp_44	139,1,1,{
+OnTouch:
+	warp "nyd_dun01",214,68;
+	end;
+}
+
+nyd_dun02,155,257,0	script	ep13_warp_45	139,1,1,{
+
+OnEnable:
+	enablenpc "ep13_warp_45";
+	end;
+
+OnDisable:
+	disablenpc "ep13_warp_45";
+	initnpctimer;
+	specialeffect EF_WIND;
+	end;
+
+OnTouch:
+	warp "nyd_dun01",214,68;
+	end;
+
+OnTimer2000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer4000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer6000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer8000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer10000:
+	specialeffect EF_STEAL;
+	end;
+
+OnTimer12000:
+	specialeffect EF_STEAL;
+	end;
+
+OnTimer15000:
+	enablenpc "ep13_warp_45";
+	end;
+}
+
+nyd_dun02,155,257,0	script	ep13_warp_45_2	139,1,1,{
+
+OnInit:
+	disablenpc "ep13_warp_45_2";
+	end;
+
+OnEnable:
+	enablenpc "ep13_warp_45_2";
+	end;
+
+OnDisable:
+	disablenpc "ep13_warp_45_2";
+	end;
+
+OnTouch:
+	disablenpc "ep13_warp_45_2";
+	donpcevent "ep13_warp_46::OnDisable";
+	donpcevent "ep13_warp_55::OnDisable";
+	donpcevent "ep13_warp_56::OnDisable";
+	donpcevent "ep13_warp_65::OnDisable";
+	donpcevent "ep13_warp_65_2::OnEnable";
+	end;
+}
+
+nyd_dun02,155,254,0	script	ep13_warp_46	139,1,1,{
+
+OnEnable:
+	enablenpc "ep13_warp_46";
+	end;
+
+OnDisable:
+	disablenpc "ep13_warp_46";
+	initnpctimer;
+	specialeffect EF_WIND;
+	end;
+
+OnTouch:
+	warp "nyd_dun01",214,68;
+	end;
+
+OnTimer2000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer4000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer6000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer8000:
+	specialeffect EF_STEAL;
+	end;
+
+OnTimer10000:
+	enablenpc "ep13_warp_46";
+	end;
+}
+
+nyd_dun02,158,266,0	script	ep13_warp_51	139,1,1,{
+OnTouch:
+	warp "nyd_dun01",214,68;
+	end;
+}
+
+nyd_dun02,158,263,0	script	ep13_warp_52	139,1,1,{
+
+OnEnable:
+	enablenpc "ep13_warp_52";
+	end;
+
+OnDisable:
+	disablenpc "ep13_warp_52";
+	initnpctimer;
+	specialeffect EF_WIND;
+	end;
+
+OnTouch:
+	warp "nyd_dun01",214,68;
+	end;
+
+OnTimer2000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer4000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer6000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer8000:
+	specialeffect EF_STEAL;
+	end;
+
+OnTimer10000:
+	enablenpc "ep13_warp_52";
+	end;
+}
+
+nyd_dun02,158,260,0	script	ep13_warp_53	139,1,1,{
+OnTouch:
+	warp "nyd_dun01",214,68;
+	end;
+}
+
+nyd_dun02,158,257,0	script	ep13_warp_54	139,1,1,{
+OnTouch:
+	warp "nyd_dun01",214,68;
+	end;
+}
+
+nyd_dun02,158,254,0	script	ep13_warp_55	139,1,1,{
+
+OnEnable:
+	enablenpc "ep13_warp_55";
+	end;
+
+OnDisable:
+	disablenpc "ep13_warp_55";
+	initnpctimer;
+	specialeffect EF_WIND;
+	end;
+
+OnTouch:
+	warp "nyd_dun01",214,68;
+	end;
+
+OnTimer2000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer4000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer6000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer8000:
+	specialeffect EF_STEAL;
+	end;
+
+OnTimer10000:
+	enablenpc "ep13_warp_55";
+	end;
+}
+
+nyd_dun02,158,251,0	script	ep13_warp_56	139,1,1,{
+
+OnEnable:
+	enablenpc "ep13_warp_56";
+	end;
+
+OnDisable:
+	disablenpc "ep13_warp_56";
+	initnpctimer;
+	specialeffect EF_WIND;
+	end;
+
+OnTouch:
+	warp "nyd_dun01",214,68;
+	end;
+
+OnTimer2000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer4000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer6000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer8000:
+	specialeffect EF_STEAL;
+	end;
+
+OnTimer10000:
+	specialeffect EF_STEAL;
+	end;
+
+OnTimer12000:
+	enablenpc "ep13_warp_56";
+	end;
+}
+
+nyd_dun02,161,264,0	script	ep13_warp_61	139,1,1,{
+
+OnEnable:
+	enablenpc "ep13_warp_61";
+	end;
+
+OnDisable:
+	disablenpc "ep13_warp_61";
+	initnpctimer;
+	specialeffect EF_WIND;
+	end;
+
+OnTouch:
+	warp "nyd_dun01",214,68;
+	end;
+
+OnTimer2000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer4000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer6000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer8000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer10000:
+	specialeffect EF_STEAL;
+	end;
+
+OnTimer12000:
+	specialeffect EF_STEAL;
+	end;
+
+OnTimer15000:
+	enablenpc "ep13_warp_61";
+	end;
+}
+
+nyd_dun02,161,264,0	script	ep13_warp_61_2	139,1,1,{
+
+OnInit:
+	disablenpc "ep13_warp_61_2";
+	end;
+
+OnEnable:
+	enablenpc "ep13_warp_61_2";
+	end;
+
+OnDisable:
+	disablenpc "ep13_warp_61_2";
+	end;
+
+OnTouch:
+	disablenpc "ep13_warp_61_2";
+	donpcevent "ep13_warp_62::OnDisable";
+	donpcevent "ep13_warp_71::OnDisable";
+	donpcevent "ep13_warp_72::OnDisable";
+	donpcevent "ep13_warp_81::OnDisable";
+	donpcevent "ep13_warp_81_2::OnEnable";
+	end;
+}
+
+nyd_dun02,161,261,0	script	ep13_warp_62	139,1,1,{
+
+OnEnable:
+	enablenpc "ep13_warp_62";
+	end;
+
+OnDisable:
+	disablenpc "ep13_warp_62";
+	initnpctimer;
+	specialeffect EF_WIND;
+	end;
+
+OnTouch:
+	warp "nyd_dun01",214,68;
+	end;
+
+OnTimer2000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer4000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer6000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer8000:
+	specialeffect EF_STEAL;
+	end;
+
+OnTimer10000:
+	enablenpc "ep13_warp_62";
+	end;
+}
+
+nyd_dun02,161,258,0	script	ep13_warp_63	139,1,1,{
+OnTouch:
+	warp "nyd_dun01",214,68;
+	end;
+}
+
+nyd_dun02,161,255,0	script	ep13_warp_64	139,1,1,{
+
+OnEnable:
+	enablenpc "ep13_warp_64";
+	initnpctimer;
+	specialeffect EF_WIND;
+	end;
+
+OnDisable:
+	disablenpc "ep13_warp_64";
+	end;
+
+OnTouch:
+	warp "nyd_dun01",214,68;
+	end;
+
+OnTimer2000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer4000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer6000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer8000:
+	specialeffect EF_STEAL;
+	end;
+
+OnTimer10000:
+	enablenpc "ep13_warp_64";
+	end;
+}
+
+nyd_dun02,161,252,0	script	ep13_warp_65	139,1,1,{
+
+OnEnable:
+	enablenpc "ep13_warp_65";
+	end;
+
+OnDisable:
+	disablenpc "ep13_warp_65";
+	initnpctimer;
+	specialeffect EF_WIND;
+	end;
+
+OnTouch:
+	warp "nyd_dun01",214,68;
+	end;
+OnTimer2000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer4000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer6000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer8000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer10000:
+	specialeffect EF_STEAL;
+	end;
+
+OnTimer12000:
+	specialeffect EF_STEAL;
+	end;
+
+OnTimer15000:
+	enablenpc "ep13_warp_65";
+	end;
+}
+
+nyd_dun02,161,252,0	script	ep13_warp_65_2	139,1,1,{
+OnInit:
+	disablenpc "ep13_warp_65_2";
+	end;
+
+OnEnable:
+	enablenpc "ep13_warp_65_2";
+	end;
+
+OnDisable:
+	disablenpc "ep13_warp_65_2";
+	end;
+
+OnTouch:
+	set way_loot,rand(1,2);
+	if (way_loot == 1) {
+		donpcevent "ep13_warp_64::OnDisable";
+		donpcevent "ep13_warp_73::OnDisable";
+		donpcevent "ep13_warp_82::OnDisable";
+		donpcevent "ep13_warp_83::OnDisable";
+		donpcevent "ep13_warp_83_2::OnEnable";
+	}
+	else {
+		donpcevent "ep13_warp_66::OnDisable";
+		donpcevent "ep13_warp_75::OnDisable";
+		donpcevent "ep13_warp_76::OnDisable";
+		donpcevent "ep13_warp_85::OnDisable";
+		donpcevent "ep13_warp_85_2::OnEnable";
+	}
+	disablenpc "ep13_warp_65_2";
+	end;
+}
+
+nyd_dun02,161,249,0	script	ep13_warp_66	139,1,1,{
+
+OnEnable:
+	enablenpc "ep13_warp_66";
+	end;
+
+OnDisable:
+	disablenpc "ep13_warp_66";
+	initnpctimer;
+	specialeffect EF_WIND;
+	end;
+
+OnTouch:
+	warp "nyd_dun01",214,68;
+	end;
+
+OnTimer2000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer4000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer6000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer8000:
+	specialeffect EF_STEAL;
+	end;
+
+OnTimer10000:
+	enablenpc "ep13_warp_66";
+	end;
+}
+
+nyd_dun02,164,261,0	script	ep13_warp_71	139,1,1,{
+
+OnEnable:
+	enablenpc "ep13_warp_71";
+	end;
+
+OnDisable:
+	disablenpc "ep13_warp_71";
+	initnpctimer;
+	specialeffect EF_WIND;
+	end;
+
+OnTouch:
+	warp "nyd_dun01",214,68;
+	end;
+
+OnTimer2000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer4000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer6000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer8000:
+	specialeffect EF_STEAL;
+	end;
+
+OnTimer10000:
+	enablenpc "ep13_warp_71";
+	end;
+}
+
+nyd_dun02,164,258,0	script	ep13_warp_72	139,1,1,{
+
+OnEnable:
+	enablenpc "ep13_warp_72";
+	end;
+
+OnDisable:
+	disablenpc "ep13_warp_72";
+	initnpctimer;
+	specialeffect EF_WIND;
+	end;
+
+OnTouch:
+	warp "nyd_dun01",214,68;
+	end;
+
+OnTimer2000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer4000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer6000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer8000:
+	specialeffect EF_STEAL;
+	end;
+
+OnTimer10000:
+	specialeffect EF_STEAL;
+	end;
+
+OnTimer12000:
+	enablenpc "ep13_warp_72";
+	end;
+}
+
+nyd_dun02,164,255,0	script	ep13_warp_73	139,1,1,{
+
+OnEnable:
+	enablenpc "ep13_warp_73";
+	end;
+
+OnDisable:
+	disablenpc "ep13_warp_73";
+	initnpctimer;
+	specialeffect EF_WIND;
+	end;
+
+OnTouch:
+	warp "nyd_dun01",214,68;
+	end;
+
+OnTimer2000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer4000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer6000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer8000:
+	specialeffect EF_STEAL;
+	end;
+
+OnTimer10000:
+	enablenpc "ep13_warp_73";
+	end;
+}
+
+nyd_dun02,164,252,0	script	ep13_warp_74	139,1,1,{
+OnTouch:
+	warp "nyd_dun01",214,68;
+	end;
+}
+
+nyd_dun02,164,249,0	script	ep13_warp_75	139,1,1,{
+
+OnEnable:
+	enablenpc "ep13_warp_75";
+	end;
+
+OnDisable:
+	disablenpc "ep13_warp_75";
+	initnpctimer;
+	specialeffect EF_WIND;
+	end;
+
+OnTouch:
+	warp "nyd_dun01",214,68;
+	end;
+
+OnTimer2000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer4000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer6000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer8000:
+	specialeffect EF_STEAL;
+	end;
+
+OnTimer10000:
+	enablenpc "ep13_warp_75";
+	end;
+}
+
+nyd_dun02,164,246,0	script	ep13_warp_76	139,1,1,{
+
+OnEnable:
+	enablenpc "ep13_warp_76";
+	end;
+
+OnDisable:
+	disablenpc "ep13_warp_76";
+	initnpctimer;
+	specialeffect EF_WIND;
+	end;
+
+OnTouch:
+	warp "nyd_dun01",214,68;
+	end;
+
+OnTimer2000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer4000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer6000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer8000:
+	specialeffect EF_STEAL;
+	end;
+
+OnTimer10000:
+	specialeffect EF_STEAL;
+	end;
+
+OnTimer12000:
+	enablenpc "ep13_warp_76";
+	end;
+}
+
+nyd_dun02,167,258,0	script	ep13_warp_81	139,1,1,{
+
+OnEnable:
+	enablenpc "ep13_warp_81";
+	end;
+
+OnDisable:
+	disablenpc "ep13_warp_81";
+	initnpctimer;
+	specialeffect EF_WIND;
+	end;
+
+OnTouch:
+	warp "nyd_dun01",214,68;
+	end;
+
+OnTimer2000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer4000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer6000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer8000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer10000:
+	specialeffect EF_STEAL;
+	end;
+
+OnTimer12000:
+	specialeffect EF_STEAL;
+	end;
+
+OnTimer15000:
+	enablenpc "ep13_warp_81";
+	end;
+}
+
+nyd_dun02,167,258,0	script	ep13_warp_81_2	139,1,1,{
+OnInit:
+	disablenpc "ep13_warp_81_2";
+	end;
+
+OnEnable:
+	enablenpc "ep13_warp_81_2";
+	end;
+
+OnDisable:
+	disablenpc "ep13_warp_81_2";
+	end;
+
+OnTouch:
+	disablenpc "ep13_warp_81_2";
+	donpcevent "ep13_warp_91::OnDisable";
+	donpcevent "ep13_warp_92::OnDisable";
+	donpcevent "ep13_warp_93::OnDisable";
+	donpcevent "ep13_warp_e1::OnDisable";
+	end;
+}
+
+nyd_dun02,167,255,0	script	ep13_warp_82	139,1,1,{
+
+OnEnable:
+	enablenpc "ep13_warp_82";
+	end;
+
+OnDisable:
+	disablenpc "ep13_warp_82";
+	initnpctimer;
+	specialeffect EF_WIND;
+	end;
+
+OnTouch:
+	warp "nyd_dun01",214,68;
+	end;
+
+OnTimer2000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer4000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer6000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer8000:
+	specialeffect EF_STEAL;
+	end;
+
+OnTimer10000:
+	specialeffect EF_STEAL;
+	end;
+
+OnTimer12000:
+	enablenpc "ep13_warp_82";
+	end;
+}
+
+nyd_dun02,167,252,0	script	ep13_warp_83	139,1,1,{
+
+OnEnable:
+	enablenpc "ep13_warp_83";
+	end;
+
+OnDisable:
+	disablenpc "ep13_warp_83";
+	initnpctimer;
+	specialeffect EF_WIND;
+	end;
+
+OnTouch:
+	warp "nyd_dun01",214,68;
+	end;
+
+OnTimer2000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer4000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer6000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer8000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer10000:
+	specialeffect EF_STEAL;
+	end;
+
+OnTimer12000:
+	specialeffect EF_STEAL;
+	end;
+
+OnTimer15000:
+	enablenpc "ep13_warp_83";
+	end;
+}
+
+nyd_dun02,167,252,0	script	ep13_warp_83_2	139,1,1,{
+
+OnInit:
+	disablenpc "ep13_warp_83_2";
+	end;
+
+OnEnable:
+	enablenpc "ep13_warp_83_2";
+	end;
+
+OnDisable:
+	disablenpc "ep13_warp_83_2";
+	end;
+
+OnTouch:
+	disablenpc "ep13_warp_83_2";
+	donpcevent "ep13_warp_84::OnDisable";
+	donpcevent "ep13_warp_94::OnDisable";
+	donpcevent "ep13_warp_e2::OnDisable";
+	end;
+}
+
+nyd_dun02,167,249,0	script	ep13_warp_84	139,1,1,{
+
+OnEnable:
+	enablenpc "ep13_warp_84";
+	end;
+
+OnDisable:
+	disablenpc "ep13_warp_84";
+	initnpctimer;
+	specialeffect EF_WIND;
+	end;
+
+OnTouch:
+	warp "nyd_dun01",214,68;
+	end;
+
+OnTimer2000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer4000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer6000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer8000:
+	specialeffect EF_STEAL;
+	end;
+
+OnTimer10000:
+	enablenpc "ep13_warp_84";
+	end;
+}
+
+nyd_dun02,167,246,0	script	ep13_warp_85	139,1,1,{
+
+OnEnable:
+	enablenpc "ep13_warp_85";
+	end;
+
+OnDisable:
+	disablenpc "ep13_warp_85";
+	initnpctimer;
+	specialeffect EF_WIND;
+	end;
+
+OnTouch:
+	warp "nyd_dun01",214,68;
+	end;
+
+OnTimer2000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer4000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer6000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer8000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer10000:
+	specialeffect EF_STEAL;
+	end;
+
+OnTimer12000:
+	specialeffect EF_STEAL;
+	end;
+
+OnTimer15000:
+	enablenpc "ep13_warp_85";
+	end;
+}
+
+nyd_dun02,167,246,0	script	ep13_warp_85_2	139,1,1,{
+
+OnInit:
+	disablenpc "ep13_warp_85_2";
+	end;
+
+OnEnable:
+	enablenpc "ep13_warp_85_2";
+	end;
+
+OnDisable:
+	disablenpc "ep13_warp_85_2";
+	end;
+
+OnTouch:
+	disablenpc "ep13_warp_85_2";
+	donpcevent "ep13_warp_95::OnDisable";
+	donpcevent "ep13_warp_e3::OnDisable";
+	end;
+}
+
+nyd_dun02,170,257,0	script	ep13_warp_91	139,1,1,{
+
+OnEnable:
+	enablenpc "ep13_warp_91";
+	end;
+
+OnDisable:
+	disablenpc "ep13_warp_91";
+	initnpctimer;
+	specialeffect EF_WIND;
+	end;
+
+OnTouch:
+	warp "nyd_dun01",214,68;
+	end;
+
+OnTimer2000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer4000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer6000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer8000:
+	specialeffect EF_STEAL;
+	end;
+
+OnTimer10000:
+	enablenpc "ep13_warp_91";
+	end;
+}
+
+nyd_dun02,170,254,0	script	ep13_warp_92	139,1,1,{
+
+OnEnable:
+	enablenpc "ep13_warp_92";
+	end;
+
+OnDisable:
+	disablenpc "ep13_warp_92";
+	initnpctimer;
+	specialeffect EF_WIND;
+	end;
+
+OnTouch:
+	warp "nyd_dun01",214,68;
+	end;
+
+OnTimer2000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer4000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer6000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer8000:
+	specialeffect EF_STEAL;
+	end;
+
+OnTimer10000:
+	enablenpc "ep13_warp_92";
+	end;
+}
+
+nyd_dun02,170,251,0	script	ep13_warp_93	139,1,1,{
+
+OnEnable:
+	enablenpc "ep13_warp_93";
+	end;
+
+OnDisable:
+	disablenpc "ep13_warp_93";
+	initnpctimer;
+	specialeffect EF_WIND;
+	end;
+
+OnTouch:
+	warp "nyd_dun01",214,68;
+	end;
+
+OnTimer2000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer4000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer6000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer8000:
+	specialeffect EF_STEAL;
+	end;
+
+OnTimer10000:
+	specialeffect EF_STEAL;
+	end;
+
+OnTimer12000:
+	enablenpc "ep13_warp_93";
+	end;
+}
+
+nyd_dun02,170,248,0	script	ep13_warp_94	139,1,1,{
+
+OnEnable:
+	enablenpc "ep13_warp_94";
+	end;
+
+OnDisable:
+	disablenpc "ep13_warp_94";
+	initnpctimer;
+	specialeffect EF_WIND;
+	end;
+
+OnTouch:
+	warp "nyd_dun01",214,68;
+	end;
+
+OnTimer2000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer4000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer6000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer8000:
+	specialeffect EF_STEAL;
+	end;
+
+OnTimer10000:
+	enablenpc "ep13_warp_94";
+	end;
+}
+
+nyd_dun02,170,245,0	script	ep13_warp_95	139,1,1,{
+
+OnEnable:
+	enablenpc "ep13_warp_95";
+	end;
+
+OnDisable:
+	disablenpc "ep13_warp_95";
+	initnpctimer;
+	specialeffect EF_WIND;
+	end;
+
+OnTouch:
+	warp "nyd_dun01",214,68;
+	end;
+
+OnTimer2000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer4000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer6000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer8000:
+	specialeffect EF_STEAL;
+	end;
+
+OnTimer10000:
+	enablenpc "ep13_warp_95";
+	end;
+}
+
+nyd_dun02,173,251,0	script	ep13_warp_e1	139,1,1,{
+
+OnEnable:
+	enablenpc "ep13_warp_e1";
+	end;
+
+OnDisable:
+	disablenpc "ep13_warp_e1";
+	initnpctimer;
+	specialeffect EF_WIND;
+	end;
+
+OnTouch:
+	warp "nyd_dun01",214,68;
+	end;
+
+OnTimer2000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer4000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer6000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer8000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer10000:
+	specialeffect EF_STEAL;
+	end;
+
+OnTimer12000:
+	specialeffect EF_STEAL;
+	end;
+
+OnTimer15000:
+	enablenpc "ep13_warp_e1";
+	end;
+}
+
+nyd_dun02,173,248,0	script	ep13_warp_e2	139,1,1,{
+
+OnEnable:
+	enablenpc "ep13_warp_e2";
+	end;
+
+OnDisable:
+	disablenpc "ep13_warp_e2";
+	initnpctimer;
+	specialeffect EF_WIND;
+	end;
+
+OnTouch:
+	warp "nyd_dun01",214,68;
+	end;
+
+OnTimer2000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer4000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer6000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer8000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer10000:
+	specialeffect EF_STEAL;
+	end;
+
+OnTimer12000:
+	specialeffect EF_STEAL;
+	end;
+
+OnTimer15000:
+	enablenpc "ep13_warp_e2";
+	end;
+}
+
+nyd_dun02,173,245,0	script	ep13_warp_e3	139,1,1,{
+
+OnEnable:
+	enablenpc "ep13_warp_e3";
+	end;
+
+OnDisable:
+	disablenpc "ep13_warp_e3";
+	initnpctimer;
+	specialeffect EF_WIND;
+	end;
+
+OnTouch:
+	warp "nyd_dun01",214,68;
+	end;
+
+OnTimer2000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer4000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer6000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer8000:
+	specialeffect EF_WIND;
+	end;
+
+OnTimer10000:
+	specialeffect EF_STEAL;
+	end;
+
+OnTimer12000:
+	specialeffect EF_STEAL;
+	end;
+
+OnTimer15000:
+	enablenpc "ep13_warp_e3";
+	end;
+}
+
+nyd_dun02,173,242,0	script	ep13_warp_e4	139,1,1,{
+OnTouch:
+	warp "nyd_dun01",214,68;
+	end;
+}
+
+nyd_dun01,255,142,0	warp	nynm_dun1f_to_2f	1,1,nyd_dun02,61,265
+nyd_dun02,56,264,0	warp	nynm_dun2f_to_1f	1,1,nyd_dun01,249,143
+
+//==============================================================================
+nyd_dun02,1,1,0	script	ep13_nd2f_mng	844,{
+	mes "Enter password.";
+	next;
+	input .@input; //,0,4000;
+	if (.@input == 1854) {
+		mes "Reset Puzzle?";
+		next;
+		switch(select("Yes:No")) {
+		case 1:
+			donpcevent "ep13_nd2f_mng::Onreset";
+			//set $@08_ep13nydun02_in,0; //Global Variable
+			mes "Puzzle reset";
+			close;
+		case 2:
+			mes "Canceled.";
+			close;
+		}
+	}
+	else {
+		mes "Invalid.";
+		close;
+	}
+	end;
+
+Onreset:
+	donpcevent "ep13_warp_s1::OnEnable";
+	donpcevent "ep13_warp_s3::OnEnable";
+
+	donpcevent "ep13_warp_11::OnEnable";
+	donpcevent "ep13_warp_13::OnEnable";
+	donpcevent "ep13_warp_14::OnEnable";
+
+	donpcevent "ep13_warp_21::OnEnable";
+	donpcevent "ep13_warp_22::OnEnable";
+	donpcevent "ep13_warp_24::OnEnable";
+	donpcevent "ep13_warp_25::OnEnable";
+	donpcevent "ep13_warp_26::OnEnable";
+
+	donpcevent "ep13_warp_31::OnEnable";
+	donpcevent "ep13_warp_33::OnEnable";
+	donpcevent "ep13_warp_35::OnEnable";
+
+	donpcevent "ep13_warp_41::OnEnable";
+	donpcevent "ep13_warp_42::OnEnable";
+	donpcevent "ep13_warp_43::OnEnable";
+	donpcevent "ep13_warp_45::OnEnable";
+	donpcevent "ep13_warp_46::OnEnable";
+
+	donpcevent "ep13_warp_52::OnEnable";
+	donpcevent "ep13_warp_55::OnEnable";
+	donpcevent "ep13_warp_56::OnEnable";
+
+	donpcevent "ep13_warp_61::OnEnable";
+	donpcevent "ep13_warp_62::OnEnable";
+	donpcevent "ep13_warp_64::OnEnable";
+	donpcevent "ep13_warp_65::OnEnable";
+	donpcevent "ep13_warp_66::OnEnable";
+
+	donpcevent "ep13_warp_71::OnEnable";
+	donpcevent "ep13_warp_72::OnEnable";
+	donpcevent "ep13_warp_73::OnEnable";
+	donpcevent "ep13_warp_75::OnEnable";
+	donpcevent "ep13_warp_76::OnEnable";
+
+	donpcevent "ep13_warp_81::OnEnable";
+	donpcevent "ep13_warp_82::OnEnable";
+	donpcevent "ep13_warp_83::OnEnable";
+	donpcevent "ep13_warp_84::OnEnable";
+	donpcevent "ep13_warp_85::OnEnable";
+
+	donpcevent "ep13_warp_91::OnEnable";
+	donpcevent "ep13_warp_92::OnEnable";
+	donpcevent "ep13_warp_93::OnEnable";
+	donpcevent "ep13_warp_94::OnEnable";
+	donpcevent "ep13_warp_95::OnEnable";
+
+	donpcevent "ep13_warp_e1::OnEnable";
+	donpcevent "ep13_warp_e2::OnEnable";
+	donpcevent "ep13_warp_e3::OnEnable";
+
+	donpcevent "ep13_warp_22_2::OnDisable";
+	donpcevent "ep13_warp_24_2::OnDisable";
+	donpcevent "ep13_warp_43_2::OnDisable";
+	donpcevent "ep13_warp_45_2::OnDisable";
+	donpcevent "ep13_warp_61_2::OnDisable";
+	donpcevent "ep13_warp_65_2::OnDisable";
+	donpcevent "ep13_warp_81_2::OnDisable";
+	donpcevent "ep13_warp_83_2::OnDisable";
+	donpcevent "ep13_warp_85_2::OnDisable";
+	end;
+}

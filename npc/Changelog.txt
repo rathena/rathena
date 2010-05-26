@@ -1,6 +1,7 @@
 Date		Added
 ======
-2010/05/24
+2010/05/25
+	* Rev. 14307 Added 13.2 a minor access 'event' for Yggdrasil Dungeon floor 2. [L0ne_W0lf]
 	* Rev. 14306 Added 13.2 quests 'Midgard Ore' and 'Alfheim perfume'. [L0ne_W0lf]
 2010/05/24
 	* Rev. 14305 Some bug fixing :x Nothing to new today folks! Stay tuned. [L0ne_W0lf]

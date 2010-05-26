@@ -1,5 +1,7 @@
 Date	Added
 
+2010/05/25
+	* Rev. 14307 Added noteleport flag to nyd_dun02. [L0ne_W0lf]
 2009/11/03
 	* Rev. 14123 Added mapflags for WoESE guild dungeon. [L0ne_W0lf]
 2009/10/18
