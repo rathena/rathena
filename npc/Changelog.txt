@@ -1,6 +1,8 @@
 Date		Added
 ======
 2010/05/24
+	* Rev. 14306 Added 13.2 quests 'Midgard Ore' and 'Alfheim perfume'. [L0ne_W0lf]
+2010/05/24
 	* Rev. 14305 Some bug fixing :x Nothing to new today folks! Stay tuned. [L0ne_W0lf]
 	- Fixed input checks in the 'Ring of Wise King' quest. (bugreport:4147)
 	- Fixed some of the erros reported in the Oolnir scripts. (bugreport:4220)

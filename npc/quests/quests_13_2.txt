@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
-//= 1.3
+//= 1.5
 //===== Compatible With: =====================================
 //= eAthena SVN
 //===== Description: =========================================
@@ -11,6 +11,9 @@
 //= Cat Hand Addition. (Leads to 13.2 areas)
 //= Two Tribes
 //= Otherworld language
+//= Daily Quests:
+//= - Midgard Ore
+//= - Alfheim Perfume
 //===== Additional Comments: =================================
 //= 1.0 First version
 //= 1.1 Fixed unidentified_coin -> unidentified_mineral. (bugreport:4086)
@@ -18,6 +21,7 @@
 //= 1.3 Moved misc NPCs to the their respective city file. [L0ne_W0lf]
 //= 1.3 Added the "Two Tribes" quest. [L0ne_W0lf]
 //= 1.4 Corrected issues with Otherworld Language. (Bugreport:4147)
+//= 1.5 Added daily quests: Midgard Ore, and Alfheim Perfume.
 //============================================================ 
 
 // Cat Hand Addition.
@@ -6077,3 +6081,3588 @@ mid_camp,7,3,0	script	Translator Preparation#1	708,{
 	}
 }
 */
+
+// Daily Quests
+// - Midgard Ore
+// - Alfheim Perfume
+//============================================================ 
+man_in01,372,221,5	script	Scientist#lifeguard	449,{
+	if ((isequipped(2782) == 1) && (ep13_2_rhea == 100)) {
+		if (ep13_2_tre == 0) {
+			mes "[Dr. Lifeguard]";
+			mes "Recently, it seems like my skin is becoming really dry.";
+			next;
+			mes "[Dr. Lifeguard]";
+			mes "I don't know if it's caused by the cold weather or our chronic disease getting worse.";
+			mes "It hasn't been too long since we administered the Bradium, so why.";
+			next;
+			mes "[Dr. Lifeguard]";
+			mes "Huu... You see, we are afraid of such things... What a hard life.";
+			next;
+			select("A chronic disease?:Bradium?");
+			mes "[Dr. Lifeguard]";
+			mes "We Sapha, who are descendants of Hwergelmir, survived and rebuilt the Giant tribe in the flood of the blood of Ymir.";
+			next;
+			mes "[Dr. Lifeguard]";
+			mes "For no apparent reason, we developed a chronic disease that makes our bodies dry and harden over time just like an old tree.";
+			next;
+			mes "[Dr. Lifeguard]";
+			mes "I think that this is the curse of Ymir who bled by the gods?";
+			next;
+			mes "[Dr. Lifeguard]";
+			mes "But we couldn't just wait for death to slowly creep up on us and exterminate our entire race.";
+			next;
+			mes "[Dr. Lifeguard]";
+			mes "To heal this rare disease the smartest Sapha studied and studied.";
+			next;
+			mes "[Dr. Lifeguard]";
+			mes "What they found was that by injecting a refined Bradium, which is buried around Jotunheim, it can postpone the progression of the disease.";
+			next;
+			mes "[Dr. Lifeguard]";
+			mes "So all of the giants of Sapha established their towns around mines to get Bradium easier.";
+			next;
+			mes "[Dr. Lifeguard]";
+			mes "It seems the amount of buried Bradium is enough.";
+			mes "But for the eternal prosperity of our tribe, and to make the vaccine for this incurable disease, we have to study more and more.";
+			next;
+			mes "[Dr. Lifeguard]";
+			mes "Bradium is the stem of our life.";
+			mes "But the buried Bradium will be exhausted someday, so we Scientists have to find an alternative for our descendants.";
+			next;
+			mes "[Dr. Lifeguard]";
+			mes "Recently, we've learned that there are various minerals in the human world Midgard.";
+			next;
+			mes "[Dr. Lifeguard]";
+			mes "Now the world called Midgard is";
+			mes "like a holy place for us,";
+			mes "which can bring the wind of";
+			mes "revolution for us.";
+			next;
+			mes "[Dr. Lifeguard]";
+			mes "Contact with Midgard";
+			mes "must be the lead of Hwergelmir";
+			mes "for us, the Sapha which has such";
+			mes "a closed-off society.";
+			next;
+			mes "[Dr. Lifeguard]";
+			mes "I'll draw a result that can";
+			mes "satisfy his lead!";
+			set ep13_2_tre,1;
+			close;
+		}
+		else if ((ep13_2_tre == 1) || (ep13_2_tre == 100)) {
+			if (checkweight(1201,1) == 0) {
+				mes "[Dr. Lifeguard]";
+				mes "It looks like you're carrying too many things.";
+				mes "Why not put some of your items in storage and come back?";
+				close;
+			}
+			
+			set .@dayq_chk,checkquest(2182,PLAYTIME);
+			if ((.@dayq_chk == 0) || (.@dayq_chk == 1)) {
+				mes "[Dr. Lifeguard]";
+				mes "The future of the Sapha is up to you.";
+				mes "I do not have any need of your help right now.";
+				close;
+			}
+			else {
+				erasequest 2182;
+				set .@rand_dayq,rand(1,3);
+				if (.@rand_dayq == 1) {
+					mes "[Dr. Lifeguard]";
+					mes "Recently, someone who came from Schwaltzvalt gave me a small mineral as a gift from his home town when he saw our study of Bradium.";
+					next;
+					mes "[Dr. Lifeguard]";
+					mes "I can't say for sure until now,";
+					mes "but this mineral seems to have";
+					mes "many interesting features.";
+					next;
+					mes "[Dr. Lifeguard]";
+					mes "As I examine this mineral";
+					mes "more and more, it's really";
+					mes "different from the one in Jotunheim.";
+					mes "This mineral must be helpful";
+					mes "to make a new vaccine!";
+					next;
+					mes "[Dr. Lifeguard]";
+					mes "But the amount of the mineral";
+					mes "is too little to make a";
+					mes "preparation for the";
+					mes "examination.";
+					next;
+					mes "[Dr. Lifeguard]";
+					mes "You said you're from Rune Midgard, right? Do you think you can bring me a little bit more of that mineral..";
+					next;
+					mes "[Dr. Lifeguard]";
+					mes "He said it's from";
+					mes "^FF0000Mt. Mjolnir^000000.";
+					mes "I think ^FF000010^000000 would be enough.";
+					next;
+					mes "[Dr. Lifeguard]";
+					mes "I'll give you this portable toolbox.";
+					mes "Things like a detector and a little hammer for mining minerals are included in this toolbox.";
+					next;
+					mes "[Dr. Lifeguard]";
+					mes "Take it, it shold be";
+					mes "helpful in collecting";
+					mes "the minerals I need.";
+					set ep13_2_tre,2;
+					setquest 2179;
+					getitem 6076,1; //Portable_Toolbox
+					close;
+				}
+				else if (.@rand_dayq == 2) {
+					mes "[Dr. Lifeguard]";
+					mes "Recently, someone who came from Schwaltzvalt gave me a small mineral as a gift from his home town when he saw our study of Bradium.";
+					next;
+					mes "[Dr. Lifeguard]";
+					mes "I can't say for sure until now,";
+					mes "but this mineral seems to have";
+					mes "many interesting features.";
+					next;
+					mes "[Dr. Lifeguard]";
+					mes "As I examine this mineral";
+					mes "more and more, it's really";
+					mes "different from the one in Jotunheim.";
+					mes "This mineral must be helpful";
+					mes "to make a new vaccine!";
+					next;
+					mes "[Dr. Lifeguard]";
+					mes "But the amount of the mineral";
+					mes "is too little to make a";
+					mes "preparation for the";
+					mes "examination.";
+					next;
+					mes "[Dr. Lifeguard]";
+					mes "You said you're from Rune Midgard, right? Do you think you can bring me a little bit more of that mineral..";
+					next;
+					mes "[Dr. Lifeguard]";
+					mes "He said it's from";
+					mes "^FF0000Abyss Lake^000000.";
+					mes "I think ^FF00005^000000 would be enough.";
+					next;
+					mes "[Dr. Lifeguard]";
+					mes "I'll give you this portable toolbox.";
+					mes "Things like a detector and a little hammer for mining minerals are included in this toolbox.";
+					next;
+					mes "[Dr. Lifeguard]";
+					mes "Take it, it shold be";
+					mes "helpful in collecting";
+					mes "the minerals I need.";
+					set ep13_2_tre,3;
+					setquest 2180;
+					getitem 6076,1; //Portable_Toolbox
+					close;
+				}
+				else {
+					mes "[Dr. Lifeguard]";
+					mes "Recently, someone who came from Schwaltzvalt gave me a small mineral as a gift from his home town when he saw our study of Bradium.";
+					next;
+					mes "[Dr. Lifeguard]";
+					mes "I can't say for sure until now,";
+					mes "but this mineral seems to have";
+					mes "many interesting features.";
+					next;
+					mes "[Dr. Lifeguard]";
+					mes "As I examine this mineral";
+					mes "more and more, it's really";
+					mes "different from the one in Jotunheim.";
+					mes "This mineral must be helpful";
+					mes "to make a new vaccine!";
+					next;
+					mes "[Dr. Lifeguard]";
+					mes "But the amount of the mineral";
+					mes "is too little to make a";
+					mes "preparation for the";
+					mes "examination.";
+					next;
+					mes "[Dr. Lifeguard]";
+					mes "You said you're from Rune Midgard, right? Do you think you can bring me a little bit more of that mineral..";
+					next;
+					mes "[Dr. Lifeguard]";
+					mes "He said it's from";
+					mes "^FF0000Thor Volcano^000000.";
+					mes "I think ^FF00005^000000 would be enough.";
+					next;
+					mes "[Dr. Lifeguard]";
+					mes "I'll give you this portable toolbox.";
+					mes "Things like a detector and a little hammer for mining minerals are included in this toolbox.";
+					next;
+					mes "[Dr. Lifeguard]";
+					mes "Take it, it shold be";
+					mes "helpful in collecting";
+					mes "the minerals I need.";
+					set ep13_2_tre,4;
+					setquest 2181;
+					getitem 6076,1; //Portable_Toolbox
+					close;
+				}
+			}
+		
+		}
+		else if (ep13_2_tre == 2) {
+			if (countitem(6077) > 9) {
+				mes "[Dr. Lifeguard]";
+				mes "Oh! Yes, that's it!";
+				mes "This much will be enough!";
+				next;
+				mes "[Dr. Lifeguard]";
+				mes "I really appreciate your help.";
+				next;
+				mes "[Dr. Lifeguard]";
+				mes "These are coins of the Manuk.";
+				mes "This may not be much, but if you collect more, they can be used to buy some items from our merchants.";
+				next;
+				mes "[Dr. Lifeguard]";
+				mes "If you want to help my study for the sake of the Sapha, come to me at any time.";
+				mes "I will be very happy for any help you can give.";
+				set .@stone_chk,countitem(6077);
+				set .@stoneelse_chk,countitem(6078);
+				delitem 6077,.@stone_chk; //Rough_Mineral
+				delitem 6078,.@stoneelse_chk; //Stone_Fragments
+				delitem 6076,1; //Portable_Toolbox
+				set ep13_2_tre,100;
+				getitem 6080,2; //Manuk_Coin
+				getexp 0,700000;
+				changequest 2179,2182;
+				close;
+			}
+			else {
+				mes "[Dr. Lifeguard]";
+				mes "The future of the Sapha is up to you.";
+				mes "I wish you good luck.";
+				close;
+			}
+		}
+		else if (ep13_2_tre == 3) {
+			if (countitem(6077) > 4) {
+				mes "[Dr. Lifeguard]";
+				mes "Oh! Yes, that's it!";
+				mes "This much will be enough!";
+				next;
+				mes "[Dr. Lifeguard]";
+				mes "I really appreciate your help.";
+				next;
+				mes "[Dr. Lifeguard]";
+				mes "These are coins of the Manuk.";
+				mes "This may not be much, but if you collect more, they can be used to buy some items from our merchants.";
+				next;
+				mes "[Dr. Lifeguard]";
+				mes "If you want to help my study for the sake of the Sapha, come to me at any time.";
+				mes "I will be very happy for any help you can give.";
+				set .@stone_chk,countitem(6077);
+				set .@stoneelse_chk,countitem(6078);
+				delitem 6077,.@stone_chk; //Rough_Mineral
+				delitem 6078,.@stoneelse_chk; //Stone_Fragments
+				delitem 6076,1; //Portable_Toolbox
+				set ep13_2_tre,100;
+				getitem 6080,2; //Manuk_Coin
+				getexp 0,700000;
+				changequest 2180,2182;
+				close;
+			}
+			else {
+				mes "[Dr. Lifeguard]";
+				mes "The future of the Sapha is up to you.";
+				mes "I wish you good luck.";
+				close;
+			}
+		}
+		else if (ep13_2_tre == 4) {
+			if (countitem(6077) > 4) {
+				mes "[Dr. Lifeguard]";
+				mes "Oh! Yes, that's it!";
+				mes "This much will be enough!";
+				next;
+				mes "[Dr. Lifeguard]";
+				mes "I really appreciate your help.";
+				next;
+				mes "[Dr. Lifeguard]";
+				mes "These are coins of the Manuk.";
+				mes "This may not be much, but if you collect more, they can be used to buy some items from our merchants.";
+				next;
+				mes "[Dr. Lifeguard]";
+				mes "If you want to help my study for the sake of the Sapha, come to me at any time.";
+				mes "I will be very happy for any help you can give.";
+				set .@stone_chk,countitem(6077);
+				set .@stoneelse_chk,countitem(6078);
+				delitem 6077,.@stone_chk; //Rough_Mineral
+				delitem 6078,.@stoneelse_chk; //Stone_Fragments
+				delitem 6076,1; //Portable_Toolbox
+				set ep13_2_tre,100;
+				getitem 6080,2; //Manuk_Coin
+				getexp 0,700000;
+				changequest 2181,2182;
+				close;
+			}
+			else {
+				mes "[Dr. Lifeguard]";
+				mes "The future of the Sapha is up to you.";
+				mes "I wish you good luck.";
+				close;
+			}
+		}
+		else {
+			mes "[Dr. Lifeguard]";
+			mes "Hmm...";
+			close;
+		}
+	}
+	else {
+		mes "[Scientist]";
+		mes "Pdh doud pjfdd";
+		mes "fo pdi Wrdpp doff";
+		mes "WosNuffremu Ha TurAshTi";
+		mes "SeGothShar An AshDur";
+		mes "UorVeLars No Ador";
+		close;
+	}
+}
+
+mjolnir_01,364,256,0	script	#mj01_find	-1,5,5,{
+	end;
+
+OnTouch:
+	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
+		if (countitem(6077) < 10) {
+			mes "- Just arrived at Mt. Mjolnir. I think I can find the mineral by using the Mineral Detector in the Portable Toolbox. -";
+			next;
+			switch(select("Check current location.:Do nothing.")) {
+			case 1:
+				mes "- You pressed the button of the detector. -";
+				next;
+				mes "[Mineral Detector]";
+				mes "Bee beep -";
+				viewpoint 1,32,309,1,0x00FF00;
+				viewpoint 1,217,34,2,0x00FF00;
+				close;
+			case 2:
+				mes "- You decide to do nothing. -";
+				close;
+			}
+		}
+	}
+	end;
+}
+
+mjolnir_01,32,309,3	script	#mj01_01	111,7,7,{
+	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
+		if (countitem(6077) < 10) {
+			mes "- I can see some different colored minerals where the detector pointed to. This must be the mineral that Mr. Lifeguard told me about. -";
+			next;
+			switch(select("Mine minerals.:Do nothing.")) {
+			case 1:
+				mes "Clang! Clang! Clang! Clang!";
+				progressbar "ffff00",4;
+				next;
+				set .@get_stone,rand(1,6);
+				if (.@get_stone < 4) {
+					mes "- You failed to mine minerals. -";
+					getitem 6078,1; //Stone_Fragments
+					close;
+				}
+				else {
+					mes "- You succeeded to mine minerals. -";
+					emotion e_ic,1;
+					set .@stst,rand(1,5);
+					if (.@stst == 5) {
+						getitem 6077,5; //Rough_Mineral
+					}
+					else if (.@stst == 1) {
+						getitem 6077,1; //Rough_Mineral
+					}
+					else {
+						getitem 6077,2; //Rough_Mineral
+					}
+					close2;
+					donpcevent "#mj01_01_t::OnEnable";
+					disablenpc "#mj01_01";
+					end;
+				}
+			case 2:
+				mes "- You decide to do nothing. -";
+				close;
+			}
+		}
+		else {
+			mes "- I think I have enough minerals. -";
+			close;
+		}
+	}
+	end;
+
+OnInit:
+	enablenpc "#mj01_01";
+	end;
+
+.@get_stone:
+	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
+		if (countitem(6077) < 10) {
+			specialeffect EF_COUPLECASTING; 
+		}
+	}
+	end;
+}
+
+mjolnir_01,1,1,3	script	#mj01_01_t	111,{
+	end;
+
+OnEnable:
+	initnpctimer;
+	end;
+
+OnTimer60000:
+	enablenpc "#mj01_01";
+	stopnpctimer;
+	end;
+}
+
+mjolnir_01,32,309,3	script	#mj01_02	111,7,7,{
+	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
+		if (countitem(6077) < 10) {
+			mes "- I can see some different colored minerals where the detector pointed to. This must be the mineral that Mr. Lifeguard told me about. -";
+			next;
+			switch(select("Mine minerals.:Do nothing.")) {
+			case 1:
+				mes "Clang! Clang! Clang! Clang!";
+				progressbar "ffff00",4;
+				next;
+				set .@get_stone,rand(1,6);
+				if (.@get_stone < 4) {
+					mes "- You failed to mine minerals. -";
+					getitem 6078,1; //Stone_Fragments
+					close;
+				}
+				else {
+					mes "- You succeeded to mine minerals. -";
+					emotion e_ic,1;
+					set .@stst,rand(1,5);
+					if (.@stst == 5) {
+						getitem 6077,5; //Rough_Mineral
+					}
+					else if (.@stst == 1) {
+						getitem 6077,1; //Rough_Mineral
+					}
+					else {
+						getitem 6077,2; //Rough_Mineral
+					}
+					close2;
+					donpcevent "#mj01_02_t::OnEnable";
+					disablenpc "#mj01_02";
+					end;
+				}
+			case 2:
+				mes "- You decide to do nothing. -";
+				close;
+			}
+		}
+		else {
+			mes "- I think I have enough minerals. -";
+			close;
+		}
+	}
+	end;
+
+OnInit:
+	enablenpc "#mj01_02";
+	end;
+
+.@get_stone:
+	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
+		if (countitem(6077) < 10) {
+			specialeffect EF_COUPLECASTING;
+		}
+	}
+	end;
+}
+
+mjolnir_01,1,1,3	script	#mj01_02_t	111,{
+OnEnable:
+	initnpctimer;
+	end;
+
+OnTimer60000:
+	enablenpc "#mj01_02";
+	stopnpctimer;
+	end;
+}
+
+mjolnir_02,313,289,0	script	#mj02_find_1	-1,5,5,{
+	end;
+
+OnTouch:
+	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
+		if (countitem(6077) < 10) {
+			mes "- Just arrived at Mt. Mjolnir. I think I can find the mineral by using the Mineral Detector in the Portable Toolbox. -";
+			next;
+			switch(select("Check current location.:Do nothing.")) {
+			case 1:
+				mes "- You pressed the button of the detector. -";
+				next;
+				mes "[Mineral Detector]";
+				mes "Bee beep -";
+				viewpoint 1,90,195,1,0x00FF00;
+				viewpoint 1,206,187,2,0x00FF00;
+				close;
+			case 2:
+				mes "- You decide to do nothing. -";
+				close;
+			}
+		}
+	}
+	end;
+}
+
+mjolnir_02,78,258,0	script	#mj02_find_2	-1,5,5,{
+	end;
+
+OnTouch:
+	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
+		if (countitem(6077) < 10) {
+			mes "- Just arrived at Mt. Mjolnir. I think I can find the mineral by using the Mineral Detector in the Portable Toolbox. -";
+			next;
+			switch(select("Check current location.:Do nothing.")) {
+			case 1:
+				mes "- You pressed the button of the detector. -";
+				next;
+				mes "[Mineral Detector]";
+				mes "Bee beep -";
+				viewpoint 1,90,195,1,0x00FF00;
+				viewpoint 1,206,187,2,0x00FF00;
+				close;
+			case 2:
+				mes "- You decide to do nothing. -";
+				close;
+			}
+		}
+	}
+	end;
+}
+
+mjolnir_02,90,195,3	script	#mj02_01	111,5,10,{
+	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
+		if (countitem(6077) < 10) {
+			mes "- I can see some different colored minerals where the detector pointed to. This must be the mineral that Mr. Lifeguard told me about. -";
+			next;
+			switch(select("Mine minerals.:Do nothing.")) {
+			case 1:
+				mes "Clang! Clang! Clang! Clang!";
+				progressbar "ffff00",4;
+				next;
+				set .@get_stone,rand(1,6);
+				if (.@get_stone < 4) {
+					mes "- You failed to mine minerals. -";
+					getitem 6078,1; //Stone_Fragments
+					close;
+				}
+				else {
+					mes "- You succeeded to mine minerals. -";
+					emotion e_ic,1;
+					set .@stst,rand(1,5);
+					if (.@stst == 5) {
+						getitem 6077,5; //Rough_Mineral
+					}
+					else if (.@stst == 1) {
+						getitem 6077,1; //Rough_Mineral
+					}
+					else {
+						getitem 6077,2; //Rough_Mineral
+					}
+					close2;
+					donpcevent "#mj02_01_t::OnEnable";
+					disablenpc "#mj02_01";
+					end;
+				}
+			case 2:
+				mes "- You decide to do nothing. -";
+				close;
+			}
+		}
+		else {
+			mes "- I think I have enough minerals. -";
+			close;
+		}
+	}
+	end;
+
+OnInit:
+	enablenpc "#mj02_01";
+	end;
+
+OnTouch:
+	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
+		if (countitem(6077) < 10) {
+			specialeffect EF_COUPLECASTING;
+		}
+	}
+	end;
+}
+
+mjolnir_02,1,1,3	script	#mj02_01_t	111,{
+OnEnable:
+	initnpctimer;
+	end;
+
+OnTimer60000:
+	enablenpc "#mj02_01";
+	stopnpctimer;
+	end;
+}
+
+mjolnir_02,206,187,3	script	#mj02_02	111,7,7,{
+	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
+		if (countitem(6077) < 10) {
+			mes "- I can see some different colored minerals where the detector pointed to. This must be the mineral that Mr. Lifeguard told me about. -";
+			next;
+			switch(select("Mine minerals.:Do nothing.")) {
+			case 1:
+				mes "Clang! Clang! Clang! Clang!";
+				progressbar "ffff00",4;
+				next;
+				set .@get_stone,rand(1,6);
+				if (.@get_stone < 4) {
+					mes "- You failed to mine minerals. -";
+					getitem 6078,1; //Stone_Fragments
+					close;
+				}
+				else {
+					mes "- You succeeded to mine minerals. -";
+					emotion e_ic,1;
+					set .@stst,rand(1,5);
+					if (.@stst == 5) {
+						getitem 6077,5; //Rough_Mineral
+					}
+					else if (.@stst == 1) {
+						getitem 6077,1; //Rough_Mineral
+					}
+					else {
+						getitem 6077,2; //Rough_Mineral
+					}
+					close2;
+					donpcevent "#mj02_02_t::OnEnable";
+					disablenpc "#mj02_02";
+					end;
+				}
+			case 2:
+				mes "- You decide to do nothing. -";
+				close;
+			}
+		}
+		else {
+			mes "- I think I have enough minerals. -";
+			close;
+		}
+	}
+	end;
+
+OnInit:
+	enablenpc "#mj02_02";
+	end;
+
+OnTouch:
+	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
+		if (countitem(6077) < 10) {
+			specialeffect EF_COUPLECASTING;
+		}
+	}
+	end;
+}
+
+mjolnir_02,1,1,3	script	#mj02_02_t	111,{
+OnEnable:
+	initnpctimer;
+	end;
+
+OnTimer60000:
+	enablenpc "#mj02_02";
+	stopnpctimer;
+	end;
+}
+
+mjolnir_03,76,258,0	script	#mj03_find_1	-1,5,5,{
+	end;
+
+OnTouch:
+	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
+		if (countitem(6077) < 10) {
+			mes "- Just arrived at Mt. Mjolnir. I think I can find the mineral by using the Mineral Detector in the Portable Toolbox. -";
+			next;
+			switch(select("Check current location.:Do nothing.")) {
+			case 1:
+				mes "- You pressed the button of the detector. -";
+				next;
+				mes "[Mineral Detector]";
+				mes "Bee beep -";
+				next;
+				mes "- Nothing's found. -";
+				close;
+			case 2:
+				mes "- You decide to do nothing. -";
+				close;
+			}
+		}
+	}
+	end;
+}
+
+mjolnir_03,227,204,0	script	#mj03_find_2	-1,5,5,{
+	end;
+
+OnTouch:
+	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
+		if (countitem(6077) < 10) {
+			mes "- Just arrived at Mt. Mjolnir. I think I can find the mineral by using the Mineral Detector in the Portable Toolbox. -";
+			next;
+			switch(select("Check current location.:Do nothing.")) {
+			case 1:
+				mes "- You pressed the button of the detector. -";
+				next;
+				mes "[Mineral Detector]";
+				mes "Bee beep -";
+				next;
+				mes "- Nothing's found. -";
+				close;
+			case 2:
+				mes "- You decide to do nothing. -";
+				close;
+			}
+		}
+	}
+	end;
+}
+
+mjolnir_04,147,208,0	script	#mj04_find_1	-1,5,5,{
+	end;
+
+OnTouch:
+	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
+		if (countitem(6077) < 10) {
+			mes "- Just arrived at Mt. Mjolnir. I think I can find the mineral by using the Mineral Detector in the Portable Toolbox. -";
+			next;
+			switch(select("Check current location.:Do nothing.")) {
+			case 1:
+				mes "- You pressed the button of the detector. -";
+				next;
+				mes "[Mineral Detector]";
+				mes "Bee beep -";
+				viewpoint 1,125,380,1,0x00FF00;
+				viewpoint 1,220,130,2,0x00FF00;
+				close;
+			case 2:
+				mes "- You decide to do nothing. -";
+				close;
+			}
+		}
+	}
+	end;
+}
+
+mjolnir_04,160,77,0	script	#mj04_find_2	-1,5,5,{
+	end;
+
+OnTouch:
+	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
+		if (countitem(6077) < 10) {
+			mes "- Just arrived at Mt. Mjolnir. I think I can find the mineral by using the Mineral Detector in the Portable Toolbox. -";
+			next;
+			switch(select("Check current location.:Do nothing.")) {
+			case 1:
+				mes "- You pressed the button of the detector. -";
+				next;
+				mes "[Mineral Detector]";
+				mes "Bee beep -";
+				viewpoint 1,125,380,1,0x00FF00;
+				viewpoint 1,220,130,2,0x00FF00;
+				close;
+			case 2:
+				mes "- You decide to do nothing. -";
+				close;
+			}
+		}
+	}
+	end;
+}
+
+mjolnir_04,361,174,0	script	#mj04_find_3	-1,5,5,{
+	end;
+
+OnTouch:
+	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
+		if (countitem(6077) < 10) {
+			mes "- Just arrived at Mt. Mjolnir. I think I can find the mineral by using the Mineral Detector in the Portable Toolbox. -";
+			next;
+			switch(select("Check current location.:Do nothing.")) {
+			case 1:
+				mes "- You pressed the button of the detector. -";
+				next;
+				mes "[Mineral Detector]";
+				mes "Bee beep -";
+				viewpoint 1,125,380,1,0x00FF00;
+				viewpoint 1,220,130,2,0x00FF00;
+				close;
+			case 2:
+				mes "- You decide to do nothing. -";
+				close;
+			}
+		}
+	}
+	end;
+}
+
+mjolnir_04,125,380,3	script	#mj04_01	111,7,7,{
+	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
+		if (countitem(6077) < 10) {
+			mes "- I can see some different colored minerals where the detector pointed to. This must be the mineral that Mr. Lifeguard told me about. -";
+			next;
+			switch(select("Mine minerals.:Do nothing.")) {
+			case 1:
+				mes "Clang! Clang! Clang! Clang!";
+				progressbar "ffff00",4;
+				next;
+				set .@get_stone,rand(1,6);
+				if (.@get_stone < 4) {
+					mes "- You failed to mine minerals. -";
+					getitem 6078,1; //Stone_Fragments
+					close;
+				}
+				else {
+					mes "- You succeeded to mine minerals. -";
+					emotion e_ic,1;
+					set .@stst,rand(1,5);
+					if (.@stst == 5) {
+						getitem 6077,5; //Rough_Mineral
+					}
+					else if (.@stst == 1) {
+						getitem 6077,1; //Rough_Mineral
+					}
+					else {
+						getitem 6077,2; //Rough_Mineral
+					}
+					close2;
+					donpcevent "#mj04_01_t::OnEnable";
+					disablenpc "#mj04_01";
+					end;
+				}
+			case 2:
+				mes "- You decide to do nothing. -";
+				close;
+			}
+		}
+		else {
+			mes "- I think I have enough minerals. -";
+			close;
+		}
+	}
+	end;
+
+OnInit:
+	enablenpc "#mj04_01";
+	end;
+
+OnTouch:
+	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
+		if (countitem(6077) < 10) {
+			specialeffect EF_COUPLECASTING;
+		}
+	}
+	end;
+}
+
+mjolnir_04,1,1,3	script	#mj04_01_t	111,{
+OnEnable:
+	initnpctimer;
+	end;
+
+OnTimer60000:
+	enablenpc "#mj04_01";
+	stopnpctimer;
+	end;
+}
+
+mjolnir_04,220,130,3	script	#mj04_02	111,7,7,{
+	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
+		if (countitem(6077) < 10) {
+				mes "- I can see some different colored minerals where the detector pointed to. This must be the mineral that Mr. Lifeguard told me about. -";
+				next;
+				switch(select("Mine minerals.:Do nothing.")) {
+				case 1:
+					mes "Clang! Clang! Clang! Clang!";
+					progressbar "ffff00",4;
+					next;
+					set .@get_stone,rand(1,6);
+					if (.@get_stone < 4) {
+						mes "- You failed to mine minerals. -";
+						getitem 6078,1; //Stone_Fragments
+						close;
+					}
+					else {
+						mes "- You succeeded to mine minerals. -";
+						emotion e_ic,1;
+						set .@stst,rand(1,5);
+						if (.@stst == 5) {
+							getitem 6077,5; //Rough_Mineral
+						}
+						else if (.@stst == 1) {
+							getitem 6077,1; //Rough_Mineral
+						}
+						else {
+							getitem 6077,2; //Rough_Mineral
+						}
+						close2;
+						donpcevent "#mj04_02_t::OnEnable";
+						disablenpc "#mj04_02";
+						end;
+					}
+					break;
+				case 2:
+					mes "- You decide to do nothing. -";
+					close;
+				}
+		}
+		else {
+			mes "- I think I have enough minerals. -";
+			close;
+		}
+	}
+	end;
+
+OnInit:
+	enablenpc "#mj04_02";
+	end;
+
+OnTouch:
+	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
+		if (countitem(6077) < 10) {
+			specialeffect EF_COUPLECASTING;
+		}
+	}
+	end;
+}
+
+mjolnir_04,1,1,3	script	#mj04_02_t	111,{
+OnEnable:
+	initnpctimer;
+	end;
+
+OnTimer60000:
+	enablenpc "#mj04_02";
+	stopnpctimer;
+	end;
+}
+
+mjolnir_05,82,171,0	script	#mj05_find_1	-1,5,5,{
+	end;
+
+OnTouch:
+	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
+		if (countitem(6077) < 10) {
+			mes "- Just arrived at Mt. Mjolnir. I think I can find the mineral by using the Mineral Detector in the Portable Toolbox. -";
+			next;
+			switch(select("Check current location.:Do nothing.")) {
+			case 1:
+				mes "- You pressed the button of the detector. -";
+				next;
+				mes "[Mineral Detector]";
+				mes "Bee beep -";
+				next;
+				mes "- Nothing's found. -";
+				close;
+			case 2:
+				mes "- You decide to do nothing. -";
+				close;
+			}
+		}
+	}
+	end;
+}
+
+mjolnir_05,219,375,0	script	#mj05_find_2	-1,5,5,{
+	end;
+
+OnTouch:
+	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
+		if (countitem(6077) < 10) {
+			mes "- Just arrived at Mt. Mjolnir. I think I can find the mineral by using the Mineral Detector in the Portable Toolbox. -";
+			next;
+			switch(select("Check current location.:Do nothing.")) {
+			case 1:
+				mes "- You pressed the button of the detector. -";
+				next;
+				mes "[Mineral Detector]";
+				mes "Bee beep -";
+				next;
+				mes "- Nothing's found. -";
+				close;
+			case 2:
+				mes "- You decide to do nothing. -";
+				close;
+			}
+		}
+	}
+	end;
+}
+
+mjolnir_06,28,332,0	script	#mj06_find_1	-1,5,5,{
+	end;
+
+OnTouch:
+	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
+		if (countitem(6077) < 10) {
+			mes "- Just arrived at Mt. Mjolnir. I think I can find the mineral by using the Mineral Detector in the Portable Toolbox. -";
+			next;
+			switch(select("Check current location.:Do nothing.")) {
+			case 1:
+				mes "- You pressed the button of the detector. -";
+				next;
+				mes "[Mineral Detector]";
+				mes "Bee beep -";
+				next;
+				mes "- Nothing's found. -";
+				close;
+			case 2:
+				mes "- You decide to do nothing. -";
+				close;
+			}
+		}
+	}
+	end;
+}
+
+mjolnir_06,275,50,0	script	#mj06_find_2	-1,5,5,{
+	end;
+
+OnTouch:
+	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
+		if (countitem(6077) < 10) {
+			mes "- Just arrived at Mt. Mjolnir. I think I can find the mineral by using the Mineral Detector in the Portable Toolbox. -";
+			next;
+			switch(select("Check current location.:Do nothing.")) {
+			case 1:
+				mes "- You pressed the button of the detector. -";
+				next;
+				mes "[Mineral Detector]";
+				mes "Bee beep -";
+				next;
+				mes "- Nothing's found. -";
+				close;
+			case 2:
+				mes "- You decide to do nothing. -";
+				close;
+			}
+		}
+	}
+	end;
+}
+
+mjolnir_06,371,78,0	script	#mj06_find_3	-1,5,5,{
+	end;
+
+OnTouch:
+	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
+		if (countitem(6077) < 10) {
+			mes "- Just arrived at Mt. Mjolnir. I think I can find the mineral by using the Mineral Detector in the Portable Toolbox. -";
+			next;
+			switch(select("Check current location.:Do nothing.")) {
+			case 1:
+				mes "- You pressed the button of the detector. -";
+				next;
+				mes "[Mineral Detector]";
+				mes "Bee beep -";
+				next;
+				mes "- Nothing's found. -";
+				close;
+			case 2:
+				mes "- You decide to do nothing. -";
+				close;
+			}
+		}
+	}
+	end;
+}
+
+mjolnir_07,26,373,0	script	#mj07_find_1	-1,5,5,{
+	end;
+
+OnTouch:
+	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
+		if (countitem(6077) < 10) {
+			mes "- Just arrived at Mt. Mjolnir. I think I can find the mineral by using the Mineral Detector in the Portable Toolbox. -";
+			next;
+			switch(select("Check current location.:Do nothing.")) {
+			case 1:
+				mes "- You pressed the button of the detector. -";
+				next;
+				mes "[Mineral Detector]";
+				mes "Bee beep -";
+				next;
+				mes "- Nothing's found. -";
+				close;
+			case 2:
+				mes "- You decide to do nothing. -";
+				close;
+			}
+		}
+	}
+	end;
+}
+
+mjolnir_07,214,373,0	script	#mj07_find_2	-1,5,5,{
+	end;
+
+OnTouch:
+	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
+		if (countitem(6077) < 10) {
+			mes "- Just arrived at Mt. Mjolnir. I think I can find the mineral by using the Mineral Detector in the Portable Toolbox. -";
+			next;
+			switch(select("Check current location.:Do nothing.")) {
+			case 1:
+				mes "- You pressed the button of the detector. -";
+				next;
+				mes "[Mineral Detector]";
+				mes "Bee beep -";
+				next;
+				mes "- Nothing's found. -";
+				close;
+			case 2:
+				mes "- You decide to do nothing. -";
+				close;
+			}
+		}
+	}
+	end;
+}
+
+mjolnir_07,372,355,0	script	#mj07_find_3	-1,5,5,{
+	end;
+
+OnTouch:
+	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
+		if (countitem(6077) < 10) {
+			mes "- Just arrived at Mt. Mjolnir. I think I can find the mineral by using the Mineral Detector in the Portable Toolbox. -";
+			next;
+			switch(select("Check current location.:Do nothing.")) {
+			case 1:
+				mes "- You pressed the button of the detector. -";
+				next;
+				mes "[Mineral Detector]";
+				mes "Bee beep -";
+				next;
+				mes "- Nothing's found. -";
+				close;
+			case 2:
+				mes "- You decide to do nothing. -";
+				close;
+			}
+		}
+	}
+	end;
+}
+
+mjolnir_07,375,233,0	script	#mj07_find_4	-1,5,5,{
+	end;
+
+OnTouch:
+	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
+		if (countitem(6077) < 10) {
+			mes "- Just arrived at Mt. Mjolnir. I think I can find the mineral by using the Mineral Detector in the Portable Toolbox. -";
+			next;
+			switch(select("Check current location.:Do nothing.")) {
+			case 1:
+				mes "- You pressed the button of the detector. -";
+				next;
+				mes "[Mineral Detector]";
+				mes "Bee beep -";
+				next;
+				mes "- Nothing's found. -";
+				close;
+			case 2:
+				mes "- You decide to do nothing. -";
+				close;
+			}
+		}
+	}
+	end;
+}
+
+mjolnir_07,26,78,0	script	#mj07_find_5	-1,5,5,{
+	end;
+
+OnTouch:
+	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
+		if (countitem(6077) < 10) {
+			mes "- Just arrived at Mt. Mjolnir. I think I can find the mineral by using the Mineral Detector in the Portable Toolbox. -";
+			next;
+			switch(select("Check current location.:Do nothing.")) {
+			case 1:
+				mes "- You pressed the button of the detector. -";
+				next;
+				mes "[Mineral Detector]";
+				mes "Bee beep -";
+				next;
+				mes "- Nothing's found. -";
+				close;
+			case 2:
+				mes "- You decide to do nothing. -";
+				close;
+			}
+		}
+	}
+	end;
+}
+
+mjolnir_07,157,25,0	script	#mj07_find_6	-1,5,5,{
+	end;
+
+OnTouch:
+	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
+		if (countitem(6077) < 10) {
+			mes "- Just arrived at Mt. Mjolnir. I think I can find the mineral by using the Mineral Detector in the Portable Toolbox. -";
+			next;
+			switch(select("Check current location.:Do nothing.")) {
+			case 1:
+				mes "- You pressed the button of the detector. -";
+				next;
+				mes "[Mineral Detector]";
+				mes "Bee beep -";
+				next;
+				mes "- Nothing's found. -";
+				close;
+			case 2:
+				mes "- You decide to do nothing. -";
+				close;
+			}
+		}
+	}
+	end;
+}
+
+mjolnir_08,39,239,0	script	#mj08_find_1	-1,5,5,{
+	end;
+
+OnTouch:
+	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
+		if (countitem(6077) < 10) {
+			mes "- Just arrived at Mt. Mjolnir. I think I can find the mineral by using the Mineral Detector in the Portable Toolbox. -";
+			next;
+			switch(select("Check current location.:Do nothing.")) {
+			case 1:
+				mes "- You pressed the button of the detector. -";
+				next;
+				mes "[Mineral Detector]";
+				mes "Bee beep -";
+				next;
+				mes "- Nothing's found. -";
+				close;
+			case 2:
+				mes "- You decide to do nothing. -";
+				close;
+			}
+		}
+	}
+	end;
+}
+
+mjolnir_08,36,344,0	script	#mj08_find_2	-1,5,5,{
+	end;
+
+OnTouch:
+	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
+		if (countitem(6077) < 10) {
+			mes "- Just arrived at Mt. Mjolnir. I think I can find the mineral by using the Mineral Detector in the Portable Toolbox. -";
+			next;
+			switch(select("Check current location.:Do nothing.")) {
+			case 1:
+				mes "- You pressed the button of the detector. -";
+				next;
+				mes "[Mineral Detector]";
+				mes "Bee beep -";
+				next;
+				mes "- Nothing's found. -";
+				close;
+			case 2:
+				mes "- You decide to do nothing. -";
+				close;
+			}
+		}
+	}
+	end;
+}
+
+mjolnir_08,160,349,0	script	#mj08_find_3	-1,5,5,{
+	end;
+
+OnTouch:
+	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
+		if (countitem(6077) < 10) {
+			mes "- Just arrived at Mt. Mjolnir. I think I can find the mineral by using the Mineral Detector in the Portable Toolbox. -";
+			next;
+			switch(select("Check current location.:Do nothing.")) {
+			case 1:
+				mes "- You pressed the button of the detector. -";
+				next;
+				mes "[Mineral Detector]";
+				mes "Bee beep -";
+				next;
+				mes "- Nothing's found. -";
+				close;
+			case 2:
+				mes "- You decide to do nothing. -";
+				close;
+			}
+		}
+	}
+	end;
+}
+
+mjolnir_08,359,258,0	script	#mj08_find_4	-1,5,5,{
+	end;
+
+OnTouch:
+	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
+		if (countitem(6077) < 10) {
+			mes "- Just arrived at Mt. Mjolnir. I think I can find the mineral by using the Mineral Detector in the Portable Toolbox. -";
+			next;
+			switch(select("Check current location.:Do nothing.")) {
+			case 1:
+				mes "- You pressed the button of the detector. -";
+				next;
+				mes "[Mineral Detector]";
+				mes "Bee beep -";
+				next;
+				mes "- Nothing's found. -";
+				close;
+			case 2:
+				mes "- You decide to do nothing. -";
+				close;
+			}
+		}
+	}
+	end;
+}
+
+mjolnir_08,193,62,0	script	#mj08_find_5	-1,5,5,{
+	end;
+
+OnTouch:
+	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
+		if (countitem(6077) < 10) {
+			mes "- Just arrived at Mt. Mjolnir. I think I can find the mineral by using the Mineral Detector in the Portable Toolbox. -";
+			next;
+			switch(select("Check current location.:Do nothing.")) {
+			case 1:
+				mes "- You pressed the button of the detector. -";
+				next;
+				mes "[Mineral Detector]";
+				mes "Bee beep -";
+				next;
+				mes "- Nothing's found. -";
+				close;
+			case 2:
+				mes "- You decide to do nothing. -";
+				close;
+			}
+		}
+	}
+	end;
+}
+
+mjolnir_09,201,355,0	script	#mj09_find_1	-1,5,5,{
+	end;
+
+OnTouch:
+	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
+		if (countitem(6077) < 10) {
+			mes "- Just arrived at Mt. Mjolnir. I think I can find the mineral by using the Mineral Detector in the Portable Toolbox. -";
+			next;
+			switch(select("Check current location.:Do nothing.")) {
+			case 1:
+				mes "- You pressed the button of the detector. -";
+				next;
+				mes "[Mineral Detector]";
+				mes "Bee beep -";
+				viewpoint 1,229,214,1,0x00FF00;
+				close;
+			case 2:
+				mes "- You decide to do nothing. -";
+				close;
+			}
+		}
+	}
+	end;
+}
+
+mjolnir_09,38,243,0	script	#mj09_find_2	-1,5,5,{
+	end;
+
+OnTouch:
+	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
+		if (countitem(6077) < 10) {
+			mes "- Just arrived at Mt. Mjolnir. I think I can find the mineral by using the Mineral Detector in the Portable Toolbox. -";
+			next;
+			switch(select("Check current location.:Do nothing.")) {
+			case 1:
+				mes "- You pressed the button of the detector. -";
+				next;
+				mes "[Mineral Detector]";
+				mes "Bee beep -";
+				viewpoint 1,229,214,1,0x00FF00;
+				close;
+			case 2:
+				mes "- You decide to do nothing. -";
+				close;
+			}
+		}
+	}
+	end;
+}
+
+mjolnir_09,106,36,0	script	#mj09_find_3	-1,5,5,{
+	end;
+
+OnTouch:
+	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
+		if (countitem(6077) < 10) {
+			mes "- Just arrived at Mt. Mjolnir. I think I can find the mineral by using the Mineral Detector in the Portable Toolbox. -";
+			next;
+			switch(select("Check current location.:Do nothing.")) {
+			case 1:
+				mes "- You pressed the button of the detector. -";
+				next;
+				mes "[Mineral Detector]";
+				mes "Bee beep -";
+				viewpoint 1,229,214,1,0x00FF00;
+				close;
+			case 2:
+				mes "- You decide to do nothing. -";
+				close;
+			}
+		}
+	}
+	end;
+}
+
+mjolnir_09,306,36,0	script	#mj09_find_4	-1,5,5,{
+	end;
+
+OnTouch:
+	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
+		if (countitem(6077) < 10) {
+			mes "- Just arrived at Mt. Mjolnir. I think I can find the mineral by using the Mineral Detector in the Portable Toolbox. -";
+			next;
+			switch(select("Check current location.:Do nothing.")) {
+			case 1:
+				mes "- You pressed the button of the detector. -";
+				next;
+				mes "[Mineral Detector]";
+				mes "Bee beep -";
+				viewpoint 1,229,214,1,0x00FF00;
+				close;
+			case 2:
+				mes "- You decide to do nothing. -";
+				close;
+			}
+		}
+	}
+	end;
+}
+
+mjolnir_09,369,279,0	script	#mj09_find_5	-1,5,5,{
+	end;
+
+OnTouch:
+	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
+		if (countitem(6077) < 10) {
+			mes "- Just arrived at Mt. Mjolnir. I think I can find the mineral by using the Mineral Detector in the Portable Toolbox. -";
+			next;
+			switch(select("Check current location.:Do nothing.")) {
+			case 1:
+				mes "- You pressed the button of the detector. -";
+				next;
+				mes "[Mineral Detector]";
+				mes "Bee beep -";
+				viewpoint 1,229,214,1,0x00FF00;
+				close;
+			case 2:
+				mes "- You decide to do nothing. -";
+				close;
+			}
+		}
+	}
+	end;
+}
+
+mjolnir_09,229,214,3	script	#mj09_01	111,10,10,{
+	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
+		if (countitem(6077) < 10) {
+			mes "- I can see some different colored minerals where the detector pointed to. This must be the mineral that Mr. Lifeguard told me about. -";
+			next;
+			switch(select("Mine minerals.:Do nothing.")) {
+			case 1:
+				mes "Clang! Clang! Clang! Clang!";
+				progressbar "ffff00",4;
+				next;
+				set .@get_stone,rand(1,6);
+				if (.@get_stone < 4) {
+					mes "- You failed to mine minerals. -";
+					getitem 6078,1; //Stone_Fragments
+					close;
+				}
+				else {
+					mes "- You succeeded to mine minerals. -";
+					emotion e_ic,1;
+					set .@stst,rand(1,5);
+					if (.@stst == 5) {
+						getitem 6077,5; //Rough_Mineral
+					}
+					else if (.@stst == 1) {
+						getitem 6077,1; //Rough_Mineral
+					}
+					else {
+						getitem 6077,2; //Rough_Mineral
+					}
+					close2;
+					donpcevent "#mj09_01_t::OnEnable";
+					disablenpc "#mj09_01";
+					end;
+				}
+			case 2:
+				mes "- You decide to do nothing. -";
+				close;
+			}
+		}
+		else {
+			mes "- I think I have enough minerals. -";
+			close;
+		}
+	}
+	end;
+
+OnInit:
+	enablenpc "#mj09_01";
+	end;
+
+OnTouch:
+	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
+		if (countitem(6077) < 10) {
+			specialeffect EF_COUPLECASTING;
+		}
+	}
+	end;
+}
+
+mjolnir_09,1,1,3	script	#mj09_01_t	111,{
+OnEnable:
+	initnpctimer;
+	end;
+
+OnTimer60000:
+	enablenpc "#mj09_01";
+	stopnpctimer;
+	end;
+}
+
+mjolnir_10,201,355,0	script	#mj10_find_1	-1,5,5,{
+	end;
+
+OnTouch:
+	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
+		if (countitem(6077) < 10) {
+			mes "- Just arrived at Mt. Mjolnir. I think I can find the mineral by using the Mineral Detector in the Portable Toolbox. -";
+			next;
+			switch(select("Check current location.:Do nothing.")) {
+			case 1:
+				mes "- You pressed the button of the detector. -";
+				next;
+				mes "[Mineral Detector]";
+				mes "Bee beep -";
+				viewpoint 1,188,260,1,0x00FF00;
+				close;
+			case 2:
+				mes "- You decide to do nothing. -";
+				close;
+			}
+		}
+	}
+	end;
+}
+
+mjolnir_10,374,215,0	script	#mj10_find_2	-1,5,5,{
+	end;
+
+OnTouch:
+	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
+		if (countitem(6077) < 10) {
+			mes "- Just arrived at Mt. Mjolnir. I think I can find the mineral by using the Mineral Detector in the Portable Toolbox. -";
+			next;
+			switch(select("Check current location.:Do nothing.")) {
+			case 1:
+				mes "- You pressed the button of the detector. -";
+				next;
+				mes "[Mineral Detector]";
+				mes "Bee beep -";
+				viewpoint 1,188,260,1,0x00FF00;
+				close;
+			case 2:
+				mes "- You decide to do nothing. -";
+				close;
+			}
+		}
+	}
+	end;
+}
+
+mjolnir_10,272,20,0	script	#mj10_find_3	-1,5,5,{
+	end;
+
+OnTouch:
+	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
+		if (countitem(6077) < 10) {
+			mes "- Just arrived at Mt. Mjolnir. I think I can find the mineral by using the Mineral Detector in the Portable Toolbox. -";
+			next;
+			switch(select("Check current location.:Do nothing.")) {
+			case 1:
+				mes "- You pressed the button of the detector. -";
+				next;
+				mes "[Mineral Detector]";
+				mes "Bee beep -";
+				viewpoint 1,188,260,1,0x00FF00;
+				close;
+			case 2:
+				mes "- You decide to do nothing. -";
+				close;
+			}
+		}
+	}
+	end;
+}
+
+mjolnir_10,75,22,0	script	#mj10_find_4	-1,5,5,{
+	end;
+
+OnTouch:
+	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
+		if (countitem(6077) < 10) {
+			mes "- Just arrived at Mt. Mjolnir. I think I can find the mineral by using the Mineral Detector in the Portable Toolbox. -";
+			next;
+			switch(select("Check current location.:Do nothing.")) {
+			case 1:
+				mes "- You pressed the button of the detector. -";
+				next;
+				mes "[Mineral Detector]";
+				mes "Bee beep -";
+				viewpoint 1,188,260,1,0x00FF00;
+				close;
+			case 2:
+				mes "- You decide to do nothing. -";
+				close;
+			}
+		}
+	}
+	end;
+}
+
+mjolnir_10,27,258,0	script	#mj10_find_5	-1,5,5,{
+	end;
+
+OnTouch:
+	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
+		if (countitem(6077) < 10) {
+			mes "- Just arrived at Mt. Mjolnir. I think I can find the mineral by using the Mineral Detector in the Portable Toolbox. -";
+			next;
+			switch(select("Check current location.:Do nothing.")) {
+			case 1:
+				mes "- You pressed the button of the detector. -";
+				next;
+				mes "[Mineral Detector]";
+				mes "Bee beep -";
+				viewpoint 1,229,214,1,0x00FF00;
+				close;
+			case 2:
+				mes "- You decide to do nothing. -";
+				close;
+			}
+		}
+	}
+	end;
+}
+
+mjolnir_10,188,260,3	script	#mj10_01	111,10,10,{
+	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
+		if (countitem(6077) < 10) {
+				mes "- I can see some different colored minerals where the detector pointed to. This must be the mineral that Mr. Lifeguard told me about. -";
+				next;
+				switch(select("Mine minerals.:Do nothing.")) {
+				case 1:
+					mes "Clang! Clang! Clang! Clang!";
+					progressbar "ffff00",4;
+					next;
+					set .@get_stone,rand(1,6);
+					if (.@get_stone < 4) {
+						mes "- You failed to mine minerals. -";
+						getitem 6078,1; //Stone_Fragments
+					}
+					else {
+						mes "- You succeeded to mine minerals. -";
+						emotion e_ic,1;
+						set .@stst,rand(1,5);
+						if (.@stst == 5) {
+							getitem 6077,5; //Rough_Mineral
+						}
+						else if (.@stst == 1) {
+							getitem 6077,1; //Rough_Mineral
+						}
+						else {
+							getitem 6077,2; //Rough_Mineral
+						}
+						
+						close2;
+						donpcevent "#mj10_01_t::OnEnable";
+						disablenpc "#mj10_01";
+						end;
+					}
+				case 2:
+					mes "- You decide to do nothing. -";
+					close;
+				}
+		}
+		else {
+			mes "- I think I have enough minerals. -";
+			close;
+		}
+	}
+	end;
+
+OnInit:
+	enablenpc "#mj10_01";
+	end;
+
+OnTouch:
+	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
+		if (countitem(6077) < 10) {
+			specialeffect EF_COUPLECASTING;
+		}
+	}
+	end;
+}
+
+mjolnir_10,1,1,3	script	#mj10_01_t	111,{
+OnEnable:
+	initnpctimer;
+	end;
+
+OnTimer60000:
+	enablenpc "#mj10_01";
+	stopnpctimer;
+	end;
+}
+
+mjolnir_11,29,220,0	script	#mj11_find_1	-1,5,5,{
+	end;
+
+OnTouch:
+	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
+		if (countitem(6077) < 10) {
+			mes "- Just arrived at Mt. Mjolnir. I think I can find the mineral by using the Mineral Detector in the Portable Toolbox. -";
+			next;
+			switch(select("Check current location.:Do nothing.")) {
+			case 1:
+				mes "- You pressed the button of the detector. -";
+				mes "[Mineral Detector]";
+				mes "Bee beep -";
+				next;
+				mes "- Nothing's found. -";
+				close;
+			case 2:
+				mes "- You decide to do nothing. -";
+				close;
+			}
+		}
+	}
+	end;
+}
+
+mjolnir_11,175,29,0	script	#mj11_find_2	-1,5,5,{
+	end;
+
+OnTouch:
+	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
+		if (countitem(6077) < 10) {
+			mes "- Just arrived at Mt. Mjolnir. I think I can find the mineral by using the Mineral Detector in the Portable Toolbox. -";
+			next;
+			switch(select("Check current location.:Do nothing.")) {
+			case 1:
+				mes "- You pressed the button of the detector. -";
+				next;
+				mes "[Mineral Detector]";
+				mes "Bee beep -";
+				next;
+				mes "- Nothing's found. -";
+				close;
+			case 2:
+				mes "- You decide to do nothing. -";
+				close;
+			}
+		}
+	}
+	end;
+}
+
+mjolnir_12,199,370,0	script	#mj12_find_1	-1,5,5,{
+	end;
+
+OnTouch:
+	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
+		if (countitem(6077) < 10) {
+			mes "- Just arrived at Mt. Mjolnir. I think I can find the mineral by using the Mineral Detector in the Portable Toolbox. -";
+			next;
+			switch(select("Check current location.:Do nothing.")) {
+			case 1:
+				mes "- You pressed the button of the detector. -";
+				mes "[Mineral Detector]";
+				mes "Bee beep -";
+				next;
+				mes "- Nothing's found. -";
+				close;
+			case 2:
+				mes "- You decide to do nothing. -";
+				close;
+			}
+		}
+	}
+	end;
+}
+
+mjolnir_12,44,25,0	script	#mj12_find_2	-1,5,5,{
+	end;
+
+OnTouch:
+	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
+		if (countitem(6077) < 10) {
+			mes "- Just arrived at Mt. Mjolnir. I think I can find the mineral by using the Mineral Detector in the Portable Toolbox. -";
+			next;
+			switch(select("Check current location.:Do nothing.")) {
+			case 1:
+				mes "- You pressed the button of the detector. -";
+				next;
+				mes "[Mineral Detector]";
+				mes "Bee beep -";
+				next;
+				mes "- Nothing's found. -";
+				close;
+			case 2:
+				mes "- You decide to do nothing. -";
+				close;
+			}
+		}
+	}
+	end;
+}
+
+mjolnir_12,220,37,0	script	#mj12_find_3	-1,5,5,{
+	end;
+
+OnTouch:
+	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
+		if (countitem(6077) < 10) {
+			mes "- Just arrived at Mt. Mjolnir. I think I can find the mineral by using the Mineral Detector in the Portable Toolbox. -";
+			next;
+			switch(select("Check current location.:Do nothing.")) {
+			case 1:
+				mes "- You pressed the button of the detector. -";
+				next;
+				mes "[Mineral Detector]";
+				mes "Bee beep -";
+				next;
+				mes "- Nothing's found. -";
+				close;
+			case 2:
+				mes "- You decide to do nothing. -";
+				close;
+			}
+		}
+	}
+	end;
+}
+
+hu_fild05,335,152,0	script	#hu_find_1	-1,5,5,{
+	end;
+
+OnTouch:
+	if ((ep13_2_tre == 3) && (countitem(6076) == 1)) {
+		if (countitem(6077) < 5) {
+			mes "- Just arrived at Abyss Lake. I think I can find the mineral by using the Mineral Detector in the Portable Toolbox. -";
+			next;
+			switch(select("Check current location.:Do nothing.")) {
+			case 1:
+				mes "- You pressed the button of the detector. -";
+				next;
+				mes "[Mineral Detector]";
+				mes "Bee beep -";
+				viewpoint 1,251,345,1,0x00FF00;
+				viewpoint 1,134,322,2,0x00FF00;
+				viewpoint 1,72,104,3,0x00FF00;
+				viewpoint 1,65,99,4,0x00FF00;
+				viewpoint 1,323,84,5,0x00FF00;
+				close;
+			case 2:
+				mes "- You decide to do nothing. -";
+				close;
+			}
+		}
+	}
+	end;
+}
+
+hu_fild05,89,52,0	script	#hu_find_2	-1,5,5,{
+	end;
+
+OnTouch:
+	if ((ep13_2_tre == 3) && (countitem(6076) == 1)) {
+		if (countitem(6077) < 5) {
+			mes "- Just arrived at Abyss Lake. I think I can find the mineral by using the Mineral Detector in the Portable Toolbox. -";
+			next;
+			switch(select("Check current location.:Do nothing.")) {
+			case 1:
+				mes "- You pressed the button of the detector. -";
+				next;
+				mes "[Mineral Detector]";
+				mes "Bee beep -";
+				viewpoint 1,251,345,1,0x00FF00;
+				viewpoint 1,134,322,2,0x00FF00;
+				viewpoint 1,72,104,3,0x00FF00;
+				viewpoint 1,65,99,4,0x00FF00;
+				viewpoint 1,323,84,5,0x00FF00;
+				close;
+			case 2:
+				mes "- You decide to do nothing. -";
+				close;
+			}
+		}
+	}
+	end;
+}
+
+hu_fild05,42,205,0	script	#hu_find_3	-1,5,5,{
+	end;
+
+OnTouch:
+	if ((ep13_2_tre == 3) && (countitem(6076) == 1)) {
+		if (countitem(6077) < 5) {
+			mes "- Just arrived at Abyss Lake. I think I can find the mineral by using the Mineral Detector in the Portable Toolbox. -";
+			next;
+			switch(select("Check current location.:Do nothing.")) {
+			case 1:
+				mes "- You pressed the button of the detector. -";
+				next;
+				mes "[Mineral Detector]";
+				mes "Bee beep -";
+				viewpoint 1,251,345,1,0x00FF00;
+				viewpoint 1,134,322,2,0x00FF00;
+				viewpoint 1,72,104,3,0x00FF00;
+				viewpoint 1,65,99,4,0x00FF00;
+				viewpoint 1,323,84,5,0x00FF00;
+				close;
+			case 2:
+				mes "- You decide to do nothing. -";
+				close;
+			}
+		}
+	}
+	end;
+}
+
+hu_fild05,276,349,0	script	#hu_find_4	-1,5,5,{
+	end;
+
+OnTouch:
+	if ((ep13_2_tre == 3) && (countitem(6076) == 1)) {
+		if (countitem(6077) < 5) {
+			mes "- Just arrived at Abyss Lake. I think I can find the mineral by using the Mineral Detector in the Portable Toolbox. -";
+			next;
+			switch(select("Check current location.:Do nothing.")) {
+			case 1:
+				mes "- You pressed the button of the detector. -";
+				next;
+				mes "[Mineral Detector]";
+				mes "Bee beep -";
+				viewpoint 1,251,345,1,0x00FF00;
+				viewpoint 1,134,322,2,0x00FF00;
+				viewpoint 1,72,104,3,0x00FF00;
+				viewpoint 1,65,99,4,0x00FF00;
+				viewpoint 1,323,84,5,0x00FF00;
+				close;
+			case 2:
+				mes "- You decide to do nothing. -";
+				close;
+			}
+		}
+	}
+	end;
+}
+
+hu_fild05,251,345,3	script	#hu_01	111,10,10,{
+	if ((ep13_2_tre == 3) && (countitem(6076) == 1)) {
+		if (countitem(6077) < 5) {
+			mes "- I can see some different colored minerals where the detector pointed to. This must be the mineral that Mr. Lifeguard told me about. -";
+			next;
+			switch(select("Mine minerals.:Do nothing.")) {
+			case 1:
+				mes "Clang! Clang! Clang! Clang!";
+				progressbar "ffff00",4;
+				next;
+				set .@get_stone,rand(1,6);
+				if (.@get_stone < 4) {
+					mes "- You failed to mine minerals. -";
+					getitem 6078,1; //Stone_Fragments
+					close;
+				}
+				else {
+					mes "- You succeeded to mine minerals. -";
+					emotion e_ic,1;
+					set .@stst,rand(1,5);
+					if (.@stst == 5) {
+						getitem 6077,5; //Rough_Mineral
+					}
+					else if (.@stst == 1) {
+						getitem 6077,2; //Rough_Mineral
+					}
+					else {
+						getitem 6077,1; //Rough_Mineral
+					}
+					donpcevent "#hu_01_t::OnEnable";
+					disablenpc "#hu_01";
+					close;
+				}
+			case 2:
+				mes "- You decide to do nothing. -";
+				close;
+			}
+		}
+		else {
+			mes "- I think I have enough minerals. -";
+			close;
+		}
+	}
+	end;
+
+OnInit:
+	enablenpc "#hu_01";
+	end;
+
+OnTouch:
+	if ((ep13_2_tre == 3) && (countitem(6076) == 1)) {
+		if (countitem(6077) < 5) {
+			specialeffect EF_COUPLECASTING;
+		}
+	}
+	end;
+}
+
+hu_fild05,1,1,3	script	#hu_01_t	111,{
+OnEnable:
+	initnpctimer;
+	end;
+
+OnTimer60000:
+	enablenpc "#hu_01";
+	stopnpctimer;
+	end;
+}
+hu_fild05,134,322,3	script	#hu_02	111,10,10,{
+	if ((ep13_2_tre == 3) && (countitem(6076) == 1)) {
+		if (countitem(6077) < 5) {
+			mes "- I can see some different colored minerals where the detector pointed to. This must be the mineral that Mr. Lifeguard told me about. -";
+			next;
+			switch(select("Mine minerals.:Do nothing.")) {
+			case 1:
+				mes "Clang! Clang! Clang! Clang!";
+				progressbar "ffff00",4;
+				next;
+				set .@get_stone,rand(1,6);
+				if (.@get_stone < 4) {
+					mes "- You failed to mine minerals. -";
+					getitem 6078,1; //Stone_Fragments
+					close;
+				}
+				else {
+					mes "- You succeeded to mine minerals. -";
+					emotion e_ic,1;
+					set .@stst,rand(1,5);
+					if (.@stst == 5) {
+							getitem 6077,5; //Rough_Mineral
+					}
+					else if (.@stst == 1) {
+							getitem 6077,2; //Rough_Mineral
+					}
+					else {
+							getitem 6077,1; //Rough_Mineral
+					}
+					donpcevent "#hu_02_t::OnEnable";
+					disablenpc "#hu_02";
+					close;
+				}
+			case 2:
+				mes "- You decide to do nothing. -";
+				close;
+			}
+		}
+		else {
+			mes "- I think I have enough minerals. -";
+			close;
+		}
+	}
+	end;
+
+OnInit:
+	enablenpc "#hu_02";
+	end;
+
+OnTouch:
+	if ((ep13_2_tre == 3) && (countitem(6076) == 1)) {
+		if (countitem(6077) < 5) {
+			specialeffect EF_COUPLECASTING;
+		}
+	}
+	end;
+
+}
+
+hu_fild05,1,1,3	script	#hu_02_t	111,{
+OnEnable:
+	initnpctimer;
+	end;
+
+OnTimer60000:
+	enablenpc "#hu_02";
+	stopnpctimer;
+	end;
+}
+
+hu_fild05,72,104,3	script	#hu_03	111,10,10,{
+	if ((ep13_2_tre == 3) && (countitem(6076) == 1)) {
+		if (countitem(6077) < 5) {
+			mes "- I can see some different colored minerals where the detector pointed to. This must be the mineral that Mr. Lifeguard told me about. -";
+			next;
+			switch(select("Mine minerals.:Do nothing.")) {
+			case 1:
+				mes "Clang! Clang! Clang! Clang!";
+				progressbar "ffff00",4;
+				next;
+				set .@get_stone,rand(1,6);
+				if (.@get_stone < 4) {
+					mes "- You failed to mine minerals. -";
+					getitem 6078,1; //Stone_Fragments
+					close;
+				}
+				else {
+					mes "- You succeeded to mine minerals. -";
+					emotion e_ic,1;
+					set .@stst,rand(1,5);
+					if (.@stst == 5) {
+						getitem 6077,5; //Rough_Mineral
+					}
+					else if (.@stst == 1) {
+						getitem 6077,2; //Rough_Mineral
+					}
+					else {
+						getitem 6077,1; //Rough_Mineral
+					}
+					donpcevent "#hu_03_t::OnEnable";
+					disablenpc "#hu_03";
+					close;
+				}
+			case 2:
+				mes "- You decide to do nothing. -";
+				close;
+			}
+		}
+		else {
+			mes "- I think I have enough minerals. -";
+			close;
+		}
+	}
+	end;
+
+OnInit:
+	enablenpc "#hu_03";
+	end;
+
+OnTouch:
+	if ((ep13_2_tre == 3) && (countitem(6076) == 1)) {
+		if (countitem(6077) < 5) {
+			specialeffect EF_COUPLECASTING;
+		}
+	}
+	end;
+}
+
+hu_fild05,1,1,3	script	#hu_03_t	111,{
+OnEnable:
+	initnpctimer;
+	end;
+
+OnTimer60000:
+	enablenpc "#hu_03";
+	stopnpctimer;
+	end;
+}
+
+hu_fild05,65,99,3	script	#hu_04	111,10,10,{
+	if ((ep13_2_tre == 3) && (countitem(6076) == 1)) {
+		if (countitem(6077) < 5) {
+			mes "- I can see some different colored minerals where the detector pointed to. This must be the mineral that Mr. Lifeguard told me about. -";
+			next;
+			switch(select("Mine minerals.:Do nothing.")) {
+			case 1:
+				mes "Clang! Clang! Clang! Clang!";
+				progressbar "ffff00",4;
+				next;
+				set .@get_stone,rand(1,6);
+				if (.@get_stone < 4) {
+					mes "- You failed to mine minerals. -";
+					getitem 6078,1; //Stone_Fragments
+					close;
+				}
+				else {
+					mes "- You succeeded to mine minerals. -";
+					emotion e_ic,1;
+					set .@stst,rand(1,5);
+					if (.@stst == 5) {
+						getitem 6077,5; //Rough_Mineral
+					}
+					else if (.@stst == 1) {
+						getitem 6077,2; //Rough_Mineral
+					}
+					else {
+						getitem 6077,1; //Rough_Mineral
+					}
+					donpcevent "#hu_04_t::OnEnable";
+					disablenpc "#hu_04";
+				}
+			case 2:
+				mes "- You decide to do nothing. -";
+				close;
+			}
+		}
+		else {
+			mes "- I think I have enough minerals. -";
+			close;
+		}
+	}
+	end;
+
+OnInit:
+	enablenpc "#hu_04";
+	end;
+
+OnTouch:
+	if ((ep13_2_tre == 3) && (countitem(6076) == 1)) {
+		if (countitem(6077) < 5) {
+			specialeffect EF_COUPLECASTING;
+		}
+	}
+	end;
+}
+
+hu_fild05,1,1,3	script	#hu_04_t	111,{
+OnEnable:
+	initnpctimer;
+	end;
+
+OnTimer60000:
+	enablenpc "#hu_04";
+	stopnpctimer;
+	end;
+}
+hu_fild05,323,84,3	script	#hu_05	111,10,10,{
+	if ((ep13_2_tre == 3) && (countitem(6076) == 1)) {
+		if (countitem(6077) < 5) {
+			mes "- I can see some different colored minerals where the detector pointed to. This must be the mineral that Mr. Lifeguard told me about. -";
+			next;
+			switch(select("Mine minerals.:Do nothing.")) {
+			case 1:
+				mes "Clang! Clang! Clang! Clang!";
+				progressbar "ffff00",4;
+				next;
+				set .@get_stone,rand(1,6);
+				if (.@get_stone < 4) {
+					mes "- You failed to mine minerals. -";
+					getitem 6078,1; //Stone_Fragments
+					close;
+				}
+				else {
+					mes "- You succeeded to mine minerals. -";
+					emotion e_ic,1;
+					set .@stst,rand(1,5);
+					if (.@stst == 5) {
+						getitem 6077,5; //Rough_Mineral
+					}
+					else if (.@stst == 1) {
+						getitem 6077,2	; //Rough_Mineral
+					}
+					else {
+						getitem 6077,1; //Rough_Mineral
+					}
+					donpcevent "#hu_05_t::OnEnable";
+					disablenpc "#hu_05";
+					close;
+				}
+			case 2:
+				mes "- You decide to do nothing. -";
+				close;
+			}
+		}
+		else {
+			mes "- I think I have enough minerals. -";
+			close;
+		}
+	}
+	end;
+
+OnInit:
+	enablenpc "#hu_05";
+	end;
+
+OnTouch:
+	if ((ep13_2_tre == 3) && (countitem(6076) == 1)) {
+		if (countitem(6077) < 5) {
+			specialeffect EF_COUPLECASTING;
+		}
+	}
+	end;
+}
+
+hu_fild05,1,1,3	script	#hu_05_t	111,{
+OnEnable:
+	initnpctimer;
+	end;
+
+OnTimer60000:
+	enablenpc "#hu_05";
+	stopnpctimer;
+	end;
+}
+
+ve_fild03,351,219,0	script	#ve_find_1	-1,5,5,{
+	end;
+
+OnTouch:
+	if ((ep13_2_tre == 4) && (countitem(6076) == 1)) {
+		if (countitem(6077) < 5) {
+			mes "- Just arrived at Thor Volcano. I think I can find the mineral by using the Mineral Detector in the Portable Toolbox. -";
+			next;
+			switch(select("Check current location.:Do nothing.")) {
+			case 1:
+				mes "- You pressed the button of the detector. -";
+				next;
+				mes "[Mineral Detector]";
+				mes "Bee beep -";
+				viewpoint 1,152,134,1,0x00FF00;
+				viewpoint 1,256,228,2,0x00FF00;
+				viewpoint 1,85,189,3,0x00FF00;
+				viewpoint 1,282,268,4,0x00FF00;
+				close;
+			case 2:
+				mes "- You decide to do nothing. -";
+				close;
+			}
+		}
+	}
+	end;
+}
+
+ve_fild03,223,51,0	script	#ve_find_2	-1,5,5,{
+	end;
+
+OnTouch:
+	if ((ep13_2_tre == 4) && (countitem(6076) == 1)) {
+		if (countitem(6077) < 5) {
+			mes "- Just arrived at Thor Volcano. I think I can find the mineral by using the Mineral Detector in the Portable Toolbox. -";
+			next;
+			switch(select("Check current location.:Do nothing.")) {
+			case 1:
+				mes "- You pressed the button of the detector. -";
+				next;
+				mes "[Mineral Detector]";
+				mes "Bee beep -";
+				viewpoint 1,152,134,1,0x00FF00;
+				viewpoint 1,256,228,2,0x00FF00;
+				viewpoint 1,85,189,3,0x00FF00;
+				viewpoint 1,282,268,4,0x00FF00;
+				close;
+			case 2:
+				mes "- You decide to do nothing. -";
+				close;
+			}
+		}
+	}
+	end;
+}
+
+ve_fild03,152,134,3	script	#ve_01	111,10,10,{
+	if ((ep13_2_tre == 4) && (countitem(6076) == 1)) {
+		if (countitem(6077) < 5) {
+			mes "- I can see some different colored minerals where the detector pointed to. This must be the mineral that Mr. Lifeguard told me about. -";
+			next;
+			switch(select("Mine minerals.:Do nothing.")) {
+			case 1:
+				mes "Clang! Clang! Clang! Clang!";
+				progressbar "ffff00",4;
+				next;
+				set .@get_stone,rand(1,6);
+				if (.@get_stone < 4) {
+					mes "- You failed to mine minerals. -";
+					getitem 6078,1; //Stone_Fragments
+					close;
+				}
+				else {
+					mes "- You succeeded to mine minerals. -";
+					emotion e_ic,1;
+					set .@stst,rand(1,5);
+					if (.@stst == 5) {
+						getitem 6077,5; //Rough_Mineral
+					}
+					else if (.@stst == 1) {
+						getitem 6077,2; //Rough_Mineral
+					}
+					else {
+						getitem 6077,1; //Rough_Mineral
+					}
+					donpcevent "#ve_01_t::OnEnable";
+					disablenpc "#ve_01";
+					close;
+				}
+			case 2:
+				mes "- You decide to do nothing. -";
+				close;
+			}
+		}
+		else {
+			mes "- I think I have enough minerals. -";
+			close;
+		}
+	}
+	end;
+
+OnInit:
+	enablenpc "#ve_01";
+	end;
+
+OnTouch:
+	if ((ep13_2_tre == 4) && (countitem(6076) == 1)) {
+		if (countitem(6077) < 5) {
+			specialeffect EF_COUPLECASTING;
+		}
+	}
+	end;
+}
+
+ve_fild03,1,1,3	script	#ve_01_t	111,{
+OnEnable:
+	initnpctimer;
+	end;
+
+OnTimer40000:
+	enablenpc "#ve_01";
+	stopnpctimer;
+	end;
+}
+
+ve_fild03,256,228,3	script	#ve_02	111,10,10,{
+	if ((ep13_2_tre == 4) && (countitem(6076) == 1)) {
+		if (countitem(6077) < 5) {
+			mes "- I can see some different colored minerals where the detector pointed to. This must be the mineral that Mr. Lifeguard told me about. -";
+			next;
+			switch(select("Mine minerals.:Do nothing.")) {
+			case 1:
+				mes "Clang! Clang! Clang! Clang!";
+				progressbar "ffff00",4;
+				next;
+				set .@get_stone,rand(1,6);
+				if (.@get_stone < 4) {
+					mes "- You failed to mine minerals. -";
+					getitem 6078,1; //Stone_Fragments
+					close;
+				}
+				else {
+					mes "- You succeeded to mine minerals. -";
+					emotion e_ic,1;
+					set .@stst,rand(1,5);
+					if (.@stst == 5) {
+						getitem 6077,5; //Rough_Mineral
+					}
+					else if (.@stst == 1) {
+						getitem 6077,2; //Rough_Mineral
+					}
+					else {
+						getitem 6077,1; //Rough_Mineral
+					}
+					donpcevent "#ve_02_t::OnEnable";
+					disablenpc "#ve_02";
+					close;
+				}
+			case 2:
+				mes "- You decide to do nothing. -";
+				close;
+			}
+		}
+		else {
+			mes "- I think I have enough minerals. -";
+			close;
+		}
+	}
+	end;
+
+OnInit:
+	enablenpc "#ve_02";
+	end;
+
+OnTouch:
+	if ((ep13_2_tre == 4) && (countitem(6076) == 1)) {
+		if (countitem(6077) < 5) {
+			specialeffect EF_COUPLECASTING;
+		}
+	}
+	end;
+}
+
+ve_fild03,1,1,3	script	#ve_02_t	111,{
+OnEnable:
+	initnpctimer;
+	end;
+
+OnTimer40000:
+	enablenpc "#ve_02";
+	stopnpctimer;
+	end;
+}
+
+ve_fild03,85,189,3	script	#ve_03	111,10,10,{
+	if ((ep13_2_tre == 4) && (countitem(6076) == 1)) {
+		if (countitem(6077) < 5) {
+			mes "- I can see some different colored minerals where the detector pointed to. This must be the mineral that Mr. Lifeguard told me about. -";
+			next;
+			switch(select("Mine minerals.:Do nothing.")) {
+			case 1:
+				mes "Clang! Clang! Clang! Clang!";
+				progressbar "ffff00",4;
+				next;
+				set .@get_stone,rand(1,6);
+				if (.@get_stone < 4) {
+					mes "- You failed to mine minerals. -";
+					getitem 6078,1; //Stone_Fragments
+					close;
+				}
+				else {
+					mes "- You succeeded to mine minerals. -";
+					emotion e_ic,1;
+					set .@stst,rand(1,5);
+					if (.@stst == 5) {
+						getitem 6077,5; //Rough_Mineral
+					}
+					else if (.@stst == 1) {
+						getitem 6077,2; //Rough_Mineral
+					}
+					else {
+						getitem 6077,1; //Rough_Mineral
+					}
+					donpcevent "#ve_03_t::OnEnable";
+					disablenpc "#ve_03";
+					close;
+				}
+			case 2:
+				mes "- You decide to do nothing. -";
+				close;
+			}
+		}
+		else {
+			mes "- I think I have enough minerals. -";
+			close;
+		}
+	}
+	end;
+
+OnInit:
+	enablenpc "#hu_03";
+	end;
+
+OnTouch:
+	if ((ep13_2_tre == 4) && (countitem(6076) == 1)) {
+		if (countitem(6077) < 5) {
+			specialeffect EF_COUPLECASTING;
+		}
+	}
+	end;
+}
+
+ve_fild03,1,1,3	script	#ve_03_t	111,{
+OnEnable:
+	initnpctimer;
+	end;
+
+OnTimer40000:
+	enablenpc "#ve_03";
+	stopnpctimer;
+	end;
+}
+
+ve_fild03,282,268,3	script	#ve_04	111,10,10,{
+	if ((ep13_2_tre == 4) && (countitem(6076) == 1)) {
+		if (countitem(6077) < 5) {
+			mes "- I can see some different colored minerals where the detector pointed to. This must be the mineral that Mr. Lifeguard told me about. -";
+			next;
+			switch(select("Mine minerals.:Do nothing.")) {
+			case 1:
+				mes "Clang! Clang! Clang! Clang!";
+				progressbar "ffff00",4;
+				next;
+				set .@get_stone,rand(1,6);
+				if (.@get_stone < 4) {
+					mes "- You failed to mine minerals. -";
+					getitem 6078,1; //Stone_Fragments
+					close;
+				}
+				else {
+					mes "- You succeeded to mine minerals. -";
+					emotion e_ic,1;
+					set .@stst,rand(1,5);
+					if (.@stst == 5) {
+						getitem 6077,5; //Rough_Mineral
+					}
+					else if (.@stst == 1) {
+						getitem 6077,2; //Rough_Mineral
+					}
+					else {
+						getitem 6077,1; //Rough_Mineral
+					}
+					donpcevent "#ve_04_t::OnEnable";
+					disablenpc "#ve_04";
+					close;
+				}
+			case 2:
+				mes "- You decide to do nothing. -";
+				close;
+			}
+		}
+		else {
+			mes "- I think I have enough minerals. -";
+			close;
+		}
+	}
+	end;
+
+OnInit:
+	enablenpc "#ve_04";
+	end;
+
+OnTouch:
+	if ((ep13_2_tre == 4) && (countitem(6076) == 1)) {
+		if (countitem(6077) < 5) {
+			specialeffect EF_COUPLECASTING;
+		}
+	}
+	end;
+}
+
+ve_fild03,1,1,3	script	#ve_04_t	111,{
+OnEnable:
+	initnpctimer;
+	end;
+
+OnTimer40000:
+	enablenpc "#ve_04";
+	stopnpctimer;
+	end;
+}
+
+spl_in01,30,324,3	script	High Laphine#grenouille	446,{
+	if ((isequipped(2782) == 1) && (ep13_2_rhea == 100)) {
+		if (checkweight(1201,1) == 0) {
+			mes "[Grenouille]";
+			mes "It looks like you're carrying too many things.";
+			mes "Why not put some of your items in storage and come back?";
+			close;
+		}
+		set .@dayq_chk,checkquest(2186,PLAYTIME);
+		if ((.@dayq_chk == -1) || (.@dayq_chk == 2)) {
+			if ((ep13_2_tre1 < 1) || (ep13_2_tre1 == 6)) {
+				erasequest 2186;
+				set ep13_2_tre1,0;
+				mes "[Grenouille]";
+				mes "I've heard that some strangers from Rune Midgard are around here, it must be you.";
+				mes "I'm Grenouille, a scientist.";
+				next;
+				mes "[Grenouille]";
+				mes "It's been a long time since";
+				mes "the Laphine built the Splendide camp here";
+				mes "and confronted each other.";
+				next;
+				mes "[Grenouille]";
+				mes "A number of soldiers who";
+				mes "left their hometown Alfheim are";
+				mes "restraining them with fighting against";
+				mes "the harsh cold of Jotunheim";
+				mes "for the holy duty and the faith to";
+				mes "stop the evil attempts to";
+				mes "sickening Yggdrasil.";
+				next;
+				mes "[Grenouille]";
+				mes "They're well trained soldiers,";
+				mes "and their captains hold them in high esteem,";
+				mes "so they're enjoying a";
+				mes "comfortable life there.";
+				next;
+				mes "[Grenouille]";
+				mes "But there's a saying that";
+				mes "constant dripping water";
+				mes "wears away the stone.";
+				next;
+				mes "[Grenouille]";
+				mes "Continuous small battles without big progression";
+				mes "makes the soldiers in Splendide exhausted.";
+				next;
+				mes "[Grenouille]";
+				mes "One day, someone began to sing";
+				mes "a song of Alfheim, that spread rapidly...";
+				mes "Now they strongly";
+				mes "miss their hometown.";
+				next;
+				mes "[Grenouille]";
+				mes "I was so worried about them and";
+				mes "I finally found a way to";
+				mes "save them from the deep sadness.";
+				mes "I hope you to help me to do that.";
+				next;
+				mes "[Grenouille]";
+				mes "There's a Laphine General";
+				mes "who is called Flowery,";
+				mes "in Splendide.";
+				next;
+				mes "[Grenouille]";
+				mes "She is a collecting maniac,";
+				mes "so her house is always";
+				mes "in a mess with miscellaneous";
+				mes "things. Flowery must have";
+				mes "seeds from the flowers";
+				mes "of Alfheim.";
+				next;
+				mes "[Grenouille]";
+				mes "I'll make the flower of";
+				mes "Alfheim open with the seed.";
+				mes "The flower of their hometown.";
+				next;
+				mes "[Grenouille]";
+				mes "There are some devices that purify";
+				mes "the environment and have a function";
+				mes "that can hasten the growth of plants.";
+				next;
+				mes "[Grenouille]";
+				mes "Please bring me the flower of Alfheim that bloomed by the device.";
+				next;
+				mes "[Grenouille]";
+				mes "The flower of Alfheim is not";
+				mes "strong enough to keep it's life by";
+				mes "depending on the Splendide device,";
+				mes "but ^FF0000the way^000000 can fill";
+				mes "Splendide by it's scent like it never falls!";
+				set ep13_2_tre1,1;
+				setquest 2183;
+				close;
+			}
+			else if ((ep13_2_tre1 == 1) && (ep13_2_tre1 == 2)) {
+				mes "[Grenouille]";
+				mes "Get a seed from Flowery,";
+				mes "and then use a Purifier";
+				mes "to make the seed blossom.";
+				close;
+			}
+			else if (ep13_2_tre1 == 3) {
+				if (countitem(6079) == 1) {
+					emotion e_swt;
+					emotion e_swt,1;
+					mes "[Grenouille]";
+					mes "Hoo, this is one of the";
+					mes "most common kinds of flowers.";
+					next;
+					emotion e_heh;
+					mes "[Grenouille]";
+					mes "Haha, Don't worry.";
+					mes "Common flowers like this can bring the familiarity of home back to the soldiers.";
+					mes "?±øÃ?ÐÊ?½Êì?µLÊÏçµÄÆø?¡£";
+					next;
+					mes "[Grenouille]";
+					mes "For now, I'll extract a liquid that";
+					mes "includes the scent of this flower by using a distiller.";
+					mes "Making a ^3131FFPerfume^000000.";
+					next;
+					mes "[Grenouille]";
+					mes "Would you please wait a while?";
+					changequest 2183,2184;
+					set ep13_2_tre1,4;
+					delitem 6079,1; //Flower_Of_Alfheim
+					close;
+				}
+				else {
+					mes "[Grenouille]";
+					mes "Where is the flower?";
+					close;
+				}
+			}
+			else if (ep13_2_tre1 == 4) {
+				set .@ttalk,rand(1,10);
+				if (.@ttalk < 8) {
+					mes "- clitter-clatter -";
+					next;
+					mes "- clitter-clatter -";
+					mes "- clitter-clatter -";
+					next;
+					mes "- clitter-clatter -";
+					mes "- clitter-clatter -";
+					mes "- Spraying something -";
+					next;
+					mes "[Grenouille]";
+					mes "Not finished yet.";
+					mes "Please wait a second.";
+					close;
+				}
+				else {
+					mes "- clitter-clatter -";
+					next;
+					mes "- clitter-clatter -";
+					mes "- clitter-clatter -";
+					next;
+					mes "- clitter-clatter -";
+					mes "- clitter-clatter -";
+					mes "- Spraying something -";
+					next;
+					mes "[Grenouille]";
+					mes "Wow, finished!";
+					next;
+					mes "[Grenouille]";
+					mes "I think I'll call this perfume";
+					mes "The ^3131FFSoul of Alfheim^000000!";
+					next;
+					mes "[Grenouille]";
+					mes "This perfume can relieve their minds by using";
+					mes "the scent of their hometown Alfheim.";
+					mes "Though it's not a permanent solution, I think it will help them feel comfortable for now.";
+					next;
+					mes "[Grenouille]";
+					mes "Here, I'll give you this perfume,";
+					mes "help the exhausted soldiers and";
+					mes "let me know the result, please!";
+					set ep13_2_tre1,5;
+					getitem 6082,5; //Spirit_Of_Alfheim
+					changequest 2184,2185;
+					close;
+				}
+			}
+			else if (ep13_2_tre1 == 5) {
+				if (countitem(6082) < 1) {
+					mes "[Grenouille]";
+					mes "Oh! How's the reaction of the soldiers?";
+					next;
+					mes "["+ strcharinfo(0) +"]";
+					mes "Yes, they seemed to be happy.";
+					mes "But, it still made someone cry because he probably misses Alfheim.";
+					next;
+					mes "[Grenouille]";
+					mes "Oh! That means it works!";
+					mes "Thanks.";
+					next;
+					mes "[Grenouille]";
+					mes "Thanks for your help.";
+					mes "This is my reward for you.";
+					mes "I hope this will be helpful to you.";
+					mes "If you have something to talk to me about, come to me whenever. Nice to meet you, human from Rune Midgard.";
+					set ep13_2_tre1,6;
+					changequest 2185,2186;
+					getitem 6081,2; //Splendide_Coin
+					getexp 0,700000;
+					close;
+				}
+				else {
+					mes "[Grenouille]";
+					mes "Go and spray this perfume for the exhausted soldiers in Splendide!";
+					close;
+				}
+			}
+			else {
+				mes "[Grenouille]";
+				mes "I hope this long battle will end soon.";
+				close;
+			}
+		}
+		else {
+			mes "[Grenouille]";
+			mes "I hope this long battle will end soon.";
+			close;
+		}
+	}
+	else {
+		mes "[High Laphine]";
+		mes "BurYurDath Ee NeKoIyaz er ModRuAlah Yee VeldDuDur Yee SeYurOsa U ReNudNud Ra ";
+		next;
+		mes "[High Laphine]";
+		mes "DiebVrumDana er TingNothDim No RasVilHir Yu YurAdorShar Yu DanaVeldDur Ha VilModMe O SharThus";
+		close;
+	}
+}
+
+spl_in02,139,65,3	script	Middle-Ranked Laphine#la	438,{
+	if ((isequipped(2782) == 1) && (ep13_2_rhea == 100)) {
+		if (checkweight(1201,1) == 0) {
+			mes "[Flowery]";
+			mes "It looks like you're carrying too many things.";
+			mes "Why not put some of your items in storage and come back?";
+			close;
+		}
+		if (ep13_2_tre1 == 1) {
+			mes "[Flowery]";
+			mes "Huh? Seed of the flower of Alfheim?";
+			mes "Do I have that one? Hmm~";
+			next;
+			mes "[Flowery]";
+			mes "As you see, there're so many stuffs";
+			mes "in my room, so I don't know";
+			mes "exactly what I have";
+			mes "or not in my room.";
+			next;
+			mes "[Flowery]";
+			mes "But I'll try to find cuz you came";
+			mes "here to help Grenouille";
+			mes "He's always pretend to tenacious,";
+			mes "but sometimes he help others well! Huhu!";
+			next;
+			mes "- rummaging -";
+			emotion e_dots;
+			next;
+			mes "- rummaging -";
+			mes "- rummaging -";
+			emotion e_dots;
+			next;
+			mes "- rummaging -";
+			mes "- rummaging -";
+			mes "- rummaging -";
+			emotion e_ic;
+			next;
+			mes "[Flowery]";
+			mes "Wow! Come here!";
+			mes "I found a seed!";
+			next;
+			mes "[Flowery]";
+			mes "Hmm... But this one is";
+			mes "one of the most common and trifle";
+			mes "kind in Alfheim, so you can find";
+			mes "this wild flower at anywhere...";
+			mes "This one would be ok?";
+			next;
+			mes "[Flowery]";
+			mes "Umm.. But I don't have";
+			mes "any other seed of flower..";
+			mes "So, just bring this, here you are~";
+			set ep13_2_tre1,2;
+			getitem 7193,1; //Germinating_Sprout
+			close;
+		}
+		else if (ep13_2_tre1 == 2) {
+			mes "[Flowery]";
+			mes "I gave you the seed, so it's up to you that what would you do with the seed.";
+			mes "I feel dizzy when I look at my room.";
+			close;
+		}
+		else {
+			mes "[Flowery]";
+			mes "Yuuuum~";
+			mes "Can you believe that right in front of us is a battle field? Though it's very silent and peaceful at the moment. So do I~";
+			close;
+		}
+		
+	}
+	else {
+		mes "[Middle-Ranked Laphine]";
+		mes "NeiKoFulo An DielOdesMush Or KoDanaOsa Ir FarBurnes Ir ";
+		mes "NeOsaVa Mu BurVeTi Ra OsaDeh";
+		close;
+	}
+}
+
+splendide,160,265,3	script	Purifier#1	844,{
+	if (ep13_2_tre1 == 2) {
+		if (countitem(7193) > 0) {
+			mes "- You put the seed in the";
+			mes "device and watched it";
+			mes "as Grenouille told you. -";
+			next;
+			mes "- Booowoong -";
+			specialeffect2 EF_HEALSP;
+			next;
+			mes "- When the lights gone,";
+			mes "a big flower of Alfheim was lied";
+			mes "in your hand, instead of the seed. -";
+			delitem 7193,1; //Germinating_Sprout
+			set ep13_2_tre1,3;
+			getitem 6079,1; //Flower_Of_Alfheim
+			close;
+		}
+		else {
+			mes "["+ strcharinfo(0) +"]";
+			mes "Where are the seeds?";
+			close;
+		}
+	}
+	end;
+}
+
+splendide,262,262,3	script	Purifier#2	844,{
+	if (ep13_2_tre1 == 2) {
+		if (countitem(7193) > 0) {
+			mes "- You put the seed in the";
+			mes "device and watched it";
+			mes "as Grenouille told you. -";
+			next;
+			mes "- Booowoong -";
+			specialeffect2 EF_HEALSP;
+			next;
+			mes "- When the lights gone,";
+			mes "a big flower of Alfheim was lied";
+			mes "in your hand, instead of the seed. -";
+			delitem 7193,1; //Germinating_Sprout
+			set ep13_2_tre1,3;
+			getitem 6079,1; //Flower_Of_Alfheim
+			close;
+		}
+		else {
+			mes "["+ strcharinfo(0) +"]";
+			mes "Where are the seeds?";
+			close;
+		}
+	}
+	end;
+}
+
+splendide,262,187,3	script	Purifier#3	844,{
+	if (ep13_2_tre1 == 2) {
+		if (countitem(7193) > 0) {
+			mes "- You put the seed in the";
+			mes "device and watched it";
+			mes "as Grenouille told you. -";
+			next;
+			mes "- Booowoong -";
+			specialeffect2 EF_HEALSP;
+			next;
+			mes "- When the lights gone,";
+			mes "a big flower of Alfheim was lied";
+			mes "in your hand, instead of the seed. -";
+			delitem 7193,1; //Germinating_Sprout
+			set ep13_2_tre1,3;
+			getitem 6079,1; //Flower_Of_Alfheim
+			close;
+		}
+		else {
+			mes "["+ strcharinfo(0) +"]";
+			mes "Where are the seeds?";
+			close;
+		}
+	}
+	end;
+}
+
+splendide,164,82,3	script	Purifier#4	844,{
+	if (ep13_2_tre1 == 2) {
+		if (countitem(7193) > 0) {
+			mes "- You put the seed in the";
+			mes "device and watched it";
+			mes "as Grenouille told you. -";
+			next;
+			mes "- Booowoong -";
+			specialeffect2 EF_HEALSP;
+			next;
+			mes "- When the lights gone,";
+			mes "a big flower of Alfheim was lied";
+			mes "in your hand, instead of the seed. -";
+			delitem 7193,1; //Germinating_Sprout
+			set ep13_2_tre1,3;
+			getitem 6079,1; //Flower_Of_Alfheim
+			close;
+		}
+		else {
+			mes "["+ strcharinfo(0) +"]";
+			mes "Where are the seeds?";
+			close;
+		}
+	}
+	end;
+}
+
+splendide,171,116,3	script	Purifier#5	844,{
+	if (ep13_2_tre1 == 2) {
+		if (countitem(7193) > 0) {
+			mes "- You put the seed in the";
+			mes "device and watched it";
+			mes "as Grenouille told you. -";
+			next;
+			mes "- Booowoong -";
+			specialeffect2 EF_HEALSP;
+			next;
+			mes "- When the lights gone,";
+			mes "a big flower of Alfheim was lied";
+			mes "in your hand, instead of the seed. -";
+			delitem 7193,1; //Germinating_Sprout
+			set ep13_2_tre1,3;
+			getitem 6079,1; //Flower_Of_Alfheim
+			close;
+		}
+		else {
+			mes "["+ strcharinfo(0) +"]";
+			mes "Where are the seeds?";
+			close;
+		}
+	}
+	end;
+}
+
+splendide,134,280,3	script	Purifier#6	844,{
+	if (ep13_2_tre1 == 2) {
+		if (countitem(7193) > 0) {
+			mes "- You put the seed in the";
+			mes "device and watched it";
+			mes "as Grenouille told you. -";
+			next;
+			mes "- Booowoong -";
+			specialeffect2 EF_HEALSP;
+			next;
+			mes "- When the lights gone,";
+			mes "a big flower of Alfheim was lied";
+			mes "in your hand, instead of the seed. -";
+			delitem 7193,1; //Germinating_Sprout
+			set ep13_2_tre1,3;
+			getitem 6079,1; //Flower_Of_Alfheim
+			close;
+		}
+		else {
+			mes "["+ strcharinfo(0) +"]";
+			mes "Where are the seeds?";
+			close;
+		}
+	}
+	end;
+}
+
+splendide,205,139,5	script	Exhausted Soldier#1	447,{
+	if ((isequipped(2782) == 1) && (ep13_2_rhea == 100)) {
+		if (ep13_2_tre1 == 5) {
+			if (countitem(6082) > 0) {
+				mes "[Exhausted Soldier]";
+				mes "Oh my hometown...";
+				next;
+				switch(select("Use perfume.:Don't use perfume.")) {
+				case 1:
+					mes "(Spray-)";
+					specialeffect EF_SANCTUARY;
+					next;
+					mes "[Exhausted Soldier]";
+					mes "Umm... This is...";
+					mes "I can feel the scent of Alfheim.";
+					mes "My hometown Alfheim!";
+					next;
+					mes "[Exhausted Soldier]";
+					mes "Ahh! Feeling much better!";
+					emotion e_heh;
+					delitem 6082,1; //Spirit_Of_Alfheim
+					close2;
+					donpcevent "#tukare_1::OnEnable";
+					disablenpc "Exhausted Soldier#1";
+					end;
+				case 2:
+					mes "- You decide to do nothing. -";
+					close;
+				}
+			}
+			end;
+		}
+		else {
+			mes "[Exhausted Soldier]";
+			mes "Oh my hometown...";
+			close;
+		}
+	}
+	else {
+		mes "[Exhausted Soldier]";
+		mes "CyaResehr";
+		close;
+	}
+
+OnInit:
+	enablenpc "Exhausted Soldier#1";
+	end;
+}
+
+splendide,1,1,1	script	#tukare_1	111,{
+OnEnable:
+	initnpctimer;
+	end;
+
+OnTimer60000:
+	enablenpc "Exhausted Soldier#1";
+	stopnpctimer;
+	end;
+}
+
+splendide,181,135,5	script	Exhausted Soldier#2	447,{
+	if ((isequipped(2782) == 1) && (ep13_2_rhea == 100)) {
+		if (ep13_2_tre1 == 5) {
+			if (countitem(6082) > 0) {
+				mes "[Exhausted Soldier]";
+				mes "Want to take a rest...";
+				next;
+				switch(select("Use perfume.:Don't use perfume.")) {
+				case 1:
+					mes "(Spray-)";
+					specialeffect EF_SANCTUARY;
+					next;
+					mes "[Exhausted Soldier]";
+					mes "What happen?";
+					mes "Feel better suddenly! I'm so happy now!";
+					mes "Let's go to work!";
+					emotion e_heh;
+					delitem 6082,1; //Spirit_Of_Alfheim
+					close2;
+					donpcevent "#tukare_2::OnEnable";
+					disablenpc "Exhausted Soldier#2";
+					end;
+				case 2:
+					mes "- You decide to do nothing. -";
+					close;
+				}
+			}
+			end;
+		}
+		else {
+			mes "[Exhausted Soldier]";
+			mes "Want to take a rest...";
+			close;
+		}
+	}
+	else {
+		mes "[Exhausted Soldier]";
+		mes "CyaResehr";
+		close;
+	}
+
+OnInit:
+	enablenpc "Exhausted Soldier#2";
+	end;
+}
+
+splendide,1,1,1	script	#tukare_2	111,{
+OnEnable:
+	initnpctimer;
+	end;
+
+OnTimer60000:
+	enablenpc "Exhausted Soldier#2";
+	stopnpctimer;
+	end;
+}
+
+splendide,139,178,5	script	Exhausted Soldier#3	447,{
+	if ((isequipped(2782) == 1) && (ep13_2_rhea == 100)) {
+		if (ep13_2_tre1 == 5) {
+			if (countitem(6082) > 0) {
+				mes "[Exhausted Soldier]";
+				mes "My hometown Alfheim...";
+				next;
+				switch(select("Use perfume.:Don't use perfume.")) {
+				case 1:
+					mes "(Spray-)";
+					specialeffect EF_SANCTUARY;
+					next;
+					mes "[Exhausted Soldier]";
+					mes "Umm... This is...";
+					mes "I can feel the scent of Alfheim.";
+					mes "My hometown Alfheim!";
+					next;
+					mes "[Exhausted Soldier]";
+					mes "Let's beat Sapha and go back home!";
+					emotion e_heh;
+					delitem 6082,1; //Spirit_Of_Alfheim
+					close2;
+					donpcevent "#tukare_3::OnEnable";
+					disablenpc "Exhausted Soldier#3";
+					end;
+				case 2:
+					mes "- You decide to do nothing. -";
+					close;
+				}
+			}
+			end;
+		}
+		else {
+			mes "[Exhausted Soldier]";
+			mes "My hometown Alfheim...";
+			close;
+		}
+	}
+	else {
+		mes "[Exhausted Soldier]";
+		mes "CyaResehr";
+		close;
+	}
+
+OnInit:
+	enablenpc "Exhausted Soldier#3";
+	end;
+}
+
+splendide,1,1,1	script	#tukare_3	111,{
+OnEnable:
+	initnpctimer;
+	end;
+
+OnTimer60000:
+	enablenpc "Exhausted Soldier#3";
+	stopnpctimer;
+	end;
+}
+
+splendide,164,188,5	script	Exhausted Soldier#4	447,{
+	if ((isequipped(2782) == 1) && (ep13_2_rhea == 100)) {
+		if (ep13_2_tre1 == 5) {
+			if (countitem(6082) > 0) {
+				mes "[Exhausted Soldier]";
+				mes "Huu...";
+				next;
+				switch(select("Use perfume.:Don't use perfume.")) {
+				case 1:
+					mes "(Spray-)";
+					specialeffect EF_SANCTUARY;
+					next;
+					mes "[Exhausted Soldier]";
+					mes "Umm... This is...";
+					mes "I can feel the scent of Alfheim.";
+					mes "My hometown Alfheim!";
+					next;
+					mes "[Exhausted Soldier]";
+					mes "Ahh! Feels like at home!!";
+					emotion e_sob;
+					delitem 6082,1; //Spirit_Of_Alfheim
+					close2;
+					donpcevent "#tukare_4::OnEnable";
+					disablenpc "Exhausted Soldier#4";
+					end;
+				case 2:
+					mes "- You decide to do nothing. -";
+					close;
+				}
+			}
+			end;
+		}
+		else {
+			mes "[Exhausted Soldier]";
+			mes "Huu...";
+			close;
+		}
+	}
+	else {
+		mes "[Exhausted Soldier]";
+		mes "CyaResehr";
+		close;
+	}
+
+OnInit:
+	enablenpc "Exhausted Soldier#4";
+	end;
+}
+
+splendide,1,1,1	script	#tukare_4	111,{
+OnEnable:
+	initnpctimer;
+	end;
+
+OnTimer60000:
+	enablenpc "Exhausted Soldier#4";
+	stopnpctimer;
+	end;
+}
+
+splendide,177,257,5	script	Exhausted Soldier#5	447,{
+	if ((isequipped(2782) == 1) && (ep13_2_rhea == 100)) {
+		if (ep13_2_tre1 == 5) {
+			if (countitem(6082) > 0) {
+				mes "[Exhausted Soldier]";
+				mes "Oh my hometown...";
+				next;
+				switch(select("Use perfume.:Don't use perfume.")) {
+				case 1:
+					mes "(Spray-)";
+					specialeffect EF_SANCTUARY;
+					next;
+					mes "[Exhausted Soldier]";
+					mes "Umm... This is...";
+					mes "I can feel the scent of Alfheim.";
+					mes "My hometown Alfheim!";
+					next;
+					mes "[Exhausted Soldier]";
+					mes "Ahh! Feeling much better!";
+					emotion e_heh;
+					delitem 6082,1; //Spirit_Of_Alfheim
+					close2;
+					donpcevent "#tukare_5::OnEnable";
+					disablenpc "Exhausted Soldier#5";
+					end;
+				case 2:
+					mes "- You decide to do nothing. -";
+					close;
+				}
+			}
+			end;
+		}
+		else {
+			mes "[Exhausted Soldier]";
+			mes "Oh my hometown...";
+			close;
+		}
+	}
+	else {
+		mes "[Exhausted Soldier]";
+		mes "CyaResehr";
+		close;
+	}
+
+OnInit:
+	enablenpc "Exhausted Soldier#5";
+	end;
+}
+
+splendide,1,1,1	script	#tukare_5	111,{
+OnEnable:
+	initnpctimer;
+	end;
+
+OnTimer60000:
+	enablenpc "Exhausted Soldier#5";
+	stopnpctimer;
+	end;
+}
+
+splendide,124,212,5	script	Exhausted Soldier#6	447,{
+	if ((isequipped(2782) == 1) && (ep13_2_rhea == 100)) {
+		if (ep13_2_tre1 == 5) {
+			if (countitem(6082) > 0) {
+				mes "[Exhausted Soldier]";
+				mes "Huu...";
+				next;
+				switch(select("Use perfume.:Don't use perfume.")) {
+				case 1:
+					mes "(Spray-)";
+					specialeffect EF_SANCTUARY; // 83 : "Exhausted Soldier#6" EF_SANCTUARY
+					next;
+					mes "[Exhausted Soldier]";
+					mes "I can feel the scent of Alfheim.";
+					mes "My hometown Alfheim!";
+					next;
+					mes "[Exhausted Soldier]";
+					mes "Yes, Splendide also a part of Alfheim!";
+					mes "Go Laphines!";
+					emotion e_heh;
+					delitem 6082,1; //Spirit_Of_Alfheim
+					close2;
+					donpcevent "#tukare_6::OnEnable";
+					disablenpc "Exhausted Soldier#6";
+					end;
+				case 2:
+					mes "- You decide to do nothing. -";
+					close;
+				}
+			}
+			end;
+		}
+		else {
+			mes "[Exhausted Soldier]";
+			mes "Huu...";
+			close;
+		}
+	}
+	else {
+		mes "[Exhausted Soldier]";
+		mes "CyaResehr";
+		close;
+	}
+
+OnInit:
+	enablenpc "Exhausted Soldier#6";
+	end;
+}
+
+splendide,1,1,1	script	#tukare_6	111,{
+OnEnable:
+	initnpctimer;
+	end;
+
+OnTimer60000:
+	enablenpc "Exhausted Soldier#6";
+	stopnpctimer;
+	end;
+}
+
+splendide,196,153,5	script	Exhausted Soldier#7	447,{
+	if ((isequipped(2782) == 1) && (ep13_2_rhea == 100)) {
+		if (ep13_2_tre1 == 5) {
+			if (countitem(6082) > 0) {
+				mes "[Exhausted Soldier]";
+				mes "Oh my hometown...";
+				next;
+				switch(select("Use perfume.:Don't use perfume.")) {
+				case 1:
+					mes "(Spray-)";
+					specialeffect EF_SANCTUARY; // 83 : "Exhausted Soldier#7" EF_SANCTUARY
+					next;
+					mes "[Exhausted Soldier]";
+					mes "Umm... This is...";
+					mes "I can feel the scent of Alfheim.";
+					mes "My hometown Alfheim!";
+					next;
+					mes "[Exhausted Soldier]";
+					mes "Ahh! Feeling much better!";
+					emotion e_heh;
+					delitem 6082,1; //Spirit_Of_Alfheim
+					close2;
+					donpcevent "#tukare_7::OnEnable";
+					disablenpc "Exhausted Soldier#7";
+					end;
+				case 2:
+					mes "- You decide to do nothing. -";
+					close;
+				}
+			}
+			end;
+		}
+		else {
+			mes "[Exhausted Soldier]";
+			mes "Oh my hometown...";
+			close;
+		}
+	}
+	else {
+		mes "[Exhausted Soldier]";
+		mes "CyaResehr";
+		close;
+	}
+
+OnInit:
+	enablenpc "Exhausted Soldier#7";
+	end;
+}
+
+splendide,1,1,1	script	#tukare_7	111,{
+OnEnable:
+	initnpctimer;
+	end;
+
+OnTimer60000:
+	enablenpc "Exhausted Soldier#7";
+	stopnpctimer;
+	end;
+}
+

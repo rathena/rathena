@@ -8,6 +8,9 @@
 	1475 Equestrian's Spear:	NEED INFO.
 	13005 Angelic Wing Dagger:	NEED INFO.
 =======================
+2010/05/25
+	* Rev. 14306 Added some items from 12.1, 13.1. and 13.2 to item_trade. [L0ne_W0lf]
+	* Added the 24 hour time limit on the quests 2182 and 2185.
 2010/05/20
 	* Rev. 14298 Lots of updates. Mostly mob related. [L0ne_W0lf]
 	- Added known stats and drops for 13.2 monsters.

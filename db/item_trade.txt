@@ -666,6 +666,8 @@
 13865,73,100	// Observer_Box
 5315,73,100	// Observer
 5314,73,100	// Hockey_Mask
+
+// Episode 12
 1638,123,100	// Healing_Staff_C
 2438,83,100	// Paw_Of_Cat
 2720,115,100	// Medal_Swordman
@@ -695,6 +697,10 @@
 6007,115,100	// New_Year_Rice_Cake_Soup
 6009,115,100	// Large_Magical_Fan
 7623,123,100	// Name_Change_Coupon
+
+// Sealed Shrine
+6001,123,100	// Essence_Of_Fire
+6002,121,100	// Token_Of_Apostle
 
 // Falicious Okolnir
 7839,115,100	// Crystal_Key
@@ -1177,6 +1183,8 @@
 14548,91,100	// Fire_Cracker_Valentine
 14549,91,100	// Fire_Cracker_Bday
 14550,91,100	// Fire_Cracker_Xmas
+
+// cashitem 20090106
 7821,73,100	// Green_Apple
 7822,73,100	// Whole_Barbecue
 7823,73,100	// Meat_Veg_Skewer
@@ -1219,6 +1227,8 @@
 9035,73,100	// Red_Deleter_Egg
 9036,73,100	// Diabolic_Egg
 9037,73,100	// Wanderer_Egg
+
+// cashitem 090127
 5152,73,100	// Chinese_Crown
 5235,73,100	// Gray_Fur_Hat
 5236,73,100	// Blue_Fur_Hat
@@ -1230,19 +1240,26 @@
 14466,123,100	// Valentine_Pledge_Box
 5817,123,100	// Valentine_Pledge
 
+// cashitem 20090210
 //5393,73,100	// ???
 
-// Misc. Items
+// cashitem 20090224
 5226,73,100	// Mini_Propeller_
 5238,73,100	// Red_Wizardry_Hat
 5239,73,100	// White_Wizardry_Hat
 5240,73,100	// Gray_Wizardry_Hat
 5241,73,100	// Blue_Wizardry_Hat
 5242,73,100	// Yellow_Wizardry_Hat
+
+// Ayo_event 20090303
 7950,115,100	// Ayothaya_Ticket
 5820,83,100	// Black_Elven_Ears
+
+// cashitem 20090310
 5316,73,100	// Umbrella_Hat
 5367,73,100	// Hyegun_Hat
+
+// cashitem 20090317
 13896,73,100	// Mimic_Summon_Box5
 13897,73,100	// Disguise_Summon_Box5
 13898,73,100	// Alice_Summon_Box5
@@ -1252,12 +1269,29 @@
 12276,73,100	// Mimic_Summon_Book
 12277,73,100	// Disguise_Summon_Book
 12278,73,100	// Alice_Summon_Book
+
+// cashitem 20090324
 5506,73,100	// Blue_Pajamas_Hat
 5507,73,100	// Pink_Pajamas_Hat
 //14488,73,100	// Blue_Pajamas_Hat_
 //14489,73,100	// Blue_Pajamas_Hat_
 
-// Episode 13
+// Episode 13.1
+6027,123,100	// Crystal_Of_Feardoom
+6028,123,100	// Seal_Scroll
+6029,123,100	// Morocc_Tracing_Log
+6035,123,100	// Decaying_Stem
+6036,123,100	// Invite_To_Meeting
+6037,123,100	// Rough_File
+6038,123,100	// Neat_Report
+6039,91,100	// Piece_Of_Fish
+6040,123,100	// Some_Of_Report
+6041,91,100	// Strong_Bine
+6042,91,100	// Ordinary_Branch
+6043,123,100	// Letter_From_Lugen
+6044,123,100	// Letter_From_Otto
+6045,123,100	// Supply_Box
+6048,91,100	// Unidentified_Mineral
 6051,115,100	// Gray_Hollow
 
 // Battleground Rewards (Krieger Von Midgard)
@@ -1311,6 +1345,7 @@
 12332,123,100	// Fruit_Juice
 7928,123,100	// Brazilian_Flag_
 7929,123,100	// Golden_Coin_
+12333,123,100	// Ansila
 5450,91,100	// Sun_Cap
 5451,91,100	// Dragonhelm_Gold
 5452,91,100	// Dragonhelm_Silver
@@ -1466,3 +1501,20 @@
 5421,73,100	// Ifrit's_Ear
 14469,73,100	// Ox_Tail_Scroll
 
+// Episode 13.2
+6074,123,100	// Bazett's_Order
+6075,91,100	// Crystalized_Teardrop
+6076,123,100	// Portable_Toolbox
+6077,123,100	// Rough_Mineral
+6079,123,100	// Flower_Of_Alfheim
+6080,91,100	// Manuk_Coin
+6081,91,100	// Splendide_Coin
+6082,123,100	// Spirit_Of_Alfheim
+6084,123,100	// Bradium_Fragments
+6085,123,100	// Shaggy_Muffler
+12342,91,100	// Manuk's_Opportunity
+12343,91,100	// Manuk's_Courage
+12344,91,100	// Pinguicula's_fruit_Jam
+12345,91,100	// Luciola's_Honey_Jam
+12348,91,100	// Manuk's_Faith
+12349,91,100	// Cornus'_Tears
