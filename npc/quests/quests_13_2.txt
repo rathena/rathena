@@ -3,13 +3,15 @@
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
-//= 1.6
+//= 1.7
 //===== Compatible With: =====================================
 //= eAthena SVN
 //===== Description: =========================================
 //= [Aegis Conversion]
 //= Cat Hand Addition. (Leads to 13.2 areas)
 //= Two Tribes
+//= Daily Quests:
+//= - Drago Egg Collection (npc includes 'Wanted' quest)
 //= Otherworld language
 //= Daily Quests:
 //= - Midgard Ore
@@ -24,6 +26,7 @@
 //= 1.4 Corrected issues with Otherworld Language. (Bugreport:4147)
 //= 1.5 Added daily quests: Midgard Ore, and Alfheim Perfume.
 //= 1.6 Added the Yggdrasil Dungeon floor 2 puzzle.
+//= 1.7 Added daily quest 'Dragon Egg collection.'
 //============================================================ 
 
 // Cat Hand Addition.
@@ -4897,6 +4900,763 @@ spl_fild01,329,29,0	script	???#ep13mdf03	844,{
 	}
 }
 
+// Daily Quests
+// - Drago Egg Collection (npc includes 'Wanted' quest)
+//============================================================
+mid_camp,146,306,3	script	Pet Breeder#ep13_eden01	982,{
+	if (checkweight(1201,2) == 0) {
+		mes "Wait a moment!!";
+		mes "You have too many items.";
+		mes "You can't receive this.";
+		mes "Lighten your weight and";
+		mes "try again.";
+		close;
+	}
+	if (ep13_mdrama < 6) {
+		mes "[Pinedel]";
+		mes "Why isn't it working, Tabb?";
+		mes "That should be working.";
+		next;
+		mes "[Tabb]";
+		mes "That's very dangerous. Do you want to die..?!";
+		next;
+		mes "[Pinedel]";
+		mes "Are you ignoring cute pets??";
+		mes "We've been able to get Pickys and even Zealotus!";
+		next;
+		mes "[Tabb]";
+		mes "No way, even if you ask me...";
+		mes "Hillslion is very adorable...";
+		mes "But you can't.";
+		next;
+		mes "[Pinedel]";
+		mes "Then let me know why you object to this.";
+		next;
+		mes "[Tabb]";
+		mes "It's too dangerous. I've trained monsters before.";
+		mes "Hillslions look cute and adorable, but it's not very realistic.";
+		next;
+		mes "[Tabb]";
+		mes "Can't you see that?";
+		mes "I've tried to train them... but I couldn't.";
+		mes "How can we can train them as a cute pet...?";
+		next;
+		mes "[Tabb]";
+		mes "It would definitely try to escape from us...";
+		mes "Then he would become very awful.";
+		mes "I don't agree with this.";
+		next;
+		mes "[Pinedel]";
+		mes "Nah...";
+		mes "Can't we control them with magical power?";
+		mes "We've done it before......";
+		next;
+		mes "- They just continue to argue -";
+		close;
+	}
+	else {
+		mes "[Pinedel]";
+		mes "Ah, Tabb isn't flexible at all.";
+		mes "Hey there! What's up??";
+		next;
+		switch(select("Notice for criminal report:Cute pet investigation.")) {
+		case 1:
+			if (ep13_2_wanted == 1) {
+				if (checkquest(7076,HUNTING) == 2) {
+					mes "[Pinedel]";
+					mes "Have you hunted the Runaway Dandelion?";
+					mes "Ok, I accept you.";
+					mes "Here's something Rin was storing here.";
+					next;
+					mes "[Pinedel]";
+					mes "This is Rin's cherished treasure box...";
+					mes "This is enough payment, right?";
+					completequest 7076;
+					set ep13_2_wanted,2;
+					getitem 7444,1; //Treasure_Box
+					close;
+				}
+				else {
+					mes "[Pinedel]";
+					mes "I know you haven't terminated the Runaway Dandelion yet.";
+					mes "Don't take me for a fool.";
+					close;
+				}
+			}
+			else if (ep13_2_wanted == 2) {
+				mes "[Pinedel]";
+				mes "I will forward everything to Rin.";
+				mes "She'll love it.";
+				mes "Just tell her your name " + PcName + ".";
+				next;
+				mes "[Pinedel]";
+				mes "I can remember that I've heard about you from Rin.";
+				mes "But Rin likes you, so that must mean that you're nice.";
+				close;
+			}
+			else {
+				mes "[Pinedel]";
+				mes "Seaching for a criminal?";
+				mes "I'm not sure that you're involved in it.";
+				close;
+			}
+		case 2:
+			if (ep13_2_dayegg == 1) {
+				if (countitem(6093) > 9) {
+					mes "[Pinedel]";
+					mes "Oh! Nice!";
+					mes "I can go through this study deeper with your assistance.";
+					next;
+					mes "[Pinedel]";
+					mes "I will try to make these Dragon eggs into cute pets.";
+					mes "Don't expect much!";
+					mes "Come back after a day to check on the progress.";
+					delitem 6093,10; //Egg_Of_Draco
+					erasequest 7077;
+					setquest 7078;
+					set ep13_2_dayegg,2;
+					getexp 40000,40000;
+					getitem 6081,1; //Splendide_Coin
+					getitem 6080,1; //Manuk_Coin
+					close;
+				}
+				else {
+					mes "[Pinedel]";
+					mes "Draco was being kept in the nest just before hatching. Please collect 10 Dragon eggs for me.";
+					mes "You know, those are hard to hatch in captivity.";
+					close;
+				}
+			}
+			else if (ep13_2_dayegg == 2) {
+				set .@alba_check,checkquest(7078,PLAYTIME);
+				if (.@alba_check == -1) {
+					mes "[Pinedel]";
+					mes "Those eggs are about to hatch now.";
+					mes "I will investigate those back home.";
+					close2;
+					erasequest 7078;
+					set ep13_2_dayegg,3;
+					end;
+				}
+				else if ((.@alba_check == 0) || (.@alba_check == 1)) {
+					mes "[Pinedel]";
+					mes "Those eggs are about to hatch now.";
+					mes "I will investigate those back home.";
+					mes "For now I still need more time.";
+					next;
+					mes "[Pinedel]";
+					mes "Can you come back here tomorrow?";
+					close;
+				}
+				else if (.@alba_check == 2) {
+					mes "[Pinedel]";
+					mes "Those eggs are about to hatch now.";
+					mes "I will investigate those back home.";
+					close;
+					erasequest 7078;
+					set ep13_2_dayegg,3;
+					close;
+				}
+			}
+			else if (ep13_2_dayegg == 3) {
+				mes "[Pinedel]";
+				mes "Do you want to help me gather more Dragon eggs today?";
+				mes "I want to try many things with those eggs.";
+				next;
+				switch(select("Sure.:Sorry, I can't.")) {
+				case 1:
+					mes "[Pinedel]";
+					mes "Please collect 10 Draco Eggs.";
+					set ep13_2_dayegg,1;
+					setquest 7077;
+					close;
+				case 2:
+					mes "[Pinedel]";
+					mes "Ok. You have your own business here.";
+					mes "Go ahead.";
+					close;
+				}
+			}
+			else {
+				mes "[Pinedel]";
+				mes "I am investigating cute pets.";
+				mes "Ash-vacuum has several monsters that I think could become cute pets.";
+				next;
+				mes "[Pinedel]";
+				mes "The objective is one Dragon egg!";
+				mes "Can you bring me a Dragon Egg?";
+				next;
+				switch(select("Yes.:Nope.")) {
+				case 1:
+					mes "[Pinedel]";
+					mes "There would be Dragon nest in the cave you found out.";
+					mes "There should be nice Dragon Eggs.";
+					next;
+					mes "[Pinedel]";
+					mes "Please collect 10 Draco Eggs.";
+					mes "Let's work together to make them as pets.";
+					set ep13_2_dayegg,1;
+					setquest 7077;
+					close;
+				case 2:
+					mes "[Pinedel]";
+					mes "I know it's not the easiest task.";
+					mes "But I refuse to give up.";
+					mes "I will make it into a cute pet someday.";
+					next;
+					mes "[Tabb]";
+					mes "Would you just give up making exogamous beings into cute pets...";
+					mes " ";
+					mes "[Pinedel]";
+					mes "Tabb doesn't have any guts!";
+					close;
+				}
+			}
+		}
+	}
+}
+
+mid_camp,192,239,4	script	Wanted Sign#ep13_2ect01	857,{
+	if (ep13_mdrama > 5) {
+		mes "[Wanted]";
+		mes " ";
+		mes "Wanted: Dandelion";
+		mes "Requester: Rin";
+		mes "Reward : treasure box.";
+		mes " ";
+		mes "Notice : We thought that all of the Dandelion gang were terminated.";
+		mes "But they weren't.";
+		mes "I've heard that there was a Dandelion's black clothing found in Ash-Vacuum.";
+		mes "There were some problems...";
+		mes "I need someone to find the Dandelion and terminate them.";
+		mes "I can provide a treasure box that I cherish.";
+		mes "I've heard a rumor that he's in a cave somewhere..!";
+		mes " ";
+		mes "PS> They have a bad reputation...";
+		mes "So you may not want to go alone...";
+		mes " ";
+		mes "PSS> I can't reward you directly...";
+		mes "'Pinedel' will reward you once the deed is done..!";
+		mes " ";
+		next;
+		if (ep13_2_wanted == 0) {
+			mes "Do you accept Rin's request?";
+			switch(select("I accept that request.:No, I can't.")) {
+			case 1:
+				mes "I accepted Rin's request.";
+				set ep13_2_wanted,1;
+				setquest 7076;
+				close;
+			
+			case 2:
+				mes "No, I won't get involved in it.";
+				close;
+			}
+		}
+		else {
+			mes "I've already decided to take the request.";
+			close;
+		}
+	}
+	else {
+		mes "There must be someone who remove the wanted notice paper.";
+		close;
+	}
+}
+
+nyd_dun01,258,134,0	script	Dragon Egg#ep13_degg01	463,{
+	if (checkweight(1201,2) == 0) {
+		mes "- You're carrying too many items. -";
+		close;
+	}
+	if ((ep13_2_dayegg == 1) && (countitem(6093) < 10)) {
+		mes "We just got fresh eggs from the dragon nest.";
+		getitem 6093,1; //Egg_Of_Draco
+		disablenpc "Dragon Egg#ep13_degg01";
+		initnpctimer;
+		close;
+	}
+	end;
+
+OnTimer420000:
+	enablenpc "Dragon Egg#ep13_degg01";
+	stopnpctimer;
+	end;
+
+OnEnable:
+	enablenpc "Dragon Egg#ep13_degg01";
+	end;
+
+OnDisable:
+	disablenpc "Dragon Egg#ep13_degg01";
+	end;
+}
+
+nyd_dun01,100,210,0	script	Dragon Egg#ep13_degg02	463,{
+	if (checkweight(1201,2) == 0) {
+		mes "- You're carrying too many items. -";
+		close;
+	}
+	if ((ep13_2_dayegg == 1) && (countitem(6093) < 10)) {
+		mes "We just got fresh eggs from the dragon nest.";
+		getitem 6093,1; //Egg_Of_Draco
+		disablenpc "Dragon Egg#ep13_degg02";
+		initnpctimer;
+		close;
+	}
+	end;
+
+OnTimer420000:
+	enablenpc "Dragon Egg#ep13_degg02";
+	stopnpctimer;
+	end;
+
+OnEnable:
+	enablenpc "Dragon Egg#ep13_degg02";
+	end;
+
+OnDisable:
+	disablenpc "Dragon Egg#ep13_degg02";
+	end;
+}
+
+nyd_dun01,74,68,0	script	Dragon Egg#ep13_degg03	463,{
+	if (checkweight(1201,2) == 0) {
+		mes "- You're carrying too many items. -";
+		close;
+	}
+	if ((ep13_2_dayegg == 1) && (countitem(6093) < 10)) {
+		mes "We just got fresh eggs from the dragon nest.";
+		getitem 6093,1; //Egg_Of_Draco
+		disablenpc "Dragon Egg#ep13_degg03";
+		initnpctimer;
+		close;
+	}
+	end;
+
+OnTimer420000:
+	enablenpc "Dragon Egg#ep13_degg03";
+	stopnpctimer;
+	end;
+
+OnEnable:
+	enablenpc "Dragon Egg#ep13_degg03";
+	end;
+
+OnDisable:
+	disablenpc "Dragon Egg#ep13_degg03";
+	end;
+}
+
+nyd_dun01,98,142,0	script	Dragon Egg#ep13_degg04	463,{
+	if (checkweight(1201,2) == 0) {
+		mes "- You're carrying too many items. -";
+		close;
+	}
+	if ((ep13_2_dayegg == 1) && (countitem(6093) < 10)) {
+		mes "We just got fresh eggs from the dragon nest.";
+		getitem 6093,1; //Egg_Of_Draco
+		disablenpc "Dragon Egg#ep13_degg04";
+		initnpctimer;
+		close;
+	}
+	end;
+
+OnTimer420000:
+	enablenpc "Dragon Egg#ep13_degg04";
+	stopnpctimer;
+	end;
+
+OnEnable:
+	enablenpc "Dragon Egg#ep13_degg04";
+	end;
+
+OnDisable:
+	disablenpc "Dragon Egg#ep13_degg04";
+	end;
+}
+
+nyd_dun01,244,157,0	script	Dragon Egg#ep13_degg05	463,{
+	if (checkweight(1201,2) == 0) {
+		mes "- You're carrying too many items. -";
+		close;
+	}
+	if ((ep13_2_dayegg == 1) && (countitem(6093) < 10)) {
+		mes "We just got fresh eggs from the dragon nest.";
+		getitem 6093,1; //Egg_Of_Draco
+		disablenpc "Dragon Egg#ep13_degg05";
+		initnpctimer;
+		close;
+	}
+	end;
+
+OnTimer420000:
+	enablenpc "Dragon Egg#ep13_degg05";
+	stopnpctimer;
+	end;
+
+OnEnable:
+	enablenpc "Dragon Egg#ep13_degg05";
+	end;
+
+OnDisable:
+	disablenpc "Dragon Egg#ep13_degg05";
+	end;
+}
+
+nyd_dun01,59,185,0	script	Dragon Egg#ep13_degg06	463,{
+	if (checkweight(1201,2) == 0) {
+		mes "- You're carrying too many items. -";
+		close;
+	}
+	if ((ep13_2_dayegg == 1) && (countitem(6093) < 10)) {
+		mes "We just got fresh eggs from the dragon nest.";
+		getitem 6093,1; //Egg_Of_Draco
+		disablenpc "Dragon Egg#ep13_degg06";
+		initnpctimer;
+		close;
+	}
+	end;
+
+OnTimer420000:
+	enablenpc "Dragon Egg#ep13_degg06";
+	stopnpctimer;
+	end;
+
+OnEnable:
+	enablenpc "Dragon Egg#ep13_degg06";
+	end;
+
+OnDisable:
+	disablenpc "Dragon Egg#ep13_degg06";
+	end;
+}
+
+nyd_dun02,68,256,0	script	Dragon Egg#ep13_degg11	463,{
+	if (checkweight(1201,2) == 0) {
+		mes "- You're carrying too many items. -";
+		close;
+	}
+	if ((ep13_2_dayegg == 1) && (countitem(6093) < 10)) {
+		mes "We just got fresh eggs from the dragon nest.";
+		getitem 6093,1; //Egg_Of_Draco
+		disablenpc "Dragon Egg#ep13_degg11";
+		initnpctimer;
+		close;
+	}
+	end;
+
+OnTimer240000:
+	enablenpc "Dragon Egg#ep13_degg11";
+	stopnpctimer;
+	end;
+
+OnEnable:
+	enablenpc "Dragon Egg#ep13_degg11";
+	end;
+
+OnDisable:
+	disablenpc "Dragon Egg#ep13_degg11";
+	end;
+}
+
+nyd_dun02,202,166,0	script	Dragon Egg#ep13_degg12	463,{
+	if (checkweight(1201,2) == 0) {
+		mes "- You're carrying too many items. -";
+		close;
+	}
+	if ((ep13_2_dayegg == 1) && (countitem(6093) < 10)) {
+		mes "We just got fresh eggs from the dragon nest.";
+		getitem 6093,1; //Egg_Of_Draco
+		disablenpc "Dragon Egg#ep13_degg12";
+		initnpctimer;
+		close;
+	}
+	end;
+
+OnTimer240000:
+	enablenpc "Dragon Egg#ep13_degg12";
+	stopnpctimer;
+	end;
+
+OnEnable:
+	enablenpc "Dragon Egg#ep13_degg12";
+	end;
+
+OnDisable:
+	disablenpc "Dragon Egg#ep13_degg12";
+	end;
+}
+
+nyd_dun02,200,165,0	script	Dragon Egg#ep13_degg13	463,{
+	if (checkweight(1201,2) == 0) {
+		mes "- You're carrying too many items. -";
+		close;
+	}
+	if ((ep13_2_dayegg == 1) && (countitem(6093) < 10)) {
+		mes "We just got fresh eggs from the dragon nest.";
+		getitem 6093,1; //Egg_Of_Draco
+		disablenpc "Dragon Egg#ep13_degg13";
+		initnpctimer;
+		close;
+	}
+	end;
+
+OnTimer240000:
+	enablenpc "Dragon Egg#ep13_degg13";
+	stopnpctimer;
+	end;
+
+OnEnable:
+	enablenpc "Dragon Egg#ep13_degg13";
+	end;
+
+OnDisable:
+	disablenpc "Dragon Egg#ep13_degg13";
+	end;
+}
+
+nyd_dun02,201,166,0	script	Dragon Egg#ep13_degg16	463,{
+	if (checkweight(1201,2) == 0) {
+		mes "- You're carrying too many items. -";
+		close;
+	}
+	if ((ep13_2_dayegg == 1) && (countitem(6093) < 10)) {
+		mes "We just got fresh eggs from the dragon nest.";
+		getitem 6093,1; //Egg_Of_Draco
+		disablenpc "Dragon Egg#ep13_degg16";
+		initnpctimer;
+		close;
+	}
+	end;
+
+OnTimer120000:
+	enablenpc "Dragon Egg#ep13_degg16";
+	stopnpctimer;
+	end;
+
+OnEnable:
+	enablenpc "Dragon Egg#ep13_degg16";
+	end;
+
+OnDisable:
+	disablenpc "Dragon Egg#ep13_degg16";
+	end;
+}
+
+nyd_dun02,203,167,0	script	Dragon Egg#ep13_degg17	463,{
+	if (checkweight(1201,2) == 0) {
+		mes "- You're carrying too many items. -";
+		close;
+	}
+	else {
+	}
+	if ((ep13_2_dayegg == 1) && (countitem(6093) < 10)) {
+		mes "We just got fresh eggs from the dragon nest.";
+		getitem 6093,1; //Egg_Of_Draco
+		disablenpc "Dragon Egg#ep13_degg17";
+		initnpctimer;
+		close;
+	}
+	end;
+
+OnTimer120000:
+	enablenpc "Dragon Egg#ep13_degg17";
+	stopnpctimer;
+	end;
+
+OnEnable:
+	enablenpc "Dragon Egg#ep13_degg17";
+	end;
+
+OnDisable:
+	disablenpc "Dragon Egg#ep13_degg17";
+	end;
+}
+
+nyd_dun02,201,164,0	script	Dragon Egg#ep13_degg18	463,{
+	if (checkweight(1201,2) == 0) {
+		mes "- You're carrying too many items. -";
+		close;
+	}
+	if ((ep13_2_dayegg == 1) && (countitem(6093) < 10)) {
+		mes "We just got fresh eggs from the dragon nest.";
+		getitem 6093,1; //Egg_Of_Draco
+		disablenpc "Dragon Egg#ep13_degg18";
+		initnpctimer;
+		close;
+	}
+	end;
+
+OnTimer120000:
+	enablenpc "Dragon Egg#ep13_degg18";
+	stopnpctimer;
+	end;
+
+OnEnable:
+	enablenpc "Dragon Egg#ep13_degg18";
+	end;
+
+OnDisable:
+	disablenpc "Dragon Egg#ep13_degg18";
+	end;
+}
+
+nyd_dun02,201,157,5	script	Egg Keeper Draco#13_1	2013,3,3,{
+
+OnEnable:
+	enablenpc "Egg Keeper Draco#13_1";
+	end;
+
+OnDisable:
+	disablenpc "Egg Keeper Draco#13_1";
+	end;
+
+OnTouch:
+	disablenpc "Egg Keeper Draco#13_1";
+	monster "nyd_dun02",201,157,"Egg Keeper Draco",2013,1,"Egg Keeper Draco#13_3::OnMyMobDead";
+	end;
+}
+
+nyd_dun02,206,157,3	script	Egg Keeper Draco#13_2	2013,3,3,{
+	end;
+
+OnEnable:
+	enablenpc "Egg Keeper Draco#13_2";
+	end;
+
+OnDisable:
+	disablenpc "Egg Keeper Draco#13_2";
+	end;
+
+OnTouch:
+	disablenpc "Egg Keeper Draco#13_2";
+	monster "nyd_dun02",206,157,"Egg Keeper Draco",2013,1,"Egg Keeper Draco#13_4::OnMyMobDead";
+	end;
+}
+
+nyd_dun02,201,157,5	script	Egg Keeper Draco#13_3	-1,{
+	end;
+
+OnMyMobDead:
+	initnpctimer;
+	end;
+
+OnTimer180000:
+	enablenpc "Egg Keeper Draco#13_1";
+	stopnpctimer;
+	end;
+}
+
+nyd_dun02,206,157,3	script	Egg Keeper Draco#13_4	-1,{
+	end;
+
+OnMyMobDead:
+	initnpctimer;
+	end;
+
+OnTimer180000:
+	enablenpc "Egg Keeper Draco#13_2";
+	stopnpctimer;
+	end;
+}
+
+nyd_dun02,144,103,3	script	Stranger#ep13_2_dan01	456,3,3,{
+	end;
+
+OnEnable:
+	enablenpc "Stranger#ep13_2_dan01";
+	end;
+
+OnDisable:
+	disablenpc "Stranger#ep13_2_dan01";
+	end;
+
+Oncall:
+	monster "nyd_dun02",144,103,"Runway Dandelion",2026,1,"Stranger#ep13_2_dan03::OnMyMobDead";
+	end;
+
+Onreset:
+	killmonster "nyd_dun02","Stranger#ep13_2_dan03::OnMyMobDead";
+	end;
+
+OnTouch:
+	emotion e_gasp,1;
+	emotion e_omg;
+	disablenpc "Stranger#ep13_2_dan01";
+	donpcevent "Stranger#ep13_2_dan02::Oncall";
+	end;
+}
+
+nyd_dun02,206,114,5	script	Stranger#ep13_2_dan02	456,3,3,{
+	end;
+
+OnInit:
+	disablenpc "Stranger#ep13_2_dan02";
+	end;
+
+OnEnable:
+	enablenpc "Stranger#ep13_2_dan02";
+	end;
+
+OnDisable:
+	disablenpc "Stranger#ep13_2_dan02";
+	end;
+
+Oncall:
+	monster "nyd_dun02",206,114,"Runway Dandelion",2026,1,"Stranger#ep13_2_dan04::OnMyMobDead";
+	end;
+
+Onreset:
+	killmonster "nyd_dun02","Stranger#ep13_2_dan04::OnMyMobDead";
+	end;
+
+OnTouch:
+	emotion e_gasp,1;
+	emotion e_omg;
+	disablenpc "Stranger#ep13_2_dan02";
+	donpcevent "Stranger#ep13_2_dan01::Oncall";
+	end;
+}
+
+nyd_dun02,144,103,0	script	Stranger#ep13_2_dan03	-1,{
+	end;
+
+OnMyMobDead:
+	initnpctimer;
+	end;
+
+OnTimer300000:
+	set .@temp_call,rand(1,2);
+	if (.@temp_call == 1) {
+		enablenpc "Stranger#ep13_2_dan01";
+	}
+	else {
+		donpcevent "Stranger#ep13_2_dan02::OnEnable";
+	}
+	stopnpctimer;
+	end;
+}
+
+nyd_dun02,206,114,0	script	Stranger#ep13_2_dan04	-1,{
+	end;
+
+OnMyMobDead:
+	initnpctimer;
+	end;
+
+OnTimer300000:
+	set .@temp_call,rand(1,2);
+	if (.@temp_call == 1) {
+		enablenpc "Stranger#ep13_2_dan02";
+	}
+	else {
+		donpcevent "Stranger#ep13_2_dan01::OnEnable";
+	}
+	stopnpctimer;
+	end;
+}
+
 // Otherworld language
 //============================================================ 
 mid_camp,197,237,3	script	Schwartzvalt Mechanic#1	869,{
@@ -8890,7 +9650,6 @@ spl_in01,30,324,3	script	High Laphine#grenouille	446,{
 					mes "[Grenouille]";
 					mes "Haha, Don't worry.";
 					mes "Common flowers like this can bring the familiarity of home back to the soldiers.";
-					mes "?±øÃ?ÐÊ?½Êì?µLÊÏçµÄÆø?¡£";
 					next;
 					mes "[Grenouille]";
 					mes "For now, I'll extract a liquid that";
@@ -9558,7 +10317,7 @@ splendide,124,212,5	script	Exhausted Soldier#6	447,{
 				switch(select("Use perfume.:Don't use perfume.")) {
 				case 1:
 					mes "(Spray-)";
-					specialeffect EF_SANCTUARY; // 83 : "Exhausted Soldier#6" EF_SANCTUARY
+					specialeffect EF_SANCTUARY;
 					next;
 					mes "[Exhausted Soldier]";
 					mes "I can feel the scent of Alfheim.";
@@ -9618,7 +10377,7 @@ splendide,196,153,5	script	Exhausted Soldier#7	447,{
 				switch(select("Use perfume.:Don't use perfume.")) {
 				case 1:
 					mes "(Spray-)";
-					specialeffect EF_SANCTUARY; // 83 : "Exhausted Soldier#7" EF_SANCTUARY
+					specialeffect EF_SANCTUARY;
 					next;
 					mes "[Exhausted Soldier]";
 					mes "Umm... This is...";
