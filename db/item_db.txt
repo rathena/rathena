@@ -1541,7 +1541,7 @@
 2730,Morroc_Seal,Continental Guard Seal,5,0,,50,,0,,1,0xFFFFFFFE,7,2,136,,80,0,0,{ bonus bMaxHP,50; bonus bAspdRate,3; },{},{}
 2731,Morroc_Charm_Stone,Rune Charm Stone,5,0,,50,,0,,1,0xFFFFFFFE,7,2,136,,80,0,0,{ bonus bMaxSP,50; bonus bCastRate,-1; },{},{}
 2732,Morroc_Ring,Death Medalion,5,0,,50,,0,,1,0xFFFFFFFE,7,2,136,,80,0,0,{ bonus bCritical,5; },{},{}
-2733,Medal_Gunner,Sheriff_Badge,5,0,,0,,1,,0,0x01000000,7,2,136,,80,0,0,{ bonus bAtkRate,5; bonus bMatkRate,5; bonus bCritical,10; bonus bMaxHP,300; bonus bMaxSP,80; bonus3 bAddEff,Eff_Blind,1000,ATF_LONG; },{},{}
+2733,Medal_Gunner,Sheriff_Badge,5,0,,0,,1,,0,0x01000000,7,2,136,,80,0,0,{ bonus bAtkRate,5; bonus bMatkRate,5; bonus bCritical,10; bonus bMaxHP,300; bonus bMaxSP,80; bonus3 bAddEff,Eff_Blind,100,ATF_LONG; },{},{}
 2734,Directive_A,Directive,5,0,,0,,1,,0,0xFFFFFFFF,7,2,136,,80,0,0,{},{},{}
 2735,Directive_B,Directive,5,0,,0,,1,,0,0xFFFFFFFF,7,2,136,,80,0,0,{},{},{}
 2736,Navel_Ring,...,5,0,,100,,0,,0,0xFFFFFFFF,7,2,136,,75,0,0,{ bonus bDex,3; bonus bLuk,3; bonus bMdef,2; },{},{}
@@ -2557,7 +2557,7 @@
 5418,Soldier_Hat,Legionnaire Hat,5,20,,400,,4,,1,0xFFFFFFFF,7,2,256,,0,1,420,{ bonus bStr,1; bonus2 bAddRace,RC_NonBoss,3; bonus2 bAddRace,RC_Boss,3; },{},{}
 5419,Evolved_Leaf,Leaves Of Grass,5,,,100,,0,,0,0xFFFFFFFF,7,2,1,,0,0,57,{ bonus bVit,1; bonus2 bSubRace,RC_Plant,5; },{},{}
 //5420,Mask_Of_Ifrit,Mask Of Ifrit,5,,,0,,8,,0,0xFFFFFFFE,7,2,769,,70,0,421,{ bonus bStr,1; bonus bInt,1; bonus bMdef,5; bonus2 bSubEle,Ele_Fire,10; bonus2 bSubEle,Ele_Water,-10; skill "MG_SIGHT",1; bonus3 bAutoSpellWhenHit,"WZ_METEOR",3,50; bonus3 bAutoSpell,"MG_FIREBOLT",3,50; },{},{ sc_end SC_SIGHT; }
-5421,Ifrit's_Ear,Ears Of Ifrit,5,,,0,,0,,0,0xFFFFFFFE,7,2,512,,70,0,422,{ bonus bStr,1; bonus bMdef,3; bonus2 bSkillAtk,"MG_FIREBOLT",2; bonus2 bSkillAtk,"WZ_FIREPILLAR",2; bonus2 bSkillAtk,"WZ_METEOR",2; bonus2 bSkillAtk,"SM_BASH",2; bonus2 bSkillAtk,"SM_MAGNUM",2; bonus2 bSkillAtk,"KN_PIERCE",2; bonus2 bSubEle,Ele_Fire,5; },{},{}
+5421,Ifrit's_Ear,Ears Of Ifrit,5,,,0,,0,,0,0xFFFFFFFE,7,2,512,,70,0,422,{ bonus bStr,1; bonus bMdef,3; bonus2 bSkillAtk,"MG_FIREBOLT",2; bonus2 bSkillAtk,"WZ_FIREPILLAR",2; bonus2 bSkillAtk,"WZ_METEOR",2; bonus2 bSkillAtk,"SM_BASH",2; bonus2 bSkillAtk,"SM_MAGNUM",2; bonus2 bSkillAtk,"KN_PIERCE",2; bonus2 bSubEle,Ele_Fire,5; bonus2 bSubEle,Ele_Water,-5; },{},{}
 //5422,Linguistic_Book_Cap,Linguistic Book Hat,5,,,70,,0,,0,0xFFFFFFFF,7,2,256,,0,0,423,{ bonus bInt,1; bonus bMdef,2; },{},{}
 //5423,Lovecap_China,I Love China,5,,,250,,5,,0,0xFFFFFFFF,7,2,256,,0,0,424,{ bonus bDex,3; bonus2 bSubRace,RC_DemiHuman,10; },{},{}
 5424,Fanta_Orange_Can,Fanta Orange Can Hat,5,,,100,,2,,1,0xFFFFFFFF,7,2,256,,0,1,425,{},{},{}

@@ -1345,7 +1345,6 @@
 12332,123,100	// Fruit_Juice
 7928,123,100	// Brazilian_Flag_
 7929,123,100	// Golden_Coin_
-12333,123,100	// Ansila
 5450,91,100	// Sun_Cap
 5451,91,100	// Dragonhelm_Gold
 5452,91,100	// Dragonhelm_Silver

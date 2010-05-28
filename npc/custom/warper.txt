@@ -127,10 +127,10 @@
 					warp "izlu2dun",106,88;
 					break;
 				case 6:
-					warp "prt_sewb1",126,248;
+					warp "mjolnir_02",81,359;
 					break;
 				case 7:
-					warp "mjolnir_02",81,359;
+					warp "prt_sewb1",126,248;
 					break;
 				case 8:
 					warp "einbech",135,249;
