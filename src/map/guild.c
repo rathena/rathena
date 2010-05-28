@@ -1456,7 +1456,7 @@ int guild_opposition(struct map_session_data *sd,struct map_session_data *tsd)
 				clif_guild_oppositionack(sd,2);
 				return 0;
 			}
-			if(agit_flag) // Prevent the changing of alliances to oppositions during WoE.
+			if(agit_flag || agit2_flag) // Prevent the changing of alliances to oppositions during WoE.
 				return 0;
 			//Change alliance to opposition.
 			intif_guild_alliance( sd->status.guild_id,tsd->status.guild_id,
