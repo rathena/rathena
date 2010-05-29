@@ -4215,107 +4215,90 @@ BUILDIN_FUNC(warpchar)
 	
 	return 0;
 } 
- 
 /*==========================================
- * Warpparty - [Fredzilla]
- * Syntax: warpparty "mapname",x,y,Party_ID;
+ * Warpparty - [Fredzilla] [Paradox924X]
+ * Syntax: warpparty "to_mapname",x,y,Party_ID,{"from_mapname"};
+ * If 'from_mapname' is specified, only the party members on that map will be warped
  *------------------------------------------*/
 BUILDIN_FUNC(warpparty)
 {
-	int x,y;
-	const char *str;
-	int p_id;
-	int i;
-	unsigned short mapindex;
+	TBL_PC *sd;
 	TBL_PC *pl_sd;
-	struct party_data *p=NULL;
-	str=script_getstr(st,2);
-	x=script_getnum(st,3);
-	y=script_getnum(st,4);
-	p_id=script_getnum(st,5);
-	if(p_id < 1)
+	struct party_data* p;
+	int type;
+	int mapindex;
+	int i, j;
+
+	const char* str = script_getstr(st,2);
+	int x = script_getnum(st,3);
+	int y = script_getnum(st,4);
+	int p_id = script_getnum(st,5);
+	const char* str2 = NULL;
+	if ( script_hasdata(st,6) )
+		str2 = script_getstr(st,6);
+
+	sd=script_rid2sd(st);
+	if( sd == NULL )
 		return 0;
 	p = party_search(p_id);
-	if (!p)
+	if(!p)
 		return 0;
-	if(strcmp(str,"Random")==0)
-	{
-		for (i = 0; i < MAX_PARTY; i++)
-		{
-			if ((pl_sd = p->data[i].sd))
-			{
-				if(map[pl_sd->bl.m].flag.nowarp)
-					continue;
-				pc_randomwarp(pl_sd,3);
-			}
-		}
-	}
-	else if(strcmp(str,"SavePointAll")==0)
-	{
-		for (i = 0; i < MAX_PARTY; i++)
-		{
-			if ((pl_sd = p->data[i].sd))
-			{
-				if(map[pl_sd->bl.m].flag.noreturn)
-					continue;
-				pc_setpos(pl_sd,pl_sd->status.save_point.map,pl_sd->status.save_point.x,pl_sd->status.save_point.y,3);
-			}
-		}
-	}
-	else if(strcmp(str,"SavePoint")==0)
-	{
-		pl_sd=script_rid2sd(st);
-		if (!pl_sd) return 0;
 	
-		mapindex=pl_sd->status.save_point.map;
-		x=pl_sd->status.save_point.x;
-		y=pl_sd->status.save_point.y;
-		
-		for (i = 0; i < MAX_PARTY; i++)
-		{
-			if ((pl_sd = p->data[i].sd))
-			{
-				if(map[pl_sd->bl.m].flag.noreturn)
-					continue;			
-				pc_setpos(pl_sd,mapindex,x,y,3);
-			}
-		}
-	}
-	else if(strcmp(str,"Leader")==0)
+	if(map[sd->bl.m].flag.noreturn || map[sd->bl.m].flag.nowarpto)
+		return 0;
+	
+	type = ( strcmp(str,"Random")==0 ) ? 0
+	     : ( strcmp(str,"SavePointAll")==0 ) ? 1
+		 : ( strcmp(str,"SavePoint")==0 ) ? 2
+		 : ( strcmp(str,"Leader")==0 ) ? 3
+		 : 4;
+
+	for (i = 0; i < MAX_PARTY; i++)
 	{
-		for(i = 0; i < MAX_PARTY && !p->party.member[i].leader; i++);
-		if (i == MAX_PARTY || !p->data[i].sd) //Leader not found / not online
-			return 0;
-		if(map[p->data[i].sd->bl.m].flag.nowarpto)
-			return 0;
-		mapindex = p->data[i].sd->mapindex;
-		x = p->data[i].sd->bl.x;
-		y = p->data[i].sd->bl.y;
-		for (i = 0; i < MAX_PARTY; i++)
+		if( !(pl_sd = p->data[i].sd) || pl_sd->status.party_id != p_id )
+			continue;
+
+		if( str2 && strcmp(str2, map[pl_sd->bl.m].name) != 0 )
+			continue;
+
+		switch( type )
 		{
-			pl_sd = p->data[i].sd;
-			if (!pl_sd)
-				continue;
-			if(map[pl_sd->bl.m].flag.noreturn || map[pl_sd->bl.m].flag.nowarp)
-				continue;
-			pc_setpos(pl_sd,mapindex,x,y,3);
-		}
-	}
-	else
-	{
-		mapindex = mapindex_name2id(str);
-		if (!mapindex) //Show source of npc error.
-			return 1;
-		for (i = 0; i < MAX_PARTY; i++)
-		{
-			if ((pl_sd = p->data[i].sd))
+		case 0: // Random
+			if(!map[pl_sd->bl.m].flag.nowarp)
+				pc_randomwarp(pl_sd,3);
+		break;
+		case 1: // SavePointAll
+			if(!map[pl_sd->bl.m].flag.noreturn)
+				pc_setpos(pl_sd,pl_sd->status.save_point.map,pl_sd->status.save_point.x,pl_sd->status.save_point.y,3);
+		break;
+		case 2: // SavePoint
+			if(!map[pl_sd->bl.m].flag.noreturn)
+				pc_setpos(pl_sd,sd->status.save_point.map,sd->status.save_point.x,sd->status.save_point.y,3);
+		break;
+		case 3: // Leader
+			for(j = 0; j < MAX_PARTY && !p->party.member[j].leader; j++);
+			if (j == MAX_PARTY || !p->data[j].sd) //Leader not found / not online
+				return 0;
+			mapindex = p->data[j].sd->mapindex;
+			x = p->data[j].sd->bl.x;
+			y = p->data[j].sd->bl.y;
+			for (j = 0; j < MAX_PARTY; j++)
 			{
+				pl_sd = p->data[j].sd;
+				if (!pl_sd)
+					continue;
 				if(map[pl_sd->bl.m].flag.noreturn || map[pl_sd->bl.m].flag.nowarp)
 					continue;
 				pc_setpos(pl_sd,mapindex,x,y,3);
 			}
+		break;
+		case 4: // m,x,y
+			if(!map[pl_sd->bl.m].flag.noreturn && !map[pl_sd->bl.m].flag.nowarp)
+				pc_setpos(pl_sd,mapindex_name2id(str),x,y,3);
+		break;
 		}
 	}
+
 	return 0;
 }
 /*==========================================
@@ -14309,7 +14292,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(warp,"sii"),
 	BUILDIN_DEF(areawarp,"siiiisii"),
 	BUILDIN_DEF(warpchar,"siii"), // [LuzZza]
-	BUILDIN_DEF(warpparty,"siii"), // [Fredzilla]
+	BUILDIN_DEF(warpparty,"siii*"), // [Fredzilla] [Paradox924X]
 	BUILDIN_DEF(warpguild,"siii"), // [Fredzilla]
 	BUILDIN_DEF(setlook,"ii"),
 	BUILDIN_DEF(changelook,"ii"), // Simulates but don't Store it
