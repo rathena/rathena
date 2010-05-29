@@ -3533,7 +3533,7 @@ See also 'warp'.
 
 ---------------------------------------
  
-*warpparty "<mapname>",<x>,<y>,<party_id>;
+*warpparty "<to_mapname>",<x>,<y>,<party_id>,{"<from_mapname>"};
  
 Warps a party to specified map and coordinate given the party ID, which you can get with
 getcharid(1). You can also request another party id given a member's name with getcharid(1,<player_name>).
@@ -3546,6 +3546,8 @@ SavePoint:    All party members are warped to the save point of the currently
               attached player (will fail if there's no player attached).
 Leader:       All party members are warped to the leader's position. The leader must
               be online and in the current map-server for this to work.
+
+If you specify a from_mapname, warpparty will only affect those on that map.
 
 Example:
 mes "[Party Warper]";
