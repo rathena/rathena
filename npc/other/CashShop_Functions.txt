@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.3
+//= 1.4
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -20,6 +20,7 @@
 //=     Added Seige Teleport Scroll Function
 //= 1.2 Updated the dungeon teleport scroll menu. [L0ne_w0lf]
 //= 1.3 Implemented Aozi Giant Flywing Fix. (bugreport:4242) [L0ne_w0lf]
+//= 1.4 Simplified Giant Flywing function using warpparty. [L0ne_w0lf]
 //============================================================ 
 
 // Kafra Card
@@ -47,6 +48,16 @@ function	script	F_CashPartyCall	{
 	warp "Random",0,0;
 	if(getpartyleader(getcharid(1),2) == getcharid(0)) {
 		getmapxy .@mapl$, .@xl, .@yl, 0;
+		warpparty .@mapl$, .@xl, .@yl, getcharid(1), .@mapl$;
+	}
+	return;
+}
+
+/*
+function	script	F_CashPartyCall2	{
+	warp "Random",0,0;
+	if(getpartyleader(getcharid(1),2) == getcharid(0)) {
+		getmapxy .@mapl$, .@xl, .@yl, 0;
 		getpartymember getcharid(1),2;
 		set .@partymembercount, $@partymembercount;
 		copyarray .@partymemberaid[0], $@partymemberaid[0], .@partymembercount;
@@ -60,6 +71,7 @@ function	script	F_CashPartyCall	{
 	}
 	return;
 }
+*/
 
 // Neuralizer
 //============================================================ 

@@ -4261,6 +4261,9 @@ BUILDIN_FUNC(warpparty)
 		if( str2 && strcmp(str2, map[pl_sd->bl.m].name) != 0 )
 			continue;
 
+		if( pc_isdead(pl_sd) )
+			continue;
+
 		switch( type )
 		{
 		case 0: // Random
@@ -4293,7 +4296,7 @@ BUILDIN_FUNC(warpparty)
 			}
 		break;
 		case 4: // m,x,y
-			if(!map[pl_sd->bl.m].flag.noreturn && !map[pl_sd->bl.m].flag.nowarp)
+			if(!map[pl_sd->bl.m].flag.noreturn && !map[pl_sd->bl.m].flag.nowarp) 
 				pc_setpos(pl_sd,mapindex_name2id(str),x,y,3);
 		break;
 		}

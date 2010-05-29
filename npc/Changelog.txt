@@ -1,5 +1,9 @@
 Date		Added
 ======
+2010/05/29
+	* Rev. 14313 Updated F_CashPartyCall to use warpparty. Renamed original function to F_CashPartyCall2 and commented out. [L0ne_W0lf]
+	* Fixed an error in the monster race npcs calling a nonexistant OnEnable.
+	* Renamed 'Tabb' in the 13.1 Draco egg daily quest to 'Taab'.
 2010/05/26
 	* Rev. 14308 Added 13.2 daily quest 'Dragon Egg collection.' [L0ne_W0lf]
 2010/05/25

@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
-//= 1.3
+//= 1.4
 //===== Compatible With: =====================================
 //= eAthena SVN (Trunk, r12752+)
 //===== Description: =========================================
@@ -17,6 +17,7 @@
 //= 1.1 Corrected a minor typo. [L0ne_W0lf]
 //= 1.2 Replaced effect numerics with constants. [L0ne_W0lf]
 //= 1.3 Ei'felle now gives Exercise. (Bugreport:4092) [L0ne_W0lf]
+//= 1.4 Fixed call to a non-existant event. [L0ne_W0lf]
 //============================================================
 
 //============================================================
@@ -7752,12 +7753,12 @@ OnInit:
 
 OnEnable:
 	enablenpc "TrapGlobal#race02";
-	donpcevent "starting#race02_1::OnEnable";
-	donpcevent "starting#race02_2::OnEnable";
-	donpcevent "starting#race02_3::OnEnable";
-	donpcevent "starting#race02_4::OnEnable";
-	donpcevent "starting#race02_5::OnEnable";
-	donpcevent "starting#race02_6::OnEnable";
+	enablenpc "starting#race02_1";
+	enablenpc "starting#race02_2";
+	enablenpc "starting#race02_3";
+	enablenpc "starting#race02_4";
+	enablenpc "starting#race02_5";
+	enablenpc "starting#race02_6";
 	//-------------------------------------------------------------
 	// Monster No. 1, Poring
 	//-------------------------------------------------------------

@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
-//= 1.7
+//= 1.7a
 //===== Compatible With: =====================================
 //= eAthena SVN
 //===== Description: =========================================
@@ -27,6 +27,7 @@
 //= 1.5 Added daily quests: Midgard Ore, and Alfheim Perfume.
 //= 1.6 Added the Yggdrasil Dungeon floor 2 puzzle.
 //= 1.7 Added daily quest 'Dragon Egg collection.'
+//= 1.7a Fixed a translation typo. Tabb -> Taab.
 //============================================================ 
 
 // Cat Hand Addition.
@@ -4914,17 +4915,17 @@ mid_camp,146,306,3	script	Pet Breeder#ep13_eden01	982,{
 	}
 	if (ep13_mdrama < 6) {
 		mes "[Pinedel]";
-		mes "Why isn't it working, Tabb?";
+		mes "Why isn't it working, Taab?";
 		mes "That should be working.";
 		next;
-		mes "[Tabb]";
+		mes "[Taab]";
 		mes "That's very dangerous. Do you want to die..?!";
 		next;
 		mes "[Pinedel]";
 		mes "Are you ignoring cute pets??";
 		mes "We've been able to get Pickys and even Zealotus!";
 		next;
-		mes "[Tabb]";
+		mes "[Taab]";
 		mes "No way, even if you ask me...";
 		mes "Hillslion is very adorable...";
 		mes "But you can't.";
@@ -4932,16 +4933,16 @@ mid_camp,146,306,3	script	Pet Breeder#ep13_eden01	982,{
 		mes "[Pinedel]";
 		mes "Then let me know why you object to this.";
 		next;
-		mes "[Tabb]";
+		mes "[Taab]";
 		mes "It's too dangerous. I've trained monsters before.";
 		mes "Hillslions look cute and adorable, but it's not very realistic.";
 		next;
-		mes "[Tabb]";
+		mes "[Taab]";
 		mes "Can't you see that?";
 		mes "I've tried to train them... but I couldn't.";
 		mes "How can we can train them as a cute pet...?";
 		next;
-		mes "[Tabb]";
+		mes "[Taab]";
 		mes "It would definitely try to escape from us...";
 		mes "Then he would become very awful.";
 		mes "I don't agree with this.";
@@ -4956,7 +4957,7 @@ mid_camp,146,306,3	script	Pet Breeder#ep13_eden01	982,{
 	}
 	else {
 		mes "[Pinedel]";
-		mes "Ah, Tabb isn't flexible at all.";
+		mes "Ah, Taab isn't flexible at all.";
 		mes "Hey there! What's up??";
 		next;
 		switch(select("Notice for criminal report:Cute pet investigation.")) {
@@ -5104,11 +5105,11 @@ mid_camp,146,306,3	script	Pet Breeder#ep13_eden01	982,{
 					mes "But I refuse to give up.";
 					mes "I will make it into a cute pet someday.";
 					next;
-					mes "[Tabb]";
+					mes "[Taab]";
 					mes "Would you just give up making exogamous beings into cute pets...";
 					mes " ";
 					mes "[Pinedel]";
-					mes "Tabb doesn't have any guts!";
+					mes "Taab doesn't have any guts!";
 					close;
 				}
 			}
