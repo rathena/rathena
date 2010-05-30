@@ -1,5 +1,11 @@
 Date		Added
 ======
+	* Rev. 14315 Shop update, and added Wanderer pet food maker NPC. [L0ne_W0lf]
+	- Added Trading merchants, (ninja& gunslinger) to Izlude and Alberta.
+	- Made Brasilis shop names unique, and uncommented.
+	- Changed the whip sold in comodo weapon shop. (1956 ->1960)
+	- Added Fire and Silver arrow to Einbroch tool dealer.
+	- Re-added Bill of Birds to Morroc Item Collectors.
 2010/05/29
 	* Rev. 14313 Updated F_CashPartyCall to use warpparty. Renamed original function to F_CashPartyCall2 and commented out. [L0ne_W0lf]
 	* Fixed an error in the monster race npcs calling a nonexistant OnEnable.
