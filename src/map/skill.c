@@ -1948,7 +1948,7 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 			battle_delay_damage(tick, dmg.amotion,bl,src,0,0,0,rdamage,ATK_DEF,0);
 		else
 			status_fix_damage(bl,src,rdamage,0);
-		clif_damage(src,src,tick, dmg.amotion,0,rdamage,1,4,0);
+		clif_damage(src,src,tick, dmg.amotion,0,rdamage,dmg.div_>1?dmg.div_:1,4,0);
 		//Use Reflect Shield to signal this kind of skill trigger. [Skotlex]
 		if( tsd && src != bl )
 			battle_drain(tsd, src, rdamage, rdamage, sstatus->race, is_boss(src));
