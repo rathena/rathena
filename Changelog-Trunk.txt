@@ -3,6 +3,8 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2010/05/31
+	* Rewrote and reorganized checks in @autotrade to check and display most useful information first (bugreport:4253). [Paradox924X]
 2010/05/30
 	* Damaged reflected from skills will now be shown as multiple hits if the skill used was multi-hit. [Paradox924X]
 2010/05/29
