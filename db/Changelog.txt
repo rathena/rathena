@@ -8,6 +8,8 @@
 	1475 Equestrian's Spear:	NEED INFO.
 	13005 Angelic Wing Dagger:	NEED INFO.
 =======================
+2010/05/30
+	* Added a missing newline causing issues. [Paradox924X]
 2010/05/25
 	* Rev. 14306 Added some items from 12.1, 13.1. and 13.2 to item_trade. [L0ne_W0lf]
 	* Added the 24 hour time limit on the quests 2182 and 2185.
