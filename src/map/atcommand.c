@@ -4281,8 +4281,11 @@ int atcommand_mapinfo(const int fd, struct map_session_data* sd, const char* com
 	clif_displaymessage(fd, "------ Map Flags ------");
 	if (map[m_id].flag.town)
 		clif_displaymessage(fd, "Town Map");
-		
-	clif_displaymessage(fd, "Autotrade %s", (battle_config.autotrade_mapflag == map[m_id].flag.autotrade) ? "Enabled" : "Disabled");
+
+	if (battle_config.autotrade_mapflag == map[m_id].flag.autotrade)
+		clif_displaymessage(fd, "Autotrade Enabled");
+	else
+		clif_displaymessage(fd, "Autotrade Disabled");
 	
 	if (map[m_id].flag.battleground)
 		clif_displaymessage(fd, "Battlegrounds ON");
