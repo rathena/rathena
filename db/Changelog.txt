@@ -9,6 +9,7 @@
 	13005 Angelic Wing Dagger:	NEED INFO.
 =======================
 2010/05/31
+	* Rev. 14321 Several updates to the name field in the item_db to follow iRO display names, minus some typos. [L0ne_W0lf]
 	* Rev. 14320 Added a series of new items (commented out) and several missing hats. And there's still more to add. [L0ne_W0lf]
 2010/05/30
 	* Added a missing newline causing issues. [Paradox924X]
