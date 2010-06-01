@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
-//= 1.7a
+//= 1.8
 //===== Compatible With: =====================================
 //= eAthena SVN
 //===== Description: =========================================
@@ -28,6 +28,7 @@
 //= 1.6 Added the Yggdrasil Dungeon floor 2 puzzle.
 //= 1.7 Added daily quest 'Dragon Egg collection.'
 //= 1.7a Fixed a translation typo. Tabb -> Taab.
+//= 1.8 Added a missing " in the GM only NPC.
 //============================================================ 
 
 // Cat Hand Addition.
@@ -6801,7 +6802,7 @@ mid_camp,7,3,0	script	Translator Preparation#1	708,{
 			next;
 			mes "[EP 13 Translator Quest Preparation]";
 			mes "Current report quest's item is "+ ep13_1_edq +" ";
-			mes "Start Quest?;
+			mes "Start Quest?";
 			next;
 			switch(select("Yes:No")) {
 			case 1:

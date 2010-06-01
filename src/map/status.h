@@ -317,6 +317,12 @@ typedef enum sc_type {
 	SC_HELLPOWER = 294,
 	SC_INVINCIBLE, //295
 	SC_INVINCIBLEOFF,
+	SC_MANU_ATK,
+	SC_MANU_DEF,
+	SC_SPL_ATK,
+	SC_SPL_DEF, //300
+	SC_MANU_MATK,
+	SC_SPL_MATK,
 
 	SC_MAX, //Automatically updated max, used in for's to check we are within bounds.
 } sc_type;
@@ -706,13 +712,15 @@ enum si_type {
 	SI_NEUTRALBARRIER_MASTER = 378,
 	SI_STEALTHFIELD = 379,
 	SI_STEALTHFIELD_MASTER = 380,
+*/
 	SI_MANU_ATK = 381, 
 	SI_MANU_DEF = 382, 
 	SI_SPL_ATK = 383, 
 	SI_SPL_DEF = 384, 
-	SI_REPRODUCE = 385,
+//	SI_REPRODUCE = 385,
 	SI_MANU_MATK = 386,
 	SI_SPL_MATK = 387,
+/*
 	SI_STR_SCROLL = 388,
 	SI_INT_SCROLL = 389,
 	SI_LG_REFLECTDAMAGE = 390,

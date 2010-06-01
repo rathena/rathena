@@ -430,6 +430,23 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,struct Damag
 				damage >>= 2; //75% reduction
 		}
 
+		// Compressed code, fixed by map.h [Epoque]
+		if (src->type == BL_MOB) {
+			int i;
+			if (sc->data[SC_MANU_DEF])
+				for (i=0;ARRAYLENGTH(mob_manuk)>i;i++)
+					if (mob_manuk[i]==((TBL_MOB*)src)->class_) {
+						damage -= sc->data[SC_MANU_DEF]->val1*damage/100;
+						break;
+					}
+			if (sc->data[SC_SPL_DEF])
+				for (i=0;ARRAYLENGTH(mob_splendide)>i;i++)
+					if (mob_splendide[i]==((TBL_MOB*)src)->class_) {
+						damage -= sc->data[SC_SPL_DEF]->val1*damage/100;
+						break;
+					}
+		}
+
 		if((sce=sc->data[SC_ARMOR]) && //NPC_DEFENDER
 			sce->val3&flag && sce->val4&flag)
 			damage -= damage*sc->data[SC_ARMOR]->val2/100;
@@ -493,6 +510,28 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,struct Damag
 	{
 		if( sc->data[SC_INVINCIBLE] && !sc->data[SC_INVINCIBLEOFF] )
 			damage += damage * 75 / 100;
+		// [Epoque]
+		if (bl->type == BL_MOB)
+		{
+			int i;
+
+			if ( ((sce=sc->data[SC_MANU_ATK]) && (flag&BF_WEAPON)) ||
+				 ((sce=sc->data[SC_MANU_MATK]) && (flag&BF_MAGIC))
+				)
+				for (i=0;ARRAYLENGTH(mob_manuk)>i;i++)
+					if (((TBL_MOB*)bl)->class_==mob_manuk[i]) {
+						damage += damage*sce->val1/100;
+						break;
+					}
+			if ( ((sce=sc->data[SC_SPL_ATK]) && (flag&BF_WEAPON)) ||
+				 ((sce=sc->data[SC_SPL_MATK]) && (flag&BF_MAGIC))
+				)
+				for (i=0;ARRAYLENGTH(mob_splendide)>i;i++)
+					if (((TBL_MOB*)bl)->class_==mob_splendide[i]) {
+						damage += damage*sce->val1/100;
+						break;
+					}
+		}
 	}
 
 	if (battle_config.pk_mode && sd && bl->type == BL_PC && damage)

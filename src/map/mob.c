@@ -73,6 +73,10 @@ static struct {
 
 #define CLASSCHANGE_BOSS_NUM 21
 
+//Defines the Manuk/Splendide mob groups for the status reductions [Epoque]
+const int mob_manuk[] = { 1986, 1987, 1988, 1989, 1990, 1997, 1998, 1999 };
+const int mob_splendide[] = { 1991, 1992, 1993, 1994, 1995 };
+
 /*==========================================
  * Local prototype declaration   (only required thing)
  *------------------------------------------*/
