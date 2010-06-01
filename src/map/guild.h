@@ -56,7 +56,7 @@ void guild_member_joined(struct map_session_data *sd);
 int guild_member_added(int guild_id,int account_id,int char_id,int flag);
 int guild_leave(struct map_session_data *sd,int guild_id,
 	int account_id,int char_id,const char *mes);
-int guild_member_leaved(int guild_id,int account_id,int char_id,int flag,
+int guild_member_withdraw(int guild_id,int account_id,int char_id,int flag,
 	const char *name,const char *mes);
 int guild_expulsion(struct map_session_data *sd,int guild_id,
 	int account_id,int char_id,const char *mes);

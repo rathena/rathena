@@ -412,7 +412,7 @@ int mapif_party_optionchanged(int fd,struct party *p,int account_id,int flag)
 }
 
 // パーティ脱退通知
-int mapif_party_leaved(int party_id,int account_id, int char_id) {
+int mapif_party_withdraw(int party_id,int account_id, int char_id) {
 	unsigned char buf[16];
 
 	WBUFW(buf,0) = 0x3824;
@@ -608,14 +608,14 @@ int mapif_parse_PartyLeave(int fd, int party_id, int account_id, int char_id)
 	if (i >= MAX_PARTY)
 		return 0; //Member not found?
 
-	mapif_party_leaved(party_id, account_id, char_id);
+	mapif_party_withdraw(party_id, account_id, char_id);
 
 	if (p->party.member[i].leader){
 		p->party.member[i].account_id = 0;
 		for (j = 0; j < MAX_PARTY; j++) {
 			if (!p->party.member[j].account_id)
 				continue;
-			mapif_party_leaved(party_id, p->party.member[j].account_id, p->party.member[j].char_id);
+			mapif_party_withdraw(party_id, p->party.member[j].account_id, p->party.member[j].char_id);
 			p->party.member[j].account_id = 0;
 		}
 		//Party gets deleted on the check_empty call below.

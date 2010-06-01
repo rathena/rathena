@@ -516,7 +516,7 @@ int party_leave(struct map_session_data *sd)
 }
 
 /// Invoked (from char-server) when a party member leaves the party.
-int party_member_leaved(int party_id, int account_id, int char_id)
+int party_member_withdraw(int party_id, int account_id, int char_id)
 {
 	struct map_session_data* sd = map_id2sd(account_id);
 	struct party_data* p = party_search(party_id);
@@ -527,7 +527,7 @@ int party_member_leaved(int party_id, int account_id, int char_id)
 		ARR_FIND( 0, MAX_PARTY, i, p->party.member[i].account_id == account_id && p->party.member[i].char_id == char_id );
 		if( i < MAX_PARTY )
 		{
-			clif_party_leaved(p,sd,account_id,p->party.member[i].name,0x00);
+			clif_party_withdraw(p,sd,account_id,p->party.member[i].name,0x00);
 			memset(&p->party.member[i], 0, sizeof(p->party.member[0]));
 			memset(&p->data[i], 0, sizeof(p->data[0]));
 			p->party.count--;
@@ -567,7 +567,7 @@ int party_broken(int party_id)
 	{
 		if( p->data[i].sd!=NULL )
 		{
-			clif_party_leaved(p,p->data[i].sd,p->party.member[i].account_id,p->party.member[i].name,0x10);
+			clif_party_withdraw(p,p->data[i].sd,p->party.member[i].account_id,p->party.member[i].name,0x10);
 			p->data[i].sd->status.party_id=0;
 		}
 	}

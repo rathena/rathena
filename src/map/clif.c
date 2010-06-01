@@ -5850,7 +5850,7 @@ int clif_party_option(struct party_data *p,struct map_session_data *sd,int flag)
 /*==========================================
  * パーティ脱退（脱退前に呼ぶこと）
  *------------------------------------------*/
-int clif_party_leaved(struct party_data* p, struct map_session_data* sd, int account_id, const char* name, int flag)
+int clif_party_withdraw(struct party_data* p, struct map_session_data* sd, int account_id, const char* name, int flag)
 {
 	unsigned char buf[64];
 	int i;

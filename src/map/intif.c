@@ -1036,11 +1036,11 @@ int intif_parse_PartyOptionChanged(int fd)
 	return 0;
 }
 // パーティ脱退通知
-int intif_parse_PartyMemberLeaved(int fd)
+int intif_parse_PartyMemberWithdraw(int fd)
 {
 	if(battle_config.etc_log)
-		ShowInfo("intif: party member leaved: Party(%d), Account(%d), Char(%d)\n",RFIFOL(fd,2),RFIFOL(fd,6),RFIFOL(fd,10));
-	party_member_leaved(RFIFOL(fd,2),RFIFOL(fd,6),RFIFOL(fd,10));
+		ShowInfo("intif: party member withdraw: Party(%d), Account(%d), Char(%d)\n",RFIFOL(fd,2),RFIFOL(fd,6),RFIFOL(fd,10));
+	party_member_withdraw(RFIFOL(fd,2),RFIFOL(fd,6),RFIFOL(fd,10));
 	return 0;
 }
 // パーティ解散通知
@@ -1091,9 +1091,9 @@ int intif_parse_GuildMemberAdded(int fd)
 	return 0;
 }
 // ギルドメンバ脱退/追放通知
-int intif_parse_GuildMemberLeaved(int fd)
+int intif_parse_GuildMemberWithdraw(int fd)
 {
-	guild_member_leaved(RFIFOL(fd,2),RFIFOL(fd,6),RFIFOL(fd,10),RFIFOB(fd,14),(char *)RFIFOP(fd,55),(char *)RFIFOP(fd,15));
+	guild_member_withdraw(RFIFOL(fd,2),RFIFOL(fd,6),RFIFOL(fd,10),RFIFOB(fd,14),(char *)RFIFOP(fd,55),(char *)RFIFOP(fd,15));
 	return 0;
 }
 
@@ -2029,14 +2029,14 @@ int intif_parse(int fd)
 	case 0x3821:	intif_parse_PartyInfo(fd); break;
 	case 0x3822:	intif_parse_PartyMemberAdded(fd); break;
 	case 0x3823:	intif_parse_PartyOptionChanged(fd); break;
-	case 0x3824:	intif_parse_PartyMemberLeaved(fd); break;
+	case 0x3824:	intif_parse_PartyMemberWithdraw(fd); break;
 	case 0x3825:	intif_parse_PartyMove(fd); break;
 	case 0x3826:	intif_parse_PartyBroken(fd); break;
 	case 0x3827:	intif_parse_PartyMessage(fd); break;
 	case 0x3830:	intif_parse_GuildCreated(fd); break;
 	case 0x3831:	intif_parse_GuildInfo(fd); break;
 	case 0x3832:	intif_parse_GuildMemberAdded(fd); break;
-	case 0x3834:	intif_parse_GuildMemberLeaved(fd); break;
+	case 0x3834:	intif_parse_GuildMemberWithdraw(fd); break;
 	case 0x3835:	intif_parse_GuildMemberInfoShort(fd); break;
 	case 0x3836:	intif_parse_GuildBroken(fd); break;
 	case 0x3837:	intif_parse_GuildMessage(fd); break;

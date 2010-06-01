@@ -844,7 +844,7 @@ int guild_expulsion(struct map_session_data* sd, int guild_id, int account_id, i
 	return 0;
 }
 
-int guild_member_leaved(int guild_id, int account_id, int char_id, int flag, const char* name, const char* mes)
+int guild_member_withdraw(int guild_id, int account_id, int char_id, int flag, const char* name, const char* mes)
 {
 	int i;
 	struct guild* g = guild_search(guild_id);

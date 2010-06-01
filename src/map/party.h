@@ -46,7 +46,7 @@ void party_member_joined(struct map_session_data *sd);
 int party_member_added(int party_id,int account_id,int char_id,int flag);
 int party_leave(struct map_session_data *sd);
 int party_removemember(struct map_session_data *sd,int account_id,char *name);
-int party_member_leaved(int party_id,int account_id,int char_id);
+int party_member_withdraw(int party_id,int account_id,int char_id);
 void party_reply_invite(struct map_session_data *sd,int account_id,int flag);
 int party_recv_noinfo(int party_id);
 int party_recv_info(struct party *sp);

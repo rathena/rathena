@@ -365,7 +365,7 @@ int mapif_party_optionchanged(int fd,struct party *p, int account_id, int flag) 
 }
 
 // パ?ティ?退通知
-int mapif_party_leaved(int party_id,int account_id, int char_id) {
+int mapif_party_withdraw(int party_id,int account_id, int char_id) {
 	unsigned char buf[16];
 
 	WBUFW(buf,0) = 0x3824;
@@ -564,7 +564,7 @@ int mapif_parse_PartyLeave(int fd, int party_id, int account_id, int char_id)
 		if(p->party.member[i].account_id == account_id &&
 			p->party.member[i].char_id == char_id)
 		{
-			mapif_party_leaved(party_id, account_id, char_id);
+			mapif_party_withdraw(party_id, account_id, char_id);
 			lv = p->party.member[i].lv;
 			if(p->party.member[i].online) p->party.count--;
 			memset(&p->party.member[i], 0, sizeof(struct party_member));

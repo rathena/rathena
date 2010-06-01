@@ -714,7 +714,7 @@ int mapif_guild_memberadded(int fd, int guild_id, int account_id, int char_id, i
 }
 
 // ’E‘Þ/’Ç•ú’Ê’m
-int mapif_guild_leaved(int guild_id, int account_id, int char_id, int flag, const char *name, const char *mes)
+int mapif_guild_withdraw(int guild_id, int account_id, int char_id, int flag, const char *name, const char *mes)
 {
 	unsigned char buf[79];
 
@@ -1096,7 +1096,7 @@ int mapif_parse_GuildLeave(int fd, int guild_id, int account_id, int char_id, in
 		safestrncpy(g->expulsion[j].mes, mes, 40);
 	}
 
-	mapif_guild_leaved(guild_id, account_id, char_id, flag, g->member[i].name, mes);
+	mapif_guild_withdraw(guild_id, account_id, char_id, flag, g->member[i].name, mes);
 
 	memset(&g->member[i], 0, sizeof(struct guild_member));
 

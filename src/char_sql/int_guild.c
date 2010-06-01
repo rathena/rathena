@@ -995,7 +995,7 @@ int mapif_guild_memberadded(int fd,int guild_id,int account_id,int char_id,int f
 }
 
 // ACK member leave
-int mapif_guild_leaved(int guild_id,int account_id,int char_id,int flag, const char *name, const char *mes)
+int mapif_guild_withdraw(int guild_id,int account_id,int char_id,int flag, const char *name, const char *mes)
 {
 	unsigned char buf[55+NAME_LENGTH];
 	WBUFW(buf, 0)=0x3834;
@@ -1006,7 +1006,7 @@ int mapif_guild_leaved(int guild_id,int account_id,int char_id,int flag, const c
 	memcpy(WBUFP(buf,15),mes,40);
 	memcpy(WBUFP(buf,55),name,NAME_LENGTH);
 	mapif_sendall(buf,55+NAME_LENGTH);
-	ShowInfo("int_guild: guild leaved (%d - %d: %s - %s)\n",guild_id,account_id,name,mes);
+	ShowInfo("int_guild: guild withdraw (%d - %d: %s - %s)\n",guild_id,account_id,name,mes);
 	return 0;
 }
 
@@ -1376,7 +1376,7 @@ int mapif_parse_GuildLeave(int fd, int guild_id, int account_id, int char_id, in
 		// Unknown guild, just update the player
 		if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `guild_id`='0' WHERE `account_id`='%d' AND `char_id`='%d'", char_db, account_id, char_id) )
 			Sql_ShowDebug(sql_handle);
-		// mapif_guild_leaved(guild_id,account_id,char_id,flag,g->member[i].name,mes);
+		// mapif_guild_withdraw(guild_id,account_id,char_id,flag,g->member[i].name,mes);
 		return 0;
 	}
 
@@ -1405,7 +1405,7 @@ int mapif_parse_GuildLeave(int fd, int guild_id, int account_id, int char_id, in
 		safestrncpy(g->expulsion[j].mes, mes, 40);
 	}
 
-	mapif_guild_leaved(guild_id,account_id,char_id,flag,g->member[i].name,mes);
+	mapif_guild_withdraw(guild_id,account_id,char_id,flag,g->member[i].name,mes);
 	inter_guild_removemember_tosql(g->member[i].account_id,g->member[i].char_id);
 
 	memset(&g->member[i],0,sizeof(struct guild_member));
