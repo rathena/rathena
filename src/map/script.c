@@ -341,7 +341,7 @@ enum {
 	MF_AUTOTRADE,
 	MF_ALLOWKS,
 	MF_MONSTER_NOTELEPORT,
-	MF_PVPNOCALCRANK,	//50
+	MF_PVP_NOCALCRANK,	//50
 	MF_BATTLEGROUND
 };
 
@@ -9177,7 +9177,7 @@ BUILDIN_FUNC(getmapflag)
 			case MF_AUTOTRADE:			script_pushint(st,map[m].flag.autotrade); break;
 			case MF_ALLOWKS:			script_pushint(st,map[m].flag.allowks); break;
 			case MF_MONSTER_NOTELEPORT:	script_pushint(st,map[m].flag.monster_noteleport); break;
-			case MF_PVPNOCALCRANK:		script_pushint(st,map[m].flag.pvpnocalcrank); break;
+			case MF_PVP_NOCALCRANK:		script_pushint(st,map[m].flag.pvp_nocalcrank); break;
 			case MF_BATTLEGROUND:		script_pushint(st,map[m].flag.battleground); break;
 		}
 	}
@@ -9247,8 +9247,8 @@ BUILDIN_FUNC(setmapflag)
 			case MF_AUTOTRADE:			map[m].flag.autotrade=1; break;
 			case MF_ALLOWKS:			map[m].flag.allowks=1; break;
 			case MF_MONSTER_NOTELEPORT:	map[m].flag.monster_noteleport=1; break;
-			case MF_PVPNOCALCRANK:		map[m].flag.pvpnocalcrank=1; break;
-			case MF_BATTLEGROUND:		map[m].flag.battleground = (!val || atoi(val) < - || atoi(val) > 2) ? 1 : atoi(val); break;
+			case MF_PVP_NOCALCRANK:		map[m].flag.pvp_nocalcrank=1; break;
+			case MF_BATTLEGROUND:		map[m].flag.battleground = (!val || atoi(val) < 0 || atoi(val) > 2) ? 1 : atoi(val); break;
 		}
 	}
 
@@ -9314,7 +9314,7 @@ BUILDIN_FUNC(removemapflag)
 			case MF_AUTOTRADE:			map[m].flag.autotrade=0; break;
 			case MF_ALLOWKS:			map[m].flag.allowks=0; break;
 			case MF_MONSTER_NOTELEPORT:	map[m].flag.monster_noteleport=0; break;
-			case MF_PVPNOCALCRANK:		map[m].flag.pvpnocalcrank=0; break;
+			case MF_PVP_NOCALCRANK:		map[m].flag.pvp_nocalcrank=0; break;
 			case MF_BATTLEGROUND:		map[m].flag.battleground=0; break;
 		}
 	}

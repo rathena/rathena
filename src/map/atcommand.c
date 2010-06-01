@@ -4378,7 +4378,7 @@ int atcommand_mapinfo(const int fd, struct map_session_data* sd, const char* com
 		strcat(atcmd_output, "NoSkill | ");
 	if (map[m_id].flag.noicewall)
 		strcat(atcmd_output, "NoIcewall | ");
-	if (map[m_id].allowks)
+	if (map[m_id].flag.allowks)
 		strcat(atcmd_output, "AllowKS | ");
 	clif_displaymessage(fd, atcmd_output);
 
