@@ -5974,50 +5974,49 @@ void clif_hpmeter_single(int fd, int id, unsigned int hp, unsigned int maxhp)
 }
 
 /*==========================================
+ *
+ *------------------------------------------*/
+int clif_hpmeter_sub(struct block_list *bl, va_list ap)
+{
+	struct map_session_data *sd, *tsd;
+	int level;
+
+	sd = va_arg(ap, struct map_session_data *);
+	tsd = (TBL_PC *)bl;
+
+	nullpo_retr(0, sd);
+	nullpo_retr(0, tsd);
+
+	if( !tsd->fd )
+		return 0;
+
+	if( (level = pc_isGM(tsd)) >= battle_config.disp_hpmeter && level >= pc_isGM(sd) )
+	{
+		WFIFOHEAD(tsd->fd,packet_len(0x106));
+		WFIFOW(tsd->fd,0) = 0x106;
+		WFIFOL(tsd->fd,2) = sd->status.account_id;
+		if( sd->battle_status.max_hp > SHRT_MAX )
+		{ //To correctly display the %hp bar. [Skotlex]
+			WFIFOW(tsd->fd,6) = sd->battle_status.hp/(sd->battle_status.max_hp/100);
+			WFIFOW(tsd->fd,8) = 100;
+		} else {
+			WFIFOW(tsd->fd,6) = sd->battle_status.hp;
+			WFIFOW(tsd->fd,8) = sd->battle_status.max_hp;
+		}
+		WFIFOSET(tsd->fd,packet_len(0x106));
+	}
+	return 0;
+}
+
+/*==========================================
  * GM‚ÖêŠ‚ÆHP’Ê’m
  *------------------------------------------*/
 int clif_hpmeter(struct map_session_data *sd)
 {
-	struct map_session_data *sd2;
-	unsigned char buf[16];
-	int i, x0, y0, x1, y1;
-	int level;
-
 	nullpo_retr(0, sd);
 
-	x0 = sd->bl.x - AREA_SIZE;
-	y0 = sd->bl.y - AREA_SIZE;
-	x1 = sd->bl.x + AREA_SIZE;
-	y1 = sd->bl.y + AREA_SIZE;
-
-	WBUFW(buf,0) = 0x106;
-	WBUFL(buf,2) = sd->status.account_id;
-	if( sd->battle_status.max_hp > SHRT_MAX )
-	{ //To correctly display the %hp bar. [Skotlex]
-		WBUFW(buf,6) = sd->battle_status.hp/(sd->battle_status.max_hp/100);
-		WBUFW(buf,8) = 100;
-	}
-	else
-	{
-		WBUFW(buf,6) = sd->battle_status.hp;
-		WBUFW(buf,8) = sd->battle_status.max_hp;
-	}
-
-	//TODO: replace with map_foreachinarea?
-	for( i = 0; i < fd_max; i++ )
-	{
-		if( session[i] && session[i]->func_parse == clif_parse && (sd2 = (struct map_session_data*)session[i]->session_data) && sd != sd2 && sd2->state.active )
-		{
-			if( sd2->bl.m != sd->bl.m || sd2->bl.x < x0 || sd2->bl.y < y0 || sd2->bl.x > x1 || sd2->bl.y > y1 )
-				continue; // Not in the Visual Area
-			if( battle_config.disp_hpmeter && (level = pc_isGM(sd2)) >= battle_config.disp_hpmeter && level >= pc_isGM(sd) )
-			{
-				WFIFOHEAD(i,packet_len(0x106));
-				memcpy(WFIFOP(i,0),buf,packet_len(0x106));
-				WFIFOSET(i,packet_len(0x106));
-			}
-		}
-	}
+	if( battle_config.disp_hpmeter )
+		map_foreachinarea(clif_hpmeter_sub, sd->bl.m, sd->bl.x-AREA_SIZE, sd->bl.y-AREA_SIZE, sd->bl.x+AREA_SIZE, sd->bl.y+AREA_SIZE, BL_PC, sd);
 
 	return 0;
 }
