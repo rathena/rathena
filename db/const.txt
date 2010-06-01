@@ -224,6 +224,12 @@ mf_loadevent 42
 mf_nochat	43
 mf_noexppenalty	44
 mf_guildlock	45
+mf_town	46
+mf_autotrade	47
+mf_allowks	48
+mf_monster_noteleport	49
+mf_pvpnocalcrank	50
+mf_battleground	51
 
 cell_walkable	0
 cell_shootable	1

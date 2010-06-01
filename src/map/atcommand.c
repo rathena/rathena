@@ -4279,6 +4279,14 @@ int atcommand_mapinfo(const int fd, struct map_session_data* sd, const char* com
 	sprintf(atcmd_output, "Map Name: %s | Players In Map: %d | NPCs In Map: %d | Chats In Map: %d", mapname, map[m_id].users, map[m_id].npc_num, chat_num);
 	clif_displaymessage(fd, atcmd_output);
 	clif_displaymessage(fd, "------ Map Flags ------");
+	if (map[m_id].flag.town)
+		clif_displaymessage(fd, "Town Map");
+		
+	clif_displaymessage(fd, "Autotrade %s", (battle_config.autotrade_mapflag == map[m_id].flag.autotrade) ? "Enabled" : "Disabled");
+	
+	if (map[m_id].flag.battleground)
+		clif_displaymessage(fd, "Battlegrounds ON");
+		
 	strcpy(atcmd_output,"PvP Flags: ");
 	if (map[m_id].flag.pvp)
 		strcat(atcmd_output, "Pvp ON | ");
@@ -4370,7 +4378,8 @@ int atcommand_mapinfo(const int fd, struct map_session_data* sd, const char* com
 		strcat(atcmd_output, "NoSkill | ");
 	if (map[m_id].flag.noicewall)
 		strcat(atcmd_output, "NoIcewall | ");
-		
+	if (map[m_id].allowks)
+		strcat(atcmd_output, "AllowKS | ");
 	clif_displaymessage(fd, atcmd_output);
 
 	strcpy(atcmd_output,"Other Flags: ");
@@ -4389,7 +4398,6 @@ int atcommand_mapinfo(const int fd, struct map_session_data* sd, const char* com
 	if (map[m_id].flag.guildlock)
 		strcat(atcmd_output, "GuildLock | ");
 	clif_displaymessage(fd, atcmd_output);
-
 
 	switch (list) {
 	case 0:
