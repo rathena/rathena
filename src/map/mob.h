@@ -39,8 +39,8 @@
 #define DEFAULT_ENEMY_TYPE(md) (md->special_state.ai?BL_CHAR:BL_PC|BL_HOM|BL_MER)
 
 //Externals for the status effects. [Epoque]
-extern const int mob_manuk[];
-extern const int mob_splendide[];
+extern const int mob_manuk[8];
+extern const int mob_splendide[5];
 
 //Mob skill states.
 enum MobSkillState {

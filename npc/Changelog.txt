@@ -1,6 +1,7 @@
 Date		Added
 ======
 2010/06/01
+	* Rev. 14329 Actually added Manul/Splendide shop files from r14327. [L0ne_W0lf]
 	* Rev. 14327 Added Splendide and Manuk merchants. [L0ne_W0lf]
 2010/05/30
 	* Rev. 14315 Shop update, and added Wanderer pet food maker NPC. [L0ne_W0lf]

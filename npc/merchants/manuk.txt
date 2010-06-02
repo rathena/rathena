@@ -1,0 +1,117 @@
+//===== eAthena Script =======================================
+//= Manuk Merchant
+//===== By: ==================================================
+//= eAthena dev team
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= eAthena SVN
+//===== Description: =========================================
+//= [Aegis Conversion]
+//= Manuk coin redemption NPC.
+//===== Additional Comments: =================================
+//= 1.0 First version 
+//============================================================
+
+man_in01,286,16,1	script	Merchant of Manuk	454,{
+	if ((isequipped(2782) == 1) && (ep13_2_rhea == 100)) {
+		set .@anrp_test,1201;
+		if (anrp_test == 1) {
+			mes "[Merchant of Manuk]";
+			mes "It looks like you're carrying too many things.";
+			mes "Why not put some of your items in storage and come back?";
+			close;
+		}
+		mes "[Merchant of Manuk]";
+		mes "Hello.";
+		mes "What are you looking for?";
+		next;
+		switch(select("View item description:Manuk's Opportunity:Manuk's Courage:Manuk's Faith:Cancel")) {
+		case 1:
+			mes "[Merchant of Manuk]";
+			mes "Here are the item descriptions.";
+			close2;
+			ReadBook 11019,1;
+			end;
+		case 2:
+			mes "[Merchant of Manuk]";
+			mes "I can sell you 3 Manuk's Opportunity for^3131FF 1 coin^000000";
+			next;
+			switch(select("Purchase:Do not purchase.")) {
+			case 1:
+				if (countitem(6080) > 0) {
+					mes "[Merchant of Manuk]";
+					mes "Thank you for coming.";
+					delitem 6080,1; //Manuk_Coin
+					getitem 12342,3; //Manuk's_Opportunity
+					close;
+				}
+				else {
+					mes "[Merchant of Manuk]";
+					mes "You don't have enough coins.";
+					close;
+				}
+			case 2:
+				mes "[Merchant of Manuk]";
+				mes "Come again if you change your mind.";
+				close;
+			}
+		case 3:
+			mes "[Merchant of Manuk]";
+			mes "I can sell you 3 Manuk's Courage for^3131FF 1 coin^000000";
+			next;
+			switch(select("Purchase:Do not purchase.")) {
+			case 1:
+				if (countitem(6080) > 0) {
+					mes "[Merchant of Manuk]";
+					mes "Thank you for coming.";
+					delitem 6080,1; //Manuk_Coin
+					getitem 12343,3; //Manuk's_Courage
+					close;
+				}
+				else {
+					mes "[Merchant of Manuk]";
+					mes "You don't have enough coins.";
+					close;
+				}
+			case 2:
+				mes "[Merchant of Manuk]";
+				mes "Come again if you change your mind.";
+				close;
+			}
+		case 4:
+			mes "[Merchant of Manuk]";
+			mes "I can sell you 3 Manuk's Faith for^3131FF 1 coin^000000";
+			next;
+			switch(select("Purchase:Do not purchase.")) {
+			case 1:
+				if (countitem(6080) > 0) {
+					mes "[Merchant of Manuk]";
+					mes "Thank you for coming.";
+					delitem 6080,1; //Manuk_Coin
+					getitem 12348,3; //Manuk's_Faith
+					close;
+				}
+				else {
+					mes "[Merchant of Manuk]";
+					mes "You don't have enough coins.";
+					close;
+				}
+			case 2:
+				mes "[Merchant of Manuk]";
+				mes "Come again if you change your mind.";
+				close;
+			}
+		case 5:
+			mes "[Merchant of Manuk]";
+			mes "Come again if you change your mind.";
+			close;
+		}
+	}
+	else {
+		mes "[Merchant of Manuk]";
+		mes "Rtt od d";
+		mes "Qwo hd is d irr";
+		close;
+	}
+}

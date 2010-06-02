@@ -1,0 +1,117 @@
+//===== eAthena Script =======================================
+//= Splendide Merchant
+//===== By: ==================================================
+//= eAthena dev team
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= eAthena SVN
+//===== Description: =========================================
+//= [Aegis Conversion]
+//= Splendide coin redemption NPC.
+//===== Additional Comments: =================================
+//= 1.0 First version 
+//============================================================
+
+spl_in01,110,326,5	script	Merchant of Splendide	439,{
+	if ((isequipped(2782) == 1) && (ep13_2_rhea == 100)) {
+		set .@anrp_test,1201;
+		if (anrp_test == 1) {
+			mes "[Merchant of Splendide]";
+			mes "It looks like you're carrying too many things.";
+			mes "Why not put some of your items in storage and come back?";
+			close;
+		}
+		mes "[Merchant of Splendide]";
+		mes "Hello.";
+		mes "What are you looking for?";
+		next;
+		switch(select("View item description:Buy Pinguicula's fruit Jam:Buy Luciola's Honey Jam:Buy Cornus' Tears:Do nothing")) {
+		case 1:
+			mes "[Merchant of Splendide]";
+			mes "Would you like to see the item description?";
+			close2;
+			ReadBook 11018,1;
+			end;
+		case 2:
+			mes "[Merchant of Splendide]";
+			mes "I can sell you 3 Pinguicula's fruit Jam for^3131FF 1 coin^000000";
+			next;
+			switch(select("Purchase:Do not purchase.")) {
+			case 1:
+				if (countitem(6081) > 0) {
+					mes "[Merchant of Splendide]";
+					mes "Thank you for coming.";
+					delitem 6081,1; //Splendide_Coin
+					getitem 12344,3; //Pinguicula's_fruit_Jam
+					close;
+				}
+				else {
+					mes "[Merchant of Splendide]";
+					mes "You don't have enough coins.";
+					close;
+				}
+			case 2:
+				mes "[Merchant of Splendide]";
+				mes "Come again if you change your mind.";
+				close;
+			}
+		case 3:
+			mes "[Merchant of Splendide]";
+			mes "I can sell you 3 Luciola's Honey Jam for^3131FF 1 coin^000000";
+			next;
+			switch(select("Purchase:Do not purchase.")) {
+			case 1:
+				if (countitem(6081) > 0) {
+					mes "[Merchant of Splendide]";
+					mes "Thank you for coming.";
+					delitem 6081,1; //Splendide_Coin
+					getitem 12345,3; //Luciola's_Honey_Jam
+					close;
+				}
+				else {
+					mes "[Merchant of Splendide]";
+					mes "You don't have enough coins.";
+					close;
+				}
+			case 2:
+				mes "[Merchant of Splendide]";
+				mes "Come again if you change your mind.";
+				close;
+			}
+		case 4:
+			mes "[Merchant of Splendide]";
+			mes "I can sell you 3 Cornus' Tears for^3131FF 1 coin^000000";
+			next;
+			switch(select("Purchase:Do not purchase.")) {
+			case 1:
+				if (countitem(6081) > 0) {
+					mes "[Merchant of Splendide]";
+					mes "Thank you for coming.";
+					delitem 6081,1; //Splendide_Coin
+					getitem 12349,3; //Cornus'_Tears
+					close;
+				}
+				else {
+					mes "[Merchant of Splendide]";
+					mes "You don't have enough coins.";
+					close;
+				}
+			case 2:
+				mes "[Merchant of Splendide]";
+				mes "Come again if you change your mind.";
+				close;
+			}
+		case 5:
+			mes "[Merchant of Splendide]";
+			mes "Come again if you change your mind.";
+			close;
+		}
+	}
+	else {
+		mes "[Merchant of Splendide]";
+		mes "BurWehAla";
+		mes "tasnarAndu Ie Ru";
+		close;
+	}
+}
