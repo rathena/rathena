@@ -2591,7 +2591,7 @@
 5428,Bread_Bag1,RWC Anniversary Bread Envelope,5,,,100,,0,,0,0xFFFFFFFF,7,2,769,,0,1,429,{ bonus2 bSubRace,RC_DemiHuman,12; },{},{}
 //5429,Bogy_Cap,Bogy Cap,5,,,100,,2,,1,0xFFFFFFFF,7,2,256,,0,1,430,{},{},{}
 5430,Sacred_Torch_Coronet,Torch Cap,5,,,250,,3,,0,0xFFFFFFFF,7,2,256,,0,0,431,{ bonus2 bSubEle,Ele_Fire,20; skill "MG_FIREBALL",5; },{},{}
-5431,Chicken_Hat,Chicken Hat,5,,,100,,0,,0,0xFFFFFFFF,7,2,256,,30,0,432,{ bonus bAspdRate,-10; },{},{}
+5431,Chicken_Hat,Chicken Hat,5,,,100,,0,,0,0xFFFFFFFF,7,2,256,,30,0,432,{ bonus3 bAutoSpell,"MC_LOUD",1,30; bonus bAspdRate,5; },{},{}
 //5432,Brazil_Baseball_Cap,bRO 4th Anniversary Hat,5,,,100,,0,,0,0xFFFFFFFF,7,2,256,,0,0,433,{ bonus bAllStats,4; },{},{}
 //5433,Golden_Wreath,Golden Laurel,5,,,100,,0,,0,0xFFFFFFFF,7,2,256,,0,0,434,{},{},{}
 5434,Coke_Hat,Coca Cola Can Hat,5,,,100,,2,,1,0xFFFFFFFF,7,2,256,,0,1,435,{},{},{}

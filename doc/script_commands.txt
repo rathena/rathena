@@ -4710,9 +4710,9 @@ The disguise lasts until 'undisguise' is issued or the player logs out.
 
 Example:
 
-disquise 1002; //Yay! You're a Poring!!!
+disguise 1002; //Yay! You're a Poring!!!
 next;
-undisquise; //Yay!!!! You're a human again!!
+undisguise; //Yay!!!! You're a human again!!
 
 ---------------------------------------
 \\
