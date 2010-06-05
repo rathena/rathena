@@ -8,6 +8,8 @@
 	1475 Equestrian's Spear:	NEED INFO.
 	13005 Angelic Wing Dagger:	NEED INFO.
 =======================
+2010/06/05
+	* Rev. 14331 Implemented some new items, most 13.2 equipment. [L0ne_W0lf]
 2010/06/01
 	* Rev. 14327 Implemented Manuk and Splendide consumable items. [L0ne_W0lf]
 	* Rev. 14325 Fixed Dark Shadow having Nydhoggr's Shadow's MVP exp reward. (Bugreport:4247) [L0ne_W0lf]

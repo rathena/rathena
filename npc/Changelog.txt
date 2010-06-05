@@ -1,5 +1,7 @@
 Date		Added
 ======
+2010/06/05
+	* Rev. 14331 Corrected Brasilis Fruit Merchant. (bugreport:4278) [L0ne_W0lf]
 2010/06/01
 	* Rev. 14330 Actually applied the right update to the comodo weapon shop. [L0ne_W0lf]
 	* Rev. 14329 Actually added Manuk/Splendide shop files from r14327. [L0ne_W0lf]
