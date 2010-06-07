@@ -8,6 +8,12 @@
 	1475 Equestrian's Spear:	NEED INFO.
 	13005 Angelic Wing Dagger:	NEED INFO.
 =======================
+2010/06/07
+	* Rev. 14332 Item database update! (Again!) [L0ne_W0lf]
+	- Changed a lot of bonuses on headgears and fixed rates of procs.
+	- Added some status effects to some newer consumable items.
+	- Added new a mob group '6', 'Ninja class' monsters into mob_race_db2.
+	- Changed long running typo 'BA_FROSTJOKE' in skill_db to 'BA_FTOSTJOKER'.
 2010/06/05
 	* Rev. 14331 Implemented some new items, most 13.2 equipment. [L0ne_W0lf]
 2010/06/01

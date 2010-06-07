@@ -359,7 +359,7 @@
 315,0,0,0,0,0,0,10,0,no,0,0,0,weapon,0,		BA_MUSICALLESSON,Music Lessons
 316,9,6,1,-1,0,0,5,1,no,0,0,0,weapon,0,		BA_MUSICALSTRIKE,Melody Strike
 317,0,8,4,0,0x41,0,5,1,no,0,0x20,0,misc,0,	BA_DISSONANCE,Unchained Serenade
-318,0,6,4,0,0x3,-1,5,1,no,0,0,0,misc,0,		BA_FROSTJOKE,Unbarring Octave
+318,0,6,4,0,0x3,-1,5,1,no,0,0,0,misc,0,		BA_FROSTJOKER,Unbarring Octave
 319,0,6,4,0,0x1,0,10,1,no,0,0x20,0,misc,0,	BA_WHISTLE,Perfect Tablature
 320,0,6,4,0,0x1,0,10,1,no,0,0x20,0,misc,0,	BA_ASSASSINCROSS,Impressive Riff
 321,0,6,4,0,0x1,0,10,1,no,0,0x20,0,misc,0,	BA_POEMBRAGI,Magic Strings
