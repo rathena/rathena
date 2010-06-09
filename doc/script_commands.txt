@@ -6035,6 +6035,25 @@ You can add your own effects this way, naturally.
 
 ---------------------------------------
 
+*playBGM "<BGM filename>"
+*playBGMall "<BGM filename>",{,"<map name>"}{,<x0>,<y0>,<x1>,<y1>}
+
+These two commands will play a Background Music to either the invoking character 
+only ('playBGM') or multiple characters ('playBGMall'). If the running 
+code does not have an object ID (a 'floating' npc) or is not running from an NPC 
+object at all (an item script) the sound will be centered on the character who's 
+RID got attached to the script, if any. If it does, it will be centered on that 
+object. (an NPC sprite)
+
+BGM filename is the filename in /BGM/ folder. It has to be in .mp3 extension.
+
+It's not required to specify the extension inside the script.
+If coordinates are omitted, BGM will be broadcasted on the entire map.
+
+You can add your own BGMs this way, naturally.
+
+---------------------------------------
+
 *pvpon "<map name>";
 *pvpoff "<map name>";
 

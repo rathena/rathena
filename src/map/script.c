@@ -10636,6 +10636,71 @@ BUILDIN_FUNC(misceffect)
 	return 0;
 }
 /*==========================================
+ * Play a BGM on a single client [Rikter/Yommy]
+ *------------------------------------------*/
+BUILDIN_FUNC(playBGM)
+{
+	TBL_PC* sd = script_rid2sd(st);
+	const char* name = script_getstr(st,2);
+
+	if(sd)
+	{
+		if(!st->rid)
+			clif_playBGM(sd,map_id2bl(st->oid),name);
+		else
+			clif_playBGM(sd,&sd->bl,name);
+	}
+
+	return 0;
+}
+
+int playBGM_sub(struct block_list* bl,va_list ap)
+{
+	char* name = va_arg(ap,char*);
+
+	clif_playBGM((TBL_PC *)bl, bl, name);
+
+    return 0;
+}
+
+/*==========================================
+ * Play a BGM on multiple client [Rikter/Yommy]
+ *------------------------------------------*/
+BUILDIN_FUNC(playBGMall)
+{
+	struct block_list* bl;
+	const char* name;
+
+	bl = (st->rid) ? &(script_rid2sd(st)->bl) : map_id2bl(st->oid);
+	if (!bl)
+		return 0;
+
+	name = script_getstr(st,2);
+
+	if(script_hasdata(st,7))
+	{	// specified part of map
+		const char* map = script_getstr(st,3);
+		int x0 = script_getnum(st,4);
+		int y0 = script_getnum(st,5);
+		int x1 = script_getnum(st,6);
+		int y1 = script_getnum(st,7);
+		map_foreachinarea(playBGM_sub, map_mapname2mapid(map), x0, y0, x1, y1, BL_PC, name);
+	}
+	else
+	if(!script_hasdata(st,7))
+	{	// entire map
+		const char* map = script_getstr(st,3);
+		map_foreachinmap(playBGM_sub, map_mapname2mapid(map), BL_PC, name);
+	}
+	else
+	{
+		ShowError("buildin_playBGMall: insufficient arguments for specific area broadcast.\n");
+	}
+
+	return 0;
+}
+
+/*==========================================
  * サウンドエフェクト
  *------------------------------------------*/
 BUILDIN_FUNC(soundeffect)
@@ -14504,6 +14569,8 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(clearitem,""),
 	BUILDIN_DEF(classchange,"ii"),
 	BUILDIN_DEF(misceffect,"i"),
+	BUILDIN_DEF(playBGM,"s"),
+	BUILDIN_DEF(playBGMall,"s*"),
 	BUILDIN_DEF(soundeffect,"si"),
 	BUILDIN_DEF(soundeffectall,"si*"),	// SoundEffectAll [Codemaster]
 	BUILDIN_DEF(strmobinfo,"ii"),	// display mob data [Valaris]

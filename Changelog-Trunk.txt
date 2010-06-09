@@ -3,6 +3,9 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2010/06/09
+	* Added support for packet 0x7fe which changes the bgm temporarily for a single player [Rikter/Yommy]
+	* Added 2 script commands, playBGM and playBGMall, documented use in doc/script_commands.txt [Rikter/Yommy]
 2010/06/01
 	* Rev. 14329 Corrected warnings (and errors on some compilers) from r14327. [L0ne_W0lf]
 	* Rev. 14327 Implemented the Manuk and Splendide item status effects, thanks to Epoque. [L0ne_W0lf]
