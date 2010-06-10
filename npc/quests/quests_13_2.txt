@@ -3,14 +3,17 @@
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
-//= 1.8
+//= 1.9
 //===== Compatible With: =====================================
 //= eAthena SVN
 //===== Description: =========================================
 //= [Aegis Conversion]
 //= Cat Hand Addition. (Leads to 13.2 areas)
 //= Two Tribes
+//= Monster Suppression
 //= Daily Quests:
+//= - Bradium Collection
+//= - Laphine Craftsman
 //= - Drago Egg Collection (npc includes 'Wanted' quest)
 //= Otherworld language
 //= Daily Quests:
@@ -29,6 +32,8 @@
 //= 1.7 Added daily quest 'Dragon Egg collection.'
 //= 1.7a Fixed a translation typo. Tabb -> Taab.
 //= 1.8 Added a missing " in the GM only NPC.
+//= 1.9 Added Monster Suppression, Bradium Collection, and 
+//=     Laphine Craftsman quests.
 //============================================================ 
 
 // Cat Hand Addition.
@@ -4902,9 +4907,361 @@ spl_fild01,329,29,0	script	???#ep13mdf03	844,{
 	}
 }
 
+// Monster Suppression
+//============================================================
+manuk,252,116,3	script	Manuk Galtun#ep13_2day	450,{
+	if (checkweight(1201,2) == 0) {
+		mes "Wait a moment!!";
+		mes "You have too many items.";
+		mes "You can't receive this.";
+		mes "Lighten your weight and";
+		mes "try again.";
+		close;
+	}
+	if ((isequipped(2782) == 1) && (ep13_2_rhea > 99)) {
+		if (ep13_2_days01 == 0) {
+			mes "[Strom]";
+			mes "Hello.";
+			mes "You're a human right?";
+			mes "My name is Strom.";
+			next;
+			mes "[Strom]";
+			mes "But, you guys seem so weak.";
+			mes "You don't have solid skin nor enough power.";
+			next;
+			mes "[Strom]";
+			mes "How did you guys get here?";
+			next;
+			mes "[Strom]";
+			mes "Your language seems gentle, but it seems like you are here to create more tension.";
+			next;
+			switch(select("Keep the peace.:...")) {
+			case 1:
+				mes "[" + strcharinfo(0) + "]";
+				mes "Yes, we humans are smaller than you... but...";
+				mes "we have been training ourselves to be strong.";
+				next;
+				mes "[" + strcharinfo(0) + "]";
+				mes "Now let me show you that";
+				mes "we can match your strength!";
+				next;
+				if (ep13_mdrama > 5) {
+					mes "[Strom]";
+					mes "Anyway...";
+					mes "Some bad things happened to my one of my colleagues in that cave you found recently.";
+					next;
+					mes "[Strom]";
+					mes "There're monsters called ^4d4dffRata^000000 and ^4d4dffDueyrr^000000.";
+					mes "If you terminate them, I would regard you as a decent and strong person.";
+					set ep13_2_days01,1;
+					setquest 7074;
+					setquest 7075;
+					close;
+				}
+				else {
+					mes "[Strom]";
+					mes "...is that it?";
+					mes "Let me think.";
+					mes "Since you have so much confidence in their abilities...";
+					mes "I will find you a worthy challenge to prove it.";
+					close;
+				}
+			case 2:
+				mes "[" + strcharinfo(0) + "]";
+				mes "Yes, but human beings can be stronger when they all work together.";
+				close;
+			}
+		}
+		else if (ep13_2_days01 == 1) {
+			set .@qst_cpl01,checkquest(7074,HUNTING);
+			set .@qst_cpl02,checkquest(7075,HUNTING);
+			if ((.@qst_cpl01 == 2) & (.@qst_cpl02 == 2)) {
+				mes "[Strom]";
+				mes "Sure enough... I, the Sapha Galtun, Strom, apologize to you. I should not have been so quick to despise you.";
+				mes "I admit that you are a brave soldier, please feel free to visit Manuk.";
+				next;
+				mes "[Strom]";
+				mes "Although I don't have much to offer, please accept these coins.";
+				mes "If you need to buy something, you can use them.";
+				completequest 7074;
+				completequest 7075;
+				set ep13_2_days01,2;
+				getexp 500000,300000;
+				getitem 6080,10; //Manuk_Coin
+				close;
+			}
+			else {
+				mes "[Strom]";
+				mes "If you want to show you're so strong...";
+				mes "Please find and defeat the Rata and Duneyrr in the cave.";
+				close;
+			}
+		}
+		else {
+			mes "[Strom]";
+			mes "Here icy climate is not suitable for biological survival, but we do not feel cold,";
+			mes "so we're not very concerned about it.";
+			next;
+			mes "[Strom]";
+			mes "But... you're different.";
+			mes "In such cold weather, you are best to don Hillslions fur...";
+			close;
+		}
+	}
+	else {
+		mes "[Manuk Galtun]";
+		mes "Arpe? Yu osp sad?";
+		mes "EW pisdn psa?";
+		mes "We psis?";
+	}
+}
+
 // Daily Quests
+// - Bradium Collection
+// - Laphine Craftsman
 // - Drago Egg Collection (npc includes 'Wanted' quest)
 //============================================================
+man_in01,378,276,3	script	Manuk Engineer#ep13_2	453,{
+	if (checkweight(1201,2) == 0) {
+		mes "Wait a moment!!";
+		mes "You have too many items.";
+		mes "You can't receive this.";
+		mes "Lighten your weight and";
+		mes "try again.";
+		close;
+	}
+	if ((isequipped(2782) == 1) && (ep13_2_rhea > 99)) {
+		set .@alba,checkquest(7080);
+		if ((.@alba == 0) || (.@alba == 1)) {
+			set .@time_chek,checkquest(7080,PLAYTIME);
+			if (.@time_chek != 2) {
+				mes "[Manuk Engineer]";
+				mes "Thank you for collecting the Enriched Bradium for me, it was very helpful.";
+				mes "We've got more than enough for now though.";
+				close;
+			}
+			else {
+				mes "[Manuk Engineer]";
+				mes "Thank you for collecting the Enriched Bradium for me, it was very helpful.";
+				mes "I hope you can help me again.";
+				erasequest 7080;
+				close;
+			}
+		}
+		else {
+			set .@alba2,checkquest(7079);
+			if ((.@alba2 == 0) || (.@alba2 == 1)) {
+				if (countitem(6090) > 19) {
+					mes "[Manuk Engineer]";
+					mes "Oh, that will do very well.";
+					mes "On behalf of the Sapha, I extend our thanks to you.";
+					mes "I hope you can help us again.";
+					delitem 6090,20; //Purified_Bradium
+					erasequest 7079;
+					setquest 7080;
+					getexp 40000,40000;
+					getitem 6080,3; //Manuk_Coin
+					close;
+				}
+				else {
+					mes "[Manuk Engineer]";
+					mes "What's up?";
+					mes "You're not prepared yet.";
+					close;
+				}
+			}
+			else {
+				mes "[Manuk Engineer]";
+				mes "Hello.";
+				mes "This is where we refine stones.";
+				next;
+				switch(select("About colleting stones.:About the usage of stones.")) {
+				case 1:
+					mes "[Manuk Engineer]";
+					mes "To prevent our bodies from becoming numb, we need Bradium.";
+					mes "From the Bradium we can extract a special element that we need to survive.";
+					mes "Ìá?ÌØÊâµ???¬²¢¾­³£'Óá£";
+					next;
+					mes "[Manuk Engineer]";
+					mes "The mining industry is primary here since our lives depend on it.";
+					mes "But the mine has become clogged.";
+					next;
+					mes "[Manuk Engineer]";
+					mes "I've already heard that you guys are good soldiers.";
+					mes "Would you mind terminating the Bradium Golem, and bringing back some Bradium for me?";
+					next;
+					switch(select("Sure, I don't mind.:Nope, I can't.")) {
+					case 1:
+						mes "[Manuk Engineer]";
+						mes "Then take this mission.";
+						mes "Please hunt Bradium Golem and bring me 20 blended Bradium.";
+						setquest 7079;
+						close;
+					case 2:
+						mes "[Manuk Engineer]";
+						mes "Oh, this is our fate.";
+						mes "How could I be so naive to depend on others?";
+						close;
+					}
+				case 2:
+					mes "[Manuk Engineer]";
+					mes "We refine Bradium and extract special things from it.";
+					mes "Then form that into an injection.";
+					mes "When it is refined it is used to maintain our body cycles.";
+					next;
+					mes "[Manuk Engineer]";
+					mes "That's why we are quite advanced in this industry.";
+					mes "Other industries are also well developed... but...";
+					next;
+					mes "[Manuk Engineer]";
+					mes "This is our top priority because it is crucial for our survival.";
+					close;
+				}
+			}
+		}
+	}
+	else {
+		mes "[Manuk Engineer]";
+		mes "Aweo wpe?";
+		mes "Sdd psiem!";
+		mes "Awq ouwn ksudh bud ds.";
+		close;
+	}
+}
+
+spl_in01,97,313,3	script	Laphine Craftsman#ep13	446,{
+	if (checkweight(1201,2) == 0) {
+		mes "Wait a moment!!";
+		mes "You have too many items.";
+		mes "You can't receive this.";
+		mes "Lighten your weight and";
+		mes "try again.";
+		close;
+	}
+	if ((isequipped(2782) == 1) && (ep13_2_rhea > 99)) {
+		if (ep13_mdrama > 5) {
+			set .@alba,checkquest(7082);
+			if (.@alba == 1) {
+				set .@time_chek,checkquest(7082,PLAYTIME);
+				if ((.@time_chek == 0) || (.@time_chek == 1)) {
+					mes "[Laphine craftsman]";
+					mes "Thank you for collecting those items for me.";
+					mes "That should be sufficient for the time being.";
+					close;
+				}
+				else {
+					mes "[Laphine craftsman]";
+					mes "Thank you for collecting those items for me.";
+					mes "Hopefully you can help us again.";
+					erasequest 7082;
+					close;
+				}
+			}
+			else {
+				set .@alba2,checkquest(7081);
+				if ((.@alba2 == 0) || (.@alba2 == 1)) {
+					if ((countitem(7326) > 14) && (countitem(6075) > 14)) {
+						mes "[Laphine craftsman]";
+						mes "Oh, fantastic.";
+						mes "These are enough materials for today.";
+						mes "I'll let you know if I need more.";
+						delitem 7326,15; //Fluorescent_Liquid
+						delitem 6075,15; //Crystalized_Teardrop
+						erasequest 7081;
+						setquest 7082;
+						getexp 30000,30000;
+						getitem 6081,3; //Splendide_Coin
+						close;
+					}
+					else {
+						mes "[Laphine craftsman]";
+						mes "What can I help you with?";
+						mes "Not yet done with my request?";
+						close;
+					}
+				}
+				else {
+					mes "[Laphine craftsman]";
+					mes "What's up??";
+					mes "I need to make more decorations for the Yai.";
+					next;
+					switch(select("May I help you?:What's a Yai?")) {
+					case 1:
+						mes "[Laphine craftsman]";
+						mes "You want to help?";
+						mes "This place is being used for battle but it is also our home.";
+						next;
+						mes "[Laphine craftsman]";
+						mes "We prefer to be alone so we must each have our own Yai.";
+						mes "Though we are in a military base we should take care of each Yai.";
+						next;
+						mes "[Laphine craftsman]";
+						mes "I am not a soldier but we hope all of us to be as confident as they are.";
+						mes "I would like to support all Laphine with my skills.";
+						next;
+						mes "[Laphine craftsman]";
+						mes "So I want to help make decorations for everyone's Yai.";
+						mes "I need more materials to make them.";
+						next;
+						mes "[Laphine craftsman]";
+						mes "I heard that a water ghost has been appearing in the cave.";
+						mes "Can you bring me 15 Crystallized Teardrop and 15 Fluorescent Liquid?";
+						next;
+						switch(select("Yes.:Sorry.")) {
+						case 1:
+							mes "[Laphine craftsman]";
+							mes "Please take my request.";
+							mes "Can you bring me 15 Crystallized Teardrop and 15 Fluorescent Liquid?";
+							setquest 7081;
+							close;
+						case 2:
+							mes "[Laphine craftsman]";
+							mes "Yes, I'm sure that you have your own business to attend to.";
+							mes "I feel embarrassed asking a favor from you, as a Laphine.";
+							next;
+							mes "[Laphine craftsman]";
+							mes "But, why are you trying to be involved in our business yet you won't take up our request?";
+							close;
+						}
+					case 2:
+						mes "[Laphine craftsman]";
+						mes "Yai...";
+						mes "All grown Laphine have one.";
+						mes "They're essential for all Laphine to live in since we are very private people.";
+						next;
+						select("It's a house...?");
+						mes "[Laphine craftsman]";
+						mes "Yes...";
+						mes "That's it. We sometimes invite our friends or guests to our Yai.";
+						mes "And decorations for Yai are quite important to us...";
+						next;
+						mes "[Laphine craftsman]";
+						mes "We Laphine care about ourselves and our Yai as well.";
+						next;
+						mes "[Laphine craftsman]";
+						mes "We are far away from our hometown now...";
+						mes "If we don't have this kind of hobby, there's nothing to enjoy here.";
+						close;
+					}
+				}
+			}
+		}
+		else {
+			mes "[Laphine craftsman]";
+			mes "Hm? Oh, can't you see I'm busy?";
+			mes "I'm making ornaments though, if you must know.";
+			close;
+		}
+	}
+	else {
+		mes "[Laphine craftsman]";
+		mes "Yur,Dur AnoVa?";
+		mes "Wha? Dieb OsaDur .. ";
+		mes "ah..RuffThus NeAsh. man nesAsh OdesAlah ?";
+		close;
+	}
+}
+
 mid_camp,146,306,3	script	Pet Breeder#ep13_eden01	982,{
 	if (checkweight(1201,2) == 0) {
 		mes "Wait a moment!!";
@@ -4989,7 +5346,7 @@ mid_camp,146,306,3	script	Pet Breeder#ep13_eden01	982,{
 				mes "[Pinedel]";
 				mes "I will forward everything to Rin.";
 				mes "She'll love it.";
-				mes "Just tell her your name " + PcName + ".";
+				mes "Just tell her your name " + strcharinfo(0) + ".";
 				next;
 				mes "[Pinedel]";
 				mes "I can remember that I've heard about you from Rin.";
@@ -5054,7 +5411,7 @@ mid_camp,146,306,3	script	Pet Breeder#ep13_eden01	982,{
 					mes "[Pinedel]";
 					mes "Those eggs are about to hatch now.";
 					mes "I will investigate those back home.";
-					close;
+					close2;
 					erasequest 7078;
 					set ep13_2_dayegg,3;
 					close;

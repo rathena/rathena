@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.2
+//= 1.5
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -31,6 +31,7 @@
 //= 1.3 Added the two remaining 13.1 quests. [L0ne_W0lf]
 //=     Cat Hand Agents no longer ignore you with 300+ points.
 //= 1.4 Changed killmonsterall -> killmonster. (bugreport:4131)
+//= 1.5 Removed a 'close;' which should have been 'close2'. (bugreport:4276)
 //============================================================ 
 
 // Onward to the New World
@@ -5794,7 +5795,6 @@ mid_camp,9,215,5	script	Camp Guard#man3	852,{
 				mes "[Camp Guard]";
 				mes "Please be careful out there.";
 				mes "If you encounter any threats or strange phenomenon, then please don't hesitate to report to us at the garrison.";
-				close;
 				close2;
 				warp "spl_fild02",380,217;
 				end;
