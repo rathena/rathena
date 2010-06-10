@@ -2219,12 +2219,13 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 				(int)(md->level - sd->status.base_level) >= 20)
 				drop_rate = (int)(drop_rate*1.25); // pk_mode increase drops if 20 level difference [Valaris]
 
+			// Increase drop rate if user has SC_ITEMBOOST
+			if (sd && sd->sc.data[SC_ITEMBOOST]) // now rig the drop rate to never be over 90% unless it is originally >90%.
+				drop_rate = max(drop_rate,cap_value((int)(0.5+drop_rate*(sd->sc.data[SC_ITEMBOOST]->val1)/100.),0,9000));
+
 			// attempt to drop the item
 			if (rand() % 10000 >= drop_rate)
-			{	// Double try by Bubble Gum
-				if (!(mvp_sd && mvp_sd->sc.data[SC_ITEMBOOST] && rand() % 10000 < drop_rate))
 					continue;
-			}
 
 			ditem = mob_setdropitem(md->db->dropitem[i].nameid, 1);
 

@@ -8,6 +8,11 @@
 	1475 Equestrian's Spear:	NEED INFO.
 	13005 Angelic Wing Dagger:	NEED INFO.
 =======================
+2010/06/10
+	* Rev. 14336 Corrected number of slots on several newer items. [L0ne_W0lf]
+	* Added HE Bubble Gum and adjusted existing gum bonuses.
+	* Removed monster chat for porings npc_emotion skill use.
+	* Updated several modes for monsters episode 13.1+
 2010/06/09
 	* Rev. 14333 Added a lot of headgear this time folks. [L0ne_W0lf]
 	- Several are still missing their bonuses and stats.
