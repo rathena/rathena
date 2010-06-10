@@ -1,5 +1,7 @@
 Date		Added
 ======
+2010/06/10
+	* Rev. 14337 Enabled the WoESE Guild Dungeon warper and spawns. [L0ne_W0lf]
 2010/06/05
 	* Rev. 14331 Corrected Brasilis Fruit Merchant. (bugreport:4278) [L0ne_W0lf]
 2010/06/01

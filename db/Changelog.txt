@@ -9,6 +9,7 @@
 	13005 Angelic Wing Dagger:	NEED INFO.
 =======================
 2010/06/10
+	* Rev. 14337 Touched up the WoESE Guild Dungeon monster stats and added drops. [L0ne_W0lf]
 	* Rev. 14336 Corrected number of slots on several newer items. [L0ne_W0lf]
 	* Added HE Bubble Gum and adjusted existing gum bonuses.
 	* Removed monster chat for porings npc_emotion skill use.
