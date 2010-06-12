@@ -8,8 +8,9 @@
 	1475 Equestrian's Spear:	NEED INFO.
 	13005 Angelic Wing Dagger:	NEED INFO.
 =======================
-2010/06/10
-	* Rev. 14339 Teehee, bugfixes! Some I made, some I missed.
+2010/06/11
+	* Rev. 14340 Reduced Robo_Eye bonus from 3 -> 2 (bugreport:4288) [L0ne_W0lf]
+	* Rev. 14339 Teehee, bugfixes! Some I made, some I missed. [L0ne_W0lf]
 	* Fixed missing slot on Power_of_Thor. (bugreport:4168)
 	* Fixed size for HELL_APOCALIPS and ZUKADAM. (bugreport:4293)
 	* Fixed mob modes on ANCIENT_TREE and RYNCHO. (bugreport:4294)

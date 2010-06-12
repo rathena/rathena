@@ -1,6 +1,7 @@
 Date		Added
 ======
-2010/06/10
+2010/06/11
+	* Rev. 14340 Disabled the Peco Peco repeatable quest, see comment in conf as to why. [L0ne_W0lf]
 	* Rev. 14339 Implemented repeatable EXP quests (with kill count and item gathering options) removed iRO_Exp.txt. [L0ne_W0lf]
 2010/06/10
 	* Rev. 14338 Removed a 'close' in a 13.1 quest which should have been 'close2'. (bugreport:4276)
