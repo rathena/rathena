@@ -1,0 +1,244 @@
+//===== eAthena Script =======================================
+//= iRO Repeatable EXP Quests.
+//===== By: ==================================================
+//= L0ne_W0lf
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= eAthena SVN
+//===== Description: =========================================
+//= [Aegis Conversion]
+//= Added Monster Killing quests.
+//= Repeatable EXP Quest (Bacillus)
+//===== Additional Comments: =================================
+//= 1.0 First version.
+//============================================================
+
+ein_fild01,43,249,0	script	Local Villager#hunt	898,{
+	if (checkquest(60125) != -1) {
+		if (checkquest(60125,HUNTING) != 2 ) {
+			mes "[Local Villager]";
+			mes "Have you finished hunting the 50 Demon Pungus?";
+			next;
+			switch(select("Yes:No:I want to quit")) {
+			case 1:
+				mes "[Local Villager]";
+				mes "Hmm, I don't think you've hunted 50 yet...";
+				close;
+			case 2:
+				mes "[Local Villager]";
+				mes "Remember, I need help hunting Demon Pungus so go and hunt 50 of them.";
+				close;
+			case 3:
+				mes "[Local Villager]";
+				mes "Are you sure that you want to stop hunting?";
+				mes "Any progress that you've made will be erased";
+				next;
+				switch(select("Yes:No")) {
+				case 1:
+					mes "[Local Villager]";
+					mes "Ok then, well come back here if you change your mind.";
+					erasequest 60125;
+					close;
+				case 2:
+					mes "[Local Villager]";
+					mes "Please kill 50 Demon Pungus.";
+					close;
+				}
+			}
+		}
+		else {
+			mes "[Local Villager]";
+			mes "Amazing, you did that with speed.";
+			getexp 250266,144452;
+			erasequest 60125;
+			close;
+		}
+	}
+	if (checkquest(60126) != -1) {
+		if (checkquest(60126,HUNTING) != 2 ) {
+			mes "[Local Villager]";
+			mes "Have you finished hunting the 50 Demon Pungus?";
+			next;
+			switch(select("Yes:No:I want to quit")) {
+			case 1:
+				mes "[Local Villager]";
+				mes "Hmm, I don't think you've hunted 100 yet...";
+				close;
+			case 2:
+				mes "[Local Villager]";
+				mes "Remember, I need help hunting Demon Pungus so go and hunt 100 of them.";
+				close;
+			case 3:
+				mes "[Local Villager]";
+				mes "Are you sure that you want to stop hunting?";
+				mes "Any progress that you've made will be erased";
+				next;
+				switch(select("Yes:No")) {
+				case 1:
+					mes "[Local Villager]";
+					mes "Ok then, well come back here if you change your mind.";
+					erasequest 60126;
+					close;
+				case 2:
+					mes "[Local Villager]";
+					mes "Please kill 100 Demon Pungus.";
+					close;
+				}
+			}
+		}
+		else {
+			mes "[Local Villager]";
+			mes "Amazing, you did that with speed.";
+			getexp 250266,144452;
+			getexp 250266,144452;
+			erasequest 60126;
+			close;
+		}
+	}
+	if (checkquest(60127) != -1) {
+		if (checkquest(60127,HUNTING) != 2 ) {
+			mes "[Local Villager]";
+			mes "Have you finished hunting the 150 Demon Pungus?";
+			next;
+			switch(select("Yes:No:I want to quit")) {
+			case 1:
+				mes "[Local Villager]";
+				mes "Hmm, I don't think you've hunted 150 yet...";
+				close;
+			case 2:
+				mes "[Local Villager]";
+				mes "Remember, I need help hunting Demon Pungus so go and hunt 150 of them.";
+				close;
+			case 3:
+				mes "[Local Villager]";
+				mes "Are you sure that you want to stop hunting?";
+				mes "Any progress that you've made will be erased";
+				next;
+				switch(select("Yes:No")) {
+				case 1:
+					mes "[Local Villager]";
+					mes "Ok then, well come back here if you change your mind.";
+					erasequest 60127;
+					close;
+				case 2:
+					mes "[Local Villager]";
+					mes "Please kill 150 Demon Pungus.";
+					close;
+				}
+			}
+		}
+		else {
+			mes "[Local Villager]";
+			mes "Amazing, you did that with speed.";
+			getexp 250266,144452;
+			getexp 250266,144452;
+			getexp 250266,144452;
+			erasequest 60127;
+			close;
+		}
+	}
+	//for minimum level
+	if (BaseLevel > 59) {
+		//for maximum level
+		if (BaseLevel < 75) {
+			mes "[Local Villager]";
+			mes "Hey, you there. Yeah you!";
+			mes "Do you think you can help me with something?";
+			next;
+			switch(select("Sure:No")) {
+			case 1:
+				mes "[Local Villager]";
+				mes "I am trying to make my way through but I can't seem to get past these Demon Pungus.";
+				next;
+				switch(select("Gather Items:Hunt Demon Pungus:Cancel")) {
+				case 1:
+					// Item turn in
+					mes "[Local Villager]";
+					mes "Can you help by collecting ^FF0000Bacillus^000000?";
+					mes "I will reward you for helping clear this out for me.";
+					next;
+					switch(select("I have Bacillus:What did you need?")) {
+					case 1:
+						/*
+						if (checkweight(504,10) == 0) {
+							mes "[Local Villager]";
+							mes "Hey, it looks like that the weight on";
+							mes "your back will crush you. Come back";
+							mes "after you have lost some weight.";
+							close;
+						}
+						*/
+						if (countitem(7119) > 49) {
+							mes "[Local Villager]";
+							mes "I had my doubts, but you have proven me wrong.";
+							delitem 7119,50; //Spawns
+							getexp 250266,144452;
+							//getitem 504,10; //White_Potion
+							close;
+						}
+						else {
+							mes "[Local Villager]";
+							mes "It doesn't look like you have enough.";
+							next;
+							mes "[Local Villager]";
+							mes "I need to see that you have gathered ^FF000050 Bacillus^000000, and then I can reward you.";
+							close;
+						}
+					case 2:
+						mes "[Local Villager]";
+						mes "I need to see that you have gathered ^FF000050 Bacillus^000000, and then I can reward you.";
+						close;
+					}
+				case 2:
+					// Kill Count Quest
+					mes "[Local Villager]";
+					mes "Ah, ok I think you can help me out by hunting some Demon Pungus.";
+					mes "How many would you like to hunt?";
+					next;
+					switch(select("50 Demon Pungus:100 Demon Pungus:150 Demon Pungus")) {
+					case 1:
+						mes "[Local Villager]";
+						mes "Come back when you've finished your task and I will give you a small reward.";
+						setquest 60125;
+						close;
+					case 2:
+						mes "[Local Villager]";
+						mes "Come back when you've finished your task and I will give you a small reward.";
+						setquest 60126;
+						close;
+					case 3:
+						mes "[Local Villager]";
+						mes "Come back when you've finished your task and I will give you a small reward.";
+						setquest 60127;
+						close;
+					}
+				case 3:
+					mes "[Local Villager]";
+					mes "If you change your mind, please come back.";
+					close;
+				}
+			case 2:
+				mes "[Local Villager]";
+				mes "If you change your mind, please come back.";
+				close;
+			}
+		}
+		else {
+			mes "[Local Villager]";
+			mes "Um, um. I don't think..";
+			next;
+			mes "[Local Villager]";
+			mes "Yeah, sorry I can't talk right now.";
+			close;
+		}
+	}
+	else {
+		mes "[Local Villager]";
+		mes "Its amazing, truly it is.";
+		mes "I just wish I could get through this all.";
+		close;
+	}
+}
+
+

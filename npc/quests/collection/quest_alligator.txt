@@ -1,0 +1,242 @@
+//===== eAthena Script =======================================
+//= iRO Repeatable EXP Quests.
+//===== By: ==================================================
+//= L0ne_W0lf
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= eAthena SVN
+//===== Description: =========================================
+//= [Aegis Conversion]
+//= Added Monster Killing quests.
+//= Repeatable EXP Quest (Anolian Skins)
+//===== Additional Comments: =================================
+//= 1.0 First version.
+//============================================================
+
+cmd_fild01,362,256,3	script	Cuir#Gator_Hunt	106,{
+	if (checkquest(60119) != -1) {
+		if (checkquest(60119,HUNTING) != 2 ) {
+			mes "[Cuir]";
+			mes "Have you finished hunting the 50 Alligators?";
+			next;
+			switch(select("Yes:No:I want to quit")) {
+			case 1:
+				mes "[Cuir]";
+				mes "Hmm, I don't think you've hunted 50 yet...";
+				close;
+			case 2:
+				mes "[Cuir]";
+				mes "Remember, I need help hunting Alligators so go and hunt 50 of them.";
+				close;
+			case 3:
+				mes "[Cuir]";
+				mes "Are you sure that you want to stop hunting?";
+				mes "Any progress that you've made will be erased";
+				next;
+				switch(select("Yes:No")) {
+				case 1:
+					mes "[Cuir]";
+					mes "Ok then, well come back here if you change your mind.";
+					erasequest 60119;
+					close;
+				case 2:
+					mes "[Cuir]";
+					mes "Please kill 50 Alligators.";
+					close;
+				}
+			}
+		}
+		else {
+			mes "[Cuir]";
+			mes "Amazing, you did that with speed.";
+			getexp 68950,43300;
+			erasequest 60119;
+			close;
+		}
+	}
+	if (checkquest(60120) != -1) {
+		if (checkquest(60120,HUNTING) != 2 ) {
+			mes "[Cuir]";
+			mes "Have you finished hunting the 50 Alligators?";
+			next;
+			switch(select("Yes:No:I want to quit")) {
+			case 1:
+				mes "[Cuir]";
+				mes "Hmm, I don't think you've hunted 100 yet...";
+				close;
+			case 2:
+				mes "[Cuir]";
+				mes "Remember, I need help hunting Alligators so go and hunt 100 of them.";
+				close;
+			case 3:
+				mes "[Cuir]";
+				mes "Are you sure that you want to stop hunting?";
+				mes "Any progress that you've made will be erased";
+				next;
+				switch(select("Yes:No")) {
+				case 1:
+					mes "[Cuir]";
+					mes "Ok then, well come back here if you change your mind.";
+					erasequest 60120;
+					close;
+				case 2:
+					mes "[Cuir]";
+					mes "Please kill 100 Alligators.";
+					close;
+				}
+			}
+		}
+		else {
+			mes "[Cuir]";
+			mes "Amazing, you did that with speed.";
+			getexp 68950,43300;
+			getexp 68950,43300;
+			erasequest 60120;
+			close;
+		}
+	}
+	if (checkquest(60121) != -1) {
+		if (checkquest(60121,HUNTING) != 2 ) {
+			mes "[Cuir]";
+			mes "Have you finished hunting the 150 Alligators?";
+			next;
+			switch(select("Yes:No:I want to quit")) {
+			case 1:
+				mes "[Cuir]";
+				mes "Hmm, I don't think you've hunted 150 yet...";
+				close;
+			case 2:
+				mes "[Cuir]";
+				mes "Remember, I need help hunting Alligators so go and hunt 150 of them.";
+				close;
+			case 3:
+				mes "[Cuir]";
+				mes "Are you sure that you want to stop hunting?";
+				mes "Any progress that you've made will be erased";
+				next;
+				switch(select("Yes:No")) {
+				case 1:
+					mes "[Cuir]";
+					mes "Ok then, well come back here if you change your mind.";
+					erasequest 60121;
+					close;
+				case 2:
+					mes "[Cuir]";
+					mes "Please kill 150 Alligators.";
+					close;
+				}
+			}
+		}
+		else {
+			mes "[Cuir]";
+			mes "Amazing, you did that with speed.";
+			getexp 68950,43300;
+			getexp 68950,43300;
+			getexp 68950,43300;
+			erasequest 60121;
+			close;
+		}
+	}
+	//for minimum level
+	if (BaseLevel > 44) {
+		//for maximum level
+		if (BaseLevel < 81) {
+			mes "[Cuir]";
+			mes "You look like a sturdy adventurer!";
+			next;
+			mes "[Cuir]";
+			mes "I was sent here to minimize the Alligator population but the task is proving to be quite difficult for just me to complete.";
+			mes "How'd you like to help me out?";
+			next;
+			switch(select("Sure:No")) {
+			case 1:
+				mes "[Cuir]";
+				mes "You can help me out by either hunting Alligators or by gathering items for me.";
+				mes "Which would you like to do?";
+				next;
+				switch(select("Gather Items:Hunt Alligators:Cancel")) {
+				case 1:
+					// Item turn in
+					mes "[Cuir]";
+					mes "If you can bring me ^00CC0020 Anolian Skins^000000. I'll help you get stronger.";
+					next;
+					switch(select("I have the Anolian Skins:Gators bite!")) {
+					case 1:
+						/*
+						if (checkweight(503,10) == 0) {
+							mes "[Cuir]";
+							mes "Hey, it looks like that the weight on";
+							mes "your back will crush you. Come back";
+							mes "after you have lost some weight.";
+							close;
+						}
+						*/
+						if (countitem(7003) > 19) {
+							mes "[Cuir]";
+							mes "Thank you for the ^00CE0020 Anolian Skins^000000!";
+							mes "I hope you can continue to help me collect these skins.";
+							mes "The armor creators around the world are clamoring for them.";
+							delitem 7003,20; //Anolian_Skin
+							getexp 68950,43300;
+							//getitem 503,10; //Yellow_Potion
+							close;
+						}
+						else {
+							mes "[Cuir]";
+							mes "I know a gator skin when I see it and I don't see ^00CE0020 Anolian Skins^000000.";
+							close;
+						}
+					case 2:
+						mes "[Cuir]";
+						mes "I need ^00CE0020 Anolian Skins^000000.";
+						close;
+					}
+				case 2:
+					// Kill Count Quest
+					mes "[Cuir]";
+					mes "Ah, ok I think you can help me out by hunting some Alligators.";
+					mes "How many would you like to hunt?";
+					next;
+					switch(select("50 Alligators:100 Alligators:150 Alligators")) {
+					case 1:
+						mes "[Cuir]";
+						mes "Come back when you've finished your task and I will give you a small reward.";
+						setquest 60119;
+						close;
+					case 2:
+						mes "[Cuir]";
+						mes "Come back when you've finished your task and I will give you a small reward.";
+						setquest 60120;
+						close;
+					case 3:
+						mes "[Cuir]";
+						mes "Come back when you've finished your task and I will give you a small reward.";
+						setquest 60121;
+						close;
+					}
+				case 3:
+					mes "[Cuir]";
+					mes "If you change your mind, please come back.";
+					close;
+				}
+			case 2:
+				mes "[Cuir]";
+				mes "If you change your mind, please come back.";
+				close;
+			}
+		}
+		else {
+			mes "[Cuir]";
+			mes "You are too powerful for this task, I need the skins in fair condition, not exploded!";
+			next;
+			close;
+		}
+	}
+	else {
+		mes "[Cuir]";
+		mes "You certainly are brave, but bravery turns to foolishness if you continue going East.";
+		mes "Perhaps when you are stronger you and I can do business.";
+		close;
+	}
+}

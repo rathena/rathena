@@ -1,0 +1,240 @@
+//===== eAthena Script =======================================
+//= iRO Repeatable EXP Quests.
+//===== By: ==================================================
+//= L0ne_W0lf
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= eAthena SVN
+//===== Description: =========================================
+//= [Aegis Conversion]
+//= Added Monster Killing quests.
+//= Repeatable EXP Quest (Frills)
+//===== Additional Comments: =================================
+//= 1.0 First version.
+//============================================================
+
+moc_fild17,66,273,5	script	Lemly#Frilldora_Hunt	725,{
+	if (checkquest(60134) != -1) {
+		if (checkquest(60134,HUNTING) != 2 ) {
+			mes "[Lemly]";
+			mes "Have you finished hunting the 50 Frilldora?";
+			next;
+			switch(select("Yes:No:I want to quit")) {
+			case 1:
+				mes "[Lemly]";
+				mes "Hmm, I don't think you've hunted 50 yet...";
+				close;
+			case 2:
+				mes "[Lemly]";
+				mes "Remember, I need help hunting Frilldora so go and hunt 50 of them.";
+				close;
+			case 3:
+				mes "[Lemly]";
+				mes "Are you sure that you want to stop hunting?";
+				mes "Any progress that you've made will be erased";
+				next;
+				switch(select("Yes:No")) {
+				case 1:
+					mes "[Lemly]";
+					mes "Ok then, well come back here if you change your mind.";
+					erasequest 60134;
+					close;
+				case 2:
+					mes "[Lemly]";
+					mes "Please kill 50 Frilldora.";
+					close;
+				}
+			}
+		}
+		else {
+			mes "[Lemly]";
+			mes "Amazing, you did that with speed.";
+			getexp 30000,23000;
+			erasequest 60134;
+			close;
+		}
+	}
+	if (checkquest(60135) != -1) {
+		if (checkquest(60135,HUNTING) != 2 ) {
+			mes "[Lemly]";
+			mes "Have you finished hunting the 50 Frilldora?";
+			next;
+			switch(select("Yes:No:I want to quit")) {
+			case 1:
+				mes "[Lemly]";
+				mes "Hmm, I don't think you've hunted 100 yet...";
+				close;
+			case 2:
+				mes "[Lemly]";
+				mes "Remember, I need help hunting Frilldora so go and hunt 100 of them.";
+				close;
+			case 3:
+				mes "[Lemly]";
+				mes "Are you sure that you want to stop hunting?";
+				mes "Any progress that you've made will be erased";
+				next;
+				switch(select("Yes:No")) {
+				case 1:
+					mes "[Lemly]";
+					mes "Ok then, well come back here if you change your mind.";
+					erasequest 60135;
+					close;
+				case 2:
+					mes "[Lemly]";
+					mes "Please kill 100 Frilldora.";
+					close;
+				}
+			}
+		}
+		else {
+			mes "[Lemly]";
+			mes "Amazing, you did that with speed.";
+			getexp 30000,23000;
+			getexp 30000,23000;
+			erasequest 60135;
+			close;
+		}
+	}
+	if (checkquest(60136) != -1) {
+		if (checkquest(60136,HUNTING) != 2 ) {
+			mes "[Lemly]";
+			mes "Have you finished hunting the 150 Frilldora?";
+			next;
+			switch(select("Yes:No:I want to quit")) {
+			case 1:
+				mes "[Lemly]";
+				mes "Hmm, I don't think you've hunted 150 yet...";
+				close;
+			case 2:
+				mes "[Lemly]";
+				mes "Remember, I need help hunting Frilldora so go and hunt 150 of them.";
+				close;
+			case 3:
+				mes "[Lemly]";
+				mes "Are you sure that you want to stop hunting?";
+				mes "Any progress that you've made will be erased";
+				next;
+				switch(select("Yes:No")) {
+				case 1:
+					mes "[Lemly]";
+					mes "Ok then, well come back here if you change your mind.";
+					erasequest 60136;
+					close;
+				case 2:
+					mes "[Lemly]";
+					mes "Please kill 150 Frilldora.";
+					close;
+				}
+			}
+		}
+		else {
+			mes "[Lemly]";
+			mes "Amazing, you did that with speed.";
+			getexp 30000,23000;
+			getexp 30000,23000;
+			getexp 30000,23000;
+			erasequest 60136;
+			close;
+		}
+	}
+	//for minimum level
+	if (BaseLevel > 29) {
+		//for maximum level
+		if (BaseLevel < 66) {
+			mes "[Lemly]";
+			mes "Hey there cutie!";
+			next;
+			mes "[Lemly]";
+			mes "Think you could take some time to give me a hand?";
+			next;
+			switch(select("Sure:No")) {
+			case 1:
+				mes "[Lemly]";
+				mes "I am looking for lizard ^FF0000Frills^000000.";
+				next;
+				mes "[Lemly]";
+				mes "The lizards around here have a natural stealth, a property that the Assassin's Guild wants to study.";
+				next;
+				switch(select("Gather Items:Hunt Frilldora:Cancel")) {
+				case 1:
+					// Item turn in
+					switch(select("I have some Frills:What did you need?")) {
+					case 1:
+						if (countitem(1012) > 24) {
+							mes "[Lemly]";
+							mes "Hey, thank you.";
+							mes "These are pretty icky though.";
+							delitem 1012,25; //Lizard_Scruff
+							getexp 30000,23000;
+							close;
+						}
+						else {
+							mes "[Lemly]";
+							mes "Sigh,";
+							mes "Please, don't waste my time.";
+							next;
+							mes "[Lemly]";
+							mes "I need ^FF000025 Frills^000000 for the Assassin's Guild.";
+							close;
+						}
+					case 2:
+						mes "[Lemly]";
+						mes "I need ^FF000025 Frills^000000 for the Assassin's Guild.";
+						close;
+					}
+				case 2:
+					// Kill Count Quest
+					mes "[Lemly]";
+					mes "Ah, ok I think you can help me out by hunting some Frilldora.";
+					mes "How many would you like to hunt?";
+					next;
+					switch(select("50 Frilldora:100 Frilldora:150 Frilldora")) {
+					case 1:
+						mes "[Lemly]";
+						mes "Come back when you've finished your task and I will give you a small reward.";
+						setquest 60134;
+						close;
+					case 2:
+						mes "[Lemly]";
+						mes "Come back when you've finished your task and I will give you a small reward.";
+						setquest 60135;
+						close;
+					case 3:
+						mes "[Lemly]";
+						mes "Come back when you've finished your task and I will give you a small reward.";
+						setquest 60136;
+						close;
+					}
+				case 3:
+					mes "[Lemly]";
+					mes "If you change your mind, please come back.";
+					close;
+				}
+			case 2:
+				mes "[Lemly]";
+				mes "If you change your mind, please come back.";
+				close;
+			}
+		}
+		else {
+			mes "[Lemly]";
+			mes "Hey there.";
+			next;
+			mes "[Lemly]";
+			mes "These lizards are gross.";
+			next;
+			mes "[Lemly]";
+			mes "I can't believe I am stuck doing this.";
+			close;
+		}
+	}
+	else {
+		mes "[Lemly]";
+		mes "What are you doing here?";
+		mes "The desert will kill you here!";
+		close;
+	}
+}
+
+

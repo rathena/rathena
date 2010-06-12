@@ -1054,7 +1054,7 @@
 2001,Divine_Cross,Divine Cross,4,20,,1500,120,,1,0,0x00008100,7,2,34,4,70,1,10,{ bonus bAtkEle,Ele_Holy; bonus bMatkRate,15; bonus bDex,4; bonus2 bSubRace,RC_Demon,15; bonus2 bSubRace,RC_Undead,15; if (isequipped(2677) || isequipped(2711)) { bonus bMatkRate,10; bonus bDex,2; bonus2 bSubRace,RC_Demon,10; bonus2 bSubRace,RC_Undead,10; }; },{},{}
 2002,Krieger_Twohand_Staff1,Glorious Destruction Staff,4,0,,0,70,,1,0,0x00018314,7,2,34,4,80,1,10,{ bonus bMatkRate,getrefine(); bonus2 bMagicAddRace,RC_DemiHuman,15; bonus2 bIgnoreMdefRate,RC_DemiHuman,25; bonus bUnbreakableWeapon,0; if(getrefine() > 5) { bonus2 bMagicAddRace,RC_DemiHuman,(getrefine()-5)*2; bonus2 bIgnoreMdefRate,RC_DemiHuman,(getrefine()-5)*2; } if(getrefine() > 8) { bonus5 bAutoSpellOnSkill,"WZ_STORMGUST","MG_SAFETYWALL",10,200,1; bonus5 bAutoSpellOnSkill,"WZ_METEOR","MG_SAFETYWALL",10,200,1; bonus5 bAutoSpellOnSkill,"WZ_VERMILION","MG_SAFETYWALL",10,200,1; } },{},{}
 2003,Destruction_Rod_M,Staff of Destruction,4,20,,2500,130,,1,1,0x00000200,2,2,34,4,80,1,10,{ bonus bMatkRate,25+getrefine()/2; bonus bInt,3; bonus bAgi,10; bonus bUseSPrate,(getrefine()*2); bonus3 bAutoSpellWhenHit,"WZ_JUPITEL",5,(getrefine()*20); bonus2 bCastrate,366,-50; },{},{}
-2004,Kronos,Kronos,4,0,,1000,30,,1,0,0x00010204,2,2,34,4,50,1,10,{ bonus bMatkRate,20; bonus bInt,getrefine(); bonus bMaxHP,300; bonus bMaxSP,50*getrefine()/2; autobonus "{ bonus bMatkRate,12; bonus buseSPRate,20; }",1,5000,BF_MAGIC,"{ specialeffect2 EF_ENHANCE; }"; },{},{}
+2004,Kronos,Kronos,4,0,,1000,30,,1,0,0x00010204,2,2,34,4,50,1,10,{ bonus bMatkRate,20; bonus bInt,3+(getrefine()/2); bonus bMaxHP,300+(50*getrefine()/2); autobonus "{ bonus bMatkRate,12; bonus buseSPRate,20; }",1,5000,BF_MAGIC,"{ specialeffect2 EF_ENHANCE; }"; },{},{}
 2005,Dea_Staff,Dea Staff,4,20,,1000,30,,1,1,0x00008110,2,2,34,3,50,1,10,{ bonus bAtkEle,Ele_Holy; bonus bMatkRate,15+getrefine()/2; bonus bInt,6; bonus bVit,2; autobonus3 "{ }",20,1000,"AL_HEAL","{ specialeffect2 EF_MAGICALATTHIT;  heal 0,200;  }"; },{},{}
 // Shields
 //===================================================================
@@ -2679,12 +2679,12 @@
 5492,Boy's_Cap_I,Student Cap,5,0,,0,,5,,0,0xFFFFFFFE,7,2,256,,0,1,102,{ bonus2 bAddRace,RC_DemiHuman,5; },{},{}
 5493,Ulle_Cap_I,Ulle's Cap,5,0,,0,,3,,0,0xFFFFFFFE,7,2,256,,0,1,254,{ bonus bDex,2; bonus bAgi,1; if(isequipped(2353) && readparam(bDex)>=70) bonus bUseSPrate,-10; },{},{}
 5494,Spinx_Helm_I,Sphinx Hat,5,0,,0,,5,,0,0x00004082,7,2,769,,0,0,137,{ bonus bStr,5; },{},{}
-//5495,Power_Of_Thor,Power Of Thor,5,0,,500,,6,,0,0xFFFFFFFF,7,2,256,,75,0,493,{ bonus bFlee,5; bonus bAllStats,1; },{},{}
+//5495,Power_Of_Thor,Power Of Thor,5,0,,500,,6,,1,0xFFFFFFFF,7,2,256,,75,0,493,{ bonus bFlee,5; bonus bAllStats,1; },{},{}
 //5496,Dice_Hat,Dice Hat,5,0,,500,,3,,0,0xFFFFFFFF,7,2,256,,50,0,494,{ bonus bLuk,4; },{},{}
 //5497,King_Tiger_Doll_Hat,King Tiger Doll Hat,5,0,,400,,3,,0,0xFFFFFFFF,7,2,256,,30,0,495,{ bonus bStr,2; },{},{}
 5498,Wondering_Wolf_King_Hel,Wandering Wolf Hat,5,,,600,,5,,0,0xFFFFFFFE,7,2,768,,50,0,490,{ bonus bFlee,10; bonus bVit,5; },{},{}
 5499,Pizza_Hat,Pizza Hat,5,20,,6000,,0,,0,0xFFFFFFFF,7,2,256,,0,1,487,{ skill "SM_PROVOKE",1; },{},{}
-5500,Icecream_Hat,Icecream Hat,5,20,,300,,1,,0,0xFFFFFFFF,7,2,256,,30,1,488,{ skill "MG_DIVER",3; bonus bMdef,3; },{},{}
+5500,Icecream_Hat,Icecream Hat,5,20,,300,,1,,0,0xFFFFFFFF,7,2,256,,30,1,488,{ skill "MG_FROSTDIVER",3; bonus bMdef,3; },{},{}
 5501,Pirate's_Pride,Pirate's Pride,5,20,,100,,3,,0,0xFFFFFFFF,7,2,256,,10,1,496,{ bonus2 bAddRace2,6,5; bonus2 bSubRace2,6,5; },{},{}
 5502,Necromencer's_Hood,Necromancer's Hood,5,,,100,,2,,1,0xFFFFFFFF,7,2,768,,10,1,491,{ bonus5 bAutoSpellWhenHit,"NPC_DARKSTRIKE",5,5,BF_WEAPON|BF_MAGIC,1; },{},{}
 5503,Rabbit_Magic_Hat,Magic Rabit Hat,5,20,,800,,2,,0,0xFFFFFFFF,7,2,256,,0,1,497,{ bonus bDex,2; bonus bAgi,2; bonus bMDef,1; bonus bMaxSP,50; bonus3 bAutoSpellWhenHit,"MG_FIREBOLT",1,10; bonus3 bAutoSpellWhenHit,"MG_COLDBOLT",1,10; bonus3 bAutoSpellWhenHit,"MG_LIGHTNINGBOLT",1,10; },{},{}
@@ -4860,7 +4860,7 @@
 13418,Krieger_Onehand_Sword3,Glorious Holy Avenger,4,0,,0,130,,1,0,0x000444A2,7,2,2,4,80,1,2,{ bonus bInt,getrefine()-5; bonus bMatkRate,10; bonus bUnbreakableWeapon,0; if(getrefine() > 5) bonus bUseSPrate,-10; if(getrefine() > 8) bonus4 bAutoSpellOnSkill,"PA_PRESSURE","PR_LEXDIVINA",1,1000; if(getrefine() > 9) bonus bInt,5; },{},{}
 //13419,Holy_Saber
 //13420,Honglyun's_Sword
-13421,Ruber,Ruber,4,20,,1500,170,,1,1,0x000444A2,7,2,2,4,50,1,7,{ autobonus "{ bonus2 bSkillAtk,\"KN_BOWLINGBASH\",20; bonus2 bSkillAtk,\"SM_BASH\",20; }",5,15000,BF_WEAPON,"{ specialeffect2 EF_ENHANCE; }"; },{},{}
+13421,Ruber,Ruber,4,20,,1500,170,,1,1,0x000444A2,2,2,2,3,50,1,2,{ autobonus "{ bonus2 bSkillAtk,\"KN_BOWLINGBASH\",20; bonus2 bSkillAtk,\"SM_BASH\",20; }",5,15000,BF_WEAPON,"{ specialeffect2 EF_ENHANCE; }"; },{},{}
 //13422,Flamberge_C
 //13426,Cutlas_C
 //13427,Solar_Sword_C

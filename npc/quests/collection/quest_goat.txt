@@ -1,0 +1,245 @@
+//===== eAthena Script =======================================
+//= iRO Repeatable EXP Quests.
+//===== By: ==================================================
+//= L0ne_W0lf
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= eAthena SVN
+//===== Description: =========================================
+//= [Aegis Conversion]
+//= Added Monster Killing quests.
+//= Repeatable EXP Quest (Antelope Horns)
+//===== Additional Comments: =================================
+//= 1.0 First version.
+//============================================================
+
+ein_fild06,82,171,0	script	Vegetable Farmer#Goat	919,{
+	if (checkquest(60137) != -1) {
+		if (checkquest(60137,HUNTING) != 2 ) {
+			mes "[Vegetable Farmer]";
+			mes "Have you finished hunting the 50 Goats?";
+			next;
+			switch(select("Yes:No:I want to quit")) {
+			case 1:
+				mes "[Vegetable Farmer]";
+				mes "Hmm, I don't think you've hunted 50 yet.";
+				close;
+			case 2:
+				mes "[Vegetable Farmer]";
+				mes "Remember, I need help hunting Goats so go and hunt 50 of them.";
+				close;
+			case 3:
+				mes "[Vegetable Farmer]";
+				mes "Are you sure that you want to stop hunting?";
+				mes "Any progress that you've made will be erased";
+				next;
+				switch(select("Yes:No")) {
+				case 1:
+					mes "[Vegetable Farmer]";
+					mes "Ok then, well come back here if you change your mind.";
+					erasequest 60137;
+					close;
+				case 2:
+					mes "[Vegetable Farmer]";
+					mes "Please kill 50 Goats so I can farm my vegetables without any worries.";
+					close;
+				}
+			}
+		}
+		else {
+			mes "[Vegetable Farmer]";
+			mes "Amazing, you did that with speed.";
+			getexp 258489,155155;
+			erasequest 60137;
+			close;
+		}
+	}
+	if (checkquest(60138) != -1) {
+		if (checkquest(60138,HUNTING) != 2) {
+			mes "[Vegetable Farmer]";
+			mes "Have you finished hunting the 100 Goats?";
+			next;
+			switch(select("Yes:No:I want to quit")) {
+			case 1:
+				mes "[Vegetable Farmer]";
+				mes "Hmm, I don't think you've hunted 100 yet.";
+				close;
+			case 2:
+				mes "[Vegetable Farmer]";
+				mes "Remember, I need help hunting Goats so go and hunt 100 of them.";
+				close;
+			case 3:
+				mes "[Vegetable Farmer]";
+				mes "Are you sure that you want to stop hunting?";
+				mes "Any progress that you've made will be erased";
+				next;
+				switch(select("Yes:No")) {
+				case 1:
+					mes "[Vegetable Farmer]";
+					mes "Ok then, well come back here if you change your mind.";
+					erasequest 60138;
+					close;
+				case 2:
+					mes "[Vegetable Farmer]";
+					mes "Please kill 100 Goats so I can farm my vegetables without any worries.";
+					close;
+				}
+			}
+		}
+		else {
+			mes "[Vegetable Farmer]";
+			mes "Amazing, you did that with speed.";
+			getexp 258489,155155;
+			getexp 258489,155155;
+			erasequest 60138;
+			close;
+		}
+	}
+	if (checkquest(60139) != -1) {
+		if (checkquest(60139,HUNTING) != 2) {
+			mes "[Vegetable Farmer]";
+			mes "Have you finished hunting the 150 Goats?";
+			next;
+			switch(select("Yes:No:I want to quit")) {
+			case 1:
+				mes "[Vegetable Farmer]";
+				mes "Hmm, I don't think you've hunted 150 yet.";
+				close;
+			case 2:
+				mes "[Vegetable Farmer]";
+				mes "Remember, I need help hunting Goats so go and hunt 150 of them.";
+				close;
+			case 3:
+				mes "[Vegetable Farmer]";
+				mes "Are you sure that you want to stop hunting?";
+				mes "Any progress that you've made will be erased";
+				next;
+				switch(select("Yes:No")) {
+				case 1:
+					mes "[Vegetable Farmer]";
+					mes "Ok then, well come back here if you change your mind.";
+					erasequest 60139;
+					close;
+				case 2:
+					mes "[Vegetable Farmer]";
+					mes "Please kill 150 Goats so I can farm my vegetables without any worries.";
+					close;
+				}
+			}
+		}
+		else {
+			mes "[Vegetable Farmer]";
+			mes "Amazing, you did that with speed.";
+			getexp 258489,155155;
+			getexp 258489,155155;
+			getexp 258489,155155;
+			erasequest 60139;
+			close;
+		}
+	}
+	//for minimum level
+	if (BaseLevel > 69) {
+		//for maximum level
+		if (BaseLevel < 85) {
+			mes "[Vegetable Farmer]";
+			mes "Oh great!";
+			mes "You are here to help me right?";
+			mes "If not, then I am in a world of hurt.";
+			next;
+			switch(select("Sure:No")) {
+			case 1:
+				mes "[Vegetable Farmer]";
+				mes "These Goats keep eating my vegetables.";
+				mes "Can you do what you can to help me?";
+				next;
+				switch(select("Gather Items:Hunt Goats:Cancel")) {
+				case 1:
+					// Item turn in
+					mes "[Vegetable Farmer]";
+					mes "I need ^FF0000Antelope Horns^000000 to show for your hard work, and I will reward you.";
+					next;
+					switch(select("I have Antelope Horns:What did you need?")) {
+					case 1:
+						/*
+						if (checkweight(504,10) == 0) {
+							mes "[Vegetable Farmer]";
+							mes "Hey, it looks like that the weight on";
+							mes "your back will crush you. Come back";
+							mes "after you have lost some weight.";
+							close;
+						}
+						*/
+						if (countitem(7106) > 49) {
+							mes "[Vegetable Farmer]";
+							mes "Amazing, you did that with speed.";
+							mes "I am truly grateful.";
+							delitem 7106,50; //Goat's_Horn
+							getexp 258489,155155;
+							//getitem 504,10; //White_Potion
+							close;
+						}
+						else {
+							mes "[Vegetable Farmer]";
+							mes "It doesn't look like you have enough.";
+							next;
+							mes "[Vegetable Farmer]";
+							mes "I need to see that you have gathered ^FF000050 Antelope Horns^000000, and then I can reward you.";
+							close;
+						}
+					case 2:
+						mes "[Vegetable Farmer]";
+						mes "I need to see that you have gathered ^FF000050 Antelope Horns^000000, and then I can reward you.";
+						close;
+					}
+				case 2:
+					// Kill Count Quest
+					mes "[Vegetable Farmer]";
+					mes "Thank you.";
+					mes "How many Goats would you like to hunt?";
+					next;
+					switch(select("50 Goats:100 Goats:150 Goats")) {
+					case 1:
+						mes "[Vegetable Farmer]";
+						mes "Kill 50 of those Goats and let me know when you're done. I will reward you for your efforts.";
+						setquest 60137;
+						close;
+					case 2:
+						mes "[Vegetable Farmer]";
+						mes "Kill 100 of those Goats and let me know when you're done. I will reward you for your efforts.";
+						setquest 60138;
+						close;
+					case 3:
+						mes "[Vegetable Farmer]";
+						mes "Kill 150 of those Goats and let me know when you're done. I will reward you for your efforts.";
+						setquest 60139;
+						close;
+					}
+				case 3:
+					mes "[Vegetable Farmer]";
+					mes "If you change your mind, please come back.";
+					close;
+				}
+			case 2:
+				mes "[Vegetable Farmer]";
+				mes "If you change your mind, please come back.";
+				close;
+			}
+		}
+		else {
+			mes "[Vegetable Farmer]";
+			mes "Oh boy, Oh boy!";
+			next;
+			mes "[Vegetable Farmer]";
+			mes "Sorry I can't talk right now I am in a world of hurt here, these darn Goats are going to kill me.";
+			close;
+		}
+	}
+	else {
+		mes "[Vegetable Farmer]";
+		mes "My vegetables, where did they all go?";
+		mes "Oh, no..no!!!";
+		close;
+	}
+}
+

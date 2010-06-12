@@ -9,6 +9,14 @@
 	13005 Angelic Wing Dagger:	NEED INFO.
 =======================
 2010/06/10
+	* Rev. 14339 Teehee, bugfixes! Some I made, some I missed.
+	* Fixed missing slot on Power_of_Thor. (bugreport:4168)
+	* Fixed size for HELL_APOCALIPS and ZUKADAM. (bugreport:4293)
+	* Fixed mob modes on ANCIENT_TREE and RYNCHO. (bugreport:4294)
+	* Fixed HP and INT bonuses on the Kronos staff. (bugreport:4297)
+	* Fixed equip location and more on the Ruber sword. (bugreport:4298)
+	* Fixed typo in the Icecream_Hat giving the wrong skill. (bugreport:4299)
+2010/06/10
 	* Rev. 14338 Adjusted the cooldowns on the "Rough Mineral" and "Helping Grenouille" quests. [L0ne_W0lf]
 	* Rev. 14337 Touched up the WoESE Guild Dungeon monster stats and added drops. [L0ne_W0lf]
 	* Rev. 14336 Corrected number of slots on several newer items. [L0ne_W0lf]
