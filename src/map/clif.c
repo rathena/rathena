@@ -5987,7 +5987,7 @@ int clif_hpmeter_sub(struct block_list *bl, va_list ap)
 	nullpo_retr(0, sd);
 	nullpo_retr(0, tsd);
 
-	if( !tsd->fd )
+	if( !tsd->fd || tsd == sd )
 		return 0;
 
 	if( (level = pc_isGM(tsd)) >= battle_config.disp_hpmeter && level >= pc_isGM(sd) )

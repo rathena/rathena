@@ -3,6 +3,8 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2010/06/13
+	* 'clif_hpmeter' shouldn't send the packet to the player himself. [Inkfish]
 2010/06/10
 	* Rev. 14336 Updated SC_ITEMBOOST to work similar to how it used to in r11351. [L0ne_W0lf]
 	- Will not boost drop rates past 90%, but ignores those already greater than.
