@@ -3,6 +3,12 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2010/06/14
+	* Rev. 13442 Blocked being able to use the skill CR_DEVOTION on players under the status SC_HELLPOWER. [L0ne_W0lf]
+	- Additionally, users afflicted by the status can also no longer use Token of Siegfried to self-res.
+	* Added Manuk, Splendide and SC_HELLPOWER statuses to the status effects that can't be dispelled.
+	* Changed SC_SPEEDUP0 to use the correct status icon SI_MOVHASTE_HORSE.
+	* Changed SI_SPEEDUP1 to use the correct status icon SI_SPEEDPOTION1.
 2010/06/13
 	* 'clif_hpmeter' shouldn't send the packet to the player himself. [Inkfish]
 2010/06/10

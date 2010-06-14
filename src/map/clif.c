@@ -11988,6 +11988,9 @@ void clif_parse_AutoRevive(int fd, struct map_session_data *sd)
 	if (item_position < 0)
 		return;
 
+	if (sd->sc.data[SC_HELLPOWER]) //Cannot res while under the effect of SC_HELLPOWER.
+		return;
+
 	if (!status_revive(&sd->bl, 100, 100))
 		return;
 	

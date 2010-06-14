@@ -3851,7 +3851,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			if( lv > battle_config.devotion_level_difference || // Level difference requeriments
 				(dstsd->sc.data[type] && dstsd->sc.data[type]->val1 != src->id) || // Cannot Devote a player devoted from another source
 				(skillid == ML_DEVOTION && (!mer || mer != dstsd->md)) || // Mercenary only can devote owner
-				(dstsd->class_&MAPID_UPPERMASK) == MAPID_CRUSADER ) // Crusader Cannot be devoted
+				(dstsd->class_&MAPID_UPPERMASK) == MAPID_CRUSADER || // Crusader Cannot be devoted
+				(dstsd->sc.data[SC_HELLPOWER])) // Players affected by SC_HELLPOWERR cannot be devoted.
 			{
 				if( sd )
 					clif_skill_fail(sd,skillid,0,0);
@@ -4727,7 +4728,10 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				case SC_READYSTORM:  case SC_READYDOWN:   case SC_READYTURN:
 				case SC_READYCOUNTER:case SC_DODGE:       case SC_WARM:
 				case SC_SPEEDUP1:    case SC_AUTOTRADE:   case SC_CRITICALWOUND:
-				case SC_JEXPBOOST:	 case SC_INVINCIBLE:  case SC_INVINCIBLEOFF:	
+				case SC_JEXPBOOST:	 case SC_INVINCIBLE:  case SC_INVINCIBLEOFF:
+				case SC_HELLPOWER:	 case SC_MANU_ATK:    case SC_MANU_DEF:
+				case SC_SPL_ATK:	 case SC_SPL_DEF:	  case SC_MANU_MATK:
+				case SC_SPL_MATK:
 					continue;
 				case SC_ASSUMPTIO:
 					if( bl->type == BL_MOB )

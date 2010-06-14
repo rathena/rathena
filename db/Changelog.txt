@@ -9,6 +9,18 @@
 	13005 Angelic Wing Dagger:	NEED INFO.
 =======================
 2010/06/11
+	* Rev. 14342 Added updated 13.2 drops to existing monsters. (Most rates are unknown, and set to 0.1%) [L0ne_W0lf]
+	* And time to squish database bug reports!
+	- Fixed guild event quest log entry time limit. (Bugreport:4204)
+	- Fixed Musika healing while attacking and not when attacked. (Bugreport:4211)
+	- Corrected the Int and HP/SP reduction on the Dead Tree Cane. (Bugreport:4217)
+	- Fixed the non-set bonus for Glorious Ring's heal increase. (Bugreport:4223)
+	- Fixed Death Guidance not casting NPC_HELLPOWER on the user. (Bugreport:4250)
+	- Changed the usable job for Bone Plate from all to thief class. (Bugreport:4286)
+	- Changed the bonus on alternate large bapho horns to subrace. (Bugreport:4291)
+	- Added slots to blu and pink night caps, and a couple others. (Bugreport:4301)
+	- Removed an extra comma from the Mini_Propeller_M headgear. (Bugreport:4307)
+2010/06/11
 	* Rev. 14340 Reduced Robo_Eye bonus from 3 -> 2 (bugreport:4288) [L0ne_W0lf]
 	* Rev. 14339 Teehee, bugfixes! Some I made, some I missed. [L0ne_W0lf]
 	* Fixed missing slot on Power_of_Thor. (bugreport:4168)

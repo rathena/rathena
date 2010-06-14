@@ -463,8 +463,8 @@ void initChangeTables(void)
 	StatusIconChangeTable[SC_ASPDPOTION1] = SI_ASPDPOTION1;
 	StatusIconChangeTable[SC_ASPDPOTION2] = SI_ASPDPOTION2;
 	StatusIconChangeTable[SC_ASPDPOTION3] = SI_ASPDPOTIONINFINITY;
-	StatusIconChangeTable[SC_SPEEDUP0] = SI_SPEEDPOTION1;
-	StatusIconChangeTable[SC_SPEEDUP1] = SI_SPEEDPOTION2;
+	StatusIconChangeTable[SC_SPEEDUP0] = SI_MOVHASTE_HORSE;
+	StatusIconChangeTable[SC_SPEEDUP1] = SI_SPEEDPOTION1;
 	StatusIconChangeTable[SC_INCSTR] = SI_INCSTR;
 	StatusIconChangeTable[SC_MIRACLE] = SI_SPIRIT;
 	StatusIconChangeTable[SC_INTRAVISION] = SI_INTRAVISION;

@@ -140,7 +140,7 @@
 2130,0,0,0,0,0,0,0,"Thor Volcano base camp"
 2131,0,0,0,0,0,0,0,"Thor Volcano base camp"
 //
-2143,0,0,0,0,0,0,0,"Guild Dungeon Event"
+2143,50,0,0,0,0,0,0,"Guild Dungeon Event"
 2144,0,0,0,0,0,0,0,"Guild Dungeon Event"
 //
 2147,0,0,0,0,0,0,0,"Attitude to the New"
