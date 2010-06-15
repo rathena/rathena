@@ -15219,7 +15219,7 @@ mid_camp,256,272,3	script	Defaria#moc2	897,{
 			mes "You'll be the one using this scroll. Am I right?";
 			mes "Here, please take this.";
 			next;
-			mes "[" + PcName + "]";
+			mes "[" + strcharinfo(0) + "]";
 			mes "'To gather members..?'";
 			mes "..Right! I remember";
 			mes "Rayan mentioned a gathering somewhere!";

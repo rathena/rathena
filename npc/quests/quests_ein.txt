@@ -6378,7 +6378,6 @@ ein_in01,200,101,5	script	Clitzer#ein	854,{
 		mes "*Press Press Press*";
 		mes "*C-c-c-c-c-c-crack!*";
 		next;
-		set name,strcharinfo(0);
 		mes "["+ strcharinfo(0) +"]";
 		mes "Oh--";
 		mes "Hell yeah!";

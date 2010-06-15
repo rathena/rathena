@@ -8867,7 +8867,6 @@ himinn,48,86,5	script	Valkyrie#sign	811,{
 		mes "[Valkyrie Sandra]";
 		mes "As a symbol of this promise to invite you to Valhalla, you shall be rewarded with 'The Sign' which will show all others that you are a great warrior whose courage was tested by the gods themselves.";
 		next;
-		set name,PcName;
 		mes "[Valkyrie Sandra]";
 		mes "Congratulations,";
 		mes ""+ strcharinfo(0) +". Verily,";
@@ -11438,7 +11437,6 @@ que_sign01,45,227,4	script	Queen of the Dead	856,{
 		close;
 	}
 	else if (sign_q == 142) {
-		set name,PcName;
 		mes "[Lady Hell]";
 		mes "^8C1717Ah.";
 		mes "You are the";

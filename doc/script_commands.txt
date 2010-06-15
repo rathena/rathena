@@ -2531,7 +2531,12 @@ correctly handle an NPC trader for carded and named items who could resell them
 - since NPC objects cannot own items, so they have to store item data in 
 variables and recreate the items.
 
-Notice that the variables this command generates are all local and numeric. 
+Notice that the variables this command generates are all temporary, attached to 
+the character, and integer.
+
+Be sure to use @inventorylist_count to go through these arrays, and not 
+'getarraysize', because the arrays are not automatically cleared between runs 
+of 'getinventorylist'.
 
 ---------------------------------------
 
@@ -4977,7 +4982,7 @@ invoking character.
 
 Timeout is the time in milliseconds the summon lives, and is set default 
 to 60000 (1 minute). Note that also the value 0 will set the timer to default,
-and it is not possible to create a spawn that lastst forever.
+and it is not possible to create a spawn that lasts forever.
 If an event label is given, upon the monster being killed, the event label will
 run as if by 'donpcevent'.
 
