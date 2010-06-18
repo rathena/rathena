@@ -235,7 +235,7 @@ lighthalzen,66,94,3	script	Elmer Keays#li_03	866,{
 	mes "precious sight to these";
 	mes "old eyes, my dear. I'm";
 	mes "really lucky to be with you.";
-	emotion e_kis;
+	emotion e_kis,0,"Margie Keays#li_02";
 	emotion e_kis2;
 	close;
 }
@@ -948,13 +948,13 @@ lighthalzen,123,212,4	script	Merpi#zen2	700,{
 	}
 }
 
-lighthalzen,296,239,3	script	Berru#lhz_01::childlhz	706,{
+lighthalzen,296,239,3	script	Berru#lhz_01	706,{
 	switch(rand(1,3)) {
 	case 1:
 		mes "[Berru]";
 		mes "Daddy...! Waaaaah~!";
 		mes "I wanna see my Daddy!";
-		emotion e_sob;
+		emotion e_sob,0,"Berru#lhz_01";
 		next;
 		mes "[Pilia]";
 		mes "Berru, I don't ";
@@ -968,7 +968,7 @@ lighthalzen,296,239,3	script	Berru#lhz_01::childlhz	706,{
 		mes "home! He said he'll";
 		mes "bring us candy tonight!";
 		mes "You go sleep first, Pilia!";
-		emotion e_ag;
+		emotion e_ag,0,"Berru#lhz_01";
 		next;
 		mes "[Pilia]";
 		mes "^333333*Sigh...*^000000";
@@ -976,7 +976,7 @@ lighthalzen,296,239,3	script	Berru#lhz_01::childlhz	706,{
 		mes "He said he found a";
 		mes "good job, but we haven't";
 		mes "heard from him since then...";
-		emotion e_dots;
+		emotion e_dots,0,"Pilia#lhz_01";
 		close;
 	case 2:
 		mes "[Pilia]";
@@ -984,7 +984,7 @@ lighthalzen,296,239,3	script	Berru#lhz_01::childlhz	706,{
 		mes "so long? I hope Daddy";
 		mes "comes back home soon.";
 		mes "Come on, Berru, don't cry.";
-		emotion e_dots;
+		emotion e_dots,0,"Pilia#lhz_01";
 		next;
 		mes "[Berru]";
 		mes "^333333*Sob...*^000000";
@@ -1002,7 +1002,7 @@ lighthalzen,296,239,3	script	Berru#lhz_01::childlhz	706,{
 		mes "but my little brother";
 		mes "just won't stop crying.";
 		mes "I'm sorry if we're loud...";
-		emotion e_what;
+		emotion e_what,0,"Pilia#lhz_01";
 		next;
 		mes "[Pilia]";
 		mes "Our daddy goes to work";
@@ -1017,12 +1017,12 @@ lighthalzen,296,239,3	script	Berru#lhz_01::childlhz	706,{
 		mes "misses him a lot. I don't";
 		mes "know how to make him";
 		mes "stop crying! What do I do?";
-		emotion e_swt2;
+		emotion e_swt2,0,"Pilia#lhz_01";
 		close;
 	}
 }
 
-lighthalzen,297,239,3	duplicate(childlhz)	Pilia#lhz_01	818
+lighthalzen,297,239,3	duplicate(Berru#lhz_01)	Pilia#lhz_01	818
 
 lighthalzen,312,233,3	script	Beggar#lhz_02	777,3,1,{
 	end;
@@ -2480,7 +2480,7 @@ lighthalzen,162,304,7	script	Rekenber Guard Drew#li	868,{
 	mes "even got the glasses chick";
 	mes "to wear 'em too? That's the";
 	mes "best news I've heard all day!";
-	emotion e_omg;
+	emotion e_omg,0,"Rekenber Guard Tan#li";
 	next;
 	mes "[Rekenber Guard Drew]";
 	mes "Okay man, you know these";

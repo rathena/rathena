@@ -3999,7 +3999,7 @@ OnTouch:
 			mes "you've finally agreed";
 			mes "to join us. Welcome!";
 			next;
-			donpcevent "#Varmunt::OnEmote";
+			emotion e_swt;
 			mes "[Varmunt]";
 			mes "Well, I don't know if I agree";
 			mes "with this company's policies,";
@@ -4007,7 +4007,7 @@ OnTouch:
 			mes "seems to be an opportunity that";
 			mes "comes once in a lifetime, so...";
 			next;
-			donpcevent "#Rekenber::OnEmote";
+			emotion e_ok,0,"#Rekenber";
 			mes "[??]";
 			mes "To be honest, this project";
 			mes "can only be a success with";
@@ -4126,10 +4126,6 @@ OnTouch:
 		}
 	}
 	warp "lhz_in01",206,129;
-	end;
-
-OnEmote:
-	emotion e_swt;
 	end;
 }
 
@@ -4144,7 +4140,7 @@ OnTouch:
 			mes "you've finally agreed";
 			mes "to join us. Welcome!";
 			next;
-			donpcevent "#Varmunt::OnEmote";
+			emotion e_swt,0,"#Varmunt";
 			mes "[Varmunt]";
 			mes "Well, I don't know if I agree";
 			mes "with this company's policies,";
@@ -4152,7 +4148,7 @@ OnTouch:
 			mes "seems to be an opportunity that";
 			mes "comes once in a lifetime, so...";
 			next;
-			donpcevent "#Rekenber::OnEmote";
+			emotion e_ok;
 			mes "[??]";
 			mes "To be honest, this project";
 			mes "can only be a success with";
@@ -4271,10 +4267,6 @@ OnTouch:
 		}
 	}
 	warp "lhz_in01",206,129;
-	end;
-
-OnEmote:
-	emotion e_ok;
 	end;
 }
 
