@@ -9419,7 +9419,7 @@ BUILDIN_FUNC(gvgoff)
 }
 /*==========================================
  *	Shows an emoticon on top of the player/npc
- *	emotion emotion#, <target: 0 - NPC, 1 - PC>
+ *	emotion emotion#, <target: 0 - NPC, 1 - PC>, <NPC/PC name>
  *------------------------------------------*/
 //Optional second parameter added by [Skotlex]
 BUILDIN_FUNC(emotion)
@@ -9435,11 +9435,22 @@ BUILDIN_FUNC(emotion)
 		player=script_getnum(st,3);
 	
 	if (player) {
-		TBL_PC *sd = script_rid2sd(st);
+		TBL_PC *sd = NULL;
+		if( script_hasdata(st,4) )
+			sd = map_nick2sd(script_getstr(st,4));
+		else
+			sd = script_rid2sd(st);
 		if (sd)
 			clif_emotion(&sd->bl,type);
 	} else
-		clif_emotion(map_id2bl(st->oid),type);
+		if( script_hasdata(st,4) )
+		{
+			TBL_NPC *nd = npc_name2id(script_getstr(st,4));
+			if(nd)
+				clif_emotion(&nd->bl,type);
+		}
+		else
+			clif_emotion(map_id2bl(st->oid),type);
 	return 0;
 }
 

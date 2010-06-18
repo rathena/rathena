@@ -5992,7 +5992,7 @@ A full list of pet IDs can be found inside 'db/pet_db.txt'
 
 ---------------------------------------
 
-*emotion <emotion number>{, target};
+*emotion <emotion number>{,<target>}{,"<target name>"};
 
 This command makes an object display an emoticon sprite above their own as 
 if they were doing that emotion. For a full list of emotion numbers, 
@@ -6002,6 +6002,9 @@ and 'e_gasp' (the exclamation mark).
 The optional target parameter specifies who will get the emotion on top of
 their head. If 0 (the default if omitted), the NPC in current use will show
 the emotion, if 1, the player that is running the script will display it.
+
+Target name parameter allows to display emotion on top of other NPC/PC without
+event labels. If specified name is not found, command does nothing.
 
 ---------------------------------------
 
