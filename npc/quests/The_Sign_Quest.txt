@@ -8990,10 +8990,6 @@ OnDisable:
 OnEnable:
 	enablenpc "Dark Lord#serin";
 	end;
-
-Onemo:
-	emotion e_gg;
-	end;
 }
 
 que_sign01,196,39,4	script	Serin#serin	90,{
@@ -9124,7 +9120,7 @@ que_sign01,196,39,4	script	Serin#serin	90,{
 			mes "I really don't want to fight you,";
 			mes "but I've come too far to give up now. If you insist on interfering, then you leave me no choice...";
 			next;
-			donpcevent "Dark Lord#serin::Onemo";
+			emotion e_gg,0,"Dark Lord#serin";
 			mes "[Dark Lord]";
 			mes "^330033Insolent mortal!";
 			mes "Do you really think";

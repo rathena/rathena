@@ -5653,8 +5653,8 @@ ve_in,233,116,3	script	Drunken Man#vol	901,{
 		mes "Hahahaha! Guess I look";
 		mes "pretty tough, don't I?";
 		next;
-		donpcevent "Drunken Lady#1::OnEmote";
-		donpcevent "Drunken Lady#2::OnEmote";
+		emotion e_lv,0,"Drunken Lady#1";
+		emotion e_lv,0,"Drunken Lady#2";
 		mes "[Ladies]";
 		mes "Oh, my God!";
 		mes "You're so cool~!";
@@ -5683,8 +5683,8 @@ ve_in,233,116,3	script	Drunken Man#vol	901,{
 		mes "Hahahaha! Guess I look";
 		mes "pretty tough, don't I?";
 		next;
-		donpcevent "Drunken Lady#1::OnEmote";
-		donpcevent "Drunken Lady#2::OnEmote";
+		emotion e_lv,0,"Drunken Lady#1";
+		emotion e_lv,0,"Drunken Lady#2";
 		mes "[Ladies]";
 		mes "Oh, my God!";
 		mes "You're so cool~!";
@@ -5751,8 +5751,8 @@ ve_in,233,116,3	script	Drunken Man#vol	901,{
 		mes "but duty calls.";
 		mes "Hahahahahahha~";
 		next;
-		donpcevent "Drunken Lady#1::OnEmote";
-		donpcevent "Drunken Lady#2::OnEmote";
+		emotion e_lv,0,"Drunken Lady#1";
+		emotion e_lv,0,"Drunken Lady#2";
 		mes "[Ladies]";
 		mes "Please don't go~";
 		next;
@@ -5836,8 +5836,8 @@ ve_in,233,116,3	script	Drunken Man#vol	901,{
 		mes "I should stay here and";
 		mes "entreat them to a lecture.";
 		next;
-		donpcevent "Drunken Lady#1::OnEmote";
-		donpcevent "Drunken Lady#2::OnEmote";
+		emotion e_lv,0,"Drunken Lady#1";
+		emotion e_lv,0,"Drunken Lady#2";
 		mes "[Ladies]";
 		mes "Oh~! You'll really";
 		mes "teach us geology?";
@@ -6007,8 +6007,8 @@ ve_in,233,116,3	script	Drunken Man#vol	901,{
 	mes "Hahahaha! Guess I look";
 	mes "pretty tough, don't I?";
 	next;
-	donpcevent "Drunken Lady#1::OnEmote";
-	donpcevent "Drunken Lady#2::OnEmote";
+	emotion e_lv,0,"Drunken Lady#1";
+	emotion e_lv,0,"Drunken Lady#2";
 	mes "[Ladies]";
 	mes "Oh, my God!";
 	mes "You're so cool~!";
@@ -6028,10 +6028,6 @@ ve_in,232,117,5	script	Drunken Lady#1	940,{
 	mes "I get free drinks if";
 	mes "I can put up with him~";
 	close;
-
-OnEmote:
-	emotion e_lv;
-	end;
 }
 
 ve_in,234,115,3	script	Drunken Lady#2	940,{
@@ -6042,10 +6038,6 @@ ve_in,234,115,3	script	Drunken Lady#2	940,{
 	mes "I can mix better drinks";
 	mes "at home, no sweat at all~";
 	close;
-
-OnEmote:
-	emotion e_lv;
-	end;
 }
 
 ve_in,277,229,3	script	Wall Closet#vol	111,{

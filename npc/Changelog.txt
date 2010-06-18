@@ -1,5 +1,7 @@
 Date		Added
 ======
+2010/06/18
+	* Rev. 14347 Applied patch from Dani to change NPC emotion events to use the updated emotion command. (bugreport:4318) [L0ne_W0lf]
 2010/06/11
 	* Rev. 14340 Disabled the Peco Peco repeatable quest, see comment in conf as to why. [L0ne_W0lf]
 	* Rev. 14339 Implemented repeatable EXP quests (with kill count and item gathering options) removed iRO_Exp.txt. [L0ne_W0lf]

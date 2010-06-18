@@ -2924,10 +2924,6 @@ OnEnter:
 	enablenpc "Ferlock#lab";
 	initnpctimer;
 	end;
-	
-OnEmote:
-	emotion e_omg,0;
-	end;
 
 OnTimer120000:
 	donpcevent "Ferlock#lab::OnInit";
@@ -3052,7 +3048,7 @@ L_Input:
 			mes "Airship. Wait, wait...";
 			mes "You look familiar...";
 			next;
-			donpcevent "Ferlock#lab::OnEmote";
+			emotion e_omg,0,"Ferlock#lab";
 			mes "[Ferlock]";
 			mes "That's right, aren't you the";
 			mes "one who brought me my";

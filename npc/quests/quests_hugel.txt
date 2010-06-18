@@ -8721,7 +8721,7 @@ hu_in01,19,161,0	script	Alex	803,{
 				mes "when you're done and";
 				mes "don't waste my time!";
 				next;
-				donpcevent "Julian::OnEmote";
+				emotion e_ho,0,"Julian";
 				mes "[Julian]";
 				mes "Hey, you know what,";
 				mes "Alex? You can't push";
@@ -8955,7 +8955,7 @@ hu_in01,14,11,4	script	Laura	70,{
 		mes "Milton, is right over";
 		mes "there. Say, 'Hello,' Ashe.";
 		next;
-		donpcevent "Ashe::OnEmote";
+		emotion e_heh,0,"Ashe";
 		mes "[Ashe]";
 		mes "Hello!";
 		next;
@@ -9097,7 +9097,7 @@ hu_in01,14,11,4	script	Laura	70,{
 				mes "expedition for the Rune Midgarts^FFFFFF ^000000 Kingdom. Ashe Milton is my";
 				mes "assistant for this excavation.";
 				next;
-				donpcevent "Ashe::OnEmote";
+				emotion e_heh,0,"Ashe";
 				mes "[Ashe]";
 				mes "Hello!";
 				next;
@@ -9273,7 +9273,7 @@ hu_in01,14,11,4	script	Laura	70,{
 				mes "greets me with a fake";
 				mes "smile. I hate her!";
 				next;
-				donpcevent "Ashe::OnEmote2"; //ET_PROFUSELY_SWAT
+				emotion e_swt2,0,"Ashe";
 				mes "[Ashe]";
 				mes "Ms. Laurence...!";
 				mes "Stop it, please!";
@@ -9657,7 +9657,7 @@ hu_in01,14,11,4	script	Laura	70,{
 				mes "Well, have you";
 				mes "ever heard of Ymir's...";
 				next;
-				donpcevent "Ashe::OnEmote3"; //ET_SURPRISE
+				emotion e_gasp,0,"Ashe";
 				mes "[Ashe]";
 				mes "...Heart?";
 				mes "Ymir's Heart, right?";
@@ -9699,7 +9699,7 @@ hu_in01,14,11,4	script	Laura	70,{
 						next;
 						break;
 				}
-				donpcevent "Ashe::OnEmote4"; //ET_OK
+				emotion e_ok,0,"Ashe";
 				mes "[Ashe]";
 				mes "Ymir's Heart?";
 				mes "That's a clothing";
@@ -9853,10 +9853,6 @@ hu_in01,18,167,4	script	Julian	86,{
 		mes "Don't tell them I said that!";
 		close;
 	}
-	
-OnEmote:
-	emotion e_ho,0;
-	end;
 }
 
 hu_in01,16,21,0	script	Ashe#5	139,2,2,{
@@ -10024,22 +10020,6 @@ hu_in01,16,20,4	script	Ashe	95,{
 			mes "you no harm~";
 			close;
 	}
-	
-OnEmote:
-	emotion e_heh,0;
-	end;
-	
-OnEmote2:
-	emotion e_swt2,0;
-	end;
-
-OnEmote3:
-	emotion e_gasp,0;
-	end;
-	
-OnEmote4:
-	emotion e_ok,0;
-	end;
 }
 
 hu_in01,174,90,0	script	Entrance	139,2,2,{
@@ -10060,7 +10040,7 @@ hu_in01,159,84,3	script	Laura#2	70,{
 	if(hg_odin == 22 || hg_odin == 23)
 	{
 		cutin "hu_laura03.bmp",2;
-		donpcevent "Laura#2::OnEmote";
+		emotion e_an,0,"Laura#2";
 		mes "[Laura]";
 		mes "Wh-what...?!";
 		mes "Does this mean";
@@ -10070,7 +10050,7 @@ hu_in01,159,84,3	script	Laura#2	70,{
 		mes "complete lunacy!";
 		next;
 		cutin "hu_alex04.bmp",0;
-		donpcevent "Alex#2::OnEmote";
+		emotion e_an,0,"Alex#2";
 		mes "[Alex]";
 		mes "What are you talking";
 		mes "about, you crazy wench?";
@@ -10127,12 +10107,12 @@ hu_in01,159,84,3	script	Laura#2	70,{
 		mes "waves a thick file";
 		mes "clasped in her hands.^000000";
 		next;
-		donpcevent "Julian#2::OnEmote";
+		emotion e_omg,0,"Julian#2";
 		mes "[Julian]";
 		mes "What...?";
 		mes "Argh, that's--!";
 		next;
-		donpcevent "Laura#2::OnEmote2";
+		emotion e_ag,0,"Laura#2";
 		mes "[Laura]";
 		mes "That's right.";
 		mes "Now tell me, what the";
@@ -10143,7 +10123,7 @@ hu_in01,159,84,3	script	Laura#2	70,{
 		mes "......";
 		mes "Julian!";
 		next;
-		donpcevent "Julian#2::OnEmote2";
+		emotion e_swt2,0,"Julian#2";
 		mes "[Julian]";
 		mes "Uh, this isn't my fault!";
 		mes "Sh-she doesn't have any";
@@ -10167,7 +10147,7 @@ hu_in01,159,84,3	script	Laura#2	70,{
 		mes "what are your true goals?!";
 		next;
 		cutin "hu_alex03.bmp",0;
-		donpcevent "Alex#2::OnEmote3";
+		emotion e_swt2,0,"Alex#2";
 		mes "[Alex]";
 		mes "I-I don't know what you're";
 		mes "talking about! J-Julian must";
@@ -10185,18 +10165,18 @@ hu_in01,159,84,3	script	Laura#2	70,{
 		mes "away, and threateningly";
 		mes "rolled up her sleeves.^000000";
 		next;
-		donpcevent "Ashe#2::OnEmote";
+		emotion e_sob,0,"Ashe#2";
 		mes "[Ashe]";
 		mes "S-stop!";
 		mes "Both of you!";
 		next;
-		donpcevent "Laura#2::OnEmote3";
+		emotion e_swt2,0,"Laura#2";
 		mes "[Laura]";
 		mes "Stay out of";
 		mes "this, Ashe!";
 		next;
 		cutin "hu_alex04.bmp",0;
-		donpcevent "Alex#2::OnEmote";
+		emotion e_an,0,"Alex#2";
 		mes "[Alex]";
 		mes "Yeah, this is none";
 		mes "of your business!";
@@ -10211,31 +10191,20 @@ hu_in01,159,84,3	script	Laura#2	70,{
 	else if(hg_odin > 23)
 	{
 		cutin "hu_laura03.bmp",2;
-		donpcevent "Laura#2::OnEmote";
+		emotion e_an,0,"Laura#2";
 		mes "[Laura]";
 		mes "Hah...!";
 		mes "Did you...";
 		mes "Just hit me?";
 		next;
 		cutin "hu_alex04.bmp",0;
-		donpcevent "Alex#2::OnEmote";
+		emotion e_an,0,"Alex#2";
 		mes "[Alex]";
 		mes "You crazy...!";
 		close2;
 		cutin "hu_alex04.bmp",255;
 		end;
 	}
-OnEmote:
-	emotion e_an,0;
-	end;
-	
-OnEmote2:
-	emotion e_ag,0;
-	end;
-	
-OnEmote3:
-	emotion e_swt2,0;
-	end;
 }
 
 hu_in01,158,84,5	duplicate(Laura#2)	Alex#2	803,0,0
@@ -10289,10 +10258,6 @@ hu_in01,162,85,4	script	Ashe#2	95,{
 		mes "find him as soon as you can!";
 		close;
 	}
-
-OnEmote:
-	emotion e_sob,0;
-	end;
 }
 
 hu_in01,171,90,0	script	Ashe#3	139,2,2,{
@@ -10346,14 +10311,6 @@ hu_in01,155,82,4	script	Julian#2	86,{
 	mes "involved. If you want,";
 	mes "you can try to stop them...";
 	close;
-	
-OnEmote:
-	emotion e_omg,0;
-	end;
-	
-OnEmote2:
-	emotion e_swt2,0;
-	end;
 }
 
 moc_fild12,160,372,0	script	Hit	139,{

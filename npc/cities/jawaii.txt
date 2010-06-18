@@ -1237,7 +1237,7 @@ prt_in,173,13,4	script	Customer#SoloHan	86,{
 		next;
 		mes "[Bachewcca]";
 		mes "...!";
-		donpcevent "Customer#Bachewcca::OnEmote";
+		emotion e_no1,0,"Customer#Bachewcca";
 		next;
 		mes "[SoloHan]";
 		mes "It's doesn't really matter whether you're married";
@@ -1390,15 +1390,13 @@ prt_in,170,14,0	script	Customer#Bachewcca	89,{
 	mes "..............";
 	mes "^666666*Gulp....gulp...*^000000";
 	mes "Grrrrr!! That hit the spot!";
-	Emotion e_sob;
+	emotion e_sob;
 	close;
 
-OnEmote:
-	emotion e_no1;
-	end;
 OnEffect1:
 	specialeffect 296; //EF_TALK_SCREAM
 	end;
+
 OnEffect2:
 	specialeffect 291; //EF_THROWITEM
 	end;

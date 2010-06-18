@@ -3156,9 +3156,6 @@ OnReset:
 }
 
 que_god02,173,58,4	script	#doppelganger1	739,{
-
-OnEmoGasp:
-	emotion e_gasp;
 	end;
 }
 
@@ -3170,9 +3167,6 @@ OnCast:
 }
 
 que_god02,175,54,1	script	#lowen	745,{
-
-OnEmoGasp:
-	emotion e_gasp;
 	end;
 
 OnCast:
@@ -3181,35 +3175,14 @@ OnCast:
 }
 
 que_god02,178,49,1	script	#knight1	751,{
-
-OnEmoGasp:
-	emotion e_gasp;
-	end;
-
-OnEmoGo:
-	emotion e_go;
 	end;
 }
 
 que_god02,168,53,7	script	#knight2	734,{
-
-OnEmoGasp:
-	emotion e_gasp;
-	end;
-
-OnEmoGo:
-	emotion e_go;
 	end;
 }
 
 que_god02,167,58,4	script	#knight3	752,{
-
-OnEmoGasp:
-	emotion e_gasp;
-	end;
-
-OnEmoGo:
-	emotion e_go;
 	end;
 }
 
@@ -3256,10 +3229,10 @@ OnTouch:
 	mapannounce "que_god02","Everyone, stay calm! Get into your positions!",0,0x9CFF00;
 	mes "^4E2F2F[Crusader Commander]";
 	mes "Everyone, get into your positions! Front line, block its movement! Rear line, support the defense!^000000";
-	donpcevent "#knight1::OnEmoGo";
-	donpcevent "#knight2::OnEmoGo";
-	donpcevent "#knight3::OnEmoGo";
-	donpcevent "#doppelganger1::OnEmoGasp";
+	emotion e_go,0,"#knight1";
+	emotion e_go,0,"#knight2";
+	emotion e_go,0,"#knight3";
+	emotion e_gasp,0,"#doppelganger1";
 	next;
 	mes "[Lowen Ellenen]";
 	mes "N-no!";
@@ -3275,10 +3248,10 @@ OnTouch:
 	mapannounce "que_god02","Mwahaha! Mortals are such fools...",0,0xA8A8A8;
 	donpcevent "#brisinsummon::OnDoppel1Off";
 	donpcevent "#brisinsummon::OnDoppel2On";
-	donpcevent "#knight1::OnEmoGasp";
-	donpcevent "#knight2::OnEmoGasp";
-	donpcevent "#knight3::OnEmoGasp";
-	donpcevent "#lowen::OnEmoGasp";
+	emotion e_gasp,0,"#knight1";
+	emotion e_gasp,0,"#knight2";
+	emotion e_gasp,0,"#knight3";
+	emotion e_gasp,0,"#lowen";
 	mes "[" + strcharinfo(0) + "]";
 	mes " ??!!!";
 	next;

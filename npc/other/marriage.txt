@@ -389,39 +389,39 @@ prt_church,97,100,4	script	Wedding Staff#w	71,{
 		mes "^CC9933You have to refine";
 		mes "items on your own to";
 		mes "make great equipment!^000000";
-		donpcevent "Single Army#Prontera::OnEmote";
+		emotion e_rock,0,"Single Army#Prontera";
 		next;
 		mes "[Single Army]";
 		mes "^330099It's a waste to";
 		mes "form parties in";
 		mes "dungeons! I can";
 		mes "make it on my own!^000000";
-		donpcevent "Single Army#Geffen::OnEmote";
+		emotion e_rock,0,"Single Army#Geffen";
 		next;
 		mes "[Single Army]";
 		mes "^666666Hell, I've trained";
 		mes "all by myself since";
 		mes "birth, all the way";
 		mes "to my job change!^000000";
-		donpcevent "Single Army#Morocc::OnEmote";
+		emotion e_rock,0,"Single Army#Morocc";
 		next;
 		mes "[Single Army]";
 		mes "^666600I CHOOSE to spend";
 		mes "Christmas alone...";
 		mes "playing Solitaire and";
 		mes "doing crossword puzzles!^000000";
-		donpcevent "Single Army#Payon::OnEmote";
+		emotion e_rock,0,"Single Army#Payon";
 		next;
 		mes "[Single Army]";
 		mes "^CC9966Women may break my";
 		mes "spirit, but they'll never";
 		mes "take... my FREEDOM!^000000";
-		donpcevent "Single Army#Amatsu::OnEmote";
+		emotion e_rock,0,"Single Army#Amatsu";
 		next;
 		mes "[Single Army]";
 		mes "^669900...We're the free! We're";
 		mes "the Invincible Single Army!^000000";
-		donpcevent "Single Army#Gonryun::OnEmote";
+		emotion e_rock,0,"Single Army#Gonryun";
 		close2;
 		cutin "wedding_marry01",255;
 		Emotion e_swt;
@@ -456,11 +456,7 @@ OnInit:
 
 OnEnable:
 	hideoffnpc "Single Army#Prontera";
-	Emotion e_go;
-	end;
-
-OnEmote:
-	emotion e_rock;
+	emotion e_go;
 	end;
 }
 
@@ -478,11 +474,7 @@ OnInit:
 
 OnEnable:
 	hideoffnpc "Single Army#Geffen";
-	Emotion e_go;
-	end;
-
-OnEmote:
-	emotion e_rock;
+	emotion e_go;
 	end;
 }
 
@@ -500,11 +492,7 @@ OnInit:
 
 OnEnable:
 	hideoffnpc "Single Army#Morocc";
-	Emotion e_go;
-	end;
-
-OnEmote:
-	emotion e_rock;
+	emotion e_go;
 	end;
 }
 
@@ -522,11 +510,7 @@ OnInit:
 
 OnEnable:
 	hideoffnpc "Single Army#Payon";
-	Emotion e_go;
-	end;
-
-OnEmote:
-	emotion e_rock;
+	emotion e_go;
 	end;
 }
 
@@ -543,11 +527,7 @@ OnInit:
 
 OnEnable:
 	hideoffnpc "Single Army#Amatsu";
-	Emotion e_go;
-	end;
-
-OnEmote:
-	emotion e_rock;
+	emotion e_go;
 	end;
 }
 
@@ -563,11 +543,7 @@ OnInit:
 
 OnEnable:
 	hideoffnpc "Single Army#Gonryun";
-	Emotion e_go;
-	end;
-
-OnEmote:
-	emotion e_rock;
+	emotion e_go;
 	end;
 }
 

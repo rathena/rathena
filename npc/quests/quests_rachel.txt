@@ -3911,7 +3911,7 @@ OnTouch:
 			mes "entrance is locked.^000000";
 			next;
 			select("Kick Door.:Smash Door with Weapon.");
-			donpcevent "Nemma#ra_temple::OnEmotion";
+			emotion e_omg,0,"Nemma#ra_temple";
 			mes "[Priestess Nemma]";
 			mes "Please don't do that!";
 			close;
@@ -4315,10 +4315,6 @@ ra_temple,116,174,3	script	Nemma#ra_temple	920,{
 L_End:
 	close2;
 	cutin "",255;
-	end;
-
-OnEmotion:
-	emotion e_omg;
 	end;
 
 S_Donate:

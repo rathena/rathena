@@ -1034,14 +1034,6 @@ um_in,139,48,5	script	Phrenetan	783,{
 		close;
 	}
 	end;
-
-OnEmoteOmg:
-	emotion e_omg;
-	end;
-
-OnEmoteRock:
-	emotion e_rock;
-	end;
 }
 
 um_in,144,45,5	script	Umpokoriohtan	789,{
@@ -1077,7 +1069,7 @@ um_in,144,45,5	script	Umpokoriohtan	789,{
 			mes "...........";
 			mes "My back--!";
 			mes "Simmer down, baby, your turn is comin' in a minute~";
-			donpcevent "Phrenetan::OnEmoteRock";
+			emotion e_rock,0,"Phrenetan";
 			emotion e_swt;
 			close;
 		}
@@ -1106,7 +1098,7 @@ um_in,144,45,5	script	Umpokoriohtan	789,{
 			mes "Baby, why you gotta be rough?";
 			mes "Hit me gently, ya dig??";
 			mes "I don't mean to hurt you~";
-			donpcevent "Phrenetan::OnEmoteOmg";
+			emotion e_omg,0,"Phrenetan";
 			emotion e_wah;
 			close;
 		}

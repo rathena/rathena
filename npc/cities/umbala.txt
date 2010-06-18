@@ -27,13 +27,6 @@
 comodo,170,137,7	script	La Ed#um	84,{
 	end;
 
-OnEmoteHmm:
-	emotion e_hmm;
-	end;
-
-OnEmoteGG:
-	emotion e_gg;
-	end;
 }
 
 comodo,171,137,1	script	Haith#um	92,{
@@ -61,7 +54,7 @@ comodo,171,137,1	script	Haith#um	92,{
 	mes "would tell us about such a";
 	mes "great treasure so easily?";
 	emotion e_hmm;
-	donpcevent "La Ed#um::OnEmoteHmm";
+	emotion e_hmm,0,"La Ed#um";
 	next;
 	select("Hm? What treasure?");
 	mes "[La Ed]";
@@ -82,7 +75,7 @@ comodo,171,137,1	script	Haith#um	92,{
 	mes "[La Ed, Haith]";
 	mes "If you pay us 1,000 zeny, we will tell you!";
 	emotion e_gg;
-	donpcevent "La Ed#um::OnEmoteGG";
+	emotion e_gg,0,"La Ed#um";
 	next;
 	if (select("Pay 1,000 zeny:Refuse to pay") == 1) {
 		if (Zeny > 999) {

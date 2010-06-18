@@ -4529,8 +4529,8 @@ mosk_in,131,92,3	script	Csar Alexsay III#npc	965,{
 					mes "Good, play it right away!";
 					next;
 					soundeffect "mos_gusli2.wav",0;
-					donpcevent "Csar Alexsay III#npc::OnEmoteAg";
-					donpcevent "Prime Minister Dmitree#m::OnEmoteAg";
+					emotion e_ag,0,"Csar Alexsay III#npc";
+					emotion e_ag,0,"Prime Minister Dmitree#m";
 					mes "[Csar Alexsay III]";
 					mes "Um... What is this? Do you mock me?";
 					mes "You are so impudent... You...!";
@@ -4646,8 +4646,8 @@ mosk_in,131,92,3	script	Csar Alexsay III#npc	965,{
 				mes "played, all the people in the";
 				mes "Csar's Palace fall in with the tune.-";
 				next;
-				donpcevent "Csar Alexsay III#npc::OnEmoteSob";
-				donpcevent "Prime Minister Dmitree#m::OnEmoteSob";
+				emotion e_sob,0,"Csar Alexsay III#npc";
+				emotion e_sob,0,"Prime Minister Dmitree#m";
 				mes "[Csar Alexsay III]";
 				mes "Oh! I can't hear without tears.";
 				mes "That's a sad tune.";
@@ -4721,14 +4721,6 @@ mosk_in,131,92,3	script	Csar Alexsay III#npc	965,{
 			close;
 		}
 	}
-	
-	OnEmoteAg:
-		emotion e_ag;
-		end;
-		
-	OnEmoteSob:
-		emotion e_sob;
-		end;
 }
 
 //----------------------------------------------------------------------------
@@ -5164,7 +5156,7 @@ mosk_in,144,279,5	script	Gallina#mos	959,{
 		mes "[Gallina]";
 		mes "It's because you didn't look after your brother. So you clean the house, Anna?";
 		next;
-		donpcevent "Anna#mos::OnEmoteSob";
+		emotion e_sob,0,"Anna#mos";
 		mes "[Anna]";
 		mes "Oh, my................";
 		next;
@@ -5282,10 +5274,6 @@ mosk_in,144,279,5	script	Gallina#mos	959,{
 		mes "I think that will be great!";
 		close;
 	}
-	
-	OnEmoteSob:
-		emotion e_sob;
-		end;
 }
 
 //----------------------------------------------------------------------------

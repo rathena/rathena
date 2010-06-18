@@ -3096,7 +3096,7 @@ que_job01,16,21,5	script	Valdes#1	55,{
 				mes "Hey there~";
 				mes "I'm Kidd.";
 				mes "Nice to meet you.";
-				donpcevent "Kidd#1::OnEmotion";
+				emotion e_ok,0,"Kidd#1";
 				cutin "mocseal_kid01.bmp",2;
 				next;
 				mes "[Valdes]";
@@ -3131,7 +3131,7 @@ que_job01,16,21,5	script	Valdes#1	55,{
 				mes "I'm lookin' forward";
 				mes "to working together";
 				mes "with you. Heh heh~";
-				donpcevent "Lin#1::OnEmotion";
+				emotion e_ok,0,"Lin#1";
 				cutin "mocseal_rin01.bmp",2;
 				next;
 				mes "[Valdes]";
@@ -3587,10 +3587,6 @@ OnInit:
 
 OnEnter:
 	enablenpc "Lin#1";
-	end;
-	
-OnEmotion:
-	emotion e_ok,0;
 	end;
 }
 
@@ -4667,10 +4663,6 @@ OnInit:
 	
 OnEnter:
 	enablenpc "Kidd#1";
-	end;
-	
-OnEmotion:
-	emotion e_ok,0;
 	end;
 }
 
@@ -8290,39 +8282,39 @@ OnStop:
 OnEnter:
 	enablenpc "#maogate1_battle";
 	end;
-	
+
 OnStop2:
 	stopnpctimer;
 	killmonster "que_job02","#maogate1_battle::OnMyMobDead";
 	end;
-	
+
 OnTouch:
 	initnpctimer;
 	emotion e_wah,1;
 	disablenpc "#maogate1_battle";
 	end;
-	
+
 OnTimer500:
 	monster "que_job02",71,85,"Mummy",1041,1,"#maogate1_battle::OnMyMobDead";
 	monster "que_job02",79,85,"Mummy",1041,1,"#maogate1_battle::OnMyMobDead";
 	monster "que_job02",71,80,"Mummy",1041,1,"#maogate1_battle::OnMyMobDead";
 	monster "que_job02",79,80,"Mummy",1041,1,"#maogate1_battle::OnMyMobDead";
 	end;
-	
+
 OnTimer5000:
 	mapannounce "que_job02","Watch out!",1,0x90EE90;
 	donpcevent "Dandelion Member#1_bt::OnEnter";
 	end;
-	
+
 OnTimer6000:
 	specialeffect EF_LORD;
 	end;
-	
+
 OnTimer6500:
 	killmonster "que_job02","#maogate1_battle::OnMyMobDead";
 	stopnpctimer;
 	end;
-	
+
 OnMyMobDead:
 	end;
 }
@@ -8383,7 +8375,7 @@ que_job02,66,85,5	script	Dandelion Member#1_bt	880,{
 OnInit:
 	disablenpc "Dandelion Member#1_bt";
 	end;
-	
+
 OnEnter:
 	enablenpc "Dandelion Member#1_bt";
 	end;
@@ -8394,11 +8386,11 @@ que_job02,87,83,1	script	#maogate1_setting	139,2,2,{
 OnStop:
 	disablenpc "#maogate1_setting";
 	end;
-	
+
 OnEnter:
 	enablenpc "#maogate1_setting";
 	end;
-	
+
 OnTouch:
 	if (mao_request == 27)
 	{
@@ -8417,20 +8409,20 @@ que_job02,117,101,1	script	#maogate1_end	139,3,3,{
 OnInit:
 	disablenpc "#maogate1_end";
 	end;
-	
+
 OnReset:
 	killmonster "que_job02","#maogate1_end::OnMyMobDead";
 	end;
-	
+
 OnStop:
 	killmonster "que_job02","#maogate1_end::OnMyMobDead";
 	stopnpctimer;
 	end;
-	
+
 OnEnter:
 	enablenpc "#maogate1_end";
 	end;
-	
+
 OnTouch:
 	donpcevent "#maogate1_setting::OnStop";
 	mes "[" + strcharinfo(0) + "]";
@@ -8457,7 +8449,7 @@ OnTouch:
 	mes "working for, the Dandelion";
 	mes "Organization, have been";
 	mes "hunting Mr. Moore down...";
-	donpcevent "Lin#maogate1_1::OnEmotion";
+	emotion e_wah,0,"Lin#maogate1_1";
 	next;
 	cutin "mocseal_kid01.bmp",0;
 	mes "[Kidd]";
@@ -8480,7 +8472,7 @@ OnTouch:
 	mes "me everything you know";
 	mes "about your own client,";
 	mes "the Dandelion Organization...";
-	donpcevent "R#maogate1::OnEmotion";
+	emotion e_hmm,0,"R#maogate1";
 	next;
 	cutin "mocseal_rin01.bmp",255;
 	cutin "mocseal_kid01.bmp",255;
@@ -8497,7 +8489,7 @@ OnTouch:
 	mes "Your blood will be used";
 	mes "to revive Morroc Satan!";
 	donpcevent "R#maogate1::OnSpell";
-	donpcevent "Kidd#maogate1_1::OnEmotion";
+	emotion e_gasp,0,"Kidd#maogate1_1";
 	emotion e_gasp,1;
 	next;
 	mes "[Kidd]";
@@ -8528,7 +8520,7 @@ OnTouch:
 	mes "Fine, you leave me";
 	mes "no choice. Feel the";
 	mes "power of Morroc Satan!";
-	donpcevent "R#maogate1::OnEmotion2";
+	emotion e_gg,0,"R#maogate1";
 	next;
 	donpcevent "R#maogate1::OnInit";
 	initnpctimer;
@@ -8561,10 +8553,10 @@ OnTimer500:
 	mapannounce "que_job02","I'll back you up!",1,0x90EE90;
 	donpcevent "Dandelion#maogate1_3::OnEnter";
 	donpcevent "Dandelion#maogate1_4::OnEnter";
-	donpcevent "Dandelion#maogate1_1::OnEmotion";
-	donpcevent "Dandelion#maogate1_2::OnEmotion";
-	donpcevent "Dandelion#maogate1_3::OnEmotion";
-	donpcevent "Dandelion#maogate1_4::OnEmotion";
+	emotion e_go,0,"Dandelion#maogate1_1";
+	emotion e_go,0,"Dandelion#maogate1_2";
+	emotion e_go,0,"Dandelion#maogate1_3";
+	emotion e_go,0,"Dandelion#maogate1_4";
 	end;
 
 OnTimer3000:
@@ -8610,13 +8602,9 @@ que_job02,116,108,5	script	Kidd#maogate1_1	884,{
 OnInit:
 	disablenpc "Kidd#maogate1_1";
 	end;
-	
+
 OnEnter:
 	enablenpc "Kidd#maogate1_1";
-	end;
-	
-OnEmotion:
-	emotion e_gasp,0;
 	end;
 }
 
@@ -8627,11 +8615,11 @@ que_job02,126,103,5	script	Kidd#maogate1_2	884,{
 OnInit:
 	disablenpc "Kidd#maogate1_2";
 	end;
-	
+
 OnEnter:
 	enablenpc "Kidd#maogate1_2";
 	end;
-	
+
 OnMyMobDead:
 	set $@maogate1mobs,$@maogate1mobs -1;
 	if($@maogate1mobs < 1) donpcevent "#maogate1_end2::OnEnter";
@@ -8643,13 +8631,9 @@ que_job02,121,106,1	script	Lin#maogate1_1	885,{
 OnInit:
 	disablenpc "Lin#maogate1_1";
 	end;
-	
+
 OnEnter:
 	enablenpc "Lin#maogate1_1";
-	end;
-	
-OnEmotion:
-	emotion e_wah,0;
 	end;
 }
 
@@ -8658,7 +8642,7 @@ que_job02,127,101,1	script	Lin#maogate1_2	885,{
 OnInit:
 	disablenpc "Lin#maogate1_2";
 	end;
-	
+
 OnEnter:
 	enablenpc "Lin#maogate1_2";
 	end;
@@ -8669,19 +8653,11 @@ que_job02,124,109,3	script	R#maogate1	880,{
 OnInit:
 	disablenpc "R#maogate1";
 	end;
-	
+
 OnEnter:
 	enablenpc "R#maogate1";
 	end;
-	
-OnEmotion:
-	emotion e_hmm,0;
-	end;
-	
-OnEmotion2:
-	emotion e_gg,0;
-	end;
-	
+
 OnSpell:
 	specialeffect EF_BEGINSPELL2;
 	end;
@@ -8692,13 +8668,9 @@ que_job02,113,107,5	script	Dandelion#maogate1_1	880,{
 OnInit:
 	disablenpc "Dandelion#maogate1_1";
 	end;
-	
+
 OnEnter:
 	enablenpc "Dandelion#maogate1_1";
-	end;
-	
-OnEmotion:
-	emotion e_go,0;
 	end;
 }
 
@@ -8707,19 +8679,15 @@ que_job02,121,100,7	script	Dandelion#maogate1_2	880,{
 OnInit:
 	disablenpc "Dandelion#maogate1_2";
 	end;
-	
+
 OnEnter:
 	enablenpc "Dandelion#maogate1_2";
 	end;
-	
-OnEmotion:
-	emotion e_go,0;
-	end;
-	
+
 OnSpell:
 	specialeffect EF_BEGINSPELL2;
 	end;
-	
+
 OnSpell2:
 	specialeffect EF_LORD;
 	end;
@@ -8730,15 +8698,11 @@ que_job02,122,98,1	script	Dandelion#maogate1_3	880,{
 OnInit:
 	disablenpc "Dandelion#maogate1_3";
 	end;
-	
+
 OnEnter:
 	enablenpc "Dandelion#maogate1_3";
 	end;
-	
-OnEmotion:
-	emotion e_go,0;
-	end;
-	
+
 OnSpell:
 	specialeffect EF_BEGINSPELL2;
 	end;
@@ -8749,15 +8713,11 @@ que_job02,122,111,5	script	Dandelion#maogate1_4	880,{
 OnInit:
 	disablenpc "Dandelion#maogate1_4";
 	end;
-	
+
 OnEnter:
 	enablenpc "Dandelion#maogate1_4";
 	end;
-	
-OnEmotion:
-	emotion e_go,0;
-	end;
-	
+
 OnSpell:
 	specialeffect EF_LORD;
 	end;
@@ -8768,7 +8728,7 @@ que_job02,122,106,1	script	#maogate1_end2	139,15,15,{
 OnInit:
 	disablenpc "#maogate1_end2";
 	end;
-	
+
 OnEnter:
 	enablenpc "#maogate1_end2";
 	end;
@@ -9482,7 +9442,7 @@ OnTouch:
 	mes "working for, the Dandelion";
 	mes "Organization, have been";
 	mes "hunting Mr. Moore down...";
-	donpcevent "Lin#maogate2_1::OnEmotion";
+	emotion e_wah,0,"Lin#maogate2_1";
 	next;
 	cutin "mocseal_kid01.bmp",0;
 	mes "[Kidd]";
@@ -9505,7 +9465,7 @@ OnTouch:
 	mes "me everything you know";
 	mes "about your own client,";
 	mes "the Dandelion Organization...";
-	donpcevent "R#maogate2::OnEmotion";
+	emotion e_hmm,0,"R#maogate2";
 	next;
 	cutin "mocseal_rin01.bmp",255;
 	cutin "mocseal_kid01.bmp",255;
@@ -9522,7 +9482,7 @@ OnTouch:
 	mes "Your blood will be used";
 	mes "to revive Morroc Satan!";
 	donpcevent "R#maogate2::OnSpell";
-	donpcevent "Kidd#maogate2_1::OnEmotion";
+	emotion e_gasp,0,"Kidd#maogate2_1";
 	emotion e_gasp,1;
 	next;
 	mes "[Kidd]";
@@ -9553,7 +9513,7 @@ OnTouch:
 	mes "Fine, you leave me";
 	mes "no choice. Feel the";
 	mes "power of Morroc Satan!";
-	donpcevent "R#maogate2::OnEmotion2";
+	emotion e_gg,0,"R#maogate2";
 	next;
 	donpcevent "R#maogate2::OnInit";
 	initnpctimer;
@@ -9587,10 +9547,10 @@ OnTimer500:
 	mapannounce "que_job03","I'll back you up!",1,0x90EE90;
 	donpcevent "Dandelion#maogate2_3::OnEnter";
 	donpcevent "Dandelion#maogate2_4::OnEnter";
-	donpcevent "Dandelion#maogate2_1::OnEmotion";
-	donpcevent "Dandelion#maogate2_2::OnEmotion";
-	donpcevent "Dandelion#maogate2_3::OnEmotion";
-	donpcevent "Dandelion#maogate2_4::OnEmotion";
+	emotion e_go,0,"Dandelion#maogate2_1";
+	emotion e_go,0,"Dandelion#maogate2_2";
+	emotion e_go,0,"Dandelion#maogate2_3";
+	emotion e_go,0,"Dandelion#maogate2_4";
 	end;
 
 OnTimer3000:
@@ -9626,7 +9586,7 @@ OnTimer10000:
 	donpcevent "Dandelion#maogate2_1::OnInit";
 	stopnpctimer;
 	end;
-	
+
 OnMyMobDead:
 	end;
 }
@@ -9636,13 +9596,9 @@ que_job03,116,108,5	script	Kidd#maogate2_1	884,{
 OnInit:
 	disablenpc "Kidd#maogate2_1";
 	end;
-	
+
 OnEnter:
 	enablenpc "Kidd#maogate2_1";
-	end;
-	
-OnEmotion:
-	emotion e_gasp,0;
 	end;
 }
 
@@ -9653,11 +9609,11 @@ que_job03,126,103,5	script	Kidd#maogate2_2	884,{
 OnInit:
 	disablenpc "Kidd#maogate2_2";
 	end;
-	
+
 OnEnter:
 	enablenpc "Kidd#maogate2_2";
 	end;
-	
+
 OnMyMobDead:
 	set $@maogate2mobs,$@maogate2mobs -1;
 	if($@maogate2mobs < 1) donpcevent "#maogate2_end2::OnEnter";
@@ -9669,13 +9625,9 @@ que_job03,121,106,1	script	Lin#maogate2_1	885,{
 OnInit:
 	disablenpc "Lin#maogate2_1";
 	end;
-	
+
 OnEnter:
 	enablenpc "Lin#maogate2_1";
-	end;
-	
-OnEmotion:
-	emotion e_wah,0;
 	end;
 }
 
@@ -9684,7 +9636,7 @@ que_job03,127,101,1	script	Lin#maogate2_2	885,{
 OnInit:
 	disablenpc "Lin#maogate2_2";
 	end;
-	
+
 OnEnter:
 	enablenpc "Lin#maogate2_2";
 	end;
@@ -9695,19 +9647,11 @@ que_job03,124,109,3	script	R#maogate2	880,{
 OnInit:
 	disablenpc "R#maogate2";
 	end;
-	
+
 OnEnter:
 	enablenpc "R#maogate2";
 	end;
-	
-OnEmotion:
-	emotion e_hmm,0;
-	end;
-	
-OnEmotion2:
-	emotion e_gg,0;
-	end;
-	
+
 OnSpell:
 	specialeffect EF_BEGINSPELL2;
 	end;
@@ -9718,13 +9662,9 @@ que_job03,113,107,5	script	Dandelion#maogate2_1	880,{
 OnInit:
 	disablenpc "Dandelion#maogate2_1";
 	end;
-	
+
 OnEnter:
 	enablenpc "Dandelion#maogate2_1";
-	end;
-	
-OnEmotion:
-	emotion e_go,0;
 	end;
 }
 
@@ -9733,19 +9673,15 @@ que_job03,121,100,7	script	Dandelion#maogate2_2	880,{
 OnInit:
 	disablenpc "Dandelion#maogate2_2";
 	end;
-	
+
 OnEnter:
 	enablenpc "Dandelion#maogate2_2";
 	end;
-	
-OnEmotion:
-	emotion e_go,0;
-	end;
-	
+
 OnSpell:
 	specialeffect EF_BEGINSPELL2;
 	end;
-	
+
 OnSpell2:
 	specialeffect EF_LORD;
 	end;
@@ -9756,15 +9692,11 @@ que_job03,122,98,1	script	Dandelion#maogate2_3	880,{
 OnInit:
 	disablenpc "Dandelion#maogate2_3";
 	end;
-	
+
 OnEnter:
 	enablenpc "Dandelion#maogate2_3";
 	end;
-	
-OnEmotion:
-	emotion e_go,0;
-	end;
-	
+
 OnSpell:
 	specialeffect EF_BEGINSPELL2;
 	end;
@@ -9775,15 +9707,11 @@ que_job03,122,111,5	script	Dandelion#maogate2_4	880,{
 OnInit:
 	disablenpc "Dandelion#maogate2_4";
 	end;
-	
+
 OnEnter:
 	enablenpc "Dandelion#maogate2_4";
 	end;
-	
-OnEmotion:
-	emotion e_go,0;
-	end;
-	
+
 OnSpell:
 	specialeffect EF_LORD;
 	end;
@@ -10241,13 +10169,13 @@ que_job01,68,88,5	script	Simon#mao	881,{
 	mes "...No. How many";
 	mes "times must I tell you?";
 	mes "I'm not going back.";
-	donpcevent "Simon#mao::OnEmotion1";
+	emotion e_swt,0,"Simon#mao";
 	next;
 	mes "[Kimmie]";
 	mes "Please...";
 	mes "We really need";
 	mes "you back home...";
-	donpcevent "Kimmie::OnEmotion2";
+	emotion e_sob,0,"Kimmie";
 	next;
 	mes "[Simon]";
 	mes "I'm sorry, Kimmie.";
@@ -10263,7 +10191,7 @@ que_job01,68,88,5	script	Simon#mao	881,{
 	mes "I d-didn't want to tell you";
 	mes "this, but Jimmy's been getting";
 	mes "in trouble with the law and...";
-	donpcevent "Kimmie::OnEmotion3";
+	emotion e_wah,0,"Kimmie";
 	next;
 	mes "[Simon]";
 	mes "Then it's his own";
@@ -10284,18 +10212,6 @@ que_job01,68,88,5	script	Simon#mao	881,{
 	mes "good not to get involved";
 	mes "with other people's problems.";
 	close;
-	
-OnEmotion1:
-	emotion e_swt,0;
-	end;
-	
-OnEmotion2:
-	emotion e_sob,0;
-	end;
-	
-OnEmotion3:
-	emotion e_wah,0;
-	end;
 }
 
 que_job01,70,84,1	duplicate(Simon#mao)	Kimmie	882,0,0

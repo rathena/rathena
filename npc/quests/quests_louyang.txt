@@ -1820,25 +1820,6 @@ lou_in02,201,166,4	script	Storage Keeper#lou	819,{
 	mes "take care of these things";
 	mes "as soon as I can...";
 	close;
-
-OnEmotion1:
-	emotion e_an;
-	end;
-
-OnEmotion2:
-	emotion e_pif;
-	end;
-
-OnEmotion3:
-	emotion e_gg;
-	end;
-
-OnEmotion4:
-	emotion e_wah;
-	end;
-
-OnEmotion5:
-	emotion e_rock;
 }
 
 lou_in02,210,47,0	script	City Hall Officer#lou	825,{
@@ -2194,7 +2175,7 @@ lou_in02,204,169,0	script	Supply Stack#1lou	111,{
 			mes "[Jiang Xiayou]";
 			mes "Hey, hey...";
 			mes "I told you! It's not too late, why don't you do me the favor I asked? I'm only asking you once!";
-			donpcevent "Storage Keeper#lou::OnEmotion1";
+			emotion e_an,0,"Storage Keeper#lou";
 			close;
 		}
 		mes "^3355FF*Rummage rummage*";
@@ -2256,7 +2237,7 @@ lou_in02,207,168,0	script	Supply Stack#5lou	111,{
 	next;
 	mes "[Jiang Xiayou]";
 	mes "Hey, don't touch anything! If you mess anything up, you've gotta pile it up again, got it? If you don't want to clean up after yourself, don't make a mess!";
-	donpcevent "Storage Keeper#lou::OnEmotion5";
+	emotion e_rock,0,"Storage Keeper#lou";
 	close;
 }
 
@@ -2285,7 +2266,7 @@ lou_in02,206,163,0	script	Supply Stack#4lou	111,{
 				mes "You found it...?!";
 				mes "I can't believe it!";
 				mes "You just lucked out.";
-				donpcevent "Storage Keeper#lou::OnEmotion4";
+				emotion e_wah,0,"Storage Keeper#lou";
 				close;
 			}
 			mes "^3355FF*Rummage rummage*";
@@ -2350,7 +2331,7 @@ lou_in02,198,170,0	script	Supply Stack#3lou	111,{
 			mes "It's not too late for you";
 			mes "to do the favor I asked.";
 			mes "I'm only asking you once!";
-			donpcevent "Storage Keeper#lou::OnEmotion3";
+			emotion e_gg,0,"Storage Keeper#lou";
 			close;
 		}
 		mes "^3355FF*Rummage rummage*";
@@ -2398,7 +2379,7 @@ lou_in02,192,170,0	script	Supply Stack#2	111,{
 			next;
 			mes "[Jiang Xiayou]";
 			mes "I told you! Now stop bugging me and leave now! I don't wanna deal with someone who won't trust me.";
-			donpcevent "Storage Keeper#lou::OnEmotion2";
+			emotion e_pif,0,"Storage Keeper#lou";
 			close;
 		}
 		mes "^3355FF*Rummage rummage*";
