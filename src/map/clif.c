@@ -9031,6 +9031,9 @@ void clif_parse_WisMessage(int fd, struct map_session_data* sd)
 			char output[256];
 
 			str = message;
+			// skip codepage indicator, if detected
+			if( str[0] == '|' && strlen(str) >= 4 )
+				str += 3;
 			for( i = 0; i < 10; ++i )
 			{// Splits the message using '#' as separators
 				split = strchr(str,'#');
