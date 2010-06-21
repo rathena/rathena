@@ -8,6 +8,10 @@
 	1475 Equestrian's Spear:	NEED INFO.
 	13005 Angelic Wing Dagger:	NEED INFO.
 =======================
+2010/06/21
+	* Rev. 14352 Minor item database bug fixes! [L0ne_W0lf]
+	- Corrected some lower headgears being able to be refined. (bugreport:4328) 
+	- Fixed wrong view ids for crown of deceit and musical note headband. (bugreport:4328) 
 2010/06/11
 	* Rev. 14342 Added updated 13.2 drops to existing monsters. (Most rates are unknown, and set to 0.1%) [L0ne_W0lf]
 	* And time to squish database bug reports!

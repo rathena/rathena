@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
-//= 2.0
+//= 2.1
 //===== Compatible With: =====================================
 //= eAthena SVN
 //===== Description: =========================================
@@ -24,6 +24,7 @@
 //= 1.9 Applied updated eco/def systems. [L0ne_W0lf]
 //= 2.0 Fixed eco/def not actually incrementing. [L0ne_W0lf]
 //=     Can no longer gain eco/def higher than 100.
+//= 2.1 Fixed setcell extending more than it should on 3rd barricade. (bugreport:4323) [L0ne_W0lf]
 //============================================================
 
 arug_cas04,1,1,0	script	Manager#aru04_02	111,{
@@ -1275,12 +1276,12 @@ OnBarrierDestroyed:
 	if (.MyMobCount == 0) {
 		setarray $agit_ar04[4],1;
 		mapannounce "arug_cas04","The 3rd Fortress Gate is destroyed!",bc_map,"0x00ff00";
-		setcell "arug_cas04",138,363,145,263,cell_walkable,1;
+		setcell "arug_cas04",138,263,145,263,cell_walkable,1;
 	}
 	end;
 
 OnDisable:
-	setcell "arug_cas04",138,363,145,263,cell_walkable,1;
+	setcell "arug_cas04",138,263,145,263,cell_walkable,1;
 	killmonster "arug_cas04","#aru04_RL03::OnBarrierDestroyed";
 	end;
 }
