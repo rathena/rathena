@@ -4,7 +4,7 @@
 //= Made by: Black Dragon
 //= Converted by: Shin
 //===== Current Version: ===================================== 
-//= 3.2
+//= 3.3
 //===== Compatible With: ===================================== 
 //= eAthena  SVN
 //===== Description: ========================================= 
@@ -31,6 +31,7 @@
 //= 3.0 Updated waiting room. (Removes global var) [L0ne_W0lf]
 //= 3.1 Adding Hermemton's changes. [L0ne_W0lf]
 //= 3.2 Added Quest Log commands. [Kisuka]
+//= 3.3 Removed the need for use of 'goto.' [L0ne_W0lf]
 //============================================================
 
 
@@ -491,40 +492,40 @@ prt_church,95,127,3	script	Crusader	745,{
 		mes "If you would like to become a Crusader, please speak with our leader in the Prontera Central Palace.";
 		close;
 	}
-	else if(CRUS_Q == 6) {
-		mes "Welcome.";
-		mes "Did you do well";
-		mes "on those painful tests?";
-		mes "I will be conducting your next test.";
-		next;
-		mes "[Gabriel Valentine]";
-		mes "My name is Gabriel Valentine. I, too, am preparing for the Holy War. For the time being, I act as guard for this church.";
-		next;
-		mes "[Gabriel Valentine]";
-		mes "I will test to see if you have acquired the knowledge that is necessary to become a Crusader.";
-		mes "We can't very well win the Holy War just by swinging a sword.";
-		next;
-		mes "[Gabriel Valentine]";
-		mes "I will give";
-		mes "you 10 questions.";
-		mes "Answer them correctly.";
-		next;
-		goto C_Questions;
-	} 
-	else if(CRUS_Q == 7) {
-		mes "Welcome back~";
-		mes "Did you prepare";
-		mes "well for this test?";
-		mes "Let's try again,";
-		mes "shall we...?";
-		next;
-		mes "[Gabriel Valentine]";
-		mes "Once again, I'm going";
-		mes "to give you 10 questions";
-		mes "Listen carefully, and";
-		mes "choose the correct answer.";
-		next;
-C_Questions:
+	else if((CRUS_Q == 6) || (CRUS_Q == 7)) {
+		if(CRUS_Q == 6) {
+			mes "Welcome.";
+			mes "Did you do well";
+			mes "on those painful tests?";
+			mes "I will be conducting your next test.";
+			next;
+			mes "[Gabriel Valentine]";
+			mes "My name is Gabriel Valentine. I, too, am preparing for the Holy War. For the time being, I act as guard for this church.";
+			next;
+			mes "[Gabriel Valentine]";
+			mes "I will test to see if you have acquired the knowledge that is necessary to become a Crusader.";
+			mes "We can't very well win the Holy War just by swinging a sword.";
+			next;
+			mes "[Gabriel Valentine]";
+			mes "I will give";
+			mes "you 10 questions.";
+			mes "Answer them correctly.";
+			next;
+		}
+		else if(CRUS_Q == 7) {
+			mes "Welcome back~";
+			mes "Did you prepare";
+			mes "well for this test?";
+			mes "Let's try again,";
+			mes "shall we...?";
+			next;
+			mes "[Gabriel Valentine]";
+			mes "Once again, I'm going";
+			mes "to give you 10 questions";
+			mes "Listen carefully, and";
+			mes "choose the correct answer.";
+			next;
+		}
 		set .@cru_m,rand(1,3);
 		if (.@cru_m == 1) {
 			mes "[Gabriel Valentine]";
@@ -768,7 +769,7 @@ C_Questions:
 		mes "[Gabriel Valentine]";
 		mes "Don't stress, you need to know a lot in order to pass this test. In any case, I'll be waiting right here. When you think you're ready, come back, alright?";
 		close;
-	}
+	} 
 	else if(CRUS_Q == 8 || CRUS_Q == 9) {
 		mes "Like I mentioned before, you should go to Prontera Castle and meet with Bliant Piyord to take your next test. Good luck, and become a Crusder soon, alright?";
 		close;

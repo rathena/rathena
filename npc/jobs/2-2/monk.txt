@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Dino9021, Edited / Translated by Celest
 //===== Current Version: ===================================== 
-//= 2.4
+//= 2.5
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -15,6 +15,7 @@
 //= 2.3 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
 //= 2.3a Deleted unused variables. [Samuray22]
 //= 2.4 Added Quest Log commands. [Kisuka]
+//= 2.5 Removed the need for use of 'goto.' [L0ne_W0lf]
 //============================================================ 
 
 prt_monk,59,247,1	script	Guarding Monk#mk	120,6,2,{
@@ -903,42 +904,49 @@ monk_in,99,58,1	script	Sensei Moohae#mk	60,{
 }
 
 prt_monk,251,255,1	script	Touha#mk	79,{
-	if (MONK_Q == 10) {
-		mes "[Touha]";
-		mes "What brings you to me.";
-		mes "Do you wish to share a conversation with me?";
-		next;
-		mes "[Touha]";
-		mes "Oh, I see. You're on the monk in training.";
-		mes "You already possess a similar spirit as a monk's.";
-		next;
-		mes "[Touha]";
-		mes "By the looks of you, it seems, you";
-		mes "have already visited Sensei Moohae. Good.";
-		next;
-		mes "[Touha]";
-		mes "Let me inform you about certain things you must know as a monk.";
-		mes "Then I will help you to strengthen your body so that you can bear your next training.";
-		next;
-		mes "[Touha]";
-		mes "Calm your mind.";
-		mes "Relax your body...are you ready?";
-		next;
-		if (select("Yes.:No.") == 2) {
+	if (MONK_Q >= 10 && MONK_Q < 14) {
+		if (MONK_Q == 10) {
 			mes "[Touha]";
-			mes "Please come back when you're ready.";
-			close;
+			mes "What brings you to me.";
+			mes "Do you wish to share a conversation with me?";
+			next;
+			mes "[Touha]";
+			mes "Oh, I see. You're on the monk in training.";
+			mes "You already possess a similar spirit as a monk's.";
+			next;
+			mes "[Touha]";
+			mes "By the looks of you, it seems, you";
+			mes "have already visited Sensei Moohae. Good.";
+			next;
+			mes "[Touha]";
+			mes "Let me inform you about certain things you must know as a monk.";
+			mes "Then I will help you to strengthen your body so that you can bear your next training.";
+			next;
+			mes "[Touha]";
+			mes "Calm your mind.";
+			mes "Relax your body...are you ready?";
+			next;
+			if (select("Yes.:No.") == 2) {
+				mes "[Touha]";
+				mes "Please come back when you're ready.";
+				close;
+			}
+			mes "[Touha]";
+			mes "Ok...then.";
+			next;
+			mes "[Touha]";
+			mes "Please repeat after me.";
+			next;
+			changequest 3024,3025;
+		}
+		else {
+			mes "[Touha]";
+			mes "Now, pay attention this time...";
+			next;
 		}
 		mes "[Touha]";
-		mes "Ok...then.";
-		next;
-		mes "[Touha]";
-		mes "Please repeat after me.";
-		next;
-		mes "[Touha]";
-		changequest 3024,3025;
-		switch(rand(1,3)) {
-		case 1:
+		set .@rand,rand(1,3);
+		if ((.@rand == 1) || (MONK_Q == 11)) {
 			set MONK_Q,11;
 			mes "I seek the path";
 			next;
@@ -968,8 +976,8 @@ prt_monk,251,255,1	script	Touha#mk	79,{
 			next;
 			mes "[Touha]";
 			mes "et Spiritus Sancti.";
-			break;
-		case 2:
+		}
+		else if ((.@rand == 2) || (MONK_Q == 12)) {
 			set MONK_Q,12;
 			mes "I commit myself to";
 			next;
@@ -999,8 +1007,8 @@ prt_monk,251,255,1	script	Touha#mk	79,{
 			next;
 			mes "[Touha]";
 			mes "et Spiritus Sancti.";
-			break;
-		case 3:
+		}
+		else if ((.@rand == 3) || (MONK_Q == 13)) {
 			set MONK_Q,13;
 			mes "And shepherds we shall be,";
 			next;
@@ -1032,12 +1040,13 @@ prt_monk,251,255,1	script	Touha#mk	79,{
 			mes "et Spiritus Sancti.";
 		}
 		next;
-		mes "[Touha]";
-		mes "Ok, that is all. Now repeat what I have spoken.";
-		if (MONK_Q == 11) {
-L_MonkOath1:
+		if (MONK_Q == 10) {
+			mes "[Touha]";
+			mes "Ok, that is all. Now repeat what I have spoken.";
 			mes "" + strcharinfo(0) + ", your turn.";
 			next;
+		}
+		if (MONK_Q == 11) {
 			switch(select("shall hold true:We monks:and will help protect others:through the teachings:In nomine Patris, et Filii:to what we believe:I seek the path:we learn through our lives.:et Spiritus Sancti.:of enlightenment.")) {
 			case 1:
 				mes "[" + strcharinfo(0) + "]";
@@ -1219,9 +1228,6 @@ L_MonkOath1:
 			}
 		}
 		else if (MONK_Q == 12) {
-L_MonkOath2:
-			mes "" + strcharinfo(0) + ", your turn.";
-			next;
 			switch(select("I will follow my path:veritas and aequitas.:to enlightenment and purity.:I commit myself to:I will protect my:victorious while I breathe.:brothers with my life.:Evil shall never be:In nomine Patris, et Filii:et Spiritus Sancti.")) {
 			case 1:
 				mes "[" + strcharinfo(0) + "]";
@@ -1402,9 +1408,6 @@ L_MonkOath2:
 			}
 		}
 		else if (MONK_Q == 13) {
-L_MonkOath3:
-			mes "" + strcharinfo(0) + ", your turn.";
-			next;
 			switch(select("for thee my lord for thee.:And shepherds we shall be,:Power hath descended forth:out thy command. And we shall:from the hand:flow a river forth to thee and:so our feet may swiftly carry:teeming with souls shall it ever be:et Spiritus Sancti.:In nomine Patris, et Filii")) {
 			case 1:
 				mes "[" + strcharinfo(0) + "]";
@@ -1635,114 +1638,6 @@ L_MonkOath3:
 			mes "[Touha]";
 			mes "If you cannot pay attention and repeat what I ask you to, I will not allow you to continue your training here..";
 			close;
-		}
-	}
-	else if (MONK_Q > 10 && MONK_Q < 14) {
-		mes "[Touha]";
-		mes "Now, pay attention this time...";
-		next;
-		mes "[Touha]";
-		if (MONK_Q == 11) {
-			mes "I seek the path";
-			next;
-			mes "[Touha]";
-			mes "of enlightenment.";
-			next;
-			mes "[Touha]";
-			mes "We monks";
-			next;
-			mes "[Touha]";
-			mes "shall hold true";
-			next;
-			mes "[Touha]";
-			mes "to what we believe";
-			next;
-			mes "[Touha]";
-			mes "and will help protect others";
-			next;
-			mes "[Touha]";
-			mes "through the teachings";
-			next;
-			mes "[Touha]";
-			mes "we learn through our lives.";
-			next;
-			mes "[Touha]";
-			mes "In nomine Patris, et Filii";
-			next;
-			mes "[Touha]";
-			mes "et Spiritus Sancti.";
-			next;
-			mes "[Touha]";
-			mes "Ok, that is the end.";
-			goto L_MonkOath1;
-		}
-		else if (MONK_Q == 12) {
-			mes "I commit myself to";
-			next;
-			mes "[Touha]";
-			mes "veritas and aequitas.";
-			next;
-			mes "[Touha]";
-			mes "I will follow my path";
-			next;
-			mes "[Touha]";
-			mes "to enlightenment and purity.";
-			next;
-			mes "[Touha]";
-			mes "I will protect my";
-			next;
-			mes "[Touha]";
-			mes "brothers with my life.";
-			next;
-			mes "[Touha]";
-			mes "Evil shall never be";
-			next;
-			mes "[Touha]";
-			mes "victorious while I breathe.";
-			next;
-			mes "[Touha]";
-			mes "In nomine Patris, et Filii";
-			next;
-			mes "[Touha]";
-			mes "et Spiritus Sancti.";
-			next;
-			mes "[Touha]";
-			mes "That's it... were you paying attention?.";
-			goto L_MonkOath2;
-		}
-		else if (MONK_Q == 13) {
-			mes "And shepherds we shall be,";
-			next;
-			mes "[Touha]";
-			mes "for thee my lord for thee.";
-			next;
-			mes "[Touha]";
-			mes "Power hath descended forth";
-			next;
-			mes "[Touha]";
-			mes "from the hand";
-			next;
-			mes "[Touha]";
-			mes "so our feet may swiftly carry";
-			next;
-			mes "[Touha]";
-			mes "out thy command. And we shall";
-			next;
-			mes "[Touha]";
-			mes "flow a river forth to thee and";
-			next;
-			mes "[Touha]";
-			mes "teeming with souls shall it ever be";
-			next;
-			mes "[Touha]";
-			mes "In nomine Patris, et Filii";
-			next;
-			mes "[Touha]";
-			mes "et Spiritus Sancti.";
-			next;
-			mes "[Touha]";
-			mes "I hope you were paying attention this time. This is a sacred family prayer.";
-			goto L_MonkOath3;
 		}
 	}
 	else if (MONK_Q == 14) {

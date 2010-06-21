@@ -7,7 +7,7 @@
 //= Optimized and further edited by kobra_k88.
 //= Further bugfixed and tested by Lupus
 //===== Current Version: =====================================
-//= 2.7
+//= 2.8
 //===== Compatible With: =====================================
 //= eAthena  SVN
 //===== Description: =========================================
@@ -39,6 +39,7 @@
 //= 2.6 Fixed 4 bugs [Lupus]
 //= 2.6a Typo fix [Yommy]
 //= 2.7 Added Quest Log commands. [Kisuka]
+//= 2.8 Removed the need for use of 'goto.' [L0ne_W0lf]
 //==============================================================
 
 ein_in01,18,28,4	script	Guildsman#BLS	731,{
@@ -305,27 +306,46 @@ ein_in01,201,27,3	script	Guildsman#alberta	63,{
 			mes "to be busy~";
 			close;
 		}
-		else if (BSMITH_Q == 1) {
-			mes "[Geschupenschte]";
-			mes "Am I correct in assuming you are the help sent by the Blacksmith Guild? There aren't many trustyworthy people I can hire to help me, so I'm always";
-			mes "short on help.";
-			next;
-			mes "[Geschupenschte]";
-			mes "Hmm, in any case,";
-			mes "you are the help that was sent, right? Okay, I have some work for you that must be handled";
-			mes "right away!";
-			next;
-			mes "[Geschupenschte]";
-			mes "Some time ago, I had a boy working for me who had no experience and bought the wrong supplies! It was terrible...";
-			next;
-			mes "[Geschupenschte]";
-			mes "Anyone would hate to lose money through a foolish mistake like that. However, I have a slightly more difficult job for you.";
-			next;
-			mes "[Geschupenschte]";
-			mes "However, I want to make sure that you have some basic knowledge as a Merchant. I'd like to ask you some questions, if that's okay.";
-			next;
-			if (select("Yes.:Um, can I have some time to prepare?") == 1) {
-L_AskQuestions:
+		else if ((BSMITH_Q == 1) || (BSMITH_Q == 2)) {
+			if (BSMITH_Q == 1) {
+				mes "[Geschupenschte]";
+				mes "Am I correct in assuming you are the help sent by the Blacksmith Guild? There aren't many trustyworthy people I can hire to help me, so I'm always";
+				mes "short on help.";
+				next;
+				mes "[Geschupenschte]";
+				mes "Hmm, in any case,";
+				mes "you are the help that was sent, right? Okay, I have some work for you that must be handled";
+				mes "right away!";
+				next;
+				mes "[Geschupenschte]";
+				mes "Some time ago, I had a boy working for me who had no experience and bought the wrong supplies! It was terrible...";
+				next;
+				mes "[Geschupenschte]";
+				mes "Anyone would hate to lose money through a foolish mistake like that. However, I have a slightly more difficult job for you.";
+				next;
+				mes "[Geschupenschte]";
+				mes "However, I want to make sure that you have some basic knowledge as a Merchant. I'd like to ask you some questions, if that's okay.";
+				next;
+				set .@selection,select("Yes.:Um, can I have some time to prepare?");
+			}
+			else if (BSMITH_Q == 2) {
+				mes "[Geschupenschte]";
+				mes "So, have you";
+				mes "studied a little";
+				mes "more this time?";
+				next;
+				mes "[Geschupenschte]";
+				mes "I admit that it's pretty unreasonable to expect anyone to get a perfect score the first time around, so I'll give you";
+				mes "a little break...";
+				next;
+				mes "[Geschupenschte]";
+				mes "You can miss";
+				mes "one problem!";
+				mes "Alright, let's start";
+				mes "with the questions~";
+				next;
+			}
+			if (.@selection != 2) {
 				if (rand(2)) {
 					mes "[Geschupenschte]";
 					mes "1. Which one of the following regions is matched incorrectly";
@@ -506,6 +526,7 @@ L_AskQuestions:
 			mes "being careful~";
 			close;
 		}
+		/*
 		else if (BSMITH_Q == 2) {
 			mes "[Geschupenschte]";
 			mes "So, have you";
@@ -524,6 +545,7 @@ L_AskQuestions:
 			next;
 			goto L_AskQuestions;
 		}
+		*/
 		else if (BSMITH_Q == 3) {
 			mes "[Geschupenschte]";
 			mes "Hmm...";

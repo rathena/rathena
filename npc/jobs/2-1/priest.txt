@@ -5,7 +5,7 @@
 //= Converted by: kobra_k88.
 //= Further bugfixed and tested by Lupus
 //===== Current Version: ===================================== 
-//= 2.5
+//= 2.6
 //===== Compatible With: ===================================== 
 //= eAthena  SVN
 //===== Description: ========================================= 
@@ -29,6 +29,7 @@
 //= 2.4a Deleted unused variables. [Samuray22]
 //= 2.4b Corrected a Typo error ";;". [Samuray22]
 //= 2.5 Added Quest Log commands. [Kisuka]
+//= 2.6 Removed the need for use of 'goto.' [L0ne_W0lf]
 //==========================================================
 
 prt_church,16,41,4	script	High Bishop#prst	60,{
@@ -706,13 +707,21 @@ prt_church,27,24,1	script	Sister Cecilia	79,{
 		mes "May God give you guidance and protection. When you complete your training, please come back to me.";
 		close;
 	}
-	else if (PRIEST_Q == 7) {
-		if(checkquest(8014) == -1) {
-			changequest 8013,8014;
+	else if (PRIEST_Q == 7 || PRIEST_Q == 8) {
+		if (PRIEST_Q == 7) {
+			if(checkquest(8014) == -1) {
+				changequest 8013,8014;
+			}
+			mes "Welcome! I'm so glad to see you've come back! Now, there is one last trial left for you to complete.";
 		}
-		mes "Welcome! I'm so glad to see you've come back! Now, there is one last trial left for you to complete.";
+		else if (PRIEST_Q == 8) {
+			mes "...";
+			next;
+			mes "[Sister Cecilia]";
+			mes "Welcome back.";
+			mes "I hope that you've reflected on what you've said last time, and that you now have the attitude to become a Priest.";
+		}
 		next;
-L_AskQuestions:
 		mes "[Sister Cecilia]";
 		if (sex)
 			mes "Brother "+ strcharinfo(0) +"...";
@@ -841,15 +850,6 @@ L_AskQuestions:
 		mes "Why would you want";
 		mes "to throw this all away...?";
 		close;
-	}
-	else if (PRIEST_Q == 8) {
-		mes "...";
-		next;
-		mes "[Sister Cecilia]";
-		mes "Welcome back.";
-		mes "I hope that you've reflected on what you've said last time, and that you now have the attitude to become a Priest.";
-		next;
-		goto L_AskQuestions;
 	}
 	else if (PRIEST_Q == 9) {
 		mes "Congratulations.";

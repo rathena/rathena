@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= nestor_zulueta (Fusion), converted by Darkchild
 //===== Current Version: ===================================== 
-//= 2.9
+//= 3.0
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -16,6 +16,7 @@
 //= 2.7 Added missing checkweights. [L0ne_W0lf]
 //= 2.8 Fixed minor typo in test section. [L0ne_W0lf]
 //= 2.9 Added Quest Log commands. [Kisuka]
+//= 3.0 Removed the need for use of 'goto.' [L0ne_W0lf]
 //============================================================ 
 
 alde_alche,27,185,5	script	Alchemist Guildsman#am	744,{
@@ -413,75 +414,101 @@ alde_alche,175,107,3	script	Fastidious Alchemist#am	749,{
 		mes "Even if you tried studying for a thousand years, maybe even more, it'd be useless to you! Forget about it and just worry about your store!";
 		close;
 	}
-	else if (ALCH_Q == 4) {
-		mes "Heeheehee";
-		mes "keheheh~!";
-		mes "What do you";
-		mes "want, kid?";
-		next;
-		mes "[Raspuchin Gregory]";
-		mes "What...?";
-		mes "Join the Union!?";
-		mes "I don't like it...";
-		mes "I just don't...!";
-		next;
-		mes "[Raspuchin Gregory]";
-		mes "Nowadays, anyone thinks they can";
-		mes "be Alchemists just by knowing how to mix a few herbs. That's why my interview is necessary.";
-		next;
-		mes "[Raspuchin Gregory]";
-		mes "Heeheehee";
-		mes "keheheh~!";
-		mes "I plan on weeding out all the dumb and incompetent, and chase them";
-		mes "all away! We don't need morons!";
-		next;
-		if (JobLevel == 50) {
+	else if ((ALCH_Q == 4) || (ALCH_Q == 5)) {
+		if (ALCH_Q == 4) {
+			mes "Heeheehee";
+			mes "keheheh~!";
+			mes "What do you";
+			mes "want, kid?";
+			next;
 			mes "[Raspuchin Gregory]";
-			mes "Wait...";
-			mes "Maybe I've";
-			mes "misjudged you.";
-			if (sex == 1) {
-				mes "You might be a pretty boy,";
-				mes "but I can tell you're smart";
-				mes "from your eyes.";
+			mes "What...?";
+			mes "Join the Union!?";
+			mes "I don't like it...";
+			mes "I just don't...!";
+			next;
+			mes "[Raspuchin Gregory]";
+			mes "Nowadays, anyone thinks they can";
+			mes "be Alchemists just by knowing how to mix a few herbs. That's why my interview is necessary.";
+			next;
+			mes "[Raspuchin Gregory]";
+			mes "Heeheehee";
+			mes "keheheh~!";
+			mes "I plan on weeding out all the dumb and incompetent, and chase them";
+			mes "all away! We don't need morons!";
+			next;
+			if (JobLevel == 50) {
+				mes "[Raspuchin Gregory]";
+				mes "Wait...";
+				mes "Maybe I've";
+				mes "misjudged you.";
+				if (sex == 1) {
+					mes "You might be a pretty boy,";
+					mes "but I can tell you're smart";
+					mes "from your eyes.";
+				}
+				else {
+					mes "Huh. You're a cutie alright,";
+					mes "but I can tell you've got brains.";
+				}
+				next;
+				mes "[Raspuchin Gregory]";
+				mes "You're not just some stupid kid.";
+				mes "I can tell youve gone through some rough times as a Merchant. Excellent. Keh heh heh~";
+				next;
+				mes "[Raspuchin Gregory]";
+				mes "Fine, just so we don't insult each other's intelligence, I'll just let you pass the interview.";
+				next;
+				mes "[Raspuchin Gregory]";
+				mes "So hurry up, become an Alchemist, do some good research, and you might turn out to be of some help to me. Hahahahahaha~!";
+				next;
+				mes "[Raspuchin Gregory]";
+				mes "Now go to Darwin!";
+				mes "He'll teach you how to do the experiments. Just tell him that";
+				mes "I sent you.";
+				set ALCH_Q,6;
+				close;
 			}
 			else {
-				mes "Huh. You're a cutie alright,";
-				mes "but I can tell you've got brains.";
+				mes "[Raspuchin Gregory]";
+				mes "Surprised, are you?";
+				mes "Keheheh~ If you thought";
+				mes "becoming an Alchemist was";
+				mes "just a matter of changing";
+				mes "your clothes, then you're";
+				mes "sadly mistaken.";
+				next;
+				mes "[Raspuchin Gregory]";
+				mes "Now, try solving";
+				mes "all these problems.";
+				mes "Let's see how smart";
+				mes "really are.";
 			}
-			next;
-			mes "[Raspuchin Gregory]";
-			mes "You're not just some stupid kid.";
-			mes "I can tell youve gone through some rough times as a Merchant. Excellent. Keh heh heh~";
-			next;
-			mes "[Raspuchin Gregory]";
-			mes "Fine, just so we don't insult each other's intelligence, I'll just let you pass the interview.";
-			next;
-			mes "[Raspuchin Gregory]";
-			mes "So hurry up, become an Alchemist, do some good research, and you might turn out to be of some help to me. Hahahahahaha~!";
-			next;
-			mes "[Raspuchin Gregory]";
-			mes "Now go to Darwin!";
-			mes "He'll teach you how to do the experiments. Just tell him that";
-			mes "I sent you.";
-			set ALCH_Q,6;
-			close;
 		}
-		mes "[Raspuchin Gregory]";
-		mes "Surprised, are you?";
-		mes "Keheheh~ If you thought";
-		mes "becoming an Alchemist was";
-		mes "just a matter of changing";
-		mes "your clothes, then you're";
-		mes "sadly mistaken.";
+		else if (ALCH_Q == 5) {
+			mes "What...?!";
+			mes "You want to take";
+			mes "the test again?!";
+			mes "I thought I told";
+			mes "you to leave!";
+			next;
+			mes "[Raspuchin Gregory]";
+			mes "I don't like it...";
+			mes "I don't like this!";
+			next;
+			mes "[Raspuchin Gregory]";
+			mes "Fine...";
+			mes "I'll try to overlook your pitiful performance last time and give";
+			mes "you another chance. Don't screw";
+			mes "up again, got it?";
+			next;
+			mes "[Raspuchin Gregory]";
+			mes "Now then,";
+			mes "give me all the";
+			mes "^551A8Bright^000000 answers";
+			mes "this time.";
+		}
 		next;
-		mes "[Raspuchin Gregory]";
-		mes "Now, try solving";
-		mes "all these problems.";
-		mes "Let's see how smart";
-		mes "really are.";
-		next;
-L_AskQuestions:
 		switch(rand(1,3)) {
 		case 1:
 			mes "[Raspuchin Gregory]";
@@ -749,31 +776,6 @@ L_AskQuestions:
 		set ALCH_Q,6;
 		changequest 2031,2032;
 		close;
-	}
-	else if (ALCH_Q == 5) {
-		mes "What...?!";
-		mes "You want to take";
-		mes "the test again?!";
-		mes "I thought I told";
-		mes "you to leave!";
-		next;
-		mes "[Raspuchin Gregory]";
-		mes "I don't like it...";
-		mes "I don't like this!";
-		next;
-		mes "[Raspuchin Gregory]";
-		mes "Fine...";
-		mes "I'll try to overlook your pitiful performance last time and give";
-		mes "you another chance. Don't screw";
-		mes "up again, got it?";
-		next;
-		mes "[Raspuchin Gregory]";
-		mes "Now then,";
-		mes "give me all the";
-		mes "^551A8Bright^000000 answers";
-		mes "this time.";
-		next;
-		goto L_AskQuestions;
 	}
 	else if (ALCH_Q == 6) {
 		mes "What are you doing?";

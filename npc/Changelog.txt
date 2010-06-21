@@ -1,5 +1,7 @@
 Date		Added
 ======
+2010/06/21
+	* Rev. 14351 Removed usage of the 'goto' command from job quests. [L0ne_W0lf]
 2010/06/20
 	* Rev. 14350 Corrected Einbech Mine warps. [Gepard] 
 2010/06/18

@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 
-//= 3.3
+//= 3.4
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -46,6 +46,7 @@
 //= 3.1b Fixed waiting room not enabled in some situations [Zephyrus]
 //= 3.2 Fixed a question having all correct answers. [brianluau]
 //= 3.3 Added Quest Log commands. [Kisuka]
+//= 3.4 Removed the need for use of 'goto.' [L0ne_W0lf]
 //============================================================ 
 
 in_moc_16,19,33,1	script	Guildsman#asn	55,{
@@ -660,152 +661,182 @@ OnTouch:
 
 in_moc_16,19,154,0	script	nameless_one	-1,8,2,{
 OnTouch:
-	if (ASSIN_Q2 < 3) {
-		mes "[The Anonymous One]";
-		mes "Welcome, guest.";
-		mes "Mwahaha, it's useless";
-		mes "to try to find or see me...";
-		next;
-		mes "[The Anonymous One]";
-		mes "I am perfectly hidden!";
-		mes "To become undetectable can only be done by the greatest Assassins!";
-		next;
-		mes "[The Anonymous One]";
-		mes "Aren't you scared that you can't see me? I could kill you at any time and it would be so easy...";
-		next;
-		if (select("I think I crapped my pants!:You're all talk. I challenge you!") == 1) {
+	if (ASSIN_Q2 < 5) {
+		if (ASSIN_Q2 < 3) {
 			mes "[The Anonymous One]";
-			mes "Now I see that";
-			mes "you're nothing";
-			mes "but a wimp.";
+			mes "Welcome, guest.";
+			mes "Mwahaha, it's useless";
+			mes "to try to find or see me...";
 			next;
 			mes "[The Anonymous One]";
-			mes "Bwahahahahahah!";
-			mes "Stop cowering in fear!";
-			mes "It's making me laugh!";
-			close;
-		}
-		mes "[The Anonymous One]";
-		mes "So...";
-		mes "You wish for";
-		mes "a challenge?";
-		mes "From me?!";
-		next;
-		mes "[The Anonymous One]";
-		mes "A river of blood follows my every footstep. I am nameless, for the sting of my blades is all anyone needs to know.";
-		next;
-		mes "[The Anonymous One]";
-		mes "I am here to test your knowledge, as well as your capacity for heartlessness. Those are both necessary to become an Assassin.";
-		next;
-		mes "[The Anonymous One]";
-		mes "For your challenge, you must";
-		mes "answer my questions correctly. Very difficult questions that only an Assassin can answer.";
-		next;
-		mes "[The Anonymous One]";
-		mes "Although I am heartless,";
-		mes "I am not necessarily cruel. Before we proceed, is there anything you wish to know?";
-		next;
-		set ASSIN_Q2,0;
-		while(ASSIN_Q2 < 3) {
-			switch(select("...Skills?:...Stats?:Hmpf, I know it all.")) {
-			case 1:
+			mes "I am perfectly hidden!";
+			mes "To become undetectable can only be done by the greatest Assassins!";
+			next;
+			mes "[The Anonymous One]";
+			mes "Aren't you scared that you can't see me? I could kill you at any time and it would be so easy...";
+			next;
+			if (select("I think I crapped my pants!:You're all talk. I challenge you!") == 1) {
 				mes "[The Anonymous One]";
-				mes "Skills...?";
-				mes "Although skills can have circumstantial applications, I will tell you about the basic concepts.";
+				mes "Now I see that";
+				mes "you're nothing";
+				mes "but a wimp.";
 				next;
 				mes "[The Anonymous One]";
-				mes "First, ^3355FFKatar Mastery^000000. This skill increases the damage of Katar class weapons. The higher the skill level, the more damage is increased.";
-				next;
-				mes "[The Anonymous One]";
-				mes "^3355FFLeft Hand Mastery^000000 and ^3355FFRight Hand Mastery^000000. Assassins can equip different weapons in each hand when using Dagger class weapons.";
-				next;
-				mes "[The Anonymous One]";
-				mes "But it is obviously more difficult to handle 2 weapons at a time than using just one. The Left and Right Hand Mastery skills increase the damage when using two Daggers.";
-				next;
-				mes "[The Anonymous One]";
-				mes "However, if you don't want to use two Daggers, you won't need this skill. You will see how 'Left Hand Mastery' works as soon as you reach 'Right Hand Mastery' Level 2.";
-				next;
-				mes "[The Anonymous One]";
-				mes "^3355FFSonic Blow^000000 allows you to strike an enemy 8 times at once. This skill only works with Katar weapons because of the speed it requires.";
-				next;
-				mes "[The Anonymous One]";
-				mes "Of course, the damage is affected by STR and weapon damage. You'll understand how this skill works when you reach Level 4 Katar Mastery.";
-				next;
-				mes "[The Anonymous One]";
-				mes "^3355FFGrimtooth^000000 allows you to attack enemies while hiding under the ground. As you master it, you'll be able to attack foes from a distance.";
-				next;
-				mes "[The Anonymous One]";
-				mes "Since it's a ranged attack, it can be very useful when you're surrounded by enemies.";
-				next;
-				mes "[The Anonymous One]";
-				mes "Because you're required to perfectly hide yourself to use this skill, you must first learn Level 2 Cloaking before you can learn Grimtooth.";
-				next;
-				mes "[The Anonymous One]";
-				mes "To learn ^3355FFCloaking^000000, you must learn Level 2 Hiding. Then you will be able to move while hiding if you are close to a wall.";
-				next;
-				mes "[The Anonymous One]";
-				mes "The ^3355FFEnchant Poison^000000 skill allows you to enchant poison on the weapon you're using. This will temporarily give the weapon the Poison property.";
-				next;
-				mes "[The Anonymous One]";
-				mes "This will also make your attacks poison the enemy by chance. You can also use this skill to enchant the weapons of your party members...";
-				next;
-				mes "[The Anonymous One]";
-				mes "^3355FFPoison React^000000 shields the user from attacks with the Poison property, and can be used on other people as well. However, you must learn Level 3 Enchant Poison first.";
-				next;
-				mes "[The Anonymous One]";
-				mes "^3355FFVenom Dust^000000 consumes a Red Gemstone to contaminate an area with poison. The duration of contamination increases with the level of this skill.";
-				next;
-				mes "[The Anonymous One]";
-				mes "You can learn the Venom Dust skill after you learn Level 5 Enchant Poison.";
-				next;
-				mes "[The Anonymous One]";
-				mes "^3355FFVenom Splasher^000000 is a skill that, after it is used on a target, will cause it to explode when its HP is less than a certain amount after three seconds.";
-				next;
-				mes "[The Anonymous One]";
-				mes "When the target explodes, the enemies in the vicinity are also damaged. This is an essential skill for Assassins. It requires Level 5 Poison React and Level 5 Venom Dust.";
-				next;
-				mes "[The Anonymous One]";
-				mes "Now...";
-				mes "That's all I have to tell you";
-				mes "about Assassin skills.";
-				set ASSIN_Q2,1;
-				next;
-				break;
-			case 2:
-				mes "[The Anonymous One]";
-				mes "Hmm, Stats...";
-				mes "For Assassins, Agility, or AGI, is the most important stat.";
-				next;
-				mes "[The Anonymous One]";
-				mes "For the sake of assassination, STR is probably the second most important stat. But that is only my recommendation.";
-				next;
-				mes "[The Anonymous One]";
-				mes "I cannot give you better advice than that in regards to Stats. You should research and see which stats suit you, and decide what kind of Assassin you want to be.";
-				set ASSIN_Q2,2;
-				next;
-				break;
-			case 3:
-				if (ASSIN_Q2 == 0) {
-					mes "[The Anonymous One]";
-					mes "Know everything do you?!";
-					mes "I'll be the judge of that!";
-					next;
-				}
-				set ASSIN_Q2,3;
-				break;
+				mes "Bwahahahahahah!";
+				mes "Stop cowering in fear!";
+				mes "It's making me laugh!";
+				close;
 			}
+			mes "[The Anonymous One]";
+			mes "So...";
+			mes "You wish for";
+			mes "a challenge?";
+			mes "From me?!";
+			next;
+			mes "[The Anonymous One]";
+			mes "A river of blood follows my every footstep. I am nameless, for the sting of my blades is all anyone needs to know.";
+			next;
+			mes "[The Anonymous One]";
+			mes "I am here to test your knowledge, as well as your capacity for heartlessness. Those are both necessary to become an Assassin.";
+			next;
+			mes "[The Anonymous One]";
+			mes "For your challenge, you must";
+			mes "answer my questions correctly. Very difficult questions that only an Assassin can answer.";
+			next;
+			mes "[The Anonymous One]";
+			mes "Although I am heartless,";
+			mes "I am not necessarily cruel. Before we proceed, is there anything you wish to know?";
+			next;
+			set ASSIN_Q2,0;
+			while(ASSIN_Q2 < 3) {
+				switch(select("...Skills?:...Stats?:Hmpf, I know it all.")) {
+				case 1:
+					mes "[The Anonymous One]";
+					mes "Skills...?";
+					mes "Although skills can have circumstantial applications, I will tell you about the basic concepts.";
+					next;
+					mes "[The Anonymous One]";
+					mes "First, ^3355FFKatar Mastery^000000. This skill increases the damage of Katar class weapons. The higher the skill level, the more damage is increased.";
+					next;
+					mes "[The Anonymous One]";
+					mes "^3355FFLeft Hand Mastery^000000 and ^3355FFRight Hand Mastery^000000. Assassins can equip different weapons in each hand when using Dagger class weapons.";
+					next;
+					mes "[The Anonymous One]";
+					mes "But it is obviously more difficult to handle 2 weapons at a time than using just one. The Left and Right Hand Mastery skills increase the damage when using two Daggers.";
+					next;
+					mes "[The Anonymous One]";
+					mes "However, if you don't want to use two Daggers, you won't need this skill. You will see how 'Left Hand Mastery' works as soon as you reach 'Right Hand Mastery' Level 2.";
+					next;
+					mes "[The Anonymous One]";
+					mes "^3355FFSonic Blow^000000 allows you to strike an enemy 8 times at once. This skill only works with Katar weapons because of the speed it requires.";
+					next;
+					mes "[The Anonymous One]";
+					mes "Of course, the damage is affected by STR and weapon damage. You'll understand how this skill works when you reach Level 4 Katar Mastery.";
+					next;
+					mes "[The Anonymous One]";
+					mes "^3355FFGrimtooth^000000 allows you to attack enemies while hiding under the ground. As you master it, you'll be able to attack foes from a distance.";
+					next;
+					mes "[The Anonymous One]";
+					mes "Since it's a ranged attack, it can be very useful when you're surrounded by enemies.";
+					next;
+					mes "[The Anonymous One]";
+					mes "Because you're required to perfectly hide yourself to use this skill, you must first learn Level 2 Cloaking before you can learn Grimtooth.";
+					next;
+					mes "[The Anonymous One]";
+					mes "To learn ^3355FFCloaking^000000, you must learn Level 2 Hiding. Then you will be able to move while hiding if you are close to a wall.";
+					next;
+					mes "[The Anonymous One]";
+					mes "The ^3355FFEnchant Poison^000000 skill allows you to enchant poison on the weapon you're using. This will temporarily give the weapon the Poison property.";
+					next;
+					mes "[The Anonymous One]";
+					mes "This will also make your attacks poison the enemy by chance. You can also use this skill to enchant the weapons of your party members...";
+					next;
+					mes "[The Anonymous One]";
+					mes "^3355FFPoison React^000000 shields the user from attacks with the Poison property, and can be used on other people as well. However, you must learn Level 3 Enchant Poison first.";
+					next;
+					mes "[The Anonymous One]";
+					mes "^3355FFVenom Dust^000000 consumes a Red Gemstone to contaminate an area with poison. The duration of contamination increases with the level of this skill.";
+					next;
+					mes "[The Anonymous One]";
+					mes "You can learn the Venom Dust skill after you learn Level 5 Enchant Poison.";
+					next;
+					mes "[The Anonymous One]";
+					mes "^3355FFVenom Splasher^000000 is a skill that, after it is used on a target, will cause it to explode when its HP is less than a certain amount after three seconds.";
+					next;
+					mes "[The Anonymous One]";
+					mes "When the target explodes, the enemies in the vicinity are also damaged. This is an essential skill for Assassins. It requires Level 5 Poison React and Level 5 Venom Dust.";
+					next;
+					mes "[The Anonymous One]";
+					mes "Now...";
+					mes "That's all I have to tell you";
+					mes "about Assassin skills.";
+					set ASSIN_Q2,1;
+					next;
+					break;
+				case 2:
+					mes "[The Anonymous One]";
+					mes "Hmm, Stats...";
+					mes "For Assassins, Agility, or AGI, is the most important stat.";
+					next;
+					mes "[The Anonymous One]";
+					mes "For the sake of assassination, STR is probably the second most important stat. But that is only my recommendation.";
+					next;
+					mes "[The Anonymous One]";
+					mes "I cannot give you better advice than that in regards to Stats. You should research and see which stats suit you, and decide what kind of Assassin you want to be.";
+					set ASSIN_Q2,2;
+					next;
+					break;
+				case 3:
+					if (ASSIN_Q2 == 0) {
+						mes "[The Anonymous One]";
+						mes "Know everything do you?!";
+						mes "I'll be the judge of that!";
+						next;
+					}
+					set ASSIN_Q2,3;
+					break;
+				}
+			}
+			mes "[The Anonymous One]";
+			mes "Hmpf. It is now time to test your knowledge. You are not allowed to miss more than one question.";
+			next;
+			mes "[The Anonymous One]";
+			mes "In other words, if you want to pass this test, you must give me 9 correct answers out of 10 questions. I won't let you know which answer you got wrong...";
+			next;
+			mes "[The Anonymous One]";
+			mes "Are you ready?";
+			mes "Prepare yourself!";
 		}
-		mes "[The Anonymous One]";
-		mes "Hmpf. It is now time to test your knowledge. You are not allowed to miss more than one question.";
+		else if (ASSIN_Q2 < 5) {
+			mes "[The Anonymous One]";
+			mes "Having problems";
+			mes "passing a simple test?";
+			mes "You should have";
+			mes "known better.";
+			next;
+			if (select("Help me, how do I pass?:I challenge you again!") == 1) {
+				mes "[The Anonymous One]";
+				mes "Well, that's a damn good question. But you're banished from the Assassin Guild, so it's no concern of mine...";
+				close2;
+				warp "moc_fild16",206,151;
+				end;
+			}
+			mes "[The Anonymous One]";
+			mes "So I see...";
+			mes "Now go, but do not fear. I will be by your side as you learn the outcome of your choice...";
+			next;
+			mes "[The Anonymous One]";
+			mes "Now, we shall test you once more! Keep in mind, you must answer 9 questions out of 10 correctly. Remember I am doing you a favor...";
+			next;
+			mes "[The Anonymous One]";
+			mes "You must answer 9 questions out of 10 correctly. If you miss more then one question, you can never become an Assassin.";
+			next;
+			mes "[The Anonymous One]";
+			mes "Okay,";
+			mes "are you ready?";
+			mes "Good luck.";
+		}
 		next;
-		mes "[The Anonymous One]";
-		mes "In other words, if you want to pass this test, you must give me 9 correct answers out of 10 questions. I won't let you know which answer you got wrong...";
-		next;
-		mes "[The Anonymous One]";
-		mes "Are you ready?";
-		mes "Prepare yourself!";
-		next;
-L_AskQuestions:
 		switch(rand(1,3)) {
 		case 1:
 			mes "[The Anonymous One]";
@@ -1056,43 +1087,11 @@ L_AskQuestions:
 			}
 		}
 	}
-	else if (ASSIN_Q2 < 5) {
-		mes "[The Anonymous One]";
-		mes "Having problems";
-		mes "passing a simple test?";
-		mes "You should have";
-		mes "known better.";
-		next;
-		if (select("Help me, how do I pass?:I challenge you again!") == 1) {
-			mes "[The Anonymous One]";
-			mes "Well, that's a damn good question. But you're banished from the Assassin Guild, so it's no concern of mine...";
-			close2;
-			warp "moc_fild16",206,151;
-			end;
-		}
-		mes "[The Anonymous One]";
-		mes "So I see...";
-		mes "Now go, but do not fear. I will be by your side as you learn the outcome of your choice...";
-		next;
-		mes "[The Anonymous One]";
-		mes "Now, we shall test you once more! Keep in mind, you must answer 9 questions out of 10 correctly. Remember I am doing you a favor...";
-		next;
-		mes "[The Anonymous One]";
-		mes "You must answer 9 questions out of 10 correctly. If you miss more then one question, you can never become an Assassin.";
-		next;
-		mes "[The Anonymous One]";
-		mes "Okay,";
-		mes "are you ready?";
-		mes "Good luck.";
-		next;
-		goto L_AskQuestions;
-	}
 	else {
 		mes "[The Anonymous One]";
 		mes "...I will keep watching you.";
 		close;
 	}
-
 }
 
 in_moc_16,21,165,2	script	Standby Room#ASNTEST	725,{

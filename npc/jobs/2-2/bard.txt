@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Muad_Dib(The Prometheus Project), Lupus, Samuray22
 //===== Current Version: ===================================== 
-//= 2.5
+//= 2.6
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -22,6 +22,7 @@
 //=	- Changed item names to item IDs
 //= 2.4 Fixed hang up on bard quest. ($kiN.) [L0ne_W0lf]
 //= 2.5 Added Quest Log commands. [Kisuka]
+//= 2.6 Removed the need for use of 'goto.' [L0ne_W0lf]
 //============================================================
 
 //=============== Ayealo ============================
@@ -421,27 +422,60 @@ comodo,226,123,5	script	Wandering Bard	741,{
 		cutin "job_bard_aiolo01",255;
 		end;
 	}
-	else if(BARD_Q == 3) {
-		if(xmas_npc > 10) { //this var is set in LUTIE.TXT
+	else if ((BARD_Q >= 3) || (BARD_Q <= 5)) {
+		if (BARD_Q == 3) {
+			if(xmas_npc > 10) { //this var is set in LUTIE.TXT
+				cutin "job_bard_aiolo01",2;
+				mes "[Lalo]";
+				mes "How was the trip? Did you meet a lot of people?";
+				mes "You should have been able to learn something more important than a gift.";
+				next;
+				mes "[Lalo]";
+				mes "Then, do you want to try singing...?";
+				mes "I'll sing a short melody...";
+				mes "and you try after.";
+				if(checkquest(3003) == -1) {
+					changequest 3002,3003;
+				}
+				next;
+				mes "[Lalo]";
+				mes "Here I go.";
+				mes "Ehem *clears throat*";
+				mes "1, 2, 3, 4";
+				next;
+			}
+			else {
+				cutin "job_bard_aiolo01",2;
+				set xmas_npc,1;
+				mes "[Lalo]";
+				mes "Eh, you still haven't become his friend?";
+				mes "Talking will not be enough.";
+				next;
+				mes "[Lalo]";
+				mes "if you become friends with ^008800Jack Frost^000000, you will receive something.";
+				mes "And talk with the village people, too...";
+				close2;
+				cutin "job_bard_aiolo01",255;
+				end;
+			}
+		}
+		else if (BARD_Q == 4) {
 			cutin "job_bard_aiolo01",2;
 			mes "[Lalo]";
-			mes "How was the trip? Did you meet a lot of people?";
-			mes "You should have been able to learn something more important than a gift.";
+			mes "Hmm... this time you can do better, right?";
+			mes "Let's try again, you can do it.";
 			next;
 			mes "[Lalo]";
-			mes "Then, do you want to try singing...?";
-			mes "I'll sing a short melody...";
-			mes "and you try after.";
-			if(checkquest(3003) == -1) {
-				changequest 3002,3003;
-			}
+			mes "I'll sing one part...";
+			mes "and you try it after.";
 			next;
 			mes "[Lalo]";
-			mes "Here I go.";
-			mes "Ehem *clears throat*";
+			mes "Here we go.";
+			mes "*Ehem*";
 			mes "1, 2, 3, 4";
 			next;
-B_Sing:
+		}
+		if (BARD_Q != 5) {
 			set .@bard_s, rand(1,5);
 			if (.@bard_s == 1) {
 				mes "^3377FFThere was a man^000000";
@@ -808,113 +842,64 @@ B_Sing:
 			mes "Do you want to just change jobs now?";
 			mes "Or do you want a present.";
 			next;
-			if (select("Just change my job please.:I'd be thankful for a present.") == 1) {
-B_Change:
-				if(SkillPoint) {
-					cutin "job_bard_aiolo01",2;
-					mes "[Lalo]";
-					mes "Ah... Everything is good, but you still have some skill points left.";
-					mes "Go learn the rest of the skills and come back.";
-					next;
-					mes "[Lalo]";
-					mes "And I am going to give you a small present...";
-					mes "So bring some trunks.";
-					mes "It doesn't matter what kind, as long as they are 60 of the same kind...";
-					close2;
-					cutin "job_bard_aiolo01",255;
-					end;
-				}
-				completequest 3003;
-				callfunc "Job_Change",Job_Bard;
-				callfunc "F_ClearJobVar";		//clears all job variables for the current player
+			set .@selection,select("Just change my job please.:I'd be thankful for a present.");
+		}
+		if ((.@selection == 1) || (BARD_Q == 5)) {
+			if(SkillPoint) {
+				cutin "job_bard_aiolo01",2;
 				mes "[Lalo]";
-				mes "Very well! Hope you sing happy enjoyable songs.";
-				mes "Live like the wind and the clouds!";
+				mes "Ah... Everything is good, but you still have some skill points left.";
+				mes "Go learn the rest of the skills and come back.";
 				next;
 				mes "[Lalo]";
-				mes "See you again next time!";
+				mes "And I am going to give you a small present...";
+				mes "So bring some trunks.";
+				mes "It doesn't matter what kind, as long as they are 60 of the same kind...";
 				close2;
 				cutin "job_bard_aiolo01",255;
 				end;
 			}
-			changequest 3003,3004;
-			mes "[Lalo]";
-			mes "Hmm... very well, bring some trunks.";
-			mes "It doesn't matter what kind, as long as they are 60 of the same kind...";
-			next;
-			mes "[Lalo]";
-			mes "I will give you a gift once you bring them.";
-			mes "Have a safe trip.";
-			close2;
-			cutin "job_bard_aiolo01",255;
-			end;
+			else {
+				switch(BARD_Q) {
+				case 5:
+					if(countitem(1019) > 59) callsub S_ChangeJob,1019,1901;
+					else if(countitem(1068) > 59) callsub S_ChangeJob,1068,1903;
+					else if(countitem(1067) > 59) callsub S_ChangeJob,1067,1903;
+					else if(countitem(1066) > 59) {
+						if(JobLevel > 49) callsub S_ChangeJob,1066,1910;
+						else callsub S_ChangeJob,1066,1905;
+					}
+					cutin "job_bard_aiolo01",2;
+					mes "[Lalo]";
+					mes "Mmm? Seems like you haven't prepared all trunks the yet? ";
+					mes "Do you want to just change jobs anyways?";
+					next;
+					if (select("Yes, just change my job already.:No, I'll go prepare them.") == 2)
+						break;
+				default:
+					completequest 3003;
+					callfunc "Job_Change",Job_Bard;
+					callfunc "F_ClearJobVar";		//clears all job variables for the current player
+					mes "[Lalo]";
+					mes "Very well! Hope you sing happy enjoyable songs.";
+					mes "Live like the wind and the clouds!";
+					next;
+					mes "[Lalo]";
+					mes "See you again next time!";
+					close2;
+					cutin "job_bard_aiolo01",255;
+					end;
+				}
+			}
 		}
-		cutin "job_bard_aiolo01",2;
-		set xmas_npc,1;
+		changequest 3003,3004;
 		mes "[Lalo]";
-		mes "Eh, you still haven't become his friend?";
-		mes "Talking will not be enough.";
+		mes "Hmm... very well, bring some trunks.";
+		mes "It doesn't matter what kind, as long as they are 60 of the same kind...";
 		next;
 		mes "[Lalo]";
-		mes "if you become friends with ^008800Jack Frost^000000, you will receive something.";
-		mes "And talk with the village people, too...";
-		close2;
-		cutin "job_bard_aiolo01",255;
-		end;
-	} 
-	else if(BARD_Q == 4) {
-		cutin "job_bard_aiolo01",2;
-		mes "[Lalo]";
-		mes "Hmm... this time you can do better, right?";
-		mes "Let's try again, you can do it.";
-		next;
-		mes "[Lalo]";
-		mes "I'll sing one part...";
-		mes "and you try it after.";
-		next;
-		mes "[Lalo]";
-		mes "Here we go.";
-		mes "*Ehem*";
-		mes "1, 2, 3, 4";
-		next;
-		goto B_SING;
-	}
-	else if(BARD_Q == 5) {
-		if(SkillPoint) {
-			cutin "job_bard_aiolo01",2;
-			mes "[Lalo]";
-			mes "Ah... Everything is good, but you still have some skill points left.";
-			mes "Go learn the rest of the skills and come back.";
-			next;
-			mes "[Lalo]";
-			mes "And I am going to give you a small present...";
-			mes "So don't forget the trunks.";
-			mes "It doesn't matter what kind, as long as they are 60 of the same sort...";
-			close2;
-			cutin "job_bard_aiolo01",255;
-			end;
-		}
-		if(countitem(1019) > 59) callsub S_ChangeJob,1019,1901;
-		else if(countitem(1068) > 59) callsub S_ChangeJob,1068,1903;
-		else if(countitem(1067) > 59) callsub S_ChangeJob,1067,1903;
-		else if(countitem(1066) > 59) {
-			if(JobLevel > 49) callsub S_ChangeJob,1066,1910;
-			else callsub S_ChangeJob,1066,1905;
-		}
-		cutin "job_bard_aiolo01",2;
-		mes "[Lalo]";
-		mes "Mmm? Seems like you haven't prepared all trunks the yet? ";
-		mes "Do you want to just change jobs anyways?";
-		next;
-		if (select("Yes, just change my job already.:No, I'll go prepare them.") == 1) goto B_Change;
-		cutin "job_bard_aiolo01",2;
-		mes "[Lalo]";
-		mes "Hmm... ok, bring some ^3355FFtrunks^000000.";
-		mes "Doesn't matter what kind, as long as they are 60 of the same sort.";
-		next;
-		mes "[Lalo]";
-		mes "I'll give you a present if you bring them.";
-		mes "Then see you soon.";
+		mes "I will give you a gift once you bring them.";
+		mes "Have a safe trip.";
 		close2;
 		cutin "job_bard_aiolo01",255;
 		end;

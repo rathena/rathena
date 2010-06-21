@@ -5,7 +5,7 @@
 //= Converted by kobra_k88
 //= Further bugfixed and tested by Lupus
 //===== Current Version: ===================================== 
-//= 3.5
+//= 3.6
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -51,6 +51,7 @@
 //= 3.4 Corrected some Issues with the Waiting Room. (bugreport:1890) [Samuray22]
 //=	-Deleted a Unnecesary Next; on Hunter Guildsman#hnt. (bugreports:1665,2239,2179)
 //= 3.5 Added Quest Log commands. [Kisuka]
+//= 3.6 Removed the need for use of 'goto.' [L0ne_W0lf]
 //============================================================ 
 
 // Notices in the old Hunter Guild.
@@ -196,194 +197,213 @@ hu_in01,386,373,4	script	Hunter Guildsman#hnt	727,{
 				getitem 1710,1; //CrossBow
 			close;
 		}
-		else if (JobLevel > 39 && HNTR_Q == 0) {
-			mes "[Hunter Guildsman]";
-			mes "Oh, you're an Archer! It seems as if you've trained enough as an Archer... You came here to become a Hunter, right?";
-			next;
-			switch(select("Yes. That's what I'm here for.:What are the requirements to change jobs?:....I don't want to change yet.")) {
-			case 1:
+		else if ((JobLevel > 39) && ((HNTR_Q == 0) || (HNTR_Q == 1))) {
+			if (HNTR_Q == 0) {
 				mes "[Hunter Guildsman]";
-				mes "Hehe~";
-				mes "I was right! Let me put you on the candidate list. Let's see~*";
+				mes "Oh, you're an Archer! It seems as if you've trained enough as an Archer... You came here to become a Hunter, right?";
 				next;
-				mes "[Hunter Guildsman]";
-				mes "Hmm... Let's start with the interview. Wait and relax a moment. No need to worry, I'll prepare everything~";
-				next;
-				mes "^3355FF*Gathers and flips through papers*^000000";
-				next;
-				mes "^3355FF*Rummage rummage*^000000";
-				next;
-				mes "[Hunter Guildsman]";
-				mes "Ah!";
-				mes "Here they are: the interview questions~ First of all, my name is 'Sherin.' Nice to meet you!";
-				next;
-				mes "[Hunter Sherin]";
-				mes "Well then,";
-				mes "shall we begin?";
-				next;
-				if (select("Yes~ Let's start now.:No, I'll be back later.") == 1) {
-					if(checkquest(4000) == -1) {
-						setquest 4000;
-					}
-					mes "[Hunter Sherin]";
-					mes "Listen carefully to the scenarios I describe. When I ask a question, you choose an answer. Pretty simple, don't you think?";
+				switch(select("Yes. That's what I'm here for.:What are the requirements to change jobs?:....I don't want to change yet.")) {
+				case 1:
+					mes "[Hunter Guildsman]";
+					mes "Hehe~";
+					mes "I was right! Let me put you on the candidate list. Let's see~*";
 					next;
-					mes "[Hunter Sherin]";
-					mes "I just want to know how you think about life, and why you want to become a Hunter, so there's no need to be nervous.";
+					mes "[Hunter Guildsman]";
+					mes "Hmm... Let's start with the interview. Wait and relax a moment. No need to worry, I'll prepare everything~";
 					next;
-L_AskQuestions:
+					mes "^3355FF*Gathers and flips through papers*^000000";
+					next;
+					mes "^3355FF*Rummage rummage*^000000";
+					next;
+					mes "[Hunter Guildsman]";
+					mes "Ah!";
+					mes "Here they are: the interview questions~ First of all, my name is 'Sherin.' Nice to meet you!";
+					next;
 					mes "[Hunter Sherin]";
 					mes "Well then,";
-					mes "let's begin.";
+					mes "shall we begin?";
 					next;
-					mes "[Hunter Sherin]";
-					mes "You are an Archer, and you don't know where you should go to hunt. What do you do?";
-					next;
-					switch(select("Scream out loud asking where you should go.:Quietly ask a person passing by.:Wander around alone and search for a place.")) {
-					case 2:
-					case 3:
-						set .@hunter_t,.@hunter_t+10;
-					default:
-						break;
-					}
-					mes "[Hunter Sherin]";
-					mes "So you've decided on a place to hunt. You're going to hunt the monsters known as Hodes in the Sograt Desert.";
-					next;
-					mes "[Hunter Sherin]";
-					mes "But you are in Payon!!";
-					mes "How do you go to the desert?";
-					next;
-					switch(select("Ask a Priest to open a free warp portal.:Use the Kafra service.:Walk with a friend.")) {
-					case 2:
-					case 3:
-						set .@hunter_t,.@hunter_t+10;
-					default:
-						break;
-					}
-					mes "[Hunter Sherin]";
-					mes "There is no Priest to ask for a warp, and no friend is around to walk with you. You must use the Kafra service, but you have no Zeny!";
-					next;
-					mes "[Hunter Sherin]";
-					mes "How would you go";
-					mes "about to make the";
-					mes "Zeny that you need?";
-					next;
-					switch(select("Beg here and there.:Sell items I do not need.:Hunt at a nearby field.")) {
-					case 2:
-					case 3:
-						set .@hunter_t,.@hunter_t+10;
-					default:
-						break;
-					}
-					mes "[Hunter Sherin]";
-					mes "So you finally arrive at the Sograt Desert. But you realize that Hodes are a bit too strong for you to hunt alone.";
-					next;
-					mes "[Hunter Sherin]";
-					mes "What is your";
-					mes "solution to this";
-					mes "situation?";
-					next;
-					if (select("Attack a Hode from the top of a hill.:Go back to town.:Attack someone else's Hode.") == 2)
-						set .@hunter_t,.@hunter_t+10;
-					mes "[Hunter Sherin]";
-					mes "Let's say you were having too much trouble hunting Hodes and returned to town. Now you are out of HP and a Priest happens to be around. How would you ask for a Heal?";
-					next;
-					if (select("Would it be possible to get a Heal, please?:Heal, please.:Heal me.") == 1)
-						set .@hunter_t,.@hunter_t+10;
-					mes "[Hunter Sherin]";
-					mes "This time, you found a rare item while you were going through your inventory. You go out to sell the item, and there are many people with stores and chatrooms open.";
-					next;
-					mes "[Hunter Sherin]";
-					mes "What is the";
-					mes "best way to";
-					mes "sell your item?";
-					next;
-					switch(select("Scream out loud to everyone in sight.:Open a chatroom and wait.:Look to see if anyone already wants it.")) {
-					case 2:
-					case 3:
-						set .@hunter_t,.@hunter_t+10;
-					default:
-						break;
-					}
-					mes "[Hunter Sherin]";
-					mes "While you are waiting, someone is begging for items and Zeny. What should you do?";
-					next;
-					if (select("Give some of my items and Zeny.:Ignore and walk away.:Tell the person about a good place to hunt.") == 1)
-						set .@hunter_t,.@hunter_t+10;
-					mes "[Hunter Sherin]";
-					mes "By now, you decide to go to the Maze by yourself.";
-					next;
-					mes "[Hunter Sherin]";
-					mes "But on your way, you run";
-					mes "into someone that is lost.";
-					mes "What should you do?";
-					next;
-					switch(select("Tell them which way to go.:Guide them to their destination.:Ignore.")) {
-					case 1:
-					case 2:
-						set .@hunter_t,.@hunter_t+10;
-					default:
-						break;
-					}
-					mes "[Hunter Sherin]";
-					mes "After meeting this lost person, you decide to get back to hunting. Just then, you find that someone is attacking a boss!";
-					next;
-					mes "[Hunter Sherin]";
-					mes "What should you do?";
-					next;
-					if (select("Watch, then attack when asked for help.:Attack and see what happens.:Just go back to town.") == 1)
-						set .@hunter_t,.@hunter_t+10;
-					mes "[Hunter Sherin]";
-					mes "You are now very exhausted after your day of hunting. It's time to go back to town.";
-					next;
-					mes "[Hunter Sherin]";
-					mes "But what's this!? You find an expensive item lying on the floor! What should you do with it?";
-					next;
-					switch(select("Pick it up and keep it.:Try to find the owner.:Just walk by.")) {
-					case 2:
-					case 3:
-						set .@hunter_t,.@hunter_t+10;
-					default:
-						break;
-					}
-					mes "[Hunter Sherin]";
-					mes "Okay, this is the end of the test!";
-					next;
-					if (.@hunter_t == 100) {
-						set HNTR_Q,2;
-						changequest 4000,4001;
+					if (select("Yes~ Let's start now.:No, I'll be back later.") == 1) {
+						if(checkquest(4000) == -1) {
+							setquest 4000;
+						}
 						mes "[Hunter Sherin]";
-						mes "Well done! Your answers show you've got the right outlook on life. You definitely have the right qualities to become a Hunter~";
+						mes "Listen carefully to the scenarios I describe. When I ask a question, you choose an answer. Pretty simple, don't you think?";
 						next;
 						mes "[Hunter Sherin]";
-						mes "I'm glad to say you've passed the interview~ Now, go to that person in the corner and confirm which item is necessary for your job change test~";
-						close;
-					}
-					else if (.@hunter_t == 90) {
-						set HNTR_Q,2;
-						changequest 4000,4001;
-						mes "[Hunter Sherin]";
-						mes "Well, I'm looking at your answers and your score isn't perfect. But I'll let you pass anyway. I don't know what our Guildmaster will think, though.";
+						mes "I just want to know how you think about life, and why you want to become a Hunter, so there's no need to be nervous.";
 						next;
+					}
+					else {
 						mes "[Hunter Sherin]";
-						mes "Just remember to always keep basic etiquette in mind. Try harder in the following tests and make me happy, okay?";
+						mes "Okay...";
+						mes "Come back";
+						mes "when you're ready~";
 						close;
 					}
-					set HNTR_Q,1;
-					mes "[Hunter Sherin]";
-					mes "Hmm... I don't think this'll work out. You can't become a Hunter without knowing basic etiquette.";
-					next;
-					mes "[Hunter Sherin]";
-					mes "Think about how you answered the questions one more time. In order to value nature, you must first value your relationship with others.";
-					next;
-					mes "[Hunter Sherin]";
-					mes "Then, you'll be more in tune with nature and with other people. It's this kind of harmony that makes the best Hunters.";
-					close;
+					break;
+				case 2:
+					set .@selection,2;
+					break;
+				case 3:
+					set .@selection,3;
+					break;
+				}
+			}
+			else if (HNTR_Q == 1) {
+				mes "[Hunter Sherin]";
+				mes "Welcome back...!";
+				mes "Well, let's start with the interview. This time, carefully think about the answers to each question.";
+				next;
+			}
+			switch(.@selection) {
+			default:
+				mes "[Hunter Sherin]";
+				mes "Well then,";
+				mes "let's begin.";
+				next;
+				mes "[Hunter Sherin]";
+				mes "You are an Archer, and you don't know where you should go to hunt. What do you do?";
+				next;
+				switch(select("Scream out loud asking where you should go.:Quietly ask a person passing by.:Wander around alone and search for a place.")) {
+				case 2:
+				case 3:
+					set .@hunter_t,.@hunter_t+10;
+				default:
+					break;
 				}
 				mes "[Hunter Sherin]";
-				mes "Okay...";
-				mes "Come back";
-				mes "when you're ready~";
+				mes "So you've decided on a place to hunt. You're going to hunt the monsters known as Hodes in the Sograt Desert.";
+				next;
+				mes "[Hunter Sherin]";
+				mes "But you are in Payon!!";
+				mes "How do you go to the desert?";
+				next;
+				switch(select("Ask a Priest to open a free warp portal.:Use the Kafra service.:Walk with a friend.")) {
+				case 2:
+				case 3:
+					set .@hunter_t,.@hunter_t+10;
+				default:
+					break;
+				}
+				mes "[Hunter Sherin]";
+				mes "There is no Priest to ask for a warp, and no friend is around to walk with you. You must use the Kafra service, but you have no Zeny!";
+				next;
+				mes "[Hunter Sherin]";
+				mes "How would you go";
+				mes "about to make the";
+				mes "Zeny that you need?";
+				next;
+				switch(select("Beg here and there.:Sell items I do not need.:Hunt at a nearby field.")) {
+				case 2:
+				case 3:
+					set .@hunter_t,.@hunter_t+10;
+				default:
+					break;
+				}
+				mes "[Hunter Sherin]";
+				mes "So you finally arrive at the Sograt Desert. But you realize that Hodes are a bit too strong for you to hunt alone.";
+				next;
+				mes "[Hunter Sherin]";
+				mes "What is your";
+				mes "solution to this";
+				mes "situation?";
+				next;
+				if (select("Attack a Hode from the top of a hill.:Go back to town.:Attack someone else's Hode.") == 2)
+					set .@hunter_t,.@hunter_t+10;
+				mes "[Hunter Sherin]";
+				mes "Let's say you were having too much trouble hunting Hodes and returned to town. Now you are out of HP and a Priest happens to be around. How would you ask for a Heal?";
+				next;
+				if (select("Would it be possible to get a Heal, please?:Heal, please.:Heal me.") == 1)
+					set .@hunter_t,.@hunter_t+10;
+				mes "[Hunter Sherin]";
+				mes "This time, you found a rare item while you were going through your inventory. You go out to sell the item, and there are many people with stores and chatrooms open.";
+				next;
+				mes "[Hunter Sherin]";
+				mes "What is the";
+				mes "best way to";
+				mes "sell your item?";
+				next;
+				switch(select("Scream out loud to everyone in sight.:Open a chatroom and wait.:Look to see if anyone already wants it.")) {
+				case 2:
+				case 3:
+					set .@hunter_t,.@hunter_t+10;
+				default:
+					break;
+				}
+				mes "[Hunter Sherin]";
+				mes "While you are waiting, someone is begging for items and Zeny. What should you do?";
+				next;
+				if (select("Give some of my items and Zeny.:Ignore and walk away.:Tell the person about a good place to hunt.") == 1)
+					set .@hunter_t,.@hunter_t+10;
+				mes "[Hunter Sherin]";
+				mes "By now, you decide to go to the Maze by yourself.";
+				next;
+				mes "[Hunter Sherin]";
+				mes "But on your way, you run";
+				mes "into someone that is lost.";
+				mes "What should you do?";
+				next;
+				switch(select("Tell them which way to go.:Guide them to their destination.:Ignore.")) {
+				case 1:
+				case 2:
+					set .@hunter_t,.@hunter_t+10;
+				default:
+					break;
+				}
+				mes "[Hunter Sherin]";
+				mes "After meeting this lost person, you decide to get back to hunting. Just then, you find that someone is attacking a boss!";
+				next;
+				mes "[Hunter Sherin]";
+				mes "What should you do?";
+				next;
+				if (select("Watch, then attack when asked for help.:Attack and see what happens.:Just go back to town.") == 1)
+					set .@hunter_t,.@hunter_t+10;
+				mes "[Hunter Sherin]";
+				mes "You are now very exhausted after your day of hunting. It's time to go back to town.";
+				next;
+				mes "[Hunter Sherin]";
+				mes "But what's this!? You find an expensive item lying on the floor! What should you do with it?";
+				next;
+				switch(select("Pick it up and keep it.:Try to find the owner.:Just walk by.")) {
+				case 2:
+				case 3:
+					set .@hunter_t,.@hunter_t+10;
+				default:
+					break;
+				}
+				mes "[Hunter Sherin]";
+				mes "Okay, this is the end of the test!";
+				next;
+				if (.@hunter_t == 100) {
+					set HNTR_Q,2;
+					changequest 4000,4001;
+					mes "[Hunter Sherin]";
+					mes "Well done! Your answers show you've got the right outlook on life. You definitely have the right qualities to become a Hunter~";
+					next;
+					mes "[Hunter Sherin]";
+					mes "I'm glad to say you've passed the interview~ Now, go to that person in the corner and confirm which item is necessary for your job change test~";
+					close;
+				}
+				else if (.@hunter_t == 90) {
+					set HNTR_Q,2;
+					changequest 4000,4001;
+					mes "[Hunter Sherin]";
+					mes "Well, I'm looking at your answers and your score isn't perfect. But I'll let you pass anyway. I don't know what our Guildmaster will think, though.";
+					next;
+					mes "[Hunter Sherin]";
+					mes "Just remember to always keep basic etiquette in mind. Try harder in the following tests and make me happy, okay?";
+					close;
+				}
+				set HNTR_Q,1;
+				mes "[Hunter Sherin]";
+				mes "Hmm... I don't think this'll work out. You can't become a Hunter without knowing basic etiquette.";
+				next;
+				mes "[Hunter Sherin]";
+				mes "Think about how you answered the questions one more time. In order to value nature, you must first value your relationship with others.";
+				next;
+				mes "[Hunter Sherin]";
+				mes "Then, you'll be more in tune with nature and with other people. It's this kind of harmony that makes the best Hunters.";
 				close;
 			case 2:
 				mes "[Hunter Guildsman]";
@@ -411,13 +431,6 @@ L_AskQuestions:
 				mes "see you next time~";
 				close;
 			}
-		}
-		else if (JobLevel > 39 && HNTR_Q == 1) {
-			mes "[Hunter Sherin]";
-			mes "Welcome back...!";
-			mes "Well, let's start with the interview. This time, carefully think about the answers to each question.";
-			next;
-			goto L_AskQuestions;
 		}
 		else if (HNTR_Q > 2 && HNTR_Q < 10) {
 			mes "[Hunter Sherin]";
@@ -461,30 +474,51 @@ hu_in01,382,382,4	script	Guild Receptionist#hnt	732,{
 		mes "[Guild Receptionist]";
 		mes "Greetings. They call me... ^660000The Demon Hunter^000000. I am the one in charge of processing applications. Your name is ... " + strcharinfo(0) + ", correct?";
 		next;
-		if (select("Yes, that is correct.:Nope~~(heeheehee)") == 1) {
-L_GiveQuestItems:
+		set .@selection,select("Yes, that is correct.:Nope~~(heeheehee)");
+		if (.@selection == 2) {
 			mes "[Demon Hunter]";
-			mes "Okay. These are the items you need for the test. Since we provide all the arrows you will be using for this test, we need you to get the materials to make them.";
+			mes "Hey, stop messing around.";
+			mes "Your name is " + strcharinfo(0) + ", right?";
 			next;
-			mes "[Demon Hunter]";
-			mes "You see, we're having some financial problems. Let's see, we're short on these items...";
-			next;
-			switch(rand(1,7)) {
-			//Claw_Of_Desert_Wolf, Wooden_Block, White_Herb
-			case 1: setarray .@items[0], 7030,5, 1019,5, 509,3, 3; changequest 4001,4002; break;
-			//Bill_Of_Birds, Skel_Bonem Green_Herb
-			case 2: setarray .@items[0], 925,3, 932,5, 511,3, 4; changequest 4001,4003; break;
-			//Posionous_Canine, Animal's_Skin, Red_Herb
-			case 3: setarray .@items[0], 937,3, 919,3, 507,5, 5; changequest 4001,4004; break;
-			//Dokkaebi_Horn, Piece_Of_Egg_Shell, Fluff
-			case 4: setarray .@items[0], 1021,3, 7032,3, 914,10, 6; changequest 4001,4005; break;
-			//Shell, Worm_Peelings, Yellow_Herb
-			case 5: setarray .@items[0], 935,9, 955,9, 508,9, 7; changequest 4001,4006; break;
-			//Tooth_Of_Bat, Sticky_Mucus, Bear's_Foot
-			case 6: setarray .@items[0], 913,3, 938,1, 948,1, 8; changequest 4001,4007; break;
-			//Porcupine_Spike, Yoyo_Tailm Acorn
-			case 7: setarray .@items[0], 1027,2, 942,1, 1026,1, 9; changequest 4001,4008; break;
+			if (select("Yes...:Hehehe. I keep telling you, it's not~~") == 1) {
+				mes "[Demon Hunter]";
+				mes "Okay, then. These are the items you need for the test. Since we provide all of the necessary arrows you'll use for the test, we need you to get the materials to make them.";
+				next;
+				mes "[Demon Hunter]";
+				mes "You see, right now we're having some financial problems. Let's see, we're short on these items...";
+				next;
 			}
+			else {
+				mes "[Demon Hunter]";
+				mes "Leave if you plan to trifle me your petty tricks. Do you not realize that you are toying with ^660000The Demon Hunter^000000?!'";
+				close2;
+				warp "hugel",208,223;
+				end;
+			}
+		}
+		mes "[Demon Hunter]";
+		mes "Okay. These are the items you need for the test. Since we provide all the arrows you will be using for this test, we need you to get the materials to make them.";
+		next;
+		mes "[Demon Hunter]";
+		mes "You see, we're having some financial problems. Let's see, we're short on these items...";
+		next;
+		switch(rand(1,7)) {
+		//Claw_Of_Desert_Wolf, Wooden_Block, White_Herb
+		case 1: setarray .@items[0], 7030,5, 1019,5, 509,3, 3; changequest 4001,4002; break;
+		//Bill_Of_Birds, Skel_Bonem Green_Herb
+		case 2: setarray .@items[0], 925,3, 932,5, 511,3, 4; changequest 4001,4003; break;
+		//Posionous_Canine, Animal's_Skin, Red_Herb
+		case 3: setarray .@items[0], 937,3, 919,3, 507,5, 5; changequest 4001,4004; break;
+		//Dokkaebi_Horn, Piece_Of_Egg_Shell, Fluff
+		case 4: setarray .@items[0], 1021,3, 7032,3, 914,10, 6; changequest 4001,4005; break;
+		//Shell, Worm_Peelings, Yellow_Herb
+		case 5: setarray .@items[0], 935,9, 955,9, 508,9, 7; changequest 4001,4006; break;
+		//Tooth_Of_Bat, Sticky_Mucus, Bear's_Foot
+		case 6: setarray .@items[0], 913,3, 938,1, 948,1, 8; changequest 4001,4007; break;
+		//Porcupine_Spike, Yoyo_Tailm Acorn
+		case 7: setarray .@items[0], 1027,2, 942,1, 1026,1, 9; changequest 4001,4008; break;
+		}
+		if (.@selection == 1) {
 			mes "[Demon Hunter]";
 			mes "Hmm. ^660000"+.@items[1]+" "+getitemname(.@items[0])+"^000000 to use for arrow tips. ^660000"+.@items[3]+" "+getitemname(.@items[2])+"^000000 to use here and there. And ^660000"+.@items[5]+" "+getitemname(.@items[4])+"^000000 please.";
 			set HNTR_Q,.@items[6];
@@ -494,26 +528,8 @@ L_GiveQuestItems:
 			next;
 			mes "[Demon Hunter]";
 			mes "Alright then, come back to me when you have everything ready~";
-			close;
 		}
-		mes "[Demon Hunter]";
-		mes "Hey, stop messing around.";
-		mes "Your name is " + strcharinfo(0) + ", right?";
-		next;
-		if (select("Yes...:Hehehe. I keep telling you, it's not~~") == 1) {
-			mes "[Demon Hunter]";
-			mes "Okay, then. These are the items you need for the test. Since we provide all of the necessary arrows you'll use for the test, we need you to get the materials to make them.";
-			next;
-			mes "[Demon Hunter]";
-			mes "You see, right now we're having some financial problems. Let's see, we're short on these items...";
-			next;
-			goto L_GiveQuestItems;
-		}
-		mes "[Demon Hunter]";
-		mes "Leave if you plan to trifle me your petty tricks. Do you not realize that you are toying with ^660000The Demon Hunter^000000?!'";
-		close2;
-		warp "hugel",208,223;
-		end;
+		close;
 	}
 	else if (HNTR_Q >= 3 && HNTR_Q <= 9) {
 		switch(HNTR_Q) {
@@ -594,7 +610,7 @@ L_GiveQuestItems:
 		close;
 	}
 }
-				
+
 payon_in03,131,7,3	script	Hunter#htnGM	59,{
 	if (HNTR_Q == 10) {
 		mes "[Hunter Guildmaster]";
