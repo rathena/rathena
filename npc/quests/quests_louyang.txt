@@ -4112,7 +4112,7 @@ lou_fild01,224,348,0	script	Lady#delivery	817,{
 				set zeny,zeny-100;
 			}
 			close2;
-			donpcevent " #fire::OnClaymore";
+			specialeffect EF_BLASTMINEBOMB,AREA," #fire";
 			end;
 		}
 		mes "[Lady]";
@@ -4232,10 +4232,6 @@ lou_fild01,224,348,0	script	Lady#delivery	817,{
 }
 
 lou_fild01,225,350,0	script	 #fire	139,{
-	end;
-
-OnClaymore:
-	specialeffect EF_BLASTMINEBOMB;
 	end;
 }
 

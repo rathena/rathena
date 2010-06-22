@@ -3160,17 +3160,10 @@ que_god02,173,58,4	script	#doppelganger1	739,{
 }
 
 que_god02,175,55,4	script	#doppelganger2	739,{
-
-OnCast:
-	specialeffect EF_BEGINSPELL7;
 	end;
 }
 
 que_god02,175,54,1	script	#lowen	745,{
-	end;
-
-OnCast:
-	specialeffect EF_BEGINSPELL7;
 	end;
 }
 
@@ -3244,7 +3237,7 @@ OnTouch:
 	mes "Go, Lowen!";
 	mes "Cast Grand Cross, now!^000000";
 	next;
-	donpcevent "#lowen::OnCast";
+	specialeffect EF_BEGINSPELL7,AREA,"#lowen";
 	mapannounce "que_god02","Mwahaha! Mortals are such fools...",0,0xA8A8A8;
 	donpcevent "#brisinsummon::OnDoppel1Off";
 	donpcevent "#brisinsummon::OnDoppel2On";
@@ -3255,7 +3248,7 @@ OnTouch:
 	mes "[" + strcharinfo(0) + "]";
 	mes " ??!!!";
 	next;
-	donpcevent "#doppelganger2::OnCast";
+	specialeffect EF_BEGINSPELL7,AREA,"#doppelganger2";
 	mes "[Male Voice]";
 	mes "Lowen!";
 	mes "Noooooooooo!!!";

@@ -7616,7 +7616,7 @@ OnInit:
 	enablenpc "#mj01_01";
 	end;
 
-.@get_stone:
+OnTouch:
 	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
 		if (countitem(6077) < 10) {
 			specialeffect EF_COUPLECASTING; 
@@ -7688,7 +7688,7 @@ OnInit:
 	enablenpc "#mj01_02";
 	end;
 
-.@get_stone:
+OnTouch:
 	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
 		if (countitem(6077) < 10) {
 			specialeffect EF_COUPLECASTING;

@@ -1858,7 +1858,7 @@ OnMyMobDead:
 		mapannounce "juperos_02","Have you come seeking Juperos?! It no longer exists...",bc_map,"0xFF0000";
 	else if (.MyMobs == 0) {
 		mapannounce "juperos_02","Have you come to see me? Fine! Find me first!",bc_map,"0xFF0000";
-		specialeffect2 563; // 563
+		specialeffect2 563;
 		soundeffectall "earth_quake.wav",0;
 		disablenpc "3F Gate Switch#jupe";
 		donpcevent "Restricted Area#jupe::OnEnable";
@@ -1912,7 +1912,7 @@ OnTimer483000:
 OnTimer506000:
 OnTimer529000:
 OnTimer552000:
-	specialeffect 561; //"Restricted Area#jupe" 561
+	specialeffect 561;
 	end;
 
 OnTimer556000:
@@ -1924,7 +1924,7 @@ OnTimer561000:
 	end;
 
 OnTimer598000:
-	specialeffect 561; //"Restricted Area#jupe" 561
+	specialeffect 561;
 	end;
 
 OnTimer600000:
@@ -2067,7 +2067,7 @@ OnInit:
 
 OnEnable:
 	enablenpc "Warp#1-1";
-	specialeffect 561; //"Warp#1-1" 561
+	specialeffect 561;
 	soundeffectall "jupe_warp.wav",0;
 	initnpctimer;
 	end;
@@ -2361,7 +2361,7 @@ OnInit:
 
 OnEnable:
 	enablenpc "Warp#1-2";
-	specialeffect 561; //"Warp#1-2" 561
+	specialeffect 561;
 	soundeffectall "jupe_warp.wav",0;
 	initnpctimer;
 	end;
@@ -2648,7 +2648,7 @@ OnInit:
 
 OnEnable:
 	enablenpc "Warp#1-3";
-	specialeffect 561; //"Warp#1-3" 561
+	specialeffect 561;
 	soundeffectall "jupe_warp.wav",0;
 	initnpctimer;
 	end;
@@ -2937,7 +2937,7 @@ OnInit:
 
 OnEnable:
 	enablenpc "Warp#1-4";
-	specialeffect 561; //"Warp#1-4" 561
+	specialeffect 561;
 	soundeffectall "jupe_warp.wav",0;
 	initnpctimer;
 	end;
@@ -3143,7 +3143,7 @@ OnInit:
 
 OnEnable:
 	enablenpc "LeverWarp#ufe";
-	specialeffect 561; //"LeverWarp#ufe" 561
+	specialeffect 561;
 	soundeffectall "jupe_warp.wav",0;
 	initnpctimer;
 	end;
@@ -3276,7 +3276,7 @@ OnInit:
 
 OnEnable:
 	enablenpc "Warp#2-1";
-	specialeffect 561; //"Warp#2-1" 561
+	specialeffect 561;
 	soundeffectall "jupe_warp.wav",0;
 	initnpctimer;
 	end;
@@ -3570,7 +3570,7 @@ OnInit:
 
 OnEnable:
 	enablenpc "Warp#2-2";
-	specialeffect 561; //"Warp#2-2" 561
+	specialeffect 561;
 	soundeffectall "jupe_warp.wav",0;
 	initnpctimer;
 	end;
@@ -3857,7 +3857,7 @@ OnInit:
 
 OnEnable:
 	enablenpc "Warp#2-3";
-	specialeffect 561; //"Warp#2-3" 561
+	specialeffect 561;
 	soundeffectall "jupe_warp.wav",0;
 	initnpctimer;
 	end;
@@ -4148,7 +4148,7 @@ OnInit:
 
 OnEnable:
 	enablenpc "Warp#2-4";
-	specialeffect 561; //"Warp#2-4" 561
+	specialeffect 561;
 	soundeffectall "jupe_warp.wav",0;
 	initnpctimer;
 	end;
@@ -4356,7 +4356,7 @@ OnInit:
 
 OnEnable:
 	enablenpc "LeverWarp#ufe2";
-	specialeffect 561; //"LeverWarp#ufe2" 561
+	specialeffect 561;
 	soundeffectall "jupe_warp.wav",0;
 	initnpctimer;
 	end;
@@ -4450,7 +4450,7 @@ jupe_ele_r,51,98,0	script	Switch#ufe	844,{
 							disablenpc "Switch#ufe";
 							enablenpc "Switch On#ufe";
 							initnpctimer;
-							specialeffect2 563; // 563
+							specialeffect2 563;
 							soundeffectall "earth_quake.wav",0;
 							close2;
 							cutin "5-1",255;

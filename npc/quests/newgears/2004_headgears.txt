@@ -1918,15 +1918,15 @@ alde_alche,88,180,0	script	Muscle Man#Alarm Mask	748,{
 	mes "It's sexy time!";
 	next;
 	specialeffect EF_FLASHER;
-	setnpcdisplay "Muscle Man#Alarm Mask Man", 1193;
+	setnpcdisplay "Muscle Man#Alarm Mask", 1193;
 	enablenpc " #Alarm Mask Man1";
 	enablenpc " #Alarm Mask Man2";
 	enablenpc " #Alarm Mask Man3";
 	enablenpc " #Alarm Mask Man4";
-	donpcevent " #Alarm Mask Man1::OnAlarmState";
-	donpcevent " #Alarm Mask Man2::OnAlarmState";
-	donpcevent " #Alarm Mask Man3::OnAlarmState";
-	donpcevent " #Alarm Mask Man4::OnAlarmState";
+	specialeffect EF_CLAYMORE,AREA," #Alarm Mask Man1";
+	specialeffect EF_CLAYMORE,AREA," #Alarm Mask Man2";
+	specialeffect EF_CLAYMORE,AREA," #Alarm Mask Man3";
+	specialeffect EF_CLAYMORE,AREA," #Alarm Mask Man4";
 	initnpctimer;
 	if (countitem(1095) > 2999 && countitem(2288) > 0) {
 		if (select("Give him items:Cancel") == 1) {
@@ -2033,15 +2033,15 @@ alde_alche,88,180,0	script	Muscle Man#Alarm Mask	748,{
 
 OnTimer4000:
 	specialeffect EF_FLASHER;
-	setnpcdisplay "Muscle Man#Alarm Mask Man", 748;
+	setnpcdisplay "Muscle Man#Alarm Mask", 748;
 	disablenpc " #Alarm Mask Man1";
 	disablenpc " #Alarm Mask Man2";
 	disablenpc " #Alarm Mask Man3";
 	disablenpc " #Alarm Mask Man4";
-	donpcevent " #Alarm Mask Man1::OnAlarmState";
-	donpcevent " #Alarm Mask Man2::OnAlarmState";
-	donpcevent " #Alarm Mask Man3::OnAlarmState";
-	donpcevent " #Alarm Mask Man4::OnAlarmState";
+	specialeffect EF_CLAYMORE,AREA," #Alarm Mask Man1";
+	specialeffect EF_CLAYMORE,AREA," #Alarm Mask Man2";
+	specialeffect EF_CLAYMORE,AREA," #Alarm Mask Man3";
+	specialeffect EF_CLAYMORE,AREA," #Alarm Mask Man4";
 	stopnpctimer;
 	end;
 }
@@ -2050,19 +2050,11 @@ alde_alche,86,184,0	script	 #Alarm Mask Man1	1193,{
 OnInit:
 	disablenpc " #Alarm Mask Man1";
 	end;
-
-OnAlarmState:
-	specialeffect EF_CLAYMORE;
-	end;
 }
 
 alde_alche,89,184,0	script	 #Alarm Mask Man2	1193,{
 OnInit:
 	disablenpc " #Alarm Mask Man2";
-	end;
-
-OnAlarmState:
-	specialeffect EF_CLAYMORE;
 	end;
 }
 
@@ -2070,19 +2062,11 @@ alde_alche,92,184,0	script	 #Alarm Mask Man3	1193,{
 OnInit:
 	disablenpc " #Alarm Mask Man3";
 	end;
-
-OnAlarmState:
-	specialeffect EF_CLAYMORE;
-	end;
 }
 
 alde_alche,95,184,0	script	 #Alarm Mask Man4	1193,{
 OnInit:
 	disablenpc " #Alarm Mask Man4";
-	end;
-
-OnAlarmState:
-	specialeffect EF_CLAYMORE;
 	end;
 }
 

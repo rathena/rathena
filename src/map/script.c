@@ -10996,7 +10996,14 @@ BUILDIN_FUNC(specialeffect)
 	if(bl==NULL)
 		return 0;
 
-	clif_specialeffect(bl, type, target);
+	if( script_hasdata(st,4) )
+	{
+		TBL_NPC *nd = npc_name2id(script_getstr(st,4));
+		if(nd)
+			clif_specialeffect(&nd->bl, type, target);
+	}
+	else
+		clif_specialeffect(bl, type, target);
 
 	return 0;
 }

@@ -170,8 +170,8 @@ pay_arche,109,169,3	script	Arpesto	712,{
 				next;
 				mes "[Arpesto]";
 				mes "ARRRRRRRROOOOOOW~!";
-				specialeffect 99;
-				specialeffect2 99;
+				specialeffect EF_FLASHER;
+				specialeffect2 EF_FLASHER;
 				next;
 				mes "[Arpesto]";
 				mes "^333333*Pant Pant*^000000";
@@ -182,7 +182,7 @@ pay_arche,109,169,3	script	Arpesto	712,{
 				next;
 				mes "^3355FF*Swwwwwww!*";
 				mes "*Bang!*^000000";
-				specialeffect 1;
+				specialeffect EF_HIT2;
 				emotion 23;
 				emotion 23,1;
 				next;

@@ -410,7 +410,7 @@ OnTouch:
 			mes "[Maia]";
 			mes "This Witherless Rose will";
 			mes "wither away instead of you...";
-			donpcevent "Maia#link2::Oneff";
+			specialeffect EF_MAPPILLAR2,AREA,"Maia#link2";
 			next;
 			mes "[Maia]";
 			mes "This Witherless Rose will";
@@ -476,10 +476,6 @@ OnTouch:
 	}
 	close2;
 	warp "morocc",157,47;
-	end;
-
-Oneff:
-	specialeffect EF_MAPPILLAR2;
 	end;
 }
 

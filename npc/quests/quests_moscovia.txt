@@ -3789,7 +3789,7 @@ mosk_fild01,86,104,3	script	Aged Stranger#npc	963,{
 				if (.@music_bard == 2) {
 					soundeffect "mos_gusli1.wav",0;
 					emotion e_no1;
-					specialeffect2 7;
+					specialeffect2 EF_EXIT;
 					mes "[Aged Stranger]";
 					mes "Oh! You are good at playing the";
 					mes "Gusli! In such a short time... you";
@@ -3833,7 +3833,7 @@ mosk_fild01,86,104,3	script	Aged Stranger#npc	963,{
 				if (.@music_etc == 3) {
 					soundeffect "mos_gusli1.wav",0;
 					emotion e_no1;
-					specialeffect2 7;
+					specialeffect2 EF_EXIT;
 					mes "[Aged Stranger]";
 					mes "Oh! You are good at playing the";
 					mes "Gusli! In such a short time... you";
@@ -3905,7 +3905,7 @@ mosk_fild01,86,104,3	script	Aged Stranger#npc	963,{
 				if (.@music_bard == 2) {
 					soundeffect "mos_gusli1.wav",0;
 					emotion e_no1;
-					specialeffect2 7;
+					specialeffect2 EF_EXIT;
 					mes "[Aged Stranger]";
 					mes "Oh! You are good at playing the";
 					mes "Gusli! In such a short time... you";
@@ -3949,7 +3949,7 @@ mosk_fild01,86,104,3	script	Aged Stranger#npc	963,{
 				if (.@music_etc == 3) {
 					soundeffect "mos_gusli1.wav",0;
 					emotion e_no1;
-					specialeffect2 7;
+					specialeffect2 EF_EXIT;
 					mes "[Aged Stranger]";
 					mes "Oh! You are good at playing the";
 					mes "Gusli! In such a short time... you";
@@ -10394,8 +10394,8 @@ mosk_dun01,169,162,0	script	Mysterious Stone#rus02	111,{
 			next;
 			mes "- !!!!!! -";
 			percentheal -50,-50;
-			specialeffect2 212;
-			specialeffect2 1;
+			specialeffect2 EF_DARKBREATH;
+			specialeffect2 EF_HIT2;
 			emotion 23,1;
 			next;
 			mes "- An unknown force has -";
@@ -10518,7 +10518,7 @@ mosk_dun01,167,160,3	script	Gray Wolf#rus03	972,{
 		mes "Unless you want to be killed, leave now.";
 		set rhea_rus_main,3;
 		emotion 23,1;
-		specialeffect2 1;
+		specialeffect2 EF_HIT2;
 		percentheal -50,0;
 		next;
 		mes "- The Gray Wolf attacks you -";
@@ -10771,8 +10771,8 @@ mosk_dun01,45,259,0	script	Wall#rus04	111,{
 					mes "- The key begins to glow -";
 					mes "- wind begins to blow -";
 					mes "- from somewhere -";
-					specialeffect2 12;
-					specialeffect 134;
+					specialeffect2 EF_BEGINSPELL;
+					specialeffect EF_FREEZED;
 					next;
 				}else{
 					mes "["+ strcharinfo(0) +"]";
@@ -10789,13 +10789,15 @@ mosk_dun01,45,259,0	script	Wall#rus04	111,{
 				mes "- The wind disappears and -";
 				mes "- a very young girl appears -";
 				donpcevent "Maria Morebna#rus46::OnEnable";
-				donpcevent "Maria Morebna#rus46::OnFreezed";
+				specialeffect EF_FREEZED,AREA,"Maria Morebna#rus46";
 				next;
 				mes "[Maria Morebna]";
 				mes "Thank you!";
 				mes "I'm finally out of there! Now I can.....................aaaaak!!!....";
 				next;
-				donpcevent "Maria Morebna#rus46::OnDeath";
+				specialeffect EF_HIT2,AREA,"Maria Morebna#rus46";
+				specialeffect EF_DARKBREATH,AREA,"Maria Morebna#rus46";
+				specialeffect EF_DEVIL,AREA,"Maria Morebna#rus46";
 				mes "- Maria is attacked -";
 				mes "- and falls down!! -";
 				next;
@@ -10824,7 +10826,7 @@ mosk_dun01,45,259,0	script	Wall#rus04	111,{
 				mes "Gray Wolf...";
 				mes "You think you can fight me?!";
 				next;
-				donpcevent "Gray Wolf#rus05::OnFirehit";
+				specialeffect EF_FIREHIT,AREA,"Gray Wolf#rus05";
 				mes "- Staggering from -";
 				mes "- Koshei's flames, -";
 				mes "- Gray Wolf quickly tell me -";
@@ -10956,7 +10958,7 @@ mosk_dun01,45,259,0	script	Wall#rus04	111,{
 			mes "- The wounds and -";
 			mes "- curses on her body -";
 			mes "- are removed !! -";
-			donpcevent "Maria Morebna#rus46::OnAbsorbspirits";
+			specialeffect EF_ABSORBSPIRITS,AREA,"Maria Morebna#rus46";
 			next;
 			mes "["+ strcharinfo(0) +"]";
 			mes "Ok! Next...";
@@ -10986,7 +10988,7 @@ mosk_dun01,45,259,0	script	Wall#rus04	111,{
 				next;
 			}
 			mes "- !! -";
-			donpcevent "Maria Morebna#rus46::OnResurrection";
+			specialeffect EF_RESURRECTION,AREA,"Maria Morebna#rus46";
 			next;
 			mes "[Gray Wolf]";
 			mes "Success!!";
@@ -11170,10 +11172,6 @@ OnDisable:
 	disablenpc "Gray Wolf#rus05";
 	end;
 
-OnFirehit:
-	specialeffect 49;
-	end;
-
 OnTimer120000:
 	stopnpctimer;
 	donpcevent "Gray Wolf#rus05::OnDisable";
@@ -11198,24 +11196,6 @@ OnEnable:
 OnDisable:
 	stopnpctimer;
 	disablenpc "Maria Morebna#rus46";
-	end;
-
-OnFreezed:
-	specialeffect 134;
-	end;
-
-OnDeath:
-	specialeffect 1;
-	specialeffect 212;
-	specialeffect 372;
-	end;
-
-OnAbsorbspirits:
-	specialeffect 253;
-	end;
-
-OnResurrection:
-	specialeffect 77;
 	end;
 
 OnTimer120000:
@@ -11422,7 +11402,7 @@ moscovia,178,127,0	script	The Blacksmith#rus06	63,{
 				next;
 				mes "[The Blacksmith]";
 				mes "'^ff0000Spellshield Protection^000000.";
-				specialeffect2 253;
+				specialeffect2 EF_ABSORBSPIRITS;
 				next;
 				mes "[The Blacksmith]";
 				mes "This spell protects you from any curse the keymaker might try to use. Remember the words of the spell. It won't last very long because I am just a blacksmith.";
@@ -12470,7 +12450,7 @@ mosk_fild02,151,188,0	script	Pointed Tree#rus11	111,{
 				close;
 			}else{
 				mes "- My hand is pricked by thorns! -";
-				specialeffect2 1;
+				specialeffect2 EF_HIT2;
 				percentheal -5,0;
 				close;
 			}
@@ -12508,7 +12488,7 @@ mosk_fild02,160,227,0	script	Pointed Tree#rus12	111,{
 				close;
 			}else{
 				mes "- My hand is pricked by thorns! -";
-				specialeffect2 1;
+				specialeffect2 EF_HIT2;
 				percentheal -5,0;
 				close;
 			}
@@ -12546,7 +12526,7 @@ mosk_fild02,160,179,0	script	Pointed Tree#rus13	111,{
 				close;
 			}else{
 				mes "- My hand is pricked by thorns! -";
-				specialeffect2 1;
+				specialeffect2 EF_HIT2;
 				percentheal -5,0;
 				close;
 			}
@@ -12584,7 +12564,7 @@ mosk_fild02,142,247,0	script	Pointed Tree#rus14	111,{
 				close;
 			}else{
 				mes "- My hand is pricked by thorns! -";
-				specialeffect2 1;
+				specialeffect2 EF_HIT2;
 				percentheal -5,0;
 				close;
 			}
@@ -12622,7 +12602,7 @@ mosk_fild02,149,223,0	script	Pointed Tree#rus15	111,{
 				close;
 			}else{
 				mes "- My hand is pricked by thorns! -";
-				specialeffect2 1;
+				specialeffect2 EF_HIT2;
 				percentheal -5,0;
 				close;
 			}
@@ -12660,7 +12640,7 @@ mosk_fild02,114,223,0	script	Pointed Tree#rus16	111,{
 				close;
 			}else{
 				mes "- My hand is pricked by thorns! -";
-				specialeffect2 1;
+				specialeffect2 EF_HIT2;
 				percentheal -5,0;
 				close;
 			}
@@ -12698,7 +12678,7 @@ mosk_fild02,101,197,0	script	Pointed Tree#rus17	111,{
 				close;
 			}else{
 				mes "- My hand is pricked by thorns! -";
-				specialeffect2 1;
+				specialeffect2 EF_HIT2;
 				percentheal -5,0;
 				close;
 			}
@@ -12736,7 +12716,7 @@ mosk_fild02,125,182,0	script	Pointed Tree#rus18	111,{
 				close;
 			}else{
 				mes "- My hand is pricked by thorns! -";
-				specialeffect2 1;
+				specialeffect2 EF_HIT2;
 				percentheal -5,0;
 				close;
 			}
@@ -12919,7 +12899,7 @@ OnTouch:
 					mes "- something gleaming -";
 					mes "- seems to stare at you!! -";
 					next;
-					specialeffect2 99;
+					specialeffect2 EF_FLASHER;
 					percentheal -100,0;
 					close;
 				}
@@ -12946,7 +12926,7 @@ OnTouch:
 					close;
 				}else{
 					mes "-You seem to hear the splash but something gleaming raids on you!!-";
-					specialeffect2 99;
+					specialeffect2 EF_FLASHER;
 					percentheal -100,0;
 					close;
 				}
@@ -13164,7 +13144,7 @@ mosk_fild02,124,202,3	script	Lusalka#rus23	971,{
 				mes "Here, my hair...?!";
 				mes "Aaaaaaaah!??!?!";
 				sc_start SC_CURSE,60000,0;
-				specialeffect2 90;
+				specialeffect2 EF_LORD;
 				emotion 23,1;
 				percentheal -30,0;
 				next;
@@ -13210,7 +13190,7 @@ mosk_fild02,124,202,3	script	Lusalka#rus23	971,{
 		}
 	}else{
 		mes "-When Lusalka watches you, you are blacked out-";
-		specialeffect2 99;
+		specialeffect2 EF_FLASHER;
 		percentheal -100,0;
 		donpcevent "Lusalka#rus23::OnDisable";
 		close;
@@ -13616,7 +13596,7 @@ OnInit:
 
 OnEnable:
 	initnpctimer;
-	specialeffect 317;
+	specialeffect EF_PORTAL2;
 	enablenpc "1#rus27";
 	end;
 
@@ -13719,7 +13699,7 @@ mosk_que,45,131,0	script	Stone Furnace#rus28	111,{
 				next;
 				mes "["+ strcharinfo(0) +"]";
 				mes "Oops, it's hot, hot!!!";
-				specialeffect2 49;
+				specialeffect2 EF_FIREHIT;
 				emotion 23,1;
 				percentheal -5,0;
 				close;
@@ -14065,7 +14045,7 @@ mosk_dun02,48,214,5	script	Baba Yaga#rus32	970,{
 		mes "[Baba Yaga]";
 		mes "'Presto Change-o!!'";
 		mes "'Turn into a pig!!'";
-		specialeffect2 63;
+		specialeffect2 EF_BARRIER;
 		emotion 23;
 		next;
 		mes "[Baba Yaga]";
@@ -14083,7 +14063,7 @@ mosk_dun02,48,214,5	script	Baba Yaga#rus32	970,{
 			mes "["+ strcharinfo(0) +"]";
 			mes "Eh, eh.. I mean.. I say.. spell...";
 			mes ""+ .@input$ +" !!!";
-			specialeffect2 253;
+			specialeffect2 EF_ABSORBSPIRITS;
 			next;
 		}else{
 			mes "["+ strcharinfo(0) +"]";
@@ -14254,7 +14234,7 @@ mosk_dun02,48,214,5	script	Baba Yaga#rus32	970,{
 			mes "[Baba Yaga]";
 			mes "Ok.. Let's do this.";
 			mes "'Keep off the grass!!!'";
-			specialeffect 56;
+			specialeffect EF_BEGINSPELL4;
 			delitem 7881,1;
 			set rhea_rus_main,28;
 			monster "mosk_dun02",52,210,"Violent Gardener",1493,1,"Baba Yaga#rus32::OnMyMobDead";
@@ -14283,7 +14263,7 @@ mosk_dun02,48,214,5	script	Baba Yaga#rus32	970,{
 		next;
 		mes "[Baba Yaga]";
 		mes "'There is an order for you to open your eyes!!!'";
-		specialeffect2 55;
+		specialeffect2 EF_BEGINSPELL3;
 		set rhea_rus_main,29;
 		monster "mosk_dun02",52,210,"Alarm to 5 minutes",1193,1,"Baba Yaga#rus32::OnMyMobDead";
 		monster "mosk_dun02",53,210,"Alarm on time",1193,1,"Baba Yaga#rus32::OnMyMobDead";
@@ -14497,7 +14477,7 @@ mosk_dun02,48,214,5	script	Baba Yaga#rus32	970,{
 			next;
 			mes "[Baba Yaga]";
 			mes "Yg~ Yg~ Yggdrasil~ Yggdrasil has lots of iron~";
-			specialeffect 305;
+			specialeffect EF_PHARMACY_OK;
 			next;
 			mes "[Baba Yaga]";
 			mes "Here, I made the 'Living Water' so now let's make the 'Dead Water'...";
@@ -14511,7 +14491,7 @@ mosk_dun02,48,214,5	script	Baba Yaga#rus32	970,{
 			next;
 			mes "[Baba Yaga]";
 			mes "Hi~ hi~ hi~ hi~ na~ lle~ Stir with right hand~ Stir with left hand~ Both hands will be ok~";
-			specialeffect 305;
+			specialeffect EF_PHARMACY_OK;
 			next;
 			mes "[Baba Yaga]";
 			mes "Here, it's done.";
@@ -14671,7 +14651,7 @@ mosk_dun02,48,214,5	script	Baba Yaga#rus32	970,{
 					}
 					mes "[Baba Yaga]";
 					mes "Here, done!";
-					specialeffect 305;
+					specialeffect EF_PHARMACY_OK;
 					next;
 					mes "[Baba Yaga]";
 					mes "Whenever you want more, come to me.";
@@ -14770,7 +14750,7 @@ mosk_dun02,48,214,5	script	Baba Yaga#rus32	970,{
 					}
 					mes "[Baba Yaga]";
 					mes "Here, done!";
-					specialeffect 305;
+					specialeffect EF_PHARMACY_OK;
 					next;
 					mes "[Baba Yaga]";
 					mes "Whenever you want more, come to me.";
@@ -14879,7 +14859,7 @@ OnTouch:
 			if (.@input$ == "Good feed is orange-flavored") {
 				mes "["+ strcharinfo(0) +"]";
 				mes ""+ .@input$ +" !!!";
-				specialeffect 304;
+				specialeffect EF_TELEPORTATION2;
 				next;
 				mes "- You cast the spell in a hurry and the cow is surronded by the light and disappears !! -";
 				donpcevent "Cow#rus33::OnDisable";
@@ -14993,7 +14973,7 @@ OnTouch:
 			if (.@input$ == "Good feed is orange-flavored") {
 				mes "["+ strcharinfo(0) +"]";
 				mes ""+ .@input$ +" !!!";
-				specialeffect 304;
+				specialeffect EF_TELEPORTATION2;
 				next;
 				mes "- You cast the spell in a hurry and the cow is surronded by the light and disappears !! -";
 				donpcevent "Cow#rus34::OnDisable";
@@ -15107,7 +15087,7 @@ OnTouch:
 			if (.@input$ == "Good feed is orange-flavored") {
 				mes "["+ strcharinfo(0) +"]";
 				mes ""+ .@input$ +" !!!";
-				specialeffect 304;
+				specialeffect EF_TELEPORTATION2;
 				next;
 				mes "- You cast the spell in a hurry and the cow is surronded by the light and disappears !! -";
 				donpcevent "Cow#rus35::OnDisable";
@@ -15211,7 +15191,7 @@ mosk_dun02,65,232,0	script	Noisy Coffin#rus36	801,{
 					next;
 					mes "["+ strcharinfo(0) +"]";
 					mes "Heaven, earth, and wind belong to God, there is no place for evil.";
-					specialeffect 42;
+					specialeffect EF_BLESSING;
 					next;
 					mes "[Noisy Coffin]";
 					mes "Heek, heeee! Heeeeeek!";
@@ -15223,7 +15203,7 @@ mosk_dun02,65,232,0	script	Noisy Coffin#rus36	801,{
 					next;
 					mes "["+ strcharinfo(0) +"]";
 					mes "Heaven, earth, and wind belong to God, there is no place for evil.";
-					specialeffect 42;
+					specialeffect EF_BLESSING;
 					next;
 					mes "[Noisy Coffin]";
 					mes "What was that? What was that for? Was it fun?";
@@ -15243,7 +15223,7 @@ mosk_dun02,65,232,0	script	Noisy Coffin#rus36	801,{
 					mes "- The covetous, the perverse -";
 					mes "- All the evils hateful -";
 					mes "- Will be droven off this land -";
-					specialeffect 75;
+					specialeffect EF_GLORIA;
 					next;
 					mes "[Noisy Coffin]";
 					mes "Heek, heeee! Heeeeeek!";
@@ -15257,7 +15237,7 @@ mosk_dun02,65,232,0	script	Noisy Coffin#rus36	801,{
 					mes "- The covetous, the perverse -";
 					mes "- All the evils hateful -";
 					mes "- Will be droven off this land -";
-					specialeffect 75;
+					specialeffect EF_GLORIA;
 					next;
 					mes "[Noisy Coffin]";
 					mes "Perverse! The perverse!! Drive away!! What was that song?! Was it fun?!";
@@ -15275,7 +15255,7 @@ mosk_dun02,65,232,0	script	Noisy Coffin#rus36	801,{
 						mes "If you don't shut up, I will pour Holy Water on you!";
 						next;
 						mes "- You open the bottle of Holy Water and pour it around the coffin carefully !! -";
-						specialeffect 72;
+						specialeffect EF_SPHERE;
 						next;
 						mes "[Noisy Coffin]";
 						mes "Heek, heeee! Heeeeeek!";
@@ -15287,7 +15267,7 @@ mosk_dun02,65,232,0	script	Noisy Coffin#rus36	801,{
 						mes "If you don't shut up, I will pour Holy Water on you!";
 						next;
 						mes "- You open the bottle of Holy Water and pour it around the coffin carefully !! -";
-						specialeffect 72;
+						specialeffect EF_SPHERE;
 						next;
 						mes "[Noisy Coffin]";
 						mes "Ah, cold! No, it's cool! Was it fun? Was it fun?!";
@@ -15321,7 +15301,7 @@ mosk_dun02,65,232,0	script	Noisy Coffin#rus36	801,{
 					next;
 					mes "[Noisy Coffin]";
 					mes "Heeeek! Heeeeeee!!!! I am scared! Stop it!!";
-					specialeffect 152;
+					specialeffect EF_HOLYHIT;
 					set rhea_rus_main,20;
 					next;
 					break;
@@ -15331,7 +15311,7 @@ mosk_dun02,65,232,0	script	Noisy Coffin#rus36	801,{
 					mes "......I will kick you!!";
 					next;
 					mes "- You close your eyes, take a deep breathe and kick the coffin with the might of God !! -";
-					specialeffect 152;
+					specialeffect EF_HOLYHIT;
 					next;
 					mes "[Noisy Coffin]";
 					mes "Slam! Slam! I like noise! Do it more, more, more!";
@@ -15426,7 +15406,7 @@ treasure01,165,58,0	script	Old Treasure Box#rus37	111,{
 			next;
 			mes "["+ strcharinfo(0) +"]";
 			mes "Arrrrrk? What is this!!";
-			specialeffect 99;
+			specialeffect EF_FLASHER;
 			next;
 		}else{
 			mes "- Her eyes are made from jewels !! -";
@@ -15437,7 +15417,7 @@ treasure01,165,58,0	script	Old Treasure Box#rus37	111,{
 			end;
 		}
 		mes "- You wave your arms and cover your eyes. The mirror inside your bag reflects the light from her eyes accidentally !! -";
-		specialeffect 99;
+		specialeffect EF_FLASHER;
 		next;
 		mes "- The light reflected goes to the woman shape and fumes comes from the box and it opens !! -";
 		next;
@@ -15509,7 +15489,7 @@ treasure01,24,39,0	script	Old Bed#rus38	111,{
 			next;
 			mes "["+ strcharinfo(0) +"]";
 			mes "Ouch?!";
-			specialeffect2 1;
+			specialeffect2 EF_HIT2;
 			percentheal -5,0;
 			next;
 			mes "- Something unidentified bites your hand !! -";
@@ -15563,7 +15543,7 @@ treasure01,24,39,0	script	Old Bed#rus38	111,{
 			next;
 			mes "["+ strcharinfo(0) +"]";
 			mes "Ouch?!";
-			specialeffect2 1;
+			specialeffect2 EF_HIT2;
 			percentheal -5,0;
 			next;
 			mes "- Something unidentified bites your hand !! -";
@@ -15810,7 +15790,7 @@ mosk_dun02,57,220,0	script	House Ghost Jar#rus43	111,{
 		next;
 		mes "- You tap the jar -";
 		mes "- with your hand -";
-		specialeffect 62;
+		specialeffect EF_SIGHTRASHER;
 		emotion 23,1;
 		next;
 		mes "- A voice laughs in the jar as -";
@@ -15818,7 +15798,7 @@ mosk_dun02,57,220,0	script	House Ghost Jar#rus43	111,{
 		next;
 		mes "["+ strcharinfo(0) +"]";
 		mes "You! No more games! Come out of there!";
-		specialeffect 1;
+		specialeffect EF_HIT2;
 		next;
 		mes "- You kick the jar -";
 		mes "- it rolls to the floor -";
@@ -15837,7 +15817,7 @@ mosk_dun02,57,220,0	script	House Ghost Jar#rus43	111,{
 		mes "- As you plan to kick the jar -";
 		mes "- again, something scared -";
 		mes "- utters in a shaky voice -";
-		specialeffect 196;
+		specialeffect EF_CURSEATTACK;
 		next;
 		mes "[House Ghost]";
 		mes "No! Please stop it! I was wrong!";
@@ -15886,19 +15866,19 @@ mosk_dun02,57,220,0	script	House Ghost Jar#rus43	111,{
 			next;
 			mes "[House Ghost]";
 			mes "One!";
-			specialeffect 0;
+			specialeffect EF_HIT1;
 			next;
 			mes "[House Ghost]";
 			mes "One! Two!";
-			specialeffect 1;
+			specialeffect EF_HIT2;
 			next;
 			mes "[House Ghost]";
 			mes "One! Two! Three!";
-			specialeffect 2;
+			specialeffect EF_HIT3;
 			next;
 			mes "[House Ghost]";
 			mes "Ok! I will pick one of them up!";
-			specialeffect 18;
+			specialeffect EF_STEAL;
 			next;
 			mes "[House Ghost]";
 			mes "Ok! I will pick one of them up!";
@@ -16413,7 +16393,7 @@ pay_dun04,163,186,0	script	Ghost Tree#rus45	111,{
 			mes "I cast first.";
 			next;
 			mes "- Ghost Tree casts a dice. The dice falls down, rotates and stops there-";
-			specialeffect 194;
+			specialeffect EF_STUNATTACK;
 			next;
 			set .@tree_dice01,rand(1,6);
 			if (.@tree_dice01 == 1) {
@@ -16456,7 +16436,7 @@ pay_dun04,163,186,0	script	Ghost Tree#rus45	111,{
 			mes "Ok, it is my turn?";
 			next;
 			mes "-You cast a dice. The dice falls down, rotates and stops there-";
-			specialeffect2 194;
+			specialeffect2 EF_STUNATTACK;
 			next;
 			set .@rus_dice01,rand(1,6);
 			mes "["+ strcharinfo(0) +"]";

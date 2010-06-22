@@ -12086,7 +12086,7 @@ mid_camp,206,286,3	script	Expedition Messenger	997,{
 		mes "[Expedition Messenger]";
 		mes "You, head to Schwaltzval Republic.";
 		mes "And you, take Arunafeltz. I'll visit Prontera Palace.";
-		donpcevent "Expedition Messenger#2::OnOK";
+		emotion e_ok,0,"Expedition Messenger#2";
 		next;
 		mes "[Expedition Messenger]";
 		mes "I'll see you guys later.";
@@ -12094,7 +12094,7 @@ mid_camp,206,286,3	script	Expedition Messenger	997,{
 		next;
 		mes "[Expedition Messenger]";
 		mes "What's up? Why haven't you left...?";
-		specialeffect2 EF_SOULBREAKER; // 361 : "Expedition Messenger#edq" EF_SOULBREAKER
+		specialeffect EF_SOULBREAKER,AREA,"Expedition Messenger";
 		next;
 		mes "[Expedition Messenger]";
 		mes "Argh... Why are you doing this?!";
@@ -12116,12 +12116,13 @@ mid_camp,206,286,3	script	Expedition Messenger	997,{
 			mes "Give it to me, now!";
 			next;
 			donpcevent "Expedition Messenger#2::OnEnable";
-			donpcevent "Expedition Messenger#3:OnGasp";
+			emotion e_casp,0,"Expedition Messenger#3";
 			cutin "ep13_shadow_edq",2;
 			mes "[???]";
 			mes "Argh...";
 			next;
-			donpcevent "Expedition Messenger#3:OnEffect";
+			specialeffect EF_SOULBREAKER,AREA,"Expedition Messenger#3";
+			specialeffect EF_SOULBREAKER,AREA,"Expedition Messenger#3";
 			mes "[???]";
 			mes "Argh... You...";
 			next;
@@ -12169,11 +12170,12 @@ mid_camp,206,286,3	script	Expedition Messenger	997,{
 			mes "Oh, yeah? Then I'll have to use force!";
 			next;
 			donpcevent "Expedition Messenger#2::OnEnable";
-			donpcevent "Expedition Messenger#3:OnGasp";
+			emotion e_casp,0,"Expedition Messenger#3";
 			mes "[???]";
 			mes "Argh!";
 			next;
-			donpcevent "Expedition Messenger#3:OnEffect";
+			specialeffect EF_SOULBREAKER,AREA,"Expedition Messenger#3";
+			specialeffect EF_SOULBREAKER,AREA,"Expedition Messenger#3";
 			mes "[???]";
 			mes "Argh... You...";
 			next;
@@ -12291,15 +12293,6 @@ Ongo:
 OnDisable:
 	disablenpc "Expedition Messenger#2";
 	end;
-
-OnOK:
-	emotion e_ok;
-	end;
-
-OnEffect:
-	specialeffect2 EF_SOULBREAKER;
-	specialeffect2 EF_SONICBLOW;
-	end;
 }
 
 mid_camp,209,286,3	script	Expedition Messenger#3	998,4,4,{
@@ -12320,15 +12313,6 @@ OnEnable:
 
 OnDisable:
 	disablenpc "Expedition Messenger#3";
-	end;
-
-OnGaspp:
-	emotion e_gasp;
-	end;
-
-OnEffect:
-	specialeffect2 EF_SOULBREAKER;
-	specialeffect2 EF_SONICBLOW;
 	end;
 }
 
@@ -15096,7 +15080,7 @@ mid_camp,256,272,3	script	Defaria#moc2	897,{
 		specialeffect EF_BEGINSPELL2;
 		next;
 		mes "- The fire sparked, but then it immediatly blew out. -";
-		donpcevent "Wet Firewood#moc2::OnEffect1";
+		specialeffect EF_FIREARROW,AREA,"Wet Firewood#moc2";
 		next;
 		mes "[Defaria]";
 		mes "...............";
@@ -15115,7 +15099,7 @@ mid_camp,256,272,3	script	Defaria#moc2	897,{
 		specialeffect EF_BEGINSPELL2;
 		next;
 		mes "- The fire sparked, but then it immediately blew out.-";
-		donpcevent "Wet Firewood#moc2::OnEffect1";
+		specialeffect EF_FIREARROW,AREA,"Wet Firewood#moc2";
 		next;
 		mes "[Defaria]";
 		mes "...............";
@@ -15352,7 +15336,8 @@ mid_camp,256,272,3	script	Defaria#moc2	897,{
 			mes "..Hopefully I can make a fire with your nice logs....";
 			specialeffect EF_BEGINSPELL2;
 			next;
-			donpcevent "Wet Firewood#moc2::OnEffect2";
+			specialeffect EF_FIREWALL,AREA,"Wet Firewood#moc2";
+			specialeffect EF_TORCH,AREA,"Wet Firewood#moc2";
 			mes "[Defaria]";
 			mes "Oh, this is as great as I'd hoped!";
 			mes "I guess my magic hasn't gotten that rusty after all..";
@@ -15508,15 +15493,6 @@ mid_camp,255,269,0	script	Wet Firewood#moc2	844,{
 		mes "It seems somebody has been futilely attempting to make a fire with them.";
 		close;
 	}
-
-OnEffect1:
-	specialeffect EF_FIREARROW;
-	end;
-
-OnEffect2:
-	specialeffect EF_FIREWALL;
-	specialeffect EF_TORCH;
-	end;
 }
 
 morocc,43,108,5	script	Sharp-Looking Boy#dan_07	82,{
@@ -16697,17 +16673,17 @@ que_job01,144,54,3	script	Rin#moc_room2_2	885,{
 			cutin "moc2_dan02",255;
 			switch(select("Smack his head.:Punch his stomach.:Slap his face.")) {
 			case 1:
-				donpcevent "Rayan#moc_room2_2::OnHit1";
+				specialeffect EF_HIT2,AREA,"Rayan#moc_room2_2";
 				mes "- Wanting to stop Rayan from going berserk, you smacked the back of his head with the journal. Rayan staggered and then fell to the ground. Nice job! -";
 				next;
 				break;
 			case 2:
-				donpcevent "Rayan#moc_room2_2::OnHit2";
+				specialeffect EF_HIT4,AREA,"Rayan#moc_room2_2";
 				mes "- Wanting to stop Rayan from going berserk, you sucker punched him in the 'ole bread basket. Rayan staggered and then fell to the ground..! -";
 				next;
 				break;
 			case 3:
-				donpcevent "Rayan#moc_room2_2::OnHit3";
+				specialeffect EF_HIT1,AREA,"Rayan#moc_room2_2";
 				mes "- Wanting to stop Rayan from going berserk, you slapped his face with the journal. Rayan staggered and then fell onto the ground. Wah! -";
 				next;
 				break;
@@ -16718,7 +16694,7 @@ que_job01,144,54,3	script	Rin#moc_room2_2	885,{
 			mes "[Rayan]";
 			mes "Ahh....";
 			mes "....? Isn't.. Isn't this?!....";
-			donpcevent "Rayan#moc_room2_2::OnEffect1";
+			specialeffect EF_POISON,AREA,"Rayan#moc_room2_2";
 			next;
 			mes "[Rin]";
 			mes "Wah! What's going on?";
@@ -16760,7 +16736,7 @@ que_job01,144,54,3	script	Rin#moc_room2_2	885,{
 			mes "You're Rin, right?";
 			mes "This is the last time you'll ever see me.";
 			mes "Haha... Muhahahahaha!!";
-			donpcevent "Rayan#moc_room2_2::OnEffect2";
+			specialeffect EF_ENTRY,AREA,"Rayan#moc_room2_2";
 			donpcevent "Rayan#moc_room2_2::OnDisable";
 			next;
 			cutin "moc2_rin03",2;
@@ -16968,26 +16944,6 @@ OnEnable:
 OnDisable:
 	disablenpc "Rayan#moc_room2_2";
 	end;
-
-OnEffect1:
-	specialeffect EF_POISON;
-	end;
-
-OnEffect2:
-	specialeffect EF_ENTRY;
-	end;
-
-OnHit1:
-	specialeffect EF_HIT2;
-	end;
-
-OnHit2:
-	specialeffect EF_HIT4;
-	end;
-
-OnHit3:
-	specialeffect EF_HIT1;
-	end;
 }
 
 hu_fild04,235,103,0	script	Heap of Earth#mao2_01	844,4,4,{
@@ -17189,9 +17145,9 @@ OnTouch:
 	mes "Why? Why is Rin here? Wait, where am I?";
 	mes "Argh.. I can't move at all...";
 	next;
-	donpcevent "Dandelion Member#moc2_1::OnEffect1";
-	donpcevent "Dandelion Member#moc2_2::OnEffect1";
-	emotion e_gasp;
+	specialeffect EF_BEGINSPELL2,AREA,"Dandelion Member#moc2_1";
+	specialeffect EF_BEGINSPELL2,AREA,"Dandelion Member#moc2_2";
+	emotion e_gasp,"Rin#moc2_bt_rin01";
 	emotion e_gasp,1;
 	mes "[Rin]";
 	mes "You're not alone. So what?";
@@ -17199,7 +17155,8 @@ OnTouch:
 	next;
 	donpcevent "Rin#moc2_bt_rin01::OnDisable";
 	donpcevent "Rin#moc2_bt_rin02::OnEnable";
-	donpcevent "Rin#moc2_bt_rin01::OnEffect1";
+	specialeffect EF_ICECRASH,AREA,"Rin#moc2_bt_rin01";
+	specialeffect EF_METEORSTORM,AREA,"Rin#moc2_bt_rin01";
 	mes "[Rayan]";
 	mes "Hah, how impressive! You run like a rabbit!";
 	mes "I should have you killed you when I had the chance.";
@@ -17216,16 +17173,16 @@ OnTouch:
 	donpcevent "Dandelion Member#moc2_4::OnEnable";
 	donpcevent "Dandelion Member#moc2_5::OnEnable";
 	next;
-	donpcevent "Rin#moc2_bt_rin02::OnEffect1";
+	specialeffect EF_FREEZED,AREA,"Rin#moc2_bt_rin02";
 	emotion e_gasp;
 	mapannounce "que_dan01", "Rin: When.. When did you...!?!",bc_map,"0x7b68ee";
 	mes "[Rayan]";
 	mes "I'm sorry that I have to do this.";
 	mes "...";
 	mes "Kill her.";
-	donpcevent "Dandelion Member#moc2_3::OnEffect1";
-	donpcevent "Dandelion Member#moc2_4::OnEffect1";
-	donpcevent "Dandelion Member#moc2_5::OnEffect1";
+	specialeffect EF_BEGINSPELL2,AREA,"Dandelion Member#moc2_3";
+	specialeffect EF_BEGINSPELL2,AREA,"Dandelion Member#moc2_4";
+	specialeffect EF_BEGINSPELL2,AREA,"Dandelion Member#moc2_5";
 	next;
 	mapannounce "que_dan01", "Rayan: Follow me as soon as you take care of her. Our next meeting place is the usual place. I'm leaving.",bc_map,"0xA8A8A8";
 	donpcevent "Rayan#moc2_bt_r01::OnDisable";
@@ -17233,7 +17190,9 @@ OnTouch:
 	donpcevent "Dandelion Member#moc2_2::OnDisable";
 	mes "[" + strcharinfo(0) + "]";
 	mes "Rin-!!!";
-	donpcevent "Rin#moc2_bt_rin02::OnEffect2";
+	specialeffect EF_LIGHTBOLT,AREA,"Rin#moc2_bt_rin02";
+	specialeffect EF_FIREPILLARBOMB,AREA,"Rin#moc2_bt_rin02";
+	specialeffect EF_METEORSTORM,AREA,"Rin#moc2_bt_rin02";
 	donpcevent "Rin#moc2_bt_rin02::OnDisable";
 	next;
 	mes "You feel helpless: you can do nothing but watch her slowly get overpowered..";
@@ -17370,11 +17329,6 @@ OnEnable:
 OnDisable:
 	disablenpc "Rin#moc2_bt_rin01";
 	end;
-
-OnEffect1:
-	specialeffect EF_ICECRASH;
-	specialeffect EF_METEORSTORM;
-	end;
 }
 
 que_dan01,29,34,7	script	Rin#moc2_bt_rin02	885,{
@@ -17390,16 +17344,6 @@ OnEnable:
 
 OnDisable:
 	disablenpc "Rin#moc2_bt_rin02";
-	end;
-
-OnEffect1:
-	specialeffect EF_FREEZED;
-	end;
-
-OnEffect2:
-	specialeffect EF_LIGHTBOLT;
-	specialeffect EF_FIREPILLARBOMB;
-	specialeffect EF_METEORSTORM;
 	end;
 }
 
@@ -17434,9 +17378,6 @@ OnDisable:
 	disablenpc "Dandelion Member#moc2_1";
 	end;
 
-OnEffect1:
-	specialeffect EF_BEGINSPELL2;
-	end;
 }
 
 que_dan01,41,34,3	script	Dandelion Member#moc2_2	456,{
@@ -17452,10 +17393,6 @@ OnEnable:
 
 OnDisable:
 	disablenpc "Dandelion Member#moc2_2";
-	end;
-
-OnEffect1:
-	specialeffect EF_BEGINSPELL2;
 	end;
 }
 
@@ -17473,10 +17410,6 @@ OnEnable:
 OnDisable:
 	disablenpc "Dandelion Member#moc2_3";
 	end;
-
-OnEffect1:
-	specialeffect EF_BEGINSPELL2;
-	end;
 }
 
 que_dan01,21,35,5	script	Dandelion Member#moc2_4	456,{
@@ -17493,10 +17426,6 @@ OnEnable:
 OnDisable:
 	disablenpc "Dandelion Member#moc2_4";
 	end;
-
-OnEffect1:
-	specialeffect EF_BEGINSPELL2;
-	end;
 }
 
 que_dan01,25,32,7	script	Dandelion Member#moc2_5	456,{
@@ -17512,10 +17441,6 @@ OnEnable:
 
 OnDisable:
 	disablenpc "Dandelion Member#moc2_5";
-	end;
-
-OnEffect1:
-	specialeffect EF_BEGINSPELL2;
 	end;
 }
 

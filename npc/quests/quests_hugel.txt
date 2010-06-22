@@ -312,7 +312,7 @@ hu_in01,387,245,0	script	Allen Schuwell	849,2,2,{
 			mes "medicine you're";
 			mes "supposed to";
 			mes "need so badly.";
-			donpcevent "Postell Schuwell#D::OnEffect";
+			specialeffect EF_CHANGECOLD,AREA,"Postell Schuwell#D";
 			next;
 			mes "[Allen]";
 			mes "Thank goodness...";
@@ -324,7 +324,7 @@ hu_in01,387,245,0	script	Allen Schuwell	849,2,2,{
 			mes "Something's not";
 			mes "right. Bunkoll A";
 			mes "doesn't taste like this...";
-			donpcevent "Postell Schuwell#D::OnSweat";
+			emotion e_swt,0,"Postell Schuwell#D";
 			next;
 			mes "[Postell]";
 			mes "Bunkoll A...?";
@@ -469,15 +469,6 @@ OnTimer100000:
 	disablenpc "Postell Schuwell#D";
 	stopnpctimer;
 	end;
-	
-OnSweat:
-	emotion e_swt;
-	end;
-
-OnEffect:
-	specialeffect EF_CHANGECOLD;
-	end;
-
 }
 
 hu_fild06,34,123,3	script	Postell Schuwell	97,{
@@ -4467,7 +4458,7 @@ hu_fild06,218,373,1	script	Moks Bugs#Bug4	1053,{
 			mes "- *Whizz Whizz Bzzzz* -";
 			mes "- *Whizz Whizz*-";
 			mes "- *Whizz Whizz*-";
-			specialeffect2 71;
+			specialeffect2 EF_CONE;
 			next;
 			if(rand(1,5) > 4)
 			{
@@ -4566,7 +4557,7 @@ lhz_dun02,244,226,0	script	Unethical Machine	111,{
 			mes "- You threw a Marine Sphere Bottle toward the machine. -";
 			next;
 			mes "BOOM!";
-			specialeffect2 183;
+			specialeffect2 EF_SUI_EXPLOSION;
 			enablenpc "HiddenExplosion";
 			mapannounce "lhz_dun02","Beep------------------ ",1,0x99CCFF;
 			delitem 7138,1; //Marine sphere bottle
@@ -4590,7 +4581,7 @@ OnInit:
 	
 OnTouch:
 	percentheal -10,0;
-	specialeffect 4;
+	specialeffect EF_HIT5;
 	disablenpc "HiddenExplosion";
 	end;
 	
@@ -4644,7 +4635,7 @@ hugel,198,169,0	script	#HugelTree	139,2,2,{
 		}
 		else if(hg_memory == 6)
 		{
-			specialeffect2 57;
+			specialeffect2 EF_BEGINSPELL5;
 			mes "^3355FFWhat's this strange";
 			mes "feeling of dread?";
 			mes "This peculiar chill...";
@@ -5350,7 +5341,7 @@ hugel,196,164,3	script	El Schatt	50,{
 		mes "It's... I'm Manainne...";
 		mes "^333333*Sniff*^000000 She had to go back...";
 		next;
-		specialeffect2 71;
+		specialeffect2 EF_CONE;
 		set hg_memory,12;
 		getexp 50000,0;
 		getitem 603,1; //Old blue box
@@ -5680,7 +5671,7 @@ hu_fild06,190,367,3	script	Torpy's Mom	701,{
 		mes "it's not much, but I hope";
 		mes "you accept this as our thanks.";
 		mes "Goodbye for now, adventurer~";
-		specialeffect2 71;
+		specialeffect2 EF_CONE;
 		set hg_ubu01,8;
 		getitem 12065,3; //Green salad
 		getexp 50000,0;
@@ -5702,7 +5693,7 @@ hu_fild06,190,367,3	script	Torpy's Mom	701,{
 		mes "it's not much, but I hope";
 		mes "you accept this as our thanks.";
 		mes "Goodbye for now, adventurer~";
-		specialeffect2 68;
+		specialeffect2 EF_MVP;
 		set hg_ubu01,8;
 		getitem 12065,3; //Green salad
 		getexp 50000,0;
@@ -7172,7 +7163,7 @@ yuno,111,156,3	script	Euslan	90,{
 		mes "Take care of yourself...";
 		close2;
 		set hg_ma1,13;
-		specialeffect 253;
+		specialeffect EF_ABSORBSPIRITS;
 		getexp 900000,600000;
 		end;
 	}
@@ -7725,7 +7716,7 @@ hugel,56,104,3	script	Kurupe	709,3,3,{
 			close;
 		}
 		set hg_milk,9;
-		specialeffect2 71;
+		specialeffect2 EF_CONE;
 		getexp 100000,0;
 		getitem 12063,3;
 		mes "[Kurupe]";
@@ -10314,9 +10305,6 @@ hu_in01,155,82,4	script	Julian#2	86,{
 }
 
 moc_fild12,160,372,0	script	Hit	139,{
-
-OnEffect:
-	specialeffect 122;
 	end;
 }
 
@@ -10335,7 +10323,7 @@ OnTouch:
 		mes "followed. Hold on a sec";
 		mes "while I take care of him.";
 		next;
-		donpcevent "Hit::OnEffect";
+		specialeffect EF_SONICBLOWHIT,AREA,"Hit";
 		mes "[???]";
 		mes "Ha!";
 		next;
@@ -10773,9 +10761,9 @@ OnTouch:
 							mes "What was";
 							mes "that noise?!";
 							next;
-							specialeffect 90;
-							specialeffect 90;
-							specialeffect 90;
+							specialeffect EF_LORD;
+							specialeffect EF_LORD;
+							specialeffect EF_LORD;
 							mes "["+strcharinfo(0)+"]";
 							mes "Wa...waaaahhhh!";
 							close2;

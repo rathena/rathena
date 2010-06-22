@@ -127,7 +127,7 @@ morocc,223,102,0	script	Volunteer - Morroc#06::MocVolunteer	741,{
 	next;
 	mes "[Ringing Voice]";
 	mes "Be quiet! Can't you see what's going on?!";
-	donpcevent "Volunteer - Morroc#06::OnHit";
+	specialeffect EF_HIT2,AREA,"Volunteer - Morroc#06";
 	next;
 	mes "[Morroc Volunteer]";
 	mes "Heyyy, you're being too harsh, Senyorita. Your fist may be as fragile as you are, but it sure can hurt somebody.";
@@ -138,10 +138,6 @@ morocc,223,102,0	script	Volunteer - Morroc#06::MocVolunteer	741,{
 	mes "[Morroc Volunteer]";
 	mes "No, No way!? It,, sure is not!";
 	close;
-
-OnHit:
-	specialeffect EF_HIT2;
-	end;
 }
 
 morocc,226,102,4	duplicate(MocVolunteer)	Volunteer - Morroc#07	726

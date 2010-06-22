@@ -988,7 +988,7 @@ jawaii_in,28,124,0	script	Bartender#jaw	46,{
 				next;
 				mes "^3355FFYou gulp the delicious";
 				mes "Margarita down in one sip.^000000";
-				specialeffect2 17; //EF_MAGNUMBREAK
+				specialeffect2 EF_MAGNUMBREAK;
 				percentheal -20,0;
 				next;
 			}
@@ -1010,7 +1010,7 @@ jawaii_in,28,124,0	script	Bartender#jaw	46,{
 			mes "I'm a cowboy hero!";
 			mes "Bang Bang Bang!";
 			next;
-			specialeffect2 18; //EF_STEAL
+			specialeffect2 EF_STEAL;
 			percentheal -10,0;
 			next;
 			break;
@@ -1034,7 +1034,7 @@ jawaii_in,28,124,0	script	Bartender#jaw	46,{
 			mes "["+strcharinfo(0)+"]";
 			mes "Aaaaaahhhhhh~!";
 			mes "This drink is really good!";
-			specialeffect2 83; //EF_SANCTUARY
+			specialeffect2 EF_SANCTUARY;
 			percentheal -10,0;
 			next;
 			break;
@@ -1054,7 +1054,7 @@ jawaii_in,28,124,0	script	Bartender#jaw	46,{
 			mes "gulped it down.^000000";
 			next;
 			mes "^3355FFYou feel pretty hammered.^000000";
-			specialeffect2 106; //EF_BLASTMINEBOMB
+			specialeffect2 EF_BLASTMINEBOMB;
 			percentheal -10,0;
 			next;
 			break;
@@ -1076,7 +1076,7 @@ jawaii_in,28,124,0	script	Bartender#jaw	46,{
 			mes "^3355FFYou took a sip of it and sighed.^000000";
 			next;
 			mes "^3355FFAnd promised yourself that you would never drink it ever again.^000000";
-			specialeffect2 5; //EF_HIT6
+			specialeffect2 EF_HIT6;
 			percentheal -10,0;
 			next;
 			break;
@@ -1266,7 +1266,7 @@ prt_in,173,13,4	script	Customer#SoloHan	86,{
 				next;
 				mes "[Bachewcca]";
 				mes "^666666*Grunt!*^000000";
-				donpcevent "Customer#Bachewcca::OnEffect1";
+				specialeffect EF_TALK_SCREAM,AREA,"Customer#Bachewcca";
 				next;
 				mes "[SoloHan]";
 				mes "To...";
@@ -1372,7 +1372,7 @@ prt_in,173,13,4	script	Customer#SoloHan	86,{
 		next;
 		mes "[Bachewcca]";
 		mes "^666666*Grrr...!*^000000";
-		donpcevent "Customer#Bachewcca::OnEffect2";
+		specialeffect EF_THROWITEM,AREA,"Customer#Bachewcca";
 		close;
 	}
 	mes "Oh man...";
@@ -1392,14 +1392,6 @@ prt_in,170,14,0	script	Customer#Bachewcca	89,{
 	mes "Grrrrr!! That hit the spot!";
 	emotion e_sob;
 	close;
-
-OnEffect1:
-	specialeffect 296; //EF_TALK_SCREAM
-	end;
-
-OnEffect2:
-	specialeffect 291; //EF_THROWITEM
-	end;
 }
 
 // Izlude
