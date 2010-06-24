@@ -575,22 +575,20 @@ s_Record:
 }
 
 airplane_01,221,158,6	script	Pilot#air-0::Pilot	852,{
-	set @pilot, rand(1,4);
-	if (@pilot == 1) {
+	set .@pilot, rand(1,4);
+	if (.@pilot == 1) {
 		mes "[Pilot]";
 		mes "Longitude, 131 degrees east.";
 		mes "Latitude, 37 degrees north.";
 		mes "We're right on course, captain.";
-		close;
-	} else if(@aa == 2) {
+	} else if(.@pilot == 2) {
 		mes "[Pilot]";
 		mes "Looks like a really";
 		mes "cloudy day. Always hard";
 		mes "to navigate when the skies";
 		mes "aren't clear. Guess we'll";
 		mes "need to amp the radar.";
-		close;
-	} else if(@aa == 3) {
+	} else if(.@pilot == 3) {
 		mes "[Pilot]";
 		mes "The Captain is a good";
 		mes "man and I can't think of";
@@ -606,26 +604,26 @@ airplane_01,221,158,6	script	Pilot#air-0::Pilot	852,{
 		mes "[Pilot]";
 		mes "R-right away, sir!";
 		mes "(See what I mean?)";
-		close;
+	} else {
+		mes "[Pilot]";
+		mes "This uniform is";
+		mes "really dapper, but";
+		mes "it's way too thick to";
+		mes "wear around the Airship.";
+		next;
+		mes "[Pilot]";
+		mes "...";
+		mes "......";
+		mes "No one ever really";
+		mes "comes into this room.";
+		mes "And the captain IS a reindeer.";
+		mes "I could just strip to my boxers.";
+		next;
+		//Emotion "Pilot#airplane_01" ET_HUK
+		mes "[Pilot]";
+		mes "Oh...! Hello there!";
+		mes "E-e-enjoying your flight?!";
 	}
-	mes "[Pilot]";
-	mes "This uniform is";
-	mes "really dapper, but";
-	mes "it's way too thick to";
-	mes "wear around the Airship.";
-	next;
-	mes "[Pilot]";
-	mes "...";
-	mes "......";
-	mes "No one ever really";
-	mes "comes into this room.";
-	mes "And the captain IS a reindeer.";
-	mes "I could just strip to my boxers.";
-	next;
-	//Emotion "Pilot#airplane_01" ET_HUK
-	mes "[Pilot]";
-	mes "Oh...! Hello there!";
-	mes "E-e-enjoying your flight?!";
 	close;
 }
 
