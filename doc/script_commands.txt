@@ -4561,7 +4561,7 @@ character.
 
 ---------------------------------------
 
-*specialeffect <effect number>{,<send_target>}{,"<NPC Name>"</NPC>};
+*specialeffect <effect number>{,<send_target>}{,"<NPC Name>"};
 
 This command will display special effect with the given number, centered on the 
 specified NPCs coordinates, if any. For a full list of special effect numbers 
@@ -4584,10 +4584,15 @@ will retain the default behavior of the command.
 
 ---------------------------------------
 
-*specialeffect2 <effect number>{,<send_target>};
+*specialeffect2 <effect number>{,<send_target>}{,"<Player Name>"};
 
 This command behaves identically to the 'specialeffect', but the effect will be 
 centered on the invoking character's sprite.
+
+<Player name> parameter will display <effect number> on another Player than the
+one currently attached to the script. Like with specialeffect, when specifying
+a player, <send_target> must be supplied, specifying AREA will retain the default 
+behavior of the command.
 
 ---------------------------------------
 

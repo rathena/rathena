@@ -11017,6 +11017,9 @@ BUILDIN_FUNC(specialeffect2)
 	if(sd==NULL)
 		return 0;
 
+	if( script_hasdata(st,4) )
+		sd = map_nick2sd(script_getstr(st,4));
+
 	clif_specialeffect(&sd->bl, type, target);
 
 	return 0;

@@ -1493,8 +1493,8 @@ int skill_blown(struct block_list* src, struct block_list* target, int count, in
 		case BL_PC:
 		{
 			struct map_session_data *sd = BL_CAST(BL_PC, target);
-			if( sd->sc.data[SC_BASILICA] && sd->sc.data[SC_BASILICA]->val4 == sd->bl.id )
-				return 0; // Basilica caster can't be knocked-back
+			if( sd->sc.data[SC_BASILICA] && sd->sc.data[SC_BASILICA]->val4 == sd->bl.id && !is_boss(src))
+				return 0; // Basilica caster can't be knocked-back by normal monsters.
 			if( src != target && sd->special_state.no_knockback )
 				return 0;
 		}

@@ -4,8 +4,11 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2010/06/27
+	* Rev. 14357 Updated specialeffect2 to accept player names. (follow up to r14353) [L0ne_W0lf]
+	* Bascilica now allows boss-flagged monsters to knock you back as per official.
+2010/06/27
 	* Rev. 14356 Follow up to r13895, added a battle.conf setting to control if ranges should be checked with autocasts. [L0ne_W0lf]
-	  'autospell_check_range', by default is set to no, as this is official behavior. This does not affect autospellwhenhit.
+	  'autospell_check_range', by default is set to no, as this is official behavior. This also affects autospellwhenhit.
 	* Sonic Blow autocast now stops players attacking when it triggers. It's possible there is more depth to this 
 	  on official servers, and should 'stop' attacking on regular casts as well. It appears so far that this is the
 	  only skill that behaves this way.
