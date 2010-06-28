@@ -8,6 +8,8 @@
 	1475 Equestrian's Spear:	NEED INFO.
 	13005 Angelic Wing Dagger:	NEED INFO.
 =======================
+2010/06/27
+	* Rev. 14356 Corrected a view ID and an equip location in the item database. (bugreport:4330) [L0ne_W0lf]
 2010/06/21
 	* Rev. 14352 Minor item database bug fixes! [L0ne_W0lf]
 	- Corrected some lower headgears being able to be refined. (bugreport:4328) 

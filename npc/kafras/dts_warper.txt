@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Evera
 //===== Current Version: ===================================== 
-//= 2.6
+//= 2.7
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: =========================================
@@ -51,6 +51,7 @@
 //= 2.4 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
 //= 2.5 Converted from Aegis file. (11.3) [L0ne_W0lf]
 //= 2.6 Moved Morroc NPCs to Morroc Ruins. [L0ne_W0lf]
+//= 2.7 Fixed a typo, a - to a +. Not sure how that happened. [L0ne_w0lf]
 //============================================================ 
 
 einbroch,246,70,0	script	Vote Timer#ein	-1,{
@@ -287,7 +288,7 @@ OnTimer60000:
 		donpcevent "Vote Timer#ein::OnEnable";
 	}
 	else {
-		set $DTS_PeriodCheck,$DTS_PeriodCheck-1; //Global Variable
+		set $DTS_PeriodCheck,$DTS_PeriodCheck+1; //Global Variable
 		donpcevent "Vote Timer4#ein::OnEnable";
 	}
 	end;

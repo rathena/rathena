@@ -4577,7 +4577,7 @@ will retain the default behavior of the command.
 	// this will make the NPC "John Doe#1"
 	// show the effect "EF_HIT1" specified by
 	// Jane Doe. I wonder what John did...
-	mes "[Jane Doe];
+	mes "[Jane Doe]";
 	mes "Well, I never!";
 	specialeffect EF_HIT1,AREA,"John Doe#1";
 	close;

@@ -2717,7 +2717,7 @@
 5530,Raven_Cap,Raven Cap,5,20,,300,,3,,1,0xFFFFFFFF,7,2,256,,30,1,524,{},{},{}
 5531,B_Dragon_Hat,Baby Dragon Hat,5,20,,100,,3,,1,0xFFFFFFFF,7,2,256,,0,1,525,{},{},{}
 5532,Pirate_Dagger_J,Pirate Dagger,5,,,100,,0,,0,0xFFFFFFFF,7,2,1,,0,1,327,{ bonus bShortWeaponDamageReturn,1; },{},{}
-5533,Emperor_Wreath_J,Emperor Wreath,5,,,800,,3,,1,0xFFFFFFFF,7,2,1,,80,1,261,{ bonus bAllStats,1; },{},{}
+5533,Emperor_Wreath_J,Emperor Wreath,5,,,800,,3,,1,0xFFFFFFFF,7,2,256,,80,1,261,{ bonus bAllStats,1; },{},{}
 5534,Fox_Hat_J,Fox Hat,5,20,,100,,1,,0,0xFFFFFFFF,7,0,769,,70,1,403,{ bonus bAgi,1; bonus bFlee2,2; },{},{}
 5535,Side_Cap,Side Cap,5,20,,500,,3,,0,0xFFFFFFFF,7,2,256,,0,1,529,{ bonus2 bSubRace,RC_DemiHuman,5; bonus2 bAddRace,RC_DemiHuman,3; },{},{}
 5536,Spare_Card,Spare Card,5,20,,10,,1,,0,0xFFFFFFFF,7,2,1,,10,1,526,{ bonus2 bAddMonsterDropItem,6187,1000; },{},{}
@@ -2754,7 +2754,7 @@
 5567,Bright_Fury,Bright Fury,5,20,,100,,1,,1,0xFFFFFFFF,7,2,256,,0,1,548,{ bonus2 bAddRace,RC_NonBoss,2; bonus2 bAddRace,RC_Boss,2; bonus bAspdRate,2; },{},{}
 5568,Rabbit_Bonnet,Rabbit Bonnet,5,20,,100,,1,,0,0xFFFFFFFF,7,2,256,,0,1,549,{},{},{}
 5569,Gemini_Diadem,Gemini Diadem,5,20,,300,,4,,1,0xFFFFFFFF,7,2,256,,70,1,550,{ bonus bMatkRate,2; if(getrefine()>6) { bonus bMDef,7; bonus bMAtkRate,8; bonus2 bSubEle,Ele_Wind,5; } },{},{}
-5570,Gemini_Crown,Gemini Crown,5,20,,300,,4,,1,0xFFFFFFFF,7,2,256,,70,1,550,{ bonus bAtk,2; bonus bMDef,5; if(getrefine()>6) { bonus bDef,1; bonus bMAtk,15; bonus bFlee,10; bonus2 bSubEle,Ele_Wind,5; } },{},{}
+5570,Gemini_Crown,Gemini Crown,5,20,,300,,4,,1,0xFFFFFFFF,7,2,256,,70,1,551,{ bonus bAtk,2; bonus bMDef,5; if(getrefine()>6) { bonus bDef,1; bonus bMAtk,15; bonus bFlee,10; bonus2 bSubEle,Ele_Wind,5; } },{},{}
 //5571,Rasta_Wig,Rasta_Wig,5,20,,800,,1,,0,0xFFFFFFFF,7,2,256,,0,1,552,{},{},{}
 5572,Savage_Babe_Hat,Savage Babe Hat,5,20,,100,,1,,1,0xFFFFFFFF,7,2,256,,0,1,553,{},{},{}
 5573,Dokebi_Horn,Dokebi Horn,5,20,,100,,1,,1,0xFFFFFFFF,7,2,256,,0,1,554,{},{},{}

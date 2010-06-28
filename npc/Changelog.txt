@@ -1,5 +1,7 @@
 Date		Added
 ======
+2010/06/27
+	* Rev. 14356 Corrected a typo in the DTS_Warper script. [L0ne_W0lf]
 2010/06/22
 	* Rev. 14353 Updated several NPCs to use the updated specialeffect command, updated more NPCs to use the updated emotion command. [L0ne_W0lf]
 2010/06/21

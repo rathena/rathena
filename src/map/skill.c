@@ -1010,8 +1010,11 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 
 			tbl = (sd->autospell[i].id < 0) ? src : bl;
 
-			if( !battle_check_range(src, tbl, skill_get_range2(src, skill,skilllv) + (skill == RG_CLOSECONFINE?0:1)) )
-				continue; //Autocasts should always fail if the target is outside the skill range or an obstacle is in between.[Inkfish]
+			if( !battle_check_range(src, tbl, skill_get_range2(src, skill,skilllv) + (skill == RG_CLOSECONFINE?0:1)) && battle_config.autospell_check_range )
+				continue; // If autospell_check_range is yes, fail the autocast.
+
+			if (skill == AS_SONICBLOW)
+				pc_stop_attack(sd); //Special case, Sonic Blow autospell should stop the player attacking.
 
 			sd->state.autocast = 1;
 			skill_consume_requirement(sd,skill,skilllv,1);
@@ -1109,7 +1112,7 @@ int skill_onskillusage(struct map_session_data *sd, struct block_list *bl, int s
 			continue;
 		tbl = (sd->autospell3[i].id < 0) ? &sd->bl : bl;
 
-		if( !battle_check_range(&sd->bl, tbl, skill_get_range2(&sd->bl, skill,skilllv) + (skill == RG_CLOSECONFINE?0:1)) )
+		if( !battle_check_range(&sd->bl, tbl, skill_get_range2(&sd->bl, skill,skilllv) + (skill == RG_CLOSECONFINE?0:1)) && battle_config.autospell_check_range )
 			continue;
 
 		sd->state.autocast = 1;
@@ -1281,7 +1284,7 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 
 			tbl = (dstsd->autospell2[i].id < 0) ? bl : src;
 
-			if( !battle_check_range(src, tbl, skill_get_range2(src, skillid,skilllv) + (skillid == RG_CLOSECONFINE?0:1)) )
+			if( !battle_check_range(src, tbl, skill_get_range2(src, skillid,skilllv) + (skillid == RG_CLOSECONFINE?0:1)) && battle_config.autospell_check_range )
 				continue;
 
 			dstsd->state.autocast = 1;
