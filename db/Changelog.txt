@@ -9,6 +9,8 @@
 	13005 Angelic Wing Dagger:	NEED INFO.
 =======================
 2010/06/27
+	* Rev. 14358 Fixed Bubble Gum again. (200 = +100%, 300 = +200%, etc.) [L0ne_W0lf]
+2010/06/27
 	* Rev. 14356 Corrected a view ID and an equip location in the item database. (bugreport:4330) [L0ne_W0lf]
 2010/06/21
 	* Rev. 14352 Minor item database bug fixes! [L0ne_W0lf]
