@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= $ephiroth
 //===== Current Version: =====================================
-//= 1.6
+//= 1.7
 //===== Compatible With: =====================================
 //= Any Athena Version
 //===== Additional Comments: =================================
@@ -14,6 +14,7 @@
 //= 1.4 Updated spawns with info from RO Monthly [Playtester]
 //= 1.5 Updated spawn amounts to official [Playtester]
 //= 1.6 Even more accurate spawns [Playtester]
+//= 1.7 Corrected MVP spawn variance. [Gepard]
 //============================================================
 
 //======== [Veins Field-01] ==================================
@@ -21,7 +22,7 @@ ve_fild01,0,0,0,0	monster	Drops	1113,10,0,0,0
 ve_fild01,0,0,0,0	monster	Stapo	1784,20,0,0,0
 ve_fild01,0,0,0,0	monster	Muka	1055,70,0,0,0
 ve_fild01,0,0,0,0	monster	Side Winder	1037,10,0,0,0
-ve_fild01,0,0,0,0	boss_monster	Atroce	1785,1,10800000,0,0
+ve_fild01,0,0,0,0	boss_monster	Atroce	1785,1,10800000,600000,0
 ve_fild01,0,0,0,0	monster	Red Plant	1078,10,0,0,0
 ve_fild01,0,0,0,0	monster	Yellow Plant	1081,10,0,0,0
 ve_fild01,270,80,20,7	monster	Blue Plant	1079,4,840000,0,0
@@ -35,7 +36,7 @@ ve_fild02,65,220,14,14	monster	Roween	1782,2,660000,0,0
 ve_fild02,220,215,135,180	monster	Roween	1782,18,0,0,0
 ve_fild02,65,220,14,14	monster	Side Winder	1037,1,900000,0,0
 ve_fild02,220,215,135,180	monster	Side Winder	1037,4,0,0,0
-ve_fild02,120,55,50,50	boss_monster	Atroce	1785,1,21600000,0,0
+ve_fild02,120,55,50,50	boss_monster	Atroce	1785,1,21600000,600000,0
 ve_fild02,0,0,0,0	monster	Red Plant	1078,10,0,0,0
 ve_fild02,0,0,0,0	monster	Yellow Plant	1081,10,0,0,0
 

@@ -1,5 +1,7 @@
 Date		Added
 ======
+2010/06/30
+	* Rev. 14359 Corrected some MVP spawn variances (Guild Dungeon & Veins Fields). [Gepard]
 2010/06/27
 	* Rev. 14356 Corrected a typo in the DTS_Warper script. [L0ne_W0lf]
 2010/06/22
