@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Kisuka
 //===== Current Version: ===================================== 
-//= 1.7
+//= 1.8
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -19,6 +19,7 @@
 //= 1.5 Fixes to 'Koshei the Immortal' quest. [Kisuka]
 //= 1.6 Added 'tides' to Ibanoff & Fixed time check for Marozka. [Kisuka]
 //= 1.7 Fixes on donpcevents and fixed some left over aegis stuff. [Kisuka]
+//= 1.8 Fixed some condition checks. [Gepard]
 //============================================================ 
 
 //============================================================================
@@ -4881,7 +4882,7 @@ OnTouch:
 		mes "Stop by the whale island?";
 		next;
 		if(select("Go to Whale Island.:Stay put.") == 1) {
-			if (getequipid(EQI_ACC_L) || getequipid(EQI_ACC_R) == 2707) {
+			if (getequipid(EQI_ACC_L) == 2707 || getequipid(EQI_ACC_R) == 2707) {
 				soundeffect "mos_gusli2.wav",0;
 				mes "-Slowly, your hands are on the";
 				mes "Gusli, and the playing starts...";
@@ -10036,7 +10037,7 @@ OnTouch:
 		while(1) {
 			if(select("Look for it.:I will try next time.") == 1) {
 				set .@findout,rand(1,20);
-				if (Class == THIEF || Class == THIEF_H || Class == ROGUE || Class == ROGUE_H || Class == ASSASSIN || Class == ASSASSIN_H) {
+				if (BaseJob == Job_Thief) {
 					mes "["+strcharinfo(0)+"]";
 					mes "Here it is.";
 					mes "That was easy to find.";

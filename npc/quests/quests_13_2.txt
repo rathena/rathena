@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
-//= 1.9
+//= 2.0
 //===== Compatible With: =====================================
 //= eAthena SVN
 //===== Description: =========================================
@@ -34,6 +34,9 @@
 //= 1.8 Added a missing " in the GM only NPC.
 //= 1.9 Added Monster Suppression, Bradium Collection, and 
 //=     Laphine Craftsman quests.
+//= 2.0 Added missing global var check in Yggdrasil Dungeon
+//=     floor 2 puzzle. Fixed a typo. Commented out untranslated
+//=     line. [Gepard]
 //============================================================ 
 
 // Cat Hand Addition.
@@ -5075,12 +5078,12 @@ man_in01,378,276,3	script	Manuk Engineer#ep13_2	453,{
 				mes "Hello.";
 				mes "This is where we refine stones.";
 				next;
-				switch(select("About colleting stones.:About the usage of stones.")) {
+				switch(select("About collecting stones.:About the usage of stones.")) {
 				case 1:
 					mes "[Manuk Engineer]";
 					mes "To prevent our bodies from becoming numb, we need Bradium.";
 					mes "From the Bradium we can extract a special element that we need to survive.";
-					mes "Ã·?Ãÿ ‚µ???¨≤¢æ≠≥£'”·£";
+					//mes "Ã·?Ãÿ ‚µ???¨≤¢æ≠≥£'”·£";
 					next;
 					mes "[Manuk Engineer]";
 					mes "The mining industry is primary here since our lives depend on it.";
@@ -10810,8 +10813,7 @@ OnTouch:
 }
 
 nyd_dun02,139,274,0	script	Strange Device#ep13_in	844,3,3,{
-	//set go_to_2f,08_ep13nydun02_in;
-	if (go_to_2f == 1) {
+	if ($@08_ep13nydun02_in == 1) {
 		mes "The device has already been activated.";
 		mes "You must wait for the controls to reset.";
 		close;
@@ -10822,13 +10824,12 @@ nyd_dun02,139,274,0	script	Strange Device#ep13_in	844,3,3,{
 		next;
 		switch(select("Control.:Quit.")) {
 		case 1:
-			//set go_to_2f2,08_ep13nydun02_in;
-			if (go_to_2f2 == 1) {
+			if ($@08_ep13nydun02_in == 1) {
 				mes "Seems to have been started.";
 				close;
 			}
 			else {
-				//set $@08_ep13nydun02_in,1; //Global Variable
+				set $@08_ep13nydun02_in,1;
 				set .@way_loot,rand(1,2);
 				if (.@way_loot == 1) {
 					donpcevent "ep13_warp_s1::OnDisable";
@@ -10858,12 +10859,8 @@ nyd_dun02,139,274,0	script	Strange Device#ep13_in	844,3,3,{
 
 OnTimer70000:
 	donpcevent "ep13_nd2f_mng::Onreset";
-	//set $@08_ep13nydun02_in,0; //Global Variable
+	set $@08_ep13nydun02_in,0;
 	stopnpctimer;
-	end;
-
-OnInit:
-	//set $@08_ep13nydun02_in,0; //Global Variable
 	end;
 
 OnTouch:
@@ -12952,7 +12949,7 @@ nyd_dun02,1,1,0	script	ep13_nd2f_mng	844,{
 		switch(select("Yes:No")) {
 		case 1:
 			donpcevent "ep13_nd2f_mng::Onreset";
-			//set $@08_ep13nydun02_in,0; //Global Variable
+			set $@08_ep13nydun02_in,0;
 			mes "Puzzle reset";
 			close;
 		case 2:

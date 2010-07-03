@@ -100,7 +100,7 @@ OnReadyCheck:
 
 	if( .@Guillaume < 5 || .@Croix < 5 )
 	{
-		if( .@Guillaume > 3 && .@Croix > 3 && !agitcheck() && $@KvM_Flood < gettimetick(2) )
+		if( .@Guillaume > 3 && .@Croix > 3 && !agitcheck() && !agitcheck2() && $@KvM_Flood < gettimetick(2) )
 		{
 			announce "Battleground -- Kreiger Von Midgard [60-79] G: " + .@Guillaume + "/5, C: " + .@Croix + "/5",0,0x808080;
 			set $@KvM_Flood, gettimetick(2) + 15;

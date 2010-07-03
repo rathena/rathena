@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= eAthena dev team
 //===== Current Version: =====================================
-//= 1.0
+//= 1.1
 //===== Compatible With: =====================================
 //= eAthena SVN
 //===== Description: =========================================
@@ -11,12 +11,12 @@
 //= Splendide coin redemption NPC.
 //===== Additional Comments: =================================
 //= 1.0 First version 
+//= 1.1 Fixed checkweight. [Gepard]
 //============================================================
 
 spl_in01,110,326,5	script	Merchant of Splendide	439,{
 	if ((isequipped(2782) == 1) && (ep13_2_rhea == 100)) {
-		set .@anrp_test,1201;
-		if (anrp_test == 1) {
+		if (checkweight(1201,1) == 0) {
 			mes "[Merchant of Splendide]";
 			mes "It looks like you're carrying too many things.";
 			mes "Why not put some of your items in storage and come back?";

@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //=  erKURITA, Au{R}oN (Translated by Alan), $ephiroth
 //===== Current Version: ===================================== 
-//= 1.9
+//= 2.0
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -39,6 +39,7 @@
 //= 1.7b Another fix to Lucius (trivial). (bugreport:1125)
 //= 1.8 Replaced effect numerics with constants. [L0ne_W0lf]
 //= 1.9 Added Cool Corp. Event Staff, who oringialy resided in the DTS_warper script file. [L0ne_W0lf]
+//= 2.0 Added missing Lab Staff#amano08 NPC. (bugreport:4319) [Gepard]
 //=============================================================
 
 lighthalzen,198,285,5	script	Jiwon#zen5	862,{
@@ -1630,6 +1631,22 @@ lhz_in03,186,29,7	script	Bad Drunk#12	869,{
 	close;
 }
 
+lhz_in02,265,273,6	script	Lab Staff#amano08	865,{
+	mes "[Assam]";
+	mes "This place is nice";
+	mes "and usually pretty quiet.";
+	mes "I like to come here after";
+	mes "work, have a drink and just";
+	mes "chat with the bartender.";
+	next;
+	mes "[Assam]";
+	mes "The rum here is incredibly";
+	mes "good too. It might even be";
+	mes "the best in the world. I dunno";
+	mes "why, but for some reason, its";
+	mes "taste reminds me of teamwork~";
+	close;
+}
 
 lhz_in03,192,93,3	script	City Girl#amano05	862,{
 	mes "[Lanko]";
