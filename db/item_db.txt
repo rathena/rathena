@@ -2666,7 +2666,7 @@
 5479,Shaman's_Hair_Ornament,Shaman's Hair Decoration,5,,,300,,1,,0,0xFFFFFFFF,7,2,256,,30,1,476,{ bonus bMdef,3; bonus bMaxHP,50; bonus2 bSubEle,Ele_Neutral,5; if(isequipped(2777,2778)) { bonus bMaxHP,300; bonus bMatkRate,5; bonus2 bSubEle,Ele_Neutral,5; } },{},{}
 5480,Bizofnil_Wing_Deco,Bijofnil Wings,5,,,1000,,3,,1,0xFFFFFFFF,7,2,256,,30,1,477,{ bonus3 bAutoSpell,"PR_IMPOSITIO",3,3; },{},{}
 5481,Hermose_Cap,Hermode Cap,5,,,1000,,1,,1,0xFFFFFFFF,7,2,256,,1,1,478,{ bonus bAspdRate,10; bonus bBaseAtk,-20; bonus bMatkRate,-10; },{},{}
-5482,Dark_Knight_Mask,Dark Knight Mask,5,,,3000,,5,,0,0xFFFFFFFF,7,2,769,,80,1,479,{ bonus bStr,3; if(isequipped(2779,2780)) { bonus bMatkRate,10; bonus bInt,5; bonus2 bSubRace,RG_Angel,10; } },{},{}
+5482,Dark_Knight_Mask,Dark Knight Mask,5,,,3000,,5,,0,0xFFFFFFFF,7,2,769,,80,1,479,{ bonus bStr,3; if(isequipped(2779,2780)) { bonus bMatkRate,10; bonus bInt,5; bonus2 bSubRace,RC_Angel,10; } },{},{}
 5483,Odin_Mask,Odin Mask,5,,,100,,1,,0,0xFFFFFFFE,7,2,512,,50,1,480,{ bonus bHit,-10; bonus2 bAddRace,RC_Demihuman,6; },{},{}
 //5484,Taiwan_Flag_Hat,Holidays Hat,5,,,500,,4,,0,0xFFFFFFFF,7,2,256,,0,1,482,{ bonus bAllStats,5; bonus2 bResEff,Eff_Stun,500; },{},{}
 5485,Tiger_Face,Tiger Face,5,,,1000,,3,,0,0xFFFFFFFF,7,2,769,,60,1,483,{ bonus2 bSubRace,RC_Brute,5; bonus2 bAddRace,RC_Brute,5; bonus2 bMagicAddRace,RC_Brute,5; },{},{}
@@ -2761,7 +2761,7 @@
 5574,Pencil_in_Mouth,Well-Chewed Pencil,5,20,,100,,0,,0,0xFFFFFFFF,7,2,1,,10,0,555,{ bonus bdex,2; bonus bHitRate,3; },{},{}
 //5575,Oingiri_Hat,Rice Ball Hat,5,20,,100,,1,,0,0xFFFFFFFF,7,2,256,,0,1,556,{},{},{}
 //5576,Sake_Bottle,Wine Cup,5,20,,100,,1,,0,0xFFFFFFFF,7,2,256,,0,1,557,{},{},{}
-5577,Dark_Knight_Mask_,Dark Knight Mask,5,,,3000,,5,,0,0xFFFFFFFF,7,2,769,,80,1,479,{ bonus bStr,3; if(isequipped(2779,2780)) { bonus bMatkRate,10; bonus bInt,5; bonus2 bSubRace,RG_Angel,10; } },{},{}
+5577,Dark_Knight_Mask_,Dark Knight Mask,5,,,3000,,5,,0,0xFFFFFFFF,7,2,769,,80,1,479,{ bonus bStr,3; if(isequipped(2779,2780)) { bonus bMatkRate,10; bonus bInt,5; bonus2 bSubRace,RC_Angel,10; } },{},{}
 5578,Voyage_Hat,Voyage_Hat,5,20,,100,,1,,0,0xFFFFFFFF,7,2,256,,0,1,236,{},{},{}
 5579,Satgat,Wanderer's Sakkat,5,20,,300,,2,,0,0xFFFFFFFF,7,2,768,,70,1,558,{ bonus bAgi,2; },{},{}
 5580,Red_Beret,Red Beret,5,20,,100,,1,,0,0xFFFFFFFF,7,2,256,,0,1,559,{},{},{}
@@ -4801,8 +4801,8 @@
 13170,Lever_Action_Rifle,Lever Action Rifle,4,20,,770,138,,9,2,0x01000000,7,2,34,3,70,1,18,{ bonus bHit,20; bonus bCritical,50; bonus bAspdRate,-5; },{},{}
 13171,BF_Rifle1,Soldier Rifle,4,0,,0,50,,9,0,0x01000000,7,2,34,3,80,1,18,{ bonus bDex,2; bonus bHit,10; bonus bCritical,10; bonus2 bAddRace,RC_DemiHuman,75; bonus2 bCastRate,512,-25; bonus2 bIgnoreDefRate,RC_DemiHuman,20; bonus bUnbreakableWeapon,0; },{},{}
 13172,BF_Gatling_Gun1,Soldier Gatling Gun,4,0,,0,80,,9,0,0x01000000,7,2,34,3,80,1,19,{ bonus bDex,2; bonus2 bAddRace,RC_DemiHuman,35; bonus2 bIgnoreDefRate,RC_DemiHuman,20; autobonus "{ bonus bBaseAtk,80; bonus2 bHPLossRate,120,1000; }",10,6000,BF_WEAPON,"{ specialeffect2 EF_BASH3D; }"; bonus bUnbreakableWeapon,0; },{},{}
-13173,BF_Shotgun1,Soldier Shotgun,4,0,,0,100,,9,0,0x01000000,7,2,34,3,80,1,20,{ bonus bDex,2; bonus bSplashRange,1; bonus2 bAddRace,RC_DemiHuman,55; bonus2 bIgnoreDefRate,RC_DemiHuman,20; autobonus "{ bonus bBaseAtk,80; bonus bHPLossRate,100,1000,0,0; }",30,6000,BF_WEAPON,"{ specialeffect2 EF_BASH3D; }"; bonus bUnbreakableWeapon,0; },{},{}
-13174,BF_Launcher1,Soldier Grenade Launcher,4,0,,0,300,,9,0,0x01000000,7,2,34,3,80,1,21,{ bonus bDex,2; bonus2 bAddRace,RC_DemiHuman,35; bonus2 bIgnoreDefRate,RC_DemiHuman,20; autobonus "{ bonus bBaseAtk,300; bonus bHPLossRate,120,1000,0,0; }",30,9000,BF_WEAPON,"{ specialeffect2 EF_BASH3D; }"; bonus bUnbreakableWeapon,0; },{},{}
+13173,BF_Shotgun1,Soldier Shotgun,4,0,,0,100,,9,0,0x01000000,7,2,34,3,80,1,20,{ bonus bDex,2; bonus bSplashRange,1; bonus2 bAddRace,RC_DemiHuman,55; bonus2 bIgnoreDefRate,RC_DemiHuman,20; autobonus "{ bonus bBaseAtk,80; bonus2 bHPLossRate,100,1000; }",30,6000,BF_WEAPON,"{ specialeffect2 EF_BASH3D; }"; bonus bUnbreakableWeapon,0; },{},{}
+13174,BF_Launcher1,Soldier Grenade Launcher,4,0,,0,300,,9,0,0x01000000,7,2,34,3,80,1,21,{ bonus bDex,2; bonus2 bAddRace,RC_DemiHuman,35; bonus2 bIgnoreDefRate,RC_DemiHuman,20; autobonus "{ bonus bBaseAtk,300; bonus2 bHPLossRate,120,1000; }",30,9000,BF_WEAPON,"{ specialeffect2 EF_BASH3D; }"; bonus bUnbreakableWeapon,0; },{},{}
 //13175,Lever_Action_Rifle_C
 13176,Krieger_Rifle1,Glorious Rifle,4,0,,0,90,,9,0,0x01000000,7,2,34,4,80,1,18,{ bonus2 bAddRace,RC_DemiHuman,75; bonus2 bIgnoreDefRate,RC_DemiHuman,20; bonus2 bSkillAtk,"GS_TRIPLEACTION",30; bonus bUnbreakableWeapon,0; if(getrefine() > 5) { bonus2 bAddRace,RC_DemiHuman,(getrefine()-4)*(getrefine()-4); bonus2 bIgnoreDefRate,RC_DemiHuman,5; }  if(getrefine() > 8) { bonus2 bCastrate,"GS_TRACKING",25; bonus2 bSkillAtk,"GS_TRACKING",getrefine() * 3; } },{},{}
 13177,Krieger_Gatling1,Glorious Gatling Gun,4,0,,0,90,,9,0,0x01000000,7,2,34,4,80,1,19,{ bonus2 bAddRace,RC_DemiHuman,35; bonus2 bIgnoreDefRate,RC_DemiHuman,25; bonus2 bSkillAtk,"GS_TRIPLEACTION",30; bonus bUnbreakableWeapon,0; if(getrefine() > 5) { bonus2 bAddRace,RC_DemiHuman,(getrefine()-4)*(getrefine()-4); bonus2 bIgnoreDefRate,RC_DemiHuman,5; }  if(getrefine() > 8) {bonus2 bAddRace,RC_Boss,getrefine(); bonus2 bAddRace,RC_NonBoss,getrefine(); } },{},{}

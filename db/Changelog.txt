@@ -8,6 +8,8 @@
 	1475 Equestrian's Spear:	NEED INFO.
 	13005 Angelic Wing Dagger:	NEED INFO.
 =======================
+2010/07/05
+	* Rev. 14361 Fixed some typos in item db! [Inkfish]
 2010/06/27
 	* Rev. 14358 Fixed Bubble Gum again. (200 = +100%, 300 = +200%, etc.) [L0ne_W0lf]
 2010/06/27
