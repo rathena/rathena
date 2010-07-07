@@ -7,6 +7,7 @@
 //= 1.7 Added all novice maps. [L0ne_W0lf]
 //= 1.8 Added nameless_i location [Lupus]
 //= 1.8a Removed duplicate gef_cas nomemo mapflags [Yommy]
+//= 1.8b Removed duplicate arug_dun01 & schg_dun01 entries [Gepard]
 //===== Current Version: =====================================
 
 
@@ -665,6 +666,3 @@ spl_in01	mapflag	nomemo
 // Nidhoggr's Instance ===========
 1@nyd	mapflag	nomemo
 2@nyd	mapflag	nomemo
-
-arug_dun01	mapflag	nomemo
-schg_dun01	mapflag	nomemo

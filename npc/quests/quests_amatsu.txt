@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= eAthena team & others? & MasterOfMuppets
 //===== Current Version: ===================================== 
-//= 1.4
+//= 1.4a
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -14,6 +14,7 @@
 //===== Additional Comments: ================================= 
 //= 1.3 Rescripted to Aegis 10.3 Standards. [L0ne_W0lf]
 //= 1.4 Added missing checkweight. [L0ne_W0lf]
+//= 1.4a Fixed typo in condition check [Gepard]
 //============================================================ 
 
 // Momotaro Event
@@ -1896,7 +1897,7 @@ ama_in01,22,111,0	script	Grandma#ama2	761,{
 		mes "it won't harm me!! Yelp!^000000";
 		next;
 		select("Taaaah!!");
-		if ((BaseJob == Job_Priest || BaseJob != Job_Acolye && BaseJob != Job_Monk) || (countitem(523) < 1 || countitem(948) < 1 || countitem(1029) < 1)) {
+		if ((BaseJob == Job_Priest || BaseJob != Job_Acolyte && BaseJob != Job_Monk) || (countitem(523) < 1 || countitem(948) < 1 || countitem(1029) < 1)) {
 			if (rand(1,4) == 1)
 				set .@fox_kill,0;
 			else
