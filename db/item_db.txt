@@ -4450,12 +4450,12 @@
 12278,Alice_Summon_Book,Alice Contract,2,2,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ mercenary_create 1275,1800000; },{},{}
 12279,Undead_Element_Scroll,Undead Elemental Scroll,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start4 SC_ARMOR_RESIST,300000,20,20,20,20; },{},{}
 12280,Holy_Element_Scroll,Holy Elemental Scroll,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ specialeffect2 EF_BENEDICTIO; sc_start SC_BENEDICTIO,300000,1; },{},{}
-12281,Tresure_Box_WoE,Event Treasure Box,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12281,Tresure_Box_WoE,Event Treasure Box,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_Tresure_Box_WoE),1; },{},{}
 12282,Internet_Cafe1,Internet Cafe1,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_INCALLSTATUS,5400000,3; sc_start SC_ATKPOTION,5400000,15; sc_start SC_MATKPOTION,5400000,15; },{},{}
 12283,Internet_Cafe2,Internet Cafe2,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_INCSTR,5400000,8; sc_start SC_INCDEX,5400000,4; sc_start SC_INCAGI,5400000,6; sc_start SC_ATKPOTION,5400000,32; sc_start SC_INCFLEE,5400000,5; },{},{}
 12284,Internet_Cafe3,Internet Cafe3,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_INCINT,5400000,8; sc_start SC_INCVIT,5400000,4; sc_start SC_INCDEX,5400000,6; sc_start SC_MATKPOTION,5400000,40; },{},{}
 12285,Internet_Cafe4,Internet Cafe4,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_INCDEX,5400000,8; sc_start SC_INCLUK,5400000,4; sc_start SC_INCAGI,5400000,6; sc_start SC_ATKPOTION,5400000,24; sc_start SC_MATKPOTION,5400000,24; },{},{}
-12286,Masquerade_Ball_Box2,Masquerade Ball Box2,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12286,Masquerade_Ball_Box2,Masquerade Ball Box2,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_Masquerade_2),1; },{},{}
 12287,Love_Angel,Love Angel Magic Powder,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ setfont 1; },{},{}
 12288,Squirrel,Squirrel Magic Powder,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ setfont 2; },{},{}
 12289,Gogo,Gogo Magic Powder,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ setfont 3; },{},{}
@@ -4503,12 +4503,12 @@
 12331,Ginseng,Ginseng,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 6,0; },{},{}
 12332,Fruit_Juice,Fruit Juice,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 0,6; },{},{}
 12333,Ansila,Ancilla,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-12334,Cherish_Box,Treasure Edition Helm Box,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12334,Cherish_Box,Treasure Edition Helm Box,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_Cherish_Box),1; },{},{}
 12335,Yummy_Skewered_Dish,Grilled Delicious Skewer,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 60,60; },{},{}
 12336,Baked_Mushroom,Grilled Mushroom,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 30,30; },{},{}
 12337,Grilled_Sausage,Grilled Sausages,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 20,20; },{},{}
 12338,Grilled_Corn,Grilled Corn,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_INCSTR,180000,2; sc_start SC_INCINT,180000,2; sc_start SC_INCAGI,180000,2; },{},{}
-12339,Cherish_Box_Ori,Treasure Edition Box,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12339,Cherish_Box_Ori,Treasure Edition Box,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_Cherish_Box_Ori),1; },{},{}
 12340,Mysterious_Rice_Powder,Chewy Rice Powder,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1815; },{},{}
 12341,Special_Alloy_Trap_Box,Special Alloy Trap Box,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12342,Manuk's_Opportunity,Manuk's Opportunity,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ specialeffect2 EF_POTION_BERSERK; sc_start SC_MANU_ATK,600000,10; },{},{}
@@ -4524,8 +4524,8 @@
 12352,Dun_Tele_Scroll3,Dungeon Teleport Scroll 3,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12353,Tiny_Waterbottle,Small Bottle,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_WATERWEAPON,90000,1; },{},{}
 12354,Buche_De_Noel,Buche De Noel,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ specialeffect2 EF_ANGELUS; sc_start SC_INCMHPRATE,600000,3; sc_start SC_INCMSPRATE,600000,3; sc_start SC_INCHITRATE,600000,3; sc_start SC_INCCRI,600000,7; },{},{}
-12355,Xmas_Gift,Xmas Gift,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-12356,Louise_Costume_Box,Louise Costume Box,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12355,Xmas_Gift,Xmas Gift,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_Xmas_Gift),1; },{},{}
+12356,Louise_Costume_Box,Louise Costume Box,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_Louise_Costume_Box),1; },{},{}
 12357,Shiny_Wing_Gown,Shiny Wing Gown,2,0,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1002; },{},{}
 12358,Fan_Of_Wind,Fan Of Wind,2,0,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1513; },{},{}
 12359,Very_Soft_Plant,Very Soft Plant,2,0,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1586; },{},{}
@@ -4582,7 +4582,7 @@
 12711,Pretzel,Pretzel,2,2,,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12712,Green_Beer,Green Beer,2,2,,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12713,Monster_Extract,Monster Extract,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-12714,Easter_Scroll,Easter Scroll,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12714,Easter_Scroll,Easter Scroll,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_Easter_Scroll),1; },{},{}
 12715,Black_Treasure_Chest,Black Treasure Chest,2,0,,200,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12716,Indian_Rice_Cake,Indian Rice Cake,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12717,Poison_Paralysis,Paralyze,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
@@ -5779,7 +5779,7 @@
 14593,Magic_Power_Scroll,Mystical Amplification Scroll,11,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill "HW_MAGICPOWER",10; },{},{}
 14594,Quagmire_Scroll,Quagmire Scroll,11,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill "WZ_QUAGMIRE",5; },{},{}
 14595,Unsealed_Magic_Spell,Unsealed Magic Spell,2,2,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ warp "yuno_fild09",255,127; },{},{}
-14596,Pierre_Treasurebox,Pierre's Treasure Box,2,2,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+14596,Pierre_Treasurebox,Pierre's Treasure Box,2,2,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_Pierre_Treasurebox),1; getitem groupranditem(IG_Pierre_Treasurebox),1; getitem groupranditem(IG_Pierre_Treasurebox),1; getitem groupranditem(IG_Pierre_Treasurebox),1; getitem groupranditem(IG_Pierre_Treasurebox),1; getitem groupranditem(IG_Pierre_Treasurebox),1; },{},{}
 14597,PhreeoniS,Phreeoni Scroll,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_ITEMSCRIPT,180000,4121; },{},{}
 14598,GhostringS,Ghostring Scroll,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_ITEMSCRIPT,60000,4047; },{},{}
 14599,Greed_Scroll_C,Greed Scroll,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}

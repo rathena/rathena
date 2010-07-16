@@ -161,6 +161,10 @@
 22,10018,1	// Monkey Circlet
 22,10019,1	// Red Scarf
 22,10020,1	// Grave Keeper's Sword
+22,12373,1	// 
+22,12374,1	// 
+22,12395,1	// 
+22,12395,1	// 
 // Bundle Of Magic Scroll
 23,686,1	// Level 3 Earth Spike
 23,687,1	// Level 5 Earth Spike
@@ -526,3 +530,26 @@
 52,5305,2	// Pirate Dagger
 52,5332,2	// Loki Mask
 52,2712,2	// Collector's Edition Book
+// Louise_Costume_Box
+53,12132,9	// Red_Bag
+53,12260,1	// Cool_Summer_Outfit
+// Xmas_Gift
+54,14550,3	// Fire_Cracker_Xmas
+54,14546,3	// Fire_Cracker_Love
+54,644,33	// Gift_Box
+54,12702,18	// Old_Bleu_Box
+54,12105,3	// Set_Of_Taiming_Item
+54,12107,3	// Wrapped_Mask
+54,603,12	// Old_Blue_Box
+54,12108,6	// Bundle_Of_Magic_Scroll
+54,12354,21	// Buche_De_Noel
+54,12016,6	// Speed_Up_Potion
+54,12017,6	// Slow_Down_Potion
+54,12130,6	// Cookie_Bag
+54,12132,3	// Red_Bag
+54,12110,6	// First_Aid_Kit
+54,732,6	// Crystal_Jewel__
+54,559,9	// Light_Orange_Pot
+54,560,9	// HandMade_Chocolate_
+54,573,9	// Chocolate_Drink
+54,5136,6	// Santa's_Hat_

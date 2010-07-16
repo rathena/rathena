@@ -8,6 +8,8 @@
 	1475 Equestrian's Spear:	NEED INFO.
 	13005 Angelic Wing Dagger:	NEED INFO.
 =======================
+2010/07/16
+	* Rev. 14364 Added two new item groups, and implemented the remaining in the item database. [L0ne_W0lf]
 2010/07/10
 	* Rev. 14363 Fixed a typo in item db. [Inkfish]
 2010/07/05

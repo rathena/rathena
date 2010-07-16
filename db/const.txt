@@ -557,6 +557,8 @@ IG_Easter_Scroll	49
 IG_Pierre_Treasurebox	50
 IG_Cherish_Box	51
 IG_Cherish_Box_Ori	52
+IG_Louise_Costume_Box	53
+IG_Xmas_Gift	54
 
 SC_ALL -1
 SC_STONE	0
