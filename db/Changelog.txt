@@ -8,6 +8,8 @@
 	1475 Equestrian's Spear:	NEED INFO.
 	13005 Angelic Wing Dagger:	NEED INFO.
 =======================
+2010/07/27
+	* Rev. 14365 Updated entry for npc_randomattack in the skill database, now uses the newly added -3 element. [L0ne_W0lf]
 2010/07/16
 	* Rev. 14364 Added two new item groups, and implemented the remaining in the item database. [L0ne_W0lf]
 2010/07/10

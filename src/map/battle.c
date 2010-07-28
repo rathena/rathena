@@ -1093,6 +1093,8 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 	}
 	else if( s_ele == -2 ) //Use enchantment's element
 		s_ele = s_ele_ = status_get_attack_sc_element(src,sc);
+	else if( s_ele == -3 ) //Use random element
+		s_ele = s_ele_ = rand()%ELE_MAX;
 	switch( skill_num )
 	{
 		case GS_GROUNDDRIFT:
@@ -1502,7 +1504,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 						skillratio += 100; //Max damage for non players.
 					break;
 				case NPC_RANDOMATTACK:
-					skillratio += rand()%150-50;
+					skillratio += 100*skill_lv;
 					break;
 				case NPC_WATERATTACK:
 				case NPC_GROUNDATTACK:
@@ -2277,6 +2279,8 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 		s_ele = sstatus->rhw.ele;
 	else if (s_ele == -2) //Use status element
 		s_ele = status_get_attack_sc_element(src,status_get_sc(src));
+	else if( s_ele == -3 ) //Use random element
+		s_ele = rand()%ELE_MAX;
 	
 	//Set miscellaneous data that needs be filled
 	if(sd) {
@@ -2611,8 +2615,10 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 	}
 
 	s_ele = skill_get_ele(skill_num, skill_lv);
-	if (s_ele < 0) //Attack that takes weapon's element for misc attacks? Make it neutral [Skotlex]
+	if (s_ele < 0 && s_ele != -3) //Attack that takes weapon's element for misc attacks? Make it neutral [Skotlex]
 		s_ele = ELE_NEUTRAL;
+	else if (s_ele == -3) //Use random element
+		s_ele = rand()%ELE_MAX;
 
 	//Skill Range Criteria
 	md.flag |= battle_range_type(src, target, skill_num, skill_lv);
