@@ -1,5 +1,7 @@
 Date		Added
 ======
+2010/07/29
+	* Rev. 14366 Added the acolyte-specific arena to the Izlude arena. [L0ne_W0lf]
 2010/07/08
 	* Rev. 14362 Official Lighthalzen Gangster Alert script. [Gepard]
 	- Fixed typo in Amatsu Dungeon Entrance Quest.
