@@ -993,9 +993,9 @@
 8235,0,6,4,0,0x1,0,1,1,yes,0,0,0,none,0,	MER_SCAPEGOAT,Scapegoat
 8236,5,6,1,0,0x1,0,10,0,yes,0,0,0,magic,0,	MER_LEXDIVINA,Lex_Divina
 8237,9,6,1,0,0x1,0,1,1,yes,0,0,0,magic,0,	MER_ESTIMATION,Sense
-//8238,0,0,0,0,0,0,9,0,no,0,0,0,none,0,		MER_KYRIE,Kyrie Eleison
-//8239,0,0,0,0,0,0,9,0,no,0,0,0,none,0,		MER_BLESSING,Blessing
-//8240,0,0,0,0,0,0,9,0,no,0,0,0,none,0,		MER_INCAGI,Increase Agility
+8238,9,6,16,0,0x1,0,10,1,yes,0,0,0,magic,0,	MER_KYRIE,Kyrie Eleison
+8239,9,6,16,0,0x1,0,10,1,yes,0,0,0,magic,0,	MER_BLESSING,Blessing
+8240,9,6,16,0,0x1,0,10,1,yes,0,0,0,magic,0,	MER_INCAGI,Increase Agility
 
 // Summons skills. 
 //8416,0,0,0,0,0,0,9,0,no,0,0,0,none,0		EL_AQUAPLAY,

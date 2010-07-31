@@ -149,6 +149,9 @@ int npc_enable_sub(struct block_list *bl, va_list ap)
 
 		if( npc_ontouch_event(sd,nd) > 0 && npc_ontouch2_event(sd,nd) > 0 )
 		{ // failed to run OnTouch event, so just click the npc
+			if (sd->npc_id != 0)
+				return 0;
+
 			pc_stop_walking(sd,1);
 			npc_click(sd,nd);
 		}

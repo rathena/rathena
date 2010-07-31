@@ -8,6 +8,10 @@
 	1475 Equestrian's Spear:	NEED INFO.
 	13005 Angelic Wing Dagger:	NEED INFO.
 =======================
+2010/07/30
+	* Rev. 14367 Added two new monster mercenaries. [L0ne_W0lf]
+	- Added information for the three new mercenary skills.
+	- Added mercenary skills with cast times to castnodex.
 2010/07/27
 	* Rev. 14365 Updated entry for npc_randomattack in the skill database, now uses the newly added -3 element. [L0ne_W0lf]
 2010/07/16

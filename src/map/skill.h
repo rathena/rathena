@@ -1060,6 +1060,9 @@ enum e_skill {
 	MER_SCAPEGOAT,
 	MER_LEXDIVINA,
 	MER_ESTIMATION,
+	MER_KYRIE,
+	MER_BLESSING,
+	MER_INCAGI,
 };
 
 /// The client view ids for land skills.

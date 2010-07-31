@@ -155,8 +155,8 @@
 
 //Mercenary System
 #define MC_SKILLBASE 8201
-#define MAX_MERCSKILL 37
-#define MAX_MERCENARY_CLASS 36
+#define MAX_MERCSKILL 40
+#define MAX_MERCENARY_CLASS 38
 
 enum item_types {
 	IT_HEALING = 0,

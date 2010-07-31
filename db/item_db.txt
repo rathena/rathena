@@ -3027,15 +3027,15 @@
 6101,Attendance_Card,Attendance Card,3,0,,10,,,,,,,,,,,,,{},{},{}
 6102,Report_On_Splendide,Report On Splendide,3,0,,10,,,,,,,,,,,,,{},{},{}
 6103,Report_On_Manuk,Report On Manuk,3,0,,10,,,,,,,,,,,,,{},{},{}
-6104,Big_Cell,Big Cell,3,0,,10,,,,,,,,,,,,,{},{},{}
-6105,Morning_Dew,Morning Dew,3,0,,10,,,,,,,,,,,,,{},{},{}
-6106,Well_Ripened_Berry,Well Ripened Berry,3,0,,10,,,,,,,,,,,,,{},{},{}
-6107,Sunset_On_The_Rock,Sunset On The Rock,3,0,,10,,,,,,,,,,,,,{},{},{}
-6108,Apple_Pudding,Apple Pudding,3,0,,10,,,,,,,,,,,,,{},{},{}
-6109,Plant_Neutrient,Plant Neutrient,3,0,,10,,,,,,,,,,,,,{},{},{}
-6110,Vital_Flower,Vital Flower,3,0,,10,,,,,,,,,,,,,{},{},{}
-6111,Mystic_Stone,Mystic Stone,3,0,,10,,,,,,,,,,,,,{},{},{}
-6112,Fresh_Plant,Fresh Plant,3,0,,10,,,,,,,,,,,,,{},{},{}
+6104,Big_Cell,Big Cell,3,1000,,10,,,,,,,,,,,,,{},{},{}
+6105,Morning_Dew,Morning Dew,3,1000,,10,,,,,,,,,,,,,{},{},{}
+6106,Well_Ripened_Berry,Well Ripened Berry,3,1000,,10,,,,,,,,,,,,,{},{},{}
+6107,Sunset_On_The_Rock,Sunset On The Rock,3,1000,,10,,,,,,,,,,,,,{},{},{}
+6108,Apple_Pudding,Apple Pudding,3,1000,,10,,,,,,,,,,,,,{},{},{}
+6109,Plant_Neutrient,Plant Neutrient,3,1000,,10,,,,,,,,,,,,,{},{},{}
+6110,Vital_Flower,Vital Flower,3,1000,,10,,,,,,,,,,,,,{},{},{}
+6111,Mystic_Stone,Mystic Stone,3,1000,,10,,,,,,,,,,,,,{},{},{}
+6112,Fresh_Plant,Fresh Plant,3,1000,,10,,,,,,,,,,,,,{},{},{}
 6113,Vital_Flower_,Vital Flower,3,1000,,10,,,,,,,,,,,,,{},{},{}
 6114,Flame_Gemstone,Flame Gemstone,3,1000,,10,,,,,,,,,,,,,{},{},{}
 6115,Bun_,Bun,3,1000,,10,,,,,,,,,,,,,{},{},{}
@@ -4498,8 +4498,8 @@
 12326,J_Firecracker,Large Firecracker,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12327,Charm_Of_Luck,Charm Of Luck,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12328,Charm_Of_Happiness,Charm Of Happiness,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_INCLUK,3600000,20; },{},{}
-12329,Recall_MaleGM,Summon Male GameMaster Scroll,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-12330,Recall_FemaleGM,Summon Female GameMaster Scroll,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12329,Recall_MaleGM,Summon Male GameMaster Scroll,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ mercenary_create 2000,1800000; },{},{}
+12330,Recall_FemaleGM,Summon Female GameMaster Scroll,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ mercenary_create 2001,1800000; },{},{}
 12331,Ginseng,Ginseng,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 6,0; },{},{}
 12332,Fruit_Juice,Fruit Juice,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 0,6; },{},{}
 12333,Ansila,Ancilla,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
