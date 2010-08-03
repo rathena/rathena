@@ -1,6 +1,19 @@
 Date		Added
 ======
 2010/07/29
+	* Rev. 14369 A rather large overhaul of the battlegrounds. [L0ne_W0lf]
+	- in bg_common.txt, stripped out KvM npcs, fixed coordinates.
+	- Needs to be tested, none of the BG files are on by default.
+	- Created subfolder battleground/KvM/ which now holds KVM files.
+	- Added kvm_enter.txt, which warps players to the waiting rooms.
+	- Added kvm_item_pay.txt, which holds the point redemption NPC.
+	- Made the KvM battlegrounds work closer to official, needs work.
+	* Corrected variable typos in the acolyte arena. (bugreport:4374)
+	* Corrected donpcevent typo in the party arena. (bugreport:4374)
+	* Added two global functions which will return equip data as strings.
+	- F_GetWeaponType: returns the type of weapon by 'look', (ie "Dagger")
+	- F_GetArmorType: returns the kind of armor via 'equip loc'. (ie "Armor")
+2010/07/29
 	* Rev. 14366 Added the acolyte-specific arena to the Izlude arena. [L0ne_W0lf]
 2010/07/08
 	* Rev. 14362 Official Lighthalzen Gangster Alert script. [Gepard]

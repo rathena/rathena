@@ -1007,6 +1007,7 @@ From here on, we will have the commands sorted as follow:
 5.- Mob / NPC -related commands.
 6.- Other commands.
 7.- Instance Commands.
+8.- Quest Log Commands.
 
 =====================
 |1.- Basic commands.|
@@ -2585,6 +2586,11 @@ and return the number of slots this kind of items has - 0 if they are not
 slotted. It will also be 0 for all non-equippable items, naturally, unless 
 someone messed up the item database. It will return -1 if there is no such item.
 
+Example(s):
+
+//@slots now has the amount of slots of the item with ID 1205.
+	set @slots, getItemSlots(1205);
+
 ---------------------------------------
 
 *getiteminfo(<item ID>,<type>)
@@ -2619,18 +2625,7 @@ This func returns CARD ID, 255,254,-255 (for card 0, if the item is produced) it
 when you want to check item cards or if it's signed. Useful for such quests as 
 "Sign this refined item with players name" etc;
 	Hat[0] +4 -> Player's Hat[0] +4
-	
----------------------------------------
 
-*getitemslots(<item id>)
-
-Returns the amount of slots the item has.
-
-Example(s):
-
-//@slots now has the amount of slots of the item with ID 1205.
-	set @slots, getItemSlots(1205);
-	
 ---------------------------------------
 //
 2,1.- End of item-related commands.

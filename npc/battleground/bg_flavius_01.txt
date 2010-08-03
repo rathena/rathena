@@ -5,7 +5,7 @@
 // Registration NPC's
 // *********************************************************************
 
-bat_room,253,97,4	script	Registration::Fl1R_Guillaume	418,{
+bat_room,86,227,4	script	Registration::Fl1R_Guillaume	418,{
 	end;
 OnInit:
 	waitingroom "Battle Station 10 Players",10,"Flavius_BG1::OnGuillaumeJoin",1;
@@ -15,7 +15,7 @@ OnEnterBG:
 	end;
 }
 
-bat_room,253,74,0	script	Registration::Fl1R_Croix	414,{
+bat_room,85,204,0	script	Registration::Fl1R_Croix	414,{
 	end;
 OnInit:
 	waitingroom "Battle Station 10 Players",10,"Flavius_BG1::OnCroixJoin",1;

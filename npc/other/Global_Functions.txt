@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Lupus, kobra_k88
 //===== Current Version: ===================================== 
-//= 2.15
+//= 2.16
 //===== Compatible With: ===================================== 
 //= eAthena 1.0
 //===== Description: ========================================= 
@@ -38,6 +38,7 @@
 //= 2.13 Added more unused vars to F_ClearGarbage [Lupus]
 //= 2.14 Added old novice variables to F_ClearGarbage. [L0ne_W0lf]
 //= 2.15 Added no unused DTS variables to F_ClearGarbage. [L0ne_W0lf]
+//= 2.6 Added F_GetWeaponType, and F_GetArmorType. [L0ne_W0lf]
 //============================================================ 
 
 
@@ -256,4 +257,56 @@ function	script	F_Load2Skills	{
 	}
 	set ADV_QSK2,0; //Clear var
 	return;
+}
+
+//////////////////////////////////////////////////////////////////////////////////
+// *** Function "F_GetWeaponType": Determine weapon type by view
+//////////////////////////////////////////////////////////////////////////////////
+function	script	F_GetWeaponType	{
+	switch(getiteminfo(getarg(0),11)) {
+		case 1: return "Dagger"; break;
+		case 2: return "One-handed Sword"; break;
+		case 3: return "Two-handed Sword"; break;
+		case 4: return "One-handed Spear"; break;
+		case 5: return "Two-handed Spear"; break;
+		case 6: return "One-handed Axe"; break;
+		case 7: return "Two-handed Axe"; break;
+		case 8: return "Mace"; break;
+		//case 9: return "Unused"; break;
+		case 10: return "Staff"; break;
+		case 11: return "Bow"; break;
+		case 12: return "Knuckle"; break;
+		case 13: return "Instrument"; break;
+		case 14: return "Whip"; break;
+		case 15: return "Book"; break;
+		case 16: return "Katar"; break;
+		case 17: return "Revolver"; break;
+		case 18: return "Rifle"; break;
+		case 19: return "Gatling gun"; break;
+		case 20: return "Shotgun"; break;
+		case 21: return "Grenade Launcher"; break;
+		case 22: return "Shuriken"; break;
+		default: return "Unable to Determine Equip Type"; break;
+	}
+	end;
+}
+
+//////////////////////////////////////////////////////////////////////////////////
+// *** Function "F_GetArmorType": Determine equipment type by equip location
+//////////////////////////////////////////////////////////////////////////////////
+function	script	F_GetArmorType	{
+	switch(getiteminfo(getarg(0),5)) {
+		case 001: return "Lower Headgear"; break;
+		case 2: return "Weapon"; break;
+		case 4: return "Garment"; break;
+		case 8: return "Accessory"; break;
+		case 16: return "Armor"; break;
+		case 32: return "Shield"; break;
+		case 64: return "Shoes"; break;
+		case 128: return "Accessory"; break;
+		case 256: return "Upper Headgear"; break;
+		case 512: return "Middle Headgear"; break;
+		default: return "Unable to Determine Equip Location"; break;
+	}
+	end;
 }

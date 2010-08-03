@@ -3,13 +3,14 @@
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
-//= 1.0
+//= 1.1
 //===== Compatible With: =====================================
 //= Any Athena Version
 //===== Description: =========================================
 //= Izlude Acolyte Battle Arena
 //===== Additional Comments: =================================
 //= 1.0 First version.
+//= 1.1 Corrected variable typos. (bugreport:4374) [L0ne_w0lf]
 //============================================================
 
 arena_room,114,102,0	script	onlyaco#arena	45,1,1,{
@@ -1257,7 +1258,7 @@ prt_are_in,25,31,3	script	Staff#aco-2	67,{
 			mes "under the Time Force Battle";
 			mes "Arena - Acolyte Class Record!";
 			if (basejob == job_acolyte) {
-				set $@arn_acotop,.@record_timeaco;
+				set $arn_acotop,.@record_timeaco;
 				set $arn_acotopn$, strcharinfo(0);
 				donpcevent "Vendigos::Onlinerec_aco";
 			}
@@ -1416,7 +1417,7 @@ prt_are_in,25,31,3	script	Staff#aco-2	67,{
 			mes "Acolyte Class Records.";
 			mes "Congratulations~";
 			if (basejob == job_acolyte) {
-				set $@arn_acotop,.@record_timeaco;
+				set $arn_acotop,.@record_timeaco;
 				set $arn_acotopn$, strcharinfo(0);
 				donpcevent "#Vendigos::Onlinerec_aco";
 			}
