@@ -1181,13 +1181,11 @@ int pet_skill_support_timer(int tid, unsigned int tick, int id, intptr data)
 	
 	pet_stop_attack(pd);
 	pet_stop_walking(pd,1);
-	
+	pd->s_skill->timer=add_timer(tick+pd->s_skill->delay*1000,pet_skill_support_timer,sd->bl.id,0);
 	if (skill_get_inf(pd->s_skill->id) & INF_GROUND_SKILL)
 		unit_skilluse_pos(&pd->bl, sd->bl.x, sd->bl.y, pd->s_skill->id, pd->s_skill->lv);
 	else
 		unit_skilluse_id(&pd->bl, sd->bl.id, pd->s_skill->id, pd->s_skill->lv);
-
-	pd->s_skill->timer=add_timer(tick+pd->s_skill->delay*1000,pet_skill_support_timer,sd->bl.id,0);
 	return 0;
 }
 

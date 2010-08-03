@@ -80,7 +80,7 @@ bool storage_fromstr(char* str, int* account_id, struct storage_data* p)
 		p->items[i].refine = tmp_int[5];
 		p->items[i].attribute = tmp_int[6];
 			
-		for(j = 0; j < MAX_SLOTS && tmp_str && sscanf(tmp_str, ",%d%[0-9,-]",&tmp_int[0], tmp_str) > 0; j++)
+		for(j = 0; j < MAX_SLOTS && tmp_str[0] && sscanf(tmp_str, ",%d%[0-9,-]",&tmp_int[0], tmp_str) > 0; j++)
 			p->items[i].card[j] = tmp_int[0];
 			
 		next += len;
@@ -145,7 +145,7 @@ int guild_storage_fromstr(char *str,struct guild_storage *p)
 			p->storage_[i].identify = tmp_int[4];
 			p->storage_[i].refine = tmp_int[5];
 			p->storage_[i].attribute = tmp_int[6];
-			for(j = 0; j < MAX_SLOTS && tmp_str && sscanf(tmp_str, ",%d%[0-9,-]",&tmp_int[0], tmp_str) > 0; j++)
+			for(j = 0; j < MAX_SLOTS && tmp_str[0] && sscanf(tmp_str, ",%d%[0-9,-]",&tmp_int[0], tmp_str) > 0; j++)
 				p->storage_[i].card[j] = tmp_int[0];
 			next += len;
 			if (str[next] == ' ')
