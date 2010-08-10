@@ -69,7 +69,7 @@ int atcommand_commands(const int fd, struct map_session_data* sd, const char* co
 /*=========================================
  * Generic variables
  *-----------------------------------------*/
-char atcmd_output[200];
+char atcmd_output[CHAT_SIZE_MAX];
 char atcmd_player_name[NAME_LENGTH];
 char atcmd_temp[100];
 
@@ -1000,7 +1000,7 @@ int atcommand_whogm(const int fd, struct map_session_data* sd, const char* comma
 	struct s_mapiterator* iter;
 	int j, count;
 	int pl_GM_level, GM_level;
-	char match_text[200];
+	char match_text[CHAT_SIZE_MAX];
 	char player_name[NAME_LENGTH];
 	struct guild *g;
 	struct party_data *p;
@@ -3722,7 +3722,7 @@ int atcommand_spiritball(const int fd, struct map_session_data* sd, const char* 
 
 	if( !message || !*message || (number = atoi(message)) < 0 || number > max_spiritballs )
 	{
-		char msg[256];
+		char msg[CHAT_SIZE_MAX];
 		safesnprintf(msg, sizeof(msg), "Usage: @spiritball <number: 0-%d>", max_spiritballs);
 		clif_displaymessage(fd, msg);
 		return -1;
@@ -4782,8 +4782,8 @@ int atcommand_unloadnpc(const int fd, struct map_session_data* sd, const char* c
 char* txt_time(unsigned int duration)
 {
 	int days, hours, minutes, seconds;
-	char temp[256];
-	static char temp1[256];
+	char temp[CHAT_SIZE_MAX];
+	static char temp1[CHAT_SIZE_MAX];
 
 	memset(temp, '\0', sizeof(temp));
 	memset(temp1, '\0', sizeof(temp1));
@@ -4825,7 +4825,7 @@ int atcommand_servertime(const int fd, struct map_session_data* sd, const char* 
 	const struct TimerData * timer_data2;
 	time_t time_server;  // variable for number of seconds (used with time() function)
 	struct tm *datetime; // variable for time in structure ->tm_mday, ->tm_sec, ...
-	char temp[256];
+	char temp[CHAT_SIZE_MAX];
 	nullpo_retr(-1, sd);
 
 	memset(temp, '\0', sizeof(temp));
@@ -5272,7 +5272,7 @@ int atcommand_undisguiseall(const int fd, struct map_session_data* sd, const cha
  *------------------------------------------*/
 int atcommand_exp(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
-	char output[200];
+	char output[CHAT_SIZE_MAX];
 	double nextb, nextj;
 	nullpo_retr(-1, sd);
 	memset(output, '\0', sizeof(output));
@@ -6449,7 +6449,7 @@ int atcommand_pettalk(const int fd, struct map_session_data* sd, const char* com
 /// #users displays on the target user instead of self
 int atcommand_users(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
-	char buf[256];
+	char buf[CHAT_SIZE_MAX];
 	int i;
 	int users[MAX_MAPINDEX];
 	int users_all;
@@ -6820,7 +6820,7 @@ int atcommand_identify(const int fd, struct map_session_data* sd, const char* co
  *------------------------------------------*/
 int atcommand_gmotd(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
-		char buf[256];
+		char buf[CHAT_SIZE_MAX];
 		FILE *fp;
 	nullpo_retr(-1, sd);
 		if((fp = fopen(motd_txt, "r"))!=NULL){
@@ -6876,7 +6876,7 @@ int atcommand_mobinfo(const int fd, struct map_session_data* sd, const char* com
 	unsigned char msize[3][7] = {"Small", "Medium", "Large"};
 	unsigned char mrace[12][11] = {"Formless", "Undead", "Beast", "Plant", "Insect", "Fish", "Demon", "Demi-Human", "Angel", "Dragon", "Boss", "Non-Boss"};
 	unsigned char melement[10][8] = {"Neutral", "Water", "Earth", "Fire", "Wind", "Poison", "Holy", "Dark", "Ghost", "Undead"};
-	char atcmd_output2[200];
+	char atcmd_output2[CHAT_SIZE_MAX];
 	struct item_data *item_data;
 	struct mob_db *mob, *mob_array[MAX_SEARCH];
 	int count;
@@ -7498,7 +7498,7 @@ int atcommand_adopt(const int fd, struct map_session_data* sd, const char* comma
 {
 	struct map_session_data *pl_sd1, *pl_sd2, *pl_sd3;
 	char player1[NAME_LENGTH], player2[NAME_LENGTH], player3[NAME_LENGTH];
-	char output[256];
+	char output[CHAT_SIZE_MAX];
 
 	nullpo_retr(-1, sd);
 
@@ -7622,7 +7622,7 @@ int atcommand_rates(const int fd, struct map_session_data* sd, const char* comma
  *------------------------------------------*/
 int atcommand_me(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
-	char tempmes[200];
+	char tempmes[CHAT_SIZE_MAX];
 	nullpo_retr(-1, sd);
 
 	memset(tempmes, '\0', sizeof(tempmes));
@@ -7832,7 +7832,7 @@ int atcommand_invite(const int fd, struct map_session_data* sd, const char* comm
 
 int atcommand_duel(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
-	char output[256];
+	char output[CHAT_SIZE_MAX];
 	unsigned int maxpl=0, newduel;
 	struct map_session_data *target_sd;
 
@@ -7900,7 +7900,7 @@ int atcommand_leave(const int fd, struct map_session_data* sd, const char* comma
 
 int atcommand_accept(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
-	char output[256];
+	char output[CHAT_SIZE_MAX];
 
 	if(!duel_checktime(sd)) {
 		// "Duel: You can take part in duel only one time per %d minutes."
@@ -8294,7 +8294,7 @@ int atcommand_itemlist(const int fd, struct map_session_data* sd, const char* co
 
 		if( it->equip )
 		{
-			char equipstr[200];
+			char equipstr[CHAT_SIZE_MAX];
 			strcpy(equipstr, " | equipped: ");
 			if( it->equip & EQP_GARMENT )
 				strcat(equipstr, "garment, ");
@@ -8396,7 +8396,7 @@ int atcommand_itemlist(const int fd, struct map_session_data* sd, const char* co
 int atcommand_stats(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
 	char job_jobname[100];
-	char output[200];
+	char output[CHAT_SIZE_MAX];
 	int i;
 	struct {
 		const char* format;
@@ -8459,7 +8459,7 @@ int atcommand_delitem(const int fd, struct map_session_data* sd, const char* com
 	char item_name[100];
 	int i, number = 0, item_id, item_position, count;
 	struct item_data *item_data;
-	char output[200];
+	char output[CHAT_SIZE_MAX];
 
 	nullpo_retr(-1, sd);
 
@@ -8894,12 +8894,12 @@ bool is_atcommand(const int fd, struct map_session_data* sd, const char* message
 	char charname[NAME_LENGTH], params[100];
 	char charname2[NAME_LENGTH], params2[100];
 	char command[100];
-	char output[200];
+	char output[CHAT_SIZE_MAX];
 	int x, y, z;
 	int lv = 0;
 	
 	//Reconstructed message
-	char atcmd_msg[200];
+	char atcmd_msg[CHAT_SIZE_MAX];
 	
 	TBL_PC * ssd = NULL; //sd for target
 	AtCommandInfo * info;
