@@ -7595,13 +7595,22 @@ int atcommand_mutearea(const int fd, struct map_session_data* sd, const char* co
 
 int atcommand_rates(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
-	char buf[255];
+	char buf[CHAT_SIZE_MAX];
 	
-	nullpo_retr(0, sd);
+	nullpo_ret(sd);
+	memset(buf, '\0', sizeof(buf));
 	
-	sprintf(buf, "Experience rates: Base %.1fx / Job %.1fx",
-	battle_config.base_exp_rate/100., battle_config.job_exp_rate/100.);
-	
+	snprintf(buf, CHAT_SIZE_MAX, "Experience rates: Base %.2fx / Job %.2fx",
+		battle_config.base_exp_rate/100., battle_config.job_exp_rate/100.);
+	clif_displaymessage(fd, buf);
+	snprintf(buf, CHAT_SIZE_MAX, "Normal Drop Rates: Common %.2fx / Healing %.2fx / Usable %.2fx / Equipment %.2fx / Card %.2fx",
+		battle_config.item_rate_common/100., battle_config.item_rate_heal/100., battle_config.item_rate_use/100., battle_config.item_rate_equip/100., battle_config.item_rate_card/100.);
+	clif_displaymessage(fd, buf);
+	snprintf(buf, CHAT_SIZE_MAX, "Boss Drop Rates: Common %.2fx / Healing %.2fx / Usable %.2fx / Equipment %.2fx / Card %.2fx",
+		battle_config.item_rate_common_boss/100., battle_config.item_rate_heal_boss/100., battle_config.item_rate_use_boss/100., battle_config.item_rate_equip_boss/100., battle_config.item_rate_card_boss/100.);
+	clif_displaymessage(fd, buf);
+	snprintf(buf, CHAT_SIZE_MAX, "Other Drop Rates: MvP %.2fx / Card-Based %.2fx / Treasure %.2fx",
+		battle_config.item_rate_mvp/100., battle_config.item_rate_adddrop/100., battle_config.item_rate_treasure/100.);
 	clif_displaymessage(fd, buf);
 	
 	return 0;
