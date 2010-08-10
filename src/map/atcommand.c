@@ -4163,8 +4163,10 @@ int atcommand_reloadbattleconf(const int fd, struct map_session_data* sd, const 
 	||  prev_config.item_drop_use_max      != battle_config.item_drop_use_max
 	||  prev_config.item_drop_treasure_min != battle_config.item_drop_treasure_min
 	||  prev_config.item_drop_treasure_max != battle_config.item_drop_treasure_max
+	||  prev_config.base_exp_rate          != battle_config.base_exp_rate
+	||  prev_config.job_exp_rate           != battle_config.job_exp_rate
 	)
-  	{	//Drop rates changed.
+  	{	// Exp or Drop rates changed.
 		mob_reload(); //Needed as well so rate changes take effect.
 #ifndef TXT_ONLY
 		chrif_ragsrvinfo(battle_config.base_exp_rate, battle_config.job_exp_rate, battle_config.item_rate_common);
