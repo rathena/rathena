@@ -1,5 +1,15 @@
 Date		Added
 ======
+2010/08/11
+	* Rev. 14369 Another rather large overhaul of the battlegrounds. [L0ne_W0lf]
+	- in bg_common.txt, stripped out several more NPCs, split them off.
+	- Most of the NPCs in bg_common.txt are now official Aegis versions.
+	- Completely rewrote Tierra Gorge for the most part, from ground up.
+	- Moved old Tierra Valley battlegrounds to /custom/battleground.
+	- Added Tierra scripts, Flavius, and bg_common to scripts_athena.
+	- Tierra, KvM, and bg_common scripts are now enabled by default.
+	- To use custom Flavius, you must enable /flavius/flavius_enter.txt
+	- * TIERRA GORGE AND KVM BOTH REQUIRE TESTING *
 2010/07/29
 	* Rev. 14369 A rather large overhaul of the battlegrounds. [L0ne_W0lf]
 	- in bg_common.txt, stripped out KvM npcs, fixed coordinates.

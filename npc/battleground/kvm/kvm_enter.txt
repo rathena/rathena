@@ -14,7 +14,7 @@
 //= 1.0 First Version.
 //============================================================
 
-// KvM Officerer - Guillaume
+// KvM Officer - Guillaume
 //============================================================
 bat_room,164,178,5	script	KVM Mercenary Officer#1	418,{
 	set .@permit,checkquest(6026,PLAYTIME);

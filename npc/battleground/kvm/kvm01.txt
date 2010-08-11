@@ -387,6 +387,7 @@ bat_c01,51,130,5	script	KVM Officer#KVM01A	419,{
 			close2;
 		}
 		bg_leave;
+		set Bat_Team,0;
 		warp "bat_room",154,150;
 		end;
 	}
@@ -415,6 +416,7 @@ bat_c01,148,53,1	script	KVM Officer#KVM01B	415,{
 			close2;
 		}
 		bg_leave;
+		set Bat_Team,0;
 		warp "bat_room",154,150;
 		end;
 	}
