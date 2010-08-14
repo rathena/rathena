@@ -76,4 +76,3 @@ prontera,146,92,3	script	Cellerb	58,{
 	}
 }
 
-prontera	mapflag	fireworks

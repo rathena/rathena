@@ -271,6 +271,14 @@ que_qaru03	mapflag	nightenabled
 que_qaru04	mapflag	nightenabled
 que_qaru05	mapflag	nightenabled
 
+// Battle Grounds ==============
+bat_c01	mapflag	nightenabled
+bat_c02	mapflag	nightenabled
+bat_c03	mapflag	nightenabled
+
+//Endless Tower ==================
+e_tower	mapflag	nightenabled
+
 // Episode 13 ====================
 mid_camp	mapflag	nightenabled
 man_fild01	mapflag	nightenabled
@@ -287,9 +295,5 @@ manuk	mapflag	nightenabled
 man_fild02	mapflag	nightenabled
 splendide	mapflag	nightenabled
 spl_fild01	mapflag	nightenabled
-bat_c01	mapflag	nightenabled
-bat_c02	mapflag	nightenabled
-bat_c03	mapflag	nightenabled
 
-//Endless Tower ==================
-e_tower	mapflag	nightenabled
+//evt_zombie	mapflag	nightenabled

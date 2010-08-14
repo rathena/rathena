@@ -1,5 +1,5 @@
 //===== eAthena Script =======================================
-//= Mapflag from a script in the NPC folder
+//= Displays Fireworks effect (Depreciated)
 //===== By: ==================================================
 //= Epoque
 //===== Current Version: =====================================
@@ -10,17 +10,4 @@
 //=
 //============================================================
 
-//hunte	mapflag	noloot
-//job_knt	mapflag	noloot
-//job_prist	mapflag	noloot
-//job_wiz	mapflag	noloot
-//job_cru	mapflag	noloot
-//monk_test	mapflag	noloot
-//in_rogue	mapflag	noloot
-//job_sage	mapflag	noloot
-//job_soul	mapflag	noloot
-//job_star	mapflag	noloot
-//que_ng	mapflag	noloot
-
-//Thieves have to gather some mushrooms. So they need loot
-//job_thief1	mapflag	noloot
+//prontera	mapflag	fireworks

@@ -17,14 +17,22 @@
 // KvM Officer - Guillaume
 //============================================================
 bat_room,164,178,5	script	KVM Mercenary Officer#1	418,{
-	set .@permit,checkquest(6026,PLAYTIME);
+	/*
+	set .@kvm,checkquest(6027,PLAYTIME);
+	if ((.@kvm == 0) || (.@kvm == 1)) {
+		mes "[Croix Mercenary Officer]";
+		mes "It seems you ahve recently participated in a KVM battle. You must wait 5 minutes before signing up again.";
+		close;
+	}
+	*/
+	set .@permit,checkquest(6025,PLAYTIME);
 	if ((.@permit == 0) || (.@permit == 1)) {
 		mes "[Guillaume Mercenary Officer]";
 		mes "I know that you've already signed with the Croix. Go back and join their team. We will not accept traitors to fight for us.";
 		close;
 	}
 	else {
-		if (checkquest(6025) >= 0) erasequest 6026;
+		if (checkquest(6025) >= 0) erasequest 6025;
 	}
 	mes "[Guillaume Mercenary Officer]";
 	mes "Let them know the real might of Guillaume!";
@@ -115,6 +123,14 @@ bat_room,167,178,5	script	Guillaume Knight#kvm	417,{
 // KvM Officer - Croix
 //============================================================
 bat_room,164,121,1	script	KVM Mercenary Officer#2	414,{
+	/*
+	set .@kvm,checkquest(6027,PLAYTIME);
+	if ((.@kvm == 0) || (.@kvm == 1)) {
+		mes "[Croix Mercenary Officer]";
+		mes "It seems you ahve recently participated in a KVM battle. You must wait 5 minutes before signing up again.";
+		close;
+	}
+	*/
 	set .@permit,checkquest(6025,PLAYTIME);
 	if ((.@permit == 0) || (.@permit == 1)) {
 		mes "[Croix Mercenary Officer]";

@@ -60,23 +60,23 @@ OnKvM03Two:
 	end;
 }
 
-bat_c03,54,124,3	duplicate(CellEffect3)	#RedcellA1-3	111
-bat_c03,55,124,3	duplicate(CellEffect3)	#RedcellA2-3	111
-bat_c03,56,124,3	duplicate(CellEffect3)	#RedcellA3-3	111
-bat_c03,57,124,3	duplicate(CellEffect3)	#RedcellA4-3	111
-bat_c03,57,125,3	duplicate(CellEffect3)	#RedcellA5-3	111
-bat_c03,57,126,3	duplicate(CellEffect3)	#RedcellA6-3	111
-bat_c03,57,127,3	duplicate(CellEffect3)	#RedcellA7-3	111
+bat_c03,54,124,3	duplicate(CellEffect3)	#RedcellA1-3	139
+bat_c03,55,124,3	duplicate(CellEffect3)	#RedcellA2-3	139
+bat_c03,56,124,3	duplicate(CellEffect3)	#RedcellA3-3	139
+bat_c03,57,124,3	duplicate(CellEffect3)	#RedcellA4-3	139
+bat_c03,57,125,3	duplicate(CellEffect3)	#RedcellA5-3	139
+bat_c03,57,126,3	duplicate(CellEffect3)	#RedcellA6-3	139
+bat_c03,57,127,3	duplicate(CellEffect3)	#RedcellA7-3	139
 
-bat_c03,145,59,3	duplicate(CellEffect3)	#RedcellB1-3	111
-bat_c03,144,59,3	duplicate(CellEffect3)	#RedcellB2-3	111
-bat_c03,143,59,3	duplicate(CellEffect3)	#RedcellB3-3	111
-bat_c03,142,59,3	duplicate(CellEffect3)	#RedcellB4-3	111
-bat_c03,142,56,3	duplicate(CellEffect3)	#RedcellB5-3	111
-bat_c03,142,57,3	duplicate(CellEffect3)	#RedcellB6-3	111
-bat_c03,142,58,3	duplicate(CellEffect3)	#RedcellB7-3	111
+bat_c03,145,59,3	duplicate(CellEffect3)	#RedcellB1-3	139
+bat_c03,144,59,3	duplicate(CellEffect3)	#RedcellB2-3	139
+bat_c03,143,59,3	duplicate(CellEffect3)	#RedcellB3-3	139
+bat_c03,142,59,3	duplicate(CellEffect3)	#RedcellB4-3	139
+bat_c03,142,56,3	duplicate(CellEffect3)	#RedcellB5-3	139
+bat_c03,142,57,3	duplicate(CellEffect3)	#RedcellB6-3	139
+bat_c03,142,58,3	duplicate(CellEffect3)	#RedcellB7-3	139
 
-bat_c03,54,128,3	script	#A_camp_start03	111,4,4,{
+bat_c03,54,128,3	script	#A_camp_start03	139,4,4,{
 	end;
 
 OnInit:
@@ -97,7 +97,7 @@ OnTouch:
 	end;
 }
 
-bat_c03,146,56,3	script	#B_camp_start03	111,4,4,{
+bat_c03,146,56,3	script	#B_camp_start03	139,4,4,{
 	end;
 
 OnInit:
@@ -146,6 +146,10 @@ OnGuillaumeDie:
 		set .Croix_Score, .Croix_Score + 1;
 		bg_updatescore "bat_c03",.Guillaume_Score,.Croix_Score;
 		if( .Guillaume_Count < 1 ) donpcevent "KvM03_BG::OnCroixWin";
+		else {
+			mapannounce "bat_c03", "NUmber of Guillaume survivors "+.Guillaume_Count+".",bc_map,"0x00ff00";
+			mapannounce "bat_c03", "NUmber of Croix survivors "+.Croix_Count+".",bc_map,"0x00ff00";
+		}
 	}
 	end;
 
@@ -158,6 +162,10 @@ OnCroixDie:
 		set .Guillaume_Score, .Guillaume_Score + 1;
 		bg_updatescore "bat_c03",.Guillaume_Score,.Croix_Score;
 		if( .Croix_Count < 1 ) donpcevent "KvM03_BG::OnGuillaumeWin";
+		else {
+			mapannounce "bat_c03", "NUmber of Guillaume survivors "+.Guillaume_Count+".",bc_map,"0x00ff00";
+			mapannounce "bat_c03", "NUmber of Croix survivors "+.Croix_Count+".",bc_map,"0x00ff00";
+		}
 	}
 	end;
 
@@ -425,12 +433,3 @@ bat_c03,148,53,1	script	KVM Officer#KVM03B	415,{
 // MapFlags
 //============================================================
 
-bat_c03	mapflag	battleground	2
-bat_c03	mapflag	nomemo
-bat_c03	mapflag	nosave	SavePoint
-bat_c03	mapflag	noteleport
-bat_c03	mapflag	nowarp
-bat_c03	mapflag	nowarpto
-bat_c03	mapflag	noreturn
-bat_c03	mapflag	nobranch
-bat_c03	mapflag	nopenalty

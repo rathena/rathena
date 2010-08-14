@@ -1,4 +1,5 @@
 //===== eAthena Script =======================================
+//===== eAthena Script =======================================
 //= Map flags that disable warp portal memory
 //===== By: ==================================================
 //= eAthena Dev Team
@@ -637,6 +638,16 @@ que_qaru05	mapflag	nomemo
 5@tower	mapflag	nomemo
 6@tower	mapflag	nomemo
 
+// Battle Grounds ================
+bat_c01	mapflag	nomemo
+bat_c02	mapflag	nomemo
+bat_c03	mapflag	nomemo
+bat_room	mapflag	nomemo
+bat_b01	mapflag	nomemo
+bat_b02	mapflag	nomemo
+bat_a01	mapflag	nomemo
+bat_a02	mapflag	nomemo
+
 // Episode 13 ====================
 mid_campin	mapflag	nomemo
 man_fild01	mapflag	nomemo
@@ -666,3 +677,5 @@ spl_in01	mapflag	nomemo
 // Nidhoggr's Instance ===========
 1@nyd	mapflag	nomemo
 2@nyd	mapflag	nomemo
+
+//evt_zombie	mapflag	nomemo

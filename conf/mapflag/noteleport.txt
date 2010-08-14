@@ -353,6 +353,16 @@ e_tower	mapflag	noteleport
 6@tower	mapflag	noteleport
 6@tower	mapflag	monster_noteleport
 
+// Battle Grounds ==============
+bat_c01	mapflag	noteleport
+bat_c02	mapflag	noteleport
+bat_c03	mapflag	noteleport
+bat_room	mapflag	noteleport
+bat_b01	mapflag	noteleport
+bat_b02	mapflag	noteleport
+bat_a01	mapflag	noteleport
+bat_a02	mapflag	noteleport
+
 // Episode 13 ====================
 mid_campin	mapflag	noteleport
 moc_fild22b	mapflag	noteleport
@@ -377,3 +387,5 @@ nyd_dun02	mapflag	noteleport
 1@nyd	mapflag	monster_noteleport
 2@nyd	mapflag	noteleport
 2@nyd	mapflag	monster_noteleport
+
+//evt_zombie	mapflag	noteleport

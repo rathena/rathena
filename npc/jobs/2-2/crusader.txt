@@ -1461,13 +1461,6 @@ OnStop:
 //============================================================ 
 // mapflag
 //============================================================ 
-job_cru	mapflag	nomemo
-job_cru	mapflag	noteleport
-job_cru	mapflag	nosave	SavePoint
-job_cru	mapflag	nopenalty
-job_cru	mapflag	nobranch
-job_cru	mapflag	noexp
-job_cru	mapflag	noloot
 
 //============================================================ 
 // Old changelog

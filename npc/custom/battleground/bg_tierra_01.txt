@@ -238,19 +238,6 @@ OnReset:
 	end;
 }
 
-// MapFlags
-// *********************************************************************
-
-bat_a01	mapflag	battleground
-bat_a01	mapflag	nomemo
-bat_a01	mapflag	nosave	SavePoint
-bat_a01	mapflag	noteleport
-bat_a01	mapflag	nowarp
-bat_a01	mapflag	nowarpto
-bat_a01	mapflag	noreturn
-bat_a01	mapflag	nobranch
-bat_a01	mapflag	nopenalty
-
 // Other Flags
 // *********************************************************************
 

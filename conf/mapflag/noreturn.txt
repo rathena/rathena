@@ -229,3 +229,14 @@ que_hugel	mapflag	noreturn
 //pvp_n_8-4	mapflag	noreturn
 //pvp_n_8-5	mapflag	noreturn
 //pvp_2vs2	mapflag	noreturn
+
+// Battle Grounds ==============
+bat_c01	mapflag	noreturn
+bat_c02	mapflag	noreturn
+bat_c03	mapflag	noreturn
+bat_b01	mapflag	noreturn
+bat_b02	mapflag	noreturn
+bat_a01	mapflag	noreturn
+bat_a02	mapflag	noreturn
+
+//evt_zombie	mapflag	noreturn

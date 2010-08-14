@@ -44,6 +44,7 @@ OnEnterBG:
 bat_room,1,151,3	script	#bat_a01_timer	844,{
 	end;
 
+onInit:
 OnEnable:
 	initnpctimer;
 	end;
@@ -129,7 +130,7 @@ OnReadyCheck:
 		donpcevent "#bat_a01_timer::OnStop";
 		end;
 	}
-	if( .@Guillaume < 10 || .@Croix < 10 )
+	else if( .@Guillaume < 10 || .@Croix < 10 )
 		end;
 	set $@TierraBG1,1;
 	donpcevent "Lieutenant Kalos::OnEnterBG";
@@ -196,7 +197,7 @@ bat_a01,15,18,3	script	barricade#bat_a01_a	844,{
 OnEnable:
 	for( set .@i,185; .@i < 202; set .@i,.@i+1 )
 		bg_monster $@TierraBG1_id1,"bat_a01",.@i,266,"Barricade",1906,"barricade#bat_a01_a::OnMyMobDead";
-	setwall "bat_a01",185,266,16,6,1,"bat_a01_c1";
+	setwall "bat_a01",185,265,16,6,1,"bat_a01_c1";
 	end;
 
 Onkill:
@@ -218,7 +219,7 @@ bat_a01,15,19,3	script	barricade#bat_a01_b	844,{
 OnEnable:
 	for( set .@i,169; .@i < 186; set .@i,.@i+1 )
 		bg_monster $@TierraBG1_id2,"bat_a01",.@i,129,"Barricade",1906,"barricade#bat_a01_b::OnMyMobDead";
-	setwall "bat_a01",169,129,16,6,1,"bat_a01_g1";
+	setwall "bat_a01",169,130,16,6,1,"bat_a01_g1";
 	end;
 
 Onkill:

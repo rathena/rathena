@@ -239,6 +239,15 @@ e_tower	mapflag	nosave	SavePoint
 5@tower	mapflag	nosave	SavePoint
 6@tower	mapflag	nosave	SavePoint
 
+// Battle Grounds ==============
+bat_c01	mapflag	nosave	SavePoint
+bat_c02	mapflag	nosave	SavePoint
+bat_c03	mapflag	nosave	SavePoint
+bat_b01	mapflag	nosave	SavePoint
+bat_b02	mapflag	nosave	SavePoint
+bat_a01	mapflag	nosave	SavePoint
+bat_a02	mapflag	nosave	SavePoint
+
 // Episode 13 ====================
 moc_fild22b	mapflag	nosave	SavePoint
 que_dan01	mapflag	nosave	SavePoint
@@ -258,3 +267,5 @@ arug_dun01	mapflag	nosave	SavePoint
 
 arug_dun01	mapflag	nosave	SavePoint
 schg_dun01	mapflag	nosave	SavePoint
+
+//evt_zombie	mapflag	nosave	SavePoint

@@ -537,8 +537,3 @@ job_thief1,0,0,0,0	monster	Spore	1014,30,0,0,0
 //============================================================
 // mapflag
 //============================================================
-job_thief1	mapflag	nomemo
-job_thief1	mapflag	noteleport
-job_thief1	mapflag	nosave	SavePoint
-job_thief1	mapflag	nopenalty
-job_thief1	mapflag	nobranch

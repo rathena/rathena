@@ -1,7 +1,20 @@
 Date		Added
 ======
 2010/08/11
-	* Rev. 14369 Another rather large overhaul of the battlegrounds. [L0ne_W0lf]
+	* Rev. 14374 More battleground editing, and some bug fixes. [L0ne_W0lf]
+	- * ALL BATTLEGROUNDS ARE NOW ACTIVE BY DEFAULT. PLEASE CONTINUE TESTING *
+	- Rewrote the Badge Exchange NPC in bg_common.txt, is official now.
+	- Other changes to the bg_common folder, including disabled GM NPC.
+	- Completely rewrote Flavius for the most part, from ground up.
+	- Moved old Flavius battlegrounds to /custom/battleground folder.
+	- Restored original bg_common, and KVM to /custom/battleground
+	- Fixed wall bugs in Tierra Gorge, and added an oninit to the timers.
+	- Other minor tweaks to both Tierra Gorge and KVM scripts.
+	- Fixed the pseudo-cooldown on KVM not working properly, I hope.
+	- Added global time2str function which will be used later in Endless tower.
+	* Applied Epoque's mapflag clean up, which removes flags from scripts.
+2010/08/11
+	* Rev. 14373 Another rather large overhaul of the battlegrounds. [L0ne_W0lf]
 	- in bg_common.txt, stripped out several more NPCs, split them off.
 	- Most of the NPCs in bg_common.txt are now official Aegis versions.
 	- Completely rewrote Tierra Gorge for the most part, from ground up.

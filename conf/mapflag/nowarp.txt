@@ -57,3 +57,11 @@ turbo_e_16	mapflag	nowarp
 //Monster Races ================
 p_track01	mapflag	nowarp
 p_track02	mapflag	nowarp
+// Battle Grounds ==============
+bat_c01	mapflag	nowarp
+bat_c02	mapflag	nowarp
+bat_c03	mapflag	nowarp
+bat_b01	mapflag	nowarp
+bat_b02	mapflag	nowarp
+bat_a01	mapflag	nowarp
+bat_a02	mapflag	nowarp

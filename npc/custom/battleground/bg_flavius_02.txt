@@ -438,16 +438,3 @@ bat_b02,110,162,1	duplicate(Croix camp#bat)	Croix camp#bat39	974
 bat_b02,110,137,1	duplicate(Croix camp#bat)	Croix camp#bat40	974
 bat_b02,152,120,1	duplicate(Croix camp#bat)	Croix camp#bat41	974
 bat_b02,158,114,1	duplicate(Croix camp#bat)	Croix camp#bat42	974
-
-// MapFlags
-// *********************************************************************
-
-bat_b02	mapflag	battleground
-bat_b02	mapflag	nomemo
-bat_b02	mapflag	nosave	SavePoint
-bat_b02	mapflag	noteleport
-bat_b02	mapflag	nowarp
-bat_b02	mapflag	nowarpto
-bat_b02	mapflag	noreturn
-bat_b02	mapflag	nobranch
-bat_b02	mapflag	nopenalty

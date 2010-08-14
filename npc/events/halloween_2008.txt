@@ -267,15 +267,6 @@ payon,162,176,4	script	Halloween Magician#iRO08	704,{
 	
 // --------------- MapFlags ---------------
 
-evt_zombie	mapflag	nightenabled
-evt_zombie	mapflag	nobranch
-evt_zombie	mapflag	nomemo
-evt_zombie	mapflag	nopenalty
-evt_zombie	mapflag	pvp	off
-evt_zombie	mapflag	noreturn
-evt_zombie	mapflag	nosave	SavePoint
-evt_zombie	mapflag	noskill
-evt_zombie	mapflag	noteleport
 
 evt_zombie,16,142,1	script	zombiewarp001	45,2,2,{
 	OnTouch:

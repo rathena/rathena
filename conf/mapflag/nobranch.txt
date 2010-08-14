@@ -9,7 +9,7 @@
 //= 1.8 Removed restriction on PVP maps. [L0ne_W0lf]
 //===== Current Version: =====================================
 
-// Cities ================>\\
+// Cities ======================
 ayo_in01	mapflag	nobranch
 ayo_in02	mapflag	nobranch
 alb_ship	mapflag	nobranch
@@ -95,7 +95,7 @@ ve_in	mapflag	nobranch
 ve_in02	mapflag	nobranch
 thor_camp	mapflag	nobranch
 
-// Job Quests ====================
+// Job Quests ==================
 job_sword1	mapflag	nobranch
 job_thief1	mapflag	nobranch
 // 2-1
@@ -118,7 +118,7 @@ que_ng	mapflag	nobranch
 job_soul	mapflag	nobranch
 job_star	mapflag	nobranch
 
-// Special Quests Places =========
+// Special Quests Places =======
 que_god01	mapflag	nobranch
 que_god02	mapflag	nobranch
 que_bingo	mapflag	nobranch
@@ -135,7 +135,7 @@ que_rachel	mapflag	nobranch
 que_san04	mapflag	nobranch
 que_thor	mapflag	nobranch
 
-// Guild Castles ==================
+// Guild Castles ===============
 //alde_gld	mapflag	nobranch
 aldeg_cas01	mapflag	nobranch
 aldeg_cas02	mapflag	nobranch
@@ -178,14 +178,14 @@ nguild_gef	mapflag	nobranch
 nguild_pay	mapflag	nobranch
 nguild_prt	mapflag	nobranch
 
-// GvG Arenas =====================
+// GvG Arenas ==================
 guild_vs1	mapflag	nobranch
 guild_vs2	mapflag	nobranch
 guild_vs3	mapflag	nobranch
 guild_vs4	mapflag	nobranch
 guild_vs5	mapflag	nobranch
 
-// Arenas ================>\\
+// Arenas ======================
 arena_room	mapflag	nobranch
 force_1-1	mapflag	nobranch
 force_1-2	mapflag	nobranch
@@ -219,11 +219,11 @@ prt_are01	mapflag	nobranch
 //wizard_2-1	mapflag	nobranch
 //wizard_3-1	mapflag	nobranch
 
-// PvP Arenas =========================
+// PvP Arenas ==================
 pvp_y_room	mapflag	nobranch
 pvp_n_room	mapflag	nobranch
 
-//Main City maps
+// Main City maps ==============
 alberta	mapflag	nobranch
 aldebaran	mapflag	nobranch
 amatsu	mapflag	nobranch
@@ -259,11 +259,11 @@ turbo_e_4	mapflag	nobranch
 turbo_e_8	mapflag	nobranch
 turbo_e_16	mapflag	nobranch
 
-//Monster Races ================
+// Monster Races ===============
 p_track01	mapflag	nobranch
 p_track02	mapflag	nobranch
 
-//Vision of Okolnir ============
+// Vision of Okolnir ===========
 que_qsch01	mapflag	nobranch
 que_qsch02	mapflag	nobranch
 que_qsch03	mapflag	nobranch
@@ -274,3 +274,15 @@ que_qaru02	mapflag	nobranch
 que_qaru03	mapflag	nobranch
 que_qaru04	mapflag	nobranch
 que_qaru05	mapflag	nobranch
+
+// Battle Grounds ==============
+bat_c01	mapflag	nobranch
+bat_c02	mapflag	nobranch
+bat_c03	mapflag	nobranch
+bat_room	mapflag	nobranch
+bat_b01	mapflag	nobranch
+bat_b02	mapflag	nobranch
+bat_a01	mapflag	nobranch
+bat_a02	mapflag	nobranch
+
+//evt_zombie	mapflag	nobranch

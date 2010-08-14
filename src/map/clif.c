@@ -13116,27 +13116,29 @@ void clif_quest_delete(struct map_session_data * sd, int quest_id)
 	WFIFOSET(fd, packet_len(0x02B4));
 }
 
-//* 02b5 <packet_len>.w <mob_num>.w { <quest_id>.d <mob_id>.d <count>.w }.mob_num
+//* 02b5 <packet_len>.w <mob_num>.w { <quest_id>.d <mob_id>.d <count_total>.w <count_partial>.w }.mob_num
 void clif_quest_update_objective(struct map_session_data * sd, struct quest * qd, int index)
 {
-	int fd = sd->fd;
+    int fd = sd->fd;
 	int i;
-	int len = quest_db[index].num_objectives*10+6;
+	int len = quest_db[index].num_objectives*12+6;
 
 	WFIFOHEAD(fd, len);
-	WFIFOW(fd, 0) = 0x02B5;
-	WFIFOW(fd, 2) = len;
-	WFIFOW(fd, 4) = quest_db[index].num_objectives;
+    WFIFOW(fd, 0) = 0x02B5;
+    WFIFOW(fd, 2) = len;
+    WFIFOW(fd, 4) = quest_db[index].num_objectives;
 
 	for( i = 0; i < quest_db[index].num_objectives; i++ )
-	{
-		WFIFOL(fd, i*10+6) = qd->quest_id;
-		WFIFOL(fd, i*10+10) = quest_db[index].mob[i];
-		WFIFOW(fd, i*10+14) = qd->count[i];
-	}
+    {
+        WFIFOL(fd, i*12+6) = qd->quest_id;
+        WFIFOL(fd, i*12+10) = quest_db[index].mob[i];
+        WFIFOW(fd, i*12+14) = quest_db[index].count[i];
+        WFIFOW(fd, i*12+16) = qd->count[i];
+    }
 
 	WFIFOSET(fd, len);
 }
+
 
 //* 02B6 <quest_id>.L <state>.B
 void clif_parse_questStateAck(int fd, struct map_session_data * sd)

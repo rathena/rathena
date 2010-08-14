@@ -2893,11 +2893,6 @@ OnTimer9000:
 //============================================================ 
 // Mapflag
 //============================================================ 
-job_sage	mapflag	nomemo
-job_sage	mapflag	noteleport
-job_sage	mapflag	nosave	SavePoint
-job_sage	mapflag	nopenalty
-job_sage	mapflag	nobranch
 
 //============================================================ 
 // Old changelog

@@ -1,5 +1,5 @@
 //===== eAthena Script =======================================
-//= Mapflag from a script in the NPC folder
+//= Battleground map setting. '2' shows scoreboard.
 //===== By: ==================================================
 //= Epoque
 //===== Current Version: =====================================
@@ -10,17 +10,10 @@
 //=
 //============================================================
 
-//hunte	mapflag	noloot
-//job_knt	mapflag	noloot
-//job_prist	mapflag	noloot
-//job_wiz	mapflag	noloot
-//job_cru	mapflag	noloot
-//monk_test	mapflag	noloot
-//in_rogue	mapflag	noloot
-//job_sage	mapflag	noloot
-//job_soul	mapflag	noloot
-//job_star	mapflag	noloot
-//que_ng	mapflag	noloot
-
-//Thieves have to gather some mushrooms. So they need loot
-//job_thief1	mapflag	noloot
+bat_c01	mapflag	battleground	2
+bat_c02	mapflag	battleground	2
+bat_c03	mapflag	battleground	2
+bat_b01	mapflag	battleground	2
+bat_b02	mapflag	battleground
+bat_a01	mapflag	battleground
+bat_a02	mapflag	battleground

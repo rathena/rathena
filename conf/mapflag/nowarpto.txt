@@ -99,6 +99,16 @@ e_tower	mapflag	nowarpto
 5@tower	mapflag	nowarpto
 6@tower	mapflag	nowarpto
 
+// Battle Grounds ==============
+bat_c01	mapflag	nowarpto
+bat_c02	mapflag	nowarpto
+bat_c03	mapflag	nowarpto
+bat_room	mapflag	nowarpto
+bat_b01	mapflag	nowarpto
+bat_b02	mapflag	nowarpto
+bat_a01	mapflag	nowarpto
+bat_a02	mapflag	nowarpto
+
 // Episode 13 ====================
 mid_campin	mapflag	nowarpto
 man_fild01	mapflag	nowarpto

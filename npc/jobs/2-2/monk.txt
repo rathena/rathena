@@ -2609,13 +2609,6 @@ job_monk,0,0,0,0	monster	Thief Bug Larva	1051,20,0,0,0
 //============================================================ 
 // mapflag
 //============================================================ 
-monk_test	mapflag	nomemo
-monk_test	mapflag	noteleport
-monk_test	mapflag	nosave	SavePoint
-monk_test	mapflag	nopenalty
-monk_test	mapflag	nobranch
-monk_test	mapflag	noexp
-monk_test	mapflag	noloot
 
 //============================================================ 
 // Old changelog

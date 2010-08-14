@@ -6735,7 +6735,8 @@ color can be:
 <On Quit Event> refers to an NPC label that attaches to the character and is run when they relog.
 <On Death Event> refers to an NPC label that attaches to the character and is run when they die. Can be "" for empty.
 
-Unlike the prior command, the latter will attach a GROUP in a waiting room to the battleground.
+Unlike the prior command, the latter will attach a GROUP in a waiting room to the battleground, and 
+sets the array $@arenamembers[0] where 0 holds the IDs of the first group, and 1 holds the IDs of the second.
 
 Example:
 	// Battle Group will be refered to as $@KvM01BG_id1, and when they die, respawn at bat_c01,52,129.
