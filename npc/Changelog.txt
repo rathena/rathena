@@ -1,6 +1,7 @@
 Date		Added
 ======
 2010/08/11
+	* Rev. 14375 Fixed error in bg_common, and duplicate warp names. [L0ne_W0lf]
 	* Rev. 14374 More battleground editing, and some bug fixes. [L0ne_W0lf]
 	- * ALL BATTLEGROUNDS ARE NOW ACTIVE BY DEFAULT. PLEASE CONTINUE TESTING *
 	- Rewrote the Badge Exchange NPC in bg_common.txt, is official now.

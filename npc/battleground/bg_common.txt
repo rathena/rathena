@@ -580,7 +580,7 @@ bat_room,160,150,3	script	Erundek	109,{
 			if (.@cost[0] == 7829)
 				set .@type$,"(VB)";
 			else 
-v				set .@type$,"(BB)";
+				set .@type$,"(BB)";
 			mes "[Erundek]";
 			mes "You chose ^3131FF"+getitemname(.@item[0])+""+.@type$+"^000000.";
 			mes "You can exchange for this item with ^FF0000"+.@cost[1]+" "+getitemname(.@cost[0])+"^000000.";
