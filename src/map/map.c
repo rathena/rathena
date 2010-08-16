@@ -2331,11 +2331,9 @@ int map_random_dir(struct block_list *bl, short *x, short *y)
 }
 
 // gatån
-static struct mapcell map_gat2cell(int gat)
+inline static struct mapcell map_gat2cell(int gat)
 {
-	struct mapcell cell;
-	memset(&cell, 0, sizeof(cell));
-
+	struct mapcell cell = {0};
 	switch( gat )
 	{
 	case 0: cell.walkable = 1; cell.shootable = 1; cell.water = 0; break; // walkable ground
@@ -2670,59 +2668,85 @@ int map_eraseipport(unsigned short mapindex, uint32 ip, uint16 port)
 }
 
 /*==========================================
- * Map cache reading
- *==========================================*/
-int map_readfromcache(struct map_data *m, FILE *fp)
+ * [Shinryo]: Init and free the mapcache
+ *------------------------------------------*/
+char *map_init_mapcache(FILE *fp)
 {
-	struct map_cache_main_header header;
-	struct map_cache_map_info info;
-	int i;
-	
-	if( !fp )
-		return 0;
+	size_t size = 0, read_size;
+	char *buffer;
 
+	// No file open? Return..
+	nullpo_ret(fp);
+
+	// Get file size
+	fseek(fp, 0, SEEK_END);
+	size = ftell(fp);
 	fseek(fp, 0, SEEK_SET);
-	fread(&header, sizeof(struct map_cache_main_header), 1, fp);
 
-	for( i = 0; i < header.map_count; ++i )
-	{
-		fread(&info, sizeof(struct map_cache_map_info), 1, fp);
+	// Allocate enough space
+	CREATE(buffer, unsigned char, size);
 
-		if( strcmp(m->name, info.name) == 0 )
-			break; // Map found
+	// No memory? Return..
+	nullpo_ret(buffer);
 
-		// Map not found, jump to the beginning of the next map info header
-		fseek(fp, info.len, SEEK_CUR);
+	// Read file into buffer..
+	if((read_size = fread(buffer, sizeof(char), size, fp)) != size) {
+		ShowError("map_init_mapcache: Could not read entire mapcache file\n");
+		return NULL;
 	}
 
-	if( i < header.map_count )
-	{
-		unsigned char *buf, *buf2;
+	return buffer;
+}
+
+/*==========================================
+ * Map cache reading
+ * [Shinryo]: Optimized some behaviour to speed this up
+ *==========================================*/
+int map_readfromcache(struct map_data *m, char *buffer, char *decode_buffer)
+{
+	int i;
+	struct map_cache_main_header *header = (struct map_cache_main_header *)buffer;
+	struct map_cache_map_info *info;
+	unsigned char *p = buffer + sizeof(struct map_cache_main_header);
+
+	for(i = 0; i < header->map_count; i++) {
+		info = (struct map_cache_map_info *)p;
+
+		if( strcmp(m->name, info->name) == 0 )
+			break; // Map found
+
+		// Jump to next entry..
+		p += sizeof(struct map_cache_map_info) + info->len;
+	}
+
+	if( i < header->map_count ) {
 		unsigned long size, xy;
 
-		if( info.xs <= 0 || info.ys <= 0 )
-			return 0;// invalid
+		if( info->xs <= 0 || info->ys <= 0 )
+			return 0;// Invalid
 
-		m->xs = info.xs;
-		m->ys = info.ys;
-		size = (unsigned long)info.xs*(unsigned long)info.ys;
+		m->xs = info->xs;
+		m->ys = info->ys;
+		size = (unsigned long)info->xs*(unsigned long)info->ys;
 
-		buf = (unsigned char*)aMalloc(info.len); // temp buffer to read the zipped map
-		buf2 = (unsigned char*)aMalloc(size); // temp buffer to unpack the data
+		if(size > MAX_MAP_SIZE) {
+			ShowWarning("map_readfromcache: %s exceeded MAX_MAP_SIZE of %d\n", info->name, MAX_MAP_SIZE);
+			return 0; // Say not found to remove it from list.. [Shinryo]
+		}
+
+		// TO-DO: Maybe handle the scenario, if the decoded buffer isn't the same size as expected? [Shinryo]
+		decode_zip(decode_buffer, &size, p+sizeof(struct map_cache_map_info), info->len);
+
 		CREATE(m->cell, struct mapcell, size);
 
-		fread(buf, info.len, 1, fp);
-		decode_zip(buf2, &size, buf, info.len); // Unzip the map from the buffer
 
 		for( xy = 0; xy < size; ++xy )
-			m->cell[xy] = map_gat2cell(buf2[xy]);
+			m->cell[xy] = map_gat2cell(decode_buffer[xy]);
 
-		aFree(buf);
-		aFree(buf2);
 		return 1;
 	}
 
-	return 0;// not found
+	return 0; // Not found
 }
 
 int map_addmap(char* mapname)
@@ -2867,6 +2891,8 @@ int map_readallmaps (void)
 	int i;
 	FILE* fp=NULL;
 	int maps_removed = 0;
+	unsigned char *map_cache_buffer; // Has the uncompressed gat data of all maps, so just one allocation has to be made
+	unsigned char map_cache_decode_buffer[MAX_MAP_SIZE];
 
 	if( enable_grf )
 		ShowStatus("Loading maps (using GRF files)...\n");
@@ -2878,20 +2904,32 @@ int map_readallmaps (void)
 			ShowFatalError("Unable to open map cache file "CL_WHITE"%s"CL_RESET"\n", map_cache_file);
 			exit(EXIT_FAILURE); //No use launching server if maps can't be read.
 		}
+
+		// Init mapcache data.. [Shinryo]
+		map_cache_buffer = map_init_mapcache(fp);
+		if(!map_cache_buffer) {
+			ShowFatalError("Failed to initialize mapcache data (%s)..\n", map_cache_file);
+			exit(EXIT_FAILURE);
+		}
 	}
+
+	// Mapcache reading is now fast enough, the progress info will just slow it down so don't use it anymore [Shinryo]
+	if(!enable_grf)
+		ShowStatus("Loading maps (%d)..\n", map_num);
 
 	for(i = 0; i < map_num; i++)
 	{
 		size_t size;
 
 		// show progress
-		ShowStatus("Loading maps [%i/%i]: %s"CL_CLL"\r", i, map_num, map[i].name);
+		if(enable_grf)
+			ShowStatus("Loading maps [%i/%i]: %s"CL_CLL"\r", i, map_num, map[i].name);
 
 		// try to load the map
 		if( !
 			(enable_grf?
 				 map_readgat(&map[i])
-				:map_readfromcache(&map[i], fp))
+				:map_readfromcache(&map[i], map_cache_buffer, map_cache_decode_buffer))
 			) {
 			map_delmapid(i);
 			maps_removed++;
@@ -2934,8 +2972,12 @@ int map_readallmaps (void)
 		map[i].block_mob = (struct block_list**)aCalloc(size, 1);
 	}
 
-	if( !enable_grf )
+	if( !enable_grf ) {
 		fclose(fp);
+
+		// The cache isn't needed anymore, so free it.. [Shinryo]
+		aFree(map_cache_buffer);
+	}
 
 	// finished map loading
 	ShowInfo("Successfully loaded '"CL_WHITE"%d"CL_RESET"' maps."CL_CLL"\n",map_num);

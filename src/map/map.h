@@ -44,6 +44,7 @@ struct item_data;
 #define MAX_DROP_PER_MAP 48
 #define MAX_IGNORE_LIST 20 // official is 14
 #define MAX_VENDING 12
+#define MAX_MAP_SIZE 512*512 // Wasn't there something like this already? Can't find it.. [Shinryo]
 #define MOBID_EMPERIUM 1288
 // Added definitions for WoESE objects. [L0ne_W0lf]
 #define MOBID_BARRICADE1 1905
