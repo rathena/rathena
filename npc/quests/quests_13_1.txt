@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.5
+//= 1.6
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -32,6 +32,7 @@
 //=     Cat Hand Agents no longer ignore you with 300+ points.
 //= 1.4 Changed killmonsterall -> killmonster. (bugreport:4131)
 //= 1.5 Removed a 'close;' which should have been 'close2'. (bugreport:4276)
+//= 1.6 Fixed check in cat hand agent.
 //============================================================ 
 
 // Onward to the New World
@@ -8945,7 +8946,7 @@ mid_camp,62,125,4	script	Cat Hand Agent	421,{
 			mes "40 or more Cat Trading Points.";
 			mes "Please remember, you can't come back easily once you move to Midgard.";
 			next;
-			if ((ep13_yong1 > 39) && (ep13_yong1 < 49)) {
+			if ((ep13_yong1 > 39) && (ep13_yong1 <= 49)) {
 				switch(select("Prontera -> 5500z:Cancel")) {
 				case 1:
 					if (Zeny >= 5500) {
@@ -8961,7 +8962,7 @@ mid_camp,62,125,4	script	Cat Hand Agent	421,{
 					break;
 				}
 			}
-			else if ((ep13_yong1 > 49) && (ep13_yong1 < 59)) {
+			else if ((ep13_yong1 > 49) && (ep13_yong1 < 60)) {
 				switch(select("Alberta -> 5500z:Prontera -> 5500z:Cancel")) {
 				case 1:
 					if (Zeny >= 5500) {
@@ -8987,7 +8988,7 @@ mid_camp,62,125,4	script	Cat Hand Agent	421,{
 					break;
 				}
 			}
-			else if ((ep13_yong1 > 59) && (ep13_yong1 < 69)) {
+			else if ((ep13_yong1 > 59) && (ep13_yong1 < 70)) {
 				switch(select("Alberta -> 5025z:Prontera -> 5025z:Izlude -> 5025z:Cancel")) {
 				case 1:
 					if (Zeny >= 5025) {
@@ -9023,7 +9024,7 @@ mid_camp,62,125,4	script	Cat Hand Agent	421,{
 					break;
 				}
 			}
-			else if ((ep13_yong1 > 69) && (ep13_yong1 < 79)) {
+			else if ((ep13_yong1 > 69) && (ep13_yong1 < 80)) {
 				switch(select("Alberta -> 5025z:Prontera -> 5025z:Izlude -> 5025z:Geffen -> 5025z:Cancel")) {
 				case 1:
 					if (Zeny >= 5025) {
@@ -9069,7 +9070,7 @@ mid_camp,62,125,4	script	Cat Hand Agent	421,{
 					break;
 				}
 			}
-			else if ((ep13_yong1 > 79) && (ep13_yong1 < 89)) {
+			else if ((ep13_yong1 > 79) && (ep13_yong1 < 90)) {
 				switch(select("Alberta -> 4765z:Prontera -> 4765z:Izlude -> 4765z:Geffen -> 4765z:Payon -> 4765z:Cancel")) {
 				case 1:
 					if (Zeny >= 4765) {
@@ -9125,7 +9126,7 @@ mid_camp,62,125,4	script	Cat Hand Agent	421,{
 					break;
 				}
 			}
-			else if ((ep13_yong1 > 89) && (ep13_yong1 < 99)) {
+			else if ((ep13_yong1 > 89) && (ep13_yong1 < 100)) {
 				switch(select("Alberta -> 4765z:Prontera -> 4765z:Izlude -> 4765z:Geffen -> 4765z:Payon -> 4765z:Morroc -> 4765z:Cancel")) {
 				case 1:
 					if (Zeny >= 4765) {

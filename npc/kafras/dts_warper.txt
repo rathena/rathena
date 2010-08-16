@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Evera
 //===== Current Version: ===================================== 
-//= 2.7
+//= 2.8
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: =========================================
@@ -52,6 +52,7 @@
 //= 2.5 Converted from Aegis file. (11.3) [L0ne_W0lf]
 //= 2.6 Moved Morroc NPCs to Morroc Ruins. [L0ne_W0lf]
 //= 2.7 Fixed a typo, a - to a +. Not sure how that happened. [L0ne_w0lf]
+//= 2.8 Corrected another typo this time in a variable.
 //============================================================ 
 
 einbroch,246,70,0	script	Vote Timer#ein	-1,{
@@ -769,7 +770,7 @@ yuno,153,191,6	script	Cool Event Staff#yuno::VotingStaffCCE	874,{
 		//}
 		//else {
 			if ($DTS_Result == 0) {
-				if (lhz_vote <= $DTRS_VoteCount) {
+				if (lhz_vote <= $DTS_VoteCount) {
 					mes "[Cool Event Corp. Voting Staff]";
 					mes "Cool Event Corp.,";
 					mes "if chosen to provide the";
@@ -833,7 +834,7 @@ yuno,153,191,6	script	Cool Event Staff#yuno::VotingStaffCCE	874,{
 				}
 			}
 			else if ($DTS_Result == 3) {
-				if (lhz_vote <= $DTRS_VoteCount) {
+				if (lhz_vote <= $DTS_VoteCount) {
 					mes "[Cool Event Corp. Voting Staff]";
 					mes "Unfortunately, there wasn't";
 					mes "enough voter turnout in the";

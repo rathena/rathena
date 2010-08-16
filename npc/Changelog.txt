@@ -1,6 +1,14 @@
 Date		Added
 ======
-2010/08/11
+2010/08/16
+	* Rev. 14376 Fixed Flavius only needing 1 person on either side to start. [L0ne_W0lf]
+	* Updated the level 4 weapon quest to aegis conversion.
+	* Corrected a variable typo in the dts_warper script.
+	* Fixed a script hang in Hugel Temple Excavation quest.
+	* Fixed Cat Hand Agent checks, and mysterious rock#31.
+	* Corrected the two hour time limit for Sealed Shrine.
+	* Corrected a few other minor issues in Sealed Shrine.
+2010/08/14
 	* Rev. 14375 Fixed error in bg_common, and duplicate warp names. [L0ne_W0lf]
 	* Rev. 14374 More battleground editing, and some bug fixes. [L0ne_W0lf]
 	- * ALL BATTLEGROUNDS ARE NOW ACTIVE BY DEFAULT. PLEASE CONTINUE TESTING *

@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
-//= 2.0
+//= 2.1
 //===== Compatible With: =====================================
 //= eAthena SVN
 //===== Description: =========================================
@@ -37,6 +37,7 @@
 //= 2.0 Added missing global var check in Yggdrasil Dungeon
 //=     floor 2 puzzle. Fixed a typo. Commented out untranslated
 //=     line. [Gepard]
+//= 2.1 Fixed Myterious Rock 31, and Cart Hand Agents.
 //============================================================ 
 
 // Cat Hand Addition.
@@ -161,7 +162,7 @@ spl_fild02,25,211,4	script	Cat Hand Agent#spl	421,{
 			mes "[Cat Hand Agent]";
 			mes "With " + ep13_yong1 + " credit points, we offer the following warp services. Please remember, you can't come back easily once you move to Midgard.";
 			next;
-			if ((ep13_yong1 > 39) && (ep13_yong1 < 49)) {
+			if ((ep13_yong1 > 39) && (ep13_yong1 < 50)) {
 				switch(select("Prontera -> 5500z:Cancel")) {
 				case 1:
 					if (Zeny >= 5500) {
@@ -178,7 +179,7 @@ spl_fild02,25,211,4	script	Cat Hand Agent#spl	421,{
 					close;
 				}
 			}
-			else if ((ep13_yong1 > 49) && (ep13_yong1 < 59)) {
+			else if ((ep13_yong1 > 49) && (ep13_yong1 < 60)) {
 				switch(select("Alberta -> 5500z:Prontera -> 5500z:Cancel")) {
 				case 1:
 					if (Zeny >= 5500) {
@@ -206,7 +207,7 @@ spl_fild02,25,211,4	script	Cat Hand Agent#spl	421,{
 					close;
 				}
 			}
-			else if ((ep13_yong1 > 59) && (ep13_yong1 < 69)) {
+			else if ((ep13_yong1 > 59) && (ep13_yong1 < 70)) {
 				switch(select("Alberta -> 5025z:Prontera -> 5025z:Izlude -> 5025z:Cancel")) {
 				case 1:
 					if (Zeny >= 5025) {
@@ -245,7 +246,7 @@ spl_fild02,25,211,4	script	Cat Hand Agent#spl	421,{
 					close;
 				}
 			}
-			else if ((ep13_yong1 > 69) && (ep13_yong1 < 79)) {
+			else if ((ep13_yong1 > 69) && (ep13_yong1 < 80)) {
 				switch(select("Alberta -> 5025z:Prontera -> 5025z:Izlude -> 5025z:Geffen -> 5025z:Cancel")) {
 				case 1:
 					if (Zeny >= 5025) {
@@ -295,7 +296,7 @@ spl_fild02,25,211,4	script	Cat Hand Agent#spl	421,{
 					close;
 				}
 			}
-			else if ((ep13_yong1 > 79) && (ep13_yong1 < 89)) {
+			else if ((ep13_yong1 > 79) && (ep13_yong1 < 90)) {
 				switch(select("Alberta -> 4765z:Prontera -> 4765z:Izlude -> 4765z:Geffen -> 4765z:Payon -> 4765z:Cancel")) {
 				case 1:
 					if (Zeny >= 4765) {
@@ -356,7 +357,7 @@ spl_fild02,25,211,4	script	Cat Hand Agent#spl	421,{
 					close;
 				}
 			}
-			else if ((ep13_yong1 > 89) && (ep13_yong1 < 99)) {
+			else if ((ep13_yong1 > 89) && (ep13_yong1 < 100)) {
 				switch(select("Alberta -> 4765z:Prontera -> 4765z:Izlude -> 4765z:Geffen -> 4765z:Payon -> 4765z:Morroc -> 4765z:Cancel")) {
 				case 1:
 					if (Zeny >= 4765) {
@@ -1138,7 +1139,7 @@ man_fild02,132,47,4	script	Cat Hand Agent#man	421,{
 			mes "[Cat Hand Agent]";
 			mes "With " + ep13_yong1 + " credit points, we offer the following warp services. Please remember, you can't come back easily once you move to Midgard.";
 			next;
-			if ((ep13_yong1 > 39) && (ep13_yong1 < 49)) {
+			if ((ep13_yong1 > 39) && (ep13_yong1 < 50)) {
 				switch(select("Prontera -> 5500z:Cancel")) {
 				case 1:
 					if (Zeny >= 5500) {
@@ -1155,7 +1156,7 @@ man_fild02,132,47,4	script	Cat Hand Agent#man	421,{
 					close;
 				}
 			}
-			else if ((ep13_yong1 > 49) && (ep13_yong1 < 59)) {
+			else if ((ep13_yong1 > 49) && (ep13_yong1 < 60)) {
 				switch(select("Alberta -> 5500z:Prontera -> 5500z:Cancel")) {
 				case 1:
 					if (Zeny >= 5500) {
@@ -1183,7 +1184,7 @@ man_fild02,132,47,4	script	Cat Hand Agent#man	421,{
 					close;
 				}
 			}
-			else if ((ep13_yong1 > 59) && (ep13_yong1 < 69)) {
+			else if ((ep13_yong1 > 59) && (ep13_yong1 < 70)) {
 				switch(select("Alberta -> 5025z:Prontera -> 5025z:Izlude -> 5025z:Cancel")) {
 				case 1:
 					if (Zeny >= 5025) {
@@ -1222,7 +1223,7 @@ man_fild02,132,47,4	script	Cat Hand Agent#man	421,{
 					close;
 				}
 			}
-			else if ((ep13_yong1 > 69) && (ep13_yong1 < 79)) {
+			else if ((ep13_yong1 > 69) && (ep13_yong1 < 80)) {
 				switch(select("Alberta -> 5025z:Prontera -> 5025z:Izlude -> 5025z:Geffen -> 5025z:Cancel")) {
 				case 1:
 					if (Zeny >= 5025) {
@@ -1272,7 +1273,7 @@ man_fild02,132,47,4	script	Cat Hand Agent#man	421,{
 					close;
 				}
 			}
-			else if ((ep13_yong1 > 79) && (ep13_yong1 < 89)) {
+			else if ((ep13_yong1 > 79) && (ep13_yong1 < 90)) {
 				switch(select("Alberta -> 4765z:Prontera -> 4765z:Izlude -> 4765z:Geffen -> 4765z:Payon -> 4765z:Cancel")) {
 				case 1:
 					if (Zeny >= 4765) {
@@ -1333,7 +1334,7 @@ man_fild02,132,47,4	script	Cat Hand Agent#man	421,{
 					close;
 				}
 			}
-			else if ((ep13_yong1 > 89) && (ep13_yong1 < 99)) {
+			else if ((ep13_yong1 > 89) && (ep13_yong1 < 100)) {
 				switch(select("Alberta -> 4765z:Prontera -> 4765z:Izlude -> 4765z:Geffen -> 4765z:Payon -> 4765z:Morroc -> 4765z:Cancel")) {
 				case 1:
 					if (Zeny >= 4765) {
@@ -2015,7 +2016,7 @@ man_fild02,146,81,0	script	Mysterious Rock#31	844,{
 		else if (.@rhea_ran == 16) {
 			getitem 993,1; //Yellow_Live
 		}
-		else if (.@rhea_ran > 17) {
+		else if (.@rhea_ran == 17) {
 			getitem 6080,1; //Manuk_Coin
 		}
 		else if (.@rhea_ran > 18) {
