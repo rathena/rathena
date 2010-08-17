@@ -12795,6 +12795,12 @@ void clif_parse_Auction_bid(int fd, struct map_session_data *sd)
 	unsigned int auction_id = RFIFOL(fd,2);
 	int bid = RFIFOL(fd,6);
 
+	if( !pc_can_give_items(pc_isGM(sd)) )
+	{ //They aren't supposed to give zeny [Inkfish]
+		clif_displaymessage(sd->fd, msg_txt(246));
+		return;
+	}
+
 	if( bid <= 0 )
 		clif_Auction_message(fd, 0); // You have failed to bid into the auction
 	else if( bid > sd->status.zeny )
