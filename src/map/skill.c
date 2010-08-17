@@ -1677,15 +1677,11 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 
 			//Spirit of Wizard blocks Kaite's reflection
 			if( type == 2 && sc && sc->data[SC_SPIRIT] && sc->data[SC_SPIRIT]->val2 == SL_WIZARD )
-			{	//It should only consume once per skill casted. Val3 is the skill id and val4 is the ID of the damage src.
+			{	//Consume one Fragment per hit of the casted skill. Val3 is the skill id and val4 is the ID of the damage src.
 				//This should account for ground spells (and single target spells will be completed on castend_id) [Skotlex]
-				if (tsd && !(sc->data[SC_SPIRIT]->val3 == skillid && sc->data[SC_SPIRIT]->val4 == dsrc->id) )
-				{	//Check if you have stone to consume.
-				  	type = pc_search_inventory (tsd, 7321);
-					if (type >= 0)
-						pc_delitem(tsd, type, 1, 0);
-				} else
-					type = 0;
+			  	type = pc_search_inventory (tsd, 7321);
+				if (type >= 0)
+					pc_delitem(tsd, type, 1, 0);
 
 				if (type >= 0) {
 					dmg.damage = dmg.damage2 = 0;
@@ -4258,7 +4254,12 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case RG_STEALCOIN:
 		if(sd) {
 			if(pc_steal_coin(sd,bl))
+			{
+				dstmd->state.provoke_flag = src->id;
+				mob_target(dstmd, src, skill_get_range2(src,skillid,skilllv));
 				clif_skill_nodamage(src,bl,skillid,skilllv,1);
+
+			} 
 			else
 				clif_skill_fail(sd,skillid,0,0);
 		}
@@ -5373,7 +5374,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 					sc_start(bl,SC_INCATKRATE,100,-50,skill_get_time2(skillid,skilllv));
 					break;
 				case 5:	// 2000HP heal, random teleported
-					status_heal(bl, 2000, 0, 0);
+					status_heal(src, 2000, 0, 0);
 					if( !map_flag_vs(bl->m) )
 						unit_warp(bl, -1,-1,-1, 3);
 					break;
@@ -7539,15 +7540,9 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 						++count < SKILLUNITTIMER_INTERVAL/sg->interval && !status_isdead(bl) );
 				}
 				break;
-				case WZ_STORMGUST:
-					if (tsc)
-					{	//Reset hit counter when under new storm gust.
-						if (tsc->sg_id != sg->group_id) {
-							tsc->sg_id = sg->group_id;
-							tsc->sg_counter = 0;
-						}
+				case WZ_STORMGUST: //SG counter does not reset per stormgust. IE: One hit from a SG and two hits from another will freeze you.
+					if (tsc) 
 						tsc->sg_counter++; //SG hit counter.
-					}
 					if (skill_attack(skill_get_type(sg->skill_id),ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick,0) <= 0 && tsc)
 						tsc->sg_counter=0; //Attack absorbed.
 				break;

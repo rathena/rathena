@@ -8,6 +8,8 @@
 	1475 Equestrian's Spear:	NEED INFO.
 	13005 Angelic Wing Dagger:	NEED INFO.
 =======================
+2010/08/16
+	* Rev. 14378 Flag some skills so they won't be given with @allskills. (bugreport:3933) [L0ne_W0lf]
 2010/07/30
 	* Rev. 14367 Added two new monster mercenaries. [L0ne_W0lf]
 	- Added information for the three new mercenary skills.

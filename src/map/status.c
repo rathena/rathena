@@ -1175,7 +1175,7 @@ int status_check_skilluse(struct block_list *src, struct block_list *target, int
 	{	
 		if(!skill_num && !(status->mode&MD_BOSS) && tsc->data[SC_TRICKDEAD])
 			return 0;
-		if((skill_num == WZ_STORMGUST || skill_num == NJ_HYOUSYOURAKU)
+		if((skill_num == WZ_STORMGUST || skill_num == WZ_FROSTNOVA || skill_num == NJ_HYOUSYOURAKU)
 			&& tsc->data[SC_FREEZE])
 			return 0;
 		if(skill_num == PR_LEXAETERNA && (tsc->data[SC_FREEZE] || (tsc->data[SC_STONE] && tsc->opt1 == OPT1_STONE)))

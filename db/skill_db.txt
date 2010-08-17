@@ -631,17 +631,17 @@
 
 // Additional Skill (??)
 //688,0,0,0,0,0,0,9,0,no,0,0,0,none,0,		GM_SANDMAN,GM Sandman
-689,0,6,4,0,0x3,-1,10,1,yes,0,0,0,magic,0,	CASH_BLESSING,Party Blessing
-690,0,6,4,0,0x3,-1,10,1,yes,0,0,0,magic,0,	CASH_INCAGI,Party Increase AGI
-691,0,6,4,0,0x3,-1,5,1,yes,0,0,0,magic,0,	CASH_ASSUMPTIO,Party Assumptio
-//692,0,0,0,0,0,0,9,0,no,0,0,0,none,0,		ALL_CATCRY,Cat Cry
-//693,0,0,0,0,0,0,9,0,no,0,0,0,none,0,		ALL_PARTYFLEE,Party Flee
-//694,0,0,0,0,0,0,9,0,no,0,0,0,none,0,		ALL_ANGEL_PROTECT,Angel's Protection
-//695,0,0,0,0,0,0,9,0,no,0,0,0,none,0,		ALL_DREAM_SUMMERNIGHT,Summer Night Dream
-//696,0,0,0,0,0,0,9,0,no,0,0,0,none,0,		NPC_CHANGEUNDEAD2,Change Undead
+689,0,6,4,0,0x3,-1,10,1,yes,0,0x2,0,magic,0,	CASH_BLESSING,Party Blessing
+690,0,6,4,0,0x3,-1,10,1,yes,0,0x2,0,magic,0,	CASH_INCAGI,Party Increase AGI
+691,0,6,4,0,0x3,-1,5,1,yes,0,0x2,0,magic,0,	CASH_ASSUMPTIO,Party Assumptio
+//692,0,0,0,0,0,0,9,0,no,0,0x2,0,none,0,		ALL_CATCRY,Cat Cry
+//693,0,0,0,0,0,0,9,0,no,0,0x2,0,none,0,		ALL_PARTYFLEE,Party Flee
+//694,0,0,0,0,0,0,9,0,no,0,0x2,0,none,0,		ALL_ANGEL_PROTECT,Angel's Protection
+//695,0,0,0,0,0,0,9,0,no,0,0x2,0,none,0,		ALL_DREAM_SUMMERNIGHT,Summer Night Dream
+//696,0,0,0,0,0,0,9,0,no,0,0x2,0,none,0,		NPC_CHANGEUNDEAD2,Change Undead
 //697,9,6,4,0,0x1,0,1,1,yes,0,0x2,0,magic,0,	ALL_REVERSEORCISH,Reverse Orcish
-698,0,6,4,0,0x01,0,1,1,no,0,0,0,none,0,		ALL_WEWISH,Christmas Carol
-//699,0,0,0,0,0,0,9,0,no,0,0,0,none,0,		ALL_SONKRAN,ALL_SONKRAN
+698,0,6,4,0,0x01,0,1,1,no,0,0x2,0,none,0,		ALL_WEWISH,Christmas Carol
+//699,0,0,0,0,0,0,9,0,no,0,0x2,0,none,0,		ALL_SONKRAN,ALL_SONKRAN
 
 1001,9,6,1,-1,0,0,1,1,no,0,0x1,0,weapon,0,	KN_CHARGEATK,Charge Attack
 1002,0,6,4,0,0x1,0,1,0,no,0,0x1,0,weapon,2,	CR_SHRINK,Shrink
