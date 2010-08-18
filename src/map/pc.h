@@ -44,6 +44,11 @@ struct weapon_data {
 	struct {
 		short class_, rate;
 	}	add_dmg[MAX_PC_BONUS];
+
+	struct {
+		short flag, rate;
+		unsigned char ele;
+	} addele2[MAX_PC_BONUS];
 };
 
 struct s_autospell {
@@ -250,6 +255,10 @@ struct map_session_data {
 		int nameid;
 		int rate;
 	} itemhealrate[MAX_PC_BONUS];
+	struct {
+		short flag, rate;
+		unsigned char ele;
+	} subele2[MAX_PC_BONUS];
 	// zeroed structures end here
 	// manually zeroed structures start here.
 	struct s_autobonus autobonus[MAX_PC_BONUS], autobonus2[MAX_PC_BONUS], autobonus3[MAX_PC_BONUS]; //Auto script on attack, when attacked, on skill usage

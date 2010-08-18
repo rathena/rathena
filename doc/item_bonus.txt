@@ -333,3 +333,46 @@ bonus2 bSPDrainValue,n,x;		When hitting a monster by physical attack, ...
 					1=you drain n SP from target
 
 bonus2 bIgnoreDefRate,n,x;		Disregard x% of the target's DEF if the target belongs to race n;
+
+bonus3 bAddEle,n,x,t;			+x% physical damage against element n
+							n: 	0=Neutral, 1=Water, 2=Earth, 3=Fire, 4=Wind, 5=Poison,
+								6=Holy, 7=Dark, 8=Spirit, 9=Undead
+					t: Trigger criteria:
+					   BF_SHORT: Trigger on melee attack
+					   BF_LONG: Trigger on ranged attack
+					   ( Default: BF_SHORT+BF_LONG )
+					   
+					   BF_WEAPON: Trigger on weapon skills 
+					   BF_MAGIC: Trigger on magic skills 
+					   BF_MISC: Trigger on misc skills
+					   ( Default: BF_WEAPON )
+					   
+					   BF_NORMAL: Trigger on normal
+					   attacks.
+					   BF_SKILL: Trigger on skills
+					   (Default: BF_SKILL if type is BF_MISC or BF_MAGIC, BF_NORMAL if type is BF_WEAPON)
+					   
+					   i: 1=cast on enemy, not on self
+					   2=use random skill lv in [1..y]
+					   3=1+2 (random lv on enemy)
+bonus3 bSubEle,n,x,t;			x% Damage reduction against element n.
+							n: 	0=Neutral, 1=Water, 2=Earth, 3=Fire, 4=Wind, 5=Poison,
+								6=Holy, 7=Dark, 8=Spirit, 9=Undead
+					t: Trigger criteria:
+					   BF_SHORT: Trigger on melee attack
+					   BF_LONG: Trigger on ranged attack
+					   ( Default: BF_SHORT+BF_LONG )
+					   
+					   BF_WEAPON: Trigger on weapon skills 
+					   BF_MAGIC: Trigger on magic skills 
+					   BF_MISC: Trigger on misc skills
+					   ( Default: BF_WEAPON )
+					   
+					   BF_NORMAL: Trigger on normal
+					   attacks.
+					   BF_SKILL: Trigger on skills
+					   (Default: BF_SKILL if type is BF_MISC or BF_MAGIC, BF_NORMAL if type is BF_WEAPON)
+					   
+					   i: 1=cast on enemy, not on self
+					   2=use random skill lv in [1..y]
+					   3=1+2 (random lv on enemy)
