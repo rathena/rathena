@@ -38,7 +38,7 @@
 //= 2.13 Added more unused vars to F_ClearGarbage [Lupus]
 //= 2.14 Added old novice variables to F_ClearGarbage. [L0ne_W0lf]
 //= 2.15 Added no unused DTS variables to F_ClearGarbage. [L0ne_W0lf]
-//= 2.6 Added F_GetWeaponType, and F_GetArmorType. [L0ne_W0lf]
+//= 2.16 Added F_GetWeaponType, and F_GetArmorType. [L0ne_W0lf]
 //============================================================ 
 
 

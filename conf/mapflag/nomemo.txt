@@ -1,5 +1,4 @@
 //===== eAthena Script =======================================
-//===== eAthena Script =======================================
 //= Map flags that disable warp portal memory
 //===== By: ==================================================
 //= eAthena Dev Team

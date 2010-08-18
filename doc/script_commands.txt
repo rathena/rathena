@@ -5094,14 +5094,14 @@ invoked by the RID that was active in the script that issued a 'doevent'.
     place,100,100,1%TAB%script%TAB%NPC%TAB%53,{
         mes "This is what you will see when you click me";
         close;
-    Label:
+    OnLabel:
         mes "This is what you will see if the doevent is activated";
         close;
     }
 
     ....
 
-    doevent "NPC::Label";
+    doevent "NPC::OnLabel";
 
 ---------------------------------------
 
@@ -5126,20 +5126,20 @@ something.
     place,100,100,1%TAB%script%TAB%NPC%TAB%53,{
         mes "Hey NPC2 copy what I do";
         close2;
-        set @emo, rand(1,30);
-        donpcevent "NPC2::Emo";
-    Emo:
-        emotion @emo;
+        set .@emote, rand(1,30);
+        donpcevent "NPC2::OnEmote";
+    OnEmote:
+        emotion .@emote;
         end;
     }
 
     place,102,100,1%TAB%script%TAB%NPC2%TAB%53,{
         mes "Hey NPC copy what I do";
         close2;
-        set @emo, rand(1,30);
-        donpcevent "NPC::Emo";
-    Emo:
-        emotion @emo;
+        set .@emote, rand(1,30);
+        donpcevent "NPC::OnEmote";
+    OnEmote:
+        emotion .@emote;
         end;
     }
 

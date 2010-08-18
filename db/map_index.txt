@@ -599,7 +599,7 @@ job_hunter
 job_knight
 job_priest
 job_wizard
-ve_in02	// missing map
+ve_in02
 rachel
 ra_in01
 ra_fild01
