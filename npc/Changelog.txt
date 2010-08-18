@@ -1,5 +1,7 @@
 Date		Added
 ======
+2010/08/18
+	* Rev. 14380 Fixed level 4 weapon quest deleting wrong items. (bugreport:4390) [L0ne_W0lf]
 2010/08/16
 	* Rev. 14376 Fixed Flavius only needing 1 person on either side to start. [L0ne_W0lf]
 	* Updated the level 4 weapon quest to aegis conversion.

@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Vicious_Pucca, Reddozen & MasterOfMuppets
 //===== Current Version: ===================================== 
-//= 1.5
+//= 1.6
 //===== Compatible With: ===================================== 
 //= eAthena SVN 3422+(Requires jA Script System)
 //===== Description: ========================================= 
@@ -19,6 +19,7 @@
 //= 1.3 Redirected error message for "LV_16" to "LV_16_NOGEM" (Gepard) [L0ne_W0lf]
 //= 1.4 Fixed bad NPC header data to comply with rev. 11603. [L0ne_W0lf]
 //= 1.5 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
+//= 1.6 Was using the wrong IDs for the ores needed. [L0ne_W0lf]
 //============================================================ 
 
 umbala,117,285,3	script	Bazo#lv4	85,{
@@ -158,13 +159,13 @@ umbala,117,285,3	script	Bazo#lv4	85,{
 	}
 	if (((lv4_weapon == 2) && (countitem(7295) > 29)) || ((lv4_weapon == 3) && (countitem(7294) > 29)) || ((lv4_weapon == 4) && (countitem(7291) > 29))) {
 		if (lv4_weapon == 2) {
-			set .@itemreq,7795; // Citrine
+			set .@itemreq,7295; // Citrine
 		}
 		else if (lv4_weapon == 3) {
-			set .@itemreq,7794; //Turqoise
+			set .@itemreq,7294; //Turqoise
 		}
 		else if (lv4_weapon == 4) {
-			set .@itemreq,7791; // Agate
+			set .@itemreq,7291; // Agate
 		}
 		mes "[Bazo]";
 		mes "Okay, it seems like you're";
@@ -262,8 +263,8 @@ umbala,117,285,3	script	Bazo#lv4	85,{
 		mes "[Bazo]";
 		mes "Oh, you've brought all the basic materials. Now, let me check to see if you brought any of the rare ores I asked for...";
 		next;
-		if ((countitem(7295) > 29) || (countitem(7794) > 29) || (countitem(7291) > 29)) {
-			if ((countitem(7295) > 29) && (countitem(7794) > 29) && (countitem(7291) > 29)) {
+		if ((countitem(7295) > 29) || (countitem(7294) > 29) || (countitem(7291) > 29)) {
+			if ((countitem(7295) > 29) && (countitem(7294) > 29) && (countitem(7291) > 29)) {
 				mes "[Bazo]";
 				mes "Hahaha, I asked you to";
 				mes "bring one kind of ore, not all of them. So which one would you";
@@ -271,27 +272,27 @@ umbala,117,285,3	script	Bazo#lv4	85,{
 				next;
 				switch(select("Citrin:Turquoise:Agate")) {
 				case 1:
-					set .@itemreq,7795; // Citrine
+					set .@itemreq,7295; // Citrine
 					break;
 				case 2:
-					set .@itemreq,7794; //Turqoise
+					set .@itemreq,7294; //Turqoise
 					break;
 				case 3:
-					set .@itemreq,7791; // Agate
+					set .@itemreq,7291; // Agate
 					break;
 				}
 			}
-			else if ((countitem(7295) > 29) && (countitem(7794) > 29)) {
+			else if ((countitem(7295) > 29) && (countitem(7294) > 29)) {
 				mes "Hahaha, I asked you to";
 				mes "bring one kind of ore, not";
 				mes "two. So which one would";
 				mes "you like to use?";
 				switch(select("Citrin:Turquoise")) {
 				case 1:
-					set .@itemreq,7795; // Citrine
+					set .@itemreq,7295; // Citrine
 					break;
 				case 2:
-					set .@itemreq,7794; //Turqoise
+					set .@itemreq,7294; //Turqoise
 					break;
 				}
 			}
@@ -302,36 +303,36 @@ umbala,117,285,3	script	Bazo#lv4	85,{
 				mes "you like to use?";
 				switch(select("Citrin:Agate")) {
 				case 1:
-					set .@itemreq,7795; // Citrine
+					set .@itemreq,7295; // Citrine
 					break;
 				case 2:
-					set .@itemreq,7791; // Agate
+					set .@itemreq,7291; // Agate
 					break;
 				}
 			}
-			else if ((countitem(7794) > 29) && (countitem(7291) > 29)) {
+			else if ((countitem(7294) > 29) && (countitem(7291) > 29)) {
 				mes "Hahaha, I asked you to";
 				mes "bring one kind of ore, not";
 				mes "two. So which one would";
 				mes "you like to use?";
 				switch(select("Turquoise:Agate")) {
 				case 1:
-					set .@itemreq,7794; //Turqoise
+					set .@itemreq,7294; //Turqoise
 					break;
 				case 2:
-					set .@itemreq,7791; // Agate
+					set .@itemreq,7291; // Agate
 					break;
 				}
 			}
 			else {
-				if (countitem(7795) > 29) {
-					set .@itemreq,7795; // Citrine
+				if (countitem(7295) > 29) {
+					set .@itemreq,7295; // Citrine
 				}
-				if (countitem(7794) > 29) {
-					set .@itemreq,7794; //Turqoise
+				if (countitem(7294) > 29) {
+					set .@itemreq,7294; //Turqoise
 				}
-				if (countitem(7791) > 29) {
-					set .@itemreq,7791; // Agate
+				if (countitem(7291) > 29) {
+					set .@itemreq,7291; // Agate
 				}
 			}
 			mes "[Bazo]";
@@ -360,13 +361,13 @@ umbala,117,285,3	script	Bazo#lv4	85,{
 			delitem 969,10; //Gold
 			delitem 999,50; //Steel
 			delitem 714,10; //Emperium
-			if (.@itemreq == 7795) {
+			if (.@itemreq == 7295) {
 				set lv4_weapon,2;
 			}
-			else if (.@itemreq == 7794) {
+			else if (.@itemreq == 7294) {
 				set lv4_weapon,3;
 			}
-			else if (.@itemreq == 7791) {
+			else if (.@itemreq == 7291) {
 				set lv4_weapon,4;
 			}
 			close;
@@ -599,10 +600,10 @@ umbala,163,257,3	script	Hibilaithan#lv4	785,{
 			set .@itemreq,7292; //Muscovite
 		}
 		else if (lv4_weapon == 10) {
-			set .@itemreq,7797; // Biotite
+			set .@itemreq,7297; // Biotite
 		}
 		else if (lv4_weapon == 11) {
-			set .@itemreq,7796; // Pyroxene
+			set .@itemreq,7296; // Pyroxene
 		}
 		mes "[Hibilaithan]";
 		mes "Okay, let's get started!";
@@ -725,10 +726,10 @@ umbala,163,257,3	script	Hibilaithan#lv4	785,{
 					set .@itemreq,7292; //Muscovite
 					break;
 				case 2:
-					set .@itemreq,7797; // Biotite
+					set .@itemreq,7297; // Biotite
 					break;
 				case 3:
-					set .@itemreq,7796; // Pyroxene
+					set .@itemreq,7296; // Pyroxene
 					break;
 				}
 			}
@@ -741,7 +742,7 @@ umbala,163,257,3	script	Hibilaithan#lv4	785,{
 					set .@itemreq,7292; //Muscovite
 					break;
 				case 2:
-					set .@itemreq,7797; // Biotite
+					set .@itemreq,7297; // Biotite
 					break;
 				}
 			}
@@ -754,7 +755,7 @@ umbala,163,257,3	script	Hibilaithan#lv4	785,{
 					set .@itemreq,7292; //Muscovite
 					break;
 				case 2:
-					set .@itemreq,7796; // Pyroxene
+					set .@itemreq,7296; // Pyroxene
 					break;
 				}
 			}
@@ -764,10 +765,10 @@ umbala,163,257,3	script	Hibilaithan#lv4	785,{
 				next;
 				switch(select("Biotite:Pyroxene")) {
 				case 1:
-					set .@itemreq,7797; // Biotite
+					set .@itemreq,7297; // Biotite
 					break;
 				case 2:
-					set .@itemreq,7796; // Pyroxene
+					set .@itemreq,7296; // Pyroxene
 					break;
 				}
 			}
@@ -776,10 +777,10 @@ umbala,163,257,3	script	Hibilaithan#lv4	785,{
 					set .@itemreq,7292; //Muscovite
 				}
 				else if (countitem(7297) > 29) {
-					set .@itemreq,7797; // Biotite
+					set .@itemreq,7297; // Biotite
 				}
 				else if (countitem(7296) > 29) {
-					set .@itemreq,7796; // Pyroxene
+					set .@itemreq,7296; // Pyroxene
 				}
 			}
 			mes "[Hibilaithan]";
@@ -1052,10 +1053,10 @@ um_in,156,77,5	script	Tabezthan#lv4	788,{
 			set .@itemreq,7290; //Phlogopite
 		}
 		else if (lv4_weapon == 17) {
-			set .@itemreq,7789; //Olivine
+			set .@itemreq,7289; //Olivine
 		}
 		else if (lv4_weapon == 18) {
-			set .@itemreq,7793; //Rose_Quartz
+			set .@itemreq,7293; //Rose_Quartz
 		}
 		mes "[Tabezthan]";
 		mes "Shall we begin?";
@@ -1167,10 +1168,10 @@ um_in,156,77,5	script	Tabezthan#lv4	788,{
 					set .@itemreq,7290; //Phlogopite
 					break;
 				case 2:
-					set .@itemreq,7789; //Olivine
+					set .@itemreq,7289; //Olivine
 					break;
 				case 3:
-					set .@itemreq,7793; //Rose_Quartz
+					set .@itemreq,7293; //Rose_Quartz
 					break;
 				}
 			}
@@ -1186,7 +1187,7 @@ um_in,156,77,5	script	Tabezthan#lv4	788,{
 					set .@itemreq,7290; //Phlogopite
 					break;
 				case 2:
-					set .@itemreq,7789; //Olivine
+					set .@itemreq,7289; //Olivine
 					break;
 				}
 			}
@@ -1202,7 +1203,7 @@ um_in,156,77,5	script	Tabezthan#lv4	788,{
 					set .@itemreq,7290; //Phlogopite
 					break;
 				case 2:
-					set .@itemreq,7793; //Rose_Quartz
+					set .@itemreq,7293; //Rose_Quartz
 					break;
 				}
 			}
@@ -1215,10 +1216,10 @@ um_in,156,77,5	script	Tabezthan#lv4	788,{
 				next;
 				switch(select("Peridot:Rose Quartz")) {
 				case 1:
-					set .@itemreq,7789; //Olivine
+					set .@itemreq,7289; //Olivine
 					break;
 				case 2:
-					set .@itemreq,7793; //Rose_Quartz
+					set .@itemreq,7293; //Rose_Quartz
 					break;
 				}
 			}
@@ -1227,10 +1228,10 @@ um_in,156,77,5	script	Tabezthan#lv4	788,{
 					set .@itemreq,7290; //Phlogopite
 				}
 				else if (countitem(7289) > 29) {
-					set .@itemreq,7789; //Olivine
+					set .@itemreq,7289; //Olivine
 				}
 				else if (countitem(7293) > 29) {
-					set .@itemreq,7793; //Rose_Quartz
+					set .@itemreq,7293; //Rose_Quartz
 				}
 			}
 			mes "[Tabezthan]";
