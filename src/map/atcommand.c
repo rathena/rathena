@@ -1719,7 +1719,7 @@ int atcommand_itemreset(const int fd, struct map_session_data* sd, const char* c
 			if(log_config.enable_logs&0x400)
 				log_pick_pc(sd, "A", sd->status.inventory[i].nameid, -sd->status.inventory[i].amount, &sd->status.inventory[i]);
 
-			pc_delitem(sd, i, sd->status.inventory[i].amount, 0);
+			pc_delitem(sd, i, sd->status.inventory[i].amount, 0, 0);
 		}
 	}
 	clif_displaymessage(fd, msg_txt(20)); // All of your items have been removed.
@@ -2678,7 +2678,7 @@ int atcommand_refine(const int fd, struct map_session_data* sd, const char* comm
 			current_position = sd->status.inventory[i].equip;
 			pc_unequipitem(sd, i, 3);
 			clif_refine(fd, 0, i, sd->status.inventory[i].refine);
-			clif_delitem(sd, i, 1);
+			clif_delitem(sd, i, 1, 3);
 			clif_additem(sd, i, 1, 0);
 			pc_equipitem(sd, i, current_position);
 			clif_misceffect(&sd->bl, 3);
@@ -8489,7 +8489,7 @@ int atcommand_delitem(const int fd, struct map_session_data* sd, const char* com
 				if(log_config.enable_logs&0x400)
 					log_pick_pc(sd, "A", sd->status.inventory[item_position].nameid, -1, &sd->status.inventory[item_position]);
 
-				pc_delitem(sd, item_position, 1, 0);
+				pc_delitem(sd, item_position, 1, 0, 0);
 				count++;
 				item_position = pc_search_inventory(sd, item_id); // for next loop
 			}

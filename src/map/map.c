@@ -2668,9 +2668,9 @@ int map_eraseipport(unsigned short mapindex, uint32 ip, uint16 port)
 }
 
 /*==========================================
- * [Shinryo]: Init and free the mapcache
+ * [Shinryo]: Init the mapcache
  *------------------------------------------*/
-char *map_init_mapcache(FILE *fp)
+static char *map_init_mapcache(FILE *fp)
 {
 	size_t size = 0, read_size;
 	char *buffer;

@@ -554,7 +554,7 @@ void trade_tradecommit(struct map_session_data *sd)
 					log_pick_pc(sd, "T", sd->status.inventory[n].nameid, -(sd->deal.item[trade_i].amount), &sd->status.inventory[n]);
 					log_pick_pc(tsd, "T", sd->status.inventory[n].nameid, sd->deal.item[trade_i].amount, &sd->status.inventory[n]);
 				}
-				pc_delitem(sd, n, sd->deal.item[trade_i].amount, 1);
+				pc_delitem(sd, n, sd->deal.item[trade_i].amount, 1, 6);
 			} else
 				clif_additem(sd, n, sd->deal.item[trade_i].amount, 0);
 			sd->deal.item[trade_i].index = 0;
@@ -573,7 +573,7 @@ void trade_tradecommit(struct map_session_data *sd)
 					log_pick_pc(tsd, "T", tsd->status.inventory[n].nameid, -(tsd->deal.item[trade_i].amount), &tsd->status.inventory[n]);
 					log_pick_pc(sd, "T", tsd->status.inventory[n].nameid, tsd->deal.item[trade_i].amount, &tsd->status.inventory[n]);
 				}
-				pc_delitem(tsd, n, tsd->deal.item[trade_i].amount, 1);
+				pc_delitem(tsd, n, tsd->deal.item[trade_i].amount, 1, 6);
 			} else
 				clif_additem(tsd, n, tsd->deal.item[trade_i].amount, 0);
 			tsd->deal.item[trade_i].index = 0;

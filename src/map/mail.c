@@ -38,7 +38,7 @@ int mail_removeitem(struct map_session_data *sd, short flag)
 			if(log_config.enable_logs&0x2000)
 				log_pick_pc(sd, "E", sd->mail.nameid, -sd->mail.amount, &sd->status.inventory[sd->mail.index]);
 
-			pc_delitem(sd, sd->mail.index, sd->mail.amount, 1);
+			pc_delitem(sd, sd->mail.index, sd->mail.amount, 1, 0);
 		}
 		else
 			clif_additem(sd, sd->mail.index, sd->mail.amount, 0);

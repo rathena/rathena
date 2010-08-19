@@ -5677,7 +5677,7 @@ BUILDIN_FUNC(delitem)
 			if(log_config.enable_logs&0x40)
 				log_pick_pc(sd, "N", sd->status.inventory[i].nameid, -amount, &sd->status.inventory[i]);
 
-			pc_delitem(sd,i,amount,0);
+			pc_delitem(sd,i,amount,0,0);
 			return 0; //we deleted exact amount of items. now exit
 		} else {
 			amount-=sd->status.inventory[i].amount;
@@ -5688,7 +5688,7 @@ BUILDIN_FUNC(delitem)
 			}
 			//Logs
 
-			pc_delitem(sd,i,sd->status.inventory[i].amount,0);
+			pc_delitem(sd,i,sd->status.inventory[i].amount,0,0);
 		}
 	}
 	//2nd pass
@@ -5706,7 +5706,7 @@ BUILDIN_FUNC(delitem)
 				if(log_config.enable_logs&0x40)
 					log_pick_pc(sd, "N", sd->status.inventory[i].nameid, -amount, &sd->status.inventory[i]);
 
-				pc_delitem(sd,i,amount,0);
+				pc_delitem(sd,i,amount,0,0);
 				return 0; //we deleted exact amount of items. now exit
 			} else {
 				amount-=sd->status.inventory[i].amount;
@@ -5715,7 +5715,7 @@ BUILDIN_FUNC(delitem)
 				if(log_config.enable_logs&0x40)
 					log_pick_pc(sd, "N", sd->status.inventory[i].nameid, -sd->status.inventory[i].amount, &sd->status.inventory[i]);
 
-				pc_delitem(sd,i,sd->status.inventory[i].amount,0);
+				pc_delitem(sd,i,sd->status.inventory[i].amount,0,0);
 			}
 		}
 
@@ -5804,7 +5804,7 @@ BUILDIN_FUNC(delitem2)
 			if(log_config.enable_logs&0x40)
 				log_pick_pc(sd, "N", sd->status.inventory[i].nameid, -amount, &sd->status.inventory[i]);
 
-			pc_delitem(sd,i,amount,0);
+			pc_delitem(sd,i,amount,0,0);
 			return 0; //we deleted exact amount of items. now exit
 		} else {
 			amount-=sd->status.inventory[i].amount;
@@ -5813,7 +5813,7 @@ BUILDIN_FUNC(delitem2)
 			if(log_config.enable_logs&0x40)
 				log_pick_pc(sd, "N", sd->status.inventory[i].nameid, -sd->status.inventory[i].amount, &sd->status.inventory[i]);
 
-			pc_delitem(sd,i,sd->status.inventory[i].amount,0);
+			pc_delitem(sd,i,sd->status.inventory[i].amount,0,0);
 		}
 	}
 
@@ -6471,7 +6471,7 @@ BUILDIN_FUNC(successrefitem)
 		pc_unequipitem(sd,i,2); // status calc will happen in pc_equipitem() below
 
 		clif_refine(sd->fd,0,i,sd->status.inventory[i].refine);
-		clif_delitem(sd,i,1);
+		clif_delitem(sd,i,1,3);
 
 		//Logs items, got from (N)PC scripts [Lupus]
 		if(log_config.enable_logs&0x40)
@@ -6526,7 +6526,7 @@ BUILDIN_FUNC(failedrefitem)
 		// 精錬失敗エフェクトのパケット
 		clif_refine(sd->fd,1,i,sd->status.inventory[i].refine);
 
-		pc_delitem(sd,i,1,0);
+		pc_delitem(sd,i,1,0,2);
 		// 他の人にも失敗を通知
 		clif_misceffect(&sd->bl,2);
 	}
@@ -9798,7 +9798,7 @@ BUILDIN_FUNC(successremovecards)
 		if(log_config.enable_logs&0x40)
 			log_pick_pc(sd, "N", sd->status.inventory[i].nameid, -1, &sd->status.inventory[i]);
 
-		pc_delitem(sd,i,1,0);
+		pc_delitem(sd,i,1,0,3);
 
 		//Logs items, got from (N)PC scripts [Lupus]
 		if(log_config.enable_logs&0x40)
@@ -9872,7 +9872,7 @@ BUILDIN_FUNC(failedremovecards)
 			if(log_config.enable_logs&0x40)
 				log_pick_pc(sd, "N", sd->status.inventory[i].nameid, -1, &sd->status.inventory[i]);
 
-			pc_delitem(sd,i,1,0);
+			pc_delitem(sd,i,1,0,2);
 		}
 		if(typefail == 1){	// カードのみ損失（武具を返す）
 			int flag;
@@ -9889,7 +9889,7 @@ BUILDIN_FUNC(failedremovecards)
 				item_tmp.card[j]=0;
 			for (j = sd->inventory_data[i]->slot; j < MAX_SLOTS; j++)
 				item_tmp.card[j]=sd->status.inventory[i].card[j];
-			pc_delitem(sd,i,1,0);
+			pc_delitem(sd,i,1,0,2);
 
 			//Logs items, got from (N)PC scripts [Lupus]
 			if(log_config.enable_logs&0x40)
@@ -10566,7 +10566,7 @@ BUILDIN_FUNC(clearitem)
 			if(log_config.enable_logs&0x40)
 				log_pick_pc(sd, "N", sd->status.inventory[i].nameid, -sd->status.inventory[i].amount, &sd->status.inventory[i]);
 
-			pc_delitem(sd, i, sd->status.inventory[i].amount, 0);
+			pc_delitem(sd, i, sd->status.inventory[i].amount, 0, 0);
 		}
 	}
 	return 0;

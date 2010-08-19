@@ -445,7 +445,7 @@ int pet_recv_petdata(int account_id,struct s_pet *p,int flag)
 			return 1;
 		}
 		if (!pet_birth_process(sd,p)) //Pet hatched. Delete egg.
-			pc_delitem(sd,i,1,0);
+			pc_delitem(sd,i,1,0,0);
 	} else {
 		pet_data_init(sd,p);
 		if(sd->pd && sd->bl.prev != NULL) {
@@ -659,7 +659,7 @@ int pet_equipitem(struct map_session_data *sd,int index)
 		return 1;
 	}
 
-	pc_delitem(sd,index,1,0);
+	pc_delitem(sd,index,1,0,0);
 	pd->pet.equip = nameid;
 	status_set_viewdata(&pd->bl, pd->pet.class_); //Updates view_data.
 	clif_pet_equip_area(pd);
@@ -734,7 +734,7 @@ static int pet_food(struct map_session_data *sd, struct pet_data *pd)
 		clif_pet_food(sd,k,0);
 		return 1;
 	}
-	pc_delitem(sd,i,1,0);
+	pc_delitem(sd,i,1,0,0);
 
 	if( pd->pet.hungry > 90 )
 		pet_set_intimate(pd, pd->pet.intimate - pd->petDB->r_full);

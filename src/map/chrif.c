@@ -902,7 +902,7 @@ int chrif_divorceack(int char_id, int partner_id)
 		sd->status.partner_id = 0;
 		for(i = 0; i < MAX_INVENTORY; i++)
 			if (sd->status.inventory[i].nameid == WEDDING_RING_M || sd->status.inventory[i].nameid == WEDDING_RING_F)
-				pc_delitem(sd, i, 1, 0);
+				pc_delitem(sd, i, 1, 0, 0);
 	}
 
 	if( (sd = map_charid2sd(partner_id)) != NULL && sd->status.partner_id == char_id )
@@ -910,7 +910,7 @@ int chrif_divorceack(int char_id, int partner_id)
 		sd->status.partner_id = 0;
 		for(i = 0; i < MAX_INVENTORY; i++)
 			if (sd->status.inventory[i].nameid == WEDDING_RING_M || sd->status.inventory[i].nameid == WEDDING_RING_F)
-				pc_delitem(sd, i, 1, 0);
+				pc_delitem(sd, i, 1, 0, 0);
 	}
 	
 	return 0;

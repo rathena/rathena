@@ -114,7 +114,8 @@ int clif_scriptinputstr(struct map_session_data *sd,int npcid);	// self
 int clif_cutin(struct map_session_data* sd, const char* image, int type);	//self
 int clif_viewpoint(struct map_session_data*,int,int,int,int,int,int);	//self
 int clif_additem(struct map_session_data *sd, int n, int amount, int fail); // self
-int clif_delitem(struct map_session_data*,int,int);	//self
+int clif_dropitem(struct map_session_data*,int,int);	//self
+int clif_delitem(struct map_session_data*,int,int,short); //self
 int clif_updatestatus(struct map_session_data*,int);	//self
 int clif_changestatus(struct block_list*,int,int);	//area
 int clif_damage(struct block_list* src,struct block_list *dst,unsigned int tick,int sdelay,int ddelay,int damage,int div,int type,int damage2);	// area
@@ -333,8 +334,7 @@ void clif_instance_join(int fd, int instance_id);
 void clif_instance_leave(int fd);
 
 // Custom Fonts
-int clif_font_area(struct map_session_data *sd);
-int clif_font_single(int fd, struct map_session_data *sd);
+int clif_font(struct map_session_data *sd);
 
 // atcommand
 int clif_displaymessage(const int fd,const char* mes);

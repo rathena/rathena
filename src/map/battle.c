@@ -897,7 +897,7 @@ void battle_consume_ammo(TBL_PC*sd, int skill, int lv)
 	}
 
 	if(sd->equip_index[EQI_AMMO]>=0) //Qty check should have been done in skill_check_condition
-		pc_delitem(sd,sd->equip_index[EQI_AMMO],qty,0);
+		pc_delitem(sd,sd->equip_index[EQI_AMMO],qty,0,1);
 
 	sd->state.arrow_atk = 0;
 }

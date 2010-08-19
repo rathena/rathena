@@ -339,7 +339,7 @@ void pc_inventory_rentals(struct map_session_data *sd)
 		if( sd->status.inventory[i].expire_time <= time(NULL) )
 		{
 			clif_rental_expired(sd->fd, sd->status.inventory[i].nameid);
-			pc_delitem(sd, i, sd->status.inventory[i].amount, 0);
+			pc_delitem(sd, i, sd->status.inventory[i].amount, 0, 0);
 		}
 		else
 		{
@@ -3124,7 +3124,7 @@ int pc_insert_card(struct map_session_data* sd, int idx_card, int idx_equip)
 	// remember the card id to insert
 	nameid = sd->status.inventory[idx_card].nameid;
 
-	if( pc_delitem(sd,idx_card,1,1) == 1 )
+	if( pc_delitem(sd,idx_card,1,1,0) == 1 )
 	{// failed
 		clif_insert_card(sd,idx_equip,idx_card,1);
 	}
@@ -3378,7 +3378,7 @@ int pc_additem(struct map_session_data *sd,struct item *item_data,int amount)
 /*==========================================
  * ƒAƒCƒeƒ€‚ðŒ¸‚ç‚·
  *------------------------------------------*/
-int pc_delitem(struct map_session_data *sd,int n,int amount,int type)
+int pc_delitem(struct map_session_data *sd,int n,int amount,int type, short reason)
 {
 	nullpo_retr(1, sd);
 
@@ -3394,7 +3394,7 @@ int pc_delitem(struct map_session_data *sd,int n,int amount,int type)
 		sd->inventory_data[n] = NULL;
 	}
 	if(!(type&1))
-		clif_delitem(sd,n,amount);
+		clif_delitem(sd,n,amount,reason);
 	if(!(type&2))
 		clif_updatestatus(sd,SP_WEIGHT);
 
@@ -3442,7 +3442,7 @@ int pc_dropitem(struct map_session_data *sd,int n,int amount)
 	if (!map_addflooritem(&sd->status.inventory[n], amount, sd->bl.m, sd->bl.x, sd->bl.y, 0, 0, 0, 2))
 		return 0;
 	
-	pc_delitem(sd, n, amount, 0);
+	pc_delitem(sd, n, amount, 0, 7);
 	return 1;
 }
 
@@ -3705,7 +3705,7 @@ int pc_useitem(struct map_session_data *sd,int n)
 			if( log_config.enable_logs&0x100 )
 				log_pick_pc(sd, "C", sd->status.inventory[n].nameid, -1, &sd->status.inventory[n]);
 
-			pc_delitem(sd,n,1,1); // Rental Usable Items are not deleted until expiration
+			pc_delitem(sd,n,1,1,0); // Rental Usable Items are not deleted until expiration
 		}
 		else
 			clif_useitemack(sd,n,0,0);
@@ -3826,7 +3826,7 @@ int pc_putitemtocart(struct map_session_data *sd,int idx,int amount)
 		return 1;
 
 	if( pc_cart_additem(sd,item_data,amount) == 0 )
-		return pc_delitem(sd,idx,amount,0);
+		return pc_delitem(sd,idx,amount,0,5);
 
 	return 1;
 }
@@ -7230,7 +7230,7 @@ int pc_checkitem(struct map_session_data *sd)
 		if( battle_config.item_check && !itemdb_available(id) )
 		{
 			ShowWarning("illegal item id %d in %d[%s] inventory.\n",id,sd->bl.id,sd->status.name);
-			pc_delitem(sd,i,sd->status.inventory[i].amount,3);
+			pc_delitem(sd,i,sd->status.inventory[i].amount,3,0);
 			continue;
 		}
 		if( i > j )
@@ -7409,9 +7409,9 @@ int pc_divorce(struct map_session_data *sd)
 	for( i = 0; i < MAX_INVENTORY; i++ )
 	{
 		if( sd->status.inventory[i].nameid == WEDDING_RING_M || sd->status.inventory[i].nameid == WEDDING_RING_F )
-			pc_delitem(sd, i, 1, 0);
+			pc_delitem(sd, i, 1, 0, 0);
 		if( p_sd->status.inventory[i].nameid == WEDDING_RING_M || p_sd->status.inventory[i].nameid == WEDDING_RING_F )
-			pc_delitem(p_sd, i, 1, 0);
+			pc_delitem(p_sd, i, 1, 0, 0);
 	}
 
 	clif_divorced(sd, p_sd->status.name);

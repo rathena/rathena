@@ -161,6 +161,24 @@ uint16 clif_getport(void)
 	return map_port;
 }
 
+#if PACKETVER >= 20071106
+static inline unsigned char clif_bl_type(struct block_list *bl) {
+	switch (bl->type) {
+	case BL_PC:    return disguised(bl)?0x1:0x0; //PC_TYPE
+	case BL_ITEM:  return 0x2; //ITEM_TYPE
+	case BL_SKILL: return 0x3; //SKILL_TYPE
+	case BL_CHAT:  return 0x4; //UNKNOWN_TYPE
+	case BL_MOB:   return 0x5; //NPC_MOB_TYPE
+	case BL_NPC:   return 0x6; //NPC_EVT_TYPE
+	case BL_PET:   return 0x7; //NPC_PET_TYPE
+	case BL_HOM:   return 0x8; //NPC_HOM_TYPE
+	case BL_MER:   return 0x9; //NPC_MERSOL_TYPE
+// case BL_ELEM:  return 0xA; //NPC_ELEMENTAL_TYPE
+	default:       return 0x1; //NPC_TYPE
+	}
+}
+#endif
+
 /*==========================================
  * clif_send‚ÅAREA*Žw’èŽž—p
  *------------------------------------------*/
@@ -751,36 +769,52 @@ static int clif_set_unit_idle(struct block_list* bl, unsigned char* buffer, bool
 	struct status_change* sc = status_get_sc(bl);
 	struct view_data* vd = status_get_viewdata(bl);
 	unsigned char *buf = WBUFP(buffer,0);
+#if PACKETVER < 20091103
 	bool type = !pcdb_checkid(vd->class_);
+#endif
 #if PACKETVER >= 7
 	unsigned short offset = 0;
 #endif
+#if PACKETVER >= 20091103
+	const char *name;
+#endif
 	sd = BL_CAST(BL_PC, bl);
 
+#if PACKETVER < 20091103
 	if(type)
 		WBUFW(buf,0) = spawn?0x7c:0x78;
 	else
+#endif
 #if PACKETVER < 4
 		WBUFW(buf,0) = spawn?0x79:0x78;
 #elif PACKETVER < 7
 		WBUFW(buf,0) = spawn?0x1d9:0x1d8;
-#else
+#elif PACKETVER < 20080102
 		WBUFW(buf,0) = spawn?0x22b:0x22a;
+#elif PACKETVER < 20091103
+		WBUFW(buf,0) = spawn?0x2ed:0x2ee;
+#else
+		WBUFW(buf,0) = spawn?0x7f8:0x7f9;
 #endif
 
-#if PACKETVER >= 20071106
-	if (type) {
-		// shift payload 1 byte to the right for mob packets
-		WBUFB(buf,2) = 0; // padding?
+#if PACKETVER >= 20091103
+	name = status_get_name(bl);
+	WBUFW(buf,2) = (spawn?62:63)+strlen(name);
+	WBUFB(buf,4) = clif_bl_type(bl);
+	offset+=3;
+	buf = WBUFP(buffer,offset);
+#elif PACKETVER >= 20071106
+	if (type) { //Non-player packets
+		WBUFB(buf,2) = clif_bl_type(bl);
 		offset++;
 		buf = WBUFP(buffer,offset);
 	}
 #endif
-
 	WBUFL(buf, 2) = bl->id;
 	WBUFW(buf, 6) = status_get_speed(bl);
 	WBUFW(buf, 8) = (sc)? sc->opt1 : 0;
 	WBUFW(buf,10) = (sc)? sc->opt2 : 0;
+#if PACKETVER < 20091103
 	if (type&&spawn) { //uses an older and different packet structure
 		WBUFW(buf,12) = (sc)? sc->option : 0;
 		WBUFW(buf,14) = vd->hair_style;
@@ -789,14 +823,21 @@ static int clif_set_unit_idle(struct block_list* bl, unsigned char* buffer, bool
 		WBUFW(buf,20) = vd->class_; //Pet armor (ignored by client)
 		WBUFW(buf,22) = vd->shield;
 	} else {
-#if PACKETVER >= 7
+#endif
+#if PACKETVER >= 20091103
+		WBUFL(buf,12) = (sc)? sc->option : 0;
+		offset+=2;
+		buf = WBUFP(buffer,offset);
+#elif PACKETVER >= 7
 		if (!type) {
 			WBUFL(buf,12) = (sc)? sc->option : 0;
 			offset+=2;
-			buf = WBUFP(buffer,offset); //Shift 2 bytes to the right for the rest of fields
+			buf = WBUFP(buffer,offset);
 		} else
-#endif
 			WBUFW(buf,12) = (sc)? sc->option : 0;
+#else
+		WBUFW(buf,12) = (sc)? sc->option : 0;
+#endif
 		WBUFW(buf,14) = vd->class_;
 		WBUFW(buf,16) = vd->hair_style;
 		WBUFW(buf,18) = vd->weapon;
@@ -807,7 +848,9 @@ static int clif_set_unit_idle(struct block_list* bl, unsigned char* buffer, bool
 		WBUFW(buf,20) = vd->shield;
 		WBUFW(buf,22) = vd->head_bottom;
 #endif
+#if PACKETVER < 20091103
 	}
+#endif
 	WBUFW(buf,24) = vd->head_top;
 	WBUFW(buf,26) = vd->head_mid;
 
@@ -820,43 +863,57 @@ static int clif_set_unit_idle(struct block_list* bl, unsigned char* buffer, bool
 	WBUFW(buf,28) = vd->hair_color;
 	WBUFW(buf,30) = vd->cloth_color;
 	WBUFW(buf,32) = (sd)? sd->head_dir : 0;
+#if PACKETVER < 20091103
 	if (type&&spawn) { //End of packet 0x7c
 		WBUFB(buf,34) = (sd)?sd->status.karma:0; // karma
 		WBUFB(buf,35) = vd->sex;
 		WBUFPOS(buf,36,bl->x,bl->y,unit_getdir(bl));
 		WBUFB(buf,39) = 0;
-#if PACKETVER >= 20071106
 		WBUFB(buf,40) = 0;
-#endif
-#if PACKETVER > 20081217
-		WBUFB(buf,41) = 0;
-		WBUFB(buf,42) = 0;
-#endif
 		return packet_len(0x7c);
 	}
+#endif
 	WBUFL(buf,34) = status_get_guild_id(bl);
 	WBUFW(buf,38) = status_get_emblem_id(bl);
 	WBUFW(buf,40) = (sd)? sd->status.manner : 0;
-#if PACKETVER >= 7
+#if PACKETVER >= 20091103
+	WBUFL(buf,42) = (sc)? sc->opt3 : 0;
+	offset+=2;
+	buf = WBUFP(buffer,offset);
+#elif PACKETVER >= 7
 	if (!type) {
 		WBUFL(buf,42) = (sc)? sc->opt3 : 0;
 		offset+=2;
-		buf = WBUFP(buffer,offset); //Shift additional 2 bytes...
+		buf = WBUFP(buffer,offset);
 	} else
-#endif
 		WBUFW(buf,42) = (sc)? sc->opt3 : 0;
+#else
+	WBUFW(buf,42) = (sc)? sc->opt3 : 0;
+#endif
 	WBUFB(buf,44) = (sd)? sd->status.karma : 0;
 	WBUFB(buf,45) = vd->sex;
 	WBUFPOS(buf,46,bl->x,bl->y,unit_getdir(bl));
 	WBUFB(buf,49) = (sd)? 5 : 0;
 	WBUFB(buf,50) = (sd)? 5 : 0;
-	if (spawn) {
-		WBUFW(buf,51) = clif_setlevel(status_get_lv(bl));
-	} else {
+	if (!spawn) {
 		WBUFB(buf,51) = vd->dead_sit;
-		WBUFW(buf,52) = clif_setlevel(status_get_lv(bl));
+		offset++;
+		buf = WBUFP(buffer,offset);
 	}
+	WBUFW(buf,51) = clif_setlevel(status_get_lv(bl));
+#if PACKETVER < 20091103
+	if (type) //End for non-player packet
+		return packet_len(WBUFW(buffer,0));
+#endif
+#if PACKETVER >= 20080102
+	WBUFW(buf,53) = sd?sd->state.user_font:0;
+#endif
+#if PACKETVER >= 20091103
+	strcpy((char*)WBUFP(buf,55), name);
+	return WBUFW(buffer,2);
+#else
 	return packet_len(WBUFW(buffer,0));
+#endif
 }
 
 /*==========================================
@@ -871,6 +928,9 @@ static int clif_set_unit_walking(struct block_list* bl, struct unit_data* ud, un
 #if PACKETVER >= 7
 	unsigned short offset = 0;
 #endif
+#if PACKETVER >= 20091103
+	const char *name;
+#endif
 
 	sd = BL_CAST(BL_PC, bl);
 
@@ -878,14 +938,24 @@ static int clif_set_unit_walking(struct block_list* bl, struct unit_data* ud, un
 	WBUFW(buf, 0) = 0x7b;
 #elif PACKETVER < 7
 	WBUFW(buf, 0) = 0x1da;
-#else
+#elif PACKETVER < 20080102
 	WBUFW(buf, 0) = 0x22c;
+#elif PACKETVER < 20091103
+	WBUFW(buf, 0) = 0x2ec;
+#else
+	WBUFW(buf, 0) = 0x7f7;
 #endif
 
+#if PACKETVER >= 20091103
+	name = status_get_name(bl);
+	WBUFW(buf, 2) = 69+strlen(name);
+	offset+=2;
+	buf = WBUFP(buffer,offset);
+#endif
 #if PACKETVER >= 20071106
-	WBUFB(buf, 2) = 0; // padding?
+	WBUFB(buf, 2) = clif_bl_type(bl);
 	offset++;
-	buf = WBUFP(buf,offset);
+	buf = WBUFP(buffer,offset);
 #endif
 	WBUFL(buf, 2) = bl->id;
 	WBUFW(buf, 6) = status_get_speed(bl);
@@ -931,8 +1001,15 @@ static int clif_set_unit_walking(struct block_list* bl, struct unit_data* ud, un
 	WBUFB(buf,56) = (sd)? 5 : 0;
 	WBUFB(buf,57) = (sd)? 5 : 0;
 	WBUFW(buf,58) = clif_setlevel(status_get_lv(bl));
-
+#if PACKETVER >= 20080102
+	WBUFW(buf,60) = sd?sd->state.user_font:0;
+#endif
+#if PACKETVER >= 20091103
+	strcpy((char*)WBUFP(buf,62), name);
+	return WBUFW(buffer,2);
+#else
 	return packet_len(WBUFW(buffer,0));
+#endif
 }
 
 //Modifies the buffer for disguise characters and sends it to self.
@@ -1069,8 +1146,6 @@ int clif_spawn(struct block_list *bl)
 				clif_specialeffect(bl,423,AREA);
 			else if(sd->state.size==1)
 				clif_specialeffect(bl,421,AREA);
-			if( sd->state.user_font )
-				clif_font_area(sd);
 			if( sd->state.bg_id && map[sd->bl.m].flag.battleground )
 				clif_sendbgemblem_area(sd);
 		}
@@ -1867,7 +1942,7 @@ int clif_additem(struct map_session_data *sd, int n, int amount, int fail)
 /*==========================================
  *
  *------------------------------------------*/
-int clif_delitem(struct map_session_data *sd,int n,int amount)
+int clif_dropitem(struct map_session_data *sd,int n,int amount)
 {
 	int fd;
 
@@ -1881,6 +1956,43 @@ int clif_delitem(struct map_session_data *sd,int n,int amount)
 	WFIFOSET(fd,packet_len(0xaf));
 
 	return 0;
+}
+
+/*==========================================
+ * Deletes an item from your inventory.
+ * Reason values:
+ * 0 - Normal
+ * 1 - Item used for a skill
+ * 2 - Refine failed
+ * 3 - Material changed
+ * 4 - Moved to storage
+ * 5 - Moved to cart
+ * 6 - Item sold
+ * 7 - Item dropped 
+ *------------------------------------------*/
+int clif_delitem(struct map_session_data *sd,int n,int amount, short reason)
+{
+#if PACKETVER < 20091117
+	return clif_dropitem(sd,n,amount);
+#else
+	int fd;
+
+	nullpo_retr(0, sd);
+	
+	if (reason == 7)
+		return clif_dropitem(sd,n,amount);
+
+	fd=sd->fd;
+	
+	WFIFOHEAD(fd, packet_len(0x7fa));
+	WFIFOW(fd,0)=0x7fa;
+	WFIFOW(fd,2)=reason;
+	WFIFOW(fd,4)=n+2;
+	WFIFOW(fd,6)=amount;
+	WFIFOSET(fd,packet_len(0x7fa));
+
+	return 0;
+#endif
 }
 
 // Simplifies inventory/cart/storage packets by handling the packet section relevant to items. [Skotlex]
@@ -3702,8 +3814,6 @@ void clif_getareachar_unit(struct map_session_data* sd,struct block_list *bl)
 				clif_specialeffect_single(bl,423,sd->fd);
 			else if(tsd->state.size==1)
 				clif_specialeffect_single(bl,421,sd->fd);
-			if( tsd->state.user_font )
-				clif_font_single(sd->fd,tsd);
 			if( tsd->state.bg_id && map[tsd->bl.m].flag.battleground )
 				clif_sendbgemblem_single(sd->fd,tsd);
 		}
@@ -9352,7 +9462,7 @@ void clif_parse_DropItem(int fd, struct map_session_data *sd)
 	} while (0);
 
 	//Because the client does not like being ignored.
-	clif_delitem(sd, item_index,0);
+	clif_dropitem(sd, item_index,0);
 }
 
 /*==========================================
@@ -12112,7 +12222,7 @@ void clif_parse_AutoRevive(int fd, struct map_session_data *sd)
 		return;
 	
 	clif_skill_nodamage(&sd->bl,&sd->bl,ALL_RESURRECTION,4,1);
-	pc_delitem(sd, item_position, 1, 0);
+	pc_delitem(sd, item_position, 1, 0, 1);
 }
 
 /// /check <string>
@@ -12770,7 +12880,7 @@ void clif_parse_Auction_register(int fd, struct map_session_data *sd)
 		clif_Auction_message(fd, 4); // No Char Server? lets say something to the client
 	else
 	{
-		pc_delitem(sd, sd->auction.index, sd->auction.amount, 1);
+		pc_delitem(sd, sd->auction.index, sd->auction.amount, 1, 6);
 		sd->auction.amount = 0;
 		pc_payzeny(sd, auction.hours * battle_config.auction_feeperhour);
 	}
@@ -13547,7 +13657,7 @@ int clif_sendbgemblem_single(int fd, struct map_session_data *sd)
  * Custom Fonts
  * S 0x2ef <account_id>.l <font id>.w
  *------------------------------------------*/
-int clif_font_area(struct map_session_data *sd)
+int clif_font(struct map_session_data *sd)
 {
 	unsigned char buf[8];
 	nullpo_retr(0,sd);
@@ -13555,17 +13665,6 @@ int clif_font_area(struct map_session_data *sd)
 	WBUFL(buf,2) = sd->bl.id;
 	WBUFW(buf,6) = sd->state.user_font;
 	clif_send(buf, packet_len(0x2ef), &sd->bl, AREA);
-	return 1;
-}
-
-int clif_font_single(int fd, struct map_session_data *sd)
-{
-	nullpo_retr(0,sd);
-	WFIFOHEAD(fd,packet_len(0x2ef));
-	WFIFOW(fd,0) = 0x2ef;
-	WFIFOL(fd,2) = sd->bl.id;
-	WFIFOW(fd,6) = sd->state.user_font;
-	WFIFOSET(fd,packet_len(0x2ef));
 	return 1;
 }
 
@@ -14108,7 +14207,7 @@ static int packetdb_readdb(void)
 	    6,  2, -1,  4,  4,  4,  4,  8,  8,268,  6,  8,  6, 54, 30, 54,
 #endif
 	    0,  0,  0,  0,  0,  8,  8, 32, -1,  5,  0,  0,  0,  0,  0,  0,
-	    0,  0,  0,  0,  0,  0, 14, 93, 86, 87,  0,  0,  0,  0, 26,  0,
+	    0,  0,  0,  0,  0,  0, 14, -1, -1, -1,  8,  0,  0,  0, 26,  0,
 	//#0x0800
 	   -1, -1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 14, 20,
 	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,

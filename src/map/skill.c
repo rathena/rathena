@@ -1681,7 +1681,7 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 				//This should account for ground spells (and single target spells will be completed on castend_id) [Skotlex]
 			  	type = pc_search_inventory (tsd, 7321);
 				if (type >= 0)
-					pc_delitem(tsd, type, 1, 0);
+					pc_delitem(tsd, type, 1, 0, 1);
 
 				if (type >= 0) {
 					dmg.damage = dmg.damage2 = 0;
@@ -2273,7 +2273,7 @@ static int skill_check_condition_mercenary(struct block_list *bl, int skill, int
 	// Consume items
 	for( i = 0; i < ARRAYLENGTH(itemid); i++ )
 	{
-		if( index[i] >= 0 ) pc_delitem(sd, index[i], amount[i], 0);
+		if( index[i] >= 0 ) pc_delitem(sd, index[i], amount[i], 0, 1);
 	}
 
 	if( type&2 )
@@ -8237,7 +8237,7 @@ int skill_check_condition_castbegin(struct map_session_data* sd, short skill, sh
 			if( skill == WZ_EARTHSPIKE && sc && sc->data[SC_EARTHSCROLL] && rand()%100 > sc->data[SC_EARTHSCROLL]->val2 ) // [marquis007]
 				; //Do not consume item.
 			else if( sd->status.inventory[i].expire_time == 0 )
-				pc_delitem(sd,i,1,0); // Rental usable items are not consumed until expiration
+				pc_delitem(sd,i,1,0,0); // Rental usable items are not consumed until expiration
 		}
 		return 1;
 	}
@@ -8826,7 +8826,7 @@ int skill_consume_requirement( struct map_session_data *sd, short skill, short l
 				continue; //Gemstones are checked, but not substracted from inventory.
 
 			if( (n = pc_search_inventory(sd,req.itemid[i])) >= 0 )
-				pc_delitem(sd,n,req.amount[i],0);
+				pc_delitem(sd,n,req.amount[i],0,1);
 		}
 	}
 
@@ -9337,7 +9337,7 @@ void skill_repairweapon (struct map_session_data *sd, int idx)
 	clif_skill_nodamage(&sd->bl,&target_sd->bl,sd->menuskill_id,1,1);
 	item->attribute=0;
 	clif_equiplist(target_sd);
-	pc_delitem(sd,pc_search_inventory(sd,material),1,0);
+	pc_delitem(sd,pc_search_inventory(sd,material),1,0,0);
 	clif_item_repaireffect(sd,item->nameid,0);
 	if(sd!=target_sd)
 		clif_item_repaireffect(target_sd,item->nameid,0);
@@ -9391,7 +9391,7 @@ void skill_weaponrefine (struct map_session_data *sd, int idx)
 			per = percentrefinery [ditem->wlv][(int)item->refine];
 			per += (((signed int)sd->status.job_level)-50)/2; //Updated per the new kro descriptions. [Skotlex]
 
-			pc_delitem(sd, i, 1, 0);
+			pc_delitem(sd, i, 1, 0, 0);
 			if (per > rand() % 100) {
 				item->refine++;
 				if(item->equip) {
@@ -9399,7 +9399,7 @@ void skill_weaponrefine (struct map_session_data *sd, int idx)
 					pc_unequipitem(sd,idx,3);
 				}
 				clif_refine(sd->fd,0,idx,item->refine);
-				clif_delitem(sd,idx,1);
+				clif_delitem(sd,idx,1,3);
 				clif_additem(sd,idx,1,0);
 				if (ep)
 					pc_equipitem(sd,idx,ep);
@@ -9425,7 +9425,7 @@ void skill_weaponrefine (struct map_session_data *sd, int idx)
 				if(item->equip)
 					pc_unequipitem(sd,idx,3);
 				clif_refine(sd->fd,1,idx,item->refine);
-				pc_delitem(sd,idx,1,0);
+				pc_delitem(sd,idx,1,0,2);
 				clif_misceffect(&sd->bl,2);
 				clif_emotion(&sd->bl, 23);
 			}
@@ -10833,12 +10833,12 @@ int skill_produce_mix (struct map_session_data *sd, int skill_id, int nameid, in
 		if(j < 0)
 			continue;
 		if(slot[i]==1000){	/* Star Crumb */
-			pc_delitem(sd,j,1,1);
+			pc_delitem(sd,j,1,1,0);
 			sc++;
 		}
 		if(slot[i]>=994 && slot[i]<=997 && ele==0){	/* Flame Heart . . . Great Nature */
 			static const int ele_table[4]={3,1,4,2};
-			pc_delitem(sd,j,1,1);
+			pc_delitem(sd,j,1,1,0);
 			ele=ele_table[slot[i]-994];
 		}
 	}
@@ -10856,7 +10856,7 @@ int skill_produce_mix (struct map_session_data *sd, int skill_id, int nameid, in
 			if(j >= 0){
 				y = sd->status.inventory[j].amount;
 				if(y>x)y=x;
-				pc_delitem(sd,j,y,0);
+				pc_delitem(sd,j,y,0,0);
 			} else
 				ShowError("skill_produce_mix: material item error\n");
 
@@ -11165,7 +11165,7 @@ int skill_arrow_create (struct map_session_data *sd, int nameid)
 	if(index < 0 || (j = pc_search_inventory(sd,nameid)) < 0)
 		return 1;
 
-	pc_delitem(sd,j,1,0);
+	pc_delitem(sd,j,1,0,0);
 	for(i=0;i<MAX_ARROW_RESOURCE;i++) {
 		memset(&tmp_item,0,sizeof(tmp_item));
 		tmp_item.identify = 1;
