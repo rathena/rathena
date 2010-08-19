@@ -14271,7 +14271,7 @@ BUILDIN_FUNC(setfont)
 	else
 		sd->state.user_font = 0;
 	
-	clif_font_area(sd);
+	clif_font(sd);
 	return 0;
 }
 

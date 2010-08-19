@@ -8529,7 +8529,7 @@ int atcommand_font(const int fd, struct map_session_data *sd, const char *comman
 		{
 			sd->state.user_font = 0;
 			clif_displaymessage(fd, "Returning to normal font.");
-			clif_font_area(sd);
+			clif_font(sd);
 		}
 		else
 		{
@@ -8542,7 +8542,7 @@ int atcommand_font(const int fd, struct map_session_data *sd, const char *comman
 	else if( font_id != sd->state.user_font )
 	{
 		sd->state.user_font = font_id;
-		clif_font_area(sd);
+		clif_font(sd);
 		clif_displaymessage(fd, "Font changed.");
 	}
 	else

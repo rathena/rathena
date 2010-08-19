@@ -3,6 +3,8 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2010/08/19
+	* Rev. 14384 Follow up to r14383, changed use of clif_font_area to clif_font, seems Skotlex forgot them. [L0ne_W0lf]
 2010/08/18
 	* Rev. 14381 Added bonus3 bAdd/SubEle, which allows you to specify a battle flag as well! Dun dun dun! [L0ne_W0lf]
 	- The bonuses are addititive to existing bAdd/SubEles, as that's how it appears to work.
