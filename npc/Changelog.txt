@@ -1,5 +1,9 @@
 Date		Added
 ======
+2010/08/20
+	* Rev. 14385 Fixed wrong events being called for flavius02 BG waiting rooms. (bugreport:4395) [L0ne_W0lf]
+	* Fixed the setwalls in Tierra gorge, again. Removed extra mapflags.
+	* Moved overlapping guild flags outside arug_cas05 to proper points.
 2010/08/18
 	* Rev. 14380 Fixed level 4 weapon quest deleting wrong items. (bugreport:4390) [L0ne_W0lf]
 2010/08/16

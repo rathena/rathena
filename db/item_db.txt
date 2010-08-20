@@ -4307,7 +4307,7 @@
 12133,Ice_Cream_,McDonald's Ice Cone,0,0,,80,,,,,0xFFFFFFFF,7,2,,,,,,{ if(gettime(5) != MDiceCone) { set MDiceCone,gettime(5); percentheal 50,50; } },{},{}
 12134,Red_Envelope,Red Envelope,2,1,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ set Zeny,Zeny+rand(1000,10000); },{},{}
 12135,Green_Ale,Green Ale,2,20,,30,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 50,50; if(rand(100) >= 90)sc_start SC_Confusion,10000,0; },{},{}
-12136,Womení»s_Bundle,Women's Bundle,2,0,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem callfunc("F_RandMes",4,558,529,2668,7518),1; },{},{}
+12136,Women's_Bundle,Women's Bundle,2,0,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem callfunc("F_RandMes",4,558,529,2668,7518),1; },{},{}
 12137,1st_Stage_Prize,First Stage Prize,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12138,2nd_Stage_Prize,Second Stage Prize,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12139,3rd_Stage_Prize,Third Stage Prize,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}

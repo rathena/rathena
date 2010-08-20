@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
-//= 2.1
+//= 2.2
 //===== Compatible With: =====================================
 //= eAthena SVN
 //===== Description: =========================================
@@ -25,6 +25,7 @@
 //= 2.0 Fixed eco/def not actually incrementing. [L0ne_W0lf]
 //=     Can no longer gain eco/def higher than 100.
 //= 2.1 Fixed setcell extending more than it should on 3rd barricade. (bugreport:4323) [L0ne_W0lf]
+//= 2.2 Fixed exterior flag placements. [L0ne_W0lf]
 //============================================================
 
 arug_cas05,1,1,0	script	Manager#aru05_02	111,{
@@ -2921,7 +2922,7 @@ OnRecvCastlear05:
 
 aru_gld,289,112,6	duplicate(ar05_Flag)	Banadis#flag_ar05_2	722
 
-aru_gld,289,103,6	script	Banadis#flag_ar05_3::ar05_Flag2	722,{
+aru_gld,350,98,6	script	Banadis#flag_ar05_3::ar05_Flag2	722,{
 	set .@GID, GetCastleData("arug_cas05",1);
 	if (.@GID == 0) {
 		mes "[ Arunafeltz Royal Edict ]";
@@ -2955,4 +2956,4 @@ OnRecvCastlear05:
 	end;
 }
 
-aru_gld,289,112,6	duplicate(ar05_Flag2)	Banadis#flag_ar05_4	722
+aru_gld,350,88,6	duplicate(ar05_Flag2)	Banadis#flag_ar05_4	722

@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.0
+//= 1.1
 //===== Compatible With: ===================================== 
 //= eAthena 1.0
 //===== Description: ========================================= 
@@ -13,6 +13,7 @@
 //= - Losing Team: 1 badge
 //===== Additional Comments: ================================= 
 //= 1.0 First Version.
+//= 1.1 Corrected setwalls for barricades. [L0ne_W0lf]
 //============================================================
 
 // Waiting Room NPCs
@@ -197,7 +198,7 @@ bat_a01,15,18,3	script	barricade#bat_a01_a	844,{
 OnEnable:
 	for( set .@i,185; .@i < 202; set .@i,.@i+1 )
 		bg_monster $@TierraBG1_id1,"bat_a01",.@i,266,"Barricade",1906,"barricade#bat_a01_a::OnMyMobDead";
-	setwall "bat_a01",185,265,16,6,1,"bat_a01_c1";
+	setwall "bat_a01",186,266,16,6,1,"bat_a01_c1";
 	end;
 
 Onkill:
@@ -219,7 +220,7 @@ bat_a01,15,19,3	script	barricade#bat_a01_b	844,{
 OnEnable:
 	for( set .@i,169; .@i < 186; set .@i,.@i+1 )
 		bg_monster $@TierraBG1_id2,"bat_a01",.@i,129,"Barricade",1906,"barricade#bat_a01_b::OnMyMobDead";
-	setwall "bat_a01",169,130,16,6,1,"bat_a01_g1";
+	setwall "bat_a01",170,129,16,6,1,"bat_a01_g1";
 	end;
 
 Onkill:
@@ -943,12 +944,3 @@ bat_a01,1,1,3	script	Release all#a01	81,{
 }
 */
 
-bat_a01	mapflag	battleground
-bat_a01	mapflag	nomemo
-bat_a01	mapflag	nosave	SavePoint
-bat_a01	mapflag	noteleport
-bat_a01	mapflag	nowarp
-bat_a01	mapflag	nowarpto
-bat_a01	mapflag	noreturn
-bat_a01	mapflag	nobranch
-bat_a01	mapflag	nopenalty

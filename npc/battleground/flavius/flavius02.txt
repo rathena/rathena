@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.0
+//= 1.1
 //===== Compatible With: ===================================== 
 //= eAthena 1.0
 //===== Description: ========================================= 
@@ -13,6 +13,7 @@
 //= - Losing Team: 3 badge
 //===== Additional Comments: ================================= 
 //= 1.0 First Version.
+//= 1.1 Fixed NPCs being called for waiting rooms. (bugreport:4395)
 //============================================================
 
 // Waiting Room NPCs
@@ -76,8 +77,8 @@ OnInit:
 OnReadyCheck:
 	if( $@FlaviusBG2 )
 		end;
-	set .@Guillaume, getwaitingroomstate(0,"Lieutenant Ator");
-	set .@Croix, getwaitingroomstate(0,"Lieutenant Thelokus");
+	set .@Guillaume, getwaitingroomstate(0,"Lieutenant Huvas");
+	set .@Croix, getwaitingroomstate(0,"Lieutenant Yukon");
 	if( !.@Guillaume && !.@Croix ) {
 		donpcevent "#bat_b02_timer::OnStop";
 		end;
@@ -90,8 +91,8 @@ OnReadyCheck:
 	set $@Guill_ScoreBG2, 0;
 
 	bg_updatescore "bat_b02",$@Guill_ScoreBG2,$@Croix_ScoreBG2;
-	donpcevent "Lieutenant Ator::OnEnterBG";
-	donpcevent "Lieutenant Thelokus::OnEnterBG";
+	donpcevent "Lieutenant Huvas::OnEnterBG";
+	donpcevent "Lieutenant Yukon::OnEnterBG";
 	donpcevent "OBJ#bat_b02_a::Onkill";
 	donpcevent "OBJ#bat_b02_a::OnEnable";
 	donpcevent "OBJ#bat_b02_b::Onkill";
