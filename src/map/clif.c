@@ -2164,7 +2164,7 @@ void clif_storagelist(struct map_session_data* sd, struct storage_data* stor)
 	unsigned char *bufe;
 #if PACKETVER < 5
 	const int s = 10; //Entry size.
-#elfi PACKETVER < 20080102
+#elif PACKETVER < 20080102
 	const int s = 18;
 #else
 	const int s = 22;
