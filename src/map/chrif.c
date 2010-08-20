@@ -433,7 +433,6 @@ int chrif_connectack(int fd)
 
 	chrif_sendmap(fd);
 
-	ShowStatus("Event '"CL_WHITE"OnCharIfInit"CL_RESET"' executed with '"CL_WHITE"%d"CL_RESET"' NPCs.\n", npc_event_doall("OnCharIfInit"));
 	ShowStatus("Event '"CL_WHITE"OnInterIfInit"CL_RESET"' executed with '"CL_WHITE"%d"CL_RESET"' NPCs.\n", npc_event_doall("OnInterIfInit"));
 	if( !char_init_done ) {
 		char_init_done = true;
