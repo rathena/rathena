@@ -168,7 +168,7 @@ static inline unsigned char clif_bl_type(struct block_list *bl) {
 	case BL_ITEM:  return 0x2; //ITEM_TYPE
 	case BL_SKILL: return 0x3; //SKILL_TYPE
 	case BL_CHAT:  return 0x4; //UNKNOWN_TYPE
-	case BL_MOB:   return 0x5; //NPC_MOB_TYPE
+	case BL_MOB:   return pcdb_checkid(((TBL_MOB*)bl)->class_)?0x0:0x5; //NPC_MOB_TYPE
 	case BL_NPC:   return 0x6; //NPC_EVT_TYPE
 	case BL_PET:   return 0x7; //NPC_PET_TYPE
 	case BL_HOM:   return 0x8; //NPC_HOM_TYPE
@@ -1016,7 +1016,11 @@ static int clif_set_unit_walking(struct block_list* bl, struct unit_data* ud, un
 //Used for spawn/walk packets, where the ID offset changes for packetver >=9
 static void clif_setdisguise(struct block_list *bl, unsigned char *buf,int len)
 {
-#if PACKETVER >= 20071106
+#if PACKETVER >= 20091103
+	WBUFB(buf,4)= 0x5; //NPC_MOB_TYPE
+	WBUFL(buf,5)=-bl->id;
+#elif PACKETVER >= 20071106
+	WBUFB(buf,2)= 0x5; //NPC_MOB_TYPE
 	WBUFL(buf,3)=-bl->id;
 #else
 	WBUFL(buf,2)=-bl->id;
