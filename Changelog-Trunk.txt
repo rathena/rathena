@@ -4,6 +4,8 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2010/08/20
+	* Made it so global events don't get executed in duplicates to prevent unnecessary reprocessing of events that only need to be run once.
+	  This potentially reduces the total number of global events by hundreds, even thousands. [Paradox924X]
 	* Added a few missing updates to the last packet update to properly support player clones and disguising. [Skotlex]
 2010/08/19
 	* Rev. 14384 Follow up to r14383, changed use of clif_font_area to clif_font, seems Skotlex forgot them. [L0ne_W0lf]
