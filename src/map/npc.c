@@ -282,7 +282,7 @@ int npc_event_doall_sub(DBKey key, void* data, va_list ap)
 	rid = va_arg(ap, int);
 
 	p = strchr(p, ':'); // match only the event name
-	if( p && strcmpi(name, p) == 0 && !ev->nd->src_id ) // Do not run on duplicates. [Paradox924X]
+	if( p && strcmpi(name, p) == 0 /* && !ev->nd->src_id */ ) // Do not run on duplicates. [Paradox924X]
 	{
 		if(rid) // a player may only have 1 script running at the same time
 			npc_event_sub(map_id2sd(rid),ev,key.str);

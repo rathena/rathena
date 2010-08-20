@@ -4,6 +4,7 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2010/08/20
+	* Rev. 14390 Commented out code from r14388, as this breaks NPCs that rely on running global events in duplicates. (IE: WoE scripts) [L0ne_W0lf]
 	* Removed processing for undocumented and unused event 'OnCharIfInit' which is essentially an alias for event 'OnInterIfInit'. [Paradox924X]
 	* Made it so global events don't get executed in duplicates to prevent unnecessary reprocessing of events that only need to be run once.
 	  This potentially reduces the total number of global events by hundreds, even thousands. [Paradox924X]
