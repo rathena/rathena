@@ -1,5 +1,7 @@
 Date		Added
 ======
+2010/08/21
+	* Rev. 14391 Fixed silly copy paste errors in Tierra Gorge entrance npcs. (bugreport:4401) [L0ne_W0lf]
 2010/08/20
 	* Rev. 14385 Fixed wrong events being called for flavius02 BG waiting rooms. (bugreport:4395) [L0ne_W0lf]
 	* Fixed the setwalls in Tierra gorge, again. Removed extra mapflags.

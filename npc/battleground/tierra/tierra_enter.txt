@@ -11,9 +11,10 @@
 //= Tierra Gorge Battleground Entrance NPCs
 //===== Additional Comments: ================================= 
 //= 1.0 First Version.
+//= 1.1 Fixed silly copy paste errors. (bugreport:4401)
 //============================================================
 
-// First Tierra Gorge Officers - Guillaume & Croix
+// First Tierra Gorge Officers - Guillaume
 //============================================================
 bat_room,124,178,5	script	Tierra Gorge Officer#01a	418,{
 	if (checkweight(1201,1) == 0) {
@@ -245,7 +246,7 @@ bat_room,143,121,1	script	Croix Knight#2	413,{
 	close;
 }
 
-// Second Tierra Gorge Officers - Guillaume & Croix
+// Second Tierra Gorge Officers - Croix
 //============================================================
 bat_room,125,121,1	script	Tierra Gorge Officer#01b	414,{
 	if (checkweight(1201,1) == 0) {
@@ -256,24 +257,24 @@ bat_room,125,121,1	script	Tierra Gorge Officer#01b	414,{
 		mes "- after you loose some weight. -";
 		close;
 	}
-	mes "[Guillaume Army Officer]";
-	mes "Let's show the power of the Guillaume Army to those stinky Croixs!";
+	mes "[Croix Army Officer]";
+	mes "Let's show the power of the Croix Army to those stinky Guillaumes!";
 	next;
 	switch(select("I want to join your army!:End Conversation")) {
 	case 1:
 		if ((Class == job_Novice) || (BaseClass == Job_Supernovice)) {
-			mes "[Guillaume Army Officer]";
-			mes "I'm very pleased that you want to join us and fight the Croix Army, but I'm sorry: I can't send a rookie like you to die on the cruel battlefield.";
+			mes "[Croix Army Officer]";
+			mes "I'm very pleased that you want to join us and fight the Guillaume Army, but I'm sorry: I can't send a rookie like you to die on the cruel battlefield.";
 		}
 		else {
 			if (BaseLevel < 80) {
-				mes "[Guillaume Army Officer]";
-				mes "I'm very pleased that you want to join us and fight the Croix Army, but I'm sorry: I can't send a rookie like you to die on the cruel battlefield.";
+				mes "[Croix Army Officer]";
+				mes "I'm very pleased that you want to join us and fight the Guillaume Army, but I'm sorry: I can't send a rookie like you to die on the cruel battlefield.";
 			}
 			else {
 				set .@chk_urtime,checkquest(2069,PLAYTIME);
 				if ((.@chk_urtime == 0)|| (.@chk_urtime == 1)) {
-					mes "[Guillaume Army Officer]";
+					mes "[Croix Army Officer]";
 					mes "You seem to have just returned from the battlefield.";
 					mes "It's too early for you to go back. Go rest, and leave the enemies to us!";
 				}
@@ -307,7 +308,7 @@ bat_room,125,121,1	script	Tierra Gorge Officer#01b	414,{
 		}
 		break;
 	case 2:
-		mes "[Guillaume Army Officer]";
+		mes "[Croix Army Officer]";
 		mes "Today, we shall be victorious!";
 		break;
 	}
