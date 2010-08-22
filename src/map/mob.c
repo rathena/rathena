@@ -2995,7 +2995,6 @@ int mobskill_use(struct mob_data *md, unsigned int tick, int event)
  			snprintf(name, sizeof name,"%s", md->name);
  			strtok(name, "#"); // discard extra name identifier if present [Daegaladh]
  			snprintf(temp, sizeof temp,"%s : %s", name, mc->msg);
-			snprintf(temp, sizeof temp,"%s : %s", md->name, mc->msg);
 			clif_messagecolor(&md->bl, mc->color, temp);
 		}
 		
