@@ -1409,8 +1409,8 @@
 60189,0,1365,100,0,0,0,0,"Hunting Apocalypse"
 60190,0,1365,150,0,0,0,0,"Hunting Apocalypse"
 //
-60200,0,0,0,0,0,0,0,"Endless Tower Effect"
-60201,0,0,0,0,0,0,0,"Endless Tower Time Limit"
+60200,604800,0,0,0,0,0,0,"Endless Tower Effect"
+60201,14400,0,0,0,0,0,0,"Endless Tower Time Limit"
 60301,0,1155,100,0,0,0,0,"Dragon Hunting"
 60302,0,1155,200,0,0,0,0,"Dragon Hunting"
 60303,0,1714,100,0,0,0,0,"Dragon Hunting"

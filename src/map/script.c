@@ -5721,6 +5721,7 @@ BUILDIN_FUNC(delitem)
 
 	ShowError("script:delitem: failed to delete %d items (AID=%d item_id=%d).\n", amount, sd->status.account_id, nameid);
 	st->state = END;
+	clif_scriptclose(sd, st->oid);
 	return 1;
 }
 
@@ -5819,6 +5820,7 @@ BUILDIN_FUNC(delitem2)
 
 	ShowError("script:delitem2: failed to delete %d items (AID=%d item_id=%d).\n", amount, sd->status.account_id, nameid);
 	st->state = END;
+	clif_scriptclose(sd, st->oid);
 	return 1;
 }
 
@@ -14193,7 +14195,11 @@ BUILDIN_FUNC(instance_npcname)
  		script_pushconststr(st,npcname);
 	}
 	else
-		script_pushconststr(st,"");
+	{
+		ShowError("script:instance_npcname: invalid instance NPC (instance_id: %d, NPC name: \"%s\".)\n", instance_id, str);
+		st->state = END;
+		return 1;
+	}
 
 	return 0;
 }

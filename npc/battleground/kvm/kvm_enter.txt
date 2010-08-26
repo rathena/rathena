@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.0
+//= 1.1
 //===== Compatible With: ===================================== 
 //= eAthena 1.0
 //===== Description: ========================================= 
@@ -12,27 +12,33 @@
 //= Original NPCs scrapped from bg_common.
 //===== Additional Comments: ================================= 
 //= 1.0 First Version.
+//= 1.1 Corrected some typos, and shifted messages around.
+//=     Corrected iRO style quest log entries, however it's
+//=     advisable that you not use them, as they conflict.
 //============================================================
 
 // KvM Officer - Guillaume
 //============================================================
 bat_room,164,178,5	script	KVM Mercenary Officer#1	418,{
 	/*
-	set .@kvm,checkquest(6027,PLAYTIME);
+	set .@kvm,checkquest(6026,PLAYTIME);
 	if ((.@kvm == 0) || (.@kvm == 1)) {
 		mes "[Croix Mercenary Officer]";
-		mes "It seems you ahve recently participated in a KVM battle. You must wait 5 minutes before signing up again.";
+		mes "I know that you've already signed with the Croix. Go back and join their team. We will not accept traitors to fight for us.";
 		close;
+	}
+	else if (.@kvm == 2) {
+		erasequest 6026;
 	}
 	*/
 	set .@permit,checkquest(6025,PLAYTIME);
 	if ((.@permit == 0) || (.@permit == 1)) {
 		mes "[Guillaume Mercenary Officer]";
-		mes "I know that you've already signed with the Croix. Go back and join their team. We will not accept traitors to fight for us.";
+		mes "It seems you have recently participated in a KVM battle. You must wait 5 minutes before signing up again.";
 		close;
 	}
-	else {
-		if (checkquest(6025) >= 0) erasequest 6025;
+	else if (.@permit == 2) {
+		erasequest 6025;
 	}
 	mes "[Guillaume Mercenary Officer]";
 	mes "Let them know the real might of Guillaume!";
@@ -43,6 +49,7 @@ bat_room,164,178,5	script	KVM Mercenary Officer#1	418,{
 		mes "Show them how strong we are.";
 		mes "Today, everyone will hear the shout of triumph from Guillaume!";
 		close2;
+		//setquest 6025;
 		if (BaseLevel > 79) {
 			warp "bat_room",169,223;
 		}
@@ -124,21 +131,24 @@ bat_room,167,178,5	script	Guillaume Knight#kvm	417,{
 //============================================================
 bat_room,164,121,1	script	KVM Mercenary Officer#2	414,{
 	/*
-	set .@kvm,checkquest(6027,PLAYTIME);
+	set .@kvm,checkquest(6025,PLAYTIME);
 	if ((.@kvm == 0) || (.@kvm == 1)) {
 		mes "[Croix Mercenary Officer]";
-		mes "It seems you ahve recently participated in a KVM battle. You must wait 5 minutes before signing up again.";
+		mes "I know that you've already signed with the Guillaume. Go back and join their team. We will not accept traitors to fight for us.";
 		close;
+	}
+	else if (.@kvm == 2) {
+		erasequest 6025;
 	}
 	*/
 	set .@permit,checkquest(6025,PLAYTIME);
 	if ((.@permit == 0) || (.@permit == 1)) {
 		mes "[Croix Mercenary Officer]";
-		mes "I know that you've already signed with the Guillaume. Go back and join their team. We will not accept traitors to fight for us.";
+		mes "It seems you have recently participated in a KVM battle. You must wait 5 minutes before signing up again.";
 		close;
 	}
-	else {
-		if (checkquest(6025) >= 0) erasequest 6025;
+	else if (.@permit == 2) {
+		erasequest 6025;
 	}
 	mes "[Croix Mercenary Officer]";
 	mes "Let them know the real might of Croix!";
@@ -149,6 +159,7 @@ bat_room,164,121,1	script	KVM Mercenary Officer#2	414,{
 		mes "Show them how strong we are.";
 		mes "Today, everyone will hear the shout of triumph from Croix!";
 		close2;
+		//setquest 6026;
 		if (BaseLevel > 79) {
 			warp "bat_room",169,207;
 		}

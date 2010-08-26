@@ -3,6 +3,12 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2010/08/26
+	* Rev. 14395 instance_npcname will now error if the NPC being looked up is not found, care of ramsey. [L0ne_W0lf]
+	* delitem/2 will now send the close button when failing to find all neccecary items to delete.
+	- Still do to, items should not be deleted as-found, and should be deleted once counted
+	  and in the event of delitem failure, nothing should be consumed. This is a design flaw
+	  in eathena, and should be fixed as soon as possible.
 2010/08/21
 	* Rev. 14393 Follow up to r14392, forgot to remove the old snprintf. [L0ne_W0lf]
 	* Rev. 14392 Mob chat now strips "#unique" names off monsters, curtosy of Daegaladh. [L0ne_W0lf]

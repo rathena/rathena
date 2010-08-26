@@ -1,5 +1,8 @@
 Date		Added
 ======
+2010/08/26
+	* Rev. 14395 Implemented the Endless Tower instance. [L0ne_W0lf]
+	* Updated announces and dialogs in KVM.
 2010/08/21
 	* Rev. 14392 Touched up the Airship scripts. Fixed up some content based on official files. [L0ne_W0lf]
 	* Rev. 14391 Fixed silly copy paste errors in Tierra Gorge entrance npcs. (bugreport:4401) [L0ne_W0lf]

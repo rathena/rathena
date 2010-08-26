@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= ???, L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.1
+//= 1.2
 //===== Compatible With: ===================================== 
 //= eAthena 1.0
 //===== Description: ========================================= 
@@ -14,6 +14,9 @@
 //===== Additional Comments: ================================= 
 //= 1.0 First Version.
 //= 1.1 Updated using official Aegis files. [L0ne_W0lf]
+//= 1.2 Upated some announces and dialogs from iRO.
+//=     Changed how the scoreboard works slightly.
+//=     Removed the areapercentheals, and minor things.
 //============================================================
 
 // Waiting Room NPCs
@@ -143,12 +146,11 @@ OnGuillaumeDie:
 	if( $@KvM02BG == 2 )
 	{
 		set .Guillaume_Count, .Guillaume_Count - 1;
-		set .Croix_Score, .Croix_Score + 1;
-		bg_updatescore "bat_c02",.Guillaume_Score,.Croix_Score;
+		bg_updatescore "bat_c02",.Guillaume_Count,.Croix_Count;
 		if( .Guillaume_Count < 1 ) donpcevent "KvM02_BG::OnCroixWin";
 		else {
-			mapannounce "bat_c02", "Number of Guillaume survivors "+.Guillaume_Count+".",bc_map,"0x00ff00";
-			mapannounce "bat_c02", "Number of Croix survivors "+.Croix_Count+".",bc_map,"0x00ff00";
+			mapannounce "bat_c02", "The number of Guillaumes is "+.Guillaume_Count+".",bc_map,"0x00ff00";
+			mapannounce "bat_c02", "The number of Croixes is "+.Croix_Count+".",bc_map,"0x00ff00";
 		}
 	}
 	end;
@@ -159,12 +161,11 @@ OnCroixDie:
 	if( $@KvM02BG == 2 )
 	{
 		set .Croix_Count, .Croix_Count - 1;
-		set .Guillaume_Score, .Guillaume_Score + 1;
-		bg_updatescore "bat_c02",.Guillaume_Score,.Croix_Score;
+		bg_updatescore "bat_c02",.Guillaume_Count,.Croix_Count;
 		if( .Croix_Count < 1 ) donpcevent "KvM02_BG::OnGuillaumeWin";
 		else {
-			mapannounce "bat_c02", "Number of Guillaume survivors "+.Guillaume_Count+".",bc_map,"0x00ff00";
-			mapannounce "bat_c02", "Number of Croix survivors "+.Croix_Count+".",bc_map,"0x00ff00";
+			mapannounce "bat_c02", "The number of Guillaumes is "+.Guillaume_Count+".",bc_map,"0x00ff00";
+			mapannounce "bat_c02", "The number of Croixes is "+.Croix_Count+".",bc_map,"0x00ff00";
 		}
 	}
 	end;
@@ -191,9 +192,6 @@ OnStart:
 	// Warp Teams
 	bg_warp $@KvM02BG_id1,"bat_c02",53,128;
 	bg_warp $@KvM02BG_id2,"bat_c02",146,55;
-	// ScoreBoard
-	set .Guillaume_Score, 0;
-	set .Croix_Score, 0;
 	initnpctimer;
 	end;
 
@@ -255,34 +253,32 @@ OnTimer61000:
 		end;
 	}
 	set $@KvM02BG, 2; // Playing
-	areapercentheal "bat_c02",50,123,58,131,100,100;
 	bg_warp $@KvM02BG_id1,"bat_c02",62,119;
-	areapercentheal "bat_c02",141,52,149,60,100,100;
 	bg_warp $@KvM02BG_id2,"bat_c02",137,64;
 	end;
 
 OnTimer300000:
-	mapannounce "bat_c02", "KVM will be ending in 1 minute.",bc_map,"0x00ff00";
+	mapannounce "bat_c02", "1 minute remaining to finish the KVM battle.",bc_map,"0x00ff00";
 	end;
 
 OnTimer330000:
-	mapannounce "bat_c02", "KVM will be ending in 30 seconds.",bc_map,"0x00ff00";
+	mapannounce "bat_c02", "30 seconds remaining to finish the KVM battle.",bc_map,"0x00ff00";
 	end;
 
 OnTimer345000:
-	mapannounce "bat_c02", "KVM will be ending in 15 seconds.",bc_map,"0x00ff00";
+	mapannounce "bat_c02", "15 seconds remaining to finish the KVM battle.",bc_map,"0x00ff00";
 	end;
 
 OnTimer350000:
-	mapannounce "bat_c02", "KVM will be ending in 10 seconds.",bc_map,"0x00ff00";
+	mapannounce "bat_c02", "10 seconds remaining to finish the KVM battle.",bc_map,"0x00ff00";
 	end;
 
 OnTimer355000:
-	mapannounce "bat_c02", "KVM will be ending in 5 seconds.",bc_map,"0x00ff00";
+	mapannounce "bat_c02", "5 seconds remaining to finish the KVM battle.",bc_map,"0x00ff00";
 	end;
 
 OnTimer360000:
-	mapannounce "bat_c02", "KVM has ended.",bc_map,"0x00ff00";
+	mapannounce "bat_c02", "The KVM battle is over.",bc_map,"0x00ff00";
 	if( .Croix_Count > .Guillaume_Count )
 		donpcevent "KvM02_BG::OnCroixWin";
 	else if( .Croix_Count < .Guillaume_Count )
@@ -291,9 +287,9 @@ OnTimer360000:
 	{ // Draw Game
 		set $@KvM02BG, 3;
 		set $@KvM02BG_Victory, 3;
-		mapannounce "bat_c02", "Number of Guillaume survivors "+.Guillaume_Count+".",bc_map,"0x00ff00";
-		mapannounce "bat_c02", "Number of Croix survivors "+.Croix_Count+".",bc_map,"0x00ff00";
-		mapannounce "bat_c02", "Regardless of the outcome of the two camps.",bc_map,"0x00ff00";
+		mapannounce "bat_c02", "The number of Guillaumes is "+.Guillaume_Count+".",bc_map,"0x00ff00";
+		mapannounce "bat_c02", "The number of Croixes is "+.Croix_Count+".",bc_map,"0x00ff00";
+		mapannounce "bat_c02", "This battle has ended in a draw.",bc_map,"0x00ff00";
 		donpcevent "KvM02_BG::OnStop";
 	}
 	end;
@@ -301,18 +297,18 @@ OnTimer360000:
 OnGuillaumeWin:
 	set $@KvM02BG, 3;
 	set $@KvM02BG_Victory, 1;
-	mapannounce "bat_c02", "Guillaume camp victory.",bc_map,"0x00ff00";
-	mapannounce "bat_c02", "Congratulations to all Guillaume members.",bc_map,"0x00ff00";
-	mapannounce "bat_c02", "All personnel move to the starting zone.",bc_map,"0x00ff00";
+	mapannounce "bat_c02", "Guillaume wins!",bc_map,"0x00ff00";
+	mapannounce "bat_c02", "Congratulations to Guillaume members.",bc_map,"0x00ff00";
+	mapannounce "bat_c02", "Everyone will be moved to the start point.",bc_map,"0x00ff00";
 	donpcevent "KvM02_BG::OnStop";
 	end;
 
 OnCroixWin:
 	set $@KvM02BG, 3;
 	set $@KvM02BG_Victory, 2;
-	mapannounce "bat_c02", "Croix camp victory.",bc_map,"0x00ff00";
-	mapannounce "bat_c02", "Congratulations to all Croix members.",bc_map,"0x00ff00";
-	mapannounce "bat_c02", "All personnel move to the starting zone.",bc_map,"0x00ff00";
+	mapannounce "bat_c02", "Croix wins!",bc_map,"0x00ff00";
+	mapannounce "bat_c02", "Congratulations to Croix members.",bc_map,"0x00ff00";
+	mapannounce "bat_c02", "Everyone will be moved to the start point.",bc_map,"0x00ff00";
 	donpcevent "KvM02_BG::OnStop";
 	end;
 
@@ -329,8 +325,6 @@ OnStop:
 OnReset:
 	set .Croix_Count, 0;
 	set .Guillaume_Count, 0;
-	set .Croix_Score, 0;
-	set .Guillaume_Score, 0;
 	set $@KvM02BG_Victory, 0;
 	if( $@KvM02BG_id1 ) { bg_destroy $@KvM02BG_id1; set $@KvM02BG_id1, 0; }
 	if( $@KvM02BG_id2 ) { bg_destroy $@KvM02BG_id2; set $@KvM02BG_id2, 0; }
@@ -338,7 +332,7 @@ OnReset:
 	disablenpc "KVM Officer#KVM02B";
 	mapwarp "bat_c02","bat_room",154,150;
 	maprespawnguildid "bat_c02",0,3; // Just in case someone else
-	bg_updatescore "bat_c02",0,0;
+	bg_updatescore "bat_c02",5,5;
 	set $@KvM02BG, 0;
 	donpcevent "KvM02_BG::OnReadyCheck"; // Maybe a game is ready to start
 	end;
@@ -361,8 +355,12 @@ OnTimer3000:
 	end;
 
 OnTimer5000:
-	mapannounce "bat_c02", "If you do not claim your points now, you will not be able to.",bc_map,"0x00ff00";
-	mapannounce "bat_c02", "Please make sure to collect before the time expires.",bc_map,"0x00ff00";
+	mapannounce "bat_c02", "Unless you talk to the Officer, you cannot gain the points.",bc_map,"0x00ff00";
+	mapannounce "bat_c02", "Please be careful.",bc_map,"0x00ff00";
+	end;
+
+OnTimer:55000:
+	mapannounce "bat_c02", "You will be sent back.",bc_map,"0x00ff00";
 	end;
 
 OnTimer60000:
@@ -379,16 +377,18 @@ bat_c02,51,130,5	script	KVM Officer#KVM02A	419,{
 		if( $@KvM02BG_Victory == Bat_Team )
 		{ // Victory
 			set kvm_point,kvm_point + 1;
-			mes "[Swandery]";
-			mes "Blessed Guillaume!!";
-			mes "Let's enjoy our glorious victory!";
-			mes "" + strcharinfo(0) + ", its a sign reflecting victory";
+			mes "[KVM Officer]";
+			mes "Good Game.";
+			mes "May the glory of KVM be with you.";
+			mes "You aquire the winning points: 5";
 			close2;
 		}
 		else
 		{ // 
-			mes "[Swandery]";
-			mes "You lost, but you're dedicated to this battle.";
+			mes "[KVM Officer]";
+			mes "I am so sorry.";
+			mes "I wish you better luck next time.";
+			mes "You aquire the losing points: 0";
 			close2;
 		}
 		bg_leave;
@@ -405,19 +405,18 @@ bat_c02,148,53,1	script	KVM Officer#KVM02B	415,{
 		if( $@KvM02BG_Victory == Bat_Team )
 		{ // Victory
 			set kvm_point,kvm_point + 1;
-			mes "[Swandery]";
-			mes "Blessed Croax!!";
-			mes "Let's enjoy our glorious victory!";
-			mes "" + strcharinfo(0) + ", its a sign reflecting victory";
-			mes "Just take this defeat a lesson, and later you would definitely learn.";
+			mes "[KVM Officer]";
+			mes "Good Game.";
+			mes "May the glory of KVM be with you.";
+			mes "You aquire the winning points: 1";
 			close2;
 		}
 		else
 		{ // 
-			mes "[Swandery]";
-			mes "Oh, " + strcharinfo(0) + ". Don't be sad.";
-			mes "Even though we didn't win, we did our best.";
-			mes "Please don't forget this battle. We can win the next.";
+			mes "[KVM Officer]";
+			mes "I am so sorry.";
+			mes "I wish you better luck next time.";
+			mes "You aquire the losing points: 0";
 			close2;
 		}
 		bg_leave;
