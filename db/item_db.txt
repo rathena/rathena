@@ -4204,7 +4204,7 @@
 12030,Box_Of_Grudge,Box of Resentment,2,1000,,200,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_ATKPOTION,60000,20; },{},{}
 12031,Sleepy_Box,Box of Drowsiness,2,1000,,200,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_MATKPOTION,60000,20; },{},{}
 12032,Box_Of_Storm,Box of Storms,11,1000,,200,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill "ITEM_ENCHANTARMS",2; },{},{}
-12033,Box_Of_Sunlight,Box of Sunlight,2,1000,,200,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_Intravision,20000,0; },{},{}
+12033,Box_Of_Sunlight,Box of Sunlight,2,1000,,200,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_Intravision,30000,0; },{},{}
 12034,Painting_Box,Box of Panting,2,1000,,200,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 0,9; if(rand(1000)<300) sc_start SC_Silence,30000,0; },{},{}
 12035,Lotto_Box01,Lotto Box 01,2,0,,20,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem rand(7361,7370),1; },{},{}
 12036,Lotto_Box02,Lotto Box 02,2,0,,20,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem rand(7371,7380),1; },{},{}

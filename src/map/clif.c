@@ -7735,10 +7735,14 @@ int clif_refresh(struct map_session_data *sd)
 	}
 	map_foreachinrange(clif_getareachar,&sd->bl,AREA_SIZE,BL_ALL,sd);
 	clif_weather_check(sd);
+	if( sd->chatID )
+		chat_leavechat(sd,0);
 	if( pc_issit(sd) )
 		clif_sitting(&sd->bl); // FIXME: just send to self, not area
 	if( pc_isdead(sd) ) //When you refresh, resend the death packet.
 		clif_clearunit_single(sd->bl.id,1,sd->fd);
+	else
+		clif_changed_dir(&sd->bl, SELF);
 
 #ifndef TXT_ONLY
 	mail_clear(sd);

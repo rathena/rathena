@@ -147,8 +147,8 @@ OnGuillaumeDie:
 		bg_updatescore "bat_c02",.Guillaume_Score,.Croix_Score;
 		if( .Guillaume_Count < 1 ) donpcevent "KvM02_BG::OnCroixWin";
 		else {
-			mapannounce "bat_c02", "NUmber of Guillaume survivors "+.Guillaume_Count+".",bc_map,"0x00ff00";
-			mapannounce "bat_c02", "NUmber of Croix survivors "+.Croix_Count+".",bc_map,"0x00ff00";
+			mapannounce "bat_c02", "Number of Guillaume survivors "+.Guillaume_Count+".",bc_map,"0x00ff00";
+			mapannounce "bat_c02", "Number of Croix survivors "+.Croix_Count+".",bc_map,"0x00ff00";
 		}
 	}
 	end;
@@ -163,8 +163,8 @@ OnCroixDie:
 		bg_updatescore "bat_c02",.Guillaume_Score,.Croix_Score;
 		if( .Croix_Count < 1 ) donpcevent "KvM02_BG::OnGuillaumeWin";
 		else {
-			mapannounce "bat_c02", "NUmber of Guillaume survivors "+.Guillaume_Count+".",bc_map,"0x00ff00";
-			mapannounce "bat_c02", "NUmber of Croix survivors "+.Croix_Count+".",bc_map,"0x00ff00";
+			mapannounce "bat_c02", "Number of Guillaume survivors "+.Guillaume_Count+".",bc_map,"0x00ff00";
+			mapannounce "bat_c02", "Number of Croix survivors "+.Croix_Count+".",bc_map,"0x00ff00";
 		}
 	}
 	end;
