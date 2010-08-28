@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.0
+//= 1.1
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -12,6 +12,7 @@
 //= Consists of 101 floors.
 //===== Additional Comments: ================================= 
 //= 1.0 First version.
+//= 1.1 Removed a disablenpc from #102FShadowDust1. (bugreport:4415)
 //============================================================ 
 
 alberta,214,77,6	script	Captain Janssen	709,{
@@ -3722,7 +3723,6 @@ OnTimer500:
 
 5@tower,82,112,2	script	#102FShadowDust1	844,{
 OnInstanceInit:
-	disablenpc instance_npcname("#102FShadowDust1", instance_id());
 	donpcevent instance_npcname("#102FShadowDust", instance_id())+"::OnEnable";
 	monster "5@tower",83,85,"Entweihen Crothen",1957,1,instance_npcname("#102FShadowDust1", instance_id())+"::OnMyMobDead";
 	end;
@@ -3735,6 +3735,7 @@ OnMyMobDead:
 		donpcevent instance_npcname("Lucid Crystal#102", instance_id())+"::OnEnable";
 		//SetItemPartyInMap in_102floor 100
 	}
+	end;
 }
 
 5@tower,82,113,2	script	#102FShadowDust	844,{

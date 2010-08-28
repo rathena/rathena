@@ -1,5 +1,7 @@
 Date		Added
 ======
+2010/08/28
+	* Rev. 14397 Removed a disablenpc from #102FShadowDust1. (bugreport:4415) [L0ne_W0lf]
 2010/08/26
 	* Rev. 14395 Implemented the Endless Tower instance. [L0ne_W0lf]
 	* Updated announces and dialogs in KVM.
