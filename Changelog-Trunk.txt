@@ -3,6 +3,8 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2010/08/28
+	* Replaced a map_moveblock() call with a call to unit_movepos() to prevent an exploit. [Paradox924X]
 2010/08/26
 	* Rev. 14395 instance_npcname will now error if the NPC being looked up is not found, care of ramsey. [L0ne_W0lf]
 	* delitem/2 will now send the close button when failing to find all neccecary items to delete.

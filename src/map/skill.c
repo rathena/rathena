@@ -7580,7 +7580,7 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 					const struct TimerData* td = tsc->data[type]?get_timer(tsc->data[type]->timer):NULL; 
 					if( td )
 						sec = DIFF_TICK(td->tick, tick);
-					map_moveblock(bl, src->bl.x, src->bl.y, tick);
+					unit_movepos(bl, src->bl.x, src->bl.y, 0, 0);
 					clif_fixpos(bl);
 					sg->val2 = bl->id;
 				}
