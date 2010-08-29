@@ -865,6 +865,7 @@ int chrif_changedsex(int fd)
 							  // do same modify in login-server for the account, but no in char-server (it ask again login_id1 to login, and don't remember it)
 		clif_displaymessage(sd->fd, "Your sex has been changed (need disconnection by the server)...");
 		set_eof(sd->fd); // forced to disconnect for the change
+		map_quit(sd); // Remove leftovers (e.g. autotrading) [Paradox924X]
 	}
 	return 0;
 }
@@ -958,6 +959,7 @@ int chrif_accountdeletion(int fd)
 			sd->login_id1++; // change identify, because if player come back in char within the 5 seconds, he can change its characters
 			clif_displaymessage(sd->fd, "Your account has been deleted (disconnection)...");
 			set_eof(sd->fd); // forced to disconnect for the change
+			map_quit(sd); // Remove leftovers (e.g. autotrading) [Paradox924X]
 		}
 	} else {
 		if (sd != NULL)
@@ -1013,6 +1015,7 @@ int chrif_accountban(int fd)
 	}
 
 	set_eof(sd->fd); // forced to disconnect for the change
+	map_quit(sd); // Remove leftovers (e.g. autotrading) [Paradox924X]
 	return 0;
 }
 
