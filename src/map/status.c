@@ -640,6 +640,7 @@ int status_charge(struct block_list* bl, int hp, int sp)
 //If flag&2, fail if target does not has enough to substract.
 //If flag&4, if killed, mob must not give exp/loot.
 //If flag&8, sp loss on dead target.
+//If flag&16, reflect damage is done, which can't be absorbed by Devotion. [icescope]
 int status_damage(struct block_list *src,struct block_list *target,int hp, int sp, int walkdelay, int flag)
 {
 	struct status_data *status;
@@ -680,7 +681,7 @@ int status_damage(struct block_list *src,struct block_list *target,int hp, int s
 	if( battle_config.invincible_nodamage && src && sc && sc->data[SC_INVINCIBLE] && !sc->data[SC_INVINCIBLEOFF] )
 		hp = 1;
 
-	if( hp && !(flag&(1|8)) ) {
+	if( hp && !(flag&(1|8|16)) ) {
 		if( sc ) {
 			struct status_change_entry *sce;
 			if( (sce = sc->data[SC_DEVOTION]) && src && battle_getcurrentskill(src) != PA_PRESSURE )

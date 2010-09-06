@@ -3,6 +3,9 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2010/09/06
+	* Rev. 14400 Implemented Icescope's fix for devotion, reflect damage is no longer absorbed by the devoter. (bugreport:3189) [L0ne_W0lf]
+	* As a folow up to r14301, increased MAX_REG_NUM to 256, to prevent possible data loss.
 2010/08/28
 	* Force a map_quit() call on the session data after a block/ban/changesex/acc deletion to remove leftovers of a player's session
 	  caused by when the fd has already been set to eof (player is not connected) but session data is kept (e.g. autotrading). [Paradox924X]

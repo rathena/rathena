@@ -1,5 +1,9 @@
 Date		Added
 ======
+2010/09/06
+	* Rev. 14400 Touched up the endless tower script slightly. [L0ne_W0lf]
+	- Added ends to several NPCs which would allow you to restart timers.
+	- Added some missing stopnpctimers to npcs. (bugreport:4418)
 2010/08/28
 	* Rev. 14397 Removed a disablenpc from #102FShadowDust1. (bugreport:4415) [L0ne_W0lf]
 2010/08/26

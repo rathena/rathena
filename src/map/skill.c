@@ -1948,7 +1948,7 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 	if( rdamage > 0 )
 	{
 		if( dmg.amotion )
-			battle_delay_damage(tick, dmg.amotion,bl,src,0,0,0,rdamage,ATK_DEF,0);
+			battle_delay_damage(tick, dmg.amotion,bl,src,0,CR_REFLECTSHIELD,0,rdamage,ATK_DEF,0); // also here the reflect shield, but for skills [icescope]
 		else
 			status_fix_damage(bl,src,rdamage,0);
 		clif_damage(src,src,tick, dmg.amotion,0,rdamage,dmg.div_>1?dmg.div_:1,4,0);

@@ -164,7 +164,13 @@ int battle_delay_damage_sub(int tid, unsigned int tick, int id, intptr data)
 		check_distance_bl(dat->src, target, dat->distance)) //Check to see if you haven't teleported. [Skotlex]
 	{
 		map_freeblock_lock();
-		status_fix_damage(dat->src, target, dat->damage, dat->delay);
+		if(dat->skill_id != CR_REFLECTSHIELD)
+			status_fix_damage(dat->src, target, dat->damage, dat->delay); // We have to seperate here between reflect damage and others [icescope]
+		else
+		{
+			status_damage(dat->src, map_id2bl(dat->target), dat->damage, 0, dat->delay, 16);
+			dat->skill_id = 0;
+		}
 		if( dat->attack_type && !status_isdead(target) )
 			skill_additional_effect(dat->src,target,dat->skill_id,dat->skill_lv,dat->attack_type,dat->dmg_lv,tick);
 		if( dat->damage > 0 && dat->attack_type )
@@ -183,7 +189,13 @@ int battle_delay_damage (unsigned int tick, int amotion, struct block_list *src,
 
 	if (!battle_config.delay_battle_damage) {
 		map_freeblock_lock();
-		status_fix_damage(src, target, damage, ddelay);
+		if(skill_id != CR_REFLECTSHIELD)
+			status_fix_damage(src, target, damage, ddelay); // We have to seperate here between reflect damage and others [icescope]
+		else
+		{
+			status_damage(src, target, damage, 0, ddelay, 16);
+			skill_id = 0;
+		}
 		if( attack_type && !status_isdead(target) )
 			skill_additional_effect(src, target, skill_id, skill_lv, attack_type, dmg_lv, gettick());
 		if( damage > 0 && attack_type )
@@ -3216,7 +3228,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 	if (rdamage > 0) { //By sending attack type "none" skill_additional_effect won't be invoked. [Skotlex]
 		if(tsd && src != target)
 			battle_drain(tsd, src, rdamage, rdamage, sstatus->race, is_boss(src));
-		battle_delay_damage(tick, wd.amotion, target, src, 0, 0, 0, rdamage, ATK_DEF, rdelay);
+		battle_delay_damage(tick, wd.amotion, target, src, 0, CR_REFLECTSHIELD, 0, rdamage, ATK_DEF, rdelay); // the skill id is needed we use CR_REFLECTSHIELD as default [icescope]
 	}
 
 	if (tsc) {
