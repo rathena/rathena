@@ -2719,7 +2719,7 @@ int map_readfromcache(struct map_data *m, char *buffer, char *decode_buffer)
 		p += sizeof(struct map_cache_map_info) + info->len;
 	}
 
-	if( i < header->map_count ) {
+	if( info && i < header->map_count ) {
 		unsigned long size, xy;
 
 		if( info->xs <= 0 || info->ys <= 0 )
