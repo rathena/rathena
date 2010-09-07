@@ -4,6 +4,8 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2010/09/07
+	* Added MD_TARGETWEAK to list of modes not to give a player when calculating player data.
+	- This makes evilclones aggressive towards players. (bugreport:3280) [Paradox924X]
 	* Ensure a pointer is valid within map_readfromcache() before attempting to access its members. [Paradox924X]
 2010/09/06
 	* Rev. 14400 Implemented Icescope's fix for devotion, reflect damage is no longer absorbed by the devoter. (bugreport:3189) [L0ne_W0lf]
