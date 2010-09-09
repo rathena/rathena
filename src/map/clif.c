@@ -168,7 +168,7 @@ static inline unsigned char clif_bl_type(struct block_list *bl) {
 	case BL_ITEM:  return 0x2; //ITEM_TYPE
 	case BL_SKILL: return 0x3; //SKILL_TYPE
 	case BL_CHAT:  return 0x4; //UNKNOWN_TYPE
-	case BL_MOB:   return pcdb_checkid(((TBL_MOB*)bl)->class_)?0x0:0x5; //NPC_MOB_TYPE
+	case BL_MOB:   return pcdb_checkid(((TBL_MOB*)bl)->vd->class_)?0x0:0x5; //NPC_MOB_TYPE
 	case BL_NPC:   return 0x6; //NPC_EVT_TYPE
 	case BL_PET:   return 0x7; //NPC_PET_TYPE
 	case BL_HOM:   return 0x8; //NPC_HOM_TYPE
