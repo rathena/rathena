@@ -163,14 +163,10 @@ int battle_delay_damage_sub(int tid, unsigned int tick, int id, intptr data)
 		(target->type != BL_PC || ((TBL_PC*)target)->invincible_timer == -1) &&
 		check_distance_bl(dat->src, target, dat->distance)) //Check to see if you haven't teleported. [Skotlex]
 	{
+		struct status_change *sc = status_get_sc(target);
 		map_freeblock_lock();
-		if(dat->skill_id != CR_REFLECTSHIELD)
-			status_fix_damage(dat->src, target, dat->damage, dat->delay); // We have to seperate here between reflect damage and others [icescope]
-		else
-		{
-			status_damage(dat->src, map_id2bl(dat->target), dat->damage, 0, dat->delay, 16);
-			dat->skill_id = 0;
-		}
+		if( !sc || !sc->data[SC_DEVOTION] )
+			status_fix_damage(dat->src, target, dat->damage, dat->delay);
 		if( dat->attack_type && !status_isdead(target) )
 			skill_additional_effect(dat->src,target,dat->skill_id,dat->skill_lv,dat->attack_type,dat->dmg_lv,tick);
 		if( dat->damage > 0 && dat->attack_type )
@@ -188,14 +184,10 @@ int battle_delay_damage (unsigned int tick, int amotion, struct block_list *src,
 	nullpo_retr(0, target);
 
 	if (!battle_config.delay_battle_damage) {
+		struct status_change *sc = status_get_sc(target);
 		map_freeblock_lock();
-		if(skill_id != CR_REFLECTSHIELD)
+		if( !sc || !sc->data[SC_DEVOTION] )
 			status_fix_damage(src, target, damage, ddelay); // We have to seperate here between reflect damage and others [icescope]
-		else
-		{
-			status_damage(src, target, damage, 0, ddelay, 16);
-			skill_id = 0;
-		}
 		if( attack_type && !status_isdead(target) )
 			skill_additional_effect(src, target, skill_id, skill_lv, attack_type, dmg_lv, gettick());
 		if( damage > 0 && attack_type )
@@ -476,6 +468,8 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,struct Damag
 			damage -= damage * 6 * (1+per) / 100;
 		}
 
+		// FIXME:
+		// So Reject Sword calculates the redirected damage before calculating WoE/BG reduction? This is weird. [Inkfish]
 		if((sce=sc->data[SC_REJECTSWORD]) && flag&BF_WEAPON &&
 			// Fixed the condition check [Aalye]
 			(src->type!=BL_PC || (
@@ -3182,6 +3176,23 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 		}
 	}
 
+	if( tsc && tsc->data[SC_DEVOTION] )
+	{
+		struct status_change_entry *sce = tsc->data[SC_DEVOTION];
+		struct block_list *d_bl = map_id2bl(sce->val1);
+
+		if( d_bl && (
+			(d_bl->type == BL_MER && ((TBL_MER*)d_bl)->master && ((TBL_MER*)d_bl)->master->bl.id == target->id) ||
+			(d_bl->type == BL_PC && ((TBL_PC*)d_bl)->devotion[sce->val2] == target->id)
+			) && check_distance_bl(target, d_bl, sce->val3) )
+		{
+			clif_damage(d_bl, d_bl, gettick(), 0, 0, damage, 0, 0, 0);
+			status_fix_damage(NULL, d_bl, damage, 0);
+		}
+		else
+			status_change_end(target, SC_DEVOTION, -1);
+	}
+
 	wd.dmotion = clif_damage(src, target, tick, wd.amotion, wd.dmotion, wd.damage, wd.div_ , wd.type, wd.damage2);
 
 	if (sd && sd->splash_range > 0 && damage > 0)
@@ -3228,7 +3239,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 	if (rdamage > 0) { //By sending attack type "none" skill_additional_effect won't be invoked. [Skotlex]
 		if(tsd && src != target)
 			battle_drain(tsd, src, rdamage, rdamage, sstatus->race, is_boss(src));
-		battle_delay_damage(tick, wd.amotion, target, src, 0, CR_REFLECTSHIELD, 0, rdamage, ATK_DEF, rdelay); // the skill id is needed we use CR_REFLECTSHIELD as default [icescope]
+		battle_delay_damage(tick, wd.amotion, target, src, 0, 0, 0, rdamage, ATK_DEF, rdelay);
 	}
 
 	if (tsc) {

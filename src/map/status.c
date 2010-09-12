@@ -640,7 +640,6 @@ int status_charge(struct block_list* bl, int hp, int sp)
 //If flag&2, fail if target does not has enough to substract.
 //If flag&4, if killed, mob must not give exp/loot.
 //If flag&8, sp loss on dead target.
-//If flag&16, reflect damage is done, which can't be absorbed by Devotion. [icescope]
 int status_damage(struct block_list *src,struct block_list *target,int hp, int sp, int walkdelay, int flag)
 {
 	struct status_data *status;
@@ -681,25 +680,9 @@ int status_damage(struct block_list *src,struct block_list *target,int hp, int s
 	if( battle_config.invincible_nodamage && src && sc && sc->data[SC_INVINCIBLE] && !sc->data[SC_INVINCIBLEOFF] )
 		hp = 1;
 
-	if( hp && !(flag&(1|8|16)) ) {
+	if( hp && !(flag&(1|8)) ) {
 		if( sc ) {
 			struct status_change_entry *sce;
-			if( (sce = sc->data[SC_DEVOTION]) && src && battle_getcurrentskill(src) != PA_PRESSURE )
-			{ // Devotion prevents any of the other ailments from ending.
-				struct block_list *d_bl = map_id2bl(sce->val1);
-
-				if( d_bl && (
-					(d_bl->type == BL_MER && ((TBL_MER*)d_bl)->master && ((TBL_MER*)d_bl)->master->bl.id == target->id) ||
-					(d_bl->type == BL_PC && ((TBL_PC*)d_bl)->devotion[sce->val2] == target->id)
-					) && check_distance_bl(target, d_bl, sce->val3) )
-				{
-					clif_damage(d_bl, d_bl, gettick(), 0, 0, hp, 0, 0, 0);
-					status_fix_damage(NULL, d_bl, hp, 0);
-					return 0;
-				}
-
-				status_change_end(target, SC_DEVOTION, -1);
-			}
 			if (sc->data[SC_STONE] && sc->opt1 == OPT1_STONE)
 				status_change_end(target,SC_STONE,-1);
 			status_change_end(target,SC_FREEZE,-1);
