@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.2
+//= 1.3
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -15,6 +15,8 @@
 //= 1.1 Removed a disablenpc from #102FShadowDust1. (bugreport:4415)
 //= 1.2 Added ends to several NPCs which would allow you to restart timers.
 //=     Added some missing stopnpctimers to npcs. (bugreport:4418)
+//= 1.3 Fixed a couple copy/paste errors :D I fail. [L0ne_W0lf]
+//      Timer no longer resets when re-entering.
 //============================================================ 
 
 alberta,214,77,6	script	Captain Janssen	709,{
@@ -292,7 +294,7 @@ e_tower,81,105,0	script	Tower Protection Stone	406,{
 						mes "The memorial dungeon " + .@md_name$ + " does not exist.";
 						mes "The party leader did not generate the dungeon yet.";
 					}
-					else if ((has_instance("1@orcs") != "") && (.@partymembercount < 2))
+					else if ((has_instance("1@tower") != "") && (.@partymembercount < 2))
 						mes "You can enter the dungeon after making a party.";
 					else {
 						mapannounce "e_tower", .@p_name2$ + " of the party, " + .@p_name$ + ", is entering the dungeon, " + .@md_name$ + ".",bc_map,"0x00ff99",FW_NORMAL,12;
@@ -321,11 +323,10 @@ e_tower,81,105,0	script	Tower Protection Stone	406,{
 					mes "The memorial dungeon " + .@md_name$ + " does not exist.";
 					mes "The party leader did not generate the dungeon yet.";
 				}
-				else if ((has_instance("1@orcs") != "") && (.@partymembercount < 2))
+				else if ((has_instance("1@tower") != "") && (.@partymembercount < 2))
 					mes "You can enter the dungeon after making a party.";
 				else {
 					mapannounce "e_tower", .@p_name2$ + " of the party, " + .@p_name$ + ", is entering the dungeon, " + .@md_name$ + ".",bc_map,"0x00ff99",FW_NORMAL,12;
-					set etower_timer,gettimetick(2);
 					warp "1@tower",52,354;
 					end;
 				}

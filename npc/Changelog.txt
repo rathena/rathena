@@ -1,5 +1,9 @@
 Date		Added
 ======
+2010/09/13
+	* Rev. 14407 Some more Endless tower bugfixes. [L0ne_W0lf]
+	- Fixed some copy/paste errors (1@orc -> 1@tower)
+	- No longer resets entrance time when re-entering.
 2010/09/06
 	* Rev. 14400 Touched up the endless tower script slightly. [L0ne_W0lf]
 	- Added ends to several NPCs which would allow you to restart timers.
