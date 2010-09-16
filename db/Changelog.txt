@@ -8,6 +8,8 @@
 	1475 Equestrian's Spear:	NEED INFO.
 	13005 Angelic Wing Dagger:	NEED INFO.
 =======================
+2010/09/16
+	* Rev. 14408 Added updated stats for Brasilis monsters. [L0ne_W0lf]
 2010/08/20
 	* Rev. 13485 Fixed kRO Name for Women's Bundle. (bugreport:4398) [L0ne_W0lf]
 2010/08/18
