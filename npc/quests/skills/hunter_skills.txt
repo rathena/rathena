@@ -37,12 +37,12 @@ pay_arche,109,169,3	script	Arpesto	712,{
 				mes "me with that attack accidentally. It's just that I was training so";
 				mes "diligently and blood sugar was incredibly low and the fatigue...";
 				next;
-				mes "[Raiden Karus]";
+				mes "[Reidin Corse]";
 				mes "Hah! Admit it,";
 				mes "old man! You were";
 				mes "just scared! Me, on";
 				mes "the other hand...";
-				donpcevent "Raiden Karus#tu::OnKik";
+				emotion e_gg,"Reidin Corse#tu";
 				next;
 				mes "[Arpesto]";
 				mes "You little";
@@ -57,7 +57,7 @@ pay_arche,109,169,3	script	Arpesto	712,{
 				mes "I think. Reidin, do you";
 				mes "remember this guy?";
 				next;
-				mes "[Raiden Karus]";
+				mes "[Reidin Corse]";
 				mes "Oh come on, we see";
 				mes "hundreds of Archers and";
 				mes "Hunters and Snipers and...";
@@ -73,7 +73,7 @@ pay_arche,109,169,3	script	Arpesto	712,{
 				mes "offer to teach you my secret";
 				mes "skill, ''Phantasmic Arrow.''";
 				next;
-				mes "[Raiden Karus]";
+				mes "[Reidin Corse]";
 				mes "Wait, wait. This guy";
 				mes "only needs a refresher.";
 				mes "Yeah, I'm pretty sure you";
@@ -88,7 +88,7 @@ pay_arche,109,169,3	script	Arpesto	712,{
 				mes "You should be able to use the";
 				mes "Phantasmic Arrow skill now.";
 				mes "Travel safely now, you hear?";
-				skill 1009,1,0;
+				skill "HT_PHANTASMIC",1,0;
 				close;
 			}
 		}
@@ -102,12 +102,12 @@ pay_arche,109,169,3	script	Arpesto	712,{
 				mes "my super secret skill...";
 				mes "The 1st Arpesto Form!";
 				next;
-				mes "[Raiden Karus]";
+				mes "[Reidin Corse]";
 				mes "Wait! Wait...";
 				mes "Didn't you call it";
 				mes "Arpesto's 3rd Form";
 				mes "or something at first?";
-				donpcevent "Raiden Karus#tu::OnSwt";
+				emotion e_swt,"Reidin Corse#tu";
 				next;
 				mes "[Arpesto]";
 				mes "Er, yes, Arpesto's";
@@ -117,15 +117,15 @@ pay_arche,109,169,3	script	Arpesto	712,{
 				mes "Anyway, let me teach you";
 				mes "the ''Emergency Arrow'' skill.";
 				next;
-				mes "[Raiden Karus]";
+				mes "[Reidin Corse]";
 				mes "Whoa, hold on!";
 				mes "''Emergency Arrow?!''";
 				mes "That's the old name you";
 				mes "gave that skill, right?";
 				mes "Didn't you change it?";
-				emotion 23;
+				emotion e_omg;
 				next;
-				emotion 23;
+				emotion e_omg;
 				mes "[Arpesto]";
 				mes "What the hell";
 				mes "are you talkin--";
@@ -136,23 +136,23 @@ pay_arche,109,169,3	script	Arpesto	712,{
 				mes "was too cheesy. What";
 				mes "did we call it now? Um...";
 				mes "''Phantasmic Arrow?''";
-				emotion 9;
+				emotion e_dots;
 				next;
 				mes "[Arpesto]";
 				mes "...";
 				mes "......";
-				emotion 28;
+				emotion e_sob;
 				next;
-				mes "[Raiden Karus]";
+				mes "[Reidin Corse]";
 				mes "Umm....";
 				mes "Ummm........";
 				next;
-				mes "[Raiden Karus]";
+				mes "[Reidin Corse]";
 				mes "Yeah, that was the one!";
 				mes "''^3131FFPhantasmic Arrow^000000'' sounds";
 				mes "soooo much cooler than that";
 				mes "other name you came up with!";
-				donpcevent "Raiden Karus#tu::OnIc";
+				emotion e_ic,"Reidin Corse#tu";
 				next;
 				mes "[Arpesto]";
 				mes "You can be pretty handy";
@@ -183,8 +183,8 @@ pay_arche,109,169,3	script	Arpesto	712,{
 				mes "^3355FF*Swwwwwww!*";
 				mes "*Bang!*^000000";
 				specialeffect EF_HIT2;
-				emotion 23;
-				emotion 23,1;
+				emotion e_omg;
+				emotion e_omg,1;
 				next;
 				mes "[Arpesto]";
 				mes "^333333*Pant Pant*";
@@ -193,11 +193,11 @@ pay_arche,109,169,3	script	Arpesto	712,{
 				next;
 				mes "[Arpesto]";
 				mes "WHHHHHHHY MEEEEE?!";
-				donpcevent "Raiden Karus#tu::OnOmg";
+				emotion e_omg,"Reidin Corse#tu";
 				next;
 				mes "^3355FF*Thump*^000000";
 				next;
-				mes "[Raiden Karus]";
+				mes "[Reidin Corse]";
 				mes "Ar-Arpesto, no!";
 				mes "...........................";
 				mes "";
@@ -205,18 +205,18 @@ pay_arche,109,169,3	script	Arpesto	712,{
 				mes "just glanced you! You'll be";
 				mes "alright. Quit being a baby.";
 				next;
-				mes "[Raiden Karus]";
+				mes "[Reidin Corse]";
 				mes "Eh, don't worry about";
 				mes "Arpesto. He's just being";
 				mes "a crazy old man. I'll take";
 				mes "care of him, so just make";
 				mes "sure you make good use";
 				mes "of that new skill. Take care~";
-				delitem 724,5;
-				delitem 7115,5;
-				delitem 537,30;
+				delitem 724,5; //Cardinal_Jewel_
+				delitem 7115,5; //Harpy's_Feather
+				delitem 537,30; //Pet_Food
 				set qskill_hunter,100;
-				skill 1009,1,0;
+				skill "HT_PHANTASMIC",1,0;
 				close;
 			}else{
 				mes "[Arpesto]";
@@ -273,7 +273,8 @@ pay_arche,109,169,3	script	Arpesto	712,{
 				mes "''^3131FFEmergency Arrow^000000.'' Would you";
 				mes "be interested in learning it?";
 				next;
-				if(select("Yes, please!:Ummm...") == 1) {
+				switch(select("Yes, please!:Ummm...")) {
+				case 1:
 					mes "[Arpesto]";
 					mes "Great, great. Of course,";
 					mes "you can't resist this offer";
@@ -289,16 +290,16 @@ pay_arche,109,169,3	script	Arpesto	712,{
 					mes "sacrifice and unimaginable";
 					mes "bloodshed on my part...";
 					next;
-					mes "[Raiden Karus]";
+					mes "[Reidin Corse]";
 					mes "Hey! You liar!";
 					mes "I was there when you";
 					mes "accidently made up that";
 					mes "skill when you were bored";
 					mes "and just messing around";
 					mes "with one of the Bows!";
-					donpcevent "Raiden Karus#tu::OnKik";
+					emotion e_gg,"Reidin Corse#tu";
 					next;
-					emotion 23;
+					emotion e_omg;
 					mes "[Arpesto]";
 					mes "^333333*Ahem*^000000 Please Reidin,";
 					mes "don't entertain unfounded";
@@ -307,7 +308,7 @@ pay_arche,109,169,3	script	Arpesto	712,{
 					mes "that I managed to invent and";
 					mes "perfect Emergency Arrow.";
 					next;
-					mes "[Raiden Karus]";
+					mes "[Reidin Corse]";
 					mes "^333333*Tsk tsk*^000000 Huh.";
 					mes "I thought you said";
 					mes "you developed it while";
@@ -327,7 +328,7 @@ pay_arche,109,169,3	script	Arpesto	712,{
 					mes "Then I can teach";
 					mes "you this skill.";
 					next;
-					mes "[Raiden Karus]";
+					mes "[Reidin Corse]";
 					mes "30 Pet Foods?";
 					mes "What the heck do";
 					mes "you need all that for?";
@@ -338,37 +339,38 @@ pay_arche,109,169,3	script	Arpesto	712,{
 					mes "use it to feed";
 					mes "my pet Falcon.";
 					next;
-					mes "[Raiden Karus]";
+					mes "[Reidin Corse]";
 					mes "...";
 					mes "......";
 					mes ".........";
 					mes "......Riiiight.";
-					donpcevent "Raiden Karus#tu::OnThink";
+					emotion e_dots,"Reidin Corse#tu";
 					set qskill_hunter,1;
 					close;
+				case 2:
+					mes "[Arpesto]";
+					mes "Alright, it's your";
+					mes "decision. However, I'm";
+					mes "sure that you may have";
+					mes "great need of my skill";
+					mes "sooner or later, so return";
+					mes "to me if you change your mind.";
+					close;
 				}
-				mes "[Arpesto]";
-				mes "Alright, it's your";
-				mes "decision. However, I'm";
-				mes "sure that you may have";
-				mes "great need of my skill";
-				mes "sooner or later, so return";
-				mes "to me if you change your mind.";
-				close;
 			}
 		}
 	}else{
 		mes "[Arpesto]";
 		mes "The sky still looks clear, but recently the winds that have been blowing through the land seem to carry with them an air of misfortune.";
 		next;
-		donpcevent "Raiden Karus#tu::OnHng";
-		mes "[Raiden Karus]";
+		emotion e_pif,"Reidin Corse#tu";
+		mes "[Reidin Corse]";
 		mes "So...";
 		mes "Danger's coming?";
 		mes "Heh! Chill, gramps~";
 		mes "I got it covered!";
 		next;
-		emotion 19;
+		emotion e_swt2;
 		mes "[Arpesto]";
 		mes "Ho ho...";
 		mes "Energetic, but";
@@ -376,3 +378,4 @@ pay_arche,109,169,3	script	Arpesto	712,{
 		close;
 	}
 }
+

@@ -7370,7 +7370,7 @@ void clif_wedding_effect(struct block_list *bl)
 }
 /*==========================================
  * ?‚È‚½‚Éˆ§‚¢‚½‚¢Žg—pŽž–¼‘O‹©‚Ñ
- *------------------------------------------
+ *------------------------------------------*/
 
 void clif_callpartner(struct map_session_data *sd)
 {
@@ -7385,15 +7385,12 @@ void clif_callpartner(struct map_session_data *sd)
 		if(p){
 			memcpy(WBUFP(buf,2),p,NAME_LENGTH);
 		}else{
-			map_reqchariddb(sd,sd->status.partner_id);
-			chrif_searchcharid(sd->status.partner_id);
 			WBUFB(buf,2) = 0;
 		}
 		clif_send(buf,packet_len(0x1e6),&sd->bl,AREA);
 	}
-	return;
 }
-*/
+
 
 /*==========================================
  * Marry [DracoRPG]

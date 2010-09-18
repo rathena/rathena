@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
-//= 2.1
+//= 2.2
 //===== Compatible With: =====================================
 //= eAthena SVN
 //===== Description: =========================================
@@ -25,6 +25,7 @@
 //= 2.0 Fixed eco/def not actually incrementing. [L0ne_W0lf]
 //=     Can no longer gain eco/def higher than 100.
 //= 2.1 Fixed setcell extending more than it should on 3rd barricade. (bugreport:4323) [L0ne_W0lf]
+//= 2.2 Corrected exterior flag positions. (bugreport:4436) [L0ne_W0lf]
 //============================================================
 
 arug_cas04,1,1,0	script	Manager#aru04_02	111,{
@@ -2917,7 +2918,7 @@ OnRecvCastlear04:
 	end;
 }
 
-aru_gld,306,348,0	duplicate(ar04_Flag)	Gefn#flag_ar04_2	722
+aru_gld,306,348,6	duplicate(ar04_Flag)	Gefn#flag_ar04_2	722
 
 aru_gld,301,318,4	script	Gefn#flag_ar04_3::ar04_Flag2	722,{
 	set .@GID, GetCastleData("arug_cas04",1);
@@ -2953,4 +2954,4 @@ OnRecvCastlear04:
 	end;
 }
 
-aru_gld,306,348,0	duplicate(ar04_Flag2)	Gefn#flag_ar04_4	722
+aru_gld,313,318,4	duplicate(ar04_Flag2)	Gefn#flag_ar04_4	722

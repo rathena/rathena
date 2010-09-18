@@ -2924,16 +2924,16 @@
 //5852,Easter_Egg_Shell
 // More Etc Items
 //===================================================================
-6000,Dark_Ashes,Ashes of Darkness,3,,,0,,,,,,,,,,,,,{},{},{}
-6001,Essence_Of_Fire,Essence of Fire,3,,,10,,,,,,,,,,,,,{},{},{}
-6002,Token_Of_Apostle,Token of Apostle,3,,,10,,,,,,,,,,,,,{},{},{}
-6003,Soul_Pendant,Pendant of Spirit,3,,,10,,,,,,,,,,,,,{},{},{}
-6004,Bapho_Doll,Cursed Baphomet Doll,3,,,10,,,,,,,,,,,,,{},{},{}
+6000,Dark_Ashes,Ashes of Darkness,3,0,,0,,,,,,,,,,,,,{},{},{}
+6001,Essence_Of_Fire,Essence of Fire,3,0,,10,,,,,,,,,,,,,{},{},{}
+6002,Token_Of_Apostle,Token of Apostle,3,0,,10,,,,,,,,,,,,,{},{},{}
+6003,Soul_Pendant,Pendant of Spirit,3,0,,10,,,,,,,,,,,,,{},{},{}
+6004,Bapho_Doll,Cursed Baphomet Doll,3,0,,10,,,,,,,,,,,,,{},{},{}
 6005,New_Year_Rice_Cake,New Year Rice Cake,3,0,,10,,,,,,,,,,,,,{},{},{}
 6006,Rice_Cake_Delivery_Box,Rice Cake Delivery Box,3,0,,10,,,,,,,,,,,,,{},{},{}
 6007,New_Year_Rice_Cake_Soup,New Year Rice Cake Soup,3,0,,10,,,,,,,,,,,,,{},{},{}
 6008,Wood,Wood,3,0,,10,,,,,,,,,,,,,{},{},{}
-6009,Large_Magical_Fan,Big Fan Of Magic,3,0,,10,,,,,,,,,,,,,{},{},{}
+6009,Large_Magical_Fan,Big Fan Of Magic,3,0,,0,,,,,,,,,,,,,{},{},{}
 6010,Pickaxe,Hoe,3,0,,10,,,,,,,,,,,,,{},{},{}
 6011,Blue_Card_B,Blue B Card,3,0,,10,,,,,,,,,,,,,{},{},{}
 6012,Blue_Card_C,Blue C Card,3,0,,10,,,,,,,,,,,,,{},{},{}
@@ -2947,7 +2947,7 @@
 6021,Peaked_Hat,Peaked Hat,3,432,,10,,,,,,,,,,,,,{},{},{}
 6022,Hard_Skin,Hard Skin,3,0,,10,,,,,,,,,,,,,{},{},{}
 6023,Mystic_Horn,Mystic Horn,3,1000,,10,,,,,,,,,,,,,{},{},{}
-6024,17Carat_Dia,17Carat Diamond,3,0,,10,,,,,,,,,,,,,{},{},{}
+6024,17_Carat_Diamond,17Carat Diamond,3,0,,500,,,,,,,,,,,,,{},{},{}
 6025,Towel_Of_Memory,Towel of Memory,3,0,,10,,,,,,,,,,,,,{},{},{}
 6026,Marriage_Covenant,Written Oath Of Marriage,3,0,,10,,,,,,,,,,,,,{},{},{}
 6027,Crystal_Of_Feardoom,Crystal Of Feardom,3,0,,10,,,,,,,,,,,,,{},{},{}
@@ -2969,8 +2969,8 @@
 6043,Letter_From_Lugen,Letter from Lugen,3,0,,10,,,,,,,,,,,,,{},{},{}
 6044,Letter_From_Otto,Letter from Otto,3,0,,10,,,,,,,,,,,,,{},{},{}
 6045,Supply_Box,Supply Box,3,0,,10,,,,,,,,,,,,,{},{},{}
-6046,Clothing_Dye_Coupon,New Clothing Dye Coupon,3,0,,10,,,,,,,,,,,,,{},{},{}
-6047,Clothing_Dye_Coupon2,Original Clothing Dye Coupon,3,0,,10,,,,,,,,,,,,,{},{},{}
+6046,Clothing_Dye_Coupon,New Clothing Dye Coupon,3,0,,0,,,,,,,,,,,,,{},{},{}
+6047,Clothing_Dye_Coupon2,Original Clothing Dye Coupon,3,0,,0,,,,,,,,,,,,,{},{},{}
 6048,Unidentified_Mineral,Unidentified Mineral,3,0,,10,,,,,,,,,,,,,{},{},{}
 6049,Marlin,Marlin,3,0,,10,,,,,,,,,,,,,{},{},{}
 6050,Mercenary_Contract,Mercenary Contract,3,0,,10,,,,,,,,,,,,,{},{},{}
@@ -3205,9 +3205,9 @@
 7056,Payroll_Of_Kafra,Payment Statement for Kafra Employee,3,1,,50,,,,,,,,,,,,,{},{},{}
 7057,Gallar_Horn,Gjallar,3,1,,500,,,,,,,,,,,,,{},{},{}
 7058,Gullraifnir,Gleipnir,3,1,,500,,,,,,,,,,,,,{},{},{}
-7059,Cargo_Free_Ticket,Free Ticket for Kafra Storage,3,1,,0,,,,,,,,,,,,,{},{},{}
-7060,Warp_Free_Ticket,Free Ticket for Kafra Transportation,3,1,,0,,,,,,,,,,,,,{},{},{}
-7061,Cart_Free_Ticket,Free Ticket for the Cart Service,3,1,,0,,,,,,,,,,,,,{},{},{}
+7059,Cargo_Free_Ticket,Free Ticket for Kafra Storage,3,1,,10,,,,,,,,,,,,,{},{},{}
+7060,Warp_Free_Ticket,Free Ticket for Kafra Transportation,3,1,,10,,,,,,,,,,,,,{},{},{}
+7061,Cart_Free_Ticket,Free Ticket for the Cart Service,3,1,,10,,,,,,,,,,,,,{},{},{}
 7062,Broken_Turtle_Shell,Broken Turtle Shell,3,280,,10,,,,,,,,,,,,,{},{},{}
 7063,Soft_Feather,Soft Feather,3,280,,10,,,,,,,,,,,,,{},{},{}
 7064,Dragon_Fly_Wing,Wing of Dragonfly,3,520,,10,,,,,,,,,,,,,{},{},{}
@@ -3345,7 +3345,7 @@
 7196,Shoulder_Protection,Shoulder Protector,3,230,,10,,,,,,,,,,,,,{},{},{}
 7197,Tough_Vines,Tough Vines,3,500,,10,,,,,,,,,,,,,{},{},{}
 7198,Great_Leaf,Huge Leaf,3,610,,10,,,,,,,,,,,,,{},{},{}
-7199,Coupon,Unknown Coupon,3,0,,10,,,,,,,,,,,,,{},{},{}
+7199,Coupon,Coupon,3,0,,10,,,,,,,,,,,,,{},{},{}
 7200,Flexible_String,Elastic Band,3,380,,10,,,,,,,,,,,,,{},{},{}
 7201,Log,Log,3,250,,10,,,,,,,,,,,,,{},{},{}
 7202,Beetle_Nipper,Pincher of Beetle,3,290,,10,,,,,,,,,,,,,{},{},{}
@@ -3768,18 +3768,18 @@
 7620,Enriched_Oridecon,Enriched Oridecon,3,2,,10,,,,,,,,,,,,,{},{},{}
 7621,Token_Of_Siegfried,Token Of Siegfried,3,2,,10,,,,,,,,,,,,,{},{},{}
 7622,New_Style_Coupon,Hairstyle Coupon,3,0,,10,,,,,,,,,,,,,{},{},{}
-7623,Name_Change_Coupon,Ticket Of Identification,3,2,,10,,,,,,,,,,,,,{},{},{}
+7623,Name_Change_Coupon,Ticket Of Identification,3,2,,0,,,,,,,,,,,,,{},{},{}
 //
 7701,Dragon_Spirit,Soul,3,2,,10,,,,,,,,,,,,,{},{},{}
 7702,Special_Cogwheel,Special Cogwheel,3,2,,10,,,,,,,,,,,,,{},{},{}
-7703,Piece_Of_Cogwheel,Piece of Cogwheel,3,2,,0,,,,,,,,,,,,,{},{},{}
+7703,Piece_Of_Cogwheel,Piece of Cogwheel,3,2,,10,,,,,,,,,,,,,{},{},{}
 7704,Broken_Thermometer,Broken Thermometer,3,2,,0,,,,,,,,,,,,,{},{},{}
-7705,Note_Of_Geologist,Note of Geologist,3,20,,40,,,,,,,,,,,,,{},{},{}
+7705,Note_Of_Geologist,Note of Geologist,3,2,,0,,,,,,,,,,,,,{},{},{}
 7706,Spoiled_Carrot_Juice,Broken Carrot Juice,3,20,,40,,,,,,,,,,,,,{},{},{}
 7707,Spoiled_Banana_Juice,Broken Banana Juice,3,20,,40,,,,,,,,,,,,,{},{},{}
 7708,Spoiled_Apple_Juice,Broken Apple Juice,3,20,,40,,,,,,,,,,,,,{},{},{}
-7709,Spoiled_Grape_Juice,Broken Grape Juice,3,600,,30,,,,,,,,,,,,,{},{},{}
-7710,Black_Gemstone,Black Gemstone,3,0,,10,,,,,,,,,,,,,{},{},{}
+7709,Spoiled_Grape_Juice,Broken Grape Juice,3,20,,40,,,,,,,,,,,,,{},{},{}
+7710,Black_Gemstone,Black Gemstone,3,600,,30,,,,,,,,,,,,,{},{},{}
 7711,Update_Ticket,Event Ticket,3,0,,10,,,,,,,,,,,,,{},{},{}
 7712,Nokia5500,Nokia 5500,3,0,,10,,,,,,,,,,,,,{},{},{}
 7713,BlueCard_A_,Blue A(2) Card,3,0,,10,,,,,,,,,,,,,{},{},{}
@@ -3788,7 +3788,7 @@
 7716,Strawberry_Choco_Recipe,Chocolate Strawberry Recipe,3,0,,0,,,,,,,,,,,,,{},{},{}
 7717,Choco_Tart_Recipe,Chocolate Tart Recipe,3,0,,0,,,,,,,,,,,,,{},{},{}
 7718,Cacao_Bean,Cacao Bean,3,0,,10,,,,,,,,,,,,,{},{},{}
-7719,BlueCard_G,Blue G Card,3,0,,1,,,,,,,,,,,,,{},{},{}
+7719,BlueCard_G,Blue G Card,3,0,,10,,,,,,,,,,,,,{},{},{}
 7720,Gold_Coin_US,Gold Coin,3,100,,10,,,,,,,,,,,,,{},{},{}
 7721,Treasure_Box_,Treasure Box,3,100,,500,,,,,,,,,,,,,{},{},{}
 7722,Debt_Note,Debt Note,3,20,,0,,,,,,,,,,,,,{},{},{}
@@ -3842,7 +3842,7 @@
 7770,Sweet_Rice,Sweet Rice,3,0,,10,,,,,,,,,,,,,{},{},{}
 7771,Lotus_Leaf,Lotus Leaf,3,0,,10,,,,,,,,,,,,,{},{},{}
 7772,String,String,3,0,,10,,,,,,,,,,,,,{},{},{}
-7773,War_Badge,Wat Badge,3,,1,0,,,,,,,,,,,,,{},{},{}
+7773,War_Badge,Wat Badge,3,0,,0,,,,,,,,,,,,,{},{},{}
 7774,Chung_E_Ticket,Green Maiden Ticket,3,0,,10,,,,,,,,,,,,,{},{},{}
 7775,Spring_Rabbit_Ticket,Spring Rabbit Ticket,3,0,,10,,,,,,,,,,,,,{},{},{}
 7776,Max_Weight_Up_Scroll,Gym Pass,3,0,,10,,,,,,,,,,,,,{},{},{}
@@ -3863,7 +3863,7 @@
 7791,Fawner_Coupon8,Free Coupon 8,3,0,,10,,,,,,,,,,,,,{},{},{}
 7792,Guyak,Guyak,3,0,,10,,,,,,,,,,,,,{},{},{}
 7793,Golden_Apple,Golden Apple,3,0,,0,,,,,,,,,,,,,{},{},{}
-7794,Fate_Of_Crow,The Crow of Destiny,3,0,,10,,,,,,,,,,,,,{},{},{}
+7794,Fate_Of_Crow,The Crow of Destiny,3,0,,0,,,,,,,,,,,,,{},{},{}
 7795,Mami_Photo_Album,Mammi's Photo Album,3,2,,10,,,,,,,,,,,,,{},{},{}
 7796,Author_Autograph,Author's Autograph,3,2,,10,,,,,,,,,,,,,{},{},{}
 7797,Author_Memo,Author's Memo,3,2,,10,,,,,,,,,,,,,{},{},{}
@@ -3896,9 +3896,9 @@
 7824,Spirit_Liquor,Spirit Liquor,3,20,,10,,,,,,,,,,,,,{},{},{}
 7825,Heroic_Stone,Heroic Stone,3,20,,10,,,,,,,,,,,,,{},{},{}
 7826,Continental_Guard_Paper,Continental Guard Paper,3,0,,0,,,,,,,,,,,,,{},{},{}
-7827,Mineral_Report,Mineral Evals,3,0,,10,,,,,,,,,,,,,{},{},{}
-7828,BF_Badge1,Bravery Badge,3,,1,0,,,,,,,,,,,,,{},{},{}
-7829,BF_Badge2,Valor Badge,3,,1,0,,,,,,,,,,,,,{},{},{}
+7827,Mineral_Report,Mineral Evals,3,0,,0,,,,,,,,,,,,,{},{},{}
+7828,BF_Badge1,Bravery Badge,3,0,,0,,,,,,,,,,,,,{},{},{}
+7829,BF_Badge2,Valor Badge,3,0,,0,,,,,,,,,,,,,{},{},{}
 7830,Goddess_Tear,Goddess Tear,3,1,,500,,,,,,,,,,,,,{},{},{}
 7831,Valkyrie_Token,Valkyrie's Token,3,1,,500,,,,,,,,,,,,,{},{},{}
 7832,Brynhild_Armor_Piece,Brynhild Armor Piece,3,1,,500,,,,,,,,,,,,,{},{},{}
@@ -3908,12 +3908,12 @@
 7836,Dawn_Essence,Dawn Essence,3,1,,500,,,,,,,,,,,,,{},{},{}
 7837,Cold_Moonlight,Cold Moonlight,3,1,,500,,,,,,,,,,,,,{},{},{}
 7838,Hazy_Starlight,Hazy Starlight,3,1,,500,,,,,,,,,,,,,{},{},{}
-7839,Crystal_Key,Crystal Key,3,1,,0,,,,,,,,,,,,,{},{},{}
-7840,Valkyrie_Gift,Valkyrie's Gift,3,1,,0,,,,,,,,,,,,,{},{},{}
-7841,Spotted_Paper,Stained Piece Of Paper,3,0,,10,,,,,,,,,,,,,{},{},{}
-7842,Torn_Paper,Torn Piece Of Paper,3,0,,10,,,,,,,,,,,,,{},{},{}
-7843,Old_Paper,Old Piece Of Paper,3,0,,10,,,,,,,,,,,,,{},{},{}
-7844,Burnt_Paper,Burnt Pieces Of Paper,3,0,,10,,,,,,,,,,,,,{},{},{}
+7839,Crystal_Key,Crystal Key,3,0,,0,,,,,,,,,,,,,{},{},{}
+7840,Valkyrie_Gift,Valkyrie's Gift,3,0,,0,,,,,,,,,,,,,{},{},{}
+7841,Spotted_Paper,Stained Piece Of Paper,3,0,,0,,,,,,,,,,,,,{},{},{}
+7842,Torn_Paper,Torn Piece Of Paper,3,0,,0,,,,,,,,,,,,,{},{},{}
+7843,Old_Paper,Old Piece Of Paper,3,0,,0,,,,,,,,,,,,,{},{},{}
+7844,Burnt_Paper,Burnt Pieces Of Paper,3,0,,0,,,,,,,,,,,,,{},{},{}
 7845,Copy_Of_Spotted_Paper,Copy Of Spotted Paper,3,0,,10,,,,,,,,,,,,,{},{},{}
 7846,Copy_Of_Torn_Paper,Copy Of Torn Paper,3,0,,10,,,,,,,,,,,,,{},{},{}
 7847,Copy_Of_Old_Paper,Copy Of Old Paper,3,0,,10,,,,,,,,,,,,,{},{},{}
@@ -3960,31 +3960,31 @@
 7888,Bag_Of_Nuts,Bag of Nuts,3,0,,30,,,,,,,,,,,,,{},{},{}
 7889,Chicken_Feed,Chicken Feed,3,0,,20,,,,,,,,,,,,,{},{},{}
 7891,Mug,Mug,3,2,,100,,,,,,,,,,,,,{},{},{}
-7892,Charcoal,Charcoal,3,0,,10,,,,,,,,,,,,,{},{},{}
-7893,Sulfur,Sulphur,3,0,,10,,,,,,,,,,,,,{},{},{}
-7894,Nitrate,Nitrogen Acid,3,0,,10,,,,,,,,,,,,,{},{},{}
-7895,TRO_Memory_Book01,Rama5 Book,3,0,,10,,,,,,,,,,,,,{},{},{}
-7896,TRO_Memory_Book02,Loykrathong Book,3,0,,10,,,,,,,,,,,,,{},{},{}
-7897,TRO_Memory_Book03,Constitution Book,3,0,,10,,,,,,,,,,,,,{},{},{}
-7898,VVS_Balmung,VV Strong Balmung,3,0,,10,,,,,,,,,,,,,{},{},{}
-7899,Spiritualist_Dagger,Dagger Of Psychic,3,0,,10,,,,,,,,,,,,,{},{},{}
+7892,Charcoal,Charcoal,3,10,,10,,,,,,,,,,,,,{},{},{}
+7893,Sulfur,Sulphur,3,10,,10,,,,,,,,,,,,,{},{},{}
+7894,Nitrate,Nitrogen Acid,3,10,,10,,,,,,,,,,,,,{},{},{}
+7895,TRO_Memory_Book01,Rama5 Book,3,0,,0,,,,,,,,,,,,,{},{},{}
+7896,TRO_Memory_Book02,Loykrathong Book,3,0,,0,,,,,,,,,,,,,{},{},{}
+7897,TRO_Memory_Book03,Constitution Book,3,0,,0,,,,,,,,,,,,,{},{},{}
+7898,VVS_Balmung,VV Strong Balmung,3,0,,0,,,,,,,,,,,,,{},{},{}
+7899,Spiritualist_Dagger,Dagger Of Psychic,3,0,,0,,,,,,,,,,,,,{},{},{}
 7900,Jenoss_Ring1,Jonathan Family Ring,3,0,,0,,,,,,,,,,,,,{},{},{}
 7901,Jenoss_Ring2,Jillberriel Family Ring,3,0,,0,,,,,,,,,,,,,{},{},{}
 7902,Jenoss_Ring3,Jessur Family Ring,3,0,,0,,,,,,,,,,,,,{},{},{}
 7903,Jenoss_Ring4,Jenoss Family Ring,3,0,,0,,,,,,,,,,,,,{},{},{}
 7904,Piano_Key,Piano Key,3,0,,0,,,,,,,,,,,,,{},{},{}
-7905,Rok_Star_Badge_,Rok Star Badge,3,0,,0,,,,,,,,,,,,,{},{},{}
+7905,Rok_Star_Badge_,Rok Star Badge,3,20,,100,,,,,,,,,,,,,{},{},{}
 7906,Poppy_Wreath,Poppy Wreath,3,0,,0,,,,,,,,,,,,,{},{},{}
-7907,Bobbin_Of_Goddess,Bobbin Of Goddess,3,0,,0,,,,,,,,,,,,,{},{},{}
+7907,Bobbin_Of_Goddess,Bobbin Of Goddess,3,20,,10,,,,,,,,,,,,,{},{},{}
 7908,Louise_Beauty_Coupon,Louise's Beauty Coupon,3,0,,10,,,,,,,,,,,,,{},{},{}
 7909,Stolen_Cookie,Stolen Cookie,3,0,,10,,,,,,,,,,,,,{},{},{}
 7910,Stolen_Candy,Stolen Candy,3,0,,10,,,,,,,,,,,,,{},{},{}
 7911,Yulia_Hat,Yulia's Hat,3,0,,10,,,,,,,,,,,,,{},{},{}
-7912,Portable_Snowman,Portable Snowman Machine,3,0,,10,,,,,,,,,,,,,{},{},{}
-7913,Test_Certificate,Battle Test Certificate,3,0,,10,,,,,,,,,,,,,{},{},{}
-7914,Ancient_Document_TW,Ancient Language Document,3,0,,10,,,,,,,,,,,,,{},{},{}
-7915,Copper_Coin_,Bronze Coin,3,100,,10,,,,,,,,,,,,,{},{},{}
-7916,Silver_Coin_,Silver Coin,3,100,,10,,,,,,,,,,,,,{},{},{}
+7912,Portable_Snowman,Portable Snowman Machine,3,0,,0,,,,,,,,,,,,,{},{},{}
+7913,Test_Certificate,Battle Test Certificate,3,0,,0,,,,,,,,,,,,,{},{},{}
+7914,Ancient_Document_TW,Ancient Language Document,3,10,,0,,,,,,,,,,,,,{},{},{}
+7915,Copper_Coin_,Bronze Coin,3,0,,0,,,,,,,,,,,,,{},{},{}
+7916,Silver_Coin_,Silver Coin,3,0,,0,,,,,,,,,,,,,{},{},{}
 7917,Magic_Potion,Magic Potion,3,100,,10,,,,,,,,,,,,,{},{},{}
 7918,Particle_Of_Memory,Fragment Of Memory,3,100,,10,,,,,,,,,,,,,{},{},{}
 7919,Festival_Ticket,Festival Ticket,3,100,,10,,,,,,,,,,,,,{},{},{}
@@ -4131,7 +4131,7 @@
 11006,Blood_Flower01,Blood Flower Vol.1,3,8000,,0,,,,,,,,,,,,,{},{},{}
 11007,Blood_Flower02,Blood Flower Vol.2,3,8000,,0,,,,,,,,,,,,,{},{},{}
 11008,Barmund,Biographical Dictionary Copy Edition,3,10000,,0,,,,,,,,,,,,,{},{},{}
-11009,Adventure_Story02,Adventure Story Vol.2,3,8000,,10,,,,,,,,,,,,,{},{},{}
+11009,Adventure_Story02,Adventure Story Vol.2,3,8000,,0,,,,,,,,,,,,,{},{},{}
 11010,Reward_List_Book,Battlegrounds Catalog,3,0,,10,,,,,,,,,,,,,{},{},{}
 11011,Barmund_Note,Varmunt's Note,3,0,,10,,,,,,,,,,,,,{},{},{}
 11012,Expedition_Report,Expedition Report,3,0,,10,,,,,,,,,,,,,{},{},{}
@@ -4492,9 +4492,9 @@
 12320,Pineapple_Juice,Schwartzwald Pine Jubilee,0,0,,300,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_INCHIT,600000,10; sc_start SC_INCFLEE2,600000,20; },{},{}
 12321,Spicy_Sandwich,Arunafeltz Desert Sandwich,0,0,,300,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_INCCRI,600000,7; },{},{}
 12322,Chocolate_Pie,Chocolate Pie,0,0,,300,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 5,5; },{},{}
-12323,N_Fly_Wing,Novice Fly Wing,11,1,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill "AL_TELEPORT",1; },{},{}
-12324,N_Butterfly_Wing,Novice Butterfly Wing,11,1,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill "AL_TELEPORT",3; },{},{}
-12325,N_Magnifier,Novice Magnifier,11,1,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill "MC_IDENTIFY",1; },{},{}
+12323,N_Fly_Wing,Novice Fly Wing,11,1,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill "AL_TELEPORT",1; },{},{}
+12324,N_Butterfly_Wing,Novice Butterfly Wing,11,1,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill "AL_TELEPORT",3; },{},{}
+12325,N_Magnifier,Novice Magnifier,11,1,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill "MC_IDENTIFY",1; },{},{}
 12326,J_Firecracker,Large Firecracker,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12327,Charm_Of_Luck,Charm Of Luck,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12328,Charm_Of_Happiness,Charm Of Happiness,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_INCLUK,3600000,20; },{},{}

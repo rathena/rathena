@@ -1,5 +1,12 @@
 Date		Added
 ======
+2010/09/18
+	* Rev 14409 Updates, and bugfixes, the usual stuff. [L0ne_W0lf]
+	* Updated Sage quest skill quest with the file curtosy of 5511.
+	* Fixed the Pink Crystal being named Blue Crystal in Flavius.
+	* Touched up the archer tutorial, and phantasmic arrow quests.
+	* Fixed Turbo Track records for 8 and 16 normal saving as expert. (bugreport:4433)
+	* Corrected the positions for the arug castle 04 exterior flags. (bugreport:4436)
 2010/09/13
 	* Rev. 14407 Some more Endless tower bugfixes. [L0ne_W0lf]
 	- Fixed some copy/paste errors (1@orc -> 1@tower)

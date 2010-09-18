@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.1
+//= 1.2
 //===== Compatible With: ===================================== 
 //= eAthena 1.0
 //===== Description: ========================================= 
@@ -14,6 +14,7 @@
 //===== Additional Comments: ================================= 
 //= 1.0 First Version.
 //= 1.1 Fixed NPCs being called for waiting rooms. (bugreport:4395)
+//= 1.2 Fixed pink crystal spawning as blue. [L0ne_W0lf]
 //============================================================
 
 // Waiting Room NPCs
@@ -147,7 +148,7 @@ OnTimer10000:
 
 bat_b02,1,1,3	script	OBJ#bat_b02_a	844,{
 OnEnable:
-	bg_monster $@FlaviusBG2_id1,"bat_b02",61,150,"Blue Crystal",1915,"OBJ#bat_b02_a::OnMyMobDead";
+	bg_monster $@FlaviusBG2_id1,"bat_b02",61,150,"Pink Crystal",1915,"OBJ#bat_b02_a::OnMyMobDead";
 	end;
 
 Onkill:

@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
-//= 1.4
+//= 1.5
 //===== Compatible With: =====================================
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -15,6 +15,7 @@
 //= 1.2 Replaced effect numerics with constants. [L0ne_W0lf]
 //= 1.3 Fixed a little mistake [akrus]
 //= 1.4 Corrected issue with top record setting. [L0ne_W0lf]
+//= 1.5 Fixed name being saved under expert mode. (bugreport:4433) [L0ne_W0lf]
 //============================================================
 
 turbo_room,84,135,3	script	Normal mode - 8 person	124,{
@@ -821,7 +822,7 @@ OnInit:
 
 OnTouch:
 	mapannounce "turbo_n_8","" + strcharinfo(0) +" has just arrived at the Finish Line! Congratulations!",bc_map,"0xFFFF00";
-	set $ttnames$[5],strcharinfo(0);
+	set $ttnames$[2],strcharinfo(0);
 	donpcevent "TBT_Guide#Broadcast::Onwin_n8";
 	if (tt_point < 28951)
 		set tt_point,tt_point+50;

@@ -8,6 +8,12 @@
 	1475 Equestrian's Spear:	NEED INFO.
 	13005 Angelic Wing Dagger:	NEED INFO.
 =======================
+2010/09/18
+	* Rev. 14409 Lots of small minor updates. :P [L0ne_W0lf]
+	* Lots of updates to monster stats/drops, all fairly minor.
+	* Updated the price and weight of a handful of etc items.
+	* Removed drops for quest-spawned Satan Morroc. (bugreport:4425)
+	* Changed weight on novice consumable items to 0 (bugreport:4442)
 2010/09/16
 	* Rev. 14408 Added updated stats for Brasilis monsters. [L0ne_W0lf]
 2010/08/20

@@ -630,6 +630,7 @@ que_qaru05	mapflag	nomemo
 2@cata	mapflag	nomemo
 
 //Endless Tower ==================
+e_tower	mapflag	nomemo
 1@tower	mapflag	nomemo
 2@tower	mapflag	nomemo
 3@tower	mapflag	nomemo

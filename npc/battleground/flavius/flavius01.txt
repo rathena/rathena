@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.0
+//= 1.1
 //===== Compatible With: ===================================== 
 //= eAthena 1.0
 //===== Description: ========================================= 
@@ -13,6 +13,7 @@
 //= - Losing Team: 3 badge
 //===== Additional Comments: ================================= 
 //= 1.0 First Version.
+//= 1.1 Fixed pink crystal spawning as blue. [L0ne_W0lf]
 //============================================================
 
 // Waiting Room NPCs
@@ -146,7 +147,7 @@ OnTimer10000:
 
 bat_b01,1,1,3	script	OBJ#bat_b01_a	844,{
 OnEnable:
-	bg_monster $@FlaviusBG1_id1,"bat_b01",61,150,"Blue Crystal",1915,"OBJ#bat_b01_a::OnMyMobDead";
+	bg_monster $@FlaviusBG1_id1,"bat_b01",61,150,"Pink Crystal",1915,"OBJ#bat_b01_a::OnMyMobDead";
 	end;
 
 Onkill:
