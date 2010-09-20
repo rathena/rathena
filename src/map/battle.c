@@ -163,13 +163,11 @@ int battle_delay_damage_sub(int tid, unsigned int tick, int id, intptr data)
 		(target->type != BL_PC || ((TBL_PC*)target)->invincible_timer == -1) &&
 		check_distance_bl(dat->src, target, dat->distance)) //Check to see if you haven't teleported. [Skotlex]
 	{
-		struct status_change *sc = status_get_sc(target);
 		map_freeblock_lock();
-		if( !sc || !sc->data[SC_DEVOTION] )
-			status_fix_damage(dat->src, target, dat->damage, dat->delay);
+		status_fix_damage(dat->src, target, dat->damage, dat->delay);
 		if( dat->attack_type && !status_isdead(target) )
 			skill_additional_effect(dat->src,target,dat->skill_id,dat->skill_lv,dat->attack_type,dat->dmg_lv,tick);
-		if( dat->damage > 0 && dat->attack_type )
+		if( dat->dmg_lv > ATK_BLOCK && dat->attack_type )
 			skill_counter_additional_effect(dat->src,target,dat->skill_id,dat->skill_lv,dat->attack_type,tick);
 		map_freeblock_unlock();
 	}
@@ -180,17 +178,20 @@ int battle_delay_damage_sub(int tid, unsigned int tick, int id, intptr data)
 int battle_delay_damage (unsigned int tick, int amotion, struct block_list *src, struct block_list *target, int attack_type, int skill_id, int skill_lv, int damage, enum damage_lv dmg_lv, int ddelay)
 {
 	struct delay_damage *dat;
+	struct status_change *sc;
 	nullpo_retr(0, src);
 	nullpo_retr(0, target);
 
+	sc = status_get_sc(target);
+	if( sc && sc->data[SC_DEVOTION] && damage > 0 )
+		damage = 0;
+
 	if (!battle_config.delay_battle_damage) {
-		struct status_change *sc = status_get_sc(target);
 		map_freeblock_lock();
-		if( !sc || !sc->data[SC_DEVOTION] )
-			status_fix_damage(src, target, damage, ddelay); // We have to seperate here between reflect damage and others [icescope]
+		status_fix_damage(src, target, damage, ddelay); // We have to seperate here between reflect damage and others [icescope]
 		if( attack_type && !status_isdead(target) )
 			skill_additional_effect(src, target, skill_id, skill_lv, attack_type, dmg_lv, gettick());
-		if( damage > 0 && attack_type )
+		if( dmg_lv > ATK_BLOCK && attack_type )
 			skill_counter_additional_effect(src, target, skill_id, skill_lv, attack_type, gettick());
 		map_freeblock_unlock();
 		return 0;
@@ -3176,6 +3177,15 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 		}
 	}
 
+	wd.dmotion = clif_damage(src, target, tick, wd.amotion, wd.dmotion, wd.damage, wd.div_ , wd.type, wd.damage2);
+
+	if (sd && sd->splash_range > 0 && damage > 0)
+		skill_castend_damage_id(src, target, 0, 1, tick, 0);
+
+	map_freeblock_lock();
+
+	battle_delay_damage(tick, wd.amotion, src, target, wd.flag, 0, 0, damage, wd.dmg_lv, wd.dmotion);
+
 	if( tsc && tsc->data[SC_DEVOTION] )
 	{
 		struct status_change_entry *sce = tsc->data[SC_DEVOTION];
@@ -3192,15 +3202,6 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 		else
 			status_change_end(target, SC_DEVOTION, -1);
 	}
-
-	wd.dmotion = clif_damage(src, target, tick, wd.amotion, wd.dmotion, wd.damage, wd.div_ , wd.type, wd.damage2);
-
-	if (sd && sd->splash_range > 0 && damage > 0)
-		skill_castend_damage_id(src, target, 0, 1, tick, 0);
-
-	map_freeblock_lock();
-
-	battle_delay_damage(tick, wd.amotion, src, target, wd.flag, 0, 0, damage, wd.dmg_lv, wd.dmotion);
 
 	if (sc && sc->data[SC_AUTOSPELL] && rand()%100 < sc->data[SC_AUTOSPELL]->val4) {
 		int sp = 0;

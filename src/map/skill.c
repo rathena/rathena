@@ -1715,23 +1715,6 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 		&& skillid != WS_CARTTERMINATION )
 		rdamage = battle_calc_return_damage(bl, damage, dmg.flag);
 
-	if( sc && sc->data[SC_DEVOTION] && skillid != PA_PRESSURE )
-	{
-		struct status_change_entry *sce = sc->data[SC_DEVOTION];
-		struct block_list *d_bl = map_id2bl(sce->val1);
-
-		if( d_bl && (
-			(d_bl->type == BL_MER && ((TBL_MER*)d_bl)->master && ((TBL_MER*)d_bl)->master->bl.id == bl->id) ||
-			(d_bl->type == BL_PC && ((TBL_PC*)d_bl)->devotion[sce->val2] == bl->id)
-			) && check_distance_bl(bl, d_bl, sce->val3) )
-		{
-			clif_damage(d_bl, d_bl, gettick(), 0, 0, damage, 0, 0, 0);
-			status_fix_damage(NULL, d_bl, damage, 0);
-		}
-		else
-			status_change_end(bl, SC_DEVOTION, -1);
-	}
-
 	//Skill hit type
 	type=(skillid==0)?5:skill_get_hit(skillid);
 
@@ -1944,6 +1927,23 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 	//Delayed damage must be dealt after the knockback (it needs to know actual position of target)
 	if (dmg.amotion)
 		battle_delay_damage(tick, dmg.amotion,src,bl,dmg.flag,skillid,skilllv,damage,dmg.dmg_lv,dmg.dmotion);
+
+	if( sc && sc->data[SC_DEVOTION] && skillid != PA_PRESSURE )
+	{
+		struct status_change_entry *sce = sc->data[SC_DEVOTION];
+		struct block_list *d_bl = map_id2bl(sce->val1);
+
+		if( d_bl && (
+			(d_bl->type == BL_MER && ((TBL_MER*)d_bl)->master && ((TBL_MER*)d_bl)->master->bl.id == bl->id) ||
+			(d_bl->type == BL_PC && ((TBL_PC*)d_bl)->devotion[sce->val2] == bl->id)
+			) && check_distance_bl(bl, d_bl, sce->val3) )
+		{
+			clif_damage(d_bl, d_bl, gettick(), 0, 0, damage, 0, 0, 0);
+			status_fix_damage(NULL, d_bl, damage, 0);
+		}
+		else
+			status_change_end(bl, SC_DEVOTION, -1);
+	}
 
 	if(skillid == RG_INTIMIDATE && damage > 0 && !(tstatus->mode&MD_BOSS)) {
 		int rate = 50 + skilllv * 5;
