@@ -164,7 +164,6 @@
 22,12373,1	// 
 22,12374,1	// 
 22,12395,1	// 
-22,12395,1	// 
 // Bundle Of Magic Scroll
 23,686,1	// Level 3 Earth Spike
 23,687,1	// Level 5 Earth Spike

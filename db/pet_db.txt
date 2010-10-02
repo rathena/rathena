@@ -5,21 +5,21 @@
 //
 // 01. MobID			Monster ID of the pet.
 // 02. Name			Name of the monster as defined in the database.
-// 02. JName			The display name of the monster when hatched.
-// 03. LureID			Pet Tame Item ID.
-// 04. EggID			Pet Egg ID.
-// 05. EquipID			Pet Accessory ID.
-// 06. FoodID			Pet Food ID.
-// 07. Fullness			The amount Hunger is decreased every [HungeyDelay] seconds.
-// 08. HungeyDelay		The amount of time it takes for hunger to decrease after feeding. (Default: 60 seconds)
-// 09. R_Hungry			Amount of Intimacy that is increased when fed.
-// 10. R_Full			Amount of Intimacy that is decreased when over-fed.
-// 11. Intimate			Amount of Intimacy the pet starts with.
-// 12. Die			Amount of Intimacy that is decreased when the pet owner dies.
-// 13. Capture			Capture succes rate (10000 = 100%)
-// 14. Speed			Pet's walk speed. (Defaul: 150)
-// 15. S_Performance		Special Performance. (Yes = 1, No = 0)
-// 16. talk_convert_class	Disables pet talk (instead of talking they emote  with /!.)
+// 03. JName			The display name of the monster when hatched.
+// 04. LureID			Pet Tame Item ID.
+// 05. EggID			Pet Egg ID.
+// 06. EquipID			Pet Accessory ID.
+// 07. FoodID			Pet Food ID.
+// 08. Fullness			The amount Hunger is decreased every [HungeyDelay] seconds.
+// 09. HungeyDelay		The amount of time it takes for hunger to decrease after feeding. (Default: 60 seconds)
+// 10. R_Hungry			Amount of Intimacy that is increased when fed.
+// 11. R_Full			Amount of Intimacy that is decreased when over-fed.
+// 12. Intimate			Amount of Intimacy the pet starts with.
+// 13. Die			Amount of Intimacy that is decreased when the pet owner dies.
+// 14. Capture			Capture succes rate (10000 = 100%)
+// 15. Speed			Pet's walk speed. (Defaul: 150)
+// 16. S_Performance		Special Performance. (Yes = 1, No = 0)
+// 17. talk_convert_class	Disables pet talk (instead of talking they emote  with /!.)
 //NOTE: The max value (100%) of attack_rate, defense_rate & change_target_rate is 10000.
 
 //In theory you can use any valid script, but it is run only once upon pet

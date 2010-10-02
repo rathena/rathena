@@ -4,6 +4,33 @@
 //= v 1.1a
 //============================================================
 
+1@cata	mapflag	pvp	off
+2@cata	mapflag	pvp	off
+1@nyd	mapflag	pvp	off
+2@nyd	mapflag	pvp	off
+1@orcs	mapflag	pvp	off
+2@orcs	mapflag	pvp	off
+1@tower	mapflag	pvp	off
+2@tower	mapflag	pvp	off
+3@tower	mapflag	pvp	off
+4@tower	mapflag	pvp	off
+5@tower	mapflag	pvp	off
+6@tower	mapflag	pvp	off
+
+bat_a01	mapflag	pvp	off
+bat_a02	mapflag	pvp	off
+bat_b01	mapflag	pvp	off
+bat_b02	mapflag	pvp	off
+bat_c01	mapflag	pvp	off
+bat_c02	mapflag	pvp	off
+bat_c03	mapflag	pvp	off
+
+guild_vs1	mapflag	pvp	off
+guild_vs2	mapflag	pvp	off
+guild_vs3	mapflag	pvp	off
+guild_vs4	mapflag	pvp	off
+guild_vs5	mapflag	pvp	off
+
 ayo_in01	mapflag	pvp	off
 ayo_in02	mapflag	pvp	off
 alberta_in	mapflag	pvp	off
