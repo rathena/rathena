@@ -2408,6 +2408,8 @@ void clif_clearcart(int fd)
 {
 	WFIFOHEAD(fd, packet_len(0x12b));
 	WFIFOW(fd,0) = 0x12b;
+	WFIFOSET(fd, packet_len(0x12b));
+
 }
 
 // Guild XY locators [Valaris]
@@ -10784,6 +10786,145 @@ void clif_parse_PartyChangeLeader(int fd, struct map_session_data* sd)
 	party_changeleader(sd, map_id2sd(RFIFOL(fd,2)));
 }
 
+ /*==========================================
+ * Party Booking in KRO [Spiria]
+ *------------------------------------------*/
+void clif_parse_PartyBookingRegisterReq(int fd, struct map_session_data* sd)
+{
+	short level = RFIFOW(fd,2);
+	short mapid = RFIFOW(fd,4);
+	short job[6];
+	int i;
+	
+	for(i=0; i<6; i++)
+		job[i] = RFIFOB(fd,6+i*2);
+
+	party_booking_register(sd, level, mapid, job);
+}
+
+/*==========================================
+ * flag: 0 - success, 1 - failed
+ *------------------------------------------*/
+void clif_PartyBookingRegisterAck(struct map_session_data *sd, int flag)
+{
+	int fd = sd->fd;
+
+	WFIFOHEAD(fd,packet_len(0x803));
+	WFIFOW(fd,0) = 0x803;
+	WFIFOW(fd,2) = flag;
+	WFIFOSET(fd,packet_len(0x803));
+}
+
+void clif_parse_PartyBookingSearchReq(int fd, struct map_session_data* sd)
+{	
+	short level = RFIFOW(fd,2);
+	short mapid = RFIFOW(fd,4);
+	short job = RFIFOW(fd,6);
+	unsigned long lastindex = RFIFOL(fd,8);
+	short resultcount = RFIFOB(fd,12);
+
+	party_booking_search(sd, level, mapid, job, lastindex, resultcount);
+}
+
+/*==========================================
+ * more_result: 0 - no more, 1 - more
+ *------------------------------------------*/
+void clif_PartyBookingSearchAck(int fd, unsigned long *index, int count, bool more_result)
+{
+	int i, j;
+	int size = sizeof(struct party_booking_ad_info); // structure size (48)
+	struct party_booking_ad_info *pb_ad;
+	WFIFOHEAD(fd,size*count + 5);
+	WFIFOW(fd,0) = 0x805;
+	WFIFOW(fd,2) = size*count + 5;
+	WFIFOB(fd,4) = (bool)more_result;
+	for(i=0; i<count; i++)
+	{
+		pb_ad = party_booking_getdata(index[i]);
+		if(pb_ad == NULL) return;
+		WFIFOL(fd,i*size+5) = pb_ad->index;
+		memcpy(WFIFOP(fd,i*size+9),pb_ad->charname,NAME_LENGTH);
+		WFIFOL(fd,i*size+33) = pb_ad->starttime;
+		WFIFOW(fd,i*size+37) = pb_ad->p_detail.level;
+		WFIFOW(fd,i*size+39) = pb_ad->p_detail.mapid;
+		for(j=0; j<6; j++)
+			WFIFOW(fd,i*size+41+j*2) = pb_ad->p_detail.job[j];
+	}
+	WFIFOSET(fd,WFIFOW(fd,2));
+}
+
+void clif_parse_PartyBookingDeleteReq(int fd, struct map_session_data* sd)
+{
+	if(party_booking_delete(sd, false))
+		clif_PartyBookingDeleteAck(sd, 0);
+}
+
+/*==========================================
+ * flag: 0 - success, other - failed
+ *------------------------------------------*/
+void clif_PartyBookingDeleteAck(struct map_session_data* sd, int flag)
+{
+	int fd = sd->fd;
+
+	WFIFOHEAD(fd,packet_len(0x807));
+	WFIFOW(fd,0) = 0x807;
+	WFIFOW(fd,2) = flag;
+	WFIFOSET(fd,packet_len(0x807));
+}
+
+void clif_parse_PartyBookingUpdateReq(int fd, struct map_session_data* sd)
+{
+	short job[6];
+	int i;
+	
+	for(i=0; i<6; i++)
+		job[i] = RFIFOW(fd,2+i*2);
+
+	party_booking_update(sd, job);
+}
+
+void clif_PartyBookingInsertNotify(struct map_session_data* sd, struct party_booking_ad_info* pb_ad)
+{
+	int i;
+
+	if(pb_ad == NULL) return;
+
+	WFIFOHEAD(sd->fd,packet_len(0x809));
+	WFIFOW(sd->fd,0) = 0x809;
+	WFIFOL(sd->fd,2) = pb_ad->index;
+	memcpy(WFIFOP(sd->fd,6),pb_ad->charname,NAME_LENGTH);
+	WFIFOL(sd->fd,30) = pb_ad->starttime;
+	WFIFOW(sd->fd,34) = pb_ad->p_detail.level;
+	WFIFOW(sd->fd,36) = pb_ad->p_detail.mapid;
+	for(i=0; i<6; i++)
+		WFIFOW(sd->fd,38+i*2) = pb_ad->p_detail.job[i];
+	
+	WFIFOSET(sd->fd,packet_len(0x809));
+}
+
+void clif_PartyBookingUpdateNotify(struct map_session_data* sd, struct party_booking_ad_info* pb_ad)
+{
+	int i;
+	uint8 buf[18];
+
+	if(pb_ad == NULL) return;
+
+	WBUFW(buf,0) = 0x80a;
+	WBUFL(buf,2) = pb_ad->index;
+	for(i=0; i<6; i++)
+		WBUFW(buf,6+i*2) = pb_ad->p_detail.job[i];
+	clif_send(buf,packet_len(0x80a),&sd->bl,ALL_CLIENT); // Now UPDATE all client.
+}
+
+void clif_PartyBookingDeleteNotify(struct map_session_data* sd, int index)
+{
+	uint8 buf[6];
+	WBUFW(buf,0) = 0x80b;
+	WBUFL(buf,2) = index;
+	
+	clif_send(buf, packet_len(0x80b), &sd->bl, ALL_CLIENT); // Now UPDATE all client.
+}
+
 /*==========================================
  * òIìXï¬çΩ
  *------------------------------------------*/
@@ -14214,7 +14355,11 @@ static int packetdb_readdb(void)
 	    0,  0,  0,  0,  0,  8,  8, 32, -1,  5,  0,  0,  0,  0,  0,  0,
 	    0,  0,  0,  0,  0,  0, 14, -1, -1, -1,  8,  0,  0,  0, 26,  0,
 	//#0x0800
-	   -1, -1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 14, 20,
+#if PACKETVER < 20091229
+ 	   -1, -1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 14, 20,
+#else // for Party booking ( PACKETVER >= 20091229 )
+	   -1, -1, 18,  4,  8,  6,  2,  4, 14, 50, 18,  6,  2,  3, 14, 20,
+#endif
 	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,

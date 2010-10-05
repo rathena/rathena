@@ -41,7 +41,7 @@
 
 #ifndef PACKETVER
 	#define PACKETVER	20081126
-	//#define PACKETVER 20100629
+	//#define PACKETVER 20100707
 #endif
 // backward compatible PACKETVER 8 and 9
 #if PACKETVER == 8
@@ -162,7 +162,7 @@
 //Mercenary System
 #define MC_SKILLBASE 8201
 #define MAX_MERCSKILL 40
-#define MAX_MERCENARY_CLASS 38
+#define MAX_MERCENARY_CLASS 40
 
 enum item_types {
 	IT_HEALING = 0,

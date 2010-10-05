@@ -57,7 +57,7 @@
 286,0x9b,    ,  3, 0,  -1,all,   0x010	//SA_DELUGE
 287,0x9c,    ,  3, 0,  -1,all,   0x010	//SA_VIOLENTGALE
 288,0x9d,    ,  3:3:4:4:5,0, -1,all,   0x010	//SA_LANDPROTECTOR
-306,0x9e,    ,  4, 0,6000,all,   0x200	//BD_LULLABY
+306,0x9e,    ,  4, 0,6000,enemy,   0x200	//BD_LULLABY
 307,0x9f,    ,  4, 0,  -1,enemy, 0x220	//BD_RICHMANKIM
 308,0xa0,    ,  4, 0,  -1,enemy, 0x200	//BD_ETERNALCHAOS
 309,0xa1,    ,  4, 0,  -1,party, 0x200	//BD_DRUMBATTLEFIELD

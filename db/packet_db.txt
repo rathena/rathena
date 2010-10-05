@@ -1452,11 +1452,11 @@ packet_ver: 25
 //0x0801,-1
 
 //2009-12-22aRagexeRE
-0x0802,18		// Booking System
+0x0802,18,bookingregreq,2:4:6		// Booking System
 //0x0803,4
 0x0804,8		// Booking System
 //0x0805,-1
-0x0806,4		// Booking System
+0x0806,4,bookingdelreq,2		// Booking System
 //0x0807,2
 0x0808,4		// Booking System
 //0x0809,14
@@ -1465,13 +1465,13 @@ packet_ver: 25
 //0x080C,6
 
 //2009-12-29aRagexeRE
-0x0804,14		// Booking System
-0x0806,2		// Booking System
+0x0804,14,bookingsearchreq,2:4:6:8:12		// Booking System
+0x0806,2,bookingdelreq,0		// Booking System
 //0x0807,4
-0x0808,14		// Booking System
+0x0808,14,bookingupdatereq,2		// Booking System
 //0x0809,50
-//0x080A,18
-//0x080B,6
+0x080A,18
+0x080B,6		// Booking System
 
 //2010-01-05aRagexeRE
 0x0801,-1,purchasereq2,2:4:8:12

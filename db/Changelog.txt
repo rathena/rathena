@@ -8,6 +8,14 @@
 	1475 Equestrian's Spear:	NEED INFO.
 	13005 Angelic Wing Dagger:	NEED INFO.
 =======================
+2010/10/05
+	* Rev. 14412 Handfull of misc changes. [L0ne_W0lf]
+	- Added two additional mercenaries and updated data.
+	- Added place holder values to the item database.
+	- Added packets for the party booking system.
+	- Updated the 13.2 monster skills to official.
+	- Updated stats and drop rates on several monsters.
+	- Fixed Lullaby working on allies/party members.
 2010/09/18
 	* Rev. 14409 Lots of small minor updates. :P [L0ne_W0lf]
 	* Lots of updates to monster stats/drops, all fairly minor.
