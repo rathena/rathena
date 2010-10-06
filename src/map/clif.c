@@ -14544,6 +14544,12 @@ static int packetdb_readdb(void)
 		{clif_parse_BattleChat,"battlechat"},
 		{clif_parse_mercenary_action,"mermenu"},
 		{clif_parse_progressbar,"progressbar"},
+#if PACKETVER >= 20091229
+		{clif_parse_PartyBookingRegisterReq,"bookingregreq"},
+		{clif_parse_PartyBookingSearchReq,"bookingsearchreq"},
+		{clif_parse_PartyBookingUpdateReq,"bookingupdatereq"},
+		{clif_parse_PartyBookingDeleteReq,"bookingdelreq"},
+#endif
 		{NULL,NULL}
 	};
 

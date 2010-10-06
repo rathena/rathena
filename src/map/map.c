@@ -1666,7 +1666,6 @@ int map_quit(struct map_session_data *sd)
 	}	
 
 	party_booking_delete(sd, true); // Party Booking [Spiria]
-	party_booking_delete(sd, true); // Party Booking [Spiria]
 	pc_makesavestatus(sd);
 	pc_clean_skilltree(sd);
 	chrif_save(sd,1);
