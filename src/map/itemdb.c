@@ -330,7 +330,7 @@ int itemdb_isequip(int nameid)
  *------------------------------------------*/
 int itemdb_isequip2(struct item_data *data)
 { 
-	nullpo_retr(0, data);
+	nullpo_ret(data);
 	switch(data->type) {
 		case IT_WEAPON:
 		case IT_ARMOR:
@@ -363,7 +363,7 @@ int itemdb_isstackable(int nameid)
  *------------------------------------------*/
 int itemdb_isstackable2(struct item_data *data)
 {
-  nullpo_retr(0, data);
+  nullpo_ret(data);
   switch(data->type) {
 	  case IT_WEAPON:
 	  case IT_ARMOR:

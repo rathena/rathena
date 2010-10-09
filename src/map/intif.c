@@ -195,7 +195,7 @@ int intif_broadcast2(const char* mes, int len, unsigned long fontColor, short fo
 // The transmission of Wisp/Page to inter-server (player not found on this server)
 int intif_wis_message(struct map_session_data *sd, char *nick, char *mes, int mes_len)
 {
-	nullpo_retr(0, sd);
+	nullpo_ret(sd);
 	if (CheckForCharServer())
 		return 0;
 
@@ -317,7 +317,7 @@ int intif_saveregistry(struct map_session_data *sd, int type)
 //Request the registries for this player.
 int intif_request_registry(struct map_session_data *sd, int flag)
 {
-	nullpo_retr(0, sd);
+	nullpo_ret(sd);
 
 	sd->save_reg.account2_num = -1;
 	sd->save_reg.account_num = -1;
@@ -368,7 +368,7 @@ int intif_create_party(struct party_member *member,char *name,int item,int item2
 {
 	if (CheckForCharServer())
 		return 0;
-	nullpo_retr(0, member);
+	nullpo_ret(member);
 
 	WFIFOHEAD(inter_fd,64);
 	WFIFOW(inter_fd,0) = 0x3020;
@@ -506,7 +506,7 @@ int intif_guild_create(const char *name,const struct guild_member *master)
 {
 	if (CheckForCharServer())
 		return 0;
-	nullpo_retr(0, master);
+	nullpo_ret(master);
 
 	WFIFOHEAD(inter_fd,sizeof(struct guild_member)+(8+NAME_LENGTH));
 	WFIFOW(inter_fd,0)=0x3030;

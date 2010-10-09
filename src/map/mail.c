@@ -29,7 +29,7 @@ void mail_clear(struct map_session_data *sd)
 
 int mail_removeitem(struct map_session_data *sd, short flag)
 {
-	nullpo_retr(0,sd);
+	nullpo_ret(sd);
 
 	if( sd->mail.amount )
 	{
@@ -52,7 +52,7 @@ int mail_removeitem(struct map_session_data *sd, short flag)
 
 int mail_removezeny(struct map_session_data *sd, short flag)
 {
-	nullpo_retr(0,sd);
+	nullpo_ret(sd);
 
 	if (flag && sd->mail.zeny > 0)
 	{  //Zeny send
@@ -160,7 +160,7 @@ void mail_getattachment(struct map_session_data* sd, int zeny, struct item* item
 
 int mail_openmail(struct map_session_data *sd)
 {
-	nullpo_retr(0,sd);
+	nullpo_ret(sd);
 
 	if( sd->state.storage_flag || sd->vender_id || sd->state.trading )
 		return 0;

@@ -63,7 +63,7 @@ int log_branch(struct map_session_data *sd)
 	if(!log_config.enable_logs)
 		return 0;
 
-	nullpo_retr(0, sd);
+	nullpo_ret(sd);
 
 #ifndef TXT_ONLY
 	if( log_config.sql_logs )
@@ -98,7 +98,7 @@ int log_branch(struct map_session_data *sd)
 
 int log_pick_pc(struct map_session_data *sd, const char *type, int nameid, int amount, struct item *itm)
 {
-	nullpo_retr(0, sd);
+	nullpo_ret(sd);
 
 	if (!should_log_item(log_config.filter, nameid, amount))
 		return 0; //we skip logging this item set - it doesn't meet our logging conditions [Lupus]
@@ -148,7 +148,7 @@ int log_pick_mob(struct mob_data *md, const char *type, int nameid, int amount, 
 {
 	char* mapname;
 
-	nullpo_retr(0, md);
+	nullpo_ret(md);
 
 	if (!should_log_item(log_config.filter, nameid, amount))
 		return 0; //we skip logging this item set - it doesn't meet our logging conditions [Lupus]
@@ -203,7 +203,7 @@ int log_zeny(struct map_session_data *sd, char *type, struct map_session_data *s
 	if(!log_config.enable_logs || (log_config.zeny != 1 && abs(amount) < log_config.zeny))
 		return 0;
 
-	nullpo_retr(0, sd);
+	nullpo_ret(sd);
 
 #ifndef TXT_ONLY
 	if( log_config.sql_logs )
@@ -235,7 +235,7 @@ int log_mvpdrop(struct map_session_data *sd, int monster_id, int *log_mvp)
 	if(!log_config.enable_logs)
 		return 0;
 
-	nullpo_retr(0, sd);
+	nullpo_ret(sd);
 
 #ifndef TXT_ONLY
 	if( log_config.sql_logs )
@@ -268,7 +268,7 @@ int log_atcommand(struct map_session_data* sd, const char* message)
 	if(!log_config.enable_logs)
 		return 0;
 
-	nullpo_retr(0, sd);
+	nullpo_ret(sd);
 
 #ifndef TXT_ONLY
 	if( log_config.sql_logs )
@@ -307,7 +307,7 @@ int log_npc(struct map_session_data* sd, const char* message)
 	if(!log_config.enable_logs)
 		return 0;
 
-	nullpo_retr(0, sd);
+	nullpo_ret(sd);
 
 #ifndef TXT_ONLY
 	if( log_config.sql_logs )

@@ -1529,7 +1529,7 @@ int status_calc_mob_(struct mob_data* md, bool first)
 //Skotlex: Calculates the stats of the given pet.
 int status_calc_pet_(struct pet_data *pd, bool first)
 {
-	nullpo_retr(0, pd);
+	nullpo_ret(pd);
 
 	if (first) {
 		memcpy(&pd->status, &pd->db->status, sizeof(struct status_data));
@@ -4084,7 +4084,7 @@ static unsigned short status_calc_mode(struct block_list *bl, struct status_chan
 
 const char* status_get_name(struct block_list *bl)
 {
-	nullpo_retr(0, bl);
+	nullpo_ret(bl);
 	switch (bl->type) {
 	case BL_PC:  return ((TBL_PC *)bl)->fakename[0] != '\0' ? ((TBL_PC*)bl)->fakename : ((TBL_PC*)bl)->status.name;
 	case BL_MOB: return ((TBL_MOB*)bl)->name;
@@ -4101,7 +4101,7 @@ const char* status_get_name(struct block_list *bl)
  *------------------------------------------*/
 int status_get_class(struct block_list *bl)
 {
-	nullpo_retr(0, bl);
+	nullpo_ret(bl);
 	switch( bl->type )
 	{
 	case BL_PC:  return ((TBL_PC*)bl)->status.class_;
@@ -4119,7 +4119,7 @@ int status_get_class(struct block_list *bl)
  *------------------------------------------*/
 int status_get_lv(struct block_list *bl)
 {
-	nullpo_retr(0, bl);
+	nullpo_ret(bl);
 	switch (bl->type) {
 		case BL_PC:  return ((TBL_PC*)bl)->status.base_level;
 		case BL_MOB: return ((TBL_MOB*)bl)->level;
@@ -4191,7 +4191,7 @@ unsigned short status_get_speed(struct block_list *bl)
 
 int status_get_party_id(struct block_list *bl)
 {
-	nullpo_retr(0, bl);
+	nullpo_ret(bl);
 	switch (bl->type) {
 	case BL_PC:
 		return ((TBL_PC*)bl)->status.party_id;
@@ -4227,7 +4227,7 @@ int status_get_party_id(struct block_list *bl)
 
 int status_get_guild_id(struct block_list *bl)
 {
-	nullpo_retr(0, bl);
+	nullpo_ret(bl);
 	switch (bl->type) {
 	case BL_PC:
 		return ((TBL_PC*)bl)->status.guild_id;
@@ -4265,7 +4265,7 @@ int status_get_guild_id(struct block_list *bl)
 
 int status_get_emblem_id(struct block_list *bl)
 {
-	nullpo_retr(0, bl);
+	nullpo_ret(bl);
 	switch (bl->type) {
 	case BL_PC:
 		return ((TBL_PC*)bl)->guild_emblem_id;
@@ -4304,7 +4304,7 @@ int status_get_emblem_id(struct block_list *bl)
 
 int status_get_mexp(struct block_list *bl)
 {
-	nullpo_retr(0, bl);
+	nullpo_ret(bl);
 	if(bl->type==BL_MOB)
 		return ((struct mob_data *)bl)->db->mexp;
 	if(bl->type==BL_PET)
@@ -4313,7 +4313,7 @@ int status_get_mexp(struct block_list *bl)
 }
 int status_get_race2(struct block_list *bl)
 {
-	nullpo_retr(0, bl);
+	nullpo_ret(bl);
 	if(bl->type == BL_MOB)
 		return ((struct mob_data *)bl)->db->race2;
 	if(bl->type==BL_PET)
@@ -4323,7 +4323,7 @@ int status_get_race2(struct block_list *bl)
 
 int status_isdead(struct block_list *bl)
 {
-	nullpo_retr(0, bl);
+	nullpo_ret(bl);
 	return status_get_status_data(bl)->hp == 0;
 }
 
@@ -4513,7 +4513,7 @@ int status_get_sc_def(struct block_list *bl, enum sc_type type, int rate, int ti
 	struct status_change* sc;
 	struct map_session_data *sd;
 
-	nullpo_retr(0, bl);
+	nullpo_ret(bl);
 
 	//Status that are blocked by Golden Thief Bug card or Wand of Hermod
 	if (status_isimmune(bl))
@@ -4692,7 +4692,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 	struct view_data *vd;
 	int opt_flag, calc_flag, undead_flag;
 
-	nullpo_retr(0, bl);
+	nullpo_ret(bl);
 	sc = status_get_sc(bl);
 	status = status_get_status_data(bl);
 
@@ -6312,7 +6312,7 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 	struct view_data *vd;
 	int opt_flag=0, calc_flag;
 
-	nullpo_retr(0, bl);
+	nullpo_ret(bl);
 	
 	sc = status_get_sc(bl);
 	status = status_get_status_data(bl);

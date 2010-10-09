@@ -179,8 +179,8 @@ int battle_delay_damage (unsigned int tick, int amotion, struct block_list *src,
 {
 	struct delay_damage *dat;
 	struct status_change *sc;
-	nullpo_retr(0, src);
-	nullpo_retr(0, target);
+	nullpo_ret(src);
+	nullpo_ret(target);
 
 	sc = status_get_sc(target);
 	if( sc && sc->data[SC_DEVOTION] && damage > 0 )
@@ -278,7 +278,7 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,struct Damag
 	struct status_change_entry *sce;
 	int div_ = d->div_, flag = d->flag;
 
-	nullpo_retr(0, bl);
+	nullpo_ret(bl);
 
 	if( !damage )
 		return 0;
@@ -713,7 +713,7 @@ int battle_addmastery(struct map_session_data *sd,struct block_list *target,int 
 	int weapon;
 	damage = dmg;
 
-	nullpo_retr(0, sd);
+	nullpo_ret(sd);
 
 	if((skill = pc_checkskill(sd,AL_DEMONBANE)) > 0 &&
 		target->type == BL_MOB && //This bonus doesnt work against players.
@@ -3331,8 +3331,8 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 	int strip_enemy = 1; //Flag which marks whether to remove the BCT_ENEMY status if it's also friend/ally.
 	struct block_list *s_bl = src, *t_bl = target;
 
-	nullpo_retr(0, src);
-	nullpo_retr(0, target);
+	nullpo_ret(src);
+	nullpo_ret(target);
 
 	m = target->m;
 

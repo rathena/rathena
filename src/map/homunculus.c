@@ -87,7 +87,7 @@ int merc_hom_vaporize(struct map_session_data *sd, int flag)
 {
 	struct homun_data *hd;
 
-	nullpo_retr(0, sd);
+	nullpo_ret(sd);
 
 	hd = sd->hd;
 	if (!hd || hd->homunculus.vaporize)
@@ -115,7 +115,7 @@ int merc_hom_vaporize(struct map_session_data *sd, int flag)
 int merc_hom_delete(struct homun_data *hd, int emote)
 {
 	struct map_session_data *sd;
-	nullpo_retr(0, hd);
+	nullpo_ret(hd);
 	sd = hd->master;
 
 	if (!sd)
@@ -138,7 +138,7 @@ int merc_hom_calc_skilltree(struct homun_data *hd)
 	int j,f=1;
 	int c=0;
 
-	nullpo_retr(0, hd);
+	nullpo_ret(hd);
 	c = hd->homunculus.class_ - HM_CLASS_BASE;
 	
 	for(i=0;i < MAX_SKILL_TREE && (id = hskill_tree[c][i].id) > 0;i++)
@@ -287,7 +287,7 @@ int merc_hom_evolution(struct homun_data *hd)
 	struct s_homunculus *hom;
 	struct h_stats *max, *min;
 	struct map_session_data *sd;
-	nullpo_retr(0, hd);
+	nullpo_ret(hd);
 
 	if(!hd->homunculusDB->evo_class || hd->homunculus.class_ == hd->homunculusDB->evo_class)
 	{
@@ -411,7 +411,7 @@ void merc_save(struct homun_data *hd)
 
 int merc_menu(struct map_session_data *sd,int menunum)
 {
-	nullpo_retr(0, sd);
+	nullpo_ret(sd);
 	if (sd->hd == NULL)
 		return 1;
 	
@@ -522,7 +522,7 @@ static int merc_hom_hungry(int tid, unsigned int tick, int id, intptr data)
 
 int merc_hom_hungry_timer_delete(struct homun_data *hd)
 {
-	nullpo_retr(0, hd);
+	nullpo_ret(hd);
 	if(hd->hungry_timer != -1) {
 		delete_timer(hd->hungry_timer,merc_hom_hungry);
 		hd->hungry_timer = INVALID_TIMER;
@@ -762,7 +762,7 @@ int merc_create_homunculus_request(struct map_session_data *sd, int class_)
 int merc_resurrect_homunculus(struct map_session_data* sd, unsigned char per, short x, short y)
 {
 	struct homun_data* hd;
-	nullpo_retr(0, sd);
+	nullpo_ret(sd);
 
 	if (!sd->status.hom_id)
 		return 0; // no homunculus

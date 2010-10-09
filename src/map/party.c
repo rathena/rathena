@@ -185,7 +185,7 @@ int party_check_member(struct party *p)
 	struct map_session_data *sd;
 	struct s_mapiterator* iter;
 
-	nullpo_retr(0, p);
+	nullpo_ret(p);
 
 	iter = mapit_getallusers();
 	for( sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC*)mapit_next(iter) )
@@ -262,7 +262,7 @@ int party_recv_info(struct party *sp)
 	int i;
 	bool party_new = false;
 	
-	nullpo_retr(0, sp);
+	nullpo_ret(sp);
 
 	p = (struct party_data*)idb_ensure(party_db, sp->party_id, create_party);
 	if (!p->party.party_id) //party just received.
@@ -300,7 +300,7 @@ int party_invite(struct map_session_data *sd,struct map_session_data *tsd)
 	struct party_data *p=party_search(sd->status.party_id);
 	int i,flag=0;
 	
-	nullpo_retr(0, sd);
+	nullpo_ret(sd);
 	if( p == NULL )
 		return 0;
 	if( tsd == NULL) {	//TODO: Find the correct reply packet.
@@ -587,7 +587,7 @@ int party_broken(int party_id)
 
 int party_changeoption(struct map_session_data *sd,int exp,int item)
 {
-	nullpo_retr(0, sd);
+	nullpo_ret(sd);
 
 	if( sd->status.party_id==0)
 		return 0;
@@ -874,7 +874,7 @@ int party_send_xy_clear(struct party_data *p)
 {
 	int i;
 
-	nullpo_retr(0, p);
+	nullpo_ret(p);
 
 	for(i=0;i<MAX_PARTY;i++){
 		if(!p->data[i].sd) continue;
@@ -891,7 +891,7 @@ int party_exp_share(struct party_data* p, struct block_list* src, unsigned int b
 	struct map_session_data* sd[MAX_PARTY];
 	unsigned int i, c;
 
-	nullpo_retr(0, p);
+	nullpo_ret(p);
 
 	// count the number of players eligible for exp sharing
 	for (i = c = 0; i < MAX_PARTY; i++) {
@@ -1028,7 +1028,7 @@ int party_foreachsamemap(int (*func)(struct block_list*,va_list),struct map_sess
 	int blockcount=0;
 	int total = 0; //Return value.
 	
-	nullpo_retr(0,sd);
+	nullpo_ret(sd);
 	
 	if((p=party_search(sd->status.party_id))==NULL)
 		return 0;

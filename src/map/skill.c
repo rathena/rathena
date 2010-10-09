@@ -491,8 +491,8 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 	int skill;
 	int rate;
 
-	nullpo_retr(0, src);
-	nullpo_retr(0, bl);
+	nullpo_ret(src);
+	nullpo_ret(bl);
 
 	if(skillid < 0) return 0;
 	if(skillid > 0 && skilllv <= 0) return 0;	// don't forget auto attacks! - celest
@@ -1161,8 +1161,8 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 	struct map_session_data *dstsd=NULL;
 	struct status_change *tsc;
 
-	nullpo_retr(0, src);
-	nullpo_retr(0, bl);
+	nullpo_ret(src);
+	nullpo_ret(bl);
 
 	if(skillid < 0) return 0;
 	if(skillid > 0 && skilllv <= 0) return 0;	// don't forget auto attacks! - celest
@@ -1474,7 +1474,7 @@ int skill_blown(struct block_list* src, struct block_list* target, int count, in
 	int ret;
 	struct skill_unit* su = NULL;
 
-	nullpo_retr(0, src);
+	nullpo_ret(src);
 
 	if (src != target && (map_flag_gvg(target->m) || map[target->m].flag.battleground))
 		return 0; //No knocking back in WoE
@@ -1613,9 +1613,9 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 
 	if(skillid > 0 && skilllv <= 0) return 0;
 
-	nullpo_retr(0, src);	//Source is the master behind the attack (player/mob/pet)
-	nullpo_retr(0, dsrc); //dsrc is the actual originator of the damage, can be the same as src, or a skill casted by src.
-	nullpo_retr(0, bl); //Target to be attacked.
+	nullpo_ret(src);	//Source is the master behind the attack (player/mob/pet)
+	nullpo_ret(dsrc); //dsrc is the actual originator of the damage, can be the same as src, or a skill casted by src.
+	nullpo_ret(bl); //Target to be attacked.
 
 	if (src != dsrc) {
 		//When caster is not the src of attack, this is a ground skill, and as such, do the relevant target checking. [Skotlex]
@@ -2010,7 +2010,7 @@ int skill_area_sub (struct block_list *bl, va_list ap)
 	unsigned int tick;
 	SkillFunc func;
 
-	nullpo_retr(0, bl);
+	nullpo_ret(bl);
 
 	src=va_arg(ap,struct block_list *);
 	skill_id=va_arg(ap,int);
@@ -2197,7 +2197,7 @@ static int skill_check_condition_mercenary(struct block_list *bl, int skill, int
 
 	if( lv < 1 || lv > MAX_SKILL_LEVEL )
 		return 0;
-	nullpo_retr(0,bl);
+	nullpo_ret(bl);
 
 	switch( bl->type )
 	{
@@ -2321,10 +2321,10 @@ static int skill_timerskill(int tid, unsigned int tick, int id, intptr data)
 	struct skill_timerskill *skl = NULL;
 	int range;
 
-	nullpo_retr(0, src);
-	nullpo_retr(0, ud);
+	nullpo_ret(src);
+	nullpo_ret(ud);
 	skl = ud->skilltimerskill[data];
-	nullpo_retr(0, skl);
+	nullpo_ret(skl);
 	ud->skilltimerskill[data] = NULL;
 
 	do {
@@ -2450,9 +2450,9 @@ int skill_cleartimerskill (struct block_list *src)
 {
 	int i;
 	struct unit_data *ud;
-	nullpo_retr(0, src);
+	nullpo_ret(src);
 	ud = unit_bl2ud(src);
-	nullpo_retr(0, ud);
+	nullpo_ret(ud);
 
 	for(i=0;i<MAX_SKILLTIMERSKILL;i++) {
 		if(ud->skilltimerskill[i]) {
@@ -6071,7 +6071,7 @@ int skill_castend_pos(int tid, unsigned int tick, int id, intptr data)
 	struct unit_data *ud = unit_bl2ud(src);
 	struct mob_data *md;
 
-	nullpo_retr(0, ud);
+	nullpo_ret(ud);
 
 	sd = BL_CAST(BL_PC , src);
 	md = BL_CAST(BL_MOB, src);
@@ -6223,7 +6223,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, int skillid, int sk
 	//if(skilllv <= 0) return 0;
 	if(skillid > 0 && skilllv <= 0) return 0;	// celest
 
-	nullpo_retr(0, src);
+	nullpo_ret(src);
 
 	if(status_isdead(src))
 		return 0;
@@ -6637,7 +6637,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, int skillid, int sk
  *------------------------------------------*/
 int skill_castend_map (struct map_session_data *sd, short skill_num, const char *map)
 {
-	nullpo_retr(0, sd);
+	nullpo_ret(sd);
 
 //Simplify skill_failed code.
 #define skill_failed(sd) { sd->menuskill_id = sd->menuskill_val = 0; }
@@ -7230,14 +7230,14 @@ static int skill_unit_onplace (struct skill_unit *src, struct block_list *bl, un
 	enum sc_type type;
 	int skillid;
 
-	nullpo_retr(0, src);
-	nullpo_retr(0, bl);
+	nullpo_ret(src);
+	nullpo_ret(bl);
 
 	if(bl->prev==NULL || !src->alive || status_isdead(bl))
 		return 0;
 
-	nullpo_retr(0, sg=src->group);
-	nullpo_retr(0, ss=map_id2bl(sg->src_id));
+	nullpo_ret(sg=src->group);
+	nullpo_ret(ss=map_id2bl(sg->src_id));
 
 	if( skill_get_type(sg->skill_id) == BF_MAGIC && map_getcell(bl->m, bl->x, bl->y, CELL_CHKLANDPROTECTOR) && sg->skill_id != SA_LANDPROTECTOR )
 		return 0; //AoE skills are ineffective. [Skotlex]
@@ -7415,14 +7415,14 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 	int skillid;
 	int diff=0;
 
-	nullpo_retr(0, src);
-	nullpo_retr(0, bl);
+	nullpo_ret(src);
+	nullpo_ret(bl);
 
 	if (bl->prev==NULL || !src->alive || status_isdead(bl))
 		return 0;
 
-	nullpo_retr(0, sg=src->group);
-	nullpo_retr(0, ss=map_id2bl(sg->src_id));
+	nullpo_ret(sg=src->group);
+	nullpo_ret(ss=map_id2bl(sg->src_id));
 	sd = BL_CAST(BL_PC, ss);
 	tsd = BL_CAST(BL_PC, bl);
 	tsc = status_get_sc(bl);
@@ -7834,9 +7834,9 @@ int skill_unit_onout (struct skill_unit *src, struct block_list *bl, unsigned in
 	struct status_change_entry *sce;
 	enum sc_type type;
 
-	nullpo_retr(0, src);
-	nullpo_retr(0, bl);
-	nullpo_retr(0, sg=src->group);
+	nullpo_ret(src);
+	nullpo_ret(bl);
+	nullpo_ret(sg=src->group);
 	sc = status_get_sc(bl);
 	type = status_skill2sc(sg->skill_id);
 	sce = (sc && type != -1)?sc->data[type]:NULL;
@@ -7986,7 +7986,7 @@ static int skill_unit_effect (struct block_list* bl, va_list ap)
 	if( (!unit->alive && !(flag&4)) || bl->prev == NULL )
 		return 0;
 
-	nullpo_retr(0, group);
+	nullpo_ret(group);
 
 	dissonance = skill_dance_switch(unit, 0);
 
@@ -8022,8 +8022,8 @@ int skill_unit_ondamaged (struct skill_unit *src, struct block_list *bl, int dam
 {
 	struct skill_unit_group *sg;
 
-	nullpo_retr(0, src);
-	nullpo_retr(0, sg=src->group);
+	nullpo_ret(src);
+	nullpo_ret(sg=src->group);
 
 	switch( sg->unit_id )
 	{
@@ -8060,10 +8060,10 @@ static int skill_check_condition_char_sub (struct block_list *bl, va_list ap)
 	struct map_session_data *tsd;
 	int *p_sd;	//Contains the list of characters found.
 
-	nullpo_retr(0, bl);
-	nullpo_retr(0, tsd=(struct map_session_data*)bl);
-	nullpo_retr(0, src=va_arg(ap,struct block_list *));
-	nullpo_retr(0, sd=(struct map_session_data*)src);
+	nullpo_ret(bl);
+	nullpo_ret(tsd=(struct map_session_data*)bl);
+	nullpo_ret(src=va_arg(ap,struct block_list *));
+	nullpo_ret(sd=(struct map_session_data*)src);
 
 	c=va_arg(ap,int *);
 	p_sd = va_arg(ap, int *);
@@ -8210,7 +8210,7 @@ int skill_check_condition_castbegin(struct map_session_data* sd, short skill, sh
 	struct skill_condition require;
 	int i;
 
-	nullpo_retr(0, sd);
+	nullpo_ret(sd);
 
 	if (lv <= 0 || sd->chatID) return 0;
 
@@ -8696,7 +8696,7 @@ int skill_check_condition_castend(struct map_session_data* sd, short skill, shor
 	int i;
 	int index[MAX_SKILL_ITEM_REQUIRE];
 
-	nullpo_retr(0, sd);
+	nullpo_ret(sd);
 
 	if( lv <= 0 || sd->chatID )
 		return 0;
@@ -8810,7 +8810,7 @@ int skill_consume_requirement( struct map_session_data *sd, short skill, short l
 	int n,i;
 	struct skill_condition req;
 
-	nullpo_retr(0, sd);
+	nullpo_ret(sd);
 
 	req = skill_get_requirement(sd,skill,lv);
 
@@ -9041,7 +9041,7 @@ int skill_castfix (struct block_list *bl, int skill_id, int skill_lv)
 	struct map_session_data *sd;
 	struct status_change *sc;
 
-	nullpo_retr(0, bl);
+	nullpo_ret(bl);
 	sd = BL_CAST(BL_PC, bl);
 	sc = status_get_sc(bl);
 
@@ -9113,7 +9113,7 @@ int skill_delayfix (struct block_list *bl, int skill_id, int skill_lv)
 	struct map_session_data *sd;
 	struct status_change *sc = status_get_sc(bl);
 
-	nullpo_retr(0, bl);
+	nullpo_ret(bl);
 	sd = BL_CAST(BL_PC, bl);
 
 	if (skill_id == SA_ABRACADABRA)
@@ -9465,7 +9465,7 @@ int skill_autospell (struct map_session_data *sd, int skillid)
 	int skilllv;
 	int maxlv=1,lv;
 
-	nullpo_retr(0, sd);
+	nullpo_ret(sd);
 
 	skilllv = sd->menuskill_val;
 	lv=pc_checkskill(sd,skillid);
@@ -9563,7 +9563,7 @@ int skill_sit (struct map_session_data *sd, int type)
 {
 	int flag = 0;
 	int range = 0, lv;
-	nullpo_retr(0, sd);
+	nullpo_ret(sd);
 
 
 	if((lv = pc_checkskill(sd,RG_GANGSTER)) > 0) {
@@ -9600,8 +9600,8 @@ int skill_frostjoke_scream (struct block_list *bl, va_list ap)
 	int skillnum,skilllv;
 	unsigned int tick;
 
-	nullpo_retr(0, bl);
-	nullpo_retr(0, src=va_arg(ap,struct block_list*));
+	nullpo_ret(bl);
+	nullpo_ret(src=va_arg(ap,struct block_list*));
 
 	skillnum=va_arg(ap,int);
 	skilllv=va_arg(ap,int);
@@ -9689,7 +9689,7 @@ int skill_clear_group (struct block_list *bl, int flag)
 	struct skill_unit_group *group[MAX_SKILLUNITGROUP];
 	int i, count=0;
 
-	nullpo_retr(0, bl);
+	nullpo_ret(bl);
 	if (!ud) return 0;
 
 	//All groups to be deleted are first stored on an array since the array elements shift around when you delete them. [Skotlex]
@@ -9724,7 +9724,7 @@ struct skill_unit_group *skill_locate_element_field(struct block_list *bl)
 {
 	struct unit_data *ud = unit_bl2ud(bl);
 	int i;
-	nullpo_retr(0, bl);
+	nullpo_ret(bl);
 	if (!ud) return NULL;
 
 	for (i=0;i<MAX_SKILLUNITGROUP && ud->skillunit[i];i++) {
@@ -9745,8 +9745,8 @@ int skill_graffitiremover (struct block_list *bl, va_list ap)
 {
 	struct skill_unit *unit=NULL;
 
-	nullpo_retr(0, bl);
-	nullpo_retr(0, ap);
+	nullpo_ret(bl);
+	nullpo_ret(ap);
 
 	if(bl->type!=BL_SKILL || (unit=(struct skill_unit *)bl) == NULL)
 		return 0;
@@ -9763,8 +9763,8 @@ int skill_greed (struct block_list *bl, va_list ap)
 	struct map_session_data *sd=NULL;
 	struct flooritem_data *fitem=NULL;
 
-	nullpo_retr(0, bl);
-	nullpo_retr(0, src = va_arg(ap, struct block_list *));
+	nullpo_ret(bl);
+	nullpo_ret(src = va_arg(ap, struct block_list *));
 
 	if(src->type == BL_PC && (sd=(struct map_session_data *)src) && bl->type==BL_ITEM && (fitem=(struct flooritem_data *)bl))
 		pc_takeitem(sd, fitem);
@@ -9902,8 +9902,8 @@ static int skill_trap_splash (struct block_list *bl, va_list ap)
 	unit = (struct skill_unit *)src;
 	tick = va_arg(ap,int);
 
-	nullpo_retr(0, sg = unit->group);
-	nullpo_retr(0, ss = map_id2bl(sg->src_id));
+	nullpo_ret(sg = unit->group);
+	nullpo_ret(ss = map_id2bl(sg->src_id));
 
 	if(battle_check_target(src,bl,BCT_ENEMY) <= 0)
 		return 0;
@@ -9949,8 +9949,8 @@ int skill_enchant_elemental_end (struct block_list *bl, int type)
 	struct status_change *sc;
 	const enum sc_type scs[] = { SC_ENCPOISON, SC_ASPERSIO, SC_FIREWEAPON, SC_WATERWEAPON, SC_WINDWEAPON, SC_EARTHWEAPON, SC_SHADOWWEAPON, SC_GHOSTWEAPON, SC_ENCHANTARMS };
 	int i;
-	nullpo_retr(0, bl);
-	nullpo_retr(0, sc= status_get_sc(bl));
+	nullpo_ret(bl);
+	nullpo_ret(sc= status_get_sc(bl));
 
 	if (!sc->count) return 0;
 
@@ -10060,12 +10060,12 @@ int skill_delunit (struct skill_unit* unit)
 {
 	struct skill_unit_group *group;
 
-	nullpo_retr(0, unit);
+	nullpo_ret(unit);
 	if( !unit->alive )
 		return 0;
 	unit->alive=0;
 
-	nullpo_retr(0, group=unit->group);
+	nullpo_ret(group=unit->group);
 
 	if( group->state.song_dance&0x1 ) //Cancel dissonance effect.
 		skill_dance_overlap(unit, 0);
@@ -10208,7 +10208,7 @@ int skill_delunitgroup (struct skill_unit_group *group)
 	struct unit_data *ud;
 	int i,j;
 
-	nullpo_retr(0, group);
+	nullpo_ret(group);
 
 	src=map_id2bl(group->src_id);
 	ud = unit_bl2ud(src);
@@ -10291,7 +10291,7 @@ int skill_clear_unitgroup (struct block_list *src)
 {
 	struct unit_data *ud = unit_bl2ud(src);
 
-	nullpo_retr(0, ud);
+	nullpo_ret(ud);
 
 	while (ud->skillunit[0])
 		skill_delunitgroup(ud->skillunit[0]);
@@ -10308,7 +10308,7 @@ struct skill_unit_group_tickset *skill_unitgrouptickset_search (struct block_lis
 	struct unit_data *ud;
 	struct skill_unit_group_tickset *set;
 
-	nullpo_retr(0, bl);
+	nullpo_ret(bl);
 	if (group->interval==-1)
 		return NULL;
 
@@ -10352,7 +10352,7 @@ int skill_unit_timer_sub_onplace (struct block_list* bl, va_list ap)
 	if( !unit->alive || bl->prev == NULL )
 		return 0;
 
-	nullpo_retr(0, group);
+	nullpo_ret(group);
 
 	if( !(skill_get_inf2(group->skill_id)&(INF2_SONG_DANCE|INF2_TRAP)) && map_getcell(bl->m, bl->x, bl->y, CELL_CHKLANDPROTECTOR) )
 		return 0; //AoE skills are ineffective. [Skotlex]
@@ -10379,7 +10379,7 @@ static int skill_unit_timer_sub (DBKey key, void* data, va_list ap)
 	if( !unit->alive )
 		return 0;
 
-	nullpo_retr(0, group);
+	nullpo_ret(group);
 
 	// check for expiration
 	if( (DIFF_TICK(tick,group->tick) >= group->limit || DIFF_TICK(tick,group->tick) >= unit->limit) )
@@ -10552,7 +10552,7 @@ int skill_unit_move_sub (struct block_list* bl, va_list ap)
 	int skill_id;
 	int i;
 
-	nullpo_retr(0, group);
+	nullpo_ret(group);
 
 	if( !unit->alive || target->prev == NULL )
 		return 0;
@@ -10653,7 +10653,7 @@ int skill_unit_move_sub (struct block_list* bl, va_list ap)
  *------------------------------------------*/
 int skill_unit_move (struct block_list *bl, unsigned int tick, int flag)
 {
-	nullpo_retr(0, bl);
+	nullpo_ret(bl);
 
 	if( bl->prev == NULL )
 		return 0;
@@ -10775,7 +10775,7 @@ int skill_can_produce_mix (struct map_session_data *sd, int nameid, int trigger,
 {
 	int i,j;
 
-	nullpo_retr(0, sd);
+	nullpo_ret(sd);
 
 	if(nameid<=0)
 		return 0;
@@ -10832,7 +10832,7 @@ int skill_produce_mix (struct map_session_data *sd, int skill_id, int nameid, in
 	int num = -1; // exclude the recipe
 	struct status_data *status;
 
-	nullpo_retr(0, sd);
+	nullpo_ret(sd);
 	status = status_get_status_data(&sd->bl);
 
 	if( !(idx=skill_can_produce_mix(sd,nameid,-1, qty)) )
@@ -11175,7 +11175,7 @@ int skill_arrow_create (struct map_session_data *sd, int nameid)
 	int i,j,flag,index=-1;
 	struct item tmp_item;
 
-	nullpo_retr(0, sd);
+	nullpo_ret(sd);
 
 	if(nameid <= 0)
 		return 1;

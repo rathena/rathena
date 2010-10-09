@@ -138,8 +138,8 @@ int npc_enable_sub(struct block_list *bl, va_list ap)
 	struct map_session_data *sd;
 	struct npc_data *nd;
 
-	nullpo_retr(0, bl);
-	nullpo_retr(0, nd=va_arg(ap,struct npc_data *));
+	nullpo_ret(bl);
+	nullpo_ret(nd=va_arg(ap,struct npc_data *));
 	if(bl->type == BL_PC && (sd=(struct map_session_data *)bl))
 	{
 		TBL_PC *sd = (TBL_PC*)bl;
@@ -202,7 +202,7 @@ struct npc_data* npc_name2id(const char* name)
  *------------------------------------------*/
 int npc_event_dequeue(struct map_session_data* sd)
 {
-	nullpo_retr(0, sd);
+	nullpo_ret(sd);
 
 	if(sd->npc_id)
 	{	//Current script is aborted.
@@ -276,9 +276,9 @@ int npc_event_doall_sub(DBKey key, void* data, va_list ap)
 	const char* name;
 	int rid;
 
-	nullpo_retr(0, ev = (struct event_data *)data);
-	nullpo_retr(0, c = va_arg(ap, int *));
-	nullpo_retr(0, name = va_arg(ap, const char *));
+	nullpo_ret(ev = (struct event_data *)data);
+	nullpo_ret(c = va_arg(ap, int *));
+	nullpo_ret(name = va_arg(ap, const char *));
 	rid = va_arg(ap, int);
 
 	p = strchr(p, ':'); // match only the event name
@@ -301,9 +301,9 @@ static int npc_event_do_sub(DBKey key, void* data, va_list ap)
 	int* c;
 	const char* name;
 
-	nullpo_retr(0, ev = (struct event_data *)data);
-	nullpo_retr(0, c = va_arg(ap, int *));
-	nullpo_retr(0, name = va_arg(ap, const char *));
+	nullpo_ret(ev = (struct event_data *)data);
+	nullpo_ret(c = va_arg(ap, int *));
+	nullpo_ret(name = va_arg(ap, const char *));
 
 	if( p && strcmpi(name, p) == 0 )
 	{
@@ -525,7 +525,7 @@ int npc_timerevent_start(struct npc_data* nd, int rid)
 	struct map_session_data *sd = NULL; //Player to whom script is attached.
 	struct timer_event_data *ted;
 		
-	nullpo_retr(0, nd);
+	nullpo_ret(nd);
 
 	// No need to start because of no events
 	if( nd->u.scr.timeramount == 0 )
@@ -579,7 +579,7 @@ int npc_timerevent_stop(struct npc_data* nd)
 	const struct TimerData *td = NULL;
 	int *tid;
 
-	nullpo_retr(0, nd);
+	nullpo_ret(nd);
 
 	if( nd->u.scr.rid && !(sd = map_id2sd(nd->u.scr.rid)) )
 	{
@@ -676,7 +676,7 @@ void npc_timerevent_quit(struct map_session_data* sd)
 int npc_gettimerevent_tick(struct npc_data* nd)
 {
 	int tick;
-	nullpo_retr(0, nd);
+	nullpo_ret(nd);
 
 	// TODO: Get player attached timer's tick. Now we can just get it by using 'getnpctimer' inside OnTimer event.
 
@@ -696,7 +696,7 @@ int npc_settimerevent_tick(struct npc_data* nd, int newtimer)
 	int old_rid;
 	//struct map_session_data *sd = NULL;
 
-	nullpo_retr(0, nd);
+	nullpo_ret(nd);
 
 	// TODO: Set player attached timer's tick.	
 
@@ -748,7 +748,7 @@ int npc_event(struct map_session_data* sd, const char* eventname, int ontouch)
 	struct event_data* ev = (struct event_data*)strdb_get(ev_db, eventname);
 	struct npc_data *nd;
 
-	nullpo_retr(0,sd);
+	nullpo_ret(sd);
 
 	if( ev == NULL || (nd = ev->nd) == NULL )
 	{
@@ -777,8 +777,8 @@ int npc_touch_areanpc_sub(struct block_list *bl, va_list ap)
 	int pc_id,npc_id;
 	char *name;
 
-	nullpo_retr(0,bl);
-	nullpo_retr(0,(sd = map_id2sd(bl->id)));
+	nullpo_ret(bl);
+	nullpo_ret((sd = map_id2sd(bl->id)));
 
 	pc_id = va_arg(ap,int);
 	npc_id = va_arg(ap,int);
@@ -1937,9 +1937,9 @@ int npc_convertlabel_db(DBKey key, void* data, va_list ap)
 	const char *p;
 	int len;
 
-	nullpo_retr(0, label_list = va_arg(ap,struct npc_label_list**));
-	nullpo_retr(0, label_list_num = va_arg(ap,int*));
-	nullpo_retr(0, filepath = va_arg(ap,const char*));
+	nullpo_ret(label_list = va_arg(ap,struct npc_label_list**));
+	nullpo_ret(label_list_num = va_arg(ap,int*));
+	nullpo_ret(filepath = va_arg(ap,const char*));
 
 	if( *label_list == NULL )
 	{

@@ -173,7 +173,7 @@ int bg_create(unsigned short mapindex, short rx, short ry, const char *ev, const
 
 int bg_team_get_id(struct block_list *bl)
 {
-	nullpo_retr(0, bl);
+	nullpo_ret(bl);
 	switch( bl->type )
 	{
 		case BL_PC:
@@ -209,7 +209,7 @@ int bg_send_message(struct map_session_data *sd, const char *mes, int len)
 {
 	struct battleground_data *bg;
 
-	nullpo_retr(0, sd);
+	nullpo_ret(sd);
 	if( sd->state.bg_id == 0 || (bg = bg_team_search(sd->state.bg_id)) == NULL )
 		return 0;
 	clif_bg_message(bg, sd->status.name, mes, len);
@@ -221,7 +221,7 @@ int bg_send_xy_timer_sub(DBKey key, void *data, va_list ap)
 	struct battleground_data *bg = (struct battleground_data *)data;
 	struct map_session_data *sd;
 	int i;
-	nullpo_retr(0, bg);
+	nullpo_ret(bg);
 	for( i = 0; i < MAX_BG_MEMBERS; i++ )
 	{
 		if( (sd = bg->members[i].sd) == NULL )

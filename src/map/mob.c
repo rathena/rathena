@@ -527,7 +527,7 @@ static int mob_spawn_guardian_sub(int tid, unsigned int tick, int id, intptr dat
 	}
 	
 	md = (struct mob_data*)bl;
-	nullpo_retr(0, md->guardian_data);
+	nullpo_ret(md->guardian_data);
 	g = guild_search((int)data);
 
 	if (g == NULL)
@@ -721,8 +721,8 @@ int mob_can_reach(struct mob_data *md,struct block_list *bl,int range, int state
 {
 	int easy = 0;
 
-	nullpo_retr(0, md);
-	nullpo_retr(0, bl);
+	nullpo_ret(md);
+	nullpo_ret(bl);
 	switch (state) {
 		case MSS_RUSH:
 		case MSS_FOLLOW:
@@ -746,7 +746,7 @@ int mob_linksearch(struct block_list *bl,va_list ap)
 	struct block_list *target;
 	unsigned int tick;
 	
-	nullpo_retr(0, bl);
+	nullpo_ret(bl);
 	md=(struct mob_data *)bl;
 	class_ = va_arg(ap, int);
 	target = va_arg(ap, struct block_list *);
@@ -937,8 +937,8 @@ static int mob_can_changetarget(struct mob_data* md, struct block_list* target, 
  *------------------------------------------*/
 int mob_target(struct mob_data *md,struct block_list *bl,int dist)
 {
-	nullpo_retr(0, md);
-	nullpo_retr(0, bl);
+	nullpo_ret(md);
+	nullpo_ret(bl);
 
 	// Nothing will be carried out if there is no mind of changing TAGE by TAGE ending.
 	if(md->target_id && !mob_can_changetarget(md, bl, status_get_mode(&md->bl)))
@@ -966,7 +966,7 @@ static int mob_ai_sub_hard_activesearch(struct block_list *bl,va_list ap)
 	int mode;
 	int dist;
 
-	nullpo_retr(0, bl);
+	nullpo_ret(bl);
 	md=va_arg(ap,struct mob_data *);
 	target= va_arg(ap,struct block_list**);
 	mode= va_arg(ap,int);
@@ -1017,7 +1017,7 @@ static int mob_ai_sub_hard_changechase(struct block_list *bl,va_list ap)
 	struct mob_data *md;
 	struct block_list **target;
 
-	nullpo_retr(0, bl);
+	nullpo_ret(bl);
 	md=va_arg(ap,struct mob_data *);
 	target= va_arg(ap,struct block_list**);
 
@@ -1180,7 +1180,7 @@ static int mob_ai_sub_hard_slavemob(struct mob_data *md,unsigned int tick)
  *------------------------------------------*/
 int mob_unlocktarget(struct mob_data *md, unsigned int tick)
 {
-	nullpo_retr(0, md);
+	nullpo_ret(md);
 
 	switch (md->state.skillstate) {
 	case MSS_WALK:
@@ -1223,7 +1223,7 @@ int mob_randomwalk(struct mob_data *md,unsigned int tick)
 	int i,x,y,c,d;
 	int speed;
 
-	nullpo_retr(0, md);
+	nullpo_ret(md);
 
 	if(DIFF_TICK(md->next_walktime,tick)>0 ||
 	   !unit_can_move(&md->bl) ||
@@ -1574,7 +1574,7 @@ static int mob_ai_sub_lazy(struct mob_data *md, va_list args)
 {
 	unsigned int tick;
 
-	nullpo_retr(0, md);
+	nullpo_ret(md);
 
 	if(md->bl.prev == NULL)
 		return 0;
@@ -1774,8 +1774,8 @@ int mob_deleteslave_sub(struct block_list *bl,va_list ap)
 	struct mob_data *md;
 	int id;
 
-	nullpo_retr(0, bl);
-	nullpo_retr(0, md = (struct mob_data *)bl);
+	nullpo_ret(bl);
+	nullpo_ret(md = (struct mob_data *)bl);
 
 	id=va_arg(ap,int);
 	if(md->master_id > 0 && md->master_id == id )
@@ -1788,7 +1788,7 @@ int mob_deleteslave_sub(struct block_list *bl,va_list ap)
  *------------------------------------------*/
 int mob_deleteslave(struct mob_data *md)
 {
-	nullpo_retr(0, md);
+	nullpo_ret(md);
 
 	map_foreachinmap(mob_deleteslave_sub, md->bl.m, BL_MOB,md->bl.id);
 	return 0;
@@ -2472,8 +2472,8 @@ int mob_guardian_guildchange(struct block_list *bl,va_list ap)
 	struct mob_data *md;
 	struct guild* g;
 
-	nullpo_retr(0, bl);
-	nullpo_retr(0, md = (struct mob_data *)bl);
+	nullpo_ret(bl);
+	nullpo_ret(md = (struct mob_data *)bl);
 
 	if (!md->guardian_data)
 		return 0;
@@ -2522,7 +2522,7 @@ int mob_guardian_guildchange(struct block_list *bl,va_list ap)
  *------------------------------------------*/
 int mob_random_class (int *value, size_t count)
 {
-	nullpo_retr(0, value);
+	nullpo_ret(value);
 
 	// no count specified, look into the array manually, but take only max 5 elements
 	if (count < 1) {
@@ -2547,7 +2547,7 @@ int mob_class_change (struct mob_data *md, int class_)
 	unsigned int tick = gettick();
 	int i, c, hp_rate;
 
-	nullpo_retr(0, md);
+	nullpo_ret(md);
 
 	if( md->bl.prev == NULL )
 		return 0;
@@ -2680,8 +2680,8 @@ int mob_summonslave(struct mob_data *md2,int *value,int amount,int skill_id)
 	struct spawn_data data;
 	int count = 0,k=0,hp_rate=0;
 
-	nullpo_retr(0, md2);
-	nullpo_retr(0, value);
+	nullpo_ret(md2);
+	nullpo_ret(value);
 
 	memset(&data, 0, sizeof(struct spawn_data));
 	data.m = md2->bl.m;
@@ -2845,9 +2845,9 @@ int mob_getfriendstatus_sub(struct block_list *bl,va_list ap)
 	struct mob_data **fr, *md, *mmd;
 	int flag=0;
 
-	nullpo_retr(0, bl);
-	nullpo_retr(0, md=(struct mob_data *)bl);
-	nullpo_retr(0, mmd=va_arg(ap,struct mob_data *));
+	nullpo_ret(bl);
+	nullpo_ret(md=(struct mob_data *)bl);
+	nullpo_ret(mmd=va_arg(ap,struct mob_data *));
 
 	if( mmd->bl.id == bl->id && !(battle_config.mob_ai&0x10) )
 		return 0;
@@ -2874,7 +2874,7 @@ int mob_getfriendstatus_sub(struct block_list *bl,va_list ap)
 struct mob_data *mob_getfriendstatus(struct mob_data *md,int cond1,int cond2)
 {
 	struct mob_data* fr = NULL;
-	nullpo_retr(0, md);
+	nullpo_ret(md);
 
 	map_foreachinrange(mob_getfriendstatus_sub, &md->bl, 8,BL_MOB, md,cond1,cond2,&fr);
 	return fr;
@@ -2891,8 +2891,8 @@ int mobskill_use(struct mob_data *md, unsigned int tick, int event)
 	struct mob_data *fmd = NULL;
 	int i,j,n;
 
-	nullpo_retr (0, md);
-	nullpo_retr (0, ms = md->db->skill);
+	nullpo_ret(md);
+	nullpo_ret(ms = md->db->skill);
 
 	if (!battle_config.mob_skill_rate || md->ud.skilltimer != -1 || !md->db->maxskill)
 		return 0;
@@ -3155,7 +3155,7 @@ int mob_clone_spawn(struct map_session_data *sd, int m, int x, int y, const char
 	struct mob_db* db;
 	struct status_data *status;
 
-	nullpo_retr(0, sd);
+	nullpo_ret(sd);
 
 	ARR_FIND( MOB_CLONE_START, MOB_CLONE_END, class_, mob_db_data[class_] == NULL );
 	if(class_ >= MOB_CLONE_END)

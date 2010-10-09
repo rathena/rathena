@@ -2569,7 +2569,7 @@ static int atkillmonster_sub(struct block_list *bl, va_list ap)
 	struct mob_data *md;
 	int flag;
 	
-	nullpo_retr(0, md=(struct mob_data *)bl);
+	nullpo_ret(md=(struct mob_data *)bl);
 	flag = va_arg(ap, int);
 
 	if (md->guardian_data)
@@ -6338,7 +6338,7 @@ int atcommand_mobsearch(const int fd, struct map_session_data* sd, const char* c
  *------------------------------------------*/
 static int atcommand_cleanmap_sub(struct block_list *bl, va_list ap)
 {
-	nullpo_retr(0, bl);
+	nullpo_ret(bl);
 	map_clearflooritem(bl->id);
 
 	return 0;
@@ -6860,7 +6860,7 @@ int atcommand_misceffect(const int fd, struct map_session_data* sd, const char* 
  *------------------------------------------*/
 int atcommand_mail(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
-	nullpo_retr(0,sd);
+	nullpo_ret(sd);
 #ifndef TXT_ONLY
 	mail_openmail(sd);
 #endif
@@ -7576,7 +7576,7 @@ static int atcommand_mutearea_sub(struct block_list *bl,va_list ap)
 int atcommand_mutearea(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
 	int time;
-	nullpo_retr(0, sd);
+	nullpo_ret(sd);
 
 	if (!message || !*message) {
 		clif_displaymessage(fd, "Please, enter a time in minutes (usage: @mutearea/@stfu <time in minutes>.");
@@ -8144,7 +8144,7 @@ int atcommand_feelreset(const int fd, struct map_session_data* sd, const char* c
  *------------------------------------------*/
 int atcommand_auction(const int fd, struct map_session_data *sd, const char *command, const char *message)
 {
-	nullpo_retr(0,sd);
+	nullpo_ret(sd);
 
 #ifndef TXT_ONLY
 	clif_Auction_openwindow(sd);

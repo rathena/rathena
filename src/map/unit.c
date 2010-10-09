@@ -281,7 +281,7 @@ int unit_walktoxy( struct block_list *bl, short x, short y, int flag)
 	struct unit_data* ud = NULL;
 	struct status_change* sc = NULL;
 
-	nullpo_retr(0, bl);
+	nullpo_ret(bl);
 	
 	ud = unit_bl2ud(bl);
 	
@@ -350,8 +350,8 @@ int unit_walktobl(struct block_list *bl, struct block_list *tbl, int range, int 
 {
 	struct unit_data        *ud = NULL;
 	struct status_change		*sc = NULL;
-	nullpo_retr(0, bl);
-	nullpo_retr(0, tbl);
+	nullpo_ret(bl);
+	nullpo_ret(tbl);
 	
 	ud = unit_bl2ud(bl);
 	if( ud == NULL) return 0;
@@ -490,7 +490,7 @@ int unit_movepos(struct block_list *bl, short dst_x, short dst_y, int easy, bool
 	struct unit_data        *ud = NULL;
 	struct map_session_data *sd = NULL;
 
-	nullpo_retr(0, bl);
+	nullpo_ret(bl);
 	sd = BL_CAST(BL_PC, bl);
 	ud = unit_bl2ud(bl);
 
@@ -547,7 +547,7 @@ int unit_movepos(struct block_list *bl, short dst_x, short dst_y, int easy, bool
 int unit_setdir(struct block_list *bl,unsigned char dir)
 {
 	struct unit_data *ud;
-	nullpo_retr( 0, bl );
+	nullpo_ret(bl );
 	ud = unit_bl2ud(bl);
 	if (!ud) return 0;
 	ud->dir = dir;
@@ -560,7 +560,7 @@ int unit_setdir(struct block_list *bl,unsigned char dir)
 uint8 unit_getdir(struct block_list *bl)
 {
 	struct unit_data *ud;
-	nullpo_retr( 0, bl );
+	nullpo_ret(bl );
 	ud = unit_bl2ud(bl);
 	if (!ud) return 0;
 	return ud->dir;
@@ -572,7 +572,7 @@ uint8 unit_getdir(struct block_list *bl)
 int unit_warp(struct block_list *bl,short m,short x,short y,int type)
 {
 	struct unit_data *ud;
-	nullpo_retr(0, bl);
+	nullpo_ret(bl);
 	ud = unit_bl2ud(bl);
 	
 	if(bl->prev==NULL || !ud)
@@ -650,7 +650,7 @@ int unit_stop_walking(struct block_list *bl,int type)
 	struct unit_data *ud;
 	const struct TimerData* td;
 	unsigned int tick;
-	nullpo_retr(0, bl);
+	nullpo_ret(bl);
 
 	ud = unit_bl2ud(bl);
 	if(!ud || ud->walktimer == -1)
@@ -700,7 +700,7 @@ int unit_skilluse_id(struct block_list *src, int target_id, short skill_num, sho
 int unit_is_walking(struct block_list *bl)
 {
 	struct unit_data *ud = unit_bl2ud(bl);
-	nullpo_retr(0, bl);
+	nullpo_ret(bl);
 	if(!ud) return 0;
 	return (ud->walktimer != -1);
 }
@@ -714,7 +714,7 @@ int unit_can_move(struct block_list *bl)
 	struct unit_data *ud;
 	struct status_change *sc;
 	
-	nullpo_retr(0, bl);
+	nullpo_ret(bl);
 	ud = unit_bl2ud(bl);
 	sc = status_get_sc(bl);
 	sd = BL_CAST(BL_PC, bl);
@@ -840,7 +840,7 @@ int unit_skilluse_id2(struct block_list *src, int target_id, short skill_num, sh
 	unsigned int tick = gettick();
 	int temp;
 
-	nullpo_retr(0, src);
+	nullpo_ret(src);
 	if(status_isdead(src))
 		return 0; // Ž€‚ñ‚Å‚¢‚È‚¢‚©
 
@@ -1143,7 +1143,7 @@ int unit_skilluse_pos2( struct block_list *src, short skill_x, short skill_y, sh
 	struct block_list    bl;
 	unsigned int tick = gettick();
 
-	nullpo_retr(0, src);
+	nullpo_ret(src);
 
 	if(!src->prev) return 0; // map ã‚É‘¶Ý‚·‚é‚©
 	if(status_isdead(src)) return 0;
@@ -1238,7 +1238,7 @@ static int unit_attack_timer(int tid, unsigned int tick, int id, intptr data);
 int unit_stop_attack(struct block_list *bl)
 {
 	struct unit_data *ud = unit_bl2ud(bl);
-	nullpo_retr(0, bl);
+	nullpo_ret(bl);
 
 	if(!ud || ud->attacktimer == -1)
 		return 0;
@@ -1274,7 +1274,7 @@ int unit_attack(struct block_list *src,int target_id,int continuous)
 	struct block_list *target;
 	struct unit_data  *ud;
 
-	nullpo_retr(0, ud = unit_bl2ud(src));
+	nullpo_ret(ud = unit_bl2ud(src));
 
 	target = map_id2bl(target_id);
 	if( target==NULL || status_isdead(target) )
@@ -1336,7 +1336,7 @@ int unit_cancel_combo(struct block_list *bl)
 		return 0; //Combo wasn't active.
 
 	ud = unit_bl2ud(bl);
-	nullpo_retr(0, ud);
+	nullpo_ret(ud);
 
 	ud->attackabletime = gettick() + status_get_amotion(bl);
 
@@ -1404,7 +1404,7 @@ int	unit_calc_pos(struct block_list *bl, int tx, int ty, int dir)
 {
 	int dx, dy, x, y, i, k;
 	struct unit_data *ud = unit_bl2ud(bl);
-	nullpo_retr(0, ud);
+	nullpo_ret(ud);
 
 	if( dir < 0 || dir > 7 )
 		return 1;
@@ -1603,7 +1603,7 @@ int unit_skillcastcancel(struct block_list *bl,int type)
 	unsigned int tick=gettick();
 	int ret=0, skill;
 	
-	nullpo_retr(0, bl);
+	nullpo_ret(bl);
 	if (!ud || ud->skilltimer==-1)
 		return 0; //Nothing to cancel.
 
@@ -1695,7 +1695,7 @@ static int unit_counttargeted_sub(struct block_list* bl, va_list ap)
  *------------------------------------------*/
 int unit_counttargeted(struct block_list* bl, int target_lv)
 {
-	nullpo_retr(0, bl);
+	nullpo_ret(bl);
 	return (map_foreachinrange(unit_counttargeted_sub, bl, AREA_SIZE, BL_CHAR, bl->id, target_lv));
 }
 
@@ -1704,7 +1704,7 @@ int unit_counttargeted(struct block_list* bl, int target_lv)
  *------------------------------------------*/
 int unit_fixdamage(struct block_list *src,struct block_list *target,unsigned int tick,int sdelay,int ddelay,int damage,int div,int type,int damage2)
 {
-	nullpo_retr(0, target);
+	nullpo_ret(target);
 
 	if(damage+damage2 <= 0)
 		return 0;
@@ -1717,7 +1717,7 @@ int unit_fixdamage(struct block_list *src,struct block_list *target,unsigned int
  *------------------------------------------*/
 int unit_changeviewsize(struct block_list *bl,short size)
 {
-	nullpo_retr(0, bl);
+	nullpo_ret(bl);
 
 	size=(size<0)?-1:(size>0)?1:0;
 
@@ -1743,7 +1743,7 @@ int unit_remove_map_(struct block_list *bl, int clrtype, const char* file, int l
 {
 	struct unit_data *ud = unit_bl2ud(bl);
 	struct status_change *sc = status_get_sc(bl);
-	nullpo_retr(0, ud);
+	nullpo_ret(ud);
 
 	if(bl->prev == NULL)
 		return 0; //Already removed?
@@ -1964,7 +1964,7 @@ void unit_free_pc(struct map_session_data *sd)
 int unit_free(struct block_list *bl, int clrtype)
 {
 	struct unit_data *ud = unit_bl2ud( bl );
-	nullpo_retr(0, ud);
+	nullpo_ret(ud);
 
 	map_freeblock_lock();
 	if( bl->prev )	//Players are supposed to logout with a "warp" effect.

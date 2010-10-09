@@ -64,7 +64,7 @@ static struct chat_data* chat_createchat(struct block_list* bl, const char* titl
 int chat_createpcchat(struct map_session_data* sd, const char* title, const char* pass, int limit, bool pub)
 {
 	struct chat_data* cd;
-	nullpo_retr(0, sd);
+	nullpo_ret(sd);
 
 	if( sd->chatID )
 		return 0; //Prevent people abusing the chat system by creating multiple chats, as pointed out by End of Exam. [Skotlex]
@@ -105,7 +105,7 @@ int chat_joinchat(struct map_session_data* sd, int chatid, const char* pass)
 {
 	struct chat_data* cd;
 
-	nullpo_retr(0, sd);
+	nullpo_ret(sd);
 	cd = (struct chat_data*)map_id2bl(chatid);
 
 	if( cd == NULL || cd->bl.type != BL_CHAT || cd->bl.m != sd->bl.m || sd->vender_id || sd->chatID || cd->users >= cd->limit )
@@ -297,7 +297,7 @@ int chat_kickchat(struct map_session_data* sd, const char* kickusername)
 int chat_createnpcchat(struct npc_data* nd, const char* title, int limit, bool pub, int trigger, const char* ev)
 {
 	struct chat_data* cd;
-	nullpo_retr(0, nd);
+	nullpo_ret(nd);
 
 	if( nd->chat_id )
 	{
@@ -319,7 +319,7 @@ int chat_createnpcchat(struct npc_data* nd, const char* title, int limit, bool p
 int chat_deletenpcchat(struct npc_data* nd)
 {
 	struct chat_data *cd;
-	nullpo_retr(0, nd);
+	nullpo_ret(nd);
 
 	cd = (struct chat_data*)map_id2bl(nd->chat_id);
 	if( cd == NULL )
@@ -340,7 +340,7 @@ int chat_deletenpcchat(struct npc_data* nd)
  *------------------------------------------*/
 int chat_triggerevent(struct chat_data *cd)
 {
-	nullpo_retr(0, cd);
+	nullpo_ret(cd);
 
 	if( cd->users >= cd->trigger && cd->npc_event[0] )
 		npc_event_do(cd->npc_event);
@@ -351,7 +351,7 @@ int chat_triggerevent(struct chat_data *cd)
 /// At most, 127 users are needed to trigger the event.
 int chat_enableevent(struct chat_data* cd)
 {
-	nullpo_retr(0, cd);
+	nullpo_ret(cd);
 
 	cd->trigger &= 0x7f;
 	chat_triggerevent(cd);
@@ -361,7 +361,7 @@ int chat_enableevent(struct chat_data* cd)
 /// Disables the event of the chat room
 int chat_disableevent(struct chat_data* cd)
 {
-	nullpo_retr(0, cd);
+	nullpo_ret(cd);
 
 	cd->trigger |= 0x80;
 	return 0;
@@ -370,7 +370,7 @@ int chat_disableevent(struct chat_data* cd)
 /// Kicks all the users from the chat room.
 int chat_npckickall(struct chat_data* cd)
 {
-	nullpo_retr(0, cd);
+	nullpo_ret(cd);
 
 	while( cd->users > 0 )
 		chat_leavechat(cd->usersd[cd->users-1],0);

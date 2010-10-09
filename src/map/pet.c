@@ -42,7 +42,7 @@ static struct eri *item_drop_list_ers;
 
 int pet_hungry_val(struct pet_data *pd)
 {
-	nullpo_retr(0, pd);
+	nullpo_ret(pd);
 
 	if(pd->pet.hungry > 90)
 		return 4;
@@ -86,7 +86,7 @@ int pet_create_egg(struct map_session_data *sd, int item_id)
 
 int pet_unlocktarget(struct pet_data *pd)
 {
-	nullpo_retr(0, pd);
+	nullpo_ret(pd);
 
 	pd->target_id=0;
 	pet_stop_attack(pd);
@@ -174,7 +174,7 @@ int pet_sc_check(struct map_session_data *sd, int type)
 {	
 	struct pet_data *pd;
 
-	nullpo_retr(0, sd);
+	nullpo_ret(sd);
 	pd = sd->pd;
 
 	if( pd == NULL
@@ -262,7 +262,7 @@ int search_petDB_index(int key,int type)
 
 int pet_hungry_timer_delete(struct pet_data *pd)
 {
-	nullpo_retr(0, pd);
+	nullpo_ret(pd);
 	if(pd->pet_hungry_timer != -1) {
 		delete_timer(pd->pet_hungry_timer,pet_hungry);
 		pd->pet_hungry_timer = INVALID_TIMER;
@@ -463,7 +463,7 @@ int pet_recv_petdata(int account_id,struct s_pet *p,int flag)
 
 int pet_select_egg(struct map_session_data *sd,short egg_index)
 {
-	nullpo_retr(0, sd);
+	nullpo_ret(sd);
 
 	if(egg_index < 0 || egg_index >= MAX_INVENTORY)
 		return 0; //Forged packet!
@@ -478,7 +478,7 @@ int pet_select_egg(struct map_session_data *sd,short egg_index)
 
 int pet_catch_process1(struct map_session_data *sd,int target_class)
 {
-	nullpo_retr(0, sd);
+	nullpo_ret(sd);
 
 	sd->catch_target_class = target_class;
 	clif_catch_process(sd);
@@ -580,7 +580,7 @@ static int pet_ai_sub_hard_lootsearch(struct block_list *bl,va_list ap);
 
 int pet_menu(struct map_session_data *sd,int menunum)
 {
-	nullpo_retr(0, sd);
+	nullpo_ret(sd);
 	if (sd->pd == NULL)
 		return 1;
 	
@@ -776,7 +776,7 @@ static int pet_randomwalk(struct pet_data *pd,unsigned int tick)
 {
 	const int retrycount=20;
 
-	nullpo_retr(0, pd);
+	nullpo_ret(pd);
 
 	Assert((pd->msd == 0) || (pd->msd->pd == pd));
 

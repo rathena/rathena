@@ -190,8 +190,8 @@ int quest_update_objective_sub(struct block_list *bl, va_list ap)
 	struct map_session_data * sd;
 	int mob, party;
 
-	nullpo_retr(0, bl);
-	nullpo_retr(0, sd = (struct map_session_data *)bl);
+	nullpo_ret(bl);
+	nullpo_ret(sd = (struct map_session_data *)bl);
 
 	party = va_arg(ap,int);
 	mob = va_arg(ap,int);

@@ -92,7 +92,7 @@ void do_reconnect_storage(void)
  *------------------------------------------*/
 int storage_storageopen(struct map_session_data *sd)
 {
-	nullpo_retr(0, sd);
+	nullpo_ret(sd);
 
 	if(sd->state.storage_flag)
 		return 1; //Already open?
@@ -207,7 +207,7 @@ int storage_delitem(struct map_session_data* sd, int n, int amount)
  *------------------------------------------*/
 int storage_storageadd(struct map_session_data* sd, int index, int amount)
 {
-	nullpo_retr(0, sd);
+	nullpo_ret(sd);
 
 	if( sd->status.storage.storage_amount > MAX_STORAGE )
 		return 0; // storage full
@@ -256,7 +256,7 @@ int storage_storageget(struct map_session_data* sd, int index, int amount)
  *------------------------------------------*/
 int storage_storageaddfromcart(struct map_session_data* sd, int index, int amount)
 {
-	nullpo_retr(0, sd);
+	nullpo_ret(sd);
 
 	if( sd->status.storage.storage_amount > MAX_STORAGE )
   		return 0; // storage full / storage closed
@@ -281,7 +281,7 @@ int storage_storageaddfromcart(struct map_session_data* sd, int index, int amoun
  *------------------------------------------*/
 int storage_storagegettocart(struct map_session_data* sd, int index, int amount)
 {
-	nullpo_retr(0, sd);
+	nullpo_ret(sd);
 
 	if( index < 0 || index >= MAX_STORAGE )
 		return 0;
@@ -358,7 +358,7 @@ int storage_guild_storageopen(struct map_session_data* sd)
 {
 	struct guild_storage *gstor;
 
-	nullpo_retr(0, sd);
+	nullpo_ret(sd);
 
 	if(sd->status.guild_id <= 0)
 		return 2;
@@ -460,8 +460,8 @@ int storage_guild_storageadd(struct map_session_data* sd, int index, int amount)
 {
 	struct guild_storage *stor;
 
-	nullpo_retr(0, sd);
-	nullpo_retr(0, stor=guild2storage2(sd->status.guild_id));
+	nullpo_ret(sd);
+	nullpo_ret(stor=guild2storage2(sd->status.guild_id));
 		
 	if( !stor->storage_status || stor->storage_amount > MAX_GUILD_STORAGE )
 		return 0;
@@ -487,8 +487,8 @@ int storage_guild_storageget(struct map_session_data* sd, int index, int amount)
 	struct guild_storage *stor;
 	int flag;
 
-	nullpo_retr(0, sd);
-	nullpo_retr(0, stor=guild2storage2(sd->status.guild_id));
+	nullpo_ret(sd);
+	nullpo_ret(stor=guild2storage2(sd->status.guild_id));
 
 	if(!stor->storage_status)
   		return 0;
@@ -515,8 +515,8 @@ int storage_guild_storageaddfromcart(struct map_session_data* sd, int index, int
 {
 	struct guild_storage *stor;
 
-	nullpo_retr(0, sd);
-	nullpo_retr(0, stor=guild2storage2(sd->status.guild_id));
+	nullpo_ret(sd);
+	nullpo_ret(stor=guild2storage2(sd->status.guild_id));
 
 	if( !stor->storage_status || stor->storage_amount > MAX_GUILD_STORAGE )
 		return 0;
@@ -540,8 +540,8 @@ int storage_guild_storagegettocart(struct map_session_data* sd, int index, int a
 {
 	struct guild_storage *stor;
 
-	nullpo_retr(0, sd);
-	nullpo_retr(0, stor=guild2storage2(sd->status.guild_id));
+	nullpo_ret(sd);
+	nullpo_ret(stor=guild2storage2(sd->status.guild_id));
 
 	if(!stor->storage_status)
 	  	return 0;
@@ -595,8 +595,8 @@ int storage_guild_storageclose(struct map_session_data* sd)
 {
 	struct guild_storage *stor;
 
-	nullpo_retr(0, sd);
-	nullpo_retr(0, stor=guild2storage2(sd->status.guild_id));
+	nullpo_ret(sd);
+	nullpo_ret(stor=guild2storage2(sd->status.guild_id));
 
 	clif_storageclose(sd);
 	if (stor->storage_status)
@@ -616,8 +616,8 @@ int storage_guild_storage_quit(struct map_session_data* sd, int flag)
 {
 	struct guild_storage *stor;
 
-	nullpo_retr(0, sd);
-	nullpo_retr(0, stor=guild2storage2(sd->status.guild_id));
+	nullpo_ret(sd);
+	nullpo_ret(stor=guild2storage2(sd->status.guild_id));
 	
 	if(flag)
 	{	//Only during a guild break flag is 1 (don't save storage)
