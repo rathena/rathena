@@ -4,6 +4,7 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2010/10/10
+	* Pull `name` from character table instead of using `master` from guild table when loading guild data. [Paradox924X]
 	* Use `char_id` rather than `master` when checking if a guild needs to be deleted during character deletion. [Paradox924X]
 2010/10/06
 	* Rev. 14413 Touched up the party booking patch, seems I forgot some lines in clif.c...and managed to duplicate a line in map.c. [L0ne_W0lf]
