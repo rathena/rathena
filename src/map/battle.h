@@ -214,6 +214,7 @@ extern struct Battle_Config
 	int combo_delay_rate;
 	int item_check;
 	int item_use_interval;	//[Skotlex]
+	int cashfood_use_interval;
 	int wedding_modifydisplay;
 	int wedding_ignorepalette;	//[Skotlex]
 	int xmas_ignorepalette;	// [Valaris]

@@ -486,6 +486,12 @@ void initChangeTables(void)
 	StatusIconChangeTable[SC_MANU_MATK] = SI_MANU_MATK;
 	StatusIconChangeTable[SC_SPL_MATK] = SI_SPL_MATK;
 	//Cash Items
+	StatusIconChangeTable[SC_FOOD_STR_CASH] = SI_FOOD_STR_CASH;
+	StatusIconChangeTable[SC_FOOD_AGI_CASH] = SI_FOOD_AGI_CASH;
+	StatusIconChangeTable[SC_FOOD_VIT_CASH] = SI_FOOD_VIT_CASH;
+	StatusIconChangeTable[SC_FOOD_DEX_CASH] = SI_FOOD_DEX_CASH;
+	StatusIconChangeTable[SC_FOOD_INT_CASH] = SI_FOOD_INT_CASH;
+	StatusIconChangeTable[SC_FOOD_LUK_CASH] = SI_FOOD_LUK_CASH;
 	StatusIconChangeTable[SC_EXPBOOST] = SI_EXPBOOST;
 	StatusIconChangeTable[SC_ITEMBOOST] = SI_ITEMBOOST;
 	StatusIconChangeTable[SC_JEXPBOOST] = SI_CASH_PLUSONLYJOBEXP;
@@ -550,6 +556,13 @@ void initChangeTables(void)
 	StatusChangeFlagTable[SC_SPCOST_RATE] |= SCB_ALL;
 	StatusChangeFlagTable[SC_WALKSPEED] |= SCB_SPEED;
 	StatusChangeFlagTable[SC_ITEMSCRIPT] |= SCB_ALL;
+	// Cash Items
+	StatusChangeFlagTable[SC_FOOD_STR_CASH] = SCB_STR;
+	StatusChangeFlagTable[SC_FOOD_AGI_CASH] = SCB_AGI;
+	StatusChangeFlagTable[SC_FOOD_VIT_CASH] = SCB_VIT;
+	StatusChangeFlagTable[SC_FOOD_DEX_CASH] = SCB_DEX;
+	StatusChangeFlagTable[SC_FOOD_INT_CASH] = SCB_INT;
+	StatusChangeFlagTable[SC_FOOD_LUK_CASH] = SCB_LUK;
 	// Mercenary Bonus Effects
 	StatusChangeFlagTable[SC_MERC_FLEEUP] |= SCB_FLEE;
 	StatusChangeFlagTable[SC_MERC_ATKUP] |= SCB_WATK;
@@ -3192,6 +3205,8 @@ static unsigned short status_calc_str(struct block_list *bl, struct status_chang
 		str += sc->data[SC_INCSTR]->val1;
 	if(sc->data[SC_STRFOOD])
 		str += sc->data[SC_STRFOOD]->val1;
+	if(sc->data[SC_FOOD_STR_CASH])
+		str += sc->data[SC_FOOD_STR_CASH]->val1;
 	if(sc->data[SC_BATTLEORDERS])
 		str += 5;
 	if(sc->data[SC_GUILDAURA] && sc->data[SC_GUILDAURA]->val3>>16)
@@ -3233,6 +3248,8 @@ static unsigned short status_calc_agi(struct block_list *bl, struct status_chang
 		agi += sc->data[SC_INCAGI]->val1;
 	if(sc->data[SC_AGIFOOD])
 		agi += sc->data[SC_AGIFOOD]->val1;
+	if(sc->data[SC_FOOD_AGI_CASH])
+		agi += sc->data[SC_FOOD_AGI_CASH]->val1;
 	if(sc->data[SC_GUILDAURA] && (sc->data[SC_GUILDAURA]->val4)>>16)
 		agi += (sc->data[SC_GUILDAURA]->val4)>>16;
 	if(sc->data[SC_TRUESIGHT])
@@ -3268,6 +3285,8 @@ static unsigned short status_calc_vit(struct block_list *bl, struct status_chang
 		vit += sc->data[SC_INCVIT]->val1;
 	if(sc->data[SC_VITFOOD])
 		vit += sc->data[SC_VITFOOD]->val1;
+	if(sc->data[SC_FOOD_VIT_CASH])
+		vit += sc->data[SC_FOOD_VIT_CASH]->val1;
 	if(sc->data[SC_CHANGE])
 		vit += sc->data[SC_CHANGE]->val2;
 	if(sc->data[SC_GUILDAURA] && sc->data[SC_GUILDAURA]->val3&0xFFFF)
@@ -3297,6 +3316,8 @@ static unsigned short status_calc_int(struct block_list *bl, struct status_chang
 		int_ += sc->data[SC_INCINT]->val1;
 	if(sc->data[SC_INTFOOD])
 		int_ += sc->data[SC_INTFOOD]->val1;
+	if(sc->data[SC_FOOD_INT_CASH])
+		int_ += sc->data[SC_FOOD_INT_CASH]->val1;
 	if(sc->data[SC_CHANGE])
 		int_ += sc->data[SC_CHANGE]->val3;
 	if(sc->data[SC_BATTLEORDERS])
@@ -3337,6 +3358,8 @@ static unsigned short status_calc_dex(struct block_list *bl, struct status_chang
 		dex += sc->data[SC_INCDEX]->val1;
 	if(sc->data[SC_DEXFOOD])
 		dex += sc->data[SC_DEXFOOD]->val1;
+	if(sc->data[SC_FOOD_DEX_CASH])
+		dex += sc->data[SC_FOOD_DEX_CASH]->val1;
 	if(sc->data[SC_BATTLEORDERS])
 		dex += 5;
 	if(sc->data[SC_GUILDAURA] && sc->data[SC_GUILDAURA]->val4&0xFFFF)
@@ -3376,6 +3399,8 @@ static unsigned short status_calc_luk(struct block_list *bl, struct status_chang
 		luk += sc->data[SC_INCLUK]->val1;
 	if(sc->data[SC_LUKFOOD])
 		luk += sc->data[SC_LUKFOOD]->val1;
+	if(sc->data[SC_FOOD_LUK_CASH])
+		luk += sc->data[SC_FOOD_LUK_CASH]->val1;
 	if(sc->data[SC_TRUESIGHT])
 		luk += 5;
 	if(sc->data[SC_GLORIA])
@@ -6274,6 +6299,12 @@ int status_change_clear(struct block_list* bl, int type)
 		case SC_HELLPOWER:
 		case SC_JEXPBOOST:
 		case SC_AUTOTRADE:
+		case SC_FOOD_STR_CASH:
+		case SC_FOOD_AGI_CASH:
+		case SC_FOOD_VIT_CASH:
+		case SC_FOOD_DEX_CASH:
+		case SC_FOOD_INT_CASH:
+		case SC_FOOD_LUK_CASH:
 			continue;
 		}
 
@@ -7302,6 +7333,12 @@ int status_change_clear_buffs (struct block_list* bl, int type)
 			case SC_BATKFOOD:
 			case SC_WATKFOOD:
 			case SC_MATKFOOD:
+			case SC_FOOD_STR_CASH:
+			case SC_FOOD_AGI_CASH:
+			case SC_FOOD_VIT_CASH:
+			case SC_FOOD_DEX_CASH:
+			case SC_FOOD_INT_CASH:
+			case SC_FOOD_LUK_CASH:
 				continue;
 				
 			//Debuffs that can be removed.

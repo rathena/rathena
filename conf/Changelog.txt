@@ -1,5 +1,7 @@
 Date	Added
 
+2010/10/10
+	* Added cashfood_use_interval config setting. [Paradox924X]
 2010/05/25
 	* Rev. 14307 Added noteleport flag to nyd_dun02. [L0ne_W0lf]
 2009/11/03
