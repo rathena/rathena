@@ -4,6 +4,7 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2010/10/10
+	* Added NULL initialization to info variable in map_readfromcache() to satiate compiler. (bugreport:4399) [Paradox924X]
 	* Applied Ai4rei's patch to eliminate unnecessary and redundant castle data saving. (bugreport:4471) [Paradox924X]
 	* Added a missing const qualifier to a variable. (bugreport:4472) [Paradox924X]
 	* Rev. 14418 Follow up from r14413, should take care of the errors from bugreport:4472. [L0ne_W0lf]
