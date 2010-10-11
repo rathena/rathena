@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Sara-chan (1.0)
 //===== Current Version: =====================================
-//= 1.2
+//= 1.3
 //===== Compatible With: =====================================
 //= Any Athena Version; RO Episode 10+
 //===== Description: =========================================
@@ -12,6 +12,7 @@
 //= Initial Release
 //= 1.1 Official warps [Playtester]
 //= 1.2 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
+//= 1.3 Renewal warp adjustments.
 //============================================================
 
 //= Hugel Field ==============================================

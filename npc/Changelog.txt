@@ -1,6 +1,8 @@
 Date		Added
 ======
 2010/10/10
+	* Rev. 14422 Wot's dis? Missed a warp in morroc field! THIS WILL NOT DO. [L0ne_W0lf]
+	- ...corrected the versions in the file headers as well. :P
 	* Rev. 14421 Renewal Update to warp portals, and deleted disabled_warps.txt. [L0ne_W0lf]
 	- Only disabled warps, some coordinates might have slipped past me.
 2010/09/18

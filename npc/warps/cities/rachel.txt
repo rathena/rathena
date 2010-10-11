@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= erKURITA & RockmanEXE
 //===== Current Version: =====================================
-//= 1.4
+//= 1.5
 //===== Compatible With: =====================================
 //= Any Athena Version
 //===== Description: =========================================
@@ -17,6 +17,7 @@
 //= 1.2a Added missing warp (Pope's office entryway -> temple) [L0ne_W0lf]
 //= 1.3 Updated Rachel -> Veins Field warp. [L0ne_W0lf]
 //= 1.4 Disabled rachel33, moved to quest_rachel.txt [L0ne_W0lf] 
+//= 1.5 Renewal warp adjustments.
 //============================================================
 
 rachel,150,249,0	warp	rachel01	1,1,ra_temple,120,30

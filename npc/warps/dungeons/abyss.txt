@@ -10,7 +10,7 @@
 //= Warp Points for Abyss Lake Dungeon
 //===== Additional Comments: =================================
 //= 1.0 Thanks to Muad-Dib for the temp warps [Lupus]
-//= 1.1 Renewal warp adjustments.
+//= 1.1 Corrected warp placements.
 //============================================================
 
 abyss_01,25,24,0	warp	abysslakedunwarp001	1,1,abyss_02,271,270

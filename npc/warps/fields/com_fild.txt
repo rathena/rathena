@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Nana
 //===== Current Version: =====================================
-//= 1.1
+//= 1.2
 //===== Compatible With: =====================================
 //= Any Athena Version
 //===== Description: =========================================
@@ -11,6 +11,7 @@
 //= Warp Points for Comodo Fields
 //===== Additional Comments: =================================
 //= 1.1 Rescripted to Aegis 10.3 Standards. [L0ne_W0lf]
+//= 1.2 Renewal warp adjustments.
 //============================================================
 
 cmd_fild01,222,24,0	warp	cmd_fild01-1	1,1,cmd_fild02,222,372
