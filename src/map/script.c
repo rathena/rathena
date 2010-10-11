@@ -9068,8 +9068,13 @@ BUILDIN_FUNC(warpwaitingpc)
  *------------------------------------------*/
 BUILDIN_FUNC(attachrid)
 {
-	st->rid=script_getnum(st,2);
-	script_pushint(st,(map_id2sd(st->rid)!=NULL));
+	int rid = script_getnum(st,2);
+	
+	if (map_id2sd(rid)) {
+		st->rid = rid;
+		script_pushint(st,1);
+	} else
+		script_pushint(st,0);
 	return 0;
 }
 /*==========================================
