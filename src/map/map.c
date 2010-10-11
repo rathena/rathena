@@ -2707,7 +2707,7 @@ int map_readfromcache(struct map_data *m, char *buffer, char *decode_buffer)
 {
 	int i;
 	struct map_cache_main_header *header = (struct map_cache_main_header *)buffer;
-	struct map_cache_map_info *info;
+	struct map_cache_map_info *info = NULL;
 	unsigned char *p = buffer + sizeof(struct map_cache_main_header);
 
 	for(i = 0; i < header->map_count; i++) {
