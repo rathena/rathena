@@ -1,5 +1,8 @@
 Date		Added
 ======
+2010/10/10
+	* Rev. 14421 Renewal Update to warp portals, and deleted disabled_warps.txt. [L0ne_W0lf]
+	- Only disabled warps, some coordinates might have slipped past me.
 2010/09/18
 	* Rev 14409 Updates, and bugfixes, the usual stuff. [L0ne_W0lf]
 	* Updated Sage quest skill quest with the file curtosy of 5511.
