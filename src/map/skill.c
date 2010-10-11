@@ -9902,6 +9902,9 @@ static int skill_trap_splash (struct block_list *bl, va_list ap)
 	unit = (struct skill_unit *)src;
 	tick = va_arg(ap,int);
 
+	if( !unit->alive || bl->prev == NULL )
+		return 0;
+
 	nullpo_ret(sg = unit->group);
 	nullpo_ret(ss = map_id2bl(sg->src_id));
 
