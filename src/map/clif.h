@@ -25,6 +25,7 @@ struct party_data;
 struct guild;
 struct battleground_data;
 struct quest;
+struct party_booking_ad_info;
 #include <stdarg.h>
 // packet DB
 #define MAX_PACKET_DB		0x900
