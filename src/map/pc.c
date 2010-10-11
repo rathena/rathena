@@ -851,6 +851,7 @@ bool pc_authok(struct map_session_data *sd, int login_id2, time_t expiration_tim
 	sd->pvp_timer = INVALID_TIMER;
 	
 	sd->canuseitem_tick = tick;
+	sd->canusecashfood_tick = tick;
 	sd->canequip_tick = tick;
 	sd->cantalk_tick = tick;
 	sd->cansendmail_tick = tick;
@@ -3666,7 +3667,9 @@ int pc_useitem(struct map_session_data *sd,int n)
 		return 0;
 
 	 //Prevent mass item usage. [Skotlex]
-	if( DIFF_TICK(sd->canuseitem_tick, tick) > 0 )
+	if( DIFF_TICK(sd->canuseitem_tick, tick) > 0 ||
+		(itemdb_iscashfood(sd->status.inventory[n].nameid) && DIFF_TICK(sd->canusecashfood_tick, tick) > 0)
+	)
 		return 0;
 
 	if( sd->sc.count && (
@@ -3718,7 +3721,11 @@ int pc_useitem(struct map_session_data *sd,int n)
 			 potion_flag = 3; //Even more effective potions.
 	}
 
-	sd->canuseitem_tick= tick + battle_config.item_use_interval; //Update item use time.
+	//Update item use time.
+	sd->canuseitem_tick = tick + battle_config.item_use_interval;
+	if( itemdb_iscashfood(sd->status.inventory[n].nameid) )
+		sd->canusecashfood_tick = tick + battle_config.cashfood_use_interval;
+
 	run_script(script,0,sd->bl.id,fake_nd->bl.id);
 	potion_flag = 0;
 	return 1;
