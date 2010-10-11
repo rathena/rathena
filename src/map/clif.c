@@ -7377,7 +7377,7 @@ void clif_wedding_effect(struct block_list *bl)
 void clif_callpartner(struct map_session_data *sd)
 {
 	unsigned char buf[26];
-	char *p;
+	const char *p;
 
 	nullpo_retv(sd);
 
