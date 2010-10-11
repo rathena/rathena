@@ -61,13 +61,7 @@ struct{
 	}need[6];
 } guild_skill_tree[MAX_GUILDSKILL];
 
-// timer for auto saving guild data during WoE
-#define GUILD_SAVE_INTERVAL 300000
-int guild_save_timer = INVALID_TIMER;
-int guild_save_timer2 = INVALID_TIMER;
-
 int guild_payexp_timer(int tid, unsigned int tick, int id, intptr data);
-int guild_save_sub(int tid, unsigned int tick, int id, intptr data);
 static int guild_send_xy_timer(int tid, unsigned int tick, int id, intptr data);
 
 /*==========================================
@@ -1896,8 +1890,6 @@ int guild_agit_start(void)
 {	// Run All NPC_Event[OnAgitStart]
 	int c = npc_event_doall("OnAgitStart");
 	ShowStatus("NPC_Event:[OnAgitStart] Run (%d) Events by @AgitStart.\n",c);
-	// Start auto saving
-	guild_save_timer = add_timer_interval (gettick() + GUILD_SAVE_INTERVAL, guild_save_sub, 0, 0, GUILD_SAVE_INTERVAL);
 	return 0;
 }
 
@@ -1905,8 +1897,6 @@ int guild_agit_end(void)
 {	// Run All NPC_Event[OnAgitEnd]
 	int c = npc_event_doall("OnAgitEnd");
 	ShowStatus("NPC_Event:[OnAgitEnd] Run (%d) Events by @AgitEnd.\n",c);
-	// Stop auto saving
-	delete_timer (guild_save_timer, guild_save_sub);
 	return 0;
 }
 
@@ -1914,8 +1904,6 @@ int guild_agit2_start(void)
 {	// Run All NPC_Event[OnAgitStart2]
 	int c = npc_event_doall("OnAgitStart2");
 	ShowStatus("NPC_Event:[OnAgitStart2] Run (%d) Events by @AgitStart2.\n",c);
-	// Start auto saving
-	guild_save_timer2 = add_timer_interval (gettick() + GUILD_SAVE_INTERVAL, guild_save_sub, 0, 0, GUILD_SAVE_INTERVAL);
 	return 0;
 }
 
@@ -1923,27 +1911,6 @@ int guild_agit2_end(void)
 {	// Run All NPC_Event[OnAgitEnd2]
 	int c = npc_event_doall("OnAgitEnd2");
 	ShowStatus("NPC_Event:[OnAgitEnd2] Run (%d) Events by @AgitEnd2.\n",c);
-	// Stop auto saving
-	delete_timer (guild_save_timer2, guild_save_sub);
-	return 0;
-}
-
-int guild_save_sub(int tid, unsigned int tick, int id, intptr data)
-{
-	static int Gid[MAX_GUILDCASTLE]; // previous owning guild
-	struct guild_castle *gc;
-	int i;
-
-	for(i = 0; i < MAX_GUILDCASTLE; i++) {	// [Yor]
-		gc = guild_castle_search(i);
-		if (!gc) continue;
-		if (gc->guild_id != Gid[i]) {
-			// Re-save guild id if its owner guild has changed
-			guild_castledatasave(gc->castle_id, 1, gc->guild_id);
-			Gid[i] = gc->guild_id;
-		}
-	}
-
 	return 0;
 }
 
@@ -2008,7 +1975,6 @@ void do_init_guild(void)
 	guild_read_guildskill_tree_db(); //guild skill tree [Komurka]
 
 	add_timer_func_list(guild_payexp_timer,"guild_payexp_timer");
-	add_timer_func_list(guild_save_sub, "guild_save_sub");
 	add_timer_func_list(guild_send_xy_timer, "guild_send_xy_timer");
 	add_timer_interval(gettick()+GUILD_PAYEXP_INVERVAL,guild_payexp_timer,0,0,GUILD_PAYEXP_INVERVAL);
 	add_timer_interval(gettick()+GUILD_SEND_XY_INVERVAL,guild_send_xy_timer,0,0,GUILD_SEND_XY_INVERVAL);
