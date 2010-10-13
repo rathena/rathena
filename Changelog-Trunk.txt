@@ -1,5 +1,7 @@
 Date	Added
 
+2010/10/13
+	* Prevented @stpoint and @skpoint from causing overflows. [Paradox924X]
 2010/10/11
 	* Implemented official cash food behavior, including use delay, not being dispelled (including on death),
 	  distinct status effects and icons from the ordinary food types. (bugreport:2560) [Paradox924X]
