@@ -14551,7 +14551,7 @@ mid_camp,199,311,7	script	Mr. Kidd#ep13_dan01	884,{
 			mes "......";
 			next;
 			mes "......";
-			mes "............­";
+			mes "............";
 			next;
 			cutin "moc2_kid03",2;
 			mes "[Mr. Kidd]";
