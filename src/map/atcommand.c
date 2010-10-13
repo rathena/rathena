@@ -1340,33 +1340,35 @@ int atcommand_jobchange(const int fd, struct map_session_data* sd, const char* c
 
 		if (!found) {
 			clif_displaymessage(fd, "Please, enter job ID (usage: @job/@jobchange <job name/ID>).");
-			clif_displaymessage(fd, "   0 Novice            7 Knight           14 Crusader         21 Peco Crusader");
+			clif_displaymessage(fd, "   0 Novice            7 Knight           14 Crusader         21 N/A");
 			clif_displaymessage(fd, "   1 Swordman          8 Priest           15 Monk             22 N/A");
 			clif_displaymessage(fd, "   2 Mage              9 Wizard           16 Sage             23 Super Novice");
 			clif_displaymessage(fd, "   3 Archer           10 Blacksmith       17 Rogue            24 Gunslinger");
 			clif_displaymessage(fd, "   4 Acolyte          11 Hunter           18 Alchemist        25 Ninja");
 			clif_displaymessage(fd, "   5 Merchant         12 Assassin         19 Bard             26 N/A");
-			clif_displaymessage(fd, "   6 Thief            13 Peco Knight      20 Dancer");
-			clif_displaymessage(fd, "4001 Novice High    4008 Lord Knight      4015 Paladin        4022 Peco Paladin");
+			clif_displaymessage(fd, "   6 Thief            13 N/A              20 Dancer           27 N/A");
+			clif_displaymessage(fd, "4001 Novice High    4008 Lord Knight      4015 Paladin        4022 N/A");
 			clif_displaymessage(fd, "4002 Swordman High  4009 High Priest      4016 Champion");
 			clif_displaymessage(fd, "4003 Mage High      4010 High Wizard      4017 Professor");
 			clif_displaymessage(fd, "4004 Archer High    4011 Whitesmith       4018 Stalker");
 			clif_displaymessage(fd, "4005 Acolyte High   4012 Sniper           4019 Creator");
 			clif_displaymessage(fd, "4006 Merchant High  4013 Assassin Cross   4020 Clown");
-			clif_displaymessage(fd, "4007 Thief High     4014 Peco Lord Knight 4021 Gypsy");
-			clif_displaymessage(fd, "4023 Baby Novice    4030 Baby Knight      4037 Baby Crusader  4044 Baby Peco Crusader");
+			clif_displaymessage(fd, "4007 Thief High     4014 N/A              4021 Gypsy");
+			clif_displaymessage(fd, "4023 Baby Novice    4030 Baby Knight      4037 Baby Crusader  4044 N/A");
 			clif_displaymessage(fd, "4024 Baby Swordsman 4031 Baby Priest      4038 Baby Monk      4045 Super Baby");
 			clif_displaymessage(fd, "4025 Baby Mage      4032 Baby Wizard      4039 Baby Sage      4046 Taekwon Kid");
 			clif_displaymessage(fd, "4026 Baby Archer    4033 Baby Blacksmith  4040 Baby Rogue     4047 Taekwon Master");
 			clif_displaymessage(fd, "4027 Baby Acolyte   4034 Baby Hunter      4041 Baby Alchemist 4048 N/A");
 			clif_displaymessage(fd, "4028 Baby Merchant  4035 Baby Assassin    4042 Baby Bard      4049 Soul Linker");
-			clif_displaymessage(fd, "4029 Baby Thief     4036 Baby Peco-Knight 4043 Baby Dancer");
+			clif_displaymessage(fd, "4029 Baby Thief     4036 N/A              4043 Baby Dancer");
 			clif_displaymessage(fd, "[upper]: -1 (default) to automatically determine the 'level', 0 to force normal job, 1 to force high job.");
 			return -1;
 		}
 	}
 
-	if (job == 37 ||job == 45)
+	if (job == 13 || job == 21 || job == 22 || job == 26 || job == 27
+		|| job == 4014 || job == 4022 || job == 4036 || job == 4044 || job == 4048
+	) // Deny direct transformation into dummy jobs
 		return 0;
 
 	if (pcdb_checkid(job))
@@ -1378,28 +1380,28 @@ int atcommand_jobchange(const int fd, struct map_session_data* sd, const char* c
 			return -1;
 		}
 	} else {
-		clif_displaymessage(fd, "Please, enter a valid job ID (usage: @job/@jobchange <job name/ID>).");
-		clif_displaymessage(fd, "   0 Novice            7 Knight           14 Crusader         21 Peco Crusader");
+		clif_displaymessage(fd, "Please, enter job ID (usage: @job/@jobchange <job name/ID>).");
+		clif_displaymessage(fd, "   0 Novice            7 Knight           14 Crusader         21 N/A");
 		clif_displaymessage(fd, "   1 Swordman          8 Priest           15 Monk             22 N/A");
 		clif_displaymessage(fd, "   2 Mage              9 Wizard           16 Sage             23 Super Novice");
 		clif_displaymessage(fd, "   3 Archer           10 Blacksmith       17 Rogue            24 Gunslinger");
 		clif_displaymessage(fd, "   4 Acolyte          11 Hunter           18 Alchemist        25 Ninja");
 		clif_displaymessage(fd, "   5 Merchant         12 Assassin         19 Bard             26 N/A");
-		clif_displaymessage(fd, "   6 Thief            13 Peco Knight      20 Dancer");
-		clif_displaymessage(fd, "4001 Novice High    4008 Lord Knight      4015 Paladin        4022 Peco Paladin");
+		clif_displaymessage(fd, "   6 Thief            13 N/A              20 Dancer           27 N/A");
+		clif_displaymessage(fd, "4001 Novice High    4008 Lord Knight      4015 Paladin        4022 N/A");
 		clif_displaymessage(fd, "4002 Swordman High  4009 High Priest      4016 Champion");
 		clif_displaymessage(fd, "4003 Mage High      4010 High Wizard      4017 Professor");
 		clif_displaymessage(fd, "4004 Archer High    4011 Whitesmith       4018 Stalker");
 		clif_displaymessage(fd, "4005 Acolyte High   4012 Sniper           4019 Creator");
 		clif_displaymessage(fd, "4006 Merchant High  4013 Assassin Cross   4020 Clown");
-		clif_displaymessage(fd, "4007 Thief High     4014 Peco Lord Knight 4021 Gypsy");
-		clif_displaymessage(fd, "4023 Baby Novice    4030 Baby Knight      4037 Baby Crusader  4044 Baby Peco Crusader");
+		clif_displaymessage(fd, "4007 Thief High     4014 N/A              4021 Gypsy");
+		clif_displaymessage(fd, "4023 Baby Novice    4030 Baby Knight      4037 Baby Crusader  4044 N/A");
 		clif_displaymessage(fd, "4024 Baby Swordsman 4031 Baby Priest      4038 Baby Monk      4045 Super Baby");
 		clif_displaymessage(fd, "4025 Baby Mage      4032 Baby Wizard      4039 Baby Sage      4046 Taekwon Kid");
 		clif_displaymessage(fd, "4026 Baby Archer    4033 Baby Blacksmith  4040 Baby Rogue     4047 Taekwon Master");
 		clif_displaymessage(fd, "4027 Baby Acolyte   4034 Baby Hunter      4041 Baby Alchemist 4048 N/A");
 		clif_displaymessage(fd, "4028 Baby Merchant  4035 Baby Assassin    4042 Baby Bard      4049 Soul Linker");
-		clif_displaymessage(fd, "4029 Baby Thief     4036 Baby Peco-Knight 4043 Baby Dancer");
+		clif_displaymessage(fd, "4029 Baby Thief     4036 N/A              4043 Baby Dancer");
 		clif_displaymessage(fd, "[upper]: -1 (default) to automatically determine the 'level', 0 to force normal job, 1 to force high job.");
 		return -1;
 	}

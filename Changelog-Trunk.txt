@@ -1,6 +1,7 @@
 Date	Added
 
 2010/10/13
+	* Prevented direct transformation into dummy jobs via @jobchange command. (bugreport:4227) [Paradox924X]
 	* Prevented @stpoint and @skpoint from causing overflows. [Paradox924X]
 2010/10/11
 	* Implemented official cash food behavior, including use delay, not being dispelled (including on death),
