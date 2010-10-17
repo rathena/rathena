@@ -1,5 +1,7 @@
 Date	Added
 
+2010/10/17
+	* Fixed wrong char info packet size for clients after 2010-07-27. (bugreport:4413) [Gepard]
 2010/10/13
 	* Prevented direct transformation into dummy jobs via @jobchange command. (bugreport:4227) [Paradox924X]
 	* Prevented @stpoint and @skpoint from causing overflows. [Paradox924X]
