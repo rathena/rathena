@@ -1736,7 +1736,7 @@ int mmo_char_tobuf(uint8* buffer, struct mmo_charstatus* p)
 	WBUFW(buf,106) = ( p->rename > 0 ) ? 0 : 1;
 	offset += 2;
 #endif
-#if PACKETVER >= 20100721
+#if PACKETVER >= 20100720 && PACKETVER <= 20100727
 	mapindex_getmapname_ext(mapindex_id2name(p->last_point.map), (char*)WBUFP(buf,108));
 	offset += 16;
 #endif
