@@ -199,7 +199,6 @@ mf_fog		17
 mf_sakura	18
 mf_leaves	19
 mf_rain		20
-mf_indoors	21
 mf_nogo		22
 mf_clouds	23
 mf_clouds2	24

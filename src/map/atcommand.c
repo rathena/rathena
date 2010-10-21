@@ -4366,8 +4366,6 @@ int atcommand_mapinfo(const int fd, struct map_session_data* sd, const char* com
 		strcat(atcmd_output, "Leaves | ");
 	if (map[m_id].flag.rain)
 		strcat(atcmd_output, "Rain | ");
-	if (map[m_id].flag.indoors)
-		strcat(atcmd_output, "Indoors | ");
 	if (map[m_id].flag.nightenabled)
 		strcat(atcmd_output, "Displays Night | ");
 	clif_displaymessage(fd, atcmd_output);
