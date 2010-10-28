@@ -1,5 +1,7 @@
 Date		Added
 ======
+2010/10/23
+	* Rev. 14435 Updated spawns for Geffen fields to Rewnewal. [L0ne_W0lf]
 2010/10/20
 	* Rev. 14433 Updated spawns for Prontera fields to Rewnewal. [L0ne_W0lf]
 2010/10/10
