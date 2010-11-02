@@ -4571,12 +4571,12 @@
 12200,Event_Cake,X-mas Cake,2,20,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill "PR_MAGNIFICAT",3; },{},{}
 12201,Red_Box_C,Commonplace Red Box,2,20,,200,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 // Cash Shop Usable Items
-12202,Str_Dish10_,Steamed Tongue,0,2,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_STR_FOOD_CASH,1800000,10; percentheal 15,5; },{},{}
-12203,Agi_Dish10_,Steamed Scorpion,0,2,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_AGI_FOOD_CASH,1800000,10; percentheal 15,5; },{},{}
-12204,Int_Dish10_,Dragon Breath Cocktail,0,2,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_INT_FOOD_CASH,1800000,10; percentheal 15,5; },{},{}
-12205,Dex_Dish10_,Hwergelmir's Tonic,0,2,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_DEX_FOOD_CASH,1800000,10; percentheal 15,5; },{},{}
-12206,Luk_Dish10_,Cooked Nine Tail's Tails,0,2,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_LUK_FOOD_CASH,1800000,10; percentheal 15,5; },{},{}
-12207,Vit_Dish10_,Stew Of Immortality,0,2,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_VIT_FOOD_CASH,1800000,10; percentheal 15,5; },{},{}
+12202,Str_Dish10_,Steamed Tongue,0,2,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_FOOD_STR_CASH,1800000,10; percentheal 15,5; },{},{}
+12203,Agi_Dish10_,Steamed Scorpion,0,2,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_FOOD_AGI_CASH,1800000,10; percentheal 15,5; },{},{}
+12204,Int_Dish10_,Dragon Breath Cocktail,0,2,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_FOOD_INT_CASH,1800000,10; percentheal 15,5; },{},{}
+12205,Dex_Dish10_,Hwergelmir's Tonic,0,2,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_FOOD_DEX_CASH,1800000,10; percentheal 15,5; },{},{}
+12206,Luk_Dish10_,Cooked Nine Tail's Tails,0,2,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_FOOD_LUK_CASH,1800000,10; percentheal 15,5; },{},{}
+12207,Vit_Dish10_,Stew Of Immortality,0,2,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_FOOD_VIT_CASH,1800000,10; percentheal 15,5; },{},{}
 12208,Battle_Manual,Battle Manual,2,2,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_EXPBOOST,1800000,50; },{},{}
 12209,Insurance,Life Insurance,2,2,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_LIFEINSURANCE,1800000,0; },{},{}
 12210,Bubble_Gum,Bubble Gum,2,2,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_ITEMBOOST,1800000,200; },{},{}

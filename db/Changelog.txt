@@ -8,6 +8,8 @@
 	1475 Equestrian's Spear:	NEED INFO.
 	13005 Angelic Wing Dagger:	NEED INFO.
 =======================
+2010/11/02
+	* Fixed incorrect status change constants being used in cash food scripts. (bugreport:4477) [Paradox924X]
 2010/10/23
 	* Rev. 14435 Updated stats for monsters that spawn on Geffen Fields. [L0ne_W0lf]
 	* Packet_db now uses packet_db_ver set to default
