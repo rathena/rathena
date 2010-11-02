@@ -1,6 +1,7 @@
 Date	Added
 
 2010/11/02
+	* Fixed an issue where two ushorts were being strcmp'd. Follow-up to r14442. (bugreport:4523) [Paradox924X]
 	* Ensured character data is saved even when last map is the only value that has changed during save time. (bugreport:2218) [Paradox924X]
 	* Applied fix by Ai4rei to reintroduce mapName within charinfo packet when PACKETVER >= 20100803. Follow-up to r14432. (bugreport:4413) [Paradox924X]
 	* Updated script doc to appropriately describe the effects of close/close2 when used without a window on screen. (bugreport:898) [Paradox924X]
