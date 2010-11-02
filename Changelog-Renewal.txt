@@ -1,5 +1,7 @@
 Date	Added
 
+2010/11/01
+	* Modified certain atcommands to use 64 bit arithmetic before capping a value to correct boundary logic for overflowing values. [Paradox924X]
 2010/10/21
 	* Removed unused 'indoors' mapflag. [Gepard]
 2010/10/17
