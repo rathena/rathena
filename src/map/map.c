@@ -2673,7 +2673,7 @@ int map_eraseipport(unsigned short mapindex, uint32 ip, uint16 port)
  *------------------------------------------*/
 static char *map_init_mapcache(FILE *fp)
 {
-	size_t size = 0, read_size;
+	size_t size = 0;
 	char *buffer;
 
 	// No file open? Return..
@@ -2691,7 +2691,7 @@ static char *map_init_mapcache(FILE *fp)
 	nullpo_ret(buffer);
 
 	// Read file into buffer..
-	if((read_size = fread(buffer, sizeof(char), size, fp)) != size) {
+	if(fread(buffer, sizeof(char), size, fp) != size) {
 		ShowError("map_init_mapcache: Could not read entire mapcache file\n");
 		return NULL;
 	}

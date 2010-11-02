@@ -135,12 +135,11 @@ int npc_ontouch2_event(struct map_session_data *sd, struct npc_data *nd)
  *------------------------------------------*/
 int npc_enable_sub(struct block_list *bl, va_list ap)
 {
-	struct map_session_data *sd;
 	struct npc_data *nd;
 
 	nullpo_ret(bl);
 	nullpo_ret(nd=va_arg(ap,struct npc_data *));
-	if(bl->type == BL_PC && (sd=(struct map_session_data *)bl))
+	if(bl->type == BL_PC)
 	{
 		TBL_PC *sd = (TBL_PC*)bl;
 

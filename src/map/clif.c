@@ -4191,7 +4191,7 @@ int clif_outsight(struct block_list *bl,va_list ap)
 	{	//tsd has lost sight of the bl object.
 		switch(bl->type){
 		case BL_PC:
-			if (((TBL_PC*)bl)->vd.class_ != INVISIBLE_CLASS)
+			if (sd->vd.class_ != INVISIBLE_CLASS)
 				clif_clearunit_single(bl->id,0,tsd->fd);
 			if(sd->chatID){
 				struct chat_data *cd;
@@ -13128,10 +13128,8 @@ void clif_parse_cashshop_buy(int fd, struct map_session_data *sd)
 {
 	int fail = 0, amount, points;
 	short nameid;
-	struct npc_data *nd;
 	nullpo_retv(sd);
 
-	nd = (struct npc_data *)map_id2bl(sd->npc_shopid);
 	nameid = RFIFOW(fd,2);
 	amount = RFIFOW(fd,4);
 	points = RFIFOL(fd,6); // Not Implemented. Should be 0

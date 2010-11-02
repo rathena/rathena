@@ -7517,7 +7517,6 @@ BUILDIN_FUNC(getmobdrops)
 {
 	int class_ = script_getnum(st,2);
 	int i, j = 0;
-	struct item_data *i_data;
 	struct mob_db *mob;
 
 	if( !mobdb_checkid(class_) )
@@ -7532,7 +7531,7 @@ BUILDIN_FUNC(getmobdrops)
 	{
 		if( mob->dropitem[i].nameid < 1 )
 			continue;
-		if( (i_data = itemdb_exists(mob->dropitem[i].nameid)) == NULL )
+		if( itemdb_exists(mob->dropitem[i].nameid) == NULL )
 			continue;
 
 		mapreg_setreg(add_str("$@MobDrop_item") + (j<<24), mob->dropitem[i].nameid);
@@ -10039,10 +10038,9 @@ BUILDIN_FUNC(divorce)
 BUILDIN_FUNC(ispartneron)
 {
 	TBL_PC *sd=script_rid2sd(st);
-	TBL_PC *p_sd=NULL;
 
 	if(sd==NULL || !pc_ismarried(sd) ||
-            (p_sd=map_charid2sd(sd->status.partner_id)) == NULL) {
+            map_charid2sd(sd->status.partner_id) == NULL) {
 		script_pushint(st,0);
 		return 0;
 	}
@@ -11352,11 +11350,8 @@ BUILDIN_FUNC(movenpc)
  *------------------------------------------*/
 BUILDIN_FUNC(message)
 {
-	TBL_PC *sd;
 	const char *msg,*player;
 	TBL_PC *pl_sd = NULL;
-
-	sd = script_rid2sd(st);
 
 	player = script_getstr(st,2);
 	msg = script_getstr(st,3);

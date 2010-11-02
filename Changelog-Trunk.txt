@@ -1,5 +1,7 @@
 Date	Added
 
+2010/11/02
+	* Applied patch by xazax to clean up various bits of code across mapserver code. (bugreport:4512) [Paradox924X]
 2010/11/01
 	* Changed Normal and Cash Food statuses so they do not stack and overwrite the other if the level (val1) is the same or higher. (bugreport:4519) [Paradox924X]
 	* Modified certain atcommands to use 64 bit arithmetic before capping a value to correct boundary logic for overflowing values. [Paradox924X]
