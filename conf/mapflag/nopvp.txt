@@ -107,4 +107,5 @@ ayothaya	mapflag	pvp	off
 veins	mapflag	pvp	off
 ve_in	mapflag	pvp	off
 ve_in02	mapflag	pvp	off
+cave	mapflag	pvp	off
 //evt_zombie	mapflag	pvp	off
