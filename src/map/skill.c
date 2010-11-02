@@ -323,9 +323,6 @@ int skill_calc_heal(struct block_list *src, struct block_list *target, int skill
 // Making plagiarize check its own function [Aru]
 int can_copy (struct map_session_data *sd, int skillid, struct block_list* bl)
 {
-	struct status_change* sc;
-	sc = status_get_sc(bl);
-
 	// Never copy NPC/Wedding Skills
 	if (skill_get_inf2(skillid)&(INF2_NPC_SKILL|INF2_WEDDING_SKILL))
 		return 0;
@@ -2483,7 +2480,7 @@ static int skill_reveal_trap (struct block_list *bl, va_list ap)
  *------------------------------------------*/
 int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int skillid, int skilllv, unsigned int tick, int flag)
 {
-	struct map_session_data *sd = NULL, *tsd = NULL;
+	struct map_session_data *sd = NULL;
 	struct status_data *tstatus;
 	struct status_change *sc;
 
@@ -2499,7 +2496,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 		return 1;
 
 	sd = BL_CAST(BL_PC, src);
-	tsd = BL_CAST(BL_PC, bl);
 
 	if (status_isdead(bl))
 		return 1;
@@ -7408,7 +7404,6 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 {
 	struct skill_unit_group *sg;
 	struct block_list *ss;
-	TBL_PC* sd;
 	TBL_PC* tsd;
 	struct status_data *tstatus, *sstatus;
 	struct status_change *tsc, *sc;
@@ -7425,7 +7420,6 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 
 	nullpo_ret(sg=src->group);
 	nullpo_ret(ss=map_id2bl(sg->src_id));
-	sd = BL_CAST(BL_PC, ss);
 	tsd = BL_CAST(BL_PC, bl);
 	tsc = status_get_sc(bl);
 	tstatus = status_get_status_data(bl);
@@ -9041,11 +9035,9 @@ int skill_castfix (struct block_list *bl, int skill_id, int skill_lv)
 {
 	int time = skill_get_cast(skill_id, skill_lv);
 	struct map_session_data *sd;
-	struct status_change *sc;
 
 	nullpo_ret(bl);
 	sd = BL_CAST(BL_PC, bl);
-	sc = status_get_sc(bl);
 
 	// calculate base cast time (reduced by dex)
 	if( !(skill_get_castnodex(skill_id, skill_lv)&1) )

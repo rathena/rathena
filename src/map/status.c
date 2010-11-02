@@ -7326,7 +7326,6 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr data)
  *------------------------------------------*/
 int status_change_timer_sub(struct block_list* bl, va_list ap)
 {
-	struct map_session_data *sd, *tsd;
 	struct status_change* tsc;
 
 	struct block_list* src = va_arg(ap,struct block_list*);
@@ -7338,9 +7337,6 @@ int status_change_timer_sub(struct block_list* bl, va_list ap)
 		return 0;
 
 	tsc = status_get_sc(bl);
-
-	sd = BL_CAST(BL_PC, src);
-	tsd = BL_CAST(BL_PC, bl);
 
 	switch( type )
 	{
