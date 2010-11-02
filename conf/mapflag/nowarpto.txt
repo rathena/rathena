@@ -1,4 +1,4 @@
-//===== eAthena Script =======================================
+/===== eAthena Script =======================================
 //= Map flags that disable warpto
 //===== By: ==================================================
 //= eAthena Dev Team
@@ -52,6 +52,7 @@ ama_test	mapflag	nowarpto
 gon_test	mapflag	nowarpto
 que_rachel	mapflag	nowarpto
 que_san04	mapflag	nowarpto
+cave	mapflag	nowarpto
 //Aldebaran Turbo Track ========
 turbo_n_1	mapflag	nowarpto
 turbo_n_4	mapflag	nowarpto

@@ -155,6 +155,7 @@ poring_c02	mapflag	noteleport
 que_job01	mapflag	noteleport
 que_job02	mapflag	noteleport
 que_job03	mapflag	noteleport
+cave	mapflag	noteleport
 
 // Guild Castles =================
 aldeg_cas01	mapflag	noteleport

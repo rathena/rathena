@@ -194,6 +194,7 @@ ve_fild02	mapflag	nomemo
 ve_fild03	mapflag	nomemo
 ve_fild04	mapflag	nomemo
 ve_fild06	mapflag	nomemo
+cave	mapflag	nomemo
 
 // Job Quests ================
 // First Job Class
