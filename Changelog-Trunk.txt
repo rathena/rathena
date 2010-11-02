@@ -1,6 +1,7 @@
 Date	Added
 
 2010/11/02
+	* Updated script doc to appropriately describe the effects of close/close2 when used without a window on screen. (bugreport:898) [Paradox924X]
 	* Applied patch by xazax to clean up various bits of code across mapserver code. (bugreport:4512) [Paradox924X]
 2010/11/01
 	* Changed Normal and Cash Food statuses so they do not stack and overwrite the other if the level (val1) is the same or higher. (bugreport:4519) [Paradox924X]
