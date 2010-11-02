@@ -459,7 +459,7 @@ int mmo_char_tosql(int char_id, struct mmo_charstatus* p)
 		(p->base_exp != cp->base_exp) || (p->base_level != cp->base_level) ||
 		(p->job_level != cp->job_level) || (p->job_exp != cp->job_exp) ||
 		(p->zeny != cp->zeny) ||
-		strcmp(p->last_point.map, cp->last_point.map)
+		(p->last_point.map != cp->last_point.map) ||
 		(p->last_point.x != cp->last_point.x) || (p->last_point.y != cp->last_point.y) ||
 		(p->max_hp != cp->max_hp) || (p->hp != cp->hp) ||
 		(p->max_sp != cp->max_sp) || (p->sp != cp->sp) ||
