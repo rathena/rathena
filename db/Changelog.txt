@@ -8,6 +8,11 @@
 	1475 Equestrian's Spear:	NEED INFO.
 	13005 Angelic Wing Dagger:	NEED INFO.
 =======================
+2010/11/04
+	* Rev. 14445 Updated monster database. Most spawning monsters stats are now updated. [L0ne_W0lf]
+	- 'Ghost' mobs, and event monsters are not updated at this time.
+	- Information collected from RODE by Gepard.
+	* Added demonstrative mob_penalty_db. (unused.)
 2010/11/02
 	* Fixed incorrect status change constants being used in cash food scripts. (bugreport:4477) [Paradox924X]
 2010/10/23

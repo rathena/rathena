@@ -1,6 +1,6 @@
 // This database is currently unused, and is not read by the server.
 // It is here only to illistrate design, with known information.
-// With the recommended formatting to handle the level penelty system.
+// Recommended formatting to handle the level penalty system.
 //
 // Mob Level Penalty Database
 // 
@@ -22,7 +22,7 @@
 // 		If only 0:100 is given, all levels will receieve the 100% rate.
 // 	Another example would be:
 // 		If 0,13:0,12:25,11:50,10:100 is given, then a level difference of 13 levels and higher recievce 0 exp.
-// 		While a 12 level difference will give 25% of hte exp the monster wold give normally.
+// 		While a 12 level difference will give 25% of the exp the monster would give normally.
 // 		with a level difference of 11, 50%...and if you are 10 levels lower, 100%.
 //
 
