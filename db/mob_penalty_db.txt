@@ -1,0 +1,40 @@
+// This database is currently unused, and is not read by the server.
+// It is here only to illistrate design, with known information.
+// With the recommended formatting to handle the level penelty system.
+//
+// Mob Level Penalty Database
+// 
+// Structure of Database :
+// Type or MOD ID,Level Difference:Percentage{,Level Difference:Percentage{,...}}
+//
+// 01:
+// 	0 Normal Mob EXP penalty.	penalty or bonus to EXP from normal monsters relative to level.
+// 	1 Boss Mob EXP penalty.		penalty or bonus to EXP from boss monsters relative to level.
+// 	2 Normal Mob Damage Penlty.	penalty or bonus to damage done to normal monsters relative to level.
+// 	3 Boss Mob Damage Penlty.	penalty or bonus to damage done to boss monsters relative to level.
+// 	4 Normal Mob Drop penalty.	penalty or bonus to drops from normal monsters relative to level.
+// 	5 Boss Mob Drop penalty.	penalty or bonus to drops from boss monsters relative to level.
+//
+// 02:
+// 	Level Difference:Percentage Adustment.
+// 	All levels below the highest or lowest value given will carry that adjustment to reamining levels.
+// 	For example:
+// 		If only 0:100 is given, all levels will receieve the 100% rate.
+// 	Another example would be:
+// 		If 0,13:0,12:25,11:50,10:100 is given, then a level difference of 13 levels and higher recievce 0 exp.
+// 		While a 12 level difference will give 25% of hte exp the monster wold give normally.
+// 		with a level difference of 11, 50%...and if you are 10 levels lower, 100%.
+//
+
+// Normal Mob EXP penalty.
+0,13:40,12:50,11:60,10:140,9:135,8:130,7:125,6:120,5:115,4:110,3:105,0:100,-1:100,-6:95,-11:90,-16:85,-21:60,-26:35,-31:10
+// Boss Mob EXP penalty.
+1,0:100
+// Normal Mob Damage Penlty.
+2,0:100
+// Boss Mob Damage Penlty.
+3,0:100
+// Normal Mob Drop penalty.
+4,71:50,61:60,51:70,41:80,31:90,0:100,-31:90,-41:80,-51:70,-61:60,-71:50
+// Boss Mob Drop penalty.
+5,0:100
