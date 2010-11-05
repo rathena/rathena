@@ -108,4 +108,29 @@ veins	mapflag	pvp	off
 ve_in	mapflag	pvp	off
 ve_in02	mapflag	pvp	off
 cave	mapflag	pvp	off
+
+e_tower	mapflag	pvp	off
+
+mid_camp	mapflag	pvp	off
+mid_campin	mapflag	pvp	off
+man_fild01	mapflag	pvp	off
+moc_fild22b	mapflag	pvp	off
+que_dan01	mapflag	pvp	off
+que_dan02	mapflag	pvp	off
+schg_que01	mapflag	pvp	off
+arug_que01	mapflag	pvp	off
+
+bat_room	mapflag	pvp	off
+
+manuk	mapflag	pvp	off
+man_in01	mapflag	pvp	off
+splendide	mapflag	pvp	off
+spl_in01	mapflag	pvp	off
+spl_in02	mapflag	pvp	off
+
+moc_para01	mapflag	pvp	off
+
+brasilis	mapflag	pvp	off
+bra_in01	mapflag	pvp	off
+
 //evt_zombie	mapflag	pvp	off

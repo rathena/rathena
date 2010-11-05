@@ -94,7 +94,7 @@ ra_temsky	mapflag	nobranch
 ve_in	mapflag	nobranch
 ve_in02	mapflag	nobranch
 thor_camp	mapflag	nobranch
-cave	mapflag	nobanch
+cave	mapflag	nobranch
 
 // Job Quests ==================
 job_sword1	mapflag	nobranch
@@ -276,6 +276,27 @@ que_qaru03	mapflag	nobranch
 que_qaru04	mapflag	nobranch
 que_qaru05	mapflag	nobranch
 
+1@cata	mapflag	nobranch
+2@cata	mapflag	nobranch
+e_tower	mapflag	nobranch
+1@tower	mapflag	nobranch
+2@tower	mapflag	nobranch
+3@tower	mapflag	nobranch
+4@tower	mapflag	nobranch
+5@tower	mapflag	nobranch
+6@tower	mapflag	nobranch
+
+mid_camp	mapflag	nobranch
+mid_campin	mapflag	nobranch
+man_fild01	mapflag	nobranch
+moc_fild22b	mapflag	nobranch
+que_dan01	mapflag	nobranch
+que_dan02	mapflag	nobranch
+schg_que01	mapflag	nobranch
+arug_que01	mapflag	nobranch
+1@orcs	mapflag	nobranch
+2@orcs	mapflag	nobranch
+
 // Battle Grounds ==============
 bat_c01	mapflag	nobranch
 bat_c02	mapflag	nobranch
@@ -285,5 +306,33 @@ bat_b01	mapflag	nobranch
 bat_b02	mapflag	nobranch
 bat_a01	mapflag	nobranch
 bat_a02	mapflag	nobranch
+
+1@nyd	mapflag	nobranch
+2@nyd	mapflag	nobranch
+manuk	mapflag	nobranch
+man_fild02	mapflag	nobranch
+man_in01	mapflag	nobranch
+splendide	mapflag	nobranch
+spl_in01	mapflag	nobranch
+spl_in02	mapflag	nobranch
+
+moc_para01	mapflag	nobranch
+job3_arch01	mapflag	nobranch
+job3_arch02	mapflag	nobranch
+job3_arch03	mapflag	nobranch
+job3_guil01	mapflag	nobranch
+job3_guil02	mapflag	nobranch
+job3_guil03	mapflag	nobranch
+job3_rang01	mapflag	nobranch
+job3_rang02	mapflag	nobranch
+job3_rune01	mapflag	nobranch
+job3_rune02	mapflag	nobranch
+job3_rune03	mapflag	nobranch
+job3_war01	mapflag	nobranch
+job3_war02	mapflag	nobranch
+jupe_core2	mapflag	nobranch
+
+brasilis	mapflag	nobranch
+bra_in01	mapflag	nobranch
 
 //evt_zombie	mapflag	nobranch

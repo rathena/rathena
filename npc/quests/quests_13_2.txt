@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
-//= 2.1
+//= 2.2
 //===== Compatible With: =====================================
 //= eAthena SVN
 //===== Description: =========================================
@@ -38,6 +38,7 @@
 //=     floor 2 puzzle. Fixed a typo. Commented out untranslated
 //=     line. [Gepard]
 //= 2.1 Fixed Myterious Rock 31, and Cart Hand Agents.
+//= 2.2 Added a missing close. (bugreport:4520) [L0ne_W0lf]
 //============================================================ 
 
 // Cat Hand Addition.
@@ -5018,6 +5019,7 @@ manuk,252,116,3	script	Manuk Galtun#ep13_2day	450,{
 		mes "EW pisdn psa?";
 		mes "We psis?";
 	}
+	close;
 }
 
 // Daily Quests

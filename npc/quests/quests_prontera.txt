@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88; L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 2.6
+//= 2.7
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -46,6 +46,7 @@
 //= 2.5 Fixed requirements for PH D. Hat. [L0ne_W0lf]
 //= 2.5a Fixed requirements for PH D. Hat agian lol. [L0ne_W0lf]
 //= 2.6 Replaced effect numerics with constants. [L0ne_W0lf]
+//= 2.7 Corrected 'IProntera' typo. (bugreport:4522) [L0ne_W0lf]
 //============================================================ 
 
 // Prontera Culvert
@@ -1316,7 +1317,7 @@ morocc_in,45,126,3	script	Historian#prt02	702,{
 		mes "Rodafrian can offer you";
 		mes "any more information. For";
 		mes "now, it would be best to";
-		mes "go to ^3355FFIProntera Church.^000000";
+		mes "go to ^3355FFProntera Church.^000000";
 		close;
 	}
 	else {

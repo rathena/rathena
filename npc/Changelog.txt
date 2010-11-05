@@ -1,5 +1,9 @@
 Date		Added
 ======
+2010/11/04
+	* Rev. 14448 Just a couple Bug fixes. :P [L0ne_W0lf]
+	- Added a missing close in quests_13_2.txt. (bugreport:4520)
+	- Corrected 'IProntera' typo in quests_prontera.txt (bugreport:4522)
 2010/09/18
 	* Rev 14409 Updates, and bugfixes, the usual stuff. [L0ne_W0lf]
 	* Updated Sage quest skill quest with the file curtosy of 5511.
