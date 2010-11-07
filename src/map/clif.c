@@ -2147,6 +2147,12 @@ void clif_equiplist(struct map_session_data *sd)
 		WBUFL(buf,n*cmd+24)=sd->status.inventory[i].expire_time;
 		WBUFW(buf,n*cmd+28)=0; //Unknown
 #endif
+#if PACKETVER >= 20100629
+		if (sd->inventory_data[i]->equip&EQP_HELM)
+			WBUFW(buf,n*cmd+30)= sd->inventory_data[i]->look;
+		else
+			WBUFW(buf,n*cmd+30)=0;
+#endif
 		n++;
 	}
 	if (n) {
