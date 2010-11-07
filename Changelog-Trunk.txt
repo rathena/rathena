@@ -1,6 +1,7 @@
 Date	Added
 
 2010/11/07
+	* 'Exp gained' packets are now sent regardless of @showexp. @showexp can be enabled regardless of PACKETVER. [Gepard]
 	* Applied clif_equiplist fix by Ai4rei to prevent client crash when equipment is broken/repaired and PACKETVER >= 20100629. Follow-up to r14368. (bugreport:4459) [Gepard]
 2010/11/02
 	* Fixed an issue where two ushorts were being strcmp'd. Follow-up to r14442. (bugreport:4523) [Paradox924X]
