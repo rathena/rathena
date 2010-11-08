@@ -1,6 +1,7 @@
 Date	Added
 
 2010/11/08
+	* Notify players involved in a trade that it has been canceled when one player changes maps/logs out or otherwise becomes unable to participate in the trade. [Paradox924X]
 	* Send the actual level of the person you're trading with rather than limiting it by the max_lv/aura_lv settings. [Paradox924X]
 2010/11/07
 	* 'Exp gained' packets are now sent regardless of @showexp. @showexp can be enabled regardless of PACKETVER. [Gepard]
