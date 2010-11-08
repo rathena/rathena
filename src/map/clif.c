@@ -3458,7 +3458,7 @@ void clif_traderequest(struct map_session_data* sd, const char* name)
 	WFIFOW(fd,0) = 0x1f4;
 	safestrncpy((char*)WFIFOP(fd,2), name, NAME_LENGTH);
 	WFIFOL(fd,26) = tsd->status.char_id;
-	WFIFOW(fd,30) = clif_setlevel(tsd->status.base_level);
+	WFIFOW(fd,30) = tsd->status.base_level;
 	WFIFOSET(fd,packet_len(0x1f4));
 #endif
 }
@@ -3491,7 +3491,7 @@ void clif_tradestart(struct map_session_data* sd, uint8 type)
 	WFIFOW(fd,0) = 0x1f5;
 	WFIFOB(fd,2) = type;
 	WFIFOL(fd,3) = tsd->status.char_id;
-	WFIFOW(fd,7) = clif_setlevel(tsd->status.base_level);
+	WFIFOW(fd,7) = tsd->status.base_level;
 	WFIFOSET(fd,packet_len(0x1f5));
 #endif
 }
