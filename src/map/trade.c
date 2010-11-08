@@ -455,8 +455,12 @@ void trade_tradecancel(struct map_session_data *sd)
 
 	if(!sd->state.trading)
 	{ // Not trade acepted
-		if( target_sd ) target_sd->trade_partner = 0;
+		if( target_sd ) {
+			target_sd->trade_partner = 0;
+			clif_tradecancelled(target_sd);
+		}
 		sd->trade_partner = 0;
+		clif_tradecancelled(sd);
 		return;
 	}
 	
