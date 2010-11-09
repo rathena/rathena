@@ -1,5 +1,7 @@
 Date	Added
 
+2010/11/09
+	* Follow-up to r14368. Load last_map from SQL on char load so the information is available during char select for PACKETVER > 20100721. Patch based on Ai4rei's. (bugreport:4429) [Paradox924X]
 2010/11/08
 	* Notify players involved in a trade that it has been canceled when one player changes maps/logs out or otherwise becomes unable to participate in the trade. [Paradox924X]
 	* Send the actual level of the person you're trading with rather than limiting it by the max_lv/aura_lv settings. [Paradox924X]
