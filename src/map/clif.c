@@ -3477,23 +3477,20 @@ void clif_traderequest(struct map_session_data* sd, const char* name)
 void clif_tradestart(struct map_session_data* sd, uint8 type)
 {
 	int fd = sd->fd;
-	
-#if PACKETVER < 6
-	WFIFOHEAD(fd,packet_len(0xe7));
-	WFIFOW(fd,0) = 0xe7;
-	WFIFOB(fd,2) = type;
-	WFIFOSET(fd,packet_len(0xe7));
-#else
 	struct map_session_data* tsd = map_id2sd(sd->trade_partner);
-	if( !tsd ) return;
-
-	WFIFOHEAD(fd,packet_len(0x1f5));
-	WFIFOW(fd,0) = 0x1f5;
-	WFIFOB(fd,2) = type;
-	WFIFOL(fd,3) = tsd->status.char_id;
-	WFIFOW(fd,7) = tsd->status.base_level;
-	WFIFOSET(fd,packet_len(0x1f5));
-#endif
+	if( PACKETVER < 6 || !tsd ) {
+		WFIFOHEAD(fd,packet_len(0xe7));
+		WFIFOW(fd,0) = 0xe7;
+		WFIFOB(fd,2) = type;
+		WFIFOSET(fd,packet_len(0xe7));
+	} else {
+		WFIFOHEAD(fd,packet_len(0x1f5));
+		WFIFOW(fd,0) = 0x1f5;
+		WFIFOB(fd,2) = type;
+		WFIFOL(fd,3) = tsd->status.char_id;
+		WFIFOW(fd,7) = tsd->status.base_level;
+		WFIFOSET(fd,packet_len(0x1f5));
+	}
 }
 
 /*==========================================
