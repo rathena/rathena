@@ -204,6 +204,11 @@ struct map_session_data {
 	unsigned int cantalk_tick;
 	unsigned int cansendmail_tick; // [Mail System Flood Protection]
 	unsigned int ks_floodprotect_tick; // [Kill Steal Protection]
+	
+	struct {
+		int nameid;
+		unsigned int tick;
+	} item_delay[MAX_ITEMDELAYS]; // [Paradox924X]
 
 	short weapontype1,weapontype2;
 	short disguise; // [Valaris]
@@ -403,7 +408,6 @@ struct map_session_data {
 	int debug_line;
 	const char* debug_func;
 };
-
 
 //Update this max as necessary. 54 is the value needed for Super Baby currently
 #define MAX_SKILL_TREE 54

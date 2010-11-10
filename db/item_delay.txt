@@ -1,0 +1,6 @@
+// Item Delay Database
+// Max number of entries is defined in itemdb.h as MAX_ITEMDELAYS
+// WARNING: Adding/removing/modifying entries here and then using @reloaditemdb will cause problems/inconsistencies!
+//
+// Structure:
+// Item ID,Delay in Milliseconds

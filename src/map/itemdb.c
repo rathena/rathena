@@ -27,7 +27,7 @@ static struct item_group itemgroup_db[MAX_ITEMGROUP];
 
 struct item_data dummy_item; //This is the default dummy item used for non-existant items. [Skotlex]
 
-
+int item_delays = 0;
 
 /*==========================================
  * ñºëOÇ≈åüçıóp
@@ -661,6 +661,50 @@ static int itemdb_read_itemtrade(void)
 	return 0;
 }
 
+/*==========================================
+ * Reads item delay amounts [Paradox924X]
+ *------------------------------------------*/
+static int itemdb_read_itemdelay(void)
+{
+	FILE *fp;
+	int nameid, j;
+	char line[1024], *str[10], *p;
+	struct item_data *id;
+
+	sprintf(line, "%s/item_delay.txt", db_path);
+	if ((fp = fopen(line,"r")) == NULL) {
+		ShowError("can't read %s\n", line);
+		return -1;
+	}
+
+	while(fgets(line, sizeof(line), fp))
+	{
+		if (item_delays == MAX_ITEMDELAYS) {
+			ShowError("itemdb_read_itemdelay: Too many entries specified in %s/item_delay.txt!\n", db_path);
+			break;
+		}
+		if (line[0] == '/' && line[1] == '/')
+			continue;
+		memset(str, 0, sizeof(str));
+		for (j = 0, p = line; j < 2 && p; j++) {
+			str[j] = p;
+			p = strchr(p, ',');
+			if(p) *p++ = 0;
+		}
+
+		if (j < 2 || str[0] == NULL ||
+			(nameid = atoi(str[0])) < 0 || !(id = itemdb_exists(nameid)))
+			continue;
+
+		id->delay = atoi(str[1]);
+		item_delays++;
+	}
+	fclose(fp);
+	ShowStatus("Done reading '"CL_WHITE"%d"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n", item_delays, "item_delay.txt");
+
+	return 0;
+}
+
 /*======================================
  * Applies gender restrictions according to settings. [Skotlex]
  *======================================*/
@@ -971,6 +1015,7 @@ static void itemdb_read(void)
 	itemdb_read_itemavail();
 	itemdb_read_noequip();
 	itemdb_read_itemtrade();
+	itemdb_read_itemdelay();
 }
 
 /*==========================================

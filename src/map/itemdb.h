@@ -8,6 +8,9 @@
 
 #define MAX_RANDITEM	11000
 
+// The maximum number of item delays
+#define MAX_ITEMDELAYS	10
+
 #define MAX_SEARCH	5  //Designed for search functions, species max number of matches to display.
 
 #define ITEMID_YELLOW_GEMSTONE 715
@@ -54,6 +57,7 @@ struct item_data {
 	int elv;
 	int wlv;
 	int view_id;
+	int delay;
 //Lupus: I rearranged order of these fields due to compatibility with ITEMINFO script command
 //		some script commands should be revised as well...
 	unsigned int class_base[3];	//Specifies if the base can wear this item (split in 3 indexes per type: 1-1, 2-1, 2-2)
