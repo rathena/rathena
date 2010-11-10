@@ -1396,7 +1396,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 				if(sd)
 				{
 					if (sd->atk_rate != 100)
-						ATK_RATE(sd->atk_rate);
+						ATK_ADDRATE(sd->atk_rate);
 
 					if(flag.cri && sd->crit_atk_rate)
 						ATK_ADDRATE(sd->crit_atk_rate);
