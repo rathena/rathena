@@ -3162,7 +3162,7 @@
 //6215,Tear_Gas,Tear Gas,3,500,,1,,,,,,,,,,,,,{},{},{}
 //6216,Oil_Bottle,Oil Bottle,3,1000,,1,,,,,,,,,,,,,{},{},{}
 //6217,Mandragora_Flowerpot,Mandragora Flowerpot,3,2000,,1,,,,,,,,,,,,,{},{},{}
-//6218,Delivery_Daishin_Box,
+6218,Disin_Delivery_Box,Delivery_Daishin_Box,3,20,,0,,,,,,,,,,,,,{},{},{}
 6219,Para_Team_Mark,Eden Group Mark,3,20,,0,,,,,,,,,,,,,{},{},{}
 //6220,Mysterious_Dyestuffs
 //6221,Mystic_Leaf_Cat_Ball

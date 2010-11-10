@@ -4,3 +4,14 @@
 //
 // Structure:
 // Item ID,Delay in Milliseconds
+
+//12202,60000	//Str_Dish10_
+//12203,60000	//Agi_Dish10_
+//12204,60000	//Int_Dish10_
+//12205,60000	//Dex_Dish10_
+//12206,60000	//Luk_Dish10_
+//12207,60000	//Vit_Dish10_
+12208,60000	//Battle_Manual
+12210,60000	//Bubble_Gum
+14538,300000	//Glass_Of_Illusion
+14586,180000	//Spark_Candy

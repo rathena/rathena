@@ -8,6 +8,8 @@
 	1475 Equestrian's Spear:	NEED INFO.
 	13005 Angelic Wing Dagger:	NEED INFO.
 =======================
+2010/11/10
+	* Rev. 14458 Added some items with enforced delays to the item_delay_db! [L0ne_W0lf]
 2010/11/02
 	* Fixed incorrect status change constants being used in cash food scripts. (bugreport:4477) [Paradox924X]
 2010/10/11
