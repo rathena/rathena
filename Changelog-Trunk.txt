@@ -1,6 +1,7 @@
 Date	Added
 
 2010/11/10
+	* Made bAtkRate add the rate rather than setting it. (bugreport:4499) [Paradox924X]
 	* Added an item_delay database usable for item-specific use delays. [Paradox924X]
 2010/11/09
 	* Use packet 0xe7 instead of 0x1f5 within clif_tradestart() when there is no trade_partner (or an invalid one) specified even for PACKETVER >= 6. (bugreport:4544) [Paradox924X]
