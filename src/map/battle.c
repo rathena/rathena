@@ -1395,7 +1395,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 				//Add any bonuses that modify the base baseatk+watk (pre-skills)
 				if(sd)
 				{
-					if (sd->atk_rate != 100)
+					if (sd->atk_rate)
 						ATK_ADDRATE(sd->atk_rate);
 
 					if(flag.cri && sd->crit_atk_rate)
