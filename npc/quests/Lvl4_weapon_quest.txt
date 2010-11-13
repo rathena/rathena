@@ -2139,7 +2139,8 @@ niflheim,240,193,3	script	Kayron#lv4	794,{
 }
 
 niflheim,99,268,5	script	Reyghema#lv4	794,{
-	if (now_weight < 3000) {
+	set .@now_weight,MaxWeight-Weight;
+	if (.@now_weight < 3000) {
 		mes "^3355FFWait a second! Right now, you're carrying too many items with you. Please come back after putting some of your things into Kafra Storage.^000000";
 		close;
 	}

@@ -2860,20 +2860,17 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 		int race2 = status_get_race2(src);
 		if (!(nk&NK_NO_ELEFIX))
 		{
-			if (!(nk&NK_NO_ELEFIX))
+			int ele_fix = tsd->subele[s_ele];
+			for (i = 0; ARRAYLENGTH(tsd->subele2) > i && tsd->subele2[i].rate != 0; i++)
 			{
-				int ele_fix = tsd->subele[s_ele];
-				for (i = 0; ARRAYLENGTH(tsd->subele2) > i && tsd->subele2[i].rate != 0; i++)
-				{
-					if(tsd->subele2[i].ele != s_ele) continue;
-					if(!(tsd->subele2[i].flag&md.flag&BF_WEAPONMASK &&
-						 tsd->subele2[i].flag&md.flag&BF_RANGEMASK &&
-						 tsd->subele2[i].flag&md.flag&BF_SKILLMASK))
-						continue;
-					ele_fix += tsd->subele2[i].rate;
-				}
-				cardfix=cardfix*(100-ele_fix)/100;
+				if(tsd->subele2[i].ele != s_ele) continue;
+				if(!(tsd->subele2[i].flag&md.flag&BF_WEAPONMASK &&
+					 tsd->subele2[i].flag&md.flag&BF_RANGEMASK &&
+					 tsd->subele2[i].flag&md.flag&BF_SKILLMASK))
+					continue;
+				ele_fix += tsd->subele2[i].rate;
 			}
+			cardfix=cardfix*(100-ele_fix)/100;
 		}
 		cardfix=cardfix*(100-tsd->subsize[sstatus->size])/100;
 		cardfix=cardfix*(100-tsd->subrace2[race2])/100;

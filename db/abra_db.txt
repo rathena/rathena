@@ -96,7 +96,7 @@
 81,Sighttrasher,2,4000
 //82,Fire Ivy,1,0
 83,Meteor Storm,6,4000
-84,Jupiter Thunder,2,4000
+84,Jupitel Thunder,2,4000
 85,Lord of Vermilion,6,4000
 86,Water Ball,4,4000
 87,Ice Wall,2,4000
