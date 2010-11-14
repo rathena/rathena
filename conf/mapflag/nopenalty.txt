@@ -124,6 +124,7 @@ veins	mapflag	nopenalty
 ve_in	mapflag	nopenalty
 ve_in02	mapflag	nopenalty
 thor_camp	mapflag	nopenalty
+moc_para01	mapflag	nopenalty
 
 // Job Quests ========================
 job_sword1	mapflag	nopenalty

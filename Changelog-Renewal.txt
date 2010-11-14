@@ -1,5 +1,10 @@
 Date	Added
 
+2010/11/14
+	* Rev. 14463 Updated quest_read_db. [L0ne_W0lf]
+	- Reports entries when read by server at start up like other DBs.
+	- Will now skip blank lines instead of reporting false errors.
+	- Will report when entries are > MAX_QUEST_DB.
 2010/11/10
 	* Made bAtkRate add the rate rather than setting it. (bugreport:4499) [Paradox924X]
 	* Added an item_delay database usable for item-specific use delays. [Paradox924X]
