@@ -542,8 +542,8 @@
 1189,Krasnaya,Krasnaya,4,20,,3800,200,,1,3,0x00004082,2,2,34,2,50,1,3,{ if(readparam(bStr)>=95) { bonus bAtk,20; } },{},{}
 1190,Claymore_C,Claymore,4,20,,0,220,,1,0,0x00004080,7,2,34,3,1,0,3,{ bonus2 bAddSize,0,40; bonus2 bAddSize,1,40; bonus2 bAddSize,2,40; },{},{}
 //1191,Alca_Bringer,
-//1192,P_Slayer1,Eden Slayer I,
-//1193,P_Slayer1,Eden Slayer II,
+//1192,P_Slayer1,Eden Slayer I,4,0,,0,162,,1,0,0x00004082,7,2,34,2,26,0,3,{},{},{}
+//1193,P_Slayer2,Eden Slayer II,4,0,,0,185,,1,0,0x00004082,7,2,34,2,40,0,3,{},{},{}
 //1194,Executioner,
 // Daggers
 1201,Knife,Knife,4,50,,400,17,,1,3,0xFE9F7EEF,7,2,2,1,1,1,1,{},{},{}
@@ -894,8 +894,8 @@
 1647,Croce_Staff,Croce Staff,4,20,,400,10,,1,1,0x00008110,2,2,2,3,50,1,10,{ bonus bAtkEle,Ele_Holy; bonus bMatkRate,15; bonus bInt,4; bonus4 bAutoSpellOnSkill,"AL_HEAL","AL_BLESSING",getskilllv("AL_BLESSING")>1?getskilllv("AL_BLESSING"):1,20; },{},{}
 1648,Staff_Of_Bordeaux,Staff Of Bordeaux,4,0,,500,30,,1,0,0x00010204,2,2,2,4,50,1,10,{ bonus bMatkRate,15; bonus bInt,2; bonus bDex,1; if(getskilllv("SA_DRAGONOLOGY") == 5) { bonus bUseSPrate,-15; bonus bInt,3; } },{},{}
 //1649,Rafini_Staff,
-//1650,P_Staff1,Eden Staff I,
-//1651,P_Staff2,Eden Staff II,
+//1650,P_Staff1,Eden Staff I,4,0,,0,69,,1,0,0x00818314,7,2,2,2,26,0,10,{ bonus bInt,1; bonus bMatkRate,15; },{},{}
+//1651,P_Staff2,Eden Staff II,4,0,,0,60,,1,0,0x00818314,7,2,2,2,40,0,10,{ bonus bInt,2; bonus bMatkRate,15; },{},{}
 // Bows
 1701,Bow,Bow,4,1000,,500,15,,5,3,0x000A0848,7,2,34,1,4,1,11,{},{},{}
 1702,Bow_,Bow,4,1000,,500,15,,5,4,0x000A0848,7,2,34,1,4,1,11,{},{},{}
@@ -942,8 +942,8 @@
 1744,Bow_Of_Evil,Bow Of Evil,4,0,,0,170,,5,0,0x000A0848,7,2,34,4,1,0,11,{ bonus2 bSkillAtk,"AC_DOUBLE",25; bonus bDex,2; },{},{}
 1745,Falken_Blitz,Falken Blitz,4,0,,1000,100,,5,2,0x00080808,2,2,34,3,50,1,11,{ bonus2 bSkillAtk,"SN_SHARPSHOOTING",10; bonus2 bSkillAtk,"AC_DOUBLE",10; bonus2 bSkillAtk,"AC_CHARGEARROW",10; },{},{}
 //1746,Elven_Bow,
-//1747,P_Bow1,Eden Bow I,
-//1748,P_Bow2,Eden Bow II,
+//1747,P_Bow1,Eden Bow I,4,0,,0,82,,5,3,0x000A0848,7,2,34,2,26,0,11,{},{},{}
+//1748,P_Bow2,Eden Bow II,4,0,,0,120,,5,3,0x000A0848,7,2,34,2,40,0,11,{},{},{}
 // Arrows
 1750,Arrow,Arrow,10,1,,1,25,,,,0x000A1848,7,2,32768,,1,,1,{},{},{}
 1751,Silver_Arrow,Silver Arrow,10,3,,2,30,,,,0x000A1848,7,2,32768,,1,,1,{ bonus bAtkEle,Ele_Holy; },{},{}
@@ -1380,9 +1380,9 @@
 //2453,Freya_Spirit_Sandals3,Freya Spirit Sandals,
 //2454,Freya_Spirit_Sandals4,Freya Spirit Sandals,
 //2455,Guardian_Boots,Guardian Boots,
-//2456,Para_Team_Boots1,Eden Team Boots I,
-//2457,Para_Team_Boots2,Eden Team Boots II,
-//2458,Para_Team_Boots3,Eden Team Boots III,
+//2456,Para_Team_Boots1,Eden Team Boots I,5,0,,0,,12,,0,0xFFFFFFFF,7,2,64,,12,0,0,{ bonus bHPrecovRate,10; bonus bSPrecovRate,2; },{},{}
+//2457,Para_Team_Boots2,Eden Team Boots II,5,0,,0,,16,,0,0xFFFFFFFF,7,2,64,,26,0,0,{ bonus bHPrecovRate,12; bonus bSPrecovRate,4; },{},{}
+//2458,Para_Team_Boots3,Eden Team Boots III,5,0,,0,,18,,0,0xFFFFFFFF,7,2,64,,40,0,0,{ bonus bHPrecovRate,14; bonus bSPrecovRate,6; },{},{}
 // Garments
 //===================================================================
 2501,Hood,Hood,5,1000,,200,,1,,0,0xFFFFFFFF,7,2,4,,0,1,0,{},{},{}
@@ -1444,7 +1444,7 @@
 //2557,Freya_Soul_Scarf3,Freya Soul Scarf,
 //2558,Freya_Soul_Scarf4,Freya Soul Scarf,
 //2559,Guardian_Manteau,Guardian Manteau,
-//2560,Para_Team_Manteau,Eden Team Manteau,
+//2560,Para_Team_Manteau,Eden Team Manteau,5,0,,0,,14,,0,0xFFFFFFFF,7,2,4,,12,0,0,{ bonus2 bSubEle,Ele_Neutral,10; },{},{}
 // Accessories
 //===================================================================
 2601,Ring,Ring,5,30000,,100,,0,,0,0xFFFFFFFE,7,2,136,,20,0,0,{ bonus bStr,2; },{},{}
@@ -2788,7 +2788,7 @@
 5580,Red_Beret,Red Beret,5,20,,100,,1,,0,0xFFFFFFFF,7,2,256,,0,1,559,{},{},{}
 5581,Cancer_Crown,Cancer Crown,5,20,,300,,3,,0,0xFFFFFFFF,7,2,256,,70,1,560,{ bonus2 bSubEle,Ele_water,5; if(getrefine()>6) { bonus bDef,1; bonus bHealPower,3; bonus bFlee,10; } },{},{}
 5582,Cancer_Diadem,Cancer Diadem,5,20,,300,,3,,0,0xFFFFFFFF,7,2,256,,70,1,561,{ bonus2 bSubEle,Ele_water,5; if(getrefine()>6) { bonus bMDef,1; bonus bHealPower,3; bonus bMatkRate,2; } },{},{}
-5583,Paradise_Hat,Paradise Hat,5,20,,100,,1,,0,0xFFFFFFFF,7,2,256,,0,1,1,{},{},{}
+//5583,Para_Team_Hat,Eden Team Hat,5,20,,100,,1,,0,0xFFFFFFFF,7,2,256,,0,1,465,{},{},{}
 5584,Majestic_Evil_Horn,Majestic Evil Horns,5,20,,100,,1,,0,0xFFFFFFFF,7,2,256,,0,1,562,{ bonus2 bSubRace,RC_Demon,3; bonus2 bHPDrainRate,3,15; bonus2 bSPDrainRate,1,7; },{},{}
 5585,Rune_Cloth_Circlet,Rune Cloth Circlet,5,20,,100,,1,,1,0xFFFFFFFF,7,2,256,,0,1,564,{},{},{}
 5586,Mogikiller,Mosquito Coil,5,20,,100,,1,,1,0xFFFFFFFF,7,2,256,,0,1,563,{},{},{}
@@ -5027,8 +5027,8 @@
 13046,Krieg,Krierg,4,20,,500,110,,1,3,0x00000040,2,2,2,2,50,1,1,{ bonus3 bAddEffOnSkill,"RG_BACKSTAP",Eff_Bleeding,100; bonus2 bSkillAtk,"RG_BACKSTAP",15; },{},{}
 13047,Weihna,Weihna,4,20,,500,135,,1,2,0x00000040,2,2,2,2,50,1,1,{ bonus3 bAddEffOnSkill,"RG_RAID",Eff_Poison,100; autobonus "{ bonus bAtkRate,10; }",5,5000,BF_WEAPON|BF_SHORT,"{ specialeffect2 EF_POTION_BERSERK; }"; },{},{}
 //13048,Damascus_C
-//13050,P_Dagger,Eden Dagger I,
-//13051,P_Dagger,Eden Dagger II,
+//13050,P_Dagger1,Eden Dagger I,4,0,,0,124,,1,0,0xFE9F7EEF,7,2,2,2,26,0,1,{},{},{}
+//13051,P_Dagger2,Eden Dagger II,4,0,,0,158,,1,0,0xFE9F7EEF,7,2,2,2,40,0,1,{},{},{}
 //13053,Moonlight_Sword,
 //13054,Combat_Knife,
 //13055,Asura,
@@ -5046,6 +5046,8 @@
 //13109,Wasteland_Outlaw_C
 13110,Krieger_Pistol1,Glorious Pistol,4,0,,0,80,,7,0,0x01000000,7,2,34,4,80,1,17,{ bonus2 bAddRace,RC_DemiHuman,55; bonus2 bIgnoreDefRate,RC_DemiHuman,20; bonus bUnbreakableWeapon,0; if(getrefine() > 5) bonus2 bIgnoreDefRate,RC_DemiHuman,5; if(getrefine() > 8) { bonus4 bAutoSpellOnSkill,"GS_RAPIDSHOWER","GS_GLITTERING",1,1000; bonus2 bSkillAtk,"GS_RAPIDSHOWER",getrefine()*2; } },{},{}
 //13111,Sharpshooter_Revolver
+//13112,P_Revolver1,Eden Revlover I,4,0,,0,4,,7,0,0x01000000,7,2,34,1,26,0,17,{ bonus bHit,-5; },{},{}
+//13113,P_Revolver2,Eden Revlover II,4,0,,0,60,,7,0,0x01000000,7,2,34,1,40,0,17,{ bonus bHit,-5; },{},{}
 13150,Branch,Branch,4,3000,,500,50,,9,3,0x01000000,7,2,34,1,1,1,18,{},{},{}
 13151,The_Cyclone,Cyclone,4,17500,,700,120,,9,1,0x01000000,7,2,34,2,24,1,18,{ bonus bHit,10; bonus bCritical,10; },{},{}
 13152,The_Cyclone_,Cyclone,4,17500,,700,120,,9,2,0x01000000,7,2,34,2,24,1,18,{ bonus bHit,10; bonus bCritical,10; },{},{}
@@ -5158,8 +5160,8 @@
 //13420,Honglyun's_Sword
 13421,Ruber,Ruber,4,20,,1500,170,,1,1,0x000444A2,2,2,2,3,50,1,2,{ autobonus "{ bonus2 bSkillAtk,\"KN_BOWLINGBASH\",20; bonus2 bSkillAtk,\"SM_BASH\",20; }",5,15000,BF_WEAPON,"{ specialeffect2 EF_ENHANCE; }"; },{},{}
 //13422,Flamberge_C
-//13423,P_Sabre1,Eden Sabre I,
-//13424,P_Sabre2,Eden Sabre II,
+//13423,P_Sabre1,Eden Sabre I,4,0,,0,147,,1,0,0x000654E2,7,2,2,2,26,0,2,{},{},{}
+//13424,P_Sabre2,Eden Sabre II,4,0,,0,170,,1,0,0x000654E2,7,2,2,2,40,0,2,{},{},{}
 //13426,Cutlas_C
 //13427,Solar_Sword_C
 // More Cash Shop Items
@@ -6094,9 +6096,9 @@
 15000,Bone_Plate,Bone Plate,5,20,,1000,,7,,1,0x00021040,2,2,16,,85,1,0,{ bonus bStr,1; bonus bMDef,3; bonus2 bIgnoreDefRate,RC_DemiHuman,10; bonus2 bIgnoreDefRate,RC_Brute,10; bonus3 bAutoSpellWhenHit,"NPC_WIDEBLEEDING",1,10; },{},{}
 15001,Odin's_Blessing_I,Odin's Blessing,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 15002,Rune_Plate,Rune Plate,2,0,,0,,,,1,0xFFFFFFFF,7,2,,,,,,{},{},{}
-//15009,Para_Team_Uniform1,Eden Team Uniform I,
-//15010,Para_Team_Uniform2,Eden Team Uniform II,
-//15011,Para_Team_Uniform3,Eden Team Uniform III,
+//15009,Para_Team_Uniform1,Eden Team Uniform I,5,0,,0,,35,,0,0xFFFFFFFF,7,2,16,,12,0,0,{ bonus bMaxHP,100; bonus bMaxSP,10; },{},{}
+//15010,Para_Team_Uniform2,Eden Team Uniform II,5,0,,0,,46,,0,0xFFFFFFFF,7,2,16,,26,0,0,{ bonus bMaxHP,200; bonus bMaxSP,20; },{},{}
+//15011,Para_Team_Uniform3,Eden Team Uniform III,5,0,,0,,58,,0,0xFFFFFFFF,7,2,16,,40,0,0,{ bonus bMaxHP,300; bonus bMaxSP,30; bonus bMDef,5; },{},{}
 //15012,Puente_Robe,
 //15013,Claire_Suits,
 //15014,Ebone_Armor,
@@ -6104,8 +6106,8 @@
 16001,Red_Square_Bag,Red Square Bag,4,20,,500,130,,,2,0x0004C5B2,2,2,2,4,50,1,8,{ bonus bMaxHP,200; bonus2 bSkillAtk,"AM_ACIDTERROR",20; bonus2 bSkillAtk,"AM_DEMONSTRATION",20; bonus2 bAddMonsterDropItem,501,50; bonus2 bAddMonsterDropItem,502,20; bonus2 bAddMonsterDropItem,503,20; bonus2 bAddMonsterDropItem,504,20; bonus2 bAddMonsterDropItem,505,10; if(readparam(bStr)>=95) bonus2 bAddEff,Eff_Stun,500; },{},{}
 16002,Stunner_C,Stunner,2,20,,2000,140,,1,0,0x00008110,7,2,2,3,27,1,8,{ bonus2 bAddEff,Eff_Stun,1000; bonus2 bAddSize,0,40; bonus2 bAddSize,1,40; bonus2 bAddSize,2,40; },{},{}
 //16003,Carga_Mace,
-//16004,P_Mace1,Eden Mace I,
-//16005,P_Mace2,Eden Mace II,
+//16004,P_Mace1,Eden Mace I,4,0,,0,142,,1,0,0x0004C5B2,7,2,2,2,26,0,8,{},{},{}
+//16005,P_Mace2,Eden Mace II,4,0,,0,163,,1,0,0x0004C5B2,7,2,2,2,40,0,8,{},{},{}
 //16008,Spanner,
 16134,King_Frog_Hat_Box,Frog King Hat Box,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 16135,Evil's_Bone_Hat_Box,Satanic Bone Helm Box,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}

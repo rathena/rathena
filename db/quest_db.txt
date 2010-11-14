@@ -2,7 +2,6 @@
 //
 // Structure of Database :
 // Quest ID,Time Limit,Target1,Val1,Target2,Val2,Target3,Val3,Quest Title
-//
 1000,0,0,0,0,0,0,0,"Transcend"
 1001,0,0,0,0,0,0,0,"Job Change to Acolyte"
 1002,0,0,0,0,0,0,0,"Job Change to Acolyte"
@@ -139,10 +138,10 @@
 2129,0,0,0,0,0,0,0,"Thor Volcano base camp"
 2130,0,0,0,0,0,0,0,"Thor Volcano base camp"
 2131,0,0,0,0,0,0,0,"Thor Volcano base camp"
-//
+
 2143,50,0,0,0,0,0,0,"Guild Dungeon Event"
 2144,0,0,0,0,0,0,0,"Guild Dungeon Event"
-//
+
 2147,0,0,0,0,0,0,0,"Attitude to the New"
 2148,0,0,0,0,0,0,0,"Attitude to the New"
 2149,0,0,0,0,0,0,0,"Attitude to the New"
@@ -203,7 +202,7 @@
 3044,0,0,0,0,0,0,0,"The Gigantic Magestic Goat"
 3045,9600,0,0,0,0,0,0,"Sealed Shrine"
 3046,0,0,0,0,0,0,0,"Sealed Shrine After-effect"
-//
+
 3050,0,0,0,0,0,0,0,"Resurrection of Satan Morocc - 1"
 3051,0,0,0,0,0,0,0,"Resurrection of Satan Morocc - 2"
 3052,0,0,0,0,0,0,0,"Resurrection of Satan Morocc - 3"
@@ -245,7 +244,7 @@
 3092,0,0,0,0,0,0,0,"Report to the continent - Success to restore!"
 3093,0,0,0,0,0,0,0,"Report to the continent - Report to the continent"
 3094,0,0,0,0,0,0,0,"Report to the continent - Return to the expedition"
-//
+
 3100,0,0,0,0,0,0,0,"Consolidating Heavy Debt - Lost Bond of Debt"
 3101,0,0,0,0,0,0,0,"Consolidating Heavy Debt - Strange Heap of Earth"
 3102,0,0,0,0,0,0,0,"Consolidating Heavy Debt - Bond of Debt Found, but..."
@@ -283,6 +282,23 @@
 3134,0,0,0,0,0,0,0,"Z Gang Wanted - Clean Sweep of Z Gang"
 3135,0,0,0,0,0,0,0,"Nidhoggur's Nest"
 3136,0,0,0,0,0,0,0,"Nidhoggur's Nest Time Limit"
+
+3250,0,1041,30,0,0,0,0,"Request - What is this bandage for?"
+3251,0,1271,30,0,0,0,0,"Request - An alligator of Counterattack"
+3252,0,1264,30,0,0,0,0,"Request - My mermaid don't do like this way!"
+3253,0,0,0,0,0,0,0,"Request - Missing occult mania"
+3254,0,0,0,0,0,0,0,"Request - A country wants you"
+3255,0,1166,30,0,0,0,0,"Request - A wild boar subjugate operation"
+3256,0,0,0,0,0,0,0,"Request - Ready for waiting summer"
+3257,0,1170,30,0,0,0,0,"Request - A grudge of women"
+3258,0,0,0,0,0,0,0,"Request - A material of delicacy"
+3259,0,1143,30,0,0,0,0,"Request - A agony of a doll maste"
+3260,0,1035,30,0,0,0,0,"Request - Tiresome flies"
+3261,0,1026,30,0,0,0,0,"Request - Unclean girl"
+3262,0,0,0,0,0,0,0,"Request - Queer hobby"
+3263,0,0,0,0,0,0,0,"Request - A mallet of goblin"
+3265,0,0,0,0,0,0,0,"Request - Missing occult mania"
+
 4000,0,0,0,0,0,0,0,"Sherin's Job Interview"
 4001,0,0,0,0,0,0,0,"Job Change to Hunter"
 4002,0,0,0,0,0,0,0,"Job Change to Hunter"
@@ -316,7 +332,7 @@
 4032,0,0,0,0,0,0,0,"Conspiracy of the two families"
 4033,0,0,0,0,0,0,0,"Death of Ahrum"
 5000,0,0,0,0,0,0,0,"The Crow of the Fate - 7"
-//
+
 6000,0,0,0,0,0,0,0,"Job Change to Taekwon"
 6001,0,0,0,0,0,0,0,"Job Change to Taekwon"
 6002,0,0,0,0,0,0,0,"Job Change to Taekwon"
@@ -420,7 +436,40 @@
 7080,86400,0,0,0,0,0,0,"Finding Refined Bradium"
 7081,0,0,0,0,0,0,0,"Helping the Laphine Craftsman"
 7082,86400,0,0,0,0,0,0,"Helping the Laphine Craftsman"
-//
+
+7128,0,0,0,0,0,0,0,"Training course 'conquest a desert!' -start"
+7129,0,1009,10,0,0,0,0,"The training course 'conquer the desert!' - A real battle 1"
+7130,0,1107,10,0,0,0,0,"The training course 'conquer the desert!' - A real battle 2"
+7131,0,1001,5,0,0,0,0,"The training course 'conquer the desert!' - A real battle 3"
+7132,0,0,0,0,0,0,0,"The training course 'conquer the desert!' - Complete a quest"
+7133,0,0,0,0,0,0,0,"The training course 'conquer the culvert!' - Start"
+7134,0,1051,10,0,0,0,0,"The training course 'conquer the culvert!' - A real battle1"
+7135,0,1175,10,0,0,0,0,"The training course 'conquer the culvert!' - A real battle2"
+7136,0,1005,5,0,0,0,0,"The training course 'conquer the culvert!' - A real battle3"
+7137,0,0,0,0,0,0,0,"The training course 'conquer the culvert!' - Complete a quest"
+7138,0,0,0,0,0,0,0,"The training course 'conquer the haunted cave!' - Start"
+7139,0,1076,15,0,0,0,0,"The training course 'conquer the haunted cave!' - A real battle1"
+7140,0,1031,10,0,0,0,0,"The training course 'conquer the haunted cave!' - A real battle2"
+7141,0,0,0,0,0,0,0,"The training course 'conquer the haunted cave!' - Complete a quest"
+7142,0,0,0,0,0,0,0,"The training course 'conquer ant hell!' - Start"
+7143,0,1160,15,0,0,0,0,"The training course 'conquer ant hell!' - A real battle1"
+7144,0,1095,15,0,0,0,0,"The training course 'conquer ant hell!' - A real battle2"
+7145,0,1176,10,0,0,0,0,"The training course 'conquer ant hell!' - A real battle3"
+7146,0,0,0,0,0,0,0,"The training course 'conquer ant hell!' - Complete a quest"
+7147,0,0,0,0,0,0,0,"The training course 'conquer the orc village!' - start"
+7148,0,1686,10,0,0,0,0,"The training course 'conquer the orc village!' - A real battle1"
+7149,0,1023,10,0,0,0,0,"The training course 'conquer the orc village!' - A real battle2"
+7150,0,1273,10,0,0,0,0,"The training course 'conquer the orc village!' - A real battle3"
+7151,0,0,0,0,0,0,0,"The training course 'conquer the orc village!' - Complete a quest"
+7152,0,0,0,0,0,0,0,"bThe training course 'conquer the orc dungeon!' - start"
+7153,0,1153,20,0,0,0,0,"The training course 'conquer the orc dungeon!' - A real battle1"
+7154,0,1152,20,0,0,0,0,"The training course 'conquer the orc dungeon!'- A real battle2"
+7155,0,0,0,0,0,0,0,"The training course 'conquer the orc dungeon!' - complete a quest"
+7156,0,0,0,0,0,0,0,"The training course 'conquer an undersea city!' - start"
+7157,0,1264,15,0,0,0,0,"The training course 'conquer an undersea city!' - A real battle1"
+7158,0,1065,10,0,0,0,0,0,"The training course 'conquer an undersea city!' - A real battle2"
+7159,0,0,0,0,0,0,0,"The training course 'conquer an undersea city!' - Complete a quest"
+
 8000,0,0,0,0,0,0,0,"Quitting Job Change"
 8001,0,0,0,0,0,0,0,"Job Change to Assassin"
 8002,0,0,0,0,0,0,0,"Job Change to Assassin"
@@ -593,7 +642,7 @@
 8169,0,0,0,0,0,0,0,"Living and Dead Water"
 8170,0,0,0,0,0,0,0,"Living and Dead Water"
 8171,0,0,0,0,0,0,0,"Living and Dead Water"
-//
+
 8181,0,0,0,0,0,0,0,"Sight Blaster"
 8182,0,0,0,0,0,0,0,"Push Back Theory"
 8183,0,0,0,0,0,0,0,"Sight Blaster"
@@ -667,7 +716,22 @@
 8251,0,0,0,0,0,0,0,"Injection of Magic"
 8252,0,0,0,0,0,0,0,"Handworked jewels"
 8253,3600,0,0,0,0,0,0,"Language translation device"
-//
+
+8266,0,1077,10,0,0,0,0,"Hunting poison spore!"
+8267,0,1056,10,0,0,0,0,"Hunting smokie!"
+8268,0,1033,10,0,0,0,0,"Hunt elder wilow!"
+8269,0,1104,10,0,0,0,0,"Hunt coco!"
+8270,0,1034,10,0,0,0,0,"Hunt tharafrog!"
+8271,0,0,0,0,0,0,0,"Toxic sprays delivery!"
+8272,0,0,0,0,0,0,0,"Deliver a honey!"
+8273,0,0,0,0,0,0,0,"Deliver a  blanket!"
+8274,0,0,0,0,0,0,0,"Collect bones!"
+8275,0,0,0,0,0,0,0,"Collect feet!"
+8276,0,0,0,0,0,0,0,"Collect scell!"
+8277,0,0,0,0,0,0,0,"Collect tails!"
+8278,0,0,0,0,0,0,0,"Collect cookies!"
+8279,0,0,0,0,0,0,0,"Collect mustache!"
+
 9000,0,0,0,0,0,0,0,"Job Change to Knight"
 9001,0,0,0,0,0,0,0,"Loyalty of a Knight"
 9002,0,0,0,0,0,0,0,"Loyalty of a Knight"
@@ -786,7 +850,30 @@
 10087,0,0,0,0,0,0,0,"Escape from the reality, into the broad world"
 10088,0,0,0,0,0,0,0,"Escape from the reality, into the broad world"
 10089,0,0,0,0,0,0,0,"Escape from the reality, into the broad world"
-//
+
+10102,0,0,0,0,0,0,0,"To client - the chapter of the sphinx dungeon"
+10103,0,0,0,0,0,0,0,"To client - the chapter of Glast heim"
+10104,0,0,0,0,0,0,0,"To client - the chapter of Yuno"
+10105,0,0,0,0,0,0,0,"To client - the chapter of a clock tower"
+10106,0,0,0,0,0,0,0,"To client - the chapter of localizing "
+10107,0,1164,10,0,0,0,0,"Sphinx dungeon - Requiem"
+10108,0,1140,10,0,0,0,0,"Sphinx dungeon - Marduk"
+10109,0,1154,10,0,0,0,0,"Sphinx dungeon - Pasana"
+10110,0,1260,10,0,0,0,0,"Glast heim - Dark Frame"
+10111,0,1117,10,0,0,0,0,"Glast heim - Evil druid"
+10112,0,1192,10,0,0,0,0,"Glast heim - Wraith"
+10113,0,1276,10,0,0,0,0,"Glast Heim - Raydric Archer"
+10114,0,1369,20,0,0,0,0,"Juno - Grand Peco"
+10115,0,1386,20,0,0,0,0,"Juno - sleeper"
+10116,0,1372,20,0,0,0,0,"Juno - Goat"
+10117,0,1376,20,0,0,0,0,"Juno - Harpy"
+10118,0,1269,10,0,0,0,0,"clock tower - Clock"
+10119,0,1199,15,0,0,0,0,"clock tower - Punk"
+10120,0,1195,15,0,0,0,0,"clock tower - Rideword"
+10121,0,1883,15,0,0,0,0,"Localizing - Uzhas"
+10122,0,1404,15,0,0,0,0,"Localizing - Miyabi Doll"
+10123,0,1516,15,0,0,0,0,"Localizing - Mi Gao"
+
 11000,0,0,0,0,0,0,0,"Inspection of Odin Shrine"
 11001,0,0,0,0,0,0,0,"Inspection of Odin Shrine"
 11002,0,0,0,0,0,0,0,"Inspection of Odin Shrine"
@@ -882,7 +969,28 @@
 11103,0,0,0,0,0,0,0,"Secret note of Bazet"
 11104,0,0,0,0,0,0,0,"Resting time"
 11105,0,0,0,0,0,0,0,"Tendrilrion skin"
-//
+
+11114,0,1004,10,0,0,0,0,"Request : Hunt Honet"
+11115,0,1009,20,0,0,0,0,"Request : Hunt Condor"
+11116,0,1052,10,0,0,0,0,"Request : Hunt grasshopper's leg"
+11117,0,1024,20,0,0,0,0,"Request : Hunt Worm tail"
+11118,0,1014,30,0,0,0,0,"Request : Hunt Spore"
+11119,0,1048,20,0,0,0,0,"Request : Pest control"
+11120,0,1055,20,0,0,0,0,"Request : Hunt Muka"
+11121,0,1005,20,0,0,0,0,"Request : Hunt Farmiliar"
+11122,0,1019,30,0,0,0,0,"Request : Collect feather"
+11123,0,1077,30,0,0,0,0,"Request : Collect Poison spore"
+11124,86400,0,0,0,0,0,0,"Request : Hunt honet - Complete"
+11125,86400,0,0,0,0,0,0,"Request : Hunt condor - Complete"
+11126,86400,0,0,0,0,0,0,"Request : Hunt grasshopper's leg - Complete"
+11127,86400,0,0,0,0,0,0,"Request : Hunt Worm tail - Complete"
+11128,86400,0,0,0,0,0,0,"Request : Hunt spore - Complete"
+11129,86400,0,0,0,0,0,0,"Request : Pest control - Complete"
+11130,86400,0,0,0,0,0,0,"Request : Hunt muka - Complete"
+11131,86400,0,0,0,0,0,0,"Request : Hunt Farmiliar - Complete"
+11132,86400,0,0,0,0,0,0,"Request : Collect feather - Complete"
+11133,86400,0,0,0,0,0,0,"Request : Collect Poison spore - Complete"
+
 12000,0,0,0,0,0,0,0,"An old friend"
 12001,0,0,0,0,0,0,0,"Digotz, Maku's old friend"
 12002,0,0,0,0,0,0,0,"Messenger of Friendship"
@@ -947,7 +1055,25 @@
 12061,0,0,0,0,0,0,0,"Concentration"
 12062,86400,0,0,0,0,0,0,"Today's Mining Closed"
 12070,0,0,0,0,0,0,0,"Limited time for enter"
-//
+
+12072,0,1034,20,0,0,0,0,"Hunt tharafrog"
+12073,0,1248,15,0,0,0,0,"Remove Cruiser"
+12074,0,1070,30,0,0,0,0,"Remove Kukre"
+12075,0,1686,15,0,0,0,0,"Remove orcbaby"
+12076,0,1023,20,0,0,0,0,"Remove orcwarroir"
+12077,0,1066,15,0,0,0,0,"Hunt vadon"
+12078,0,1064,30,0,0,0,0,"Hunt Megalodon"
+12079,0,1144,15,0,0,0,0,"Hunt Marse"
+12080,0,1067,20,0,0,0,0,"Hunt Cornutus"
+12081,0,1151,15,0,0,0,0,"Remove Myst"
+12082,0,1074,30,0,0,0,0,"Hunt shellfish"
+12083,0,1142,15,0,0,0,0,"Hunt Marine sphere"
+12084,0,1158,20,0,0,0,0,"Hunt Phen"
+12085,0,1152,15,0,0,0,0,"Remove orcskeleton"
+12086,0,1177,30,0,0,0,0,"Remove Zenorc"
+12087,0,1041,15,0,0,0,0,"Remove mummy"
+12088,0,0,0,0,0,0,0,"Accomplishing a request"
+
 16000,0,0,0,0,0,0,0,"Metz Brayde's Notice"
 16001,0,0,0,0,0,0,0,"First examination"
 16002,0,0,0,0,0,0,0,"Fetching Items for Arian -1"
@@ -1106,7 +1232,7 @@
 17015,0,0,0,0,0,0,0,"The Research Note"
 17016,0,0,0,0,0,0,0,"Regicide"
 17017,0,0,0,0,0,0,0,"Reporting the King's Death"
-//
+
 18001,0,0,0,0,0,0,0,"Delivery for Rooney"
 18002,0,0,0,0,0,0,0,"Delivery for Rooney"
 18003,0,0,0,0,0,0,0,"Delivery for Rooney"
@@ -1224,7 +1350,7 @@
 19127,0,0,0,0,0,0,0,"The Eye of Hellion"
 19128,0,0,0,0,0,0,0,"The Eye of Hellion"
 19129,0,0,0,0,0,0,0,"The Eye of Hellion"
-//
+
 50000,0,0,0,0,0,0,0,"Pirate Dagger materials"
 50001,0,0,0,0,0,0,0,"Weather Beaten Old Man"
 50002,0,0,0,0,0,0,0,"Lost Treasure?"
@@ -1254,7 +1380,7 @@
 50027,0,0,0,0,0,0,0,"Buried treasure"
 50028,0,0,0,0,0,0,0,"Stolen treasure!"
 50029,0,0,0,0,0,0,0,"A Pirate's Spirit!"
-//
+
 //60000,0,0,0,0,0,0,0,"60000"
 60001,0,0,0,0,0,0,0,"Monster Extermination"
 60002,0,0,0,0,0,0,0,"Monster Extermination"
@@ -1408,7 +1534,7 @@
 60188,0,1365,50,0,0,0,0,"Hunting Apocalypse"
 60189,0,1365,100,0,0,0,0,"Hunting Apocalypse"
 60190,0,1365,150,0,0,0,0,"Hunting Apocalypse"
-//
+
 60200,604800,0,0,0,0,0,0,"Endless Tower Effect"
 60201,14400,0,0,0,0,0,0,"Endless Tower Time Limit"
 60301,0,1155,100,0,0,0,0,"Dragon Hunting"
@@ -1421,3 +1547,4 @@
 60308,0,1713,200,0,0,0,0,"Dragon Hunting"
 60309,0,1716,100,0,0,0,0,"Dragon Hunting"
 60310,0,1716,200,0,0,0,0,"Dragon Hunting"
+

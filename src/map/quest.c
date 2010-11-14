@@ -314,6 +314,10 @@ int quest_read_db(void)
 	
 	while(fgets(line, sizeof(line), fp))
 	{
+		if (k == MAX_QUEST_DB) {
+			ShowError("quest_read_db: Too many entries specified in %s/quest_db.txt!\n", db_path);
+			break;
+		}
 		if(line[0]=='/' && line[1]=='/')
 			continue;
 		memset(str,0,sizeof(str));
@@ -326,6 +330,8 @@ int quest_read_db(void)
 				*np = 0;
 				p = np + 1;
 			}
+			else if (str[0] == NULL)
+				continue;
 			else
 			{
 				ShowError("quest_read_db: insufficient columes in line %s\n", line);
@@ -352,7 +358,7 @@ int quest_read_db(void)
 		k++;
 	}
 	fclose(fp);
-	ShowStatus("Done reading '"CL_WHITE"%s"CL_RESET"'.\n","quest_db.txt");
+	ShowStatus("Done reading '"CL_WHITE"%d"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n", k, "quest_db.txt");
 	return 0;
 }
 
