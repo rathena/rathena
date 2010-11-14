@@ -112,24 +112,14 @@ gef_fild11,0,0,0,0	monster	Goblin Leader	1299,1,1800000,1200000,0
 //==================================================
 // gef_fild12 - Kordt Forest
 //==================================================
-//gef_fild12,0,0,0,0	monster	Kobold	1133,20,0,0,0
-//gef_fild12,0,0,0,0	monster	Kobold	1134,30,0,0,0
-//gef_fild12,0,0,0,0	monster	Kobold	1135,30,0,0,0
-//gef_fild12,0,0,0,0	monster	Kobold Archer	1282,40,0,0,0
-//gef_fild12,0,0,0,0	monster	Poporing	1031,20,0,0,0
-//gef_fild12,0,0,0,0	monster	Kobold Leader	1296,1,1800000,1200000,0
+// No spawns/Disabled Map - 13.3
 
 //==================================================
 // gef_fild13 - Britoniah
 //==================================================
-//gef_fild13,0,0,0,0	monster	Poporing	1031,20,0,0,0
-//gef_fild13,0,0,0,0	monster	Creamy	1018,40,0,0,0
-//gef_fild13,0,0,0,0	monster	Ambernite	1094,30,0,0,0
+// No spawns - 13.3
 
 //==================================================
 // gef_fild14 - West Orc Village
 //==================================================
-//gef_fild14,0,0,0,0	monster	Orc Lady	1273,20,0,0,0
-//gef_fild14,0,0,0,0	monster	Orc Warrior	1023,10,0,0,0
-//gef_fild14,0,0,0,0	monster	Orc Archer	1189,30,0,0,0
-//gef_fild14,0,0,0,0	monster	High Orc	1213,70,0,0,0
+// No spawns/Disabled Map - 13.3

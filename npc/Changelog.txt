@@ -1,13 +1,22 @@
 Date		Added
 ======
+2010/11/14
+	* Rev. 14462 Updating spawns as a precursor for Eden group quests. [L0ne_W0lf]
+	* Updated spawns for Juno fields to Renewal.
+	* Updated spawns for Umbala fields to Renewal.
+	* Updated spawns for Comodo fields to Renewal
+	* Updated spawns for Mjolnir fields to Renewal.
+	* Updated spawns for Payon fields to Renewal.
+	* Updated spawns for Morroc fields to Renewal.
+	* Commented out repeatable EXP quests.
 2010/11/04
 	* Rev. 14448 Just a couple Bug fixes. :P [L0ne_W0lf]
 	- Added a missing close in quests_13_2.txt. (bugreport:4520)
 	- Corrected 'IProntera' typo in quests_prontera.txt (bugreport:4522)
 2010/10/23
-	* Rev. 14435 Updated spawns for Geffen fields to Rewnewal. [L0ne_W0lf]
+	* Rev. 14435 Updated spawns for Geffen fields to Renewal. [L0ne_W0lf]
 2010/10/20
-	* Rev. 14433 Updated spawns for Prontera fields to Rewnewal. [L0ne_W0lf]
+	* Rev. 14433 Updated spawns for Prontera fields to Renewal. [L0ne_W0lf]
 2010/10/10
 	* Rev. 14422 Wot's dis? Missed a warp in morroc field! THIS WILL NOT DO. [L0ne_W0lf]
 	- ...corrected the versions in the file headers as well. :P
