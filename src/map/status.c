@@ -1721,13 +1721,13 @@ int status_calc_pc_(struct map_session_data* sd, bool first)
 	sd->dsprate=100;
 	sd->hprecov_rate = 100;
 	sd->sprecov_rate = 100;
-	sd->atk_rate = sd->matk_rate = 100;
+	sd->matk_rate = 100;
 	sd->critical_rate = sd->hit_rate = sd->flee_rate = sd->flee2_rate = 100;
 	sd->def_rate = sd->def2_rate = sd->mdef_rate = sd->mdef2_rate = 100;
 	sd->regen.state.block = 0;
 
-	// zeroed arrays, order follows the order in map.h.
-	// add new arrays to the end of zeroed area in map.h (see comments) and size here. [zzo]
+	// zeroed arrays, order follows the order in pc.h.
+	// add new arrays to the end of zeroed area in pc.h (see comments) and size here. [zzo]
 	memset (sd->param_bonus, 0, sizeof(sd->param_bonus)
 		+ sizeof(sd->param_equip)
 		+ sizeof(sd->subele)
@@ -1805,7 +1805,8 @@ int status_calc_pc_(struct map_session_data* sd, bool first)
 	);
 	
 	// vars zeroing. ints, shorts, chars. in that order.
-	memset (&sd->arrow_atk, 0,sizeof(sd->arrow_atk)
+	memset (&sd->atk_rate, 0,sizeof(sd->atk_rate)
+		+ sizeof(sd->arrow_atk)
 		+ sizeof(sd->arrow_ele)
 		+ sizeof(sd->arrow_cri)
 		+ sizeof(sd->arrow_hit)
