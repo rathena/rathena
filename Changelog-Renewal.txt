@@ -1,5 +1,7 @@
 Date	Added
 
+2010/11/15
+	* Follow-up to r14456. Default initialize atk_rate to 0 instead of 100 to match new effect of bonus bAtkRate. [Paradox924X]
 2010/11/14
 	* Rev. 14463 Updated quest_read_db. [L0ne_W0lf]
 	- Reports entries when read by server at start up like other DBs.
