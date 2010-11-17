@@ -1,5 +1,7 @@
 Date	Added
 
+2010/11/16
+	* Added a missing argument to a warning containing a format specifier. [Paradox924X]
 2010/11/15
 	* Follow-up to r14456. Default initialize atk_rate to 0 instead of 100 to match new effect of bonus bAtkRate. [Paradox924X]
 2010/11/14

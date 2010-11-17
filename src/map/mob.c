@@ -3418,7 +3418,7 @@ static bool mob_parse_dbrow(char** str)
 		return false;
 	}
 	if (pcdb_checkid(class_)) {
-		ShowWarning("Mob with ID: %d not loaded. That ID is reserved for player classes.\n");
+		ShowWarning("Mob with ID: %d not loaded. That ID is reserved for player classes.\n", class_);
 		return false;
 	}
 	
