@@ -253,9 +253,9 @@ size_t strnlen (const char* string, size_t maxlen)
 #endif
 
 #if defined(WIN32) && defined(_MSC_VER) && _MSC_VER <= 1200
-unsigned long long strtoull(const char* str, char** endptr, int base)
+uint64 strtoull(const char* str, char** endptr, int base)
 {
-	unsigned long long result;
+	uint64 result;
 	int count;
 	int n;
 
@@ -266,8 +266,13 @@ unsigned long long strtoull(const char* str, char** endptr, int base)
 		else
 		if( str[0] == '0' )
 			base = 8;
+		else
+			base = 10;
 	}
 
+	if( base == 8 )
+		count = sscanf(str, "%I64o%n", &result, &n);
+	else
 	if( base == 10 )
 		count = sscanf(str, "%I64u%n", &result, &n);
 	else

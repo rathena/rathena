@@ -231,7 +231,7 @@ SOURCE=..\src\login\loginlog.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\src\login\loginlog_sql.h
+SOURCE=..\src\login\loginlog_sql.c
 # End Source File
 # End Group
 # End Target

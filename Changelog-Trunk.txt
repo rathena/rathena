@@ -1,5 +1,12 @@
 Date	Added
 
+2010/11/19
+	* Various VC6-related fixes and tweaks. [Ai4rei]
+	- Fixed a typo in VC6 project files, that prevented login-server from compiling (bugreport:4061, since r12727).
+	- Fixed usage of 'long long' in Sql_P_BindSqlDataType preventing SQL VC6 projects from compiling (bugreport:1741, since r10779).
+	- Fixed usage of 'long long' in strtoull preventing VC6 projects from compiling (bugreport:4059, follow up to r14245).
+	- Made strtoull default to base 10 and actually process base 8, to match the normal behavior of this function (bugreport:4059, follow up to r14245).
+	- Fixed functions in db.c not being returned as pointer, causing warnings on VC6.
 2010/11/16
 	* Added a missing argument to a warning containing a format specifier. [Paradox924X]
 2010/11/15
