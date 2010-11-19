@@ -3624,7 +3624,7 @@ int check_connect_login_server(int tid, unsigned int tick, int id, intptr data)
 	memcpy(WFIFOP(login_fd,26), passwd, 24);
 	WFIFOL(login_fd,50) = 0;
 	WFIFOL(login_fd,54) = htonl(char_ip);
-	WFIFOL(login_fd,58) = htons(char_port);
+	WFIFOW(login_fd,58) = htons(char_port);
 	memcpy(WFIFOP(login_fd,60), server_name, 20);
 	WFIFOW(login_fd,80) = 0;
 	WFIFOW(login_fd,82) = char_maintenance;
