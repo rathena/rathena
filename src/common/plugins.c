@@ -160,8 +160,8 @@ static int plugin_iscompatible(char* version)
 	if( version == NULL )
 		return 0;
 	sscanf(version, "%d.%d", &req_major, &req_minor);
-	sscanf(version, "%d.%d", &major, &minor);
-	return ( req_major == major || req_minor <= minor );
+	sscanf(PLUGIN_VERSION, "%d.%d", &major, &minor);
+	return ( req_major == major && req_minor <= minor );
 }
 
 Plugin* plugin_open(const char* filename)
