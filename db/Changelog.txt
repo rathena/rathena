@@ -8,6 +8,8 @@
 	1475 Equestrian's Spear:	NEED INFO.
 	13005 Angelic Wing Dagger:	NEED INFO.
 =======================
+2010/11/19
+	* Rev. 14469 Fixed packet layout of wanttoconnection for packet_ver 16 and 22 (bugreport:3359, since r9958). [Ai4rei]
 2010/11/14
 	* Rev. 14463 Updated quest and item DBs with Eden Group information. [L0ne_W0lf]
 2010/11/10

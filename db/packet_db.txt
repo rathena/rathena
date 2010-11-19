@@ -679,7 +679,7 @@ packet_ver: 16
 0x0089,8,ticksend,4
 0x008c,11,getcharnamerequest,7
 0x0094,14,movetokafra,7:10
-0x009b,26,wanttoconnection,4:9:17:18:25
+0x009b,26,wanttoconnection,4:9:17:21:25
 0x009f,14,useitem,4:10
 0x00a2,15,solvecharname,11
 0x00a7,8,walktoxy,5
@@ -978,7 +978,7 @@ packet_ver: 22
 0x0089,8,ticksend,4
 0x008c,11,getcharnamerequest,7
 0x0094,14,movetokafra,7:10
-0x009b,26,wanttoconnection,4:9:17:18:25
+0x009b,26,wanttoconnection,4:9:17:21:25
 0x009f,14,useitem,4:10
 0x00a2,15,solvecharname,11
 //0x00a7,8,walktoxy,5
