@@ -2229,10 +2229,10 @@ DBComparator db_default_cmp(DBType type)
 {
 	DB_COUNTSTAT(db_default_cmp);
 	switch (type) {
-		case DB_INT:     return db_int_cmp;
-		case DB_UINT:    return db_uint_cmp;
-		case DB_STRING:  return db_string_cmp;
-		case DB_ISTRING: return db_istring_cmp;
+		case DB_INT:     return &db_int_cmp;
+		case DB_UINT:    return &db_uint_cmp;
+		case DB_STRING:  return &db_string_cmp;
+		case DB_ISTRING: return &db_istring_cmp;
 		default:
 			ShowError("db_default_cmp: Unknown database type %u\n", type);
 			return NULL;
@@ -2253,10 +2253,10 @@ DBHasher db_default_hash(DBType type)
 {
 	DB_COUNTSTAT(db_default_hash);
 	switch (type) {
-		case DB_INT:     return db_int_hash;
-		case DB_UINT:    return db_uint_hash;
-		case DB_STRING:  return db_string_hash;
-		case DB_ISTRING: return db_istring_hash;
+		case DB_INT:     return &db_int_hash;
+		case DB_UINT:    return &db_uint_hash;
+		case DB_STRING:  return &db_string_hash;
+		case DB_ISTRING: return &db_istring_hash;
 		default:
 			ShowError("db_default_hash: Unknown database type %u\n", type);
 			return NULL;
@@ -2284,12 +2284,12 @@ DBReleaser db_default_release(DBType type, DBOptions options)
 	options = db_fix_options(type, options);
 	if (options&DB_OPT_RELEASE_DATA) { // Release data, what about the key?
 		if (options&(DB_OPT_DUP_KEY|DB_OPT_RELEASE_KEY))
-			return db_release_both; // Release both key and data
-		return db_release_data; // Only release data
+			return &db_release_both; // Release both key and data
+		return &db_release_data; // Only release data
 	}
 	if (options&(DB_OPT_DUP_KEY|DB_OPT_RELEASE_KEY))
-		return db_release_key; // Only release key
-	return db_release_nothing; // Release nothing
+		return &db_release_key; // Only release key
+	return &db_release_nothing; // Release nothing
 }
 
 /**
@@ -2307,10 +2307,10 @@ DBReleaser db_custom_release(DBRelease which)
 {
 	DB_COUNTSTAT(db_custom_release);
 	switch (which) {
-		case DB_RELEASE_NOTHING: return db_release_nothing;
-		case DB_RELEASE_KEY:     return db_release_key;
-		case DB_RELEASE_DATA:    return db_release_data;
-		case DB_RELEASE_BOTH:    return db_release_both;
+		case DB_RELEASE_NOTHING: return &db_release_nothing;
+		case DB_RELEASE_KEY:     return &db_release_key;
+		case DB_RELEASE_DATA:    return &db_release_data;
+		case DB_RELEASE_BOTH:    return &db_release_both;
 		default:
 			ShowError("db_custom_release: Unknown release options %u\n", which);
 			return NULL;

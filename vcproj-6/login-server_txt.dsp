@@ -219,7 +219,7 @@ SOURCE=..\src\login\loginlog.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\src\login\loginlog_txt.h
+SOURCE=..\src\login\loginlog_txt.c
 # End Source File
 # End Group
 # End Target

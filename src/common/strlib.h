@@ -29,7 +29,7 @@ size_t strnlen (const char* string, size_t maxlen);
 #endif
 
 #if defined(WIN32) && defined(_MSC_VER) && _MSC_VER <= 1200
-unsigned long long strtoull(const char* str, char** endptr, int base);
+uint64 strtoull(const char* str, char** endptr, int base);
 #endif
 
 int e_mail_check(char* email);

@@ -489,8 +489,8 @@ static int Sql_P_BindSqlDataType(MYSQL_BIND* bind, enum SqlDataType buffer_type,
 		buffer_len = sizeof(long);
 		break;
 	case SQLDT_ULONGLONG: bind->is_unsigned = 1;
-	case SQLDT_LONGLONG: bind->buffer_type = Sql_P_SizeToMysqlIntType(sizeof(long long));
-		buffer_len = sizeof(long long);
+	case SQLDT_LONGLONG: bind->buffer_type = Sql_P_SizeToMysqlIntType(sizeof(int64));
+		buffer_len = sizeof(int64);
 		break;
 	// floating point
 	case SQLDT_FLOAT: bind->buffer_type = MYSQL_TYPE_FLOAT;
