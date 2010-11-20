@@ -50,8 +50,8 @@
 41,Vending,4,5000
 42,Mammonite,1,5000
 
-//43,Owl?s Eye,1,0
-//44,Vulture?s Eye,1,0
+//43,Owl's Eye,1,0
+//44,Vulture's Eye,1,0
 45,Improve Concentration,4,5000
 46,Double Strafe,1,5000
 47,Arrow Shower,2,5000
@@ -77,7 +77,7 @@
 //64,Cavalier Mastery,1,0
 
 //65,Mace Mastery,1,0
-66,Imposito Manus,1,4000
+66,Impositio Manus,1,4000
 67,Suffragium,2,4000
 68,Aspersio,2,4000
 69,B.S Sacramenti,4,4000
@@ -93,7 +93,7 @@
 79,Magnus Exorcismus,6,4000
 
 80,Fire Pillar,2,4000
-81,Sighttrasher,2,4000
+81,Sightrasher,2,4000
 //82,Fire Ivy,1,0
 83,Meteor Storm,6,4000
 84,Jupitel Thunder,2,4000
@@ -103,7 +103,7 @@
 88,Frost Nova,1,4000
 89,Storm Gust,6,4000
 90,Earth spike,1,4000
-91,Heaven?s Drive,2,4000
+91,Heaven's Drive,2,4000
 92,Quagmire,4,4000
 93,Sense,1,4000
 
@@ -162,7 +162,7 @@
 142,First Aid,1,5000
 143,Act Dead,1,5000
 //144,Moving HP-Recovery,1,0
-//145,Attack Weak Point,1,0
+//145,Fatal Blow,1,0
 146,Auto Berserk,1,0
 147,Arrow Crafting,1,5000
 148,Arrow Repel,1,5000
@@ -207,16 +207,16 @@
 236,Synthetic Armor,4,4000
 237,Biochemical Helm,4,4000
 
-//238,Basis of Life,1,0
+//238,Bioethics,1,0
 //239,Biotechnology,1,0
 //240,Life Creation,1,0
 //241,Cultivation,1,0
 //242,Flame control,1,0
-//243,Call Hommunculus,1,0
-//244,Peaceful Rest,1,0
+//243,Call Homunculus,1,0
+//244,Vaporize,1,0
 //245,Drillmaster,1,0
-//246,Heal Hommunculus,1,0
-//247,Resurrect Hommunculus,1,0
+//246,Heal Homunculus,1,0
+//247,Resurrect Homunculus,1,0
 
 //248,Faith,1,0
 249,Guard,1,4000
@@ -226,7 +226,7 @@
 253,Holy cross,2,4000
 254,Grand cross,6,4000
 255,Sacrifice,4,4000
-256,Resistant Soul,2,4000
+256,Resistant Souls,2,4000
 257,Defending Aura,4,4000
 258,Spear Quicken,1,4000
 
@@ -234,7 +234,7 @@
 //260,Spiritual Cadence,1,0
 261,Summon Spirit Sphere,1,4000
 262,Absorb Spirit Sphere,1,4000
-//263,Raging Triple Blow,1,0
+//263,Raging Trifecta Blow,1,0
 264,Snap,4,4000
 //265,Dodge,1,0
 266,Occult Impact,2,4000
@@ -268,15 +268,15 @@
 291,Monocell,4,2500
 292,Class Change,8,2500
 293,Summon Monster,6,3500
-294,Orcish Face,4,5000
-295,Death,8,2000
-296,Fortune,6,4000
-297,Tame Monster,6,4000
-298,Question,4,5000
+294,Grampus Morph,4,5000
+295,Grim Reaper,8,2000
+296,Gold Digger,6,4000
+297,Beastly Hypnosis,6,4000
+298,Questioning,4,5000
 299,Gravity,4,5000
-300,Level Up,10,500
-301,Instant Death,4,2000
-302,Full Recovery,8,3000
+300,Leveling,10,500
+301,Suicide,4,2000
+302,Rejuvination,8,3000
 303,Coma,4,4000
 
 // Dancer / Bard commonness
@@ -293,7 +293,7 @@
 //314,Ragnarok,1,0
 
 // Bard skill
-//315,Music Lesson,1,0
+//315,Music Lessons,1,0
 316,Melody Strike,1,4000
 317,Unchained Serenade,1,0
 318,Unbarring Octave,2,4000
