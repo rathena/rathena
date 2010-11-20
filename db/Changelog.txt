@@ -9,6 +9,17 @@
 	13005 Angelic Wing Dagger:	NEED INFO.
 =======================
 2010/11/19
+	* Rev. 14474 Item Database bugfixing. [L0ne_W0lf]
+	- Fixed equip locations and view IDs for some headgears. (bugreport:4336)
+	- Corrected the value of hit given by Military Ration C. (bugreport:4369)
+	- Updated bonus for items that increase attack by class. (bugreport:4387)
+	  These 'fixes' should be considered a temporary fix
+	  until proper bonuses can be added to emulate aegis.
+	- Added bonus increase_agi autocast to Krieger_shoes01. (bugreport:4406)
+	- Added EXP script to Miracle and Secre Medicine items. (bugreport:4416)
+	- Corrected weight of Some_of_Report to 0, as per desc. (bugreport:4541)
+	- Corrected typos in skill name column in abra_db.txt. (bugreport:4557)
+	- Corrected what jobs can use the Weihna and Krieg. (bugreport:4558)
 	* Rev. 14469 Fixed packet layout of wanttoconnection for packet_ver 16 and 22 (bugreport:3359, since r9958). [Ai4rei]
 2010/11/14
 	* Rev. 14463 Updated quest and item DBs with Eden Group information. [L0ne_W0lf]
