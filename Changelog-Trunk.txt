@@ -12,6 +12,7 @@ Date	Added
 	* Made script command getmapxy print a warning, if an invalid type is supplied (related r69, r8459). [Ai4rei]
 	* Fixed pc_marriage not checking spouse character job for baby class. [Ai4rei]
 	* Removed ; from INTPTR_* defines (since r13449). [Ai4rei]
+	* Fixed a crash when SqlStmt_ShowDebug is given NULL pointer as statement handle (since r10753, related r10818). [Ai4rei]
 2010/11/16
 	* Added a missing argument to a warning containing a format specifier. [Paradox924X]
 2010/11/15
