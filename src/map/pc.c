@@ -7394,7 +7394,7 @@ int pc_marriage(struct map_session_data *sd,struct map_session_data *dstsd)
 {
 	if(sd == NULL || dstsd == NULL ||
 		sd->status.partner_id > 0 || dstsd->status.partner_id > 0 ||
-		sd->class_&JOBL_BABY)
+		(sd->class_&JOBL_BABY) || (dstsd->class_&JOBL_BABY))
 		return -1;
 	sd->status.partner_id = dstsd->status.char_id;
 	dstsd->status.partner_id = sd->status.char_id;
