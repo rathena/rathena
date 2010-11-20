@@ -5,6 +5,7 @@ Date	Added
 	* Fixed login-server account engine initialization not getting checked, whether it succeeds or not (bugreport:4361, since r12700, related r13000). [Ai4rei]
 	- Failure to retrieve account engine and initializing it is now considered fatal and causes the server to exit immediately.
 	- Fixed two data type inconsistencies, while being at it.
+	* Made atcommand declarations use ACMD_FUNC macro (bugreport:4252, related r11607). [Ai4rei]
 2010/11/19
 	* Various VC6-related fixes and tweaks. [Ai4rei]
 	- Fixed a typo in VC6 project files, that prevented login-server from compiling (bugreport:4061, since r12727).
