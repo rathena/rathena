@@ -9,6 +9,7 @@ Date	Added
 	- Fixed functions in db.c not being returned as pointer, causing warnings on VC6.
 	* Fixed plug-in version getting checked against itself and a wrong operator being used for the check (bugreport:3952, since r9631). [Ai4rei]
 	* Fixed WFIFOL being used instead of WFIFOW for a short field of packet 0x2710 (bugreport:2819). [Ai4rei]
+	* Made script command getmapxy print a warning, if an invalid type is supplied (related r69, r8459). [Ai4rei]
 2010/11/16
 	* Added a missing argument to a warning containing a format specifier. [Paradox924X]
 2010/11/15

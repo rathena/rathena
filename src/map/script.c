@@ -11575,6 +11575,10 @@ BUILDIN_FUNC(getmapxy)
 			if (sd && sd->hd)
 				bl = &sd->hd->bl;
 			break;
+		default:
+			ShowWarning("script: buildin_getmapxy: Invalid type %d\n", type);
+			script_pushint(st,-1);
+			return 1;
 	}
 	if (!bl) { //No object found.
 		script_pushint(st,-1);
