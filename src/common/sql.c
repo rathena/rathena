@@ -920,7 +920,7 @@ void SqlStmt_ShowDebug_(SqlStmt* self, const char* debug_file, const unsigned lo
 {
 	if( self == NULL )
 		ShowDebug("at %s:%lu -  self is NULL\n", debug_file, debug_line);
-	if( StringBuf_Length(&self->buf) > 0 )
+	else if( StringBuf_Length(&self->buf) > 0 )
 		ShowDebug("at %s:%lu - %s\n", debug_file, debug_line, StringBuf_Value(&self->buf));
 	else
 		ShowDebug("at %s:%lu\n", debug_file, debug_line);
