@@ -3479,7 +3479,6 @@ int atcommand_doom(const int fd, struct map_session_data* sd, const char* comman
 	struct s_mapiterator* iter;
 
 	nullpo_retr(-1, sd);
-	clif_specialeffect(&sd->bl,450,ALL_SAMEMAP);
 
 	iter = mapit_getallusers();
 	for( pl_sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); pl_sd = (TBL_PC*)mapit_next(iter) )
@@ -3487,6 +3486,7 @@ int atcommand_doom(const int fd, struct map_session_data* sd, const char* comman
 		if (pl_sd->fd != fd && pc_isGM(sd) >= pc_isGM(pl_sd))
 		{
 			status_kill(&pl_sd->bl);
+			clif_specialeffect(&pl_sd->bl,450,AREA);
 			clif_displaymessage(pl_sd->fd, msg_txt(61)); // The holy messenger has given judgement.
 		}
 	}
@@ -3506,7 +3506,6 @@ int atcommand_doommap(const int fd, struct map_session_data* sd, const char* com
 	struct s_mapiterator* iter;
 
 	nullpo_retr(-1, sd);
-	clif_specialeffect(&sd->bl,450,ALL_CLIENT);
 
 	iter = mapit_getallusers();
 	for( pl_sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); pl_sd = (TBL_PC*)mapit_next(iter) )
@@ -3514,6 +3513,7 @@ int atcommand_doommap(const int fd, struct map_session_data* sd, const char* com
 		if (pl_sd->fd != fd && sd->bl.m == pl_sd->bl.m && pc_isGM(sd) >= pc_isGM(pl_sd))
 		{
 			status_kill(&pl_sd->bl);
+			clif_specialeffect(&pl_sd->bl,450,AREA);
 			clif_displaymessage(pl_sd->fd, msg_txt(61)); // The holy messenger has given judgement.
 		}
 	}
