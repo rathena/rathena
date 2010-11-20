@@ -577,7 +577,7 @@ int parse_fromchar(int fd)
 			struct mmo_account acc;
 
 			int account_id = RFIFOL(fd,2);
-			int state = RFIFOL(fd,6);
+			unsigned int state = RFIFOL(fd,6);
 			RFIFOSKIP(fd,10);
 
 			if( !accounts->load_num(accounts, &acc, account_id) )
@@ -1543,7 +1543,7 @@ int login_config_read(const char* cfgName)
 		else if(!strcmpi(w1, "check_client_version"))
 			login_config.check_client_version = (bool)config_switch(w2);
 		else if(!strcmpi(w1, "client_version_to_connect"))
-			login_config.client_version_to_connect = atoi(w2);
+			login_config.client_version_to_connect = strtoul(w2, NULL, 10);
 		else if(!strcmpi(w1, "use_MD5_passwords"))
 			login_config.use_md5_passwds = (bool)config_switch(w2);
 		else if(!strcmpi(w1, "min_level_to_connect"))
@@ -1723,14 +1723,18 @@ int do_init(int argc, char** argv)
 	accounts = get_account_engine();
 	if( accounts == NULL )
 	{
-		ShowError("do_init: account engine '%s' not found.\n", login_config.account_engine);
-		runflag = 0;
-		return 1;
+		ShowFatalError("do_init: account engine '%s' not found.\n", login_config.account_engine);
+		exit(EXIT_FAILURE);
 	}
 	else
 	{
 		ShowInfo("Using account engine '%s'.\n", login_config.account_engine);
-		accounts->init(accounts);
+
+		if(!accounts->init(accounts))
+		{
+			ShowFatalError("do_init: Failed to initialize account engine '%s'.\n", login_config.account_engine);
+			exit(EXIT_FAILURE);
+		}
 	}
 
 	if( login_config.console )

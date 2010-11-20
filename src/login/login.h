@@ -58,7 +58,7 @@ struct Login_Config {
 	bool use_md5_passwds;                           // work with password hashes instead of plaintext passwords?
 	int min_level_to_connect;                       // minimum level of player/GM (0: player, 1-99: GM) to connect
 	bool check_client_version;                      // check the clientversion set in the clientinfo ?
-	int client_version_to_connect;                  // the client version needed to connect (if checking is enabled)
+	uint32 client_version_to_connect;               // the client version needed to connect (if checking is enabled)
 
 	bool admin_state;                               // is ladmin support enabled?
 	char admin_pass[24];                            // security password for ladmin

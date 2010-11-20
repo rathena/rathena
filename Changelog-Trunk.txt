@@ -2,6 +2,9 @@ Date	Added
 
 2010/11/20
 	* Fixed @doom and @doommap spamming packets for the visual effect on invoker unnecessarily over whole map and server respectively. The effect is now displayed on each killed character (bugreport:871, since r311). [Ai4rei]
+	* Fixed login-server account engine initialization not getting checked, whether it succeeds or not (bugreport:4361, since r12700, related r13000). [Ai4rei]
+	- Failure to retrieve account engine and initializing it is now considered fatal and causes the server to exit immediately.
+	- Fixed two data type inconsistencies, while being at it.
 2010/11/19
 	* Various VC6-related fixes and tweaks. [Ai4rei]
 	- Fixed a typo in VC6 project files, that prevented login-server from compiling (bugreport:4061, since r12727).
