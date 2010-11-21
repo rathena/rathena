@@ -31,7 +31,7 @@ struct weapon_data {
 	int def_ratio_atk_race;
 	int addele[ELE_MAX];
 	int addrace[RC_MAX];
-	int addrace2[RC_MAX];
+	int addrace2[RC2_MAX];
 	int addsize[3];
 
 	struct drain_data {
@@ -219,7 +219,7 @@ struct map_session_data {
 	int param_bonus[6],param_equip[6]; //Stores card/equipment bonuses.
 	int subele[ELE_MAX];
 	int subrace[RC_MAX];
-	int subrace2[RC_MAX];
+	int subrace2[RC2_MAX];
 	int subsize[3];
 	int reseff[SC_COMMON_MAX-SC_COMMON_MIN+1];
 	int weapon_coma_ele[ELE_MAX];

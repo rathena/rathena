@@ -27,7 +27,6 @@
 #include "homunculus.h"
 #include "instance.h"
 #include "mercenary.h"
-#include "mob.h" // MAX_MOB_RACE_DB
 #include "npc.h" // fake_nd
 #include "pet.h" // pet_unlocktarget()
 #include "party.h" // party_search()
@@ -2741,7 +2740,7 @@ int pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 		}
 		break;
 	case SP_ADDRACE2:
-		if (!(type2 > 0 && type2 < MAX_MOB_RACE_DB))
+		if (!(type2 > RC2_NONE && type2 < RC2_MAX))
 			break;
 		if(sd->state.lr_flag != 2)
 			sd->right_weapon.addrace2[type2] += val;
@@ -2753,6 +2752,8 @@ int pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 			sd->subsize[type2]+=val;
 		break;
 	case SP_SUBRACE2:
+		if (!(type2 > RC2_NONE && type2 < RC2_MAX))
+			break;
 		if(sd->state.lr_flag != 2)
 			sd->subrace2[type2]+=val;
 		break;

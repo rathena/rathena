@@ -487,6 +487,14 @@ RC_Boss	10
 RC_NonBoss	11
 RC_NonDemiHuman	12
 
+RC2_None	0
+RC2_Goblin	1
+RC2_Kobold	2
+RC2_Orc	3
+RC2_Golem	4
+RC2_Guardian	5
+RC2_Ninja	6
+
 BF_WEAPON	0x0001
 BF_MAGIC	0x0002
 BF_MISC	0x0004

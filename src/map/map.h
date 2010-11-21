@@ -211,6 +211,17 @@ enum {
 };
 
 enum {
+	RC2_NONE = 0,
+	RC2_GOBLIN,
+	RC2_KOBOLD,
+	RC2_ORC,
+	RC2_GOLEM,
+	RC2_GUARDIAN,
+	RC2_NINJA,
+	RC2_MAX
+};
+
+enum {
 	ELE_NEUTRAL=0,
 	ELE_WATER,
 	ELE_EARTH,

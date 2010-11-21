@@ -285,7 +285,7 @@ bonus2 bSPRegenRate,n,x;		Gain n SP every x milliseconds
 bonus2 bSPLossRate,n,x;			Lose n SP every x milliseconds
 bonus2 bExpAddRace,n,x;			Increase exp gained by x% vs. enemies of race n
 bonus2 bSPGainRace,n,x;			When killing a monster of race n by physical attack gain x amount of sp
-bonus2 bSPSubRace2,n,x;			Damage x% reduction from enemies of race n
+bonus2 bSubRace2,n,x;			Damage x% reduction from enemies of race n
 							(Check db/mob_race2_db.txt)
 
 bonus2 bAddMonsterDropItemGroup,n,x;	x% chance to get an item of group type n when you kill a monster 
