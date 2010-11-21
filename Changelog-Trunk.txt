@@ -1,5 +1,7 @@
 Date	Added
 
+2010/11/21
+	* Added msinttypes (rev. 26, http://msinttypes.googlecode.com/svn/trunk/) portability framework for Visual C++ compilers (related bugreport:4059). [Ai4rei]
 2010/11/20
 	* Fixed @doom and @doommap spamming packets for the visual effect on invoker unnecessarily over whole map and server respectively. The effect is now displayed on each killed character (bugreport:871, since r311). [Ai4rei]
 	* Fixed login-server account engine initialization not getting checked, whether it succeeds or not (bugreport:4361, since r12700, related r13000). [Ai4rei]
