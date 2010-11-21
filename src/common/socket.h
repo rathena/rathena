@@ -32,6 +32,8 @@
 #define WFIFOW(fd,pos) (*(uint16*)WFIFOP(fd,pos))
 #define RFIFOL(fd,pos) (*(uint32*)RFIFOP(fd,pos))
 #define WFIFOL(fd,pos) (*(uint32*)WFIFOP(fd,pos))
+#define RFIFOQ(fd,pos) (*(uint64*)RFIFOP(fd,pos))
+#define WFIFOQ(fd,pos) (*(uint64*)WFIFOP(fd,pos))
 #define RFIFOSPACE(fd) (session[fd]->max_rdata - session[fd]->rdata_size)
 #define WFIFOSPACE(fd) (session[fd]->max_wdata - session[fd]->wdata_size)
 
@@ -52,11 +54,13 @@
 #define RBUFB(p,pos) (*(uint8*)RBUFP((p),(pos)))
 #define RBUFW(p,pos) (*(uint16*)RBUFP((p),(pos)))
 #define RBUFL(p,pos) (*(uint32*)RBUFP((p),(pos)))
+#define RBUFQ(p,pos) (*(uint64*)RBUFP((p),(pos)))
 
 #define WBUFP(p,pos) (((uint8*)(p)) + (pos))
 #define WBUFB(p,pos) (*(uint8*)WBUFP((p),(pos)))
 #define WBUFW(p,pos) (*(uint16*)WBUFP((p),(pos)))
 #define WBUFL(p,pos) (*(uint32*)WBUFP((p),(pos)))
+#define WBUFQ(p,pos) (*(uint64*)WBUFP((p),(pos)))
 
 #define TOB(n) ((uint8)((n)&UINT8_MAX))
 #define TOW(n) ((uint16)((n)&UINT16_MAX))
