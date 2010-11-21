@@ -8,6 +8,9 @@
 	1475 Equestrian's Spear:	NEED INFO.
 	13005 Angelic Wing Dagger:	NEED INFO.
 =======================
+2010/11/21
+	* Rev. 14480 Added enumeration RC2_* to const.txt for mob data 'race2' (bugreport:4561). [Ai4rei]
+	- Fixed bSubRace2 being documented as bSPSubRace2 (since r1257).
 2010/11/19
 	* Rev. 14474 Item Database bugfixing. [L0ne_W0lf]
 	- Fixed equip locations and view IDs for some headgears. (bugreport:4336)

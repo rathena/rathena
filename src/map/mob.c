@@ -4349,7 +4349,7 @@ static int mob_readdb_race(void)
 			continue;
 
 		race=atoi(str[0]);
-		if (race < 0 || race >= MAX_MOB_RACE_DB)
+		if (race < RC2_NONE || race >= RC2_MAX)
 			continue;
 
 		for (j=1; j<20; j++) {
