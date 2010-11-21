@@ -38,7 +38,7 @@ RSC=rc.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
-# ADD CPP /nologo /W2 /GX /O2 /I "..\3rdparty\zlib\include" /I "..\3rdparty\pcre\include" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_WIN32" /D "TXT_ONLY" /D "__WIN32" /D "PCRE_SUPPORT" /D FD_SETSIZE=4096 /D "DB_MANUAL_CAST_TO_UNION" /Fp"tmp/map_txt/map-server_txt.pch" /YX /Fo"tmp/map_txt/" /Fd"tmp/map_txt/" /FD /c
+# ADD CPP /nologo /W2 /GX /O2 /I "..\3rdparty\zlib\include" /I "..\3rdparty\pcre\include" /I "..\3rdparty\msinttypes\include" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_WIN32" /D "TXT_ONLY" /D "__WIN32" /D "PCRE_SUPPORT" /D FD_SETSIZE=4096 /D "DB_MANUAL_CAST_TO_UNION" /Fp"tmp/map_txt/map-server_txt.pch" /YX /Fo"tmp/map_txt/" /Fd"tmp/map_txt/" /FD /c
 # ADD BASE RSC /l 0x409
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo

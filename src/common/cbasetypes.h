@@ -73,6 +73,11 @@
 #  define  __attribute__(x)
 #endif
 
+//////////////////////////////////////////////////////////////////////////
+// portable printf/scanf format macros and integer definitions
+// NOTE: Visual C++ uses <inttypes.h> and <stdint.h> provided in /3rdparty
+//////////////////////////////////////////////////////////////////////////
+#include <inttypes.h>
 
 //////////////////////////////////////////////////////////////////////////
 // typedefs to compensate type size change from 32bit to 64bit
@@ -174,22 +179,20 @@ typedef int				ssize_t;
 typedef __int64				int64;
 typedef signed __int64		sint64;
 typedef unsigned __int64	uint64;
-#define LLCONST(a)			(a##i64)
 #else
 typedef long long			int64;
 typedef signed long long	sint64;
 typedef unsigned long long	uint64;
-#define LLCONST(a)			(a##ll)
 #endif
 
 #ifndef INT64_MIN
-#define INT64_MIN  (LLCONST(-9223372036854775807)-1)
+#define INT64_MIN  (INT64_C(-9223372036854775807)-1)
 #endif
 #ifndef INT64_MAX
-#define INT64_MAX  (LLCONST(9223372036854775807))
+#define INT64_MAX  (INT64_C(9223372036854775807))
 #endif
 #ifndef UINT64_MAX
-#define UINT64_MAX (LLCONST(18446744073709551615u))
+#define UINT64_MAX (UINT64_C(18446744073709551615))
 #endif
 
 
