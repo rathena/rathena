@@ -1,5 +1,7 @@
 Date	Added
 
+2010/11/21
+	* Changed party_share_level from 10 to 15 as per kRO maintenance from 2010/04/14. [Ai4rei]
 2010/10/10
 	* Added cashfood_use_interval config setting. [Paradox924X]
 2010/05/25
