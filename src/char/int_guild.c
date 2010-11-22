@@ -49,7 +49,7 @@ int inter_guild_tostr(char* str, struct guild* g)
 	for(i = 0; i < g->max_member; i++)
 	{
 		struct guild_member *m = &g->member[i];
-		len += sprintf(str + len, "%d,%d,%d,%d,%d,%d,%d,%llu,%d,%d\t%s\t",
+		len += sprintf(str + len, "%d,%d,%d,%d,%d,%d,%d,%"PRIu64",%d,%d\t%s\t",
 		               m->account_id, m->char_id,
 		               m->hair, m->hair_color, m->gender,
 		               m->class_, m->lv, m->exp, m->exp_payper, m->position,
@@ -160,7 +160,7 @@ int inter_guild_fromstr(char* str, struct guild* g)
 		for( i = 0; i < g->max_member; i++ )
 		{
 			struct guild_member* m = &g->member[i];
-			if (sscanf(str, "%d,%d,%d,%d,%d,%d,%d,%llu,%d,%d\t%[^\t]\t%n",
+			if (sscanf(str, "%d,%d,%d,%d,%d,%d,%d,%"SCNu64",%d,%d\t%[^\t]\t%n",
 					   &accountid, &charid, &hair, &hair_color, &gender,
 					   &class_, &lv, &exp, &exp_payper, &position,
 					   name, &len) < 11)

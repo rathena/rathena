@@ -5,6 +5,8 @@ Date	Added
 	* Fixed a crash when shutting down char-server (TXT only), after it failed to load storage save data (since r1275). [Ai4rei]
 	* Batch files (Windows) now detect whether the server crashed, aborted or shutdown cleanly (Ctrl+C or @mapexit) and print appropriate message, instead of always assuming, that the server crashed (bugreport:3476, since r1818). [Ai4rei]
 	* Fixed map server getting notified of hair, hair color, gender, class and level changes from a char server (TXT only) twice (since r2986). [Ai4rei]
+	* Fixed saving/loading errors with compilers (such as VC6, MinGW), which do not recognize %ll format (since r14242). [Ai4rei]
+	- This also fixes guild leader name being displayed and saved as "(null)" in the guild member list.
 2010/11/21
 	* Added msinttypes (rev. 26, http://msinttypes.googlecode.com/svn/trunk/) portability framework for Visual C++ compilers (related bugreport:4059). [Ai4rei]
 	* Added 64-bit variants of the socket and buffer I/O macros. [Ai4rei]
