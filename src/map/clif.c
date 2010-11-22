@@ -1017,10 +1017,10 @@ static int clif_set_unit_walking(struct block_list* bl, struct unit_data* ud, un
 static void clif_setdisguise(struct block_list *bl, unsigned char *buf,int len)
 {
 #if PACKETVER >= 20091103
-	WBUFB(buf,4)= 0x5; //NPC_MOB_TYPE
+	WBUFB(buf,4)= pcdb_checkid(status_get_viewdata(bl)->class_) ? 0x0 : 0x5; //PC_TYPE : NPC_MOB_TYPE
 	WBUFL(buf,5)=-bl->id;
 #elif PACKETVER >= 20071106
-	WBUFB(buf,2)= 0x5; //NPC_MOB_TYPE
+	WBUFB(buf,2)= pcdb_checkid(status_get_viewdata(bl)->class_) ? 0x0 : 0x5; //PC_TYPE : NPC_MOB_TYPE
 	WBUFL(buf,3)=-bl->id;
 #else
 	WBUFL(buf,2)=-bl->id;
