@@ -1124,7 +1124,7 @@ int intif_parse_GuildBasicInfoChanged(int fd)
 		return 0;
 
 	switch(type) {
-	case GBI_EXP:        g->exp = RFIFOL(fd,10); break;
+	case GBI_EXP:        g->exp = RFIFOQ(fd,10); break;
 	case GBI_GUILDLV:    g->guild_lv = RFIFOW(fd,10); break;
 	case GBI_SKILLPOINT: g->skill_point = RFIFOL(fd,10); break;
 	}
@@ -1141,8 +1141,7 @@ int intif_parse_GuildMemberInfoChanged(int fd)
 	int account_id = RFIFOL(fd,8);
 	int char_id = RFIFOL(fd,12);
 	int type = RFIFOW(fd,16);
-	void* data = RFIFOP(fd,18);
-	int dd = *((int *)data);
+	//void* data = RFIFOP(fd,18);
 
 	struct guild* g;
 	int idx;
@@ -1156,13 +1155,13 @@ int intif_parse_GuildMemberInfoChanged(int fd)
 		return 0;
 
 	switch( type ) {
-	case GMI_POSITION:   g->member[idx].position = dd; guild_memberposition_changed(g,idx,dd); break;
-	case GMI_EXP:        g->member[idx].exp = dd; break;
-	case GMI_HAIR:       g->member[idx].hair = dd; break;
-	case GMI_HAIR_COLOR: g->member[idx].hair_color = dd; break;
-	case GMI_GENDER:     g->member[idx].gender = dd; break;
-	case GMI_CLASS:      g->member[idx].class_ = dd; break;
-	case GMI_LEVEL:      g->member[idx].lv = dd; break;
+	case GMI_POSITION:   g->member[idx].position   = RFIFOW(fd,18); guild_memberposition_changed(g,idx,RFIFOW(fd,18)); break;
+	case GMI_EXP:        g->member[idx].exp        = RFIFOQ(fd,18); break;
+	case GMI_HAIR:       g->member[idx].hair       = RFIFOW(fd,18); break;
+	case GMI_HAIR_COLOR: g->member[idx].hair_color = RFIFOW(fd,18); break;
+	case GMI_GENDER:     g->member[idx].gender     = RFIFOW(fd,18); break;
+	case GMI_CLASS:      g->member[idx].class_     = RFIFOW(fd,18); break;
+	case GMI_LEVEL:      g->member[idx].lv         = RFIFOW(fd,18); break;
 	}
 	return 0;
 }

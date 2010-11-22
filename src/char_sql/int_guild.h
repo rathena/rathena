@@ -28,7 +28,7 @@ int inter_guild_mapif_init(int fd);
 int inter_guild_leave(int guild_id,int account_id,int char_id);
 int mapif_parse_BreakGuild(int fd,int guild_id);
 int inter_guild_broken(int guild_id);
-int inter_guild_sex_changed(int guild_id,int account_id,int char_id, int gender);
+int inter_guild_sex_changed(int guild_id,int account_id,int char_id, short gender);
 int inter_guild_charname_changed(int guild_id,int account_id, int char_id, char *name);
 int inter_guild_CharOnline(int char_id, int guild_id);
 int inter_guild_CharOffline(int char_id, int guild_id);
