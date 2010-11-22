@@ -42,7 +42,7 @@ int inter_guild_tostr(char* str, struct guild* g)
 	int i, c, len;
 
 	// save guild base info
-	len = sprintf(str, "%d\t%s\t%s\t%d,%d,%u,%d,%d\t%s#\t%s#\t",
+	len = sprintf(str, "%d\t%s\t%s\t%d,%d,%"PRIu64",%d,%d\t%s#\t%s#\t",
 		g->guild_id, g->name, g->master, g->guild_lv, g->max_member, g->exp, g->skill_point, 0, g->mes1, g->mes2);
 
 	// save guild member info
@@ -118,13 +118,13 @@ int inter_guild_fromstr(char* str, struct guild* g)
 		char master[256]; // only 24 used
 		int guildlv;
 		int max_member;
-		unsigned int exp;
+		uint64 exp;
 		int skpoint;
 		char mes1[256]; // only 60 used
 		char mes2[256]; // only 120 used
 		int len;
 
-		if( sscanf(str, "%d\t%[^\t]\t%[^\t]\t%d,%d,%u,%d,%*d\t%[^\t]\t%[^\t]\t%n",
+		if( sscanf(str, "%d\t%[^\t]\t%[^\t]\t%d,%d,%"SCNu64",%d,%*d\t%[^\t]\t%[^\t]\t%n",
 				   &guildid, name, master, &guildlv, &max_member, &exp, &skpoint, mes1, mes2, &len) < 9 )
 			return 1;
 
@@ -1236,55 +1236,55 @@ int mapif_parse_GuildMemberInfoChange(int fd, int guild_id, int account_id, int 
 	}
 	switch(type) {
 	case GMI_POSITION:	// –ğE
-		g->member[i].position = *((int *)data);
+		g->member[i].position = *((short *)data);
 		mapif_guild_memberinfochanged(guild_id, account_id, char_id, type, data, len);
 		break;
 	case GMI_EXP:	// EXP
 	{
-		unsigned int exp, old_exp=g->member[i].exp;
-		g->member[i].exp=*((unsigned int *)data);
+		uint64 exp, old_exp=g->member[i].exp;
+		g->member[i].exp=*((uint64 *)data);
 		if (g->member[i].exp > old_exp)
 		{
 			exp = g->member[i].exp - old_exp;
 			if (guild_exp_rate != 100)
 				exp = exp*guild_exp_rate/100;
-			if (exp > UINT_MAX - g->exp)
-				g->exp = UINT_MAX;
+			if (exp > UINT64_MAX - g->exp)
+				g->exp = UINT64_MAX;
 			else
 				g->exp+=exp;
 			guild_calcinfo(g);
-			mapif_guild_basicinfochanged(guild_id,GBI_EXP,&g->exp,4);
+			mapif_guild_basicinfochanged(guild_id,GBI_EXP,&g->exp,sizeof(g->exp));
 		}
 		mapif_guild_memberinfochanged(guild_id, account_id, char_id, type, data, len);
 		break;
 	}
 	case GMI_HAIR:
 	{
-		g->member[i].hair=*((int *)data);
+		g->member[i].hair=*((short *)data);
 		mapif_guild_memberinfochanged(guild_id,account_id,char_id,type,data,len);
 		break;
 	}
 	case GMI_HAIR_COLOR:
 	{
-		g->member[i].hair_color=*((int *)data);
+		g->member[i].hair_color=*((short *)data);
 		mapif_guild_memberinfochanged(guild_id,account_id,char_id,type,data,len);
 		break;
 	}
 	case GMI_GENDER:
 	{
-		g->member[i].gender=*((int *)data);
+		g->member[i].gender=*((short *)data);
 		mapif_guild_memberinfochanged(guild_id,account_id,char_id,type,data,len);
 		break;
 	}
 	case GMI_CLASS:
 	{
-		g->member[i].class_=*((int *)data);
+		g->member[i].class_=*((short *)data);
 		mapif_guild_memberinfochanged(guild_id,account_id,char_id,type,data,len);
 		break;
 	}
 	case GMI_LEVEL:
 	{
-		g->member[i].lv=*((int *)data);
+		g->member[i].lv=*((short *)data);
 		mapif_guild_memberinfochanged(guild_id,account_id,char_id,type,data,len);
 		break;
 	}
@@ -1297,7 +1297,7 @@ int mapif_parse_GuildMemberInfoChange(int fd, int guild_id, int account_id, int 
 	return 0;
 }
 
-int inter_guild_sex_changed(int guild_id,int account_id,int char_id, int gender)
+int inter_guild_sex_changed(int guild_id,int account_id,int char_id, short gender)
 {
 	return mapif_parse_GuildMemberInfoChange(0, guild_id, account_id, char_id, GMI_GENDER, (const char*)&gender, sizeof(gender));
 }

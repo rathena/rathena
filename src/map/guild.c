@@ -1003,7 +1003,7 @@ int guild_recv_message(int guild_id,int account_id,const char *mes,int len)
 	return 0;
 }
 // ƒMƒ‹ƒhƒƒ“ƒo‚Ì–ğE•ÏX
-int guild_change_memberposition(int guild_id,int account_id,int char_id,int idx)
+int guild_change_memberposition(int guild_id,int account_id,int char_id,short idx)
 {
 	return intif_guild_change_memberinfo(guild_id,account_id,char_id,GMI_POSITION,&idx,sizeof(idx));
 }

@@ -241,7 +241,7 @@ int inter_guild_tosql(struct guild *g,int flag)
 				StringBuf_AppendStr(&buf, ", ");
 			else
 				add_comma = true;
-			StringBuf_Printf(&buf, "`guild_lv`=%d, `skill_point`=%d, `exp`=%u, `next_exp`=%u, `max_member`=%d", g->guild_lv, g->skill_point, g->exp, g->next_exp, g->max_member);
+			StringBuf_Printf(&buf, "`guild_lv`=%d, `skill_point`=%d, `exp`=%"PRIu64", `next_exp`=%u, `max_member`=%d", g->guild_lv, g->skill_point, g->exp, g->next_exp, g->max_member);
 		}
 		StringBuf_Printf(&buf, " WHERE `guild_id`=%d", g->guild_id);
 		if( SQL_ERROR == Sql_Query(sql_handle, "%s", StringBuf_Value(&buf)) )
@@ -406,7 +406,7 @@ struct guild * inter_guild_fromsql(int guild_id)
 		g->max_member = MAX_GUILD;
 	}
 	Sql_GetData(sql_handle,  5, &data, NULL); g->average_lv = atoi(data);
-	Sql_GetData(sql_handle,  6, &data, NULL); g->exp = (unsigned int)strtoul(data, NULL, 10);
+	Sql_GetData(sql_handle,  6, &data, NULL); g->exp = strtoull(data, NULL, 10);
 	Sql_GetData(sql_handle,  7, &data, NULL); g->next_exp = (unsigned int)strtoul(data, NULL, 10);
 	Sql_GetData(sql_handle,  8, &data, NULL); g->skill_point = atoi(data);
 	Sql_GetData(sql_handle,  9, &data, &len); memcpy(g->mes1, data, min(len, sizeof(g->mes1)));
@@ -1588,7 +1588,7 @@ int mapif_parse_GuildMemberInfoChange(int fd,int guild_id,int account_id,int cha
 	{
 		case GMI_POSITION:
 		  {
-			g->member[i].position=*((int *)data);
+			g->member[i].position=*((short *)data);
 			g->member[i].modified = GS_MEMBER_MODIFIED;
 			mapif_guild_memberinfochanged(guild_id,account_id,char_id,type,data,len);
 			g->save_flag |= GS_MEMBER;
@@ -1596,8 +1596,8 @@ int mapif_parse_GuildMemberInfoChange(int fd,int guild_id,int account_id,int cha
 		  }
 		case GMI_EXP:
 		{	// EXP
-			unsigned int exp, old_exp=g->member[i].exp;
-			g->member[i].exp=*((unsigned int *)data);
+			uint64 exp, old_exp=g->member[i].exp;
+			g->member[i].exp=*((uint64 *)data);
 			g->member[i].modified = GS_MEMBER_MODIFIED;
 			if (g->member[i].exp > old_exp)
 			{
@@ -1608,13 +1608,13 @@ int mapif_parse_GuildMemberInfoChange(int fd,int guild_id,int account_id,int cha
 					exp = exp*guild_exp_rate/100;
 
 				// Update guild exp
-				if (exp > UINT_MAX - g->exp)
-					g->exp = UINT_MAX;
+				if (exp > UINT64_MAX - g->exp)
+					g->exp = UINT64_MAX;
 				else
 					g->exp+=exp;
 
 				guild_calcinfo(g);
-				mapif_guild_basicinfochanged(guild_id,GBI_EXP,&g->exp,4);
+				mapif_guild_basicinfochanged(guild_id,GBI_EXP,&g->exp,sizeof(g->exp));
 				g->save_flag |= GS_LEVEL;
 			}
 			mapif_guild_memberinfochanged(guild_id,account_id,char_id,type,data,len);
@@ -1623,7 +1623,7 @@ int mapif_parse_GuildMemberInfoChange(int fd,int guild_id,int account_id,int cha
 		}
 		case GMI_HAIR:
 		{
-			g->member[i].hair=*((int *)data);
+			g->member[i].hair=*((short *)data);
 			g->member[i].modified = GS_MEMBER_MODIFIED;
 			mapif_guild_memberinfochanged(guild_id,account_id,char_id,type,data,len);
 			g->save_flag |= GS_MEMBER; //Save new data.
@@ -1631,7 +1631,7 @@ int mapif_parse_GuildMemberInfoChange(int fd,int guild_id,int account_id,int cha
 		}
 		case GMI_HAIR_COLOR:
 		{
-			g->member[i].hair_color=*((int *)data);
+			g->member[i].hair_color=*((short *)data);
 			g->member[i].modified = GS_MEMBER_MODIFIED;
 			mapif_guild_memberinfochanged(guild_id,account_id,char_id,type,data,len);
 			g->save_flag |= GS_MEMBER; //Save new data.
@@ -1639,7 +1639,7 @@ int mapif_parse_GuildMemberInfoChange(int fd,int guild_id,int account_id,int cha
 		}
 		case GMI_GENDER:
 		{
-			g->member[i].gender=*((int *)data);
+			g->member[i].gender=*((short *)data);
 			g->member[i].modified = GS_MEMBER_MODIFIED;
 			mapif_guild_memberinfochanged(guild_id,account_id,char_id,type,data,len);
 			g->save_flag |= GS_MEMBER; //Save new data.
@@ -1647,7 +1647,7 @@ int mapif_parse_GuildMemberInfoChange(int fd,int guild_id,int account_id,int cha
 		}
 		case GMI_CLASS:
 		{
-			g->member[i].class_=*((int *)data);
+			g->member[i].class_=*((short *)data);
 			g->member[i].modified = GS_MEMBER_MODIFIED;
 			mapif_guild_memberinfochanged(guild_id,account_id,char_id,type,data,len);
 			g->save_flag |= GS_MEMBER; //Save new data.
@@ -1655,7 +1655,7 @@ int mapif_parse_GuildMemberInfoChange(int fd,int guild_id,int account_id,int cha
 		}
 		case GMI_LEVEL:
 		{
-			g->member[i].lv=*((int *)data);
+			g->member[i].lv=*((short *)data);
 			g->member[i].modified = GS_MEMBER_MODIFIED;
 			mapif_guild_memberinfochanged(guild_id,account_id,char_id,type,data,len);
 			g->save_flag |= GS_MEMBER; //Save new data.
@@ -1668,7 +1668,7 @@ int mapif_parse_GuildMemberInfoChange(int fd,int guild_id,int account_id,int cha
 	return 0;
 }
 
-int inter_guild_sex_changed(int guild_id,int account_id,int char_id, int gender)
+int inter_guild_sex_changed(int guild_id,int account_id,int char_id, short gender)
 {
 	return mapif_parse_GuildMemberInfoChange(0, guild_id, account_id, char_id, GMI_GENDER, (const char*)&gender, sizeof(gender));
 }
