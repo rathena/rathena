@@ -23,8 +23,8 @@
 char storage_txt[1024]="save/storage.txt";
 char guild_storage_txt[1024]="save/g_storage.txt";
 
-static DBMap* storage_db; // int account_id -> struct storage_data*
-static DBMap* guild_storage_db; // int guild_id -> struct guild_storage*
+static DBMap* storage_db = NULL; // int account_id -> struct storage_data*
+static DBMap* guild_storage_db = NULL; // int guild_id -> struct guild_storage*
 
 // 倉庫データを文字列に変換
 bool storage_tostr(char* str, int account_id, struct storage_data* p)
@@ -280,8 +280,14 @@ int inter_storage_init()
 }
 
 void inter_storage_final() {
-	storage_db->destroy(storage_db, NULL);
-	guild_storage_db->destroy(guild_storage_db, NULL);
+	if(storage_db)
+	{
+		storage_db->destroy(storage_db, NULL);
+	}
+	if(guild_storage_db)
+	{
+		guild_storage_db->destroy(guild_storage_db, NULL);
+	}
 	return;
 }
 

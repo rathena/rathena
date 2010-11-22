@@ -2,6 +2,7 @@ Date	Added
 
 2010/11/22
 	* mail_deliveryfail no longer attempts to log (since r12910) and give items (since r11855), when there is no item attached to the mail (bugreport:3239). [Ai4rei]
+	* Fixed a crash when shutting down char-server (TXT only), after it failed to load storage save data (since r1275). [Ai4rei]
 2010/11/21
 	* Added msinttypes (rev. 26, http://msinttypes.googlecode.com/svn/trunk/) portability framework for Visual C++ compilers (related bugreport:4059). [Ai4rei]
 	* Added 64-bit variants of the socket and buffer I/O macros. [Ai4rei]
