@@ -4,6 +4,7 @@ Date	Added
 	* mail_deliveryfail no longer attempts to log (since r12910) and give items (since r11855), when there is no item attached to the mail (bugreport:3239). [Ai4rei]
 	* Fixed a crash when shutting down char-server (TXT only), after it failed to load storage save data (since r1275). [Ai4rei]
 	* Batch files (Windows) now detect whether the server crashed, aborted or shutdown cleanly (Ctrl+C or @mapexit) and print appropriate message, instead of always assuming, that the server crashed (bugreport:3476, since r1818). [Ai4rei]
+	* Fixed map server getting notified of hair, hair color, gender, class and level changes from a char server (TXT only) twice (since r2986). [Ai4rei]
 2010/11/21
 	* Added msinttypes (rev. 26, http://msinttypes.googlecode.com/svn/trunk/) portability framework for Visual C++ compilers (related bugreport:4059). [Ai4rei]
 	* Added 64-bit variants of the socket and buffer I/O macros. [Ai4rei]

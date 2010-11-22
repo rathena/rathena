@@ -1237,6 +1237,7 @@ int mapif_parse_GuildMemberInfoChange(int fd, int guild_id, int account_id, int 
 	switch(type) {
 	case GMI_POSITION:	// –ðE
 		g->member[i].position = *((int *)data);
+		mapif_guild_memberinfochanged(guild_id, account_id, char_id, type, data, len);
 		break;
 	case GMI_EXP:	// EXP
 	{
@@ -1254,6 +1255,7 @@ int mapif_parse_GuildMemberInfoChange(int fd, int guild_id, int account_id, int 
 			guild_calcinfo(g);
 			mapif_guild_basicinfochanged(guild_id,GBI_EXP,&g->exp,4);
 		}
+		mapif_guild_memberinfochanged(guild_id, account_id, char_id, type, data, len);
 		break;
 	}
 	case GMI_HAIR:
@@ -1291,7 +1293,6 @@ int mapif_parse_GuildMemberInfoChange(int fd, int guild_id, int account_id, int 
 		ShowError("int_guild: GuildMemberInfoChange: Unknown type %d\n", type);
 		break;
 	}
-	mapif_guild_memberinfochanged(guild_id, account_id, char_id, type, data, len);
 
 	return 0;
 }
