@@ -9,6 +9,7 @@ Date	Added
 	- This also fixes guild leader name being displayed and saved as "(null)" in the guild member list.
 	* Fixed guild and guild member exp truncation issue (bugreport:4130, since r14242). [Ai4rei]
 	- Fixed guild member position, hair, hair color, gender, class and level could potentially become corrupted due to shorts being read as ints (partially since r2986).
+	* Fixed disguising as player clone causing the client to crash while looking for non-existing NPC sprites (bugreport:4428, since r14387, related r14383). [Ai4rei]
 2010/11/21
 	* Added msinttypes (rev. 26, http://msinttypes.googlecode.com/svn/trunk/) portability framework for Visual C++ compilers (related bugreport:4059). [Ai4rei]
 	* Added 64-bit variants of the socket and buffer I/O macros. [Ai4rei]
