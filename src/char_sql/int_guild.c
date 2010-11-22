@@ -265,7 +265,7 @@ int inter_guild_tosql(struct guild *g,int flag)
 				//Since nothing references guild member table as foreign keys, it's safe to use REPLACE INTO
 				Sql_EscapeStringLen(sql_handle, esc_name, m->name, strnlen(m->name, NAME_LENGTH));
 				if( SQL_ERROR == Sql_Query(sql_handle, "REPLACE INTO `%s` (`guild_id`,`account_id`,`char_id`,`hair`,`hair_color`,`gender`,`class`,`lv`,`exp`,`exp_payper`,`online`,`position`,`name`) "
-					"VALUES ('%d','%d','%d','%d','%d','%d','%d','%d','%llu','%d','%d','%d','%s')",
+					"VALUES ('%d','%d','%d','%d','%d','%d','%d','%d','%"PRIu64"','%d','%d','%d','%s')",
 					guild_member_db, g->guild_id, m->account_id, m->char_id,
 					m->hair, m->hair_color, m->gender,
 					m->class_, m->lv, m->exp, m->exp_payper, m->online, m->position, esc_name) )
@@ -455,7 +455,7 @@ struct guild * inter_guild_fromsql(int guild_id)
 		Sql_GetData(sql_handle,  4, &data, NULL); m->gender = atoi(data);
 		Sql_GetData(sql_handle,  5, &data, NULL); m->class_ = atoi(data);
 		Sql_GetData(sql_handle,  6, &data, NULL); m->lv = atoi(data);
-		Sql_GetData(sql_handle,  7, &data, NULL); m->exp = (uint64)strtoull(data, NULL, 10);
+		Sql_GetData(sql_handle,  7, &data, NULL); m->exp = strtoull(data, NULL, 10);
 		Sql_GetData(sql_handle,  8, &data, NULL); m->exp_payper = (unsigned int)atoi(data);
 		Sql_GetData(sql_handle,  9, &data, NULL); m->online = atoi(data);
 		Sql_GetData(sql_handle, 10, &data, NULL); m->position = atoi(data);
