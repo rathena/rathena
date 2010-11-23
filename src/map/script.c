@@ -8220,13 +8220,38 @@ BUILDIN_FUNC(areaannounce)
  *------------------------------------------*/
 BUILDIN_FUNC(getusers)
 {
-	int flag=script_getnum(st,2);
-	struct block_list *bl=map_id2bl((flag&0x08)?st->oid:st->rid);
-	int val=0;
-	switch(flag&0x07){
-	case 0: val=map[bl->m].users; break;
-	case 1: val=map_getusers(); break;
+	int flag, val = 0;
+	struct map_session_data* sd;
+	struct block_list* bl = NULL;
+
+	flag = script_getnum(st,2);
+
+	if(flag&0x8)
+	{// npc
+		bl = map_id2bl(st->oid);
 	}
+	else if((sd = script_rid2sd(st))!=NULL)
+	{// pc
+		bl = &sd->bl;
+	}
+
+	switch(flag&0x07)
+	{
+		case 0:
+			if(bl)
+			{
+				val = map[bl->m].users;
+			}
+			break;
+		case 1:
+			val = map_getusers();
+			break;
+		default:
+			ShowWarning("buildin_getusers: Unknown type %d.\n", flag);
+			script_pushint(st,0);
+			return 1;
+	}
+
 	script_pushint(st,val);
 	return 0;
 }
