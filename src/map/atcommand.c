@@ -2849,19 +2849,35 @@ ACMD_FUNC(displaystatus)
  *------------------------------------------*/
 ACMD_FUNC(statuspoint)
 {
-	int point, new_status_point;
+	int point;
+	unsigned int new_status_point;
 
 	if (!message || !*message || (point = atoi(message)) == 0) {
 		clif_displaymessage(fd, "Please, enter a number (usage: @stpoint <number of points>).");
 		return -1;
 	}
 
-	if (point < 0 && sd->status.status_point < -point)
-		new_status_point = 0;
+	if(point < 0)
+	{
+		if(sd->status.status_point < (unsigned int)(-point))
+		{
+			new_status_point = 0;
+		}
+		else
+		{
+			new_status_point = sd->status.status_point + point;
+		}
+	}
+	else if(UINT_MAX - sd->status.status_point < (unsigned int)point)
+	{
+		new_status_point = UINT_MAX;
+	}
 	else
-		new_status_point = cap_value((int64)sd->status.status_point + point, 0, INT_MAX);
+	{
+		new_status_point = sd->status.status_point + point;
+	}
 
-	if (new_status_point != (int)sd->status.status_point) {
+	if (new_status_point != sd->status.status_point) {
 		sd->status.status_point = new_status_point;
 		clif_updatestatus(sd, SP_STATUSPOINT);
 		clif_displaymessage(fd, msg_txt(174)); // Number of status points changed.
@@ -2881,7 +2897,8 @@ ACMD_FUNC(statuspoint)
  *------------------------------------------*/
 ACMD_FUNC(skillpoint)
 {
-	int point, new_skill_point;
+	int point;
+	unsigned int new_skill_point;
 	nullpo_retr(-1, sd);
 
 	if (!message || !*message || (point = atoi(message)) == 0) {
@@ -2889,12 +2906,27 @@ ACMD_FUNC(skillpoint)
 		return -1;
 	}
 
-	if (point < 0 && sd->status.skill_point < -point)
-		new_skill_point = 0;
+	if(point < 0)
+	{
+		if(sd->status.skill_point < (unsigned int)(-point))
+		{
+			new_skill_point = 0;
+		}
+		else
+		{
+			new_skill_point = sd->status.skill_point + point;
+		}
+	}
+	else if(UINT_MAX - sd->status.skill_point < (unsigned int)point)
+	{
+		new_skill_point = UINT_MAX;
+	}
 	else
-		new_skill_point = cap_value((int64)sd->status.skill_point + point, 0, INT_MAX);
-	
-	if (new_skill_point != (int)sd->status.skill_point) {
+	{
+		new_skill_point = sd->status.skill_point + point;
+	}
+
+	if (new_skill_point != sd->status.skill_point) {
 		sd->status.skill_point = new_skill_point;
 		clif_updatestatus(sd, SP_SKILLPOINT);
 		clif_displaymessage(fd, msg_txt(175)); // Number of skill points changed.
@@ -2948,7 +2980,7 @@ ACMD_FUNC(zeny)
  *------------------------------------------*/
 ACMD_FUNC(param)
 {
-	int i, value = 0, new_value, max;
+	int i, value = 0, new_value;
 	const char* param[] = { "str", "agi", "vit", "int", "dex", "luk" };
 	short* status[6];
  	//we don't use direct initialization because it isn't part of the c standard.
@@ -2977,10 +3009,20 @@ ACMD_FUNC(param)
 	status[4] = &sd->status.dex;
 	status[5] = &sd->status.luk;
 
-	max = SHRT_MAX;
-	new_value = cap_value((int64)*status[i] + value, 1, max);
-	
-	if (new_value != (int)*status[i]) {
+	if(value < 0 && *status[i] < -value)
+	{
+		new_value = 1;
+	}
+	else if(SHRT_MAX - *status[i] < value)
+	{
+		new_value = SHRT_MAX;
+	}
+	else
+	{
+		new_value = *status[i] + value;
+	}
+
+	if (new_value != *status[i]) {
 		*status[i] = new_value;
 		clif_updatestatus(sd, SP_STR + i);
 		clif_updatestatus(sd, SP_USTR + i);

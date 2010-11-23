@@ -3,6 +3,11 @@ Date	Added
 2010/11/23
 	* Added script command pushpc, which is required by newer scripts. [Ai4rei]
 	- Moved knockback-part of skill_blown into unit_blown, to allow unconditional knockback required by pushpc without copy-pasting code.
+	* Various small cleanups. [Ai4rei]
+	- Fixed truncation warnings in @statuspoint, @skillpoint and @str/@agi/@vit/@int/@dex/@luk (since r14436).
+	- Fixed data type inconsistency in @statuspoint and @skillpoint (since r5762, related r13541).
+	- Silenced truncation warnings in CR_ACIDDEMONSTRATION damage calculation and cardfix application (since r13700).
+	- Reformatted unit_blown to make it look cleaner (follow up to r14492).
 2010/11/22
 	* mail_deliveryfail no longer attempts to log (since r12910) and give items (since r11855), when there is no item attached to the mail (bugreport:3239). [Ai4rei]
 	* Fixed a crash when shutting down char-server (TXT only), after it failed to load storage save data (since r1275). [Ai4rei]
