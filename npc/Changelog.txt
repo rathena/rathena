@@ -1,5 +1,11 @@
 Date		Added
 ======
+2010/11/22
+	* Rev. 14490 Added quest log support for the following quests. [L0ne_W0lf]
+	- Factory Quest, Murder Quest, Cursed Spirit Quest, Juno Remedy Quest,
+	Airship Ticket Quest, How the Airship Works, Ice Necklace Quest, 
+	Siblings Quest, Thor Volcano Base Quest, Muff's Loan, Broken Diamond,
+	and the Z-Gang Quest
 2010/11/04
 	* Rev. 14448 Just a couple Bug fixes. :P [L0ne_W0lf]
 	- Added a missing close in quests_13_2.txt. (bugreport:4520)

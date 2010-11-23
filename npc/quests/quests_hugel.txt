@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= MasterOfMuppets & SinSloth
 //===== Current Version: =====================================
-//= 2.0
+//= 2.1
 //===== Compatible With: =====================================
 //= eAthena
 //===== Description: =========================================
@@ -23,6 +23,8 @@
 //= 1.8 Added missing checkweight. [L0ne_W0lf]
 //= 1.9 Replaced effect numerics with constants. [Samuray22]
 //= 2.0 Commented a break out to fix a script hang.
+//= 2.1 Added quest log entries for:
+//=     - Juno Remedy Quest
 //============================================================
 
 //-------------------------------------------------------------------------
@@ -6968,6 +6970,7 @@ yuno,111,156,3	script	Euslan	90,{
 			mes "know as soon as you can,";
 			mes "okay? Thanks for cheering";
 			mes "me up, "+strcharinfo(0)+".";
+			setquest 8044;
 			set hg_ma1,3;
 			close;
 		break;
@@ -7041,6 +7044,7 @@ yuno,111,156,3	script	Euslan	90,{
 			mes "know as soon as you can,";
 			mes "okay? Thanks for cheering";
 			mes "me up, "+strcharinfo(0)+".";
+			setquest 8044;
 			set hg_ma1,3;
 			close;
 		break;
@@ -7104,6 +7108,7 @@ yuno,111,156,3	script	Euslan	90,{
 		mes "of your way. Still, I'd really";
 		mes "appreciate your help if you";
 		mes "happen to pass through Hugel.";
+		changequest 8046,8047;
 		set hg_ma1,6;
 		close;
 	}
@@ -7163,6 +7168,7 @@ yuno,111,156,3	script	Euslan	90,{
 		mes "your safety in your adventures.";
 		mes "Take care of yourself...";
 		close2;
+		completequest 8052;
 		set hg_ma1,13;
 		specialeffect EF_ABSORBSPIRITS;
 		getexp 900000,600000;
@@ -7242,6 +7248,7 @@ que_bingo,53,190,7	script	Eukran	778,{
 		mes "would Thierry go to such a";
 		mes "dangerous place? No one goes^FFFFFF ^000000 to the Odin Shrine for no reason.";
 		close2;
+		changequest 8047,8048;
 		set hg_ma1,8;
 		warp "que_bingo",37,24;
 		end;
@@ -7355,6 +7362,7 @@ odin_tem01,130,134,4	script	Young Man#Hu_Quest	774,{
 		mes "Euslan's disease. It's not";
 		mes "curable by modern medicine...";
 		close2;
+		changequest 8048,8049;
 		set hg_ma1,9;
 		end;
 	}
@@ -7487,6 +7495,7 @@ odin_tem01,130,134,4	script	Young Man#Hu_Quest	774,{
 		mes "If they get me, I'll never be";
 		mes "able to make the medicine!";
 		close2;
+		changequest 8050,8051;
 		set hg_ma1,11;
 		end;
 	}
@@ -7542,6 +7551,7 @@ odin_tem01,130,134,4	script	Young Man#Hu_Quest	774,{
 		mes "has made to give to Euslan.^000000";
 		close2;
 		delitem 7511,5; //Darkness rune
+		changequest 8051,8052;
 		set hg_ma1,12;
 		end;
 	}
@@ -7598,6 +7608,7 @@ OnTouch:
 		mes "you better go tell him";
 		mes "about this right now!^000000";
 		close2;
+		changequest 8049,8050;
 		set hg_ma1,10;
 		end;
 	}

@@ -4,7 +4,7 @@
 //= Persian, Vicious_Pucca, aoa00, Evera, MasterOfMupppets,
 //= Lupus, Lord Gywall
 //===== Current Version: ===================================== 
-//= 4.5
+//= 4.6
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -74,6 +74,8 @@
 //= 4.5 Corrected an Incorrect check of the Shinokas_Quest. (bugreport:2276) [Samuray22]
 //=	  Replaced effect numerics with constants.
 //= 4.5 Official Gangster Alert script. [Gepard]
+//= 4.6 Added quest log entries for:
+//=     - Cursed Spirit Quest
 //============================================================ 
 
 // Gangster Alert [Aegis Conversion]
@@ -3410,6 +3412,7 @@ OnTouch:
 		if(!lhz_curse)
 		{
 			soundeffect "loli_ruri_stand.wav",0;
+			setquest 2086;
 			set lhz_curse,1;
 			end;
 		}
@@ -3455,6 +3458,7 @@ OnTouch:
 		if(!lhz_curse)
 		{
 			soundeffect "tao_gunka_stand.wav",0;
+			setquest 2086;
 			set lhz_curse,1;
 			end;
 		}
@@ -3500,6 +3504,7 @@ OnTouch:
 		if(!lhz_curse)
 		{
 			soundeffect "tao_gunka_stand.wav",0;
+			setquest 2086;
 			set lhz_curse,1;
 			end;
 		}
@@ -4399,6 +4404,7 @@ lhz_que01,99,74,5	script	#pecomaster	48,{
 		mes "No matter how hard you try,";
 		mes "you can't open its clasp to see";
 		mes "what this pendant contains.^000000";
+		changequest 2090,2091;
 		set lhz_curse,17;
 		getitem 7341,1;
 		close2;
@@ -4638,6 +4644,7 @@ L_NoText:
 				mes "the wrath of these spirits...";
 				mes "But as long as you let them";
 				mes "guide you, you ought to be safe.";
+				changequest 2086,2087;
 				set lhz_curse,6;
 				close;
 		
@@ -4708,9 +4715,10 @@ L_NoText:
 				mes "It won't be long until";
 				mes "the spirits are consumed";
 				mes "by their supernatural rage...";
+				changequest 2091,2092;
 				set lhz_curse,18;
 				close;
-				case 2:
+			case 2:
 				mes "[Elder]";
 				mes "Oh... You look so pale, are";
 				mes "you alright? Heh heh~";
@@ -4768,9 +4776,10 @@ L_NoText:
 		mes "couple. Somehow, the girl in";
 		mes "the picture, sitting uncomfortably";
 		mes "in an old chair, looks familiar...^000000";
+		delitem 523,5; // Holy Water
+		delitem 744,1; // Bouquet
+		changequest 2092,2093;
 		set lhz_curse,19;
-		delitem 523,5;
-		delitem 744,1;
 		close;
 	}
 	else goto L_NoText;
@@ -4979,6 +4988,7 @@ lhz_in03,32,162,3	script	Crippled Girl	53,{
 							mes "Sheesh.";
 							mes "Don't kill the";
 							mes "messenger.";
+							changequest 2093,2094;
 							set lhz_curse,23;
 							close2;
 							warp "lighthalzen",322,323;
@@ -5074,6 +5084,7 @@ lhz_in03,32,162,3	script	Crippled Girl	53,{
 									mes "["+strcharinfo(0)+"]";
 									mes "Yes, I'm sure of that.";
 									delitem 7341,1;
+									changequest 2093,2094;
 									set lhz_curse,25;
 									close;
 						
@@ -5112,6 +5123,7 @@ lhz_in03,32,162,3	script	Crippled Girl	53,{
 									mes "[Setsu]";
 									mes "I'll try hard!";
 									delitem 7341,1;
+									changequest 2093,2094;
 									set lhz_curse,25;
 									close;
 							}
@@ -5206,6 +5218,7 @@ OnTouch:
 		mes "is tied to the ^FF0000Rekenber";
 		mes "Corporation^000000 and that";
 		mes "^FF0000Regenschirm Laboratory^000000.";
+		changequest 2094,2095;
 		set lhz_curse,26;
 		if(BaseLevel < 70) getexp 800000,300000;
 		else if(BaseLevel < 80) getexp 1000000,500000;
@@ -5225,68 +5238,69 @@ lhz_in01,114,181,3	script	Representative	71,{
 	if(lhz_curse == 7) menu "Building Information",L_Building,"Corporation History",L_History;
 	else menu "Building Information",L_Building;
 
-L_Building:
-	mes "[Representative]";
-	mes "Please tell me";
-	mes "which floor you'd like";
-	mes "to know more about.";
-	next;
-	switch( select( "1F","2F","B1","Cancel" ) )
-	{
-		case 1:
-			mes "[Representative]";
-			mes "The ^3131FFRekenber Library^000000 can";
-			mes "be found at the end of the";
-			mes "left hallway. Our library is";
-			mes "a great resource of innovative";
-			mes "ideas and information for our";
-			mes "system development employees.";
-			next;
-			mes "[Representative]";
-			mes "The ^3131FFBall Room^000000, where";
-			mes "various official events are";
-			mes "usually held, can be accessed";
-			mes "through the right hallway.";
-			next;
-			goto L_Building;
+	while(1) {
+		mes "[Representative]";
+		mes "Please tell me";
+		mes "which floor you'd like";
+		mes "to know more about.";
+		next;
+		switch( select( "1F","2F","B1","Cancel" ) )
+		{
+			case 1:
+				mes "[Representative]";
+				mes "The ^3131FFRekenber Library^000000 can";
+				mes "be found at the end of the";
+				mes "left hallway. Our library is";
+				mes "a great resource of innovative";
+				mes "ideas and information for our";
+				mes "system development employees.";
+				next;
+				mes "[Representative]";
+				mes "The ^3131FFBall Room^000000, where";
+				mes "various official events are";
+				mes "usually held, can be accessed";
+				mes "through the right hallway.";
+				next;
+				break;
 
-		case 2:
-			mes "[Representative]";
-			mes "Please use the stairs";
-			mes "located on both sides of";
-			mes "the Help Desk to go to the";
-			mes "Second Floor. The Second";
-			mes "Floor is mostly used for";
-			mes "administrative purposes.";
-			next;
-			mes "[Representative]";
-			mes "There, you can find";
-			mes "the ^3131FFConference Room^000000,";
-			mes "^3131FFSecretary Office^000000, the";
-			mes "^3131FFAuditorium^000000 and the";
-			mes "^3131FFChairman's Office^000000.";
-			next;
-			goto L_Building;
+			case 2:
+				mes "[Representative]";
+				mes "Please use the stairs";
+				mes "located on both sides of";
+				mes "the Help Desk to go to the";
+				mes "Second Floor. The Second";
+				mes "Floor is mostly used for";
+				mes "administrative purposes.";
+				next;
+				mes "[Representative]";
+				mes "There, you can find";
+				mes "the ^3131FFConference Room^000000,";
+				mes "^3131FFSecretary Office^000000, the";
+				mes "^3131FFAuditorium^000000 and the";
+				mes "^3131FFChairman's Office^000000.";
+				next;
+				break;
 
-		case 3:
-			mes "[Representative]";
-			mes "The first underground floor";
-			mes "is used by the ^3131FFRegenshirm^000000,";
-			mes "our laboratory affiliate. For";
-			mes "security reasons, this floor";
-			mes "is not accessible to visitors";
-			next;
-			goto L_Building;
+			case 3:
+				mes "[Representative]";
+				mes "The first underground floor";
+				mes "is used by the ^3131FFRegenshirm^000000,";
+				mes "our laboratory affiliate. For";
+				mes "security reasons, this floor";
+				mes "is not accessible to visitors";
+				next;
+				break;
 
-		case 4:
-			mes "[Representative]";
-			mes "We are always doing our";
-			mes "best to provide the best";
-			mes "services to our customers.";
-			mes "Remember that Rekenber";
-			mes "is the name you can trust.";
-			mes "Thank you and have a nice day.";
-			close;
+			case 4:
+				mes "[Representative]";
+				mes "We are always doing our";
+				mes "best to provide the best";
+				mes "services to our customers.";
+				mes "Remember that Rekenber";
+				mes "is the name you can trust.";
+				mes "Thank you and have a nice day.";
+				close;
+		}
 	}
 
 L_History:
@@ -5302,8 +5316,9 @@ L_History:
 	mes "the hallway to the left in";
 	mes "order to find our Library.";
 	mes "Thank you and have a nice day.";
+	changequest 2087,2088;
 	set lhz_curse,8;
-	close;	
+	close;
 }
 
 lhz_in01,27,247,5	script	Representative#lhz	71,{
@@ -5348,7 +5363,10 @@ lhz_in01,27,247,5	script	Representative#lhz	71,{
 				mes "Rekenber Corporation to grow";
 				mes "into the nation's biggest company.";
 				if(lhz_curse == 8) set lhz_curse,9;
-				else if(lhz_curse == 9) set lhz_curse,10;
+				else if(lhz_curse == 9) {
+					changequest 2088,2089;
+					set lhz_curse,10;
+				}
 				next;
 				break;
 
@@ -5368,7 +5386,10 @@ lhz_in01,27,247,5	script	Representative#lhz	71,{
 				mes "that Rekenber is the name";
 				mes "that you can trust.";
 				if (lhz_curse == 8) set lhz_curse,9;
-				else if(lhz_curse == 9) set lhz_curse,10;
+				else if(lhz_curse == 9) {
+					changequest 2088,2089;
+					set lhz_curse,10;
+				}
 				next;
 				break;
 		}
@@ -5388,68 +5409,69 @@ lhz_in01,27,247,5	script	Representative#lhz	71,{
 	switch( select( "Building Information" ) )
 	{
 		case 1:
-L_Building:
-			mes "[Representative]";
-			mes "Please tell me";
-			mes "which floor you'd like";
-			mes "to know more about.";
-			next;
-			switch( select( "1F","2F","B1","Cancel" ) )
-			{
-				case 1:
-					mes "[Representative]";
-					mes "The ^3131FFRekenber Library^000000 can";
-					mes "be found at the end of the";
-					mes "left hallway. Our library is";
-					mes "a great resource of innovative";
-					mes "ideas and information for our";
-					mes "system development employees.";
-					next;
-					mes "[Representative]";
-					mes "The ^3131FFBall Room^000000, where";
-					mes "various official events are";
-					mes "usually held, can be accessed";
-					mes "through the right hallway.";
-					next;
-					goto L_Building;
+			while (1) {
+				mes "[Representative]";
+				mes "Please tell me";
+				mes "which floor you'd like";
+				mes "to know more about.";
+				next;
+				switch( select( "1F","2F","B1","Cancel" ) )
+				{
+					case 1:
+						mes "[Representative]";
+						mes "The ^3131FFRekenber Library^000000 can";
+						mes "be found at the end of the";
+						mes "left hallway. Our library is";
+						mes "a great resource of innovative";
+						mes "ideas and information for our";
+						mes "system development employees.";
+						next;
+						mes "[Representative]";
+						mes "The ^3131FFBall Room^000000, where";
+						mes "various official events are";
+						mes "usually held, can be accessed";
+						mes "through the right hallway.";
+						next;
+						break;
 
-				case 2:
-					mes "[Representative]";
-					mes "Please use the stairs";
-					mes "located on both sides of";
-					mes "the Help Desk to go to the";
-					mes "Second Floor. The Second";
-					mes "Floor is mostly used for";
-					mes "administrative purposes.";
-					next;
-					mes "[Representative]";
-					mes "There, you can find";
-					mes "the ^3131FFConference Room^000000,";
-					mes "^3131FFSecretary Office^000000, the";
-					mes "^3131FFAuditorium^000000 and the";
-					mes "^3131FFChairman's Office^000000.";
-					next;
-					goto L_Building;
+					case 2:
+						mes "[Representative]";
+						mes "Please use the stairs";
+						mes "located on both sides of";
+						mes "the Help Desk to go to the";
+						mes "Second Floor. The Second";
+						mes "Floor is mostly used for";
+						mes "administrative purposes.";
+						next;
+						mes "[Representative]";
+						mes "There, you can find";
+						mes "the ^3131FFConference Room^000000,";
+						mes "^3131FFSecretary Office^000000, the";
+						mes "^3131FFAuditorium^000000 and the";
+						mes "^3131FFChairman's Office^000000.";
+						next;
+						break;
 
-				case 3:
-					mes "[Representative]";
-					mes "The first underground floor";
-					mes "is used by the ^3131FFRegenshirm^000000,";
-					mes "our laboratory affiliate. For";
-					mes "security reasons, this floor";
-					mes "is not accessible to visitors";
-					next;
-					goto L_Building;
+					case 3:
+						mes "[Representative]";
+						mes "The first underground floor";
+						mes "is used by the ^3131FFRegenshirm^000000,";
+						mes "our laboratory affiliate. For";
+						mes "security reasons, this floor";
+						mes "is not accessible to visitors";
+						next;
+						break;
 
-				case 4:
-					mes "[Representative]";
-					mes "We are always doing our";
-					mes "best to provide the best";
-					mes "services to our customers.";
-					mes "Remember that Rekenber";
-					mes "is the name you can trust.";
-					mes "Thank you and have a nice day.";
-					close;
+					case 4:
+						mes "[Representative]";
+						mes "We are always doing our";
+						mes "best to provide the best";
+						mes "services to our customers.";
+						mes "Remember that Rekenber";
+						mes "is the name you can trust.";
+						mes "Thank you and have a nice day.";
+						close;
+				}
 			}
 	}
 }
@@ -5551,6 +5573,7 @@ lhz_in01,273,121,1	script	Mad Scientist	865,{
 				mes "Here's a hint... It's round...";
 				mes "Shiny... Kids love playing games";
 				mes "with them! Oh, I said too much!";
+				changequest 2089,2090;
 				set lhz_curse,15;
 				close;
 
@@ -6062,6 +6085,7 @@ L_Evidence:
 		mes "on people! Anyway, please";
 		mes "accept this as a token of";
 		mes "our gratitude, adventurer.";
+		changequest 2094,2095;
 		set lhz_curse,31;
 		getitem 617,1;
 		getitem 12016,10;
@@ -6107,7 +6131,10 @@ OnTouch:
 		mes "that mad scientist. Only";
 		mes "his stacks of well organized";
 		mes "files remain here in the lab.^000000";
-		if(lhz_curse == 31) set lhz_curse,32;
+		if(lhz_curse == 31) {
+			completequest 2095;
+			set lhz_curse,32;
+		}
 		close;
 	}
 }
