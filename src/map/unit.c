@@ -566,6 +566,54 @@ uint8 unit_getdir(struct block_list *bl)
 	return ud->dir;
 }
 
+// Pushes a unit by given amount of cells into given direction. Only
+// map cell restrictions are respected.
+// flag:
+//  &1  Do not send position update packets.
+int unit_blown(struct block_list* bl, int dx, int dy, int count, int flag)
+{
+	int nx, ny, ret;
+	struct skill_unit* su = BL_CAST(BL_SKILL, bl);
+
+	ret=path_blownpos(bl->m,bl->x,bl->y,dx,dy,count);
+	nx = ret>>16;
+	ny = ret&0xffff;
+
+	if (!su)
+		unit_stop_walking(bl,0);
+
+	dx = nx - bl->x;
+	dy = ny - bl->y;
+
+	if (!dx && !dy) //Could not knockback.
+		return 0;
+
+	map_foreachinmovearea(clif_outsight, bl, AREA_SIZE, dx, dy, bl->type == BL_PC ? BL_ALL : BL_PC, bl);
+
+	if(su)
+		skill_unit_move_unit_group(su->group,bl->m,dx,dy);
+	else
+		map_moveblock(bl, nx, ny, gettick());
+
+	map_foreachinmovearea(clif_insight, bl, AREA_SIZE, -dx, -dy, bl->type == BL_PC ? BL_ALL : BL_PC, bl);
+
+	if(!(flag&0x1))
+		clif_blown(bl);
+
+	if( bl->type == BL_PC )
+	{
+		TBL_PC *sd = (TBL_PC*)bl;
+		if( sd->touching_id )
+			npc_touchnext_areanpc(sd,false);
+		if( map_getcell(bl->m,bl->x,bl->y,CELL_CHKNPC) )
+			npc_touch_areanpc(sd,bl->m,bl->x,bl->y);
+		else
+			sd->areanpc_id=0;
+	}
+
+	return count; //Return amount of knocked back cells.
+}
+
 //Warps a unit/ud to a given map/position. 
 //In the case of players, pc_setpos is used.
 //it respects the no warp flags, so it is safe to call this without doing nowarpto/nowarp checks.

@@ -84,6 +84,7 @@ int unit_movepos(struct block_list *bl, short dst_x, short dst_y, int easy, bool
 int unit_warp(struct block_list *bl, short map, short x, short y, int type);
 int unit_setdir(struct block_list *bl,unsigned char dir);
 uint8 unit_getdir(struct block_list *bl);
+int unit_blown(struct block_list* bl, int dx, int dy, int count, int flag);
 
 // ‚»‚±‚Ü‚Å•às‚Å‚½‚Ç‚è’…‚¯‚é‚©‚Ì”»’è
 bool unit_can_reach_pos(struct block_list *bl,int x,int y,int easy);

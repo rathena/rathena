@@ -1,5 +1,8 @@
 Date	Added
 
+2010/11/23
+	* Added script command pushpc, which is required by newer scripts. [Ai4rei]
+	- Moved knockback-part of skill_blown into unit_blown, to allow unconditional knockback required by pushpc without copy-pasting code.
 2010/11/22
 	* mail_deliveryfail no longer attempts to log (since r12910) and give items (since r11855), when there is no item attached to the mail (bugreport:3239). [Ai4rei]
 	* Fixed a crash when shutting down char-server (TXT only), after it failed to load storage save data (since r1275). [Ai4rei]
