@@ -1467,8 +1467,7 @@ int skill_strip_equip(struct block_list *bl, unsigned short where, int rate, int
  -------------------------------------------------------------------------*/
 int skill_blown(struct block_list* src, struct block_list* target, int count, int direction, int flag)
 {
-	int dx = 0, dy = 0, nx, ny;
-	int ret;
+	int dx = 0, dy = 0;
 	struct skill_unit* su = NULL;
 
 	nullpo_ret(src);
@@ -1514,43 +1513,7 @@ int skill_blown(struct block_list* src, struct block_list* target, int count, in
 		dy = -diry[direction];
 	}
 
-	ret=path_blownpos(target->m,target->x,target->y,dx,dy,count);
-	nx = ret>>16;
-	ny = ret&0xffff;
-
-	if (!su)
-		unit_stop_walking(target,0);
-
-	dx = nx - target->x;
-	dy = ny - target->y;
-
-	if (!dx && !dy) //Could not knockback.
-		return 0;
-
-	map_foreachinmovearea(clif_outsight, target, AREA_SIZE, dx, dy, target->type == BL_PC ? BL_ALL : BL_PC, target);
-
-	if(su)
-		skill_unit_move_unit_group(su->group,target->m,dx,dy);
-	else
-		map_moveblock(target, nx, ny, gettick());
-
-	map_foreachinmovearea(clif_insight, target, AREA_SIZE, -dx, -dy, target->type == BL_PC ? BL_ALL : BL_PC, target);
-
-	if(!(flag&0x1))
-		clif_blown(target);
-
-	if( target->type == BL_PC )
-	{
-		TBL_PC *sd = (TBL_PC*)target;
-		if( sd->touching_id )
-			npc_touchnext_areanpc(sd,false);
-		if( map_getcell(target->m,target->x,target->y,CELL_CHKNPC) )
-			npc_touch_areanpc(sd,target->m,target->x,target->y);
-		else
-			sd->areanpc_id=0;
-	}
-
-	return count; //Return amount of knocked back cells.
+	return unit_blown(target, dx, dy, count, flag&0x1);
 }
 
 

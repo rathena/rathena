@@ -14380,6 +14380,44 @@ BUILDIN_FUNC(progressbar)
     return 0;
 }
 
+BUILDIN_FUNC(pushpc)
+{
+	int direction, cells, dx, dy;
+	struct map_session_data* sd;
+
+	if((sd = script_rid2sd(st))==NULL)
+	{
+		return 0;
+	}
+
+	direction = script_getnum(st,2);
+	cells     = script_getnum(st,3);
+
+	if(direction<0 || direction>7)
+	{
+		ShowWarning("buildin_pushpc: Invalid direction %d specified.\n", direction);
+		script_reportsrc(st);
+
+		direction%= 8;  // trim spin-over
+	}
+
+	if(!cells)
+	{// zero distance
+		return 0;
+	}
+	else if(cells<0)
+	{// pushing backwards
+		direction = (direction+4)%8;  // turn around
+		cells     = -cells;
+	}
+
+	dx = dirx[direction];
+	dy = diry[direction];
+
+	unit_blown(&sd->bl, dx, dy, cells, 0);
+	return 0;
+}
+
 // declarations that were supposed to be exported from npc_chat.c
 #ifdef PCRE_SUPPORT
 BUILDIN_FUNC(defpattern);
@@ -14739,6 +14777,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(setfont,"i"),
 	BUILDIN_DEF(areamobuseskill,"siiiiviiiii"),
 	BUILDIN_DEF(progressbar, "si"),
+	BUILDIN_DEF(pushpc,"ii"),
 	// WoE SE
 	BUILDIN_DEF(agitstart2,""),
 	BUILDIN_DEF(agitend2,""),

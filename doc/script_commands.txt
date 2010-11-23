@@ -135,6 +135,8 @@
 //= 3.28.20091119
 //=       Added showevent and searchitem commands [Skotlex]
 //=       Added info on strcharinfo(3) [Skotlex]
+//= 3.29.20101123
+//=       Added 'pushpc' command. [Ai4rei]
 //=========================================================
 
 This document is a reference manual for all the scripting commands and functions 
@@ -3868,6 +3870,22 @@ impossible to tell you what all the colour numbers are. If you want a serious
 example, there is a Stylist script inside the default eAthena installation that 
 you can look at, this may help you create a Stylist of your own: 
 'custom\dye.txt'
+
+---------------------------------------
+
+*pushpc <direction>,<cells>;
+
+This command will push the currently attached player to given direction by given
+amount of square cells. Direction is the same as used when declaring npcs, and
+can be specified by using one of the DIR_* constants (db/const.txt).
+
+The knock-back is not restricted by items or map flags, only obstacles are taken
+into account. If there is not enough space to perform the push (e.g. due to a
+wall), the character is pushed only up to the obstacle.
+
+    // pushes the character 5 cells in 3 o'clock direction from it's
+    // current position.
+    pushpc DIR_EAST, 5;
 
 ---------------------------------------
 \\
