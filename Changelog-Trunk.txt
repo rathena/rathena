@@ -11,6 +11,7 @@ Date	Added
 	- Fixed guild member position, hair, hair color, gender, class and level could potentially become corrupted due to shorts being read as ints (partially since r2986).
 	* Fixed disguising as player clone causing the client to crash while looking for non-existing NPC sprites (bugreport:4428, since r14387, related r14383). [Ai4rei]
 	* Fixed Rogue skill Steal Coin working on boss monsters (bugreport:2442). [Ai4rei]
+	* Fixed map-server displaying 'PK Mode' notice only for pk_mode 1 (since r8402). [Ai4rei]
 2010/11/21
 	* Added msinttypes (rev. 26, http://msinttypes.googlecode.com/svn/trunk/) portability framework for Visual C++ compilers (related bugreport:4059). [Ai4rei]
 	* Added 64-bit variants of the socket and buffer I/O macros. [Ai4rei]
