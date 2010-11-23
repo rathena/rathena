@@ -20,7 +20,7 @@
 //= - prerequisite Quest to "Broken Diamond"
 //= - Variable in use: diamond_edq (Max: 14)
 //= Broken Diamond:
-//- - Help Ibrahim rtrieve his stolen diamond.
+//- - Help Ibrahim retrieve his stolen diamond.
 //= - prerequisite Quest to "Unlucky Emerald"
 //= - Variable in use: diamond_edq (Max: 26)
 //= Z-Gang Quest:
@@ -55,6 +55,10 @@
 //= 1.9 Fixed mapwarp warping to disabled map. [L0ne_W0lf]
 //= 2.0 Removed duplicate dialog. [L0ne_W0lf]
 //= 2.1 Fixed a race condition blocking progress. [brianluau]
+//= 2.2 Added quest log entries for:
+//=     - Muff's Loan
+//=     - Broken Diamond
+//=     - Z-Gang Quest
 //============================================================ 
 
 // Nameless Island and Cursed Monestary Access Quest
@@ -664,7 +668,7 @@ ve_in,81,296,3	script	Soldier#Aru	946,{
 		mes "Maybe the magistrate would";
 		mes "know if he was able to finish";
 		mes "interrogating the smugglers.";
-		mes "I'm not sure if he did since the smugglers were taken away.";		
+		mes "I'm not sure if he did since the smugglers were taken away.";
 		set aru_monas,10;
 		close;
 	}
@@ -681,7 +685,7 @@ ve_in,81,296,3	script	Soldier#Aru	946,{
 	else {
 		mes "[Himus]";
 		mes "Nice day, isn't it?";
-		close;		
+		close;
 	}
 }
 
@@ -3159,6 +3163,7 @@ comodo,224,187,3	script	Muff	86,{
 					mes "wallet, I'll make sure";
 					mes "to repay you. Please";
 					mes "help me if you can!";
+					setquest 3100;
 					set diamond_edq,1;
 					close;
 				case 2:
@@ -3260,6 +3265,7 @@ comodo,224,187,3	script	Muff	86,{
 			mes "but I really need my bond";
 			mes "of debt to get my collateral";
 			mes "back from that Belder.";
+			setquest 3100;
 			set diamond_edq,1;
 			close;
 		case 2:
@@ -3341,6 +3347,7 @@ comodo,224,187,3	script	Muff	86,{
 			mes "him to restore my bond of";
 			mes "debt. I'll be waiting for";
 			mes "you right here, okay?";
+			changequest 3102,3103;
 			set diamond_edq,6;
 			close;
 		case 2:
@@ -3372,6 +3379,7 @@ comodo,224,187,3	script	Muff	86,{
 			mes "him to restore my bond of";
 			mes "debt. I'll be waiting for";
 			mes "you right here, okay?";
+			changequest 3102,3103;
 			set diamond_edq,6;
 			close;
 		case 2:
@@ -3409,6 +3417,7 @@ comodo,224,187,3	script	Muff	86,{
 		mes "You've done well, my friend.";
 		mes "Here, please take these as";
 		mes "a meager reward for your help.";
+		completequest 3109;
 		set diamond_edq,14;
 		getitem 603,1; //Old_Blue_Box
 		getitem 608,4; //Seed_Of_Yggdrasil
@@ -3588,6 +3597,7 @@ cmd_fild01,55,160,0	script	Heap of Earth	844,{
 			mes "little thing. Now what?";
 			mes "I dropped it! I have to";
 			mes "try to dig it up again...";
+			changequest 3100,3101;
 			set diamond_edq,2;
 			close;
 		case 2:
@@ -3612,6 +3622,7 @@ cmd_fild01,55,160,0	script	Heap of Earth	844,{
 		mes "Well, I've done all";
 		mes "I can for now. I should";
 		mes "bring this back to Muff.";
+		changequest 3101,3102;
 		set diamond_edq,4;
 		close;
 	}
@@ -3777,6 +3788,7 @@ izlude_in,110,64,3	script	Dorian	878,2,2,{
 						mes "explain how you can";
 						mes "repair the Mystic";
 						mes "Dryer de Elegance.";
+						changequest 3103,3104;
 						set diamond_edq,9;
 						close;
 					}
@@ -3931,6 +3943,7 @@ izlude_in,110,64,3	script	Dorian	878,2,2,{
 			delitem 999,5; //Steel
 			delitem 723,2; //Cardinal_Jewel
 			delitem 716,5; //Red_Gemstone
+			changequest 3104,3105;
 			set diamond_edq,10;
 			mes "[Dorian]";
 			mes "I expect you to fail";
@@ -4075,6 +4088,7 @@ izlude_in,110,64,3	script	Dorian	878,2,2,{
 		mes "Elegance? That's expected:";
 		mes "I didn't really design it for the^FFFFFF ^000000 common user in mind. Well,";
 		mes "why don't you try it again?";
+		erasequest 3106;
 		set diamond_edq,10;
 		close;
 	}
@@ -4092,6 +4106,8 @@ izlude_in,110,64,3	script	Dorian	878,2,2,{
 		mes "is insert the damaged";
 		mes "document and press the";
 		mes "switch. Simple, yes?";
+		erasequest 3106;
+		changequest 3105,3108;
 		set diamond_edq,13;
 		next;
 		mes "[Dorian]";
@@ -4207,6 +4223,7 @@ izlude_in,113,66,0	script	Strange Machine	111,{
 					mes "The joint is broken...";
 					mes "You should go back";
 					mes "to Dorian for help.^000000";
+					setquest 3106;
 					set diamond_edq,11;
 					close;
 				}
@@ -4244,6 +4261,7 @@ izlude_in,113,66,0	script	Strange Machine	111,{
 					mes "^3355FFYou should tell Dorian";
 					mes "first so that you can";
 					mes "use this machine.^000000";
+					setquest 3107;
 					set diamond_edq,12;
 					close;
 				}
@@ -4267,6 +4285,7 @@ izlude_in,113,66,0	script	Strange Machine	111,{
 							mes "before coming to a sudden";
 							mes "stop. That was the wrong";
 							mes "switch. You'd better ask Dorian... ^FFFFFF ^000000";
+							setquest 3106;
 							set diamond_edq,11;
 							close;
 						case 1:
@@ -4292,6 +4311,7 @@ izlude_in,113,66,0	script	Strange Machine	111,{
 								mes "before coming to a sudden";
 								mes "stop. That was the wrong";
 								mes "switch. You'd better ask Dorian... ^FFFFFF ^000000";
+								setquest 3106;
 								set diamond_edq,11;
 								close;
 							}
@@ -4317,6 +4337,7 @@ izlude_in,113,66,0	script	Strange Machine	111,{
 							mes "before coming to a sudden";
 							mes "stop. That was the wrong";
 							mes "switch. You'd better ask Dorian... ^FFFFFF ^000000";
+							setquest 3106;
 							set diamond_edq,11;
 							close;
 						case 2:
@@ -4342,6 +4363,7 @@ izlude_in,113,66,0	script	Strange Machine	111,{
 								mes "before coming to a sudden";
 								mes "stop. That was the wrong";
 								mes "switch. You'd better ask Dorian... ^FFFFFF ^000000";
+								setquest 3106;
 								set diamond_edq,11;
 								close;
 							}
@@ -4366,6 +4388,7 @@ izlude_in,113,66,0	script	Strange Machine	111,{
 							mes "before coming to a sudden";
 							mes "stop. That was the wrong";
 							mes "switch. You'd better ask Dorian... ^FFFFFF ^000000";
+							setquest 3106;
 							set diamond_edq,11;
 							close;
 						case 3:
@@ -4391,6 +4414,7 @@ izlude_in,113,66,0	script	Strange Machine	111,{
 								mes "before coming to a sudden";
 								mes "stop. That was the wrong";
 								mes "switch. You'd better ask Dorian... ^FFFFFF ^000000";
+								setquest 3106;
 								set diamond_edq,11;
 								close;
 							}
@@ -4416,6 +4440,7 @@ izlude_in,113,66,0	script	Strange Machine	111,{
 							mes "before coming to a sudden";
 							mes "stop. That was the wrong";
 							mes "switch. You'd better ask Dorian... ^FFFFFF ^000000";
+							setquest 3106;
 							set diamond_edq,11;
 							close;
 						case 4:
@@ -4441,6 +4466,7 @@ izlude_in,113,66,0	script	Strange Machine	111,{
 								mes "before coming to a sudden";
 								mes "stop. That was the wrong";
 								mes "switch. You'd better ask Dorian... ^FFFFFF ^000000";
+								setquest 3106;
 								set diamond_edq,11;
 								close;
 							}
@@ -4479,6 +4505,7 @@ izlude_in,113,66,0	script	Strange Machine	111,{
 		mes "So this is the original";
 		mes "bond of debt that Muff";
 		mes "lost? It looks... Perfect!";
+		changequest 3108,3109;
 		getitem 7722,1; //Debt_Note
 		close;
 	}
@@ -4604,6 +4631,7 @@ moc_ruins,152,147,5	script	Ibrahim	732,3,3,{
 					mes "Well, I'll be right";
 					mes "here. I hope you come";
 					mes "back with some good news.";
+					setquest 3110;
 					set diamond_edq,15;
 					close;
 				case 2:
@@ -4802,6 +4830,7 @@ moc_ruins,152,147,5	script	Ibrahim	732,3,3,{
 		mes "Well, I don't know if";
 		mes "it's enough for what you";
 		mes "did, but I hope you like it.";
+		completequest 3118;
 		set diamond_edq,26;
 		getitem 732,2; //Crystal_Jewel__
 		getitem 603,1; //Old_Blue_Box
@@ -5359,6 +5388,7 @@ geffen,128,153,3	script	Leblo	883,{
 			mes "she'll give you my medicine...";
 			mes "I hope. Anyway, her name is";
 			mes "^0000FFWola^000000, and she's in Payon.";
+			changequest 3110,3111;
 			set diamond_edq,17;
 			close;
 		case 2:
@@ -5435,6 +5465,7 @@ geffen,128,153,3	script	Leblo	883,{
 		mes "learn more about the Z Gang.";
 		mes "Pretty useful info, huh?";
 		mes "Take care, my friend.";
+		changequest 3114,3115;
 		set diamond_edq,22;
 		close;
 	}
@@ -5630,6 +5661,7 @@ payon_in03,167,149,3	script	Wola	75,2,2,{
 		next;
 		mes "["+ strcharinfo(0) +"]";
 		mes "You... You got it.";
+		changequest 3111,3112;
 		set diamond_edq,19;
 		close;
 	}
@@ -5684,6 +5716,7 @@ payon_in03,167,149,3	script	Wola	75,2,2,{
 			mes "some medicine? I completely";
 			mes "forgot about that for a while.";
 			mes "What did you say exactly?";
+			changequest 3112,3113;
 			set diamond_edq,20;
 			next;
 			switch(select("Will you go out with me?:Leblo's back medicine?")) {
@@ -5749,6 +5782,7 @@ payon_in03,167,149,3	script	Wola	75,2,2,{
 				mes "be okay in my hands. I need";
 				mes "to get back to work: please";
 				mes "take care of yourself!";
+				changequest 3113,3114;
 				set diamond_edq,21;
 				close;
 			}
@@ -5836,6 +5870,7 @@ payon_in03,167,149,3	script	Wola	75,2,2,{
 			mes "be okay in my hands. I need";
 			mes "to get back to work: please";
 			mes "take care of yourself!";
+			changequest 3113,3114;
 			set diamond_edq,21;
 			close;
 		}
@@ -5854,7 +5889,6 @@ payon_in03,167,149,3	script	Wola	75,2,2,{
 	mes "Take care of yourself!";
 	close;
 
-//OnTouch2:
 OnTouch:
 	if (diamond_edq == 17) {
 		mes "[Wola]";
@@ -5961,6 +5995,7 @@ in_rogue,366,46,3	script	Rogue Investigator	828,{
 				mes "in Comodo. I doubt you'll";
 				mes "find anything there, but";
 				mes "you can go check it out. ";
+				changequest 3115,3116;
 				set diamond_edq,23;
 				close;
 			}
@@ -6032,6 +6067,7 @@ in_rogue,366,46,3	script	Rogue Investigator	828,{
 				mes "is a large warehouse in";
 				mes "Comodo where I doubt you'll";
 				mes "find anything. But who knows? ";
+				changequest 3115,3116;
 				set diamond_edq,23;
 				close;
 			}
@@ -6142,6 +6178,7 @@ cmd_in02,69,188,1	script	Small Safe	844,{
 		mes "sneak out of here, and";
 		mes "return this big diamond";
 		mes "to Ibrahim as soon as I can.";
+		changequest 3117,3118;
 		set diamond_edq,25;
 		close;
 	}
@@ -6201,6 +6238,7 @@ cmd_in02,80,189,0	script	Odd Switch#Switch2	844,{
 		next;
 		mes "^3355FF*Click Click*^000000";
 		next;
+		changequest 3116,3117;
 		set diamond_edq,24;
 		mes "[" + strcharinfo(0) + "]";
 		mes "That sound...!";
@@ -6246,6 +6284,7 @@ prontera,150,326,0	script	Wanted Notice#edq	111,{
 		mes "be rewarded with the Book";
 		mes "of Forbidden Mystery, one";
 		mes "of the kingdom's treasures.";
+		setquest 3119;
 		set zdan_edq,1;
 		close;
 	}
@@ -6277,7 +6316,7 @@ prontera,150,326,0	script	Wanted Notice#edq	111,{
 		mes "^0000ffCatfoii^000000 - Pet Cat";
 		next;
 		mes "====National Wanted Notice====";
-	mes "These infamous members";
+		mes "These infamous members";
 		mes "of the Z Gang are suspected";
 		mes "of stealing national treasure,";
 		mes "committing fraud, forgery,";
@@ -6339,6 +6378,7 @@ prontera,148,326,3	script	Chief Officer#edq	734,{
 		mes "Louis, Martha Hertizan a.k.a.";
 		mes "Martha, and Catfoii a.k.a.";
 		mes "Catfoii must be captured!";
+		changequest 3119,3120;
 		set zdan_edq,2;
 		close;
 	}
@@ -6512,6 +6552,7 @@ prontera,148,326,3	script	Chief Officer#edq	734,{
 		mes "be recorded in the annals";
 		mes "of Rune-Midgarts history.";
 		mes "Congratulations! ";
+		completequest 3134;
 		set zdan_edq,19;
 		getexp 1000000,0;
 		close;
@@ -6575,6 +6616,7 @@ prt_in,168,18,1	script	Valdes	65,2,2,{
 			mes "5 bottles! Then... Maybe...";
 			mes "I'll tell you want you really";
 			mes "wanna know. Heh heh~ ^666666*Hic!*^000000";
+			changequest 3120,3121;
 			set zdan_edq,3;
 			close;
 		case 2:
@@ -6664,6 +6706,7 @@ prt_in,168,18,1	script	Valdes	65,2,2,{
 			mes "those Z Gang bastards.";
 			mes "^666666*Sigh*^000000 I think I'll go rest";
 			mes "a bit now. Good luck!";
+			changequest 3121,3122;
 			set zdan_edq,4;
 			close;
 		}
@@ -6757,6 +6800,7 @@ in_rogue,359,116,3	script	Marybell	747,{
 					mes "or not, I'm gonna continue";
 					mes "investigating the Z Gang for";
 					mes "the Rogue Guild and Valdes.";
+					changequest 3122,3123;
 					set zdan_edq,5;
 					break;
 				case 2:
@@ -6924,6 +6968,7 @@ in_rogue,359,116,3	script	Marybell	747,{
 					mes "and check it out. Good";
 					mes "luck finding those Z Gang";
 					mes "guys. And take care!";
+					changequest 3125,3126;
 					set zdan_edq,9;
 					close;
 				}
@@ -6989,7 +7034,7 @@ in_rogue,359,116,3	script	Marybell	747,{
 		mes "decoders in this kingdom.";
 		next;
 		mes "[" + strcharinfo(0) + "]";
-		mes "Goohoo Ahn?";
+		mes "Gooho Ahn?";
 		mes "Why does it feel like";
 		mes "I should know that";
 		mes "name? It's so familiar...";
@@ -7003,15 +7048,16 @@ in_rogue,359,116,3	script	Marybell	747,{
 		mes "[Marybell]";
 		mes "Eh, that's not what's";
 		mes "important right now.";
-		mes "Would you talk to Goohoo";
+		mes "Would you talk to Gooho";
 		mes "Ahn and see what he found?";
+		changequest 3128,3129;
 		set zdan_edq,12;
 		close;
 	}
 	if ((zdan_edq > 11) && (zdan_edq < 14)) {
 		mes "[Marybell]";
 		mes "Hey, why don't you talk";
-		mes "to Goohoo Ahn in Payon,";
+		mes "to Gooho Ahn in Payon,";
 		mes "and ask if he finished";
 		mes "decoding that secret letter";
 		mes "from the Z Gang already?";
@@ -7019,7 +7065,7 @@ in_rogue,359,116,3	script	Marybell	747,{
 	}
 	if (zdan_edq == 14) {
 		mes "[Marybell]";
-		mes "Oh, Goohoo decoded everything?";
+		mes "Oh, Gooho decoded everything?";
 		mes "Let's see... Something about";
 		mes "the Book of Forbidden Mystery...^FFFFFF ^000000 Ah. There we go! The location";
 		mes "of the Z Gang's hideout!";
@@ -7048,6 +7094,7 @@ in_rogue,359,116,3	script	Marybell	747,{
 		mes "hunt them down separately, and";
 		mes "whoever finds 'em first gets";
 		mes "dibs on beating them up!";
+		changequest 3131,3132;
 		set zdan_edq,15;
 		close;
 	}
@@ -7197,6 +7244,7 @@ payon,244,62,3	script	Moonho Ahn	897,{
 			mes "some time to prep the";
 			mes "game? When you return,";
 			mes "we'll be ready to play~";
+			changequest 3123,3124;
 			set zdan_edq,6;
 			close;
 		}
@@ -7419,6 +7467,7 @@ payon,244,62,3	script	Moonho Ahn	897,{
 					mes "feels good to have";
 					mes "played with a worthy";
 					mes "opponent. Thank you~";
+					changequest 3124,3125;
 					set zdan_edq,7;
 					close;
 				}
@@ -7555,6 +7604,7 @@ payon,244,62,3	script	Moonho Ahn	897,{
 						mes "feels good to have";
 						mes "played with a worthy";
 						mes "opponent. Thank you~";
+						changequest 3124,3125;
 						set zdan_edq,7;
 						close;
 					}
@@ -7707,6 +7757,7 @@ payon,192,176,3	script	Gooho Ahn	903,{
 			mes "I need, I should be able";
 			mes "to decrypt the rest of";
 			mes "this secret Z Gang letter.";
+			changequest 3129,3130;
 			set zdan_edq,13;
 			close;
 		}
@@ -7809,6 +7860,7 @@ payon,192,176,3	script	Gooho Ahn	903,{
 			mes "^0000ffWeii arr prowd Z G gna^000000";
 			mes "^0000ffAynoen hwo sspotp uys^000000";
 			mes "^0000ffwlil eb kckide on htier ssa!^000000";
+			changequest 3130,3131;
 			set zdan_edq,14;
 			close;
 		}
@@ -7901,6 +7953,7 @@ moc_ruins,90,67,3	script	Suspicious Man#1	99,2,2,{
 		mes "an informer for the Z Gang.";
 		mes "He can't have gotten too far:";
 		mes "I have a chance to catch him!";
+		changequest 3126,3127;
 		set zdan_edq,10;
 		close;
 	}
@@ -8013,6 +8066,7 @@ moc_ruins,90,67,3	script	Suspicious Man#1	99,2,2,{
 		mes "I should head back to";
 		mes "Marybell, and see if she's";
 		mes "learned any new information.";
+		changequest 3127,3128;
 		set zdan_edq,11;
 		set $@zdan,0;
 		stopnpctimer;
@@ -8096,6 +8150,7 @@ OnTouch:
 		mes "an informer for the Z Gang.";
 		mes "He can't have gotten too far:";
 		mes "I have a chance to catch him!";
+		changequest 3126,3127;
 		set zdan_edq,10;
 		close;
 	}
@@ -8145,6 +8200,7 @@ moc_ruins,78,167,3	script	Suspicious Man#2	99,2,2,{
 		mes "an informer for the Z Gang.";
 		mes "He can't have gotten too far:";
 		mes "I have a chance to catch him!";
+		changequest 3126,3127;
 		set zdan_edq,10;
 		close;
 	}
@@ -8234,6 +8290,7 @@ moc_ruins,78,167,3	script	Suspicious Man#2	99,2,2,{
 		mes "I should head back to";
 		mes "Marybell, and see if she's";
 		mes "learned any new information.";
+		changequest 3127,3128;
 		set zdan_edq,11;
 		set $@zdan,0;
 		stopnpctimer;
@@ -8342,6 +8399,7 @@ OnTouch:
 		mes "an informer for the Z Gang.";
 		mes "He can't have gotten too far:";
 		mes "I have a chance to catch him!";
+		changequest 3126,3127;
 		set zdan_edq,10;
 		close;
 	}
@@ -8421,6 +8479,7 @@ moc_fild17,209,235,0	script	Odd Slab	111,4,4,{
 						mes "What th--?! What's";
 						mes "happening?! I'm being";
 						mes "sucked away somewhere!";
+						changequest 3132,3133;
 						set zdan_edq,16;
 						close2;
 						warp "z_agit",98,40;
@@ -8674,7 +8733,6 @@ OnInit:
 OnEnable:
 	enablenpc "#ZGuard";
 	initnpctimer;
-	set .MyMobCount,3;
 	monster "z_agit",97,78,"Catfoii's Guard",1479,1,"#ZGuard::OnMyMobDead";
 	monster "z_agit",98,79,"Catfoii's Guard",1479,1,"#ZGuard::OnMyMobDead";
 	monster "z_agit",96,81,"Catfoii's Guard",1523,1,"#ZGuard::OnMyMobDead";
@@ -8691,8 +8749,7 @@ Onreset:
 	end;
 
 OnMyMobDead:
-	set .MyMobCount,.MyMobCount-1;
-	if (.MyMobCount < 1) {
+	if (mobcount("z_agit","#ZGuard::OnMyMobDead") < 1) {
 		mes "[" + strcharinfo(0) + "]";
 		mes "You cowardly Z Gang!";
 		mes "Come out and surrender!";
@@ -8830,6 +8887,7 @@ z_agit,97,101,3	script	Louis	931,{
 		mes "But how did we lose?!";
 		close2;
 		getitem 7724,1; //Forbidden_Secret_Art
+		changequest 3133,3134;
 		set zdan_edq,18;
 		mapwarp "z_agit","moc_fild17",209,235;
 		set $@monster_zgang,0;
@@ -8952,6 +9010,7 @@ z_agit,99,101,3	script	Martha	101,{
 		mes "But how did we lose?!";
 		close2;
 		getitem 7724,1; //Forbidden_Secret_Art
+		changequest 3133,3134;
 		set zdan_edq,18;
 		mapwarp "z_agit","moc_fild17",209,235;
 		set $@monster_zgang,0;
@@ -9071,6 +9130,7 @@ z_agit,95,101,3	script	Catfoii	876,{
 		mes "But how did we lose?!";
 		close2;
 		getitem 7724,1; //Forbidden_Secret_Art
+		changequest 3133,3134;
 		set zdan_edq,18;
 		mapwarp "z_agit","moc_fild17",209,235;
 		set $@monster_zgang,0;

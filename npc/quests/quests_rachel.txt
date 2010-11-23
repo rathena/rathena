@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 3.3a
+//= 3.4
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -60,6 +60,9 @@
 //= 3.3 Fixed occurance of PcName. [L0ne_W0lf]
 //=     Fixed level 4 ID warps always being usable.
 //= 3.3a Fixed level 4 ID warps again. (Bugreport:4102) [L0ne_W0lf]
+//= 3.4 Added quest log entries for:
+//=     - Ice Necklace Quest
+//=     - Thor Volcano Base Quest addition.
 //============================================================ 
 
 // Lost Child Quest (Prerequisite to High Priest quest)
@@ -2884,6 +2887,7 @@ rachel,157,183,3	script	Sincere Follower Urstia	916,{
 			mes "to restore its luster. Then,";
 			mes "it'll be a fitting tribute to";
 			mes "our loving goddess Freya.";
+			setquest 2109;
 			getitem 7572,1; //Magic_Necklace
 			set ice_necklace_q,1;
 			close2;
@@ -2923,6 +2927,7 @@ rachel,157,183,3	script	Sincere Follower Urstia	916,{
 			mes " what you have done for me.";
 			delitem 7573,1; //Magic_Necklace_
 			getexp 700000,0;
+			completequest 2113;
 			set ice_necklace_q,6;
 			next;
 			mes "["+strcharinfo(0)+"]";
@@ -3150,6 +3155,7 @@ ice_dun02,120,105,3	script	Man Stuck in Ice#cave	924,5,5,{
 		mes "this prison of ice. He can";
 		mes "be found near Freya's Spring:";
 		mes "beseech him on my behalf!";
+		changequest 2109,2110;
 		set ice_necklace_q,2;
 		close2;
 		cutin "",255;
@@ -3276,6 +3282,7 @@ ice_dun02,120,105,3	script	Man Stuck in Ice#cave	924,5,5,{
 		delitem 7569,1; //Wind Of_Hammer
 		getitem 7574,4; //Freezing Snow Powder
 		getitem 7573,1; //Magic_Necklace_
+		changequest 2112,2113;
 		set ice_necklace_q,5;
 		close2;
 		cutin "",255;
@@ -3381,6 +3388,7 @@ rachel,265,98,3	script	Hamion#aru	930,{
 		mes "not one of those smithing tools.";
 		mes "I'd help you if I could, but...";
 		mes "I'm just smart, not strong.";
+		changequest 2110,2111;
 		set ice_necklace_q,3;
 		close;
 	}
@@ -3451,6 +3459,7 @@ rachel,265,98,3	script	Hamion#aru	930,{
 		delitem 1354,1; //Empty_Scroll
 		delitem 7433,1; //Hammer
 		getitem 7569,1; //Hammer_of_Wind
+		changequest 2111,2112;
 		set ice_necklace_q,4;
 		close;
 	}
@@ -5768,6 +5777,7 @@ ra_temin,277,159,3	script	High Priest Zhed#rachel	932,{
 				mes "of a really good way";
 				mes "for you to infiltrate";
 				mes "that place. Hmmmm...";
+				setquest 2114;
 				set aru_vol,1;
 				close2;
 				cutin "ra_gman",255;
@@ -5940,6 +5950,7 @@ ra_temin,277,159,3	script	High Priest Zhed#rachel	932,{
 					mes "best chance of entering the Thor";
 					mes "Volcano camp without suspicion.";
 					delitem 7342,1; //File01
+					changequest 2115,2116;
 					set aru_vol,6;
 				}
 				else {
@@ -6014,6 +6025,7 @@ ra_temin,277,159,3	script	High Priest Zhed#rachel	932,{
 				mes "I will be contacting you again.";
 				mes "Together, we can protect";
 				mes "peace between our nations.";
+				completequest 60213;
 				set aru_vol,27;
 				getexp 200000,0;
 				close2;

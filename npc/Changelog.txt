@@ -1,5 +1,11 @@
 Date		Added
 ======
+2010/11/22
+	* Rev. 14490 Added quest log support for the following quests. [L0ne_W0lf]
+	- Factory Quest, Murder Quest, Cursed Spirit Quest, Juno Remedy Quest,
+	Airship Ticket Quest, How the Airship Works, Ice Necklace Quest, 
+	Siblings Quest, Thor Volcano Base Quest, Muff's Loan, Broken Diamond,
+	and the Z-Gang Quest
 2010/11/14
 	* Rev. 14462 Updating spawns as a precursor for Eden group quests. [L0ne_W0lf]
 	* Updated spawns for Juno fields to Renewal.

@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 // Samuray22
 //===== Current Version: ===================================== 
-//= 1.7
+//= 1.8
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -11,8 +11,8 @@
 //= Reward: -Free Ticket for Flyship.
 //=	    -Free System to Repair.
 //= Quest about how work the airship
-//= Reward: -Base Experience 200.000
-//=	    -Job Experience 10.000
+//= Reward: -Base Experience 200,000
+//=	    -Job Experience 10,000
 //===== Additional Comments: ================================= 
 //= 1.0 First Beta.
 //= 1.1 Added Heart Fragment quest. [SinSloth]
@@ -24,6 +24,9 @@
 //= 1.5 Replaced effect numerics with constants. [Samuray22]
 //= 1.6 Changed some variables to scope instead of permanent char. [brianluau]
 //= 1.7 some minor cleanup updates to the airship invasion. [L0ne_W0lf]
+//= 1.8 Added quest log entries for:
+//=     - Airship Ticket Quest
+//=     - How the Airship Works
 //============================================================ 
 
 //=======================================================================================================//
@@ -47,6 +50,7 @@ airplane,47,61,1	script	Crewman	833,{
 		mes "[Kain Himere]";
 		mes "It's a strange favor to ask, but I'll pay you back as soon as you return.";
 		next;
+		setquest 2079;
 		set kain_ticket, 5;
 		mes "^3355FFKain Himere has given you a small box.^000000";
 		close;
@@ -270,7 +274,7 @@ airplane,47,61,1	script	Crewman	833,{
 				mes "I needed sent to Einbroch. Anyway, I hope you have a good trip. Oh, and thanks for listening.";
 				close;
 			}
-		}			
+		}
 	} else if(kain_ticket==3) {
 		mes "[Kain Himere]";
 		mes "Oh, how are you?";
@@ -368,6 +372,7 @@ airplane,47,61,1	script	Crewman	833,{
 			next;
 			mes "[Kain Himere]";
 			mes "Would be so kind as to help me by finding that journal and seeing if Tarsha is my daughter?";
+			changequest 2081,2082;
 			set kain_ticket, 11;
 			close;
 		}
@@ -403,6 +408,7 @@ airplane,47,61,1	script	Crewman	833,{
 			mes "[Kain Himere]";
 			mes "I know this isn't much, but please understand that it's all I can give you. God bless you for your all your help!";
 			delitem 7276, 1;
+			completequest 2085;
 			set kain_ticket, 15;
 			getitem 7311, 4;
 			close;
@@ -473,6 +479,7 @@ OnTouch:
 			mes "out 'comrades!'";
 			close;
 		case 2:
+			changequest 2079,2080;
 			set kain_ticket, 7;
 			mes "[Elle Cherno]";
 			mes "This...?";
@@ -519,6 +526,7 @@ OnTouch:
 			mes "^3355FFElle put a big";
 			mes "doodled message";
 			mes "in your hand.^000000";
+			changequest 2084,2085;
 			set kain_ticket, 14;
 			getitem 7276, 1; //Picture Letter,
 			close;
@@ -641,6 +649,7 @@ ein_in01,125,99,3	script	Tarsha Cherno	850,{
 		next;
 		mes "["+strcharinfo(0)+"]";
 		mes "I've got to go check something now, but hopefully I'll be back soon with good news!";
+		changequest 2080,2081;
 		set kain_ticket, 10;
 		close;
 	} else if(kain_ticket == 10 || kain_ticket == 11) {
@@ -708,6 +717,7 @@ ein_in01,125,99,3	script	Tarsha Cherno	850,{
 			mes "[Tarsha Cherno]";
 			mes "Ah, right.";
 			mes "Elle wants to see you again. Would you be so kind as to see her before you go?";
+			changequest 2083,2084;
 			set kain_ticket, 13;
 			close;
 		case 3:
@@ -920,6 +930,7 @@ einbech,45,113,5	script	Tree#t1-1::Tree	111,{
 			close;
 		} else {
 			callfunc "diary";
+			changequest 2082,2083;
 			set kain_ticket, 12;
 			close;
 		}
@@ -1500,6 +1511,7 @@ airplane_01,238,154,5	script	Airship Captain#01	873,{
 						cutin "",255;
 						end;
 					case 2:
+						setquest 8032;
 						set lght_air, 2;
 						mes "[Tarlock]";
 						mes "Ha-hah! I like you";
@@ -1633,6 +1645,7 @@ airplane_01,238,154,5	script	Airship Captain#01	873,{
 					mes "I'm tired for reading";
 					mes "and writing those long";
 					mes "letters.";
+					completequest 8035;
 					set lght_air, 7;
 					getexp 200000, 10000;
 					close2;
@@ -1755,6 +1768,7 @@ airplane,236,163,5	script	Airship Captain#03	873,{
 		next;
 		mes "[Ferlock]";
 		mes "And if you ever meet him, please send him my gratitude and regards.";
+		changequest 8045,8046;
 		set hg_ma1,5;
 		close2;
 		cutin "",255;
@@ -1976,6 +1990,7 @@ airplane,236,163,5	script	Airship Captain#03	873,{
 		mes "is goodbye for now, adventurer.";
 		close2;
 		specialeffect2 EF_ABSORBSPIRITS;
+		completequest 8043;
 		set lhz_heart,13;
 		getexp 700000,400000;
 		cutin "",255;
@@ -2024,71 +2039,73 @@ airplane,236,163,5	script	Airship Captain#03	873,{
 		
 	case 2:
 		if (lght_air == 2) {
-		set lght_air, 3;
-		mes "^3131FFYou give Captain Ferlock";
-		mes "the letter that his brother";
-		mes "Tarlock has written for him.^000000";
-		next;
-		mes "[Ferlock]";
-		mes "Oh, this is from my";
-		mes "brother? Hey, thanks so";
-		mes "much for bringing this to";
-		mes "me for him. Ah, give me";
-		mes "a minute to read all of";
-		mes "this, would you now?";
-		next;
-		mes "[Ferlock]";
-		mes "...";
-		mes "So that's what he's been";
-		mes "up to. Huh. Hahaha! Oh, that's";
-		mes "funny. Ah, it's always good to";
-		mes "hear from Tarlock. Anyway,";
-		mes "I'm sorry to make you wait.";
-		next;
-		mes "[Ferlock]";
-		mes "Anyway, my brother wrote";
-		mes "about the usual stuff, but";
-		mes "he mentioned that he was";
-		mes "hoping to finally return a few";
-		mes "things he borrowed from me.";
-		mes "However, he lost them...";
-		next;
-		mes "[Ferlock]";
-		mes "It turns that those nasty";
-		mes "gremlins that sometimes";
-		mes "attack his ship stole my";
-		mes "things, so was he actually";
-		mes "hoping that you would";
-		mes "help me get them back.";
-		next;
-		mes "[Ferlock]";
-		mes "Yeah, yeah. He specifically";
-		mes "mentioned that I shouldn't";
-		mes "give you my reply until you";
-		mes "hunt those monsters and get";
-		mes "my stuff back. I'm sorry, but";
-		mes "I guess you owe big bro, huh?";
-		next;
-		mes "[Ferlock]";
-		mes "Well, if you're willing to";
-		mes "help me, would you get my";
-		mes "^ff00002 Will of the Darkness^000000 and";
-		mes "^ff00002 Prickly Fruit^000000 back for me?";
-		next;
-		mes "[Ferlock]";
-		mes "The monsters that attack";
-		mes "Tarlock's Airship should";
-		mes "have them. I'd appreciate";
-		mes "it if you'd help me out on";
-		mes "this, adventurer. Thanks";
-		mes "in advance and good luck~";
-		close2;
-		cutin "",255;
-		end;
+			changequest 8032,8033;
+			set lght_air, 3;
+			mes "^3131FFYou give Captain Ferlock";
+			mes "the letter that his brother";
+			mes "Tarlock has written for him.^000000";
+			next;
+			mes "[Ferlock]";
+			mes "Oh, this is from my";
+			mes "brother? Hey, thanks so";
+			mes "much for bringing this to";
+			mes "me for him. Ah, give me";
+			mes "a minute to read all of";
+			mes "this, would you now?";
+			next;
+			mes "[Ferlock]";
+			mes "...";
+			mes "So that's what he's been";
+			mes "up to. Huh. Hahaha! Oh, that's";
+			mes "funny. Ah, it's always good to";
+			mes "hear from Tarlock. Anyway,";
+			mes "I'm sorry to make you wait.";
+			next;
+			mes "[Ferlock]";
+			mes "Anyway, my brother wrote";
+			mes "about the usual stuff, but";
+			mes "he mentioned that he was";
+			mes "hoping to finally return a few";
+			mes "things he borrowed from me.";
+			mes "However, he lost them...";
+			next;
+			mes "[Ferlock]";
+			mes "It turns that those nasty";
+			mes "gremlins that sometimes";
+			mes "attack his ship stole my";
+			mes "things, so was he actually";
+			mes "hoping that you would";
+			mes "help me get them back.";
+			next;
+			mes "[Ferlock]";
+			mes "Yeah, yeah. He specifically";
+			mes "mentioned that I shouldn't";
+			mes "give you my reply until you";
+			mes "hunt those monsters and get";
+			mes "my stuff back. I'm sorry, but";
+			mes "I guess you owe big bro, huh?";
+			next;
+			mes "[Ferlock]";
+			mes "Well, if you're willing to";
+			mes "help me, would you get my";
+			mes "^ff00002 Will of the Darkness^000000 and";
+			mes "^ff00002 Prickly Fruit^000000 back for me?";
+			next;
+			mes "[Ferlock]";
+			mes "The monsters that attack";
+			mes "Tarlock's Airship should";
+			mes "have them. I'd appreciate";
+			mes "it if you'd help me out on";
+			mes "this, adventurer. Thanks";
+			mes "in advance and good luck~";
+			close2;
+			cutin "",255;
+			end;
 		} else if(lght_air == 3) {
 			if (countitem(7340) >= 2 && countitem(576) >= 2) {
 				delitem 7340, 2;
 				delitem 576, 2;
+				changequest 8033,8034;
 				set lght_air, 4;
 				mes "[Ferlock]";
 				mes "You brought the items!";
@@ -2107,16 +2124,16 @@ airplane,236,163,5	script	Airship Captain#03	873,{
 				cutin "",255;
 				end;
 			}
-				mes "[Ferlock]";
-				mes "Oh, I'm sorry, but it looks";
-				mes "like you're missing something.";
-				mes "Would you please go and find";
-				mes "^ff00002 Will of the Darkness^000000 and";
-				mes "^ff00002 Prickly Fruit^000000? Thanks,";
-				mes "brave adventurer~";
-				close2;
-				cutin "",255;
-				end;
+			mes "[Ferlock]";
+			mes "Oh, I'm sorry, but it looks";
+			mes "like you're missing something.";
+			mes "Would you please go and find";
+			mes "^ff00002 Will of the Darkness^000000 and";
+			mes "^ff00002 Prickly Fruit^000000? Thanks,";
+			mes "brave adventurer~";
+			close2;
+			cutin "",255;
+			end;
 		}
 		mes "[Ferlock]";
 		mes "Well, I hope that";
@@ -2293,6 +2310,7 @@ airplane,236,63,4	script	Hallen	706,{
 				mes "^3355FFHallen gave you";
 				mes "Mawong's letter to";
 				mes "be delivered to Kaci.^000000";
+				setquest 8036;
 				set lhz_heart,2;
 				next;
 				mes "[Hallen]";
@@ -2456,6 +2474,7 @@ airplane,236,63,4	script	Hallen	706,{
 		mes "is it even possible? Well, if";
 		mes "you could find out for me, ";
 		mes "it'd be a really big help.";
+		changequest 8038,8039;
 		set lhz_heart,6;
 		close;
 	}
@@ -2518,6 +2537,7 @@ airplane,236,63,4	script	Hallen	706,{
 			mes "Heart Piece. Now where";
 			mes "have I heard about that";
 			mes "before? Mm, let me think...";
+			changequest 8039,8040;
 			set lhz_heart,7;
 			close;
 		}
@@ -2594,6 +2614,7 @@ airplane,236,63,4	script	Hallen	706,{
 		}
 		if(Shinokas_Quest > 9) set lhz_heart,9;
 		else set lhz_heart,8;
+		changequest 8040,8041;
 		getitem 501,1;
 		mes "[Hallen]";
 		mes "Here you go~";
@@ -2688,6 +2709,7 @@ airplane,33,69,4	script	Kaci	73,{
 		mes "As for Euslan, please tell her about me and let her know that I hope she gets well soon.";
 		next;
 		mes "^3355FFSince she's begging, I guess I should send her message.";
+		changequest 8044,8045;
 		set hg_ma1,4;
 		close;
 	}
@@ -2718,6 +2740,7 @@ airplane,33,69,4	script	Kaci	73,{
 		mes "asking customers for favors!";
 		mes "But still, he's really busy...";
 		next;
+		changequest 8036,8037;
 		set lhz_heart,3;
 		mes "[Kaci]";
 		mes "Thank you for bringing";
@@ -2834,6 +2857,7 @@ L_Ask:
 		mes "back to work now.";
 		mes "Have a nice day,";
 		mes "and I'll see you later~";
+		changequest 8037,8038;
 		set lhz_heart,4;
 		close;
 	}
@@ -2885,6 +2909,7 @@ L_Ask:
 		mes "that laboratory in Einbroch";
 		mes "as soon as I can, even if it's";
 		mes "a heavily restricted area.^000000)";
+		changequest 8041,8042;
 		set lhz_heart,9;
 		close;
 	}
@@ -3097,6 +3122,7 @@ L_Input:
 			mes "Airship, alright? Now hurry!";
 			close2;
 			donpcevent "Ferlock#lab::OnInit";
+			changequest 8042,8043;
 			set lhz_heart,11;
 			end;
 		}
