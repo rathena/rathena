@@ -3676,7 +3676,7 @@ int do_init(int argc, char *argv[])
 		//##TODO invoke a CONSOLE_START plugin event
 	}
 
-	if (battle_config.pk_mode == 1)
+	if (battle_config.pk_mode)
 		ShowNotice("Server is running on '"CL_WHITE"PK Mode"CL_RESET"'.\n");
 
 	ShowStatus("Server is '"CL_GREEN"ready"CL_RESET"' and listening on port '"CL_WHITE"%d"CL_RESET"'.\n\n", map_port);
