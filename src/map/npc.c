@@ -1940,14 +1940,6 @@ int npc_convertlabel_db(DBKey key, void* data, va_list ap)
 	nullpo_ret(label_list_num = va_arg(ap,int*));
 	nullpo_ret(filepath = va_arg(ap,const char*));
 
-	if( *label_list == NULL )
-	{
-		*label_list = (struct npc_label_list *) aCallocA (1, sizeof(struct npc_label_list));
-		*label_list_num = 0;
-	} else
-		*label_list = (struct npc_label_list *) aRealloc (*label_list, sizeof(struct npc_label_list)*(*label_list_num+1));
-	label = *label_list+*label_list_num;
-
 	// In case of labels not terminated with ':', for user defined function support
 	p = lname;
 	while( ISALNUM(*p) || *p == '_' )
@@ -1958,8 +1950,17 @@ int npc_convertlabel_db(DBKey key, void* data, va_list ap)
 	if( len > 23 )
 	{
 		ShowError("npc_parse_script: label name longer than 23 chars! '%s'\n (%s)", lname, filepath);
-		exit(EXIT_FAILURE);
+		return 0;
 	}
+
+	if( *label_list == NULL )
+	{
+		*label_list = (struct npc_label_list *) aCallocA (1, sizeof(struct npc_label_list));
+		*label_list_num = 0;
+	} else
+		*label_list = (struct npc_label_list *) aRealloc (*label_list, sizeof(struct npc_label_list)*(*label_list_num+1));
+	label = *label_list+*label_list_num;
+
 	safestrncpy(label->name, lname, sizeof(label->name));
 	label->pos = lpos;
 	++(*label_list_num);
