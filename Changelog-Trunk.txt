@@ -8,6 +8,7 @@ Date	Added
 	- Fixed data type inconsistency in @statuspoint and @skillpoint (since r5762, related r13541).
 	- Silenced truncation warnings in CR_ACIDDEMONSTRATION damage calculation and cardfix application (since r13700).
 	- Reformatted unit_blown to make it look cleaner (follow up to r14492).
+	* Labels longer than 23 characters will no longer cause the server to exit immediately (bugreport:4563, since r1213). [Ai4rei]
 2010/11/22
 	* mail_deliveryfail no longer attempts to log (since r12910) and give items (since r11855), when there is no item attached to the mail (bugreport:3239). [Ai4rei]
 	* Fixed a crash when shutting down char-server (TXT only), after it failed to load storage save data (since r1275). [Ai4rei]
