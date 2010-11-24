@@ -1,6 +1,7 @@
 Date	Added
 
 2010/11/24
+	* Display a message showing the user where to change MAX_ITEMDELAYS when they have too many entries in the item_delays db. Follow-up to r14455. [Paradox924X]
 	* Fixed pets with player sprites causing the client to crash while looking for non-existing resources (topic:260895, follow up to r14488). [Ai4rei]
 	* Fixed calls to pc_delautobonus assuming map_session_data::autobonus2 and map_session_data::autobonus3 arrays having the same size as map_session_data::autobonus (since r13915). [Ai4rei]
 2010/11/23

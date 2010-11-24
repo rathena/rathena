@@ -680,7 +680,7 @@ static int itemdb_read_itemdelay(void)
 	while(fgets(line, sizeof(line), fp))
 	{
 		if (item_delays == MAX_ITEMDELAYS) {
-			ShowError("itemdb_read_itemdelay: Too many entries specified in %s/item_delay.txt!\n", db_path);
+			ShowError("itemdb_read_itemdelay: Too many entries specified in %s/item_delay.txt! Increase MAX_ITEMDELAYS in itemdb.h!\n", db_path);
 			break;
 		}
 		if (line[0] == '/' && line[1] == '/')
