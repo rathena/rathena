@@ -2053,8 +2053,8 @@ int unit_free(struct block_list *bl, int clrtype)
 
 			pc_delinvincibletimer(sd);
 			pc_delautobonus(sd,sd->autobonus,ARRAYLENGTH(sd->autobonus),false);
-			pc_delautobonus(sd,sd->autobonus2,ARRAYLENGTH(sd->autobonus),false);
-			pc_delautobonus(sd,sd->autobonus3,ARRAYLENGTH(sd->autobonus),false);
+			pc_delautobonus(sd,sd->autobonus2,ARRAYLENGTH(sd->autobonus2),false);
+			pc_delautobonus(sd,sd->autobonus3,ARRAYLENGTH(sd->autobonus3),false);
 			
 			if( sd->followtimer != -1 )
 				pc_stop_following(sd);

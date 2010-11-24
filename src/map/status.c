@@ -1859,8 +1859,8 @@ int status_calc_pc_(struct map_session_data* sd, bool first)
 
 	// Autobonus
 	pc_delautobonus(sd,sd->autobonus,ARRAYLENGTH(sd->autobonus),true);
-	pc_delautobonus(sd,sd->autobonus2,ARRAYLENGTH(sd->autobonus),true);
-	pc_delautobonus(sd,sd->autobonus3,ARRAYLENGTH(sd->autobonus),true);
+	pc_delautobonus(sd,sd->autobonus2,ARRAYLENGTH(sd->autobonus2),true);
+	pc_delautobonus(sd,sd->autobonus3,ARRAYLENGTH(sd->autobonus3),true);
 
 	// Parse equipment.
 	for(i=0;i<EQI_MAX-1;i++) {
