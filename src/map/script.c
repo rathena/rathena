@@ -9087,14 +9087,40 @@ BUILDIN_FUNC(warpwaitingpc)
 // ...
 //
 
+static void script_detach_rid(struct script_state* st)
+{
+	struct map_session_data* sd;
+
+	if(st->rid)
+	{
+		if((sd = script_rid2sd(st))!=NULL)
+		{
+			if(sd->npc_id!=st->oid)
+			{
+				ShowDebug("script_detach_rid: sd->npc_id (%d) != st->oid (%d), please report this!\n", sd->npc_id, st->oid);
+				script_reportsrc(st);
+			}
+
+			sd->npc_id = 0;
+			sd->st = NULL;
+		}
+		st->rid = 0;
+	}
+}
+
 /*==========================================
  * RIDのアタッチ
  *------------------------------------------*/
 BUILDIN_FUNC(attachrid)
 {
 	int rid = script_getnum(st,2);
-	
-	if (map_id2sd(rid)) {
+	struct map_session_data* sd;
+
+	if ((sd = map_id2sd(rid))!=NULL) {
+		script_detach_rid(st);
+
+		sd->st = st;
+		sd->npc_id = st->oid;
 		st->rid = rid;
 		script_pushint(st,1);
 	} else
@@ -9106,7 +9132,7 @@ BUILDIN_FUNC(attachrid)
  *------------------------------------------*/
 BUILDIN_FUNC(detachrid)
 {
-	st->rid=0;
+	script_detach_rid(st);
 	return 0;
 }
 /*==========================================
