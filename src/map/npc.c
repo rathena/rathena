@@ -3129,7 +3129,12 @@ void npc_parsesrcfile(const char* filepath)
 			{// Incorrect map, we must skip the script info...
 				ShowError("npc_parsesrcfile: Unknown map '%s' in file '%s', line '%d'. Skipping line...\n", mapname, filepath, strline(buffer,p-buffer));
 				if( strcasecmp(w2,"script") == 0 && count > 3 )
-					p = npc_skip_script(p,buffer,filepath);
+				{
+					if((p = npc_skip_script(p,buffer,filepath)) == NULL)
+					{
+						break;
+					}
+				}
 				p = strchr(p,'\n');// next line
 				continue;
 			}
@@ -3137,7 +3142,12 @@ void npc_parsesrcfile(const char* filepath)
 			if( m < 0 )
 			{// "mapname" is not assigned to this server, we must skip the script info...
 				if( strcasecmp(w2,"script") == 0 && count > 3 )
-					p = npc_skip_script(p,buffer,filepath);
+				{
+					if((p = npc_skip_script(p,buffer,filepath)) == NULL)
+					{
+						break;
+					}
+				}
 				p = strchr(p,'\n');// next line
 				continue;
 			}

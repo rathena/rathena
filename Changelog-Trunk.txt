@@ -1,6 +1,7 @@
 Date	Added
 
 2010/11/25
+	* Fixed a crash when an unknown map is encountered during parsing a 'script' npc and the script has mismatched curly braces (bugreport:4423, since r11502). [Ai4rei]
 	* Fixed script commands attachrid and detachrid not updating the attached character's information about currently running script, causing errors with dialog-based scripts or preventing characters from walking (bugreport:4571). [Ai4rei]
 2010/11/24
 	* Fixed party booking search not interpreting level 0 as 'all levels' and using level as upper rather than lower bound (bugreport:4537, since r14412). [Ai4rei]
