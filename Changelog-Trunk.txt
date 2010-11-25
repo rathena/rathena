@@ -1,6 +1,7 @@
 Date	Added
 
 2010/11/25
+	* Too large client packets, which would otherwise cause the client to crash, are now dropped and reported (bugreport:4391). [Ai4rei]
 	* Fixed a crash when an unknown map is encountered during parsing a 'script' npc and the script has mismatched curly braces (bugreport:4423, since r11502). [Ai4rei]
 	* Fixed script commands attachrid and detachrid not updating the attached character's information about currently running script, causing errors with dialog-based scripts or preventing characters from walking (bugreport:4571). [Ai4rei]
 2010/11/24

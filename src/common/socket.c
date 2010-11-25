@@ -199,6 +199,10 @@ time_t stall_time = 60;
 uint32 addr_[16];   // ip addresses of local host (host byte order)
 int naddr_ = 0;   // # of ip addresses
 
+// Maximum packet size in bytes, which the client is able to handle.
+// Larger packets cause a buffer overflow and stack corruption.
+static size_t socket_max_client_packet = 20480;
+
 // initial recv buffer size (this will also be the max. size)
 // biggest known packet: S 0153 <len>.w <emblem data>.?B -> 24x24 256 color .bmp (0153 + len.w + 1618/1654/1756 bytes)
 #define RFIFO_SIZE (2*1024)
@@ -643,6 +647,12 @@ int WFIFOSET(int fd, size_t len)
 		exit(EXIT_FAILURE);
 	}
 
+	if( !s->flag.server && len > socket_max_client_packet )
+	{// see declaration of socket_max_client_packet for details
+		ShowError("WFIFOSET: Dropped too large client packet 0x%04x (length=%u, max=%u).\n", WFIFOW(fd,0), len, socket_max_client_packet);
+		return 0;
+	}
+
 	if( !s->flag.server && s->wdata_size+len > WFIFO_MAX )
 	{// reached maximum write fifo size
 		set_eof(fd);
@@ -1064,6 +1074,8 @@ int socket_config_read(const char* cfgName)
 			ddos_autoreset = atoi(w2);
 		else if (!strcmpi(w1,"debug"))
 			access_debug = config_switch(w2);
+		else if (!strcmpi(w1,"socket_max_client_packet"))
+			socket_max_client_packet = strtoul(w2, NULL, 0);
 #endif
 		else if (!strcmpi(w1, "import"))
 			socket_config_read(w2);
