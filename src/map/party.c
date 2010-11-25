@@ -1172,7 +1172,7 @@ void party_booking_search(struct map_session_data *sd, short level, short mapid,
 	
 	for( pb_ad = (struct party_booking_ad_info*)iter->first(iter,NULL);	iter->exists(iter);	pb_ad = (struct party_booking_ad_info*)iter->next(iter,NULL) )
 	{
-		if (pb_ad->index < lastindex || (pb_ad->p_detail.level < level || pb_ad->p_detail.level-15 > level))
+		if (pb_ad->index < lastindex || (level && (pb_ad->p_detail.level < level-15 || pb_ad->p_detail.level > level)))
 			continue;
 		if (count >= 10){
 			more_result = true;
