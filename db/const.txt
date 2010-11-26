@@ -276,6 +276,8 @@ Sp		7	1
 MaxSp		8	1
 BaseJob		119	1
 BaseClass	120	1
+killerrid	121 1
+killedrid	122 1
 
 bMaxHP		6
 bMaxSP		8

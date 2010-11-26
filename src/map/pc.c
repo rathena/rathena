@@ -5613,7 +5613,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 	}
 
 	pc_setglobalreg(sd,"PC_DIE_COUNTER",sd->die_counter+1);
-	pc_setglobalreg(sd,"killerrid",src?src->id:0);
+	pc_setparam(sd, SP_KILLERRID, src?src->id:0);
 	if( sd->state.bg_id )
 	{
 		struct battleground_data *bg;
@@ -5667,7 +5667,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 	if (src && src->type == BL_PC)
 	{
 		struct map_session_data *ssd = (struct map_session_data *)src;
-		pc_setglobalreg(ssd, "killedrid", sd->bl.id);
+		pc_setparam(ssd, SP_KILLEDRID, sd->bl.id);
 		npc_script_event(ssd, NPCE_KILLPC);
 
 		if (battle_config.pk_mode&2) {
@@ -5923,6 +5923,8 @@ int pc_readparam(struct map_session_data* sd,int type)
 	case SP_KARMA:       val = sd->status.karma; break;
 	case SP_MANNER:      val = sd->status.manner; break;
 	case SP_FAME:        val = sd->status.fame; break;
+	case SP_KILLERRID:   val = sd->killerrid; break;
+	case SP_KILLEDRID:   val = sd->killedrid; break;
 	}
 
 	return val;
@@ -6043,6 +6045,12 @@ int pc_setparam(struct map_session_data *sd,int type,int val)
 	case SP_FAME:
 		sd->status.fame = val;
 		break;
+	case SP_KILLERRID:
+		sd->killerrid = val;
+		return 1;
+	case SP_KILLEDRID:
+		sd->killedrid = val;
+		return 1;
 	default:
 		ShowError("pc_setparam: Attempted to set unknown parameter '%d'.\n", type);
 		return 0;

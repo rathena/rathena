@@ -1,6 +1,9 @@
 Date	Added
 
 2010/11/26
+	* Changed 'killerrid' and 'killedrid' from player vars to player params (bugreport:3249) [ultramage]
+	- Now stored in player session data, so they don't get saved on logout anymore.
+	- Added sql upgrade script 'upgrade_svn14507.sql' to remove the now unused player variables.
 	* Some updates and fixes to script command documentation. [Ai4rei]
 	- Fixed small inaccuracy in description for homevolution (bugreport:125).
 	- Added ~AnnieRuru~'s fixes to item scripts, variables, and commands addtimer and addnpctimer (bugreport:373).

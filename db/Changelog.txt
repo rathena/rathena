@@ -8,6 +8,8 @@
 	1475 Equestrian's Spear:	NEED INFO.
 	13005 Angelic Wing Dagger:	NEED INFO.
 =======================
+2010/11/26
+	* Rev. 14507 Added killerrid and killedrid param constants to const.txt [ultramage]
 2010/11/21
 	* Rev. 14480 Added enumeration RC2_* to const.txt for mob data 'race2' (bugreport:4561). [Ai4rei]
 	- Fixed bSubRace2 being documented as bSPSubRace2 (since r1257).
