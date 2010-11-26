@@ -7915,7 +7915,6 @@ int pc_split_atoui(char* str, unsigned int* val, char sep, int max)
 int pc_readdb(void)
 {
 	int i,j,k;
-	unsigned int stat;
 	FILE *fp;
 	char line[24000],*p;
 
@@ -8106,7 +8105,6 @@ int pc_readdb(void)
 	// ƒXƒLƒ‹ƒcƒŠ?
 	memset(statp,0,sizeof(statp));
 	i=1;
-	stat = 48;	// base points
 	sprintf(line, "%s/statpoint.txt", db_path);
 	fp=fopen(line,"r");
 	if(fp == NULL){
@@ -8115,6 +8113,7 @@ int pc_readdb(void)
 	} else {
 		while(fgets(line, sizeof(line), fp))
 		{
+			int stat;
 			if(line[0]=='/' && line[1]=='/')
 				continue;
 			if ((stat=strtoul(line,NULL,10))<0)
@@ -8128,10 +8127,9 @@ int pc_readdb(void)
 		ShowStatus("Done reading '"CL_WHITE"%s"CL_RESET"'.\n","statpoint.txt");
 	}
 	// generate the remaining parts of the db if necessary
-	for (; i <= MAX_LEVEL; i++) {
-		stat += (i+15)/5;
-		statp[i] = stat;		
-	}
+	statp[0] = 45; // seed value
+	for (; i <= MAX_LEVEL; i++)
+		statp[i] = statp[i-1] + (i-1+15)/5;
 
 	return 0;
 }
