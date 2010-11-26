@@ -8088,7 +8088,7 @@ int pc_readdb(void)
 	// ƒXƒLƒ‹ƒcƒŠ?
 	memset(statp,0,sizeof(statp));
 	i=1;
-	stat = 45;	// base points
+	stat = 48;	// base points
 	sprintf(line, "%s/statpoint.txt", db_path);
 	fp=fopen(line,"r");
 	if(fp == NULL){
