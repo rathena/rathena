@@ -194,7 +194,7 @@ bonus bSPGainValue,n;			When killing a monster by physical attack, you gain n SP
 bonus bHPGainValue,n;			When killing a monster by physical attack, you gain n HP
 bonus bIgnoreDefMob,n;			Ignore monster's DEF when attacking.
 							n: 0=All normal monster except Bosses, 1=All monsters
-bonus2 bCriticalAddRace,n,r;		Critical + n vs. enemies of race r
+bonus2 bCriticalAddRace,r,n;		Critical + n vs. enemies of race r
 								r:
 									0=Formless, 1=Undead, 2=Brute, 3=Plant, 4=Insect,
 									5=Fish, 6=Demon, 7=Demi-Human, 8=Angel, 9=Dragon, 
