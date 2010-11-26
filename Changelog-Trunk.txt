@@ -1,6 +1,14 @@
 Date	Added
 
 2010/11/26
+	* Some updates and fixes to script command documentation. [Ai4rei]
+	- Fixed small inaccuracy in description for homevolution (bugreport:125).
+	- Added ~AnnieRuru~'s fixes to item scripts, variables, and commands addtimer and addnpctimer (bugreport:373).
+	- Fixed documentation for function command in regard of passed arguments and return value. (bugreport:373).
+	- Simplified description for getusers, by hiding internal mechanics of the command, which are irrelevant to a scripter (bugreport:2545).
+	- Added description for setfont and mercenary-related commands (bugreport:3034).
+	- Added documentation for ?: operator and "global" labels provided by Gepard (bugreport:3650).
+	- Added documentation for operators -, ~ and ! (bugreport:3650).
 	* Fixed base and job exp not getting reset on (de)leveling through commands (bugreport:85). [Ai4rei]
 	- Fixed level up related functions not updating client-side exp information, causing the exp percent value display random values.
 	- Fixed party system not getting notified of level-ups through parameter changes.

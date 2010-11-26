@@ -492,15 +492,16 @@ implemented (but NEVER documented by Lance. Shame on you...).
 Item and pet scripts
 --------------------
 
-Each item in the item database has two special fields - EquipScript and 
-UseScript. The first is script code run every time a character equips the item, 
+Each item in the item database has three special fields - Script , OnEquip_Script
+and OnUnequip_Script. The first is script code run every time a character equips the item, 
 with the RID of the equipping character. Every time they unequip an item, all 
 temporary bonuses given by the script commands are cleared, and all the scripts 
 are executed once again to rebuild them. This also happens in several other 
 situations (like upon login) but the full list is currently unknown.
 
-UseScript is a piece of script code run whenever the item is used by a character 
-by doubleclicking on it.
+OnEquip_Script is a piece of script code run whenever the item is used by a character 
+by doubleclicking on it. OnUnequip_Script runs whenever the
+equipment is unequip by a character
 
 Not all script commands work properly in the item scripts. Where commands and 
 functions are known to be meant specifically for use in item scripts, they are 
@@ -549,8 +550,10 @@ permanent - They still exist when the server resets.
 temporary - They cease to exist when the server resets.
 
 Prefix: scope and extent
-nothing  - A permanent variable attached to the character, the default 
-           variable type.
+nothing  - A permanent variable attached to the character, the default variable
+           type. They are stored with all the account data in "save\athena.txt"
+           in TXT versions and in the SQL versions in the `global_reg_value`
+           table using type 3.
 "@"      - A temporary variable attached to the character.
            SVN versions before 2094 revision and RC5 version will also treat
            'l' as a temporary variable prefix, so beware of having variable
@@ -747,7 +750,7 @@ common mathematical operations or conditional operators
 + - will add two numbers. If you try to add two strings, the result will be a 
     string glued together at the +. You can add a number to a string, and the
     result will be a string. No other math operators work with strings.
-- - will subtract two numbers.
+- - will subtract two numbers. 
 * - will multiply two numbers.
 / - will divide two numbers. Note that this is an integer division, i.e.
     7/2 is not equal 3.5, it's equal 3.
@@ -863,6 +866,52 @@ Logical bitwise operators work only on numbers, and they are the following:
 			mes "Quest 1 complete!! You unlocked the secrets of the Xor dinasty, use them wisely.";
 			close;
 		}
+
+Unary operators with only with a single number, which follows the operator, and
+are following:
+
+ -  - Negation.
+	The sign of the number will be reversed. If the number was positive, it will
+	become negative and vice versa.
+
+	Example:
+		set .@myvar,10;
+		mes "Negative 10 is "+(-.@myvar);
+
+ !  - Logical Not.
+	Reverses the boolean result of an expression. True will become false and
+	false will become true.
+
+	Example:
+		if(!callfunc("F_dosomething"))
+		{
+			mes "Doing something failed.";
+			close;
+		}
+
+ ~  - Bitwise Not.
+	Reverses each bit in a number, also known as one's complement. Cleared bits
+	are set, and set bits are cleared.
+
+	Example:
+	- Ensure, that quest 2 is disabled, while keeping all other active, if they are.
+		set inProgress,inProgress&(~2);  // same as set inProgress,inProgress&0xfffffffd
+
+Ternary operators take three expressions (numbers, strings or boolean), and are
+following:
+
+ ?: - Conditional operator
+	Very useful e.g. to replace
+
+		if(Sex) mes "..."; else mes "...";
+
+	clauses with simple
+
+		mes "Welcome, " + (Sex?"Mr.":"Mrs.") + " " + strcharinfo(0);
+
+	or to replace any other simple if-else clauses. It might be worth
+	mentioning that ?: has low priority and has to be enclosed with
+	parenthesis in most (if not all) cases.
 
 Labels
 ------
@@ -981,6 +1030,15 @@ OnThisMobDeath:
 
 Each time you kill one, that announce will appear in blue to everyone.
 
+"Global" labels
+
+There's a catch with labels and doevent. If you call a label (using doevent)
+and called label is in NPC that has trigger area, that label must end with
+"Global" to work globally (i.e. if RID is outside of the trigger area, which
+usually happens since otherwise there would be no point calling the label with
+doevent, because OnTouch would do the job). For further reference look for
+npc_event in npc.c.
+
 Scripting commands and functions
 --------------------------------
 
@@ -1008,9 +1066,10 @@ From here on, we will have the commands sorted as follow:
 4.- Player-related commands.
 5.- Mob / NPC -related commands.
 6.- Other commands.
-7.- Instance Commands.
-8.- Quest Log Commands.
+7.- Instance commands.
+8.- Quest Log commands.
 9.- Battleground commands.
+10.- Mercenary commands.
 
 =====================
 |1.- Basic commands.|
@@ -1605,9 +1664,9 @@ program what exactly happened.
 
 (Skotlex stop being so selfish and give us all the commands T~T! J/k lol :P)
 
-This works like callfunc, but doesn't support arguments like callfunc. It's used for cleaner
-and fast script that doesn't require arguments for it to work. Also they must be inside a script. 
-They're not separated scripts and they work more like labels.
+This works like callfunc. It's used for cleaner and fast scripting. Also they
+must be inside a script. They're not separated scripts and they work more like
+labels with arguments.
 
 Note it looks like the normal declaration
 
@@ -1615,10 +1674,10 @@ Usage:
 
 You first Declare the function with function <function name>;.
 
-Put the rest of your code. You can use then <function name>; to call the function. If it returns a value is unsure,
-test it if you want and give us some comments ;3
+Put the rest of your code. You can use then <function name>; to call the
+function. It can also return a value when used with parentheses.
 
-And at least, but inside the script itself, put the function <function name> {<code>}.
+And at last, but inside the script itself, put the function <function name> {<code>}.
 
 Example:
 
@@ -1665,6 +1724,24 @@ function SF_Selling {
 		}
 	}
 	return;
+}
+
+Example with parameters and return value:
+
+prontera,150,150,0	script	TestNPC	123,{
+	function MyAdd;
+
+	mes "Enter two numbers.";
+	next;
+	input .@a;
+	input .@b;
+	mes .@a+" + "+.@b+" = "+MyAdd(.@a,.@b);
+	close;
+
+	function MyAdd
+	{
+		return getarg(0)+getarg(1);
+	}
 }
 
 
@@ -2755,15 +2832,12 @@ This will print a full date and time like 'YYYY-MM/DD HH:MM:SS'.
 This function will return a number of users on a map or the whole server. What 
 it returns is specified by Type.
 
-Type is a bitmask, add up to get the effects you want:
+Type can be one of the following values, which control what will be returned:
 
-  8 - This will count all characters on the same map as the current NPC.
-      (By default, it will count people on the same map as the character)
-  7 - Return the amount of players for the entire server.
-      (By default, only the players on the map will be counted.)
-      
-So 'getusers(0)' will return the number of characters on the same map as the 
-invoking character, while 'getusers(7)' will give the count for entire server.
+    0 - Count of all characters on the map of the invoking character.
+    1 - Count of all characters in the entire server.
+    8 - Count of all characters on the map of the NPC the script is
+        running in.
 
 ---------------------------------------
 
@@ -5031,7 +5105,7 @@ If it doesn't work, the /swt emoticon is shown.
 
 To evolve a homunculus, the invoking player must have a homunculus,
 the homunculus must not be the last evolution and
-the homunculus must be on at least 91000/100000 intimacy with it's owner.
+the homunculus must have above 91000 intimacy with it's owner.
 
 ---------------------------------------
 
@@ -5202,19 +5276,19 @@ Since trunk r11779
 5,1.- Time-related commands
 \\
 ---------------------------------------
-*addtimer <ticks>,"<NPC object name>::<label>";
-*deltimer "<NPC object name>::<event label>";
-*addtimercount <ticks>,"<NPC object name>::<event label>";
+*addtimer <ticks>,"NPC::OnLabel";
+*deltimer "NPC::OnLabel";
+*addtimercount <ticks>,"NPC::OnLabel";
 
-These commands will create and manage a player-based timer: 'addtimer' to 
-create, 'deltimer' to destroy and 'addtimercount' to delay it by the specified 
-number of ticks. For all three cases, the event label given is the identifier of 
-that timer. A player can have multiple timers running at the same time, and 
-there can even be multiple timers referencing the same label.
+These commands will create, destroy, and delay a countdown timer - 'addtimer' to
+create, 'deltimer' to destroy and 'addtimercount' to delay it by the specified
+number of ticks. For all three cases, the event label given is the identifier of
+that timer. The timer runs on the character object that is attached to the script,
+and can have multiple instances. When the label is run, it is run as if the player that
+the timer runs on has clicked the NPC.
 
-When this timer runs out, a new execution thread will start in the specified NPC 
-object at the specified label, and the script will run attached to that player. 
-If the specified label is not found, the map server will happily print an error.
+When this timer runs out, a new execution thread will start in the specified NPC
+object at the specified label.
 
 The ticks are given in 1/1000ths of a second.
 
@@ -5291,6 +5365,8 @@ The 'setnpctimer' command will explicitly set the timer to a given tick.
 Example 1:
 
     <NPC Header> {
+        // We need to use attachnpctimer because the mes command below needs RID attach
+        attachnpctimer;
         initnpctimer;
         npctalk "I cant talk right now, give me 10 seconds";
         end;
@@ -5310,9 +5386,11 @@ Example 1:
         npctalk "1";
         end;
     OnTimer10000:
-        stopnpctimer; // This command is indeed not neccessary here because timer automaticly stopped due to no remaining events.
+        stopnpctimer;
         mes "[Man]";
         mes "Ok we can talk now";
+        detachnpctimer;
+        // and remember attachnpctimer and detachnpctimer can only use while the npc timer is not running !
     }
 
 Example 2:
@@ -6380,6 +6458,26 @@ The first letter is position 0.
 
 ---------------------------------------
 
+*setfont <font>
+
+This command sets the current RO client interface font to one of the
+fonts stored in data\*.eot by using an ID of the font. When the ID
+of the currently used font is used, default interface font is used
+again.
+
+    0 - Default
+    1 - RixLoveangel
+    2 - RixSquirrel
+    3 - NHCgogo
+    4 - RixDiary
+    5 - RixMiniHeart
+    6 - RixFreshman
+    7 - RixKid
+    8 - RixMagic
+    9 - RixJJangu
+
+---------------------------------------
+
 * The Pet AI commands
 
 These commands will only work if the invoking character has a pet, and are meant 
@@ -6866,6 +6964,57 @@ mapflag	<mapname>	battleground	2
 This command will force the update of the displayed scoreboard.
 
 ----------------------------------------
+
+==========================
+|10.- Mercenary commands.|
+==========================
+---------------------------------------
+
+*mercenary_create <class>,<contract time>;
+
+This command summons a mercenary of given class, for given amount of
+time in milliseconds. Typically used in item scripts of mercenary
+scrolls.
+
+----------------------------------------
+
+*mercenary_heal <hp>,<sp>;
+
+This command works like 'heal', but affects the mercenary of the
+currently attached character.
+
+----------------------------------------
+
+*mercenary_sc_start <type>,<tick>,<val1>;
+
+This command works like 'sc_start', but affects the mercenary of the
+currently attached character.
+
+----------------------------------------
+
+*mercenary_get_calls(<guild>);
+*mercenary_set_calls <guild>,<value>;
+
+Sets or gets the mercenary calls value for given guild for currently
+attached character. Guild can be one or the following constants:
+
+    ARCH_MERC_GUILD
+    SPEAR_MERC_GUILD
+    SWORD_MERC_GUILD
+
+----------------------------------------
+
+*mercenary_get_faith(<guild>);
+*mercenary_set_faith <guild>,<value>;
+
+Sets or gets the mercenary faith value for given guild for currently
+attached character. Guild can be one or the following constants:
+
+    ARCH_MERC_GUILD
+    SPEAR_MERC_GUILD
+    SWORD_MERC_GUILD
+
+---------------------------------------
 
 Whew.
 That's about all of them.
