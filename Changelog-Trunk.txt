@@ -1,6 +1,9 @@
 Date	Added
 
 2010/11/26
+	* Fixed base and job exp not getting reset on (de)leveling through commands (bugreport:85). [Ai4rei]
+	- Fixed level up related functions not updating client-side exp information, causing the exp percent value display random values.
+	- Fixed party system not getting notified of level-ups through parameter changes.
 	* Fixed auto-generated statpoint table missing 3 status points (since r1107). [Ai4rei]
 2010/11/25
 	* Too large client packets, which would otherwise cause the client to crash, are now dropped and reported (bugreport:4391). [Ai4rei]
