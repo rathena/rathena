@@ -9063,8 +9063,10 @@ void clif_parse_ChangeDir(int fd, struct map_session_data *sd)
  *------------------------------------------*/
 void clif_parse_Emotion(int fd, struct map_session_data *sd)
 {
+	int emoticon = RFIFOB(fd,packet_db[sd->packet_ver][RFIFOW(fd,0)].pos[0]);
+
 	if (battle_config.basic_skill_check == 0 || pc_checkskill(sd, NV_BASIC) >= 2) {
-		if (RFIFOB(fd,2) == E_MUTE) {// prevent use of the mute emote [Valaris]
+		if (emoticon == E_MUTE) {// prevent use of the mute emote [Valaris]
 			clif_skill_fail(sd, 1, 0, 1);
 			return;
 		}
@@ -9076,7 +9078,12 @@ void clif_parse_Emotion(int fd, struct map_session_data *sd)
 		}
 		sd->emotionlasttime = time(NULL) + 1; // not more than 1 per second (using /commands the client can spam it)
 
-		clif_emotion(&sd->bl, RFIFOB(fd,2));
+		if(battle_config.client_reshuffle_dice && emoticon>=E_DICE1 && emoticon<=E_DICE6)
+		{// re-roll dice
+			emoticon = rand()%6+E_DICE1;
+		}
+
+		clif_emotion(&sd->bl, emoticon);
 	} else
 		clif_skill_fail(sd, 1, 0, 1);
 }

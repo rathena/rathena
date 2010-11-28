@@ -471,6 +471,7 @@ extern struct Battle_Config
 	int invincible_nodamage;
 	int mob_slave_keep_target;
 	int autospell_check_range;	//Enable range check for autospell bonus. [L0ne_W0lf]
+	int client_reshuffle_dice;  // Reshuffle /dice
 
 	// [BattleGround Settings]
 	int bg_update_interval;

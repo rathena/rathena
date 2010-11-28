@@ -1,6 +1,7 @@
 Date	Added
 
 2010/11/28
+	* Added an option to re-roll the /dice emotion server-side, to prevent cheats during events (bugreport:4194). [Ai4rei]
 	* Added emotion_type enumeration for clif_emotion constants. [Ai4rei]
 	- Made clif_parse_Emotion use clif_emotion, rather than having it's code inlined.
 	* Added clr_type enumeration for vanish effect constants. [Ai4rei]

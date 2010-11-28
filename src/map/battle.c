@@ -4004,6 +4004,7 @@ static const struct _battle_data {
 	{ "invincible.nodamage",                &battle_config.invincible_nodamage,             0,      0,      1,              },
 	{ "mob_slave_keep_target",              &battle_config.mob_slave_keep_target,           0,      0,      1,              },
 	{ "autospell_check_range",              &battle_config.autospell_check_range,           0,      0,      1,              },
+	{ "client_reshuffle_dice",              &battle_config.client_reshuffle_dice,           0,      0,      1,              },
 // BattleGround Settings
 	{ "bg_update_interval",                 &battle_config.bg_update_interval,              1000,   100,    INT_MAX,        },
 	{ "bg_short_attack_damage_rate",        &battle_config.bg_short_damage_rate,            80,     0,      INT_MAX,        },
