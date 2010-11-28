@@ -1078,13 +1078,6 @@ static struct party_booking_ad_info* create_party_booking_data(int party_id)
 	return pb_ad;
 }
 
-struct party_booking_ad_info* party_booking_getdata(unsigned long index)
-{
-	struct party_booking_ad_info *pb_ad;
-	pb_ad = (struct party_booking_ad_info*)idb_get(party_booking_db, index);
-	return pb_ad;
-}
-
 bool check_party_leader(struct map_session_data *sd, struct party_data *p)
 {
 	int i;
@@ -1130,8 +1123,7 @@ void party_booking_register(struct map_session_data *sd, short level, short mapi
 
 	clif_PartyBookingRegisterAck(sd, 0);
 	clif_PartyBookingInsertNotify(sd, pb_ad); // Notice
-	clif_PartyBookingSearchAck(sd->fd, &pb_ad->index, 1, false); // Update Client!
-	return;
+	clif_PartyBookingSearchAck(sd->fd, &pb_ad, 1, false); // Update Client!
 }
 
 void party_booking_update(struct map_session_data *sd, short* job)
@@ -1157,18 +1149,17 @@ void party_booking_update(struct map_session_data *sd, short* job)
 		else pb_ad->p_detail.job[i] = -1;
 
 	clif_PartyBookingUpdateNotify(sd, pb_ad);
-	return;
 }
 
 void party_booking_search(struct map_session_data *sd, short level, short mapid, short job, unsigned long lastindex, short resultcount)
 {
 	struct party_booking_ad_info *pb_ad;
 	int i, count=0;
-	unsigned long index_list[PARTY_BOOKING_RESULTS];
+	struct party_booking_ad_info* result_list[PARTY_BOOKING_RESULTS];
 	bool more_result = false;
 	DBIterator* iter = party_booking_db->iterator(party_booking_db);
 	
-	memset(index_list, 0, sizeof(index_list));
+	memset(result_list, 0, sizeof(result_list));
 	
 	for( pb_ad = (struct party_booking_ad_info*)iter->first(iter,NULL);	iter->exists(iter);	pb_ad = (struct party_booking_ad_info*)iter->next(iter,NULL) )
 	{
@@ -1179,19 +1170,19 @@ void party_booking_search(struct map_session_data *sd, short level, short mapid,
 			break;
 		}
 		if (mapid == 0 && job == -1)
-			index_list[count] = pb_ad->index;
+			result_list[count] = pb_ad;
 		else if (mapid == 0) {
 			for(i=0; i<PARTY_BOOKING_JOBS; i++)
 				if (pb_ad->p_detail.job[i] == job && job != -1)
-					index_list[count] = pb_ad->index;
+					result_list[count] = pb_ad;
 		} else if (job == -1){
 			if (pb_ad->p_detail.mapid == mapid)
-				index_list[count] = pb_ad->index;
+				result_list[count] = pb_ad;
 		}
 		count++;
 	}
 	iter->destroy(iter);
-	clif_PartyBookingSearchAck(sd->fd, index_list, count, more_result);
+	clif_PartyBookingSearchAck(sd->fd, result_list, count, more_result);
 }
 
 bool party_booking_delete(struct map_session_data *sd, bool force_delete)

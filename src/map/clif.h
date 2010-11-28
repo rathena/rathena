@@ -469,7 +469,7 @@ void clif_progressbar_abort(struct map_session_data * sd);
 
 void clif_PartyBookingRegisterAck(struct map_session_data *sd, int flag);
 void clif_PartyBookingDeleteAck(struct map_session_data* sd, int flag);
-void clif_PartyBookingSearchAck(int fd, unsigned long *index, int count, bool more_result);
+void clif_PartyBookingSearchAck(int fd, struct party_booking_ad_info** results, int count, bool more_result);
 void clif_PartyBookingUpdateNotify(struct map_session_data* sd, struct party_booking_ad_info* pb_ad);
 void clif_PartyBookingDeleteNotify(struct map_session_data* sd, int index);
 void clif_PartyBookingInsertNotify(struct map_session_data* sd, struct party_booking_ad_info* pb_ad);

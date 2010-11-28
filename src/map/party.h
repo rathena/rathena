@@ -86,7 +86,6 @@ int party_foreachsamemap(int (*func)(struct block_list *,va_list),struct map_ses
 /*==========================================
  * Party Booking in KRO [Spiria]
  *------------------------------------------*/
-struct party_booking_ad_info* party_booking_getdata(unsigned long index);
 void party_booking_register(struct map_session_data *sd, short level, short mapid, short* job);
 void party_booking_update(struct map_session_data *sd, short* job);
 void party_booking_search(struct map_session_data *sd, short level, short mapid, short job, unsigned long lastindex, short resultcount);

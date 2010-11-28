@@ -10832,7 +10832,7 @@ void clif_parse_PartyBookingSearchReq(int fd, struct map_session_data* sd)
 /*==========================================
  * more_result: 0 - no more, 1 - more
  *------------------------------------------*/
-void clif_PartyBookingSearchAck(int fd, unsigned long *index, int count, bool more_result)
+void clif_PartyBookingSearchAck(int fd, struct party_booking_ad_info** results, int count, bool more_result)
 {
 	int i, j;
 	int size = sizeof(struct party_booking_ad_info); // structure size (48)
@@ -10840,11 +10840,10 @@ void clif_PartyBookingSearchAck(int fd, unsigned long *index, int count, bool mo
 	WFIFOHEAD(fd,size*count + 5);
 	WFIFOW(fd,0) = 0x805;
 	WFIFOW(fd,2) = size*count + 5;
-	WFIFOB(fd,4) = (bool)more_result;
+	WFIFOB(fd,4) = more_result;
 	for(i=0; i<count; i++)
 	{
-		pb_ad = party_booking_getdata(index[i]);
-		if(pb_ad == NULL) return;
+		pb_ad = results[i];
 		WFIFOL(fd,i*size+5) = pb_ad->index;
 		memcpy(WFIFOP(fd,i*size+9),pb_ad->charname,NAME_LENGTH);
 		WFIFOL(fd,i*size+33) = pb_ad->starttime;
