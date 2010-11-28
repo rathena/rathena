@@ -547,7 +547,7 @@ static int mob_spawn_guardian_sub(int tid, unsigned int tick, int id, intptr dat
 				md->guardian_data->castle->guardian[md->guardian_data->number].visible = 0;
 				guild_castledatasave(md->guardian_data->castle->castle_id, 10+md->guardian_data->number,0);
 			}
-			unit_free(&md->bl,0); //Remove guardian.
+			unit_free(&md->bl,CLR_OUTSIGHT); //Remove guardian.
 		}
 		return 0;
 	}
@@ -795,7 +795,7 @@ int mob_setdelayspawn(struct mob_data *md)
 	unsigned int spawntime;
 
 	if (!md->spawn) //Doesn't has respawn data!
-		return unit_free(&md->bl,1);
+		return unit_free(&md->bl,CLR_DEAD);
 
 	spawntime = md->spawn->delay1; //Base respawn time
 	if (md->spawn->delay2) //random variance
@@ -826,7 +826,7 @@ int mob_spawn (struct mob_data *md)
 
 	md->last_thinktime = tick;
 	if (md->bl.prev != NULL)
-		unit_remove_map(&md->bl,2);
+		unit_remove_map(&md->bl,CLR_RESPAWN);
 	else
 	if (md->spawn && md->class_ != md->spawn->class_)
 	{
@@ -1121,7 +1121,7 @@ static int mob_ai_sub_hard_slavemob(struct mob_data *md,unsigned int tick)
 			md->master_dist > MAX_MINCHASE
 		){
 			md->master_dist = 0;
-			unit_warp(&md->bl,bl->m,bl->x,bl->y,3);
+			unit_warp(&md->bl,bl->m,bl->x,bl->y,CLR_TELEPORT);
 			return 1;
 		}
 
@@ -1761,7 +1761,7 @@ int mob_timer_delete(int tid, unsigned int tick, int id, intptr data)
 		}
 		//for Alchemist CANNIBALIZE [Lupus]
 		md->deletetimer = INVALID_TIMER;
-		unit_free(bl, 3);
+		unit_free(bl, CLR_TELEPORT);
 	}
 	return 0;
 }
@@ -2491,7 +2491,7 @@ int mob_guardian_guildchange(struct block_list *bl,va_list ap)
 				md->guardian_data->castle->guardian[md->guardian_data->number].visible = 0;
 				guild_castledatasave(md->guardian_data->castle->castle_id, 10+md->guardian_data->number,0);
 			}
-			unit_free(&md->bl,0); //Remove guardian.
+			unit_free(&md->bl,CLR_OUTSIGHT); //Remove guardian.
 		}
 		return 0;
 	}
@@ -2505,7 +2505,7 @@ int mob_guardian_guildchange(struct block_list *bl,va_list ap)
 			md->guardian_data->castle->guardian[md->guardian_data->number].visible = 0;
 			guild_castledatasave(md->guardian_data->castle->castle_id, 10+md->guardian_data->number,0);
 		}
-		unit_free(&md->bl,0);
+		unit_free(&md->bl,CLR_OUTSIGHT);
 		return 0;
 	}
 
@@ -2631,7 +2631,7 @@ int mob_warpslave_sub(struct block_list *bl,va_list ap)
 		return 0;
 
 	map_search_freecell(master, 0, &x, &y, range, range, 0);
-	unit_warp(&md->bl, master->m, x, y,2);
+	unit_warp(&md->bl, master->m, x, y,CLR_RESPAWN);
 	return 1;
 }
 

@@ -658,7 +658,7 @@ int clif_clearflooritem(struct flooritem_data *fitem, int fd)
  *       3 - teleported / logged out
  * fd  : the target client
  *------------------------------------------*/
-int clif_clearunit_single(int id, uint8 type, int fd)
+int clif_clearunit_single(int id, clr_type type, int fd)
 {
 	WFIFOHEAD(fd, packet_len(0x80));
 	WFIFOW(fd,0) = 0x80;
@@ -676,7 +676,7 @@ int clif_clearunit_single(int id, uint8 type, int fd)
  *       2 - respawned
  *       3 - teleported / logged out
  *------------------------------------------*/
-int clif_clearunit_area(struct block_list* bl, uint8 type)
+int clif_clearunit_area(struct block_list* bl, clr_type type)
 {
 	unsigned char buf[16];
 
@@ -686,7 +686,7 @@ int clif_clearunit_area(struct block_list* bl, uint8 type)
 	WBUFL(buf,2) = bl->id;
 	WBUFB(buf,6) = type;
 
-	clif_send(buf, packet_len(0x80), bl, type == 1 ? AREA : AREA_WOS);
+	clif_send(buf, packet_len(0x80), bl, type == CLR_DEAD ? AREA : AREA_WOS);
 
 	if(disguised(bl)) {
 		WBUFL(buf,2) = -bl->id;
@@ -699,7 +699,7 @@ int clif_clearunit_area(struct block_list* bl, uint8 type)
 static int clif_clearunit_delayed_sub(int tid, unsigned int tick, int id, intptr data)
 {
 	struct block_list *bl = (struct block_list *)data;
-	clif_clearunit_area(bl, 0);
+	clif_clearunit_area(bl, CLR_OUTSIGHT);
 	aFree(bl);
 	return 0;
 }
@@ -4195,7 +4195,7 @@ int clif_outsight(struct block_list *bl,va_list ap)
 		switch(bl->type){
 		case BL_PC:
 			if (sd->vd.class_ != INVISIBLE_CLASS)
-				clif_clearunit_single(bl->id,0,tsd->fd);
+				clif_clearunit_single(bl->id,CLR_OUTSIGHT,tsd->fd);
 			if(sd->chatID){
 				struct chat_data *cd;
 				cd=(struct chat_data*)map_id2bl(sd->chatID);
@@ -4213,14 +4213,14 @@ int clif_outsight(struct block_list *bl,va_list ap)
 			break;
 		default:
 			if ((vd=status_get_viewdata(bl)) && vd->class_ != INVISIBLE_CLASS)
-				clif_clearunit_single(bl->id,0,tsd->fd);
+				clif_clearunit_single(bl->id,CLR_OUTSIGHT,tsd->fd);
 			break;
 		}
 	}
 	if (sd && sd->fd)
 	{	//sd is watching tbl go out of view.
 		if ((vd=status_get_viewdata(tbl)) && vd->class_ != INVISIBLE_CLASS)
-			clif_clearunit_single(tbl->id,0,sd->fd);
+			clif_clearunit_single(tbl->id,CLR_OUTSIGHT,sd->fd);
 	}
 	return 0;
 }
@@ -7742,7 +7742,7 @@ int clif_refresh(struct map_session_data *sd)
 	if( pc_issit(sd) )
 		clif_sitting(&sd->bl); // FIXME: just send to self, not area
 	if( pc_isdead(sd) ) //When you refresh, resend the death packet.
-		clif_clearunit_single(sd->bl.id,1,sd->fd);
+		clif_clearunit_single(sd->bl.id,CLR_DEAD,sd->fd);
 	else
 		clif_changed_dir(&sd->bl, SELF);
 
@@ -8720,7 +8720,7 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 
   	// If player is dead, and is spawned (such as @refresh) send death packet. [Valaris]
 	if(pc_isdead(sd))
-		clif_clearunit_area(&sd->bl, 1);
+		clif_clearunit_area(&sd->bl, CLR_DEAD);
 // Uncomment if you want to make player face in the same direction he was facing right before warping. [Skotlex]
 //	else
 //		clif_changed_dir(&sd->bl, SELF);
@@ -8821,7 +8821,7 @@ void clif_parse_WalkToXY(int fd, struct map_session_data *sd)
 	int cmd;
 
 	if (pc_isdead(sd)) {
-		clif_clearunit_area(&sd->bl, 1);
+		clif_clearunit_area(&sd->bl, CLR_DEAD);
 		return;
 	}
 
@@ -9100,7 +9100,7 @@ void clif_parse_HowManyConnections(int fd, struct map_session_data *sd)
 void clif_parse_ActionRequest_sub(struct map_session_data *sd, int action_type, int target_id, unsigned int tick)
 {
 	if (pc_isdead(sd)) {
-		clif_clearunit_area(&sd->bl, 1);
+		clif_clearunit_area(&sd->bl, CLR_DEAD);
 		return;
 	}
 
@@ -9198,7 +9198,7 @@ void clif_parse_Restart(int fd, struct map_session_data *sd)
 {
 	switch(RFIFOB(fd,2)) {
 	case 0x00:
-		pc_respawn(sd,2);
+		pc_respawn(sd,CLR_RESPAWN);
 		break;
 	case 0x01:
 		/*	Rovert's Prevent logout option - Fixed [Valaris]	*/
@@ -9416,7 +9416,7 @@ void clif_parse_TakeItem(int fd, struct map_session_data *sd)
 
 	do {
 		if (pc_isdead(sd)) {
-			clif_clearunit_area(&sd->bl, 1);
+			clif_clearunit_area(&sd->bl, CLR_DEAD);
 			break;
 		}
 
@@ -9483,7 +9483,7 @@ void clif_parse_UseItem(int fd, struct map_session_data *sd)
 	int n;
 
 	if (pc_isdead(sd)) {
-		clif_clearunit_area(&sd->bl, 1);
+		clif_clearunit_area(&sd->bl, CLR_DEAD);
 		return;
 	}
 
@@ -9516,7 +9516,7 @@ void clif_parse_EquipItem(int fd,struct map_session_data *sd)
 	int index;
 
 	if(pc_isdead(sd)) {
-		clif_clearunit_area(&sd->bl,1);
+		clif_clearunit_area(&sd->bl,CLR_DEAD);
 		return;
 	}
 	index = RFIFOW(fd,2)-2; 
@@ -9559,7 +9559,7 @@ void clif_parse_UnequipItem(int fd,struct map_session_data *sd)
 	int index;
 
 	if(pc_isdead(sd)) {
-		clif_clearunit_area(&sd->bl,1);
+		clif_clearunit_area(&sd->bl,CLR_DEAD);
 		return;
 	}
 
@@ -9581,7 +9581,7 @@ void clif_parse_NpcClicked(int fd,struct map_session_data *sd)
 	struct block_list *bl;
 
 	if(pc_isdead(sd)) {
-		clif_clearunit_area(&sd->bl,1);
+		clif_clearunit_area(&sd->bl,CLR_DEAD);
 		return;
 	}
 

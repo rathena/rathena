@@ -107,7 +107,7 @@ int merc_hom_vaporize(struct map_session_data *sd, int flag)
 		memset(hd->blockskill, 0, sizeof(hd->blockskill));
 	clif_hominfo(sd, sd->hd, 0);
 	merc_save(hd);
-	return unit_remove_map(&hd->bl, 0);
+	return unit_remove_map(&hd->bl, CLR_OUTSIGHT);
 }
 
 //delete a homunculus, completely "killing it". 
@@ -119,7 +119,7 @@ int merc_hom_delete(struct homun_data *hd, int emote)
 	sd = hd->master;
 
 	if (!sd)
-		return unit_free(&hd->bl,1);
+		return unit_free(&hd->bl,CLR_DEAD);
 
 	if (emote >= 0)
 		clif_emotion(&sd->bl, emote);
@@ -129,7 +129,7 @@ int merc_hom_delete(struct homun_data *hd, int emote)
 	// Send homunculus_dead to client
 	hd->homunculus.hp = 0;
 	clif_hominfo(sd, hd, 0);
-	return unit_remove_map(&hd->bl,0);
+	return unit_remove_map(&hd->bl,CLR_OUTSIGHT);
 }
 
 int merc_hom_calc_skilltree(struct homun_data *hd)
@@ -317,7 +317,7 @@ int merc_hom_evolution(struct homun_data *hd)
 	hom->luk += 10*rand(min->luk, max->luk);
 	hom->intimacy = 500;
 
-	unit_remove_map(&hd->bl, 0);
+	unit_remove_map(&hd->bl, CLR_OUTSIGHT);
 	map_addblock(&hd->bl);
 
 	clif_spawn(&hd->bl);
@@ -676,7 +676,7 @@ int merc_call_homunculus(struct map_session_data *sd)
 		merc_save(hd); 
 	} else
 		//Warp him to master.
-		unit_warp(&hd->bl,sd->bl.m, sd->bl.x, sd->bl.y,0);
+		unit_warp(&hd->bl,sd->bl.m, sd->bl.x, sd->bl.y,CLR_OUTSIGHT);
 	return 1;
 }
 

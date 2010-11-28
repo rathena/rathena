@@ -452,7 +452,7 @@ ACMD_FUNC(mapmove)
 		clif_displaymessage(fd, msg_txt(248));
 		return -1;
 	}
-	if (pc_setpos(sd, mapindex, x, y, 3) != 0) {
+	if (pc_setpos(sd, mapindex, x, y, CLR_TELEPORT) != 0) {
 		clif_displaymessage(fd, msg_txt(1)); // Map not found.
 		return -1;
 	}
@@ -535,7 +535,7 @@ ACMD_FUNC(jumpto)
 		return -1;
 	}
 
-	pc_setpos(sd, pl_sd->mapindex, pl_sd->bl.x, pl_sd->bl.y, 3);
+	pc_setpos(sd, pl_sd->mapindex, pl_sd->bl.x, pl_sd->bl.y, CLR_TELEPORT);
 	sprintf(atcmd_output, msg_txt(4), pl_sd->status.name); // Jumped to %s
  	clif_displaymessage(fd, atcmd_output);
 
@@ -572,7 +572,7 @@ ACMD_FUNC(jump)
 		x = y = 0; //Invalid cell, use random spot.
 	}
 
-	pc_setpos(sd, sd->mapindex, x, y, 3);
+	pc_setpos(sd, sd->mapindex, x, y, CLR_TELEPORT);
 	sprintf(atcmd_output, msg_txt(5), sd->bl.x, sd->bl.y); // Jumped to %d %d
 	clif_displaymessage(fd, atcmd_output);
 	return 0;
@@ -1114,7 +1114,7 @@ ACMD_FUNC(load)
 		return -1;
 	}
 
-	pc_setpos(sd, sd->status.save_point.map, sd->status.save_point.x, sd->status.save_point.y, 0);
+	pc_setpos(sd, sd->status.save_point.map, sd->status.save_point.x, sd->status.save_point.y, CLR_OUTSIGHT);
 	clif_displaymessage(fd, msg_txt(7)); // Warping to save point..
 
 	return 0;
@@ -2308,7 +2308,7 @@ ACMD_FUNC(go)
 			clif_displaymessage(fd, msg_txt(248));
 			return -1;
 		}
-		if (pc_setpos(sd, mapindex_name2id(data[town].map), data[town].x, data[town].y, 3) == 0) {
+		if (pc_setpos(sd, mapindex_name2id(data[town].map), data[town].x, data[town].y, CLR_TELEPORT) == 0) {
 			clif_displaymessage(fd, msg_txt(0)); // Warped.
 		} else {
 			clif_displaymessage(fd, msg_txt(1)); // Map not found.
@@ -3329,7 +3329,7 @@ ACMD_FUNC(recall)
 		clif_displaymessage(fd, "You are not authorized to warp this player from its actual map.");
 		return -1;
 	}
-	pc_setpos(pl_sd, sd->mapindex, sd->bl.x, sd->bl.y, 2);
+	pc_setpos(pl_sd, sd->mapindex, sd->bl.x, sd->bl.y, CLR_RESPAWN);
 	sprintf(atcmd_output, msg_txt(46), pl_sd->status.name); // %s recalled!
 	clif_displaymessage(fd, atcmd_output);
 
@@ -3988,7 +3988,7 @@ ACMD_FUNC(recallall)
 					pc_setstand(pl_sd);
 					pc_setrestartvalue(pl_sd,1);
 				}
-				pc_setpos(pl_sd, sd->mapindex, sd->bl.x, sd->bl.y, 2);
+				pc_setpos(pl_sd, sd->mapindex, sd->bl.x, sd->bl.y, CLR_RESPAWN);
 			}
 		}
 	}
@@ -4047,7 +4047,7 @@ ACMD_FUNC(guildrecall)
 			if (pl_sd->bl.m >= 0 && map[pl_sd->bl.m].flag.nowarp && battle_config.any_warp_GM_min_level > pc_isGM(sd))
 				count++;
 			else
-				pc_setpos(pl_sd, sd->mapindex, sd->bl.x, sd->bl.y, 2);
+				pc_setpos(pl_sd, sd->mapindex, sd->bl.x, sd->bl.y, CLR_RESPAWN);
 		}
 	}
 	mapit_free(iter);
@@ -4106,7 +4106,7 @@ ACMD_FUNC(partyrecall)
 			if (pl_sd->bl.m >= 0 && map[pl_sd->bl.m].flag.nowarp && battle_config.any_warp_GM_min_level > pc_isGM(sd))
 				count++;
 			else
-				pc_setpos(pl_sd, sd->mapindex, sd->bl.x, sd->bl.y, 2);
+				pc_setpos(pl_sd, sd->mapindex, sd->bl.x, sd->bl.y, CLR_RESPAWN);
 		}
 	}
 	mapit_free(iter);
@@ -4704,7 +4704,7 @@ ACMD_FUNC(tonpc)
 	}
 
 	if ((nd = npc_name2id(npcname)) != NULL) {
-		if (pc_setpos(sd, map_id2index(nd->bl.m), nd->bl.x, nd->bl.y, 3) == 0)
+		if (pc_setpos(sd, map_id2index(nd->bl.m), nd->bl.x, nd->bl.y, CLR_TELEPORT) == 0)
 			clif_displaymessage(fd, msg_txt(0)); // Warped.
 		else
 			return -1;
@@ -7700,7 +7700,7 @@ ACMD_FUNC(size)
 	size = atoi(message);
 	if(sd->state.size) {
 		sd->state.size=0;
-		pc_setpos(sd, sd->mapindex, sd->bl.x, sd->bl.y, 3);
+		pc_setpos(sd, sd->mapindex, sd->bl.x, sd->bl.y, CLR_TELEPORT);
 	}
 
 	if(size==1) {

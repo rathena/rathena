@@ -78,6 +78,14 @@ typedef enum send_target {
 	BG_AREA_WOS,
 } send_target;
 
+typedef enum clr_type
+{
+	CLR_OUTSIGHT = 0,
+	CLR_DEAD,
+	CLR_RESPAWN,
+	CLR_TELEPORT,
+} clr_type;
+
 int clif_setip(const char* ip);
 void clif_setbindip(const char* ip);
 void clif_setport(uint16 port);
@@ -92,8 +100,8 @@ int clif_charselectok(int);
 int clif_dropflooritem(struct flooritem_data *);
 int clif_clearflooritem(struct flooritem_data *,int);
 
-int clif_clearunit_single(int id, uint8 type, int fd);
-int clif_clearunit_area(struct block_list* bl, uint8 type);
+int clif_clearunit_single(int id, clr_type type, int fd);
+int clif_clearunit_area(struct block_list* bl, clr_type type);
 int clif_clearunit_delayed(struct block_list* bl, unsigned int tick);
 int clif_spawn(struct block_list*);	//area
 int clif_walkok(struct map_session_data*);	// self

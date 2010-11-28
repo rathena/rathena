@@ -641,7 +641,7 @@ int unit_blown(struct block_list* bl, int dx, int dy, int count, int flag)
 //Warps a unit/ud to a given map/position. 
 //In the case of players, pc_setpos is used.
 //it respects the no warp flags, so it is safe to call this without doing nowarpto/nowarp checks.
-int unit_warp(struct block_list *bl,short m,short x,short y,int type)
+int unit_warp(struct block_list *bl,short m,short x,short y,clr_type type)
 {
 	struct unit_data *ud;
 	nullpo_ret(bl);
@@ -650,7 +650,7 @@ int unit_warp(struct block_list *bl,short m,short x,short y,int type)
 	if(bl->prev==NULL || !ud)
 		return 1;
 
-	if (type == 1)
+	if (type == CLR_DEAD)
 		//Type 1 is invalid, since you shouldn't warp a bl with the "death" 
 		//animation, it messes up with unit_remove_map! [Skotlex]
 		return 1;
@@ -1811,7 +1811,7 @@ int unit_changeviewsize(struct block_list *bl,short size)
  * Otherwise it is assumed bl is being warped.
  * On-Kill specific stuff is not performed here, look at status_damage for that.
  *------------------------------------------*/
-int unit_remove_map_(struct block_list *bl, int clrtype, const char* file, int line, const char* func)
+int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, int line, const char* func)
 {
 	struct unit_data *ud = unit_bl2ud(bl);
 	struct status_change *sc = status_get_sc(bl);
@@ -1960,7 +1960,7 @@ int unit_remove_map_(struct block_list *bl, int clrtype, const char* file, int l
 		{	//If logging out, this is deleted on unit_free
 			clif_clearunit_area(bl,clrtype);
 			map_delblock(bl);
-			unit_free(bl,0);
+			unit_free(bl,CLR_OUTSIGHT);
 			map_freeblock_unlock();
 			return 0;
 		}
@@ -1976,7 +1976,7 @@ int unit_remove_map_(struct block_list *bl, int clrtype, const char* file, int l
 			clif_emotion(bl, 28) ;	//sob
 			clif_clearunit_area(bl,clrtype);
 			map_delblock(bl);
-			unit_free(bl,0);
+			unit_free(bl,CLR_OUTSIGHT);
 			map_freeblock_unlock();
 			return 0;
 		}
@@ -1990,7 +1990,7 @@ int unit_remove_map_(struct block_list *bl, int clrtype, const char* file, int l
 		{
 			clif_clearunit_area(bl,clrtype);
 			map_delblock(bl);
-			unit_free(bl,0);
+			unit_free(bl,CLR_OUTSIGHT);
 			map_freeblock_unlock();
 			return 0;
 		}
@@ -2005,11 +2005,11 @@ int unit_remove_map_(struct block_list *bl, int clrtype, const char* file, int l
 	return 1;
 }
 
-void unit_remove_map_pc(struct map_session_data *sd, int clrtype)
+void unit_remove_map_pc(struct map_session_data *sd, clr_type clrtype)
 {
 	unit_remove_map(&sd->bl,clrtype);
 
-	if (clrtype == 3) clrtype = 0; //3 is the warp from logging out, but pets/homunc need to just 'vanish' instead of showing the warping out animation.
+	if (clrtype == CLR_TELEPORT) clrtype = CLR_OUTSIGHT; //CLR_TELEPORT is the warp from logging out, but pets/homunc need to just 'vanish' instead of showing the warping out animation.
 
 	if(sd->pd)
 		unit_remove_map(&sd->pd->bl, clrtype);
@@ -2021,17 +2021,17 @@ void unit_remove_map_pc(struct map_session_data *sd, int clrtype)
 
 void unit_free_pc(struct map_session_data *sd)
 {
-	if (sd->pd) unit_free(&sd->pd->bl,0);
-	if (sd->hd) unit_free(&sd->hd->bl,0);
-	if (sd->md) unit_free(&sd->md->bl,0);
-	unit_free(&sd->bl,3);
+	if (sd->pd) unit_free(&sd->pd->bl,CLR_OUTSIGHT);
+	if (sd->hd) unit_free(&sd->hd->bl,CLR_OUTSIGHT);
+	if (sd->md) unit_free(&sd->md->bl,CLR_OUTSIGHT);
+	unit_free(&sd->bl,CLR_TELEPORT);
 }
 
 /*==========================================
  * Function to free all related resources to the bl
  * if unit is on map, it is removed using the clrtype specified
  *------------------------------------------*/
-int unit_free(struct block_list *bl, int clrtype)
+int unit_free(struct block_list *bl, clr_type clrtype)
 {
 	struct unit_data *ud = unit_bl2ud( bl );
 	nullpo_ret(ud);

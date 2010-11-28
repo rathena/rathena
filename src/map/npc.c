@@ -176,7 +176,7 @@ int npc_enable(const char* name, int flag)
 	if (nd->class_ == WARP_CLASS || nd->class_ == FLAG_CLASS)
 	{	//Client won't display option changes for these classes [Toms]
 		if (nd->sc.option&(OPTION_HIDE|OPTION_INVISIBLE))
-			clif_clearunit_area(&nd->bl, 0);
+			clif_clearunit_area(&nd->bl, CLR_OUTSIGHT);
 		else
 			clif_spawn(&nd->bl);
 	} else
@@ -206,7 +206,7 @@ int npc_event_dequeue(struct map_session_data* sd)
 	if(sd->npc_id)
 	{	//Current script is aborted.
 		if(sd->state.using_fake_npc){
-			clif_clearunit_single(sd->npc_id, 0, sd->fd);
+			clif_clearunit_single(sd->npc_id, CLR_OUTSIGHT, sd->fd);
 			sd->state.using_fake_npc = 0;
 		}
 		if (sd->st) {
@@ -866,7 +866,7 @@ int npc_touch_areanpc(struct map_session_data* sd, int m, int x, int y)
 		case WARP:
 			if( pc_ishiding(sd) )
 				break; // hidden chars cannot use warps
-			pc_setpos(sd,map[m].npc[i]->u.warp.mapindex,map[m].npc[i]->u.warp.x,map[m].npc[i]->u.warp.y,0);
+			pc_setpos(sd,map[m].npc[i]->u.warp.mapindex,map[m].npc[i]->u.warp.x,map[m].npc[i]->u.warp.y,CLR_OUTSIGHT);
 			break;
 		case SCRIPT:
 			if( npc_ontouch_event(sd,map[m].npc[i]) > 0 && npc_ontouch2_event(sd,map[m].npc[i]) > 0 )
@@ -923,7 +923,7 @@ int npc_touch_areanpc2(struct mob_data *md)
 					xs = map_mapindex2mapid(map[m].npc[i]->u.warp.mapindex);
 					if( m < 0 )
 						break; // Cannot Warp between map servers
-					if( unit_warp(&md->bl, xs, map[m].npc[i]->u.warp.x, map[m].npc[i]->u.warp.y, 0) == 0 )
+					if( unit_warp(&md->bl, xs, map[m].npc[i]->u.warp.x, map[m].npc[i]->u.warp.y, CLR_OUTSIGHT) == 0 )
 						return 1; // Warped
 					break;
 				case SCRIPT:
@@ -1451,7 +1451,7 @@ int npc_remove_map(struct npc_data* nd)
 	if(nd->bl.prev == NULL || nd->bl.m < 0)
 		return 1; //Not assigned to a map.
   	m = nd->bl.m;
-	clif_clearunit_area(&nd->bl,2);
+	clif_clearunit_area(&nd->bl,CLR_RESPAWN);
 	npc_unsetcells(nd);
 	map_delblock(&nd->bl);
 	//Remove npc from map[].npc list. [Skotlex]
@@ -2550,7 +2550,7 @@ void npc_setclass(struct npc_data* nd, short class_)
 	if( nd->class_ == class_ )
 		return;
 
-	clif_clearunit_area(&nd->bl, 0);// fade out
+	clif_clearunit_area(&nd->bl, CLR_OUTSIGHT);// fade out
 	nd->class_ = class_;
 	status_set_viewdata(&nd->bl, class_);
 	clif_spawn(&nd->bl);// fade in
@@ -3280,7 +3280,7 @@ int npc_reload(void)
 				npc_unload((struct npc_data *)bl);
 			break;
 		case BL_MOB:
-			unit_free(bl,0);
+			unit_free(bl,CLR_OUTSIGHT);
 			break;
 		}
 	}
@@ -3360,7 +3360,7 @@ int do_final_npc(void)
 			if (bl->type == BL_NPC)
 				npc_unload((struct npc_data *)bl);
 			else if (bl->type&(BL_MOB|BL_PET|BL_HOM|BL_MER))
-				unit_free(bl, 0);
+				unit_free(bl, CLR_OUTSIGHT);
 		}
 	}
 

@@ -1,6 +1,7 @@
 Date	Added
 
 2010/11/28
+	* Added clr_type enumeration for vanish effect constants. [Ai4rei]
 	* Resolved multiple issues with the party booking system (bugreport:4573, since r14412). [Ai4rei]
 	- Fixed recruitments were limited to party leaders.
 	- Fixed recruitment index was party id instead of an auto-increment value, causing sorting by age not working.

@@ -3335,7 +3335,7 @@ void run_script_main(struct script_state *st)
 		if ((sd = map_id2sd(st->rid))!=NULL)
 		{	//Restore previous stack and save char.
 			if(sd->state.using_fake_npc){
-				clif_clearunit_single(sd->npc_id, 0, sd->fd);
+				clif_clearunit_single(sd->npc_id, CLR_OUTSIGHT, sd->fd);
 				sd->state.using_fake_npc = 0;
 			}
 			//Restore previous script if any.
@@ -4136,11 +4136,11 @@ BUILDIN_FUNC(warp)
 	y = script_getnum(st,4);
 
 	if(strcmp(str,"Random")==0)
-		ret = pc_randomwarp(sd,3);
+		ret = pc_randomwarp(sd,CLR_TELEPORT);
 	else if(strcmp(str,"SavePoint")==0 || strcmp(str,"Save")==0)
-		ret = pc_setpos(sd,sd->status.save_point.map,sd->status.save_point.x,sd->status.save_point.y,3);
+		ret = pc_setpos(sd,sd->status.save_point.map,sd->status.save_point.x,sd->status.save_point.y,CLR_TELEPORT);
 	else
-		ret = pc_setpos(sd,mapindex_name2id(str),x,y,0);
+		ret = pc_setpos(sd,mapindex_name2id(str),x,y,CLR_OUTSIGHT);
 
 	if( ret ) {
 		ShowError("buildin_warp: moving player '%s' to \"%s\",%d,%d failed.\n", sd->status.name, str, x, y);
@@ -4160,9 +4160,9 @@ static int buildin_areawarp_sub(struct block_list *bl,va_list ap)
 	x=va_arg(ap,int);
 	y=va_arg(ap,int);
 	if(map == 0)
-		pc_randomwarp((TBL_PC *)bl,3);
+		pc_randomwarp((TBL_PC *)bl,CLR_TELEPORT);
 	else
-		pc_setpos((TBL_PC *)bl,map,x,y,0);
+		pc_setpos((TBL_PC *)bl,map,x,y,CLR_OUTSIGHT);
 	return 0;
 }
 BUILDIN_FUNC(areawarp)
@@ -4248,12 +4248,12 @@ BUILDIN_FUNC(warpchar)
 		return 0;
 
 	if(strcmp(str, "Random") == 0)
-		pc_randomwarp(sd, 3);
+		pc_randomwarp(sd, CLR_TELEPORT);
 	else
 	if(strcmp(str, "SavePoint") == 0)
-		pc_setpos(sd, sd->status.save_point.map,sd->status.save_point.x, sd->status.save_point.y, 3);
+		pc_setpos(sd, sd->status.save_point.map,sd->status.save_point.x, sd->status.save_point.y, CLR_TELEPORT);
 	else	
-		pc_setpos(sd, mapindex_name2id(str), x, y, 3);
+		pc_setpos(sd, mapindex_name2id(str), x, y, CLR_TELEPORT);
 	
 	return 0;
 } 
@@ -4310,15 +4310,15 @@ BUILDIN_FUNC(warpparty)
 		{
 		case 0: // Random
 			if(!map[pl_sd->bl.m].flag.nowarp)
-				pc_randomwarp(pl_sd,3);
+				pc_randomwarp(pl_sd,CLR_TELEPORT);
 		break;
 		case 1: // SavePointAll
 			if(!map[pl_sd->bl.m].flag.noreturn)
-				pc_setpos(pl_sd,pl_sd->status.save_point.map,pl_sd->status.save_point.x,pl_sd->status.save_point.y,3);
+				pc_setpos(pl_sd,pl_sd->status.save_point.map,pl_sd->status.save_point.x,pl_sd->status.save_point.y,CLR_TELEPORT);
 		break;
 		case 2: // SavePoint
 			if(!map[pl_sd->bl.m].flag.noreturn)
-				pc_setpos(pl_sd,sd->status.save_point.map,sd->status.save_point.x,sd->status.save_point.y,3);
+				pc_setpos(pl_sd,sd->status.save_point.map,sd->status.save_point.x,sd->status.save_point.y,CLR_TELEPORT);
 		break;
 		case 3: // Leader
 			for(j = 0; j < MAX_PARTY && !p->party.member[j].leader; j++);
@@ -4334,12 +4334,12 @@ BUILDIN_FUNC(warpparty)
 					continue;
 				if(map[pl_sd->bl.m].flag.noreturn || map[pl_sd->bl.m].flag.nowarp)
 					continue;
-				pc_setpos(pl_sd,mapindex,x,y,3);
+				pc_setpos(pl_sd,mapindex,x,y,CLR_TELEPORT);
 			}
 		break;
 		case 4: // m,x,y
 			if(!map[pl_sd->bl.m].flag.noreturn && !map[pl_sd->bl.m].flag.nowarp) 
-				pc_setpos(pl_sd,mapindex_name2id(str),x,y,3);
+				pc_setpos(pl_sd,mapindex_name2id(str),x,y,CLR_TELEPORT);
 		break;
 		}
 	}
@@ -4388,19 +4388,19 @@ BUILDIN_FUNC(warpguild)
 		{
 		case 0: // Random
 			if(!map[pl_sd->bl.m].flag.nowarp)
-				pc_randomwarp(pl_sd,3);
+				pc_randomwarp(pl_sd,CLR_TELEPORT);
 		break;
 		case 1: // SavePointAll
 			if(!map[pl_sd->bl.m].flag.noreturn)
-				pc_setpos(pl_sd,pl_sd->status.save_point.map,pl_sd->status.save_point.x,pl_sd->status.save_point.y,3);
+				pc_setpos(pl_sd,pl_sd->status.save_point.map,pl_sd->status.save_point.x,pl_sd->status.save_point.y,CLR_TELEPORT);
 		break;
 		case 2: // SavePoint
 			if(!map[pl_sd->bl.m].flag.noreturn)
-				pc_setpos(pl_sd,sd->status.save_point.map,sd->status.save_point.x,sd->status.save_point.y,3);
+				pc_setpos(pl_sd,sd->status.save_point.map,sd->status.save_point.x,sd->status.save_point.y,CLR_TELEPORT);
 		break;
 		case 3: // m,x,y
 			if(!map[pl_sd->bl.m].flag.noreturn && !map[pl_sd->bl.m].flag.nowarp)
-				pc_setpos(pl_sd,mapindex_name2id(str),x,y,3);
+				pc_setpos(pl_sd,mapindex_name2id(str),x,y,CLR_TELEPORT);
 		break;
 		}
 	}
@@ -9104,16 +9104,16 @@ BUILDIN_FUNC(warpwaitingpc)
 		mapreg_setreg(add_str("$@warpwaitingpc")+(i<<24), sd->bl.id);
 
 		if( strcmp(map_name,"Random") == 0 )
-			pc_randomwarp(sd,3);
+			pc_randomwarp(sd,CLR_TELEPORT);
 		else if( strcmp(map_name,"SavePoint") == 0 )
 		{
 			if( map[sd->bl.m].flag.noteleport )
 				return 0;// can't teleport on this map
 
-			pc_setpos(sd, sd->status.save_point.map, sd->status.save_point.x, sd->status.save_point.y, 3);
+			pc_setpos(sd, sd->status.save_point.map, sd->status.save_point.x, sd->status.save_point.y, CLR_TELEPORT);
 		}
 		else
-			pc_setpos(sd, mapindex_name2id(map_name), x, y, 0);
+			pc_setpos(sd, mapindex_name2id(map_name), x, y, CLR_OUTSIGHT);
 	}
 	mapreg_setreg(add_str("$@warpwaitingpcnum"), i);
 	return 0;
@@ -9547,7 +9547,7 @@ static int buildin_maprespawnguildid_sub_pc(struct map_session_data* sd, va_list
 		(sd->status.guild_id != g_id && flag&2) || //Warp out outsiders
 		(sd->status.guild_id == 0)	// Warp out players not in guild [Valaris]
 	)
-		pc_setpos(sd,sd->status.save_point.map,sd->status.save_point.x,sd->status.save_point.y,3);
+		pc_setpos(sd,sd->status.save_point.map,sd->status.save_point.x,sd->status.save_point.y,CLR_TELEPORT);
 	return 1;
 }
 
@@ -10021,7 +10021,7 @@ BUILDIN_FUNC(mapwarp)	// Added by RoVeRT
 				for( i=0; i < g->max_member; i++)
 				{
 					if(g->member[i].sd && g->member[i].sd->bl.m==m){
-						pc_setpos(g->member[i].sd,index,x,y,3);
+						pc_setpos(g->member[i].sd,index,x,y,CLR_TELEPORT);
 					}
 				}
 			}
@@ -10031,7 +10031,7 @@ BUILDIN_FUNC(mapwarp)	// Added by RoVeRT
 			if(p){
 				for(i=0;i<MAX_PARTY; i++){
 					if(p->data[i].sd && p->data[i].sd->bl.m == m){
-						pc_setpos(p->data[i].sd,index,x,y,3);
+						pc_setpos(p->data[i].sd,index,x,y,CLR_TELEPORT);
 					}
 				}
 			}
@@ -10194,7 +10194,7 @@ BUILDIN_FUNC(warppartner)
 
 	mapindex = mapindex_name2id(str);
 	if (mapindex) {
-		pc_setpos(p_sd,mapindex,x,y,0);
+		pc_setpos(p_sd,mapindex,x,y,CLR_OUTSIGHT);
 		script_pushint(st,1);
 	} else
 		script_pushint(st,0);
@@ -12203,7 +12203,7 @@ BUILDIN_FUNC(setnpcdisplay)
 		npc_setclass(nd, class_);
 	else if( size != -1 )
 	{ // Required to update the visual size
-		clif_clearunit_area(&nd->bl, 0);
+		clif_clearunit_area(&nd->bl, CLR_OUTSIGHT);
 		clif_spawn(&nd->bl);
 	}
 
@@ -13068,7 +13068,7 @@ BUILDIN_FUNC(unitwarp)
 
 	bl = map_id2bl(unit_id);
 	if( map >= 0 && bl != NULL )
-		script_pushint(st, unit_warp(bl,map,x,y,0));
+		script_pushint(st, unit_warp(bl,map,x,y,CLR_OUTSIGHT));
 	else
 		script_pushint(st, 0);
 
@@ -13860,7 +13860,7 @@ BUILDIN_FUNC(waitingroom2bg_single)
 
 	if( bg_team_join(bg_id, sd) )
 	{
-		pc_setpos(sd, mapindex, x, y, 3);
+		pc_setpos(sd, mapindex, x, y, CLR_TELEPORT);
 		script_pushint(st,1);
 	}
 	else
@@ -14329,7 +14329,7 @@ BUILDIN_FUNC(instance_warpall)
 
 	mapindex = map_id2index(m);
 	for( i = 0; i < MAX_PARTY; i++ )
-		if( (pl_sd = p->data[i].sd) && map[pl_sd->bl.m].instance_id == st->instance_id ) pc_setpos(pl_sd,mapindex,x,y,3);
+		if( (pl_sd = p->data[i].sd) && map[pl_sd->bl.m].instance_id == st->instance_id ) pc_setpos(pl_sd,mapindex,x,y,CLR_TELEPORT);
 
 	return 0;
 }

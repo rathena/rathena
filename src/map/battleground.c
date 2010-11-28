@@ -64,7 +64,7 @@ int bg_team_warp(int bg_id, unsigned short mapindex, short x, short y)
 	struct battleground_data *bg = bg_team_search(bg_id);
 	if( bg == NULL ) return 0;
 	for( i = 0; i < MAX_BG_MEMBERS; i++ )
-		if( bg->members[i].sd != NULL ) pc_setpos(bg->members[i].sd, mapindex, x, y, 3);
+		if( bg->members[i].sd != NULL ) pc_setpos(bg->members[i].sd, mapindex, x, y, CLR_TELEPORT);
 	return 1;
 }
 
@@ -145,7 +145,7 @@ int bg_member_respawn(struct map_session_data *sd)
 		return 0;
 	if( bg->mapindex == 0 )
 		return 0; // Respawn not handled by Core
-	pc_setpos(sd, bg->mapindex, bg->x, bg->y, 0);
+	pc_setpos(sd, bg->mapindex, bg->x, bg->y, CLR_OUTSIGHT);
 	status_revive(&sd->bl, 1, 100);
 
 	return 1; // Warped

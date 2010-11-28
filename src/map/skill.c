@@ -2307,11 +2307,11 @@ static int skill_timerskill(int tid, unsigned int tick, int id, intptr data)
 
 			switch(skl->skill_id) {
 				case RG_INTIMIDATE:
-					if (unit_warp(src,-1,-1,-1,3) == 0) {
+					if (unit_warp(src,-1,-1,-1,CLR_TELEPORT) == 0) {
 						short x,y;
 						map_search_freecell(src, 0, &x, &y, 1, 1, 0);
 						if (target != src && !status_isdead(target))
-							unit_warp(target, -1, x, y, 3);
+							unit_warp(target, -1, x, y, CLR_TELEPORT);
 					}
 					break;
 				case BA_FROSTJOKER:
@@ -4418,9 +4418,9 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			if( sd->state.autocast || ( (sd->skillitem == AL_TELEPORT || battle_config.skip_teleport_lv1_menu) && skilllv == 1 ) || skilllv == 3 )
 			{
 				if( skilllv == 1 )
-					pc_randomwarp(sd,3);
+					pc_randomwarp(sd,CLR_TELEPORT);
 				else
-					pc_setpos(sd,sd->status.save_point.map,sd->status.save_point.x,sd->status.save_point.y,3);
+					pc_setpos(sd,sd->status.save_point.map,sd->status.save_point.x,sd->status.save_point.y,CLR_TELEPORT);
 				break;
 			}
 
@@ -4430,12 +4430,12 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			else
 				clif_skill_warppoint(sd,skillid,skilllv, (unsigned short)-1,sd->status.save_point.map,0,0);
 		} else
-			unit_warp(bl,-1,-1,-1,3);
+			unit_warp(bl,-1,-1,-1,CLR_TELEPORT);
 		break;
 
 	case NPC_EXPULSION:
 		clif_skill_nodamage(src,bl,skillid,skilllv,1);
-		unit_warp(bl,-1,-1,-1,3);
+		unit_warp(bl,-1,-1,-1,CLR_TELEPORT);
 		break;
 
 	case AL_HOLYWATER:
@@ -5360,7 +5360,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				case 5:	// 2000HP heal, random teleported
 					status_heal(src, 2000, 0, 0);
 					if( !map_flag_vs(bl->m) )
-						unit_warp(bl, -1,-1,-1, 3);
+						unit_warp(bl, -1,-1,-1, CLR_TELEPORT);
 					break;
 				case 6:	// random 2 other effects
 					if (count == -1)
@@ -5530,7 +5530,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 						continue;
 					if(map_getcell(src->m,src->x+dx[j],src->y+dy[j],CELL_CHKNOREACH))
 						dx[j] = dy[j] = 0;
-					pc_setpos(dstsd, map_id2index(src->m), src->x+dx[j], src->y+dy[j], 2);
+					pc_setpos(dstsd, map_id2index(src->m), src->x+dx[j], src->y+dy[j], CLR_RESPAWN);
 				}
 			}
 			if (sd)
@@ -6643,9 +6643,9 @@ int skill_castend_map (struct map_session_data *sd, short skill_num, const char 
 	{
 	case AL_TELEPORT:
 		if(strcmp(map,"Random")==0)
-			pc_randomwarp(sd,3);
+			pc_randomwarp(sd,CLR_TELEPORT);
 		else if (sd->menuskill_val > 1) //Need lv2 to be able to warp here.
-			pc_setpos(sd,sd->status.save_point.map,sd->status.save_point.x,sd->status.save_point.y,3);
+			pc_setpos(sd,sd->status.save_point.map,sd->status.save_point.x,sd->status.save_point.y,CLR_TELEPORT);
 		break;
 
 	case AL_WARP:
@@ -7259,7 +7259,7 @@ static int skill_unit_onplace (struct skill_unit *src, struct block_list *bl, un
 				if( --sg->val1 <= 0 )
 					skill_delunitgroup(sg);
 
-				pc_setpos(sd,m,x,y,3);
+				pc_setpos(sd,m,x,y,CLR_TELEPORT);
 				sg = src->group; // avoid dangling pointer (pc_setpos can cause deletion of 'sg')
 			}
 		} else
@@ -7267,7 +7267,7 @@ static int skill_unit_onplace (struct skill_unit *src, struct block_list *bl, un
 		{
 			int m = map_mapindex2mapid(sg->val3);
 			if (m < 0) break; //Map not available on this map-server.
-			unit_warp(bl,m,sg->val2>>16,sg->val2&0xffff,3);
+			unit_warp(bl,m,sg->val2>>16,sg->val2&0xffff,CLR_TELEPORT);
 		}
 		break;
 
@@ -10404,13 +10404,13 @@ static int skill_unit_timer_sub (DBKey key, void* data, va_list ap)
 		  			sd = map_charid2sd(group->val1);
 					group->val1 = 0;
 					if (sd && !map[sd->bl.m].flag.nowarp)
-						pc_setpos(sd,map_id2index(unit->bl.m),unit->bl.x,unit->bl.y,3);
+						pc_setpos(sd,map_id2index(unit->bl.m),unit->bl.x,unit->bl.y,CLR_TELEPORT);
 				}
 				if(group->val2) {
 					sd = map_charid2sd(group->val2);
 					group->val2 = 0;
 					if (sd && !map[sd->bl.m].flag.nowarp)
-						pc_setpos(sd,map_id2index(unit->bl.m),unit->bl.x,unit->bl.y,3);
+						pc_setpos(sd,map_id2index(unit->bl.m),unit->bl.x,unit->bl.y,CLR_TELEPORT);
 				}
 				skill_delunit(unit);
 			}

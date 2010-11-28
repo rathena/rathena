@@ -910,11 +910,11 @@ bool pc_authok(struct map_session_data *sd, int login_id2, time_t expiration_tim
 		sd->hate_mob[i] = -1;
 
 	// ˆÊ’u‚ÌÝ’è
-	if ((i=pc_setpos(sd,sd->status.last_point.map, sd->status.last_point.x, sd->status.last_point.y, 0)) != 0) {
+	if ((i=pc_setpos(sd,sd->status.last_point.map, sd->status.last_point.x, sd->status.last_point.y, CLR_OUTSIGHT)) != 0) {
 		ShowError ("Last_point_map %s - id %d not found (error code %d)\n", mapindex_id2name(sd->status.last_point.map), sd->status.last_point.map, i);
 
 		// try warping to a default map instead (church graveyard)
-		if (pc_setpos(sd, mapindex_name2id(MAP_PRONTERA), 273, 354, 0) != 0) {
+		if (pc_setpos(sd, mapindex_name2id(MAP_PRONTERA), 273, 354, CLR_OUTSIGHT) != 0) {
 			// if we fail again
 			clif_authfail_fd(sd->fd, 0);
 			return false;
@@ -1439,7 +1439,7 @@ int pc_disguise(struct map_session_data *sd, int class_)
 
 	if (sd->bl.prev != NULL) {
 		pc_stop_walking(sd, 0);
-		clif_clearunit_area(&sd->bl, 0);
+		clif_clearunit_area(&sd->bl, CLR_OUTSIGHT);
 	}
 
 	if (!class_) {
@@ -4038,7 +4038,7 @@ int pc_steal_coin(struct map_session_data *sd,struct block_list *target)
  * 1 - Invalid map index.
  * 2 - Map not in this map-server, and failed to locate alternate map-server.
  *------------------------------------------*/
-int pc_setpos(struct map_session_data* sd, unsigned short mapindex, int x, int y, uint8 clrtype)
+int pc_setpos(struct map_session_data* sd, unsigned short mapindex, int x, int y, clr_type clrtype)
 {
 	struct party_data *p;
 	int m;
@@ -4196,7 +4196,7 @@ int pc_setpos(struct map_session_data* sd, unsigned short mapindex, int x, int y
 /*==========================================
  * PC‚Ìƒ‰ƒ“ƒ_ƒ€ƒ?ƒv
  *------------------------------------------*/
-int pc_randomwarp(struct map_session_data *sd, int type)
+int pc_randomwarp(struct map_session_data *sd, clr_type type)
 {
 	int x,y,i=0;
 	int m;
@@ -4704,7 +4704,7 @@ int pc_follow_timer(int tid, unsigned int tick, int id, intptr data)
 			if (!check_distance_bl(&sd->bl, tbl, 5))
 				unit_walktobl(&sd->bl, tbl, 5, 0);
 		} else
-			pc_setpos(sd, map_id2index(tbl->m), tbl->x, tbl->y, 3);
+			pc_setpos(sd, map_id2index(tbl->m), tbl->x, tbl->y, CLR_TELEPORT);
 	}
 	sd->followtimer = add_timer(
 		tick + 1000,	// increase time a bit to loosen up map's load
@@ -5520,7 +5520,7 @@ int pc_skillheal2_bonus(struct map_session_data *sd, int skill_num)
 	return bonus;
 }
 
-void pc_respawn(struct map_session_data* sd, uint8 clrtype)
+void pc_respawn(struct map_session_data* sd, clr_type clrtype)
 {
 	if( !pc_isdead(sd) )
 		return; // not applicable
@@ -5539,7 +5539,7 @@ static int pc_respawn_timer(int tid, unsigned int tick, int id, intptr data)
 	if( sd != NULL )
 	{
 		sd->pvp_point=0;
-		pc_respawn(sd,0);
+		pc_respawn(sd,CLR_OUTSIGHT);
 	}
 
 	return 0;

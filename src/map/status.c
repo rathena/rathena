@@ -831,16 +831,16 @@ int status_damage(struct block_list *src,struct block_list *target,int hp, int s
 	status_change_clear(target,0);
 
 	if(flag&4) //Delete from memory. (also invokes map removal code)
-		unit_free(target,1);
+		unit_free(target,CLR_DEAD);
 	else
 	if(flag&2) //remove from map
-		unit_remove_map(target,1);
+		unit_remove_map(target,CLR_DEAD);
 	else
 	{ //Some death states that would normally be handled by unit_remove_map
 		unit_stop_attack(target);
 		unit_stop_walking(target,1);
 		unit_skillcastcancel(target,0);
-		clif_clearunit_area(target,1);
+		clif_clearunit_area(target,CLR_DEAD);
 		skill_unit_move(target,gettick(),4);
 		skill_cleartimerskill(target);
 	}
@@ -5953,7 +5953,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 					int pos =  (bl->x&0xFFFF)|(bl->y<<16), //Current Coordinates
 					map =  sd->mapindex; //Current Map
 					//1. Place in Jail (val2 -> Jail Map, val3 -> x, val4 -> y
-					pc_setpos(sd,(unsigned short)val2,val3,val4, 3);
+					pc_setpos(sd,(unsigned short)val2,val3,val4, CLR_TELEPORT);
 					//2. Set restore point (val3 -> return map, val4 return coords
 					val3 = map;
 					val4 = pos;
@@ -6736,7 +6736,7 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 				break;
 		  	//natural expiration.
 			if(sd && sd->mapindex == sce->val2)
-				pc_setpos(sd,(unsigned short)sce->val3,sce->val4&0xFFFF, sce->val4>>16, 3);
+				pc_setpos(sd,(unsigned short)sce->val3,sce->val4&0xFFFF, sce->val4>>16, CLR_TELEPORT);
 			break; //guess hes not in jail :P
 		case SC_CHANGE:
 			if (tid == -1)
