@@ -1,6 +1,7 @@
 Date	Added
 
 2010/11/28
+	* Replaced literal constants related to the party booking system with defines. [Ai4rei]
 	* Fixed pets derived from immobile monsters not being able to walk (bugreport:3377, since r13789). [Ai4rei]
 	- This also fixes pets using original monster walk speed, instead of the one defined in pet db.
 	- Fixed pets not being able to attack (pet_attack_support and pet_damage_support) when derived from a monster, which is not able to attack.

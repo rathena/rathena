@@ -1123,7 +1123,7 @@ void party_booking_register(struct map_session_data *sd, short level, short mapi
 	pb_ad->p_detail.level = level;
 	pb_ad->p_detail.mapid = mapid;
 
-	for(i=0;i<6;i++)
+	for(i=0;i<PARTY_BOOKING_JOBS;i++)
 		if(job[i] != 0xFF)
 			pb_ad->p_detail.job[i] = job[i];
 		else pb_ad->p_detail.job[i] = -1;
@@ -1151,7 +1151,7 @@ void party_booking_update(struct map_session_data *sd, short* job)
 	
 	pb_ad->starttime = (int)time(NULL);// Update time.
 
-	for(i=0;i<6;i++)
+	for(i=0;i<PARTY_BOOKING_JOBS;i++)
 		if(job[i] != 0xFF)
 			pb_ad->p_detail.job[i] = job[i];
 		else pb_ad->p_detail.job[i] = -1;
@@ -1164,7 +1164,7 @@ void party_booking_search(struct map_session_data *sd, short level, short mapid,
 {
 	struct party_booking_ad_info *pb_ad;
 	int i, count=0;
-	unsigned long index_list[10];
+	unsigned long index_list[PARTY_BOOKING_RESULTS];
 	bool more_result = false;
 	DBIterator* iter = party_booking_db->iterator(party_booking_db);
 	
@@ -1174,14 +1174,14 @@ void party_booking_search(struct map_session_data *sd, short level, short mapid,
 	{
 		if (pb_ad->index < lastindex || (level && (pb_ad->p_detail.level < level-15 || pb_ad->p_detail.level > level)))
 			continue;
-		if (count >= 10){
+		if (count >= PARTY_BOOKING_RESULTS){
 			more_result = true;
 			break;
 		}
 		if (mapid == 0 && job == -1)
 			index_list[count] = pb_ad->index;
 		else if (mapid == 0) {
-			for(i=0; i<6; i++)
+			for(i=0; i<PARTY_BOOKING_JOBS; i++)
 				if (pb_ad->p_detail.job[i] == job && job != -1)
 					index_list[count] = pb_ad->index;
 		} else if (job == -1){

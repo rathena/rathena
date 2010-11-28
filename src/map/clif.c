@@ -10796,10 +10796,10 @@ void clif_parse_PartyBookingRegisterReq(int fd, struct map_session_data* sd)
 {
 	short level = RFIFOW(fd,2);
 	short mapid = RFIFOW(fd,4);
-	short job[6];
+	short job[PARTY_BOOKING_JOBS];
 	int i;
 	
-	for(i=0; i<6; i++)
+	for(i=0; i<PARTY_BOOKING_JOBS; i++)
 		job[i] = RFIFOB(fd,6+i*2);
 
 	party_booking_register(sd, level, mapid, job);
@@ -10850,7 +10850,7 @@ void clif_PartyBookingSearchAck(int fd, unsigned long *index, int count, bool mo
 		WFIFOL(fd,i*size+33) = pb_ad->starttime;
 		WFIFOW(fd,i*size+37) = pb_ad->p_detail.level;
 		WFIFOW(fd,i*size+39) = pb_ad->p_detail.mapid;
-		for(j=0; j<6; j++)
+		for(j=0; j<PARTY_BOOKING_JOBS; j++)
 			WFIFOW(fd,i*size+41+j*2) = pb_ad->p_detail.job[j];
 	}
 	WFIFOSET(fd,WFIFOW(fd,2));
@@ -10877,10 +10877,10 @@ void clif_PartyBookingDeleteAck(struct map_session_data* sd, int flag)
 
 void clif_parse_PartyBookingUpdateReq(int fd, struct map_session_data* sd)
 {
-	short job[6];
+	short job[PARTY_BOOKING_JOBS];
 	int i;
 	
-	for(i=0; i<6; i++)
+	for(i=0; i<PARTY_BOOKING_JOBS; i++)
 		job[i] = RFIFOW(fd,2+i*2);
 
 	party_booking_update(sd, job);
@@ -10899,7 +10899,7 @@ void clif_PartyBookingInsertNotify(struct map_session_data* sd, struct party_boo
 	WFIFOL(sd->fd,30) = pb_ad->starttime;
 	WFIFOW(sd->fd,34) = pb_ad->p_detail.level;
 	WFIFOW(sd->fd,36) = pb_ad->p_detail.mapid;
-	for(i=0; i<6; i++)
+	for(i=0; i<PARTY_BOOKING_JOBS; i++)
 		WFIFOW(sd->fd,38+i*2) = pb_ad->p_detail.job[i];
 	
 	WFIFOSET(sd->fd,packet_len(0x809));
@@ -10914,7 +10914,7 @@ void clif_PartyBookingUpdateNotify(struct map_session_data* sd, struct party_boo
 
 	WBUFW(buf,0) = 0x80a;
 	WBUFL(buf,2) = pb_ad->index;
-	for(i=0; i<6; i++)
+	for(i=0; i<PARTY_BOOKING_JOBS; i++)
 		WBUFW(buf,6+i*2) = pb_ad->p_detail.job[i];
 	clif_send(buf,packet_len(0x80a),&sd->bl,ALL_CLIENT); // Now UPDATE all client.
 }

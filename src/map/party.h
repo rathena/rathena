@@ -12,6 +12,9 @@ struct item;
 
 #include <stdarg.h>
 
+#define PARTY_BOOKING_JOBS 6
+#define PARTY_BOOKING_RESULTS 10
+
 struct party_member_data {
 	struct map_session_data *sd;
 	unsigned int hp; //For HP,x,y refreshing.
@@ -34,7 +37,7 @@ struct party_data {
 struct party_booking_detail {
 	short level;
     short mapid;
-    short job[6];
+    short job[PARTY_BOOKING_JOBS];
 };
 
 struct party_booking_ad_info {
