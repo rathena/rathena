@@ -650,7 +650,7 @@ int unit_warp(struct block_list *bl,short m,short x,short y,int type)
 	if(bl->prev==NULL || !ud)
 		return 1;
 
-	if (type < 0 || type == 1)
+	if (type == 1)
 		//Type 1 is invalid, since you shouldn't warp a bl with the "death" 
 		//animation, it messes up with unit_remove_map! [Skotlex]
 		return 1;
@@ -2030,8 +2030,6 @@ void unit_free_pc(struct map_session_data *sd)
 /*==========================================
  * Function to free all related resources to the bl
  * if unit is on map, it is removed using the clrtype specified
- * If clrtype is <0, no saving is performed. This is only for non-authed
- * objects that shouldn't be on a map yet.
  *------------------------------------------*/
 int unit_free(struct block_list *bl, int clrtype)
 {
@@ -2138,15 +2136,12 @@ int unit_free(struct block_list *bl, int clrtype)
 				aFree (pd->loot);
 				pd->loot = NULL;
 			}
-			if( clrtype >= 0 )
-			{
-				if( pd->pet.intimate > 0 )
-					intif_save_petdata(pd->pet.account_id,&pd->pet);
-				else
-				{	//Remove pet.
-					intif_delete_petdata(pd->pet.pet_id);
-					if (sd) sd->status.pet_id = 0;
-				}
+			if( pd->pet.intimate > 0 )
+				intif_save_petdata(pd->pet.account_id,&pd->pet);
+			else
+			{	//Remove pet.
+				intif_delete_petdata(pd->pet.pet_id);
+				if (sd) sd->status.pet_id = 0;
 			}
 			if( sd )
 				sd->pd = NULL;
@@ -2213,16 +2208,13 @@ int unit_free(struct block_list *bl, int clrtype)
 			struct homun_data *hd = (TBL_HOM*)bl;
 			struct map_session_data *sd = hd->master;
 			merc_hom_hungry_timer_delete(hd);
-			if( clrtype >= 0 )
+			if( hd->homunculus.intimacy > 0 )
+				merc_save(hd);
+			else
 			{
-				if( hd->homunculus.intimacy > 0 )
-					merc_save(hd);
-				else
-				{
-					intif_homunculus_requestdelete(hd->homunculus.hom_id);
-					if( sd )
-						sd->status.hom_id = 0;
-				}
+				intif_homunculus_requestdelete(hd->homunculus.hom_id);
+				if( sd )
+					sd->status.hom_id = 0;
 			}
 			if( sd )
 				sd->hd = NULL;
@@ -2232,16 +2224,13 @@ int unit_free(struct block_list *bl, int clrtype)
 		{
 			struct mercenary_data *md = (TBL_MER*)bl;
 			struct map_session_data *sd = md->master;
-			if( clrtype >= 0 )
+			if( mercenary_get_lifetime(md) > 0 )
+				mercenary_save(md);
+			else
 			{
-				if( mercenary_get_lifetime(md) > 0 )
-					mercenary_save(md);
-				else
-				{
-					intif_mercenary_delete(md->mercenary.mercenary_id);
-					if( sd )
-						sd->status.mer_id = 0;
-				}
+				intif_mercenary_delete(md->mercenary.mercenary_id);
+				if( sd )
+					sd->status.mer_id = 0;
 			}
 			if( sd )
 				sd->md = NULL;
