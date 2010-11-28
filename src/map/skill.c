@@ -734,7 +734,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 	case AM_ACIDTERROR:
 		sc_start(bl,SC_BLEEDING,(skilllv*3),skilllv,skill_get_time2(skillid,skilllv));
 		if (skill_break_equip(bl, EQP_ARMOR, 100*skill_get_time(skillid,skilllv), BCT_ENEMY))
-			clif_emotion(bl,23);
+			clif_emotion(bl,E_OMG);
 		break;
 
 	case AM_DEMONSTRATION:
@@ -3002,7 +3002,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 		break;
 
 	case NPC_DARKBREATH:
-		clif_emotion(src,7);
+		clif_emotion(src,E_AG);
 	case SN_FALCONASSAULT:
 	case PA_PRESSURE:
 	case CR_ACIDDEMONSTRATION:
@@ -9408,7 +9408,7 @@ void skill_weaponrefine (struct map_session_data *sd, int idx)
 				clif_refine(sd->fd,1,idx,item->refine);
 				pc_delitem(sd,idx,1,0,2);
 				clif_misceffect(&sd->bl,2);
-				clif_emotion(&sd->bl, 23);
+				clif_emotion(&sd->bl, E_OMG);
 			}
 		}
 	}

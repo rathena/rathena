@@ -8693,7 +8693,7 @@ BUILDIN_FUNC(homunculus_evolution)
 		if (sd->hd->homunculus.intimacy > 91000)
 			merc_hom_evolution(sd->hd);
 		else
-			clif_emotion(&sd->hd->bl, 4) ;	//swt
+			clif_emotion(&sd->hd->bl, E_SWT);
 	}
 	return 0;
 }

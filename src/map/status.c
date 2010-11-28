@@ -1083,7 +1083,7 @@ int status_check_skilluse(struct block_list *src, struct block_list *target, int
 
 		if (sc->data[SC_WINKCHARM] && target && !flag)
 		{	//Prevents skill usage
-			clif_emotion(src, 3);
+			clif_emotion(src, E_LV);
 			return 0;
 		}
 
@@ -5266,7 +5266,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 		case SC_SIGNUMCRUCIS:
 			val2 = 10 + 4*val1; //Def reduction
 			tick = -1;
-			clif_emotion(bl,4);
+			clif_emotion(bl,E_SWT);
 			break;
 		case SC_MAXIMIZEPOWER:
 			val2 = tick>0?tick:60000;
@@ -5483,7 +5483,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 		
 		break;
 		case SC_CONFUSION:
-			clif_emotion(bl,1);
+			clif_emotion(bl,E_WHAT);
 			break;
 		case SC_BLEEDING:
 			val4 = tick/10000;
