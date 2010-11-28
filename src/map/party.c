@@ -30,8 +30,9 @@
 
 static DBMap* party_db; // int party_id -> struct party_data*
 static DBMap* party_booking_db; // Party Booking [Spiria]
+static unsigned long party_booking_nextid = 1;
+
 int party_send_xy_timer(int tid, unsigned int tick, int id, intptr data);
-bool check_party_leader(struct map_session_data *sd, struct party_data *p); // Party Booking [Spiria]
 
 /*==========================================
  * Fills the given party_member structure according to the sd provided. 
@@ -515,11 +516,6 @@ int party_leave(struct map_session_data *sd)
 	if( i == MAX_PARTY )
 		return 0;
 
-	if( check_party_leader(sd, p) ){ // when party leader leaves party, cancel booking.
-		party_booking_delete(sd,true);
-		clif_PartyBookingDeleteAck(sd,0);
-	}
-
 	intif_party_leave(p->party.party_id,sd->status.account_id,sd->status.char_id);
 	return 1;
 }
@@ -665,8 +661,6 @@ bool party_changeleader(struct map_session_data *sd, struct map_session_data *ts
 	//Update info.
 	intif_party_leaderchange(p->party.party_id,p->party.member[tmi].account_id,p->party.member[tmi].char_id);
 	clif_party_info(p,NULL);
-	party_booking_delete(sd, true); // Party Booking [Spiria]
-	clif_PartyBookingDeleteAck(sd, 0); // Close small window
 	return true;
 }
 
@@ -1070,45 +1064,25 @@ int party_foreachsamemap(int (*func)(struct block_list*,va_list),struct map_sess
  * Party Booking in KRO [Spiria]
  *------------------------------------------*/
 
-static struct party_booking_ad_info* create_party_booking_data(int party_id)
+static struct party_booking_ad_info* create_party_booking_data(void)
 {
 	struct party_booking_ad_info *pb_ad;
 	CREATE(pb_ad, struct party_booking_ad_info, 1);
-	pb_ad->index = party_id;
+	pb_ad->index = party_booking_nextid++;
 	return pb_ad;
-}
-
-bool check_party_leader(struct map_session_data *sd, struct party_data *p)
-{
-	int i;
-
-	if (!sd || !sd->status.party_id) return false;
-
-	if( p == NULL ) return false;
-
-	ARR_FIND(0, MAX_PARTY, i, p->party.member[i].leader && p->party.member[i].online && p->data[i].sd == sd);
-	if(i == MAX_PARTY) return false;
-
-	return true;
 }
 
 void party_booking_register(struct map_session_data *sd, short level, short mapid, short* job)
 {
 	struct party_booking_ad_info *pb_ad;
-	struct party_data *p=party_search(sd->status.party_id);
 	int i;
 
-	if (!check_party_leader(sd, p)) {
-		clif_PartyBookingRegisterAck(sd, 1);
-		return;
-	}
-	
-	pb_ad = (struct party_booking_ad_info*)idb_get(party_booking_db, p->party.party_id);
+	pb_ad = (struct party_booking_ad_info*)idb_get(party_booking_db, sd->status.char_id);
 
 	if( pb_ad == NULL )
 	{
-		pb_ad = create_party_booking_data(p->party.party_id);
-		idb_put(party_booking_db, pb_ad->index, pb_ad);
+		pb_ad = create_party_booking_data();
+		idb_put(party_booking_db, sd->status.char_id, pb_ad);
 	}
 	
 	memcpy(pb_ad->charname,sd->status.name,NAME_LENGTH);
@@ -1123,20 +1097,14 @@ void party_booking_register(struct map_session_data *sd, short level, short mapi
 
 	clif_PartyBookingRegisterAck(sd, 0);
 	clif_PartyBookingInsertNotify(sd, pb_ad); // Notice
-	clif_PartyBookingSearchAck(sd->fd, &pb_ad, 1, false); // Update Client!
 }
 
 void party_booking_update(struct map_session_data *sd, short* job)
 {
 	int i;
-	struct party_data *p=party_search(sd->status.party_id);
 	struct party_booking_ad_info *pb_ad;
 
-	if (!check_party_leader(sd, p)) {
-		return;
-	}
-
-	pb_ad = (struct party_booking_ad_info*)idb_get(party_booking_db, p->party.party_id);
+	pb_ad = (struct party_booking_ad_info*)idb_get(party_booking_db, sd->status.char_id);
 	
 	if( pb_ad == NULL )
 		return;
@@ -1185,13 +1153,14 @@ void party_booking_search(struct map_session_data *sd, short level, short mapid,
 	clif_PartyBookingSearchAck(sd->fd, result_list, count, more_result);
 }
 
-bool party_booking_delete(struct map_session_data *sd, bool force_delete)
+bool party_booking_delete(struct map_session_data *sd)
 {
-	struct party_data *p=party_search(sd->status.party_id);
-	if (!check_party_leader(sd, p) && !force_delete) {
-		return false;
+	struct party_booking_ad_info* pb_ad;
+
+	if((pb_ad = (struct party_booking_ad_info*)idb_get(party_booking_db, sd->status.char_id))!=NULL)
+	{
+		clif_PartyBookingDeleteNotify(sd, pb_ad->index);
+		idb_remove(party_booking_db,sd->status.char_id);
 	}
-	clif_PartyBookingDeleteNotify(sd, sd->status.party_id);
-	idb_remove(party_booking_db,sd->status.party_id);
 	return true;
 }

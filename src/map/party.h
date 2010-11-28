@@ -89,6 +89,6 @@ int party_foreachsamemap(int (*func)(struct block_list *,va_list),struct map_ses
 void party_booking_register(struct map_session_data *sd, short level, short mapid, short* job);
 void party_booking_update(struct map_session_data *sd, short* job);
 void party_booking_search(struct map_session_data *sd, short level, short mapid, short job, unsigned long lastindex, short resultcount);
-bool party_booking_delete(struct map_session_data *sd, bool force_delete);
+bool party_booking_delete(struct map_session_data *sd);
 
 #endif /* _PARTY_H_ */

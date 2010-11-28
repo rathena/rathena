@@ -10857,7 +10857,7 @@ void clif_PartyBookingSearchAck(int fd, struct party_booking_ad_info** results, 
 
 void clif_parse_PartyBookingDeleteReq(int fd, struct map_session_data* sd)
 {
-	if(party_booking_delete(sd, false))
+	if(party_booking_delete(sd))
 		clif_PartyBookingDeleteAck(sd, 0);
 }
 
@@ -10888,26 +10888,26 @@ void clif_parse_PartyBookingUpdateReq(int fd, struct map_session_data* sd)
 void clif_PartyBookingInsertNotify(struct map_session_data* sd, struct party_booking_ad_info* pb_ad)
 {
 	int i;
+	uint8 buf[38+PARTY_BOOKING_JOBS*2];
 
 	if(pb_ad == NULL) return;
 
-	WFIFOHEAD(sd->fd,packet_len(0x809));
-	WFIFOW(sd->fd,0) = 0x809;
-	WFIFOL(sd->fd,2) = pb_ad->index;
-	memcpy(WFIFOP(sd->fd,6),pb_ad->charname,NAME_LENGTH);
-	WFIFOL(sd->fd,30) = pb_ad->starttime;
-	WFIFOW(sd->fd,34) = pb_ad->p_detail.level;
-	WFIFOW(sd->fd,36) = pb_ad->p_detail.mapid;
+	WBUFW(buf,0) = 0x809;
+	WBUFL(buf,2) = pb_ad->index;
+	memcpy(WBUFP(buf,6),pb_ad->charname,NAME_LENGTH);
+	WBUFL(buf,30) = pb_ad->starttime;
+	WBUFW(buf,34) = pb_ad->p_detail.level;
+	WBUFW(buf,36) = pb_ad->p_detail.mapid;
 	for(i=0; i<PARTY_BOOKING_JOBS; i++)
-		WFIFOW(sd->fd,38+i*2) = pb_ad->p_detail.job[i];
+		WBUFW(buf,38+i*2) = pb_ad->p_detail.job[i];
 	
-	WFIFOSET(sd->fd,packet_len(0x809));
+	clif_send(buf, packet_len(0x809), &sd->bl, ALL_CLIENT);
 }
 
 void clif_PartyBookingUpdateNotify(struct map_session_data* sd, struct party_booking_ad_info* pb_ad)
 {
 	int i;
-	uint8 buf[18];
+	uint8 buf[6+PARTY_BOOKING_JOBS*2];
 
 	if(pb_ad == NULL) return;
 

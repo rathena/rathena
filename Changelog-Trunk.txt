@@ -1,6 +1,12 @@
 Date	Added
 
 2010/11/28
+	* Resolved multiple issues with the party booking system (bugreport:4573, since r14412). [Ai4rei]
+	- Fixed recruitments were limited to party leaders.
+	- Fixed recruitment index was party id instead of an auto-increment value, causing sorting by age not working.
+	- Fixed search result packet being sent on recruitment creation (probably to work-around next problem).
+	- Fixed packet 0x0805 not getting sent, because of commented entries in packet_db.txt (packet ver. restriction of clif_send).
+	- Fixed recruitment creation notice being sent to the recruiter only.
 	* Removed 'negative clrtype is used for skipping unauthed objects from saving' introduced in r9975, as it is no longer required/used (follow up to r12223). [Ai4rei]
 	* Made the party booking search pass results as array of pointers, rather than array of indexes, which require further lookup. [Ai4rei]
 	* Replaced literal constants related to the party booking system with defines. [Ai4rei]
