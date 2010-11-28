@@ -1,5 +1,9 @@
 Date	Added
 
+2010/11/28
+	* Fixed pets derived from immobile monsters not being able to walk (bugreport:3377, since r13789). [Ai4rei]
+	- This also fixes pets using original monster walk speed, instead of the one defined in pet db.
+	- Fixed pets not being able to attack (pet_attack_support and pet_damage_support) when derived from a monster, which is not able to attack.
 2010/11/27
 	* Fixed a crash uncovered with r14501, caused by outdated local variables when a script is about to suspend or terminate (bugreport:4577). [Ai4rei]
 	* Fixed a crash when using food status bonuses with cash food status bonuses (bugreport:4582, since r14437). [Ai4rei]

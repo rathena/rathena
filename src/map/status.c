@@ -1546,8 +1546,13 @@ int status_calc_pet_(struct pet_data *pd, bool first)
 
 	if (first) {
 		memcpy(&pd->status, &pd->db->status, sizeof(struct status_data));
-		pd->status.mode|= MD_CANMOVE; //so they can chase their master!
+		pd->status.mode = MD_CANMOVE; // pets discard all modes, except walking
 		pd->status.speed = pd->petDB->speed;
+
+		if(battle_config.pet_attack_support || battle_config.pet_damage_support)
+		{// attack support requires the pet to be able to attack
+			pd->status.mode|= MD_CANATTACK;
+		}
 	}
 
 	if (battle_config.pet_lv_rate && pd->msd)
@@ -3090,6 +3095,9 @@ void status_calc_bl_(struct block_list* bl, enum scb_flag flag, bool first)
 		case BL_MER: status_calc_mercenary_(BL_CAST(BL_MER,bl), first);  break;
 		}
 	}
+
+	if( bl->type == BL_PET )
+		return; // pets are not affected by statuses
 
 	if( first && bl->type == BL_MOB )
 		return; // assume there will be no statuses active
