@@ -121,6 +121,9 @@ struct script_state {
 		int tick,timer,charid;
 	} sleep;
 	int instance_id;
+	//For backing up purposes
+	struct script_state *bk_st;
+	int bk_npcid;
 };
 
 struct script_reg {

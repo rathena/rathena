@@ -2694,6 +2694,10 @@ struct script_state* script_alloc_state(struct script_code* script, int pos, int
 /// @param st Script state
 void script_free_state(struct script_state* st)
 {
+	if(st->bk_st)
+	{// backup was not restored
+		ShowDebug("script_free_state: Previous script state lost (rid=%d, oid=%d, state=%d, bk_npcid=%d).\n", st->bk_st->rid, st->bk_st->oid, st->bk_st->state, st->bk_npcid);
+	}
 	if( st->sleep.timer != INVALID_TIMER )
 		delete_timer(st->sleep.timer, run_script_timer);
 	script_free_vars(st->stack->var_function);
@@ -3138,6 +3142,63 @@ int run_script_timer(int tid, unsigned int tick, int id, intptr data)
 	return 0;
 }
 
+/// Detaches script state from possibly attached character and restores it's previous script if any.
+///
+/// @param st Script state to detach.
+/// @param dequeue_event Whether to schedule any queued events, when there was no previous script.
+static void script_detach_state(struct script_state* st, bool dequeue_event)
+{
+	struct map_session_data* sd;
+
+	if(st->rid && (sd = map_id2sd(st->rid))!=NULL)
+	{
+		sd->st = st->bk_st;
+		sd->npc_id = st->bk_npcid;
+
+		if(st->bk_st)
+		{
+			//Remove tag for removal.
+			st->bk_st = NULL;
+			st->bk_npcid = 0;
+		}
+		else if(dequeue_event)
+		{
+			npc_event_dequeue(sd);
+		}
+	}
+	else if(st->bk_st)
+	{// rid was set to 0, before detaching the script state
+		ShowError("script_detach_state: Found previous script state without attached player (rid=%d, oid=%d, state=%d, bk_npcid=%d)\n", st->bk_st->rid, st->bk_st->oid, st->bk_st->state, st->bk_npcid);
+		script_reportsrc(st->bk_st);
+
+		script_free_state(st->bk_st);
+		st->bk_st = NULL;
+	}
+}
+
+/// Attaches script state to possibly attached character and backups it's previous script, if any.
+///
+/// @param st Script state to attach.
+static void script_attach_state(struct script_state* st)
+{
+	struct map_session_data* sd;
+
+	if(st->rid && (sd = map_id2sd(st->rid))!=NULL)
+	{
+		if(st!=sd->st)
+		{
+			if(st->bk_st)
+			{// there is already a backup
+				ShowDebug("script_free_state: Previous script state lost (rid=%d, oid=%d, state=%d, bk_npcid=%d).\n", st->bk_st->rid, st->bk_st->oid, st->bk_st->state, st->bk_npcid);
+			}
+			st->bk_st = sd->st;
+			st->bk_npcid = sd->npc_id;
+		}
+		sd->st = st;
+		sd->npc_id = st->oid;
+	}
+}
+
 /*==========================================
  * スクリプトの実行メイン部分
  *------------------------------------------*/
@@ -3146,22 +3207,10 @@ void run_script_main(struct script_state *st)
 	int cmdcount=script_config.check_cmdcount;
 	int gotocount=script_config.check_gotocount;
 	TBL_PC *sd;
-	//For backing up purposes
-	struct script_state *bk_st = NULL;
-	int bk_npcid = 0;
 	struct script_stack *stack=st->stack;
 	struct npc_data *nd;
 
-	sd = map_id2sd(st->rid);
-
-	if(sd){
-		if(sd->st != st){
-			bk_st = sd->st;
-			bk_npcid = sd->npc_id;
-		}
-		sd->st = st;
-		sd->npc_id = st->oid;
-	}
+	script_attach_state(st);
 
 	nd = map_id2nd(st->oid);
 	if( nd && map[nd->bl.m].instance_id > 0 )
@@ -3260,43 +3309,37 @@ void run_script_main(struct script_state *st)
 
 	if(st->sleep.tick > 0) {
 		//Restore previous script
-		if (sd) {
-			sd->st = bk_st;
-			sd->npc_id = bk_npcid;
-			bk_st = NULL; //Remove tag for removal.
-		}
+		script_detach_state(st, false);
 		//Delay execution
-		sd = map_id2sd(st->rid); // Refresh sd since script might have attached someone while running. [Inkfish]
+		sd = map_id2sd(st->rid); // Get sd since script might have attached someone while running. [Inkfish]
 		st->sleep.charid = sd?sd->status.char_id:0;
 		st->sleep.timer  = add_timer(gettick()+st->sleep.tick,
 			run_script_timer, st->sleep.charid, (intptr)st);
 		linkdb_insert(&sleep_db, (void*)st->oid, st);
 	}
-	else if(st->state != END && sd){
+	else if(st->state != END && st->rid){
 		//Resume later (st is already attached to player).
-		if(bk_st) {
+		if(st->bk_st) {
 			ShowWarning("Unable to restore stack! Double continuation!\n");
 			//Report BOTH scripts to see if that can help somehow.
 			ShowDebug("Previous script (lost):\n");
-			script_reportsrc(bk_st);
+			script_reportsrc(st->bk_st);
 			ShowDebug("Current script:\n");
 			script_reportsrc(st);
+
+			script_free_state(st->bk_st);
+			st->bk_st = NULL;
 		}
 	} else {
 		//Dispose of script.
-		if (sd)
+		if ((sd = map_id2sd(st->rid))!=NULL)
 		{	//Restore previous stack and save char.
 			if(sd->state.using_fake_npc){
 				clif_clearunit_single(sd->npc_id, 0, sd->fd);
 				sd->state.using_fake_npc = 0;
 			}
 			//Restore previous script if any.
-			sd->st = bk_st;
-			sd->npc_id = bk_npcid;
-			if (!bk_st)
-				npc_event_dequeue(sd);
-			else
-				bk_st = NULL; //Remove tag for removal.
+			script_detach_state(st, true);
 			if (sd->state.reg_dirty&2)
 				intif_saveregistry(sd,2);
 			if (sd->state.reg_dirty&1)
@@ -3305,13 +3348,6 @@ void run_script_main(struct script_state *st)
 		script_free_state(st);
 		st = NULL;
 	}
-
-	if (bk_st)
-	{	//Remove previous script
-		script_free_state(bk_st);
-		bk_st = NULL;
-	}
-
 }
 
 int script_config_read(char *cfgName)
@@ -9087,23 +9123,14 @@ BUILDIN_FUNC(warpwaitingpc)
 // ...
 //
 
+/// Detaches a character from a script.
+///
+/// @param st Script state to detach the character from.
 static void script_detach_rid(struct script_state* st)
 {
-	struct map_session_data* sd;
-
 	if(st->rid)
 	{
-		if((sd = script_rid2sd(st))!=NULL)
-		{
-			if(sd->npc_id!=st->oid)
-			{
-				ShowDebug("script_detach_rid: sd->npc_id (%d) != st->oid (%d), please report this!\n", sd->npc_id, st->oid);
-				script_reportsrc(st);
-			}
-
-			sd->npc_id = 0;
-			sd->st = NULL;
-		}
+		script_detach_state(st, false);
 		st->rid = 0;
 	}
 }
@@ -9119,9 +9146,8 @@ BUILDIN_FUNC(attachrid)
 	if ((sd = map_id2sd(rid))!=NULL) {
 		script_detach_rid(st);
 
-		sd->st = st;
-		sd->npc_id = st->oid;
 		st->rid = rid;
+		script_attach_state(st);
 		script_pushint(st,1);
 	} else
 		script_pushint(st,0);
@@ -13238,17 +13264,11 @@ BUILDIN_FUNC(unitskillusepos)
 BUILDIN_FUNC(sleep)
 {
 	int ticks;
-	TBL_PC* sd;
 	
 	ticks = script_getnum(st,2);
-	sd = map_id2sd(st->rid);
 
 	// detach the player
-	if( sd && sd->npc_id == st->oid )
-	{
-		sd->npc_id = 0;
-	}
-	st->rid = 0;
+	script_detach_rid(st);
 
 	if( ticks <= 0 )
 	{// do nothing

@@ -1,6 +1,7 @@
 Date	Added
 
 2010/11/27
+	* Fixed a crash uncovered with r14501, caused by outdated local variables when a script is about to suspend or terminate (bugreport:4577). [Ai4rei]
 	* Fixed a crash when using food status bonuses with cash food status bonuses (bugreport:4582, since r14437). [Ai4rei]
 2010/11/26
 	* Fixed description of bCriticalAddRace having 'race' and 'crit' parameters interchanged (bugreport:4383, since r1116 and r1382, related r12804). [Ai4rei]
