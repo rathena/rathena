@@ -1,5 +1,12 @@
 Date	Added
 
+2010/11/29
+	* Resolved issues with item delay system. [Ai4rei]
+	- Fixed random crashes caused by map_session_data corruption due to out-of-bounds access to item_delay array (bugreport:4568, since r14455).
+	- Fixed item delay database not being compatible with @reloaditemdb. Item delays are now reset upon reloading, much like a restart would do (bugreport:4589).
+	- Fixed trailing commented lines in db/item_delay.txt could cause 'too many entries' error to be displayed.
+	- Fixed last entity of a cash food item not being recognized as cash food, thus not receiving use delay, due to access to deleted inventory slot (since r14426).
+	- These changes also fix a warning regarding variable 'i' in pc_useitem being potentionally uninitialized (bugreport:4559).
 2010/11/28
 	* Added an option to re-roll the /dice emotion server-side, to prevent cheats during events (bugreport:4194). [Ai4rei]
 	* Added emotion_type enumeration for clif_emotion constants. [Ai4rei]

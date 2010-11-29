@@ -27,8 +27,6 @@ static struct item_group itemgroup_db[MAX_ITEMGROUP];
 
 struct item_data dummy_item; //This is the default dummy item used for non-existant items. [Skotlex]
 
-int item_delays = 0;
-
 /*==========================================
  * ñºëOÇ≈åüçıóp
  *------------------------------------------*/
@@ -667,7 +665,7 @@ static int itemdb_read_itemtrade(void)
 static int itemdb_read_itemdelay(void)
 {
 	FILE *fp;
-	int nameid, j;
+	int nameid, j, item_delays = 0;
 	char line[1024], *str[10], *p;
 	struct item_data *id;
 
@@ -679,12 +677,12 @@ static int itemdb_read_itemdelay(void)
 
 	while(fgets(line, sizeof(line), fp))
 	{
+		if (line[0] == '/' && line[1] == '/')
+			continue;
 		if (item_delays == MAX_ITEMDELAYS) {
 			ShowError("itemdb_read_itemdelay: Too many entries specified in %s/item_delay.txt! Increase MAX_ITEMDELAYS in itemdb.h!\n", db_path);
 			break;
 		}
-		if (line[0] == '/' && line[1] == '/')
-			continue;
 		memset(str, 0, sizeof(str));
 		for (j = 0, p = line; j < 2 && p; j++) {
 			str[j] = p;
@@ -1075,7 +1073,10 @@ void itemdb_reload(void)
 	// readjust itemdb pointer cache for each player
 	iter = mapit_geteachpc();
 	for( sd = (struct map_session_data*)mapit_first(iter); mapit_exists(iter); sd = (struct map_session_data*)mapit_next(iter) )
+	{
+		memset(sd->item_delay, 0, sizeof(sd->item_delay));  // reset item delays
 		pc_setinventorydata(sd);
+	}
 	mapit_free(iter);
 }
 

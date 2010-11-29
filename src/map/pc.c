@@ -66,8 +66,6 @@ char motd_text[MOTD_LINE_SIZE][256]; // Message of the day buffer [Valaris]
 struct duel duel_list[MAX_DUEL];
 int duel_count = 0;
 
-extern int item_delays; // [Paradox924X]
-
 //Links related info to the sd->hate_mob[]/sd->feel_map[] entries
 const struct sg_data sg_info[3] = {
 		{ SG_SUN_ANGER, SG_SUN_BLESS, SG_SUN_COMFORT, "PC_FEEL_SUN", "PC_HATE_MOB_SUN", is_day_of_sun },
@@ -532,11 +530,6 @@ int pc_setinventorydata(struct map_session_data *sd)
 	for(i=0;i<MAX_INVENTORY;i++) {
 		id = sd->status.inventory[i].nameid;
 		sd->inventory_data[i] = id?itemdb_search(id):NULL;
-		if(sd->inventory_data[i] && sd->inventory_data[i]->delay > 0) { // Load delays
-			sd->item_delay[item_delays].nameid = sd->inventory_data[i]->nameid;
-			sd->item_delay[item_delays].tick = 0;
-			++item_delays;
-		}
 	}
 	return 0;
 }
@@ -3662,7 +3655,7 @@ int pc_isUseitem(struct map_session_data *sd,int n)
  *------------------------------------------*/
 int pc_useitem(struct map_session_data *sd,int n)
 {
-	unsigned int delay, tick = gettick();
+	unsigned int tick = gettick();
 	int amount, i, nameid;
 	struct script_code *script;
 
@@ -3691,13 +3684,6 @@ int pc_useitem(struct map_session_data *sd,int n)
 
 	// Store information for later use before it is lost (via pc_delitem) [Paradox924X]
 	nameid = sd->inventory_data[n]->nameid;
-	delay = sd->inventory_data[n]->delay;
-
-	if( sd->inventory_data[n]->delay > 0 ) { // Check if there is a delay on this item [Paradox924X]
-		ARR_FIND(0, item_delays, i, sd->item_delay[i].nameid == nameid);
-		if( i < item_delays && DIFF_TICK(sd->item_delay[i].tick, tick) > 0 )
-			return 0; // Delay has not expired yet
-	}
 
 	//Since most delay-consume items involve using a "skill-type" target cursor,
 	//perform a skill-use check before going through. [Skotlex]
@@ -3705,6 +3691,27 @@ int pc_useitem(struct map_session_data *sd,int n)
 	//FIXME: Is this really needed here? It'll be checked in unit.c after all and this prevents skill items using when silenced [Inkfish]
 	if( sd->inventory_data[n]->flag.delay_consume && ( sd->ud.skilltimer != -1 /*|| !status_check_skilluse(&sd->bl, &sd->bl, ALL_RESURRECTION, 0)*/ ) )
 		return 0;
+
+	if( sd->inventory_data[n]->delay > 0 ) { // Check if there is a delay on this item [Paradox924X]
+		ARR_FIND(0, MAX_ITEMDELAYS, i, sd->item_delay[i].nameid == nameid || !sd->item_delay[i].nameid);
+		if( i < MAX_ITEMDELAYS )
+		{
+			if( sd->item_delay[i].nameid )
+			{// found
+				if( DIFF_TICK(sd->item_delay[i].tick, tick) > 0 )
+					return 0; // Delay has not expired yet
+			}
+			else
+			{// not yet used item (all slots are initially empty)
+				sd->item_delay[i].nameid = nameid;
+			}
+			sd->item_delay[i].tick = tick + sd->inventory_data[n]->delay;
+		}
+		else
+		{// should not happen
+			ShowError("pc_useitem: Exceeded item delay array capacity! (nameid=%d, char_id=%d)\n", nameid, sd->status.char_id);
+		}
+	}
 
 	sd->itemid = sd->status.inventory[n].nameid;
 	sd->itemindex = n;
@@ -3741,10 +3748,8 @@ int pc_useitem(struct map_session_data *sd,int n)
 
 	//Update item use time.
 	sd->canuseitem_tick = tick + battle_config.item_use_interval;
-	if( itemdb_iscashfood(sd->status.inventory[n].nameid) )
+	if( itemdb_iscashfood(nameid) )
 		sd->canusecashfood_tick = tick + battle_config.cashfood_use_interval;
-	if( delay > 0 && i < item_delays )
-		sd->item_delay[i].tick = tick + delay;
 
 	run_script(script,0,sd->bl.id,fake_nd->bl.id);
 	potion_flag = 0;
