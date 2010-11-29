@@ -3066,8 +3066,6 @@ int run_func(struct script_state *st)
 /*==========================================
  * script execution
  *------------------------------------------*/
-void run_script_main(struct script_state *st);
-
 void run_script(struct script_code *rootscript,int pos,int rid,int oid)
 {
 	struct script_state *st;

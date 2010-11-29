@@ -570,7 +570,6 @@ int pc_setpos(struct map_session_data* sd, unsigned short mapindex, int x, int y
 int pc_setsavepoint(struct map_session_data*,short,int,int);
 int pc_randomwarp(struct map_session_data *sd,clr_type type);
 int pc_memo(struct map_session_data* sd, int pos);
-int pc_remove_map(struct map_session_data *sd,clr_type clrtype);
 
 int pc_checkadditem(struct map_session_data*,int,int);
 int pc_inventoryblank(struct map_session_data*);

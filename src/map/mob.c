@@ -82,7 +82,6 @@ const int mob_splendide[5] = { 1991, 1992, 1993, 1994, 1995 };
  *------------------------------------------*/
 static int mob_makedummymobdb(int);
 static int mob_spawn_guardian_sub(int tid, unsigned int tick, int id, intptr data);
-int mobskill_use(struct mob_data *md,unsigned int tick,int event);
 int mob_skillid2skillidx(int class_,int skillid);
 
 /*==========================================

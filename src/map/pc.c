@@ -5227,8 +5227,8 @@ int pc_resetlvl(struct map_session_data* sd,int type)
 		sd->status.skill_point=0;
 		sd->status.base_level=1;
 		sd->status.job_level=1;
-		sd->status.base_exp=sd->status.base_exp=0;
-		sd->status.job_exp=sd->status.job_exp=0;
+		sd->status.base_exp=0;
+		sd->status.job_exp=0;
 		if(sd->sc.option !=0)
 			sd->sc.option = 0;
 

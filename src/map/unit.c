@@ -1305,8 +1305,6 @@ int unit_skilluse_pos2( struct block_list *src, short skill_x, short skill_y, sh
 	return 1;
 }
 
-static int unit_attack_timer(int tid, unsigned int tick, int id, intptr data);
-
 int unit_stop_attack(struct block_list *bl)
 {
 	struct unit_data *ud = unit_bl2ud(bl);
