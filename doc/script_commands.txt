@@ -137,6 +137,12 @@
 //=       Added info on strcharinfo(3) [Skotlex]
 //= 3.29.20101123
 //=       Added 'pushpc' command. [Ai4rei]
+//= 3.30.20101126
+//=       Added 'setfont', 'mercenary_create', 'mercenary_heal', 'mercenary_sc_start',
+//=       'mercenary_create', 'mercenary_get_calls', 'mercenary_set_calls',
+//=       'mercenary_get_faith' and 'mercenary_set_faith' commands. [Ai4rei]
+//= 3.31.20101130
+//=       Added 'progressbar' command. [Ai4rei]
 //=========================================================
 
 This document is a reference manual for all the scripting commands and functions 
@@ -5444,6 +5450,17 @@ Examples:
 	sleep 10000; //pause the script for 10 seconds and ditch the RID (so no player is attached anymore)
 	sleep2 5000; //pause the script for 5 seconds, and continue with the RID attached.
 	awake "NPC"; //Cancels any running sleep timers on the NPC 'NPC'.
+
+---------------------------------------
+
+*progressbar "<color>",<seconds>;
+
+This command works almost like sleep2, but displays a progress bar
+above the head of the currently attached character (like cast bar).
+Once the given amount of seconds passes, the script resumes. If the
+character moves while the progress bar progresses, it is aborted and
+the script ends. The color format is in RGB (0xRRGGBB). The color is
+currently ignored by the client and appears always green.
 
 ---------------------------------------
 //

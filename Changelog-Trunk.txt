@@ -1,6 +1,9 @@
 Date	Added
 
 2010/11/30
+	* Resolved missing script documentation (bugreport:4578). [Ai4rei]
+	- Added documentation for bonus bAutoSpellOnSkill (follow up to r13596).
+	- Added documentation for script command progressbar (follow up to r14024).
 	* Made job_db1.txt, job_db2.txt, size_fix.txt and refine_db.txt reading use sv_readdb. [Ai4rei]
 	- NOTE: Any MAX_LEVEL (map.h) increase requires at least same increase of SV_READDB_MAX_FIELDS as well.
 	* Added SV_READDB_MAX_FIELDS define for configuration of the sv_readdb limit. [Ai4rei]
