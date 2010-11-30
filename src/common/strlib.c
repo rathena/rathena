@@ -12,7 +12,7 @@
 #include <errno.h>
 
 
-
+#define SV_READDB_MAX_FIELDS 63
 #define J_MAX_MALLOC_SIZE 65535
 
 // escapes a string in-place (' -> \' , \ -> \\ , % -> _)
@@ -923,7 +923,7 @@ bool sv_readdb(const char* directory, const char* filename, char delim, int minc
 	FILE* fp;
 	int lines = 0;
 	int entries = 0;
-	char* fields[64]; // room for 63 fields ([0] is reserved)
+	char* fields[SV_READDB_MAX_FIELDS+1]; // room for SV_READDB_MAX_FIELDS fields ([0] is reserved)
 	int columns;
 	char path[1024], line[1024];
 
