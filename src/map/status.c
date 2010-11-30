@@ -7749,7 +7749,7 @@ static bool status_readdb_refine(char* fields[], int columns, int current)
 	refinebonus[current][1] = atoi(fields[1]);  // stats after safe-limit
 	refinebonus[current][2] = atoi(fields[2]);  // safe limit
 
-	for(i = 0; i < columns; i++)
+	for(i = 0; i < MAX_REFINE; i++)
 	{
 		percentrefinery[current][i] = atoi(fields[3+i]);
 	}
