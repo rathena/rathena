@@ -147,7 +147,7 @@ int merc_hom_calc_skilltree(struct homun_data *hd)
 			continue; //Skill already known.
 		if(!battle_config.skillfree)
 		{
-			for(j=0;j<5;j++)
+			for(j=0;j<MAX_PC_SKILL_REQUIRE;j++)
 			{
 				if( hskill_tree[c][i].need[j].id &&
 					merc_hom_checkskill(hd,hskill_tree[c][i].need[j].id) < hskill_tree[c][i].need[j].lv) 
@@ -1088,7 +1088,7 @@ int read_homunculus_skilldb(void)
 		if (minJobLevelPresent)
 			hskill_tree[classid][j].joblv=atoi(split[3]);
 
-		for(k=0;k<5;k++){
+		for(k=0;k<MAX_PC_SKILL_REQUIRE;k++){
 			hskill_tree[classid][j].need[k].id=atoi(split[3+k*2+minJobLevelPresent]);
 			hskill_tree[classid][j].need[k].lv=atoi(split[3+k*2+minJobLevelPresent+1]);
 		}

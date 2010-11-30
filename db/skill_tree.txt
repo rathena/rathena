@@ -1,4 +1,4 @@
-//JobNo,Skill-ID,MaxLV,Prerequisite Skill-ID-1,Prerequisite Skill-ID-1-Lv,PrereqSkill-ID-2,PrereqSkill-ID-2-Lv,PrereqSkill-ID-3,PrereqSkill-ID-3-Lv,PrereqSkill-ID-4,PrereqSkill-ID-4-Lv,PrereqSkill-ID-5,PrereqSkill-ID-5-Lv//CLASS_SKILLNAME#Skill Name#
+//JobNo,Skill-ID,MaxLV{,JobLV},Prerequisite Skill-ID-1,Prerequisite Skill-ID-1-Lv,PrereqSkill-ID-2,PrereqSkill-ID-2-Lv,PrereqSkill-ID-3,PrereqSkill-ID-3-Lv,PrereqSkill-ID-4,PrereqSkill-ID-4-Lv,PrereqSkill-ID-5,PrereqSkill-ID-5-Lv//CLASS_SKILLNAME#Skill Name#
 //Novice
 0,1,9,0,0,0,0,0,0,0,0,0,0 //NV_BASIC#Basic Skill#
 0,142,1,0,0,0,0,0,0,0,0,0,0 //NV_FIRSTAID#First Aid#
@@ -853,7 +853,7 @@
 4008,356,10,3,10,6,5,60,3,0,0,0,0 //LK_PARRYING#Parrying#
 4008,357,5,4,1,55,5,63,1,0,0,0,0 //LK_CONCENTRATION#Concentration#
 4008,358,1,4,10,6,5,8,3,0,0,0,0 //LK_TENSIONRELAX#Relax#
-4008,359,1,50,0,0,0,0,0,0,0,0,0,0 //LK_BERSERK#Frenzy# //It has an extra collumn after "MaxLevel" for Job Level 50 requeriment
+4008,359,1,50,0,0,0,0,0,0,0,0,0,0 //LK_BERSERK#Frenzy# //It has an extra column after "MaxLevel" for Job Level 50 requirement
 4008,397,5,55,10,56,5,58,5,63,1,0,0 //LK_SPIRALPIERCE#Spiral Pierce#
 4008,398,5,55,9,63,1,0,0,0,0,0,0 //LK_HEADCRUSH#Traumatic Blow#
 4008,399,10,55,9,64,3,398,3,0,0,0,0 //LK_JOINTBEAT#Vital Strike#
@@ -1084,7 +1084,7 @@
 4014,356,10,3,10,6,5,60,3,0,0,0,0 //LK_PARRYING#Parrying#
 4014,357,5,4,1,55,5,63,1,0,0,0,0 //LK_CONCENTRATION#Concentration#
 4014,358,1,4,10,6,5,8,3,0,0,0,0 //LK_TENSIONRELAX#Relax#
-4014,359,1,50,0,0,0,0,0,0,0,0,0,0 //LK_BERSERK#Frenzy# //check this, the last ",0" shouldn't be needed I think
+4014,359,1,50,0,0,0,0,0,0,0,0,0,0 //LK_BERSERK#Frenzy# //It has an extra column after "MaxLevel" for Job Level 50 requirement
 4014,397,5,55,10,56,5,58,5,63,1,0,0 //LK_SPIRALPIERCE#Spiral Pierce#
 4014,398,5,55,9,63,1,0,0,0,0,0,0 //LK_HEADCRUSH#Traumatic Blow#
 4014,399,10,55,9,64,3,398,3,0,0,0,0 //LK_JOINTBEAT#Vital Strike#

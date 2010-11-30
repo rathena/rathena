@@ -8,6 +8,8 @@
 	1475 Equestrian's Spear:	NEED INFO.
 	13005 Angelic Wing Dagger:	NEED INFO.
 =======================
+2010/11/30
+	* Rev. 14524 Updated comments for skill Berserk in skill_tree.txt, among others because they would cause errors the way they are read now. [Ai4rei]
 2010/11/26
 	* Rev. 14507 Added killerrid and killedrid param constants to const.txt [ultramage]
 2010/11/21

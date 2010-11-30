@@ -5786,7 +5786,7 @@ ACMD_FUNC(skilltree)
 	ent = &skill_tree[c][j];
 
 	meets = 1;
-	for(j=0;j<5;j++)
+	for(j=0;j<MAX_PC_SKILL_REQUIRE;j++)
 	{
 		if( ent->need[j].id && pc_checkskill(sd,ent->need[j].id) < ent->need[j].lv)
 		{

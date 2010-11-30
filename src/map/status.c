@@ -7676,6 +7676,13 @@ static int status_natural_heal_timer(int tid, unsigned int tick, int id, intptr 
 	return 0;
 }
 
+/*==========================================
+ * DB reading.
+ * job_db1.txt    - weight, hp, sp, aspd
+ * job_db2.txt    - job level stat bonuses
+ * size_fix.txt   - size adjustment table for weapons
+ * refine_db.txt  - refining data table
+ *------------------------------------------*/
 int status_readdb(void)
 {
 	int i,j,class_;

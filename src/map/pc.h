@@ -17,6 +17,7 @@
 #include "mob.h"
 
 #define MAX_PC_BONUS 10
+#define MAX_PC_SKILL_REQUIRE 5
 #define MAX_PC_FEELHATE 3
 
 struct weapon_data {
@@ -722,7 +723,7 @@ struct skill_tree_entry {
 	struct {
 		short id;
 		unsigned char lv;
-	} need[5];
+	} need[MAX_PC_SKILL_REQUIRE];
 }; // Celest
 extern struct skill_tree_entry skill_tree[CLASS_COUNT][MAX_SKILL_TREE];
 

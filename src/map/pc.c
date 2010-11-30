@@ -1199,7 +1199,7 @@ int pc_calc_skilltree(struct map_session_data *sd)
 
 			f = 1;
 			if(!battle_config.skillfree) {
-				for(j = 0; j < 5; j++) {
+				for(j = 0; j < MAX_PC_SKILL_REQUIRE; j++) {
 					if((k=skill_tree[c][i].need[j].id))
 					{
 						if (!sd->status.skill[k].id || sd->status.skill[k].flag == 13)
@@ -1296,7 +1296,7 @@ static void pc_check_skilltree(struct map_session_data *sd, int skill)
 			if( sd->status.skill[id].id ) //Already learned
 				continue;
 			
-			for( j = 0; j < 5; j++ )
+			for( j = 0; j < MAX_PC_SKILL_REQUIRE; j++ )
 			{
 				if( (k = skill_tree[c][i].need[j].id) )
 				{
@@ -7910,13 +7910,58 @@ int pc_split_atoui(char* str, unsigned int* val, char sep, int max)
 /*==========================================
  * DB reading.
  * exp.txt        - required experience values
- * job_db1.txt    - weight, hp, sp, aspd
- * job_db2.txt    - job level stat bonuses
  * skill_tree.txt - skill tree for every class
  * attr_fix.txt   - elemental adjustment table
- * size_fix.txt   - size adjustment table for weapons
- * refine_db.txt  - refining data table
+ * statpoint.txt  - status points per base level
  *------------------------------------------*/
+static bool pc_readdb_skilltree(char* fields[], int columns, int current)
+{
+	unsigned char joblv = 0, skilllv;
+	unsigned short skillid;
+	int idx, class_;
+	unsigned int i, offset = 3, skillidx;
+
+	class_  = atoi(fields[0]);
+	skillid = (unsigned short)atoi(fields[1]);
+	skilllv = (unsigned char)atoi(fields[2]);
+
+	if(columns==4+MAX_PC_SKILL_REQUIRE*2)
+	{// job level requirement extra column
+		joblv = (unsigned char)atoi(fields[3]);
+		offset++;
+	}
+
+	if(!pcdb_checkid(class_))
+	{
+		ShowWarning("pc_readdb_skilltree: Invalid job class %d specified.\n", class_);
+		return false;
+	}
+	idx = pc_class2idx(class_);
+
+	//This is to avoid adding two lines for the same skill. [Skotlex]
+	ARR_FIND( 0, MAX_SKILL_TREE, skillidx, skill_tree[idx][skillidx].id == 0 || skill_tree[idx][skillidx].id == skillid );
+	if( skillidx == MAX_SKILL_TREE )
+	{
+		ShowWarning("pc_readdb_skilltree: Unable to load skill %hu into job %d's tree. Maximum number of skills per class has been reached.\n", skillid, class_);
+		return false;
+	}
+	else if(skill_tree[idx][skillidx].id)
+	{
+		ShowNotice("pc_readdb_skilltree: Overwriting skill %hu for job class %d.\n", skillid, class_);
+	}
+
+	skill_tree[idx][skillidx].id    = skillid;
+	skill_tree[idx][skillidx].max   = skilllv;
+	skill_tree[idx][skillidx].joblv = joblv;
+
+	for(i = 0; i < MAX_PC_SKILL_REQUIRE; i++)
+	{
+		skill_tree[idx][skillidx].need[i].id = atoi(fields[i*2+offset]);
+		skill_tree[idx][skillidx].need[i].lv = atoi(fields[i*2+offset+1]);
+	}
+	return true;
+}
+
 int pc_readdb(void)
 {
 	int i,j,k;
@@ -8008,53 +8053,7 @@ int pc_readdb(void)
 
 	// スキルツリ?
 	memset(skill_tree,0,sizeof(skill_tree));
-	sprintf(line, "%s/skill_tree.txt", db_path);
-	fp=fopen(line,"r");
-	if(fp==NULL){
-		ShowError("can't read %s\n", line);
-		return 1;
-	}
-
-	while(fgets(line, sizeof(line), fp))
-	{
-		char *split[50];
-		int f=0, m=3, idx;
-		if(line[0]=='/' && line[1]=='/')
-			continue;
-		for(j=0,p=line;j<14 && p;j++){
-			split[j]=p;
-			p=strchr(p,',');
-			if(p) *p++=0;
-		}
-		if(j<13)
-			continue;
-		if (j == 14) {
-			f=1;	// MinJobLvl has been added
-			m++;
-		}
-		// check for bounds [celest]
-		idx = atoi(split[0]);
-		if(!pcdb_checkid(idx))
-			continue;
-		idx = pc_class2idx(idx);
-		k = atoi(split[1]); //This is to avoid adding two lines for the same skill. [Skotlex]
-		ARR_FIND( 0, MAX_SKILL_TREE, j, skill_tree[idx][j].id == 0 || skill_tree[idx][j].id == k );
-		if( j == MAX_SKILL_TREE )
-		{
-			ShowWarning("Unable to load skill %d into job %d's tree. Maximum number of skills per class has been reached.\n", k, atoi(split[0]));
-			continue;
-		}
-		skill_tree[idx][j].id=k;
-		skill_tree[idx][j].max=atoi(split[2]);
-		if (f) skill_tree[idx][j].joblv=atoi(split[3]);
-
-		for(k=0;k<5;k++){
-			skill_tree[idx][j].need[k].id=atoi(split[k*2+m]);
-			skill_tree[idx][j].need[k].lv=atoi(split[k*2+m+1]);
-		}
-	}
-	fclose(fp);
-	ShowStatus("Done reading '"CL_WHITE"%s"CL_RESET"'.\n","skill_tree.txt");
+	sv_readdb(db_path, "skill_tree.txt", ',', 3+MAX_PC_SKILL_REQUIRE*2, 4+MAX_PC_SKILL_REQUIRE*2, -1, &pc_readdb_skilltree);
 
 	// ?性修正テ?ブル
 	for(i=0;i<4;i++)
