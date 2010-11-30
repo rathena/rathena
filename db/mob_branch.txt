@@ -3,7 +3,7 @@
 // Structure of Database:
 // MobID,DummyName,Rate
 
-0,SCORPION,Scorpion,1001
+0,Scorpion,1001
 1001,Scorpion,214285
 1002,Poring,1000000
 1004,Hornet,357142

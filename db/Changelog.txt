@@ -9,6 +9,7 @@
 	13005 Angelic Wing Dagger:	NEED INFO.
 =======================
 2010/11/30
+	* Rev. 14529 Fixed a mistake (excess dummy name) in dead branch list fallback value (since r32). [Ai4rei]
 	* Rev. 14524 Updated comments for skill Berserk in skill_tree.txt, among others because they would cause errors the way they are read now. [Ai4rei]
 2010/11/26
 	* Rev. 14507 Added killerrid and killedrid param constants to const.txt [ultramage]
