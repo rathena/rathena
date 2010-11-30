@@ -1,8 +1,9 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#include "../common/cbasetypes.h"
-#include "../common/showmsg.h"
+#include "cbasetypes.h"
+#include "showmsg.h"
+#include "utils.h"
 #include "lock.h"
 
 #include <stdio.h>
@@ -12,11 +13,7 @@
 #include <unistd.h>
 #else
 #include <io.h>
-#define F_OK   0x0
-#define R_OK   0x4
 #endif
-
-#define exists(filename) (!access(filename, F_OK))
 
 // 書き込みファイルの保護処理
 // （書き込みが終わるまで、旧ファイルを保管しておく）

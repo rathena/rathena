@@ -14,6 +14,7 @@
 void dump(FILE* fp, const unsigned char* buffer, int length);
 
 void findfile(const char *p, const char *pat, void (func)(const char*));
+bool exists(const char* filename);
 
 //Caps values to min/max
 #define cap_value(a, min, max) ((a >= max) ? max : (a <= min) ? min : a)
