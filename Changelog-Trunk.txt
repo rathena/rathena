@@ -1,6 +1,8 @@
 Date	Added
 
 2010/11/30
+	* Made job_db1.txt, job_db2.txt, size_fix.txt and refine_db.txt reading use sv_readdb. [Ai4rei]
+	- NOTE: Any MAX_LEVEL (map.h) increase requires at least same increase of SV_READDB_MAX_FIELDS as well.
 	* Added SV_READDB_MAX_FIELDS define for configuration of the sv_readdb limit. [Ai4rei]
 	* Made skill_tree.txt reading use sv_readdb. [Ai4rei]
 	- Added define for skill entry requirements.

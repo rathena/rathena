@@ -12,7 +12,7 @@
 #include <errno.h>
 
 
-#define SV_READDB_MAX_FIELDS 63
+#define SV_READDB_MAX_FIELDS 105
 #define J_MAX_MALLOC_SIZE 65535
 
 // escapes a string in-place (' -> \' , \ -> \\ , % -> _)

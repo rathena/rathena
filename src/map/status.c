@@ -8,6 +8,7 @@
 #include "../common/malloc.h"
 #include "../common/utils.h"
 #include "../common/ers.h"
+#include "../common/strlib.h"
 
 #include "map.h"
 #include "path.h"
@@ -7683,146 +7684,117 @@ static int status_natural_heal_timer(int tid, unsigned int tick, int id, intptr 
  * size_fix.txt   - size adjustment table for weapons
  * refine_db.txt  - refining data table
  *------------------------------------------*/
+static bool status_readdb_job1(char* fields[], int columns, int current)
+{// Job-specific values (weight, HP, SP, ASPD)
+	int idx, class_;
+	unsigned int i;
+
+	class_ = atoi(fields[0]);
+
+	if(!pcdb_checkid(class_))
+	{
+		ShowWarning("status_readdb_job1: Invalid job class %d specified.\n", class_);
+		return false;
+	}
+	idx = pc_class2idx(class_);
+
+	max_weight_base[idx] = atoi(fields[1]);
+	hp_coefficient[idx]  = atoi(fields[2]);
+	hp_coefficient2[idx] = atoi(fields[3]);
+	sp_coefficient[idx]  = atoi(fields[4]);
+
+	for(i = 0; i < MAX_WEAPON_TYPE; i++)
+	{
+		aspd_base[idx][i] = atoi(fields[i+5]);
+	}
+	return true;
+}
+
+static bool status_readdb_job2(char* fields[], int columns, int current)
+{
+	int idx, class_, i;
+
+	class_ = atoi(fields[0]);
+
+	if(!pcdb_checkid(class_))
+	{
+		ShowWarning("status_readdb_job2: Invalid job class %d specified.\n", class_);
+		return false;
+	}
+	idx = pc_class2idx(class_);
+
+	for(i = 1; i < columns; i++)
+	{
+		job_bonus[class_][i-1] = atoi(fields[i]);
+	}
+	return true;
+}
+
+static bool status_readdb_sizefix(char* fields[], int columns, int current)
+{
+	unsigned int i;
+
+	for(i = 0; i < MAX_WEAPON_TYPE; i++)
+	{
+		atkmods[current][i] = atoi(fields[i]);
+	}
+	return true;
+}
+
+static bool status_readdb_refine(char* fields[], int columns, int current)
+{
+	int i;
+
+	refinebonus[current][0] = atoi(fields[0]);  // stats per safe-upgrade
+	refinebonus[current][1] = atoi(fields[1]);  // stats after safe-limit
+	refinebonus[current][2] = atoi(fields[2]);  // safe limit
+
+	for(i = 0; i < columns; i++)
+	{
+		percentrefinery[current][i] = atoi(fields[3+i]);
+	}
+	return true;
+}
+
 int status_readdb(void)
 {
-	int i,j,class_;
-	FILE *fp;
-	char line[1024], path[1024],*p;
+	int i, j;
 
-	sprintf(path, "%s/job_db1.txt", db_path);
-	fp=fopen(path,"r"); // Job-specific values (weight, HP, SP, ASPD)
-	if(fp==NULL){
-		ShowError("can't read %s\n", path);
-		return 1;
-	}
-	i = 0;
-	while(fgets(line, sizeof(line), fp))
-	{
-		//NOTE: entry MAX_WEAPON_TYPE is not counted
-		char* split[5 + MAX_WEAPON_TYPE];
-		i++;
-		if(line[0]=='/' && line[1]=='/')
-			continue;
-		for(j=0,p=line; j < 5 + MAX_WEAPON_TYPE && p; j++){
-			split[j]=p;
-			p=strchr(p,',');
-			if(p) *p++=0;
-		}
-		if(j < 5 + MAX_WEAPON_TYPE)
-		{	//Weapon #.MAX_WEAPON_TYPE is constantly not load. Fix to that: replace < with <= [blackhole89]
-			ShowDebug("%s: Not enough columns at line %d\n", path, i);
-			continue;
-		}
-		class_ = atoi(split[0]);
-		if(!pcdb_checkid(class_))
-			continue;
-		class_ = pc_class2idx(class_);
-		max_weight_base[class_]=atoi(split[1]);
-		hp_coefficient[class_]=atoi(split[2]);
-		hp_coefficient2[class_]=atoi(split[3]);
-		sp_coefficient[class_]=atoi(split[4]);
-		for(j=0;j<MAX_WEAPON_TYPE;j++)
-			aspd_base[class_][j]=atoi(split[j+5]);
-	}
-	fclose(fp);
-	ShowStatus("Done reading '"CL_WHITE"%s"CL_RESET"'.\n",path);
+	// initialize databases to default
+	//
 
+	// job_db1.txt
+	memset(max_weight_base, 0, sizeof(max_weight_base));
+	memset(hp_coefficient, 0, sizeof(hp_coefficient));
+	memset(hp_coefficient2, 0, sizeof(hp_coefficient2));
+	memset(sp_coefficient, 0, sizeof(sp_coefficient));
+	memset(aspd_base, 0, sizeof(aspd_base));
+
+	// job_db2.txt
 	memset(job_bonus,0,sizeof(job_bonus)); // Job-specific stats bonus
-	sprintf(path, "%s/job_db2.txt", db_path);
-	fp=fopen(path,"r");
-	if(fp==NULL){
-		ShowError("can't read %s\n", path);
-		return 1;
-	}
-	while(fgets(line, sizeof(line), fp))
-	{
-		char *split[MAX_LEVEL+1]; //Job Level is limited to MAX_LEVEL, so the bonuses should likewise be limited to it. [Skotlex]
-		if(line[0]=='/' && line[1]=='/')
-			continue;
-		for(j=0,p=line;j<MAX_LEVEL+1 && p;j++){
-			split[j]=p;
-			p=strchr(p,',');
-			if(p) *p++=0;
-		}
-		class_ = atoi(split[0]);
-		if(!pcdb_checkid(class_))
-		    continue;
-		class_ = pc_class2idx(class_);
-		for(i=1;i<j && split[i];i++)
-			job_bonus[class_][i-1]=atoi(split[i]);
-	}
-	fclose(fp);
-	ShowStatus("Done reading '"CL_WHITE"%s"CL_RESET"'.\n",path);
 
-	// サイズ補正テ?ブル
-	for(i=0;i<3;i++)
+	// size_fix.txt
+	for(i=0;i<ARRAYLENGTH(atkmods);i++)
 		for(j=0;j<MAX_WEAPON_TYPE;j++)
 			atkmods[i][j]=100;
-	sprintf(path, "%s/size_fix.txt", db_path);
-	fp=fopen(path,"r");
-	if(fp==NULL){
-		ShowError("can't read %s\n", path);
-		return 1;
-	}
-	i=0;
-	while(fgets(line, sizeof(line), fp))
-	{
-		char *split[MAX_WEAPON_TYPE];
-		if(line[0]=='/' && line[1]=='/')
-			continue;
-		if(atoi(line)<=0)
-			continue;
-		memset(split,0,sizeof(split));
-		for(j=0,p=line;j<MAX_WEAPON_TYPE && p;j++){
-			split[j]=p;
-			p=strchr(p,',');
-			if(p) *p++=0;
-			atkmods[i][j]=atoi(split[j]);
-		}
-		i++;
-	}
-	fclose(fp);
-	ShowStatus("Done reading '"CL_WHITE"%s"CL_RESET"'.\n",path);
 
-	// 精?デ?タテ?ブル
-	for(i=0;i<5;i++){
+	// refine_db.txt
+	for(i=0;i<ARRAYLENGTH(percentrefinery);i++){
 		for(j=0;j<MAX_REFINE; j++)
-			percentrefinery[i][j]=100;
+			percentrefinery[i][j]=100;  // success chance
 		percentrefinery[i][j]=0; //Slot MAX+1 always has 0% success chance [Skotlex]
-		refinebonus[i][0]=0;
-		refinebonus[i][1]=0;
-		refinebonus[i][2]=10;
+		refinebonus[i][0]=0;  // stats per safe-upgrade
+		refinebonus[i][1]=0;  // stats after safe-limit
+		refinebonus[i][2]=10;  // safe limit
 	}
 
-	sprintf(path, "%s/refine_db.txt", db_path);
-	fp=fopen(path,"r");
-	if(fp==NULL){
-		ShowError("can't read %s\n", path);
-		return 1;
-	}
-	i=0;
-	while(fgets(line, sizeof(line), fp))
-	{
-		char *split[MAX_REFINE+4];
-		if(line[0]=='/' && line[1]=='/')
-			continue;
-		if(atoi(line)<=0)
-			continue;
-		memset(split,0,sizeof(split));
-		for(j=0,p=line;j<MAX_REFINE+4 && p;j++){
-			split[j]=p;
-			p=strchr(p,',');
-			if(p) *p++=0;
-		}
-		refinebonus[i][0]=atoi(split[0]);	// 精?ボ?ナス
-		refinebonus[i][1]=atoi(split[1]);	// 過?精?ボ?ナス
-		refinebonus[i][2]=atoi(split[2]);	// 安全精?限界
-		for(j=0;j<MAX_REFINE && split[j+3];j++)
-			percentrefinery[i][j]=atoi(split[j+3]);
-		i++;
-	}
-	fclose(fp); //Lupus. close this file!!!
-	ShowStatus("Done reading '"CL_WHITE"%s"CL_RESET"'.\n",path);
+	// read databases
+	//
+
+	sv_readdb(db_path, "job_db1.txt",   ',', 5+MAX_WEAPON_TYPE, 5+MAX_WEAPON_TYPE, -1,                            &status_readdb_job1);
+	sv_readdb(db_path, "job_db2.txt",   ',', 1,                 1+MAX_LEVEL,       -1,                            &status_readdb_job2);
+	sv_readdb(db_path, "size_fix.txt",  ',', MAX_WEAPON_TYPE,   MAX_WEAPON_TYPE,    ARRAYLENGTH(atkmods),         &status_readdb_sizefix);
+	sv_readdb(db_path, "refine_db.txt", ',', 3+MAX_REFINE+1,    3+MAX_REFINE+1,     ARRAYLENGTH(percentrefinery), &status_readdb_refine);
 
 	return 0;
 }
