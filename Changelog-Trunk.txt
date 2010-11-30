@@ -1,6 +1,7 @@
 Date	Added
 
 2010/11/30
+	* Fixed class being used instead of idx in status_readdb_job2 (bugreport:4597, since r14526). [Ai4rei]
 	* Moved function 'exists' (file presense check) to utils.c, so that it is available to code outside of lock.c [Ai4rei]
 	- Fixed associated F_OK and R_OK defines causing 'already defined' warnings on MinGW (since r1361).
 	* Resolved missing script documentation (bugreport:4578). [Ai4rei]

@@ -7725,7 +7725,7 @@ static bool status_readdb_job2(char* fields[], int columns, int current)
 
 	for(i = 1; i < columns; i++)
 	{
-		job_bonus[class_][i-1] = atoi(fields[i]);
+		job_bonus[idx][i-1] = atoi(fields[i]);
 	}
 	return true;
 }
