@@ -8260,18 +8260,18 @@ BUILDIN_FUNC(getusers)
 
 	flag = script_getnum(st,2);
 
-	if(flag&0x8)
-	{// npc
-		bl = map_id2bl(st->oid);
-	}
-	else if((sd = script_rid2sd(st))!=NULL)
-	{// pc
-		bl = &sd->bl;
-	}
-
 	switch(flag&0x07)
 	{
 		case 0:
+			if(flag&0x8)
+			{// npc
+				bl = map_id2bl(st->oid);
+			}
+			else if((sd = script_rid2sd(st))!=NULL)
+			{// pc
+				bl = &sd->bl;
+			}
+
 			if(bl)
 			{
 				val = map[bl->m].users;

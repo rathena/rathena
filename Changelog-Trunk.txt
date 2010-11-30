@@ -1,5 +1,7 @@
 Date	Added
 
+2010/11/30
+	* Fixed script command getusers causing 'player not attached' errors when asking for character count in entire server (bugreport:4591, since r14495). [Ai4rei]
 2010/11/29
 	* Resolved issues with item delay system. [Ai4rei]
 	- Fixed random crashes caused by map_session_data corruption due to out-of-bounds access to item_delay array (bugreport:4568, since r14455).
