@@ -1942,8 +1942,8 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 
 			if (sc && sc->data[SC_MIRACLE]) i = 2; //Star anger
 			else
-			ARR_FIND(0, 3, i, t_class == sd->hate_mob[i]);
-			if (i < 3 && (skill=pc_checkskill(sd,sg_info[i].anger_id))) 
+			ARR_FIND(0, MAX_PC_FEELHATE, i, t_class == sd->hate_mob[i]);
+			if (i < MAX_PC_FEELHATE && (skill=pc_checkskill(sd,sg_info[i].anger_id))) 
 			{
 				skillratio = sd->status.base_level + sstatus->dex + sstatus->luk;
 				if (i == 2) skillratio += sstatus->str; //Star Anger

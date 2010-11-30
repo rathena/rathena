@@ -2064,9 +2064,9 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 			temp = status_get_class(&md->bl);
 			if(sd->sc.data[SC_MIRACLE]) i = 2; //All mobs are Star Targets
 			else
-			ARR_FIND(0, 3, i, temp == sd->hate_mob[i] &&
+			ARR_FIND(0, MAX_PC_FEELHATE, i, temp == sd->hate_mob[i] &&
 				(battle_config.allow_skill_without_day || sg_info[i].day_func()));
-			if(i<3 && (temp=pc_checkskill(sd,sg_info[i].bless_id)))
+			if(i<MAX_PC_FEELHATE && (temp=pc_checkskill(sd,sg_info[i].bless_id)))
 				bonus += (i==2?20:10)*temp;
 		}
 		if(battle_config.mobs_level_up && md->level > md->db->lv) // [Valaris]

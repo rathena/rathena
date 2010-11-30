@@ -12260,7 +12260,7 @@ void clif_parse_FeelSaveOk(int fd,struct map_session_data *sd)
 	if (sd->menuskill_id != SG_FEEL)
 		return;
 	i = sd->menuskill_val-1;
-	if (i<0 || i > 2) return; //Bug?
+	if (i<0 || i >= MAX_PC_FEELHATE) return; //Bug?
 
 	sd->feel_map[i].index = map_id2index(sd->bl.m);
 	sd->feel_map[i].m = sd->bl.m;

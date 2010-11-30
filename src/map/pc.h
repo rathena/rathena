@@ -17,6 +17,7 @@
 #include "mob.h"
 
 #define MAX_PC_BONUS 10
+#define MAX_PC_FEELHATE 3
 
 struct weapon_data {
 	int atkmods[3];
@@ -733,7 +734,7 @@ struct sg_data {
 	char hate_var[NAME_LENGTH];
 	int (*day_func)(void);
 };
-extern const struct sg_data sg_info[3];
+extern const struct sg_data sg_info[MAX_PC_FEELHATE];
 
 void pc_setinvincibletimer(struct map_session_data* sd, int val);
 void pc_delinvincibletimer(struct map_session_data* sd);
