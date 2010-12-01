@@ -275,7 +275,7 @@ int mob_get_random_id(int type, int flag, int lv)
 		(flag&8 && mob->spawn[0].qty < 1)
 	) && (i++) < MAX_MOB_DB);
 
-	if(i >= MAX_MOB_DB)
+	if(i >= MAX_MOB_DB)  // no suitable monster found, use fallback for given list
 		class_ = mob_db_data[0]->summonper[type];
 	return class_;
 }
@@ -3408,9 +3408,7 @@ static bool mob_parse_dbrow(char** str)
 	double exp, maxhp;
 	struct mob_data data;
 	
-	class_ = str[0] ? atoi(str[0]) : 0;
-	if (class_ == 0)
-		return false; //Leave blank lines alone... [Skotlex]
+	class_ = atoi(str[0]);
 	
 	if (class_ <= 1000 || class_ > MAX_MOB_DB) {
 		ShowWarning("Mob with ID: %d not loaded. ID must be in range [%d-%d]\n", class_, 1000, MAX_MOB_DB);
@@ -3635,61 +3633,31 @@ static bool mob_parse_dbrow(char** str)
 /*==========================================
  * mob_db.txt reading
  *------------------------------------------*/
-static int mob_readdb(void)
+static bool mob_readdb_sub(char* fields[], int columns, int current)
+{
+	return mob_parse_dbrow(fields);
+}
+
+static void mob_readdb(void)
 {
 	const char* filename[] = { "mob_db.txt", "mob_db2.txt" };
 	int fi;
 	
 	for( fi = 0; fi < ARRAYLENGTH(filename); ++fi )
 	{
-		uint32 lines = 0, count = 0;
-		char line[1024];
 		char path[256];
-		FILE* fp;
-		
-		sprintf(path, "%s/%s", db_path, filename[fi]);
-		fp = fopen(path, "r");
-		if(fp == NULL) {
-			if(fi > 0)
-				continue;
-			return -1;
-		}
-		
-		// process rows one by one
-		while(fgets(line, sizeof(line), fp))
+
+		if(fi > 0)
 		{
-			char *str[38+2*MAX_MOB_DROP], *p, *np;
-			int i;
-			
-			lines++;
-			if(line[0] == '/' && line[1] == '/')
-				continue;
-			
-			for(i = 0, p = line; i < 38 + 2*MAX_MOB_DROP; i++)
+			sprintf(path, "%s/%s", db_path, filename[fi]);
+			if(!exists(path))
 			{
-				str[i] = p;
-				if((np = strchr(p, ',')) != NULL) {
-					*np = '\0'; p = np + 1;
-				}
-			}
-			
-			if(i < 38 + 2*MAX_MOB_DROP) {
-				ShowWarning("mob_readdb: Insufficient columns for mob with id: %d, skipping.\n", atoi(str[0]));
 				continue;
 			}
-			
-			if (!mob_parse_dbrow(str))
-				continue;
-			
-			count++;
 		}
 
-		fclose(fp);
-
-		ShowStatus("Done reading '"CL_WHITE"%lu"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n", count, filename[fi]);
+		sv_readdb(db_path, filename[fi], ',', 38+2*MAX_MOB_DROP, 38+2*MAX_MOB_DROP, -1, &mob_readdb_sub);
 	}
-
-	return 0;
 }
 
 #ifndef TXT_ONLY
@@ -3752,73 +3720,42 @@ static int mob_read_sqldb(void)
 /*==========================================
  * MOB display graphic change data reading
  *------------------------------------------*/
-static int mob_readdb_mobavail(void)
+static bool mob_readdb_mobavail(char* str[], int columns, int current)
 {
-	FILE *fp;
-	char line[1024];
-	int ln=0;
-	int class_,j,k;
-	char *str[20],*p,*np;
+	int class_, k;
 
-	sprintf(line, "%s/mob_avail.txt", db_path);
-	if( (fp=fopen(line,"r"))==NULL ){
-		ShowError("can't read %s\n", line);
-		return -1;
-	}
+	class_=atoi(str[0]);
 
-	while(fgets(line, sizeof(line), fp))
+	if(mob_db(class_) == mob_dummy)	// 値が異常なら処理しない。
 	{
-		if(line[0]=='/' && line[1]=='/')
-			continue;
-		memset(str,0,sizeof(str));
-
-		for(j=0,p=line;j<12;j++){
-			if((np=strchr(p,','))!=NULL){
-				str[j]=p;
-				*np=0;
-				p=np+1;
-			} else
-				str[j]=p;
-		}
-
-		if(str[0]==NULL)
-			continue;
-
-		class_=atoi(str[0]);
-		if (class_ == 0)
-			continue; //Leave blank lines alone... [Skotlex]
-		
-		if(mob_db(class_) == mob_dummy)	// 値が異常なら処理しない。
-			continue;
-
-		k=atoi(str[1]);
-		if(k < 0)
-			continue;
-
-		memset(&mob_db_data[class_]->vd, 0, sizeof(struct view_data));
-		mob_db_data[class_]->vd.class_=k;
-
-		//Player sprites
-		if(pcdb_checkid(k) && j>=12) {
-			mob_db_data[class_]->vd.sex=atoi(str[2]);
-			mob_db_data[class_]->vd.hair_style=atoi(str[3]);
-			mob_db_data[class_]->vd.hair_color=atoi(str[4]);
-			mob_db_data[class_]->vd.weapon=atoi(str[5]);
-			mob_db_data[class_]->vd.shield=atoi(str[6]);
-			mob_db_data[class_]->vd.head_top=atoi(str[7]);
-			mob_db_data[class_]->vd.head_mid=atoi(str[8]);
-			mob_db_data[class_]->vd.head_bottom=atoi(str[9]);
-			mob_db_data[class_]->option=atoi(str[10])&~(OPTION_HIDE|OPTION_CLOAK|OPTION_INVISIBLE);
-			mob_db_data[class_]->vd.cloth_color=atoi(str[11]); // Monster player dye option - Valaris
-		}
-		else if(str[2] && atoi(str[2]) > 0)
-			mob_db_data[class_]->vd.head_bottom=atoi(str[2]); // mob equipment [Valaris]
-
-		ln++;
+		ShowWarning("mob_readdb_mobavail: Unknown mob id %d.\n", class_);
+		return false;
 	}
-	fclose(fp);
-	ShowStatus("Done reading '"CL_WHITE"%d"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n",ln,"mob_avail.txt");
-	return 0;
+
+	k=atoi(str[1]);
+
+	memset(&mob_db_data[class_]->vd, 0, sizeof(struct view_data));
+	mob_db_data[class_]->vd.class_=k;
+
+	//Player sprites
+	if(pcdb_checkid(k) && columns==12) {
+		mob_db_data[class_]->vd.sex=atoi(str[2]);
+		mob_db_data[class_]->vd.hair_style=atoi(str[3]);
+		mob_db_data[class_]->vd.hair_color=atoi(str[4]);
+		mob_db_data[class_]->vd.weapon=atoi(str[5]);
+		mob_db_data[class_]->vd.shield=atoi(str[6]);
+		mob_db_data[class_]->vd.head_top=atoi(str[7]);
+		mob_db_data[class_]->vd.head_mid=atoi(str[8]);
+		mob_db_data[class_]->vd.head_bottom=atoi(str[9]);
+		mob_db_data[class_]->option=atoi(str[10])&~(OPTION_HIDE|OPTION_CLOAK|OPTION_INVISIBLE);
+		mob_db_data[class_]->vd.cloth_color=atoi(str[11]); // Monster player dye option - Valaris
+	}
+	else if(columns==3)
+		mob_db_data[class_]->vd.head_bottom=atoi(str[2]); // mob equipment [Valaris]
+	else
+		return false;
+
+	return true;
 }
 
 /*==========================================
@@ -3841,7 +3778,7 @@ static int mob_read_randommonster(void)
 
 	for( i = 0; i < ARRAYLENGTH(mobfile) && i < MAX_RANDOMMONSTER; i++ )
 	{
-		mob_db_data[0]->summonper[i] = 1002;	// 設定し忘れた場合はポリンが出るようにしておく
+		mob_db_data[0]->summonper[i] = 1002;	// Default fallback value, in case the database does not provide one
 		sprintf(line, "%s/%s", db_path, mobfile[i]);
 		fp=fopen(line,"r");
 		if(fp==NULL){
@@ -3986,9 +3923,8 @@ static void mob_readchatdb(void)
 
 /*==========================================
  * processes one mob_skill_db entry
- * @param last_mob_id ensures that only one error message per mob id is printed
  *------------------------------------------*/
-static bool mob_parse_row_mobskilldb(char** str, const char* source, int line, int* last_mob_id)
+static bool mob_parse_row_mobskilldb(char** str, int columns, int current)
 {
 	static const struct {
 		char str[32];
@@ -4057,6 +3993,7 @@ static bool mob_parse_row_mobskilldb(char** str, const char* source, int line, i
 		{	"around4",	MST_AROUND4	},
 		{	"around",	MST_AROUND	},
 	};
+	static int last_mob_id = 0;  // ensures that only one error message per mob id is printed
 
 	struct mob_skill *ms, gms;
 	int mob_id;
@@ -4066,9 +4003,9 @@ static bool mob_parse_row_mobskilldb(char** str, const char* source, int line, i
 
 	if (mob_id > 0 && mob_db(mob_id) == mob_dummy)
 	{
-		if (mob_id != *last_mob_id) {
-			ShowError("mob_skill: Non existant Mob id %d at %s, line %d\n", mob_id, source, line);
-			*last_mob_id = mob_id;
+		if (mob_id != last_mob_id) {
+			ShowError("mob_parse_row_mobskilldb: Non existant Mob id %d\n", mob_id);
+			last_mob_id = mob_id;
 		}
 		return false;
 	}
@@ -4088,9 +4025,9 @@ static bool mob_parse_row_mobskilldb(char** str, const char* source, int line, i
 		ARR_FIND( 0, MAX_MOBSKILL, i, (ms = &mob_db_data[mob_id]->skill[i])->skill_id == 0 );
 		if( i == MAX_MOBSKILL )
 		{
-			if (mob_id != *last_mob_id) {
-				ShowError("mob_skill: readdb: too many skills! Line %d in %d[%s]\n", line, mob_id, mob_db_data[mob_id]->sprite);
-				*last_mob_id = mob_id;
+			if (mob_id != last_mob_id) {
+				ShowError("mob_parse_row_mobskilldb: Too many skills for monster %d[%s]\n", mob_id, mob_db_data[mob_id]->sprite);
+				last_mob_id = mob_id;
 			}
 			return false;
 		}
@@ -4101,7 +4038,7 @@ static bool mob_parse_row_mobskilldb(char** str, const char* source, int line, i
 	if( j < ARRAYLENGTH(state) )
 		ms->state = state[j].id;
 	else {
-		ShowWarning("mob_skill: Unrecognized state %s at %s, line %d\n", str[2], source, line);
+		ShowWarning("mob_parse_row_mobskilldb: Unrecognized state %s\n", str[2]);
 		ms->state = MSS_ANY;
 	}
 
@@ -4110,9 +4047,9 @@ static bool mob_parse_row_mobskilldb(char** str, const char* source, int line, i
 	if (j<=0 || j>MAX_SKILL_DB) //fixed Lupus
 	{
 		if (mob_id < 0)
-			ShowError("Invalid Skill ID (%d) for all mobs\n", j);
+			ShowError("mob_parse_row_mobskilldb: Invalid Skill ID (%d) for all mobs\n", j);
 		else
-			ShowError("Invalid Skill ID (%d) for mob %d (%s)\n", j, mob_id, mob_db_data[mob_id]->sprite);
+			ShowError("mob_parse_row_mobskilldb: Invalid Skill ID (%d) for mob %d (%s)\n", j, mob_id, mob_db_data[mob_id]->sprite);
 		return false;
 	}
 	ms->skill_id=j;
@@ -4145,7 +4082,7 @@ static bool mob_parse_row_mobskilldb(char** str, const char* source, int line, i
 	if( j < ARRAYLENGTH(target) )
 		ms->target = target[j].id;
 	else {
-		ShowWarning("mob_skill: Unrecognized target %s at %s, line %d\n", str[9], source, line);
+		ShowWarning("mob_parse_row_mobskilldb: Unrecognized target %s for %d\n", str[9], mob_id);
 		ms->target = MST_TARGET;
 	}
 
@@ -4154,13 +4091,13 @@ static bool mob_parse_row_mobskilldb(char** str, const char* source, int line, i
 	{	//Ground skill.
 		if (ms->target > MST_AROUND)
 		{
-			ShowWarning("Wrong mob skill target for ground skill %d (%s) for %s.\n",
+			ShowWarning("mob_parse_row_mobskilldb: Wrong mob skill target for ground skill %d (%s) for %s.\n",
 				ms->skill_id, skill_get_name(ms->skill_id),
 				mob_id < 0?"all mobs":mob_db_data[mob_id]->sprite);
 			ms->target = MST_TARGET;
 		}
 	} else if (ms->target > MST_MASTER) {
-		ShowWarning("Wrong mob skill target 'around' for non-ground skill %d (%s) for %s\n.",
+		ShowWarning("mob_parse_row_mobskilldb: Wrong mob skill target 'around' for non-ground skill %d (%s) for %s\n.",
 			ms->skill_id, skill_get_name(ms->skill_id),
 			mob_id < 0?"all mobs":mob_db_data[mob_id]->sprite);
 		ms->target = MST_TARGET;
@@ -4171,7 +4108,7 @@ static bool mob_parse_row_mobskilldb(char** str, const char* source, int line, i
 	if( j < ARRAYLENGTH(cond1) )
 		ms->cond1 = cond1[j].id;
 	else {
-		ShowWarning("mob_skill: Unrecognized condition 1 %s at %s, line %d\n", str[10], source, line);
+		ShowWarning("mob_parse_row_mobskilldb: Unrecognized condition 1 %s for %d\n", str[10], mob_id);
 		ms->cond1 = -1;
 	}
 
@@ -4245,7 +4182,7 @@ static bool mob_parse_row_mobskilldb(char** str, const char* source, int line, i
 /*==========================================
  * mob_skill_db.txt reading
  *------------------------------------------*/
-static int mob_readskilldb(void)
+static void mob_readskilldb(void)
 {
 	const char* filename[] = { "mob_skill_db.txt", "mob_skill_db2.txt" };
 	int fi;
@@ -4253,130 +4190,72 @@ static int mob_readskilldb(void)
 	if( battle_config.mob_skill_rate == 0 )
 	{
 		ShowStatus("Mob skill use disabled. Not reading mob skills.\n");
-		return 0;
+		return;
 	}
 
 	for( fi = 0; fi < ARRAYLENGTH(filename); ++fi )
 	{
-		uint32 lines = 0, count = 0;
-		char line[1024];
-		int i;
-		int tmp = 0;
-
 		char path[256];
-		FILE *fp;
 
-		sprintf(path, "%s/%s", db_path, filename[fi]); 
-		fp = fopen(path, "r");
-		if( fp == NULL )
+		if(fi > 0)
 		{
-			ShowWarning("mob_readskilldb: File not found \"%s\", skipping.\n", path);
-			continue;
-		}
-
-		// process rows one by one
-		while(fgets(line, sizeof(line), fp))
-		{
-			char *str[20], *p, *np;
-			int j=0;
-
-			lines++;
-			if(line[0] == '/' && line[1] == '/')
-				continue;
-			memset(str, 0, sizeof(str));
-
-			p = line;
-			while( ISSPACE(*p) )
-				++p;
-			if( *p == '\0' )
-				continue;// empty line
-			for(i = 0; i < 19; i++)
+			sprintf(path, "%s/%s", db_path, filename[fi]);
+			if(!exists(path))
 			{
-				str[i] = p;
-				if((np = strchr(p, ',')) != NULL) {
-					*np = '\0'; p = np + 1; j++;
-				}
-			}
-			
-			if ( j < 18 || str[18]==NULL )
-			{
-				ShowError("mob_readskilldb: Insufficient number of fields for skill at %s, line %d\n", filename[fi], lines);
 				continue;
 			}
-
-			if( !mob_parse_row_mobskilldb(str, path, lines, &tmp) )
-				continue;
-
-			count++;
 		}
-		fclose(fp);
-		ShowStatus("Done reading '"CL_WHITE"%s"CL_RESET"'.\n", filename[fi]);
+
+		sv_readdb(db_path, filename[fi], ',', 19, 19, -1, &mob_parse_row_mobskilldb);
 	}
-	return 0;
 }
 /*==========================================
- * mob_race_db.txt reading
+ * mob_race2_db.txt reading
  *------------------------------------------*/
-static int mob_readdb_race(void)
+static bool mob_readdb_race2(char* fields[], int columns, int current)
 {
-	FILE *fp;
-	char line[1024];
-	int race,j,k;
-	char *str[20],*p,*np;
+	int race, mobid, i;
 
-	sprintf(line, "%s/mob_race2_db.txt", db_path);
-	if( (fp=fopen(line,"r"))==NULL ){
-		ShowError("can't read %s\n", line);
-		return -1;
-	}
-	
-	while(fgets(line, sizeof(line), fp))
+	race = atoi(fields[0]);
+
+	if (race < RC2_NONE || race >= RC2_MAX)
 	{
-		if(line[0]=='/' && line[1]=='/')
-			continue;
-		memset(str,0,sizeof(str));
-
-		for(j=0,p=line;j<12;j++){
-			if((np=strchr(p,','))!=NULL){
-				str[j]=p;
-				*np=0;
-				p=np+1;
-			} else
-				str[j]=p;
-		}
-		if(str[0]==NULL)
-			continue;
-
-		race=atoi(str[0]);
-		if (race < RC2_NONE || race >= RC2_MAX)
-			continue;
-
-		for (j=1; j<20; j++) {
-			if (!str[j])
-				break;
-			k=atoi(str[j]);
-			if (mob_db(k) == mob_dummy)
-				continue;
-			mob_db_data[k]->race2 = race;
-		}
+		ShowWarning("mob_readdb_race2: Unknown race2 %d.\n", race);
+		return false;
 	}
-	fclose(fp);
-	ShowStatus("Done reading '"CL_WHITE"%s"CL_RESET"'.\n","mob_race2_db.txt");
-	return 0;
+
+	for(i = 1; i<columns; i++)
+	{
+		mobid = atoi(fields[i]);
+		if (mob_db(mobid) == mob_dummy)
+		{
+			ShowWarning("mob_readdb_race2: Unknown mob id %d for race2 %d.\n", mobid, race);
+			continue;
+		}
+		mob_db_data[mobid]->race2 = race;
+	}
+	return true;
+}
+
+static void mob_load(void)
+{
+#ifndef TXT_ONLY
+	if(db_use_sqldbs)
+		mob_read_sqldb();
+	else
+#endif /* TXT_ONLY */
+	mob_readdb();
+
+	sv_readdb(db_path, "mob_avail.txt", ',', 3, 12, -1, &mob_readdb_mobavail);
+	mob_read_randommonster();
+	mob_readchatdb();
+	mob_readskilldb();
+	sv_readdb(db_path, "mob_race2_db.txt", ',', 2, 20, -1, &mob_readdb_race2);
 }
 
 void mob_reload(void)
 {
 	int i;
-#ifndef TXT_ONLY
-    if(db_use_sqldbs)
-        mob_read_sqldb();
-    else
-#endif /* TXT_ONLY */
-	mob_readdb();
-
-	mob_readdb_mobavail();
-	mob_read_randommonster();
 
 	//Mob skills need to be cleared before re-reading them. [Skotlex]
 	for (i = 0; i < MAX_MOB_DB; i++)
@@ -4385,9 +4264,8 @@ void mob_reload(void)
 			memset(&mob_db_data[i]->skill,0,sizeof(mob_db_data[i]->skill));
 			mob_db_data[i]->maxskill=0;
 		}
-	mob_readchatdb();
-	mob_readskilldb();
-	mob_readdb_race();
+
+	mob_load();
 }
 
 void mob_clear_spawninfo()
@@ -4409,18 +4287,7 @@ int do_init_mob(void)
 	item_drop_ers = ers_new(sizeof(struct item_drop));
 	item_drop_list_ers = ers_new(sizeof(struct item_drop_list));
 
-#ifndef TXT_ONLY
-    if(db_use_sqldbs)
-        mob_read_sqldb();
-    else
-#endif /* TXT_ONLY */
-        mob_readdb();
-
-	mob_readdb_mobavail();
-	mob_read_randommonster();
-	mob_readchatdb();
-	mob_readskilldb();
-	mob_readdb_race();
+	mob_load();
 
 	add_timer_func_list(mob_delayspawn,"mob_delayspawn");
 	add_timer_func_list(mob_delay_item_drop,"mob_delay_item_drop");
