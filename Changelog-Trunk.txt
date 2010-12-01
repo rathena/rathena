@@ -1,6 +1,7 @@
 Date	Added
 
 2010/12/01
+	* Reverted change from r14533 and restored the 3rd field of mob_avail.txt being optional (bugreport:4599, since r14532). [Ai4rei]
 	* Monster database reading now utilizes sv_readdb. [Ai4rei]
 2010/11/30
 	* Fixed out-of-bound access to percentrefinery array causing refine bonuses stop working (bugreport:4598, since r14526). [Ai4rei]

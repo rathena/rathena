@@ -3752,7 +3752,7 @@ static bool mob_readdb_mobavail(char* str[], int columns, int current)
 	}
 	else if(columns==3)
 		mob_db_data[class_]->vd.head_bottom=atoi(str[2]); // mob equipment [Valaris]
-	else
+	else if( columns != 2 )
 		return false;
 
 	return true;
@@ -4246,7 +4246,7 @@ static void mob_load(void)
 #endif /* TXT_ONLY */
 	mob_readdb();
 
-	sv_readdb(db_path, "mob_avail.txt", ',', 3, 12, -1, &mob_readdb_mobavail);
+	sv_readdb(db_path, "mob_avail.txt", ',', 2, 12, -1, &mob_readdb_mobavail);
 	mob_read_randommonster();
 	mob_readchatdb();
 	mob_readskilldb();

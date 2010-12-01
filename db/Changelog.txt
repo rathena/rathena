@@ -8,8 +8,6 @@
 	1475 Equestrian's Spear:	NEED INFO.
 	13005 Angelic Wing Dagger:	NEED INFO.
 =======================
-2010/12/01
-	* Rev. 14532 Updated example in mob_avail.txt to match the format description and actual implementation (bugreport:4599, follow up to r14532). [Ai4rei]
 2010/11/30
 	* Rev. 14529 Fixed a mistake (excess dummy name) in dead branch list fallback value (since r32). [Ai4rei]
 	* Rev. 14524 Updated comments for skill Berserk in skill_tree.txt, among others because they would cause errors the way they are read now. [Ai4rei]
