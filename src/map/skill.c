@@ -1091,11 +1091,14 @@ int skill_onskillusage(struct map_session_data *sd, struct block_list *bl, int s
 	if( sd == NULL || skillid <= 0 )
 		return 0;
 
-	sd->state.skillonskill = 1;
 	for( i = 0; i < ARRAYLENGTH(sd->autospell3) && sd->autospell3[i].flag; i++ )
 	{
 		if( sd->autospell3[i].flag != skillid )
 			continue;
+
+		if( sd->autospell3[i].lock )
+			continue;  // autospell already being executed
+
 		skill = (sd->autospell3[i].id > 0) ? sd->autospell3[i].id : -sd->autospell3[i].id;
 		if( skillnotok(skill, sd) )
 			continue;
@@ -1113,6 +1116,7 @@ int skill_onskillusage(struct map_session_data *sd, struct block_list *bl, int s
 			continue;
 
 		sd->state.autocast = 1;
+		sd->autospell3[i].lock = true;
 		skill_consume_requirement(sd,skill,skilllv,1);
 		switch( skill_get_casttype(skill) )
 		{
@@ -1120,6 +1124,7 @@ int skill_onskillusage(struct map_session_data *sd, struct block_list *bl, int s
 			case CAST_NODAMAGE: skill_castend_nodamage_id(&sd->bl, tbl, skill, skilllv, tick, 0); break;
 			case CAST_DAMAGE:   skill_castend_damage_id(&sd->bl, tbl, skill, skilllv, tick, 0); break;
 		}
+		sd->autospell3[i].lock = false;
 		sd->state.autocast = 0;
 	}
 
@@ -1137,7 +1142,6 @@ int skill_onskillusage(struct map_session_data *sd, struct block_list *bl, int s
 		}
 	}
 
-	sd->state.skillonskill = 0;
 	return 1;
 }
 
@@ -3096,8 +3100,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 	{
 		if( sd->state.arrow_atk ) //Consume arrow on last invocation to this skill.
 			battle_consume_ammo(sd, skillid, skilllv);
-		if( !sd->state.skillonskill )
-			skill_onskillusage(sd, bl, skillid, tick);
+		skill_onskillusage(sd, bl, skillid, tick);
 		skill_consume_requirement(sd,skillid,skilllv,2);
 	}
 
@@ -5718,8 +5721,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	{
 		if( sd->state.arrow_atk ) //Consume arrow on last invocation to this skill.
 			battle_consume_ammo(sd, skillid, skilllv);
-		if( !sd->state.skillonskill )
-			skill_onskillusage(sd, bl, skillid, tick);
+		skill_onskillusage(sd, bl, skillid, tick);
 		skill_consume_requirement(sd,skillid,skilllv,2);
 	}
 
@@ -6583,8 +6585,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, int skillid, int sk
 	{
 		if( sd->state.arrow_atk && !(flag&1) ) //Consume arrow if a ground skill was not invoked. [Skotlex]
 			battle_consume_ammo(sd, skillid, skilllv);
-		if( !sd->state.skillonskill )
-			skill_onskillusage(sd, NULL, skillid, tick);
+		skill_onskillusage(sd, NULL, skillid, tick);
 		skill_consume_requirement(sd,skillid,skilllv,2);
 	}
 
