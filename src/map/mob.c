@@ -3830,8 +3830,10 @@ static int mob_read_randommonster(void)
  *------------------------------------------*/
 static bool mob_parse_row_chatdb(char** str, const char* source, int line, int* last_msg_id)
 {
+	char* msg;
 	struct mob_chat *ms;
 	int msg_id;
+	size_t len;
 
 	msg_id = atoi(str[0]);
 
@@ -3853,13 +3855,29 @@ static bool mob_parse_row_chatdb(char** str, const char* source, int line, int* 
 	//Color
 	ms->color=strtoul(str[1],NULL,0);
 	//Message
-	if(strlen(str[2])>(CHAT_SIZE_MAX-1)){
+	msg = str[2];
+	len = strlen(msg);
+
+	while( len && ( msg[len-1]=='\r' || msg[len-1]=='\n' ) )
+	{// find EOL to strip
+		len--;
+	}
+
+	if(len>(CHAT_SIZE_MAX-1))
+	{
 		if (msg_id != *last_msg_id) {
 			ShowError("mob_chat: readdb: Message too long! Line %d, id: %d\n", line, msg_id);
 			*last_msg_id = msg_id;
 		}
 		return false;
 	}
+	else if( !len )
+	{
+		ShowWarning("mob_parse_row_chatdb: Empty message for id %d.\n", msg_id);
+		return false;
+	}
+
+	msg[len] = 0;  // strip previously found EOL
 	strncpy(ms->msg, str[2], CHAT_SIZE_MAX);
 
 	return true;

@@ -1,6 +1,7 @@
 Date	Added
 
 2010/12/01
+	* Fixed NPC_TALK message being displayed with EOL character attached (bugreport:4596, since r14270). [Ai4rei]
 	* Reverted change from r14533 and restored the 3rd field of mob_avail.txt being optional (bugreport:4599, since r14532). [Ai4rei]
 	* Monster database reading now utilizes sv_readdb. [Ai4rei]
 2010/11/30
