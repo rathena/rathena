@@ -6,7 +6,7 @@
 // MobID,SpriteID,Sex,Hair,Hair_Color,Weapon,Shield,Head_Top,Head_Middle,Head_Bottom,Option,Dye_Color
 // Use Item ID for weapons and shields, not View ID.
 
-//1002,1039	//Poring,Baphomet (Make Porings look like Baphomet)
+//1002,1039,0	//Poring,Baphomet (Make Porings look like Baphomet)
 //1970,1002,10013	// new mob that looks like a Poring with a backpack
 
 // Easter Event Monsters
