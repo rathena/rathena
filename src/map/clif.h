@@ -504,6 +504,8 @@ void clif_viewequip_ack(struct map_session_data* sd, struct map_session_data* ts
 void clif_viewequip_fail(struct map_session_data* sd);
 void clif_equipcheckbox(struct map_session_data* sd);
 
+void clif_msg(struct map_session_data* sd, unsigned short id);
+
 //quest system [Kevin] [Inkfish]
 void clif_quest_send_list(struct map_session_data * sd);  
 void clif_quest_send_mission(struct map_session_data * sd);  
@@ -545,7 +547,7 @@ void clif_Adopt_reply(struct map_session_data *sd, int type);
 // MERCENARIES
 void clif_mercenary_info(struct map_session_data *sd);
 void clif_mercenary_skillblock(struct map_session_data *sd);
-void clif_mercenary_message(int fd, int message);
+void clif_mercenary_message(struct map_session_data* sd, int message);
 void clif_mercenary_updatestatus(struct map_session_data *sd, int type);
 
 // RENTAL SYSTEM

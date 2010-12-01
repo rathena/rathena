@@ -8175,12 +8175,9 @@ void clif_viewequip_ack(struct map_session_data* sd, struct map_session_data* ts
 	WFIFOSET(fd, WFIFOW(fd, 2));
 }
 
-/*==========================================
- * View player equip request denied
- * R 0291 <message>.W
- * TODO: this looks like a general-purpose packet to print msgstringtable entries.
- *------------------------------------------*/
-void clif_viewequip_fail(struct map_session_data* sd)
+/// Display msgstringtable.txt string (ZC_MSG)
+/// R 0291 <message>.W
+void clif_msg(struct map_session_data* sd, unsigned short id)
 {
 	int fd;
 	nullpo_retv(sd);
@@ -8188,8 +8185,14 @@ void clif_viewequip_fail(struct map_session_data* sd)
 
 	WFIFOHEAD(fd, packet_len(0x291));
 	WFIFOW(fd, 0) = 0x291;
-	WFIFOW(fd, 2) = 0x54d;	// This controls which message is displayed. 0x54d is the correct one. Maybe it's used for something else too?
+	WFIFOW(fd, 2) = id;  // zero-based msgstringtable.txt index
 	WFIFOSET(fd, packet_len(0x291));
+}
+
+/// View player equip request denied
+void clif_viewequip_fail(struct map_session_data* sd)
+{
+	clif_msg(sd, 0x54d);
 }
 
 /// Validates one global/guild/party/whisper message packet and tries to recognize its components.
@@ -13593,12 +13596,9 @@ void clif_parse_mercenary_action(int fd, struct map_session_data* sd)
  * 2 = Your mercenary soldier has been fired.
  * 3 = Your mercenary soldier has ran away.
  *------------------------------------------*/
-void clif_mercenary_message(int fd, int message)
+void clif_mercenary_message(struct map_session_data* sd, int message)
 {
-	WFIFOHEAD(fd,4);
-	WFIFOW(fd,0) = 0x0291;
-	WFIFOW(fd,2) = 1266 + message;
-	WFIFOSET(fd,4);
+	clif_msg(sd, 1266 + message);
 }
 
 /*------------------------------------------

@@ -258,7 +258,7 @@ int merc_delete(struct mercenary_data *md, int reply)
 		case 1: mercenary_set_faith(md, -1); break; // -1 Loyalty on Mercenary killed
 	}
 
-	clif_mercenary_message(sd->fd, reply);
+	clif_mercenary_message(sd, reply);
 	return unit_remove_map(&md->bl, CLR_OUTSIGHT);
 }
 
