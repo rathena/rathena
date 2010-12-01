@@ -1,6 +1,7 @@
 Date	Added
 
 2010/12/01
+	* Fixed using main chat nick longer than 15 characters would cause a buffer overflow (bugreport:2671, since r5013). [Ai4rei]
 	* Fixed bAutoSpellOnSkill bonuses could not be chained (bugreport:4421, since r13596). [Ai4rei]
 	* Fixed NPC_TALK message being displayed with EOL character attached (bugreport:4596, since r14270). [Ai4rei]
 	* Reverted change from r14533 and restored the 3rd field of mob_avail.txt being optional (bugreport:4599, since r14532). [Ai4rei]

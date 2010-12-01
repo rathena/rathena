@@ -3205,7 +3205,7 @@ int inter_config_read(char *cfgName)
 			continue;
 
 		if(strcmpi(w1, "main_chat_nick")==0)
-			strcpy(main_chat_nick, w2);
+			safestrncpy(main_chat_nick, w2, sizeof(main_chat_nick));
 			
 	#ifndef TXT_ONLY
 		else
