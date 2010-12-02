@@ -1,6 +1,7 @@
 Date	Added
 
 2010/12/02
+	* Removed clif_weather_sub and clif_misceffect2 in favor of clif_specialeffect_single and clif_specialeffect (all of them are ZC_NOTIFY_EFFECT2). [Ai4rei]
 	* Rev. 14540 Monsters spawned with mob-generating items now have MD_ANGRY applied to them. [L0ne_W0lf]
 2010/12/01
 	* Added packet 0x1b1 (ZC_SHOWDIGIT). [Ai4rei]

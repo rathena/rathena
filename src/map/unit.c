@@ -1798,7 +1798,7 @@ int unit_changeviewsize(struct block_list *bl,short size)
 	} else
 		return 0;
 	if(size!=0)
-		clif_misceffect2(bl,421+size);
+		clif_specialeffect(bl,421+size, AREA);
 	return 0;
 }
 

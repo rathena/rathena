@@ -322,7 +322,7 @@ int merc_hom_evolution(struct homun_data *hd)
 
 	clif_spawn(&hd->bl);
 	clif_emotion(&sd->bl, E_NO1);
-	clif_misceffect2(&hd->bl,568);
+	clif_specialeffect(&hd->bl,568,AREA);
 
 	//status_Calc flag&1 will make current HP/SP be reloaded from hom structure
 	hom->hp = hd->battle_status.hp;
@@ -362,7 +362,7 @@ int merc_hom_gainexp(struct homun_data *hd,int exp)
 	if( hd->exp_next == 0 )
 		hd->homunculus.exp = 0 ;
 
-	clif_misceffect2(&hd->bl,568);
+	clif_specialeffect(&hd->bl,568,AREA);
 	status_calc_homunculus(hd,0);
 	status_percent_heal(&hd->bl, 100, 100);
 	return 0;
@@ -871,7 +871,7 @@ int merc_hom_shuffle(struct homun_data *hd)
 	clif_homskillinfoblock(sd);
 	status_calc_homunculus(hd,0);
 	status_percent_heal(&hd->bl, 100, 100);
-	clif_misceffect2(&hd->bl,568);
+	clif_specialeffect(&hd->bl,568,AREA);
 
 	return 1;
 }

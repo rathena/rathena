@@ -5436,7 +5436,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		{	//Erase death count 1% of the casts
 			dstsd->die_counter = 0;
 			pc_setglobalreg(dstsd,"PC_DIE_COUNTER", 0);
-			clif_misceffect2(bl, 0x152);
+			clif_specialeffect(bl, 0x152, AREA);
 			//SC_SPIRIT invokes status_calc_pc for us.
 		}
 		clif_skill_nodamage(src,bl,skillid,skilllv,

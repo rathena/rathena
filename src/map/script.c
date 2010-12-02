@@ -10715,11 +10715,11 @@ BUILDIN_FUNC(misceffect)
 	if(st->oid && st->oid != fake_nd->bl.id) {
 		struct block_list *bl = map_id2bl(st->oid);
 		if (bl)
-			clif_misceffect2(bl,type);
+			clif_specialeffect(bl,type,AREA);
 	} else{
 		TBL_PC *sd=script_rid2sd(st);
 		if(sd)
-			clif_misceffect2(&sd->bl,type);
+			clif_specialeffect(&sd->bl,type,AREA);
 	}
 	return 0;
 }
@@ -11752,7 +11752,7 @@ BUILDIN_FUNC(summon)
 			delete_timer(md->deletetimer, mob_timer_delete);
 		md->deletetimer = add_timer(tick+(timeout>0?timeout*1000:60000),mob_timer_delete,md->bl.id,0);
 		mob_spawn (md); //Now it is ready for spawning.
-		clif_misceffect2(&md->bl,344);
+		clif_specialeffect(&md->bl,344,AREA);
 		sc_start4(&md->bl, SC_MODECHANGE, 100, 1, 0, MD_AGGRESSIVE, 0, 60000);
 	}
 	return 0;
