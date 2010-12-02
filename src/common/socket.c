@@ -655,6 +655,7 @@ int WFIFOSET(int fd, size_t len)
 
 	if( !s->flag.server && s->wdata_size+len > WFIFO_MAX )
 	{// reached maximum write fifo size
+		ShowError("WFIFOSET: Maximum write buffer size for client connection %d exceeded, most likely caused by packet 0x%04x (len=%u, ip=%lu.%lu.%lu.%lu).\n", fd, WFIFOW(fd,0), len, CONVIP(s->client_addr));
 		set_eof(fd);
 		return 0;
 	}
