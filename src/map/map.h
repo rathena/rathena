@@ -630,6 +630,7 @@ int cleanup_sub(struct block_list *bl, va_list ap);
 
 void map_helpscreen(int flag); // [Valaris]
 int map_delmap(char* mapname);
+void map_flags_init(void);
 
 bool map_iwall_set(int m, int x, int y, int size, int dir, bool shootable, const char* wall_name);
 void map_iwall_get(struct map_session_data *sd);

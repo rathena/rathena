@@ -3314,6 +3314,9 @@ int npc_reload(void)
 	npc_warp = npc_shop = npc_script = 0;
 	npc_mob = npc_cache_mob = npc_delay_mob = 0;
 
+	// reset mapflags
+	map_flags_init();
+
 	//TODO: the following code is copy-pasted from do_init_npc(); clean it up
 	// Reloading npcs now
 	for (nsl = npc_src_files; nsl; nsl = nsl->next)
