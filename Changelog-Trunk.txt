@@ -1,5 +1,7 @@
 Date	Added
 
+2010/12/02
+	* Rev. 14540 Monsters spawned with mob-generating items now have MD_ANGRY applied to them. [L0ne_W0lf]
 2010/12/01
 	* Added packet 0x1b1 (ZC_SHOWDIGIT). [Ai4rei]
 	* Confirmed packet 0x291 (ZC_MSG) to be general-purpose msgstringtable.txt packet and updated all functions using it (related r12245 and r13126). [Ai4rei]
