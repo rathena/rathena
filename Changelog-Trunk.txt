@@ -1,6 +1,11 @@
 Date	Added
 
 2010/12/02
+	* Random clif.c fixes and cleanups. [Ai4rei]
+	- Fixed clif_homskillup using sd before nullpo check (since r9297 and r9307).
+	- Merged code responsible for disabling pets in GvG and spawning them as per TODO (related r12002).
+	- Fixed base and job exp not being sent to the client for new connections (follow to r14505).
+	- Fixed Magnifier (item) and Identify (skill) attempting to identify an item, even when cancel is pressed, causing skill failed message.
 	* Added defines for guild notice sizes (MAX_GUILDMES1 and MAX_GUILDMES2). [Ai4rei]
 	* Added clif_starskill (packet 0x20e, ZC_STARSKILL) to host the packet previously implemented by clif_feel_info, clif_hate_info, clif_mission_info and clif_feel_hate_reset (related r4352, r4375 and r9162). [Ai4rei]
 	- This also fixes sd->bl.id being sometimes supplied for monster_id in this packet.

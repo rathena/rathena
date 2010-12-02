@@ -1270,13 +1270,14 @@ int clif_homskillinfoblock(struct map_session_data *sd)
 void clif_homskillup(struct map_session_data *sd, int skill_num)
 {	//[orn]
 	struct homun_data *hd;
-	int fd=sd->fd, skillid;
-	WFIFOHEAD(fd, packet_len(0x239));
+	int fd, skillid;
 	nullpo_retv(sd);
 	skillid = skill_num - HM_SKILLBASE;
 
+	fd=sd->fd;
 	hd=sd->hd;
 
+	WFIFOHEAD(fd, packet_len(0x239));
 	WFIFOW(fd,0) = 0x239;
 	WFIFOW(fd,2) = skill_num;
 	WFIFOW(fd,4) = hd->homunculus.hskill[skillid].lv;
@@ -8598,20 +8599,22 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 	// must use foreachinarea (CIRCULAR_AREA interferes with foreachinrange)
 	map_foreachinarea(clif_getareachar, sd->bl.m, sd->bl.x-AREA_SIZE, sd->bl.y-AREA_SIZE, sd->bl.x+AREA_SIZE, sd->bl.y+AREA_SIZE, BL_ALL, sd);
 
-	//TODO: merge it with the code below
-	if (battle_config.pet_no_gvg && map_flag_gvg(sd->bl.m) && sd->pd)
-	{	//Return the pet to egg. [Skotlex]
-		clif_displaymessage(sd->fd, "Pets are not allowed in Guild Wars.");
-		pet_menu(sd, 3); //Option 3 is return to egg.
-	}
-
 	// pet
-	if(sd->pd) {
-		map_addblock(&sd->pd->bl);
-		clif_spawn(&sd->pd->bl);
-		clif_send_petdata(sd,sd->pd,0,0);
-		clif_send_petstatus(sd);
-//		skill_unit_move(&sd->pd->bl,gettick(),1);
+	if( sd->pd )
+	{
+		if( battle_config.pet_no_gvg && map_flag_gvg(sd->bl.m) )
+		{	//Return the pet to egg. [Skotlex]
+			clif_displaymessage(sd->fd, "Pets are not allowed in Guild Wars.");
+			pet_menu(sd, 3); //Option 3 is return to egg.
+		}
+		else
+		{
+			map_addblock(&sd->pd->bl);
+			clif_spawn(&sd->pd->bl);
+			clif_send_petdata(sd,sd->pd,0,0);
+			clif_send_petstatus(sd);
+//			skill_unit_move(&sd->pd->bl,gettick(),1);
+		}
 	}
 
 	//homunculus [blackhole89]
@@ -8642,7 +8645,9 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 		sd->state.connect_new = 0;
 		clif_skillinfoblock(sd);
 		clif_hotkeys_send(sd);
+		clif_updatestatus(sd,SP_BASEEXP);
 		clif_updatestatus(sd,SP_NEXTBASEEXP);
+		clif_updatestatus(sd,SP_JOBEXP);
 		clif_updatestatus(sd,SP_NEXTJOBEXP);
 		clif_updatestatus(sd,SP_SKILLPOINT);
 		clif_initialstatus(sd);
@@ -9632,8 +9637,6 @@ void clif_parse_NpcClicked(int fd,struct map_session_data *sd)
 	if (!bl) return;
 	switch (bl->type) {
 		case BL_MOB:
-			clif_parse_ActionRequest_sub(sd, 0x07, bl->id, gettick());
-			break;
 		case BL_PC:
 			clif_parse_ActionRequest_sub(sd, 0x07, bl->id, gettick());
 			break;
@@ -10419,9 +10422,15 @@ void clif_parse_NpcCloseClicked(int fd,struct map_session_data *sd)
  *------------------------------------------*/
 void clif_parse_ItemIdentify(int fd,struct map_session_data *sd)
 {
+	short idx = RFIFOW(fd,2);
+
 	if (sd->menuskill_id != MC_IDENTIFY)
 		return;
-	skill_identify(sd,RFIFOW(fd,2)-2);
+	if( idx == -1 )
+	{// cancel pressed
+		return;
+	}
+	skill_identify(sd,idx-2);
 	sd->menuskill_val = sd->menuskill_id = 0;
 }
 /*==========================================
