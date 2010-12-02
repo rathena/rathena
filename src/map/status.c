@@ -5093,52 +5093,40 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 		status_change_end(bl,SC_INCREASEAGI,-1);
 		break;
 	case SC_STRFOOD:
-		if (sc->data[SC_FOOD_STR_CASH] && sc->data[SC_FOOD_STR_CASH]->val1 <= val1)
-			status_change_end(bl,SC_FOOD_STR_CASH,-1);
+		status_change_end(bl,SC_FOOD_STR_CASH,-1);
 		break;
 	case SC_AGIFOOD:
-		if (sc->data[SC_FOOD_AGI_CASH] && sc->data[SC_FOOD_AGI_CASH]->val1 <= val1)
-			status_change_end(bl,SC_FOOD_AGI_CASH,-1);
+		status_change_end(bl,SC_FOOD_AGI_CASH,-1);
 		break;
 	case SC_VITFOOD:
-		if (sc->data[SC_FOOD_VIT_CASH] && sc->data[SC_FOOD_VIT_CASH]->val1 <= val1)
-			status_change_end(bl,SC_FOOD_VIT_CASH,-1);
+		status_change_end(bl,SC_FOOD_VIT_CASH,-1);
 		break;
 	case SC_INTFOOD:
-		if (sc->data[SC_FOOD_INT_CASH] && sc->data[SC_FOOD_INT_CASH]->val1 <= val1)
-			status_change_end(bl,SC_FOOD_INT_CASH,-1);
+		status_change_end(bl,SC_FOOD_INT_CASH,-1);
 		break;
 	case SC_DEXFOOD:
-		if (sc->data[SC_FOOD_DEX_CASH] && sc->data[SC_FOOD_DEX_CASH]->val1 <= val1)
-			status_change_end(bl,SC_FOOD_DEX_CASH,-1);
+		status_change_end(bl,SC_FOOD_DEX_CASH,-1);
 		break;
 	case SC_LUKFOOD:
-		if (sc->data[SC_FOOD_LUK_CASH] && sc->data[SC_FOOD_LUK_CASH]->val1 <= val1)
-			status_change_end(bl,SC_FOOD_LUK_CASH,-1);
+		status_change_end(bl,SC_FOOD_LUK_CASH,-1);
 		break;
 	case SC_FOOD_STR_CASH:
-		if (sc->data[SC_STRFOOD] && sc->data[SC_STRFOOD]->val1 <= val1)
-			status_change_end(bl,SC_STRFOOD,-1);
+		status_change_end(bl,SC_STRFOOD,-1);
 		break;
 	case SC_FOOD_AGI_CASH:
-		if (sc->data[SC_AGIFOOD] && sc->data[SC_AGIFOOD]->val1 <= val1)
-			status_change_end(bl,SC_AGIFOOD,-1);
+		status_change_end(bl,SC_AGIFOOD,-1);
 		break;
 	case SC_FOOD_VIT_CASH:
-		if (sc->data[SC_VITFOOD] && sc->data[SC_VITFOOD]->val1 <= val1)
-			status_change_end(bl,SC_VITFOOD,-1);
+		status_change_end(bl,SC_VITFOOD,-1);
 		break;
 	case SC_FOOD_INT_CASH:
-		if (sc->data[SC_INTFOOD] && sc->data[SC_INTFOOD]->val1 <= val1)
-			status_change_end(bl,SC_INTFOOD,-1);
+		status_change_end(bl,SC_INTFOOD,-1);
 		break;
 	case SC_FOOD_DEX_CASH:
-		if (sc->data[SC_DEXFOOD] && sc->data[SC_DEXFOOD]->val1 <= val1)
-			status_change_end(bl,SC_DEXFOOD,-1);
+		status_change_end(bl,SC_DEXFOOD,-1);
 		break;
 	case SC_FOOD_LUK_CASH:
-		if (sc->data[SC_LUKFOOD] && sc->data[SC_LUKFOOD]->val1 <= val1)
-			status_change_end(bl,SC_LUKFOOD,-1);
+		status_change_end(bl,SC_LUKFOOD,-1);
 		break;
 	}
 
