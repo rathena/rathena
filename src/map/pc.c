@@ -605,7 +605,7 @@ int pc_setequipindex(struct map_session_data *sd)
 
 			if( sd->status.inventory[i].equip & EQP_HAND_L )
 			{
-				if( sd->inventory_data[i] && sd->inventory_data[i]->type == 4 )
+				if( sd->inventory_data[i] && sd->inventory_data[i]->type == IT_WEAPON )
 					sd->weapontype2 = sd->inventory_data[i]->look;
 				else
 					sd->weapontype2 = 0;

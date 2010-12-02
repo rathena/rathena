@@ -1,6 +1,11 @@
 Date	Added
 
 2010/12/02
+	* Various code tweaks and updates related to item types. [Ai4rei]
+	- Replaced item type literals with their appropriate constants.
+	- Added itemdb_typename to replace the ugly "BUG!" filled array in @iteminfo (since r1741, follow up to r14550).
+	- Made the item database parser verify item type for validity.
+	- Added item type constants to const.txt for use in scripts (getiteminfo).
 	* Added support for IT_CASH to @iteminfo, logging filters and item drop rate adjustment. Added 'show_picker.item_type'-specific IT_CASH value to it's description (follow up to r14549). [Ai4rei]
 	* Rev. 14549 Added item type IT_CASH (item type 18) Requires user confirmation before using/generating item(s). [L0ne_W0lf]
 	* Fixed mapflags not getting initialized upon @reloadscript (bugreport:2247, since r1275). [Ai4rei]

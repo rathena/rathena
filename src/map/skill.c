@@ -9306,7 +9306,7 @@ void skill_repairweapon (struct map_session_data *sd, int idx)
 		return;
 	}
 
-	if (itemdb_type(item->nameid)==4)
+	if (itemdb_type(item->nameid)==IT_WEAPON)
 		material = materials [itemdb_wlv(item->nameid)-1]; // Lv1/2/3/4 weapons consume 1 Iron Ore/Iron/Steel/Rough Oridecon
 	else
 		material = materials [2]; // Armors consume 1 Steel
@@ -9357,7 +9357,7 @@ void skill_weaponrefine (struct map_session_data *sd, int idx)
 		struct item_data *ditem = sd->inventory_data[idx];
 		item = &sd->status.inventory[idx];
 
-		if(item->nameid > 0 && ditem->type == 4)
+		if(item->nameid > 0 && ditem->type == IT_WEAPON)
 		{
 			if( item->refine >= sd->menuskill_val
 			||  item->refine >= MAX_REFINE		// if it's no longer refineable

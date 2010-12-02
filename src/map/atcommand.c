@@ -1663,15 +1663,15 @@ ACMD_FUNC(item2)
 	if (item_id > 500) {
 		loop = 1;
 		get_count = number;
-		if (item_data->type == 4 || item_data->type == 5 ||
-			item_data->type == 7 || item_data->type == 8) {
+		if (item_data->type == IT_WEAPON || item_data->type == IT_ARMOR ||
+			item_data->type == IT_PETEGG || item_data->type == IT_PETARMOR) {
 			loop = number;
 			get_count = 1;
-			if (item_data->type == 7) {
+			if (item_data->type == IT_PETEGG) {
 				identify = 1;
 				refine = 0;
 			}
-			if (item_data->type == 8)
+			if (item_data->type == IT_PETARMOR)
 				refine = 0;
 			if (refine > 10)
 				refine = 10;
@@ -7390,10 +7390,6 @@ ACMD_FUNC(homshuffle)
  *------------------------------------------*/
 ACMD_FUNC(iteminfo)
 {
-	char *itype[IT_MAX] = {"Potion/Food", "BUG!", "Usable", "Etc", "Weapon", "Protection", "Card", "Egg", "Pet Acessory", "BUG!", "Arrow",
-	"BUG!",  // No need, type 11 items are converted to type 2 upon loading [Skotlex]
-	"BUG!", "BUG!", "BUG!", "BUG!", "BUG!", "BUG!", "Cash Usable"};
-
 	struct item_data *item_data, *item_array[MAX_SEARCH];
 	int i, count = 1;
 
@@ -7418,7 +7414,7 @@ ACMD_FUNC(iteminfo)
 		item_data = item_array[i];
 		sprintf(atcmd_output, "Item: '%s'/'%s'[%d] (%d) Type: %s | Extra Effect: %s",
 			item_data->name,item_data->jname,item_data->slot,item_data->nameid,
-			item_data->type < IT_MAX ? itype[item_data->type] : "BUG!", 
+			itemdb_typename(item_data->type), 
 			(item_data->script==NULL)? "None" : "With script"
 		);
 		clif_displaymessage(fd, atcmd_output);
