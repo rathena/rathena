@@ -147,6 +147,10 @@
 #define END_ACCOUNT_NUM 100000000
 #define START_CHAR_NUM 150000
 
+//Guilds
+#define MAX_GUILDMES1 60
+#define MAX_GUILDMES2 120
+
 //Base Homun skill.
 #define HM_SKILLBASE 8001
 #define MAX_HOMUNSKILL 16
@@ -474,7 +478,7 @@ struct guild {
 	char name[NAME_LENGTH],master[NAME_LENGTH];
 	struct guild_member member[MAX_GUILD];
 	struct guild_position position[MAX_GUILDPOSITION];
-	char mes1[60],mes2[120];
+	char mes1[MAX_GUILDMES1],mes2[MAX_GUILDMES2];
 	int emblem_len,emblem_id;
 	char emblem_data[2048];
 	struct guild_alliance alliance[MAX_GUILDALLIANCE];

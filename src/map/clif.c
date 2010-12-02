@@ -7077,8 +7077,8 @@ int clif_guild_notice(struct map_session_data* sd, struct guild* g)
 
 	WFIFOHEAD(fd,packet_len(0x16f));
 	WFIFOW(fd,0) = 0x16f;
-	memcpy(WFIFOP(fd,2), g->mes1, 60);
-	memcpy(WFIFOP(fd,62), g->mes2, 120);
+	memcpy(WFIFOP(fd,2), g->mes1, MAX_GUILDMES1);
+	memcpy(WFIFOP(fd,62), g->mes2, MAX_GUILDMES2);
 	WFIFOSET(fd,packet_len(0x16f));
 	return 0;
 }
@@ -11169,7 +11169,7 @@ void clif_parse_GuildChangeNotice(int fd, struct map_session_data* sd)
 	// compensate for some client defects when using multilanguage mode
 	if (msg1[0] == '|' && msg1[3] == '|') msg1+= 3; // skip duplicate marker
 	if (msg2[0] == '|' && msg2[3] == '|') msg2+= 3; // skip duplicate marker
-	if (msg2[0] == '|') msg2[strnlen(msg2, 120)-1] = '\0'; // delete extra space at the end of string
+	if (msg2[0] == '|') msg2[strnlen(msg2, MAX_GUILDMES2)-1] = '\0'; // delete extra space at the end of string
 
 	guild_change_notice(sd, guild_id, msg1, msg2);
 }

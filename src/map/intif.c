@@ -698,8 +698,8 @@ int intif_guild_notice(int guild_id,const char *mes1,const char *mes2)
 	WFIFOHEAD(inter_fd,186);
 	WFIFOW(inter_fd,0)=0x303e;
 	WFIFOL(inter_fd,2)=guild_id;
-	memcpy(WFIFOP(inter_fd,6),mes1,60);
-	memcpy(WFIFOP(inter_fd,66),mes2,120);
+	memcpy(WFIFOP(inter_fd,6),mes1,MAX_GUILDMES1);
+	memcpy(WFIFOP(inter_fd,66),mes2,MAX_GUILDMES2);
 	WFIFOSET(inter_fd,186);
 	return 0;
 }

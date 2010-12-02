@@ -865,8 +865,8 @@ int mapif_guild_notice(struct guild *g)
 
 	WBUFW(buf,0) = 0x383e;
 	WBUFL(buf,2) = g->guild_id;
-	memcpy(WBUFP(buf,6), g->mes1, 60);
-	memcpy(WBUFP(buf,66), g->mes2, 120);
+	memcpy(WBUFP(buf,6), g->mes1, MAX_GUILDMES1);
+	memcpy(WBUFP(buf,66), g->mes2, MAX_GUILDMES2);
 	mapif_sendall(buf, 186);
 
 	return 0;
@@ -1404,8 +1404,8 @@ int mapif_parse_GuildNotice(int fd, int guild_id, const char *mes1, const char *
 	g = (struct guild*)idb_get(guild_db, guild_id);
 	if (g == NULL)
 		return 0;
-	memcpy(g->mes1, mes1, 60);
-	memcpy(g->mes2, mes2, 120);
+	memcpy(g->mes1, mes1, MAX_GUILDMES1);
+	memcpy(g->mes2, mes2, MAX_GUILDMES2);
 
 	return mapif_guild_notice(g);
 }
