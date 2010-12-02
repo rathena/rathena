@@ -181,6 +181,7 @@ enum item_types {
 	IT_UNKNOWN2,//9
 	IT_AMMO,    //10
 	IT_DELAYCONSUME,//11
+	IT_CASH = 18,
 	IT_MAX 
 };
 

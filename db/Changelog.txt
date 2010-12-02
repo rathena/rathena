@@ -8,6 +8,10 @@
 	1475 Equestrian's Spear:	NEED INFO.
 	13005 Angelic Wing Dagger:	NEED INFO.
 =======================
+2010/12/02
+	* Rev. 14549 Updated the item types for several of the cash item boxes to 18. [L0ne_W0lf]
+	* Fixed the Exorcism_Bible bonus, missing {}'s for who knows how long. (bugreport:4342)
+	* Updated Brasilis monsters stats again, care of Playtester.
 2010/11/30
 	* Rev. 14529 Fixed a mistake (excess dummy name) in dead branch list fallback value (since r32). [Ai4rei]
 	* Rev. 14524 Updated comments for skill Berserk in skill_tree.txt, among others because they would cause errors the way they are read now. [Ai4rei]

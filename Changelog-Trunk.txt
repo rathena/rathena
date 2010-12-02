@@ -1,6 +1,7 @@
 Date	Added
 
 2010/12/02
+	* Rev. 14549 Added item type IT_CASH (item type 18) Requires user confirmation before using/generating item(s). [L0ne_W0lf]
 	* Fixed mapflags not getting initialized upon @reloadscript (bugreport:2247, since r1275). [Ai4rei]
 	* Removed redundant check in food vs. cash food status change overriding code, partially suggested by xazax (related r14437 and r14510). [Ai4rei]
 	* Added an error message when a client connection exceeds the socket write buffer, so that it does not appear to be closed for no apparent reason (follow up to r13469). [Ai4rei]

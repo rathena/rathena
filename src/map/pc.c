@@ -3529,7 +3529,7 @@ int pc_isUseitem(struct map_session_data *sd,int n)
 	if( item == NULL )
 		return 0;
 	//Not consumable item
-	if( item->type != IT_HEALING && item->type != IT_USABLE )
+	if( item->type != IT_HEALING && item->type != IT_USABLE && item->type != IT_CASH )
 		return 0;
 	if( !item->script ) //if it has no script, you can't really consume it!
 		return 0;
