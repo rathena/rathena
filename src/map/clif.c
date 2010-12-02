@@ -8022,21 +8022,58 @@ void clif_gospel_info(struct map_session_data *sd, int type)
 	WFIFOSET(fd, packet_len(0x215));
 
 }
+
+/// Multi purpose mission information packet (ZC_STARSKILL).
+/// 0x20e <mapname>.24B <monster_id>.L <star>.B <result>.B
+/// result:
+///      0 = Star Gladiator %s has designed <mapname>'s as the %s.
+///      star:
+///          0 = Place of the Sun
+///          1 = Place of the Moon
+///          2 = Place of the Stars
+///      1 = Star Gladiator %s's %s: <mapname>
+///      star:
+///          0 = Place of the Sun
+///          1 = Place of the Moon
+///          2 = Place of the Stars
+///      10 = Star Gladiator %s has designed <mapname>'s as the %s.
+///      star:
+///          0 = Target of the Sun
+///          1 = Target of the Moon
+///          2 = Target of the Stars
+///      11 = Star Gladiator %s's %s: <mapname used as monster name>
+///      star:
+///          0 = Monster of the Sun
+///          1 = Monster of the Moon
+///          2 = Monster of the Stars
+///      20 = [TaeKwon Mission] Target Monster : <mapname used as monster name> (<star>%)
+///      21 = [Taming Mission] Target Monster : <mapname used as monster name>
+///      22 = [Collector Rank] Target Item : <monster_id used as item id>
+///      30 = [Sun, Moon and Stars Angel] Designed places and monsters have been reset.
+///      40 = Target HP : <monster_id used as HP>
+void clif_starskill(struct map_session_data* sd, const char* mapname, int monster_id, unsigned char star, unsigned char result)
+{
+	int fd = sd->fd;
+
+	WFIFOHEAD(fd,packet_len(0x20e));
+	WFIFOW(fd,0) = 0x20e;
+	safestrncpy((char*)WFIFOP(fd,2), mapname, NAME_LENGTH);
+	WFIFOL(fd,26) = monster_id;
+	WFIFOB(fd,30) = star;
+	WFIFOB(fd,31) = result;
+	WFIFOSET(fd,packet_len(0x20e));
+}
+
 /*==========================================
  * Info about Star Glaldiator save map [Komurka]
  * type: 1: Information, 0: Map registered
  *------------------------------------------*/
 void clif_feel_info(struct map_session_data* sd, unsigned char feel_level, unsigned char type)
 {
-	int fd=sd->fd;
+	char mapname[MAP_NAME_LENGTH_EXT];
 
-	WFIFOHEAD(fd,packet_len(0x20e));
-	WFIFOW(fd,0) = 0x20e;
-	mapindex_getmapname_ext(mapindex_id2name(sd->feel_map[feel_level].index), (char*)WFIFOP(fd,2));
-	WFIFOL(fd,26) = sd->bl.id;
-	WFIFOB(fd,30) = feel_level;
-	WFIFOB(fd,31) = type?1:0;
-	WFIFOSET(fd,packet_len(0x20e));
+	mapindex_getmapname_ext(mapindex_id2name(sd->feel_map[feel_level].index), mapname);
+	clif_starskill(sd, mapname, 0, feel_level, type ? 1 : 0);
 }
 
 /*==========================================
@@ -8045,19 +8082,18 @@ void clif_feel_info(struct map_session_data* sd, unsigned char feel_level, unsig
  *------------------------------------------*/
 void clif_hate_info(struct map_session_data *sd, unsigned char hate_level,int class_, unsigned char type)
 {
-	int fd=sd->fd;
-	WFIFOHEAD(fd,packet_len(0x20e));
-	WFIFOW(fd,0)=0x20e;
-	if (pcdb_checkid(class_))
-		strncpy((char*)WFIFOP(fd,2),job_name(class_), NAME_LENGTH);
-	else if (mobdb_checkid(class_))
-		strncpy((char*)WFIFOP(fd,2),mob_db(class_)->jname, NAME_LENGTH);
-	else //Really shouldn't happen...
-		memset(WFIFOP(fd,2), 0, NAME_LENGTH);
-	WFIFOL(fd,26)=sd->bl.id;
-	WFIFOB(fd,30)=hate_level;
-	WFIFOB(fd,31)=type?10:11; //Register/Info
-	WFIFOSET(fd, packet_len(0x20e));
+	if( pcdb_checkid(class_) )
+	{
+		clif_starskill(sd, job_name(class_), class_, hate_level, type ? 10 : 11);
+	}
+	else if( mobdb_checkid(class_) )
+	{
+		clif_starskill(sd, mob_db(class_)->jname, class_, hate_level, type ? 10 : 11);
+	}
+	else
+	{
+		ShowWarning("clif_hate_info: Received invalid class %d for this packet (char_id=%d, hate_level=%u, type=%u).\n", class_, sd->status.char_id, (unsigned int)hate_level, (unsigned int)type);
+	}
 }
 
 /*==========================================
@@ -8065,14 +8101,7 @@ void clif_hate_info(struct map_session_data *sd, unsigned char hate_level,int cl
  *------------------------------------------*/
 void clif_mission_info(struct map_session_data *sd, int mob_id, unsigned char progress)
 {
-	int fd=sd->fd;
-	WFIFOHEAD(fd,packet_len(0x20e));
-	WFIFOW(fd,0)=0x20e;
-	strncpy((char*)WFIFOP(fd,2),mob_db(mob_id)->jname, NAME_LENGTH);
-	WFIFOL(fd,26)=mob_id;
-	WFIFOB(fd,30)=progress; //Message to display
-	WFIFOB(fd,31)=20;
-	WFIFOSET(fd, packet_len(0x20e));
+	clif_starskill(sd, mob_db(mob_id)->jname, mob_id, progress, 20);
 }
 
 /*==========================================
@@ -8080,14 +8109,7 @@ void clif_mission_info(struct map_session_data *sd, int mob_id, unsigned char pr
  *------------------------------------------*/
 void clif_feel_hate_reset(struct map_session_data *sd)
 {
-	int fd=sd->fd;
-	WFIFOHEAD(fd,packet_len(0x20e));
-	WFIFOW(fd,0)=0x20e;
-	memset(WFIFOP(fd,2), 0, NAME_LENGTH); //Blank name as all was reset.
-	WFIFOL(fd,26)=sd->bl.id;
-	WFIFOB(fd,30)=0; //Feel/hate level: irrelevant
-	WFIFOB(fd,31)=30;
-	WFIFOSET(fd, packet_len(0x20e));
+	clif_starskill(sd, "", 0, 0, 30);
 }
 
 /*==========================================
