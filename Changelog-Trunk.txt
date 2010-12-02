@@ -1,6 +1,7 @@
 Date	Added
 
 2010/12/02
+	* Added support for IT_CASH to @iteminfo, logging filters and item drop rate adjustment. Added 'show_picker.item_type'-specific IT_CASH value to it's description (follow up to r14549). [Ai4rei]
 	* Rev. 14549 Added item type IT_CASH (item type 18) Requires user confirmation before using/generating item(s). [L0ne_W0lf]
 	* Fixed mapflags not getting initialized upon @reloadscript (bugreport:2247, since r1275). [Ai4rei]
 	* Removed redundant check in food vs. cash food status change overriding code, partially suggested by xazax (related r14437 and r14510). [Ai4rei]

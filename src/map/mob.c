@@ -3582,6 +3582,7 @@ static bool mob_parse_dbrow(char** str)
 			ratemax = battle_config.item_drop_heal_max;
 			break;
 		case IT_USABLE:
+		case IT_CASH:
 			rate_adjust = (status->mode&MD_BOSS) ? battle_config.item_rate_use_boss : battle_config.item_rate_use;
 			ratemin = battle_config.item_drop_use_min;
 			ratemax = battle_config.item_drop_use_max;

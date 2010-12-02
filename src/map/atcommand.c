@@ -7390,8 +7390,9 @@ ACMD_FUNC(homshuffle)
  *------------------------------------------*/
 ACMD_FUNC(iteminfo)
 {
-	char *itype[12] = {"Potion/Food", "BUG!", "Usable", "Etc", "Weapon", "Protection", "Card", "Egg", "Pet Acessory", "BUG!", "Arrow"};
-	//, "Lure/Scroll"}; No need, type 11 items are converted to type 2 upon loading [Skotlex]
+	char *itype[IT_MAX] = {"Potion/Food", "BUG!", "Usable", "Etc", "Weapon", "Protection", "Card", "Egg", "Pet Acessory", "BUG!", "Arrow",
+	"BUG!",  // No need, type 11 items are converted to type 2 upon loading [Skotlex]
+	"BUG!", "BUG!", "BUG!", "BUG!", "BUG!", "BUG!", "Cash Usable"};
 
 	struct item_data *item_data, *item_array[MAX_SEARCH];
 	int i, count = 1;
@@ -7417,7 +7418,7 @@ ACMD_FUNC(iteminfo)
 		item_data = item_array[i];
 		sprintf(atcmd_output, "Item: '%s'/'%s'[%d] (%d) Type: %s | Extra Effect: %s",
 			item_data->name,item_data->jname,item_data->slot,item_data->nameid,
-			item_data->type < 12 ? itype[item_data->type] : "BUG!", 
+			item_data->type < IT_MAX ? itype[item_data->type] : "BUG!", 
 			(item_data->script==NULL)? "None" : "With script"
 		);
 		clif_displaymessage(fd, atcmd_output);
