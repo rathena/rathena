@@ -232,9 +232,9 @@ int clif_changeoption(struct block_list*);	// area
 int clif_changeoption2(struct block_list*);	// area
 int clif_useitemack(struct map_session_data*,int,int,int);	// self
 void clif_GlobalMessage(struct block_list* bl, const char* message);
-void clif_createchat(struct map_session_data* sd, int fail);	// self
+void clif_createchat(struct map_session_data* sd, int flag);	// self
 int clif_dispchat(struct chat_data*,int);	// area or fd
-int clif_joinchatfail(struct map_session_data*,int);	// self
+int clif_joinchatfail(struct map_session_data* sd,int flag);	// self
 int clif_joinchatok(struct map_session_data*,struct chat_data*);	// self
 int clif_addchat(struct chat_data*,struct map_session_data*);	// chat
 void clif_changechatowner(struct chat_data* cd, struct map_session_data* sd);	// chat
@@ -312,7 +312,7 @@ int clif_produceeffect(struct map_session_data* sd,int flag,int nameid);
 void clif_skill_setunit(struct skill_unit *unit);
 void clif_skill_delunit(struct skill_unit *unit);
 
-void clif_01ac(struct block_list* bl);
+void clif_skillunit_update(struct block_list* bl);
 
 int clif_autospell(struct map_session_data *sd,int skilllv);
 void clif_devotion(struct block_list *src, struct map_session_data *tsd);

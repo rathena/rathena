@@ -1,6 +1,8 @@
 Date	Added
 
 2010/12/02
+	* Various additions and updates to the comments and documentation of packets in clif. [Ai4rei]
+	- Renamed clif_01ac to clif_skillunit_update to make it look less 'mysterious'.
 	* Removed clif_weather_sub and clif_misceffect2 in favor of clif_specialeffect_single and clif_specialeffect (all of them are ZC_NOTIFY_EFFECT2). [Ai4rei]
 	* Rev. 14540 Monsters spawned with mob-generating items now have MD_ANGRY applied to them. [L0ne_W0lf]
 2010/12/01

@@ -1458,9 +1458,10 @@ void clif_blown(struct block_list *bl)
 	clif_slide(bl, bl->x, bl->y);
 }
 
-/*==========================================
- *
- *------------------------------------------*/
+/// Visually moves(slides) a character to x,y. If the target cell
+/// isn't walkable, the char doesn't move at all. If the char is
+/// sitting it will stand up.
+/// S 0088 <gid>.L <x>.W <y>.W
 void clif_fixpos(struct block_list *bl)
 {
 	unsigned char buf[10];
@@ -3200,11 +3201,13 @@ int clif_useitemack(struct map_session_data *sd,int index,int amount,int ok)
 	return 0;
 }
 
-/*==========================================
- * Inform client whether chatroom creation was successful or not
- * R 00d6 <fail>.B
- *------------------------------------------*/
-void clif_createchat(struct map_session_data* sd, int fail)
+/// Inform client whether chatroom creation was successful or not
+/// R 00d6 <flag>.B
+/// flag:
+///  0 = Room has been successfully created (opens chat room)
+///  1 = Room limit exceeded
+///  2 = Same room already exists
+void clif_createchat(struct map_session_data* sd, int flag)
 {
 	int fd;
 
@@ -3213,7 +3216,7 @@ void clif_createchat(struct map_session_data* sd, int fail)
 	fd = sd->fd;
 	WFIFOHEAD(fd,packet_len(0xd6));
 	WFIFOW(fd,0) = 0xd6;
-	WFIFOB(fd,2) = fail;
+	WFIFOB(fd,2) = flag;
 	WFIFOSET(fd,packet_len(0xd6));
 }
 
@@ -3301,10 +3304,18 @@ int clif_clearchat(struct chat_data *cd,int fd)
 	return 0;
 }
 
-/*==========================================
- *
- *------------------------------------------*/
-int clif_joinchatfail(struct map_session_data *sd,int fail)
+/// Displays message (mostly) regarding join chat
+/// failures
+/// R 0x00da <flag>.B
+/// flag:
+///  0 = The room is already full.
+///  1 = Incorrect password, please try again.
+///  2 = You have been kicked out of the room.
+///  4 = You don't have enough money.
+///  5 = You are not the required level.
+///  6 = Too high level for this job.
+///  7 = Not the suitable job for this type of work.
+int clif_joinchatfail(struct map_session_data *sd,int flag)
 {
 	int fd;
 
@@ -3314,7 +3325,7 @@ int clif_joinchatfail(struct map_session_data *sd,int fail)
 
 	WFIFOHEAD(fd,packet_len(0xda));
 	WFIFOW(fd,0) = 0xda;
-	WFIFOB(fd,2) = fail;
+	WFIFOB(fd,2) = flag;
 	WFIFOSET(fd,packet_len(0xda));
 
 	return 0;
@@ -3367,7 +3378,7 @@ int clif_addchat(struct chat_data* cd,struct map_session_data *sd)
 
 /*==========================================
  * Announce the new owner
- * R 00e1 <index>.l <nick>.24B
+ * R 00e1 <owner flag>.l <nick>.24B
  *------------------------------------------*/
 void clif_changechatowner(struct chat_data* cd, struct map_session_data* sd)
 {
@@ -3379,6 +3390,8 @@ void clif_changechatowner(struct chat_data* cd, struct map_session_data* sd)
 	//FIXME: this announces a swap between positions 0 and 1 (probably not what we want) [ultramage]
 	//FIXME: aegis sends obviously incorrect packets; need to figure out what to send to display it correctly :X
 	//TODO: is it just owner swap, or can it do general-purpose reordering?
+	// It's not position, but operator flag, everyone set to 1 gets chat
+	// operator menu (yes, that means a chat may host multiple operators) [Ai4rei]
 
 	WBUFW(buf, 0) = 0xe1;
 	WBUFL(buf, 2) = 1;
@@ -3859,7 +3872,8 @@ static int clif_calc_walkdelay(struct block_list *bl,int delay, int type, int da
 
 /*==========================================
  * Sends a 'damage' packet (src performs action on dst)
- * R 008a <src ID>.l <dst ID>.l <server tick>.l <src speed>.l <dst speed>.l <param1>.w <param2>.w <type>.B <param3>.w
+ * R 008a <src ID>.L <dst ID>.L <server tick>.L <src speed>.L <dst speed>.L <damage>.W <div>.W <type>.B <damage2>.W
+ * R 02e1 <src ID>.L <dst ID>.L <server tick>.L <src speed>.L <dst speed>.L <damage>.L <div>.W <type>.B <damage2>.L
  * 
  * type=00 damage [param1: total damage, param2: div, param3: assassin dual-wield damage]
  * type=01 pick up item
@@ -4105,12 +4119,11 @@ void clif_skill_delunit(struct skill_unit *unit)
 }
 
 /*==========================================
- * Unknown... trap related?
- * Sent when an object gets ankle-snared
+ * Sent when an object gets ankle-snared (ZC_SKILL_UPDATE)
  * Only affects units with class [139,153] client-side
  * R 01ac <object id>.l
  *------------------------------------------*/
-void clif_01ac(struct block_list* bl)
+void clif_skillunit_update(struct block_list* bl)
 {
 	unsigned char buf[6];
 	nullpo_retv(bl);
@@ -4388,6 +4401,15 @@ int clif_skillup(struct map_session_data *sd,int skill_num)
 
 /*==========================================
  * スキル詠唱エフェクトを送信する
+ * pl:
+ * 0 = Yellow cast aura
+ * 1 = Water elemental cast aura
+ * 2 = Earth elemental cast aura
+ * 3 = Fire elemental cast aura
+ * 4 = Wind elemental cast aura
+ * 5 = Poison elemental cast aura
+ * 6 = White cast aura
+ * ? = like 0
  *------------------------------------------*/
 int clif_skillcasting(struct block_list* bl,
 	int src_id,int dst_id,int dst_x,int dst_y,int skill_num,int pl, int casttime)
@@ -7080,7 +7102,12 @@ int clif_guild_invite(struct map_session_data *sd,struct guild *g)
 	return 0;
 }
 /*==========================================
- * ギルドメンバ勧誘結果
+ * Reply to invite request
+ * Flag:
+ * 0 = Already in guild.
+ * 1 = Offer rejected.
+ * 2 = Offer accepted.
+ * 3 = Guild full.
  *------------------------------------------*/
 int clif_guild_inviteack(struct map_session_data *sd,int flag)
 {
@@ -7259,7 +7286,11 @@ int clif_guild_delalliance(struct map_session_data *sd,int guild_id,int flag)
 	return 0;
 }
 /*==========================================
- * ギルド敵対結果
+ * Reply to opposition request
+ * Flag:
+ * 0 = Antagonist has been set.
+ * 1 = Guild has too many Antagonists.
+ * 2 = Already set as an Antagonist.
  *------------------------------------------*/
 int clif_guild_oppositionack(struct map_session_data *sd,int flag)
 {
@@ -7902,6 +7933,9 @@ int clif_charnameupdate (struct map_session_data *ssd)
 	return 0;
 }
 
+/// Visually moves(instant) a character to x,y. The char moves even
+/// when the target cell isn't walkable. If the char is sitting it
+/// stays that way.
 void clif_slide(struct block_list *bl, int x, int y)
 {
 	unsigned char buf[10];
@@ -8306,6 +8340,10 @@ static int clif_guess_PacketVer(int fd, int get_previous, int *error)
 		err = n;\
 //define SET_ERROR
 
+	// FIXME: If the packet is not received at once, this will FAIL.
+	// Figure out, when it happens, that only part of the packet is
+	// received, or fix the function to be able to deal with that
+	// case.
 #define CHECK_PACKET_VER() \
 	if( cmd != clif_config.connect_cmd[packet_ver] || packet_len != packet_db[packet_ver][cmd].len )\
 		;/* not wanttoconnection or wrong length */\
@@ -8917,6 +8955,7 @@ void clif_parse_GlobalMessage(int fd, struct map_session_data* sd)
 	WFIFOW(fd,2) = 8 + textlen;
 	WFIFOL(fd,4) = sd->bl.id;
 	safestrncpy((char*)WFIFOP(fd,8), text, textlen);
+	//FIXME: chat has range of 9 only
 	clif_send(WFIFOP(fd,0), WFIFOW(fd,2), &sd->bl, sd->chatID ? CHAT_WOS : AREA_CHAT_WOC);
 
 	// send back message to the speaker
@@ -9198,7 +9237,7 @@ void clif_parse_Restart(int fd, struct map_session_data *sd)
 
 /*==========================================
  * Validates and processes whispered messages
- * S 0096 <packet len>.w <nick>.23B 00 <message>.?B
+ * S 0096 <packet len>.w <nick>.24B <message>.?B
  *------------------------------------------*/
 void clif_parse_WisMessage(int fd, struct map_session_data* sd)
 {
@@ -10564,7 +10603,7 @@ void clif_parse_StoragePassword(int fd, struct map_session_data *sd)
 /*==========================================
  * Party creation request
  * S 00f9 <party name>.24S
- * S 01e8 <party name>.24S <item1>.B <item2>.B
+ * S 01e8 <party name>.24S <share flag>.B <share type>.B
  *------------------------------------------*/
 void clif_parse_CreateParty(int fd, struct map_session_data *sd)
 {
@@ -11053,6 +11092,7 @@ void clif_parse_GuildChangePositionInfo(int fd, struct map_session_data *sd)
 
 /*==========================================
  * ギルドメンバ役職変更
+ * S 0155 <packet len>.W {<account id>.L <char id>.L <idx>.L}
  *------------------------------------------*/
 void clif_parse_GuildChangeMemberPosition(int fd, struct map_session_data *sd)
 {
@@ -11081,6 +11121,7 @@ void clif_parse_GuildRequestEmblem(int fd,struct map_session_data *sd)
 
 /*==========================================
  * ギルドエンブレム変更
+ * S 0153 <packet len>.W <emblem data>.?B
  *------------------------------------------*/
 void clif_parse_GuildChangeEmblem(int fd,struct map_session_data *sd)
 {
@@ -11164,7 +11205,7 @@ void clif_parse_GuildLeave(int fd,struct map_session_data *sd)
 
 /*==========================================
  * Request to expel a member of a guild
- * S 015b <guild_id>.L <account_id>.L <char_id>.L <reason>.39B 00
+ * S 015b <guild_id>.L <account_id>.L <char_id>.L <reason>.40B
  *------------------------------------------*/
 void clif_parse_GuildExpulsion(int fd,struct map_session_data *sd)
 {
@@ -11484,6 +11525,7 @@ void clif_parse_GMRecall(int fd, struct map_session_data *sd)
 
 /*==========================================
  * /monster /item 
+ * R 01F3 <name>.24B
  *------------------------------------------*/
 void clif_parse_GM_Monster_Item(int fd, struct map_session_data *sd)
 {
@@ -11641,11 +11683,11 @@ void clif_parse_GMReqAccountName(int fd, struct map_session_data *sd)
 
 /*==========================================
  * GM single cell type change request
- * /changemaptype <x> <y> <type>
+ * /changemaptype <x> <y> <type:0-1>
  * S 0198 <x>.W <y>.W <gat>.W
  *------------------------------------------*/
 void clif_parse_GMChangeMapType(int fd, struct map_session_data *sd)
-{
+{// FIXME: type sent by client is 0 or 1 (even if you enter 2+); that suggests, that it is walkable gat attribute
 	int x,y,type;
 
 	if( battle_config.atc_gmonly && !pc_isGM(sd) )
@@ -12085,6 +12127,7 @@ void clif_parse_PVPInfo(int fd,struct map_session_data *sd)
 
 /*==========================================
  * /blacksmith
+ * S 0217
  *------------------------------------------*/
 void clif_parse_Blacksmith(int fd,struct map_session_data *sd)
 {
@@ -12128,6 +12171,7 @@ int clif_fame_blacksmith(struct map_session_data *sd, int points)
 
 /*==========================================
  * /alchemist
+ * S 0218
  *------------------------------------------*/
 void clif_parse_Alchemist(int fd,struct map_session_data *sd)
 {
@@ -12171,6 +12215,7 @@ int clif_fame_alchemist(struct map_session_data *sd, int points)
 
 /*==========================================
  * /taekwon
+ * S 0225
  *------------------------------------------*/
 void clif_parse_Taekwon(int fd,struct map_session_data *sd)
 {
@@ -12212,7 +12257,8 @@ int clif_fame_taekwon(struct map_session_data *sd, int points)
 }
 
 /*==========================================
- * PK Ranking table?
+ * /pk
+ * S 0237
  *------------------------------------------*/
 void clif_parse_RankingPk(int fd,struct map_session_data *sd)
 {
@@ -12716,9 +12762,10 @@ void clif_parse_Mail_setattach(int fd, struct map_session_data *sd)
 
 /*------------------------------------------
  * Mail Window Operation
+ * S 0246 <flag>.W
  * 0 : Switch to 'new mail' window, or Close mailbox
  * 1 : ???
- * 2 : ???
+ * 2 : Zeny entering start
  *------------------------------------------*/
 void clif_parse_Mail_winopen(int fd, struct map_session_data *sd)
 {
@@ -13979,10 +14026,10 @@ int clif_parse(int fd)
 	TBL_PC* sd;
 	int pnum;
 
-	//TODO apply deplays or disconnect based on packet throughput [FlavioJS]
+	//TODO apply delays or disconnect based on packet throughput [FlavioJS]
 	// Note: "click masters" can do 80+ clicks in 10 seconds
 
-	for( pnum = 0; pnum < 3; ++pnum )// Limit max packets per cycle to 3 (delay packet spammers) [FlavioJS]
+	for( pnum = 0; pnum < 3; ++pnum )// Limit max packets per cycle to 3 (delay packet spammers) [FlavioJS]  -- This actually aids packet spammers, but stuff like /str+ gets slow without it [Ai4rei]
 	{ // begin main client packet processing loop
 
 	sd = (TBL_PC *)session[fd]->session_data;
