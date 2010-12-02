@@ -13960,6 +13960,23 @@ void clif_displayexp(struct map_session_data *sd, unsigned int exp, char type, b
     return;
 }
 
+/// Displays digital clock digits on top of the screen (ZC_SHOWDIGIT).
+/// type:
+///   0: Displays 'value' for 5 seconds.
+///   1: Incremental counter (1 tick/second), negated 'value' specifies start value (e.g. using -10 lets the counter start at 10).
+///   2: Decremental counter (1 tick/second), negated 'value' specifies start value (does not stop when reaching 0, but overflows).
+///   3: Decremental counter (2 ticks/second), 'value' specifies start value (stops when reaching 0, displays at most 2 digits).
+/// value:
+///   Except for type 3 it is interpreted as seconds for displaying as DD:HH:MM:SS, HH:MM:SS, MM:SS or SS (leftmost '00' is not displayed).
+void clif_showdigit(struct map_session_data* sd, unsigned char type, int value)
+{
+	WFIFOHEAD(sd->fd, packet_len(0x1b1));
+	WFIFOW(sd->fd,0) = 0x1b1;
+	WFIFOB(sd->fd,0) = type;
+	WFIFOL(sd->fd,0) = value;
+	WFIFOSET(sd->fd, packet_len(0x1b1));
+}
+
 /*==========================================
  * パケットデバッグ
  *------------------------------------------*/

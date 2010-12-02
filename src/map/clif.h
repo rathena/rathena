@@ -571,4 +571,6 @@ void clif_PartyBookingUpdateNotify(struct map_session_data* sd, struct party_boo
 void clif_PartyBookingDeleteNotify(struct map_session_data* sd, int index);
 void clif_PartyBookingInsertNotify(struct map_session_data* sd, struct party_booking_ad_info* pb_ad);
 
+void clif_showdigit(struct map_session_data* sd, unsigned char type, int value);
+
 #endif /* _CLIF_H_ */
