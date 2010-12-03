@@ -4787,7 +4787,7 @@ int pc_checkbaselevelup(struct map_session_data *sd)
 		if (sd->state.snovice_dead_flag)
 			sd->state.snovice_dead_flag = 0; //Reenable steelbody resurrection on dead.
 	} else
-	if((sd->class_&MAPID_UPPERMASK) == MAPID_TAEKWON || (sd->class_&MAPID_UPPERMASK) == MAPID_STAR_GLADIATOR)
+	if( (sd->class_&MAPID_BASEMASK) == MAPID_TAEKWON )
 	{
 		sc_start(&sd->bl,status_skill2sc(AL_INCAGI),100,10,600000);
 		sc_start(&sd->bl,status_skill2sc(AL_BLESSING),100,10,600000);

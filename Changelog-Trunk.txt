@@ -1,6 +1,7 @@
 Date	Added
 
 2010/12/03
+	* Fixed soul linkers not receiving taekwon angel buffs upon level up (bugreport:3585, since r3657 and r3660, related r6294). [Ai4rei]
 	* Corrected 'chance' in description for bonuses bAddMonsterDropItem and bAddMonsterDropItemGroup (bugreport:4063, partially since r1572). [Ai4rei]
 	* Removed leftovers of the item_value_db.txt feature (bugreport:2031, since athena-dev-2.1.1-mod377, followup to pre-svn 2004/05/29). [Ai4rei]
 2010/12/02
