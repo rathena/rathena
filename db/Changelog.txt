@@ -9,6 +9,8 @@
 	13005 Angelic Wing Dagger:	NEED INFO.
 =======================
 2010/12/02
+	* Rev. 14552 Updated some more cash shop boxes to use rentitem instead of getitem. [L0ne_W0lf]
+	* Added mercenary skills for Mimic, Disguise, Alice, Doppelganger, and Egnigem.
 	* Rev. 14549 Updated the item types for several of the cash item boxes to 18. [L0ne_W0lf]
 	* Fixed the Exorcism_Bible bonus, missing {}'s for who knows how long. (bugreport:4342)
 	* Updated Brasilis monsters stats again, care of Playtester.

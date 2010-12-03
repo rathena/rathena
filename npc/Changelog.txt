@@ -1,5 +1,12 @@
 Date		Added
 ======
+2010/12/02
+	* Rev. 14552 Just going through bug reports. :P [L0ne_W0lf]
+	- Removed duplicate NPCs in Lighthalzen and Morroc. (bugreport:4555)
+	- Corrected typo (Sit -> Suit) in enhcant_arm NPC. (bugreport:4586)
+	- Corrected a typo in the christmas_2008 event. (bugreport:4600)
+	- Changed which White Lady spawns in endless tower. (bugreport:4601)
+	- Also added Quest Log Entries to Endless Tower, please test.
 2010/11/22
 	* Rev. 14490 Added quest log support for the following quests. [L0ne_W0lf]
 	- Factory Quest, Murder Quest, Cursed Spirit Quest, Juno Remedy Quest,

@@ -361,7 +361,7 @@ prontera,226,306,4	script	Carolling#iROxmas08	79,{
 			mes "[Carolling]";
 			mes "For all of the children of this";
 			mes "world!!!";
-			mes "Please bring me ^0000FF6Singing Crystal";
+			mes "Please bring me ^0000FFSinging Crystal";
 			mes "Pieces^000000 from ^0000FFViolent Gift Boxes^000000!";
 			next;
 			emotion 33;

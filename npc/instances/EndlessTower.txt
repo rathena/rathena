@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.3
+//= 1.4
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -17,6 +17,9 @@
 //=     Added some missing stopnpctimers to npcs. (bugreport:4418)
 //= 1.3 Fixed a couple copy/paste errors :D I fail. [L0ne_W0lf]
 //      Timer no longer resets when re-entering.
+//= 1.4 Added quest log entries based on iRO. [L0ne_W0lf]
+//=     You may need to update your questid2display.
+//=     Changed White lady spawn to MVP White Lady. (bugreport:4601)
 //============================================================ 
 
 alberta,214,77,6	script	Captain Janssen	709,{
@@ -201,6 +204,9 @@ e_tower,81,105,0	script	Tower Protection Stone	406,{
 	set .@partymembercount,$@partymembercount;
 	copyarray .@partymembername$[0],$@partymembername$[0],.@partymembercount;
 
+	set .@etower_timer,checkquest(60200,PLAYTIME); // 1 week
+	set .@etower_timer2,checkquest(60201,PLAYTIME); // 4 hours
+
 	set .@dun_lim_time,etower_timer+604800; // 1 week
 	set .@dun_lim_time2,etower_timer+14400; // 4 hours
 	set .@dun_cur_time,gettimetick(2);
@@ -210,7 +216,7 @@ e_tower,81,105,0	script	Tower Protection Stone	406,{
 	set .@dun_s,.@dun_ent_t - ((.@dun_h * 3600) + (.@dun_m * 60));
 
 	if ((.@party_id > 0) && (.@partymembercount > 1)) {
-		if (etower_timer < 1) {
+		if (.@etower_timer == -1) {
 			if (.@ins_mas == getcharid(0)) {
 				mes "Confirmed the party has been made. Would you like to reserve for entrance to the Endless Tower?";
 				next;
@@ -273,6 +279,8 @@ e_tower,81,105,0	script	Tower Protection Stone	406,{
 					else {
 						mapannounce "e_tower", .@p_name2$ + " of the party, " + .@p_name$ + ", is entering the dungeon, " + .@md_name$ + ".",bc_map,"0x00ff99",FW_NORMAL,12;
 						set etower_timer,gettimetick(2);
+						setquest 60200;
+						setquest 60201;
 						warp "1@tower",52,354;
 						end;
 					}
@@ -299,6 +307,8 @@ e_tower,81,105,0	script	Tower Protection Stone	406,{
 					else {
 						mapannounce "e_tower", .@p_name2$ + " of the party, " + .@p_name$ + ", is entering the dungeon, " + .@md_name$ + ".",bc_map,"0x00ff99",FW_NORMAL,12;
 						set etower_timer,gettimetick(2);
+						setquest 60200;
+						setquest 60201;
 						warp "1@tower",52,354;
 						end;
 					}
@@ -314,7 +324,7 @@ e_tower,81,105,0	script	Tower Protection Stone	406,{
 				close;
 			}
 		}
-		else if ((etower_timer > 0) && (.@dun_cur_time < .@dun_lim_time2)) {
+		else if ((.@etower_timer >= 0) && (.@etower_timer2 < 2)) {
 			mes "If you have the dungeon generated already, you can enter it. ";
 			next;
 			switch(select(.@md_name$ + "Enter the dungeon:Return to Alberta:Cancel")) {
@@ -341,8 +351,8 @@ e_tower,81,105,0	script	Tower Protection Stone	406,{
 			}
 			close;
 		}
-		else if ((.@dun_cur_time > .@dun_lim_time2) && (.@dun_cur_time < .@dun_lim_time)) {
-			mes "Due to the entree aftereffect, you cannot enter the dungeon right now, " + .@dun_h + "hours " + .@dun_m + "minutes " + .@dun_s + "seconds left to enter the next dungeon.";
+		else if ((.@etower_timer >= 0) && (.@etower_timer2 == 2)) {
+			mes "Due to the entry after-effect, you cannot enter the dungeon right now, " + .@dun_h + "hours " + .@dun_m + "minutes " + .@dun_s + "seconds left to enter the next dungeon.";
 			next;
 			mes "It is dangerous here. Let me move you to Alberta.";
 			close2;
@@ -351,6 +361,8 @@ e_tower,81,105,0	script	Tower Protection Stone	406,{
 		}
 		else {
 			set etower_timer,0;
+			erasequest 60200;
+			erasequest 60201;
 			mes "^0000ffThe records and after effects related to the Endless Tower have been removed. You can generate and enter the Endless Tower again.^000000";
 			close;
 		}
@@ -1380,7 +1392,7 @@ OnInstanceInit:
 
 OnEnable:
 	enablenpc instance_npcname("29FGate102tower", instance_id());
-	areamonster "2@tower",352,351,362,387,"White Lady",1518,1,instance_npcname("29FGate102tower", instance_id())+"::OnMyMobDead";
+	areamonster "2@tower",352,351,362,387,"White Lady",1630,1,instance_npcname("29FGate102tower", instance_id())+"::OnMyMobDead";
 	areamonster "2@tower",352,351,362,387,"Evil Nymph",1416,30,instance_npcname("29FGate102tower", instance_id())+"::OnMyMobDead";
 	end;
 
