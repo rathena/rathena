@@ -1,6 +1,7 @@
 Date	Added
 
 2010/12/03
+	* Corrected 'chance' in description for bonuses bAddMonsterDropItem and bAddMonsterDropItemGroup (bugreport:4063, partially since r1572). [Ai4rei]
 	* Removed leftovers of the item_value_db.txt feature (bugreport:2031, since athena-dev-2.1.1-mod377, followup to pre-svn 2004/05/29). [Ai4rei]
 2010/12/02
 	* Various code tweaks and updates related to item types. [Ai4rei]

@@ -160,7 +160,7 @@ bonus2 bIgnoreMdefRate,n,x;		Disregard x% of the target's MDEF if the target bel
 bonus2 bHPDrainRate,n,x;		n/10 % probability to drain x% HP when attacking
 bonus2 bSPDrainRate,n,x;		n/10 % probability to drain x% SP when attacking
 bonus2 bSPVanishRate,n,x;		Add the (n/10)% chance of decreasing enemy's SP (player) amount by x% when attacking
-bonus2 bAddMonsterDropItem,n,x;		When killing any monsters with physical attack, the probability which drops item n +x% (the item which the monster drops unrelated ones)
+bonus2 bAddMonsterDropItem,n,x;		Adds a x/100% chance for item n to be dropped, when killing any monster.
 									if 'x' is negative value, then it's a part of formula
 										chance = -x*(killed_mob_level/10)+1
 bonus2 bGetZenyNum,n,x;			When killing a monster, there is a x% chance of gaining 1~n zeny
@@ -168,12 +168,12 @@ bonus2 bGetZenyNum,n,x;			When killing a monster, there is a x% chance of gainin
 								If n < 0, the max zeny to gain is -n*monster level.
 bonus2 bAddGetZenyNum,n,x;		Same as bGetZenyNum, but the rates and zeny to gain stack.
 
-bonus3 bAddMonsterDropItem,n,x,y;	When killing monsters from race x with physical attack, the probability which drops item n +y% (the item which the monster drops unrelated ones)
+bonus3 bAddMonsterDropItem,n,x,y;	Adds a y/100% chance for item n to be dropped, when killing any monster of race x.
 									0=Formless, 1=Undead, 2=Brute, 3=Plant, 4=Insect,
 									5=Fish, 6=Demon, 7=Demi-Human, 8=Angel, 9=Dragon, 
 									10=Boss monster, 11=Other than (normal monster) boss monster
-									if 'x' is negative value, then it's a part of formula
-										chance = -x*(killed_mob_level/10)+1
+									if 'y' is negative value, then it's a part of formula
+										chance = -y*(killed_mob_level/10)+1
 bonus3 bAutoSpell,n,x,y;		Auto Spell casting on attack of spell n at level x with y/10% chance. (supports skill names)
 								Skill is casted on target unless it is a self or support (inf = 4/16) skill.
 
@@ -289,7 +289,7 @@ bonus2 bSPGainRace,n,x;			When killing a monster of race n by physical attack ga
 bonus2 bSubRace2,n,x;			Damage x% reduction from enemies of race n
 							(Check db/mob_race2_db.txt)
 
-bonus2 bAddMonsterDropItemGroup,n,x;	x% chance to get an item of group type n when you kill a monster 
+bonus2 bAddMonsterDropItemGroup,n,x;	Adds a x/100% chance to get an item of group type n when you kill a monster 
 									(Check db/item_group_db.txt)
 									if 'x' is negative value, then it's a part of formula
 										chance = -x*(killed_mob_level/10)+1
@@ -309,7 +309,7 @@ bonus3 bAddEffWhenHit,n,x,y;	x/10000 chance to cause n state to the enemy when b
 									ATF_SHORT: Trigger on melee attacks
 									ATF_LONG: Trigger in ranged attacks (default: trigger on all attacks)
 
-bonus3 bAddMonsterDropItemGroup,n,x,y;	y% chance to get an item of group type n when you kill a
+bonus3 bAddMonsterDropItemGroup,n,x,y;	Adds a y/100% chance to get an item of group type n when you kill a
 										monster of race x (Check db/item_group_db.txt)
 									0=Formless, 1=Undead, 2=Brute, 3=Plant, 4=Insect,
 									5=Fish, 6=Demon, 7=Demi-Human, 8=Angel, 9=Dragon, 
