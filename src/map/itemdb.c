@@ -835,8 +835,6 @@ static bool itemdb_parse_dbrow(char** str, const char* source, int line, int scr
 	id->look = atoi(str[18]);
 
 	id->flag.available = 1;
-	id->flag.value_notdc = 0;
-	id->flag.value_notoc = 0;
 	id->view_id = 0;
 	id->sex = itemdb_gendercheck(id); //Apply gender filtering.
 

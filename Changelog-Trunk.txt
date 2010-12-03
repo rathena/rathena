@@ -1,5 +1,7 @@
 Date	Added
 
+2010/12/03
+	* Removed leftovers of the item_value_db.txt feature (bugreport:2031, since athena-dev-2.1.1-mod377, followup to pre-svn 2004/05/29). [Ai4rei]
 2010/12/02
 	* Various code tweaks and updates related to item types. [Ai4rei]
 	- Replaced item type literals with their appropriate constants.

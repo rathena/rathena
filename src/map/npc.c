@@ -1300,8 +1300,7 @@ int npc_buylist(struct map_session_data* sd, int n, unsigned short* item_list)
 				return 2;
 		}
 
-		if( !itemdb_value_notdc(nameid) )
-			value = pc_modifybuyvalue(sd,value);
+		value = pc_modifybuyvalue(sd,value);
 
 		z += (double)value * amount;
 		w += itemdb_weight(nameid) * amount;
@@ -1386,10 +1385,7 @@ int npc_selllist(struct map_session_data* sd, int n, unsigned short* item_list)
 		   sd->status.inventory[idx].amount < qty)
 			break;
 		
-		if (sd->inventory_data[idx]->flag.value_notoc)
-			z+=(double)qty*sd->inventory_data[idx]->value_sell;
-		else
-			z+=(double)qty*pc_modifysellvalue(sd,sd->inventory_data[idx]->value_sell);
+		z+=(double)qty*pc_modifysellvalue(sd,sd->inventory_data[idx]->value_sell);
 
 		if(sd->inventory_data[idx]->type == IT_PETEGG &&
 			sd->status.inventory[idx].card[0] == CARD0_PET)
