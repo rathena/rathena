@@ -56,43 +56,65 @@
 17,12120,1	// Earth Resist Potion
 17,12121,1	// Thunder Resist Potion
 // Ores
-18,756,1	// Rough Oridecon
-18,757,1	// Rough Elunium
-18,998,1	// Iron
-18,999,1	// Steel
-18,1002,1	// Iron Ore
-18,1003,1	// Coal
-18,1010,1	// Phracon
-18,1011,1	// Emveretarcon
+18,1002,30	// Iron_Ore
+18,998,28	// Iron
+18,993,26	// Yellow_Live
+18,1003,24	// Coal
+18,992,22	// Wind_Of_Verdure
+18,1010,20	// Phracon
+18,991,18	// Crystal_Blue
+18,990,16	// Boody_Red
+18,999,14	// Steel
+18,1011,12	// Emveretarcon
+18,757,10	// Elunium_Stone
+18,756,9	// Oridecon_Stone
+18,997,8	// Great_Nature
+18,996,7	// Rough_Wind
+18,995,6	// Mistic_Frozen
+18,994,5	// Flame_Heart
+18,985,4	// Elunium
+18,984,3	// Oridecon
+18,969,2	// Gold
+18,714,1	// Emperium
 // Food Types
-19,512,1	// Apple
-19,513,1	// Banana
-19,514,1	// Grape
-19,515,1	// Carrot
-19,516,1	// Potato
-19,517,1	// Meat
-19,528,1	// Monster Food
-19,529,1	// Candy
-19,530,1	// Candy Cane
-19,544,1	// Raw Fish
-19,551,1	// Sushi
+19,526,5	// Royal_Jelly
+19,12042,10	// Str_Dish02
+19,12057,10	// Agi_Dish02
+19,12068,10	// Vit_Dish03
+19,12062,10	// Dex_Dish02
+19,12068,10	// Luk_Dish03
+19,12047,10	// Int_Dish02
+19,531,30	// Apple_Juice
+19,532,30	// Banana_Juice
+19,533,30	// Grape_Juice
+19,534,30	// Carrot_Juice
+19,538,30	// Well_Baked_Cookie
+19,536,50	// Ice_Cream
+19,544,50	// Fish_Slice
+19,548,50	// Cheese
+19,551,50	// Shusi
+19,553,50	// Bun
+19,554,50	// Mojji
+19,535,50	// Pumpkin
+19,516,100	// Sweet_Potato
+19,513,100	// Banana
+19,512,600	// Apple
 // Recovery Types
-20,501,1	// Red Potion
-20,502,1	// Orange Potion
-20,503,1	// Yellow Potion
-20,504,1	// White Potion
-20,505,1	// Blue Potion
-20,506,1	// Green Potion
-20,507,1	// Red Herb
-20,508,1	// Yellow Herb
-20,509,1	// White Herb
-20,510,1	// Blue Herb
-20,511,1	// Green Herb
-20,531,1	// Apple Juice
-20,532,1	// Banana Juice
-20,533,1	// Grape Juice
-20,534,1	// Carrot Juice
-// Minerals
+20,522,5	// Fruit_Of_Mastela
+20,521,5	// Leaflet_Of_Aloe
+20,520,10	// Leaflet_Of_Hinal
+20,545,10	// Red_Slim_Potion
+20,12118,10	// Resist_Earth
+20,508,20	// Yellow_Herb
+20,501,20	// Red_Potion
+20,511,30	// Green_Herb
+20,507,30	// Red_Herb
+20,569,50	// Novice_Potion
+20,549,50	// Nice_Sweet_Potato
+20,529,100	// Candy
+20,528,200	// Monster's_Feed
+20,550,600	// Popped_Rice
+// Minerals - Unused
 21,714,1	// Emperium
 21,756,1	// Rough Oridecon
 21,757,1	// Rough Elunium
@@ -255,22 +277,26 @@
 26,2718,1	// Lunatic Brooch
 26,2719,1	// Iron Wrist
 // jewels
-27,718,1	// Garnet
-27,719,1	// Amethyst
-27,720,1	// Aquamarine
-27,721,1	// Emerald
-27,722,1	// Pearl
-27,723,1	// Ruby
-27,724,1	// Cursed Ruby
-27,725,1	// Sardonyx
-27,726,1	// Sapphire
-27,727,1	// Opal
-27,728,1	// Topaz
-27,729,1	// Zircon
-27,730,1	// 1carat Diamond
-27,731,1	// 2carat Diamond
-27,732,1	// 3carat Diamond
-27,733,1	// Cracked Diamond
+27,715,100	// Yellow_Gemstone
+27,716,100	// Red_Gemstone
+27,717,100	// Blue_Gemstone
+27,718,10	// Dark_Red_Jewel
+27,719,10	// Violet_Jewel
+27,720,10	// Skyblue_Jewel
+27,721,10	// Azure_Jewel
+27,722,10	// Scarlet_Jewel
+27,723,10	// Cardinal_Jewel
+27,724,10	// Cardinal_Jewel_
+27,725,10	// Red_Jewel
+27,726,10	// Blue_Jewel
+27,727,10	// White_Jewel
+27,728,10	// Golden_Jewel
+27,729,10	// Bluish_Green_Jewel 
+27,730,5	// Crystal_Jewel
+27,731,4	// Crystal_Jewel_
+27,732,3	// Crystal_Jewel__
+27,733,27	// Crystal_Jewel___
+27,746,50	// Glass_Bead
 // Egg Boy
 32,514,300	// Grape
 32,564,522	// Rice Ball

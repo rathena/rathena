@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.4
+//= 1.5
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -20,6 +20,7 @@
 //= 1.4 Added quest log entries based on iRO. [L0ne_W0lf]
 //=     You may need to update your questid2display.
 //=     Changed White lady spawn to MVP White Lady. (bugreport:4601)
+//= 1.5 Corrected some grammar and typos.
 //============================================================ 
 
 alberta,214,77,6	script	Captain Janssen	709,{
@@ -51,7 +52,7 @@ alberta,214,77,6	script	Captain Janssen	709,{
 		mes "[Captain Janssen]";
 		mes "As you may know after a few sea voyages, not many people have gone across the ocean beyond the continent. I too have failed to conquer the ocean.";
 		next;
-		mes "^0000ffMr. Janssen talked about his perilous ocean journeys for quite a while. You had enough time on your hands, so you sat down, quietly listening to his story.^000000";
+		mes "^0000ffMr. Janssen talked about his perilous ocean journeys for quite a while. You have enough time on your hands, so you sit down, quietly listening to his story.^000000";
 		next;
 		mes "^0000ffAt least half of his story sounded grossly exaggerated, but something caught your ear: he insists that a humongous tower exists on the ocean, and that it's so tall, it scrapes across the sky.^000000";
 		set in_102tower,2;
@@ -62,7 +63,7 @@ alberta,214,77,6	script	Captain Janssen	709,{
 		mes "So all I could do was cast anchor at that humongous tower after my fleet was wrecked. At first, we were only going to stay there until the rainstorm was over, but it didn't end as soon as we had hoped.";
 		next;
 		mes "[Captain Janssen]";
-		mes "My crew was starving, and a few of them walked into the tower of the unknown in order to find food... They never came back.";
+		mes "My crew was starving, and a few of them walked into the tower in order to find food... They never came back.";
 		next;
 		mes "["+.@name_102$+"]";
 		mes "Why didn't you go in there with them?";
@@ -73,7 +74,7 @@ alberta,214,77,6	script	Captain Janssen	709,{
 		mes "[Captain Janssen]";
 		mes "In our desperation to survive, we abandoned all our goods, and left the tower only with a little bit of the water and edible plants we'd found around the tower. When we finally reached land, I was the only one alive...";
 		next;
-		mes "^0000ffYou could imagine the heartrending scene of the dying fleet on their last voyage, even if he didn't explain it any further. A look of somber regret swept his face as he remained silent a while, and then he said:^000000";
+		mes "^0000ffYou could imagine the heartwretching scene of the dying fleet on their last voyage, even if he didn't explain it any further. A look of somber regret swept over his face as he remained silent a while, and then he said:^000000";
 		next;
 		mes "[Captain Janssen]";
 		mes "I have something I must do before I die. I must retrieve the remains of my crew that died in the tower, and give them a proper burial.";
@@ -182,7 +183,7 @@ alberta,214,77,6	script	Captain Janssen	709,{
 				mes "^0000ffYou have donated 10,000 Zeny to Captain Janssen^000000.";
 				next;
 				mes "[Captain Janssen]";
-				mes "Thank you so much! Now I can stock food and materials for my ship. You're kind, very kind!";
+				mes "Thank you so much! Now I can stock up on food and materials for my ship. You're kind, very kind!";
 				set zeny,zeny-10000;
 				set in_102tower,1;
 				close;
@@ -218,7 +219,7 @@ e_tower,81,105,0	script	Tower Protection Stone	406,{
 	if ((.@party_id > 0) && (.@partymembercount > 1)) {
 		if (.@etower_timer == -1) {
 			if (.@ins_mas == getcharid(0)) {
-				mes "Confirmed the party has been made. Would you like to reserve for entrance to the Endless Tower?";
+				mes "Confirmed the party has been made. Would you like to reserve entrance to the Endless Tower?";
 				next;
 				switch(select(.@md_name$ + " Dungeon Generated:Enter the dungeon:Return to Alberta:Cancel")) {
 				case 1:
@@ -352,7 +353,7 @@ e_tower,81,105,0	script	Tower Protection Stone	406,{
 			close;
 		}
 		else if ((.@etower_timer >= 0) && (.@etower_timer2 == 2)) {
-			mes "Due to the entry after-effect, you cannot enter the dungeon right now, " + .@dun_h + "hours " + .@dun_m + "minutes " + .@dun_s + "seconds left to enter the next dungeon.";
+			mes "Due to the tower's aftereffects, you cannot enter the dungeon right now, " + .@dun_h + "hours " + .@dun_m + "minutes " + .@dun_s + "seconds left to enter the next dungeon.";
 			next;
 			mes "It is dangerous here. Let me move you to Alberta.";
 			close2;
@@ -368,7 +369,7 @@ e_tower,81,105,0	script	Tower Protection Stone	406,{
 		}
 	}
 	else {
-		mes "Make or join the party with more than 1 member and try again.";
+		mes "Make or join a party with more than 1 member and try again.";
 		close;
 	}
 }
@@ -2982,7 +2983,7 @@ OnInstanceInit:
 
 OnEnable:
 	enablenpc instance_npcname("80FGate102tower", instance_id());
-	areamonster "4@tower",9,267,19,303,"èMysteltainn",1203,20,instance_npcname("80FGate102tower", instance_id())+"::OnMyMobDead";
+	areamonster "4@tower",9,267,19,303,"Mysteltainn",1203,20,instance_npcname("80FGate102tower", instance_id())+"::OnMyMobDead";
 	areamonster "4@tower",9,267,19,303,"Ogretooth",1204,20,instance_npcname("80FGate102tower", instance_id())+"::OnMyMobDead";
 	areamonster "4@tower",9,267,19,303,"Executioner",1205,20,instance_npcname("80FGate102tower", instance_id())+"::OnMyMobDead";
 	end;
@@ -3661,7 +3662,7 @@ OnTouch_:
 		mes "Good-bye for now.";
 		mes "Once again, I had such a great time, humans. I look forward to seeing you again.";
 		next;
-		mes "^0000ffAs soon as the voice stopped talking, an irresistible force lifted and moved you to another space.";
+		mes "^0000ffAs soon as the voice stopped talking, an irresistible force lifted and moved you somewhere else.";
 		close2;
 		set in_102tower,10;
 		warp "alberta",223,36;
@@ -4005,7 +4006,7 @@ OnTimer5500:
 OnTimer10500:
 	instance_announce 0,"You'll soon know. Mine is the face of death!",bc_map,"0x00ffcc";
 	stopnpctimer;
-	monster "6@tower",156,147,"Naght Sieger",1956,1,instance_npcname("#4th Beeper", instance_id())+"::OnMyMobDead";
+	monster "6@tower",156,147,"Nacht Sieger",1956,1,instance_npcname("#4th Beeper", instance_id())+"::OnMyMobDead";
 	end;
 
 OnMyMobDead:

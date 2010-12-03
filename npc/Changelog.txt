@@ -1,5 +1,7 @@
 Date		Added
 ======
+2010/12/03
+	* Rev. 14555 Updated instances with more proper English, care of Resplendent. [L0ne_W0lf]
 2010/12/02
 	* Rev. 14552 Just going through bug reports. :P [L0ne_W0lf]
 	- Removed duplicate NPCs in Lighthalzen and Morroc. (bugreport:4555)

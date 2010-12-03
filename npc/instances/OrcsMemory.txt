@@ -50,7 +50,7 @@ gef_fild10,242,202,0	script	Dimensional Gorge Piece	406,{
 	if ((.@party_id > 0) && ((.@partymembercount > 1))) {
 		if (.@orctime == -1) {
 			if (.@ins_mas == getcharid(0)) {
-				mes "Party generation confirmed. Would you like to book entrance to the " + .@md_name$ + "?";
+				mes "Party status confirmed. Would you like to book entrance to the " + .@md_name$ + "?";
 				next;
 				switch(select("Reserve the " + .@md_name$ + ":Enter the Dungeon:Cancel")) {
 				case 1:
@@ -63,7 +63,7 @@ gef_fild10,242,202,0	script	Dimensional Gorge Piece	406,{
 					}
 					else {
 						mes "^0000ff"+.@md_name$+"^000000- Attempting to book an entrance";
-						mes "After making a reservation, you have to select the menu 'Enter the Dungeon' if you wish to enter the " + .@md_name$ + ".";
+						mes "After making a reservation, you have to select 'Enter the Dungeon' from the menu if you wish to enter the " + .@md_name$ + ".";
 
 						for( set .@i, 1; .@i <= 2; set .@i, .@i + 1 ) {
 							if( instance_attachmap(.@i + "@orcs", .@instance) == "" )
@@ -121,7 +121,7 @@ gef_fild10,242,202,0	script	Dimensional Gorge Piece	406,{
 						mes "Memorial Dungeon " + .@md_name$ + " does not exist.";
 						mes "The party leader has not reserved entrance to the dungeon yet.";
 						next;
-						mes "Once reservation is complete, the dungeon will be generated.";
+						mes "Once the reservation is complete, the dungeon will be generated.";
 						mes "If your dungeon has been destroyed you must wait 7 days before re-entering.";
 						close;
 					}
@@ -150,8 +150,8 @@ gef_fild10,242,202,0	script	Dimensional Gorge Piece	406,{
 					//}
 					//else if (move_md == 2) {
 					if (has_instance("1@orcs") == "") {
-						mes "Memorial Dungeon " + .@md_name$ + " does not exist.";
-						mes "Memorial Dungeon has been destroyed by the Party Leader, or because of the time limit. Please try again after 2 hours.";
+						mes "The Memorial Dungeon " + .@md_name$ + " does not exist.";
+						mes "The Memorial Dungeon has been destroyed by the Party Leader or because of the time limit. Please try again after 2 hours.";
 						close;
 					}
 					//else if (move_md == 1) {
@@ -182,8 +182,8 @@ gef_fild10,242,202,0	script	Dimensional Gorge Piece	406,{
 				//}
 				//else if (move_md == 2) {
 				if (has_instance("1@orcs") == "") {
-					mes "Memorial Dungeon " + .@md_name$ + " does not exist.";
-					mes "Memorial Dungeon has been destroyed by the Party Leader, or because of the time limit. Please try again after 2 hours.";
+					mes "The Memorial Dungeon " + .@md_name$ + " does not exist.";
+					mes "The Memorial Dungeon has been destroyed by the Party Leader or because of the time limit. Please try again after 2 hours.";
 					close;
 				}
 				//else if (move_md == 1) {
@@ -203,7 +203,7 @@ gef_fild10,242,202,0	script	Dimensional Gorge Piece	406,{
 			}
 		}
 		else if (.@orctime == 2) {
-			mes "^0000ffAll records and after-effects related to the Orc's Memory Dungeon are deleted. You can now regenerate or enter the Orc's Memory.^000000";
+			mes "^0000ffAll records and after-effects related to the Orc's Memory Dungeon are deleted. You can now regenerate or re-enter the dungeon.^000000";
 			erasequest 12059;
 			close;
 		}
@@ -247,14 +247,14 @@ gef_fild10,238,202,6	script	Mad Scientist#orc	865,{
 			mes "Very smart! I have actually just done that! See that statue over there? It's not your normal Monolith!";
 			next;
 			mes "[Mad Scientist]";
-			mes "I have created it with the combination with our technology and the unlimited energy I discovered from that crevice! Want to try it?";
+			mes "I have created it with a combination of our technology and the unlimited energy I discovered from the Gorge! Want to try it?";
 			next;
 			break;
 		}
 		switch(select("... Um, that doesn't sound legal?")) {
 		case 1:
 			mes "[Mad Scientist]";
-			mes "Hey, since when is something so interesting legal!? How about it! You can talk to the Orcs! C'mon!";
+			mes "Hey, since when did something so interesting have to be legal!? How about it! You can talk to the Orcs! C'mon!";
 			next;
 			mes "[Mad Scientist]";
 			mes "Chances are they'll just give you lots of instructions once they see you, so just wing it! They're always saying the same thing, to the point where I memorized them!";
@@ -338,7 +338,7 @@ OnMyMobDead:
 		else if ((.@mob_ran > 28) && (.@mob_ran < 30)) {
 			monster "1@orcs",0,0,"High Orc",1213,.@mob_dead_num,instance_npcname("#Resurrect Monsters1", instance_id())+"::OnMyMobDead";
 			if (rand(1,10) == 9) {
-				instance_announce 0, "High Orc: We need more defense! Get more people here!",bc_map,"0xff4444";
+				instance_announce 0, "High Orc: We need more defenses! Get more people here!",bc_map,"0xff4444";
 			}
 		}
 		else if ((.@mob_ran > 26) && (.@mob_ran < 29)) {
@@ -350,7 +350,7 @@ OnMyMobDead:
 		else {
 			areamonster "1@orcs",17,187,27,177,"High Orc",1213,.@mob_dead_num,instance_npcname("#Resurrect Monsters1", instance_id())+"::OnMyMobDead";
 			if (rand(1,5) == 3) {
-				instance_announce 0, "Caution: The army's starting to concentrate at Zone No.4.",bc_map,"0x77ff77";
+				instance_announce 0, "Caution: The army's starting to concentrate at Zone No. 4.",bc_map,"0x77ff77";
 			}
 			if (rand(1,100) == 50) {
 				initnpctimer;
@@ -365,7 +365,7 @@ OnTimer10:
 
 OnTimer4010:
 	instance_announce 0, "Stalactic Golems are digging out of the deep underground.",bc_map,"0x77ff77";
-	areamonster "1@orcs",17,187,27,177,"Stalctic Golem",1278,20,instance_npcname("#Resurrect Monsters1", instance_id())+"::OnMyMobDead";
+	areamonster "1@orcs",17,187,27,177,"Stalactic Golem",1278,20,instance_npcname("#Resurrect Monsters1", instance_id())+"::OnMyMobDead";
 	stopnpctimer;
 	end;
 }
@@ -531,11 +531,11 @@ OnTimer14610:
 	end;
 
 OnTimer20210:
-	instance_announce 0, "Kruger: Darn it.. They'll come in any minute. Ok. Listen to me now.",bc_map,"0xffff00";
+	instance_announce 0, "Kruger: Darn it.. They'll be here any minute. Ok. Listen to me now.",bc_map,"0xffff00";
 	end;
 
 OnTimer24910:
-	instance_announce 0, "Kruger: The Orc Shaman has sealed the 1st basement by dividing it into 4 zones. Each zone has one Enchanted Orc who has the magic to unseal the next zone.",bc_map,"0xffff00";
+	instance_announce 0, "Kruger: The Orc Shaman has sealed the 1st basement by dividing it into 4 zones. Each zone has one Enchanted Orc who has the power to unseal the next zone.",bc_map,"0xffff00";
 	end;
 
 OnTimer34310:
@@ -551,7 +551,7 @@ OnTimer49210:
 	end;
 
 OnTimer56310:
-	instance_announce 0, "Mission: Sneak in and get rid of the 'Enchanted Orc'. Avoiding battles with other Orcs can be a tactical way of getting into the 2nd floor.",bc_map,"0x44ffff";
+	instance_announce 0, "Mission: Sneak in and get rid of the 'Enchanted Orcs'. Avoiding battles with other Orcs is the best way of getting into the 2nd floor.",bc_map,"0x44ffff";
 	donpcevent instance_npcname("#Resurrect Monsters1", instance_id())+"::OnEnable";
 	donpcevent instance_npcname("#Resurrect Monsters2", instance_id())+"::OnEnable";
 	donpcevent instance_npcname("#Resurrect Monsters3", instance_id())+"::OnEnable";
@@ -585,7 +585,7 @@ OnContinue:
 	end;
 
 OnTimer10300:
-	instance_announce 0, "Kruger's Whisper: The Orcs here used to be my companions. They just lost their will ever since the Orc Shamans started to control them with her magic.",bc_map,"0xff4499";
+	instance_announce 0, "Kruger's Whisper: The Orcs here used to be my companions. They just lost their will ever since the Orc Shaman started to control them with her magic.",bc_map,"0xff4499";
 	end;
 
 OnTimer18700:
@@ -614,11 +614,11 @@ OnContinue:
 	end;
 
 OnTimer30300:
-	instance_announce 0, "Kruger's Whisper: I saw the bodies of our tribe. It seems that the Orc Shaman has used those Orcs for her rituals.",bc_map,"0xff4499";
+	instance_announce 0, "Kruger's Whisper: I saw the bodies of our tribe. It seems that the Orc Shaman used those Orcs for her rituals.",bc_map,"0xff4499";
 	end;
 
 OnTimer37600:
-	instance_announce 0, "Kruger's Whisper: ... It all has to do with me. I am responsible for this evilness.",bc_map,"0xff4499";
+	instance_announce 0, "Kruger's Whisper: ... It all has to do with me. I am responsible for this evil.",bc_map,"0xff4499";
 	stopnpctimer;
 	end;
 }
@@ -888,15 +888,15 @@ OnTimer10710:
 	end;
 
 OnTimer16310:
-	instance_announce 0, "Kruger's Whisper: But still try keep the battles not too noticable so the Shaman won't guard the altar with her direct army squad.",bc_map,"0xffff00";
+	instance_announce 0, "Kruger's Whisper: But still, try keep the battles not too noticable so the Shaman won't guard the altar with her army squad.",bc_map,"0xffff00";
 	end;
 
 OnTimer21910:
-	instance_announce 0, "Kruger's Whisper: Only the Party Leader can strengthen the flames so protect your leader.",bc_map,"0xffff00";
+	instance_announce 0, "Kruger's Whisper: Only the Party Leader can strengthen the flames, so protect your leader.",bc_map,"0xffff00";
 	end;
 
 OnTimer23910:
-	instance_announce 0, "Mission: Unseal the zone by lighting the braziers. They can only be lit in a certain order so be careful.",bc_map,"0x4444ff";
+	instance_announce 0, "Mission: Unseal the zone by lighting the braziers. They can only be lit in a certain order, so be careful.",bc_map,"0x4444ff";
 	donpcevent instance_npcname("#2Resurrect Monsters1", instance_id())+"::OnEnable";
 	donpcevent instance_npcname("#2Resurrect Monsters3", instance_id())+"::OnEnable";
 	donpcevent instance_npcname("Torch#1-1", instance_id())+"::OnEnable";
@@ -1011,7 +1011,7 @@ OnInstanceInit:
 
 OnEnable:
 	monster "2@orcs",109,156,"Safeguard Chief",1981,1,instance_npcname("#Mobs Control", instance_id())+"::OnMyMobDead1";
-	instance_announce 0, "The Chief Orc of Safeguards: Oh!! Looks like I have a company. Try me if you can!!",bc_map,"0xff8888";
+	instance_announce 0, "The Chief Orc of Safeguards: Oh!! Looks like I have company. Defeat me if you can!!",bc_map,"0xff8888";
 	end;
 
 OnContinue:
@@ -1128,7 +1128,7 @@ OnInstanceInit:
 
 OnEnable:
 	monster "2@orcs",67,64,"Orc Sniper",1982,1,instance_npcname("#Mobs Control", instance_id())+"::OnMyMobDead2";
-	instance_announce 0, "Orc Sniper: Hah! Pretty impressive that you made it here, but your foolish little trip ends here...",bc_map,"0xff8888";
+	instance_announce 0, "Orc Sniper: Hah! Pretty impressive that you made it this far, but your foolish little trip ends here...",bc_map,"0xff8888";
 	end;
 
 OnContinue:
@@ -1268,7 +1268,7 @@ OnTimer10310:
 	end;
 
 OnTimer13110:
-	instance_announce 0, "Caution: You are discovered by Shaman Cargalache. Kruger's plan to assassinate the Shaman has failed. You must defeat Cargalache and find traces of Kruger.",bc_map,"0x8888ff";
+	instance_announce 0, "Caution: You have been discovered by Shaman Cargalache. Kruger's plan to assassinate the Shaman has failed. You must defeat Cargalache and find traces of Kruger.",bc_map,"0x8888ff";
 	stopnpctimer;
 	end;
 
@@ -1338,7 +1338,7 @@ OnTouch:
 		mes "Don't move! You are wounded!";
 		next;
 		mes "[Kruger]";
-		mes "It's alright.. I'm dying...";
+		mes "It's... all right.. I'm dying...";
 		mes "....";
 		mes "The Shaman? What about the Shaman?";
 		next;
@@ -1351,7 +1351,7 @@ OnTouch:
 		mes "I.. I just couldn't kill my own daughter...";
 		mes "Thank you, I'm sure she's finally free from the nightmare that used to choke her soul.";
 		next;
-		mes "Kruger was about to say something more, but he breathed his last breath before he could say anything.";
+		mes "Kruger was about to say something more, but he breathed his last breath before he could...";
 		set yong_odun,2;
 		close;
 	}
