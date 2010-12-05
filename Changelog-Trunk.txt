@@ -1,5 +1,7 @@
 Date	Added
 
+2010/12/04
+	* Fixed party booking search increasing result counter, even when no results were found, causing crashes from r14516 onwards (bugreport:4615, since r14412). [Ai4rei]
 2010/12/03
 	* Fixed soul linkers not receiving taekwon angel buffs upon level up (bugreport:3585, since r3657 and r3660, related r6294). [Ai4rei]
 	* Corrected 'chance' in description for bonuses bAddMonsterDropItem and bAddMonsterDropItemGroup (bugreport:4063, partially since r1572). [Ai4rei]

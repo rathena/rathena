@@ -1147,7 +1147,10 @@ void party_booking_search(struct map_session_data *sd, short level, short mapid,
 			if (pb_ad->p_detail.mapid == mapid)
 				result_list[count] = pb_ad;
 		}
-		count++;
+		if( result_list[count] )
+		{
+			count++;
+		}
 	}
 	iter->destroy(iter);
 	clif_PartyBookingSearchAck(sd->fd, result_list, count, more_result);
