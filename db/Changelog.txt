@@ -8,6 +8,8 @@
 	1475 Equestrian's Spear:	NEED INFO.
 	13005 Angelic Wing Dagger:	NEED INFO.
 =======================
+2010/12/05
+	* Rev. 14559 Updated some items to use bonus bAddItemHealRate, and healpower2. [L0ne_W0lf]
 2010/12/02
 	* Rev. 14555 Corrected incorrect bonuses relating to bAddMonsterDropItem/Group. (burgerport:4569) [L0ne_W0lf]
 	* Updated the IG_Ore, IG_Food, IG_Recovery and IG_Jewel item groups to official items/rates.

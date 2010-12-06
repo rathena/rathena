@@ -1846,6 +1846,7 @@ int status_calc_pc_(struct map_session_data* sd, bool first)
 		+ sizeof(sd->aspd_add)
 		+ sizeof(sd->setitem_hash)
 		+ sizeof(sd->setitem_hash2)
+		+ sizeof(sd->itemhealrate2)
 		// shorts
 		+ sizeof(sd->splash_range)
 		+ sizeof(sd->splash_add_range)

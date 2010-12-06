@@ -2351,6 +2351,10 @@ int pc_bonus(struct map_session_data *sd,int type,int val)
 		if(sd->state.lr_flag != 2)
 			sd->add_heal2_rate += val;
 		break;
+	case SP_ADD_ITEM_HEAL_RATE:
+		if(sd->state.lr_flag != 2)
+			sd->itemhealrate2 += val;
+		break;
 	default:
 		ShowWarning("pc_bonus: unknown type %d %d !\n",type,val);
 		break;
@@ -6098,6 +6102,8 @@ int pc_itemheal(struct map_session_data *sd,int itemid, int hp,int sp)
 		// A potion produced by an Alchemist in the Fame Top 10 gets +50% effect [DracoRPG]
 		if (potion_flag > 1)
 			bonus += bonus*(potion_flag-1)*50/100;
+		//All item bonuses.
+		bonus += sd->itemhealrate2;
 		//Item Group bonuses
 		bonus += bonus*itemdb_group_bonus(sd, itemid)/100;
 		//Individual item bonuses.

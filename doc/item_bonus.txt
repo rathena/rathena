@@ -3,7 +3,7 @@
 //===== By ================================================
 //= Developers
 //===== Version ===========================================
-//= 1.1.20101130
+//= 1.1.20101205
 //=========================================================
 //= 1.0 - Standardized doc file
 //= 1.1.20080612 - skill command and bonuses (bAutoSpell, bSkillAtk, 
@@ -14,6 +14,7 @@
 //= 1.1.20090524 - removed outdated bMatk/bMatk1/bMatk2 doc [ultramage]
 //= 1.1.20090529 - added documentation for bHealPower, bHealPower2 [Inkfish]
 //= 1.1.20101130 - added documentation for bAutoSpellOnSkill [Ai4rei]
+//= 1.1.20101205 - added documentation for bAddItemHealRate. [L0ne_W0lf]
 //===== Description =======================================
 //= List of script instructions used in item bonuses,
 //= mainly bonus/bonus2/bonus3/bonus4/bonus5 arguments
@@ -383,3 +384,4 @@ bonus5 bAutoSpellOnSkill,s,x,l,n,i	Adds a n/10% chance to autospell skill x at l
 									i: Flags (bitfield)
 										&1: Forces the skill to be casted on self, rather than on the target of skill s.
 										&2: Random skill level between 1 and l is chosen.
+bonus bAddItemHealRate,x;		Increases HP recovered by x% for healing items.

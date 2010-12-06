@@ -1299,7 +1299,7 @@
 2373,Holy_Robe_,Holy Robe,5,20,,1700,,7,,1,0x00008110,7,2,16,,60,1,0,{ bonus bMdef,5; bonus2 bSubRace,RC_Demon,15; bonus2 bSubEle,Ele_Dark,10; },{},{}
 2374,Diabolus_Robe,Diabolus Robe,5,20,,300,,6,,1,0x00098B1C,2,2,16,,55,1,0,{ bonus bMaxSP,150; bonus bMdef,5; bonus bHealPower,6; bonus bDelayRate,-10; if (isequipped(2729)) { bonus2 bAddRace,RC_NonBoss,3; bonus2 bAddRace,RC_Boss,3; bonus bMatkRate,3; } },{},{}
 2375,Diabolus_Armor,Diabolus Armor,5,20,,600,,7,,1,0x000654E2,2,2,16,,55,1,0,{ bonus bStr,2; bonus bDex,1; bonus bMaxHP,150; bonus2 bResEff,Eff_Stun,500; bonus2 bResEff,Eff_Stone,500; if (isequipped(2729)) { bonus2 bAddRace,RC_NonBoss,3; bonus2 bAddRace,RC_Boss,3; bonus bMatkRate,3; } },{},{}
-2376,Assaulter_Plate,Assaulter Plate,5,0,,0,,7,,1,0x006444A2,7,2,16,,80,1,0,{ bonus bMaxHP,150; bonus bMdef,2; bonus2 bSubRace,RC_DemiHuman,2; if (isequipped(2538,2435)) { bonus2 bSubRace,RC_NonDemiHuman,-300; bonus bVit,3; bonus bMaxHPRate,12; bonus2 bSkillHeal2,"AL_HEAL",10; bonus2 bAddItemHealRate,IG_Recovery,10; autobonus2 "{ bonus2 bHPRegenRate,600,1000; }",5,10000,BF_WEAPON,"{ specialeffect2 EF_HEAL; }"; }; },{},{}
+2376,Assaulter_Plate,Assaulter Plate,5,0,,0,,7,,1,0x006444A2,7,2,16,,80,1,0,{ bonus bMaxHP,150; bonus bMdef,2; bonus2 bSubRace,RC_DemiHuman,2; if (isequipped(2538,2435)) { bonus2 bSubRace,RC_NonDemiHuman,-300; bonus bVit,3; bonus bMaxHPRate,12; bonus bHealpower2,10; bonus bAddItemHealRate,10; autobonus2 "{ bonus2 bHPRegenRate,600,1000; }",5,10000,BF_WEAPON,"{ specialeffect2 EF_HEAL; }"; }; },{},{}
 2377,Elite_Engineer_Armor,Elite Engineer Armor,5,0,,0,,7,,1,0x00040420,7,2,16,,80,1,0,{ bonus bMaxHP,150; bonus bMdef,2; bonus2 bSubRace,RC_DemiHuman,2; if (isequipped(2538,2435)) { bonus2 bSubRace,RC_NonDemiHuman,-300; bonus bStr,3; bonus bMaxHPRate,12; bonus2 bSkillAtk,"MC_MAMMONITE",20; bonus2 bSkillHeal,"AM_POTIONPITCHER",10; bonus2 bSkillHeal2,"AM_POTIONPITCHER",10; bonus2 bSkillHeal2,"AL_HEAL",10; bonus bUnbreakableArmor,0; }; },{},{}
 2378,Assassin_Robe,Assassin Robe,5,0,,0,,7,,1,0x02021040,7,2,16,,80,1,0,{ bonus bMaxHP,150; bonus bMdef,2; bonus2 bSubRace,RC_DemiHuman,2; if (isequipped(2538,2435)) { bonus2 bSubRace,RC_NonDemiHuman,-300; bonus bAgi,3; bonus bMaxHPRate,12; bonus bCritical,5; bonus bAspdRate,5; autobonus "{ bonus2 bHPRegenRate,300,1000; }",10,10000,BF_WEAPON,"{ specialeffect2 EF_HEAL; }"; }; },{},{}
 2379,Warlock_Battle_Robe,Warlock's Battle Robe,5,0,,0,,3,,1,0x00810204,7,2,16,,80,1,0,{ bonus bMaxHP,150; bonus bMdef,2; bonus2 bSubRace,RC_DemiHuman,2; if (isequipped(2539,2436)) { bonus2 bSubRace,RC_NonDemiHuman,-300; bonus bInt,3; bonus bMaxHPRate,12; bonus2 bResEff,Eff_Stun,2000; autobonus2 "{ bonus bDefEle,Ele_Ghost; }",30,10000,BF_WEAPON,"{ specialeffect2 EF_ENERGYCOAT; }"; }; },{},{}
@@ -1310,7 +1310,7 @@
 2384,Spritual_Tunic,Spiritual Tunic,5,20,,0,,10,,0,0xFFFFFFFF,7,2,16,,0,0,0,{ bonus bMaxHP,800; bonus2 bResEff,Eff_Freeze,10000; bonus2 bSubEle,Ele_Earth,20; bonus2 bSubEle,Ele_Fire,20; bonus2 bSubEle,Ele_Wind,20; bonus2 bSubEle,Ele_Poison,20; bonus2 bSubEle,Ele_Holy,20; bonus2 bSubEle,Ele_Dark,20; bonus2 bSubEle,Ele_Ghost,20; bonus2 bSubEle,Ele_Undead,20; },{},{}
 2385,Recuperative_Armor,Recuperative Armor,5,20,,0,,12,,0,0xFFFFFFFF,7,2,16,,0,0,0,{ bonus bNoRegen,1; bonus bNoRegen,2; bonus bHPGainValue,60; bonus bSPGainValue,6; bonus bMagicHPGainValue,60; bonus bMagicSPGainValue,6; },{},{ heal 0,-100; }
 2386,Chameleon_Armor,Chameleon Armor,5,20,,1700,,5,,0,0x000FDF80,2,2,16,,70,1,0,{ bonus bMaxHP,(BaseLevel*7); bonus bMaxSP,(BaseLevel/2); autobonus2 "{ bonus bNoMagicDamage,100; }",10,2000,BF_MAGIC,"{ specialeffect2 EF_ENERGYCOAT; }"; if( BaseClass == Job_Mage || BaseClass == Job_Archer || BaseClass == Job_Acolyte ) bonus bMdef,5; else if( BaseClass == Job_Swordman || BaseClass == Job_Merchant || BaseClass == Job_Thief ) bonus bDef,3; },{},{}
-2387,Sprint_Mail,Sprint Mail,5,20,,1000,,3,,1,0x000FDF80,2,2,16,,70,1,0,{ bonus bVit,1; bonus bHPrecovRate,5; bonus2 bAddItemHealRate,IG_Recovery,3; bonus2 bSkillHeal,"AL_HEAL",3; if( isequipped(2440,2744) ) { bonus bMaxHPrate,7; bonus bMaxSPrate,7; bonus bCastrate,-3; bonus bDelayrate,-15; } },{},{}
+2387,Sprint_Mail,Sprint Mail,5,20,,1000,,3,,1,0x000FDF80,2,2,16,,70,1,0,{ bonus bVit,1; bonus bHPrecovRate,5; bonus bAddItemHealRate,3; bonus2 bSkillHeal,"AL_HEAL",3; if( isequipped(2440,2744) ) { bonus bMaxHPrate,7; bonus bMaxSPrate,7; bonus bCastrate,-3; bonus bDelayrate,-15; } },{},{}
 2388,Kandura,Kandura,5,20,,300,,4,,1,0x00001000,2,2,16,,70,1,0,{ bonus bAgi,1; bonus bFlee,5; bonus bAspdRate,2; },{},{}
 2389,Armor_Of_Naga,Armor of Naga,5,20,,1000,,5,,1,0x00CFDF80,2,2,16,,70,1,0,{ bonus bMdef,2; autobonus "{ bonus bBaseAtk,20; }",10,10000,BF_WEAPON,"{ specialeffect2 EF_ENHANCE; }"; },{},{}
 2390,Improved_Tights,Improved Tights,5,20,,400,,6,,1,0x00080808,2,2,16,,75,1,0,{ bonus bMdef,2; bonus bFlee2,3; },{},{}
@@ -1374,7 +1374,7 @@
 2447,Military_Boots,Army Boots,5,0,,1000,,5,,0,0xFFFFFFFE,7,2,64,,0,1,0,{},{},{}
 2448,Air_Boss,Air Boss,5,0,,500,,2,,0,0xFFFFFFFF,7,2,64,,0,1,0,{ bonus bAgi,1; },{},{}
 2449,Variant_Shoes_M,Variant Shoes,5,10000,,500,,3,,0,0xFFFFFFFE,2,2,64,,85,1,0,{ bonus bMaxHPRate,20-getrefine(); bonus bMaxSPRate,20-getrefine(); bonus bDef,getrefine()/2; },{},{}
-2450,Vital_Tree_Shoes,Vital Tree Shoes,5,0,,500,,4,,0,0xFFFFFFFE,7,2,64,,60,1,0,{ bonus bMaxHPrate,10; bonus2 bHPRegenRate,30,10000; bonus2 bSkillHeal,"AL_HEAL",5; bonus2 bAddItemHealRate,IG_Recovery,5; bonus bMdef,3; bonus bVit,2; },{},{}
+2450,Vital_Tree_Shoes,Vital Tree Shoes,5,0,,500,,4,,0,0xFFFFFFFE,7,2,64,,60,1,0,{ bonus bMaxHPrate,10; bonus2 bHPRegenRate,30,10000; bonus bHealpower2,5; bonus bAddItemHealRate,5; bonus bMdef,3; bonus bVit,2; },{},{}
 //2451,Freya_Spirit_Sandals1,Freya Spirit Sandals,
 //2452,Freya_Spirit_Sandals2,Freya Spirit Sandals,
 //2453,Freya_Spirit_Sandals3,Freya Spirit Sandals,
@@ -2695,7 +2695,7 @@
 5487,J_Poringcake_Hat,Poring Cake Hat,5,,,500,,1,,0,0xFFFFFFFF,7,2,256,,0,1,417,{ bonus bLuk,2; },{},{}
 5488,J_Twin_Santahat,Twin Santa Hat,5,,,100,,1,,0,0xFFFFFFFF,7,2,256,,0,1,390,{ bonus bLuk,1; bonus bMdef,1; },{},{}
 //5489,Love_Daddy,Love Daddy Hat,5,,,100,,0,,0,0xFFFFFFFF,7,2,256,,0,1,484,{ bonus bDex,2; },{},{}
-//5490,Anubis_Helm,Anubis Helm,5,,,0,,3,,0,0xFFFFFFFF,7,2,256,,70,1,485,{ bonus2 bSubRace,RC_Boss,10; bonus2 bSkillHeal2,"AL_HEAL",10; bonus2 bAddItemHealRate,IG_Recovery,10; },{},{}
+//5490,Anubis_Helm,Anubis Helm,5,,,0,,3,,0,0xFFFFFFFF,7,2,256,,70,1,485,{ bonus2 bSubRace,RC_Boss,10; bonus bHealpower2,10; bonus bAddItemHealRate,10; },{},{}
 //5491,Hat_Of_Outlaw,Bandit Hat,5,,,800,,3,,1,0xFFFFFFFF,7,2,256,,0,1,486,{ bonus bStr,2; bonus2 bSubEle,Ele_Fire,10; },{},{}
 5492,Boy's_Cap_I,Student Cap,5,0,,0,,5,,0,0xFFFFFFFE,7,2,256,,0,1,102,{ bonus2 bAddRace,RC_DemiHuman,5; },{},{}
 5493,Ulle_Cap_I,Ulle's Cap,5,0,,0,,3,,0,0xFFFFFFFE,7,2,256,,0,1,254,{ bonus bDex,2; bonus bAgi,1; if(isequipped(2353) && readparam(bDex)>=70) bonus bUseSPrate,-10; },{},{}
