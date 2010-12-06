@@ -1,7 +1,9 @@
 Date	Added
 
+2010/12/06
+	* Corrected description for bonuses bHealPower and bHealPower2 stating skill names being supported, although the bonus does not accept 'skill' as parameter (bugreport:4619, since r13821). [Ai4rei]
 2010/12/05
-	* Rev. 14559 Added support for bonus bAddItemHealRate, which works for all healing items care of Epoque. [L0n_W0lf]
+	* Rev. 14559 Added support for bonus bAddItemHealRate, which works for all healing items care of Epoque. [L0ne_W0lf]
 2010/12/04
 	* Fixed party booking search increasing result counter, even when no results were found, causing crashes from r14516 onwards (bugreport:4615, since r14412). [Ai4rei]
 2010/12/03

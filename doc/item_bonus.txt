@@ -115,8 +115,8 @@ bonus bNoGemStone,n;			Skills requiring Gemstones do no require them
 								(Hocus Pocus will still require 1 Yellow Gemstone | n is meaningless)
 bonus bIntravision,n;			Always see Hiding and Cloaking players/mobs (n is meaningless)
 
-bonus bHealPower,n;			Increase heal amount of all heal skills by n% (supports skill names)
-bonus bHealPower2,n;			Increase heal amount if you are healed by any skills by n% (supports skill names)
+bonus bHealPower,n;			Increase heal amount of all heal skills by n%
+bonus bHealPower2,n;			Increase heal amount if you are healed by any skills by n%
 bonus2 bAddEff,e,x;			Adds a x/10000 chance to cause effect e to the target when attacking (e.g. x=100 makes 1% chance, x=10000 makes 100% chance, etc)
 							e: Eff_Blind, Eff_Sleep, Eff_Poison, Eff_Freeze, Eff_Silence, Eff_Stan, Eff_Curse, Eff_Confusion, Eff_Stone, Eff_Bleeding
 bonus2 bResEff,e,x;			Adds a x/10000 tolerance to effect e (e.g. x=100 makes 1% tolerance, x=10000 makes 100% tolerance, etc)
