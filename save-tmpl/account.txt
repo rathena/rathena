@@ -1,4 +1,3 @@
-20080409
 // Accounts file: here are saved all information about the accounts.
 // Structure: account ID, username, password, sex, email, level, state, unban time, expiration time, # of logins, last login time, last (accepted) login ip, repeated(register key, register value)
 // where:

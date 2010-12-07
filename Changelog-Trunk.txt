@@ -1,6 +1,7 @@
 Date	Added
 
 2010/12/07
+	* Removed arbitrary account id from atop account.txt (Since r13000). [Paradox924X]
 	* Changed almost all instances of sprintf() to snprintf(). [Paradox924X]
 	* Further corrections to doc/item_bonus.txt (bugreport:4624). [Ai4rei]
 	- Added documentation for bUnbreakableGarment, bUnbreakableWeapon, bUnbreakableArmor, bUnbreakableHelm, bUnbreakableShield, bUnbreakableShoes, bBreakWeaponRate and bBreakArmorRate (follow up to r485, r915, r1116, r13819).
