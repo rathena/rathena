@@ -104,7 +104,7 @@ void findfile(const char *p, const char *pat, void (func)(const char*))
 			if (strcmp(FindFileData.cFileName, "..") == 0)
 				continue;
 
-			snprintf(tmppath,sizeof tmppath,"%s%c%s",path,PATHSEP,FindFileData.cFileName);
+			sprintf(tmppath,"%s%c%s",path,PATHSEP,FindFileData.cFileName);
 
 			if (FindFileData.cFileName && strstr(FindFileData.cFileName, pattern)) {
 				func( tmppath );
@@ -166,7 +166,7 @@ void findfile(const char *p, const char *pat, void (func)(const char*))
 		if (strcmp(entry->d_name, "..") == 0)
 			continue;
 
-		snprintf(tmppath,sizeof tmppath,"%s%c%s",path, PATHSEP, entry->d_name);
+		sprintf(tmppath,"%s%c%s",path, PATHSEP, entry->d_name);
 
 		// check if the pattern matchs.
 		if (entry->d_name && strstr(entry->d_name, pattern)) {

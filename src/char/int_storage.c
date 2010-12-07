@@ -31,17 +31,17 @@ bool storage_tostr(char* str, int account_id, struct storage_data* p)
 {
 	int i,j;
 	char *str_p = str;
-	str_p += snprintf(str_p, sizeof str_p, "%d,%d\t", account_id, p->storage_amount);
+	str_p += sprintf(str_p, "%d,%d\t", account_id, p->storage_amount);
 
 	for( i = 0; i < MAX_STORAGE; i++ )
 		if( p->items[i].nameid > 0 && p->items[i].amount > 0 )
 		{
-			str_p += snprintf(str_p, sizeof str_p, "%d,%d,%d,%d,%d,%d,%d",
+			str_p += sprintf(str_p, "%d,%d,%d,%d,%d,%d,%d",
 				p->items[i].id,p->items[i].nameid,p->items[i].amount,p->items[i].equip,
 				p->items[i].identify,p->items[i].refine,p->items[i].attribute);
 			for(j=0; j<MAX_SLOTS; j++)
-				str_p += snprintf(str_p,sizeof str_p,",%d",p->items[i].card[j]);
-			str_p += snprintf(str_p,sizeof str_p," ");
+				str_p += sprintf(str_p,",%d",p->items[i].card[j]);
+			str_p += sprintf(str_p," ");
 		}
 
 	*(str_p++)='\t';
@@ -98,16 +98,16 @@ int guild_storage_tostr(char *str,struct guild_storage *p)
 {
 	int i,j,f=0;
 	char *str_p = str;
-	str_p+=snprintf(str,sizeof str,"%d,%d\t",p->guild_id,p->storage_amount);
+	str_p+=sprintf(str,"%d,%d\t",p->guild_id,p->storage_amount);
 
 	for(i=0;i<MAX_GUILD_STORAGE;i++)
 		if( (p->storage_[i].nameid) && (p->storage_[i].amount) ){
-			str_p += snprintf(str_p,sizeof str_p,"%d,%d,%d,%d,%d,%d,%d",
+			str_p += sprintf(str_p,"%d,%d,%d,%d,%d,%d,%d",
 				p->storage_[i].id,p->storage_[i].nameid,p->storage_[i].amount,p->storage_[i].equip,
 				p->storage_[i].identify,p->storage_[i].refine,p->storage_[i].attribute);
 			for(j=0; j<MAX_SLOTS; j++)
-				str_p += snprintf(str_p,sizeof str_p,",%d",p->storage_[i].card[j]);
-			str_p += snprintf(str_p,sizeof str_p," ");
+				str_p += sprintf(str_p,",%d",p->storage_[i].card[j]);
+			str_p += sprintf(str_p," ");
 			f++;
 		}
 

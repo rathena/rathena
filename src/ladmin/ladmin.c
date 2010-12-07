@@ -250,7 +250,7 @@ int ladmin_log(char *fmt, ...)
 		else {
 			t = time(NULL);
 			strftime(tmpstr, 24, date_format, localtime(&t));
-			snprintf(tmpstr + strlen(tmpstr), sizeof (tmpstr + strlen(tmpstr)), ": %s", fmt);
+			sprintf(tmpstr + strlen(tmpstr), ": %s", fmt);
 			vfprintf(logfp, tmpstr, ap);
 		}
 		fclose(logfp);
@@ -2523,7 +2523,7 @@ int parse_fromlogin(int fd)
 				ladmin_log("Account [%s] state changing failed. Account doesn't exist.\n", RFIFOP(fd,6));
 			} else {
 				char tmpstr[256];
-				snprintf(tmpstr, sizeof tmpstr, "Account [%s] state successfully changed in [", RFIFOP(fd,6));
+				sprintf(tmpstr, "Account [%s] state successfully changed in [", RFIFOP(fd,6));
 				switch(RFIFOL(fd,30)) {
 				case 0:
 					strcat(tmpstr, "0: Account OK");

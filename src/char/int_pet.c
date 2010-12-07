@@ -34,7 +34,7 @@ int inter_pet_tostr(char *str,struct s_pet *p)
 	else if(p->intimate > 1000)
 		p->intimate = 1000;
 
-	len=snprintf(str,sizeof str,"%d,%d,%s\t%d,%d,%d,%d,%d,%d,%d,%d,%d",
+	len=sprintf(str,"%d,%d,%s\t%d,%d,%d,%d,%d,%d,%d,%d,%d",
 		p->pet_id,p->class_,p->name,p->account_id,p->char_id,p->level,p->egg_id,
 		p->equip,p->intimate,p->hungry,p->rename_flag,p->incuvate);
 

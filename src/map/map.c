@@ -2825,7 +2825,7 @@ int map_waterheight(char* mapname)
  	char *rsw, *found;
 
 	//Look up for the rsw
-	snprintf(fn, sizeof fn, "data\\%s.rsw", mapname);
+	sprintf(fn, "data\\%s.rsw", mapname);
 
 	found = grfio_find_file(fn);
 	if (found) strcpy(fn, found); // replace with real name
@@ -2852,7 +2852,7 @@ int map_readgat (struct map_data* m)
 	int water_height;
 	size_t xy, off, num_cells;
 
-	snprintf(filename, sizeof filename, "data\\%s.gat", m->name);
+	sprintf(filename, "data\\%s.gat", m->name);
 
 	gat = (uint8 *) grfio_read(filename);
 	if (gat == NULL)

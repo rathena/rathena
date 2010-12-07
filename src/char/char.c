@@ -358,7 +358,7 @@ int char_log(char *fmt, ...)
 			else {
 				time(&raw_time);
 				strftime(tmpstr, 24, "%d-%m-%Y %H:%M:%S", localtime(&raw_time));
-				snprintf(tmpstr + 19, sizeof (tmpstr + 19), ": %s", fmt);
+				sprintf(tmpstr + 19, ": %s", fmt);
 				vfprintf(logfp, tmpstr, ap);
 			}
 			fclose(logfp);
@@ -440,11 +440,11 @@ int mmo_friends_list_data_str(char *str, struct mmo_charstatus *p)
 {
 	int i;
 	char *str_p = str;
-	str_p += snprintf(str_p, sizeof str_p, "%d", p->char_id);
+	str_p += sprintf(str_p, "%d", p->char_id);
 
 	for (i=0;i<MAX_FRIENDS;i++){
 		if (p->friends[i].account_id > 0 && p->friends[i].char_id > 0 && p->friends[i].name[0])
-			str_p += snprintf(str_p, sizeof str_p, ",%d,%d,%s", p->friends[i].account_id, p->friends[i].char_id, p->friends[i].name);
+			str_p += sprintf(str_p, ",%d,%d,%s", p->friends[i].account_id, p->friends[i].char_id, p->friends[i].name);
 	}
 
 	str_p += '\0';
@@ -460,9 +460,9 @@ int mmo_hotkeys_tostr(char *str, struct mmo_charstatus *p)
 #ifdef HOTKEY_SAVING
 	int i;
 	char *str_p = str;
-	str_p += snprintf(str_p, sizeof str_p, "%d", p->char_id);
+	str_p += sprintf(str_p, "%d", p->char_id);
 	for (i=0;i<MAX_HOTKEYS;i++)
-		str_p += snprintf(str_p, sizeof str_p, ",%d,%d,%d", p->hotkeys[i].type, p->hotkeys[i].id, p->hotkeys[i].lv);
+		str_p += sprintf(str_p, ",%d,%d,%d", p->hotkeys[i].type, p->hotkeys[i].id, p->hotkeys[i].lv);
 	str_p += '\0';
 #endif
 
@@ -477,7 +477,7 @@ int mmo_char_tostr(char *str, struct mmo_charstatus *p, struct global_reg *reg, 
 	int i,j;
 	char *str_p = str;
 
-	str_p += snprintf(str_p, sizeof str_p,
+	str_p += sprintf(str_p,
 		"%d\t%d,%d\t%s\t%d,%d,%d\t%u,%u,%d" //Up to Zeny field
 		"\t%d,%d,%d,%d\t%d,%d,%d,%d,%d,%d\t%d,%d" //Up to Skill Point
 		"\t%d,%d,%d\t%d,%d,%d,%d" //Up to hom id
@@ -499,41 +499,41 @@ int mmo_char_tostr(char *str, struct mmo_charstatus *p, struct global_reg *reg, 
 		p->partner_id,p->father,p->mother,p->child,p->fame);
 	for(i = 0; i < MAX_MEMOPOINTS; i++)
 		if (p->memo_point[i].map) {
-			str_p += snprintf(str_p, sizeof str_p, "%d,%d,%d ", p->memo_point[i].map, p->memo_point[i].x, p->memo_point[i].y);
+			str_p += sprintf(str_p, "%d,%d,%d ", p->memo_point[i].map, p->memo_point[i].x, p->memo_point[i].y);
 		}
 	*(str_p++) = '\t';
 
 	for(i = 0; i < MAX_INVENTORY; i++)
 		if (p->inventory[i].nameid) {
-			str_p += snprintf(str_p,sizeof str_p,"%d,%d,%d,%d,%d,%d,%d",
+			str_p += sprintf(str_p,"%d,%d,%d,%d,%d,%d,%d",
 				p->inventory[i].id,p->inventory[i].nameid,p->inventory[i].amount,p->inventory[i].equip,
 				p->inventory[i].identify,p->inventory[i].refine,p->inventory[i].attribute);
 			for(j=0; j<MAX_SLOTS; j++)
-				str_p += snprintf(str_p,sizeof str_p,",%d",p->inventory[i].card[j]);
-			str_p += snprintf(str_p,sizeof str_p," ");
+				str_p += sprintf(str_p,",%d",p->inventory[i].card[j]);
+			str_p += sprintf(str_p," ");
 		}
 	*(str_p++) = '\t';
 
 	for(i = 0; i < MAX_CART; i++)
 		if (p->cart[i].nameid) {
-			str_p += snprintf(str_p,sizeof str_p,"%d,%d,%d,%d,%d,%d,%d",
+			str_p += sprintf(str_p,"%d,%d,%d,%d,%d,%d,%d",
 				p->cart[i].id,p->cart[i].nameid,p->cart[i].amount,p->cart[i].equip,
 				p->cart[i].identify,p->cart[i].refine,p->cart[i].attribute);
 			for(j=0; j<MAX_SLOTS; j++)
-				str_p += snprintf(str_p,sizeof str_p,",%d",p->cart[i].card[j]);
-			str_p += snprintf(str_p,sizeof str_p," ");
+				str_p += sprintf(str_p,",%d",p->cart[i].card[j]);
+			str_p += sprintf(str_p," ");
 		}
 	*(str_p++) = '\t';
 
 	for(i = 0; i < MAX_SKILL; i++)
 		if (p->skill[i].id && p->skill[i].flag != 1) {
-			str_p += snprintf(str_p, sizeof str_p, "%d,%d ", p->skill[i].id, (p->skill[i].flag == 0) ? p->skill[i].lv : p->skill[i].flag-2);
+			str_p += sprintf(str_p, "%d,%d ", p->skill[i].id, (p->skill[i].flag == 0) ? p->skill[i].lv : p->skill[i].flag-2);
 		}
 	*(str_p++) = '\t';
 
 	for(i = 0; i < reg_num; i++)
 		if (reg[i].str[0])
-			str_p += snprintf(str_p, sizeof str_p, "%s,%s ", reg[i].str, reg[i].value);
+			str_p += sprintf(str_p, "%s,%s ", reg[i].str, reg[i].value);
 	*(str_p++) = '\t';
 
 	*str_p = '\0';
@@ -1496,7 +1496,7 @@ void create_online_files(void)
 			// get time
 			time(&time_server); // get time in seconds since 1/1/1970
 			datetime = localtime(&time_server); // convert seconds in structure
-			strftime(temp, sizeof(temp), "%d %b %Y %X", datetime); // like snprintf, but only for date/time (05 dec 2003 15:12:52)
+			strftime(temp, sizeof(temp), "%d %b %Y %X", datetime); // like sprintf, but only for date/time (05 dec 2003 15:12:52)
 			// write heading
 			fprintf(fp2, "<HTML>\n");
 			fprintf(fp2, "  <META http-equiv=\"Refresh\" content=\"%d\">\n", online_refresh_html); // update on client explorer every x seconds

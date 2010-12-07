@@ -259,7 +259,7 @@ int merc_hom_levelup(struct homun_data *hd)
 	hom->luk += growth_luk;
 	
 	if ( battle_config.homunculus_show_growth ) {
-		snprintf(output, sizeof output,
+		sprintf(output,
 			"Growth: hp:%d sp:%d str(%.2f) agi(%.2f) vit(%.2f) int(%.2f) dex(%.2f) luk(%.2f) ",
 			growth_max_hp, growth_max_sp,
 			growth_str/10.0, growth_agi/10.0, growth_vit/10.0,
@@ -889,7 +889,7 @@ int read_homunculusdb(void)
 	memset(homunculus_db,0,sizeof(homunculus_db));
 	for(i = 0; i<2; i++)
 	{
-		snprintf(line, sizeof line, "%s/%s", db_path, filename[i]);
+		sprintf(line, "%s/%s", db_path, filename[i]);
 		fp = fopen(line,"r");
 		if(!fp){
 			if(i != 0)
@@ -1040,7 +1040,7 @@ int read_homunculus_skilldb(void)
 	char *split[15];
 
 	memset(hskill_tree,0,sizeof(hskill_tree));
-	snprintf(line, sizeof line, "%s/homun_skill_tree.txt", db_path);
+	sprintf(line, "%s/homun_skill_tree.txt", db_path);
 	fp=fopen(line,"r");
 	if(fp==NULL){
 		ShowError("can't read %s\n", line);
@@ -1108,7 +1108,7 @@ void read_homunculus_expdb(void)
 
 	memset(hexptbl,0,sizeof(hexptbl));
 	for(i=0; i<2; i++){
-		snprintf(line, sizeof line, "%s/%s", db_path, filename[i]);
+		sprintf(line, "%s/%s", db_path, filename[i]);
 		fp=fopen(line,"r");
 		if(fp == NULL){
 			if(i != 0)

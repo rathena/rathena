@@ -1753,13 +1753,13 @@ Dhp__CreateFiles(
 #endif
 	timestamp[LEN_TIMESTAMP] = '\0';
 	
-	snprintf(out_logFileName, sizeof out_logFileName, "%s%s.rpt", baseFileName, timestamp);
+	sprintf(out_logFileName, "%s%s.rpt", baseFileName, timestamp);
 	fp = fopen(out_logFileName, "w");
 	if( fp == NULL )
 		return FALSE;	// failed to create log file
 	fclose(fp);
 
-	snprintf(out_dmpFileName, sizeof out_dmpFileName, "%s%s.dmp", baseFileName, timestamp);
+	sprintf(out_dmpFileName, "%s%s.dmp", baseFileName, timestamp);
 	fp = fopen(out_dmpFileName, "w");
 	if( fp == NULL)
 		return FALSE;	// failed to create dump file

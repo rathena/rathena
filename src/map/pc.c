@@ -939,7 +939,7 @@ bool pc_authok(struct map_session_data *sd, int login_id2, time_t expiration_tim
 
 	if (battle_config.display_version == 1){
 		char buf[256];
-		snprintf(buf, sizeof buf, "eAthena SVN version: %s", get_svn_revision());
+		sprintf(buf, "eAthena SVN version: %s", get_svn_revision());
 		clif_displaymessage(sd->fd, buf);
 	}
 
@@ -3255,7 +3255,7 @@ void pc_paycash(struct map_session_data *sd, int price, int points)
 
 	pc_setaccountreg(sd,"#CASHPOINTS",sd->cashPoints - cash);
 	pc_setaccountreg(sd,"#KAFRAPOINTS",sd->kafraPoints - points);
-	snprintf(output, sizeof output, "Used %d kafra points and %d cash points. %d kafra and %d cash points remaining.", points, cash, sd->kafraPoints, sd->cashPoints);
+	sprintf(output, "Used %d kafra points and %d cash points. %d kafra and %d cash points remaining.", points, cash, sd->kafraPoints, sd->cashPoints);
 	clif_disp_onlyself(sd, output, strlen(output));
 }
 
@@ -3268,7 +3268,7 @@ void pc_getcash(struct map_session_data *sd, int cash, int points)
 	{
 		pc_setaccountreg(sd,"#CASHPOINTS",sd->cashPoints + cash);
 
-		snprintf(output, sizeof output, "Gained %d cash points. Total %d points", cash, sd->cashPoints);
+		sprintf(output, "Gained %d cash points. Total %d points", cash, sd->cashPoints);
 		clif_disp_onlyself(sd, output, strlen(output));
 	}
 
@@ -3276,7 +3276,7 @@ void pc_getcash(struct map_session_data *sd, int cash, int points)
 	{
 		pc_setaccountreg(sd,"#KAFRAPOINTS",sd->kafraPoints + points);
 
-		snprintf(output, sizeof output, "Gained %d kafra points. Total %d points", points, sd->kafraPoints);
+		sprintf(output, "Gained %d kafra points. Total %d points", points, sd->kafraPoints);
 		clif_disp_onlyself(sd, output, strlen(output));
 	}
 }
@@ -3300,7 +3300,7 @@ int pc_getzeny(struct map_session_data *sd,int zeny)
 	if( zeny > 0 && sd->state.showzeny )
 	{
 		char output[255];
-		snprintf(output, sizeof output, "Gained %dz.", zeny);
+		sprintf(output, "Gained %dz.", zeny);
 		clif_disp_onlyself(sd,output,strlen(output));
 	}
 
@@ -3922,9 +3922,9 @@ int pc_show_steal(struct block_list *bl,va_list ap)
 	itemid=va_arg(ap,int);
 
 	if((item=itemdb_exists(itemid))==NULL)
-		snprintf(output,sizeof output,"%s stole an Unknown Item (id: %i).",sd->status.name, itemid);
+		sprintf(output,"%s stole an Unknown Item (id: %i).",sd->status.name, itemid);
 	else
-		snprintf(output,sizeof output,"%s stole %s.",sd->status.name,item->jname);
+		sprintf(output,"%s stole %s.",sd->status.name,item->jname);
 	clif_displaymessage( ((struct map_session_data *)bl)->fd, output);
 
 	return 0;
@@ -4006,7 +4006,7 @@ int pc_steal_item(struct map_session_data *sd,struct block_list *bl, int lv)
 		struct item_data *i_data;
 		char message[128];
 		i_data = itemdb_search(itemid);
-		snprintf(message, sizeof message, msg_txt(542), (sd->status.name != NULL)?sd->status.name :"GM", md->db->jname, i_data->jname, (float)md->db->dropitem[i].p/100);
+		sprintf (message, msg_txt(542), (sd->status.name != NULL)?sd->status.name :"GM", md->db->jname, i_data->jname, (float)md->db->dropitem[i].p/100);
 		//MSG: "'%s' stole %s's %s (chance: %0.02f%%)"
 		intif_broadcast(message,strlen(message)+1,0);
 	}
@@ -4938,7 +4938,7 @@ int pc_gainexp(struct map_session_data *sd, struct block_list *src, unsigned int
 #endif
 	if(sd->state.showexp) {
 		char output[256];
-		snprintf(output, sizeof output,
+		sprintf(output,
 			"Experience Gained Base:%u (%.2f%%) Job:%u (%.2f%%)",base_exp,nextbp*(float)100,job_exp,nextjp*(float)100);
 		clif_disp_onlyself(sd,output,strlen(output));
 	}
@@ -7730,7 +7730,7 @@ static int duel_showinfo_sub(struct map_session_data* sd, va_list va)
 
 	if (sd->duel_group != ssd->duel_group) return 0;
 	
-	snprintf(output, sizeof output, "      %d. %s", ++(*p), sd->status.name);
+	sprintf(output, "      %d. %s", ++(*p), sd->status.name);
 	clif_disp_onlyself(ssd, output, strlen(output));
 	return 1;
 }
@@ -7741,13 +7741,13 @@ int duel_showinfo(const unsigned int did, struct map_session_data* sd)
 	char output[256];
 
 	if(duel_list[did].max_players_limit > 0)
-		snprintf(output, sizeof output, msg_txt(370), //" -- Duels: %d/%d, Members: %d/%d, Max players: %d --"
+		sprintf(output, msg_txt(370), //" -- Duels: %d/%d, Members: %d/%d, Max players: %d --"
 			did, duel_count,
 			duel_list[did].members_count,
 			duel_list[did].members_count + duel_list[did].invites_count,
 			duel_list[did].max_players_limit);
 	else
-		snprintf(output, sizeof output, msg_txt(371), //" -- Duels: %d/%d, Members: %d/%d --"
+		sprintf(output, msg_txt(371), //" -- Duels: %d/%d, Members: %d/%d --"
 			did, duel_count,
 			duel_list[did].members_count,
 			duel_list[did].members_count + duel_list[did].invites_count);
@@ -7784,14 +7784,14 @@ int duel_invite(const unsigned int did, struct map_session_data* sd, struct map_
 	char output[256];
 
 	// " -- Player %s invites %s to duel --"
-	snprintf(output, sizeof output, msg_txt(373), sd->status.name, target_sd->status.name);
+	sprintf(output, msg_txt(373), sd->status.name, target_sd->status.name);
 	clif_disp_message(&sd->bl, output, strlen(output), DUEL_WOS);
 
 	target_sd->duel_invite = did;
 	duel_list[did].invites_count++;
 	
 	// "Blue -- Player %s invites you to PVP duel (@accept/@reject) --"
-	snprintf(output, sizeof output, msg_txt(374), sd->status.name);
+	sprintf(output, msg_txt(374), sd->status.name);
 	clif_broadcast((struct block_list *)target_sd, output, strlen(output)+1, 0x10, SELF);
 	return 0;
 }
@@ -7809,7 +7809,7 @@ int duel_leave(const unsigned int did, struct map_session_data* sd)
 	char output[256];
 	
 	// " <- Player %s has left duel --"
-	snprintf(output, sizeof output, msg_txt(375), sd->status.name);
+	sprintf(output, msg_txt(375), sd->status.name);
 	clif_disp_message(&sd->bl, output, strlen(output), DUEL_WOS);
 	
 	duel_list[did].members_count--;
@@ -7835,7 +7835,7 @@ int duel_accept(const unsigned int did, struct map_session_data* sd)
 	sd->duel_invite = 0;
 	
 	// " -> Player %s has accepted duel --"
-	snprintf(output, sizeof output, msg_txt(376), sd->status.name);
+	sprintf(output, msg_txt(376), sd->status.name);
 	clif_disp_message(&sd->bl, output, strlen(output), DUEL_WOS);
 
 	clif_set0199(sd, 1);
@@ -7848,7 +7848,7 @@ int duel_reject(const unsigned int did, struct map_session_data* sd)
 	char output[256];
 	
 	// " -- Player %s has rejected duel --"
-	snprintf(output, sizeof output, msg_txt(377), sd->status.name);
+	sprintf(output, msg_txt(377), sd->status.name);
 	clif_disp_message(&sd->bl, output, strlen(output), DUEL_WOS);
 	
 	duel_list[did].invites_count--;
@@ -7977,7 +7977,7 @@ int pc_readdb(void)
 	// 必要??値?み?み
 	memset(exp_table,0,sizeof(exp_table));
 	memset(max_level,0,sizeof(max_level));
-	snprintf(line, sizeof line, "%s/exp.txt", db_path);
+	sprintf(line, "%s/exp.txt", db_path);
 	fp=fopen(line, "r");
 	if(fp==NULL){
 		ShowError("can't read %s\n", line);
@@ -8067,7 +8067,7 @@ int pc_readdb(void)
 			for(k=0;k<ELE_MAX;k++)
 				attr_fix_table[i][j][k]=100;
 
-	snprintf(line, sizeof line, "%s/attr_fix.txt", db_path);
+	sprintf(line, "%s/attr_fix.txt", db_path);
 	fp=fopen(line,"r");
 	if(fp==NULL){
 		ShowError("can't read %s\n", line);
@@ -8115,7 +8115,7 @@ int pc_readdb(void)
 	// スキルツリ?
 	memset(statp,0,sizeof(statp));
 	i=1;
-	snprintf(line, sizeof line, "%s/statpoint.txt", db_path);
+	sprintf(line, "%s/statpoint.txt", db_path);
 	fp=fopen(line,"r");
 	if(fp == NULL){
 		ShowStatus("Can't read '"CL_WHITE"%s"CL_RESET"'... Generating DB.\n",line);

@@ -806,10 +806,10 @@ static void chrif_char_ask_name_answer(int acc, const char* player_name, uint16 
 	}
 	
 	switch( answer ) {
-	case 0 : snprintf(output, sizeof output, "Login-server has been asked to %s the player '%.*s'.", action, NAME_LENGTH, player_name); break;
-	case 1 : snprintf(output, sizeof output, "The player '%.*s' doesn't exist.", NAME_LENGTH, player_name); break;
-	case 2 : snprintf(output, sizeof output, "Your GM level don't authorise you to %s the player '%.*s'.", action, NAME_LENGTH, player_name); break;
-	case 3 : snprintf(output, sizeof output, "Login-server is offline. Impossible to %s the player '%.*s'.", action, NAME_LENGTH, player_name); break;
+	case 0 : sprintf(output, "Login-server has been asked to %s the player '%.*s'.", action, NAME_LENGTH, player_name); break;
+	case 1 : sprintf(output, "The player '%.*s' doesn't exist.", NAME_LENGTH, player_name); break;
+	case 2 : sprintf(output, "Your GM level don't authorise you to %s the player '%.*s'.", action, NAME_LENGTH, player_name); break;
+	case 3 : sprintf(output, "Login-server is offline. Impossible to %s the player '%.*s'.", action, NAME_LENGTH, player_name); break;
 	default: output[0] = '\0'; break;
 	}
 	

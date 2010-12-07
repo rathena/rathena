@@ -24,7 +24,7 @@ int inter_homun_tostr(char *str,struct s_homunculus *p)
 {
 	int i;
 
-	str+=snprintf(str, sizeof str, "%d,%d\t%s\t%d,%d,%d,%d,%d,"
+	str+=sprintf(str,"%d,%d\t%s\t%d,%d,%d,%d,%d,"
 		"%u,%d,%d,%d,"
 		"%u,%d,%d,"
 		"%d,%d,%d,%d,%d,%d\t",
@@ -37,7 +37,7 @@ int inter_homun_tostr(char *str,struct s_homunculus *p)
 	for (i = 0; i < MAX_HOMUNSKILL; i++)
 	{
 		if (p->hskill[i].id && !p->hskill[i].flag)
-			str+=snprintf(str, sizeof str, "%d,%d,", p->hskill[i].id, p->hskill[i].lv);
+			str+=sprintf(str,"%d,%d,", p->hskill[i].id, p->hskill[i].lv);
 	}
 
 	return 0;

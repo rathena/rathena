@@ -411,7 +411,7 @@ int read_mercenarydb(void)
 	struct s_mercenary_db *db;
 	struct status_data *status;
 
-	snprintf(line, sizeof line, "%s/%s", db_path, "mercenary_db.txt");
+	sprintf(line, "%s/%s", db_path, "mercenary_db.txt");
 	memset(mercenary_db,0,sizeof(mercenary_db));
 
 	fp = fopen(line, "r");
@@ -505,7 +505,7 @@ int read_mercenary_skilldb(void)
 	int i, j = 0, k = 0, class_;
 	int skillid, skilllv;
 
-	snprintf(line, sizeof line, "%s/%s", db_path, "mercenary_skill_db.txt");
+	sprintf(line, "%s/%s", db_path, "mercenary_skill_db.txt");
 	fp = fopen(line, "r");
 	if( !fp )
 	{

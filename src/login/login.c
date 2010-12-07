@@ -934,11 +934,11 @@ int mmo_auth(struct login_session_data* sd)
 		bool matched = false;
 		uint8* sin_addr = (uint8*)&session[sd->fd]->client_addr;
 
-		snprintf(r_ip, sizeof r_ip, "%u.%u.%u.%u", sin_addr[0], sin_addr[1], sin_addr[2], sin_addr[3]);
+		sprintf(r_ip, "%u.%u.%u.%u", sin_addr[0], sin_addr[1], sin_addr[2], sin_addr[3]);
 
 		for( dnsbl_serv = strtok(login_config.dnsbl_servs,","); !matched && dnsbl_serv != NULL; dnsbl_serv = strtok(NULL,",") )
 		{
-			snprintf(ip_dnsbl, sizeof ip_dnsbl, "%s.%s", r_ip, dnsbl_serv);
+			sprintf(ip_dnsbl, "%s.%s", r_ip, dnsbl_serv);
 			if( host2ip(ip_dnsbl) )
 				matched = true;
 		}
@@ -1383,7 +1383,7 @@ int parse_login(int fd)
 			RFIFOSKIP(fd,86);
 
 			ShowInfo("Connection request of the char-server '%s' @ %u.%u.%u.%u:%u (account: '%s', pass: '%s', ip: '%s')\n", server_name, CONVIP(server_ip), server_port, sd->userid, sd->passwd, ip);
-			snprintf(message, sizeof message, "charserver - %s@%u.%u.%u.%u:%u", server_name, CONVIP(server_ip), server_port);
+			sprintf(message, "charserver - %s@%u.%u.%u.%u:%u", server_name, CONVIP(server_ip), server_port);
 			login_log(session[fd]->client_addr, sd->userid, 100, message);
 
 			result = mmo_auth(sd);

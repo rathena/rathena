@@ -25,7 +25,7 @@ FILE* lock_fopen (const char* filename, int *info) {
 
 	// 安全なファイル名を得る（手抜き）
 	do {
-		snprintf(newfile, sizeof newfile, "%s_%04d.tmp", filename, ++no);
+		sprintf(newfile, "%s_%04d.tmp", filename, ++no);
 	} while(exists(newfile) && no < 9999);
 	*info = no;
 	return fopen(newfile,"w");
@@ -38,8 +38,8 @@ int lock_fclose (FILE *fp, const char* filename, int *info) {
 	char oldfile[512];
 	if (fp != NULL) {
 		ret = fclose(fp);
-		snprintf(newfile, sizeof newfile, "%s_%04d.tmp", filename, *info);
-		snprintf(oldfile, sizeof oldfile, "%s.bak", filename);	// old backup file
+		sprintf(newfile, "%s_%04d.tmp", filename, *info);
+		sprintf(oldfile, "%s.bak", filename);	// old backup file
 
 		if (exists(oldfile)) remove(oldfile);	// remove backup file if it already exists
 		rename (filename, oldfile);				// backup our older data instead of deleting it

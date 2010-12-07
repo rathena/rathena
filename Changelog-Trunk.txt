@@ -1,6 +1,7 @@
 Date	Added
 
 2010/12/07
+	* Reverted r14563, due to multiple issues which render the source malfunctioning or uncompilable. To be redone later (bugreport:4627). [Ai4rei]
 	* Removed unnecessary reference operator from scanf calls passing character strings as arguments in adduser tool. [Paradox924X]
 	* Revert of r14564. The value wasn't an arbitrary account id but rather the file format version. Added comment specifying this. [Paradox924X]
 	* Removed arbitrary account id from atop account.txt (Since r13000). [Paradox924X]

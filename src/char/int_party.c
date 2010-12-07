@@ -107,10 +107,10 @@ static void int_party_calc_state(struct party_data *p)
 int inter_party_tostr(char *str, struct party *p) {
 	int i, len;
 
-	len = snprintf(str, sizeof str, "%d\t%s\t%d,%d\t", p->party_id, p->name, p->exp, p->item);
+	len = sprintf(str, "%d\t%s\t%d,%d\t", p->party_id, p->name, p->exp, p->item);
 	for(i = 0; i < MAX_PARTY; i++) {
 		struct party_member *m = &p->member[i];
-		len += snprintf(str + len, sizeof (str + len), "%d,%d,%d\t", m->account_id, m->char_id, m->leader);
+		len += sprintf(str + len, "%d,%d,%d\t", m->account_id, m->char_id, m->leader);
 	}
 
 	return 0;

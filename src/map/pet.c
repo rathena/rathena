@@ -1222,7 +1222,7 @@ int read_petdb()
 		char line[1024];
 		int lines;
 
-		snprintf(line, sizeof line, "%s/%s", db_path, filename[i]);
+		sprintf(line, "%s/%s", db_path, filename[i]);
 		fp=fopen(line,"r");
 		if( fp == NULL )
 		{
