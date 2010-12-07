@@ -1,6 +1,7 @@
 Date	Added
 
 2010/12/07
+	* Revert of r14564. The value wasn't an arbitrary account id but rather the file format version. Added comment specifying this. [Paradox924X]
 	* Removed arbitrary account id from atop account.txt (Since r13000). [Paradox924X]
 	* Changed almost all instances of sprintf() to snprintf(). [Paradox924X]
 	* Further corrections to doc/item_bonus.txt (bugreport:4624). [Ai4rei]
