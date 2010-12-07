@@ -7843,11 +7843,11 @@ int clif_charnameack (int fd, struct block_list *bl)
 				char mobhp[50], *str_p = mobhp;
 				WBUFW(buf, 0) = cmd = 0x195;
 				if( battle_config.show_mob_info&4 )
-					str_p += sprintf(str_p, "Lv. %d | ", md->level);
+					str_p += snprintf(str_p, sizeof str_p, "Lv. %d | ", md->level);
 				if( battle_config.show_mob_info&1 )
-					str_p += sprintf(str_p, "HP: %u/%u | ", md->status.hp, md->status.max_hp);
+					str_p += snprintf(str_p, sizeof str_p, "HP: %u/%u | ", md->status.hp, md->status.max_hp);
 				if( battle_config.show_mob_info&2 )
-					str_p += sprintf(str_p, "HP: %d%% | ", get_percentage(md->status.hp, md->status.max_hp));
+					str_p += snprintf(str_p, sizeof str_p, "HP: %d%% | ", get_percentage(md->status.hp, md->status.max_hp));
 				//Even thought mobhp ain't a name, we send it as one so the client
 				//can parse it. [Skotlex]
 				if( str_p != mobhp )
@@ -8727,7 +8727,7 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 		if( map[sd->bl.m].flag.allowks && !map_flag_ks(sd->bl.m) )
 		{
 			char output[128];
-			sprintf(output, "[ Kill Steal Protection Disable. KS is allowed in this map ]");
+			snprintf(output, sizeof output, "[ Kill Steal Protection Disable. KS is allowed in this map ]");
 			clif_broadcast(&sd->bl, output, strlen(output) + 1, 0x10, SELF);
 		}
 
@@ -8932,7 +8932,7 @@ void clif_parse_GetCharNameRequest(int fd, struct map_session_data *sd)
 		pc_isGM(sd) < battle_config.hack_info_GM_level
 	) {
 		char gm_msg[256];
-		sprintf(gm_msg, "Hack on NameRequest: character '%s' (account: %d) requested the name of an invisible target (id: %d).\n", sd->status.name, sd->status.account_id, id);
+		snprintf(gm_msg, sizeof gm_msg, "Hack on NameRequest: character '%s' (account: %d) requested the name of an invisible target (id: %d).\n", sd->status.name, sd->status.account_id, id);
 		ShowWarning(gm_msg);
 		// information is sent to all online GMs
 		intif_wis_message_to_gm(wisp_server_name, battle_config.hack_info_GM_level, gm_msg);
@@ -9005,7 +9005,7 @@ void clif_parse_GlobalMessage(int fd, struct map_session_data* sd)
 				break;
 			case 1: {
 				char buf[256];
-				sprintf(buf, msg_txt(505), sd->status.name);
+				snprintf(buf, sizeof buf, msg_txt(505), sd->status.name);
 				if( strstr(message, buf) ) // "My name is %s, and I'm a Super Novice~"
 					sd->state.snovice_call_flag++;
 				}
@@ -9049,11 +9049,11 @@ void clif_parse_MapMove(int fd, struct map_session_data *sd)
 
 	map_name = (char*)RFIFOP(fd,2);
 	map_name[MAP_NAME_LENGTH_EXT-1]='\0';
-	sprintf(output, "%s %d %d", map_name, RFIFOW(fd,18), RFIFOW(fd,20));
+	snprintf(output, sizeof output, "%s %d %d", map_name, RFIFOW(fd,18), RFIFOW(fd,20));
 	atcommand_mapmove(fd, sd, "@mapmove", output);
 	if( log_config.gm && get_atcommand_level(atcommand_mapmove) >= log_config.gm )
 	{
-		sprintf(message, "/mm %s", output);
+		snprintf(message, sizeof message, "/mm %s", output);
 		log_atcommand(sd, message);
 	}
 	return;
@@ -9326,11 +9326,11 @@ void clif_parse_WisMessage(int fd, struct map_session_data* sd)
 			
 			for( i = 0; i < 10; ++i )
 			{
-				sprintf(output, "@whispervar%d$", i);
+				snprintf(output, sizeof output, "@whispervar%d$", i);
 				set_var(sd,output,(char *) split_data[i]);
 			}
 			
-			sprintf(output, "%s::OnWhisperGlobal", npc->name);
+			snprintf(output, sizeof output, "%s::OnWhisperGlobal", npc->name);
 			npc_event(sd,output,0); // Calls the NPC label
 
 			return;
@@ -9390,7 +9390,7 @@ void clif_parse_WisMessage(int fd, struct map_session_data* sd)
 	if( dstsd->state.autotrade == 1 )
 	{
 		char output[256];
-		sprintf(output, "%s is in autotrade mode and cannot receive whispered messages.", dstsd->status.name);
+		snprintf(output, sizeof output, "%s is in autotrade mode and cannot receive whispered messages.", dstsd->status.name);
 		clif_wis_message(fd, wisp_server_name, output, strlen(output) + 1);
 		return;
 	}
@@ -9402,12 +9402,12 @@ void clif_parse_WisMessage(int fd, struct map_session_data* sd)
 	if(dstsd->away_message[0] != '\0')
 	{
 		char output[256];
-		sprintf(output, "%s %s", message, msg_txt(543)); // "(Automessage has been sent)"
+		snprintf(output, sizeof output, "%s %s", message, msg_txt(543)); // "(Automessage has been sent)"
 		clif_wis_message(dstsd->fd, sd->status.name, output, strlen(output) + 1);
 		if(dstsd->state.autotrade)
-			sprintf(output, msg_txt(544), dstsd->away_message); // "Away [AT] - "%s""
+			snprintf(output, sizeof output, msg_txt(544), dstsd->away_message); // "Away [AT] - "%s""
 		else
-			sprintf(output, msg_txt(545), dstsd->away_message); // "Away - "%s""
+			snprintf(output, sizeof output, msg_txt(545), dstsd->away_message); // "Away - "%s""
 		clif_wis_message(fd, dstsd->status.name, output, strlen(output) + 1);
 		return;
 	}
@@ -9438,7 +9438,7 @@ void clif_parse_Broadcast(int fd, struct map_session_data* sd)
 
 	if(log_config.gm && lv >= log_config.gm) {
 		char logmsg[CHAT_SIZE_MAX+4];
-		sprintf(logmsg, "/b %s", msg);
+		snprintf(logmsg, sizeof logmsg, "/b %s", msg);
 		log_atcommand(sd, logmsg);
 	}
 }
@@ -10528,7 +10528,7 @@ void clif_parse_LocalBroadcast(int fd, struct map_session_data* sd)
 
 	if( log_config.gm && lv >= log_config.gm ) {
 		char logmsg[CHAT_SIZE_MAX+5];
-		sprintf(logmsg, "/lb %s", msg);
+		snprintf(logmsg, sizeof logmsg, "/lb %s", msg);
 		log_atcommand(sd, logmsg);
 	}
 }
@@ -11443,7 +11443,7 @@ void clif_parse_GMKick(int fd, struct map_session_data *sd)
 
 		if(log_config.gm && lv >= log_config.gm) {
 			char message[256];
-			sprintf(message, "/kick %s (%d)", tsd->status.name, tsd->status.char_id);
+			snprintf(message, sizeof message, "/kick %s (%d)", tsd->status.name, tsd->status.char_id);
 			log_atcommand(sd, message);
 		}
 
@@ -11461,7 +11461,7 @@ void clif_parse_GMKick(int fd, struct map_session_data *sd)
 
 		if(log_config.gm && lv >= log_config.gm) {
 			char message[256];
-			sprintf(message, "/kick %s (%d)", status_get_name(target), status_get_class(target));
+			snprintf(message, sizeof message, "/kick %s (%d)", status_get_name(target), status_get_class(target));
 			log_atcommand(sd, message);
 		}
 
@@ -11480,7 +11480,7 @@ void clif_parse_GMKick(int fd, struct map_session_data *sd)
 
 		if( log_config.gm && lv >= log_config.gm ) {
 			char message[256];
-			sprintf(message, "/kick %s (%d)", status_get_name(target), status_get_class(target));
+			snprintf(message, sizeof message, "/kick %s (%d)", status_get_name(target), status_get_class(target));
 			log_atcommand(sd, message);
 		}
 
@@ -11521,7 +11521,7 @@ void clif_parse_GMShift(int fd, struct map_session_data *sd)
 	atcommand_jumpto(fd, sd, "@jumpto", player_name); // as @jumpto
 	if( log_config.gm && lv >= log_config.gm ) {
 		char message[NAME_LENGTH+7];
-		sprintf(message, "/shift %s", player_name);
+		snprintf(message, sizeof message, "/shift %s", player_name);
 		log_atcommand(sd, message);
 	}
 }
@@ -11545,7 +11545,7 @@ void clif_parse_GMRecall(int fd, struct map_session_data *sd)
 	atcommand_recall(fd, sd, "@recall", player_name); // as @recall
 	if( log_config.gm && lv >= log_config.gm ) {
 		char message[NAME_LENGTH+8];
-		sprintf(message, "/recall %s", player_name);
+		snprintf(message, sizeof message, "/recall %s", player_name);
 		log_atcommand(sd, message);
 	}
 }
@@ -11584,7 +11584,7 @@ void clif_parse_GM_Monster_Item(int fd, struct map_session_data *sd)
 	atcommand_item(fd, sd, "@item", monster_item_name); // as @item
 	if( log_config.gm && level >= log_config.gm )
 	{	//Log action. [Skotlex]
-		sprintf(message, "@item %s", monster_item_name);
+		snprintf(message, sizeof message, "@item %s", monster_item_name);
 		log_atcommand(sd, message);
 	}
 }
@@ -11760,7 +11760,7 @@ void clif_parse_PMIgnore(int fd, struct map_session_data* sd)
 		// Bot-check...
 		if (strcmp(wisp_server_name, nick) == 0)
 		{	// to find possible bot users who automaticaly ignore people
-			sprintf(output, "Character '%s' (account: %d) has tried to block wisps from '%s' (wisp name of the server). Bot user?", sd->status.name, sd->status.account_id, wisp_server_name);
+			snprintf(output, sizeof output, "Character '%s' (account: %d) has tried to block wisps from '%s' (wisp name of the server). Bot user?", sd->status.name, sd->status.account_id, wisp_server_name);
 			intif_wis_message_to_gm(wisp_server_name, battle_config.hack_info_GM_level, output);
 			WFIFOB(fd,3) = 1; // fail
 			WFIFOSET(fd, packet_len(0x0d1));
@@ -12566,7 +12566,7 @@ void clif_Mail_refreshinbox(struct map_session_data *sd)
 	if( md->full )
 	{
 		char output[100];
-		sprintf(output, "Inbox is full (Max %d). Delete some mails.", MAIL_MAX_INBOX);
+		snprintf(output, sizeof output, "Inbox is full (Max %d). Delete some mails.", MAIL_MAX_INBOX);
 		clif_disp_onlyself(sd, output, strlen(output));
 	}
 }
@@ -14625,7 +14625,7 @@ static int packetdb_readdb(void)
 	for( i = 0; i < ARRAYLENGTH(packet_len_table); ++i )
 		packet_len(i) = packet_len_table[i];
 
-	sprintf(line, "%s/packet_db.txt", db_path);
+	snprintf(line, sizeof line, "%s/packet_db.txt", db_path);
 	if( (fp=fopen(line,"r"))==NULL ){
 		ShowFatalError("can't read %s\n", line);
 		exit(EXIT_FAILURE);

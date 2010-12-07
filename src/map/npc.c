@@ -368,19 +368,19 @@ int npc_event_do_clock(int tid, unsigned int tick, int id, intptr data)
 	}
 
 	if (t->tm_min != ev_tm_b.tm_min ) {
-		sprintf(buf,"OnMinute%02d",t->tm_min);
+		snprintf(buf,sizeof buf,"OnMinute%02d",t->tm_min);
 		c+=npc_event_doall(buf);
-		sprintf(buf,"OnClock%02d%02d",t->tm_hour,t->tm_min);
+		snprintf(buf,sizeof buf,"OnClock%02d%02d",t->tm_hour,t->tm_min);
 		c+=npc_event_doall(buf);
-		sprintf(buf,"On%s%02d%02d",day,t->tm_hour,t->tm_min);
+		snprintf(buf,sizeof buf,"On%s%02d%02d",day,t->tm_hour,t->tm_min);
 		c+=npc_event_doall(buf);
 	}
 	if (t->tm_hour!= ev_tm_b.tm_hour) {
-		sprintf(buf,"OnHour%02d",t->tm_hour);
+		snprintf(buf,sizeof buf,"OnHour%02d",t->tm_hour);
 		c+=npc_event_doall(buf);
 	}
 	if (t->tm_mday!= ev_tm_b.tm_mday) {
-		sprintf(buf,"OnDay%02d%02d",t->tm_mon+1,t->tm_mday);
+		snprintf(buf,sizeof buf,"OnDay%02d%02d",t->tm_mon+1,t->tm_mday);
 		c+=npc_event_doall(buf);
 	}
 

@@ -602,7 +602,7 @@ static void memmgr_final (void)
 					char* ptr = (char *)head + sizeof(struct unit_head) - sizeof(long);
 #ifdef LOG_MEMMGR
 					char buf[1024];
-					sprintf (buf,
+					snprintf (buf, sizeof buf,
 						"%04d : %s line %d size %lu address 0x%p\n", ++count,
 						head->file, head->line, (unsigned long)head->size, ptr);
 					memmgr_log (buf);
@@ -619,7 +619,7 @@ static void memmgr_final (void)
 		struct unit_head_large *large2;
 #ifdef LOG_MEMMGR
 		char buf[1024];
-		sprintf (buf,
+		snprintf (buf, sizeof buf,
 			"%04d : %s line %d size %lu address 0x%p\n", ++count,
 			large->unit_head.file, large->unit_head.line, (unsigned long)large->size, &large->unit_head.checksum);
 		memmgr_log (buf);
@@ -642,7 +642,7 @@ static void memmgr_final (void)
 static void memmgr_init (void)
 {
 #ifdef LOG_MEMMGR
-	sprintf(memmer_logfile, "log/%s.leaks", SERVER_NAME);
+	snprintf(memmer_logfile, sizeof memmer_logfile, "log/%s.leaks", SERVER_NAME);
 	ShowStatus("Memory manager initialised: "CL_WHITE"%s"CL_RESET"\n", memmer_logfile);
 	memset(hash_unfill, 0, sizeof(hash_unfill));
 #endif /* LOG_MEMMGR */

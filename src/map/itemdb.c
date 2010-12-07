@@ -478,7 +478,7 @@ static int itemdb_read_itemavail (void)
 	char line[1024], *str[10], *p;
 	struct item_data *id;
 
-	sprintf(line, "%s/item_avail.txt", db_path);
+	snprintf(line, sizeof line, "%s/item_avail.txt", db_path);
 	if ((fp = fopen(line,"r")) == NULL) {
 		ShowError("can't read %s\n", line);
 		return -1;
@@ -600,7 +600,7 @@ static int itemdb_read_noequip(void)
 	char *str[32],*p;
 	struct item_data *id;
 
-	sprintf(line, "%s/item_noequip.txt", db_path);
+	snprintf(line, sizeof line, "%s/item_noequip.txt", db_path);
 	if( (fp=fopen(line,"r"))==NULL ){
 		ShowError("can't read %s\n", line);
 		return -1;
@@ -644,7 +644,7 @@ static int itemdb_read_itemtrade(void)
 	char line[1024], *str[10], *p;
 	struct item_data *id;
 
-	sprintf(line, "%s/item_trade.txt", db_path);
+	snprintf(line, sizeof line, "%s/item_trade.txt", db_path);
 	if ((fp = fopen(line,"r")) == NULL) {
 		ShowError("can't read %s\n", line);
 		return -1;
@@ -690,7 +690,7 @@ static int itemdb_read_itemdelay(void)
 	char line[1024], *str[10], *p;
 	struct item_data *id;
 
-	sprintf(line, "%s/item_delay.txt", db_path);
+	snprintf(line, sizeof line, "%s/item_delay.txt", db_path);
 	if ((fp = fopen(line,"r")) == NULL) {
 		ShowError("can't read %s\n", line);
 		return -1;
@@ -880,7 +880,7 @@ static int itemdb_readdb(void)
 		char path[256];
 		FILE* fp;
 
-		sprintf(path, "%s/%s", db_path, filename[fi]);
+		snprintf(path, sizeof path, "%s/%s", db_path, filename[fi]);
 		fp = fopen(path, "r");
 		if( fp == NULL )
 		{

@@ -78,9 +78,9 @@ int inter_accreg_tostr(char *str, struct accreg *reg) {
 	int j;
 	char *p = str;
 
-	p += sprintf(p, "%d\t", reg->account_id);
+	p += snprintf(p, sizeof p, "%d\t", reg->account_id);
 	for(j = 0; j < reg->reg_num; j++) {
-		p += sprintf(p,"%s,%s ", reg->reg[j].str, reg->reg[j].value);
+		p += snprintf(p, sizeof p, "%s,%s ", reg->reg[j].str, reg->reg[j].value);
 	}
 
 	return 0;

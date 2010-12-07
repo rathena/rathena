@@ -110,7 +110,7 @@ int guild_read_guildskill_tree_db(void)
 	char line[1024],*p;
 
 	memset(guild_skill_tree,0,sizeof(guild_skill_tree));
-	sprintf(line, "%s/guild_skill_tree.txt", db_path);
+	snprintf(line, sizeof line, "%s/guild_skill_tree.txt", db_path);
 	if( (fp=fopen(line,"r"))==NULL){
 		ShowError("can't read %s\n", line);
 		return -1;
@@ -176,7 +176,7 @@ static int guild_read_castledb(void)
 	char *str[32],*p;
 	struct guild_castle *gc;
 
-	sprintf(line, "%s/castle_db.txt", db_path);
+	snprintf(line, sizeof line, "%s/castle_db.txt", db_path);
 	if( (fp=fopen(line,"r"))==NULL){
 		ShowError("can't read %s\n", line);
 		return -1;

@@ -343,7 +343,7 @@ bool mob_ksprotected (struct block_list *src, struct block_list *target)
 		// Message to KS
 		if( DIFF_TICK(sd->ks_floodprotect_tick, tick) <= 0 )
 		{
-			sprintf(output, "[KS Warning!! - Owner : %s]", pl_sd->status.name);
+			snprintf(output, sizeof output, "[KS Warning!! - Owner : %s]", pl_sd->status.name);
 			clif_disp_onlyself(sd, output, strlen(output));
 
 			sd->ks_floodprotect_tick = tick + 2000;
@@ -352,7 +352,7 @@ bool mob_ksprotected (struct block_list *src, struct block_list *target)
 		// Message to Owner
 		if( DIFF_TICK(pl_sd->ks_floodprotect_tick, tick) <= 0 )
 		{
-			sprintf(output, "[Watch out! %s is trying to KS you!]", sd->status.name);
+			snprintf(output, sizeof output, "[Watch out! %s is trying to KS you!]", sd->status.name);
 			clif_disp_onlyself(pl_sd, output, strlen(output));
 
 			pl_sd->ks_floodprotect_tick = tick + 2000;
@@ -2234,7 +2234,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 				struct item_data *i_data;
 				char message[128];
 				i_data = itemdb_search(ditem->item_data.nameid);
-				sprintf (message, msg_txt(541), mvp_sd->status.name, md->name, i_data->jname, (float)drop_rate/100);
+				snprintf (message, sizeof message, msg_txt(541), mvp_sd->status.name, md->name, i_data->jname, (float)drop_rate/100);
 				//MSG: "'%s' won %s's %s (chance: %0.02f%%)"
 				intif_broadcast(message,strlen(message)+1,0);
 			}
@@ -2360,7 +2360,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 				struct item_data *i_data;
 				char message[128];
 				i_data = itemdb_exists(item.nameid);
-				sprintf (message, msg_txt(541), mvp_sd->status.name, md->name, i_data->jname, temp/100.);
+				snprintf (message, sizeof message, msg_txt(541), mvp_sd->status.name, md->name, i_data->jname, temp/100.);
 				//MSG: "'%s' won %s's %s (chance: %0.02f%%)"
 				intif_broadcast(message,strlen(message)+1,0);
 			}
@@ -3354,9 +3354,9 @@ static int mob_makedummymobdb(int class_)
 	}
 	//Initialize dummy data.	
 	mob_dummy = (struct mob_db*)aCalloc(1, sizeof(struct mob_db)); //Initializing the dummy mob.
-	sprintf(mob_dummy->sprite,"DUMMY");
-	sprintf(mob_dummy->name,"Dummy");
-	sprintf(mob_dummy->jname,"Dummy");
+	snprintf(mob_dummy->sprite,sizeof mob_dummy->sprite,"DUMMY");
+	snprintf(mob_dummy->name,sizeof mob_dummy->name,"Dummy");
+	snprintf(mob_dummy->jname,sizeof mob_dummy->jname,"Dummy");
 	mob_dummy->lv=1;
 	mob_dummy->status.max_hp=1000;
 	mob_dummy->status.max_sp=1;
@@ -3650,7 +3650,7 @@ static void mob_readdb(void)
 
 		if(fi > 0)
 		{
-			sprintf(path, "%s/%s", db_path, filename[fi]);
+			snprintf(path, sizeof path, "%s/%s", db_path, filename[fi]);
 			if(!exists(path))
 			{
 				continue;
@@ -3780,7 +3780,7 @@ static int mob_read_randommonster(void)
 	for( i = 0; i < ARRAYLENGTH(mobfile) && i < MAX_RANDOMMONSTER; i++ )
 	{
 		mob_db_data[0]->summonper[i] = 1002;	// Default fallback value, in case the database does not provide one
-		sprintf(line, "%s/%s", db_path, mobfile[i]);
+		snprintf(line, sizeof line, "%s/%s", db_path, mobfile[i]);
 		fp=fopen(line,"r");
 		if(fp==NULL){
 			ShowError("can't read %s\n",line);
@@ -3894,7 +3894,7 @@ static void mob_readchatdb(void)
 	char line[1024], path[256];
 	int i, tmp=0;
 	FILE *fp;
-	sprintf(path, "%s/%s", db_path, arc); 
+	snprintf(path, sizeof path, "%s/%s", db_path, arc); 
 	fp=fopen(path, "r");
 	if(fp == NULL)
 	{
@@ -4218,7 +4218,7 @@ static void mob_readskilldb(void)
 
 		if(fi > 0)
 		{
-			sprintf(path, "%s/%s", db_path, filename[fi]);
+			snprintf(path, sizeof path, "%s/%s", db_path, filename[fi]);
 			if(!exists(path))
 			{
 				continue;

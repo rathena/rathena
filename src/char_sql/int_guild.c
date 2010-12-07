@@ -652,7 +652,7 @@ int inter_guild_ReadEXP(void)
 	char line[1024];
 	for (i=0;i<100;i++) guild_exp[i]=0;
 
-	sprintf(line, "%s/exp_guild.txt", db_path);
+	snprintf(line, sizeof line, "%s/exp_guild.txt", db_path);
 	fp=fopen(line,"r");
 	if(fp==NULL){
 		ShowError("can't read %s\n", line);
@@ -1278,7 +1278,7 @@ int mapif_parse_CreateGuild(int fd,int account_id,char *name,struct guild_member
 	strcpy(g->position[MAX_GUILDPOSITION-1].name,"Newbie");
 	g->position[0].modified = g->position[MAX_GUILDPOSITION-1].modified = GS_POSITION_MODIFIED;
 	for(i=1;i<MAX_GUILDPOSITION-1;i++) {
-		sprintf(g->position[i].name,"Position %d",i+1);
+		snprintf(g->position[i].name,sizeof g->position[i].name,"Position %d",i+1);
 		g->position[i].modified = GS_POSITION_MODIFIED;
 	}
 

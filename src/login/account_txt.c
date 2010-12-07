@@ -558,14 +558,14 @@ static bool mmo_auth_tostr(const struct mmo_account* a, char* str)
 	int i;
 	char* str_p = str;
 
-	str_p += sprintf(str_p, "%d\t%s\t%s\t%c\t%s\t%u\t%u\t%ld\t%ld\t%u\t%s\t%s\t",
+	str_p += snprintf(str_p, sizeof str_p, "%d\t%s\t%s\t%c\t%s\t%u\t%u\t%ld\t%ld\t%u\t%s\t%s\t",
 	                 a->account_id, a->userid, a->pass, a->sex, a->email, a->level,
 	                 a->state, (long)a->unban_time, (long)a->expiration_time,
 	                 a->logincount, a->lastlogin, a->last_ip);
 
 	for( i = 0; i < a->account_reg2_num; ++i )
 		if( a->account_reg2[i].str[0] )
-			str_p += sprintf(str_p, "%s,%s ", a->account_reg2[i].str, a->account_reg2[i].value);
+			str_p += snprintf(str_p, sizeof str_p, "%s,%s ", a->account_reg2[i].str, a->account_reg2[i].value);
 
 	return true;
 }

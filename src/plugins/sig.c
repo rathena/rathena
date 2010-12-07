@@ -104,7 +104,7 @@ void sig_dump(int sn)
 	crash_flag = 1;	
 	// search for a usable filename
 	do {
-		sprintf (file, "log/%s%04d.stackdump", server_name, ++no);
+		snprintf(file, sizeof file, "log/%s%04d.stackdump", server_name, ++no);
 	} while((fp = fopen(file,"r")) && (fclose(fp), no < 9999));
 	// dump the trace into the file
 

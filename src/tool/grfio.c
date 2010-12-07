@@ -402,7 +402,7 @@ int grfio_size(char* fname)
 		FILELIST lentry;
 		struct stat st;
 
-		sprintf(lfname, "%s%s", data_dir, fname);
+		snprintf(lfname, sizeof lfname, "%s%s", data_dir, fname);
 
 		for (p = &lfname[0]; *p != 0; p++)
 			if (*p=='\\') *p = '/';
@@ -435,7 +435,7 @@ void* grfio_reads(char* fname, int* size)
 		char lfname[256], *p;
 		FILELIST lentry;
 
-		sprintf(lfname, "%s%s", data_dir, fname);
+		snprintf(lfname, sizeof lfname, "%s%s", data_dir, fname);
 		
 		for (p = &lfname[0]; *p != 0; p++)
 			if (*p == '\\') *p = '/';
@@ -697,7 +697,7 @@ static void grfio_resourcecheck(void)
 	FILE* fp;
 
 	// read resnametable from data directory and return if successful
-	sprintf(restable, "%sdata\\resnametable.txt", data_dir);
+	snprintf(restable, sizeof restable, "%sdata\\resnametable.txt", data_dir);
 	for (ptr = &restable[0]; *ptr != 0; ptr++)
 		if (*ptr == '\\') *ptr = '/';
 
@@ -709,8 +709,8 @@ static void grfio_resourcecheck(void)
 				// we only need the maps' GAT and RSW files
 				(strstr(w2, ".gat") || strstr(w2, ".rsw")))
 			{
-				sprintf(src, "data\\%s", w1);
-				sprintf(dst, "data\\%s", w2);
+				snprintf(src, sizeof src, "data\\%s", w1);
+				snprintf(dst, sizeof dst, "data\\%s", w2);
 				entry = filelist_find(dst);
 				// create new entries reusing the original's info
 				if (entry != NULL) {
@@ -736,8 +736,8 @@ static void grfio_resourcecheck(void)
 			if (sscanf(ptr, "%[^#]#%[^#]#", w1, w2) == 2 &&
 				(strstr(w2, ".gat") || strstr(w2, ".rsw")))
 			{
-				sprintf(src, "data\\%s", w1);
-				sprintf(dst, "data\\%s", w2);
+				snprintf(src, sizeof src, "data\\%s", w1);
+				snprintf(dst, sizeof dst, "data\\%s", w2);
 				entry = filelist_find(dst);
 				if (entry != NULL) {
 					FILELIST fentry;

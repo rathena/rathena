@@ -262,8 +262,8 @@ int intif_regtostr(char* str, struct global_reg *reg, int qty)
 	int len =0, i;
 
 	for (i = 0; i < qty; i++) {
-		len+= sprintf(str+len, "%s", reg[i].str)+1; //We add 1 to consider the '\0' in place.
-		len+= sprintf(str+len, "%s", reg[i].value)+1;
+		len+= snprintf(str+len, sizeof (str+len), "%s", reg[i].str)+1; //We add 1 to consider the '\0' in place.
+		len+= snprintf(str+len, sizeof (str+len), "%s", reg[i].value)+1;
 	}
 	return len;
 }
@@ -1471,7 +1471,7 @@ int intif_parse_Mail_inboxreceived(int fd)
 	else
 	{
 		char output[128];
-		sprintf(output, msg_txt(510), sd->mail.inbox.unchecked, sd->mail.inbox.unread + sd->mail.inbox.unchecked);
+		snprintf(output, sizeof output, msg_txt(510), sd->mail.inbox.unchecked, sd->mail.inbox.unread + sd->mail.inbox.unchecked);
 		clif_disp_onlyself(sd, output, strlen(output));
 	}
 	return 0;

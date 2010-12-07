@@ -52,9 +52,9 @@ static void inter_status_tostr(char* line, struct scdata *sc_data)
 {
 	int i, len;
 
-	len = sprintf(line, "%d,%d,%d\t", sc_data->account_id, sc_data->char_id, sc_data->count);
+	len = snprintf(line, sizeof line, "%d,%d,%d\t", sc_data->account_id, sc_data->char_id, sc_data->count);
 	for(i = 0; i < sc_data->count; i++) {
-		len += sprintf(line + len, "%d,%ld,%ld,%ld,%ld,%ld\t", sc_data->data[i].type, sc_data->data[i].tick,
+		len += snprintf(line + len, sizeof (line + len), "%d,%ld,%ld,%ld,%ld,%ld\t", sc_data->data[i].type, sc_data->data[i].tick,
 			sc_data->data[i].val1, sc_data->data[i].val2, sc_data->data[i].val3, sc_data->data[i].val4);
 	}
 	return;

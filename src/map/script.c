@@ -1166,32 +1166,32 @@ const char* parse_curly_close(const char* p)
 		char label[256];
 		int l;
 		// 一時変数を消す
-		sprintf(label,"set $@__SW%x_VAL,0;",syntax.curly[pos].index);
+		snprintf(label,sizeof label,"set $@__SW%x_VAL,0;",syntax.curly[pos].index);
 		syntax.curly[syntax.curly_count++].type = TYPE_NULL;
 		parse_line(label);
 		syntax.curly_count--;
 
 		// 無条件で終了ポインタに移動
-		sprintf(label,"goto __SW%x_FIN;",syntax.curly[pos].index);
+		snprintf(label,sizeof label,"goto __SW%x_FIN;",syntax.curly[pos].index);
 		syntax.curly[syntax.curly_count++].type = TYPE_NULL;
 		parse_line(label);
 		syntax.curly_count--;
 
 		// 現在地のラベルを付ける
-		sprintf(label,"__SW%x_%x",syntax.curly[pos].index,syntax.curly[pos].count);
+		snprintf(label,sizeof label,"__SW%x_%x",syntax.curly[pos].index,syntax.curly[pos].count);
 		l=add_str(label);
 		set_label(l,script_pos, p);
 
 		if(syntax.curly[pos].flag) {
 			// default が存在する
-			sprintf(label,"goto __SW%x_DEF;",syntax.curly[pos].index);
+			snprintf(label,sizeof label,"goto __SW%x_DEF;",syntax.curly[pos].index);
 			syntax.curly[syntax.curly_count++].type = TYPE_NULL;
 			parse_line(label);
 			syntax.curly_count--;
 		}
 
 		// 終了ラベルを付ける
-		sprintf(label,"__SW%x_FIN",syntax.curly[pos].index);
+		snprintf(label,sizeof label,"__SW%x_FIN",syntax.curly[pos].index);
 		l=add_str(label);
 		set_label(l,script_pos, p);
 		linkdb_final(&syntax.curly[pos].case_label);	// free the list of case label
@@ -1219,16 +1219,16 @@ const char* parse_syntax(const char* p)
 			int pos = syntax.curly_count - 1;
 			while(pos >= 0) {
 				if(syntax.curly[pos].type == TYPE_DO) {
-					sprintf(label,"goto __DO%x_FIN;",syntax.curly[pos].index);
+					snprintf(label,sizeof label,"goto __DO%x_FIN;",syntax.curly[pos].index);
 					break;
 				} else if(syntax.curly[pos].type == TYPE_FOR) {
-					sprintf(label,"goto __FR%x_FIN;",syntax.curly[pos].index);
+					snprintf(label,sizeof label,"goto __FR%x_FIN;",syntax.curly[pos].index);
 					break;
 				} else if(syntax.curly[pos].type == TYPE_WHILE) {
-					sprintf(label,"goto __WL%x_FIN;",syntax.curly[pos].index);
+					snprintf(label,sizeof label,"goto __WL%x_FIN;",syntax.curly[pos].index);
 					break;
 				} else if(syntax.curly[pos].type == TYPE_SWITCH) {
-					sprintf(label,"goto __SW%x_FIN;",syntax.curly[pos].index);
+					snprintf(label,sizeof label,"goto __SW%x_FIN;",syntax.curly[pos].index);
 					break;
 				}
 				pos--;
@@ -1262,13 +1262,13 @@ const char* parse_syntax(const char* p)
 				char *np;
 				if(syntax.curly[pos].count != 1) {
 					// FALLTHRU 用のジャンプ
-					sprintf(label,"goto __SW%x_%xJ;",syntax.curly[pos].index,syntax.curly[pos].count);
+					snprintf(label,sizeof label,"goto __SW%x_%xJ;",syntax.curly[pos].index,syntax.curly[pos].count);
 					syntax.curly[syntax.curly_count++].type = TYPE_NULL;
 					parse_line(label);
 					syntax.curly_count--;
 
 					// 現在地のラベルを付ける
-					sprintf(label,"__SW%x_%x",syntax.curly[pos].index,syntax.curly[pos].count);
+					snprintf(label,sizeof label,"__SW%x_%x",syntax.curly[pos].index,syntax.curly[pos].count);
 					l=add_str(label);
 					set_label(l,script_pos, p);
 				}
@@ -1299,7 +1299,7 @@ const char* parse_syntax(const char* p)
 				p = skip_space(p);
 				if(*p != ':')
 					disp_error_message("parse_syntax: expect ':'",p);
-				sprintf(label,"if(%d != $@__SW%x_VAL) goto __SW%x_%x;",
+				snprintf(label,sizeof label,"if(%d != $@__SW%x_VAL) goto __SW%x_%x;",
 					v,syntax.curly[pos].index,syntax.curly[pos].index,syntax.curly[pos].count+1);
 				syntax.curly[syntax.curly_count++].type = TYPE_NULL;
 				// ２回parse しないとダメ
@@ -1308,7 +1308,7 @@ const char* parse_syntax(const char* p)
 				syntax.curly_count--;
 				if(syntax.curly[pos].count != 1) {
 					// FALLTHRU 終了後のラベル
-					sprintf(label,"__SW%x_%xJ",syntax.curly[pos].index,syntax.curly[pos].count);
+					snprintf(label,sizeof label,"__SW%x_%xJ",syntax.curly[pos].index,syntax.curly[pos].count);
 					l=add_str(label);
 					set_label(l,script_pos,p);
 				}
@@ -1317,7 +1317,7 @@ const char* parse_syntax(const char* p)
 					disp_error_message("parse_syntax: dup 'case'",p);
 				linkdb_insert(&syntax.curly[pos].case_label, (void*)v, (void*)1);
 
-				sprintf(label,"set $@__SW%x_VAL,0;",syntax.curly[pos].index);
+				snprintf(label,sizeof label,"set $@__SW%x_VAL,0;",syntax.curly[pos].index);
 				syntax.curly[syntax.curly_count++].type = TYPE_NULL;
 			
 				parse_line(label);
@@ -1331,14 +1331,14 @@ const char* parse_syntax(const char* p)
 			int pos = syntax.curly_count - 1;
 			while(pos >= 0) {
 				if(syntax.curly[pos].type == TYPE_DO) {
-					sprintf(label,"goto __DO%x_NXT;",syntax.curly[pos].index);
+					snprintf(label,sizeof label,"goto __DO%x_NXT;",syntax.curly[pos].index);
 					syntax.curly[pos].flag = 1; // continue 用のリンク張るフラグ
 					break;
 				} else if(syntax.curly[pos].type == TYPE_FOR) {
-					sprintf(label,"goto __FR%x_NXT;",syntax.curly[pos].index);
+					snprintf(label,sizeof label,"goto __FR%x_NXT;",syntax.curly[pos].index);
 					break;
 				} else if(syntax.curly[pos].type == TYPE_WHILE) {
-					sprintf(label,"goto __WL%x_NXT;",syntax.curly[pos].index);
+					snprintf(label,sizeof label,"goto __WL%x_NXT;",syntax.curly[pos].index);
 					break;
 				}
 				pos--;
@@ -1375,18 +1375,18 @@ const char* parse_syntax(const char* p)
 				if(*p != ':') {
 					disp_error_message("parse_syntax: need ':'",p);
 				}
-				sprintf(label,"__SW%x_%x",syntax.curly[pos].index,syntax.curly[pos].count);
+				snprintf(label,sizeof label,"__SW%x_%x",syntax.curly[pos].index,syntax.curly[pos].count);
 				l=add_str(label);
 				set_label(l,script_pos,p);
 
 				// 無条件で次のリンクに飛ばす
-				sprintf(label,"goto __SW%x_%x;",syntax.curly[pos].index,syntax.curly[pos].count+1);
+				snprintf(label,sizeof label,"goto __SW%x_%x;",syntax.curly[pos].index,syntax.curly[pos].count+1);
 				syntax.curly[syntax.curly_count++].type = TYPE_NULL;
 				parse_line(label);
 				syntax.curly_count--;
 
 				// default のラベルを付ける
-				sprintf(label,"__SW%x_DEF",syntax.curly[pos].index);
+				snprintf(label,sizeof label,"__SW%x_DEF",syntax.curly[pos].index);
 				l=add_str(label);
 				set_label(l,script_pos,p);
 
@@ -1404,7 +1404,7 @@ const char* parse_syntax(const char* p)
 			syntax.curly[syntax.curly_count].index = syntax.index++;
 			syntax.curly[syntax.curly_count].flag  = 0;
 			// 現在地のラベル形成する
-			sprintf(label,"__DO%x_BGN",syntax.curly[syntax.curly_count].index);
+			snprintf(label,sizeof label,"__DO%x_BGN",syntax.curly[syntax.curly_count].index);
 			l=add_str(label);
 			set_label(l,script_pos,p);
 			syntax.curly_count++;
@@ -1435,7 +1435,7 @@ const char* parse_syntax(const char* p)
 			syntax.curly_count--;
 
 			// 条件判断開始のラベル形成する
-			sprintf(label,"__FR%x_J",syntax.curly[pos].index);
+			snprintf(label,sizeof label,"__FR%x_J",syntax.curly[pos].index);
 			l=add_str(label);
 			set_label(l,script_pos,p);
 
@@ -1445,7 +1445,7 @@ const char* parse_syntax(const char* p)
 				;
 			} else {
 				// 条件が偽なら終了地点に飛ばす
-				sprintf(label,"__FR%x_FIN",syntax.curly[pos].index);
+				snprintf(label,sizeof label,"__FR%x_FIN",syntax.curly[pos].index);
 				add_scriptl(add_str("jump_zero"));
 				add_scriptc(C_ARG);
 				p=parse_expr(p);
@@ -1458,13 +1458,13 @@ const char* parse_syntax(const char* p)
 			p++;
 
 			// ループ開始に飛ばす
-			sprintf(label,"goto __FR%x_BGN;",syntax.curly[pos].index);
+			snprintf(label,sizeof label,"goto __FR%x_BGN;",syntax.curly[pos].index);
 			syntax.curly[syntax.curly_count++].type = TYPE_NULL;
 			parse_line(label);
 			syntax.curly_count--;
 
 			// 次のループへのラベル形成する
-			sprintf(label,"__FR%x_NXT",syntax.curly[pos].index);
+			snprintf(label,sizeof label,"__FR%x_NXT",syntax.curly[pos].index);
 			l=add_str(label);
 			set_label(l,script_pos,p);
 
@@ -1477,13 +1477,13 @@ const char* parse_syntax(const char* p)
 			parse_syntax_for_flag = 0;
 
 			// 条件判定処理に飛ばす
-			sprintf(label,"goto __FR%x_J;",syntax.curly[pos].index);
+			snprintf(label,sizeof label,"goto __FR%x_J;",syntax.curly[pos].index);
 			syntax.curly[syntax.curly_count++].type = TYPE_NULL;
 			parse_line(label);
 			syntax.curly_count--;
 
 			// ループ開始のラベル付け
-			sprintf(label,"__FR%x_BGN",syntax.curly[pos].index);
+			snprintf(label,sizeof label,"__FR%x_BGN",syntax.curly[pos].index);
 			l=add_str(label);
 			set_label(l,script_pos,p);
 			return p;
@@ -1520,7 +1520,7 @@ const char* parse_syntax(const char* p)
 				++syntax.curly_count;
 
 				// Jump over the function code
-				sprintf(label, "goto __FN%x_FIN;", syntax.curly[syntax.curly_count-1].index);
+				snprintf(label,sizeof label, "goto __FN%x_FIN;", syntax.curly[syntax.curly_count-1].index);
 				syntax.curly[syntax.curly_count].type = TYPE_NULL;
 				++syntax.curly_count;
 				parse_line(label);
@@ -1554,7 +1554,7 @@ const char* parse_syntax(const char* p)
 			syntax.curly[syntax.curly_count].count = 1;
 			syntax.curly[syntax.curly_count].index = syntax.index++;
 			syntax.curly[syntax.curly_count].flag  = 0;
-			sprintf(label,"__IF%x_%x",syntax.curly[syntax.curly_count].index,syntax.curly[syntax.curly_count].count);
+			snprintf(label,sizeof label,"__IF%x_%x",syntax.curly[syntax.curly_count].index,syntax.curly[syntax.curly_count].count);
 			syntax.curly_count++;
 			add_scriptl(add_str("jump_zero"));
 			add_scriptc(C_ARG);
@@ -1578,7 +1578,7 @@ const char* parse_syntax(const char* p)
 			syntax.curly[syntax.curly_count].count = 1;
 			syntax.curly[syntax.curly_count].index = syntax.index++;
 			syntax.curly[syntax.curly_count].flag  = 0;
-			sprintf(label,"$@__SW%x_VAL",syntax.curly[syntax.curly_count].index);
+			snprintf(label,sizeof label,"$@__SW%x_VAL",syntax.curly[syntax.curly_count].index);
 			syntax.curly_count++;
 			add_scriptl(add_str("set"));
 			add_scriptc(C_ARG);
@@ -1606,12 +1606,12 @@ const char* parse_syntax(const char* p)
 			syntax.curly[syntax.curly_count].index = syntax.index++;
 			syntax.curly[syntax.curly_count].flag  = 0;
 			// 条件判断開始のラベル形成する
-			sprintf(label,"__WL%x_NXT",syntax.curly[syntax.curly_count].index);
+			snprintf(label,sizeof label,"__WL%x_NXT",syntax.curly[syntax.curly_count].index);
 			l=add_str(label);
 			set_label(l,script_pos,p);
 
 			// 条件が偽なら終了地点に飛ばす
-			sprintf(label,"__WL%x_FIN",syntax.curly[syntax.curly_count].index);
+			snprintf(label,sizeof label,"__WL%x_FIN",syntax.curly[syntax.curly_count].index);
 			syntax.curly_count++;
 			add_scriptl(add_str("jump_zero"));
 			add_scriptc(C_ARG);
@@ -1653,13 +1653,13 @@ const char* parse_syntax_close_sub(const char* p,int* flag)
 		const char *bp = p;
 		const char *p2;
 		// if 最終場所へ飛ばす
-		sprintf(label,"goto __IF%x_FIN;",syntax.curly[pos].index);
+		snprintf(label,sizeof label,"goto __IF%x_FIN;",syntax.curly[pos].index);
 		syntax.curly[syntax.curly_count++].type = TYPE_NULL;
 		parse_line(label);
 		syntax.curly_count--;
 
 		// 現在地のラベルを付ける
-		sprintf(label,"__IF%x_%x",syntax.curly[pos].index,syntax.curly[pos].count);
+		snprintf(label,sizeof label,"__IF%x_%x",syntax.curly[pos].index,syntax.curly[pos].count);
 		l=add_str(label);
 		set_label(l,script_pos,p);
 
@@ -1676,7 +1676,7 @@ const char* parse_syntax_close_sub(const char* p,int* flag)
 				if(*p != '(') {
 					disp_error_message("need '('",p);
 				}
-				sprintf(label,"__IF%x_%x",syntax.curly[pos].index,syntax.curly[pos].count);
+				snprintf(label,sizeof label,"__IF%x_%x",syntax.curly[pos].index,syntax.curly[pos].count);
 				add_scriptl(add_str("jump_zero"));
 				add_scriptc(C_ARG);
 				p=parse_expr(p);
@@ -1697,7 +1697,7 @@ const char* parse_syntax_close_sub(const char* p,int* flag)
 		// if 閉じ
 		syntax.curly_count--;
 		// 最終地のラベルを付ける
-		sprintf(label,"__IF%x_FIN",syntax.curly[pos].index);
+		snprintf(label,sizeof label,"__IF%x_FIN",syntax.curly[pos].index);
 		l=add_str(label);
 		set_label(l,script_pos,p);
 		if(syntax.curly[pos].flag == 1) {
@@ -1712,7 +1712,7 @@ const char* parse_syntax_close_sub(const char* p,int* flag)
 
 		if(syntax.curly[pos].flag) {
 			// 現在地のラベル形成する(continue でここに来る)
-			sprintf(label,"__DO%x_NXT",syntax.curly[pos].index);
+			snprintf(label,sizeof label,"__DO%x_NXT",syntax.curly[pos].index);
 			l=add_str(label);
 			set_label(l,script_pos,p);
 		}
@@ -1727,7 +1727,7 @@ const char* parse_syntax_close_sub(const char* p,int* flag)
 		if(*p != '(') {
 			disp_error_message("need '('",p);
 		}
-		sprintf(label,"__DO%x_FIN",syntax.curly[pos].index);
+		snprintf(label,sizeof label,"__DO%x_FIN",syntax.curly[pos].index);
 		add_scriptl(add_str("jump_zero"));
 		add_scriptc(C_ARG);
 		p=parse_expr(p);
@@ -1736,13 +1736,13 @@ const char* parse_syntax_close_sub(const char* p,int* flag)
 		add_scriptc(C_FUNC);
 
 		// 開始地点に飛ばす
-		sprintf(label,"goto __DO%x_BGN;",syntax.curly[pos].index);
+		snprintf(label,sizeof label,"goto __DO%x_BGN;",syntax.curly[pos].index);
 		syntax.curly[syntax.curly_count++].type = TYPE_NULL;
 		parse_line(label);
 		syntax.curly_count--;
 
 		// 条件終了地点のラベル形成する
-		sprintf(label,"__DO%x_FIN",syntax.curly[pos].index);
+		snprintf(label,sizeof label,"__DO%x_FIN",syntax.curly[pos].index);
 		l=add_str(label);
 		set_label(l,script_pos,p);
 		p = skip_space(p);
@@ -1755,26 +1755,26 @@ const char* parse_syntax_close_sub(const char* p,int* flag)
 		return p;
 	} else if(syntax.curly[pos].type == TYPE_FOR) {
 		// 次のループに飛ばす
-		sprintf(label,"goto __FR%x_NXT;",syntax.curly[pos].index);
+		snprintf(label,sizeof label,"goto __FR%x_NXT;",syntax.curly[pos].index);
 		syntax.curly[syntax.curly_count++].type = TYPE_NULL;
 		parse_line(label);
 		syntax.curly_count--;
 
 		// for 終了のラベル付け
-		sprintf(label,"__FR%x_FIN",syntax.curly[pos].index);
+		snprintf(label,sizeof label,"__FR%x_FIN",syntax.curly[pos].index);
 		l=add_str(label);
 		set_label(l,script_pos,p);
 		syntax.curly_count--;
 		return p;
 	} else if(syntax.curly[pos].type == TYPE_WHILE) {
 		// while 条件判断へ飛ばす
-		sprintf(label,"goto __WL%x_NXT;",syntax.curly[pos].index);
+		snprintf(label,sizeof label,"goto __WL%x_NXT;",syntax.curly[pos].index);
 		syntax.curly[syntax.curly_count++].type = TYPE_NULL;
 		parse_line(label);
 		syntax.curly_count--;
 
 		// while 終了のラベル付け
-		sprintf(label,"__WL%x_FIN",syntax.curly[pos].index);
+		snprintf(label,sizeof label,"__WL%x_FIN",syntax.curly[pos].index);
 		l=add_str(label);
 		set_label(l,script_pos,p);
 		syntax.curly_count--;
@@ -1784,13 +1784,13 @@ const char* parse_syntax_close_sub(const char* p,int* flag)
 		char label[256];
 		int l;
 		// 戻す
-		sprintf(label,"return;");
+		snprintf(label,sizeof label,"return;");
 		syntax.curly[syntax.curly_count++].type = TYPE_NULL;
 		parse_line(label);
 		syntax.curly_count--;
 
 		// 現在地のラベルを付ける
-		sprintf(label,"__FN%x_FIN",syntax.curly[pos].index);
+		snprintf(label,sizeof label,"__FN%x_FIN",syntax.curly[pos].index);
 		l=add_str(label);
 		set_label(l,script_pos,p);
 		syntax.curly_count--;
@@ -1844,7 +1844,7 @@ static void read_constdb(void)
 	char line[1024],name[1024],val[1024];
 	int n,type;
 
-	sprintf(line, "%s/const.txt", db_path);
+	snprintf(line, sizeof line, "%s/const.txt", db_path);
 	fp=fopen(line, "r");
 	if(fp==NULL){
 		ShowError("can't read %s\n", line);
@@ -10603,7 +10603,7 @@ BUILDIN_FUNC(getinventorylist)
 			pc_setreg(sd,add_str("@inventorylist_attribute")+(j<<24),sd->status.inventory[i].attribute);
 			for (k = 0; k < MAX_SLOTS; k++)
 			{
-				sprintf(card_var, "@inventorylist_card%d",k+1);
+				snprintf(card_var, sizeof card_var, "@inventorylist_card%d",k+1);
 				pc_setreg(sd,add_str(card_var)+(j<<24),sd->status.inventory[i].card[k]);
 			}
 			pc_setreg(sd,add_str("@inventorylist_expire")+(j<<24),sd->status.inventory[i].expire_time);

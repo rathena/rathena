@@ -42,14 +42,14 @@ int inter_guild_tostr(char* str, struct guild* g)
 	int i, c, len;
 
 	// save guild base info
-	len = sprintf(str, "%d\t%s\t%s\t%d,%d,%"PRIu64",%d,%d\t%s#\t%s#\t",
+	len = snprintf(str, sizeof str, "%d\t%s\t%s\t%d,%d,%"PRIu64",%d,%d\t%s#\t%s#\t",
 		g->guild_id, g->name, g->master, g->guild_lv, g->max_member, g->exp, g->skill_point, 0, g->mes1, g->mes2);
 
 	// save guild member info
 	for(i = 0; i < g->max_member; i++)
 	{
 		struct guild_member *m = &g->member[i];
-		len += sprintf(str + len, "%d,%d,%d,%d,%d,%d,%d,%"PRIu64",%d,%d\t%s\t",
+		len += snprintf(str + len, sizeof (str + len), "%d,%d,%d,%d,%d,%d,%d,%"PRIu64",%d,%d\t%s\t",
 		               m->account_id, m->char_id,
 		               m->hair, m->hair_color, m->gender,
 		               m->class_, m->lv, m->exp, m->exp_payper, m->position,
@@ -59,26 +59,26 @@ int inter_guild_tostr(char* str, struct guild* g)
 	// save guild position info
 	for(i = 0; i < MAX_GUILDPOSITION; i++) {
 		struct guild_position *p = &g->position[i];
-		len += sprintf(str + len, "%d,%d\t%s#\t", p->mode, p->exp_mode, p->name);
+		len += snprintf(str + len, sizeof (str + len), "%d,%d\t%s#\t", p->mode, p->exp_mode, p->name);
 	}
 
 	// save guild emblem
-	len += sprintf(str + len, "%d,%d,", g->emblem_len, g->emblem_id);
+	len += snprintf(str + len, sizeof (str + len), "%d,%d,", g->emblem_len, g->emblem_id);
 	for(i = 0; i < g->emblem_len; i++) {
-		len += sprintf(str + len, "%02x", (unsigned char)(g->emblem_data[i]));
+		len += snprintf(str + len, sizeof (str + len), "%02x", (unsigned char)(g->emblem_data[i]));
 	}
-	len += sprintf(str + len, "$\t");
+	len += snprintf(str + len, sizeof (str + len), "$\t");
 
 	// save guild alliance info
 	c = 0;
 	for(i = 0; i < MAX_GUILDALLIANCE; i++)
 		if (g->alliance[i].guild_id > 0)
 			c++;
-	len += sprintf(str + len, "%d\t", c);
+	len += snprintf(str + len, sizeof (str + len), "%d\t", c);
 	for(i = 0; i < MAX_GUILDALLIANCE; i++) {
 		struct guild_alliance *a = &g->alliance[i];
 		if (a->guild_id > 0)
-			len += sprintf(str + len, "%d,%d\t%s\t", a->guild_id, a->opposition, a->name);
+			len += snprintf(str + len, sizeof (str + len), "%d,%d\t%s\t", a->guild_id, a->opposition, a->name);
 	}
 
 	// save guild expulsion info
@@ -86,19 +86,19 @@ int inter_guild_tostr(char* str, struct guild* g)
 	for(i = 0; i < MAX_GUILDEXPULSION; i++)
 		if (g->expulsion[i].account_id > 0)
 			c++;
-	len += sprintf(str + len, "%d\t", c);
+	len += snprintf(str + len, sizeof (str + len), "%d\t", c);
 	for(i = 0; i < MAX_GUILDEXPULSION; i++) {
 		struct guild_expulsion *e = &g->expulsion[i];
 		if (e->account_id > 0)
-			len += sprintf(str + len, "%d,%d,%d,%d\t%s\t%s\t%s#\t",
+			len += snprintf(str + len, sizeof (str + len), "%d,%d,%d,%d\t%s\t%s\t%s#\t",
 			               e->account_id, 0, 0, 0, e->name, "#", e->mes );
 	}
 
 	// save guild skill info
 	for(i = 0; i < MAX_GUILDSKILL; i++) {
-		len += sprintf(str + len, "%d,%d ", g->skill[i].id, g->skill[i].lv);
+		len += snprintf(str + len, sizeof (str + len), "%d,%d ", g->skill[i].id, g->skill[i].lv);
 	}
-	len += sprintf(str + len, "\t");
+	len += snprintf(str + len, sizeof (str + len), "\t");
 
 	return 0;
 }
@@ -309,7 +309,7 @@ int inter_guildcastle_tostr(char *str, struct guild_castle *gc)
 {
 	int len;
 
-	len = sprintf(str, "%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d",
+	len = snprintf(str, sizeof str, "%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d",
 	              gc->castle_id, gc->guild_id, gc->economy, gc->defense, gc->triggerE,
 	              gc->triggerD, gc->nextTime, gc->payTime, gc->createTime, gc->visibleC,
 	              gc->guardian[0].visible, gc->guardian[1].visible, gc->guardian[2].visible, gc->guardian[3].visible,
@@ -369,7 +369,7 @@ int inter_guild_readdb(void)
 	char line[1024];
 	char path[1024];
 
-	sprintf(path, "%s%s", db_path, "/exp_guild.txt");
+	snprintf(path, sizeof path, "%s%s", db_path, "/exp_guild.txt");
 	fp = fopen(path, "r");
 	if (fp == NULL) {
 		ShowError("can't read db/exp_guild.txt\n");
@@ -999,7 +999,7 @@ int mapif_parse_CreateGuild(int fd, int account_id, char *name, struct guild_mem
 	strcpy(g->position[                  0].name, "GuildMaster");
 	strcpy(g->position[MAX_GUILDPOSITION-1].name, "Newbie");
 	for(i = 1; i < MAX_GUILDPOSITION-1; i++)
-		sprintf(g->position[i].name, "Position %d", i + 1);
+		snprintf(g->position[i].name, sizeof g->position[i].name, "Position %d", i + 1);
 
 	// ここでギルド情報計算が必要と思われる
 	g->max_member = 16;
