@@ -1,5 +1,10 @@
 Date	Added
 
+2010/12/07
+	* Further corrections to doc/item_bonus.txt (bugreport:4624). [Ai4rei]
+	- Added documentation for bUnbreakableGarment, bUnbreakableWeapon, bUnbreakableArmor, bUnbreakableHelm, bUnbreakableShield, bUnbreakableShoes, bBreakWeaponRate and bBreakArmorRate (follow up to r485, r915, r1116, r13819).
+	- Fixed bIgnoreDefEle having race constants listed instead of element constants (since r12804).
+	- Fixed bUnstripable* not mentioning, that the bonus parameter is meaningless (follow up to r1382).
 2010/12/06
 	* Corrected description for bonuses bHealPower and bHealPower2 stating skill names being supported, although the bonus does not accept 'skill' as parameter (bugreport:4619, since r13821). [Ai4rei]
 2010/12/05

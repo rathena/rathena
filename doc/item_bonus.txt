@@ -15,6 +15,10 @@
 //= 1.1.20090529 - added documentation for bHealPower, bHealPower2 [Inkfish]
 //= 1.1.20101130 - added documentation for bAutoSpellOnSkill [Ai4rei]
 //= 1.1.20101205 - added documentation for bAddItemHealRate. [L0ne_W0lf]
+//= 1.1.20101207 - added documentation for bUnbreakableGarment,
+//=   bUnbreakableWeapon, bUnbreakableArmor, bUnbreakableHelm,
+//=   bUnbreakableShield, bUnbreakableShoes, bBreakWeaponRate and
+//=   bBreakArmorRate. [Ai4rei]
 //===== Description =======================================
 //= List of script instructions used in item bonuses,
 //= mainly bonus/bonus2/bonus3/bonus4/bonus5 arguments
@@ -78,9 +82,7 @@ bonus bIgnoreDefRace,n;			Disregard DEF against enemies of race n
 								5=Fish, 6=Demon, 7=Demi-Human, 8=Angel, 9=Dragon, 
 								10=Boss monster, 11=Other than (normal monster) boss monster
 bonus bIgnoreDefEle,n;			Disregard DEF against enemies of element n
-							n: 	0=Formless, 1=Undead, 2=Brute, 3=Plant, 4=Insect,
-								5=Fish, 6=Demon, 7=Demi-Human, 8=Angel, 9=Dragon, 
-								10=Boss monster, 11=Other than (normal monster) boss monster
+							n: 0=Neutral, 1=Water, 2=Earth, 3=Fire, 4=Wind, 5=Poison, 6=Holy, 7=Dark, 8=Spirit, 9=Undead
 bonus bIgnoreMDefRace;			Disregard MDEF against enemies of race n
 							n: 	0=Formless, 1=Undead, 2=Brute, 3=Plant, 4=Insect,
 								5=Fish, 6=Demon, 7=Demi-Human, 8=Angel, 9=Dragon, 
@@ -188,10 +190,10 @@ bonus3 bAutoSpell,n,x,y;		Auto Spell casting on attack of spell n at level x wit
 bonus bCritAtkRate,n;			Increase critical damage by +n%
 bonus bNoRegen,n;				Stops regeneration for n
 							n: 1=HP, 2=SP
-bonus bUnstripableWeapon,n;		Weapon cannot be taken off via Strip skills
-bonus bUnstripableArmor,n;		Armor cannot be taken off via Strip skills
-bonus bUnstripableHelm,n;		Helm cannot be taken off via Strip skills
-bonus bUnstripableShield,n;		Shield cannot be taken off via Strip skills
+bonus bUnstripableWeapon,n;		Weapon cannot be taken off via Strip skills (n is meaningless)
+bonus bUnstripableArmor,n;		Armor cannot be taken off via Strip skills (n is meaningless)
+bonus bUnstripableHelm,n;		Helm cannot be taken off via Strip skills (n is meaningless)
+bonus bUnstripableShield,n;		Shield cannot be taken off via Strip skills (n is meaningless)
 bonus bSPGainValue,n;			When killing a monster by physical attack, you gain n SP
 bonus bHPGainValue,n;			When killing a monster by physical attack, you gain n HP
 bonus bIgnoreDefMob,n;			Ignore monster's DEF when attacking.
@@ -385,3 +387,11 @@ bonus5 bAutoSpellOnSkill,s,x,l,n,i	Adds a n/10% chance to autospell skill x at l
 										&1: Forces the skill to be casted on self, rather than on the target of skill s.
 										&2: Random skill level between 1 and l is chosen.
 bonus bAddItemHealRate,x;		Increases HP recovered by x% for healing items.
+bonus bUnbreakableGarment,n;	Garment cannot be damaged/broken by any means (n is meaningless)
+bonus bUnbreakableWeapon,n;	Weapon cannot be damaged/broken by any means (n is meaningless)
+bonus bUnbreakableArmor,n;	Armor cannot be damaged/broken by any means (n is meaningless)
+bonus bUnbreakableHelm,n;	Helm cannot be damaged/broken by any means (n is meaningless)
+bonus bUnbreakableShield,n;	Shield cannot be damaged/broken by any means (n is meaningless)
+bonus bUnbreakableShoes,n;	Shoes cannot be damaged/broken by any means (n is meaningless)
+bonus bBreakWeaponRate,n;	Adds a n/100% chance to break enemy's weapon while attacking (stacks with other break chances).
+bonus bBreakArmorRate,n;	Adds a n/100% chance to break enemy's armor while attacking (stacks with other break chances).
