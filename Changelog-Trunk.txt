@@ -1,6 +1,7 @@
 Date	Added
 
 2010/12/07
+	* Fixed txt-converter-login was no longer compilable with supplied project/make files, due to missing reference to function exists in utils.c (bugreport:4626, since r14528). [Ai4rei]
 	* Applied svn:eol-style to VS2010 project files (follow up to r14562). [Ai4rei]
 	* Reverted r14563, due to multiple issues which render the source malfunctioning or uncompilable. To be redone later (bugreport:4627). [Ai4rei]
 	* Removed unnecessary reference operator from scanf calls passing character strings as arguments in adduser tool. [Paradox924X]

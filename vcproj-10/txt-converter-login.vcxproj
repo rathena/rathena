@@ -135,6 +135,7 @@
     <ClCompile Include="..\src\common\sql.c" />
     <ClCompile Include="..\src\common\strlib.c" />
     <ClCompile Include="..\src\common\timer.c" />
+    <ClCompile Include="..\src\common\utils.c" />
     <ClCompile Include="..\src\login\account_sql.c" />
     <ClCompile Include="..\src\login\account_txt.c" />
     <ClCompile Include="..\src\txt-converter\login-converter.c" />
@@ -149,6 +150,7 @@
     <ClInclude Include="..\src\common\sql.h" />
     <ClInclude Include="..\src\common\strlib.h" />
     <ClInclude Include="..\src\common\timer.h" />
+    <ClInclude Include="..\src\common\utils.h" />
     <ClInclude Include="..\src\login\account.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
