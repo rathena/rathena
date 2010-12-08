@@ -1,5 +1,12 @@
 Date	Added
 
+2010/12/08
+	* Applied some script command documentation updates and fixes as already done inside the wiki. [Ai4rei]
+	- Updated description for 'next', 'return', 'attachrid', 'detachrid', 'itemskill', 'openstorage', 'skilleffect', 'donpcevent', 'day', 'night', 'atoi' and 'axtoi' to resolve inaccuracies, missing information or unverified behavior.
+	- Clarified the purpose of the 'jump_zero' and 'getelementofarray' script commands.
+	- Fixed 'changebase' stating, that it only works in item scripts (since r2402).
+	- Fixed 'kickwaitingroomall' stating, that it is not properly linked into the script engine, thus not working (since r13732).
+	- Updated the description for 'cutin' so that it does not give the impression, that the client is able to display multiple illustrations at once, and being less confusing about the maximum size of illustrations.
 2010/12/07
 	* Fixed txt-converter-login was no longer compilable with supplied project/make files, due to missing reference to function exists in utils.c (bugreport:4626, since r14528). [Ai4rei]
 	* Applied svn:eol-style to VS2010 project files (follow up to r14562). [Ai4rei]
