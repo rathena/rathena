@@ -2154,7 +2154,7 @@ void clif_equiplist(struct map_session_data *sd)
 	}
 }
 
-void clif_storagelist(struct map_session_data* sd, struct storage_data* stor)
+void clif_storagelist(struct map_session_data* sd, struct item* items, int items_length)
 {
 	struct item_data *id;
 	int i,n,ne;
@@ -2175,21 +2175,21 @@ void clif_storagelist(struct map_session_data* sd, struct storage_data* stor)
 	const int cmd = 28;
 #endif
 
-	buf = (unsigned char*)aMallocA(MAX_STORAGE * s + 4);
-	bufe = (unsigned char*)aMallocA(MAX_STORAGE * cmd + 4);
+	buf = (unsigned char*)aMallocA(items_length * s + 4);
+	bufe = (unsigned char*)aMallocA(items_length * cmd + 4);
 
-	for( i = 0, n = 0, ne = 0; i < MAX_STORAGE; i++ )
+	for( i = 0, n = 0, ne = 0; i < items_length; i++ )
 	{
-		if( stor->items[i].nameid <= 0 )
+		if( items[i].nameid <= 0 )
 			continue;
-		id = itemdb_search(stor->items[i].nameid);
+		id = itemdb_search(items[i].nameid);
 		if( !itemdb_isstackable2(id) )
 		{ //Equippable
 			WBUFW(bufe,ne*cmd+4)=i+1;
-			clif_item_sub(bufe, ne*cmd+6, &stor->items[i], id, id->equip);
-			clif_addcards(WBUFP(bufe, ne*cmd+16), &stor->items[i]);
+			clif_item_sub(bufe, ne*cmd+6, &items[i], id, id->equip);
+			clif_addcards(WBUFP(bufe, ne*cmd+16), &items[i]);
 #if PACKETVER >= 20071002
-			WBUFL(bufe,ne*cmd+24)=stor->items[i].expire_time;
+			WBUFL(bufe,ne*cmd+24)=items[i].expire_time;
 			WBUFW(bufe,ne*cmd+28)=0; //Unknown
 #endif
 			ne++;
@@ -2197,93 +2197,12 @@ void clif_storagelist(struct map_session_data* sd, struct storage_data* stor)
 		else
 		{ //Stackable
 			WBUFW(buf,n*s+4)=i+1;
-			clif_item_sub(buf, n*s+6, &stor->items[i], id,-1);
+			clif_item_sub(buf, n*s+6, &items[i], id,-1);
 #if PACKETVER >= 5
-			clif_addcards(WBUFP(buf,n*s+14), &stor->items[i]);
+			clif_addcards(WBUFP(buf,n*s+14), &items[i]);
 #endif
 #if PACKETVER >= 20080102
-			WBUFL(buf,n*s+22)=stor->items[i].expire_time;
-#endif
-			n++;
-		}
-	}
-	if( n )
-	{
-#if PACKETVER < 5
-		WBUFW(buf,0)=0xa5;
-#elif PACKETVER < 20080102
-		WBUFW(buf,0)=0x1f0;
-#else
-		WBUFW(buf,0)=0x2ea;
-#endif
-		WBUFW(buf,2)=4+n*s;
-		clif_send(buf, WBUFW(buf,2), &sd->bl, SELF);
-	}
-	if( ne )
-	{
-#if PACKETVER < 20071002
-		WBUFW(bufe,0)=0xa6;
-#else
-		WBUFW(bufe,0)=0x2d1;
-#endif
-		WBUFW(bufe,2)=4+ne*cmd;
-		clif_send(bufe, WBUFW(bufe,2), &sd->bl, SELF);
-	}
-
-	if( buf ) aFree(buf);
-	if( bufe ) aFree(bufe);
-}
-
-//Unified storage function which sends all of the storage (requires two packets, one for equipable items and one for stackable ones. [Skotlex]
-void clif_guildstoragelist(struct map_session_data *sd,struct guild_storage *stor)
-{
-	struct item_data *id;
-	int i,n,ne;
-	unsigned char *buf;
-	unsigned char *bufe;
-#if PACKETVER < 5
-	const int s = 10; //Entry size.
-#elif PACKETVER < 20080102
-	const int s = 18;
-#else
-	const int s = 22;
-#endif
-#if PACKETVER < 20071002
-	const int cmd = 20;
-#elif PACKETVER < 20100629
-	const int cmd = 26;
-#else
-	const int cmd = 28;
-#endif
-
-	buf = (unsigned char*)aMallocA(MAX_GUILD_STORAGE * s + 4);
-	bufe = (unsigned char*)aMallocA(MAX_GUILD_STORAGE * cmd + 4);
-
-	for( i = 0, n = 0, ne = 0; i < MAX_GUILD_STORAGE; i++ )
-	{
-		if( stor->storage_[i].nameid <= 0 )
-			continue;
-		id = itemdb_search(stor->storage_[i].nameid);
-		if( !itemdb_isstackable2(id) )
-		{ //Equippable
-			WBUFW(bufe,ne*cmd+4)=i+1;
-			clif_item_sub(bufe, ne*cmd+6, &stor->storage_[i], id, id->equip);
-			clif_addcards(WBUFP(bufe, ne*cmd+16), &stor->storage_[i]);
-#if PACKETVER >= 20071002
-			WBUFL(bufe,ne*cmd+24)=stor->storage_[i].expire_time;
-			WBUFW(bufe,ne*cmd+28)=0; //Unknown
-#endif
-			ne++;
-		}
-		else
-		{ //Stackable
-			WBUFW(buf,n*s+4)=i+1;
-			clif_item_sub(buf, n*s+6, &stor->storage_[i], id,-1);
-#if PACKETVER >= 5
-			clif_addcards(WBUFP(buf,n*s+14), &stor->storage_[i]);
-#endif
-#if PACKETVER >= 20080102
-			WBUFL(buf,n*s+22)=stor->storage_[i].expire_time;
+			WBUFL(buf,n*s+22)=items[i].expire_time;
 #endif
 			n++;
 		}
@@ -3671,41 +3590,6 @@ void clif_updateguildstorageamount(struct map_session_data* sd, int amount)
 	WFIFOW(fd,2) = amount;  //items
 	WFIFOW(fd,4) = MAX_GUILD_STORAGE; //items max
 	WFIFOSET(fd,packet_len(0xf2));
-}
-
-/*==========================================
- *
- *------------------------------------------*/
-void clif_guildstorageitemadded(struct map_session_data* sd, struct item* i, int index, int amount)
-{
-	int view,fd;
-	unsigned char *buf;
-#if PACKETVER < 20090603
-	const int cmd = 0xf4;
-#else
-	const int cmd = 0x1c4;
-#endif
-
-	nullpo_retv(sd);
-	nullpo_retv(i);
-	fd=sd->fd;
-	view = itemdb_viewid(i->nameid);
-	buf = WFIFOP(fd,0);
-
-	WFIFOHEAD(fd,packet_len(cmd));
-	WBUFW(buf, 0) = cmd; // Storage item added
-	WBUFW(buf, 2) = index+1; // index
-	WBUFL(buf, 4) = amount; // amount
-	WBUFW(buf, 8) = ( view > 0 ) ? view : i->nameid; // id
-#if PACKETVER >= 20090603
-	WBUFB(buf,10) = itemdb_type(i->nameid); //type
-	buf = WBUFP(buf,1); //Advance 1B
-#endif
-	WBUFB(buf,10) = i->identify; //identify flag
-	WBUFB(buf,11) = i->attribute; // attribute
-	WBUFB(buf,12) = i->refine; //refine
-	clif_addcards(WBUFP(buf,13), i);
-	WFIFOSET(fd,packet_len(cmd));
 }
 
 /*==========================================

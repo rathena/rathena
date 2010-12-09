@@ -1,5 +1,10 @@
 Date	Added
 
+2010/12/09
+	* Removed some of the duplicate, storage-related packet code. [Ai4rei]
+	- Removed clif_guildstoragelist and adjusted clif_storagelist to be able to handle any kind of storage.
+	- Removed clif_guildstorageitemadded in favor of clif_storageitemadded.
+	- This also fixes clif_guildstorageitemadded sending old update packet for clients prior 20090603, although packet 0x1c4 (ZC_ADD_ITEM_TO_STORE2) was added before PACKETVER 5 (before 2003-11-03aSakexe, exact addition date unknown) (since r14286).
 2010/12/08
 	* Applied some script command documentation updates and fixes as already done inside the wiki. [Ai4rei]
 	- Updated description for 'next', 'return', 'attachrid', 'detachrid', 'itemskill', 'openstorage', 'skilleffect', 'donpcevent', 'day', 'night', 'atoi' and 'axtoi' to resolve inaccuracies, missing information or unverified behavior.

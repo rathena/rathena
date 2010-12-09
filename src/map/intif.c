@@ -986,7 +986,7 @@ int intif_parse_LoadGuildStorage(int fd)
 	memcpy(gstor,RFIFOP(fd,12),sizeof(struct guild_storage));
 	gstor->storage_status = 1;
 	sd->state.storage_flag = 2;
-	clif_guildstoragelist(sd,gstor);
+	clif_storagelist(sd, gstor->storage_, ARRAYLENGTH(gstor->storage_));
 	clif_updateguildstorageamount(sd,gstor->storage_amount);
 	return 0;
 }
