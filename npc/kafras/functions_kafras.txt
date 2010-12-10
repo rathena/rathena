@@ -260,7 +260,7 @@ function	script	F_Kafra	{
 function	script	F_KafStor	{
 	// Unable to access Guild Storage (Busy)
 	if(getarg(0) == 1){
-		if(guildopenstorage(0) == 1){
+		if(guildopenstorage() == 1){
 			mes "[Kafra Employee]";
 			mes "I'm sorry but another guild member is using the guild storage";
 			mes "right now.  Please wait until that person is finished.";

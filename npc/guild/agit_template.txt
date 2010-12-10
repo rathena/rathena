@@ -954,7 +954,7 @@ OnGuardianDied:
 		case 2:
 			// Unofficial, but since it's already been in eA for ages
 			// and used, I can't exactly remove it, now, can I? >:(
-			if(guildopenstorage(0) == 1){
+			if(guildopenstorage() == 1){
 				mes "[Kafra Employee]";
 				mes "I'm sorry but another guild member is using the guild storage";
 				mes "right now.  Please wait until that person is finished.";

@@ -5424,8 +5424,8 @@ BUILDIN_FUNC(getitem2)
 }
 
 /*==========================================
- * rentitem <item id>
- * rentitem "<item name>"
+ * rentitem <item id>,<seconds>
+ * rentitem "<item name>",<seconds>
  *------------------------------------------*/
 BUILDIN_FUNC(rentitem)
 {
@@ -14495,7 +14495,8 @@ BUILDIN_FUNC(deactivatepset);
 BUILDIN_FUNC(deletepset);
 #endif
 
-
+/// script command definitions
+/// for an explanation on args, see add_buildin_func
 struct script_function buildin_func[] = {
 	// NPC interaction
 	BUILDIN_DEF(mes,"s"),
@@ -14507,21 +14508,21 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(prompt,"s*"),
 	//
 	BUILDIN_DEF(goto,"l"),
-	BUILDIN_DEF(callsub,"i*"),
+	BUILDIN_DEF(callsub,"l*"),
 	BUILDIN_DEF(callfunc,"s*"),
 	BUILDIN_DEF(return,"?"),
 	BUILDIN_DEF(getarg,"i?"),
-	BUILDIN_DEF(jobchange,"i*"),
+	BUILDIN_DEF(jobchange,"i?"),
 	BUILDIN_DEF(jobname,"i"),
-	BUILDIN_DEF(input,"v??"),
+	BUILDIN_DEF(input,"r??"),
 	BUILDIN_DEF(warp,"sii"),
 	BUILDIN_DEF(areawarp,"siiiisii"),
 	BUILDIN_DEF(warpchar,"siii"), // [LuzZza]
-	BUILDIN_DEF(warpparty,"siii*"), // [Fredzilla] [Paradox924X]
+	BUILDIN_DEF(warpparty,"siii?"), // [Fredzilla] [Paradox924X]
 	BUILDIN_DEF(warpguild,"siii"), // [Fredzilla]
 	BUILDIN_DEF(setlook,"ii"),
 	BUILDIN_DEF(changelook,"ii"), // Simulates but don't Store it
-	BUILDIN_DEF(set,"ii"),
+	BUILDIN_DEF(set,"rv"),
 	BUILDIN_DEF(setarray,"rv*"),
 	BUILDIN_DEF(cleararray,"rvi"),
 	BUILDIN_DEF(copyarray,"rri"),
@@ -14530,12 +14531,12 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(getelementofarray,"ri"),
 	BUILDIN_DEF(getitem,"vi?"),
 	BUILDIN_DEF(rentitem,"vi"),
-	BUILDIN_DEF(getitem2,"iiiiiiiii*"),
-	BUILDIN_DEF(getnameditem,"is"),
+	BUILDIN_DEF(getitem2,"viiiiiiii?"),
+	BUILDIN_DEF(getnameditem,"vv"),
 	BUILDIN_DEF2(grouprandomitem,"groupranditem","i"),
-	BUILDIN_DEF(makeitem,"iisii"),
-	BUILDIN_DEF(delitem,"ii?"),
-	BUILDIN_DEF(delitem2,"iiiiiiiii?"),
+	BUILDIN_DEF(makeitem,"visii"),
+	BUILDIN_DEF(delitem,"vi?"),
+	BUILDIN_DEF(delitem2,"viiiiiiii?"),
 	BUILDIN_DEF2(enableitemuse,"enable_items",""),
 	BUILDIN_DEF2(disableitemuse,"disable_items",""),
 	BUILDIN_DEF(cutin,"si"),
@@ -14544,13 +14545,13 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(itemheal,"ii"),
 	BUILDIN_DEF(percentheal,"ii"),
 	BUILDIN_DEF(rand,"i?"),
-	BUILDIN_DEF(countitem,"i"),
-	BUILDIN_DEF(countitem2,"iiiiiiii"),
-	BUILDIN_DEF(checkweight,"ii"),
-	BUILDIN_DEF(readparam,"i*"),
-	BUILDIN_DEF(getcharid,"i*"),
+	BUILDIN_DEF(countitem,"v"),
+	BUILDIN_DEF(countitem2,"viiiiiii"),
+	BUILDIN_DEF(checkweight,"vi"),
+	BUILDIN_DEF(readparam,"i?"),
+	BUILDIN_DEF(getcharid,"i?"),
 	BUILDIN_DEF(getpartyname,"i"),
-	BUILDIN_DEF(getpartymember,"i*"),
+	BUILDIN_DEF(getpartymember,"i?"),
 	BUILDIN_DEF(getpartyleader,"i?"),
 	BUILDIN_DEF(getguildname,"i"),
 	BUILDIN_DEF(getguildmaster,"i"),
@@ -14601,16 +14602,16 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(gettime,"i"),
 	BUILDIN_DEF(gettimestr,"si"),
 	BUILDIN_DEF(openstorage,""),
-	BUILDIN_DEF(guildopenstorage,"*"),
+	BUILDIN_DEF(guildopenstorage,""),
 	BUILDIN_DEF(itemskill,"vi"),
 	BUILDIN_DEF(produce,"i"),
 	BUILDIN_DEF(cooking,"i"),
-	BUILDIN_DEF(monster,"siisii*"),
+	BUILDIN_DEF(monster,"siisii?"),
 	BUILDIN_DEF(getmobdrops,"i"),
-	BUILDIN_DEF(areamonster,"siiiisii*"),
+	BUILDIN_DEF(areamonster,"siiiisii?"),
 	BUILDIN_DEF(killmonster,"ss?"),
 	BUILDIN_DEF(killmonsterall,"s?"),
-	BUILDIN_DEF(clone,"siisi*"),
+	BUILDIN_DEF(clone,"siisi????"),
 	BUILDIN_DEF(doevent,"s"),
 	BUILDIN_DEF(donpcevent,"s"),
 	BUILDIN_DEF(cmdothernpc,"ss"),
@@ -14625,14 +14626,14 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(attachnpctimer,"?"), // attached the player id to the npc timer [Celest]
 	BUILDIN_DEF(detachnpctimer,"?"), // detached the player id from the npc timer [Celest]
 	BUILDIN_DEF(playerattached,""), // returns id of the current attached player. [Skotlex]
-	BUILDIN_DEF(announce,"si*"),
-	BUILDIN_DEF(mapannounce,"ssi*"),
-	BUILDIN_DEF(areaannounce,"siiiisi*"),
+	BUILDIN_DEF(announce,"si?????"),
+	BUILDIN_DEF(mapannounce,"ssi?????"),
+	BUILDIN_DEF(areaannounce,"siiiisi?????"),
 	BUILDIN_DEF(getusers,"i"),
 	BUILDIN_DEF(getmapguildusers,"si"),
 	BUILDIN_DEF(getmapusers,"s"),
 	BUILDIN_DEF(getareausers,"siiii"),
-	BUILDIN_DEF(getareadropitem,"siiiii"),
+	BUILDIN_DEF(getareadropitem,"siiiiv"),
 	BUILDIN_DEF(enablenpc,"s"),
 	BUILDIN_DEF(disablenpc,"s"),
 	BUILDIN_DEF(hideoffnpc,"s"),
@@ -14641,7 +14642,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(sc_start2,"iiii?"),
 	BUILDIN_DEF(sc_start4,"iiiiii?"),
 	BUILDIN_DEF(sc_end,"i?"),
-	BUILDIN_DEF(getscrate,"ii*"),
+	BUILDIN_DEF(getscrate,"ii?"),
 	BUILDIN_DEF(debugmes,"s"),
 	BUILDIN_DEF2(catchpet,"pet","i"),
 	BUILDIN_DEF2(birthpet,"bpet",""),
@@ -14649,7 +14650,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(resetstatus,""),
 	BUILDIN_DEF(resetskill,""),
 	BUILDIN_DEF(skillpointcount,""),
-	BUILDIN_DEF(changebase,"i"),
+	BUILDIN_DEF(changebase,"i?"),
 	BUILDIN_DEF(changesex,""),
 	BUILDIN_DEF(waitingroom,"si??"),
 	BUILDIN_DEF(delwaitingroom,"?"),
@@ -14665,22 +14666,22 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(isloggedin,"i?"),
 	BUILDIN_DEF(setmapflagnosave,"ssii"),
 	BUILDIN_DEF(getmapflag,"si"),
-	BUILDIN_DEF(setmapflag,"si*"),
+	BUILDIN_DEF(setmapflag,"si?"),
 	BUILDIN_DEF(removemapflag,"si"),
 	BUILDIN_DEF(pvpon,"s"),
 	BUILDIN_DEF(pvpoff,"s"),
 	BUILDIN_DEF(gvgon,"s"),
 	BUILDIN_DEF(gvgoff,"s"),
-	BUILDIN_DEF(emotion,"i*"),
+	BUILDIN_DEF(emotion,"i??"),
 	BUILDIN_DEF(maprespawnguildid,"sii"),
 	BUILDIN_DEF(agitstart,""),	// <Agit>
 	BUILDIN_DEF(agitend,""),
 	BUILDIN_DEF(agitcheck,""),   // <Agitcheck>
 	BUILDIN_DEF(flagemblem,"i"),	// Flag Emblem
 	BUILDIN_DEF(getcastlename,"s"),
-	BUILDIN_DEF(getcastledata,"si*"),
+	BUILDIN_DEF(getcastledata,"si?"),
 	BUILDIN_DEF(setcastledata,"sii"),
-	BUILDIN_DEF(requestguildinfo,"i*"),
+	BUILDIN_DEF(requestguildinfo,"i?"),
 	BUILDIN_DEF(getequipcardcnt,"i"),
 	BUILDIN_DEF(successremovecards,"i"),
 	BUILDIN_DEF(failedremovecards,"ii"),
@@ -14693,7 +14694,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(getmotherid,""),
 	BUILDIN_DEF(getfatherid,""),
 	BUILDIN_DEF(warppartner,"sii"),
-	BUILDIN_DEF(getitemname,"i"),
+	BUILDIN_DEF(getitemname,"v"),
 	BUILDIN_DEF(getitemslots,"i"),
 	BUILDIN_DEF(makepet,"i"),
 	BUILDIN_DEF(getexp,"ii"),
@@ -14703,9 +14704,9 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(classchange,"ii"),
 	BUILDIN_DEF(misceffect,"i"),
 	BUILDIN_DEF(playBGM,"s"),
-	BUILDIN_DEF(playBGMall,"s*"),
+	BUILDIN_DEF(playBGMall,"s?????"),
 	BUILDIN_DEF(soundeffect,"si"),
-	BUILDIN_DEF(soundeffectall,"si*"),	// SoundEffectAll [Codemaster]
+	BUILDIN_DEF(soundeffectall,"si?????"),	// SoundEffectAll [Codemaster]
 	BUILDIN_DEF(strmobinfo,"ii"),	// display mob data [Valaris]
 	BUILDIN_DEF(guardian,"siisi??"),	// summon guardians
 	BUILDIN_DEF(guardianinfo,"sii"),	// display guardian data [Valaris]
@@ -14718,34 +14719,34 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(petskillsupport,"viiii"), // [Skotlex]
 	BUILDIN_DEF(skilleffect,"vi"), // skill effect [Celest]
 	BUILDIN_DEF(npcskilleffect,"viii"), // npc skill effect [Valaris]
-	BUILDIN_DEF(specialeffect,"i*"), // npc skill effect [Valaris]
-	BUILDIN_DEF(specialeffect2,"i*"), // skill effect on players[Valaris]
+	BUILDIN_DEF(specialeffect,"i??"), // npc skill effect [Valaris]
+	BUILDIN_DEF(specialeffect2,"i??"), // skill effect on players[Valaris]
 	BUILDIN_DEF(nude,""), // nude command [Valaris]
-	BUILDIN_DEF(mapwarp,"ssii*"),		// Added by RoVeRT
-	BUILDIN_DEF(atcommand,"*"), // [MouseJstr]
-	BUILDIN_DEF(charcommand,"*"), // [MouseJstr]
+	BUILDIN_DEF(mapwarp,"ssii??"),		// Added by RoVeRT
+	BUILDIN_DEF(atcommand,"s"), // [MouseJstr]
+	BUILDIN_DEF(charcommand,"s"), // [MouseJstr]
 	BUILDIN_DEF(movenpc,"sii"), // [MouseJstr]
-	BUILDIN_DEF(message,"s*"), // [MouseJstr]
-	BUILDIN_DEF(npctalk,"*"), // [Valaris]
+	BUILDIN_DEF(message,"ss"), // [MouseJstr]
+	BUILDIN_DEF(npctalk,"s"), // [Valaris]
 	BUILDIN_DEF(mobcount,"ss"),
 	BUILDIN_DEF(getlook,"i"),
 	BUILDIN_DEF(getsavepoint,"i"),
 	BUILDIN_DEF(npcspeed,"i"), // [Valaris]
 	BUILDIN_DEF(npcwalkto,"ii"), // [Valaris]
 	BUILDIN_DEF(npcstop,""), // [Valaris]
-	BUILDIN_DEF(getmapxy,"siii*"),	//by Lorky [Lupus]
+	BUILDIN_DEF(getmapxy,"rrri?"),	//by Lorky [Lupus]
 	BUILDIN_DEF(checkoption1,"i"),
 	BUILDIN_DEF(checkoption2,"i"),
 	BUILDIN_DEF(guildgetexp,"i"),
 	BUILDIN_DEF(guildchangegm,"is"),
 	BUILDIN_DEF(logmes,"s"), //this command actls as MES but rints info into LOG file either SQL/TXT [Lupus]
-	BUILDIN_DEF(summon,"si*"), // summons a slave monster [Celest]
+	BUILDIN_DEF(summon,"si??"), // summons a slave monster [Celest]
 	BUILDIN_DEF(isnight,""), // check whether it is night time [Celest]
 	BUILDIN_DEF(isday,""), // check whether it is day time [Celest]
 	BUILDIN_DEF(isequipped,"i*"), // check whether another item/card has been equipped [Celest]
 	BUILDIN_DEF(isequippedcnt,"i*"), // check how many items/cards are being equipped [Celest]
 	BUILDIN_DEF(cardscnt,"i*"), // check how many items/cards are being equipped in the same arm [Lupus]
-	BUILDIN_DEF(getrefine,"*"), // returns the refined number of the current item, or an item with index specified [celest]
+	BUILDIN_DEF(getrefine,""), // returns the refined number of the current item, or an item with index specified [celest]
 	BUILDIN_DEF(night,""), // sets the server to night time
 	BUILDIN_DEF(day,""), // sets the server to day time
 #ifdef PCRE_SUPPORT
@@ -14755,13 +14756,13 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(deletepset,"i"), // Delete a pattern set [MouseJstr]
 #endif
 	BUILDIN_DEF(dispbottom,"s"), //added from jA [Lupus]
-	BUILDIN_DEF(getusersname,"*"),
+	BUILDIN_DEF(getusersname,""),
 	BUILDIN_DEF(recovery,""),
 	BUILDIN_DEF(getpetinfo,"i"),
 	BUILDIN_DEF(gethominfo,"i"),
 	BUILDIN_DEF(checkequipedcard,"i"),
-	BUILDIN_DEF(jump_zero,"ii"), //for future jA script compatibility
-	BUILDIN_DEF(globalmes,"s*"),
+	BUILDIN_DEF(jump_zero,"il"), //for future jA script compatibility
+	BUILDIN_DEF(globalmes,"s?"),
 	BUILDIN_DEF(getmapmobs,"s"), //end jA addition
 	BUILDIN_DEF(unequip,"i"), // unequip command [Spectre]
 	BUILDIN_DEF(getstrlen,"s"), //strlen [Valaris]
@@ -14778,11 +14779,11 @@ struct script_function buildin_func[] = {
 	// <--- [zBuffer] List of mathematics commands
 	BUILDIN_DEF(md5,"s"),
 	// [zBuffer] List of dynamic var commands --->
-	BUILDIN_DEF(getd,"*"),
-	BUILDIN_DEF(setd,"*"),
+	BUILDIN_DEF(getd,"s"),
+	BUILDIN_DEF(setd,"ss"),
 	// <--- [zBuffer] List of dynamic var commands
 	BUILDIN_DEF(petstat,"i"),
-	BUILDIN_DEF(callshop,"si"), // [Skotlex]
+	BUILDIN_DEF(callshop,"s?"), // [Skotlex]
 	BUILDIN_DEF(npcshopitem,"sii*"), // [Lance]
 	BUILDIN_DEF(npcshopadditem,"sii*"),
 	BUILDIN_DEF(npcshopdelitem,"si*"),
@@ -14791,9 +14792,9 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(autoequip,"ii"),
 	BUILDIN_DEF(setbattleflag,"ss"),
 	BUILDIN_DEF(getbattleflag,"s"),
-	BUILDIN_DEF(setitemscript,"is*"), //Set NEW item bonus script. Lupus
+	BUILDIN_DEF(setitemscript,"is?"), //Set NEW item bonus script. Lupus
 	BUILDIN_DEF(disguise,"i"), //disguise player. Lupus
-	BUILDIN_DEF(undisguise,"*"), //undisguise player. Lupus
+	BUILDIN_DEF(undisguise,""), //undisguise player. Lupus
 	BUILDIN_DEF(getmonsterinfo,"ii"), //Lupus
 	BUILDIN_DEF(axtoi,"s"),
 	BUILDIN_DEF(query_sql,"s*"),
@@ -14824,10 +14825,10 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(warpportal,"iisii"),
 	BUILDIN_DEF2(homunculus_evolution,"homevolution",""),	//[orn]
 	BUILDIN_DEF2(homunculus_shuffle,"homshuffle",""),	//[Zephyrus]
-	BUILDIN_DEF(eaclass,"*"),	//[Skotlex]
-	BUILDIN_DEF(roclass,"i*"),	//[Skotlex]
-	BUILDIN_DEF(checkvending,"*"),
-	BUILDIN_DEF(checkchatting,"*"),
+	BUILDIN_DEF(eaclass,"?"),	//[Skotlex]
+	BUILDIN_DEF(roclass,"i?"),	//[Skotlex]
+	BUILDIN_DEF(checkvending,"?"),
+	BUILDIN_DEF(checkchatting,"?"),
 	BUILDIN_DEF(openmail,""),
 	BUILDIN_DEF(openauction,""),
 	BUILDIN_DEF(checkcell,"siii"),
@@ -14845,7 +14846,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(readbook,"ii"),
 	BUILDIN_DEF(setfont,"i"),
 	BUILDIN_DEF(areamobuseskill,"siiiiviiiii"),
-	BUILDIN_DEF(progressbar, "si"),
+	BUILDIN_DEF(progressbar,"si"),
 	BUILDIN_DEF(pushpc,"ii"),
 	// WoE SE
 	BUILDIN_DEF(agitstart2,""),
@@ -14856,7 +14857,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(waitingroom2bg_single,"isiis"),
 	BUILDIN_DEF(bg_team_setxy,"iii"),
 	BUILDIN_DEF(bg_warp,"isii"),
-	BUILDIN_DEF(bg_monster,"isiisi*"),
+	BUILDIN_DEF(bg_monster,"isiisi?"),
 	BUILDIN_DEF(bg_monster_set_team,"ii"),
 	BUILDIN_DEF(bg_leave,""),
 	BUILDIN_DEF(bg_destroy,"i"),
@@ -14874,7 +14875,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(instance_id,"?"),
 	BUILDIN_DEF(instance_set_timeout,"ii?"),
 	BUILDIN_DEF(instance_init,"i"),
-	BUILDIN_DEF(instance_announce,"isi*"),
+	BUILDIN_DEF(instance_announce,"isi?????"),
 	BUILDIN_DEF(instance_npcname,"s?"),
 	BUILDIN_DEF(has_instance,"s?"),
 	BUILDIN_DEF(instance_warpall,"sii?"),
@@ -14883,7 +14884,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(setquest, "i"),
 	BUILDIN_DEF(erasequest, "i"),
 	BUILDIN_DEF(completequest, "i"),
-	BUILDIN_DEF(checkquest, "i*"),
+	BUILDIN_DEF(checkquest, "i?"),
 	BUILDIN_DEF(changequest, "ii"),
 	BUILDIN_DEF(showevent, "ii"),
 	{NULL,NULL,NULL},

@@ -1,5 +1,9 @@
 Date	Added
 
+2010/12/10
+	* Revised argument declaration of all script commands according to the actual functions' argument usage. [Ai4rei]
+	- Fixed many script commands with fixed amount of optional parameters to no longer accept any amount of arguments due to faulty declaration.
+	- Corrected use of dummy parameter for guildopenstorage in scripts.
 2010/12/09
 	* Removed some of the duplicate, storage-related packet code. [Ai4rei]
 	- Removed clif_guildstoragelist and adjusted clif_storagelist to be able to handle any kind of storage.
