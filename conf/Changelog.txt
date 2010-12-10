@@ -1,5 +1,7 @@
 Date	Added
 
+2010/12/10
+	* Rev. 14572 Applied update to charhelp.txt provided by EvilPuncker to match current charcommand behavior (bugreport:4632, follow up to r13403). [Ai4rei]
 2010/10/10
 	* Added cashfood_use_interval config setting. [Paradox924X]
 2010/05/25
