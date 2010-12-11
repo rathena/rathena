@@ -1500,13 +1500,7 @@ static int pc_bonus_autospell_onskill(struct s_autospell *spell, int max, short 
 
 	for( i = 0; i < max && spell[i].id; i++ )  
 	{  
-		if( spell[i].flag == src_skill && spell[i].id == id && spell[i].lv == lv && (spell[i].card_id == card_id || spell[i].rate <= 0 || rate < 0) )  
-		{  
-			if( !battle_config.autospell_stacking && spell[i].rate > 0 && rate > 0 )
-				return 0;
-			rate += spell[i].rate;
-			break; 
-		}  
+		;  // each autospell works independently
 	}
 
 	if( i == max )

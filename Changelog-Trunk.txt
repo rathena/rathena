@@ -1,6 +1,7 @@
 Date	Added
 
 2010/12/10
+	* Fixed bAutoSpellOnSkill bonuses not working independently of each other (bugreport:4617, since r13596, related r14536). [Ai4rei]
 	* Revised argument declaration of all script commands according to the actual functions' argument usage. [Ai4rei]
 	- Fixed many script commands with fixed amount of optional parameters to no longer accept any amount of arguments due to faulty declaration.
 	- Corrected use of dummy parameter for guildopenstorage in scripts.
