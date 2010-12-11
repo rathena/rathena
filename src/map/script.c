@@ -5938,34 +5938,21 @@ BUILDIN_FUNC(getcharid)
 /*==========================================
  *指定IDのPT名取得
  *------------------------------------------*/
-char *buildin_getpartyname_sub(int party_id)
-{
-	struct party_data *p;
-
-	p=party_search(party_id);
-
-	if(p!=NULL){
-		char *buf;
-		buf=(char *)aMallocA(NAME_LENGTH*sizeof(char));
-		memcpy(buf, p->party.name, NAME_LENGTH);
-		buf[NAME_LENGTH-1] = '\0';
-		return buf;
-	}
-
-	return 0;
-}
 BUILDIN_FUNC(getpartyname)
 {
-	char *name;
 	int party_id;
+	struct party_data* p;
 
-	party_id=script_getnum(st,2);
-	name=buildin_getpartyname_sub(party_id);
-	if(name != NULL)
-		script_pushstr(st,name);
+	party_id = script_getnum(st,2);
+
+	if( ( p = party_search(party_id) ) != NULL )
+	{
+		script_pushstrcopy(st,p->party.name);
+	}
 	else
+	{
 		script_pushconststr(st,"null");
-
+	}
 	return 0;
 }
 /*==========================================
@@ -6043,75 +6030,58 @@ BUILDIN_FUNC(getpartyleader)
 /*==========================================
  *指定IDのギルド名取得
  *------------------------------------------*/
-char *buildin_getguildname_sub(int guild_id)
-{
-	struct guild *g=NULL;
-	g=guild_search(guild_id);
-
-	if(g!=NULL){
-		char *buf;
-		buf=(char *)aMallocA(NAME_LENGTH*sizeof(char));
-		memcpy(buf, g->name, NAME_LENGTH);
-		buf[NAME_LENGTH-1] = '\0';
-		return buf;
-	}
-	return NULL;
-}
 BUILDIN_FUNC(getguildname)
 {
-	char *name;
-	int guild_id=script_getnum(st,2);
-	name=buildin_getguildname_sub(guild_id);
-	if(name != NULL)
-		script_pushstr(st,name);
+	int guild_id;
+	struct guild* g;
+
+	guild_id = script_getnum(st,2);
+
+	if( ( g = guild_search(guild_id) ) != NULL )
+	{
+		script_pushstrcopy(st,g->name);
+	}
 	else
+	{
 		script_pushconststr(st,"null");
+	}
 	return 0;
 }
 
 /*==========================================
  *指定IDのGuildMaster名取得
  *------------------------------------------*/
-char *buildin_getguildmaster_sub(int guild_id)
-{
-	struct guild *g=NULL;
-	g=guild_search(guild_id);
-
-	if(g!=NULL){
-		char *buf;
-		buf=(char *)aMallocA(NAME_LENGTH*sizeof(char));
-		memcpy(buf, g->master, NAME_LENGTH);
-		buf[NAME_LENGTH-1] = '\0';
-		return buf;
-	}
-
-	return 0;
-}
 BUILDIN_FUNC(getguildmaster)
 {
-	char *master;
-	int guild_id=script_getnum(st,2);
-	master=buildin_getguildmaster_sub(guild_id);
-	if(master!=0)
-		script_pushstr(st,master);
+	int guild_id;
+	struct guild* g;
+
+	guild_id = script_getnum(st,2);
+
+	if( ( g = guild_search(guild_id) ) != NULL )
+	{
+		script_pushstrcopy(st,g->member[0].name);
+	}
 	else
+	{
 		script_pushconststr(st,"null");
+	}
 	return 0;
 }
 
 BUILDIN_FUNC(getguildmasterid)
 {
-	char *master;
-	TBL_PC *sd=NULL;
-	int guild_id=script_getnum(st,2);
-	master=buildin_getguildmaster_sub(guild_id);
-	if(master!=0){
-		if((sd=map_nick2sd(master)) == NULL){
-			script_pushint(st,0);
-			return 0;
-		}
-		script_pushint(st,sd->status.char_id);
-	}else{
+	int guild_id;
+	struct guild* g;
+
+	guild_id = script_getnum(st,2);
+
+	if( ( g = guild_search(guild_id) ) != NULL )
+	{
+		script_pushint(st,g->member[0].char_id);
+	}
+	else
+	{
 		script_pushint(st,0);
 	}
 	return 0;
@@ -6124,7 +6094,8 @@ BUILDIN_FUNC(strcharinfo)
 {
 	TBL_PC *sd;
 	int num;
-	char *buf;
+	struct guild* g;
+	struct party_data* p;
 
 	sd=script_rid2sd(st);
 	if (!sd) { //Avoid crashing....
@@ -6137,18 +6108,24 @@ BUILDIN_FUNC(strcharinfo)
 			script_pushstrcopy(st,sd->status.name);
 			break;
 		case 1:
-			buf=buildin_getpartyname_sub(sd->status.party_id);
-			if(buf!=0)
-				script_pushstr(st,buf);
+			if( ( p = party_search(sd->status.party_id) ) != NULL )
+			{
+				script_pushstrcopy(st,p->party.name);
+			}
 			else
+			{
 				script_pushconststr(st,"");
+			}
 			break;
 		case 2:
-			buf=buildin_getguildname_sub(sd->status.guild_id);
-			if(buf != NULL)
-				script_pushstr(st,buf);
+			if( ( g = guild_search(sd->status.guild_id) ) != NULL )
+			{
+				script_pushstrcopy(st,g->name);
+			}
 			else
+			{
 				script_pushconststr(st,"");
+			}
 			break;
 		case 3:
 			script_pushconststr(st,map[sd->bl.m].name);
