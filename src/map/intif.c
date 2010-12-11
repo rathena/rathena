@@ -1920,7 +1920,7 @@ int intif_parse_mercenary_received(int fd)
 	if( sizeof(struct s_mercenary) != len )
 	{
 		if( battle_config.etc_log )
-			ShowError("intif: create mercenary data size error %d != %d\n", sizeof(struct s_homunculus), len);
+			ShowError("intif: create mercenary data size error %d != %d\n", sizeof(struct s_mercenary), len);
 		return 0;
 	}
 

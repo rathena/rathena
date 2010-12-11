@@ -1,12 +1,14 @@
 Date	Added
 
+2010/12/11
+	* Fixed error message in intif_parse_mercenary_received printing wrong struct size (bugreport:4633, since r13116). [Ai4rei]
 2010/12/10
 	* Replaced buildin_getpartyname_sub, buildin_getguildname_sub and buildin_getguildmaster_sub, which create only unnecessary overhead, with equivalent inlined code. [Ai4rei]
 	- Fixed a memory leak in getguildmasterid, when the guild leader was not online (bugreport:2743).
 	- Command getguildmasterid no longer requires the guild leader to be online.
 	* Fixed bAutoSpellOnSkill bonuses not working independently of each other (bugreport:4617, since r13596, related r14536). [Ai4rei]
 	* Revised argument declaration of all script commands according to the actual functions' argument usage. [Ai4rei]
-	- Fixed many script commands with fixed amount of optional parameters to no longer accept any amount of arguments due to faulty declaration.
+	- Fixed many script commands with fixed amount of optional parameters to no longer accept any amount of arguments (faulty declaration).
 	- Corrected use of dummy parameter for guildopenstorage in scripts.
 2010/12/09
 	* Removed some of the duplicate, storage-related packet code. [Ai4rei]
