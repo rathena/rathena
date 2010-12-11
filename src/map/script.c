@@ -210,6 +210,7 @@ DBMap* script_get_userfunc_db(){ return userfunc_db; }
 static DBMap* autobonus_db=NULL; // char* script -> char* bytecode
 
 struct Script_Config script_config = {
+	1, // warn_func_mismatch_argtypes
 	1, 65535, 2048, //warn_func_mismatch_paramnum/check_cmdcount/check_gotocount
 	0, INT_MAX, // input_min_value/input_max_value
 	"OnPCDieEvent", //die_event_name
@@ -2981,6 +2982,94 @@ void op_1(struct script_state* st, int op)
 }
 
 
+/// Checks the type of all arguments passed to a built-in function.
+///
+/// @param st Script state whose stack arguments should be inspected.
+/// @param func Built-in function for which the arguments are intended.
+static void script_check_buildin_argtype(struct script_state* st, int func)
+{
+	char type;
+	int idx, invalid = 0;
+	script_function* sf = &buildin_func[str_data[func].val];
+
+	for( idx = 2; script_hasdata(st, idx); idx++ )
+	{
+		struct script_data* data = script_getdata(st, idx);
+
+		type = sf->arg[idx-2];
+
+		if( type == '?' || type == '*' )
+		{// optional argument or unknown number of optional parameters ( no types are after this )
+			break;
+		}
+		else if( type == 0 )
+		{// more arguments than necessary ( should not happen, as it is checked before )
+			ShowWarning("Found more arguments than necessary.\n");
+			invalid++;
+			break;
+		}
+		else
+		{
+			const char* name = NULL;
+
+			if( data_isreference(data) )
+			{// get name for variables to determine the type they refer to
+				name = reference_getname(data);
+			}
+
+			switch( type )
+			{
+				case 'v':
+					if( !data_isstring(data) && !data_isint(data) && !data_isreference(data) )
+					{// variant
+						ShowWarning("Unexpected type for argument %d. Expected string, number or variable.\n", idx-1);
+						script_reportdata(data);
+						invalid++;
+					}
+					break;
+				case 's':
+					if( !data_isstring(data) && !( data_isreference(data) && is_string_variable(name) ) )
+					{// string
+						ShowWarning("Unexpected type for argument %d. Expected string.\n", idx-1);
+						script_reportdata(data);
+						invalid++;
+					}
+					break;
+				case 'i':
+					if( !data_isint(data) && !( data_isreference(data) && ( reference_toparam(data) || reference_toconstant(data) || !is_string_variable(name) ) ) )
+					{// int ( params and constants are always int )
+						ShowWarning("Unexpected type for argument %d. Expected number.\n", idx-1);
+						script_reportdata(data);
+						invalid++;
+					}
+					break;
+				case 'r':
+					if( !data_isreference(data) )
+					{// variables
+						ShowWarning("Unexpected type for argument %d. Expected variable.\n", idx-1);
+						script_reportdata(data);
+						invalid++;
+					}
+					break;
+				case 'l':
+					if( !data_islabel(data) && !data_isfunclabel(data) )
+					{// label
+						ShowWarning("Unexpected type for argument %d. Expected label.\n", idx-1);
+						script_reportdata(data);
+						invalid++;
+					}
+					break;
+			}
+		}
+	}
+
+	if(invalid)
+	{
+		ShowDebug("Function: %s\n", get_str(func));
+		script_reportsrc(st);
+	}
+}
+
 
 /// Executes a buildin command.
 /// Stack: C_NAME(<command>) C_ARG <arg0> <arg1> ... <argN>
@@ -3014,6 +3103,11 @@ int run_func(struct script_state *st)
 		script_reportsrc(st);
 		st->state = END;
 		return 1;
+	}
+
+	if( script_config.warn_func_mismatch_argtypes )
+	{
+		script_check_buildin_argtype(st, func);
 	}
 
 	if(str_data[func].func){
@@ -3382,6 +3476,9 @@ int script_config_read(char *cfgName)
 		}
 		else if(strcmpi(w1,"input_max_value")==0) {
 			script_config.input_max_value = config_switch(w2);
+		}
+		else if(strcmpi(w1,"warn_func_mismatch_argtypes")==0) {
+			script_config.warn_func_mismatch_argtypes = config_switch(w2);
 		}
 		else if(strcmpi(w1,"import")==0){
 			script_config_read(w2);

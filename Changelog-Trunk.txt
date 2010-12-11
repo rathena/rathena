@@ -1,6 +1,7 @@
 Date	Added
 
 2010/12/11
+	* Added support for checking argument data type of built-in script functions (bugreport:1701, topic:261833, related r14573). [Ai4rei]
 	* Fixed error message in intif_parse_mercenary_received printing wrong struct size (bugreport:4633, since r13116). [Ai4rei]
 2010/12/10
 	* Replaced buildin_getpartyname_sub, buildin_getguildname_sub and buildin_getguildmaster_sub, which create only unnecessary overhead, with equivalent inlined code. [Ai4rei]
