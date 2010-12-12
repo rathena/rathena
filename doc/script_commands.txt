@@ -4,7 +4,7 @@
 //= A reference manual for the eAthena scripting language.
 //= Commands are sorted depending on their functionality.
 //===== Version ===========================================
-//= 3.32.20101208
+//= 3.33.20101212
 //=========================================================
 //= 1.0 - First release, filled will as much info as I could
 //=       remember or figure out, most likely there are errors,
@@ -138,8 +138,8 @@
 //= 3.29.20101123
 //=       Added 'pushpc' command. [Ai4rei]
 //= 3.30.20101126
-//=       Added 'setfont', 'mercenary_create', 'mercenary_heal', 'mercenary_sc_start',
-//=       'mercenary_create', 'mercenary_get_calls', 'mercenary_set_calls',
+//=       Added 'setfont', 'mercenary_create', 'mercenary_heal',
+//=       'mercenary_sc_start', 'mercenary_get_calls', 'mercenary_set_calls',
 //=       'mercenary_get_faith' and 'mercenary_set_faith' commands. [Ai4rei]
 //= 3.31.20101130
 //=       Added 'progressbar' command. [Ai4rei]
@@ -148,6 +148,9 @@
 //=       'detachrid', 'itemskill', 'openstorage', 'skilleffect', 'donpcevent',
 //=       'day', 'night', 'atoi', 'axtoi', 'jump_zero', 'getelementofarray',
 //=       'changebase', 'kickwaitingroomall', 'cutin' and 'charcommand'. [Ai4rei]
+//= 3.33.20101212
+//=       Updated description of 'playBGM' and 'playBGMall' to reflect the actual
+//=       behavior. [Ai4rei]
 //=========================================================
 
 This document is a reference manual for all the scripting commands and functions 
@@ -6170,19 +6173,16 @@ You can add your own effects this way, naturally.
 ---------------------------------------
 
 *playBGM "<BGM filename>"
-*playBGMall "<BGM filename>",{,"<map name>"}{,<x0>,<y0>,<x1>,<y1>}
+*playBGMall "<BGM filename>"{,"<map name>"{,<x0>,<y0>,<x1>,<y1>}}
 
 These two commands will play a Background Music to either the invoking character 
-only ('playBGM') or multiple characters ('playBGMall'). If the running 
-code does not have an object ID (a 'floating' npc) or is not running from an NPC 
-object at all (an item script) the sound will be centered on the character who's 
-RID got attached to the script, if any. If it does, it will be centered on that 
-object. (an NPC sprite)
+only ('playBGM') or multiple characters ('playBGMall').
 
 BGM filename is the filename in /BGM/ folder. It has to be in .mp3 extension.
 
 It's not required to specify the extension inside the script.
-If coordinates are omitted, BGM will be broadcasted on the entire map.
+If coordinates are omitted, BGM will be broadcasted on the entire map. If the map name
+is omitted as well the BGM will be played for the entire server.
 
 You can add your own BGMs this way, naturally.
 

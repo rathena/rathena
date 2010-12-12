@@ -1,5 +1,12 @@
 Date	Added
 
+2010/12/12
+	* Updates to the playBGM functionality (since r14335). [Ai4rei]
+	- Removed impossible condition in playBGM script command (from soundeffect).
+	- Removed unused code (retrieving of a bl) in playBGMall (from soundeffectall).
+	- Made playBGMall default to 'entire server' when both map name and coordinates are omitted instead of printing an error.
+	- Updated documentation for playBGM and playBGMall to match actual behavior.
+	- Removed unused parameter 'bl' in clif_playBGM.
 2010/12/11
 	* Fixed script command setd always assuming value parameter to be a string, which causes hexadecimal and octal numbers not being handled properly (topic:261833, followup to r14577 and r14578). [Ai4rei]
 	* Updates to dynamic server information `ragsrvinfo` on SQL. [Ai4rei]

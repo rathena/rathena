@@ -7465,20 +7465,17 @@ int clif_wisall(struct map_session_data *sd,int type,int flag)
 /*==========================================
  * Play a BGM! [Rikter/Yommy]
  *------------------------------------------*/
-void clif_playBGM(struct map_session_data* sd, struct block_list* bl, const char* name)
+void clif_playBGM(struct map_session_data* sd, const char* name)
 {
 	int fd;
 
 	nullpo_retv(sd);
-	nullpo_retv(bl);
 
 	fd = sd->fd;
 	WFIFOHEAD(fd,packet_len(0x7fe));
 	WFIFOW(fd,0) = 0x7fe;
 	safestrncpy((char*)WFIFOP(fd,2), name, NAME_LENGTH);
 	WFIFOSET(fd,packet_len(0x7fe));
-
-	return;
 }
 
 /*==========================================

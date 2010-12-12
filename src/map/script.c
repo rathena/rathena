@@ -10802,27 +10802,34 @@ BUILDIN_FUNC(misceffect)
  *------------------------------------------*/
 BUILDIN_FUNC(playBGM)
 {
-	TBL_PC* sd = script_rid2sd(st);
-	const char* name = script_getstr(st,2);
+	const char* name;
+	struct map_session_data* sd;
 
-	if(sd)
+	if( ( sd = script_rid2sd(st) ) != NULL )
 	{
-		if(!st->rid)
-			clif_playBGM(sd,map_id2bl(st->oid),name);
-		else
-			clif_playBGM(sd,&sd->bl,name);
+		name = script_getstr(st,2);
+
+		clif_playBGM(sd, name);
 	}
 
 	return 0;
 }
 
-int playBGM_sub(struct block_list* bl,va_list ap)
+static int playBGM_sub(struct block_list* bl,va_list ap)
 {
-	char* name = va_arg(ap,char*);
+	const char* name = va_arg(ap,const char*);
 
-	clif_playBGM((TBL_PC *)bl, bl, name);
+	clif_playBGM(BL_CAST(BL_PC, bl), name);
 
-    return 0;
+	return 0;
+}
+
+static int playBGM_foreachpc_sub(struct map_session_data* sd, va_list args)
+{
+	const char* name = va_arg(args, const char*);
+
+	clif_playBGM(sd, name);
+	return 0;
 }
 
 /*==========================================
@@ -10830,33 +10837,29 @@ int playBGM_sub(struct block_list* bl,va_list ap)
  *------------------------------------------*/
 BUILDIN_FUNC(playBGMall)
 {
-	struct block_list* bl;
 	const char* name;
-
-	bl = (st->rid) ? &(script_rid2sd(st)->bl) : map_id2bl(st->oid);
-	if (!bl)
-		return 0;
 
 	name = script_getstr(st,2);
 
-	if(script_hasdata(st,7))
-	{	// specified part of map
+	if( script_hasdata(st,7) )
+	{// specified part of map
 		const char* map = script_getstr(st,3);
 		int x0 = script_getnum(st,4);
 		int y0 = script_getnum(st,5);
 		int x1 = script_getnum(st,6);
 		int y1 = script_getnum(st,7);
+
 		map_foreachinarea(playBGM_sub, map_mapname2mapid(map), x0, y0, x1, y1, BL_PC, name);
 	}
-	else
-	if(!script_hasdata(st,7))
-	{	// entire map
+	else if( script_hasdata(st,3) )
+	{// entire map
 		const char* map = script_getstr(st,3);
+
 		map_foreachinmap(playBGM_sub, map_mapname2mapid(map), BL_PC, name);
 	}
 	else
-	{
-		ShowError("buildin_playBGMall: insufficient arguments for specific area broadcast.\n");
+	{// entire server
+		map_foreachpc(&playBGM_foreachpc_sub, name);
 	}
 
 	return 0;
