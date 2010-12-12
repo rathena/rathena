@@ -1,6 +1,7 @@
 Date	Added
 
 2010/12/11
+	* Fixed script command setd always assuming value parameter to be a string, which causes hexadecimal and octal numbers not being handled properly (topic:261833, followup to r14577 and r14578). [Ai4rei]
 	* Updates to dynamic server information `ragsrvinfo` on SQL. [Ai4rei]
 	- Fixed exp and drop rates (int) getting truncated (short) when sent to char-server.
 	- Removed `motd` from `ragsrvinfo` as it is not dynamically changed by the server and as such can be read by 3rd party applications directly from conf/motd.txt if required.

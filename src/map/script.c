@@ -12355,10 +12355,9 @@ BUILDIN_FUNC(setd)
 {
 	TBL_PC *sd=NULL;
 	char varname[100];
-	const char *value, *buffer;
+	const char *buffer;
 	int elem;
 	buffer = script_getstr(st, 2);
-	value = script_getstr(st, 3);
 
 	if(sscanf(buffer, "%99[^[][%d]", varname, &elem) < 2)
 		elem = 0;
@@ -12373,10 +12372,10 @@ BUILDIN_FUNC(setd)
 		}
 	}
 
-	if(varname[strlen(varname)-1] != '$') {
-		setd_sub(st,sd, varname, elem, (void *)atoi(value),NULL);
+	if( is_string_variable(varname) ) {
+		setd_sub(st, sd, varname, elem, (void *)script_getstr(st, 3), NULL);
 	} else {
-		setd_sub(st,sd, varname, elem, (void *)value,NULL);
+		setd_sub(st, sd, varname, elem, (void *)script_getnum(st, 3), NULL);
 	}
 	
 	return 0;
