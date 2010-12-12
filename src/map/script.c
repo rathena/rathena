@@ -11823,68 +11823,6 @@ BUILDIN_FUNC(isday)
 }
 
 /*================================================
- * Check whether another item/card has been
- * equipped - used for 2/15's cards patch [celest]
- *------------------------------------------------*/
-// leave this here, just in case
-#if 0
-BUILDIN_FUNC(isequipped)
-{
-	TBL_PC *sd;
-	int i, j, k, id = 1;
-	int ret = -1;
-
-	sd = script_rid2sd(st);
-	
-	for (i=0; id!=0; i++) {
-		int flag = 0;
-	
-		FETCH (i+2, id) else id = 0;
-		if (id <= 0)
-			continue;
-		
-		for (j=0; j<EQI_MAX; j++) {
-			int index;
-			index = sd->equip_index[j];
-			if(index < 0) continue;
-			if(j == EQI_HAND_R && sd->equip_index[EQI_HAND_L] == index) continue;
-			if(j == EQI_HEAD_MID && sd->equip_index[EQI_HEAD_LOW] == index) continue;
-			if(j == EQI_HEAD_TOP && (sd->equip_index[EQI_HEAD_MID] == index || sd->equip_index[EQI_HEAD_LOW] == index)) continue;
-			
-			if(!sd->inventory_data[index])
-				continue;
-
-			if(itemdb_type(id) != IT_CARD) { //Non card
-				if (sd->inventory_data[index]->nameid != id)
-					continue;
-				flag = 1;
-				break;
-			} else { //Card
-				if (itemdb_isspecial(sd->status.inventory[index].card[0]))
-					continue;
-				for(k=0; k<sd->inventory_data[index]->slot; k++) {
-					if (sd->status.inventory[index].card[k] == id)
-					{
-						flag = 1;
-						break;
-					}
-				}
-			}
-			if (flag) break;
-		}
-		if (ret == -1)
-			ret = flag;
-		else
-			ret &= flag;
-		if (!ret) break;
-	}
-	
-	script_pushint(st,ret);
-	return 0;
-}
-#endif
-
-/*================================================
  * Check how many items/cards in the list are
  * equipped - used for 2/15's cards patch [celest]
  *------------------------------------------------*/
