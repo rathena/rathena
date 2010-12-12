@@ -1959,9 +1959,9 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		unsigned int base_exp,job_exp;
 	} pt[DAMAGELOG_SIZE];
 	int i,temp,count,pnum=0,m=md->bl.m;
+	int dmgbltypes = 0;  // bitfield of all bl types, that caused damage to the mob and are elligible for exp distribution
 	unsigned int mvp_damage, tick = gettick();
-	unsigned short flaghom = 1; // [Zephyrus] Does the mob only received damage from homunculus?
-	bool rebirth;
+	bool rebirth, homkillonly;
 
 	status = &md->status;
 
@@ -2036,9 +2036,16 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 
 		tmpsd[i] = tsd; // record as valid damage-log entry
 
-		if(!md->dmglog[i].flag == MDLF_HOMUN && flaghom)
-			flaghom = 0; // Damage received from other Types != Homunculus
+		switch( md->dmglog[i].flag )
+		{
+			case MDLF_NORMAL: dmgbltypes|= BL_PC;  break;
+			case MDLF_HOMUN:  dmgbltypes|= BL_HOM; break;
+			case MDLF_PET:    dmgbltypes|= BL_PET; break;
+		}
 	}
+
+	// determines, if the monster was killed by homunculus' damage only
+	homkillonly = (bool)( ( dmgbltypes&BL_HOM ) && !( dmgbltypes&~BL_HOM ) );
 
 	if(!battle_config.exp_calc_type && count > 1)
 	{	//Apply first-attacker 200% exp share bonus
@@ -2240,7 +2247,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 			}
 			// Announce first, or else ditem will be freed. [Lance]
 			// By popular demand, use base drop rate for autoloot code. [Skotlex]
-			mob_item_drop(md, dlist, ditem, 0, md->db->dropitem[i].p, flaghom);
+			mob_item_drop(md, dlist, ditem, 0, md->db->dropitem[i].p, homkillonly);
 		}
 
 		// Ore Discovery [Celest]
