@@ -6862,26 +6862,36 @@ ACMD_FUNC(identify)
  *------------------------------------------*/
 ACMD_FUNC(gmotd)
 {
-		char buf[CHAT_SIZE_MAX];
-		FILE *fp;
-	nullpo_retr(-1, sd);
-		if((fp = fopen(motd_txt, "r"))!=NULL){
-			while(fgets(buf, sizeof(buf), fp) != NULL)
+	char buf[CHAT_SIZE_MAX];
+	size_t len;
+	FILE* fp;
+
+	if( ( fp = fopen(motd_txt, "r") ) != NULL )
+	{
+		while( fgets(buf, sizeof(buf), fp) )
+		{
+			if( buf[0] == '/' && buf[1] == '/' )
 			{
-				int i;
-				if (buf[0] == '/' && buf[1] == '/')
-					continue;
-				for(i=0; buf[i]; i++){
-					if(buf[i]=='\r' || buf[i]=='\n'){
-						buf[i]=0;
-						break;
-					}
-				}
-				intif_broadcast(buf, strlen(buf)+1, 0);
+				continue;
 			}
-			fclose(fp);
+
+			len = strlen(buf);
+
+			while( len && ( buf[len-1] == '\r' || buf[len-1] == '\n' ) )
+			{// strip trailing EOL characters
+				len--;
+			}
+
+			if( len )
+			{
+				buf[len] = 0;
+
+				intif_broadcast(buf, len+1, 0);
+			}
 		}
-		return 0;
+		fclose(fp);
+	}
+	return 0;
 }
 
 ACMD_FUNC(misceffect)

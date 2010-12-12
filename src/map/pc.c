@@ -61,7 +61,7 @@ struct fame_list taekwon_fame_list[MAX_FAME_LIST];
 static unsigned short equip_pos[EQI_MAX]={EQP_ACC_L,EQP_ACC_R,EQP_SHOES,EQP_GARMENT,EQP_HEAD_LOW,EQP_HEAD_MID,EQP_HEAD_TOP,EQP_ARMOR,EQP_HAND_L,EQP_HAND_R,EQP_AMMO};
 
 #define MOTD_LINE_SIZE 128
-char motd_text[MOTD_LINE_SIZE][256]; // Message of the day buffer [Valaris]
+static char motd_text[MOTD_LINE_SIZE][CHAT_SIZE_MAX]; // Message of the day buffer [Valaris]
 
 struct duel duel_list[MAX_DUEL];
 int duel_count = 0;
@@ -8141,30 +8141,60 @@ int pc_readdb(void)
 // Read MOTD on startup. [Valaris]
 int pc_read_motd(void)
 {
-	FILE *fp;
-	int ln=0,i=0;
+	char* buf, * ptr;
+	unsigned int lines = 0, entries = 0;
+	size_t len;
+	FILE* fp;
 
-	memset(motd_text,0,sizeof(motd_text));
-	if ((fp = fopen(motd_txt, "r")) != NULL) {
-		while ((ln < MOTD_LINE_SIZE) && fgets(motd_text[ln], sizeof(motd_text[ln])-1, fp) != NULL) {
-			if(motd_text[ln][0] == '/' && motd_text[ln][1] == '/')
+	// clear old MOTD
+	memset(motd_text, 0, sizeof(motd_text));
+
+	// read current MOTD
+	if( ( fp = fopen(motd_txt, "r") ) != NULL )
+	{
+		while( entries < MOTD_LINE_SIZE && fgets(motd_text[entries], sizeof(motd_text[entries]), fp) )
+		{
+			lines++;
+
+			buf = motd_text[entries];
+
+			if( buf[0] == '/' && buf[1] == '/' )
+			{
 				continue;
-			for(i=0; motd_text[ln][i]; i++) {
-				if (motd_text[ln][i] == '\r' || motd_text[ln][i]== '\n') {
-					if(i)
-						motd_text[ln][i]=0;
-					else
-						motd_text[ln][0]=' ';
-					ln++;
-					break;
+			}
+
+			len = strlen(buf);
+
+			while( len && ( buf[len-1] == '\r' || buf[len-1] == '\n' ) )
+			{// strip trailing EOL characters
+				len--;
+			}
+
+			if( len )
+			{
+				buf[len] = 0;
+
+				if( ( ptr = strstr(buf, " :") ) != NULL && ptr-buf >= NAME_LENGTH )
+				{// crashes newer clients
+					ShowWarning("Found sequence '"CL_WHITE" :"CL_RESET"' on line '"CL_WHITE"%u"CL_RESET"' in '"CL_WHITE"%s"CL_RESET"'. This can cause newer clients to crash.\n", lines, motd_txt);
 				}
 			}
+			else
+			{// empty line
+				buf[0] = ' ';
+				buf[1] = 0;
+			}
+			entries++;
 		}
 		fclose(fp);
+
+		ShowStatus("Done reading '"CL_WHITE"%u"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n", entries, motd_txt);
 	}
 	else
-		ShowWarning("In function pc_read_motd() -> File '"CL_WHITE"%s"CL_RESET"' not found.\n", motd_txt);
-	
+	{
+		ShowWarning("File '"CL_WHITE"%s"CL_RESET"' not found.\n", motd_txt);
+	}
+
 	return 0;
 }
 

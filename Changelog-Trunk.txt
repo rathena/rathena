@@ -1,6 +1,8 @@
 Date	Added
 
 2010/12/12
+	* Cleaned up MOTD reading (related r292 and r4552). [Ai4rei]
+	- Added a warning for common client crash caused by the sequence ' :' in MOTD.
 	* Fixed impossible condition in soundeffect script command (since athena-dev-2.1.1-mod1046, related r5841). [Ai4rei]
 	* Updates to the playBGM functionality (since r14335). [Ai4rei]
 	- Removed impossible condition in playBGM script command (from soundeffect).
