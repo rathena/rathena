@@ -3053,10 +3053,10 @@ int parse_frommap(int fd)
 		break;
 
 		case 0x2b16: // Receive rates [Wizputer]
-			if (RFIFOREST(fd) < 6 || RFIFOREST(fd) < RFIFOW(fd,8))
+			if( RFIFOREST(fd) < 14 )
 				return 0;
 			// Txt doesn't need this packet, so just skip it
-			RFIFOSKIP(fd,RFIFOW(fd,8));
+			RFIFOSKIP(fd,14);
 		break;
 
 		case 0x2b17: // Character disconnected set online 0 [Wizputer]

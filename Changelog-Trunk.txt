@@ -1,6 +1,9 @@
 Date	Added
 
 2010/12/11
+	* Updates to dynamic server information `ragsrvinfo` on SQL. [Ai4rei]
+	- Fixed exp and drop rates (int) getting truncated (short) when sent to char-server.
+	- Removed `motd` from `ragsrvinfo` as it is not dynamically changed by the server and as such can be read by 3rd party applications directly from conf/motd.txt if required.
 	* Added support for checking argument data type of built-in script functions (bugreport:1701, topic:261833, related r14573). [Ai4rei]
 	* Fixed error message in intif_parse_mercenary_received printing wrong struct size (bugreport:4633, since r13116). [Ai4rei]
 2010/12/10
