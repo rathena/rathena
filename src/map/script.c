@@ -67,7 +67,6 @@
 // - 'function FuncName;' function declarations reverting to global functions 
 //   if local label isn't found
 // - join callfunc and callsub's functionality
-// - use script_op2name in the DEBUG_DISASM block
 // - remove dynamic allocation in add_word()
 // - remove GETVALUE / SETVALUE
 // - clean up the set_reg / set_val / setd_sub mess
@@ -2079,54 +2078,30 @@ struct script_code* parse_script(const char *src,const char *file,int line,int o
 	{
 		int i = 0,j;
 		while(i < script_pos) {
-			ShowMessage("%06x ",i);
+			c_op op = get_com(script_buf,&i);
+
+			ShowMessage("%06x %s", i, script_op2name(op));
 			j = i;
-			switch(get_com(script_buf,&i)) {
-			case C_EOL:	 printf("C_EOL"); break;
-			case C_INT:	 printf("C_INT %d",get_num(script_buf,&i)); break;
+			switch(op) {
+			case C_INT:
+				ShowMessage(" %d", get_num(script_buf,&i));
+				break;
 			case C_POS:
-				ShowMessage("C_POS  0x%06x",*(int*)(script_buf+i)&0xffffff);
+				ShowMessage(" 0x%06x", *(int*)(script_buf+i)&0xffffff);
 				i += 3;
 				break;
 			case C_NAME:
 				j = (*(int*)(script_buf+i)&0xffffff);
-				ShowMessage("C_NAME %s",j == 0xffffff ? "?? unknown ??" : get_str(j));
+				ShowMessage(" %s", ( j == 0xffffff ) ? "?? unknown ??" : get_str(j));
 				i += 3;
 				break;
-			case C_ARG:		ShowMessage("C_ARG"); break;
-			case C_FUNC:	ShowMessage("C_FUNC"); break;
-			case C_ADD:	 	ShowMessage("C_ADD"); break;
-			case C_SUB:		ShowMessage("C_SUB"); break;
-			case C_MUL:		ShowMessage("C_MUL"); break;
-			case C_DIV:		ShowMessage("C_DIV"); break;
-			case C_MOD:		ShowMessage("C_MOD"); break;
-			case C_EQ:		ShowMessage("C_EQ"); break;
-			case C_NE:		ShowMessage("C_NE"); break;
-			case C_GT:		ShowMessage("C_GT"); break;
-			case C_GE:		ShowMessage("C_GE"); break;
-			case C_LT:		ShowMessage("C_LT"); break;
-			case C_LE:		ShowMessage("C_LE"); break;
-			case C_AND:		ShowMessage("C_AND"); break;
-			case C_OR:		ShowMessage("C_OR"); break;
-			case C_XOR:		ShowMessage("C_XOR"); break;
-			case C_LAND:	ShowMessage("C_LAND"); break;
-			case C_LOR:		ShowMessage("C_LOR"); break;
-			case C_R_SHIFT:	ShowMessage("C_R_SHIFT"); break;
-			case C_L_SHIFT:	ShowMessage("C_L_SHIFT"); break;
-			case C_NEG:		ShowMessage("C_NEG"); break;
-			case C_NOT:		ShowMessage("C_NOT"); break;
-			case C_LNOT:	ShowMessage("C_LNOT"); break;
-			case C_NOP:		ShowMessage("C_NOP"); break;
-			case C_OP3:		ShowMessage("C_OP3"); break;
 			case C_STR:
 				j = strlen(script_buf + i);
-				ShowMessage("C_STR %s",script_buf + i);
-				i+= j+1;
+				ShowMessage(" %s", script_buf + i);
+				i += j+1;
 				break;
-			default:
-				ShowMessage("unknown");
 			}
-			ShowMessage(CL_CLL "\n");
+			ShowMessage(CL_CLL"\n");
 		}
 	}
 #endif

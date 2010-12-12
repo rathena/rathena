@@ -1,6 +1,7 @@
 Date	Added
 
 2010/12/12
+	* Made script engine's DEBUG_DISASM block use script_op2name, rather than hardcoding operator names as per TODO from r13083 (related r9569, follow up to r10667). [Ai4rei]
 	* Cleaned up MOTD reading (related r292 and r4552). [Ai4rei]
 	- Added a warning for common client crash caused by the sequence ' :' in MOTD.
 	* Fixed impossible condition in soundeffect script command (since athena-dev-2.1.1-mod1046, related r5841). [Ai4rei]
