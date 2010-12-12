@@ -10876,10 +10876,7 @@ BUILDIN_FUNC(soundeffect)
 
 	if(sd)
 	{
-		if(!st->rid)
-			clif_soundeffect(sd,map_id2bl(st->oid),name,type);
-		else
-			clif_soundeffect(sd,&sd->bl,name,type);
+		clif_soundeffect(sd,&sd->bl,name,type);
 	}
 	return 0;
 }
