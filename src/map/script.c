@@ -14854,7 +14854,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(md5,"s"),
 	// [zBuffer] List of dynamic var commands --->
 	BUILDIN_DEF(getd,"s"),
-	BUILDIN_DEF(setd,"ss"),
+	BUILDIN_DEF(setd,"sv"),
 	// <--- [zBuffer] List of dynamic var commands
 	BUILDIN_DEF(petstat,"i"),
 	BUILDIN_DEF(callshop,"s?"), // [Skotlex]
