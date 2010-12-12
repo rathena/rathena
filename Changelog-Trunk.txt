@@ -1,7 +1,8 @@
 Date	Added
 
 2010/12/12
-	* Fixed killed monsters were assumed to be killed by homunculus only, if no damage log entries were elligible for exp distribution, even when no homunculus took part in damage dealing (bugreport:4452, since r12203).
+	* Fixed homunculus_autoloot not working with skill/item granted drops and loot (bugreport:4452, since r12203). [Ai4rei]
+	* Fixed killed monsters were assumed to be killed by homunculus only, if no damage log entries were elligible for exp distribution, even when no homunculus took part in damage dealing (bugreport:4452, since r12203). [Ai4rei]
 	* Added enumeration for monster damage log field 'flag'. [Ai4rei]
 	* Removed disabled backup of script command 'isequipped' (since r1605). [Ai4rei]
 	* Made script engine's DEBUG_DISASM block use script_op2name, rather than hardcoding operator names as per TODO from r13083 (related r9569, follow up to r10667). [Ai4rei]
