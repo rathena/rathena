@@ -10,8 +10,8 @@
 // 05. EggID			Pet Egg ID.
 // 06. EquipID			Pet Accessory ID.
 // 07. FoodID			Pet Food ID.
-// 08. Fullness			The amount Hunger is decreased every [HungeyDelay] seconds.
-// 09. HungeyDelay		The amount of time it takes for hunger to decrease after feeding. (Default: 60 seconds)
+// 08. Fullness			The amount Hunger is decreased every [HungryDelay] seconds.
+// 09. HungryDelay		The amount of time it takes for hunger to decrease after feeding. (Default: 60 seconds)
 // 10. R_Hungry			Amount of Intimacy that is increased when fed.
 // 11. R_Full			Amount of Intimacy that is decreased when over-fed.
 // 12. Intimate			Amount of Intimacy the pet starts with.

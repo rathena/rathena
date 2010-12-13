@@ -8,6 +8,9 @@
 	1475 Equestrian's Spear:	NEED INFO.
 	13005 Angelic Wing Dagger:	NEED INFO.
 =======================
+2010/12/13
+	* Rev. 14590 Added pet_db2.txt to make it apparent, that pet db has support for customs as well. [Ai4rei]
+	- Fixed typo 'HungeyDelay' into 'HungryDelay' in pet database description (bugreport:4636, since r13752).
 2010/12/05
 	* Rev. 14559 Updated some items to use bonus bAddItemHealRate, and healpower2. [L0ne_W0lf]
 2010/12/02
