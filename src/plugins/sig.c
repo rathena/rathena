@@ -52,7 +52,11 @@ unsigned long (*getuptime)();
 char *server_name;
 int crash_flag = 0;
 
+#ifndef __APPLE__
 extern const char *strsignal(int);
+#else
+extern char *strsignal(int);
+#endif
 int sig_final ();
 
 // by Gabuzomeu

@@ -1,5 +1,7 @@
 Date	Added
 
+2010/12/13
+	* Fixed plugin 'sig' not being compilable on Mac OS X, due to different return value type of 'strsignal' (bugreport:4637). [Ai4rei]
 2010/12/12
 	* Fixed homunculus_autoloot not working with skill/item granted drops and loot (bugreport:4452, since r12203). [Ai4rei]
 	* Fixed killed monsters were assumed to be killed by homunculus only, if no damage log entries were elligible for exp distribution, even when no homunculus took part in damage dealing (bugreport:4452, since r12203). [Ai4rei]
