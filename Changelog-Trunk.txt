@@ -1,6 +1,7 @@
 Date	Added
 
 2010/12/15
+	* Corrected type of second argument of script command 'setbattleflag' from string to number (bugreport:4640, topic:261833, since r5407, related r14577). [Ai4rei]
 	* Fixed missing check in cooking, causing cooking kit requirement could be bypassed by sending 0x25b (CZ_REQ_MAKINGITEM) directly (bugreport:4642, since r13628). [Ai4rei]
 2010/12/13
 	* Fixed plugin 'sig' not being compilable on Mac OS X, due to different return value type of 'strsignal' (bugreport:4637). [Ai4rei]

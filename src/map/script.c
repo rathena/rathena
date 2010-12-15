@@ -12088,7 +12088,7 @@ BUILDIN_FUNC(setbattleflag)
 	const char *flag, *value;
 
 	flag = script_getstr(st,2);
-	value = script_getstr(st,3);
+	value = script_getstr(st,3);  // HACK: Retrieve number as string (auto-converted) for battle_set_value
 	
 	if (battle_set_value(flag, value) == 0)
 		ShowWarning("buildin_setbattleflag: unknown battle_config flag '%s'\n",flag);
@@ -14776,7 +14776,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(npcshopattach,"s?"),
 	BUILDIN_DEF(equip,"i"),
 	BUILDIN_DEF(autoequip,"ii"),
-	BUILDIN_DEF(setbattleflag,"ss"),
+	BUILDIN_DEF(setbattleflag,"si"),
 	BUILDIN_DEF(getbattleflag,"s"),
 	BUILDIN_DEF(setitemscript,"is?"), //Set NEW item bonus script. Lupus
 	BUILDIN_DEF(disguise,"i"), //disguise player. Lupus
