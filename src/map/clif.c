@@ -10180,6 +10180,11 @@ void clif_parse_Cooking(int fd,struct map_session_data *sd)
 	//int type = RFIFOW(fd,2); // '1' for cooking, but what do other values mean?
 	int nameid = RFIFOW(fd,4);
 
+	if( sd->menuskill_id != AM_PHARMACY )
+	{
+		return;
+	}
+
 	if (pc_istrading(sd)) {
 		//Make it fail to avoid shop exploits where you sell something different than you see.
 		clif_skill_fail(sd,sd->ud.skillid,0,0);
