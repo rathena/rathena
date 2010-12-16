@@ -1,6 +1,8 @@
 Date	Added
 
 2010/12/16
+	* Reverted r14525 (introduction of SV_READDB_MAX_FIELDS) because it causes confusion to certain group of users and depends on MAX_LEVEL since r14526. [Ai4rei]
+	- Made sv_readdb be able to process any amount of columns instead.
 	* Fixed a mistake in sv_split, causing CR being recognized as EOL character, even when only LF was specified (since r12459). [Ai4rei]
 2010/12/15
 	* Corrected type of second argument of script command 'setbattleflag' from string to number (bugreport:4640, topic:261833, since r5407, related r14577). [Ai4rei]

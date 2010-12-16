@@ -12,7 +12,6 @@
 #include <errno.h>
 
 
-#define SV_READDB_MAX_FIELDS 105
 #define J_MAX_MALLOC_SIZE 65535
 
 // escapes a string in-place (' -> \' , \ -> \\ , % -> _)
@@ -923,17 +922,11 @@ bool sv_readdb(const char* directory, const char* filename, char delim, int minc
 	FILE* fp;
 	int lines = 0;
 	int entries = 0;
-	char* fields[SV_READDB_MAX_FIELDS+1]; // room for SV_READDB_MAX_FIELDS fields ([0] is reserved)
-	int columns;
+	char** fields; // buffer for fields ([0] is reserved)
+	int columns, fields_length;
 	char path[1024], line[1024];
 
 	snprintf(path, sizeof(path), "%s/%s", directory, filename);
-
-	if( maxcols > ARRAYLENGTH(fields)-1 )
-	{
-		ShowError("sv_readdb: Insufficient column storage in parser for file \"%s\" (want %d, have only %d). Increase the capacity in the source code please.\n", path, maxcols, ARRAYLENGTH(fields)-1);
-		return false;
-	}
 
 	// open file
 	fp = fopen(path, "r");
@@ -942,6 +935,10 @@ bool sv_readdb(const char* directory, const char* filename, char delim, int minc
 		ShowError("sv_readdb: can't read %s\n", path);
 		return false;
 	}
+
+	// allocate enough memory for the maximum requested amount of columns plus the reserved one
+	fields_length = maxcols+1;
+	fields = aMalloc(fields_length*sizeof(char*));
 
 	// process rows one by one
 	while( fgets(line, sizeof(line), fp) )
@@ -954,7 +951,7 @@ bool sv_readdb(const char* directory, const char* filename, char delim, int minc
 		if( line[0] == '\0' || line[0] == '\n' || line[0] == '\r')
 			continue;
 
-		columns = sv_split(line, strlen(line), 0, delim, fields, ARRAYLENGTH(fields), (e_svopt)(SV_TERMINATE_LF|SV_TERMINATE_CRLF));
+		columns = sv_split(line, strlen(line), 0, delim, fields, fields_length, (e_svopt)(SV_TERMINATE_LF|SV_TERMINATE_CRLF));
 
 		if( columns < mincols )
 		{
@@ -983,6 +980,7 @@ bool sv_readdb(const char* directory, const char* filename, char delim, int minc
 		entries++;
 	}
 
+	aFree(fields);
 	fclose(fp);
 	ShowStatus("Done reading '"CL_WHITE"%d"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n", entries, path);
 
