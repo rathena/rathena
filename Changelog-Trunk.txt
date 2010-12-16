@@ -1,5 +1,7 @@
 Date	Added
 
+2010/12/16
+	* Fixed a mistake in sv_split, causing CR being recognized as EOL character, even when only LF was specified (since r12459). [Ai4rei]
 2010/12/15
 	* Corrected type of second argument of script command 'setbattleflag' from string to number (bugreport:4640, topic:261833, since r5407, related r14577). [Ai4rei]
 	* Fixed missing check in cooking, causing cooking kit requirement could be bypassed by sending 0x25b (CZ_REQ_MAKINGITEM) directly (bugreport:4642, since r13628). [Ai4rei]

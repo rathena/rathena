@@ -657,7 +657,7 @@ int sv_split(char* str, int len, int startoff, char delim, char** out_fields, in
 			end[0] = end[1] = '\0';
 		*out_fields = end + 2;
 	}
-	else if( (opt&SV_TERMINATE_LF) && end[0] == '\r' )
+	else if( (opt&SV_TERMINATE_CR) && end[0] == '\r' )
 	{
 		if( !(opt&SV_KEEP_TERMINATOR) )
 			end[0] = '\0';
