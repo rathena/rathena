@@ -20,6 +20,11 @@
 // 15. Speed			Pet's walk speed. (Defaul: 150)
 // 16. S_Performance		Special Performance. (Yes = 1, No = 0)
 // 17. talk_convert_class	Disables pet talk (instead of talking they emote  with /!.)
+// 18. attack_rate			Rate of which the pet will attack (requires at least pet_support_min_friendly intimacy).
+// 19. defence_attack_rate	Rate of which the pet will retaliate when master is being attacked (requires at least pet_support_min_friendly intimacy).
+// 20. change_target_rate	Rate of which the pet will change its attack target.
+// 21. pet_script		Script to execute when the pet is hatched.
+// 22. loyal_script		Script to execute when the pet is hatched (requires at least pet_equip_min_friendly intimacy, independent of pet_script).
 //NOTE: The max value (100%) of attack_rate, defense_rate & change_target_rate is 10000.
 
 //In theory you can use any valid script, but it is run only once upon pet

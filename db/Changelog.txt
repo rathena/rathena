@@ -8,6 +8,8 @@
 	1475 Equestrian's Spear:	NEED INFO.
 	13005 Angelic Wing Dagger:	NEED INFO.
 =======================
+2010/12/16
+	* Rev. 14596 Added missing pet db documentation for fields 'attack_rate', 'defence_attack_rate', 'change_target_rate', 'pet_script' and 'loyal_script' based on the one provided by frenzmu06 (bugreport:4636, follow up to r13752). [Ai4rei]
 2010/12/13
 	* Rev. 14590 Added pet_db2.txt to make it apparent, that pet db has support for customs as well. [Ai4rei]
 	- Fixed typo 'HungeyDelay' into 'HungryDelay' in pet database description (bugreport:4636, since r13752).
