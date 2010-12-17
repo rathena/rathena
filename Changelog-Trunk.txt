@@ -1,6 +1,7 @@
 Date	Added
 
 2010/12/17
+	* Spellchecked script_commands.txt. [Ai4rei]
 	* Random script engine clean-ups that have accumulated over time. [Ai4rei]
 	- Resolved unnecessary script_getnum re-evaluation in a loop in script command 'npcshopdelitem' (since r7120).
 	- Script commands 'menu', 'select' and 'prompt' now warn, when there are more menu options, than the client can handle correctly (TODO from r10316).
