@@ -1,5 +1,9 @@
 Date	Added
 
+2010/12/17
+	* Random script engine clean-ups that have accumulated over time. [Ai4rei]
+	- Resolved unnecessary script_getnum re-evaluation in a loop in script command 'npcshopdelitem' (since r7120).
+	- Script commands 'menu', 'select' and 'prompt' now warn, when there are more menu options, than the client can handle correctly (TODO from r10316).
 2010/12/16
 	* Reverted r14525 (introduction of SV_READDB_MAX_FIELDS) because it causes confusion to certain group of users and depends on MAX_LEVEL since r14526. [Ai4rei]
 	- Made sv_readdb be able to process any amount of columns instead.

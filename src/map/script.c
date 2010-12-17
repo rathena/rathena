@@ -281,13 +281,11 @@ typedef struct script_function {
 extern script_function buildin_func[];
 
 static struct linkdb_node* sleep_db;// int oid -> struct script_state*
-uint32 crctab[256];
 
 /*==========================================
  * ローカルプロトタイプ宣言 (必要な物のみ)
  *------------------------------------------*/
 const char* parse_subexpr(const char* p,int limit);
-void push_val(struct script_stack *stack,int type,int val);
 int run_func(struct script_state *st);
 
 enum {
@@ -842,7 +840,7 @@ int add_word(const char* p)
 		disp_error_message("script:add_word: invalid word. A word consists of undercores and/or alfanumeric characters, and valid variable prefixes/postfixes.", p);
 
 	// Duplicate the word
-	CREATE(word, char, len+1);
+	word = aMalloc(len+1);
 	memcpy(word, p, len);
 	word[len] = 0;
 	
@@ -1502,7 +1500,7 @@ const char* parse_syntax(const char* p)
 				// function declaration - just register the name
 				int l;
 				l = add_word(func_name);
-				if( str_data[l].type == C_NOP )//## ??? [FlavioJS]
+				if( str_data[l].type == C_NOP )// set type only if the name did not exist before
 					str_data[l].type = C_USERFUNC;
 
 				// if, for , while の閉じ判定
@@ -1528,7 +1526,7 @@ const char* parse_syntax(const char* p)
 
 				// Set the position of the function (label)
 				l=add_word(func_name);
-				if( str_data[l].type == C_NOP )//## ??? [FlavioJS]
+				if( str_data[l].type == C_NOP )// set type only if the name did not exist before
 					str_data[l].type = C_USERFUNC;
 				set_label(l, script_pos, p);
 				if( parse_options&SCRIPT_USE_LABEL_DB )
@@ -3804,7 +3802,12 @@ BUILDIN_FUNC(menu)
 		sd->state.menu_or_input = 1;
 		clif_scriptmenu(sd, st->oid, StringBuf_Value(&buf));
 		StringBuf_Destroy(&buf);
-		//TODO what's the maximum number of options that can be displayed and/or received? -> give warning
+
+		if( sd->npc_menu >= 0xff )
+		{// client supports only up to 254 entries; 0 is not used and 255 is reserved for cancel; excess entries are displayed but cause 'uint8' overflow
+			ShowWarning("buildin_menu: Too many options specified (current=%d, max=254).\n", sd->npc_menu);
+			script_reportsrc(st);
+		}
 	}
 	else if( sd->npc_menu == 0xff )
 	{// Cancel was pressed
@@ -3886,6 +3889,12 @@ BUILDIN_FUNC(select)
 		sd->state.menu_or_input = 1;
 		clif_scriptmenu(sd, st->oid, StringBuf_Value(&buf));
 		StringBuf_Destroy(&buf);
+
+		if( sd->npc_menu >= 0xff )
+		{
+			ShowWarning("buildin_select: Too many options specified (current=%d, max=254).\n", sd->npc_menu);
+			script_reportsrc(st);
+		}
 	}
 	else if( sd->npc_menu == 0xff )
 	{// Cancel was pressed
@@ -3948,6 +3957,12 @@ BUILDIN_FUNC(prompt)
 		sd->state.menu_or_input = 1;
 		clif_scriptmenu(sd, st->oid, StringBuf_Value(&buf));
 		StringBuf_Destroy(&buf);
+
+		if( sd->npc_menu >= 0xff )
+		{
+			ShowWarning("buildin_prompt: Too many options specified (current=%d, max=254).\n", sd->npc_menu);
+			script_reportsrc(st);
+		}
 	}
 	else if( sd->npc_menu == 0xff )
 	{// Cancel was pressed
@@ -12179,7 +12194,7 @@ BUILDIN_FUNC(setnpcdisplay)
 	if( newname )
 		npc_setdisplayname(nd, newname);
 
-	if( size != -1 && size != nd->size )
+	if( size != -1 && size != (int)nd->size )
 		nd->size = size;
 	else
 		size = -1;
@@ -12584,6 +12599,7 @@ BUILDIN_FUNC(npcshopdelitem)
 {
 	const char* npcname = script_getstr(st,2);
 	struct npc_data* nd = npc_name2id(npcname);
+	unsigned int nameid;
 	int n, i;
 	int amount;
 	int size;
@@ -12600,7 +12616,9 @@ BUILDIN_FUNC(npcshopdelitem)
 	// remove specified items from the shop item list
 	for( i = 3; i < 3 + amount; i++ )
 	{
-		ARR_FIND( 0, size, n, nd->u.shop.shop_item[n].nameid == script_getnum(st,i) );
+		nameid = script_getnum(st,i);
+
+		ARR_FIND( 0, size, n, nd->u.shop.shop_item[n].nameid == nameid );
 		if( n < size )
 		{
 			memmove(&nd->u.shop.shop_item[n], &nd->u.shop.shop_item[n+1], sizeof(nd->u.shop.shop_item[0])*(size-n));
