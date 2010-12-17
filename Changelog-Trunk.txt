@@ -1,6 +1,7 @@
 Date	Added
 
 2010/12/17
+	* Added temporary check to skill_delunitgroup to prevent crashes when 'group' is NULL and added some debug messages to track down the source of the crash (bugreport:3504). [Ai4rei]
 	* Spellchecked script_commands.txt. [Ai4rei]
 	* Random script engine clean-ups that have accumulated over time. [Ai4rei]
 	- Resolved unnecessary script_getnum re-evaluation in a loop in script command 'npcshopdelitem' (since r7120).

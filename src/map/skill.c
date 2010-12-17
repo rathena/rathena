@@ -10161,13 +10161,17 @@ struct skill_unit_group* skill_initunitgroup (struct block_list* src, int count,
 /*==========================================
  *
  *------------------------------------------*/
-int skill_delunitgroup (struct skill_unit_group *group)
+int skill_delunitgroup_(struct skill_unit_group *group, const char* file, int line, const char* func)
 {
 	struct block_list* src;
 	struct unit_data *ud;
 	int i,j;
 
-	nullpo_ret(group);
+	if( group == NULL )
+	{
+		ShowDebug("skill_delunitgroup: group is NULL (source=%s:%d, %s)! Please report this! (#3504)\n", file, line, func);
+		return 0;
+	}
 
 	src=map_id2bl(group->src_id);
 	ud = unit_bl2ud(src);
