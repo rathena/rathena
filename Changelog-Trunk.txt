@@ -1,6 +1,7 @@
 Date	Added
 
 2010/12/17
+	* Fixed a crash, when script command 'doevent' is called without an attached player (bugreport:3973). [Ai4rei]
 	* Fixed label definitions silently overwriting built-in script functions (bugreport:2806, follow up to r8027). [Ai4rei]
 	* Added temporary check to skill_delunitgroup to prevent crashes when 'group' is NULL and added some debug messages to track down the source of the crash (bugreport:3504). [Ai4rei]
 	* Spellchecked script_commands.txt. [Ai4rei]

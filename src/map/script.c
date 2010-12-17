@@ -7848,8 +7848,15 @@ BUILDIN_FUNC(clone)
 BUILDIN_FUNC(doevent)
 {
 	const char* event = script_getstr(st,2);
+	struct map_session_data* sd;
+
+	if( ( sd = script_rid2sd(st) ) == NULL )
+	{
+		return 0;
+	}
+
 	check_event(st, event);
-	npc_event(map_id2sd(st->rid),event,0);
+	npc_event(sd, event, 0);
 	return 0;
 }
 /*==========================================
