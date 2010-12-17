@@ -739,8 +739,8 @@ void set_label(int l,int pos, const char* script_pos)
 {
 	int i,next;
 
-	if(str_data[l].type==C_INT || str_data[l].type==C_PARAM)
-	{	//Prevent overwriting constants values and parameters [Skotlex]
+	if(str_data[l].type==C_INT || str_data[l].type==C_PARAM || str_data[l].type==C_FUNC)
+	{	//Prevent overwriting constants values, parameters and built-in functions [Skotlex]
 		disp_error_message("set_label: invalid label name",script_pos);
 		return;
 	}
