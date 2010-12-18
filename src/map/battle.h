@@ -479,6 +479,7 @@ extern struct Battle_Config
 	int mob_slave_keep_target;
 	int autospell_check_range;	//Enable range check for autospell bonus. [L0ne_W0lf]
 	int client_reshuffle_dice;  // Reshuffle /dice
+	int client_sort_storage;
 
 	// [BattleGround Settings]
 	int bg_update_interval;

@@ -42,17 +42,15 @@ static int storage_comp_item(const void *_i1, const void *_i2)
 		return -1;
 	return i1->nameid - i2->nameid;
 }
-/* In case someone wants to use it in the future.
-static void storage_sortitem(struct storage_data* stor)
+
+static void storage_sortitem(struct item* items, unsigned int size)
 {
-	nullpo_retv(stor);
-	qsort(stor->items, MAX_STORAGE, sizeof(struct item), storage_comp_item);
-}
-*/
-static void storage_gsortitem(struct guild_storage* gstor)
-{
-	nullpo_retv(gstor);
-	qsort(gstor->storage_, MAX_GUILD_STORAGE, sizeof(struct item), storage_comp_item);
+	nullpo_retv(items);
+
+	if( battle_config.client_sort_storage )
+	{
+		qsort(items, size, sizeof(struct item), storage_comp_item);
+	}
 }
 
 /*==========================================
@@ -104,6 +102,7 @@ int storage_storageopen(struct map_session_data *sd)
 	}
 	
 	sd->state.storage_flag = 1;
+	storage_sortitem(sd->status.storage.items, ARRAYLENGTH(sd->status.storage.items));
 	clif_storagelist(sd, sd->status.storage.items, ARRAYLENGTH(sd->status.storage.items));
 	clif_updatestorageamount(sd,sd->status.storage.storage_amount);
 	return 0;
@@ -380,6 +379,7 @@ int storage_guild_storageopen(struct map_session_data* sd)
 	
 	gstor->storage_status = 1;
 	sd->state.storage_flag = 2;
+	storage_sortitem(gstor->storage_, ARRAYLENGTH(gstor->storage_));
 	clif_storagelist(sd, gstor->storage_, ARRAYLENGTH(gstor->storage_));
 	clif_updateguildstorageamount(sd,gstor->storage_amount);
 	return 0;
@@ -584,7 +584,6 @@ int storage_guild_storagesaved(int guild_id)
 		if (stor->dirty && stor->storage_status == 0)
 		{	//Storage has been correctly saved.
 			stor->dirty = 0;
-			storage_gsortitem(stor);
 		}
 		return 1;
 	}
