@@ -1,6 +1,7 @@
 Date	Added
 
 2010/12/18
+	* Renamed item array in 'struct guild_storage' from 'storage_' to 'items' to match 'struct storage_data' (related r12933). [Ai4rei]
 	* Bunch of intif_parse_LoadGuildStorage fixes. [Ai4rei]
 	- Fixed guild storage not being sorted, when the storage had to be requested first (follow up to r14605).
 	- Fixed missing check, whether or not the character has already an open storage (follow up to r4562).
