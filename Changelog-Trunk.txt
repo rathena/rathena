@@ -1,6 +1,10 @@
 Date	Added
 
 2010/12/18
+	* Bunch of intif_parse_LoadGuildStorage fixes. [Ai4rei]
+	- Fixed guild storage not being sorted, when the storage had to be requested first (follow up to r14605).
+	- Fixed missing check, whether or not the character has already an open storage (follow up to r4562).
+	- Fixed missing GM trust check, whether or not the player is allowed to use guild storage (follow up to r3481).
 	* Fixed character storage no longer being sorted (bugreport:1982, since r12950). [Ai4rei]
 	- Guild storage is now sorted before being displayed rather than after being saved...
 	- Merged storage_gsortitem into storage_sortitem.

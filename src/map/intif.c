@@ -984,10 +984,7 @@ int intif_parse_LoadGuildStorage(int fd)
 	if(battle_config.save_log)
 		ShowInfo("intif_open_guild_storage: %d\n",RFIFOL(fd,4) );
 	memcpy(gstor,RFIFOP(fd,12),sizeof(struct guild_storage));
-	gstor->storage_status = 1;
-	sd->state.storage_flag = 2;
-	clif_storagelist(sd, gstor->storage_, ARRAYLENGTH(gstor->storage_));
-	clif_updateguildstorageamount(sd,gstor->storage_amount);
+	storage_guild_storageopen(sd);
 	return 0;
 }
 int intif_parse_SaveGuildStorage(int fd)
