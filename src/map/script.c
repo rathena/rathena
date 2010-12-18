@@ -513,6 +513,44 @@ static void script_reportdata(struct script_data* data)
 	}
 }
 
+
+/// Reports on the console information about the current built-in function.
+static void script_reportfunc(struct script_state* st)
+{
+	int i, params, id;
+	struct script_data* data;
+
+	if( !script_hasdata(st,0) )
+	{// no stack
+		return;
+	}
+
+	data = script_getdata(st,0);
+
+	if( !data_isreference(data) || str_data[reference_getid(data)].type != C_FUNC )
+	{// script currently not executing a built-in function or corrupt stack
+		return;
+	}
+
+	id     = reference_getid(data);
+	params = script_lastdata(st)-1;
+
+	if( params > 0 )
+	{
+		ShowDebug("Function: %s (%d parameter%s):\n", get_str(id), params, ( params == 1 ) ? "" : "s");
+
+		for( i = 2; i <= script_lastdata(st); i++ )
+		{
+			script_reportdata(script_getdata(st,i));
+		}
+	}
+	else
+	{
+		ShowDebug("Function: %s (no parameters)\n", get_str(id));
+	}
+}
+
+
 /*==========================================
  * エラーメッセージ出力
  *------------------------------------------*/
@@ -2118,6 +2156,7 @@ TBL_PC *script_rid2sd(struct script_state *st)
 	TBL_PC *sd=map_id2sd(st->rid);
 	if(!sd){
 		ShowError("script_rid2sd: fatal error ! player not attached!\n");
+		script_reportfunc(st);
 		script_reportsrc(st);
 		st->state = END;
 	}
