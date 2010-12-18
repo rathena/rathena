@@ -1,5 +1,7 @@
 Date	Added
 
+2010/12/18
+	* Fixed usage of literals for map name length in character list packet (since r14368). [Ai4rei]
 2010/12/17
 	* Made the 'player not attached' script error also report the function it occured in, if available. [Ai4rei]
 	* Fixed a crash, when script command 'doevent' is called without an attached player (bugreport:3973). [Ai4rei]
