@@ -840,6 +840,23 @@ bool pc_authok(struct map_session_data *sd, int login_id2, time_t expiration_tim
 		sd->class_ = MAPID_NOVICE;
 	} else
 		sd->class_ = i; 
+
+	// Checks and fixes to character status data, that are required
+	// in case of configuration change or stuff, which cannot be
+	// checked on char-server.
+	if( sd->status.hair < MIN_HAIR_STYLE || sd->status.hair > MAX_HAIR_STYLE )
+	{
+		sd->status.hair = MIN_HAIR_STYLE;
+	}
+	if( sd->status.hair_color < MIN_HAIR_COLOR || sd->status.hair_color > MAX_HAIR_COLOR )
+	{
+		sd->status.hair_color = MIN_HAIR_COLOR;
+	}
+	if( sd->status.clothes_color < MIN_CLOTH_COLOR || sd->status.clothes_color > MAX_CLOTH_COLOR )
+	{
+		sd->status.clothes_color = MIN_CLOTH_COLOR;
+	}
+
 	//Initializations to null/0 unneeded since map_session_data was filled with 0 upon allocation.
 	if(!sd->status.hp) pc_setdead(sd);
 	sd->state.connect_new = 1;
@@ -6334,10 +6351,8 @@ int pc_changelook(struct map_session_data *sd,int type,int val)
 
 	switch(type){
 	case LOOK_HAIR:	//Use the battle_config limits! [Skotlex]
-		if (val < battle_config.min_hair_style)
-			val = battle_config.min_hair_style;
-		else if (val > battle_config.max_hair_style)
-			val = battle_config.max_hair_style;
+		val = cap_value(val, MIN_HAIR_STYLE, MAX_HAIR_STYLE);
+
 		if (sd->status.hair != val)
 		{
 			sd->status.hair=val;
@@ -6359,10 +6374,8 @@ int pc_changelook(struct map_session_data *sd,int type,int val)
 		sd->status.head_mid=val;
 		break;
 	case LOOK_HAIR_COLOR:	//Use the battle_config limits! [Skotlex]
-		if (val < battle_config.min_hair_color)
-			val = battle_config.min_hair_color;
-		else if (val > battle_config.max_hair_color)
-			val = battle_config.max_hair_color;
+		val = cap_value(val, MIN_HAIR_COLOR, MAX_HAIR_COLOR);
+
 		if (sd->status.hair_color != val)
 		{
 			sd->status.hair_color=val;
@@ -6372,10 +6385,8 @@ int pc_changelook(struct map_session_data *sd,int type,int val)
 		}
 		break;
 	case LOOK_CLOTHES_COLOR:	//Use the battle_config limits! [Skotlex]
-		if (val < battle_config.min_cloth_color)
-			val = battle_config.min_cloth_color;
-		else if (val > battle_config.max_cloth_color)
-			val = battle_config.max_cloth_color;
+		val = cap_value(val, MIN_CLOTH_COLOR, MAX_CLOTH_COLOR);
+
 		sd->status.clothes_color=val;
 		break;
 	case LOOK_SHIELD:

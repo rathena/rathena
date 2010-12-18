@@ -1294,8 +1294,6 @@ int make_new_char_sql(struct char_session_data* sd, char* name_, int str, int ag
 
 	//check other inputs
 	if((slot >= MAX_CHARS) // slots
-	|| (hair_style >= 24) // hair style
-	|| (hair_color >= 9) // hair color
 	|| (str + agi + vit + int_ + dex + luk != 6*5 ) // stats
 	|| (str < 1 || str > 9 || agi < 1 || agi > 9 || vit < 1 || vit > 9 || int_ < 1 || int_ > 9 || dex < 1 || dex > 9 || luk < 1 || luk > 9) // individual stat values
 	|| (str + int_ != 10 || agi + luk != 10 || vit + dex != 10) ) // pairs

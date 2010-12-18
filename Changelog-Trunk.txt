@@ -1,6 +1,10 @@
 Date	Added
 
 2010/12/18
+	* Updates to handling of hair color/style and cloth color of characters. [Ai4rei]
+	- Moved limit shortcut defines from mmo.h to battle.h, as they are only required in files, which include battle.h (since pre-svn 2004/10/15).
+	- Moved hair style/color validation from char-server to map-server. This enables use of non-default limits as specified in battle config, rather than being restricted to hard-coded ones (bugreport:150).
+	- Cleaned up related capping of values in pc_changelook (related r1708).
 	* Fixed usage of literals for map name length in character list packet (since r14368). [Ai4rei]
 2010/12/17
 	* Made the 'player not attached' script error also report the function it occured in, if available. [Ai4rei]
