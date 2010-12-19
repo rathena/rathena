@@ -1,6 +1,11 @@
 Date	Added
 
 2010/12/19
+	* Fixes to the dynamic shop sample script. [Ai4rei]
+	- Fixed wrong check in ::OnSellItem, causing not-enough-items condition not getting detected (since r11829).
+	- Fixed an exploit in ::OnSellItem, causing Zeny to be given to the player, even if the items fail to delete (since r5842).
+	- Fixed missing 'close' in ::OnSellItem (since r5842).
+	- Replaced 'end' with 'close' in ::OnBuyItem (since r5842, followup to r11829).
 	* Replaced maximum script array size literals with a define (constant). [Ai4rei]
 	- Fixed an off-by-one mistake in copyarray, allowing to copy 1 element more into the target array, than allowed (since r10813).
 2010/12/18
