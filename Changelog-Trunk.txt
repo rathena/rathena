@@ -1,5 +1,8 @@
 Date	Added
 
+2010/12/19
+	* Replaced maximum script array size literals with a define (constant). [Ai4rei]
+	- Fixed an off-by-one mistake in copyarray, allowing to copy 1 element more into the target array, than allowed (since r10813).
 2010/12/18
 	* Renamed item array in 'struct guild_storage' from 'storage_' to 'items' to match 'struct storage_data' (related r12933). [Ai4rei]
 	* Bunch of intif_parse_LoadGuildStorage fixes. [Ai4rei]

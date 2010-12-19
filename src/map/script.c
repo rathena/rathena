@@ -159,6 +159,9 @@
 		if( script_hasdata(st,n) ) \
 			(t)=script_getnum(st,n);
 
+/// Maximum amount of elements in script arrays
+#define SCRIPT_MAX_ARRAYSIZE 128
+
 #define SCRIPT_BLOCK_SIZE 512
 enum { LABEL_NEXTLINE=1,LABEL_START };
 
@@ -4748,7 +4751,7 @@ static int32 getarraysize(struct script_state* st, int32 id, int32 idx, int isst
 
 	if( isstring )
 	{
-		for( ; idx < 128; ++idx )
+		for( ; idx < SCRIPT_MAX_ARRAYSIZE; ++idx )
 		{
 			char* str = (char*)get_val2(st, reference_uid(id, idx), ref);
 			if( str && *str )
@@ -4758,7 +4761,7 @@ static int32 getarraysize(struct script_state* st, int32 id, int32 idx, int isst
 	}
 	else
 	{
-		for( ; idx < 128; ++idx )
+		for( ; idx < SCRIPT_MAX_ARRAYSIZE; ++idx )
 		{
 			int32 num = (int32)get_val2(st, reference_uid(id, idx), ref);
 			if( num )
@@ -4811,8 +4814,8 @@ BUILDIN_FUNC(setarray)
 	}
 
 	end = start + script_lastdata(st) - 2;
-	if( end > 127 )
-		end = 127;
+	if( end >= SCRIPT_MAX_ARRAYSIZE )
+		end = SCRIPT_MAX_ARRAYSIZE-1;
 
 	if( is_string_variable(name) )
 	{// string array
@@ -4874,8 +4877,8 @@ BUILDIN_FUNC(cleararray)
 		v = (void*)script_getnum(st, 3);
 
 	end = start + script_getnum(st, 4);
-	if( end > 127 )
-		end = 127;
+	if( end >= SCRIPT_MAX_ARRAYSIZE )
+		end = SCRIPT_MAX_ARRAYSIZE-1;
 
 	for( ; start <= end; ++start )
 		set_reg(st, sd, reference_uid(id, start), name, v, script_getref(st,2));
@@ -4944,8 +4947,8 @@ BUILDIN_FUNC(copyarray)
 	}
 
 	count = script_getnum(st, 4);
-	if( count > 128 - idx1 )
-		count = 128 - idx1;
+	if( count >= SCRIPT_MAX_ARRAYSIZE - idx1 )
+		count = (SCRIPT_MAX_ARRAYSIZE-1) - idx1;
 	if( count <= 0 || (id1 == id2 && idx1 == idx2) )
 		return 0;// nothing to copy
 
@@ -4962,7 +4965,7 @@ BUILDIN_FUNC(copyarray)
 	{// normal copy
 		for( i = 0; i < count; ++i )
 		{
-			if( idx2 + i < 128 )
+			if( idx2 + i < SCRIPT_MAX_ARRAYSIZE )
 			{
 				v = get_val2(st, reference_uid(id2, idx2 + i), reference_getref(data2));
 				set_reg(st, sd, reference_uid(id1, idx1 + i), name1, v, reference_getref(data1));
@@ -5118,7 +5121,7 @@ BUILDIN_FUNC(getelementofarray)
 	}
 
 	i = script_getnum(st, 3);
-	if( i < 0 || i >= 128 )
+	if( i < 0 || i >= SCRIPT_MAX_ARRAYSIZE )
 	{
 		ShowWarning("script:getelementofarray: index out of range (%d)\n", i);
 		script_reportdata(data);
@@ -12363,7 +12366,7 @@ int buildin_query_sql_sub(struct script_state* st, Sql* handle)
 	const char* query;
 	struct script_data* data;
 	const char* name;
-	int max_rows = 128;// maximum number of rows
+	int max_rows = SCRIPT_MAX_ARRAYSIZE;// maximum number of rows
 	int num_vars;
 	int num_cols;
 
