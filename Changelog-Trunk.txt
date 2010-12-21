@@ -1,5 +1,8 @@
 Date	Added
 
+2010/12/21
+	* Removed 'strsignal' forward-declaration from 'sig' plugin to prevent random gcc distributions from failing to compile due to mismatched declaration already present in <string.h> (bugreport:4644, topic:262284, follow up to r14591). [Ai4rei]
+	- Removed WIN32 conditions in non-WIN32 code in 'sig' plugin (follow up to r4380).
 2010/12/19
 	* Fixes to the dynamic shop sample script. [Ai4rei]
 	- Fixed wrong check in ::OnSellItem, causing not-enough-items condition not getting detected (since r11829).
