@@ -3579,6 +3579,42 @@ void script_cleararray_pc(struct map_session_data* sd, const char* varname, void
 }
 
 
+/// sets a temporary character array variable element idx to given value
+/// @param refcache Pointer to an int variable, which keeps a copy of the reference to varname and must be initialized to 0. Can be NULL if only one element is set.
+void script_setarray_pc(struct map_session_data* sd, const char* varname, uint8 idx, void* value, int* refcache)
+{
+	int key;
+
+	if( not_array_variable(varname[0]) || !not_server_variable(varname[0]) )
+	{
+		ShowError("script_setarray_pc: Variable '%s' has invalid scope (char_id=%d).\n", varname, sd->status.char_id);
+		return;
+	}
+
+	if( idx >= SCRIPT_MAX_ARRAYSIZE )
+	{
+		ShowError("script_setarray_pc: Variable '%s' has invalid index '%d' (char_id=%d).\n", varname, (int)idx, sd->status.char_id);
+		return;
+	}
+
+	key = ( refcache && refcache[0] ) ? refcache[0] : add_str(varname);
+
+	if( is_string_variable(varname) )
+	{
+		pc_setregstr(sd, reference_uid(key, idx), (const char*)value);
+	}
+	else
+	{
+		pc_setreg(sd, reference_uid(key, idx), (int)value);
+	}
+
+	if( refcache )
+	{// save to avoid repeated add_str calls
+		refcache[0] = key;
+	}
+}
+
+
 /*==========================================
  * I—¹
  *------------------------------------------*/

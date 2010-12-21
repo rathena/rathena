@@ -1142,19 +1142,24 @@ static int npc_buylist_sub(struct map_session_data* sd, int n, unsigned short* i
 {
 	char npc_ev[NAME_LENGTH*2+3];
 	int i;
-	int regkey = add_str("@bought_nameid");
-	int regkey2 = add_str("@bought_quantity");
+	int key_nameid = 0;
+	int key_amount = 0;
 
 	// discard old contents
 	script_cleararray_pc(sd, "@bought_nameid", (void*)0);
 	script_cleararray_pc(sd, "@bought_quantity", (void*)0);
 
-	snprintf(npc_ev, ARRAYLENGTH(npc_ev), "%s::OnBuyItem", nd->exname);
-	for(i=0;i<n;i++){
-		pc_setreg(sd,regkey+(i<<24),(int)item_list[i*2+1]);
-		pc_setreg(sd,regkey2+(i<<24),(int)item_list[i*2]);
+	// save list of bought items
+	for( i = 0; i < n; i++ )
+	{
+		script_setarray_pc(sd, "@bought_nameid", i, (void*)item_list[i*2+1], &key_nameid);
+		script_setarray_pc(sd, "@bought_quantity", i, (void*)item_list[i*2], &key_amount);
 	}
+
+	// invoke event
+	snprintf(npc_ev, ARRAYLENGTH(npc_ev), "%s::OnBuyItem", nd->exname);
 	npc_event(sd, npc_ev, 0);
+
 	return 0;
 }
 /*==========================================
@@ -1367,6 +1372,8 @@ int npc_selllist(struct map_session_data* sd, int n, unsigned short* item_list)
 {
 	double z;
 	int i,skill;
+	int key_nameid = 0;
+	int key_amount = 0;
 	struct npc_data *nd;
 	
 	nullpo_retr(1, sd);
@@ -1409,9 +1416,10 @@ int npc_selllist(struct map_session_data* sd, int n, unsigned short* item_list)
 		if(log_config.enable_logs&0x20) //Logs items, Sold to NPC (S)hop [Lupus]
 			log_pick_pc(sd, "S", nameid, -qty, &sd->status.inventory[idx]);
 
-		if(nd) {
-			pc_setreg(sd,add_str("@sold_nameid")+(i<<24),(int)sd->status.inventory[idx].nameid);
-			pc_setreg(sd,add_str("@sold_quantity")+(i<<24),qty);
+		if( nd )
+		{
+			script_setarray_pc(sd, "@sold_nameid", i, (void*)sd->status.inventory[idx].nameid, &key_nameid);
+			script_setarray_pc(sd, "@sold_quantity", i, (void*)qty, &key_amount);
 		}
 		pc_delitem(sd,idx,qty,0,6);
 	}
