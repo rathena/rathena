@@ -3547,6 +3547,38 @@ void script_add_autobonus(const char *autobonus)
 	}
 }
 
+
+/// resets a temporary character array variable to given value
+void script_cleararray_pc(struct map_session_data* sd, const char* varname, void* value)
+{
+	int key;
+	uint8 idx;
+
+	if( not_array_variable(varname[0]) || !not_server_variable(varname[0]) )
+	{
+		ShowError("script_cleararray_pc: Variable '%s' has invalid scope (char_id=%d).\n", varname, sd->status.char_id);
+		return;
+	}
+
+	key = add_str(varname);
+
+	if( is_string_variable(varname) )
+	{
+		for( idx = 0; idx < SCRIPT_MAX_ARRAYSIZE; idx++ )
+		{
+			pc_setregstr(sd, reference_uid(key, idx), (const char*)value);
+		}
+	}
+	else
+	{
+		for( idx = 0; idx < SCRIPT_MAX_ARRAYSIZE; idx++ )
+		{
+			pc_setreg(sd, reference_uid(key, idx), (int)value);
+		}
+	}
+}
+
+
 /*==========================================
  * I—¹
  *------------------------------------------*/

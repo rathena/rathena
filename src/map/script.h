@@ -167,6 +167,8 @@ struct DBMap* script_get_label_db(void);
 struct DBMap* script_get_userfunc_db(void);
 void script_run_autobonus(const char *autobonus,int id, int pos);
 
+void script_cleararray_pc(struct map_session_data* sd, const char* varname, void* value);
+
 int script_config_read(char *cfgName);
 int do_init_script(void);
 int do_final_script(void);

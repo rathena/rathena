@@ -1144,6 +1144,11 @@ static int npc_buylist_sub(struct map_session_data* sd, int n, unsigned short* i
 	int i;
 	int regkey = add_str("@bought_nameid");
 	int regkey2 = add_str("@bought_quantity");
+
+	// discard old contents
+	script_cleararray_pc(sd, "@bought_nameid", (void*)0);
+	script_cleararray_pc(sd, "@bought_quantity", (void*)0);
+
 	snprintf(npc_ev, ARRAYLENGTH(npc_ev), "%s::OnBuyItem", nd->exname);
 	for(i=0;i<n;i++){
 		pc_setreg(sd,regkey+(i<<24),(int)item_list[i*2+1]);
@@ -1370,6 +1375,13 @@ int npc_selllist(struct map_session_data* sd, int n, unsigned short* item_list)
 	if ((nd = npc_checknear(sd,map_id2bl(sd->npc_shopid))) == NULL)
 		return 1;
 	nd = nd->master_nd; //For OnSell triggers.
+
+	if( nd )
+	{
+		// discard old contents
+		script_cleararray_pc(sd, "@sold_nameid", (void*)0);
+		script_cleararray_pc(sd, "@sold_quantity", (void*)0);
+	}
 
 	for(i=0,z=0;i<n;i++) {
 		int nameid, idx;
