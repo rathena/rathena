@@ -1,6 +1,7 @@
 Date	Added
 
 2010/12/21
+	* Replaced in-place generation of uid of script array elements with reference_uid macro (follow up to r10813). [Ai4rei]
 	* Fixed dynamic shop arrays @bought_nameid, @bought_quantity, @sold_nameid and @sold_quantity not getting reset to zero before use, thus providing attached script with wrong/old data, if it did not clear them by itself in previous call (bugreport:1574, since r5841). [Ai4rei]
 	* Removed 'strsignal' forward-declaration from 'sig' plugin to prevent random gcc distributions from failing to compile due to mismatched declaration already present in <string.h> (bugreport:4644, topic:262284, follow up to r14591). [Ai4rei]
 	- Removed WIN32 conditions in non-WIN32 code in 'sig' plugin (follow up to r4380).
