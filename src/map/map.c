@@ -2906,7 +2906,7 @@ int map_readallmaps (void)
 	int i;
 	FILE* fp=NULL;
 	int maps_removed = 0;
-	unsigned char *map_cache_buffer; // Has the uncompressed gat data of all maps, so just one allocation has to be made
+	unsigned char *map_cache_buffer = NULL; // Has the uncompressed gat data of all maps, so just one allocation has to be made
 	unsigned char map_cache_decode_buffer[MAX_MAP_SIZE];
 
 	if( enable_grf )

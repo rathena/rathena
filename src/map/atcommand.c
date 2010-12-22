@@ -6352,7 +6352,7 @@ ACMD_FUNC(mobsearch)
 	clif_displaymessage(fd, atcmd_output);
 
 	it = mapit_geteachmob();
-	while( true )
+	for(;;)
 	{
 		TBL_MOB* md = (TBL_MOB*)mapit_next(it);
 		if( md == NULL )
@@ -6502,7 +6502,7 @@ ACMD_FUNC(users)
 
 	// count users on each map
 	iter = mapit_getallusers();
-	while( true )
+	for(;;)
 	{
 		struct map_session_data* sd2 = (struct map_session_data*)mapit_next(iter);
 		if( sd2 == NULL )
@@ -7081,7 +7081,7 @@ ACMD_FUNC(showmobs)
 	clif_displaymessage(fd, atcmd_output);
 
 	it = mapit_geteachmob();
-	while( true )
+	for(;;)
 	{
 		TBL_MOB* md = (TBL_MOB*)mapit_next(it);
 		if( md == NULL )

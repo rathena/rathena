@@ -1,6 +1,8 @@
 Date	Added
 
 2010/12/22
+	* Resolved random compiler warnings. [Ai4rei]
+	- Silenced pointer size mismatch gcc warning for variables passed to script_setarray_pc (bugreport:4661, since r14613).
 	* Fixed sql mapreg loading code specifying output buffer size for SqlStmt_BindColumn without zero-terminator, leading to truncations of variable names and/or their values when using the maximum length (bugreport:1939, since r11245). [Ai4rei]
 2010/12/21
 	* Added script_setarray_pc for setting temporary character array variables outside of script.c without requiring them to use script-interal code (add_str and reference_uid). [Ai4rei]

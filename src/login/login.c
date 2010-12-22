@@ -402,7 +402,7 @@ int parse_fromchar(int fd)
 			uint32 login_id1 = RFIFOL(fd,6);
 			uint32 login_id2 = RFIFOL(fd,10);
 			uint8 sex = RFIFOB(fd,14);
-			uint32 ip_ = ntohl(RFIFOL(fd,15));
+			//uint32 ip_ = ntohl(RFIFOL(fd,15));
 			int request_id = RFIFOL(fd,19);
 			RFIFOSKIP(fd,23);
 

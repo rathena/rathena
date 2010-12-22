@@ -345,7 +345,7 @@ bool path_search(struct walkpath_data *wpd,int m,int x0,int y0,int x1,int y1,int
 	xs = md->xs-1; // ‚ ‚ç‚©‚¶‚ß‚PŒ¸ŽZ‚µ‚Ä‚¨‚­
 	ys = md->ys-1;
 
-	while(1)
+	for(;;)
 	{
 		int e=0,f=0,dist,cost,dc[4]={0,0,0,0};
 

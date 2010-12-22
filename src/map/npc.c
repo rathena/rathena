@@ -1152,8 +1152,8 @@ static int npc_buylist_sub(struct map_session_data* sd, int n, unsigned short* i
 	// save list of bought items
 	for( i = 0; i < n; i++ )
 	{
-		script_setarray_pc(sd, "@bought_nameid", i, (void*)item_list[i*2+1], &key_nameid);
-		script_setarray_pc(sd, "@bought_quantity", i, (void*)item_list[i*2], &key_amount);
+		script_setarray_pc(sd, "@bought_nameid", i, (void*)(intptr)item_list[i*2+1], &key_nameid);
+		script_setarray_pc(sd, "@bought_quantity", i, (void*)(intptr)item_list[i*2], &key_amount);
 	}
 
 	// invoke event
@@ -1418,8 +1418,8 @@ int npc_selllist(struct map_session_data* sd, int n, unsigned short* item_list)
 
 		if( nd )
 		{
-			script_setarray_pc(sd, "@sold_nameid", i, (void*)sd->status.inventory[idx].nameid, &key_nameid);
-			script_setarray_pc(sd, "@sold_quantity", i, (void*)qty, &key_amount);
+			script_setarray_pc(sd, "@sold_nameid", i, (void*)(intptr)sd->status.inventory[idx].nameid, &key_nameid);
+			script_setarray_pc(sd, "@sold_quantity", i, (void*)(intptr)qty, &key_amount);
 		}
 		pc_delitem(sd,idx,qty,0,6);
 	}

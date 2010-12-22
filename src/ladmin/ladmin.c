@@ -261,7 +261,7 @@ int ladmin_log(char *fmt, ...)
 }
 
 //---------------------------------------------
-// Function to return ordonal text of a number.
+// Function to return ordinal text of a number.
 //---------------------------------------------
 char* makeordinal(int number)
 {
@@ -275,7 +275,6 @@ char* makeordinal(int number)
 	} else {
 		return "th";
 	}
-	return "";
 }
 
 //-----------------------------------------------------------------------------------------
