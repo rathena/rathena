@@ -1261,8 +1261,6 @@ int npc_buylist(struct map_session_data* sd, int n, unsigned short* item_list)
 	nd = npc_checknear(sd,map_id2bl(sd->npc_shopid));
 	if( nd == NULL )
 		return 3;
-	if( nd->master_nd != NULL ) //Script-based shops.
-		return npc_buylist_sub(sd,n,item_list,nd->master_nd);
 	if( nd->subtype != SHOP )
 		return 3;
 
@@ -1297,6 +1295,11 @@ int npc_buylist(struct map_session_data* sd, int n, unsigned short* item_list)
 			amount = item_list[i*2+0] = 1;
 		}
 
+		if( nd->master_nd )
+		{// Script-controlled shops decide by themselves, what can be bought and for what price.
+			continue;
+		}
+
 		switch( pc_checkadditem(sd,nameid,amount) )
 		{
 			case ADDITEM_EXIST:
@@ -1315,6 +1318,9 @@ int npc_buylist(struct map_session_data* sd, int n, unsigned short* item_list)
 		z += (double)value * amount;
 		w += itemdb_weight(nameid) * amount;
 	}
+
+	if( nd->master_nd != NULL ) //Script-based shops.
+		return npc_buylist_sub(sd,n,item_list,nd->master_nd);
 
 	if( z > (double)sd->status.zeny )
 		return 1;	// Not enough Zeny
