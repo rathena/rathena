@@ -1,5 +1,8 @@
 Date	Added
 
+2010/12/23
+	* Fixed server processing the sell list (deleting items and giving zeny) for script-controlled shops (OnSellItem), causing the controller script to fail (bugreport:4656, since r6557). [Ai4rei]
+	- This also makes the server first check the sell list and only continue, if all items can be processed, thus no longer causing incomplete deals and the need for client disconnection in such case (since r6557).
 2010/12/22
 	* NPC shop buy list received from the client is now validated for scripted shops (OnBuyItem), before the control is transfered to the script, as well (bugreport:3680, since r5841, related r8525). [Ai4rei]
 	* Resolved random compiler warnings. [Ai4rei]

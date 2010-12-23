@@ -1371,97 +1371,139 @@ int npc_buylist(struct map_session_data* sd, int n, unsigned short* item_list)
 	return 0;
 }
 
-/*==========================================
- *
- *------------------------------------------*/
+
+/// npc_selllist for script-controlled shops
+static int npc_selllist_sub(struct map_session_data* sd, int n, unsigned short* item_list, struct npc_data* nd)
+{
+	char npc_ev[NAME_LENGTH*2+3];
+	int i, idx;
+	int key_nameid = 0;
+	int key_amount = 0;
+
+	// discard old contents
+	script_cleararray_pc(sd, "@sold_nameid", (void*)0);
+	script_cleararray_pc(sd, "@sold_quantity", (void*)0);
+
+	// save list of to be sold items
+	for( i = 0; i < n; i++ )
+	{
+		idx = item_list[i*2]-2;
+
+		script_setarray_pc(sd, "@sold_nameid", i, (void*)(intptr)sd->status.inventory[idx].nameid, &key_nameid);
+		script_setarray_pc(sd, "@sold_quantity", i, (void*)(intptr)item_list[i*2+1], &key_amount);
+	}
+
+	// invoke event
+	snprintf(npc_ev, ARRAYLENGTH(npc_ev), "%s::OnSellItem", nd->exname);
+	npc_event(sd, npc_ev, 0);
+	return 0;
+}
+
+
+/// Player item selling to npc shop.
+///
+/// @param item_list 'n' pairs <index,amount>
+/// @return result code for clif_parse_NpcSellListSend
 int npc_selllist(struct map_session_data* sd, int n, unsigned short* item_list)
 {
 	double z;
 	int i,skill;
-	int key_nameid = 0;
-	int key_amount = 0;
 	struct npc_data *nd;
-	
+
 	nullpo_retr(1, sd);
 	nullpo_retr(1, item_list);
 
-	if ((nd = npc_checknear(sd,map_id2bl(sd->npc_shopid))) == NULL)
-		return 1;
-	nd = nd->master_nd; //For OnSell triggers.
-
-	if( nd )
+	if( ( nd = npc_checknear(sd, map_id2bl(sd->npc_shopid)) ) == NULL || nd->subtype != SHOP )
 	{
-		// discard old contents
-		script_cleararray_pc(sd, "@sold_nameid", (void*)0);
-		script_cleararray_pc(sd, "@sold_quantity", (void*)0);
-	}
-
-	for(i=0,z=0;i<n;i++) {
-		int nameid, idx;
-		short qty;
-		idx = item_list[i*2]-2;
-		qty = (short)item_list[i*2+1];
-		
-		if (idx <0 || idx >=MAX_INVENTORY || qty < 0)
-			break;
-		
-		nameid=sd->status.inventory[idx].nameid;
-		if (nameid == 0 || !sd->inventory_data[idx] ||
-		   sd->status.inventory[idx].amount < qty)
-			break;
-		
-		z+=(double)qty*pc_modifysellvalue(sd,sd->inventory_data[idx]->value_sell);
-
-		if(sd->inventory_data[idx]->type == IT_PETEGG &&
-			sd->status.inventory[idx].card[0] == CARD0_PET)
-		{
-			if(search_petDB_index(sd->status.inventory[idx].nameid, PET_EGG) >= 0)
-				intif_delete_petdata(MakeDWord(sd->status.inventory[idx].card[1],sd->status.inventory[idx].card[2]));
-		}
-
-		if(log_config.enable_logs&0x20) //Logs items, Sold to NPC (S)hop [Lupus]
-			log_pick_pc(sd, "S", nameid, -qty, &sd->status.inventory[idx]);
-
-		if( nd )
-		{
-			script_setarray_pc(sd, "@sold_nameid", i, (void*)(intptr)sd->status.inventory[idx].nameid, &key_nameid);
-			script_setarray_pc(sd, "@sold_quantity", i, (void*)(intptr)qty, &key_amount);
-		}
-		pc_delitem(sd,idx,qty,0,6);
-	}
-
-	if (z > MAX_ZENY) z = MAX_ZENY;
-
-	if(log_config.zeny) //Logs (S)hopping Zeny [Lupus]
-		log_zeny(sd, "S", sd, (int)z);
-
-	pc_getzeny(sd,(int)z);
-	
-	if (battle_config.shop_exp > 0 && z > 0 && (skill = pc_checkskill(sd,MC_OVERCHARGE)) > 0) {
-		if (sd->status.skill[MC_OVERCHARGE].flag != 0)
-			skill = sd->status.skill[MC_OVERCHARGE].flag - 2;
-		if (skill > 0) {
-			z = z * (double)skill * (double)battle_config.shop_exp/10000.;
-			if (z < 1)
-				z = 1;
-			pc_gainexp(sd,NULL,0,(int)z, false);
-		}
-	}
-		
-	if(nd) {
-		char npc_ev[NAME_LENGTH*2+3];
-		snprintf(npc_ev, ARRAYLENGTH(npc_ev), "%s::OnSellItem", nd->exname);
-		npc_event(sd, npc_ev, 0);
-	}
-	
-	if (i<n) {
-		//Error/Exploit... of some sort. If we return 1, the client will not mark
-		//any item as deleted even though a few were sold. In such a case, we
-		//have no recourse but to kick them out so their inventory will refresh
-		//correctly on relog. [Skotlex]
-		if (i) set_eof(sd->fd);
 		return 1;
 	}
+
+	z = 0;
+
+	// verify the sell list
+	for( i = 0; i < n; i++ )
+	{
+		int nameid, amount, idx, value;
+
+		idx    = item_list[i*2]-2;
+		amount = item_list[i*2+1];
+
+		if( idx >= MAX_INVENTORY || idx < 0 || amount < 0 )
+		{
+			return 1;
+		}
+
+		nameid = sd->status.inventory[idx].nameid;
+
+		if( !nameid || !sd->inventory_data[idx] || sd->status.inventory[idx].amount < amount )
+		{
+			return 1;
+		}
+
+		if( nd->master_nd )
+		{// Script-controlled shops decide by themselves, what can be sold and at what price.
+			continue;
+		}
+
+		value = pc_modifysellvalue(sd, sd->inventory_data[idx]->value_sell);
+
+		z+= (double)value*amount;
+	}
+
+	if( nd->master_nd )
+	{// Script-controlled shops
+		return npc_selllist_sub(sd, n, item_list, nd->master_nd);
+	}
+
+	// delete items
+	for( i = 0; i < n; i++ )
+	{
+		int nameid, amount, idx;
+
+		idx    = item_list[i*2]-2;
+		amount = item_list[i*2+1];
+		nameid = sd->status.inventory[idx].nameid;
+
+		//Logs items, Sold to NPC (S)hop [Lupus]
+		if( log_config.enable_logs&0x20 )
+			log_pick_pc(sd, "S", nameid, -amount, &sd->status.inventory[idx]);
+		//Logs
+
+		if( sd->inventory_data[idx]->type == IT_PETEGG && sd->status.inventory[idx].card[0] == CARD0_PET )
+		{
+			if( search_petDB_index(sd->status.inventory[idx].nameid, PET_EGG) >= 0 )
+			{
+				intif_delete_petdata(MakeDWord(sd->status.inventory[idx].card[1], sd->status.inventory[idx].card[2]));
+			}
+		}
+
+		pc_delitem(sd, idx, amount, 0, 6);
+	}
+
+	if( z > MAX_ZENY )
+		z = MAX_ZENY;
+
+	//Logs (S)hopping Zeny [Lupus]
+	if( log_config.zeny )
+		log_zeny(sd, "S", sd, (int)z);
+	//Logs
+
+	pc_getzeny(sd, (int)z);
+
+	// custom merchant shop exp bonus
+	if( battle_config.shop_exp > 0 && z > 0 && ( skill = pc_checkskill(sd,MC_OVERCHARGE) ) > 0)
+	{
+		if( sd->status.skill[MC_OVERCHARGE].flag != 0 )
+			skill = sd->status.skill[MC_OVERCHARGE].flag - 2;
+		if( skill > 0 )
+		{
+			z = z * (double)skill * (double)battle_config.shop_exp/10000.;
+			if( z < 1 )
+				z = 1;
+			pc_gainexp(sd, NULL, 0, (int)z, false);
+		}
+	}
+
 	return 0;
 }
 
