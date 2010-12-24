@@ -2,19 +2,16 @@
 // For more information, see LICENCE in the main folder
 
 #include "../common/cbasetypes.h"
-#include "../common/mmo.h"
+#include "../common/core.h"
 #include "../common/db.h"
 #include "../common/lock.h"
 #include "../common/malloc.h"
-#include "../common/core.h"
+#include "../common/mapindex.h"
+#include "../common/mmo.h"
+#include "../common/showmsg.h"
 #include "../common/socket.h"
 #include "../common/strlib.h"
-#include "../common/showmsg.h"
 #include "../common/timer.h"
-#include "../common/lock.h"
-#include "../common/malloc.h"
-#include "../common/mapindex.h"
-#include "../common/showmsg.h"
 #include "../common/utils.h"
 #include "../common/version.h"
 #include "inter.h"
@@ -27,16 +24,8 @@
 #include "char.h"
 
 #include <sys/types.h>
-#ifdef WIN32
-#include <winsock2.h>
-#else
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
-#endif
 #include <time.h>
 #include <signal.h>
-#include <fcntl.h>
 #include <string.h>
 #include <stdarg.h>
 #include <stdio.h>
@@ -85,7 +74,7 @@ int email_creation = 0; // disabled by default
 
 bool name_ignoring_case = false; // Allow or not identical name for characters but with a different case by [Yor]
 int char_name_option = 0; // Option to know which letters/symbols are authorised in the name of a character (0: all, 1: only those in char_name_letters, 2: all EXCEPT those in char_name_letters) by [Yor]
-char unknown_char_name[1024] = "Unknown"; // Name to use when the requested name cannot be determined
+char unknown_char_name[NAME_LENGTH] = "Unknown"; // Name to use when the requested name cannot be determined
 #define TRIM_CHARS "\032\t\x0A\x0D " //The following characters are trimmed regardless because they cause confusion and problems on the servers. [Skotlex]
 char char_name_letters[1024] = ""; // list of letters/symbols authorised (or not) in a character name. by [Yor]
 
@@ -118,7 +107,7 @@ int char_num, char_max;
 int max_connect_user = 0;
 int gm_allow_level = 99;
 int autosave_interval = DEFAULT_AUTOSAVE_INTERVAL;
-int start_zeny = 500;
+int start_zeny = 0;
 int start_weapon = 1201;
 int start_armor = 2301;
 int guild_exp_rate = 100;
@@ -678,7 +667,7 @@ int mmo_char_fromstr(char *str, struct mmo_charstatus *p, struct global_reg *reg
 		tmp_int[46] = mapindex_name2id(tmp_str[2]);
 	}	// Char structure of version 1500 (homun + mapindex maps)
 
-	memcpy(p->name, tmp_str[0], NAME_LENGTH); //Overflow protection [Skotlex]
+	safestrncpy(p->name, tmp_str[0], NAME_LENGTH); //Overflow protection [Skotlex]
 	p->char_id = tmp_int[0];
 	p->account_id = tmp_int[1];
 	p->slot = tmp_int[2];
@@ -1561,7 +1550,7 @@ void create_online_files(void)
 				j = id[i];
 				// displaying the character name
 				if ((online_display_option & 1) || (online_display_option & 64)) { // without/with 'GM' display
-					strcpy(temp, char_dat[j].status.name);
+					safestrncpy(temp, char_dat[j].status.name, sizeof(temp));
 					//l = isGM(char_dat[j].status.account_id);
 					l = 0; //FIXME: how to get the gm level?
 					if (online_display_option & 64) {
@@ -1609,7 +1598,7 @@ void create_online_files(void)
 				// displaying of the map
 				if (online_display_option & 24) { // 8 or 16
 					// prepare map name
-					memcpy(temp, mapindex_id2name(char_dat[j].status.last_point.map), MAP_NAME_LENGTH);
+					safestrncpy(temp, mapindex_id2name(char_dat[j].status.last_point.map), sizeof(temp));
 					// write map name
 					if (online_display_option & 16) { // map-name AND coordinates
 						fprintf(fp2, "        <td>%s (%d, %d)</td>\n", temp, char_dat[j].status.last_point.x, char_dat[j].status.last_point.y);
@@ -2105,7 +2094,7 @@ int parse_fromlogin(int fd)
 			RFIFOSKIP(fd,7);
 
 			if( acc > 0 )
-			{
+			{// TODO: Is this even possible?
 				struct auth_node* node = (struct auth_node*)idb_get(auth_db, acc);
 				if( node != NULL )
 					node->sex = sex;
@@ -2496,7 +2485,7 @@ void char_read_fame_list(void)
 		{
 			fame_item.id = char_dat[id[i]].status.char_id;
 			fame_item.fame = char_dat[id[i]].status.fame;
-			strncpy(fame_item.name, char_dat[id[i]].status.name, NAME_LENGTH);
+			safestrncpy(fame_item.name, char_dat[id[i]].status.name, NAME_LENGTH);
 
 			memcpy(&smith_fame_list[j],&fame_item,sizeof(struct fame_list));
 			j++;
@@ -2511,7 +2500,7 @@ void char_read_fame_list(void)
 		{
 			fame_item.id = char_dat[id[i]].status.char_id;
 			fame_item.fame = char_dat[id[i]].status.fame;
-			strncpy(fame_item.name, char_dat[id[i]].status.name, NAME_LENGTH);
+			safestrncpy(fame_item.name, char_dat[id[i]].status.name, NAME_LENGTH);
 
 			memcpy(&chemist_fame_list[j],&fame_item,sizeof(struct fame_list));
 
@@ -2525,7 +2514,7 @@ void char_read_fame_list(void)
 		{
 			fame_item.id = char_dat[id[i]].status.char_id;
 			fame_item.fame = char_dat[id[i]].status.fame;
-			strncpy(fame_item.name, char_dat[id[i]].status.name, NAME_LENGTH);
+			safestrncpy(fame_item.name, char_dat[id[i]].status.name, NAME_LENGTH);
 
 			memcpy(&taekwon_fame_list[j],&fame_item,sizeof(struct fame_list));
 
@@ -2589,9 +2578,9 @@ int char_loadName(int char_id, char* name)
 	for( j = 0; j < char_num && char_dat[j].status.char_id != char_id; ++j )
 		;// find char
 	if( j < char_num )
-		strncpy(name, char_dat[j].status.name, NAME_LENGTH);
+		safestrncpy(name, char_dat[j].status.name, NAME_LENGTH);
 	else
-		strncpy(name, unknown_char_name, NAME_LENGTH);
+		safestrncpy(name, unknown_char_name, NAME_LENGTH);
 
 	return (j < char_num) ? 1 : 0;
 }
@@ -3375,6 +3364,10 @@ int parse_char(int fd)
 			ARR_FIND( 0, MAX_CHARS, ch, sd->found_char[ch] >= 0 && char_dat[sd->found_char[ch]].status.slot == slot );
 			if (ch == MAX_CHARS)
 			{	//Not found?? May be forged packet.
+				WFIFOHEAD(fd,3);
+				WFIFOW(fd,0) = 0x6c;
+				WFIFOB(fd,2) = 0; // rejected from server
+				WFIFOSET(fd,3);
 				break;
 			}
 			cd = &char_dat[sd->found_char[ch]].status;
@@ -3522,7 +3515,7 @@ int parse_char(int fd)
 			RFIFOSKIP(fd,RFIFOREST(fd)); // hack to make the other deletion packet work
 
 			if (e_mail_check(email) == 0)
-				strncpy(email, "a@a.com", 40); // default e-mail
+				safestrncpy(email, "a@a.com", sizeof(email)); // default e-mail
 
 			// BEGIN HACK: "change email using the char deletion 'confirm email' menu"
 			// if we activated email creation and email is default email
@@ -4026,7 +4019,7 @@ int char_config_read(const char *cfgName)
 		remove_control_chars(w1);
 		remove_control_chars(w2);
 		if(strcmpi(w1,"timestamp_format") == 0) {
-			strncpy(timestamp_format, w2, 20);
+			safestrncpy(timestamp_format, w2, sizeof(timestamp_format));
 		} else if(strcmpi(w1,"console_silent")==0){
 			ShowInfo("Console Silent Setting: %d\n", atoi(w2));
 			msg_silent = atoi(w2);
@@ -4034,23 +4027,21 @@ int char_config_read(const char *cfgName)
 		} else if(strcmpi(w1,"stdout_with_ansisequence")==0){
 			stdout_with_ansisequence = config_switch(w2);
 		} else if (strcmpi(w1, "userid") == 0) {
-			strncpy(userid, w2, 24);
+			safestrncpy(userid, w2, sizeof(userid));
 		} else if (strcmpi(w1, "passwd") == 0) {
-			strncpy(passwd, w2, 24);
+			safestrncpy(passwd, w2, sizeof(passwd));
 		} else if (strcmpi(w1, "server_name") == 0) {
-			strncpy(server_name, w2, 20);
-			server_name[sizeof(server_name) - 1] = '\0';
+			safestrncpy(server_name, w2, sizeof(server_name));
 			ShowStatus("%s server has been initialized\n", w2);
 		} else if (strcmpi(w1, "wisp_server_name") == 0) {
 			if (strlen(w2) >= 4) {
-				memcpy(wisp_server_name, w2, sizeof(wisp_server_name));
-				wisp_server_name[sizeof(wisp_server_name) - 1] = '\0';
+				safestrncpy(wisp_server_name, w2, sizeof(wisp_server_name));
 			}
 		} else if (strcmpi(w1, "login_ip") == 0) {
 			char ip_str[16];
 			login_ip = host2ip(w2);
 			if (login_ip) {
-				strncpy(login_ip_str, w2, sizeof(login_ip_str));
+				safestrncpy(login_ip_str, w2, sizeof(login_ip_str));
 				ShowStatus("Login server IP address : %s -> %s\n", w2, ip2str(login_ip, ip_str));
 			}
 		} else if (strcmpi(w1, "login_port") == 0) {
@@ -4059,14 +4050,14 @@ int char_config_read(const char *cfgName)
 			char ip_str[16];
 			char_ip = host2ip(w2);
 			if (char_ip){
-				strncpy(char_ip_str, w2, sizeof(char_ip_str));
+				safestrncpy(char_ip_str, w2, sizeof(char_ip_str));
 				ShowStatus("Character server IP address : %s -> %s\n", w2, ip2str(char_ip, ip_str));
 			}
 		} else if (strcmpi(w1, "bind_ip") == 0) {
 			char ip_str[16];
 			bind_ip = host2ip(w2);
 			if (bind_ip) {
-				strncpy(bind_ip_str, w2, sizeof(bind_ip_str));
+				safestrncpy(bind_ip_str, w2, sizeof(bind_ip_str));
 				ShowStatus("Character server binding IP address : %s -> %s\n", w2, ip2str(bind_ip, ip_str));
 			}
 		} else if (strcmpi(w1, "char_port") == 0) {
@@ -4080,14 +4071,14 @@ int char_config_read(const char *cfgName)
 		} else if (strcmpi(w1, "email_creation") == 0) {
 			email_creation = config_switch(w2);
 		} else if (strcmpi(w1, "scdata_txt") == 0) { //By Skotlex
-			strcpy(scdata_txt, w2);
+			safestrncpy(scdata_txt, w2, sizeof(scdata_txt));
 #endif
 		} else if (strcmpi(w1, "char_txt") == 0) {
-			strcpy(char_txt, w2);
+			safestrncpy(char_txt, w2, sizeof(char_txt));
 		} else if (strcmpi(w1, "friends_txt") == 0) { //By davidsiaw
-			strcpy(friends_txt, w2);
+			safestrncpy(friends_txt, w2, sizeof(friends_txt));
 		} else if (strcmpi(w1, "hotkeys_txt") == 0) { //By davidsiaw
-			strcpy(hotkeys_txt, w2);
+			safestrncpy(hotkeys_txt, w2, sizeof(hotkeys_txt));
 #ifndef TXT_SQL_CONVERT
 		} else if (strcmpi(w1, "max_connect_user") == 0) {
 			max_connect_user = atoi(w2);
@@ -4130,21 +4121,21 @@ int char_config_read(const char *cfgName)
 		} else if(strcmpi(w1,"log_char")==0) {		//log char or not [devil]
 			log_char = atoi(w2);
 		} else if (strcmpi(w1, "unknown_char_name") == 0) {
-			strcpy(unknown_char_name, w2);
+			safestrncpy(unknown_char_name, w2, sizeof(unknown_char_name));
 			unknown_char_name[NAME_LENGTH-1] = '\0';
 		} else if (strcmpi(w1, "char_log_filename") == 0) {
-			strcpy(char_log_filename, w2);
+			safestrncpy(char_log_filename, w2, sizeof(char_log_filename));
 		} else if (strcmpi(w1, "name_ignoring_case") == 0) {
 			name_ignoring_case = (bool)config_switch(w2);
 		} else if (strcmpi(w1, "char_name_option") == 0) {
 			char_name_option = atoi(w2);
 		} else if (strcmpi(w1, "char_name_letters") == 0) {
-			strcpy(char_name_letters, w2);
+			safestrncpy(char_name_letters, w2, sizeof(char_name_letters));
 // online files options
 		} else if (strcmpi(w1, "online_txt_filename") == 0) {
-			strcpy(online_txt_filename, w2);
+			safestrncpy(online_txt_filename, w2, sizeof(online_txt_filename));
 		} else if (strcmpi(w1, "online_html_filename") == 0) {
-			strcpy(online_html_filename, w2);
+			safestrncpy(online_html_filename, w2, sizeof(online_html_filename));
 		} else if (strcmpi(w1, "online_sorting_option") == 0) {
 			online_sorting_option = atoi(w2);
 		} else if (strcmpi(w1, "online_display_option") == 0) {
@@ -4158,7 +4149,7 @@ int char_config_read(const char *cfgName)
 			if (online_refresh_html < 1)
 				online_refresh_html = 1;
 		} else if(strcmpi(w1,"db_path")==0) {
-			strcpy(db_path,w2);
+			safestrncpy(db_path, w2, sizeof(db_path));
 		} else if (strcmpi(w1, "console") == 0) {
 			console = config_switch(w2);
 		} else if (strcmpi(w1, "fame_list_alchemist") == 0) {
@@ -4193,11 +4184,6 @@ int char_config_read(const char *cfgName)
 }
 
 #ifndef TXT_SQL_CONVERT
-int chardb_final(int key, void* data, va_list va)
-{
-	aFree(data);
-	return 0;
-}
 void do_final(void)
 {
 	ShowStatus("Terminating server.\n");
@@ -4292,11 +4278,11 @@ int do_init(int argc, char **argv)
 		else
 			ShowStatus("Defaulting to %s as our IP address\n", ip_str);
 		if (!login_ip) {
-			strcpy(login_ip_str, ip_str);
+			safestrncpy(login_ip_str, ip_str, sizeof(login_ip_str));
 			login_ip = str2ip(login_ip_str);
 		}
 		if (!char_ip) {
-			strcpy(char_ip_str, ip_str);
+			safestrncpy(char_ip_str, ip_str, sizeof(char_ip_str));
 			char_ip = str2ip(char_ip_str);
 		}
 	}

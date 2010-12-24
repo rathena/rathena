@@ -2,17 +2,17 @@
 // For more information, see LICENCE in the main folder
 
 #include "../common/cbasetypes.h"
-#include "../common/strlib.h"
 #include "../common/core.h"
-#include "../common/timer.h"
-#include "../common/mmo.h"
 #include "../common/db.h"
 #include "../common/malloc.h"
 #include "../common/mapindex.h"
+#include "../common/mmo.h"
 #include "../common/showmsg.h"
 #include "../common/socket.h"
-#include "../common/version.h"
+#include "../common/strlib.h"
+#include "../common/timer.h"
 #include "../common/utils.h"
+#include "../common/version.h"
 #include "inter.h"
 #include "int_guild.h"
 #include "int_homun.h"
@@ -1879,7 +1879,7 @@ int parse_fromlogin(int fd)
 			RFIFOSKIP(fd,7);
 
 			if( acc > 0 )
-			{
+			{// TODO: Is this even possible?
 				int char_id[MAX_CHARS];
 				int class_[MAX_CHARS];
 				int guild_id[MAX_CHARS];
@@ -1933,12 +1933,12 @@ int parse_fromlogin(int fd)
 						inter_guild_sex_changed(guild_id[i], acc, char_id[i], sex);
 				}
 				Sql_FreeResult(sql_handle);
-			}
 
-			// disconnect player if online on char-server
-			ARR_FIND( 0, fd_max, i, session[i] && (sd = (struct char_session_data*)session[i]->session_data) && sd->account_id == acc );
-			if( i < fd_max )
-				set_eof(i);
+				// disconnect player if online on char-server
+				ARR_FIND( 0, fd_max, i, session[i] && (sd = (struct char_session_data*)session[i]->session_data) && sd->account_id == acc );
+				if( i < fd_max )
+					set_eof(i);
+			}
 
 			// notify all mapservers about this change
 			WBUFW(buf,0) = 0x2b0d;
@@ -2203,13 +2203,12 @@ int char_loadName(int char_id, char* name)
 	else if( SQL_SUCCESS == Sql_NextRow(sql_handle) )
 	{
 		Sql_GetData(sql_handle, 0, &data, &len);
-		memset(name, 0, NAME_LENGTH);
-		memcpy(name, data, min(len, NAME_LENGTH));
+		safestrncpy(name, data, NAME_LENGTH);
 		return 1;
 	}
 	else
 	{
-		memcpy(name, unknown_char_name, NAME_LENGTH);
+		safestrncpy(name, unknown_char_name, NAME_LENGTH);
 	}
 	return 0;
 }
@@ -3081,7 +3080,10 @@ int parse_char(int fd)
 				//Not found?? May be forged packet.
 				Sql_ShowDebug(sql_handle);
 				Sql_FreeResult(sql_handle);
-				//TODO: perhaps add some reply? (otherwise it hangs the client)
+				WFIFOHEAD(fd,3);
+				WFIFOW(fd,0) = 0x6c;
+				WFIFOB(fd,2) = 0; // rejected from server
+				WFIFOSET(fd,3);
 				break;
 			}
 
@@ -3246,7 +3248,6 @@ int parse_char(int fd)
 		{
 			int cid = RFIFOL(fd,2);
 
-			WFIFOHEAD(fd,46);
 			ShowInfo(CL_RED"Request Char Deletion: "CL_GREEN"%d (%d)"CL_RESET"\n", sd->account_id, cid);
 			memcpy(email, RFIFOP(fd,6), 40);
 			RFIFOSKIP(fd,RFIFOREST(fd)); // hack to make the other deletion packet work
@@ -3751,59 +3752,55 @@ void sql_config_read(const char* cfgName)
 			continue;
 
 		if(!strcmpi(w1,"char_db"))
-			strcpy(char_db,w2);
+			safestrncpy(char_db, w2, sizeof(char_db));
 		else if(!strcmpi(w1,"scdata_db"))
-			strcpy(scdata_db,w2);
+			safestrncpy(scdata_db, w2, sizeof(scdata_db));
 		else if(!strcmpi(w1,"cart_db"))
-			strcpy(cart_db,w2);
+			safestrncpy(cart_db, w2, sizeof(cart_db));
 		else if(!strcmpi(w1,"inventory_db"))
-			strcpy(inventory_db, w2);
+			safestrncpy(inventory_db, w2, sizeof(inventory_db));
 		else if(!strcmpi(w1,"charlog_db"))
-			strcpy(charlog_db,w2);
+			safestrncpy(charlog_db, w2, sizeof(charlog_db));
 		else if(!strcmpi(w1,"storage_db"))
-			strcpy(storage_db,w2);
+			safestrncpy(storage_db, w2, sizeof(storage_db));
 		else if(!strcmpi(w1,"reg_db"))
-			strcpy(reg_db,w2);
+			safestrncpy(reg_db, w2, sizeof(reg_db));
 		else if(!strcmpi(w1,"skill_db"))
-			strcpy(skill_db,w2);
+			safestrncpy(skill_db, w2, sizeof(skill_db));
 		else if(!strcmpi(w1,"interlog_db"))
-			strcpy(interlog_db,w2);
+			safestrncpy(interlog_db, w2, sizeof(interlog_db));
 		else if(!strcmpi(w1,"memo_db"))
-			strcpy(memo_db,w2);
+			safestrncpy(memo_db, w2, sizeof(memo_db));
 		else if(!strcmpi(w1,"guild_db"))
-			strcpy(guild_db,w2);
+			safestrncpy(guild_db, w2, sizeof(guild_db));
 		else if(!strcmpi(w1,"guild_alliance_db"))
-			strcpy(guild_alliance_db,w2);
+			safestrncpy(guild_alliance_db, w2, sizeof(guild_alliance_db));
 		else if(!strcmpi(w1,"guild_castle_db"))
-			strcpy(guild_castle_db,w2);
+			safestrncpy(guild_castle_db, w2, sizeof(guild_castle_db));
 		else if(!strcmpi(w1,"guild_expulsion_db"))
-			strcpy(guild_expulsion_db,w2);
+			safestrncpy(guild_expulsion_db, w2, sizeof(guild_expulsion_db));
 		else if(!strcmpi(w1,"guild_member_db"))
-			strcpy(guild_member_db,w2);
+			safestrncpy(guild_member_db, w2, sizeof(guild_member_db));
 		else if(!strcmpi(w1,"guild_skill_db"))
-			strcpy(guild_skill_db,w2);
+			safestrncpy(guild_skill_db, w2, sizeof(guild_skill_db));
 		else if(!strcmpi(w1,"guild_position_db"))
-			strcpy(guild_position_db,w2);
+			safestrncpy(guild_position_db, w2, sizeof(guild_position_db));
 		else if(!strcmpi(w1,"guild_storage_db"))
-			strcpy(guild_storage_db,w2);
+			safestrncpy(guild_storage_db, w2, sizeof(guild_storage_db));
 		else if(!strcmpi(w1,"party_db"))
-			strcpy(party_db,w2);
+			safestrncpy(party_db, w2, sizeof(party_db));
 		else if(!strcmpi(w1,"pet_db"))
-			strcpy(pet_db,w2);
+			safestrncpy(pet_db, w2, sizeof(pet_db));
 		else if(!strcmpi(w1,"mail_db"))
-			strcpy(mail_db,w2);
+			safestrncpy(mail_db, w2, sizeof(mail_db));
 		else if(!strcmpi(w1,"auction_db"))
-			strcpy(auction_db,w2);
+			safestrncpy(auction_db, w2, sizeof(auction_db));
 		else if(!strcmpi(w1,"friend_db"))
-			strcpy(friend_db,w2);
+			safestrncpy(friend_db, w2, sizeof(friend_db));
 		else if(!strcmpi(w1,"hotkey_db"))
-			strcpy(hotkey_db,w2);
+			safestrncpy(hotkey_db, w2, sizeof(hotkey_db));
 		else if(!strcmpi(w1,"quest_db"))
-			strcpy(quest_db,w2);
-#ifndef TXT_SQL_CONVERT
-		else if(!strcmpi(w1,"db_path"))
-			strcpy(db_path,w2);
-#endif
+			safestrncpy(quest_db,w2,sizeof(quest_db));
 		//support the import command, just like any other config
 		else if(!strcmpi(w1,"import"))
 			sql_config_read(w2);
@@ -3835,30 +3832,28 @@ int char_config_read(const char* cfgName)
 		remove_control_chars(w1);
 		remove_control_chars(w2);
 		if(strcmpi(w1,"timestamp_format") == 0) {
-			strncpy(timestamp_format, w2, 20);
+			safestrncpy(timestamp_format, w2, sizeof(timestamp_format));
 		} else if(strcmpi(w1,"console_silent")==0){
 			ShowInfo("Console Silent Setting: %d\n", atoi(w2));
 			msg_silent = atoi(w2);
 		} else if(strcmpi(w1,"stdout_with_ansisequence")==0){
 			stdout_with_ansisequence = config_switch(w2);
 		} else if (strcmpi(w1, "userid") == 0) {
-			strncpy(userid, w2, 24);
+			safestrncpy(userid, w2, sizeof(userid));
 		} else if (strcmpi(w1, "passwd") == 0) {
-			strncpy(passwd, w2, 24);
+			safestrncpy(passwd, w2, sizeof(passwd));
 		} else if (strcmpi(w1, "server_name") == 0) {
-			strncpy(server_name, w2, 20);
-			server_name[sizeof(server_name) - 1] = '\0';
+			safestrncpy(server_name, w2, sizeof(server_name));
 			ShowStatus("%s server has been initialized\n", w2);
 		} else if (strcmpi(w1, "wisp_server_name") == 0) {
 			if (strlen(w2) >= 4) {
-				memcpy(wisp_server_name, w2, sizeof(wisp_server_name));
-				wisp_server_name[sizeof(wisp_server_name) - 1] = '\0';
+				safestrncpy(wisp_server_name, w2, sizeof(wisp_server_name));
 			}
 		} else if (strcmpi(w1, "login_ip") == 0) {
 			char ip_str[16];
 			login_ip = host2ip(w2);
 			if (login_ip) {
-				strncpy(login_ip_str, w2, sizeof(login_ip_str));
+				safestrncpy(login_ip_str, w2, sizeof(login_ip_str));
 				ShowStatus("Login server IP address : %s -> %s\n", w2, ip2str(login_ip, ip_str));
 			}
 		} else if (strcmpi(w1, "login_port") == 0) {
@@ -3867,14 +3862,14 @@ int char_config_read(const char* cfgName)
 			char ip_str[16];
 			char_ip = host2ip(w2);
 			if (char_ip){
-				strncpy(char_ip_str, w2, sizeof(char_ip_str));
+				safestrncpy(char_ip_str, w2, sizeof(char_ip_str));
 				ShowStatus("Character server IP address : %s -> %s\n", w2, ip2str(char_ip, ip_str));
 			}
 		} else if (strcmpi(w1, "bind_ip") == 0) {
 			char ip_str[16];
 			bind_ip = host2ip(w2);
 			if (bind_ip) {
-				strncpy(bind_ip_str, w2, sizeof(bind_ip_str));
+				safestrncpy(bind_ip_str, w2, sizeof(bind_ip_str));
 				ShowStatus("Character server binding IP address : %s -> %s\n", w2, ip2str(bind_ip, ip_str));
 			}
 		} else if (strcmpi(w1, "char_port") == 0) {
@@ -3924,18 +3919,20 @@ int char_config_read(const char* cfgName)
 		} else if(strcmpi(w1,"log_char")==0) {		//log char or not [devil]
 			log_char = atoi(w2);
 		} else if (strcmpi(w1, "unknown_char_name") == 0) {
-			strcpy(unknown_char_name, w2);
+			safestrncpy(unknown_char_name, w2, sizeof(unknown_char_name));
 			unknown_char_name[NAME_LENGTH-1] = '\0';
 		} else if (strcmpi(w1, "name_ignoring_case") == 0) {
 			name_ignoring_case = config_switch(w2);
 		} else if (strcmpi(w1, "char_name_option") == 0) {
 			char_name_option = atoi(w2);
 		} else if (strcmpi(w1, "char_name_letters") == 0) {
-			strcpy(char_name_letters, w2);
+			safestrncpy(char_name_letters, w2, sizeof(char_name_letters));
 		} else if (strcmpi(w1, "chars_per_account") == 0) { //maxchars per account [Sirius]
 			char_per_account = atoi(w2);
 		} else if (strcmpi(w1, "char_del_level") == 0) { //disable/enable char deletion by its level condition [Lupus]
 			char_del_level = atoi(w2);
+		} else if(strcmpi(w1,"db_path")==0) {
+			safestrncpy(db_path, w2, sizeof(db_path));
 		} else if (strcmpi(w1, "console") == 0) {
 			console = config_switch(w2);
 		} else if (strcmpi(w1, "fame_list_alchemist") == 0) {
@@ -4059,11 +4056,11 @@ int do_init(int argc, char **argv)
 		else
 			ShowStatus("Defaulting to %s as our IP address\n", ip_str);
 		if (!login_ip) {
-			strcpy(login_ip_str, ip_str);
+			safestrncpy(login_ip_str, ip_str, sizeof(login_ip_str));
 			login_ip = str2ip(login_ip_str);
 		}
 		if (!char_ip) {
-			strcpy(char_ip_str, ip_str);
+			safestrncpy(char_ip_str, ip_str, sizeof(char_ip_str));
 			char_ip = str2ip(char_ip_str);
 		}
 	}

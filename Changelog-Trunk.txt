@@ -1,5 +1,16 @@
 Date	Added
 
+2010/12/24
+	* Fixes to char-server. [Ai4rei]
+	- Removed unnecessary #includes from TXT and synchronized them with SQL.
+	- Fixed TXT having start Zeny of 500 instead of 0 by default (follow up to r4409 and r8420).
+	- Fixed TXT using 1024 instead of NAME_LENGTH for 'unknown_char_name' (follow up to r2191).
+	- Fixed SQL potentionally attempting to disconnect a player for account_id == 0 in changesex packet.
+	- Fixed SQL looking for option 'db_path' in 'inter_athena.conf' instead of 'char_athena.conf'.
+	- Fixed char select not sending a reply packet, when selected character was not found.
+	- Made use of safestrncpy instead of strcpy, strncpy and memset for copying strings where appropriate.
+	- Removed unused function 'chardb_final' in TXT (since r4878).
+	- Removed unnecessary WFIFOHEAD in char deletion in SQL (since r11245, related r9307 and r10909).
 2010/12/23
 	* Fixed server processing the sell list (deleting items and giving zeny) for script-controlled shops (OnSellItem), causing the controller script to fail (bugreport:4656, since r6557). [Ai4rei]
 	- This also makes the server first check the sell list and only continue, if all items can be processed, thus no longer causing incomplete deals and the need for client disconnection in such case (since r6557).
