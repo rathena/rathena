@@ -5827,6 +5827,156 @@ BUILDIN_FUNC(makeitem)
 	return 0;
 }
 
+
+/// Counts / deletes the current item given by idx.
+/// Used by buildin_delitem_search
+/// Relies on all input data being already fully valid.
+static void buildin_delitem_delete(struct map_session_data* sd, int idx, int* amount, bool delete_items)
+{
+	int delamount;
+	struct item* inv = &sd->status.inventory[idx];
+
+	delamount = ( amount[0] < inv->amount ) ? amount[0] : inv->amount;
+
+	if( delete_items )
+	{
+		if( sd->inventory_data[idx]->type == IT_PETEGG && inv->card[0] == CARD0_PET )
+		{// delete associated pet
+			intif_delete_petdata(MakeDWord(inv->card[1], inv->card[2]));
+		}
+
+		//Logs items, got from (N)PC scripts [Lupus]
+		if( log_config.enable_logs&0x40 )
+		{
+			log_pick_pc(sd, "N", inv->nameid, -delamount, inv);
+		}
+		//Logs
+
+		pc_delitem(sd, idx, delamount, 0, 0);
+	}
+
+	amount[0]-= delamount;
+}
+
+
+/// Searches for item(s) and checks, if there is enough of them.
+/// Used by delitem and delitem2
+/// Relies on all input data being already fully valid.
+/// @param exact_match will also match item attributes and cards, not just name id
+/// @return true when all items could be deleted, false when there were not enough items to delete
+static bool buildin_delitem_search(struct map_session_data* sd, struct item* it, bool exact_match)
+{
+	bool delete_items = false;
+	int i, amount, important;
+	struct item* inv;
+
+	// prefer always non-equipped items
+	it->equip = 0;
+
+	// when searching for nameid only, prefer additionally
+	if( !exact_match )
+	{
+		// non-refined items
+		it->refine = 0;
+		// card-less items
+		memset(it->card, 0, sizeof(it->card));
+	}
+
+	for(;;)
+	{
+		amount = it->amount;
+		important = 0;
+
+		// 1st pass -- less important items / exact match
+		for( i = 0; amount && i < ARRAYLENGTH(sd->status.inventory); i++ )
+		{
+			inv = &sd->status.inventory[i];
+
+			if( !inv->nameid || !sd->inventory_data[i] || inv->nameid != it->nameid )
+			{// wrong/invalid item
+				continue;
+			}
+
+			if( inv->equip != it->equip || inv->refine != it->refine )
+			{// not matching attributes
+				important++;
+				continue;
+			}
+
+			if( exact_match )
+			{
+				if( inv->identify != it->identify || inv->attribute != it->attribute || memcmp(inv->card, it->card, sizeof(inv->card)) )
+				{// not matching exact attributes
+					continue;
+				}
+			}
+			else
+			{
+				if( sd->inventory_data[i]->type == IT_PETEGG )
+				{
+					if( inv->card[0] == CARD0_PET && CheckForCharServer() )
+					{// pet which cannot be deleted
+						continue;
+					}
+				}
+				else if( memcmp(inv->card, it->card, sizeof(inv->card)) )
+				{// named/carded item
+					important++;
+					continue;
+				}
+			}
+
+			// count / delete item
+			buildin_delitem_delete(sd, i, &amount, delete_items);
+		}
+
+		// 2nd pass -- any matching item
+		if( amount == 0 || important == 0 )
+		{// either everything was already consumed or no items were skipped
+			;
+		}
+		else for( i = 0; amount && i < ARRAYLENGTH(sd->status.inventory); i++ )
+		{
+			inv = &sd->status.inventory[i];
+
+			if( !inv->nameid || !sd->inventory_data[i] || inv->nameid != it->nameid )
+			{// wrong/invalid item
+				continue;
+			}
+
+			if( sd->inventory_data[i]->type == IT_PETEGG && inv->card[0] == CARD0_PET && CheckForCharServer() )
+			{// pet which cannot be deleted
+				continue;
+			}
+
+			if( exact_match )
+			{
+				if( inv->refine != it->refine || inv->identify != it->identify || inv->attribute != it->attribute || memcmp(inv->card, it->card, sizeof(inv->card)) )
+				{// not matching attributes
+					continue;
+				}
+			}
+
+			// count / delete item
+			buildin_delitem_delete(sd, i, &amount, delete_items);
+		}
+
+		if( amount )
+		{// not enough items
+			return false;
+		}
+		else if( delete_items )
+		{// we are done with the work
+			return true;
+		}
+		else
+		{// get rid of the items now
+			delete_items = true;
+		}
+	}
+}
+
+
 /// Deletes items from the target/attached player.
 /// Prioritizes ordinary items.
 ///
@@ -5834,8 +5984,8 @@ BUILDIN_FUNC(makeitem)
 /// delitem "<item name>",<amount>{,<account id>}
 BUILDIN_FUNC(delitem)
 {
-	int nameid=0,amount,i,important_item=0;
 	TBL_PC *sd;
+	struct item it;
 	struct script_data *data;
 
 	if( script_hasdata(st,4) )
@@ -5868,89 +6018,30 @@ BUILDIN_FUNC(delitem)
 			st->state = END;
 			return 1;
 		}
-		nameid = id->nameid;// "<item name>"
+		it.nameid = id->nameid;// "<item name>"
 	}
 	else
-		nameid = conv_num(st,data);// <item id>
-
-	amount=script_getnum(st,3);
-
-	if( amount <= 0 )
-		return 0;// nothing to do
-
-	//1st pass
-	//here we won't delete items with CARDS, named items but we count them
-	for(i=0;i<MAX_INVENTORY;i++){
-		//we don't delete wrong item or equipped item
-		if(sd->status.inventory[i].nameid<=0 || sd->inventory_data[i] == NULL ||
-		   sd->status.inventory[i].amount<=0 || sd->status.inventory[i].nameid!=nameid)
-			continue;
-		//1 egg uses 1 cell in the inventory. so it's ok to delete 1 pet / per cycle
-		if(sd->inventory_data[i]->type==IT_PETEGG &&
-			sd->status.inventory[i].card[0] == CARD0_PET)
+	{
+		it.nameid = conv_num(st,data);// <item id>
+		if( !itemdb_exists( it.nameid ) )
 		{
-			if (!intif_delete_petdata(MakeDWord(sd->status.inventory[i].card[1], sd->status.inventory[i].card[2])))
-				continue; //pet couldn't be sent for deletion.
-		} else
-		//is this item important? does it have cards? or Player's name? or Refined/Upgraded
-		if(itemdb_isspecial(sd->status.inventory[i].card[0]) ||
-			sd->status.inventory[i].card[0] ||
-		  	sd->status.inventory[i].refine) {
-			//this is important item, count it (except for pet eggs)
-			if(sd->status.inventory[i].card[0] != CARD0_PET)
-				important_item++;
-			continue;
-		}
-
-		if(sd->status.inventory[i].amount>=amount){
-
-			//Logs items, got from (N)PC scripts [Lupus]
-			if(log_config.enable_logs&0x40)
-				log_pick_pc(sd, "N", sd->status.inventory[i].nameid, -amount, &sd->status.inventory[i]);
-
-			pc_delitem(sd,i,amount,0,0);
-			return 0; //we deleted exact amount of items. now exit
-		} else {
-			amount-=sd->status.inventory[i].amount;
-
-			//Logs items, got from (N)PC scripts [Lupus]
-			if(log_config.enable_logs&0x40) {
-				log_pick_pc(sd, "N", sd->status.inventory[i].nameid, -sd->status.inventory[i].amount, &sd->status.inventory[i]);
-			}
-			//Logs
-
-			pc_delitem(sd,i,sd->status.inventory[i].amount,0,0);
+			ShowError("script:delitem: unknown item \"%d\".\n", it.nameid);
+			st->state = END;
+			return 1;
 		}
 	}
-	//2nd pass
-	//now if there WERE items with CARDs/REFINED/NAMED... and if we still have to delete some items. we'll delete them finally
-	if (important_item>0 && amount>0)
-		for(i=0;i<MAX_INVENTORY;i++){
-			//we don't delete wrong item
-			if(sd->status.inventory[i].nameid<=0 || sd->inventory_data[i] == NULL ||
-				sd->status.inventory[i].amount<=0 || sd->status.inventory[i].nameid!=nameid )
-				continue;
 
-			if(sd->status.inventory[i].amount>=amount){
+	it.amount=script_getnum(st,3);
 
-				//Logs items, got from (N)PC scripts [Lupus]
-				if(log_config.enable_logs&0x40)
-					log_pick_pc(sd, "N", sd->status.inventory[i].nameid, -amount, &sd->status.inventory[i]);
+	if( it.amount <= 0 )
+		return 0;// nothing to do
 
-				pc_delitem(sd,i,amount,0,0);
-				return 0; //we deleted exact amount of items. now exit
-			} else {
-				amount-=sd->status.inventory[i].amount;
+	if( buildin_delitem_search(sd, &it, false) )
+	{// success
+		return 0;
+	}
 
-				//Logs items, got from (N)PC scripts [Lupus]
-				if(log_config.enable_logs&0x40)
-					log_pick_pc(sd, "N", sd->status.inventory[i].nameid, -sd->status.inventory[i].amount, &sd->status.inventory[i]);
-
-				pc_delitem(sd,i,sd->status.inventory[i].amount,0,0);
-			}
-		}
-
-	ShowError("script:delitem: failed to delete %d items (AID=%d item_id=%d).\n", amount, sd->status.account_id, nameid);
+	ShowError("script:delitem: failed to delete %d items (AID=%d item_id=%d).\n", it.amount, sd->status.account_id, it.nameid);
 	st->state = END;
 	clif_scriptclose(sd, st->oid);
 	return 1;
@@ -5962,9 +6053,8 @@ BUILDIN_FUNC(delitem)
 /// delitem2 "<Item name>",<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<account ID>}
 BUILDIN_FUNC(delitem2)
 {
-	int nameid=0,amount,i=0;
-	int iden,ref,attr,c1,c2,c3,c4;
 	TBL_PC *sd;
+	struct item it;
 	struct script_data *data;
 
 	if( script_hasdata(st,11) )
@@ -5997,59 +6087,37 @@ BUILDIN_FUNC(delitem2)
 			st->state = END;
 			return 1;
 		}
-		nameid = id->nameid;// "<item name>"
+		it.nameid = id->nameid;// "<item name>"
 	}
 	else
-		nameid = conv_num(st,data);// <item id>
-
-	amount=script_getnum(st,3);
-	iden=script_getnum(st,4);
-	ref=script_getnum(st,5);
-	attr=script_getnum(st,6);
-	c1=(short)script_getnum(st,7);
-	c2=(short)script_getnum(st,8);
-	c3=(short)script_getnum(st,9);
-	c4=(short)script_getnum(st,10);
-
-	if( amount <= 0 )
-		return 0;// nothing to do
-
-	for(i=0;i<MAX_INVENTORY;i++){
-	//we don't delete wrong item or equipped item
-		if(sd->status.inventory[i].nameid<=0 || sd->inventory_data[i] == NULL ||
-			sd->status.inventory[i].amount<=0 || sd->status.inventory[i].nameid!=nameid ||
-			sd->status.inventory[i].identify!=iden || sd->status.inventory[i].refine!=ref ||
-			sd->status.inventory[i].attribute!=attr || sd->status.inventory[i].card[0]!=c1 ||
-			sd->status.inventory[i].card[1]!=c2 || sd->status.inventory[i].card[2]!=c3 ||
-			sd->status.inventory[i].card[3]!=c4)
-			continue;
-	//1 egg uses 1 cell in the inventory. so it's ok to delete 1 pet / per cycle
-		if(sd->inventory_data[i]->type==IT_PETEGG && sd->status.inventory[i].card[0] == CARD0_PET)
+	{
+		it.nameid = conv_num(st,data);// <item id>
+		if( !itemdb_exists( it.nameid ) )
 		{
-			if (!intif_delete_petdata( MakeDWord(sd->status.inventory[i].card[1], sd->status.inventory[i].card[2])))
-				continue; //Failed to send delete the pet.
-		}
-
-		if(sd->status.inventory[i].amount>=amount){
-
-			//Logs items, got from (N)PC scripts [Lupus]
-			if(log_config.enable_logs&0x40)
-				log_pick_pc(sd, "N", sd->status.inventory[i].nameid, -amount, &sd->status.inventory[i]);
-
-			pc_delitem(sd,i,amount,0,0);
-			return 0; //we deleted exact amount of items. now exit
-		} else {
-			amount-=sd->status.inventory[i].amount;
-
-			//Logs items, got from (N)PC scripts [Lupus]
-			if(log_config.enable_logs&0x40)
-				log_pick_pc(sd, "N", sd->status.inventory[i].nameid, -sd->status.inventory[i].amount, &sd->status.inventory[i]);
-
-			pc_delitem(sd,i,sd->status.inventory[i].amount,0,0);
+			ShowError("script:delitem: unknown item \"%d\".\n", it.nameid);
+			st->state = END;
+			return 1;
 		}
 	}
 
-	ShowError("script:delitem2: failed to delete %d items (AID=%d item_id=%d).\n", amount, sd->status.account_id, nameid);
+	it.amount=script_getnum(st,3);
+	it.identify=script_getnum(st,4);
+	it.refine=script_getnum(st,5);
+	it.attribute=script_getnum(st,6);
+	it.card[0]=(short)script_getnum(st,7);
+	it.card[1]=(short)script_getnum(st,8);
+	it.card[2]=(short)script_getnum(st,9);
+	it.card[3]=(short)script_getnum(st,10);
+
+	if( it.amount <= 0 )
+		return 0;// nothing to do
+
+	if( buildin_delitem_search(sd, &it, true) )
+	{// success
+		return 0;
+	}
+
+	ShowError("script:delitem2: failed to delete %d items (AID=%d item_id=%d).\n", it.amount, sd->status.account_id, it.nameid);
 	st->state = END;
 	clif_scriptclose(sd, st->oid);
 	return 1;

@@ -1,6 +1,10 @@
 Date	Added
 
 2010/12/25
+	* Updated script commands delitem and delitem2. [Ai4rei]
+	- Items are now deleted only if there is enough of them (as per r14395, related r13368).
+	- Not equipped items are now actually prioritized over equipped ones (related r200).
+	- Fixed item id not getting checked for validity.
 	* Fixed a compile error in txt-converter-char caused by 'save_log' being declared by both SQL and TXT (bugreport:4671, since r14619). [Ai4rei]
 	* Made SQL char-server options 'chars_per_account' and 'char_del_level' work on TXT as well (follow up to r1063 and r8420). [Ai4rei]
 2010/12/24
@@ -1070,7 +1074,7 @@ Date	Added
 2008/11/11
 	* Updated script_commands.txt [FlavioJS]
 	* Made scripts terminate with an error: (fixes bugreport:2429)
-	- when getitem/getitem2 tries to delete more items than the player has
+	- when delitem/delitem2 tries to delete more items than the player has
 	- when trying to set Zeny to a negative number.
 2008/11/09
 	* Added a check to make sure killed monster's level was greater than half of the mercenary owner's level before incrementing mercenary's killcount. (bugreport:2410) [Paradox924X]
