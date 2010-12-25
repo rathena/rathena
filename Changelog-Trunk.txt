@@ -1,6 +1,7 @@
 Date	Added
 
 2010/12/24
+	* Added support for new /remove and /recall packets for 2010-08-03aRagexeRE and newer. [Ai4rei]
 	* Synchronized TXT/SQL char-server code a bit. [Ai4rei]
 	* Fixes to char-server. [Ai4rei]
 	- Removed unnecessary #includes from TXT and synchronized them with SQL.

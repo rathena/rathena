@@ -4239,6 +4239,45 @@ int pc_randomwarp(struct map_session_data *sd, clr_type type)
 	return 0;
 }
 
+
+/// Warps one player to another.
+/// @param sd player to warp.
+/// @param pl_sd player to warp to.
+int pc_warpto(struct map_session_data* sd, struct map_session_data* pl_sd)
+{
+	if( map[sd->bl.m].flag.nowarp && battle_config.any_warp_GM_min_level > pc_isGM(sd) )
+	{
+		return -2;
+	}
+
+	if( map[pl_sd->bl.m].flag.nowarpto && battle_config.any_warp_GM_min_level > pc_isGM(sd) )
+	{
+		return -3;
+	}
+
+	return pc_setpos(sd, pl_sd->mapindex, pl_sd->bl.x, pl_sd->bl.y, CLR_TELEPORT);
+}
+
+
+/// Recalls one player to another.
+/// @param sd player to warp to.
+/// @param pl_sd player to warp.
+int pc_recall(struct map_session_data* sd, struct map_session_data* pl_sd)
+{
+	if( map[pl_sd->bl.m].flag.nowarp && battle_config.any_warp_GM_min_level > pc_isGM(sd) )
+	{
+		return -2;
+	}
+
+	if( map[sd->bl.m].flag.nowarpto && battle_config.any_warp_GM_min_level > pc_isGM(sd) )
+	{
+		return -3;
+	}
+
+	return pc_setpos(pl_sd, sd->mapindex, sd->bl.x, sd->bl.y, CLR_RESPAWN);
+}
+
+
 /*==========================================
  * Records a memo point at sd's current position
  * pos - entry to replace, (-1: shift oldest entry out)
