@@ -85,6 +85,9 @@ char unknown_char_name[NAME_LENGTH] = "Unknown"; // Name to use when the request
 #define TRIM_CHARS "\032\t\x0A\x0D " //The following characters are trimmed regardless because they cause confusion and problems on the servers. [Skotlex]
 char char_name_letters[1024] = ""; // list of letters/symbols allowed (or not) in a character name. by [Yor]
 
+int char_per_account = 0; //Maximum charas per account (default unlimited) [Sirius]
+int char_del_level = 0; //From which level u can delete character [Lupus]
+
 int log_char = 1;	// loggin char or not [devil]
 int log_inter = 1;	// loggin inter or not [devil]
 
@@ -1215,6 +1218,14 @@ int make_new_char(struct char_session_data* sd, char* name_, int str, int agi, i
 	|| (str < 1 || str > 9 || agi < 1 || agi > 9 || vit < 1 || vit > 9 || int_ < 1 || int_ > 9 || dex < 1 || dex > 9 || luk < 1 || luk > 9) // individual stat values
 	|| (str + int_ != 10 || agi + luk != 10 || vit + dex != 10) ) // pairs
 		return -2; // invalid input
+
+	// check the number of already existing chars in this account
+	if( char_per_account != 0 ) {
+		ARR_FIND( 0, MAX_CHARS, i, sd->found_char[i] == -1 );
+
+		if( i >= char_per_account )
+			return -2; // character account limit exceeded
+	}
 
 	// check char slot
 	ARR_FIND( 0, char_num, i, char_dat[i].status.account_id == sd->account_id && char_dat[i].status.slot == slot );
@@ -3607,6 +3618,17 @@ int parse_char(int fd)
 
 			// deletion process
 			cs = &char_dat[sd->found_char[i]].status;
+
+			//check for config char del condition [Lupus]
+			if( ( char_del_level > 0 && cs->base_level >= (unsigned int)char_del_level ) || ( char_del_level < 0 && cs->base_level <= (unsigned int)(-char_del_level) ) )
+			{
+				WFIFOHEAD(fd,3);
+				WFIFOW(fd,0) = 0x70;
+				WFIFOB(fd,2) = 1;  // This character cannot be deleted.
+				WFIFOSET(fd,3);
+				break;
+			}
+
 			char_delete(cs);
 			if (sd->found_char[i] != char_num - 1) {
 				int j, k;
@@ -4172,6 +4194,10 @@ int char_config_read(const char *cfgName)
 			char_name_option = atoi(w2);
 		} else if (strcmpi(w1, "char_name_letters") == 0) {
 			safestrncpy(char_name_letters, w2, sizeof(char_name_letters));
+		} else if (strcmpi(w1, "chars_per_account") == 0) { //maxchars per account [Sirius]
+			char_per_account = atoi(w2);
+		} else if (strcmpi(w1, "char_del_level") == 0) { //disable/enable char deletion by its level condition [Lupus]
+			char_del_level = atoi(w2);
 // online files options
 		} else if (strcmpi(w1, "online_txt_filename") == 0) {
 			safestrncpy(online_txt_filename, w2, sizeof(online_txt_filename));
