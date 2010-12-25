@@ -41,9 +41,7 @@ char hotkeys_txt[1024] = "save/hotkeys.txt";
 char char_log_filename[1024] = "log/char.log";
 
 // show loading/saving messages
-#ifdef TXT_SQL_CONVERT
-int save_log = 0; //Have the logs be off by default when converting
-#else
+#ifndef TXT_SQL_CONVERT
 int save_log = 1;
 #endif
 

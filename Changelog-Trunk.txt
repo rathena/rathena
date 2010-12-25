@@ -1,6 +1,7 @@
 Date	Added
 
 2010/12/25
+	* Fixed a compile error in txt-converter-char caused by 'save_log' being declared by both SQL and TXT (bugreport:4671, since r14619). [Ai4rei]
 	* Made SQL char-server options 'chars_per_account' and 'char_del_level' work on TXT as well (follow up to r1063 and r8420). [Ai4rei]
 2010/12/24
 	* Added support for new /remove and /recall packets for 2010-08-03aRagexeRE and newer. [Ai4rei]
