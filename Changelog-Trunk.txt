@@ -1,6 +1,7 @@
 Date	Added
 
 2010/12/24
+	* Synchronized TXT/SQL char-server code a bit. [Ai4rei]
 	* Fixes to char-server. [Ai4rei]
 	- Removed unnecessary #includes from TXT and synchronized them with SQL.
 	- Fixed TXT having start Zeny of 500 instead of 0 by default (follow up to r4409 and r8420).

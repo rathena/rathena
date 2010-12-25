@@ -488,7 +488,6 @@ int mapif_parse_PartyInfo(int fd, int party_id)
 		mapif_party_info(fd, &p->party);
 	else {
 		mapif_party_noinfo(fd, party_id);
-		char_clearparty(party_id);
 	}
 
 	return 0;
