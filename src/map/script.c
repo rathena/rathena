@@ -5385,48 +5385,80 @@ BUILDIN_FUNC(countitem2)
  *------------------------------------------*/
 BUILDIN_FUNC(checkweight)
 {
-	int nameid=0,amount,i;
-	unsigned long weight;
-	TBL_PC *sd;
-	struct script_data *data;
+	int nameid, amount, slots;
+	unsigned int weight;
+	struct item_data* id = NULL;
+	struct map_session_data* sd;
+	struct script_data* data;
 
-	sd = script_rid2sd(st);
-	if( sd == NULL )
+	if( ( sd = script_rid2sd(st) ) == NULL )
+	{
 		return 0;
+	}
 
-	data=script_getdata(st,2);
-	get_val(st,data);
-	if( data_isstring(data) ){
-		const char *name=conv_str(st,data);
-		struct item_data *item_data = itemdb_searchname(name);
-		if( item_data )
-			nameid=item_data->nameid;
-	}else
-		nameid=conv_num(st,data);
+	data = script_getdata(st,2);
+	get_val(st, data);  // convert into value in case of a variable
 
-	amount=script_getnum(st,3);
-	if ( amount<=0 || nameid<500 ) { //if get wrong item ID or amount<=0, don't count weight of non existing items
-		script_pushint(st,0);
-		ShowError("buildin_checkweight: Wrong item ID or amount.\n");
+	if( data_isstring(data) )
+	{// item name
+		id = itemdb_searchname(conv_str(st, data));
+	}
+	else
+	{// item id
+		id = itemdb_exists(conv_num(st, data));
+	}
+
+	if( id == NULL )
+	{
+		ShowError("buildin_checkweight: Invalid item '%s'.\n", script_getstr(st,2));  // returns string, regardless of what it was
+		return 1;
+	}
+
+	nameid = id->nameid;
+	amount = script_getnum(st,3);
+
+	if( amount < 1 )
+	{
+		ShowError("buildin_checkweight: Invalid amount '%d'.\n", amount);
 		return 1;
 	}
 
 	weight = itemdb_weight(nameid)*amount;
-	if( amount > MAX_AMOUNT || weight + sd->weight > sd->max_weight )
+
+	if( weight + sd->weight > sd->max_weight )
+	{// too heavy
 		script_pushint(st,0);
-	else if( itemdb_isstackable(nameid) )
-	{
-		if( (i = pc_search_inventory(sd,nameid)) >= 0 )
-			script_pushint(st,amount + sd->status.inventory[i].amount > MAX_AMOUNT ? 0 : 1);
-		else
-			script_pushint(st,pc_search_inventory(sd,0) >= 0 ? 1 : 0);
+		return 0;
 	}
-	else
+
+	switch( pc_checkadditem(sd, nameid, amount) )
 	{
-		for( i = 0; i < MAX_INVENTORY && amount; ++i )
-			if( sd->status.inventory[i].nameid == 0 )
-				amount--;
-		script_pushint(st,amount ? 0 : 1);
+		case ADDITEM_EXIST:
+			// item is already in inventory, but there is still space for the requested amount
+			break;
+		case ADDITEM_NEW:
+			slots = pc_inventoryblank(sd);
+
+			if( itemdb_isstackable(nameid) )
+			{// stackable
+				if( slots < 1 )
+				{
+					script_pushint(st,0);
+					return 0;
+				}
+			}
+			else
+			{// non-stackable
+				if( slots < amount )
+				{
+					script_pushint(st,0);
+					return 0;
+				}
+			}
+			break;
+		case ADDITEM_OVERAMOUNT:
+			script_pushint(st,0);
+			return 0;
 	}
 
 	return 0;

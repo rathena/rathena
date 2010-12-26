@@ -3203,6 +3203,9 @@ int pc_checkadditem(struct map_session_data *sd,int nameid,int amount)
 
 	nullpo_ret(sd);
 
+	if(amount > MAX_AMOUNT)
+		return ADDITEM_OVERAMOUNT;
+
 	if(!itemdb_isstackable(nameid))
 		return ADDITEM_NEW;
 
@@ -3214,8 +3217,6 @@ int pc_checkadditem(struct map_session_data *sd,int nameid,int amount)
 		}
 	}
 
-	if(amount > MAX_AMOUNT)
-		return ADDITEM_OVERAMOUNT;
 	return ADDITEM_NEW;
 }
 
