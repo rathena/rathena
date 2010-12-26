@@ -10655,7 +10655,7 @@ BUILDIN_FUNC(getitemslots)
 		2 type;
 		3 maxchance = Max drop chance of this item e.g. 1 = 0.01% , etc..
 				if = 0, then monsters don't drop it at all (rare or a quest item)
-				if = 10000, then this item is sold in NPC shops only
+				if = -1, then this item is sold in NPC shops only
 		4 sex;
 		5 equip;
 		6 weight;
@@ -10695,7 +10695,7 @@ BUILDIN_FUNC(getiteminfo)
 		2 type;
 		3 maxchance = Max drop chance of this item e.g. 1 = 0.01% , etc..
 				if = 0, then monsters don't drop it at all (rare or a quest item)
-				if = 10000, then this item is sold in NPC shops only
+				if = -1, then this item is sold in NPC shops only
 		4 sex;
 		5 equip;
 		6 weight;

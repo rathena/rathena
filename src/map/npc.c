@@ -1939,8 +1939,8 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 				id->name, nameid, value, (int)(value*0.75), id->value_sell, (int)(id->value_sell*1.24), filepath, strline(buffer,start-buffer));
 		}
 		//for logs filters, atcommands and iteminfo script command
-		if( id->maxchance <= 0 )
-			id->maxchance = 10000; //10000 (100% drop chance)would show that the item's sold in NPC Shop
+		if( id->maxchance == 0 )
+			id->maxchance = -1; // -1 would show that the item's sold in NPC Shop
 
 		items[i].nameid = nameid;
 		items[i].value = value;

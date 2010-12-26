@@ -7432,12 +7432,12 @@ ACMD_FUNC(iteminfo)
 		sprintf(atcmd_output, "NPC Buy:%dz, Sell:%dz | Weight: %.1f ", item_data->value_buy, item_data->value_sell, item_data->weight/10. );
 		clif_displaymessage(fd, atcmd_output);
 
-		if (item_data->maxchance == 10000)
-			strcpy(atcmd_output, " - Available in the shops only");
+		if (item_data->maxchance == -1)
+			strcpy(atcmd_output, " - Available in the shops only.");
 		else if (item_data->maxchance)
 			sprintf(atcmd_output, " - Maximal monsters drop chance: %02.02f%%", (float)item_data->maxchance / 100 );
 		else
-			strcpy(atcmd_output, " - Monsters don't drop this item");
+			strcpy(atcmd_output, " - Monsters don't drop this item.");
 		clif_displaymessage(fd, atcmd_output);
 
 	}

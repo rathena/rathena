@@ -1,6 +1,7 @@
 Date	Added
 
 2010/12/26
+	* Fixed items, that get dropped at 100% chance, being reported in @iteminfo as 'available in the shops only' (since/replaces r3482). [Ai4rei]
 	* Updated commands @delitem/#delitem. [Ai4rei]
 	- No longer deletes stackable items one by one (bugreport:1914).
 	- Fixed pets not getting deleted when a pet egg was deleted.

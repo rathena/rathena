@@ -52,7 +52,7 @@ int should_log_item(int filter, int nameid, int amount)
 		(filter&128 && (item_data->type == IT_PETEGG || item_data->type == IT_PETARMOR) ) ||
 		(filter&256 && item_data->value_buy >= log_config.price_items_log ) ||		//expensive items
 		(filter&512 && abs(amount) >= log_config.amount_items_log ) ||			//big amount of items
-		(filter&2048 && ((item_data->maxchance <= log_config.rare_items_log) || item_data->nameid == 714) ) //Rare items or Emperium
+		(filter&2048 && ((item_data->maxchance != -1 && item_data->maxchance <= log_config.rare_items_log) || item_data->nameid == 714) ) //Rare items or Emperium
 	) return item_data->nameid;
 
 	return 0;

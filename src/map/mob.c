@@ -3556,7 +3556,7 @@ static bool mob_parse_dbrow(char** str)
 		//calculate and store Max available drop chance of the MVP item
 		if (db->mvpitem[i].p) {
 			id = itemdb_search(db->mvpitem[i].nameid);
-			if (id->maxchance == 10000 || (id->maxchance < db->mvpitem[i].p/10 + 1) ) {
+			if (id->maxchance == -1 || (id->maxchance < db->mvpitem[i].p/10 + 1) ) {
 				//item has bigger drop chance or sold in shops
 				id->maxchance = db->mvpitem[i].p/10 + 1; //reduce MVP drop info to not spoil common drop rate
 			}
@@ -3618,7 +3618,7 @@ static bool mob_parse_dbrow(char** str)
 		if( db->dropitem[i].p && (class_ < 1324 || class_ > 1363) && (class_ < 1938 || class_ > 1946) )
 		{ //Skip treasure chests.
 			id = itemdb_search(db->dropitem[i].nameid);
-			if (id->maxchance == 10000 || (id->maxchance < db->dropitem[i].p) ) {
+			if (id->maxchance == -1 || (id->maxchance < db->dropitem[i].p) ) {
 				id->maxchance = db->dropitem[i].p; //item has bigger drop chance or sold in shops
 			}
 			for (k = 0; k< MAX_SEARCH; k++) {
