@@ -1,6 +1,8 @@
 Date	Added
 
 2010/12/26
+	* Fixed opening other player's vending terminating currently running NPC conversation. Vending is now unavailable when talking to an NPC (bugreport:2208). [Ai4rei]
+	* Fixed vending not accepting 0 Zeny as sell price. The client asks for confirmation when you attempt to sell items at 0 Zeny (bugreport:2595, since r918 and r11344).
 	* Fixed items, that get dropped at 100% chance, being reported in @iteminfo as 'available in the shops only' (since/replaces r3482). [Ai4rei]
 	* Updated commands @delitem/#delitem. [Ai4rei]
 	- No longer deletes stackable items one by one (bugreport:1914).

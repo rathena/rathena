@@ -10872,10 +10872,11 @@ void clif_parse_CloseVending(int fd, struct map_session_data* sd)
  *------------------------------------------*/
 void clif_parse_VendingListReq(int fd, struct map_session_data* sd)
 {
-	vending_vendinglistreq(sd,RFIFOL(fd,2));
-
 	if( sd->npc_id )
-		npc_event_dequeue(sd);
+	{// using an NPC
+		return;
+	}
+	vending_vendinglistreq(sd,RFIFOL(fd,2));
 }
 
 /*==========================================
