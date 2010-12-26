@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //=  erKURITA, Au{R}oN (Translated by Alan), $ephiroth
 //===== Current Version: ===================================== 
-//= 2.0
+//= 2.1
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -40,6 +40,7 @@
 //= 1.8 Replaced effect numerics with constants. [L0ne_W0lf]
 //= 1.9 Added Cool Corp. Event Staff, who oringialy resided in the DTS_warper script file. [L0ne_W0lf]
 //= 2.0 Added missing Lab Staff#amano08 NPC. (bugreport:4319) [Gepard]
+//= 2.1 Commented out Duplicate NPCs. (bugreport:4555)
 //=============================================================
 
 lighthalzen,198,285,5	script	Jiwon#zen5	862,{
@@ -278,8 +279,8 @@ lighthalzen,78,120,3	script	Maivi#zen1	862,{
 	close;
 }
 
+/*
 lighthalzen,226,210,3	script	Nannan	86,{
-
 	mes "[Nannan]";
 	mes "You know, I always thought";
 	mes "that all Alchemists were bookish,";
@@ -305,6 +306,7 @@ lighthalzen,226,210,3	script	Nannan	86,{
 	mes "to a street guy like me...";
 	close;
 }
+*/
 
 lighthalzen,230,182,4	script	Klaubis#zen3	866,{
 	mes "[Klaubis]";
@@ -3144,6 +3146,7 @@ lhz_in02,36,284,0	script	Cool Event Staff#Cesuna	874,{
 	close;
 }
 
+/*
 lhz_in02,19,274,2	script	Maintenance Guy#lhz	851,{
 	mes "[Kudiuu]";
 	mes "Holy...!";
@@ -3154,6 +3157,7 @@ lhz_in02,19,274,2	script	Maintenance Guy#lhz	851,{
 	mes "almost a health hazard!";
 	close;
 }
+*/
 
 // Lighthalzen Mushroom.
 // Don't really understand why it's there, but it's funny regardless.

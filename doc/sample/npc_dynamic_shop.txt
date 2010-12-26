@@ -7,21 +7,22 @@ end;
 
 OnSellItem:
 for(set @i, 0; @i < getarraysize(@sold_nameid); set @i, @i + 1){
-	if(countitem(@sold_nameid[@i]) < @sold_quantity[@i] && @sold_quantity[@i] <= 0){
+	if(countitem(@sold_nameid[@i]) < @sold_quantity[@i] || @sold_quantity[@i] <= 0){
 		mes "omgh4x!";
 		close;
 	}
 	if(@sold_nameid[@i] == 501){
+		delitem 501, @sold_quantity[@i];
 		set $@rpotsleft, $@rpotsleft + @sold_quantity[@i];
 		set Zeny, Zeny + @sold_quantity[@i]*20;
-		delitem 501, @sold_quantity[@i];
 	} else {
 		if(@sold_nameid[@i] == 502){
+			delitem 502, @sold_quantity[@i];
 			set $@opotsleft, $@opotsleft + @sold_quantity[@i];
 			set Zeny, Zeny + @sold_quantity[@i]*100;
-			delitem 502, @sold_quantity[@i];
 		} else {
 			mes "Sorry, I don't need your items.";
+			close;
 		}
 	}
 }
@@ -34,7 +35,7 @@ OnBuyItem:
 for(set @i, 0; @i < getarraysize(@bought_nameid); set @i, @i + 1){
 	if(@bought_quantity[@i] <= 0){
 		mes "omgh4x!";
-		end;
+		close;
 	}
 	if(@bought_nameid[@i] == 501){
 		if(@bought_quantity[@i] > $@rpotsleft){

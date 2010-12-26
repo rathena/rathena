@@ -96,6 +96,13 @@ bool battle_check_range(struct block_list *src,struct block_list *bl,int range);
 void battle_consume_ammo(struct map_session_data* sd, int skill, int lv);
 // ê›íË
 
+#define MIN_HAIR_STYLE battle_config.min_hair_style
+#define MAX_HAIR_STYLE battle_config.max_hair_style
+#define MIN_HAIR_COLOR battle_config.min_hair_color
+#define MAX_HAIR_COLOR battle_config.max_hair_color
+#define MIN_CLOTH_COLOR battle_config.min_cloth_color
+#define MAX_CLOTH_COLOR battle_config.max_cloth_color
+
 extern struct Battle_Config
 {
 	int warp_point_debug;
@@ -471,6 +478,8 @@ extern struct Battle_Config
 	int invincible_nodamage;
 	int mob_slave_keep_target;
 	int autospell_check_range;	//Enable range check for autospell bonus. [L0ne_W0lf]
+	int client_reshuffle_dice;  // Reshuffle /dice
+	int client_sort_storage;
 
 	// [BattleGround Settings]
 	int bg_update_interval;

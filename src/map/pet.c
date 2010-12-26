@@ -306,7 +306,7 @@ static int pet_return_egg(struct map_session_data *sd, struct pet_data *pd)
 		map_addflooritem(&tmp_item,1,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0);
 	}
 	pd->pet.incuvate = 1;
-	unit_free(&pd->bl,0);
+	unit_free(&pd->bl,CLR_OUTSIGHT);
 
 	status_calc_pc(sd,0);
 	sd->status.pet_id = 0;
@@ -509,7 +509,7 @@ int pet_catch_process2(struct map_session_data* sd, int target_id)
 	if (sd->catch_target_class == 0 && !(md->status.mode&MD_BOSS))
 		sd->catch_target_class = md->class_;
 	if(i < 0 || sd->catch_target_class != md->class_) {
-		clif_emotion(&md->bl, 7);	//mob will do /ag if wrong lure is used on them.
+		clif_emotion(&md->bl, E_AG);	//mob will do /ag if wrong lure is used on them.
 		clif_pet_roulette(sd,0);
 		sd->catch_target_class = -1;
 		return 1;
@@ -523,7 +523,7 @@ int pet_catch_process2(struct map_session_data* sd, int target_id)
 
 	if(rand()%10000 < pet_catch_rate)
 	{
-		unit_remove_map(&md->bl,0);
+		unit_remove_map(&md->bl,CLR_OUTSIGHT);
 		status_kill(&md->bl);
 		clif_pet_roulette(sd,1);
 		intif_create_pet(sd->status.account_id,sd->status.char_id,pet_db[i].class_,mob_db(pet_db[i].class_)->lv,
@@ -1100,7 +1100,7 @@ int pet_recovery_timer(int tid, unsigned int tick, int id, intptr data)
 		//Detoxify is chosen for now.
 		clif_skill_nodamage(&pd->bl,&sd->bl,TF_DETOXIFY,1,1);
 		status_change_end(&sd->bl,pd->recovery->type,-1);
-		clif_emotion(&pd->bl, 33);
+		clif_emotion(&pd->bl, E_OK);
 	}
 
 	pd->recovery->timer = INVALID_TIMER;

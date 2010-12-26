@@ -1068,8 +1068,8 @@ int guild_notice_changed(int guild_id,const char *mes1,const char *mes2)
 	if(g==NULL)
 		return 0;
 
-	memcpy(g->mes1,mes1,60);
-	memcpy(g->mes2,mes2,120);
+	memcpy(g->mes1,mes1,MAX_GUILDMES1);
+	memcpy(g->mes2,mes2,MAX_GUILDMES2);
 
 	for(i=0;i<g->max_member;i++){
 		if((sd=g->member[i].sd)!=NULL)

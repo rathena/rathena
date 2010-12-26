@@ -296,6 +296,8 @@ enum _sp {
 
 	SP_BASEJOB=119,	// 100+19 - celest
 	SP_BASECLASS=120,	//Hmm.. why 100+19? I just use the next one... [Skotlex]
+	SP_KILLERRID=121,
+	SP_KILLEDRID=122,
 
 	// Mercenaries
 	SP_MERCFLEE=165, SP_MERCKILLS=189, SP_MERCFAITH=190,
@@ -628,6 +630,7 @@ int cleanup_sub(struct block_list *bl, va_list ap);
 
 void map_helpscreen(int flag); // [Valaris]
 int map_delmap(char* mapname);
+void map_flags_init(void);
 
 bool map_iwall_set(int m, int x, int y, int size, int dir, bool shootable, const char* wall_name);
 void map_iwall_get(struct map_session_data *sd);

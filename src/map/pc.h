@@ -17,6 +17,8 @@
 #include "mob.h"
 
 #define MAX_PC_BONUS 10
+#define MAX_PC_SKILL_REQUIRE 5
+#define MAX_PC_FEELHATE 3
 
 struct weapon_data {
 	int atkmods[3];
@@ -53,6 +55,7 @@ struct weapon_data {
 
 struct s_autospell {
 	short id, lv, rate, card_id, flag;
+	bool lock;  // bAutoSpellOnSkill: blocks autospell from triggering again, while being executed
 };
 
 struct s_addeffect {
@@ -132,7 +135,6 @@ struct map_session_data {
 		short pmap; // Previous map on Map Change
 		struct guild *gmaster_flag;
 		unsigned int bg_id;
-		unsigned skillonskill : 1;
 		unsigned short user_font;
 		unsigned short autobonus; //flag to indicate if an autobonus is activated. [Inkfish]
 	} state;
@@ -290,6 +292,7 @@ struct map_session_data {
 	int crit_atk_rate;
 	int classchange; // [Valaris]
 	int speed_rate, speed_add_rate, aspd_add;
+	int itemhealrate2; // [Epoque] Increase heal rate of all healing items.
 	unsigned int setitem_hash, setitem_hash2; //Split in 2 because shift operations only work on int ranges. [Skotlex]
 	
 	short splash_range, splash_add_range;
@@ -377,6 +380,8 @@ struct map_session_data {
 
 	int duel_group; // duel vars [LuzZza]
 	int duel_invite;
+
+	int killerrid, killedrid;
 
 	char away_message[128]; // [LuzZza]
 
@@ -543,7 +548,7 @@ bool pc_can_give_items(int level);
 
 int pc_setrestartvalue(struct map_session_data *sd,int type);
 int pc_makesavestatus(struct map_session_data *);
-void pc_respawn(struct map_session_data* sd, uint8 clrtype);
+void pc_respawn(struct map_session_data* sd, clr_type clrtype);
 int pc_setnewpc(struct map_session_data*,int,int,int,unsigned int,int,int);
 bool pc_authok(struct map_session_data* sd, int, time_t, int gmlevel, struct mmo_charstatus* status);
 void pc_authfail(struct map_session_data *);
@@ -564,11 +569,12 @@ int pc_clean_skilltree(struct map_session_data *sd);
 #define pc_checkoverhp(sd) (sd->battle_status.hp == sd->battle_status.max_hp)
 #define pc_checkoversp(sd) (sd->battle_status.sp == sd->battle_status.max_sp)
 
-int pc_setpos(struct map_session_data* sd, unsigned short mapindex, int x, int y, uint8 clrtype);
+int pc_setpos(struct map_session_data* sd, unsigned short mapindex, int x, int y, clr_type clrtype);
 int pc_setsavepoint(struct map_session_data*,short,int,int);
-int pc_randomwarp(struct map_session_data *sd,int type);
+int pc_randomwarp(struct map_session_data *sd,clr_type type);
+int pc_warpto(struct map_session_data* sd, struct map_session_data* pl_sd);
+int pc_recall(struct map_session_data* sd, struct map_session_data* pl_sd);
 int pc_memo(struct map_session_data* sd, int pos);
-int pc_remove_map(struct map_session_data *sd,int clrtype);
 
 int pc_checkadditem(struct map_session_data*,int,int);
 int pc_inventoryblank(struct map_session_data*);
@@ -720,7 +726,7 @@ struct skill_tree_entry {
 	struct {
 		short id;
 		unsigned char lv;
-	} need[5];
+	} need[MAX_PC_SKILL_REQUIRE];
 }; // Celest
 extern struct skill_tree_entry skill_tree[CLASS_COUNT][MAX_SKILL_TREE];
 
@@ -732,7 +738,7 @@ struct sg_data {
 	char hate_var[NAME_LENGTH];
 	int (*day_func)(void);
 };
-extern const struct sg_data sg_info[3];
+extern const struct sg_data sg_info[MAX_PC_FEELHATE];
 
 void pc_setinvincibletimer(struct map_session_data* sd, int val);
 void pc_delinvincibletimer(struct map_session_data* sd);

@@ -3,7 +3,7 @@
 //===== By ================================================
 //= Developers
 //===== Version ===========================================
-//= 1.1.20090524
+//= 1.1.20101205
 //=========================================================
 //= 1.0 - Standardized doc file
 //= 1.1.20080612 - skill command and bonuses (bAutoSpell, bSkillAtk, 
@@ -13,6 +13,12 @@
 //= 1.1.20090421 - added the correct bonus documentation for bSPDrainValue [Playtester]
 //= 1.1.20090524 - removed outdated bMatk/bMatk1/bMatk2 doc [ultramage]
 //= 1.1.20090529 - added documentation for bHealPower, bHealPower2 [Inkfish]
+//= 1.1.20101130 - added documentation for bAutoSpellOnSkill [Ai4rei]
+//= 1.1.20101205 - added documentation for bAddItemHealRate. [L0ne_W0lf]
+//= 1.1.20101207 - added documentation for bUnbreakableGarment,
+//=   bUnbreakableWeapon, bUnbreakableArmor, bUnbreakableHelm,
+//=   bUnbreakableShield, bUnbreakableShoes, bBreakWeaponRate and
+//=   bBreakArmorRate. [Ai4rei]
 //===== Description =======================================
 //= List of script instructions used in item bonuses,
 //= mainly bonus/bonus2/bonus3/bonus4/bonus5 arguments
@@ -76,9 +82,7 @@ bonus bIgnoreDefRace,n;			Disregard DEF against enemies of race n
 								5=Fish, 6=Demon, 7=Demi-Human, 8=Angel, 9=Dragon, 
 								10=Boss monster, 11=Other than (normal monster) boss monster
 bonus bIgnoreDefEle,n;			Disregard DEF against enemies of element n
-							n: 	0=Formless, 1=Undead, 2=Brute, 3=Plant, 4=Insect,
-								5=Fish, 6=Demon, 7=Demi-Human, 8=Angel, 9=Dragon, 
-								10=Boss monster, 11=Other than (normal monster) boss monster
+							n: 0=Neutral, 1=Water, 2=Earth, 3=Fire, 4=Wind, 5=Poison, 6=Holy, 7=Dark, 8=Spirit, 9=Undead
 bonus bIgnoreMDefRace;			Disregard MDEF against enemies of race n
 							n: 	0=Formless, 1=Undead, 2=Brute, 3=Plant, 4=Insect,
 								5=Fish, 6=Demon, 7=Demi-Human, 8=Angel, 9=Dragon, 
@@ -113,8 +117,8 @@ bonus bNoGemStone,n;			Skills requiring Gemstones do no require them
 								(Hocus Pocus will still require 1 Yellow Gemstone | n is meaningless)
 bonus bIntravision,n;			Always see Hiding and Cloaking players/mobs (n is meaningless)
 
-bonus bHealPower,n;			Increase heal amount of all heal skills by n% (supports skill names)
-bonus bHealPower2,n;			Increase heal amount if you are healed by any skills by n% (supports skill names)
+bonus bHealPower,n;			Increase heal amount of all heal skills by n%
+bonus bHealPower2,n;			Increase heal amount if you are healed by any skills by n%
 bonus2 bAddEff,e,x;			Adds a x/10000 chance to cause effect e to the target when attacking (e.g. x=100 makes 1% chance, x=10000 makes 100% chance, etc)
 							e: Eff_Blind, Eff_Sleep, Eff_Poison, Eff_Freeze, Eff_Silence, Eff_Stan, Eff_Curse, Eff_Confusion, Eff_Stone, Eff_Bleeding
 bonus2 bResEff,e,x;			Adds a x/10000 tolerance to effect e (e.g. x=100 makes 1% tolerance, x=10000 makes 100% tolerance, etc)
@@ -159,7 +163,7 @@ bonus2 bIgnoreMdefRate,n,x;		Disregard x% of the target's MDEF if the target bel
 bonus2 bHPDrainRate,n,x;		n/10 % probability to drain x% HP when attacking
 bonus2 bSPDrainRate,n,x;		n/10 % probability to drain x% SP when attacking
 bonus2 bSPVanishRate,n,x;		Add the (n/10)% chance of decreasing enemy's SP (player) amount by x% when attacking
-bonus2 bAddMonsterDropItem,n,x;		When killing any monsters with physical attack, the probability which drops item n +x% (the item which the monster drops unrelated ones)
+bonus2 bAddMonsterDropItem,n,x;		Adds a x/100% chance for item n to be dropped, when killing any monster.
 									if 'x' is negative value, then it's a part of formula
 										chance = -x*(killed_mob_level/10)+1
 bonus2 bGetZenyNum,n,x;			When killing a monster, there is a x% chance of gaining 1~n zeny
@@ -167,12 +171,12 @@ bonus2 bGetZenyNum,n,x;			When killing a monster, there is a x% chance of gainin
 								If n < 0, the max zeny to gain is -n*monster level.
 bonus2 bAddGetZenyNum,n,x;		Same as bGetZenyNum, but the rates and zeny to gain stack.
 
-bonus3 bAddMonsterDropItem,n,x,y;	When killing monsters from race x with physical attack, the probability which drops item n +y% (the item which the monster drops unrelated ones)
+bonus3 bAddMonsterDropItem,n,x,y;	Adds a y/100% chance for item n to be dropped, when killing any monster of race x.
 									0=Formless, 1=Undead, 2=Brute, 3=Plant, 4=Insect,
 									5=Fish, 6=Demon, 7=Demi-Human, 8=Angel, 9=Dragon, 
 									10=Boss monster, 11=Other than (normal monster) boss monster
-									if 'x' is negative value, then it's a part of formula
-										chance = -x*(killed_mob_level/10)+1
+									if 'y' is negative value, then it's a part of formula
+										chance = -y*(killed_mob_level/10)+1
 bonus3 bAutoSpell,n,x,y;		Auto Spell casting on attack of spell n at level x with y/10% chance. (supports skill names)
 								Skill is casted on target unless it is a self or support (inf = 4/16) skill.
 
@@ -186,15 +190,15 @@ bonus3 bAutoSpell,n,x,y;		Auto Spell casting on attack of spell n at level x wit
 bonus bCritAtkRate,n;			Increase critical damage by +n%
 bonus bNoRegen,n;				Stops regeneration for n
 							n: 1=HP, 2=SP
-bonus bUnstripableWeapon,n;		Weapon cannot be taken off via Strip skills
-bonus bUnstripableArmor,n;		Armor cannot be taken off via Strip skills
-bonus bUnstripableHelm,n;		Helm cannot be taken off via Strip skills
-bonus bUnstripableShield,n;		Shield cannot be taken off via Strip skills
+bonus bUnstripableWeapon,n;		Weapon cannot be taken off via Strip skills (n is meaningless)
+bonus bUnstripableArmor,n;		Armor cannot be taken off via Strip skills (n is meaningless)
+bonus bUnstripableHelm,n;		Helm cannot be taken off via Strip skills (n is meaningless)
+bonus bUnstripableShield,n;		Shield cannot be taken off via Strip skills (n is meaningless)
 bonus bSPGainValue,n;			When killing a monster by physical attack, you gain n SP
 bonus bHPGainValue,n;			When killing a monster by physical attack, you gain n HP
 bonus bIgnoreDefMob,n;			Ignore monster's DEF when attacking.
 							n: 0=All normal monster except Bosses, 1=All monsters
-bonus2 bCriticalAddRace,n,r;		Critical + n vs. enemies of race r
+bonus2 bCriticalAddRace,r,n;		Critical + n vs. enemies of race r
 								r:
 									0=Formless, 1=Undead, 2=Brute, 3=Plant, 4=Insect,
 									5=Fish, 6=Demon, 7=Demi-Human, 8=Angel, 9=Dragon, 
@@ -288,7 +292,7 @@ bonus2 bSPGainRace,n,x;			When killing a monster of race n by physical attack ga
 bonus2 bSubRace2,n,x;			Damage x% reduction from enemies of race n
 							(Check db/mob_race2_db.txt)
 
-bonus2 bAddMonsterDropItemGroup,n,x;	x% chance to get an item of group type n when you kill a monster 
+bonus2 bAddMonsterDropItemGroup,n,x;	Adds a x/100% chance to get an item of group type n when you kill a monster 
 									(Check db/item_group_db.txt)
 									if 'x' is negative value, then it's a part of formula
 										chance = -x*(killed_mob_level/10)+1
@@ -308,7 +312,7 @@ bonus3 bAddEffWhenHit,n,x,y;	x/10000 chance to cause n state to the enemy when b
 									ATF_SHORT: Trigger on melee attacks
 									ATF_LONG: Trigger in ranged attacks (default: trigger on all attacks)
 
-bonus3 bAddMonsterDropItemGroup,n,x,y;	y% chance to get an item of group type n when you kill a
+bonus3 bAddMonsterDropItemGroup,n,x,y;	Adds a y/100% chance to get an item of group type n when you kill a
 										monster of race x (Check db/item_group_db.txt)
 									0=Formless, 1=Undead, 2=Brute, 3=Plant, 4=Insect,
 									5=Fish, 6=Demon, 7=Demi-Human, 8=Angel, 9=Dragon, 
@@ -376,3 +380,18 @@ bonus3 bSubEle,n,x,t;			x% Damage reduction against element n.
 					   i: 1=cast on enemy, not on self
 					   2=use random skill lv in [1..y]
 					   3=1+2 (random lv on enemy)
+bonus4 bAutoSpellOnSkill,s,x,l,n	Adds a n/10% chance to autospell skill x at level l when using skill s. (supports skill names)
+									Supportive spells are casted on self, others on target of skill s.
+bonus5 bAutoSpellOnSkill,s,x,l,n,i	Adds a n/10% chance to autospell skill x at level l when using skill s. (supports skill names)
+									i: Flags (bitfield)
+										&1: Forces the skill to be casted on self, rather than on the target of skill s.
+										&2: Random skill level between 1 and l is chosen.
+bonus bAddItemHealRate,x;		Increases HP recovered by x% for healing items.
+bonus bUnbreakableGarment,n;	Garment cannot be damaged/broken by any means (n is meaningless)
+bonus bUnbreakableWeapon,n;	Weapon cannot be damaged/broken by any means (n is meaningless)
+bonus bUnbreakableArmor,n;	Armor cannot be damaged/broken by any means (n is meaningless)
+bonus bUnbreakableHelm,n;	Helm cannot be damaged/broken by any means (n is meaningless)
+bonus bUnbreakableShield,n;	Shield cannot be damaged/broken by any means (n is meaningless)
+bonus bUnbreakableShoes,n;	Shoes cannot be damaged/broken by any means (n is meaningless)
+bonus bBreakWeaponRate,n;	Adds a n/100% chance to break enemy's weapon while attacking (stacks with other break chances).
+bonus bBreakArmorRate,n;	Adds a n/100% chance to break enemy's armor while attacking (stacks with other break chances).

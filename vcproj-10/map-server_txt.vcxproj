@@ -1,0 +1,228 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{D356871D-58E1-450B-967A-E1E9646175AF}</ProjectGuid>
+    <RootNamespace>map-server_txt</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">..\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectName)\$(Configuration)\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</LinkIncremental>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectName)\$(Configuration)\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>..\3rdparty\zlib\include;..\3rdparty\pcre\include;..\3rdparty\msinttypes\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_WIN32;__WIN32;_DEBUG;PCRE_SUPPORT;TXT_ONLY;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;FD_SETSIZE=4096;DB_MANUAL_CAST_TO_UNION;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessToFile>false</PreprocessToFile>
+      <PreprocessSuppressLineNumbers>false</PreprocessSuppressLineNumbers>
+      <MinimalRebuild>true</MinimalRebuild>
+      <ExceptionHandling>
+      </ExceptionHandling>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <AdditionalOptions>
+      </AdditionalOptions>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <CompileAs>CompileAsC</CompileAs>
+      <DisableSpecificWarnings>4018;4100;4800;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+    </ClCompile>
+    <Link>
+      <AdditionalOptions>/FIXED:NO %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>libcmtd.lib;oldnames.lib;ws2_32.lib;zdll.lib;pcre.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)map-server.exe</OutputFile>
+      <AdditionalLibraryDirectories>..\3rdparty\zlib\lib;..\3rdparty\pcre\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ProgramDatabaseFile>$(OutDir)map-server.pdb</ProgramDatabaseFile>
+      <SubSystem>Console</SubSystem>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention>
+      </DataExecutionPrevention>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <OmitFramePointers>true</OmitFramePointers>
+      <EnableFiberSafeOptimizations>true</EnableFiberSafeOptimizations>
+      <WholeProgramOptimization>true</WholeProgramOptimization>
+      <AdditionalIncludeDirectories>..\3rdparty\zlib\include;..\3rdparty\pcre\include;..\3rdparty\msinttypes\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_WIN32;__WIN32;NDEBUG;PCRE_SUPPORT;TXT_ONLY;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;FD_SETSIZE=4096;DB_MANUAL_CAST_TO_UNION;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <FunctionLevelLinking>false</FunctionLevelLinking>
+      <AdditionalOptions>
+      </AdditionalOptions>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <CompileAs>CompileAsC</CompileAs>
+      <DisableSpecificWarnings>4018;4100;4800;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>libcmt.lib;oldnames.lib;ws2_32.lib;zdll.lib;pcre.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)map-server.exe</OutputFile>
+      <AdditionalLibraryDirectories>..\3rdparty\zlib\lib;..\3rdparty\pcre\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ProgramDatabaseFile>$(OutDir)map-server.pdb</ProgramDatabaseFile>
+      <SubSystem>Console</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention>
+      </DataExecutionPrevention>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\map\atcommand.c" />
+    <ClCompile Include="..\src\map\battle.c" />
+    <ClCompile Include="..\src\map\battleground.c" />
+    <ClCompile Include="..\src\map\chat.c" />
+    <ClCompile Include="..\src\map\chrif.c" />
+    <ClCompile Include="..\src\map\clif.c" />
+    <ClCompile Include="..\src\map\date.c" />
+    <ClCompile Include="..\src\map\guild.c" />
+    <ClCompile Include="..\src\map\homunculus.c" />
+    <ClCompile Include="..\src\map\instance.c" />
+    <ClCompile Include="..\src\map\intif.c" />
+    <ClCompile Include="..\src\map\itemdb.c" />
+    <ClCompile Include="..\src\map\log.c" />
+    <ClCompile Include="..\src\map\mail.c" />
+    <ClCompile Include="..\src\map\map.c" />
+    <ClCompile Include="..\src\map\mapreg_txt.c" />
+    <ClCompile Include="..\src\map\mercenary.c" />
+    <ClCompile Include="..\src\map\mob.c" />
+    <ClCompile Include="..\src\map\npc.c" />
+    <ClCompile Include="..\src\map\npc_chat.c" />
+    <ClCompile Include="..\src\map\party.c" />
+    <ClCompile Include="..\src\map\path.c" />
+    <ClCompile Include="..\src\map\pc.c" />
+    <ClCompile Include="..\src\map\pet.c" />
+    <ClCompile Include="..\src\map\quest.c" />
+    <ClCompile Include="..\src\map\script.c" />
+    <ClCompile Include="..\src\map\skill.c" />
+    <ClCompile Include="..\src\map\status.c" />
+    <ClCompile Include="..\src\map\storage.c" />
+    <ClCompile Include="..\src\map\trade.c" />
+    <ClCompile Include="..\src\map\unit.c" />
+    <ClCompile Include="..\src\map\vending.c" />
+    <ClCompile Include="..\src\common\core.c" />
+    <ClCompile Include="..\src\common\db.c" />
+    <ClCompile Include="..\src\common\ers.c" />
+    <ClCompile Include="..\src\common\grfio.c" />
+    <ClCompile Include="..\src\common\lock.c" />
+    <ClCompile Include="..\src\common\malloc.c" />
+    <ClCompile Include="..\src\common\md5calc.c" />
+    <ClCompile Include="..\src\common\mapindex.c" />
+    <ClCompile Include="..\src\common\nullpo.c" />
+    <ClCompile Include="..\src\common\plugins.c" />
+    <ClCompile Include="..\src\common\showmsg.c" />
+    <ClCompile Include="..\src\common\socket.c" />
+    <ClCompile Include="..\src\common\strlib.c" />
+    <ClCompile Include="..\src\common\timer.c" />
+    <ClCompile Include="..\src\common\utils.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\map\atcommand.h" />
+    <ClInclude Include="..\src\map\battle.h" />
+    <ClInclude Include="..\src\map\battleground.h" />
+    <ClInclude Include="..\src\map\chat.h" />
+    <ClInclude Include="..\src\map\chrif.h" />
+    <ClInclude Include="..\src\map\clif.h" />
+    <ClInclude Include="..\src\map\date.h" />
+    <ClInclude Include="..\src\map\guild.h" />
+    <ClInclude Include="..\src\map\homunculus.h" />
+    <ClInclude Include="..\src\map\instance.h" />
+    <ClInclude Include="..\src\map\intif.h" />
+    <ClInclude Include="..\src\map\itemdb.h" />
+    <ClInclude Include="..\src\map\log.h" />
+    <ClInclude Include="..\src\map\mail.h" />
+    <ClInclude Include="..\src\map\map.h" />
+    <ClInclude Include="..\src\map\mapreg.h" />
+    <ClInclude Include="..\src\map\mercenary.h" />
+    <ClInclude Include="..\src\map\mob.h" />
+    <ClInclude Include="..\src\map\npc.h" />
+    <ClInclude Include="..\src\map\party.h" />
+    <ClInclude Include="..\src\map\path.h" />
+    <ClInclude Include="..\src\map\pc.h" />
+    <ClInclude Include="..\src\map\pet.h" />
+    <ClInclude Include="..\src\map\quest.h" />
+    <ClInclude Include="..\src\map\script.h" />
+    <ClInclude Include="..\src\map\skill.h" />
+    <ClInclude Include="..\src\map\status.h" />
+    <ClInclude Include="..\src\map\storage.h" />
+    <ClInclude Include="..\src\map\trade.h" />
+    <ClInclude Include="..\src\map\unit.h" />
+    <ClInclude Include="..\src\map\vending.h" />
+    <ClInclude Include="..\src\common\cbasetypes.h" />
+    <ClInclude Include="..\src\common\core.h" />
+    <ClInclude Include="..\src\common\db.h" />
+    <ClInclude Include="..\src\common\ers.h" />
+    <ClInclude Include="..\src\common\grfio.h" />
+    <ClInclude Include="..\src\common\lock.h" />
+    <ClInclude Include="..\src\common\malloc.h" />
+    <ClInclude Include="..\src\common\md5calc.h" />
+    <ClInclude Include="..\src\common\mapindex.h" />
+    <ClInclude Include="..\src\common\mmo.h" />
+    <ClInclude Include="..\src\common\nullpo.h" />
+    <ClInclude Include="..\src\common\plugin.h" />
+    <ClInclude Include="..\src\common\plugins.h" />
+    <ClInclude Include="..\src\common\showmsg.h" />
+    <ClInclude Include="..\src\common\socket.h" />
+    <ClInclude Include="..\src\common\strlib.h" />
+    <ClInclude Include="..\src\common\timer.h" />
+    <ClInclude Include="..\src\common\utils.h" />
+    <ClInclude Include="..\src\common\version.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

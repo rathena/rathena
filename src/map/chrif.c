@@ -74,7 +74,7 @@ static const int packet_len_table[0x3d] = { // U - used, F - free
 //2b13: Incoming, chrif_accountdeletion -> 'Delete acc XX, if the player is on, kick ....'
 //2b14: Incoming, chrif_accountban -> 'not sure: kick the player with message XY'
 //2b15: FREE
-//2b16: Outgoing, chrif_ragsrvinfo -> 'sends motd / rates ....'
+//2b16: Outgoing, chrif_ragsrvinfo -> 'sends base / job / drop rates ....'
 //2b17: Outgoing, chrif_char_offline -> 'tell the charserver that the char is now offline'
 //2b18: Outgoing, chrif_char_reset_offline -> 'set all players OFF!'
 //2b19: Outgoing, chrif_char_online -> 'tell the charserver that the char .. is online'
@@ -1229,40 +1229,18 @@ int chrif_load_scdata(int fd)
 
 /*==========================================
  * Send rates and motd to char server [Wizputer]
- * S 2b16 <base rate>.w <job rate>.w <drop rate>.w <motd len>.w <motd>.256B
+ * S 2b16 <base rate>.L <job rate>.L <drop rate>.L
  *------------------------------------------*/
- int chrif_ragsrvinfo(int base_rate, int job_rate, int drop_rate)
+int chrif_ragsrvinfo(int base_rate, int job_rate, int drop_rate)
 {
-	char buf[256];
-	FILE *fp;
-	int i;
-
 	chrif_check(-1);
 
-	WFIFOHEAD(char_fd, sizeof(buf) + 10);
+	WFIFOHEAD(char_fd,14);
 	WFIFOW(char_fd,0) = 0x2b16;
-	WFIFOW(char_fd,2) = base_rate;
-	WFIFOW(char_fd,4) = job_rate;
-	WFIFOW(char_fd,6) = drop_rate;
-	WFIFOW(char_fd,8) = sizeof(buf) + 10;
-
-	if ((fp = fopen(motd_txt, "r")) != NULL) {
-		if (fgets(buf, sizeof(buf), fp) != NULL)
-		{
-			for(i = 0; buf[i]; i++) {
-				if (buf[i] == '\r' || buf[i] == '\n') {
-					buf[i] = 0;
-					break;
-				}
-			}
-			memcpy(WFIFOP(char_fd,10), buf, sizeof(buf));
-		}
-		fclose(fp);
-	} else {
-		memset(buf, 0, sizeof(buf)); //No data found, send empty packets?
-		memcpy(WFIFOP(char_fd,10), buf, sizeof(buf));
-	}
-	WFIFOSET(char_fd,WFIFOW(char_fd,8));
+	WFIFOL(char_fd,2) = base_rate;
+	WFIFOL(char_fd,6) = job_rate;
+	WFIFOL(char_fd,10) = drop_rate;
+	WFIFOSET(char_fd,14);
 	return 0;
 }
 

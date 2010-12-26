@@ -10,6 +10,7 @@ LOGIN_CONVERTER_OBJ = \
 	../common/obj_all/showmsg.o \
 	../common/obj_all/strlib.o \
 	../common/obj_all/timer.o \
+	../common/obj_all/utils.o \
 	../common/obj_sql/sql.o
 LOGIN_CONVERTER_H = \
 	../login/account.h \
@@ -23,6 +24,7 @@ LOGIN_CONVERTER_H = \
 	../common/showmsg.h \
 	../common/strlib.h \
 	../common/timer.h \
+	../common/utils.h \
 	../common/sql.h
 
 CHAR_CONVERTER_OBJ = \

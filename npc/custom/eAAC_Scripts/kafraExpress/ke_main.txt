@@ -330,7 +330,7 @@ function	script	F_keGuildStorage	{
 		callfunc "F_keIntro", e_an, "Sorry, but you don't have enough Zeny.";
 		return;
 	}
-	if (guildopenstorage(0) == 1) {
+	if (guildopenstorage() == 1) {
 		callfunc "F_keIntro", -1, "Sorry, the guild storage is currently in use by someone else. Try again later.";
 		return;
 	}

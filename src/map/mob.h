@@ -55,6 +55,13 @@ enum MobSkillState {
 	MSS_ANYTARGET,
 };
 
+enum MobDamageLogFlag
+{
+	MDLF_NORMAL = 0,
+	MDLF_HOMUN,
+	MDLF_PET,
+};
+
 struct mob_skill {
 	enum MobSkillState state;
 	short skill_id,skill_lv;

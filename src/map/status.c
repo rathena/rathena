@@ -8,6 +8,7 @@
 #include "../common/malloc.h"
 #include "../common/utils.h"
 #include "../common/ers.h"
+#include "../common/strlib.h"
 
 #include "map.h"
 #include "path.h"
@@ -831,16 +832,16 @@ int status_damage(struct block_list *src,struct block_list *target,int hp, int s
 	status_change_clear(target,0);
 
 	if(flag&4) //Delete from memory. (also invokes map removal code)
-		unit_free(target,1);
+		unit_free(target,CLR_DEAD);
 	else
 	if(flag&2) //remove from map
-		unit_remove_map(target,1);
+		unit_remove_map(target,CLR_DEAD);
 	else
 	{ //Some death states that would normally be handled by unit_remove_map
 		unit_stop_attack(target);
 		unit_stop_walking(target,1);
 		unit_skillcastcancel(target,0);
-		clif_clearunit_area(target,1);
+		clif_clearunit_area(target,CLR_DEAD);
 		skill_unit_move(target,gettick(),4);
 		skill_cleartimerskill(target);
 	}
@@ -1083,7 +1084,7 @@ int status_check_skilluse(struct block_list *src, struct block_list *target, int
 
 		if (sc->data[SC_WINKCHARM] && target && !flag)
 		{	//Prevents skill usage
-			clif_emotion(src, 3);
+			clif_emotion(src, E_LV);
 			return 0;
 		}
 
@@ -1546,8 +1547,13 @@ int status_calc_pet_(struct pet_data *pd, bool first)
 
 	if (first) {
 		memcpy(&pd->status, &pd->db->status, sizeof(struct status_data));
-		pd->status.mode|= MD_CANMOVE; //so they can chase their master!
+		pd->status.mode = MD_CANMOVE; // pets discard all modes, except walking
 		pd->status.speed = pd->petDB->speed;
+
+		if(battle_config.pet_attack_support || battle_config.pet_damage_support)
+		{// attack support requires the pet to be able to attack
+			pd->status.mode|= MD_CANATTACK;
+		}
 	}
 
 	if (battle_config.pet_lv_rate && pd->msd)
@@ -1840,6 +1846,7 @@ int status_calc_pc_(struct map_session_data* sd, bool first)
 		+ sizeof(sd->aspd_add)
 		+ sizeof(sd->setitem_hash)
 		+ sizeof(sd->setitem_hash2)
+		+ sizeof(sd->itemhealrate2)
 		// shorts
 		+ sizeof(sd->splash_range)
 		+ sizeof(sd->splash_add_range)
@@ -1859,8 +1866,8 @@ int status_calc_pc_(struct map_session_data* sd, bool first)
 
 	// Autobonus
 	pc_delautobonus(sd,sd->autobonus,ARRAYLENGTH(sd->autobonus),true);
-	pc_delautobonus(sd,sd->autobonus2,ARRAYLENGTH(sd->autobonus),true);
-	pc_delautobonus(sd,sd->autobonus3,ARRAYLENGTH(sd->autobonus),true);
+	pc_delautobonus(sd,sd->autobonus2,ARRAYLENGTH(sd->autobonus2),true);
+	pc_delautobonus(sd,sd->autobonus3,ARRAYLENGTH(sd->autobonus3),true);
 
 	// Parse equipment.
 	for(i=0;i<EQI_MAX-1;i++) {
@@ -3090,6 +3097,9 @@ void status_calc_bl_(struct block_list* bl, enum scb_flag flag, bool first)
 		case BL_MER: status_calc_mercenary_(BL_CAST(BL_MER,bl), first);  break;
 		}
 	}
+
+	if( bl->type == BL_PET )
+		return; // pets are not affected by statuses
 
 	if( first && bl->type == BL_MOB )
 		return; // assume there will be no statuses active
@@ -4915,51 +4925,51 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			return 0; // Stats only for Mercenaries
 	break;
 	case SC_STRFOOD:
-		if (sc->data[SC_FOOD_STR_CASH] && sc->data[SC_FOOD_STR_CASH]->val1 > sc->data[type]->val1)
+		if (sc->data[SC_FOOD_STR_CASH] && sc->data[SC_FOOD_STR_CASH]->val1 > val1)
 			return 0;
 	break;
 	case SC_AGIFOOD:
-		if (sc->data[SC_FOOD_AGI_CASH] && sc->data[SC_FOOD_AGI_CASH]->val1 > sc->data[type]->val1)
+		if (sc->data[SC_FOOD_AGI_CASH] && sc->data[SC_FOOD_AGI_CASH]->val1 > val1)
 			return 0;
 	break;
 	case SC_VITFOOD:
-		if (sc->data[SC_FOOD_VIT_CASH] && sc->data[SC_FOOD_VIT_CASH]->val1 > sc->data[type]->val1)
+		if (sc->data[SC_FOOD_VIT_CASH] && sc->data[SC_FOOD_VIT_CASH]->val1 > val1)
 			return 0;
 	break;
 	case SC_INTFOOD:
-		if (sc->data[SC_FOOD_INT_CASH] && sc->data[SC_FOOD_INT_CASH]->val1 > sc->data[type]->val1)
+		if (sc->data[SC_FOOD_INT_CASH] && sc->data[SC_FOOD_INT_CASH]->val1 > val1)
 			return 0;
 	break;
 	case SC_DEXFOOD:
-		if (sc->data[SC_FOOD_DEX_CASH] && sc->data[SC_FOOD_DEX_CASH]->val1 > sc->data[type]->val1)
+		if (sc->data[SC_FOOD_DEX_CASH] && sc->data[SC_FOOD_DEX_CASH]->val1 > val1)
 			return 0;
 	break;
 	case SC_LUKFOOD:
-		if (sc->data[SC_FOOD_LUK_CASH] && sc->data[SC_FOOD_LUK_CASH]->val1 > sc->data[type]->val1)
+		if (sc->data[SC_FOOD_LUK_CASH] && sc->data[SC_FOOD_LUK_CASH]->val1 > val1)
 			return 0;
 	break;
 	case SC_FOOD_STR_CASH:
-		if (sc->data[SC_STRFOOD] && sc->data[SC_STRFOOD]->val1 > sc->data[type]->val1)
+		if (sc->data[SC_STRFOOD] && sc->data[SC_STRFOOD]->val1 > val1)
 			return 0;
 	break;
 	case SC_FOOD_AGI_CASH:
-		if (sc->data[SC_AGIFOOD] && sc->data[SC_AGIFOOD]->val1 > sc->data[type]->val1)
+		if (sc->data[SC_AGIFOOD] && sc->data[SC_AGIFOOD]->val1 > val1)
 			return 0;
 	break;
 	case SC_FOOD_VIT_CASH:
-		if (sc->data[SC_VITFOOD] && sc->data[SC_VITFOOD]->val1 > sc->data[type]->val1)
+		if (sc->data[SC_VITFOOD] && sc->data[SC_VITFOOD]->val1 > val1)
 			return 0;
 	break;
 	case SC_FOOD_INT_CASH:
-		if (sc->data[SC_INTFOOD] && sc->data[SC_INTFOOD]->val1 > sc->data[type]->val1)
+		if (sc->data[SC_INTFOOD] && sc->data[SC_INTFOOD]->val1 > val1)
 			return 0;
 	break;
 	case SC_FOOD_DEX_CASH:
-		if (sc->data[SC_DEXFOOD] && sc->data[SC_DEXFOOD]->val1 > sc->data[type]->val1)
+		if (sc->data[SC_DEXFOOD] && sc->data[SC_DEXFOOD]->val1 > val1)
 			return 0;
 	break;
 	case SC_FOOD_LUK_CASH:
-		if (sc->data[SC_LUKFOOD] && sc->data[SC_LUKFOOD]->val1 > sc->data[type]->val1)
+		if (sc->data[SC_LUKFOOD] && sc->data[SC_LUKFOOD]->val1 > val1)
 			return 0;
 	break;
 	}
@@ -5084,52 +5094,40 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 		status_change_end(bl,SC_INCREASEAGI,-1);
 		break;
 	case SC_STRFOOD:
-		if (sc->data[SC_FOOD_STR_CASH] && sc->data[SC_FOOD_STR_CASH]->val1 <= sc->data[type]->val1)
-			status_change_end(bl,SC_FOOD_STR_CASH,-1);
+		status_change_end(bl,SC_FOOD_STR_CASH,-1);
 		break;
 	case SC_AGIFOOD:
-		if (sc->data[SC_FOOD_AGI_CASH] && sc->data[SC_FOOD_AGI_CASH]->val1 <= sc->data[type]->val1)
-			status_change_end(bl,SC_FOOD_AGI_CASH,-1);
+		status_change_end(bl,SC_FOOD_AGI_CASH,-1);
 		break;
 	case SC_VITFOOD:
-		if (sc->data[SC_FOOD_VIT_CASH] && sc->data[SC_FOOD_VIT_CASH]->val1 <= sc->data[type]->val1)
-			status_change_end(bl,SC_FOOD_VIT_CASH,-1);
+		status_change_end(bl,SC_FOOD_VIT_CASH,-1);
 		break;
 	case SC_INTFOOD:
-		if (sc->data[SC_FOOD_INT_CASH] && sc->data[SC_FOOD_INT_CASH]->val1 <= sc->data[type]->val1)
-			status_change_end(bl,SC_FOOD_INT_CASH,-1);
+		status_change_end(bl,SC_FOOD_INT_CASH,-1);
 		break;
 	case SC_DEXFOOD:
-		if (sc->data[SC_FOOD_DEX_CASH] && sc->data[SC_FOOD_DEX_CASH]->val1 <= sc->data[type]->val1)
-			status_change_end(bl,SC_FOOD_DEX_CASH,-1);
+		status_change_end(bl,SC_FOOD_DEX_CASH,-1);
 		break;
 	case SC_LUKFOOD:
-		if (sc->data[SC_FOOD_LUK_CASH] && sc->data[SC_FOOD_LUK_CASH]->val1 <= sc->data[type]->val1)
-			status_change_end(bl,SC_FOOD_LUK_CASH,-1);
+		status_change_end(bl,SC_FOOD_LUK_CASH,-1);
 		break;
 	case SC_FOOD_STR_CASH:
-		if (sc->data[SC_STRFOOD] && sc->data[SC_STRFOOD]->val1 <= sc->data[type]->val1)
-			status_change_end(bl,SC_STRFOOD,-1);
+		status_change_end(bl,SC_STRFOOD,-1);
 		break;
 	case SC_FOOD_AGI_CASH:
-		if (sc->data[SC_AGIFOOD] && sc->data[SC_AGIFOOD]->val1 <= sc->data[type]->val1)
-			status_change_end(bl,SC_AGIFOOD,-1);
+		status_change_end(bl,SC_AGIFOOD,-1);
 		break;
 	case SC_FOOD_VIT_CASH:
-		if (sc->data[SC_VITFOOD] && sc->data[SC_VITFOOD]->val1 <= sc->data[type]->val1)
-			status_change_end(bl,SC_VITFOOD,-1);
+		status_change_end(bl,SC_VITFOOD,-1);
 		break;
 	case SC_FOOD_INT_CASH:
-		if (sc->data[SC_INTFOOD] && sc->data[SC_INTFOOD]->val1 <= sc->data[type]->val1)
-			status_change_end(bl,SC_INTFOOD,-1);
+		status_change_end(bl,SC_INTFOOD,-1);
 		break;
 	case SC_FOOD_DEX_CASH:
-		if (sc->data[SC_DEXFOOD] && sc->data[SC_DEXFOOD]->val1 <= sc->data[type]->val1)
-			status_change_end(bl,SC_DEXFOOD,-1);
+		status_change_end(bl,SC_DEXFOOD,-1);
 		break;
 	case SC_FOOD_LUK_CASH:
-		if (sc->data[SC_LUKFOOD] && sc->data[SC_LUKFOOD]->val1 <= sc->data[type]->val1)
-			status_change_end(bl,SC_LUKFOOD,-1);
+		status_change_end(bl,SC_LUKFOOD,-1);
 		break;
 	}
 
@@ -5258,7 +5256,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 		case SC_SIGNUMCRUCIS:
 			val2 = 10 + 4*val1; //Def reduction
 			tick = -1;
-			clif_emotion(bl,4);
+			clif_emotion(bl,E_SWT);
 			break;
 		case SC_MAXIMIZEPOWER:
 			val2 = tick>0?tick:60000;
@@ -5475,7 +5473,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 		
 		break;
 		case SC_CONFUSION:
-			clif_emotion(bl,1);
+			clif_emotion(bl,E_WHAT);
 			break;
 		case SC_BLEEDING:
 			val4 = tick/10000;
@@ -5945,7 +5943,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 					int pos =  (bl->x&0xFFFF)|(bl->y<<16), //Current Coordinates
 					map =  sd->mapindex; //Current Map
 					//1. Place in Jail (val2 -> Jail Map, val3 -> x, val4 -> y
-					pc_setpos(sd,(unsigned short)val2,val3,val4, 3);
+					pc_setpos(sd,(unsigned short)val2,val3,val4, CLR_TELEPORT);
 					//2. Set restore point (val3 -> return map, val4 return coords
 					val3 = map;
 					val4 = pos;
@@ -6607,6 +6605,15 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 				if(sce->val2)
 				{// erase associated land skill
 					group = skill_id2group(sce->val2);
+
+					if( group == NULL )
+					{
+						ShowDebug("status_change_end: SC_DANCING is missing skill unit group (val1=%d, val2=%d, val3=%d, val4=%d, timer=%d, tid=%d, char_id=%d, map=%s, x=%d, y=%d). Please report this! (#3504)\n",
+							sce->val1, sce->val2, sce->val3, sce->val4, sce->timer, tid,
+							sd ? sd->status.char_id : 0,
+							mapindex_id2name(map_id2index(bl->m)), bl->x, bl->y);
+					}
+
 					sce->val2 = 0;
 					skill_delunitgroup(group);
 				}
@@ -6728,7 +6735,7 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 				break;
 		  	//natural expiration.
 			if(sd && sd->mapindex == sce->val2)
-				pc_setpos(sd,(unsigned short)sce->val3,sce->val4&0xFFFF, sce->val4>>16, 3);
+				pc_setpos(sd,(unsigned short)sce->val3,sce->val4&0xFFFF, sce->val4>>16, CLR_TELEPORT);
 			break; //guess hes not in jail :P
 		case SC_CHANGE:
 			if (tid == -1)
@@ -7668,146 +7675,124 @@ static int status_natural_heal_timer(int tid, unsigned int tick, int id, intptr 
 	return 0;
 }
 
+/*==========================================
+ * DB reading.
+ * job_db1.txt    - weight, hp, sp, aspd
+ * job_db2.txt    - job level stat bonuses
+ * size_fix.txt   - size adjustment table for weapons
+ * refine_db.txt  - refining data table
+ *------------------------------------------*/
+static bool status_readdb_job1(char* fields[], int columns, int current)
+{// Job-specific values (weight, HP, SP, ASPD)
+	int idx, class_;
+	unsigned int i;
+
+	class_ = atoi(fields[0]);
+
+	if(!pcdb_checkid(class_))
+	{
+		ShowWarning("status_readdb_job1: Invalid job class %d specified.\n", class_);
+		return false;
+	}
+	idx = pc_class2idx(class_);
+
+	max_weight_base[idx] = atoi(fields[1]);
+	hp_coefficient[idx]  = atoi(fields[2]);
+	hp_coefficient2[idx] = atoi(fields[3]);
+	sp_coefficient[idx]  = atoi(fields[4]);
+
+	for(i = 0; i < MAX_WEAPON_TYPE; i++)
+	{
+		aspd_base[idx][i] = atoi(fields[i+5]);
+	}
+	return true;
+}
+
+static bool status_readdb_job2(char* fields[], int columns, int current)
+{
+	int idx, class_, i;
+
+	class_ = atoi(fields[0]);
+
+	if(!pcdb_checkid(class_))
+	{
+		ShowWarning("status_readdb_job2: Invalid job class %d specified.\n", class_);
+		return false;
+	}
+	idx = pc_class2idx(class_);
+
+	for(i = 1; i < columns; i++)
+	{
+		job_bonus[idx][i-1] = atoi(fields[i]);
+	}
+	return true;
+}
+
+static bool status_readdb_sizefix(char* fields[], int columns, int current)
+{
+	unsigned int i;
+
+	for(i = 0; i < MAX_WEAPON_TYPE; i++)
+	{
+		atkmods[current][i] = atoi(fields[i]);
+	}
+	return true;
+}
+
+static bool status_readdb_refine(char* fields[], int columns, int current)
+{
+	int i;
+
+	refinebonus[current][0] = atoi(fields[0]);  // stats per safe-upgrade
+	refinebonus[current][1] = atoi(fields[1]);  // stats after safe-limit
+	refinebonus[current][2] = atoi(fields[2]);  // safe limit
+
+	for(i = 0; i < MAX_REFINE; i++)
+	{
+		percentrefinery[current][i] = atoi(fields[3+i]);
+	}
+	return true;
+}
+
 int status_readdb(void)
 {
-	int i,j,class_;
-	FILE *fp;
-	char line[1024], path[1024],*p;
+	int i, j;
 
-	sprintf(path, "%s/job_db1.txt", db_path);
-	fp=fopen(path,"r"); // Job-specific values (weight, HP, SP, ASPD)
-	if(fp==NULL){
-		ShowError("can't read %s\n", path);
-		return 1;
-	}
-	i = 0;
-	while(fgets(line, sizeof(line), fp))
-	{
-		//NOTE: entry MAX_WEAPON_TYPE is not counted
-		char* split[5 + MAX_WEAPON_TYPE];
-		i++;
-		if(line[0]=='/' && line[1]=='/')
-			continue;
-		for(j=0,p=line; j < 5 + MAX_WEAPON_TYPE && p; j++){
-			split[j]=p;
-			p=strchr(p,',');
-			if(p) *p++=0;
-		}
-		if(j < 5 + MAX_WEAPON_TYPE)
-		{	//Weapon #.MAX_WEAPON_TYPE is constantly not load. Fix to that: replace < with <= [blackhole89]
-			ShowDebug("%s: Not enough columns at line %d\n", path, i);
-			continue;
-		}
-		class_ = atoi(split[0]);
-		if(!pcdb_checkid(class_))
-			continue;
-		class_ = pc_class2idx(class_);
-		max_weight_base[class_]=atoi(split[1]);
-		hp_coefficient[class_]=atoi(split[2]);
-		hp_coefficient2[class_]=atoi(split[3]);
-		sp_coefficient[class_]=atoi(split[4]);
-		for(j=0;j<MAX_WEAPON_TYPE;j++)
-			aspd_base[class_][j]=atoi(split[j+5]);
-	}
-	fclose(fp);
-	ShowStatus("Done reading '"CL_WHITE"%s"CL_RESET"'.\n",path);
+	// initialize databases to default
+	//
 
+	// job_db1.txt
+	memset(max_weight_base, 0, sizeof(max_weight_base));
+	memset(hp_coefficient, 0, sizeof(hp_coefficient));
+	memset(hp_coefficient2, 0, sizeof(hp_coefficient2));
+	memset(sp_coefficient, 0, sizeof(sp_coefficient));
+	memset(aspd_base, 0, sizeof(aspd_base));
+
+	// job_db2.txt
 	memset(job_bonus,0,sizeof(job_bonus)); // Job-specific stats bonus
-	sprintf(path, "%s/job_db2.txt", db_path);
-	fp=fopen(path,"r");
-	if(fp==NULL){
-		ShowError("can't read %s\n", path);
-		return 1;
-	}
-	while(fgets(line, sizeof(line), fp))
-	{
-		char *split[MAX_LEVEL+1]; //Job Level is limited to MAX_LEVEL, so the bonuses should likewise be limited to it. [Skotlex]
-		if(line[0]=='/' && line[1]=='/')
-			continue;
-		for(j=0,p=line;j<MAX_LEVEL+1 && p;j++){
-			split[j]=p;
-			p=strchr(p,',');
-			if(p) *p++=0;
-		}
-		class_ = atoi(split[0]);
-		if(!pcdb_checkid(class_))
-		    continue;
-		class_ = pc_class2idx(class_);
-		for(i=1;i<j && split[i];i++)
-			job_bonus[class_][i-1]=atoi(split[i]);
-	}
-	fclose(fp);
-	ShowStatus("Done reading '"CL_WHITE"%s"CL_RESET"'.\n",path);
 
-	// サイズ補正テ?ブル
-	for(i=0;i<3;i++)
+	// size_fix.txt
+	for(i=0;i<ARRAYLENGTH(atkmods);i++)
 		for(j=0;j<MAX_WEAPON_TYPE;j++)
 			atkmods[i][j]=100;
-	sprintf(path, "%s/size_fix.txt", db_path);
-	fp=fopen(path,"r");
-	if(fp==NULL){
-		ShowError("can't read %s\n", path);
-		return 1;
-	}
-	i=0;
-	while(fgets(line, sizeof(line), fp))
-	{
-		char *split[MAX_WEAPON_TYPE];
-		if(line[0]=='/' && line[1]=='/')
-			continue;
-		if(atoi(line)<=0)
-			continue;
-		memset(split,0,sizeof(split));
-		for(j=0,p=line;j<MAX_WEAPON_TYPE && p;j++){
-			split[j]=p;
-			p=strchr(p,',');
-			if(p) *p++=0;
-			atkmods[i][j]=atoi(split[j]);
-		}
-		i++;
-	}
-	fclose(fp);
-	ShowStatus("Done reading '"CL_WHITE"%s"CL_RESET"'.\n",path);
 
-	// 精?デ?タテ?ブル
-	for(i=0;i<5;i++){
+	// refine_db.txt
+	for(i=0;i<ARRAYLENGTH(percentrefinery);i++){
 		for(j=0;j<MAX_REFINE; j++)
-			percentrefinery[i][j]=100;
+			percentrefinery[i][j]=100;  // success chance
 		percentrefinery[i][j]=0; //Slot MAX+1 always has 0% success chance [Skotlex]
-		refinebonus[i][0]=0;
-		refinebonus[i][1]=0;
-		refinebonus[i][2]=10;
+		refinebonus[i][0]=0;  // stats per safe-upgrade
+		refinebonus[i][1]=0;  // stats after safe-limit
+		refinebonus[i][2]=10;  // safe limit
 	}
 
-	sprintf(path, "%s/refine_db.txt", db_path);
-	fp=fopen(path,"r");
-	if(fp==NULL){
-		ShowError("can't read %s\n", path);
-		return 1;
-	}
-	i=0;
-	while(fgets(line, sizeof(line), fp))
-	{
-		char *split[MAX_REFINE+4];
-		if(line[0]=='/' && line[1]=='/')
-			continue;
-		if(atoi(line)<=0)
-			continue;
-		memset(split,0,sizeof(split));
-		for(j=0,p=line;j<MAX_REFINE+4 && p;j++){
-			split[j]=p;
-			p=strchr(p,',');
-			if(p) *p++=0;
-		}
-		refinebonus[i][0]=atoi(split[0]);	// 精?ボ?ナス
-		refinebonus[i][1]=atoi(split[1]);	// 過?精?ボ?ナス
-		refinebonus[i][2]=atoi(split[2]);	// 安全精?限界
-		for(j=0;j<MAX_REFINE && split[j+3];j++)
-			percentrefinery[i][j]=atoi(split[j+3]);
-		i++;
-	}
-	fclose(fp); //Lupus. close this file!!!
-	ShowStatus("Done reading '"CL_WHITE"%s"CL_RESET"'.\n",path);
+	// read databases
+	//
+
+	sv_readdb(db_path, "job_db1.txt",   ',', 5+MAX_WEAPON_TYPE, 5+MAX_WEAPON_TYPE, -1,                            &status_readdb_job1);
+	sv_readdb(db_path, "job_db2.txt",   ',', 1,                 1+MAX_LEVEL,       -1,                            &status_readdb_job2);
+	sv_readdb(db_path, "size_fix.txt",  ',', MAX_WEAPON_TYPE,   MAX_WEAPON_TYPE,    ARRAYLENGTH(atkmods),         &status_readdb_sizefix);
+	sv_readdb(db_path, "refine_db.txt", ',', 3+MAX_REFINE+1,    3+MAX_REFINE+1,     ARRAYLENGTH(percentrefinery), &status_readdb_refine);
 
 	return 0;
 }

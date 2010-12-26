@@ -11,6 +11,7 @@ extern int potion_hp, potion_per_hp, potion_sp, potion_per_sp;
 extern int potion_target;
 
 extern struct Script_Config {
+	unsigned warn_func_mismatch_argtypes : 1;
 	unsigned warn_func_mismatch_paramnum : 1;
 	int check_cmdcount;
 	int check_gotocount;
@@ -121,6 +122,9 @@ struct script_state {
 		int tick,timer,charid;
 	} sleep;
 	int instance_id;
+	//For backing up purposes
+	struct script_state *bk_st;
+	int bk_npcid;
 };
 
 struct script_reg {
@@ -162,6 +166,9 @@ void script_free_state(struct script_state* st);
 struct DBMap* script_get_label_db(void);
 struct DBMap* script_get_userfunc_db(void);
 void script_run_autobonus(const char *autobonus,int id, int pos);
+
+void script_cleararray_pc(struct map_session_data* sd, const char* varname, void* value);
+void script_setarray_pc(struct map_session_data* sd, const char* varname, uint8 idx, void* value, int* refcache);
 
 int script_config_read(char *cfgName);
 int do_init_script(void);

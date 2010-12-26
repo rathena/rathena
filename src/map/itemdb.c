@@ -27,8 +27,6 @@ static struct item_group itemgroup_db[MAX_ITEMGROUP];
 
 struct item_data dummy_item; //This is the default dummy item used for non-existant items. [Skotlex]
 
-int item_delays = 0;
-
 /*==========================================
  * ñºëOÇ≈åüçıóp
  *------------------------------------------*/
@@ -180,6 +178,27 @@ struct item_data* itemdb_exists(int nameid)
 	if( item == &dummy_item )
 		return NULL;// dummy data, doesn't exist
 	return item;
+}
+
+/// Returns human readable name for given item type.
+/// @param type Type id to retrieve name for ( IT_* ).
+const char* itemdb_typename(int type)
+{
+	switch(type)
+	{
+		case IT_HEALING:        return "Potion/Food";
+		case IT_USABLE:         return "Usable";
+		case IT_ETC:            return "Etc.";
+		case IT_WEAPON:         return "Weapon";
+		case IT_ARMOR:          return "Armor";
+		case IT_CARD:           return "Card";
+		case IT_PETEGG:         return "Pet Egg";
+		case IT_PETARMOR:       return "Pet Accessory";
+		case IT_AMMO:           return "Arrow/Ammunition";
+		case IT_DELAYCONSUME:   return "Delay-Consume Usable";
+		case IT_CASH:           return "Cash Usable";
+	}
+	return "Unknown Type";
 }
 
 /*==========================================
@@ -667,7 +686,7 @@ static int itemdb_read_itemtrade(void)
 static int itemdb_read_itemdelay(void)
 {
 	FILE *fp;
-	int nameid, j;
+	int nameid, j, item_delays = 0;
 	char line[1024], *str[10], *p;
 	struct item_data *id;
 
@@ -679,12 +698,12 @@ static int itemdb_read_itemdelay(void)
 
 	while(fgets(line, sizeof(line), fp))
 	{
-		if (item_delays == MAX_ITEMDELAYS) {
-			ShowError("itemdb_read_itemdelay: Too many entries specified in %s/item_delay.txt!\n", db_path);
-			break;
-		}
 		if (line[0] == '/' && line[1] == '/')
 			continue;
+		if (item_delays == MAX_ITEMDELAYS) {
+			ShowError("itemdb_read_itemdelay: Too many entries specified in %s/item_delay.txt! Increase MAX_ITEMDELAYS in itemdb.h!\n", db_path);
+			break;
+		}
 		memset(str, 0, sizeof(str));
 		for (j = 0, p = line; j < 2 && p; j++) {
 			str[j] = p;
@@ -750,6 +769,13 @@ static bool itemdb_parse_dbrow(char** str, const char* source, int line, int scr
 	safestrncpy(id->jname, str[2], sizeof(id->jname));
 
 	id->type = atoi(str[3]);
+
+	if( id->type < 0 || id->type == IT_UNKNOWN || id->type == IT_UNKNOWN2 || ( id->type > IT_DELAYCONSUME && id->type < IT_CASH ) || id->type >= IT_MAX )
+	{// catch invalid item types
+		ShowWarning("itemdb_parse_dbrow: Invalid item type %d for item %d. IT_ETC will be used.\n", id->type, nameid);
+		id->type = IT_ETC;
+	}
+
 	if (id->type == IT_DELAYCONSUME)
 	{	//Items that are consumed only after target confirmation
 		id->type = IT_USABLE;
@@ -809,8 +835,6 @@ static bool itemdb_parse_dbrow(char** str, const char* source, int line, int scr
 	id->look = atoi(str[18]);
 
 	id->flag.available = 1;
-	id->flag.value_notdc = 0;
-	id->flag.value_notoc = 0;
 	id->view_id = 0;
 	id->sex = itemdb_gendercheck(id); //Apply gender filtering.
 
@@ -1075,7 +1099,10 @@ void itemdb_reload(void)
 	// readjust itemdb pointer cache for each player
 	iter = mapit_geteachpc();
 	for( sd = (struct map_session_data*)mapit_first(iter); mapit_exists(iter); sd = (struct map_session_data*)mapit_next(iter) )
+	{
+		memset(sd->item_delay, 0, sizeof(sd->item_delay));  // reset item delays
 		pc_setinventorydata(sd);
+	}
 	mapit_free(iter);
 }
 

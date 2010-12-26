@@ -275,6 +275,14 @@
 				RelativePath="..\src\common\timer.h"
 				>
 			</File>
+			<File
+				RelativePath="..\src\common\utils.c"
+				>
+			</File>
+			<File
+				RelativePath="..\src\common\utils.h"
+				>
+			</File>
 		</Filter>
 		<File
 			RelativePath="..\src\login\account.h"

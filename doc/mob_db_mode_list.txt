@@ -104,6 +104,7 @@ Aegis/eA (description)
 19: 0x3095 (aggro, change-target melee/chase, cast sensor idle)
 20: 0x3295 (aggro, change-target melee/chase, cast sensor idle/chase)
 21: 0x3695 (aggro, change-target melee/chase, cast sensor idle/chase, chase-change target)
+25: 0x0001 (passive, can't attack) [Pet]
 26: 0xB695 (aggro, change-target melee/chase, cast sensor idle/chase, chase-change target, random target)
 27: 0x8084 (aggro, immobile, random target)
 

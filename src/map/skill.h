@@ -272,7 +272,8 @@ struct skill_unit_group *skill_unitsetting(struct block_list* src, short skillid
 struct skill_unit *skill_initunit (struct skill_unit_group *group, int idx, int x, int y, int val1, int val2);
 int skill_delunit(struct skill_unit *unit);
 struct skill_unit_group *skill_initunitgroup(struct block_list* src, int count, short skillid, short skilllv, int unit_id, int limit, int interval);
-int skill_delunitgroup(struct skill_unit_group *group);
+int skill_delunitgroup_(struct skill_unit_group *group, const char* file, int line, const char* func);
+#define skill_delunitgroup(group) skill_delunitgroup_(group,__FILE__,__LINE__,__func__)
 int skill_clear_unitgroup(struct block_list *src);
 int skill_clear_group(struct block_list *bl, int flag);
 

@@ -75,7 +75,7 @@ int main(int argc, char *argv[])
 	strcpy(username, "");
 	while (strlen(username) < 4 || strlen(username) > 23) {
 		printf("Enter an username (4-23 characters): ");
-		scanf("%s", &username);
+		scanf("%s", username);
 		username[23] = 0;
 		remove_control_chars(username);
 	}
@@ -83,7 +83,7 @@ int main(int argc, char *argv[])
 	strcpy(password, "");
 	while (strlen(password) < 4 || strlen(password) > 23) {
 		printf("Enter a password (4-23 characters): ");
-		scanf("%s", &password);
+		scanf("%s", password);
 		password[23] = 0;
 		remove_control_chars(password);
 	}
@@ -91,7 +91,7 @@ int main(int argc, char *argv[])
 	strcpy(sex, "");
 	while (strcmp(sex, "F") != 0 && strcmp(sex, "M") != 0) {
 		printf("Enter a gender (M for male, F for female): ");
-		scanf("%s", &sex);
+		scanf("%s", sex);
 	}
 
 	FPaccout = fopen(account_txt, "r+");

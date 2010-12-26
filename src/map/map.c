@@ -1645,7 +1645,7 @@ int map_quit(struct map_session_data *sd)
 	if( sd->pd ) pet_lootitem_drop(sd->pd, sd);
 	if( sd->state.storage_flag == 1 ) sd->state.storage_flag = 0; // No need to Double Save Storage on Quit.
 
-	unit_remove_map_pc(sd,3);
+	unit_remove_map_pc(sd,CLR_TELEPORT);
 	
 	if( map[sd->bl.m].instance_id )
 	{ // Avoid map conflicts and warnings on next login
@@ -1665,7 +1665,7 @@ int map_quit(struct map_session_data *sd)
 		}
 	}	
 
-	party_booking_delete(sd, true); // Party Booking [Spiria]
+	party_booking_delete(sd); // Party Booking [Spiria]
 	pc_makesavestatus(sd);
 	pc_clean_skilltree(sd);
 	chrif_save(sd,1);
@@ -2150,7 +2150,7 @@ int map_removemobs_sub(struct block_list *bl, va_list ap)
 	if( md->db->mexp > 0 )
 		return 0;
 	
-	unit_free(&md->bl,0);
+	unit_free(&md->bl,CLR_OUTSIGHT);
 
 	return 1;
 }
@@ -2797,6 +2797,20 @@ int map_delmap(char* mapname)
 	return 0;
 }
 
+/// Initializes map flags and adjusts them depending on configuration.
+void map_flags_init(void)
+{
+	int i;
+
+	for( i = 0; i < map_num; i++ )
+	{
+		memset(&map[i].flag, 0, sizeof(map[i].flag));
+
+		if( battle_config.pk_mode )
+			map[i].flag.pvp = 1; // make all maps pvp for pk_mode [Valaris]
+	}
+}
+
 #define NO_WATER 1000000
 
 /*
@@ -2892,7 +2906,7 @@ int map_readallmaps (void)
 	int i;
 	FILE* fp=NULL;
 	int maps_removed = 0;
-	unsigned char *map_cache_buffer; // Has the uncompressed gat data of all maps, so just one allocation has to be made
+	unsigned char *map_cache_buffer = NULL; // Has the uncompressed gat data of all maps, so just one allocation has to be made
 	unsigned char map_cache_decode_buffer[MAX_MAP_SIZE];
 
 	if( enable_grf )
@@ -2958,8 +2972,6 @@ int map_readallmaps (void)
 		map[i].m = i;
 		memset(map[i].moblist, 0, sizeof(map[i].moblist));	//Initialize moblist [Skotlex]
 		map[i].mob_delete_timer = INVALID_TIMER;	//Initialize timer [Skotlex]
-		if(battle_config.pk_mode)
-			map[i].flag.pvp = 1; // make all maps pvp for pk_mode [Valaris]
 
 		map[i].bxs = (map[i].xs + BLOCK_SIZE - 1) / BLOCK_SIZE;
 		map[i].bys = (map[i].ys + BLOCK_SIZE - 1) / BLOCK_SIZE;
@@ -2972,6 +2984,9 @@ int map_readallmaps (void)
 		map[i].block = (struct block_list**)aCalloc(size, 1);
 		map[i].block_mob = (struct block_list**)aCalloc(size, 1);
 	}
+
+	// intialization and configuration-dependent adjustments of mapflags
+	map_flags_init();
 
 	if( !enable_grf ) {
 		fclose(fp);
@@ -3205,7 +3220,7 @@ int inter_config_read(char *cfgName)
 			continue;
 
 		if(strcmpi(w1, "main_chat_nick")==0)
-			strcpy(main_chat_nick, w2);
+			safestrncpy(main_chat_nick, w2, sizeof(main_chat_nick));
 			
 	#ifndef TXT_ONLY
 		else
@@ -3365,7 +3380,7 @@ int cleanup_sub(struct block_list *bl, va_list ap)
 			npc_unload((struct npc_data *)bl);
 			break;
 		case BL_MOB:
-			unit_free(bl,0);
+			unit_free(bl,CLR_OUTSIGHT);
 			break;
 		case BL_PET:
 		//There is no need for this, the pet is removed together with the player. [Skotlex]

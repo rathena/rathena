@@ -12,6 +12,9 @@ struct item;
 
 #include <stdarg.h>
 
+#define PARTY_BOOKING_JOBS 6
+#define PARTY_BOOKING_RESULTS 10
+
 struct party_member_data {
 	struct map_session_data *sd;
 	unsigned int hp; //For HP,x,y refreshing.
@@ -34,7 +37,7 @@ struct party_data {
 struct party_booking_detail {
 	short level;
     short mapid;
-    short job[6];
+    short job[PARTY_BOOKING_JOBS];
 };
 
 struct party_booking_ad_info {
@@ -83,10 +86,9 @@ int party_foreachsamemap(int (*func)(struct block_list *,va_list),struct map_ses
 /*==========================================
  * Party Booking in KRO [Spiria]
  *------------------------------------------*/
-struct party_booking_ad_info* party_booking_getdata(unsigned long index);
 void party_booking_register(struct map_session_data *sd, short level, short mapid, short* job);
 void party_booking_update(struct map_session_data *sd, short* job);
 void party_booking_search(struct map_session_data *sd, short level, short mapid, short job, unsigned long lastindex, short resultcount);
-bool party_booking_delete(struct map_session_data *sd, bool force_delete);
+bool party_booking_delete(struct map_session_data *sd);
 
 #endif /* _PARTY_H_ */

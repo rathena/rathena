@@ -574,8 +574,7 @@ CREATE TABLE IF NOT EXISTS `ragsrvinfo` (
   `name` varchar(255) NOT NULL default '',
   `exp` int(11) unsigned NOT NULL default '0',
   `jexp` int(11) unsigned NOT NULL default '0',
-  `drop` int(11) unsigned NOT NULL default '0',
-  `motd` varchar(255) NOT NULL default ''
+  `drop` int(11) unsigned NOT NULL default '0'
 ) ENGINE=MyISAM;
 
 --

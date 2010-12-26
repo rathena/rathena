@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88; L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 2.1
+//= 2.2
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -24,6 +24,7 @@
 //= 2.0 Fixed bad NPC header data to comply with rev. 11603. [L0ne_W0lf]
 //= 2.0a Fixed outdated info about Milk [Lupus]
 //= 2.1 Updated/Added NPCs for episode 12.1. [L0ne_W0lf]
+//= 2.2 Removed duplicate bartender NPC. (bugreport:4555) [L0ne_W0lf]
 //============================================================
 
 // Morroc
@@ -715,6 +716,7 @@ moc_fild16,211,254,4	script	Assassin#07rhea_30	118,{
 // Other NPCs
 //============================================================
 //Bartender
+/*
 morocc_in,166,76,3	script	Bartender#02	46,{
 	mes "[Bartender]";
 	mes "What are you going to order?";
@@ -752,6 +754,7 @@ morocc_in,166,76,3	script	Bartender#02	46,{
 	mes "Don't even think about drinking if you don't have 1,000 zeny.";
 	close;
 }
+*/
 
 // Assassin Guild Guards
 //===================================================

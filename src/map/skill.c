@@ -180,9 +180,7 @@ int skill_tree_get_max(int id, int b_class)
 		return skill_get_max(id);
 }
 
-int skill_castend_damage_id( struct block_list* src, struct block_list *bl,int skillid,int skilllv,unsigned int tick,int flag );
 int skill_frostjoke_scream(struct block_list *bl,va_list ap);
-int status_change_timer_sub(struct block_list *bl, va_list ap);
 int skill_attack_area(struct block_list *bl,va_list ap);
 struct skill_unit_group *skill_locate_element_field(struct block_list *bl); // [Skotlex]
 int skill_graffitiremover(struct block_list *bl, va_list ap); // [Valaris]
@@ -734,7 +732,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 	case AM_ACIDTERROR:
 		sc_start(bl,SC_BLEEDING,(skilllv*3),skilllv,skill_get_time2(skillid,skilllv));
 		if (skill_break_equip(bl, EQP_ARMOR, 100*skill_get_time(skillid,skilllv), BCT_ENEMY))
-			clif_emotion(bl,23);
+			clif_emotion(bl,E_OMG);
 		break;
 
 	case AM_DEMONSTRATION:
@@ -1093,11 +1091,14 @@ int skill_onskillusage(struct map_session_data *sd, struct block_list *bl, int s
 	if( sd == NULL || skillid <= 0 )
 		return 0;
 
-	sd->state.skillonskill = 1;
 	for( i = 0; i < ARRAYLENGTH(sd->autospell3) && sd->autospell3[i].flag; i++ )
 	{
 		if( sd->autospell3[i].flag != skillid )
 			continue;
+
+		if( sd->autospell3[i].lock )
+			continue;  // autospell already being executed
+
 		skill = (sd->autospell3[i].id > 0) ? sd->autospell3[i].id : -sd->autospell3[i].id;
 		if( skillnotok(skill, sd) )
 			continue;
@@ -1115,6 +1116,7 @@ int skill_onskillusage(struct map_session_data *sd, struct block_list *bl, int s
 			continue;
 
 		sd->state.autocast = 1;
+		sd->autospell3[i].lock = true;
 		skill_consume_requirement(sd,skill,skilllv,1);
 		switch( skill_get_casttype(skill) )
 		{
@@ -1122,6 +1124,7 @@ int skill_onskillusage(struct map_session_data *sd, struct block_list *bl, int s
 			case CAST_NODAMAGE: skill_castend_nodamage_id(&sd->bl, tbl, skill, skilllv, tick, 0); break;
 			case CAST_DAMAGE:   skill_castend_damage_id(&sd->bl, tbl, skill, skilllv, tick, 0); break;
 		}
+		sd->autospell3[i].lock = false;
 		sd->state.autocast = 0;
 	}
 
@@ -1139,7 +1142,6 @@ int skill_onskillusage(struct map_session_data *sd, struct block_list *bl, int s
 		}
 	}
 
-	sd->state.skillonskill = 0;
 	return 1;
 }
 
@@ -2307,11 +2309,11 @@ static int skill_timerskill(int tid, unsigned int tick, int id, intptr data)
 
 			switch(skl->skill_id) {
 				case RG_INTIMIDATE:
-					if (unit_warp(src,-1,-1,-1,3) == 0) {
+					if (unit_warp(src,-1,-1,-1,CLR_TELEPORT) == 0) {
 						short x,y;
 						map_search_freecell(src, 0, &x, &y, 1, 1, 0);
 						if (target != src && !status_isdead(target))
-							unit_warp(target, -1, x, y, 3);
+							unit_warp(target, -1, x, y, CLR_TELEPORT);
 					}
 					break;
 				case BA_FROSTJOKER:
@@ -3002,7 +3004,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 		break;
 
 	case NPC_DARKBREATH:
-		clif_emotion(src,7);
+		clif_emotion(src,E_AG);
 	case SN_FALCONASSAULT:
 	case PA_PRESSURE:
 	case CR_ACIDDEMONSTRATION:
@@ -3098,8 +3100,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 	{
 		if( sd->state.arrow_atk ) //Consume arrow on last invocation to this skill.
 			battle_consume_ammo(sd, skillid, skilllv);
-		if( !sd->state.skillonskill )
-			skill_onskillusage(sd, bl, skillid, tick);
+		skill_onskillusage(sd, bl, skillid, tick);
 		skill_consume_requirement(sd,skillid,skilllv,2);
 	}
 
@@ -4418,9 +4419,9 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			if( sd->state.autocast || ( (sd->skillitem == AL_TELEPORT || battle_config.skip_teleport_lv1_menu) && skilllv == 1 ) || skilllv == 3 )
 			{
 				if( skilllv == 1 )
-					pc_randomwarp(sd,3);
+					pc_randomwarp(sd,CLR_TELEPORT);
 				else
-					pc_setpos(sd,sd->status.save_point.map,sd->status.save_point.x,sd->status.save_point.y,3);
+					pc_setpos(sd,sd->status.save_point.map,sd->status.save_point.x,sd->status.save_point.y,CLR_TELEPORT);
 				break;
 			}
 
@@ -4430,12 +4431,12 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			else
 				clif_skill_warppoint(sd,skillid,skilllv, (unsigned short)-1,sd->status.save_point.map,0,0);
 		} else
-			unit_warp(bl,-1,-1,-1,3);
+			unit_warp(bl,-1,-1,-1,CLR_TELEPORT);
 		break;
 
 	case NPC_EXPULSION:
 		clif_skill_nodamage(src,bl,skillid,skilllv,1);
-		unit_warp(bl,-1,-1,-1,3);
+		unit_warp(bl,-1,-1,-1,CLR_TELEPORT);
 		break;
 
 	case AL_HOLYWATER:
@@ -5360,7 +5361,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				case 5:	// 2000HP heal, random teleported
 					status_heal(src, 2000, 0, 0);
 					if( !map_flag_vs(bl->m) )
-						unit_warp(bl, -1,-1,-1, 3);
+						unit_warp(bl, -1,-1,-1, CLR_TELEPORT);
 					break;
 				case 6:	// random 2 other effects
 					if (count == -1)
@@ -5435,7 +5436,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		{	//Erase death count 1% of the casts
 			dstsd->die_counter = 0;
 			pc_setglobalreg(dstsd,"PC_DIE_COUNTER", 0);
-			clif_misceffect2(bl, 0x152);
+			clif_specialeffect(bl, 0x152, AREA);
 			//SC_SPIRIT invokes status_calc_pc for us.
 		}
 		clif_skill_nodamage(src,bl,skillid,skilllv,
@@ -5530,7 +5531,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 						continue;
 					if(map_getcell(src->m,src->x+dx[j],src->y+dy[j],CELL_CHKNOREACH))
 						dx[j] = dy[j] = 0;
-					pc_setpos(dstsd, map_id2index(src->m), src->x+dx[j], src->y+dy[j], 2);
+					pc_setpos(dstsd, map_id2index(src->m), src->x+dx[j], src->y+dy[j], CLR_RESPAWN);
 				}
 			}
 			if (sd)
@@ -5720,8 +5721,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	{
 		if( sd->state.arrow_atk ) //Consume arrow on last invocation to this skill.
 			battle_consume_ammo(sd, skillid, skilllv);
-		if( !sd->state.skillonskill )
-			skill_onskillusage(sd, bl, skillid, tick);
+		skill_onskillusage(sd, bl, skillid, tick);
 		skill_consume_requirement(sd,skillid,skilllv,2);
 	}
 
@@ -6585,8 +6585,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, int skillid, int sk
 	{
 		if( sd->state.arrow_atk && !(flag&1) ) //Consume arrow if a ground skill was not invoked. [Skotlex]
 			battle_consume_ammo(sd, skillid, skilllv);
-		if( !sd->state.skillonskill )
-			skill_onskillusage(sd, NULL, skillid, tick);
+		skill_onskillusage(sd, NULL, skillid, tick);
 		skill_consume_requirement(sd,skillid,skilllv,2);
 	}
 
@@ -6643,9 +6642,9 @@ int skill_castend_map (struct map_session_data *sd, short skill_num, const char 
 	{
 	case AL_TELEPORT:
 		if(strcmp(map,"Random")==0)
-			pc_randomwarp(sd,3);
+			pc_randomwarp(sd,CLR_TELEPORT);
 		else if (sd->menuskill_val > 1) //Need lv2 to be able to warp here.
-			pc_setpos(sd,sd->status.save_point.map,sd->status.save_point.x,sd->status.save_point.y,3);
+			pc_setpos(sd,sd->status.save_point.map,sd->status.save_point.x,sd->status.save_point.y,CLR_TELEPORT);
 		break;
 
 	case AL_WARP:
@@ -7259,7 +7258,7 @@ static int skill_unit_onplace (struct skill_unit *src, struct block_list *bl, un
 				if( --sg->val1 <= 0 )
 					skill_delunitgroup(sg);
 
-				pc_setpos(sd,m,x,y,3);
+				pc_setpos(sd,m,x,y,CLR_TELEPORT);
 				sg = src->group; // avoid dangling pointer (pc_setpos can cause deletion of 'sg')
 			}
 		} else
@@ -7267,7 +7266,7 @@ static int skill_unit_onplace (struct skill_unit *src, struct block_list *bl, un
 		{
 			int m = map_mapindex2mapid(sg->val3);
 			if (m < 0) break; //Map not available on this map-server.
-			unit_warp(bl,m,sg->val2>>16,sg->val2&0xffff,3);
+			unit_warp(bl,m,sg->val2>>16,sg->val2&0xffff,CLR_TELEPORT);
 		}
 		break;
 
@@ -7569,7 +7568,7 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 				}
 				else
 					sec = 3000; //Couldn't trap it?
-				clif_01ac(&src->bl); // mysterious packet
+				clif_skillunit_update(&src->bl);
 				sg->limit = DIFF_TICK(tick,sg->tick)+sec;
 				sg->interval = -1;
 				src->range = 0;
@@ -9307,7 +9306,7 @@ void skill_repairweapon (struct map_session_data *sd, int idx)
 		return;
 	}
 
-	if (itemdb_type(item->nameid)==4)
+	if (itemdb_type(item->nameid)==IT_WEAPON)
 		material = materials [itemdb_wlv(item->nameid)-1]; // Lv1/2/3/4 weapons consume 1 Iron Ore/Iron/Steel/Rough Oridecon
 	else
 		material = materials [2]; // Armors consume 1 Steel
@@ -9358,7 +9357,7 @@ void skill_weaponrefine (struct map_session_data *sd, int idx)
 		struct item_data *ditem = sd->inventory_data[idx];
 		item = &sd->status.inventory[idx];
 
-		if(item->nameid > 0 && ditem->type == 4)
+		if(item->nameid > 0 && ditem->type == IT_WEAPON)
 		{
 			if( item->refine >= sd->menuskill_val
 			||  item->refine >= MAX_REFINE		// if it's no longer refineable
@@ -9408,7 +9407,7 @@ void skill_weaponrefine (struct map_session_data *sd, int idx)
 				clif_refine(sd->fd,1,idx,item->refine);
 				pc_delitem(sd,idx,1,0,2);
 				clif_misceffect(&sd->bl,2);
-				clif_emotion(&sd->bl, 23);
+				clif_emotion(&sd->bl, E_OMG);
 			}
 		}
 	}
@@ -10162,13 +10161,17 @@ struct skill_unit_group* skill_initunitgroup (struct block_list* src, int count,
 /*==========================================
  *
  *------------------------------------------*/
-int skill_delunitgroup (struct skill_unit_group *group)
+int skill_delunitgroup_(struct skill_unit_group *group, const char* file, int line, const char* func)
 {
 	struct block_list* src;
 	struct unit_data *ud;
 	int i,j;
 
-	nullpo_ret(group);
+	if( group == NULL )
+	{
+		ShowDebug("skill_delunitgroup: group is NULL (source=%s:%d, %s)! Please report this! (#3504)\n", file, line, func);
+		return 0;
+	}
 
 	src=map_id2bl(group->src_id);
 	ud = unit_bl2ud(src);
@@ -10404,13 +10407,13 @@ static int skill_unit_timer_sub (DBKey key, void* data, va_list ap)
 		  			sd = map_charid2sd(group->val1);
 					group->val1 = 0;
 					if (sd && !map[sd->bl.m].flag.nowarp)
-						pc_setpos(sd,map_id2index(unit->bl.m),unit->bl.x,unit->bl.y,3);
+						pc_setpos(sd,map_id2index(unit->bl.m),unit->bl.x,unit->bl.y,CLR_TELEPORT);
 				}
 				if(group->val2) {
 					sd = map_charid2sd(group->val2);
 					group->val2 = 0;
 					if (sd && !map[sd->bl.m].flag.nowarp)
-						pc_setpos(sd,map_id2index(unit->bl.m),unit->bl.x,unit->bl.y,3);
+						pc_setpos(sd,map_id2index(unit->bl.m),unit->bl.x,unit->bl.y,CLR_TELEPORT);
 				}
 				skill_delunit(unit);
 			}

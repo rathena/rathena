@@ -275,7 +275,7 @@ void vending_openvending(struct map_session_data* sd, const char* message, bool 
 
 		sd->vending[i].index = index;
 		sd->vending[i].amount = amount;
-		sd->vending[i].value = cap_value(value, 1, (unsigned int)battle_config.vending_max_value);
+		sd->vending[i].value = cap_value(value, 0, (unsigned int)battle_config.vending_max_value);
 
 		i++; // item successfully added
 	}

@@ -1,5 +1,7 @@
 Date	Added
 
+2010/12/26
+	* Merged changes from trunk (r14496:14630). [Ai4rei]
 2010/11/23
 	* Added script command pushpc, which is required by newer scripts. [Ai4rei]
 	- Moved knockback-part of skill_blown into unit_blown, to allow unconditional knockback required by pushpc without copy-pasting code.
