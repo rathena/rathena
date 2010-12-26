@@ -4860,6 +4860,7 @@ int pc_gainexp(struct map_session_data *sd, struct block_list *src, unsigned int
 {
 	float nextbp=0, nextjp=0;
 	unsigned int nextb=0, nextj=0;
+	int leveldiff = sd->status.base_level - status_get_lv(src), modifier = 100;
 	nullpo_ret(sd);
 
 	if(sd->bl.prev == NULL || pc_isdead(sd))
@@ -4898,6 +4899,52 @@ int pc_gainexp(struct map_session_data *sd, struct block_list *src, unsigned int
 		}
 	}
 	
+	/*Adjust exp by mob level difference vs player level.
+	Higher level creatures give more exp, lower level creatures give less
+	and you'll get normal experience if they're very close to your level.
+	
+	-2 to +5 = 100%
+	-3 = 105%
+	-4 = 110%
+	-5 = 115%
+	-6 = 120%
+	-7 = 125%
+	-8 = 130%
+	-9 = 135%
+	-10 = 140%
+	-11 or lower = 40%
+	
+	+6 to +10 = 95%
+	+11 to +15 = 90%
+	+15 to +20 = 85%
+	+21 to +25 = 60%
+	+26 to +30 = 35%
+	+31 or higher = 10% */
+	
+	if (leveldiff >= 6 && leveldiff <= 10)
+		modifier = -5;
+	if (leveldiff >= 11 && leveldiff <= 15)
+		modifier = -10;
+	if (leveldiff >= 16 && leveldiff <= 20)
+		modifier = -15;
+	if (leveldiff >= 21 && leveldiff <= 25)
+		modifier = -40;
+	if (leveldiff >= 26 && leveldiff <= 30)
+		modifier = -65;
+	if (leveldiff > 30)
+		modifier = -90;
+	if (leveldiff <= -3 && leveldiff >= -10)
+		modifier = ((leveldiff * -5)-10);	
+	if (leveldiff <= -10)
+		modifier = -60;
+		
+	if ( modifier < 0 )
+			modifier = modifier * -1;
+	if ( modifier != 100 ) {		
+		base_exp = (int)((float)base_exp - (((float)modifier/100) * (float)base_exp));
+		job_exp = (int)((float)job_exp - (((float)modifier/100) * (float)job_exp));
+	}
+	
 	//Cap exp to the level up requirement of the previous level when you are at max level, otherwise cap at UINT_MAX (this is required for some S. Novice bonuses). [Skotlex]
 	if (base_exp) {
 		nextb = nextb?UINT_MAX:pc_thisbaseexp(sd);
@@ -4928,7 +4975,7 @@ int pc_gainexp(struct map_session_data *sd, struct block_list *src, unsigned int
 	if(sd->state.showexp) {
 		char output[256];
 		sprintf(output,
-			"Experience Gained Base:%u (%.2f%%) Job:%u (%.2f%%)",base_exp,nextbp*(float)100,job_exp,nextjp*(float)100);
+			"Experience Gained Base:%u (%.2f%%) Job:%u (%.2f%%)", base_exp, nextbp*(float)100, job_exp, nextjp*(float)100);
 		clif_disp_onlyself(sd,output,strlen(output));
 	}
 
