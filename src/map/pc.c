@@ -7125,10 +7125,7 @@ int pc_equipitem(struct map_session_data *sd,int n,int req_pos)
 		if(id) {
 			if(id->type == IT_WEAPON) {
 				sd->status.shield = 0;
-				if(sd->status.inventory[n].equip == EQP_HAND_L)
-					sd->weapontype2 = id->look;
-				else
-					sd->weapontype2 = 0;
+				sd->weapontype2 = id->look;
 			}
 			else
 			if(id->type == IT_ARMOR) {

@@ -1,6 +1,7 @@
 Date	Added
 
 2010/12/25
+	* Fixed two-hand weapons not getting recognized as such upon equipping, causing respective one-hand weapon's base ASPD values being used instead (bugreport:4659, related r12599). [Ai4rei]
 	* Updated script commands delitem and delitem2. [Ai4rei]
 	- Items are now deleted only if there is enough of them (as per r14395, related r13368).
 	- Not equipped items are now actually prioritized over equipped ones (related r200).
