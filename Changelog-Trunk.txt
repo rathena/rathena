@@ -1,5 +1,10 @@
 Date	Added
 
+2010/12/26
+	* Updated commands @delitem/#delitem. [Ai4rei]
+	- No longer deletes stackable items one by one (bugreport:1914).
+	- Fixed pets not getting deleted when a pet egg was deleted.
+	- Fixed outdated usage message (since r13403).
 2010/12/25
 	* Fixed two-hand weapons not getting recognized as such upon equipping, causing respective one-hand weapon's base ASPD values being used instead (bugreport:4659, related r12599). [Ai4rei]
 	* Updated script commands delitem and delitem2. [Ai4rei]
