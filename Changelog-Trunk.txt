@@ -1,6 +1,7 @@
 Date	Added
 
 2010/12/26
+	* Reverted r14565, as the database version is already properly commented in source and is overwritten upon first sync of account.txt anyway. [Ai4rei]
 	* Cleaned up script command checkweight. [Ai4rei]
 	- Replaced some code parts with calls to pc_checkadditem and pc_inventoryblank (follow up to r13735).
 	- Fixed item id not getting checked for validity properly.
