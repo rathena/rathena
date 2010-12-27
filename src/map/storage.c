@@ -138,6 +138,11 @@ static int storage_additem(struct map_session_data* sd, struct item* item_data, 
 	
 	data = itemdb_search(item_data->nameid);
 
+	if( data->stack.storage && amount > data->stack.amount )
+	{// item stack limitation
+		return 1;
+	}
+
 	if( !itemdb_canstore(item_data, pc_isGM(sd)) )
 	{	//Check if item is storable. [Skotlex]
 		clif_displaymessage (sd->fd, msg_txt(264));
@@ -150,7 +155,7 @@ static int storage_additem(struct map_session_data* sd, struct item* item_data, 
 		{
 			if( compare_item(&stor->items[i], item_data) )
 			{// existing items found, stack them
-				if( amount > MAX_AMOUNT - stor->items[i].amount )
+				if( amount > MAX_AMOUNT - stor->items[i].amount || ( data->stack.storage && amount > data->stack.amount - stor->items[i].amount ) )
 					return 1;
 				stor->items[i].amount += amount;
 				clif_storageitemadded(sd,&stor->items[i],i,amount);
@@ -398,6 +403,11 @@ int guild_storage_additem(struct map_session_data* sd, struct guild_storage* sto
 	if(item_data->nameid <= 0 || amount <= 0)
 		return 1;
 
+	if( data->stack.guildstorage && amount > data->stack.amount )
+	{// item stack limitation
+		return 1;
+	}
+
 	if( !itemdb_canguildstore(item_data, pc_isGM(sd)) || item_data->expire_time )
 	{	//Check if item is storable. [Skotlex]
 		clif_displaymessage (sd->fd, msg_txt(264));
@@ -407,7 +417,7 @@ int guild_storage_additem(struct map_session_data* sd, struct guild_storage* sto
 	if(itemdb_isstackable2(data)){ //Stackable
 		for(i=0;i<MAX_GUILD_STORAGE;i++){
 			if(compare_item(&stor->items[i], item_data)) {
-				if(stor->items[i].amount+amount > MAX_AMOUNT)
+				if( amount > MAX_AMOUNT - stor->items[i].amount || ( data->stack.guildstorage && amount > data->stack.amount - stor->items[i].amount ) )
 					return 1;
 				stor->items[i].amount+=amount;
 				clif_storageitemadded(sd,&stor->items[i],i,amount);

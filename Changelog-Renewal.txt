@@ -1,6 +1,7 @@
 Date	Added
 
 2010/12/27
+	* Added item stacking limit database (item_stack.txt) required for runes and other 3rd class related skill items. [Ai4rei]
 	* Merged fixes from trunk for script command 'checkweight' (r14631) and skill-based item production (r14633). [Ai4rei]
 2010/12/26
 	* Merged changes from trunk (r14496:14630). [Ai4rei]

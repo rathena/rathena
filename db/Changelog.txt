@@ -8,6 +8,8 @@
 	1475 Equestrian's Spear:	NEED INFO.
 	13005 Angelic Wing Dagger:	NEED INFO.
 =======================
+2010/12/27
+	* Rev. 14634 Added item stacking limitation database 'item_stack.txt'. [Ai4rei]
 2010/12/16
 	* Rev. 14596 Added missing pet db documentation for fields 'attack_rate', 'defence_attack_rate', 'change_target_rate', 'pet_script' and 'loyal_script' based on the one provided by frenzmu06 (bugreport:4636, follow up to r13752). [Ai4rei]
 2010/12/13
