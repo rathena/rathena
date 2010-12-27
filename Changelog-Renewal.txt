@@ -1,5 +1,7 @@
 Date	Added
 
+2010/12/27
+	* Merged fixes from trunk for script command 'checkweight' (r14631) and skill-based item production (r14633). [Ai4rei]
 2010/12/26
 	* Merged changes from trunk (r14496:14630). [Ai4rei]
 2010/11/23

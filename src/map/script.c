@@ -5411,6 +5411,7 @@ BUILDIN_FUNC(checkweight)
 	if( id == NULL )
 	{
 		ShowError("buildin_checkweight: Invalid item '%s'.\n", script_getstr(st,2));  // returns string, regardless of what it was
+		script_pushint(st,0);
 		return 1;
 	}
 
@@ -5420,6 +5421,7 @@ BUILDIN_FUNC(checkweight)
 	if( amount < 1 )
 	{
 		ShowError("buildin_checkweight: Invalid amount '%d'.\n", amount);
+		script_pushint(st,0);
 		return 1;
 	}
 
@@ -5461,6 +5463,7 @@ BUILDIN_FUNC(checkweight)
 			return 0;
 	}
 
+	script_pushint(st,1);
 	return 0;
 }
 
