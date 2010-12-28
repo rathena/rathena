@@ -2,22 +2,18 @@
 @SET_MAKE@
 
 #####################################################################
-.PHONY : all adduser mapcache clean help
+.PHONY : all mapcache clean help
 
-all: adduser mapcache
-
-adduser:
-	@CC@ -o ../../tools/adduser@EXEEXT@ adduser.c
+all: mapcache
 
 mapcache:
 	@CC@ -o ../../mapcache@EXEEXT@ mapcache.c grfio.c -lz
 
 clean:
-	rm -rf *.o ../../tools/adduser@EXEEXT@ ../../mapcache@EXEEXT@
+	rm -rf *.o ../../mapcache@EXEEXT@
 
 help:
-	@echo "possible targets are 'adduser' 'mapcache' 'all' 'clean' 'help'"
-	@echo "'adduser'   - ???"
+	@echo "possible targets are 'mapcache' 'all' 'clean' 'help'"
 	@echo "'mapcache'  - mapcache generator"
 	@echo "'all'       - builds all above targets"
 	@echo "'clean'     - cleans builds and objects"
