@@ -1,6 +1,10 @@
 Date	Added
 
 2010/12/29
+	* Collection of random insignificant changes. [Ai4rei]
+	- Added progress indication on map-server shutdown when objects are removed from maps, as it takes significant amount of time to complete.
+	- Moved ers_free in db_obj_vclear, so that the node pointer is not used for comparison after it has been freed.
+	- Some documentation of shop packets.
 	* Fixed 'console' plugin not working on Windows, due to NULL passed to CreateThread instead of required pointer to thread id variable. [Ai4rei]
 	- Fixed 'console' plugin causing delete_timer error when it fails to load, due to uninitialized variable.
 	* Renamed plugin.def to sample.def and added 'sample' plugin exports into it, as it's purpose is nothing than a sample right now.

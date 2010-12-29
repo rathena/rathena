@@ -3210,6 +3210,7 @@ int pc_checkadditem(struct map_session_data *sd,int nameid,int amount)
 		return ADDITEM_NEW;
 
 	for(i=0;i<MAX_INVENTORY;i++){
+		// FIXME: This does not consider the checked item's cards, thus could check a wrong slot for stackability.
 		if(sd->status.inventory[i].nameid==nameid){
 			if(sd->status.inventory[i].amount+amount > MAX_AMOUNT)
 				return ADDITEM_OVERAMOUNT;

@@ -6191,7 +6191,7 @@ BUILDIN_FUNC(readparam)
 	if( script_hasdata(st,3) )
 		sd=map_nick2sd(script_getstr(st,3));
 	else
-	sd=script_rid2sd(st);
+		sd=script_rid2sd(st);
 
 	if(sd==NULL){
 		script_pushint(st,-1);

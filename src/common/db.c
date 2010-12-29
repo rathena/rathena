@@ -1976,13 +1976,13 @@ static int db_obj_vclear(DBMap* self, DBApply func, va_list args)
 				node->deleted = 1;
 			}
 			DB_COUNTSTAT(db_node_free);
-			ers_free(db->nodes, node);
 			if (parent) {
 				if (parent->left == node)
 					parent->left = NULL;
 				else
 					parent->right = NULL;
 			}
+			ers_free(db->nodes, node);
 			node = parent;
 		}
 		db->ht[i] = NULL;

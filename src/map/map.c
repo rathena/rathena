@@ -3412,9 +3412,14 @@ void do_final(void)
 
 	ShowStatus("Terminating...\n");
 
+	// remove all objects on maps
 	for (i = 0; i < map_num; i++)
+	{
+		ShowStatus("Cleaning up maps [%d/%d]: %s..."CL_CLL"\r", i+1, map_num, map[i].name);
 		if (map[i].m >= 0)
 			map_foreachinmap(cleanup_sub, i, BL_ALL);
+	}
+	ShowStatus("Cleaned up %d maps."CL_CLL"\n", map_num);
 
 	//Scan any remaining players (between maps?) to kick them out. [Skotlex]
 	iter = mapit_getallusers();
