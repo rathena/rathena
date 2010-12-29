@@ -1,0 +1,11 @@
+EXPORTS
+	; common exports
+	plugin_info         DATA
+	plugin_event_table  DATA
+	plugin_call_table   DATA
+
+	; plugin-specific exports
+	test_me
+	do_init
+	do_final
+	some_function

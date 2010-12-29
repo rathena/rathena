@@ -1,5 +1,12 @@
 Date	Added
 
+2010/12/29
+	* Fixed 'console' plugin not working on Windows, due to NULL passed to CreateThread instead of required pointer to thread id variable. [Ai4rei]
+	- Fixed 'console' plugin causing delete_timer error when it fails to load, due to uninitialized variable.
+	* Renamed plugin.def to sample.def and added 'sample' plugin exports into it, as it's purpose is nothing than a sample right now.
+	- Also added .def files for 'gui' and 'pid' plugins as MSVC does not export everything automatically and missing event export cause the plugins silently failing.
+	- Added VS6, VS8 and VS9 projects for compiling plug-ins, which can be used on Windows.
+	* The plug-in system will now report, if it cannot import an event function.
 2010/12/28
 	* Fixed char-server making assumptions about RFIFO data length in character deletion packet (since r10909). [Ai4rei]
 	* Fixed login-server discarding RFIFO data, when the length is 1 byte; minimum packet size is 2 bytes (since r5027).

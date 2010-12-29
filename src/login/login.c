@@ -331,7 +331,7 @@ int parse_console(char* buf)
 
 	sscanf(buf, "%[^\n]", command);
 
-	ShowInfo("Console command :%s", command);
+	ShowInfo("Console command :%s\n", command);
 
 	if( strcmpi("shutdown", command) == 0 ||
 	    strcmpi("exit", command) == 0 ||

@@ -32,7 +32,8 @@
 #define WORKER_FUNC_END(name) } ExitThread(0); return 0; }
 #define WORKER_EXECUTE(name,errvar) \
 	do{ \
-		buf.worker = CreateThread(NULL, 0, worker_ ## name, NULL, CREATE_SUSPENDED, NULL); \
+		DWORD dwThreadId; \
+		buf.worker = CreateThread(NULL, 0, worker_ ## name, NULL, CREATE_SUSPENDED, &dwThreadId); \
 		if( errvar ) \
 			*errvar = ( buf.worker == NULL ); \
 	}while(0)
@@ -135,7 +136,7 @@ unsigned int (*gettick)(void);
 int (*parse_console)(char* buf);
 
 // Locals
-int tid; // timer id
+int tid = -1; // timer id
 BUFFER buf; // input buffer
 WORKER_FUNC_DECLARE(getinput); // worker for the input buffer
 

@@ -1,0 +1,7 @@
+EXPORTS
+	plugin_info         DATA
+	plugin_event_table  DATA
+	plugin_call_table   DATA
+
+	pid_create
+	pid_delete
