@@ -852,6 +852,6 @@ int parse_admin(int fd)
 			return 0;
 		}
 	}
-	RFIFOSKIP(fd,RFIFOREST(fd));
+
 	return 0;
 }

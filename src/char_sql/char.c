@@ -3256,7 +3256,7 @@ int parse_char(int fd)
 
 			ShowInfo(CL_RED"Request Char Deletion: "CL_GREEN"%d (%d)"CL_RESET"\n", sd->account_id, cid);
 			memcpy(email, RFIFOP(fd,6), 40);
-			RFIFOSKIP(fd,RFIFOREST(fd)); // hack to make the other deletion packet work
+			RFIFOSKIP(fd,( cmd == 0x68) ? 46 : 56);
 			
 			// Check if e-mail is correct 
 			if(strcmpi(email, sd->email) && //email does not matches and 
