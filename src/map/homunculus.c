@@ -8,6 +8,7 @@
 #include "../common/nullpo.h"
 #include "../common/mmo.h"
 #include "../common/showmsg.h"
+#include "../common/strlib.h"
 #include "../common/utils.h"
 
 #include "log.h"
@@ -876,226 +877,190 @@ int merc_hom_shuffle(struct homun_data *hd)
 	return 1;
 }
 
-int read_homunculusdb(void)
+static bool read_homunculusdb_sub(char* str[], int columns, int current)
 {
-	FILE *fp;
-	char line[1024], *p;
-	int i, k, classid; 
-	int j = 0;
-	const char *filename[]={"homunculus_db.txt","homunculus_db2.txt"};
-	char *str[50];
+	int classid; 
 	struct s_homunculus_db *db;
 
-	memset(homunculus_db,0,sizeof(homunculus_db));
-	for(i = 0; i<2; i++)
+	//Base Class,Evo Class
+	classid = atoi(str[0]);
+	if (classid < HM_CLASS_BASE || classid > HM_CLASS_MAX)
 	{
-		sprintf(line, "%s/%s", db_path, filename[i]);
-		fp = fopen(line,"r");
-		if(!fp){
-			if(i != 0)
-				continue;
-			ShowError("read_homunculusdb : can't read %s\n", line);
-			return -1;
-		}
-
-		while(fgets(line, sizeof(line), fp) && j < MAX_HOMUNCULUS_CLASS)
-		{
-			if(line[0] == '/' && line[1] == '/')
-				continue;
-
-			k = 0;
-			p = strtok (line,",");
-			while (p != NULL && k < 50)
-			{
-				str[k++] = p;
-				p = strtok (NULL, ",");
-			}
-			if (k < 50 )
-			{
-				ShowError("read_homunculusdb : Incorrect number of columns at %s, homunculus %d. Read %d columns, 50 are needed.\n", filename[i], j+1, k);
-				continue;
-			}
-			
-			//Base Class,Evo Class
-			classid = atoi(str[0]);
-			if (classid < HM_CLASS_BASE || classid > HM_CLASS_MAX)
-			{
-				ShowError("read_homunculusdb : Invalid class %d (%s)\n", classid, filename[i]);
-				continue;
-			}
-			db = &homunculus_db[j];
-			db->base_class = classid;
-			classid = atoi(str[1]);
-			if (classid < HM_CLASS_BASE || classid > HM_CLASS_MAX)
-			{
-				db->base_class = 0;
-				ShowError("read_homunculusdb : Invalid class %d (%s)\n", classid, filename[i]);
-				continue;
-			}
-			db->evo_class = classid;
-			//Name, Food, Hungry Delay, Base Size, Evo Size, Race, Element, ASPD
-			strncpy(db->name,str[2],NAME_LENGTH-1);
-			db->foodID = atoi(str[3]);
-			db->hungryDelay = atoi(str[4]);
-			db->base_size = atoi(str[5]);
-			db->evo_size = atoi(str[6]);
-			db->race = atoi(str[7]);
-			db->element = atoi(str[8]);
-			db->baseASPD = atoi(str[9]);
-			//base HP, SP, str, agi, vit, int, dex, luk
-			db->base.HP = atoi(str[10]);
-			db->base.SP = atoi(str[11]);
-			db->base.str = atoi(str[12]);
-			db->base.agi = atoi(str[13]);
-			db->base.vit = atoi(str[14]);
-			db->base.int_= atoi(str[15]);
-			db->base.dex = atoi(str[16]);
-			db->base.luk = atoi(str[17]);
-			//Growth Min/Max HP, SP, str, agi, vit, int, dex, luk
-			db->gmin.HP = atoi(str[18]);
-			db->gmax.HP = atoi(str[19]);
-			db->gmin.SP = atoi(str[20]);
-			db->gmax.SP = atoi(str[21]);
-			db->gmin.str = atoi(str[22]);
-			db->gmax.str = atoi(str[23]);
-			db->gmin.agi = atoi(str[24]);
-			db->gmax.agi = atoi(str[25]);
-			db->gmin.vit = atoi(str[26]);
-			db->gmax.vit = atoi(str[27]);
-			db->gmin.int_= atoi(str[28]);
-			db->gmax.int_= atoi(str[29]);
-			db->gmin.dex = atoi(str[30]);
-			db->gmax.dex = atoi(str[31]);
-			db->gmin.luk = atoi(str[32]);
-			db->gmax.luk = atoi(str[33]);
-			//Evolution Min/Max HP, SP, str, agi, vit, int, dex, luk
-			db->emin.HP = atoi(str[34]);
-			db->emax.HP = atoi(str[35]);
-			db->emin.SP = atoi(str[36]);
-			db->emax.SP = atoi(str[37]);
-			db->emin.str = atoi(str[38]);
-			db->emax.str = atoi(str[39]);
-			db->emin.agi = atoi(str[40]);
-			db->emax.agi = atoi(str[41]);
-			db->emin.vit = atoi(str[42]);
-			db->emax.vit = atoi(str[43]);
-			db->emin.int_= atoi(str[44]);
-			db->emax.int_= atoi(str[45]);
-			db->emin.dex = atoi(str[46]);
-			db->emax.dex = atoi(str[47]);
-			db->emin.luk = atoi(str[48]);
-			db->emax.luk = atoi(str[49]);
-
-			//Check that the min/max values really are below the other one.
-			if(db->gmin.HP > db->gmax.HP)
-				db->gmin.HP = db->gmax.HP;
-			if(db->gmin.SP > db->gmax.SP)
-				db->gmin.SP = db->gmax.SP;
-			if(db->gmin.str > db->gmax.str)
-				db->gmin.str = db->gmax.str;
-			if(db->gmin.agi > db->gmax.agi)
-				db->gmin.agi = db->gmax.agi;
-			if(db->gmin.vit > db->gmax.vit)
-				db->gmin.vit = db->gmax.vit;
-			if(db->gmin.int_> db->gmax.int_)
-				db->gmin.int_= db->gmax.int_;
-			if(db->gmin.dex > db->gmax.dex)
-				db->gmin.dex = db->gmax.dex;
-			if(db->gmin.luk > db->gmax.luk)
-				db->gmin.luk = db->gmax.luk;
-
-			if(db->emin.HP > db->emax.HP)
-				db->emin.HP = db->emax.HP;
-			if(db->emin.SP > db->emax.SP)
-				db->emin.SP = db->emax.SP;
-			if(db->emin.str > db->emax.str)
-				db->emin.str = db->emax.str;
-			if(db->emin.agi > db->emax.agi)
-				db->emin.agi = db->emax.agi;
-			if(db->emin.vit > db->emax.vit)
-				db->emin.vit = db->emax.vit;
-			if(db->emin.int_> db->emax.int_)
-				db->emin.int_= db->emax.int_;
-			if(db->emin.dex > db->emax.dex)
-				db->emin.dex = db->emax.dex;
-			if(db->emin.luk > db->emax.luk)
-				db->emin.luk = db->emax.luk;
-
-			j++;
-		}
-		if (j > MAX_HOMUNCULUS_CLASS)
-			ShowWarning("read_homunculusdb: Reached max number of homunculus [%d]. Remaining homunculus were not read.\n ", MAX_HOMUNCULUS_CLASS);
-		fclose(fp);
-		ShowStatus("Done reading '"CL_WHITE"%d"CL_RESET"' homunculus in '"CL_WHITE"db/%s"CL_RESET"'.\n",j,filename[i]);
+		ShowError("read_homunculusdb : Invalid class %d\n", classid);
+		return false;
 	}
+	db = &homunculus_db[current];
+	db->base_class = classid;
+	classid = atoi(str[1]);
+	if (classid < HM_CLASS_BASE || classid > HM_CLASS_MAX)
+	{
+		db->base_class = 0;
+		ShowError("read_homunculusdb : Invalid class %d\n", classid);
+		return false;
+	}
+	db->evo_class = classid;
+	//Name, Food, Hungry Delay, Base Size, Evo Size, Race, Element, ASPD
+	strncpy(db->name,str[2],NAME_LENGTH-1);
+	db->foodID = atoi(str[3]);
+	db->hungryDelay = atoi(str[4]);
+	db->base_size = atoi(str[5]);
+	db->evo_size = atoi(str[6]);
+	db->race = atoi(str[7]);
+	db->element = atoi(str[8]);
+	db->baseASPD = atoi(str[9]);
+	//base HP, SP, str, agi, vit, int, dex, luk
+	db->base.HP = atoi(str[10]);
+	db->base.SP = atoi(str[11]);
+	db->base.str = atoi(str[12]);
+	db->base.agi = atoi(str[13]);
+	db->base.vit = atoi(str[14]);
+	db->base.int_= atoi(str[15]);
+	db->base.dex = atoi(str[16]);
+	db->base.luk = atoi(str[17]);
+	//Growth Min/Max HP, SP, str, agi, vit, int, dex, luk
+	db->gmin.HP = atoi(str[18]);
+	db->gmax.HP = atoi(str[19]);
+	db->gmin.SP = atoi(str[20]);
+	db->gmax.SP = atoi(str[21]);
+	db->gmin.str = atoi(str[22]);
+	db->gmax.str = atoi(str[23]);
+	db->gmin.agi = atoi(str[24]);
+	db->gmax.agi = atoi(str[25]);
+	db->gmin.vit = atoi(str[26]);
+	db->gmax.vit = atoi(str[27]);
+	db->gmin.int_= atoi(str[28]);
+	db->gmax.int_= atoi(str[29]);
+	db->gmin.dex = atoi(str[30]);
+	db->gmax.dex = atoi(str[31]);
+	db->gmin.luk = atoi(str[32]);
+	db->gmax.luk = atoi(str[33]);
+	//Evolution Min/Max HP, SP, str, agi, vit, int, dex, luk
+	db->emin.HP = atoi(str[34]);
+	db->emax.HP = atoi(str[35]);
+	db->emin.SP = atoi(str[36]);
+	db->emax.SP = atoi(str[37]);
+	db->emin.str = atoi(str[38]);
+	db->emax.str = atoi(str[39]);
+	db->emin.agi = atoi(str[40]);
+	db->emax.agi = atoi(str[41]);
+	db->emin.vit = atoi(str[42]);
+	db->emax.vit = atoi(str[43]);
+	db->emin.int_= atoi(str[44]);
+	db->emax.int_= atoi(str[45]);
+	db->emin.dex = atoi(str[46]);
+	db->emax.dex = atoi(str[47]);
+	db->emin.luk = atoi(str[48]);
+	db->emax.luk = atoi(str[49]);
+
+	//Check that the min/max values really are below the other one.
+	if(db->gmin.HP > db->gmax.HP)
+		db->gmin.HP = db->gmax.HP;
+	if(db->gmin.SP > db->gmax.SP)
+		db->gmin.SP = db->gmax.SP;
+	if(db->gmin.str > db->gmax.str)
+		db->gmin.str = db->gmax.str;
+	if(db->gmin.agi > db->gmax.agi)
+		db->gmin.agi = db->gmax.agi;
+	if(db->gmin.vit > db->gmax.vit)
+		db->gmin.vit = db->gmax.vit;
+	if(db->gmin.int_> db->gmax.int_)
+		db->gmin.int_= db->gmax.int_;
+	if(db->gmin.dex > db->gmax.dex)
+		db->gmin.dex = db->gmax.dex;
+	if(db->gmin.luk > db->gmax.luk)
+		db->gmin.luk = db->gmax.luk;
+
+	if(db->emin.HP > db->emax.HP)
+		db->emin.HP = db->emax.HP;
+	if(db->emin.SP > db->emax.SP)
+		db->emin.SP = db->emax.SP;
+	if(db->emin.str > db->emax.str)
+		db->emin.str = db->emax.str;
+	if(db->emin.agi > db->emax.agi)
+		db->emin.agi = db->emax.agi;
+	if(db->emin.vit > db->emax.vit)
+		db->emin.vit = db->emax.vit;
+	if(db->emin.int_> db->emax.int_)
+		db->emin.int_= db->emax.int_;
+	if(db->emin.dex > db->emax.dex)
+		db->emin.dex = db->emax.dex;
+	if(db->emin.luk > db->emax.luk)
+		db->emin.luk = db->emax.luk;
+
+	return true;
+}
+
+int read_homunculusdb(void)
+{
+	int i;
+	const char *filename[]={"homunculus_db.txt","homunculus_db2.txt"};
+
+	memset(homunculus_db,0,sizeof(homunculus_db));
+	for(i = 0; i<ARRAYLENGTH(filename); i++)
+	{
+		char path[256];
+
+		if( i > 0 )
+		{
+			sprintf(path, "%s/%s", db_path, filename[i]);
+
+			if( !exists(path) )
+			{
+				continue;
+			}
+		}
+
+		sv_readdb(db_path, filename[i], ',', 50, 50, MAX_HOMUNCULUS_CLASS, &read_homunculusdb_sub);
+	}
+
 	return 0;
+}
+
+static bool read_homunculus_skilldb_sub(char* split[], int columns, int current)
+{// <hom class>,<skill id>,<max level>[,<job level>],<req id1>,<req lv1>,<req id2>,<req lv2>,<req id3>,<req lv3>,<req id4>,<req lv4>,<req id5>,<req lv5>
+	int k, classid; 
+	int j;
+	int minJobLevelPresent = 0;
+
+	if( columns == 14 )
+		minJobLevelPresent = 1;	// MinJobLvl has been added
+
+	// check for bounds [celest]
+	classid = atoi(split[0]) - HM_CLASS_BASE;
+	if ( classid >= MAX_HOMUNCULUS_CLASS )
+	{
+		ShowWarning("read_homunculus_skilldb: Invalud homunculus class %d.\n", atoi(split[0]));
+		return false;
+	}
+
+	k = atoi(split[1]); //This is to avoid adding two lines for the same skill. [Skotlex]
+	// Search an empty line or a line with the same skill_id (stored in j)
+	ARR_FIND( 0, MAX_SKILL_TREE, j, !hskill_tree[classid][j].id || hskill_tree[classid][j].id == k );
+	if (j == MAX_SKILL_TREE)
+	{
+		ShowWarning("Unable to load skill %d into homunculus %d's tree. Maximum number of skills per class has been reached.\n", k, classid);
+		return false;
+	}
+
+	hskill_tree[classid][j].id = k;
+	hskill_tree[classid][j].max = atoi(split[2]);
+	if (minJobLevelPresent)
+		hskill_tree[classid][j].joblv = atoi(split[3]);
+
+	for( k = 0; k < MAX_PC_SKILL_REQUIRE; k++ )
+	{
+		hskill_tree[classid][j].need[k].id = atoi(split[3+k*2+minJobLevelPresent]);
+		hskill_tree[classid][j].need[k].lv = atoi(split[3+k*2+minJobLevelPresent+1]);
+	}
+
+	return true;
 }
 
 int read_homunculus_skilldb(void)
 {
-	FILE *fp;
-	char line[1024], *p;
-	int k, classid; 
-	int j = 0;
-	char *split[15];
-
 	memset(hskill_tree,0,sizeof(hskill_tree));
-	sprintf(line, "%s/homun_skill_tree.txt", db_path);
-	fp=fopen(line,"r");
-	if(fp==NULL){
-		ShowError("can't read %s\n", line);
-		return 1;
-	}
+	sv_readdb(db_path, "homun_skill_tree.txt", ',', 13, 14, -1, &read_homunculus_skilldb_sub);
 
-	while(fgets(line, sizeof(line), fp))
-	{
-		int minJobLevelPresent = 0;
-
-		if(line[0]=='/' && line[1]=='/')
-			continue;
-
-		k = 0;
-		p = strtok(line,",");
-		while (p != NULL && k < 15)
-		{
-			split[k++] = p;
-			p = strtok(NULL, ",");
-		}
-
-		if(k < 13)
-			continue;
-
-		if (k == 14)
-			minJobLevelPresent = 1;	// MinJobLvl has been added
-
-		// check for bounds [celest]
-		classid = atoi(split[0]) - HM_CLASS_BASE;
-		if ( classid >= MAX_HOMUNCULUS_CLASS )
-			continue;
-
-		k = atoi(split[1]); //This is to avoid adding two lines for the same skill. [Skotlex]
-		// Search an empty line or a line with the same skill_id (stored in j)
-		for(j = 0; j < MAX_SKILL_TREE && hskill_tree[classid][j].id && hskill_tree[classid][j].id != k; j++);
-
-		if (j == MAX_SKILL_TREE)
-		{
-			ShowWarning("Unable to load skill %d into homunculus %d's tree. Maximum number of skills per class has been reached.\n", k, classid);
-			continue;
-		}
-
-		hskill_tree[classid][j].id=k;
-		hskill_tree[classid][j].max=atoi(split[2]);
-		if (minJobLevelPresent)
-			hskill_tree[classid][j].joblv=atoi(split[3]);
-
-		for(k=0;k<MAX_PC_SKILL_REQUIRE;k++){
-			hskill_tree[classid][j].need[k].id=atoi(split[3+k*2+minJobLevelPresent]);
-			hskill_tree[classid][j].need[k].lv=atoi(split[3+k*2+minJobLevelPresent+1]);
-		}
-	}
-
-	fclose(fp);
-	ShowStatus("Done reading '"CL_WHITE"%s"CL_RESET"'.\n","homun_skill_tree.txt");
 	return 0;
 }
 

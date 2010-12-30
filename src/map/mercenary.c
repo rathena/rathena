@@ -8,6 +8,7 @@
 #include "../common/nullpo.h"
 #include "../common/mmo.h"
 #include "../common/showmsg.h"
+#include "../common/strlib.h"
 #include "../common/utils.h"
 
 #include "log.h"
@@ -402,162 +403,105 @@ int mercenary_checkskill(struct mercenary_data *md, int skill_id)
 	return 0;
 }
 
-int read_mercenarydb(void)
+static bool read_mercenarydb_sub(char* str[], int columns, int current)
 {
-	FILE *fp;
-	char line[1024], *p;
-	char *str[26];
-	int i, j = 0, k = 0, ele;
+	int ele;
 	struct s_mercenary_db *db;
 	struct status_data *status;
 
-	sprintf(line, "%s/%s", db_path, "mercenary_db.txt");
+	db = &mercenary_db[current];
+	db->class_ = atoi(str[0]);
+	strncpy(db->sprite, str[1], NAME_LENGTH);
+	strncpy(db->name, str[2], NAME_LENGTH);
+	db->lv = atoi(str[3]);
+
+	status = &db->status;
+	db->vd.class_ = db->class_;
+
+	status->max_hp = atoi(str[4]);
+	status->max_sp = atoi(str[5]);
+	status->rhw.range = atoi(str[6]);
+	status->rhw.atk = atoi(str[7]);
+	status->rhw.atk2 = status->rhw.atk + atoi(str[8]);
+	status->def = atoi(str[9]);
+	status->mdef = atoi(str[10]);
+	status->str = atoi(str[11]);
+	status->agi = atoi(str[12]);
+	status->vit = atoi(str[13]);
+	status->int_ = atoi(str[14]);
+	status->dex = atoi(str[15]);
+	status->luk = atoi(str[16]);
+	db->range2 = atoi(str[17]);
+	db->range3 = atoi(str[18]);
+	status->size = atoi(str[19]);
+	status->race = atoi(str[20]);
+
+	ele = atoi(str[21]);
+	status->def_ele = ele%10;
+	status->ele_lv = ele/20;
+	if( status->def_ele >= ELE_MAX )
+	{
+		ShowWarning("Mercenary %d has invalid element type %d (max element is %d)\n", db->class_, status->def_ele, ELE_MAX - 1);
+		status->def_ele = ELE_NEUTRAL;
+	}
+	if( status->ele_lv < 1 || status->ele_lv > 4 )
+	{
+		ShowWarning("Mercenary %d has invalid element level %d (max is 4)\n", db->class_, status->ele_lv);
+		status->ele_lv = 1;
+	}
+
+	status->aspd_rate = 1000;
+	status->speed = atoi(str[22]);
+	status->adelay = atoi(str[23]);
+	status->amotion = atoi(str[24]);
+	status->dmotion = atoi(str[25]);
+
+	return true;
+}
+
+int read_mercenarydb(void)
+{
 	memset(mercenary_db,0,sizeof(mercenary_db));
-
-	fp = fopen(line, "r");
-	if( !fp )
-	{
-		ShowError("read_mercenarydb : can't read mercenary_db.txt\n");
-		return -1;
-	}
-
-	while( fgets(line, sizeof(line), fp) && j < MAX_MERCENARY_CLASS )
-	{
-		k++;
-		if( line[0] == '/' && line[1] == '/' )
-			continue;
-
-		i = 0;
-		p = strtok(line, ",");
-		while( p != NULL && i < 26 )
-		{
-			str[i++] = p;
-			p = strtok(NULL, ",");
-		}
-		if( i < 26 )
-		{
-			ShowError("read_mercenarydb : Incorrect number of columns at mercenary_db.txt line %d.\n", k);
-			continue;
-		}
-
-		db = &mercenary_db[j];
-		db->class_ = atoi(str[0]);
-		strncpy(db->sprite, str[1], NAME_LENGTH);
-		strncpy(db->name, str[2], NAME_LENGTH);
-		db->lv = atoi(str[3]);
-
-		status = &db->status;
-		db->vd.class_ = db->class_;
-
-		status->max_hp = atoi(str[4]);
-		status->max_sp = atoi(str[5]);
-		status->rhw.range = atoi(str[6]);
-		status->rhw.atk = atoi(str[7]);
-		status->rhw.atk2 = status->rhw.atk + atoi(str[8]);
-		status->def = atoi(str[9]);
-		status->mdef = atoi(str[10]);
-		status->str = atoi(str[11]);
-		status->agi = atoi(str[12]);
-		status->vit = atoi(str[13]);
-		status->int_ = atoi(str[14]);
-		status->dex = atoi(str[15]);
-		status->luk = atoi(str[16]);
-		db->range2 = atoi(str[17]);
-		db->range3 = atoi(str[18]);
-		status->size = atoi(str[19]);
-		status->race = atoi(str[20]);
-	
-		ele = atoi(str[21]);
-		status->def_ele = ele%10;
-		status->ele_lv = ele/20;
-		if( status->def_ele >= ELE_MAX )
-		{
-			ShowWarning("Mercenary %d has invalid element type %d (max element is %d)\n", db->class_, status->def_ele, ELE_MAX - 1);
-			status->def_ele = ELE_NEUTRAL;
-		}
-		if( status->ele_lv < 1 || status->ele_lv > 4 )
-		{
-			ShowWarning("Mercenary %d has invalid element level %d (max is 4)\n", db->class_, status->ele_lv);
-			status->ele_lv = 1;
-		}
-
-		status->aspd_rate = 1000;
-		status->speed = atoi(str[22]);
-		status->adelay = atoi(str[23]);
-		status->amotion = atoi(str[24]);
-		status->dmotion = atoi(str[25]);
-
-		j++;
-	}
-
-	fclose(fp);
-	ShowStatus("Done reading '"CL_WHITE"%d"CL_RESET"' mercenaries in '"CL_WHITE"db/mercenary_db.txt"CL_RESET"'.\n",j);
+	sv_readdb(db_path, "mercenary_db.txt", ',', 26, 26, MAX_MERCENARY_CLASS, &read_mercenarydb_sub);
 
 	return 0;
 }
 
-int read_mercenary_skilldb(void)
-{
-	FILE *fp;
-	char line[1024], *p;
-	char *str[3];
+static bool read_mercenary_skilldb_sub(char* str[], int columns, int current)
+{// <merc id>,<skill id>,<skill level>
 	struct s_mercenary_db *db;
-	int i, j = 0, k = 0, class_;
+	int i, class_;
 	int skillid, skilllv;
 
-	sprintf(line, "%s/%s", db_path, "mercenary_skill_db.txt");
-	fp = fopen(line, "r");
-	if( !fp )
+	class_ = atoi(str[0]);
+	ARR_FIND(0, MAX_MERCENARY_CLASS, i, class_ == mercenary_db[i].class_);
+	if( i == MAX_MERCENARY_CLASS )
 	{
-		ShowError("read_mercenary_skilldb : can't read mercenary_skill_db.txt\n");
-		return -1;
+		ShowError("read_mercenary_skilldb : Class %d not found in mercenary_db for skill entry.\n", class_);
+		return false;
+	}
+	
+	skillid = atoi(str[1]);
+	if( skillid < MC_SKILLBASE || skillid >= MC_SKILLBASE + MAX_MERCSKILL )
+	{
+		ShowError("read_mercenary_skilldb : Skill %d out of range.\n", skillid);
+		return false;
 	}
 
-	while( fgets(line, sizeof(line), fp) )
-	{
-		k++;
-		if( line[0] == '/' && line[1] == '/' )
-			continue;
+	db = &mercenary_db[i];
+	skilllv = atoi(str[2]);
 
-		i = 0;
-		p = strtok(line, ",");
-		while( p != NULL && i < 3 )
-		{
-			str[i++] = p;
-			p = strtok(NULL, ",");
-		}
-		if( i < 3 )
-		{
-			ShowError("read_mercenary_skilldb : Incorrect number of columns at mercenary_skill_db.txt line %d.\n", k);
-			continue;
-		}
+	i = skillid - MC_SKILLBASE;
+	db->skill[i].id = skillid;
+	db->skill[i].lv = skilllv;
 
-		class_ = atoi(str[0]);
-		ARR_FIND(0, MAX_MERCENARY_CLASS, i, class_ == mercenary_db[i].class_);
-		if( i == MAX_MERCENARY_CLASS )
-		{
-			ShowError("read_mercenary_skilldb : Class not found in mercenary_db for skill entry, line %d.\n", k);
-			continue;
-		}
-		
-		skillid = atoi(str[1]);
-		if( skillid < MC_SKILLBASE || skillid >= MC_SKILLBASE + MAX_MERCSKILL )
-		{
-			ShowError("read_mercenary_skilldb : Skill out of range, line %d.\n", k);
-			continue;
-		}
+	return true;
+}
 
-		db = &mercenary_db[i];
-		skilllv = atoi(str[2]);
+int read_mercenary_skilldb(void)
+{
+	sv_readdb(db_path, "mercenary_skill_db.txt", ',', 3, 3, -1, &read_mercenary_skilldb_sub);
 
-		i = skillid - MC_SKILLBASE;
-		db->skill[i].id = skillid;
-		db->skill[i].lv = skilllv;
-		j++;
-	}
-
-	fclose(fp);
-	ShowStatus("Done reading '"CL_WHITE"%d"CL_RESET"' entries in '"CL_WHITE"db/mercenary_skill_db.txt"CL_RESET"'.\n",j);
 	return 0;
 }
 

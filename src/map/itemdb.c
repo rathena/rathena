@@ -471,46 +471,32 @@ int itemdb_isidentified(int nameid)
 /*==========================================
  * アイテム使用可能フラグのオーバーライド
  *------------------------------------------*/
-static int itemdb_read_itemavail (void)
-{
-	FILE *fp;
-	int nameid, j, k, ln = 0;
-	char line[1024], *str[10], *p;
+static bool itemdb_read_itemavail(char* str[], int columns, int current)
+{// <nameid>,<sprite>
+	int nameid, sprite;
 	struct item_data *id;
 
-	sprintf(line, "%s/item_avail.txt", db_path);
-	if ((fp = fopen(line,"r")) == NULL) {
-		ShowError("can't read %s\n", line);
-		return -1;
-	}
+	nameid = atoi(str[0]);
 
-	while(fgets(line, sizeof(line), fp))
+	if( ( id = itemdb_exists(nameid) ) == NULL )
 	{
-		if (line[0] == '/' && line[1] == '/')
-			continue;
-		memset(str, 0, sizeof(str));
-		for (j = 0, p = line; j < 2 && p; j++) {
-			str[j] = p;
-			p = strchr(p, ',');
-			if(p) *p++ = 0;
-		}
-
-		if (j < 2 || str[0] == NULL ||
-			(nameid = atoi(str[0])) < 0 || !(id = itemdb_exists(nameid)))
-			continue;
-
-		k = atoi(str[1]);
-		if (k > 0) {
-			id->flag.available = 1;
-			id->view_id = k;
-		} else
-			id->flag.available = 0;
-		ln++;
+		ShowWarning("itemdb_read_itemavail: Invalid item id %d.\n", nameid);
+		return false;
 	}
-	fclose(fp);
-	ShowStatus("Done reading '"CL_WHITE"%d"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n", ln, "item_avail.txt");
 
-	return 0;
+	sprite = atoi(str[1]);
+
+	if( sprite > 0 )
+	{
+		id->flag.available = 1;
+		id->view_id = sprite;
+	}
+	else
+	{
+		id->flag.available = 0;
+	}
+
+	return true;
 }
 
 /*==========================================
@@ -591,137 +577,90 @@ static void itemdb_read_itemgroup(void)
 /*==========================================
  * 装備制限ファイル読み出し
  *------------------------------------------*/
-static int itemdb_read_noequip(void)
-{
-	FILE *fp;
-	char line[1024];
-	int ln=0;
-	int nameid,j;
-	char *str[32],*p;
+static bool itemdb_read_noequip(char* str[], int columns, int current)
+{// <nameid>,<mode>
+	int nameid;
 	struct item_data *id;
 
-	sprintf(line, "%s/item_noequip.txt", db_path);
-	if( (fp=fopen(line,"r"))==NULL ){
-		ShowError("can't read %s\n", line);
-		return -1;
-	}
-	while(fgets(line, sizeof(line), fp))
+	nameid = atoi(str[0]);
+
+	if( ( id = itemdb_exists(nameid) ) == NULL )
 	{
-		if(line[0]=='/' && line[1]=='/')
-			continue;
-		memset(str,0,sizeof(str));
-		for(j=0,p=line;j<2 && p;j++){
-			str[j]=p;
-			p=strchr(p,',');
-			if(p) *p++=0;
-		}
-		if(str[0]==NULL)
-			continue;
-
-		nameid=atoi(str[0]);
-		if(nameid<=0 || !(id=itemdb_exists(nameid)))
-			continue;
-
-		id->flag.no_equip |= atoi(str[1]);
-
-		ln++;
-
+		ShowWarning("itemdb_read_noequip: Invalid item id %d.\n", nameid);
+		return false;
 	}
-	fclose(fp);
-	if (ln > 0) {
-		ShowStatus("Done reading '"CL_WHITE"%d"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n",ln,"item_noequip.txt");
-	}	
-	return 0;
+
+	id->flag.no_equip |= atoi(str[1]);
+
+	return true;
 }
 
 /*==========================================
  * Reads item trade restrictions [Skotlex]
  *------------------------------------------*/
-static int itemdb_read_itemtrade(void)
-{
-	FILE *fp;
-	int nameid, j, flag, gmlv, ln = 0;
-	char line[1024], *str[10], *p;
+static bool itemdb_read_itemtrade(char* str[], int columns, int current)
+{// <nameid>,<mask>,<gm level>
+	int nameid, flag, gmlv;
 	struct item_data *id;
 
-	sprintf(line, "%s/item_trade.txt", db_path);
-	if ((fp = fopen(line,"r")) == NULL) {
-		ShowError("can't read %s\n", line);
-		return -1;
-	}
+	nameid = atoi(str[0]);
 
-	while(fgets(line, sizeof(line), fp))
+	if( ( id = itemdb_exists(nameid) ) == NULL )
 	{
-		if (line[0] == '/' && line[1] == '/')
-			continue;
-		memset(str, 0, sizeof(str));
-		for (j = 0, p = line; j < 3 && p; j++) {
-			str[j] = p;
-			p = strchr(p, ',');
-			if(p) *p++ = 0;
-		}
-
-		if (j < 3 || str[0] == NULL ||
-			(nameid = atoi(str[0])) < 0 || !(id = itemdb_exists(nameid)))
-			continue;
-
-		flag = atoi(str[1]);
-		gmlv = atoi(str[2]);
-		
-		if (flag > 0 && flag < 128 && gmlv > 0) { //Check range
-			id->flag.trade_restriction = flag;
-			id->gm_lv_trade_override = gmlv;
-			ln++;
-		}
+		//ShowWarning("itemdb_read_itemtrade: Invalid item id %d.\n", nameid);
+		//return false;
+		// FIXME: item_trade.txt contains items, which are commented in item database.
+		return true;
 	}
-	fclose(fp);
-	ShowStatus("Done reading '"CL_WHITE"%d"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n", ln, "item_trade.txt");
 
-	return 0;
+	flag = atoi(str[1]);
+	gmlv = atoi(str[2]);
+
+	if( flag < 0 || flag >= 128 )
+	{//Check range
+		ShowWarning("itemdb_read_itemtrade: Invalid trading mask %d for item id %d.\n", flag, nameid);
+		return false;
+	}
+
+	if( gmlv < 1 )
+	{
+		ShowWarning("itemdb_read_itemtrade: Invalid override GM level %d for item id %d.\n", gmlv, nameid);
+		return false;
+	}
+
+	id->flag.trade_restriction = flag;
+	id->gm_lv_trade_override = gmlv;
+
+	return true;
 }
 
 /*==========================================
  * Reads item delay amounts [Paradox924X]
  *------------------------------------------*/
-static int itemdb_read_itemdelay(void)
-{
-	FILE *fp;
-	int nameid, j, item_delays = 0;
-	char line[1024], *str[10], *p;
+static bool itemdb_read_itemdelay(char* str[], int columns, int current)
+{// <nameid>,<delay>
+	int nameid, delay;
 	struct item_data *id;
 
-	sprintf(line, "%s/item_delay.txt", db_path);
-	if ((fp = fopen(line,"r")) == NULL) {
-		ShowError("can't read %s\n", line);
-		return -1;
-	}
+	nameid = atoi(str[0]);
 
-	while(fgets(line, sizeof(line), fp))
+	if( ( id = itemdb_exists(nameid) ) == NULL )
 	{
-		if (line[0] == '/' && line[1] == '/')
-			continue;
-		if (item_delays == MAX_ITEMDELAYS) {
-			ShowError("itemdb_read_itemdelay: Too many entries specified in %s/item_delay.txt! Increase MAX_ITEMDELAYS in itemdb.h!\n", db_path);
-			break;
-		}
-		memset(str, 0, sizeof(str));
-		for (j = 0, p = line; j < 2 && p; j++) {
-			str[j] = p;
-			p = strchr(p, ',');
-			if(p) *p++ = 0;
-		}
-
-		if (j < 2 || str[0] == NULL ||
-			(nameid = atoi(str[0])) < 0 || !(id = itemdb_exists(nameid)))
-			continue;
-
-		id->delay = atoi(str[1]);
-		item_delays++;
+		ShowWarning("itemdb_read_itemdelay: Invalid item id %d.\n", nameid);
+		return false;
 	}
-	fclose(fp);
-	ShowStatus("Done reading '"CL_WHITE"%d"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n", item_delays, "item_delay.txt");
 
-	return 0;
+	delay = atoi(str[1]);
+
+	if( delay < 0 )
+	{
+		ShowWarning("itemdb_read_itemdelay: Invalid delay %d for item id %d.\n", id->delay, nameid);
+		return false;
+	}
+
+	id->delay = delay;
+
+	return true;
 }
 
 /*======================================
@@ -1036,10 +975,10 @@ static void itemdb_read(void)
 		itemdb_readdb();
 
 	itemdb_read_itemgroup();
-	itemdb_read_itemavail();
-	itemdb_read_noequip();
-	itemdb_read_itemtrade();
-	itemdb_read_itemdelay();
+	sv_readdb(db_path, "item_avail.txt",   ',', 2, 2, -1,             &itemdb_read_itemavail);
+	sv_readdb(db_path, "item_noequip.txt", ',', 2, 2, -1,             &itemdb_read_noequip);
+	sv_readdb(db_path, "item_trade.txt",   ',', 3, 3, -1,             &itemdb_read_itemtrade);
+	sv_readdb(db_path, "item_delay.txt",   ',', 2, 2, MAX_ITEMDELAYS, &itemdb_read_itemdelay);
 }
 
 /*==========================================

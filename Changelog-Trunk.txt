@@ -1,6 +1,8 @@
 Date	Added
 
 2010/12/29
+	* Made remaining csv databases (guild, castle, homunculus, itemdb, mercenary) use sv_readdb, where applicable (follow up to r14524, r14526 and r14532). [Ai4rei]
+	- Few databases remain unchanged, which have either a custom layout or are otherwise incompatible with sv_readdb.
 	* Collection of random insignificant changes. [Ai4rei]
 	- Added progress indication on map-server shutdown when objects are removed from maps, as it takes significant amount of time to complete.
 	- Moved ers_free in db_obj_vclear, so that the node pointer is not used for comparison after it has been freed.
