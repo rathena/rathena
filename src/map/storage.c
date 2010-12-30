@@ -393,10 +393,11 @@ int guild_storage_additem(struct map_session_data* sd, struct guild_storage* sto
 	nullpo_retr(1, sd);
 	nullpo_retr(1, stor);
 	nullpo_retr(1, item_data);
-	nullpo_retr(1, data = itemdb_search(item_data->nameid));
 
 	if(item_data->nameid <= 0 || amount <= 0)
 		return 1;
+
+	data = itemdb_search(item_data->nameid);
 
 	if( !itemdb_canguildstore(item_data, pc_isGM(sd)) || item_data->expire_time )
 	{	//Check if item is storable. [Skotlex]

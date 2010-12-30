@@ -12586,7 +12586,7 @@ void clif_Mail_read(struct map_session_data *sd, int mail_id)
 		WFIFOL(fd,72) = 0;
 		WFIFOL(fd,76) = msg->zeny;
 
-		if( item->nameid && (data = itemdb_search(item->nameid)) != NULL )
+		if( item->nameid && (data = itemdb_exists(item->nameid)) != NULL )
 		{
 			WFIFOL(fd,80) = item->amount;
 			WFIFOW(fd,84) = (data->view_id)?data->view_id:item->nameid;
@@ -12652,7 +12652,7 @@ void clif_parse_Mail_getattach(int fd, struct map_session_data *sd)
 		struct item_data *data;
 		unsigned int weight;
 
-		if ((data = itemdb_search(sd->mail.inbox.msg[i].item.nameid)) == NULL)
+		if ((data = itemdb_exists(sd->mail.inbox.msg[i].item.nameid)) == NULL)
 			return;
 
 		switch( pc_checkadditem(sd, data->nameid, sd->mail.inbox.msg[i].item.amount) )
@@ -12865,7 +12865,7 @@ void clif_Auction_results(struct map_session_data *sd, short count, short pages,
 		WFIFOL(fd,k) = auction.auction_id;
 		safestrncpy((char*)WFIFOP(fd,4+k), auction.seller_name, NAME_LENGTH);
 
-		if( (item = itemdb_search(auction.item.nameid)) != NULL && item->view_id > 0 )
+		if( (item = itemdb_exists(auction.item.nameid)) != NULL && item->view_id > 0 )
 			WFIFOW(fd,28+k) = item->view_id;
 		else
 			WFIFOW(fd,28+k) = auction.item.nameid;
@@ -12926,7 +12926,7 @@ void clif_parse_Auction_setitem(int fd, struct map_session_data *sd)
 		return;
 	}
 
-	if( (item = itemdb_search(sd->status.inventory[idx].nameid)) != NULL && !(item->type == IT_ARMOR || item->type == IT_PETARMOR || item->type == IT_WEAPON || item->type == IT_CARD || item->type == IT_ETC) )
+	if( (item = itemdb_exists(sd->status.inventory[idx].nameid)) != NULL && !(item->type == IT_ARMOR || item->type == IT_PETARMOR || item->type == IT_WEAPON || item->type == IT_CARD || item->type == IT_ETC) )
 	{ // Consumible or pets are not allowed
 		clif_Auction_setitem(sd->fd, idx, true);
 		return;
@@ -13027,7 +13027,7 @@ void clif_parse_Auction_register(int fd, struct map_session_data *sd)
 		return;
 	}
 
-	if( (item = itemdb_search(sd->status.inventory[sd->auction.index].nameid)) == NULL )
+	if( (item = itemdb_exists(sd->status.inventory[sd->auction.index].nameid)) == NULL )
 	{ // Just in case
 		clif_Auction_message(fd, 2); // The auction has been canceled
 		return;

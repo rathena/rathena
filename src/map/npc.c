@@ -1183,7 +1183,7 @@ int npc_cashshop_buy(struct map_session_data *sd, int nameid, int amount, int po
 	if( sd->state.trading )
 		return 4;
 
-	if( (item = itemdb_search(nameid)) == NULL )
+	if( (item = itemdb_exists(nameid)) == NULL )
 		return 5; // Invalid Item
 
 	ARR_FIND(0, nd->u.shop.count, i, nd->u.shop.shop_item[i].nameid == nameid);

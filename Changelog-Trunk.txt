@@ -1,5 +1,7 @@
 Date	Added
 
+2010/12/30
+	* Fixed improper use of itemdb_search. It does not return NULL but a dummy item, if the item id is invalid. [Ai4rei]
 2010/12/29
 	* Made remaining csv databases (guild, castle, homunculus, itemdb, mercenary) use sv_readdb, where applicable (follow up to r14524, r14526 and r14532). [Ai4rei]
 	- Few databases remain unchanged, which have either a custom layout or are otherwise incompatible with sv_readdb.

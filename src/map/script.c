@@ -12312,7 +12312,7 @@ BUILDIN_FUNC(autoequip)
 	struct item_data *item_data;
 	nameid=script_getnum(st,2);
 	flag=script_getnum(st,3);
-	if(nameid>=500 && (item_data = itemdb_search(nameid)) != NULL){
+	if(nameid>=500 && (item_data = itemdb_exists(nameid)) != NULL){
 		item_data->flag.autoequip = flag>0?1:0;
 	}
 	return 0;

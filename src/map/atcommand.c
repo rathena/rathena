@@ -6986,7 +6986,7 @@ ACMD_FUNC(mobinfo)
 		strcpy(atcmd_output, " ");
 		j = 0;
 		for (i = 0; i < MAX_MOB_DROP; i++) {
-			if (mob->dropitem[i].nameid <= 0 || mob->dropitem[i].p < 1 || (item_data = itemdb_search(mob->dropitem[i].nameid)) == NULL)
+			if (mob->dropitem[i].nameid <= 0 || mob->dropitem[i].p < 1 || (item_data = itemdb_exists(mob->dropitem[i].nameid)) == NULL)
 				continue;
 			if (item_data->slot)
 				sprintf(atcmd_output2, " - %s[%d]  %02.02f%%", item_data->jname, item_data->slot, (float)mob->dropitem[i].p / 100);
@@ -7009,7 +7009,7 @@ ACMD_FUNC(mobinfo)
 			strcpy(atcmd_output, " MVP Items:");
 			j = 0;
 			for (i = 0; i < 3; i++) {
-				if (mob->mvpitem[i].nameid <= 0 || (item_data = itemdb_search(mob->mvpitem[i].nameid)) == NULL)
+				if (mob->mvpitem[i].nameid <= 0 || (item_data = itemdb_exists(mob->mvpitem[i].nameid)) == NULL)
 					continue;
 				if (mob->mvpitem[i].p > 0) {
 					j++;
@@ -8323,7 +8323,7 @@ ACMD_FUNC(itemlist)
 		const struct item* it = &items[i];
 		struct item_data* itd;
 
-		if( it->nameid == 0 || (itd = itemdb_search(it->nameid)) == NULL )
+		if( it->nameid == 0 || (itd = itemdb_exists(it->nameid)) == NULL )
 			continue;
 
 		counter += it->amount;
@@ -8406,7 +8406,7 @@ ACMD_FUNC(itemlist)
 			{
 				struct item_data* card;
 
-				if( it->card[j] == 0 || (card = itemdb_search(it->card[j])) == NULL )
+				if( it->card[j] == 0 || (card = itemdb_exists(it->card[j])) == NULL )
 					continue;
 
 				counter2++;
