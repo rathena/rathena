@@ -1,5 +1,7 @@
 Date	Added
 
+2010/12/30
+	* Fixed a nullpo crash in pc_gainexp when receiving exp though script command getexp (topic:262958, since r14625). [Ai4rei]
 2010/12/27
 	* Added item stacking limit database (item_stack.txt) required for runes and other 3rd class related skill items. [Ai4rei]
 	* Merged fixes from trunk for script command 'checkweight' (r14631) and skill-based item production (r14633). [Ai4rei]
