@@ -9,6 +9,7 @@
 	13005 Angelic Wing Dagger:	NEED INFO.
 =======================
 2010/12/30
+	* Rev. 14643 Updated mapcache up to 2010-12-01. Adds Bifrost, Dewata and Malangdo maps. [Ai4rei]
 	* Rev. 14641 Bug fixes. Not much else. :3
 	- Lowered the required level to equip Expert Ring from 90 to 50. (bugreport:2853)
 	- Changed equip location for Odin mask, and made it non-refinable. (bugreport:4221)

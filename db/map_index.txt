@@ -791,6 +791,26 @@ job3_sha01
 //ac_cl_room
 //jp_s_dun11
 
+mora
+bif_fild01
+bif_fild02
+1@mist
+dewata
+dew_in01
+dew_fild01
+dew_dun01
+dew_dun02
+que_house_s
+malangdo
+mal_in01
+mal_in02
+mal_dun01
+1@pump
+2@pump
+1@cash
+iz_dun05
+evt_mobroom
+
 // Only add maps under this line if they are not standard maps!
 
 

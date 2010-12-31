@@ -1,5 +1,7 @@
 Date	Added
 
+2010/12/30
+	* Rev. 14643 Updated mapcache up to 2010-12-01. Adds Bifrost, Dewata and Malangdo maps. [Ai4rei]
 2010/12/12
 	* Rev. 14587 Corrected wording of the setting homunculus_autoloot (since r12203). [Ai4rei]
 2010/12/10
