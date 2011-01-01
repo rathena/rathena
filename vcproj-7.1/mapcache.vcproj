@@ -20,7 +20,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="..\3rdparty\zlib\include;..\3rdparty\msinttypes\include"
-				PreprocessorDefinitions="WIN32;_WIN32;__WIN32;_DEBUG"
+				PreprocessorDefinitions="WIN32;_WIN32;__WIN32;_DEBUG;MINICORE"
 				MinimalRebuild="TRUE"
 				ExceptionHandling="FALSE"
 				BasicRuntimeChecks="3"
@@ -87,7 +87,7 @@
 				OptimizeForProcessor="2"
 				OptimizeForWindowsApplication="TRUE"
 				AdditionalIncludeDirectories="..\3rdparty\zlib\include;..\3rdparty\msinttypes\include"
-				PreprocessorDefinitions="WIN32;_WIN32;__WIN32;NDEBUG"
+				PreprocessorDefinitions="WIN32;_WIN32;__WIN32;NDEBUG;MINICORE"
 				StringPooling="TRUE"
 				RuntimeLibrary="3"
 				DefaultCharIsUnsigned="FALSE"
@@ -138,14 +138,57 @@
 	</References>
 	<Files>
 		<Filter
-			Name="mapcache"
+			Name="common"
 			Filter="">
 			<File
-				RelativePath="..\src\tool\grfio.c">
+				RelativePath="..\src\common\cbasetypes.h">
 			</File>
 			<File
-				RelativePath="..\src\tool\grfio.h">
+				RelativePath="..\src\common\core.c">
 			</File>
+			<File
+				RelativePath="..\src\common\core.h">
+			</File>
+			<File
+				RelativePath="..\src\common\grfio.c">
+			</File>
+			<File
+				RelativePath="..\src\common\grfio.h">
+			</File>
+			<File
+				RelativePath="..\src\common\malloc.c">
+			</File>
+			<File
+				RelativePath="..\src\common\malloc.h">
+			</File>
+			<File
+				RelativePath="..\src\common\mmo.h">
+			</File>
+			<File
+				RelativePath="..\src\common\showmsg.c">
+			</File>
+			<File
+				RelativePath="..\src\common\showmsg.h">
+			</File>
+			<File
+				RelativePath="..\src\common\strlib.c">
+			</File>
+			<File
+				RelativePath="..\src\common\strlib.h">
+			</File>
+			<File
+				RelativePath="..\src\common\utils.c">
+			</File>
+			<File
+				RelativePath="..\src\common\utils.h">
+			</File>
+			<File
+				RelativePath="..\src\common\version.h">
+			</File>
+		</Filter>
+		<Filter
+			Name="mapcache"
+			Filter="">
 			<File
 				RelativePath="..\src\tool\mapcache.c">
 			</File>

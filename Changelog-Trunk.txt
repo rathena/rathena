@@ -1,5 +1,10 @@
 Date	Added
 
+2011/01/01
+	* Updates to map cache generator tool. [Ai4rei]
+	- Removed unmaintained grfio library copy and made the tool use the one in /common instead (related r12726).
+	- Updated makefile to use compile options/libraries determined by configure (bugreport:1109).
+	- Fixed error messages from the tool and grfio library overlapping each other (bugreport:2403).
 2010/12/31
 	* Pending trade requests no longer prevent a character from trading someone else instead (official). [Ai4rei]
 	- This fixes trade window displaying wrong name when attempting to deal multiple characters (bugreport:344).
