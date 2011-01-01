@@ -1,5 +1,8 @@
 Date	Added
 
+2010/12/31
+	* Pending trade requests no longer prevent a character from trading someone else instead (official). [Ai4rei]
+	- This fixes trade window displaying wrong name when attempting to deal multiple characters (bugreport:344).
 2010/12/30
 	* Fixed improper use of itemdb_search. It does not return NULL but a dummy item, if the item id is invalid. [Ai4rei]
 2010/12/29

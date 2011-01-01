@@ -56,7 +56,7 @@ void trade_traderequest(struct map_session_data *sd, struct map_session_data *ta
 		}
 	}
 
-	if ((target_sd->trade_partner != 0) || (sd->trade_partner != 0)) {
+	if (target_sd->trade_partner != 0) {
 		clif_tradestart(sd, 2); // person is in another trade
 		return;
 	}
@@ -110,6 +110,7 @@ void trade_tradeack(struct map_session_data *sd, int type)
 	if (tsd->state.trading || tsd->trade_partner != sd->bl.id)
 	{
 		clif_tradestart(sd, 2);
+		sd->trade_partner=0;
 		return; //Already trading or wrong partner.
 	}
 
