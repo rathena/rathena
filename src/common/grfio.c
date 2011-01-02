@@ -13,6 +13,7 @@
 #include "../common/showmsg.h"
 #include "../common/malloc.h"
 #include "../common/strlib.h"
+#include "../common/utils.h"
 
 
 //----------------------------
@@ -458,7 +459,7 @@ void* grfio_reads(char* fname, int* size)
 		char lfname[256];
 		int declen;
 
-		grfio_localpath_create(lfname, sizeof(lfname), fname);
+		grfio_localpath_create(lfname, sizeof(lfname), ( entry && entry->fnd ) ? entry->fnd : fname);
 
 		in = fopen(lfname, "rb");
 		if (in != NULL) {
@@ -708,9 +709,10 @@ static int grfio_entryread(char* grfname, int gentry)
  *------------------------------------------*/
 static void grfio_resourcecheck(void)
 {
-	char w1[256], w2[256], src[256], dst[256], restable[256], line[256];
+	char w1[256], w2[256], src[256], dst[256], restable[256], line[256], local[256];
 	char *ptr, *buf;
 	FILELIST* entry;
+	FILELIST fentry;
 	int size;
 	FILE* fp;
 	int i = 0;
@@ -732,12 +734,25 @@ static void grfio_resourcecheck(void)
 				// create new entries reusing the original's info
 				if (entry != NULL)
 				{// alias for GRF resource
-					FILELIST fentry;
 					memcpy(&fentry, entry, sizeof(FILELIST));
 					safestrncpy(fentry.fn, src, sizeof(fentry.fn));
 					fentry.fnd = aStrdup(dst);
 					filelist_modify(&fentry);
 					i++;
+				}
+				else
+				{
+					grfio_localpath_create(local, sizeof(local), dst);
+
+					if( exists(local) )
+					{// alias for local resource
+						memset(&fentry, 0, sizeof(fentry));
+						//fentry.gentry = 0;
+						safestrncpy(fentry.fn, src, sizeof(fentry.fn));
+						fentry.fnd = aStrdup(dst);
+						filelist_modify(&fentry);
+						i++;
+					}
 				}
 			}
 		}
@@ -761,12 +776,25 @@ static void grfio_resourcecheck(void)
 				entry = filelist_find(dst);
 				if (entry != NULL)
 				{// alias for GRF resource
-					FILELIST fentry;
 					memcpy(&fentry, entry, sizeof(FILELIST));
 					safestrncpy(fentry.fn, src, sizeof(fentry.fn));
 					fentry.fnd = aStrdup(dst);
 					filelist_modify(&fentry);
 					i++;
+				}
+				else
+				{
+					grfio_localpath_create(local, sizeof(local), dst);
+
+					if( exists(local) )
+					{// alias for local resource
+						memset(&fentry, 0, sizeof(fentry));
+						//fentry.gentry = 0;
+						safestrncpy(fentry.fn, src, sizeof(fentry.fn));
+						fentry.fnd = aStrdup(dst);
+						filelist_modify(&fentry);
+						i++;
+					}
 				}
 			}
 			ptr = strchr(ptr, '\n');	// Next line

@@ -1,6 +1,7 @@
 Date	Added
 
 2011/01/01
+	* Fixed local files could not be aliased with resnametable.txt in grfio (bugreport:2203, since r5152). [Ai4rei]
 	* Cleanups to grfio. [Ai4rei]
 	- Replaced strncpy with safestrncpy (bugreport:3080).
 	- Ensured, that all local paths are normalized and work whether or not the data dir ends with '/'.
