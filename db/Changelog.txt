@@ -10,6 +10,7 @@
 =======================
 
 2011/01/04
+	* Rev. 14650 Shuffled around disabled headgears, more accurate to what is and isn't avaliable in kRO. Snuck in a few minor fixes. [L0ne_W0lf]
 	* Rev. 14649 Disabled monster BACSOJIN_T (1996) whose drop White Snake Hat (5411) is not enabled (was hidden by '//', which would cause errors now) (since r14412). [Ai4rei]
 2010/12/30
 	* Rev. 14643 Updated mapcache up to 2010-12-01. Adds Bifrost, Dewata and Malangdo maps. [Ai4rei]
