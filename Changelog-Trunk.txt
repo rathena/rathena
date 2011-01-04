@@ -1,5 +1,7 @@
 Date	Added
 
+2011/01/04
+	* Added support for removal of trailing comments to sv_readdb (bugreport:4680). [Ai4rei]
 2011/01/01
 	* Fixed local files could not be aliased with resnametable.txt in grfio (bugreport:2203, since r5152). [Ai4rei]
 	* Cleanups to grfio. [Ai4rei]

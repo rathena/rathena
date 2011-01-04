@@ -925,6 +925,7 @@ bool sv_readdb(const char* directory, const char* filename, char delim, int minc
 	char** fields; // buffer for fields ([0] is reserved)
 	int columns, fields_length;
 	char path[1024], line[1024];
+	char* match;
 
 	snprintf(path, sizeof(path), "%s/%s", directory, filename);
 
@@ -944,9 +945,12 @@ bool sv_readdb(const char* directory, const char* filename, char delim, int minc
 	while( fgets(line, sizeof(line), fp) )
 	{
 		lines++;
-		if( line[0] == '/' && line[1] == '/' )
-			continue;
-		//TODO: strip trailing // comment
+
+		if( ( match = strstr(line, "//") ) != NULL )
+		{// strip comments
+			match[0] = 0;
+		}
+
 		//TODO: strip trailing whitespace
 		if( line[0] == '\0' || line[0] == '\n' || line[0] == '\r')
 			continue;

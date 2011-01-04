@@ -8,6 +8,9 @@
 	1475 Equestrian's Spear:	NEED INFO.
 	13005 Angelic Wing Dagger:	NEED INFO.
 =======================
+
+2011/01/04
+	* Rev. 14649 Disabled monster BACSOJIN_T (1996) whose drop White Snake Hat (5411) is not enabled (was hidden by '//', which would cause errors now) (since r14412). [Ai4rei]
 2010/12/30
 	* Rev. 14643 Updated mapcache up to 2010-12-01. Adds Bifrost, Dewata and Malangdo maps. [Ai4rei]
 	* Rev. 14641 Bug fixes. Not much else. :3
