@@ -977,6 +977,23 @@ const char* parse_callfunc(const char* p, int require_paren)
 	return p;
 }
 
+/// Processes end of logical script line.
+/// @param first When true, only fix up scheduling data is initialized
+/// @param p Script position for error reporting in set_label
+static void parse_nextline(bool first, const char* p)
+{
+	if( !first )
+	{
+		add_scriptc(C_EOL);  // mark end of line for stack cleanup
+		set_label(LABEL_NEXTLINE, script_pos, p);  // fix up '-' labels
+	}
+
+	// initialize data for new '-' label fix up scheduling
+	str_data[LABEL_NEXTLINE].type      = C_NOP;
+	str_data[LABEL_NEXTLINE].backpatch = -1;
+	str_data[LABEL_NEXTLINE].label     = -1;
+}
+
 /*==========================================
  * 項の解析
  *------------------------------------------*/
@@ -1546,7 +1563,8 @@ const char* parse_syntax(const char* p)
 
 				// if, for , while の閉じ判定
 				p = parse_syntax_close(p2 + 1);
-				return p;			}
+				return p;
+			}
 			else if(*p2 == '{')
 			{// function <name> <line/block of code>
 				char label[256];
@@ -1691,6 +1709,10 @@ const char* parse_syntax_close_sub(const char* p,int* flag)
 	} else if(syntax.curly[pos].type == TYPE_IF) {
 		const char *bp = p;
 		const char *p2;
+
+		// if-block and else-block end is a new line
+		parse_nextline(false, p);
+
 		// if 最終場所へ飛ばす
 		sprintf(label,"goto __IF%x_FIN;",syntax.curly[pos].index);
 		syntax.curly[syntax.curly_count++].type = TYPE_NULL;
@@ -1766,6 +1788,10 @@ const char* parse_syntax_close_sub(const char* p,int* flag)
 		if(*p != '(') {
 			disp_error_message("need '('",p);
 		}
+
+		// do-block end is a new line
+		parse_nextline(false, p);
+
 		sprintf(label,"__DO%x_FIN",syntax.curly[pos].index);
 		add_scriptl(add_str("jump_zero"));
 		add_scriptc(C_ARG);
@@ -1793,6 +1819,9 @@ const char* parse_syntax_close_sub(const char* p,int* flag)
 		syntax.curly_count--;
 		return p;
 	} else if(syntax.curly[pos].type == TYPE_FOR) {
+		// for-block end is a new line
+		parse_nextline(false, p);
+
 		// 次のループに飛ばす
 		sprintf(label,"goto __FR%x_NXT;",syntax.curly[pos].index);
 		syntax.curly[syntax.curly_count++].type = TYPE_NULL;
@@ -1806,6 +1835,9 @@ const char* parse_syntax_close_sub(const char* p,int* flag)
 		syntax.curly_count--;
 		return p;
 	} else if(syntax.curly[pos].type == TYPE_WHILE) {
+		// while-block end is a new line
+		parse_nextline(false, p);
+
 		// while 条件判断へ飛ばす
 		sprintf(label,"goto __WL%x_NXT;",syntax.curly[pos].index);
 		syntax.curly[syntax.curly_count++].type = TYPE_NULL;
@@ -1988,9 +2020,7 @@ struct script_code* parse_script(const char *src,const char *file,int line,int o
 	script_buf=(unsigned char *)aMalloc(SCRIPT_BLOCK_SIZE*sizeof(unsigned char));
 	script_pos=0;
 	script_size=SCRIPT_BLOCK_SIZE;
-	str_data[LABEL_NEXTLINE].type=C_NOP;
-	str_data[LABEL_NEXTLINE].backpatch=-1;
-	str_data[LABEL_NEXTLINE].label=-1;
+	parse_nextline(true, NULL);
 
 	// who called parse_script is responsible for clearing the database after using it, but just in case... lets clear it here
 	if( options&SCRIPT_USE_LABEL_DB )
@@ -2077,12 +2107,8 @@ struct script_code* parse_script(const char *src,const char *file,int line,int o
 		// 他は全部一緒くた
 		p=parse_line(p);
 		p=skip_space(p);
-		add_scriptc(C_EOL);
 
-		set_label(LABEL_NEXTLINE,script_pos,p);
-		str_data[LABEL_NEXTLINE].type=C_NOP;
-		str_data[LABEL_NEXTLINE].backpatch=-1;
-		str_data[LABEL_NEXTLINE].label=-1;
+		parse_nextline(false, p);
 	}
 
 	add_scriptc(C_NOP);
