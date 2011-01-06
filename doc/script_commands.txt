@@ -4,7 +4,7 @@
 //= A reference manual for the eAthena scripting language.
 //= Commands are sorted depending on their functionality.
 //===== Version ===========================================
-//= 3.34.20101217
+//= 3.35.20110106
 //=========================================================
 //= 1.0 - First release, filled will as much info as I could
 //=       remember or figure out, most likely there are errors,
@@ -153,6 +153,8 @@
 //=       behavior. [Ai4rei]
 //= 3.34.20101217
 //=       Spellcheck. [Ai4rei]
+//= 3.35.20110106
+//=       Removed bug warning from 'deletearray'. [Ai4rei]
 //=========================================================
 
 This document is a reference manual for all the scripting commands and functions 
@@ -2104,11 +2106,6 @@ array, shifting all the elements beyond this towards the beginning.
 // place, and move the other elements ups, so there are no gaps.
 
     deletearray @array[1],3
-
-IMPORTANT: deletarray is horribly broken since the earliest days of jAthena. It 
-tends to merrily remove much more variables than it's told to remove, which 
-makes it pretty much useless for anything other than removing an array from 
-memory entirely. This would be very handy, if it always worked. 
 
 ---------------------------------------
 

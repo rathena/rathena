@@ -1,6 +1,8 @@
 Date	Added
 
-2010/01/05
+2011/01/06
+	* Fixed script command 'deletearray' deleting incorrect amount of array elements from arrays with empty elements (bugreport:4628). [Ai4rei]
+2011/01/05
 	* Fixed ends of statement blocks missing script EOL processing, thus causing 'next line' label (-) to misbehave in statement blocks without additional curly braces (bugreport:4417, since r3422). [Ai4rei]
 2011/01/04
 	* Added support for removal of trailing comments to sv_readdb (bugreport:4680). [Ai4rei]

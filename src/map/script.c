@@ -5147,7 +5147,8 @@ BUILDIN_FUNC(deletearray)
 			return 0;// no player attached
 	}
 
-	end = getarraysize(st, id, start, is_string_variable(name), reference_getref(data));
+	end = SCRIPT_MAX_ARRAYSIZE;
+
 	if( start >= end )
 		return 0;// nothing to free
 
