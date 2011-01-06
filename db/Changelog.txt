@@ -9,6 +9,8 @@
 	13005 Angelic Wing Dagger:	NEED INFO.
 =======================
 
+2011/01/06
+	* Rev. 14653 Updated mapcache once more, because the one from r14643 contained official xmas versions of the town maps, now causing glitches after the xmas event on kRO ended. [Ai4rei]
 2011/01/04
 	* Rev. 14650 Shuffled around disabled headgears, more accurate to what is and isn't avaliable in kRO. Snuck in a few minor fixes. [L0ne_W0lf]
 	* Rev. 14649 Disabled monster BACSOJIN_T (1996) whose drop White Snake Hat (5411) is not enabled (was hidden by '//', which would cause errors now) (since r14412). [Ai4rei]
