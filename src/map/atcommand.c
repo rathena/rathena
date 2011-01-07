@@ -6095,7 +6095,7 @@ ACMD_FUNC(autoloot)
 }
 
 /*==========================================
- * @autolootitem
+ * @alootid
  *------------------------------------------*/
 ACMD_FUNC(autolootitem)
 {
@@ -6104,9 +6104,9 @@ ACMD_FUNC(autolootitem)
 	if (!message || !*message) {
 		if (sd->state.autolootid) {
 			sd->state.autolootid = 0;
-			clif_displaymessage(fd, "Autolootitem have been turned OFF.");
+			clif_displaymessage(fd, "Autolootitem has been turned OFF.");
 		} else
-			clif_displaymessage(fd, "Please, enter Item name or its ID (usage: @autolootitem <item_name_or_ID>).");
+			clif_displaymessage(fd, "Please, enter item name or it's ID (usage: @alootid <item_name_or_ID>).");
 
 		return -1;
 	}
@@ -6122,7 +6122,7 @@ ACMD_FUNC(autolootitem)
 
 	sd->state.autolootid = item_data->nameid; // Autoloot Activated
 
-	sprintf(atcmd_output, "Autolooting Item: '%s'/'%s' {%d}",
+	sprintf(atcmd_output, "Autolooting item: '%s'/'%s' (%d)",
 		item_data->name, item_data->jname, item_data->nameid);
 	clif_displaymessage(fd, atcmd_output);
 
