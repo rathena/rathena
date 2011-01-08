@@ -4123,7 +4123,7 @@ static bool mob_parse_row_mobskilldb(char** str, int columns, int current)
 			ms->target = MST_TARGET;
 		}
 	} else if (ms->target > MST_MASTER) {
-		ShowWarning("mob_parse_row_mobskilldb: Wrong mob skill target 'around' for non-ground skill %d (%s) for %s\n.",
+		ShowWarning("mob_parse_row_mobskilldb: Wrong mob skill target 'around' for non-ground skill %d (%s) for %s.\n",
 			ms->skill_id, skill_get_name(ms->skill_id),
 			mob_id < 0?"all mobs":mob_db_data[mob_id]->sprite);
 		ms->target = MST_TARGET;
