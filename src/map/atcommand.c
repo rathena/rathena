@@ -7115,19 +7115,18 @@ ACMD_FUNC(homlevel)
 
 	nullpo_retr(-1, sd);
 
-	if (!message || !*message) {
-		clif_displaymessage(fd, "Please, enter a level adjustment: (usage: @homlevel <+/- # of levels>.");
+	if ( !message || !*message || ( level = atoi(message) ) < 1 ) {
+		clif_displaymessage(fd, "Please, enter a level adjustment: (usage: @homlevel <# of levels to level up>.");
 		return -1;
 	}
-		
+
 	if ( !merc_is_hom_active(sd->hd) ) {
 		clif_displaymessage(fd, "You do not have a homunculus.");
 		return -1;
 	}
 
-	level = atoi(message);
 	hd = sd->hd;
-	
+
 	for (i = 1; i <= level && hd->exp_next; i++){
 		hd->homunculus.exp += hd->exp_next;
 		merc_hom_levelup(hd);

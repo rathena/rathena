@@ -1,8 +1,10 @@
 Date	Added
 
+2011/01/08
+	* Fixed @homlevel usage message stating, that deleveling is possible, although it is not (bugreport:1485, since r10272). [Ai4rei]
+	- The command now fails, if it is given a zero or negative value.
 2011/01/07
 	* Fixed @alootid using 'autolootitem' (internal name) in it's usage message (bugreport:1445, since r12203). [Ai4rei]
-	- Reworded the turn off message of @alootid.
 2011/01/06
 	* Fixed script command 'deletearray' deleting incorrect amount of array elements from arrays with empty elements (bugreport:4628). [Ai4rei]
 2011/01/05
