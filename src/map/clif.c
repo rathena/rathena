@@ -12098,20 +12098,20 @@ void clif_parse_FriendsListRemove(int fd, struct map_session_data *sd)
 }
 
 /*==========================================
- * /pvpinfo
+ * /pvpinfo (CZ_REQ_PVPPOINT & ZC_ACK_PVPPOINT)
+ * R 020f <char id>.L <account id>.L
+ * S 0210 <char id>.L <account id>.L <win point>.L <lose point>.L <point>.L
  *------------------------------------------*/
 void clif_parse_PVPInfo(int fd,struct map_session_data *sd)
 {
 	WFIFOHEAD(fd,packet_len(0x210));
 	WFIFOW(fd,0) = 0x210;
-	//WFIFOL(fd,2) = 0;	// not sure what for yet
-	//WFIFOL(fd,6) = 0;
+	WFIFOL(fd,2) = sd->status.char_id;
+	WFIFOL(fd,6) = sd->status.account_id;
 	WFIFOL(fd,10) = sd->pvp_won;	// times won
 	WFIFOL(fd,14) = sd->pvp_lost;	// times lost
 	WFIFOL(fd,18) = sd->pvp_point;
 	WFIFOSET(fd, packet_len(0x210));
-
-	return;
 }
 
 /*==========================================
@@ -14601,6 +14601,7 @@ static int packetdb_readdb(void)
 		{clif_parse_PartyBookingUpdateReq,"bookingupdatereq"},
 		{clif_parse_PartyBookingDeleteReq,"bookingdelreq"},
 #endif
+		{clif_parse_PVPInfo,"pvpinfo"},
 		{NULL,NULL}
 	};
 

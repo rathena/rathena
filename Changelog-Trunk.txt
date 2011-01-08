@@ -1,6 +1,8 @@
 Date	Added
 
 2011/01/08
+	* Applied fix provided by Valaris to make /pvpinfo actually work. (bugreport:1785, since r1602). [Ai4rei]
+	- Filled-in missing packet fields and documented the packet. Note, that this command does not show anything outside of PvP maps (client-side limitation).
 	* Fixed @homlevel usage message stating, that deleveling is possible, although it is not (bugreport:1485, since r10272). [Ai4rei]
 	- The command now fails, if it is given a zero or negative value.
 2011/01/07

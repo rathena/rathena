@@ -506,7 +506,7 @@ packet_ver: 9
 0x0214,42
 
 //2004-08-17aSakexe
-0x020f,10
+0x020f,10,pvpinfo,2:6
 0x0210,22
 
 //2004-09-06aSakexe
