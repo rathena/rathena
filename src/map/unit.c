@@ -939,8 +939,6 @@ int unit_skilluse_id2(struct block_list *src, int target_id, short skill_num, sh
 		if(skillnotok(skill_num, sd)) // [MouseJstr]
 			return 0;
 
-		mob_ksprotected(src, map_id2bl(target_id));
-
 		switch(skill_num)
 		{	//Check for skills that auto-select target
 		case MO_CHAINCOMBO:
@@ -985,6 +983,9 @@ int unit_skilluse_id2(struct block_list *src, int target_id, short skill_num, sh
 		target = map_id2bl(target_id);
 
 	if( !target || src->m != target->m || !src->prev || !target->prev )
+		return 0;
+
+	if( mob_ksprotected(src, target) )
 		return 0;
 
 	//Normally not needed because clif.c checks for it, but the at/char/script commands don't! [Skotlex]
