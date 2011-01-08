@@ -1,6 +1,7 @@
 Date	Added
 
 2011/01/08
+	* Fixed script command 'progressbar' resuming fails on second invocation, when there was no script pause between the first and second call (bugreport:4698, since r14024). [Ai4rei]
 	* Fixed kill steal protection result in skill casting (unit_skilluse_id2) not getting evaluated (bugreport:1808, since r12203). [Ai4rei]
 	- Moved kill steal protection in skill casting to be only executed, after the actual target has been determined and validated (since r12203).
 	* Applied fix provided by Valaris to make /pvpinfo actually work. (bugreport:1785, since r1602). [Ai4rei]

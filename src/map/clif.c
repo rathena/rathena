@@ -8724,11 +8724,13 @@ void clif_progressbar_abort(struct map_session_data * sd)
 
 void clif_parse_progressbar(int fd, struct map_session_data * sd)
 {
+	int npc_id = sd->progressbar.npc_id;
+
 	if( gettick() < sd->progressbar.timeout && sd->st )
 		sd->st->state = END;
 
-	npc_scriptcont(sd, sd->progressbar.npc_id);
 	sd->progressbar.npc_id = sd->progressbar.timeout = 0;
+	npc_scriptcont(sd, npc_id);
 }
 
 /*==========================================
