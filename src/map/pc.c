@@ -5710,6 +5710,11 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 			md->level++;
 			status_calc_mob(md, 0);
 			status_percent_heal(src,10,0);
+
+			if( battle_config.show_mob_info&4 )
+			{// update name with new level
+				clif_charnameack(0, &md->bl);
+			}
 		}
 		src = battle_get_master(src); // Maybe Player Summon
 	}
