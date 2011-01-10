@@ -4908,8 +4908,8 @@ BUILDIN_FUNC(setarray)
 	}
 
 	end = start + script_lastdata(st) - 2;
-	if( end >= SCRIPT_MAX_ARRAYSIZE )
-		end = SCRIPT_MAX_ARRAYSIZE-1;
+	if( end > SCRIPT_MAX_ARRAYSIZE )
+		end = SCRIPT_MAX_ARRAYSIZE;
 
 	if( is_string_variable(name) )
 	{// string array
@@ -4971,10 +4971,10 @@ BUILDIN_FUNC(cleararray)
 		v = (void*)script_getnum(st, 3);
 
 	end = start + script_getnum(st, 4);
-	if( end >= SCRIPT_MAX_ARRAYSIZE )
-		end = SCRIPT_MAX_ARRAYSIZE-1;
+	if( end > SCRIPT_MAX_ARRAYSIZE )
+		end = SCRIPT_MAX_ARRAYSIZE;
 
-	for( ; start <= end; ++start )
+	for( ; start < end; ++start )
 		set_reg(st, sd, reference_uid(id, start), name, v, script_getref(st,2));
 	return 0;
 }
@@ -5041,8 +5041,8 @@ BUILDIN_FUNC(copyarray)
 	}
 
 	count = script_getnum(st, 4);
-	if( count >= SCRIPT_MAX_ARRAYSIZE - idx1 )
-		count = (SCRIPT_MAX_ARRAYSIZE-1) - idx1;
+	if( count > SCRIPT_MAX_ARRAYSIZE - idx1 )
+		count = SCRIPT_MAX_ARRAYSIZE - idx1;
 	if( count <= 0 || (id1 == id2 && idx1 == idx2) )
 		return 0;// nothing to copy
 

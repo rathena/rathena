@@ -1,6 +1,8 @@
 Date	Added
 
 2011/01/10
+	* Fixed script command 'cleararray' setting 1 element more, than it is told to (bugreport:2047, since r12253). [Ai4rei]
+	- Fixed 'inaccessible element 127' issue in 'cleararray', 'setarray' (since r10813) and 'copyarray' (since r14608) script commands (bugreport:864, related r12253, follow up to r14608).
 	* Fixed monster level not getting updated in monster name (option 'show_mob_info'), when a monster levels up (option 'mobs_level_up') (follow up to r8644, related r187). [Ai4rei]
 	* Made script command 'charisalpha' always return 1 when 'isaplha' is true, rather than to return the return value of 'isalpha' which is only defined as zero/non-zero and can be different from 1 (bugreport:2024, related r2003). [Ai4rei]
 2011/01/09
