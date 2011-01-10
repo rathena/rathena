@@ -12389,7 +12389,7 @@ BUILDIN_FUNC(charisalpha)
 	const char *str=script_getstr(st,2);
 	int pos=script_getnum(st,3);
 
-	int val = ( str && pos >= 0 && (unsigned int)pos < strlen(str) ) ? ISALPHA( str[pos] ) : 0;
+	int val = ( str && pos >= 0 && (unsigned int)pos < strlen(str) ) ? ISALPHA( str[pos] ) != 0 : 0;
 
 	script_pushint(st,val);
 	return 0;

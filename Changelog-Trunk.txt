@@ -1,5 +1,7 @@
 Date	Added
 
+2011/01/10
+	* Made script command 'charisalpha' always return 1 when 'isaplha' is true, rather than to return the return value of 'isalpha' which is only defined as zero/non-zero and can be different from 1 (bugreport:2024, related r2003). [Ai4rei]
 2011/01/09
 	* Fixed packet_len entry for packet 0x289 (ZC_PC_CASH_POINT_UPDATE) not matching the actual size used in clif_cashshop_ack (bugreport:4701, since r14639, follow up to r12264). [Ai4rei]
 2011/01/08
