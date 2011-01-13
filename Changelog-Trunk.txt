@@ -1,5 +1,7 @@
 Date	Added
 
+2011/01/13
+	* Reformatting and minor cleanups to console-plugin related code. [Ai4rei]
 2011/01/10
 	* Fixed script command 'cleararray' setting 1 element more, than it is told to (bugreport:2047, since r12253). [Ai4rei]
 	- Fixed 'inaccessible element 127' issue in 'cleararray', 'setarray' (since r10813) and 'copyarray' (since r14608) script commands (bugreport:864, related r12253, follow up to r14608).

@@ -133,7 +133,7 @@ int (*add_timer_func_list)(TimerFunc func, char* name);
 int (*add_timer_interval)(unsigned int tick, TimerFunc func, int id, intptr data, int interval);
 int (*delete_timer)(int tid, TimerFunc func);
 unsigned int (*gettick)(void);
-int (*parse_console)(char* buf);
+int (*parse_console)(const char* buf);
 
 // Locals
 int tid = -1; // timer id

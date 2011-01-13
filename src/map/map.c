@@ -3012,7 +3012,7 @@ static int char_ip_set = 0;
 /*==========================================
  * Console Command Parser [Wizputer]
  *------------------------------------------*/
-int parse_console(char* buf)
+int parse_console(const char* buf)
 {
 	char type[64];
 	char command[64];
@@ -3026,14 +3026,20 @@ int parse_console(char* buf)
 	memset(&sd, 0, sizeof(struct map_session_data));
 	strcpy(sd.status.name, "console");
 
-	if( (n=sscanf(buf, "%[^:]:%[^:]:%99s %d %d[^\n]",type,command,map,&x,&y)) < 5 )
-		if( (n=sscanf(buf, "%[^:]:%[^\n]",type,command)) < 2 )
-			n = sscanf(buf,"%[^\n]",type);
+	if( ( n = sscanf(buf, "%63[^:]:%63[^:]:%63s %d %d[^\n]", type, command, map, &x, &y) ) < 5 )
+	{
+		if( ( n = sscanf(buf, "%63[^:]:%63[^\n]", type, command) ) < 2 )
+		{
+			n = sscanf(buf, "%63[^\n]", type);
+		}
+	}
 
-	if( n == 5 ) {
+	if( n == 5 )
+	{
 		m = map_mapname2mapid(map);
-		if( m < 0 ){
-			ShowWarning("Console: Unknown map\n");
+		if( m < 0 )
+		{
+			ShowWarning("Console: Unknown map.\n");
 			return 0;
 		}
 		sd.bl.m = m;
@@ -3042,32 +3048,40 @@ int parse_console(char* buf)
 			sd.bl.x = x;
 		if( y > 0 )
 			sd.bl.y = y;
-	} else {
+	}
+	else
+	{
 		map[0] = '\0';
-		if( n < 2 ) command[0] = '\0';
-		if( n < 1 ) type[0] = '\0';
+		if( n < 2 )
+			command[0] = '\0';
+		if( n < 1 )
+			type[0] = '\0';
 	}
 
-	ShowInfo("Type of command: '%s' || Command: '%s' || Map: '%s' Coords: %d %d\n", type, command, map, x, y);
+	ShowNotice("Type of command: '%s' || Command: '%s' || Map: '%s' Coords: %d %d\n", type, command, map, x, y);
 
-	if( n == 5 && strcmpi("admin",type) == 0 ){
-		if( !is_atcommand(sd.fd,&sd,command,0) )
+	if( n == 5 && strcmpi("admin",type) == 0 )
+	{
+		if( !is_atcommand(sd.fd, &sd, command, 0) )
 			ShowInfo("Console: not atcommand\n");
-	} else if( n == 2 && strcmpi("server",type) == 0 ){
-		if( strcmpi("shutdown",command) == 0 ||
-		    strcmpi("exit",command) == 0 ||
-		    strcmpi("quit",command) == 0 ){
+	}
+	else if( n == 2 && strcmpi("server", type) == 0 )
+	{
+		if( strcmpi("shutdown", command) == 0 || strcmpi("exit", command) == 0 || strcmpi("quit", command) == 0 )
+		{
 			runflag = 0;
 		}
-	} else if( strcmpi("help",type) == 0 ){
-		ShowNotice("To use GM commands:\n");
-		ShowInfo("admin:<gm command>:<map of \"gm\"> <x> <y>\n");
+	}
+	else if( strcmpi("help", type) == 0 )
+	{
+		ShowInfo("To use GM commands:\n");
+		ShowInfo("  admin:<gm command>:<map of \"gm\"> <x> <y>\n");
 		ShowInfo("You can use any GM command that doesn't require the GM.\n");
 		ShowInfo("No using @item or @warp however you can use @charwarp\n");
 		ShowInfo("The <map of \"gm\"> <x> <y> is for commands that need coords of the GM\n");
 		ShowInfo("IE: @spawn\n");
 		ShowInfo("To shutdown the server:\n");
-		ShowInfo("server:shutdown\n");
+		ShowInfo("  server:shutdown\n");
 	}
 
 	return 0;
