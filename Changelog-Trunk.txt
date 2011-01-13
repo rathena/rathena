@@ -1,6 +1,7 @@
 Date	Added
 
 2011/01/13
+	* Added support for creating account through the console-plugin on login-server (replaces ladmin functionality unavailable through atcommands). [Ai4rei]
 	* Reformatting and minor cleanups to console-plugin related code. [Ai4rei]
 2011/01/10
 	* Fixed script command 'cleararray' setting 1 element more, than it is told to (bugreport:2047, since r12253). [Ai4rei]
