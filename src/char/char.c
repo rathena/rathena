@@ -2176,72 +2176,6 @@ int parse_fromlogin(int fd)
 		}
 		break;
 
-		case 0x2726:	// Request to send a broadcast message (no answer)
-			if (RFIFOREST(fd) < 8 || RFIFOREST(fd) < (8 + RFIFOL(fd,4)))
-				return 0;
-			if (RFIFOL(fd,4) < 1)
-				char_log("Receiving a message for broadcast, but message is void.\n");
-			else
-			{
-				// at least 1 map-server
-				ARR_FIND( 0, MAX_MAP_SERVERS, i, server[i].fd >= 0 );
-				if (i == MAX_MAP_SERVERS)
-					char_log("'ladmin': Receiving a message for broadcast, but no map-server is online.\n");
-				else {
-					unsigned char buf[128];
-					char message[4096]; // +1 to add a null terminated if not exist in the packet
-					int lp;
-					char *p;
-					memset(message, '\0', sizeof(message));
-					memcpy(message, RFIFOP(fd,8), RFIFOL(fd,4));
-					message[sizeof(message)-1] = '\0';
-					remove_control_chars(message);
-					// remove all first spaces
-					p = message;
-					while(p[0] == ' ')
-						p++;
-					// if message is only composed of spaces
-					if (p[0] == '\0')
-						char_log("Receiving a message for broadcast, but message is only a lot of spaces.\n");
-					// else send message to all map-servers
-					else {
-						if (RFIFOW(fd,2) == 0) {
-							char_log("'ladmin': Receiving a message for broadcast (message (in yellow): %s)\n",
-							         message);
-							lp = 4;
-						} else {
-							char_log("'ladmin': Receiving a message for broadcast (message (in blue): %s)\n",
-							         message);
-							lp = 8;
-						}
-						// split message to max 80 char
-						while(p[0] != '\0') { // if not finish
-							if (p[0] == ' ') // jump if first char is a space
-								p++;
-							else {
-								char split[80];
-								char* last_space;
-								sscanf(p, "%79[^\t]", split); // max 79 char, any char (\t is control char and control char was removed before)
-								split[sizeof(split)-1] = '\0'; // last char always \0
-								if ((last_space = strrchr(split, ' ')) != NULL) { // searching space from end of the string
-									last_space[0] = '\0'; // replace it by NULL to have correct length of split
-									p++; // to jump the new NULL
-								}
-								p += strlen(split);
-								// send broadcast to all map-servers
-								WBUFW(buf,0) = 0x3800;
-								WBUFW(buf,2) = lp + strlen(split) + 1;
-								WBUFL(buf,4) = 0x65756c62; // only write if in blue (lp = 8)
-								memcpy(WBUFP(buf,lp), split, strlen(split) + 1);
-								mapif_sendall(buf, WBUFW(buf,2));
-							}
-						}
-					}
-				}
-			}
-			RFIFOSKIP(fd,8 + RFIFOL(fd,4));
-		break;
-
 		// reply to an account_reg2 registry request
 		case 0x2729:
 			if (RFIFOREST(fd) < 4 || RFIFOREST(fd) < RFIFOW(fd,2))
@@ -2254,54 +2188,6 @@ int parse_fromlogin(int fd)
 			mapif_sendall(buf, WBUFW(buf,2));
 			RFIFOSKIP(fd, RFIFOW(fd,2));
 		}
-		break;
-
-		// Account deletion notification (from login-server)
-		case 0x2730:
-			if (RFIFOREST(fd) < 6)
-				return 0;
-			// Deletion of all characters of the account
-			for(i = 0; i < char_num; i++) {
-				if (char_dat[i].status.account_id == RFIFOL(fd,2)) {
-					char_delete(&char_dat[i].status);
-					if (i < char_num - 1) {
-						memcpy(&char_dat[i], &char_dat[char_num-1], sizeof(struct character_data));
-						// if moved character owns to deleted account, check again it's character
-						if (char_dat[i].status.account_id == RFIFOL(fd,2)) {
-							i--;
-						// Correct moved character reference in the character's owner by [Yor]
-						} else {
-							int j, k;
-							struct char_session_data *sd2;
-							for (j = 0; j < fd_max; j++) {
-								if (session[j] && (sd2 = (struct char_session_data*)session[j]->session_data) &&
-									sd2->account_id == char_dat[char_num-1].status.account_id) {
-									for (k = 0; k < MAX_CHARS; k++) {
-										if (sd2->found_char[k] == char_num-1) {
-											sd2->found_char[k] = i;
-											break;
-										}
-									}
-									break;
-								}
-							}
-						}
-					}
-					char_num--;
-				}
-			}
-			// Deletion of the storage
-			inter_storage_delete(RFIFOL(fd,2));
-			// send to all map-servers to disconnect the player
-			{
-				unsigned char buf[6];
-				WBUFW(buf,0) = 0x2b13;
-				WBUFL(buf,2) = RFIFOL(fd,2);
-				mapif_sendall(buf, 6);
-			}
-			// disconnect player if online on char-server
-			disconnect_player(RFIFOL(fd,2));
-			RFIFOSKIP(fd,6);
 		break;
 
 		// State change of account/ban notification (from login-server)
@@ -3749,22 +3635,6 @@ int parse_char(int fd)
 			RFIFOSKIP(fd,60);
 		}
 		return 0; // avoid processing of followup packets here
-
-		// Athena info get
-		case 0x7530:
-			WFIFOHEAD(fd,10);
-			WFIFOW(fd,0) = 0x7531;
-			WFIFOB(fd,2) = ATHENA_MAJOR_VERSION;
-			WFIFOB(fd,3) = ATHENA_MINOR_VERSION;
-			WFIFOB(fd,4) = ATHENA_REVISION;
-			WFIFOB(fd,5) = ATHENA_RELEASE_FLAG;
-			WFIFOB(fd,6) = ATHENA_OFFICIAL_FLAG;
-			WFIFOB(fd,7) = ATHENA_SERVER_INTER | ATHENA_SERVER_CHAR;
-			WFIFOW(fd,8) = ATHENA_MOD_VERSION;
-			WFIFOSET(fd,10);
-
-			RFIFOSKIP(fd,2);
-		break;
 
 		// unknown packet received
 		default:

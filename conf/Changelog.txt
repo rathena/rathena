@@ -1,5 +1,7 @@
 Date	Added
 
+2011/01/13
+	* Rev. 14667 Removed ladmin settings (ladmin_athena.conf) and login-server settings for ladmin (login_athena.conf) (topic:262934). [Ai4rei]
 2010/12/30
 	* Rev. 14643 Updated mapcache up to 2010-12-01. Adds Bifrost, Dewata and Malangdo maps. [Ai4rei]
 2010/12/12

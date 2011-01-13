@@ -13,7 +13,7 @@ COMMON_H = ../common/core.h ../common/socket.h ../common/timer.h ../common/mmo.h
 COMMON_SQL_OBJ = ../common/obj_sql/sql.o
 COMMON_SQL_H = ../common/sql.h
 
-LOGIN_OBJ = login.o admin.o
+LOGIN_OBJ = login.o
 LOGIN_TXT_OBJ = $(LOGIN_OBJ:%=obj_txt/%) \
 	obj_txt/account_txt.o obj_txt/ipban_txt.o obj_txt/loginlog_txt.o
 LOGIN_SQL_OBJ = $(LOGIN_OBJ:%=obj_sql/%) \

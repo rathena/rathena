@@ -1333,7 +1333,7 @@ ac_compiler_gnu=$ac_cv_c_compiler_gnu
 
                     ac_config_files="$ac_config_files Makefile src/common/Makefile"
 
-                              ac_config_files="$ac_config_files src/char/Makefile src/login/Makefile src/ladmin/Makefile"
+                              ac_config_files="$ac_config_files src/char/Makefile src/login/Makefile"
 
                     ac_config_files="$ac_config_files src/char_sql/Makefile src/txt-converter/Makefile"
 
@@ -5628,7 +5628,6 @@ do
   "src/common/Makefile" ) CONFIG_FILES="$CONFIG_FILES src/common/Makefile" ;;
   "src/char/Makefile" ) CONFIG_FILES="$CONFIG_FILES src/char/Makefile" ;;
   "src/login/Makefile" ) CONFIG_FILES="$CONFIG_FILES src/login/Makefile" ;;
-  "src/ladmin/Makefile" ) CONFIG_FILES="$CONFIG_FILES src/ladmin/Makefile" ;;
   "src/char_sql/Makefile" ) CONFIG_FILES="$CONFIG_FILES src/char_sql/Makefile" ;;
   "src/txt-converter/Makefile" ) CONFIG_FILES="$CONFIG_FILES src/txt-converter/Makefile" ;;
   "src/map/Makefile" ) CONFIG_FILES="$CONFIG_FILES src/map/Makefile" ;;

@@ -19,7 +19,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-bool ladmin_auth(struct login_session_data* sd, const char* ip);
 struct Login_Config login_config;
 
 int login_fd; // login server socket
@@ -1224,7 +1223,7 @@ void login_auth_failed(struct login_session_data* sd, int result)
 
 
 //----------------------------------------------------------------------------------------
-// Default packet parsing (normal players or administation/char-server connection requests)
+// Default packet parsing (normal players or char-server connection requests)
 //----------------------------------------------------------------------------------------
 int parse_login(int fd)
 {
@@ -1358,7 +1357,6 @@ int parse_login(int fd)
 		break;
 
 		case 0x01db:	// Sending request of the coding key
-		case 0x791a:	// Sending request of the coding key (administration packet)
 			RFIFOSKIP(fd,2);
 		{
 			memset(sd->md5key, '\0', sizeof(sd->md5key));
@@ -1433,45 +1431,6 @@ int parse_login(int fd)
 			}
 		}
 		return 0; // processing will continue elsewhere
-
-		case 0x7530:	// Server version information request
-			ShowStatus("Sending server version information to ip: %s\n", ip);
-			RFIFOSKIP(fd,2);
-			WFIFOHEAD(fd,10);
-			WFIFOW(fd,0) = 0x7531;
-			WFIFOB(fd,2) = ATHENA_MAJOR_VERSION;
-			WFIFOB(fd,3) = ATHENA_MINOR_VERSION;
-			WFIFOB(fd,4) = ATHENA_REVISION;
-			WFIFOB(fd,5) = ATHENA_RELEASE_FLAG;
-			WFIFOB(fd,6) = ATHENA_OFFICIAL_FLAG;
-			WFIFOB(fd,7) = ATHENA_SERVER_LOGIN;
-			WFIFOW(fd,8) = ATHENA_MOD_VERSION;
-			WFIFOSET(fd,10);
-		break;
-
-		case 0x7918:	// Request for administation login
-			if ((int)RFIFOREST(fd) < 4 || (int)RFIFOREST(fd) < ((RFIFOW(fd,2) == 0) ? 28 : 20))
-				return 0;
-		{
-			int passwdenc = (int)RFIFOW(fd,2);
-			const char* passwd = (char*)RFIFOP(fd,4);
-
-			if( passwdenc == 0 ) { // non encrypted password
-				safestrncpy(sd->passwd, passwd, NAME_LENGTH);
-				sd->passwdenc = 0;
-			} else { // encrypted password
-				memcpy(sd->passwd, passwd, 16); sd->passwd[16] = '\0'; // raw binary data here!
-				sd->passwdenc = passwdenc;
-			}
-
-			RFIFOSKIP(fd, (passwdenc == 0) ? 28 : 20);
-
-			WFIFOHEAD(fd,3);
-			WFIFOW(fd,0) = 0x7919;
-			WFIFOB(fd,2) = ladmin_auth(sd, ip) ? 0 : 1;
-			WFIFOSET(fd,3);
-		}
-		break;
 
 		default:
 			ShowNotice("Abnormal end of connection (ip: %s): Unknown packet 0x%x\n", ip, command);
@@ -1578,14 +1537,6 @@ int login_config_read(const char* cfgName)
 			login_config.ipban_cleanup_interval = (unsigned int)atoi(w2);
 		else if(!strcmpi(w1, "ip_sync_interval"))
 			login_config.ip_sync_interval = (unsigned int)1000*60*atoi(w2); //w2 comes in minutes.
-
-		else if(!strcmpi(w1, "admin_state"))
-			login_config.admin_state = (bool)config_switch(w2);
-		else if(!strcmpi(w1, "admin_pass"))
-			safestrncpy(login_config.admin_pass, w2, sizeof(login_config.admin_pass));
-		else if(!strcmpi(w1, "admin_allowed_host"))
-			safestrncpy(login_config.admin_allowed_host, w2, sizeof(login_config.admin_pass));
-
 		else if(!strcmpi(w1, "import"))
 			login_config_read(w2);
 		else

@@ -214,10 +214,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\src\login\admin.c"
-				>
-			</File>
-			<File
 				RelativePath="..\src\login\ipban.h"
 				>
 			</File>

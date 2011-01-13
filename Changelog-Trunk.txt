@@ -1,6 +1,7 @@
 Date	Added
 
 2011/01/13
+	* Removed ladmin (remote administration tool), all related support code and the checkversion.pl tool with it's support code, which was shared with ladmin (topic:262934, related bugreport:1147, bugreport:1889, r9408 and r9610). [Ai4rei]
 	* Fixed chrif-packet processing considering free/unused packet IDs incorrectly as variable length packets (-1 = variable length, 0 = disabled packet). [Ai4rei]
 	* Added support for creating account through the console-plugin on login-server (replaces ladmin functionality unavailable through atcommands). [Ai4rei]
 	* Reformatting and minor cleanups to console-plugin related code. [Ai4rei]

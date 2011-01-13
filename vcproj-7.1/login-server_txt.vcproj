@@ -154,9 +154,6 @@
 				RelativePath="..\src\login\account_txt.c">
 			</File>
 			<File
-				RelativePath="..\src\login\admin.c">
-			</File>
-			<File
 				RelativePath="..\src\login\ipban.h">
 			</File>
 			<File
