@@ -1,6 +1,7 @@
 Date	Added
 
 2011/01/13
+	* Fixed chrif-packet processing considering free/unused packet IDs incorrectly as variable length packets (-1 = variable length, 0 = disabled packet). [Ai4rei]
 	* Added support for creating account through the console-plugin on login-server (replaces ladmin functionality unavailable through atcommands). [Ai4rei]
 	* Reformatting and minor cleanups to console-plugin related code. [Ai4rei]
 2011/01/10
