@@ -396,15 +396,15 @@ int map_moveblock(struct block_list *bl, int x1, int y1, unsigned int tick)
 		sc = status_get_sc(bl);
 		if (sc && sc->count) {
 			if (sc->data[SC_CLOSECONFINE])
-				status_change_end(bl, SC_CLOSECONFINE, -1);
+				status_change_end(bl, SC_CLOSECONFINE, INVALID_TIMER);
 			if (sc->data[SC_CLOSECONFINE2])
-				status_change_end(bl, SC_CLOSECONFINE2, -1);
+				status_change_end(bl, SC_CLOSECONFINE2, INVALID_TIMER);
 //			if (sc->data[SC_BLADESTOP]) //Won't stop when you are knocked away, go figure...
-//				status_change_end(bl, SC_BLADESTOP, -1);
+//				status_change_end(bl, SC_BLADESTOP, INVALID_TIMER);
 			if (sc->data[SC_TATAMIGAESHI])
-				status_change_end(bl, SC_TATAMIGAESHI, -1);
+				status_change_end(bl, SC_TATAMIGAESHI, INVALID_TIMER);
 			if (sc->data[SC_MAGICROD])
-				status_change_end(bl, SC_MAGICROD, -1);
+				status_change_end(bl, SC_MAGICROD, INVALID_TIMER);
 		}
 	} else
 	if (bl->type == BL_NPC)
@@ -1566,7 +1566,7 @@ int map_quit(struct map_session_data *sd)
 		return 0;
 	}
 
-	if (sd->npc_timer_id != -1) //Cancel the event timer.
+	if (sd->npc_timer_id != INVALID_TIMER) //Cancel the event timer.
 		npc_timerevent_quit(sd);
 
 	if (sd->npc_id)
@@ -1581,63 +1581,63 @@ int map_quit(struct map_session_data *sd)
 	{
 		//Status that are not saved...
 		if(sd->sc.data[SC_BOSSMAPINFO])
-			status_change_end(&sd->bl,SC_BOSSMAPINFO,-1);
+			status_change_end(&sd->bl, SC_BOSSMAPINFO, INVALID_TIMER);
 		if(sd->sc.data[SC_AUTOTRADE])
-			status_change_end(&sd->bl,SC_AUTOTRADE,-1);
+			status_change_end(&sd->bl, SC_AUTOTRADE, INVALID_TIMER);
 		if(sd->sc.data[SC_SPURT])
-			status_change_end(&sd->bl,SC_SPURT,-1);
+			status_change_end(&sd->bl, SC_SPURT, INVALID_TIMER);
 		if(sd->sc.data[SC_BERSERK])
-			status_change_end(&sd->bl,SC_BERSERK,-1);
+			status_change_end(&sd->bl, SC_BERSERK, INVALID_TIMER);
 		if(sd->sc.data[SC_TRICKDEAD])
-			status_change_end(&sd->bl,SC_TRICKDEAD,-1);
+			status_change_end(&sd->bl, SC_TRICKDEAD, INVALID_TIMER);
 		if(sd->sc.data[SC_GUILDAURA])
-			status_change_end(&sd->bl,SC_GUILDAURA,-1);
+			status_change_end(&sd->bl, SC_GUILDAURA, INVALID_TIMER);
 		if(sd->sc.data[SC_ENDURE] && sd->sc.data[SC_ENDURE]->val4)
-			status_change_end(&sd->bl,SC_ENDURE,-1); //No need to save infinite endure.
+			status_change_end(&sd->bl, SC_ENDURE, INVALID_TIMER); //No need to save infinite endure.
 		if(sd->sc.data[SC_WEIGHT50])
-			status_change_end(&sd->bl,SC_WEIGHT50,-1);
+			status_change_end(&sd->bl, SC_WEIGHT50, INVALID_TIMER);
 		if(sd->sc.data[SC_WEIGHT90])
-			status_change_end(&sd->bl,SC_WEIGHT90,-1);
+			status_change_end(&sd->bl, SC_WEIGHT90, INVALID_TIMER);
 		if (battle_config.debuff_on_logout&1) {
 			if(sd->sc.data[SC_ORCISH])
-				status_change_end(&sd->bl,SC_ORCISH,-1);
+				status_change_end(&sd->bl, SC_ORCISH, INVALID_TIMER);
 			if(sd->sc.data[SC_STRIPWEAPON])
-				status_change_end(&sd->bl,SC_STRIPWEAPON,-1);
+				status_change_end(&sd->bl, SC_STRIPWEAPON, INVALID_TIMER);
 			if(sd->sc.data[SC_STRIPARMOR])
-				status_change_end(&sd->bl,SC_STRIPARMOR,-1);
+				status_change_end(&sd->bl, SC_STRIPARMOR, INVALID_TIMER);
 			if(sd->sc.data[SC_STRIPSHIELD])
-				status_change_end(&sd->bl,SC_STRIPSHIELD,-1);
+				status_change_end(&sd->bl, SC_STRIPSHIELD, INVALID_TIMER);
 			if(sd->sc.data[SC_STRIPHELM])
-				status_change_end(&sd->bl,SC_STRIPHELM,-1);
+				status_change_end(&sd->bl, SC_STRIPHELM, INVALID_TIMER);
 			if(sd->sc.data[SC_EXTREMITYFIST])
-				status_change_end(&sd->bl,SC_EXTREMITYFIST,-1);
+				status_change_end(&sd->bl, SC_EXTREMITYFIST, INVALID_TIMER);
 			if(sd->sc.data[SC_EXPLOSIONSPIRITS])
-				status_change_end(&sd->bl,SC_EXPLOSIONSPIRITS,-1);
+				status_change_end(&sd->bl, SC_EXPLOSIONSPIRITS, INVALID_TIMER);
 			if(sd->sc.data[SC_REGENERATION] && sd->sc.data[SC_REGENERATION]->val4)
-				status_change_end(&sd->bl,SC_REGENERATION,-1);
+				status_change_end(&sd->bl, SC_REGENERATION, INVALID_TIMER);
 			//TO-DO Probably there are way more NPC_type negative status that are removed
 			if(sd->sc.data[SC_CHANGEUNDEAD])
-				status_change_end(&sd->bl,SC_CHANGEUNDEAD,-1);
+				status_change_end(&sd->bl, SC_CHANGEUNDEAD, INVALID_TIMER);
 			// Both these statuses are removed on logout. [L0ne_W0lf]
 			if(sd->sc.data[SC_SLOWCAST])
-				status_change_end(&sd->bl,SC_SLOWCAST,-1);
+				status_change_end(&sd->bl, SC_SLOWCAST, INVALID_TIMER);
 			if(sd->sc.data[SC_CRITICALWOUND])
-				status_change_end(&sd->bl,SC_CRITICALWOUND,-1);
+				status_change_end(&sd->bl, SC_CRITICALWOUND, INVALID_TIMER);
 		}
 		if (battle_config.debuff_on_logout&2)
 		{
 			if(sd->sc.data[SC_MAXIMIZEPOWER])
-				status_change_end(&sd->bl,SC_MAXIMIZEPOWER,-1);
+				status_change_end(&sd->bl, SC_MAXIMIZEPOWER, INVALID_TIMER);
 			if(sd->sc.data[SC_MAXOVERTHRUST])
-				status_change_end(&sd->bl,SC_MAXOVERTHRUST,-1);
+				status_change_end(&sd->bl, SC_MAXOVERTHRUST, INVALID_TIMER);
 			if(sd->sc.data[SC_STEELBODY])
-				status_change_end(&sd->bl,SC_STEELBODY,-1);
+				status_change_end(&sd->bl, SC_STEELBODY, INVALID_TIMER);
 			if(sd->sc.data[SC_PRESERVE])
-				status_change_end(&sd->bl,SC_PRESERVE,-1);
+				status_change_end(&sd->bl, SC_PRESERVE, INVALID_TIMER);
 			if(sd->sc.data[SC_KAAHI])
-				status_change_end(&sd->bl,SC_KAAHI,-1);
+				status_change_end(&sd->bl, SC_KAAHI, INVALID_TIMER);
 			if(sd->sc.data[SC_SPIRIT])
-				status_change_end(&sd->bl,SC_SPIRIT,-1);
+				status_change_end(&sd->bl, SC_SPIRIT, INVALID_TIMER);
 		}
 	}
 	
@@ -2109,7 +2109,7 @@ int map_addmobtolist(unsigned short m, struct spawn_data *spawn)
 void map_spawnmobs(int m)
 {
 	int i, k=0;
-	if (map[m].mob_delete_timer != -1)
+	if (map[m].mob_delete_timer != INVALID_TIMER)
 	{	//Mobs have not been removed yet [Skotlex]
 		delete_timer(map[m].mob_delete_timer, map_removemobs_timer);
 		map[m].mob_delete_timer = INVALID_TIMER;
@@ -2184,7 +2184,7 @@ int map_removemobs_timer(int tid, unsigned int tick, int id, intptr data)
 
 void map_removemobs(int m)
 {
-	if (map[m].mob_delete_timer != -1) // should never happen
+	if (map[m].mob_delete_timer != INVALID_TIMER) // should never happen
 		return; //Mobs are already scheduled for removal
 
 	map[m].mob_delete_timer = add_timer(gettick()+battle_config.mob_remove_delay, map_removemobs_timer, m, 0);

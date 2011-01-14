@@ -1143,7 +1143,7 @@ int chrif_save_scdata(struct map_session_data *sd)
 	{
 		if (!sc->data[i])
 			continue;
-		if (sc->data[i]->timer != -1)
+		if (sc->data[i]->timer != INVALID_TIMER)
 		{
 			timer = get_timer(sc->data[i]->timer);
 			if (timer == NULL || timer->func != status_change_timer || DIFF_TICK(timer->tick,tick) < 0)

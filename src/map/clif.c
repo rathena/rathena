@@ -9077,7 +9077,7 @@ void clif_parse_ActionRequest_sub(struct map_session_data *sd, int action_type, 
 			return;
 		}
 
-		if (sd->ud.skilltimer != -1 || sd->sc.opt1)
+		if (sd->ud.skilltimer != INVALID_TIMER || sd->sc.opt1)
 			break;
 
 		if (sd->sc.count && (
@@ -9852,7 +9852,7 @@ static void clif_parse_UseSkillToId_homun(struct homun_data *hd, struct map_sess
 		return;
 	if( hd->bl.id != target_id && skill_get_inf(skillnum)&INF_SELF_SKILL )
 		target_id = hd->bl.id;
-	if( hd->ud.skilltimer != -1 )
+	if( hd->ud.skilltimer != INVALID_TIMER )
 	{
 		if( skillnum != SA_CASTCANCEL ) return;
 	}
@@ -9962,7 +9962,7 @@ void clif_parse_UseSkillToId(int fd, struct map_session_data *sd)
 	if( target_id < 0 && -target_id == sd->bl.id ) // for disguises [Valaris]
 		target_id = sd->bl.id;
 	
-	if( sd->ud.skilltimer != -1 )
+	if( sd->ud.skilltimer != INVALID_TIMER )
 	{
 		if( skillnum != SA_CASTCANCEL )
 			return;
@@ -10054,7 +10054,7 @@ void clif_parse_UseSkillToPosSub(int fd, struct map_session_data *sd, short skil
 		safestrncpy(sd->message, (char*)RFIFOP(fd,skillmoreinfo), MESSAGE_SIZE);
 	}
 
-	if( sd->ud.skilltimer != -1 )
+	if( sd->ud.skilltimer != INVALID_TIMER )
 		return;
 
 	if( DIFF_TICK(tick, sd->ud.canact_tick) < 0 )
@@ -11619,7 +11619,7 @@ void clif_parse_GMReqNoChat(int fd,struct map_session_data *sd)
 			sc_start(&dstsd->bl,SC_NOCHAT,100,0,0);
 		} else {
 			dstsd->status.manner = 0;
-			status_change_end(&dstsd->bl,SC_NOCHAT,-1);
+			status_change_end(&dstsd->bl, SC_NOCHAT, INVALID_TIMER);
 		}
 
 		if( type != 2 )
@@ -13272,7 +13272,7 @@ void clif_bossmapinfo(int fd, struct mob_data *md, short flag)
 			else
 				WFIFOB(fd,2) = 2; // First Time
 		}
-		else if (md->spawn_timer != -1)
+		else if (md->spawn_timer != INVALID_TIMER)
 		{ // Boss is Dead
 			const struct TimerData * timer_data = get_timer(md->spawn_timer);
 			unsigned int seconds;

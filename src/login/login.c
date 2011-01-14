@@ -109,7 +109,7 @@ static void* create_online_user(DBKey key, va_list args)
 	CREATE(p, struct online_login_data, 1);
 	p->account_id = key.i;
 	p->char_server = -1;
-	p->waiting_disconnect = -1;
+	p->waiting_disconnect = INVALID_TIMER;
 	return p;
 }
 
@@ -118,10 +118,10 @@ struct online_login_data* add_online_user(int char_server, int account_id)
 	struct online_login_data* p;
 	p = (struct online_login_data*)idb_ensure(online_db, account_id, create_online_user);
 	p->char_server = char_server;
-	if( p->waiting_disconnect != -1 )
+	if( p->waiting_disconnect != INVALID_TIMER )
 	{
 		delete_timer(p->waiting_disconnect, waiting_disconnect_timer);
-		p->waiting_disconnect = -1;
+		p->waiting_disconnect = INVALID_TIMER;
 	}
 	return p;
 }
@@ -132,7 +132,7 @@ void remove_online_user(int account_id)
 	p = (struct online_login_data*)idb_get(online_db, account_id);
 	if( p == NULL )
 		return;
-	if( p->waiting_disconnect != -1 )
+	if( p->waiting_disconnect != INVALID_TIMER )
 		delete_timer(p->waiting_disconnect, waiting_disconnect_timer);
 
 	idb_remove(online_db, account_id);
@@ -143,7 +143,7 @@ static int waiting_disconnect_timer(int tid, unsigned int tick, int id, intptr d
 	struct online_login_data* p = (struct online_login_data*)idb_get(online_db, id);
 	if( p != NULL && p->waiting_disconnect == tid && p->account_id == id )
 	{
-		p->waiting_disconnect = -1;
+		p->waiting_disconnect = INVALID_TIMER;
 		remove_online_user(id);
 		idb_remove(auth_db, id);
 	}
@@ -157,10 +157,10 @@ static int online_db_setoffline(DBKey key, void* data, va_list ap)
 	if( server == -1 )
 	{
 		p->char_server = -1;
-		if( p->waiting_disconnect != -1 )
+		if( p->waiting_disconnect != INVALID_TIMER )
 		{
 			delete_timer(p->waiting_disconnect, waiting_disconnect_timer);
-			p->waiting_disconnect = -1;
+			p->waiting_disconnect = INVALID_TIMER;
 		}
 	}
 	else if( p->char_server == server )
@@ -803,10 +803,10 @@ int parse_fromchar(int fd)
 					aid = RFIFOL(fd,6+i*4);
 					p = (struct online_login_data*)idb_ensure(online_db, aid, create_online_user);
 					p->char_server = id;
-					if (p->waiting_disconnect != -1)
+					if (p->waiting_disconnect != INVALID_TIMER)
 					{
 						delete_timer(p->waiting_disconnect, waiting_disconnect_timer);
-						p->waiting_disconnect = -1;
+						p->waiting_disconnect = INVALID_TIMER;
 					}
 				}
 			}
@@ -1091,7 +1091,7 @@ void login_auth_ok(struct login_session_data* sd)
 				WBUFW(buf,0) = 0x2734;
 				WBUFL(buf,2) = sd->account_id;
 				charif_sendallwos(-1, buf, 6);
-				if( data->waiting_disconnect == -1 )
+				if( data->waiting_disconnect == INVALID_TIMER )
 					data->waiting_disconnect = add_timer(gettick()+AUTH_TIMEOUT, waiting_disconnect_timer, sd->account_id, 0);
 
 				WFIFOHEAD(fd,3);

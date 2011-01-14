@@ -524,7 +524,7 @@ static int merc_hom_hungry(int tid, unsigned int tick, int id, intptr data)
 int merc_hom_hungry_timer_delete(struct homun_data *hd)
 {
 	nullpo_ret(hd);
-	if(hd->hungry_timer != -1) {
+	if(hd->hungry_timer != INVALID_TIMER) {
 		delete_timer(hd->hungry_timer,merc_hom_hungry);
 		hd->hungry_timer = INVALID_TIMER;
 	}
@@ -638,7 +638,7 @@ int merc_hom_alloc(struct map_session_data *sd, struct s_homunculus *hom)
 
 void merc_hom_init_timers(struct homun_data * hd)
 {
-	if (hd->hungry_timer == -1)
+	if (hd->hungry_timer == INVALID_TIMER)
 		hd->hungry_timer = add_timer(gettick()+hd->homunculusDB->hungryDelay,merc_hom_hungry,hd->master->bl.id,0);
 	hd->regen.state.block = 0; //Restore HP/SP block.
 }

@@ -611,7 +611,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 					rate = 20;
 					if (sc->data[SC_SKILLRATE_UP] && sc->data[SC_SKILLRATE_UP]->val1 == TK_COUNTER) {
 						rate += rate*sc->data[SC_SKILLRATE_UP]->val2/100;
-						status_change_end(src,SC_SKILLRATE_UP,-1);
+						status_change_end(src, SC_SKILLRATE_UP, INVALID_TIMER);
 					}
 					sc_start4(src,SC_COMBO, rate, TK_COUNTER, bl->id,0,0,
 						(2000 - 4*sstatus->agi - 2*sstatus->dex));
@@ -883,12 +883,12 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 	case TK_JUMPKICK:
 		if( dstsd && dstsd->class_ != MAPID_SOUL_LINKER && !tsc->data[SC_PRESERVE] )
 		{// debuff the following statuses
-			status_change_end(bl, SC_SPIRIT, -1);
-			status_change_end(bl, SC_ADRENALINE2, -1);
-			status_change_end(bl, SC_KAITE, -1);
-			status_change_end(bl, SC_KAAHI, -1);
-			status_change_end(bl, SC_ONEHAND, -1);
-			status_change_end(bl, SC_ASPDPOTION2, -1);
+			status_change_end(bl, SC_SPIRIT, INVALID_TIMER);
+			status_change_end(bl, SC_ADRENALINE2, INVALID_TIMER);
+			status_change_end(bl, SC_KAITE, INVALID_TIMER);
+			status_change_end(bl, SC_KAAHI, INVALID_TIMER);
+			status_change_end(bl, SC_ONEHAND, INVALID_TIMER);
+			status_change_end(bl, SC_ASPDPOTION2, INVALID_TIMER);
 		}
 		break;
 	case TK_TURNKICK:
@@ -1544,7 +1544,7 @@ static int skill_magic_reflect(struct block_list* src, struct block_list* bl, in
 	{// Kaite only works against non-players if they are low-level.
 		clif_specialeffect(bl, 438, AREA);
 		if( --sc->data[SC_KAITE]->val2 <= 0 )
-			status_change_end(bl, SC_KAITE, -1);
+			status_change_end(bl, SC_KAITE, INVALID_TIMER);
 		return 2;
 	}
 
@@ -1719,7 +1719,7 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 				break;
 			default:
 				if( src == dsrc ) // Ground skills are exceptions. [Inkfish]
-					status_change_end(src,SC_COMBO,-1);
+					status_change_end(src, SC_COMBO, INVALID_TIMER);
 			}
 		}
 		switch(skillid)
@@ -1904,7 +1904,7 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 			status_fix_damage(NULL, d_bl, damage, 0);
 		}
 		else
-			status_change_end(bl, SC_DEVOTION, -1);
+			status_change_end(bl, SC_DEVOTION, INVALID_TIMER);
 	}
 
 	if(skillid == RG_INTIMIDATE && damage > 0 && !(tstatus->mode&MD_BOSS)) {
@@ -2339,7 +2339,7 @@ static int skill_timerskill(int tid, unsigned int tick, int id, intptr data)
 						struct status_change *sc = status_get_sc(src);
 						if(sc) {
 							if(sc->data[SC_MAGICPOWER])
-								status_change_end(src,SC_MAGICPOWER,-1);
+								status_change_end(src, SC_MAGICPOWER, INVALID_TIMER);
 							if(sc->data[SC_SPIRIT] &&
 								sc->data[SC_SPIRIT]->val2 == SL_WIZARD &&
 								sc->data[SC_SPIRIT]->val3 == skl->skill_id)
@@ -2469,7 +2469,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 	{	//GTB makes all targetted magic display miss with a single bolt.
 		sc_type sct = status_skill2sc(skillid);
 		if(sct != SC_NONE)
-			status_change_end(bl, sct, -1);
+			status_change_end(bl, sct, INVALID_TIMER);
 		clif_skill_damage(src, bl, tick, status_get_amotion(src), status_get_dmotion(bl), 0, 1, skillid, skilllv, skill_get_hit(skillid));
 		return 1;
 	}
@@ -2663,7 +2663,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 	case MO_INVESTIGATE:
 		skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,flag);
 		if (sc && sc->data[SC_BLADESTOP])
-			status_change_end(src,SC_BLADESTOP,-1);
+			status_change_end(src, SC_BLADESTOP, INVALID_TIMER);
 		break;
 
 	case RG_BACKSTAP:
@@ -2671,7 +2671,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 			int dir = map_calc_dir(src, bl->x, bl->y), t_dir = unit_getdir(bl);
 			if ((!check_distance_bl(src, bl, 0) && !map_check_dir(dir, t_dir)) || bl->type == BL_SKILL) {
 				if (sc && sc->data[SC_HIDING])
-					status_change_end(src, SC_HIDING, -1);
+					status_change_end(src, SC_HIDING, INVALID_TIMER);
 				skill_attack(BF_WEAPON, src, src, bl, skillid, skilllv, tick, flag);
 				dir = dir < 4 ? dir+4 : dir-4; // change direction [Celest]
 				unit_setdir(bl,dir);
@@ -2689,24 +2689,24 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 				skill_addtimerskill(src, tick + i * 200, bl->id, 0, 0, skillid, skilllv, BF_WEAPON, flag);
 		}
 		if (sc && sc->data[SC_BLADESTOP])
-			status_change_end(src,SC_BLADESTOP,-1);
+			status_change_end(src, SC_BLADESTOP, INVALID_TIMER);
 		break;
 
 	case MO_CHAINCOMBO:
 		skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,flag);
 		if (sc && sc->data[SC_BLADESTOP])
-			status_change_end(src,SC_BLADESTOP,-1);
+			status_change_end(src, SC_BLADESTOP, INVALID_TIMER);
 		break;
 
 	case NJ_ISSEN:
-		status_change_end(src,SC_NEN,-1);
-		status_change_end(src,SC_HIDING,-1);
+		status_change_end(src, SC_NEN, INVALID_TIMER);
+		status_change_end(src, SC_HIDING, INVALID_TIMER);
 		// fall through
 	case MO_EXTREMITYFIST:
 		if( skillid == MO_EXTREMITYFIST )
 		{
-			status_change_end(src,SC_EXPLOSIONSPIRITS,-1);
-			status_change_end(src,SC_BLADESTOP,-1);
+			status_change_end(src, SC_EXPLOSIONSPIRITS, INVALID_TIMER);
+			status_change_end(src, SC_BLADESTOP, INVALID_TIMER);
 		}
 		//Client expects you to move to target regardless of distance
 		{
@@ -2992,7 +2992,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 
 	case SL_SMA:
 		if (sc && sc->data[SC_SMA])
-			status_change_end(src,SC_SMA,-1);
+			status_change_end(src, SC_SMA, INVALID_TIMER);
 	case SL_STIN:
 	case SL_STUN:
 		if (sd && !battle_config.allow_es_magic_pc && bl->type != BL_MOB) {
@@ -3066,7 +3066,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 				clif_slide(src,src->x,src->y);
 		}
 		if (sc && sc->data[SC_HIDING])
-			status_change_end(src, SC_HIDING, -1);
+			status_change_end(src, SC_HIDING, INVALID_TIMER);
 		skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,flag);
 		break;
 	case 0:
@@ -3208,7 +3208,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				if( tsc->data[SC_KAITE] && !(sstatus->mode&MD_BOSS) )
 				{ //Bounce back heal
 					if (--tsc->data[SC_KAITE]->val2 <= 0)
-						status_change_end(bl, SC_KAITE, -1);
+						status_change_end(bl, SC_KAITE, INVALID_TIMER);
 					if (src == bl)
 						heal=0; //When you try to heal yourself under Kaite, the heal is voided.
 					else {
@@ -3327,7 +3327,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case PR_LEXDIVINA:
 	case MER_LEXDIVINA:
 		if( tsce )
-			status_change_end(bl,type, -1);
+			status_change_end(bl,type, INVALID_TIMER);
 		else
 			sc_start(bl,type,100,skilllv,skill_get_time(skillid,skilllv));
 		clif_skill_nodamage (src, bl, skillid, skilllv, 1);
@@ -3441,9 +3441,9 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			{
 				const enum sc_type scs[] = { SC_QUAGMIRE, SC_PROVOKE, SC_ROKISWEIL, SC_GRAVITATION, SC_SUITON, SC_STRIPWEAPON, SC_STRIPSHIELD, SC_STRIPARMOR, SC_STRIPHELM, SC_BLADESTOP };
 				for (i = SC_COMMON_MIN; i <= SC_COMMON_MAX; i++)
-					if (tsc->data[i]) status_change_end(bl, (sc_type)i, -1);
+					if (tsc->data[i]) status_change_end(bl, (sc_type)i, INVALID_TIMER);
 				for (i = 0; i < ARRAYLENGTH(scs); i++)
-					if (tsc->data[scs[i]]) status_change_end(bl, scs[i], -1);
+					if (tsc->data[scs[i]]) status_change_end(bl, scs[i], INVALID_TIMER);
 			}
 		}
 		break;
@@ -3508,8 +3508,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				if(  sc->data[SC_MARIONETTE ] &&  sc->data[SC_MARIONETTE ]->val1 == bl->id &&
 					tsc->data[SC_MARIONETTE2] && tsc->data[SC_MARIONETTE2]->val1 == src->id )
 				{
-					status_change_end(src, SC_MARIONETTE, -1);
-					status_change_end(bl, SC_MARIONETTE2, -1);
+					status_change_end(src, SC_MARIONETTE, INVALID_TIMER);
+					status_change_end(bl, SC_MARIONETTE2, INVALID_TIMER);
 				}
 				else
 				{
@@ -3699,7 +3699,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		clif_skill_nodamage(src,bl,skillid,skilllv,
 			sc_start(bl,type,100,skilllv,skill_get_time(skillid,skilllv)));
 		if (tsc && tsc->data[SC_NEN])
-			status_change_end(bl,SC_NEN,-1);
+			status_change_end(bl, SC_NEN, INVALID_TIMER);
 		break;
 /* Was modified to only affect targetted char.	[Skotlex]
 	case HP_ASSUMPTIO:
@@ -3805,11 +3805,11 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		if( tsc && tsc->count )
 		{
 			if( tsc->data[SC_FREEZE] )
-				status_change_end(bl,SC_FREEZE,-1);
+				status_change_end(bl, SC_FREEZE, INVALID_TIMER);
 			if( tsc->data[SC_STONE] && tsc->opt1 == OPT1_STONE )
-				status_change_end(bl,SC_STONE,-1);
+				status_change_end(bl, SC_STONE, INVALID_TIMER);
 			if( tsc->data[SC_SLEEP] )
-				status_change_end(bl,SC_SLEEP,-1);
+				status_change_end(bl, SC_SLEEP, INVALID_TIMER);
 		}
 
 		if( dstmd )
@@ -3947,7 +3947,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			skill_get_splash(skillid, skilllv), splash_target(src),
 			src,skillid,skilllv,tick, flag|BCT_ENEMY|1,
 			skill_castend_damage_id);
-		status_change_end(src, SC_HIDING, -1);
+		status_change_end(src, SC_HIDING, INVALID_TIMER);
 		break;
 
 	case ASC_METEORASSAULT:
@@ -4016,7 +4016,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 
 	case WZ_SIGHTRASHER:
 		//Passive side of the attack.
-		status_change_end(src,SC_SIGHT,-1);
+		status_change_end(src, SC_SIGHT, INVALID_TIMER);
 		clif_skill_nodamage(src,bl,skillid,skilllv,1);
 		map_foreachinrange(skill_area_sub,src,
 			skill_get_splash(skillid, skilllv),BL_CHAR|BL_SKILL,
@@ -4104,7 +4104,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case GS_GATLINGFEVER:
 		if( tsce )
 		{
-			clif_skill_nodamage(src,bl,skillid,skilllv,status_change_end(bl, type, -1));
+			clif_skill_nodamage(src,bl,skillid,skilllv,status_change_end(bl, type, INVALID_TIMER));
 			map_freeblock_unlock();
 			return 0;
 		}
@@ -4133,7 +4133,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case SM_AUTOBERSERK:
 	case MER_AUTOBERSERK:
 		if( tsce )
-			i = status_change_end(bl, type, -1);
+			i = status_change_end(bl, type, INVALID_TIMER);
 		else
 			i = sc_start(bl,type,100,skilllv,60000);
 		clif_skill_nodamage(src,bl,skillid,skilllv,i);
@@ -4142,7 +4142,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case ST_CHASEWALK:
 		if (tsce)
 		{
-			clif_skill_nodamage(src,bl,skillid,-1,status_change_end(bl, type, -1)); //Hide skill-scream animation.
+			clif_skill_nodamage(src,bl,skillid,-1,status_change_end(bl, type, INVALID_TIMER)); //Hide skill-scream animation.
 			map_freeblock_unlock();
 			return 0;
 		}
@@ -4151,7 +4151,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case TK_RUN:
 		if (tsce)
 		{
-			clif_skill_nodamage(src,bl,skillid,skilllv,status_change_end(bl, type, -1));
+			clif_skill_nodamage(src,bl,skillid,skilllv,status_change_end(bl, type, INVALID_TIMER));
 			map_freeblock_unlock();
 			return 0;
 		}
@@ -4162,7 +4162,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case AS_CLOAKING:
 		if (tsce)
 		{
-			i = status_change_end(bl, type, -1);
+			i = status_change_end(bl, type, INVALID_TIMER);
 			if( i )
 				clif_skill_nodamage(src,bl,skillid,-1,i);
 			else if( sd )
@@ -4180,7 +4180,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case BD_ADAPTATION:
 		if(tsc && tsc->data[SC_DANCING]){
 			clif_skill_nodamage(src,bl,skillid,skilllv,1);
-			status_change_end(bl, SC_DANCING, -1);
+			status_change_end(bl, SC_DANCING, INVALID_TIMER);
 		}
 		break;
 
@@ -4253,7 +4253,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				break;
 
 			if (tsc->data[SC_STONE]) {
-				status_change_end(bl,SC_STONE,-1);
+				status_change_end(bl, SC_STONE, INVALID_TIMER);
 				if (sd) clif_skill_fail(sd,skillid,0,0);
 				break;
 			}
@@ -4283,16 +4283,16 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			clif_skill_nodamage(src,bl,skillid,skilllv,0);
 			break;
 		}
-		status_change_end(bl, SC_SILENCE	, -1 );
-		status_change_end(bl, SC_BLIND	, -1 );
-		status_change_end(bl, SC_CONFUSION, -1 );
+		status_change_end(bl, SC_SILENCE, INVALID_TIMER);
+		status_change_end(bl, SC_BLIND, INVALID_TIMER);
+		status_change_end(bl, SC_CONFUSION, INVALID_TIMER);
 		clif_skill_nodamage(src,bl,skillid,skilllv,1);
 		break;
 
 	case TF_DETOXIFY:
 		clif_skill_nodamage(src,bl,skillid,skilllv,1);
-		status_change_end(bl, SC_POISON	, -1 );
-		status_change_end(bl, SC_DPOISON	, -1 );
+		status_change_end(bl, SC_POISON, INVALID_TIMER);
+		status_change_end(bl, SC_DPOISON, INVALID_TIMER);
 		break;
 
 	case PR_STRECOVERY:
@@ -4301,10 +4301,10 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			break;
 		}
 		if (tsc && tsc->opt1) {
-			status_change_end(bl, SC_FREEZE, -1 );
-			status_change_end(bl, SC_STONE, -1 );
-			status_change_end(bl, SC_SLEEP, -1 );
-			status_change_end(bl, SC_STUN, -1 );
+			status_change_end(bl, SC_FREEZE, INVALID_TIMER);
+			status_change_end(bl, SC_STONE, INVALID_TIMER);
+			status_change_end(bl, SC_SLEEP, INVALID_TIMER);
+			status_change_end(bl, SC_STUN, INVALID_TIMER);
 		}
 		//Is this equation really right? It looks so... special.
 		if(battle_check_undead(tstatus->race,tstatus->def_ele))
@@ -4321,31 +4321,31 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 
 	// Mercenary Supportive Skills
 	case MER_BENEDICTION:
-		status_change_end(bl, SC_CURSE, -1);
-		status_change_end(bl, SC_BLIND, -1);
+		status_change_end(bl, SC_CURSE, INVALID_TIMER);
+		status_change_end(bl, SC_BLIND, INVALID_TIMER);
 		clif_skill_nodamage(src,bl,skillid,skilllv,1);
 		break;
 	case MER_COMPRESS:
-		status_change_end(bl, SC_BLEEDING, -1);
+		status_change_end(bl, SC_BLEEDING, INVALID_TIMER);
 		clif_skill_nodamage(src,bl,skillid,skilllv,1);
 		break;
 	case MER_MENTALCURE:
-		status_change_end(bl, SC_CONFUSION, -1);
+		status_change_end(bl, SC_CONFUSION, INVALID_TIMER);
 		clif_skill_nodamage(src,bl,skillid,skilllv,1);
 		break;
 	case MER_RECUPERATE:
-		status_change_end(bl, SC_POISON, -1);
-		status_change_end(bl, SC_SILENCE, -1);
+		status_change_end(bl, SC_POISON, INVALID_TIMER);
+		status_change_end(bl, SC_SILENCE, INVALID_TIMER);
 		clif_skill_nodamage(src,bl,skillid,skilllv,1);
 		break;
 	case MER_REGAIN:
-		status_change_end(bl, SC_SLEEP, -1);
-		status_change_end(bl, SC_STUN, -1);
+		status_change_end(bl, SC_SLEEP, INVALID_TIMER);
+		status_change_end(bl, SC_STUN, INVALID_TIMER);
 		clif_skill_nodamage(src,bl,skillid,skilllv,1);
 		break;
 	case MER_TENDER:
-		status_change_end(bl, SC_FREEZE, -1);
-		status_change_end(bl, SC_STONE, -1);
+		status_change_end(bl, SC_FREEZE, INVALID_TIMER);
+		status_change_end(bl, SC_STONE, INVALID_TIMER);
 		clif_skill_nodamage(src,bl,skillid,skilllv,1);
 		break;
 
@@ -4643,7 +4643,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		{
 			enum sc_type scid = (sc_type)(SC_STRIPWEAPON + (skillid - AM_CP_WEAPON));
 			if(tsc && tsc->data[scid])
-				status_change_end(bl, scid, -1 );
+				status_change_end(bl, scid, INVALID_TIMER);
 			clif_skill_nodamage(src,bl,skillid,skilllv,
 				sc_start(bl,type,100,skilllv,skill_get_time(skillid,skilllv)));
 		}
@@ -4735,7 +4735,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 					break;
 				}
 				if(i==SC_BERSERK) tsc->data[i]->val2=0; //Mark a dispelled berserk to avoid setting hp to 100 by setting hp penalty to 0.
-				status_change_end(bl,(sc_type)i,-1);
+				status_change_end(bl, (sc_type)i, INVALID_TIMER);
 			}
 			break;
 		}
@@ -4796,7 +4796,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			} else {
 				struct unit_data *ud = unit_bl2ud(bl);
 				int bl_skillid=0,bl_skilllv=0,hp = 0;
-				if (!ud || ud->skilltimer == -1) break; //Nothing to cancel.
+				if (!ud || ud->skilltimer == INVALID_TIMER)
+					break; //Nothing to cancel.
 				bl_skillid = ud->skillid;
 				bl_skilllv = ud->skilllv;
 				if (tstatus->mode & MD_BOSS)
@@ -5021,7 +5022,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		{
 			clif_emotion(bl, md->db->skill[md->skillidx].val[0]);
 			if(md->db->skill[md->skillidx].val[4] && tsce)
-				status_change_end(bl, type, -1);
+				status_change_end(bl, type, INVALID_TIMER);
 
 			if(md->db->skill[md->skillidx].val[1] || md->db->skill[md->skillidx].val[2])
 				sc_start4(src, type, 100, skilllv,
@@ -5226,11 +5227,11 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 
 			if(tsc && tsc->count){
 				if(tsc->data[SC_FREEZE])
-					status_change_end(bl,SC_FREEZE,-1);
+					status_change_end(bl, SC_FREEZE, INVALID_TIMER);
 				if(tsc->data[SC_STONE] && tsc->opt1 == OPT1_STONE)
-					status_change_end(bl,SC_STONE,-1);
+					status_change_end(bl, SC_STONE, INVALID_TIMER);
 				if(tsc->data[SC_SLEEP])
-					status_change_end(bl,SC_SLEEP,-1);
+					status_change_end(bl, SC_SLEEP, INVALID_TIMER);
 			}
 
 			if(dstmd)
@@ -5298,7 +5299,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			}
 			for (i=0; i<4; i++) {
 				if(tsc->data[SC_STRIPWEAPON + i])
-					status_change_end(bl, (sc_type)(SC_STRIPWEAPON + i), -1 );
+					status_change_end(bl, (sc_type)(SC_STRIPWEAPON + i), INVALID_TIMER);
 				sc_start(bl,(sc_type)(SC_CP_WEAPON + i),100,skilllv,skilltime);
 			}
 			clif_skill_nodamage(src,bl,skillid,skilllv,1);
@@ -5771,7 +5772,7 @@ int skill_castend_id(int tid, unsigned int tick, int id, intptr data)
 			return 0;
 		}
 
-		if( sd && ud->skilltimer != -1 && pc_checkskill(sd,SA_FREECAST) > 0 )
+		if( sd && ud->skilltimer != INVALID_TIMER && pc_checkskill(sd,SA_FREECAST) > 0 )
 		{// restore original walk speed
 			ud->skilltimer = INVALID_TIMER;
 			status_calc_bl(&sd->bl, SCB_SPEED);
@@ -5875,7 +5876,7 @@ int skill_castend_id(int tid, unsigned int tick, int id, intptr data)
 		}
 
 		//Avoid doing double checks for instant-cast skills.
-		if (tid != -1 && !status_check_skilluse(src, target, ud->skillid, 1))
+		if (tid != INVALID_TIMER && !status_check_skilluse(src, target, ud->skillid, 1))
 			break;
 
 		if(md) {
@@ -5909,7 +5910,7 @@ int skill_castend_id(int tid, unsigned int tick, int id, intptr data)
 		if (ud->state.running && ud->skillid == TK_JUMPKICK)
 			flag = 1;
 
-		if (ud->walktimer != -1 && ud->skillid != TK_RUN)
+		if (ud->walktimer != INVALID_TIMER && ud->skillid != TK_RUN)
 			unit_stop_walking(src,1);
 
 		if( !sd || sd->skillitem != ud->skillid || skill_get_delay(ud->skillid,ud->skilllv) )
@@ -5952,7 +5953,7 @@ int skill_castend_id(int tid, unsigned int tick, int id, intptr data)
 		if(sc && sc->count) {
 		  	if(sc->data[SC_MAGICPOWER] &&
 				ud->skillid != HW_MAGICPOWER && ud->skillid != WZ_WATERBALL)
-				status_change_end(src,SC_MAGICPOWER,-1);
+				status_change_end(src, SC_MAGICPOWER, INVALID_TIMER);
 			if(sc->data[SC_SPIRIT] &&
 				sc->data[SC_SPIRIT]->val2 == SL_WIZARD &&
 				sc->data[SC_SPIRIT]->val3 == ud->skillid &&
@@ -5966,7 +5967,7 @@ int skill_castend_id(int tid, unsigned int tick, int id, intptr data)
 		if( sd && ud->skillid != SA_ABRACADABRA ) // Hocus-Pocus has just set the data so leave it as it is.[Inkfish]
 			sd->skillitem = sd->skillitemlv = 0;
 
-		if (ud->skilltimer == -1) {
+		if (ud->skilltimer == INVALID_TIMER) {
 			if(md) md->skillidx = -1;
 			else ud->skillid = 0; //mobs can't clear this one as it is used for skill condition 'afterskill'
 			ud->skilllv = ud->skilltarget = 0;
@@ -5985,9 +5986,9 @@ int skill_castend_id(int tid, unsigned int tick, int id, intptr data)
 		if (sc->count)
 		{	//End states
 			if (sc->data[SC_EXPLOSIONSPIRITS])
-				status_change_end(src, SC_EXPLOSIONSPIRITS, -1);
+				status_change_end(src, SC_EXPLOSIONSPIRITS, INVALID_TIMER);
 			if (sc->data[SC_BLADESTOP])
-				status_change_end(src,SC_BLADESTOP,-1);
+				status_change_end(src, SC_BLADESTOP, INVALID_TIMER);
 		}
 		if (target && target->m == src->m)
 		{	//Move character to target anyway.
@@ -6049,7 +6050,7 @@ int skill_castend_pos(int tid, unsigned int tick, int id, intptr data)
 		return 0;
 	}
 
-	if( sd && ud->skilltimer != -1 && pc_checkskill(sd,SA_FREECAST) > 0 )
+	if( sd && ud->skilltimer != INVALID_TIMER && pc_checkskill(sd,SA_FREECAST) > 0 )
 	{// restore original walk speed
 		ud->skilltimer = INVALID_TIMER;
 		status_calc_bl(&sd->bl, SCB_SPEED);
@@ -6091,7 +6092,7 @@ int skill_castend_pos(int tid, unsigned int tick, int id, intptr data)
 			}
 		}
 
-		if(tid != -1)
+		if(tid != INVALID_TIMER)
 		{	//Avoid double checks on instant cast skills. [Skotlex]
 			if (!status_check_skilluse(src, NULL, ud->skillid, 1))
 				break;
@@ -6124,7 +6125,7 @@ int skill_castend_pos(int tid, unsigned int tick, int id, intptr data)
 			ShowInfo("Type %d, ID %d skill castend pos [id =%d, lv=%d, (%d,%d)]\n",
 				src->type, src->id, ud->skillid, ud->skilllv, ud->skillx, ud->skilly);
 
-		if (ud->walktimer != -1)
+		if (ud->walktimer != INVALID_TIMER)
 			unit_stop_walking(src,1);
 
 		if( !sd || sd->skillitem != ud->skillid || skill_get_delay(ud->skillid,ud->skilllv) )
@@ -6148,7 +6149,7 @@ int skill_castend_pos(int tid, unsigned int tick, int id, intptr data)
 		if( sd && sd->skillitem != AL_WARP ) // Warp-Portal thru items will clear data in skill_castend_map. [Inkfish]
 			sd->skillitem = sd->skillitemlv = 0;
 
-		if (ud->skilltimer == -1) {
+		if (ud->skilltimer == INVALID_TIMER) {
 			if (md) md->skillidx = -1;
 			else ud->skillid = 0; //Non mobs can't clear this one as it is used for skill condition 'afterskill'
 			ud->skilllv = ud->skillx = ud->skilly = 0;
@@ -6335,7 +6336,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, int skillid, int sk
 		break;
 	case HP_BASILICA:
 		if( sc->data[SC_BASILICA] )
-			status_change_end(src, SC_BASILICA, -1); // Cancel Basilica
+			status_change_end(src, SC_BASILICA, INVALID_TIMER); // Cancel Basilica
 		else
 		{ // Create Basilica. Start SC on caster. Unit timer start SC on others.
 			skill_clear_unitgroup(src);
@@ -6409,7 +6410,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, int skillid, int sk
 			clif_slide(src,x,y);
 		}
 		if (sc && sc->data[SC_HIDING])
-			status_change_end(src, SC_HIDING, -1);
+			status_change_end(src, SC_HIDING, INVALID_TIMER);
 		break;
 	case AM_SPHEREMINE:
 	case AM_CANNIBALIZE:
@@ -6544,7 +6545,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, int skillid, int sk
 	case PA_GOSPEL:
 		if (sce && sce->val4 == BCT_SELF)
 		{
-			status_change_end(src,SC_GOSPEL,-1);
+			status_change_end(src, SC_GOSPEL, INVALID_TIMER);
 			return 0;
 		}
 		else
@@ -6552,7 +6553,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, int skillid, int sk
 			sg = skill_unitsetting(src,skillid,skilllv,src->x,src->y,0);
 			if (!sg) break;
 			if (sce)
-				status_change_end(src,type,-1); //Was under someone else's Gospel. [Skotlex]
+				status_change_end(src, type, INVALID_TIMER); //Was under someone else's Gospel. [Skotlex]
 			sc_start4(src,type,100,skilllv,0,sg->group_id,BCT_SELF,skill_get_time(skillid,skilllv));
 			clif_skill_poseffect(src, skillid, skilllv, 0, 0, tick); // PA_GOSPEL music packet
 		}
@@ -6579,7 +6580,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, int skillid, int sk
 	}
 
 	if (sc && sc->data[SC_MAGICPOWER])
-		status_change_end(src,SC_MAGICPOWER,-1);
+		status_change_end(src, SC_MAGICPOWER, INVALID_TIMER);
 
 	if( sd )
 	{
@@ -7807,17 +7808,17 @@ int skill_unit_onout (struct skill_unit *src, struct block_list *bl, unsigned in
 	case UNT_SAFETYWALL:
 	case UNT_PNEUMA:
 		if (sce)
-			status_change_end(bl,type,-1);
+			status_change_end(bl, type, INVALID_TIMER);
 		break;
 
 	case UNT_BASILICA:
 		if( sce && sce->val4 == src->bl.id )
-			status_change_end(bl,type,-1);
+			status_change_end(bl, type, INVALID_TIMER);
 		break;
 
 	case UNT_HERMODE:	//Clear Hermode if the owner moved.
 		if (sce && sce->val3 == BCT_SELF && sce->val4 == sg->group_id)
-			status_change_end(bl,type,-1);
+			status_change_end(bl, type, INVALID_TIMER);
 		break;
 
 	case UNT_SPIDERWEB:
@@ -7826,7 +7827,7 @@ int skill_unit_onout (struct skill_unit *src, struct block_list *bl, unsigned in
 			if (target && target==bl)
 			{
 				if (sce && sce->val3 == sg->group_id)
-					status_change_end(bl,type,-1);
+					status_change_end(bl, type, INVALID_TIMER);
 				sg->limit = DIFF_TICK(tick,sg->tick)+1000;
 			}
 			break;
@@ -7857,7 +7858,7 @@ static int skill_unit_onleft (int skill_id, struct block_list *bl, unsigned int 
 			if (bl->type==BL_MOB)
 				break;
 			if (sce)
-				status_change_end(bl, type, -1);
+				status_change_end(bl, type, INVALID_TIMER);
 			break;
 
 		case BD_LULLABY:
@@ -7875,7 +7876,7 @@ static int skill_unit_onleft (int skill_id, struct block_list *bl, unsigned int 
 				//it only checks if you are doing the same ensemble. So if there's two chars doing an ensemble
 				//which overlaps, by stepping outside of the other parther's ensemble will cause you to cancel
 				//your own. Let's pray that scenario is pretty unlikely and noone will complain too much about it.
-				status_change_end(bl, SC_DANCING, -1);
+				status_change_end(bl, SC_DANCING, INVALID_TIMER);
 			}
 		case MG_SAFETYWALL:
 		case AL_PNEUMA:
@@ -7886,7 +7887,7 @@ static int skill_unit_onleft (int skill_id, struct block_list *bl, unsigned int 
 		case HW_GRAVITATION:
 		case NJ_SUITON:
 			if (sce)
-				status_change_end(bl, type, -1);
+				status_change_end(bl, type, INVALID_TIMER);
 			break;
 
 		case BA_POEMBRAGI:
@@ -7909,11 +7910,11 @@ static int skill_unit_onleft (int skill_id, struct block_list *bl, unsigned int 
 		case PF_FOGWALL:
 			if (sce)
 			{
-				status_change_end(bl,type,-1);
+				status_change_end(bl, type, INVALID_TIMER);
 				if ((sce=sc->data[SC_BLIND]))
 				{
 					if (bl->type == BL_PC) //Players get blind ended inmediately, others have it still for 30 secs. [Skotlex]
-						status_change_end(bl, SC_BLIND, -1);
+						status_change_end(bl, SC_BLIND, INVALID_TIMER);
 					else {
 						delete_timer(sce->timer, status_change_timer);
 						sce->timer = add_timer(30000+tick, status_change_timer, bl->id, SC_BLIND);
@@ -8252,7 +8253,7 @@ int skill_check_condition_castbegin(struct map_session_data* sd, short skill, sh
 	switch( skill )
 	{
 	case SA_CASTCANCEL:
-		if(sd->ud.skilltimer == -1) {
+		if(sd->ud.skilltimer == INVALID_TIMER) {
 			clif_skill_fail(sd,skill,0,0);
 			return 0;
 		}
@@ -8352,7 +8353,7 @@ int skill_check_condition_castbegin(struct map_session_data* sd, short skill, sh
 		if (pc_famerank(sd->status.char_id,MAPID_TAEKWON))
 		{	//Unlimited Combo
 			if (skill == sd->skillid_old) {
-				status_change_end(&sd->bl, SC_COMBO, -1);
+				status_change_end(&sd->bl, SC_COMBO, INVALID_TIMER);
 				sd->skillid_old = sd->skilllv_old = 0;
 				return 0; //Can't repeat previous combo skill.
 			}
@@ -9046,12 +9047,12 @@ int skill_castfix_sc (struct block_list *bl, int time)
 			time += time * sc->data[SC_SLOWCAST]->val2 / 100;
 		if (sc->data[SC_SUFFRAGIUM]) {
 			time -= time * sc->data[SC_SUFFRAGIUM]->val2 / 100;
-			status_change_end(bl, SC_SUFFRAGIUM, -1);
+			status_change_end(bl, SC_SUFFRAGIUM, INVALID_TIMER);
 		}
 		if (sc->data[SC_MEMORIZE]) {
 			time>>=1;
 			if ((--sc->data[SC_MEMORIZE]->val2) <= 0)
-				status_change_end(bl, SC_MEMORIZE, -1);
+				status_change_end(bl, SC_MEMORIZE, INVALID_TIMER);
 		}
 		if (sc->data[SC_POEMBRAGI])
 			time -= time * sc->data[SC_POEMBRAGI]->val2 / 100;
@@ -9915,7 +9916,7 @@ int skill_enchant_elemental_end (struct block_list *bl, int type)
 
 	for (i = 0; i < ARRAYLENGTH(scs); i++)
 		if (type != scs[i] && sc->data[scs[i]])
-			status_change_end(bl, scs[i], -1);
+			status_change_end(bl, scs[i], INVALID_TIMER);
 
 	return 0;
 }
@@ -9940,7 +9941,7 @@ bool skill_check_cloaking(struct block_list *bl, struct status_change_entry *sce
 		if( !wall )
 		{
 			if( sce->val1 < 3 ) //End cloaking.
-				status_change_end(bl, SC_CLOAKING, -1);
+				status_change_end(bl, SC_CLOAKING, INVALID_TIMER);
 			else
 			if( sce->val4&1 )
 			{	//Remove wall bonus
@@ -10039,7 +10040,7 @@ int skill_delunit (struct skill_unit* unit)
 		{
 		struct block_list* target = map_id2bl(group->val2);
 		if( target )
-			status_change_end(target,SC_ANKLE,-1);
+			status_change_end(target, SC_ANKLE, INVALID_TIMER);
 		}
 		break;
 	case WZ_ICEWALL:
@@ -10185,7 +10186,7 @@ int skill_delunitgroup_(struct skill_unit_group *group, const char* file, int li
 		if (sc && sc->data[SC_DANCING])
 		{
 			sc->data[SC_DANCING]->val2 = 0 ; //This prevents status_change_end attempting to redelete the group. [Skotlex]
-			status_change_end(src,SC_DANCING,-1);
+			status_change_end(src, SC_DANCING, INVALID_TIMER);
 		}
 	}
 
@@ -10195,7 +10196,7 @@ int skill_delunitgroup_(struct skill_unit_group *group, const char* file, int li
 		struct status_change *sc = status_get_sc(src);
 		if(sc && sc->data[SC_GOSPEL]) {
 			sc->data[SC_GOSPEL]->val3 = 0; //Remove reference to this group. [Skotlex]
-			status_change_end(src,SC_GOSPEL,-1);
+			status_change_end(src, SC_GOSPEL, INVALID_TIMER);
 		}
 	}
 
@@ -10205,7 +10206,7 @@ int skill_delunitgroup_(struct skill_unit_group *group, const char* file, int li
 		struct status_change *sc = status_get_sc(src);
 		if(sc && sc->data[SC_WARM]) {
 			sc->data[SC_WARM]->val4 = 0;
-			status_change_end(src,SC_WARM,-1);
+			status_change_end(src, SC_WARM, INVALID_TIMER);
 		}
 	}
 

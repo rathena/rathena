@@ -180,7 +180,7 @@ int pet_sc_check(struct map_session_data *sd, int type)
 	if( pd == NULL
 	||  (battle_config.pet_equip_required && pd->pet.equip == 0)
 	||  pd->recovery == NULL
-	||  pd->recovery->timer != -1
+	||  pd->recovery->timer != INVALID_TIMER
 	||  pd->recovery->type != type )
 		return 1;
 
@@ -263,7 +263,7 @@ int search_petDB_index(int key,int type)
 int pet_hungry_timer_delete(struct pet_data *pd)
 {
 	nullpo_ret(pd);
-	if(pd->pet_hungry_timer != -1) {
+	if(pd->pet_hungry_timer != INVALID_TIMER) {
 		delete_timer(pd->pet_hungry_timer,pet_hungry);
 		pd->pet_hungry_timer = INVALID_TIMER;
 	}
@@ -666,14 +666,14 @@ int pet_equipitem(struct map_session_data *sd,int index)
 	if (battle_config.pet_equip_required)
 	{ 	//Skotlex: start support timers if need
 		unsigned int tick = gettick();
-		if (pd->s_skill && pd->s_skill->timer == -1)
+		if (pd->s_skill && pd->s_skill->timer == INVALID_TIMER)
 		{
 			if (pd->s_skill->id)
 				pd->s_skill->timer=add_timer(tick+pd->s_skill->delay*1000, pet_skill_support_timer, sd->bl.id, 0);
 			else
 				pd->s_skill->timer=add_timer(tick+pd->s_skill->delay*1000, pet_heal_timer, sd->bl.id, 0);
 		}
-		if (pd->bonus && pd->bonus->timer == -1)
+		if (pd->bonus && pd->bonus->timer == INVALID_TIMER)
 			pd->bonus->timer=add_timer(tick+pd->bonus->delay*1000, pet_skill_bonus_timer, sd->bl.id, 0);
 	}
 
@@ -706,7 +706,7 @@ static int pet_unequipitem(struct map_session_data *sd, struct pet_data *pd)
 			pd->state.skillbonus = 0;
 			status_calc_pc(sd,0);
 		}
-		if( pd->s_skill && pd->s_skill->timer != -1 )
+		if( pd->s_skill && pd->s_skill->timer != INVALID_TIMER )
 		{
 			if( pd->s_skill->id )
 				delete_timer(pd->s_skill->timer, pet_skill_support_timer);
@@ -714,7 +714,7 @@ static int pet_unequipitem(struct map_session_data *sd, struct pet_data *pd)
 				delete_timer(pd->s_skill->timer, pet_heal_timer);
 			pd->s_skill->timer = INVALID_TIMER;
 		}
-		if( pd->bonus && pd->bonus->timer != -1 )
+		if( pd->bonus && pd->bonus->timer != INVALID_TIMER )
 		{
 			delete_timer(pd->bonus->timer, pet_skill_bonus_timer);
 			pd->bonus->timer = INVALID_TIMER;
@@ -825,10 +825,10 @@ static int pet_ai_sub_hard(struct pet_data *pd, struct map_session_data *sd, uns
 		return 0;
 	pd->last_thinktime=tick;
 
-	if(pd->ud.attacktimer != -1 || pd->ud.skilltimer != -1 || pd->bl.m != sd->bl.m)
+	if(pd->ud.attacktimer != INVALID_TIMER || pd->ud.skilltimer != INVALID_TIMER || pd->bl.m != sd->bl.m)
 		return 0;
 
-	if(pd->ud.walktimer != -1 && pd->ud.walkpath.path_pos <= 2)
+	if(pd->ud.walktimer != INVALID_TIMER && pd->ud.walkpath.path_pos <= 2)
 		return 0; //No thinking when you just started to walk.
 
 	if(pd->pet.intimate <= 0) {
@@ -841,7 +841,7 @@ static int pet_ai_sub_hard(struct pet_data *pd, struct map_session_data *sd, uns
 		//Master too far, chase.
 		if(pd->target_id)
 			pet_unlocktarget(pd);
-		if(pd->ud.walktimer != -1 && pd->ud.target == sd->bl.id)
+		if(pd->ud.walktimer != INVALID_TIMER && pd->ud.target == sd->bl.id)
 			return 0; //Already walking to him
 		if (DIFF_TICK(tick, pd->ud.canmove_tick) < 0)
 			return 0; //Can't move yet.
@@ -855,7 +855,7 @@ static int pet_ai_sub_hard(struct pet_data *pd, struct map_session_data *sd, uns
 
 	//Return speed to normal.
 	if (pd->status.speed != pd->petDB->speed) {
-		if (pd->ud.walktimer != -1)
+		if (pd->ud.walktimer != INVALID_TIMER)
 			return 0; //Wait until the pet finishes walking back to master.
 		pd->status.speed = pd->petDB->speed;
 	}
@@ -881,7 +881,7 @@ static int pet_ai_sub_hard(struct pet_data *pd, struct map_session_data *sd, uns
 		if (check_distance_bl(&sd->bl, &pd->bl, 3))
 			return 0; //Already next to master.
 
-		if(pd->ud.walktimer != -1 && check_distance_blxy(&sd->bl, pd->ud.to_x,pd->ud.to_y, 3))
+		if(pd->ud.walktimer != INVALID_TIMER && check_distance_blxy(&sd->bl, pd->ud.to_x,pd->ud.to_y, 3))
 			return 0; //Already walking to him
 
 		unit_calc_pos(&pd->bl, sd->bl.x, sd->bl.y, sd->ud.dir);
@@ -892,7 +892,7 @@ static int pet_ai_sub_hard(struct pet_data *pd, struct map_session_data *sd, uns
 	}
 	
 	if(pd->ud.target == target->id &&
-		(pd->ud.attacktimer != -1 || pd->ud.walktimer != -1))
+		(pd->ud.attacktimer != INVALID_TIMER || pd->ud.walktimer != INVALID_TIMER))
 		return 0; //Target already locked.
 
 	if (target->type != BL_ITEM) 
@@ -1099,7 +1099,7 @@ int pet_recovery_timer(int tid, unsigned int tick, int id, intptr data)
 	{	//Display a heal animation? 
 		//Detoxify is chosen for now.
 		clif_skill_nodamage(&pd->bl,&sd->bl,TF_DETOXIFY,1,1);
-		status_change_end(&sd->bl,pd->recovery->type,-1);
+		status_change_end(&sd->bl, pd->recovery->type, INVALID_TIMER);
 		clif_emotion(&pd->bl, E_OK);
 	}
 
@@ -1130,7 +1130,7 @@ int pet_heal_timer(int tid, unsigned int tick, int id, intptr data)
 	if(pc_isdead(sd) ||
 		(rate = get_percentage(status->sp, status->max_sp)) > pd->s_skill->sp ||
 		(rate = get_percentage(status->hp, status->max_hp)) > pd->s_skill->hp ||
-		(rate = (pd->ud.skilltimer != -1)) //Another skill is in effect
+		(rate = (pd->ud.skilltimer != INVALID_TIMER)) //Another skill is in effect
 	) {  //Wait (how long? 1 sec for every 10% of remaining)
 		pd->s_skill->timer=add_timer(gettick()+(rate>10?rate:10)*100,pet_heal_timer,sd->bl.id,0);
 		return 0;
@@ -1173,7 +1173,7 @@ int pet_skill_support_timer(int tid, unsigned int tick, int id, intptr data)
 	if(pc_isdead(sd) ||
 		(rate = get_percentage(status->sp, status->max_sp)) > pd->s_skill->sp ||
 		(rate = get_percentage(status->hp, status->max_hp)) > pd->s_skill->hp ||
-		(rate = (pd->ud.skilltimer != -1)) //Another skill is in effect
+		(rate = (pd->ud.skilltimer != INVALID_TIMER)) //Another skill is in effect
 	) {  //Wait (how long? 1 sec for every 10% of remaining)
 		pd->s_skill->timer=add_timer(tick+(rate>10?rate:10)*100,pet_skill_support_timer,sd->bl.id,0);
 		return 0;

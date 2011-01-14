@@ -170,7 +170,7 @@ int pc_addspiritball(struct map_session_data *sd,int interval,int max)
 
 	if( sd->spiritball && sd->spiritball >= max )
 	{
-		if(sd->spirit_timer[0] != -1)
+		if(sd->spirit_timer[0] != INVALID_TIMER)
 			delete_timer(sd->spirit_timer[0],pc_spiritball_timer);
 		sd->spiritball--;
 		if( sd->spiritball != 0 )
@@ -209,14 +209,14 @@ int pc_delspiritball(struct map_session_data *sd,int count,int type)
 		count = MAX_SKILL_LEVEL;
 
 	for(i=0;i<count;i++) {
-		if(sd->spirit_timer[i] != -1) {
+		if(sd->spirit_timer[i] != INVALID_TIMER) {
 			delete_timer(sd->spirit_timer[i],pc_spiritball_timer);
-			sd->spirit_timer[i] = -1;
+			sd->spirit_timer[i] = INVALID_TIMER;
 		}
 	}
 	for(i=count;i<MAX_SKILL_LEVEL;i++) {
 		sd->spirit_timer[i-count] = sd->spirit_timer[i];
-		sd->spirit_timer[i] = -1;
+		sd->spirit_timer[i] = INVALID_TIMER;
 	}
 
 	if(!type)
@@ -317,7 +317,7 @@ int pc_inventory_rental_clear(struct map_session_data *sd)
 	if( sd->rental_timer != INVALID_TIMER )
 	{
 		delete_timer(sd->rental_timer, pc_inventory_rental_end);
-		sd->rental_timer = -1;
+		sd->rental_timer = INVALID_TIMER;
 	}
 
 	return 1;
@@ -912,7 +912,7 @@ bool pc_authok(struct map_session_data *sd, int login_id2, time_t expiration_tim
 
 	// Event Timers
 	for( i = 0; i < MAX_EVENTTIMER; i++ )
-		sd->eventtimer[i] = -1;
+		sd->eventtimer[i] = INVALID_TIMER;
 	// Rental Timer
 	sd->rental_timer = INVALID_TIMER;
 
@@ -1418,9 +1418,9 @@ int pc_updateweightstatus(struct map_session_data *sd)
 
 	// stop old status change
 	if( old_overweight == 1 )
-		status_change_end(&sd->bl, SC_WEIGHT50, -1);
+		status_change_end(&sd->bl, SC_WEIGHT50, INVALID_TIMER);
 	else if( old_overweight == 2 )
-		status_change_end(&sd->bl, SC_WEIGHT90, -1);
+		status_change_end(&sd->bl, SC_WEIGHT90, INVALID_TIMER);
 
 	// start new status change
 	if( new_overweight == 1 )
@@ -3706,7 +3706,7 @@ int pc_useitem(struct map_session_data *sd,int n)
 	//perform a skill-use check before going through. [Skotlex]
 	//resurrection was picked as testing skill, as a non-offensive, generic skill, it will do.
 	//FIXME: Is this really needed here? It'll be checked in unit.c after all and this prevents skill items using when silenced [Inkfish]
-	if( sd->inventory_data[n]->flag.delay_consume && ( sd->ud.skilltimer != -1 /*|| !status_check_skilluse(&sd->bl, &sd->bl, ALL_RESURRECTION, 0)*/ ) )
+	if( sd->inventory_data[n]->flag.delay_consume && ( sd->ud.skilltimer != INVALID_TIMER /*|| !status_check_skilluse(&sd->bl, &sd->bl, ALL_RESURRECTION, 0)*/ ) )
 		return 0;
 
 	if( sd->inventory_data[n]->delay > 0 ) { // Check if there is a delay on this item [Paradox924X]
@@ -4102,20 +4102,20 @@ int pc_setpos(struct map_session_data* sd, unsigned short mapindex, int x, int y
 			if (sd->sc.data[SC_JAILED])
 				return 1; //You may not get out!
 			if (sd->sc.data[SC_BOSSMAPINFO])
-				status_change_end(&sd->bl,SC_BOSSMAPINFO,-1);
+				status_change_end(&sd->bl, SC_BOSSMAPINFO, INVALID_TIMER);
 			if (sd->sc.data[SC_WARM])
-				status_change_end(&sd->bl,SC_WARM,-1);
+				status_change_end(&sd->bl, SC_WARM, INVALID_TIMER);
 			if (sd->sc.data[SC_SUN_COMFORT])
-				status_change_end(&sd->bl,SC_SUN_COMFORT,-1);
+				status_change_end(&sd->bl, SC_SUN_COMFORT, INVALID_TIMER);
 			if (sd->sc.data[SC_MOON_COMFORT])
-				status_change_end(&sd->bl,SC_MOON_COMFORT,-1);
+				status_change_end(&sd->bl, SC_MOON_COMFORT, INVALID_TIMER);
 			if (sd->sc.data[SC_STAR_COMFORT])
-				status_change_end(&sd->bl,SC_STAR_COMFORT,-1);
+				status_change_end(&sd->bl, SC_STAR_COMFORT, INVALID_TIMER);
 			if (sd->sc.data[SC_MIRACLE])
-				status_change_end(&sd->bl,SC_MIRACLE,-1);
+				status_change_end(&sd->bl, SC_MIRACLE, INVALID_TIMER);
 			if (sd->sc.data[SC_KNOWLEDGE]) {
 				struct status_change_entry *sce = sd->sc.data[SC_KNOWLEDGE];
-				if (sce->timer != -1)
+				if (sce->timer != INVALID_TIMER)
 					delete_timer(sce->timer, status_change_timer);
 				sce->timer = add_timer(gettick() + skill_get_time(SG_KNOWLEDGE, sce->val1), status_change_timer, sd->bl.id, SC_KNOWLEDGE);
 			}
@@ -4387,17 +4387,17 @@ int pc_checkallowskill(struct map_session_data *sd)
 	{	// Skills requiring specific weapon types
 		if(sd->sc.data[scw_list[i]] &&
 			!pc_check_weapontype(sd,skill_get_weapontype(status_sc2skill(scw_list[i]))))
-			status_change_end(&sd->bl,scw_list[i],-1);
+			status_change_end(&sd->bl, scw_list[i], INVALID_TIMER);
 	}
 	
 	if(sd->sc.data[SC_SPURT] && sd->status.weapon)
 		// Spurt requires bare hands (feet, in fact xD)
-		status_change_end(&sd->bl,SC_SPURT,-1);
+		status_change_end(&sd->bl, SC_SPURT, INVALID_TIMER);
 	
 	if(sd->status.shield <= 0) { // Skills requiring a shield
 		for (i = 0; i < ARRAYLENGTH(scs_list); i++)
 			if(sd->sc.data[scs_list[i]])
-				status_change_end(&sd->bl,scs_list[i],-1);
+				status_change_end(&sd->bl, scs_list[i], INVALID_TIMER);
 	}
 	return 0;
 }
@@ -4759,7 +4759,7 @@ int pc_follow_timer(int tid, unsigned int tick, int id, intptr data)
 	// either player or target is currently detached from map blocks (could be teleporting),
 	// but still connected to this map, so we'll just increment the timer and check back later
 	if (sd->bl.prev != NULL && tbl->prev != NULL &&
-		sd->ud.skilltimer == -1 && sd->ud.attacktimer == -1 && sd->ud.walktimer == -1)
+		sd->ud.skilltimer == INVALID_TIMER && sd->ud.attacktimer == INVALID_TIMER && sd->ud.walktimer == INVALID_TIMER)
 	{
 		if((sd->bl.m == tbl->m) && unit_can_reach_bl(&sd->bl,tbl, AREA_SIZE, 0, NULL, NULL)) {
 			if (!check_distance_bl(&sd->bl, tbl, 5))
@@ -4791,11 +4791,11 @@ int pc_follow(struct map_session_data *sd,int target_id)
 	struct block_list *bl = map_id2bl(target_id);
 	if (bl == NULL /*|| bl->type != BL_PC*/)
 		return 1;
-	if (sd->followtimer != -1)
+	if (sd->followtimer != INVALID_TIMER)
 		pc_stop_following(sd);
 
 	sd->followtarget = target_id;
-	pc_follow_timer(-1,gettick(),sd->bl.id,0);
+	pc_follow_timer(INVALID_TIMER, gettick(), sd->bl.id, 0);
 
 	return 0;
 }
@@ -5641,7 +5641,8 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 	for(k = 0; k < 5; k++)
 	if (sd->devotion[k]){
 		struct map_session_data *devsd = map_id2sd(sd->devotion[k]);
-		if (devsd) status_change_end(&devsd->bl,SC_DEVOTION,-1);
+		if (devsd)
+			status_change_end(&devsd->bl, SC_DEVOTION, INVALID_TIMER);
 		sd->devotion[k] = 0;
 	}
 
@@ -5795,7 +5796,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 				pc_setinvincibletimer(sd, battle_config.pc_invincible_time);
 			sc_start(&sd->bl,status_skill2sc(MO_STEELBODY),100,1,skill_get_time(MO_STEELBODY,1));
 			if(map_flag_gvg(sd->bl.m))
-				pc_respawn_timer(-1, gettick(), sd->bl.id, 0);
+				pc_respawn_timer(INVALID_TIMER, gettick(), sd->bl.id, 0);
 			return 0;
 		}
 	}
@@ -6293,7 +6294,7 @@ int pc_jobchange(struct map_session_data *sd,int job, int upper)
 			//Remove status specific to your current tree skills.
 			enum sc_type sc = status_skill2sc(id);
 			if (sc > SC_COMMON_MAX && sd->sc.data[sc])
-				status_change_end(&sd->bl, sc, -1);
+				status_change_end(&sd->bl, sc, INVALID_TIMER);
 		}
 	}
 	
@@ -6939,7 +6940,7 @@ static int pc_eventtimer(int tid, unsigned int tick, int id, intptr data)
 	ARR_FIND( 0, MAX_EVENTTIMER, i, sd->eventtimer[i] == tid );
 	if( i < MAX_EVENTTIMER )
 	{
-		sd->eventtimer[i] = -1;
+		sd->eventtimer[i] = INVALID_TIMER;
 		sd->eventcount--;
 		npc_event(sd,p,0);
 	}
@@ -6958,7 +6959,7 @@ int pc_addeventtimer(struct map_session_data *sd,int tick,const char *name)
 	int i;
 	nullpo_ret(sd);
 
-	ARR_FIND( 0, MAX_EVENTTIMER, i, sd->eventtimer[i] == -1 );
+	ARR_FIND( 0, MAX_EVENTTIMER, i, sd->eventtimer[i] == INVALID_TIMER );
 	if( i == MAX_EVENTTIMER )
 		return 0;
 
@@ -6983,7 +6984,7 @@ int pc_deleventtimer(struct map_session_data *sd,const char *name)
 
 	// find the named event timer
 	ARR_FIND( 0, MAX_EVENTTIMER, i,
-		sd->eventtimer[i] != -1 &&
+		sd->eventtimer[i] != INVALID_TIMER &&
 		(p = (char *)(get_timer(sd->eventtimer[i])->data)) != NULL &&
 		strcmp(p, name) == 0
 	);
@@ -6991,7 +6992,7 @@ int pc_deleventtimer(struct map_session_data *sd,const char *name)
 		return 0; // not found
 
 	delete_timer(sd->eventtimer[i],pc_eventtimer);
-	sd->eventtimer[i]=-1;
+	sd->eventtimer[i] = INVALID_TIMER;
 	sd->eventcount--;
 	aFree(p);
 
@@ -7008,7 +7009,7 @@ int pc_addeventtimercount(struct map_session_data *sd,const char *name,int tick)
 	nullpo_ret(sd);
 
 	for(i=0;i<MAX_EVENTTIMER;i++)
-		if( sd->eventtimer[i]!=-1 && strcmp(
+		if( sd->eventtimer[i] != INVALID_TIMER && strcmp(
 			(char *)(get_timer(sd->eventtimer[i])->data), name)==0 ){
 				addtick_timer(sd->eventtimer[i],tick);
 				break;
@@ -7030,10 +7031,10 @@ int pc_cleareventtimer(struct map_session_data *sd)
 		return 0;
 
 	for(i=0;i<MAX_EVENTTIMER;i++)
-		if( sd->eventtimer[i]!=-1 ){
+		if( sd->eventtimer[i] != INVALID_TIMER ){
 			char *p = (char *)(get_timer(sd->eventtimer[i])->data);
 			delete_timer(sd->eventtimer[i],pc_eventtimer);
-			sd->eventtimer[i]=-1;
+			sd->eventtimer[i] = INVALID_TIMER;
 			sd->eventcount--;
 			if (p) aFree(p);
 		}
@@ -7241,7 +7242,7 @@ int pc_unequipitem(struct map_session_data *sd,int n,int flag)
 		pc_calcweapontype(sd);
 		clif_changelook(&sd->bl,LOOK_WEAPON,sd->status.weapon);
 		if(sd->sc.data[SC_DANCING]) //When unequipping, stop dancing. [Skotlex]
-			status_change_end(&sd->bl, SC_DANCING, -1);
+			status_change_end(&sd->bl, SC_DANCING, INVALID_TIMER);
 	}
 	if(sd->status.inventory[n].equip & EQP_HAND_L) {
 		sd->status.shield = sd->weapontype2 = 0;
@@ -7272,9 +7273,9 @@ int pc_unequipitem(struct map_session_data *sd,int n,int flag)
 	if(sd->status.inventory[n].equip & EQP_ARMOR) {
 		// On Armor Change...
 		if( sd->sc.data[SC_BENEDICTIO] )
-			status_change_end(&sd->bl, SC_BENEDICTIO, -1);
+			status_change_end(&sd->bl, SC_BENEDICTIO, INVALID_TIMER);
 		if( sd->sc.data[SC_ARMOR_RESIST] )
-			status_change_end(&sd->bl, SC_ARMOR_RESIST, -1);
+			status_change_end(&sd->bl, SC_ARMOR_RESIST, INVALID_TIMER);
 	}
 
 	if( sd->state.autobonus&sd->status.inventory[n].equip )
@@ -7288,7 +7289,7 @@ int pc_unequipitem(struct map_session_data *sd,int n,int flag)
 	}
 
 	if(sd->sc.data[SC_SIGNUMCRUCIS] && !battle_check_undead(sd->battle_status.race,sd->battle_status.def_ele))
-		status_change_end(&sd->bl,SC_SIGNUMCRUCIS,-1);
+		status_change_end(&sd->bl, SC_SIGNUMCRUCIS, INVALID_TIMER);
 
 	//OnUnEquip script [Skotlex]
 	if (sd->inventory_data[n]) {
@@ -7735,7 +7736,7 @@ void pc_setstand(struct map_session_data *sd){
 	nullpo_retv(sd);
 
 	if(sd->sc.data[SC_TENSIONRELAX])
-		status_change_end(&sd->bl,SC_TENSIONRELAX,-1);
+		status_change_end(&sd->bl, SC_TENSIONRELAX, INVALID_TIMER);
 
 	//Reset sitting tick.
 	sd->ssregen.tick.hp = sd->ssregen.tick.sp = 0;

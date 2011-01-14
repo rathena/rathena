@@ -3261,7 +3261,7 @@ int run_script_timer(int tid, unsigned int tick, int id, intptr data)
 		st->rid = 0;
 		st->state = END;
 	}
-	while( node && st->sleep.timer != -1 ) {
+	while( node && st->sleep.timer != INVALID_TIMER ) {
 		if( (int)node->key == st->oid && ((struct script_state *)node->data)->sleep.timer == st->sleep.timer ) {
 			script_erase_sleepdb(node);
 			st->sleep.timer = INVALID_TIMER;
@@ -8348,10 +8348,10 @@ BUILDIN_FUNC(getnpctimer)
 				ShowError("buildin_getnpctimer: Attached player not found!\n");
 				break;
 			}
-			val = (sd->npc_timer_id != -1);
+			val = (sd->npc_timer_id != INVALID_TIMER);
 		}
 		else
-			val = (nd->u.scr.timerid !=-1);
+			val = (nd->u.scr.timerid != INVALID_TIMER);
 		break;
 	case 2: val = nd->u.scr.timeramount; break;
 	}
@@ -9732,7 +9732,7 @@ BUILDIN_FUNC(pvpon)
 	iter = mapit_getallusers();
 	for( sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC*)mapit_next(iter) )
 	{
-		if( sd->bl.m != m || sd->pvp_timer != -1 )
+		if( sd->bl.m != m || sd->pvp_timer != INVALID_TIMER )
 			continue; // not applicable
 
 		sd->pvp_timer = add_timer(gettick()+200,pc_calc_pvprank_timer,sd->bl.id,0);
@@ -9751,7 +9751,7 @@ static int buildin_pvpoff_sub(struct block_list *bl,va_list ap)
 {
 	TBL_PC* sd = (TBL_PC*)bl;
 	clif_pvpset(sd, 0, 0, 2);
-	if (sd->pvp_timer != -1) {
+	if (sd->pvp_timer != INVALID_TIMER) {
 		delete_timer(sd->pvp_timer, pc_calc_pvprank_timer);
 		sd->pvp_timer = INVALID_TIMER;
 	}
@@ -10836,7 +10836,7 @@ BUILDIN_FUNC(petskillbonus)
 	pd=sd->pd;
 	if (pd->bonus)
 	{ //Clear previous bonus
-		if (pd->bonus->timer != -1)
+		if (pd->bonus->timer != INVALID_TIMER)
 			delete_timer(pd->bonus->timer, pet_skill_bonus_timer);
 	} else //init
 		pd->bonus = (struct pet_bonus *) aMalloc(sizeof(struct pet_bonus));
@@ -11189,7 +11189,7 @@ BUILDIN_FUNC(petrecovery)
 	
 	if (pd->recovery)
 	{ //Halt previous bonus
-		if (pd->recovery->timer != -1)
+		if (pd->recovery->timer != INVALID_TIMER)
 			delete_timer(pd->recovery->timer, pet_recovery_timer);
 	} else //Init
 		pd->recovery = (struct pet_recovery *)aMalloc(sizeof(struct pet_recovery));
@@ -11215,7 +11215,7 @@ BUILDIN_FUNC(petheal)
 	pd=sd->pd;
 	if (pd->s_skill)
 	{ //Clear previous skill
-		if (pd->s_skill->timer != -1)
+		if (pd->s_skill->timer != INVALID_TIMER)
 		{
 			if (pd->s_skill->id)
 				delete_timer(pd->s_skill->timer, pet_skill_support_timer);
@@ -11309,7 +11309,7 @@ BUILDIN_FUNC(petskillsupport)
 	pd=sd->pd;
 	if (pd->s_skill)
 	{ //Clear previous skill
-		if (pd->s_skill->timer != -1)
+		if (pd->s_skill->timer != INVALID_TIMER)
 		{
 			if (pd->s_skill->id)
 				delete_timer(pd->s_skill->timer, pet_skill_support_timer);
@@ -13584,7 +13584,7 @@ BUILDIN_FUNC(awake)
 			struct script_state* tst = (struct script_state*)node->data;
 			TBL_PC* sd = map_id2sd(tst->rid);
 
-			if( tst->sleep.timer == -1 )
+			if( tst->sleep.timer == INVALID_TIMER )
 			{// already awake ???
 				node = node->next;
 				continue;
@@ -14617,7 +14617,7 @@ static int buildin_mobuseskill_sub(struct block_list *bl,va_list ap)
 	if( md->class_ != mobid )
 		return 0;
 
-	if( md->ud.skilltimer != -1 ) // Cancel the casting skill.
+	if( md->ud.skilltimer != INVALID_TIMER ) // Cancel the casting skill.
 		unit_skillcastcancel(bl,0);
 
 	// 0:self, 1:target, 2:master, default:random

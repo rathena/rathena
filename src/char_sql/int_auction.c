@@ -166,7 +166,7 @@ void auction_delete(struct auction_data *auction)
 	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `auction_id` = '%d'", auction_db, auction_id) )
 		Sql_ShowDebug(sql_handle);
 
-	if( auction->auction_end_timer != -1 )
+	if( auction->auction_end_timer != INVALID_TIMER )
 		delete_timer(auction->auction_end_timer, auction_end_timer);
 
 	idb_remove(auction_db_, auction_id);

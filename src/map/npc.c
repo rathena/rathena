@@ -493,10 +493,10 @@ int npc_timerevent(int tid, unsigned int tick, int id, intptr data)
 	else
 	{
 		if( sd )
-			sd->npc_timer_id = -1;
+			sd->npc_timer_id = INVALID_TIMER;
 		else
 		{
-			nd->u.scr.timerid = -1;
+			nd->u.scr.timerid = INVALID_TIMER;
 			nd->u.scr.timertick = 0; // NPC timer stopped
 		}
 		ers_free(timer_event_ers, ted);
@@ -544,10 +544,10 @@ int npc_timerevent_start(struct npc_data* nd, int rid)
 	// Check if timer is already started.
 	if( sd )
 	{
-		if( sd->npc_timer_id != -1 )
+		if( sd->npc_timer_id != INVALID_TIMER )
 			return 0;
 	}
-	else if( nd->u.scr.timerid != -1 )
+	else if( nd->u.scr.timerid != INVALID_TIMER )
 		return 0;
 
 	// Arrange for the next event		
@@ -587,7 +587,7 @@ int npc_timerevent_stop(struct npc_data* nd)
 	}
 	
 	tid = sd?&sd->npc_timer_id:&nd->u.scr.timerid;
-	if( *tid == -1 ) // Nothing to stop
+	if( *tid == INVALID_TIMER ) // Nothing to stop
 		return 0;
 
 	// Delete timer
@@ -595,7 +595,7 @@ int npc_timerevent_stop(struct npc_data* nd)
 	if( td && td->data ) 
 		ers_free(timer_event_ers, (void*)td->data);
 	delete_timer(*tid,npc_timerevent);
-	*tid = -1;
+	*tid = INVALID_TIMER;
 
 	if( !sd )
 	{
@@ -615,11 +615,11 @@ void npc_timerevent_quit(struct map_session_data* sd)
 	struct timer_event_data *ted;
 
 	// Check timer existance
-	if( sd->npc_timer_id == -1 )
+	if( sd->npc_timer_id == INVALID_TIMER )
 		return;
 	if( !(td = get_timer(sd->npc_timer_id)) )
 	{
-		sd->npc_timer_id = -1;
+		sd->npc_timer_id = INVALID_TIMER;
 		return;
 	}
 
@@ -627,7 +627,7 @@ void npc_timerevent_quit(struct map_session_data* sd)
 	nd = (struct npc_data *)map_id2bl(td->id);
 	ted = (struct timer_event_data*)td->data;
 	delete_timer(sd->npc_timer_id, npc_timerevent);
-	sd->npc_timer_id = -1;
+	sd->npc_timer_id = INVALID_TIMER;
 
 	// Execute OnTimerQuit
 	if( nd && nd->bl.type == BL_NPC )
@@ -873,7 +873,7 @@ int npc_touch_areanpc(struct map_session_data* sd, int m, int x, int y)
 			{ // failed to run OnTouch event, so just click the npc
 				struct unit_data *ud = unit_bl2ud(&sd->bl);
 				if( ud && ud->walkpath.path_pos < ud->walkpath.path_len )
-				{ // Since walktimer always == -1 at this time, we stop walking manually. [Inkfish]
+				{ // Since walktimer always == INVALID_TIMER at this time, we stop walking manually. [Inkfish]
 					clif_fixpos(&sd->bl);
 					ud->walkpath.path_pos = ud->walkpath.path_len;
 				}
@@ -1600,7 +1600,7 @@ int npc_unload(struct npc_data* nd)
 		}  
 		mapit_free(iter);
 
-		if (nd->u.scr.timerid != -1) {
+		if (nd->u.scr.timerid != INVALID_TIMER) {
 			const struct TimerData *td = NULL;
 			td = get_timer(nd->u.scr.timerid);
 			if (td && td->data) 
@@ -2245,7 +2245,7 @@ static const char* npc_parse_script(char* w1, char* w2, char* w3, char* w4, cons
 			nd->u.scr.timeramount++;
 		}
 	}
-	nd->u.scr.timerid = -1;
+	nd->u.scr.timerid = INVALID_TIMER;
 
 	return end;
 }
@@ -2428,7 +2428,7 @@ const char* npc_parse_duplicate(char* w1, char* w2, char* w3, char* w4, const ch
 			nd->u.scr.timeramount++;
 		}
 	}
-	nd->u.scr.timerid = -1;
+	nd->u.scr.timerid = INVALID_TIMER;
 
 	return end;
 }
@@ -3536,7 +3536,7 @@ int do_init_npc(void)
 	fake_nd->subtype = SCRIPT;
 
 	strdb_put(npcname_db, fake_nd->exname, fake_nd);
-	fake_nd->u.scr.timerid = -1;
+	fake_nd->u.scr.timerid = INVALID_TIMER;
 	map_addiddb(&fake_nd->bl);
 	// End of initialization
 
