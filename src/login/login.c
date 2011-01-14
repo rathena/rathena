@@ -912,6 +912,7 @@ int mmo_auth_new(const char* userid, const char* pass, const char sex, const cha
 	acc.expiration_time = ( login_config.start_limited_time != -1 ) ? time(NULL) + login_config.start_limited_time : 0;
 	safestrncpy(acc.lastlogin, "0000-00-00 00:00:00", sizeof(acc.lastlogin));
 	safestrncpy(acc.last_ip, last_ip, sizeof(acc.last_ip));
+	safestrncpy(acc.birthdate, "0000-00-00", sizeof(acc.birthdate));
 
 	if( !accounts->create(accounts, &acc) )
 		return 0;

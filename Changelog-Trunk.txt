@@ -1,6 +1,8 @@
 Date	Added
 
 2011/01/14
+	* Added 'birthdate' field to account data. For SQL apply upgrade_svn14672.sql to upgrade table `login`; for TXT no action is necessary, as it upgrades itself. [Ai4rei]
+	- Control panel developers are encouraged to enable players to modify this value, as it is required for new character deletion (2010-08-03aRagexeRE and later, not yet implemented).
 	* Removed unconditional redundant status change checks before status_change_end calls (follow up to r12890). [Ai4rei]
 	* Replaced remaining occurences of '-1' with 'INVALID_TIMER', where appropriate (follow up to r12998). [Ai4rei]
 	* Removed 'gui' plug-in (support plug-in for 3rd party eAthena GUI front-ends) (topic:262934). [Ai4rei]

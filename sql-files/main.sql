@@ -406,6 +406,7 @@ CREATE TABLE IF NOT EXISTS `login` (
   `logincount` mediumint(9) unsigned NOT NULL default '0',
   `lastlogin` datetime NOT NULL default '0000-00-00 00:00:00',
   `last_ip` varchar(100) NOT NULL default '',
+  `birthdate` DATE NOT NULL DEFAULT '0000-00-00',
   PRIMARY KEY  (`account_id`),
   KEY `name` (`userid`)
 ) ENGINE=MyISAM AUTO_INCREMENT=2000000; 

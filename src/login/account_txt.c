@@ -14,7 +14,7 @@
 #include <string.h>
 
 /// global defines
-#define ACCOUNT_TXT_DB_VERSION 20080409
+#define ACCOUNT_TXT_DB_VERSION 20110114
 #define AUTHS_BEFORE_SAVE 10 // flush every 10 saves
 #define AUTH_SAVING_INTERVAL 60000 // flush every 10 minutes
 
@@ -452,10 +452,31 @@ static bool mmo_auth_fromstr(struct mmo_account* a, char* str, unsigned int vers
 	// zero out the destination first
 	memset(a, 0x00, sizeof(struct mmo_account));
 
+	// defaults for older format versions
+	safestrncpy(a->birthdate, "0000-00-00", sizeof(a->birthdate));
+
 	// extract tab-separated columns from line
 	count = sv_split(str, strlen(str), 0, '\t', fields, ARRAYLENGTH(fields), (e_svopt)(SV_TERMINATE_LF|SV_TERMINATE_CRLF));
 
-	if( version == ACCOUNT_TXT_DB_VERSION && count == 13 )
+	if( version == ACCOUNT_TXT_DB_VERSION && count == 14 )
+	{
+		a->account_id = strtol(fields[1], NULL, 10);
+		safestrncpy(a->userid, fields[2], sizeof(a->userid));
+		safestrncpy(a->pass, fields[3], sizeof(a->pass));
+		a->sex = fields[4][0];
+		safestrncpy(a->email, fields[5], sizeof(a->email));
+		a->level = strtoul(fields[6], NULL, 10);
+		a->state = strtoul(fields[7], NULL, 10);
+		a->unban_time = strtol(fields[8], NULL, 10);
+		a->expiration_time = strtol(fields[9], NULL, 10);
+		a->logincount = strtoul(fields[10], NULL, 10);
+		safestrncpy(a->lastlogin, fields[11], sizeof(a->lastlogin));
+		safestrncpy(a->last_ip, fields[12], sizeof(a->last_ip));
+		safestrncpy(a->birthdate, fields[13], sizeof(a->birthdate));
+		regs = fields[14];
+	}
+	else
+	if( version == 20080409 && count == 13 )
 	{
 		a->account_id = strtol(fields[1], NULL, 10);
 		safestrncpy(a->userid, fields[2], sizeof(a->userid));
@@ -558,10 +579,10 @@ static bool mmo_auth_tostr(const struct mmo_account* a, char* str)
 	int i;
 	char* str_p = str;
 
-	str_p += sprintf(str_p, "%d\t%s\t%s\t%c\t%s\t%u\t%u\t%ld\t%ld\t%u\t%s\t%s\t",
+	str_p += sprintf(str_p, "%d\t%s\t%s\t%c\t%s\t%u\t%u\t%ld\t%ld\t%u\t%s\t%s\t%s\t",
 	                 a->account_id, a->userid, a->pass, a->sex, a->email, a->level,
 	                 a->state, (long)a->unban_time, (long)a->expiration_time,
-	                 a->logincount, a->lastlogin, a->last_ip);
+	                 a->logincount, a->lastlogin, a->last_ip, a->birthdate);
 
 	for( i = 0; i < a->account_reg2_num; ++i )
 		if( a->account_reg2[i].str[0] )
@@ -587,7 +608,7 @@ static void mmo_auth_sync(AccountDB_TXT* db)
 	fprintf(fp, "%d\n", ACCOUNT_TXT_DB_VERSION); // savefile version
 
 	fprintf(fp, "// Accounts file: here are saved all information about the accounts.\n");
-	fprintf(fp, "// Structure: account ID, username, password, sex, email, level, state, unban time, expiration time, # of logins, last login time, last (accepted) login ip, repeated(register key, register value)\n");
+	fprintf(fp, "// Structure: account ID, username, password, sex, email, level, state, unban time, expiration time, # of logins, last login time, last (accepted) login ip, birth date, repeated(register key, register value)\n");
 	fprintf(fp, "// where:\n");
 	fprintf(fp, "//   sex             : M or F for normal accounts, S for server accounts\n");
 	fprintf(fp, "//   level           : this account's gm level\n");
