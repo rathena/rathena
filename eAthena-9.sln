@@ -20,8 +20,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "txt-converter-char", "vcpro
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "plugin-console", "vcproj-9\plugin-console.vcproj", "{73E1101A-310C-4453-8F45-FD2795ABEF15}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "plugin-gui", "vcproj-9\plugin-gui.vcproj", "{7B8997FF-A2B1-4E3C-B6A9-9290F31056DB}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "plugin-pid", "vcproj-9\plugin-pid.vcproj", "{9509E1B9-DA2B-4153-9EE0-CBCA6597F198}"
 EndProject
 Global
@@ -130,10 +128,6 @@ Global
 		{73E1101A-310C-4453-8F45-FD2795ABEF15}.Debug|Win32.Build.0 = Debug|Win32
 		{73E1101A-310C-4453-8F45-FD2795ABEF15}.Release|Win32.ActiveCfg = Release|Win32
 		{73E1101A-310C-4453-8F45-FD2795ABEF15}.Release|Win32.Build.0 = Release|Win32
-		{7B8997FF-A2B1-4E3C-B6A9-9290F31056DB}.Debug|Win32.ActiveCfg = Debug|Win32
-		{7B8997FF-A2B1-4E3C-B6A9-9290F31056DB}.Debug|Win32.Build.0 = Debug|Win32
-		{7B8997FF-A2B1-4E3C-B6A9-9290F31056DB}.Release|Win32.ActiveCfg = Release|Win32
-		{7B8997FF-A2B1-4E3C-B6A9-9290F31056DB}.Release|Win32.Build.0 = Release|Win32
 		{9509E1B9-DA2B-4153-9EE0-CBCA6597F198}.Debug|Win32.ActiveCfg = Debug|Win32
 		{9509E1B9-DA2B-4153-9EE0-CBCA6597F198}.Debug|Win32.Build.0 = Debug|Win32
 		{9509E1B9-DA2B-4153-9EE0-CBCA6597F198}.Release|Win32.ActiveCfg = Release|Win32

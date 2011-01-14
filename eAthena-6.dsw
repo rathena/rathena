@@ -87,18 +87,6 @@ Package=<4>
 
 ###############################################################################
 
-Project: "gui"=".\vcproj-6\plugin-gui.dsp" - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
 Project: "pid"=".\vcproj-6\plugin-pid.dsp" - Package Owner=<4>
 
 Package=<5>

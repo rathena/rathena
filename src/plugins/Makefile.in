@@ -5,7 +5,7 @@ COMMON_H = ../common/plugin.h ../common/cbasetypes.h \
 	../common/showmsg.h ../common/utils.h ../common/strlib.h \
 	../common/malloc.h
 
-PLUGINS = sample sig pid gui console
+PLUGINS = sample sig pid console
 
 @SET_MAKE@
 
@@ -20,8 +20,6 @@ sig: sig@DLLEXT@
 
 pid: pid@DLLEXT@
 
-gui: gui@DLLEXT@
-
 console: console@DLLEXT@
 
 clean:
@@ -32,7 +30,6 @@ help:
 	@echo "'sample'   - sample plugin"
 	@echo "'sig'      - signal handler plugin"
 	@echo "'pid'      - process id plugin"
-	@echo "'gui'      - gui plugin"
 	@echo "'console'  - console plugin"
 	@echo "'all'      - builds all above targets"
 	@echo "'clean'    - cleans builds and objects"
@@ -43,13 +40,8 @@ help:
 %@DLLEXT@: %.c
 	@CC@ @CFLAGS@ @CPPFLAGS@ @LDFLAGS@ -shared -o ../../plugins/$@ $<
 
-gui@DLLEXT@: ../../plugins/gui.conf
-
 sig@DLLEXT@: sig.c $(COMMON_OBJ)
 	@CC@ @CFLAGS@ @CPPFLAGS@ @LDFLAGS@ -shared -o ../../plugins/$@ $< $(COMMON_OBJ)
-
-../../plugins/%.conf: %.txt
-	cp -r $< $@
 
 # missing common object files
 ../common/obj_all/%.o: ../common/%.c $(COMMON_H)

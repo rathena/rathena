@@ -1,5 +1,7 @@
 Date	Added
 
+2011/01/14
+	* Removed 'gui' plug-in (support plug-in for 3rd party eAthena GUI front-ends) (topic:262934). [Ai4rei]
 2011/01/13
 	* Fixed mapflags 'restricted', 'nocommand', 'bexp' and 'jexp' still not getting completely initialized upon @reloadscript (bugreport:4710, follow up to r14548). [Ai4rei]
 	* Removed ladmin (remote administration tool), all related support code and the checkversion.pl tool with it's support code, which was shared with ladmin (topic:262934, related bugreport:1147, bugreport:1889, r9408 and r9610). [Ai4rei]
