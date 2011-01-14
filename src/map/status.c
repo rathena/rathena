@@ -5001,8 +5001,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 		//TO-DO Blessing and Agi up should do 1 damage against players on Undead Status, even on PvM
 		//but cannot be plagiarized (this requires aegis investigation on packets and official behavior) [Brainstorm]
 		if ((!undead_flag && status->race!=RC_DEMON) || bl->type == BL_PC) {
-			if (sc->data[SC_CURSE])
-				status_change_end(bl, SC_CURSE, INVALID_TIMER);
+			status_change_end(bl, SC_CURSE, INVALID_TIMER);
 			if (sc->data[SC_STONE] && sc->opt1 == OPT1_STONE)
 				status_change_end(bl, SC_STONE, INVALID_TIMER);
 		}
@@ -7395,8 +7394,7 @@ int status_change_clear_buffs (struct block_list* bl, int type)
 	if (type&2) //Debuffs
 	for( i = SC_COMMON_MIN; i <= SC_COMMON_MAX; i++ )
 	{
-		if(sc->data[i])
-			status_change_end(bl, (sc_type)i, INVALID_TIMER);
+		status_change_end(bl, (sc_type)i, INVALID_TIMER);
 	}
 
 	for( i = SC_COMMON_MAX+1; i < SC_MAX; i++ )

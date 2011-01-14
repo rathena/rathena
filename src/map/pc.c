@@ -4101,18 +4101,12 @@ int pc_setpos(struct map_session_data* sd, unsigned short mapindex, int x, int y
 		{ // Cancel some map related stuff.
 			if (sd->sc.data[SC_JAILED])
 				return 1; //You may not get out!
-			if (sd->sc.data[SC_BOSSMAPINFO])
-				status_change_end(&sd->bl, SC_BOSSMAPINFO, INVALID_TIMER);
-			if (sd->sc.data[SC_WARM])
-				status_change_end(&sd->bl, SC_WARM, INVALID_TIMER);
-			if (sd->sc.data[SC_SUN_COMFORT])
-				status_change_end(&sd->bl, SC_SUN_COMFORT, INVALID_TIMER);
-			if (sd->sc.data[SC_MOON_COMFORT])
-				status_change_end(&sd->bl, SC_MOON_COMFORT, INVALID_TIMER);
-			if (sd->sc.data[SC_STAR_COMFORT])
-				status_change_end(&sd->bl, SC_STAR_COMFORT, INVALID_TIMER);
-			if (sd->sc.data[SC_MIRACLE])
-				status_change_end(&sd->bl, SC_MIRACLE, INVALID_TIMER);
+			status_change_end(&sd->bl, SC_BOSSMAPINFO, INVALID_TIMER);
+			status_change_end(&sd->bl, SC_WARM, INVALID_TIMER);
+			status_change_end(&sd->bl, SC_SUN_COMFORT, INVALID_TIMER);
+			status_change_end(&sd->bl, SC_MOON_COMFORT, INVALID_TIMER);
+			status_change_end(&sd->bl, SC_STAR_COMFORT, INVALID_TIMER);
+			status_change_end(&sd->bl, SC_MIRACLE, INVALID_TIMER);
 			if (sd->sc.data[SC_KNOWLEDGE]) {
 				struct status_change_entry *sce = sd->sc.data[SC_KNOWLEDGE];
 				if (sce->timer != INVALID_TIMER)
@@ -7241,8 +7235,7 @@ int pc_unequipitem(struct map_session_data *sd,int n,int flag)
 		sd->status.weapon = sd->weapontype2;
 		pc_calcweapontype(sd);
 		clif_changelook(&sd->bl,LOOK_WEAPON,sd->status.weapon);
-		if(sd->sc.data[SC_DANCING]) //When unequipping, stop dancing. [Skotlex]
-			status_change_end(&sd->bl, SC_DANCING, INVALID_TIMER);
+		status_change_end(&sd->bl, SC_DANCING, INVALID_TIMER); //When unequipping, stop dancing. [Skotlex]
 	}
 	if(sd->status.inventory[n].equip & EQP_HAND_L) {
 		sd->status.shield = sd->weapontype2 = 0;
@@ -7272,10 +7265,8 @@ int pc_unequipitem(struct map_session_data *sd,int n,int flag)
 
 	if(sd->status.inventory[n].equip & EQP_ARMOR) {
 		// On Armor Change...
-		if( sd->sc.data[SC_BENEDICTIO] )
-			status_change_end(&sd->bl, SC_BENEDICTIO, INVALID_TIMER);
-		if( sd->sc.data[SC_ARMOR_RESIST] )
-			status_change_end(&sd->bl, SC_ARMOR_RESIST, INVALID_TIMER);
+		status_change_end(&sd->bl, SC_BENEDICTIO, INVALID_TIMER);
+		status_change_end(&sd->bl, SC_ARMOR_RESIST, INVALID_TIMER);
 	}
 
 	if( sd->state.autobonus&sd->status.inventory[n].equip )
@@ -7735,8 +7726,7 @@ int map_night_timer(int tid, unsigned int tick, int id, intptr data)
 void pc_setstand(struct map_session_data *sd){
 	nullpo_retv(sd);
 
-	if(sd->sc.data[SC_TENSIONRELAX])
-		status_change_end(&sd->bl, SC_TENSIONRELAX, INVALID_TIMER);
+	status_change_end(&sd->bl, SC_TENSIONRELAX, INVALID_TIMER);
 
 	//Reset sitting tick.
 	sd->ssregen.tick.hp = sd->ssregen.tick.sp = 0;

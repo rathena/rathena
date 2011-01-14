@@ -2338,8 +2338,7 @@ static int skill_timerskill(int tid, unsigned int tick, int id, intptr data)
 					} else {
 						struct status_change *sc = status_get_sc(src);
 						if(sc) {
-							if(sc->data[SC_MAGICPOWER])
-								status_change_end(src, SC_MAGICPOWER, INVALID_TIMER);
+							status_change_end(src, SC_MAGICPOWER, INVALID_TIMER);
 							if(sc->data[SC_SPIRIT] &&
 								sc->data[SC_SPIRIT]->val2 == SL_WIZARD &&
 								sc->data[SC_SPIRIT]->val3 == skl->skill_id)
@@ -2662,16 +2661,14 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 
 	case MO_INVESTIGATE:
 		skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,flag);
-		if (sc && sc->data[SC_BLADESTOP])
-			status_change_end(src, SC_BLADESTOP, INVALID_TIMER);
+		status_change_end(src, SC_BLADESTOP, INVALID_TIMER);
 		break;
 
 	case RG_BACKSTAP:
 		{
 			int dir = map_calc_dir(src, bl->x, bl->y), t_dir = unit_getdir(bl);
 			if ((!check_distance_bl(src, bl, 0) && !map_check_dir(dir, t_dir)) || bl->type == BL_SKILL) {
-				if (sc && sc->data[SC_HIDING])
-					status_change_end(src, SC_HIDING, INVALID_TIMER);
+				status_change_end(src, SC_HIDING, INVALID_TIMER);
 				skill_attack(BF_WEAPON, src, src, bl, skillid, skilllv, tick, flag);
 				dir = dir < 4 ? dir+4 : dir-4; // change direction [Celest]
 				unit_setdir(bl,dir);
@@ -2688,14 +2685,12 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 			for (i = 1; i < sd->spiritball_old; i++)
 				skill_addtimerskill(src, tick + i * 200, bl->id, 0, 0, skillid, skilllv, BF_WEAPON, flag);
 		}
-		if (sc && sc->data[SC_BLADESTOP])
-			status_change_end(src, SC_BLADESTOP, INVALID_TIMER);
+		status_change_end(src, SC_BLADESTOP, INVALID_TIMER);
 		break;
 
 	case MO_CHAINCOMBO:
 		skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,flag);
-		if (sc && sc->data[SC_BLADESTOP])
-			status_change_end(src, SC_BLADESTOP, INVALID_TIMER);
+		status_change_end(src, SC_BLADESTOP, INVALID_TIMER);
 		break;
 
 	case NJ_ISSEN:
@@ -2991,8 +2986,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 	break;
 
 	case SL_SMA:
-		if (sc && sc->data[SC_SMA])
-			status_change_end(src, SC_SMA, INVALID_TIMER);
+		status_change_end(src, SC_SMA, INVALID_TIMER);
 	case SL_STIN:
 	case SL_STUN:
 		if (sd && !battle_config.allow_es_magic_pc && bl->type != BL_MOB) {
@@ -3065,8 +3059,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 			if (unit_movepos(src, x, y, 0, 0))
 				clif_slide(src,src->x,src->y);
 		}
-		if (sc && sc->data[SC_HIDING])
-			status_change_end(src, SC_HIDING, INVALID_TIMER);
+		status_change_end(src, SC_HIDING, INVALID_TIMER);
 		skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,flag);
 		break;
 	case 0:
@@ -3698,8 +3691,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case NJ_BUNSINJYUTSU:
 		clif_skill_nodamage(src,bl,skillid,skilllv,
 			sc_start(bl,type,100,skilllv,skill_get_time(skillid,skilllv)));
-		if (tsc && tsc->data[SC_NEN])
-			status_change_end(bl, SC_NEN, INVALID_TIMER);
+		status_change_end(bl, SC_NEN, INVALID_TIMER);
 		break;
 /* Was modified to only affect targetted char.	[Skotlex]
 	case HP_ASSUMPTIO:
@@ -3804,12 +3796,10 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 
 		if( tsc && tsc->count )
 		{
-			if( tsc->data[SC_FREEZE] )
-				status_change_end(bl, SC_FREEZE, INVALID_TIMER);
+			status_change_end(bl, SC_FREEZE, INVALID_TIMER);
 			if( tsc->data[SC_STONE] && tsc->opt1 == OPT1_STONE )
 				status_change_end(bl, SC_STONE, INVALID_TIMER);
-			if( tsc->data[SC_SLEEP] )
-				status_change_end(bl, SC_SLEEP, INVALID_TIMER);
+			status_change_end(bl, SC_SLEEP, INVALID_TIMER);
 		}
 
 		if( dstmd )
@@ -4642,8 +4632,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case AM_CP_HELM:
 		{
 			enum sc_type scid = (sc_type)(SC_STRIPWEAPON + (skillid - AM_CP_WEAPON));
-			if(tsc && tsc->data[scid])
-				status_change_end(bl, scid, INVALID_TIMER);
+			status_change_end(bl, scid, INVALID_TIMER);
 			clif_skill_nodamage(src,bl,skillid,skilllv,
 				sc_start(bl,type,100,skilllv,skill_get_time(skillid,skilllv)));
 		}
@@ -5226,12 +5215,10 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			unit_skillcastcancel(bl,0);
 
 			if(tsc && tsc->count){
-				if(tsc->data[SC_FREEZE])
-					status_change_end(bl, SC_FREEZE, INVALID_TIMER);
+				status_change_end(bl, SC_FREEZE, INVALID_TIMER);
 				if(tsc->data[SC_STONE] && tsc->opt1 == OPT1_STONE)
 					status_change_end(bl, SC_STONE, INVALID_TIMER);
-				if(tsc->data[SC_SLEEP])
-					status_change_end(bl, SC_SLEEP, INVALID_TIMER);
+				status_change_end(bl, SC_SLEEP, INVALID_TIMER);
 			}
 
 			if(dstmd)
@@ -5298,8 +5285,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				break;
 			}
 			for (i=0; i<4; i++) {
-				if(tsc->data[SC_STRIPWEAPON + i])
-					status_change_end(bl, (sc_type)(SC_STRIPWEAPON + i), INVALID_TIMER);
+				status_change_end(bl, (sc_type)(SC_STRIPWEAPON + i), INVALID_TIMER);
 				sc_start(bl,(sc_type)(SC_CP_WEAPON + i),100,skilllv,skilltime);
 			}
 			clif_skill_nodamage(src,bl,skillid,skilllv,1);
@@ -5985,10 +5971,8 @@ int skill_castend_id(int tid, unsigned int tick, int id, intptr data)
 		sc = &sd->sc;
 		if (sc->count)
 		{	//End states
-			if (sc->data[SC_EXPLOSIONSPIRITS])
-				status_change_end(src, SC_EXPLOSIONSPIRITS, INVALID_TIMER);
-			if (sc->data[SC_BLADESTOP])
-				status_change_end(src, SC_BLADESTOP, INVALID_TIMER);
+			status_change_end(src, SC_EXPLOSIONSPIRITS, INVALID_TIMER);
+			status_change_end(src, SC_BLADESTOP, INVALID_TIMER);
 		}
 		if (target && target->m == src->m)
 		{	//Move character to target anyway.
@@ -6409,8 +6393,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, int skillid, int sk
 			unit_movepos(src, x, y, 1, 0);
 			clif_slide(src,x,y);
 		}
-		if (sc && sc->data[SC_HIDING])
-			status_change_end(src, SC_HIDING, INVALID_TIMER);
+		status_change_end(src, SC_HIDING, INVALID_TIMER);
 		break;
 	case AM_SPHEREMINE:
 	case AM_CANNIBALIZE:
@@ -6579,8 +6562,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, int skillid, int sk
 		return 1;
 	}
 
-	if (sc && sc->data[SC_MAGICPOWER])
-		status_change_end(src, SC_MAGICPOWER, INVALID_TIMER);
+	status_change_end(src, SC_MAGICPOWER, INVALID_TIMER);
 
 	if( sd )
 	{

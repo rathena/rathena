@@ -393,19 +393,11 @@ int map_moveblock(struct block_list *bl, int x1, int y1, unsigned int tick)
 	//TODO: Perhaps some outs of bounds checking should be placed here?
 	if (bl->type&BL_CHAR) {
 		skill_unit_move(bl,tick,2);
-		sc = status_get_sc(bl);
-		if (sc && sc->count) {
-			if (sc->data[SC_CLOSECONFINE])
-				status_change_end(bl, SC_CLOSECONFINE, INVALID_TIMER);
-			if (sc->data[SC_CLOSECONFINE2])
-				status_change_end(bl, SC_CLOSECONFINE2, INVALID_TIMER);
-//			if (sc->data[SC_BLADESTOP]) //Won't stop when you are knocked away, go figure...
-//				status_change_end(bl, SC_BLADESTOP, INVALID_TIMER);
-			if (sc->data[SC_TATAMIGAESHI])
-				status_change_end(bl, SC_TATAMIGAESHI, INVALID_TIMER);
-			if (sc->data[SC_MAGICROD])
-				status_change_end(bl, SC_MAGICROD, INVALID_TIMER);
-		}
+		status_change_end(bl, SC_CLOSECONFINE, INVALID_TIMER);
+		status_change_end(bl, SC_CLOSECONFINE2, INVALID_TIMER);
+//		status_change_end(bl, SC_BLADESTOP, INVALID_TIMER); //Won't stop when you are knocked away, go figure...
+		status_change_end(bl, SC_TATAMIGAESHI, INVALID_TIMER);
+		status_change_end(bl, SC_MAGICROD, INVALID_TIMER);
 	} else
 	if (bl->type == BL_NPC)
 		npc_unsetcells((TBL_NPC*)bl);
@@ -1580,64 +1572,40 @@ int map_quit(struct map_session_data *sd)
 	if( sd->sc.count )
 	{
 		//Status that are not saved...
-		if(sd->sc.data[SC_BOSSMAPINFO])
-			status_change_end(&sd->bl, SC_BOSSMAPINFO, INVALID_TIMER);
-		if(sd->sc.data[SC_AUTOTRADE])
-			status_change_end(&sd->bl, SC_AUTOTRADE, INVALID_TIMER);
-		if(sd->sc.data[SC_SPURT])
-			status_change_end(&sd->bl, SC_SPURT, INVALID_TIMER);
-		if(sd->sc.data[SC_BERSERK])
-			status_change_end(&sd->bl, SC_BERSERK, INVALID_TIMER);
-		if(sd->sc.data[SC_TRICKDEAD])
-			status_change_end(&sd->bl, SC_TRICKDEAD, INVALID_TIMER);
-		if(sd->sc.data[SC_GUILDAURA])
-			status_change_end(&sd->bl, SC_GUILDAURA, INVALID_TIMER);
+		status_change_end(&sd->bl, SC_BOSSMAPINFO, INVALID_TIMER);
+		status_change_end(&sd->bl, SC_AUTOTRADE, INVALID_TIMER);
+		status_change_end(&sd->bl, SC_SPURT, INVALID_TIMER);
+		status_change_end(&sd->bl, SC_BERSERK, INVALID_TIMER);
+		status_change_end(&sd->bl, SC_TRICKDEAD, INVALID_TIMER);
+		status_change_end(&sd->bl, SC_GUILDAURA, INVALID_TIMER);
 		if(sd->sc.data[SC_ENDURE] && sd->sc.data[SC_ENDURE]->val4)
 			status_change_end(&sd->bl, SC_ENDURE, INVALID_TIMER); //No need to save infinite endure.
-		if(sd->sc.data[SC_WEIGHT50])
-			status_change_end(&sd->bl, SC_WEIGHT50, INVALID_TIMER);
-		if(sd->sc.data[SC_WEIGHT90])
-			status_change_end(&sd->bl, SC_WEIGHT90, INVALID_TIMER);
+		status_change_end(&sd->bl, SC_WEIGHT50, INVALID_TIMER);
+		status_change_end(&sd->bl, SC_WEIGHT90, INVALID_TIMER);
 		if (battle_config.debuff_on_logout&1) {
-			if(sd->sc.data[SC_ORCISH])
-				status_change_end(&sd->bl, SC_ORCISH, INVALID_TIMER);
-			if(sd->sc.data[SC_STRIPWEAPON])
-				status_change_end(&sd->bl, SC_STRIPWEAPON, INVALID_TIMER);
-			if(sd->sc.data[SC_STRIPARMOR])
-				status_change_end(&sd->bl, SC_STRIPARMOR, INVALID_TIMER);
-			if(sd->sc.data[SC_STRIPSHIELD])
-				status_change_end(&sd->bl, SC_STRIPSHIELD, INVALID_TIMER);
-			if(sd->sc.data[SC_STRIPHELM])
-				status_change_end(&sd->bl, SC_STRIPHELM, INVALID_TIMER);
-			if(sd->sc.data[SC_EXTREMITYFIST])
-				status_change_end(&sd->bl, SC_EXTREMITYFIST, INVALID_TIMER);
-			if(sd->sc.data[SC_EXPLOSIONSPIRITS])
-				status_change_end(&sd->bl, SC_EXPLOSIONSPIRITS, INVALID_TIMER);
+			status_change_end(&sd->bl, SC_ORCISH, INVALID_TIMER);
+			status_change_end(&sd->bl, SC_STRIPWEAPON, INVALID_TIMER);
+			status_change_end(&sd->bl, SC_STRIPARMOR, INVALID_TIMER);
+			status_change_end(&sd->bl, SC_STRIPSHIELD, INVALID_TIMER);
+			status_change_end(&sd->bl, SC_STRIPHELM, INVALID_TIMER);
+			status_change_end(&sd->bl, SC_EXTREMITYFIST, INVALID_TIMER);
+			status_change_end(&sd->bl, SC_EXPLOSIONSPIRITS, INVALID_TIMER);
 			if(sd->sc.data[SC_REGENERATION] && sd->sc.data[SC_REGENERATION]->val4)
 				status_change_end(&sd->bl, SC_REGENERATION, INVALID_TIMER);
 			//TO-DO Probably there are way more NPC_type negative status that are removed
-			if(sd->sc.data[SC_CHANGEUNDEAD])
-				status_change_end(&sd->bl, SC_CHANGEUNDEAD, INVALID_TIMER);
+			status_change_end(&sd->bl, SC_CHANGEUNDEAD, INVALID_TIMER);
 			// Both these statuses are removed on logout. [L0ne_W0lf]
-			if(sd->sc.data[SC_SLOWCAST])
-				status_change_end(&sd->bl, SC_SLOWCAST, INVALID_TIMER);
-			if(sd->sc.data[SC_CRITICALWOUND])
-				status_change_end(&sd->bl, SC_CRITICALWOUND, INVALID_TIMER);
+			status_change_end(&sd->bl, SC_SLOWCAST, INVALID_TIMER);
+			status_change_end(&sd->bl, SC_CRITICALWOUND, INVALID_TIMER);
 		}
 		if (battle_config.debuff_on_logout&2)
 		{
-			if(sd->sc.data[SC_MAXIMIZEPOWER])
-				status_change_end(&sd->bl, SC_MAXIMIZEPOWER, INVALID_TIMER);
-			if(sd->sc.data[SC_MAXOVERTHRUST])
-				status_change_end(&sd->bl, SC_MAXOVERTHRUST, INVALID_TIMER);
-			if(sd->sc.data[SC_STEELBODY])
-				status_change_end(&sd->bl, SC_STEELBODY, INVALID_TIMER);
-			if(sd->sc.data[SC_PRESERVE])
-				status_change_end(&sd->bl, SC_PRESERVE, INVALID_TIMER);
-			if(sd->sc.data[SC_KAAHI])
-				status_change_end(&sd->bl, SC_KAAHI, INVALID_TIMER);
-			if(sd->sc.data[SC_SPIRIT])
-				status_change_end(&sd->bl, SC_SPIRIT, INVALID_TIMER);
+			status_change_end(&sd->bl, SC_MAXIMIZEPOWER, INVALID_TIMER);
+			status_change_end(&sd->bl, SC_MAXOVERTHRUST, INVALID_TIMER);
+			status_change_end(&sd->bl, SC_STEELBODY, INVALID_TIMER);
+			status_change_end(&sd->bl, SC_PRESERVE, INVALID_TIMER);
+			status_change_end(&sd->bl, SC_KAAHI, INVALID_TIMER);
+			status_change_end(&sd->bl, SC_SPIRIT, INVALID_TIMER);
 		}
 	}
 	
