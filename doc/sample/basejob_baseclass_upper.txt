@@ -4,4 +4,5 @@ prontera,155,177,1	script	Tell Me	725,{
 	mes "BaseClass: " + BaseClass;
 	mes "BaseJob: " + BaseJob;
 	mes "Upper: " + Uppser;
+	close;
 }

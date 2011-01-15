@@ -12017,7 +12017,6 @@ void clif_parse_FriendsListReply(int fd, struct map_session_data *sd)
 	account_id = RFIFOL(fd,2);
 	char_id = RFIFOL(fd,6);
 	reply = RFIFOB(fd,10);
-	//printf ("reply: %d %d %d\n", char_id, id, reply);
 
 	f_sd = map_id2sd(account_id); //The account id is the same as the bl.id of players.
 	if (f_sd == NULL)

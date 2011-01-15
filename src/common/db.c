@@ -697,7 +697,7 @@ static void db_free_add(DBMap_impl* db, DBNode node, DBNode *root)
 				db->alloc_file, db->alloc_line);
 		exit(EXIT_FAILURE);
 	}
-	if (!(db->options&DB_OPT_DUP_KEY)) { // Make shure we have a key until the node is freed
+	if (!(db->options&DB_OPT_DUP_KEY)) { // Make sure we have a key until the node is freed
 		old_key = node->key;
 		node->key = db_dup_key(db, node->key);
 		db->release(old_key, node->data, DB_RELEASE_KEY);

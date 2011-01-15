@@ -82,7 +82,7 @@ Random Target: Picks a new random target in range on each attack / skill.
 Aegis Mob Types:
 -------------------------------------------------------------------------------
 
-What Aegis has are mob-types, where each type represents an AI behaviour that
+What Aegis has are mob-types, where each type represents an AI behavior that
 is mimicked by a group of eA mode bits. This is the table to convert from one
 to another:
 
@@ -91,22 +91,22 @@ Aegis/eA (description)
 02: 0x0083 (passive, looter)
 03: 0x1089 (passive, assist and change-target melee)
 04: 0x3885 (angry, change-target melee/chase)
-05: 0x2085 (aggro, change-target chase)
+05: 0x2085 (aggressive, change-target chase)
 06: 0x0000 (passive, immobile, can't attack) [plants]
 07: 0x108B (passive, looter, assist, change-target melee)
-08: 0x6085 (aggro, change-target chase, target weak enemies)
-09: 0x3095 (aggro, change-target melee/chase, cast sensor idle) [Guardian]
-10: 0x0084 (aggro, immobile)
-11: 0x0084 (aggro, immobile) [Guardian]
-12: 0x2085 (aggro, change-target chase) [Guardian]
-13: 0x308D (aggro, change-target melee/chase, assist)
+08: 0x6085 (aggressive, change-target chase, target weak enemies)
+09: 0x3095 (aggressive, change-target melee/chase, cast sensor idle) [Guardian]
+10: 0x0084 (aggressive, immobile)
+11: 0x0084 (aggressive, immobile) [Guardian]
+12: 0x2085 (aggressive, change-target chase) [Guardian]
+13: 0x308D (aggressive, change-target melee/chase, assist)
 17: 0x0091 (passive, cast sensor idle)
-19: 0x3095 (aggro, change-target melee/chase, cast sensor idle)
-20: 0x3295 (aggro, change-target melee/chase, cast sensor idle/chase)
-21: 0x3695 (aggro, change-target melee/chase, cast sensor idle/chase, chase-change target)
+19: 0x3095 (aggressive, change-target melee/chase, cast sensor idle)
+20: 0x3295 (aggressive, change-target melee/chase, cast sensor idle/chase)
+21: 0x3695 (aggressive, change-target melee/chase, cast sensor idle/chase, chase-change target)
 25: 0x0001 (passive, can't attack) [Pet]
-26: 0xB695 (aggro, change-target melee/chase, cast sensor idle/chase, chase-change target, random target)
-27: 0x8084 (aggro, immobile, random target)
+26: 0xB695 (aggressive, change-target melee/chase, cast sensor idle/chase, chase-change target, random target)
+27: 0x8084 (aggressive, immobile, random target)
 
 - Note that the detector bit due to being Insect/Demon, plant and Boss mode
   bits need to be added independently of this list.

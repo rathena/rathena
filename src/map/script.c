@@ -2133,9 +2133,9 @@ struct script_code* parse_script(const char *src,const char *file,int line,int o
 
 #ifdef DEBUG_DISP
 	for(i=0;i<script_pos;i++){
-		if((i&15)==0) printf("%04x : ",i);
+		if((i&15)==0) ShowMessage("%04x : ",i);
 		ShowMessage("%02x ",script_buf[i]);
-		if((i&15)==15) printf("\n");
+		if((i&15)==15) ShowMessage("\n");
 	}
 	ShowMessage("\n");
 #endif
@@ -11663,9 +11663,6 @@ BUILDIN_FUNC(jump_zero)
 		pos=script_getnum(st,3);
 		st->pos=pos;
 		st->state=GOTO;
-		// printf("script: jump_zero: jumpto : %d\n",pos);
-	} else {
-		// printf("script: jump_zero: fail\n");
 	}
 	return 0;
 }

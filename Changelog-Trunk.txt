@@ -1,5 +1,7 @@
 Date	Added
 
+2011/01/15
+	* Various accumulated insignificant fixes to documentation, examples and comments. [Ai4rei]
 2011/01/14
 	* Added 'birthdate' field to account data. For SQL apply upgrade_svn14672.sql to upgrade table `login`; for TXT no action is necessary, as it upgrades itself. [Ai4rei]
 	- Control panel developers are encouraged to enable players to modify this value, as it is required for new character deletion (2010-08-03aRagexeRE and later, not yet implemented).
