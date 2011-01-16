@@ -1,5 +1,10 @@
 Date		Added
 ======
+2011/01/16
+	* Rev. 14676 Various fixes for scripts that are disabled by default. [Ai4rei]
+	- Fixed name collision in Baphomet Jr. taming item quest (custom) with 'Little Boy' in cities/lutie.txt
+	- Fixed name collision in THQS_Quests (custom) with 'Little Girl' in cities/lutie.txt
+	- Fixed outdated reference to npc_dynamic_shop sample (follow up to r14277).
 2010/12/03
 	* Rev. 14555 Updated instances with more proper English, care of Resplendent. [L0ne_W0lf]
 2010/12/02
