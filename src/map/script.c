@@ -70,6 +70,7 @@
 // - remove dynamic allocation in add_word()
 // - remove GETVALUE / SETVALUE
 // - clean up the set_reg / set_val / setd_sub mess
+// - detect invalid label references at parse-time
 
 //
 // struct script_state* st;
@@ -1558,8 +1559,12 @@ const char* parse_syntax(const char* p)
 				// function declaration - just register the name
 				int l;
 				l = add_word(func_name);
-				if( str_data[l].type == C_NOP )// set type only if the name did not exist before
+				if( str_data[l].type == C_NOP )// register only, if the name was not used by something else
 					str_data[l].type = C_USERFUNC;
+				else if( str_data[l].type == C_USERFUNC )
+					;  // already registered
+				else
+					disp_error_message("parse_syntax:function: function name is invalid", func_name);
 
 				// if, for , while ‚Ì•Â‚¶”»’è
 				p = parse_syntax_close(p2 + 1);
@@ -1585,11 +1590,16 @@ const char* parse_syntax(const char* p)
 
 				// Set the position of the function (label)
 				l=add_word(func_name);
-				if( str_data[l].type == C_NOP )// set type only if the name did not exist before
+				if( str_data[l].type == C_NOP || str_data[l].type == C_USERFUNC )// register only, if the name was not used by something else
+				{
 					str_data[l].type = C_USERFUNC;
-				set_label(l, script_pos, p);
-				if( parse_options&SCRIPT_USE_LABEL_DB )
-					strdb_put(scriptlabel_db, get_str(l), (void*)script_pos);
+					set_label(l, script_pos, p);
+					if( parse_options&SCRIPT_USE_LABEL_DB )
+						strdb_put(scriptlabel_db, get_str(l), (void*)script_pos);
+				}
+				else
+					disp_error_message("parse_syntax:function: function name is invalid", func_name);
+
 				return skip_space(p);
 			}
 			else
@@ -2006,6 +2016,7 @@ struct script_code* parse_script(const char *src,const char *file,int line,int o
 	struct script_code* code = NULL;
 	static int first=1;
 	char end;
+	bool unresolved_names = false;
 
 	if( src == NULL )
 		return NULL;// empty script
@@ -2129,6 +2140,16 @@ struct script_code* parse_script(const char *src,const char *file,int line,int o
 				j=next;
 			}
 		}
+		else if( str_data[i].type == C_USERFUNC )
+		{// 'function name;' without follow-up code
+			ShowError("parse_script: function '%s' declared but not defined.\n", str_buf+str_data[i].str);
+			unresolved_names = true;
+		}
+	}
+
+	if( unresolved_names )
+	{
+		disp_error_message("parse_script: unresolved function references", p);
 	}
 
 #ifdef DEBUG_DISP

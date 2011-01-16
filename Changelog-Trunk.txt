@@ -1,5 +1,8 @@
 Date	Added
 
+2011/01/16
+	* Fixed a map-server crash, when a script attempts to call a local function, which has only a forward declaration. Such functions now count as script parse error (bugreport:4009, since r3422). [Ai4rei]
+	* Fixed definitions of local functions would set a label reference, even when their name was already taken (follow up to r14600, since r3422).
 2011/01/15
 	* Various accumulated insignificant fixes to documentation, examples and comments. [Ai4rei]
 2011/01/14
