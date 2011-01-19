@@ -1,5 +1,7 @@
 Date	Added
 
+2011/01/19
+	* Fixed solo dance/star gladiator warm AoE no longer following the owner and cloaking wall rules no longer working (bugreport:4720, since r14671). [Ai4rei]
 2011/01/16
 	* Fixed a map-server crash, when a script attempts to call a local function, which has only a forward declaration. Such functions now count as script parse error (bugreport:4009, since r3422). [Ai4rei]
 	* Fixed definitions of local functions would set a label reference, even when their name was already taken (follow up to r14600, since r3422).

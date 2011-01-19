@@ -415,6 +415,7 @@ int map_moveblock(struct block_list *bl, int x1, int y1, unsigned int tick)
 
 	if (bl->type&BL_CHAR) {
 		skill_unit_move(bl,tick,3);
+		sc = status_get_sc(bl);
 		if (sc) {
 			if (sc->count) {
 				if (sc->data[SC_CLOAKING])
