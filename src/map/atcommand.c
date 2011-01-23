@@ -9117,8 +9117,8 @@ int atcommand_config_read(const char* cfgName)
 			}
 			else {
 				p->level2 = atoi(w3);
-				p->level2 = cap_value(p->level2, 0, 100);
 			}
+			p->level2 = cap_value(p->level2, 0, 100);
 		}
 		else
 		if( strcmpi(w1, "import") == 0 )

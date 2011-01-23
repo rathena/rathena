@@ -103,7 +103,7 @@ struct item_data* itemdb_exists(int nameid);
 #define itemdb_wlv(n) itemdb_search(n)->wlv
 #define itemdb_range(n) itemdb_search(n)->range
 #define itemdb_slot(n) itemdb_search(n)->slot
-#define itemdb_available(n) (itemdb_exists(n) && itemdb_search(n)->flag.available)
+#define itemdb_available(n) (itemdb_search(n)->flag.available)
 #define itemdb_viewid(n) (itemdb_search(n)->view_id)
 #define itemdb_autoequip(n) (itemdb_search(n)->flag.autoequip)
 const char* itemdb_typename(int type);

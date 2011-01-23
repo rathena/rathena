@@ -461,8 +461,6 @@ int clif_friendslist_toggle_sub(struct map_session_data *sd,va_list ap);
 void clif_friendslist_send(struct map_session_data *sd);
 void clif_friendslist_reqack(struct map_session_data *sd, struct map_session_data *f_sd, int type);
 
-// [Valaris]
-int clif_mob_hp(struct mob_data *md);
 void clif_weather(int m); // [Valaris]
 int clif_specialeffect(struct block_list* bl, int type, enum send_target target); // special effects [Valaris]
 void clif_specialeffect_single(struct block_list* bl, int type, int fd);

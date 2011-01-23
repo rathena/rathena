@@ -1,5 +1,13 @@
 Date	Added
 
+2011/01/23
+	* Some cleaning here and there. [Ai4rei]
+	- Fixed a typo in basejob_baseclass_upper sample script (since r3893).
+	- Fixed (for sake of consistency) usage of 'sd' before corresponding nullpo check in party_invite (bugreport:2752).
+	- Fixed atcommand config reading would not cap level for charcommands, when using atcommand level as fallback (bugreport:2961, since r13409).
+	- Removed orphaned clif_mob_hp declaration from clif.h (bugreport:2788, since r2092).
+	- Removed unnecessary look-up in itemdb_available macro, as dummy_item is considered unavailable.
+	- Removed leftover shortlist linked-list struct (followup to r10507).
 2011/01/19
 	* Fixed solo dance/star gladiator warm AoE no longer following the owner and cloaking wall rules no longer working (bugreport:4720, since r14671). [Ai4rei]
 2011/01/16

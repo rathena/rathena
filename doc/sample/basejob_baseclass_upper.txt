@@ -3,6 +3,6 @@ prontera,155,177,1	script	Tell Me	725,{
 	mes "Class: " + Class;
 	mes "BaseClass: " + BaseClass;
 	mes "BaseJob: " + BaseJob;
-	mes "Upper: " + Uppser;
+	mes "Upper: " + Upper;
 	close;
 }
