@@ -3,7 +3,7 @@
 //===== By ================================================
 //= Developers
 //===== Version ===========================================
-//= 1.1.20101205
+//= 1.1.20110124
 //=========================================================
 //= 1.0 - Standardized doc file
 //= 1.1.20080612 - skill command and bonuses (bAutoSpell, bSkillAtk, 
@@ -19,6 +19,13 @@
 //=   bUnbreakableWeapon, bUnbreakableArmor, bUnbreakableHelm,
 //=   bUnbreakableShield, bUnbreakableShoes, bBreakWeaponRate and
 //=   bBreakArmorRate. [Ai4rei]
+//= 1.1.20110124 - added documentation for bAgiVit, bAgiDexStr,
+//=   bUnbreakable, bShortWeaponDamageReturn, bLongWeaponDamageReturn,
+//=   bWeaponComaEle, bAddEff2, bMagicDamageReturn, bRandomAttackIncrease,
+//=   bPerfectHide, bNoKnockback, bClassChange, bHPDrainValue, bWeaponAtk,
+//=   bWeaponAtkRate, bDelayrate, bHPDrainRateRace, bSPDrainRateRace,
+//=   bAddEffOnSkill, bNoMiscDamage, bLongAtkRate, bUnstripable,
+//=   bHPDrainValueRace, bMagicSPGainValue and bMagicHPGainValue. [Ai4rei]
 //===== Description =======================================
 //= List of script instructions used in item bonuses,
 //= mainly bonus/bonus2/bonus3/bonus4/bonus5 arguments
@@ -34,6 +41,8 @@ bonus bInt,n;				INT + n
 bonus bDex,n;				DEX + n
 bonus bLuk,n;				LUK + n
 bonus bAllStats,n;			STR + n, AGI + n, VIT + n, INT + n, DEX + n, LUK + n
+bonus bAgiVit,n;			AGI + n, VIT + n
+bonus bAgiDexStr,n;			STR + n, AGI + n, DEX + n
 bonus bMaxHP,n;				MaxHP + n
 bonus bMaxSP,n;				MaxSP + n
 bonus bMaxHPrate,n;			MaxHP + n% 
@@ -120,9 +129,9 @@ bonus bIntravision,n;			Always see Hiding and Cloaking players/mobs (n is meanin
 bonus bHealPower,n;			Increase heal amount of all heal skills by n%
 bonus bHealPower2,n;			Increase heal amount if you are healed by any skills by n%
 bonus2 bAddEff,e,x;			Adds a x/10000 chance to cause effect e to the target when attacking (e.g. x=100 makes 1% chance, x=10000 makes 100% chance, etc)
-							e: Eff_Blind, Eff_Sleep, Eff_Poison, Eff_Freeze, Eff_Silence, Eff_Stan, Eff_Curse, Eff_Confusion, Eff_Stone, Eff_Bleeding
+							e: Eff_Blind, Eff_Sleep, Eff_Poison, Eff_Freeze, Eff_Silence, Eff_Stun, Eff_Curse, Eff_Confusion, Eff_Stone, Eff_Bleeding
 bonus2 bResEff,e,x;			Adds a x/10000 tolerance to effect e (e.g. x=100 makes 1% tolerance, x=10000 makes 100% tolerance, etc)
-							e: Eff_Blind, Eff_Sleep, Eff_Poison, Eff_Freeze, Eff_Silence, Eff_Stan, Eff_Curse, Eff_Confusion, Eff_Stone, Eff_Bleeding
+							e: Eff_Blind, Eff_Sleep, Eff_Poison, Eff_Freeze, Eff_Silence, Eff_Stun, Eff_Curse, Eff_Confusion, Eff_Stone, Eff_Bleeding
 bonus2 bCastrate,n,x;			Adjust casting time of skill n by x% (supports skill names)
 bonus2 bAddSize,n,x;			+x% physical damage against size n.
 							n: 0=Small  1=Medium  2=Large
@@ -395,3 +404,36 @@ bonus bUnbreakableShield,n;	Shield cannot be damaged/broken by any means (n is m
 bonus bUnbreakableShoes,n;	Shoes cannot be damaged/broken by any means (n is meaningless)
 bonus bBreakWeaponRate,n;	Adds a n/100% chance to break enemy's weapon while attacking (stacks with other break chances).
 bonus bBreakArmorRate,n;	Adds a n/100% chance to break enemy's armor while attacking (stacks with other break chances).
+bonus bUnbreakable,n;		Reduces the break chance of all equipped equipment by n%.
+bonus bShortWeaponDamageReturn,n;	Reflects n% of received melee damage back to the enemy that caused it.
+bonus bLongWeaponDamageReturn,n;	Reflects n% of received ranged damage back to the enemy that caused it.
+bonus2 bWeaponComaEle,x,n;	Adds a n/100% chance to cause Coma when attacking a monster of element x with normal attack.
+							x:	0=Neutral, 1=Water, 2=Earth, 3=Fire, 4=Wind, 5=Poison,
+								6=Holy, 7=Dark, 8=Spirit, 9=Undead
+bonus2 bAddEff2,x,n;	Adds a n/100% chance to cause status change x on self when attacking.
+						x:	Eff_Blind, Eff_Sleep, Eff_Poison, Eff_Freeze, Eff_Silence,
+							Eff_Stun, Eff_Curse, Eff_Confusion, Eff_Stone, Eff_Bleeding
+bonus bMagicDamageReturn,n;	Adds a n% chance to reflect targetted magic spells back to the enemy that caused it.
+bonus2 bRandomAttackIncrease,x,n;	Adds a n% chance to inflict x% additional damage to the enemy with normal attack.
+bonus bPerfectHide,n;	Hidden/cloaked character is no longer detected by monsters with 'detector' mode (n is meaningless).
+bonus bNoKnockback,n;	Character is no longer knocked back by enemy skills with such effect (n is meaningless).
+bonus bClassChange,n;	Gives a n/100% chance to change the attacked monster's class with normal attack.
+bonus bHPDrainValue,n;	Heals +n HP with normal attack.
+bonus2 bHPDrainValue,n,x;	Heals +n HP with normal attack. When x is non-zero, the HP is drained instead.
+bonus2 bWeaponAtk,x,n;	Adds n ATK when weapon of type x is equipped.
+						x: see doc/item_db.txt -> view -> weapons for possible values
+bonus2 bWeaponAtkRate,x,n;	Adds n% damage to normal attacks when weapon of type x is equipped.
+							x: see doc/item_db.txt -> view -> weapons for possible values
+bonus bDelayrate,n;	Increases skill delay by n%.
+bonus3 bHPDrainRateRace,r,n,x;	Adds a n/10% chance to receive x% of dealed damage as HP from a monster of race r with normal attack.
+bonus3 bSPDrainRateRace,r,n,x;	Adds a n/10% chance to receive x% of dealed damage as SP from a monster of race r with normal attack.
+bonus3 bAddEffOnSkill,s,x,n;	Adds a n/100% chance to cause status change x on enemy when using skill s (supports skill names)
+bonus4 bAddEffOnSkill,s,x,n,t;	Adds a n/100% chance to cause status change x when using skill s (supports skill names)
+								t:	ATF_SELF   = causes status change to oneself
+									ATF_TARGET = causes status change to the enemy
+bonus bNoMiscDamage,n;	Adds n% reduction to received misc damage.
+bonus bLongAtkRate,n;	Increases damage of ranged attacks by n%.
+bonus bUnstripable,n;	Armor cannot be taken off via strip skills (n is meaningless)
+bonus2 bHPDrainValueRace,r,n;	Heals +n HP when attacking a monster of race r with normal attack.
+bonus bMagicSPGainValue,n;	Heals +n SP when killing an enemy with magic attack.
+bonus bMagicHPGainValue,n;	Heals +n HP when killing an enemy with magic attack.

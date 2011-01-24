@@ -1,5 +1,7 @@
 Date	Added
 
+2011/01/24
+	* Added documentation for undocumented bonuses (bugreport:4727, follow up to r302, r354, r485, r699, r928, r1116, r6221, r7982, r10031, r13596 and r14018). [Ai4rei]
 2011/01/23
 	* Some cleaning here and there. [Ai4rei]
 	- Fixed a typo in basejob_baseclass_upper sample script (since r3893).
