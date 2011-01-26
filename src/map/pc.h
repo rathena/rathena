@@ -350,6 +350,7 @@ struct map_session_data {
 	int guildspy; // [Syrus22]
 	int partyspy; // [Syrus22]
 
+	int vended_id;
 	int vender_id;
 	int vend_num;
 	char message[MESSAGE_SIZE];

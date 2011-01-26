@@ -1,5 +1,8 @@
 Date	Added
 
+2011/01/26
+	* Fixed buyers, that are currently in a vending shop could be fooled into buying an item at different price than they see by reopening the vending shop (bugreport:4728). [Ai4rei]
+	- This implements the official vending shop unique id handling (previously mistaken for char id), made compatible with packets before it's introduction (follow up to r14234).
 2011/01/24
 	* Added documentation for undocumented bonuses (bugreport:4727, follow up to r302, r354, r485, r699, r928, r1116, r6221, r7982, r10031, r13596 and r14018). [Ai4rei]
 2011/01/23
