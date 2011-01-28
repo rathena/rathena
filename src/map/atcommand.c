@@ -7963,6 +7963,13 @@ ACMD_FUNC(accept)
 		return 0;
 	}
 
+	if( duel_list[sd->duel_invite].max_players_limit > 0 && duel_list[sd->duel_invite].members_count >= duel_list[sd->duel_invite].max_players_limit )
+	{
+		// "Duel: Limit of players is reached."
+		clif_displaymessage(fd, msg_txt(351));
+		return 0;
+	}
+
 	duel_accept(sd->duel_invite, sd);
 	// "Duel: Invitation has been accepted."
 	clif_displaymessage(fd, msg_txt(361));
