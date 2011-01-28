@@ -1,5 +1,9 @@
 Date	Added
 
+2011/01/27
+	* Resolving allow/deny IP rules not working (bugreport:2632). [Ai4rei]
+	- Fixed 'mask' being filled with 'ip' when standard mask was specified (since r9647).
+	- Fixed 'ip' and 'mask' (bit mask) being stored in wrong byte order (network order instead of host order) (since r10162).
 2011/01/26
 	* Fixed buyers, that are currently in a vending shop could be fooled into buying an item at different price than they see by reopening the vending shop (bugreport:4728). [Ai4rei]
 	- This implements the official vending shop unique id handling (previously mistaken for char id), made compatible with packets before it's introduction (follow up to r14234).
