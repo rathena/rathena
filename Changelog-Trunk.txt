@@ -1,6 +1,7 @@
 Date	Added
 
 2011/01/29
+	* Removed @aw/@away which duplicates and collides with client's /am (away message) (bugreport:1235, topic:163083, since r4351). [Ai4rei]
 	* Fixed a map-server crash when invalid items are deleted (option 'item_check') from a logging-in character (bugreport:2604). [Ai4rei]
 	- This removes the pc_checkitem call from pc_authok, as the check is done in clif_parse_LoadEndAck as well, after first status calc has taken place.
 	- Inventory list is now sent before pc_checkitem in clif_parse_LoadEndAck, so that deleted items do not show up as 'unknown item'.

@@ -384,8 +384,6 @@ struct map_session_data {
 
 	int killerrid, killedrid;
 
-	char away_message[128]; // [LuzZza]
-
 	int cashPoints, kafraPoints;
 	int rental_timer;
 

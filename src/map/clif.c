@@ -9283,19 +9283,6 @@ void clif_parse_WisMessage(int fd, struct map_session_data* sd)
 	// notify sender of success
 	clif_wis_end(fd, 0); // 0: success to send wisper
 
-	// if player has an auto-away message
-	if(dstsd->away_message[0] != '\0')
-	{
-		char output[256];
-		sprintf(output, "%s %s", message, msg_txt(543)); // "(Automessage has been sent)"
-		clif_wis_message(dstsd->fd, sd->status.name, output, strlen(output) + 1);
-		if(dstsd->state.autotrade)
-			sprintf(output, msg_txt(544), dstsd->away_message); // "Away [AT] - "%s""
-		else
-			sprintf(output, msg_txt(545), dstsd->away_message); // "Away - "%s""
-		clif_wis_message(fd, dstsd->status.name, output, strlen(output) + 1);
-		return;
-	}
 	// Normal message
 	clif_wis_message(dstsd->fd, sd->status.name, message, messagelen);
 	return;
