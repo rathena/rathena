@@ -251,6 +251,8 @@ Plugin* plugin_open(const char* filename)
 				func = (Plugin_Event_Func*)DLL_SYM(plugin->dll, events[i].func_name);
 				if (func)
 					register_plugin_event(func, events[i].event_name);
+				else
+					ShowError("Failed to locate function '%s' in '%s'.\n", events[i].func_name, filename);
 			}
 			i++;
 		}

@@ -135,6 +135,7 @@ uint32 host2ip(const char* hostname);
 const char* ip2str(uint32 ip, char ip_str[16]);
 uint32 str2ip(const char* ip_str);
 #define CONVIP(ip) ((ip)>>24)&0xFF,((ip)>>16)&0xFF,((ip)>>8)&0xFF,((ip)>>0)&0xFF
+#define MAKEIP(a,b,c,d) (uint32)( ( ( (a)&0xFF ) << 24 ) | ( ( (b)&0xFF ) << 16 ) | ( ( (c)&0xFF ) << 8 ) | ( ( (d)&0xFF ) << 0 ) )
 uint16 ntows(uint16 netshort);
 
 int socket_getips(uint32* ips, int max);
@@ -152,12 +153,6 @@ void set_eof(int fd);
 #define SEND_SHORTLIST
 
 #ifdef SEND_SHORTLIST
-struct send_shortlist_node {
-	struct send_shortlist_node *next; // Next node in the linked list
-	struct send_shortlist_node *prev; // Previous node in the linked list
-	int fd; // FD that needs sending.
-};
-
 // Add a fd to the shortlist so that it'll be recognized as a fd that needs
 // sending done on it.
 void send_shortlist_add_fd(int fd);

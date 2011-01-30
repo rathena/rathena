@@ -144,7 +144,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\login\account_txt.c" />
-    <ClCompile Include="..\src\login\admin.c" />
     <ClCompile Include="..\src\login\ipban_txt.c" />
     <ClCompile Include="..\src\login\login.c" />
     <ClCompile Include="..\src\login\loginlog_txt.c" />

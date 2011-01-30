@@ -184,7 +184,7 @@ static void* create_online_char_data(DBKey key, va_list args)
 	character->char_id = -1;
   	character->server = -1;
 	character->fd = -1;
-	character->waiting_disconnect = -1;
+	character->waiting_disconnect = INVALID_TIMER;
 	return character;
 }
 
@@ -201,9 +201,9 @@ void set_char_charselect(int account_id)
 	character->char_id = -1;
 	character->server = -1;
 
-	if(character->waiting_disconnect != -1) {
+	if(character->waiting_disconnect != INVALID_TIMER) {
 		delete_timer(character->waiting_disconnect, chardb_waiting_disconnect);
-		character->waiting_disconnect = -1;
+		character->waiting_disconnect = INVALID_TIMER;
 	}
 
 	if (login_fd > 0 && !session[login_fd]->flag.eof)
@@ -237,9 +237,9 @@ void set_char_online(int map_id, int char_id, int account_id)
 		server[character->server].users++;
 
 	//Get rid of disconnect timer
-	if(character->waiting_disconnect != -1) {
+	if(character->waiting_disconnect != INVALID_TIMER) {
 		delete_timer(character->waiting_disconnect, chardb_waiting_disconnect);
-		character->waiting_disconnect = -1;
+		character->waiting_disconnect = INVALID_TIMER;
 	}
 
 	//Notify login server
@@ -262,9 +262,9 @@ void set_char_offline(int char_id, int account_id)
 			if( server[character->server].users > 0 ) // Prevent this value from going negative.
 				server[character->server].users--;
 
-		if(character->waiting_disconnect != -1){
+		if(character->waiting_disconnect != INVALID_TIMER){
 			delete_timer(character->waiting_disconnect, chardb_waiting_disconnect);
-			character->waiting_disconnect = -1;
+			character->waiting_disconnect = INVALID_TIMER;
 		}
 
 		if(character->char_id == char_id)
@@ -293,9 +293,9 @@ static int char_db_setoffline(DBKey key, void* data, va_list ap)
 	if (server == -1) {
 		character->char_id = -1;
 		character->server = -1;
-		if(character->waiting_disconnect != -1){
+		if(character->waiting_disconnect != INVALID_TIMER){
 			delete_timer(character->waiting_disconnect, chardb_waiting_disconnect);
-			character->waiting_disconnect = -1;
+			character->waiting_disconnect = INVALID_TIMER;
 		}
 	} else if (character->server == server)
 		character->server = -2; //In some map server that we aren't connected to.
@@ -313,7 +313,7 @@ static int char_db_kickoffline(DBKey key, void* data, va_list ap)
 	//Kick out any connected characters, and set them offline as appropiate.
 	if (character->server > -1)
 		mapif_disconnectplayer(server[character->server].fd, character->account_id, character->char_id, 1);
-	else if (character->waiting_disconnect == -1)
+	else if (character->waiting_disconnect == INVALID_TIMER)
 		set_char_offline(character->char_id, character->account_id);
 	else
 		return 0; // fail
@@ -1937,7 +1937,7 @@ static void char_auth_ok(int fd, struct char_session_data *sd)
 		if (character->server > -1)
 		{	//Character already online. KICK KICK KICK
 			mapif_disconnectplayer(server[character->server].fd, character->account_id, character->char_id, 2);
-			if (character->waiting_disconnect == -1)
+			if (character->waiting_disconnect == INVALID_TIMER)
 				character->waiting_disconnect = add_timer(gettick()+20000, chardb_waiting_disconnect, character->account_id, 0);
 			WFIFOW(fd,0) = 0x81;
 			WFIFOB(fd,2) = 8;
@@ -2016,7 +2016,7 @@ int parse_fromlogin(int fd)
 				ShowStatus("Connected to login-server (connection #%d).\n", fd);
 				
 				//Send online accounts to login server.
-				send_accounts_tologin(-1, gettick(), 0, 0);
+				send_accounts_tologin(INVALID_TIMER, gettick(), 0, 0);
 
 				// if no map-server already connected, display a message...
 				ARR_FIND( 0, MAX_MAP_SERVERS, i, server[i].fd > 0 && server[i].map[0] );
@@ -2176,72 +2176,6 @@ int parse_fromlogin(int fd)
 		}
 		break;
 
-		case 0x2726:	// Request to send a broadcast message (no answer)
-			if (RFIFOREST(fd) < 8 || RFIFOREST(fd) < (8 + RFIFOL(fd,4)))
-				return 0;
-			if (RFIFOL(fd,4) < 1)
-				char_log("Receiving a message for broadcast, but message is void.\n");
-			else
-			{
-				// at least 1 map-server
-				ARR_FIND( 0, MAX_MAP_SERVERS, i, server[i].fd >= 0 );
-				if (i == MAX_MAP_SERVERS)
-					char_log("'ladmin': Receiving a message for broadcast, but no map-server is online.\n");
-				else {
-					unsigned char buf[128];
-					char message[4096]; // +1 to add a null terminated if not exist in the packet
-					int lp;
-					char *p;
-					memset(message, '\0', sizeof(message));
-					memcpy(message, RFIFOP(fd,8), RFIFOL(fd,4));
-					message[sizeof(message)-1] = '\0';
-					remove_control_chars(message);
-					// remove all first spaces
-					p = message;
-					while(p[0] == ' ')
-						p++;
-					// if message is only composed of spaces
-					if (p[0] == '\0')
-						char_log("Receiving a message for broadcast, but message is only a lot of spaces.\n");
-					// else send message to all map-servers
-					else {
-						if (RFIFOW(fd,2) == 0) {
-							char_log("'ladmin': Receiving a message for broadcast (message (in yellow): %s)\n",
-							         message);
-							lp = 4;
-						} else {
-							char_log("'ladmin': Receiving a message for broadcast (message (in blue): %s)\n",
-							         message);
-							lp = 8;
-						}
-						// split message to max 80 char
-						while(p[0] != '\0') { // if not finish
-							if (p[0] == ' ') // jump if first char is a space
-								p++;
-							else {
-								char split[80];
-								char* last_space;
-								sscanf(p, "%79[^\t]", split); // max 79 char, any char (\t is control char and control char was removed before)
-								split[sizeof(split)-1] = '\0'; // last char always \0
-								if ((last_space = strrchr(split, ' ')) != NULL) { // searching space from end of the string
-									last_space[0] = '\0'; // replace it by NULL to have correct length of split
-									p++; // to jump the new NULL
-								}
-								p += strlen(split);
-								// send broadcast to all map-servers
-								WBUFW(buf,0) = 0x3800;
-								WBUFW(buf,2) = lp + strlen(split) + 1;
-								WBUFL(buf,4) = 0x65756c62; // only write if in blue (lp = 8)
-								memcpy(WBUFP(buf,lp), split, strlen(split) + 1);
-								mapif_sendall(buf, WBUFW(buf,2));
-							}
-						}
-					}
-				}
-			}
-			RFIFOSKIP(fd,8 + RFIFOL(fd,4));
-		break;
-
 		// reply to an account_reg2 registry request
 		case 0x2729:
 			if (RFIFOREST(fd) < 4 || RFIFOREST(fd) < RFIFOW(fd,2))
@@ -2254,54 +2188,6 @@ int parse_fromlogin(int fd)
 			mapif_sendall(buf, WBUFW(buf,2));
 			RFIFOSKIP(fd, RFIFOW(fd,2));
 		}
-		break;
-
-		// Account deletion notification (from login-server)
-		case 0x2730:
-			if (RFIFOREST(fd) < 6)
-				return 0;
-			// Deletion of all characters of the account
-			for(i = 0; i < char_num; i++) {
-				if (char_dat[i].status.account_id == RFIFOL(fd,2)) {
-					char_delete(&char_dat[i].status);
-					if (i < char_num - 1) {
-						memcpy(&char_dat[i], &char_dat[char_num-1], sizeof(struct character_data));
-						// if moved character owns to deleted account, check again it's character
-						if (char_dat[i].status.account_id == RFIFOL(fd,2)) {
-							i--;
-						// Correct moved character reference in the character's owner by [Yor]
-						} else {
-							int j, k;
-							struct char_session_data *sd2;
-							for (j = 0; j < fd_max; j++) {
-								if (session[j] && (sd2 = (struct char_session_data*)session[j]->session_data) &&
-									sd2->account_id == char_dat[char_num-1].status.account_id) {
-									for (k = 0; k < MAX_CHARS; k++) {
-										if (sd2->found_char[k] == char_num-1) {
-											sd2->found_char[k] = i;
-											break;
-										}
-									}
-									break;
-								}
-							}
-						}
-					}
-					char_num--;
-				}
-			}
-			// Deletion of the storage
-			inter_storage_delete(RFIFOL(fd,2));
-			// send to all map-servers to disconnect the player
-			{
-				unsigned char buf[6];
-				WBUFW(buf,0) = 0x2b13;
-				WBUFL(buf,2) = RFIFOL(fd,2);
-				mapif_sendall(buf, 6);
-			}
-			// disconnect player if online on char-server
-			disconnect_player(RFIFOL(fd,2));
-			RFIFOSKIP(fd,6);
 		break;
 
 		// State change of account/ban notification (from login-server)
@@ -2336,7 +2222,7 @@ int parse_fromlogin(int fd)
 				if( character->server > -1 )
 				{	//Kick it from the map server it is on.
 					mapif_disconnectplayer(server[character->server].fd, character->account_id, character->char_id, 2);
-					if (character->waiting_disconnect == -1)
+					if (character->waiting_disconnect == INVALID_TIMER)
 						character->waiting_disconnect = add_timer(gettick()+AUTH_TIMEOUT, chardb_waiting_disconnect, character->account_id, 0);
 				}
 				else
@@ -3550,7 +3436,7 @@ int parse_char(int fd)
 
 			ShowInfo(CL_RED"Request Char Deletion: "CL_GREEN"%d (%d)"CL_RESET"\n", sd->account_id, cid);
 			memcpy(email, RFIFOP(fd,6), 40);
-			RFIFOSKIP(fd,RFIFOREST(fd)); // hack to make the other deletion packet work
+			RFIFOSKIP(fd,( cmd == 0x68 ) ? 46 : 56);
 
 			if (e_mail_check(email) == 0)
 				safestrncpy(email, "a@a.com", sizeof(email)); // default e-mail
@@ -3750,22 +3636,6 @@ int parse_char(int fd)
 		}
 		return 0; // avoid processing of followup packets here
 
-		// Athena info get
-		case 0x7530:
-			WFIFOHEAD(fd,10);
-			WFIFOW(fd,0) = 0x7531;
-			WFIFOB(fd,2) = ATHENA_MAJOR_VERSION;
-			WFIFOB(fd,3) = ATHENA_MINOR_VERSION;
-			WFIFOB(fd,4) = ATHENA_REVISION;
-			WFIFOB(fd,5) = ATHENA_RELEASE_FLAG;
-			WFIFOB(fd,6) = ATHENA_OFFICIAL_FLAG;
-			WFIFOB(fd,7) = ATHENA_SERVER_INTER | ATHENA_SERVER_CHAR;
-			WFIFOW(fd,8) = ATHENA_MOD_VERSION;
-			WFIFOSET(fd,10);
-
-			RFIFOSKIP(fd,2);
-		break;
-
 		// unknown packet received
 		default:
 			ShowError("parse_char: Received unknown packet "CL_WHITE"0x%x"CL_RESET" from ip '"CL_WHITE"%s"CL_RESET"'! Disconnecting!\n", RFIFOW(fd,0), ip2str(ipl, NULL));
@@ -3779,29 +3649,19 @@ int parse_char(int fd)
 }
 
 // Console Command Parser [Wizputer]
-int parse_console(char* buf)
+int parse_console(const char* command)
 {
-	char command[256];
+	ShowNotice("Console command: %s\n", command);
 
-	memset(command, 0, sizeof(command));
-
-	sscanf(buf, "%[^\n]", command);
-
-	//login_log("Console command :%s\n", command);
-
-	if( strcmpi("shutdown", command) == 0 ||
-	    strcmpi("exit", command) == 0 ||
-	    strcmpi("quit", command) == 0 ||
-	    strcmpi("end", command) == 0 )
+	if( strcmpi("shutdown", command) == 0 || strcmpi("exit", command) == 0 || strcmpi("quit", command) == 0 || strcmpi("end", command) == 0 )
 		runflag = 0;
-	else if( strcmpi("alive", command) == 0 ||
-	         strcmpi("status", command) == 0 )
+	else if( strcmpi("alive", command) == 0 || strcmpi("status", command) == 0 )
 		ShowInfo(CL_CYAN"Console: "CL_BOLD"I'm Alive."CL_RESET"\n");
-	else if( strcmpi("help", command) == 0 ){
-		ShowInfo(CL_BOLD"Help of commands:"CL_RESET"\n");
-		ShowInfo("  To shutdown the server:\n");
-		ShowInfo("  'shutdown|exit|qui|end'\n");
-		ShowInfo("  To know if server is alive:\n");
+	else if( strcmpi("help", command) == 0 )
+	{
+		ShowInfo("To shutdown the server:\n");
+		ShowInfo("  'shutdown|exit|quit|end'\n");
+		ShowInfo("To know if server is alive:\n");
 		ShowInfo("  'alive|status'\n");
 	}
 
@@ -3978,7 +3838,7 @@ static int chardb_waiting_disconnect(int tid, unsigned int tick, int id, intptr 
 	struct online_char_data* character;
 	if ((character = (struct online_char_data*)idb_get(online_char_db, id)) != NULL && character->waiting_disconnect == tid)
 	{	//Mark it offline due to timeout.
-		character->waiting_disconnect = -1;
+		character->waiting_disconnect = INVALID_TIMER;
 		set_char_offline(character->char_id, character->account_id);
 	}
 	return 0;

@@ -1937,7 +1937,7 @@ static int atcommand_pvpoff_sub(struct block_list *bl,va_list ap)
 {
 	TBL_PC* sd = (TBL_PC*)bl;
 	clif_pvpset(sd, 0, 0, 2);
-	if (sd->pvp_timer != -1) {
+	if (sd->pvp_timer != INVALID_TIMER) {
 		delete_timer(sd->pvp_timer, pc_calc_pvprank_timer);
 		sd->pvp_timer = INVALID_TIMER;
 	}
@@ -1969,7 +1969,7 @@ ACMD_FUNC(pvpoff)
 static int atcommand_pvpon_sub(struct block_list *bl,va_list ap)
 {
 	TBL_PC* sd = (TBL_PC*)bl;
-	if (sd->pvp_timer == -1) {
+	if (sd->pvp_timer == INVALID_TIMER) {
 		sd->pvp_timer = add_timer(gettick() + 200, pc_calc_pvprank_timer, sd->bl.id, 0);
 		sd->pvp_rank = 0;
 		sd->pvp_lastusers = 0;
@@ -6095,7 +6095,7 @@ ACMD_FUNC(autoloot)
 }
 
 /*==========================================
- * @autolootitem
+ * @alootid
  *------------------------------------------*/
 ACMD_FUNC(autolootitem)
 {
@@ -6104,9 +6104,9 @@ ACMD_FUNC(autolootitem)
 	if (!message || !*message) {
 		if (sd->state.autolootid) {
 			sd->state.autolootid = 0;
-			clif_displaymessage(fd, "Autolootitem have been turned OFF.");
+			clif_displaymessage(fd, "Autolootitem has been turned OFF.");
 		} else
-			clif_displaymessage(fd, "Please, enter Item name or its ID (usage: @autolootitem <item_name_or_ID>).");
+			clif_displaymessage(fd, "Please, enter item name or it's ID (usage: @alootid <item_name_or_ID>).");
 
 		return -1;
 	}
@@ -6122,7 +6122,7 @@ ACMD_FUNC(autolootitem)
 
 	sd->state.autolootid = item_data->nameid; // Autoloot Activated
 
-	sprintf(atcmd_output, "Autolooting Item: '%s'/'%s' {%d}",
+	sprintf(atcmd_output, "Autolooting item: '%s'/'%s' (%d)",
 		item_data->name, item_data->jname, item_data->nameid);
 	clif_displaymessage(fd, atcmd_output);
 
@@ -6741,7 +6741,7 @@ ACMD_FUNC(unmute)
 	}
 
 	pl_sd->status.manner = 0;
-	status_change_end(&pl_sd->bl,SC_NOCHAT,-1);
+	status_change_end(&pl_sd->bl, SC_NOCHAT, INVALID_TIMER);
 	clif_displaymessage(sd->fd,"Player unmuted");
 	
 	return 0;
@@ -6815,7 +6815,7 @@ ACMD_FUNC(mute)
 		sc_start(&pl_sd->bl,SC_NOCHAT,100,0,0);
 	} else {
 		pl_sd->status.manner = 0;
-		status_change_end(&pl_sd->bl,SC_NOCHAT,-1);
+		status_change_end(&pl_sd->bl, SC_NOCHAT, INVALID_TIMER);
 	}
 
 	clif_GM_silence(sd, pl_sd, (manner > 0 ? 1 : 0));
@@ -6986,7 +6986,7 @@ ACMD_FUNC(mobinfo)
 		strcpy(atcmd_output, " ");
 		j = 0;
 		for (i = 0; i < MAX_MOB_DROP; i++) {
-			if (mob->dropitem[i].nameid <= 0 || mob->dropitem[i].p < 1 || (item_data = itemdb_search(mob->dropitem[i].nameid)) == NULL)
+			if (mob->dropitem[i].nameid <= 0 || mob->dropitem[i].p < 1 || (item_data = itemdb_exists(mob->dropitem[i].nameid)) == NULL)
 				continue;
 			if (item_data->slot)
 				sprintf(atcmd_output2, " - %s[%d]  %02.02f%%", item_data->jname, item_data->slot, (float)mob->dropitem[i].p / 100);
@@ -7009,7 +7009,7 @@ ACMD_FUNC(mobinfo)
 			strcpy(atcmd_output, " MVP Items:");
 			j = 0;
 			for (i = 0; i < 3; i++) {
-				if (mob->mvpitem[i].nameid <= 0 || (item_data = itemdb_search(mob->mvpitem[i].nameid)) == NULL)
+				if (mob->mvpitem[i].nameid <= 0 || (item_data = itemdb_exists(mob->mvpitem[i].nameid)) == NULL)
 					continue;
 				if (mob->mvpitem[i].p > 0) {
 					j++;
@@ -7115,19 +7115,18 @@ ACMD_FUNC(homlevel)
 
 	nullpo_retr(-1, sd);
 
-	if (!message || !*message) {
-		clif_displaymessage(fd, "Please, enter a level adjustment: (usage: @homlevel <+/- # of levels>.");
+	if ( !message || !*message || ( level = atoi(message) ) < 1 ) {
+		clif_displaymessage(fd, "Please, enter a level adjustment: (usage: @homlevel <# of levels to level up>.");
 		return -1;
 	}
-		
+
 	if ( !merc_is_hom_active(sd->hd) ) {
 		clif_displaymessage(fd, "You do not have a homunculus.");
 		return -1;
 	}
 
-	level = atoi(message);
 	hd = sd->hd;
-	
+
 	for (i = 1; i <= level && hd->exp_next; i++){
 		hd->homunculus.exp += hd->exp_next;
 		merc_hom_levelup(hd);
@@ -7616,8 +7615,8 @@ static int atcommand_mutearea_sub(struct block_list *bl,va_list ap)
 		pl_sd->status.manner -= time;
 		if (pl_sd->status.manner < 0)
 			sc_start(&pl_sd->bl,SC_NOCHAT,100,0,0);
-		else if (pl_sd->sc.data[SC_NOCHAT])
-			status_change_end(&pl_sd->bl, SC_NOCHAT, -1);
+		else
+			status_change_end(&pl_sd->bl, SC_NOCHAT, INVALID_TIMER);
 	}
 	return 0;
 }
@@ -7964,6 +7963,13 @@ ACMD_FUNC(accept)
 		return 0;
 	}
 
+	if( duel_list[sd->duel_invite].max_players_limit > 0 && duel_list[sd->duel_invite].members_count >= duel_list[sd->duel_invite].max_players_limit )
+	{
+		// "Duel: Limit of players is reached."
+		clif_displaymessage(fd, msg_txt(351));
+		return 0;
+	}
+
 	duel_accept(sd->duel_invite, sd);
 	// "Duel: Invitation has been accepted."
 	clif_displaymessage(fd, msg_txt(361));
@@ -8012,30 +8018,6 @@ ACMD_FUNC(cash)
 			pc_paycash(sd, -value, -value);
 	}
 
-	return 0;
-}
-
-/*===================================
- * Away message (@away, @aw) [LuzZza]
- *-----------------------------------*/
-ACMD_FUNC(away)
-{
-	if(strlen(message) > 0) {
-		if(strlen(message) > 128)
-			return -1;
-		strcpy(sd->away_message, message);
-		//"Away automessage has been activated."
-		clif_displaymessage(fd, msg_txt(546));
-	} else {
-		if(strlen(sd->away_message) > 0) {
-			sd->away_message[0] = 0;
-			//"Away automessage has been disabled."
-			clif_displaymessage(fd, msg_txt(547));
-			return 0;
-		}
-		//"Usage: @away,@aw <message>. Enter empty message for disable it."
-		clif_displaymessage(fd, msg_txt(548));
-	}
 	return 0;
 }
 
@@ -8323,7 +8305,7 @@ ACMD_FUNC(itemlist)
 		const struct item* it = &items[i];
 		struct item_data* itd;
 
-		if( it->nameid == 0 || (itd = itemdb_search(it->nameid)) == NULL )
+		if( it->nameid == 0 || (itd = itemdb_exists(it->nameid)) == NULL )
 			continue;
 
 		counter += it->amount;
@@ -8406,7 +8388,7 @@ ACMD_FUNC(itemlist)
 			{
 				struct item_data* card;
 
-				if( it->card[j] == 0 || (card = itemdb_search(it->card[j])) == NULL )
+				if( it->card[j] == 0 || (card = itemdb_exists(it->card[j])) == NULL )
 					continue;
 
 				counter2++;
@@ -8872,8 +8854,6 @@ AtCommandInfo atcommand_info[] = {
 	{ "leave",              1,1,      atcommand_leave },
 	{ "accept",             1,1,      atcommand_accept },
 	{ "reject",             1,1,      atcommand_reject },
-	{ "away",               1,1,      atcommand_away },
-	{ "aw",                 1,1,      atcommand_away },
 	{ "main",               1,1,      atcommand_main },
 	{ "clone",             50,50,     atcommand_clone },
 	{ "slaveclone",        50,50,     atcommand_clone },
@@ -9118,8 +9098,8 @@ int atcommand_config_read(const char* cfgName)
 			}
 			else {
 				p->level2 = atoi(w3);
-				p->level2 = cap_value(p->level2, 0, 100);
 			}
+			p->level2 = cap_value(p->level2, 0, 100);
 		}
 		else
 		if( strcmpi(w1, "import") == 0 )

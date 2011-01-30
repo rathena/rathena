@@ -10,7 +10,7 @@
 //                    revised By Warlock                    //
 //////////////////////////////////////////////////////////////
 //===== Version ==============================================
-//= 1.4
+//= 1.5
 //===== Compatible With ======================================
 //= eAthena 1.0
 //===== Description ==========================================
@@ -22,6 +22,7 @@
 //= 1.2 some bugfixes, typos [Lupus]
 //= 1.3 Removed Duplicates [Silent]
 //= 1.4 Further removed duplicates. [L0ne_W0lf]
+//= 1.5 Fixed name collision with 'Little Girl' in cities/lutie.txt [Ai4rei]
 //============================================================
 
 
@@ -671,7 +672,7 @@ N_QuestStart:
 }
 ///////Job list 7///////
 //7-1 goes to 8-1 using callfunc;
-prontera,123,208,6	script	Little Girl	717,{
+prontera,123,208,6	script	Little Girl#thq	717,{
 	if (seven_qset == 1 && countitem(531) > 4) goto N_QuestComp;
 	if (seven_qset == 1) goto N_QuestStart;
 	if (eight_qset == 1) goto N_QuestStart2;

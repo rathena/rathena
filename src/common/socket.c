@@ -996,10 +996,10 @@ int access_ipmask(const char* str, AccessControl* acc)
 				(n == 5 && m[0] > 32) ){ // invalid bit mask
 			return 0;
 		}
-		ip = (uint32)(a[0] | (a[1] << 8) | (a[2] << 16) | (a[3] << 24));
+		ip = MAKEIP(a[0],a[1],a[2],a[3]);
 		if( n == 8 )
 		{// standard mask
-			mask = (uint32)(a[0] | (a[1] << 8) | (a[2] << 16) | (a[3] << 24));
+			mask = MAKEIP(m[0],m[1],m[2],m[3]);
 		} else if( n == 5 )
 		{// bit mask
 			mask = 0;
@@ -1007,7 +1007,6 @@ int access_ipmask(const char* str, AccessControl* acc)
 				mask = (mask >> 1) | 0x80000000;
 				--m[0];
 			}
-			mask = ntohl(mask);
 		} else
 		{// just this ip
 			mask = 0xFFFFFFFF;

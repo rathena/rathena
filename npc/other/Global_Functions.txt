@@ -340,9 +340,9 @@ function	script	Time2Str	{
 		set .@Time$, .@Time$ + .@Minutes + " minute, ";
 
 	if( .@Time_Left > 1 || .@Time_Left == 0 )
-		set .@Time$, .@Time$ + .@Time_Left + " seconds.";
+		set .@Time$, .@Time$ + .@Time_Left + " seconds";
 	else if( .@Time_Left == 1 )
-		set .@Time$, .@Time$ + .@Time_Left + " second.";
+		set .@Time$, .@Time$ + .@Time_Left + " second";
 	
 	return .@Time$;
 }

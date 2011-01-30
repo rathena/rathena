@@ -195,10 +195,6 @@ SOURCE=..\src\login\account_txt.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\src\login\admin.c
-# End Source File
-# Begin Source File
-
 SOURCE=..\src\login\ipban.h
 # End Source File
 # Begin Source File

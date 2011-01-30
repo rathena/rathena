@@ -70,6 +70,7 @@
 // - remove dynamic allocation in add_word()
 // - remove GETVALUE / SETVALUE
 // - clean up the set_reg / set_val / setd_sub mess
+// - detect invalid label references at parse-time
 
 //
 // struct script_state* st;
@@ -977,6 +978,23 @@ const char* parse_callfunc(const char* p, int require_paren)
 	return p;
 }
 
+/// Processes end of logical script line.
+/// @param first When true, only fix up scheduling data is initialized
+/// @param p Script position for error reporting in set_label
+static void parse_nextline(bool first, const char* p)
+{
+	if( !first )
+	{
+		add_scriptc(C_EOL);  // mark end of line for stack cleanup
+		set_label(LABEL_NEXTLINE, script_pos, p);  // fix up '-' labels
+	}
+
+	// initialize data for new '-' label fix up scheduling
+	str_data[LABEL_NEXTLINE].type      = C_NOP;
+	str_data[LABEL_NEXTLINE].backpatch = -1;
+	str_data[LABEL_NEXTLINE].label     = -1;
+}
+
 /*==========================================
  * 項の解析
  *------------------------------------------*/
@@ -1541,12 +1559,17 @@ const char* parse_syntax(const char* p)
 				// function declaration - just register the name
 				int l;
 				l = add_word(func_name);
-				if( str_data[l].type == C_NOP )// set type only if the name did not exist before
+				if( str_data[l].type == C_NOP )// register only, if the name was not used by something else
 					str_data[l].type = C_USERFUNC;
+				else if( str_data[l].type == C_USERFUNC )
+					;  // already registered
+				else
+					disp_error_message("parse_syntax:function: function name is invalid", func_name);
 
 				// if, for , while の閉じ判定
 				p = parse_syntax_close(p2 + 1);
-				return p;			}
+				return p;
+			}
 			else if(*p2 == '{')
 			{// function <name> <line/block of code>
 				char label[256];
@@ -1567,11 +1590,16 @@ const char* parse_syntax(const char* p)
 
 				// Set the position of the function (label)
 				l=add_word(func_name);
-				if( str_data[l].type == C_NOP )// set type only if the name did not exist before
+				if( str_data[l].type == C_NOP || str_data[l].type == C_USERFUNC )// register only, if the name was not used by something else
+				{
 					str_data[l].type = C_USERFUNC;
-				set_label(l, script_pos, p);
-				if( parse_options&SCRIPT_USE_LABEL_DB )
-					strdb_put(scriptlabel_db, get_str(l), (void*)script_pos);
+					set_label(l, script_pos, p);
+					if( parse_options&SCRIPT_USE_LABEL_DB )
+						strdb_put(scriptlabel_db, get_str(l), (void*)script_pos);
+				}
+				else
+					disp_error_message("parse_syntax:function: function name is invalid", func_name);
+
 				return skip_space(p);
 			}
 			else
@@ -1691,6 +1719,10 @@ const char* parse_syntax_close_sub(const char* p,int* flag)
 	} else if(syntax.curly[pos].type == TYPE_IF) {
 		const char *bp = p;
 		const char *p2;
+
+		// if-block and else-block end is a new line
+		parse_nextline(false, p);
+
 		// if 最終場所へ飛ばす
 		sprintf(label,"goto __IF%x_FIN;",syntax.curly[pos].index);
 		syntax.curly[syntax.curly_count++].type = TYPE_NULL;
@@ -1766,6 +1798,10 @@ const char* parse_syntax_close_sub(const char* p,int* flag)
 		if(*p != '(') {
 			disp_error_message("need '('",p);
 		}
+
+		// do-block end is a new line
+		parse_nextline(false, p);
+
 		sprintf(label,"__DO%x_FIN",syntax.curly[pos].index);
 		add_scriptl(add_str("jump_zero"));
 		add_scriptc(C_ARG);
@@ -1793,6 +1829,9 @@ const char* parse_syntax_close_sub(const char* p,int* flag)
 		syntax.curly_count--;
 		return p;
 	} else if(syntax.curly[pos].type == TYPE_FOR) {
+		// for-block end is a new line
+		parse_nextline(false, p);
+
 		// 次のループに飛ばす
 		sprintf(label,"goto __FR%x_NXT;",syntax.curly[pos].index);
 		syntax.curly[syntax.curly_count++].type = TYPE_NULL;
@@ -1806,6 +1845,9 @@ const char* parse_syntax_close_sub(const char* p,int* flag)
 		syntax.curly_count--;
 		return p;
 	} else if(syntax.curly[pos].type == TYPE_WHILE) {
+		// while-block end is a new line
+		parse_nextline(false, p);
+
 		// while 条件判断へ飛ばす
 		sprintf(label,"goto __WL%x_NXT;",syntax.curly[pos].index);
 		syntax.curly[syntax.curly_count++].type = TYPE_NULL;
@@ -1974,6 +2016,7 @@ struct script_code* parse_script(const char *src,const char *file,int line,int o
 	struct script_code* code = NULL;
 	static int first=1;
 	char end;
+	bool unresolved_names = false;
 
 	if( src == NULL )
 		return NULL;// empty script
@@ -1988,9 +2031,7 @@ struct script_code* parse_script(const char *src,const char *file,int line,int o
 	script_buf=(unsigned char *)aMalloc(SCRIPT_BLOCK_SIZE*sizeof(unsigned char));
 	script_pos=0;
 	script_size=SCRIPT_BLOCK_SIZE;
-	str_data[LABEL_NEXTLINE].type=C_NOP;
-	str_data[LABEL_NEXTLINE].backpatch=-1;
-	str_data[LABEL_NEXTLINE].label=-1;
+	parse_nextline(true, NULL);
 
 	// who called parse_script is responsible for clearing the database after using it, but just in case... lets clear it here
 	if( options&SCRIPT_USE_LABEL_DB )
@@ -2077,12 +2118,8 @@ struct script_code* parse_script(const char *src,const char *file,int line,int o
 		// 他は全部一緒くた
 		p=parse_line(p);
 		p=skip_space(p);
-		add_scriptc(C_EOL);
 
-		set_label(LABEL_NEXTLINE,script_pos,p);
-		str_data[LABEL_NEXTLINE].type=C_NOP;
-		str_data[LABEL_NEXTLINE].backpatch=-1;
-		str_data[LABEL_NEXTLINE].label=-1;
+		parse_nextline(false, p);
 	}
 
 	add_scriptc(C_NOP);
@@ -2103,13 +2140,23 @@ struct script_code* parse_script(const char *src,const char *file,int line,int o
 				j=next;
 			}
 		}
+		else if( str_data[i].type == C_USERFUNC )
+		{// 'function name;' without follow-up code
+			ShowError("parse_script: function '%s' declared but not defined.\n", str_buf+str_data[i].str);
+			unresolved_names = true;
+		}
+	}
+
+	if( unresolved_names )
+	{
+		disp_error_message("parse_script: unresolved function references", p);
 	}
 
 #ifdef DEBUG_DISP
 	for(i=0;i<script_pos;i++){
-		if((i&15)==0) printf("%04x : ",i);
+		if((i&15)==0) ShowMessage("%04x : ",i);
 		ShowMessage("%02x ",script_buf[i]);
-		if((i&15)==15) printf("\n");
+		if((i&15)==15) ShowMessage("\n");
 	}
 	ShowMessage("\n");
 #endif
@@ -3235,7 +3282,7 @@ int run_script_timer(int tid, unsigned int tick, int id, intptr data)
 		st->rid = 0;
 		st->state = END;
 	}
-	while( node && st->sleep.timer != -1 ) {
+	while( node && st->sleep.timer != INVALID_TIMER ) {
 		if( (int)node->key == st->oid && ((struct script_state *)node->data)->sleep.timer == st->sleep.timer ) {
 			script_erase_sleepdb(node);
 			st->sleep.timer = INVALID_TIMER;
@@ -4882,8 +4929,8 @@ BUILDIN_FUNC(setarray)
 	}
 
 	end = start + script_lastdata(st) - 2;
-	if( end >= SCRIPT_MAX_ARRAYSIZE )
-		end = SCRIPT_MAX_ARRAYSIZE-1;
+	if( end > SCRIPT_MAX_ARRAYSIZE )
+		end = SCRIPT_MAX_ARRAYSIZE;
 
 	if( is_string_variable(name) )
 	{// string array
@@ -4945,10 +4992,10 @@ BUILDIN_FUNC(cleararray)
 		v = (void*)script_getnum(st, 3);
 
 	end = start + script_getnum(st, 4);
-	if( end >= SCRIPT_MAX_ARRAYSIZE )
-		end = SCRIPT_MAX_ARRAYSIZE-1;
+	if( end > SCRIPT_MAX_ARRAYSIZE )
+		end = SCRIPT_MAX_ARRAYSIZE;
 
-	for( ; start <= end; ++start )
+	for( ; start < end; ++start )
 		set_reg(st, sd, reference_uid(id, start), name, v, script_getref(st,2));
 	return 0;
 }
@@ -5015,8 +5062,8 @@ BUILDIN_FUNC(copyarray)
 	}
 
 	count = script_getnum(st, 4);
-	if( count >= SCRIPT_MAX_ARRAYSIZE - idx1 )
-		count = (SCRIPT_MAX_ARRAYSIZE-1) - idx1;
+	if( count > SCRIPT_MAX_ARRAYSIZE - idx1 )
+		count = SCRIPT_MAX_ARRAYSIZE - idx1;
 	if( count <= 0 || (id1 == id2 && idx1 == idx2) )
 		return 0;// nothing to copy
 
@@ -5121,7 +5168,8 @@ BUILDIN_FUNC(deletearray)
 			return 0;// no player attached
 	}
 
-	end = getarraysize(st, id, start, is_string_variable(name), reference_getref(data));
+	end = SCRIPT_MAX_ARRAYSIZE;
+
 	if( start >= end )
 		return 0;// nothing to free
 
@@ -6191,7 +6239,7 @@ BUILDIN_FUNC(readparam)
 	if( script_hasdata(st,3) )
 		sd=map_nick2sd(script_getstr(st,3));
 	else
-	sd=script_rid2sd(st);
+		sd=script_rid2sd(st);
 
 	if(sd==NULL){
 		script_pushint(st,-1);
@@ -8321,10 +8369,10 @@ BUILDIN_FUNC(getnpctimer)
 				ShowError("buildin_getnpctimer: Attached player not found!\n");
 				break;
 			}
-			val = (sd->npc_timer_id != -1);
+			val = (sd->npc_timer_id != INVALID_TIMER);
 		}
 		else
-			val = (nd->u.scr.timerid !=-1);
+			val = (nd->u.scr.timerid != INVALID_TIMER);
 		break;
 	case 2: val = nd->u.scr.timeramount; break;
 	}
@@ -9705,7 +9753,7 @@ BUILDIN_FUNC(pvpon)
 	iter = mapit_getallusers();
 	for( sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC*)mapit_next(iter) )
 	{
-		if( sd->bl.m != m || sd->pvp_timer != -1 )
+		if( sd->bl.m != m || sd->pvp_timer != INVALID_TIMER )
 			continue; // not applicable
 
 		sd->pvp_timer = add_timer(gettick()+200,pc_calc_pvprank_timer,sd->bl.id,0);
@@ -9724,7 +9772,7 @@ static int buildin_pvpoff_sub(struct block_list *bl,va_list ap)
 {
 	TBL_PC* sd = (TBL_PC*)bl;
 	clif_pvpset(sd, 0, 0, 2);
-	if (sd->pvp_timer != -1) {
+	if (sd->pvp_timer != INVALID_TIMER) {
 		delete_timer(sd->pvp_timer, pc_calc_pvprank_timer);
 		sd->pvp_timer = INVALID_TIMER;
 	}
@@ -10809,7 +10857,7 @@ BUILDIN_FUNC(petskillbonus)
 	pd=sd->pd;
 	if (pd->bonus)
 	{ //Clear previous bonus
-		if (pd->bonus->timer != -1)
+		if (pd->bonus->timer != INVALID_TIMER)
 			delete_timer(pd->bonus->timer, pet_skill_bonus_timer);
 	} else //init
 		pd->bonus = (struct pet_bonus *) aMalloc(sizeof(struct pet_bonus));
@@ -11162,7 +11210,7 @@ BUILDIN_FUNC(petrecovery)
 	
 	if (pd->recovery)
 	{ //Halt previous bonus
-		if (pd->recovery->timer != -1)
+		if (pd->recovery->timer != INVALID_TIMER)
 			delete_timer(pd->recovery->timer, pet_recovery_timer);
 	} else //Init
 		pd->recovery = (struct pet_recovery *)aMalloc(sizeof(struct pet_recovery));
@@ -11188,7 +11236,7 @@ BUILDIN_FUNC(petheal)
 	pd=sd->pd;
 	if (pd->s_skill)
 	{ //Clear previous skill
-		if (pd->s_skill->timer != -1)
+		if (pd->s_skill->timer != INVALID_TIMER)
 		{
 			if (pd->s_skill->id)
 				delete_timer(pd->s_skill->timer, pet_skill_support_timer);
@@ -11282,7 +11330,7 @@ BUILDIN_FUNC(petskillsupport)
 	pd=sd->pd;
 	if (pd->s_skill)
 	{ //Clear previous skill
-		if (pd->s_skill->timer != -1)
+		if (pd->s_skill->timer != INVALID_TIMER)
 		{
 			if (pd->s_skill->id)
 				delete_timer(pd->s_skill->timer, pet_skill_support_timer);
@@ -11636,9 +11684,6 @@ BUILDIN_FUNC(jump_zero)
 		pos=script_getnum(st,3);
 		st->pos=pos;
 		st->state=GOTO;
-		// printf("script: jump_zero: jumpto : %d\n",pos);
-	} else {
-		// printf("script: jump_zero: fail\n");
 	}
 	return 0;
 }
@@ -12312,7 +12357,7 @@ BUILDIN_FUNC(autoequip)
 	struct item_data *item_data;
 	nameid=script_getnum(st,2);
 	flag=script_getnum(st,3);
-	if(nameid>=500 && (item_data = itemdb_search(nameid)) != NULL){
+	if(nameid>=500 && (item_data = itemdb_exists(nameid)) != NULL){
 		item_data->flag.autoequip = flag>0?1:0;
 	}
 	return 0;
@@ -12362,7 +12407,7 @@ BUILDIN_FUNC(charisalpha)
 	const char *str=script_getstr(st,2);
 	int pos=script_getnum(st,3);
 
-	int val = ( str && pos >= 0 && (unsigned int)pos < strlen(str) ) ? ISALPHA( str[pos] ) : 0;
+	int val = ( str && pos >= 0 && (unsigned int)pos < strlen(str) ) ? ISALPHA( str[pos] ) != 0 : 0;
 
 	script_pushint(st,val);
 	return 0;
@@ -13557,7 +13602,7 @@ BUILDIN_FUNC(awake)
 			struct script_state* tst = (struct script_state*)node->data;
 			TBL_PC* sd = map_id2sd(tst->rid);
 
-			if( tst->sleep.timer == -1 )
+			if( tst->sleep.timer == INVALID_TIMER )
 			{// already awake ???
 				node = node->next;
 				continue;
@@ -14590,7 +14635,7 @@ static int buildin_mobuseskill_sub(struct block_list *bl,va_list ap)
 	if( md->class_ != mobid )
 		return 0;
 
-	if( md->ud.skilltimer != -1 ) // Cancel the casting skill.
+	if( md->ud.skilltimer != INVALID_TIMER ) // Cancel the casting skill.
 		unit_skillcastcancel(bl,0);
 
 	// 0:self, 1:target, 2:master, default:random

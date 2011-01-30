@@ -19,6 +19,18 @@
 #include <stdio.h>
 #include <string.h>
 
+static int vending_nextid = 1;
+
+/// Returns an unique vending shop id.
+static int vending_getuid(void)
+{
+	if(!vending_nextid)
+	{// wrapped around, 0 is reserved for "not vending" state on eathena
+		vending_nextid = 1;
+	}
+
+	return vending_nextid++;
+}
 
 /*==========================================
  * Close shop
@@ -50,13 +62,15 @@ void vending_vendinglistreq(struct map_session_data* sd, int id)
 		return;
 	} 
 
+	sd->vended_id = vsd->vender_id;  // register vending uid
+
 	clif_vendinglist(sd, id, vsd->vending);
 }
 
 /*==========================================
  * Purchase item(s) from a shop
  *------------------------------------------*/
-void vending_purchasereq(struct map_session_data* sd, int aid, int cid, const uint8* data, int count)
+void vending_purchasereq(struct map_session_data* sd, int aid, int uid, const uint8* data, int count)
 {
 	int i, j, cursor, w, new_ = 0, blank, vend_list[MAX_VENDING];
 	double z;
@@ -64,12 +78,15 @@ void vending_purchasereq(struct map_session_data* sd, int aid, int cid, const ui
 	struct map_session_data* vsd = map_id2sd(aid);
 
 	nullpo_retv(sd);
-	if( vsd == NULL || vsd->vender_id == 0 || vsd->vender_id == sd->bl.id )
+	if( vsd == NULL || vsd->vender_id == 0 || vsd->bl.id == sd->bl.id )
 		return; // invalid shop
-#if PACKETVER >= 20100105
-	if( vsd->status.char_id != cid )
-		return; //Char-ID check
-#endif
+
+	if( vsd->vender_id != uid )
+	{// shop has changed
+		clif_buyvending(sd, 0, 0, 6);  // store information was incorrect
+		return;
+	}
+
 	if( sd->bl.m != vsd->bl.m || !check_distance_bl(&sd->bl, &vsd->bl, AREA_SIZE) )
 		return; // shop too far away
 	if( count < 1 || count > MAX_VENDING || count > vsd->vend_num )
@@ -289,11 +306,11 @@ void vending_openvending(struct map_session_data* sd, const char* message, bool 
 		return;
 	}
 
-	sd->vender_id = sd->bl.id;
+	sd->vender_id = vending_getuid();
 	sd->vend_num = i;
 	safestrncpy(sd->message, message, MESSAGE_SIZE);
 
 	pc_stop_walking(sd,1);
-	clif_openvending(sd,sd->vender_id,sd->vending);
+	clif_openvending(sd,sd->bl.id,sd->vending);
 	clif_showvendingboard(&sd->bl,message,0);
 }

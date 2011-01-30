@@ -350,6 +350,7 @@ struct map_session_data {
 	int guildspy; // [Syrus22]
 	int partyspy; // [Syrus22]
 
+	int vended_id;
 	int vender_id;
 	int vend_num;
 	char message[MESSAGE_SIZE];
@@ -382,8 +383,6 @@ struct map_session_data {
 	int duel_invite;
 
 	int killerrid, killedrid;
-
-	char away_message[128]; // [LuzZza]
 
 	int cashPoints, kafraPoints;
 	int rental_timer;

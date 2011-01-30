@@ -298,11 +298,11 @@ int party_recv_info(struct party *sp)
 
 int party_invite(struct map_session_data *sd,struct map_session_data *tsd)
 {
-	struct party_data *p=party_search(sd->status.party_id);
+	struct party_data *p;
 	int i,flag=0;
 	
 	nullpo_ret(sd);
-	if( p == NULL )
+	if( ( p = party_search(sd->status.party_id) ) == NULL )
 		return 0;
 	if( tsd == NULL) {	//TODO: Find the correct reply packet.
 		clif_displaymessage(sd->fd, msg_txt(3));

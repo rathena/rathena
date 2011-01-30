@@ -1,5 +1,7 @@
 Date	Added
 
+2011/01/29
+	* Merged changes from trunk (r14636:14686). [Ai4rei]
 2010/12/30
 	* Fixed a nullpo crash in pc_gainexp when receiving exp though script command getexp (topic:262958, since r14625). [Ai4rei]
 2010/12/27

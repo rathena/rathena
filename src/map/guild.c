@@ -103,46 +103,34 @@ int guild_checkskill(struct guild *g,int id)
 /*==========================================
  * guild_skill_tree.txt reading - from jA [Komurka]
  *------------------------------------------*/
-int guild_read_guildskill_tree_db(void)
-{
-	int i,k,id=0,ln=0;
-	FILE *fp;
-	char line[1024],*p;
+static bool guild_read_guildskill_tree_db(char* split[], int columns, int current)
+{// <skill id>,<max lv>,<req id1>,<req lv1>,<req id2>,<req lv2>,<req id3>,<req lv3>,<req id4>,<req lv4>,<req id5>,<req lv5>
+	int k, id, skillid;
 
-	memset(guild_skill_tree,0,sizeof(guild_skill_tree));
-	sprintf(line, "%s/guild_skill_tree.txt", db_path);
-	if( (fp=fopen(line,"r"))==NULL){
-		ShowError("can't read %s\n", line);
-		return -1;
-	}
-	while(fgets(line, sizeof(line), fp))
+	skillid = atoi(split[0]);
+	id = skillid - GD_SKILLBASE;
+
+	if( id < 0 || id >= MAX_GUILDSKILL )
 	{
-		char *split[50];
-		if(line[0]=='/' && line[1]=='/')
-			continue;
-		for(i=0,p=line;i<12 && p;i++){
-			split[i]=p;
-			p=strchr(p,',');
-			if(p) *p++=0;
-		}
-		if(i<12)
-			continue;
-		id = atoi(split[0]) - GD_SKILLBASE;
-		if(id<0 || id>=MAX_GUILDSKILL)
-			continue;
-		guild_skill_tree[id].id=atoi(split[0]);
-		guild_skill_tree[id].max=atoi(split[1]);
-		if (guild_skill_tree[id].id==GD_GLORYGUILD && battle_config.require_glory_guild && guild_skill_tree[id].max==0) guild_skill_tree[id].max=1;
-		for(k=0;k<5;k++){
-			guild_skill_tree[id].need[k].id=atoi(split[k*2+2]);
-			guild_skill_tree[id].need[k].lv=atoi(split[k*2+3]);
-		}
-	ln++;
+		ShowWarning("guild_read_guildskill_tree_db: Invalid skill id %d.\n", skillid);
+		return false;
 	}
-	fclose(fp);
-	ShowStatus("Done reading '"CL_WHITE"%d"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n",ln,"guild_skill_tree.txt");
 
-	return 0;
+	guild_skill_tree[id].id = skillid;
+	guild_skill_tree[id].max = atoi(split[1]);
+
+	if( guild_skill_tree[id].id == GD_GLORYGUILD && battle_config.require_glory_guild && guild_skill_tree[id].max == 0 )
+	{// enable guild's glory when required for emblems
+		guild_skill_tree[id].max = 1;
+	}
+
+	for( k = 0; k < 5; k++ )
+	{
+		guild_skill_tree[id].need[k].id = atoi(split[k*2+2]);
+		guild_skill_tree[id].need[k].lv = atoi(split[k*2+3]);
+	}
+
+	return true;
 }
 
 /*==========================================
@@ -168,51 +156,21 @@ int guild_check_skill_require(struct guild *g,int id)
 	return 1;
 }
 
-static int guild_read_castledb(void)
-{
-	FILE *fp;
-	char line[1024];
-	int j,ln=0;
-	char *str[32],*p;
+static bool guild_read_castledb(char* str[], int columns, int current)
+{// <castle id>,<map name>,<castle name>,<castle event>[,<reserved/unused switch flag>]
 	struct guild_castle *gc;
 
-	sprintf(line, "%s/castle_db.txt", db_path);
-	if( (fp=fopen(line,"r"))==NULL){
-		ShowError("can't read %s\n", line);
-		return -1;
-	}
+	CREATE(gc, struct guild_castle, 1);
+	gc->castle_id = atoi(str[0]);
+	gc->mapindex = mapindex_name2id(str[1]);
+	safestrncpy(gc->castle_name, str[2], sizeof(gc->castle_name));
+	safestrncpy(gc->castle_event, str[3], sizeof(gc->castle_event));
 
-	while(fgets(line, sizeof(line), fp))
-	{
-		if(line[0]=='/' && line[1]=='/')
-			continue;
-		memset(str,0,sizeof(str));
-		for(j=0,p=line;j<6 && p;j++){
-			str[j]=p;
-			p=strchr(p,',');
-			if(p) *p++=0;
-		}
-		if (j < 4) //Insufficient data for castle. [Skotlex]
-		{
-			ShowError("castle_db.txt: invalid line '%s'\n", line);
-			continue;
-		}
+	idb_put(castle_db,gc->castle_id,gc);
 
-		gc=(struct guild_castle *)aCalloc(1,sizeof(struct guild_castle));
-		gc->castle_id=atoi(str[0]);
-		gc->mapindex = mapindex_name2id(str[1]);
-		safestrncpy(gc->castle_name,str[2],NAME_LENGTH);
-		safestrncpy(gc->castle_event,str[3],NAME_LENGTH);
+	//intif_guild_castle_info(gc->castle_id);
 
-		idb_put(castle_db,gc->castle_id,gc);
-
-		//intif_guild_castle_info(gc->castle_id);
-
-		ln++;
-	}
-	fclose(fp);
-	ShowStatus("Done reading '"CL_WHITE"%d"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n",ln,"castle_db.txt");
-	return 0;
+	return true;
 }
 
 /// lookup: guild id -> guild*
@@ -1969,9 +1927,10 @@ void do_init_guild(void)
 	expcache_ers = ers_new(sizeof(struct guild_expcache)); 
 	guild_castleinfoevent_db=idb_alloc(DB_OPT_BASE);
 
-	guild_read_castledb();
+	sv_readdb(db_path, "castle_db.txt", ',', 4, 5, -1, &guild_read_castledb);
 
-	guild_read_guildskill_tree_db(); //guild skill tree [Komurka]
+	memset(guild_skill_tree,0,sizeof(guild_skill_tree));
+	sv_readdb(db_path, "guild_skill_tree.txt", ',', 12, 12, -1, &guild_read_guildskill_tree_db); //guild skill tree [Komurka]
 
 	add_timer_func_list(guild_payexp_timer,"guild_payexp_timer");
 	add_timer_func_list(guild_send_xy_timer, "guild_send_xy_timer");

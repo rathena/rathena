@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= eAthena Dev Team
 //===== Current Version: ===================================== 
-//= 1.1
+//= 1.2
 //===== Compatible With: ===================================== 
 //= eAthena 1.0
 //===== Description: ========================================= 
@@ -11,6 +11,7 @@
 //===== Additional Comments: ================================= 
 //= 1.0 ????
 //= 1.1 Optimized Book of Devil quest. used bit-wise var. [Lupus]
+//= 1.2 Fixed name collision with 'Little Boy' in cities/lutie.txt [Ai4rei]
 //============================================================ 
 
 //=============================================================
@@ -62,7 +63,7 @@ M_NO:
 	close;
 }
 
-nif_fild01,213,268,5	script	Little Boy	797,{
+nif_fild01,213,268,5	script	Little Boy#02	797,{
 	if(MISC_QUEST & 256){
 L_DONE:
 		set @niflheimlost,2;
