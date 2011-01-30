@@ -893,6 +893,7 @@ bool pc_authok(struct map_session_data *sd, int login_id2, time_t expiration_tim
 		sd->state.showdelay = 1;
 		
 	pc_setinventorydata(sd);
+	pc_setequipindex(sd);
 
 	status_change_init(&sd->bl);
 	if ((battle_config.atc_gmonly == 0 || pc_isGM(sd)) && (pc_isGM(sd) >= get_atcommand_level(atcommand_hide)))

@@ -1,5 +1,7 @@
 Date	Added
 
+2011/01/30
+	* Fixed equipped items' bonus no longer working after log-in until next status recalc, due to missing pc_setequipindex which was previously called by pc_checkitem (bugreport:2604, since r14685). [Ai4rei]
 2011/01/29
 	* Removed @aw/@away which duplicates and collides with client's /am (away message) (bugreport:1235, topic:163083, since r4351). [Ai4rei]
 	* Fixed a map-server crash when invalid items are deleted (option 'item_check') from a logging-in character (bugreport:2604). [Ai4rei]
