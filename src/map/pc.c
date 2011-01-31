@@ -7308,55 +7308,38 @@ int pc_unequipitem(struct map_session_data *sd,int n,int flag)
  *------------------------------------------*/
 int pc_checkitem(struct map_session_data *sd)
 {
-	int i,j,k,id,calc_flag = 0;
+	int i,id,calc_flag = 0;
 	struct item_data *it=NULL;
 
 	nullpo_ret(sd);
 
 	if( sd->vender_id ) //Avoid reorganizing items when we are vending, as that leads to exploits (pointed out by End of Exam)
 		return 0;
-	
-	for( i = j = 0; i < MAX_INVENTORY; i++ )
-	{
-		if( (id = sd->status.inventory[i].nameid) == 0 )
-			continue;
 
-		if( battle_config.item_check && !itemdb_available(id) )
+	if( battle_config.item_check )
+	{// check for invalid(ated) items
+		for( i = 0; i < MAX_INVENTORY; i++ )
 		{
-			ShowWarning("illegal item id %d in %d[%s] inventory.\n",id,sd->bl.id,sd->status.name);
-			pc_delitem(sd,i,sd->status.inventory[i].amount,3,0);
-			continue;
+			id = sd->status.inventory[i].nameid;
+
+			if( id && !itemdb_available(id) )
+			{
+				ShowWarning("Removed invalid/disabled item id %d from inventory (amount=%d, char_id=%d).\n", id, sd->status.inventory[i].amount, sd->status.char_id);
+				pc_delitem(sd, i, sd->status.inventory[i].amount, 0, 0);
+			}
 		}
-		if( i > j )
+
+		for( i = 0; i < MAX_CART; i++ )
 		{
-			memcpy(&sd->status.inventory[j], &sd->status.inventory[i], sizeof(struct item));
-			sd->inventory_data[j] = sd->inventory_data[i];
+			id = sd->status.cart[i].nameid;
+
+			if( id && !itemdb_available(id) )
+			{
+				ShowWarning("Removed invalid/disabled item id %d from cart (amount=%d, char_id=%d).\n", id, sd->status.cart[i].amount, sd->status.char_id);
+				pc_cart_delitem(sd, i, sd->status.cart[i].amount, 0);
+			}
 		}
-		j++;
 	}
-
-	if( j < MAX_INVENTORY )
-		memset(&sd->status.inventory[j], 0, sizeof(struct item)*(MAX_INVENTORY-j));
-	for( k = j ; k < MAX_INVENTORY; k++ )
-		sd->inventory_data[k] = NULL;
-
-	for( i = j = 0; i < MAX_CART; i++ )
-	{
-		if( (id=sd->status.cart[i].nameid) == 0 )
-			continue;
-		if( battle_config.item_check &&  !itemdb_available(id) ){
-			ShowWarning("illegal item id %d in %d[%s] cart.\n",id,sd->bl.id,sd->status.name);
-			pc_cart_delitem(sd,i,sd->status.cart[i].amount,1);
-			continue;
-		}
-		if( i > j )
-		{
-			memcpy(&sd->status.cart[j],&sd->status.cart[i],sizeof(struct item));
-		}
-		j++;
-	}
-	if( j < MAX_CART )
-		memset(&sd->status.cart[j],0,sizeof(struct item)*(MAX_CART-j));
 
 	for( i = 0; i < MAX_INVENTORY; i++)
 	{
@@ -7389,7 +7372,6 @@ int pc_checkitem(struct map_session_data *sd)
 		}
 	}
 
-	pc_setequipindex(sd);
 	if( calc_flag && sd->state.active )
 	{
 		pc_checkallowskill(sd);
