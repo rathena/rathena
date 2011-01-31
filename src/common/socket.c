@@ -543,18 +543,16 @@ static int create_session(int fd, RecvFunc func_recv, SendFunc func_send, ParseF
 	return 0;
 }
 
-static int delete_session(int fd)
+static void delete_session(int fd)
 {
-	if (fd <= 0 || fd >= FD_SETSIZE)
-		return -1;
-	if (session[fd]) {
+	if( session_isValid(fd) )
+	{
 		aFree(session[fd]->rdata);
 		aFree(session[fd]->wdata);
 		aFree(session[fd]->session_data);
 		aFree(session[fd]);
 		session[fd] = NULL;
 	}
-	return 0;
 }
 
 int realloc_fifo(int fd, unsigned int rfifo_size, unsigned int wfifo_size)
@@ -1333,10 +1331,12 @@ void send_shortlist_add_fd(int fd)
 	int i;
 	int bit;
 
-	if( fd < 0 || fd >= FD_SETSIZE )
+	if( !session_isValid(fd) )
 		return;// out of range
+
 	i = fd/32;
 	bit = fd%32;
+
 	if( (send_shortlist_set[i]>>bit)&1 )
 		return;// already in the list
 

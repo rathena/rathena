@@ -9,6 +9,7 @@
 #endif
 
 #ifdef WIN32
+	#define WIN32_LEAN_AND_MEAN  // otherwise winsock2.h includes full windows.h
 	#include <winsock2.h>
 	typedef long in_addr_t;
 #else
@@ -19,6 +20,7 @@
 
 #include <time.h>
 
+#define FIFOSIZE_SERVERLINK 256*1024
 
 // socket I/O macros
 #define RFIFOHEAD(fd)

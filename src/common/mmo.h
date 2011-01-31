@@ -53,8 +53,6 @@
 #define PACKETVER 20071106
 #endif
 
-#define FIFOSIZE_SERVERLINK	256*1024
-
 //Remove/Comment this line to disable sc_data saving. [Skotlex]
 #define ENABLE_SC_SAVING 
 //Remove/Comment this line to disable server-side hot-key saving support [Skotlex]

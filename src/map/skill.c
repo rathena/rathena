@@ -6754,14 +6754,22 @@ int skill_dance_overlap(struct skill_unit* unit, int flag)
  *------------------------------------------*/
 static bool skill_dance_switch(struct skill_unit* unit, int flag)
 {
+	static int prevflag = 1;  // by default the backup is empty
 	static struct skill_unit_group backup;
 	struct skill_unit_group* group = unit->group;
-
-	//TODO: add protection against attempts to read an empty backup / write to a full backup
 
 	// val2&UF_ENSEMBLE is a hack to indicate dissonance
 	if ( !(group->state.song_dance&0x1 && unit->val2&UF_ENSEMBLE) )
 		return false;
+
+	if( flag == prevflag )
+	{// protection against attempts to read an empty backup / write to a full backup
+		ShowError("skill_dance_switch: Attempted to %s (skill_id=%d, skill_lv=%d, src_id=%d).\n",
+			flag ? "read an empty backup" : "write to a full backup",
+			group->skill_id, group->skill_lv, group->src_id);
+		return false;
+	}
+	prevflag = flag;
 
 	if( !flag )
 	{	//Transform

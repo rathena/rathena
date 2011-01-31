@@ -14635,9 +14635,6 @@ static int buildin_mobuseskill_sub(struct block_list *bl,va_list ap)
 	if( md->class_ != mobid )
 		return 0;
 
-	if( md->ud.skilltimer != INVALID_TIMER ) // Cancel the casting skill.
-		unit_skillcastcancel(bl,0);
-
 	// 0:self, 1:target, 2:master, default:random
 	switch( target )
 	{
@@ -14649,6 +14646,9 @@ static int buildin_mobuseskill_sub(struct block_list *bl,va_list ap)
 
 	if( !tbl )
 		return 0;
+
+	if( md->ud.skilltimer != INVALID_TIMER ) // Cancel the casting skill.
+		unit_skillcastcancel(bl,0);
 
 	if( skill_get_casttype(skillid) == CAST_GROUND )
 		unit_skilluse_pos2(&md->bl, tbl->x, tbl->y, skillid, skilllv, casttime, cancel);
