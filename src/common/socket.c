@@ -584,7 +584,7 @@ int realloc_writefifo(int fd, size_t addition)
 	if( session[fd]->wdata_size + addition  > session[fd]->max_wdata )
 	{	// grow rule; grow in multiples of WFIFO_SIZE
 		newsize = WFIFO_SIZE;
-		while( session[fd]->wdata_size + addition > newsize ) newsize += newsize;
+		while( session[fd]->wdata_size + addition > newsize ) newsize += WFIFO_SIZE;
 	}
 	else
 	if( session[fd]->max_wdata >= (size_t)2*(session[fd]->flag.server?FIFOSIZE_SERVERLINK:WFIFO_SIZE)
@@ -667,9 +667,9 @@ int WFIFOSET(int fd, size_t len)
 
 	// always keep a WFIFO_SIZE reserve in the buffer
 	// For inter-server connections, let the reserve be 1/4th of the link size.
-	newreserve = s->wdata_size + ( s->flag.server ? FIFOSIZE_SERVERLINK / 4 : WFIFO_SIZE);
+	newreserve = s->flag.server ? FIFOSIZE_SERVERLINK / 4 : WFIFO_SIZE;
 
-	// readjust the buffer to the newly chosen size
+	// readjust the buffer to include the chosen reserve
 	realloc_writefifo(fd, newreserve);
 
 #ifdef SEND_SHORTLIST

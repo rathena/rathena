@@ -1,5 +1,7 @@
 Date	Added
 
+2011/01/31
+	* Fixed faulty WFIFO reallocation causing memory exhaustion (bugreport:4737, since r1816, related r11503, r11571, r11886 and r12232). [Ai4rei]
 2011/01/30
 	* Fixed equipped items' bonus no longer working after log-in until next status recalc, due to missing pc_setequipindex which was previously called by pc_checkitem (bugreport:2604, since r14685). [Ai4rei]
 2011/01/29
