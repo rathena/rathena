@@ -1,5 +1,7 @@
 Date	Added
 
+2011/02/02
+	* Fixed non-windows 'findfile' utils function missing a 'closedir' call (bugreport:4739, since r1629). [Ai4rei]
 2011/01/31
 	* Inventory and Cart item arrays are no longer getting compacted on each log-in/teleport/warp. [Ai4rei]
 	- This also resolves yet another issue caused by r14685 (bugreport:2604).

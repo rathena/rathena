@@ -183,6 +183,8 @@ void findfile(const char *p, const char *pat, void (func)(const char*))
 			findfile(tmppath, pat, func);
 		}
 	}//end while
+
+	closedir(dir);
 }
 #endif
 
