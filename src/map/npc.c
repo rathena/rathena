@@ -2263,6 +2263,7 @@ const char* npc_parse_duplicate(char* w1, char* w2, char* w3, char* w4, const ch
 	char srcname[128];
 	int i;
 	const char* end;
+	size_t length;
 
 	int src_id;
 	int type;
@@ -2270,12 +2271,16 @@ const char* npc_parse_duplicate(char* w1, char* w2, char* w3, char* w4, const ch
 	struct npc_data* dnd;
 
 	end = strchr(start,'\n');
+	length = strlen(w2);
+
 	// get the npc being duplicated
-	if( sscanf(w2,"duplicate(%127[^)])",srcname) != 1 )
-	{
+	if( w2[length-1] != ')' || length <= 11 || length-11 >= sizeof(srcname) )
+	{// does not match 'duplicate(%127s)', name is empty or too long
 		ShowError("npc_parse_script: bad duplicate name in file '%s', line '%d' : %s\n", filepath, strline(buffer,start-buffer), w2);
 		return end;// next line, try to continue
 	}
+	safestrncpy(srcname, w2+10, length-10);
+
 	dnd = npc_name2id(srcname);
 	if( dnd == NULL) {
 		ShowError("npc_parse_script: original npc not found for duplicate in file '%s', line '%d' : %s\n", filepath, strline(buffer,start-buffer), srcname);
