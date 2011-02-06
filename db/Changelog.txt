@@ -9,6 +9,9 @@
 	13005 Angelic Wing Dagger:	NEED INFO.
 =======================
 
+2011/02/06
+	* Rev. 14697 Added the missing restricted skills to zone 6 for Endless Tower. (bugreport:4707) [L0ne_W0lf]
+	* Adjusted the rates for item using bAddEffOnSkill bonus. 
 2011/01/23
 	* Rev. 14679 Updated Aegis NPC ID constants from current npcidentity.lub (bugreport:4706). [Ai4rei]
 	- Fixes some incorrect NPC ID constants (since r12780).

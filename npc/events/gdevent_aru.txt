@@ -1,10 +1,26 @@
+//===== eAthena Script ======================================= 
+//= Guild dungeon event, Arunafeltz.
+//===== By: ================================================== 
+//= L0ne_W0lf
+//===== Current Version: ===================================== 
+//= 1.1
+//===== Compatible With: ===================================== 
+//= eAthena SVN
+//===== Description: ========================================= 
+//= Guild dungeon event, Arunafeltz. Retrieve Morestone's
+//= pickaxe from Kublin.
+//===== Additional Comments: =================================
+//= 1.0 First version
+//= 1.1 Changed spawn timer to 1 hour. [L0ne_w0lf]
+//============================================================
+
 arug_dun01,1,1,1	script	Monster Controler#aru_gd	81,{
 OnInit:
 	donpcevent "Monster Controler1#aru::OnKill";
 	initnpctimer;
 	end;
 
-OnTimer10000:
+OnTimer3600000:
 	donpcevent "Monster Controler1#aru::OnEnable";
 	mapannounce "arug_dun01", "Kublin: Aargh!",bc_map,"0x99CC00";
 	mapannounce "arug_dun01", "Morestone: Stop righ there! You thief!",bc_map,"0x99CC00";

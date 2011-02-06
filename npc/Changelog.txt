@@ -1,5 +1,17 @@
 Date		Added
 ======
+2011/02/06
+	* Rev. 14697 Script bug fixing. :] Here's some. I know it's been awhile. [L0ne_W0lf]
+	- Changed some duplicates so they use a floating NPC as their original. (bugreport:1395)
+	- Fixed the NPC looking for missing label in the Cursed Spirit quest. (bugreport:4654)
+	- Applied Uno's fix for the cooldown condition in Endless Tower. (bugreport:4677)
+	- Removed level requirement for the Viens Stone gathering quest. (bugreport:4678)
+	- Added the missing restricted skills to zone 6 for Endless Tower. (bugreport:4707)
+	  It's worth noting how much I hate the system for restricting skills per zone.
+	- Fixed Cat Hand warp service warping players to all warp options. (bugreport:4709)
+	- Fixed floor 75 warp in endless tower disabling the wrong warp. (bugreport:4711)
+	- Added a condition for Chungwolmang to only delete items if a certain ID is specified. (bugreport:4719)
+	- Corrected a mobcount specifying the wrong NPC in the Moscovia Ship quest. (bugreport:4736)
 2011/01/16
 	* Rev. 14676 Various fixes for scripts that are disabled by default. [Ai4rei]
 	- Fixed name collision in Baphomet Jr. taming item quest (custom) with 'Little Boy' in cities/lutie.txt

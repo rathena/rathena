@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.5
+//= 1.6
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -21,6 +21,8 @@
 //=     You may need to update your questid2display.
 //=     Changed White lady spawn to MVP White Lady. (bugreport:4601)
 //= 1.5 Corrected some grammar and typos.
+//= 1.6 Corrected the tower re-entry blocked condition. (bugreport:4677) [L0ne_W0lf]
+//=     Corrected floor 75 warp disabling the wrong NPC. (bugreport:4711)
 //============================================================ 
 
 alberta,214,77,6	script	Captain Janssen	709,{
@@ -352,7 +354,7 @@ e_tower,81,105,0	script	Tower Protection Stone	406,{
 			}
 			close;
 		}
-		else if ((.@etower_timer >= 0) && (.@etower_timer2 == 2)) {
+		else if ((.@etower_timer >= 0) && (.@etower_timer < 2) && (.@etower_timer2 == 2)) {
 			mes "Due to the tower's aftereffects, you cannot enter the dungeon right now, " + .@dun_h + "hours " + .@dun_m + "minutes " + .@dun_s + "seconds left to enter the next dungeon.";
 			next;
 			mes "It is dangerous here. Let me move you to Alberta.";
@@ -2807,11 +2809,11 @@ OnTimer120000:
 
 3@tower,355,51,0	script	75FGate102tower-2	45,2,2,{
 OnInstanceInit:
-	disablenpc instance_npcname("75FGate102tower", instance_id());
+	disablenpc instance_npcname("75FGate102tower-2", instance_id());
 	end;
 
 OnEnable:
-	enablenpc instance_npcname("75FGate102tower", instance_id());
+	enablenpc instance_npcname("75FGate102tower-2", instance_id());
 	end;
 
 OnTouch_:

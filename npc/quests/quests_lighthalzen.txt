@@ -4,7 +4,7 @@
 //= Persian, Vicious_Pucca, aoa00, Evera, MasterOfMupppets,
 //= Lupus, Lord Gywall
 //===== Current Version: ===================================== 
-//= 4.6
+//= 4.7
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -76,6 +76,7 @@
 //= 4.5 Official Gangster Alert script. [Gepard]
 //= 4.6 Added quest log entries for:
 //=     - Cursed Spirit Quest
+//= 4.7 Fixed missing label. (bugreport:4654) [L0ne_W0lf]
 //============================================================ 
 
 // Gangster Alert [Aegis Conversion]
@@ -5235,89 +5236,93 @@ lhz_in01,114,181,3	script	Representative	71,{
 	mes "to the Rekenber Corporation.";
 	mes "How may I be of service today?";
 	next;
-	if(lhz_curse == 7) menu "Building Information",L_Building,"Corporation History",L_History;
-	else menu "Building Information",L_Building;
+	if(lhz_curse == 7)
+		select("Building Information","Corporation History");
+	else 
+		select("Building Information");
 
-	while(1) {
-		mes "[Representative]";
-		mes "Please tell me";
-		mes "which floor you'd like";
-		mes "to know more about.";
-		next;
-		switch( select( "1F","2F","B1","Cancel" ) )
-		{
-			case 1:
-				mes "[Representative]";
-				mes "The ^3131FFRekenber Library^000000 can";
-				mes "be found at the end of the";
-				mes "left hallway. Our library is";
-				mes "a great resource of innovative";
-				mes "ideas and information for our";
-				mes "system development employees.";
-				next;
-				mes "[Representative]";
-				mes "The ^3131FFBall Room^000000, where";
-				mes "various official events are";
-				mes "usually held, can be accessed";
-				mes "through the right hallway.";
-				next;
-				break;
+	if (@menu == 1) {
+		while(1) {
+			mes "[Representative]";
+			mes "Please tell me";
+			mes "which floor you'd like";
+			mes "to know more about.";
+			next;
+			switch( select( "1F","2F","B1","Cancel" ) )
+			{
+				case 1:
+					mes "[Representative]";
+					mes "The ^3131FFRekenber Library^000000 can";
+					mes "be found at the end of the";
+					mes "left hallway. Our library is";
+					mes "a great resource of innovative";
+					mes "ideas and information for our";
+					mes "system development employees.";
+					next;
+					mes "[Representative]";
+					mes "The ^3131FFBall Room^000000, where";
+					mes "various official events are";
+					mes "usually held, can be accessed";
+					mes "through the right hallway.";
+					next;
+					break;
 
-			case 2:
-				mes "[Representative]";
-				mes "Please use the stairs";
-				mes "located on both sides of";
-				mes "the Help Desk to go to the";
-				mes "Second Floor. The Second";
-				mes "Floor is mostly used for";
-				mes "administrative purposes.";
-				next;
-				mes "[Representative]";
-				mes "There, you can find";
-				mes "the ^3131FFConference Room^000000,";
-				mes "^3131FFSecretary Office^000000, the";
-				mes "^3131FFAuditorium^000000 and the";
-				mes "^3131FFChairman's Office^000000.";
-				next;
-				break;
+				case 2:
+					mes "[Representative]";
+					mes "Please use the stairs";
+					mes "located on both sides of";
+					mes "the Help Desk to go to the";
+					mes "Second Floor. The Second";
+					mes "Floor is mostly used for";
+					mes "administrative purposes.";
+					next;
+					mes "[Representative]";
+					mes "There, you can find";
+					mes "the ^3131FFConference Room^000000,";
+					mes "^3131FFSecretary Office^000000, the";
+					mes "^3131FFAuditorium^000000 and the";
+					mes "^3131FFChairman's Office^000000.";
+					next;
+					break;
 
-			case 3:
-				mes "[Representative]";
-				mes "The first underground floor";
-				mes "is used by the ^3131FFRegenshirm^000000,";
-				mes "our laboratory affiliate. For";
-				mes "security reasons, this floor";
-				mes "is not accessible to visitors";
-				next;
-				break;
+				case 3:
+					mes "[Representative]";
+					mes "The first underground floor";
+					mes "is used by the ^3131FFRegenshirm^000000,";
+					mes "our laboratory affiliate. For";
+					mes "security reasons, this floor";
+					mes "is not accessible to visitors";
+					next;
+					break;
 
-			case 4:
-				mes "[Representative]";
-				mes "We are always doing our";
-				mes "best to provide the best";
-				mes "services to our customers.";
-				mes "Remember that Rekenber";
-				mes "is the name you can trust.";
-				mes "Thank you and have a nice day.";
-				close;
+				case 4:
+					mes "[Representative]";
+					mes "We are always doing our";
+					mes "best to provide the best";
+					mes "services to our customers.";
+					mes "Remember that Rekenber";
+					mes "is the name you can trust.";
+					mes "Thank you and have a nice day.";
+					close;
+			}
 		}
 	}
-
-L_History:
-	mes "[Representative]";
-	mes "If you're interested in";
-	mes "learning the history of";
-	mes "our corporation, please";
-	mes "speak to the representative";
-	mes "inside our Library. Thank you.";
-	next;
-	mes "[Representative]";
-	mes "Please head down";
-	mes "the hallway to the left in";
-	mes "order to find our Library.";
-	mes "Thank you and have a nice day.";
-	changequest 2087,2088;
-	set lhz_curse,8;
+	else {
+		mes "[Representative]";
+		mes "If you're interested in";
+		mes "learning the history of";
+		mes "our corporation, please";
+		mes "speak to the representative";
+		mes "inside our Library. Thank you.";
+		next;
+		mes "[Representative]";
+		mes "Please head down";
+		mes "the hallway to the left in";
+		mes "order to find our Library.";
+		mes "Thank you and have a nice day.";
+		changequest 2087,2088;
+		set lhz_curse,8;
+	}
 	close;
 }
 

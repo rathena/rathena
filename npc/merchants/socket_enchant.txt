@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= eAthena dev team
 //===== Current Version: =====================================
-//= 1.9
+//= 2.0
 //===== Compatible With: =====================================
 //= eAthena SVN
 //===== Description: =========================================
@@ -26,9 +26,10 @@
 //= 1.8 Added missing Gae Bolg and Dragon Slayer. [Kisuka]
 //= 1.9 Moved Episode 12 items to separate NPC.
 //=     Some cleanup & optimization. [Gepard]
+//= 2.0 Duplicates now spawn from floating NPCs. [L0ne_W0lf]
 //============================================================
 
-payon,140,151,5	script	Seiyablem#pay	84,{
+-	script	Seiyablem#dummy::SocketEnchant	-1,{
 	if (checkweight(1201,1) == 0)
 	{
 		mes "- Wait a minute !! -";
@@ -333,11 +334,12 @@ function	script	Func_Socket	{
 	}
 }
 
-lhz_in02,281,35,5	duplicate(Seiyablem#pay)	Seiyablem#lhz	84
-prt_in,33,70,5	duplicate(Seiyablem#pay)	Seiyablem#prt	84
-morocc,51,41,4	duplicate(Seiyablem#pay)	Seiyablem#moc	84
+payon,140,151,5	duplicate(SocketEnchant)	Seiyablem#pay	84
+lhz_in02,281,35,5	duplicate(SocketEnchant)	Seiyablem#lhz	84
+prt_in,33,70,5	duplicate(SocketEnchant)	Seiyablem#prt	84
+morocc,51,41,4	duplicate(SocketEnchant)	Seiyablem#moc	84
 
-prt_in,31,57,1	script	Young Man#prt	97,{
+-	script	Young Man#dummy::SocketMan	-1,{
 	mes "[Young Man]";
 	mes "I'm considering becoming a Slotting Engineer.";
 	mes "It's a new field where you can add Slots to equipment, and it'd be cool if I can work in such a lucrative career.";
@@ -354,6 +356,7 @@ prt_in,31,57,1	script	Young Man#prt	97,{
 	close;
 }
 
-payon,143,143,7	duplicate(Young Man#prt)	Young Man#pay	97
-morocc,60,42,3	duplicate(Young Man#prt)	Young Man#moc	97
-lhz_in02,269,33,5	duplicate(Young Man#prt)	Young Man#lhz	97
+prt_in,31,57,1	duplicate(SocketMan)	Young Man#prt	97
+payon,143,143,7	duplicate(SocketMan)	Young Man#pay	97
+morocc,60,42,3	duplicate(SocketMan)	Young Man#moc	97
+lhz_in02,269,33,5	duplicate(SocketMan)	Young Man#lhz	97

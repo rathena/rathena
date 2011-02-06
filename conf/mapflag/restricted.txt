@@ -5,6 +5,7 @@
 //= eAthena Dev Team
 //= 1.0 [Komurka]
 //= 1.1 Added WoE:SE Map restrictions. [L0ne_W0lf]
+//= 1.2 Added Endless Tower Restrictions. (bugreport:4707) [L0ne_W0lf]
 //===== Current Version: =====================================
 
 //Aldebaran Turbo Track
@@ -45,3 +46,11 @@ arug_cas05	mapflag	restricted	4
 //Sealed Shrine ==================
 1@cata	mapflag	restricted	5
 2@cata	mapflag	restricted	5
+
+//Endless Tower ==================
+1@tower	mapflag	restricted	6
+2@tower	mapflag	restricted	6
+3@tower	mapflag	restricted	6
+4@tower	mapflag	restricted	6
+5@tower	mapflag	restricted	6
+6@tower	mapflag	restricted	6
