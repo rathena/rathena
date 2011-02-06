@@ -1,5 +1,8 @@
 Date	Added
 
+2011/02/06
+	* Replaced 'nameid < 500' checks in script commands 'countitem', 'countitem2' and 'autoequip' with stricter ones. [Ai4rei]
+	- This should stop meaningless itemdb_search warnings from said commands when an invalid item id is used.
 2011/02/05
 	* Fixed NPCs with closing parenthesis in their name could not be duplicated (bugreport:3235). [Ai4rei]
 	* Fixed closing 'switch' curly not causing script EOL processing to trigger, leading to the script line after the switch being handled as belonging to the curly-less statement block (bugreport:3273, since r3422). [Ai4rei]

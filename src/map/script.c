@@ -5338,6 +5338,7 @@ BUILDIN_FUNC(countitem)
 {
 	int nameid, i;
 	int count = 0;
+	struct item_data* id = NULL;
 	struct script_data* data;
 
 	TBL_PC* sd = script_rid2sd(st);
@@ -5347,23 +5348,25 @@ BUILDIN_FUNC(countitem)
 	}
 
 	data = script_getdata(st,2);
-	get_val(st,data);
-	if( data_isstring(data) ) {
-		const char* name = conv_str(st,data);
-		struct item_data* item_data;
-		if((item_data = itemdb_searchname(name)) != NULL)
-			nameid = item_data->nameid;
-		else
-			nameid = 0;
-	} else
-		nameid = conv_num(st,data);
+	get_val(st, data);  // convert into value in case of a variable
 
-	if (nameid < 500) {
-		ShowError("wrong item ID : countitem(%i)\n", nameid);
-		script_reportsrc(st);
+	if( data_isstring(data) )
+	{// item name
+		id = itemdb_searchname(conv_str(st, data));
+	}
+	else
+	{// item id
+		id = itemdb_exists(conv_num(st, data));
+	}
+
+	if( id == NULL )
+	{
+		ShowError("buildin_countitem: Invalid item '%s'.\n", script_getstr(st,2));  // returns string, regardless of what it was
 		script_pushint(st,0);
 		return 1;
 	}
+
+	nameid = id->nameid;
 
 	for(i = 0; i < MAX_INVENTORY; i++)
 		if(sd->status.inventory[i].nameid == nameid)
@@ -5381,7 +5384,8 @@ BUILDIN_FUNC(countitem2)
 {
 	int nameid, iden, ref, attr, c1, c2, c3, c4;
 	int count = 0;
-	int i;	
+	int i;
+	struct item_data* id = NULL;
 	struct script_data* data;
 	
 	TBL_PC* sd = script_rid2sd(st);
@@ -5389,19 +5393,27 @@ BUILDIN_FUNC(countitem2)
 		script_pushint(st,0);
 		return 0;
 	}
-	
+
 	data = script_getdata(st,2);
-	get_val(st,data);
-	if( data_isstring(data) ) {
-		const char* name = conv_str(st,data);
-		struct item_data* item_data;
-		if((item_data = itemdb_searchname(name)) != NULL)
-			nameid = item_data->nameid;
-		else
-			nameid = 0;
-	} else
-		nameid = conv_num(st,data);
-	
+	get_val(st, data);  // convert into value in case of a variable
+
+	if( data_isstring(data) )
+	{// item name
+		id = itemdb_searchname(conv_str(st, data));
+	}
+	else
+	{// item id
+		id = itemdb_exists(conv_num(st, data));
+	}
+
+	if( id == NULL )
+	{
+		ShowError("buildin_countitem2: Invalid item '%s'.\n", script_getstr(st,2));  // returns string, regardless of what it was
+		script_pushint(st,0);
+		return 1;
+	}
+
+	nameid = id->nameid;
 	iden = script_getnum(st,3);
 	ref  = script_getnum(st,4);
 	attr = script_getnum(st,5);
@@ -5409,13 +5421,7 @@ BUILDIN_FUNC(countitem2)
 	c2 = (short)script_getnum(st,7);
 	c3 = (short)script_getnum(st,8);
 	c4 = (short)script_getnum(st,9);
-	
-	if (nameid < 500) {
-		ShowError("wrong item ID : countitem2(%i)\n", nameid);
-		script_pushint(st,0);
-		return 1;
-	}
-	
+
 	for(i = 0; i < MAX_INVENTORY; i++)
 		if (sd->status.inventory[i].nameid > 0 && sd->inventory_data[i] != NULL &&
 			sd->status.inventory[i].amount > 0 && sd->status.inventory[i].nameid == nameid &&
@@ -12359,9 +12365,20 @@ BUILDIN_FUNC(autoequip)
 	struct item_data *item_data;
 	nameid=script_getnum(st,2);
 	flag=script_getnum(st,3);
-	if(nameid>=500 && (item_data = itemdb_exists(nameid)) != NULL){
-		item_data->flag.autoequip = flag>0?1:0;
+
+	if( ( item_data = itemdb_exists(nameid) ) == NULL )
+	{
+		ShowError("buildin_autoequip: Invalid item '%d'.\n", nameid);
+		return 1;
 	}
+
+	if( !itemdb_isequip2(item_data) )
+	{
+		ShowError("buildin_autoequip: Item '%d' cannot be equipped.\n", nameid);
+		return 1;
+	}
+
+	item_data->flag.autoequip = flag>0?1:0;
 	return 0;
 }
 
