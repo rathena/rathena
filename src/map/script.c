@@ -1253,7 +1253,9 @@ const char* parse_curly_close(const char* p)
 		set_label(l,script_pos, p);
 		linkdb_final(&syntax.curly[pos].case_label);	// free the list of case label
 		syntax.curly_count--;
-		return p+1;
+		// if, for , while ‚Ì•Â‚¶”»’è
+		p = parse_syntax_close(p + 1);
+		return p;
 	} else {
 		disp_error_message("parse_curly_close: unexpected string",p);
 		return p + 1;

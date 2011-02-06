@@ -1,6 +1,7 @@
 Date	Added
 
 2011/02/05
+	* Fixed closing 'switch' curly not causing script EOL processing to trigger, leading to the script line after the switch being handled as belonging to the curly-less statement block (bugreport:3273, since r3422). [Ai4rei]
 	* Removed unnecessary getlogincount.pl, mapcheck.sh and mapchecker.sh tools (topic:262934). [Ai4rei]
 2011/02/02
 	* Fixed non-windows 'findfile' utils function missing a 'closedir' call (bugreport:4739, since r1629). [Ai4rei]
