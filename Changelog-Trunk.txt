@@ -1,5 +1,8 @@
 Date	Added
 
+2011/02/08
+	* Moved script constant manipulation code into separate functions script_get_constant / script_set_constant. [Ai4rei]
+	- Added protection against overwriting existing names in script constant creation code.
 2011/02/07
 	* Added support for new delayed character deletion. [Ai4rei]
 	- Asks for birth date associated with the account and has a waiting time of 24 hours by default (setting).

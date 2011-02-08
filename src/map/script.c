@@ -1343,10 +1343,8 @@ const char* parse_syntax(const char* p)
 					v = p2-p; // length of word at p2
 					memcpy(label,p,v);
 					label[v]='\0';
-					v = search_str(label);
-					if (v < 0 || str_data[v].type != C_INT)
+					if( !script_get_constant(label, &v) )
 						disp_error_message("parse_syntax: 'case' label not integer",p);
-					v = str_data[v].val;
 					p = skip_word(p);
 				} else { //Numeric value
 					if((*p == '-' || *p == '+') && ISDIGIT(p[1]))	// pre-skip because '-' can not skip_word
@@ -1918,6 +1916,40 @@ static void add_buildin_func(void)
 	}
 }
 
+/// Retrieves the value of a constant.
+bool script_get_constant(const char* name, int* value)
+{
+	int n = search_str(name);
+
+	if( n == -1 || str_data[n].type != C_INT )
+	{// not found or not a constant
+		return false;
+	}
+	value[0] = str_data[n].val;
+
+	return true;
+}
+
+/// Creates new constant or parameter with given value.
+void script_set_constant(const char* name, int value, bool isparameter)
+{
+	int n = add_str(name);
+
+	if( str_data[n].type == C_NOP )
+	{// new
+		str_data[n].type = isparameter ? C_PARAM : C_INT;
+		str_data[n].val  = value;
+	}
+	else if( str_data[n].type == C_PARAM || str_data[n].type == C_INT )
+	{// existing parameter or constant
+		ShowError("script_set_constant: Attempted to overwrite existing %s '%s' (old value=%d, new value=%d).\n", ( str_data[n].type == C_PARAM ) ? "parameter" : "constant", name, str_data[n].val, value);
+	}
+	else
+	{// existing name
+		ShowError("script_set_constant: Invalid name for %s '%s' (already defined as %s).\n", isparameter ? "parameter" : "constant", name, script_op2name(str_data[n].type));
+	}
+}
+
 /*==========================================
  * 定数データベースの読み込み
  *------------------------------------------*/
@@ -1925,7 +1957,7 @@ static void read_constdb(void)
 {
 	FILE *fp;
 	char line[1024],name[1024],val[1024];
-	int n,type;
+	int type;
 
 	sprintf(line, "%s/const.txt", db_path);
 	fp=fopen(line, "r");
@@ -1940,12 +1972,7 @@ static void read_constdb(void)
 		type=0;
 		if(sscanf(line,"%[A-Za-z0-9_],%[-0-9xXA-Fa-f],%d",name,val,&type)>=2 ||
 		   sscanf(line,"%[A-Za-z0-9_] %[-0-9xXA-Fa-f] %d",name,val,&type)>=2){
-			n=add_str(name);
-			if(type==0)
-				str_data[n].type=C_INT;
-			else
-				str_data[n].type=C_PARAM;
-			str_data[n].val= (int)strtol(val,NULL,0);
+			script_set_constant(name, (int)strtol(val, NULL, 0), (bool)type);
 		}
 	}
 	fclose(fp);
