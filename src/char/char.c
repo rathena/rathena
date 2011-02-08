@@ -85,6 +85,7 @@ char char_name_letters[1024] = ""; // list of letters/symbols allowed (or not) i
 
 int char_per_account = 0; //Maximum charas per account (default unlimited) [Sirius]
 int char_del_level = 0; //From which level u can delete character [Lupus]
+int char_del_delay = 86400;
 
 int log_char = 1;	// loggin char or not [devil]
 int log_inter = 1;	// loggin inter or not [devil]
@@ -106,6 +107,7 @@ struct char_session_data {
 	int gmlevel;
 	uint32 version;
 	uint8 clienttype;
+	char birthdate[10+1];  // YYYY-MM-DD
 };
 
 int char_id_count = START_CHAR_NUM;
@@ -368,6 +370,48 @@ int char_log(char *fmt, ...)
 	return 0;
 }
 
+
+/// Find all characters for given session and update the session character cache.
+int char_find_characters(struct char_session_data* sd)
+{
+	int i, found_num = 0;
+
+	for( i = 0; i < char_num; i++ )
+	{// find character entries and save them
+		if( char_dat[i].status.account_id == sd->account_id )
+		{
+			sd->found_char[found_num++] = i;
+
+			if( found_num >= MAX_CHARS )
+			{
+				break;
+			}
+		}
+	}
+
+	for( i = found_num; i < MAX_CHARS; i++ )
+	{// fill remaining blanks
+		sd->found_char[i] = -1;
+	}
+
+	return found_num;
+}
+
+
+/// Search character data from given session.
+struct mmo_charstatus* search_session_character(struct char_session_data* sd, int char_id)
+{
+	int i;
+
+	ARR_FIND( 0, MAX_CHARS, i, sd->found_char[i] != -1 && char_dat[sd->found_char[i]].status.char_id == char_id );
+	if( i == MAX_CHARS )
+	{
+		return NULL;
+	}
+	return &char_dat[sd->found_char[i]].status;
+}
+
+
 //Search character data from the aid/cid givem
 struct mmo_charstatus* search_character(int aid, int cid)
 {
@@ -483,7 +527,7 @@ int mmo_char_tostr(char *str, struct mmo_charstatus *p, struct global_reg *reg, 
 		"\t%d,%d,%d\t%d,%d,%d,%d" //Up to hom id
 		"\t%d,%d,%d\t%d,%d,%d,%d,%d" //Up to head bottom
 		"\t%d,%d,%d\t%d,%d,%d" //last point + save point
-		",%d,%d,%d,%d,%d\t",	//Family info
+		",%d,%d,%d,%d,%d,%lu\t",	//Family info + delete date
 		p->char_id, p->account_id, p->slot, p->name, //
 		p->class_, p->base_level, p->job_level,
 		p->base_exp, p->job_exp, p->zeny,
@@ -496,7 +540,8 @@ int mmo_char_tostr(char *str, struct mmo_charstatus *p, struct global_reg *reg, 
 		p->weapon, p->shield, p->head_top, p->head_mid, p->head_bottom,
 		p->last_point.map, p->last_point.x, p->last_point.y, //
 		p->save_point.map, p->save_point.x, p->save_point.y,
-		p->partner_id,p->father,p->mother,p->child,p->fame);
+		p->partner_id,p->father,p->mother,p->child,p->fame, //
+		TOL(p->delete_date));  // FIXME: platform-dependent size
 	for(i = 0; i < MAX_MEMOPOINTS; i++)
 		if (p->memo_point[i].map) {
 			str_p += sprintf(str_p, "%d,%d,%d ", p->memo_point[i].map, p->memo_point[i].x, p->memo_point[i].y);
@@ -549,10 +594,30 @@ int mmo_char_fromstr(char *str, struct mmo_charstatus *p, struct global_reg *reg
 	int tmp_int[256];
 	unsigned int tmp_uint[2]; //To read exp....
 	int next, len, i, j;
+	unsigned long tmp_ulong[1];
 
 	// initilialise character
 	memset(p, '\0', sizeof(struct mmo_charstatus));
 	
+// Char structure of version 146xx (delete date)
+	if (sscanf(str, "%d\t%d,%d\t%127[^\t]\t%d,%d,%d\t%u,%u,%d\t%d,%d,%d,%d\t%d,%d,%d,%d,%d,%d\t%d,%d"
+		"\t%d,%d,%d\t%d,%d,%d,%d\t%d,%d,%d\t%d,%d,%d,%d,%d"
+		"\t%d,%d,%d\t%d,%d,%d,%d,%d,%d,%d,%d,%lu%n",
+		&tmp_int[0], &tmp_int[1], &tmp_int[2], tmp_str[0],
+		&tmp_int[3], &tmp_int[4], &tmp_int[5],
+		&tmp_uint[0], &tmp_uint[1], &tmp_int[8],
+		&tmp_int[9], &tmp_int[10], &tmp_int[11], &tmp_int[12],
+		&tmp_int[13], &tmp_int[14], &tmp_int[15], &tmp_int[16], &tmp_int[17], &tmp_int[18],
+		&tmp_int[19], &tmp_int[20],
+		&tmp_int[21], &tmp_int[22], &tmp_int[23], //
+		&tmp_int[24], &tmp_int[25], &tmp_int[26], &tmp_int[44],
+		&tmp_int[27], &tmp_int[28], &tmp_int[29],
+		&tmp_int[30], &tmp_int[31], &tmp_int[32], &tmp_int[33], &tmp_int[34],
+		&tmp_int[45], &tmp_int[35], &tmp_int[36],
+		&tmp_int[46], &tmp_int[37], &tmp_int[38], &tmp_int[39], 
+		&tmp_int[40], &tmp_int[41], &tmp_int[42], &tmp_int[43], &tmp_ulong[0], &next) != 49)
+	{
+	tmp_ulong[0] = 0; // delete date
 // Char structure of version 1500 (homun + mapindex maps)
 	if (sscanf(str, "%d\t%d,%d\t%127[^\t]\t%d,%d,%d\t%u,%u,%d\t%d,%d,%d,%d\t%d,%d,%d,%d,%d,%d\t%d,%d"
 		"\t%d,%d,%d\t%d,%d,%d,%d\t%d,%d,%d\t%d,%d,%d,%d,%d"
@@ -677,6 +742,7 @@ int mmo_char_fromstr(char *str, struct mmo_charstatus *p, struct global_reg *reg
 		tmp_int[45] = mapindex_name2id(tmp_str[1]);
 		tmp_int[46] = mapindex_name2id(tmp_str[2]);
 	}	// Char structure of version 1500 (homun + mapindex maps)
+	}	// Char structure of version 146xx (delete date)
 
 	safestrncpy(p->name, tmp_str[0], NAME_LENGTH); //Overflow protection [Skotlex]
 	p->char_id = tmp_int[0];
@@ -726,6 +792,7 @@ int mmo_char_fromstr(char *str, struct mmo_charstatus *p, struct global_reg *reg
 	p->hom_id = tmp_int[44];
 	p->last_point.map = tmp_int[45];
 	p->save_point.map = tmp_int[46];
+	p->delete_date = tmp_ulong[0];
 
 #ifndef TXT_SQL_CONVERT
 	// Some checks
@@ -1705,7 +1772,7 @@ int count_users(void)
 // Writes char data to the buffer in the format used by the client.
 // Used in packets 0x6b (chars info) and 0x6d (new char info)
 // Returns the size
-#define MAX_CHAR_BUF 110 //Max size (for WFIFOHEAD calls)
+#define MAX_CHAR_BUF 132 //Max size (for WFIFOHEAD calls)
 int mmo_char_tobuf(uint8* buffer, struct mmo_charstatus* p)
 {
 	unsigned short offset = 0;
@@ -1765,6 +1832,10 @@ int mmo_char_tobuf(uint8* buffer, struct mmo_charstatus* p)
 	mapindex_getmapname_ext(mapindex_id2name(p->last_point.map), (char*)WBUFP(buf,108));
 	offset += MAP_NAME_LENGTH_EXT;
 #endif
+#if PACKETVER >= 20100803
+	WBUFL(buf,124) = TOL(p->delete_date);
+	offset += 4;
+#endif
 	return 106+offset;
 }
 
@@ -1778,16 +1849,7 @@ int mmo_char_send006b(int fd, struct char_session_data* sd)
 	offset += 3;
 #endif
 
-	found_num = 0;
-	for(i = 0; i < char_num; i++) {
-		if (char_dat[i].status.account_id == sd->account_id) {
-			sd->found_char[found_num] = i;
-			if( ++found_num == MAX_CHARS )
-				break;
-		}
-	}
-	for(i = found_num; i < MAX_CHARS; i++)
-		sd->found_char[i] = -1;
+	found_num = char_find_characters(sd);
 
 	j = 24 + offset; // offset
 	WFIFOHEAD(fd,j + found_num*MAX_CHAR_BUF);
@@ -2064,7 +2126,7 @@ int parse_fromlogin(int fd)
 		break;
 
 		case 0x2717: // account data
-			if (RFIFOREST(fd) < 51)
+			if (RFIFOREST(fd) < 62)
 				return 0;
 
 			// find the authenticated session with this account id
@@ -2074,6 +2136,7 @@ int parse_fromlogin(int fd)
 				memcpy(sd->email, RFIFOP(fd,6), 40);
 				sd->expiration_time = (time_t)RFIFOL(fd,46);
 				sd->gmlevel = RFIFOB(fd,50);
+				safestrncpy(sd->birthdate, RFIFOP(fd,51), sizeof(sd->birthdate));
 
 				// continued from char_auth_ok...
 				if( max_connect_user && count_users() >= max_connect_user && sd->gmlevel < gm_allow_level )
@@ -2089,7 +2152,7 @@ int parse_fromlogin(int fd)
 					mmo_char_send006b(i, sd);
 				}
 			}
-			RFIFOSKIP(fd,51);
+			RFIFOSKIP(fd,62);
 		break;
 
 		// login-server alive packet
@@ -3155,6 +3218,211 @@ int lan_subnetcheck(uint32 ip)
 	}
 }
 
+
+/// @param result
+/// 0 (0x718): An unknown error has occurred.
+/// 1: none/success
+/// 3 (0x719): A database error occurred.
+/// 4 (0x71a): To delete a character you must withdraw from the guild.
+/// 5 (0x71b): To delete a character you must withdraw from the party.
+/// Any (0x718): An unknown error has occurred.
+void char_delete2_ack(int fd, int char_id, uint32 result, time_t delete_date)
+{// HC: <0828>.W <char id>.L <Msg:0-5>.L <deleteDate>.L
+	WFIFOHEAD(fd,14);
+	WFIFOW(fd,0) = 0x828;
+	WFIFOL(fd,2) = char_id;
+	WFIFOL(fd,6) = result;
+	WFIFOL(fd,10) = TOL(delete_date);
+	WFIFOSET(fd,14);
+}
+
+
+/// @param result
+/// 0 (0x718): An unknown error has occurred.
+/// 1: none/success
+/// 2 (0x71c): Due to system settings can not be deleted.
+/// 3 (0x719): A database error occurred.
+/// 4 (0x71d): Deleting not yet possible time.
+/// 5 (0x71e): Date of birth do not match.
+/// Any (0x718): An unknown error has occurred.
+void char_delete2_accept_ack(int fd, int char_id, uint32 result)
+{// HC: <082a>.W <char id>.L <Msg:0-5>.L
+	WFIFOHEAD(fd,10);
+	WFIFOW(fd,0) = 0x82a;
+	WFIFOL(fd,2) = char_id;
+	WFIFOL(fd,6) = result;
+	WFIFOSET(fd,10);
+}
+
+
+/// @param result
+/// 1 (0x718): none/success, (if char id not in deletion process): An unknown error has occurred.
+/// 2 (0x719): A database error occurred.
+/// Any (0x718): An unknown error has occurred.
+void char_delete2_cancel_ack(int fd, int char_id, uint32 result)
+{// HC: <082c>.W <char id>.L <Msg:1-2>.L
+	WFIFOHEAD(fd,10);
+	WFIFOW(fd,0) = 0x82c;
+	WFIFOL(fd,2) = char_id;
+	WFIFOL(fd,6) = result;
+	WFIFOSET(fd,10);
+}
+
+
+static void char_delete2_req(int fd, struct char_session_data* sd)
+{// CH: <0827>.W <char id>.L
+	int char_id;
+	struct mmo_charstatus* cs;
+
+	char_id = RFIFOL(fd,2);
+
+	if( ( cs = search_session_character(sd, char_id) ) == NULL )
+	{// character not found
+		char_delete2_ack(fd, char_id, 3, 0);
+		return;
+	}
+
+	if( cs->delete_date )
+	{// character already queued for deletion
+		char_delete2_ack(fd, char_id, 0, 0);
+		return;
+	}
+
+/*
+	// Aegis imposes these checks probably to avoid dead member
+	// entries in guilds/parties, otherwise they are not required.
+	// TODO: Figure out how these are enforced during waiting.
+	if( cs->guild_id )
+	{// character in guild
+		char_delete2_ack(fd, char_id, 4, 0);
+		return;
+	}
+
+	if( cs->party_id )
+	{// character in party
+		char_delete2_ack(fd, char_id, 5, 0);
+		return;
+	}
+*/
+
+	// success
+	cs->delete_date = time(NULL)+char_del_delay;
+
+	char_delete2_ack(fd, char_id, 1, cs->delete_date);
+}
+
+
+static void char_delete2_accept(int fd, struct char_session_data* sd)
+{// CH: <0829>.W <char id>.L <birth date:YYMMDD>.6B
+	char birthdate[8+1];
+	int char_id, i;
+	struct mmo_charstatus* cs;
+
+	char_id = RFIFOL(fd,2);
+
+	ShowInfo(CL_RED"Request Char Deletion: "CL_GREEN"%d (%d)"CL_RESET"\n", sd->account_id, char_id);
+
+	// construct "YY-MM-DD"
+	birthdate[0] = RFIFOB(fd,6);
+	birthdate[1] = RFIFOB(fd,7);
+	birthdate[2] = '-';
+	birthdate[3] = RFIFOB(fd,8);
+	birthdate[4] = RFIFOB(fd,9);
+	birthdate[5] = '-';
+	birthdate[6] = RFIFOB(fd,10);
+	birthdate[7] = RFIFOB(fd,11);
+	birthdate[8] = 0;
+
+	ARR_FIND( 0, MAX_CHARS, i, sd->found_char[i] != -1 && char_dat[sd->found_char[i]].status.char_id == char_id );
+	if( i == MAX_CHARS )
+	{// character not found
+		char_delete2_accept_ack(fd, char_id, 3);
+		return;
+	}
+	cs = &char_dat[sd->found_char[i]].status;
+
+	if( !cs->delete_date || cs->delete_date>time(NULL) )
+	{// not queued or delay not yet passed
+		char_delete2_accept_ack(fd, char_id, 4);
+		return;
+	}
+
+	if( strcmp(sd->birthdate+2, birthdate) )  // +2 to cut off the century
+	{// birth date is wrong
+		char_delete2_accept_ack(fd, char_id, 5);
+		return;
+	}
+
+	if( ( char_del_level > 0 && cs->base_level >= (unsigned int)char_del_level ) || ( char_del_level < 0 && cs->base_level <= (unsigned int)(-char_del_level) ) )
+	{// character level config restriction
+		char_delete2_accept_ack(fd, char_id, 2);
+		return;
+	}
+
+	// success
+	char_delete(cs);
+
+	// drop character entry
+	if( --char_num > 0 && sd->found_char[i] != char_num )
+	{
+		int s, c;
+
+		// move the last entry to the place of the deleted character
+		memcpy(&char_dat[sd->found_char[i]], &char_dat[char_num], sizeof(struct mmo_charstatus));
+
+		// scan currently online accounts, if the moved character
+		// entry requires an update of the cached character list
+		for( s = 0; s < fd_max; s++ )
+		{
+			struct char_session_data* osd;
+
+			if( session[s] && ( osd = (struct char_session_data*)session[s]->session_data ) != NULL && osd->account_id == char_dat[char_num].status.account_id )
+			{
+				for( c = 0; c < MAX_CHARS; c++ )
+				{
+					if( osd->found_char[c] == char_num )
+					{
+						osd->found_char[c] = sd->found_char[i];
+						break;
+					}
+				}
+				break;
+			}
+		}
+
+		// wipe the last entry
+		memset(&char_dat[char_num], 0, sizeof(struct mmo_charstatus));
+	}
+
+	// refresh character list cache
+	char_find_characters(sd);
+
+	char_delete2_accept_ack(fd, char_id, 1);
+}
+
+
+static void char_delete2_cancel(int fd, struct char_session_data* sd)
+{// CH: <082b>.W <char id>.L
+	int char_id;
+	struct mmo_charstatus* cs;
+
+	char_id = RFIFOL(fd,2);
+
+	if( ( cs = search_session_character(sd, char_id) ) == NULL )
+	{// character not found
+		char_delete2_cancel_ack(fd, char_id, 2);
+		return;
+	}
+
+	// there is no need to check, whether or not the character was
+	// queued for deletion, as the client prints an error message by
+	// itself, if it was not the case (@see char_delete2_cancel_ack)
+	cs->delete_date = 0;
+
+	char_delete2_cancel_ack(fd, char_id, 1);
+}
+
+
 int parse_char(int fd)
 {
 	int i, ch;
@@ -3598,6 +3866,27 @@ int parse_char(int fd)
 			WFIFOB(fd,4) = 1;
 			WFIFOSET(fd,5);
 			RFIFOSKIP(fd,32);
+		break;
+
+		// deletion timer request
+		case 0x827:
+			FIFOSD_CHECK(6);
+			char_delete2_req(fd, sd);
+			RFIFOSKIP(fd,6);
+		break;
+
+		// deletion accept request
+		case 0x829:
+			FIFOSD_CHECK(12);
+			char_delete2_accept(fd, sd);
+			RFIFOSKIP(fd,12);
+		break;
+
+		// deletion cancel request
+		case 0x82b:
+			FIFOSD_CHECK(6);
+			char_delete2_cancel(fd, sd);
+			RFIFOSKIP(fd,6);
 		break;
 
 		// login as map-server
@@ -4056,6 +4345,8 @@ int char_config_read(const char *cfgName)
 			char_per_account = atoi(w2);
 		} else if (strcmpi(w1, "char_del_level") == 0) { //disable/enable char deletion by its level condition [Lupus]
 			char_del_level = atoi(w2);
+		} else if (strcmpi(w1, "char_del_delay") == 0) {
+			char_del_delay = atoi(w2);
 // online files options
 		} else if (strcmpi(w1, "online_txt_filename") == 0) {
 			safestrncpy(online_txt_filename, w2, sizeof(online_txt_filename));

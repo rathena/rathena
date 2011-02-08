@@ -38,6 +38,7 @@
 // 20100629 - 2010-06-29aRagexeRE+ - 0x2d0, 0xaa, 0x2d1, 0x2d2
 // 20100721 - 2010-07-21aRagexeRE+ - 0x6b, 0x6d
 // 20100727 - 2010-07-27aRagexeRE+ - 0x6b, 0x6d
+// 20100803 - 2010-08-03aRagexeRE+ - 0x6b, 0x6d, 0x827, 0x828, 0x829, 0x82a, 0x82b, 0x82c, 0x842, 0x843
 
 #ifndef PACKETVER
 	#define PACKETVER	20081126
@@ -348,6 +349,8 @@ struct mmo_charstatus {
 #endif
 	bool show_equip;
 	short rename;
+
+	time_t delete_date;
 };
 
 typedef enum mail_status {

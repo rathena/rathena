@@ -517,6 +517,7 @@ int parse_fromchar(int fd)
 			time_t expiration_time = 0;
 			char email[40] = "";
 			int gmlevel = 0;
+			char birthdate[10+1] = "";
 
 			int account_id = RFIFOL(fd,2);
 			RFIFOSKIP(fd,6);
@@ -528,15 +529,17 @@ int parse_fromchar(int fd)
 				safestrncpy(email, acc.email, sizeof(email));
 				expiration_time = acc.expiration_time;
 				gmlevel = acc.level;
+				safestrncpy(birthdate, acc.birthdate, sizeof(birthdate));
 			}
 
-			WFIFOHEAD(fd,51);
+			WFIFOHEAD(fd,62);
 			WFIFOW(fd,0) = 0x2717;
 			WFIFOL(fd,2) = account_id;
 			safestrncpy((char*)WFIFOP(fd,6), email, 40);
 			WFIFOL(fd,46) = (uint32)expiration_time;
 			WFIFOB(fd,50) = gmlevel;
-			WFIFOSET(fd,51);
+			safestrncpy((char*)WFIFOP(fd,51), birthdate, 10+1);
+			WFIFOSET(fd,62);
 		}
 		break;
 

@@ -1,5 +1,7 @@
 Date	Added
 
+2011/02/06
+	* Rev. 14700 Added char-server setting 'char_del_delay'. [Ai4rei]
 2011/01/13
 	* Rev. 14667 Removed ladmin settings (ladmin_athena.conf) and login-server settings for ladmin (login_athena.conf) (topic:262934). [Ai4rei]
 2010/12/30

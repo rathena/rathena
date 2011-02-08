@@ -109,6 +109,7 @@ char char_name_letters[1024] = ""; // list of letters/symbols allowed (or not) i
 
 int char_per_account = 0; //Maximum charas per account (default unlimited) [Sirius]
 int char_del_level = 0; //From which level u can delete character [Lupus]
+int char_del_delay = 86400;
 
 int log_char = 1;	// loggin char or not [devil]
 int log_inter = 1;	// loggin inter or not [devil]
@@ -131,6 +132,7 @@ struct char_session_data {
 	uint32 version;
 	uint8 clienttype;
 	char new_name[NAME_LENGTH];
+	char birthdate[10+1];  // YYYY-MM-DD
 };
 
 int max_connect_user = 0;
@@ -471,7 +473,7 @@ int mmo_char_tosql(int char_id, struct mmo_charstatus* p)
 		(p->party_id != cp->party_id) || (p->guild_id != cp->guild_id) ||
 		(p->pet_id != cp->pet_id) || (p->weapon != cp->weapon) || (p->hom_id != cp->hom_id) ||
 		(p->shield != cp->shield) || (p->head_top != cp->head_top) ||
-		(p->head_mid != cp->head_mid) || (p->head_bottom != cp->head_bottom)
+		(p->head_mid != cp->head_mid) || (p->head_bottom != cp->head_bottom) || (p->delete_date != cp->delete_date)
 	)
 	{	//Save status
 		if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `base_level`='%d', `job_level`='%d',"
@@ -480,7 +482,8 @@ int mmo_char_tosql(int char_id, struct mmo_charstatus* p)
 			"`str`='%d',`agi`='%d',`vit`='%d',`int`='%d',`dex`='%d',`luk`='%d',"
 			"`option`='%d',`party_id`='%d',`guild_id`='%d',`pet_id`='%d',`homun_id`='%d',"
 			"`weapon`='%d',`shield`='%d',`head_top`='%d',`head_mid`='%d',`head_bottom`='%d',"
-			"`last_map`='%s',`last_x`='%d',`last_y`='%d',`save_map`='%s',`save_x`='%d',`save_y`='%d', `rename`='%d'"
+			"`last_map`='%s',`last_x`='%d',`last_y`='%d',`save_map`='%s',`save_x`='%d',`save_y`='%d', `rename`='%d',"
+			"`delete_date`='%lu'"
 			" WHERE  `account_id`='%d' AND `char_id` = '%d'",
 			char_db, p->base_level, p->job_level,
 			p->base_exp, p->job_exp, p->zeny,
@@ -490,6 +493,7 @@ int mmo_char_tosql(int char_id, struct mmo_charstatus* p)
 			p->weapon, p->shield, p->head_top, p->head_mid, p->head_bottom,
 			mapindex_id2name(p->last_point.map), p->last_point.x, p->last_point.y,
 			mapindex_id2name(p->save_point.map), p->save_point.x, p->save_point.y, p->rename,
+			TOL(p->delete_date),  // FIXME: platform-dependent size
 			p->account_id, p->char_id) )
 		{
 			Sql_ShowDebug(sql_handle);
@@ -839,7 +843,7 @@ int mmo_chars_fromsql(struct char_session_data* sd, uint8* buf)
 		"`char_id`,`char_num`,`name`,`class`,`base_level`,`job_level`,`base_exp`,`job_exp`,`zeny`,"
 		"`str`,`agi`,`vit`,`int`,`dex`,`luk`,`max_hp`,`hp`,`max_sp`,`sp`,"
 		"`status_point`,`skill_point`,`option`,`karma`,`manner`,`hair`,`hair_color`,"
-		"`clothes_color`,`weapon`,`shield`,`head_top`,`head_mid`,`head_bottom`,`last_map`,`rename`"
+		"`clothes_color`,`weapon`,`shield`,`head_top`,`head_mid`,`head_bottom`,`last_map`,`rename`,`delete_date`"
 		" FROM `%s` WHERE `account_id`='%d' AND `char_num` < '%d'", char_db, sd->account_id, MAX_CHARS)
 	||	SQL_ERROR == SqlStmt_Execute(stmt)
 	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 0,  SQLDT_INT,    &p.char_id, 0, NULL, NULL)
@@ -876,6 +880,7 @@ int mmo_chars_fromsql(struct char_session_data* sd, uint8* buf)
 	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 31, SQLDT_SHORT,  &p.head_bottom, 0, NULL, NULL)
 	||  SQL_ERROR == SqlStmt_BindColumn(stmt, 32, SQLDT_STRING, &last_map, sizeof(last_map), NULL, NULL)
 	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 33, SQLDT_SHORT,	&p.rename, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 34, SQLDT_UINT32, &p.delete_date, 0, NULL, NULL)
 	)
 	{
 		SqlStmt_ShowDebug(stmt);
@@ -934,7 +939,7 @@ int mmo_char_fromsql(int char_id, struct mmo_charstatus* p, bool load_everything
 		"`str`,`agi`,`vit`,`int`,`dex`,`luk`,`max_hp`,`hp`,`max_sp`,`sp`,"
 		"`status_point`,`skill_point`,`option`,`karma`,`manner`,`party_id`,`guild_id`,`pet_id`,`homun_id`,`hair`,"
 		"`hair_color`,`clothes_color`,`weapon`,`shield`,`head_top`,`head_mid`,`head_bottom`,`last_map`,`last_x`,`last_y`,"
-		"`save_map`,`save_x`,`save_y`,`partner_id`,`father`,`mother`,`child`,`fame`,`rename`"
+		"`save_map`,`save_x`,`save_y`,`partner_id`,`father`,`mother`,`child`,`fame`,`rename`,`delete_date`"
 		" FROM `%s` WHERE `char_id`=? LIMIT 1", char_db)
 	||	SQL_ERROR == SqlStmt_BindParam(stmt, 0, SQLDT_INT, &char_id, 0)
 	||	SQL_ERROR == SqlStmt_Execute(stmt)
@@ -987,6 +992,7 @@ int mmo_char_fromsql(int char_id, struct mmo_charstatus* p, bool load_everything
 	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 46, SQLDT_INT,    &p->child, 0, NULL, NULL)
 	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 47, SQLDT_INT,    &p->fame, 0, NULL, NULL)
 	||  SQL_ERROR == SqlStmt_BindColumn(stmt, 48, SQLDT_SHORT,	&p->rename, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 49, SQLDT_UINT32, &p->delete_date, 0, NULL, NULL)
 	)
 	{
 		SqlStmt_ShowDebug(stmt);
@@ -1407,6 +1413,7 @@ int delete_char_sql(int char_id)
 	Sql_FreeResult(sql_handle);
 
 	//check for config char del condition [Lupus]
+	// TODO: Move this out to packet processing (0x68/0x1fb).
 	if( ( char_del_level > 0 && base_level >= char_del_level )
 	 || ( char_del_level < 0 && base_level <= -char_del_level )
 	) {
@@ -1542,7 +1549,7 @@ int count_users(void)
 // Writes char data to the buffer in the format used by the client.
 // Used in packets 0x6b (chars info) and 0x6d (new char info)
 // Returns the size
-#define MAX_CHAR_BUF 110 //Max size (for WFIFOHEAD calls)
+#define MAX_CHAR_BUF 132 //Max size (for WFIFOHEAD calls)
 int mmo_char_tobuf(uint8* buffer, struct mmo_charstatus* p)
 {
 	unsigned short offset = 0;
@@ -1601,6 +1608,10 @@ int mmo_char_tobuf(uint8* buffer, struct mmo_charstatus* p)
 #if (PACKETVER >= 20100720 && PACKETVER <= 20100727) || PACKETVER >= 20100803
 	mapindex_getmapname_ext(mapindex_id2name(p->last_point.map), (char*)WBUFP(buf,108));
 	offset += MAP_NAME_LENGTH_EXT;
+#endif
+#if PACKETVER >= 20100803
+	WBUFL(buf,124) = TOL(p->delete_date);
+	offset += 4;
 #endif
 	return 106+offset;
 }
@@ -1849,7 +1860,7 @@ int parse_fromlogin(int fd)
 		break;
 
 		case 0x2717: // account data
-			if (RFIFOREST(fd) < 51)
+			if (RFIFOREST(fd) < 62)
 				return 0;
 
 			// find the authenticated session with this account id
@@ -1859,6 +1870,7 @@ int parse_fromlogin(int fd)
 				memcpy(sd->email, RFIFOP(fd,6), 40);
 				sd->expiration_time = (time_t)RFIFOL(fd,46);
 				sd->gmlevel = RFIFOB(fd,50);
+				safestrncpy(sd->birthdate, RFIFOP(fd,51), sizeof(sd->birthdate));
 
 				// continued from char_auth_ok...
 				if( max_connect_user && count_users() >= max_connect_user && sd->gmlevel < gm_allow_level )
@@ -1874,7 +1886,7 @@ int parse_fromlogin(int fd)
 					mmo_char_send006b(i, sd);
 				}
 			}
-			RFIFOSKIP(fd,51);
+			RFIFOSKIP(fd,62);
 		break;
 
 		// login-server alive packet
@@ -2961,6 +2973,223 @@ int lan_subnetcheck(uint32 ip)
 	}
 }
 
+
+/// @param result
+/// 0 (0x718): An unknown error has occurred.
+/// 1: none/success
+/// 3 (0x719): A database error occurred.
+/// 4 (0x71a): To delete a character you must withdraw from the guild.
+/// 5 (0x71b): To delete a character you must withdraw from the party.
+/// Any (0x718): An unknown error has occurred.
+void char_delete2_ack(int fd, int char_id, uint32 result, time_t delete_date)
+{// HC: <0828>.W <char id>.L <Msg:0-5>.L <deleteDate>.L
+	WFIFOHEAD(fd,14);
+	WFIFOW(fd,0) = 0x828;
+	WFIFOL(fd,2) = char_id;
+	WFIFOL(fd,6) = result;
+	WFIFOL(fd,10) = TOL(delete_date);
+	WFIFOSET(fd,14);
+}
+
+
+/// @param result
+/// 0 (0x718): An unknown error has occurred.
+/// 1: none/success
+/// 2 (0x71c): Due to system settings can not be deleted.
+/// 3 (0x719): A database error occurred.
+/// 4 (0x71d): Deleting not yet possible time.
+/// 5 (0x71e): Date of birth do not match.
+/// Any (0x718): An unknown error has occurred.
+void char_delete2_accept_ack(int fd, int char_id, uint32 result)
+{// HC: <082a>.W <char id>.L <Msg:0-5>.L
+	WFIFOHEAD(fd,10);
+	WFIFOW(fd,0) = 0x82a;
+	WFIFOL(fd,2) = char_id;
+	WFIFOL(fd,6) = result;
+	WFIFOSET(fd,10);
+}
+
+
+/// @param result
+/// 1 (0x718): none/success, (if char id not in deletion process): An unknown error has occurred.
+/// 2 (0x719): A database error occurred.
+/// Any (0x718): An unknown error has occurred.
+void char_delete2_cancel_ack(int fd, int char_id, uint32 result)
+{// HC: <082c>.W <char id>.L <Msg:1-2>.L
+	WFIFOHEAD(fd,10);
+	WFIFOW(fd,0) = 0x82c;
+	WFIFOL(fd,2) = char_id;
+	WFIFOL(fd,6) = result;
+	WFIFOSET(fd,10);
+}
+
+
+static void char_delete2_req(int fd, struct char_session_data* sd)
+{// CH: <0827>.W <char id>.L
+	int char_id, i, guild_id, party_id;
+	char* data;
+	time_t delete_date;
+
+	char_id = RFIFOL(fd,2);
+
+	ARR_FIND( 0, MAX_CHARS, i, sd->found_char[i] == char_id );
+	if( i == MAX_CHARS )
+	{// character not found
+		char_delete2_ack(fd, char_id, 3, 0);
+		return;
+	}
+
+	if( SQL_SUCCESS != Sql_Query(sql_handle, "SELECT `guild_id`,`party_id`,`delete_date` FROM `%s` WHERE `char_id`='%d'", char_db, char_id) || SQL_SUCCESS != Sql_NextRow(sql_handle) )
+	{
+		Sql_ShowDebug(sql_handle);
+		char_delete2_ack(fd, char_id, 3, 0);
+		return;
+	}
+
+	Sql_GetData(sql_handle, 0, &data, NULL); guild_id = atoi(data);
+	Sql_GetData(sql_handle, 1, &data, NULL); party_id = atoi(data);
+	Sql_GetData(sql_handle, 2, &data, NULL); delete_date = strtoul(data, NULL, 10);
+
+	if( delete_date )
+	{// character already queued for deletion
+		char_delete2_ack(fd, char_id, 0, 0);
+		return;
+	}
+
+/*
+	// Aegis imposes these checks probably to avoid dead member
+	// entries in guilds/parties, otherwise they are not required.
+	// TODO: Figure out how these are enforced during waiting.
+	if( guild_id )
+	{// character in guild
+		char_delete2_ack(fd, char_id, 4, 0);
+		return;
+	}
+
+	if( party_id )
+	{// character in party
+		char_delete2_ack(fd, char_id, 5, 0);
+		return;
+	}
+*/
+
+	// success
+	delete_date = time(NULL)+char_del_delay;
+
+	if( SQL_SUCCESS != Sql_Query(sql_handle, "UPDATE `%s` SET `delete_date`='%lu' WHERE `char_id`='%d'", char_db, TOL(delete_date), char_id) )
+	{
+		Sql_ShowDebug(sql_handle);
+		char_delete2_ack(fd, char_id, 3, 0);
+		return;
+	}
+
+	char_delete2_ack(fd, char_id, 1, delete_date);
+}
+
+
+static void char_delete2_accept(int fd, struct char_session_data* sd)
+{// CH: <0829>.W <char id>.L <birth date:YYMMDD>.6B
+	char birthdate[8+1];
+	int char_id, i, k;
+	unsigned int base_level;
+	char* data;
+	time_t delete_date;
+
+	char_id = RFIFOL(fd,2);
+
+	ShowInfo(CL_RED"Request Char Deletion: "CL_GREEN"%d (%d)"CL_RESET"\n", sd->account_id, char_id);
+
+	// construct "YY-MM-DD"
+	birthdate[0] = RFIFOB(fd,6);
+	birthdate[1] = RFIFOB(fd,7);
+	birthdate[2] = '-';
+	birthdate[3] = RFIFOB(fd,8);
+	birthdate[4] = RFIFOB(fd,9);
+	birthdate[5] = '-';
+	birthdate[6] = RFIFOB(fd,10);
+	birthdate[7] = RFIFOB(fd,11);
+	birthdate[8] = 0;
+
+	ARR_FIND( 0, MAX_CHARS, i, sd->found_char[i] == char_id );
+	if( i == MAX_CHARS )
+	{// character not found
+		char_delete2_accept_ack(fd, char_id, 3);
+		return;
+	}
+
+	if( SQL_SUCCESS != Sql_Query(sql_handle, "SELECT `base_level`,`delete_date` FROM `%s` WHERE `char_id`='%d'", char_db, char_id) || SQL_SUCCESS != Sql_NextRow(sql_handle) )
+	{// data error
+		Sql_ShowDebug(sql_handle);
+		char_delete2_accept_ack(fd, char_id, 3);
+		return;
+	}
+
+	Sql_GetData(sql_handle, 0, &data, NULL); base_level = (unsigned int)strtoul(data, NULL, 10);
+	Sql_GetData(sql_handle, 1, &data, NULL); delete_date = strtoul(data, NULL, 10);
+
+	if( !delete_date || delete_date>time(NULL) )
+	{// not queued or delay not yet passed
+		char_delete2_accept_ack(fd, char_id, 4);
+		return;
+	}
+
+	if( strcmp(sd->birthdate+2, birthdate) )  // +2 to cut off the century
+	{// birth date is wrong
+		char_delete2_accept_ack(fd, char_id, 5);
+		return;
+	}
+
+	if( ( char_del_level > 0 && base_level >= (unsigned int)char_del_level ) || ( char_del_level < 0 && base_level <= (unsigned int)(-char_del_level) ) )
+	{// character level config restriction
+		char_delete2_accept_ack(fd, char_id, 2);
+		return;
+	}
+
+	// success
+	if( delete_char_sql(char_id) < 0 )
+	{
+		char_delete2_accept_ack(fd, char_id, 3);
+		return;
+	}
+
+	// refresh character list cache
+	for(k = i; k < MAX_CHARS-1; k++)
+	{
+		sd->found_char[k] = sd->found_char[k+1];
+	}
+	sd->found_char[MAX_CHARS-1] = -1;
+
+	char_delete2_accept_ack(fd, char_id, 1);
+}
+
+
+static void char_delete2_cancel(int fd, struct char_session_data* sd)
+{// CH: <082b>.W <char id>.L
+	int char_id, i;
+
+	char_id = RFIFOL(fd,2);
+
+	ARR_FIND( 0, MAX_CHARS, i, sd->found_char[i] == char_id );
+	if( i == MAX_CHARS )
+	{// character not found
+		char_delete2_cancel_ack(fd, char_id, 2);
+		return;
+	}
+
+	// there is no need to check, whether or not the character was
+	// queued for deletion, as the client prints an error message by
+	// itself, if it was not the case (@see char_delete2_cancel_ack)
+	if( SQL_SUCCESS != Sql_Query(sql_handle, "UPDATE `%s` SET `delete_date`='0' WHERE `char_id`='%d'", char_db, char_id) )
+	{
+		Sql_ShowDebug(sql_handle);
+		char_delete2_cancel_ack(fd, char_id, 2);
+		return;
+	}
+
+	char_delete2_cancel_ack(fd, char_id, 1);
+}
+
+
 int parse_char(int fd)
 {
 	int i, ch;
@@ -3391,6 +3620,27 @@ int parse_char(int fd)
 			WFIFOB(fd,4) = 1;
 			WFIFOSET(fd,5);
 			RFIFOSKIP(fd,32);
+		break;
+
+		// deletion timer request
+		case 0x827:
+			FIFOSD_CHECK(6);
+			char_delete2_req(fd, sd);
+			RFIFOSKIP(fd,6);
+		break;
+
+		// deletion accept request
+		case 0x829:
+			FIFOSD_CHECK(12);
+			char_delete2_accept(fd, sd);
+			RFIFOSKIP(fd,12);
+		break;
+
+		// deletion cancel request
+		case 0x82b:
+			FIFOSD_CHECK(6);
+			char_delete2_cancel(fd, sd);
+			RFIFOSKIP(fd,6);
 		break;
 
 		// login as map-server
@@ -3910,6 +4160,8 @@ int char_config_read(const char* cfgName)
 			char_per_account = atoi(w2);
 		} else if (strcmpi(w1, "char_del_level") == 0) { //disable/enable char deletion by its level condition [Lupus]
 			char_del_level = atoi(w2);
+		} else if (strcmpi(w1, "char_del_delay") == 0) {
+			char_del_delay = atoi(w2);
 		} else if(strcmpi(w1,"db_path")==0) {
 			safestrncpy(db_path, w2, sizeof(db_path));
 		} else if (strcmpi(w1, "console") == 0) {

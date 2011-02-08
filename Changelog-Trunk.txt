@@ -1,6 +1,11 @@
 Date	Added
 
 2011/02/07
+	* Added support for new delayed character deletion. [Ai4rei]
+	- Asks for birth date associated with the account and has a waiting time of 24 hours by default (setting).
+	- For SQL apply upgrade_svn14700.sql to upgrade table `char`; for TXT no action is necessary, as it upgrades itself.
+	- This completes support for clients 2010-08-03aRagexeRE and later.
+	* Updated login sql engine version, missed during `birthdate` addition (follow up to r14672).
 	* Updates to various client packets. [Ai4rei]
 	- Renamed clif_set0199 and clif_send0199 to clif_map_property and clif_map_property_mapall respectively and added an enumeration for currently known map properties.
 	- Renamed clif_set01D6 to clif_map_type and added an enumeration for currently known map types.

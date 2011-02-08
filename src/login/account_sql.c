@@ -12,7 +12,7 @@
 #include <string.h>
 
 /// global defines
-#define ACCOUNT_SQL_DB_VERSION 20080417
+#define ACCOUNT_SQL_DB_VERSION 20110114
 
 /// internal structure
 typedef struct AccountDB_SQL
