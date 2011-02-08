@@ -1,5 +1,7 @@
 Date	Added
 
+2011/02/07
+	* Updated enumerations of skill, skill unit and status option IDs. [Ai4rei]
 2011/01/29
 	* Merged changes from trunk (r14636:14686). [Ai4rei]
 2010/12/30
