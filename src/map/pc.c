@@ -7794,7 +7794,7 @@ int duel_create(struct map_session_data* sd, const unsigned int maxpl)
 	strcpy(output, msg_txt(372)); // " -- Duel has been created (@invite/@leave) --"
 	clif_disp_onlyself(sd, output, strlen(output));
 	
-	clif_set0199(sd, 1);
+	clif_map_property(sd, MAPPROPERTY_FREEPVPZONE);
 	//clif_misceffect2(&sd->bl, 159);
 	return i;
 }
@@ -7841,7 +7841,7 @@ int duel_leave(const unsigned int did, struct map_session_data* sd)
 	
 	sd->duel_group = 0;
 	duel_savetime(sd);
-	clif_set0199(sd, 0);
+	clif_map_property(sd, MAPPROPERTY_NOTHING);
 	return 0;
 }
 
@@ -7858,7 +7858,7 @@ int duel_accept(const unsigned int did, struct map_session_data* sd)
 	sprintf(output, msg_txt(376), sd->status.name);
 	clif_disp_message(&sd->bl, output, strlen(output), DUEL_WOS);
 
-	clif_set0199(sd, 1);
+	clif_map_property(sd, MAPPROPERTY_FREEPVPZONE);
 	//clif_misceffect2(&sd->bl, 159);
 	return 0;
 }

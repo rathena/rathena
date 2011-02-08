@@ -1216,7 +1216,7 @@ int clif_hominfo(struct map_session_data *sd, struct homun_data *hd, int flag)
 	WBUFL(buf,59)=hd->homunculus.exp;
 	WBUFL(buf,63)=hd->exp_next;
 	WBUFW(buf,67)=hd->homunculus.skillpts;
-	WBUFW(buf,69)=2; // FIXME: undocumented flag, seems to be '2' all the time [ultramage]
+	WBUFW(buf,69)=status_get_range(&hd->bl);
 	clif_send(buf,packet_len(0x22e),&sd->bl,SELF);
 	return 0;
 }
@@ -1227,7 +1227,7 @@ void clif_send_homdata(struct map_session_data *sd, int type, int param)
 	WFIFOHEAD(fd, packet_len(0x230));
 	nullpo_retv(sd->hd);
 	WFIFOW(fd,0)=0x230;
-	WFIFOW(fd,2)=type;
+	WFIFOW(fd,2)=type;  // FIXME: This is actually <type>.B <state>.B
 	WFIFOL(fd,4)=sd->hd->bl.id;
 	WFIFOL(fd,8)=param;
 	WFIFOSET(fd,packet_len(0x230));
@@ -2815,8 +2815,8 @@ int clif_initialstatus(struct map_session_data *sd)
 	WBUFW(buf,34) = sd->battle_status.flee;
 	WBUFW(buf,36) = sd->battle_status.flee2/10;
 	WBUFW(buf,38) = sd->battle_status.cri/10;
-	WBUFW(buf,40) = sd->status.karma;
-	WBUFW(buf,42) = sd->status.manner;
+	WBUFW(buf,40) = sd->battle_status.amotion; // aspd
+	WBUFW(buf,42) = sd->status.manner;  // FIXME: This is 'plusASPD', but what is it supposed to be?
 
 	WFIFOSET(fd,packet_len(0xbd));
 
@@ -4129,42 +4129,6 @@ int clif_insight(struct block_list *bl,va_list ap)
 }
 
 /*==========================================
- *
- *------------------------------------------
-int clif_skillinfo(struct map_session_data *sd,int skillid,int type,int range)
-{
-	int fd,id;
-
-	nullpo_ret(sd);
-
-	fd=sd->fd;
-	if( (id=sd->status.skill[skillid].id) <= 0 )
-		return 0;
-	WFIFOHEAD(fd,packet_len(0x147));
-	WFIFOW(fd,0)=0x147;
-	WFIFOW(fd,2) = id;
-	if(type < 0)
-		WFIFOW(fd,4) = skill_get_inf(id);
-	else
-		WFIFOW(fd,4) = type;
-	WFIFOW(fd,6) = 0;
-	WFIFOW(fd,8) = sd->status.skill[skillid].lv;
-	WFIFOW(fd,10) = skill_get_sp(id,sd->status.skill[skillid].lv);
-	if(range < 0)
-		range = skill_get_range2(&sd->bl, id,sd->status.skill[skillid].lv);
-
-	WFIFOW(fd,12)= range;
-	safestrncpy((char*)WFIFOP(fd,14), skill_get_name(id), NAME_LENGTH);
-	if(sd->status.skill[skillid].flag ==0)
-		WFIFOB(fd,38)= (sd->status.skill[skillid].lv < skill_tree_get_max(id, sd->status.class_))? 1:0;
-	else
-		WFIFOB(fd,38) = 0;
-	WFIFOSET(fd,packet_len(0x147));
-
-	return 0;
-}*/
-
-/*==========================================
  * スキルリストを送信する
  *------------------------------------------*/
 int clif_skillinfoblock(struct map_session_data *sd)
@@ -4390,7 +4354,7 @@ int clif_skill_fail(struct map_session_data *sd,int skill_id,int type,int btype)
 	WFIFOW(fd,0) = 0x110;
 	WFIFOW(fd,2) = skill_id;
 	WFIFOL(fd,4) = btype;
-	WFIFOB(fd,8) = 0;// success?
+	WFIFOB(fd,8) = 0;// success
 	WFIFOB(fd,9) = type;
 	WFIFOSET(fd,packet_len(0x110));
 
@@ -5057,15 +5021,8 @@ int clif_resurrection(struct block_list *bl,int type)
 	return 0;
 }
 
-/// Sets the map mode.
-///
-/// mode=1 : pvp mode
-/// mode=2 : unknown mode (pk?)
-/// mode=3 : gvg mode
-/// mode=4 : message "You are in a PK area. Please beware of sudden attacks." in color 0x9B9BFF (light red)
-/// mode=5 : pvp mode
-/// mode=other : ?
-void clif_set0199(struct map_session_data* sd, int mode)
+/// Sets the map property (ZC_NOTIFY_MAPPROPERTY).
+void clif_map_property(struct map_session_data* sd, enum map_property property)
 {
 	int fd;
 
@@ -5074,13 +5031,12 @@ void clif_set0199(struct map_session_data* sd, int mode)
 	fd=sd->fd;
 	WFIFOHEAD(fd,packet_len(0x199));
 	WFIFOW(fd,0)=0x199;
-	WFIFOW(fd,2)=mode;
+	WFIFOW(fd,2)=property;
 	WFIFOSET(fd,packet_len(0x199));
 }
 
-/// Set the map mode (special)
-/// 19 = battleground
-void clif_set01D6(struct map_session_data* sd, int mode)
+/// Set the map type (ZC_NOTIFY_MAPPROPERTY2)
+void clif_map_type(struct map_session_data* sd, enum map_type type)
 {
 	int fd;
 
@@ -5089,7 +5045,7 @@ void clif_set01D6(struct map_session_data* sd, int mode)
 	fd=sd->fd;
 	WFIFOHEAD(fd,packet_len(0x1D6));
 	WFIFOW(fd,0)=0x1D6;
-	WFIFOW(fd,2)=mode;
+	WFIFOW(fd,2)=type;
 	WFIFOSET(fd,packet_len(0x1D6));
 }
 
@@ -5129,7 +5085,7 @@ int clif_pvpset(struct map_session_data *sd,int pvprank,int pvpnum,int type)
 /*==========================================
  *
  *------------------------------------------*/
-int clif_send0199(int map,int type)
+void clif_map_property_mapall(int map, enum map_property property)
 {
 	struct block_list bl;
 	unsigned char buf[16];
@@ -5138,10 +5094,8 @@ int clif_send0199(int map,int type)
 	bl.type = BL_NUL;
 	bl.m = map;
 	WBUFW(buf,0)=0x199;
-	WBUFW(buf,2)=type;
+	WBUFW(buf,2)=property;
 	clif_send(buf,packet_len(0x199),&bl,ALL_SAMEMAP);
-
-	return 0;
 }
 
 /*==========================================
@@ -5189,7 +5143,7 @@ int clif_wis_message(int fd, const char* nick, const char* mes, int mes_len)
 	WFIFOW(fd,0) = 0x97;
 	WFIFOW(fd,2) = mes_len + NAME_LENGTH + 8;
 	safestrncpy((char*)WFIFOP(fd,4), nick, NAME_LENGTH);
-	WFIFOL(fd,28) = 0; // unknown; if nonzero, also displays text above char
+	WFIFOL(fd,28) = 0; // isAdmin; if nonzero, also displays text above char
 	safestrncpy((char*)WFIFOP(fd,32), mes, mes_len);
 	WFIFOSET(fd,WFIFOW(fd,2));
 #endif
@@ -5849,7 +5803,7 @@ int clif_party_invite(struct map_session_data *sd,struct map_session_data *tsd)
 
 	WFIFOHEAD(fd,packet_len(0xfe));
 	WFIFOW(fd,0)=0xfe;
-	WFIFOL(fd,2)=sd->status.account_id;
+	WFIFOL(fd,2)=sd->status.account_id;  // FIXME: This is party_id
 	memcpy(WFIFOP(fd,6),p->party.name,NAME_LENGTH);
 	WFIFOSET(fd,packet_len(0xfe));
 	return 0;
@@ -8447,7 +8401,7 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 	if( sd->state.bg_id ) clif_bg_hp(sd); // BattleGround System
 	if( sd->state.changemap && map[sd->bl.m].flag.battleground )
 	{
-		clif_set01D6(sd,19); // Battleground Mode
+		clif_map_type(sd, MAPTYPE_BATTLEFIELD); // Battleground Mode
 		if( map[sd->bl.m].flag.battleground == 2 )
 			clif_bg_updatescore_single(sd);
 	}
@@ -8462,17 +8416,17 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 			sd->pvp_won = 0;
 			sd->pvp_lost = 0;
 		}
-		clif_set0199(sd,1);
+		clif_map_property(sd, MAPPROPERTY_FREEPVPZONE);
 	} else
 	// set flag, if it's a duel [LuzZza]
 	if(sd->duel_group)
-		clif_set0199(sd,1);
+		clif_map_property(sd, MAPPROPERTY_FREEPVPZONE);
 
 	if (map[sd->bl.m].flag.gvg_dungeon)
-		clif_set0199(sd,1); //TODO: Figure out the real packet to send here.
+		clif_map_property(sd, MAPPROPERTY_FREEPVPZONE); //TODO: Figure out the real packet to send here.
 
 	if( map_flag_gvg(sd->bl.m) )
-		clif_set0199(sd,3);
+		clif_map_property(sd, MAPPROPERTY_AGITZONE);
 
 	// info about nearby objects
 	// must use foreachinarea (CIRCULAR_AREA interferes with foreachinrange)
@@ -13244,8 +13198,13 @@ void clif_parse_Adopt_reply(int fd, struct map_session_data *sd)
 }
 
 /*==========================================
- * Convex Mirror
- * S 0293 <flag>.b <x>.l <y>.l <Hours>.w <Minutes>.w <unknown>.l <monster name>.40B <unknown>.11B
+ * Convex Mirror (ZC_BOSS_INFO)
+ * S 0293 <infoType>.B <x>.L <y>.L <minHours>.W <minMinutes>.W <maxHours>.W <maxMinutes>.W  <monster name>.51B
+ * infoType:
+ *  0 = No boss on this map (BOSS_INFO_NOT).
+ *  1 = Boss is alive (position update) (BOSS_INFO_ALIVE).
+ *  2 = Boss is alive (initial announce) (BOSS_INFO_ALIVE_WITHMSG).
+ *  3 = Boss is dead (BOSS_INFO_DEAD).
  *==========================================*/
 void clif_bossmapinfo(int fd, struct mob_data *md, short flag)
 {

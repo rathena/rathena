@@ -1,5 +1,13 @@
 Date	Added
 
+2011/02/07
+	* Updates to various client packets. [Ai4rei]
+	- Renamed clif_set0199 and clif_send0199 to clif_map_property and clif_map_property_mapall respectively and added an enumeration for currently known map properties.
+	- Renamed clif_set01D6 to clif_map_type and added an enumeration for currently known map types.
+	- Resolved undocumented field of packet 0x22e (ZC_PROPERTY_HOMUN) to attack range.
+	- Fixed aspd field of packet 0xbd (ZC_STATUS) getting filled with karma value.
+	- Removed commented clif_skillinfo (duplicate of clif_item_skill).
+	- Other minor comment updates and 'FIXME' assignments.
 2011/02/06
 	* Replaced 'nameid < 500' checks in script commands 'countitem', 'countitem2' and 'autoequip' with stricter ones. [Ai4rei]
 	- This should stop meaningless itemdb_search warnings from said commands when an invalid item id is used.

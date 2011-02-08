@@ -9753,7 +9753,7 @@ BUILDIN_FUNC(pvpon)
 		return 0; // nothing to do
 
 	map[m].flag.pvp = 1;
-	clif_send0199(m,1);
+	clif_map_property_mapall(m, MAPPROPERTY_FREEPVPZONE);
 
 	if(battle_config.pk_mode) // disable ranking functions if pk_mode is on [Valaris]
 		return 0;
@@ -9798,7 +9798,7 @@ BUILDIN_FUNC(pvpoff)
 		return 0; //fixed Lupus
 
 	map[m].flag.pvp = 0;
-	clif_send0199(m,0);
+	clif_map_property_mapall(m, MAPPROPERTY_NOTHING);
 
 	if(battle_config.pk_mode) // disable ranking options if pk_mode is on [Valaris]
 		return 0;
@@ -9816,7 +9816,7 @@ BUILDIN_FUNC(gvgon)
 	m = map_mapname2mapid(str);
 	if(m >= 0 && !map[m].flag.gvg) {
 		map[m].flag.gvg = 1;
-		clif_send0199(m,3);
+		clif_map_property_mapall(m, MAPPROPERTY_AGITZONE);
 	}
 
 	return 0;
@@ -9830,7 +9830,7 @@ BUILDIN_FUNC(gvgoff)
 	m = map_mapname2mapid(str);
 	if(m >= 0 && map[m].flag.gvg) {
 		map[m].flag.gvg = 0;
-		clif_send0199(m,0);
+		clif_map_property_mapall(m, MAPPROPERTY_NOTHING);
 	}
 
 	return 0;
