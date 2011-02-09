@@ -9124,6 +9124,11 @@ BUILDIN_FUNC(birthpet)
 	if( sd == NULL )
 		return 0;
 
+	if( sd->status.pet_id )
+	{// do not send egg list, when you already have a pet
+		return 0;
+	}
+
 	clif_sendegg(sd);
 	return 0;
 }

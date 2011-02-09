@@ -1,5 +1,7 @@
 Date	Added
 
+2011/02/09
+	* Fixed script command 'bpet' (Pet Incubator) displaying an empty egg list when attempting to hatch a pet while already having one out (bugreport:3313). [Ai4rei]
 2011/02/08
 	* Moved script constant manipulation code into separate functions script_get_constant / script_set_constant. [Ai4rei]
 	- Added protection against overwriting existing names in script constant creation code.

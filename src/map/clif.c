@@ -6194,15 +6194,13 @@ int clif_sendegg(struct map_session_data *sd)
 	}
 	WFIFOHEAD(fd, MAX_INVENTORY * 2 + 4);
 	WFIFOW(fd,0)=0x1a6;
-	if(sd->status.pet_id <= 0) {
-		for(i=0,n=0;i<MAX_INVENTORY;i++){
-			if(sd->status.inventory[i].nameid<=0 || sd->inventory_data[i] == NULL ||
-			   sd->inventory_data[i]->type!=IT_PETEGG ||
-			   sd->status.inventory[i].amount<=0)
-				continue;
-			WFIFOW(fd,n*2+4)=i+2;
-			n++;
-		}
+	for(i=0,n=0;i<MAX_INVENTORY;i++){
+		if(sd->status.inventory[i].nameid<=0 || sd->inventory_data[i] == NULL ||
+		   sd->inventory_data[i]->type!=IT_PETEGG ||
+		   sd->status.inventory[i].amount<=0)
+			continue;
+		WFIFOW(fd,n*2+4)=i+2;
+		n++;
 	}
 	WFIFOW(fd,2)=4+n*2;
 	WFIFOSET(fd,WFIFOW(fd,2));
