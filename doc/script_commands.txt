@@ -6098,7 +6098,7 @@ illustration without displaying a new one, an empty file name and position 255
 must be used.
 
     // Displays the Comodo Kafra illustration in lower right corner.
-    cutin "kafra_7",2;
+    cutin "kafra_07",2;
 
     // Typical way to end a script, which displayed an illustration during a
     // dialog with a player.
