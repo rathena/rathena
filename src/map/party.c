@@ -309,8 +309,8 @@ int party_invite(struct map_session_data *sd,struct map_session_data *tsd)
 		return 0;
 	}
 	
-	if ( (pc_isGM(sd) > battle_config.lowest_gm_level && pc_isGM(tsd) < battle_config.lowest_gm_level && !battle_config.gm_can_party && pc_isGM(sd) < battle_config.gm_cant_party_min_lv)
-		|| ( pc_isGM(sd) < battle_config.lowest_gm_level && pc_isGM(tsd) > battle_config.lowest_gm_level && !battle_config.gm_can_party && pc_isGM(tsd) < battle_config.gm_cant_party_min_lv) )
+	if ( (pc_isGM(sd) >= battle_config.lowest_gm_level && pc_isGM(tsd) < battle_config.lowest_gm_level && !battle_config.gm_can_party && pc_isGM(sd) < battle_config.gm_cant_party_min_lv)
+		|| ( pc_isGM(sd) < battle_config.lowest_gm_level && pc_isGM(tsd) >= battle_config.lowest_gm_level && !battle_config.gm_can_party && pc_isGM(tsd) < battle_config.gm_cant_party_min_lv) )
 	{
 		//GMs can't invite non GMs to the party if not above the invite trust level
 		//Likewise, as long as gm_can_party is off, players can't invite GMs.

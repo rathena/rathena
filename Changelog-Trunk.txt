@@ -1,6 +1,7 @@
 Date	Added
 
 2011/02/14
+	* Fixed GMs with GM level equal to 'lowest_gm_level' being treated as normal players in 'gm_can_party' check (bugreport:4162, since r13143). [Ai4rei]
 	* Fixed a crash when script 'npctalk' is given too long string (bugreport:4759, related r2145). [Ai4rei]
 	- Fixed related buffer overflows in message related clif functions (since r1182, r14270).
 2011/02/09
