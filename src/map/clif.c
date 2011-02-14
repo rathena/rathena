@@ -4930,6 +4930,12 @@ void clif_GlobalMessage(struct block_list* bl, const char* message)
 
 	len = strlen(message)+1;
 
+	if( len > sizeof(buf)-8 )
+	{
+		ShowWarning("clif_GlobalMessage: Truncating too long message '%s' (len=%d).\n", message, len);
+		len = sizeof(buf)-8;
+	}
+
 	WBUFW(buf,0)=0x8d;
 	WBUFW(buf,2)=len+8;
 	WBUFL(buf,4)=bl->id;
@@ -7513,6 +7519,12 @@ int clif_messagecolor(struct block_list* bl, unsigned long color, const char* ms
 
 	nullpo_ret(bl);
 
+	if( msg_len > sizeof(buf)-12 )
+	{
+		ShowWarning("clif_messagecolor: Truncating too long message '%s' (len=%u).\n", msg, msg_len);
+		msg_len = sizeof(buf)-12;
+	}
+
 	WBUFW(buf,0) = 0x2C1;
 	WBUFW(buf,2) = msg_len + 12;
 	WBUFL(buf,4) = bl->id;
@@ -7531,6 +7543,12 @@ int clif_message(struct block_list* bl, const char* msg)
 	uint8 buf[256];
 
 	nullpo_ret(bl);
+
+	if( msg_len > sizeof(buf)-8 )
+	{
+		ShowWarning("clif_message: Truncating too long message '%s' (len=%u).\n", msg, msg_len);
+		msg_len = sizeof(buf)-8;
+	}
 
 	WBUFW(buf,0) = 0x8d;
 	WBUFW(buf,2) = msg_len + 8;
