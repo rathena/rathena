@@ -11842,9 +11842,6 @@ void clif_parse_NoviceExplosionSpirits(int fd, struct map_session_data *sd)
 	return;
 }
 
-// random notes:
-// 0x214: monster/player info ?
-
 /*==========================================
  * Friends List
  *------------------------------------------*/
@@ -12353,11 +12350,69 @@ void clif_parse_AutoRevive(int fd, struct map_session_data *sd)
 	pc_delitem(sd, item_position, 1, 0, 1);
 }
 
-/// /check <string>
-/// S 0213 <string>.24B
+
+/// Information about character's status values (ZC_ACK_STATUS_GM)
+/// 0214 <str>.B <standardStr>.B <agi>.B <standardAgi>.B <vit>.B <standardVit>.B
+///      <int>.B <standardInt>.B <dex>.B <standardDex>.B <luk>.B <standardLuk>.B
+///      <attPower>.W <refiningPower>.W <max_mattPower>.W <min_mattPower>.W
+///      <itemdefPower>.W <plusdefPower>.W <mdefPower>.W <plusmdefPower>.W
+///      <hitSuccessValue>.W <avoidSuccessValue>.W <plusAvoidSuccessValue>.W
+///      <criticalSuccessValue>.W <ASPD>.W <plusASPD>.W
+void clif_check(int fd, struct map_session_data* pl_sd)
+{
+	WFIFOHEAD(fd,packet_len(0x214));
+	WFIFOW(fd, 0) = 0x214;
+	WFIFOB(fd, 2) = min(pl_sd->status.str, UCHAR_MAX);
+	WFIFOB(fd, 3) = pc_need_status_point(pl_sd, SP_STR);
+	WFIFOB(fd, 4) = min(pl_sd->status.agi, UCHAR_MAX);
+	WFIFOB(fd, 5) = pc_need_status_point(pl_sd, SP_AGI);
+	WFIFOB(fd, 6) = min(pl_sd->status.vit, UCHAR_MAX);
+	WFIFOB(fd, 7) = pc_need_status_point(pl_sd, SP_VIT);
+	WFIFOB(fd, 8) = min(pl_sd->status.int_, UCHAR_MAX);
+	WFIFOB(fd, 9) = pc_need_status_point(pl_sd, SP_INT);
+	WFIFOB(fd,10) = min(pl_sd->status.dex, UCHAR_MAX);
+	WFIFOB(fd,11) = pc_need_status_point(pl_sd, SP_DEX);
+	WFIFOB(fd,12) = min(pl_sd->status.luk, UCHAR_MAX);
+	WFIFOB(fd,13) = pc_need_status_point(pl_sd, SP_LUK);
+	WFIFOW(fd,14) = pl_sd->battle_status.batk+pl_sd->battle_status.rhw.atk+pl_sd->battle_status.lhw.atk;
+	WFIFOW(fd,16) = pl_sd->battle_status.rhw.atk2+pl_sd->battle_status.lhw.atk2;
+	WFIFOW(fd,18) = pl_sd->battle_status.matk_max;
+	WFIFOW(fd,20) = pl_sd->battle_status.matk_min;
+	WFIFOW(fd,22) = pl_sd->battle_status.def;
+	WFIFOW(fd,24) = pl_sd->battle_status.def2;
+	WFIFOW(fd,26) = pl_sd->battle_status.mdef;
+	WFIFOW(fd,28) = pl_sd->battle_status.mdef2;
+	WFIFOW(fd,30) = pl_sd->battle_status.hit;
+	WFIFOW(fd,32) = pl_sd->battle_status.flee;
+	WFIFOW(fd,34) = pl_sd->battle_status.flee2/10;
+	WFIFOW(fd,36) = pl_sd->battle_status.cri/10;
+	WFIFOW(fd,38) = (2000-pl_sd->battle_status.amotion)/10;  // aspd
+	WFIFOW(fd,40) = 0;  // FIXME: What is 'plusASPD' supposed to be?
+	WFIFOSET(fd,packet_len(0x214));
+}
+
+
+/// Request character's status values (CZ_REQ_STATUS_GM)
+/// /check <char name>
+/// 0213 <char name>.24B
 void clif_parse_Check(int fd, struct map_session_data *sd)
 {
-	// no info
+	char charname[NAME_LENGTH];
+	struct map_session_data* pl_sd;
+
+	if( pc_isGM(sd) < battle_config.gm_check_minlevel )
+	{
+		return;
+	}
+
+	safestrncpy(charname, (const char*)RFIFOP(fd,packet_db[sd->packet_ver][RFIFOW(fd,0)].pos[0]), sizeof(charname));
+
+	if( ( pl_sd = map_nick2sd(charname) ) == NULL || pc_isGM(sd) < pc_isGM(pl_sd) )
+	{
+		return;
+	}
+
+	clif_check(fd, pl_sd);
 }
 
 #ifndef TXT_ONLY

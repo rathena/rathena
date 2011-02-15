@@ -1,5 +1,7 @@
 Date	Added
 
+2011/02/15
+	* Added support for client GM command /check (related r12076). [Ai4rei]
 2011/02/14
 	* Fixed drop list of map flag 'pvp_nightmaredrop' not getting cleared upon @reloadscript (bugreport:4282, follow up to r14668). [Ai4rei]
 	* Fixed GMs with GM level equal to 'lowest_gm_level' being treated as normal players in 'gm_can_party' check (bugreport:4162, since r13143). [Ai4rei]
