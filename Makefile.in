@@ -2,7 +2,7 @@
 
 HAVE_MYSQL=@HAVE_MYSQL@
 ifeq ($(HAVE_MYSQL),yes)
-	ALL_DEPENDS=common common_sql login login_sql char char_sql map map_sql tools converters plugins import save
+	ALL_DEPENDS=common common_sql login login_sql char char_sql map map_sql tools converters import save
 	SQL_DEPENDS=common_sql login_sql char_sql map_sql import save
 	COMMON_SQL_DEPENDS=
 	LOGIN_SQL_DEPENDS=common_sql
@@ -10,13 +10,21 @@ ifeq ($(HAVE_MYSQL),yes)
 	MAP_SQL_DEPENDS=common_sql
 	CONVERTERS_DEPENDS=common_sql
 else
-	ALL_DEPENDS=common login char map tools plugins import save
+	ALL_DEPENDS=common login char map tools import save
 	SQL_DEPENDS=needs_mysql
 	COMMON_SQL_DEPENDS=needs_mysql
 	LOGIN_SQL_DEPENDS=needs_mysql
 	CHAR_SQL_DEPENDS=needs_mysql
 	MAP_SQL_DEPENDS=needs_mysql
 	CONVERTERS_DEPENDS=needs_mysql
+endif
+
+WITH_PLUGINS=@WITH_PLUGINS@
+ifeq ($(WITH_PLUGINS),yes)
+	ALL_DEPENDS+=plugins
+	PLUGIN_DEPENDS=common
+else
+	PLUGIN_DEPENDS=no_plugins
 endif
 
 #####################################################################
@@ -66,7 +74,7 @@ tools:
 converters: $(CONVERTERS_DEPENDS)
 	@$(MAKE) -C src/txt-converter
 
-plugins addons: common
+plugins addons: $(PLUGIN_DEPENDS)
 	@$(MAKE) -C src/plugins
 
 import:
@@ -127,6 +135,10 @@ help:
 
 needs_mysql:
 	@echo "MySQL not found or disabled by the configure script"
+	@exit 1
+
+no_plugins:
+	@echo "Plugins disabled by the configure script"
 	@exit 1
 
 #####################################################################

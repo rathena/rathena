@@ -1,5 +1,10 @@
 Date	Added
 
+2011/02/16
+	* Updated configure/make scripts to resolve various issues. [Ai4rei]
+	- Added detection whether or not -fPIC switch is required when compiling shared objects (plug-ins) to resolve compile issues on 64-bit platforms (topic:208746).
+	- Native 'strnlen' implementations are now detected and disable the one in strlib (bugreport:1261).
+	- Define 'DB_MANUAL_CAST_TO_UNION' is now set when necessary (bugreport:1261).
 2011/02/15
 	* Added support for client GM command /check (related r12076). [Ai4rei]
 2011/02/14

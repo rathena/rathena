@@ -339,6 +339,108 @@ AC_COMPILE_IFELSE(
 )
 
 
+AC_MSG_CHECKING([whether $CC supports -fPIC])
+OLD_CFLAGS="$CFLAGS"
+CFLAGS="$CFLAGS -fPIC"
+AC_COMPILE_IFELSE(
+	[int foo;],
+	[
+		AC_MSG_RESULT([yes])
+		compiler_supports_pic="yes"
+	],
+	[
+		AC_MSG_RESULT([no])
+		compiler_supports_pic="no"
+	]
+)
+CFLAGS="$OLD_CFLAGS"
+
+
+#
+# -shared needs position independent code; some platforms emit it
+# always, others need -fPIC
+#
+AC_MSG_CHECKING([whether $CC needs -fPIC for shared objects])
+OLD_CFLAGS="$CFLAGS"
+CFLAGS="$CFLAGS -shared"
+WITH_PLUGINS="yes"
+AC_LINK_IFELSE(
+	[
+		int foo(void)
+		{
+			return 0;
+		}
+	],
+	[
+		AC_MSG_RESULT([no])
+		CFLAGS="$OLD_CFLAGS"
+	],
+	[
+		if test "$compiler_supports_pic" = "yes" ; then
+			# Verify if -shared really fails due to lack of -fPIC or something else
+			CFLAGS="$CFLAGS -fPIC"
+			AC_LINK_IFELSE(
+				[
+					int foo(void)
+					{
+						return 0;
+					}
+				],
+				[
+					AC_MSG_RESULT([yes])
+					CFLAGS="$OLD_CFLAGS -fPIC"
+				],
+				[
+					AC_MSG_RESULT([no, but fails for another reason])
+					AC_MSG_ERROR([compiler is unable to compile shared objects for an unhandled reason, please report this with attached config.log... stopping])
+				]
+			)
+		else
+			# Disable compilation of plugins (optional), so 'make all' does not fail
+			AC_MSG_RESULT([yes, but unsupported])
+			AC_MSG_NOTICE([compiler is unable to generate position independent code, disabled plugins (optional)])
+			WITH_PLUGINS="no"
+		fi
+	]
+)
+AC_SUBST([WITH_PLUGINS])
+
+
+#
+# DB_MANUAL_CAST_TO_UNION
+#
+AC_MSG_CHECKING([whether $CC is able to typecast to union])
+AC_COMPILE_IFELSE(
+	[
+		typedef union Foonion
+		{
+			int i;
+			unsigned int ui;
+			const char* s;
+		}
+		Foonion;
+		
+		int bar(Foonion onion)
+		{
+			return onion.i;
+		}
+		
+		int foo(void)
+		{
+			int i = 0;
+		
+			return bar(((Foonion)(int)i));
+		}
+	],
+	[
+		AC_MSG_RESULT([yes])
+	],
+	[
+		AC_MSG_RESULT([no])
+		CFLAGS="$CFLAGS -DDB_MANUAL_CAST_TO_UNION"
+	]
+)
+
 
 ###############################################################################
 # Check for libraries and header files.
@@ -350,6 +452,11 @@ AC_COMPILE_IFELSE(
 #
 AC_CHECK_FUNC([setrlimit],[CFLAGS="$CFLAGS -DHAVE_SETRLIMIT"])
 
+
+#
+# strnlen - string length with upper scan bound
+#
+AC_CHECK_FUNC([strnlen],[CFLAGS="$CFLAGS -DHAVE_STRNLEN"])
 
 
 #
