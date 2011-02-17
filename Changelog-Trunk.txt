@@ -1,5 +1,7 @@
 Date	Added
 
+2011/02/17
+	* Merged enumeration update from renewal [14699/branches/renewal] for a future commit. [Ai4rei]
 2011/02/16
 	* Updated configure/make scripts to resolve various issues. [Ai4rei]
 	- Added detection whether or not -fPIC switch is required when compiling shared objects (plug-ins) to resolve compile issues on 64-bit platforms (topic:208746).
