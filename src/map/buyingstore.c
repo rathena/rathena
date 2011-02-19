@@ -195,6 +195,11 @@ void buyingstore_open(struct map_session_data* sd, int account_id)
 		return;
 	}
 
+	if( sd->bl.m != pl_sd->bl.m || !check_distance_bl(&sd->bl, &pl_sd->bl, AREA_SIZE) )
+	{// out of view range
+		return;
+	}
+
 	// success
 	clif_buyingstore_itemlist(sd, pl_sd);
 }
@@ -227,6 +232,12 @@ void buyingstore_trade(struct map_session_data* sd, int account_id, unsigned int
 
 	if( ( pl_sd = map_id2sd(account_id) ) == NULL || !pl_sd->state.buyingstore || pl_sd->buyer_id != buyer_id )
 	{// not online, not buying or not same store
+		clif_buyingstore_trade_failed_seller(sd, BUYINGSTORE_TRADE_SELLER_FAILED, 0);
+		return;
+	}
+
+	if( sd->bl.m != pl_sd->bl.m || !check_distance_bl(&sd->bl, &pl_sd->bl, AREA_SIZE) )
+	{// out of view range
 		clif_buyingstore_trade_failed_seller(sd, BUYINGSTORE_TRADE_SELLER_FAILED, 0);
 		return;
 	}
