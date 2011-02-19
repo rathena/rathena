@@ -492,31 +492,31 @@ int log_config_read(char *cfgName)
 			else if(strcmpi(w1, "log_branch_file") == 0) {
 				strcpy(log_config.log_branch, w2);
 				if(log_config.branch > 0 && !log_config.sql_logs)
-					ShowNotice("Logging Dead Branch Usage to file `%s`.txt\n", w2);
+					ShowNotice("Logging Dead Branch Usage to file `%s`\n", w2);
 			} else if(strcmpi(w1, "log_pick_file") == 0) {
 				strcpy(log_config.log_pick, w2);
 				if(log_config.filter > 0 && !log_config.sql_logs)
-					ShowNotice("Logging Item Picks to file `%s`.txt\n", w2);
+					ShowNotice("Logging Item Picks to file `%s`\n", w2);
 			} else if(strcmpi(w1, "log_zeny_file") == 0) {
 				strcpy(log_config.log_zeny, w2);
 				if(log_config.zeny > 0 && !log_config.sql_logs)
-					ShowNotice("Logging Zeny to file `%s`.txt\n", w2);
+					ShowNotice("Logging Zeny to file `%s`\n", w2);
 			} else if(strcmpi(w1, "log_mvpdrop_file") == 0) {
 				strcpy(log_config.log_mvpdrop, w2);
 				if(log_config.mvpdrop > 0 && !log_config.sql_logs)
-					ShowNotice("Logging MVP Drops to file `%s`.txt\n", w2);
+					ShowNotice("Logging MVP Drops to file `%s`\n", w2);
 			} else if(strcmpi(w1, "log_gm_file") == 0) {
 				strcpy(log_config.log_gm, w2);
 				if(log_config.gm > 0 && !log_config.sql_logs)
-					ShowNotice("Logging GM Level %d Commands to file `%s`.txt\n", log_config.gm, w2);
+					ShowNotice("Logging GM Level %d Commands to file `%s`\n", log_config.gm, w2);
 			} else if(strcmpi(w1, "log_npc_file") == 0) {
 				strcpy(log_config.log_npc, w2);
 				if(log_config.npc > 0 && !log_config.sql_logs)
-					ShowNotice("Logging NPC 'logmes' to file `%s`.txt\n", w2);
+					ShowNotice("Logging NPC 'logmes' to file `%s`\n", w2);
 			} else if(strcmpi(w1, "log_chat_file") == 0) {
 				strcpy(log_config.log_chat, w2);
 				if(log_config.chat > 0 && !log_config.sql_logs)					
-					ShowNotice("Logging CHAT to file `%s`.txt\n", w2);
+					ShowNotice("Logging CHAT to file `%s`\n", w2);
 			//support the import command, just like any other config
 			} else if(strcmpi(w1,"import") == 0) {
 				log_config_read(w2);

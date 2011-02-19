@@ -1,6 +1,7 @@
 Date	Added
 
 2011/02/19
+	* Removed '.txt' from log config info messages, as the values already have an extension (since r197, related r196). [Ai4rei]
 	* Fixed gcc compile warnings in char-server and console plug-in (bugreport:4771, topic:208746, since r9631 and r14700). [Ai4rei]
 	* Fixed buying stores could be opened and sold to regardless of distance between seller and buyer (since r14713). [Ai4rei]
 	* Fixed 'feature.conf' not getting loaded and a typo buying store feature setting name (follow up to r14713). [Ai4rei]
