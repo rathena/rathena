@@ -9,6 +9,12 @@
 	13005 Angelic Wing Dagger:	NEED INFO.
 =======================
 
+2011/02/19
+	* Rev. 14713 Database updates required by buying store system implementation. [Ai4rei]
+	- Added database of items, that can be sold to a buying store (item_buyingstore.txt).
+	- Added items Buy_Stall_Permit (6377) and Shabby_Purchase_Street_Stall_License (12548).
+	- Updated packet database with buying store related packets.
+	- Added skill 'Open Buying Store' (ALL_BUYING_STORE).
 2011/02/06
 	* Rev. 14697 Added the missing restricted skills to zone 6 for Endless Tower. (bugreport:4707) [L0ne_W0lf]
 	* Adjusted the rates for item using bAddEffOnSkill bonus. 

@@ -211,6 +211,10 @@ SOURCE=..\src\map\battleground.c
 # End Source File
 # Begin Source File
 
+SOURCE=..\src\map\buyingstore.c
+# End Source File
+# Begin Source File
+
 SOURCE=..\src\map\chat.c
 # End Source File
 # Begin Source File
@@ -332,6 +336,10 @@ SOURCE=..\src\map\battle.h
 # Begin Source File
 
 SOURCE=..\src\map\battleground.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\map\buyingstore.h
 # End Source File
 # Begin Source File
 

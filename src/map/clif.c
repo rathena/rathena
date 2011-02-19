@@ -56,7 +56,10 @@ struct Clif_Config {
 struct s_packet_db packet_db[MAX_PACKET_VER + 1][MAX_PACKET_DB + 1];
 
 //Converts item type in case of pet eggs.
-#define itemtype(a) (a == IT_PETEGG)?IT_WEAPON:a
+inline int itemtype(int type)
+{
+	return ( type == IT_PETEGG ) ? IT_WEAPON : type;
+}
 
 #define WBUFPOS(p,pos,x,y,dir) \
 	do { \
@@ -3644,6 +3647,9 @@ static void clif_getareachar_pc(struct map_session_data* sd,struct map_session_d
 	if(dstsd->vender_id)
 		clif_showvendingboard(&dstsd->bl,dstsd->message,sd->fd);
 
+	if( dstsd->state.buyingstore )
+		clif_buyingstore_entry_single(sd, dstsd);
+
 	if(dstsd->spiritball > 0)
 		clif_spiritball_single(sd->fd, dstsd);
 
@@ -4072,6 +4078,8 @@ int clif_outsight(struct block_list *bl,va_list ap)
 			}
 			if(sd->vender_id)
 				clif_closevendingboard(bl,tsd->fd);
+			if( sd->state.buyingstore )
+				clif_buyingstore_disappear_entry_single(tsd, sd);
 			break;
 		case BL_ITEM:
 			clif_clearflooritem((struct flooritem_data*)bl,tsd->fd);
@@ -12851,7 +12859,7 @@ void clif_Auction_openwindow(struct map_session_data *sd)
 {
 	int fd = sd->fd;
 
-	if( sd->state.storage_flag || sd->vender_id || sd->state.trading )
+	if( sd->state.storage_flag || sd->vender_id || sd->state.buyingstore || sd->state.trading )
 		return;
 
 	WFIFOHEAD(fd,12);
@@ -14033,6 +14041,308 @@ void clif_showdigit(struct map_session_data* sd, unsigned char type, int value)
 	WFIFOSET(sd->fd, packet_len(0x1b1));
 }
 
+
+/// Buying Store System
+///
+
+/// Opens preparation window for buying store (ZC_OPEN_BUYING_STORE)
+/// 0810 <slots>.B
+void clif_buyingstore_open(struct map_session_data* sd)
+{
+	int fd = sd->fd;
+
+	WFIFOHEAD(fd,packet_len(0x810));
+	WFIFOW(fd,0) = 0x810;
+	WFIFOB(fd,2) = sd->buyingstore.slots;
+	WFIFOSET(fd,packet_len(0x810));
+}
+
+
+/// Request to create a buying store (CZ_REQ_OPEN_BUYING_STORE)
+/// 0811 <packet len>.W <limit zeny>.L <result>.B <store name>.80B { <name id>.W <amount>.W <price>.L }*
+/// result:
+///     0 = cancel
+///     1 = open
+static void clif_parse_ReqOpenBuyingStore(int fd, struct map_session_data* sd)
+{
+	const unsigned int blocksize = 8;
+	uint8* itemlist;
+	char storename[MESSAGE_SIZE];
+	unsigned char result;
+	int zenylimit;
+	unsigned int count, packet_len;
+	struct s_packet_db* info = &packet_db[sd->packet_ver][RFIFOW(fd,0)];
+
+	packet_len = RFIFOW(fd,info->pos[0]);
+
+	// TODO: Make this check global for all variable length packets.
+	if( packet_len < 89 )
+	{// minimum packet length
+		ShowError("clif_parse_ReqOpenBuyingStore: Malformed packet (expected length=%u, length=%u, account_id=%d).\n", 89, packet_len, sd->bl.id);
+		return;
+	}
+
+	zenylimit = RFIFOL(fd,info->pos[1]);
+	result    = RFIFOL(fd,info->pos[2]);
+	safestrncpy(storename, (const char*)RFIFOP(fd,info->pos[3]), sizeof(storename));
+	itemlist  = RFIFOP(fd,info->pos[4]);
+
+	// so that buyingstore_create knows, how many elements it has access to
+	packet_len-= info->pos[4];
+
+	if( packet_len%blocksize )
+	{
+		ShowError("clif_parse_ReqOpenBuyingStore: Unexpected item list size %u (account_id=%d, block size=%u)\n", packet_len, sd->bl.id, blocksize);
+		return;
+	}
+	count = packet_len/blocksize;
+
+	buyingstore_create(sd, zenylimit, result, storename, itemlist, count);
+}
+
+
+/// Notification, that the requested buying store could not be created (ZC_FAILED_OPEN_BUYING_STORE_TO_BUYER)
+/// 0812 <result>.W <total weight>.L
+/// result:
+///     1 = "Failed to open buying store." (0x6cd, MSI_BUYINGSTORE_OPEN_FAILED)
+///     2 = "Total amount of then possessed items exceeds the weight limit by <weight/10-maxweight*90%>. Please re-enter." (0x6ce, MSI_BUYINGSTORE_OVERWEIGHT)
+///     8 = "No sale (purchase) information available." (0x705)
+/// other = nothing
+void clif_buyingstore_open_failed(struct map_session_data* sd, unsigned short result, unsigned int weight)
+{
+	int fd = sd->fd;
+
+	WFIFOHEAD(fd,packet_len(0x812));
+	WFIFOW(fd,0) = 0x812;
+	WFIFOW(fd,2) = result;
+	WFIFOL(fd,4) = weight;
+	WFIFOSET(fd,packet_len(0x812));
+}
+
+
+/// Notification, that the requested buying store was created (ZC_MYITEMLIST_BUYING_STORE)
+/// 0813 <packet len>.W <account id>.L <limit zeny>.L { <price>.L <count>.W <type>.B <name id>.W }*
+void clif_buyingstore_myitemlist(struct map_session_data* sd)
+{
+	int fd = sd->fd;
+	unsigned int i;
+
+	WFIFOHEAD(fd,12+sd->buyingstore.slots*9);
+	WFIFOW(fd,0) = 0x813;
+	WFIFOW(fd,2) = 12+sd->buyingstore.slots*9;
+	WFIFOL(fd,4) = sd->bl.id;
+	WFIFOL(fd,8) = sd->buyingstore.zenylimit;
+
+	for( i = 0; i < sd->buyingstore.slots; i++ )
+	{
+		WFIFOL(fd,12+i*9) = sd->buyingstore.items[i].price;
+		WFIFOW(fd,16+i*9) = sd->buyingstore.items[i].amount;
+		WFIFOB(fd,18+i*9) = itemtype(itemdb_type(sd->buyingstore.items[i].nameid));
+		WFIFOW(fd,19+i*9) = sd->buyingstore.items[i].nameid;
+	}
+
+	WFIFOSET(fd,WFIFOW(fd,2));
+}
+
+
+/// Notifies clients in area of a buying store (ZC_BUYING_STORE_ENTRY)
+/// 0814 <account id>.L <store name>.80B
+void clif_buyingstore_entry(struct map_session_data* sd)
+{
+	uint8 buf[86];
+
+	WBUFW(buf,0) = 0x814;
+	WBUFL(buf,2) = sd->bl.id;
+	memcpy(WBUFP(buf,6), sd->message, MESSAGE_SIZE);
+
+	clif_send(buf, packet_len(0x814), &sd->bl, AREA_WOS);
+}
+void clif_buyingstore_entry_single(struct map_session_data* sd, struct map_session_data* pl_sd)
+{
+	int fd = sd->fd;
+
+	WFIFOHEAD(fd,packet_len(0x814));
+	WFIFOW(fd,0) = 0x814;
+	WFIFOL(fd,2) = pl_sd->bl.id;
+	memcpy(WFIFOP(fd,6), pl_sd->message, MESSAGE_SIZE);
+	WFIFOSET(fd,packet_len(0x814));
+}
+
+
+/// Request to close own buying store (CZ_REQ_CLOSE_BUYING_STORE)
+/// 0815
+static void clif_parse_ReqCloseBuyingStore(int fd, struct map_session_data* sd)
+{
+	buyingstore_close(sd);
+}
+
+
+/// Notifies clients in area that a buying store was closed (ZC_DISAPPEAR_BUYING_STORE_ENTRY)
+/// 0816 <account id>.L
+void clif_buyingstore_disappear_entry(struct map_session_data* sd)
+{
+	uint8 buf[6];
+
+	WBUFW(buf,0) = 0x816;
+	WBUFL(buf,2) = sd->bl.id;
+
+	clif_send(buf, packet_len(0x816), &sd->bl, AREA_WOS);
+}
+void clif_buyingstore_disappear_entry_single(struct map_session_data* sd, struct map_session_data* pl_sd)
+{
+	int fd = sd->fd;
+
+	WFIFOHEAD(fd,packet_len(0x816));
+	WFIFOW(fd,0) = 0x816;
+	WFIFOL(fd,2) = pl_sd->bl.id;
+	WFIFOSET(fd,packet_len(0x816));
+}
+
+
+/// Request to open someone else's buying store (CZ_REQ_CLICK_TO_BUYING_STORE)
+/// 0817 <account id>.L
+static void clif_parse_ReqClickBuyingStore(int fd, struct map_session_data* sd)
+{
+	int account_id;
+
+	account_id = RFIFOL(fd,packet_db[sd->packet_ver][RFIFOW(fd,0)].pos[0]);
+
+	buyingstore_open(sd, account_id);
+}
+
+
+/// Sends buying store item list (ZC_ACK_ITEMLIST_BUYING_STORE)
+/// 0818 <packet len>.W <account id>.L <store id>.L <limit zeny>.L { <price>.L <amount>.W <type>.B <name id>.W }*
+void clif_buyingstore_itemlist(struct map_session_data* sd, struct map_session_data* pl_sd)
+{
+	int fd = sd->fd;
+	unsigned int i;
+
+	WFIFOHEAD(fd,16+pl_sd->buyingstore.slots*9);
+	WFIFOW(fd,0) = 0x818;
+	WFIFOW(fd,2) = 16+pl_sd->buyingstore.slots*9;
+	WFIFOL(fd,4) = pl_sd->bl.id;
+	WFIFOL(fd,8) = pl_sd->buyer_id;
+	WFIFOL(fd,12) = pl_sd->buyingstore.zenylimit;
+
+	for( i = 0; i < pl_sd->buyingstore.slots; i++ )
+	{
+		WFIFOL(fd,16+i*9) = pl_sd->buyingstore.items[i].price;
+		WFIFOW(fd,20+i*9) = pl_sd->buyingstore.items[i].amount;  // TODO: Figure out, if no longer needed items (amount == 0) are listed on official.
+		WFIFOB(fd,22+i*9) = itemtype(itemdb_type(pl_sd->buyingstore.items[i].nameid));
+		WFIFOW(fd,23+i*9) = pl_sd->buyingstore.items[i].nameid;
+	}
+
+	WFIFOSET(fd,WFIFOW(fd,2));
+}
+
+
+/// Request to sell items to a buying store (CZ_REQ_TRADE_BUYING_STORE)
+/// 0819 <packet len>.W <account id>.L <store id>.L { <index>.W <name id>.W <amount>.W }*
+static void clif_parse_ReqTradeBuyingStore(int fd, struct map_session_data* sd)
+{
+	const unsigned int blocksize = 6;
+	uint8* itemlist;
+	int account_id;
+	unsigned int count, packet_len, buyer_id;
+	struct s_packet_db* info = &packet_db[sd->packet_ver][RFIFOW(fd,0)];
+
+	packet_len = RFIFOW(fd,info->pos[0]);
+
+	if( packet_len < 12 )
+	{// minimum packet length
+		ShowError("clif_parse_ReqTradeBuyingStore: Malformed packet (expected length=%u, length=%u, account_id=%d).\n", 12, packet_len, sd->bl.id);
+		return;
+	}
+
+	account_id = RFIFOL(fd,info->pos[1]);
+	buyer_id   = RFIFOL(fd,info->pos[2]);
+	itemlist   = RFIFOP(fd,info->pos[3]);
+
+	// so that buyingstore_trade knows, how many elements it has access to
+	packet_len-= info->pos[3];
+
+	if( packet_len%blocksize )
+	{
+		ShowError("clif_parse_ReqTradeBuyingStore: Unexpected item list size %u (account_id=%d, buyer_id=%d, block size=%u)\n", packet_len, sd->bl.id, account_id, blocksize);
+		return;
+	}
+	count = packet_len/blocksize;
+
+	buyingstore_trade(sd, account_id, buyer_id, itemlist, count);
+}
+
+
+/// Notifies the buyer, that the buying store has been closed due to a post-trade condition (ZC_FAILED_TRADE_BUYING_STORE_TO_BUYER)
+/// 081a <result>.W
+/// result:
+///     3 = "All items within the buy limit were purchased." (0x6cf, MSI_BUYINGSTORE_TRADE_OVERLIMITZENY)
+///     4 = "All items were purchased." (0x6d0, MSI_BUYINGSTORE_TRADE_BUYCOMPLETE)
+/// other = nothing
+void clif_buyingstore_trade_failed_buyer(struct map_session_data* sd, short result)
+{
+	int fd = sd->fd;
+
+	WFIFOHEAD(fd,packet_len(0x81a));
+	WFIFOW(fd,0) = 0x81a;
+	WFIFOW(fd,2) = result;
+	WFIFOSET(fd,packet_len(0x81a));
+}
+
+
+/// Updates the zeny limit and an item in the buying store item list (ZC_UPDATE_ITEM_FROM_BUYING_STORE)
+/// 081b <name id>.W <amount>.W <limit zeny>.L
+void clif_buyingstore_update_item(struct map_session_data* sd, unsigned short nameid, unsigned short amount)
+{
+	int fd = sd->fd;
+
+	WFIFOHEAD(fd,packet_len(0x81b));
+	WFIFOW(fd,0) = 0x81b;
+	WFIFOW(fd,2) = nameid;
+	WFIFOW(fd,4) = amount;  // amount of nameid received
+	WFIFOW(fd,6) = sd->buyingstore.zenylimit;
+	WFIFOSET(fd,packet_len(0x81b));
+}
+
+
+/// Deletes item from inventory, that was sold to a buying store (ZC_ITEM_DELETE_BUYING_STORE)
+/// 081c <index>.W <amount>.W <price>.L
+/// message:
+///     "%s (%d) were sold at %dz." (0x6d2, MSI_BUYINGSTORE_TRADE_SELLCOMPLETE)
+///
+/// @note   This function has to be called _instead_ of clif_delitem/clif_dropitem.
+void clif_buyingstore_delete_item(struct map_session_data* sd, short index, unsigned short amount, int price)
+{
+	int fd = sd->fd;
+
+	WFIFOHEAD(fd,packet_len(0x81c));
+	WFIFOW(fd,0) = 0x81c;
+	WFIFOW(fd,2) = index+2;
+	WFIFOW(fd,4) = amount;
+	WFIFOL(fd,6) = price;  // price per item, client calculates total Zeny by itself
+	WFIFOSET(fd,packet_len(0x81c));
+}
+
+
+/// Notifies the seller, that a buying store trade failed (ZC_FAILED_TRADE_BUYING_STORE_TO_SELLER)
+/// 0824 <result>.W <name id>.W
+/// result:
+///     5 = "The deal has failed." (0x39, MSI_DEAL_FAIL)
+///     6 = "The trade failed, because the entered amount of item %s is higher, than the buyer is willing to buy." (0x6d3, MSI_BUYINGSTORE_TRADE_OVERCOUNT)
+///     7 = "The trade failed, because the buyer is lacking required balance." (0x6d1, MSI_BUYINGSTORE_TRADE_LACKBUYERZENY)
+/// other = nothing
+void clif_buyingstore_trade_failed_seller(struct map_session_data* sd, short result, unsigned short nameid)
+{
+	int fd = sd->fd;
+
+	WFIFOHEAD(fd,packet_len(0x824));
+	WFIFOW(fd,0) = 0x824;
+	WFIFOW(fd,2) = result;
+	WFIFOW(fd,4) = nameid;
+	WFIFOSET(fd,packet_len(0x824));
+}
+
+
 /*==========================================
  * パケットデバッグ
  *------------------------------------------*/
@@ -14435,8 +14745,8 @@ static int packetdb_readdb(void)
 #else // for Party booking ( PACKETVER >= 20091229 )
 	   -1, -1, 18,  4,  8,  6,  2,  4, 14, 50, 18,  6,  2,  3, 14, 20,
 #endif
-	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+	    3, -1,  8, -1,  86, 2,  6,  6, -1, -1,  4, 10, 10,  0,  0,  0,
+	    0,  0,  0,  0,  6,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 	};
 	struct {
@@ -14628,6 +14938,11 @@ static int packetdb_readdb(void)
 		{clif_parse_PartyBookingDeleteReq,"bookingdelreq"},
 #endif
 		{clif_parse_PVPInfo,"pvpinfo"},
+		// Buying Store
+		{clif_parse_ReqOpenBuyingStore,"reqopenbuyingstore"},
+		{clif_parse_ReqCloseBuyingStore,"reqclosebuyingstore"},
+		{clif_parse_ReqClickBuyingStore,"reqclickbuyingstore"},
+		{clif_parse_ReqTradeBuyingStore,"reqtradebuyingstore"},
 		{NULL,NULL}
 	};
 

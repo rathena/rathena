@@ -14807,6 +14807,23 @@ BUILDIN_FUNC(pushpc)
 	return 0;
 }
 
+
+/// Invokes buying store preparation window
+/// buyingstore <slots>;
+BUILDIN_FUNC(buyingstore)
+{
+	struct map_session_data* sd;
+
+	if( ( sd = script_rid2sd(st) ) == NULL )
+	{
+		return 0;
+	}
+
+	buyingstore_setup(sd, script_getnum(st,2));
+	return 0;
+}
+
+
 // declarations that were supposed to be exported from npc_chat.c
 #ifdef PCRE_SUPPORT
 BUILDIN_FUNC(defpattern);
@@ -15168,6 +15185,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(areamobuseskill,"siiiiviiiii"),
 	BUILDIN_DEF(progressbar,"si"),
 	BUILDIN_DEF(pushpc,"ii"),
+	BUILDIN_DEF(buyingstore,"i"),
 	// WoE SE
 	BUILDIN_DEF(agitstart2,""),
 	BUILDIN_DEF(agitend2,""),

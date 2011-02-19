@@ -4,7 +4,7 @@
 //= A reference manual for the eAthena scripting language.
 //= Commands are sorted depending on their functionality.
 //===== Version ===========================================
-//= 3.35.20110106
+//= 3.36.20110219
 //=========================================================
 //= 1.0 - First release, filled will as much info as I could
 //=       remember or figure out, most likely there are errors,
@@ -155,6 +155,8 @@
 //=       Spellcheck. [Ai4rei]
 //= 3.35.20110106
 //=       Removed bug warning from 'deletearray'. [Ai4rei]
+//= 3.36.20110219
+//=       Added 'buyingstore' command. [Ai4rei]
 //=========================================================
 
 This document is a reference manual for all the scripting commands and functions 
@@ -4422,6 +4424,19 @@ Example(s):
 	
 //The invoked character will no longer automatically equip a falchion.
 	autoequip 1104,0;
+
+---------------------------------------
+
+*buyingstore <slots>;
+
+Invokes buying store preparation window like the skill 'Open Buying Store',
+without the item requirement. Amount of slots is limited by the server to
+a maximum of 5 slots by default.
+
+Example:
+
+	// Gives the player oppurtunity to buy 4 different kinds of items.
+	buyingstore 4;
 
 ---------------------------------------
 //

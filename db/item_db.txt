@@ -3293,7 +3293,7 @@
 //6362,Yellow_Wish_Point,Yellow Wish Point,3,100,,5,,,,,,,,,,,,,{},{},{}
 //6363,Lime_Green_Point,Lime Green Point,3,100,,5,,,,,,,,,,,,,{},{},{}
 //6376,KVM_Badge
-//6377,Buy_Stall_Permit,Purchase Street Stall License,3,200,,10,,,,,,,,,,,,,{},{},{}
+6377,Buy_Stall_Permit,Purchase Street Stall License,3,200,,10,,,,,,,,,,,,,{},{},{}
 //6378
 //6379
 //6380
@@ -4823,7 +4823,7 @@
 //12471,LV5_Adrenaline_Scroll,
 //12472,Convex_Mirror,
 //12475,Cure_Free,
-//12548,Shabby_Purchase_Street_Stall_License,
+12548,Shabby_Purchase_Street_Stall_License,Shabby Purchase Street Stall License,2,500,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ buyingstore 2; },{},{}
 //12553,Brysingamen_Piece_Box,
 //12554,Asprika_Piece_Box,
 //12555,Brynhild_Piece_Box,

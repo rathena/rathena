@@ -1,5 +1,8 @@
 Date	Added
 
+2011/02/19
+	* Rev. 14713 Added map-server feature settings file 'battle/feature.conf'. [Ai4rei]
+	- Added setting 'feature.buying_store' to enable/disable the buying store system.
 2011/02/15
 	* Rev. 14707 Added map-server battle setting 'gm_check_minlevel'. [Ai4rei]
 2011/02/06

@@ -481,6 +481,7 @@ extern struct Battle_Config
 	int client_reshuffle_dice;  // Reshuffle /dice
 	int client_sort_storage;
 	int gm_check_minlevel;  // min GM level for /check
+	int feature_buying_store;
 
 	// [BattleGround Settings]
 	int bg_update_interval;

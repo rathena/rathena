@@ -1,7 +1,7 @@
 #PickLog types (M)onsters Drop, (P)layers Drop/Take, Mobs Drop (L)oot Drop/Take,
 # Players (T)rade Give/Take, Players (V)ending Sell/Take, (S)hop Sell/Take, (N)PC Give/Take,
 # (C)onsumable Items, (A)dministrators Create/Delete, Sto(R)age, (G)uild Storage,
-# (E)mail attachment
+# (E)mail attachment,(B)uying Store
 
 #Database: log
 #Table: picklog
@@ -9,7 +9,7 @@ CREATE TABLE `picklog` (
   `id` int(11) NOT NULL auto_increment,
   `time` datetime NOT NULL default '0000-00-00 00:00:00',
   `char_id` int(11) NOT NULL default '0',
-  `type` enum('M','P','L','T','V','S','N','C','A','R','G','E') NOT NULL default 'P',
+  `type` enum('M','P','L','T','V','S','N','C','A','R','G','E','B') NOT NULL default 'P',
   `nameid` int(11) NOT NULL default '0',
   `amount` int(11) NOT NULL default '1',
   `refine` tinyint(3) unsigned NOT NULL default '0',
@@ -22,7 +22,7 @@ CREATE TABLE `picklog` (
   INDEX (`type`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
-#ZenyLog types (M)onsters,(T)rade,(V)ending Sell/Buy,(S)hop Sell/Buy,(N)PC Change amount,(A)dministrators,(E)Mail
+#ZenyLog types (M)onsters,(T)rade,(V)ending Sell/Buy,(S)hop Sell/Buy,(N)PC Change amount,(A)dministrators,(E)Mail,(B)uying Store
 #Database: log
 #Table: zenylog
 CREATE TABLE `zenylog` (
@@ -30,7 +30,7 @@ CREATE TABLE `zenylog` (
   `time` datetime NOT NULL default '0000-00-00 00:00:00',
   `char_id` int(11) NOT NULL default '0',
   `src_id` int(11) NOT NULL default '0',
-  `type` enum('M','T','V','S','N','A','E') NOT NULL default 'S',
+  `type` enum('M','T','V','S','N','A','E','B') NOT NULL default 'S',
   `amount` int(11) NOT NULL default '0',
   `map` varchar(11) NOT NULL default '',
   PRIMARY KEY  (`id`),

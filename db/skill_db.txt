@@ -938,6 +938,9 @@
 // Episode 13.3
 //2534,0,0,0,0,0,0,9,0,no,0,0,0,none,0		RETURN_TO_ELDICASTES,
 
+// Buying Store
+2535,0,0,4,0,0x1,0,1,0,no,0,0x1,0,none,0,	ALL_BUYING_STORE,Open Buying Store
+
 8001,9,6,4,0,0x1,0,5,1,no,0,0,0,magic,0,	HLIF_HEAL,Healing Touch
 8002,0,6,4,0,0x3,-1,5,1,no,0,0,0,none,0,	HLIF_AVOID,Avoid
 8003,0,0,0,0,0,1,5,0,no,0,0,0,none,0,		HLIF_BRAIN,Brain Surgery

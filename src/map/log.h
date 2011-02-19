@@ -36,9 +36,10 @@ typedef enum log_what {
 	LOG_USED_ITEMS          = 0x0100, // used by player
 	LOG_MVP_PRIZE           = 0x0200,
 	LOG_COMMAND_ITEMS       = 0x0400, // created/deleted through @/# commands
-	LOG_STORAGE_ITEMS	= 0x0800, // placed/retrieved from storage
-	LOG_GSTORAGE_ITEMS	= 0x1000, // placed/retrieved from guild storage
-	LOG_MAILS		= 0x2000  // mail system transactions
+	LOG_STORAGE_ITEMS       = 0x0800, // placed/retrieved from storage
+	LOG_GSTORAGE_ITEMS      = 0x1000, // placed/retrieved from guild storage
+	LOG_MAILS               = 0x2000, // mail system transactions
+	LOG_BUYING_STORE        = 0x4000, // buying store transactions
 } log_what;
 
 extern struct Log_Config {

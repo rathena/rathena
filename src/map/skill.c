@@ -5692,6 +5692,12 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case ALL_WEWISH:
 		clif_skill_nodamage(src,bl,skillid,skilllv,1);
 		break;
+	case ALL_BUYING_STORE:
+		if( sd )
+		{// players only, skill allows 5 buying slots
+			clif_skill_nodamage(src, bl, skillid, skilllv, buyingstore_setup(sd, MAX_BUYINGSTORE_SLOTS));
+		}
+		break;
 	default:
 		ShowWarning("skill_castend_nodamage_id: Unknown skill used:%d\n",skillid);
 		clif_skill_nodamage(src,bl,skillid,skilllv,1);

@@ -1150,7 +1150,7 @@ ACMD_FUNC(storage)
 {
 	nullpo_retr(-1, sd);
 	
-	if (sd->npc_id || sd->vender_id || sd->state.trading || sd->state.storage_flag)
+	if (sd->npc_id || sd->vender_id || sd->state.buyingstore || sd->state.trading || sd->state.storage_flag)
 		return -1;
 
 	if (storage_storageopen(sd) == 1)
@@ -1177,7 +1177,7 @@ ACMD_FUNC(guildstorage)
 		return -1;
 	}
 
-	if (sd->npc_id || sd->vender_id || sd->state.trading)
+	if (sd->npc_id || sd->vender_id || sd->state.buyingstore || sd->state.trading)
 		return -1;
 
 	if (sd->state.storage_flag == 1) {

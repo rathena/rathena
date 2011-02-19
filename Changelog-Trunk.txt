@@ -1,5 +1,9 @@
 Date	Added
 
+2011/02/19
+	* Implemented buying store system (aka. reverse vending, purchase shop) together with related skill and items, without NPCs. [Ai4rei]
+	- For SQL apply upgrade_svn14713_log.sql to upgrade tables `picklog` and `zenylog`; for TXT no action is necessary.
+	- Requires 2010-04-20aRagexeRE or later and can be disabled in 'conf/battle/feature.conf'.
 2011/02/17
 	* Merged enumeration update from renewal [14699/branches/renewal] for a future commit. [Ai4rei]
 2011/02/16
