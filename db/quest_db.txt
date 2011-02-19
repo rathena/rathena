@@ -440,6 +440,18 @@
 7081,0,0,0,0,0,0,0,"Helping the Laphine Craftsman"
 7082,86400,0,0,0,0,0,0,"Helping the Laphine Craftsman"
 
+// Novice Training Grounds
+7117,0,0,0,0,0,0,0,"Your first quest!"
+7118,0,0,0,0,0,0,0,"Novice Training"
+7119,0,0,0,0,0,0,0,"Novice Training"
+7120,0,0,0,0,0,0,0,"Novice Training"
+7121,0,0,0,0,0,0,0,"Novice Training"
+7122,0,1002,1,0,0,0,0,"First battle - Poring Hunt"
+7123,0,1049,2,0,0,0,0,"Battle Basics -Swordman"
+7124,0,1063,5,0,0,0,0,"Battle Basics -Mage"
+7126,0,0,0,0,0,0,0,"Selling items"
+7127,0,1010,5,0,0,0,0,"Battle Basics -Thief"
+
 7128,0,0,0,0,0,0,0,"Training course 'conquest a desert!' -start"
 7129,0,1009,10,0,0,0,0,"The training course 'conquer the desert!' - A real battle 1"
 7130,0,1107,10,0,0,0,0,"The training course 'conquer the desert!' - A real battle 2"
