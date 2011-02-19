@@ -541,7 +541,7 @@ int mmo_char_tostr(char *str, struct mmo_charstatus *p, struct global_reg *reg, 
 		p->last_point.map, p->last_point.x, p->last_point.y, //
 		p->save_point.map, p->save_point.x, p->save_point.y,
 		p->partner_id,p->father,p->mother,p->child,p->fame, //
-		TOL(p->delete_date));  // FIXME: platform-dependent size
+		(unsigned long)p->delete_date);  // FIXME: platform-dependent size
 	for(i = 0; i < MAX_MEMOPOINTS; i++)
 		if (p->memo_point[i].map) {
 			str_p += sprintf(str_p, "%d,%d,%d ", p->memo_point[i].map, p->memo_point[i].x, p->memo_point[i].y);
