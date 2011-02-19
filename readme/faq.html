@@ -1,151 +1,31 @@
-<html><head><title>eAthena - FAQ</title><head>
-
-<link rel="stylesheet" type="text/css" href="./readme.css">
-
-<body>
-<div id="dleftbg">
-</div>
-<div id="drightbg">
-</div>
-<div id="canvas" align="center">
-<table cellspacing="0" cellpadding="0" border="0" id="ea" align="center">
-	<tr>
-		<td id="leftborder" valign="top">
-			<table cellspacing="0" cellpadding="0" border="0">
-				<tr>
-					<td id="leftborderspacer">
-					</td>
-				</tr>
-				<tr>
-					<td valign="top">
-					<img src="./images/leftborder.gif">
-					</td>
-				</tr>
-			</table>
-		</td>
-		<td id="middle" valign="top">
-			<table cellspacing="0" cellpadding="0" border="0" valign="top">
-				<tr>
-					<td id="logo" valign="top">
-						<table class="w800" cellspacing="0" cellpadding="0" border="0">
-							<tr>
-								<td valign="top">
-									<table class="w800" cellspacing="0" cellpadding="0" border="0" height="100%">
-										<tr>
-											<td rowspan="4">
-												<img src="./images/chara.gif" width="366" height="274">
-											</td>
-											<td rowspan="4" width="129">
-											</td>
-											<td colspan="2" width="305" height="51" align="right">
-												<img src="./images/banner.gif" width="305" height="51">
-											</td>
-										</tr>
-										<tr>
-											<td id="title" colspan="2" align="right">
-												FAQ
-											</td>
-										</tr>
-										<tr>
-											<td height="81" colspan="2">
-											</td>
-										</tr>
-										<tr>
-											<td class="navi" align="right">
-												<a href="../readme.html">Introduction</a><br>
-												<a href="./changelog.html">Changelog</a><br>
-												<a href="./features.html">Features</a><br>
-												<a href="./npcfeatures.html">NPC Features</a>
-
-											</td>
-											<td class="navi" align="right">
-												<a href="./setup.html">Setup</a><br>
-												<a href="./gmcommands.html">GM Commands</a><br>
-												FAQ<br>
-												<a href="./resources.html">Resources</a>
-											</td>
-										</tr>
-									</table>
-								</td>
-							</tr>
-							<tr>
-								<td id="btmborder">
-									<table class="w800" cellspacing="0" cellpadding="0" border="0" height="2">
-										<tr>
-											<td id="leftbtmborder"">
-											</td>
-											<td id="midbtmborder"">
-												<img src="./images/btmborder.gif" width="44" height="2">
-											</td>
-											<td id="rightbtmborder">
-											</td>
-										</tr>
-									</table>
-								</td>
-							</tr>
-							<tr>
-								<td id="content">
-									<table class="w800" cellspacing="0" cellpadding="0" border="0" height="100%">
-										<tr>
-											<td id="lefttext" valign="top">
-<h1>FAQ</h1>
-<b>Q: I get the error message "This application has failed to start because cygwin1.dll was not found. Re-installing the application may fix this problem."</b><br>
- 	A: You're missing the cygwin dlls. Please get the latest dll at: http://www.cygwin.com/snapshot. If you're unsure, asking around in our IRC chatroom will get you around too, but always remember - use common sense and search before asking.<br><br>
-<b>Q: My map-server won't load! It appears to be loading things before it dissapeared suddenly! HELP!</b><br>
-	A: Use command line to load map-server. It should tell you the error. If you're missing a map, update your kRO Sakray or comment the map from map_athena.conf. If you have an errornous NPC, fix it or comment it off. Anything other than that, feel free to ask around<br><br>
-<b>Q: My map-server failed to load 'adata.grf'! Where do I find this adata.grf? My map-server won't load without it!</b><br>
-	A: The error that caused the map-server to not load is not the adata.grf. adata.grf is NOT a requirement for the map-server to load. The error is probably related to something else.<br><br>
-											</td>
-											<td id="midtext">
-											</td>
-											<td id="righttext" valign="top">
-<b>Q: All 3 of the servers are loaded, but I am still having problems accessing it! What do I do?</b><br>
-	A: First, check the IPs in map_athena.conf and char_athena.conf. If those are correct, check the ports to make sure they match. If that's correct too, you probably cannot handle the server load. Lower the monster spawning rate using mob_count in battle_athena.conf and it should be fine.<br><br>
-<b>Q: How do I start Guild Wars/War of Emperium??? HELP!!!</b><br>
-	A: Read the GM Command page for full list of commands that GMs can use, including the command for this.<br><br>
-<b>Q: My Ragnarok Online crashed while playing with eAthena! What do I do now?</b><br>
-	A: Well, if your Ragnarok crashes, it's most probably not anything to do with eAthena. Something is wrong with your Ragnarok installation. Try reinstalling or updating.<br><br>
-<b>Q: Is eAthena compatible with mySQL? Can I use mySQL as the DB instead of using text files?</b><br>
-	A: Yes, eAthena is compatible with mySQL. A tutorial on how to setup this is coming soon.<br><br>
-<b>Q: Is eAthena compatible with msSQL? Can I use msSQL as the DB instead of using text files?</b><br>
-	A: No, eAthena is not compatible with msSQL. You cannot use msSQL with eAthena.<br><br>
-<b>Q: I found a bug! Where do I report it?</b><br>
-	A: Drop the developers a line at the IRC chatroom. Or just post it in the bug report forum. We check them out too. :)<br><br>
-<b>Q: I know alot of C and I'm able to help improve eAthena and add new features. How can I join your development team?</b><br>
-	A: Try talking to one of the current developers in the eAthena channel.
-			
-											</td>
-										</tr>
-										<tr>
-											<td colspan="3">
-												&copy; Content Copyright 2005 eAthena Development Team/Evera<br>
-												&copy; Design Copyright 2005 Evera
-											</td>
-										</tr>
-									</table>
-								</td>
-							</tr>			
-						</table>
-					</td>
-				</tr>
-			</table>
-		</td>
-		<td id="rightborder" valign="top">
-			<table cellspacing="0" cellpadding="0" border="0">
-				<tr>
-					<td id="rightborderspacer">
-					</td>
-				</tr>
-				<tr>
-					<td valign="top">
-					<img src="./images/rightborder.gif">
-					</td>
-				</tr>
-			</table>
-		</td>
-
-	</tr>
-
-</table>
-</div>
-
+<html>
+    <head>
+        <title>eAthena | FAQ</title>
+        <link rel="stylesheet" type="text/css" href="style.css">
+    </head>
+    <body>
+    	<div id="template">
+            <div id="header">
+                <div class="logo">eAthena<br /><span class="subtitle">- RAGNAROK Online Server Emulator</span></div>
+                <div class="title">FAQ</div>
+            </div>
+            <div id="navcontainer">
+                <ul id="navlist">
+                    <li><a href="../readme.html">Intro</a></li>
+                    <li><a href="setup.html">Setup</a></li>
+                    <li><a href="faq.html">FAQ</a></li>
+                    <li><a href="scripting.html">Scripting</a></li>
+                    <li><a href="commands.html">GM Commands</a></li>
+                    <li><a href="resources.html">Resources</a></li>
+                </ul>
+            </div>
+                
+            <div class="body-container">
+            	The following are frequently asked questions regarding eAthena.<br /><br />
+                <iframe width="100%" height="75%" src="faq-content.html"></iframe><br />
+            </div>
+            
+            <div id="footer">"Read Me" Created & Designed by <a href="http://www.kisuka.com" target="_new">Kisuka</a></div>
+		</div>
+    </body>
+</html>

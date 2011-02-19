@@ -1,0 +1,2299 @@
+//===== eAthena Script =======================================
+//= New Novice Training Grounds
+//===== By: ==================================================
+//= Kisuka
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= eAthena SVN
+//===== Description: =========================================
+//= New Novice Training Grounds
+//= [Hand Scripted (No Programs or AEGIS Scripts)]
+//===== Important Note: ======================================
+//= Its recommended that you have Renewal EXP Table!
+//= Lower the 'getexp' rewards if your not using renewal exp table!
+//===== Additional Comments: =================================
+//= 1.0 First version. [Kisuka]
+//============================================================
+
+//============================================================================
+// Sprakki (Start of Novice Training Ground, Outside Castle)
+//============================================================================
+new_1-1,53,114,4	script	Sprakki#nv1	90,{
+	if(job_novice_q < 1) {
+		mes "[Sprakki]";
+		mes "Hello there! Welcome to the World of Ragnarok Online. My name is Sprakki and I'm in charge of giving you basic gameplay tips.";
+		mes "Click on the [Next] button or press [Enter] to continue.";
+		next;
+		mes "[Sprakki]";
+		mes "First you need to learn the very basics of controlling your character.";
+		mes "All the basic ^4A4AFFmoves, selection of items, and attacks^000000 use the ^4A4AFFleft click of the mouse^000000.";
+		next;
+		cutin "tutorial01",3;
+		mes "-! Info !-";
+		mes "Click on the ground to move the character.";
+		mes "Attacking monsters and conversations with the people of this world can be done by simply clicking on them.";
+		next;
+		cutin "",255;
+		mes "[Sprakki]";
+		mes "First off, try moving around.";
+		mes "Do you see that wooden bridge to the right?";
+		next;
+		setquest 7117;
+		set job_novice_q,1;
+		mes "[Sprakki]";
+		mes "Walk over that bridge and there's a castle used as the Training Center.";
+		mes "I will be waiting for you inside of that Castle. Please come to the castle by yourself.";
+		next;
+		cutin "tutorial02",3;
+		mes "-! Info !-";
+		mes "You've received a quest from Sprakki.";
+		mes "You can check the contents of the quest in the Quest Info Window.";
+		next;
+		mes "[Sprakki]";
+		mes "I will wait inside the Training Center across the bridge.";
+		next;
+		mes "-! Info !-";
+		mes "You can open the Quest Info Window by pressing the ^4A4AFFALT + U^000000 keys at the same time.";
+		next;
+		cutin "",255;
+		mes "[Sprakki]";
+		mes "Have you checked the Quest Info Window?";
+		mes "I'll be waiting in the castle across the bridge.";
+		close;
+	} else {
+		mes "[Sprakki]";
+		mes "I will be waiting for you across the Bridge to the east.";
+		close;
+	}
+}
+
+//============================================================================
+// Sprakki (Inside Castle)
+//============================================================================
+new_1-2,100,29,4	script	Sprakki#nv2	90,{
+	if(job_novice_q < 1) {
+		mes "[Sprakki]";
+		mes "Hello there! Welcome to the World of Ragnarok Online. My name is Sprakki and I'm in charge of giving you basic gameplay tips.";
+		mes "Click on the [Next] button or press [Enter] to continue.";
+		next;
+		mes "[Sprakki]";
+		mes "First you need to learn the very basics of controlling your character.";
+		mes "All the basic ^4A4AFFmoves, selection of items, and attacks^000000 use the ^4A4AFFleft click of the mouse^000000.";
+		next;
+		cutin "tutorial01",3;
+		mes "-! Info !-";
+		mes "Click on the ground to move the character.";
+		mes "Attacking monsters and conversations with the people of this world can be done by simply clicking on them.";
+		next;
+		cutin "",255;
+		setquest 7117;
+		set job_novice_q,1;
+		mes "[Sprakki]";
+		mes "Well then, I will give you a quest to talk to me.";
+		mes "After the conversation is over, talk to me again by left-clicking on me.";
+		next;
+		cutin "tutorial02",3;
+		mes "-! Info !-";
+		mes "You've received a quest from Sprakki.";
+		mes "You can check the contents of the quest in the Quest Info Window by pressing the ^4A4AFFAlt + U^000000 keys at the same time.";
+		next;
+		cutin "",255;
+		mes "[Sprakki]";
+		mes "Have you checked the Quest Info Window?";
+		mes "Well, talk to me again.";
+		close;
+	} else {
+		if(job_novice_q == 1) {
+			getexp 300,0;
+			getexp 300,5;
+			completequest 7117;
+			set job_novice_q,2;
+			mes "[Sprakki]";
+			mes "Great!";
+			mes "Now you know how to move and talk to others, right?";
+			next;
+		}
+		mes "[Sprakki]";
+		mes "The training Center is prepared for novices just like you.";
+		mes "You are going to be trained to get used to the basics of the Game.";
+		next;
+		select("Begin Training.");
+		mes "[Sprakki]";
+		mes "I will guide you to the Novice Training Center.";
+		mes "Inside, Instructor 'Brade' will be waiting to speak to you.";
+		next;
+		setquest 7118;
+		set job_novice_q,3;
+		mes "[Sprakki]";
+		mes "Instructor 'Brade' will help you afterwards.";
+		mes "Please, Go see him.";
+		next;
+		mes "^4A4AFF- You received a quest 'Novice Training Ground-1' from Sprakki.^000000";
+		mes "^4A4AFFPlease check the Quest Info Window.-^000000";
+		close2;
+		savepoint "new_1-2",100,100;
+		warp "new_1-2",100,100;
+		end;
+	}
+}
+
+
+//============================================================================
+// Instructor Brade
+//============================================================================
+new_1-2,100,105,4	script	Brade#nv	733,{
+	if(job_novice_q < 3) {
+		mes "[Instructor Brade]";
+		mes "How did you get here?";
+		close2;
+		warp "new_1-1",53,111;
+		end;
+	}
+	else if(job_novice_q == 3) {
+		getexp 300,0;
+		getexp 300,0;
+		getexp 300,10;
+		completequest 7118;
+		set job_novice_q,4;
+		mes "[Instructor Brade]";
+		mes "Great.";
+		mes "You've completed the given quest successfully, so I will reward you with experience points.";
+		next;
+		mes "[Instructor Brade]";
+		mes "Experience Points you've earned from hunting or finishing quests can be checked by tracking the EXP Bar, located at the upper-left side of the display.";
+		next;
+		mes "[Instructor Brade]";
+		mes "Sigh... I will just talk roughly.";
+		mes "...I just can't get used to";
+		mes "'politeness' you know.";
+		mes "Don't look at me like that!";
+		next;
+		mes "[Instructor Brade]";
+		mes "Ok look alive you maggot.";
+		mes "Next up is items and equipment.";
+		next;
+		mes "[Instructor Brade]";
+		mes "First, take these.";
+		mes "These are very basic equipments and recovery potions.";
+		getitem 2352,1;	// Novice_Plate
+		getitem 2510,1;	// Novice_Hood
+		getitem 2414,1;	// Novice_Boots
+		getitem 5055,1;	// Novice_Egg_Cap
+		getitem 1243,1;	// Novice_Knife
+		getitem 2112,1;	// Novice_Guard
+		getitem 569,300;	// Novice_Potion
+		setquest 7119;
+		set job_novice_q,5;
+		next;
+		mes "[Instructor Brade]";
+		mes "In the upper left Basic Info Window, press the 'Item' icon to open the Item Window.";
+		mes "The item window has 3 sections...";
+		next;
+		mes "[Instructor Brade]";
+		mes "consumable items, equipment and other items.";
+		mes "If you want to use or equip items, double-click on the item or drag them into the Equipment Window.";
+		next;
+		mes "[Instructor Brade]";
+		mes "You can see detailed info of each item by right-clicking on the item.";
+		mes "Do that and the info will pop-up in a separate window.";
+		next;
+		cutin "tutorial04",3;
+		mes "!- Info -!";
+		mes "Double-click on the item to see the detailed information.";
+		next;
+		mes "!- Info -!";
+		mes "Right-click on other players to show the Community Menu and you can join a party, request trades, etc.";
+		next;
+		cutin "",255;
+		mes "[Instructor Brade]";
+		mes "Why don't you equip the items I gave you earlier?";
+		mes "^4A4AFFDouble-Click^000000 on the item you want to equip. Let us continue after you are done gearing up.";
+		next;
+		cutin "tutorial03",3;
+		mes "!- Info -!";
+		mes "Items can be easily equipped or used by simply clicking on them.";
+		mes "The Hot Key to open the Item Window is Alt + E.";
+		next;
+		mes "!- Info -!";
+		mes "To check on the items that are currently equipped, use the hot key Alt + Q.";
+		mes "Or, drag the item on to the item slot you want the item to be equipped.";
+		next;
+		mes "!- Info -!";
+		mes "Equip all of the equipment given by Instructor Brade.";
+		close2;
+		cutin "",255;
+		end;
+	}
+	else if(job_novice_q == 4) {
+		mes "[Instructor Brade]";
+		mes "Uh... Where were we? Oh right, let's continue.";
+		mes "It's about items and equipments.";
+		next;
+		mes "[Instructor Brade]";
+		mes "Take these.";
+		mes "Basic equipments and recovery potions.";
+		getitem 2352,1;	// Novice_Plate
+		getitem 2510,1;	// Novice_Hood
+		getitem 2414,1;	// Novice_Boots
+		getitem 5055,1;	// Novice_Egg_Cap
+		getitem 1243,1;	// Novice_Knife
+		getitem 2112,1;	// Novice_Guard
+		getitem 569,300;	// Novice_Potion
+		setquest 7119;
+		set job_novice_q,5;
+		next;
+		mes "[Instructor Brade]";
+		mes "In the upper left Basic Info Window, press the 'Item' icon to open the Item Window.";
+		mes "The item window is divided into...";
+		next;
+		mes "[Instructor Brade]";
+		mes "3 sections: consumable items, equipment and other items.";
+		mes "If you want to use or equip items, double-click on the item or drag them into the Equipment Window.";
+		next;
+		mes "[Instructor Brade]";
+		mes "You can see detailed info of each item by right-clicking on the item.";
+		mes "Do that and the info will pop-up in a separate window.";
+		next;
+		cutin "tutorial04",3;
+		mes "!- Info -!";
+		mes "Double-click on the item to see the detailed information.";
+		next;
+		mes "!- Info -!";
+		mes "Right-click on other players to show the Community Menu and you can join a party, request trades, etc.";
+		next;
+		cutin "",255;
+		mes "[Instructor Brade]";
+		mes "Why don't you equip the items I gave you earlier?";
+		mes "^4A4AFFDouble-Click^000000 on the item you want to equip. Let us continue after you are done gearing up.";
+		next;
+		cutin "tutorial03",3;
+		mes "!- Info -!";
+		mes "Items can be easily equipped or used by simply clicking on them.";
+		mes "The Hot Key to open the Item Window is Alt + E.";
+		next;
+		mes "!- Info -!";
+		mes "To check on the items that are currently equipped, use the hot key Alt + Q.";
+		mes "Or, drag the item on to the item slot you want the item to be equipped.";
+		next;
+		mes "!- Info -!";
+		mes "Equip all of the equipment given by Instructor Brade.";
+		close2;
+		cutin "",255;
+		end;
+	}
+	else if(job_novice_q == 5 || job_novice_q == 6) {
+		set .@EquipCheck,0;
+		if (getequipisequiped(EQI_SHOES)) { set .@EquipCheck,.@EquipCheck+1; }
+		if (getequipisequiped(EQI_ARMOR)) { set .@EquipCheck,.@EquipCheck+1; }
+		if (getequipisequiped(EQI_GARMET)) { set .@EquipCheck,.@EquipCheck+1; }
+		if (getequipisequiped(EQI_HEAD_TOP)) { set .@EquipCheck,.@EquipCheck+1; }
+		if (getequipisequiped(EQI_HAND_L)) { set .@EquipCheck,.@EquipCheck+1; }
+		if (getequipisequiped(EQI_HAND_R)) { set .@EquipCheck,.@EquipCheck+1; }
+		if(.@EquipCheck >= 4) {
+			if(job_novice_q == 5) {
+				mes "[Instructor Brade]";
+				mes "You are all set.";
+				mes "You are coming along just fine.";
+				getexp 300,0;
+				getexp 300,0;
+				getexp 300,0;
+				getexp 300,15;
+				getitem 12323,50;	// N_Fly_Wing
+				getitem 12324,20;	// N_Butterfly_Wing
+				completequest 7119;
+				set job_novice_q,6;
+				next;
+				mes "[Instructor Brade]";
+				mes "Here's some Fly Wings and Butterfly Wings as a reward.";
+				mes "You don't need these in the Training Ground, but they will come in handy later.";
+				next;
+			}
+			mes "[Instructor Brade]";
+			mes "Next, are Hot Keys.";
+			mes "Press the ^4A4AFF12 key^000000 on your keyboard.";
+			mes "A box with 9 slots will pop up.";
+			next;
+			mes "[Instructor Brade]";
+			mes "Drag on the right corner of the Hot Key Window and you will be able to see the other pages of the Hot Key.";
+			next;
+			mes "[Instructor Brade]";
+			mes "The F1 to F9 keys are the designated hotkeys.";
+			mes "Just drag a skill or an item onto the Hot Key Window and press a corresponding key to use them right away.";
+			next;
+			cutin "tutorial05",3;
+			mes "!- Info -!";
+			mes "You can register a skill or an item to the Hot Key Window by just dragging them onto the Hot Key Slot.";
+			next;
+			mes "!- Info -!";
+			mes "Registered Skills or Items can be used/equipped by just pressing the corresponding key.";
+			next;
+			mes "!- Info -!";
+			mes "You can customize the Hot Key to use any keys you please as the Hot Key by changing the Shortcut configuration in the options menu.";
+			next;
+			mes "!- Info -!";
+			mes "Register skills and items that you use often so that you can use them easily";
+			next;
+			cutin "",255;
+			mes "[Instructor Brade]";
+			mes "The last part is how to use Skills.";
+			mes "But before that, you need to learn something first.";
+			next;
+			setquest 7120;
+			set job_novice_q,7;
+			mes "[Instructor Brade]";
+			mes "Somewhere in this room, there's someone named ^4A4AFFJinha^000000.";
+			mes "Find Jinha and learn the ^4A4AFF[First Aid]^000000 skill from him.";
+			next;
+			mes "[Instructor Brade]";
+			mes "Your lesson is after that.";
+			mes "Go find Jinha and learn the [First Aid] Skill. Then come back to me.";
+			close;
+		}else{
+			mes "[Instructor Brade]";
+			mes "Try to put on at least 4 of the equipment I gave you.";
+			mes "Put those shoes on, wear those clothes, and arm yourself with that weapon you maggot.";
+			close;
+		}
+	}
+	else if(job_novice_q == 7) {
+		mes "[Instructor Brade]";
+		mes "Somewhere in this room, there's someone named ^4A4AFFJinha^000000.";
+		mes "Find Jinha and learn the ^4A4AFF[First Aid]^000000 skill from him.";
+		close;
+	}
+	else if(job_novice_q == 8) {
+		mes "[Instructor Brade]";
+		mes "Now you've learned the [Firdt Aid] Skill.";
+		mes "Just as I told you before, by registering the First Aid Skill onto the Hot Key Window, you can use the skill fast and easy.";
+		next;
+		mes "[Instructor Brade]";
+		mes "And that's it, that's all I can teach you.";
+		mes "You see that exit to the west?";
+		mes "Move on to the next room and there will be another instructor waiting for you.";
+		next;
+		mes "[Instructor Brade]";
+		mes "We will be seeing each other soon enough.";
+		mes "But for now, go to the room to the west and get more information.";
+		next;
+		mes "[Instructor Brade]";
+		mes "You've come along fine this far.";
+		mes "This is not much, but that this as a reward.";
+		getitem 2393,1;	// N_Adventurer's_Suit
+		completequest 7120;
+		set job_novice_q,9;
+		close;
+	}
+	else if(job_novice_q > 8) {
+		mes "[Instructor Brade]";
+		mes "Next step of the Training is done in the room west of here.";
+		mes "If you are lost, I can send you there.";
+		next;
+		if(select("I can get there by myself.:Please, send me to the next room.") == 2) {
+			mes "[Instructor Brade]";
+			mes "Oh well.";
+			mes "I think it's better than seeing you lost and wandering about.";
+			mes "Hahahaha...";
+			close2;
+			warp "new_1-2",41,172;
+			end;
+		}
+		mes "[Instructor Brade]";
+		mes "Good. That's the attitude you must have.";
+		mes "You can't just lean on others to help you.";
+		mes "Now, go ahead.";
+		close;
+	}
+	else {
+		mes "[Instructor Brade]";
+		mes "Why are you still here?";
+		close2;
+		warp "prontera",156,90;
+		end;
+	}
+}
+
+//============================================================================
+// Instructor Jinha
+//============================================================================
+new_1-2,115,120,4	script	Jinha#nv	59,{
+	if(job_novice_q < 7) {
+		mes "[Jinha]";
+		mes "What can I help you with?";
+		mes "Hmm? You haven't followed the curriculum correctly.";
+		next;
+		mes "[Jinha]";
+		mes "You have to see Instructor Brade first before me. I will send you to Instructor Brade.";
+		close2;
+		warp "new_1-2",100,100;
+		end;
+	}
+	else if(job_novice_q == 7) {
+		mes "[Jinha]";
+		mes "Hello!";
+		mes "How can I help you?";
+		next;
+		select("I want to learn the use the [First Aid] Skill.");
+		mes "[Jinha]";
+		mes "That's right.";
+		mes "First Aid is the skill used to convert SP into HP when you are in danger.";
+		next;
+		specialeffect2 58;
+		specialeffect2 234;
+		mes "[Jinha]";
+		mes "It's recovery amount is small.";
+		mes "Still, it will help you not to faint from a critical hit.";
+		next;
+		skill 141,1,0;	// NV_FIRSTAID
+		set job_novice_q,8;
+		mes "[Jinha]";
+		mes "You can open the Skill Window by pressing the ^4A4AFFskill^000000 button in the Basic Window.";
+		mes "Hot Key is ^4A4AFFALT + S^000000.";
+		mes "Why don't you try the skill?";
+		next;
+		mes "[Jinha]";
+		mes "Good, now you know how to use the First Aid Skill, you have to move on to the next step.";
+		mes "Go back to Instructor Brade and show him what you've learned here.";
+		close;
+	}
+	else if(job_novice_q == 8) {
+		mes "[Jinha]";
+		mes "Didn't you learn the First Aid Skill already?";
+		mes "Have it checked by Instructor Brade.";
+		mes "If you don't know how to get to him, I will send you to him.";
+		next;
+		if(select("I'm good by myself.:Please, send me to him.") == 2) {
+			mes "[Jinha]";
+			mes "I will send you to Instructor Brade.";
+			close2;
+			warp "new_1-2",100,100;
+			end;
+		}
+		mes "[Jinha]";
+		mes "Very Good!";
+		mes "That's the right attitude!";
+		mes "You will be a great adventurer in the future.";
+		close;
+	}
+	else if(job_novice_q > 8) {
+		mes "[Jinha]";
+		mes "What can I do for you?";
+		mes "Next course will be continued in the West Room.";
+		mes "Go on to the west room.";
+		close;
+	}
+	else {
+		mes "[Jinha]";
+		mes "Why are you still here?";
+		close2;
+		warp "prontera",156,90;
+		end;
+	}
+}
+
+//============================================================================
+// People/Services in Ragnarok
+//============================================================================
+// ---------- Chocolat ----------
+new_1-2,32,172,4	script	Chocolat#nv	96,{
+	if(job_novice_q < 9) {
+		mes "[Chocolat]";
+		mes "Hmm? Strange.";
+		mes "Let me see that Traniee ID for a sec.";
+		next;
+		mes "[Chocolat]";
+		mes "You were still on the basic course.";
+		mes "You should go back to Instructor Brade or Jinha.";
+		next;
+		mes "[Chocolat]";
+		mes "If you don't know how to find them, I can send you to Instructor Brade, How about it?";
+		next;
+		if(select("I will go myself.:Will you do that for me?") == 2) {
+			mes "[Chocolat]";
+			mes "Sure.";
+			mes "I will see you later.";
+			close2;
+			warp "new_1-2",100,100;
+			end;
+		}
+		mes "[Chocolat]";
+		mes "Sure. Go out to the door to the right.";
+		close;
+	}
+	else if(job_novice_q == 9) {
+		mes "[Chocolat]";
+		mes "I will tell you about the people you will be seeing in Town.";
+		mes "There are many kinds of people in town and some of them will be helpful to know.";
+		next;
+		mes "[Chocolat]";
+		mes "There are a lot of people in town, but among them, these people are the most important to know.";
+		next;
+		mes "[Chocolat]";
+		mes "They are [Kafra] Agents standing right behind me and their rival company the [Cool Event].";
+		mes "When you visit a town for the first time, you should talk to Information [Soldier].";
+		next;
+		mes "[Chocolat]";
+		mes "Well then, let's hear from each of them.";
+		mes "Start by talking to the [Kafra] agent.";
+		setquest 7121;
+		set job_novice_q,10;
+		close;
+	}
+	else if(job_novice_q == 10) {
+		mes "[Chocolat]";
+		mes "Here, talk to these guys standing behind me.";
+		mes "Start with the [Kafra] gal behind me.";
+		close;
+	}
+	else if(job_novice_q == 11) {
+		mes "[Chocolat]";
+		mes "You've learned a lot about Kafra service huh?";
+		mes "From now on, you can use the Kafra Server.";
+		next;
+		mes "[Chocolat]";
+		mes "Next is Kafra's rival, [Cool Event] Staff!";
+		mes "[Cool Event] Staff specialize in events.";
+		mes "Well, why don't you talk to him yourself?";
+		close;
+	}
+	else if(job_novice_q == 12) {
+		mes "[Chocolat]";
+		mes "After [Kafra] and [Cool Event], are the Information [Soldier]s.";
+		mes "They can seem insignificant but they can help you greatly when the time comes.";
+		next;
+		mes "[Chocolat]";
+		mes "I've brought the Information Soldier from the City of Prontera.";
+		mes "Ask him what he actually does in town.";
+		close;
+	}
+	else if(job_novice_q == 13) {
+		mes "[Chocolat]";
+		mes "How was the guide of the Information [Soldier]?";
+		mes "Last is about using [Inn]s.";
+		mes "There's an Inn located in each town.";
+		next;
+		mes "[Chocolat]";
+		mes "You can rest at Inns or Hotels for a small fee.";
+		mes "Your HP and SP will be recovered completely by resting there.";
+		mes "Can't hurt to use one, eh?";
+		next;
+		mes "[Chocolat]";
+		mes "Besides these guys, there's many merchants selling various kind of items, so go check them out.";
+		completequest 7121;
+		getexp 300,0;
+		getexp 300,0;
+		getexp 300,0;
+		getexp 300,0;
+		getexp 300,0;
+		getexp 300,20;
+		getitem 7059,20;	// Cargo_Free_Ticket
+		getitem 7060,30;	// Warp_Free_Ticket
+		set job_novice_q,14;
+		next;
+		mes "[Chocolat]";
+		mes "You've completed all the quests I gave you.";
+		mes "As the reward, I will give you Free Tickets for Kafra Storage and Teleport Service.";
+		mes "They will come in handy.";
+		next;
+		mes "[Chocolat]";
+		mes "That's all for me.";
+		mes "Now, it's time for real combat!";
+		next;
+		mes "[Chocolat]";
+		mes "Real Combat Training will be given by Instructor Brade. You met him earlier.";
+		mes "I will send you to the Real Combat Training Field.";
+		close2;
+		savepoint "new_1-3",96,21;
+		warp "new_1-3",96,21;
+		end;
+	}
+	else if(job_novice_q > 13) {
+		mes "[Chocolat]";
+		mes "What can I do for you?";
+		next;
+		select("");
+		mes "[Chocolat]";
+		mes "I will send you to the Real Combat Training Field right away.";
+		close2;
+		savepoint "new_1-3",96,21;
+		warp "new_1-3",96,21;
+		end;
+	}
+	else {
+		mes "[Chocolat]";
+		mes "Why are you still here?";
+		close2;
+		warp "prontera",156,90;
+		end;		
+	}
+}
+
+
+// ---------- Kafra ----------
+new_1-2,29,176,4	script	Kafra#nv	117,{
+	if(job_novice_q < 10) {
+		mes "[Kafra Agent]";
+		mes "Hello.";
+		mes "I don't think it's my turn yet.";
+		mes "Please talk to 'Chocolat' first.";
+		close;
+	}
+	else if(job_novice_q == 10) {
+		mes "[Kafra Agent]";
+		mes "Hello.";
+		mes "I've been dispatched by the Kafra Head Office to help Trainees.";
+		mes "The Kafra Corporation is the world's largest company with a long and distinguished history on the Rune Midgard continent.";
+		mes "It's important for you adventurers to be close with us.";
+		next;
+		mes "[Kafra Agent]";
+		mes "I will inform you about the Kafra Services which you will be using most frequently, [Save], [Storage], and [Teleport] Services.";
+		next;
+		mes "[Kafra Agent]";
+		mes "When you talk to a Kafra Agent and ask for the Save Service, the location of where you will revive, after being defeated in battle, will be changed.";
+		next;
+		mes "[Kafra Agent]";
+		mes "Your Respawn Point is always the last place where you have saved.";
+		mes "Using a Butterfly Wing will return you to the place where you last saved.";
+		mes "This service is free to use, so feel free to use the Save Service anytime you like.";
+		next;
+		mes "[Kafra Agent]";
+		mes "Next is the Storage Service.";
+		mes "You can store and retrieve your items in any town at your convenience.";
+		next;
+		mes "[Kafra Agent]";
+		mes "It's unreasonable to carry all of your items with you when you don't need them right away.";
+		mes "Please use our Storage and keep your items safe and secure.";
+		next;
+		mes "[Kafra Agent]";
+		mes "Our convenient Storage Service is provided to our customers for a small fee which is different from town to town.";
+		mes "However, you must be at least ^4A4AFFBasic Skill Level 6^000000 to use the Storage.";
+		next;
+		mes "[Kafra Agent]";
+		mes "There are 7 different item sections of the Storage into which items are organized: Consumable, Kafra (Item Mall), Armor, Weapons, Ammo, Cards, and Etc items.";
+		next;
+		mes "[Kafra Agent]";
+		mes "There are a maximum of 600 Inventory Slots in Kafra Storage, meaning you can have up to 600 different kinds of total items in Storage.";
+		next;
+		mes "[Kafra Agent]";
+		mes "If you have a Premium Subscription, the maximum Inventory Slots in Kafra Storage is 600!";
+		mes "Remember though, that in the case of Equipment, each item takes up one Inventory Slot.";
+		mes "The maximum number of items that can be placed in Kafra Storage is 30,000.";
+		next;
+		mes "[Kafra Agent]";
+		mes "Storage is shared by everyone character on one account.";
+		mes "Storage Fees can vary for each Town.";
+		mes "So please keep that in mind when you are using our storage service.";
+		next;
+		mes "[Kafra Agent]";
+		mes "We also provide you with a Teleport Service to make your trips easier when you are trying to move a long distance.";
+		next;
+		mes "[Kafra Agent]";
+		mes "With our veteran teleporter's skill, your trip will be safer and more comfortable.";
+		mes "Oh and remember that the places you can teleport to vary from town to town.";
+		next;
+		mes "[Kafra Agent]";
+		mes "This is all for your never ending support. We are working hard to repay our debt to our customers.";
+		next;
+		mes "[Kafra Agent]";
+		mes "Do you want to hear another explanation?";
+		set job_novice_q,11;
+		next;
+		goto L_ServiceMenu;
+	}
+	else {
+		mes "[Kafra Agent]";
+		mes "Kafra Service at your service";
+		mes "What can I do for you?";
+		next;
+		select("About Kafra Service");
+		mes "[Kafra Agent]";
+		mes "I will explain about the Kafra Service.";
+		mes "Which service do you want to be informed about?";
+		next;
+		goto L_ServiceMenu;
+	}
+	
+	L_ServiceMenu:
+		while(1) {
+			switch(select("About Save:About Storage:About Teleport:About Cart:No More.")) {
+			case 1:
+				mes "[Kafra Agent]";
+				mes "When you are killed in battle, you can revive in the location you saved with this service.";
+				mes "If you save at a Kafra in a village, you can revive in the village you saved.";
+				next;
+				mes "[Kafra Agent]";
+				mes "Saved location is always where you saved last, and by using a Butterfly Wing, you can teleport directly to your saved point.";
+				mes "So feel free to use this service.";
+				next;
+				break;
+			case 2:
+				mes "[Kafra Agent]";
+				mes "Next is the Storage Service.";
+				mes "You can store and retrieve your items in any town at your convenience.";
+				next;
+				mes "[Kafra Agent]";
+				mes "It's unreasonable to carry all of your items with you when you don't need them right away.";
+				mes "Please use our Storage and keep your items safe and secure.";
+				next;
+				mes "[Kafra Agent]";
+				mes "Our convenient Storage Service is provided to our customers for a small fee which is different from town to town.";
+				mes "However, you must be at least ^4A4AFFBasic Skill Level 6^000000 to use the Storage.";
+				next;
+				mes "[Kafra Agent]";
+				mes "There are 7 different item sections of the Storage into which items are organized: Consumable, Kafra (Item Mall), Armor, Weapons, Ammo, Cards, and Etc items.";
+				next;
+				mes "[Kafra Agent]";
+				mes "There are a maximum of 600 Inventory Slots in Kafra Storage, meaning you can have up to 600 different kinds of total items in Storage.";
+				next;
+				mes "[Kafra Agent]";
+				mes "If you have a Premium Subscription, the maximum Inventory Slots in Kafra Storage is 600!";
+				mes "Remember though, that in the case of Equipment, each item takes up one Inventory Slot.";
+				mes "The maximum number of items that can be placed in Kafra Storage is 30,000.";
+				next;
+				mes "[Kafra Agent]";
+				mes "Storage is shared by everyone character on one account.";
+				mes "Storage Fees can vary for each Town.";
+				mes "So please keep that in mind when you are using our storage service.";
+				next;
+				break;
+			case 3:
+				mes "[Kafra Agent]";
+				mes "We also provide you with a Teleport Service to make your trips easier when you are trying to move a long distance.";
+				next;
+				mes "[Kafra Agent]";
+				mes "With our veteran teleporter's skill, your trip will be safer and more comfortable.";
+				mes "Oh and remember that the places you can teleport to vary from town to town.";
+				next;
+				mes "[Kafra Agent]";
+				mes "This is all for your never ending support. We are working hard to repay our debt to our customers.";
+				next;
+				break;
+			case 4:
+				mes "[Kafra Agent]";
+				mes "The Kafra corporation provides Cart rental services to customers engaged in commercial business.";
+				mes "Originally this cart rental service had been only provided by the merchant guild in Alberta.";
+				next;
+				mes "[Kafra Agent]";
+				mes "However, since we took over this service, our merchant customers have been able to rent carts from almost anywhere.";
+				mes "The cart rental service is available only for job classes engaged in commercial business such as ^4A4AFFMerchants, Blacksmiths, Alchemists, and Super Novices^000000.";
+				next;
+				mes "[Kafra Agent]";
+				mes "Of course you should learn the 'Pushcart' skill beforehand, otherwise you will not be able to rent a cart from us.";
+				mes "The rental fee varies by town, please keep that in mind.";
+				next;
+				break;
+			case 5:
+				mes "[Kafra Agent]";
+				mes "I hope you are satisfied with my explanation about the Kafra Service.";
+				close;
+			}
+		}
+}
+
+// ---------- Cool Event Staff ----------
+new_1-2,33,176,4	script	Cool Event Staff#nv	874,{
+	if(job_novice_q < 11) {
+		mes "[Cool Event Staff]";
+		mes "This is not my turn.";
+		mes "You finished talking to Kafra yet?";
+		close;
+	}
+	else if(job_novice_q == 11) {
+		mes "[Cool Event Staff]";
+		mes "Hello.";
+		mes "We are working hard to provide events on Rune Midgard similar to the Kafra service.";
+		next;
+		mes "[Cool Event Staff]";
+		mes "Our staff is here to support you with [storage], [save], and [teleport] services.";
+		next;
+		mes "[Cool Event Staff]";
+		mes "If there's no Kafra around you, we're around to help you.";
+		next;
+		mes "[Cool Event Staff]";
+		mes "We are working hard on a network of Events to make your life better.";
+		mes "I hope that you can meet our staff in Alberta.";
+		next;
+		mes "[Cool Event Staff]";
+		mes "Who knows, we might meet outside of this academy.";
+		next;
+		mes "[Cool Event Staff]";
+		mes "Mostly all of us wear red coats in the places that the Kafra Staff don't work for.";
+		set job_novice_q,12;
+		close;
+	}
+	else {
+		mes "[Cool Event Staff]";
+		mes "Most of our services are similar to those of Kafra.";
+		close;
+	}
+}
+
+// ---------- Soldier ----------
+new_1-2,36,176,4	script	Soldier#nv	105,{
+	if(job_novice_q < 12) {
+		mes "[Soldier]";
+		mes "It isn't my turn yet.";
+		mes "Listen to Chocolat.";
+		close;
+	}
+	else if(job_novice_q == 12) {
+		mes "[Soldier]";
+		mes "Soldiers are in each town to guide you to useful places.";
+		mes "Ask us where you want to go and we'll mark your mini maps with a ^4A4AFF+^000000.";
+		mes "Don't hesitate to ask us questions.";
+		next;
+		mes "[Soldier]";
+		mes "We all don't look the same in every town but our roles are the same.";
+		mes "Take note of this whenever you go to a new town.";
+		next;
+		mes "[Soldier]";
+		mes "If you want to go to your first town, you can do so once you have reached Base Level 11 in the training grounds.";
+		set job_novice_q,13;
+		close;
+	}
+	else {
+		mes "[Soldier]";
+		mes "What can I help you with?";
+		mes "Need me to explain what I do again?";
+		next;
+		if(select("Yes, I need an explanation.:Nope") == 2) {
+			mes "[Soldier]";
+			mes "Ok well talk to Chocolat if you're done talking with us.";
+			close;
+		}
+		mes "[Soldier]";
+		mes "Soldiers are in each town to guide you to useful places.";
+		mes "Ask us where you want to go and we'll mark your mini maps with a ^4A4AFF+^000000.";
+		mes "Don't hesitate to ask us questions.";
+		next;
+		mes "[Soldier]";
+		mes "We all don't look the same in every town but our roles are the same.";
+		mes "Take note of this whenever you go to a new town.";
+		next;
+		mes "[Soldier]";
+		mes "If you want to go to your first town, you can do so once you have reached Base Level 11 in the training grounds.";
+		close;
+	}
+}
+
+//============================================================================
+// Instructor Brade (Real Combat Training)
+//============================================================================
+-	script	Brade#nv::NvBrade	733,{
+	if(job_novice_q < 14) {
+		mes "[Brade]";
+		mes "How did you get here?";
+		close2;
+		warp "new_1-2",100,100;
+		end;
+	}
+	else if(job_novice_q == 14) {
+		mes "[Brade]";
+		mes "Welcome.";
+		mes "Now this is real practice.";
+		mes "We can practive real battle here.";
+		next;
+		mes "[Brade]";
+		mes "As I explained the first time, we can click on the monsters.";
+		mes "One attack per click.";
+		next;
+		mes "[Brade]";
+		mes "For convenience,";
+		mes "^4A4AFFIf you hold down the Ctrl key,^000000";
+		mes "while attacking, you will automatically attack.";
+		next;
+		mes "[Brade]";
+		mes "You can also set this mode before battle by typing ^4A4AFF[ /nc ]^000000.";
+		next;
+		mes "[Brade]";
+		mes "Then, let's go Poring hunting.";
+		mes "Please hunt Poring's on Level 1 of the training grounds.";
+		setquest 7122;
+		set job_novice_q,15;
+		getitem 569,100;	// Novice_Potion
+		next;
+		mes "^4A4AFF- You've received a quest from Instructor Brade.^000000";
+		mes "^4A4AFFPlease check the quest information window. -^000000";
+		close;
+	}
+	else if(job_novice_q == 15) {
+		if(checkquest(7122,HUNTING) == 2) {
+			mes "[Brade]";
+			mes "You can see it is not so hard, right?";
+			mes "Nice job.";
+			getitem 13040,1;	// N_Cutter
+			getexp 1000,0;
+			getexp 1000,0;
+			getexp 1000,30;
+			completequest 7122;
+			set job_novice_q,16;
+			next;
+			mes "[Brade]";
+			mes "Now all of the courses are almost done.";
+			mes "You are a Novice, and you can't get any jobs yet.";
+			next;
+			mes "[Brade]";
+			mes "If you acquire all of basic skills with Job Level 10, you can change your job.";
+			next;
+			mes "[Brade]";
+			mes "The first job classes are defined into 6 classes.";
+			next;
+			mes "[Brade]";
+			mes "The 6 basic jobs are";
+			mes "Swordman, Thief,";
+			mes "Acolyte, Mage,";
+			mes "Archer and Merchant.";
+			next;
+			mes "[Brade]";
+			mes "Let's experience the basic 6 jobs, Swordman, Thief, Acolyte, Mage, Archer and Merchant and see what those jobs can do.";
+			next;
+			mes "[Brade]";
+			mes "Behind me, there are people dispatched from each of the basic Job Guilds.";
+			mes "These people will give you instruction manuals that allow you to experience some limited skills of each job.";
+			next;
+			mes "[Brade]";
+			mes "Equip a manual of the job which you want to experience, and you will be able to use some basic skills of that corresponding job.";
+			mes "Try those skills and decide which job to choose.";
+			close;
+		}else{
+			mes "[Brade]";
+			mes "Kill enough Porings.";
+			mes "Porings are easy to deal with, so cheer up.";
+			mes "Try again.";
+			percentheal 100,100;
+			skilleffect 28,9999;
+			close;
+		}
+	}
+	else {
+		mes "[Brade]";
+		mes "Have you tried the skills in the Manuals?";
+		mes "If you want to hear information about each job, talk to the people dispatched by the Job Guilds.";
+		next;
+		mes "[Brade]";
+		mes "I think you've learned enough, if you want to learn more, then speak to the Eden Group girl next to the Trainers.";
+		next;
+		mes "[Brade]";
+		mes "Try using the job manuals to find out the characteristics of each job's skills.";
+		mes "I will restore your HP and SP...Keep it up.";
+		percentheal 100,100;
+		skilleffect 28,9999;
+		close;
+	}
+}
+
+new_1-3,96,30,4	duplicate(NvBrade)	Brade#nv1	733
+new_2-3,96,30,4	duplicate(NvBrade)	Brade#nv2	733
+new_3-3,96,30,4	duplicate(NvBrade)	Brade#nv3	733
+new_4-3,96,30,4	duplicate(NvBrade)	Brade#nv4	733
+new_5-3,96,30,4	duplicate(NvBrade)	Brade#nv5	733
+
+//============================================================================
+// Job Guides (Real Combat Training)
+//============================================================================
+// ---------------------------- Swordman Guide -------------------------------
+-	script	Swordman Guide#nv::NvSwd	728,{
+	if(job_novice_q < 16) {
+		mes "[Swordman Guildsman]";
+		mes "I won't help you until you finish Brade's intructions.";
+		close;
+	}
+	else if(checkquest(7123,HUNTING) != 2) {
+		mes "[Swordman Guildsman]";
+		mes "Hunt two Picky monsters.";
+		mes "You can find them in the more difficult training grounds by talking to Trainer Brutus.";
+		close2;
+	}
+	else if(checkquest(7123,HUNTING) == 2) {
+		mes "[Swordman Guildsman]";
+		mes "Great.";
+		mes "I think that you're good enough to be a Swordman.";
+		mes "I'll give you some potions as a reward.";
+		completequest 7123;
+		getitem 569,200;	// Novice_Potion
+		getexp 1000,0;
+		getexp 1000,0;
+		getexp 1000,0;
+		getexp 1000,0;
+		getexp 1000,100;
+		close2;
+	}
+	mes "[Swordman Guildsman]";
+	mes "Can I help you?";
+	next;
+	switch(select("About Swordman Class.:Job change to Swordman.:Got any quests?:Cancel.")) {
+	case 1:
+		mes "[Swordman Guildsman]";
+		mes "Literally, Swordman means one, who is specialized in wielding swords.";
+		mes "But they can also choose to use spears if they so choose.";
+		next;
+		mes "[Swordman Guildsman]";
+		mes "We possess strong physical strength.";
+		mes "So naturally we can equip heavy armors and weapons.";
+		mes "Most weapon classes, except for bows and rods, are equippable by our class.";
+		next;
+		mes "[Swordman Guildsman]";
+		mes "The only weakness of the Swordman class is that they cannot use magic spells.";
+		mes "But we've compensated for that by using elemental weapons.";
+		next;
+		mes "[Swordman Guildsman]";
+		mes "The merits of being a Swordman is the enormous amount of HP we have.";
+		mes "Most of us can bear the grunt of our enemies' attacks with relative ease.";
+		next;
+		mes "[Swordman Guildsman]";
+		mes "And we are unrivaled when it comes to one-on-one melee combat.";
+		next;
+		mes "[Swordman Guildsman]";
+		mes "Anyone who chooses to be a Swordman will likely play the role of the tank. It is our duty to protect the weak.";
+		next;
+		mes "[Swordman Guildsman]";
+		mes "As a Swordman you can advance to a ^8C2121Knight^000000 or ^8C2121Crusader^000000 class as your 2nd class profession.";
+		mes "And just recently third professions have been discovered.";
+		if(countitem(2819) == 0 && (getequipid(EQI_ACC_L) != 2819 || getequipid(EQI_ACC_R) != 2819)) {
+			next;
+			mes "[Swordman Guildsman]";
+			mes "If you're interested in being a Swordman, I'll offer you this manual.";
+			mes "Do you want to try the skills of a Swordman?";
+			next;
+			if(select("I'll try the Swordman skills.:No Thanks.") == 2) {
+				mes "[Swordman Guildsman]";
+				mes "Hum. Do you think so?";
+				mes "Ok, I agree with you. Choosing a job is very important in our lives.";
+				mes "Just talk to me whenever you want to experience Swordman skills.";
+				close;
+			}
+			mes "[Swordman Guildsman]";
+			mes "Here is the Swordman manual.";
+			mes "I'll just take any manuals from any other classes you have.";
+			next;
+			mes "[Swordman Guildsman]";
+			mes "Here is the Swordman manual.";
+			mes "I'll just take any manuals from any other classes you have.";
+			nude;
+			if(countitem(2820) > 0) delitem 2820,1;	// Thief_Manual
+			if(countitem(2821) > 0) delitem 2821,1;	// Acolyte_Manual
+			if(countitem(2822) > 0) delitem 2822,1;	// Archer_Manual
+			if(countitem(2823) > 0) delitem 2823,1;	// Merchant_Manual
+			if(countitem(2824) > 0) delitem 2824,1;	// Mage_Manual
+			getitem 2819,1;	// Swordsman_Manual
+			next;
+			mes "[Swordman Guildsman]";
+			mes "After equipping the Manual, open your Skill menu by pressing ALT+S.";
+			mes "Make sure to minimize your Skill tree by clicking the '-' button on the top right corner of the Skill Tree Window.";
+		}
+		close;
+	case 2:
+		mes "[Swordman Guildsman]";
+		mes "Do you really want to change your job to Swordman?";
+		mes "If you want to be a Swordman, I'll send you to the Swordman Guild immediately.";
+		next;
+		mes "[Swordman Guildsman]";
+		mes "I think you have enough job levels, of course, right?";
+		mes "Do you want to stop your training now and go to the Swordman Guild?";
+		next;
+		if(select("I'll consider it again.:I'll go to the Swordman Guild.") == 2) {
+			mes "[Swordman Guildsman]";
+			mes "I see.";
+			mes "Then I'll end your training process and send you to the Swordman Guild.";
+			close2;
+			if(checkquest(7123) == 0 || checkquest(7123) == 1) { erasequest 7123; }
+			if(checkquest(7124) == 0 || checkquest(7124) == 1) { erasequest 7124; }
+			if(checkquest(7126) == 0 || checkquest(7126) == 1) { erasequest 7126; }
+			if(checkquest(7127) == 0 || checkquest(7127) == 1) { erasequest 7127; }
+			nude;
+			if(countitem(2819) > 0) delitem 2819,1;	// Swordsman_Manual
+			if(countitem(2820) > 0) delitem 2820,1;	// Thief_Manual
+			if(countitem(2821) > 0) delitem 2821,1;	// Acolyte_Manual
+			if(countitem(2822) > 0) delitem 2822,1;	// Archer_Manual
+			if(countitem(2823) > 0) delitem 2823,1;	// Merchant_Manual
+			if(countitem(2824) > 0) delitem 2824,1;	// Mage_Manual
+			savepoint "izlude",93,104;
+			warp "izlude_in",74,167;
+			end;
+		}
+		mes "[Swordman Guildsman]";
+		mes "Please try enough instruction manuals from each job class and consider it carefully.";
+		mes "Of course, you're always welcomed.";
+		close;
+	case 3:
+		if(checkquest(7123,HUNTING) != 2) {
+			mes "[Swordman Guildsman]";
+			mes "Hunt two Picky monsters.";
+			mes "You can find them in the more difficult training grounds by talking to Trainer Brutus.";
+			close;
+		}
+		else if(checkquest(7123) == 2) {
+			mes "[Swordman Guildsman]";
+			mes "I think you finished that quest already, right?";
+			mes "You'll experience more of these quests as you grow as an adventurer in the world.";
+			next;
+			mes "[Swordman Guildsman]";
+			mes "Your training is now complete.";
+			mes "If you choose to become a Swordman I wish you goodluck.";
+			close;
+		}
+		else{
+			mes "[Swordman Guildsman]";
+			mes "You want me to give you a quest?";
+			mes "Umm. Let me see.";
+			mes "Ok! Hunt a couple of Picky monsters around here.";
+			next;
+			mes "^4A4AFFYou received a hunting request from a staff of the Swordman Guild.^000000";
+			mes "^4A4AFFYou can check the contents of the quest from the quest information window.^000000";
+			setquest 7123;
+			next;
+			mes "[Swordman Guildsman]";
+			mes "Use the 'Bash' skill in the Swordman manual.";
+			mes "Open your Skill Tree by pressing ^4A4AFFAlt + S^000000 and minimize the window by pressing the '-' button on the top right corner of the window to see the available Swordman skills.";
+			next;
+			mes "[Swordman Guildsman]";
+			mes "Talk to Trainer Brutus if you want to fight stronger monsters.";
+			mes "I'll wait for you here.";
+			mes "Wish you a good luck.";
+			close;
+		}		
+	case 4:
+		mes "[Swordman Guildsman]";
+		mes "If you have any questions about the Swordman class, please ask me.";
+		mes "The Swordman Guild is waiting for novices like you.";
+		close;
+	}
+}
+
+new_1-3,97,41,4	duplicate(NvSwd)	Swordman Guide#nv1	728
+new_2-3,97,41,4	duplicate(NvSwd)	Swordman Guide#nv2	728
+new_3-3,97,41,4	duplicate(NvSwd)	Swordman Guide#nv3	728
+new_4-3,97,41,4	duplicate(NvSwd)	Swordman Guide#nv4	728
+new_5-3,97,41,4	duplicate(NvSwd)	Swordman Guide#nv5	728
+
+// ---------------------------- Mage Guide ----------------------------------
+-	script	Mage Guide#nv::NvMag	123,{
+	if(job_novice_q < 16) {
+		mes "[Mage Guide]";
+		mes "You are still in the process of training with Instructor Brade.";
+		close;
+	}
+	else if(checkquest(7124,HUNTING) != 2) {
+		mes "[Mage Guide]";
+		mes "The quest is that you have to hunt Lunatics and bring 5 clovers.";
+		close2;
+	}
+	else if(checkquest(7124,HUNTING) == 2) {
+		mes "[Mage Guide]";
+		mes "You have done an excellent job.";
+		mes "So, did you find any interests about Mages?";
+		mes "Alright. I will give something...";
+		mes "Here are Novice Butterfly Wings, please take them.";
+		completequest 7124;
+		getitem 12324,30;	// N_Butterfly_Wing
+		getexp 1000,0;
+		getexp 1000,0;
+		getexp 1000,0;
+		getexp 1000,0;
+		getexp 1000,100;
+		close2;
+	}
+	mes "[Mage Guide]";
+	mes "What can I help you with?";
+	next;
+	switch(select("Tell me about Mages:I want to be a Mage:Give me a Quest:Cancel")) {
+	case 1:
+		mes "[Mage Guide]";
+		mes "Mages are those who can use magic when they need to protect their friends.";
+		mes "Mages can curse enemies using the elements of fire, water, earth and thunder magic.";
+		next;
+		mes "[Mage Guide]";
+		mes "However they cannot equip other weapons but staffs and books.";
+		mes "Because they are too delicate to carry heavy weapons.";
+		next;
+		mes "[Mage Guide]";
+		mes "But they can cover this weakness by their remarkable magic skills.";
+		mes "That is why many people want to become a Mage!";
+		next;
+		mes "[Mage Guide]";
+		mes "Mages have to be in their guild for guild's power and honor.";
+		mes "This is one of the reasons why Mages are popular in any parties and guilds.";
+		mes "Why don't you become a Mage?";
+		next;
+		mes "[Mage Guide]";
+		mes "^8C2121Mages can transform to Wizards or Sages as their second job.^000000";
+		if(countitem(2824) == 0 && (getequipid(EQI_ACC_L) != 2824 || getequipid(EQI_ACC_R) != 2824)) {
+			next;
+			mes "[Mage Guide]";
+			mes "Do you want to register to experience how it is to be a Mage?";
+			mes "Would you like to test Mage skills?";
+			next;
+			if(select("I want to test Mage skills.:I don't want to test it.") == 2) {
+				mes "[Mage Guide]";
+				mes "Hum. Do you think so.";
+				mes "Ok, I agree with you. Choosing a job is very important in our life.";
+				mes "Just talk to me whenever you want to experience Mage skills.";
+				close;
+			}
+			mes "[Mage Guide]";
+			mes "Here is the Mage Manual.";
+			mes "I will take the other job registration forms and manuals from you.";
+			next;
+			mes "[Mage Guide]";
+			mes "Here is the Mage Manual.";
+			mes "I will take the other job registration forms and manuals from you.";
+			nude;
+			if(countitem(2819) > 0) delitem 2819,1;	// Swordsman_Manual
+			if(countitem(2820) > 0) delitem 2820,1;	// Thief_Manual
+			if(countitem(2821) > 0) delitem 2821,1;	// Acolyte_Manual
+			if(countitem(2822) > 0) delitem 2822,1;	// Archer_Manual
+			if(countitem(2823) > 0) delitem 2823,1;	// Merchant_Manual
+			getitem 2824,1;	// Mage_Manual
+			next;
+			mes "[Mage Guide]";
+			mes "After equipping the Manual, open your Skill menu by pressing ALT+S.";
+			mes "Make sure to minimize your Skill tree by clicking the '-' button on the top right corner of the Skill Tree Window.";
+		}
+		close;
+	case 2:
+		mes "[Mage Guide]";
+		mes "You want to be a Mage?";
+		mes "Ok, then, I will send you to the Mage Guild union in Geffen right away.";
+		next;
+		mes "[Mage Guide]";
+		mes "Wait, have you checked your Job level?";
+		mes "Do you want to complete your Novice training and go straight to the Mage Guild's union?";
+		next;
+		if(select("I will think about it again.:Yes, complete my training.") == 2) {
+			mes "[Mage Guide]";
+			mes "Welcome!!";
+			mes "I will send you to the Mage Guilds union after you complete your Novice training.";
+			close2;
+			if(checkquest(7123) == 0 || checkquest(7123) == 1) { erasequest 7123; }
+			if(checkquest(7124) == 0 || checkquest(7124) == 1) { erasequest 7124; }
+			if(checkquest(7126) == 0 || checkquest(7126) == 1) { erasequest 7126; }
+			if(checkquest(7127) == 0 || checkquest(7127) == 1) { erasequest 7127; }
+			nude;
+			if(countitem(2819) > 0) delitem 2819,1;	// Swordsman_Manual
+			if(countitem(2820) > 0) delitem 2820,1;	// Thief_Manual
+			if(countitem(2821) > 0) delitem 2821,1;	// Acolyte_Manual
+			if(countitem(2822) > 0) delitem 2822,1;	// Archer_Manual
+			if(countitem(2823) > 0) delitem 2823,1;	// Merchant_Manual
+			if(countitem(2824) > 0) delitem 2824,1;	// Mage_Manual
+			savepoint "geffen",119,37;
+			warp "geffen_in",163,98;
+			end;
+		}
+		mes "[Mage Guide]";
+		mes "Please test what Mage skills are all about before you decide.";
+		mes "We are always welcome to have you!";
+		close;
+	case 3:
+		if(checkquest(7124,HUNTING) != 2) {
+			mes "[Mage Guide]";
+			mes "The quest is that you have to hunt Lunatics and bring 5 clovers.";
+			close;
+		}
+		else if(checkquest(7124) == 2) {
+			mes "[Mage Guide]";
+			mes "You have already completed the quest.";
+			mes "Once you enter the main world, you can get various exciting quests there!";
+			next;
+			mes "[Mage Guide]";
+			mes "This should be enough for your training.";
+			close;
+		}
+		else {
+			mes "[Mage Guide]";
+			mes "Huh? Quest?";
+			mes "Hmm... What would be suited for you...?";
+			mes "Would you like to hunt Lunatics by using Bolt skills?";
+			next;
+			mes "^4A4AFFYou have received a Hunting quest from the Mage Guide.^000000";
+			mes "^4A4AFFYou can get more information about the quest from the quest window.^000000";
+			setquest 7124;
+			next;
+			mes "[Mage Guide]";
+			mes "You are able to use 'Fire Bolt' skill that is shown on the Mage manual.";
+			mes "I will wait for you here.";
+			mes "Good luck!";
+			close;
+		}
+	case 4:
+		mes "[Mage Guide]";
+		mes "If you have any questions about Mages, feel free to ask me.";
+		mes "I think you could be a intelligent Mage...";
+		close;
+	}
+}
+
+new_1-3,101,41,4	duplicate(NvMag)	Mage Guide#nv1	123
+new_2-3,101,41,4	duplicate(NvMag)	Mage Guide#nv2	123
+new_3-3,101,41,4	duplicate(NvMag)	Mage Guide#nv3	123
+new_4-3,101,41,4	duplicate(NvMag)	Mage Guide#nv4	123
+new_5-3,101,41,4	duplicate(NvMag)	Mage Guide#nv5	123
+
+// ---------------------------- Thief Guide ---------------------------------
+-	script	Thief Guide#nv::NvThf	118,{
+	if(job_novice_q < 16) {
+		mes "[Thief Guild Member]";
+		mes "You look like you are not done with Instructor Brade's lessons.";
+		close;
+	}
+	else if(checkquest(7127,HUNTING) != 2) {
+		mes "[Thief Guild Member]";
+		mes "Hunt 5 Willows and then come talk to me to finish youe quest.";
+		close2;
+	}
+	else if(checkquest(7127,HUNTING) == 2) {
+		mes "[Thief Guild Member]";
+		mes "You are very strong.";
+		mes "These are not many but let me give you a reward for your effort.";
+		completequest 7127;
+		getitem 12323,50;	// N_Fly_Wing
+		getexp 1000,0;
+		getexp 1000,0;
+		getexp 1000,0;
+		getexp 1000,0;
+		getexp 1000,100;
+		close2;
+	}
+	mes "[Thief Guild Member]";
+	mes "How can I help you?";
+	next;
+	switch(select("About the Thief Class.:I want to be a Thief.:Got any Quests?:Cancel.")) {
+	case 1:
+		mes "[Thief Guild Member]";
+		mes "Thieves are experts at using Dagger class weapons.";
+		mes "They strike quickly and easily evade attacks from their enemies.";
+		next;
+		mes "[Thief Guild Member]";
+		mes "Thieves can learn skills that allow them to hide from their enemies or steal items from monsters.";
+		mes "They are also feared for their use of poison, which slowly weakens their enemies.";
+		next;
+		mes "[Thief Guild Member]";
+		mes "In jeopardy, or in the case that thieves do not want to reveal themselves, they can use their skill to hide themselves easily.";
+		next;
+		mes "[Thief Guild Member]";
+		mes "Thieves can change their jobs to ^8C2121Assasins^000000 or ^8C2121Rogues.^000000";
+		if(countitem(2820) == 0 && (getequipid(EQI_ACC_L) != 2820 || getequipid(EQI_ACC_R) != 2820)) {
+		next;
+		mes "[Thief Guild Member]";
+		mes "If you want, I'll give you a Thief skill manual.";
+		mes "Would you like to experience the skills of a Thief?";
+		next;
+		if(select("Yes, I would.:No, I don't.") == 2) {
+			mes "[Thief Guild Member]";
+			mes "Oh, are you sure?";
+			mes "Class selection is very important so please consider it carefully.";
+			mes "If you want to ask about Thieves, please talk to me any time.";
+			close;
+		}
+		mes "[Thief Guild Member]";
+		mes "Here, please take the Thief manual.";
+		mes "I'll just take the other class manuals while I'm at it.";
+		next;
+		mes "[Thief Guild Member]";
+		mes "Here, please take the Thief manual.";
+		mes "I'll just take the other class manuals while I'm at it.";
+		nude;
+		if(countitem(2819) > 0) delitem 2819,1;	// Swordsman_Manual
+		if(countitem(2821) > 0) delitem 2821,1;	// Acolyte_Manual
+		if(countitem(2822) > 0) delitem 2822,1;	// Archer_Manual
+		if(countitem(2823) > 0) delitem 2823,1;	// Merchant_Manual
+		if(countitem(2824) > 0) delitem 2824,1;	// Mage_Manual
+		getitem 2820,1;	// Thief_Manual
+		next;
+		mes "[Thief Guild Member]";
+		mes "Make sure to equip the Skill Manual by double-clicking it in the Inventory Window.";
+		mes "Open your Skill Tree by pressing ^4A4AFFAlt + S^000000 and minimize the window by pressing the '-' button on the top right corner of the window to see the available skills.";
+		}
+		close;
+
+	case 2:
+		mes "[Thief Guild Member]";
+		mes "Do you really want to be a Thief?";
+		mes "If so, I will send you to the Thief Guild immediately.";
+		next;
+		mes "[Thief Guild Member]";
+		mes "You already reached the required job level, didn't you?";
+		mes "Do you want to finish the Novice training and go to the Thief Guild?";
+		next;
+		if(select("Let me consider it again.:Yes, I do.") == 2) {
+		mes "[Thief Guild Member]";
+		mes "Ok, I see.";
+		mes "Welcome. Then your Novice training is totally complete and you will be sent to the Thief Guild immediately.";
+		close2;
+		if(checkquest(7123) == 0 || checkquest(7123) == 1) { erasequest 7123; }
+		if(checkquest(7124) == 0 || checkquest(7124) == 1) { erasequest 7124; }
+		if(checkquest(7126) == 0 || checkquest(7126) == 1) { erasequest 7126; }
+		if(checkquest(7127) == 0 || checkquest(7127) == 1) { erasequest 7127; }
+		nude;
+		if(countitem(2819) > 0) delitem 2819,1;	// Swordsman_Manual
+		if(countitem(2820) > 0) delitem 2820,1;	// Thief_Manual
+		if(countitem(2821) > 0) delitem 2821,1;	// Acolyte_Manual
+		if(countitem(2822) > 0) delitem 2822,1;	// Archer_Manual
+		if(countitem(2823) > 0) delitem 2823,1;	// Merchant_Manual
+		if(countitem(2824) > 0) delitem 2824,1;	// Mage_Manual
+		savepoint "morocc",150,99;
+		warp "moc_ruins",155,44;
+		end;
+		}
+		mes "[Thief Guild Member]";
+		mes "Have you tried all of the class manuals yet?";
+		mes "If you're undecided what job to take on I suggest you try talking to all the Guides first.";
+		close;
+	case 3:
+		if(checkquest(7127,HUNTING) != 2) {
+		mes "[Thief Guild Member]";
+		mes "Hunt 5 Willows and then come talk to me to finish youe quest.";
+		close;
+		}
+		else if(checkquest(7127) == 2) {
+		mes "[Thief Guild Member]";
+		mes "I'm sorry but I don't have any quests to give you right now.";
+		close;
+		}
+		else {
+		mes "[Thief Guild Member]";
+		mes "Quests?";
+		mes "Hmm, what will be good for you?";
+		mes "How about hunting some Willows.";
+		next;
+		mes "[Thief Guild Member]";
+		mes "You can't cheat this so make sure to kill 5 Willows. When you're done come and talk to me again.";
+		mes "If you talk to Trainer Brutus, he can send you to a more difficult training ground where there are Willows to hunt.";
+		next;
+		mes "[Thief Guild Member]";
+		mes "If you equip the Thief manual, you can have the effect of the skill, Double Attack.";
+		mes "Double Attack and Hide are the main skills of the Thief.";
+		setquest 7127;
+		close;
+		}
+	case 4:
+		mes "[Thief Guild Member]";
+		mes "If you have something to ask about the Thief job, feel free to ask me.";
+		close;
+	}
+}
+
+new_1-3,105,41,4	duplicate(NvThf)	Thief Guide#nv1	118
+new_2-3,105,41,4	duplicate(NvThf)	Thief Guide#nv2	118
+new_3-3,105,41,4	duplicate(NvThf)	Thief Guide#nv3	118
+new_4-3,105,41,4	duplicate(NvThf)	Thief Guide#nv4	118
+new_5-3,105,41,4	duplicate(NvThf)	Thief Guide#nv5	118
+
+// ---------------------------- Merchant Guide ------------------------------
+-	script	Merchant Guide#nv::NvMer	97,{
+	if(job_novice_q < 16) {
+		mes "[Merchant Guide]";
+		mes "You are still in the process of training with sir Brade.";
+		close;
+	}
+	else if((checkquest(7126) == 0 || checkquest(7126) == 1) && Zeny < 300) {
+		mes "[Merchant Guide]";
+		mes "Zeny is the currency of Rune Midgard.";
+		mes "You can make zeny by selling loot as well as through making smart business decisions.";
+		next;
+		mes "[Merchant Guide]";
+		mes "You can get loot by killing monsters. After hunting monsters, you can sell those loot to make a profit!";
+		mes "What a valuable job it is! Isn't it?";
+		next;
+		mes "[Merchant Guide]";
+		mes "Why don't you try to be a Merchant?";
+		mes "Making money is not easy but it will be a great experience!";
+		close2;
+	}
+	else if((checkquest(7126) == 0 || checkquest(7126) == 1) && Zeny >= 300) {
+		mes "[Merchant Guide]";
+		mes "Excellent!";
+		mes "Zeny is the currency of Rune Midgard.";
+		mes "You can make zeny by selling loot as well as through making smart business decisions.";
+		next;
+		mes "[Merchant Guide]";
+		mes "We can use extremely powerful skills with zeny!";
+		mes "Mammonite! That is our ultimate attack skill!!";
+		mes "We basically paste money on the weapon and then strike the enemy.";
+		mes "Death by Zeny! Nyahahahaha!";
+		next;
+		mes "[Merchant Guide]";
+		mes "By the way, you have done an excellent job. So, I should give you something... What would be good?";
+		mes "Alright! What about Phracon?";
+		mes "Phracon is a metallic element which you can use for refining weapons.";
+		completequest 7126;
+		getitem 1010,7;	// Phracon
+		getexp 1000,0;
+		getexp 1000,0;
+		getexp 1000,0;
+		getexp 1000,0;
+		getexp 1000,100;
+		close2;
+	}
+	mes "[Merchant Guide]";
+	mes "What can I help you with?";
+	next;
+	switch(select("Tell me about Merchants:I want to be a Merchant.:Give me a Quest.:Cancel")) {
+	case 1:
+		mes "[Merchant Guide]";
+		mes "Merchant? Simply put, they sell goods and make money.";
+		mes "That's the main focus for any Merchant.";
+		next;
+		mes "[Merchant Guide]";
+		mes "We have special skills for making money.";
+		mes "We can buy goods at a lower price and sell them at a higher price.";
+		next;
+		mes "[Merchant Guide]";
+		mes "Also Merchants can have Carts that we can store lots of items in.";
+		next;
+		mes "[Merchant Guide]";
+		mes "^8C2121Merchants can transform to a Blacksmith or an Alchemist^000000 as their second job.";
+		if(countitem(2823) == 0 && (getequipid(EQI_ACC_L) != 2823 || getequipid(EQI_ACC_R) != 2823)) {
+		next;
+		mes "[Merchant Guide]";
+		mes "Do you wan to see what it's like to be a Merchant?";
+		next;
+		if(select("I want to test Merchant skills.:I don't want to test it.") == 2) {
+			mes "[Merchant Guide]";
+			mes "Hum. Do you think so?";
+			mes "Ok, I agree with you. Choosing a job is very important in our life.";
+			mes "Just talk to me whenever you want to experience Merchant skills.";
+			close;
+		}
+		mes "[Merchant Guide]";
+		mes "Here is the Merchant skill manual.";
+		mes "I will take other job manuals from you while I'm at it.";
+		next;
+		mes "[Merchant Guide]";
+		mes "Here is the Merchant skill manual.";
+		mes "I will take other job manuals from you while I'm at it.";
+		nude;
+		if(countitem(2819) > 0) delitem 2819,1;	// Swordsman_Manual
+		if(countitem(2820) > 0) delitem 2820,1;	// Thief_Manual
+		if(countitem(2821) > 0) delitem 2821,1;	// Acolyte_Manual
+		if(countitem(2822) > 0) delitem 2822,1;	// Archer_Manual
+		if(countitem(2824) > 0) delitem 2824,1;	// Mage_Manual
+		getitem 2823,1;	// Merchant_Manual
+		next;
+		mes "[Merchant Guide]";
+		mes "Make sure to equip the Skill Manual by double-clicking it in the Inventory Window.";
+		mes "Open your Skill Tree by pressing ^4A4AFFAlt + S^000000 and minimize the window by pressing the '-' button on the top right corner of the window to see the available skills.";
+		}
+		close;
+
+	case 2:
+		mes "[Merchant Guide]";
+		mes "You want to be a Merchant?";
+		mes "Ok, then, I will send you to the Merchant Guild's union right away.";
+		next;
+		mes "[Merchant Guide]";
+		mes "Wait, have you checked your Job level?";
+		mes "Do you want to complete your Novice training and go straight to the Merchant Guild's union?";
+		next;
+		if(select("I will think about it again.:Yes, I want to go to the Merchant Guild's union.") == 2) {
+		mes "[Merchant Guide]";
+		mes "Welcome!!";
+		mes "I will send you to the Merchant Guild's union after you complete your Novice training.";
+		close2;
+		if(checkquest(7123) == 0 || checkquest(7123) == 1) { erasequest 7123; }
+		if(checkquest(7124) == 0 || checkquest(7124) == 1) { erasequest 7124; }
+		if(checkquest(7126) == 0 || checkquest(7126) == 1) { erasequest 7126; }
+		if(checkquest(7127) == 0 || checkquest(7127) == 1) { erasequest 7127; }
+		nude;
+		if(countitem(2819) > 0) delitem 2819,1;	// Swordsman_Manual
+		if(countitem(2820) > 0) delitem 2820,1;	// Thief_Manual
+		if(countitem(2821) > 0) delitem 2821,1;	// Acolyte_Manual
+		if(countitem(2822) > 0) delitem 2822,1;	// Archer_Manual
+		if(countitem(2823) > 0) delitem 2823,1;	// Merchant_Manual
+		if(countitem(2824) > 0) delitem 2824,1;	// Mage_Manual
+		savepoint "alberta",30,232;
+		warp "alberta_in",62,44;
+		end;
+		}
+		mes "[Merchant Guide]";
+		mes "Ok, I hope you consider being a Merchant.";
+		mes "We are always welcome to have you!";
+		close;
+	case 3:
+		if((checkquest(7126) == 0 || checkquest(7126) == 1) && Zeny < 300) {
+		mes "[Merchant Guide]";
+		mes "Zeny is the currency of Rune Midgard.";
+		mes "You can make zeny by selling loot as well as through making smart business decisions.";
+		next;
+		mes "[Merchant Guide]";
+		mes "You can get loot by killing monsters. After hunting monsters, you can sell those loot to make a profit!";
+		mes "What a valuable job it is! Isn't it?";
+		next;
+		mes "[Merchant Guide]";
+		mes "Why don't you try to be a Merchant?";
+		mes "Making money is not easy but it will be a great experience!";
+		close;
+		}
+		else if(checkquest(7126) == 2) {
+		mes "[Merchant Guide]";
+		mes "You have already completed the quest.";
+		mes "Once you enter the main world, you can get various exciting quests there!";
+		next;
+		mes "[Merchant Guide]";
+		mes "I think you're strong enough now to change your job right? Hahahaha don't waste too much time here Novice.";
+		close;
+		}
+		else {
+		mes "[Merchant Guide]";
+		mes "Huh? Quest??";
+		mes "Humm... What would be suited for you...?";
+		mes "Ok, then bring me ^4A4AFF300 zeny^000000 by selling some of your items to the Potato Merchant.";
+		next;
+		mes "[Merchant Guide]";
+		mes "If you equipped the Merchant manual you have the ability to use the 'Overcharge' and 'Discount' skills.";
+		setquest 7126;
+		next;
+		mes "[Merchant Guide]";
+		mes "Good luck!";
+		close;
+		}
+	case 4:
+		mes "[Merchant Guide]";
+		mes "If you have any questions about Merchants, feel free to ask me.";
+		mes "I think you could be a rich Merchant. AhHahaha.";
+		close;
+	}
+}
+
+new_1-3,109,41,4	duplicate(NvMer)	Merchant Guide#nv1	97
+new_2-3,109,41,4	duplicate(NvMer)	Merchant Guide#nv2	97
+new_3-3,109,41,4	duplicate(NvMer)	Merchant Guide#nv3	97
+new_4-3,109,41,4	duplicate(NvMer)	Merchant Guide#nv4	97
+new_5-3,109,41,4	duplicate(NvMer)	Merchant Guide#nv5	97
+
+// ---------------------------- Archer Guide --------------------------------
+-	script	Archer Guide#nv::NvArc	727,{
+	if(job_novice_q < 16) {
+		mes "[Archer Guide]";
+		mes "You are still in the process of training with sir Brade.";
+		close;
+	}
+	mes "[Archer Guide]";
+	mes "What can I help you with?";
+	next;
+	switch(select("Tell me about Archers:I want to be an Archer:Cancel")) {
+	case 1:
+		mes "[Archer Guide]";
+		mes "Archers have specialized skills by using a Bow and have a variety of powerful skills.";
+		mes "Archers are good at staying back and picking off their targets.";
+		next;
+		mes "[Archer Guide]";
+		mes "Archers don't have great vitality so they have to keep their distance from enemies.";
+		next;
+		mes "[Archer Guide]";
+		mes "On the other hand, Archers are attentive and have incredibly accurate eyes.";
+		mes "So once they are ready to attack, they can kill enemies before they're even aware of their presence.";
+		next;
+		mes "[Archer Guide]";
+		mes "^8C2121Archers can transform to many second jobs like a Hunter.^000000";
+		mes "^8C2121Besides Hunters, Archers can transform to a Bard, if they are male.^000000";
+		mes "^8C2121They can transform to a Dancer, if they are female.^000000";
+		if(countitem(2822) == 0 && (getequipid(EQI_ACC_L) != 2822 || getequipid(EQI_ACC_R) != 2822)) {
+			next;
+			mes "[Archer Guide]";
+			mes "Do you want to register to test skill experience?";
+			mes "Would you like to test Archer skills?";			
+			next;
+			if(select("I want to test Archer skills.:I don't want to test it.") == 2) {
+				mes "[Archer Guide]";
+				mes "Hum. Do you think so.";
+				mes "Ok, I agree with you. Choosing a job is very important in our life.";
+				mes "Just talk to me whenever you want to experience Archer skills.";
+				close;
+			}
+			mes "[Archer Guide]";
+			mes "Here is the Archer manual.";
+			mes "I will take the other job manuals from you while you test the Archer manual out.";
+			next;
+			mes "[Archer Guide]";
+			mes "I will take the other job manuals from you while you test the Archer manual out.";
+			nude;
+			if(countitem(2819) > 0) delitem 2819,1;	// Swordsman_Manual
+			if(countitem(2820) > 0) delitem 2820,1;	// Thief_Manual
+			if(countitem(2821) > 0) delitem 2821,1;	// Acolyte_Manual
+			if(countitem(2823) > 0) delitem 2823,1;	// Merchant_Manual
+			if(countitem(2824) > 0) delitem 2824,1;	// Mage_Manual
+			getitem 2822,1;	// Archer_Manual
+			next;
+			mes "[Archer Guide]";
+			mes "Make sure to equip the Skill Manual by double-clicking it in the Inventory Window.";
+			mes "Open your Skill Tree by pressing ^4A4AFFAlt + S^000000 and minimize the window by pressing the '-' button on the top right corner of the window to see the available skills.";
+		}
+		close;
+	case 2:
+		mes "[Archer Guide]";
+		mes "You want to be an Archer?";
+		mes "Ok, then, I will send you to the Archer Guild right away.";
+		next;
+		mes "[Archer Guide]";
+		mes "Wait, have you checked your Job level?";
+		mes "Do you want to complete the Novice training arena and go to the Archer Guild right now?";
+		next;
+		if(select("I will think about it again.:Yes, I want to go to the Archer Guild's union.") == 2) {
+			mes "[Archer Guide]";
+			mes "Welcome!!";
+			mes "I will send you to the Archer Guild after you complete your Novice training.";
+			close2;
+			if(checkquest(7123) == 0 || checkquest(7123) == 1) { erasequest 7123; }
+			if(checkquest(7124) == 0 || checkquest(7124) == 1) { erasequest 7124; }
+			if(checkquest(7126) == 0 || checkquest(7126) == 1) { erasequest 7126; }
+			if(checkquest(7127) == 0 || checkquest(7127) == 1) { erasequest 7127; }
+			nude;
+			if(countitem(2819) > 0) delitem 2819,1;	// Swordsman_Manual
+			if(countitem(2820) > 0) delitem 2820,1;	// Thief_Manual
+			if(countitem(2821) > 0) delitem 2821,1;	// Acolyte_Manual
+			if(countitem(2822) > 0) delitem 2822,1;	// Archer_Manual
+			if(countitem(2823) > 0) delitem 2823,1;	// Merchant_Manual
+			if(countitem(2824) > 0) delitem 2824,1;	// Mage_Manual
+			savepoint "payon",70,100;
+			warp "payon_in02",64,65;
+			end;
+		}
+		mes "[Archer Guide]";
+		mes "Test out all the jobs if you have to but choose Archer because we're the best.";
+		mes "We are always welcome to have you!";
+		close;
+	case 3:
+		mes "[Archer Guide]";
+		mes "If you have any questions about Archers, feel free to ask me.";
+		mes "I think you could be a strong Archer young Novice.";
+		close;
+	}
+}
+
+new_1-3,113,41,4	duplicate(NvArc)	Archer Guide#nv1	727
+new_2-3,113,41,4	duplicate(NvArc)	Archer Guide#nv2	727
+new_3-3,113,41,4	duplicate(NvArc)	Archer Guide#nv3	727
+new_4-3,113,41,4	duplicate(NvArc)	Archer Guide#nv4	727
+new_5-3,113,41,4	duplicate(NvArc)	Archer Guide#nv5	727
+
+// ---------------------------- Acolyte Guide -------------------------------
+-	script	Acolyte Guide#nv::NvAco	95,{
+	if(job_novice_q < 16) {
+		mes "[Prontera Acolyte]";
+		mes "You look like you are not done with Instructor Brade's lessons.";
+		close;
+	}
+	mes "[Prontera Acolyte]";
+	mes "What can I do for you?";
+	next;
+	switch(select("What is an Acolyte?:Job change to Acolyte.Cancel")) {
+	case 1:
+		mes "[Prontera Acolyte]";
+		mes "An Acolyte is someone who worships the goddess Freya sacrificing themselves to help others.";
+		next;
+		mes "[Prontera Acolyte]";
+		mes "Acolytes use supportive skills to make combat easier.";
+		mes "It is essential to have an Acolyte in any successful party.";
+		next;
+		mes "[Prontera Acolyte]";
+		mes "^8C2121As an Acolyte, you can upgrade your future job to Priest or Monk.^000000";
+		next;
+		mes "[Prontera Acolyte]";
+		if(countitem(2821) == 0 && (getequipid(EQI_ACC_L) != 2821 || getequipid(EQI_ACC_R) != 2821)) {
+			next;
+			mes "[Prontera Acolyte]";
+			mes "If you want, I can give you a skill manual to experience what it is like to be an Acolyte.";
+			mes "Would you like to experience the skills of an Acolyte?";
+			next;
+			if(select("Yes, please.:No I'm not interested.") == 2) {
+				mes "[Prontera Acolyte]";
+				mes "Hum. Do you think so.";
+				mes "Ok, I agree with you. Choosing a job is very important in our life.";
+				mes "Just talk to me whenever you want to know about Acolytes.";
+				close;
+			}
+			mes "[Prontera Acolyte]";
+			mes "Here you go, the instruction manual of an Acolyte.";
+			mes "I will take away those other job's manuals while you study this one.";
+			next;
+			mes "[Prontera Acolyte]";
+			mes "Here you go, the instruction manual of an Acolyte.";
+			mes "I will take away those other job's manuals while you study this one.";
+			nude;
+			if(countitem(2819) > 0) delitem 2819,1;	// Swordsman_Manual
+			if(countitem(2820) > 0) delitem 2820,1;	// Thief_Manual
+			if(countitem(2822) > 0) delitem 2822,1;	// Archer_Manual
+			if(countitem(2823) > 0) delitem 2823,1;	// Merchant_Manual
+			if(countitem(2824) > 0) delitem 2824,1;	// Mage_Manual
+			getitem 2821,1;	// Acolyte_Manual
+			next;
+			mes "[Prontera Acolyte]";
+			mes "Make sure to equip the Skill Manual by double-clicking it in the Inventory Window.";
+			mes "Open your Skill Tree by pressing ^4A4AFFAlt + S^000000 and minimizing the window by pressing the '-' button on the top right corner of the window to see the available skills.";
+		}
+		close;
+	case 2:
+		mes "[Prontera Acolyte]";
+		mes "Of course, I assume you have enough job levels to become an Acolyte right?";
+		mes "Would you like to quit the Training Process and go to the Cathedral of Prontera?";
+		next;
+		if(select("Let me reconsider.:I will go to the Cathedral.") == 2) {
+			mes "[Prontera Acolyte]";
+			mes "That's great.";
+			mes "Then I will completely end the Training Process and send you to the Cathedral of Prtonera.";
+			close2;
+			if(checkquest(7123) == 0 || checkquest(7123) == 1) { erasequest 7123; }
+			if(checkquest(7124) == 0 || checkquest(7124) == 1) { erasequest 7124; }
+			if(checkquest(7126) == 0 || checkquest(7126) == 1) { erasequest 7126; }
+			if(checkquest(7127) == 0 || checkquest(7127) == 1) { erasequest 7127; }
+			nude;
+			if(countitem(2819) > 0) delitem 2819,1;	// Swordsman_Manual
+			if(countitem(2820) > 0) delitem 2820,1;	// Thief_Manual
+			if(countitem(2821) > 0) delitem 2821,1;	// Acolyte_Manual
+			if(countitem(2822) > 0) delitem 2822,1;	// Archer_Manual
+			if(countitem(2823) > 0) delitem 2823,1;	// Merchant_Manual
+			if(countitem(2824) > 0) delitem 2824,1;	// Mage_Manual
+			savepoint "prontera",117,72;
+			warp "prt_church",172,19;
+			end;
+		}
+		mes "[Prontera Acolyte]";
+		mes "You should try out each job's manuals.";
+		mes "Go through them throughly and decide carefully.";
+		mes "Of course, I will welcome you anytime.";
+		close;
+	case 3:
+		mes "[Prontera Acolyte]";
+		mes "If you have any questions about Acolytes, please ask me anytime.";
+		mes "Ou God, Odin awaits adventurers like you";
+		close;
+	}
+}
+
+new_1-3,117,41,4	duplicate(NvAco)	Acolyte Guide#nv1	95
+new_2-3,117,41,4	duplicate(NvAco)	Acolyte Guide#nv2	95
+new_3-3,117,41,4	duplicate(NvAco)	Acolyte Guide#nv3	95
+new_4-3,117,41,4	duplicate(NvAco)	Acolyte Guide#nv4	95
+new_5-3,117,41,4	duplicate(NvAco)	Acolyte Guide#nv5	95
+
+// ---------------------------- Bruce (Extended Jobs) -----------------------
+-	script	Bruce#nv::NvBruce	57,{
+	mes "[Bruce]";
+	mes "Hello?";
+	mes "I'm here to guide you about extra jobs and special classes.";
+	next;
+	mes "[Bruce]";
+	mes "For special classes, there are Taekwon, Ninja, Super Novice, and Gunslinger.";
+	mes "Which job description do you want to hear?";
+	next;
+	while(1) {
+		switch(select("Taekwon:Ninja:Super Novice:Gunslinger:End the conversation.")) {
+		case 1:
+			mes "[Bruce]";
+			mes "It's a job that usually uses a lot of kicking skills.";
+			mes "It belongs to special class and later you can change your job into Taekwon Master which has much stronger attack skills.";
+			next;
+			mes "[Bruce]";
+			mes "There is a secondary class to choose from called Soul Linker which also has strong attacks.";
+			mes "You can decide that later when you get stronger.";
+			next;
+			break;
+		case 2:
+			mes "[Bruce]";
+			mes "Ninja's specialty is rapid movement.";
+			mes "They specialize in using throwing weapons.";
+			next;
+			mes "[Bruce]";
+			mes "Ninjas are kind of a hybrid class that can use various dodge skills with the capability of both physical and magical attacks depending on their preference.";
+			next;
+			break;
+		case 3:
+			mes "[Bruce]";
+			mes "The biggest attraction of the stronger Novice, called Super Novice, is their pull to mediocrity.";
+			mes "They are the proverbial Jack-of-all-Trades but Master of none.";
+			next;
+			mes "[Bruce]";
+			mes "Super Novices can learn most of the 1st job class skills.";
+			mes "If you become a Super Novice, you cannot change your job, which is too bad, but you can grow as a very individual character.";
+			next;
+			break;
+		case 4:
+			mes "[Bruce]";
+			mes "You can job change directly from Novice to a special class which is optimized for a long-distance attack with guns.";
+			next;
+			mes "[Bruce]";
+			mes "Gunslingers use all kinds of guns made in 'Einbroch', the city of steel.";
+			mes "I recommend this for those who want to become powerful sharpshooters.";
+			next;
+			break;
+		case 5:
+			mes "[Bruce]";
+			mes "If you need more information, you can always go to";
+			mes "'iro.ragnarokonline.com'";
+			close;
+		}
+	}
+}
+
+new_1-3,121,41,4	duplicate(NvBruce)	Bruce#nv1	57
+new_2-3,121,41,4	duplicate(NvBruce)	Bruce#nv2	57
+new_3-3,121,41,4	duplicate(NvBruce)	Bruce#nv3	57
+new_4-3,121,41,4	duplicate(NvBruce)	Bruce#nv4	57
+new_5-3,121,41,4	duplicate(NvBruce)	Bruce#nv5	57
+
+//============================================================================
+// Eden Group Officer (Real Combat Training)
+//============================================================================
+-	script	Eden Group Officer#nv::NvEdn	-1,{
+	if(BaseLevel < 10) {
+		mes "[Eden Group Officer]";
+		mes "Hello, I am a representative of the Eden Group.";
+		mes "We are here to assist adventurers in Rune Midgard.";
+		next;
+		mes "[Eden Group Officer]";
+		mes "We have agents all over the world waiting to send you to our secret headquarters where you can get some useful quests.";
+		next;
+		mes "[Eden Group Officer]";
+		mes "If you take our quests we even give you weapons and equipment so be sure to visit us once you are done with your training.";
+		next;
+		mes "[Eden Group Officer]";
+		mes "Speak to me again once you have reached Base Level 10 and I will send you out of the training grounds.";
+		mes "Have you taken the quests from all of the Guides yet?";
+		close;
+	}else{
+		mes "[Eden Group Officer]";
+		mes "Great! You are ready to take on the challenges of the world.";
+		mes "What would you like to do?";
+		next;
+		switch(select("I want to leave the training grounds:Tell me about the towns.:Cancel")) {
+		case 1:
+			mes "[Eden Group Officer]";
+			mes "Looks like you are ready.";
+			mes "I guess you have made up your mind, huh?";
+			next;
+			mes "[Eden Group Officer]";
+			mes "If you know what job you want to change to, you should ask the ^4A4AFFJob Guides^000000 to send you out of the training grounds.";
+			mes "What town would you like to go to?";
+			next;
+			switch(select("Prontera:Morocc:Payon:Alberta:Geffen:Cancel")) {
+			case 1:
+				mes "[Eden Group Officer]";
+				mes "Prontera, the Capital city of the Rune-Midgarts Kingdom.";
+				mes "Take care and may Freya bless you on your journey.";
+				close2;
+				if(checkquest(7123) == 0 || checkquest(7123) == 1) { erasequest 7123; }
+				if(checkquest(7124) == 0 || checkquest(7124) == 1) { erasequest 7124; }
+				if(checkquest(7126) == 0 || checkquest(7126) == 1) { erasequest 7126; }
+				if(checkquest(7127) == 0 || checkquest(7127) == 1) { erasequest 7127; }
+				nude;
+				if(countitem(2819) > 0) delitem 2819,1;	// Swordsman_Manual
+				if(countitem(2820) > 0) delitem 2820,1;	// Thief_Manual
+				if(countitem(2821) > 0) delitem 2821,1;	// Acolyte_Manual
+				if(countitem(2822) > 0) delitem 2822,1;	// Archer_Manual
+				if(countitem(2823) > 0) delitem 2823,1;	// Merchant_Manual
+				if(countitem(2824) > 0) delitem 2824,1;	// Mage_Manual
+				savepoint "prontera",273,354;
+				warp "prontera",273,354;
+				end;
+			case 2:
+				mes "[Eden Group Officer]";
+				mes "The desert city of Morocc was recently destroyed.";
+				mes "I will send you to the camp where the survivors are.";
+				close2;
+				if(checkquest(7123) == 0 || checkquest(7123) == 1) { erasequest 7123; }
+				if(checkquest(7124) == 0 || checkquest(7124) == 1) { erasequest 7124; }
+				if(checkquest(7126) == 0 || checkquest(7126) == 1) { erasequest 7126; }
+				if(checkquest(7127) == 0 || checkquest(7127) == 1) { erasequest 7127; }
+				nude;
+				if(countitem(2819) > 0) delitem 2819,1;	// Swordsman_Manual
+				if(countitem(2820) > 0) delitem 2820,1;	// Thief_Manual
+				if(countitem(2821) > 0) delitem 2821,1;	// Acolyte_Manual
+				if(countitem(2822) > 0) delitem 2822,1;	// Archer_Manual
+				if(countitem(2823) > 0) delitem 2823,1;	// Merchant_Manual
+				if(countitem(2824) > 0) delitem 2824,1;	// Mage_Manual
+				savepoint "morocc",150,99;
+				warp "moc_ruins",155,44;
+				end;
+			case 3:
+				mes "[Eden Group Officer]";
+				mes "Just north of Payon you'll find the Archer Village.";
+				mes "Good luck on your journeys.";
+				close2;
+				if(checkquest(7123) == 0 || checkquest(7123) == 1) { erasequest 7123; }
+				if(checkquest(7124) == 0 || checkquest(7124) == 1) { erasequest 7124; }
+				if(checkquest(7126) == 0 || checkquest(7126) == 1) { erasequest 7126; }
+				if(checkquest(7127) == 0 || checkquest(7127) == 1) { erasequest 7127; }
+				nude;
+				if(countitem(2819) > 0) delitem 2819,1;	// Swordsman_Manual
+				if(countitem(2820) > 0) delitem 2820,1;	// Thief_Manual
+				if(countitem(2821) > 0) delitem 2821,1;	// Acolyte_Manual
+				if(countitem(2822) > 0) delitem 2822,1;	// Archer_Manual
+				if(countitem(2823) > 0) delitem 2823,1;	// Merchant_Manual
+				if(countitem(2824) > 0) delitem 2824,1;	// Mage_Manual
+				savepoint "payon",70,100;
+				warp "payon",70,100;
+				end;
+			case 4:
+				mes "[Eden Group Officer]";
+				mes "Alberta, the Port City.";
+				mes "It's the main hub of all trades.";
+				mes "If you want to travel to other civilizations, Alberta is the only outlet.";
+				close2;
+				if(checkquest(7123) == 0 || checkquest(7123) == 1) { erasequest 7123; }
+				if(checkquest(7124) == 0 || checkquest(7124) == 1) { erasequest 7124; }
+				if(checkquest(7126) == 0 || checkquest(7126) == 1) { erasequest 7126; }
+				if(checkquest(7127) == 0 || checkquest(7127) == 1) { erasequest 7127; }
+				nude;
+				if(countitem(2819) > 0) delitem 2819,1;	// Swordsman_Manual
+				if(countitem(2820) > 0) delitem 2820,1;	// Thief_Manual
+				if(countitem(2821) > 0) delitem 2821,1;	// Acolyte_Manual
+				if(countitem(2822) > 0) delitem 2822,1;	// Archer_Manual
+				if(countitem(2823) > 0) delitem 2823,1;	// Merchant_Manual
+				if(countitem(2824) > 0) delitem 2824,1;	// Mage_Manual
+				savepoint "alberta",116,57;
+				warp "alberta",116,57;
+				end;
+			case 5:
+				mes "[Eden Group Officer]";
+				mes "Geffen, is known as the Magical City of Rune Midgard.";
+				mes "I will send you near the Fountains.";
+				mes "Goddess Freya bless you.";
+				close2;
+				if(checkquest(7123) == 0 || checkquest(7123) == 1) { erasequest 7123; }
+				if(checkquest(7124) == 0 || checkquest(7124) == 1) { erasequest 7124; }
+				if(checkquest(7126) == 0 || checkquest(7126) == 1) { erasequest 7126; }
+				if(checkquest(7127) == 0 || checkquest(7127) == 1) { erasequest 7127; }
+				nude;
+				if(countitem(2819) > 0) delitem 2819,1;	// Swordsman_Manual
+				if(countitem(2820) > 0) delitem 2820,1;	// Thief_Manual
+				if(countitem(2821) > 0) delitem 2821,1;	// Acolyte_Manual
+				if(countitem(2822) > 0) delitem 2822,1;	// Archer_Manual
+				if(countitem(2823) > 0) delitem 2823,1;	// Merchant_Manual
+				if(countitem(2824) > 0) delitem 2824,1;	// Mage_Manual
+				savepoint "geffen",120,100;
+				warp "geffen",128,66;
+				end;
+			case 6:
+				mes "[Eden Group Officer]";
+				mes "If you're still not sure what job you want, talk to the Job Guides for more help.";
+				close;
+			}
+		case 2:
+			mes "[Eden Group Officer]";
+			mes "Prontera is the main capital of the Rune-Midgard Kingdom. Here you will find Merchants selling their items and is a favorite gathering point of adventurers.";
+			next;
+			mes "[Eden Group Officer]";
+			mes "The Acolyte Guild is here at the Prontera Church located to the northwest. The Swordman Guild can be found at Izlude, a town just southeast of Prontera.";
+			next;
+			mes "[Eden Group Officer]";
+			mes "Morocc is a city located in the desert that was recently destroyed due to an evil monster named Satan Morroc. The Thief Guild has been working to restore it to it's former glory.";
+			next;
+			mes "[Eden Group Officer]";
+			mes "Payon is where the Archer Guild has made it's home. You can also find the Kafra Shop Employees selling their Item Mall items near the center of this city.";
+			next;
+			mes "[Eden Group Officer]";
+			mes "Alberta is the trading hub of Rune Midgard. The Merchant Guild is located here and the docks have ships that will take you to different island cities.";
+			next;
+			mes "[Eden Group Officer]";
+			mes "Geffen is known as the magical city of Rune Midgard. The Mage Guild is located here and research for new magic is always being conducted at their headquarters.";
+			next;
+			mes "[Eden Group Officer]";
+			mes "If you wish to be sent directly to the Job Guilds, then speak to the Job Guides and tell them that you want to change your job.";
+			close;
+		case 3:
+			close;
+		}
+	}
+	
+OnTouch:
+	emotion e_gasp;
+	end;
+}
+
+new_1-3,97,50,4	duplicate(NvEdn)	Eden Group Officer#nv1	729,5,5
+new_2-3,97,50,4	duplicate(NvEdn)	Eden Group Officer#nv2	729,5,5
+new_3-3,97,50,4	duplicate(NvEdn)	Eden Group Officer#nv3	729,5,5
+new_4-3,97,50,4	duplicate(NvEdn)	Eden Group Officer#nv4	729,5,5
+new_5-3,97,50,4	duplicate(NvEdn)	Eden Group Officer#nv5	729,5,5
+
+//============================================================================
+// Merchant (Real Combat Training)
+//============================================================================
+-	shop	Merchant#nv::NvPotato	93,516:15
+
+new_1-3,100,50,4	duplicate(NvPotato)	Merchant#nv1	93
+new_2-3,100,50,4	duplicate(NvPotato)	Merchant#nv2	93
+new_3-3,100,50,4	duplicate(NvPotato)	Merchant#nv3	93
+new_4-3,100,50,4	duplicate(NvPotato)	Merchant#nv4	93
+new_5-3,100,50,4	duplicate(NvPotato)	Merchant#nv5	93
+
+//============================================================================
+// Trainer (Real Combat Training)
+//============================================================================
+-	script	Level 1 Trainer#nv::NvBrutus	84,{
+	mes "[Trainer Brutus]";
+	mes "These monsters are all weak and easy to kill. But be careful, a lot of them are aggressive and out for blood!";
+	next;
+	mes "[Trainer Brutus]";
+	mes "If you think monsters here are too weak for you, I can send you to another training ground where the monsters are stronger than the ones over here.";
+	next;
+	mes "[Trainer Brutus]";
+	mes "So would you like to try?";
+	next;
+	switch(select("Send me to another Level:What monsters are there?:Cancel")) {
+	case 1:
+		mes "[Trainer Brutus]";
+		mes "I see, then let me guid you to another level. Which level do you want to go to?";
+		next;
+		for(set .@i,1; .@i<=5; set .@i,.@i+1) {
+			if(strnpcinfo(2) == "nv1") {
+				set .@select$,"Send me to Level 2:Send me to Level 3:Send me to Level 4:Send me to Level 5";
+			}
+			if(strnpcinfo(2) == "nv2") {
+				set .@select$,"Send me to Level 1:Send me to Level 3:Send me to Level 4:Send me to Level 5";
+			}
+			if(strnpcinfo(2) == "nv3") {
+				set .@select$,"Send me to Level 1:Send me to Level 2:Send me to Level 4:Send me to Level 5";
+			}
+			if(strnpcinfo(2) == "nv4") {
+				set .@select$,"Send me to Level 1:Send me to Level 2:Send me to Level 3:Send me to Level 5";
+			}
+			if(strnpcinfo(2) == "nv5") {
+				set .@select$,"Send me to Level 1:Send me to Level 2:Send me to Level 3:Send me to Level 4";
+			}
+		}
+		switch(select(""+.@select$+":Cancel")) {
+		case 1:
+			if(strnpcinfo(2) == "nv1") {
+				warp "new_2-3",96,21;
+			}else{
+				warp "new_1-3",96,21;
+			}
+			end;
+		case 2:
+			if(strnpcinfo(2) == "nv1" || strnpcinfo(2) == "nv2") {
+				warp "new_3-3",96,21;
+			}else{
+				warp "new_2-3",96,21;
+			}
+			end;
+		case 3:
+			if(strnpcinfo(2) == "nv4" || strnpcinfo(2) == "nv5") {
+				warp "new_3-3",96,21;
+			}else{
+				warp "new_4-3",96,21;
+			}
+			end;
+		case 4:
+			if(strnpcinfo(2) == "nv5") {
+				warp "new_4-3",96,21;
+			}else{
+				warp "new_5-3",96,21;
+			}
+			end;
+		case 5:
+			close;
+		}
+	case 2:
+		mes "[Trainer Brutus]";
+		mes "You seem eager to fight.";
+		mes "The monster levels increase with each level of the training grounds.";
+		next;
+		mes "[Trainer Brutus]";
+		mes "Level 1 has the weakest monsters.";
+		mes "There you'll find Poring, Drops, Lunatics, Fabres, and Chonchons.";
+		next;
+		mes "[Trainer Brutus]";
+		mes "Level 2 is more challenging.";
+		mes "There you'll find Condors, Pickys, Willows, Fabres, and Roda Frogs.";
+		next;
+		mes "[Trainer Brutus]";
+		mes "Level 3 is pretty much the same as Level 2.";
+		mes "There you'll find Condors, Pickys, Willows, Fabres, and Roda Frogs.";
+		next;
+		mes "[Trainer Brutus]";
+		mes "Level 4 has stronger monsters.";
+		mes "There you'll find Rockers, Spores, and Fabres.";
+		next;
+		mes "[Trainer Brutus]";
+		mes "Level 5 is the same as Level 4.";
+		mes "There you'll find Rockers, Spores, and Fabres.";
+		close;
+	case 3:
+		mes "[Trainer Brutus]";
+		mes "Hmm...?";
+		mes "Are you worried about going to more challenging places? That's understandable, since you're still a new adventurer. Good luck~";
+		close;
+	}
+}
+
+new_1-3,103,50,4	duplicate(NvBrutus)	Level 1 Trainer#nv1	84
+new_2-3,103,50,4	duplicate(NvBrutus)	Level 2 Trainer#nv2	84
+new_3-3,103,50,4	duplicate(NvBrutus)	Level 3 Trainer#nv3	84
+new_4-3,103,50,4	duplicate(NvBrutus)	Level 4 Trainer#nv4	84
+new_5-3,103,50,4	duplicate(NvBrutus)	Level 5 Trainer#nv5	84
+
+//============================================================================
+// Random Stuff (Guards & Bulletin Board)
+//============================================================================
+new_1-1,66,114,4	script	Bulletin Board#nv	111,{
+	mes "^FF0000=================================^000000";
+	mes "^FF0000 ^000000 ^E40CAA[Welcome]^CC0000 to ^FF9000Novice^7FFF00 Training ^00FF00Grounds ^E40CAA[Welcome]^FF0000^000000";
+	mes "^FF0000=================================^000000";
+	close;
+}
+
+new_1-1,144,116,2	script	Guard#nv1	105,{
+	mes "[Training Grounds Guard]";
+	mes "Welcome to the Training Grounds.";
+	mes "You are now in the outer court yard. Please go inside the castle to begin your training.";
+	close;
+}
+
+new_1-1,144,107,2	script	Guard#nv2	105,{
+	mes "[Training Grounds Guard]";
+	if(rand(2)) {
+		mes "Come in!";
+		mes "I would like o welcome you to the Training Grounds!";
+		next;
+		mes "[Training Grounds Guard]";
+		mes "In here, you can prepare yourself for your future adventures throughout the Ragnarok world!";
+	}
+	else {
+		mes "Go, Novice, go!";
+		mes "Fight, and grow stronger! Look towards a brighter tomorrow!";
+	}
+	close;
+}
+
+new_1-2,161,182,5	script	Instructor#nv	92,{
+	mes "[Edwin]";
+	mes "Eh? Why are you still here?";
+	mes "There are no more courses that you need to take.";
+	next;
+	mes "[Edwin]";
+	mes "Well, I will let you out of here.";
+	mes "Go find the instructor, Brade.";
+	close2;
+	warp "new_1-2",100,100;
+	end;
+}
+
+//============================================================================
+// Real Combat Training Mobs
+//============================================================================
+new_1-3,0,0,0,0	monster	ChonChon	1011,10,0,0,0
+new_1-3,0,0,0,0	monster	Drops	1113,10,0,0,0
+new_1-3,0,0,0,0	monster	Fabre	1184,5,0,0,0
+new_1-3,0,0,0,0	monster	Lunatic	1063,10,0,0,0
+new_1-3,0,0,0,0	monster	Poring	1002,10,0,0,0
+new_2-3,0,0,0,0	monster	Condor	1009,10,0,0,0
+new_2-3,0,0,0,0	monster	Fabre	1184,5,0,0,0
+new_2-3,0,0,0,0	monster	Picky	1050,10,0,0,0
+new_2-3,0,0,0,0	monster	Roda Frog	1012,10,0,0,0
+new_2-3,0,0,0,0	monster	Willow	1010,10,0,0,0
+new_3-3,0,0,0,0	monster	Condor	1009,10,0,0,0
+new_3-3,0,0,0,0	monster	Fabre	1184,5,0,0,0
+new_3-3,0,0,0,0	monster	Picky	1050,10,0,0,0
+new_3-3,0,0,0,0	monster	Roda Frog	1012,10,0,0,0
+new_3-3,0,0,0,0	monster	Willow	1010,10,0,0,0
+new_4-3,0,0,0,0	monster	Fabre	1184,5,0,0,0
+new_4-3,0,0,0,0	monster	Rocker	1052,10,0,0,0
+new_4-3,0,0,0,0	monster	Spore	1014,10,0,0,0
+new_4-3,0,0,0,0	monster	Thief Bug	1051,10,0,0,0
+new_4-3,0,0,0,0	monster	Thief Bug	1053,10,0,0,0
+new_5-3,0,0,0,0	monster	Fabre	1184,5,0,0,0
+new_5-3,0,0,0,0	monster	Rocker	1052,10,0,0,0
+new_5-3,0,0,0,0	monster	Spore	1014,1,0,0,0
+new_5-3,0,0,0,0	monster	Thief Bug	1051,1,0,0,0
+new_5-3,0,0,0,0	monster	Thief Bug	1053,1,0,0,0

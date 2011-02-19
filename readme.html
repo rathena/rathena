@@ -1,349 +1,40 @@
-<html><head><link rel="stylesheet" type="text/css" href="./readme/readme.css"><title>eAthena - Introduction</title></head>
-
-<body>
-<div id="dleftbg">
-</div>
-<div id="drightbg">
-</div>
-<div id="canvas" align="center">
-<table cellspacing="0" cellpadding="0" border="0" id="ea" align="center">
-	<tr>
-		<td id="leftborder" valign="top">
-			<table cellspacing="0" cellpadding="0" border="0">
-				<tr>
-					<td id="leftborderspacer">
-					</td>
-				</tr>
-				<tr>
-					<td valign="top">
-					<img src="./readme/images/leftborder.gif">
-					</td>
-				</tr>
-			</table>
-		</td>
-		<td id="middle" valign="top">
-			<table cellspacing="0" cellpadding="0" border="0" valign="top">
-				<tr>
-					<td id="logo" valign="top">
-						<table class="w800" cellspacing="0" cellpadding="0" border="0">
-							<tr>
-								<td valign="top">
-									<table class="w800" cellspacing="0" cellpadding="0" border="0" height="100%">
-										<tr>
-											<td rowspan="4">
-												<img src="./readme/images/chara.gif" width="366" height="274">
-											</td>
-											<td rowspan="4" width="129">
-											</td>
-											<td colspan="2" width="305" height="51" align="right">
-												<img src="./readme/images/banner.gif" width="305" height="51">
-											</td>
-										</tr>
-										<tr>
-											<td id="title" colspan="2" align="right">
-												Introduction
-											</td>
-										</tr>
-										<tr>
-											<td height="81" colspan="2">
-											</td>
-										</tr>
-										<tr>
-											<td class="navi" align="right">
-												Introduction<br>
-												<a href="./readme/changelog.html">Changelog</a><br>
-												<a href="./readme/features.html">Features</a><br>
-												<a href="./readme/npcfeatures.html">NPC Features</a>
-
-											</td>
-											<td class="navi" align="right">
-												<a href="./readme/setup.html">Setup</a><br>
-												<a href="./readme/gmcommands.html">GM Commands</a><br>
-												<a href="./readme/faq.html">FAQ</a><br>
-												<a href="./readme/resources.html">Resources</a>
-											</td>
-										</tr>
-									</table>
-								</td>
-							</tr>
-							<tr>
-								<td id="btmborder">
-									<table class="w800" cellspacing="0" cellpadding="0" border="0" height="2">
-										<tr>
-											<td id="leftbtmborder"">
-											</td>
-											<td id="midbtmborder"">
-												<img src="./readme/images/btmborder.gif" width="44" height="2">
-											</td>
-											<td id="rightbtmborder">
-											</td>
-										</tr>
-									</table>
-								</td>
-							</tr>
-							<tr>
-								<td id="content">
-									<table class="w800" cellspacing="0" cellpadding="0" border="0" height="100%">
-										<tr>
-											<td id="lefttext" valign="top">
-<h1>eAthena SVN series</h1>
-eAthena is an open-source Ragnarok Online server emulator. It's written in C, but we are working on a C++ version. Although it is cross-platform, we only officially support Win32 and Linux.
-<br>
-<br>eAthena is licensed under the GPL, so please give us credit if you use our code.
-<br>Our SVN (<a href="http://tortoisesvn.net/downloads.html">You may download TortoiseSVN here to access our SVN</a>) is located at <a href="http://eathena-project.googlecode.com/svn/">http://eathena-project.googlecode.com/svn/</a>. SVN stands for Subversion, which is similar to the commonly used CVS.
-<br>
-<br>P.S. If you had a hard time loading this readme, please use <a href="http://www.getfirefox.com">Firefox</a>.
-
-											</td>
-											<td id="midtext">
-											</td>
-											<td id="righttext" valign="top">
-<h1>The eAthena Team</h1>
-Here are our current developers. We have had many past developers, and if you come across this, please let us know ^_^.<br>
-
-<b>Developers</b>
-<table class="right">
-	<tr>
-		<td>
-			Wallex
-		</td>
-		<td>
-			Lupus
-		</td>
-		<td>
-			DracoRPG
-		</td>
-	</tr>
-	<tr>
-		<td>
-			MasterOfMuppets
-		</td>
-
-		<td>
-			Fredzilla
-		</td>
-		<td>
-			Kayla
-		</td>
-	</tr>
-	<tr>
-		<td>
-			Kevin
-		</td>
-		<td>
-			Shinomori
-		</td>
-		<td>
-			Clownphobia(Cuteboi)
-		</td>
-	</tr>
-	<tr>
-		<td>
-			LuzZza
-		</td>
-		<td>
-			Evera
-		</td>
-		<td>
-			Nexon
-		</td>
-	</tr>
-	<tr>
-		<td>
-			Celest
-		</td>
-		<td>
-			Wizputer
-		</td>
-		<td>
-            Valaris
-		</td>
-	</tr>
-	<tr>
-		<td>
-			Lance
-		</td>
-		<td>
-			Komurka
-		</td>
-		<td>
+<html>
+    <head>
+        <title>eAthena | Intro</title>
+        <link rel="stylesheet" type="text/css" href="./readme/style.css">
+    </head>
+    <body>
+    	<div id="template">
+            <div id="header">
+                <div class="logo">eAthena<br /><span class="subtitle">- RAGNAROK Online Server Emulator</span></div>
+                <div class="title">Intro</div>
+            </div>
+            <div id="navcontainer">
+                <ul id="navlist">
+                    <li><a href="./readme.html">Intro</a></li>
+                    <li><a href="./readme/setup.html">Setup</a></li>
+                    <li><a href="./readme/faq.html">FAQ</a></li>
+                    <li><a href="./readme/scripting.html">Scripting</a></li>
+                    <li><a href="./readme/commands.html">GM Commands</a></li>
+                    <li><a href="./readme/resources.html">Resources</a></li>
+                </ul>
+            </div>
+                
+            <div class="body-container">
+                <ul>
+                    <li><span class="body-title">What is eAthena?</span><br>
+                    eAthena is a collaborative software development project revolving around the creation of a robust massively multiplayer online role playing game (MMORPG) server package. Written in C, the program is very versatile and provides NPCs, warps and modifications. The project is jointly managed by a group of volunteers located around the world as well as a tremendous community providing QA and support. eAthena is a continuation of the original jAthena project.</li>
+                </ul>
+                
+                <ul>
+                    <li><span class="body-title">Who are the eAthena developers?</span><br>
+                    You can find a list of the currently active eAthena developers at:<br>
+					<a href="http://code.google.com/p/eathena-project/people/list" target="_new">http://code.google.com/p/eathena-project/people/list</a>
+                    </li>
+                </ul>
+            </div>
             
-		</td>
-	</tr>
-</table>
-<br>
-<b>Mods/Admins</b>
-<table class="right">
-	<tr>
-		<td>
-			Massdriller
-		</td>
-		<td>
-			Deviant
-		</td>
-		<td>
-			Delta
-		</td>
-	</tr>
-	<tr>
-		<td>
-			Manipulator
-		</td>
-		<td>
-			SantaPoring
-		</td>
-		<td>
-			Davidchak
-		</td>
-	</tr>
-    <tr>
-        <td>
-            Valaris
-        </td><td></td><td></td>
-    </tr>
-	<tr>
-		<td>
-		</td>
-	</tr>
-</table>
-<br>
-<b>Ex-Developers and Honorable Mentions</b>
-<table class="right">
-	<tr>
-		<td>
-			RoVeRT
-		</td>
-		<td>
-			AppleGirl
-		</td>
-		<td>
-			Akaru/Hikaru
-		</td>
-	</tr>
-	<tr>
-		<td>
-			Darkchild
-		</td>
-		<td>
-			Kalaspuff
-		</td>
-		<td>
-			Ajarn
-		</td>
-	</tr>
-	<tr>
-		<td>
-			Fritz
-		</td>
-		<td>
-			Aria
-		</td>
-		<td>
-			Mass Zero
-		</td>
-	</tr>
-	<tr>
-		<td>
-			Nana
-		</td>
-		<td>
-			Shinigami
-		</td>
-		<td>
-			Moonsoul
-		</td>
-	</tr>
-	<tr>
-		<td>
-			Kobra_k88
-		</td>
-		<td>
-			Codemaster
-		</td>
-		<td>
-			Davidsiaw
-		</td>
-	</tr>
-	<tr>
-		<td>
-			MC_Cameri
-		</td>
-		<td>
-			Spira
-		</td>
-		<td>
-			Lord
-		</td>
-	</tr>
-	<tr>
-		<td>
-			Yor
-		</td>
-		<td>
-			Sara-chan
-		</td>
-		<td>
-			Mikage
-		</td>
-	</tr>
-	<tr>
-		<td>
-			Ajs15822
-		</td>
-		<td>
-			Cyberghost
-		</td>
-		<td>
-			Azndragon
-		</td>
-	</tr>
-	<tr>
-		<td>
-			Nasedo
-		</td>
-		<td>
-			Sirius
-		</td>
-	</tr>
-</table>
-                                                <br />
-                                                    <br />
-                                                </strong>
-			
-											</td>
-										</tr>
-										<tr>
-											<td colspan="3">
-												&copy; Content Copyright 2005 eAthena Development Team/Evera<br>
-												&copy; Design Copyright 2005 Evera
-											</td>
-										</tr>
-									</table>
-								</td>
-							</tr>			
-						</table>
-
-</table>
-		<td id="rightborder" valign="top">
-			<table cellspacing="0" cellpadding="0" border="0">
-				<tr>
-					<td id="rightborderspacer">
-					</td>
-				</tr>
-				<tr>
-					<td valign="top">
-					<img src="./readme/images/rightborder.gif">
-					</td>
-				</tr>
-			</table>
-		</td>
-</div>
-					</td>
-				</tr>
-			</table>
-		</td>
-
-	</tr>
-</body>
+            <div id="footer">"Read Me" Created & Designed by <a href="http://www.kisuka.com" target="_new">Kisuka</a></div>
+		</div>
+    </body>
 </html>
-

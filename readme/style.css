@@ -1,0 +1,80 @@
+/* Created by Kisuka */
+/* www.kisuka.com */
+html, body { 
+	height: 100%;
+	margin: 0;
+	background-image:url(images/bg.gif);
+}
+body {
+	width: 900px;
+	height: 100%;
+	border-left:thin solid #000;
+	border-right:thin solid #000;
+	margin-left:auto;
+  	margin-right:auto;
+	background:#FFF url(images/clown.png) no-repeat fixed right bottom;
+}
+#template 	{ position:relative;  min-height:100%;  }
+* html #template { height: 100%; }
+#header {
+	height: 60px;
+	border-bottom:thin solid #000;
+}
+.logo {
+	float:left;
+	padding-left:25px;
+	font-size:x-large;
+}
+.title {
+	float:right;
+	padding-right:25px;
+	font-size:xx-large;
+	padding-top:10px;
+}
+.body-title {
+	font-size:x-large;	
+}
+.subtitle {
+	font-size:14px;
+	padding-left:10px;
+	font-style:italic;
+}
+.body-container {
+	padding-left:30px;
+	padding-right:30px;
+}
+#navcontainer ul {
+padding-left: 0;
+margin-left: 0;
+margin-top:0;
+background-color: #000;
+color: White;
+float: left;
+width: 100%;
+font-family: arial, helvetica, sans-serif;
+}
+#navcontainer ul li { display: inline; }
+#navcontainer ul li a {
+	padding: 0.2em 1em;
+	background-color: #000;
+	color: White;
+	text-decoration: none;
+	float: left;
+	border-right: 1px solid #fff;
+}
+#navcontainer ul li a:hover {
+	background-color: #666;
+	color: #fff;
+}
+#footer {
+	background-color: #000;
+	width: 100%;
+	color: White;
+	position:absolute;
+	bottom:0;
+	text-align:center;
+	border-top: 1px solid #fff;
+}
+#footer a {
+	color: White;	
+}

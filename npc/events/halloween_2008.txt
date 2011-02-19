@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Kisuka
 //===== Current Version: =====================================
-//= 1.0
+//= 1.1
 //===== Compatible With: =====================================
 //= eAthena SVN
 //===== Description: =========================================
@@ -14,6 +14,7 @@
 //= You must enable the event monsters in mob_db2.
 //===== Additional Comments: =================================
 //= 1.0 First version. [Kisuka]
+//= 1.1 Some small changes. [Kisuka]
 //============================================================
 
 payon,162,176,4	script	Halloween Magician#iRO08	704,{
@@ -21,15 +22,12 @@ payon,162,176,4	script	Halloween Magician#iRO08	704,{
 	if(Hallow08 < 1) {
 			mes "[Halloween Magician]";
 			mes "Kkkkkkkkk!";
-			mes "I have a special event this";
-			mes "Halloween that tests your luck and";
-			mes "agility.";
+			mes "I have a special event this Halloween that tests your luck and agility.";
 			mes "Are you interested?";
 			next;
 			mes "[Halloween Magician]";
 			mes "Come on! Don't be a wuss!";
-			mes "If you collect enough tickets";
-			mes "you can get good prizes!";
+			mes "If you collect enough tickets you can get good prizes!";
 			mes "So what do you say?";
 			next;
 			goto MainMenu;
@@ -60,56 +58,40 @@ payon,162,176,4	script	Halloween Magician#iRO08	704,{
 		set Hallow08Kill,0;
 		mes "[Halloween Magician]";
 		mes "As I promised";
-		mes "You can get Halloween tickets";
-		mes "for cool items.";
+		mes "You can get Halloween tickets for cool items.";
 		close;
 	}
 
 	if(Hallow08 > 0) {
 		mes "[Halloween Magician]";
-		mes "Well, do you want to hear the rules";
-		mes "again or,";
-		mes "just get back to it...";
+		mes "Well, do you want to hear the rules again or, just get back to it...";
 		next;
 		goto MainMenu2;
 	}
 	
 		Rules:
 			mes "[Halloween Magician]";
-			mes "This village is like a virtual";
-			mes "Payon. There are zombies and ghouls";
-			mes "roaming around";
-			mes "and three southern exits, but only";
-			mes "one works.";
+			mes "This village is like a virtual Payon.";
+			mes "There are zombies and ghouls roaming around and three southern exits, but only one works.";
 			mes "That's up to you to find out.";
 			next;
 			mes "[Halloween Magician]";
-			mes "You can't use any skills";
-			mes "to kill the ghouls or zombies.";
+			mes "You can't use any skills to kill the ghouls or zombies.";
 			mes "And one more thing...";
 			mes "you shouldn't forget...";
 			next;
 			mes "[Halloween Magician]";
-			mes "All participants";
-			mes "should be wearing nothing.";
-			mes "Put all belongings in your storage";
-			mes "and come back here when your weight";
-			mes "is '0'.";
+			mes "All participants should be wearing nothing.";
+			mes "Put all belongings in your storage and come back here when your weight is '0'.";
 			next;
 			mes "[Halloween Magician]";
 			mes "Oh and one more thing!";
-			mes "You can't be riding a PecoPeco or";
-			mes "have a Cart.";
-			mes "If you are, then I will remove them";
-			mes "before you enter.";
+			mes "You can't be riding a PecoPeco or have a Cart.";
+			mes "If you are, then I will remove them before you enter.";
 			mes "Got it?";
 			next;
 			mes "[Halloween Magician]";
-			mes "Remember, there are three exits but";
-			mes "only one works randomly,";
-			mes "the zombies and ghouls roaming";
-			mes "around there can't be killed";
-			mes "and you can't be wearing anything.";
+			mes "Remember, there are three exits but only one works randomly, the zombies and ghouls roaming around there can't be killed and you can't be wearing anything.";
 			next;
 			if (Hallow08 > 0) {
 				mes "[Halloween Magician]";
@@ -128,26 +110,21 @@ payon,162,176,4	script	Halloween Magician#iRO08	704,{
 			if (Weight > 0) {
 				mes "[Halloween Magician]";
 				mes "Gosh!";
-				mes "There's always a black sheep";
-				mes "anywhere.";
+				mes "There's always a black sheep anywhere.";
 				next;
 				mes "[Halloween Magician]";
-				mes "You think I wouldn't notice that";
-				mes "your weight is above '0'?";
+				mes "You think I wouldn't notice that your weight is above '0'?";
 				mes "You're overweight...";
 				close;
 			}else{
 				mes "[Halloween Magician]";
-				mes "You seem good to go,";
-				mes "and your weight is just right.";
+				mes "You seem good to go, and your weight is just right.";
 				next;
 				mes "[Halloween Magician]";
-				mes "I was quite swamped with my work,";
-				mes "so I'm exhausted.";
+				mes "I was quite swamped with my work, so I'm exhausted.";
 				next;
 				mes "[Halloween Magician]";
-				mes "I sometimes forget to send you";
-				mes "there...";
+				mes "I sometimes forget to send you there...";
 				next;
 				mes "[Halloween Magician]";
 				mes "I hope you come back well.";
@@ -166,13 +143,11 @@ payon,162,176,4	script	Halloween Magician#iRO08	704,{
 			
 		TicketExchange:
 			mes "[Halloween Magician]";
-			mes "You want to exchange tickets for";
-			mes "prizes?";
+			mes "You want to exchange tickets for prizes?";
 			mes "Good job! Kkkkkk!";
 			next;
 			mes "[Halloween Magician]";
-			mes "Lemme tell you what items you can";
-			mes "exchange for.";
+			mes "Lemme tell you what items you can exchange for.";
 			next;
 			mes "[Halloween Magician]";
 			mes "5 tickets for Pumpkin Pie.";
@@ -182,8 +157,7 @@ payon,162,176,4	script	Halloween Magician#iRO08	704,{
 			mes "200 tickets for Old Card Album.";
 			next;
 			mes "[Halloween Magician]";
-			mes "What would you like to exchange";
-			mes "for?";
+			mes "What would you like to exchange for?";
 			next;
 			switch(select("Pumpkin Pie:Pumpkin-Head:Old Blue Box:Old Purple Box:Old Card Album")) {
 				case 1:
@@ -248,8 +222,7 @@ payon,162,176,4	script	Halloween Magician#iRO08	704,{
 		mes "[Halloween Magician]";
 		mes "You don't have enough tickets!";
 		mes "Can't you even count?";
-		mes "Please come here with the right";
-		mes "number of tickets.";
+		mes "Please come here with the right number of tickets.";
 		close;
 
 	Enough:

@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Kisuka
 //===== Current Version: =====================================
-//= 1.0
+//= 1.1
 //===== Compatible With: =====================================
 //= eAthena SVN
 //===== Description: =========================================
@@ -15,33 +15,31 @@
 //= Must enable X-mas08 mobs in mob_db2.
 //===== Additional Comments: =================================
 //= 1.0 First version. [Kisuka]
+//= 1.1 Fixed some issues, revamped the whole script. [Kisuka]
 //============================================================
 
-// ============== Carolling - Music Box ================
+// ============== Caroller - Music Box ================
 // =====================================================
-prontera,226,306,4	script	Carolling#iROxmas08	79,{
+prontera,226,306,4	script	Caroller#iROxmas08	79,{
 	if (iROxmas08carol < 1 || iROxmas08carol == 3) {
 		if (iROxmas08carol == 3) {
-			mes "[Carolling]";
-			mes "Jingle Bells! Jingle Bells! Jingle";
-			mes "all the way!";
-			mes "O' what fun it is to ride in a";
-			mes "one-horse open sleeeigh, Hey!";
+			mes "[Caroller]";
+			mes "Jingle Bells! Jingle Bells! Jingle all the way!";
+			mes "O' what fun it is to ride in a one-horse open sleeeigh, Hey!";
 			next;
-			mes "[Carolling]";
+			mes "[Caroller]";
 			mes "Merry Christmas!";
-			mes "Hey! You! What comes to mind when";
-			mes "you think about Christmas?";
+			mes "Hey! You! What comes to mind when you think about Christmas?";
 			next;
 		}else{
-			mes "[Carolling]";
+			mes "[Caroller]";
 			mes "Jingle Bells! Jingle Bells! Jingle all the way!";
 			next;
-			specialeffect 75;
-			mes "[Carolling]";
+			specialeffect EF_GLORIA;
+			mes "[Caroller]";
 			mes "O' what fun it is to ride in a one-horse open sleigh!";
 			next;
-			mes "[Carolling]";
+			mes "[Caroller]";
 			mes "Merry Christmas!";
 			if (Sex) {
 				mes "Hey, boy! What comes to mind when";
@@ -54,291 +52,229 @@ prontera,226,306,4	script	Carolling#iROxmas08	79,{
 		switch(select("Santa Claus:Gift Boxes:Carols:Santa Costumes:Fake Santa Antonio")) {
 
 			case 1:
-				mes "[Carolling]";
+				mes "[Caroller]";
 				mes "Santa Claus!";
 				mes "You're so innocent!!";
 				mes "Ah!";
 				next;
-				mes "[Carolling]";
+				mes "[Caroller]";
 				mes "Here's a secret!";
-				mes "There's a rumor that Santa Claus";
-				mes "lives in a certain village all";
-				mes "throughout the year.";
+				mes "There's a rumor that Santa Claus lives in a certain village all throughout the year.";
 				next;
-				mes "[Carolling]";
+				mes "[Caroller]";
 				mes "But now!!!";
 				mes "In this Christmas season!!";
-				mes "You guys can meet Santa on either";
-				mes "of the five possible villages";
-				mes "throughout Rune-Midgerts!";
+				mes "You guys can meet Santa on either of the five possible villages throughout Rune-Midgerts!";
 				next;
-				mes "[Carolling]";
-				mes "If you win over Santa, you can get";
-				mes "a gift. Would you go for it?";
+				mes "[Caroller]";
+				mes "If you win over Santa, you can get a gift. Would you go for it?";
 				next;
 				emotion 18;
-				mes "[Carolling]";
-				mes "Carolling's hot news! Ha!";
+				mes "[Caroller]";
+				mes "Caroller's hot news! Ha!";
 				mes "Isn't that big news?";
 				close;
 
 			case 2:
-				mes "[Carolling]";
+				mes "[Caroller]";
 				mes "Gift boxes?! All right!";
-				mes "Isn't it thrilling to open gifts";
-				mes "over your head!!";
+				mes "Isn't it thrilling to open gifts over your head!!";
 				next;
-				mes "[Carolling]";
+				mes "[Caroller]";
 				mes "Anyway, did you know...";
-				mes "Some villain, a fake Santa robbed";
-				mes "some gifts from the good Santa!";
+				mes "Some villain, a fake Santa robbed some gifts from the good Santa!";
 				next;
-				mes "[Carolling]";
-				mes "Furthermore, he has put bad magic";
-				mes "on the gifts so that they become";
-				mes "monsters!";
+				mes "[Caroller]";
+				mes "Furthermore, he has put bad magic on the gifts so that they become monsters!";
 				next;
 				emotion 18;
-				mes "[Carolling]";
-				mes "Carolling's hot news! Ha!";
+				mes "[Caroller]";
+				mes "Caroller's hot news! Ha!";
 				mes "Isn't it amazing?";
 				close;
 
 			case 3:
 				if (iROxmas08carol == 3) {
-					mes "[Carolling]";
+					mes "[Caroller]";
 					mes "Ah, a music box is useful.";
 					next;
-					mes "[Carolling]";
-					mes "Though we can't all play it around";
-					mes "the village as we planned, it's";
-					mes "cool that you carry it.";
+					mes "[Caroller]";
+					mes "Though we can't all play it around the village as we planned, it's cool that you carry it.";
 					next;
-					mes "[Carolling]";
-					mes "We want to enjoy carols all";
-					mes "together... I hope to get Crystal";
-					mes "Pieces!";
+					mes "[Caroller]";
+					mes "We want to enjoy carols all together... I hope to get Crystal Pieces!";
 					next;
-					mes "[Carolling]";
-					mes "If you can get ^0000FFSinging Crystal";
-					mes "Pieces^000000, give them to me please?";
+					mes "[Caroller]";
+					mes "If you can get ^0000FFSinging Crystal Pieces^000000, give them to me please?";
 					next;
 					select("Why not? Sure, I can give you some.");
 					if (countitem(6092) < 6) {
-						mes "[Carolling]";
+						mes "[Caroller]";
 						mes "Yes, please.";
 						next;
-						mes "[Carolling]";
-						mes "If you can get ^0000FFSinging Crystal";
-						mes "Pieces^000000, give them to me please?";
+						mes "[Caroller]";
+						mes "If you can get ^0000FFSinging Crystal Pieces^000000, give them to me please?";
 						close;
 					}else{
-						mes "[Carolling]";
+						mes "[Caroller]";
 						mes "Wow, you have them.";
 						next;
-						mes "[Carolling]";
-						mes "I can bake you a cake,";
-						mes "and I can carve your name on the";
-						mes "cake, if you want!";
+						mes "[Caroller]";
+						mes "I can bake you a cake, and I can carve your name on the cake, if you want!";
 						next;
 						if (select("No, thanks.:Please name it for me.") == 2) {
-							mes "[Carolling]";
+							mes "[Caroller]";
 							mes "Thank for your help!";
 							next;
-							mes "[Carolling]";
-							mes "Many people live in the giant";
-							mes "world!";
-							mes "So many people hope to hear";
-							mes "carolling, yet I always lack";
-							mes "Crystal pieces.";
+							mes "[Caroller]";
+							mes "Many people live in the giant world!";
+							mes "So many people hope to hear Caroller, yet I always lack Crystal pieces.";
 							next;
-							mes "[Carolling]";
+							mes "[Caroller]";
 							mes "If you can get ^0000FFSinging Crystal Pieces^000000, give them to me please?";
 							next;
 							emotion 18;
 							delitem 6092,6;
 							getnameditem 12354,"+strcharinfo(0)+";
-							mes "[Carolling]";
-							mes "Let's care about others around you";
-							mes "on this Christmas season!";
+							mes "[Caroller]";
+							mes "Let's care about others around you on this Christmas season!";
 							close;
 						}else{
-							mes "[Carolling]";
+							mes "[Caroller]";
 							mes "Oh!";
 							mes "Shyness!";
 							next;
-							mes "[Carolling]";
-							mes "Anyway, thanks a lot for your";
-							mes "help.";
+							mes "[Caroller]";
+							mes "Anyway, thanks a lot for your help.";
 							next;
-							mes "[Carolling]";
-							mes "Many people live in the giant";
-							mes "world!";
-							mes "So many people hope to hear";
-							mes "carolling, yet I always lack";
-							mes "Crystal pieces.";
+							mes "[Caroller]";
+							mes "Many people live in the giant world!";
+							mes "So many people hope to hear Caroller, yet I always lack Crystal pieces.";
 							next;
-							mes "[Carolling]";
+							mes "[Caroller]";
 							mes "If you can get ^0000FFSinging Crystal Pieces^000000, give them to me please?";
 							next;
 							emotion 18;
 							delitem 6092,6;
 							getitem 12354,1;
-							mes "[Carolling]";
-							mes "Let's care about others around you";
-							mes "on this Christmas season!";
+							mes "[Caroller]";
+							mes "Let's care about others around you on this Christmas season!";
 							close;
 						}
 					}
 				}
-					mes "[Carolling]";
+					mes "[Caroller]";
 					mes "You know about Christmas!";
 					mes "Talking about Christmas...";
 					mes "...it's carols!!!";
 					mes "I've been waiting for this for when";
 					mes "Christmas comes around!";
 					next;
-					mes "[Carolling]";
-					mes "But there's been no caroling here";
-					mes "and there like before, so we can't";
-					mes "feel the Christmas spirit.";
+					mes "[Caroller]";
+					mes "But there's been no caroling here and there like before, so we can't feel the Christmas spirit.";
 					next;
-					mes "[Carolling]";
-					mes "So, I installed a Singing Crystal";
-					mes "in Prontera...";
+					mes "[Caroller]";
+					mes "So, I installed a Singing Crystal in Prontera...";
 					next;
-					mes "[Carolling]";
-					mes "but that jerk Antonio broke the";
-					mes "crystal!";
+					mes "[Caroller]";
+					mes "but that jerk Antonio broke the crystal!";
 					next;
-					mes "[Carolling]";
-					mes "The gift boxes have been changing";
-					mes "into monsters since Antonio placed";
-					mes "some magic on them, so the monsters";
-					mes "ate up the crystal fragments!";
+					mes "[Caroller]";
+					mes "The gift boxes have been changing into monsters since Antonio placed some magic on them, so the monsters ate up the crystal fragments!";
 					next;
-					mes "[Carolling]";
-					mes "I am so devastated, since the";
-					mes "Singing Crystal has been the hope";
-					mes "of many children around the villages.";
+					mes "[Caroller]";
+					mes "I am so devastated, since the Singing Crystal has been the hope of many children around the villages.";
 					next;
 					if (select("There's no other way to carol?:You can hear carols in Lutie.") == 2) {
-						mes "[Carolling]";
-						mes "And just stay there, every";
-						mes "Christmas, for your whole life?";
+						mes "[Caroller]";
+						mes "And just stay there, every Christmas, for your whole life?";
 						next;
 						mes "["+strcharinfo(0)+"]";
 						mes "What? What do you mean?";
 						next;
-						mes "[Carolling]";
+						mes "[Caroller]";
 						mes "Oh, nevermind.";
 						mes "Ah...";
 						close;
 					}
-					mes "[Carolling]";
-					mes "Maybe, it's quite hard to make a";
-					mes "jukebox for the villages, but a";
-					mes "music box might be possible.";
+					mes "[Caroller]";
+					mes "Maybe, it's quite hard to make a jukebox for the villages, but a music box might be possible.";
 					next;
-					mes "[Carolling]";
-					mes "We need the ^0000FFSinging Crystal Pieces^000000";
-					mes "that the monsters ate up.";
+					mes "[Caroller]";
+					mes "We need the ^0000FFSinging Crystal Pieces^000000 that the monsters ate up.";
 					next;
-					mes "[Carolling]";
-					mes "Please bring me ^0000FF6 Singing Crystal";
-					mes "Pieces^000000, and you will be rewarded";
-					mes "with presents!";
+					mes "[Caroller]";
+					mes "Please bring me ^0000FF6 Singing Crystal Pieces^000000, and you will be rewarded with presents!";
 					next;
-					mes "[Carolling]";
+					mes "[Caroller]";
 					mes "Sounds cool, huh!!";
 					next;
 					select("........................");
-					mes "[Carolling]";
-					mes "...Why are you staring at me like";
-					mes "that?";
+					mes "[Caroller]";
+					mes "...Why are you staring at me like that?";
 					next;
-					mes "[Carolling]";
-					mes "You're thinking that we are always";
-					mes "getting our plans spoiled, aren't";
-					mes "you?";
+					mes "[Caroller]";
+					mes "You're thinking that we are always getting our plans spoiled, aren't you?";
 					next;
-					mes "[Carolling]";
-					mes "I know that we are not good at";
-					mes "controlling stuff, but our rewards";
-					mes "are good, right?";
+					mes "[Caroller]";
+					mes "I know that we are not good at controlling stuff, but our rewards are good, right?";
 					next;
 					select("........................");
-					mes "[Carolling]";
+					mes "[Caroller]";
 					mes "Hey, we treat you good...";
 					next;
 					select("........................");
-					mes "[Carolling]";
+					mes "[Caroller]";
 					mes "You are so cruel to me!";
 					mes "Bad! Bad!";
 					next;
-					mes "[Carolling]";
-					mes "Please, for our children's";
-					mes "hope!!!?";
-					mes "Please bring me 6 Singing Crystal";
-					mes "Pieces from ^0000FFViolent Gift Boxes^000000!";
+					mes "[Caroller]";
+					mes "Please, for our children's hope!!!?";
+					mes "Please bring me 6 Singing Crystal Pieces from ^0000FFViolent Gift Boxes^000000!";
 					next;
 					emotion 33;
-					mes "[Carolling]";
-					mes "They're definitely as";
-					mes "harsh as their name.";
+					mes "[Caroller]";
+					mes "They're definitely as harsh as their name.";
 					mes "Go on please!";
 					set iROxmas08carol,1;
 					close;
 
 			case 4:
-				mes "[Carolling]";
+				mes "[Caroller]";
 				mes "Santa costumes!!";
-				mes "You know, the santa costumes that";
-				mes "the monsters are wearing now aren't";
-				mes "genuine!";
+				mes "You know, the santa costumes that the monsters are wearing now aren't genuine!";
 				next;
-				mes "[Carolling]";
-				mes "The rumor 'round here is, Lutie's";
-				mes "designer made these costumes.";
+				mes "[Caroller]";
+				mes "The rumor 'round here is, Lutie's designer made these costumes.";
 				next;
-				mes "[Carolling]";
-				mes "Every year, adventurers challenge";
-				mes "to attack Antonio the fake Santa,";
-				mes "but there's no way to catch up to";
-				mes "him due to his hat and costume!";
+				mes "[Caroller]";
+				mes "Every year, adventurers challenge to attack Antonio the fake Santa, but there's no way to catch up to him due to his hat and costume!";
 				next;
-				mes "[Carolling]";
-				mes "Are there some spcial abilities";
-				mes "within them?";
-				mes "There's still the designer in the";
-				mes "Christmas village... How about";
-				mes "asking her to make that costume?";
+				mes "[Caroller]";
+				mes "Are there some spcial abilities within them?";
+				mes "There's still the designer in the Christmas village... How about asking her to make that costume?";
 				next;
 				emotion 18;
-				mes "[Carolling]";
-				mes "Carolling's hot news! Ha!";
+				mes "[Caroller]";
+				mes "Caroller's hot news! Ha!";
 				mes "It's hot, huh?";
 				close;
 
 
 			case 5:
-				mes "[Carolling]";
+				mes "[Caroller]";
 				mes "A-N-T-O-N-I-O!!!";
-				mes "As I heard, this Antonio is quite";
-				mes "different from before.";
+				mes "As I heard, this Antonio is quite different from before.";
 				next;
-				mes "[Carolling]";
-				mes "He seems to be quite resolved with";
-				mes "himself since he ran away from";
-				mes "people before.";
+				mes "[Caroller]";
+				mes "He seems to be quite resolved with himself since he ran away from people before.";
 				next;
-				mes "[Carolling]";
-				mes "And he isn't alone anymore... is";
-				mes "what I heard...";
+				mes "[Caroller]";
+				mes "And he isn't alone anymore... is what I heard...";
 				next;
 				emotion 18;
-				mes "[Carolling]";
-				mes "Carolling's hot news! Ha!";
+				mes "[Caroller]";
+				mes "Caroller's hot news! Ha!";
 				mes "Hotness, right?";
 				close;
 		}
@@ -346,80 +282,64 @@ prontera,226,306,4	script	Carolling#iROxmas08	79,{
 	
 	if (iROxmas08carol == 1) {
 		if (countitem(6092) < 6) {
-			mes "[Carolling]";
-			mes "Maybe, it's quite hard to make a";
-			mes "jukebox for the villages, but a";
-			mes "music box might be possible.";
+			mes "[Caroller]";
+			mes "Maybe, it's quite hard to make a jukebox for the villages, but a music box might be possible.";
 			next;
-			mes "[Carolling]";
-			mes "We need the ^0000FFSinging Crystal Pieces^000000";
-			mes "that the monsters ate up.";
+			mes "[Caroller]";
+			mes "We need the ^0000FFSinging Crystal Pieces^000000 that the monsters ate up.";
 			next;
-			mes "[Carolling]";
+			mes "[Caroller]";
 			mes "Please bring me ^0000FF6 Singing Crystal Pieces^000000, and you will be rewarded with presents!";
 			next;
-			mes "[Carolling]";
-			mes "For all of the children of this";
-			mes "world!!!";
-			mes "Please bring me ^0000FFSinging Crystal";
-			mes "Pieces^000000 from ^0000FFViolent Gift Boxes^000000!";
+			mes "[Caroller]";
+			mes "For all of the children of this world!!!";
+			mes "Please bring me ^0000FFSinging Crystal Pieces^000000 from ^0000FFViolent Gift Boxes^000000!";
 			next;
 			emotion 33;
-			mes "[Carolling]";
+			mes "[Caroller]";
 			mes "Be careful!";
-			mes "They're definitely as";
-			mes "harsh as their name.";
+			mes "They're definitely as harsh as their name.";
 			mes "Take care!!!";
 			close;
 		}else{
-			specialeffect 75;
-			mes "[Carolling]";
+			specialeffect EF_GLORIA;
+			mes "[Caroller]";
 			mes "Don't cry, don't cry!";
-			mes "Santa won't give you a";
-			mes "gift if you're crying.";
+			mes "Santa won't give you a gift if you're crying.";
 			next;
-			mes "[Carolling]";
+			mes "[Caroller]";
 			select("I got them!");
-			mes "[Carolling]";
+			mes "[Caroller]";
 			mes "Wow, you got them!";
 			mes "They are so cruel, aren't they?";
 			mes "I'm happy to see you again.";
 			next;
-			mes "[Carolling]";
+			mes "[Caroller]";
 			mes "Let's count together!";
 			mes "... ...";
 			mes "Six!!";
 			next;
-			mes "[Carolling]";
-			mes "All right! We can start to make our";
-			mes "music box with crystal fragments.";
+			mes "[Caroller]";
+			mes "All right! We can start to make our music box with crystal fragments.";
 			next;
-			mes "[Carolling]";
-			mes "We would amplify the sounds of the";
-			mes "crystal fragments to sound through";
-			mes "the music box.";
+			mes "[Caroller]";
+			mes "We would amplify the sounds of the crystal fragments to sound through the music box.";
 			next;
-			mes "[Carolling]";
-			mes "You know, a music box that sounds";
-			mes "like a jukebox!";
+			mes "[Caroller]";
+			mes "You know, a music box that sounds like a jukebox!";
 			next;
-			mes "[Carolling]";
-			mes "It's handy. You can carry it, as";
-			mes "well as listen to sweet carols";
-			mes "anywhere. Doesn't that sound";
-			mes "cool!?";
+			mes "[Caroller]";
+			mes "It's handy. You can carry it, as well as listen to sweet carols anywhere.";
+			mes "Doesn't that sound cool!?";
 			next;
-			mes "[Carolling]";
-			mes "So, we need more of some";
-			mes "materials.";
-			mes "^0000FF10 Wooden Block, 1 Hammer Of";
-			mes "Blacksmith, 1 Jubilee, 10 Sticky";
-			mes "Mucus, 3-karat Diamond^000000!";
+			mes "[Caroller]";
+			mes "So, we need more of some materials.";
+			mes "^0000FF10 Trunk, 1 Hammer Of Blacksmith, 1 Jubilee, 10 Sticky Mucus, 3carat Diamond^000000!";
 			next;
 			delitem 6092,6;
 			emotion 33;
 			set iROxmas08carol,2;
-			mes "[Carolling]";
+			mes "[Caroller]";
 			mes "Those are all needed.";
 			mes "Isn't that easy?";
 			close;
@@ -428,86 +348,72 @@ prontera,226,306,4	script	Carolling#iROxmas08	79,{
 	
 	if (iROxmas08carol == 2) {
 		if (countitem(1019) < 10 || countitem(1005) < 1 || countitem(7312) < 1 || countitem(938) < 10 || countitem(732) < 1) {
-			mes "[Carolling]";
-			mes "We can make a music box";
-			mes "with Singing Crystal Pieces.";
-			mes "It's handy, you can hear carols";
-			mes "anywhere. Sounds cool?";
+			mes "[Caroller]";
+			mes "We can make a music box with Singing Crystal Pieces.";
+			mes "It's handy, you can hear carols anywhere. Sounds cool?";
 			next;
-			mes "[Carolling]";
+			mes "[Caroller]";
 			mes "So, we need more of some materials.";
-			mes "^0000FF10 Wooden Block, 1 Hammer Of";
-			mes "Blacksmith, 1 Jubilee, 10 Sticky";
-			mes "Mucus, 3-karat Diamond^000000!";
+			mes "^0000FF10 Trunk, 1 Hammer Of Blacksmith, 1 Jubilee, 10 Sticky Mucus, 3carat Diamond^000000!";
 			next;
 			emotion 33;
-			mes "[Carolling]";
+			mes "[Caroller]";
 			mes "That's all we need.";
 			mes "Isn't that easy?";
 			close;
 		}else{
-			specialeffect 75;
-			mes "[Carolling]";
+			specialeffect EF_GLORIA;
+			mes "[Caroller]";
 			mes "Jingle bells, jingle bells,";
 			mes "jingle all the way!";
 			mes "O what fun it is to ride, in a";
 			mes "one... horse... o-pen... sleigh!!!";
 			next;
-			mes "[Carolling]";
+			mes "[Caroller]";
 			mes "Wow!";
 			mes "You came back!";
-			mes "Did you bring all the";
-			mes "materials?";
+			mes "Did you bring all the materials?";
 			next;
-			mes "[Carolling]";
+			mes "[Caroller]";
 			mes "Good!";
-			mes "No need to hesitate! Let's get";
-			mes "started to make our music box.";
+			mes "No need to hesitate! Let's get started to make our music box.";
 			next;
-			mes "[Carolling]";
-			specialeffect 101;
-			mes "Blacksmith hammers on wooden";
-			mes "block... and we shape the frame.";
+			mes "[Caroller]";
+			specialeffect EF_REPAIRWEAPON;
+			mes "Blacksmith hammers on trunk... and we shape the frame.";
 			next;
-			mes "[Carolling]";
+			mes "[Caroller]";
 			//(effect - stones from ground?)
-			mes "Please use the Singing Crystal";
-			mes "Pieces for a column, the Diamond as";
-			mes "a prop, and the Sticky Mucus as";
-			mes "glue.";
+			mes "Please use the Singing Crystal Pieces for a column, the Diamond as a prop, and the Sticky Mucus as glue.";
 			next;
-			mes "[Carolling]";
-			specialeffect 1;
+			mes "[Caroller]";
+			specialeffect EF_HIT2;
 			mes "And now...";
 			mes "we decorate with a Jubilee...";
 			next;
-			mes "[Carolling]";
-			specialeffect 88;
+			mes "[Caroller]";
+			specialeffect EF_SUFFRAGIUM;
 			mes "The last step...!";
 			mes "Breating life into it!";
 			next;
-			mes "[Carolling]";
+			mes "[Caroller]";
 			mes "It's done now!!!";
 			next;
-			mes "[Carolling]";
+			mes "[Caroller]";
 			mes "It's so cool! Isn't it cute!!?!";
 			next;
-			mes "[Carolling]";
-			mes "You did as I requested, so I will";
-			mes "give you gifts, as promised.";
+			mes "[Caroller]";
+			mes "You did as I requested, so I will give you gifts, as promised.";
 			next;
-			mes "[Carolling]";
+			mes "[Caroller]";
 			mes "One, is this music box.";
-			mes "Please play this music box all over";
-			mes "the villages!";
+			mes "Please play this music box all over the villages!";
 			next;
-			mes "[Carolling]";
-			mes "Another present is a Christmas cake";
-			mes "especially shaped like your name!";
-			mes "I made this cake shaped like your";
-			mes "name!";
+			mes "[Caroller]";
+			mes "Another present is a Christmas cake especially shaped like your name!";
+			mes "I made this cake shaped like your name!";
 			next;
-			mes "[Carolling]";
+			mes "[Caroller]";
 			mes "Don't worry, it tastes good.";
 			next;
 			emotion 33;
@@ -519,7 +425,7 @@ prontera,226,306,4	script	Carolling#iROxmas08	79,{
 			delitem 938,10;
 			delitem 732,1;
 			set iROxmas08carol,3;
-			mes "[Carolling]";
+			mes "[Caroller]";
 			mes "Thanks a lot.";
 			mes "Merry Christmas!";
 			mes "Have a good holiday season!";
@@ -532,22 +438,18 @@ prontera,226,306,4	script	Carolling#iROxmas08	79,{
 // =====================================================
 -	script	Santa Claus#iROxmas08::08santa	718,{
 	mes "[Santa Claus]";
-	mes "Wow! Were you naughty or nice this";
-	mes "year?";
-	mes "All right, what comes to your mind";
-	mes "when you think about Christmas?";
+	mes "Wow! Were you naughty or nice this year?";
+	mes "All right, what comes to your mind when you think about Christmas?";
 	next;
 	switch(select("Carolling:Santa Claus:Gift Boxes:Santa Costume:Not much really...")) {
 	
 	case 1:
 		mes "[Santa Claus]";
 		mes "Carolling! That's good!";
-		mes "A sweet carol always makes";
-		mes "Christmas more happy!!!";
+		mes "A sweet carol always makes Christmas more happy!!!";
 		next;
 		mes "[Santa Claus]";
-		mes "Yes indeed Carolling spreads Joy";
-		mes "throughout the world?";
+		mes "Yes indeed Carolling spreads Joy throughout the world?";
 		close;
 
 	case 2:
@@ -559,75 +461,53 @@ prontera,226,306,4	script	Carolling#iROxmas08	79,{
 		}
 		next;
 		mes "[Santa Claus]";
-		mes "But you should be wary of a fake";
-		mes "Santa romaing around.";
-		mes "Have you heard of Antonio, who";
-		mes "invades villages every Christmas?";
+		mes "But you should be wary of a fake Santa romaing around.";
+		mes "Have you heard of Antonio, who invades villages every Christmas?";
 		next;
 		mes "[Santa Claus]";
-		mes "He has stolen my gifts, as well as";
-		mes "attacked adventurers around Toy and";
-		mes "Lutie field.";
+		mes "He has stolen my gifts, as well as attacked adventurers around Toy and Lutie field.";
 		next;
 		mes "[Santa Claus]";
-		mes "A bad Santa ruins us good Santa's";
-		mes "reputations!";
-		mes "The World Santa Organization is";
-		mes "considering this a grave";
-		mes "situation.";
+		mes "A bad Santa ruins us good Santa's reputations!";
+		mes "The World Santa Organization is considering this a grave situation.";
 		close;
 	
 	case 3:
 		mes "[Santa Claus]";
 		mes "A gift box! That sounds good!";
-		mes "It's so exciting to open gift boxes";
-		mes "when you wake up on Christmas";
-		mes "morning!!!";
+		mes "It's so exciting to open gift boxes when you wake up on Christmas morning!!!";
 		next;
 		mes "[Santa Claus]";
-		mes "But we have very little gifts now,";
-		mes "since Santa Antonio has stolen my";
-		mes "gift bag.";
+		mes "But we have very little gifts now, since Santa Antonio has stolen my gift bag.";
 		next;
 		mes "[Santa Claus]";
-		mes "Many adventurers try to catch up";
-		mes "to him, but he is not easy to catch.";
+		mes "Many adventurers try to catch up to him, but he is not easy to catch.";
 		next;
 		mes "[Santa Claus]";
-		mes "Anyway let those adventurers try to";
-		mes "catch him, I have a small game for";
-		mes "you.";
+		mes "Anyway let those adventurers try to catch him, I have a small game for you.";
 		next;
 		mes "[Santa Claus]";
-		mes "I will give you a small gift if you";
-		mes "beat me!";
+		mes "I will give you a small gift if you beat me!";
 		next;
 		mes "[Santa Claus]";
-		mes "Do you want to play a game with";
-		mes "me?";
+		mes "Do you want to play a game with me?";
 		next;
 		if (select("No, thanks.:Yes, I would.") == 1) {
 			mes "[Santa Claus]";
-			mes "Aww, don't be afraid. If you've";
-			mes "been a little naughty this year I";
-			mes "won't stuff your stockings with";
-			mes "coal.";
+			mes "Aww, don't be afraid.";
+			mes "If you've been a little naughty this year I won't stuff your stockings with coal.";
 			next;
 			mes "[Santa Claus]";
-			mes "I will stay here throughout the";
-			mes "Christmas season, just visit me";
-			mes "when you change your mind.";
+			mes "I will stay here throughout the Christmas season, just visit me when you change your mind.";
 			close;
 		}
 		if (gettimetick(2) < SantaCardTime) {
 			mes "[Santa Claus]";
-			mes "Um... You've played the game";
-			mes "recently haven't you?";
+			mes "Um... You've played the game recently haven't you?";
 			next;
 			mes "[Santa Claus]";
 			mes "You can try the game once a hour.";
-			mes "Please visit me after the one hour";
-			mes "has passed.";
+			mes "Please visit me after the one hour has passed.";
 			close;
 		}
 		set .@SantaCardTurn,0;
@@ -636,40 +516,35 @@ prontera,226,306,4	script	Carolling#iROxmas08	79,{
 		mes "Wow! You're so cool!";
 		next;
 		mes "[Santa Claus]";
-		mes "Let me explain how to play this";
-		mes "game.";
+		mes "Let me explain how to play this game.";
 		next;
 		mes "[Santa Claus]";
-		mes "It's quite simple. I will pick one";
-		mes "of three cards: Poring Card,";
-		mes "Ghostring Card, and Angeling Card.";
-		mes "Guess which card I pick and";
-		mes "you're a winner!";
+		mes "It's quite simple.";
+		mes "I will pick one of three cards: Poring Card, Ghostring Card, and Angeling Card.";
+		mes "Guess which card I pick and you're a winner!";
 		next;
 		mes "[Santa Claus]";
-		mes "If you guess right 3 times out of";
-		mes "5, I will give you a gift.";
+		mes "If you guess right 3 times out of 5, I will give you a gift.";
 		mes "Let's get started!";
 		next;
 		while(.@SantaCardTurn != 5) {
 			emotion 56;
 			mes "[Santa Claus]";
-			mes "First let me shuffle up these";
-			mes "cards... Ok!!!";
+			mes "First let me shuffle up these cards... Ok!!!";
 			next;
-			specialeffect 0;
+			specialeffect EF_HIT1;
 			mes "[Santa Claus]";
 			mes "One!";
 			next;
-			specialeffect 1;
+			specialeffect EF_HIT2;
 			mes "[Santa Claus]";
 			mes "Two!";
 			next;
-			specialeffect 2;
+			specialeffect EF_HIT3;
 			mes "[Santa Claus]";
 			mes "Three!";
 			next;
-			specialeffect 18;
+			specialeffect EF_STEAL;
 			mes "[Santa Claus]";
 			mes "I'm picking up only one!";
 			next;
@@ -725,8 +600,7 @@ prontera,226,306,4	script	Carolling#iROxmas08	79,{
 				cutin "",255;
 				mes "[Santa Claus]";
 				mes "You're lucky.";
-				mes "Can you guess the right card the";
-				mes "next time around?";
+				mes "Can you guess the right card the next time around?";
 				next;
 			}else{
 				emotion 0;
@@ -739,8 +613,8 @@ prontera,226,306,4	script	Carolling#iROxmas08	79,{
 		}
 		if (.@SantaCardWins < 3) {
 			mes "["+strcharinfo(0)+"]";
-			mes "This is just luck. Let me try";
-			mes "again!!";
+			mes "This is just luck.";
+			mes "Let me try again!!";
 			next;
 			mes "[Santa Claus]";
 			mes "Whenever you want.";
@@ -750,9 +624,8 @@ prontera,226,306,4	script	Carolling#iROxmas08	79,{
 			mes "You're so good!";
 			next;
 			mes "[Santa Claus]";
-			mes "Now this gift is for you. Put your";
-			mes "hand into the bag and pick only";
-			mes "one.";
+			mes "Now this gift is for you.";
+			mes "Put your hand into the bag and pick only one.";
 			set .@SantaCardPrize, rand(1,12);
 			next;
 			if (.@SantaCardPrize == 1) {
@@ -793,24 +666,19 @@ prontera,226,306,4	script	Carolling#iROxmas08	79,{
 			}
 			set SantaCardTime,gettimetick(2)+3600;
 			mes "[Santa Claus]";
-			mes "Good job! Thanks for playing the";
-			mes "card game with me! Merry";
-			mes "Christmas!";
+			mes "Good job! Thanks for playing the card game with me!";
+			mes "Merry Christmas!";
 			close;
 		}
 
 	case 4:
 		mes "[Santa Claus]";
-		mes "Do you mean that ever so";
-		mes "fashionable costume for Santa's and";
-		mes "youngsters!?!";
-		mes "Light-weight, fashionable, and";
-		mes "keeps you warm!";
+		mes "Do you mean that ever so fashionable costume for Santa's and youngsters!?!";
+		mes "Light-weight, fashionable, and keeps you warm!";
 		next;
 		mes "[Santa Claus]";
-		mes "There used to be designer who";
-		mes "visited my house to make my Santa";
-		mes "costumes. Do you have any ideas?";
+		mes "There used to be designer who visited my house to make my Santa costumes.";
+		mes "Do you have any ideas?";
 		close;
 	
 	case 5:
@@ -835,10 +703,8 @@ prontera,226,306,4	script	Carolling#iROxmas08	79,{
 		mes "...";
 		next;
 		mes "[Santa Claus]";
-		mes "You should open your heart to the";
-		mes "spirit of Christmas!";
-		mes "Once you do, I know you'll be able";
-		mes "to think of something.";
+		mes "You should open your heart to the spirit of Christmas!";
+		mes "Once you do, I know you'll be able to think of something.";
 		close;
 	}
 }
@@ -854,32 +720,25 @@ morocc,158,104,4	duplicate(08santa)	Santa Claus#0805	718
 // =====================================================
 xmas_in,89,92,4	script	Louise Kim#iROxmas08	714,{
 	mes "[Louise Kim]";
-	mes "I always thought about how boring";
-	mes "Santa Claus is wearing a too boring";
-	mes "costume. Too boring!";
+	mes "I always thought about how boring Santa Claus is wearing a too boring costume.";
+	mes "Too boring!";
 	next;
 	mes "[Louise Kim]";
-	mes "I could make a glamorous style for";
-	mes "him!";
+	mes "I could make a glamorous style for him!";
 	next;
 	mes "[Louise Kim]";
-	mes "I once made a costume for";
-	mes "the notorious figure Antonio!";
-	mes "The reason catching up to him";
-	mes "is so hard, is that his clothes";
-	mes "have been given strong power!";
+	mes "I once made a costume for the notorious figure Antonio!";
+	mes "The reason catching up to him is so hard, is that his clothes have been given strong power!";
 	mes "I blessed them with good luck!";
 	next;
 	emotion 3;
 	mes "[Louise Kim]";
 	mes "Preta Porter!!";
-	mes "Which is quite luxurious";
-	mes "but sold at good price ~";
+	mes "Which is quite luxurious but sold at good price ~";
 	next;
 	mes "[Louise Kim]";
-	mes "Hey loosers! You can share my sense";
-	mes "of fashion and wear my look if you";
-	mes "run a light mission for me.";
+	mes "Hey loosers!";
+	mes "You can share my sense of fashion and wear my look if you run a light mission for me.";
 	next;
 	mes "[Louise Kim]";
 	mes "Are you interested?";
@@ -887,15 +746,12 @@ xmas_in,89,92,4	script	Louise Kim#iROxmas08	714,{
 	if (select("Nope.:Yes, please.") == 1) {
 		mes "[Louise Kim]";
 		mes "Ah!";
-		mes "You're silly! You lost your big";
-		mes "chance!";
+		mes "You're silly! You lost your big chance!";
 		next;
 		emotion 18;
 		mes "[Louise Kim]";
-		mes "Come to me later if you";
-		mes "want to get the mission.";
-		mes "I, Louise Kim, am generous";
-		mes "enough to accept you next time.";
+		mes "Come to me later if you want to get the mission.";
+		mes "I, Louise Kim, am generous enough to accept you next time.";
 		close;
 	}
 	mes "[Louise Kim]";
@@ -904,13 +760,10 @@ xmas_in,89,92,4	script	Louise Kim#iROxmas08	714,{
 	mes "[Louise Kim]";
 	mes "Don't worry about this mission.";
 	mes "It's not that difficult.";
-	mes "I'm only in need of some";
-	mes "materials. Things that are";
-	mes "beyond my ability...";
+	mes "I'm only in need of some materials. Things that are beyond my ability...";
 	next;
 	mes "[Louise Kim]";
-	mes "Anyway, can you bring me some";
-	mes "stuff?";
+	mes "Anyway, can you bring me some stuff?";
 	next;
 	if (select("Why not? What do you need?:Sorry, no time.") == 2) {
 		emotion 18;
@@ -922,25 +775,18 @@ xmas_in,89,92,4	script	Louise Kim#iROxmas08	714,{
 	}
 	mes "[Louise Kim]";
 	mes "All right, you're cool!!";
-	mes "You need to bring me: ^0000FFCotton Shirt,";
-	mes "3 Red Potion, Holy Water, 4 Wrapping";
-	mes "Paper, Wrapping Lace^000000..";
+	mes "You need to bring me: ^0000FFCotton Shirt, 3 Red Potion, Holy Water, 4 Wrapping Paper, Wrapping Lace^000000.";
 	next;
 	mes "[Louise Kim]";
-	mes "If you bring me all that stuff, I";
-	mes "can make you a glamorous Santa";
-	mes "costume.";
+	mes "If you bring me all that stuff, I can make you a glamorous Santa costume.";
 	next;
 	if (countitem(2301) < 1 || countitem(501) < 3 || countitem(523) < 1 || countitem(7175) < 4 || countitem(7174) < 1) {		
 			mes "[Louise Kim]";
-			mes "If you were to bring me all the";
-			mes "stuff, I would make you a wonderful";
-			mes "costume, for free...";
+			mes "If you were to bring me all the stuff, I would make you a wonderful costume, for free...";
 			next;
 			emotion 3;
 			mes "[Louise Kim]";
-			mes "Please see me again if you are";
-			mes "interested.";
+			mes "Please see me again if you are interested.";
 			close;
 	}else{
 		select("Here you are.");
@@ -948,20 +794,18 @@ xmas_in,89,92,4	script	Louise Kim#iROxmas08	714,{
 		mes "[Louise Kim]";
 		mes "Oh! Good!";
 		mes "Let's not delay.";
-		mes "I will show you my limitless";
-		mes "ability.";
+		mes "I will show you my limitless ability.";
 		next;
 		mes "-She pours everything in a pot-";
 		mes "-even the shirt goes in!-";
 		mes "-She takes it out with skill-";
 		mes "-and many blessings she sings.-";
 		next;
-		specialeffect 42;
+		specialeffect EF_BLESSING;
 		emotion 2;
 		mes "[Louise Kim]";
 		mes "By artist, Louise Kim!";
-		mes "All over the world will be blessed";
-		mes "tonight!";
+		mes "All over the world will be blessed tonight!";
 		next;
 		mes "-Pour red potion in another pot-";
 		mes "-then stir all of its parts.-";
@@ -971,20 +815,19 @@ xmas_in,89,92,4	script	Louise Kim#iROxmas08	714,{
 		mes "-String by string-";
 		mes "-Count your blessings and sing!-";
 		next;
-		specialeffect 75;
+		specialeffect EF_GLORIA;
 		emotion 2;
 		mes "[Louise Kim]";
 		mes "By artist, Louise Kim!";
-		mes "All over the world will be blessed";
-		mes "tonight!";
+		mes "All over the world will be blessed tonight!";
 		next;
 		mes "-She is knitting clothes-";
 		mes "-with a hooked needle-";
 		mes "-with her great skill.-";
-		mes "Spread your blessings,-";
-		mes "cheer and goodwill!-";
+		mes "-Spread your blessings,-";
+		mes "-cheer and goodwill!-";
 		next;
-		specialeffect 91;
+		specialeffect EF_BENEDICTIO;
 		emotion 3;
 		mes "[Louise Kim]";
 		mes "This is miraculous!";
@@ -995,14 +838,11 @@ xmas_in,89,92,4	script	Louise Kim#iROxmas08	714,{
 		mes "All right! Isn't it wonderful?";
 		mes "You can call it what you wish.";
 		mes "My fashion is radiant.";
-		mes "I ain't envious of Designer";
-		mes "Pierre.";
+		mes "I ain't envious of Designer Pierre.";
 		next;
 		emotion 18;
 		mes "[Louise Kim]";
-		mes "I am supposed to get paid well,";
-		mes "however I will just let it";
-		mes "be free, since this is Christmas!";
+		mes "I am supposed to get paid well, however I will just let it be free, since this is Christmas!";
 		next;
 		delitem 2301,1;
 		delitem 501,3;
@@ -1011,9 +851,7 @@ xmas_in,89,92,4	script	Louise Kim#iROxmas08	714,{
 		delitem 7174,1;
 		getitem 12132,1;
 		mes "[Louise Kim]";
-		mes "Go brag about these wonderful";
-		mes "clothes. There wouldn't be";
-		mes "any without me, Louise Kim.";
+		mes "Go brag about these wonderful clothes. There wouldn't be any without me, Louise Kim.";
 		close;
 	}
 }

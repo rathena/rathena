@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= KOOK SWU, Kisuka
 //===== Current Version: =====================================
-//= 1.4
+//= 1.5
 //===== Compatible With: =====================================
 //= eAthena SVN
 //===== Description: =========================================
@@ -13,6 +13,7 @@
 //= 1.2 According to the patch, IceCream seller has been removed from Morocc [Lupus]
 //= 1.3 No more label menu and updated to match AEGIS script. [Kisuka]
 //= 1.4 Duplicates now spawn from floating NPCs. [L0ne_W0lf]
+//= 1.5 Fixed small checkweight issue. [Kisuka]
 //============================================================
 
 -	script	Ice Cream Maker::IceCreamer	-1,{
@@ -62,7 +63,7 @@
 		mes "Price is ^3355FF100 Zeny^000000 per ice cream.";
 		close;	
 	}
-	if(checkweight(536,.@amount) == 0) {
+	if(checkweight(536,.@input) == 0) {
 		mes "[Ice Cream Maker]";
 		mes "Dear customer,you look like you're carrying a lot.";
 		mes "Ice Cream is fine,";
