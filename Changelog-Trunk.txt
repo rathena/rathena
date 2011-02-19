@@ -1,6 +1,7 @@
 Date	Added
 
 2011/02/19
+	* Fixed 'feature.conf' not getting loaded and a typo buying store feature setting name (follow up to r14713). [Ai4rei]
 	* Implemented buying store system (aka. reverse vending, purchase shop) together with related skill and items, without NPCs. [Ai4rei]
 	- For SQL apply upgrade_svn14713_log.sql to upgrade tables `picklog` and `zenylog`; for TXT no action is necessary.
 	- Requires 2010-04-20aRagexeRE or later and can be disabled in 'conf/battle/feature.conf'.
