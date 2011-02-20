@@ -374,6 +374,7 @@
 			<File
 				RelativePath="..\src\map\battleground.h"
 				>
+			</File>
 			<File
 				RelativePath="..\src\map\buyingstore.c"
 				>
