@@ -1,6 +1,7 @@
 Date	Added
 
 2011/02/19
+	* Updated guild expel notification packet 0x15c (ZC_ACK_BAN_GUILD) for clients 2010-06-08aRagexeRE and newer to 0x839. [Ai4rei]
 	* Removed '.txt' from log config info messages, as the values already have an extension (since r197, related r196). [Ai4rei]
 	* Fixed gcc compile warnings in char-server and console plug-in (bugreport:4771, topic:208746, since r9631 and r14700). [Ai4rei]
 	* Fixed buying stores could be opened and sold to regardless of distance between seller and buyer (since r14713). [Ai4rei]

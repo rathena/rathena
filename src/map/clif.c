@@ -6994,14 +6994,21 @@ int clif_guild_leave(struct map_session_data *sd,const char *name,const char *me
 int clif_guild_expulsion(struct map_session_data *sd,const char *name,const char *mes,int account_id)
 {
 	unsigned char buf[128];
+#if PACKETVER < 20100608
+	const unsigned short cmd = 0x15c;
+#else
+	const unsigned short cmd = 0x839;
+#endif
 
 	nullpo_ret(sd);
 
-	WBUFW(buf, 0)=0x15c;
+	WBUFW(buf,0) = cmd;
 	safestrncpy((char*)WBUFP(buf, 2),name,NAME_LENGTH);
 	safestrncpy((char*)WBUFP(buf,26),mes,40);
+#if PACKETVER < 20100608
 	safestrncpy((char*)WBUFP(buf,66),"",NAME_LENGTH); // account name (not used for security reasons)
-	clif_send(buf,packet_len(0x15c),&sd->bl,GUILD_NOBG);
+#endif
+	clif_send(buf,packet_len(cmd),&sd->bl,GUILD_NOBG);
 	return 0;
 }
 
@@ -14747,7 +14754,7 @@ static int packetdb_readdb(void)
 #endif
 	    3, -1,  8, -1,  86, 2,  6,  6, -1, -1,  4, 10, 10,  0,  0,  0,
 	    0,  0,  0,  0,  6,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+	    0,  0,  0,  0,  0,  0,  0,  0,  0, 66,  0,  0,  0,  0,  0,  0,
 	};
 	struct {
 		void (*func)(int, struct map_session_data *);
