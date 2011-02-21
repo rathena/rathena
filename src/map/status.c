@@ -174,7 +174,7 @@ void initChangeTables(void)
 	set_sc( BS_ADRENALINE        , SC_ADRENALINE      , SI_ADRENALINE      , SCB_ASPD );
 	set_sc( BS_WEAPONPERFECT     , SC_WEAPONPERFECTION, SI_WEAPONPERFECTION, SCB_NONE );
 	set_sc( BS_OVERTHRUST        , SC_OVERTHRUST      , SI_OVERTHRUST      , SCB_NONE );
-	set_sc( BS_MAXIMIZE          , SC_MAXIMIZEPOWER   , SI_MAXIMIZEPOWER   , SCB_NONE );
+	set_sc( BS_MAXIMIZE          , SC_MAXIMIZEPOWER   , SI_MAXIMIZEPOWER   , SCB_REGEN );
 	add_sc( HT_LANDMINE          , SC_STUN            );
 	add_sc( HT_ANKLESNARE        , SC_ANKLE           );
 	add_sc( HT_SANDMAN           , SC_SLEEP           );
@@ -2693,6 +2693,7 @@ void status_calc_regen_rate(struct block_list *bl, struct regen_data *regen, str
 			(((TBL_PC*)bl)->class_&MAPID_UPPERMASK) == MAPID_MONK &&
 			(sc->data[SC_EXTREMITYFIST] || (sc->data[SC_EXPLOSIONSPIRITS] && (!sc->data[SC_SPIRIT] || sc->data[SC_SPIRIT]->val2 != SL_MONK)))
 			)
+		|| sc->data[SC_MAXIMIZEPOWER]
 	)	//No natural SP regen
 		regen->flag &=~RGN_SP;
 

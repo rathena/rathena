@@ -1,6 +1,7 @@
 Date	Added
 
 2011/02/20
+	* Fixed SP regen not stopping when Maximize Power (BS_MAXIMIZE) is in effect. [Ai4rei]
 	* Fixed missing </File> end-tag in VC8 map-server sql project file (since r14713). [Ai4rei]
 2011/02/19
 	* Updated guild expel notification packet 0x15c (ZC_ACK_BAN_GUILD) for clients 2010-06-08aRagexeRE and newer to 0x839. [Ai4rei]
