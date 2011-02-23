@@ -9200,7 +9200,7 @@ void clif_parse_WisMessage(int fd, struct map_session_data* sd)
 				set_var(sd,output,(char *) split_data[i]);
 			}
 			
-			sprintf(output, "%s::OnWhisperGlobal", npc->name);
+			sprintf(output, "%s::OnWhisperGlobal", npc->exname);
 			npc_event(sd,output,0); // Calls the NPC label
 
 			return;

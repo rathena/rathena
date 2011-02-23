@@ -1,5 +1,7 @@
 Date	Added
 
+2011/02/23
+	* Fixed whispering to NPCs (::OnWhisperGlobal) not working for NPCs whose unique name is different from the display name (bugreport:4776, since r2624). [Ai4rei]
 2011/02/20
 	* Fixed SP regen not stopping when Maximize Power (BS_MAXIMIZE) is in effect. [Ai4rei]
 	* Fixed missing </File> end-tag in VC8 map-server sql project file (since r14713). [Ai4rei]
