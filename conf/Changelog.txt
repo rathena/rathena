@@ -1,5 +1,7 @@
 Date	Added
 
+2011/02/23
+	* Rev. 14724 Made autotrade error message store type-neutral, as it is used for buying stores now as well. [Ai4rei]
 2011/02/19
 	* Rev. 14713 Added map-server feature settings file 'battle/feature.conf'. [Ai4rei]
 	- Added setting 'feature.buying_store' to enable/disable the buying store system.

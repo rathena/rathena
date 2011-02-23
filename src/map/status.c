@@ -6747,7 +6747,8 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 		case SC_AUTOTRADE:
 			if (tid == INVALID_TIMER)
 				break;
-			vending_closevending(sd);
+			// Note: vending/buying is closed by unit_remove_map, no
+			// need to do it here.
 			map_quit(sd);
 			// Because map_quit calls status_change_end with tid -1
 			// from here it's not neccesary to continue

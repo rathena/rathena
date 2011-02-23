@@ -1,6 +1,10 @@
 Date	Added
 
 2011/02/23
+	* Updates to various custom stuff that buying stores might/are expected to support (follow up to r14713). [Ai4rei]
+	- Buying store no longer works on novending maps/cells (bugreport:4778).
+	- MANNER_NOROOM mute flag now affects buying stores as well (like vending).
+	- Enabled @autotrade for buying stores.
 	* Fixed whispering to NPCs (::OnWhisperGlobal) not working for NPCs whose unique name is different from the display name (bugreport:4776, since r2624). [Ai4rei]
 2011/02/20
 	* Fixed SP regen not stopping when Maximize Power (BS_MAXIMIZE) is in effect. [Ai4rei]

@@ -5945,8 +5945,8 @@ ACMD_FUNC(autotrade)
 		return -1;
 	}
 	
-	if( !sd->vender_id ) { //check if player is vending
-		clif_displaymessage(fd, msg_txt(549)); // You should be vending to use @Autotrade.
+	if( !sd->vender_id && !sd->state.buyingstore ) { //check if player is vending or buying
+		clif_displaymessage(fd, msg_txt(549)); // "You should have a shop open to use @autotrade."
 		return -1;
 	}
 	

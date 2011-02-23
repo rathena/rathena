@@ -50,6 +50,17 @@ bool buyingstore_setup(struct map_session_data* sd, unsigned char slots)
 		return false;
 	}
 
+	if( sd->sc.data[SC_NOCHAT] && (sd->sc.data[SC_NOCHAT]->val1&MANNER_NOROOM) )
+	{// custom: mute limitation
+		return false;
+	}
+
+	if( map[sd->bl.m].flag.novending || map_getcell(sd->bl.m, sd->bl.x, sd->bl.y, CELL_CHKNOVENDING) )
+	{// custom: no vending maps/cells
+		clif_displaymessage(sd->fd, msg_txt(276)); // "You can't open a shop on this map"
+		return false;
+	}
+
 	if( slots > MAX_BUYINGSTORE_SLOTS )
 	{
 		ShowWarning("buyingstore_setup: Requested %d slots, but server supports only %d slots.\n", (int)slots, MAX_BUYINGSTORE_SLOTS);
@@ -85,6 +96,17 @@ void buyingstore_create(struct map_session_data* sd, int zenylimit, unsigned cha
 		sd->buyingstore.slots = 0;
 		clif_displaymessage(sd->fd, msg_txt(246));
 		clif_buyingstore_open_failed(sd, BUYINGSTORE_CREATE, 0);
+		return;
+	}
+
+	if( sd->sc.data[SC_NOCHAT] && (sd->sc.data[SC_NOCHAT]->val1&MANNER_NOROOM) )
+	{// custom: mute limitation
+		return;
+	}
+
+	if( map[sd->bl.m].flag.novending || map_getcell(sd->bl.m, sd->bl.x, sd->bl.y, CELL_CHKNOVENDING) )
+	{// custom: no vending maps/cells
+		clif_displaymessage(sd->fd, msg_txt(276)); // "You can't open a shop on this map"
 		return;
 	}
 
@@ -171,6 +193,12 @@ void buyingstore_close(struct map_session_data* sd)
 
 		// notify other players
 		clif_buyingstore_disappear_entry(sd);
+
+		// remove auto-trader
+		if( sd->state.autotrade )
+		{
+			map_quit(sd);
+		}
 	}
 }
 
