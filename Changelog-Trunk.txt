@@ -1,5 +1,8 @@
 Date	Added
 
+2011/02/26
+	* Reduced MAX_GUILD_STORAGE from 1000 to 600 (like MAX_STORAGE), since storage with 1000 items causes too large packets that are dropped then, which in turn gives the impression that the items are lost (follow up to r14503). [Ai4rei]
+	- Note: When updating an existing server, keep in mind that excess items in guild storage get lost, when MAX_GUILD_STORAGE is reduced.
 2011/02/23
 	* Updates to various custom stuff that buying stores might/are expected to support (follow up to r14713). [Ai4rei]
 	- Buying store no longer works on novending maps/cells (bugreport:4778).
