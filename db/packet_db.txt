@@ -1548,7 +1548,6 @@ packet_ver: 25
 
 //2010-06-08aRagexeRE
 //0x0838,2
-0x0839,66
 //0x083A,4 	// Search Stalls Feature
 //0x083B,2
 //0x083C,12
@@ -1583,6 +1582,7 @@ packet_ver: 25
 //0x841,4
 
 //2010-08-03aRagexeRE
+0x0839,66
 0x0842,6,recall2,2
 0x0843,6,remove2,2
 

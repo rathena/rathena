@@ -1,5 +1,7 @@
 Date	Added
 
+2011/03/01
+	* Fixed packet 0x839 (new guild member expel notification) was expected on clients 2010-06-08aRagexeRE~2010-07-30aRagexeRE, although those do not implement it (bugreport:4789, since r14718, related r14368). [Ai4rei]
 2011/02/26
 	* Reduced MAX_GUILD_STORAGE from 1000 to 600 (like MAX_STORAGE), since storage with 1000 items causes too large packets that are dropped then, which in turn gives the impression that the items are lost (follow up to r14503). [Ai4rei]
 	- Note: When updating an existing server, keep in mind that excess items in guild storage get lost, when MAX_GUILD_STORAGE is reduced.
