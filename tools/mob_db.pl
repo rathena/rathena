@@ -95,6 +95,8 @@ while ($ligne=<STDIN>)
 		}
 	}
 }
+print("\n");
+
 
 sub printField {
 	my ($str, $suffix, $idCol) = @_;
