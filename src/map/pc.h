@@ -105,7 +105,6 @@ struct map_session_data {
 		unsigned gangsterparadise : 1;
 		unsigned rest : 1;
 		unsigned storage_flag : 2; //0: closed, 1: Normal Storage open, 2: guild storage open [Skotlex]
-		unsigned snovice_call_flag : 2; //Summon Angel (stage 1~3)
 		unsigned snovice_dead_flag : 1; //Explosion spirits on death: 0 off, 1 used.
 		unsigned abra_flag : 1; // Abracadabra bugfix by Aru
 		unsigned autocast : 1; // Autospell flag [Inkfish]

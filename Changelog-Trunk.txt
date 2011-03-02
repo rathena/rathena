@@ -1,5 +1,13 @@
 Date	Added
 
+2011/03/02
+	* Updates to the super novice's guardian angel prayer effect and related handling code. [Ai4rei]
+	- Removed the server-side chat tracking code (since r492) responsible for invoking the effect, since this functionality is handled by the client (invocation also processed by the server). This also fixes the missing 7 lines requirement on the server-side handling (bugreport:4786).
+	- Updated the checks in the client-invoked code part and documented the packet.
+	- Now only the prayer in client-side data\msgstringtable.txt (lines 791~794) applies.
+	- The prayer is no longer blocked by noskill-restrictions.
+	- Exp at 0% and 100% no longer causes the effect to trigger.
+	- Fixed the exp percent check to also check one digit after the decimal point (requirement is 10.0% not 10%).
 2011/03/01
 	* Fixed packet 0x839 (new guild member expel notification) was expected on clients 2010-06-08aRagexeRE~2010-07-30aRagexeRE, although those do not implement it (bugreport:4789, since r14718, related r14368). [Ai4rei]
 2011/02/26

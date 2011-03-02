@@ -8861,41 +8861,6 @@ void clif_parse_GlobalMessage(int fd, struct map_session_data* sd)
 	map_foreachinrange(npc_chat_sub, &sd->bl, AREA_SIZE, BL_NPC, text, textlen, &sd->bl);
 #endif
 
-	// check for special supernovice phrase
-	if( (sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE )
-	{
-		unsigned int next = pc_nextbaseexp(sd);
-		if( next == 0 ) next = pc_thisbaseexp(sd);
-		if( get_percentage(sd->status.base_exp, next)% 10 == 0 ) // 0%, 10%, 20%, ...
-		{
-			switch (sd->state.snovice_call_flag) {
-			case 0:
-				if( strstr(message, msg_txt(504)) ) // "Guardian Angel, can you hear my voice? ^^;"
-					sd->state.snovice_call_flag++;
-				break;
-			case 1: {
-				char buf[256];
-				sprintf(buf, msg_txt(505), sd->status.name);
-				if( strstr(message, buf) ) // "My name is %s, and I'm a Super Novice~"
-					sd->state.snovice_call_flag++;
-				}
-				break;
-			case 2:
-				if( strstr(message, msg_txt(506)) ) // "Please help me~ T.T"
-					sd->state.snovice_call_flag++;
-				break;
-			case 3:
-				if( skillnotok(MO_EXPLOSIONSPIRITS,sd) )
-					break; //Do not override the noskill mapflag. [Skotlex]
-				clif_skill_nodamage(&sd->bl,&sd->bl,MO_EXPLOSIONSPIRITS,-1,
-					sc_start(&sd->bl,status_skill2sc(MO_EXPLOSIONSPIRITS),100,
-					17,skill_get_time(MO_EXPLOSIONSPIRITS,1))); //Lv17-> +50 critical (noted by Poki) [Skotlex]
-				sd->state.snovice_call_flag = 0;
-				break;
-			}
-		}
-	}
-
 	// Chat logging type 'O' / Global Chat
 	if( log_config.chat&1 || (log_config.chat&2 && !((agit_flag || agit2_flag) && log_config.chat&64)) )
 		log_chat("O", 0, sd->status.char_id, sd->status.account_id, mapindex_id2name(sd->mapindex), sd->bl.x, sd->bl.y, NULL, message);
@@ -11835,27 +11800,35 @@ void clif_parse_NoviceDoriDori(int fd, struct map_session_data *sd)
 	}
 	return;
 }
-/*==========================================
- * ƒXƒpƒmƒr‚Ì”š—ô”g“®
- *------------------------------------------*/
+
+
+/// Request to invoke the effect of super novice's guardian angel prayer (CZ_CHOPOKGI)
+/// 01ed
+/// Note: This packet is caused by 7 lines of any text, followed by
+///       the prayer and an another line of any text. The prayer is
+///       defined by lines 791~794 in data\msgstringtable.txt
+///       "Dear angel, can you hear my voice?"
+///       "I am" (space separated player name) "Super Novice~"
+///       "Help me out~ Please~ T_T"
 void clif_parse_NoviceExplosionSpirits(int fd, struct map_session_data *sd)
 {
-	if(sd){
-		int nextbaseexp=pc_nextbaseexp(sd);
-		if (battle_config.etc_log){
-			if(nextbaseexp != 0)
-				ShowInfo("SuperNovice explosionspirits!! %d %d %d %d\n",sd->bl.id,sd->status.class_,sd->status.base_exp,(int)((double)1000*sd->status.base_exp/nextbaseexp));
-			else
-				ShowInfo("SuperNovice explosionspirits!! %d %d %d 000\n",sd->bl.id,sd->status.class_,sd->status.base_exp);
-		}
-		if((sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE && sd->status.base_exp > 0 && nextbaseexp > 0 && (int)((double)1000*sd->status.base_exp/nextbaseexp)%100==0){
-			clif_skill_nodamage(&sd->bl,&sd->bl,MO_EXPLOSIONSPIRITS,5,
-				sc_start(&sd->bl,status_skill2sc(MO_EXPLOSIONSPIRITS),100,
-					5,skill_get_time(MO_EXPLOSIONSPIRITS,5)));
+	if( ( sd->class_&MAPID_UPPERMASK ) == MAPID_SUPER_NOVICE )
+	{
+		unsigned int next = pc_nextbaseexp(sd);
+
+		if( next )
+		{
+			int percent = (int)( ( (float)sd->status.base_exp/(float)next )*1000. );
+
+			if( percent && ( percent%100 ) == 0 )
+			{// 10.0%, 20.0%, ..., 90.0%
+				sc_start(&sd->bl, status_skill2sc(MO_EXPLOSIONSPIRITS), 100, 17, skill_get_time(MO_EXPLOSIONSPIRITS, 5)); //Lv17-> +50 critical (noted by Poki) [Skotlex]
+				clif_skill_nodamage(&sd->bl, &sd->bl, MO_EXPLOSIONSPIRITS, 5, 1);  // prayer always shows successful Lv5 cast and disregards noskill restrictions
+			}
 		}
 	}
-	return;
 }
+
 
 /*==========================================
  * Friends List
