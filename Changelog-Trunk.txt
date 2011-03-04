@@ -1,5 +1,7 @@
 Date	Added
 
+2011/03/04
+	* Fixed recursive map_quit invocation when a buying store is auto-closed (login when @autotrade/logout) (bugreport:4796, since r14724). [Ai4rei]
 2011/03/02
 	* Updates to the super novice's guardian angel prayer effect and related handling code. [Ai4rei]
 	- Removed the server-side chat tracking code (since r492) responsible for invoking the effect, since this functionality is handled by the client (invocation also processed by the server). This also fixes the missing 7 lines requirement on the server-side handling (bugreport:4786).

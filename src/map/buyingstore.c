@@ -193,12 +193,6 @@ void buyingstore_close(struct map_session_data* sd)
 
 		// notify other players
 		clif_buyingstore_disappear_entry(sd);
-
-		// remove auto-trader
-		if( sd->state.autotrade )
-		{
-			map_quit(sd);
-		}
 	}
 }
 
@@ -388,11 +382,22 @@ void buyingstore_trade(struct map_session_data* sd, int account_id, unsigned int
 	if( i == pl_sd->buyingstore.slots )
 	{// everything was bought
 		clif_buyingstore_trade_failed_buyer(pl_sd, BUYINGSTORE_TRADE_BUYER_NO_ITEMS);
-		buyingstore_close(pl_sd);
 	}
 	else if( pl_sd->buyingstore.zenylimit == 0 )
 	{// zeny limit reached
 		clif_buyingstore_trade_failed_buyer(pl_sd, BUYINGSTORE_TRADE_BUYER_ZENY);
-		buyingstore_close(pl_sd);
+	}
+	else
+	{// continue buying
+		return;
+	}
+
+	// cannot continue buying
+	buyingstore_close(pl_sd);
+
+	// remove auto-trader
+	if( pl_sd->state.autotrade )
+	{
+		map_quit(pl_sd);
 	}
 }
