@@ -483,7 +483,14 @@ static void script_reportdata(struct script_data* data)
 		break;
 	case C_STR:
 	case C_CONSTSTR:// string
-		ShowDebug("Data: string value=\"%s\"\n", data->u.str);
+		if( data->u.str )
+		{
+			ShowDebug("Data: string value=\"%s\"\n", data->u.str);
+		}
+		else
+		{
+			ShowDebug("Data: string value=NULL\n");
+		}
 		break;
 	case C_NAME:// reference
 		if( reference_tovariable(data) )

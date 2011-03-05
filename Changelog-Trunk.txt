@@ -1,5 +1,7 @@
 Date	Added
 
+2011/03/05
+	* Fixed possible crash in script_reportdata, when a script string becomes NULL for whatever reason. [Ai4rei]
 2011/03/04
 	* Fixed recursive map_quit invocation when a buying store is auto-closed (login when @autotrade/logout) (bugreport:4796, since r14724). [Ai4rei]
 2011/03/02
