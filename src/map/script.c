@@ -14831,6 +14831,39 @@ BUILDIN_FUNC(buyingstore)
 }
 
 
+/// Invokes search store info window
+/// searchstores <uses>,<effect>;
+BUILDIN_FUNC(searchstores)
+{
+	unsigned short effect;
+	unsigned int uses;
+	struct map_session_data* sd;
+
+	if( ( sd = script_rid2sd(st) ) == NULL )
+	{
+		return 0;
+	}
+
+	uses   = script_getnum(st,2);
+	effect = script_getnum(st,3);
+
+	if( !uses )
+	{
+		ShowError("buildin_searchstores: Amount of uses cannot be zero.\n");
+		return 1;
+	}
+
+	if( effect > 1 )
+	{
+		ShowError("buildin_searchstores: Invalid effect id %hu, specified.\n", effect);
+		return 1;
+	}
+
+	searchstore_open(sd, uses, effect);
+	return 0;
+}
+
+
 // declarations that were supposed to be exported from npc_chat.c
 #ifdef PCRE_SUPPORT
 BUILDIN_FUNC(defpattern);
@@ -15193,6 +15226,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(progressbar,"si"),
 	BUILDIN_DEF(pushpc,"ii"),
 	BUILDIN_DEF(buyingstore,"i"),
+	BUILDIN_DEF(searchstores,"ii"),
 	// WoE SE
 	BUILDIN_DEF(agitstart2,""),
 	BUILDIN_DEF(agitend2,""),

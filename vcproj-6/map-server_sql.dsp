@@ -419,6 +419,14 @@ SOURCE=..\src\map\script.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\src\map\searchstore.c
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\map\searchstore.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\src\map\skill.c
 # End Source File
 # Begin Source File

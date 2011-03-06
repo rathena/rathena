@@ -87,8 +87,11 @@ void vending_purchasereq(struct map_session_data* sd, int aid, int uid, const ui
 		return;
 	}
 
-	if( sd->bl.m != vsd->bl.m || !check_distance_bl(&sd->bl, &vsd->bl, AREA_SIZE) )
+	if( !searchstore_queryremote(sd, aid) && ( sd->bl.m != vsd->bl.m || !check_distance_bl(&sd->bl, &vsd->bl, AREA_SIZE) ) )
 		return; // shop too far away
+
+	searchstore_clearremote(sd);
+
 	if( count < 1 || count > MAX_VENDING || count > vsd->vend_num )
 		return; // invalid amount of purchased items
 
@@ -313,4 +316,89 @@ void vending_openvending(struct map_session_data* sd, const char* message, bool 
 	pc_stop_walking(sd,1);
 	clif_openvending(sd,sd->bl.id,sd->vending);
 	clif_showvendingboard(&sd->bl,message,0);
+}
+
+
+/// Checks if an item is being sold in given player's vending.
+bool vending_search(struct map_session_data* sd, unsigned short nameid)
+{
+	int i;
+
+	if( !sd->vender_id )
+	{// not vending
+		return false;
+	}
+
+	ARR_FIND( 0, sd->vend_num, i, sd->status.cart[sd->vending[i].index].nameid == (short)nameid );
+	if( i == sd->vend_num )
+	{// not found
+		return false;
+	}
+
+	return true;
+}
+
+
+/// Searches for all items in a vending, that match given ids, price and possible cards.
+/// @return Whether or not the search should be continued.
+bool vending_searchall(struct map_session_data* sd, const struct s_search_store_search* s)
+{
+	int i, c, slot;
+	unsigned int idx, cidx;
+	struct item* it;
+
+	if( !sd->vender_id )
+	{// not vending
+		return true;
+	}
+
+	for( idx = 0; idx < s->item_count; idx++ )
+	{
+		ARR_FIND( 0, sd->vend_num, i, sd->status.cart[sd->vending[i].index].nameid == (short)s->itemlist[idx] );
+		if( i == sd->vend_num )
+		{// not found
+			continue;
+		}
+		it = &sd->status.cart[sd->vending[i].index];
+
+		if( s->min_price && s->min_price > sd->vending[i].value )
+		{// too low price
+			continue;
+		}
+
+		if( s->max_price && s->max_price < sd->vending[i].value )
+		{// too high price
+			continue;
+		}
+
+		if( s->card_count )
+		{// check cards
+			if( itemdb_isspecial(it->card[0]) )
+			{// something, that is not a carded
+				continue;
+			}
+			slot = itemdb_slot(it->nameid);
+
+			for( c = 0; c < slot && it->card[c]; c ++ )
+			{
+				ARR_FIND( 0, s->card_count, cidx, s->cardlist[cidx] == it->card[c] );
+				if( cidx != s->card_count )
+				{// found
+					break;
+				}
+			}
+
+			if( c == slot || !it->card[c] )
+			{// no card match
+				continue;
+			}
+		}
+
+		if( !searchstore_result(s->search_sd, sd->vender_id, sd->status.account_id, sd->message, it->nameid, sd->vending[i].amount, sd->vending[i].value, it->card, it->refine) )
+		{// result set full
+			return false;
+		}
+	}
+
+	return true;
 }

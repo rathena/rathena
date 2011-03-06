@@ -1541,17 +1541,17 @@ packet_ver: 25
 //2010-06-01aRagexeRE
 //0x0825,-1
 //0x0826,4
-//0x0835,-1
-//0x0836,-1
-//0x0837,3
+0x0835,-1,searchstoreinfo,2:4:5:9:13:14:15
+0x0836,-1
+0x0837,3
 //0x0838,3
 
 //2010-06-08aRagexeRE
-//0x0838,2
-//0x083A,4 	// Search Stalls Feature
-//0x083B,2
-//0x083C,12
-//0x083D,6
+0x0838,2,searchstoreinfonextpage,0
+0x083A,4 	// Search Stalls Feature
+0x083B,2,closesearchstoreinfo,0
+0x083C,12,searchstoreinfolistitemclick,2:6:10
+0x083D,6
 
 //2010-06-15aRagexeRE
 //0x083E,26
@@ -1566,7 +1566,7 @@ packet_ver: 25
 //0x07F3,6
 
 //2010-07-01aRagexeRE
-//0x083A,5 	// Search Stalls Feature
+0x083A,5 	// Search Stalls Feature
 
 //2010-07-13aRagexeRE
 //0x0827,6

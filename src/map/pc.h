@@ -12,6 +12,7 @@
 #include "map.h" // RC_MAX
 #include "pc.h" // struct map_session_data
 #include "script.h" // struct script_reg, struct script_regstr
+#include "searchstore.h"  // struct s_search_store_info
 #include "status.h" // OPTION_*, struct weapon_atk
 #include "unit.h" // unit_stop_attack(), unit_stop_walking()
 #include "vending.h" // struct s_vending
@@ -359,6 +360,8 @@ struct map_session_data {
 
 	unsigned int buyer_id;  // uid of open buying store
 	struct s_buyingstore buyingstore;
+
+	struct s_search_store_info searchstore;
 
 	struct pet_data *pd;
 	struct homun_data *hd;	// [blackhole89]

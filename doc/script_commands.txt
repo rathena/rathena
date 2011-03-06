@@ -4,7 +4,7 @@
 //= A reference manual for the eAthena scripting language.
 //= Commands are sorted depending on their functionality.
 //===== Version ===========================================
-//= 3.36.20110219
+//= 3.37.20110306
 //=========================================================
 //= 1.0 - First release, filled will as much info as I could
 //=       remember or figure out, most likely there are errors,
@@ -157,6 +157,8 @@
 //=       Removed bug warning from 'deletearray'. [Ai4rei]
 //= 3.36.20110219
 //=       Added 'buyingstore' command. [Ai4rei]
+//= 3.37.20110306
+//=       Added 'searchstores' command. [Ai4rei]
 //=========================================================
 
 This document is a reference manual for all the scripting commands and functions 
@@ -4437,6 +4439,26 @@ Example:
 
 	// Gives the player oppurtunity to buy 4 different kinds of items.
 	buyingstore 4;
+
+---------------------------------------
+
+*searchstores <uses>,<effect>;
+
+Invokes the store search window, which allows to search for both vending
+and buying stores. Parameter uses indicates, how many searches can be
+started, before the window has to be reopened. Effect value affects,
+what happens, when a result item is double-clicked and can be one of the
+following:
+
+	0 = Shows the store's position on the mini-map and highlights the
+		shop sign with yellow color, when the store is on same map
+		as the invoking player.
+	1 = Directly opens the shop, regardless of distance.
+
+Example:
+
+	// Item Universal_Catalog_Gold (10 uses, effect: open shop)
+	searchstores 10,1;
 
 ---------------------------------------
 //

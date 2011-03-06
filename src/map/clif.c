@@ -14323,6 +14323,198 @@ void clif_buyingstore_trade_failed_seller(struct map_session_data* sd, short res
 }
 
 
+/// Search Store Info System
+///
+
+/// Request to search for stores (CZ_SEARCH_STORE_INFO)
+/// 0835 <packet len>.W <type>.B <max price>.L <min price>.L <name id count>.B <card count>.B { <name id>.W }* { <card>.W }*
+/// type:
+///     0 = Vending
+///     1 = Buying Store
+///
+/// @note   The client determines the item ids by specifying a name and optionally,
+///         amount of card slots. If the client does not know about the item it
+///         cannot be searched.
+static void clif_parse_SearchStoreInfo(int fd, struct map_session_data* sd)
+{
+	const unsigned int blocksize = 2;
+	const uint8* itemlist;
+	const uint8* cardlist;
+	unsigned char type;
+	unsigned int min_price, max_price, packet_len, count, item_count, card_count;
+	struct s_packet_db* info = &packet_db[sd->packet_ver][RFIFOW(fd,0)];
+
+	packet_len = RFIFOW(fd,info->pos[0]);
+
+	if( packet_len < 15 )
+	{// minimum packet length
+		ShowError("clif_parse_SearchStoreInfo: Malformed packet (expected length=%u, length=%u, account_id=%d).\n", 15, packet_len, sd->bl.id);
+		return;
+	}
+
+	type       = RFIFOB(fd,info->pos[1]);
+	max_price  = RFIFOL(fd,info->pos[2]);
+	min_price  = RFIFOL(fd,info->pos[3]);
+	item_count = RFIFOB(fd,info->pos[4]);
+	card_count = RFIFOB(fd,info->pos[5]);
+	itemlist   = RFIFOP(fd,info->pos[6]);
+	cardlist   = RFIFOP(fd,info->pos[6]+blocksize*item_count);
+
+	// check, if there is enough data for the claimed count of items
+	packet_len-= info->pos[6];
+
+	if( packet_len%blocksize )
+	{
+		ShowError("clif_parse_SearchStoreInfo: Unexpected item list size %u (account_id=%d, block size=%u)\n", packet_len, sd->bl.id, blocksize);
+		return;
+	}
+	count = packet_len/blocksize;
+
+	if( count < item_count+card_count )
+	{
+		ShowError("clif_parse_SearchStoreInfo: Malformed packet (expected count=%u, count=%u, account_id=%d).\n", item_count+card_count, count, sd->bl.id);
+		return;
+	}
+
+	searchstore_query(sd, type, min_price, max_price, (const unsigned short*)itemlist, item_count, (const unsigned short*)cardlist, card_count);
+}
+
+
+/// Results for a store search request (ZC_SEARCH_STORE_INFO_ACK)
+/// 0836 <packet len>.W <is first page>.B <is next page>.B <remaining uses>.B { <store id>.L <account id>.L <shop name>.80B <nameid>.W <item type>.B <price>.L <amount>.W <refine>.B <card1>.W <card2>.W <card3>.W <card4>.W }*
+/// is first page:
+///     0 = appends to existing results
+///     1 = clears previous results before displaying this result set
+/// is next page:
+///     0 = no "next" label
+///     1 = "next" label to retrieve more results
+void clif_search_store_info_ack(struct map_session_data* sd)
+{
+	const unsigned int blocksize = MESSAGE_SIZE+26;
+	int fd = sd->fd;
+	unsigned int i, start, end;
+
+	start = sd->searchstore.pages*SEARCHSTORE_RESULTS_PER_PAGE;
+	end   = min(sd->searchstore.count, start+SEARCHSTORE_RESULTS_PER_PAGE);
+
+	WFIFOHEAD(fd,7+(end-start)*blocksize);
+	WFIFOW(fd,0) = 0x836;
+	WFIFOW(fd,2) = 7+(end-start)*blocksize;
+	WFIFOB(fd,4) = !sd->searchstore.pages;
+	WFIFOB(fd,5) = searchstore_querynext(sd);
+	WFIFOB(fd,6) = (unsigned char)min(sd->searchstore.uses, UCHAR_MAX);
+
+	for( i = start; i < end; i++ )
+	{
+		struct s_search_store_info_item* ssitem = &sd->searchstore.items[i];
+		struct item it;
+
+		WFIFOL(fd,i*blocksize+ 7) = ssitem->store_id;
+		WFIFOL(fd,i*blocksize+11) = ssitem->account_id;
+		memcpy(WFIFOP(fd,i*blocksize+15), ssitem->store_name, MESSAGE_SIZE);
+		WFIFOW(fd,i*blocksize+15+MESSAGE_SIZE) = ssitem->nameid;
+		WFIFOB(fd,i*blocksize+17+MESSAGE_SIZE) = itemtype(itemdb_type(ssitem->nameid));
+		WFIFOL(fd,i*blocksize+18+MESSAGE_SIZE) = ssitem->price;
+		WFIFOW(fd,i*blocksize+22+MESSAGE_SIZE) = ssitem->amount;
+		WFIFOB(fd,i*blocksize+24+MESSAGE_SIZE) = ssitem->refine;
+
+		// make-up an item for clif_addcards
+		memset(&it, 0, sizeof(it));
+		memcpy(&it.card, &ssitem->card, sizeof(it.card));
+		it.nameid = ssitem->nameid;
+		it.amount = ssitem->amount;
+
+		clif_addcards(WFIFOP(fd,i*blocksize+25+MESSAGE_SIZE), &it);
+	}
+
+	WFIFOSET(fd,WFIFOW(fd,2));
+}
+
+
+/// Notification of failure when searching for stores (ZC_SEARCH_STORE_INFO_FAILED)
+/// 0837 <reason>.B
+/// reason:
+///     0 = "No matching stores were found." (0x70b)
+///     1 = "There are too many results. Please enter more detailed search term." (0x6f8)
+///     2 = "You cannot search anymore." (0x706)
+///     3 = "You cannot search yet." (0x708)
+///     4 = "No sale (purchase) information available." (0x705)
+void clif_search_store_info_failed(struct map_session_data* sd, unsigned char reason)
+{
+	int fd = sd->fd;
+
+	WFIFOHEAD(fd,packet_len(0x837));
+	WFIFOW(fd,0) = 0x837;
+	WFIFOB(fd,2) = reason;
+	WFIFOSET(fd,packet_len(0x837));
+}
+
+
+/// Request to display next page of results (CZ_SEARCH_STORE_INFO_NEXT_PAGE)
+/// 0838
+static void clif_parse_SearchStoreInfoNextPage(int fd, struct map_session_data* sd)
+{
+	searchstore_next(sd);
+}
+
+
+/// Opens the search store window (ZC_OPEN_SEARCH_STORE_INFO)
+/// 083a <type>.W <remaining uses>.B
+/// type:
+///     0 = Search Stores
+///     1 = Search Stores (Cash), asks for confirmation, when clicking a store
+void clif_open_search_store_info(struct map_session_data* sd)
+{
+	int fd = sd->fd;
+
+	WFIFOHEAD(fd,packet_len(0x83a));
+	WFIFOW(fd,0) = 0x83a;
+	WFIFOW(fd,2) = sd->searchstore.effect;
+#if PACKETVER > 20100701
+	WFIFOB(fd,4) = (unsigned char)min(sd->searchstore.uses, UCHAR_MAX);
+#endif
+	WFIFOSET(fd,packet_len(0x83a));
+}
+
+
+/// Request to close the store search window (CZ_CLOSE_SEARCH_STORE_INFO)
+/// 083b
+static void clif_parse_CloseSearchStoreInfo(int fd, struct map_session_data* sd)
+{
+	searchstore_close(sd);
+}
+
+
+/// Request to invoke catalog effect on a store from search results (CZ_SSILIST_ITEM_CLICK)
+/// 083c <account id>.L <store id>.L <nameid>.W
+static void clif_parse_SearchStoreInfoListItemClick(int fd, struct map_session_data* sd)
+{
+	unsigned short nameid;
+	int account_id, store_id;
+	struct s_packet_db* info = &packet_db[sd->packet_ver][RFIFOW(fd,0)];
+
+	account_id = RFIFOL(fd,info->pos[0]);
+	store_id   = RFIFOL(fd,info->pos[1]);
+	nameid     = RFIFOW(fd,info->pos[2]);
+
+	searchstore_click(sd, account_id, store_id, nameid);
+}
+
+
+/// Notification of the store position on current map (ZC_SSILIST_ITEM_CLICK_ACK)
+/// 083d <xPos>.W <yPos>.W
+void clif_search_store_info_click_ack(struct map_session_data* sd, short x, short y)
+{
+	int fd = sd->fd;
+
+	WFIFOHEAD(fd,packet_len(0x83d));
+	WFIFOW(fd,0) = 0x83d;
+	WFIFOW(fd,2) = x;
+	WFIFOW(fd,4) = y;
+	WFIFOSET(fd,packet_len(0x83d));
+}
+
+
 /*==========================================
  * パケットデバッグ
  *------------------------------------------*/
@@ -14727,7 +14919,7 @@ static int packetdb_readdb(void)
 #endif
 	    3, -1,  8, -1,  86, 2,  6,  6, -1, -1,  4, 10, 10,  0,  0,  0,
 	    0,  0,  0,  0,  6,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-	    0,  0,  0,  0,  0,  0,  0,  0,  0, 66,  0,  0,  0,  0,  0,  0,
+	    0,  0,  0,  0,  0, -1, -1,  3,  2, 66,  5,  2, 12,  6,  0,  0,
 	};
 	struct {
 		void (*func)(int, struct map_session_data *);
@@ -14923,6 +15115,11 @@ static int packetdb_readdb(void)
 		{clif_parse_ReqCloseBuyingStore,"reqclosebuyingstore"},
 		{clif_parse_ReqClickBuyingStore,"reqclickbuyingstore"},
 		{clif_parse_ReqTradeBuyingStore,"reqtradebuyingstore"},
+		// Store Search
+		{clif_parse_SearchStoreInfo,"searchstoreinfo"},
+		{clif_parse_SearchStoreInfoNextPage,"searchstoreinfonextpage"},
+		{clif_parse_CloseSearchStoreInfo,"closesearchstoreinfo"},
+		{clif_parse_SearchStoreInfoListItemClick,"searchstoreinfolistitemclick"},
 		{NULL,NULL}
 	};
 

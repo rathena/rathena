@@ -149,6 +149,7 @@
     <ClCompile Include="..\src\map\pet.c" />
     <ClCompile Include="..\src\map\quest.c" />
     <ClCompile Include="..\src\map\script.c" />
+    <ClCompile Include="..\src\map\searchstore.c" />
     <ClCompile Include="..\src\map\skill.c" />
     <ClCompile Include="..\src\map\status.c" />
     <ClCompile Include="..\src\map\storage.c" />
@@ -198,6 +199,7 @@
     <ClInclude Include="..\src\map\pet.h" />
     <ClInclude Include="..\src\map\quest.h" />
     <ClInclude Include="..\src\map\script.h" />
+    <ClInclude Include="..\src\map\searchstore.h" />
     <ClInclude Include="..\src\map\skill.h" />
     <ClInclude Include="..\src\map\status.h" />
     <ClInclude Include="..\src\map\storage.h" />

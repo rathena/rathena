@@ -9,6 +9,9 @@
 	13005 Angelic Wing Dagger:	NEED INFO.
 =======================
 
+2011/03/06
+	* Rev. 14732 Added Universal Catalog Silver, Gold and Bronze and their respective boxes. [Ai4rei]
+	- Updated packet info related to search store info.
 2011/02/19
 	* Rev. 14713 Database updates required by buying store system implementation. [Ai4rei]
 	- Added database of items, that can be sold to a buying store (item_buyingstore.txt).

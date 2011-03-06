@@ -563,6 +563,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\src\map\searchstore.c"
+				>
+			</File>
+			<File
+				RelativePath="..\src\map\searchstore.h"
+				>
+			</File>
+			<File
 				RelativePath="..\src\map\skill.c"
 				>
 			</File>

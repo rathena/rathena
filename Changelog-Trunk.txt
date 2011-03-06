@@ -1,5 +1,8 @@
 Date	Added
 
+2011/03/06
+	* Implemented search store info system (aka. vending and buying store search) together with related items. [Ai4rei]
+	- Requires 2010-08-03aRagexeRE or later and can be disabled in 'conf/battle/feature.conf'.
 2011/03/05
 	* Fixed possible crash in script_reportdata, when a script string becomes NULL for whatever reason. [Ai4rei]
 2011/03/04

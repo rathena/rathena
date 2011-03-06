@@ -1874,6 +1874,7 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 		if(sd->vender_id)
 			vending_closevending(sd);
 		buyingstore_close(sd);
+		searchstore_close(sd);
 		if(sd->state.storage_flag == 1)
 			storage_storage_quit(sd,0);
 		else if (sd->state.storage_flag == 2)

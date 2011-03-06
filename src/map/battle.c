@@ -4008,6 +4008,9 @@ static const struct _battle_data {
 	{ "client_sort_storage",                &battle_config.client_sort_storage,             0,      0,      1,              },
 	{ "gm_check_minlevel",                  &battle_config.gm_check_minlevel,               60,     0,      100,            },
 	{ "feature.buying_store",               &battle_config.feature_buying_store,            1,      0,      1,              },
+	{ "feature.search_stores",              &battle_config.feature_search_stores,           1,      0,      1,              },
+	{ "searchstore_querydelay",             &battle_config.searchstore_querydelay,         10,      0,      INT_MAX,        },
+	{ "searchstore_maxresults",             &battle_config.searchstore_maxresults,         30,      1,      INT_MAX,        },
 // BattleGround Settings
 	{ "bg_update_interval",                 &battle_config.bg_update_interval,              1000,   100,    INT_MAX,        },
 	{ "bg_short_attack_damage_rate",        &battle_config.bg_short_damage_rate,            80,     0,      INT_MAX,        },
