@@ -5,10 +5,9 @@
 #include "../common/malloc.h"  // aMalloc, aRealloc, aFree
 #include "../common/showmsg.h"  // ShowError, ShowWarning
 #include "../common/strlib.h"  // safestrncpy
-#include "atcommand.h"  // msg_txt
 #include "battle.h"  // battle_config.*
 #include "clif.h"  // clif_open_search_store_info, clif_search_store_info_*
-#include "pc.h"  // struct map_session_data, pc_setpos, pc_isGM
+#include "pc.h"  // struct map_session_data
 #include "searchstore.h"  // struct s_search_store_info
 
 
