@@ -46,7 +46,8 @@
 #include <stdarg.h>
 #include <time.h>
 
-#define DUMP_UNKNOWN_PACKET	0
+//#define DUMP_UNKNOWN_PACKET
+//#define DUMP_INVALID_PACKET
 
 struct Clif_Config {
 	int packet_db_ver;	//Preferred packet version.
@@ -14515,23 +14516,35 @@ void clif_search_store_info_click_ack(struct map_session_data* sd, short x, shor
 }
 
 
-/*==========================================
- * パケットデバッグ
- *------------------------------------------*/
+/// Parse function for packet debugging
 void clif_parse_debug(int fd,struct map_session_data *sd)
 {
-	int i, cmd, len;
+	int cmd, packet_len;
 
+	// clif_parse ensures, that there is at least 2 bytes of data
 	cmd = RFIFOW(fd,0);
-	len = sd?packet_db[sd->packet_ver][cmd].len:RFIFOREST(fd); //With no session, just read the remaining in the buffer.
-	ShowDebug("packet debug 0x%4X\n",cmd);
-	ShowMessage("---- 00-01-02-03-04-05-06-07-08-09-0A-0B-0C-0D-0E-0F");
-	for(i=0;i<len;i++){
-		if((i&15)==0)
-			ShowMessage("\n%04X ",i);
-		ShowMessage("%02X ",RFIFOB(fd,i));
+
+	if( sd )
+	{
+		packet_len = packet_db[sd->packet_ver][cmd].len;
+
+		if( packet_len == 0 )
+		{// unknown
+			packet_len = RFIFOREST(fd);
+		}
+		else if( packet_len == -1 )
+		{// variable length
+			packet_len = RFIFOW(fd,2);  // clif_parse ensures, that this amount of data is already received
+		}
+		ShowDebug("Packet debug of 0x%04X (length %d), %s session #%d, %d/%d (AID/CID)\n", cmd, packet_len, sd->state.active ? "authed" : "unauthed", fd, sd->status.account_id, sd->status.char_id);
 	}
-	ShowMessage("\n");
+	else
+	{
+		packet_len = RFIFOREST(fd);
+		ShowDebug("Packet debug of 0x%04X (length %d), session #%d\n", cmd, packet_len, fd);
+	}
+
+	ShowDump(RFIFOP(fd,0), packet_len);
 }
 
 /*==========================================
@@ -14601,6 +14614,9 @@ int clif_parse(int fd)
 			WFIFOW(fd,0) = 0x6a;
 			WFIFOB(fd,2) = 3; // Rejected from Server
 			WFIFOSET(fd,packet_len(0x6a));
+#ifdef DUMP_INVALID_PACKET
+			ShowDump(RFIFOP(fd,0), RFIFOREST(fd));
+#endif
 			RFIFOSKIP(fd, RFIFOREST(fd));
 			set_eof(fd);
 			return 0;
@@ -14610,6 +14626,9 @@ int clif_parse(int fd)
 	// filter out invalid / unsupported packets
 	if (cmd > MAX_PACKET_DB || packet_db[packet_ver][cmd].len == 0) {
 		ShowWarning("clif_parse: Received unsupported packet (packet 0x%04x, %d bytes received), disconnecting session #%d.\n", cmd, RFIFOREST(fd), fd);
+#ifdef DUMP_INVALID_PACKET
+		ShowDump(RFIFOP(fd,0), RFIFOREST(fd));
+#endif
 		set_eof(fd);
 		return 0;
 	}
@@ -14623,6 +14642,9 @@ int clif_parse(int fd)
 		packet_len = RFIFOW(fd,2);
 		if (packet_len < 4 || packet_len > 32768) {
 			ShowWarning("clif_parse: Received packet 0x%04x specifies invalid packet_len (%d), disconnecting session #%d.\n", cmd, packet_len, fd);
+#ifdef DUMP_INVALID_PACKET
+			ShowDump(RFIFOP(fd,0), RFIFOREST(fd));
+#endif
 			set_eof(fd);
 			return 0;
 		}
@@ -14646,58 +14668,45 @@ int clif_parse(int fd)
 		else
 			packet_db[packet_ver][cmd].func(fd, sd); 
 	}
-#if DUMP_UNKNOWN_PACKET
-	else if (battle_config.error_log)
+#ifdef DUMP_UNKNOWN_PACKET
+	else
 	{
-		int i;
-		FILE *fp;
-		char packet_txt[256] = "save/packet.txt";
-		time_t now;
-		dump = 1;
+		const char* packet_txt = "save/packet.txt";
+		FILE* fp;
 
-		if ((fp = fopen(packet_txt, "a")) == NULL) {
-			ShowError("clif.c: can't write [%s] !!! data is lost !!!\n", packet_txt);
-			return 1;
-		} else {
-			time(&now);
-			if (sd && sd->state.active) {
-				fprintf(fp, "%sPlayer with account ID %d (character ID %d, player name %s) sent wrong packet:\n",
-					asctime(localtime(&now)), sd->status.account_id, sd->status.char_id, sd->status.name);
-			} else if (sd) // not authentified! (refused by char-server or disconnect before to be authentified)
-				fprintf(fp, "%sPlayer with account ID %d sent wrong packet:\n", asctime(localtime(&now)), sd->bl.id);
-
-			fprintf(fp, "\t---- 00-01-02-03-04-05-06-07-08-09-0A-0B-0C-0D-0E-0F");
-			for(i = 0; i < packet_len; i++) {
-				if ((i & 15) == 0)
-					fprintf(fp, "\n\t%04X ", i);
-				fprintf(fp, "%02X ", RFIFOB(fd,i));
+		if((fp = fopen(packet_txt, "a"))!=NULL)
+		{
+			if( sd )
+			{
+				fprintf(fp, "Unknown packet 0x%04X (length %d), %s session #%d, %d/%d (AID/CID)\n", cmd, packet_len, sd->state.active ? "authed" : "unauthed", fd, sd->status.account_id, sd->status.char_id);
 			}
-			fprintf(fp, "\n\n");
+			else
+			{
+				fprintf(fp, "Unknown packet 0x%04X (length %d), session #%d\n", cmd, packet_len, fd);
+			}
+
+			WriteDump(fp, RFIFOP(fd,0), packet_len);
+			fprintf(fp, "\n");
 			fclose(fp);
+		}
+		else
+		{
+			ShowError("Failed to write '%s'.\n", packet_txt);
+
+			// Dump on console instead
+			if( sd )
+			{
+				ShowDebug("Unknown packet 0x%04X (length %d), %s session #%d, %d/%d (AID/CID)\n", cmd, packet_len, sd->state.active ? "authed" : "unauthed", fd, sd->status.account_id, sd->status.char_id);
+			}
+			else
+			{
+				ShowDebug("Unknown packet 0x%04X (length %d), session #%d\n", cmd, packet_len, fd);
+			}
+
+			ShowDump(RFIFOP(fd,0), packet_len);
 		}
 	}
 #endif
-
-	/* TODO: use utils.c :: dump()
-	if (dump) {
-		int i;
-		ShowDebug("\nclif_parse: session #%d, packet 0x%04x, length %d, version %d\n", fd, cmd, packet_len, packet_ver);
-		ShowMessage("---- 00-01-02-03-04-05-06-07-08-09-0A-0B-0C-0D-0E-0F");
-		for(i = 0; i < packet_len; i++) {
-			if ((i & 15) == 0)
-				ShowMessage("\n%04X ",i);
-			ShowMessage("%02X ", RFIFOB(fd,i));
-		}
-		ShowMessage("\n");
-		if (sd && sd->state.active) {
-			if (sd->status.name != NULL)
-				ShowMessage("\nAccount ID %d, character ID %d, player name %s.\n",
-				sd->status.account_id, sd->status.char_id, sd->status.name);
-			else
-				ShowMessage("\nAccount ID %d.\n", sd->bl.id);
-		} else if (sd) // not authentified! (refused by char-server or disconnect before to be authentified)
-			ShowMessage("\nAccount ID %d.\n", sd->bl.id);
-	}*/
 
 	RFIFOSKIP(fd, packet_len);
 

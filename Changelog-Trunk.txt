@@ -1,5 +1,11 @@
 Date	Added
 
+2011/03/07
+	* Cleaned up packet dumping code. [Ai4rei]
+	- Replaced utils function 'dump' with 'WriteDump' (files) and 'ShowDump' (console), and used those to replace inlined code in clif (related r10947).
+	- Fixed clif_parse_debug not printing anything, when it is used with a variable length packet.
+	- Added ability to dump invalid packets through define DUMP_INVALID_PACKET (clif.c).
+	- Removed code to dump all incoming packets, as that can be achieved with the DUMP_UNKNOWN_PACKET code as well when needed (from r1009).
 2011/03/06
 	* Implemented search store info system (aka. vending and buying store search) together with related items. [Ai4rei]
 	- Requires 2010-08-03aRagexeRE or later and can be disabled in 'conf/battle/feature.conf'.
