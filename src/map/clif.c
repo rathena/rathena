@@ -7653,8 +7653,13 @@ int clif_charnameack (int fd, struct block_list *bl)
 			}
 			memcpy(WBUFP(buf,6), ssd->status.name, NAME_LENGTH);
 			
-			if (ssd->status.party_id > 0)
-				p = party_search(ssd->status.party_id);
+			if (!battle_config.display_party_name) {
+				if (ssd->status.party_id > 0 && ssd->status.guild_id > 0 && (g = guild_search(ssd->status.guild_id)) != NULL)
+					p = party_search(ssd->status.party_id);
+			}else{
+				if (ssd->status.party_id > 0)
+					p = party_search(ssd->status.party_id);
+			}
 
 			if( ssd->status.guild_id > 0 && (g = guild_search(ssd->status.guild_id)) != NULL )
 			{
@@ -7769,8 +7774,13 @@ int clif_charnameupdate (struct map_session_data *ssd)
 
 	memcpy(WBUFP(buf,6), ssd->status.name, NAME_LENGTH);
 			
-	if( ssd->status.party_id > 0 )
-		p = party_search(ssd->status.party_id);
+	if (!battle_config.display_party_name) {
+		if (ssd->status.party_id > 0 && ssd->status.guild_id > 0 && (g = guild_search(ssd->status.guild_id)) != NULL)
+			p = party_search(ssd->status.party_id);
+	}else{
+		if (ssd->status.party_id > 0)
+			p = party_search(ssd->status.party_id);
+	}
 
 	if( ssd->status.guild_id > 0 && (g = guild_search(ssd->status.guild_id)) != NULL )
 	{

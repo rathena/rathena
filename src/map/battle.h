@@ -485,6 +485,7 @@ extern struct Battle_Config
 	int feature_search_stores;
 	int searchstore_querydelay;
 	int searchstore_maxresults;
+	int display_party_name;
 
 	// [BattleGround Settings]
 	int bg_update_interval;
