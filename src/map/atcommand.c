@@ -1673,8 +1673,8 @@ ACMD_FUNC(item2)
 			}
 			if (item_data->type == IT_PETARMOR)
 				refine = 0;
-			if (refine > 10)
-				refine = 10;
+			if (refine > MAX_REFINE)
+				refine = MAX_REFINE;
 		} else {
 			identify = 1;
 			refine = attr = 0;
