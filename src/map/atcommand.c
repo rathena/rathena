@@ -3009,7 +3009,7 @@ ACMD_FUNC(param)
 	status[4] = &sd->status.dex;
 	status[5] = &sd->status.luk;
 
-	if(value < 0 && *status[i] < -value)
+	if(value < 0 && *status[i] <= -value)
 	{
 		new_value = 1;
 	}
