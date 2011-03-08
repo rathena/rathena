@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Kisuka
 //===== Current Version: =====================================
-//= 1.0
+//= 1.1
 //===== Compatible With: =====================================
 //= eAthena SVN
 //===== Description: =========================================
@@ -11,6 +11,7 @@
 //= [Hand Scripted (No Programs or AEGIS Scripts)]
 //===== Additional Comments: =================================
 //= 1.0 First version. [Kisuka]
+//= 1.1 Updated warps, savepoints, NPC locations. [Kisuka]
 //============================================================
 
 //============================================================================
@@ -441,7 +442,7 @@ new_1-2,115,120,4	script	Jinha#nv	59,{
 		mes "It's recovery amount is small.";
 		mes "Still, it will help you not to faint from a critical hit.";
 		next;
-		skill 141,1,0;	// NV_FIRSTAID
+		skill "NV_FIRSTAID",1,0;	// NV_FIRSTAID
 		set job_novice_q,8;
 		mes "[Jinha]";
 		mes "You can open the Skill Window by pressing the ^4A4AFFskill^000000 button in the Basic Window.";
@@ -788,7 +789,7 @@ new_1-2,29,176,4	script	Kafra#nv	117,{
 }
 
 // ---------- Cool Event Staff ----------
-new_1-2,33,176,4	script	Cool Event Staff#nv	874,{
+new_1-2,32,176,4	script	Cool Event Staff#nv	874,{
 	if(job_novice_q < 11) {
 		mes "[Cool Event Staff]";
 		mes "This is not my turn.";
@@ -826,7 +827,7 @@ new_1-2,33,176,4	script	Cool Event Staff#nv	874,{
 }
 
 // ---------- Soldier ----------
-new_1-2,36,176,4	script	Soldier#nv	105,{
+new_1-2,35,176,4	script	Soldier#nv	105,{
 	if(job_novice_q < 12) {
 		mes "[Soldier]";
 		mes "It isn't my turn yet.";
@@ -995,13 +996,13 @@ new_5-3,96,30,4	duplicate(NvBrade)	Brade#nv5	733
 		mes "I won't help you until you finish Brade's intructions.";
 		close;
 	}
-	else if(checkquest(7123,HUNTING) != 2) {
+	else if(checkquest(7123,HUNTING) != -1 && checkquest(7123,HUNTING) != 2) {
 		mes "[Swordman Guildsman]";
 		mes "Hunt two Picky monsters.";
 		mes "You can find them in the more difficult training grounds by talking to Trainer Brutus.";
 		close2;
 	}
-	else if(checkquest(7123,HUNTING) == 2) {
+	else if(checkquest(7123) != 2 && checkquest(7123,HUNTING) == 2) {
 		mes "[Swordman Guildsman]";
 		mes "Great.";
 		mes "I think that you're good enough to be a Swordman.";
@@ -1104,7 +1105,7 @@ new_5-3,96,30,4	duplicate(NvBrade)	Brade#nv5	733
 			if(countitem(2822) > 0) delitem 2822,1;	// Archer_Manual
 			if(countitem(2823) > 0) delitem 2823,1;	// Merchant_Manual
 			if(countitem(2824) > 0) delitem 2824,1;	// Mage_Manual
-			savepoint "izlude",93,104;
+			savepoint "izlude",94,103;
 			warp "izlude_in",74,167;
 			end;
 		}
@@ -1113,7 +1114,7 @@ new_5-3,96,30,4	duplicate(NvBrade)	Brade#nv5	733
 		mes "Of course, you're always welcomed.";
 		close;
 	case 3:
-		if(checkquest(7123,HUNTING) != 2) {
+		if(checkquest(7123,HUNTING) != -1 && checkquest(7123,HUNTING) != 2) {
 			mes "[Swordman Guildsman]";
 			mes "Hunt two Picky monsters.";
 			mes "You can find them in the more difficult training grounds by talking to Trainer Brutus.";
@@ -1170,12 +1171,12 @@ new_5-3,97,41,4	duplicate(NvSwd)	Swordman Guide#nv5	728
 		mes "You are still in the process of training with Instructor Brade.";
 		close;
 	}
-	else if(checkquest(7124,HUNTING) != 2) {
+	else if(checkquest(7124,HUNTING) != -1 && checkquest(7124,HUNTING) != 2) {
 		mes "[Mage Guide]";
 		mes "The quest is that you have to hunt Lunatics and bring 5 clovers.";
 		close2;
 	}
-	else if(checkquest(7124,HUNTING) == 2) {
+	else if(checkquest(7124) != 2 && checkquest(7124,HUNTING) == 2) {
 		mes "[Mage Guide]";
 		mes "You have done an excellent job.";
 		mes "So, did you find any interests about Mages?";
@@ -1272,7 +1273,7 @@ new_5-3,97,41,4	duplicate(NvSwd)	Swordman Guide#nv5	728
 			if(countitem(2822) > 0) delitem 2822,1;	// Archer_Manual
 			if(countitem(2823) > 0) delitem 2823,1;	// Merchant_Manual
 			if(countitem(2824) > 0) delitem 2824,1;	// Mage_Manual
-			savepoint "geffen",119,37;
+			savepoint "geffen",119,38;
 			warp "geffen_in",163,98;
 			end;
 		}
@@ -1281,7 +1282,7 @@ new_5-3,97,41,4	duplicate(NvSwd)	Swordman Guide#nv5	728
 		mes "We are always welcome to have you!";
 		close;
 	case 3:
-		if(checkquest(7124,HUNTING) != 2) {
+		if(checkquest(7124,HUNTING) != -1 && checkquest(7124,HUNTING) != 2) {
 			mes "[Mage Guide]";
 			mes "The quest is that you have to hunt Lunatics and bring 5 clovers.";
 			close;
@@ -1332,12 +1333,12 @@ new_5-3,101,41,4	duplicate(NvMag)	Mage Guide#nv5	123
 		mes "You look like you are not done with Instructor Brade's lessons.";
 		close;
 	}
-	else if(checkquest(7127,HUNTING) != 2) {
+	else if(checkquest(7127,HUNTING) != -1 && checkquest(7127,HUNTING) != 2) {
 		mes "[Thief Guild Member]";
 		mes "Hunt 5 Willows and then come talk to me to finish youe quest.";
 		close2;
 	}
-	else if(checkquest(7127,HUNTING) == 2) {
+	else if(checkquest(7127) != 2 && checkquest(7127,HUNTING) == 2) {
 		mes "[Thief Guild Member]";
 		mes "You are very strong.";
 		mes "These are not many but let me give you a reward for your effort.";
@@ -1369,36 +1370,36 @@ new_5-3,101,41,4	duplicate(NvMag)	Mage Guide#nv5	123
 		mes "[Thief Guild Member]";
 		mes "Thieves can change their jobs to ^8C2121Assasins^000000 or ^8C2121Rogues.^000000";
 		if(countitem(2820) == 0 && (getequipid(EQI_ACC_L) != 2820 || getequipid(EQI_ACC_R) != 2820)) {
-		next;
-		mes "[Thief Guild Member]";
-		mes "If you want, I'll give you a Thief skill manual.";
-		mes "Would you like to experience the skills of a Thief?";
-		next;
-		if(select("Yes, I would.:No, I don't.") == 2) {
+			next;
 			mes "[Thief Guild Member]";
-			mes "Oh, are you sure?";
-			mes "Class selection is very important so please consider it carefully.";
-			mes "If you want to ask about Thieves, please talk to me any time.";
-			close;
-		}
-		mes "[Thief Guild Member]";
-		mes "Here, please take the Thief manual.";
-		mes "I'll just take the other class manuals while I'm at it.";
-		next;
-		mes "[Thief Guild Member]";
-		mes "Here, please take the Thief manual.";
-		mes "I'll just take the other class manuals while I'm at it.";
-		nude;
-		if(countitem(2819) > 0) delitem 2819,1;	// Swordsman_Manual
-		if(countitem(2821) > 0) delitem 2821,1;	// Acolyte_Manual
-		if(countitem(2822) > 0) delitem 2822,1;	// Archer_Manual
-		if(countitem(2823) > 0) delitem 2823,1;	// Merchant_Manual
-		if(countitem(2824) > 0) delitem 2824,1;	// Mage_Manual
-		getitem 2820,1;	// Thief_Manual
-		next;
-		mes "[Thief Guild Member]";
-		mes "Make sure to equip the Skill Manual by double-clicking it in the Inventory Window.";
-		mes "Open your Skill Tree by pressing ^4A4AFFAlt + S^000000 and minimize the window by pressing the '-' button on the top right corner of the window to see the available skills.";
+			mes "If you want, I'll give you a Thief skill manual.";
+			mes "Would you like to experience the skills of a Thief?";
+			next;
+			if(select("Yes, I would.:No, I don't.") == 2) {
+				mes "[Thief Guild Member]";
+				mes "Oh, are you sure?";
+				mes "Class selection is very important so please consider it carefully.";
+				mes "If you want to ask about Thieves, please talk to me any time.";
+				close;
+			}
+			mes "[Thief Guild Member]";
+			mes "Here, please take the Thief manual.";
+			mes "I'll just take the other class manuals while I'm at it.";
+			next;
+			mes "[Thief Guild Member]";
+			mes "Here, please take the Thief manual.";
+			mes "I'll just take the other class manuals while I'm at it.";
+			nude;
+			if(countitem(2819) > 0) delitem 2819,1;	// Swordsman_Manual
+			if(countitem(2821) > 0) delitem 2821,1;	// Acolyte_Manual
+			if(countitem(2822) > 0) delitem 2822,1;	// Archer_Manual
+			if(countitem(2823) > 0) delitem 2823,1;	// Merchant_Manual
+			if(countitem(2824) > 0) delitem 2824,1;	// Mage_Manual
+			getitem 2820,1;	// Thief_Manual
+			next;
+			mes "[Thief Guild Member]";
+			mes "Make sure to equip the Skill Manual by double-clicking it in the Inventory Window.";
+			mes "Open your Skill Tree by pressing ^4A4AFFAlt + S^000000 and minimize the window by pressing the '-' button on the top right corner of the window to see the available skills.";
 		}
 		close;
 
@@ -1412,55 +1413,55 @@ new_5-3,101,41,4	duplicate(NvMag)	Mage Guide#nv5	123
 		mes "Do you want to finish the Novice training and go to the Thief Guild?";
 		next;
 		if(select("Let me consider it again.:Yes, I do.") == 2) {
-		mes "[Thief Guild Member]";
-		mes "Ok, I see.";
-		mes "Welcome. Then your Novice training is totally complete and you will be sent to the Thief Guild immediately.";
-		close2;
-		if(checkquest(7123) == 0 || checkquest(7123) == 1) { erasequest 7123; }
-		if(checkquest(7124) == 0 || checkquest(7124) == 1) { erasequest 7124; }
-		if(checkquest(7126) == 0 || checkquest(7126) == 1) { erasequest 7126; }
-		if(checkquest(7127) == 0 || checkquest(7127) == 1) { erasequest 7127; }
-		nude;
-		if(countitem(2819) > 0) delitem 2819,1;	// Swordsman_Manual
-		if(countitem(2820) > 0) delitem 2820,1;	// Thief_Manual
-		if(countitem(2821) > 0) delitem 2821,1;	// Acolyte_Manual
-		if(countitem(2822) > 0) delitem 2822,1;	// Archer_Manual
-		if(countitem(2823) > 0) delitem 2823,1;	// Merchant_Manual
-		if(countitem(2824) > 0) delitem 2824,1;	// Mage_Manual
-		savepoint "morocc",150,99;
-		warp "moc_ruins",155,44;
-		end;
+			mes "[Thief Guild Member]";
+			mes "Ok, I see.";
+			mes "Welcome. Then your Novice training is totally complete and you will be sent to the Thief Guild immediately.";
+			close2;
+			if(checkquest(7123) == 0 || checkquest(7123) == 1) { erasequest 7123; }
+			if(checkquest(7124) == 0 || checkquest(7124) == 1) { erasequest 7124; }
+			if(checkquest(7126) == 0 || checkquest(7126) == 1) { erasequest 7126; }
+			if(checkquest(7127) == 0 || checkquest(7127) == 1) { erasequest 7127; }
+			nude;
+			if(countitem(2819) > 0) delitem 2819,1;	// Swordsman_Manual
+			if(countitem(2820) > 0) delitem 2820,1;	// Thief_Manual
+			if(countitem(2821) > 0) delitem 2821,1;	// Acolyte_Manual
+			if(countitem(2822) > 0) delitem 2822,1;	// Archer_Manual
+			if(countitem(2823) > 0) delitem 2823,1;	// Merchant_Manual
+			if(countitem(2824) > 0) delitem 2824,1;	// Mage_Manual
+			savepoint "morocc",150,100;
+			warp "moc_prydb1",99,185;
+			end;
 		}
 		mes "[Thief Guild Member]";
 		mes "Have you tried all of the class manuals yet?";
 		mes "If you're undecided what job to take on I suggest you try talking to all the Guides first.";
 		close;
 	case 3:
-		if(checkquest(7127,HUNTING) != 2) {
-		mes "[Thief Guild Member]";
-		mes "Hunt 5 Willows and then come talk to me to finish youe quest.";
-		close;
+		if(checkquest(7127,HUNTING) != -1 && checkquest(7127,HUNTING) != 2) {
+			mes "[Thief Guild Member]";
+			mes "Hunt 5 Willows and then come talk to me to finish youe quest.";
+			close;
 		}
 		else if(checkquest(7127) == 2) {
-		mes "[Thief Guild Member]";
-		mes "I'm sorry but I don't have any quests to give you right now.";
-		close;
+			mes "[Thief Guild Member]";
+			mes "I'm sorry but I don't have any quests to give you right now.";
+			close;
 		}
 		else {
-		mes "[Thief Guild Member]";
-		mes "Quests?";
-		mes "Hmm, what will be good for you?";
-		mes "How about hunting some Willows.";
-		next;
-		mes "[Thief Guild Member]";
-		mes "You can't cheat this so make sure to kill 5 Willows. When you're done come and talk to me again.";
-		mes "If you talk to Trainer Brutus, he can send you to a more difficult training ground where there are Willows to hunt.";
-		next;
-		mes "[Thief Guild Member]";
-		mes "If you equip the Thief manual, you can have the effect of the skill, Double Attack.";
-		mes "Double Attack and Hide are the main skills of the Thief.";
-		setquest 7127;
-		close;
+			mes "[Thief Guild Member]";
+			mes "Quests?";
+			mes "Hmm, what will be good for you?";
+			mes "How about hunting some Willows.";
+			next;
+			mes "[Thief Guild Member]";
+			mes "You can't cheat this so make sure to kill 5 Willows. When you're done come and talk to me again.";
+			mes "If you talk to Trainer Brutus, he can send you to a more difficult training ground where there are Willows to hunt.";
+			next;
+			mes "[Thief Guild Member]";
+			mes "If you equip the Thief manual, you can have the effect of the skill, Double Attack.";
+			mes "Double Attack and Hide are the main skills of the Thief.";
+			setquest 7127;
+			close;
 		}
 	case 4:
 		mes "[Thief Guild Member]";
@@ -1540,35 +1541,35 @@ new_5-3,105,41,4	duplicate(NvThf)	Thief Guide#nv5	118
 		mes "[Merchant Guide]";
 		mes "^8C2121Merchants can transform to a Blacksmith or an Alchemist^000000 as their second job.";
 		if(countitem(2823) == 0 && (getequipid(EQI_ACC_L) != 2823 || getequipid(EQI_ACC_R) != 2823)) {
-		next;
-		mes "[Merchant Guide]";
-		mes "Do you wan to see what it's like to be a Merchant?";
-		next;
-		if(select("I want to test Merchant skills.:I don't want to test it.") == 2) {
+			next;
 			mes "[Merchant Guide]";
-			mes "Hum. Do you think so?";
-			mes "Ok, I agree with you. Choosing a job is very important in our life.";
-			mes "Just talk to me whenever you want to experience Merchant skills.";
-			close;
-		}
-		mes "[Merchant Guide]";
-		mes "Here is the Merchant skill manual.";
-		mes "I will take other job manuals from you while I'm at it.";
-		next;
-		mes "[Merchant Guide]";
-		mes "Here is the Merchant skill manual.";
-		mes "I will take other job manuals from you while I'm at it.";
-		nude;
-		if(countitem(2819) > 0) delitem 2819,1;	// Swordsman_Manual
-		if(countitem(2820) > 0) delitem 2820,1;	// Thief_Manual
-		if(countitem(2821) > 0) delitem 2821,1;	// Acolyte_Manual
-		if(countitem(2822) > 0) delitem 2822,1;	// Archer_Manual
-		if(countitem(2824) > 0) delitem 2824,1;	// Mage_Manual
-		getitem 2823,1;	// Merchant_Manual
-		next;
-		mes "[Merchant Guide]";
-		mes "Make sure to equip the Skill Manual by double-clicking it in the Inventory Window.";
-		mes "Open your Skill Tree by pressing ^4A4AFFAlt + S^000000 and minimize the window by pressing the '-' button on the top right corner of the window to see the available skills.";
+			mes "Do you wan to see what it's like to be a Merchant?";
+			next;
+			if(select("I want to test Merchant skills.:I don't want to test it.") == 2) {
+				mes "[Merchant Guide]";
+				mes "Hum. Do you think so?";
+				mes "Ok, I agree with you. Choosing a job is very important in our life.";
+				mes "Just talk to me whenever you want to experience Merchant skills.";
+				close;
+			}
+			mes "[Merchant Guide]";
+			mes "Here is the Merchant skill manual.";
+			mes "I will take other job manuals from you while I'm at it.";
+			next;
+			mes "[Merchant Guide]";
+			mes "Here is the Merchant skill manual.";
+			mes "I will take other job manuals from you while I'm at it.";
+			nude;
+			if(countitem(2819) > 0) delitem 2819,1;	// Swordsman_Manual
+			if(countitem(2820) > 0) delitem 2820,1;	// Thief_Manual
+			if(countitem(2821) > 0) delitem 2821,1;	// Acolyte_Manual
+			if(countitem(2822) > 0) delitem 2822,1;	// Archer_Manual
+			if(countitem(2824) > 0) delitem 2824,1;	// Mage_Manual
+			getitem 2823,1;	// Merchant_Manual
+			next;
+			mes "[Merchant Guide]";
+			mes "Make sure to equip the Skill Manual by double-clicking it in the Inventory Window.";
+			mes "Open your Skill Tree by pressing ^4A4AFFAlt + S^000000 and minimize the window by pressing the '-' button on the top right corner of the window to see the available skills.";
 		}
 		close;
 
@@ -1582,24 +1583,24 @@ new_5-3,105,41,4	duplicate(NvThf)	Thief Guide#nv5	118
 		mes "Do you want to complete your Novice training and go straight to the Merchant Guild's union?";
 		next;
 		if(select("I will think about it again.:Yes, I want to go to the Merchant Guild's union.") == 2) {
-		mes "[Merchant Guide]";
-		mes "Welcome!!";
-		mes "I will send you to the Merchant Guild's union after you complete your Novice training.";
-		close2;
-		if(checkquest(7123) == 0 || checkquest(7123) == 1) { erasequest 7123; }
-		if(checkquest(7124) == 0 || checkquest(7124) == 1) { erasequest 7124; }
-		if(checkquest(7126) == 0 || checkquest(7126) == 1) { erasequest 7126; }
-		if(checkquest(7127) == 0 || checkquest(7127) == 1) { erasequest 7127; }
-		nude;
-		if(countitem(2819) > 0) delitem 2819,1;	// Swordsman_Manual
-		if(countitem(2820) > 0) delitem 2820,1;	// Thief_Manual
-		if(countitem(2821) > 0) delitem 2821,1;	// Acolyte_Manual
-		if(countitem(2822) > 0) delitem 2822,1;	// Archer_Manual
-		if(countitem(2823) > 0) delitem 2823,1;	// Merchant_Manual
-		if(countitem(2824) > 0) delitem 2824,1;	// Mage_Manual
-		savepoint "alberta",30,232;
-		warp "alberta_in",62,44;
-		end;
+			mes "[Merchant Guide]";
+			mes "Welcome!!";
+			mes "I will send you to the Merchant Guild's union after you complete your Novice training.";
+			close2;
+			if(checkquest(7123) == 0 || checkquest(7123) == 1) { erasequest 7123; }
+			if(checkquest(7124) == 0 || checkquest(7124) == 1) { erasequest 7124; }
+			if(checkquest(7126) == 0 || checkquest(7126) == 1) { erasequest 7126; }
+			if(checkquest(7127) == 0 || checkquest(7127) == 1) { erasequest 7127; }
+			nude;
+			if(countitem(2819) > 0) delitem 2819,1;	// Swordsman_Manual
+			if(countitem(2820) > 0) delitem 2820,1;	// Thief_Manual
+			if(countitem(2821) > 0) delitem 2821,1;	// Acolyte_Manual
+			if(countitem(2822) > 0) delitem 2822,1;	// Archer_Manual
+			if(countitem(2823) > 0) delitem 2823,1;	// Merchant_Manual
+			if(countitem(2824) > 0) delitem 2824,1;	// Mage_Manual
+			savepoint "alberta",29,231;
+			warp "alberta_in",62,44;
+			end;
 		}
 		mes "[Merchant Guide]";
 		mes "Ok, I hope you consider being a Merchant.";
@@ -1607,41 +1608,41 @@ new_5-3,105,41,4	duplicate(NvThf)	Thief Guide#nv5	118
 		close;
 	case 3:
 		if((checkquest(7126) == 0 || checkquest(7126) == 1) && Zeny < 300) {
-		mes "[Merchant Guide]";
-		mes "Zeny is the currency of Rune Midgard.";
-		mes "You can make zeny by selling loot as well as through making smart business decisions.";
-		next;
-		mes "[Merchant Guide]";
-		mes "You can get loot by killing monsters. After hunting monsters, you can sell those loot to make a profit!";
-		mes "What a valuable job it is! Isn't it?";
-		next;
-		mes "[Merchant Guide]";
-		mes "Why don't you try to be a Merchant?";
-		mes "Making money is not easy but it will be a great experience!";
-		close;
+			mes "[Merchant Guide]";
+			mes "Zeny is the currency of Rune Midgard.";
+			mes "You can make zeny by selling loot as well as through making smart business decisions.";
+			next;
+			mes "[Merchant Guide]";
+			mes "You can get loot by killing monsters. After hunting monsters, you can sell those loot to make a profit!";
+			mes "What a valuable job it is! Isn't it?";
+			next;
+			mes "[Merchant Guide]";
+			mes "Why don't you try to be a Merchant?";
+			mes "Making money is not easy but it will be a great experience!";
+			close;
 		}
 		else if(checkquest(7126) == 2) {
-		mes "[Merchant Guide]";
-		mes "You have already completed the quest.";
-		mes "Once you enter the main world, you can get various exciting quests there!";
-		next;
-		mes "[Merchant Guide]";
-		mes "I think you're strong enough now to change your job right? Hahahaha don't waste too much time here Novice.";
-		close;
+			mes "[Merchant Guide]";
+			mes "You have already completed the quest.";
+			mes "Once you enter the main world, you can get various exciting quests there!";
+			next;
+			mes "[Merchant Guide]";
+			mes "I think you're strong enough now to change your job right? Hahahaha don't waste too much time here Novice.";
+			close;
 		}
 		else {
-		mes "[Merchant Guide]";
-		mes "Huh? Quest??";
-		mes "Humm... What would be suited for you...?";
-		mes "Ok, then bring me ^4A4AFF300 zeny^000000 by selling some of your items to the Potato Merchant.";
-		next;
-		mes "[Merchant Guide]";
-		mes "If you equipped the Merchant manual you have the ability to use the 'Overcharge' and 'Discount' skills.";
-		setquest 7126;
-		next;
-		mes "[Merchant Guide]";
-		mes "Good luck!";
-		close;
+			mes "[Merchant Guide]";
+			mes "Huh? Quest??";
+			mes "Humm... What would be suited for you...?";
+			mes "Ok, then bring me ^4A4AFF300 zeny^000000 by selling some of your items to the Potato Merchant.";
+			next;
+			mes "[Merchant Guide]";
+			mes "If you equipped the Merchant manual you have the ability to use the 'Overcharge' and 'Discount' skills.";
+			setquest 7126;
+			next;
+			mes "[Merchant Guide]";
+			mes "Good luck!";
+			close;
 		}
 	case 4:
 		mes "[Merchant Guide]";
@@ -1741,7 +1742,7 @@ new_5-3,109,41,4	duplicate(NvMer)	Merchant Guide#nv5	97
 			if(countitem(2822) > 0) delitem 2822,1;	// Archer_Manual
 			if(countitem(2823) > 0) delitem 2823,1;	// Merchant_Manual
 			if(countitem(2824) > 0) delitem 2824,1;	// Mage_Manual
-			savepoint "payon",70,100;
+			savepoint "payon",256,242;
 			warp "payon_in02",64,65;
 			end;
 		}
@@ -1932,7 +1933,7 @@ new_5-3,121,41,4	duplicate(NvBruce)	Bruce#nv5	57
 // Eden Group Officer (Real Combat Training)
 //============================================================================
 -	script	Eden Group Officer#nv::NvEdn	-1,{
-	if(BaseLevel < 10) {
+	if(BaseLevel < 11) {
 		mes "[Eden Group Officer]";
 		mes "Hello, I am a representative of the Eden Group.";
 		mes "We are here to assist adventurers in Rune Midgard.";
@@ -1979,8 +1980,8 @@ new_5-3,121,41,4	duplicate(NvBruce)	Bruce#nv5	57
 				if(countitem(2822) > 0) delitem 2822,1;	// Archer_Manual
 				if(countitem(2823) > 0) delitem 2823,1;	// Merchant_Manual
 				if(countitem(2824) > 0) delitem 2824,1;	// Mage_Manual
-				savepoint "prontera",273,354;
-				warp "prontera",273,354;
+				savepoint "prontera",122,77;
+				warp "prontera",121,76;
 				end;
 			case 2:
 				mes "[Eden Group Officer]";
@@ -1998,8 +1999,8 @@ new_5-3,121,41,4	duplicate(NvBruce)	Bruce#nv5	57
 				if(countitem(2822) > 0) delitem 2822,1;	// Archer_Manual
 				if(countitem(2823) > 0) delitem 2823,1;	// Merchant_Manual
 				if(countitem(2824) > 0) delitem 2824,1;	// Mage_Manual
-				savepoint "morocc",150,99;
-				warp "moc_ruins",155,44;
+				savepoint "moc_ruins",71,157;
+				warp "moc_ruins",70,158;
 				end;
 			case 3:
 				mes "[Eden Group Officer]";
@@ -2017,8 +2018,8 @@ new_5-3,121,41,4	duplicate(NvBruce)	Bruce#nv5	57
 				if(countitem(2822) > 0) delitem 2822,1;	// Archer_Manual
 				if(countitem(2823) > 0) delitem 2823,1;	// Merchant_Manual
 				if(countitem(2824) > 0) delitem 2824,1;	// Mage_Manual
-				savepoint "payon",70,100;
-				warp "payon",70,100;
+				savepoint "payon",167,68;
+				warp "payon",172,111;
 				end;
 			case 4:
 				mes "[Eden Group Officer]";
@@ -2037,8 +2038,8 @@ new_5-3,121,41,4	duplicate(NvBruce)	Bruce#nv5	57
 				if(countitem(2822) > 0) delitem 2822,1;	// Archer_Manual
 				if(countitem(2823) > 0) delitem 2823,1;	// Merchant_Manual
 				if(countitem(2824) > 0) delitem 2824,1;	// Mage_Manual
-				savepoint "alberta",116,57;
-				warp "alberta",116,57;
+				savepoint "alberta",115,57;
+				warp "alberta",116,58;
 				end;
 			case 5:
 				mes "[Eden Group Officer]";
@@ -2057,7 +2058,7 @@ new_5-3,121,41,4	duplicate(NvBruce)	Bruce#nv5	57
 				if(countitem(2822) > 0) delitem 2822,1;	// Archer_Manual
 				if(countitem(2823) > 0) delitem 2823,1;	// Merchant_Manual
 				if(countitem(2824) > 0) delitem 2824,1;	// Mage_Manual
-				savepoint "geffen",120,100;
+				savepoint "geffen",118,36;
 				warp "geffen",128,66;
 				end;
 			case 6:

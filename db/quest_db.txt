@@ -447,7 +447,7 @@
 7120,0,0,0,0,0,0,0,"Novice Training"
 7121,0,0,0,0,0,0,0,"Novice Training"
 7122,0,1002,1,0,0,0,0,"First battle - Poring Hunt"
-7123,0,1049,2,0,0,0,0,"Battle Basics -Swordman"
+7123,0,1050,2,0,0,0,0,"Battle Basics -Swordman"
 7124,0,1063,5,0,0,0,0,"Battle Basics -Mage"
 7126,0,0,0,0,0,0,0,"Selling items"
 7127,0,1010,5,0,0,0,0,"Battle Basics -Thief"
