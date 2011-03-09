@@ -38,6 +38,7 @@
 // 20100629 - 2010-06-29aRagexeRE+ - 0x2d0, 0xaa, 0x2d1, 0x2d2
 // 20100721 - 2010-07-21aRagexeRE+ - 0x6b, 0x6d
 // 20100727 - 2010-07-27aRagexeRE+ - 0x6b, 0x6d
+// 20100803 - 2010-08-03aRagexeRE+ - 0x6b, 0x6d, 0x827, 0x828, 0x829, 0x82a, 0x82b, 0x82c, 0x842, 0x843
 
 #ifndef PACKETVER
 	#define PACKETVER	20081126
@@ -52,8 +53,6 @@
 #undef PACKETVER
 #define PACKETVER 20071106
 #endif
-
-#define FIFOSIZE_SERVERLINK	256*1024
 
 //Remove/Comment this line to disable sc_data saving. [Skotlex]
 #define ENABLE_SC_SAVING 
@@ -85,7 +84,7 @@
 #define MAX_ZENY 1000000000
 #define MAX_FAME 1000000000
 #define MAX_CART 100
-#define MAX_SKILL 1020
+#define MAX_SKILL 2536
 #define GLOBAL_REG_NUM 256
 #define ACCOUNT_REG_NUM 64
 #define ACCOUNT_REG2_NUM 16
@@ -95,7 +94,7 @@
 #define MIN_WALK_SPEED 0
 #define MAX_WALK_SPEED 1000
 #define MAX_STORAGE 600
-#define MAX_GUILD_STORAGE 1000
+#define MAX_GUILD_STORAGE 600
 #define MAX_PARTY 12
 #define MAX_GUILD 16+10*6	// increased max guild members +6 per 1 extension levels [Lupus]
 #define MAX_GUILDPOSITION 20	// increased max guild positions to accomodate for all members [Valaris] (removed) [PoW]
@@ -350,6 +349,8 @@ struct mmo_charstatus {
 #endif
 	bool show_equip;
 	short rename;
+
+	time_t delete_date;
 };
 
 typedef enum mail_status {

@@ -86,6 +86,7 @@
 5,155,1,0,0,0,0,0,0,0,0,0,0 //MC_LOUD#Crazy Uproar#
 5,410,1,0,0,0,0,0,0,0,0,0,0 //WE_CALLBABY#Call Baby#
 5,681,1,0,0,0,0,0,0,0,0,0,0 //ALL_INCCARRY#Enlarge Weight Limit R#
+5,2535,1,41,1,0,0,0,0,0,0,0,0 //ALL_BUYING_STORE#Open Buying Store#
 //Thief
 6,1,9,0,0,0,0,0,0,0,0,0,0 //NV_BASIC#Basic Skill#
 6,142,1,0,0,0,0,0,0,0,0,0,0 //NV_FIRSTAID#First Aid#
@@ -240,6 +241,7 @@
 10,410,1,0,0,0,0,0,0,0,0,0,0 //WE_CALLBABY#Call Baby#
 10,459,1,111,5,0,0,0,0,0,0,0,0	//BS_ADRENALINE2#Full Adrenaline Rush#
 10,681,1,0,0,0,0,0,0,0,0,0,0 //ALL_INCCARRY#Enlarge Weight Limit R#
+10,2535,1,41,1,0,0,0,0,0,0,0,0 //ALL_BUYING_STORE#Open Buying Store#
 //Hunter
 11,1,9,0,0,0,0,0,0,0,0,0,0 //NV_BASIC#Basic Skill#
 11,142,1,0,0,0,0,0,0,0,0,0,0 //NV_FIRSTAID#First Aid#
@@ -511,6 +513,7 @@
 18,497,1,228,10,0,0,0,0,0,0,0,0	//AM_TWILIGHT2#Twilight Alchemy 2#
 18,498,1,228,10,0,0,0,0,0,0,0,0	//AM_TWILIGHT3#Twilight Alchemy 3#
 18,681,1,0,0,0,0,0,0,0,0,0,0 //ALL_INCCARRY#Enlarge Weight Limit R#
+18,2535,1,41,1,0,0,0,0,0,0,0,0 //ALL_BUYING_STORE#Open Buying Store#
 //Bard
 19,1,9,0,0,0,0,0,0,0,0,0,0 //NV_BASIC#Basic Skill#
 19,142,1,0,0,0,0,0,0,0,0,0,0 //NV_FIRSTAID#First Aid#
@@ -668,6 +671,7 @@
 23,53,1,52,3,0,0,0,0,0,0,0,0 //TF_DETOXIFY#Detoxify#
 23,410,1,0,0,0,0,0,0,0,0,0,0 //WE_CALLBABY#Call Baby#
 23,681,1,0,0,0,0,0,0,0,0,0,0 //ALL_INCCARRY#Enlarge Weight Limit R#
+23,2535,1,41,1,0,0,0,0,0,0,0,0 //ALL_BUYING_STORE#Open Buying Store#
 //Gunslinger
 24,1,9,0,0,0,0,0,0,0,0,0,0 //NV_BASIC#Basic Skill#
 24,142,1,0,0,0,0,0,0,0,0,0,0 //NV_FIRSTAID#First Aid#
@@ -810,6 +814,7 @@
 4006,155,1,0,0,0,0,0,0,0,0,0,0 //MC_LOUD#Crazy Uproar#
 4006,410,1,0,0,0,0,0,0,0,0,0,0 //WE_CALLBABY#Call Baby#
 4006,681,1,0,0,0,0,0,0,0,0,0,0 //ALL_INCCARRY#Enlarge Weight Limit R#
+4006,2535,1,41,1,0,0,0,0,0,0,0,0 //ALL_BUYING_STORE#Open Buying Store#
 //ThiefHigh
 4007,1,9,0,0,0,0,0,0,0,0,0,0 //NV_BASIC#Basic Skill#
 4007,142,1,0,0,0,0,0,0,0,0,0,0 //NV_FIRSTAID#First Aid#
@@ -989,6 +994,7 @@
 4011,410,1,0,0,0,0,0,0,0,0,0,0 //WE_CALLBABY#Call Baby#
 4011,459,1,111,5,0,0,0,0,0,0,0,0	//BS_ADRENALINE2#Full Adrenaline Rush#
 4011,681,1,0,0,0,0,0,0,0,0,0,0 //ALL_INCCARRY#Enlarge Weight Limit R#
+4011,2535,1,41,1,0,0,0,0,0,0,0,0 //ALL_BUYING_STORE#Open Buying Store#
 //Sniper
 4012,1,9,0,0,0,0,0,0,0,0,0,0 //NV_BASIC#Basic Skill#
 4012,142,1,0,0,0,0,0,0,0,0,0,0 //NV_FIRSTAID#First Aid#
@@ -1303,6 +1309,7 @@
 4019,497,1,228,10,0,0,0,0,0,0,0,0	//AM_TWILIGHT2#Twilight Alchemy 2#
 4019,498,1,228,10,0,0,0,0,0,0,0,0	//AM_TWILIGHT3#Twilight Alchemy 3#
 4019,681,1,0,0,0,0,0,0,0,0,0,0 //ALL_INCCARRY#Enlarge Weight Limit R#
+4019,2535,1,41,1,0,0,0,0,0,0,0,0 //ALL_BUYING_STORE#Open Buying Store#
 //Clown
 4020,1,9,0,0,0,0,0,0,0,0,0,0 //NV_BASIC#Basic Skill#
 4020,142,1,0,0,0,0,0,0,0,0,0,0 //NV_FIRSTAID#First Aid#
@@ -1508,6 +1515,7 @@
 4028,408,1,0,0,0,0,0,0,0,0,0,0 //WE_BABY#Baby#
 4028,409,1,0,0,0,0,0,0,0,0,0,0 //WE_CALLPARENT#Call Parent#
 4028,681,1,0,0,0,0,0,0,0,0,0,0 //ALL_INCCARRY#Enlarge Weight Limit R#
+4028,2535,1,41,1,0,0,0,0,0,0,0,0 //ALL_BUYING_STORE#Open Buying Store#
 //Baby Thief
 4029,1,9,0,0,0,0,0,0,0,0,0,0 //NV_BASIC#Basic Skill#
 4029,142,1,0,0,0,0,0,0,0,0,0,0 //NV_FIRSTAID#First Aid#
@@ -1666,6 +1674,7 @@
 4033,1013,1,0,0,0,0,0,0,0,0,0,0 //BS_GREED#Greed#
 4033,459,1,111,5,0,0,0,0,0,0,0,0	//BS_ADRENALINE2#Full Adrenaline Rush#
 4033,681,1,0,0,0,0,0,0,0,0,0,0 //ALL_INCCARRY#Enlarge Weight Limit R#
+4033,2535,1,41,1,0,0,0,0,0,0,0,0 //ALL_BUYING_STORE#Open Buying Store#
 //Baby Hunter
 4034,1,9,0,0,0,0,0,0,0,0,0,0 //NV_BASIC#Basic Skill#
 4034,142,1,0,0,0,0,0,0,0,0,0,0 //NV_FIRSTAID#First Aid#
@@ -1945,6 +1954,7 @@
 4041,497,1,228,10,0,0,0,0,0,0,0,0	//AM_TWILIGHT2#Twilight Alchemy 2#
 4041,498,1,228,10,0,0,0,0,0,0,0,0	//AM_TWILIGHT3#Twilight Alchemy 3#
 4041,681,1,0,0,0,0,0,0,0,0,0,0 //ALL_INCCARRY#Enlarge Weight Limit R#
+4041,2535,1,41,1,0,0,0,0,0,0,0,0 //ALL_BUYING_STORE#Open Buying Store#
 //Baby Bard
 4042,1,9,0,0,0,0,0,0,0,0,0,0 //NV_BASIC#Basic Skill#
 4042,142,1,0,0,0,0,0,0,0,0,0,0 //NV_FIRSTAID#First Aid#
@@ -2099,6 +2109,7 @@
 4045,408,1,0,0,0,0,0,0,0,0,0,0 //WE_BABY#Baby#
 4045,409,1,0,0,0,0,0,0,0,0,0,0 //WE_CALLPARENT#Call Parent#
 4045,681,1,0,0,0,0,0,0,0,0,0,0 //ALL_INCCARRY#Enlarge Weight Limit R#
+4045,2535,1,41,1,0,0,0,0,0,0,0,0 //ALL_BUYING_STORE#Open Buying Store#
 //Taekwon
 4046,1,9,0,0,0,0,0,0,0,0,0,0 //NV_BASIC#Basic Skill#
 4046,142,1,0,0,0,0,0,0,0,0,0,0 //NV_FIRSTAID#First Aid#

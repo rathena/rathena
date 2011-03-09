@@ -34,8 +34,7 @@
 	do{ \
 		DWORD dwThreadId; \
 		buf.worker = CreateThread(NULL, 0, worker_ ## name, NULL, CREATE_SUSPENDED, &dwThreadId); \
-		if( errvar ) \
-			*errvar = ( buf.worker == NULL ); \
+		*(errvar) = ( buf.worker == NULL ); \
 	}while(0)
 
 /// Buffer for asynchronous input
@@ -61,8 +60,7 @@ typedef struct _buffer {
 		if( pid == 0 ){ \
 			worker_ ## name(); \
 		} \
-		if( errvar ) \
-			*errvar = (pid == -1); \
+		*(errvar) = (pid == -1); \
 	}while(0)
 
 #define PIPE_READ 0

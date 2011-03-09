@@ -1150,7 +1150,7 @@ ACMD_FUNC(storage)
 {
 	nullpo_retr(-1, sd);
 	
-	if (sd->npc_id || sd->vender_id || sd->state.trading || sd->state.storage_flag)
+	if (sd->npc_id || sd->vender_id || sd->state.buyingstore || sd->state.trading || sd->state.storage_flag)
 		return -1;
 
 	if (storage_storageopen(sd) == 1)
@@ -1177,7 +1177,7 @@ ACMD_FUNC(guildstorage)
 		return -1;
 	}
 
-	if (sd->npc_id || sd->vender_id || sd->state.trading)
+	if (sd->npc_id || sd->vender_id || sd->state.buyingstore || sd->state.trading)
 		return -1;
 
 	if (sd->state.storage_flag == 1) {
@@ -1673,8 +1673,8 @@ ACMD_FUNC(item2)
 			}
 			if (item_data->type == IT_PETARMOR)
 				refine = 0;
-			if (refine > 10)
-				refine = 10;
+			if (refine > MAX_REFINE)
+				refine = MAX_REFINE;
 		} else {
 			identify = 1;
 			refine = attr = 0;
@@ -1956,7 +1956,7 @@ ACMD_FUNC(pvpoff)
 	map[sd->bl.m].flag.pvp = 0;
 
 	if (!battle_config.pk_mode)
-		clif_send0199(sd->bl.m, 0);
+		clif_map_property_mapall(sd->bl.m, MAPPROPERTY_NOTHING);
 	map_foreachinmap(atcommand_pvpoff_sub,sd->bl.m, BL_PC);
 	map_foreachinmap(atcommand_stopattack,sd->bl.m, BL_CHAR, 0);
 	clif_displaymessage(fd, msg_txt(31)); // PvP: Off.
@@ -1993,7 +1993,7 @@ ACMD_FUNC(pvpon)
 
 	if (!battle_config.pk_mode)
 	{// display pvp circle and rank
-		clif_send0199(sd->bl.m, 1);
+		clif_map_property_mapall(sd->bl.m, MAPPROPERTY_FREEPVPZONE);
 		map_foreachinmap(atcommand_pvpon_sub,sd->bl.m, BL_PC);
 	}
 
@@ -2015,7 +2015,7 @@ ACMD_FUNC(gvgoff)
 	}
 		
 	map[sd->bl.m].flag.gvg = 0;
-	clif_send0199(sd->bl.m, 0);
+	clif_map_property_mapall(sd->bl.m, MAPPROPERTY_NOTHING);
 	map_foreachinmap(atcommand_stopattack,sd->bl.m, BL_CHAR, 0);
 	clif_displaymessage(fd, msg_txt(33)); // GvG: Off.
 
@@ -2035,7 +2035,7 @@ ACMD_FUNC(gvgon)
 	}
 	
 	map[sd->bl.m].flag.gvg = 1;
-	clif_send0199(sd->bl.m, 3);
+	clif_map_property_mapall(sd->bl.m, MAPPROPERTY_AGITZONE);
 	clif_displaymessage(fd, msg_txt(34)); // GvG: On.
 
 	return 0;
@@ -3009,7 +3009,7 @@ ACMD_FUNC(param)
 	status[4] = &sd->status.dex;
 	status[5] = &sd->status.luk;
 
-	if(value < 0 && *status[i] < -value)
+	if(value < 0 && *status[i] <= -value)
 	{
 		new_value = 1;
 	}
@@ -5945,8 +5945,8 @@ ACMD_FUNC(autotrade)
 		return -1;
 	}
 	
-	if( !sd->vender_id ) { //check if player is vending
-		clif_displaymessage(fd, msg_txt(549)); // You should be vending to use @Autotrade.
+	if( !sd->vender_id && !sd->state.buyingstore ) { //check if player is vending or buying
+		clif_displaymessage(fd, msg_txt(549)); // "You should have a shop open to use @autotrade."
 		return -1;
 	}
 	

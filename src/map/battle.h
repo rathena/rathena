@@ -480,6 +480,12 @@ extern struct Battle_Config
 	int autospell_check_range;	//Enable range check for autospell bonus. [L0ne_W0lf]
 	int client_reshuffle_dice;  // Reshuffle /dice
 	int client_sort_storage;
+	int gm_check_minlevel;  // min GM level for /check
+	int feature_buying_store;
+	int feature_search_stores;
+	int searchstore_querydelay;
+	int searchstore_maxresults;
+	int display_party_name;
 
 	// [BattleGround Settings]
 	int bg_update_interval;

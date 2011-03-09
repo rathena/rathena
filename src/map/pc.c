@@ -893,6 +893,7 @@ bool pc_authok(struct map_session_data *sd, int login_id2, time_t expiration_tim
 		sd->state.showdelay = 1;
 		
 	pc_setinventorydata(sd);
+	pc_setequipindex(sd);
 
 	status_change_init(&sd->bl);
 	if ((battle_config.atc_gmonly == 0 || pc_isGM(sd)) && (pc_isGM(sd) >= get_atcommand_level(atcommand_hide)))
@@ -1540,7 +1541,7 @@ static int pc_bonus_addeff(struct s_addeffect* effect, int max, enum sc_type id,
 	if (!(flag&(ATF_TARGET|ATF_SELF)))
 		flag|=ATF_TARGET; //Default target: enemy.
 	if (!(flag&(ATF_WEAPON|ATF_MAGIC|ATF_MISC)))
-		flag|=ATF_WEAPON; //Defatul type: weapon.
+		flag|=ATF_WEAPON; //Default type: weapon.
 
 	for (i = 0; i < max && effect[i].flag; i++) {
 		if (effect[i].id == id && effect[i].flag == flag)
@@ -2934,7 +2935,7 @@ int pc_bonus3(struct map_session_data *sd,int type,int type2,int type3,int val)
 			break;
 		}
 		if( sd->state.lr_flag != 2 )
-			pc_bonus_addeff_onskill(sd->addeff3, ARRAYLENGTH(sd->addeff3), (sc_type)type3, val, type2, 2);
+			pc_bonus_addeff_onskill(sd->addeff3, ARRAYLENGTH(sd->addeff3), (sc_type)type3, val, type2, ATF_TARGET);
 		break;
 		
 	case SP_ADDELE:
@@ -5047,7 +5048,7 @@ int pc_gainexp(struct map_session_data *sd, struct block_list *src, unsigned int
 	if(sd->state.showexp) {
 		char output[256];
 		sprintf(output,
-			"Experience Gained Base:%u (%.2f%%) Job:%u (%.2f%%)", base_exp, nextbp*(float)100, job_exp, nextjp*(float)100);
+			"Experience Gained Base:%u (%.2f%%) Job:%u (%.2f%%)",base_exp,nextbp*(float)100,job_exp,nextjp*(float)100);
 		clif_disp_onlyself(sd,output,strlen(output));
 	}
 
@@ -7875,7 +7876,7 @@ int duel_create(struct map_session_data* sd, const unsigned int maxpl)
 	strcpy(output, msg_txt(372)); // " -- Duel has been created (@invite/@leave) --"
 	clif_disp_onlyself(sd, output, strlen(output));
 	
-	clif_set0199(sd, 1);
+	clif_map_property(sd, MAPPROPERTY_FREEPVPZONE);
 	//clif_misceffect2(&sd->bl, 159);
 	return i;
 }
@@ -7922,7 +7923,7 @@ int duel_leave(const unsigned int did, struct map_session_data* sd)
 	
 	sd->duel_group = 0;
 	duel_savetime(sd);
-	clif_set0199(sd, 0);
+	clif_map_property(sd, MAPPROPERTY_NOTHING);
 	return 0;
 }
 
@@ -7939,7 +7940,7 @@ int duel_accept(const unsigned int did, struct map_session_data* sd)
 	sprintf(output, msg_txt(376), sd->status.name);
 	clif_disp_message(&sd->bl, output, strlen(output), DUEL_WOS);
 
-	clif_set0199(sd, 1);
+	clif_map_property(sd, MAPPROPERTY_FREEPVPZONE);
 	//clif_misceffect2(&sd->bl, 159);
 	return 0;
 }

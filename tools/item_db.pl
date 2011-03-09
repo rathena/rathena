@@ -65,6 +65,7 @@ while ($ligne=<STDIN>)
 		}
 	}
 }
+print("\n");
 
 
 sub printField {

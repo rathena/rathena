@@ -76,6 +76,7 @@ struct item_data {
 		unsigned delay_consume : 1;	// Signifies items that are not consumed immediately upon double-click [Skotlex]
 		unsigned trade_restriction : 7;	//Item restrictions mask [Skotlex]
 		unsigned autoequip: 1;
+		unsigned buyingstore : 1;
 	} flag;
 	struct
 	{// item stacking limitation

@@ -376,6 +376,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\src\map\buyingstore.c"
+				>
+			</File>
+			<File
+				RelativePath="..\src\map\buyingstore.h"
+				>
+			</File>
+			<File
 				RelativePath="..\src\map\chat.c"
 				>
 			</File>
@@ -553,6 +561,14 @@
 			</File>
 			<File
 				RelativePath="..\src\map\script.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\map\searchstore.c"
+				>
+			</File>
+			<File
+				RelativePath="..\src\map\searchstore.h"
 				>
 			</File>
 			<File

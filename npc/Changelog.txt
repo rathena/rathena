@@ -1,5 +1,17 @@
 Date		Added
 ======
+2011/02/06
+	* Rev. 14697 Script bug fixing. :] Here's some. I know it's been awhile. [L0ne_W0lf]
+	- Changed some duplicates so they use a floating NPC as their original. (bugreport:1395)
+	- Fixed the NPC looking for missing label in the Cursed Spirit quest. (bugreport:4654)
+	- Applied Uno's fix for the cooldown condition in Endless Tower. (bugreport:4677)
+	- Removed level requirement for the Viens Stone gathering quest. (bugreport:4678)
+	- Added the missing restricted skills to zone 6 for Endless Tower. (bugreport:4707)
+	  It's worth noting how much I hate the system for restricting skills per zone.
+	- Fixed Cat Hand warp service warping players to all warp options. (bugreport:4709)
+	- Fixed floor 75 warp in endless tower disabling the wrong warp. (bugreport:4711)
+	- Added a condition for Chungwolmang to only delete items if a certain ID is specified. (bugreport:4719)
+	- Corrected a mobcount specifying the wrong NPC in the Moscovia Ship quest. (bugreport:4736)
 2011/01/16
 	* Rev. 14676 Various fixes for scripts that are disabled by default. [Ai4rei]
 	- Fixed name collision in Baphomet Jr. taming item quest (custom) with 'Little Boy' in cities/lutie.txt
@@ -20,28 +32,10 @@ Date		Added
 	Airship Ticket Quest, How the Airship Works, Ice Necklace Quest, 
 	Siblings Quest, Thor Volcano Base Quest, Muff's Loan, Broken Diamond,
 	and the Z-Gang Quest
-2010/11/14
-	* Rev. 14462 Updating spawns as a precursor for Eden group quests. [L0ne_W0lf]
-	* Updated spawns for Juno fields to Renewal.
-	* Updated spawns for Umbala fields to Renewal.
-	* Updated spawns for Comodo fields to Renewal
-	* Updated spawns for Mjolnir fields to Renewal.
-	* Updated spawns for Payon fields to Renewal.
-	* Updated spawns for Morroc fields to Renewal.
-	* Commented out repeatable EXP quests.
 2010/11/04
 	* Rev. 14448 Just a couple Bug fixes. :P [L0ne_W0lf]
 	- Added a missing close in quests_13_2.txt. (bugreport:4520)
 	- Corrected 'IProntera' typo in quests_prontera.txt (bugreport:4522)
-2010/10/23
-	* Rev. 14435 Updated spawns for Geffen fields to Renewal. [L0ne_W0lf]
-2010/10/20
-	* Rev. 14433 Updated spawns for Prontera fields to Renewal. [L0ne_W0lf]
-2010/10/10
-	* Rev. 14422 Wot's dis? Missed a warp in morroc field! THIS WILL NOT DO. [L0ne_W0lf]
-	- ...corrected the versions in the file headers as well. :P
-	* Rev. 14421 Renewal Update to warp portals, and deleted disabled_warps.txt. [L0ne_W0lf]
-	- Only disabled warps, some coordinates might have slipped past me.
 2010/09/18
 	* Rev 14409 Updates, and bugfixes, the usual stuff. [L0ne_W0lf]
 	* Updated Sage quest skill quest with the file curtosy of 5511.

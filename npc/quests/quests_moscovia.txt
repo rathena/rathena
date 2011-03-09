@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Kisuka
 //===== Current Version: ===================================== 
-//= 1.8
+//= 1.9
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -20,6 +20,7 @@
 //= 1.6 Added 'tides' to Ibanoff & Fixed time check for Marozka. [Kisuka]
 //= 1.7 Fixes on donpcevents and fixed some left over aegis stuff. [Kisuka]
 //= 1.8 Fixed some condition checks. [Gepard]
+//= 1.9 Corrected NPC counting mobs for the wrong NPC. (bugreport:4736) [L0ne_W0lf]
 //============================================================ 
 
 //============================================================================
@@ -5117,7 +5118,7 @@ OnDisable:
 	end;
 
 OnMyMobDead:
-	if (mobcount("mosk_ship","Baehideun1#ship::OnMyMobDead") < 1) {
+	if (mobcount("mosk_ship","Baehideun4#ship::OnMyMobDead") < 1) {
 		set $@mos1_edq,0;
 		mes "[Mr. Ibanoff]";
 		mes "Now that all the monsters are gone,";

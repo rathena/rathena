@@ -703,6 +703,32 @@ static bool itemdb_read_stack(char* fields[], int columns, int current)
 	return true;
 }
 
+/// Reads items allowed to be sold in buying stores
+static bool itemdb_read_buyingstore(char* fields[], int columns, int current)
+{// <nameid>
+	int nameid;
+	struct item_data* id;
+
+	nameid = atoi(fields[0]);
+
+	if( ( id = itemdb_exists(nameid) ) == NULL )
+	{
+		ShowWarning("itemdb_read_buyingstore: Invalid item id %d.\n", nameid);
+		return false;
+	}
+
+	if( !itemdb_isstackable2(id) )
+	{
+		ShowWarning("itemdb_read_buyingstore: Non-stackable item id %d cannot be enabled for buying store.\n", nameid);
+		return false;
+	}
+
+	id->flag.buyingstore = true;
+
+	return true;
+}
+
+
 /*======================================
  * Applies gender restrictions according to settings. [Skotlex]
  *======================================*/
@@ -1019,6 +1045,7 @@ static void itemdb_read(void)
 	sv_readdb(db_path, "item_noequip.txt", ',', 2, 2, -1,             &itemdb_read_noequip);
 	sv_readdb(db_path, "item_trade.txt",   ',', 3, 3, -1,             &itemdb_read_itemtrade);
 	sv_readdb(db_path, "item_delay.txt",   ',', 2, 2, MAX_ITEMDELAYS, &itemdb_read_itemdelay);
+	sv_readdb(db_path, "item_buyingstore.txt", ',', 1, 1, -1,         &itemdb_read_buyingstore);
 	sv_readdb(db_path, "item_stack.txt", ',', 3, 3, -1, &itemdb_read_stack);
 }
 

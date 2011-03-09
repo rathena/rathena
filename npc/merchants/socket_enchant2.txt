@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Gepard
 //===== Current Version: ===================================== 
-//= 1.0
+//= 1.1
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -11,9 +11,10 @@
 //= Adds slots to selected weapons and armor.
 //===== Additional Comments: ================================= 
 //= 1.0 First version.
+//= 1.1 Duplicates now spawn from floating NPCs. [L0ne_W0lf]
 //============================================================ 
 
-payon,236,199,3	script	Leablem	86,{
+-	script	Leablem#dummy::SocketEnchant2	-1,{
 	if (checkweight(1201,1) == 0)
 	{
 		mes "- Wait a seconds !! -";
@@ -377,9 +378,10 @@ payon,236,199,3	script	Leablem	86,{
 	}
 }
 
-lighthalzen,96,137,3	duplicate(Leablem)	Leablem#lhz	86
-prontera,244,169,5	duplicate(Leablem)	Leablem#prt	86
-moc_ruins,154,86,3	duplicate(Leablem)	Leablem#moc	86
+payon,236,199,3	duplicate(SocketEnchant2)	Leablem#pay	86,{
+lighthalzen,96,137,3	duplicate(SocketEnchant2)	Leablem#lhz	86
+prontera,244,169,5	duplicate(SocketEnchant2)	Leablem#prt	86
+moc_ruins,154,86,3	duplicate(SocketEnchant2)	Leablem#moc	86
 
 function	script	Func_Socket2	{
 

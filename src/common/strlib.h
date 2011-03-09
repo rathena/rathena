@@ -9,6 +9,10 @@
 #endif
 #include <stdarg.h>
 
+#define __USE_GNU  // required to enable strnlen on some platforms
+#include <string.h>
+#undef __USE_GNU
+
 char* jstrescape (char* pt);
 char* jstrescapecpy (char* pt, const char* spt);
 int jmemescapecpy (char* pt, const char* spt, int size);
@@ -24,7 +28,7 @@ const char *stristr(const char *haystack, const char *needle);
 char* _strtok_r(char* s1, const char* s2, char** lasts);
 #endif
 
-#if !(defined(WIN32) && defined(_MSC_VER) && _MSC_VER >= 1400) && !defined(CYGWIN)
+#if !(defined(WIN32) && defined(_MSC_VER) && _MSC_VER >= 1400) && !defined(HAVE_STRNLEN)
 size_t strnlen (const char* string, size_t maxlen);
 #endif
 

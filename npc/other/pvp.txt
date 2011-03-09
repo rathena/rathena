@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88; L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.4
+//= 1.5
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -26,15 +26,12 @@
 //=	exception of the "Free for all" mode.
 //=	Added PVP event NPCs.
 //= 1.4 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
+//= 1.5 Duplicates now spawn from floating NPCs. [L0ne_W0lf]
 //============================================================ 
 
-// Morroc
+// Floating NPC
 //============================================================ 
-morocc_in,144,138,4	script	PVPNarrator#moc	84,{
-	callfunc "F_PVPNarrator","morocc_in",141,139;
-}
-
-morocc_in,144,142,4	script	Gate Keeper#moc::PVPGateKeeper	83,{
+-	script	Gate Keeper#dummy::PVPGateKeeper	-1,{
 	mes "[Gate Keeper]";
 	mes "Glad to be of service.";
 	mes "I will open the PVP fight";
@@ -113,6 +110,15 @@ morocc_in,144,142,4	script	Gate Keeper#moc::PVPGateKeeper	83,{
 		close;
 	}
 }
+
+// Morroc
+//============================================================ 
+morocc_in,144,138,4	script	PVPNarrator#moc	84,{
+	callfunc "F_PVPNarrator","morocc_in",141,139;
+}
+
+morocc_in,144,142,4	duplicate(PVPGateKeeper)	Gate Keeper#moc	83,{
+
 
 // Alberta
 //============================================================ 
@@ -465,7 +471,7 @@ OnInit:
 
 // Spectator Entrance
 //============================================================ 
-pvp_room,62,85,4	script	Spectator's Entrance#1::PVPSpectator	105,{
+-	script	Spectator's Entrance#dum::PVPSpectator	-1,{
 	if (countitem(7029) == 0) {
 		mes "[PVP Compete Square Register Staff]";
 		mes "This is the entrance for viewers.";
@@ -492,6 +498,8 @@ OnInit:
 	end;
 }
 
+pvp_room,62,85,4	duplicate(PVPSpectator)	Spectator's Entrance#1	105
+
 pvp_room,70,85,4	duplicate(PVPSpectator)	Spectator's Entrance#2	105
 
 pvp_room,78,85,4	duplicate(PVPSpectator)	Spectator's Entrance#3	105
@@ -500,7 +508,7 @@ pvp_room,86,85,4	duplicate(PVPSpectator)	Spectator's Entrance#4	105
 
 // Spectator Warps
 //============================================================ 
-pvp_2vs2,5,4,0	script	Combat Square Staff#1::PVPSpecWarp	45,1,1,{
+-	script	Combat Square Staff#dum::PVPSpecWarp	-1,{
 OnTouch:
 	mes "[Combat Square Staff]";
 	mes "May I help you?";
@@ -511,6 +519,8 @@ OnTouch:
 	warp "pvp_room",84,39;
 	end;
 }
+
+pvp_2vs2,5,4,0	duplicate(PVPSpecWarp)	Combat Square Staff#1	45,1,1,{
 
 pvp_2vs2,5,74,0	duplicate(PVPSpecWarp)	Combat Square Staff#2	45,1,1
 

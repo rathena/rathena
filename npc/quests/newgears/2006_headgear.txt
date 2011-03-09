@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= DiviniaRO members, cleaned by reddozen
 //===== Current Version: =====================================
-//= 1.3a
+//= 1.4
 //===== Compatible With: =====================================
 //= SVN eA
 //===== Description: =========================================
@@ -21,6 +21,7 @@
 //=	Fixed some of the names to iRO.
 //= 1.3 Fixed some color code bugs in Ghenirhemin. Thanks to yyCC. [L0ne_W0lf]
 //= 1.3a Fixed wrong item names (due to copy/paste) [Lupus]
+//= 1.4 Chungwolmang now checks if the last item set should be deleted. (bugreport:4719) [L0ne_W0lf]
 //============================================================
 
 //===================== Censor Bar =====================================================
@@ -781,7 +782,8 @@ S_MakeMask:
 		delitem getarg(1),getarg(2);
 		delitem getarg(3),getarg(4);
 		delitem getarg(5),getarg(6);
-		delitem getarg(7),getarg(8);
+		if (getarg(0) == 5169) 
+			delitem getarg(7),getarg(8);
 		getitem getarg(0),1;
 		set moza_tal,0;
 		mes "[Chungwolmang]";

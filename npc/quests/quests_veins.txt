@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.9
+//= 2.0
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -43,6 +43,7 @@
 //= 1.9 Added quest log entries for:
 //=     - Siblings Quest
 //=     - Thor Volcano Base Quest
+//= 2.0 Removed lvel requirement. (bugreport:4678) [L0ne_W0lf]
 //============================================================ 
 
 // Stone Quest
@@ -56,7 +57,7 @@ ve_fild05,257,130,4	script	Wincing Old Man#ve	945,{
 		mes "- you put some items into Kafra Storage. -";
 		close;
 	}
-	if ((veins_stone == 0) && (BaseLevel > 59)) {
+	if (veins_stone == 0) {
 		mes "[Zabaroo]";
 		mes "My back is killing me";
 		mes "after stooping over to";
@@ -300,11 +301,6 @@ ve_fild05,257,130,4	script	Wincing Old Man#ve	945,{
 		mes "care of myself at my age...";
 		close;
 	}
-	mes "[Zabaroo]";
-	mes "I'm sorry dear.";
-	mes "You're not strong enough for this kind of work.";
-	mes "Put on some muscle and talk to me again.";
-	close;
 }
 
 ve_in,169,310,6	script	Strange Old Man#ve	121,{

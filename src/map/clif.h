@@ -173,6 +173,43 @@ typedef enum clr_type
 	CLR_TELEPORT,
 } clr_type;
 
+enum map_property
+{// clif_map_property
+	MAPPROPERTY_NOTHING       = 0,
+	MAPPROPERTY_FREEPVPZONE   = 1,
+	MAPPROPERTY_EVENTPVPZONE  = 2,
+	MAPPROPERTY_AGITZONE      = 3,
+	MAPPROPERTY_PKSERVERZONE  = 4, // message "You are in a PK area. Please beware of sudden attacks." in color 0x9B9BFF (light red)
+	MAPPROPERTY_PVPSERVERZONE = 5,
+	MAPPROPERTY_DENYSKILLZONE = 6,
+};
+
+enum map_type
+{// clif_map_type
+	MAPTYPE_VILLAGE              = 0,
+	MAPTYPE_VILLAGE_IN           = 1,
+	MAPTYPE_FIELD                = 2,
+	MAPTYPE_DUNGEON              = 3,
+	MAPTYPE_ARENA                = 4,
+	MAPTYPE_PENALTY_FREEPKZONE   = 5,
+	MAPTYPE_NOPENALTY_FREEPKZONE = 6,
+	MAPTYPE_EVENT_GUILDWAR       = 7,
+	MAPTYPE_AGIT                 = 8,
+	MAPTYPE_DUNGEON2             = 9,
+	MAPTYPE_DUNGEON3             = 10,
+	MAPTYPE_PKSERVER             = 11,
+	MAPTYPE_PVPSERVER            = 12,
+	MAPTYPE_DENYSKILL            = 13,
+	MAPTYPE_TURBOTRACK           = 14,
+	MAPTYPE_JAIL                 = 15,
+	MAPTYPE_MONSTERTRACK         = 16,
+	MAPTYPE_PORINGBATTLE         = 17,
+	MAPTYPE_AGIT_SIEGEV15        = 18,
+	MAPTYPE_BATTLEFIELD          = 19,
+	MAPTYPE_PVP_TOURNAMENT       = 20,
+	MAPTYPE_UNUSED               = 29,
+};
+
 int clif_setip(const char* ip);
 void clif_setbindip(const char* ip);
 void clif_setport(uint16 port);
@@ -284,7 +321,6 @@ int clif_class_change(struct block_list *bl,int class_,int type);
 #define clif_mob_class_change(md, class_) clif_class_change(&md->bl, class_, 1)
 int clif_mob_equip(struct mob_data *md,int nameid); // [Valaris]
 
-int clif_skillinfo(struct map_session_data *sd,int skillid,int type,int range);
 int clif_skillinfoblock(struct map_session_data *sd);
 int clif_skillup(struct map_session_data *sd,int skill_num);
 int clif_addskill(struct map_session_data *sd, int skill);
@@ -438,9 +474,9 @@ void clif_MainChatMessage(const char* message); //luzza
 int clif_broadcast2(struct block_list *bl, const char* mes, int len, unsigned long fontColor, short fontType, short fontSize, short fontAlign, short fontY, enum send_target target);
 int clif_heal(int fd,int type,int val);
 int clif_resurrection(struct block_list *bl,int type);
-void clif_set0199(struct map_session_data* sd, int mode);
+void clif_map_property(struct map_session_data* sd, enum map_property property);
 int clif_pvpset(struct map_session_data *sd, int pvprank, int pvpnum,int type);
-int clif_send0199(int map,int type);
+void clif_map_property_mapall(int map, enum map_property property);
 void clif_refine(int fd, int fail, int index, int val);
 void clif_upgrademessage(int fd, int result, int item_id);
 
@@ -568,5 +604,25 @@ void clif_PartyBookingDeleteNotify(struct map_session_data* sd, int index);
 void clif_PartyBookingInsertNotify(struct map_session_data* sd, struct party_booking_ad_info* pb_ad);
 
 void clif_showdigit(struct map_session_data* sd, unsigned char type, int value);
+
+/// Buying Store System
+void clif_buyingstore_open(struct map_session_data* sd);
+void clif_buyingstore_open_failed(struct map_session_data* sd, unsigned short result, unsigned int weight);
+void clif_buyingstore_myitemlist(struct map_session_data* sd);
+void clif_buyingstore_entry(struct map_session_data* sd);
+void clif_buyingstore_entry_single(struct map_session_data* sd, struct map_session_data* pl_sd);
+void clif_buyingstore_disappear_entry(struct map_session_data* sd);
+void clif_buyingstore_disappear_entry_single(struct map_session_data* sd, struct map_session_data* pl_sd);
+void clif_buyingstore_itemlist(struct map_session_data* sd, struct map_session_data* pl_sd);
+void clif_buyingstore_trade_failed_buyer(struct map_session_data* sd, short result);
+void clif_buyingstore_update_item(struct map_session_data* sd, unsigned short nameid, unsigned short amount);
+void clif_buyingstore_delete_item(struct map_session_data* sd, short index, unsigned short amount, int price);
+void clif_buyingstore_trade_failed_seller(struct map_session_data* sd, short result, unsigned short nameid);
+
+/// Search Store System
+void clif_search_store_info_ack(struct map_session_data* sd);
+void clif_search_store_info_failed(struct map_session_data* sd, unsigned char reason);
+void clif_open_search_store_info(struct map_session_data* sd);
+void clif_search_store_info_click_ack(struct map_session_data* sd, short x, short y);
 
 #endif /* _CLIF_H_ */

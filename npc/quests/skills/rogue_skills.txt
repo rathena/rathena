@@ -237,9 +237,9 @@ in_rogue,355,179,0	script	Haijara Greg#rogueguild	46,{
 						mes "[Haijara Greg]";
 						mes "Hmm... Well, I suppose";
 						if (Upper == 1)
-							mes "I can trust a fellow Rogue";
-						else
 							mes "I can trust a fellow Stalker";
+						else
+							mes "I can trust a fellow Rogue";
 						mes "with my predictament. Honor";
 						mes "among thieves and all that.";
 						mes "Alright. Have you ever heard";

@@ -483,7 +483,14 @@ static void script_reportdata(struct script_data* data)
 		break;
 	case C_STR:
 	case C_CONSTSTR:// string
-		ShowDebug("Data: string value=\"%s\"\n", data->u.str);
+		if( data->u.str )
+		{
+			ShowDebug("Data: string value=\"%s\"\n", data->u.str);
+		}
+		else
+		{
+			ShowDebug("Data: string value=NULL\n");
+		}
 		break;
 	case C_NAME:// reference
 		if( reference_tovariable(data) )
@@ -1253,7 +1260,9 @@ const char* parse_curly_close(const char* p)
 		set_label(l,script_pos, p);
 		linkdb_final(&syntax.curly[pos].case_label);	// free the list of case label
 		syntax.curly_count--;
-		return p+1;
+		// if, for , while の閉じ判定
+		p = parse_syntax_close(p + 1);
+		return p;
 	} else {
 		disp_error_message("parse_curly_close: unexpected string",p);
 		return p + 1;
@@ -1341,10 +1350,8 @@ const char* parse_syntax(const char* p)
 					v = p2-p; // length of word at p2
 					memcpy(label,p,v);
 					label[v]='\0';
-					v = search_str(label);
-					if (v < 0 || str_data[v].type != C_INT)
+					if( !script_get_constant(label, &v) )
 						disp_error_message("parse_syntax: 'case' label not integer",p);
-					v = str_data[v].val;
 					p = skip_word(p);
 				} else { //Numeric value
 					if((*p == '-' || *p == '+') && ISDIGIT(p[1]))	// pre-skip because '-' can not skip_word
@@ -1916,6 +1923,40 @@ static void add_buildin_func(void)
 	}
 }
 
+/// Retrieves the value of a constant.
+bool script_get_constant(const char* name, int* value)
+{
+	int n = search_str(name);
+
+	if( n == -1 || str_data[n].type != C_INT )
+	{// not found or not a constant
+		return false;
+	}
+	value[0] = str_data[n].val;
+
+	return true;
+}
+
+/// Creates new constant or parameter with given value.
+void script_set_constant(const char* name, int value, bool isparameter)
+{
+	int n = add_str(name);
+
+	if( str_data[n].type == C_NOP )
+	{// new
+		str_data[n].type = isparameter ? C_PARAM : C_INT;
+		str_data[n].val  = value;
+	}
+	else if( str_data[n].type == C_PARAM || str_data[n].type == C_INT )
+	{// existing parameter or constant
+		ShowError("script_set_constant: Attempted to overwrite existing %s '%s' (old value=%d, new value=%d).\n", ( str_data[n].type == C_PARAM ) ? "parameter" : "constant", name, str_data[n].val, value);
+	}
+	else
+	{// existing name
+		ShowError("script_set_constant: Invalid name for %s '%s' (already defined as %s).\n", isparameter ? "parameter" : "constant", name, script_op2name(str_data[n].type));
+	}
+}
+
 /*==========================================
  * 定数データベースの読み込み
  *------------------------------------------*/
@@ -1923,7 +1964,7 @@ static void read_constdb(void)
 {
 	FILE *fp;
 	char line[1024],name[1024],val[1024];
-	int n,type;
+	int type;
 
 	sprintf(line, "%s/const.txt", db_path);
 	fp=fopen(line, "r");
@@ -1938,12 +1979,7 @@ static void read_constdb(void)
 		type=0;
 		if(sscanf(line,"%[A-Za-z0-9_],%[-0-9xXA-Fa-f],%d",name,val,&type)>=2 ||
 		   sscanf(line,"%[A-Za-z0-9_] %[-0-9xXA-Fa-f] %d",name,val,&type)>=2){
-			n=add_str(name);
-			if(type==0)
-				str_data[n].type=C_INT;
-			else
-				str_data[n].type=C_PARAM;
-			str_data[n].val= (int)strtol(val,NULL,0);
+			script_set_constant(name, (int)strtol(val, NULL, 0), (bool)type);
 		}
 	}
 	fclose(fp);
@@ -5336,6 +5372,7 @@ BUILDIN_FUNC(countitem)
 {
 	int nameid, i;
 	int count = 0;
+	struct item_data* id = NULL;
 	struct script_data* data;
 
 	TBL_PC* sd = script_rid2sd(st);
@@ -5345,23 +5382,25 @@ BUILDIN_FUNC(countitem)
 	}
 
 	data = script_getdata(st,2);
-	get_val(st,data);
-	if( data_isstring(data) ) {
-		const char* name = conv_str(st,data);
-		struct item_data* item_data;
-		if((item_data = itemdb_searchname(name)) != NULL)
-			nameid = item_data->nameid;
-		else
-			nameid = 0;
-	} else
-		nameid = conv_num(st,data);
+	get_val(st, data);  // convert into value in case of a variable
 
-	if (nameid < 500) {
-		ShowError("wrong item ID : countitem(%i)\n", nameid);
-		script_reportsrc(st);
+	if( data_isstring(data) )
+	{// item name
+		id = itemdb_searchname(conv_str(st, data));
+	}
+	else
+	{// item id
+		id = itemdb_exists(conv_num(st, data));
+	}
+
+	if( id == NULL )
+	{
+		ShowError("buildin_countitem: Invalid item '%s'.\n", script_getstr(st,2));  // returns string, regardless of what it was
 		script_pushint(st,0);
 		return 1;
 	}
+
+	nameid = id->nameid;
 
 	for(i = 0; i < MAX_INVENTORY; i++)
 		if(sd->status.inventory[i].nameid == nameid)
@@ -5379,7 +5418,8 @@ BUILDIN_FUNC(countitem2)
 {
 	int nameid, iden, ref, attr, c1, c2, c3, c4;
 	int count = 0;
-	int i;	
+	int i;
+	struct item_data* id = NULL;
 	struct script_data* data;
 	
 	TBL_PC* sd = script_rid2sd(st);
@@ -5387,19 +5427,27 @@ BUILDIN_FUNC(countitem2)
 		script_pushint(st,0);
 		return 0;
 	}
-	
+
 	data = script_getdata(st,2);
-	get_val(st,data);
-	if( data_isstring(data) ) {
-		const char* name = conv_str(st,data);
-		struct item_data* item_data;
-		if((item_data = itemdb_searchname(name)) != NULL)
-			nameid = item_data->nameid;
-		else
-			nameid = 0;
-	} else
-		nameid = conv_num(st,data);
-	
+	get_val(st, data);  // convert into value in case of a variable
+
+	if( data_isstring(data) )
+	{// item name
+		id = itemdb_searchname(conv_str(st, data));
+	}
+	else
+	{// item id
+		id = itemdb_exists(conv_num(st, data));
+	}
+
+	if( id == NULL )
+	{
+		ShowError("buildin_countitem2: Invalid item '%s'.\n", script_getstr(st,2));  // returns string, regardless of what it was
+		script_pushint(st,0);
+		return 1;
+	}
+
+	nameid = id->nameid;
 	iden = script_getnum(st,3);
 	ref  = script_getnum(st,4);
 	attr = script_getnum(st,5);
@@ -5407,13 +5455,7 @@ BUILDIN_FUNC(countitem2)
 	c2 = (short)script_getnum(st,7);
 	c3 = (short)script_getnum(st,8);
 	c4 = (short)script_getnum(st,9);
-	
-	if (nameid < 500) {
-		ShowError("wrong item ID : countitem2(%i)\n", nameid);
-		script_pushint(st,0);
-		return 1;
-	}
-	
+
 	for(i = 0; i < MAX_INVENTORY; i++)
 		if (sd->status.inventory[i].nameid > 0 && sd->inventory_data[i] != NULL &&
 			sd->status.inventory[i].amount > 0 && sd->status.inventory[i].nameid == nameid &&
@@ -5652,7 +5694,7 @@ BUILDIN_FUNC(getitem2)
 		if (item_data == NULL)
 			return -1;
 		if(item_data->type==IT_WEAPON || item_data->type==IT_ARMOR){
-			if(ref > 10) ref = 10;
+			if(ref > MAX_REFINE) ref = MAX_REFINE;
 		}
 		else if(item_data->type==IT_PETEGG) {
 			iden = 1;
@@ -9089,6 +9131,11 @@ BUILDIN_FUNC(birthpet)
 	if( sd == NULL )
 		return 0;
 
+	if( sd->status.pet_id )
+	{// do not send egg list, when you already have a pet
+		return 0;
+	}
+
 	clif_sendegg(sd);
 	return 0;
 }
@@ -9745,7 +9792,7 @@ BUILDIN_FUNC(pvpon)
 		return 0; // nothing to do
 
 	map[m].flag.pvp = 1;
-	clif_send0199(m,1);
+	clif_map_property_mapall(m, MAPPROPERTY_FREEPVPZONE);
 
 	if(battle_config.pk_mode) // disable ranking functions if pk_mode is on [Valaris]
 		return 0;
@@ -9790,7 +9837,7 @@ BUILDIN_FUNC(pvpoff)
 		return 0; //fixed Lupus
 
 	map[m].flag.pvp = 0;
-	clif_send0199(m,0);
+	clif_map_property_mapall(m, MAPPROPERTY_NOTHING);
 
 	if(battle_config.pk_mode) // disable ranking options if pk_mode is on [Valaris]
 		return 0;
@@ -9808,7 +9855,7 @@ BUILDIN_FUNC(gvgon)
 	m = map_mapname2mapid(str);
 	if(m >= 0 && !map[m].flag.gvg) {
 		map[m].flag.gvg = 1;
-		clif_send0199(m,3);
+		clif_map_property_mapall(m, MAPPROPERTY_AGITZONE);
 	}
 
 	return 0;
@@ -9822,7 +9869,7 @@ BUILDIN_FUNC(gvgoff)
 	m = map_mapname2mapid(str);
 	if(m >= 0 && map[m].flag.gvg) {
 		map[m].flag.gvg = 0;
-		clif_send0199(m,0);
+		clif_map_property_mapall(m, MAPPROPERTY_NOTHING);
 	}
 
 	return 0;
@@ -11773,17 +11820,17 @@ BUILDIN_FUNC(message)
 BUILDIN_FUNC(npctalk)
 {
 	const char* str;
-	char message[255];
+	char name[NAME_LENGTH], message[256];
 
 	struct npc_data* nd = (struct npc_data *)map_id2bl(st->oid);
 	str = script_getstr(st,2);
 
-	if(nd) {
-		memcpy(message, nd->name, NAME_LENGTH);
-		strtok(message, "#"); // discard extra name identifier if present
-		strcat(message, " : ");
-		strncat(message, str, 254); //Prevent overflow possibility. [Skotlex]
-		clif_message(&(nd->bl), message);
+	if(nd)
+	{
+		safestrncpy(name, nd->name, sizeof(name));
+		strtok(name, "#"); // discard extra name identifier if present
+		safesnprintf(message, sizeof(message), "%s : %s", name, str);
+		clif_message(&nd->bl, message);
 	}
 
 	return 0;
@@ -12357,9 +12404,20 @@ BUILDIN_FUNC(autoequip)
 	struct item_data *item_data;
 	nameid=script_getnum(st,2);
 	flag=script_getnum(st,3);
-	if(nameid>=500 && (item_data = itemdb_exists(nameid)) != NULL){
-		item_data->flag.autoequip = flag>0?1:0;
+
+	if( ( item_data = itemdb_exists(nameid) ) == NULL )
+	{
+		ShowError("buildin_autoequip: Invalid item '%d'.\n", nameid);
+		return 1;
 	}
+
+	if( !itemdb_isequip2(item_data) )
+	{
+		ShowError("buildin_autoequip: Item '%d' cannot be equipped.\n", nameid);
+		return 1;
+	}
+
+	item_data->flag.autoequip = flag>0?1:0;
 	return 0;
 }
 
@@ -14635,9 +14693,6 @@ static int buildin_mobuseskill_sub(struct block_list *bl,va_list ap)
 	if( md->class_ != mobid )
 		return 0;
 
-	if( md->ud.skilltimer != INVALID_TIMER ) // Cancel the casting skill.
-		unit_skillcastcancel(bl,0);
-
 	// 0:self, 1:target, 2:master, default:random
 	switch( target )
 	{
@@ -14649,6 +14704,9 @@ static int buildin_mobuseskill_sub(struct block_list *bl,va_list ap)
 
 	if( !tbl )
 		return 0;
+
+	if( md->ud.skilltimer != INVALID_TIMER ) // Cancel the casting skill.
+		unit_skillcastcancel(bl,0);
 
 	if( skill_get_casttype(skillid) == CAST_GROUND )
 		unit_skilluse_pos2(&md->bl, tbl->x, tbl->y, skillid, skilllv, casttime, cancel);
@@ -14755,6 +14813,56 @@ BUILDIN_FUNC(pushpc)
 	unit_blown(&sd->bl, dx, dy, cells, 0);
 	return 0;
 }
+
+
+/// Invokes buying store preparation window
+/// buyingstore <slots>;
+BUILDIN_FUNC(buyingstore)
+{
+	struct map_session_data* sd;
+
+	if( ( sd = script_rid2sd(st) ) == NULL )
+	{
+		return 0;
+	}
+
+	buyingstore_setup(sd, script_getnum(st,2));
+	return 0;
+}
+
+
+/// Invokes search store info window
+/// searchstores <uses>,<effect>;
+BUILDIN_FUNC(searchstores)
+{
+	unsigned short effect;
+	unsigned int uses;
+	struct map_session_data* sd;
+
+	if( ( sd = script_rid2sd(st) ) == NULL )
+	{
+		return 0;
+	}
+
+	uses   = script_getnum(st,2);
+	effect = script_getnum(st,3);
+
+	if( !uses )
+	{
+		ShowError("buildin_searchstores: Amount of uses cannot be zero.\n");
+		return 1;
+	}
+
+	if( effect > 1 )
+	{
+		ShowError("buildin_searchstores: Invalid effect id %hu, specified.\n", effect);
+		return 1;
+	}
+
+	searchstore_open(sd, uses, effect);
+	return 0;
+}
+
 
 // declarations that were supposed to be exported from npc_chat.c
 #ifdef PCRE_SUPPORT
@@ -15117,6 +15225,8 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(areamobuseskill,"siiiiviiiii"),
 	BUILDIN_DEF(progressbar,"si"),
 	BUILDIN_DEF(pushpc,"ii"),
+	BUILDIN_DEF(buyingstore,"i"),
+	BUILDIN_DEF(searchstores,"ii"),
 	// WoE SE
 	BUILDIN_DEF(agitstart2,""),
 	BUILDIN_DEF(agitend2,""),

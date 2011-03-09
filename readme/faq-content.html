@@ -1,0 +1,33 @@
+<html>
+<body>
+<ul>
+        	<li><strong>Where can I set the exp rates?</strong><br />
+        	  - Go to /conf/battle/exp.conf<br />
+              - Find base_exp_rate and job_exp_rate. Change the value there to raise or lower the rates.<br />
+  - 100 = 1x, 1000 = 10x rates, etc<br />
+  <br />
+  </li>
+        	<li><strong>Where can I set the item drop rates?</strong><br />
+        	  - Go to /conf/battle/drops.conf<br />
+        	  - You can set the drop rates by changing the values:<br />
+        	  item_rate_common: 100  &lt;-- 100 = 1x drop rate, 1000 = 10x drop rate, etc<br />
+        	  item_rate_common_boss: 100 &lt;--- drop rate for bosses<br />
+        	  item_drop_common_min: 1 &lt;--- minimal drop rate<br />
+       	    item_drop_common_max: 10000 &lt;--- maximum drop rate.<br />
+        	(You can set the rates of different items in the same file)<br />
+        	<br />
+        	</li>
+        	<li><strong>I found a bug, where to I report it?</strong><br />
+       	    If you find a bug in eAthena, report it here: <a href="http://www.eathena.ws/board/index.php?autocom=bugtracker" target="_blank">Bug Tracker</a><br />
+       	    <br />
+            </li>
+        	<li><strong>I'm a well-experienced programmer, can I join the eAthena dev team?</strong><br />
+       	    Contact <a href="http://www.eathena.ws/board/index.php?showuser=121372" target="_blank">Paradox924X</a><br />
+       	    <br />
+            </li>
+        	<li><strong>My character won't move, and no windows open when I login to the game, what's wrong?</strong><br />
+        	  Your packet_db_ver is most likely set wrong, change it in /db/packet_db.txt to match your client's packet ver.
+        	</li>
+</ul>
+</body>
+</html>

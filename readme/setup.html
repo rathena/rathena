@@ -1,144 +1,62 @@
-<html><head><title>eAthena - Setup</title><head>
-
-<link rel="stylesheet" type="text/css" href="./readme.css">
-
-<body>
-<div id="dleftbg">
-</div>
-<div id="drightbg">
-</div>
-<div id="canvas" align="center">
-<table cellspacing="0" cellpadding="0" border="0" id="ea" align="center">
-	<tr>
-		<td id="leftborder" valign="top">
-			<table cellspacing="0" cellpadding="0" border="0">
-				<tr>
-					<td id="leftborderspacer">
-					</td>
-				</tr>
-				<tr>
-					<td valign="top">
-					<img src="./images/leftborder.gif">
-					</td>
-				</tr>
-			</table>
-		</td>
-		<td id="middle" valign="top">
-			<table cellspacing="0" cellpadding="0" border="0" valign="top">
-				<tr>
-					<td id="logo" valign="top">
-						<table class="w800" cellspacing="0" cellpadding="0" border="0">
-							<tr>
-								<td valign="top">
-									<table class="w800" cellspacing="0" cellpadding="0" border="0" height="100%">
-										<tr>
-											<td rowspan="4">
-												<img src="./images/chara.gif" width="366" height="274">
-											</td>
-											<td rowspan="4" width="129">
-											</td>
-											<td colspan="2" width="305" height="51" align="right">
-												<img src="./images/banner.gif" width="305" height="51">
-											</td>
-										</tr>
-										<tr>
-											<td id="title" colspan="2" align="right">
-												Setup
-											</td>
-										</tr>
-										<tr>
-											<td height="81" colspan="2">
-											</td>
-										</tr>
-										<tr>
-											<td class="navi" align="right">
-												<a href="../readme.html">Introduction</a><br>
-												<a href="./changelog.html">Changelog</a><br>
-												<a href="./features.html">Features</a><br>
-												<a href="./npcfeatures.html">NPC Features</a>
-
-											</td>
-											<td class="navi" align="right">
-												Setup<br>
-												<a href="./gmcommands.html">GM Commands</a><br>
-												<a href="./faq.html">FAQ</a><br>
-												<a href="./resources.html">Resources</a>
-											</td>
-										</tr>
-									</table>
-								</td>
-							</tr>
-							<tr>
-								<td id="btmborder">
-									<table class="w800" cellspacing="0" cellpadding="0" border="0" height="2">
-										<tr>
-											<td id="leftbtmborder"">
-											</td>
-											<td id="midbtmborder"">
-												<img src="./images/btmborder.gif" width="44" height="2">
-											</td>
-											<td id="rightbtmborder">
-											</td>
-										</tr>
-									</table>
-								</td>
-							</tr>
-							<tr>
-								<td id="content">
-									<table class="w800" cellspacing="0" cellpadding="0" border="0" height="100%">
-										<tr>
-											<td id="lefttext" valign="top">
-<h1>Fresh Install</h1>
-It's extremely easy to set up eAthena, just follow these simple steps.
-<ol>
-	<li>Edit motd.txt, grf-files.txt and the .conf files in your /conf/ folder as you see fit</li>
-	<li>If you want to add a user, edit save/account.txt in the main eAthena directory before starting the server.</li>
-	<li>Run runserver.bat or runserver-sql.bat (depending on which storage system you're using, or you could run login-server.exe, char-server.exe, and map-server.exe manually)</li>
-	<li>Give people your IP address (can be found at <a href="http://www.whatismyip.com">http://www.whatismyip.com</a>) to people to add in their sclientinfo.xml</li>
-	<li>You're done!</li>
-											</td>
-											<td id="midtext">
-											</td>
-											<td id="righttext" valign="top">
-<h1>Upgrading</h1>
-When you're changing versions of eAthena, it is important to keep your saved files in tact. Locate the files (/save/ in TXT, your SQL databse in SQL) and make a back up.
-You also might want to back up any changes you did to eAthena, such as custom sprites/items, open-source changes.
-After backing it up, change motd.txt, grf-files.txt, and the .conf files in the /conf/ folder to your old settings. It is
-important that you use a fresh eAthena, as it changes in structure and many files will have different formats over time.
-Put your backed up files back in, and run eAthena like you normally would.
-			
-											</td>
-										</tr>
-										<tr>
-											<td colspan="3">
-												&copy; Content Copyright 2005 eAthena Development Team/Evera<br>
-												&copy; Design Copyright 2005 Evera
-											</td>
-										</tr>
-									</table>
-								</td>
-							</tr>			
-						</table>
-					</td>
-				</tr>
-			</table>
-		</td>
-		<td id="rightborder" valign="top">
-			<table cellspacing="0" cellpadding="0" border="0">
-				<tr>
-					<td id="rightborderspacer">
-					</td>
-				</tr>
-				<tr>
-					<td valign="top">
-					<img src="./images/rightborder.gif">
-					</td>
-				</tr>
-			</table>
-		</td>
-
-	</tr>
-
-</table>
-</div>
-
+<html>
+    <head>
+        <title>eAthena | Setup</title>
+        <link rel="stylesheet" type="text/css" href="style.css">
+    </head>
+    <body>
+    	<div id="template">
+            <div id="header">
+                <div class="logo">eAthena<br /><span class="subtitle">- RAGNAROK Online Server Emulator</span></div>
+                <div class="title">Setup</div>
+            </div>
+            <div id="navcontainer">
+                <ul id="navlist">
+                    <li><a href="../readme.html">Intro</a></li>
+                    <li><a href="setup.html">Setup</a></li>
+                    <li><a href="faq.html">FAQ</a></li>
+                    <li><a href="scripting.html">Scripting</a></li>
+                    <li><a href="commands.html">GM Commands</a></li>
+                    <li><a href="resources.html">Resources</a></li>
+                </ul>
+            </div>
+                
+            <div class="body-container">                 
+                  <strong>Character Server:<br></strong>
+                  <ol>
+                  	<li>Open /conf/char_athena.conf</li>
+                    <li>Change userid and passwd (s1/p1) to what you want your server's communication details to be.</li>
+                    <li>Change Server_Name to what you want to call your server.</li>
+                    <li>Remove the <strong>//</strong> before login_ip.
+                    <li>Remove the <strong>//</strong> before char_ip and change 127.0.0.1 to your <a href="http://www.whatismyip.com" target="_new">WAN IP</a>.
+                  </ol>
+                  
+                  <strong>Map Server:<br></strong>
+                  <ol>
+                  	<li>Open /conf/map_athena.conf</li>
+                    <li>Change userid and passwd to the same thing you set in char_athena.</li>
+                    <li>Remove the <strong>//</strong> before char_ip.</li>
+                    <li>Remove the <strong>//</strong> before map_ip and change 127.0.0.1 to your <a href="http://www.whatismyip.com" target="_new">WAN IP</a>.
+                  </ol>
+                  
+                  <strong>Subnet:<br></strong>
+                  <ol>
+                  	<li>Open /conf/subnet_athena.conf</li>
+                    <li>Change 255.0.0.0 to your <strong>"Subnet Mask"</strong>, change the two 127.0.0.1 to your <strong>LAN IP</strong>.
+                  </ol>
+                  
+                  <strong>MySQL Settings:<br></strong>
+                  <ol>
+                  	<li>Open /conf/inter_athena.conf</li>
+                    <li>Find the "Global SQL Settings" and change them to your SQL server's settings.</li>
+                  </ol>
+                  
+                  <strong>Message of the Day:<br></strong>
+                  <ol>
+                  	<li>Open /conf/motd.txt and edit it to change the in-game MOTD.</li>
+                  </ol>
+          </div>
+            
+            <div id="footer">"Read Me" Created & Designed by <a href="http://www.kisuka.com" target="_new">Kisuka</a></div>
+		</div>
+    </body>
+</html>
