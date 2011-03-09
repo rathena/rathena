@@ -703,6 +703,7 @@ static bool itemdb_read_stack(char* fields[], int columns, int current)
 	return true;
 }
 
+
 /// Reads items allowed to be sold in buying stores
 static bool itemdb_read_buyingstore(char* fields[], int columns, int current)
 {// <nameid>
@@ -1045,8 +1046,8 @@ static void itemdb_read(void)
 	sv_readdb(db_path, "item_noequip.txt", ',', 2, 2, -1,             &itemdb_read_noequip);
 	sv_readdb(db_path, "item_trade.txt",   ',', 3, 3, -1,             &itemdb_read_itemtrade);
 	sv_readdb(db_path, "item_delay.txt",   ',', 2, 2, MAX_ITEMDELAYS, &itemdb_read_itemdelay);
-	sv_readdb(db_path, "item_buyingstore.txt", ',', 1, 1, -1,         &itemdb_read_buyingstore);
 	sv_readdb(db_path, "item_stack.txt", ',', 3, 3, -1, &itemdb_read_stack);
+	sv_readdb(db_path, "item_buyingstore.txt", ',', 1, 1, -1,         &itemdb_read_buyingstore);
 }
 
 /*==========================================
