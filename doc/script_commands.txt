@@ -4,7 +4,7 @@
 //= A reference manual for the eAthena scripting language.
 //= Commands are sorted depending on their functionality.
 //===== Version ===========================================
-//= 3.37.20110306
+//= 3.38.20110313
 //=========================================================
 //= 1.0 - First release, filled will as much info as I could
 //=       remember or figure out, most likely there are errors,
@@ -159,6 +159,9 @@
 //=       Added 'buyingstore' command. [Ai4rei]
 //= 3.37.20110306
 //=       Added 'searchstores' command. [Ai4rei]
+//= 3.38.20110313
+//=       Added 'cooking' command. [Ai4rei]
+//=       Fixed item levels in 'produce' command.
 //=========================================================
 
 This document is a reference manual for all the scripting commands and functions 
@@ -4317,11 +4320,38 @@ Valid item levels are:
  1   - Level 1 Weapons
  2   - Level 2 Weapons
  3   - Level 3 Weapons
- 16  - Blacksmith's Stones and Metals
- 32  - Alchemist's Potions
- 64  - Whitesmith's Coins
- 123 - Whitesmith's Nuggets
- 256 - Assassin Cross's Deadly Poison
+ 21  - Blacksmith's Stones and Metals
+ 22  - Alchemist's Potions, Holy Water, Assassin Cross's Deadly Poison
+ 23  - Elemental Converters
+
+---------------------------------------
+
+*cooking <dish level>;
+
+This command will open a produce window on the client connected to the invoking 
+character. The 'dish level' is the number which determines what kind of dish
+level you can produce. You can see the full list of dishes that can be produced in 
+'db/produce_db.txt'.
+
+The window will be shown empty if the invoking character does not have enough of
+the required incredients to cook a dish.
+
+Valid dish levels are:
+
+11 - Level 1 Dish
+12 - Level 2 Dish
+13 - Level 3 Dish
+14 - Level 4 Dish
+15 - Level 5 Dish
+16 - Level 6 Dish
+17 - Level 7 Dish
+18 - Level 8 Dish
+19 - Level 9 Dish
+20 - Level 10 Dish
+
+Altough it's required to set a dish level, it doesn't matter if you set it to 1
+and you want to cook a level 10 dish, as long as you got the required incredients
+to cook the dish the command works.
 
 ---------------------------------------
 

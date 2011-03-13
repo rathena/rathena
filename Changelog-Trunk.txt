@@ -1,5 +1,9 @@
 Date	Added
 
+2011/03/13
+	* Script commands documentation updates. [Ai4rei]
+	- Added missing description for script command 'cooking' provided by Masao (bugreport:3372, follow up to r13628).
+	- Fixed wrong item levels being listed in the description to script command 'produce'.
 2011/03/08
 	* Fixed @item2 and script command 'getitem2' not taking MAX_REFINE define into consideration (bugreport:4804). [Ai4rei]
 	* Fixed @str/@agi/@vit/@int/@dex/@luk commands setting a stat to 0 (rather than 1), when exact amount is subtracted (bugreport:4803, since r14493). [Ai4rei]
