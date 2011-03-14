@@ -1,5 +1,7 @@
 Date	Added
 
+2011/03/14
+	* Fixed a typo in npc_touchnext_areanpc (NPC's map being used as it's x-coordinate), which caused ::OnTouch_ invokation to affect different area than intended (bugreport:4814, since r14097). [Ai4rei]
 2011/03/13
 	* Script commands documentation updates. [Ai4rei]
 	- Added missing description for script command 'cooking' provided by Masao (bugreport:3372, follow up to r13628).
