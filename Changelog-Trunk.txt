@@ -1,6 +1,7 @@
 Date	Added
 
 2011/03/15
+	* Fixed canceling item appraisal window (Magnifier and Identify) would prevent players from using any follow up skills (bugreport:4809, since r14545). [Ai4rei]
 	* Fixed monsters getting warped when stepping on an NPC warp when at least one of the bits of setting 'mob_warp' was set (bugreport:4766, since r12757). [Ai4rei]
 2011/03/14
 	* Fixed a typo in npc_touchnext_areanpc (NPC's map being used as it's x-coordinate), which caused ::OnTouch_ invokation to affect different area than intended (bugreport:4814, since r14097). [Ai4rei]
