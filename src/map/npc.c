@@ -902,7 +902,7 @@ int npc_touch_areanpc2(struct mob_data *md)
 		switch( map[m].npc[i]->subtype )
 		{
 			case WARP:
-				if( !battle_config.mob_warp&1 )
+				if( !( battle_config.mob_warp&1 ) )
 					continue;
 				xs = map[m].npc[i]->u.warp.xs;
 				ys = map[m].npc[i]->u.warp.ys;
