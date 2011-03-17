@@ -1,5 +1,10 @@
 Date		Added
 ======
+2011/03/17
+	* Rev. 14747 Endless Tower fixes: [Gepard]
+	- Added missing end's to prevent accidental disabling of warps between floors. (bugreport:4623)
+	- Added missing end's to prevent infinite mobspawn (bugreport:4540)
+	- Commented out remaining GM-only NPCs.
 2011/02/06
 	* Rev. 14697 Script bug fixing. :] Here's some. I know it's been awhile. [L0ne_W0lf]
 	- Changed some duplicates so they use a floating NPC as their original. (bugreport:1395)
