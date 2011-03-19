@@ -1,5 +1,9 @@
 Date	Added
 
+2011/03/19
+	* Removed leftovers of old charcommand config (follow-up to r13403). [Gepard]
+	* Added check to ensure character `rename` status will be saved if changed. [Gepard]
+	* Fixed Beast Strafing (HT_POWER) damage formula provided by Playtester (bugreport:4675, since r4392). [Gepard]
 2011/03/15
 	* Fixed pet database reading displaying wrong amount of read entries per file (bugreport:4797). [Ai4rei]
 	* Fixed canceling item appraisal window (Magnifier and Identify) would prevent players from using any follow up skills (bugreport:4809, since r14545). [Ai4rei]
