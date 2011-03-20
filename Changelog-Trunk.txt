@@ -1,6 +1,8 @@
 Date	Added
 
 2011/03/20
+	* Fixed battleground kvm02 and kvm03 scripts referring to NPCs in the custom battleground kvm (bugreport:4812, since r14369). [Ai4rei]
+	- Fixed kvm02 printing different amount of points, than it actually gives.
 	* Updates the to configure script. [Ai4rei]
 	- Added check, whether or not '-Wno-pointer-sign' can actually be used (caused warnings with g++).
 	- Math library is no longer considered required, when math functions are available without it (made configure fail on platforms, where no separate math library is present).

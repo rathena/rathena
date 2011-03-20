@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= ???, L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.2
+//= 1.3
 //===== Compatible With: ===================================== 
 //= eAthena 1.0
 //===== Description: ========================================= 
@@ -17,6 +17,8 @@
 //= 1.2 Upated some announces and dialogs from iRO.
 //=     Changed how the scoreboard works slightly.
 //=     Removed the areapercentheals, and minor things.
+//= 1.3 Fixed wrong names for disablenpc/enablenpc. [Ai4rei]
+//=     Fixed points in text and actual points differing.
 //============================================================
 
 // Waiting Room NPCs
@@ -131,8 +133,8 @@ OnInit:
 	setwall "bat_c02",55,122,5,7,0,"batc02wall_b";
 	setwall "bat_c02",140,56,6,7,0,"batc02wall_c";
 	setwall "bat_c02",140,57,5,7,0,"batc02wall_d";
-	disablenpc "VintenarKvM02a";
-	disablenpc "VintenarKvM02b";
+	disablenpc "KVM Officer#KVM02A";
+	disablenpc "KVM Officer#KVM02B";
 	end;
 
 OnGuillaumeJoin:
@@ -186,8 +188,8 @@ OnReadyCheck:
 	end;
 
 OnStart:
-	disablenpc "VintenarKvM02a";
-	disablenpc "VintenarKvM02b";
+	disablenpc "KVM Officer#KVM02A";
+	disablenpc "KVM Officer#KVM02B";
 	set $@KvM02BG_Victory, 0;
 	// Warp Teams
 	bg_warp $@KvM02BG_id1,"bat_c02",53,128;
@@ -314,8 +316,8 @@ OnCroixWin:
 
 OnStop:
 	stopnpctimer;
-	enablenpc "VintenarKvM02a";
-	enablenpc "VintenarKvM02b";
+	enablenpc "KVM Officer#KVM02A";
+	enablenpc "KVM Officer#KVM02B";
 	// Warp Teams
 	bg_warp $@KvM02BG_id1,"bat_c02",53,128;
 	bg_warp $@KvM02BG_id2,"bat_c02",146,55;
@@ -380,7 +382,7 @@ bat_c02,51,130,5	script	KVM Officer#KVM02A	419,{
 			mes "[KVM Officer]";
 			mes "Good Game.";
 			mes "May the glory of KVM be with you.";
-			mes "You aquire the winning points: 5";
+			mes "You aquire the winning points: 1";
 			close2;
 		}
 		else
