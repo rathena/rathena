@@ -1,5 +1,9 @@
 Date	Added
 
+2011/03/20
+	* Updates the to configure script. [Ai4rei]
+	- Added check, whether or not '-Wno-pointer-sign' can actually be used (caused warnings with g++).
+	- Math library is no longer considered required, when math functions are available without it (made configure fail on platforms, where no separate math library is present).
 2011/03/19
 	* Removed leftovers of old charcommand config (follow-up to r13403). [Gepard]
 	* Added check to ensure character `rename` status will be saved if changed. [Gepard]

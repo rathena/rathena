@@ -318,7 +318,24 @@ OLD_CFLAGS="$CFLAGS"
 CFLAGS="$CFLAGS -Wno-pointer-sign"
 AC_COMPILE_IFELSE(
 	[int foo;],
-	[AC_MSG_RESULT([yes])],
+	[
+		AC_MSG_RESULT([yes])
+		AC_MSG_CHECKING([whether $CC can actually use -Wno-pointer-sign])
+		# This option causes warnings in C++ mode
+		# Note: -Werror must be before -Wno-pointer-sign, otherwise it does not do anything
+		CFLAGS="$OLD_CFLAGS -Werror -Wno-pointer-sign"
+		AC_COMPILE_IFELSE(
+			[int foo;],
+			[
+				AC_MSG_RESULT([yes])
+				CFLAGS="$OLD_CFLAGS -Wno-pointer-sign"
+			],
+			[
+				AC_MSG_RESULT([no])
+				CFLAGS="$OLD_CFLAGS"
+			]
+		)
+	],
 	[
 		AC_MSG_RESULT([no])
 		CFLAGS="$OLD_CFLAGS"
@@ -555,7 +572,7 @@ AC_CHECK_HEADER([zlib.h], [], [AC_MSG_ERROR([zlib header not found, please speci
 #
 # math library (required)
 #
-AC_CHECK_LIB([m], [sqrt], [], [AC_MSG_ERROR([math library not found... stopping])])
+AC_SEARCH_LIBS([sqrt], [m], [], [AC_MSG_ERROR([math library not found... stopping])])
 
 
 #
