@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 
-//= 2.8
+//= 2.9
 //===== Compatible With: ===================================== 
 //= eAthena 7.15 +
 //===== Description: ========================================= 
@@ -41,6 +41,8 @@
 //=     finished it to return to the previous map.
 //= 2.7 Corrected weight checks, they only check for inventory slots. [L0ne_W0lf]
 //= 2.8 Disabled Assassin bar pub NPCs, as they are included in the 13.1 quests file. [L0ne_W0lf]
+//= 2.9 Fixed player dying/logging out during conversation could prevent
+//=     summoning of Satan Morroc until server reboot. [Gepard]
 //============================================================ 
 
 // Stop Post Quest
@@ -1899,7 +1901,6 @@ OnDisable:
 
 moc_fild21,178,239,0	script	Group of Evil#edq	844,1,1,{
 	if (((rebirth_moc_edq == 4) || (rebirth_moc_edq == 7)) && ($@re_moc == 1)) {
-		set $@re_moc,2;
 		mes "Awed by the time-space gap where darkness is given life, you instinctively step back.";
 		next;
 		mes "You can feel the power of the darkness rise from the gap where light and darkness are mingled.";
@@ -1907,7 +1908,10 @@ moc_fild21,178,239,0	script	Group of Evil#edq	844,1,1,{
 		mes "[" + strcharinfo(0) + "]";
 		mes "Wah...!";
 		close2;
-		donpcevent "Satan Summon#edq::OnEnable";
+		if($@re_moc == 1) {
+			set $@re_moc,2;
+			donpcevent "Satan Summon#edq::OnEnable";
+		}
 		end;
 	}
 	else {
