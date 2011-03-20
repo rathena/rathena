@@ -357,7 +357,9 @@ int guild_create(struct map_session_data *sd, const char *name)
 	nullpo_ret(sd);
 
 	safestrncpy(tname, name, NAME_LENGTH);
-	if( strlen(trim(tname)) == 0 )
+	trim(tname);
+
+	if( !tname[0] )
 		return 0; // empty name
 
 	if( sd->status.guild_id )

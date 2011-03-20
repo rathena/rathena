@@ -1,6 +1,14 @@
 Date	Added
 
 2011/03/20
+	* Random accumulated tweaks and fixes. [Ai4rei]
+	- Added a error message to npc_enable, to spot disablenpc/enablenpc/hideoffnpc/hideonnpc on non-existing NPCs (related r14750).
+	- Replaced inlined npc_name2id code with calls to npc_name2id.
+	- Open Buying Store skill is now exempted from noskill mapflag like Vending as well (bugreport:4815, follow up to r14713).
+	- Fixed signed constant being returned as unsigned value in get_percentage (bugreport:4765, since r12679).
+	- Replaced strlen checks, which checked whether or not a string is empty, with first-byte checks.
+	- Fixed enabling 'fakename' not clearing party and guild name and cleaned up atcommand 'fakename' code.
+	- Cleaned up party/guild name code in clif_charnameack (follow up to r14737).
 	* Fixed battleground kvm02 and kvm03 scripts referring to NPCs in the custom battleground kvm (bugreport:4812, since r14369). [Ai4rei]
 	- Fixed kvm02 printing different amount of points, than it actually gives.
 	* Updates the to configure script. [Ai4rei]

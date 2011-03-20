@@ -7624,7 +7624,9 @@ int clif_refresh(struct map_session_data *sd)
 	return 0;
 }
 
-// updates the object's (bl) name on client
+/// Updates the object's (bl) name on client (ZC_ACK_REQNAME/ZC_ACK_REQNAMEALL)
+/// 0095 <unit id>.L <char name>.24B
+/// 0195 <unit id>.L <char name>.24B <party name>.24B <guild name>.24B <position name>.24B
 int clif_charnameack (int fd, struct block_list *bl)
 {
 	unsigned char buf[103];
@@ -7647,24 +7649,31 @@ int clif_charnameack (int fd, struct block_list *bl)
 			if (ssd->fd == fd && ssd->disguise)
 				WBUFL(buf,2) = -bl->id;
 
-			if (strlen(ssd->fakename)>1) {
+			if( ssd->fakename[0] )
+			{
+				WBUFW(buf, 0) = cmd = 0x195;
 				memcpy(WBUFP(buf,6), ssd->fakename, NAME_LENGTH);
+				WBUFB(buf,30) = WBUFB(buf,54) = WBUFB(buf,78) = 0;
 				break;
 			}
 			memcpy(WBUFP(buf,6), ssd->status.name, NAME_LENGTH);
-			
-			if (!battle_config.display_party_name) {
-				if (ssd->status.party_id > 0 && ssd->status.guild_id > 0 && (g = guild_search(ssd->status.guild_id)) != NULL)
-					p = party_search(ssd->status.party_id);
-			}else{
-				if (ssd->status.party_id > 0)
-					p = party_search(ssd->status.party_id);
+
+			if( ssd->status.party_id )
+			{
+				p = party_search(ssd->status.party_id);
+			}
+			if( ssd->status.guild_id )
+			{
+				if( ( g = guild_search(ssd->status.guild_id) ) != NULL )
+				{
+					ARR_FIND(0, g->max_member, i, g->member[i].account_id == ssd->status.account_id && g->member[i].char_id == ssd->status.char_id);
+					if( i < g->max_member ) ps = g->member[i].position;
+				}
 			}
 
-			if( ssd->status.guild_id > 0 && (g = guild_search(ssd->status.guild_id)) != NULL )
-			{
-				ARR_FIND(0, g->max_member, i, g->member[i].account_id == ssd->status.account_id && g->member[i].char_id == ssd->status.char_id);
-				if( i < g->max_member ) ps = g->member[i].position;
+			if( !battle_config.display_party_name && g == NULL )
+			{// do not display party unless the player is also in a guild
+				p = NULL;
 			}
 
 			if (p == NULL && g == NULL)
@@ -7766,7 +7775,7 @@ int clif_charnameupdate (struct map_session_data *ssd)
 
 	nullpo_ret(ssd);
 
-	if (strlen(ssd->fakename)>1)
+	if( ssd->fakename[0] )
 		return 0; //No need to update as the party/guild was not displayed anyway.
 
 	WBUFW(buf,0) = cmd;

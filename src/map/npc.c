@@ -160,9 +160,13 @@ int npc_enable_sub(struct block_list *bl, va_list ap)
 
 int npc_enable(const char* name, int flag)
 {
-	struct npc_data* nd = (struct npc_data*)strdb_get(npcname_db, name);
+	struct npc_data* nd = npc_name2id(name);
+
 	if (nd==NULL)
+	{
+		ShowError("npc_enable: Attempted to %s a non-existing NPC '%s' (flag=%d).\n", (flag&3) ? "show" : "hide", name, flag);
 		return 0;
+	}
 
 	if (flag&1)
 		nd->sc.option&=~OPTION_INVISIBLE;
@@ -1034,7 +1038,7 @@ struct npc_data* npc_checknear(struct map_session_data* sd, struct block_list* b
  *------------------------------------------*/
 int npc_globalmessage(const char* name, const char* mes)
 {
-	struct npc_data* nd = (struct npc_data *) strdb_get(npcname_db, name);
+	struct npc_data* nd = npc_name2id(name);
 	char temp[100];
 
 	if (!nd)

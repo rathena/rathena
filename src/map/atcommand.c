@@ -2377,7 +2377,7 @@ ACMD_FUNC(monster)
 	if (number <= 0)
 		number = 1;
 
-	if (strlen(name) < 1)
+	if( !name[0] )
 		strcpy(name, "--ja--");
 
 	// If value of atcommand_spawn_quantity_limit directive is greater than or equal to 1 and quantity of monsters is greater than value of the directive
@@ -2458,7 +2458,7 @@ ACMD_FUNC(monstersmall)
 	if (number <= 0)
 		number = 1;
 
-	if (strlen(name) < 1)
+	if( !name[0] )
 		strcpy(name, "--ja--");
 
 	// If value of atcommand_spawn_quantity_limit directive is greater than or equal to 1 and quantity of monsters is greater than value of the directive
@@ -2534,7 +2534,7 @@ ACMD_FUNC(monsterbig)
 	if (number <= 0)
 		number = 1;
 
-	if (strlen(name) < 1)
+	if( !name[0] )
 		strcpy(name, "--ja--");
 
 	// If value of atcommand_spawn_quantity_limit directive is greater than or equal to 1 and quantity of monsters is greater than value of the directive
@@ -5983,7 +5983,7 @@ ACMD_FUNC(changegm)
 		return -1;
 	}
 
-	if (strlen(message)==0)
+	if( !message[0] )
 	{
 		clif_displaymessage(fd, "Command usage: @changegm <guildmember name>");
 		return -1;
@@ -6006,7 +6006,7 @@ ACMD_FUNC(changeleader)
 {
 	nullpo_retr(-1, sd);
 	
-	if (strlen(message)==0)
+	if( !message[0] )
 	{
 		clif_displaymessage(fd, "Command usage: @changeleader <party member name>");
 		return -1;
@@ -7744,31 +7744,32 @@ ACMD_FUNC(monsterignore)
  *------------------------------------------*/
 ACMD_FUNC(fakename)
 {
-	char name[NAME_LENGTH];
 	nullpo_retr(-1, sd);
-	
-	if((!message || !*message) && strlen(sd->fakename) > 1) {
-		sd->fakename[0]='\0';
-		clif_charnameack(0, &sd->bl);
-		clif_displaymessage(sd->fd,"Returned to real name.");
-		return 0;
-	}
 
-	if (!message || !*message || sscanf(message, "%23[^\n]", name) < 1) {
-		clif_displaymessage(sd->fd,"You must enter a name.");
+	if( !message || !*message )
+	{
+		if( sd->fakename[0] )
+		{
+			sd->fakename[0] = '\0';
+			clif_charnameack(0, &sd->bl);
+			clif_displaymessage(sd->fd, "Returned to real name.");
+			return 0;
+		}
+
+		clif_displaymessage(sd->fd, "You must enter a name.");
 		return -1;
 	}
 
-	if(strlen(name) < 2) {
-		clif_displaymessage(sd->fd,"Fake name must be at least two characters.");
+	if( strlen(message) < 2 )
+	{
+		clif_displaymessage(sd->fd, "Fake name must be at least two characters.");
 		return -1;
 	}
 	
-	memcpy(sd->fakename,name,NAME_LENGTH);
-	sd->fakename[NAME_LENGTH-1] = '\0';
+	safestrncpy(sd->fakename, message, sizeof(sd->fakename));
 	clif_charnameack(0, &sd->bl);
-	clif_displaymessage(sd->fd,"Fake name enabled.");
-	
+	clif_displaymessage(sd->fd, "Fake name enabled.");
+
 	return 0;
 }
 
@@ -7902,7 +7903,7 @@ ACMD_FUNC(duel)
 		return 0;
 	}
 
-	if(strlen(message) > 0) {
+	if( message[0] ) {
 		if(sscanf(message, "%d", &maxpl) >= 1) {
 			if(maxpl < 2 || maxpl > 65535) {
 				clif_displaymessage(fd, msg_txt(357)); // "Duel: Invalid value."
@@ -8078,7 +8079,7 @@ ACMD_FUNC(clone)
  *-----------------------------------*/
 ACMD_FUNC(main)
 {
-	if(strlen(message) > 0) {
+	if( message[0] ) {
 
 		if(strcmpi(message, "on") == 0) {
 			if(!sd->state.mainchat) {
@@ -9164,7 +9165,7 @@ ACMD_FUNC(commands)
 		if( gm_lvl < atcommand_info[i].level2 && stristr(command,"charcommands") )
 			continue;
 
-		slen = (unsigned int)strlen(atcommand_info[i].command);
+		slen = strlen(atcommand_info[i].command);
 
 		// flush the text buffer if this command won't fit into it
 		if( slen + cur - line_buff >= CHATBOX_SIZE )
