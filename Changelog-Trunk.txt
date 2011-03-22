@@ -1,5 +1,7 @@
 Date	Added
 
+2011/03/22
+	* Fixed possible client crash when monster is class-changing to mob_avail'd one. [Gepard]
 2011/03/20
 	* Random accumulated tweaks and fixes. [Ai4rei]
 	- Added a error message to npc_enable, to spot disablenpc/enablenpc/hideoffnpc/hideonnpc on non-existing NPCs (related r14750).
