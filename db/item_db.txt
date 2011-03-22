@@ -2973,7 +2973,7 @@
 6025,Towel_Of_Memory,Towel of Memory,3,0,,10,,,,,,,,,,,,,{},{},{}
 6026,Marriage_Covenant,Written Oath Of Marriage,3,0,,10,,,,,,,,,,,,,{},{},{}
 6027,Crystal_Of_Feardoom,Crystal Of Feardom,3,0,,10,,,,,,,,,,,,,{},{},{}
-6028,Seal_Scroll,Sealed Scroll,3,0,,10,,,,,,,,,,,,,{},{},{}
+6028,Seal_Scroll,Sealed Scroll,3,0,,0,,,,,,,,,,,,,{},{},{}
 6029,Morocc_Tracing_Log,Morocc Tracing Log,3,0,,10,,,,,,,,,,,,,{},{},{}
 6030,Glitering_PaperA,Glittering Paper,3,0,,10,,,,,,,,,,,,,{},{},{}
 6031,Glitering_PaperB,Glittering Paper,3,0,,10,,,,,,,,,,,,,{},{},{}
