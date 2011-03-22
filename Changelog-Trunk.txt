@@ -1,6 +1,10 @@
 Date	Added
 
 2011/03/22
+	* Documentation updates and fixes. [Ai4rei]
+	- Added documentation for script commands 'bg_getareausers' and 'bg_get_data' (bugreport:3034).
+	- Fixed documentation for script command 'waitingroom2bg_single' (bugreport:4770, since r14373).
+	- Documented optional parameter 'npc name' for script command 'waitingroom2bg'.
 	* Fixed possible client crash when monster is class-changing to mob_avail'd one. [Gepard]
 2011/03/20
 	* Random accumulated tweaks and fixes. [Ai4rei]
