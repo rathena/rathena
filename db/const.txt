@@ -86,45 +86,64 @@ Job_Ranger	4056
 Job_Archbishop	4057
 Job_Mechanic	4058
 Job_Guillotine_Cross	4059
+
 Job_Rune_Knight_H	4060
 Job_Warlock_H	4061
-Job_RANGER_H	4062
+Job_Ranger_H	4062
 Job_Archbishop_H	4063
 Job_Mechanic_H	4064
 Job_Guillotine_Cross_H	4065
+
 Job_Royal_Guard	4066
 Job_Sorcerer	4067
 Job_Minstrel	4068
-Job_Wandrer	4069
+Job_Wanderer	4069
 Job_Sura	4070
 Job_Genetic	4071
 Job_Shadow_Chaser	4072
+
 Job_Royal_Guard_H	4073
 Job_Sorcerer_H	4074
 Job_Minstrel_H	4075
-Job_Wandrer_H	4076
+Job_Wanderer_H	4076
 Job_Sura_H	4077
 Job_Genetic_H	4078
 Job_Shadow_Chaser_H	4079
-Job_Rune_Knight_B	4096
-Job_Warlock_B	4097
-Job_RANGER_B	4098
-Job_Archbishop_B	4099
-Job_Mechanic_B	4100
-Job_Guillotine_Cross_B	4101
-Job_Royal_Guard_B	4102
-Job_Sorcerer_B	4103
-Job_Minstrel_B	4104
-Job_Wandrer_B	4105
-Job_Sura_B	4106
-Job_Genetic_B	4107
-Job_Shadow_Chaser_B	4108
+
+Job_Rune_Knight2	4080
+Job_Rune_Knight_H2	4081
+Job_Royal_Guard2	4082
+Job_Royal_Guard_H2	4083
+Job_Ranger2	4084
+Job_Ranger_H2	4085
+Job_Mechanic2	4086
+Job_Mechanic_H2	4087
+
+Job_Baby_Rune	4096
+Job_Baby_Warlock	4097
+Job_Baby_Ranger	4098
+Job_Baby_Bishop	4099
+Job_Baby_Mechanic	4100
+Job_Baby_Cross	4101
+Job_Baby_Guard	4102
+Job_Baby_Sorcerer	4103
+Job_Baby_Minstrel	4104
+Job_Baby_Wanderer	4105
+Job_Baby_Sura	4106
+Job_Baby_Genetic	4107
+Job_Baby_Chaser	4108
+
+Job_Baby_Rune2	4109
+Job_Baby_Guard2	4110
+Job_Baby_Ranger2	4111
+Job_Baby_Mechanic2	4112
 
 EAJL_2_1	0x100
 EAJL_2_2	0x200
 EAJL_2	0x300
 EAJL_UPPER	0x1000
 EAJL_BABY	0x2000
+EAJL_3	0x4000
 EAJ_UPPERMASK	0x0fff
 EAJ_BASEMASK	0x00ff
 
@@ -155,6 +174,32 @@ EAJ_MONK	0x204
 EAJ_ALCHEMIST	0x205
 EAJ_ROGUE	0x206
 EAJ_SOUL_LINKER	0x207
+
+EAJ_RUNE_KNIGHT	0x4101
+EAJ_WARLOCK	0x4102
+EAJ_RANGER	0x4103
+EAJ_ARCHBISHOP	0x4104
+EAJ_MECHANIC	0x4105
+EAJ_GUILLOTINE_CROSS	0x4106
+EAJ_ROYAL_GUARD	0x4201
+EAJ_SORCERER	0x4202
+EAJ_MINSTRELWANDERER	0x4203
+EAJ_SURA	0x4204
+EAJ_GENETIC	0x4205
+EAJ_SHADOW_CHASER	0x4206
+
+EAJ_RUNE_KNIGHT_H	0x5101
+EAJ_WARLOCK_H	0x5102
+EAJ_RANGER_H	0x5103
+EAJ_ARCHBISHOP_H	0x5104
+EAJ_MECHANIC_H	0x5105
+EAJ_GUILLOTINE_CROSS_H	0x5106
+EAJ_ROYAL_GUARD_H	0x5201
+EAJ_SORCERER_H	0x5202
+EAJ_MINSTRELWANDERER_H	0x5203
+EAJ_SURA_H	0x5204
+EAJ_GENETIC_H	0x5205
+EAJ_SHADOW_CHASER_H	0x5206
 
 EAJ_NOVICE_HIGH	0x1000
 EAJ_SWORDMAN_HIGH	0x1001

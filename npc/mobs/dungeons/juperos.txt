@@ -17,44 +17,36 @@
 //= 1.4 Corrected MVP spawn variance. [L0ne_W0lf]
 //============================================================
 
-//========================================================================================
-// - Juperos 01
-//========================================================================================
+//==================================================
+// juperos_01 - Ruins of Juperos
+//==================================================
+juperos_01,0,0,0,0	monster	Venatu	1676,70,5000,0,0
+juperos_01,0,0,0,0	monster	Venatu	1677,70,5000,0,0
+juperos_01,0,0,0,0	monster	Venatu	1678,70,5000,0,0
+juperos_01,0,0,0,0	monster	Venatu	1679,50,5000,0,0
+juperos_01,0,0,0,0	monster	Dimik	1670,10,5000,0,0
+juperos_01,0,0,0,0	monster	Dimik	1671,5,5000,0,0
+juperos_01,0,0,0,0	monster	Dimik	1672,5,5000,0,0
+juperos_01,0,0,0,0	monster	Dimik	1673,5,5000,0,0
 
-juperos_01,100,180,60,70	monster	Venatu	1679,15,300000,0,1
-juperos_01,100,180,60,70	monster	Venatu	1676,25,300000,0,1
-juperos_01,100,180,60,70	monster	Venatu	1677,20,300000,0,1
-juperos_01,100,180,60,70	monster	Venatu	1678,25,300000,0,1
-juperos_01,192,132,60,80	monster	Venatu	1679,35,300000,0,1
-juperos_01,192,132,60,80	monster	Venatu	1676,45,300000,0,1
-juperos_01,192,132,60,80	monster	Venatu	1677,50,300000,0,1
-juperos_01,192,132,60,80	monster	Venatu	1678,45,300000,0,1
-juperos_01,0,0,0,0	monster	Dimik	1670,5,0,0,1
-juperos_01,0,0,0,0	monster	Dimik	1671,5,0,0,1
-juperos_01,0,0,0,0	monster	Dimik	1672,5,0,0,1
-juperos_01,0,0,0,0	monster	Dimik	1673,5,0,0,1
-juperos_01,232,202,25,25	monster	Dimik	1670,5,420000,0,0
+//==================================================
+// juperos_02 - Ruins of Juperos
+//==================================================
+juperos_02,0,0,0,0	monster	Apocalypse	1365,70,5000,0,0
+juperos_02,0,0,0,0	monster	Venatu	1676,65,5000,0,0
+juperos_02,0,0,0,0	monster	Venatu	1677,65,5000,0,0
+juperos_02,0,0,0,0	monster	Venatu	1678,65,5000,0,0
+juperos_02,0,0,0,0	monster	Venatu	1679,50,5000,0,0
 
-//========================================================================================
-// - Juperos 02
-//========================================================================================
-
-juperos_02,0,0,0,0	monster	Venatu	1679,50,0,0,1
-juperos_02,0,0,0,0	monster	Venatu	1676,65,0,0,1
-juperos_02,0,0,0,0	monster	Venatu	1677,65,0,0,1
-juperos_02,0,0,0,0	monster	Venatu	1678,65,0,0,1
-juperos_02,0,0,0,0	monster	Apocalypse	1365,70,0,0,1
-
-//========================================================================================
-// - Juperos Core
-//========================================================================================
-
-jupe_core,0,0,0,0	monster	Venatu	1676,25,0,0,1
-jupe_core,0,0,0,0	monster	Venatu	1677,25,0,0,1
-jupe_core,0,0,0,0	monster	Venatu	1678,25,0,0,1
-jupe_core,0,0,0,0	monster	Dimik	1670,40,0,0,1
-jupe_core,0,0,0,0	monster	Dimik	1671,40,0,0,1
-jupe_core,0,0,0,0	monster	Dimik	1672,40,0,0,1
-jupe_core,0,0,0,0	monster	Dimik	1673,40,0,0,1
-jupe_core,0,0,0,0	monster	Archdam	1668,40,0,0,1
+//==================================================
+// jupe_core - Center of Juperos
+//==================================================
+jupe_core,0,0,0,0	monster	Dimik	1670,40,5000,0,0
+jupe_core,0,0,0,0	monster	Dimik	1671,40,5000,0,0
+jupe_core,0,0,0,0	monster	Dimik	1672,40,5000,0,0
+jupe_core,0,0,0,0	monster	Dimik	1673,40,5000,0,0
+jupe_core,0,0,0,0	monster	Archdam	1668,40,5000,0,0
+jupe_core,0,0,0,0	monster	Venatu	1676,25,5000,0,0
+jupe_core,0,0,0,0	monster	Venatu	1677,25,5000,0,0
+jupe_core,0,0,0,0	monster	Venatu	1678,25,5000,0,0
 jupe_core,0,0,0,0	boss_monster	Vesper	1685,1,7200000,600000,1
