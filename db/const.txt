@@ -61,7 +61,7 @@ Job_Baby_Knight	4030
 Job_Baby_Priest	4031
 Job_Baby_Wizard	4032
 Job_Baby_Blacksmith	4033
-Job_Baby_Hunter		4034
+Job_Baby_Hunter	4034
 Job_Baby_Assassin	4035
 Job_Baby_Knight2	4036
 Job_Baby_Crusader	4037
@@ -184,22 +184,22 @@ mf_nosave	2
 mf_nobranch	3
 mf_nopenalty	4
 mf_nozenypenalty	5
-mf_pvp		6
+mf_pvp	6
 mf_pvp_noparty	7
 mf_pvp_noguild	8
-mf_gvg		9
+mf_gvg	9
 mf_gvg_noparty	10
 mf_notrade	11
 mf_noskill	12
 mf_nowarp	13
 mf_partylock	14
 mf_noicewall	15
-mf_snow		16
-mf_fog		17
+mf_snow	16
+mf_fog	17
 mf_sakura	18
 mf_leaves	19
-mf_rain		20
-mf_nogo		22
+mf_rain	20
+mf_nogo	22
 mf_clouds	23
 mf_clouds2	24
 mf_fireworks	25
@@ -216,8 +216,8 @@ mf_nonightmaredrop	35
 mf_restricted	36
 mf_nocommand	37
 mf_nodrop	38
-mf_jexp		39
-mf_bexp		40
+mf_jexp	39
+mf_bexp	40
 mf_novending	41
 mf_loadevent 42
 mf_nochat	43
@@ -257,64 +257,64 @@ cell_chknochat	13
 StatusPoint	9	1
 BaseLevel	11	1
 SkillPoint	12	1
-Class		19	1
-Upper		56	1
-Zeny		20	1
-Sex		21	1
-Weight		24	1
+Class	19	1
+Upper	56	1
+Zeny	20	1
+Sex	21	1
+Weight	24	1
 MaxWeight	25	1
 JobLevel	55	1
-BaseExp		1	1
-JobExp		2	1
-Karma		3	1
-Manner		4	1
+BaseExp	1	1
+JobExp	2	1
+Karma	3	1
+Manner	4	1
 NextBaseExp	22	1
 NextJobExp	23	1
-Hp		5	1
-MaxHp		6	1
-Sp		7	1
-MaxSp		8	1
-BaseJob		119	1
+Hp	5	1
+MaxHp	6	1
+Sp	7	1
+MaxSp	8	1
+BaseJob	119	1
 BaseClass	120	1
 killerrid	121 1
 killedrid	122 1
 
-bMaxHP		6
-bMaxSP		8
-bStr		13
-bAgi		14
-bVit		15
-bInt		16
-bDex		17
-bLuk		18
-bAtk		41
-bAtk2		42
-bDef		45
-bDef2		46
-bMdef		47
-bMdef2		48
-bHit		49
-bFlee		50
-bFlee2		51
+bMaxHP	6
+bMaxSP	8
+bStr	13
+bAgi	14
+bVit	15
+bInt	16
+bDex	17
+bLuk	18
+bAtk	41
+bAtk2	42
+bDef	45
+bDef2	46
+bMdef	47
+bMdef2	48
+bHit	49
+bFlee	50
+bFlee2	51
 bCritical	52
-bAspd		53
-bFame		59
+bAspd	53
+bFame	59
 bUnbreakable	60
 
 bAtkRange	1000
-bAtkEle		1001
-bDefEle		1002
+bAtkEle	1001
+bDefEle	1002
 bCastrate	1003
 bMaxHPrate	1004
 bMaxSPrate	1005
 bUseSPrate	1006
-bAddEle		1007
+bAddEle	1007
 bAddRace	1008
 bAddSize	1009
-bSubEle		1010
+bSubEle	1010
 bSubRace	1011
-bAddEff		1012
-bResEff		1013
+bAddEff	1012
+bResEff	1013
 bBaseAtk	1014
 bAspdRate	1015
 bHPrecovRate	1016
@@ -374,9 +374,9 @@ bBreakArmorRate	1069
 bAddStealRate	1070
 bMagicDamageReturn	1071
 bRandomAttackIncrease	1072
-bAllStats		1073
-bAgiVit			1074
-bAgiDexStr		1075
+bAllStats	1073
+bAgiVit		1074
+bAgiDexStr	1075
 bPerfectHide	1076
 bNoKnockback	1077
 bClassChange	1078
@@ -1960,16 +1960,16 @@ CLEAR_NPC	844
 
 HAVEQUEST	0
 PLAYTIME	1
-HUNTING		2
+HUNTING	2
 
 FW_DONTCARE	0
-FW_THIN		100
+FW_THIN	100
 FW_EXTRALIGHT	200
 FW_LIGHT	300
 FW_NORMAL	400
 FW_MEDIUM	500
 FW_SEMIBOLD	600
-FW_BOLD		700
+FW_BOLD	700
 FW_EXTRABOLD	800
 FW_HEAVY	900
 
