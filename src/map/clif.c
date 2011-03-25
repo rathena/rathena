@@ -13759,7 +13759,10 @@ int clif_bg_xy_remove(struct map_session_data *sd)
 	return 0;
 }
 
-int clif_bg_message(struct battleground_data *bg, const char *name, const char *mes, int len)
+
+/// Notifies clients of a battleground message (ZC_BATTLEFIELD_CHAT)
+/// 02dc <packet len>.W <account id>.L <name>.24B <message>.?B
+int clif_bg_message(struct battleground_data *bg, int src_id, const char *name, const char *mes, int len)
 {
 	struct map_session_data *sd;
 	unsigned char *buf;
@@ -13770,7 +13773,7 @@ int clif_bg_message(struct battleground_data *bg, const char *name, const char *
 
 	WBUFW(buf,0) = 0x2dc;
 	WBUFW(buf,2) = len + NAME_LENGTH + 8;
-	WBUFL(buf,4) = sd->state.bg_id;
+	WBUFL(buf,4) = src_id;
 	memcpy(WBUFP(buf,8), name, NAME_LENGTH);
 	memcpy(WBUFP(buf,32), mes, len);
 	clif_send(buf,WBUFW(buf,2), &sd->bl, BG);
