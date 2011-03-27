@@ -19,16 +19,11 @@
 #include <stdio.h>
 #include <string.h>
 
-static int vending_nextid = 1;
+static int vending_nextid = 0;
 
 /// Returns an unique vending shop id.
 static int vending_getuid(void)
 {
-	if(!vending_nextid)
-	{// wrapped around, 0 is reserved for "not vending" state on eathena
-		vending_nextid = 1;
-	}
-
 	return vending_nextid++;
 }
 
@@ -39,8 +34,11 @@ void vending_closevending(struct map_session_data* sd)
 {
 	nullpo_retv(sd);
 
-	sd->vender_id = 0;
-	clif_closevendingboard(&sd->bl,0);
+	if( sd->state.vending )
+	{
+		sd->state.vending = false;
+		clif_closevendingboard(&sd->bl, 0);
+	}
 }
 
 /*==========================================
@@ -53,7 +51,7 @@ void vending_vendinglistreq(struct map_session_data* sd, int id)
 
 	if( (vsd = map_id2sd(id)) == NULL )
 		return;
-	if( vsd->vender_id == 0 )
+	if( !vsd->state.vending )
 		return; // not vending
 
 	if ( !pc_can_give_items(pc_isGM(sd)) || !pc_can_give_items(pc_isGM(vsd)) ) //check if both GMs are allowed to trade
@@ -78,7 +76,7 @@ void vending_purchasereq(struct map_session_data* sd, int aid, int uid, const ui
 	struct map_session_data* vsd = map_id2sd(aid);
 
 	nullpo_retv(sd);
-	if( vsd == NULL || vsd->vender_id == 0 || vsd->bl.id == sd->bl.id )
+	if( vsd == NULL || !vsd->state.vending || vsd->bl.id == sd->bl.id )
 		return; // invalid shop
 
 	if( vsd->vender_id != uid )
@@ -309,6 +307,7 @@ void vending_openvending(struct map_session_data* sd, const char* message, bool 
 		return;
 	}
 
+	sd->state.vending = true;
 	sd->vender_id = vending_getuid();
 	sd->vend_num = i;
 	safestrncpy(sd->message, message, MESSAGE_SIZE);
@@ -324,7 +323,7 @@ bool vending_search(struct map_session_data* sd, unsigned short nameid)
 {
 	int i;
 
-	if( !sd->vender_id )
+	if( !sd->state.vending )
 	{// not vending
 		return false;
 	}
@@ -347,7 +346,7 @@ bool vending_searchall(struct map_session_data* sd, const struct s_search_store_
 	unsigned int idx, cidx;
 	struct item* it;
 
-	if( !sd->vender_id )
+	if( !sd->state.vending )
 	{// not vending
 		return true;
 	}

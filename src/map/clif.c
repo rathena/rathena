@@ -3645,7 +3645,7 @@ static void clif_getareachar_pc(struct map_session_data* sd,struct map_session_d
 			clif_dispchat(cd,sd->fd);
 	}
 
-	if(dstsd->vender_id)
+	if( dstsd->state.vending )
 		clif_showvendingboard(&dstsd->bl,dstsd->message,sd->fd);
 
 	if( dstsd->state.buyingstore )
@@ -4077,7 +4077,7 @@ int clif_outsight(struct block_list *bl,va_list ap)
 				if(cd->usersd[0]==sd)
 					clif_dispchat(cd,tsd->fd);
 			}
-			if(sd->vender_id)
+			if( sd->state.vending )
 				clif_closevendingboard(bl,tsd->fd);
 			if( sd->state.buyingstore )
 				clif_buyingstore_disappear_entry_single(tsd, sd);
@@ -10428,7 +10428,7 @@ void clif_parse_MoveFromKafra(int fd,struct map_session_data *sd)
  *------------------------------------------*/
 void clif_parse_MoveToKafraFromCart(int fd, struct map_session_data *sd)
 {
-	if(sd->vender_id)	
+	if( sd->state.vending )
 		return;
 	if (!pc_iscarton(sd))
 		return;
@@ -10445,7 +10445,7 @@ void clif_parse_MoveToKafraFromCart(int fd, struct map_session_data *sd)
  *------------------------------------------*/
 void clif_parse_MoveFromKafraToCart(int fd, struct map_session_data *sd)
 {
-	if (sd->vender_id)
+	if( sd->state.vending )
 		return;
 	if (!pc_iscarton(sd))
 		return;
@@ -12860,7 +12860,7 @@ void clif_Auction_openwindow(struct map_session_data *sd)
 {
 	int fd = sd->fd;
 
-	if( sd->state.storage_flag || sd->vender_id || sd->state.buyingstore || sd->state.trading )
+	if( sd->state.storage_flag || sd->state.vending || sd->state.buyingstore || sd->state.trading )
 		return;
 
 	WFIFOHEAD(fd,12);

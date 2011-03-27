@@ -69,7 +69,7 @@ int chat_createpcchat(struct map_session_data* sd, const char* title, const char
 	if( sd->chatID )
 		return 0; //Prevent people abusing the chat system by creating multiple chats, as pointed out by End of Exam. [Skotlex]
 
-	if( sd->vender_id || sd->state.buyingstore )
+	if( sd->state.vending || sd->state.buyingstore )
 	{// not chat, when you already have a store open
 		return 0;
 	}
@@ -113,7 +113,7 @@ int chat_joinchat(struct map_session_data* sd, int chatid, const char* pass)
 	nullpo_ret(sd);
 	cd = (struct chat_data*)map_id2bl(chatid);
 
-	if( cd == NULL || cd->bl.type != BL_CHAT || cd->bl.m != sd->bl.m || sd->vender_id || sd->state.buyingstore || sd->chatID || cd->users >= cd->limit )
+	if( cd == NULL || cd->bl.type != BL_CHAT || cd->bl.m != sd->bl.m || sd->state.vending || sd->state.buyingstore || sd->chatID || cd->users >= cd->limit )
 	{
 		clif_joinchatfail(sd,0);
 		return 0;

@@ -802,7 +802,7 @@ int unit_can_move(struct block_list *bl)
 	
 	if (sd && (
 		pc_issit(sd) ||
-		sd->vender_id ||
+		sd->state.vending ||
 		sd->state.buyingstore ||
 		sd->state.blockedmove
 	))
@@ -1871,8 +1871,7 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 			chat_leavechat(sd,0);
 		if(sd->trade_partner)
 			trade_tradecancel(sd);
-		if(sd->vender_id)
-			vending_closevending(sd);
+		vending_closevending(sd);
 		buyingstore_close(sd);
 		searchstore_close(sd);
 		if(sd->state.storage_flag == 1)

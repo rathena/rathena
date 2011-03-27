@@ -13111,7 +13111,7 @@ BUILDIN_FUNC(checkvending) // check vending [Nab4]
 		sd = script_rid2sd(st);
 
 	if(sd)
-		script_pushint(st,(sd->vender_id != 0));
+		script_pushint(st,sd->state.vending);
 	else
 		script_pushint(st,0);
 
