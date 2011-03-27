@@ -14046,6 +14046,26 @@ void clif_showdigit(struct map_session_data* sd, unsigned char type, int value)
 }
 
 
+/// Notification of the state of client command /effect (CZ_LESSEFFECT)
+/// 021d <state>.L
+/// state:
+///     0 = Full effects
+///     1 = Reduced effects
+///
+/// @note   The state is used on Aegis for sending skill unit packet
+///         0x11f (ZC_SKILL_ENTRY) instead of 0x1c9 (ZC_SKILL_ENTRY2)
+///         whenever possible. Due to the way the decision check is
+///         constructed, this state tracking was rendered useless,
+///         as the only skill unit, that is sent with 0x1c9 is
+///         Graffiti.
+void clif_parse_LessEffect(int fd, struct map_session_data* sd)
+{
+	int isLess = RFIFOL(fd,packet_db[sd->packet_ver][RFIFOW(fd,0)].pos[0]);
+
+	sd->state.lesseffect = ( isLess != 0 );
+}
+
+
 /// Buying Store System
 ///
 
@@ -15142,6 +15162,7 @@ static int packetdb_readdb(void)
 		{clif_parse_PartyBookingDeleteReq,"bookingdelreq"},
 #endif
 		{clif_parse_PVPInfo,"pvpinfo"},
+		{clif_parse_LessEffect,"lesseffect"},
 		// Buying Store
 		{clif_parse_ReqOpenBuyingStore,"reqopenbuyingstore"},
 		{clif_parse_ReqCloseBuyingStore,"reqclosebuyingstore"},

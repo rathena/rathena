@@ -130,6 +130,7 @@ struct map_session_data {
 		unsigned ignoreAll : 1;
 		unsigned debug_remove_map : 1; // temporary state to track double remove_map's [FlavioJS]
 		unsigned buyingstore : 1;
+		unsigned lesseffect : 1;
 		unsigned short autoloot;
 		unsigned short autolootid; // [Zephyrus]
 		unsigned noks : 3; // [Zeph Kill Steal Protection]

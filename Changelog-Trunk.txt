@@ -1,5 +1,7 @@
 Date	Added
 
+2011/03/27
+	* Added support for tracking state of client command /effect through packet 0x21d (CZ_LESSEFFECT). [Ai4rei]
 2011/03/25
 	* Fixed battlegrounds chat packet 0x2dc (ZC_BATTLEFIELD_CHAT) being sent with the battleground id rather than the account id of the talking player (since r13593). [Ai4rei]
 2011/03/22

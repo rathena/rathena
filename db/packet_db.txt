@@ -596,7 +596,7 @@ packet_ver: 13
 0x021c,10
 
 //2004-11-15aSakexe
-0x021d,6
+0x021d,6,lesseffect,2
 
 //2004-11-29aSakexe
 packet_ver: 14
