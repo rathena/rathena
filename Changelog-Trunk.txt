@@ -1,5 +1,7 @@
 Date	Added
 
+2011/03/29
+	* Added TargetName values to VS2010 project files to prevent MSB8012 warnings (follow-up to r14562). [Gepard]
 2011/03/28
 	* Prevented SC_EXPBOOST, SC_JEXPBOOST and SC_ITEMBOOST (used by Battle Manuals and Bubble Gum) from being dispelled by Gospel. (bugreport:4836) [Paradox924X]
 2011/03/27
