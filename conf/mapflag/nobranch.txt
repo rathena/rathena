@@ -336,3 +336,7 @@ brasilis	mapflag	nobranch
 bra_in01	mapflag	nobranch
 
 //evt_zombie	mapflag	nobranch
+
+// Poring War ==================
+poring_w01	mapflag	nobranch
+poring_w02	mapflag	nobranch

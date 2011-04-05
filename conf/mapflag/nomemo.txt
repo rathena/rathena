@@ -681,3 +681,7 @@ spl_in01	mapflag	nomemo
 2@nyd	mapflag	nomemo
 
 //evt_zombie	mapflag	nomemo
+
+// Poring War ====================
+poring_w01	mapflag	nomemo
+poring_w02	mapflag	nomemo

@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= SinSloth(Most of the NPCs), MasterOfMuppets(Some of the NPCs + bug fixes) & Kargha(The quiz NPCs)
 //===== Current Version: ===================================== 
-//= 3.2
+//= 3.4
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -20,6 +20,7 @@
 //= 3.2 Removed mapannounce used while debugging. [L0ne_W0lf]
 //=     Moved the disablewaitingroomevent in dancing portion.
 //= 3.3 Applied Kazukin's fix for the dancing portion. (bugreport:3966) [L0ne_W0lf]
+//= 3.4 Updated 'waitingroom' to support required zeny/lvl. [Kisuka]
 //============================================================ 
 
 //============================================================ 
@@ -5216,8 +5217,7 @@ cmd_in01,33,33,1	script	Standby Room#sign	66,{
 	end;
 
 OnInit:
-	waitingroom "DANCE~ DANCE~",20,"Standby Room#sign::OnStartArena",1;
-	//SetReqLevel 44 99
+	waitingroom "DANCE~ DANCE~",20,"Standby Room#sign::OnStartArena",1,0,44,99;
 	enablewaitingroomevent;
 	end;
 

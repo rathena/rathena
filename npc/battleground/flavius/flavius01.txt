@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.1
+//= 1.2
 //===== Compatible With: ===================================== 
 //= eAthena 1.0
 //===== Description: ========================================= 
@@ -14,6 +14,7 @@
 //===== Additional Comments: ================================= 
 //= 1.0 First Version.
 //= 1.1 Fixed pink crystal spawning as blue. [L0ne_W0lf]
+//= 1.2 Updated 'waitingroom' to support required zeny/lvl. [Kisuka]
 //============================================================
 
 // Waiting Room NPCs
@@ -21,7 +22,7 @@
 bat_room,86,227,4	script	Lieutenant Ator	418,{
 	end;
 OnInit:
-	waitingroom "Battle Station",10,"start#bat_b01::OnReadyCheck",1;
+	waitingroom "Battle Station",10,"start#bat_b01::OnReadyCheck",1,0,80,99;
 	end;
 OnEnterBG:
 	set $@FlaviusBG1_id1, waitingroom2bg("bat_b01",10,290,"start#bat_b01::OnGuillaumeQuit","");
@@ -31,7 +32,7 @@ OnEnterBG:
 bat_room,85,204,0	script	Lieutenant Thelokus	414,{
 	end;
 OnInit:
-	waitingroom "Battle Station",10,"start#bat_b01::OnReadyCheck",1;
+	waitingroom "Battle Station",10,"start#bat_b01::OnReadyCheck",1,0,80,99;
 	end;
 OnEnterBG:
 	set $@FlaviusBG1_id2, waitingroom2bg("bat_b01",390,10,"start#bat_b01::OnCroixQuit","");

@@ -391,3 +391,8 @@ nyd_dun02	mapflag	noteleport
 2@nyd	mapflag	monster_noteleport
 
 //evt_zombie	mapflag	noteleport
+
+// Poring War ====================
+poring_w01	mapflag	noteleport
+poring_w02	mapflag	noteleport
+poring_w02	mapflag	monster_noteleport

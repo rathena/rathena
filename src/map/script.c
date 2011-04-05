@@ -9262,52 +9262,24 @@ BUILDIN_FUNC(globalmes)
 	return 0;
 }
 
-/////////////////////////////////////////////////////////////////////
-// NPC waiting room (chat room)
-//
-
-/// Creates a waiting room (chat room) for this npc.
-///
-/// waitingroom "<title>",<limit>,<trigger>,"<event>";
-/// waitingroom "<title>",<limit>,"<event>",<trigger>;
-/// waitingroom "<title>",<limit>,"<event>";
-/// waitingroom "<title>",<limit>;
+/*==========================================
+ * Creates a waiting room (chat room)
+ *------------------------------------------*/
 BUILDIN_FUNC(waitingroom)
 {
-	struct npc_data* nd;
-	const char* title;
-	const char* ev = "";
-	int limit;
-	int trigger = 0;
+	struct npc_data* nd;	
 	int pub = 1;
-
-	title = script_getstr(st, 2);
-	limit = script_getnum(st, 3);
-
-	if( script_hasdata(st,5) )
-	{
-		struct script_data* last = script_getdata(st, 5);
-		get_val(st, last);
-		if( data_isstring(last) )
-		{// ,<trigger>,"<event>"
-			trigger = script_getnum(st, 4);
-			ev = script_getstr(st, 5);
-		}
-		else
-		{// ,"<event>",<trigger>
-			ev = script_getstr(st, 4);
-			trigger = script_getnum(st,5);
-		}
-	}
-	else if( script_hasdata(st,4) )
-	{// ,"<event>"
-		ev = script_getstr(st, 4);
-		trigger = limit;
-	}
+	const char* title = script_getstr(st, 2);
+	int limit = script_getnum(st, 3);
+	const char* ev = script_hasdata(st,4) ? script_getstr(st,4) : "";
+	int trigger =  script_hasdata(st,5) ? script_getnum(st,5) : limit;
+	int zeny =  script_hasdata(st,6) ? script_getnum(st,6) : 0;
+	int minLvl =  script_hasdata(st,7) ? script_getnum(st,7) : 1;
+	int maxLvl =  script_hasdata(st,8) ? script_getnum(st,8) : MAX_LEVEL;
 
 	nd = (struct npc_data *)map_id2bl(st->oid);
 	if( nd != NULL )
-		chat_createnpcchat(nd, title, limit, pub, trigger, ev);
+		chat_createnpcchat(nd, title, limit, pub, trigger, ev, zeny, minLvl, maxLvl);
 
 	return 0;
 }
@@ -9488,9 +9460,13 @@ BUILDIN_FUNC(warpwaitingpc)
 				return 0;// can't teleport on this map
 
 			pc_setpos(sd, sd->status.save_point.map, sd->status.save_point.x, sd->status.save_point.y, CLR_TELEPORT);
+			if( cd->zeny )
+				pc_payzeny(sd, cd->zeny);
 		}
 		else
 			pc_setpos(sd, mapindex_name2id(map_name), x, y, CLR_OUTSIGHT);
+			if( cd->zeny )
+				pc_payzeny(sd, cd->zeny);
 	}
 	mapreg_setreg(add_str("$@warpwaitingpcnum"), i);
 	return 0;
@@ -15029,7 +15005,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(skillpointcount,""),
 	BUILDIN_DEF(changebase,"i?"),
 	BUILDIN_DEF(changesex,""),
-	BUILDIN_DEF(waitingroom,"si??"),
+	BUILDIN_DEF(waitingroom,"si?????"),
 	BUILDIN_DEF(delwaitingroom,"?"),
 	BUILDIN_DEF2(waitingroomkickall,"kickwaitingroomall","?"),
 	BUILDIN_DEF(enablewaitingroomevent,"?"),

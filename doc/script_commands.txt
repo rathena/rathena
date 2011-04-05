@@ -166,6 +166,8 @@
 //=       Added 'bg_getareausers' and 'bg_get_data' commands. [Ai4rei]
 //=       Updated description of 'waitingroom2bg_single' command.
 //=       Documented optional parameter 'npc name' of 'waitingroom2bg' command.
+//= 3.40.20110404
+//=       Updated description of 'waitingroom' command to include required zeny/lvl. [Kisuka]
 //=========================================================
 
 This document is a reference manual for all the scripting commands and functions 
@@ -5708,7 +5710,7 @@ The function returns 0 if the shop was not found, 1 otherwise.
 
 ---------------------------------------
 
-*waitingroom "<chatroom name>",<limit>{,<event label>,<trigger>};
+*waitingroom "<chatroom name>",<limit>{,<event label>,<trigger>,<required zeny>,<min lvl>,<max lvl>};
 
 This command will create a chat room, owned by the NPC object running this 
 script and displayed above the NPC sprite.
@@ -5718,9 +5720,6 @@ The limit is the maximum number of people allowed to enter the chat room. If the
 optional event and trigger parameters are given, the event label 
 ("<NPC object name>::<label name>") will be invoked as if with a 'doevent' upon 
 the number of people in the chat room reaching the given triggering amount.
-
-It's funny, but for compatibility with jAthena, you can swap the event label and 
-the trigger parameters, and it will still work.
 
 // The NPC will just show a box above its head that says "Hello World", clicking 
 // it will do nothing, since the limit is zero.
@@ -5732,6 +5731,14 @@ the trigger parameters, and it will still work.
 // it will cause the NPC "Bouncer" run the label "OnStart"
 
     waitingroom "Disco - Waiting Room",8,"Bouncer::OnStart",8;
+
+// The NPC will have a box above its head, it will say "Party - Waiting Room" 
+// and will have 8 waiting slots. Clicking this will allow a player who has
+// 5000 zeny and lvl 50~99 to enter the chat room, where the player will be
+// able to wait until 8 people accumulate. Once this happens, it will cause
+// the NPC "Bouncer" run the label "OnStart"
+
+    waitingroom "Party - Waiting Room",5,"Bouncer::OnStart",8,5000,50,99;
 
 Creating a waiting room does not stop the execution of the script and it will 
 continue to the next line.

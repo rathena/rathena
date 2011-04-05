@@ -139,3 +139,7 @@ spl_in01	mapflag	nowarpto
 // Nidhoggr's Instance ===========
 1@nyd	mapflag	nowarpto
 2@nyd	mapflag	nowarpto
+
+// Poring War ====================
+poring_w01	mapflag	nowarpto
+poring_w02	mapflag	nowarpto
