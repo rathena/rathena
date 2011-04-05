@@ -3245,7 +3245,10 @@ int pc_payzeny(struct map_session_data *sd,int zeny)
 	nullpo_ret(sd);
 
 	if( zeny < 0 )
-	  	return pc_getzeny(sd, -zeny);
+	{
+		ShowError("pc_payzeny: Paying negative Zeny (zeny=%d, account_id=%d, char_id=%d).\n", zeny, sd->status.account_id, sd->status.char_id);
+		return 1;
+	}
 
 	if( sd->status.zeny < zeny )
 		return 1; //Not enough.
@@ -3301,7 +3304,10 @@ int pc_getzeny(struct map_session_data *sd,int zeny)
 	nullpo_ret(sd);
 
 	if( zeny < 0 )
-		return pc_payzeny(sd, -zeny);
+	{
+		ShowError("pc_getzeny: Obtaining negative Zeny (zeny=%d, account_id=%d, char_id=%d).\n", zeny, sd->status.account_id, sd->status.char_id);
+		return 1;
+	}
 
 	if( zeny > MAX_ZENY - sd->status.zeny )
 		zeny = MAX_ZENY - sd->status.zeny;

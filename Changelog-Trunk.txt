@@ -1,5 +1,7 @@
 Date	Added
 
+2011/04/05
+	* Paying and obtaining Zeny (pc_payzeny/pc_getzeny) no longer silently reverses the effect for negative amounts, that is, getting Zeny instead of paying up and vice versa (since r8273, related r8072). [Ai4rei]
 2011/03/29
 	* Added TargetName values to VS2010 project files to prevent MSB8012 warnings (follow-up to r14562). [Gepard]
 2011/03/28
