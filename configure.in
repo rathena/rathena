@@ -576,9 +576,47 @@ AC_SEARCH_LIBS([sqrt], [m], [], [AC_MSG_ERROR([math library not found... stoppin
 
 
 #
-# clock_gettime (rt on Debian)
+# clock_gettime (optional, rt on Debian)
 #
-AC_CHECK_LIB([rt], [clock_gettime])
+AC_SEARCH_LIBS([clock_gettime], [rt])
+
+
+#
+# CLOCK_MONOTONIC clock for clock_gettime
+# Normally defines _POSIX_TIMERS > 0 and _POSIX_MONOTONIC_CLOCK (for posix
+# compliant systems) and __FreeBSD_cc_version >= 500005 (for FreeBSD
+# >= 5.1.0, which does not have the posix defines (ref. r11983)) would be
+# checked but some systems define them even when they do not support it
+# (ref. bugreport:1003).
+#
+if test "$ac_cv_search_clock_gettime" != "no" ; then
+	AC_MSG_CHECKING([whether CLOCK_MONOTONIC is supported and works])
+	AC_RUN_IFELSE(
+		[
+			#include <sys/time.h>
+			#include <time.h>
+			#include <unistd.h>
+			
+			int main(int argc, char** argv)
+			{
+				struct timespec tval;
+				return clock_gettime(CLOCK_MONOTONIC, &tval);
+			}
+		],
+		[
+			AC_MSG_RESULT([yes])
+			CFLAGS="$CFLAGS -DHAVE_MONOTONIC_CLOCK"
+		],
+		[
+			# either it failed to compile (CLOCK_MONOTONIC undefined)
+			# or clock_gettime has returned a non-zero value
+			AC_MSG_RESULT([no])
+		],
+		[
+			AC_MSG_RESULT([guessing no])
+		]
+	)
+fi
 
 
 #
