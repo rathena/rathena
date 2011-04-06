@@ -9447,54 +9447,29 @@ BUILDIN_FUNC(warpwaitingpc)
 	for( i = 0; i < n && cd->users > 0; i++ )
 	{
 		sd = cd->usersd[0];
-		if( sd == NULL )
-		{
-			ShowDebug("script:warpwaitingpc: no user in chat room position 0 (cd->users=%d,%d/%d)\n", cd->users, i, n);
-			mapreg_setreg(reference_uid(add_str("$@warpwaitingpc"), i), 0);
-			continue;// Broken npc chat room?
+
+		if( strcmp(map_name,"SavePoint") == 0 && map[sd->bl.m].flag.noteleport )
+		{// can't teleport on this map
+			break;
+		}
+
+		if( cd->zeny )
+		{// fee set
+			if( (uint32)sd->status.zeny < cd->zeny )
+			{// no zeny to cover set fee
+				break;
+			}
+			pc_payzeny(sd, cd->zeny);
 		}
 
 		mapreg_setreg(reference_uid(add_str("$@warpwaitingpc"), i), sd->bl.id);
 
 		if( strcmp(map_name,"Random") == 0 )
-		{
-			if( cd->zeny )
-			{// fee set
-				if( (uint32)sd->status.zeny < cd->zeny )
-				{// no zeny to cover set fee
-					return 0;
-				}
-				pc_payzeny(sd, cd->zeny);
-			}
 			pc_randomwarp(sd,CLR_TELEPORT);
-		}
 		else if( strcmp(map_name,"SavePoint") == 0 )
-		{
-			if( map[sd->bl.m].flag.noteleport )
-				return 0;// can't teleport on this map
-
-			if( cd->zeny )
-			{// fee set
-				if( (uint32)sd->status.zeny < cd->zeny )
-				{// no zeny to cover set fee
-					return 0;
-				}
-				pc_payzeny(sd, cd->zeny);
-			}
 			pc_setpos(sd, sd->status.save_point.map, sd->status.save_point.x, sd->status.save_point.y, CLR_TELEPORT);
-		}
 		else
-		{
-			if( cd->zeny )
-			{// fee set
-				if( (uint32)sd->status.zeny < cd->zeny )
-				{// no zeny to cover set fee
-					return 0;
-				}
-				pc_payzeny(sd, cd->zeny);
-			}
 			pc_setpos(sd, mapindex_name2id(map_name), x, y, CLR_OUTSIGHT);
-		}
 	}
 	mapreg_setreg(add_str("$@warpwaitingpcnum"), i);
 	return 0;
