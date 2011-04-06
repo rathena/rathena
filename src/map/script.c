@@ -11438,7 +11438,15 @@ BUILDIN_FUNC(specialeffect)
 			clif_specialeffect(&nd->bl, type, target);
 	}
 	else
-		clif_specialeffect(bl, type, target);
+	{
+		if (target == SELF) {
+			TBL_PC *sd=script_rid2sd(st);
+			if (sd)
+				clif_specialeffect_single(bl,type,sd->fd);
+		} else {
+			clif_specialeffect(bl, type, target);
+		}
+	}
 
 	return 0;
 }
@@ -11771,6 +11779,8 @@ BUILDIN_FUNC(movenpc)
 	if ((nd = npc_name2id(npc)) == NULL)
 		return -1;
 
+	if (script_hasdata(st,5))
+		nd->ud.dir = script_getnum(st,5);
 	npc_movenpc(nd, x, y);
 	return 0;
 }
@@ -15081,7 +15091,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(mapwarp,"ssii??"),		// Added by RoVeRT
 	BUILDIN_DEF(atcommand,"s"), // [MouseJstr]
 	BUILDIN_DEF(charcommand,"s"), // [MouseJstr]
-	BUILDIN_DEF(movenpc,"sii"), // [MouseJstr]
+	BUILDIN_DEF(movenpc,"sii?"), // [MouseJstr]
 	BUILDIN_DEF(message,"ss"), // [MouseJstr]
 	BUILDIN_DEF(npctalk,"s"), // [Valaris]
 	BUILDIN_DEF(mobcount,"ss"),

@@ -6049,17 +6049,19 @@ sprite based sprite id in 'db/mob-avail.txt' with this.
 
 ---------------------------------------
 
-*movenpc <NPC name>,x,y;
+*movenpc "<NPC name>",<x>,<y>{,<dir>};
 
 This command looks like the NPCWalkToxy function,but is a little different.
 
-While NPCWalkToXY just makes the NPC 'walk' to the coordinates given 
-(which sometimes gives problems if the path isn't a straight line without objects),
-this command just moves the NPC. It basically warps out and in on the current and given spot.
+While NPCWalkToXY just makes the NPC 'walk' to the coordinates given (which 
+sometimes gives problems if the path isn't a straight line without objects), 
+this command just moves the NPC. It basically warps out and in on the current 
+and given spot. Direction can be used to change the NPC's facing direction.
 
 Example(s):
 
-//This will move Bugga from it's current position to the coordinates 100,20 (if those coordinates are walkable (legit)).
+// This will move Bugga from it's current position to the coordinates 100,20 
+// (if those coordinates are walkable (legit)).
 	moveNPC "Bugga",100,20;
 	
 ---------------------------------------
