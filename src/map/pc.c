@@ -6001,7 +6001,7 @@ int pc_readparam(struct map_session_data* sd,int type)
  *------------------------------------------*/
 int pc_setparam(struct map_session_data *sd,int type,int val)
 {
-	int i = 0;
+	int i = 0, statlimit;
 
 	nullpo_ret(sd);
 
@@ -6064,7 +6064,7 @@ int pc_setparam(struct map_session_data *sd,int type,int val)
 		}
 		break;
 	case SP_SEX:
-		sd->status.sex = val;
+		sd->status.sex = val ? SEX_MALE : SEX_FEMALE;
 		break;
 	case SP_WEIGHT:
 		sd->weight = val;
@@ -6073,34 +6073,52 @@ int pc_setparam(struct map_session_data *sd,int type,int val)
 		sd->max_weight = val;
 		break;
 	case SP_HP:
-		sd->battle_status.hp = val;
+		sd->battle_status.hp = cap_value(val, 1, (int)sd->battle_status.max_hp);
 		break;
 	case SP_MAXHP:
-		sd->battle_status.max_hp = val;
+		sd->battle_status.max_hp = cap_value(val, 1, battle_config.max_hp);
+
+		if( sd->battle_status.max_hp < sd->battle_status.hp )
+		{
+			sd->battle_status.hp = sd->battle_status.max_hp;
+			clif_updatestatus(sd, SP_HP);
+		}
 		break;
 	case SP_SP:
-		sd->battle_status.sp = val;
+		sd->battle_status.sp = cap_value(val, 0, (int)sd->battle_status.max_sp);
 		break;
 	case SP_MAXSP:
-		sd->battle_status.max_sp = val;
+		sd->battle_status.max_sp = cap_value(val, 1, battle_config.max_sp);
+
+		if( sd->battle_status.max_sp < sd->battle_status.sp )
+		{
+			sd->battle_status.sp = sd->battle_status.max_sp;
+			clif_updatestatus(sd, SP_SP);
+		}
 		break;
 	case SP_STR:
-		sd->status.str = val;
+		statlimit = pc_maxparameter(sd);
+		sd->status.str = cap_value(val, 1, statlimit);
 		break;
 	case SP_AGI:
-		sd->status.agi = val;
+		statlimit = pc_maxparameter(sd);
+		sd->status.agi = cap_value(val, 1, statlimit);
 		break;
 	case SP_VIT:
-		sd->status.vit = val;
+		statlimit = pc_maxparameter(sd);
+		sd->status.vit = cap_value(val, 1, statlimit);
 		break;
 	case SP_INT:
-		sd->status.int_ = val;
+		statlimit = pc_maxparameter(sd);
+		sd->status.int_ = cap_value(val, 1, statlimit);
 		break;
 	case SP_DEX:
-		sd->status.dex = val;
+		statlimit = pc_maxparameter(sd);
+		sd->status.dex = cap_value(val, 1, statlimit);
 		break;
 	case SP_LUK:
-		sd->status.luk = val;
+		statlimit = pc_maxparameter(sd);
+		sd->status.luk = cap_value(val, 1, statlimit);
 		break;
 	case SP_KARMA:
 		sd->status.karma = val;

@@ -1,6 +1,11 @@
 Date	Added
 
 2011/04/06
+	* Resolved some pc_setparam issues. [Ai4rei]
+	- Fixed HP/MaxHP/SP/MaxSP could be set to arbitrary values, thus disregarding configuration limits and causing client crashes on certain conditions (bugreport:4177).
+	- Fixed HP/SP not getting adjusted to MaxHP/MaxSP respectively, when the max. value is reduced below the value of the cur. value.
+	- Fixed STR/AGI/VIT/INT/DEX/LUK values could be set beyond character's max. stat limit.
+	- Fixed Gender not being limited to male/female.
 	* Fixed script command 'warpwaitingpc' not checking, whether or not the player still has required amount of Zeny (since r14765). [Ai4rei]
 	- Fixed warping through 'warpwaitingpc' to savepoint would take the fee twice ( missing {} ).
 	- Fixed random warping through 'warpwaitingpc' would not take away fee Zeny at all.
