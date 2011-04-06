@@ -1,6 +1,9 @@
 Date	Added
 
 2011/04/06
+	* Fixed script command 'warpwaitingpc' not checking, whether or not the player still has required amount of Zeny (since r14765). [Ai4rei]
+	- Fixed warping through 'warpwaitingpc' to savepoint would take the fee twice ( missing {} ).
+	- Fixed random warping through 'warpwaitingpc' would not take away fee Zeny at all.
 	* STABLE IS NOW THE OLD TRUNK. THE NEW TRUNK IS NOW FOR BLEEDING-EDGE AND/OR UNTESTED CHANGES. [Paradox924X]
 2011/04/05
 	* Moved detection of monotonic clock support to the configure script, which also checks, whether or not it actually works (bugreport:1003, related r11912 and r11983). [Ai4rei]
