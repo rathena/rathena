@@ -1,15 +1,17 @@
 //===== eAthena Script ======================================= 
 // Eden Group Quest - Quests NPCs
 //===== By: ================================================== 
-//= Protimus
+//= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.0
+//= 1.1
 //===== Compatible With: ===================================== 
-//= eAthena 1.0
+//= eAthena SVN
 //===== Description: ========================================= 
 //= [AEGIS Conversion]
 //===== Additional Comments: ================================= 
 //= 1.0 First Version.
+//= 1.1 Removed unencoded comments (Korean -> Gibberish)
+//=     Readded the GM helper NPC, commented out.
 //============================================================
 
 moc_para01,25,35,4	script	Instructor Boya#para01	469,{
@@ -1342,7 +1344,6 @@ moc_fild11,180,253,5	script	Talking Dog#para03	972,{
 	}
 }
 
-//========== µ?EÆµ5N? =================================================
 prt_sewb1,131,262,3	script	Standing Cat#para04	422,{
 	if (para_suv01 < 6) {
 		mes "[Timid Cat]";
@@ -1546,7 +1547,6 @@ prt_sewb1,131,262,3	script	Standing Cat#para04	422,{
 	}
 }
 
-//========== ?™?????????ro??UKarlSan HO====================================
 pay_arche,41,136,3	script	Eden Member Karl#p05	904,{
 	if (para_suv01 < 13) {
 		if (countitem(6219) > 0) {
@@ -1700,7 +1700,6 @@ pay_arche,41,136,3	script	Eden Member Karl#p05	904,{
 	}
 }
 
-//========== i?µ??¶µN??? Clod==========================================
 anthell01,29,264,5	script	Eden Member Cloud#p06	899,{
 	if (para_suv01 < 17) {
 		if (countitem(6219) > 0) {
@@ -1907,7 +1906,6 @@ anthell01,29,264,5	script	Eden Member Cloud#p06	899,{
 	}
 }
 
-//========== ?????? L ===3-1???3-2???========Hooksha===========
 in_orcs01,38,175,3	script	Eden Member Hooksha#p07	803,{
 	if (para_suv01 < 24) {
 		if (countitem(6219) > 0) {
@@ -2081,7 +2079,6 @@ in_orcs01,38,175,3	script	Eden Member Hooksha#p07	803,{
 		mes "You have completed the training mission.";
 		mes "Go back to the Eden Group base and make a report.";
 		close;
-		//--- 3-2???
 	}
 	else if (para_suv01 == 29) {
 		mes "[Hooksha]";
@@ -2198,7 +2195,6 @@ in_orcs01,38,175,3	script	Eden Member Hooksha#p07	803,{
 	}
 }
 
-//========== D€?????µ??æ??I ==== 3-3???====Callandiva========
 iz_dun04,43,46,3	script	Eden Member Callandiva	745,{
 	if (para_suv01 < 33) {
 		if (countitem(6219) > 0) {
@@ -2349,7 +2345,7 @@ iz_dun04,43,46,3	script	Eden Member Callandiva	745,{
 	}
 }
 
-//========== ????????? ================================================
+//============================================================
 moc_para01,112,96,5	script	Administrator Michael	967,{
 	mes "[Michael]";
 	mes "Why did you come to here?";
@@ -3579,8 +3575,6 @@ moc_para01,112,96,5	script	Administrator Michael	967,{
 	}
 }
 
-//==============================================================================
-//==-- ‚V??Chef??∂?∂???A??????A????S?µO?-=====
 moc_para01,179,44,3	script	Chef#para	820,{
 	mes "[Chef]";
 	mes "What's up?";
@@ -3911,3 +3905,34 @@ moc_para01,179,44,3	script	Chef#para	820,{
 		break;
 	}
 }
+
+/*
+sec_in02,25,33,4	script	Assistant	422,{
+	mes "Password";
+	next;
+	input .@input,0,9999;
+	if (.@input == 1854) {
+		mes "Please select the variable you want to modify.";
+		next;
+		switch(select("para_suv01:para_suv02")) {
+		case 1:
+			mes "Enter the modified value";
+			next;
+			input .@input,0,9999;
+			mes "Value of para_suv01 has been changed to " + .@input + ".";
+			set para_suv01,.@input;
+			break;
+		case 2:
+			mes "Enter the modified value";
+			next;
+			input .@input,0,9999;
+			mes "Value of para_suv02 has been changed to " + .@input + ".";
+			set para_suv02,.@input;
+			break;
+		}
+	}
+	else
+		mes "......meow wee.";
+	close;
+}
+*/
