@@ -1,5 +1,8 @@
 Date		Added
 ======
+2011/04/06
+	* Rev. 14775 Added two new quests, Alberta Boy and Secret Note of Bazett. [L0ne_W0lf]
+	* Implemented 13.2 update to Report to the New World quest.
 2011/03/21
 	* Fixed and commented out old Anthell entrance warps (bugreport:3589). Moved entrance to cmd_fild08 to match mapcache updates [Gepard]
 	- Fixed an issue in Resurrection of Satan Morroc (Continental Guard Quest) when player dying/logging out during conversation

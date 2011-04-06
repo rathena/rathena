@@ -19,6 +19,7 @@
 //= Daily Quests:
 //= - Midgard Ore
 //= - Alfheim Perfume
+//= Secret note of Bazett
 //= Yggdrasil Dungeon Floor 2 puzzle.
 //===== Additional Comments: =================================
 //= 1.0 First version
@@ -10790,6 +10791,672 @@ OnTimer60000:
 	enablenpc "Exhausted Soldier#7";
 	stopnpctimer;
 	end;
+}
+
+// Secret note of Bazett
+//============================================================ 
+mid_camp,283,198,5	script	Bazett Teablack#ep13bs	883,{
+	if (checkweight(1201,1) == 0) {
+		mes " - Hold on!! -";
+		mes " - You are carrying too many different items - ";
+		mes " - You cannot receive the reward - ";
+		mes " - Please use the Kafra service - ";
+		mes " - And try again. - ";
+		close;
+	}
+	if (ep13_2_rhea < 100) {
+		mes "[Industrious Man]";
+		mes "Hu~~";
+		mes "That's pretty interesting...";
+		mes "I will take note of it in my research papers.";
+		emotion e_ic,"Bazett Teablack#ep13bs";
+		next;
+		mes "[Industrious Man]";
+		mes "write..write...";
+		mes "crunch..crunch...";
+		next;
+		mes " - He doesn't seem to recognize that I am standing next to him as he continues writing something. -";
+		next;
+		mes "[Industrious Man]";
+		mes "write..write...";
+		mes "crunch..crunch...";
+		mes "....";
+		close;
+	}
+	if (ep13_2_busut < 1) {
+		if (isequipped(2782) == 1) {
+			mes "[Industrious Man]";
+			mes "Hu~~";
+			mes "That's pretty interesting...";
+			mes "I will take note of it in my research papers.";
+			emotion e_ic,"Bazett Teablack#ep13bs";
+			next;
+			mes "[Industrious Man]";
+			mes "write..write...";
+			mes "crunch..crunch...";
+			next;
+			mes " - He doesn't seem to recognize that I am standing next to him as he continues writing something. -";
+			next;
+			mes "[Industrious Man]";
+			mes "write..write...";
+			mes "crunch..crunch...";
+			mes "....";
+			next;
+			mes "[Industrious Man]";
+			mes "Auch!!!";
+			mes "Who...who are you?!";
+			mes "How long have you been standing there?";
+			emotion e_omg,"Bazett Teablack#ep13bs";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "Uh, I'm just passing by.";
+			mes "You look like you're busy with something.";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "See you~!!";
+			emotion e_swt2,1;
+			next;
+			mes "[Industrious Man]";
+			mes "Uh!! Wait!!";
+			mes "Your finger... Is that..?!";
+			next;
+			mes " - He grabs your hand with a surprised look -";
+			next;
+			mes "[Industrious Man]";
+			mes "This is the ^0000FFRing of the Ancient Wise King^000000!!!!!";
+			mes "This has to be fate that I've met you!";
+			next;
+			mes "[Industrious Man]";
+			mes "My research is not going so well. The god of fate must have sent you to me. I'm sure of it!!";
+			emotion e_no1,"Bazett Teablack#ep13bs";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "......";
+			mes "......What?!";
+			emotion e_omg,1;
+			next;
+			mes "[Industrious Man]";
+			mes "Would you like to help me with my search?";
+			next;
+			switch(select("What kind of search?:Sure.:Borrrring.")) {
+			case 1:
+				mes "[Industrious Man]";
+				mes "To put it simply, I'm searching for fairies and giants that live around here.";
+				next;
+				mes "[Industrious Man]";
+				mes "Though I believe they all live in the same place, they are sure to have different cultures.";
+				mes "...first and foremost is proof of their existence.";
+				next;
+				mes "[Industrious Man]";
+				mes "What about it?";
+				mes "Are you interested?";
+				next;
+				switch(select("Sure.:Not really.")) {
+				case 1:
+					mes "[Industrious Man]";
+					mes "Haha... I just know that I'm right!";
+					mes "Hahahaha!!";
+					next;
+					mes "[Industrious Man]";
+					mes "So let's work together from this point on. Let me introduce myself.";
+					mes "As you can see from my name tag, my name is ^0000FFBazett Teablack^000000.";
+					next;
+					mes "["+strcharinfo(0)+"]";
+					mes "I am "+strcharinfo(0)+".";
+					next;
+					select("OK, so what can I do for you?");
+					mes "[Bazett]";
+					mes ""+strcharinfo(0)+" let's see..!!";
+					mes "Search Manuk and Splendide fields everyday for signs of the fairies or giants.";
+					next;
+					mes "[Bazett]";
+					mes "It's not difficult.";
+					mes "So please share any information that you can gather as you travel through those areas.";
+					next;
+					mes "[Bazett]";
+					mes "Hopefully I can find what I am looking for with the information you can find.";
+					set ep13_2_busut,2;
+					setquest 11101;
+					close;
+				case 2:
+					mes "[Industrious Man]";
+					mes ".............";
+					mes ".............";
+					mes ".............";
+					mes ".............";
+					mes "...........Why!!!!!";
+					emotion e_sob,"Bazett Teablack#ep13bs";
+					next;
+					mes "[Industrious Man]";
+					mes "Well if you decide to change your mind, come back to me.";
+					set ep13_2_busut,1;
+					close;
+				}
+				break;
+			case 2:
+				mes "[Industrious Man]";
+				mes "Haha... I just know that I'm right!";
+				mes "Hahahaha!!";
+				next;
+				mes "[Industrious Man]";
+				mes "So let's work together from this point on. Let me introduce myself.";
+				mes "As you can see from my name tag, my name is ^0000FFBazett Teablack^000000.";
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "I am "+strcharinfo(0)+".";
+				next;
+				select("OK, so what can I do for you?");
+				mes "[Bazett]";
+				mes ""+strcharinfo(0)+" let's see..!!";
+				mes "Search Manuk and Splendide fields everyday for signs of the fairies or giants.";
+				next;
+				mes "[Bazett]";
+				mes "It's not difficult.";
+				mes "So please share any information that you can gather as you travel through those areas.";
+				next;
+				mes "[Bazett]";
+				mes "Hopefully I can find what I am looking for with the information you can find.";
+				set ep13_2_busut,2;
+				setquest 11101;
+				close;
+			case 3:
+				mes "[Industrious Man]";
+				mes ".............";
+				next;
+				mes "[Industrious Man]";
+				mes ".............";
+				mes ".............";
+				next;
+				mes "[Industrious Man]";
+				mes ".............";
+				mes ".............";
+				mes ".............";
+				next;
+				mes "[Industrious Man]";
+				mes ".............";
+				mes ".............";
+				mes ".............";
+				mes ".............";
+				next;
+				mes "[Industrious Man]";
+				mes ".............";
+				mes ".............";
+				mes ".............";
+				mes ".............";
+				mes "...........Why!!!!!";
+				emotion e_sob,"Bazett Teablack#ep13bs";
+				next;
+				mes "[Industrious Man]";
+				mes "Well if you decide to change your mind, come back to me.";
+				set ep13_2_busut,1;
+				close;
+			}
+		}
+		else {
+			if (rand(1,2) == 1) {
+				mes "[Industrious Man]";
+				mes "Gthgh sdsWryi";
+				mes "Apeu hjsu opuer ";
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "?????";
+				mes "What'd you say?";
+				next;
+				mes "[Industrious Man]";
+				mes "Oh! Sorry, I think I said it wrong...";
+				mes "I was just infatuated with my research...";
+				next;
+				mes "[Industrious Man]";
+				mes "You should find a way to understand this strange language that I've discovered here in the Ash Vacuum.";
+				next;
+				mes "[Industrious Man]";
+				mes "Without the ability to communicate it would be really difficult to get around here, don't you think?";
+				close;
+			}
+			else {
+				mes "[Industrious Man]";
+				mes "TalDathMush Di nahDeh";
+				mes "ReAnduDu So sehr";
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "?????";
+				mes "Huh?";
+				next;
+				mes "[Industrious Man]";
+				mes "Oh! I must've said it wrong...";
+				mes "My research hasn't been going too well lately.";
+				next;
+				mes "[Industrious Man]";
+				mes "There should be a way for you to understand this strange language here.";
+				next;
+				mes "[Industrious Man]";
+				mes "Without the ability to communicate it would be really difficult to get around here, don't you think?";
+				close;
+			}
+		}
+	}
+	if (ep13_2_busut == 1) {
+		mes "[Industrious Man]";
+		mes "Ah! You've returned!";
+		mes "Now are you interested in my research?";
+		next;
+		switch(select("Yes.:No.")) {
+		case 1:
+			mes "[Industrious Man]";
+			mes "Haha... I just know that I'm right!";
+			mes "Hahahaha!!";
+			next;
+			mes "[Industrious Man]";
+			mes "So let's work together from this point on. Let me introduce myself.";
+			mes "As you can see from my name tag, my name is ^0000FFBazett Teablack^000000.";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "I am "+strcharinfo(0)+".";
+			next;
+			select("OK, so what can I do for you?");
+			mes "[Bazett]";
+			mes ""+strcharinfo(0)+" let's see..!!";
+			mes "Search Manuk and Splendide fields everyday for signs of the fairies or giants.";
+			next;
+			mes "[Bazett]";
+			mes "It's not difficult.";
+			mes "So please share any information that you can gather as you travel through those areas.";
+			next;
+			mes "[Bazett]";
+			mes "Hopefully I can find what I am looking for with the information you can find.";
+			set ep13_2_busut,2;
+			setquest 11101;
+			close;
+		case 2:
+			mes "[Industrious Man]";
+			mes ".............";
+			mes "Well if you decide to change your mind, come back to me.";
+			emotion e_sob,"Bazett Teablack#ep13bs";
+			close;
+		}
+	}
+	if (ep13_2_busut == 2) {
+		mes "[Bazett]";
+		mes "Um... for today can you search for giants in the Manuk Field?";
+		mes "That place is pretty cold so, you might need a coat.";
+		next;
+		mes "[Bazett]";
+		mes "I used this note so it should still be useful. Take it...";
+		mes "Ah... and don't worry about the title of the note.";
+		next;
+		mes "[Bazett]";
+		mes "After you've finished searching bring that note back to me.";
+		next;
+		mes "[Bazett]";
+		mes "Got it? Ok take care and see you soon.";
+		set ep13_2_busut,3;
+		set ep13_2_bs1,1;
+		set ep13_2_bs2,1;
+		set ep13_2_bs3,1;
+		set ep13_2_bs4,1;
+		getitem 6074,1; //Bazett's_Order
+		changequest 11101,11102;
+		close;
+	}
+	if (ep13_2_busut == 3) {
+		mes "[Bazett]";
+		mes "How's the search going?";
+		next;
+		if (countitem(6074) < 1) {
+			mes "[Bazett]";
+			mes "!!!!!!!";
+			mes "You lost the notes!!?";
+			mes "Sigh...";
+			next;
+			mes "[Bazett]";
+			mes "What's done has been done.";
+			mes "I'll give you a new one.";
+			getitem 6074,1; //Bazett's_Order
+			close;
+		}
+		else {
+			mes "[Bazett]";
+			mes "Take it easy...";
+			close;
+		}
+	}
+	if (ep13_2_busut == 4) {
+		mes "[Bazett]";
+		mes "Oh! You're done with the investigation?";
+		next;
+		switch(select("Yes.:Not yet...")) {
+		case 1:
+			if (countitem(6074) < 1) {
+				mes "[Bazett]";
+				mes "!!!!!!!";
+				mes "You lost the notes!!?";
+				mes "Sigh...";
+				next;
+				mes "[Bazett]";
+				mes "What's done has been done.";
+				mes "You must be tired, go take a rest.";
+				mes "I'll go prepare new notes.";
+				mes "You can just go investigate again for me.";
+				set ep13_2_busut,7;
+				erasequest 11102;
+				setquest 11104;
+				close;
+			}
+			else {
+				mes "[Bazett]";
+				mes "May I take a look at the notes first?";
+				mes "Oh!!";
+				next;
+				mes " - Bazett is reading the detailed contents - ";
+				mes " - He seems to be captivated. - ";
+				mes " - It's better if I leave him alone. - ";
+				mes " - So he can finish. - ";
+				next;
+				mes "[Bazett]";
+				mes "Mm...there are actually such things?!";
+				next;
+				mes "[Bazett]";
+				mes "Mm...I see, I see.";
+				next;
+				mes "[Bazett]";
+				mes "Even though the content is simple, it's well organized and interesting.";
+				mes "As expected of "+strcharinfo(0)+"!!";
+				next;
+				mes "[Bazett]";
+				mes "You've done well.";
+				mes "You must be exhausted. Go take a rest. We'll continue tomorrow.";
+				next;
+				mes "[Bazett]";
+				mes "Ah... this isn't much, but it's a coin that the giants use.";
+				mes "Maybe you can buy something from them with this.";
+				delitem 6074,1; //Bazett's_Order
+				set ep13_2_busut,7;
+				if (ep13_2_bs1 == 3) getitem 6080,1; //Manuk_Coin
+				if (ep13_2_bs2 == 3) getitem 6080,1; //Manuk_Coin
+				if (ep13_2_bs3 == 3) getitem 6080,1; //Manuk_Coin
+				if (ep13_2_bs4 == 3) getitem 6080,1; //Manuk_Coin
+				erasequest 11102;
+				setquest 11104;
+				close;
+			}
+			break;
+		case 2:
+			mes "[Bazett]";
+			mes "Take it easy...";
+			close;
+		}
+	}
+	else {
+		mes "[Bazett]";
+		mes "You've done well.";
+		mes "You must be exhausted. Go take a rest, we'll continue tomorrow.";
+		close;
+	}
+}
+
+manuk,193,135,0	script	Worker#ep13bs	454,{
+	if (isequipped(2782) == 1) {
+		if (ep13_2_busut == 3) {
+			if (ep13_2_bs1 == 1) {
+				mes "[Worker]";
+				mes "Oops, it's dangerous, almost broken.";
+				mes "I should hurry to change it...otherwise.";
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "What's the matter?";
+				next;
+				mes "[Worker]";
+				mes "Ah....here.....um...";
+				mes "......";
+				mes ".........";
+				mes "Nothing!!";
+				emotion e_omg,"Worker#ep13bs";
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "What's up?";
+				next;
+				mes "[Worker]";
+				mes "You are an outsider.";
+				mes "......";
+				mes "I was suprised by your voice.";
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "Yes, sorry to startle you.";
+				emotion e_heh,1;
+				next;
+				mes "[Worker]";
+				mes "Haha, it's ok.";
+				mes "Recently I heard about people like you but it's the first time I've actually met one.";
+				next;
+				mes "[Worker]";
+				mes "You speak our language pretty good.";
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "Ah...anyway..you look like you're having some trouble. What happened?";
+				next;
+				mes "[Worker]";
+				mes "Nothing!!";
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "Are you sure? Fate has to have brought us together for a reason.";
+				mes "Tell me~";
+				next;
+				mes "[Worker]";
+				mes "......";
+				mes "Frankly...";
+				next;
+				mes "[Worker]";
+				mes "The screw is too old to use to fix the tent, so I should change it before it breaks.";
+				next;
+				mes "[Worker]";
+				mes "I can't leave so I'm just waiting for my friend to pass by to help me.";
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "Can I help you?";
+				next;
+				mes "[Worker]";
+				mes "No~that's alright. We just met so I can't ask you for a favor.";
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "That's ok! We can help each other!";
+				next;
+				mes "- Suddenly there is a screeching sound as the screw breaks -";
+				next;
+				mes "[Worker]";
+				mes "Ugh!!!";
+				mes "**Sigh**";
+				emotion e_sob,"Worker#ep13bs";
+				emotion e_sob,1;
+				next;
+				mes "[Worker]";
+				mes "Well that's that!";
+				mes "Anyway my name is ^0000FFGill^000000.";
+				next;
+				mes "[Gill]";
+				mes "I need something to fix the tent with, if you can get^0000FF 30 Horn of Hillslion^000000, I can make them into sturdy enough screws.";
+				next;
+				mes "[Gill]";
+				mes "Sorry, again for making you do this but I will be waiting here for you.";
+				set ep13_2_bs1,2;
+				setquest 11105;
+				close;
+			}
+			else if (ep13_2_bs1 == 2) {
+				if (countitem(6032) > 29) {
+					mes "[Gill]";
+					mes "You helped me collect all of the Horns of Hillslion?";
+					mes "Thank you so much.";
+					next;
+					mes "[Gill]";
+					mes "It's all because of you, we are able to prevent anything disastrous.";
+					mes "^0000FFEven though you're also an alien race, but compared to the vile fairies^000000, I'm glad to have met someone like "+strcharinfo(0)+".";
+					delitem 6032,30; //Horn_Of_Hilsrion
+					set ep13_2_bs1,3;
+					set ep13_2_busut,4;
+					completequest 11105;
+					close;
+				}
+				else {
+					mes "[Gill]";
+					mes "Sorry, again for making you do this but I will be waiting here for you to bring back the^0000FF 30 Horn of Hillslions.^000000.";
+					close;
+				}
+			}
+			else if (ep13_2_bs1 == 3) {
+				mes "[Gill]";
+				mes "Thank you for helping me.";
+				mes "^0000FFEven though you're also an alien race, but compared to the vile fairies^000000, I'm glad to have met someone like "+strcharinfo(0)+".";
+				close;
+			}
+			else {
+				mes "[Worker]";
+				mes "This is too dangerous, it's become too loose...";
+				mes "It must be replaced soon...";
+				close;
+			}
+		}
+		else if (ep13_2_busut == 4) {
+			if (ep13_2_bs1 == 1) {
+				mes "[Worker]";
+				mes "This is too dangerous, it's become too loose...";
+				mes "It must be replaced soon...";
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "Is something wrong?";
+				next;
+				mes "[Worker]";
+				mes "Ah... see here...";
+				mes "......";
+				mes ".........";
+				mes "Nevermind. Nothing.";
+				emotion e_omg,"Worker#ep13bs";
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "You don't have to be like this.";
+				next;
+				mes "[Worker]";
+				mes "You are one of the strange race, aren't you?";
+				mes "......";
+				mes "To suddenly hear you speak our language gave me a bit of a shock.";
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "Since I'm travelling here, so I thought I'd need it...";
+				emotion e_heh,1," ET_SMILE";
+				next;
+				mes "[Worker]";
+				mes "Haha, is that so?";
+				mes "I've heard of the rumour that your race exists, but I've never seen one before.";
+				next;
+				mes "[Worker]";
+				mes "And to think you can speak our language. Interesting.";
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "Ah...but just a moment ago, you were having a hard time with something. Is something wrong?";
+				next;
+				mes "[Worker]";
+				mes "It's nothing.";
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "Ah~ It must be fate that we met~";
+				mes "You can just tell me.";
+				next;
+				mes "[Worker]";
+				mes "......";
+				mes "Well...";
+				next;
+				mes "[Worker]";
+				mes "The screw that is used to keep our tent in place is rusting away... we must get a new one.";
+				next;
+				mes "[Worker]";
+				mes "But I can't leave this place, so I was waiting for someone to pass by.";
+				mes "And you just happened to talk to me. I thought you were someone from our tribe.";
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "I can help you.";
+				next;
+				mes "[Worker]";
+				mes "No, it's alright. We just met, so I don't want to trouble you.";
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "Don't worry about it! Life is all about helping eachother, don't you think so?";
+				next;
+				mes " - While the disagreement is taking place, - ";
+				mes " - The screw that has held its ground til now - ";
+				mes " - Finally gives in and breaks in half. - ";
+				next;
+				mes "[Worker]";
+				mes "Ah!!!";
+				emotion e_sob,"Worker#ep13bs";
+				emotion e_sob,1;
+				next;
+				mes "[Worker]";
+				mes "I can't just care about pride now.";
+				mes "Let me introduce myself, I am ^0000FFGill^000000.";
+				next;
+				mes "[Gill]";
+				mes "I need a screw to stablize our tent, and it can be found from the ^0000FFHillslion^000000 monster.";
+				mes "Please help me collect ^0000FF30 Horns of Hillslion^000000, and that should be enough for now.";
+				next;
+				mes "[Gill]";
+				mes "I'm really sorry, so please hurry.";
+				set ep13_2_bs1,2;
+				setquest 11105;
+				close;
+			}
+			else if (ep13_2_bs1 == 2) {
+				if (countitem(6032) > 29) {
+					mes "[Gill]";
+					mes "You helped me collect all of the Horns of Hillslion?";
+					mes "Thank you so much.";
+					next;
+					mes "[Gill]";
+					mes "It's all because of you, we are able to prevent anything disastrous.";
+					mes "^0000FFEven though you're also an alien race, but compared to the vile fairies^000000, I'm glad to have met someone like "+strcharinfo(0)+".";
+					delitem 6032,30; //Horn_Of_Hilsrion
+					set ep13_2_bs1,3;
+					completequest 11105;
+					close;
+				}
+				else {
+					mes "[Gill]";
+					mes "Making you do something like this, I feel ashamed.";
+					close;
+				}
+			}
+			else if (ep13_2_bs1 == 3) {
+				mes "[Gill]";
+				mes "Thank you for helping me.";
+				mes "^0000FFEven though you're also an alien race, but compared to the vile Fairies^000000, I'm glad to have met someone like "+strcharinfo(0)+".";
+				close;
+			}
+			else {
+				mes "[Worker]";
+				mes "This is too dangerous, it's become too loose...";
+				mes "It must be replaced soon...";
+				close;
+			}
+		}
+		else {
+			mes "[Gill]";
+			mes "You're here again?";
+			mes "Talking with someone occasionally is quite relaxing.";
+			close;
+		}
+	}
+	else {
+		mes "[Worker]";
+		mes "Ehahdie O Ehai";
+		mes "Ohek Hekdh I dkek";
+		mes "Ohehp Qe Tehdhah";
+		next;
+		mes "[Worker]";
+		mes "Ehaodke Thdieqak Khehdi";
+		mes "PHhdkel";
+		mes "Thhdqdcczk U dheagelokd dok";
+		next;
+		mes "- You can't understand what he's saying. - ";
+		close;
+	}
 }
 
 // Yggdrasil Dungeon Floor 2 puzzle.

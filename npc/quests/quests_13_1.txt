@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.7
+//= 1.8
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -34,6 +34,8 @@
 //= 1.5 Removed a 'close;' which should have been 'close2'. (bugreport:4276)
 //= 1.6 Fixed check in cat hand agent.
 //= 1.7 Moved the close in Cat Hand Service Warps. (bugreport:4079) [L0ne_W0lf]
+//= 1.8 Added 13.2 Additions to Report from the New World NPCs
+//=     Upped success rates for Report from the New World drops.
 //============================================================ 
 
 // Onward to the New World
@@ -11474,12 +11476,308 @@ mid_campin,90,121,5	script	Hibba Agip	459,{
 		cutin "ep13_captin_edq",255;
 		close;
 	}
-	else if (ep13_1_edq > 13) {
+	else if (ep13_1_edq == 14) {
 		mes "[Hibba Agip]";
 		mes "Hey, how have you been? It's too early to say that we've figured out who's the mastermind.";
 		next;
 		mes "[Hibba Agip]";
 		mes "Please be patient, I'll contact you when the time is right.";
+		next;
+		mes "[Hibba Agip]";
+		mes "Wait, have you explored this area yet? I mean the wide tundra and fields around the camp.";
+		next;
+		mes "[Hibba Agip]";
+		mes "There are many fun things outside. If you are an adventurer, go explore for yourself. Come back after you've explored the areas around the camp.";
+		cutin "ep13_captin_edq",255;
+		close;
+	}
+	else if ((ep13_1_edq == 15) && (ins_nyd == 1)) {
+		mes "[Hibba Agip]";
+		mes "Ah, it's you again. So, are you accustomed to this area now?";
+		next;
+		mes "[Hibba Agip]";
+		mes "What brings you here again? You seem to have something to say to me.";
+		next;
+		switch(select("I just want to say hello.:I found a weird portal below the mine cave.")) {
+		case 1:
+			mes "[Hibba Agip]";
+			mes "Well hello then...";
+			next;
+			mes "[Hibba Agip]";
+			mes "Please be patient. I'll contact you when the time is right.";
+			cutin "ep13_captin_edq",255;
+			break;
+		case 2:
+			mes "[Hibba Agip]";
+			mes "What portal? I've never heard about it.";
+			next;
+			mes "[Hibba Agip]";
+			mes "That place must be where both races fight against each other. It might be dangerous there.";
+			next;
+			mes "[Hibba Agip]";
+			mes "I have no idea of what it is like. It is not in my field of expertise.";
+			next;
+			mes "[Hibba Agip]";
+			mes "There is someone here who can help you. He is a historian from Rune-Midgarts. He may be aware of some relics or something that could help.";
+			next;
+			mes "[Hibba Agip]";
+			mes "Find the historian and see if he has any useful information for you.";
+			set ins_nyd,2;
+			cutin "ep13_captin_edq",255;
+			break;
+		}
+		close;
+	}
+	else if ((ins_nyd > 1) && (ins_nyd < 7)) {
+		mes "[Hibba Agip]";
+		mes "He's at his post, you can't find him?";
+		next;
+		mes "[Hibba Agip]";
+		mes "His name is Magniffer... look for him.. he's somewhere around here...";
+		cutin "ep13_captin_edq",255;
+		close;
+	}
+	else if (ins_nyd == 7) {
+		// 13.2 Addon
+		mes "[Hibba Agip]";
+		mes "Did you talk with the scholar? Thesedays, I haven't seen him for a while.";
+		next;
+		mes "[Staff Officer Abidal]";
+		mes "That's because you don't like talking to him.";
+		next;
+		mes "[Hibba Agip]";
+		mes "Hey, don't judge me like that...the problem is only that I can't see him often.";
+		next;
+		mes "[Hibba Agip]";
+		mes "Whatever. Did something happen because he showed up to me? Tell me more.";
+		next;
+		switch(select("Tell the story.")) {
+		case 1:
+			mes "[Hibba Agip]";
+			mes "Hmmm... umm... so...";
+			next;
+			mes "[Hibba Agip]";
+			mes "So, that's why that happened like that... It's so complicated...";
+			next;
+			mes "[Hibba Agip]";
+			mes "And you guys...you just take a task that you start up at first.";
+			next;
+			mes "[Staff Officer Abidal]";
+			mes "You sent him to Doctor Magnifer first....";
+			next;
+			mes "[Hibba Agip]";
+			mes "I just thought that he needed someone to talk to.";
+			next;
+			mes "[Staff Officer Abidal]";
+			mes "Ah yeah... you're right.";
+			next;
+			mes "[Hibba Agip]";
+			mes "Hmm... for example, you want to investigate a cave that you found, but you got on the Laphine and Sapha's nerves. right?";
+			next;
+			mes "[Hibba Agip]";
+			mes "And that two guys pay attention and stay quiet, but they are doing it for themselves..";
+			next;
+			mes "[Hibba Agip]";
+			mes "The most important thing is that this place is the ground that the Yggdrasilberry takes root acording to Magnifer.";
+			next;
+			mes "[Hibba Agip]";
+			mes "Abidal, do you have anything to say about this?";
+			next;
+			mes "[Staff Officer Abidal]";
+			mes "Our object is to make contact with one tribe and investgate this world and how adaptable it can be.";
+			next;
+			mes "[Staff Officer Abidal]";
+			mes "Actually, we don't have to make this situation bigger than it already is.";
+			next;
+			mes "[Hibba Agip]";
+			mes "Yeah right. I don't want to extend this thing anymore...";
+			next;
+			mes "[Staff Officer Abidal]";
+			mes "But the two tribes have remained neutral towards us up until now.";
+			next;
+			mes "[Staff Officer Abidal]";
+			mes "We don't really know what attitude they have towards us.";
+			next;
+			mes "[Hibba Agip]";
+			mes "Yeah.. that makes sense... If they made a general attack, we would probably fail.";
+			next;
+			mes "[Staff Officer Abidal]";
+			mes "We should map out a strategy. There is a method that uses Laphine and Sapha's together.";
+			next;
+			mes "[Staff Officer Abidal]";
+			mes "We send this guy to one of the tribes and ask for cooperation in our investgation.";
+			next;
+			mes "[Hibba Agip]";
+			mes "Will they help us? They have already said threatening words...";
+			next;
+			mes "[Staff Officer Abidal]";
+			mes "Of course they will help us. if they reject our demand, we just say that we'll ask for help from the other tribe.";
+			next;
+			mes "[Hibba Agip]";
+			mes "Right, if we do that, they will have no other choice.";
+			next;
+			mes "[Staff Officer Abidal]";
+			mes "In this situation, they want to avoid showing that place to the other tribe.";
+			next;
+			mes "[Staff Officer Abidal]";
+			mes "So, they have to cooperate with us.";
+			next;
+			mes "[Hibba Agip]";
+			mes "Oh, you have a malicious idea.";
+			next;
+			mes "[Staff Officer Abidal]";
+			mes "That's called that Kuhotanrangjigea from east. I didn't make that by myself.";
+			next;
+			mes "[Hibba Agip]";
+			mes "Whatever.. Hey, you there... your name is " + name + " right? Do you know what to do?";
+			next;
+			mes "[Hibba Agip]";
+			mes "Go to one of the tribes and ask for help officially. I'll send someone to the other tribe.";
+			next;
+			mes "[Hibba Agip]";
+			mes "I'm going to give you a choice. Which tribe do you want to go to?";
+			next;
+			switch(select("Laphine:Sapha")) {
+			case 1:
+				mes "[Hibba Agip]";
+				mes "Okay, then I place responsibility on you. from now on you focus on acquiring a good reputation with the Laphine.";
+				next;
+				mes "[Hibba Agip]";
+				mes "It won't be easy to get a good impression from the Sapha again.";
+				next;
+				mes "[Hibba Agip]";
+				mes "So you must earn us a good reputation from the Laphine.";
+				next;
+				mes "[Hibba Agip]";
+				mes "Will you choose the Laphine?";
+				next;
+				switch(select("Choose Laphine.:Think again.")) {
+				case 1:
+					mes "[Hibba Agip]";
+					mes "Good. You are now responsible with building our relationship with the Laphine tribe.";
+					next;
+					mes "[Hibba Agip]";
+					mes "Go to the chief of the Laphine and if he doesn't accept our request, just say that you are going to ask for help from the Sapha.";
+					next;
+					mes "[Hibba Agip]";
+					mes "You have your orders! Now I'm going to look for an adventurer who is willing to be sent to the Sapha.";
+					set ins_nyd,81;
+					cutin "ep13_captin_edq",255;
+					break;
+				case 2:
+					mes "[Hibba Agip]";
+					mes "Yeah? Then think again and decide.";
+					cutin "ep13_captin_edq",255;
+					break;
+				}
+				break;
+			case 2:
+				mes "[Hibba Agip]";
+				mes "Okay, then I place responsibility on you. from now on you focus on acquiring a good reputation with the Sapha.";
+				next;
+				mes "[Hibba Agip]";
+				mes "It won't be easy to get a good impression from the Laphine again.";
+				next;
+				mes "[Hibba Agip]";
+				mes "So you must earn us a good reputation from the Sapha.";
+				next;
+				mes "[Hibba Agip]";
+				mes "Will you choose the Sapha?";
+				next;
+				switch(select("Choose Sapha.:Think again.")) {
+				case 1:
+					mes "[Hibba Agip]";
+					mes "Good. You are now responsible with building our relationship with the Sapha tribe.";
+					next;
+					mes "[Hibba Agip]";
+					mes "Go to the chief of the Sapha and if he doesn't accept our request, just say that you are going to ask for help from the Laphine.";
+					next;
+					mes "[Hibba Agip]";
+					mes "You have your orders! Now I'm going to look for an adventurer who is willing to be sent to the Laphine.";
+					set ins_nyd,82;
+					cutin "ep13_captin_edq",255;
+					break;
+				case 2:
+					mes "[Hibba Agip]";
+					mes "Yeah? then think again and decide.";
+					cutin "ep13_captin_edq",255;
+					break;
+				}
+				break;
+			}
+			break;
+		}
+		close;
+	}
+	else if (ins_nyd == 81) {
+		mes "[Hibba Agip]";
+		mes "Good. You are now responsible with building our relationship with the Laphine tribe.";
+		next;
+		mes "[Hibba Agip]";
+		mes "Go to the chief of the Laphine and if he doesn't accept our request, just say that you are going to ask for help from the Sapha.";
+		next;
+		mes "[Hibba Agip]";
+		mes "I'm going to look for an adventurer who is willing to be sent to the Sapha.";
+		cutin "ep13_captin_edq",255;
+		close;
+	}
+	else if (ins_nyd == 82) {
+		mes "[Hibba Agip]";
+		mes "Good. You are now responsible with building our relationship with the Sapha tribe.";
+		next;
+		mes "[Hibba Agip]";
+		mes "Go to the chief of the Sapha and if he doesn't accept our request, just say that you are going to ask for help from the Laphine.";
+		next;
+		mes "[Hibba Agip]";
+		mes "You have your orders! Now I'm going to look for an adventurer who is willing to be sent to the Laphine.";
+		cutin "ep13_captin_edq",255;
+		close;
+	}
+	else if ((ins_nyd == 91) || (ins_nyd == 101) || (ins_nyd == 111)) {
+		mes "[Hibba Agip]";
+		mes "How's the activity in Laphine? They have a stern character.";
+		next;
+		mes "[Hibba Agip]";
+		mes "I'm not cut out for matching with them...ew...";
+		next;
+		mes "[Hibba Agip]";
+		mes "I'm going to send a few able men to the Sapha, you don't have to worry about it.";
+		cutin "ep13_captin_edq",255;
+		close;
+	}
+	else if ((ins_nyd == 92) || (ins_nyd == 102) || (ins_nyd == 112)) {
+		mes "[Hibba Agip]";
+		mes "How's the activity Sapha? They have a stern character.";
+		next;
+		mes "[Hibba Agip]";
+		mes "I'm not cut out for matching with them...ew...";
+		next;
+		mes "[Hibba Agip]";
+		mes "I'm going to send a few able men to the Laphine, you don't have to worry about it.";
+		cutin "ep13_captin_edq",255;
+		close;
+	}
+	else if ((ins_nyd == 121) || (ins_nyd == 131) || (ins_nyd == 132)) {
+		mes "[Hibba Agip]";
+		mes "You've come back alive? Let us celebrate your immunity!";
+		next;
+		mes "[Hibba Agip]";
+		mes "Who would have thought that that outsiders would be treated so vulgar by the leaders of the other tribes?";
+		next;
+		mes "[Hibba Agip]";
+		mes "I have said before this thing is not the last, and certainly there is something waiting for us.";
+		next;
+		mes "[Hibba Agip]";
+		mes "It is time for us to head out, is it not, instructor?";
+		next;
+		mes "[Staff Officer Abidal]";
+		mes "Right... It's time...";
+		next;
+		mes "[Instructor Igrid]";
+		mes "I'm ready.";
+		next;
+		mes "[Hibba Agip]";
+		mes "I am looking forward to what will happen... Whew...";
 		cutin "ep13_captin_edq",255;
 		close;
 	}
@@ -11704,8 +12002,8 @@ mid_campin,94,118,3	script	Staff Officer Abidal	755,{
 						mes "[Staff Officer Abidal]";
 						mes "Umm... This page should go here and..";
 						next;
-						set .@ep13_edq_wrong,rand(1,12);
-						if ((countitem(11013) == 0) && (.@ep13_edq_wrong == 4)) {
+						set .@ep13_edq_wrong,rand(1,7);
+						if ((countitem(11013) == 0) && (.@ep13_edq_wrong == 1)) {
 							mes "[Staff Officer Abidal]";
 							mes "Thank you for your hard work. We were able to restore one volume of the report.";
 							next;
@@ -11718,7 +12016,7 @@ mid_campin,94,118,3	script	Staff Officer Abidal	755,{
 							mes "Keep up the good work on finding the rest of the volumes.";
 							close;
 						}
-						else if ((countitem(11013) == 1) && (.@ep13_edq_wrong == 4)) {
+						else if ((countitem(11013) == 1) && (.@ep13_edq_wrong == 1)) {
 							mes "[Staff Officer Abidal]";
 							mes "Thank you for your hard work. We were able to restore one volume of the report.";
 							next;
@@ -11727,7 +12025,7 @@ mid_campin,94,118,3	script	Staff Officer Abidal	755,{
 							delitem 6040,10; //Some_Of_Report
 							close;
 						}
-						else if ((countitem(11014) == 0) && (.@ep13_edq_wrong == 6)) {
+						else if ((countitem(11014) == 0) && ((.@ep13_edq_wrong == 3) || (.@ep13_edq_wrong == 2))) {
 							mes "[Staff Officer Abidal]";
 							mes "Thank you for your hard work. We were able to restore one volume of the report.";
 							next;
@@ -11740,7 +12038,7 @@ mid_campin,94,118,3	script	Staff Officer Abidal	755,{
 							mes "Keep up the good work on finding the rest of the volumes.";
 							close;
 						}
-						else if ((countitem(11014) == 1) && (.@ep13_edq_wrong == 6)) {
+						else if ((countitem(11014) == 1) && ((.@ep13_edq_wrong == 3) || (.@ep13_edq_wrong == 2))) {
 							mes "[Staff Officer Abidal]";
 							mes "Thank you for your hard work. We were able to restore one volume of the report.";
 							next;
@@ -11749,7 +12047,7 @@ mid_campin,94,118,3	script	Staff Officer Abidal	755,{
 							delitem 6040,10; //Some_Of_Report
 							close;
 						}
-						else if ((countitem(11015) == 0) && (.@ep13_edq_wrong == 8)) {
+						else if ((countitem(11015) == 0) && ((.@ep13_edq_wrong == 5) || (.@ep13_edq_wrong == 6))) {
 							mes "[Staff Officer Abidal]";
 							mes "Thank you for your hard work. We were able to restore one volume of the report.";
 							next;
@@ -11762,7 +12060,7 @@ mid_campin,94,118,3	script	Staff Officer Abidal	755,{
 							mes "Keep up the good work on finding the rest of the volumes.";
 							close;
 						}
-						else if ((countitem(11015) == 1) && (.@ep13_edq_wrong == 8)) {
+						else if ((countitem(11015) == 1) && ((.@ep13_edq_wrong == 5) || (.@ep13_edq_wrong == 6))) {
 							mes "[Staff Officer Abidal]";
 							mes "Thank you for your hard work. We were able to restore one volume of the report.";
 							next;
@@ -11771,7 +12069,7 @@ mid_campin,94,118,3	script	Staff Officer Abidal	755,{
 							delitem 6040,10; //Some_Of_Report
 							close;
 						}
-						else if ((countitem(11016) == 0) && (.@ep13_edq_wrong == 10)) {
+						else if ((countitem(11016) == 0) && (.@ep13_edq_wrong == 7)) {
 							mes "[Staff Officer Abidal]";
 							mes "Thank you for your hard work. We were able to restore one volume of the report.";
 							next;
@@ -11784,7 +12082,7 @@ mid_campin,94,118,3	script	Staff Officer Abidal	755,{
 							mes "Keep up the good work on finding the rest of the volumes.";
 							close;
 						}
-						else if ((countitem(11016) == 1) && (.@ep13_edq_wrong == 10)) {
+						else if ((countitem(11016) == 1) && (.@ep13_edq_wrong == 7)) {
 							mes "[Staff Officer Abidal]";
 							mes "Thank you for your hard work. We were able to restore one volume of the report.";
 							next;
@@ -11807,8 +12105,8 @@ mid_campin,94,118,3	script	Staff Officer Abidal	755,{
 						mes "[Staff Officer Abidal]";
 						mes "Umm... This page should go here and..";
 						next;
-						set .@ep13_edq_wrong,rand(1,10);
-						if ((countitem(11013) == 0) && (.@ep13_edq_wrong == 4)) {
+						set .@ep13_edq_wrong,rand(1,5);
+						if ((countitem(11013) == 0) && (.@ep13_edq_wrong == 1)) {
 							mes "[Staff Officer Abidal]";
 							mes "Thank you for your hard work. We were able to restore one volume of the report.";
 							next;
@@ -11821,7 +12119,7 @@ mid_campin,94,118,3	script	Staff Officer Abidal	755,{
 							mes "Keep up the good work on finding the rest of the volumes.";
 							close;
 						}
-						else if ((countitem(11013) == 1) && (.@ep13_edq_wrong == 4)) {
+						else if ((countitem(11013) == 1) && (.@ep13_edq_wrong == 1)) {
 							mes "[Staff Officer Abidal]";
 							mes "Thank you for your hard work. We were able to restore one volume of the report.";
 							next;
@@ -11830,7 +12128,7 @@ mid_campin,94,118,3	script	Staff Officer Abidal	755,{
 							delitem 6040,10; //Some_Of_Report
 							close;
 						}
-						else if ((countitem(11014) == 0) && (.@ep13_edq_wrong == 6)) {
+						else if ((countitem(11014) == 0) && (.@ep13_edq_wrong == 2)) {
 							mes "[Staff Officer Abidal]";
 							mes "Thank you for your hard work. We were able to restore one volume of the report.";
 							next;
@@ -11843,7 +12141,7 @@ mid_campin,94,118,3	script	Staff Officer Abidal	755,{
 							mes "Keep up the good work on finding the rest of the volumes.";
 							close;
 						}
-						else if ((countitem(11014) == 1) && (.@ep13_edq_wrong == 6)) {
+						else if ((countitem(11014) == 1) && (.@ep13_edq_wrong == 2)) {
 							mes "[Staff Officer Abidal]";
 							mes "Thank you for your hard work. We were able to restore one volume of the report.";
 							next;
@@ -11852,7 +12150,7 @@ mid_campin,94,118,3	script	Staff Officer Abidal	755,{
 							delitem 6040,10; //Some_Of_Report
 							close;
 						}
-						else if ((countitem(11015) == 0) && (.@ep13_edq_wrong == 8)) {
+						else if ((countitem(11015) == 0) && ((.@ep13_edq_wrong == 3) || (.@ep13_edq_wrong == 4))) {
 							mes "[Staff Officer Abidal]";
 							mes "Thank you for your hard work. We were able to restore one volume of the report.";
 							next;
@@ -11865,7 +12163,7 @@ mid_campin,94,118,3	script	Staff Officer Abidal	755,{
 							mes "Keep up the good work on finding the rest of the volumes.";
 							close;
 						}
-						else if ((countitem(11015) == 1) && (.@ep13_edq_wrong == 8)) {
+						else if ((countitem(11015) == 1) && ((.@ep13_edq_wrong == 3) || (.@ep13_edq_wrong == 4))) {
 							mes "[Staff Officer Abidal]";
 							mes "Thank you for your hard work. We were able to restore one volume of the report.";
 							next;
@@ -11874,7 +12172,7 @@ mid_campin,94,118,3	script	Staff Officer Abidal	755,{
 							delitem 6040,10; //Some_Of_Report
 							close;
 						}
-						else if ((countitem(11016) == 0) && (.@ep13_edq_wrong == 10)) {
+						else if ((countitem(11016) == 0) && (.@ep13_edq_wrong == 5)) {
 							mes "[Staff Officer Abidal]";
 							mes "Thank you for your hard work. We were able to restore one volume of the report.";
 							next;
@@ -11887,7 +12185,7 @@ mid_campin,94,118,3	script	Staff Officer Abidal	755,{
 							mes "Keep up the good work on finding the rest of the volumes.";
 							close;
 						}
-						else if ((countitem(11016) == 1) && (.@ep13_edq_wrong == 10)) {
+						else if ((countitem(11016) == 1) && (.@ep13_edq_wrong == 5)) {
 							mes "[Staff Officer Abidal]";
 							mes "Thank you for your hard work. We were able to restore one volume of the report.";
 							next;
@@ -12006,7 +12304,7 @@ mid_campin,94,118,3	script	Staff Officer Abidal	755,{
 			close;
 		}
 	}
-	else if ((ep13_1_edq > 8) && (ep13_1_edq < 13)) {
+	else if ((ep13_1_edq == 8) || ((ep13_1_edq > 8) && (ep13_1_edq < 13))) {
 		mes "[Staff Officer Abidal]";
 		mes "Phew, I'm glad we can resume the mission again.";
 		next;
@@ -12014,7 +12312,18 @@ mid_campin,94,118,3	script	Staff Officer Abidal	755,{
 		mes "...Aren't you leaving? I think you should.";
 		close;
 	}
+	else if (ins_nyd > 0) {
+		// 13.2 addon
+		mes "[Staff Officer Abidal]";
+		mes "I heard that you got a new duty from Commander Agip.";
+		next;
+		mes "[Staff Officer Abidal]";
+		mes "...Aren't you leaving? I think you should.";
+		close;
+	}
 	else {
+		mes "[Staff Officer Abidal]";
+		mes "Hello, I'm Staff Officer Abidal. Safe travels, Adventurer.";
 		close;
 	}
 }
@@ -12061,6 +12370,12 @@ mid_campin,85,118,7	script	Instructor Igrid	751,{
 		next;
 		mes "[Instructor Igrid]";
 		mes "What are you looking at? Go mind your own business!";
+		close;
+	}
+	else {
+		// 13.2 addon
+		mes "[Instructor Igrid]";
+		mes "I am Expedition Training Instructor Igrid, and the commander responsible for training soldiers. ";
 		close;
 	}
 }
@@ -12335,9 +12650,9 @@ man_fild01,315,95,3	script	Expedition Scout#1	707,{
 				mes "Oh, you must be" + strcharinfo(0) + ". I heard that you'll be delivering the report.";
 				next;
 				mes "[Expedition Scout]";
-				mes "Good news! I've found 3 pieces of paper that appear to be part of the report.";
+				mes "Good news! I've found 5 pieces of paper that appear to be part of the report.";
 				next;
-				getitem 6040,3; //Some_Of_Report
+				getitem 6040,5; //Some_Of_Report
 				changequest 3090,3091;
 				erasequest 3090;
 				setquest 3091;
@@ -12350,9 +12665,9 @@ man_fild01,315,95,3	script	Expedition Scout#1	707,{
 				mes "Oh, you must be" + strcharinfo(0) + ". I heard that you'll be delivering the report.";
 				next;
 				mes "[Expedition Scout]";
-				mes "Good news! I've found 1 piece of paper that appear to be part of the report.";
+				mes "Good news! I've found 2 pieces of paper that appear to be part of the report.";
 				next;
-				getitem 6040,1; //Some_Of_Report
+				getitem 6040,2; //Some_Of_Report
 				changequest 3090,3091;
 				erasequest 3090;
 				setquest 3091;
@@ -12365,9 +12680,9 @@ man_fild01,315,95,3	script	Expedition Scout#1	707,{
 				mes "Oh, you must be" + strcharinfo(0) + ". I heard that you'll be delivering the report.";
 				next;
 				mes "[Expedition Scout]";
-				mes "Good news! I've found 2 pieces of paper that appear to be part of the report.";
+				mes "Good news! I've found 3 pieces of paper that appear to be part of the report.";
 				next;
-				getitem 6040,2; //Some_Of_Report
+				getitem 6040,3; //Some_Of_Report
 				changequest 3090,3091;
 				erasequest 3090;
 				setquest 3091;
@@ -12405,9 +12720,9 @@ man_fild01,315,95,3	script	Expedition Scout#1	707,{
 				mes "Oh, you must be" + strcharinfo(0) + ". I heard that you'll be delivering the report.";
 				next;
 				mes "[Expedition Scout]";
-				mes "Good news! I've found 3 pieces of paper that appear to be part of the report.";
+				mes "Good news! I've found 5 pieces of paper that appear to be part of the report.";
 				next;
-				getitem 6040,3; //Some_Of_Report
+				getitem 6040,5; //Some_Of_Report
 				erasequest 3091;
 				setquest 3091;
 				mes "[Expedition Scout]";
@@ -12419,9 +12734,9 @@ man_fild01,315,95,3	script	Expedition Scout#1	707,{
 				mes "Oh, you must be" + strcharinfo(0) + ". I heard that you'll be delivering the report.";
 				next;
 				mes "[Expedition Scout]";
-				mes "Good news! I've found 1 piece of paper that appear to be part of the report.";
+				mes "Good news! I've found 2 pieces of paper that appear to be part of the report.";
 				next;
-				getitem 6040,1; //Some_Of_Report
+				getitem 6040,2; //Some_Of_Report
 				erasequest 3091;
 				setquest 3091;
 				mes "[Expedition Scout]";
@@ -12433,9 +12748,9 @@ man_fild01,315,95,3	script	Expedition Scout#1	707,{
 				mes "Oh, you must be" + strcharinfo(0) + ". I heard that you'll be delivering the report.";
 				next;
 				mes "[Expedition Scout]";
-				mes "Good news! I've found 2 pieces of paper that appear to be part of the report.";
+				mes "Good news! I've found 3 pieces of paper that appear to be part of the report.";
 				next;
-				getitem 6040,2; //Some_Of_Report
+				getitem 6040,3; //Some_Of_Report
 				erasequest 3091;
 				setquest 3091;
 				mes "[Expedition Scout]";
@@ -12510,9 +12825,9 @@ man_fild03,202,251,3	script	Expedition Scout#2	707,{
 				mes "Oh, you must be" + strcharinfo(0) + ". I heard that you'll be delivering the report.";
 				next;
 				mes "[Expedition Scout]";
-				mes "Good news! I've found 3 pieces of paper that appear to be part of the report.";
+				mes "Good news! I've found 5 pieces of paper that appear to be part of the report.";
 				next;
-				getitem 6040,3; //Some_Of_Report
+				getitem 6040,5; //Some_Of_Report
 				changequest 3090,3091;
 				erasequest 3090;
 				setquest 3091;
@@ -12525,9 +12840,9 @@ man_fild03,202,251,3	script	Expedition Scout#2	707,{
 				mes "Oh, you must be" + strcharinfo(0) + ". I heard that you'll be delivering the report.";
 				next;
 				mes "[Expedition Scout]";
-				mes "Good news! I've found 1 piece of paper that appear to be part of the report.";
+				mes "Good news! I've found 2 piece of paper that appear to be part of the report.";
 				next;
-				getitem 6040,1; //Some_Of_Report
+				getitem 6040,2; //Some_Of_Report
 				changequest 3090,3091;
 				erasequest 3090;
 				setquest 3091;
@@ -12540,9 +12855,9 @@ man_fild03,202,251,3	script	Expedition Scout#2	707,{
 				mes "Oh, you must be" + strcharinfo(0) + ". I heard that you'll be delivering the report.";
 				next;
 				mes "[Expedition Scout]";
-				mes "Good news! I've found 2 pieces of paper that appear to be part of the report.";
+				mes "Good news! I've found 3 pieces of paper that appear to be part of the report.";
 				next;
-				getitem 6040,2; //Some_Of_Report
+				getitem 6040,3; //Some_Of_Report
 				changequest 3090,3091;
 				erasequest 3090;
 				setquest 3091;
@@ -12580,9 +12895,9 @@ man_fild03,202,251,3	script	Expedition Scout#2	707,{
 				mes "Oh, you must be" + strcharinfo(0) + ". I heard that you'll be delivering the report.";
 				next;
 				mes "[Expedition Scout]";
-				mes "Good news! I've found 3 pieces of paper that appear to be part of the report.";
+				mes "Good news! I've found 5 pieces of paper that appear to be part of the report.";
 				next;
-				getitem 6040,3; //Some_Of_Report
+				getitem 6040,5; //Some_Of_Report
 				erasequest 3091;
 				setquest 3091;
 				mes "[Expedition Scout]";
@@ -12594,9 +12909,9 @@ man_fild03,202,251,3	script	Expedition Scout#2	707,{
 				mes "Oh, you must be" + strcharinfo(0) + ". I heard that you'll be delivering the report.";
 				next;
 				mes "[Expedition Scout]";
-				mes "Good news! I've found 1 piece of paper that appear to be part of the report.";
+				mes "Good news! I've found 2 pieces of paper that appear to be part of the report.";
 				next;
-				getitem 6040,1; //Some_Of_Report
+				getitem 6040,2; //Some_Of_Report
 				erasequest 3091;
 				setquest 3091;
 				mes "[Expedition Scout]";
@@ -12608,9 +12923,9 @@ man_fild03,202,251,3	script	Expedition Scout#2	707,{
 				mes "Oh, you must be" + strcharinfo(0) + ". I heard that you'll be delivering the report.";
 				next;
 				mes "[Expedition Scout]";
-				mes "Good news! I've found 2 pieces of paper that appear to be part of the report.";
+				mes "Good news! I've found 3 pieces of paper that appear to be part of the report.";
 				next;
-				getitem 6040,2; //Some_Of_Report
+				getitem 6040,3; //Some_Of_Report
 				erasequest 3091;
 				setquest 3091;
 				mes "[Expedition Scout]";
@@ -12675,9 +12990,9 @@ spl_fild02,295,368,3	script	Expedition Scout#3	707,{
 				mes "Oh, you must be" + strcharinfo(0) + ". I heard that you'll be delivering the report.";
 				next;
 				mes "[Expedition Scout]";
-				mes "Good news! I've found 3 pieces of paper that appear to be part of the report.";
+				mes "Good news! I've found 5 pieces of paper that appear to be part of the report.";
 				next;
-				getitem 6040,3; //Some_Of_Report
+				getitem 6040,5; //Some_Of_Report
 				changequest 3090,3091;
 				erasequest 3090;
 				setquest 3091;
@@ -12690,9 +13005,9 @@ spl_fild02,295,368,3	script	Expedition Scout#3	707,{
 				mes "Oh, you must be" + strcharinfo(0) + ". I heard that you'll be delivering the report.";
 				next;
 				mes "[Expedition Scout]";
-				mes "Good news! I've found 1 piece of paper that appear to be part of the report.";
+				mes "Good news! I've found 2 pieces of paper that appear to be part of the report.";
 				next;
-				getitem 6040,1; //Some_Of_Report
+				getitem 6040,2; //Some_Of_Report
 				changequest 3090,3091;
 				erasequest 3090;
 				setquest 3091;
@@ -12705,9 +13020,9 @@ spl_fild02,295,368,3	script	Expedition Scout#3	707,{
 				mes "Oh, you must be" + strcharinfo(0) + ". I heard that you'll be delivering the report.";
 				next;
 				mes "[Expedition Scout]";
-				mes "Good news! I've found 2 pieces of paper that appear to be part of the report.";
+				mes "Good news! I've found 3 pieces of paper that appear to be part of the report.";
 				next;
-				getitem 6040,2; //Some_Of_Report
+				getitem 6040,3; //Some_Of_Report
 				changequest 3090,3091;
 				erasequest 3090;
 				setquest 3091;
@@ -12745,9 +13060,9 @@ spl_fild02,295,368,3	script	Expedition Scout#3	707,{
 				mes "Oh, you must be" + strcharinfo(0) + ". I heard that you'll be delivering the report.";
 				next;
 				mes "[Expedition Scout]";
-				mes "Good news! I've found 3 pieces of paper that appear to be part of the report.";
+				mes "Good news! I've found 5 pieces of paper that appear to be part of the report.";
 				next;
-				getitem 6040,3; //Some_Of_Report
+				getitem 6040,5; //Some_Of_Report
 				erasequest 3091;
 				setquest 3091;
 				mes "[Expedition Scout]";
@@ -12759,9 +13074,9 @@ spl_fild02,295,368,3	script	Expedition Scout#3	707,{
 				mes "Oh, you must be" + strcharinfo(0) + ". I heard that you'll be delivering the report.";
 				next;
 				mes "[Expedition Scout]";
-				mes "Good news! I've found 1 piece of paper that appear to be part of the report.";
+				mes "Good news! I've found 2 piece of paper that appear to be part of the report.";
 				next;
-				getitem 6040,1; //Some_Of_Report
+				getitem 6040,2; //Some_Of_Report
 				erasequest 3091;
 				setquest 3091;
 				mes "[Expedition Scout]";
@@ -12773,9 +13088,9 @@ spl_fild02,295,368,3	script	Expedition Scout#3	707,{
 				mes "Oh, you must be" + strcharinfo(0) + ". I heard that you'll be delivering the report.";
 				next;
 				mes "[Expedition Scout]";
-				mes "Good news! I've found 2 pieces of paper that appear to be part of the report.";
+				mes "Good news! I've found 3 pieces of paper that appear to be part of the report.";
 				next;
-				getitem 6040,2; //Some_Of_Report
+				getitem 6040,3; //Some_Of_Report
 				erasequest 3091;
 				setquest 3091;
 				mes "[Expedition Scout]";
@@ -12850,9 +13165,9 @@ spl_fild03,172,71,3	script	Expedition Scout#4	707,{
 				mes "Oh, you must be" + strcharinfo(0) + ". I heard that you'll be delivering the report.";
 				next;
 				mes "[Expedition Scout]";
-				mes "Good news! I've found 3 pieces of paper that appear to be part of the report.";
+				mes "Good news! I've found 5 pieces of paper that appear to be part of the report.";
 				next;
-				getitem 6040,3; //Some_Of_Report
+				getitem 6040,5; //Some_Of_Report
 				changequest 3090,3091;
 				erasequest 3090;
 				setquest 3091;
@@ -12865,9 +13180,9 @@ spl_fild03,172,71,3	script	Expedition Scout#4	707,{
 				mes "Oh, you must be" + strcharinfo(0) + ". I heard that you'll be delivering the report.";
 				next;
 				mes "[Expedition Scout]";
-				mes "Good news! I've found 1 piece of paper that appear to be part of the report.";
+				mes "Good news! I've found 2 pieces of paper that appear to be part of the report.";
 				next;
-				getitem 6040,1; //Some_Of_Report
+				getitem 6040,2; //Some_Of_Report
 				changequest 3090,3091;
 				erasequest 3090;
 				setquest 3091;
@@ -12880,9 +13195,9 @@ spl_fild03,172,71,3	script	Expedition Scout#4	707,{
 				mes "Oh, you must be" + strcharinfo(0) + ". I heard that you'll be delivering the report.";
 				next;
 				mes "[Expedition Scout]";
-				mes "Good news! I've found 2 pieces of paper that appear to be part of the report.";
+				mes "Good news! I've found 3 pieces of paper that appear to be part of the report.";
 				next;
-				getitem 6040,2; //Some_Of_Report
+				getitem 6040,3; //Some_Of_Report
 				changequest 3090,3091;
 				erasequest 3090;
 				setquest 3091;
@@ -12920,9 +13235,9 @@ spl_fild03,172,71,3	script	Expedition Scout#4	707,{
 				mes "Oh, you must be" + strcharinfo(0) + ". I heard that you'll be delivering the report.";
 				next;
 				mes "[Expedition Scout]";
-				mes "Good news! I've found 3 pieces of paper that appear to be part of the report.";
+				mes "Good news! I've found 5 pieces of paper that appear to be part of the report.";
 				next;
-				getitem 6040,3; //Some_Of_Report
+				getitem 6040,5; //Some_Of_Report
 				erasequest 3091;
 				setquest 3091;
 				mes "[Expedition Scout]";
@@ -12934,9 +13249,9 @@ spl_fild03,172,71,3	script	Expedition Scout#4	707,{
 				mes "Oh, you must be" + strcharinfo(0) + ". I heard that you'll be delivering the report.";
 				next;
 				mes "[Expedition Scout]";
-				mes "Good news! I've found 1 piece of paper that appear to be part of the report.";
+				mes "Good news! I've found 2 pieces of paper that appear to be part of the report.";
 				next;
-				getitem 6040,1; //Some_Of_Report
+				getitem 6040,2; //Some_Of_Report
 				erasequest 3091;
 				setquest 3091;
 				mes "[Expedition Scout]";
@@ -12948,9 +13263,9 @@ spl_fild03,172,71,3	script	Expedition Scout#4	707,{
 				mes "Oh, you must be" + strcharinfo(0) + ". I heard that you'll be delivering the report.";
 				next;
 				mes "[Expedition Scout]";
-				mes "Good news! I've found 2 pieces of paper that appear to be part of the report.";
+				mes "Good news! I've found 3 pieces of paper that appear to be part of the report.";
 				next;
-				getitem 6040,2; //Some_Of_Report
+				getitem 6040,3; //Some_Of_Report
 				erasequest 3091;
 				setquest 3091;
 				mes "[Expedition Scout]";
@@ -13502,6 +13817,10 @@ OnEnable:
 	monster "spl_fild02",0,0,"Luciola Vespa",1994,1,"ep13_spl_fild02_mon_edq::OnMyMobDead";
 	monster "spl_fild02",0,0,"Luciola Vespa",1994,1,"ep13_spl_fild02_mon_edq::OnMyMobDead";
 	monster "spl_fild02",0,0,"Luciola Vespa",1994,1,"ep13_spl_fild02_mon_edq::OnMyMobDead";
+	monster "spl_fild02",0,0,"Luciola Vespa",1994,1,"ep13_spl_fild02_mon_edq::OnMyMobDead";
+	monster "spl_fild02",0,0,"Luciola Vespa",1994,1,"ep13_spl_fild02_mon_edq::OnMyMobDead";
+	monster "spl_fild02",0,0,"Pinguicula",1995,1,"ep13_spl_fild02_mon_edq::OnMyMobDead";
+	monster "spl_fild02",0,0,"Pinguicula",1995,1,"ep13_spl_fild02_mon_edq::OnMyMobDead";
 	monster "spl_fild02",0,0,"Pinguicula",1995,1,"ep13_spl_fild02_mon_edq::OnMyMobDead";
 	monster "spl_fild02",0,0,"Pinguicula",1995,1,"ep13_spl_fild02_mon_edq::OnMyMobDead";
 	monster "spl_fild02",0,0,"Pinguicula",1995,1,"ep13_spl_fild02_mon_edq::OnMyMobDead";
@@ -13524,7 +13843,19 @@ OnTimer600000:
 
 OnMyMobDead:
 	set .@spl_fild02_mob_dead,mobcount("spl_fild02","ep13_spl_fild02_mon_edq::OnMyMobDead");
-	if (.@spl_fild02_mob_dead < 10) && ((ep13_1_edq == 71) || (ep13_1_edq == 72)) {
+	if (.@spl_fild02_mob_dead < 14) && ((ep13_1_edq == 71) || (ep13_1_edq == 72)) {
+		getitem 6040,1; //Some_Of_Report
+	}
+	else if (.@spl_fild02_mob_dead < 13) && ((ep13_1_edq == 71) || (ep13_1_edq == 72)) {
+		getitem 6040,1; //Some_Of_Report
+	}
+	else if (.@spl_fild02_mob_dead < 12) && ((ep13_1_edq == 71) || (ep13_1_edq == 72)) {
+		getitem 6040,1; //Some_Of_Report
+	}
+	else if (.@spl_fild02_mob_dead < 11) && ((ep13_1_edq == 71) || (ep13_1_edq == 72)) {
+		getitem 6040,1; //Some_Of_Report
+	}
+	else if (.@spl_fild02_mob_dead < 10) && ((ep13_1_edq == 71) || (ep13_1_edq == 72)) {
 		getitem 6040,1; //Some_Of_Report
 	}
 	else if (.@spl_fild02_mob_dead < 9) && ((ep13_1_edq == 71) || (ep13_1_edq == 72)) {
@@ -13570,9 +13901,13 @@ OnEnable:
 	monster "spl_fild03",0,0,"Luciola Vespa",1994,1,"ep13_spl_fild03_mon_edq::OnMyMobDead";
 	monster "spl_fild03",0,0,"Luciola Vespa",1994,1,"ep13_spl_fild03_mon_edq::OnMyMobDead";
 	monster "spl_fild03",0,0,"Luciola Vespa",1994,1,"ep13_spl_fild03_mon_edq::OnMyMobDead";
+	monster "spl_fild03",0,0,"Luciola Vespa",1994,1,"ep13_spl_fild03_mon_edq::OnMyMobDead";
 	monster "spl_fild03",0,0,"Cornus",1992,1,"ep13_spl_fild03_mon_edq::OnMyMobDead";
 	monster "spl_fild03",0,0,"Cornus",1992,1,"ep13_spl_fild03_mon_edq::OnMyMobDead";
 	monster "spl_fild03",0,0,"Cornus",1992,1,"ep13_spl_fild03_mon_edq::OnMyMobDead";
+	monster "spl_fild03",0,0,"Cornus",1992,1,"ep13_spl_fild03_mon_edq::OnMyMobDead";
+	monster "spl_fild03",0,0,"Cornus",1992,1,"ep13_spl_fild03_mon_edq::OnMyMobDead";
+	monster "spl_fild03",0,0,"Naga",1993,1,"ep13_spl_fild03_mon_edq::OnMyMobDead";
 	monster "spl_fild03",0,0,"Naga",1993,1,"ep13_spl_fild03_mon_edq::OnMyMobDead";
 	monster "spl_fild03",0,0,"Naga",1993,1,"ep13_spl_fild03_mon_edq::OnMyMobDead";
 	monster "spl_fild03",0,0,"Naga",1993,1,"ep13_spl_fild03_mon_edq::OnMyMobDead";
@@ -13594,7 +13929,19 @@ OnTimer600000:
 
 OnMyMobDead:
 	set .@spl_fild03_mob_dead,mobcount("spl_fild03","ep13_spl_fild03_mon_edq::OnMyMobDead");
-	if (.@spl_fild03_mob_dead < 10) && ((ep13_1_edq == 71) || (ep13_1_edq == 72)) {
+	if (.@spl_fild03_mob_dead < 14) && ((ep13_1_edq == 71) || (ep13_1_edq == 72)) {
+		getitem 6040,1; //Some_Of_Report
+	}
+	else if (.@spl_fild03_mob_dead < 13) && ((ep13_1_edq == 71) || (ep13_1_edq == 72)) {
+		getitem 6040,1; //Some_Of_Report
+	}
+	else if (.@spl_fild03_mob_dead < 12) && ((ep13_1_edq == 71) || (ep13_1_edq == 72)) {
+		getitem 6040,1; //Some_Of_Report
+	}
+	else if (.@spl_fild03_mob_dead < 11) && ((ep13_1_edq == 71) || (ep13_1_edq == 72)) {
+		getitem 6040,1; //Some_Of_Report
+	}
+	else if (.@spl_fild03_mob_dead < 10) && ((ep13_1_edq == 71) || (ep13_1_edq == 72)) {
 		getitem 6040,1; //Some_Of_Report
 	}
 	else if (.@spl_fild03_mob_dead < 9) && ((ep13_1_edq == 71) || (ep13_1_edq == 72)) {
@@ -13642,6 +13989,10 @@ OnEnable:
 	monster "man_fild01",0,0,"Nepenthes",1988,1,"ep13_man_fild01_mon_edq::OnMyMobDead";
 	monster "man_fild01",0,0,"Nepenthes",1988,1,"ep13_man_fild01_mon_edq::OnMyMobDead";
 	monster "man_fild01",0,0,"Nepenthes",1988,1,"ep13_man_fild01_mon_edq::OnMyMobDead";
+	monster "man_fild01",0,0,"Nepenthes",1988,1,"ep13_man_fild01_mon_edq::OnMyMobDead";
+	monster "man_fild01",0,0,"Nepenthes",1988,1,"ep13_man_fild01_mon_edq::OnMyMobDead";
+	monster "man_fild01",0,0,"Hillslion",1989,1,"ep13_man_fild01_mon_edq::OnMyMobDead";
+	monster "man_fild01",0,0,"Hillslion",1989,1,"ep13_man_fild01_mon_edq::OnMyMobDead";
 	monster "man_fild01",0,0,"Hillslion",1989,1,"ep13_man_fild01_mon_edq::OnMyMobDead";
 	monster "man_fild01",0,0,"Hillslion",1989,1,"ep13_man_fild01_mon_edq::OnMyMobDead";
 	monster "man_fild01",0,0,"Hillslion",1989,1,"ep13_man_fild01_mon_edq::OnMyMobDead";
@@ -13664,7 +14015,19 @@ OnTimer600000:
 
 OnMyMobDead:
 	set .@man_fild01_mob_dead,mobcount("man_fild01","ep13_man_fild01_mon_edq::OnMyMobDead");
-	if (.@man_fild01_mob_dead < 10) && ((ep13_1_edq == 71) || (ep13_1_edq == 72)) {
+	if (.@man_fild01_mob_dead < 14) && ((ep13_1_edq == 71) || (ep13_1_edq == 72)) {
+		getitem 6040,1; //Some_Of_Report
+	}
+	else if (.@man_fild01_mob_dead < 13) && ((ep13_1_edq == 71) || (ep13_1_edq == 72)) {
+		getitem 6040,1; //Some_Of_Report
+	}
+	else if (.@man_fild01_mob_dead < 12) && ((ep13_1_edq == 71) || (ep13_1_edq == 72)) {
+		getitem 6040,1; //Some_Of_Report
+	}
+	else if (.@man_fild01_mob_dead < 11) && ((ep13_1_edq == 71) || (ep13_1_edq == 72)) {
+		getitem 6040,1; //Some_Of_Report
+	}
+	else if (.@man_fild01_mob_dead < 10) && ((ep13_1_edq == 71) || (ep13_1_edq == 72)) {
 		getitem 6040,1; //Some_Of_Report
 	}
 	else if (.@man_fild01_mob_dead < 9) && ((ep13_1_edq == 71) || (ep13_1_edq == 72)) {
@@ -13712,6 +14075,10 @@ OnEnable:
 	monster "man_fild03",0,0,"Centipede",1987,1,"ep13_man_fild03_mon_edq::OnMyMobDead";
 	monster "man_fild03",0,0,"Centipede",1987,1,"ep13_man_fild03_mon_edq::OnMyMobDead";
 	monster "man_fild03",0,0,"Centipede",1987,1,"ep13_man_fild03_mon_edq::OnMyMobDead";
+	monster "man_fild03",0,0,"Centipede",1987,1,"ep13_man_fild03_mon_edq::OnMyMobDead";
+	monster "man_fild03",0,0,"Centipede",1987,1,"ep13_man_fild03_mon_edq::OnMyMobDead";
+	monster "man_fild03",0,0,"Tatacho",1986,1,"ep13_man_fild03_mon_edq::OnMyMobDead";
+	monster "man_fild03",0,0,"Tatacho",1986,1,"ep13_man_fild03_mon_edq::OnMyMobDead";
 	monster "man_fild03",0,0,"Tatacho",1986,1,"ep13_man_fild03_mon_edq::OnMyMobDead";
 	monster "man_fild03",0,0,"Tatacho",1986,1,"ep13_man_fild03_mon_edq::OnMyMobDead";
 	monster "man_fild03",0,0,"Tatacho",1986,1,"ep13_man_fild03_mon_edq::OnMyMobDead";
@@ -13734,7 +14101,19 @@ OnTimer600000:
 
 OnMyMobDead:
 	set .@man_fild03_mob_dead,mobcount("man_fild03","ep13_man_fild03_mon_edq::OnMyMobDead");
-	if (.@man_fild03_mob_dead < 10) && ((ep13_1_edq == 71) || (ep13_1_edq == 72)) {
+	if (.@man_fild03_mob_dead < 14) && ((ep13_1_edq == 71) || (ep13_1_edq == 72)) {
+		getitem 6040,1; //Some_Of_Report
+	}
+	else if (.@man_fild03_mob_dead < 13) && ((ep13_1_edq == 71) || (ep13_1_edq == 72)) {
+		getitem 6040,1; //Some_Of_Report
+	}
+	else if (.@man_fild03_mob_dead < 12) && ((ep13_1_edq == 71) || (ep13_1_edq == 72)) {
+		getitem 6040,1; //Some_Of_Report
+	}
+	else if (.@man_fild03_mob_dead < 11) && ((ep13_1_edq == 71) || (ep13_1_edq == 72)) {
+		getitem 6040,1; //Some_Of_Report
+	}
+	else if (.@man_fild03_mob_dead < 10) && ((ep13_1_edq == 71) || (ep13_1_edq == 72)) {
 		getitem 6040,1; //Some_Of_Report
 	}
 	else if (.@man_fild03_mob_dead < 9) && ((ep13_1_edq == 71) || (ep13_1_edq == 72)) {
