@@ -1,5 +1,7 @@
 Date	Added
 
+2011/04/06
+	* STABLE IS NOW THE OLD TRUNK. THE NEW TRUNK IS NOW FOR BLEEDING-EDGE AND/OR UNTESTED CHANGES. [Paradox924X]
 2011/04/05
 	* Moved detection of monotonic clock support to the configure script, which also checks, whether or not it actually works (bugreport:1003, related r11912 and r11983). [Ai4rei]
 	* Paying and obtaining Zeny (pc_payzeny/pc_getzeny) no longer silently reverses the effect for negative amounts, that is, getting Zeny instead of paying up and vice versa (since r8273, related r8072). [Ai4rei]
