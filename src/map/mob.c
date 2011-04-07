@@ -4167,7 +4167,7 @@ static bool mob_parse_row_mobskilldb(char** str, int columns, int current)
 		ms->val[1] = 0; //Do not "set" it.
 	}
 
-	if(str[17] != NULL && strlen(str[17])>2)
+	if(*str[17])
 		ms->emotion=atoi(str[17]);
 	else
 		ms->emotion=-1;
