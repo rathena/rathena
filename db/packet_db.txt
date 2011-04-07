@@ -767,7 +767,7 @@ packet_ver: 18
 0x0248,68
 0x0249,3
 0x024a,70
-0x024b,4,auctioncancelreg,0
+0x024b,4,auctioncancelreg,2
 0x024c,8,auctionsetitem,0
 0x024d,14
 0x024e,6,auctioncancel,0
@@ -799,7 +799,7 @@ packet_ver: 19
 0x0251,4
 
 //2005-08-08aSakexe
-0x024d,12,auctionregister,0
+0x024d,12,auctionregister,2:6:10
 0x024e,4
 
 //2005-08-17aSakexe
@@ -830,7 +830,7 @@ packet_ver: 19
 
 //2005-10-17aSakexe
 0x007a,58
-0x025d,6,auctionclose,0
+0x025d,6,auctionclose,2
 0x025e,4
 
 //2005-10-24aSakexe

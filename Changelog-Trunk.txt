@@ -1,5 +1,14 @@
 Date	Added
 
+2011/04/07
+	* Throwing around with packet updates. [Ai4rei]
+	- Clarified the description for role-change chatroom packets 0xe0 (CZ_REQ_ROLE_CHANGE) and 0xe1 (ZC_ROLE_CHANGE).
+	- Fixed auction window opening packet 0x25f (ZC_AUCTION_WINDOWS) had also a close button packet attached (since r12270).
+	- Fixed auction search results packet 0x252 (ZC_AUCTION_ITEM_REQ_SEARCH) obtaining only a WFIFO buffer of 20 bytes, regardless of the amount of results (since r12301).
+	- Fixed auction search result item type was .W instead of .L, which also eliminates the unknown field after it (since r12301).
+	- Fixed an odd packet in clif_Auction_close, which is supposed to have layout of 0x25e, while using 0x25d as packet type (since r12323).
+	- Resolved unconfirmed fields in clif_party_show_picker (follow up to r13987).
+	- Updated packet layouts for auction in packet_db.
 2011/04/06
 	* Resolved some pc_setparam issues. [Ai4rei]
 	- Fixed HP/MaxHP/SP/MaxSP could be set to arbitrary values, thus disregarding configuration limits and causing client crashes on certain conditions (bugreport:4177).
