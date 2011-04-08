@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Muad_Dib, Samuray22, Kisuka
 //===== Current Version: =====================================
-//= 1.3
+//= 1.4
 //===== Compatible With: =====================================
 //= eAthena SVN
 //===== Description: =========================================
@@ -12,6 +12,7 @@
 //===== Additional Comments: =================================
 //= 1.2 Rescripted to the Aegis 10.3 Standards. [Samuray22]
 //= 1.3 Updated to match AEGIS script. [Kisuka]
+//= 1.4 Added Lighthalzen Hair Dresser. [L0ne_W0lf]
 //============================================================
 
 // Hair Dresser Veronica
@@ -678,6 +679,619 @@ alberta,33,141,7	script	Roving Hair Dresser	87,{
 		mes "your hairstyle!? I'm sure the";
 		mes "heavens are crying tears of";
 		mes "pity at mankind's ignorance...";
+		close;
+	}
+}
+
+
+// Lighthalzen
+lhz_in02,100,143,3	script	Hair Dresser#li	122,{
+	mes "[Prince Shammi]";
+	mes "Welcome to Prince Shammi's";
+	mes "Beauty Shop, the place to go";
+	mes "for faaabulous hair. Don't be";
+	mes "shy, tell me exactly how you";
+	mes "want me to make you glamorous~";
+	next;
+	switch(select("Check all hairstyles:Change hairstyle:Cancel")) {
+	case 1:
+		mes "[Prince Shammi]";
+		mes "Oh, would you like to";
+		mes "see all of the trendy new";
+		mes "hairstyles I offer?";
+		next;
+		mes "[Prince Shammi]";
+		mes "Please, oh please, choose from the following styles and I will show you a preview.";
+		next;
+		switch(select("Old Hairstyles:New Hairstyles")) {
+		case 1:
+			if (Sex == 1) {
+				switch(select("Petite Style:Executioner Style:Prince Style:Deviace Style:Cancel")) {
+				case 1:
+					cutin "hair_m_20",4;
+					mes "[Prince Shammi]";
+					mes "This is the ^3131FFPetite Style^000000,";
+					mes "which softens the gentleman's";
+					mes "appearance with long braids";
+					mes "for a fluffier appearance.";
+					break;
+				case 2:
+					cutin "hair_m_21",4;
+					mes "[Prince Shammi]";
+					mes "Oh, the ^3131FFExecutioner Style^000000!";
+					mes "It's a rugged, shaggy style";
+					mes "for that tough guy look that's";
+					mes "becoming popular these days.";
+					mes "And every girl loves a tough";
+					mes "guy, right? ^333333*Tee hee~*^000000";
+					break;
+				case 3:
+					cutin "hair_m_22",4;
+					mes "[Prince Shammi]";
+					mes "You certainly have an";
+					mes "eye for fashion! Yes, this";
+					mes "is the ^3131FFPrince Style^000000, the";
+					mes "pinnacle of sexiness and";
+					mes "sophistication. Magnifique, no?";
+					mes "Yes, choose this one, this one!";
+					break;
+				case 4:
+					cutin "hair_m_23",4;
+					mes "[Prince Shammi]";
+					mes "A-ha~! The ^3131FFDeviace Style^000000!";
+					mes "This is much like the Prince";
+					mes "Style, but with shorter hair";
+					mes "in the back. Yes, this look";
+					mes "is very neat and dandy.";
+					break;
+				case 5:
+					cutin "hair_f_01",255;
+					mes "[Prince Shammi]";
+					mes "No? You didn't want";
+					mes "to take a look? Please,";
+					mes "you're an adventurer, I know";
+					mes "you can be more daring than";
+					mes "that! Be fashionably adventurous, you fashionable adventurer~";
+					emotion e_lv,"Hair Dresser#i";
+					close;
+				}
+			}
+			else {
+				switch(select("Spring Rabbit Style:Harpy Style:Medusa Style:Isis Style:Cancel")) {
+				case 1:
+					cutin "hair_f_20",4;
+					mes "[Prince Shammi]";
+					mes "Oh yes, this is the ";
+					mes "^3131FFSpring Rabbit Style^000000.";
+					mes "The bobbing forelock";
+					mes "adds an aura of chic,";
+					mes "cutsiness and playfulness.";
+					mes "Yes? No? Yes? No? Oh yes!";
+					break;
+				case 2:
+					cutin "hair_f_21",4;
+					mes "[Prince Shammi]";
+					mes "Ooh, are you interested";
+					mes "in the ^3131FFHarpy Style^000000? The";
+					mes "natural curl coupled with";
+					mes "the pony tail results in";
+					mes "a sophisticated, yet very";
+					mes "natural and relaxed look~";
+					break;
+				case 3:
+					cutin "hair_f_22",4;
+					mes "[Prince Shammi]";
+					mes "Ahh, the ^3131FFMedusa Style^000000~";
+					mes "These boldy flowing locks";
+					mes "scream power and dominance";
+					mes "and is ideal for the big career";
+					mes "woman who wishes to be...";
+					mes "irresistable to men~";
+					break;
+				case 4:
+					cutin "hair_f_23",4;
+					mes "[Prince Shammi]";
+					mes "Ooh, the ^3131FFIsis Style^000000~";
+					mes "Yes, you'll look very cute";
+					mes "with your hair in buns on";
+					mes "on both sides of your head.";
+					mes "It'll be very darling on you!";
+					break;
+				case 5:
+					mes "[Prince Shammi]";
+					mes "No? You didn't want";
+					mes "to take a look? Please,";
+					mes "you're an adventurer, I know";
+					mes "you can be more daring than";
+					mes "that! Be fashionably adventurous, you fashionable adventurer~";
+					emotion e_lv,"Hair Dresser#li";
+					close;
+				}
+			}
+			break;
+		case 2:
+			if (Sex == 1) {
+				switch(select("Emergency Heal Perm:Aura Blade Cut:Power Swing:Renovatio Cut:Cancel")) {
+				case 1:
+					cutin "hair_m_24",4;
+					mes "[Prince Shammi]";
+					mes "This is the ^3131FFEmergency Heal Perm^000000";
+					mes "It is quite popular among the healing class.";
+					break;
+				case 2:
+					cutin "hair_m_25",4;
+					mes "[Prince Shammi]";
+					mes "You must be after a lady yes?";
+					mes "The ^3131FFAura Blade Cut^000000";
+					mes "is known to make the ladies swoon, you tiger you!";
+					break;
+				case 3:
+					cutin "hair_m_26",4;
+					mes "[Prince Shammi]";
+					mes "Oh you brute!";
+					mes "^3131FFPower Swing Cut^000000";
+					mes "Flex your style muscles with this hairstyle. This is definitely your look.";
+					break;
+				case 4:
+					cutin "hair_m_27",4;
+					mes "[Prince Shammi]";
+					mes "Ah! I see you're only interested in the latest trends.";
+					mes "Straight from the runway is the ^3131FFRenovatio Cut^000000.";
+					break;
+				case 5:
+					mes "[Prince Shammi]";
+					mes "No? You didn't want";
+					mes "to take a look? Please,";
+					mes "you're an adventurer, I know";
+					mes "you can be more daring than";
+					mes "that! Be fashionably adventurous, you fashionable adventurer~";
+					emotion e_lv,"Hair Dresser#li";
+					close;
+				}
+			}
+			else {
+				switch(select("Assumptio Perm:Soul Changer Cut:X Tornado Cut:Oratio Cut:Cancel")) {
+				case 1:
+					cutin "hair_f_24",4;
+					mes "[Prince Shammi]";
+					mes "This is the ^3131FFAssumptio Perm^000000";
+					mes "It's a shorter style perm that allows for maximum spellcasting.";
+					break;
+				case 2:
+					cutin "hair_f_25",4;
+					mes "[Prince Shammi]";
+					mes "You must be a man killer no?";
+					mes "The ^3131FFSoul Changer Cut^000000";
+					mes "will make any man open his wall... er heart to you!";
+					break;
+				case 3:
+					cutin "hair_f_26",4;
+					mes "[Prince Shammi]";
+					mes "This is a bit of a trendy style";
+					mes "^3131FFX Tornado Cut^000000";
+					mes "It's for adventurous people who like change.";
+					break;
+				case 4:
+					cutin "hair_f_27",4;
+					mes "[Prince Shammi]";
+					mes "Ah! I see you're only interested in the latest trends.";
+					mes "Straight from the runway is the ^3131FFOratio Cut^000000.";
+					mes "You'll be the envy of all of your friends with this hairstyle.";
+					break;
+				case 5:
+					mes "[Prince Shammi]";
+					mes "No? You didn't want";
+					mes "to take a look? Please,";
+					mes "you're an adventurer, I know";
+					mes "you can be more daring than";
+					mes "that! Be fashionably adventurous, you fashionable adventurer~";
+					emotion e_lv,"Hair Dresser#li";
+					close;
+				}
+			}
+		}
+		close2;
+		cutin "",255;
+		end;
+	case 2:
+		if (BaseLevel < 60) {
+			mes "[Prince Shammi]";
+			mes "Oh, I'm so sorry, but";
+			mes "I can only perform my";
+			mes "services for clients that have";
+			mes "matured enough to find their";
+			mes "true inner beauty. But please";
+			mes "come back once you do, okay?";
+			close;
+		}
+		else if ((countitem(973) < 3) || (countitem(974) < 3) || (countitem(901) < 100) || (countitem(1094) < 100) || (countitem(1020) < 100) || (countitem(1060) < 100) || (countitem(7152) < 100) || (Zeny < 99800)) {
+			mes "[Prince Shammi]";
+			mes "If you've already decided";
+			mes "what hairstyle you'd like,";
+			mes "please have my service charge";
+			mes "ready, as well as the materials";
+			mes "I will need in performing this";
+			mes "service, okay? Please bring...";
+			next;
+			mes "[Prince Shammi]";
+			mes "^3355FF3 Counteragent^000000,";
+			mes "^3355FF3 Mixture^000000,";
+			mes "^3355FF100 Daenggie^000000,";
+			mes "^3355FF100 Short Daenggie^000000...";
+			next;
+			mes "[Prince Shammi]";
+			mes "^3355FF100 Black Hair^000000,";
+			mes "^3355FF100 Golden Hair^000000,";
+			mes "^3355FF100 Glossy Hair^000000";
+			mes "and ^3355FF99,800 zeny^000000.";
+			mes "Once you do that, I'll make";
+			mes "a miracle out of your hair!";
+			close;
+		}
+		mes "[Prince Shammi]";
+		mes "Alright, please choose";
+		mes "which hairstyle you wish";
+		mes "to have from numbers 20 to 25.";
+		mes "Here's a list of the style names just in case you need them~";
+		next;
+		mes "[Prince Shammi]";
+		if (Sex == 1) {
+			mes "No. 20: Petite Style";
+			mes "No. 21: Executioner Style";
+			mes "No. 22: Prince Style";
+			mes "No. 23: Deviace Style";
+			mes "No. 24: Emergency Heal Perm";
+			mes "No. 25: Aura Blade Cut";
+			mes "No. 26: Power Swing and";
+			mes "No. 27: Renovatio Cut.";
+		}
+		else {
+			mes "No. 20: Spring Rabbit Style";
+			mes "No. 21: Harpy Style";
+			mes "No. 22: Medusa Style";
+			mes "No. 23: Isis Style";
+			mes "No. 24: Assumptio Perm";
+			mes "No. 25: Soul Changer Cut";
+			mes "No. 26: X Tornado Cut and";
+			mes "No. 27: Oratio Cut.";
+		}
+		next;
+		input .@input;
+		if (.@input == 0) {
+			mes "[Prince Shammi]";
+			mes "Oh...?";
+			mes "You decided to cancel?";
+			mes "Well, you know what's";
+			mes "best for you, I suppose.";
+			mes "Still, I'm so disappointed~";
+			close;
+		}
+		else if ((.@input < 20) || (.@input > 27)) {
+			mes "[Prince Shammi]";
+			mes "Dearie, please enter";
+			mes "a number from ''20'' to";
+			mes "''25,'' alright? Then I can";
+			mes "get right to work at making";
+			mes "you soooooooo beautiful!";
+			close;
+		}
+		else if (getlook(VAR_HEAD) == .@input) {
+			mes "[Prince Shammi]";
+			mes "Oh dear me, you're not";
+			mes "going to waste money for";
+			mes "the same hairstyle that you";
+			mes "have now, are you? You can";
+			mes "have someone else change";
+			mes "your hair color, you know.";
+			close;
+		}
+		else {
+			if (Sex == 1)
+				cutin "hair_m_"+.@input+".BMP",4;
+			else
+				cutin "hair_f_"+.@input+".BMP",4;
+			mes "[Prince Shammi]";
+			mes "Oooh! Now, is this the";
+			mes "hairstyle that you wanted?";
+			mes "This is No. "+.@input+", by the way.";
+			next;
+			switch(select("Yes.:No.")) {
+			case 1:
+				if (getlook(VAR_HEADPALETTE) == 0) {
+					mes "[Prince Shammi]";
+					mes "Oh, Sweet Christmas,";
+					mes "I almost forgot! Would";
+					mes "you like me to dye your";
+					mes "hair, free of charge? It's";
+					mes "a part of my service, so";
+					mes "please choose a color~";
+					next;
+					switch(select("Red:Yellow:Purple:Orange:Green:Blue:White:Dark Brown")) {
+					case 1:
+						set .@headpalette,8;
+						break;
+					case 2:
+						set .@headpalette,1;
+						break;
+					case 3:
+						set .@headpalette,2;
+						break;
+					case 4:
+						set .@headpalette,3;
+						break;
+					case 5:
+						set .@headpalette,4;
+						break;
+					case 6:
+						set .@headpalette,5;
+						break;
+					case 7:
+						set .@headpalette,6;
+						break;
+					case 8:
+						set .@headpalette,7;
+						break;
+					}
+				}
+				mes "[Prince Shammi]";
+				mes "Okay, let's get";
+				mes "started, shall we?";
+				mes "Keep your head still,";
+				mes "now. Yes, that's good...";
+				next;
+				mes "^3355FF*Snip snip*";
+				mes "*Rustle rustle*";
+				mes "*Clip clip clip clip*";
+				mes "*Bzzzzzzzzzzzzzzzzzzzz*^000000";
+				next;
+				set zeny,zeny-99800;
+				delitem 973,3; //Counteragent
+				delitem 974,3; //Mixture
+				delitem 901,100; //Danggie
+				delitem 1094,100; //Short_Daenggie
+				delitem 1020,100; //Long_Hair
+				delitem 1060,100; //Golden_Hair
+				delitem 7152,100; //Glossy_Hair
+				setlook VAR_HEAD,.@input;
+				setlook VAR_HEADPALETTE,.@headpalette;
+				mes "[Prince Shammi]";
+				mes "Well, we're all finished!";
+				mes "And my, oh my, you look even";
+				mes "more fabulous that I thought";
+				mes "you would! Oh, I can't believe";
+				if (Sex == 1) {
+					mes "how tough and elegant you are~";
+					mes "So ruggedly manly and handsome!";
+				}
+				else {
+					mes "how graceful and elegant you";
+					mes "look! Absolutely gorgeous!";
+				}
+				emotion e_kis,"Hair Dresser#li";
+				next;
+				mes "[Prince Shammi]";
+				mes "You love your new";
+				mes "hair, don't you? Feel";
+				mes "free to come back anytime.";
+				mes "I'll make you the best looking";
+				mes "person in the entire world!";
+				emotion e_no1,"Hair Dresser#li";
+				close;
+			case 2:
+				mes "[Prince Shammi]";
+				mes "Oh, did you forget which";
+				mes "hairstyle goes with which";
+				mes "number? By all means, please";
+				mes "check again! Find the one that";
+				mes "is perfect just for you, okay?";
+				close;
+			}
+		}
+		break;
+	case 3:
+		mes "[Prince Shammi]";
+		mes "Humm ? ";
+		mes "Maybe you don't understand";
+		mes "my futuristic styles.";
+		mes "Goodbye! ";
+		close;
+	}
+}
+
+lhz_in02,91,155,5	script	Assistant Beautician#li	862,{
+	mes "[Assistant Beautician]";
+	mes "Wah?! Sweet Jiminy,";
+	mes "you freaked me out!";
+	mes "What are you doing?!";
+	emotion e_omg,"Assistant Beautician#li";
+	next;
+	mes "[Assistant Beautician]";
+	mes "Oh! Um, a customer!";
+	mes "H-h-h-h-h-hello! Can";
+	mes "I help you with anything?";
+	next;
+	switch(select("What do you do?:Please change my hairstyle.:Who is Prince Shammi?")) {
+	case 1:
+		mes "[Assistant Beautician]";
+		mes "Oh! Me...? I'm";
+		mes "just an assistant";
+		mes "beautician, but I'm";
+		mes "training hard everyday";
+		mes "so that I can become";
+		mes "a real professional!";
+		next;
+		mes "[Assistant Beautician]";
+		mes "Yeah, I do all sorts of";
+		mes "grunt work for the boss while";
+		mes "I'm in training. Sometimes, he";
+		mes "makes me work pretty hard.";
+		mes "In fact, I better get back to work before he gets angry at me!";
+		close;
+	case 2:
+		if (BaseLevel < 60) {
+			mes "[Assistant Beautician]";
+			mes "Me...? Oh no,";
+			mes "no I can't! I mean,";
+			mes "I'd love to but, I'm";
+			mes "still in training and";
+			mes "I can't take responsibility";
+			mes "if I mess up on a little kid!";
+			close;
+		}
+		else if ((Zeny < 250000)) {
+			mes "[Assistant Beautician]";
+			mes "Well... I'm just an";
+			mes "assistant, but I have been";
+			mes "studying hairstyling after";
+			mes "work. If you want, just bring";
+			mes "me 250,000 zeny and I'll try";
+			mes "my best to change your hair~";
+			next;
+			mes "[Assistant Beautician]";
+			mes "I'd appreciate it if you'd";
+			mes "give me this chance! The";
+			mes "boss doesn't think I'm ready";
+			mes "for styling real people yet, so";
+			mes "I haven't had much practice!";
+			next;
+			mes "[Assistant Beautician]";
+			mes "I just know I could";
+			mes "do a good job on your";
+			mes "hair! Just... Just please";
+			mes "understand if I mess up.";
+			mes "It won't be too bad, I promise~";
+			close;
+		}
+		else {
+			mes "[Assistant Beautician]";
+			mes "You're really going to";
+			mes "give me a chance to practice?";
+			mes "Oh, I love you so much! Okay,";
+			mes "I'll need 250,000 zeny to make";
+			mes "up for the material expenses.";
+			mes "Is that okay with you?";
+			next;
+			switch(select("Of course~:On second thought...")) {
+			case 1:
+				mes "[Assistant Beautician]";
+				mes "Great! Now, please";
+				mes "choose a hairstyle";
+				mes "from ''1'' to ''23.''";
+				mes "Um, if you need to";
+				mes "cancel, just enter ''0.''";
+				next;
+				input .@input;
+				if (.@input == 0) {
+					mes "[Assistant Beautician]";
+					mes "Awwww...";
+					mes "I guess you don't";
+					mes "trust me after all...";
+					close;
+				}
+				else if ((.@input < 1) || (.@input > 23)) {
+					mes "[Assistant Beautician]";
+					mes "Huh? I thought I asked";
+					mes "you to enter a number from";
+					mes "''1'' to ''23?'' What did I do";
+					mes "wrong this time? Hmmm...";
+					close;
+				}
+				else {
+					mes "[Assistant Beautician]";
+					mes "So this is the";
+					mes "style you want me";
+					mes "to try to do for you?";
+					if (Sex == 1) {
+						if (.@input < 10)
+							cutin "hair_m_0"+.@input+".BMP",4;
+						else
+							cutin "hair_m_"+.@input+".BMP",4;
+					}
+					else {
+						if (.@input < 10)
+							cutin "hair_f_0"+.@input+".BMP",4;
+						else
+							cutin "hair_f_"+.@input+".BMP",4;
+					}
+					next;
+					switch(select("Yes, let's try it~:Cancel.")) {
+					case 1:
+						break;
+					case 2:
+						mes "[Assistant Beautician]";
+						mes "Oooh, there must";
+						mes "be some style that";
+						mes "you like, right? Hmmm...";
+						close;
+					}
+				}
+				mes "[Assistant Beautician]";
+				mes "Great, you finally";
+				mes "picked one! What, which";
+				mes "one did you pick again?";
+				mes "Ah, I found it, I found it!";
+				mes "Haha! No problem here!";
+				mes "Now it's time to style!";
+				next;
+				nude;
+				mes "[Assistant Beautician]";
+				mes "Bwwwwaaaahhhh!";
+				next;
+				mes "[Assistant Beautician]";
+				mes "Yap! Pwwwaaattt!";
+				next;
+				mes "[Assistant Beautician]";
+				mes "Waaaah!";
+				mes "Oh crap!";
+				mes "Wait, I can...";
+				mes "I can fix this!";
+				next;
+				set .@style_r,rand(1,23);
+				set .@color_r,rand(1,8);
+				mes "[Assistant Beautician]";
+				mes "^333333*Pant Pant Pant*^000000";
+				next;
+				set zeny,zeny-250000;
+				setlook VAR_HEAD,.@style_r;
+				setlook VAR_HEADPALETTE,.@color_r;
+				mes "[Assistant Beautician]";
+				mes "Bwahahaha! Success!";
+				if (.@input == .@style_r) {
+					mes "So... How do you like";
+					mes "your new style? I love it!";
+				}
+				else {
+					mes "Wha...? This isn't what";
+					mes "you wanted? Uh oh... Um...";
+					mes "Well, next time I know I can";
+					mes "do a much better job! Right!";
+				}
+				next;
+				mes "[Assistant Beautician]";
+				mes "Oh, you're such a";
+				mes "sweetheart for helping";
+				mes "me! Thank you for using";
+				mes "my service and come again~";
+				emotion e_kis,"Assistant Beautician#li";
+				close;
+			case 2:
+				mes "[Assistant Beautician]";
+				mes "Huh? Oh no, you're";
+				mes "quitting? Well, I guess";
+				mes "I couldn't trust me to";
+				mes "style my hair either...";
+				mes "You're... You're right.";
+				close;
+			}
+		}
+	case 3:
+		mes "[Assistant Beautician]";
+		mes "Prince Shammi?";
+		mes "He's only a genius when";
+		mes "it comes to hairstyling!";
+		mes "I'm just his apprentice, but";
+		mes "maybe someday, I can be a";
+		mes "force in the fashion world too!";
 		close;
 	}
 }

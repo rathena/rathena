@@ -1,5 +1,11 @@
 Date		Added
 ======
+2011/04/08
+	* Rev. 14780 Added missing Hair Dressers and Hair Dyer to Lighthalzen. [L0ne_W0lf]
+	- Hair Dresser will change hair styles ranging between 20 to 27
+	- Assistant Beautician changes to a random style and colour between 1-23.
+	* Updated the Cursed Spirit quest, and added some more town NPCs.
+	* Added more town NPCs to Splendide and Manuk.
 2011/04/06
 	* Rev. 14775 Added two new quests, Alberta Boy and Secret Note of Bazett. [L0ne_W0lf]
 	* Implemented 13.2 update to Report to the New World quest.

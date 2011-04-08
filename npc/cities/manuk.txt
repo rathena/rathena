@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.1
+//= 1.2
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -12,6 +12,7 @@
 //===== Additional Comments: ================================= 
 //= 1.0 First Version.
 //= 1.1 Added more town NPCs
+//= 1.2 Added more town NPCs
 //============================================================
 
 // cat_enhance
@@ -487,6 +488,82 @@ manuk,253,173,3	script	Manuk Benknee#tre5	449,{
 		mes "Ys oadj oa s d";
 		mes "Bni ii osd jo as das";
 		mes "Qa oj df isd oo o";
+		close;
+	}
+}
+
+// ep12_2_dailybs
+manuk,251,180,5	script	Young Villager#ep13bs	454,{
+	if (isequipped(2782) == 1) {
+		mes "[Young Villager]";
+		mes "It's past the time of our date, why isn't she here yet!!?";
+		close;
+	}
+	else {
+		mes "[Asd]";
+		mes "Ywo di pi butfs oui Afbsu ";
+		close;
+	}
+}
+
+man_in01,360,137,5	script	Mechanic#ep13bs	454,{
+	if (isequipped(2782) == 1) {
+		mes "[Mechanic]";
+		mes "Alien races are not allowed to enter.";
+		mes "It's very dangerous here, please don't come any closer.";
+		close;
+	}
+	else {
+		mes "[Asoui]";
+		mes "Fs iua sdjosow ww ";
+		mes "Adds wwpq iusnd ";
+		close;
+	}
+}
+
+man_in01,68,187,0	script	Worker#ep13bs1	454,{
+	if (isequipped(2782) == 1) {
+		mes "[Worker]";
+		mes "Hmm, it smells delicious.";
+		mes "It should be time to turn it around now.";
+		next;
+		mes "[Worker]";
+		mes "Hardrock Mammoth steak should be eaten slightly raw!";
+		close;
+	}
+	else {
+		mes "[Tee]";
+		mes "As woue dpi sha we";
+		mes "Two psie bu le";
+		next;
+		mes "[Tee]";
+		mes "Tr sdou powee wwee ";
+		close;
+	}
+}
+
+man_in01,74,181,3	script	Worker#ep13bs2	454,{
+	if (isequipped(2782) == 1) {
+		mes "[Worker]";
+		mes "Chef Cook, how many plates should I put down?";
+		close;
+	}
+	else {
+		mes "[Tee]";
+		mes "We pishd bugs ouwwe iro ";
+		close;
+	}
+}
+
+man_in01,227,280,5	script	Scientist#ep13bs	449,{
+	if (isequipped(2782) == 1) {
+		mes "[Scientist]";
+		mes "Is there only one way we can survive..?";
+		close;
+	}
+	else {
+		mes "[Apti]";
+		mes "Dso piey pioit ioep ";
 		close;
 	}
 }

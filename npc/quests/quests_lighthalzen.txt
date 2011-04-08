@@ -3406,45 +3406,39 @@ yuno_in04,168,117,3	script	Book#lhz	111,{
 ///Cursed Spirit Quest
 
 lhz_dun01,147,106,0	script	#kiz01-1	-1,3,3,{
-
-OnTouch:
-	if(countitem(7345))
-	{
-		if(!lhz_curse)
-		{
+OnTouch_:
+	if (countitem(7345) > 0 ) {
+		if (lhz_curse == 0) {
 			soundeffect "loli_ruri_stand.wav",0;
-			setquest 2086;
 			set lhz_curse,1;
-			end;
+			setquest 2086;
 		}
-		else if(lhz_curse < 26)
-		{
+		else if (lhz_curse < 26) {
 			set @lhz_ghost,rand(1,5);
 			sc_start SC_Curse,1000,0;
 			soundeffect "loli_ruri_stand.wav",0;
-			if(@lhz_ghost == 1)
-			{
-				mes "[???]";
-				mes "......";
+			if (@lhz_ghost == 1) {
+				mes "[??????]";
+				mes "...................";
 				next;
-				mes "[???]";
-				mes "Enjoy... this...";
 				soundeffect "loli_ruri_stand.wav",0;
+				mes "[??????]";
+				mes "...elp....help...";
 				close;
 			}
-			else if(@lhz_ghost == 4)
-			{
-				mes "[???]";
-				mes "......";
+			else if (@lhz_ghost == 4) {
+				mes "[??????]";
+				mes "...................";
 				next;
-				mes "[???]";
-				mes "I... I despise the living...";
 				soundeffect "loli_ruri_stand.wav",0;
+				mes "[??????]";
+				mes "I...";
+				mes "I despise the living.";
 				close;
 			}
-			end;
 		}
 	}
+	end;
 }
 
 lhz_dun01,239,135,0	duplicate(#kiz01-1)	#kiz01-2	-1,3,3
@@ -3452,45 +3446,39 @@ lhz_dun01,66,212,0	duplicate(#kiz01-1)	#kiz01-3	-1,3,3
 lhz_dun01,225,198,0	duplicate(#kiz01-1)	#kiz01-4	-1,3,3
 
 lhz_dun02,244,229,0	script	#kiz02-1	-1,3,3,{
-
-OnTouch:
-	if(countitem(7345))
-	{
-		if(!lhz_curse)
-		{
+OnTouch_:
+	if (countitem(7345) > 0 ) {
+		if (lhz_curse == 0) {
 			soundeffect "tao_gunka_stand.wav",0;
-			setquest 2086;
 			set lhz_curse,1;
-			end;
+			setquest 2086;
 		}
-		else if(lhz_curse < 26)
-		{
+		else if (lhz_curse < 26) {
 			set @lhz_ghost,rand(1,10);
 			sc_start SC_Curse,1000,0;
 			soundeffect "tao_gunka_stand.wav",0;
-			if(@lhz_ghost == 1)
-			{
-				mes "[???]";
-				mes "......";
+			if (@lhz_ghost == 1) {
+				mes "[??????]";
+				mes "...................";
 				next;
-				mes "[???]";
-				mes "Enjoy... this...";
-				soundeffect "loli_ruri_stand.wav",0;
+				soundeffect "tao_gunka_stand.wav",0;
+				mes "[??????]";
+				mes "...elp....help...";
 				close;
 			}
-			else if(@lhz_ghost == 4)
-			{
-				mes "[???]";
-				mes "......";
+			else if (@lhz_ghost == 4) {
+				mes "[??????]";
+				mes "...................";
 				next;
-				mes "[???]";
-				mes "I... I despise the living...";
-				soundeffect "loli_ruri_stand.wav",0;
+				soundeffect "tao_gunka_stand.wav",0;
+				mes "[??????]";
+				mes "I...";
+				mes "I despise the living.";
 				close;
 			}
-			end;
 		}
 	}
+	end;
 }
 
 lhz_dun02,60,298,0	duplicate(#kiz02-1)	#kiz02-2	-1,3,3
@@ -3498,68 +3486,57 @@ lhz_dun02,267,278,0	duplicate(#kiz02-1)	#kiz02-3	-1,3,3
 lhz_dun02,94,199,0	duplicate(#kiz02-1)	#kiz02-4	-1,3,3
 
 lhz_dun03,244,51,0	script	#kiz03-1	-1,3,3,{
-
-OnTouch:
-	if(countitem(7345))
-	{
-		if(!lhz_curse)
-		{
+OnTouch_:
+	if (countitem(7345) > 0 ) {
+		if (lhz_curse == 0) {
 			soundeffect "tao_gunka_stand.wav",0;
-			setquest 2086;
 			set lhz_curse,1;
-			end;
+			setquest 2086;
 		}
-		else if(lhz_curse < 26)
-		{
+		else if (lhz_curse < 26) {
 			set @lhz_ghost,rand(1,10);
 			sc_start SC_Curse,1000,0;
 			soundeffect "tao_gunka_stand.wav",0;
-			if(@lhz_ghost == 1)
-			{
-				mes "[???]";
-				mes "......";
+			if (@lhz_ghost == 1) {
+				mes "[??????]";
+				mes "...................";
 				next;
-				mes "[???]";
-				mes "Enjoy... this...";
 				soundeffect "tao_gunka_stand.wav",0;
+				mes "[??????]";
+				mes "...elp....help...";
 				close;
 			}
-			else if(@lhz_ghost == 4)
-			{
-				mes "[???]";
-				mes "......";
+			else if (@lhz_ghost == 4) {
+				mes "[??????]";
+				mes "...................";
 				next;
-				mes "[???]";
-				mes "I... I despise the living...";
 				soundeffect "tao_gunka_stand.wav",0;
+				mes "[??????]";
+				mes "I...";
+				mes "I despise the living.";
 				close;
 			}
-			end;
 		}
 	}
+	end;
 }
 
 lhz_dun03,123,191,0	duplicate(#kiz03-1)	#kiz03-2	-1,3,3
 lhz_dun03,74,140,0	duplicate(#kiz03-1)	#kiz03-3	-1,3,3
 
 lighthalzen,344,278,0	script	#kiz03	-1,2,2,{
-
-OnTouch:
-	if(countitem(7345))
-	{
-		if(!lhz_curse)
-		{
+OnTouch_:
+	if (countitem(7345) > 0 ) {
+		if (lhz_curse == 0) {
+			soundeffect "tao_gunka_stand.wav",0;
 			sc_start SC_Curse,1000,0;
-			soundeffect "tao_gunka_stand.wav",0;
-			end;
 		}
-		else if(lhz_curse < 26)
-		{
-			mes "...............";
+		else if ((lhz_curse > 0) && (lhz_curse < 26)) {
+			mes "............";
 			next;
-			mes "...............";
-			sc_start SC_Blind,60000,0;
 			soundeffect "tao_gunka_stand.wav",0;
+			sc_start SC_Blind,60000,0;
+			mes "............";
 			next;
 			mes "[?????]";
 			mes "Honey, I'm sorry,";
@@ -3580,9 +3557,9 @@ OnTouch:
 			mes "It's like we're less";
 			mes "than animals. I hate this!";
 			next;
-			mes "...............";
+			mes "............";
 			next;
-			mes "...............";
+			mes "............";
 			next;
 			emotion e_what,1;
 			mes "["+strcharinfo(0)+"]";
@@ -3590,39 +3567,34 @@ OnTouch:
 			mes "just in my head, were they?";
 			mes "Hello...? Anybody there...?";
 			close2;
-			sc_end SC_All;
+			sc_end SC_Blind;
 			sc_start SC_Curse,5000,0;
-			if(!lhz_spi01) set lhz_spi01,1;
-			end;
+			if (!lhz_spi01) set lhz_spi01,1;
 		}
 	}
+	end;
 }
 
 lhz_in03,178,22,0	script	#kiz04	-1,2,2,{
-
-OnTouch:
-	if(countitem(7345))
-	{
-		if(!lhz_curse)
-		{
+OnTouch_:
+	if (countitem(7345) > 0 ) {
+		if (lhz_curse == 0) {
 			sc_start SC_Curse,1000,0;
 			soundeffect "tao_gunka_stand.wav",0;
-			end;
 		}
-		else if(lhz_curse < 26)
-		{
-			mes "...............";
+		else if ((lhz_curse > 0) && (lhz_curse < 26)) {
+			mes "............";
 			next;
-			mes "...............";
-			sc_start SC_Blind,60000,0;
 			soundeffect "tao_gunka_stand.wav",0;
+			sc_start SC_Blind,60000,0;
+			mes "............";
 			next;
 			mes "[?????]";
 			mes "Hey, you won't";
 			mes "believe it! Rekenber";
 			mes "decided to hire us!";
 			next;
-			mes "[?????]";
+			mes "[???????]";
 			mes "You sure that's so great?";
 			mes "Those big corporations";
 			mes "always take advantage";
@@ -3642,13 +3614,13 @@ OnTouch:
 			mes "If they're true to their word,";
 			mes "that'll be even better!";
 			next;
-			mes "...............";
+			mes "............";
 			next;
-			mes "...............";
+			mes "............";
 			next;
 			mes "[???]";
 			mes "Waaaah!";
-			mes "Waaaaaah~!";
+			mes "Waaaaaaah~!";
 			next;
 			mes "[????]";
 			mes "Woman, shut this";
@@ -3663,9 +3635,9 @@ OnTouch:
 			mes "crummy this house is!";
 			mes "It's mine and I want quiet!";
 			next;
-			mes "...............";
+			mes "............";
 			next;
-			mes "...............";
+			mes "............";
 			next;
 			emotion e_what,1;
 			mes "["+strcharinfo(0)+"]";
@@ -3674,31 +3646,26 @@ OnTouch:
 			mes "these voices coming from?";
 			close2;
 			soundeffect "tao_gunka_stand.wav",0;
-			sc_end SC_All;
+			sc_end SC_Blind;
 			sc_start SC_Curse,5000,0;
-			if(!lhz_spi02) set lhz_spi02,1;
-			end;
+			if (!lhz_spi02) set lhz_spi02,1;
 		}
 	}
+	end;
 }
 
 lighthalzen,295,227,0	script	#kiz05	-1,2,2,{
-
-OnTouch:
-	if(countitem(7345))
-	{
-		if(!lhz_curse)
-		{
+OnTouch_:
+	if (countitem(7345) > 0 ) {
+		if (lhz_curse == 0) {
 			sc_start SC_Curse,1000,0;
-			end;
 		}
-		else if(lhz_curse < 26)
-		{
-			mes "...............";
+		else if ((lhz_curse > 0) && (lhz_curse < 26)) {
+			mes "............";
 			next;
-			mes "...............";
-			sc_start SC_Blind,60000,0;
 			soundeffect "loli_ruri_stand.wav",0;
+			sc_start SC_Blind,60000,0;
+			mes "............";
 			next;
 			mes "[?????]";
 			mes "Mommy, why don't those";
@@ -3715,9 +3682,9 @@ OnTouch:
 			mes "any spare change? I...";
 			mes "I need something to eat...";
 			next;
-			mes "...............";
+			mes "............";
 			next;
-			mes "...............";
+			mes "............";
 			next;
 			mes "["+strcharinfo(0)+"]";
 			mes "This is...";
@@ -3725,31 +3692,26 @@ OnTouch:
 			mes "I must be hallucinating!";
 			close2;
 			soundeffect "loli_ruri_stand.wav",0;
-			sc_end SC_All;
+			sc_end SC_Blind;
 			sc_start SC_Curse,3000,0;
-			if(!lhz_spi03) set lhz_spi03,1;
-			end;
+			if (!lhz_spi03) set lhz_spi03,1;
 		}
 	}
+	end;
 }
 
 lighthalzen,364,315,0	script	#kiz06	-1,3,3,{
-
-OnTouch:
-	if(countitem(7345))
-	{
-		if(!lhz_curse)
-		{
+OnTouch_:
+	if (countitem(7345) > 0 ) {
+		if (lhz_curse == 0) {
 			sc_start SC_Curse,1000,0;
-			end;
 		}
-		else if(lhz_curse < 26)
-		{
-			mes "...............";
+		else if ((lhz_curse > 0) && (lhz_curse < 26)) {
+			mes "............";
 			next;
-			mes "...............";
-			sc_start SC_Blind,60000,0;
 			soundeffect "tao_gunka_stand.wav",0;
+			sc_start SC_Blind,60000,0;
+			mes "............";
 			next;
 			mes "[?????]";
 			mes "Listen, I know you're";
@@ -3776,44 +3738,39 @@ OnTouch:
 			mes "generously compensated.";
 			next;
 			mes "[???????]";
-			mes "...............";
+			mes ".............";
 			next;
 			mes "[???????]";
 			mes "...Alright, I'm in.";
 			next;
-			mes "...............";
+			mes "............";
 			next;
-			mes "...............";
+			mes "............";
 			next;
 			mes "["+strcharinfo(0)+"]";
-			mes "...............";
+			mes "............";
 			close2;
 			soundeffect "tao_gunka_stand.wav",0;
-			sc_end SC_All;
+			sc_end SC_Blind;
 			sc_start SC_Curse,5000,0;
-			if(!lhz_spi04) set lhz_spi04,1;
-			end;
+			if (!lhz_spi04) set lhz_spi04,1;
 		}
 	}
+	end;
 }
 
 lhz_in01,113,150,0	script	#kiz07	-1,3,3,{
-
-OnTouch:
-	if(countitem(7345))
-	{
-		if(!lhz_curse)
-		{
+OnTouch_:
+	if (countitem(7345) > 0 ) {
+		if (lhz_curse == 0) {
 			sc_start SC_Curse,1000,0;
-			end;
 		}
-		else if(lhz_curse < 26)
-		{
-			mes "...............";
+		else if ((lhz_curse > 0) && (lhz_curse < 26)) {
+			mes "............";
 			next;
-			mes "...............";
-			sc_start SC_Blind,60000,0;
 			soundeffect "tao_gunka_stand.wav",0;
+			sc_start SC_Blind,60000,0;
+			mes "............";
 			next;
 			mes "[?????]";
 			mes "So, what exactly did you";
@@ -3843,36 +3800,31 @@ OnTouch:
 			mes "be taken to that far";
 			mes "off place very soon...";
 			next;
-			mes "...............";
+			mes "............";
 			next;
-			mes "...............";
+			mes "............";
 			close2;
 			soundeffect "tao_gunka_stand.wav",0;
-			sc_end SC_All;
+			sc_end SC_Blind;
 			sc_start SC_Curse,3000,0;
-			if(lhz_curse == 6) set lhz_curse,7;
-			end;
+			if (!lhz_curse == 6) set lhz_curse,7;
 		}
 	}
+	end;
 }
 
 lhz_in01,272,227,0	script	#kiz08	-1,2,2,{
-
-OnTouch:
-	if(countitem(7345))
-	{
-		if(!lhz_curse)
-		{
+OnTouch_:
+	if (countitem(7345) > 0 ) {
+		if (lhz_curse == 0) {
 			sc_start SC_Curse,1000,0;
-			end;
 		}
-		else if(lhz_curse < 26)
-		{
-			mes "...............";
+		else if ((lhz_curse > 0) && (lhz_curse < 26)) {
+			mes "............";
 			next;
-			mes "...............";
-			sc_start SC_Blind,60000,0;
 			soundeffect "tao_gunka_stand.wav",0;
+			sc_start SC_Blind,60000,0;
+			mes "............";
 			next;
 			mes "[????]";
 			mes "Oh, I'm so sorry to";
@@ -3900,7 +3852,7 @@ OnTouch:
 			mes "[???]";
 			mes "Thank you, sir.";
 			next;
-			mes "[???]";
+			mes "[????]";
 			mes "It would be a great loss";
 			mes "for this company to let you";
 			mes "go now. But I guess we have";
@@ -3932,196 +3884,47 @@ OnTouch:
 			mes "WHAT HAVE YOU DONE TO";
 			mes "MY LEGS?! HELP ME, OH MY G--";
 			next;
-			mes "...............";
+			mes "............";
 			next;
-			mes "...............";
-			close2;
+			mes "............";
+			close;
 			soundeffect "tao_gunka_stand.wav",0;
-			sc_end SC_All;
+			sc_end SC_Blind;
 			sc_start SC_Curse,3000,0;
-			if(lhz_curse == 11) set lhz_curse,12;
-			end;
+			if (lhz_curse == 11) set lhz_curse,12;
 		}
 	}
-}
-
-lhz_in01,206,129,0	script	#kiz09	-1,5,5,{
-
-OnTouch:
-	if(countitem(7345))
-	{
-		if(lhz_curse == 12)
-		{
-			mes "...............";
-			next;
-			mes "...............";
-			sc_start SC_Curse,1000,0;
-			soundeffect "loli_ruri_stand.wav",0;
-			close2;
-			warp "lhz_que01",26,27;
-			end;
-		}
-		else if(lhz_curse > 0 && lhz_curse < 26)
-		{
-			sc_start SC_Curse,1000,0;
-			end;
-		}
-	}
-}
-
-lhz_que01,21,31,5	script	#Varmunt	755,{
-
-OnTouch:
-	if(countitem(7345))
-	{
-		if(lhz_curse == 12)
-		{
-			mes "Doctor Varmunt,";
-			mes "you've finally agreed";
-			mes "to join us. Welcome!";
-			next;
-			emotion e_swt;
-			mes "[Varmunt]";
-			mes "Well, I don't know if I agree";
-			mes "with this company's policies,";
-			mes "but the project you're offering";
-			mes "seems to be an opportunity that";
-			mes "comes once in a lifetime, so...";
-			next;
-			emotion e_ok,0,"#Rekenber";
-			mes "[??]";
-			mes "To be honest, this project";
-			mes "can only be a success with";
-			mes "your cooperation. We need";
-			mes "your genius and will provide";
-			mes "whatever you require.";
-			next;
-			mes "[Varmunt]";
-			mes "I'm flattered.";
-			mes "And of course, I'll";
-			mes "do my best. It's just";
-			mes "that this deal sounds";
-			mes "too good to be true...";
-			next;
-			mes ".........";
-			next;
-			soundeffect "loli_ruri_stand.wav",0;
-			mes "............";
-			next;
-			soundeffect "loli_ruri_stand.wav",0;
-			mes "...............";
-			next;
-			soundeffect "loli_ruri_stand.wav",0;
-			mes "..................";
-			next;
-			mes ".....................";
-			next;
-			mes "[??]";
-			mes "Amazing. You've accomplished";
-			mes "what most have thought to be";
-			mes "impossible ahead of schedule.";
-			mes "An imitation of Ymir's Heart!";
-			mes "This will surely spur Airship";
-			mes "and Guardian development~!";
-			next;
-			mes "[Varmunt]";
-			mes "I still don't believe that";
-			mes "were able to do it. This is";
-			mes "a huge leap for science, even";
-			mes "if this imitation isn't as powerful";
-			mes "as the real Ymir's Heart.";
-			next;
-			mes "[??]";
-			mes "Come, we must celebrate!";
-			mes "Let's go outside and have";
-			mes "a toast in your honor! Ha ha~";
-			next;
-			mes ".........";
-			next;
-			soundeffect "loli_ruri_stand.wav",0;
-			mes "............";
-			next;
-			soundeffect "loli_ruri_stand.wav",0;
-			mes "...............";
-			next;
-			soundeffect "loli_ruri_stand.wav",0;
-			mes "..................";
-			next;
-			mes "[??]";
-			mes "But why, Doctor Varmunt?";
-			mes "If you're unhappy with the";
-			mes "Rekenber Corporation for";
-			mes "any reason whatsoever...";
-			next;
-			mes "[Varmunt]";
-			mes "Well, I don't really";
-			mes "have a reason to remain";
-			mes "now that we've accomplished";
-			mes "what I've agreed to do. It's time";
-			mes "for me to return and work on";
-			mes "my personal research.";
-			next;
-			mes "[??]";
-			mes "Please, Doctor Varmunt,";
-			mes "reconsider! You may have";
-			mes "full use of our facilities to";
-			mes "conduct your research. I'm";
-			mes "willing to make you an offer.";
-			next;
-			mes "[Varmunt]";
-			mes "No, I can't...";
-			mes "If I continue to work";
-			mes "here, I'm afraid I might";
-			mes "make a lot of people";
-			mes "unhappy. But, thank";
-			mes "you for everything.";
-			next;
-			mes "[??]";
-			mes "Wait...";
-			mes "Doctor Varmunt.";
-			mes "You forgot your cane.";
-			next;
-			mes "[Varmunt]";
-			mes "Since when have you";
-			mes "seen me use a cane?";
-			mes "And even if I did,";
-			mes "that one isn't mi--";
-			next;
-			mes "...";
-			next;
-			mes "...";
-			mes "......";
-			next;
-			mes "...";
-			mes "......";
-			mes ".........";
-			set lhz_curse,13;
-			close2;
-			warp "lhz_in01",206,129;
-			end;
-		}
-		else
-		{
-			warp "lhz_in01",206,129;
-			end;
-		}
-	}
-	warp "lhz_in01",206,129;
 	end;
 }
 
-lhz_que01,29,24,3	script	#Rekenber	754,{
+lhz_in01,206,129,0	script	#kiz09	-1,5,5,{
+OnTouch_:
+	if (countitem(7345) > 0) {
+		if (lhz_curse == 12) {
+			mes "............";
+			next;
+			mes "............";
+			soundeffect "loli_ruri_stand.wav",0;
+			sc_start SC_Curse,1000,0;
+			close2;
+			warp "lhz_que01",26,27;
+		}
+		else if (((lhz_curse > 0) && (lhz_curse < 12)) && ((lhz_curse > 12) && (lhz_curse < 26))) {
+			sc_start SC_Curse,1000,0;
+		}
+	}
+	end;
+}
 
-OnTouch:
-	if(countitem(7345))
-	{
-		if(lhz_curse == 12)
-		{
+lhz_que01,21,31,5	script	#li_Varmunt	755,{
+	if (countitem(7345) > 0) {
+		if (lhz_curse == 12) {
+			mes "[??]";
 			mes "Doctor Varmunt,";
 			mes "you've finally agreed";
 			mes "to join us. Welcome!";
 			next;
-			emotion e_swt,0,"#Varmunt";
+			emotion e_swt,"#li_Varmunt";
 			mes "[Varmunt]";
 			mes "Well, I don't know if I agree";
 			mes "with this company's policies,";
@@ -4129,7 +3932,7 @@ OnTouch:
 			mes "seems to be an opportunity that";
 			mes "comes once in a lifetime, so...";
 			next;
-			emotion e_ok;
+			emotion e_no1,"#li_researcher";
 			mes "[??]";
 			mes "To be honest, this project";
 			mes "can only be a success with";
@@ -4144,18 +3947,18 @@ OnTouch:
 			mes "that this deal sounds";
 			mes "too good to be true...";
 			next;
-			mes ".........";
-			next;
-			soundeffect "loli_ruri_stand.wav",0;
 			mes "............";
 			next;
 			soundeffect "loli_ruri_stand.wav",0;
-			mes "...............";
+			mes ".................";
 			next;
 			soundeffect "loli_ruri_stand.wav",0;
-			mes "..................";
+			mes "...................";
 			next;
+			soundeffect "loli_ruri_stand.wav",0;
 			mes ".....................";
+			next;
+			mes ".......................";
 			next;
 			mes "[??]";
 			mes "Amazing. You've accomplished";
@@ -4169,24 +3972,23 @@ OnTouch:
 			mes "I still don't believe that";
 			mes "were able to do it. This is";
 			mes "a huge leap for science, even";
-			mes "if this imitation isn't as powerful";
-			mes "as the real Ymir's Heart.";
+			mes "if this imitation isn't as powerful as the real Ymir's Heart.";
 			next;
 			mes "[??]";
 			mes "Come, we must celebrate!";
 			mes "Let's go outside and have";
 			mes "a toast in your honor! Ha ha~";
 			next;
-			mes ".........";
-			next;
-			soundeffect "loli_ruri_stand.wav",0;
 			mes "............";
 			next;
 			soundeffect "loli_ruri_stand.wav",0;
-			mes "...............";
+			mes ".................";
 			next;
 			soundeffect "loli_ruri_stand.wav",0;
-			mes "..................";
+			mes "....................";
+			next;
+			soundeffect "loli_ruri_stand.wav",0;
+			mes "......................";
 			next;
 			mes "[??]";
 			mes "But why, Doctor Varmunt?";
@@ -4198,8 +4000,7 @@ OnTouch:
 			mes "Well, I don't really";
 			mes "have a reason to remain";
 			mes "now that we've accomplished";
-			mes "what I've agreed to do. It's time";
-			mes "for me to return and work on";
+			mes "what I've agreed to do. It's time for me to return and work on";
 			mes "my personal research.";
 			next;
 			mes "[??]";
@@ -4241,53 +4042,185 @@ OnTouch:
 			warp "lhz_in01",206,129;
 			end;
 		}
-		else
-		{
+		else {
+			warp "lhz_in01",206,129;
+		}
+	}
+	else {
+		warp "lhz_in01",206,129;
+	}
+	end;
+}
+
+lhz_que01,29,24,3	script	#li_researcher	754,{
+	if (countitem(7345) > 0) {
+		if (lhz_curse == 12) {
+			mes "Doctor Varmunt,";
+			mes "you've finally agreed";
+			mes "to join us. Welcome!";
+			next;
+			emotion e_swt,"#li_Varmunt";
+			mes "[Varmunt]";
+			mes "Well, I don't know if I agree";
+			mes "with this company's policies,";
+			mes "but the project you're offering";
+			mes "seems to be an opportunity that";
+			mes "comes once in a lifetime, so...";
+			next;
+			emotion e_no1,"#li_researcher";
+			mes "[??]";
+			mes "To be honest, this project";
+			mes "can only be a success with";
+			mes "your cooperation. We need";
+			mes "your genius and will provide";
+			mes "whatever you require.";
+			next;
+			mes "[Varmunt]";
+			mes "I'm flattered.";
+			mes "And of course, I'll";
+			mes "do my best. It's just";
+			mes "that this deal sounds";
+			mes "too good to be true...";
+			next;
+			mes "............";
+			next;
+			soundeffect "loli_ruri_stand.wav",0;
+			mes ".................";
+			next;
+			soundeffect "loli_ruri_stand.wav",0;
+			mes "...................";
+			next;
+			soundeffect "loli_ruri_stand.wav",0;
+			mes ".....................";
+			next;
+			mes ".......................";
+			next;
+			mes "[??]";
+			mes "Amazing. You've accomplished";
+			mes "what most have thought to be";
+			mes "impossible ahead of schedule.";
+			mes "An imitation of Ymir's Heart!";
+			mes "This will surely spur Airship";
+			mes "and Guardian development~!";
+			next;
+			mes "[Varmunt]";
+			mes "I still don't believe that";
+			mes "were able to do it. This is";
+			mes "a huge leap for science, even";
+			mes "if this imitation isn't as powerful as the real Ymir's Heart.";
+			next;
+			mes "[??]";
+			mes "Come, we must celebrate!";
+			mes "Let's go outside and have";
+			mes "a toast in your honor! Ha ha~";
+			next;
+			mes "............";
+			next;
+			soundeffect "loli_ruri_stand.wav",0;
+			mes ".................";
+			next;
+			soundeffect "loli_ruri_stand.wav",0;
+			mes "....................";
+			next;
+			soundeffect "loli_ruri_stand.wav",0;
+			mes "......................";
+			next;
+			mes "[??]";
+			mes "But why, Doctor Varmunt?";
+			mes "If you're unhappy with the";
+			mes "Rekenber Corporation for";
+			mes "any reason whatsoever...";
+			next;
+			mes "[Varmunt]";
+			mes "Well, I don't really";
+			mes "have a reason to remain";
+			mes "now that we've accomplished";
+			mes "what I've agreed to do. It's time for me to return and work on";
+			mes "my personal research.";
+			next;
+			mes "[??]";
+			mes "Please, Doctor Varmunt,";
+			mes "reconsider! You may have";
+			mes "full use of our facilities to";
+			mes "conduct your research. I'm";
+			mes "willing to make you an offer.";
+			next;
+			mes "[Varmunt]";
+			mes "No, I can't...";
+			mes "If I continue to work";
+			mes "here, I'm afraid I might";
+			mes "make a lot of people";
+			mes "unhappy. But, thank";
+			mes "you for everything.";
+			next;
+			mes "[??]";
+			mes "Wait...";
+			mes "Doctor Varmunt.";
+			mes "You forgot your cane.";
+			next;
+			mes "[Varmunt]";
+			mes "Since when have you";
+			mes "seen me use a cane?";
+			mes "And even if I did,";
+			mes "that one isn't mi--";
+			next;
+			mes "...";
+			next;
+			mes "...";
+			mes "......";
+			next;
+			mes "...";
+			mes "......";
+			mes ".........";
+			set lhz_curse,13;
+			close2;
 			warp "lhz_in01",206,129;
 			end;
 		}
+		else {
+			warp "lhz_in01",206,129;
+		}
 	}
-	warp "lhz_in01",206,129;
+	else {
+		warp "lhz_in01",206,129;
+	}
 	end;
 }
 
 lhz_in01,282,166,0	script	#kiz10	-1,3,3,{
-
-OnTouch:
-	if(countitem(7345))
-	{
-		if(lhz_curse == 16)
-		{
-			mes "...............";
+OnTouch_:
+	if (countitem(7345) > 0) {
+		if (lhz_curse == 16) {
+			if (checkweight(1201,1) == 1) {
+				mes "^3355FFThere's something on";
+				mes "the floor, but you can't";
+				mes "really take a good look at";
+				mes "what it is right now. Perhaps";
+				mes "if you freed up more space";
+				mes "in your inventory...";
+				close;
+			}
+			mes "...";
+			mes "......";
 			next;
-			mes "...............";
-			sc_start SC_Curse,1000,0;
+			mes "...";
+			mes "......";
+			mes ".........";
 			soundeffect "loli_ruri_stand.wav",0;
+			sc_start SC_Curse,1000,0;
 			close2;
 			warp "lhz_que01",98,59;
 			end;
 		}
-		else if(lhz_curse > 0 && lhz_curse < 26)
-		{
+		else if (((lhz_curse > 0) && (lhz_curse < 16)) && ((lhz_curse > 16) && (lhz_curse < 26))) {
 			sc_start SC_Curse,1000,0;
-			end;
 		}
 	}
+	end;
 }
 
-lhz_que01,99,74,5	script	#pecomaster	48,{
-
-	if(checkweight(7341,1) != 1)
-	{
-		mes "^3355FFWait a second! Right now,";
-		mes "you have too many items in your";
-		mes "inventory. Please come back";
-		mes "after you've made more available";
-		mes "inventory space.^000000";
-		close;
-	}
-	else if(lhz_curse == 16)
-	{
+lhz_que01,99,74,5	script	#li_Man	48,{
+	if (lhz_curse == 16) {
 		mes "[???]";
 		mes "It's over.";
 		mes "I really want";
@@ -4295,8 +4228,8 @@ lhz_que01,99,74,5	script	#pecomaster	48,{
 		mes "the end for me.";
 		next;
 		mes "[Peco Peco]";
-		mes "^3131FFThis is the end!^000000";
-		mes "^3131FFThis is the end!^000000";
+		mes "^3131FFThis is the end!";
+		mes "This is the end!^000000";
 		next;
 		mes "[???]";
 		mes "He was right to say that";
@@ -4310,12 +4243,11 @@ lhz_que01,99,74,5	script	#pecomaster	48,{
 		mes "about me by now. And her";
 		mes "health is so bad. I'm such";
 		mes "a fool for leaving her behind.";
-		mes "";
 		next;
 		mes "[Peco Peco]";
-		mes "^3131FFSuch a fool!^000000";
-		mes "^3131FFSuch a fool!^000000";
-		mes "^3131FF*Squaaawk~*^000000";
+		mes "Such a fool!";
+		mes "Such a fool!";
+		mes "*Squaaawk~*";
 		next;
 		mes "[???]";
 		mes "Damn it!";
@@ -4323,9 +4255,9 @@ lhz_que01,99,74,5	script	#pecomaster	48,{
 		mes "Be quiet for just a minute!";
 		next;
 		mes "[Peco Peco]";
-		mes "^3131FF*Squaaawk!*^000000";
-		mes "^3131FFDeath Penalty!^000000";
-		mes "^3131FFDeath Penalty!^000000";
+		mes "*Squaaaawk!*";
+		mes "Death Penalty!";
+		mes "Death Penalty!";
 		next;
 		mes "[???]";
 		mes "Death penalty?";
@@ -4333,11 +4265,13 @@ lhz_que01,99,74,5	script	#pecomaster	48,{
 		mes "to say something weird";
 		mes "like that? Huh. That's...";
 		next;
-		mes "............";
+		mes "..............";
 		next;
-		mes "............";
+		mes ".................";
 		next;
-		mes "............";
+		mes "....................";
+		next;
+		mes "......................";
 		next;
 		mes "[???]";
 		mes "I'm the only one still";
@@ -4356,7 +4290,7 @@ lhz_que01,99,74,5	script	#pecomaster	48,{
 		mes "be able to get back...";
 		next;
 		mes "[???]";
-		mes "............";
+		mes "........";
 		next;
 		mes "[?????]";
 		mes "Hey there, been";
@@ -4382,10 +4316,14 @@ lhz_que01,99,74,5	script	#pecomaster	48,{
 		mes "I want to see her again,";
 		mes "please let me see her...!";
 		next;
-		mes ".........";
-		mes "............";
+		mes "...";
+		mes "......";
 		next;
-		mes "^3131FF*Clink*^000000";
+		mes "...";
+		mes "......";
+		mes ".........";
+		next;
+		mes "^3355FF*Clink*^000000";
 		next;
 		mes "[??]";
 		mes "Hm? Who the hell";
@@ -4400,30 +4338,31 @@ lhz_que01,99,74,5	script	#pecomaster	48,{
 		mes "pendant isn't even";
 		mes "worth picking up.";
 		next;
-		mes "^3131FFYou pick up an old^000000";
+		mes "^3131FFYou pick up an old";
 		mes "pendant from the ground.";
 		mes "No matter how hard you try,";
 		mes "you can't open its clasp to see";
 		mes "what this pendant contains.^000000";
-		changequest 2090,2091;
 		set lhz_curse,17;
-		getitem 7341,1;
+		changequest 2090,2091;
+		getitem 7341,1; //Worn_Out_Pendant
 		close2;
-		warp "lhz_in01",278,161;
-		end;
+		warp "lhz_in01",278,162;
 	}
-	else
-	{
-		warp "lhz_in01",278,161;
-		end;
+	else {
+		warp "lhz_in01",278,162;
 	}
+	end;
 }
 
-lhz_que01,90,71,5	script	#birdie	1019,3,3,{
+lhz_que01,90,71,5	script	#li_bird	1019,3,3,{
+	mes "[Peco Peco]";
+	mes "You're a fool!";
+	mes "You're a fool!";
+	mes "You're a fool!";
+	close;
 
-	end;
-
-OnTouch:
+OnTouch_:
 	mes "[Peco Peco]";
 	mes "You're a fool!";
 	mes "You're a fool!";
@@ -4431,20 +4370,271 @@ OnTouch:
 	close;
 }
 
-lighthalzen,346,263,3	script	Elder	846,{
-
-	if((!countitem(7345)) || (lhz_curse > 18))
-	{
-L_NoText:
-		mes "[Elder]";
-		mes "Predators are always";
-		mes "on the lookout for easy";
-		mes "prey. Be careful, youngster!";
-		mes "You look innocent enough";
-		mes "to become a victim in the city.";
-		next;
-		switch( select( "About Lighthalzen","About the Slum","????" ) )
-		{
+lighthalzen,346,263,3	script	Elder#lhz	846,{
+	if (countitem(7345) > 0) {
+		if ((lhz_curse == 1) && (lhz_spi01 == 1) && (lhz_spi02 == 1) && (lhz_spi03 == 1) && (lhz_spi04 == 1)) {
+			mes "[Elder]";
+			mes "No wonder you look";
+			mes "so weary. Come, let";
+			mes "me help relieve you";
+			mes "of the burden that";
+			mes "you are carrying.";
+			next;
+			switch(select("Um, burden...?:Crazy old woman!")) {
+			case 1:
+				mes "[Elder]";
+				mes "Ah yes, they may not";
+				mes "be apparent to you, but";
+				mes "my eyes can clearly see";
+				mes "them. Yes. You're being";
+				mes "followed by those things.";
+				next;
+				select("Things?");
+				mes "[Elder]";
+				mes "Yes. The best way I can";
+				mes "describe them is as evil";
+				mes "thoughts left in the world";
+				mes "when someone dies in";
+				mes "such a way that his grudge";
+				mes "survives to menace the living.";
+				next;
+				mes "[Elder]";
+				mes "Sometimes, these lingering";
+				mes "thoughts are created when";
+				mes "someone is broken hearted";
+				mes "or clings to this plane for the";
+				mes "sake of a loved one. Yes, those";
+				mes "thoughts are following you.";
+				next;
+				mes "[Elder]";
+				mes "I don't know why they";
+				mes "are following you, but I'm";
+				mes "certain they're there. Have";
+				mes "you been experiencing chills";
+				mes "down your spine, cold sweats,";
+				mes "maybe even hearing voices?";
+				soundeffect "loli_ruri_stand.wav",0;
+				sc_start SC_Curse,5000,0;
+				next;
+				select("Yes! How do I get rid of them?");
+				mes "[Elder]";
+				mes "Well, usually these lingering";
+				mes "thoughts have some sort of";
+				mes "physical anchor, an object";
+				mes "that has feelings attached";
+				mes "to it, something important";
+				mes "to its late owner.";
+				next;
+				mes "[Elder]";
+				mes "The rage they're directing";
+				mes "at you seems to be growing";
+				mes "and I can see the angry spirits";
+				mes "pulling at the hems of your";
+				mes "clothes. Tell me, have you";
+				mes "wronged anyone recently?!";
+				next;
+				select("I don't... think so.:I can't remember every bad thing I've done!");
+				mes "[Elder]";
+				mes "Well, you better do";
+				mes "something soon, before";
+				mes "the evil taints your mind";
+				mes "and drives you to insanity!";
+				mes "Now, I need to know for sure";
+				mes "if you've been hearing voices.";
+				next;
+				select("Y-yes, I have.");
+				mes "[Elder]";
+				mes "There's still hope.";
+				mes "The spirits are trying";
+				mes "to reach you for now, but";
+				mes "if you wait too long, you may";
+				mes "become a victim of their wrath.";
+				mes "Hurry, there is much to do!";
+				next;
+				mes "[Elder]";
+				mes "You must appease these";
+				mes "forces by finding out what";
+				mes "happened to them in life.";
+				mes "Now, I don't possess great";
+				mes "power, but I can encourage";
+				mes "the spirits to guide you.";
+				next;
+				mes "[Elder]";
+				mes "I can only have the spirits";
+				mes "reveal the places they wish";
+				mes "for you to search only once.";
+				mes "You must remember the";
+				mes "locations that I am about";
+				mes "to show you. Get ready...";
+				specialeffect2 EF_SIGHT;
+				next;
+				mes "[Elder]";
+				mes "Yaaaaappp ---!";
+				specialeffect2 EF_SIGHTRASHER;
+				specialeffect2 EF_VOLCANO;
+				specialeffect2 EF_MAPPILLAR;
+				next;
+				mes "[Elder]";
+				mes "There! The locations";
+				mes "you must search should";
+				mes "be clear to you now! Don't";
+				mes "forget these placemarks!";
+				viewpoint 1,104,282,1,0xFF99FF33;
+				viewpoint 1,105,282,2,0xFF99FF33;
+				viewpoint 1,104,281,3,0xFF99FF33;
+				viewpoint 1,105,281,4,0xFF99FF33;
+				next;
+				mes "[Elder]";
+				mes "Good luck, youngster.";
+				mes "I hope you can appease";
+				mes "the wrath of these spirits...";
+				mes "But as long as you let them guide you, you ought to be safe.";
+				set lhz_curse,6;
+				changequest 2086,2087;
+				close;
+			case 2:
+				mes "[Elder]";
+				mes "Crazy...? Hm, you must";
+				mes "not quite understand what's";
+				mes "happening to you. Please do";
+				mes "not hesitate to come back to";
+				mes "me when you realize that you";
+				mes "need my help, youngster.";
+				close;
+			}
+		}
+		else if ((lhz_curse > 5) && (lhz_curse < 17)) {
+			mes "[Elder]";
+			mes "I'm sorry, but there's";
+			mes "nothing more I can do for";
+			mes "you right now. But if you";
+			mes "find anything related to the";
+			mes "spirits that torment you,";
+			mes "please let me know.";
+			close;
+		}
+		else if (lhz_curse == 17) {
+			if (countitem(7341) > 0) {
+				mes "[Elder]";
+				mes "Greetings, adventurer.";
+				mes "How goes your search for";
+				mes "the remains of the spirits";
+				mes "that still cling to this plane?";
+				next;
+				switch(select("Show him the Pendant.:Cancel")) {
+				case 1:
+					mes "[Elder]";
+					mes "Oh my... There are some";
+					mes "incredibly powerful emotions";
+					mes "clinging to this pendant. If we";
+					mes "don't do anything about this,";
+					mes "you'll be cursed very soon.";
+					mes "This is what you must do.";
+					next;
+					mes "[Elder]";
+					mes "Hurry and bring";
+					mes "^3131FF5 Holy Water^000000 and";
+					mes "^3131FF1 Bouquet^000000. The Holy Water";
+					mes "will purify this Pendant and";
+					mes "the Bouquet will comfort";
+					mes "the spirit of its owner.";
+					next;
+					mes "[Elder]";
+					mes "You don't have much";
+					mes "time, so return to me";
+					mes "as soon as possible!";
+					mes "It won't be long until";
+					mes "the spirits are consumed";
+					mes "by their supernatural rage...";
+					set lhz_curse,18;
+					changequest 2091,2092;
+					close;
+				case 2:
+					close;
+				}
+			}
+			else {
+				mes "[Elder]";
+				mes "Greetings, adventurer.";
+				mes "How goes your search for";
+				mes "the remains of the spirits";
+				mes "that still cling to this plane?";
+				next;
+				mes "[Elder]";
+				mes "Wait...";
+				mes "Why do I sense";
+				mes "that you've found";
+				mes "something, but have";
+				mes "not brought it with you?";
+				mes "You must retrace your steps!";
+				close;
+			}
+		}
+		else if (lhz_curse == 18) {
+			if ((countitem(523) > 4) && (countitem(744) > 0) && (countitem(7341) > 0)) {
+				mes "[Elder]";
+				mes "Good, good.";
+				mes "All is in readiness.";
+				mes "Please be silent as";
+				mes "I focus my spirit for the";
+				mes "great task before me.";
+				next;
+				mes "[Elder]";
+				mes "...";
+				mes "......";
+				mes ".........";
+				mes "Hooooooo...";
+				specialeffect2 EF_BENEDICTIO;
+				next;
+				mes "[Elder]";
+				mes "Yaaaaapp ---!";
+				specialeffect2 EF_ASPERSIO;
+				next;
+				mes "[Elder]";
+				mes "Whew! I've managed";
+				mes "to nullify this curse for you.";
+				mes "That still doesn't change the";
+				mes "fact that what happened to this";
+				mes "pendant's owner was tragic...";
+				next;
+				mes "[Elder]";
+				mes "Why don't you bring";
+				mes "this pendant to the place";
+				mes "where it really belongs?";
+				mes "I'm sure that would bring";
+				mes "great comfort to its owner.";
+				next;
+				mes "^3355FFSuddenly, the clasp on";
+				mes "the pendant pops open,";
+				mes "revealing a picture of a happy";
+				mes "couple. Somehow, the girl in";
+				mes "the picture, sitting uncomfortably^FFFFFF^3355FF in an old chair, looks familiar...^000000";
+				set lhz_curse,19;
+				changequest 2092,2093;
+				delitem 523,5; //Holy_Water
+				delitem 744,1; //Bunch_Of_Flowers
+				close;
+			}
+			else {
+				mes "[Elder]";
+				mes "Hurry and bring";
+				mes "^3131FF5 Holy Water^000000 and";
+				mes "^3131FF1 Bouquet^000000 in order";
+				mes "for me to nullify this";
+				mes "curse. Do not forget to";
+				mes "bring the Pendant as well.";
+				close;
+			}
+		}
+		else {
+			mes "[Elder]";
+			mes "Predators are always";
+			mes "on the lookout for easy";
+			mes "prey. Be careful, youngster!";
+			mes "You look innocent enough";
+			mes "to become a victim in the city.";
+			next;
+			switch(select("About Lighthalzen:About the Slum:????")) {
 			case 1:
 				mes "[Elder]";
 				mes "Lighthalzen might seem";
@@ -4478,7 +4668,6 @@ L_NoText:
 				mes "can't be choosers, so I'm sure";
 				mes "these jobs aren't that great.";
 				close;
-
 			case 2:
 				mes "[Elder]";
 				mes "To live in the slum is to";
@@ -4496,7 +4685,6 @@ L_NoText:
 				mes "people in the rich district";
 				mes "seem to keep forgetting.";
 				close;
-
 			case 3:
 				mes "[Elder]";
 				mes "Well, if you need any";
@@ -4505,293 +4693,154 @@ L_NoText:
 				mes "and ask me. I get the feeling";
 				mes "that we'll probably meet again.";
 				close;
+			}
 		}
 	}
-	else if((lhz_curse == 1) && (lhz_spi01) && (lhz_spi02) && (lhz_spi04))
-	{
-		mes "[Elder]";
-		mes "No wonder you look";
-		mes "so weary. Come, let";
-		mes "me help relieve you";
-		mes "of the burden that";
-		mes "you're carrying.";
-		next;
-		switch( select( "Um, burden...?","Crazy old woman!" ) )
-		{
-			case 1:
-				mes "[Elder]";
-				mes "Ah yes, they may not";
-				mes "be apparent to you, but";
-				mes "my eyes can clearly see";
-				mes "them. Yes. You're being";
-				mes "followed by those things.";
-				next;
-				switch( select( "Things?" ) )
-				{
-					case 1:
-						break;
-				}
-				mes "[Elder]";
-				mes "Yes. the best way I can";
-				mes "describe them is as evil";
-				mes "thoughts left in the world";
-				mes "when someone dies in";
-				mes "such a way that his grudge";
-				mes "survives to menace the living.";
-				next;
-				mes "[Elder]";
-				mes "Sometimes, these lingering";
-				mes "thoughts are created when";
-				mes "someone is broken hearted";
-				mes "or clings to this plane of the";
-				mes "sake of a loved one. Yes, those";
-				mes "thoughts are following you.";
-				next;
-				mes "[Elder]";
-				mes "I don't know why they";
-				mes "are following you, but I'm";
-				mes "certain they're there. Have";
-				mes "you been experiencing chills";
-				mes "down your spine, cold sweats,";
-				mes "maybe even hearing voices?";
-				soundeffect "loli_ruri_stand.wav",0;
-				sc_start SC_Curse,5000,0;
-				next;
-				switch( select( "Yes! How do I get rid of them?" ) )
-				{
-					case 1:
-						break;
-				}
-				mes "[Elder]";
-				mes "Well, usually these lingering";
-				mes "thoughts have some sort of";
-				mes "physical anchor, an object";
-				mes "that has feelings attached";
-				mes "to it, something important";
-				mes "to its late owner.";
-				next;
-				mes "[Elder]";
-				mes "The rage they're directing";
-				mes "at you seems to be growing";
-				mes "and I can see the angry spirits";
-				mes "pulling at the hems of your";
-				mes "clothes. Tell me, have you";
-				mes "wronged anyone recently?!";
-				next;
-				switch( select( "I don't... think so.","I can't remember every bad thing I've done!" ) )
-				{
-					case 1:
-						break;
-						case 2:
-						break;
-				}
-				mes "[Elder]";
-				mes "Well, you better do";
-				mes "something soon, before";
-				mes "the evil taints your mind";
-				mes "and drives you to insanity!";
-				mes "Now, I need to know for sure";
-				mes "if you've hearing voices.";
-				next;
-				switch( select( "Y-yes, I have." ) )
-				{
-					case 1:
-						break;
-				}
-				mes "[Elder]";
-				mes "There's still hope.";
-				mes "The spirits are trying";
-				mes "to reach you for now, but";
-				mes "if you wait too long, you may";
-				mes "become a victim of their wrath.";
-				mes "Hurry, there is much to do!";
-				next;
-				mes "[Elder]";
-				mes "You must appease these";
-				mes "forces by finding out what";
-				mes "happened to them in life.";
-				mes "Now, I don't possess great";
-				mes "power, but I can encourage";
-				mes "the spirits to guide you.";
-				next;
-				mes "[Elder]";
-				mes "I can only have the spirits";
-				mes "reveal the places they wish";
-				mes "for you to search only once.";
-				mes "You must remember the";
-				mes "locations that I am about";
-				mes "to show you. Get ready...";
-				specialeffect2 EF_SIGHT;
-				next;
-				mes "[Elder]";
-				mes "Yaaaaappp ---!";
-				specialeffect2 EF_SIGHTRASHER;
-				specialeffect2 EF_VOLCANO;
-				specialeffect2 EF_PORTAL;
-				next;
-				mes "[Elder]";
-				mes "There! The locations";
-				mes "you must search should";
-				mes "be clear to you now! Don't";
-				mes "forget these placemarks!";
-				viewpoint 1,104,282,1,0xFF99FF33;
-				viewpoint 1,105,282,2,0xFF99FF33;
-				viewpoint 1,104,281,3,0xFF99FF33;
-				viewpoint 1,105,281,4,0xFF99FF33;
-				next;
-				mes "[Elder]";
-				mes "Good luck, youngster.";
-				mes "I hope you can appease";
-				mes "the wrath of these spirits...";
-				mes "But as long as you let them";
-				mes "guide you, you ought to be safe.";
-				changequest 2086,2087;
-				set lhz_curse,6;
-				close;
-		
-			case 2:
-				mes "[Elder]";
-				mes "Crazy...? Hm, you must";
-				mes "not quite understand what's";
-				mes "happening to you. Please do";
-				mes "not hesitate to come back to";
-				mes "me when you realize that you";
-				mes "need my help, youngster.";
-				close;
-		}
-	}
-	else if((lhz_curse > 5) && (lhz_curse < 17))
-	{
-		mes "[Elder]";
-		mes "I'm sorry, but there's";
-		mes "nothing more I can do for";
-		mes "you right now. But if you";
-		mes "find anything related to the";
-		mes "spirits that torment you,";
-		mes "please let me know.";
-		close;
-	}
-	else if(lhz_curse == 17)
-	{
-		if(!countitem(7341))
-		{
+	else {
+		if (lhz_curse < 1) {
 			mes "[Elder]";
-			mes "I'm sorry, but there's";
-			mes "nothing more I can do for";
-			mes "you right now. But if you";
-			mes "find anything related to the";
-			mes "spirits that torment you,";
-			mes "please let me know.";
-			close;
-		}
-		mes "[Elder]";
-		mes "Greetings, adventurer.";
-		mes "How goes your search for";
-		mes "the remains of the spirits";
-		mes "that still cling to this plane?";
-		next;
-		switch( select( "Show her the Pendant.","Cancel" ) )
-		{
+			mes "Predators are always";
+			mes "on the lookout for easy";
+			mes "prey. Be careful, youngster!";
+			mes "You look innocent enough";
+			mes "to become a victim in the city.";
+			next;
+			switch(select("About Lighthalzen:About the Slum:????")) {
 			case 1:
 				mes "[Elder]";
-				mes "Oh my... There are some";
-				mes "incredibly powerful emotions";
-				mes "clinging to this pendant. If we";
-				mes "don't do anything about this,";
-				mes "you'll be cursed very soon.";
-				mes "This is what you must do.";
+				mes "Lighthalzen might seem";
+				mes "like a splendid city at first,";
+				mes "but you'll quickly learn that";
+				mes "the poor are segregated from";
+				mes "the rich and treated as less";
+				mes "than second class citizens.";
 				next;
 				mes "[Elder]";
-				mes "Hurry and bring";
-				mes "^0000ff5 Holy Water^000000 and";
-				mes "^0000ff1 Bouquet^000000. The Holy Water";
-				mes "will purify this Pendant and";
-				mes "the Bouquet will comfort";
-				mes "the spirit of its owner.";
+				mes "At first, separation between";
+				mes "the rich and poor districts was";
+				mes "subtly enforced. They built the";
+				mes "railroad right between the two";
+				mes "districts to make it easier for";
+				mes "the rich to ignore the poor.";
 				next;
 				mes "[Elder]";
-				mes "You don't have much";
-				mes "time, so return to me";
-				mes "as soon as possible!";
-				mes "It won't be long until";
-				mes "the spirits are consumed";
-				mes "by their supernatural rage...";
-				changequest 2091,2092;
-				set lhz_curse,18;
+				mes "But now they even have";
+				mes "guards to make sure that";
+				mes "the poor can't bother the";
+				mes "rich. I'm pretty sure that";
+				mes "this segregation won't be";
+				mes "ending anytime soon...";
+				next;
+				mes "[Elder]";
+				mes "Now, I've heard that the";
+				mes "Rekenber Corporation is";
+				mes "actually providing jobs for";
+				mes "people in the slums. Beggars";
+				mes "can't be choosers, so I'm sure";
+				mes "these jobs aren't that great.";
 				close;
 			case 2:
 				mes "[Elder]";
-				mes "Oh... You look so pale, are";
-				mes "you alright? Heh heh~";
+				mes "To live in the slum is to";
+				mes "be familiar with poverty,";
+				mes "disease, condemnation";
+				mes "and contempt. But we're all";
+				mes "still people, you know, so let";
+				mes "go of any of your misgivings.";
+				next;
+				mes "[Elder]";
+				mes "We're struggling just";
+				mes "to survive here. At the";
+				mes "very least, please respect";
+				mes "that. It's a fact that the";
+				mes "people in the rich district";
+				mes "seem to keep forgetting.";
+				close;
+			case 3:
+				mes "[Elder]";
+				mes "Well, if you need any";
+				mes "help around here or have";
+				mes "any questions, come back";
+				mes "and ask me. I get the feeling";
+				mes "that we'll probably meet again.";
 				close;
 			}
-	}
-	else if(lhz_curse == 18)
-	{
-		if((countitem(523) < 5) || (!countitem(744)) || (!countitem(7341)))
-		{
-			mes "[Elder]";
-			mes "Hurry and bring";
-			mes "^0000ff5 Holy Water^000000 and";
-			mes "^0000ff1 Bouquet^000000. The Holy Water";
-			mes "will purify this Pendant and";
-			mes "the Bouquet will comfort";
-			mes "the spirit of its owner.";
-			close;
 		}
-		mes "[Elder]";
-		mes "Good, good.";
-		mes "All is readiness.";
-		mes "Please be silent as";
-		mes "I focus my spirit for the";
-		mes "great task before me.";
-		next;
-		mes "[Elder]";
-		mes "...";
-		mes "......";
-		mes ".........";
-		mes "Hoooooooo...";
-		specialeffect2 EF_SUFFRAGIUM;
-		next;
-		mes "[Elder]";
-		mes "Yaaaaapp ---!";
-		specialeffect2 EF_ASPERSIO;
-		next;
-		mes "[Elder]";
-		mes "Whew! I've managed";
-		mes "to nullify this curse for you.";
-		mes "That still doesn't change the";
-		mes "fact that what happened to this";
-		mes "pendant's owner was tragic...";
-		next;
-		mes "[Elder]";
-		mes "Why don't you bring";
-		mes "this pendant to the place";
-		mes "where it really belongs?";
-		mes "I'm sure that would bring";
-		mes "great comfort to its owner.";
-		next;
-		mes "^3131FFSuddenly, the clasp on";
-		mes "the pendant pops open,";
-		mes "revealing a picture of a happy";
-		mes "couple. Somehow, the girl in";
-		mes "the picture, sitting uncomfortably";
-		mes "in an old chair, looks familiar...^000000";
-		delitem 523,5; // Holy Water
-		delitem 744,1; // Bouquet
-		changequest 2092,2093;
-		set lhz_curse,19;
-		close;
+		else {
+			mes "[Elder]";
+			mes "Predators are always";
+			mes "on the lookout for easy";
+			mes "prey. Be careful, youngster!";
+			mes "You look innocent enough";
+			mes "to become a victim in the city.";
+			next;
+			switch(select("About Lighthalzen:About the Slum:????")) {
+			case 1:
+				mes "[Elder]";
+				mes "Lighthalzen might seem";
+				mes "like a splendid city at first,";
+				mes "but you'll quickly learn that";
+				mes "the poor are segregated from";
+				mes "the rich and treated as less";
+				mes "than second class citizens.";
+				next;
+				mes "[Elder]";
+				mes "At first, separation between";
+				mes "the rich and poor districts was";
+				mes "subtly enforced. They built the";
+				mes "railroad right between the two";
+				mes "districts to make it easier for";
+				mes "the rich to ignore the poor.";
+				next;
+				mes "[Elder]";
+				mes "But now they even have";
+				mes "guards to make sure that";
+				mes "the poor can't bother the";
+				mes "rich. I'm pretty sure that";
+				mes "this segregation won't be";
+				mes "ending anytime soon...";
+				next;
+				mes "[Elder]";
+				mes "Now, I've heard that the";
+				mes "Rekenber Corporation is";
+				mes "actually providing jobs for";
+				mes "people in the slums. Beggars";
+				mes "can't be choosers, so I'm sure";
+				mes "these jobs aren't that great.";
+				close;
+			case 2:
+				mes "[Elder]";
+				mes "To live in the slum is to";
+				mes "be familiar with poverty,";
+				mes "disease, condemnation";
+				mes "and contempt. But we're all";
+				mes "still people, you know, so let";
+				mes "go of any of your misgivings.";
+				next;
+				mes "[Elder]";
+				mes "We're struggling just";
+				mes "to survive here. At the";
+				mes "very least, please respect";
+				mes "that. It's a fact that the";
+				mes "people in the rich district";
+				mes "seem to keep forgetting.";
+				close;
+			case 3:
+				mes "[Elder]";
+				mes "Well, if you need any";
+				mes "help around here or have";
+				mes "any questions, come back";
+				mes "and ask me. I get the feeling";
+				mes "that we'll probably meet again.";
+				close;
+			}
+		}
 	}
-	else goto L_NoText;
 }
 
-lhz_in03,32,162,3	script	Crippled Girl	53,{
-
-	if(lhz_curse == 23)
-	{
-		if(countitem(7341))
-		{
+lhz_in03,32,162,3	script	Crippled Girl#li_tre	53,{
+	if (lhz_curse == 23) {
+		if (countitem(7341) > 0) {
 			mes "["+strcharinfo(0)+"]";
 			mes "Hey there, are";
 			mes "you feeling alright?";
@@ -4826,7 +4875,7 @@ lhz_in03,32,162,3	script	Crippled Girl	53,{
 			mes "old pendant";
 			mes "into her hands.^000000";
 			next;
-			specialeffect2 EF_MAPPILLAR3;
+			specialeffect2 EF_FORESTLIGHT4;
 			mes "...............";
 			next;
 			mes "["+strcharinfo(0)+"]";
@@ -4865,300 +4914,310 @@ lhz_in03,32,162,3	script	Crippled Girl	53,{
 			mes "["+strcharinfo(0)+"]";
 			mes "Well...";
 			mes "This is awkward.";
-			delitem 7341,1;
+			delitem 7341,1; //Worn_Out_Pendant
 			set lhz_curse,24;
 			close;
 		}
-		mes "["+strcharinfo(0)+"]";
-		mes "Hey there, are";
-		mes "you feeling alright?";
-		next;
-		mes "[Crippled Girl]";
-		mes "Oh, thanks,";
-		mes "I'm fine. But...";
-		mes "Have we met before?";
-		next;
-		mes "["+strcharinfo(0)+"]";
-		mes "Yeah, we did.";
-		mes "You should know who";
-		mes "I am by now. Hey, you";
-		mes "didn't forget, did you?";
-		next;
-		mes "[Lady]";
-		mes "Oh, how do I put this?";
-		mes "The fever she had for the";
-		mes "last few days. She's gotten";
-		mes "better, but she's forgotten";
-		mes "everything that's happened";
-		mes "in the past few weeks...";
-		next;
-		mes "^3131ffThis would be a good";
-		mes "opportunity to give her the...^000000";
-		close;
+		else {
+			mes "["+strcharinfo(0)+"]";
+			mes "Hey there, are";
+			mes "you feeling alright?";
+			next;
+			mes "[Crippled Girl]";
+			mes "Oh, thanks,";
+			mes "I'm fine. But...";
+			mes "Have we met before?";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "Yeah, we did.";
+			mes "You should know who";
+			mes "I am by now. Hey, you";
+			mes "didn't forget, did you?";
+			next;
+			mes "[Lady]";
+			mes "Oh, how do I put this?";
+			mes "The fever she had for the";
+			mes "last few days. She's gotten";
+			mes "better, but she's forgotten";
+			mes "everything that's happened";
+			mes "in the past few weeks...";
+			next;
+			mes "^3131ffThis would be a good";
+			mes "opportunity to give her the...^000000";
+			close;
+		}
 	}
-	else if(lhz_curse == 24)
-	{
+	else if (lhz_curse == 24) {
 		mes "[Setsu]";
 		mes "...";
 		mes "......";
 		close;
 	}
-	else if(lhz_curse == 25)
-	{
+	else if (lhz_curse == 25) {
 		mes "[Setsu]";
 		mes "Excuse me, I can't still";
 		mes "walk but I don't cry";
 		mes "anymore. I'm doing my best!";
 		close;
 	}
-	else
-	{
+	else {
 		mes "[Crippled Girl]";
 		mes "...";
 		mes "......";
 		mes "*Sigh...*";
 		next;
-		switch( select( "Hello, how are you?" ) )
-		{
-			case 1:
-				break;
-		}
+		select("Hello, how are you?");
 		mes "[Crippled Girl]";
 		mes "Oh, I'm fine,";
 		mes "thanks for asking.";
 		mes "I'm just waiting for";
 		mes "somebody, that's all.";
-		if(lhz_curse == 19)
-		{
+		if (lhz_curse == 19) {
 			next;
-			switch( select( "Show her the Pendant.","Okay, have a good day." ) )
-			{
-				case 1:
-					mes "["+strcharinfo(0)+"]";
-					mes "Um, would you have";
-					mes "any idea who might";
-					mes "have owned this pendant?";
+			switch(select("Show her the Pendant.:Okay, have a good day.")) {
+			case 1:
+				break;
+			case 2:
+				mes "[Crippled Girl]";
+				mes "Okay,";
+				mes "bye-bye...";
+				close;
+			}
+			mes "["+strcharinfo(0)+"]";
+			mes "Um, would you have";
+			mes "any idea who might";
+			mes "have owned this pendant?";
+			next;
+			if (countitem(7341) < 1) {
+				mes "[Crippled Girl]";
+				mes "What are you talking about?";
+				close;
+			}
+			emotion e_gasp,"Crippled Girl#li_tre";
+			mes "[Crippled Girl]";
+			mes "Oh, that's mine!";
+			mes "I gave it to my big brother";
+			mes "before he went away on some";
+			mes "sort of business trip. You must";
+			mes "be his friend, is that right?";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "Actually, um,";
+			mes "you know what...?";
+			next;
+			switch(select("Brutal Truth:Break it to her gently")) {
+			case 1:
+				mes "...";
+				mes "......";
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "...So basically, your";
+				mes "brother's @lhz_ghost, oh right,";
+				mes "did I mention he was dead?";
+				mes "Anyway, so he's not alive";
+				mes "anymore, but his spirit or";
+				mes "whatever is still around and--";
+				next;
+				mes "[Crippled Girl]";
+				mes "...";
+				mes "......";
+				next;
+				mes "[Crippled Girl]";
+				mes "...Dead?";
+				mes "No! I don't believe you!";
+				mes "He can't die! He was the";
+				mes "bravest and the sweetest";
+				mes "and the-- Leave me alone!";
+				mes "Oh god, get the hell away!";
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "...";
+				mes "......";
+				mes "Sheesh.";
+				mes "Don't kill the";
+				mes "messenger.";
+				set lhz_curse,20;
+				close2;
+				warp "lighthalzen",322,323;
+				end;
+			case 2:
+				if (countitem(7341) > 0) {
+					mes "[Crippled Girl]";
+					mes "Did you meet my";
+					mes "big brother...?";
 					next;
-					if (!countitem(7341))
-					{
-						mes "[Crippled Girl]";
-						mes "What are you talking about?";
+					mes "[Crippled Girl]";
+					mes "My brother is a strong";
+					mes "person, and I should be";
+					mes "happy of that, because";
+					mes "nothing could happen";
+					mes "to him.";
+					next;
+					mes "["+strcharinfo(0)+"]";
+					mes "Um... yes. So...";
+					next;
+					mes "["+strcharinfo(0)+"]";
+					mes "Sure, your big brother must be happy.";
+					mes "He'll come back sometime.";
+					mes "You should sleep to be healthy";
+					mes "once your brother returns.";
+					next;
+					mes "[Crippled Girl]";
+					mes "Yes! I must be okay";
+					mes "and be able to walk when my";
+					mes "brother come.";
+					next;
+					mes "^3131ffYou place the";
+					mes "old pendant";
+					mes "into her hands.^000000";
+					next;
+					specialeffect2 EF_FORESTLIGHT4;
+					mes "......";
+					next;
+					mes "["+strcharinfo(0)+"]";
+					mes "...............";
+					next;
+					mes "[Possessed "+strcharinfo(0)+"]";
+					mes "^3131FFSetsu, please remember";
+					mes "that I'd never do anything";
+					mes "to hurt you. Forgive me for";
+					mes "leaving you behind. I hope";
+					mes "that one day we'll meet";
+					mes "again, little princess.^000000";
+					next;
+					mes "[Possessed "+strcharinfo(0)+"]";
+					mes "^3131FFUntil then, I want";
+					mes "you to be happy, okay?";
+					mes "Your brother's always";
+					mes "gonna be looking out for";
+					mes "you, one way or another...^000000";
+					next;
+					mes "[Setsu]";
+					mes "My brother's...";
+					mes "That's my brother's";
+					mes "voice! Brother!";
+					next;
+					mes "["+strcharinfo(0)+"]";
+					mes "Eh? What? Whoa...";
+					mes "What came over me?";
+					mes "The last thing I reme--";
+					next;
+					mes "^FF0000Tears fall from the";
+					mes "girl's face, then you...^000000";
+					next;
+					switch(select("Distract her:Comfort her")) {
+					case 1:
+						mes "["+strcharinfo(0)+"]";
+						mes "Oh, all of this was a play...";
+						mes "Y-yes a play, I was practising.";
+						mes "Ha ha~ Is it okay, isn't it?";
+						next;
+						mes "[Setsu]";
+						mes "Oh, you surprised me!";
+						mes "Even though I didn't think";
+						mes "it was really my brother, you know?";
+						next;
+						mes "["+strcharinfo(0)+"]";
+						mes "Excuse me...";
+						next;
+						mes "[Setsu]";
+						mes "I'll do my best!";
+						mes "I must be okay when my brother return.";
+						mes "He'll be very proud of me.";
+						mes "Heh heh~";
+						next;
+						mes "["+strcharinfo(0)+"]";
+						mes "Yes, I'm sure of that.";
+						delitem 7341,1; //Worn_Out_Pendant
+						set lhz_curse,25;
+						close;
+					case 2:
+						mes "["+strcharinfo(0)+"]";
+						mes "Crying have no use!";
+						mes "You're a very pretty";
+						mes "girl to be ruining your";
+						mes "face with useless tears.";
+						next;
+						mes "[Setsu]";
+						mes "............";
+						next;
+						mes "["+strcharinfo(0)+"]";
+						mes "You should do your best";
+						mes "to be healthy for the time";
+						mes "your big brother return.";
+						next;
+						mes "[Setsu]";
+						mes "Yes...";
+						next;
+						mes "["+strcharinfo(0)+"]";
+						mes "Listen, when your brother";
+						mes "return you'll celebrate in";
+						mes "a beautiful place.";
+						next;
+						mes "[Setsu]";
+						mes "Really?";
+						mes "It's a promise then! Heh heh~";
+						next;
+						mes "["+strcharinfo(0)+"]";
+						mes "I hope it'll be soon!";
+						mes "When I return I want you to be";
+						mes "able to walk. See you soon, then!";
+						next;
+						mes "[Setsu]";
+						mes "I'll try hard!";
+						delitem 7341,1; //Worn_Out_Pendant
+						set lhz_curse,25;
 						close;
 					}
-					emotion e_gasp;
+				}
+				else {
 					mes "[Crippled Girl]";
-					mes "Oh, that's mine!";
-					mes "I gave it to my big brother";
-					mes "before he went away on some";
-					mes "sort of business trip. You must";
-					mes "be his friend, is that right?";
+					mes "Did you meet my";
+					mes "big brother...?";
+					next;
+					mes "[Crippled Girl]";
+					mes "My brother is a strong";
+					mes "person, and I should be";
+					mes "happy of that, because";
+					mes "nothing could happen";
+					mes "to him.";
 					next;
 					mes "["+strcharinfo(0)+"]";
-					mes "Actually, um,";
-					mes "you know what...?";
+					mes "Um... yes. So...";
 					next;
-					switch( select( "Brutal Truth","Break it to her gently" ) )
-					{
-						case 1:
-							mes "...";
-							mes "......";
-							next;
-							mes "["+strcharinfo(0)+"]";
-							mes "...So basically, your";
-							mes "brother's ghost, oh right,";
-							mes "did I mention he was dead?";
-							mes "Anyway, so he's not alive";
-							mes "anymore, but his spirit or";
-							mes "whatever is still around and--";
-							next;
-							mes "[Crippled Girl]";
-							mes "...";
-							mes "......";
-							next;
-							mes "[Crippled Girl]";
-							mes "...Dead?";
-							mes "No! I don't believe you!";
-							mes "He can't die! He was the";
-							mes "bravest and the sweetest";
-							mes "and the-- Leave me alone!";
-							mes "Oh god, get the hell away!";
-							next;
-							mes "["+strcharinfo(0)+"]";
-							mes "...";
-							mes "......";
-							mes "Sheesh.";
-							mes "Don't kill the";
-							mes "messenger.";
-							changequest 2093,2094;
-							set lhz_curse,23;
-							close2;
-							warp "lighthalzen",322,323;
-							end;
-
-						case 2:
-							mes "[Crippled Girl]";
-							mes "Did you meet my";
-							mes "big brother...?";
-							next;
-							mes "[Crippled Girl]";
-							mes "My brother is a strong";
-							mes "person, and I should be";
-							mes "happy of that, because";
-							mes "nothing could happen";
-							mes "to him.";
-							next;
-							mes "["+strcharinfo(0)+"]";
-							mes "Um... yes. So...";
-							next;
-							mes "["+strcharinfo(0)+"]";
-							mes "Sure, your big brother must be happy.";
-							mes "He'll come back sometime.";
-							mes "You should sleep to be healthy";
-							mes "once your brother returns.";
-							next;
-							mes "[Crippled Girl]";
-							mes "Yes! I must be okay";
-							mes "and be able to walk when my";
-							mes "brother come.";
-							if(!countitem(7341)) close;
-							next;
-							mes "^3131ffYou place the";
-							mes "old pendant";
-							mes "into her hands.^000000";
-							next;
-							specialeffect2 EF_MAPPILLAR3;
-							mes "......";
-							next;
-							mes "["+strcharinfo(0)+"]";
-							mes "...............";
-							next;
-							mes "[Possessed "+strcharinfo(0)+"]";
-							mes "^3131FFSetsu, please remember";
-							mes "that I'd never do anything";
-							mes "to hurt you. Forgive me for";
-							mes "leaving you behind. I hope";
-							mes "that one day we'll meet";
-							mes "again, little princess.^000000";
-							next;
-							mes "[Possessed "+strcharinfo(0)+"]";
-							mes "^3131FFUntil then, I want";
-							mes "you to be happy, okay?";
-							mes "Your brother's always";
-							mes "gonna be looking out for";
-							mes "you, one way or another...^000000";
-							next;
-							mes "[Setsu]";
-							mes "My brother's...";
-							mes "That's my brother's";
-							mes "voice! Brother!";
-							next;
-							mes "["+strcharinfo(0)+"]";
-							mes "Eh? What? Whoa...";
-							mes "What came over me?";
-							mes "The last thing I reme--";
-							next;
-							mes "^FF0000Tears fall from the";
-							mes "girl's face, then you...^000000";
-							next;
-							switch( select( "Distract her","Comfort her" ) )
-							{
-								case 1:
-									mes "["+strcharinfo(0)+"]";
-									mes "Oh, all of this was a play...";
-									mes "Y-yes a play, I was practising.";
-									mes "Ha ha~ Is it okay, isn't it?";
-									next;
-									mes "[Setsu]";
-									mes "Oh, you surprised me!";
-									mes "Even though I didn't think";
-									mes "it was really my brother, you know?";
-									next;
-									mes "["+strcharinfo(0)+"]";
-									mes "Excuse me...";
-									next;
-									mes "[Setsu]";
-									mes "I'll do my best!";
-									mes "I must be okay when my brother return.";
-									mes "He'll be very proud of me.";
-									mes "Heh heh~";
-									next;
-									mes "["+strcharinfo(0)+"]";
-									mes "Yes, I'm sure of that.";
-									delitem 7341,1;
-									changequest 2093,2094;
-									set lhz_curse,25;
-									close;
-						
-								case 2:
-									mes "["+strcharinfo(0)+"]";
-									mes "Crying have no use!";
-									mes "You're a very pretty";
-									mes "girl to be ruining your";
-									mes "face with useless tears.";
-									next;
-									mes "[Setsu]";
-									mes "............";
-									next;
-									mes "["+strcharinfo(0)+"]";
-									mes "You should do your best";
-									mes "to be healthy for the time";
-									mes "your big brother return.";
-									next;
-									mes "[Setsu]";
-									mes "Yes...";
-									next;
-									mes "["+strcharinfo(0)+"]";
-									mes "Listen, when your brother";
-									mes "return you'll celebrate in";
-									mes "a beautiful place.";
-									next;
-									mes "[Setsu]";
-									mes "Really?";
-									mes "It's a promise then! Heh heh~";
-									next;
-									mes "["+strcharinfo(0)+"]";
-									mes "I hope it'll be soon!";
-									mes "When I return I want you to be";
-									mes "able to walk. See you soon, then!";
-									next;
-									mes "[Setsu]";
-									mes "I'll try hard!";
-									delitem 7341,1;
-									changequest 2093,2094;
-									set lhz_curse,25;
-									close;
-							}
-					}
-			
-				case 2:
+					mes "["+strcharinfo(0)+"]";
+					mes "Sure, your big brother must be happy.";
+					mes "He'll come back sometime.";
+					mes "You should sleep to be healthy";
+					mes "once your brother returns.";
+					next;
 					mes "[Crippled Girl]";
-					mes "Okay,";
-					mes "bye-bye...";
+					mes "Yes! I must be okay";
+					mes "and be able to walk when my";
+					mes "brother come.";
 					close;
+				}
 			}
 		}
 		close;
 	}
 }
 
-lighthalzen,324,322,1	script	#lhz_door1	45,2,2,{
-
-OnTouch:
-	if((lhz_curse > 19) && (lhz_curse < 23))
-	{	
-		mes "^3131ffThe door is locked.^000000";
+lighthalzen,324,322,0	script	#li_door	45,2,2,{
+OnTouch_:
+	if ((lhz_curse > 19) && (lhz_curse < 23)) {
+		mes "^3355FFThe door is locked.^000000";
+		set lhz_curse,lhz_curse+1;
 		close;
 	}
-	else if(lhz_curse > 23)
-	{
-		mes "^3131ffThe door is locked.^000000";
+	else if (lhz_curse > 23) {
+		mes "^3355FFThe door is locked.^000000";
 		next;
 		mes "[Citizen]";
 		mes "I'm sorry, but another";
 		mes "epidemic is starting to";
 		mes "spread around the slums.";
-		mes "We're not going outside and";
-		mes "we're keeping our children safe!";
+		mes "We're not going outside and we're keeping our children safe!";
 		next;
 		mes "[Citizen]";
 		mes "Not to be unfriendly,";
@@ -5168,35 +5227,29 @@ OnTouch:
 		mes "sanitary, you know?";
 		close;
 	}
-	else
-	{
+	else {
 		warp "lhz_in03",15,162;
-		end;
 	}
-}
-
-lhz_in03,12,162,1	script	#lhz_door2	45,1,1,{
-
-OnTouch:
-	warp "lighthalzen",321,322;
 	end;
 }
 
-lighthalzen,319,321,0	script	#brother	-1,3,3,{
+lhz_in03,12,162,0	warp	#to_lhz		1,1,lighthalzen,321,322
 
-OnTouch:
-	if((lhz_curse == 24) || (lhz_curse == 25))
-	{
-		mes "*Shhhzzzz!*";
+lighthalzen,319,321,0	script	#li_bother	-1,3,3,{
+OnTouch_:
+	if ((lhz_curse == 24 ) || (lhz_curse == 25)) {
+		mes ".............";
+		next;
+		mes "*Shhhzzzzzzz!*";
+		specialeffect2 EF_MAPPILLAR;
 		next;
 		mes "[????]";
-		mes "............";
-		specialeffect2 EF_PORTAL;
+		mes "...........";
 		next;
-		mes "[???]";
+		mes "[????]";
 		mes "^FF0000...I'm sorry...";
 		mes "......I appreciate";
-		mes "that you............^000000";
+		mes "that you.............^000000";
 		next;
 		mes "["+strcharinfo(0)+"]";
 		mes "H-huh?!";
@@ -5219,37 +5272,36 @@ OnTouch:
 		mes "is tied to the ^FF0000Rekenber";
 		mes "Corporation^000000 and that";
 		mes "^FF0000Regenschirm Laboratory^000000.";
-		changequest 2094,2095;
 		set lhz_curse,26;
-		if(BaseLevel < 70) getexp 800000,300000;
-		else if(BaseLevel < 80) getexp 1000000,500000;
-		else if(BaseLevel < 90) getexp 1500000,800000;
-		else getexp 2000000,1000000;
-		close;
+		changequest 2093,2094;
+		if (BaseLevel < 70)
+			getexp 80000,30000;
+		else if ((BaseLevel > 69) && (BaseLevel < 80))
+			getexp 100000,50000;
+		else if ((BaseLevel > 79) && (BaseLevel < 90))
+			getexp 150000,80000;
+		else if ((BaseLevel > 89) && (BaseLevel < 151))
+			getexp 200000,100000;
 	}
+	end;
 }
 
-lhz_in01,114,181,3	script	Representative	71,{
-
-	mes "[Representative]";
-	mes "Greetings, and welcome";
-	mes "to the Rekenber Corporation.";
-	mes "How may I be of service today?";
-	next;
-	if(lhz_curse == 7)
-		select("Building Information","Corporation History");
-	else 
-		select("Building Information");
-
-	if (@menu == 1) {
-		while(1) {
+lhz_in01,114,181,5	script	Representative#li_01	71,{
+	if (lhz_curse == 7) {
+		mes "[Representative]";
+		mes "Greetings, and welcome";
+		mes "to the Rekenber Corporation.";
+		mes "How may I be of service today?";
+		next;
+		switch(select("Building Information:Corporation History")) {
+		case 1:
 			mes "[Representative]";
 			mes "Please tell me";
 			mes "which floor you'd like";
 			mes "to know more about.";
 			next;
-			switch( select( "1F","2F","B1","Cancel" ) )
-			{
+			while (1) {
+				switch(select("1F:2F:B1:Cancel")) {
 				case 1:
 					mes "[Representative]";
 					mes "The ^3131FFRekenber Library^000000 can";
@@ -5266,7 +5318,6 @@ lhz_in01,114,181,3	script	Representative	71,{
 					mes "through the right hallway.";
 					next;
 					break;
-
 				case 2:
 					mes "[Representative]";
 					mes "Please use the stairs";
@@ -5279,22 +5330,20 @@ lhz_in01,114,181,3	script	Representative	71,{
 					mes "[Representative]";
 					mes "There, you can find";
 					mes "the ^3131FFConference Room^000000,";
-					mes "^3131FFSecretary Office^000000, the";
+					mes "^3131FFSecretary's Office^000000, the";
 					mes "^3131FFAuditorium^000000 and the";
 					mes "^3131FFChairman's Office^000000.";
 					next;
 					break;
-
 				case 3:
 					mes "[Representative]";
 					mes "The first underground floor";
-					mes "is used by the ^3131FFRegenshirm^000000,";
+					mes "is used by ^3131FFRegenschirm^000000,";
 					mes "our laboratory affiliate. For";
 					mes "security reasons, this floor";
-					mes "is not accessible to visitors";
+					mes "is not accessible to visitors.";
 					next;
 					break;
-
 				case 4:
 					mes "[Representative]";
 					mes "We are always doing our";
@@ -5304,99 +5353,158 @@ lhz_in01,114,181,3	script	Representative	71,{
 					mes "is the name you can trust.";
 					mes "Thank you and have a nice day.";
 					close;
+				}
 			}
+		case 2:
+			mes "[Representative]";
+			mes "If you're interested in";
+			mes "learning the history of";
+			mes "our corporation, please";
+			mes "speak to the representative";
+			mes "inside our Library. Thank you.";
+			next;
+			mes "[Representative]";
+			mes "Please head down";
+			mes "the hallway to the left in";
+			mes "order to find our Library.";
+			mes "Thank you and have a nice day.";
+			set lhz_curse,8;
+			changequest 2087,2088;
+			close;
 		}
 	}
 	else {
 		mes "[Representative]";
-		mes "If you're interested in";
-		mes "learning the history of";
-		mes "our corporation, please";
-		mes "speak to the representative";
-		mes "inside our Library. Thank you.";
+		mes "Greetings, and welcome";
+		mes "to the Rekenber Corporation.";
+		mes "How may I be of service today?";
 		next;
-		mes "[Representative]";
-		mes "Please head down";
-		mes "the hallway to the left in";
-		mes "order to find our Library.";
-		mes "Thank you and have a nice day.";
-		changequest 2087,2088;
-		set lhz_curse,8;
+		switch(select("Building Information.")) {
+		case 1:
+			mes "[Representative]";
+			mes "Please tell me";
+			mes "which floor you'd like";
+			mes "to know more about.";
+			next;
+			while (1) {
+				switch(select("1F:2F:B1:Cancel")) {
+				case 1:
+					mes "[Representative]";
+					mes "The ^3131FFRekenber Library^000000 can";
+					mes "be found at the end of the";
+					mes "left hallway. Our library is";
+					mes "a great resource of innovative";
+					mes "ideas and information for our";
+					mes "system development employees.";
+					next;
+					mes "[Representative]";
+					mes "The ^3131FFBall Room^000000, where";
+					mes "various official events are";
+					mes "usually held, can be accessed";
+					mes "through the right hallway.";
+					next;
+					break;
+				case 2:
+					mes "[Representative]";
+					mes "Please use the stairs";
+					mes "located on both sides of";
+					mes "the Help Desk to go to the";
+					mes "Second Floor. The Second";
+					mes "Floor is mostly used for";
+					mes "administrative purposes.";
+					next;
+					mes "[Representative]";
+					mes "There, you can find";
+					mes "the ^3131FFConference Room^000000,";
+					mes "^3131FFSecretary's Office^000000, the";
+					mes "^3131FFAuditorium^000000 and the";
+					mes "^3131FFChairman's Office^000000.";
+					next;
+					break;
+				case 3:
+					mes "[Representative]";
+					mes "The first underground floor";
+					mes "is used by ^3131FFRegenschirm^000000,";
+					mes "our laboratory affiliate. For";
+					mes "security reasons, this floor";
+					mes "is not accessible to visitors.";
+					next;
+					break;
+				case 4:
+					mes "[Representative]";
+					mes "We are always doing our";
+					mes "best to provide the best";
+					mes "services to our customers.";
+					mes "Remember that Rekenber";
+					mes "is the name you can trust.";
+					mes "Thank you and have a nice day.";
+					close;
+				}
+			}
+		}
 	}
-	close;
 }
 
-lhz_in01,27,247,5	script	Representative#lhz	71,{
-
-	if(lhz_curse > 6)
-	{
+lhz_in01,27,247,5	script	Representative#li_02	71,{
+	if (lhz_curse > 6) {
 		mes "[Representative]";
 		mes "Welcome to the";
 		mes "Rekenber Corporation.";
 		mes "How may I help you?";
 		next;
-		switch( select( "Corporation History","Rekenber's Businesses" ) )
-		{
-			case 1:
-				mes "[Representative]";
-				mes "Rekenber was established";
-				mes "400 years ago, around the";
-				mes "same time as the foundation";
-				mes "of the Schwaltzvalt Republic.";
-				next;
-				mes "[Representative]";
-				mes "We began as the ''Zent Zerter";
-				mes "Lighthal Research Center,''";
-				mes "named after our first chairman.";
-				mes "In 560 A.W. (After War), our";
-				mes "organization was renamed after";
-				mes "our new chairman, Mr. Rekenber.";
-				next;
-				mes "[Representative]";
-				mes "Mr. Rekenber expanded the";
-				mes "Corporation's purposes, but";
-				mes "also founded the Regenschirm";
-				mes "Laboratory to continue this";
-				mes "company's original goal of";
-				mes "scientific research.";
-				next;
-				mes "[Representative]";
-				mes "In the year 700 A.W.,";
-				mes "^ff0000Doctor Varmunt^000000 joined";
-				mes "Regenschirm. It was his work";
-				mes "in science that enabled the";
-				mes "Rekenber Corporation to grow";
-				mes "into the nation's biggest company.";
-				if(lhz_curse == 8) set lhz_curse,9;
-				else if(lhz_curse == 9) {
-					changequest 2088,2089;
-					set lhz_curse,10;
-				}
-				next;
-				break;
-
-			case 2:
-				mes "[Representative]";
-				mes "In addition to merchandising,";
-				mes "freight transport and trading,";
-				mes "the Rekenber Corporation is";
-				mes "also heavily involved with";
-				mes "providing the Airship service,";
-				mes "one of our major projects.";
-				next;
-				mes "[Representative]";
-				mes "Rekenber is involved in";
-				mes "almost any business that";
-				mes "you can imagine. Remember";
-				mes "that Rekenber is the name";
-				mes "that you can trust.";
-				if (lhz_curse == 8) set lhz_curse,9;
-				else if(lhz_curse == 9) {
-					changequest 2088,2089;
-					set lhz_curse,10;
-				}
-				next;
-				break;
+		switch(select("Corporation History:Rekenber's Businesses")) {
+		case 1:
+			mes "[Representative]";
+			mes "Rekenber was established";
+			mes "400 years ago, around the";
+			mes "same time as the foundation";
+			mes "of the Schwaltzvalt Republic.";
+			next;
+			mes "[Representative]";
+			mes "We began as the ''Zent Zerter";
+			mes "Lighthal Research Center,''";
+			mes "named after our first chairman.";
+			mes "In 560 A.W. (After War), our";
+			mes "organization was renamed after";
+			mes "our new chairman, Mr. Rekenber.";
+			next;
+			mes "[Representative]";
+			mes "Mr. Rekenber expanded the";
+			mes "Corporation's purposes, but";
+			mes "also founded the Regenschirm";
+			mes "Laboratory to continue this";
+			mes "company's original goal of";
+			mes "scientific research.";
+			next;
+			mes "[Representative]";
+			mes "In the year 700 A.W.,";
+			mes "^FF0000Doctor Varmunt^000000 joined";
+			mes "Regenschirm. It was his work";
+			mes "in science that enabled the";
+			mes "Rekenber Corporation to grow into the nation's biggest company.";
+			if (lhz_curse == 8) set lhz_curse,9;
+			else if (lhz_curse == 9) set lhz_curse,10;
+			next;
+			break;
+		case 2:
+			mes "[Representative]";
+			mes "In addition to merchandising,";
+			mes "freight transport and trading,";
+			mes "the Rekenber Corporation is";
+			mes "also heavily involved with";
+			mes "providing the Airship service,";
+			mes "one of our major projects.";
+			next;
+			mes "[Representative]";
+			mes "Rekenber is involved in";
+			mes "almost any business that";
+			mes "you can imagine. Remember";
+			mes "that Rekenber is the name";
+			mes "that you can trust.";
+			if (lhz_curse == 8) set lhz_curse,9;
+			else if (lhz_curse == 9) set lhz_curse,10;
+			next;
+			break;
 		}
 		mes "[Representative]";
 		mes "If you'd like to know more";
@@ -5404,94 +5512,90 @@ lhz_in01,27,247,5	script	Representative#lhz	71,{
 		mes "please refer to the Rekenber";
 		mes "Guidebook located to my side.";
 		mes "Thank you and have a nice day.";
+		changequest 2088,2089;
 		close;
 	}
-	mes "[Representative]";
-	mes "Greetings, and welcome";
-	mes "to the Rekenber Corporation.";
-	mes "How may I be of service today?";
-	next;
-	switch( select( "Building Information" ) )
-	{
+	else {
+		mes "[Representative]";
+		mes "Welcome to the";
+		mes "Rekenber Corporation.";
+		mes "How may I help you?";
+		next;
+		switch(select("Building Information.")) {
 		case 1:
+			mes "[Representative]";
+			mes "Please tell me";
+			mes "which floor you'd like";
+			mes "to know more about.";
+			next;
 			while (1) {
-				mes "[Representative]";
-				mes "Please tell me";
-				mes "which floor you'd like";
-				mes "to know more about.";
-				next;
-				switch( select( "1F","2F","B1","Cancel" ) )
-				{
-					case 1:
-						mes "[Representative]";
-						mes "The ^3131FFRekenber Library^000000 can";
-						mes "be found at the end of the";
-						mes "left hallway. Our library is";
-						mes "a great resource of innovative";
-						mes "ideas and information for our";
-						mes "system development employees.";
-						next;
-						mes "[Representative]";
-						mes "The ^3131FFBall Room^000000, where";
-						mes "various official events are";
-						mes "usually held, can be accessed";
-						mes "through the right hallway.";
-						next;
-						break;
-
-					case 2:
-						mes "[Representative]";
-						mes "Please use the stairs";
-						mes "located on both sides of";
-						mes "the Help Desk to go to the";
-						mes "Second Floor. The Second";
-						mes "Floor is mostly used for";
-						mes "administrative purposes.";
-						next;
-						mes "[Representative]";
-						mes "There, you can find";
-						mes "the ^3131FFConference Room^000000,";
-						mes "^3131FFSecretary Office^000000, the";
-						mes "^3131FFAuditorium^000000 and the";
-						mes "^3131FFChairman's Office^000000.";
-						next;
-						break;
-
-					case 3:
-						mes "[Representative]";
-						mes "The first underground floor";
-						mes "is used by the ^3131FFRegenshirm^000000,";
-						mes "our laboratory affiliate. For";
-						mes "security reasons, this floor";
-						mes "is not accessible to visitors";
-						next;
-						break;
-
-					case 4:
-						mes "[Representative]";
-						mes "We are always doing our";
-						mes "best to provide the best";
-						mes "services to our customers.";
-						mes "Remember that Rekenber";
-						mes "is the name you can trust.";
-						mes "Thank you and have a nice day.";
-						close;
+				switch(select("1F:2F:B1:Cancel")) {
+				case 1:
+					mes "[Representative]";
+					mes "The ^3131FFRekenber Library^000000 can";
+					mes "be found at the end of the";
+					mes "left hallway. Our library is";
+					mes "a great resource of innovative";
+					mes "ideas and information for our";
+					mes "system development employees.";
+					next;
+					mes "[Representative]";
+					mes "The ^3131FFBall Room^000000, where";
+					mes "various official events are";
+					mes "usually held, can be accessed";
+					mes "through the right hallway.";
+					next;
+					break;
+				case 2:
+					mes "[Representative]";
+					mes "Please use the stairs";
+					mes "located on both sides of";
+					mes "the Help Desk to go to the";
+					mes "Second Floor. The Second";
+					mes "Floor is mostly used for";
+					mes "administrative purposes.";
+					next;
+					mes "[Representative]";
+					mes "There, you can find";
+					mes "the ^3131FFConference Room^000000,";
+					mes "^3131FFSecretary's Office^000000, the";
+					mes "^3131FFAuditorium^000000 and the";
+					mes "^3131FFChairman's Office^000000.";
+					next;
+					break;
+				case 3:
+					mes "[Representative]";
+					mes "The first underground floor";
+					mes "is used by ^3131FFRegenschirm^000000,";
+					mes "our laboratory affiliate. For";
+					mes "security reasons, this floor";
+					mes "is not accessible to visitors.";
+					next;
+					break;
+				case 4:
+					mes "[Representative]";
+					mes "We are always doing our";
+					mes "best to provide the best";
+					mes "services to our customers.";
+					mes "Remember that Rekenber";
+					mes "is the name you can trust.";
+					mes "Thank you and have a nice day.";
+					close;
 				}
 			}
+		}
 	}
 }
 
-lhz_in01,25,251,3	script	Rekenber Guidebook	111,{
-
-	mes "...............";
+lhz_in01,25,251,3	script	Rekenber Guidebook#li	111,{
+	mes "..............";
 	next;
-	mes "^0000FF#The Vision^000000";
+	mes "^3131FF#The Vision^000000";
 	mes "In the pursuit of knowledge,";
 	mes "Rekenber will search the";
 	mes "Rune-Midgart continent for";
 	mes "ancient relics. We hope to make";
-	mes "significant scientific progress by";
-	mes "learning the secrets of the past.";
+	mes "significant scientific progress by learning the secrets of the past.";
 	next;
 	mes "By making scientific";
 	mes "headway, we hope we can";
@@ -5500,30 +5604,27 @@ lhz_in01,25,251,3	script	Rekenber Guidebook	111,{
 	mes "and affordable services in";
 	mes "the Schwaltzvalt Republic.";
 	next;
-	mes "^0000ff#The Commitment^000000";
+	mes "^3131FF#The Commitment^000000";
 	mes "Although magic and the";
-	mes "power of gods has always";
+	mes "power of the gods has always";
 	mes "maintained an aura of mystery";
-	mes "and superstition, Rekenber hopes";
-	mes "^0000ffto understand these forces from";
-	mes "a more logical standpoint^000000.";
+	mes "and superstition, Rekenber hopes^FFFFFF ^3131FF to understand these forces from";
+	mes "a more logical standpoint.";
 	next;
-	mes "^ff0000Our goal is to make";
+	mes "^FF0000Our goal is to make";
 	mes "the lives of our customers";
 	mes "easier and more enjoyable";
 	mes "by making the ancient power";
 	mes "of the gods more accessible";
-	mes "by means of new technologies.^000000";
-	if(lhz_curse == 10) set lhz_curse,11;
+	mes "by means of new technologies.";
+	if (lhz_curse == 10) set lhz_curse,11;
 	next;
-	mes "...............";
+	mes "..............";
 	close;
 }
 
-lhz_in01,273,121,1	script	Mad Scientist	865,{
-
-	if(lhz_curse == 13)
-	{
+lhz_in01,273,121,1	script	Mad Scientist#li	865,{
+	if (lhz_curse == 13) {
 		mes "[Wolfchev]";
 		mes "No one shall";
 		mes "interrupt my";
@@ -5531,140 +5632,138 @@ lhz_in01,273,121,1	script	Mad Scientist	865,{
 		mes "dare, I'll simply...";
 		mes "Eat you. Eat you alive.";
 		next;
-		switch( select( "No... N-no!","Do you need any help?" ) )
-		{
-			case 1:
-				mes "[Wolfchev]";
-				mes "Out of my sight,";
-				mes "microcephalic fool!";
-				close;
-
-			case 2:
-				mes "[Wolfchev]";
-				mes "Huh? You think I have";
-				mes "the luxury of remembering";
-				mes "the face of every part-timer";
-				mes "I've fired? Get lost, or I'll";
-				mes "treat you to the pain of";
-				mes "being eaten alive!";
-				set lhz_curse,14;
-				close;
+		switch(select("No... N-no!:Do you need any help?")) {
+		case 1:
+			mes "[Wolfchev]";
+			mes "Out of my sight,";
+			mes "microcephalic fool!";
+			close;
+		case 2:
+			mes "[Wolfchev]";
+			mes "Huh? You think I have";
+			mes "the luxury of remembering";
+			mes "the face of every part-timer";
+			mes "I've fired? Get lost, or I'll";
+			mes "treat you to the pain of";
+			mes "being eaten alive!";
+			set lhz_curse,14;
+			close;
 		}
 	}
-	else if(lhz_curse == 14)
-	{
+	else if (lhz_curse == 14) {
 		mes "[Wolfchev]";
 		mes "You again?!";
 		mes "What the hell do";
 		mes "you want from me?!";
-		emotion e_ag,0;
+		emotion e_ag,"Mad Scientist#li";
 		next;
-		switch( select( "Let me speak with you.","Sorry for bothering you." ) )
-		{
-			case 1:
-				mes "[Wolfchev]";
-				mes "I don't have time to";
-				mes "waste with drivel! I'm";
-				mes "too busy with my research!";
-				next;
-				mes "[Wolfchev]";
-				mes "............!";
-				emotion e_gasp,0;
-				next;
-				mes "[Wolfchev]";
-				mes "Ah, but wait! I am collecting";
-				mes "something. Yes, bring me the";
-				mes "thing I must collect. Yes, yes.";
-				mes "Here's a hint... It's round...";
-				mes "Shiny... Kids love playing games";
-				mes "with them! Oh, I said too much!";
-				changequest 2089,2090;
-				set lhz_curse,15;
-				close;
-
-			case 2:
-				emotion e_pif;
-				mes "[Wolfchev]";
-				mes "''Sorry?!'' Do you";
-				mes "think ''sorry'' will";
-				mes "get back that precious";
-				mes "minute I've lost yelling";
-				mes "at you?! Get the hell out!";
-				close;
-		}
-	}
-	else if(lhz_curse == 15)
-	{
-		if(!countitem(746))
-		{
+		switch(select("Let me speak with you.:Sorry for bothering you.")) {
+		case 1:
 			mes "[Wolfchev]";
-			mes "It's a round and shining thing!";
-			mes "Hurry up! Bweh-heh-heh!";
-			emotion e_slur,0;
+			mes "I don't have time to";
+			mes "waste with drivel! I'm";
+			mes "too busy with my research!";
+			next;
+			mes "[Wolfchev]";
+			mes "...........!";
+			emotion e_gasp,"Mad Scientist#li";
+			next;
+			mes "[Wolfchev]";
+			mes "Ah, but wait! I am collecting";
+			mes "something. Yes, bring me the";
+			mes "thing I must collect. Yes, yes.";
+			mes "Here's a hint... It's round...";
+			mes "Shiny... Kids love playing games with them! Oh, I said too much!";
+			set lhz_curse,15;
+			changequest 2089,2090;
+			close;
+		case 2:
+			emotion e_an,"Mad Scientist#li";
+			mes "[Wolfchev]";
+			mes "''Sorry?!'' Do you";
+			mes "think ''sorry'' will";
+			mes "get back that precious";
+			mes "minute I've lost yelling";
+			mes "at you?! Get the hell out!";
 			close;
 		}
-		delitem 746,1;
-		mes "[Wolfchev]";
-		mes "Yes...! Beads!";
-		mes "You brought them!";
-		mes "You're not as dumb";
-		mes "as I thought you'd be!";
-		next;
-		switch( select( "Why do you want Glass Beads?" ) )
-		{
+	}
+	else if (lhz_curse == 15) {
+		if (countitem(746) > 0) {
+			delitem 746,1; //Glass_Bead
+			mes "[Wolfchev]";
+			mes "Yes...! Beads!";
+			mes "You brought them!";
+			mes "You're not as dumb";
+			mes "as I thought you'd be!";
+			next;
+			switch(select("Why do you want Glass Beads?")) {
 			case 1:
+				mes "[Wolfchev]";
+				mes "..................";
+				mes "I take that back!";
+				mes "You should know by";
+				mes "now that I would never";
+				mes "tell you why I neeeeed";
+				mes "these Beads. Bweh-heh!";
+				emotion e_gg,"Mad Scientist#li";
+				next;
 				break;
-		}
-		mes "[Wolfchev]";
-		mes "............";
-		mes "I take that back!";
-		mes "You should know by";
-		mes "now that I would never";
-		mes "tell you why I neeeed";
-		mes "these Beads. Bweh-heh!";
-		emotion e_slur,0;
-		next;
-		mes "[Wolfchev]";
-		mes "This favor you've done";
-		mes "is worth a small chat and";
-		mes "I can spare a minute or two";
-		mes "for you inane questions. So";
-		mes "what is it you want to know?!";
-		next;
-L_Ask1:
-		switch( select( "Ask about hobbies","Ask about work" ) )
-		{
+			}
+			mes "[Wolfchev]";
+			mes "This favor you've done";
+			mes "is worth a small chat and";
+			mes "I can spare a minute or two";
+			mes "for you inane questions. So";
+			mes "what is it you want to know?!";
+			next;
+			while (1) {
+				switch(select("Ask about hobbies:Ask about work")) {
+				case 1:
+					if (Sex == 1) {
+						mes "[Wolfchev]";
+						mes "Hyuu~ I think you're";
+						mes "just a little too innocent";
+						mes "to know about my secret";
+						mes "hobby. Yes, yes, I couldn't";
+						mes "tell you possibly, it'd be";
+						mes "so weird, so strange...";
+						next;
+					}
+					else {
+						mes "[Wolfchev]";
+						mes "Oh. Oh no, oh no,";
+						mes "I couldn't possibly...";
+						mes "It's a-- I-It's a secret.";
+						mes "You wouldn't want to know";
+						mes "anyway. Bweh-heh-heh-heh!";
+						next;
+					}
+					break;
+				case 2:
+					mes "[Wolfchev]";
+					mes "Oh, I don't know if you";
+					mes "can call it work. After all,";
+					mes "I do research whatever it is";
+					mes "I want. And they pay me to";
+					mes "do it! This is the best place";
+					mes "for a scientist like me, yes.";
+					next;
+					mes "[Wolfchev]";
+					mes "Now, in a perfect world,";
+					mes "my test subjects would be";
+					mes "much more cooperative, but";
+					mes "I suppose I cannot blame";
+					mes "them. Not that I cause them";
+					mes "undue suffering or anything...";
+					next;
+					set .@exit,1;
+					break;
+				}
+				if (.@exit) break;
+			}
+			switch(select("What kind of research?")) {
 			case 1:
-				mes "[Wolfchev]";
-				mes "Oh. Oh no, oh no,";
-				mes "I couldn't possibly...";
-				mes "It's a-- I-it's a secret.";
-				mes "You wouldn't want to know";
-				mes "anyway. Bweh-heh-heh-heh!";
-				next;
-				goto L_Ask1;
-
-			case 2:
-				mes "[Wolfchev]";
-				mes "Oh, I don't know if you";
-				mes "can call it work. After all,";
-				mes "I do research whatever it is";
-				mes "I want. And they pay me to";
-				mes "do it! This is the best place";
-				mes "for a scientist like me, yes.";
-				next;
-				mes "[Wolfchev]";
-				mes "Now, in a perfect world,";
-				mes "my test subjects would be";
-				mes "much more cooperative, but";
-				mes "I suppose I cannot blame";
-				mes "them. Not that I cause them";
-				mes "undue suffering or anything...";
-				next;
-		}
-		switch( select( "What kind of research?" ) )
-		{
-			case 1:				
 				mes "[Wolfchev]";
 				mes "Well, I couldn't tell you";
 				mes "exactly. But don't you";
@@ -5688,34 +5787,43 @@ L_Ask1:
 				mes "make mankind stronger and";
 				mes "better and more powerful and--";
 				next;
+				break;
+			}
+			select("Um, what are you testing on?");
+			mes "[Wolfchev]";
+			mes "What do you know?";
+			mes "I better get back to";
+			mes "work if I wish to keep";
+			mes "on schedule. I can't afford";
+			mes "the leisure of speaking with";
+			mes "you any longer. Bweh heh heh!";
+			set lhz_curse,16;
+			close;
 		}
-		switch( select( "Um, what are you testing on?" ) )
-		{
-			case 1:
-				mes "[Wolfchev]";
-				mes "What do you know?";
-				mes "I better get back to";
-				mes "work if I wish to keep";
-				mes "on schedule. I can't afford";
-				mes "the leisure of speaking with";
-				mes "you any longer. Bweh heh heh!";
-				set lhz_curse,16;
-				close;
+		else {
+			mes "[Wolfchev]";
+			mes "I don't have time to";
+			mes "waste with drivel! I'm";
+			mes "too busy with my research!";
+			next;
+			mes "[Wolfchev]";
+			mes "...........!";
+			emotion e_gasp,"Mad Scientist#li";
+			next;
+			emotion e_gg,"Mad Scientist#li";
+			mes "[Wolfchev]";
+			mes "Ah, but wait! I am collecting";
+			mes "something. Yes, bring me the";
+			mes "thing I must collect. Yes, yes.";
+			mes "Here's a hint... It's round...";
+			mes "Shiny... Kids love playing games with them! Oh, I said too much!";
+			close;
 		}
-	}
-	else
-	{
-		mes "[Wolfchev]";
-		mes "Waaah~!";
-		mes "Do not disturb my study!";
-		close;
 	}
 }
 
-lhz_in01,286,226,3	script	Secretary Slierre	831,{
-
-	if(lhz_curse == 26)
-	{
+lhz_in01,286,226,3	script	Secretary Slierre#li	831,{
+	if (lhz_curse == 26) {
 		mes "[Sueii Slierre]";
 		mes "Excuse me, but you are";
 		mes "not allowed to be in here.";
@@ -5724,29 +5832,26 @@ lhz_in01,286,226,3	script	Secretary Slierre	831,{
 		mes "direct you to someone qualified";
 		mes "to give you an answer.";
 		next;
-		switch( select( "About the slums.","About you." ) )
-		{
-			case 1:
-				mes "[Sueii Slierre]";
-				mes "The slums? All I know";
-				mes "is that this corporation";
-				mes "specifically targeted that";
-				mes "area in order to provide ample";
-				mes "opportunity for employment.";
-				set lhz_curse,27;
-				close;
-			
-			case 2:
-				mes "[Sueii Slierre]";
-				mes "I'm Sueii Slierre,";
-				mes "the personal secretary";
-				mes "for the chairman of the";
-				mes "Rekenber Corporation.";
-				close;
+		switch(select("About the Slums:About Secretary Slierre")) {
+		case 1:
+			mes "[Sueii Slierre]";
+			mes "The slums? All I know";
+			mes "is that this corporation";
+			mes "specifically targeted that";
+			mes "area in order to provide ample";
+			mes "opportunity for employment.";
+			set lhz_curse,27;
+			close;
+		case 2:
+			mes "[Sueii Slierre]";
+			mes "I'm Sueii Slierre,";
+			mes "the personal secretary";
+			mes "for the chairman of the";
+			mes "Rekenber Corporation.";
+			close;
 		}
 	}
-	else if(lhz_curse == 27)
-	{
+	else if (lhz_curse == 27) {
 		mes "[Sueii Slierre]";
 		mes "Did you have something";
 		mes "else to ask? I can only";
@@ -5755,60 +5860,52 @@ lhz_in01,286,226,3	script	Secretary Slierre	831,{
 		mes "tell you who to contact for";
 		mes "more specific inquiries.";
 		next;
-		switch( select( "About the Laboratory","About the Corporation" ) )
-		{
-			case 1:
-				mes "[Sueii Slierre]";
-				mes "Rekenber is perhaps the";
-				mes "biggest contributer of the";
-				mes "Regenschirm Laboratory.";
-				mes "Their work will benefit the";
-				mes "entire Rune-Midgart continent,";
-				mes "hence our highly involved support.";
-				next;
-				mes "[Sueii Slierre]";
-				mes "A representative at the";
-				mes "Help Desk will be happy";
-				mes "to assist you if you have";
-				mes "more inquiries regarding";
-				mes "the Regenschirm Laboratory.";
-				set lhz_curse,28;
-				close;
-		
-			case 2:
-				mes "[Sueii Slierre]";
-				mes "I'm sorry, but I don't have";
-				mes "any special information";
-				mes "regarding our corporation.";
-				mes "Why don't you ask one of";
-				mes "our representatives at the";
-				mes "Help Desk to learn more?";
-				close;
+		switch(select("About the Laboratory:About the Corporation")) {
+		case 1:
+			mes "[Sueii Slierre]";
+			mes "Rekenber is perhaps the";
+			mes "biggest contributer of the";
+			mes "Regenschirm Laboratory.";
+			mes "Their work will benefit the";
+			mes "entire Rune-Midgard continent, hence our highly involved support.";
+			next;
+			mes "[Sueii Slierre]";
+			mes "A representative at the";
+			mes "Help Desk will be happy";
+			mes "to assist you if you have";
+			mes "more inquiries regarding";
+			mes "the Regenschirm Laboratory.";
+			set lhz_curse,28;
+			close;
+		case 2:
+			mes "[Sueii Slierre]";
+			mes "I'm sorry, but I don't have";
+			mes "any special information";
+			mes "regarding our corporation.";
+			mes "Why don't you ask one of";
+			mes "our representatives at the";
+			mes "Help Desk to learn more?";
+			close;
 		}
 	}
-	else if(lhz_curse == 28)
-	{
+	else if (lhz_curse == 28) {
 		mes "[Sueii Slierre]";
 		mes "You're back? I really";
 		mes "doubt that I can be of";
 		mes "any assistance to you.";
 		next;
-		switch( select( "Wolfchev's Research" ) )
-		{
-			case 1:
-				break;
-		}
-		mes "[Sueii Slierre]";
-		mes "..............!";
-		emotion e_gasp,0;
-		next;
-		mes "[Sueii Slierre]";
-		mes "How do you know";
-		mes "Wolfchev? Are you an";
-		mes "acquaintance of his or...?";
-		next;
-		switch( select( "I'm a friend of his.","Oh, we're family, you know...","I've heard about him before, so..." ) )
-		{
+		switch(select("Wolfchev's Research")) {
+		case 1:
+			mes "[Sueii Slierre]";
+			mes ".............!";
+			emotion e_gasp,"Secretary Slierre#li";
+			next;
+			mes "[Sueii Slierre]";
+			mes "How do you know";
+			mes "Wolfchev? Are you an";
+			mes "acquaintance of his or...?";
+			next;
+			switch(select("I'm a friend of his.:Oh, we're family, you know...:I've heard about him before, so...")) {
 			case 1:
 				mes "[Sueii Slierre]";
 				mes "Well, Wolfchev is not";
@@ -5817,7 +5914,6 @@ lhz_in01,286,226,3	script	Secretary Slierre	831,{
 				mes "He should be doing just fine.";
 				next;
 				break;
-
 			case 2:
 				mes "[Sueii Slierre]";
 				mes "Ah, you should be";
@@ -5828,7 +5924,6 @@ lhz_in01,286,226,3	script	Secretary Slierre	831,{
 				mes "truly a model scientist.";
 				next;
 				break;
-
 			case 3:
 				mes "[Sueii Slierre]";
 				mes "Ah yes, Wolfchev has";
@@ -5837,41 +5932,52 @@ lhz_in01,286,226,3	script	Secretary Slierre	831,{
 				mes "demand that Regenschirm";
 				mes "wants him on their staff.";
 				close;
-		}
-		mes "[Sueii Slierre]";
-		mes "...";
-		mes "......";
-		next;
-		mes "[Sueii Slierre]";
-		mes "I'm sorry, but please";
-		mes "understand that my office";
-		mes "isn't the place for visitors to";
-		mes "submit their general inquiries.";
-		mes "Please visit the Help Desk if";
-		mes "you have any more questions.";
-		next;
-		switch( select( "About Wolfchev's Research" ) )
-		{
+			}
+			mes "[Sueii Slierre]";
+			mes "Now if you'll excuse me,";
+			mes "I have many task to perform,";
+			mes "so please visit our Help Desk";
+			mes "if you have further inquiries.";
+			next;
+			switch(select("W-Wait!:Alright, I understand.")) {
 			case 1:
+				mes "[Sueii Slierre]";
+				mes "...";
+				mes "......";
+				next;
 				break;
-		}
-		mes "[Sueii Slierre]";
-		mes "I couldn't tell you any";
-		mes "more about Wolfchev.";
-		mes "But is there anything you";
-		mes "need to tell me about him?";
-		mes "Well, if you have something";
-		mes "to ask, be quick about it.";
-		emotion e_hmm,0;
-		next;
-		switch( select( "Wolfchev's Past","Wolfchev's Test Subjects" ) )
-		{
+			case 2:
+				mes "[Sueii Slierre]";
+				mes "Thank you for your";
+				mes "cooperation. As you well";
+				mes "know, the Help Desk is there";
+				mes "to answer any of your questions regarding the Rekenber Corporation.";
+				close;
+			}
+			mes "[Sueii Slierre]";
+			mes "I'm sorry, but please";
+			mes "understand that my office";
+			mes "isn't the place for visitors to";
+			mes "submit their general inquiries.";
+			mes "Please visit the Help Desk if";
+			mes "you have any more questions.";
+			next;
+			select("About Wolfchev's Research");
+			emotion e_dots,"Secretary Slierre#li";
+			mes "[Sueii Slierre]";
+			mes "I couldn't tell you any";
+			mes "more about Wolfchev.";
+			mes "But is there anything you";
+			mes "need to tell me about him?";
+			mes "Well, if you have something";
+			mes "to ask, be quick about it.";
+			next;
+			switch(select("Wolfchev's Past:Wolfchev's Test Subjects")) {
 			case 1:
 				mes "[Sueii Slierre]";
 				mes "I remember hearing that he";
 				mes "received a high recommendation";
-				mes "to work here, but specifics elude";
-				mes "me since I don't work in Human";
+				mes "to work here, but specifics elude me since I don't work in Human";
 				mes "Resources. There's a rumor that";
 				mes "he had a troubled love life...";
 				next;
@@ -5883,229 +5989,302 @@ lhz_in01,286,226,3	script	Secretary Slierre	831,{
 				mes "it may be unethical to pry too";
 				mes "much into our employee's lives.";
 				close;
-			
+			case 2:
+				break;
+			}
+			mes "[Sueii Slierre]";
+			mes "Wolfchev's test subjects?";
+			mes "Well, I know we have a policy";
+			mes "of using the most humane";
+			mes "methods depending on the";
+			mes "experiment. And of course, he should only be testing on animals.";
+			next;
+			switch(select("Wolfchev's research is great!:His experiments are suspicious...")) {
+			case 1:
+				mes "[Sueii Slierre]";
+				mes "Yes, yes, I'd agree if";
+				mes "I understood science a";
+				mes "little bit better. Now, you'll";
+				mes "have to excuse me. I've been distracted long enough as it is...";
+				close2;
+				warp "lhz_in01",228,226;
+				end;
 			case 2:
 				mes "[Sueii Slierre]";
-				mes "Wolfchev's test subjects?";
-				mes "Well, I know we have a policy";
-				mes "of using the most humane";
-				mes "methods depending on the";
-				mes "experiment. And of course, he";
-				mes "should only be testing on animals.";
+				mes "What exactly do you mean?";
+				mes "Are you sure that you haven't";
+				mes "misunderstood anything about";
+				mes "Wolfchev's work? You'll need";
+				mes "to illustrate your claim for us";
+				mes "to be on the same page...";
 				next;
-				switch( select( "Wolfchev's research is great!","His experiments are suspicious..." ) )
-				{		
-					case 1:
-						mes "[Sueii Slierre]";
-						mes "Yes yes, I'd agree if";
-						mes "I understood science a";
-						mes "little bit better. Now, you'll";
-						mes "have to excuse me. I've been";
-						mes "distracted long enough as it is...";
-						close2;
-						warp "lhz_in01",228,226;
-						end;
-
-					case 2:
-						mes "[Sueii Slierre]";
-						mes "What exactly do you mean?";
-						mes "Are you sure that you haven't";
-						mes "misunderstood anything about";
-						mes "Wolfchev's work? You'll need";
-						mes "to illustrate your claim for us";
-						mes "to be on the same page...";
+				switch(select("Show Evidence:Cancel")) {
+				case 1:
+					if (countitem(7345) > 0) {
+						mes "^3355FFYou reveal the Handcuffs";
+						mes "you found in the laboratory,";
+						mes "and Secretary Slierre's face";
+						mes "is instantly shadowed by a";
+						mes "deeply troubled look.^000000";
 						next;
-						switch( select( "Show Evidence","Cancel" ) )
-						{
+						mes "[Sueii Slierre]";
+						mes "...";
+						mes "......";
+						next;
+						select("What's Regenschirm up to?:What's Wolfchev up to?");
+						mes "[Sueii Slierre]";
+						mes "...";
+						mes "......";
+						emotion e_ic,"Secretary Slierre#li";
+						next;
+						mes "[Sueii Slierre]";
+						mes "So... You're";
+						mes "suspicious about";
+						mes "Wolfchev's research in";
+						mes "the Regenschirm Laboratory?";
+						next;
+						switch(select("Yes:No")) {
+						case 1:
+							break;
+						case 2:
+							mes "[Sueii Slierre]";
+							mes "Wait, what exactly";
+							mes "do you feel suspicious";
+							mes "about? Basically, which";
+							mes "party do you feel is most";
+							mes "at fault in this situation?";
+							next;
+							switch(select("Regenschirm:Mr. Wolfchev")) {
 							case 1:
-L_Evidence:
-								if (!countitem(7345))
-								{
+								mes "[Sueii Slierre]";
+								mes "Let me assure you that";
+								mes "Regenschirm has a strict set";
+								mes "of protocals and procedures";
+								mes "to ensure safety and the";
+								mes "prevention of unnecessary";
+								mes "cruelty in experimentation.";
+								next;
+								switch(select("What about the creatures in Regenschirm?")) {
+								case 1:
 									mes "[Sueii Slierre]";
-									mes "What evidence are you";
-									mes "talking about? Look,";
-									mes "I'm very busy at the moment,";
-									mes "I can't lose too much time";
-									mes "with you. Talk to me when you";
-									mes "have something concrete.";
-									set lhz_curse,29;
-									close;
+									mes "Creatures? I would";
+									mes "guess that they're the";
+									mes "result of experimentation.";
+									mes "But I wouldn't know for sure.";
+									next;
+									break;
 								}
-								mes "^3131ffWhile saying that you";
-								mes "show the handcuffs to";
-								mes "Sueii Slierre.^000000";
-								next;
-								mes "^3131ffThe expression in";
-								mes "Sueii Slierre's face tenses";
-								mes "a little.^000000";
-								next;
-								mes "[Sueii Slierre]";
-								mes "...............";
-								next;
-								mes "[Sueii Slierre]";
-								mes "...............";
-								next;
-								mes "[Sueii Slierre]";
-								mes "...............";
-								next;
-								switch( select( "What's Wolfchev up to?","What's Regenschirm up to?" ) )
-								{
-									case 1:
-										break;
-
-									case 2:
-										break;
-								}
-								mes "[Sueii Slierre]";
-								mes "...............";
-								mes "...............";
-								mes "...............";
-								mes "...............";
-								next;
-								mes "[Sueii Slierre]";
-								mes "...............";
-								emotion e_heh,0;
-								next;
-								mes "[Sueii Slierre]";
-								mes "Then, you say that";
-								mes "Wolfchev is doing a";
-								mes "suspicious research or that";
-								mes "the Regenschirm Laboratory";
-								mes "is behind all of this?";
-								next;
-								switch( select( "Both","No" ) )
-								{
-									case 1:
-										break;
-
-									case 2:
-										mes "[Sueii Slierre]";
-										mes "Where do you see suspicious";
-										mes "behaviour?";
-										next;
-										switch( select( "Regenschirm Laboratory","Wolfchev" ) )
-										{
-											case 1:
-												mes "[Sueii Slierre]";
-												mes "Regenschirm is part of";
-												mes "the culture of Schwaltzvalt";
-												mes "Republic.";
-												next;
-												mes "[Sueii Slierre]";
-												mes "It's not possible that they're";
-												mes "doing suspicious research.";
-												next;
-												switch( select( "What about Regenschirm's Life Form Research?" ) )
-												{
-													case 1:
-														mes "[Sueii Slierre]";
-														mes "...............?";
-														mes "I don't know much of that";
-														mes "kind of research.";
-														next;
-														break;
-												}
-												break;
-
-											case 2:
-												break;
-										}
-										break;
-								}
-								mes "[Sueii Slierre]";
-								mes "Anyway, we'll start";
-								mes "an investigation about";
-								mes "Wolfchev and his research";
-								mes "to bright this matter a bit.";
-								next;
-								mes "[Sueii Slierre]";
-								mes "I'll tell you if we";
-								mes "find something of interest.";
-								set lhz_curse,30;
-								close;
-				
+								break;
 							case 2:
-								mes "[Sueii Slierre]";
-								mes "If you're finished,";
-								mes "I'd like to get back on";
-								mes "task. Please excuse me.";
-								close;
+								break;
+							}
+							break;
 						}
+						mes "[Sueii Slierre]";
+						mes "I can't be sure right";
+						mes "now, but this looks like";
+						mes "fairly concrete evidence.";
+						mes "We'll send some people over";
+						mes "to Regenschirm right away!";
+						next;
+						mes "[Sueii Slierre]";
+						mes "For now, your claim";
+						mes "merits an investigation.";
+						mes "I'll let you know if we";
+						mes "find anything significant...";
+						set lhz_curse,30;
+						close;
+					}
+					else {
+						mes "[Sueii Slierre]";
+						mes "Evidence...?";
+						mes "I'm sorry, but you don't";
+						mes "seem to be carrying anything";
+						mes "that can be construed as proof.";
+						mes "I suggest you bring something that actually supports your claim.";
+						set lhz_curse,29;
+						close;
+					}
+					break;
+				case 2:
+					mes "[Sueii Slierre]";
+					mes "If you're finished,";
+					mes "I'd like to get back on";
+					mes "task. Please excuse me.";
+					close2;
+					set lhz_curse,30;
+					end;
 				}
-				
+				break;
+			}
+			break;
 		}
 	}
-	else if(lhz_curse == 29) goto L_Evidence;
-	else if(lhz_curse == 30)
-	{
-		set @lhz_invest,rand(1,10);
-		if (@lhz_invest < 8)
-		{
-			mes "[Sueii Slierre]";
-			mes "We're still investigating.";
-			mes "Please wait.";
-			close;
-		}
-		else if(checkweight(1119,1) != 1)
-		{
-			mes "^3355FFWait a second! Right now,";
-			mes "you have too many items in your";
-			mes "inventory. Please come back";
-			mes "after you've made more available";
-			mes "inventory space.^000000";
-			close;
-		}
+	else if (lhz_curse == 29) {
 		mes "[Sueii Slierre]";
-		mes "Oh good, you're here.";
-		mes "You were right all along.";
-		mes "In our investigation, we found";
-		mes "that Wolfchev was conducting";
-		mes "unauthorized and very dangerous";
-		mes "research. I owe you our thanks.";
+		mes "Hmm, have you come back";
+		mes "to address your claim about";
+		mes "Wolfchev's work? If you don't";
+		mes "have any evidence, then you";
+		mes "shouldn't be making rumors...";
 		next;
-		switch( select( "What was he doing...?" ) )
-		{
+		if (countitem(7345) > 0) {
+			mes "^3355FFYou reveal the Handcuffs";
+			mes "you found in the laboratory,";
+			mes "and Secretary Slierre's face";
+			mes "is instantly shadowed by a";
+			mes "deeply troubled look.^000000";
+			next;
+			mes "[Sueii Slierre]";
+			mes "...";
+			mes "......";
+			next;
+			select("What's Regenschirm up to?:What's Wolfchev up to?");
+			mes "[Sueii Slierre]";
+			mes "...";
+			mes "......";
+			emotion e_ic,"Secretary Slierre#li";
+			next;
+			mes "[Sueii Slierre]";
+			mes "So... You're";
+			mes "suspicious about";
+			mes "Wolfchev's research in";
+			mes "the Regenschirm Laboratory?";
+			next;
+			switch(select("Yes:No")) {
 			case 1:
 				break;
+			case 2:
+				mes "[Sueii Slierre]";
+				mes "Wait, what exactly";
+				mes "do you feel suspicious";
+				mes "about? Basically, which";
+				mes "party do you feel is most";
+				mes "at fault in this situation?";
+				next;
+				switch(select("Regenschirm:Mr. Wolfchev")) {
+				case 1:
+					mes "[Sueii Slierre]";
+					mes "Let me assure you that";
+					mes "Regenschirm has a strict set";
+					mes "of protocals and procedures";
+					mes "to ensure safety and the";
+					mes "prevention of unnecessary";
+					mes "cruelty in experimentation.";
+					next;
+					switch(select("What about the creatures in Regenschirm?")) {
+					case 1:
+						mes "[Sueii Slierre]";
+						mes "Creatures? I would";
+						mes "guess that they're the";
+						mes "result of experimentation.";
+						mes "But I wouldn't know for sure.";
+						next;
+						break;
+					}
+					break;
+				case 2:
+					break;
+				}
+				break;
+			}
+			mes "[Sueii Slierre]";
+			mes "I can't be sure right";
+			mes "now, but this looks like";
+			mes "fairly concrete evidence.";
+			mes "We'll send some people over";
+			mes "to Regenschirm right away!";
+			next;
+			mes "[Sueii Slierre]";
+			mes "For now, your claim";
+			mes "merits an investigation.";
+			mes "I'll let you know if we";
+			mes "find anything significant...";
+			set lhz_curse,30;
+			close;
 		}
-		mes "[Sueii Slierre]";
-		mes "It turns out that Wolfchev";
-		mes "was kidnapping weak and sick";
-		mes "people from the slums and";
-		mes "using them as his guinea pigs.";
-		mes "Rest assured, he'll be punished";
-		mes "for his behavior, if not fired.";
-		next;
-		mes "[Sueii Slierre]";
-		mes "I think you deserve an";
-		mes "apology. Without your";
-		mes "report, our corporation's";
-		mes "reputation could have been";
-		mes "potetially damaged. Thank you.";
-		next;
-		mes "[Sueii Slierre]";
-		mes "Yes, there's nothing so";
-		mes "taboo as trying to perform";
-		mes "Homunculus experiments";
-		mes "on people! Anyway, please";
-		mes "accept this as a token of";
-		mes "our gratitude, adventurer.";
-		changequest 2094,2095;
-		set lhz_curse,31;
-		getitem 617,1;
-		getitem 12016,10;
-		next;
-		mes "[Sueii Slierre]";
-		mes "Let me promise you";
-		mes "that Rekenber will ensure";
-		mes "that this kind of incident";
-		mes "will not be repeated and";
-		mes "we'll do everything in our";
-		mes "power to compensate for this...";
-		close;
+		else {
+			mes "[Sueii Slierre]";
+			mes "Hmm. I can't consider";
+			mes "whatever you brought this";
+			mes "time as evidence that would";
+			mes "allay my doubts about your";
+			mes "claim. Now, if you'll excuse";
+			mes "me, I need to get back on task.";
+			set lhz_curse,29;
+			close2;
+			warp "lhz_in01",228,226;
+			end;
+		}
 	}
-	else if(lhz_curse > 30)
-	{
+	else if (lhz_curse == 30) {
+		set .@li_keka,rand(1,10);
+		if (.@li_keka > 7) {
+			if (checkweight(1201,1) == 1) {
+				mes "[Sueii Slierre]";
+				mes "Oh, I'd like to have";
+				mes "a word with you. Would";
+				mes "you please come back after";
+				mes "reducing the weight of the";
+				mes "items you are carrying please?";
+				close;
+			}
+			mes "[Sueii Slierre]";
+			mes "Oh good, you're here.";
+			mes "You were right all along.";
+			mes "In our investigation, we found";
+			mes "that Wolfchev was conducting";
+			mes "unauthorized and very dangerous";
+			mes "research. I owe you our thanks.";
+			next;
+			select("What was he doing...?");
+			mes "[Sueii Slierre]";
+			mes "It turns out that Wolfchev";
+			mes "was kidnapping weak and sick";
+			mes "people from the slums and";
+			mes "using them as his guinea pigs.";
+			mes "Rest assured, he'll be punished";
+			mes "for his behavior, if not fired.";
+			next;
+			mes "[Sueii Slierre]";
+			mes "I think you deserve an";
+			mes "apology. Without your";
+			mes "report, our corporation's";
+			mes "reputation could have been";
+			mes "potentially damaged. Thank you.";
+			next;
+			mes "[Sueii Slierre]";
+			mes "Yes, there's nothing so";
+			mes "taboo as trying to perform";
+			mes "Homunculus experiments";
+			mes "on people! Anyway, please";
+			mes "accept this as a token of";
+			mes "our gratitude, adventurer.";
+			set lhz_curse,31;
+			changequest 2094,2095;
+			getitem 603,1; //Old_Blue_Box
+			getitem 12016,10; //Speed_Up_Potion
+			next;
+			mes "[Sueii Slierre]";
+			mes "Let me promise you";
+			mes "that Rekenber will ensure";
+			mes "that this kind of incident";
+			mes "will not be repeated and";
+			mes "we'll do everything in our";
+			mes "power to compensate for this...";
+			close;
+		}
+		else {
+			mes "[Sueii Slierre]";
+			mes "Oh, our investigation";
+			mes "of your claim is still in";
+			mes "progress. However, we";
+			mes "will let you know when any";
+			mes "new developments arise.";
+			close;
+		}
+	}
+	else if (lhz_curse > 30) {
 		mes "[Sueii Slierre]";
 		mes "I'm glad to know that";
 		mes "we have such proactive";
@@ -6114,8 +6293,7 @@ L_Evidence:
 		mes "the Rekenber Corporation.";
 		close;
 	}
-	else
-	{
+	else {
 		mes "[Sueii Slierre]";
 		mes "Excuse me, but you are";
 		mes "not allowed to be in here.";
@@ -6127,53 +6305,37 @@ L_Evidence:
 	}
 }
 
-lhz_que01,94,24,0	script	#trace	-1,2,2,{
-
-OnTouch:
-	if(lhz_curse > 30)
-	{
+lhz_que01,94,24,0	script	#li_end	-1,2,2,{
+OnTouch_:
+	if (lhz_curse > 30) {
 		mes "^3131FFThere's no trace of";
 		mes "that mad scientist. Only";
 		mes "his stacks of well organized";
 		mes "files remain here in the lab.^000000";
-		if(lhz_curse == 31) {
-			completequest 2095;
+		if (lhz_curse == 31) {
 			set lhz_curse,32;
+			completequest 2095;
 		}
 		close;
 	}
+	end;
 }
 
-lhz_in01,43,114,1	script	#warp1	45,1,1,{
-
-OnTouch:
-	if(lhz_curse > 30)
-	{
+lhz_in01,43,114,0	script	#li_toend	45,1,1,{
+OnTouch_:
+	if (lhz_curse > 30) {
 		warp "lhz_que01",97,30;
-		end;
 	}
-	warp "lhz_in01",277,130;
+	else {
+		warp "lhz_in01",277,130;
+	}
 	end;
 }
 
-lhz_que01,97,33,1	script	#warp2	45,1,1,{
+lhz_que01,97,33,0	warp	#li_toin01	1,1,lhz_in01,43,120
+lhz_in01,278,132,0	warp	#li_toin02	1,1,lhz_in01,43,120
 
-OnTouch:
-	warp "lhz_in01",43,120;
-	end;
-}
-
-lhz_in01,278,132,1	script	#warp3	45,1,1,{
-
-OnTouch:
-	warp "lhz_in01",43,120;
-	end;
-}
-
-lhz_que01,89,15,3	script	A File	111,{
-
-	mes "............";
-	next;
+lhz_que01,89,15,3	script	File#li	111,{
 	mes "Name: Engeod";
 	mes "Age: XX";
 	mes "Height: XXX";
@@ -6188,15 +6350,10 @@ lhz_que01,89,15,3	script	A File	111,{
 	mes "Age: XX";
 	mes "Height: XXX";
 	mes "Weight: XX";
-	next;
-	mes "............";
 	close;
 }
 
-lhz_in01,269,114,3	script	Documents	111,{
-
-	mes "............";
-	next;
+lhz_in01,269,114,3	script	A File#li-1	111,{
 	mes "Name: Engeod";
 	mes "Age: XX";
 	mes "Height: XXX";
@@ -6211,8 +6368,6 @@ lhz_in01,269,114,3	script	Documents	111,{
 	mes "Age: XX";
 	mes "Height: XXX";
 	mes "Weight: XX";
-	next;
-	mes "............";
 	close;
 }
 

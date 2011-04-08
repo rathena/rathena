@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //=  erKURITA, Au{R}oN (Translated by Alan), $ephiroth
 //===== Current Version: ===================================== 
-//= 2.1
+//= 2.2
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -41,6 +41,7 @@
 //= 1.9 Added Cool Corp. Event Staff, who oringialy resided in the DTS_warper script file. [L0ne_W0lf]
 //= 2.0 Added missing Lab Staff#amano08 NPC. (bugreport:4319) [Gepard]
 //= 2.1 Commented out Duplicate NPCs. (bugreport:4555)
+//= 2.2 Added missing NPC found in AEGIS files. [L0ne_W0lf]
 //=============================================================
 
 lighthalzen,198,285,5	script	Jiwon#zen5	862,{
@@ -3158,6 +3159,56 @@ lhz_in02,19,274,2	script	Maintenance Guy#lhz	851,{
 	close;
 }
 */
+
+lighthalzen,337,296,3	script	Rekenber Employee#li_2	868,{
+	if (hg_tre > 54) {
+		mes "[Rekenber Employee]";
+		mes "Greetings. As part of our";
+		mes "effort to relieve the poor,";
+		mes "Rekenber is providing job";
+		mes "opportunities targeted for";
+		mes "citizens of the slum areas.";
+		next;
+		mes "[Rekenber Employee]";
+		mes "You can choose to work";
+		mes "from home, or undergo a";
+		mes "little bit of training for more";
+		mes "professional positions. This";
+		mes "is a great chance to make a";
+		mes "difference... and some money~";
+		emotion e_no1,"Rekenber Employee#li";
+		close;
+	}
+}
+
+lhz_in01,221,131,7	script	Scientist#li_01	865,{
+	if (isequipped(2241) && isequipped(2243)) {
+		if (hg_tre > 54) {
+			mes "[A Scientist]";
+			mes "What happened? All the machines are ruined and the research report are gone! The history of Regenschirm has been hacked!";
+			close;
+		}
+		else {
+			mes "[Scientist]";
+			mes "It takes so long for";
+			mes "this device to process";
+			mes "all the data and give me";
+			mes "the results. Still, the wait";
+			mes "heightens my anticipation...";
+			close;
+		}
+	}
+	else {
+		mes "[Scientist]";
+		mes "What?! Guards!";
+		mes "Hurry, there's an";
+		mes "intruder right here!";
+		emotion e_gasp,"A Scientist#li_01";
+		close2;
+		warp "lhz_in01",33,224;
+		end;
+	}
+}
 
 // Lighthalzen Mushroom.
 // Don't really understand why it's there, but it's funny regardless.
