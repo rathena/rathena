@@ -1,5 +1,7 @@
 Date	Added
 
+2011/04/08
+	* Fixed a compile error when socket send shortlists are disabled (s->eof instead of s->flag.eof) (follow up to r11930). [Ai4rei]
 2011/04/07
 	* Fixed monster skill associated emotions were always ignored when having less than three digits ( = all ) (bugreport:4842). [Ai4rei]
 	* Throwing around with packet updates. [Ai4rei]
