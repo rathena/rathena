@@ -1351,9 +1351,6 @@ void send_shortlist_do_sends()
 {
 	int i = 0;
 
-	// Assume all or most of the fd's don't remain in the shortlist
-	memset(send_shortlist_set, 0, sizeof(send_shortlist_set));
-
 	while( i < send_shortlist_count )
 	{
 		int fd = send_shortlist_array[i];
@@ -1375,7 +1372,6 @@ void send_shortlist_do_sends()
 			// be sent from it we'll keep it in the shortlist.
 			if( session[fd] && !session[fd]->flag.eof && session[fd]->wdata_size )
 			{
-				send_shortlist_set[fd/32] |= 1<<(fd%32);
 				++i;
 				continue;
 			}
@@ -1383,6 +1379,7 @@ void send_shortlist_do_sends()
 
 		// Remove fd from shortlist, move the last fd to the current position
 		send_shortlist_array[i] = send_shortlist_array[--send_shortlist_count];
+		send_shortlist_set[fd/32]&=~(1<<(fd%32));
 	}
 }
 #endif
