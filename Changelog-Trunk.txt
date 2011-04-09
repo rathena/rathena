@@ -1,6 +1,7 @@
 Date	Added
 
 2011/04/09
+	* Added *.opt (VS6 workspace cache file) to svn:ignore. [Ai4rei]
 	* Changed pc_jobid2mapid to use a 1:1 mapping which is less prone to errors and faster than the previous method (follow up to r14755). [Ai4rei]
 2011/04/08
 	* Fixed memory corruption when amount of players online approached FD_SETSIZE (topic:262388, bugreport:4856, since 11897). [Ai4rei]
