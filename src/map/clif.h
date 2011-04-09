@@ -451,7 +451,7 @@ int clif_guild_xy_remove(struct map_session_data *sd);
 int clif_bg_hp(struct map_session_data *sd);
 int clif_bg_xy(struct map_session_data *sd);
 int clif_bg_xy_remove(struct map_session_data *sd);
-int clif_bg_message(struct battleground_data *bg, const char *name, const char *mes, int len);
+int clif_bg_message(struct battleground_data *bg, int src_id, const char *name, const char *mes, int len);
 int clif_bg_updatescore(int m);
 int clif_bg_updatescore_single(struct map_session_data *sd);
 int clif_sendbgemblem_area(struct map_session_data *sd);

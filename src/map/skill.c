@@ -398,6 +398,7 @@ int skillnotok (int skillid, struct map_session_data *sd)
 			break;
 		case MC_VENDING:
 		case MC_IDENTIFY:
+		case ALL_BUYING_STORE:
 			return 0; // always allowed
 		case WZ_ICEWALL:
 			// noicewall flag [Valaris]

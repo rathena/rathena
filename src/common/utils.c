@@ -269,7 +269,7 @@ unsigned int get_percentage(const unsigned int A, const unsigned int B)
 	if( B == 0 )
 	{
 		ShowError("get_percentage(): divison by zero! (A=%u,B=%u)\n", A, B);
-		return -1;
+		return ~0U;
 	}
 
 	result = 100 * ((double)A / (double)B);

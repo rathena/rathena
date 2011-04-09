@@ -160,9 +160,13 @@ int npc_enable_sub(struct block_list *bl, va_list ap)
 
 int npc_enable(const char* name, int flag)
 {
-	struct npc_data* nd = (struct npc_data*)strdb_get(npcname_db, name);
+	struct npc_data* nd = npc_name2id(name);
+
 	if (nd==NULL)
+	{
+		ShowError("npc_enable: Attempted to %s a non-existing NPC '%s' (flag=%d).\n", (flag&3) ? "show" : "hide", name, flag);
 		return 0;
+	}
 
 	if (flag&1)
 		nd->sc.option&=~OPTION_INVISIBLE;
@@ -813,7 +817,7 @@ int npc_touchnext_areanpc(struct map_session_data* sd, bool leavemap)
 
 		nd->touching_id = sd->touching_id = 0;
 		snprintf(name, ARRAYLENGTH(name), "%s::%s", nd->exname, script_config.ontouch_name);
-		map_forcountinarea(npc_touch_areanpc_sub,nd->bl.m,nd->bl.m - xs,nd->bl.y - ys,nd->bl.x + xs,nd->bl.y + ys,1,BL_PC,sd->bl.id,nd->bl.id,name);
+		map_forcountinarea(npc_touch_areanpc_sub,nd->bl.m,nd->bl.x - xs,nd->bl.y - ys,nd->bl.x + xs,nd->bl.y + ys,1,BL_PC,sd->bl.id,nd->bl.id,name);
 	}
 	return 0;
 }
@@ -902,7 +906,7 @@ int npc_touch_areanpc2(struct mob_data *md)
 		switch( map[m].npc[i]->subtype )
 		{
 			case WARP:
-				if( !battle_config.mob_warp&1 )
+				if( !( battle_config.mob_warp&1 ) )
 					continue;
 				xs = map[m].npc[i]->u.warp.xs;
 				ys = map[m].npc[i]->u.warp.ys;
@@ -1034,7 +1038,7 @@ struct npc_data* npc_checknear(struct map_session_data* sd, struct block_list* b
  *------------------------------------------*/
 int npc_globalmessage(const char* name, const char* mes)
 {
-	struct npc_data* nd = (struct npc_data *) strdb_get(npcname_db, name);
+	struct npc_data* nd = npc_name2id(name);
 	char temp[100];
 
 	if (!nd)

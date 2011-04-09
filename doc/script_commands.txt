@@ -4,7 +4,7 @@
 //= A reference manual for the eAthena scripting language.
 //= Commands are sorted depending on their functionality.
 //===== Version ===========================================
-//= 3.37.20110306
+//= 3.39.20110322
 //=========================================================
 //= 1.0 - First release, filled will as much info as I could
 //=       remember or figure out, most likely there are errors,
@@ -159,6 +159,15 @@
 //=       Added 'buyingstore' command. [Ai4rei]
 //= 3.37.20110306
 //=       Added 'searchstores' command. [Ai4rei]
+//= 3.38.20110313
+//=       Added 'cooking' command. [Ai4rei]
+//=       Fixed item levels in 'produce' command.
+//= 3.39.20110322
+//=       Added 'bg_getareausers' and 'bg_get_data' commands. [Ai4rei]
+//=       Updated description of 'waitingroom2bg_single' command.
+//=       Documented optional parameter 'npc name' of 'waitingroom2bg' command.
+//= 3.40.20110404
+//=       Updated description of 'waitingroom' command to include required zeny/lvl. [Kisuka]
 //=========================================================
 
 This document is a reference manual for all the scripting commands and functions 
@@ -4317,11 +4326,38 @@ Valid item levels are:
  1   - Level 1 Weapons
  2   - Level 2 Weapons
  3   - Level 3 Weapons
- 16  - Blacksmith's Stones and Metals
- 32  - Alchemist's Potions
- 64  - Whitesmith's Coins
- 123 - Whitesmith's Nuggets
- 256 - Assassin Cross's Deadly Poison
+ 21  - Blacksmith's Stones and Metals
+ 22  - Alchemist's Potions, Holy Water, Assassin Cross's Deadly Poison
+ 23  - Elemental Converters
+
+---------------------------------------
+
+*cooking <dish level>;
+
+This command will open a produce window on the client connected to the invoking 
+character. The 'dish level' is the number which determines what kind of dish
+level you can produce. You can see the full list of dishes that can be produced in 
+'db/produce_db.txt'.
+
+The window will be shown empty if the invoking character does not have enough of
+the required incredients to cook a dish.
+
+Valid dish levels are:
+
+11 - Level 1 Dish
+12 - Level 2 Dish
+13 - Level 3 Dish
+14 - Level 4 Dish
+15 - Level 5 Dish
+16 - Level 6 Dish
+17 - Level 7 Dish
+18 - Level 8 Dish
+19 - Level 9 Dish
+20 - Level 10 Dish
+
+Altough it's required to set a dish level, it doesn't matter if you set it to 1
+and you want to cook a level 10 dish, as long as you got the required incredients
+to cook the dish the command works.
 
 ---------------------------------------
 
@@ -5674,7 +5710,7 @@ The function returns 0 if the shop was not found, 1 otherwise.
 
 ---------------------------------------
 
-*waitingroom "<chatroom name>",<limit>{,<event label>,<trigger>};
+*waitingroom "<chatroom name>",<limit>{,<event label>,<trigger>,<required zeny>,<min lvl>,<max lvl>};
 
 This command will create a chat room, owned by the NPC object running this 
 script and displayed above the NPC sprite.
@@ -5684,9 +5720,6 @@ The limit is the maximum number of people allowed to enter the chat room. If the
 optional event and trigger parameters are given, the event label 
 ("<NPC object name>::<label name>") will be invoked as if with a 'doevent' upon 
 the number of people in the chat room reaching the given triggering amount.
-
-It's funny, but for compatibility with jAthena, you can swap the event label and 
-the trigger parameters, and it will still work.
 
 // The NPC will just show a box above its head that says "Hello World", clicking 
 // it will do nothing, since the limit is zero.
@@ -5698,6 +5731,14 @@ the trigger parameters, and it will still work.
 // it will cause the NPC "Bouncer" run the label "OnStart"
 
     waitingroom "Disco - Waiting Room",8,"Bouncer::OnStart",8;
+
+// The NPC will have a box above its head, it will say "Party - Waiting Room" 
+// and will have 8 waiting slots. Clicking this will allow a player who has
+// 5000 zeny and lvl 50~99 to enter the chat room, where the player will be
+// able to wait until 8 people accumulate. Once this happens, it will cause
+// the NPC "Bouncer" run the label "OnStart"
+
+    waitingroom "Party - Waiting Room",5,"Bouncer::OnStart",8,5000,50,99;
 
 Creating a waiting room does not stop the execution of the script and it will 
 continue to the next line.
@@ -6008,17 +6049,19 @@ sprite based sprite id in 'db/mob-avail.txt' with this.
 
 ---------------------------------------
 
-*movenpc <NPC name>,x,y;
+*movenpc "<NPC name>",<x>,<y>{,<dir>};
 
 This command looks like the NPCWalkToxy function,but is a little different.
 
-While NPCWalkToXY just makes the NPC 'walk' to the coordinates given 
-(which sometimes gives problems if the path isn't a straight line without objects),
-this command just moves the NPC. It basically warps out and in on the current and given spot.
+While NPCWalkToXY just makes the NPC 'walk' to the coordinates given (which 
+sometimes gives problems if the path isn't a straight line without objects), 
+this command just moves the NPC. It basically warps out and in on the current 
+and given spot. Direction can be used to change the NPC's facing direction.
 
 Example(s):
 
-//This will move Bugga from it's current position to the coordinates 100,20 (if those coordinates are walkable (legit)).
+// This will move Bugga from it's current position to the coordinates 100,20 
+// (if those coordinates are walkable (legit)).
 	moveNPC "Bugga",100,20;
 	
 ---------------------------------------
@@ -6809,9 +6852,9 @@ instance times out while inactive.
 
 ---------------------------------------
 
-========================
+=========================
 |8.- Quest Log commands.|
-========================
+=========================
 ---------------------------------------
 
 *setquest <ID>;
@@ -6880,13 +6923,20 @@ color can be:
 
 ----------------------------------------
 
-===========================
+============================
 |9.- Battleground commands.|
-===========================
+============================
 ---------------------------------------
 
-*waitingroom2bg_single("<mapname>",<x>,<y>,"<On Quit Event>","<On Death Event>");
-*waitingroom2bg("<mapname>",<x>,<y>,"<On Quit Event>","<On Death Event>");
+*waitingroom2bg_single(<battle group>,"<mapname>",<x>,<y>,"<npc name>");
+
+Adds the first waiting player from the chat room of given NPC to an
+existing battleground group and warps it to specified coordinates on
+given map.
+
+---------------------------------------
+
+*waitingroom2bg("<mapname>",<x>,<y>,"<On Quit Event>","<On Death Event>"{,"<npc name>"});
 
 <Mapname> and X Y coordinates refer to where the "respawn" base is, where the player group will respawn when they die.
 <On Quit Event> refers to an NPC label that attaches to the character and is run when they relog.
@@ -6894,6 +6944,8 @@ color can be:
 
 Unlike the prior command, the latter will attach a GROUP in a waiting room to the battleground, and 
 sets the array $@arenamembers[0] where 0 holds the IDs of the first group, and 1 holds the IDs of the second.
+
+If the option parameter is left out, the waiting room of the current NPC is used.
 
 Example:
 	// Battle Group will be referred to as $@KvM01BG_id1, and when they die, respawn at bat_c01,52,129.
@@ -6992,9 +7044,16 @@ Example:
 
 *bg_get_data(<Battle Group>,<type>);
 
+Retrieves data related to given battle group. Type can be one of the following:
+
+    0 - Amount of players currently belonging to the group.
+
 ----------------------------------------
 
-*bg_getareausers
+*bg_getareausers(<battle group>,<map name>,<x0>,<y0>,<x1>,<y1>);
+
+Retrieves amount of players belonging to given battle group on given
+map within an specified rectangular area.
 
 ----------------------------------------
 

@@ -71,7 +71,7 @@ static bool searchstore_hasstore(struct map_session_data* sd, unsigned char type
 {
 	switch( type )
 	{
-		case SEARCHTYPE_VENDING:      return (bool)( sd->vender_id != 0 );
+		case SEARCHTYPE_VENDING:      return sd->state.vending;
 		case SEARCHTYPE_BUYING_STORE: return sd->state.buyingstore;
 	}
 	return false;

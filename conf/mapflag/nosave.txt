@@ -269,3 +269,7 @@ arug_dun01	mapflag	nosave	SavePoint
 schg_dun01	mapflag	nosave	SavePoint
 
 //evt_zombie	mapflag	nosave	SavePoint
+
+// Poring War ====================
+poring_w01	mapflag	nosave	SavePoint
+poring_w02	mapflag	nosave	SavePoint

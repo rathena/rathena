@@ -23,7 +23,7 @@ int chat_triggerevent(struct chat_data *cd); // forward declaration
 
 /// Initializes a chatroom object (common functionality for both pc and npc chatrooms).
 /// Returns a chatroom object on success, or NULL on failure.
-static struct chat_data* chat_createchat(struct block_list* bl, const char* title, const char* pass, int limit, bool pub, int trigger, const char* ev)
+static struct chat_data* chat_createchat(struct block_list* bl, const char* title, const char* pass, int limit, bool pub, int trigger, const char* ev, int zeny, int minLvl, int maxLvl)
 {
 	struct chat_data* cd;
 	nullpo_retr(NULL, bl);
@@ -36,6 +36,9 @@ static struct chat_data* chat_createchat(struct block_list* bl, const char* titl
 	cd->users = 0;
 	cd->limit = min(limit, ARRAYLENGTH(cd->usersd));
 	cd->trigger = trigger;
+	cd->zeny = zeny;
+	cd->minLvl = minLvl;
+	cd->maxLvl = maxLvl;
 	memset(cd->usersd, 0, sizeof(cd->usersd));
 	cd->owner = bl;
 	safestrncpy(cd->npc_event, ev, sizeof(cd->npc_event));
@@ -69,7 +72,7 @@ int chat_createpcchat(struct map_session_data* sd, const char* title, const char
 	if( sd->chatID )
 		return 0; //Prevent people abusing the chat system by creating multiple chats, as pointed out by End of Exam. [Skotlex]
 
-	if( sd->vender_id || sd->state.buyingstore )
+	if( sd->state.vending || sd->state.buyingstore )
 	{// not chat, when you already have a store open
 		return 0;
 	}
@@ -88,7 +91,7 @@ int chat_createpcchat(struct map_session_data* sd, const char* title, const char
 
 	pc_stop_walking(sd,1);
 
-	cd = chat_createchat(&sd->bl, title, pass, limit, pub, 0, "");
+	cd = chat_createchat(&sd->bl, title, pass, limit, pub, 0, "", 0, 1, MAX_LEVEL);
 	if( cd )
 	{
 		cd->users = 1;
@@ -113,7 +116,7 @@ int chat_joinchat(struct map_session_data* sd, int chatid, const char* pass)
 	nullpo_ret(sd);
 	cd = (struct chat_data*)map_id2bl(chatid);
 
-	if( cd == NULL || cd->bl.type != BL_CHAT || cd->bl.m != sd->bl.m || sd->vender_id || sd->state.buyingstore || sd->chatID || cd->users >= cd->limit )
+	if( cd == NULL || cd->bl.type != BL_CHAT || cd->bl.m != sd->bl.m || sd->state.vending || sd->state.buyingstore || sd->chatID || cd->users >= cd->limit )
 	{
 		clif_joinchatfail(sd,0);
 		return 0;
@@ -122,6 +125,22 @@ int chat_joinchat(struct map_session_data* sd, int chatid, const char* pass)
 	if( !cd->pub && strncmp(pass, cd->pass, sizeof(cd->pass)) != 0 && !(battle_config.gm_join_chat && pc_isGM(sd) >= battle_config.gm_join_chat) )
 	{
 		clif_joinchatfail(sd,1);
+		return 0;
+	}
+
+	if( sd->status.base_level < cd->minLvl || sd->status.base_level > cd->maxLvl )
+	{
+		if(sd->status.base_level < cd->minLvl)
+			clif_joinchatfail(sd,5);
+		else
+			clif_joinchatfail(sd,6);
+
+		return 0;
+	}
+
+	if( sd->status.zeny < cd->zeny )
+	{
+		clif_joinchatfail(sd,4);
 		return 0;
 	}
 
@@ -299,7 +318,7 @@ int chat_kickchat(struct map_session_data* sd, const char* kickusername)
 }
 
 /// Creates a chat room for the npc.
-int chat_createnpcchat(struct npc_data* nd, const char* title, int limit, bool pub, int trigger, const char* ev)
+int chat_createnpcchat(struct npc_data* nd, const char* title, int limit, bool pub, int trigger, const char* ev, int zeny, int minLvl, int maxLvl)
 {
 	struct chat_data* cd;
 	nullpo_ret(nd);
@@ -310,7 +329,14 @@ int chat_createnpcchat(struct npc_data* nd, const char* title, int limit, bool p
 		return 0;
 	}
 
-	cd = chat_createchat(&nd->bl, title, "", limit, pub, trigger, ev);
+	if( zeny > MAX_ZENY || maxLvl > MAX_LEVEL )
+	{
+		ShowError("chat_createnpcchat: npc '%s' has a required lvl or amount of zeny over the max limit!\n", nd->exname);
+		return 0;
+	}
+
+	cd = chat_createchat(&nd->bl, title, "", limit, pub, trigger, ev, zeny, minLvl, maxLvl);
+
 	if( cd )
 	{
 		nd->chat_id = cd->bl.id;

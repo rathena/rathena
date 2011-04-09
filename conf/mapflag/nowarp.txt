@@ -65,3 +65,7 @@ bat_b01	mapflag	nowarp
 bat_b02	mapflag	nowarp
 bat_a01	mapflag	nowarp
 bat_a02	mapflag	nowarp
+
+// Poring War ==================
+poring_w01	mapflag	nowarp
+poring_w02	mapflag	nowarp

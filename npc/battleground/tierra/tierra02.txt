@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.0
+//= 1.1
 //===== Compatible With: ===================================== 
 //= eAthena 1.0
 //===== Description: ========================================= 
@@ -13,6 +13,7 @@
 //= - Losing Team: 1 badge
 //===== Additional Comments: ================================= 
 //= 1.0 First Version.
+//= 1.1 Updated 'waitingroom' to support required zeny/lvl. [Kisuka]
 //============================================================
 
 // Waiting Room NPCs
@@ -21,7 +22,7 @@ bat_room,114,227,5	script	Lieutenant Rundel	418,{
 	end;
 
 OnInit:
-	waitingroom "Battle Station",10,"start#bat_a02::OnReadyCheck",1;
+	waitingroom "Battle Station",10,"start#bat_a02::OnReadyCheck",1,0,80,99;
 	end;
 
 OnEnterBG:
@@ -33,7 +34,7 @@ bat_room,114,204,1	script	Lieutenant Guerrit	414,{
 	end;
 
 OnInit:
-	waitingroom "Battle Station",10,"start#bat_a02::OnReadyCheck",1;
+	waitingroom "Battle Station",10,"start#bat_a02::OnReadyCheck",1,0,80,99;
 	end;
 
 OnEnterBG:

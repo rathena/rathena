@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
-//= 1.3
+//= 1.4
 //===== Compatible With: =====================================
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -14,14 +14,14 @@
 //= 1.1 Fixed small official bug. [L0ne_W0lf]
 //= 1.2 Fixed a little mistake [akrus]
 //= 1.3 Corrected issue with top record setting. [L0ne_W0lf]
+//= 1.4 Updated 'waitingroom' to support required zeny/lvl. [Kisuka]
 //============================================================
 
 turbo_room,110,135,3	script	Expert mode - 4 person	124,{
 	end;
 
 OnInit:
-	waitingroom "Expert mode - 4 person",60,"Expert mode - 4 person::OnStartArena",4;
-	//SetFeeZeny 1000
+	waitingroom "Expert mode - 4 person",60,"Expert mode - 4 person::OnStartArena",4,1000,10,99;
 	enablewaitingroomevent "Expert mode - 4 person";
 	end;
 

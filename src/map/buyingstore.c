@@ -46,7 +46,7 @@ static unsigned int buyingstore_getuid(void)
 
 bool buyingstore_setup(struct map_session_data* sd, unsigned char slots)
 {
-	if( !battle_config.feature_buying_store || sd->vender_id || sd->state.buyingstore || sd->state.trading || slots == 0 )
+	if( !battle_config.feature_buying_store || sd->state.vending || sd->state.buyingstore || sd->state.trading || slots == 0 )
 	{
 		return false;
 	}

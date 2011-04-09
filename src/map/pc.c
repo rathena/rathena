@@ -3251,7 +3251,10 @@ int pc_payzeny(struct map_session_data *sd,int zeny)
 	nullpo_ret(sd);
 
 	if( zeny < 0 )
-	  	return pc_getzeny(sd, -zeny);
+	{
+		ShowError("pc_payzeny: Paying negative Zeny (zeny=%d, account_id=%d, char_id=%d).\n", zeny, sd->status.account_id, sd->status.char_id);
+		return 1;
+	}
 
 	if( sd->status.zeny < zeny )
 		return 1; //Not enough.
@@ -3307,7 +3310,10 @@ int pc_getzeny(struct map_session_data *sd,int zeny)
 	nullpo_ret(sd);
 
 	if( zeny < 0 )
-		return pc_payzeny(sd, -zeny);
+	{
+		ShowError("pc_getzeny: Obtaining negative Zeny (zeny=%d, account_id=%d, char_id=%d).\n", zeny, sd->status.account_id, sd->status.char_id);
+		return 1;
+	}
 
 	if( zeny > MAX_ZENY - sd->status.zeny )
 		zeny = MAX_ZENY - sd->status.zeny;
@@ -3447,7 +3453,7 @@ int pc_dropitem(struct map_session_data *sd,int n,int amount)
 	if(sd->status.inventory[n].nameid <= 0 ||
 		sd->status.inventory[n].amount <= 0 ||
 		sd->status.inventory[n].amount < amount ||
-		sd->state.trading || sd->vender_id != 0 ||
+		sd->state.trading || sd->state.vending ||
 		!sd->inventory_data[n] //pc_delitem would fail on this case.
 		)
 		return 0;
@@ -3887,7 +3893,7 @@ int pc_putitemtocart(struct map_session_data *sd,int idx,int amount)
 	
 	item_data = &sd->status.inventory[idx];
 
-	if( item_data->nameid == 0 || amount < 1 || item_data->amount < amount || sd->vender_id )
+	if( item_data->nameid == 0 || amount < 1 || item_data->amount < amount || sd->state.vending )
 		return 1;
 
 	if( pc_cart_additem(sd,item_data,amount) == 0 )
@@ -3927,7 +3933,7 @@ int pc_getitemfromcart(struct map_session_data *sd,int idx,int amount)
 	
 	item_data=&sd->status.cart[idx];
 
-	if(item_data->nameid==0 || amount < 1 || item_data->amount<amount || sd->vender_id )
+	if(item_data->nameid==0 || amount < 1 || item_data->amount<amount || sd->state.vending )
 		return 1;
 	if((flag = pc_additem(sd,item_data,amount)) == 0)
 		return pc_cart_delitem(sd,idx,amount,0);
@@ -6220,7 +6226,7 @@ int pc_readparam(struct map_session_data* sd,int type)
  *------------------------------------------*/
 int pc_setparam(struct map_session_data *sd,int type,int val)
 {
-	int i = 0;
+	int i = 0, statlimit;
 
 	nullpo_ret(sd);
 
@@ -6283,7 +6289,7 @@ int pc_setparam(struct map_session_data *sd,int type,int val)
 		}
 		break;
 	case SP_SEX:
-		sd->status.sex = val;
+		sd->status.sex = val ? SEX_MALE : SEX_FEMALE;
 		break;
 	case SP_WEIGHT:
 		sd->weight = val;
@@ -6292,34 +6298,52 @@ int pc_setparam(struct map_session_data *sd,int type,int val)
 		sd->max_weight = val;
 		break;
 	case SP_HP:
-		sd->battle_status.hp = val;
+		sd->battle_status.hp = cap_value(val, 1, (int)sd->battle_status.max_hp);
 		break;
 	case SP_MAXHP:
-		sd->battle_status.max_hp = val;
+		sd->battle_status.max_hp = cap_value(val, 1, battle_config.max_hp);
+
+		if( sd->battle_status.max_hp < sd->battle_status.hp )
+		{
+			sd->battle_status.hp = sd->battle_status.max_hp;
+			clif_updatestatus(sd, SP_HP);
+		}
 		break;
 	case SP_SP:
-		sd->battle_status.sp = val;
+		sd->battle_status.sp = cap_value(val, 0, (int)sd->battle_status.max_sp);
 		break;
 	case SP_MAXSP:
-		sd->battle_status.max_sp = val;
+		sd->battle_status.max_sp = cap_value(val, 1, battle_config.max_sp);
+
+		if( sd->battle_status.max_sp < sd->battle_status.sp )
+		{
+			sd->battle_status.sp = sd->battle_status.max_sp;
+			clif_updatestatus(sd, SP_SP);
+		}
 		break;
 	case SP_STR:
-		sd->status.str = val;
+		statlimit = pc_maxparameter(sd);
+		sd->status.str = cap_value(val, 1, statlimit);
 		break;
 	case SP_AGI:
-		sd->status.agi = val;
+		statlimit = pc_maxparameter(sd);
+		sd->status.agi = cap_value(val, 1, statlimit);
 		break;
 	case SP_VIT:
-		sd->status.vit = val;
+		statlimit = pc_maxparameter(sd);
+		sd->status.vit = cap_value(val, 1, statlimit);
 		break;
 	case SP_INT:
-		sd->status.int_ = val;
+		statlimit = pc_maxparameter(sd);
+		sd->status.int_ = cap_value(val, 1, statlimit);
 		break;
 	case SP_DEX:
-		sd->status.dex = val;
+		statlimit = pc_maxparameter(sd);
+		sd->status.dex = cap_value(val, 1, statlimit);
 		break;
 	case SP_LUK:
-		sd->status.luk = val;
+		statlimit = pc_maxparameter(sd);
+		sd->status.luk = cap_value(val, 1, statlimit);
 		break;
 	case SP_KARMA:
 		sd->status.karma = val;
@@ -7538,7 +7562,7 @@ int pc_checkitem(struct map_session_data *sd)
 
 	nullpo_ret(sd);
 
-	if( sd->vender_id ) //Avoid reorganizing items when we are vending, as that leads to exploits (pointed out by End of Exam)
+	if( sd->state.vending ) //Avoid reorganizing items when we are vending, as that leads to exploits (pointed out by End of Exam)
 		return 0;
 
 	if( battle_config.item_check )

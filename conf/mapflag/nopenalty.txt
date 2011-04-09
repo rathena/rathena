@@ -251,3 +251,6 @@ bat_a01	mapflag	nopenalty
 bat_a02	mapflag	nopenalty
 
 //evt_zombie	mapflag	nopenalty
+
+// Poring War ==================
+poring_w02	mapflag	nopenalty

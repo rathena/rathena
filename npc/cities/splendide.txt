@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.1
+//= 1.2
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -12,6 +12,7 @@
 //===== Additional Comments: ================================= 
 //= 1.0 First Version.
 //= 1.1 Added more town NPCs
+//= 1.2 Added more town NPCs
 //============================================================
 
 // cat_enhance
@@ -792,3 +793,39 @@ spl_in01,122,311,1	script	Laphine Soldier#ep13_2	447,{
 	}
 }
 
+// ep33_2_dailybs
+splendide,121,259,3	script	Fairy#ep13bs1	436,{
+	if (isequipped(2782) == 1) {
+		mes "[Fairy]";
+		mes "Have you ever gone to the East side?";
+		mes "Theres lots of ice~";
+		mes "How cold...";
+		close;
+	}
+	else {
+		mes "[nes]";
+		mes "VaFuloDor An ";
+		mes "WosNuffremu Ha TurAshTi";
+		mes "VilTiRini O ";
+		close;
+	}
+}
+
+splendide,163,264,3	script	Fairy#ep13bs2	438,{
+	if (isequipped(2782) == 1) {
+		mes "[Fairy]";
+		mes "What are you looking at!";
+		next;
+		mes "[Fairy]";
+		mes "Oh me! You know beauty when you see it don't you~?!";
+		close;
+	}
+	else {
+		mes "[nes]";
+		mes "UorVeLars No Ador";
+		next;
+		mes "[nes]";
+		mes "SeGothShar An AshDur";
+		close;
+	}
+}

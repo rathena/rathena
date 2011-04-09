@@ -1,5 +1,7 @@
 Date	Added
 
+2011/03/15
+	* Rev. 14744 Fixed option 'monster_ai' referring to setting 'mob_npc_warp' rather than 'mob_warp' (follow up to r8135). [Ai4rei]
 2011/03/06
 	* Rev. 14732 Added search store info related settings. [Ai4rei]
 2011/02/23
