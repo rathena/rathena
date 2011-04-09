@@ -4424,102 +4424,99 @@ int pc_checkequip(struct map_session_data *sd,int pos)
  *------------------------------------------*/
 int pc_jobid2mapid(unsigned short b_class)
 {
-	int class_ = 0;
-	if (b_class >= JOB_BABY && b_class <= JOB_SUPER_BABY)
+	switch(b_class)
 	{
-		if (b_class == JOB_SUPER_BABY)
-			b_class = JOB_SUPER_NOVICE;
-		else
-			b_class -= JOB_BABY;
-		class_|= JOBL_BABY;
-	}
-	else if (b_class >= JOB_NOVICE_HIGH && b_class <= JOB_PALADIN2)
-	{
-		b_class -= JOB_NOVICE_HIGH;
-		class_|= JOBL_UPPER;
-	}
-	if (b_class >= JOB_KNIGHT && b_class <= JOB_KNIGHT2)
-		class_|= JOBL_2_1;
-	else if (b_class >= JOB_CRUSADER && b_class <= JOB_CRUSADER2)
-		class_|= JOBL_2_2;
-	switch (b_class)
-	{
-		case JOB_NOVICE:
-		case JOB_SWORDMAN:
-		case JOB_MAGE:
-		case JOB_ARCHER:
-		case JOB_ACOLYTE:
-		case JOB_MERCHANT:
-		case JOB_THIEF:
-			class_ |= b_class;
-			break;
-		case JOB_KNIGHT:
-		case JOB_KNIGHT2:
-		case JOB_CRUSADER:
-		case JOB_CRUSADER2:
-			class_ |= MAPID_SWORDMAN;
-			break;
-		case JOB_PRIEST:
-		case JOB_MONK:
-			class_ |= MAPID_ACOLYTE;
-			break;
-		case JOB_WIZARD:
-		case JOB_SAGE:
-			class_ |= MAPID_MAGE;
-			break;
-		case JOB_BLACKSMITH:
-		case JOB_ALCHEMIST:
-			class_ |= MAPID_MERCHANT;
-			break;
-		case JOB_HUNTER:
+		case JOB_NOVICE:            return MAPID_NOVICE;
+	//1st classes
+		case JOB_SWORDMAN:          return MAPID_SWORDMAN;
+		case JOB_MAGE:              return MAPID_MAGE;
+		case JOB_ARCHER:            return MAPID_ARCHER;
+		case JOB_ACOLYTE:           return MAPID_ACOLYTE;
+		case JOB_MERCHANT:          return MAPID_MERCHANT;
+		case JOB_THIEF:             return MAPID_THIEF;
+		case JOB_TAEKWON:           return MAPID_TAEKWON;
+		case JOB_WEDDING:           return MAPID_WEDDING;
+		case JOB_GUNSLINGER:        return MAPID_GUNSLINGER;
+		case JOB_NINJA:             return MAPID_NINJA;
+		case JOB_XMAS:              return MAPID_XMAS;
+		case JOB_SUMMER:            return MAPID_SUMMER;
+	//2_1 classes
+		case JOB_SUPER_NOVICE:      return MAPID_SUPER_NOVICE;
+		case JOB_KNIGHT:            return MAPID_KNIGHT;
+		case JOB_WIZARD:            return MAPID_WIZARD;
+		case JOB_HUNTER:            return MAPID_HUNTER;
+		case JOB_PRIEST:            return MAPID_PRIEST;
+		case JOB_BLACKSMITH:        return MAPID_BLACKSMITH;
+		case JOB_ASSASSIN:          return MAPID_ASSASSIN;
+		case JOB_STAR_GLADIATOR:    return MAPID_STAR_GLADIATOR;
+	//2_2 classes
+		case JOB_CRUSADER:          return MAPID_CRUSADER;
+		case JOB_SAGE:              return MAPID_SAGE;
 		case JOB_BARD:
-		case JOB_DANCER:
-			class_ |= MAPID_ARCHER;
-			break;
-		case JOB_ASSASSIN:
-		case JOB_ROGUE:
-			class_ |= MAPID_THIEF;
-			break;
-			
-		case JOB_STAR_GLADIATOR:
-		case JOB_STAR_GLADIATOR2:
-			class_ |= JOBL_2_1;
-			class_ |= MAPID_TAEKWON;
-			break;	
-		case JOB_SOUL_LINKER:
-			class_ |= JOBL_2_2;
-		case JOB_TAEKWON:
-			class_ |= MAPID_TAEKWON;
-			break;
-		case JOB_WEDDING:
-			class_ = MAPID_WEDDING;
-			break;
-		case JOB_SUPER_NOVICE: //Super Novices are considered 2-1 novices. [Skotlex]
-			class_ |= JOBL_2_1;
-			break;
-		case JOB_GUNSLINGER:
-			class_ |= MAPID_GUNSLINGER;
-			break;
-		case JOB_NINJA:
-			class_ |= MAPID_NINJA;
-			break;
-		case JOB_XMAS:
-			class_ = MAPID_XMAS;
-			break;
-		case JOB_SUMMER:
-			class_ = MAPID_SUMMER;
-			break;
+		case JOB_DANCER:            return MAPID_BARDDANCER;
+		case JOB_MONK:              return MAPID_MONK;
+		case JOB_ALCHEMIST:         return MAPID_ALCHEMIST;
+		case JOB_ROGUE:             return MAPID_ROGUE;
+		case JOB_SOUL_LINKER:       return MAPID_SOUL_LINKER;
+	//1st: advanced
+		case JOB_NOVICE_HIGH:       return MAPID_NOVICE_HIGH;
+		case JOB_SWORDMAN_HIGH:     return MAPID_SWORDMAN_HIGH;
+		case JOB_MAGE_HIGH:         return MAPID_MAGE_HIGH;
+		case JOB_ARCHER_HIGH:       return MAPID_ARCHER_HIGH;
+		case JOB_ACOLYTE_HIGH:      return MAPID_ACOLYTE_HIGH;
+		case JOB_MERCHANT_HIGH:     return MAPID_MERCHANT_HIGH;
+		case JOB_THIEF_HIGH:        return MAPID_THIEF_HIGH;
+	//2_1 advanced
+		case JOB_LORD_KNIGHT:       return MAPID_LORD_KNIGHT;
+		case JOB_HIGH_WIZARD:       return MAPID_HIGH_WIZARD;
+		case JOB_SNIPER:            return MAPID_SNIPER;
+		case JOB_HIGH_PRIEST:       return MAPID_HIGH_PRIEST;
+		case JOB_WHITESMITH:        return MAPID_WHITESMITH;
+		case JOB_ASSASSIN_CROSS:    return MAPID_ASSASSIN_CROSS;
+	//2_2 advanced
+		case JOB_PALADIN:           return MAPID_PALADIN;
+		case JOB_PROFESSOR:         return MAPID_PROFESSOR;
+		case JOB_CLOWN:
+		case JOB_GYPSY:             return MAPID_CLOWNGYPSY;
+		case JOB_CHAMPION:          return MAPID_CHAMPION;
+		case JOB_CREATOR:           return MAPID_CREATOR;
+		case JOB_STALKER:           return MAPID_STALKER;
+	//1-1 baby
+		case JOB_BABY:              return MAPID_BABY;
+		case JOB_BABY_SWORDMAN:     return MAPID_BABY_SWORDMAN;
+		case JOB_BABY_MAGE:         return MAPID_BABY_MAGE;
+		case JOB_BABY_ARCHER:       return MAPID_BABY_ARCHER;
+		case JOB_BABY_ACOLYTE:      return MAPID_BABY_ACOLYTE;
+		case JOB_BABY_MERCHANT:     return MAPID_BABY_MERCHANT;
+		case JOB_BABY_THIEF:        return MAPID_BABY_THIEF;
+	//2_1 baby
+		case JOB_SUPER_BABY:        return MAPID_SUPER_BABY;
+		case JOB_BABY_KNIGHT:       return MAPID_BABY_KNIGHT;
+		case JOB_BABY_WIZARD:       return MAPID_BABY_WIZARD;
+		case JOB_BABY_HUNTER:       return MAPID_BABY_HUNTER;
+		case JOB_BABY_PRIEST:       return MAPID_BABY_PRIEST;
+		case JOB_BABY_BLACKSMITH:   return MAPID_BABY_BLACKSMITH;
+		case JOB_BABY_ASSASSIN:     return MAPID_BABY_ASSASSIN;
+	//2_2 baby
+		case JOB_BABY_CRUSADER:     return MAPID_BABY_CRUSADER;
+		case JOB_BABY_SAGE:         return MAPID_BABY_SAGE;
+		case JOB_BABY_BARD:
+		case JOB_BABY_DANCER:       return MAPID_BABY_BARDDANCER;
+		case JOB_BABY_MONK:         return MAPID_BABY_MONK;
+		case JOB_BABY_ALCHEMIST:    return MAPID_BABY_ALCHEMIST;
+		case JOB_BABY_ROGUE:        return MAPID_BABY_ROGUE;
 		default:
 			return -1;
 	}
-	return class_;
 }
 
 //Reverts the map-style class id to the client-style one.
 int pc_mapid2jobid(unsigned short class_, int sex)
 {
-	switch(class_) {
+	switch(class_)
+	{
 		case MAPID_NOVICE:          return JOB_NOVICE;
+	//1st classes
 		case MAPID_SWORDMAN:        return JOB_SWORDMAN;
 		case MAPID_MAGE:            return JOB_MAGE;
 		case MAPID_ARCHER:          return JOB_ARCHER;
@@ -4549,7 +4546,7 @@ int pc_mapid2jobid(unsigned short class_, int sex)
 		case MAPID_ALCHEMIST:       return JOB_ALCHEMIST;
 		case MAPID_ROGUE:           return JOB_ROGUE;
 		case MAPID_SOUL_LINKER:     return JOB_SOUL_LINKER;
-	//1-1: advanced
+	//1st: advanced
 		case MAPID_NOVICE_HIGH:     return JOB_NOVICE_HIGH;
 		case MAPID_SWORDMAN_HIGH:   return JOB_SWORDMAN_HIGH;
 		case MAPID_MAGE_HIGH:       return JOB_MAGE_HIGH;
