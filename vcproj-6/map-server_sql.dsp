@@ -271,6 +271,14 @@ SOURCE=..\src\map\date.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\src\map\duel.c
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\map\duel.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\src\map\guild.c
 # End Source File
 # Begin Source File

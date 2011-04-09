@@ -416,6 +416,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\src\map\duel.c"
+				>
+			</File>
+			<File
+				RelativePath="..\src\map\duel.h"
+				>
+			</File>
+			<File
 				RelativePath="..\src\map\guild.c"
 				>
 			</File>

@@ -17,6 +17,7 @@
 #include "mercenary.h"
 #include "skill.h"
 #include "clif.h"
+#include "duel.h"
 #include "npc.h"
 #include "guild.h"
 #include "status.h"

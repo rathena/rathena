@@ -510,16 +510,6 @@ enum equip_index {
 	EQI_MAX
 };
 
-struct duel {
-	int members_count;
-	int invites_count;
-	int max_players_limit;
-};
-
-#define MAX_DUEL 1024
-extern struct duel duel_list[MAX_DUEL];
-extern int duel_count;
-
 #define pc_setdead(sd)        ( (sd)->state.dead_sit = (sd)->vd.dead_sit = 1 )
 #define pc_setsit(sd)         ( (sd)->state.dead_sit = (sd)->vd.dead_sit = 2 )
 #define pc_isdead(sd)         ( (sd)->state.dead_sit == 1 )
@@ -777,15 +767,6 @@ int map_night_timer(int tid, unsigned int tick, int id, intptr data); // by [yor
 void pc_inventory_rentals(struct map_session_data *sd);
 int pc_inventory_rental_clear(struct map_session_data *sd);
 void pc_inventory_rental_add(struct map_session_data *sd, int seconds);
-
-//Duel functions // [LuzZza]
-int duel_create(struct map_session_data* sd, const unsigned int maxpl);
-int duel_invite(const unsigned int did, struct map_session_data* sd, struct map_session_data* target_sd);
-int duel_accept(const unsigned int did, struct map_session_data* sd);
-int duel_reject(const unsigned int did, struct map_session_data* sd);
-int duel_leave(const unsigned int did, struct map_session_data* sd);
-int duel_showinfo(const unsigned int did, struct map_session_data* sd);
-int duel_checktime(struct map_session_data* sd);
 
 int pc_read_motd(void); // [Valaris]
 int pc_disguise(struct map_session_data *sd, int class_);

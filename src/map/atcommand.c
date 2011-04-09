@@ -17,6 +17,7 @@
 #include "chat.h"
 #include "clif.h"
 #include "chrif.h"
+#include "duel.h"
 #include "intif.h"
 #include "itemdb.h"
 #include "log.h"
