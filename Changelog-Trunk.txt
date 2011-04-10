@@ -1,5 +1,7 @@
 Date	Added
 
+2011/04/10
+	* Fixed @changegm not updating guild window interface after changing the guild leader (bugreport:408, since r2622, related r3185). [Ai4rei]
 2011/04/09
 	* Moved duel code into a separate file. [Ai4rei]
 	* Added *.opt (VS6 workspace cache file) to svn:ignore. [Ai4rei]

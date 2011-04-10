@@ -1604,7 +1604,7 @@ int guild_gm_changed(int guild_id, int account_id, int char_id)
 {
 	struct guild *g;
 	struct guild_member gm;
-	int pos;
+	int pos, i;
 
 	g=guild_search(guild_id);
 
@@ -1638,7 +1638,18 @@ int guild_gm_changed(int guild_id, int account_id, int char_id)
 		g->member[0].sd->state.gmaster_flag = g;
 		//Block his skills for 5 minutes to prevent abuse.
 		guild_block_skill(g->member[0].sd, 300000);
-	}	
+	}
+
+	// announce the change to all guild members
+	for( i = 0; i < g->max_member; i++ )
+	{
+		if( g->member[i].sd && g->member[i].sd->fd )
+		{
+			clif_guild_basicinfo(g->member[i].sd);
+			clif_guild_memberlist(g->member[i].sd);
+		}
+	}
+
 	return 1;
 }
 
