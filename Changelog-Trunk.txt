@@ -1,6 +1,8 @@
 Date	Added
 
 2011/04/10
+	* Added support for clients 2010-11-23aRagexeRE+ and 2011-01-11aRagexeRE+. [Ai4rei]
+	- Servers that used packet db version 'default' until now need to be updated to use version '25'.
 	* Fixed switching between musical weapons would cancel ongoing dance skills (bugreport:4756, since r3538). [Ai4rei]
 	* Fixed @changegm not updating guild window interface after changing the guild leader (bugreport:408, since r2622, related r3185). [Ai4rei]
 2011/04/09

@@ -1586,5 +1586,11 @@ packet_ver: 25
 0x0842,6,recall2,2
 0x0843,6,remove2,2
 
+//2010-11-23aRagexeRE
+packet_ver: 26
+0x035f,5,walktoxy,2
+0x0360,6,ticksend,2
+0x0368,6,getcharnamerequest,2
+
 //Add new packets here
-//packet_ver: 26
+//packet_ver: 27
