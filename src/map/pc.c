@@ -4367,6 +4367,7 @@ int pc_checkallowskill(struct map_session_data *sd)
 		SC_SPEARQUICKEN,
 		SC_ADRENALINE,
 		SC_ADRENALINE2,
+		SC_DANCING,
 		SC_GATLINGFEVER
 	};
 	const enum sc_type scs_list[] = {
@@ -7253,7 +7254,6 @@ int pc_unequipitem(struct map_session_data *sd,int n,int flag)
 		sd->status.weapon = sd->weapontype2;
 		pc_calcweapontype(sd);
 		clif_changelook(&sd->bl,LOOK_WEAPON,sd->status.weapon);
-		status_change_end(&sd->bl, SC_DANCING, INVALID_TIMER); //When unequipping, stop dancing. [Skotlex]
 	}
 	if(sd->status.inventory[n].equip & EQP_HAND_L) {
 		sd->status.shield = sd->weapontype2 = 0;
