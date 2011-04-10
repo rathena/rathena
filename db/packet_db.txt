@@ -1588,8 +1588,16 @@ packet_ver: 25
 
 //2010-11-23aRagexeRE
 packet_ver: 26
+0x0436,19,wanttoconnection,2:6:10:14:18
 0x035f,5,walktoxy,2
 0x0360,6,ticksend,2
+0x0361,5,changedir,2:4
+0x0362,6,takeitem,2
+0x0363,6,dropitem,2:4
+0x0364,8,movetokafra,2:4
+0x0365,8,movefromkafra,2:4
+0x0366,10,useskilltopos,2:4:6:8
+0x0367,90,useskilltoposinfo,2:4:6:8:10
 0x0368,6,getcharnamerequest,2
 
 //Add new packets here
