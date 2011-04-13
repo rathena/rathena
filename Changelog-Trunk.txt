@@ -1,5 +1,7 @@
 Date	Added
 
+2011/04/13
+	* Added missing 0x369 packet.(info provided by Yommy) [Inkfish]
 2011/04/10
 	* Added support for clients 2010-11-23aRagexeRE+ and 2011-01-11aRagexeRE+. [Ai4rei]
 	- Servers that used packet db version 'default' until now need to be updated to use version '25'.
