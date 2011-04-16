@@ -6398,6 +6398,7 @@ int pc_equiplookall(struct map_session_data *sd)
 	clif_changelook(&sd->bl,LOOK_HEAD_BOTTOM,sd->status.head_bottom);
 	clif_changelook(&sd->bl,LOOK_HEAD_TOP,sd->status.head_top);
 	clif_changelook(&sd->bl,LOOK_HEAD_MID,sd->status.head_mid);
+	clif_changelook(&sd->bl, LOOK_ROBE, sd->status.robe);
 
 	return 0;
 }
@@ -6453,6 +6454,9 @@ int pc_changelook(struct map_session_data *sd,int type,int val)
 		sd->status.shield=val;
 		break;
 	case LOOK_SHOES:
+		break;
+	case LOOK_ROBE:
+		sd->status.robe = val;
 		break;
 	}
 	clif_changelook(&sd->bl,type,val);
@@ -7184,6 +7188,11 @@ int pc_equipitem(struct map_session_data *sd,int n,int req_pos)
 	}
 	if(pos & EQP_SHOES)
 		clif_changelook(&sd->bl,LOOK_SHOES,0);
+	if( pos&EQP_GARMENT )
+	{
+		sd->status.robe = id ? id->look : 0;
+		clif_changelook(&sd->bl, LOOK_ROBE, sd->status.robe);
+	}
 
 	pc_checkallowskill(sd); //Check if status changes should be halted.
 
@@ -7274,6 +7283,11 @@ int pc_unequipitem(struct map_session_data *sd,int n,int flag)
 	}
 	if(sd->status.inventory[n].equip & EQP_SHOES)
 		clif_changelook(&sd->bl,LOOK_SHOES,0);
+	if( sd->status.inventory[n].equip&EQP_GARMENT )
+	{
+		sd->status.robe = 0;
+		clif_changelook(&sd->bl, LOOK_ROBE, 0);
+	}
 
 	clif_unequipitemack(sd,n,sd->status.inventory[n].equip,1);
 

@@ -1,6 +1,9 @@
 Date	Added
 
 2011/04/16
+	* Added support for visible garments/robes. [Ai4rei]
+	- For SQL apply upgrade_svn14797.sql to upgrade table `char`; for TXT no action is necessary, as it upgrades itself.
+	- This also fixes NPCs not being visible with clients 2011-01-11aRagexeRE+ (bugreport:4865).
 	* Updated field `weapon` in table `char` to default to '0' (bare-handed) rather than '1' (knife) (follow up to r11696). [Ai4rei]
 	- Apply upgrade_svn14796.sql to reflect the change on existing setups.
 	* Some cleanups related to player and monster states. [Ai4rei]

@@ -494,6 +494,13 @@ enum equip_pos {
 #define EQP_HELM (EQP_HEAD_LOW|EQP_HEAD_MID|EQP_HEAD_TOP)
 #define EQP_ACC (EQP_ACC_L|EQP_ACC_R)
 
+/// Equip positions that use a visible sprite
+#if PACKETVER < 20110111
+	#define EQP_VISIBLE EQP_HELM
+#else
+	#define EQP_VISIBLE (EQP_HELM|EQP_GARMENT)
+#endif
+
 //Equip indexes constants. (eg: sd->equip_index[EQI_AMMO] returns the index
 //where the arrows are equipped)
 enum equip_index {

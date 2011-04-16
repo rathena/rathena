@@ -1586,7 +1586,7 @@ packet_ver: 25
 0x0842,6,recall2,2
 0x0843,6,remove2,2
 
-//2010-11-23aRagexeRE
+//2010-11-24aRagexeRE
 packet_ver: 26
 0x0436,19,wanttoconnection,2:6:10:14:18
 0x035f,5,walktoxy,2
@@ -1600,6 +1600,9 @@ packet_ver: 26
 0x0367,90,useskilltoposinfo,2:4:6:8:10
 0x0368,6,getcharnamerequest,2
 0x0369,6,solvecharname,2
+0x0856,-1
+0x0857,-1
+0x0858,-1
 
 //Add new packets here
 //packet_ver: 27

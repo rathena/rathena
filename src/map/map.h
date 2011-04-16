@@ -354,7 +354,10 @@ enum _look {
 	LOOK_HAIR_COLOR,
 	LOOK_CLOTHES_COLOR,
 	LOOK_SHIELD,
-	LOOK_SHOES
+	LOOK_SHOES,
+	LOOK_BODY,
+	LOOK_FLOOR,
+	LOOK_ROBE,
 };
 
 // used by map_setcell()

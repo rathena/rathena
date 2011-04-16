@@ -797,13 +797,19 @@ static int clif_set_unit_idle(struct block_list* bl, unsigned char* buffer, bool
 		WBUFW(buf,0) = spawn?0x22b:0x22a;
 #elif PACKETVER < 20091103
 		WBUFW(buf,0) = spawn?0x2ed:0x2ee;
-#else
+#elif PACKETVER < 20101124
 		WBUFW(buf,0) = spawn?0x7f8:0x7f9;
+#else
+		WBUFW(buf,0) = spawn?0x858:0x857;
 #endif
 
 #if PACKETVER >= 20091103
 	name = status_get_name(bl);
+#if PACKETVER < 20110111
 	WBUFW(buf,2) = (spawn?62:63)+strlen(name);
+#else
+	WBUFW(buf,2) = (spawn?64:65)+strlen(name);
+#endif
 	WBUFB(buf,4) = clif_bl_type(bl);
 	offset+=3;
 	buf = WBUFP(buffer,offset);
@@ -877,6 +883,11 @@ static int clif_set_unit_idle(struct block_list* bl, unsigned char* buffer, bool
 		return packet_len(0x7c);
 	}
 #endif
+#if PACKETVER >= 20110111
+	WBUFW(buf,34) = vd->robe;
+	offset+= 2;
+	buf = WBUFP(buf,offset);
+#endif
 	WBUFL(buf,34) = status_get_guild_id(bl);
 	WBUFW(buf,38) = status_get_emblem_id(bl);
 	WBUFW(buf,40) = (sd)? sd->status.manner : 0;
@@ -946,13 +957,19 @@ static int clif_set_unit_walking(struct block_list* bl, struct unit_data* ud, un
 	WBUFW(buf, 0) = 0x22c;
 #elif PACKETVER < 20091103
 	WBUFW(buf, 0) = 0x2ec;
-#else
+#elif PACKETVER < 20101124
 	WBUFW(buf, 0) = 0x7f7;
+#else
+	WBUFW(buf, 0) = 0x856;
 #endif
 
 #if PACKETVER >= 20091103
 	name = status_get_name(bl);
+#if PACKETVER < 20110111
 	WBUFW(buf, 2) = 69+strlen(name);
+#else
+	WBUFW(buf, 2) = 71+strlen(name);
+#endif
 	offset+=2;
 	buf = WBUFP(buffer,offset);
 #endif
@@ -989,6 +1006,11 @@ static int clif_set_unit_walking(struct block_list* bl, struct unit_data* ud, un
 	WBUFW(buf,32) = vd->hair_color;
 	WBUFW(buf,34) = vd->cloth_color;
 	WBUFW(buf,36) = (sd)? sd->head_dir : 0;
+#if PACKETVER >= 20110111
+	WBUFW(buf,38) = vd->robe;
+	offset+= 2;
+	buf = WBUFP(buf,offset);
+#endif
 	WBUFL(buf,38) = status_get_guild_id(bl);
 	WBUFW(buf,42) = status_get_emblem_id(bl);
 	WBUFW(buf,44) = (sd)? sd->status.manner : 0;
@@ -2057,7 +2079,7 @@ void clif_inventorylist(struct map_session_data *sd)
 			WBUFW(bufe,ne*se+28)=0; //Unknown
 #endif
 #if PACKETVER >= 20100629
-			if (sd->inventory_data[i]->equip&EQP_HELM)
+			if (sd->inventory_data[i]->equip&EQP_VISIBLE)
 				WBUFW(bufe,ne*se+30)= sd->inventory_data[i]->look;
 			else
 				WBUFW(bufe,ne*se+30)=0;
@@ -2140,7 +2162,7 @@ void clif_equiplist(struct map_session_data *sd)
 		WBUFW(buf,n*cmd+28)=0; //Unknown
 #endif
 #if PACKETVER >= 20100629
-		if (sd->inventory_data[i]->equip&EQP_HELM)
+		if (sd->inventory_data[i]->equip&EQP_VISIBLE)
 			WBUFW(buf,n*cmd+30)= sd->inventory_data[i]->look;
 		else
 			WBUFW(buf,n*cmd+30)=0;
@@ -2705,6 +2727,17 @@ void clif_changelook(struct block_list *bl,int type,int val)
 #endif
 			//Shoes? No packet uses this....
 		break;
+		case LOOK_BODY:
+		case LOOK_FLOOR:
+			// unknown purpose
+		break;
+		case LOOK_ROBE:
+#if PACKETVER < 20110111
+			return;
+#else
+			vd->robe = val;
+#endif
+		break;
 	}
 
 	// prevent leaking the presence of GM-hidden objects
@@ -2726,8 +2759,7 @@ void clif_changelook(struct block_list *bl,int type,int val)
 		WBUFW(buf,9)=vd->shield;
 	} else {
 		WBUFB(buf,6)=type;
-		WBUFW(buf,7)=val;
-		WBUFW(buf,9)=0;
+		WBUFL(buf,7)=val;
 	}
 	clif_send(buf,packet_len(0x1d7),bl,target);
 #endif
@@ -2952,7 +2984,7 @@ int clif_equipitemack(struct map_session_data *sd,int n,int pos,int ok)
 #if PACKETVER < 20100629
 	WFIFOB(fd,6)=ok;
 #else
-	if (ok && sd->inventory_data[n]->equip&EQP_HELM)
+	if (ok && sd->inventory_data[n]->equip&EQP_VISIBLE)
 		WFIFOW(fd,6)=sd->inventory_data[n]->look;
 	else
 		WFIFOW(fd,6)=0;
@@ -8072,7 +8104,7 @@ void clif_viewequip_ack(struct map_session_data* sd, struct map_session_data* ts
 		WFIFOL(fd, n*s+63) = tsd->status.inventory[i].expire_time;
 		WFIFOW(fd, n*s+67) = 0;
 #if PACKETVER >= 20100629
-		if (tsd->inventory_data[i]->equip&EQP_HELM)
+		if (tsd->inventory_data[i]->equip&EQP_VISIBLE)
 			WFIFOW(fd, n*s+69) = tsd->inventory_data[i]->look;
 		else
 			WFIFOW(fd, n*s+69) = 0;
@@ -14978,6 +15010,11 @@ static int packetdb_readdb(void)
 	    3, -1,  8, -1,  86, 2,  6,  6, -1, -1,  4, 10, 10,  0,  0,  0,
 	    0,  0,  0,  0,  6,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 	    0,  0,  0,  0,  0, -1, -1,  3,  2, 66,  5,  2, 12,  6,  0,  0,
+	//#0x0840
+	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+	    0,  0,  0,  0,  0,  0, -1, -1, -1,  0,  0,  0,  0,  0,  0,  0,
+	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 	};
 	struct {
 		void (*func)(int, struct map_session_data *);

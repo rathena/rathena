@@ -1445,6 +1445,7 @@
 //2558,Freya_Soul_Scarf4,Freya Soul Scarf,
 //2559,Guardian_Manteau,Guardian Manteau,
 //2560,Para_Team_Manteau,Eden Team Manteau,5,0,,0,,14,,0,0xFFFFFFFF,7,2,4,,12,0,0,{ bonus2 bSubEle,Ele_Neutral,10; },{},{}
+2573,Archangel_Wings,Archangel Wings,5,0,,200,,18,,1,0xFFFFFFFF,7,2,4,,0,1,1,{},{},{}
 // Accessories
 //===================================================================
 2601,Ring,Ring,5,30000,,100,,0,,0,0xFFFFFFFE,7,2,136,,20,0,0,{ bonus bStr,2; },{},{}
@@ -6192,6 +6193,7 @@
 16680,Universal_Catalog_Gold_Box50,Universal Catalog Gold 50 Box,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 12581,50; },{},{}
 16776,Universal_Catalog_Gold_Box10,Universal Catalog Gold 10 Box,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 12581,10; },{},{}
 16777,Universal_Catalog_Gold_Box50,Universal Catalog Gold 50 Box,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 12581,50; },{},{}
+16998,Archangel_Wings_Box,Archangel Wings Box,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 2573,1; },{},{}
 //18000,Cannon_Ball
 //18001,Holy_Cannon_Ball
 //18002,Dark_Cannon_Ball

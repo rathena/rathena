@@ -39,6 +39,7 @@
 // 20100721 - 2010-07-21aRagexeRE+ - 0x6b, 0x6d
 // 20100727 - 2010-07-27aRagexeRE+ - 0x6b, 0x6d
 // 20100803 - 2010-08-03aRagexeRE+ - 0x6b, 0x6d, 0x827, 0x828, 0x829, 0x82a, 0x82b, 0x82c, 0x842, 0x843
+// 20101124 - 2010-11-24aRagexeRE+ - 0x856, 0x857, 0x858
 // 20110111 - 2011-01-11aRagexeRE+ - 0x6b, 0x6d
 
 #ifndef PACKETVER
@@ -330,6 +331,7 @@ struct mmo_charstatus {
 	short weapon; // enum weapon_type
 	short shield; // view-id
 	short head_top,head_mid,head_bottom;
+	short robe;
 
 	char name[NAME_LENGTH];
 	unsigned int base_level,job_level;
