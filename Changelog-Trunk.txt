@@ -1,6 +1,8 @@
 Date	Added
 
 2011/04/16
+	* Updated field `weapon` in table `char` to default to '0' (bare-handed) rather than '1' (knife) (follow up to r11696). [Ai4rei]
+	- Apply upgrade_svn14796.sql to reflect the change on existing setups.
 	* Some cleanups related to player and monster states. [Ai4rei]
 	- Moved user_font and bg_id out of states as they are data, not states.
 	- Reordered members of state structs so that bitfields are packed together (less memory gets wasted).
