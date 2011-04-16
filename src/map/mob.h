@@ -113,32 +113,31 @@ struct mob_data {
 	struct mob_db *db;	//For quick data access (saves doing mob_db(md->class_) all the time) [Skotlex]
 	char name[NAME_LENGTH];
 	struct {
-		unsigned size : 2; //Small/Big monsters.
-		unsigned ai : 2; //Special ai for summoned monsters.
+		unsigned int size : 2; //Small/Big monsters.
+		unsigned int ai : 2; //Special ai for summoned monsters.
 							//0: Normal mob.
 							//1: Standard summon, attacks mobs.
 							//2: Alchemist Marine Sphere
 							//3: Alchemist Summon Flora
 	} special_state; //Special mob information that does not needs to be zero'ed on mob respawn.
 	struct {
+		unsigned int aggressive : 1; //Signals whether the mob AI is in aggressive mode or reactive mode. [Skotlex]
+		unsigned int steal_coin_flag : 1;
+		unsigned int soul_change_flag : 1; // Celest
+		unsigned int alchemist: 1;
+		unsigned int spotted: 1;
+		unsigned int npc_killmonster: 1; //for new killmonster behavior
+		unsigned int rebirth: 1; // NPC_Rebirth used
 		enum MobSkillState skillstate;
-		unsigned aggressive : 1; //Signals whether the mob AI is in aggressive mode or reactive mode. [Skotlex]
 		unsigned char steal_flag; //number of steal tries (to prevent steal exploit on mobs with few items) [Lupus]
-		unsigned steal_coin_flag : 1;
-		unsigned soul_change_flag : 1; // Celest
-		unsigned alchemist: 1;
-		unsigned spotted: 1;
 		unsigned char attacked_count; //For rude attacked.
 		int provoke_flag; // Celest
-		unsigned npc_killmonster: 1; //for new killmonster behavior
-		unsigned rebirth: 1; // NPC_Rebirth used
-		unsigned int bg_id; // BattleGround System
 	} state;
 	struct guardian_data* guardian_data; 
 	struct {
 		int id;
 		unsigned int dmg;
-		unsigned flag : 2; //0: Normal. 1: Homunc exp. 2: Pet exp
+		unsigned int flag : 2; //0: Normal. 1: Homunc exp. 2: Pet exp
 	} dmglog[DAMAGELOG_SIZE];
 	struct spawn_data *spawn; //Spawn data.
 	int spawn_timer; //Required for Convex Mirror
@@ -149,6 +148,7 @@ struct mob_data {
 	int level;
 	int target_id,attacked_id;
 	int areanpc_id; //Required in OnTouchNPC (to avoid multiple area touchs)
+	unsigned int bg_id; // BattleGround System
 
 	unsigned int next_walktime,last_thinktime,last_linktime,last_pcneartime;
 	short move_fail_count;
@@ -230,7 +230,7 @@ int mob_once_spawn_area(struct map_session_data* sd,int m,int x0,int y0,int x1,i
 bool mob_ksprotected (struct block_list *src, struct block_list *target);
 
 int mob_spawn_guardian(const char* mapname, short x, short y, const char* mobname, int class_, const char* event, int guardian, bool has_index);	// Spawning Guardians [Valaris]
-int mob_spawn_bg(const char* mapname, short x, short y, const char* mobname, int class_, const char* event, int bg_id);
+int mob_spawn_bg(const char* mapname, short x, short y, const char* mobname, int class_, const char* event, unsigned int bg_id);
 int mob_guardian_guildchange(struct block_list *bl,va_list ap); //Change Guardian's ownership. [Skotlex]
 
 int mob_randomwalk(struct mob_data *md,unsigned int tick);

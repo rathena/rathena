@@ -96,63 +96,61 @@ struct map_session_data {
 	//NOTE: When deciding to add a flag to state or special_state, take into consideration that state is preserved in
 	//status_calc_pc, while special_state is recalculated in each call. [Skotlex]
 	struct {
-		unsigned active : 1; //Marks active player (not active is logging in/out, or changing map servers)
-		unsigned menu_or_input : 1;// if a script is waiting for feedback from the player
-		unsigned dead_sit : 2;
-		unsigned lr_flag : 2;
-		unsigned connect_new : 1;
-		unsigned arrow_atk : 1;
-		unsigned combo : 2; // 1:Asura, 2:Kick [Inkfish]
-		unsigned gangsterparadise : 1;
-		unsigned rest : 1;
-		unsigned storage_flag : 2; //0: closed, 1: Normal Storage open, 2: guild storage open [Skotlex]
-		unsigned snovice_dead_flag : 1; //Explosion spirits on death: 0 off, 1 used.
-		unsigned abra_flag : 1; // Abracadabra bugfix by Aru
-		unsigned autocast : 1; // Autospell flag [Inkfish]
-		unsigned autotrade : 1;	//By Fantik
-		unsigned reg_dirty : 3; //By Skotlex (marks whether registry variables have been saved or not yet)
-		unsigned showdelay :1;
-		unsigned showexp :1;
-		unsigned showzeny :1;
-		unsigned mainchat :1; //[LuzZza]
-		unsigned noask :1; // [LuzZza]
-		unsigned trading :1; //[Skotlex] is 1 only after a trade has started.
-		unsigned deal_locked :2; //1: Clicked on OK. 2: Clicked on TRADE
-		unsigned monster_ignore :1; // for monsters to ignore a character [Valaris] [zzo]
-		unsigned size :2; // for tiny/large types
-		unsigned night :1; //Holds whether or not the player currently has the SI_NIGHT effect on. [Skotlex]
-		unsigned blockedmove :1;
-		unsigned using_fake_npc :1;
-		unsigned rewarp :1; //Signals that a player should warp as soon as he is done loading a map. [Skotlex]
-		unsigned killer : 1;
-		unsigned killable : 1;
-		unsigned doridori : 1;
-		unsigned ignoreAll : 1;
-		unsigned debug_remove_map : 1; // temporary state to track double remove_map's [FlavioJS]
-		unsigned buyingstore : 1;
-		unsigned lesseffect : 1;
-		unsigned vending : 1;
+		unsigned int active : 1; //Marks active player (not active is logging in/out, or changing map servers)
+		unsigned int menu_or_input : 1;// if a script is waiting for feedback from the player
+		unsigned int dead_sit : 2;
+		unsigned int lr_flag : 2;
+		unsigned int connect_new : 1;
+		unsigned int arrow_atk : 1;
+		unsigned int combo : 2; // 1:Asura, 2:Kick [Inkfish]
+		unsigned int gangsterparadise : 1;
+		unsigned int rest : 1;
+		unsigned int storage_flag : 2; //0: closed, 1: Normal Storage open, 2: guild storage open [Skotlex]
+		unsigned int snovice_dead_flag : 1; //Explosion spirits on death: 0 off, 1 used.
+		unsigned int abra_flag : 1; // Abracadabra bugfix by Aru
+		unsigned int autocast : 1; // Autospell flag [Inkfish]
+		unsigned int autotrade : 1;	//By Fantik
+		unsigned int reg_dirty : 3; //By Skotlex (marks whether registry variables have been saved or not yet)
+		unsigned int showdelay :1;
+		unsigned int showexp :1;
+		unsigned int showzeny :1;
+		unsigned int mainchat :1; //[LuzZza]
+		unsigned int noask :1; // [LuzZza]
+		unsigned int trading :1; //[Skotlex] is 1 only after a trade has started.
+		unsigned int deal_locked :2; //1: Clicked on OK. 2: Clicked on TRADE
+		unsigned int monster_ignore :1; // for monsters to ignore a character [Valaris] [zzo]
+		unsigned int size :2; // for tiny/large types
+		unsigned int night :1; //Holds whether or not the player currently has the SI_NIGHT effect on. [Skotlex]
+		unsigned int blockedmove :1;
+		unsigned int using_fake_npc :1;
+		unsigned int rewarp :1; //Signals that a player should warp as soon as he is done loading a map. [Skotlex]
+		unsigned int killer : 1;
+		unsigned int killable : 1;
+		unsigned int doridori : 1;
+		unsigned int ignoreAll : 1;
+		unsigned int debug_remove_map : 1; // temporary state to track double remove_map's [FlavioJS]
+		unsigned int buyingstore : 1;
+		unsigned int lesseffect : 1;
+		unsigned int vending : 1;
+		unsigned int noks : 3; // [Zeph Kill Steal Protection]
+		unsigned int changemap : 1;
+		short pmap; // Previous map on Map Change
 		unsigned short autoloot;
 		unsigned short autolootid; // [Zephyrus]
-		unsigned noks : 3; // [Zeph Kill Steal Protection]
-		bool changemap;
-		short pmap; // Previous map on Map Change
-		struct guild *gmaster_flag;
-		unsigned int bg_id;
-		unsigned short user_font;
 		unsigned short autobonus; //flag to indicate if an autobonus is activated. [Inkfish]
+		struct guild *gmaster_flag;
 	} state;
 	struct {
 		unsigned char no_weapon_damage, no_magic_damage, no_misc_damage;
-		unsigned restart_full_recover : 1;
-		unsigned no_castcancel : 1;
-		unsigned no_castcancel2 : 1;
-		unsigned no_sizefix : 1;
-		unsigned no_gemstone : 1;
-		unsigned intravision : 1; // Maya Purple Card effect [DracoRPG]
-		unsigned perfect_hiding : 1; // [Valaris]
-		unsigned no_knockback : 1;
-		unsigned bonus_coma : 1;
+		unsigned int restart_full_recover : 1;
+		unsigned int no_castcancel : 1;
+		unsigned int no_castcancel2 : 1;
+		unsigned int no_sizefix : 1;
+		unsigned int no_gemstone : 1;
+		unsigned int intravision : 1; // Maya Purple Card effect [DracoRPG]
+		unsigned int perfect_hiding : 1; // [Valaris]
+		unsigned int no_knockback : 1;
+		unsigned int bonus_coma : 1;
 	} special_state;
 	int login_id1, login_id2;
 	unsigned short class_;	//This is the internal job ID used by the map server to simplify comparisons/queries/etc. [Skotlex]
@@ -420,6 +418,9 @@ struct map_session_data {
 	const char* debug_file;
 	int debug_line;
 	const char* debug_func;
+
+	unsigned int bg_id;
+	unsigned short user_font;
 };
 
 //Update this max as necessary. 55 is the value needed for Super Baby currently

@@ -667,7 +667,7 @@ int mob_spawn_guardian(const char* mapname, short x, short y, const char* mobnam
 /*==========================================
  * Summoning BattleGround [Zephyrus]
  *------------------------------------------*/
-int mob_spawn_bg(const char* mapname, short x, short y, const char* mobname, int class_, const char* event, int bg_id)
+int mob_spawn_bg(const char* mapname, short x, short y, const char* mobname, int class_, const char* event, unsigned int bg_id)
 {
 	struct mob_data *md = NULL;
 	struct spawn_data data;
@@ -704,7 +704,7 @@ int mob_spawn_bg(const char* mapname, short x, short y, const char* mobname, int
 
 	md = mob_spawn_dataset(&data);
 	mob_spawn(md);
-	md->state.bg_id = bg_id; // BG Team ID
+	md->bg_id = bg_id; // BG Team ID
 
 	return md->bl.id;
 }

@@ -1,5 +1,10 @@
 Date	Added
 
+2011/04/16
+	* Some cleanups related to player and monster states. [Ai4rei]
+	- Moved user_font and bg_id out of states as they are data, not states.
+	- Reordered members of state structs so that bitfields are packed together (less memory gets wasted).
+	- Other insignificant code tweaks.
 2011/04/13
 	* Added missing 0x369 packet.(info provided by Yommy) [Inkfish]
 2011/04/10
