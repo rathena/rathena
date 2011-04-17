@@ -2026,6 +2026,7 @@ static void char_auth_ok(int fd, struct char_session_data *sd)
 			mapif_disconnectplayer(server[character->server].fd, character->account_id, character->char_id, 2);
 			if (character->waiting_disconnect == INVALID_TIMER)
 				character->waiting_disconnect = add_timer(gettick()+20000, chardb_waiting_disconnect, character->account_id, 0);
+			WFIFOHEAD(fd,3);
 			WFIFOW(fd,0) = 0x81;
 			WFIFOB(fd,2) = 8;
 			WFIFOSET(fd,3);
@@ -2033,6 +2034,7 @@ static void char_auth_ok(int fd, struct char_session_data *sd)
 		}
 		if (character->fd >= 0 && character->fd != fd)
 		{	//There's already a connection from this account that hasn't picked a char yet.
+			WFIFOHEAD(fd,3);
 			WFIFOW(fd,0) = 0x81;
 			WFIFOB(fd,2) = 8;
 			WFIFOSET(fd,3);
@@ -2167,6 +2169,7 @@ int parse_fromlogin(int fd)
 				if( max_connect_user && count_users() >= max_connect_user && sd->gmlevel < gm_allow_level )
 				{
 					// refuse connection (over populated)
+					WFIFOHEAD(i,3);
 					WFIFOW(i,0) = 0x6c;
 					WFIFOW(i,2) = 0;
 					WFIFOSET(i,3);
@@ -2701,6 +2704,7 @@ int parse_frommap(int fd)
 			data = status_search_scdata(aid, cid);
 			if (data->count > 0)
 			{	//Deliver status change data.
+				WFIFOHEAD(fd,14 + data->count*sizeof(struct status_change_data));
 				WFIFOW(fd,0) = 0x2b1d;
 				WFIFOW(fd,2) = 14 + data->count*sizeof(struct status_change_data);
 				WFIFOL(fd,4) = aid;

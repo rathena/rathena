@@ -1,5 +1,7 @@
 Date	Added
 
+2011/04/17
+	* Fixed char-server missing some WFIFOHEAD (partially due to r10909 being reverted by r11245, follow up to r9307 and r14618). [Ai4rei]
 2011/04/16
 	* Added support for visible garments/robes. [Ai4rei]
 	- For SQL apply upgrade_svn14797.sql to upgrade table `char`; for TXT no action is necessary, as it upgrades itself.

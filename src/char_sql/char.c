@@ -1744,6 +1744,7 @@ static void char_auth_ok(int fd, struct char_session_data *sd)
 			mapif_disconnectplayer(server[character->server].fd, character->account_id, character->char_id, 2);
 			if (character->waiting_disconnect == INVALID_TIMER)
 				character->waiting_disconnect = add_timer(gettick()+20000, chardb_waiting_disconnect, character->account_id, 0);
+			WFIFOHEAD(fd,3);
 			WFIFOW(fd,0) = 0x81;
 			WFIFOB(fd,2) = 8;
 			WFIFOSET(fd,3);
@@ -1751,6 +1752,7 @@ static void char_auth_ok(int fd, struct char_session_data *sd)
 		}
 		if (character->fd >= 0 && character->fd != fd)
 		{	//There's already a connection from this account that hasn't picked a char yet.
+			WFIFOHEAD(fd,3);
 			WFIFOW(fd,0) = 0x81;
 			WFIFOB(fd,2) = 8;
 			WFIFOSET(fd,3);
@@ -1885,6 +1887,7 @@ int parse_fromlogin(int fd)
 				if( max_connect_user && count_users() >= max_connect_user && sd->gmlevel < gm_allow_level )
 				{
 					// refuse connection (over populated)
+					WFIFOHEAD(i,3);
 					WFIFOW(i,0) = 0x6c;
 					WFIFOW(i,2) = 0;
 					WFIFOSET(i,3);
@@ -3530,6 +3533,7 @@ int parse_char(int fd)
 				//can't delete the char
 				//either SQL error or can't delete by some CONFIG conditions
 				//del fail
+				WFIFOHEAD(fd,3);
 				WFIFOW(fd, 0) = 0x70;
 				WFIFOB(fd, 2) = 0;
 				WFIFOSET(fd, 3);
