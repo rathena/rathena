@@ -1,6 +1,8 @@
 Date	Added
 
 2011/04/17
+	* Updated packet for the view players' equip feature for 2010-11-24aRagexeRE+ and made it support robes (follow up to r14797). [Ai4rei]
+	- Fixed spawn/walking packets using wrong variable for shifting buffer reference (since r14797).
 	* Fixed char-server missing some WFIFOHEAD (partially due to r10909 being reverted by r11245, follow up to r9307 and r14618). [Ai4rei]
 2011/04/16
 	* Added support for visible garments/robes. [Ai4rei]
