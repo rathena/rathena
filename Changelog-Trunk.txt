@@ -1,5 +1,7 @@
 Date	Added
 
+2011/04/20
+	* Fixed quest_check checking exactly 3 quest objectives instead of MAX_QUEST_OBJECTIVES (since r13959). [Gepard]
 2011/04/17
 	* Updated packet for the view players' equip feature for 2010-11-24aRagexeRE+ and made it support robes (follow up to r14797). [Ai4rei]
 	- Fixed spawn/walking packets using wrong variable for shifting buffer reference (since r14797).

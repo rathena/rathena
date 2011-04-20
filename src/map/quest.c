@@ -279,17 +279,13 @@ int quest_check(TBL_PC * sd, int quest_id, quest_check_type type)
 		return (sd->quest_log[i].time < (unsigned int)time(NULL) ? 2 : sd->quest_log[i].state == Q_COMPLETE ? 1 : 0);
 	case HUNTING:
 		{
-			int j = sd->quest_index[i];
-
-			if( sd->quest_log[i].count[0] < quest_db[j].count[0] || sd->quest_log[i].count[1] < quest_db[j].count[1] || sd->quest_log[i].count[2] < quest_db[j].count[2] )
-			{
-				if( sd->quest_log[i].time < (unsigned int)time(NULL) )
-					return 1;
-
-				return 0;
-			}
-			
-			return 2;
+			int j;
+			ARR_FIND(0, MAX_QUEST_OBJECTIVES, j, sd->quest_log[i].count[j] < quest_db[sd->quest_index[i]].count[j]);
+			if( j == MAX_QUEST_OBJECTIVES )
+				return 2;
+			if( sd->quest_log[i].time < (unsigned int)time(NULL) )
+				return 1;
+			return 0;
 		}
 	default:
 		ShowError("quest_check_quest: Unknown parameter %d",type);
@@ -334,7 +330,7 @@ int quest_read_db(void)
 				continue;
 			else
 			{
-				ShowError("quest_read_db: insufficient columes in line %s\n", line);
+				ShowError("quest_read_db: insufficient columns in line %s\n", line);
 				continue;
 			}
 		}
