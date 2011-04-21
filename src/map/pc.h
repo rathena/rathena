@@ -421,6 +421,10 @@ struct map_session_data {
 
 	unsigned int bg_id;
 	unsigned short user_font;
+
+	// temporary debugging of bug #3504
+	const char* delunit_prevfile;
+	int delunit_prevline;
 };
 
 //Update this max as necessary. 55 is the value needed for Super Baby currently
