@@ -1,5 +1,7 @@
 Date	Added
 
+2011/04/27
+	* Fixed description for script command 'itemheal' claiming, that this command is responsible for potion visual effects which it is not (item-use causes the client to display these) (since r2397). [Ai4rei]
 2011/04/21
 	* Extended debugging code for bugreport:3504 (related r14599). [Ai4rei]
 2011/04/20

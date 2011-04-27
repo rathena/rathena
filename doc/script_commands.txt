@@ -4,7 +4,7 @@
 //= A reference manual for the eAthena scripting language.
 //= Commands are sorted depending on their functionality.
 //===== Version ===========================================
-//= 3.39.20110322
+//= 3.41.20110427
 //=========================================================
 //= 1.0 - First release, filled will as much info as I could
 //=       remember or figure out, most likely there are errors,
@@ -168,6 +168,9 @@
 //=       Documented optional parameter 'npc name' of 'waitingroom2bg' command.
 //= 3.40.20110404
 //=       Updated description of 'waitingroom' command to include required zeny/lvl. [Kisuka]
+//= 3.41.20110427
+//=       Updated description of 'itemheal' primarily to remove overhead and lies
+//=       about client effects. [Ai4rei]
 //=========================================================
 
 This document is a reference manual for all the scripting commands and functions 
@@ -3727,15 +3730,10 @@ character and produces no other output whatsoever.
 
 *itemheal <hp>,<sp>;
 
-This command works on the invoking character like 'heal', however, it is not 
-normally used in NPC scripts and will not work as expected there, but is used 
-all over in item scripts. 
-
-Unlike 'heal', which just alters hp/sp and doesn't do anything else at all, this 
-command also shows healing animations for potions and other stuff, checks 
-whether the potion was made by a famous alchemist and alters the amount healed, 
-etc, etc. Since which kind of effect is shown depends on what item was used, 
-using it in an NPC script will not have a desired effect.
+This command heals given absolute amounts of HP and/or SP on the invoking
+character. Unlike heal, this command is intended for use in item scripts. It
+applies potion-related bonuses, such as alchemist ranking, cards and status
+changes. When used inside an NPC script, certain bonuses are omitted.
 
 There is also a nice example on using this with the 'rand' function, to give you 
 a random amount of healing.
