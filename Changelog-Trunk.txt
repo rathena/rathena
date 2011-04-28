@@ -1,6 +1,7 @@
 Date	Added
 
 2011/04/28
+	* Fixed @makehomun not checking for existing homunculus properly and thus allowing to create a homunculus when one is already present but inactive (bugreport:4879, since r10272). [Ai4rei]
 	* Updated packet 0x163 (ZC_BAN_LIST) to reflect change in packet layout introduced with 2010-08-03aRagexeRE (bugreport:4881, follow up to r14718). [Ai4rei]
 	* Fixed formatted broadcast messages not working with 2010-11-24aRagexeRE and later (bugreport:4872, since r14120). [Ai4rei]
 2011/04/27

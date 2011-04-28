@@ -7166,7 +7166,7 @@ ACMD_FUNC(makehomun)
 	int homunid;
 	nullpo_retr(-1, sd);
 
-	if ( merc_is_hom_active(sd->hd) ) {
+	if ( sd->status.hom_id ) {
 		clif_displaymessage(fd, msg_txt(450));
 		return -1;
 	}
