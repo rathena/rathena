@@ -1,5 +1,7 @@
 Date	Added
 
+2011/04/28
+	* Fixed formatted broadcast messages not working with 2010-11-24aRagexeRE and later (bugreport:4872, since r14120). [Ai4rei]
 2011/04/27
 	* Fixed description for script command 'itemheal' claiming, that this command is responsible for potion visual effects which it is not (item-use causes the client to display these) (since r2397). [Ai4rei]
 2011/04/21

@@ -5004,17 +5004,12 @@ void clif_MainChatMessage(const char* message)
 /*==========================================
  * Send broadcast message with font formatting.
  * S 01C3 <len>.W <fontColor>.L <fontType>.W <fontSize>.W <fontAlign>.W <fontY>.W <message>.?B
- * S 040C <len>.W <fontColor>.L <fontType>.W <fontSize>.W <fontAlign>.W <fontY>.W <message>.?B
  *------------------------------------------*/
 int clif_broadcast2(struct block_list* bl, const char* mes, int len, unsigned long fontColor, short fontType, short fontSize, short fontAlign, short fontY, enum send_target target)
 {
 	unsigned char *buf = (unsigned char*)aMallocA((16 + len)*sizeof(unsigned char));
 
-#if PACKETVER < 20080820
 	WBUFW(buf,0)  = 0x1c3;
-#else
-	WBUFW(buf,0)  = 0x40c;
-#endif
 	WBUFW(buf,2)  = len + 16;
 	WBUFL(buf,4)  = fontColor;
 	WBUFW(buf,8)  = fontType;
