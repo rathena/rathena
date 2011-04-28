@@ -7039,6 +7039,11 @@ int clif_guild_expulsion(struct map_session_data *sd,const char *name,const char
  *------------------------------------------*/
 int clif_guild_expulsionlist(struct map_session_data *sd)
 {
+#if PACKETVER < 20100803
+	const int offset = NAME_LENGTH+64;
+#else
+	const int offset = NAME_LENGTH+40;
+#endif
 	int fd;
 	int i,c;
 	struct guild *g;
@@ -7048,18 +7053,22 @@ int clif_guild_expulsionlist(struct map_session_data *sd)
 		return 0;
 
 	fd = sd->fd;
-	WFIFOHEAD(fd,4 + MAX_GUILDEXPULSION * 88);
+	WFIFOHEAD(fd,4 + MAX_GUILDEXPULSION * offset);
 	WFIFOW(fd,0)=0x163;
 	for(i=c=0;i<MAX_GUILDEXPULSION;i++){
 		struct guild_expulsion *e=&g->expulsion[i];
 		if(e->account_id>0){
-			safestrncpy((char*)WFIFOP(fd,4 + c*88),e->name,NAME_LENGTH);
-			safestrncpy((char*)WFIFOP(fd,4 + c*88+24),"",24); // account name (not used for security reasons)
-			safestrncpy((char*)WFIFOP(fd,4 + c*88+48),e->mes,40);
+			safestrncpy((char*)WFIFOP(fd,4 + c*offset),e->name,NAME_LENGTH);
+#if PACKETVER < 20100803
+			safestrncpy((char*)WFIFOP(fd,4 + c*offset+24),"",24); // account name (not used for security reasons)
+			safestrncpy((char*)WFIFOP(fd,4 + c*offset+48),e->mes,40);
+#else
+			safestrncpy((char*)WFIFOP(fd,4 + c*offset+24),e->mes,40);
+#endif
 			c++;
 		}
 	}
-	WFIFOW(fd,2) = 4 + c*88;
+	WFIFOW(fd,2) = 4 + c*offset;
 	WFIFOSET(fd,WFIFOW(fd,2));
 	return 0;
 }
