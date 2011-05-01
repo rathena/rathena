@@ -171,7 +171,7 @@ void cache_map(char *name, struct map_data *m)
 	len = (unsigned long)m->xs*(unsigned long)m->ys*2;
 	write_buf = (unsigned char *)aMalloc(len);
 	// Compress the cells and get the compressed length
-	encode_zip(write_buf, &len, m->cells, m->xs*m->ys);
+	compress(write_buf, &len, m->cells, m->xs*m->ys);
 
 	// Fill the map header
 	strncpy(info.name, name, MAP_NAME_LENGTH);

@@ -1,6 +1,7 @@
 Date	Added
 
 2011/05/01
+	* Removed functions 'decode_zip' (ancient) and 'encode_zip' (from r824) from grfio. These were outdated copies of zlib's 'uncompress' and 'compress' respectively (related r1530 and r5152). [Ai4rei]
 	* Removed auto-add feature from mapindex code, as map indexes are used for save data, thus need to be constant across server starts (since r4726). [Ai4rei]
 2011/04/28
 	* Fixed @makehomun not checking for existing homunculus properly and thus allowing to create a homunculus when one is already present but inactive (bugreport:4879, since r10272). [Ai4rei]
