@@ -1,6 +1,7 @@
 Date	Added
 
 2011/05/08
+	* Script command 'query_logsql' now throws a warning when SQL logs are disabled (related r11892). [Ai4rei]
 	* Updated/revised description of instance-related script commands (bugreport:4880). [Ai4rei]
 	- Fixed 'instance_create' would return -4 (party already instancing) when the requested party was not found.
 	- 'instance_create' return value -2 now means 'party not found' rather than 'missing parameter'.

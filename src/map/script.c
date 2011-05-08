@@ -12737,6 +12737,13 @@ BUILDIN_FUNC(query_sql)
 BUILDIN_FUNC(query_logsql)
 {
 #ifndef TXT_ONLY
+	if( !log_config.sql_logs )
+	{// logmysql_handle == NULL
+		ShowWarning("buildin_query_logsql: SQL logs are disabled, query '%s' will not be executed.\n", script_getstr(st,2));
+		script_pushint(st,-1);
+		return 1;
+	}
+
 	return buildin_query_sql_sub(st, logmysql_handle);
 #else
 	//for TXT version, we always return -1
