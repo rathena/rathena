@@ -1,5 +1,7 @@
 Date	Added
 
+2011/05/08
+	* Fixed pcdb_checkid not recognizing invalid/unused job classes (bugreport:4830, since r14755). [Ai4rei]
 2011/02/07
 	* Updated enumerations of skill, skill unit and status option IDs. [Ai4rei]
 2011/01/29
