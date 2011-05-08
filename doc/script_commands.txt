@@ -4,7 +4,7 @@
 //= A reference manual for the eAthena scripting language.
 //= Commands are sorted depending on their functionality.
 //===== Version ===========================================
-//= 3.41.20110427
+//= 3.42.20110508
 //=========================================================
 //= 1.0 - First release, filled will as much info as I could
 //=       remember or figure out, most likely there are errors,
@@ -171,6 +171,9 @@
 //= 3.41.20110427
 //=       Updated description of 'itemheal' primarily to remove overhead and lies
 //=       about client effects. [Ai4rei]
+//= 3.42.20110508
+//=       Updated description of all instance commands to reflect actual behavior.
+//=       [Ai4rei]
 //=========================================================
 
 This document is a reference manual for all the scripting commands and functions 
@@ -5542,7 +5545,7 @@ currently ignored by the client and appears always green.
 5,1.- End of time-related commands
 //
 
-*announce "<text>",<flag>{,<fontColor>{,<fontType>{,<fontSize>{,<fontAlign>{,<fontY>}}}}}};
+*announce "<text>",<flag>{,<fontColor>{,<fontType>{,<fontSize>{,<fontAlign>{,<fontY>}}}}};
 
 This command will broadcast a message to all or most players, similar to 
 @kami/@kamib GM commands.
@@ -6766,18 +6769,17 @@ This will open a book item at the specified page
 ========================
 ---------------------------------------
 
-*instance_create("<Instance Name>",<Party ID>,<Instance>)
+*instance_create("<instance name>",<party id>);
 
-Create an instance using the name "<Instance Name>" for the Party of <Party ID>.
-Instance ID currently will only be ID_ENDLESS (5) or ID_CATACOMBS (6)
-Most Instance_* commands are used in conjunction with this command and depend
+Create an instance using the name "<instance name>" for the Party of <party id>.
+Most instance_* commands are used in conjunction with this command and depend
 on the ID this command returns.
 
 Example: 
 	// Store the Party ID of the invoking character.
 	set .@party_id, getcharid(1);
 	// Attempt to create an instance using that party ID.
-	set .@id, instance_create("Endless Tower", .@party_id, ID_ENDLESS);
+	set .@id, instance_create("Endless Tower", .@party_id);
 	if (.@id == -1) { // Party ID is in use by another instance.
 		...
 	}
@@ -6786,67 +6788,111 @@ Example:
 	}
 ---------------------------------------
 
-*instance_destroy(<Instance ID>)
+*instance_destroy {<instance id>};
 
-Destroys instance with the ID <Instance ID>.
-
----------------------------------------
-
-*instance_attachmap(<Instance ID>,"<Map Name>")
-*instance_detachmap(<Instance ID>,"<Map Name>")
-
-Attach or detach the map "<Map Name>" to the instance with the <Instance ID>.
+Destroys instance with the ID <instance id>. If no ID is specified, the instance,
+the script is attached to, is used. If the script is not attached to an instance,
+the instance of the currently attached player's party is used. If no player is
+currently attached, the command fails and causes the script to halt.
 
 ---------------------------------------
 
-*instance_init(<Instance ID>);
+*instance_attachmap("<map name>",<instance id>{,<use base name>});
 
-Initiate the instance of <Instance ID>.
+Attaches the map "<map name>" to the instance specified with <instance id>. The
+optional parameter specifies, whether a map requires emulation for instancing (1)
+or not (0 = default).
 
----------------------------------------
-
-*instance_announce <Instance ID>,"<text>",<flag>{,<color>};
-
-Works like announce, but has the <Instance ID> parameter, where 0 = active instance?
+Returns the resulting map name on success or an empty string on failure.
 
 ---------------------------------------
 
-*instance_attach(<Instance ID>);
+*instance_detachmap "<map name>"{,<instance id>};
 
-Attaches a script to the provided <Instance ID>?
-
----------------------------------------
-
-*instance_npcname("<NPC Name>",<Instance ID>)
-
-Retrieve the unique name given to a copy of an NPC for an instance, the given
-"<NPC Name>" that belongs to instance <Instance ID>. Can be used with such commands
-as enablenpc and disablenpc, donpcevent, etc.
+Detach the map "<map name>" to the instance with the <instance id>. If no ID is
+specified, the instance, the script is attached to, is used. If the script is not
+attached to an instance, the instance of the currently attached player's party is
+used. If no player is currently attached, the command fails and causes the script
+to halt.
 
 ---------------------------------------
 
-*has_instance("<Map Name>")
+*instance_init <instance id>;
 
-Check if the player has been queued for the <Map Name> instance.
-
----------------------------------------
-
-*instance_id(<?>)
-
-Apparently returns the ID the player is currently attached too.
+Initializes the instance given by <instance id>. This copies all NPCs from the
+source maps to the instanced maps.
 
 ---------------------------------------
 
-*instance_warpall "<Map Name>",<x>,<y>;
+*instance_announce <instance id>,"<text>",<flag>{,<fontColor>{,<fontType>{,<fontSize>{,<fontAlign>{,<fontY>}}}}};
 
-Warp all players in the instance to <map name> and given coordinates.
+Works like announce, but has the <instance id> parameter. If instance id is 0, the
+instance, the script is attached to, is used. If the script is not attached to an
+instance, the instance of the currently attached player's party is used. If no
+player is currently attached, the command fails and causes the script to halt.
 
 ---------------------------------------
 
-*instance_set_timeout <Time1>,<Time2>,<Instance ID>;
+*instance_attach <instance id>;
 
-Lifetime of <Time1> for <Instance ID>, while <Time2> is how long until the 
-instance times out while inactive. 
+Attaches the current script to the instance given by <instance id>.
+
+---------------------------------------
+
+*instance_npcname("<npc name>"{,<instance id>});
+
+Retrieves the unique name given to a copy of an NPC given by "<npc name>" in an
+instance specified <instance id>. If no ID is specified, the instance, the script
+is attached to, is used. If the script is not attached to an instance, the
+instance of the currently attached player's party is used. If no player is
+currently attached, the command fails and causes the script to halt.
+
+---------------------------------------
+
+*has_instance("<map name>"{,<instance id>});
+
+Checks whether or not the given map belongs to specified instance. If no ID is
+specified, the instance, the script is attached to, is used. If the script is not
+attached to an instance, the instance of the currently attached player's party
+is used. If no player is currently attached, the command fails and causes the
+script to halt.
+
+Returns the name of the instanced map on success, otherwise an empty string.
+
+---------------------------------------
+
+*instance_id({<type>});
+
+Retrieves the instance id, depending on <type>. If type is not given, it defaults
+to 0.
+
+Type:
+    0 - Instance ID the script is attached to.
+    1 - Instance ID of the currently attached player's party.
+
+---------------------------------------
+
+*instance_warpall "<map name>",<x>,<y>{,<instance id>};
+
+Warps all players in the instance <instance id> to <map name> at given
+coordinates. If no ID is specified, the instance, the script is attached to,
+is used. If the script is not attached to an instance, the instance of the
+currently attached player's party is used. If no player is currently attached,
+the command fails and causes the script to halt.
+
+---------------------------------------
+
+*instance_set_timeout <alive timeout>,<idle timeout>{,<instance id>};
+
+Sets the timeout values for an instance given by <instance id>. If no ID is
+specified, the instance, the script is attached to, is used. If the script is
+not attached to an instance, the instance of the currently attached player's
+party is used. If no player is currently attached, the command fails and causes
+the script to halt.
+
+Parameter <alive timeout> specifies the total amount of time the instance will
+exist. Parameter <idle timeout> specifies how long players have, when they are
+outside of the instance, until it is destroyed.
 
 ---------------------------------------
 

@@ -14360,11 +14360,11 @@ BUILDIN_FUNC(instance_create)
 	}
 	else if( res < 0 )
 	{
-		char *err;
+		const char *err;
 		switch(res)
 		{
 		case -3: err = "No free instances"; break;
-		case -2: err = "Missing parameter"; break;
+		case -2: err = "Invalid party ID"; break;
 		case -1: err = "Invalid type"; break;
 		default: err = "Unknown"; break;
 		}

@@ -1,5 +1,9 @@
 Date	Added
 
+2011/05/08
+	* Updated/revised description of instance-related script commands (bugreport:4880). [Ai4rei]
+	- Fixed 'instance_create' would return -4 (party already instancing) when the requested party was not found.
+	- 'instance_create' return value -2 now means 'party not found' rather than 'missing parameter'.
 2011/05/01
 	* Removed functions 'decode_zip' (ancient) and 'encode_zip' (from r824) from grfio. These were outdated copies of zlib's 'uncompress' and 'compress' respectively (related r1530 and r5152). [Ai4rei]
 	* Removed auto-add feature from mapindex code, as map indexes are used for save data, thus need to be constant across server starts (since r4726). [Ai4rei]
