@@ -1,5 +1,7 @@
 Date	Added
 
+2011/05/14
+	* Fixed map-server printing deprecation message, when monster event label was used as transport for special attributes (small/large monsters etc.) in script command 'monster' and related commands (bugreport:1274, since r6592, related r5707). [Ai4rei]
 2011/05/13
 	* Random accumulated bits and pieces. [Ai4rei]
 	- Added checks/warnings to pc_paycash and pc_getcash (follow up to r12264).

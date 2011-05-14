@@ -577,9 +577,17 @@ static void disp_error_message2(const char *mes,const char *pos,int report)
 /// Checks event parameter validity
 static void check_event(struct script_state *st, const char *evt)
 {
-	if( evt != NULL && *evt != '\0' && !stristr(evt,"::On") ){
-		ShowError("NPC event parameter deprecated! Please use 'NPCNAME::OnEVENT' instead of '%s'.\n",evt);
-		script_reportsrc(st);
+	if( evt && evt[0] && !stristr(evt, "::On") )
+	{
+		if( npc_event_isspecial(evt) )
+		{
+			;  // portable small/large monsters or other attributes
+		}
+		else
+		{
+			ShowError("NPC event parameter deprecated! Please use 'NPCNAME::OnEVENT' instead of '%s'.\n", evt);
+			script_reportsrc(st);
+		}
 	}
 }
 

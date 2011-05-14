@@ -179,7 +179,7 @@ int mob_parse_dataset(struct spawn_data *data)
 
 	if (data->eventname[0])
 	{
-		if(i <= 2)
+		if(npc_event_isspecial(data->eventname))
 		{	//Portable monster big/small implementation. [Skotlex]
 			i = atoi(data->eventname);
 			if (i) {
@@ -191,7 +191,7 @@ int mob_parse_dataset(struct spawn_data *data)
 					data->state.ai=1;
 				data->eventname[0] = '\0'; //Clear event as it is not used.
 			}
-		} else {
+		} else if( i ) {
 			if (data->eventname[i-1] == '"')
 				data->eventname[i-1] = '\0'; //Remove trailing quote.
 			if (data->eventname[0] == '"') //Strip leading quotes
