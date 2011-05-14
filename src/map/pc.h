@@ -727,7 +727,7 @@ int pc_candrop(struct map_session_data *sd,struct item *item);
 int pc_jobid2mapid(unsigned short b_class);	// Skotlex
 int pc_mapid2jobid(unsigned short class_, int sex);	// Skotlex
 
-char * job_name(int class_);
+const char * job_name(int class_);
 
 struct skill_tree_entry {
 	short id;

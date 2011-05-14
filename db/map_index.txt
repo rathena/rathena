@@ -810,6 +810,16 @@ mal_dun01
 1@cash
 iz_dun05
 evt_mobroom
+alde_tt03
+dic_dun03
+//mjolnir_04_1
+//evt_swar_b
+//evt_swar_r
+//evt_swar_s
+//evt_swar_t
+1@lhz
+lhz_dun04
+que_lhz
 
 // Only add maps under this line if they are not standard maps!
 

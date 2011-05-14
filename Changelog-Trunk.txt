@@ -1,5 +1,13 @@
 Date	Added
 
+2011/05/13
+	* Random accumulated bits and pieces. [Ai4rei]
+	- Added checks/warnings to pc_paycash and pc_getcash (follow up to r12264).
+	- Added missing packet_db.txt and packet length table entries for packet 0x0859 (follow up to r14799).
+	- Added set of map_id2xx wrappers for map_id2bl for most common map objects, which return NULL when the bl-type is not the expected one (also updated map_id2nd to behave this way).
+	- Fixed missing ',' in mob_skill_db.txt example (follow up to r14270).
+	- Updated mapcache with recent maps (up to que_lhz).
+	- Functions 'msg_txt' and 'job_name' now return a const pointer.
 2011/05/08
 	* Script command 'query_logsql' now throws a warning when SQL logs are disabled (related r11892). [Ai4rei]
 	* Updated/revised description of instance-related script commands (bugreport:4880). [Ai4rei]

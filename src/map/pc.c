@@ -3263,11 +3263,31 @@ int pc_payzeny(struct map_session_data *sd,int zeny)
 void pc_paycash(struct map_session_data *sd, int price, int points)
 {
 	char output[128];
-	int cash = price - points;
+	int cash;
 	nullpo_retv(sd);
 
-	pc_setaccountreg(sd,"#CASHPOINTS",sd->cashPoints - cash);
-	pc_setaccountreg(sd,"#KAFRAPOINTS",sd->kafraPoints - points);
+	if( price < 0 || points < 0 )
+	{
+		ShowError("pc_paycash: Paying negative points (price=%d, points=%d, account_id=%d, char_id=%d).\n", price, points, sd->status.account_id, sd->status.char_id);
+		return;
+	}
+
+	if( points > price )
+	{
+		ShowWarning("pc_paycash: More kafra points provided than needed (price=%d, points=%d, account_id=%d, char_id=%d).\n", price, points, sd->status.account_id, sd->status.char_id);
+		points = price;
+	}
+
+	cash = price-points;
+
+	if( sd->cashPoints < cash || sd->kafraPoints < points )
+	{
+		ShowError("pc_paycash: Not enough points (cash=%d, kafra=%d) to cover the price (cash=%d, kafra=%d) (account_id=%d, char_id=%d).\n", sd->cashPoints, sd->kafraPoints, cash, points, sd->status.account_id, sd->status.char_id);
+		return;
+	}
+
+	pc_setaccountreg(sd, "#CASHPOINTS", sd->cashPoints-cash);
+	pc_setaccountreg(sd, "#KAFRAPOINTS", sd->kafraPoints-points);
 
 	if( battle_config.cashshop_show_points )
 	{
@@ -3283,7 +3303,13 @@ void pc_getcash(struct map_session_data *sd, int cash, int points)
 
 	if( cash > 0 )
 	{
-		pc_setaccountreg(sd,"#CASHPOINTS",sd->cashPoints + cash);
+		if( cash > MAX_ZENY-sd->cashPoints )
+		{
+			ShowWarning("pc_getcash: Cash point overflow (cash=%d, have cash=%d, account_id=%d, char_id=%d).\n", cash, sd->cashPoints, sd->status.account_id, sd->status.char_id);
+			cash = MAX_ZENY-sd->cashPoints;
+		}
+
+		pc_setaccountreg(sd, "#CASHPOINTS", sd->cashPoints+cash);
 
 		if( battle_config.cashshop_show_points )
 		{
@@ -3291,16 +3317,30 @@ void pc_getcash(struct map_session_data *sd, int cash, int points)
 			clif_disp_onlyself(sd, output, strlen(output));
 		}
 	}
+	else if( cash < 0 )
+	{
+		ShowError("pc_getcash: Obtaining negative cash points (cash=%d, account_id=%d, char_id=%d).\n", cash, sd->status.account_id, sd->status.char_id);
+	}
 
 	if( points > 0 )
 	{
-		pc_setaccountreg(sd,"#KAFRAPOINTS",sd->kafraPoints + points);
+		if( points > MAX_ZENY-sd->kafraPoints )
+		{
+			ShowWarning("pc_getcash: Kafra point overflow (points=%d, have points=%d, account_id=%d, char_id=%d).\n", points, sd->kafraPoints, sd->status.account_id, sd->status.char_id);
+			points = MAX_ZENY-sd->kafraPoints;
+		}
+
+		pc_setaccountreg(sd, "#KAFRAPOINTS", sd->kafraPoints+points);
 
 		if( battle_config.cashshop_show_points )
 		{
 			sprintf(output, msg_txt(506), points, sd->kafraPoints);
 			clif_disp_onlyself(sd, output, strlen(output));
 		}
+	}
+	else if( points < 0 )
+	{
+		ShowError("pc_getcash: Obtaining negative kafra points (points=%d, account_id=%d, char_id=%d).\n", points, sd->status.account_id, sd->status.char_id);
 	}
 }
 
@@ -4608,7 +4648,7 @@ int pc_mapid2jobid(unsigned short class_, int sex)
 /*====================================================
  * This function return the name of the job (by [Yor])
  *----------------------------------------------------*/
-char* job_name(int class_)
+const char* job_name(int class_)
 {
 	switch (class_) {
 	case JOB_NOVICE:

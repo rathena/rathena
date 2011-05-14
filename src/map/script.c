@@ -4780,7 +4780,7 @@ BUILDIN_FUNC(jobchange)
 BUILDIN_FUNC(jobname)
 {
 	int class_=script_getnum(st,2);
-	script_pushconststr(st,job_name(class_));
+	script_pushconststr(st, (char*)job_name(class_));
 	return 0;
 }
 

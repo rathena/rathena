@@ -9692,7 +9692,8 @@ void clif_parse_ChatLeave(int fd, struct map_session_data* sd)
 //0: 
 static void clif_noask_sub(struct map_session_data *src, struct map_session_data *target, int type)
 {
-	char *msg, output[256];
+	const char* msg;
+	char output[256];
 	// Your request has been rejected by autoreject option.
 	msg = msg_txt(392);
 	clif_disp_onlyself(src, msg, strlen(msg));
@@ -15029,7 +15030,7 @@ static int packetdb_readdb(void)
 	    0,  0,  0,  0,  0, -1, -1,  3,  2, 66,  5,  2, 12,  6,  0,  0,
 	//#0x0840
 	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-	    0,  0,  0,  0,  0,  0, -1, -1, -1,  0,  0,  0,  0,  0,  0,  0,
+	    0,  0,  0,  0,  0,  0, -1, -1, -1, -1,  0,  0,  0,  0,  0,  0,
 	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 	};

@@ -584,6 +584,9 @@ struct map_session_data* map_charid2sd(int charid);
 struct map_session_data * map_id2sd(int id);
 struct mob_data * map_id2md(int id);
 struct npc_data * map_id2nd(int id);
+struct homun_data* map_id2hd(int id);
+struct mercenary_data* map_id2mc(int id);
+struct chat_data* map_id2cd(int id);
 struct block_list * map_id2bl(int id);
 
 #define map_id2index(id) map[(id)].index
