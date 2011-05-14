@@ -1465,7 +1465,7 @@ int intif_parse_Mail_inboxreceived(int fd)
 
 	if (flag)
 		clif_Mail_refreshinbox(sd);
-	else
+	else if( battle_config.mail_show_status && ( battle_config.mail_show_status == 1 || sd->mail.inbox.unread ) )
 	{
 		char output[128];
 		sprintf(output, msg_txt(510), sd->mail.inbox.unchecked, sd->mail.inbox.unread + sd->mail.inbox.unchecked);
