@@ -128,6 +128,7 @@ struct mob_data {
 		unsigned int spotted: 1;
 		unsigned int npc_killmonster: 1; //for new killmonster behavior
 		unsigned int rebirth: 1; // NPC_Rebirth used
+		unsigned int boss : 1;
 		enum MobSkillState skillstate;
 		unsigned char steal_flag; //number of steal tries (to prevent steal exploit on mobs with few items) [Lupus]
 		unsigned char attacked_count; //For rude attacked.
@@ -143,7 +144,6 @@ struct mob_data {
 	int spawn_timer; //Required for Convex Mirror
 	struct item *lootitem;
 	short class_;
-	unsigned boss : 1;
 	unsigned int tdmg; //Stores total damage given to the mob, for exp calculations. [Skotlex]
 	int level;
 	int target_id,attacked_id;

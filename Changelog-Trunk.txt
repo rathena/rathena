@@ -1,6 +1,7 @@
 Date	Added
 
 2011/05/14
+	* Moved bitfield 'boss' inside 'spawn_data' and 'mob_data' into the respective state struct (from r13813, follow up to r14795). [Ai4rei]
 	* Some NPC event related cleaning. [Ai4rei]
 	- Made event label deprecation message a warning rather than an error, as the scripts still work regardless of whether '::On' is used or not (since r6592).
 	- Introduced constant EVENT_NAME_LENGTH (51) for all event name struct fields to eliminate size inconsistency across all objects (was 50 and 51).

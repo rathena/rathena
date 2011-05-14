@@ -2705,7 +2705,7 @@ static const char* npc_parse_mob(char* w1, char* w2, char* w3, char* w4, const c
 
 	memset(&mob, 0, sizeof(struct spawn_data));
 
-	mob.boss = !strcmpi(w2,"boss_monster");
+	mob.state.boss = !strcmpi(w2,"boss_monster");
 
 	// w1=<map name>,<x>,<y>,<xs>,<ys>
 	// w4=<mob id>,<amount>,<delay1>,<delay2>,<event>

@@ -1509,7 +1509,7 @@ void map_addiddb(struct block_list *bl)
 		TBL_MOB* md = (TBL_MOB*)bl;
 		idb_put(mobid_db,bl->id,bl);
 
-		if( md->boss )
+		if( md->state.boss )
 			idb_put(bossid_db, bl->id, bl);
 	}
 
