@@ -160,7 +160,7 @@ struct mob_data {
 
 	short skillidx;
 	unsigned int skilldelay[MAX_MOBSKILL];
-	char npc_event[50];
+	char npc_event[EVENT_NAME_LENGTH];
 };
 
 

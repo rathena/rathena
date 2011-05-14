@@ -159,6 +159,8 @@ enum {
 #define CHATROOM_PASS_SIZE (8 + 1)
 //Max allowed chat text length
 #define CHAT_SIZE_MAX (255 + 1)
+//24 for npc name + 24 for label + 2 for a "::" and 1 for EOS
+#define EVENT_NAME_LENGTH ( NAME_LENGTH * 2 + 3 )
 
 #define DEFAULT_AUTOSAVE_INTERVAL 5*60*1000
 
@@ -268,7 +270,7 @@ struct spawn_data {
 		unsigned ai :2;	//Holds if mob is special ai.
 		unsigned dynamic :1; //Whether this data is indexed by a map's dynamic mob list
 	} state;
-	char name[NAME_LENGTH],eventname[50]; //Name/event
+	char name[NAME_LENGTH],eventname[EVENT_NAME_LENGTH]; //Name/event
 };
 
 

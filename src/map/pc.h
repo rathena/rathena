@@ -378,7 +378,7 @@ struct map_session_data {
 	unsigned short pvp_rank, pvp_lastusers;
 	unsigned short pvp_won, pvp_lost;
 
-	char eventqueue[MAX_EVENTQUEUE][NAME_LENGTH*2+3];
+	char eventqueue[MAX_EVENTQUEUE][EVENT_NAME_LENGTH];
 	int eventtimer[MAX_EVENTTIMER];
 	unsigned short eventcount; // [celest]
 

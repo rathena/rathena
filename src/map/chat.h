@@ -22,7 +22,7 @@ struct chat_data {
 	uint32 maxLvl;					 // maximum base level allowed to join
 	struct map_session_data* usersd[20];
 	struct block_list* owner;
-	char npc_event[50];
+	char npc_event[EVENT_NAME_LENGTH];
 };
 
 

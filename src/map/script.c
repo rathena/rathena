@@ -585,7 +585,7 @@ static void check_event(struct script_state *st, const char *evt)
 		}
 		else
 		{
-			ShowError("NPC event parameter deprecated! Please use 'NPCNAME::OnEVENT' instead of '%s'.\n", evt);
+			ShowWarning("NPC event parameter deprecated! Please use 'NPCNAME::OnEVENT' instead of '%s'.\n", evt);
 			script_reportsrc(st);
 		}
 	}
@@ -8187,8 +8187,8 @@ BUILDIN_FUNC(cmdothernpc)	// Added by RoVeRT
 {
 	const char* npc = script_getstr(st,2);
 	const char* command = script_getstr(st,3);
-	char event[51];
-	snprintf(event, 51, "%s::OnCommand%s", npc, command);
+	char event[EVENT_NAME_LENGTH];
+	snprintf(event, sizeof(event), "%s::OnCommand%s", npc, command);
 	check_event(st, event);
 	npc_event_do(event);
 	return 0;

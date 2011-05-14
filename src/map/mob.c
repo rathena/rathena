@@ -160,7 +160,8 @@ struct view_data * mob_get_viewdata(int class_)
  *------------------------------------------*/
 int mob_parse_dataset(struct spawn_data *data)
 {
-	int i;
+	size_t len;
+
 	//FIXME: This implementation is not stable, npc scripts will stop working once MAX_MOB_DB changes value! [Skotlex]
 	if(data->class_ > 2*MAX_MOB_DB){ // large/tiny mobs [Valaris]
 		data->state.size=2;
@@ -173,32 +174,33 @@ int mob_parse_dataset(struct spawn_data *data)
 	if ((!mobdb_checkid(data->class_) && !mob_is_clone(data->class_)) || !data->num)
 		return 0;
 
-	if (data->eventname[0])
-	{
-		if(npc_event_isspecial(data->eventname))
-		{	//Portable monster big/small implementation. [Skotlex]
-			i = atoi(data->eventname);
-			if (i) {
-				if (i&2)
-					data->state.size=1;
-				else if (i&4)
-					data->state.size=2;
-				if (i&8)
-					data->state.ai=1;
-				data->eventname[0] = '\0'; //Clear event as it is not used.
-			}
-		} else if( ( i = strlen(data->eventname) ) > 0 ) {
-			if (data->eventname[i-1] == '"')
-				data->eventname[i-1] = '\0'; //Remove trailing quote.
-			if (data->eventname[0] == '"') //Strip leading quotes
-				memmove(data->eventname, data->eventname+1, i-1);
+	if( npc_event_isspecial(data->eventname) )
+	{//Portable monster big/small implementation. [Skotlex]
+		int i = atoi(data->eventname);
+
+		if( i )
+		{
+			if( i&2 )
+				data->state.size = 1;
+			else if( i&4 )
+				data->state.size = 2;
+			if( i&8 )
+				data->state.ai = 1;
 		}
+		data->eventname[0] = '\0'; //Clear event as it is not used.
+	}
+	else if( ( len = strlen(data->eventname) ) > 0 )
+	{
+		if( data->eventname[len-1] == '"' )
+			data->eventname[len-1] = '\0'; //Remove trailing quote.
+		if( data->eventname[0] == '"' ) //Strip leading quotes
+			memmove(data->eventname, data->eventname+1, len-1);
 	}
 
 	if(strcmp(data->name,"--en--")==0)
-		strncpy(data->name,mob_db(data->class_)->name,NAME_LENGTH-1);
+		safestrncpy(data->name, mob_db(data->class_)->name, sizeof(data->name));
 	else if(strcmp(data->name,"--ja--")==0)
-		strncpy(data->name,mob_db(data->class_)->jname,NAME_LENGTH-1);
+		safestrncpy(data->name, mob_db(data->class_)->jname, sizeof(data->name));
 
 	return 1;
 }

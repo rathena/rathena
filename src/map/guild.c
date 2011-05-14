@@ -36,7 +36,7 @@ static DBMap* guild_infoevent_db; // int guild_id -> struct eventlist*
 static DBMap* guild_castleinfoevent_db; // int castle_id_index -> struct eventlist*
 
 struct eventlist {
-	char name[50];
+	char name[EVENT_NAME_LENGTH];
 	struct eventlist *next;
 };
 
@@ -1545,7 +1545,7 @@ int guild_broken(int guild_id,int flag)
 	struct guild_castle *gc=NULL;
 	struct map_session_data *sd;
 	int i;
-	char name[50];
+	char name[EVENT_NAME_LENGTH];
 
 	if(flag!=0 || g==NULL)
 		return 0;

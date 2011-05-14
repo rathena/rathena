@@ -105,7 +105,7 @@ struct view_data* npc_get_viewdata(int class_)
 
 int npc_ontouch_event(struct map_session_data *sd, struct npc_data *nd)
 {
-	char name[NAME_LENGTH*2+3];
+	char name[EVENT_NAME_LENGTH];
 
 	if( nd->touching_id )
 		return 0; // Attached a player already. Can't trigger on anyone else.
@@ -119,7 +119,7 @@ int npc_ontouch_event(struct map_session_data *sd, struct npc_data *nd)
 
 int npc_ontouch2_event(struct map_session_data *sd, struct npc_data *nd)
 {
-	char name[NAME_LENGTH*2+3];
+	char name[EVENT_NAME_LENGTH];
 
 	if( sd->areanpc_id == nd->bl.id )
 		return 0;
@@ -245,7 +245,7 @@ int npc_event_export(char* lname, void* data, va_list ap)
 
 	if ((lname[0]=='O' || lname[0]=='o')&&(lname[1]=='N' || lname[1]=='n')) {
 		struct event_data *ev;
-		char buf[NAME_LENGTH*2+3];
+		char buf[EVENT_NAME_LENGTH];
 		char* p = strchr(lname, ':');
 		// エクスポートされる
 		ev = (struct event_data *) aMalloc(sizeof(struct event_data));
@@ -644,7 +644,7 @@ void npc_timerevent_quit(struct map_session_data* sd)
 	// Execute OnTimerQuit
 	if( nd && nd->bl.type == BL_NPC )
 	{
-		char buf[NAME_LENGTH*2+3];
+		char buf[EVENT_NAME_LENGTH];
 		struct event_data *ev;
 
 		snprintf(buf, ARRAYLENGTH(buf), "%s::OnTimerQuit", nd->exname);
@@ -821,7 +821,7 @@ int npc_touchnext_areanpc(struct map_session_data* sd, bool leavemap)
 		sd->bl.y < nd->bl.y - ys || sd->bl.y > nd->bl.y + ys ||
 		pc_ishiding(sd) || leavemap )
 	{
-		char name[NAME_LENGTH*2+3];
+		char name[EVENT_NAME_LENGTH];
 
 		nd->touching_id = sd->touching_id = 0;
 		snprintf(name, ARRAYLENGTH(name), "%s::%s", nd->exname, script_config.ontouch_name);
@@ -902,7 +902,7 @@ int npc_touch_areanpc(struct map_session_data* sd, int m, int x, int y)
 int npc_touch_areanpc2(struct mob_data *md)
 {
 	int i, m = md->bl.m, x = md->bl.x, y = md->bl.y, id;
-	char eventname[NAME_LENGTH*2+3];
+	char eventname[EVENT_NAME_LENGTH];
 	struct event_data* ev;
 	int xs, ys;
 
@@ -1152,7 +1152,7 @@ int npc_buysellsel(struct map_session_data* sd, int id, int type)
 //npc_buylist for script-controlled shops.
 static int npc_buylist_sub(struct map_session_data* sd, int n, unsigned short* item_list, struct npc_data* nd)
 {
-	char npc_ev[NAME_LENGTH*2+3];
+	char npc_ev[EVENT_NAME_LENGTH];
 	int i;
 	int key_nameid = 0;
 	int key_amount = 0;
@@ -1387,7 +1387,7 @@ int npc_buylist(struct map_session_data* sd, int n, unsigned short* item_list)
 /// npc_selllist for script-controlled shops
 static int npc_selllist_sub(struct map_session_data* sd, int n, unsigned short* item_list, struct npc_data* nd)
 {
-	char npc_ev[NAME_LENGTH*2+3];
+	char npc_ev[EVENT_NAME_LENGTH];
 	int i, idx;
 	int key_nameid = 0;
 	int key_amount = 0;
@@ -2219,7 +2219,7 @@ static const char* npc_parse_script(char* w1, char* w2, char* w3, char* w4, cons
 		if ((lname[0] == 'O' || lname[0] == 'o') && (lname[1] == 'N' || lname[1] == 'n'))
 		{
 			struct event_data* ev;
-			char buf[NAME_LENGTH*2+3]; // 24 for npc name + 24 for label + 2 for a "::" and 1 for EOS
+			char buf[EVENT_NAME_LENGTH];
 			snprintf(buf, ARRAYLENGTH(buf), "%s::%s", nd->exname, lname);
 
 			// generate the data and insert it
@@ -2407,7 +2407,7 @@ const char* npc_parse_duplicate(char* w1, char* w2, char* w3, char* w4, const ch
 		if ((lname[0] == 'O' || lname[0] == 'o') && (lname[1] == 'N' || lname[1] == 'n'))
 		{
 			struct event_data* ev;
-			char buf[NAME_LENGTH*2+3]; // 24 for npc name + 24 for label + 2 for a "::" and 1 for EOS
+			char buf[EVENT_NAME_LENGTH];
 			snprintf(buf, ARRAYLENGTH(buf), "%s::%s", nd->exname, lname);
 
 			// generate the data and insert it
