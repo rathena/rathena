@@ -1,6 +1,8 @@
 Date	Added
 
 2011/05/14
+	* Added Job Level stat bonuses for baby third classes. [Gepard]
+	- Fixed Genetic High's VIT bonus being given at different level than Genetic's (since r14557).
 	* Updated attribute (element) damage adjustment table. [Gepard]
 2011/05/08
 	* Fixed pcdb_checkid not recognizing invalid/unused job classes (bugreport:4830, since r14755). [Ai4rei]
