@@ -173,10 +173,6 @@ int mob_parse_dataset(struct spawn_data *data)
 	if ((!mobdb_checkid(data->class_) && !mob_is_clone(data->class_)) || !data->num)
 		return 0;
 
-	//better safe than sorry, current md->npc_event has a size of 50
-	if ((i=strlen(data->eventname)) >= 50)
-		return 0;
-
 	if (data->eventname[0])
 	{
 		if(npc_event_isspecial(data->eventname))
@@ -191,7 +187,7 @@ int mob_parse_dataset(struct spawn_data *data)
 					data->state.ai=1;
 				data->eventname[0] = '\0'; //Clear event as it is not used.
 			}
-		} else if( i ) {
+		} else if( ( i = strlen(data->eventname) ) > 0 ) {
 			if (data->eventname[i-1] == '"')
 				data->eventname[i-1] = '\0'; //Remove trailing quote.
 			if (data->eventname[0] == '"') //Strip leading quotes
