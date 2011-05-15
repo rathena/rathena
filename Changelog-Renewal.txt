@@ -1,6 +1,7 @@
 Date	Added
 
 2011/05/15
+	* Merged changes from trunk [14824:14825/trunk]. [Gepard]
 	* Added support for increased max statistics (parameters) for 3rd classes (regular and baby). [Gepard]
 	* Updated amounts of status points given at Base Level up for levels over 99. [Gepard]
 	* Fixes to Job Level stat bonuses table. [Gepard]

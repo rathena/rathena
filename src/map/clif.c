@@ -2542,7 +2542,7 @@ int clif_updatestatus(struct map_session_data *sd,int type)
 	case SP_UDEX:
 	case SP_ULUK:
 		WFIFOW(fd,0)=0xbe;
-		WFIFOB(fd,4)=pc_need_status_point(sd,type-SP_USTR+SP_STR);
+		WFIFOB(fd,4)=pc_need_status_point(sd,type-SP_USTR+SP_STR,1);
 		len=5;
 		break;
 
@@ -2824,17 +2824,17 @@ int clif_initialstatus(struct map_session_data *sd)
 	WBUFW(buf,0)=0xbd;
 	WBUFW(buf,2)=min(sd->status.status_point, SHRT_MAX);
 	WBUFB(buf,4)=min(sd->status.str, UCHAR_MAX);
-	WBUFB(buf,5)=pc_need_status_point(sd,SP_STR);
+	WBUFB(buf,5)=pc_need_status_point(sd,SP_STR,1);
 	WBUFB(buf,6)=min(sd->status.agi, UCHAR_MAX);
-	WBUFB(buf,7)=pc_need_status_point(sd,SP_AGI);
+	WBUFB(buf,7)=pc_need_status_point(sd,SP_AGI,1);
 	WBUFB(buf,8)=min(sd->status.vit, UCHAR_MAX);
-	WBUFB(buf,9)=pc_need_status_point(sd,SP_VIT);
+	WBUFB(buf,9)=pc_need_status_point(sd,SP_VIT,1);
 	WBUFB(buf,10)=min(sd->status.int_, UCHAR_MAX);
-	WBUFB(buf,11)=pc_need_status_point(sd,SP_INT);
+	WBUFB(buf,11)=pc_need_status_point(sd,SP_INT,1);
 	WBUFB(buf,12)=min(sd->status.dex, UCHAR_MAX);
-	WBUFB(buf,13)=pc_need_status_point(sd,SP_DEX);
+	WBUFB(buf,13)=pc_need_status_point(sd,SP_DEX,1);
 	WBUFB(buf,14)=min(sd->status.luk, UCHAR_MAX);
-	WBUFB(buf,15)=pc_need_status_point(sd,SP_LUK);
+	WBUFB(buf,15)=pc_need_status_point(sd,SP_LUK,1);
 
 	WBUFW(buf,16) = sd->battle_status.batk + sd->battle_status.rhw.atk + sd->battle_status.lhw.atk;
 	WBUFW(buf,18) = sd->battle_status.rhw.atk2 + sd->battle_status.lhw.atk2; //atk bonus
@@ -12420,17 +12420,17 @@ void clif_check(int fd, struct map_session_data* pl_sd)
 	WFIFOHEAD(fd,packet_len(0x214));
 	WFIFOW(fd, 0) = 0x214;
 	WFIFOB(fd, 2) = min(pl_sd->status.str, UCHAR_MAX);
-	WFIFOB(fd, 3) = pc_need_status_point(pl_sd, SP_STR);
+	WFIFOB(fd, 3) = pc_need_status_point(pl_sd, SP_STR, 1);
 	WFIFOB(fd, 4) = min(pl_sd->status.agi, UCHAR_MAX);
-	WFIFOB(fd, 5) = pc_need_status_point(pl_sd, SP_AGI);
+	WFIFOB(fd, 5) = pc_need_status_point(pl_sd, SP_AGI, 1);
 	WFIFOB(fd, 6) = min(pl_sd->status.vit, UCHAR_MAX);
-	WFIFOB(fd, 7) = pc_need_status_point(pl_sd, SP_VIT);
+	WFIFOB(fd, 7) = pc_need_status_point(pl_sd, SP_VIT, 1);
 	WFIFOB(fd, 8) = min(pl_sd->status.int_, UCHAR_MAX);
-	WFIFOB(fd, 9) = pc_need_status_point(pl_sd, SP_INT);
+	WFIFOB(fd, 9) = pc_need_status_point(pl_sd, SP_INT, 1);
 	WFIFOB(fd,10) = min(pl_sd->status.dex, UCHAR_MAX);
-	WFIFOB(fd,11) = pc_need_status_point(pl_sd, SP_DEX);
+	WFIFOB(fd,11) = pc_need_status_point(pl_sd, SP_DEX, 1);
 	WFIFOB(fd,12) = min(pl_sd->status.luk, UCHAR_MAX);
-	WFIFOB(fd,13) = pc_need_status_point(pl_sd, SP_LUK);
+	WFIFOB(fd,13) = pc_need_status_point(pl_sd, SP_LUK, 1);
 	WFIFOW(fd,14) = pl_sd->battle_status.batk+pl_sd->battle_status.rhw.atk+pl_sd->battle_status.lhw.atk;
 	WFIFOW(fd,16) = pl_sd->battle_status.rhw.atk2+pl_sd->battle_status.lhw.atk2;
 	WFIFOW(fd,18) = pl_sd->battle_status.matk_max;

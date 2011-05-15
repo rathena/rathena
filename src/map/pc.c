@@ -5038,18 +5038,8 @@ int pc_checkbaselevelup(struct map_session_data *sd)
 		if(!battle_config.multi_level_up && sd->status.base_exp > next-1)
 			sd->status.base_exp = next-1;
 
+		next = pc_gets_status_point(sd->status.base_level);
 		sd->status.base_level ++;
-
-		//Give status points
-		if (battle_config.use_statpoint_table) //Use values from "db/statpoint.txt"
-			next = statp[sd->status.base_level] - statp[sd->status.base_level-1];
-		else //Default increase
-		{
-			if (sd->status.base_level <= 100)
-				next = (sd->status.base_level+14) / 5;
-			else
-				next = (sd->status.base_level+129) / 10;
-		}
 		sd->status.status_point += next;
 
 	} while ((next=pc_nextbaseexp(sd)) > 0 && sd->status.base_exp >= next);
@@ -5367,18 +5357,45 @@ static int pc_setstat(struct map_session_data* sd, int type, int val)
 	return val;
 }
 
-/// Returns the number of stat points needed to raise the specified stat by 1.
-int pc_need_status_point(struct map_session_data* sd, int type)
+// Calculates the number of status points PC gets when leveling up (from level to level+1)
+int pc_gets_status_point(int level)
 {
-	int stat = pc_getstat(sd, type);
+	if (battle_config.use_statpoint_table) //Use values from "db/statpoint.txt"
+		return (statp[level+1] - statp[level]);
+	else //Default increase
+	{
+		if (level < 100)
+			return ((level+15) / 5);
+		else
+			return ((level+130) / 10);
+	}
+}
 
-	if( stat >= pc_maxparameter(sd) )
+/// Returns the number of stat points needed to change the specified stat by val.
+/// If val is negative, returns the number of stat points that would be needed to
+/// raise the specified stat from (current value - val) to current value.
+int pc_need_status_point(struct map_session_data* sd, int type, int val)
+{
+	int low, high, sp = 0;
+
+	if ( val == 0 )
+		return 0;
+
+	low = pc_getstat(sd,type);
+	if ( low >= pc_maxparameter(sd) && val > 0 )
 		return 0; // Official servers show '0' when max is reached
+	high = low + val;
 
-	if( stat < 100 )
-		return ( 1 + (stat + 9) / 10 );
-	else
-		return ( 16 + 4*((stat - 100) / 5) );
+	if ( val < 0 )
+		swap(low, high);
+
+	for ( ; low < high; low++ )
+		if( low < 100 )
+			sp += ( 1 + (low + 9) / 10 );
+		else
+			sp += ( 16 + 4*((low - 100) / 5) );
+	
+	return sp;
 }
 
 /// Raises a stat by 1.
@@ -5393,7 +5410,7 @@ int pc_statusup(struct map_session_data* sd, int type)
 	nullpo_ret(sd);
 
 	// check conditions
-	need = pc_need_status_point(sd,type);
+	need = pc_need_status_point(sd,type,1);
 	if( type < SP_STR || type > SP_LUK || need < 0 || need > sd->status.status_point )
 	{
 		clif_statusupack(sd,type,0,0);
@@ -5415,7 +5432,7 @@ int pc_statusup(struct map_session_data* sd, int type)
 	status_calc_pc(sd,0);
 
 	// update increase cost indicator
-	if( need != pc_need_status_point(sd,type) )
+	if( need != pc_need_status_point(sd,type,1) )
 		clif_updatestatus(sd, SP_USTR + type-SP_STR);
 
 	// update statpoint count
@@ -5446,7 +5463,7 @@ int pc_statusup2(struct map_session_data* sd, int type, int val)
 		return 1;
 	}
 
-	need = pc_need_status_point(sd,type);
+	need = pc_need_status_point(sd,type,1);
 
 	// set new value
 	max = pc_maxparameter(sd);
@@ -5455,7 +5472,7 @@ int pc_statusup2(struct map_session_data* sd, int type, int val)
 	status_calc_pc(sd,0);
 
 	// update increase cost indicator
-	if( need != pc_need_status_point(sd,type) )
+	if( need != pc_need_status_point(sd,type,1) )
 		clif_updatestatus(sd, SP_USTR + type-SP_STR);
 
 	// update stat value
@@ -5665,25 +5682,24 @@ int pc_resetstate(struct map_session_data* sd)
 		sd->status.status_point = statp[sd->status.base_level] + ( sd->class_&JOBL_UPPER ? 52 : 0 ); // extra 52+48=100 stat points
 	}
 	else
-	{ //Use new stat-calculating equation [Skotlex]
-#define sumsp(a) (((a-1)/10 +2)*(5*((a-1)/10 +1) + (a-1)%10) -10)
+	{
 		int add=0;
-		add += sumsp(sd->status.str);
-		add += sumsp(sd->status.agi);
-		add += sumsp(sd->status.vit);
-		add += sumsp(sd->status.int_);
-		add += sumsp(sd->status.dex);
-		add += sumsp(sd->status.luk);
+		add += pc_need_status_point(sd, SP_STR, 1-pc_getstat(sd, SP_STR));
+		add += pc_need_status_point(sd, SP_AGI, 1-pc_getstat(sd, SP_AGI));
+		add += pc_need_status_point(sd, SP_VIT, 1-pc_getstat(sd, SP_VIT));
+		add += pc_need_status_point(sd, SP_INT, 1-pc_getstat(sd, SP_INT));
+		add += pc_need_status_point(sd, SP_DEX, 1-pc_getstat(sd, SP_DEX));
+		add += pc_need_status_point(sd, SP_LUK, 1-pc_getstat(sd, SP_LUK));
 
 		sd->status.status_point+=add;
 	}
 
-	sd->status.str=1;
-	sd->status.agi=1;
-	sd->status.vit=1;
-	sd->status.int_=1;
-	sd->status.dex=1;
-	sd->status.luk=1;
+	pc_setstat(sd, SP_STR, 1);
+	pc_setstat(sd, SP_AGI, 1);
+	pc_setstat(sd, SP_VIT, 1);
+	pc_setstat(sd, SP_INT, 1);
+	pc_setstat(sd, SP_DEX, 1);
+	pc_setstat(sd, SP_LUK, 1);
 
 	clif_updatestatus(sd,SP_STR);
 	clif_updatestatus(sd,SP_AGI);
@@ -6298,8 +6314,8 @@ int pc_setparam(struct map_session_data *sd,int type,int val)
 			val = pc_maxbaselv(sd);
 		if ((unsigned int)val > sd->status.base_level) {
 			int stat=0;
-			for (i = 1; i <= (int)((unsigned int)val - sd->status.base_level); i++)
-				stat += (sd->status.base_level + i + 14) / 5 ;
+			for (i = 0; i < (int)((unsigned int)val - sd->status.base_level); i++)
+				stat += pc_gets_status_point(sd->status.base_level + i);
 			sd->status.status_point += stat;
 		}
 		sd->status.base_level = (unsigned int)val;
@@ -8308,7 +8324,7 @@ int pc_readdb(void)
 	sprintf(line, "%s/statpoint.txt", db_path);
 	fp=fopen(line,"r");
 	if(fp == NULL){
-		ShowStatus("Can't read '"CL_WHITE"%s"CL_RESET"'... Generating DB.\n",line);
+		ShowWarning("Can't read '"CL_WHITE"%s"CL_RESET"'... Generating DB.\n",line);
 		//return 1;
 	} else {
 		while(fgets(line, sizeof(line), fp))
@@ -8327,13 +8343,13 @@ int pc_readdb(void)
 		ShowStatus("Done reading '"CL_WHITE"%s"CL_RESET"'.\n","statpoint.txt");
 	}
 	// generate the remaining parts of the db if necessary
+	k = battle_config.use_statpoint_table; //save setting
+	battle_config.use_statpoint_table = 0; //temporarily disable to force pc_gets_status_point use default values
 	statp[0] = 45; // seed value
-	for (; i <= MAX_LEVEL; i++) {
-		if(i <= 100)
-			statp[i] = statp[i-1] + (i+14)/5;
-		else
-			statp[i] = statp[i-1] + (i+129)/10;
-	}
+	for (; i <= MAX_LEVEL; i++)
+		statp[i] = statp[i-1] + pc_gets_status_point(i-1);
+	battle_config.use_statpoint_table = k; //restore setting
+
 	return 0;
 }
 
