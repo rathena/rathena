@@ -1,6 +1,7 @@
 Date	Added
 
 2011/05/15
+	* Removed status point calculations (duplicate) from `pc_resetstate` function. It is now handled by `pc_need_status_point`. [Gepard]
 	* Merged pcdb_checkid update from renewal [14810/branches/renewal]. [Ai4rei]
 2011/05/14
 	* Moved bitfield 'boss' inside 'spawn_data' and 'mob_data' into the respective state struct (from r13813, follow up to r14795). [Ai4rei]

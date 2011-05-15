@@ -5134,10 +5134,26 @@ static int pc_setstat(struct map_session_data* sd, int type, int val)
 	return val;
 }
 
-/// Returns the number of stat points needed to raise the specified stat by 1.
-int pc_need_status_point(struct map_session_data* sd, int type)
+/// Returns the number of stat points needed to change the specified stat by val.
+/// If val is negative, returns the number of stat points that would be needed to
+/// raise the specified stat from (current value - val) to current value.
+int pc_need_status_point(struct map_session_data* sd, int type, int val)
 {
-	return ( 1 + (pc_getstat(sd,type) + 9) / 10 );
+	int low, high, sp = 0;
+
+	if ( val == 0 )
+		return 0;
+
+	low = pc_getstat(sd,type);
+	high = low + val;
+
+	if ( val < 0 )
+		swap(low, high);
+
+	for ( ; low < high; low++ )
+		sp += ( 1 + (low + 9) / 10 );
+	
+	return sp;
 }
 
 /// Raises a stat by 1.
@@ -5152,7 +5168,7 @@ int pc_statusup(struct map_session_data* sd, int type)
 	nullpo_ret(sd);
 
 	// check conditions
-	need = pc_need_status_point(sd,type);
+	need = pc_need_status_point(sd,type,1);
 	if( type < SP_STR || type > SP_LUK || need < 0 || need > sd->status.status_point )
 	{
 		clif_statusupack(sd,type,0,0);
@@ -5174,7 +5190,7 @@ int pc_statusup(struct map_session_data* sd, int type)
 	status_calc_pc(sd,0);
 
 	// update increase cost indicator
-	if( need != pc_need_status_point(sd,type) )
+	if( need != pc_need_status_point(sd,type,1) )
 		clif_updatestatus(sd, SP_USTR + type-SP_STR);
 
 	// update statpoint count
@@ -5205,7 +5221,7 @@ int pc_statusup2(struct map_session_data* sd, int type, int val)
 		return 1;
 	}
 
-	need = pc_need_status_point(sd,type);
+	need = pc_need_status_point(sd,type,1);
 
 	// set new value
 	max = pc_maxparameter(sd);
@@ -5214,7 +5230,7 @@ int pc_statusup2(struct map_session_data* sd, int type, int val)
 	status_calc_pc(sd,0);
 
 	// update increase cost indicator
-	if( need != pc_need_status_point(sd,type) )
+	if( need != pc_need_status_point(sd,type,1) )
 		clif_updatestatus(sd, SP_USTR + type-SP_STR);
 
 	// update stat value
@@ -5424,25 +5440,24 @@ int pc_resetstate(struct map_session_data* sd)
 		sd->status.status_point = statp[sd->status.base_level] + ( sd->class_&JOBL_UPPER ? 52 : 0 ); // extra 52+48=100 stat points
 	}
 	else
-	{ //Use new stat-calculating equation [Skotlex]
-#define sumsp(a) (((a-1)/10 +2)*(5*((a-1)/10 +1) + (a-1)%10) -10)
+	{
 		int add=0;
-		add += sumsp(sd->status.str);
-		add += sumsp(sd->status.agi);
-		add += sumsp(sd->status.vit);
-		add += sumsp(sd->status.int_);
-		add += sumsp(sd->status.dex);
-		add += sumsp(sd->status.luk);
+		add += pc_need_status_point(sd, SP_STR, 1-pc_getstat(sd, SP_STR));
+		add += pc_need_status_point(sd, SP_AGI, 1-pc_getstat(sd, SP_AGI));
+		add += pc_need_status_point(sd, SP_VIT, 1-pc_getstat(sd, SP_VIT));
+		add += pc_need_status_point(sd, SP_INT, 1-pc_getstat(sd, SP_INT));
+		add += pc_need_status_point(sd, SP_DEX, 1-pc_getstat(sd, SP_DEX));
+		add += pc_need_status_point(sd, SP_LUK, 1-pc_getstat(sd, SP_LUK));
 
 		sd->status.status_point+=add;
 	}
 
-	sd->status.str=1;
-	sd->status.agi=1;
-	sd->status.vit=1;
-	sd->status.int_=1;
-	sd->status.dex=1;
-	sd->status.luk=1;
+	pc_setstat(sd, SP_STR, 1);
+	pc_setstat(sd, SP_AGI, 1);
+	pc_setstat(sd, SP_VIT, 1);
+	pc_setstat(sd, SP_INT, 1);
+	pc_setstat(sd, SP_DEX, 1);
+	pc_setstat(sd, SP_LUK, 1);
 
 	clif_updatestatus(sd,SP_STR);
 	clif_updatestatus(sd,SP_AGI);
