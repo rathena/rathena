@@ -5040,11 +5040,16 @@ int pc_checkbaselevelup(struct map_session_data *sd)
 
 		sd->status.base_level ++;
 
-		if (battle_config.use_statpoint_table)
+		//Give status points
+		if (battle_config.use_statpoint_table) //Use values from "db/statpoint.txt"
 			next = statp[sd->status.base_level] - statp[sd->status.base_level-1];
-		else //Estimated way.
-			next = (sd->status.base_level+14) / 5 ;
-
+		else //Default increase
+		{
+			if (sd->status.base_level <= 100)
+				next = (sd->status.base_level+14) / 5;
+			else
+				next = (sd->status.base_level+129) / 10;
+		}
 		sd->status.status_point += next;
 
 	} while ((next=pc_nextbaseexp(sd)) > 0 && sd->status.base_exp >= next);
@@ -5365,7 +5370,15 @@ static int pc_setstat(struct map_session_data* sd, int type, int val)
 /// Returns the number of stat points needed to raise the specified stat by 1.
 int pc_need_status_point(struct map_session_data* sd, int type)
 {
-	return ( 1 + (pc_getstat(sd,type) + 9) / 10 );
+	int stat = pc_getstat(sd, type);
+
+	if( stat >= pc_maxparameter(sd) )
+		return 0; // Official servers show '0' when max is reached
+
+	if( stat < 100 )
+		return ( 1 + (stat + 9) / 10 );
+	else
+		return ( 16 + 4*((stat - 100) / 5) );
 }
 
 /// Raises a stat by 1.
@@ -6597,6 +6610,14 @@ int pc_jobchange(struct map_session_data *sd,int job, int upper)
 	clif_updatestatus(sd,SP_JOBLEVEL);
 	clif_updatestatus(sd,SP_JOBEXP);
 	clif_updatestatus(sd,SP_NEXTJOBEXP);
+
+	//New job may have new max_parameter, so update stat points needed to raise a stat
+	clif_updatestatus(sd,SP_USTR);
+	clif_updatestatus(sd,SP_UAGI);
+	clif_updatestatus(sd,SP_UVIT);
+	clif_updatestatus(sd,SP_UINT);
+	clif_updatestatus(sd,SP_UDEX);
+	clif_updatestatus(sd,SP_ULUK);
 
 	for(i=0;i<EQI_MAX;i++) {
 		if(sd->equip_index[i] >= 0)
@@ -8307,9 +8328,12 @@ int pc_readdb(void)
 	}
 	// generate the remaining parts of the db if necessary
 	statp[0] = 45; // seed value
-	for (; i <= MAX_LEVEL; i++)
-		statp[i] = statp[i-1] + (i-1+15)/5;
-
+	for (; i <= MAX_LEVEL; i++) {
+		if(i <= 100)
+			statp[i] = statp[i-1] + (i+14)/5;
+		else
+			statp[i] = statp[i-1] + (i+129)/10;
+	}
 	return 0;
 }
 

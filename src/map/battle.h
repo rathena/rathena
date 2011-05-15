@@ -236,7 +236,7 @@ extern struct Battle_Config
 	int max_hp;
 	int max_sp;
 	int max_lv, aura_lv;
-	int max_parameter, max_baby_parameter;
+	int max_parameter, max_baby_parameter, max_third_parameter, max_baby_third_parameter;
 	int max_cart_weight;
 	int skill_log;
 	int battle_log;
