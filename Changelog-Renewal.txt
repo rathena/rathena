@@ -1,6 +1,9 @@
 Date	Added
 
 2011/05/15
+	* Fixes to Job Level stat bonuses table. [Gepard]
+	- Added missing bonuses: Warlock's INT, Minstrel's INT & AGI, Genetic's VIT.
+	- Official Royal Guard's bonuses.
 	* Merged changes from trunk [14784:14819/trunk]. [Ai4rei]
 2011/05/14
 	* Added Job Level stat bonuses for baby third classes. [Gepard]
