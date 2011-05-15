@@ -4857,13 +4857,8 @@ int pc_checkbaselevelup(struct map_session_data *sd)
 		if(!battle_config.multi_level_up && sd->status.base_exp > next-1)
 			sd->status.base_exp = next-1;
 
+		next = pc_gets_status_point(sd->status.base_level);
 		sd->status.base_level ++;
-
-		if (battle_config.use_statpoint_table)
-			next = statp[sd->status.base_level] - statp[sd->status.base_level-1];
-		else //Estimated way.
-			next = (sd->status.base_level+14) / 5 ;
-
 		sd->status.status_point += next;
 
 	} while ((next=pc_nextbaseexp(sd)) > 0 && sd->status.base_exp >= next);
@@ -5132,6 +5127,15 @@ static int pc_setstat(struct map_session_data* sd, int type, int val)
 	}
 
 	return val;
+}
+
+// Calculates the number of status points PC gets when leveling up (from level to level+1)
+int pc_gets_status_point(int level)
+{
+	if (battle_config.use_statpoint_table) //Use values from "db/statpoint.txt"
+		return (statp[level+1] - statp[level]);
+	else //Default increase
+		return ((level+15) / 5);
 }
 
 /// Returns the number of stat points needed to change the specified stat by val.
@@ -6072,8 +6076,8 @@ int pc_setparam(struct map_session_data *sd,int type,int val)
 			val = pc_maxbaselv(sd);
 		if ((unsigned int)val > sd->status.base_level) {
 			int stat=0;
-			for (i = 1; i <= (int)((unsigned int)val - sd->status.base_level); i++)
-				stat += (sd->status.base_level + i + 14) / 5 ;
+			for (i = 0; i < (int)((unsigned int)val - sd->status.base_level); i++)
+				stat += pc_gets_status_point(sd->status.base_level + i);
 			sd->status.status_point += stat;
 		}
 		sd->status.base_level = (unsigned int)val;
@@ -8074,7 +8078,7 @@ int pc_readdb(void)
 	sprintf(line, "%s/statpoint.txt", db_path);
 	fp=fopen(line,"r");
 	if(fp == NULL){
-		ShowStatus("Can't read '"CL_WHITE"%s"CL_RESET"'... Generating DB.\n",line);
+		ShowWarning("Can't read '"CL_WHITE"%s"CL_RESET"'... Generating DB.\n",line);
 		//return 1;
 	} else {
 		while(fgets(line, sizeof(line), fp))
@@ -8093,9 +8097,12 @@ int pc_readdb(void)
 		ShowStatus("Done reading '"CL_WHITE"%s"CL_RESET"'.\n","statpoint.txt");
 	}
 	// generate the remaining parts of the db if necessary
+	k = battle_config.use_statpoint_table; //save setting
+	battle_config.use_statpoint_table = 0; //temporarily disable to force pc_gets_status_point use default values
 	statp[0] = 45; // seed value
 	for (; i <= MAX_LEVEL; i++)
-		statp[i] = statp[i-1] + (i-1+15)/5;
+		statp[i] = statp[i-1] + pc_gets_status_point(i-1);
+	battle_config.use_statpoint_table = k; //restore setting
 
 	return 0;
 }
