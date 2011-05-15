@@ -29,7 +29,7 @@ struct party_booking_ad_info;
 #include <stdarg.h>
 // packet DB
 #define MAX_PACKET_DB		0x900
-#define MAX_PACKET_VER		25
+#define MAX_PACKET_VER		26
 
 struct s_packet_db {
 	short len;
@@ -430,7 +430,7 @@ int clif_guild_memberlogin_notice(struct guild *g,int idx,int flag);
 int clif_guild_invite(struct map_session_data *sd,struct guild *g);
 int clif_guild_inviteack(struct map_session_data *sd,int flag);
 int clif_guild_leave(struct map_session_data *sd,const char *name,const char *mes);
-int clif_guild_expulsion(struct map_session_data *sd,const char *name,const char *mes,int account_id);
+void clif_guild_expulsion(struct map_session_data* sd, const char* name, const char* mes, int account_id);
 int clif_guild_positionchanged(struct guild *g,int idx);
 int clif_guild_memberpositionchanged(struct guild *g,int idx);
 int clif_guild_emblem(struct map_session_data *sd,struct guild *g);

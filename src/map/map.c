@@ -17,6 +17,7 @@
 #include "path.h"
 #include "chrif.h"
 #include "clif.h"
+#include "duel.h"
 #include "intif.h"
 #include "npc.h"
 #include "pc.h"
@@ -1508,7 +1509,7 @@ void map_addiddb(struct block_list *bl)
 		TBL_MOB* md = (TBL_MOB*)bl;
 		idb_put(mobid_db,bl->id,bl);
 
-		if( md->boss )
+		if( md->state.boss )
 			idb_put(bossid_db, bl->id, bl);
 	}
 
@@ -1658,8 +1659,30 @@ struct mob_data * map_id2md(int id)
 
 struct npc_data * map_id2nd(int id)
 {// just a id2bl lookup because there's no npc_db
-	if (id <= 0) return NULL;
-	return (struct npc_data*)map_id2bl(id);
+	struct block_list* bl = map_id2bl(id);
+
+	return BL_CAST(BL_NPC, bl);
+}
+
+struct homun_data* map_id2hd(int id)
+{
+	struct block_list* bl = map_id2bl(id);
+
+	return BL_CAST(BL_HOM, bl);
+}
+
+struct mercenary_data* map_id2mc(int id)
+{
+	struct block_list* bl = map_id2bl(id);
+
+	return BL_CAST(BL_MER, bl);
+}
+
+struct chat_data* map_id2cd(int id)
+{
+	struct block_list* bl = map_id2bl(id);
+
+	return BL_CAST(BL_CHAT, bl);
 }
 
 /// Returns the nick of the target charid or NULL if unknown (requests the nick to the char server).
@@ -2704,7 +2727,7 @@ int map_readfromcache(struct map_data *m, char *buffer, char *decode_buffer)
 		}
 
 		// TO-DO: Maybe handle the scenario, if the decoded buffer isn't the same size as expected? [Shinryo]
-		decode_zip(decode_buffer, &size, p+sizeof(struct map_cache_map_info), info->len);
+		uncompress(decode_buffer, &size, p+sizeof(struct map_cache_map_info), info->len);
 
 		CREATE(m->cell, struct mapcell, size);
 
@@ -3438,6 +3461,7 @@ void do_final(void)
 	do_final_status();
 	do_final_unit();
 	do_final_battleground();
+	do_final_duel();
 	
 	map_db->destroy(map_db, map_db_final);
 	
@@ -3673,6 +3697,7 @@ int do_init(int argc, char *argv[])
 	do_init_npc();
 	do_init_unit();
 	do_init_battleground();
+	do_init_duel();
 
 	npc_event_do_oninit();	// npcのOnInitイベント?行
 

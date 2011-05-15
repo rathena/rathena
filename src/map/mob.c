@@ -160,7 +160,8 @@ struct view_data * mob_get_viewdata(int class_)
  *------------------------------------------*/
 int mob_parse_dataset(struct spawn_data *data)
 {
-	int i;
+	size_t len;
+
 	//FIXME: This implementation is not stable, npc scripts will stop working once MAX_MOB_DB changes value! [Skotlex]
 	if(data->class_ > 2*MAX_MOB_DB){ // large/tiny mobs [Valaris]
 		data->state.size=2;
@@ -173,36 +174,33 @@ int mob_parse_dataset(struct spawn_data *data)
 	if ((!mobdb_checkid(data->class_) && !mob_is_clone(data->class_)) || !data->num)
 		return 0;
 
-	//better safe than sorry, current md->npc_event has a size of 50
-	if ((i=strlen(data->eventname)) >= 50)
-		return 0;
+	if( npc_event_isspecial(data->eventname) )
+	{//Portable monster big/small implementation. [Skotlex]
+		int i = atoi(data->eventname);
 
-	if (data->eventname[0])
-	{
-		if(i <= 2)
-		{	//Portable monster big/small implementation. [Skotlex]
-			i = atoi(data->eventname);
-			if (i) {
-				if (i&2)
-					data->state.size=1;
-				else if (i&4)
-					data->state.size=2;
-				if (i&8)
-					data->state.ai=1;
-				data->eventname[0] = '\0'; //Clear event as it is not used.
-			}
-		} else {
-			if (data->eventname[i-1] == '"')
-				data->eventname[i-1] = '\0'; //Remove trailing quote.
-			if (data->eventname[0] == '"') //Strip leading quotes
-				memmove(data->eventname, data->eventname+1, i-1);
+		if( i )
+		{
+			if( i&2 )
+				data->state.size = 1;
+			else if( i&4 )
+				data->state.size = 2;
+			if( i&8 )
+				data->state.ai = 1;
 		}
+		data->eventname[0] = '\0'; //Clear event as it is not used.
+	}
+	else if( ( len = strlen(data->eventname) ) > 0 )
+	{
+		if( data->eventname[len-1] == '"' )
+			data->eventname[len-1] = '\0'; //Remove trailing quote.
+		if( data->eventname[0] == '"' ) //Strip leading quotes
+			memmove(data->eventname, data->eventname+1, len-1);
 	}
 
 	if(strcmp(data->name,"--en--")==0)
-		strncpy(data->name,mob_db(data->class_)->name,NAME_LENGTH-1);
+		safestrncpy(data->name, mob_db(data->class_)->name, sizeof(data->name));
 	else if(strcmp(data->name,"--ja--")==0)
-		strncpy(data->name,mob_db(data->class_)->jname,NAME_LENGTH-1);
+		safestrncpy(data->name, mob_db(data->class_)->jname, sizeof(data->name));
 
 	return 1;
 }
@@ -218,7 +216,7 @@ struct mob_data* mob_spawn_dataset(struct spawn_data *data)
 	md->bl.x = data->x;
 	md->bl.y = data->y;
 	md->class_ = data->class_;
-	md->boss = data->boss;
+	md->state.boss = data->state.boss;
 	md->db = mob_db(md->class_);
 	memcpy(md->name, data->name, NAME_LENGTH);
 	if (data->state.ai)
@@ -667,7 +665,7 @@ int mob_spawn_guardian(const char* mapname, short x, short y, const char* mobnam
 /*==========================================
  * Summoning BattleGround [Zephyrus]
  *------------------------------------------*/
-int mob_spawn_bg(const char* mapname, short x, short y, const char* mobname, int class_, const char* event, int bg_id)
+int mob_spawn_bg(const char* mapname, short x, short y, const char* mobname, int class_, const char* event, unsigned int bg_id)
 {
 	struct mob_data *md = NULL;
 	struct spawn_data data;
@@ -704,7 +702,7 @@ int mob_spawn_bg(const char* mapname, short x, short y, const char* mobname, int
 
 	md = mob_spawn_dataset(&data);
 	mob_spawn(md);
-	md->state.bg_id = bg_id; // BG Team ID
+	md->bg_id = bg_id; // BG Team ID
 
 	return md->bl.id;
 }

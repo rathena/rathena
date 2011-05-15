@@ -7,9 +7,6 @@
 //File in charge of assigning a numberic ID to each map in existance for space saving when passing map info between servers.
 extern char mapindex_cfgfile[80];
 
-//whether to enable auto-adding of maps during run. Not so secure as the map indexes will vary!
-//#define MAPINDEX_AUTOADD
-
 #define MAX_MAPINDEX 2000
 
 //Some definitions for the mayor city maps.

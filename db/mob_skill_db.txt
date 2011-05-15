@@ -2,7 +2,7 @@
 //
 //MOB_ID,dummy value (info only),STATE,SKILL_ID,SKILL_LV,rate (10000 = 100%),casttime,delay,cancelable,target,condition type,condition value,val1,val2,val3,val4,val5,emotion,chat
 //Example
-//1001,Poring@TF_POISON,attack,52,3,100,1500,10000,no,target,always,0,,,,,7
+//1001,Poring@TF_POISON,attack,52,3,100,1500,10000,no,target,always,0,,,,,7,
 //
 //rate refers to the chance of the skill being casted when the condition is fulfilled.
 //delay is the time in milliseconds that has to be pass before recasting the same skill.

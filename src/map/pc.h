@@ -96,63 +96,61 @@ struct map_session_data {
 	//NOTE: When deciding to add a flag to state or special_state, take into consideration that state is preserved in
 	//status_calc_pc, while special_state is recalculated in each call. [Skotlex]
 	struct {
-		unsigned active : 1; //Marks active player (not active is logging in/out, or changing map servers)
-		unsigned menu_or_input : 1;// if a script is waiting for feedback from the player
-		unsigned dead_sit : 2;
-		unsigned lr_flag : 2;
-		unsigned connect_new : 1;
-		unsigned arrow_atk : 1;
-		unsigned combo : 2; // 1:Asura, 2:Kick [Inkfish]
-		unsigned gangsterparadise : 1;
-		unsigned rest : 1;
-		unsigned storage_flag : 2; //0: closed, 1: Normal Storage open, 2: guild storage open [Skotlex]
-		unsigned snovice_dead_flag : 1; //Explosion spirits on death: 0 off, 1 used.
-		unsigned abra_flag : 1; // Abracadabra bugfix by Aru
-		unsigned autocast : 1; // Autospell flag [Inkfish]
-		unsigned autotrade : 1;	//By Fantik
-		unsigned reg_dirty : 3; //By Skotlex (marks whether registry variables have been saved or not yet)
-		unsigned showdelay :1;
-		unsigned showexp :1;
-		unsigned showzeny :1;
-		unsigned mainchat :1; //[LuzZza]
-		unsigned noask :1; // [LuzZza]
-		unsigned trading :1; //[Skotlex] is 1 only after a trade has started.
-		unsigned deal_locked :2; //1: Clicked on OK. 2: Clicked on TRADE
-		unsigned monster_ignore :1; // for monsters to ignore a character [Valaris] [zzo]
-		unsigned size :2; // for tiny/large types
-		unsigned night :1; //Holds whether or not the player currently has the SI_NIGHT effect on. [Skotlex]
-		unsigned blockedmove :1;
-		unsigned using_fake_npc :1;
-		unsigned rewarp :1; //Signals that a player should warp as soon as he is done loading a map. [Skotlex]
-		unsigned killer : 1;
-		unsigned killable : 1;
-		unsigned doridori : 1;
-		unsigned ignoreAll : 1;
-		unsigned debug_remove_map : 1; // temporary state to track double remove_map's [FlavioJS]
-		unsigned buyingstore : 1;
-		unsigned lesseffect : 1;
-		unsigned vending : 1;
+		unsigned int active : 1; //Marks active player (not active is logging in/out, or changing map servers)
+		unsigned int menu_or_input : 1;// if a script is waiting for feedback from the player
+		unsigned int dead_sit : 2;
+		unsigned int lr_flag : 2;
+		unsigned int connect_new : 1;
+		unsigned int arrow_atk : 1;
+		unsigned int combo : 2; // 1:Asura, 2:Kick [Inkfish]
+		unsigned int gangsterparadise : 1;
+		unsigned int rest : 1;
+		unsigned int storage_flag : 2; //0: closed, 1: Normal Storage open, 2: guild storage open [Skotlex]
+		unsigned int snovice_dead_flag : 1; //Explosion spirits on death: 0 off, 1 used.
+		unsigned int abra_flag : 1; // Abracadabra bugfix by Aru
+		unsigned int autocast : 1; // Autospell flag [Inkfish]
+		unsigned int autotrade : 1;	//By Fantik
+		unsigned int reg_dirty : 3; //By Skotlex (marks whether registry variables have been saved or not yet)
+		unsigned int showdelay :1;
+		unsigned int showexp :1;
+		unsigned int showzeny :1;
+		unsigned int mainchat :1; //[LuzZza]
+		unsigned int noask :1; // [LuzZza]
+		unsigned int trading :1; //[Skotlex] is 1 only after a trade has started.
+		unsigned int deal_locked :2; //1: Clicked on OK. 2: Clicked on TRADE
+		unsigned int monster_ignore :1; // for monsters to ignore a character [Valaris] [zzo]
+		unsigned int size :2; // for tiny/large types
+		unsigned int night :1; //Holds whether or not the player currently has the SI_NIGHT effect on. [Skotlex]
+		unsigned int blockedmove :1;
+		unsigned int using_fake_npc :1;
+		unsigned int rewarp :1; //Signals that a player should warp as soon as he is done loading a map. [Skotlex]
+		unsigned int killer : 1;
+		unsigned int killable : 1;
+		unsigned int doridori : 1;
+		unsigned int ignoreAll : 1;
+		unsigned int debug_remove_map : 1; // temporary state to track double remove_map's [FlavioJS]
+		unsigned int buyingstore : 1;
+		unsigned int lesseffect : 1;
+		unsigned int vending : 1;
+		unsigned int noks : 3; // [Zeph Kill Steal Protection]
+		unsigned int changemap : 1;
+		short pmap; // Previous map on Map Change
 		unsigned short autoloot;
 		unsigned short autolootid; // [Zephyrus]
-		unsigned noks : 3; // [Zeph Kill Steal Protection]
-		bool changemap;
-		short pmap; // Previous map on Map Change
-		struct guild *gmaster_flag;
-		unsigned int bg_id;
-		unsigned short user_font;
 		unsigned short autobonus; //flag to indicate if an autobonus is activated. [Inkfish]
+		struct guild *gmaster_flag;
 	} state;
 	struct {
 		unsigned char no_weapon_damage, no_magic_damage, no_misc_damage;
-		unsigned restart_full_recover : 1;
-		unsigned no_castcancel : 1;
-		unsigned no_castcancel2 : 1;
-		unsigned no_sizefix : 1;
-		unsigned no_gemstone : 1;
-		unsigned intravision : 1; // Maya Purple Card effect [DracoRPG]
-		unsigned perfect_hiding : 1; // [Valaris]
-		unsigned no_knockback : 1;
-		unsigned bonus_coma : 1;
+		unsigned int restart_full_recover : 1;
+		unsigned int no_castcancel : 1;
+		unsigned int no_castcancel2 : 1;
+		unsigned int no_sizefix : 1;
+		unsigned int no_gemstone : 1;
+		unsigned int intravision : 1; // Maya Purple Card effect [DracoRPG]
+		unsigned int perfect_hiding : 1; // [Valaris]
+		unsigned int no_knockback : 1;
+		unsigned int bonus_coma : 1;
 	} special_state;
 	int login_id1, login_id2;
 	unsigned short class_;	//This is the internal job ID used by the map server to simplify comparisons/queries/etc. [Skotlex]
@@ -380,7 +378,7 @@ struct map_session_data {
 	unsigned short pvp_rank, pvp_lastusers;
 	unsigned short pvp_won, pvp_lost;
 
-	char eventqueue[MAX_EVENTQUEUE][NAME_LENGTH*2+3];
+	char eventqueue[MAX_EVENTQUEUE][EVENT_NAME_LENGTH];
 	int eventtimer[MAX_EVENTTIMER];
 	unsigned short eventcount; // [celest]
 
@@ -420,6 +418,13 @@ struct map_session_data {
 	const char* debug_file;
 	int debug_line;
 	const char* debug_func;
+
+	unsigned int bg_id;
+	unsigned short user_font;
+
+	// temporary debugging of bug #3504
+	const char* delunit_prevfile;
+	int delunit_prevline;
 };
 
 //Update this max as necessary. 55 is the value needed for Super Baby currently
@@ -493,6 +498,13 @@ enum equip_pos {
 #define EQP_HELM (EQP_HEAD_LOW|EQP_HEAD_MID|EQP_HEAD_TOP)
 #define EQP_ACC (EQP_ACC_L|EQP_ACC_R)
 
+/// Equip positions that use a visible sprite
+#if PACKETVER < 20110111
+	#define EQP_VISIBLE EQP_HELM
+#else
+	#define EQP_VISIBLE (EQP_HELM|EQP_GARMENT)
+#endif
+
 //Equip indexes constants. (eg: sd->equip_index[EQI_AMMO] returns the index
 //where the arrows are equipped)
 enum equip_index {
@@ -509,16 +521,6 @@ enum equip_index {
 	EQI_AMMO,
 	EQI_MAX
 };
-
-struct duel {
-	int members_count;
-	int invites_count;
-	int max_players_limit;
-};
-
-#define MAX_DUEL 1024
-extern struct duel duel_list[MAX_DUEL];
-extern int duel_count;
 
 #define pc_setdead(sd)        ( (sd)->state.dead_sit = (sd)->vd.dead_sit = 1 )
 #define pc_setsit(sd)         ( (sd)->state.dead_sit = (sd)->vd.dead_sit = 2 )
@@ -731,7 +733,7 @@ int pc_candrop(struct map_session_data *sd,struct item *item);
 int pc_jobid2mapid(unsigned short b_class);	// Skotlex
 int pc_mapid2jobid(unsigned short class_, int sex);	// Skotlex
 
-char * job_name(int class_);
+const char * job_name(int class_);
 
 struct skill_tree_entry {
 	short id;
@@ -783,15 +785,6 @@ int map_night_timer(int tid, unsigned int tick, int id, intptr data); // by [yor
 void pc_inventory_rentals(struct map_session_data *sd);
 int pc_inventory_rental_clear(struct map_session_data *sd);
 void pc_inventory_rental_add(struct map_session_data *sd, int seconds);
-
-//Duel functions // [LuzZza]
-int duel_create(struct map_session_data* sd, const unsigned int maxpl);
-int duel_invite(const unsigned int did, struct map_session_data* sd, struct map_session_data* target_sd);
-int duel_accept(const unsigned int did, struct map_session_data* sd);
-int duel_reject(const unsigned int did, struct map_session_data* sd);
-int duel_leave(const unsigned int did, struct map_session_data* sd);
-int duel_showinfo(const unsigned int did, struct map_session_data* sd);
-int duel_checktime(struct map_session_data* sd);
 
 int pc_read_motd(void); // [Valaris]
 int pc_disguise(struct map_session_data *sd, int class_);

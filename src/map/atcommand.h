@@ -41,7 +41,7 @@ int atcommand_killmonster(const int fd, struct map_session_data* sd, const char*
 
 #define MAX_MSG 1000
 extern char* msg_table[MAX_MSG];
-char* msg_txt(int msg_number);
+const char* msg_txt(int msg_number);
 int msg_config_read(const char* cfgName);
 void do_final_msg(void);
 

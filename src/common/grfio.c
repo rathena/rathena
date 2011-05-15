@@ -7,7 +7,6 @@
 #include <sys/stat.h>
 
 #include "grfio.h"
-#include <zlib.h>
 
 #include "../common/cbasetypes.h"
 #include "../common/showmsg.h"
@@ -215,70 +214,6 @@ static void decode_des_etc(unsigned char* buf, size_t len, int type, int cycle)
 			cnt++;
 		}
 	}
-}
-/*==========================================
- *	Grf data decode sub : zip
- *------------------------------------------*/
-int decode_zip(unsigned char* dest, unsigned long* destLen, const unsigned char* source, unsigned long sourceLen)
-{
-	z_stream stream;
-	int err;
-
-	stream.next_in = (Bytef*)source;
-	stream.avail_in = (uInt)sourceLen;
-	/* Check for source > 64K on 16-bit machine: */
-	if ((uLong)stream.avail_in != sourceLen) return Z_BUF_ERROR;
-
-	stream.next_out = (Bytef*) dest;
-	stream.avail_out = (uInt)*destLen;
-	if ((uLong)stream.avail_out != *destLen) return Z_BUF_ERROR;
-
-	stream.zalloc = (alloc_func)0;
-	stream.zfree = (free_func)0;
-
-	err = inflateInit(&stream);
-	if (err != Z_OK) return err;
-
-	err = inflate(&stream, Z_FINISH);
-	if (err != Z_STREAM_END) {
-		inflateEnd(&stream);
-		return err == Z_OK ? Z_BUF_ERROR : err;
-	}
-	*destLen = stream.total_out;
-
-	err = inflateEnd(&stream);
-	return err;
-}
-
-int encode_zip(unsigned char* dest, unsigned long* destLen, const unsigned char* source, unsigned long sourceLen)
-{
-	z_stream stream;
-	int err;
-	memset(&stream, 0, sizeof(stream));
-	stream.next_in = (Bytef*)source;
-	stream.avail_in = (uInt)sourceLen;
-	/* Check for source > 64K on 16-bit machine: */
-	if ((uLong)stream.avail_in != sourceLen) return Z_BUF_ERROR;
-
-	stream.next_out = (Bytef*) dest;
-	stream.avail_out = (uInt)*destLen;
-	if ((uLong)stream.avail_out != *destLen) return Z_BUF_ERROR;
-
-	stream.zalloc = (alloc_func)0;
-	stream.zfree = (free_func)0;
-
-	err = deflateInit(&stream,Z_DEFAULT_COMPRESSION);
-	if (err != Z_OK) return err;
-
-	err = deflate(&stream, Z_FINISH);
-	if (err != Z_STREAM_END) {
-		deflateEnd(&stream);
-		return err == Z_OK ? Z_BUF_ERROR : err;
-	}
-	*destLen = stream.total_out;
-
-	err = deflateEnd(&stream);
-	return err;
 }
 
 unsigned long grfio_crc32 (const unsigned char* buf, unsigned int len)
@@ -496,9 +431,9 @@ void* grfio_reads(char* fname, int* size)
 				if (entry->cycle >= 0)
 					decode_des_etc(buf, entry->srclen_aligned, entry->cycle == 0, entry->cycle);
 				len = entry->declen;
-				decode_zip(buf2, &len, buf, entry->srclen);
+				uncompress(buf2, &len, buf, entry->srclen);
 				if (len != (uLong)entry->declen) {
-					ShowError("decode_zip size mismatch err: %d != %d\n", (int)len, entry->declen);
+					ShowError("uncompress size mismatch err: %d != %d\n", (int)len, entry->declen);
 					aFree(buf);
 					aFree(buf2);
 					return NULL;
@@ -645,7 +580,7 @@ static int grfio_entryread(char* grfname, int gentry)
 		grf_filelist = (unsigned char *)aMallocA(eSize);	// Get a Extend Size
 		fread(rBuf,1,rSize,fp);
 		fclose(fp);
-		decode_zip(grf_filelist, &eSize, rBuf, rSize);	// Decode function
+		uncompress(grf_filelist, &eSize, rBuf, rSize);	// Decode function
 		list_size = eSize;
 		aFree(rBuf);
 

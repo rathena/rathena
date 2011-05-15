@@ -203,6 +203,8 @@ enum {
 #define CHATROOM_PASS_SIZE (8 + 1)
 //Max allowed chat text length
 #define CHAT_SIZE_MAX (255 + 1)
+//24 for npc name + 24 for label + 2 for a "::" and 1 for EOS
+#define EVENT_NAME_LENGTH ( NAME_LENGTH * 2 + 3 )
 
 #define DEFAULT_AUTOSAVE_INTERVAL 5*60*1000
 
@@ -301,18 +303,18 @@ struct block_list {
 // Expanded to specify all mob-related spawn data by [Skotlex]
 struct spawn_data {
 	short class_; //Class, used because a mob can change it's class
-	unsigned boss : 1;
 	unsigned short m,x,y;	//Spawn information (map, point, spawn-area around point)
 	signed short xs,ys;
 	unsigned short num; //Number of mobs using this structure
 	unsigned short active; //Number of mobs that are already spawned (for mob_remove_damaged: no)
 	unsigned int delay1,delay2; //Min delay before respawning after spawn/death
 	struct {
-		unsigned size :2; //Holds if mob has to be tiny/large
-		unsigned ai :2;	//Holds if mob is special ai.
-		unsigned dynamic :1; //Whether this data is indexed by a map's dynamic mob list
+		unsigned int size :2; //Holds if mob has to be tiny/large
+		unsigned int ai :2;	//Holds if mob is special ai.
+		unsigned int dynamic :1; //Whether this data is indexed by a map's dynamic mob list
+		unsigned int boss : 1;
 	} state;
-	char name[NAME_LENGTH],eventname[50]; //Name/event
+	char name[NAME_LENGTH],eventname[EVENT_NAME_LENGTH]; //Name/event
 };
 
 
@@ -398,7 +400,10 @@ enum _look {
 	LOOK_HAIR_COLOR,
 	LOOK_CLOTHES_COLOR,
 	LOOK_SHIELD,
-	LOOK_SHOES
+	LOOK_SHOES,
+	LOOK_BODY,
+	LOOK_FLOOR,
+	LOOK_ROBE,
 };
 
 // used by map_setcell()
@@ -625,6 +630,9 @@ struct map_session_data* map_charid2sd(int charid);
 struct map_session_data * map_id2sd(int id);
 struct mob_data * map_id2md(int id);
 struct npc_data * map_id2nd(int id);
+struct homun_data* map_id2hd(int id);
+struct mercenary_data* map_id2mc(int id);
+struct chat_data* map_id2cd(int id);
 struct block_list * map_id2bl(int id);
 
 #define map_id2index(id) map[(id)].index

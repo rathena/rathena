@@ -577,9 +577,17 @@ static void disp_error_message2(const char *mes,const char *pos,int report)
 /// Checks event parameter validity
 static void check_event(struct script_state *st, const char *evt)
 {
-	if( evt != NULL && *evt != '\0' && !stristr(evt,"::On") ){
-		ShowError("NPC event parameter deprecated! Please use 'NPCNAME::OnEVENT' instead of '%s'.\n",evt);
-		script_reportsrc(st);
+	if( evt && evt[0] && !stristr(evt, "::On") )
+	{
+		if( npc_event_isspecial(evt) )
+		{
+			;  // portable small/large monsters or other attributes
+		}
+		else
+		{
+			ShowWarning("NPC event parameter deprecated! Please use 'NPCNAME::OnEVENT' instead of '%s'.\n", evt);
+			script_reportsrc(st);
+		}
 	}
 }
 
@@ -4780,7 +4788,7 @@ BUILDIN_FUNC(jobchange)
 BUILDIN_FUNC(jobname)
 {
 	int class_=script_getnum(st,2);
-	script_pushconststr(st,job_name(class_));
+	script_pushconststr(st, (char*)job_name(class_));
 	return 0;
 }
 
@@ -6316,7 +6324,7 @@ BUILDIN_FUNC(getcharid)
 	case 1: script_pushint(st,sd->status.party_id); break;
 	case 2: script_pushint(st,sd->status.guild_id); break;
 	case 3: script_pushint(st,sd->status.account_id); break;
-	case 4: script_pushint(st,sd->state.bg_id); break;
+	case 4: script_pushint(st,sd->bg_id); break;
 	default:
 		ShowError("buildin_getcharid: invalid parameter (%d).\n", num);
 		script_pushint(st,0);
@@ -8179,8 +8187,8 @@ BUILDIN_FUNC(cmdothernpc)	// Added by RoVeRT
 {
 	const char* npc = script_getstr(st,2);
 	const char* command = script_getstr(st,3);
-	char event[51];
-	snprintf(event, 51, "%s::OnCommand%s", npc, command);
+	char event[EVENT_NAME_LENGTH];
+	snprintf(event, sizeof(event), "%s::OnCommand%s", npc, command);
 	check_event(st, event);
 	npc_event_do(event);
 	return 0;
@@ -12737,6 +12745,13 @@ BUILDIN_FUNC(query_sql)
 BUILDIN_FUNC(query_logsql)
 {
 #ifndef TXT_ONLY
+	if( !log_config.sql_logs )
+	{// logmysql_handle == NULL
+		ShowWarning("buildin_query_logsql: SQL logs are disabled, query '%s' will not be executed.\n", script_getstr(st,2));
+		script_pushint(st,-1);
+		return 1;
+	}
+
 	return buildin_query_sql_sub(st, logmysql_handle);
 #else
 	//for TXT version, we always return -1
@@ -14239,7 +14254,7 @@ BUILDIN_FUNC(bg_monster_set_team)
 	if( (mbl = map_id2bl(id)) == NULL || mbl->type != BL_MOB )
 		return 0;
 	md = (TBL_MOB *)mbl;
-	md->state.bg_id = bg_id;
+	md->bg_id = bg_id;
 
 	mob_stop_attack(md);
 	mob_stop_walking(md, 0);
@@ -14252,7 +14267,7 @@ BUILDIN_FUNC(bg_monster_set_team)
 BUILDIN_FUNC(bg_leave)
 {
 	struct map_session_data *sd = script_rid2sd(st);
-	if( sd == NULL || !sd->state.bg_id )
+	if( sd == NULL || !sd->bg_id )
 		return 0;
 	
 	bg_team_leave(sd,0);
@@ -14360,11 +14375,11 @@ BUILDIN_FUNC(instance_create)
 	}
 	else if( res < 0 )
 	{
-		char *err;
+		const char *err;
 		switch(res)
 		{
 		case -3: err = "No free instances"; break;
-		case -2: err = "Missing parameter"; break;
+		case -2: err = "Invalid party ID"; break;
 		case -1: err = "Invalid type"; break;
 		default: err = "Unknown"; break;
 		}
@@ -14658,10 +14673,10 @@ BUILDIN_FUNC(setfont)
 	if( sd == NULL )
 		return 0;
 
-	if( sd->state.user_font != font )
-		sd->state.user_font = font;
+	if( sd->user_font != font )
+		sd->user_font = font;
 	else
-		sd->state.user_font = 0;
+		sd->user_font = 0;
 	
 	clif_font(sd);
 	return 0;

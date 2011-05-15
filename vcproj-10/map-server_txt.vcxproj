@@ -132,6 +132,7 @@
     <ClCompile Include="..\src\map\chrif.c" />
     <ClCompile Include="..\src\map\clif.c" />
     <ClCompile Include="..\src\map\date.c" />
+    <ClCompile Include="..\src\map\duel.c" />
     <ClCompile Include="..\src\map\guild.c" />
     <ClCompile Include="..\src\map\homunculus.c" />
     <ClCompile Include="..\src\map\instance.c" />
@@ -183,6 +184,7 @@
     <ClInclude Include="..\src\map\chrif.h" />
     <ClInclude Include="..\src\map\clif.h" />
     <ClInclude Include="..\src\map\date.h" />
+    <ClInclude Include="..\src\map\duel.h" />
     <ClInclude Include="..\src\map\guild.h" />
     <ClInclude Include="..\src\map\homunculus.h" />
     <ClInclude Include="..\src\map\instance.h" />

@@ -17,6 +17,7 @@
 #include "chat.h"
 #include "clif.h"
 #include "chrif.h"
+#include "duel.h"
 #include "intif.h"
 #include "itemdb.h"
 #include "log.h"
@@ -88,7 +89,7 @@ int lowtohigh_compare (const void * a, const void * b)
 //-----------------------------------------------------------
 // Return the message string of the specified number by [Yor]
 //-----------------------------------------------------------
-char* msg_txt(int msg_number)
+const char* msg_txt(int msg_number)
 {
 	if (msg_number >= 0 && msg_number < MAX_MSG &&
 	    msg_table[msg_number] != NULL && msg_table[msg_number][0] != '\0')
@@ -5837,7 +5838,7 @@ ACMD_FUNC(skilltree)
 	struct map_session_data *pl_sd = NULL;
 	int skillnum;
 	int meets, j, c=0;
-	char target[NAME_LENGTH], *tbl;
+	char target[NAME_LENGTH];
 	struct skill_tree_entry *ent;
 	nullpo_retr(-1, sd);
 
@@ -5855,9 +5856,7 @@ ACMD_FUNC(skilltree)
 	c = pc_calc_skilltree_normalize_job(pl_sd);
 	c = pc_mapid2jobid(c, pl_sd->status.sex);
 
-	tbl = job_name(c);
-
-	sprintf(atcmd_output, "Player is using %s skill tree (%d basic points)", tbl, pc_checkskill(pl_sd, 1));
+	sprintf(atcmd_output, "Player is using %s skill tree (%d basic points)", job_name(c), pc_checkskill(pl_sd, 1));
 	clif_displaymessage(fd, atcmd_output);
 
 	ARR_FIND( 0, MAX_SKILL_TREE, j, skill_tree[c][j].id == 0 || skill_tree[c][j].id == skillnum );
@@ -7250,7 +7249,7 @@ ACMD_FUNC(makehomun)
 	int homunid;
 	nullpo_retr(-1, sd);
 
-	if ( merc_is_hom_active(sd->hd) ) {
+	if ( sd->status.hom_id ) {
 		clif_displaymessage(fd, msg_txt(450));
 		return -1;
 	}
@@ -8652,9 +8651,9 @@ ACMD_FUNC(font)
 	font_id = atoi(message);
 	if( font_id == 0 )
 	{
-		if( sd->state.user_font )
+		if( sd->user_font )
 		{
-			sd->state.user_font = 0;
+			sd->user_font = 0;
 			clif_displaymessage(fd, "Returning to normal font.");
 			clif_font(sd);
 		}
@@ -8666,9 +8665,9 @@ ACMD_FUNC(font)
 	}
 	else if( font_id < 0 || font_id > 9 )
 		clif_displaymessage(fd, "Invalid font. Use a Value from 0 to 9.");
-	else if( font_id != sd->state.user_font )
+	else if( font_id != sd->user_font )
 	{
-		sd->state.user_font = font_id;
+		sd->user_font = font_id;
 		clif_font(sd);
 		clif_displaymessage(fd, "Font changed.");
 	}

@@ -1,5 +1,8 @@
 Date	Added
 
+2011/05/13
+	* Rev. 14812 Added settings 'cashshop_show_points' and 'mail_show_status', both disabled by default, as the messages they control are custom (follow up to r11548 and r12264). [Ai4rei]
+	- Moved custom cash point update messages to 'msg_athena.conf' (IDs 504~506).
 2011/03/15
 	* Rev. 14744 Fixed option 'monster_ai' referring to setting 'mob_npc_warp' rather than 'mob_warp' (follow up to r8135). [Ai4rei]
 2011/03/06

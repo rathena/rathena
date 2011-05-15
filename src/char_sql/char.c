@@ -474,7 +474,7 @@ int mmo_char_tosql(int char_id, struct mmo_charstatus* p)
 		(p->pet_id != cp->pet_id) || (p->weapon != cp->weapon) || (p->hom_id != cp->hom_id) ||
 		(p->shield != cp->shield) || (p->head_top != cp->head_top) ||
 		(p->head_mid != cp->head_mid) || (p->head_bottom != cp->head_bottom) || (p->delete_date != cp->delete_date) ||
-		(p->rename != cp->rename)
+		(p->rename != cp->rename) || (p->robe != cp->robe)
 	)
 	{	//Save status
 		if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `base_level`='%d', `job_level`='%d',"
@@ -484,7 +484,7 @@ int mmo_char_tosql(int char_id, struct mmo_charstatus* p)
 			"`option`='%d',`party_id`='%d',`guild_id`='%d',`pet_id`='%d',`homun_id`='%d',"
 			"`weapon`='%d',`shield`='%d',`head_top`='%d',`head_mid`='%d',`head_bottom`='%d',"
 			"`last_map`='%s',`last_x`='%d',`last_y`='%d',`save_map`='%s',`save_x`='%d',`save_y`='%d', `rename`='%d',"
-			"`delete_date`='%lu'"
+			"`delete_date`='%lu',`robe`='%d'"
 			" WHERE  `account_id`='%d' AND `char_id` = '%d'",
 			char_db, p->base_level, p->job_level,
 			p->base_exp, p->job_exp, p->zeny,
@@ -495,6 +495,7 @@ int mmo_char_tosql(int char_id, struct mmo_charstatus* p)
 			mapindex_id2name(p->last_point.map), p->last_point.x, p->last_point.y,
 			mapindex_id2name(p->save_point.map), p->save_point.x, p->save_point.y, p->rename,
 			(unsigned long)p->delete_date,  // FIXME: platform-dependent size
+			p->robe,
 			p->account_id, p->char_id) )
 		{
 			Sql_ShowDebug(sql_handle);
@@ -844,7 +845,8 @@ int mmo_chars_fromsql(struct char_session_data* sd, uint8* buf)
 		"`char_id`,`char_num`,`name`,`class`,`base_level`,`job_level`,`base_exp`,`job_exp`,`zeny`,"
 		"`str`,`agi`,`vit`,`int`,`dex`,`luk`,`max_hp`,`hp`,`max_sp`,`sp`,"
 		"`status_point`,`skill_point`,`option`,`karma`,`manner`,`hair`,`hair_color`,"
-		"`clothes_color`,`weapon`,`shield`,`head_top`,`head_mid`,`head_bottom`,`last_map`,`rename`,`delete_date`"
+		"`clothes_color`,`weapon`,`shield`,`head_top`,`head_mid`,`head_bottom`,`last_map`,`rename`,`delete_date`,"
+		"`robe`"
 		" FROM `%s` WHERE `account_id`='%d' AND `char_num` < '%d'", char_db, sd->account_id, MAX_CHARS)
 	||	SQL_ERROR == SqlStmt_Execute(stmt)
 	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 0,  SQLDT_INT,    &p.char_id, 0, NULL, NULL)
@@ -882,6 +884,7 @@ int mmo_chars_fromsql(struct char_session_data* sd, uint8* buf)
 	||  SQL_ERROR == SqlStmt_BindColumn(stmt, 32, SQLDT_STRING, &last_map, sizeof(last_map), NULL, NULL)
 	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 33, SQLDT_SHORT,	&p.rename, 0, NULL, NULL)
 	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 34, SQLDT_UINT32, &p.delete_date, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 35, SQLDT_SHORT,  &p.robe, 0, NULL, NULL)
 	)
 	{
 		SqlStmt_ShowDebug(stmt);
@@ -940,7 +943,7 @@ int mmo_char_fromsql(int char_id, struct mmo_charstatus* p, bool load_everything
 		"`str`,`agi`,`vit`,`int`,`dex`,`luk`,`max_hp`,`hp`,`max_sp`,`sp`,"
 		"`status_point`,`skill_point`,`option`,`karma`,`manner`,`party_id`,`guild_id`,`pet_id`,`homun_id`,`hair`,"
 		"`hair_color`,`clothes_color`,`weapon`,`shield`,`head_top`,`head_mid`,`head_bottom`,`last_map`,`last_x`,`last_y`,"
-		"`save_map`,`save_x`,`save_y`,`partner_id`,`father`,`mother`,`child`,`fame`,`rename`,`delete_date`"
+		"`save_map`,`save_x`,`save_y`,`partner_id`,`father`,`mother`,`child`,`fame`,`rename`,`delete_date`,`robe`"
 		" FROM `%s` WHERE `char_id`=? LIMIT 1", char_db)
 	||	SQL_ERROR == SqlStmt_BindParam(stmt, 0, SQLDT_INT, &char_id, 0)
 	||	SQL_ERROR == SqlStmt_Execute(stmt)
@@ -994,6 +997,7 @@ int mmo_char_fromsql(int char_id, struct mmo_charstatus* p, bool load_everything
 	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 47, SQLDT_INT,    &p->fame, 0, NULL, NULL)
 	||  SQL_ERROR == SqlStmt_BindColumn(stmt, 48, SQLDT_SHORT,	&p->rename, 0, NULL, NULL)
 	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 49, SQLDT_UINT32, &p->delete_date, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 50, SQLDT_SHORT,  &p->robe, 0, NULL, NULL)
 	)
 	{
 		SqlStmt_ShowDebug(stmt);
@@ -1550,7 +1554,7 @@ int count_users(void)
 // Writes char data to the buffer in the format used by the client.
 // Used in packets 0x6b (chars info) and 0x6d (new char info)
 // Returns the size
-#define MAX_CHAR_BUF 132 //Max size (for WFIFOHEAD calls)
+#define MAX_CHAR_BUF 136 //Max size (for WFIFOHEAD calls)
 int mmo_char_tobuf(uint8* buffer, struct mmo_charstatus* p)
 {
 	unsigned short offset = 0;
@@ -1612,6 +1616,10 @@ int mmo_char_tobuf(uint8* buffer, struct mmo_charstatus* p)
 #endif
 #if PACKETVER >= 20100803
 	WBUFL(buf,124) = TOL(p->delete_date);
+	offset += 4;
+#endif
+#if PACKETVER >= 20110111
+	WBUFL(buf,128) = p->robe;
 	offset += 4;
 #endif
 	return 106+offset;
@@ -1736,6 +1744,7 @@ static void char_auth_ok(int fd, struct char_session_data *sd)
 			mapif_disconnectplayer(server[character->server].fd, character->account_id, character->char_id, 2);
 			if (character->waiting_disconnect == INVALID_TIMER)
 				character->waiting_disconnect = add_timer(gettick()+20000, chardb_waiting_disconnect, character->account_id, 0);
+			WFIFOHEAD(fd,3);
 			WFIFOW(fd,0) = 0x81;
 			WFIFOB(fd,2) = 8;
 			WFIFOSET(fd,3);
@@ -1743,6 +1752,7 @@ static void char_auth_ok(int fd, struct char_session_data *sd)
 		}
 		if (character->fd >= 0 && character->fd != fd)
 		{	//There's already a connection from this account that hasn't picked a char yet.
+			WFIFOHEAD(fd,3);
 			WFIFOW(fd,0) = 0x81;
 			WFIFOB(fd,2) = 8;
 			WFIFOSET(fd,3);
@@ -1877,6 +1887,7 @@ int parse_fromlogin(int fd)
 				if( max_connect_user && count_users() >= max_connect_user && sd->gmlevel < gm_allow_level )
 				{
 					// refuse connection (over populated)
+					WFIFOHEAD(i,3);
 					WFIFOW(i,0) = 0x6c;
 					WFIFOW(i,2) = 0;
 					WFIFOSET(i,3);
@@ -3522,6 +3533,7 @@ int parse_char(int fd)
 				//can't delete the char
 				//either SQL error or can't delete by some CONFIG conditions
 				//del fail
+				WFIFOHEAD(fd,3);
 				WFIFOW(fd, 0) = 0x70;
 				WFIFOB(fd, 2) = 0;
 				WFIFOSET(fd, 3);

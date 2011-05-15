@@ -525,7 +525,7 @@ int mmo_char_tostr(char *str, struct mmo_charstatus *p, struct global_reg *reg, 
 		"%d\t%d,%d\t%s\t%d,%d,%d\t%u,%u,%d" //Up to Zeny field
 		"\t%d,%d,%d,%d\t%d,%d,%d,%d,%d,%d\t%d,%d" //Up to Skill Point
 		"\t%d,%d,%d\t%d,%d,%d,%d" //Up to hom id
-		"\t%d,%d,%d\t%d,%d,%d,%d,%d" //Up to head bottom
+		"\t%d,%d,%d\t%d,%d,%d,%d,%d,%d" //Up to robe
 		"\t%d,%d,%d\t%d,%d,%d" //last point + save point
 		",%d,%d,%d,%d,%d,%lu\t",	//Family info + delete date
 		p->char_id, p->account_id, p->slot, p->name, //
@@ -537,7 +537,7 @@ int mmo_char_tostr(char *str, struct mmo_charstatus *p, struct global_reg *reg, 
 		p->option, p->karma, p->manner,	//
 		p->party_id, p->guild_id, p->pet_id, p->hom_id,
 		p->hair, p->hair_color, p->clothes_color,
-		p->weapon, p->shield, p->head_top, p->head_mid, p->head_bottom,
+		p->weapon, p->shield, p->head_top, p->head_mid, p->head_bottom, p->robe,
 		p->last_point.map, p->last_point.x, p->last_point.y, //
 		p->save_point.map, p->save_point.x, p->save_point.y,
 		p->partner_id,p->father,p->mother,p->child,p->fame, //
@@ -599,7 +599,26 @@ int mmo_char_fromstr(char *str, struct mmo_charstatus *p, struct global_reg *reg
 	// initilialise character
 	memset(p, '\0', sizeof(struct mmo_charstatus));
 	
-// Char structure of version 146xx (delete date)
+// Char structure of version 14797 (robe)
+	if (sscanf(str, "%d\t%d,%d\t%127[^\t]\t%d,%d,%d\t%u,%u,%d\t%d,%d,%d,%d\t%d,%d,%d,%d,%d,%d\t%d,%d"
+		"\t%d,%d,%d\t%d,%d,%d,%d\t%d,%d,%d\t%d,%d,%d,%d,%d,%d"
+		"\t%d,%d,%d\t%d,%d,%d,%d,%d,%d,%d,%d,%lu%n",
+		&tmp_int[0], &tmp_int[1], &tmp_int[2], tmp_str[0],
+		&tmp_int[3], &tmp_int[4], &tmp_int[5],
+		&tmp_uint[0], &tmp_uint[1], &tmp_int[8],
+		&tmp_int[9], &tmp_int[10], &tmp_int[11], &tmp_int[12],
+		&tmp_int[13], &tmp_int[14], &tmp_int[15], &tmp_int[16], &tmp_int[17], &tmp_int[18],
+		&tmp_int[19], &tmp_int[20],
+		&tmp_int[21], &tmp_int[22], &tmp_int[23], //
+		&tmp_int[24], &tmp_int[25], &tmp_int[26], &tmp_int[44],
+		&tmp_int[27], &tmp_int[28], &tmp_int[29],
+		&tmp_int[30], &tmp_int[31], &tmp_int[32], &tmp_int[33], &tmp_int[34], &tmp_int[47],
+		&tmp_int[45], &tmp_int[35], &tmp_int[36],
+		&tmp_int[46], &tmp_int[37], &tmp_int[38], &tmp_int[39], 
+		&tmp_int[40], &tmp_int[41], &tmp_int[42], &tmp_int[43], &tmp_ulong[0], &next) != 50)
+	{
+	tmp_int[47] = 0; // robe
+// Char structure of version 14700 (delete date)
 	if (sscanf(str, "%d\t%d,%d\t%127[^\t]\t%d,%d,%d\t%u,%u,%d\t%d,%d,%d,%d\t%d,%d,%d,%d,%d,%d\t%d,%d"
 		"\t%d,%d,%d\t%d,%d,%d,%d\t%d,%d,%d\t%d,%d,%d,%d,%d"
 		"\t%d,%d,%d\t%d,%d,%d,%d,%d,%d,%d,%d,%lu%n",
@@ -742,7 +761,8 @@ int mmo_char_fromstr(char *str, struct mmo_charstatus *p, struct global_reg *reg
 		tmp_int[45] = mapindex_name2id(tmp_str[1]);
 		tmp_int[46] = mapindex_name2id(tmp_str[2]);
 	}	// Char structure of version 1500 (homun + mapindex maps)
-	}	// Char structure of version 146xx (delete date)
+	}	// Char structure of version 14700 (delete date)
+	}	// Char structure of version 14797 (robe)
 
 	safestrncpy(p->name, tmp_str[0], NAME_LENGTH); //Overflow protection [Skotlex]
 	p->char_id = tmp_int[0];
@@ -793,6 +813,7 @@ int mmo_char_fromstr(char *str, struct mmo_charstatus *p, struct global_reg *reg
 	p->last_point.map = tmp_int[45];
 	p->save_point.map = tmp_int[46];
 	p->delete_date = tmp_ulong[0];
+	p->robe = tmp_int[47];
 
 #ifndef TXT_SQL_CONVERT
 	// Some checks
@@ -1772,7 +1793,7 @@ int count_users(void)
 // Writes char data to the buffer in the format used by the client.
 // Used in packets 0x6b (chars info) and 0x6d (new char info)
 // Returns the size
-#define MAX_CHAR_BUF 132 //Max size (for WFIFOHEAD calls)
+#define MAX_CHAR_BUF 136 //Max size (for WFIFOHEAD calls)
 int mmo_char_tobuf(uint8* buffer, struct mmo_charstatus* p)
 {
 	unsigned short offset = 0;
@@ -1834,6 +1855,10 @@ int mmo_char_tobuf(uint8* buffer, struct mmo_charstatus* p)
 #endif
 #if PACKETVER >= 20100803
 	WBUFL(buf,124) = TOL(p->delete_date);
+	offset += 4;
+#endif
+#if PACKETVER >= 20110111
+	WBUFL(buf,128) = p->robe;
 	offset += 4;
 #endif
 	return 106+offset;
@@ -2001,6 +2026,7 @@ static void char_auth_ok(int fd, struct char_session_data *sd)
 			mapif_disconnectplayer(server[character->server].fd, character->account_id, character->char_id, 2);
 			if (character->waiting_disconnect == INVALID_TIMER)
 				character->waiting_disconnect = add_timer(gettick()+20000, chardb_waiting_disconnect, character->account_id, 0);
+			WFIFOHEAD(fd,3);
 			WFIFOW(fd,0) = 0x81;
 			WFIFOB(fd,2) = 8;
 			WFIFOSET(fd,3);
@@ -2008,6 +2034,7 @@ static void char_auth_ok(int fd, struct char_session_data *sd)
 		}
 		if (character->fd >= 0 && character->fd != fd)
 		{	//There's already a connection from this account that hasn't picked a char yet.
+			WFIFOHEAD(fd,3);
 			WFIFOW(fd,0) = 0x81;
 			WFIFOB(fd,2) = 8;
 			WFIFOSET(fd,3);
@@ -2142,6 +2169,7 @@ int parse_fromlogin(int fd)
 				if( max_connect_user && count_users() >= max_connect_user && sd->gmlevel < gm_allow_level )
 				{
 					// refuse connection (over populated)
+					WFIFOHEAD(i,3);
 					WFIFOW(i,0) = 0x6c;
 					WFIFOW(i,2) = 0;
 					WFIFOSET(i,3);
@@ -2676,6 +2704,7 @@ int parse_frommap(int fd)
 			data = status_search_scdata(aid, cid);
 			if (data->count > 0)
 			{	//Deliver status change data.
+				WFIFOHEAD(fd,14 + data->count*sizeof(struct status_change_data));
 				WFIFOW(fd,0) = 0x2b1d;
 				WFIFOW(fd,2) = 14 + data->count*sizeof(struct status_change_data);
 				WFIFOL(fd,4) = aid;

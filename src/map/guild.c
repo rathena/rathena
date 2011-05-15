@@ -36,7 +36,7 @@ static DBMap* guild_infoevent_db; // int guild_id -> struct eventlist*
 static DBMap* guild_castleinfoevent_db; // int castle_id_index -> struct eventlist*
 
 struct eventlist {
-	char name[50];
+	char name[EVENT_NAME_LENGTH];
 	struct eventlist *next;
 };
 
@@ -325,7 +325,7 @@ int guild_send_xy_timer_sub(DBKey key,void *data,va_list ap)
 	for(i=0;i<g->max_member;i++){
 		//struct map_session_data* sd = g->member[i].sd;
 		struct map_session_data* sd = map_charid2sd(g->member[i].char_id); // temporary crashfix
-		if( sd != NULL && (sd->guild_x != sd->bl.x || sd->guild_y != sd->bl.y) && !sd->state.bg_id )
+		if( sd != NULL && (sd->guild_x != sd->bl.x || sd->guild_y != sd->bl.y) && !sd->bg_id )
 		{
 			clif_guild_xy(sd);
 			sd->guild_x = sd->bl.x;
@@ -1545,7 +1545,7 @@ int guild_broken(int guild_id,int flag)
 	struct guild_castle *gc=NULL;
 	struct map_session_data *sd;
 	int i;
-	char name[50];
+	char name[EVENT_NAME_LENGTH];
 
 	if(flag!=0 || g==NULL)
 		return 0;
@@ -1604,7 +1604,7 @@ int guild_gm_changed(int guild_id, int account_id, int char_id)
 {
 	struct guild *g;
 	struct guild_member gm;
-	int pos;
+	int pos, i;
 
 	g=guild_search(guild_id);
 
@@ -1638,7 +1638,18 @@ int guild_gm_changed(int guild_id, int account_id, int char_id)
 		g->member[0].sd->state.gmaster_flag = g;
 		//Block his skills for 5 minutes to prevent abuse.
 		guild_block_skill(g->member[0].sd, 300000);
-	}	
+	}
+
+	// announce the change to all guild members
+	for( i = 0; i < g->max_member; i++ )
+	{
+		if( g->member[i].sd && g->member[i].sd->fd )
+		{
+			clif_guild_basicinfo(g->member[i].sd);
+			clif_guild_memberlist(g->member[i].sd);
+		}
+	}
+
 	return 1;
 }
 

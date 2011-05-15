@@ -9,6 +9,8 @@
 	13005 Angelic Wing Dagger:	NEED INFO.
 =======================
 
+2011/04/16
+	* Rev. 14797 Added Archangel Wings (2573) and their respective Box (16998) item based on client-side kRO description. [Ai4rei]
 2011/03/19
 	* Rev. 14748 Fixed Beast Strafing (HT_POWER) SP requirement as provided by Playtester (bugreport:4675). [Gepard]
 2011/03/06

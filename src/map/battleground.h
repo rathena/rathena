@@ -22,8 +22,8 @@ struct battleground_data {
 	// BG Cementery
 	unsigned short mapindex, x, y;
 	// Logout Event
-	char logout_event[50];
-	char die_event[50];
+	char logout_event[EVENT_NAME_LENGTH];
+	char die_event[EVENT_NAME_LENGTH];
 };
 
 void do_init_battleground(void);

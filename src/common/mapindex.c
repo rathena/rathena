@@ -128,18 +128,8 @@ unsigned short mapindex_name2id(const char* name)
 		if (strcmp(indexes[i].name,map_name)==0)
 			return i;
 	}
-#ifdef MAPINDEX_AUTOADD
-	if( mapindex_addmap(i,map_name) )
-	{
-		ShowDebug("mapindex_name2id: Auto-added map \"%s\" to position %d\n", map_name, i);
-		return i;
-	}
-	ShowWarning("mapindex_name2id: Failed to auto-add map \"%s\" to position %d!\n", map_name, i);
-	return 0;
-#else
 	ShowDebug("mapindex_name2id: Map \"%s\" not found in index list!\n", map_name);
 	return 0;
-#endif
 }
 
 const char* mapindex_id2name(unsigned short id)
