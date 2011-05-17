@@ -1,6 +1,7 @@
 Date	Added
 
 2011/05/17
+	* Fixed Super Novices could not be adopted (bugreport:4907, since r12389). [Ai4rei]
 	* Improved error reporting during monster database and spawn data reading. [Ai4rei]
 2011/05/15
 	* Extracted calculations of the number of status points PC gets when leveling up to a function. [Gepard]

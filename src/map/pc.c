@@ -695,7 +695,7 @@ bool pc_can_Adopt(struct map_session_data *p1_sd, struct map_session_data *p2_sd
 		return false;
 	}
 
-	if( !(b_sd->status.class_ >= JOB_NOVICE && b_sd->status.class_ <= JOB_THIEF) )
+	if( !( ( b_sd->status.class_ >= JOB_NOVICE && b_sd->status.class_ <= JOB_THIEF ) || b_sd->status.class_ == JOB_SUPER_NOVICE ) )
 		return false;
 
 	return true;
