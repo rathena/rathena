@@ -3407,7 +3407,7 @@ static unsigned int mob_drop_adjust(int baserate, int rate_adjust, unsigned shor
  *------------------------------------------*/
 static bool mob_parse_dbrow(char** str)
 {
-	struct mob_db *db;
+	struct mob_db *db, entry;
 	struct status_data *status;
 	int class_, i, k;
 	double exp, maxhp;
@@ -3416,29 +3416,28 @@ static bool mob_parse_dbrow(char** str)
 	class_ = atoi(str[0]);
 	
 	if (class_ <= 1000 || class_ > MAX_MOB_DB) {
-		ShowWarning("Mob with ID: %d not loaded. ID must be in range [%d-%d]\n", class_, 1000, MAX_MOB_DB);
+		ShowError("mob_parse_dbrow: Invalid monster ID %d, must be in range %d-%d.\n", class_, 1000, MAX_MOB_DB);
 		return false;
 	}
 	if (pcdb_checkid(class_)) {
-		ShowWarning("Mob with ID: %d not loaded. That ID is reserved for player classes.\n", class_);
+		ShowError("mob_parse_dbrow: Invalid monster ID %d, reserved for player classes.\n", class_);
 		return false;
 	}
 	
 	if (class_ >= MOB_CLONE_START && class_ < MOB_CLONE_END) {
-		ShowWarning("Mob with ID: %d not loaded. Range %d-%d is reserved for player clones. Please increase MAX_MOB_DB (%d)\n", class_, MOB_CLONE_START, MOB_CLONE_END-1, MAX_MOB_DB);
+		ShowError("mob_parse_dbrow: Invalid monster ID %d. Range %d-%d is reserved for player clones. Please increase MAX_MOB_DB (%d).\n", class_, MOB_CLONE_START, MOB_CLONE_END-1, MAX_MOB_DB);
 		return false;
 	}
 
-	if (mob_db_data[class_] == NULL)
-		mob_db_data[class_] = (struct mob_db*)aCalloc(1, sizeof (struct mob_db));
+	memset(&entry, 0, sizeof(entry));
 	
-	db = mob_db_data[class_];
+	db = &entry;
 	status = &db->status;
 	
 	db->vd.class_ = class_;
-	strncpy(db->sprite, str[1], NAME_LENGTH);
-	strncpy(db->jname, str[2], NAME_LENGTH);
-	strncpy(db->name, str[3], NAME_LENGTH);
+	safestrncpy(db->sprite, str[1], sizeof(db->sprite));
+	safestrncpy(db->jname, str[2], sizeof(db->jname));
+	safestrncpy(db->name, str[3], sizeof(db->name));
 	db->lv = atoi(str[4]);
 	db->lv = cap_value(db->lv, 1, USHRT_MAX);
 	status->max_hp = atoi(str[5]);
@@ -3489,12 +3488,12 @@ static bool mob_parse_dbrow(char** str)
 	status->def_ele = i%10;
 	status->ele_lv = i/20;
 	if (status->def_ele >= ELE_MAX) {
-		ShowWarning("Mob with ID: %d has invalid element type %d (max element is %d)\n", class_, status->def_ele, ELE_MAX-1);
-		status->def_ele = ELE_NEUTRAL;
+		ShowError("mob_parse_dbrow: Invalid element type %d for monster ID %d (max=%d).\n", status->def_ele, class_, ELE_MAX-1);
+		return false;
 	}
 	if (status->ele_lv < 1 || status->ele_lv > 4) {
-		ShowWarning("Mob with ID: %d has invalid element level %d (max is 4)\n", class_, status->ele_lv);
-		status->ele_lv = 1;
+		ShowError("mob_parse_dbrow: Invalid element level %d for monster ID %d, must be in range 1-4.\n", status->ele_lv, class_);
+		return false;
 	}
 	
 	status->mode = (int)strtol(str[25], NULL, 0);
@@ -3512,7 +3511,8 @@ static bool mob_parse_dbrow(char** str)
 	status->dmotion = atoi(str[29]);
 	if(battle_config.monster_damage_delay_rate != 100)
 		status->dmotion = status->dmotion * battle_config.monster_damage_delay_rate / 100;
-	
+
+	// Fill in remaining status data by using a dummy monster.
 	data.bl.type = BL_MOB;
 	data.level = db->lv;
 	memcpy(&data.status, status, sizeof(struct status_data));
@@ -3632,7 +3632,12 @@ static bool mob_parse_dbrow(char** str)
 			id->mob[k].id = class_;
 		}
 	}
-	
+
+	// Finally insert monster's data into the database.
+	if (mob_db_data[class_] == NULL)
+		mob_db_data[class_] = (struct mob_db*)aCalloc(1, sizeof(struct mob_db));
+
+	memcpy(mob_db_data[class_], db, sizeof(struct mob_db));
 	return true;
 }
 

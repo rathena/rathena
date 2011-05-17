@@ -2734,13 +2734,13 @@ static const char* npc_parse_mob(char* w1, char* w2, char* w3, char* w4, const c
 	// check monster ID if exists!
 	if( mobdb_checkid(class_) == 0 )
 	{
-		ShowError("npc_parse_mob: Unknown mob ID : %s %s (file '%s', line '%d').\n", w3, w4, filepath, strline(buffer,start-buffer));
+		ShowError("npc_parse_mob: Unknown mob ID %d (file '%s', line '%d').\n", class_, filepath, strline(buffer,start-buffer));
 		return strchr(start,'\n');// skip and continue
 	}
 
 	if( num < 1 || num > 1000 )
 	{
-		ShowError("npc_parse_mob: Invalid number of monsters (must be inside the range [1,1000]) : %s %s (file '%s', line '%d').\n", w3, w4, filepath, strline(buffer,start-buffer));
+		ShowError("npc_parse_mob: Invalid number of monsters %d, must be inside the range [1,1000] (file '%s', line '%d').\n", num, filepath, strline(buffer,start-buffer));
 		return strchr(start,'\n');// skip and continue
 	}
 
@@ -2786,7 +2786,7 @@ static const char* npc_parse_mob(char* w1, char* w2, char* w3, char* w4, const c
 	}
 
 	if(mob.delay1>0xfffffff || mob.delay2>0xfffffff) {
-		ShowError("npc_parse_mob: wrong monsters spawn delays : %s %s (file '%s', line '%d').\n", w3, w4, filepath, strline(buffer,start-buffer));
+		ShowError("npc_parse_mob: Invalid spawn delays %u %u (file '%s', line '%d').\n", mob.delay1, mob.delay2, filepath, strline(buffer,start-buffer));
 		return strchr(start,'\n');// skip and continue
 	}
 
@@ -2801,7 +2801,7 @@ static const char* npc_parse_mob(char* w1, char* w2, char* w3, char* w4, const c
 	//Verify dataset.
 	if( !mob_parse_dataset(&mob) )
 	{
-		ShowError("npc_parse_mob: Invalid dataset : %s %s (file '%s', line '%d').\n", w3, w4, filepath, strline(buffer,start-buffer));
+		ShowError("npc_parse_mob: Invalid dataset for monster ID %d (file '%s', line '%d').\n", class_, filepath, strline(buffer,start-buffer));
 		return strchr(start,'\n');// skip and continue
 	}
 

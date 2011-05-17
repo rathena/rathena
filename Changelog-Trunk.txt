@@ -1,5 +1,7 @@
 Date	Added
 
+2011/05/17
+	* Improved error reporting during monster database and spawn data reading. [Ai4rei]
 2011/05/15
 	* Extracted calculations of the number of status points PC gets when leveling up to a function. [Gepard]
 	* Removed status point calculations (duplicate) from `pc_resetstate` function. It is now handled by `pc_need_status_point`. [Gepard]
