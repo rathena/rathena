@@ -3807,7 +3807,7 @@ OnTouch_:
 			soundeffect "tao_gunka_stand.wav",0;
 			sc_end SC_Blind;
 			sc_start SC_Curse,3000,0;
-			if (!lhz_curse == 6) set lhz_curse,7;
+			if (lhz_curse == 6) set lhz_curse,7;
 		}
 	}
 	end;
@@ -3887,7 +3887,7 @@ OnTouch_:
 			mes "............";
 			next;
 			mes "............";
-			close;
+			close2;
 			soundeffect "tao_gunka_stand.wav",0;
 			sc_end SC_Blind;
 			sc_start SC_Curse,3000,0;

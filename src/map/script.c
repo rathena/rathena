@@ -11788,7 +11788,7 @@ BUILDIN_FUNC(movenpc)
 		return -1;
 
 	if (script_hasdata(st,5))
-		nd->ud.dir = script_getnum(st,5);
+		nd->ud.dir = script_getnum(st,5) % 8;
 	npc_movenpc(nd, x, y);
 	return 0;
 }
