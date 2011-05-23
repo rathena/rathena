@@ -22,51 +22,61 @@ struct status_change_entry;
 #define MAX_SKILL_LEVEL 100
 
 //Constants to identify the skill's inf value:
-#define INF_ATTACK_SKILL 1
-#define INF_GROUND_SKILL 2
-// Skills casted on self where target is automatically chosen:
-#define INF_SELF_SKILL 4
-#define INF_SUPPORT_SKILL 16
-#define INF_TARGET_TRAP 32
+enum e_skill_inf
+{
+	INF_ATTACK_SKILL  = 0x01,
+	INF_GROUND_SKILL  = 0x02,
+	INF_SELF_SKILL    = 0x04, // Skills casted on self where target is automatically chosen
+	// 0x08 not assigned
+	INF_SUPPORT_SKILL = 0x10,
+	INF_TARGET_TRAP   = 0x20,
+};
 
 //Constants to identify a skill's nk value (damage properties)
 //The NK value applies only to non INF_GROUND_SKILL skills
 //when determining skill castend function to invoke.
-#define NK_NO_DAMAGE 0x01
-#define NK_SPLASH (0x02|0x04) // 0x4 = splash & split
-#define NK_SPLASHSPLIT 0x04
-#define NK_NO_CARDFIX_ATK 0x08
-#define NK_NO_ELEFIX 0x10
-#define NK_IGNORE_DEF 0x20
-#define NK_IGNORE_FLEE 0x40
-#define NK_NO_CARDFIX_DEF 0x80
+enum e_skill_nk
+{
+	NK_NO_DAMAGE      = 0x01,
+	NK_SPLASH         = 0x02|0x04, // 0x4 = splash & split
+	NK_SPLASHSPLIT    = 0x04,
+	NK_NO_CARDFIX_ATK = 0x08,
+	NK_NO_ELEFIX      = 0x10,
+	NK_IGNORE_DEF     = 0x20,
+	NK_IGNORE_FLEE    = 0x40,
+	NK_NO_CARDFIX_DEF = 0x80,
+};
 
 //A skill with 3 would be no damage + splash: area of effect.
 //Constants to identify a skill's inf2 value.
-#define INF2_QUEST_SKILL 1
-//NPC skills are those that players can't have in their skill tree.
-#define INF2_NPC_SKILL 0x2
-#define INF2_WEDDING_SKILL 0x4
-#define INF2_SPIRIT_SKILL 0x8
-#define INF2_GUILD_SKILL 0x10
-#define INF2_SONG_DANCE 0x20
-#define INF2_ENSEMBLE_SKILL 0x40
-#define INF2_TRAP 0x80
-//Refers to ground placed skills that will target the caster as well (like Grandcross)
-#define INF2_TARGET_SELF 0x100
-#define INF2_NO_TARGET_SELF 0x200
-#define INF2_PARTY_ONLY 0x400
-#define INF2_GUILD_ONLY 0x800
-#define INF2_NO_ENEMY 0x1000
+enum e_skill_inf2
+{
+	INF2_QUEST_SKILL    = 0x0001,
+	INF2_NPC_SKILL      = 0x0002, //NPC skills are those that players can't have in their skill tree.
+	INF2_WEDDING_SKILL  = 0x0004,
+	INF2_SPIRIT_SKILL   = 0x0008,
+	INF2_GUILD_SKILL    = 0x0010,
+	INF2_SONG_DANCE     = 0x0020,
+	INF2_ENSEMBLE_SKILL = 0x0040,
+	INF2_TRAP           = 0x0080,
+	INF2_TARGET_SELF    = 0x0100, //Refers to ground placed skills that will target the caster as well (like Grandcross)
+	INF2_NO_TARGET_SELF = 0x0200,
+	INF2_PARTY_ONLY     = 0x0400,
+	INF2_GUILD_ONLY     = 0x0800,
+	INF2_NO_ENEMY       = 0x1000,
+};
 
 //Walk intervals at which chase-skills are attempted to be triggered.
 #define WALK_SKILL_INTERVAL 5
 
 // Flags passed to skill_attack/skill_area_sub
-#define SD_LEVEL     0x1000 // skill_attack will send -1 instead of skill level (affects display of some skills)
-#define SD_ANIMATION 0x2000 // skill_attack will use '5' instead of the skill's 'type' (this makes skills show an animation)
-#define SD_SPLASH    0x4000 // skill_area_sub will count targets in skill_area_temp[2]
-#define SD_PREAMBLE  0x8000 // skill_area_sub will transmit a 'magic' damage packet (-30000 dmg) for the first target selected
+enum e_skill_display
+{
+	SD_LEVEL     = 0x1000, // skill_attack will send -1 instead of skill level (affects display of some skills)
+	SD_ANIMATION = 0x2000, // skill_attack will use '5' instead of the skill's 'type' (this makes skills show an animation)
+	SD_SPLASH    = 0x4000, // skill_area_sub will count targets in skill_area_temp[2]
+	SD_PREAMBLE  = 0x8000, // skill_area_sub will transmit a 'magic' damage packet (-30000 dmg) for the first target selected
+};
 
 #define MAX_SKILL_ITEM_REQUIRE	10
 struct skill_condition {

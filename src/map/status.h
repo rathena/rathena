@@ -915,13 +915,16 @@ enum si_type {
 };
 
 // JOINTBEAT stackable ailments
-#define BREAK_ANKLE    0x01 // MoveSpeed reduced by 50%
-#define BREAK_WRIST    0x02 // ASPD reduced by 25%
-#define BREAK_KNEE     0x04 // MoveSpeed reduced by 30%, ASPD reduced by 10%
-#define BREAK_SHOULDER 0x08 // DEF reduced by 50%
-#define BREAK_WAIST    0x10 // DEF reduced by 25%, ATK reduced by 25%
-#define BREAK_NECK     0x20 // current attack does 2x damage, inflicts 'bleeding' for 30 seconds
-#define BREAK_FLAGS    ( BREAK_ANKLE | BREAK_WRIST | BREAK_KNEE | BREAK_SHOULDER | BREAK_WAIST | BREAK_NECK )
+enum e_joint_break
+{
+	BREAK_ANKLE    = 0x01, // MoveSpeed reduced by 50%
+	BREAK_WRIST    = 0x02, // ASPD reduced by 25%
+	BREAK_KNEE     = 0x04, // MoveSpeed reduced by 30%, ASPD reduced by 10%
+	BREAK_SHOULDER = 0x08, // DEF reduced by 50%
+	BREAK_WAIST    = 0x10, // DEF reduced by 25%, ATK reduced by 25%
+	BREAK_NECK     = 0x20, // current attack does 2x damage, inflicts 'bleeding' for 30 seconds
+	BREAK_FLAGS    = BREAK_ANKLE | BREAK_WRIST | BREAK_KNEE | BREAK_SHOULDER | BREAK_WAIST | BREAK_NECK,
+};
 
 extern int current_equip_item_index;
 extern int current_equip_card_id;
@@ -929,22 +932,25 @@ extern int current_equip_card_id;
 extern int percentrefinery[5][MAX_REFINE+1]; //The last slot always has a 0% success chance [Skotlex]
 
 //Mode definitions to clear up code reading. [Skotlex]
-#define MD_CANMOVE 0x0001
-#define MD_LOOTER 0x0002
-#define MD_AGGRESSIVE 0x0004
-#define MD_ASSIST 0x0008
-#define MD_CASTSENSOR_IDLE 0x0010
-#define MD_BOSS 0x0020
-#define MD_PLANT 0x0040
-#define MD_CANATTACK 0x0080
-#define MD_DETECTOR 0x0100
-#define MD_CASTSENSOR_CHASE 0x0200
-#define MD_CHANGECHASE 0x0400
-#define MD_ANGRY 0x0800
-#define MD_CHANGETARGET_MELEE 0x1000
-#define MD_CHANGETARGET_CHASE 0x2000
-#define MD_TARGETWEAK 0x4000
-#define MD_MASK 0xFFFF
+enum e_mode
+{
+	MD_CANMOVE            = 0x0001,
+	MD_LOOTER             = 0x0002,
+	MD_AGGRESSIVE         = 0x0004,
+	MD_ASSIST             = 0x0008,
+	MD_CASTSENSOR_IDLE    = 0x0010,
+	MD_BOSS               = 0x0020,
+	MD_PLANT              = 0x0040,
+	MD_CANATTACK          = 0x0080,
+	MD_DETECTOR           = 0x0100,
+	MD_CASTSENSOR_CHASE   = 0x0200,
+	MD_CHANGECHASE        = 0x0400,
+	MD_ANGRY              = 0x0800,
+	MD_CHANGETARGET_MELEE = 0x1000,
+	MD_CHANGETARGET_CHASE = 0x2000,
+	MD_TARGETWEAK         = 0x4000,
+	MD_MASK               = 0xFFFF,
+};
 
 //Status change option definitions (options are what makes status changes visible to chars
 //who were not on your field of sight when it happened)
@@ -1026,19 +1032,21 @@ enum {
 	OPTION_DRAGON3   = 0x01000000,
 	OPTION_DRAGON4   = 0x02000000,
 	OPTION_DRAGON5   = 0x04000000,
+	// compound constants
+	OPTION_CART      = OPTION_CART1|OPTION_CART2|OPTION_CART3|OPTION_CART4|OPTION_CART5,
+	OPTION_DRAGON    = OPTION_DRAGON1|OPTION_DRAGON2|OPTION_DRAGON3|OPTION_DRAGON4|OPTION_DRAGON5,
+	OPTION_MASK      = ~OPTION_INVISIBLE,
 };
 
-#define OPTION_CART (OPTION_CART1|OPTION_CART2|OPTION_CART3|OPTION_CART4|OPTION_CART5)
-#define OPTION_DRAGON (OPTION_DRAGON1|OPTION_DRAGON2|OPTION_DRAGON3|OPTION_DRAGON4|OPTION_DRAGON5)
-
-#define OPTION_MASK ~0x40
-
 //Defines for the manner system [Skotlex]
-#define MANNER_NOCHAT 0x01
-#define MANNER_NOSKILL 0x02
-#define MANNER_NOCOMMAND 0x04
-#define MANNER_NOITEM 0x08
-#define MANNER_NOROOM 0x10
+enum manner_flags
+{
+	MANNER_NOCHAT    = 0x01,
+	MANNER_NOSKILL   = 0x02,
+	MANNER_NOCOMMAND = 0x04,
+	MANNER_NOITEM    = 0x08,
+	MANNER_NOROOM    = 0x10,
+};
 
 //Define flags for the status_calc_bl function. [Skotlex]
 enum scb_flag

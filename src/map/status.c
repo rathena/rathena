@@ -38,10 +38,13 @@
 
 
 //Regen related flags.
-#define RGN_HP	0x01
-#define RGN_SP	0x02
-#define RGN_SHP	0x04
-#define RGN_SSP	0x08
+enum e_regen
+{
+	RGN_HP  = 0x01,
+	RGN_SP  = 0x02,
+	RGN_SHP = 0x04,
+	RGN_SSP = 0x08,
+};
 
 static int max_weight_base[CLASS_COUNT];
 static int hp_coefficient[CLASS_COUNT];

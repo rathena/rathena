@@ -580,8 +580,8 @@ int pc_calc_skilltree(struct map_session_data *sd);
 int pc_calc_skilltree_normalize_job(struct map_session_data *sd);
 int pc_clean_skilltree(struct map_session_data *sd);
 
-#define pc_checkoverhp(sd) (sd->battle_status.hp == sd->battle_status.max_hp)
-#define pc_checkoversp(sd) (sd->battle_status.sp == sd->battle_status.max_sp)
+#define pc_checkoverhp(sd) ((sd)->battle_status.hp == (sd)->battle_status.max_hp)
+#define pc_checkoversp(sd) ((sd)->battle_status.sp == (sd)->battle_status.max_sp)
 
 int pc_setpos(struct map_session_data* sd, unsigned short mapindex, int x, int y, clr_type clrtype);
 int pc_setsavepoint(struct map_session_data*,short,int,int);

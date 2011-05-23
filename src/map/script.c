@@ -246,9 +246,13 @@ enum curly_type {
 	TYPE_ARGLIST // function argument list
 };
 
-#define ARGLIST_UNDEFINED 0
-#define ARGLIST_NO_PAREN  1
-#define ARGLIST_PAREN     2
+enum e_arglist
+{
+	ARGLIST_UNDEFINED = 0,
+	ARGLIST_NO_PAREN  = 1,
+	ARGLIST_PAREN     = 2,
+};
+
 static struct {
 	struct {
 		enum curly_type type;

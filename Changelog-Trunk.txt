@@ -1,5 +1,8 @@
 Date	Added
 
+2011/05/23
+	* Changed enumerating defines into enumerations (related topic:264007). [Ai4rei]
+	- Minor fixups on few macros.
 2011/05/17
 	* Fixed Super Novices could not be adopted (bugreport:4907, since r12389). [Ai4rei]
 	* Improved error reporting during monster database and spawn data reading. [Ai4rei]

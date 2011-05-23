@@ -72,20 +72,19 @@ struct block_list* battle_getenemy(struct block_list *target, int type, int rang
 int battle_gettarget(struct block_list *bl);
 int battle_getcurrentskill(struct block_list *bl);
 
-//New definitions [Skotlex]
-#define BCT_ENEMY 0x020000
-//This should be (~BCT_ENEMY&BCT_ALL)
-#define BCT_NOENEMY 0x1d0000
-#define BCT_PARTY	0x040000
-//This should be (~BCT_PARTY&BCT_ALL)
-#define BCT_NOPARTY 0x1b0000
-#define BCT_GUILD	0x080000
-//This should be (~BCT_GUILD&BCT_ALL)
-#define BCT_NOGUILD 0x170000
-#define BCT_ALL 0x1f0000
-#define BCT_NOONE 0x000000
-#define BCT_SELF 0x010000
-#define BCT_NEUTRAL 0x100000
+enum e_battle_check_target
+{//New definitions [Skotlex]
+	BCT_ENEMY   = 0x020000,
+	BCT_NOENEMY = 0x1d0000, //This should be (~BCT_ENEMY&BCT_ALL)
+	BCT_PARTY	= 0x040000,
+	BCT_NOPARTY = 0x1b0000, //This should be (~BCT_PARTY&BCT_ALL)
+	BCT_GUILD	= 0x080000,
+	BCT_NOGUILD = 0x170000, //This should be (~BCT_GUILD&BCT_ALL)
+	BCT_ALL     = 0x1f0000,
+	BCT_NOONE   = 0x000000,
+	BCT_SELF    = 0x010000,
+	BCT_NEUTRAL = 0x100000,
+};
 
 #define	is_boss(bl)	(status_get_mode(bl)&MD_BOSS)	// Can refine later [Aru]
 
