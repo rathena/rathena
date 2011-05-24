@@ -4191,7 +4191,7 @@ lhz_in01,282,166,0	script	#kiz10	-1,3,3,{
 OnTouch_:
 	if (countitem(7345) > 0) {
 		if (lhz_curse == 16) {
-			if (checkweight(1201,1) == 1) {
+			if (checkweight(1201,1) == 0) {
 				mes "^3355FFThere's something on";
 				mes "the floor, but you can't";
 				mes "really take a good look at";
@@ -5283,7 +5283,7 @@ OnTouch_:
 		else if ((BaseLevel > 89) && (BaseLevel < 151))
 			getexp 200000,100000;
 	}
-	end;
+	close;
 }
 
 lhz_in01,114,181,5	script	Representative#li_01	71,{
@@ -6220,7 +6220,7 @@ lhz_in01,286,226,3	script	Secretary Slierre#li	831,{
 	else if (lhz_curse == 30) {
 		set .@li_keka,rand(1,10);
 		if (.@li_keka > 7) {
-			if (checkweight(1201,1) == 1) {
+			if (checkweight(1201,1) == 0) {
 				mes "[Sueii Slierre]";
 				mes "Oh, I'd like to have";
 				mes "a word with you. Would";
