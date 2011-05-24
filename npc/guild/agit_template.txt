@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
-//= 1.7
+//= 1.8
 //===== Compatible With: =====================================
 //= eAthena SVN
 //===== Description: =========================================
@@ -49,6 +49,7 @@
 //= 1.6b Moved where investments are added to eco/def. [L0ne_W0lf]
 //= 1.7 Updated Agitbreak announcements, added bc_woe [L0ne_W0lf]
 //=     and added extended anouncement format for mapannounce.
+//= 1.8 Fixed a possible exploit in guild castle investment. [Brian]
 //============================================================
 
 // AGIT Manager Template
@@ -525,7 +526,7 @@ OnRecvCastle:
 			mes "^ff0000But the commercial growth level of our castle is peaked at 100%. It doesn't need any more investment. As I expected you have a great acumen, Master.^000000";
 			close;
 		}
-		if (GetCastleData(strnpcinfo(2),4) == 2) {
+		if (GetCastleData(strnpcinfo(2),4) >= 2) {
 			mes "^ff0000But you already invested twice today so you cannot invest any more.^000000 I expect our riches to increase in growth level.";
 			close;
 		}
@@ -538,6 +539,11 @@ OnRecvCastle:
 		next;
 		switch(select("Invest in commercial growth:Cancel")) {
 		case 1:
+			if (GetCastleData(strnpcinfo(2),4) >= 2) {
+				mes "[ Steward " + .@name$ + " ]";
+				mes "I'm sorry but you already invested twice today so you cannot invest any more.";
+				close;
+			}
 			if (Zeny < .@eco_invest) {
 				mes "[ Steward " + .@name$ + " ]";
 				mes "I'm sorry but there is not enough zeny to invest. You will have to try again when you have the funds, Master.";
@@ -588,7 +594,7 @@ OnRecvCastle:
 			mes "^ff0000But the safeguard level of our castle is peaked at 100%. It doesn't need any more investment. As I expected you have a great acumen, Master.^000000";
 			close;
 		}
-		if (GetCastleData(strnpcinfo(2),5) == 2) {
+		if (GetCastleData(strnpcinfo(2),5) >= 2) {
 			mes "^ff0000But you already invested twice today so you cannot invest any more.^000000 I expect our riches to increase in growth level.";
 			close;
 		}
@@ -601,6 +607,11 @@ OnRecvCastle:
 		next;
 		switch(select("Invest in safeguard.:Cancel")) {
 		case 1:
+			if (GetCastleData(strnpcinfo(2),5) >= 2) {
+				mes "[ Steward " + .@name$ + " ]";
+				mes "I'm sorry but you already invested twice today so you cannot invest any more.";
+				close;
+			}
 			if (Zeny < .@def_invest) {
 				mes "[ Steward " + .@name$ + " ]";
 				mes "I'm sorry but there is not enough zeny to invest. You will have to try again when you have the funds, Master.";
