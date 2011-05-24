@@ -1,5 +1,7 @@
 Date		Added
 ======
+2011/05/23
+	* Rev. 14833 Fixed a possible exploit in guild castle investment. (bugreport:4929, topic:272783) [Brian]
 2011/04/08
 	* Rev. 14780 Added missing Hair Dressers and Hair Dyer to Lighthalzen. [L0ne_W0lf]
 	- Hair Dresser will change hair styles ranging between 20 to 27

@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
-//= 2.0
+//= 2.1
 //===== Compatible With: =====================================
 //= eAthena SVN
 //===== Description: =========================================
@@ -25,6 +25,7 @@
 //= 1.9 Applied updated eco/def systems. [L0ne_W0lf]
 //= 2.0 Fixed eco/def not actually incrementing. [L0ne_W0lf]
 //=     Can no longer gain eco/def higher than 100.
+//= 2.1 Fixed a possible exploit in guild castle investment. [Brian]
 //============================================================
 
 arug_cas03,1,1,0	script	Manager#aru03_02	111,{
@@ -2367,7 +2368,7 @@ arug_cas03,328,98,3	script	Steward#aru03	55,{
 			mes "any further than that.";
 			close;
 		}
-		if (GetCastleData("arug_cas03",4) == 2) {
+		if (GetCastleData("arug_cas03",4) >= 2) {
 			mes "[ Steward ]";
 			mes "You've already made two";
 			mes "investments today, so you'll";
@@ -2393,6 +2394,14 @@ arug_cas03,328,98,3	script	Steward#aru03	55,{
 		next;
 		switch(select("Invest in Commercial Growth:Cancel")) {
 		case 1:
+			if (GetCastleData("arug_cas03",4) >= 2) {
+				mes "[ Steward ]";
+				mes "You've already made two";
+				mes "investments today, so you'll";
+				mes "have to wait until tomorrow";
+				mes "to make another investment.";
+				close;
+			}
 			if (Zeny < .@eco_invest) {
 				mes "[ Steward ]";
 				mes "I'm sorry, Master, but";
@@ -2461,7 +2470,7 @@ arug_cas03,328,98,3	script	Steward#aru03	55,{
 			mes "cannot be increased further.";
 			close;
 		}
-		if (GetCastleData("arug_cas03",5) == 2) {
+		if (GetCastleData("arug_cas03",5) >= 2) {
 			mes "Master, you've already";
 			mes "invested in Defense twice";
 			mes "today. You'll need to wait";
@@ -2485,6 +2494,15 @@ arug_cas03,328,98,3	script	Steward#aru03	55,{
 		next;
 		switch(select("Invest in Defense:Cancel")) {
 		case 1:
+			if (GetCastleData("arug_cas03",5) >= 2) {
+				mes "[ Steward ]";
+				mes "Master, you've already";
+				mes "invested in Defense twice";
+				mes "today. You'll need to wait";
+				mes "until tomorrow if you really";
+				mes "want to increase our defenses.";
+				close;
+			}
 			if (Zeny < .@def_invest) {
 				mes "[ Steward ]";
 				mes "I'm sorry, Master, but";
