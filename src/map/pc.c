@@ -2321,8 +2321,8 @@ int pc_bonus(struct map_session_data *sd,int type,int val)
 			sd->right_weapon.hp_drain[RC_BOSS].value += val;
 		}
 		else if(sd->state.lr_flag == 1) {
-			sd->right_weapon.hp_drain[RC_NONBOSS].value += val;
-			sd->right_weapon.hp_drain[RC_BOSS].value += val;
+			sd->left_weapon.hp_drain[RC_NONBOSS].value += val;
+			sd->left_weapon.hp_drain[RC_BOSS].value += val;
 		}
 		break;
 	case SP_SP_DRAIN_VALUE:
