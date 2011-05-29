@@ -7261,7 +7261,7 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr data)
 		
 	case SC_BERSERK:
 		// 5% every 10 seconds [DracoRPG]
-		if(--(sce->val3)>0 && status_charge(bl, sce->val2, 0))
+		if( --( sce->val3 ) > 0 && status_charge(bl, sce->val2, 0) && status->hp > 100 )
 		{
 			sc_timer_next(sce->val4+tick, status_change_timer, bl->id, data);
 			return 0;
