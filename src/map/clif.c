@@ -12315,10 +12315,8 @@ void clif_parse_FeelSaveOk(int fd,struct map_session_data *sd)
 	sd->menuskill_val = sd->menuskill_id = 0;
 }
 
-/*==========================================
- * Question about Star Glaldiator save map [Komurka]
- *------------------------------------------*/
-void clif_parse_ReqFeel(int fd, struct map_session_data *sd, int skilllv)
+/// Star Gladiator's Feeling map confirmation prompt (ZC_STARPLACE)
+void clif_feel_req(int fd, struct map_session_data *sd, int skilllv)
 {
 	WFIFOHEAD(fd,packet_len(0x253));
 	WFIFOW(fd,0)=0x253;

@@ -5531,7 +5531,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		//AuronX reported you CAN memorize the same map as all three. [Skotlex]
 		if (sd) {
 			if(!sd->feel_map[skilllv-1].index)
-				clif_parse_ReqFeel(sd->fd,sd, skilllv);
+				clif_feel_req(sd->fd,sd, skilllv);
 			else
 				clif_feel_info(sd, skilllv-1, 1);
 		}
