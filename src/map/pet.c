@@ -858,6 +858,7 @@ static int pet_ai_sub_hard(struct pet_data *pd, struct map_session_data *sd, uns
 		if (pd->ud.walktimer != INVALID_TIMER)
 			return 0; //Wait until the pet finishes walking back to master.
 		pd->status.speed = pd->petDB->speed;
+		pd->ud.state.change_walk_target = pd->ud.state.speed_changed = 1;
 	}
 	
 	if (pd->target_id) {

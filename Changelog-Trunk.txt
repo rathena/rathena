@@ -1,6 +1,7 @@
 Date	Added
 
 2011/05/29
+	* Fixed pets' speed would not get updated to normal, after they finished running to their owner (bugreport:1304). [Ai4rei]
 	* Fixed NULL pointer in status_change_timer (SC_BERSERK), when the HP subtraction causes the HP drop below 100, but does not exceed remaining HP (bugreport:1150, related r8705, r11786 and r12061). [Ai4rei]
 	* Updated script commands 'npcshopitem', 'npcshopadditem' and 'npcshopdelitem' to support cashshops as well (bugreport:4928). [Ai4rei]
 	* Fixed players could add themselves to their friendslist through their clones or WPE (bugreport:4909). [Ai4rei]
