@@ -1,6 +1,7 @@
 Date	Added
 
 2011/05/29
+	* Fixed players could add themselves to their friendslist through their clones or WPE (bugreport:4909). [Ai4rei]
 	* Fixed bonus 'bHPDrainValue' on left hand would work as right hand bonus, when specified with 'bonus' rather than 'bonus2' (bugreport:4939, since r6221). [Ai4rei]
 2011/05/23
 	* Changed enumerating defines into enumerations (related topic:264007). [Ai4rei]
