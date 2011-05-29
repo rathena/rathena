@@ -4,7 +4,7 @@
 //= A reference manual for the eAthena scripting language.
 //= Commands are sorted depending on their functionality.
 //===== Version ===========================================
-//= 3.42.20110508
+//= 3.43.20110529
 //=========================================================
 //= 1.0 - First release, filled will as much info as I could
 //=       remember or figure out, most likely there are errors,
@@ -174,6 +174,9 @@
 //= 3.42.20110508
 //=       Updated description of all instance commands to reflect actual behavior.
 //=       [Ai4rei]
+//= 3.43.20110529
+//=       Updated 'npcshopitem', 'npcshopadditem' and 'npcshopdelitem' to support
+//=       cashshops as well. [Ai4rei]
 //=========================================================
 
 This document is a reference manual for all the scripting commands and functions 
@@ -5660,7 +5663,7 @@ npcshopitem was used. After rechecking the source, I found what caused this.
 
 *npcshopitem "<name>",<item id>,<price>{,<item id>,<price>{,<item id>,<price>{,...}}}
 
-This command lets you override the contents of an existing NPC shop. The
+This command lets you override the contents of an existing NPC shop or cashshop. The
 current sell list will be wiped, and only the items specified with the price
 specified will be for sale.
 
@@ -5673,7 +5676,7 @@ Note that you cannot use -1 to specify default selling price!
 *npcshopadditem "<name>",<item id>,<price>{,<item id>,<price>{,<item id>,<price>{,...}}}
 
 This command will add more items at the end of the selling list for the
-specified NPC shop. If you specify an item already for sell, that item will
+specified NPC shop or cashshop. If you specify an item already for sell, that item will
 appear twice on the sell list.
 
 The function returns 1 if shop was updated successfully, or 0 if not found.
@@ -5684,7 +5687,7 @@ Note that you cannot use -1 to specify default selling price!
 
 *npcshopdelitem "<name>",<item id>{,<item id>{,<item id>{,...}}}
 
-This command will remove items from the specified NPC shop.
+This command will remove items from the specified NPC shop or cashshop.
 If the item to remove exists more than once on the shop, all instances will be
 removed.
 

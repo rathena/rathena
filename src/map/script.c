@@ -12875,7 +12875,7 @@ BUILDIN_FUNC(npcshopitem)
 	int n, i;
 	int amount;
 
-	if( !nd || nd->subtype != SHOP )
+	if( !nd || ( nd->subtype != SHOP && nd->subtype != CASHSHOP ) )
 	{	//Not found.
 		script_pushint(st,0);
 		return 0;
@@ -12904,7 +12904,7 @@ BUILDIN_FUNC(npcshopadditem)
 	int n, i;
 	int amount;
 
-	if( !nd || nd->subtype != SHOP )
+	if( !nd || ( nd->subtype != SHOP && nd->subtype != CASHSHOP ) )
 	{	//Not found.
 		script_pushint(st,0);
 		return 0;
@@ -12935,7 +12935,7 @@ BUILDIN_FUNC(npcshopdelitem)
 	int amount;
 	int size;
 
-	if( !nd || nd->subtype != SHOP )
+	if( !nd || ( nd->subtype != SHOP && nd->subtype != CASHSHOP ) )
 	{	//Not found.
 		script_pushint(st,0);
 		return 0;
