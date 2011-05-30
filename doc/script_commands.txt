@@ -4,7 +4,7 @@
 //= A reference manual for the eAthena scripting language.
 //= Commands are sorted depending on their functionality.
 //===== Version ===========================================
-//= 3.43.20110529
+//= 3.44.20110530
 //=========================================================
 //= 1.0 - First release, filled will as much info as I could
 //=       remember or figure out, most likely there are errors,
@@ -177,6 +177,8 @@
 //= 3.43.20110529
 //=       Updated 'npcshopitem', 'npcshopadditem' and 'npcshopdelitem' to support
 //=       cashshops as well. [Ai4rei]
+//= 3.44.20110530
+//=       Documented special map names recognized by 'warpguild'. [Ai4rei]
 //=========================================================
 
 This document is a reference manual for all the scripting commands and functions 
@@ -3692,6 +3694,13 @@ warpchar "prontera",150,100,20000001;
 Warps a guild to specified map and coordinate given the guild id, which you can get with 
 getcharid(2). You can also request another guild id given the member's name with getcharid(2,<player_name>).
  
+You can use the following "map names" for special warping behavior:
+Random:       All party members are randomly warped in their current map (as if they
+              all used a fly wing)
+SavePointAll: All party members are warped to their respective save point.
+SavePoint:    All party members are warped to the save point of the currently
+              attached player (will fail if there's no player attached).
+
 Example:
  
 warpguild "prontera",x,y,Guild_ID;

@@ -4641,7 +4641,7 @@ BUILDIN_FUNC(warpparty)
  *------------------------------------------*/
 BUILDIN_FUNC(warpguild)
 {
-	TBL_PC *sd;
+	TBL_PC *sd = NULL;
 	TBL_PC *pl_sd;
 	struct guild* g;
 	struct s_mapiterator* iter;
@@ -4652,20 +4652,19 @@ BUILDIN_FUNC(warpguild)
 	int y           = script_getnum(st,4);
 	int gid         = script_getnum(st,5);
 
-	sd=script_rid2sd(st);
-	if( sd == NULL )
-		return 0;
 	g = guild_search(gid);
 	if( g == NULL )
-		return 0;
-	
-	if(map[sd->bl.m].flag.noreturn || map[sd->bl.m].flag.nowarpto)
 		return 0;
 	
 	type = ( strcmp(str,"Random")==0 ) ? 0
 	     : ( strcmp(str,"SavePointAll")==0 ) ? 1
 		 : ( strcmp(str,"SavePoint")==0 ) ? 2
 		 : 3;
+
+	if( type == 2 && ( sd = script_rid2sd(st) ) == NULL )
+	{// "SavePoint" uses save point of the currently attached player
+		return 0;
+	}
 
 	iter = mapit_getallusers();
 	for( pl_sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); pl_sd = (TBL_PC*)mapit_next(iter) )
