@@ -1,5 +1,8 @@
 Date	Added
 
+2011/05/30
+	* Fixed script command 'warpparty' looking for an attached player even when it is not needed (bugreport:4359, since r14311, related r2674 and r5592). [Ai4rei]
+	- This also resolves an issue, where the command fails when the attached player is on a map that has noreturn or nowarpto mapflags set.
 2011/05/29
 	* Fixed pets' speed would not get updated to normal, after they finished running to their owner (bugreport:1304). [Ai4rei]
 	* Fixed NULL pointer in status_change_timer (SC_BERSERK), when the HP subtraction causes the HP drop below 100, but does not exceed remaining HP (bugreport:1150, related r8705, r11786 and r12061). [Ai4rei]

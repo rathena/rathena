@@ -4554,7 +4554,7 @@ BUILDIN_FUNC(warpchar)
  *------------------------------------------*/
 BUILDIN_FUNC(warpparty)
 {
-	TBL_PC *sd;
+	TBL_PC *sd = NULL;
 	TBL_PC *pl_sd;
 	struct party_data* p;
 	int type;
@@ -4569,14 +4569,8 @@ BUILDIN_FUNC(warpparty)
 	if ( script_hasdata(st,6) )
 		str2 = script_getstr(st,6);
 
-	sd=script_rid2sd(st);
-	if( sd == NULL )
-		return 0;
 	p = party_search(p_id);
 	if(!p)
-		return 0;
-	
-	if(map[sd->bl.m].flag.noreturn || map[sd->bl.m].flag.nowarpto)
 		return 0;
 	
 	type = ( strcmp(str,"Random")==0 ) ? 0
@@ -4584,6 +4578,11 @@ BUILDIN_FUNC(warpparty)
 		 : ( strcmp(str,"SavePoint")==0 ) ? 2
 		 : ( strcmp(str,"Leader")==0 ) ? 3
 		 : 4;
+
+	if( type == 2 && ( sd = script_rid2sd(st) ) == NULL )
+	{// "SavePoint" uses save point of the currently attached player
+		return 0;
+	}
 
 	for (i = 0; i < MAX_PARTY; i++)
 	{
