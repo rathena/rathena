@@ -1,5 +1,7 @@
 Date	Added
 
+2011/05/31
+	* Fixed a typo in buyingstore_create. [Inkfish]
 2011/05/30
 	* Fixed script command 'warpguild' looking for an attached player even when it is not needed (bugreport:4941, since r2674, related r14840). [Ai4rei]
 	- Documented special map names recognized by the command.
