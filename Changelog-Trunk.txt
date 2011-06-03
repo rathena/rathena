@@ -1,5 +1,7 @@
 Date	Added
 
+2011/05/02
+	* Fixed a crash in clif_parse_FriendsListAdd, when a player is added that is not online (bugreport:4947, since r14835). [Ai4rei]
 2011/05/31
 	* Fixed a typo in buyingstore_create. [Inkfish]
 2011/05/30

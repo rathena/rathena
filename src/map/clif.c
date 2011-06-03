@@ -11989,14 +11989,14 @@ void clif_parse_FriendsListAdd(int fd, struct map_session_data *sd)
 
 	f_sd = map_nick2sd((char*)RFIFOP(fd,2));
 
-	if( sd->bl.id == f_sd->bl.id )
-	{// adding oneself as friend
-		return;
-	}
-
 	// Friend doesn't exist (no player with this name)
 	if (f_sd == NULL) {
 		clif_displaymessage(fd, msg_txt(3));
+		return;
+	}
+
+	if( sd->bl.id == f_sd->bl.id )
+	{// adding oneself as friend
 		return;
 	}
 
