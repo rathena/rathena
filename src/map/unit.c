@@ -1881,7 +1881,7 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 			storage_guild_storage_quit(sd,0);
 		sd->state.storage_flag = 0; //Force close it when being warped.
 		if(sd->party_invite>0)
-			party_reply_invite(sd,sd->party_invite_account,0);
+			party_reply_invite(sd,sd->party_invite,0);
 		if(sd->guild_invite>0)
 			guild_reply_invite(sd,sd->guild_invite,0);
 		if(sd->guild_alliance>0)

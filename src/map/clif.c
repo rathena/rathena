@@ -5821,28 +5821,32 @@ void clif_partyinvitationstate(struct map_session_data* sd)
 	WFIFOSET(fd, packet_len(0x2c9));
 }
 
-/*==========================================
- * パーティ勧誘
- *------------------------------------------*/
-int clif_party_invite(struct map_session_data *sd,struct map_session_data *tsd)
+/// Party invitation request (ZC_REQ_JOIN_GROUP/ZC_PARTY_JOIN_REQ)
+/// 00fe <party id>.L <party name>.24B
+/// 02c6 <party id>.L <party name>.24B
+void clif_party_invite(struct map_session_data *sd,struct map_session_data *tsd)
 {
+#if PACKETVER < 20070821
+	const int cmd = 0xfe;
+#else
+	const int cmd = 0x2c6;
+#endif
 	int fd;
 	struct party_data *p;
 
-	nullpo_ret(sd);
-	nullpo_ret(tsd);
+	nullpo_retv(sd);
+	nullpo_retv(tsd);
 
 	fd=tsd->fd;
 
 	if( (p=party_search(sd->status.party_id))==NULL )
-		return 0;
+		return;
 
-	WFIFOHEAD(fd,packet_len(0xfe));
-	WFIFOW(fd,0)=0xfe;
-	WFIFOL(fd,2)=sd->status.account_id;  // FIXME: This is party_id
+	WFIFOHEAD(fd,packet_len(cmd));
+	WFIFOW(fd,0)=cmd;
+	WFIFOL(fd,2)=sd->status.party_id;
 	memcpy(WFIFOP(fd,6),p->party.name,NAME_LENGTH);
-	WFIFOSET(fd,packet_len(0xfe));
-	return 0;
+	WFIFOSET(fd,packet_len(cmd));
 }
 
 /*==========================================
@@ -10620,12 +10624,12 @@ void clif_parse_PartyInvite2(int fd, struct map_session_data *sd)
 	party_invite(sd, t_sd);
 }
 
-/*==========================================
- * Party invitation reply
- * S 00ff <account ID>.L <flag>.L
- * S 02c7 <account ID>.L <flag>.B
- * flag: 0-reject, 1-accept
- *------------------------------------------*/
+/// Party invitation reply (CZ_JOIN_GROUP/CZ_PARTY_JOIN_REQ_ACK)
+/// 00ff <party id>.L <flag>.L
+/// 02c7 <party id>.L <flag>.B
+/// flag:
+///     0 = reject
+///     1 = accept
 void clif_parse_ReplyPartyInvite(int fd,struct map_session_data *sd)
 {
 	party_reply_invite(sd,RFIFOL(fd,2),RFIFOL(fd,6));
@@ -14919,7 +14923,7 @@ static int packetdb_readdb(void)
 	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 	   85, -1, -1,107,  6, -1,  7,  7, 22,191,  0,  0,  0,  0,  0,  0,
 	//#0x02C0
-	    0,  0,  0,  0,  0, 30,  0,  0,  0,  3,  0, 65,  4, 71, 10,  0,
+	    0,  0,  0,  0,  0, 30, 30,  0,  0,  3,  0, 65,  4, 71, 10,  0,
 	    0,  0,  0,  0, 29,  0,  6, -1, 10, 10,  3,  0, -1, 32,  6,  0,
 	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 67, 59, 60,  8,
 	   10,  2,  2,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,

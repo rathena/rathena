@@ -369,10 +369,18 @@ int party_invite(struct map_session_data *sd,struct map_session_data *tsd)
 	return 1;
 }
 
-void party_reply_invite(struct map_session_data *sd,int account_id,int flag)
+void party_reply_invite(struct map_session_data *sd,int party_id,int flag)
 {
-	struct map_session_data *tsd= map_id2sd(account_id);
+	struct map_session_data* tsd;
 	struct party_member member;
+
+	if( sd->party_invite != party_id )
+	{// forged
+		sd->party_invite = 0;
+		sd->party_invite_account = 0;
+		return;
+	}
+	tsd = map_id2sd(sd->party_invite_account);
 
 	if( flag == 1 && !sd->party_creating && !sd->party_joining )
 	{// accepted and allowed
