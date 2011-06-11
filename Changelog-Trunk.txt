@@ -1,6 +1,7 @@
 Date	Added
 
 2011/06/11
+	* Added support for new skill usage notification packet 0x7fb (ZC_USESKILL_ACK2). [Ai4rei]
 	* Fixed party invite packet 0xfe (ZC_REQ_JOIN_GROUP) using account id of the inviter rather than party id. [Ai4rei]
 	- Added support for new party invite packet 0x2c6 (ZC_PARTY_JOIN_REQ), introduction date guessed.
 2011/06/02

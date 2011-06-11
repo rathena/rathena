@@ -4279,38 +4279,49 @@ int clif_skillup(struct map_session_data *sd,int skill_num)
 	return 0;
 }
 
-/*==========================================
- * スキル詠唱エフェクトを送信する
- * pl:
- * 0 = Yellow cast aura
- * 1 = Water elemental cast aura
- * 2 = Earth elemental cast aura
- * 3 = Fire elemental cast aura
- * 4 = Wind elemental cast aura
- * 5 = Poison elemental cast aura
- * 6 = White cast aura
- * ? = like 0
- *------------------------------------------*/
-int clif_skillcasting(struct block_list* bl,
-	int src_id,int dst_id,int dst_x,int dst_y,int skill_num,int pl, int casttime)
+
+/// Notifies clients, that an object is about to use a skill (ZC_USESKILL_ACK/ZC_USESKILL_ACK2)
+/// 013e <src id>.L <dst id>.L <x pos>.W <y pos>.W <skill id>.W <property>.L <delaytime>.L
+/// 07fb <src id>.L <dst id>.L <x pos>.W <y pos>.W <skill id>.W <property>.L <delaytime>.L <is disposable>.B
+/// property:
+///     0 = Yellow cast aura
+///     1 = Water elemental cast aura
+///     2 = Earth elemental cast aura
+///     3 = Fire elemental cast aura
+///     4 = Wind elemental cast aura
+///     5 = Poison elemental cast aura
+///     6 = Holy elemental cast aura
+///     ? = like 0
+/// is disposable:
+///     0 = yellow chat text "[src name] will use skill [skill name]."
+///     1 = no text
+void clif_skillcasting(struct block_list* bl, int src_id, int dst_id, int dst_x, int dst_y, int skill_num, int property, int casttime)
 {
+#if PACKETVER < 20091124
+	const int cmd = 0x13e;
+#else
+	const int cmd = 0x7fb;
+#endif
 	unsigned char buf[32];
-	WBUFW(buf,0) = 0x13e;
+
+	WBUFW(buf,0) = cmd;
 	WBUFL(buf,2) = src_id;
 	WBUFL(buf,6) = dst_id;
 	WBUFW(buf,10) = dst_x;
 	WBUFW(buf,12) = dst_y;
 	WBUFW(buf,14) = skill_num;
-	WBUFL(buf,16) = pl<0?0:pl; //Avoid sending negatives as element [Skotlex]
+	WBUFL(buf,16) = property<0?0:property; //Avoid sending negatives as element [Skotlex]
 	WBUFL(buf,20) = casttime;
-	if (disguised(bl)) {
-		clif_send(buf,packet_len(0x13e), bl, AREA_WOS);
-		WBUFL(buf,2) = -src_id;
-		clif_send(buf,packet_len(0x13e), bl, SELF);
-	} else
-		clif_send(buf,packet_len(0x13e), bl, AREA);
+#if PACKETVER >= 20091124
+	WBUFB(buf,24) = 1;  // isDisposable
+#endif
 
-	return 0;
+	if (disguised(bl)) {
+		clif_send(buf,packet_len(cmd), bl, AREA_WOS);
+		WBUFL(buf,2) = -src_id;
+		clif_send(buf,packet_len(cmd), bl, SELF);
+	} else
+		clif_send(buf,packet_len(cmd), bl, AREA);
 }
 
 /*==========================================
@@ -15030,7 +15041,7 @@ static int packetdb_readdb(void)
 	    6,  2, -1,  4,  4,  4,  4,  8,  8,268,  6,  8,  6, 54, 30, 54,
 #endif
 	    0,  0,  0,  0,  0,  8,  8, 32, -1,  5,  0,  0,  0,  0,  0,  0,
-	    0,  0,  0,  0,  0,  0, 14, -1, -1, -1,  8,  0,  0,  0, 26,  0,
+	    0,  0,  0,  0,  0,  0, 14, -1, -1, -1,  8, 25,  0,  0, 26,  0,
 	//#0x0800
 #if PACKETVER < 20091229
  	   -1, -1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 14, 20,
