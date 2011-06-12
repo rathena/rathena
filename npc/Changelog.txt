@@ -1,5 +1,7 @@
 Date		Added
 ======
+2011/06/11
+	* Rev. 14845 Corrected improperly converted spawns, and instance timers for sealed shine and Orc Dungeon.  [L0ne_W0lf]
 2011/05/23
 	* Rev. 14833 Fixed a possible exploit in guild castle investment. (bugreport:4929, topic:272783) [Brian]
 2011/04/08

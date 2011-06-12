@@ -74,7 +74,7 @@ gef_fild10,242,202,0	script	Dimensional Gorge Piece	406,{
 							close;
 						}
 						instance_attach(.@instance);
-						instance_set_timeout 14400,300,.@instance;
+						instance_set_timeout 7200,300,.@instance;
 						instance_init(.@instance);
 
 						// First Floor

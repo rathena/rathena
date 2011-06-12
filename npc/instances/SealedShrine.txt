@@ -122,7 +122,7 @@ monk_test,309,146,3	script	Friar Patrick#edq	412,{
 							}
 
 							instance_attach(.@instance);
-							instance_set_timeout 14400,300,.@instance;
+							instance_set_timeout 7200,300,.@instance;
 							instance_init(.@instance);
 
 							// First Floor
