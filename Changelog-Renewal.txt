@@ -1,5 +1,7 @@
 Date	Added
 
+2011/06/13
+	* Fixed 3rd classes not being able to level up after Base Level reset. [Gepard]
 2011/05/15
 	* Merged changes from trunk [14824:14825/trunk]. [Gepard]
 	* Added support for increased max statistics (parameters) for 3rd classes (regular and baby). [Gepard]
