@@ -1,5 +1,7 @@
 Date	Added
 
+2011/06/13
+	* Fixed pet's equip would visually disappear when it's walk speed was changed while it was standing (related r14838). [Ai4rei]
 2011/06/11
 	* Added support for new skill usage notification packet 0x7fb (ZC_USESKILL_ACK2). [Ai4rei]
 	* Fixed party invite packet 0xfe (ZC_REQ_JOIN_GROUP) using account id of the inviter rather than party id. [Ai4rei]
