@@ -4,6 +4,15 @@
 #ifndef _CHAR_SQL_H_
 #define _CHAR_SQL_H_
 
+#include "../common/core.h" // CORE_ST_LAST
+
+enum E_CHARSERVER_ST
+{
+	CHARSERVER_ST_RUNNING = CORE_ST_LAST,
+	CHARSERVER_ST_SHUTDOWN,
+	CHARSERVER_ST_LAST
+};
+
 struct mmo_charstatus;
 
 #define MAX_MAP_SERVERS 30

@@ -1543,7 +1543,7 @@ int count_users(void)
 	int i, users;
 
 	users = 0;
-	for(i = 0; i < MAX_MAP_SERVERS; i++) {
+	for(i = 0; i < ARRAYLENGTH(server); i++) {
 		if (server[i].fd > 0) {
 			users += server[i].users;
 		}
@@ -1779,23 +1779,74 @@ static void char_auth_ok(int fd, struct char_session_data *sd)
 }
 
 int send_accounts_tologin(int tid, unsigned int tick, int id, intptr data);
+void mapif_server_reset(int id);
+
+
+/// Resets all the data.
+void loginif_reset(void)
+{
+	int id;
+	// TODO kick everyone out and reset everything or wait for connect and try to reaquire locks [FlavioJS]
+	for( id = 0; id < ARRAYLENGTH(server); ++id )
+		mapif_server_reset(id);
+	flush_fifos();
+	exit(EXIT_FAILURE);
+}
+
+
+/// Checks the conditions for the server to stop.
+/// Releases the cookie when all characters are saved.
+/// If all the conditions are met, it stops the core loop.
+void loginif_check_shutdown(void)
+{
+	if( runflag != CHARSERVER_ST_SHUTDOWN )
+		return;
+	runflag = CORE_ST_STOP;
+}
+
+
+/// Called when the connection to Login Server is disconnected.
+void loginif_on_disconnect(void)
+{
+	ShowWarning("Connection to Login Server lost.\n\n");
+}
+
+
+/// Called when all the connection steps are completed.
+void loginif_on_ready(void)
+{
+	int i;
+
+	loginif_check_shutdown();
+	
+	//Send online accounts to login server.
+	send_accounts_tologin(INVALID_TIMER, gettick(), 0, 0);
+
+	// if no map-server already connected, display a message...
+	ARR_FIND( 0, ARRAYLENGTH(server), i, server[i].fd > 0 && server[i].map[0] );
+	if( i == ARRAYLENGTH(server) )
+		ShowStatus("Awaiting maps from map-server.\n");
+}
+
 
 int parse_fromlogin(int fd)
 {
+	struct char_session_data* sd = NULL;
 	int i;
-	struct char_session_data *sd;
-
-	// only login-server can have an access to here.
-	// so, if it isn't the login-server, we disconnect the session.
+	
+	// only process data from the login-server
 	if( fd != login_fd )
-		set_eof(fd);
-
-	if(session[fd]->flag.eof) {
-		if (fd == login_fd) {
-			ShowWarning("Connection to login-server lost (connection #%d).\n", fd);
-			login_fd = -1;
-		}
+	{
+		ShowDebug("parse_fromlogin: Disconnecting invalid session #%d (is not the login-server)\n", fd);
 		do_close(fd);
+		return 0;
+	}
+
+	if( session[fd]->flag.eof )
+	{
+		do_close(fd);
+		login_fd = -1;
+		loginif_on_disconnect();
 		return 0;
 	}
 
@@ -1819,16 +1870,11 @@ int parse_fromlogin(int fd)
 				ShowError("The server communication passwords (default s1/p1) are probably invalid.\n");
 				ShowError("Also, please make sure your login db has the correct communication username/passwords and the gender of the account is S.\n");
 				ShowError("The communication passwords are set in map_athena.conf and char_athena.conf\n");
+				set_eof(fd);
+				return 0;
 			} else {
 				ShowStatus("Connected to login-server (connection #%d).\n", fd);
-				
-				//Send online accounts to login server.
-				send_accounts_tologin(INVALID_TIMER, gettick(), 0, 0);
-
-				// if no map-server already connected, display a message...
-				ARR_FIND( 0, MAX_MAP_SERVERS, i, server[i].fd > 0 && server[i].map[0] );
-				if( i == MAX_MAP_SERVERS )
-					ShowStatus("Awaiting maps from map-server.\n");
+				loginif_on_ready();
 			}
 			RFIFOSKIP(fd,3);
 		break;
@@ -2096,6 +2142,34 @@ int parse_fromlogin(int fd)
 	return 0;
 }
 
+int check_connect_login_server(int tid, unsigned int tick, int id, intptr data);
+int ping_login_server(int tid, unsigned int tick, int id, intptr data);
+int send_accounts_tologin(int tid, unsigned int tick, int id, intptr data);
+
+void do_init_loginif(void)
+{
+	// establish char-login connection if not present
+	add_timer_func_list(check_connect_login_server, "check_connect_login_server");
+	add_timer_interval(gettick() + 1000, check_connect_login_server, 0, 0, 10 * 1000);
+	
+	// keep the char-login connection alive
+	add_timer_func_list(ping_login_server, "ping_login_server");
+	add_timer_interval(gettick() + 1000, ping_login_server, 0, 0, ((int)stall_time-2) * 1000);
+	
+	// send a list of all online account IDs to login server
+	add_timer_func_list(send_accounts_tologin, "send_accounts_tologin");
+	add_timer_interval(gettick() + 1000, send_accounts_tologin, 0, 0, 3600 * 1000); //Sync online accounts every hour
+}
+
+void do_final_loginif(void)
+{
+	if( login_fd != -1 )
+	{
+		do_close(login_fd);
+		login_fd = -1;
+	}
+}
+
 int request_accreg2(int account_id, int char_id)
 {
 	if (login_fd > 0) {
@@ -2252,37 +2326,77 @@ int char_loadName(int char_id, char* name)
 
 int search_mapserver(unsigned short map, uint32 ip, uint16 port);
 
+
+/// Initializes a server structure.
+void mapif_server_init(int id)
+{
+	memset(&server[id], 0, sizeof(server[id]));
+	server[id].fd = -1;
+}
+
+
+/// Destroys a server structure.
+void mapif_server_destroy(int id)
+{
+	if( server[id].fd == -1 )
+	{
+		do_close(server[id].fd);
+		server[id].fd = -1;
+	}
+}
+
+
+/// Resets all the data related to a server.
+void mapif_server_reset(int id)
+{
+	int i,j;
+	unsigned char buf[16384];
+	int fd = server[id].fd;
+	//Notify other map servers that this one is gone. [Skotlex]
+	WBUFW(buf,0) = 0x2b20;
+	WBUFL(buf,4) = htonl(server[id].ip);
+	WBUFW(buf,8) = htons(server[id].port);
+	j = 0;
+	for(i = 0; i < MAX_MAP_PER_SERVER; i++)
+		if (server[id].map[i])
+			WBUFW(buf,10+(j++)*4) = server[id].map[i];
+	if (j > 0) {
+		WBUFW(buf,2) = j * 4 + 10;
+		mapif_sendallwos(fd, buf, WBUFW(buf,2));
+	}
+	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `ragsrvinfo` WHERE `index`='%d'", server[id].fd) )
+		Sql_ShowDebug(sql_handle);
+	online_char_db->foreach(online_char_db,char_db_setoffline,id); //Tag relevant chars as 'in disconnected' server.
+	mapif_server_destroy(id);
+	mapif_server_init(id);
+}
+
+
+/// Called when the connection to a Map Server is disconnected.
+void mapif_on_disconnect(int id)
+{
+	ShowStatus("Map-server #%d has disconnected.\n", id);
+	mapif_server_reset(id);
+}
+
+
 int parse_frommap(int fd)
 {
 	int i, j;
 	int id;
 
-	ARR_FIND( 0, MAX_MAP_SERVERS, id, server[id].fd == fd );
-	if(id == MAX_MAP_SERVERS)
-		set_eof(fd);
-	if(session[fd]->flag.eof) {
-		if (id < MAX_MAP_SERVERS) {
-			unsigned char buf[16384];
-			ShowStatus("Map-server %d (session #%d) has disconnected.\n", id, fd);
-			//Notify other map servers that this one is gone. [Skotlex]
-			WBUFW(buf,0) = 0x2b20;
-			WBUFL(buf,4) = htonl(server[id].ip);
-			WBUFW(buf,8) = htons(server[id].port);
-			j = 0;
-			for(i = 0; i < MAX_MAP_PER_SERVER; i++)
-				if (server[id].map[i])
-					WBUFW(buf,10+(j++)*4) = server[id].map[i];
-			if (j > 0) {
-				WBUFW(buf,2) = j * 4 + 10;
-				mapif_sendallwos(fd, buf, WBUFW(buf,2));
-			}
-			memset(&server[id], 0, sizeof(struct mmo_map_server));
-			if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `ragsrvinfo` WHERE `index`='%d'", server[id].fd) )
-				Sql_ShowDebug(sql_handle);
-			server[id].fd = -1;
-			online_char_db->foreach(online_char_db,char_db_setoffline,id); //Tag relevant chars as 'in disconnected' server.
-		}
+	ARR_FIND( 0, ARRAYLENGTH(server), id, server[id].fd == fd );
+	if( id == ARRAYLENGTH(server) )
+	{// not a map server
+		ShowDebug("parse_frommap: Disconnecting invalid session #%d (is not a map-server)\n", fd);
 		do_close(fd);
+		return 0;
+	}
+	if( session[fd]->flag.eof )
+	{
+		do_close(fd);
+		server[id].fd = -1;
+		mapif_on_disconnect(id);
 		return 0;
 	}
 
@@ -2330,14 +2444,14 @@ int parse_frommap(int fd)
 				mapif_sendallwos(fd, buf, WBUFW(buf,2));
 			}
 			// Transmitting the maps of the other map-servers to the new map-server
-			for(x = 0; x < MAX_MAP_SERVERS; x++) {
+			for(x = 0; x < ARRAYLENGTH(server); x++) {
 				if (server[x].fd > 0 && x != id) {
-					WFIFOHEAD(fd,10 +4*MAX_MAP_PER_SERVER);
+					WFIFOHEAD(fd,10 +4*ARRAYLENGTH(server));
 					WFIFOW(fd,0) = 0x2b04;
 					WFIFOL(fd,4) = htonl(server[x].ip);
 					WFIFOW(fd,8) = htons(server[x].port);
 					j = 0;
-					for(i = 0; i < MAX_MAP_PER_SERVER; i++)
+					for(i = 0; i < ARRAYLENGTH(server); i++)
 						if (server[x].map[i])
 							WFIFOW(fd,10+(j++)*4) = server[x].map[i];
 					if (j > 0) {
@@ -2491,27 +2605,38 @@ int parse_frommap(int fd)
 			uint32 login_id2 = RFIFOL(fd,10);
 			uint32 ip = RFIFOL(fd,14);
 			RFIFOSKIP(fd,18);
+			
+			if( runflag != CHARSERVER_ST_RUNNING )
+			{
+				WFIFOHEAD(fd,7);
+				WFIFOW(fd,0) = 0x2b03;
+				WFIFOL(fd,2) = account_id;
+				WFIFOB(fd,6) = 0;// not ok
+				WFIFOSET(fd,7);
+			}
+			else
+			{
+				// create temporary auth entry
+				CREATE(node, struct auth_node, 1);
+				node->account_id = account_id;
+				node->char_id = 0;
+				node->login_id1 = login_id1;
+				node->login_id2 = login_id2;
+				//node->sex = 0;
+				node->ip = ntohl(ip);
+				//node->expiration_time = 0; // unlimited/unknown time by default (not display in map-server)
+				//node->gmlevel = 0;
+				idb_put(auth_db, account_id, node);
 
-			// create temporary auth entry
-			CREATE(node, struct auth_node, 1);
-			node->account_id = account_id;
-			node->char_id = 0;
-			node->login_id1 = login_id1;
-			node->login_id2 = login_id2;
-			//node->sex = 0;
-			node->ip = ntohl(ip);
-			//node->expiration_time = 0; // unlimited/unknown time by default (not display in map-server)
-			//node->gmlevel = 0;
-			idb_put(auth_db, account_id, node);
+				//Set char to "@ char select" in online db [Kevin]
+				set_char_charselect(account_id);
 
-			//Set char to "@ char select" in online db [Kevin]
-			set_char_charselect(account_id);
-
-			WFIFOHEAD(fd,7);
-			WFIFOW(fd,0) = 0x2b03;
-			WFIFOL(fd,2) = account_id;
-			WFIFOB(fd,6) = 0;
-			WFIFOSET(fd,7);
+				WFIFOHEAD(fd,7);
+				WFIFOW(fd,0) = 0x2b03;
+				WFIFOL(fd,2) = account_id;
+				WFIFOB(fd,6) = 1;// ok
+				WFIFOSET(fd,7);
+			}
 		}
 		break;
 
@@ -2534,8 +2659,10 @@ int parse_frommap(int fd)
 				mmo_char_fromsql(RFIFOL(fd,14), &char_dat, true);
 				char_data = (struct mmo_charstatus*)uidb_get(char_db_,RFIFOL(fd,14));
 			}
-
-			if (map_fd >= 0 && session[map_fd] && char_data) 
+			
+			if( runflag == CHARSERVER_ST_RUNNING &&
+				session_isActive(map_fd) &&
+				char_data )
 			{	//Send the map server the auth of this player.
 				struct auth_node* node;
 
@@ -2879,7 +3006,9 @@ int parse_frommap(int fd)
 				mmo_char_fromsql(char_id, &char_dat, true);
 				cd = (struct mmo_charstatus*)uidb_get(char_db_,char_id);
 			}
-			if( node != NULL && cd != NULL &&
+			if( runflag == CHARSERVER_ST_RUNNING &&
+				cd != NULL &&
+				node != NULL && 
 				node->account_id == account_id &&
 				node->char_id == char_id &&
 				node->login_id1 == login_id1 &&
@@ -2942,13 +3071,27 @@ int parse_frommap(int fd)
 	return 0;
 }
 
+void do_init_mapif(void)
+{
+	int i;
+	for( i = 0; i < ARRAYLENGTH(server); ++i )
+		mapif_server_init(i);
+}
+
+void do_final_mapif(void)
+{
+	int i;
+	for( i = 0; i < ARRAYLENGTH(server); ++i )
+		mapif_server_destroy(i);
+}
+
 // Searches for the mapserver that has a given map (and optionally ip/port, if not -1).
 // If found, returns the server's index in the 'server' array (otherwise returns -1).
 int search_mapserver(unsigned short map, uint32 ip, uint16 port)
 {
 	int i, j;
 	
-	for(i = 0; i < MAX_MAP_SERVERS; i++)
+	for(i = 0; i < ARRAYLENGTH(server); i++)
 	{
 		if (server[i].fd > 0
 		&& (ip == (uint32)-1 || server[i].ip == ip)
@@ -3276,6 +3419,15 @@ int parse_char(int fd)
 			WFIFOL(fd,0) = account_id;
 			WFIFOSET(fd,4);
 
+			if( runflag != CHARSERVER_ST_RUNNING )
+			{
+				WFIFOHEAD(fd,3);
+				WFIFOW(fd,0) = 0x6c;
+				WFIFOB(fd,2) = 0;// rejected from server
+				WFIFOSET(fd,3);
+				break;
+			}
+
 			// search authentification
 			node = (struct auth_node*)idb_get(auth_db, account_id);
 			if( node != NULL &&
@@ -3361,8 +3513,8 @@ int parse_char(int fd)
 			if (i < 0) {
 				unsigned short j;
 				//First check that there's actually a map server online.
-				ARR_FIND( 0, MAX_MAP_SERVERS, j, server[j].fd >= 0 && server[j].map[0] );
-				if (j == MAX_MAP_SERVERS) {
+				ARR_FIND( 0, ARRAYLENGTH(server), j, server[j].fd >= 0 && server[j].map[0] );
+				if (j == ARRAYLENGTH(server)) {
 					ShowInfo("Connection Closed. No map servers available.\n");
 					WFIFOHEAD(fd,3);
 					WFIFOW(fd,0) = 0x81;
@@ -3665,8 +3817,12 @@ int parse_char(int fd)
 			char* l_pass = (char*)RFIFOP(fd,26);
 			l_user[23] = '\0';
 			l_pass[23] = '\0';
-			ARR_FIND( 0, MAX_MAP_SERVERS, i, server[i].fd <= 0 );
-			if (i == MAX_MAP_SERVERS || strcmp(l_user, userid) || strcmp(l_pass, passwd)) {
+			ARR_FIND( 0, ARRAYLENGTH(server), i, server[i].fd <= 0 );
+			if( runflag != CHARSERVER_ST_RUNNING ||
+				i == ARRAYLENGTH(server) ||
+				strcmp(l_user, userid) != 0 ||
+				strcmp(l_pass, passwd) != 0 )
+			{
 				WFIFOHEAD(fd,3);
 				WFIFOW(fd,0) = 0x2af9;
 				WFIFOB(fd,2) = 3;
@@ -3729,7 +3885,7 @@ int mapif_sendall(unsigned char *buf, unsigned int len)
 	int i, c;
 
 	c = 0;
-	for(i = 0; i < MAX_MAP_SERVERS; i++) {
+	for(i = 0; i < ARRAYLENGTH(server); i++) {
 		int fd;
 		if ((fd = server[i].fd) > 0) {
 			WFIFOHEAD(fd,len);
@@ -3747,7 +3903,7 @@ int mapif_sendallwos(int sfd, unsigned char *buf, unsigned int len)
 	int i, c;
 
 	c = 0;
-	for(i = 0; i < MAX_MAP_SERVERS; i++) {
+	for(i = 0; i < ARRAYLENGTH(server); i++) {
 		int fd;
 		if ((fd = server[i].fd) > 0 && fd != sfd) {
 			WFIFOHEAD(fd,len);
@@ -3765,8 +3921,8 @@ int mapif_send(int fd, unsigned char *buf, unsigned int len)
 	int i;
 
 	if (fd >= 0) {
-		ARR_FIND( 0, MAX_MAP_SERVERS, i, fd == server[i].fd );
-		if( i < MAX_MAP_SERVERS )
+		ARR_FIND( 0, ARRAYLENGTH(server), i, fd == server[i].fd );
+		if( i < ARRAYLENGTH(server) )
 		{
 			WFIFOHEAD(fd,len);
 			memcpy(WFIFOP(fd,0), buf, len);
@@ -4211,7 +4367,7 @@ int char_config_read(const char* cfgName)
 
 void do_final(void)
 {
-	ShowStatus("Terminating server.\n");
+	ShowStatus("Terminating...\n");
 
 	set_all_offline(-1);
 	set_all_offline_sql();
@@ -4219,6 +4375,9 @@ void do_final(void)
 	inter_final();
 
 	flush_fifos();
+	
+	do_final_mapif();
+	do_final_loginif();
 
 	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `ragsrvinfo`") )
 		Sql_ShowDebug(sql_handle);
@@ -4227,13 +4386,16 @@ void do_final(void)
 	online_char_db->destroy(online_char_db, NULL);
 	auth_db->destroy(auth_db, NULL);
 
-	if (login_fd > 0)
-		do_close(login_fd);
-	if (char_fd > 0)
+	if( char_fd != -1 )
+	{
 		do_close(char_fd);
+		char_fd = -1;
+	}
 
 	Sql_Free(sql_handle);
 	mapindex_final();
+
+	ShowStatus("Finished.\n");
 }
 
 //------------------------------
@@ -4249,15 +4411,27 @@ void set_server_type(void)
 	SERVER_TYPE = ATHENA_SERVER_CHAR;
 }
 
+
+/// Called when a terminate signal is received.
+void do_shutdown(void)
+{
+	if( runflag != CHARSERVER_ST_SHUTDOWN )
+	{
+		int id;
+		runflag = CHARSERVER_ST_SHUTDOWN;
+		ShowStatus("Shutting down...\n");
+		// TODO proper shutdown procedure; wait for acks?, kick all characters, ... [FlavoJS]
+		for( id = 0; id < ARRAYLENGTH(server); ++id )
+			mapif_server_reset(id);
+		loginif_check_shutdown();
+		flush_fifos();
+		runflag = CORE_ST_STOP;
+	}
+}
+
+
 int do_init(int argc, char **argv)
 {
-	int i;
-
-	for(i = 0; i < MAX_MAP_SERVERS; i++) {
-		memset(&server[i], 0, sizeof(struct mmo_map_server));
-		server[i].fd = -1;
-	}
-
 	//Read map indexes
 	mapindex_init();
 	start_point.map = mapindex_name2id("new_zone01");
@@ -4284,8 +4458,6 @@ int do_init(int argc, char **argv)
 	char_read_fame_list(); //Read fame lists.
 	ShowInfo("char server initialized.\n");
 
-	set_defaultparse(parse_char);
-
 	if ((naddr_ != 0) && (!login_ip || !char_ip))
 	{
 		char ip_str[16];
@@ -4305,21 +4477,12 @@ int do_init(int argc, char **argv)
 		}
 	}
 
-	// establish char-login connection if not present
-	add_timer_func_list(check_connect_login_server, "check_connect_login_server");
-	add_timer_interval(gettick() + 1000, check_connect_login_server, 0, 0, 10 * 1000);
-
-	// keep the char-login connection alive
-	add_timer_func_list(ping_login_server, "ping_login_server");
-	add_timer_interval(gettick() + 1000, ping_login_server, 0, 0, ((int)stall_time-2) * 1000);
+	do_init_loginif();
+	do_init_mapif();
 
 	// periodically update the overall user count on all mapservers + login server
 	add_timer_func_list(broadcast_user_count, "broadcast_user_count");
 	add_timer_interval(gettick() + 1000, broadcast_user_count, 0, 0, 5 * 1000);
-
-	// send a list of all online account IDs to login server
-	add_timer_func_list(send_accounts_tologin, "send_accounts_tologin");
-	add_timer_interval(gettick() + 1000, send_accounts_tologin, 0, 0, 3600 * 1000); //Sync online accounts every hour
 
 	// ???
 	add_timer_func_list(chardb_waiting_disconnect, "chardb_waiting_disconnect");
@@ -4351,9 +4514,16 @@ int do_init(int argc, char **argv)
 
 	ShowInfo("End of char server initilization function.\n");
 
+	set_defaultparse(parse_char);
 	ShowInfo("open port %d.....\n",char_port);
 	char_fd = make_listen_bind(bind_ip, char_port);
 	ShowStatus("The char-server is "CL_GREEN"ready"CL_RESET" (Server is listening on the port %d).\n\n", char_port);
+	
+	if( runflag != CORE_ST_STOP )
+	{
+		shutdown_callback = do_shutdown;
+		runflag = CHARSERVER_ST_RUNNING;
+	}
 
 	return 0;
 }

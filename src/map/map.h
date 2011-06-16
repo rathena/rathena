@@ -7,6 +7,7 @@
 #ifndef _CBASETYPES_H_
 #include "../common/cbasetypes.h"
 #endif
+#include "../common/core.h" // CORE_ST_LAST
 #include "../common/mmo.h"
 #include "../common/mapindex.h"
 #include "../common/db.h"
@@ -15,6 +16,13 @@
 
 struct npc_data;
 struct item_data;
+
+enum E_MAPSERVER_ST
+{
+	MAPSERVER_ST_RUNNING = CORE_ST_LAST,
+	MAPSERVER_ST_SHUTDOWN,
+	MAPSERVER_ST_LAST
+};
 
 //Uncomment to enable the Cell Stack Limit mod.
 //It's only config is the battle_config cell_stack_limit.
@@ -694,5 +702,7 @@ extern char mob_db_db[32];
 extern char mob_db2_db[32];
 
 #endif /* not TXT_ONLY */
+
+void do_shutdown(void);
 
 #endif /* _MAP_H_ */

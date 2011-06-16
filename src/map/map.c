@@ -3491,7 +3491,7 @@ void do_final(void)
 #ifndef TXT_ONLY
     map_sql_close();
 #endif /* not TXT_ONLY */
-	ShowStatus("Successfully terminated.\n");
+	ShowStatus("Finished.\n");
 }
 
 static int map_abort_sub(struct map_session_data* sd, va_list ap)
@@ -3572,6 +3572,27 @@ void set_server_type(void)
 {
 	SERVER_TYPE = ATHENA_SERVER_MAP;
 }
+
+
+/// Called when a terminate signal is received.
+void do_shutdown(void)
+{
+	if( runflag != MAPSERVER_ST_SHUTDOWN )
+	{
+		runflag = MAPSERVER_ST_SHUTDOWN;
+		ShowStatus("Shutting down...\n");
+		{
+			struct map_session_data* sd;
+			struct s_mapiterator* iter = mapit_getallusers();
+			for( sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC*)mapit_next(iter) )
+				clif_GM_kick(NULL, sd);
+			mapit_free(iter);
+			flush_fifos();
+		}
+		chrif_check_shutdown();
+	}
+}
+
 
 int do_init(int argc, char *argv[])
 {
@@ -3710,6 +3731,12 @@ int do_init(int argc, char *argv[])
 		ShowNotice("Server is running on '"CL_WHITE"PK Mode"CL_RESET"'.\n");
 
 	ShowStatus("Server is '"CL_GREEN"ready"CL_RESET"' and listening on port '"CL_WHITE"%d"CL_RESET"'.\n\n", map_port);
+	
+	if( runflag != CORE_ST_STOP )
+	{
+		shutdown_callback = do_shutdown;
+		runflag = MAPSERVER_ST_RUNNING;
+	}
 
 	return 0;
 }

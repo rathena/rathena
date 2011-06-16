@@ -1,5 +1,13 @@
 Date	Added
 
+2011/06/16
+	* Merges from charmerge:
+	- Added DBMap::exists. (r14090)
+	- Added sv_parse_next, a stepped version of sv_parse (delim-separated parser). (r14100 r14104)
+	- Added missing fd check to do_close. (r14145)
+	- Normalized, refactored and restructured some code (in preparation for shutdown/reconnect code). (r14145 r14150)
+	- Changed the char select request code to allow the char-server to reject it. (player in map-server trying to go to char select) (r14150)
+	- Added shutdown support to the servers. (incomplete) (r14152)
 2011/06/13
 	* Fixed pet's equip would visually disappear when it's walk speed was changed while it was standing (related r14838). [Ai4rei]
 2011/06/11

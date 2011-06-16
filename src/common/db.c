@@ -271,6 +271,7 @@ static struct db_stats {
 	uint32 dbit_remove;
 	uint32 dbit_destroy;
 	uint32 db_iterator;
+	uint32 db_exists;
 	uint32 db_get;
 	uint32 db_getall;
 	uint32 db_vgetall;
@@ -304,7 +305,7 @@ static struct db_stats {
 	0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 	0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 	0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-	0, 0, 0, 0, 0, 0, 0, 0
+	0, 0, 0, 0, 0, 0, 0, 0, 0
 };
 #define DB_COUNTSTAT(token) if (stats. ## token != UINT32_MAX) ++stats. ## token
 #else /* !defined(DB_ENABLE_STATS) */
@@ -1087,6 +1088,7 @@ static void db_release_both(DBKey key, void *data, DBRelease which)
  *  dbit_obj_destroy - Destroys the iterator, unlocking the database and     *
  *           freeing used memory.                                            *
  *  db_obj_iterator - Return a new databse iterator.                         *
+ *  db_obj_exists   - Checks if an entry exists.                             *
  *  db_obj_get      - Get the data identified by the key.                    *
  *  db_obj_vgetall  - Get the data of the matched entries.                   *
  *  db_obj_getall   - Get the data of the matched entries.                   *
@@ -1399,6 +1401,57 @@ static DBIterator* db_obj_iterator(DBMap* self)
 	/* Lock the database */
 	db_free_lock(db);
 	return &it->vtable;
+}
+
+/**
+ * Returns true if the entry exists.
+ * @param self Interface of the database
+ * @param key Key that identifies the entry
+ * @return true is the entry exists
+ * @protected
+ * @see DBMap#exists
+ */
+static bool db_obj_exists(DBMap* self, DBKey key)
+{
+	DBMap_impl* db = (DBMap_impl*)self;
+	DBNode node;
+	int c;
+	bool found = false;
+
+	DB_COUNTSTAT(db_exists);
+	if (db == NULL) return false; // nullpo candidate
+	if (!(db->options&DB_OPT_ALLOW_NULL_KEY) && db_is_key_null(db->type, key)) {
+		return false; // nullpo candidate
+	}
+
+	if (db->cache && db->cmp(key, db->cache->key, db->maxlen) == 0) {
+#if defined(DEBUG)
+		if (db->cache->deleted) {
+			ShowDebug("db_exists: Cache contains a deleted node. Please report this!!!\n");
+			return false;
+		}
+#endif
+		return true; // cache hit
+	}
+
+	db_free_lock(db);
+	node = db->ht[db->hash(key, db->maxlen)%HASH_SIZE];
+	while (node) {
+		c = db->cmp(key, node->key, db->maxlen);
+		if (c == 0) {
+			if (!(node->deleted)) {
+				db->cache = node;
+				found = true;
+			}
+			break;
+		}
+		if (c < 0)
+			node = node->left;
+		else
+			node = node->right;
+	}
+	db_free_unlock(db);
+	return found;
 }
 
 /**
@@ -2351,6 +2404,7 @@ DBMap* db_alloc(const char *file, int line, DBType type, DBOptions options, unsi
 	options = db_fix_options(type, options);
 	/* Interface of the database */
 	db->vtable.iterator = db_obj_iterator;
+	db->vtable.exists   = db_obj_exists;
 	db->vtable.get      = db_obj_get;
 	db->vtable.getall   = db_obj_getall;
 	db->vtable.vgetall  = db_obj_vgetall;
@@ -2493,7 +2547,7 @@ void db_final(void)
 			"dbit_next          %10u, dbit_prev          %10u,\n"
 			"dbit_exists        %10u, dbit_remove        %10u,\n"
 			"dbit_destroy       %10u, db_iterator        %10u,\n"
-			"db_get             %10u,\n"
+			"db_exits           %10u, db_get             %10u,\n"
 			"db_getall          %10u, db_vgetall         %10u,\n"
 			"db_ensure          %10u, db_vensure         %10u,\n"
 			"db_put             %10u, db_remove          %10u,\n"
@@ -2523,7 +2577,7 @@ void db_final(void)
 			stats.dbit_next,          stats.dbit_prev,
 			stats.dbit_exists,        stats.dbit_remove,
 			stats.dbit_destroy,       stats.db_iterator,
-			stats.db_get,
+			stats.db_exists,          stats.db_get,
 			stats.db_getall,          stats.db_vgetall,
 			stats.db_ensure,          stats.db_vensure,
 			stats.db_put,             stats.db_remove,

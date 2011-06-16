@@ -360,6 +360,15 @@ struct DBMap {
 	DBIterator* (*iterator)(DBMap* self);
 
 	/**
+	 * Returns true if the entry exists.
+	 * @param self Database
+	 * @param key Key that identifies the entry
+	 * @return true is the entry exists
+	 * @protected
+	 */
+	bool (*exists)(DBMap* self, DBKey key);
+
+	/**
 	 * Get the data of the entry identifid by the key.
 	 * @param self Database
 	 * @param key Key that identifies the entry
@@ -579,6 +588,11 @@ struct DBMap {
 #	define ui2key(k)  ((DBKey)(unsigned int)(k))
 #	define str2key(k) ((DBKey)(const char *)(k))
 #endif /* not DB_MANUAL_CAST_TO_UNION */
+
+#define db_exists(db,k)    ( (db)->exists((db),(k)) )
+#define idb_exists(db,k)   ( (db)->exists((db),i2key(k)) )
+#define uidb_exists(db,k)  ( (db)->exists((db),ui2key(k)) )
+#define strdb_exists(db,k) ( (db)->exists((db),str2key(k)) )
 
 #define db_get(db,k)    ( (db)->get((db),(k)) )
 #define idb_get(db,k)   ( (db)->get((db),i2key(k)) )

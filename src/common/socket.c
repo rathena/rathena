@@ -1118,6 +1118,9 @@ void socket_final(void)
 /// Closes a socket.
 void do_close(int fd)
 {
+	if( fd <= 0 ||fd >= FD_SETSIZE )
+		return;// invalid
+
 	flush_fifo(fd); // Try to send what's left (although it might not succeed since it's a nonblocking socket)
 	sFD_CLR(fd, &readfds);// this needs to be done before closing the socket
 	sShutdown(fd, SHUT_RDWR); // Disallow further reads/writes

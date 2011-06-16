@@ -190,7 +190,7 @@ int charif_sendallwos(int sfd, uint8* buf, size_t len)
 {
 	int i, c;
 
-	for( i = 0, c = 0; i < MAX_SERVERS; ++i )
+	for( i = 0, c = 0; i < ARRAYLENGTH(server); ++i )
 	{
 		int fd = server[i].fd;
 		if( session_isValid(fd) && fd != sfd )
@@ -203,6 +203,42 @@ int charif_sendallwos(int sfd, uint8* buf, size_t len)
 	}
 
 	return c;
+}
+
+
+/// Initializes a server structure.
+void chrif_server_init(int id)
+{
+	memset(&server[id], 0, sizeof(server[id]));
+	server[id].fd = -1;
+}
+
+
+/// Destroys a server structure.
+void chrif_server_destroy(int id)
+{
+	if( server[id].fd != -1 )
+	{
+		do_close(server[id].fd);
+		server[id].fd = -1;
+	}
+}
+
+
+/// Resets all the data related to a server.
+void chrif_server_reset(int id)
+{
+	online_db->foreach(online_db, online_db_setoffline, id); //Set all chars from this char server to offline.
+	chrif_server_destroy(id);
+	chrif_server_init(id);
+}
+
+
+/// Called when the connection to Char Server is disconnected.
+void chrif_on_disconnect(int id)
+{
+	ShowStatus("Char-server '%s' has disconnected.\n", server[id].name);
+	chrif_server_reset(id);
 }
 
 
@@ -381,9 +417,10 @@ int parse_fromchar(int fd)
 	uint32 ipl;
 	char ip[16];
 
-	ARR_FIND( 0, MAX_SERVERS, id, server[id].fd == fd );
-	if( id == MAX_SERVERS )
+	ARR_FIND( 0, ARRAYLENGTH(server), id, server[id].fd == fd );
+	if( id == ARRAYLENGTH(server) )
 	{// not a char server
+		ShowDebug("parse_fromchar: Disconnecting invalid session #%d (is not a char-server)\n", fd);
 		set_eof(fd);
 		do_close(fd);
 		return 0;
@@ -391,11 +428,9 @@ int parse_fromchar(int fd)
 
 	if( session[fd]->flag.eof )
 	{
-		ShowStatus("Char-server '%s' has disconnected.\n", server[id].name);
-		online_db->foreach(online_db, online_db_setoffline, id); //Set all chars from this char server to offline.
-		memset(&server[id], 0, sizeof(struct mmo_char_server));
-		server[id].fd = -1;
 		do_close(fd);
+		server[id].fd = -1;
+		chrif_on_disconnect(id);
 		return 0;
 	}
 
@@ -424,8 +459,9 @@ int parse_fromchar(int fd)
 			RFIFOSKIP(fd,23);
 
 			node = (struct auth_node*)idb_get(auth_db, account_id);
-			if( node != NULL &&
-			    node->account_id == account_id &&
+			if( runflag == LOGINSERVER_ST_RUNNING &&
+				node != NULL &&
+				node->account_id == account_id &&
 				node->login_id1  == login_id1 &&
 				node->login_id2  == login_id2 &&
 				node->sex        == sex_num2str(sex) /*&&
@@ -1059,6 +1095,16 @@ void login_auth_ok(struct login_session_data* sd)
 	struct auth_node* node;
 	int i;
 
+	if( runflag != LOGINSERVER_ST_RUNNING )
+	{
+		// players can only login while running
+		WFIFOHEAD(fd,3);
+		WFIFOW(fd,0) = 0x81;
+		WFIFOB(fd,2) = 1;// server closed
+		WFIFOSET(fd,3);
+		return;
+	}
+
 	if( sd->level < login_config.min_level_to_connect )
 	{
 		ShowStatus("Connection refused: the minimum GM level for connection is %d (account: %s, GM level: %d).\n", login_config.min_level_to_connect, sd->userid, sd->level);
@@ -1070,8 +1116,8 @@ void login_auth_ok(struct login_session_data* sd)
 	}
 
 	server_num = 0;
-	for( i = 0; i < MAX_SERVERS; ++i )
-		if( session_isValid(server[i].fd) )
+	for( i = 0; i < ARRAYLENGTH(server); ++i )
+		if( session_isActive(server[i].fd) )
 			server_num++;
 
 	if( server_num == 0 )
@@ -1133,7 +1179,7 @@ void login_auth_ok(struct login_session_data* sd)
 	memset(WFIFOP(fd,20), 0, 24);
 	WFIFOW(fd,44) = 0; // unknown
 	WFIFOB(fd,46) = sex_str2num(sd->sex);
-	for( i = 0, n = 0; i < MAX_SERVERS; ++i )
+	for( i = 0, n = 0; i < ARRAYLENGTH(server); ++i )
 	{
 		if( !session_isValid(server[i].fd) )
 			continue;
@@ -1404,7 +1450,11 @@ int parse_login(int fd)
 			login_log(session[fd]->client_addr, sd->userid, 100, message);
 
 			result = mmo_auth(sd);
-			if( result == -1 && sd->sex == 'S' && sd->account_id < MAX_SERVERS && server[sd->account_id].fd == -1 )
+			if( runflag == LOGINSERVER_ST_RUNNING &&
+				result == -1 &&
+				sd->sex == 'S' &&
+				sd->account_id >= 0 && sd->account_id < ARRAYLENGTH(server) &&
+				!session_isValid(server[sd->account_id].fd) )
 			{
 				ShowStatus("Connection of the char-server '%s' accepted.\n", server_name);
 				safestrncpy(server[sd->account_id].name, server_name, sizeof(server[sd->account_id].name));
@@ -1592,7 +1642,7 @@ static AccountDB* get_account_engine(void)
 //--------------------------------------
 void do_final(void)
 {
-	int i, fd;
+	int i;
 
 	login_log(0, "login server", 100, "login server shutdown");
 	ShowStatus("Terminating...\n");
@@ -1614,15 +1664,15 @@ void do_final(void)
 	accounts = NULL; // destroyed in account_engines
 	online_db->destroy(online_db, NULL);
 	auth_db->destroy(auth_db, NULL);
+	
+	for( i = 0; i < ARRAYLENGTH(server); ++i )
+		chrif_server_destroy(i);
 
-	for (i = 0; i < MAX_SERVERS; i++) {
-		if ((fd = server[i].fd) >= 0) {
-			memset(&server[i], 0, sizeof(struct mmo_char_server));
-			server[i].fd = -1;
-			do_close(fd);
-		}
+	if( login_fd != -1 )
+	{
+		do_close(login_fd);
+		login_fd = -1;
 	}
-	do_close(login_fd);
 
 	ShowStatus("Finished.\n");
 }
@@ -1639,6 +1689,24 @@ void set_server_type(void)
 {
 	SERVER_TYPE = ATHENA_SERVER_LOGIN;
 }
+
+
+/// Called when a terminate signal is received.
+void do_shutdown(void)
+{
+	if( runflag != LOGINSERVER_ST_SHUTDOWN )
+	{
+		int id;
+		runflag = LOGINSERVER_ST_SHUTDOWN;
+		ShowStatus("Shutting down...\n");
+		// TODO proper shutdown procedure; kick all characters, wait for acks, ...  [FlavioJS]
+		for( id = 0; id < ARRAYLENGTH(server); ++id )
+			chrif_server_reset(id);
+		flush_fifos();
+		runflag = CORE_ST_STOP;
+	}
+}
+
 
 //------------------------------
 // Login server initialization
@@ -1657,9 +1725,9 @@ int do_init(int argc, char** argv)
 	login_lan_config_read((argc > 2) ? argv[2] : LAN_CONF_NAME);
 
 	srand((unsigned int)time(NULL));
-
-	for( i = 0; i < MAX_SERVERS; i++ )
-		server[i].fd = -1;
+	
+	for( i = 0; i < ARRAYLENGTH(server); ++i )
+		chrif_server_init(i);
 
 	// initialize logging
 	if( login_config.log_login )
@@ -1713,6 +1781,12 @@ int do_init(int argc, char** argv)
 
 	// server port open & binding
 	login_fd = make_listen_bind(login_config.login_ip, login_config.login_port);
+	
+	if( runflag != CORE_ST_STOP )
+	{
+		shutdown_callback = do_shutdown;
+		runflag = LOGINSERVER_ST_RUNNING;
+	}
 
 	ShowStatus("The login-server is "CL_GREEN"ready"CL_RESET" (Server is listening on the port %u).\n\n", login_config.login_port);
 	login_log(0, "login server", 100, "login server started");

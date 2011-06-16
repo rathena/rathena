@@ -31,6 +31,8 @@
 #include <sys/types.h>
 #include <time.h>
 
+static int check_connect_char_server(int tid, unsigned int tick, int id, intptr data);
+
 static struct eri *auth_db_ers; //For reutilizing player login structures.
 static DBMap* auth_db; // int id -> struct auth_node*
 
@@ -94,7 +96,7 @@ static const int packet_len_table[0x3d] = { // U - used, F - free
 //2b27: Incoming, chrif_authfail -> 'client authentication failed'
 
 int chrif_connected = 0;
-int char_fd = 0; //Using 0 instead of -1 is safer against crashes. [Skotlex]
+int char_fd = -1;
 int srvinfo;
 static char char_ip_str[128];
 static uint32 char_ip = 0;
@@ -109,6 +111,28 @@ int other_mapserver_count=0; //Holds count of how many other map servers are onl
 #define UPDATE_INTERVAL 10000
 //This define should spare writing the check in every function. [Skotlex]
 #define chrif_check(a) { if(!chrif_isconnected()) return a; }
+
+
+/// Resets all the data.
+void chrif_reset(void)
+{
+	// TODO kick everyone out and reset everything [FlavioJS]
+	exit(EXIT_FAILURE);
+}
+
+
+/// Checks the conditions for the server to stop.
+/// Releases the cookie when all characters are saved.
+/// If all the conditions are met, it stops the core loop.
+void chrif_check_shutdown(void)
+{
+	if( runflag != MAPSERVER_ST_SHUTDOWN )
+		return;
+	if( auth_db->size(auth_db) > 0 )
+		return;
+	runflag = CORE_ST_STOP;
+}
+
 
 struct auth_node* chrif_search(int account_id)
 {
@@ -363,6 +387,7 @@ int chrif_removemap(int fd)
 static void chrif_save_ack(int fd)
 {
 	chrif_auth_delete(RFIFOL(fd,2), RFIFOL(fd,6), ST_LOGOUT);
+	chrif_check_shutdown();
 }
 
 // request to move a character between mapservers
@@ -472,6 +497,25 @@ static int chrif_reconnect(DBKey key,void *data,va_list ap)
 	return 0;
 }
 
+
+/// Called when all the connection steps are completed.
+void chrif_on_ready(void)
+{
+	ShowStatus("Map Server is now online.\n");
+	chrif_state = 2;
+	chrif_check_shutdown();
+
+	//If there are players online, send them to the char-server. [Skotlex]
+	send_users_tochar();
+
+	//Auth db reconnect handling
+	auth_db->foreach(auth_db,chrif_reconnect);
+
+	//Re-save any storages that were modified in the disconnection time. [Skotlex]
+	do_reconnect_storage();
+}
+
+
 /*==========================================
  *
  *------------------------------------------*/
@@ -483,18 +527,7 @@ int chrif_sendmapack(int fd)
 	}
 
 	memcpy(wisp_server_name, RFIFOP(fd,3), NAME_LENGTH);
-	ShowStatus("Map sending complete. Map Server is now online.\n");
-	chrif_state = 2;
-
-	//If there are players online, send them to the char-server. [Skotlex]
-	send_users_tochar();
-
-	//Auth db reconnect handling
-	auth_db->foreach(auth_db,chrif_reconnect);
-
-	//Re-save any storages that were modified in the disconnection time. [Skotlex]
-	do_reconnect_storage();
-
+	chrif_on_ready();
 	return 0;
 }
 
@@ -592,7 +625,8 @@ void chrif_authok(int fd)
 	}
 
 	sd = node->sd;
-	if(node->char_dat == NULL &&
+	if( runflag == MAPSERVER_ST_RUNNING &&
+		node->char_dat == NULL &&
 		node->account_id == account_id &&
 		node->char_id == char_id &&
 		node->login_id1 == login_id1 )
@@ -1292,21 +1326,21 @@ int chrif_char_online(struct map_session_data *sd)
 	return 0;
 }
 
-int chrif_disconnect(int fd)
-{
-	if(fd == char_fd) {
-		char_fd = 0;
-		ShowWarning("Map Server disconnected from Char Server.\n\n");
-		chrif_connected = 0;
-		
-	 	other_mapserver_count=0; //Reset counter. We receive ALL maps from all map-servers on reconnect.
-		map_eraseallipport();
 
-		//Attempt to reconnect in a second. [Skotlex]
-		add_timer(gettick() + 1000, check_connect_char_server, 0, 0);
-	}
-	return 0;
+/// Called when the connection to Char Server is disconnected.
+void chrif_on_disconnect(void)
+{
+	if( chrif_connected != 1 )
+		ShowWarning("Connection to Char Server lost.\n\n");
+	chrif_connected = 0;
+	
+ 	other_mapserver_count = 0; //Reset counter. We receive ALL maps from all map-servers on reconnect.
+	map_eraseallipport();
+
+	//Attempt to reconnect in a second. [Skotlex]
+	add_timer(gettick() + 1000, check_connect_char_server, 0, 0);
 }
+
 
 void chrif_update_ip(int fd)
 {
@@ -1352,10 +1386,9 @@ int chrif_parse(int fd)
 
 	if (session[fd]->flag.eof)
 	{
-		if (chrif_connected == 1)
-			chrif_disconnect(fd);
-
 		do_close(fd);
+		char_fd = -1;
+		chrif_on_disconnect();
 		return 0;
 	}
 
@@ -1393,7 +1426,7 @@ int chrif_parse(int fd)
 		case 0x2afb: chrif_sendmapack(fd); break;
 		case 0x2afd: chrif_authok(fd); break;
 		case 0x2b00: map_setusers(RFIFOL(fd,2)); chrif_keepalive(fd); break;
-		case 0x2b03: clif_charselectok(RFIFOL(fd,2)); break;
+		case 0x2b03: clif_charselectok(RFIFOL(fd,2), RFIFOB(fd,6)); break;
 		case 0x2b04: chrif_recvmap(fd); break;
 		case 0x2b06: chrif_changemapserverack(RFIFOL(fd,2), RFIFOL(fd,6), RFIFOL(fd,10), RFIFOL(fd,14), RFIFOW(fd,18), RFIFOW(fd,20), RFIFOW(fd,22), RFIFOL(fd,24), RFIFOW(fd,28)); break;
 		case 0x2b09: map_addnickdb(RFIFOL(fd,2), (char*)RFIFOP(fd,6)); break;
@@ -1476,7 +1509,7 @@ int send_users_tochar(void)
  * timer関数
  * char鯖との接続を確認し、もし切れていたら再度接続する
  *------------------------------------------*/
-int check_connect_char_server(int tid, unsigned int tick, int id, intptr data)
+static int check_connect_char_server(int tid, unsigned int tick, int id, intptr data)
 {
 	static int displayed = 0;
 	if (char_fd <= 0 || session[char_fd] == NULL)
@@ -1491,7 +1524,6 @@ int check_connect_char_server(int tid, unsigned int tick, int id, intptr data)
 		char_fd = make_connection(char_ip, char_port);
 		if (char_fd == -1)
 		{	//Attempt to connect later. [Skotlex]
-			char_fd = 0;
 			return 0;
 		}
 
@@ -1532,8 +1564,11 @@ int auth_db_final(DBKey k,void *d,va_list ap)
  *------------------------------------------*/
 int do_final_chrif(void)
 {
-	if (char_fd > 0)
+	if( char_fd != -1 )
+	{
 		do_close(char_fd);
+		char_fd = -1;
+	}
 
 	auth_db->destroy(auth_db, auth_db_final);
 	ers_destroy(auth_db_ers);
