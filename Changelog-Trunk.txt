@@ -1,6 +1,7 @@
 Date	Added
 
 2011/06/16
+	* Fixed char-converter not being able to compile due to both char.h being included. (caused by last commit) [FlavioJS]
 	* Merges from charmerge:
 	- Added DBMap::exists. (r14090)
 	- Added sv_parse_next, a stepped version of sv_parse (delim-separated parser). (r14100 r14104)
