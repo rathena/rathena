@@ -632,14 +632,12 @@ static DBKey db_dup_key(DBMap_impl* db, DBKey key)
 {
 	char *str;
 	size_t len;
-	unsigned short maxlen;
 
 	DB_COUNTSTAT(db_dup_key);
 	switch (db->type) {
 		case DB_STRING:
 		case DB_ISTRING:
-			maxlen = ( db->maxlen != 0 ) ? db->maxlen : UINT16_MAX;
-			len = strnlen(key.str, maxlen);
+			len = strnlen(key.str, db->maxlen);
 			str = (char*)aMalloc(len + 1);
 			memcpy(str, key.str, len);
 			str[len] = '\0';
@@ -889,8 +887,6 @@ static int db_uint_cmp(DBKey key1, DBKey key2, unsigned short maxlen)
 static int db_string_cmp(DBKey key1, DBKey key2, unsigned short maxlen)
 {
 	DB_COUNTSTAT(db_string_cmp);
-	if (maxlen == 0)
-		maxlen = UINT16_MAX;
 	return strncmp((const char *)key1.str, (const char *)key2.str, maxlen);
 }
 
@@ -909,8 +905,6 @@ static int db_string_cmp(DBKey key1, DBKey key2, unsigned short maxlen)
 static int db_istring_cmp(DBKey key1, DBKey key2, unsigned short maxlen)
 {
 	DB_COUNTSTAT(db_istring_cmp);
-	if (maxlen == 0)
-		maxlen = UINT16_MAX;
 	return strncasecmp((const char *)key1.str, (const char *)key2.str, maxlen);
 }
 
@@ -952,7 +946,6 @@ static unsigned int db_uint_hash(DBKey key, unsigned short maxlen)
 
 /**
  * Default hasher for DB_STRING databases.
- * If maxlen if 0, the maximum number of maxlen is used instead.
  * @param key Key to be hashed
  * @param maxlen Maximum length of the key to hash
  * @return hash of the key
@@ -967,8 +960,6 @@ static unsigned int db_string_hash(DBKey key, unsigned short maxlen)
 	unsigned short i;
 
 	DB_COUNTSTAT(db_string_hash);
-	if (maxlen == 0)
-		maxlen = UINT16_MAX;
 
 	for (i = 0; *k; ++i) {
 		hash = (hash*33 + ((unsigned char)*k))^(hash>>24);
@@ -982,7 +973,6 @@ static unsigned int db_string_hash(DBKey key, unsigned short maxlen)
 
 /**
  * Default hasher for DB_ISTRING databases.
- * If maxlen if 0, the maximum number of maxlen is used instead.
  * @param key Key to be hashed
  * @param maxlen Maximum length of the key to hash
  * @return hash of the key
@@ -996,8 +986,6 @@ static unsigned int db_istring_hash(DBKey key, unsigned short maxlen)
 	unsigned short i;
 
 	DB_COUNTSTAT(db_istring_hash);
-	if (maxlen == 0)
-		maxlen = UINT16_MAX;
 
 	for (i = 0; *k; i++) {
 		hash = (hash*33 + ((unsigned char)TOLOWER(*k)))^(hash>>24);
@@ -2379,7 +2367,7 @@ DBReleaser db_custom_release(DBRelease which)
  * @param type Type of database
  * @param options Options of the database
  * @param maxlen Maximum length of the string to be used as key in string 
- *          databases
+ *          databases. If 0, the maximum number of maxlen is used (64K).
  * @return The interface of the database
  * @public
  * @see #DBMap_impl
@@ -2442,6 +2430,9 @@ DBMap* db_alloc(const char *file, int line, DBType type, DBOptions options, unsi
 	db->item_count = 0;
 	db->maxlen = maxlen;
 	db->global_lock = 0;
+
+	if( db->maxlen == 0 && (type == DB_STRING || type == DB_ISTRING) )
+		db->maxlen = UINT16_MAX;
 
 	return &db->vtable;
 }

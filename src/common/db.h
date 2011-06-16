@@ -205,8 +205,6 @@ typedef int (*DBMatcher)(DBKey key, void* data, va_list args);
 /**
  * Format of the comparators used internally by the database system.
  * Compares key1 to key2.
- * <code>maxlen</code> is the maximum number of character used in DB_STRING and 
- * DB_ISTRING databases. If 0, the maximum number of maxlen is used (64K).
  * Returns 0 is equal, negative if lower and positive is higher.
  * @param key1 Key being compared
  * @param key2 Key we are comparing to
@@ -221,8 +219,6 @@ typedef int (*DBComparator)(DBKey key1, DBKey key2, unsigned short maxlen);
 /**
  * Format of the hashers used internally by the database system.
  * Creates the hash of the key.
- * <code>maxlen</code> is the maximum number of character used in DB_STRING and 
- * DB_ISTRING databases. If 0, the maximum number of maxlen is used (64K).
  * @param key Key being hashed
  * @param maxlen Maximum number of characters used in DB_STRING and DB_ISTRING
  *          databases.
@@ -721,7 +717,7 @@ DBReleaser db_custom_release(DBRelease which);
  * @param type Type of database
  * @param options Options of the database
  * @param maxlen Maximum length of the string to be used as key in string 
- *          databases
+ *          databases. If 0, the maximum number of maxlen is used (64K).
  * @return The interface of the database
  * @public
  * @see #DBType
