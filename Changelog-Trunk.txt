@@ -1,6 +1,7 @@
 Date	Added
 
 2011/06/16
+	* Fixed DBMap's db_dup_key to allocate only as much as necessary (bugreport:4969) [ultramage]
 	* Fixed char-converter not being able to compile due to both char.h being included. (caused by last commit) [FlavioJS]
 	* Merges from charmerge:
 	- Added DBMap::exists. (r14090)

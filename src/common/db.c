@@ -631,19 +631,19 @@ static int db_is_key_null(DBType type, DBKey key)
 static DBKey db_dup_key(DBMap_impl* db, DBKey key)
 {
 	char *str;
+	size_t len;
+	unsigned short maxlen;
 
 	DB_COUNTSTAT(db_dup_key);
 	switch (db->type) {
 		case DB_STRING:
 		case DB_ISTRING:
-			if (db->maxlen) {
-				CREATE(str, char, db->maxlen +1);
-				strncpy(str, key.str, db->maxlen);
-				str[db->maxlen] = '\0';
-				key.str = str;
-			} else {
-				key.str = (char *)aStrdup(key.str);
-			}
+			maxlen = ( db->maxlen != 0 ) ? db->maxlen : UINT16_MAX;
+			len = strnlen(key.str, maxlen);
+			str = (char*)aMalloc(len + 1);
+			memcpy(str, key.str, len);
+			str[len] = '\0';
+			key.str = str;
 			return key;
 
 		default:
