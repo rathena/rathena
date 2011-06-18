@@ -1,5 +1,7 @@
 Date	Added
 
+2011/06/18
+	* Fixed missing strlib.h include for compilers without own 'strnlen' implementation (since r14853). [Ai4rei]
 2011/06/16
 	* Slight speedup on most strdb operations [ultramage]
 	* Fixed DBMap's db_dup_key to allocate only as much as necessary (bugreport:4969) [ultramage]

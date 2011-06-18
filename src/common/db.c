@@ -74,6 +74,7 @@
 #include "../common/malloc.h"
 #include "../common/showmsg.h"
 #include "../common/ers.h"
+#include "../common/strlib.h"
 
 /*****************************************************************************\
  *  (1) Private typedefs, enums, structures, defines and global variables of *
