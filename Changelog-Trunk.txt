@@ -1,6 +1,7 @@
 Date	Added
 
 2011/06/18
+	* Fixed using @refresh while having vending or buyingstore open would stuck the character (bugreport:156 , since r1307). [Ai4rei]
 	* Fixed missing strlib.h include for compilers without own 'strnlen' implementation (since r14853). [Ai4rei]
 2011/06/16
 	* Slight speedup on most strdb operations [ultramage]
