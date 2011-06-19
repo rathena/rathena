@@ -4,7 +4,7 @@
 
 # TARGTYPE "Win32 (x86) Console Application" 0x0103
 
-CFG=login_sql - Win32 Release
+CFG=login_sql - Win32 Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
 !MESSAGE 
@@ -13,11 +13,12 @@ CFG=login_sql - Win32 Release
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "login-server_sql.mak" CFG="login_sql - Win32 Release"
+!MESSAGE NMAKE /f "login-server_sql.mak" CFG="login_sql - Win32 Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
 !MESSAGE "login_sql - Win32 Release" (based on "Win32 (x86) Console Application")
+!MESSAGE "login_sql - Win32 Debug" (based on "Win32 (x86) Console Application")
 !MESSAGE 
 
 # Begin Project
@@ -26,6 +27,9 @@ CFG=login_sql - Win32 Release
 # PROP Scc_LocalPath ""
 CPP=cl.exe
 RSC=rc.exe
+
+!IF  "$(CFG)" == "login_sql - Win32 Release"
+
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
 # PROP BASE Output_Dir "Release"
@@ -33,23 +37,53 @@ RSC=rc.exe
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
-# PROP Output_Dir "Release"
-# PROP Intermediate_Dir "Release"
+# PROP Output_Dir ".."
+# PROP Intermediate_Dir "tmp\login_sql\Release"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
-# ADD CPP /nologo /W2 /GX /O2 /I "..\3rdparty\mysql\include" /I "..\3rdparty\msinttypes\include" /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_WIN32" /D PACKETVER=6 /D "__WIN32" /D FD_SETSIZE=4096 /D "DB_MANUAL_CAST_TO_UNION" /D "WITH_SQL" /Fp"tmp/login_sql/login-server_sql.pch" /YX /Fo"tmp/login_sql/" /Fd"tmp/login_sql/" /FD /c
-# ADD BASE RSC /l 0x409
+# ADD CPP /nologo /W3 /Zi /O2 /I "..\3rdparty\msinttypes\include" /I "..\3rdparty\mysql\include" /D "NDEBUG" /D "WIN32" /D "_CONSOLE" /D "_MBCS" /D "_WIN32" /D "__WIN32" /D FD_SETSIZE=4096 /D "DB_MANUAL_CAST_TO_UNION" /D "WITH_SQL" /FD /GF /c
+# SUBTRACT CPP /YX
+# ADD BASE RSC /l 0x405 /d "NDEBUG"
+# ADD RSC /l 0x417 /d "NDEBUG"
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
-# ADD LINK32 WSOCK32.lib libmysql.lib ws2_32.lib /nologo /subsystem:console /pdb:"tmp/login_sql/login-server_sql.pdb" /machine:I386 /out:"../login-server_sql.exe" /libpath:"..\3rdparty\mysql\lib"
-# SUBTRACT LINK32 /pdb:none
+# ADD LINK32 kernel32.lib ws2_32.lib libmysql.lib /nologo /subsystem:console /debug /machine:I386 /libpath:"..\3rdparty\mysql\lib"
+
+!ELSEIF  "$(CFG)" == "login_sql - Win32 Debug"
+
+# PROP BASE Use_MFC 0
+# PROP BASE Use_Debug_Libraries 1
+# PROP BASE Output_Dir "Debug"
+# PROP BASE Intermediate_Dir "Debug"
+# PROP BASE Target_Dir ""
+# PROP Use_MFC 0
+# PROP Use_Debug_Libraries 1
+# PROP Output_Dir ".."
+# PROP Intermediate_Dir "tmp\login_sql\Debug"
+# PROP Ignore_Export_Lib 0
+# PROP Target_Dir ""
+# ADD BASE CPP /nologo /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /GZ /c
+# ADD CPP /nologo /W3 /Gm /Gi /ZI /Od /I "..\3rdparty\msinttypes\include" /I "..\3rdparty\mysql\include" /D "_DEBUG" /D "WIN32" /D "_CONSOLE" /D "_MBCS" /D "_WIN32" /D "__WIN32" /D FD_SETSIZE=4096 /D "DB_MANUAL_CAST_TO_UNION" /D "WITH_SQL" /FD /GZ /c
+# SUBTRACT CPP /YX
+# ADD BASE RSC /l 0x405 /d "_DEBUG"
+# ADD RSC /l 0x417 /d "_DEBUG"
+BSC32=bscmake.exe
+# ADD BASE BSC32 /nologo
+# ADD BSC32 /nologo
+LINK32=link.exe
+# ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept
+# ADD LINK32 kernel32.lib ws2_32.lib libmysql.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept /libpath:"..\3rdparty\mysql\lib"
+
+!ENDIF 
+
 # Begin Target
 
 # Name "login_sql - Win32 Release"
+# Name "login_sql - Win32 Debug"
 # Begin Group "common"
 
 # PROP Default_Filter ""
@@ -80,14 +114,6 @@ SOURCE=..\src\common\ers.c
 # Begin Source File
 
 SOURCE=..\src\common\ers.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\src\common\lock.c
-# End Source File
-# Begin Source File
-
-SOURCE=..\src\common\lock.h
 # End Source File
 # Begin Source File
 
@@ -168,10 +194,6 @@ SOURCE=..\src\common\strlib.c
 # Begin Source File
 
 SOURCE=..\src\common\strlib.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\src\common\svnversion.h
 # End Source File
 # Begin Source File
 

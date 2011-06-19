@@ -1,5 +1,12 @@
 Date	Added
 
+2011/06/19
+	* Fixed various sorts of issues with VS6 project files (since r6929, follow up to r14466 and r14638). [Ai4rei]
+	- Debug configuration was missing and release had _DEBUG defined (indicates debug configuration).
+	- Login-server (SQL) defined PACKETVER=6 (overrides mmo.h).
+	- Warning Level was 2, which hides a lot of actual errors.
+	- Added projects for mapcache and TXT converter.
+	- Removed references unneeded/obsolete libraries/source files.
 2011/06/18
 	* Fixed using @refresh while having vending or buyingstore open would stuck the character (bugreport:156 , since r1307). [Ai4rei]
 	* Fixed missing strlib.h include for compilers without own 'strnlen' implementation (since r14853). [Ai4rei]
