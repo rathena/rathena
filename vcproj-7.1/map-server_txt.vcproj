@@ -399,16 +399,16 @@
 				RelativePath="..\src\common\malloc.h">
 			</File>
 			<File
-				RelativePath="..\src\common\md5calc.c">
-			</File>
-			<File
-				RelativePath="..\src\common\md5calc.h">
-			</File>
-			<File
 				RelativePath="..\src\common\mapindex.c">
 			</File>
 			<File
 				RelativePath="..\src\common\mapindex.h">
+			</File>
+			<File
+				RelativePath="..\src\common\md5calc.c">
+			</File>
+			<File
+				RelativePath="..\src\common\md5calc.h">
 			</File>
 			<File
 				RelativePath="..\src\common\mmo.h">
