@@ -1820,11 +1820,11 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 	  	&& (!sc || !sc->data[SC_PRESERVE])
 		&& damage < tsd->battle_status.hp)
 	{	//Updated to not be able to copy skills if the blow will kill you. [Skotlex]
-		if ((!tsd->status.skill[skillid].id || tsd->status.skill[skillid].flag >= 13) &&
+		if ((tsd->status.skill[skillid].id == 0 || tsd->status.skill[skillid].flag == SKILL_FLAG_PLAGIARIZED) &&
 			can_copy(tsd,skillid,bl))	// Split all the check into their own function [Aru]
 		{
 			int lv = skilllv;
-			if (tsd->cloneskill_id && tsd->status.skill[tsd->cloneskill_id].flag == 13){
+			if (tsd->cloneskill_id && tsd->status.skill[tsd->cloneskill_id].flag == SKILL_FLAG_PLAGIARIZED){
 				tsd->status.skill[tsd->cloneskill_id].id = 0;
 				tsd->status.skill[tsd->cloneskill_id].lv = 0;
 				tsd->status.skill[tsd->cloneskill_id].flag = 0;
@@ -1840,7 +1840,7 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 
 			tsd->status.skill[skillid].id = skillid;
 			tsd->status.skill[skillid].lv = lv;
-			tsd->status.skill[skillid].flag = 13;//cloneskill flag
+			tsd->status.skill[skillid].flag = SKILL_FLAG_PLAGIARIZED;
 			clif_addskill(tsd,skillid);
 		}
 	}

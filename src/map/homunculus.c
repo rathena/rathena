@@ -196,7 +196,7 @@ void merc_hom_skillup(struct homun_data *hd,int skillnum)
 	i = skillnum - HM_SKILLBASE;
 	if(hd->homunculus.skillpts > 0 &&
 		hd->homunculus.hskill[i].id &&
-		hd->homunculus.hskill[i].flag == 0 && //Don't allow raising while you have granted skills. [Skotlex]
+		hd->homunculus.hskill[i].flag == SKILL_FLAG_PERMANENT && //Don't allow raising while you have granted skills. [Skotlex]
 		hd->homunculus.hskill[i].lv < merc_skill_tree_get_max(skillnum, hd->homunculus.class_)
 		)
 	{

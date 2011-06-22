@@ -36,7 +36,7 @@ int inter_homun_tostr(char *str,struct s_homunculus *p)
 
 	for (i = 0; i < MAX_HOMUNSKILL; i++)
 	{
-		if (p->hskill[i].id && !p->hskill[i].flag)
+		if (p->hskill[i].id && p->hskill[i].flag == SKILL_FLAG_PERMANENT)
 			str+=sprintf(str,"%d,%d,", p->hskill[i].id, p->hskill[i].lv);
 	}
 

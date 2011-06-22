@@ -872,7 +872,7 @@ int chrif_changedsex(int fd)
 		if ((sd->class_&MAPID_UPPERMASK) == MAPID_BARDDANCER) {
 			// remove specifical skills of Bard classes 
 			for(i = 315; i <= 322; i++) {
-				if (sd->status.skill[i].id > 0 && !sd->status.skill[i].flag) {
+				if (sd->status.skill[i].id > 0 && sd->status.skill[i].flag == SKILL_FLAG_PERMANENT) {
 					sd->status.skill_point += sd->status.skill[i].lv;
 					sd->status.skill[i].id = 0;
 					sd->status.skill[i].lv = 0;
@@ -880,7 +880,7 @@ int chrif_changedsex(int fd)
 			}
 			// remove specifical skills of Dancer classes 
 			for(i = 323; i <= 330; i++) {
-				if (sd->status.skill[i].id > 0 && !sd->status.skill[i].flag) {
+				if (sd->status.skill[i].id > 0 && sd->status.skill[i].flag == SKILL_FLAG_PERMANENT) {
 					sd->status.skill_point += sd->status.skill[i].lv;
 					sd->status.skill[i].id = 0;
 					sd->status.skill[i].lv = 0;

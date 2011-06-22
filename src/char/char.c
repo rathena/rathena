@@ -571,8 +571,8 @@ int mmo_char_tostr(char *str, struct mmo_charstatus *p, struct global_reg *reg, 
 	*(str_p++) = '\t';
 
 	for(i = 0; i < MAX_SKILL; i++)
-		if (p->skill[i].id && p->skill[i].flag != 1) {
-			str_p += sprintf(str_p, "%d,%d ", p->skill[i].id, (p->skill[i].flag == 0) ? p->skill[i].lv : p->skill[i].flag-2);
+		if (p->skill[i].id != 0 && p->skill[i].flag != SKILL_FLAG_TEMPORARY) {
+			str_p += sprintf(str_p, "%d,%d ", p->skill[i].id, (p->skill[i].flag == SKILL_FLAG_PERMANENT) ? p->skill[i].lv : p->skill[i].flag - SKILL_FLAG_REPLACED_LV_0);
 		}
 	*(str_p++) = '\t';
 
@@ -2271,7 +2271,7 @@ int parse_fromlogin(int fd)
 						}
 						// remove specifical skills of classes 19, 4020 and 4042
 						for(j = 315; j <= 322; j++) {
-							if (char_dat[i].status.skill[j].id > 0 && !char_dat[i].status.skill[j].flag) {
+							if (char_dat[i].status.skill[j].id > 0 && char_dat[i].status.skill[j].flag == SKILL_FLAG_PERMANENT) {
 								char_dat[i].status.skill_point += char_dat[i].status.skill[j].lv;
 								char_dat[i].status.skill[j].id = 0;
 								char_dat[i].status.skill[j].lv = 0;
@@ -2279,7 +2279,7 @@ int parse_fromlogin(int fd)
 						}
 						// remove specifical skills of classes 20, 4021 and 4043
 						for(j = 323; j <= 330; j++) {
-							if (char_dat[i].status.skill[j].id > 0 && !char_dat[i].status.skill[j].flag) {
+							if (char_dat[i].status.skill[j].id > 0 && char_dat[i].status.skill[j].flag == SKILL_FLAG_PERMANENT) {
 								char_dat[i].status.skill_point += char_dat[i].status.skill[j].lv;
 								char_dat[i].status.skill[j].id = 0;
 								char_dat[i].status.skill[j].lv = 0;

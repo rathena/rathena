@@ -207,8 +207,19 @@ struct point {
 	short x,y;
 };
 
+enum e_skill_flag
+{
+	SKILL_FLAG_PERMANENT,
+	SKILL_FLAG_TEMPORARY,
+	SKILL_FLAG_PLAGIARIZED,
+	SKILL_FLAG_REPLACED_LV_0, // temporary skill overshadowing permanent skill of level 'N - SKILL_FLAG_REPLACED_LV_0'
+	//...
+};
+
 struct s_skill {
-	unsigned short id,lv,flag;
+	unsigned short id;
+	unsigned short lv;
+	unsigned short flag; // see enum e_skill_flag
 };
 
 struct global_reg {

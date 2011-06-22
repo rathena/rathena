@@ -4198,7 +4198,7 @@ int clif_skillinfoblock(struct map_session_data *sd)
 			WFIFOW(fd,len+8) = skill_get_sp(id,sd->status.skill[i].lv);
 			WFIFOW(fd,len+10)= skill_get_range2(&sd->bl, id,sd->status.skill[i].lv);
 			safestrncpy((char*)WFIFOP(fd,len+12), skill_get_name(id), NAME_LENGTH);
-			if(sd->status.skill[i].flag == 0)
+			if(sd->status.skill[i].flag == SKILL_FLAG_PERMANENT)
 				WFIFOB(fd,len+36) = (sd->status.skill[i].lv < skill_tree_get_max(id, sd->status.class_))? 1:0;
 			else
 				WFIFOB(fd,len+36) = 0;
@@ -4235,7 +4235,7 @@ int clif_addskill(struct map_session_data *sd, int id )
 	WFIFOW(fd,10) = skill_get_sp(id,sd->status.skill[id].lv);
     WFIFOW(fd,12)= skill_get_range2(&sd->bl, id,sd->status.skill[id].lv);
     safestrncpy((char*)WFIFOP(fd,14), skill_get_name(id), NAME_LENGTH);
-    if( sd->status.skill[id].flag == 0 )
+    if( sd->status.skill[id].flag == SKILL_FLAG_PERMANENT )
         WFIFOB(fd,38) = (sd->status.skill[id].lv < skill_tree_get_max(id, sd->status.class_))? 1:0;
     else
         WFIFOB(fd,38) = 0;

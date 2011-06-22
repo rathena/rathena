@@ -590,11 +590,11 @@ int mmo_char_tosql(int char_id, struct mmo_charstatus* p)
 		//insert here.
 		for( i = 0, count = 0; i < MAX_SKILL; ++i )
 		{
-			if(p->skill[i].id && p->skill[i].flag!=1)
+			if(p->skill[i].id != 0 && p->skill[i].flag != SKILL_FLAG_TEMPORARY)
 			{
 				if( count )
 					StringBuf_AppendStr(&buf, ",");
-				StringBuf_Printf(&buf, "('%d','%d','%d')", char_id, p->skill[i].id, (p->skill[i].flag == 0 ? p->skill[i].lv : p->skill[i].flag - 2));
+				StringBuf_Printf(&buf, "('%d','%d','%d')", char_id, p->skill[i].id, (p->skill[i].flag == SKILL_FLAG_PERMANENT ? p->skill[i].lv : p->skill[i].flag - SKILL_FLAG_REPLACED_LV_0));
 				++count;
 			}
 		}
@@ -1107,7 +1107,7 @@ int mmo_char_fromsql(int char_id, struct mmo_charstatus* p, bool load_everything
 	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 0, SQLDT_USHORT, &tmp_skill.id, 0, NULL, NULL)
 	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 1, SQLDT_USHORT, &tmp_skill.lv, 0, NULL, NULL) )
 		SqlStmt_ShowDebug(stmt);
-	tmp_skill.flag = 0;
+	tmp_skill.flag = SKILL_FLAG_PERMANENT;
 
 	for( i = 0; i < MAX_SKILL && SQL_SUCCESS == SqlStmt_NextRow(stmt); ++i )
 	{
