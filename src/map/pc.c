@@ -6371,6 +6371,12 @@ int pc_jobchange(struct map_session_data *sd,int job, int upper)
 	}
 
 	if(sd->cloneskill_id) {
+		if( sd->status.skill[sd->cloneskill_id].flag == SKILL_FLAG_PLAGIARIZED ) {
+			sd->status.skill[sd->cloneskill_id].id = 0;
+			sd->status.skill[sd->cloneskill_id].lv = 0;
+			sd->status.skill[sd->cloneskill_id].flag = 0;
+			clif_deleteskill(sd,sd->cloneskill_id);
+		}
 		sd->cloneskill_id = 0;
 		pc_setglobalreg(sd, "CLONE_SKILL", 0);
 		pc_setglobalreg(sd, "CLONE_SKILL_LV", 0);

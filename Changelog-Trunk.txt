@@ -1,5 +1,7 @@
 Date	Added
 
+2011/06/22
+	* Plagiarized skills are now removed on jobchange (bugreport:4973) [ultramage]
 2011/06/19
 	* Fixed various sorts of issues with VS6 project files (since r6929, follow up to r14466 and r14638). [Ai4rei]
 	- Debug configuration was missing and release had _DEBUG defined (indicates debug configuration).
