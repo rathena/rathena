@@ -1,5 +1,7 @@
 Date	Added
 
+2011/06/23
+	* Made chrif_save always call pc_makesavestatus. (no reason to prevent the call, and was interfering with multi map-server; fixes bugreport:1400) [FlavioJS]
 2011/06/22
 	* Plagiarized skills are now removed on jobchange (bugreport:4973) [ultramage]
 2011/06/19
