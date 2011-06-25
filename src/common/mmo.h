@@ -519,12 +519,6 @@ struct guild_castle {
 	int temp_guardians_max;
 };
 
-// for Brandish Spear calculations
-struct square {
-	int val1[5];
-	int val2[5];
-};
-
 struct fame_list {
 	int id;
 	int fame;
