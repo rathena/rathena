@@ -1,5 +1,7 @@
 Date	Added
 
+2011/06/25
+	* Added Mersenne Twister MT19937 as a random number generator. [FlavioJS]
 2011/06/23
 	* Made chrif_save always call pc_makesavestatus. (no reason to prevent the call, and was interfering with multi map-server; fixes bugreport:1400) [FlavioJS]
 2011/06/22
