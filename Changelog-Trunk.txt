@@ -1,6 +1,7 @@
 Date	Added
 
 2011/06/26
+	* Fixed a signed literal being assigned to an unsigned variable and other minor cleanups in malloc (bugreport:4765). [Ai4rei]
 	* Fixed @mobinfo displaying mvp rewards with 'AegisName' although normal drops use 'Name' item db column (bugreport:4981, follow up to r6346). [Ai4rei]
 	* Fixed quest index memory corruption when adding new quests (since r14039, bugreport:4982) [ultramage]
 2011/06/25

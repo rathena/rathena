@@ -222,7 +222,7 @@ void* _mmalloc(size_t size, const char *file, int line, const char *func )
 
 	if (((long) size) < 0) {
 		ShowError("_mmalloc: %d\n", size);
-		return 0;
+		return NULL;
 	}
 	
 	if(size == 0) {
@@ -380,7 +380,7 @@ void _mfree(void *ptr, const char *file, int line, const char *func )
 		{
 			ShowError("Memory manager: args of aFree 0x%p is overflowed pointer %s line %d\n", ptr, file, line);
 		} else {
-			head->size = -1;
+			head->size = 0xFFFF;
 			if(head_large->prev) {
 				head_large->prev->next = head_large->next;
 			} else {
@@ -636,7 +636,6 @@ static void memmgr_final (void)
 		fclose(log_fp);
 	}
 #endif /* LOG_MEMMGR */
-	return;
 }
 
 static void memmgr_init (void)
@@ -646,7 +645,6 @@ static void memmgr_init (void)
 	ShowStatus("Memory manager initialised: "CL_WHITE"%s"CL_RESET"\n", memmer_logfile);
 	memset(hash_unfill, 0, sizeof(hash_unfill));
 #endif /* LOG_MEMMGR */
-	return;
 }
 #endif /* USE_MEMMGR */
 
@@ -679,7 +677,6 @@ void malloc_final (void)
 #ifdef USE_MEMMGR
 	memmgr_final ();
 #endif
-	return;
 }
 
 void malloc_init (void)
@@ -687,5 +684,4 @@ void malloc_init (void)
 #ifdef USE_MEMMGR
 	memmgr_init ();
 #endif
-	return;
 }
