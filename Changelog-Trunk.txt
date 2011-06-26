@@ -1,5 +1,7 @@
 Date	Added
 
+2011/06/26
+	* Fixed quest index memory corruption when adding new quests (since r14039, bugreport:4982) [ultramage]
 2011/06/25
 	* Added Mersenne Twister MT19937 as a random number generator. [FlavioJS]
 2011/06/23
