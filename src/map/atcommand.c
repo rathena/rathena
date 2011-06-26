@@ -6999,9 +6999,9 @@ ACMD_FUNC(mobinfo)
 				if (mob->mvpitem[i].p > 0) {
 					j++;
 					if (j == 1)
-						sprintf(atcmd_output2, " %s  %02.02f%%", item_data->name, (float)mob->mvpitem[i].p / 100);
+						sprintf(atcmd_output2, " %s  %02.02f%%", item_data->jname, (float)mob->mvpitem[i].p / 100);
 					else
-						sprintf(atcmd_output2, " - %s  %02.02f%%", item_data->name, (float)mob->mvpitem[i].p / 100);
+						sprintf(atcmd_output2, " - %s  %02.02f%%", item_data->jname, (float)mob->mvpitem[i].p / 100);
 					strcat(atcmd_output, atcmd_output2);
 				}
 			}
