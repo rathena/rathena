@@ -42,7 +42,7 @@ RSC=rc.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
-# ADD CPP /nologo /W3 /Zi /O2 /I "..\3rdparty\msinttypes\include" /I "..\3rdparty\pcre\include" /I "..\3rdparty\zlib\include" /D "NDEBUG" /D "TXT_ONLY" /D "WIN32" /D "_CONSOLE" /D "_MBCS" /D "_WIN32" /D "__WIN32" /D FD_SETSIZE=4096 /D "DB_MANUAL_CAST_TO_UNION" /D "PCRE_SUPPORT" /FD /GF /c
+# ADD CPP /nologo /W3 /Zi /O2 /I "..\3rdparty\msinttypes\include" /I "..\3rdparty\pcre\include" /I "..\3rdparty\zlib\include" /I "..\3rdparty\mt19937ar" /D "NDEBUG" /D "TXT_ONLY" /D "WIN32" /D "_CONSOLE" /D "_MBCS" /D "_WIN32" /D "__WIN32" /D FD_SETSIZE=4096 /D "DB_MANUAL_CAST_TO_UNION" /D "PCRE_SUPPORT" /FD /GF /c
 # SUBTRACT CPP /YX
 # ADD BASE RSC /l 0x405 /d "NDEBUG"
 # ADD RSC /l 0x417 /d "NDEBUG"
@@ -67,7 +67,7 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /GZ /c
-# ADD CPP /nologo /W3 /Gm /Gi /ZI /Od /I "..\3rdparty\msinttypes\include" /I "..\3rdparty\pcre\include" /I "..\3rdparty\zlib\include" /D "_DEBUG" /D "TXT_ONLY" /D "WIN32" /D "_CONSOLE" /D "_MBCS" /D "_WIN32" /D "__WIN32" /D FD_SETSIZE=4096 /D "DB_MANUAL_CAST_TO_UNION" /D "PCRE_SUPPORT" /FD /GZ /c
+# ADD CPP /nologo /W3 /Gm /Gi /ZI /Od /I "..\3rdparty\msinttypes\include" /I "..\3rdparty\pcre\include" /I "..\3rdparty\zlib\include" /I "..\3rdparty\mt19937ar" /D "_DEBUG" /D "TXT_ONLY" /D "WIN32" /D "_CONSOLE" /D "_MBCS" /D "_WIN32" /D "__WIN32" /D FD_SETSIZE=4096 /D "DB_MANUAL_CAST_TO_UNION" /D "PCRE_SUPPORT" /FD /GZ /c
 # SUBTRACT CPP /YX
 # ADD BASE RSC /l 0x405 /d "_DEBUG"
 # ADD RSC /l 0x417 /d "_DEBUG"
@@ -84,6 +84,18 @@ LINK32=link.exe
 
 # Name "map_txt - Win32 Release"
 # Name "map_txt - Win32 Debug"
+# Begin Group "3rdparty"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=..\3rdparty\mt19937ar\mt19937ar.c
+# End Source File
+# Begin Source File
+
+SOURCE=..\3rdparty\mt19937ar\mt19937ar.h
+# End Source File
+# End Group
 # Begin Group "common"
 
 # PROP Default_Filter ""
@@ -178,6 +190,14 @@ SOURCE=..\src\common\plugins.c
 # Begin Source File
 
 SOURCE=..\src\common\plugins.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\common\random.c
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\common\random.h
 # End Source File
 # Begin Source File
 

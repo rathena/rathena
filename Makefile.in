@@ -2,15 +2,15 @@
 
 HAVE_MYSQL=@HAVE_MYSQL@
 ifeq ($(HAVE_MYSQL),yes)
-	ALL_DEPENDS=common common_sql login login_sql char char_sql map map_sql tools converters import save
-	SQL_DEPENDS=common_sql login_sql char_sql map_sql import save
-	COMMON_SQL_DEPENDS=
-	LOGIN_SQL_DEPENDS=common_sql
-	CHAR_SQL_DEPENDS=common_sql
-	MAP_SQL_DEPENDS=common_sql
+	ALL_DEPENDS=mt19937ar common common_sql login login_sql char char_sql map map_sql tools converters import save
+	SQL_DEPENDS=mt19937ar common_sql login_sql char_sql map_sql import save
+	COMMON_SQL_DEPENDS=mt19937ar
+	LOGIN_SQL_DEPENDS=mt19937ar common_sql
+	CHAR_SQL_DEPENDS=mt19937ar common_sql
+	MAP_SQL_DEPENDS=mt19937ar common_sql
 	CONVERTERS_DEPENDS=common_sql
 else
-	ALL_DEPENDS=common login char map tools import save
+	ALL_DEPENDS=mt19937ar common login char map tools import save
 	SQL_DEPENDS=needs_mysql
 	COMMON_SQL_DEPENDS=needs_mysql
 	LOGIN_SQL_DEPENDS=needs_mysql
@@ -18,6 +18,10 @@ else
 	MAP_SQL_DEPENDS=needs_mysql
 	CONVERTERS_DEPENDS=needs_mysql
 endif
+COMMON_TXT_DEPENDS=mt19937ar
+LOGIN_TXT_DEPENDS=mt19937ar common
+CHAR_TXT_DEPENDS=mt19937ar common
+MAP_TXT_DEPENDS=mt19937ar common
 
 WITH_PLUGINS=@WITH_PLUGINS@
 ifeq ($(WITH_PLUGINS),yes)
@@ -30,6 +34,7 @@ endif
 #####################################################################
 .PHONY: txt sql conf \
 	common common_sql \
+	mt19937ar \
 	login login_sql \
 	char char_sql \
 	map map_sql \
@@ -44,25 +49,28 @@ sql: $(SQL_DEPENDS)
 
 conf: import save
 
-common:
+common: $(COMMON_TXT_DEPENDS)
 	@$(MAKE) -C src/common txt
 
 common_sql: $(COMMON_SQL_DEPENDS)
 	@$(MAKE) -C src/common sql
 
-login: common
+mt19937ar:
+	@$(MAKE) -C 3rdparty/mt19937ar
+
+login: $(LOGIN_TXT_DEPENDS)
 	@$(MAKE) -C src/login txt
 
 login_sql: $(LOGIN_SQL_DEPENDS)
 	@$(MAKE) -C src/login sql
 
-char: common
+char: $(CHAR_TXT_DEPENDS)
 	@$(MAKE) -C src/char
 
 char_sql: $(CHAR_SQL_DEPENDS)
 	@$(MAKE) -C src/char_sql
 
-map: common
+map: $(MAP_TXT_DEPENDS)
 	@$(MAKE) -C src/map txt
 
 map_sql: $(MAP_SQL_DEPENDS)
@@ -97,6 +105,7 @@ save:
 
 clean:
 	@$(MAKE) -C src/common $@
+	@$(MAKE) -C 3rdparty/mt19937ar $@
 	@$(MAKE) -C src/login $@
 	@$(MAKE) -C src/char $@
 	@$(MAKE) -C src/char_sql $@
@@ -110,6 +119,7 @@ help:
 	@echo "possible targets are:"
 	@echo "'common'      - builds object files used in TXT servers"
 	@echo "'common_sql'  - builds object files used in SQL servers"
+	@echo "'mt19937ar'   - builds object file of Mersenne Twister MT19937"
 	@echo "'login'       - builds login server (TXT version)"
 	@echo "'login_sql'   - builds login server (SQL version)"
 	@echo "'char'        - builds char server (TXT version)"

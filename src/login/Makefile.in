@@ -3,15 +3,19 @@ COMMON_OBJ = ../common/obj_all/core.o ../common/obj_all/socket.o ../common/obj_a
 	../common/obj_all/db.o ../common/obj_all/plugins.o ../common/obj_all/lock.o \
 	../common/obj_all/malloc.o ../common/obj_all/showmsg.o ../common/obj_all/utils.o \
 	../common/obj_all/strlib.o ../common/obj_all/grfio.o ../common/obj_all/mapindex.o \
-	../common/obj_all/ers.o ../common/obj_all/md5calc.o
+	../common/obj_all/ers.o ../common/obj_all/md5calc.o ../common/obj_all/random.o
 COMMON_H = ../common/core.h ../common/socket.h ../common/timer.h ../common/mmo.h \
 	../common/version.h ../common/db.h ../common/plugins.h ../common/lock.h \
 	../common/malloc.h ../common/showmsg.h ../common/utils.h ../common/strlib.h \
 	../common/grfio.h ../common/mapindex.h \
-	../common/ers.h ../common/md5calc.h
+	../common/ers.h ../common/md5calc.h ../common/random.h
 
 COMMON_SQL_OBJ = ../common/obj_sql/sql.o
 COMMON_SQL_H = ../common/sql.h
+
+MT19937AR_OBJ = ../../3rdparty/mt19937ar/mt19937ar.o
+MT19937AR_H = ../../3rdparty/mt19937ar/mt19937ar.h
+MT19937AR_INCLUDE = -I../../3rdparty/mt19937ar
 
 LOGIN_OBJ = login.o
 LOGIN_TXT_OBJ = $(LOGIN_OBJ:%=obj_txt/%) \
@@ -22,10 +26,11 @@ LOGIN_H = login.h account.h ipban.h loginlog.h
 
 HAVE_MYSQL=@HAVE_MYSQL@
 ifeq ($(HAVE_MYSQL),yes)
-	LOGIN_SERVER_SQL_DEPENDS=obj_sql $(LOGIN_SQL_OBJ) $(COMMON_OBJ) $(COMMON_SQL_OBJ)
+	LOGIN_SERVER_SQL_DEPENDS=obj_sql $(LOGIN_SQL_OBJ) $(COMMON_OBJ) $(COMMON_SQL_OBJ) $(MT19937AR_OBJ)
 else
 	LOGIN_SERVER_SQL_DEPENDS=needs_mysql
 endif
+LOGIN_SERVER_TXT_DEPENDS=obj_txt $(LOGIN_TXT_OBJ) $(COMMON_OBJ) $(MT19937AR_OBJ)
 
 @SET_MAKE@
 
@@ -63,19 +68,25 @@ obj_sql:
 	test -d obj_sql || mkdir obj_sql
 
 #executables
-login-server: $(LOGIN_TXT_OBJ) $(COMMON_OBJ)
-	@CC@ @LDFLAGS@ -o ../../login-server@EXEEXT@ $(LOGIN_TXT_OBJ) $(COMMON_OBJ) @LIBS@ 
+login-server: $(LOGIN_SERVER_TXT_DEPENDS)
+	@CC@ @LDFLAGS@ -o ../../login-server@EXEEXT@ $(LOGIN_TXT_OBJ) $(COMMON_OBJ) $(MT19937AR_OBJ) @LIBS@ 
 
 login-server_sql: $(LOGIN_SERVER_SQL_DEPENDS)
-	@CC@ @LDFLAGS@ -o ../../login-server_sql@EXEEXT@ $(LOGIN_SQL_OBJ) $(COMMON_OBJ) $(COMMON_SQL_OBJ) @LIBS@ @MYSQL_LIBS@
+	@CC@ @LDFLAGS@ -o ../../login-server_sql@EXEEXT@ $(LOGIN_SQL_OBJ) $(COMMON_OBJ) $(COMMON_SQL_OBJ) $(MT19937AR_OBJ) @LIBS@ @MYSQL_LIBS@
 
 # login object files
-obj_txt/%.o: %.c $(LOGIN_H) $(COMMON_H)
-	@CC@ @CFLAGS@ -DWITH_TXT @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
+obj_txt/%.o: %.c $(LOGIN_H) $(COMMON_H) $(MT19937AR_H)
+	@CC@ @CFLAGS@ $(MT19937AR_INCLUDE) -DWITH_TXT @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
 
-obj_sql/%.o: %.c $(LOGIN_H) $(COMMON_H)
-	@CC@ @CFLAGS@ -DWITH_SQL @MYSQL_CFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
+obj_sql/%.o: %.c $(LOGIN_H) $(COMMON_H) $(MT19937AR_H)
+	@CC@ @CFLAGS@ $(MT19937AR_INCLUDE) -DWITH_SQL @MYSQL_CFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
 
-# missing common object files
+# missing object files
 ../common/obj_all/%.o:
+	@$(MAKE) -C ../common txt
+
+../common/obj_sql/%.o:
 	@$(MAKE) -C ../common sql
+
+MT19937AR_OBJ:
+	@$(MAKE) -C ../../3rdparty/mt19937ar
