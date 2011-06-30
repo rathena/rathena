@@ -40,9 +40,7 @@
 #ifndef _ERS_H_
 #define _ERS_H_
 
-#ifndef _CBASETYPES_H_
 #include "../common/cbasetypes.h"
-#endif
 
 /*****************************************************************************\
  *  (1) All public parts of the Entry Reusage System.                        *

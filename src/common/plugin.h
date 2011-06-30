@@ -4,9 +4,7 @@
 #ifndef	_PLUGIN_H_
 #define _PLUGIN_H_
 
-#ifndef _CBASETYPES_H_
 #include "../common/cbasetypes.h"
-#endif
 
 ////// Plugin functions ///////////////
 

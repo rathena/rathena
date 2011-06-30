@@ -4,9 +4,7 @@
 #ifndef _RANDOM_H_
 #define _RANDOM_H_
 
-#ifndef _CBASETYPES_H_
 #include "../common/cbasetypes.h"
-#endif
 
 void rnd_init(void);
 void rnd_seed(uint32);

@@ -4,10 +4,7 @@
 #ifndef	_PLUGINS_H_
 #define _PLUGINS_H_
 
-#ifndef _CBASETYPES_H_
 #include "../common/cbasetypes.h"
-#endif
-
 #include "../common/plugin.h"
 
 ////// Dynamic Link Library functions ///////////////

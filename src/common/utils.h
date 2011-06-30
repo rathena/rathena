@@ -4,10 +4,7 @@
 #ifndef _UTILS_H_
 #define _UTILS_H_
 
-#ifndef _CBASETYPES_H_
 #include "../common/cbasetypes.h"
-#endif
-
 #include <stdio.h> // FILE*
 
 // generate a hex dump of the first 'length' bytes of 'buffer'

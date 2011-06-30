@@ -4,9 +4,7 @@
 #ifndef	_TIMER_H_
 #define	_TIMER_H_
 
-#ifndef _CBASETYPES_H_
 #include "../common/cbasetypes.h"
-#endif
 
 #define DIFF_TICK(a,b) ((int)((a)-(b)))
 
