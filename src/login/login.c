@@ -101,7 +101,7 @@ struct online_login_data {
 };
 
 static DBMap* online_db; // int account_id -> struct online_login_data*
-static int waiting_disconnect_timer(int tid, unsigned int tick, int id, intptr data);
+static int waiting_disconnect_timer(int tid, unsigned int tick, int id, intptr_t data);
 
 static void* create_online_user(DBKey key, va_list args)
 {
@@ -138,7 +138,7 @@ void remove_online_user(int account_id)
 	idb_remove(online_db, account_id);
 }
 
-static int waiting_disconnect_timer(int tid, unsigned int tick, int id, intptr data)
+static int waiting_disconnect_timer(int tid, unsigned int tick, int id, intptr_t data)
 {
 	struct online_login_data* p = (struct online_login_data*)idb_get(online_db, id);
 	if( p != NULL && p->waiting_disconnect == tid && p->account_id == id )
@@ -176,7 +176,7 @@ static int online_data_cleanup_sub(DBKey key, void *data, va_list ap)
 	return 0;
 }
 
-static int online_data_cleanup(int tid, unsigned int tick, int id, intptr data)
+static int online_data_cleanup(int tid, unsigned int tick, int id, intptr_t data)
 {
 	online_db->foreach(online_db, online_data_cleanup_sub);
 	return 0;
@@ -245,7 +245,7 @@ void chrif_on_disconnect(int id)
 //-----------------------------------------------------
 // periodic ip address synchronization
 //-----------------------------------------------------
-static int sync_ip_addresses(int tid, unsigned int tick, int id, intptr data)
+static int sync_ip_addresses(int tid, unsigned int tick, int id, intptr_t data)
 {
 	uint8 buf[2];
 	ShowInfo("IP Sync in progress...\n");

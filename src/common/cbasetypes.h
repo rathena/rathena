@@ -78,6 +78,7 @@
 // NOTE: Visual C++ uses <inttypes.h> and <stdint.h> provided in /3rdparty
 //////////////////////////////////////////////////////////////////////////
 #include <inttypes.h>
+#include <stdint.h>
 
 //////////////////////////////////////////////////////////////////////////
 // typedefs to compensate type size change from 32bit to 64bit
@@ -193,30 +194,6 @@ typedef unsigned long long	uint64;
 #endif
 #ifndef UINT64_MAX
 #define UINT64_MAX (UINT64_C(18446744073709551615))
-#endif
-
-
-//////////////////////////////////////////////////////////////////////////
-// pointer sized integers
-//////////////////////////////////////////////////////////////////////////
-#undef UINTPTR_MIN
-#undef UINTPTR_MAX
-#undef INTPTR_MIN
-#undef INTPTR_MAX
-#ifdef __64BIT__
-typedef uint64 uintptr;
-typedef int64 intptr;
-#define UINTPTR_MIN UINT64_MIN
-#define UINTPTR_MAX UINT64_MAX
-#define INTPTR_MIN INT64_MIN
-#define INTPTR_MAX INT64_MAX
-#else
-typedef uint32 uintptr;
-typedef int32 intptr;
-#define UINTPTR_MIN UINT32_MIN
-#define UINTPTR_MAX UINT32_MAX
-#define INTPTR_MIN INT32_MIN
-#define INTPTR_MAX INT32_MAX
 #endif
 
 

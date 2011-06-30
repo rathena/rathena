@@ -7018,7 +7018,7 @@ ACMD_FUNC(mobinfo)
 * @showmobs by KarLaeda
 * => For 5 sec displays the mobs on minimap
 *------------------------------------------*/
-int atshowmobs_timer(int tid, unsigned int tick, int id, intptr data)
+int atshowmobs_timer(int tid, unsigned int tick, int id, intptr_t data)
 {
 	struct map_session_data* sd = map_id2sd(id);
 	if( sd == NULL )

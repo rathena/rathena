@@ -356,7 +356,7 @@ bool npc_event_isspecial(const char* eventname)
 /*==========================================
  * 時計イベント実行
  *------------------------------------------*/
-int npc_event_do_clock(int tid, unsigned int tick, int id, intptr data)
+int npc_event_do_clock(int tid, unsigned int tick, int id, intptr_t data)
 {
 	static struct tm ev_tm_b; // tracks previous execution time
 	time_t timer;
@@ -455,7 +455,7 @@ struct timer_event_data {
 /*==========================================
  * triger 'OnTimerXXXX' events
  *------------------------------------------*/
-int npc_timerevent(int tid, unsigned int tick, int id, intptr data)
+int npc_timerevent(int tid, unsigned int tick, int id, intptr_t data)
 {
 	int next;
 	int old_rid, old_timer;
@@ -498,9 +498,9 @@ int npc_timerevent(int tid, unsigned int tick, int id, intptr data)
 		next = nd->u.scr.timer_event[ ted->next ].timer - nd->u.scr.timer_event[ ted->next - 1 ].timer;
 		ted->time += next;
 		if( sd )
-			sd->npc_timer_id = add_timer(tick+next,npc_timerevent,id,(intptr)ted);
+			sd->npc_timer_id = add_timer(tick+next,npc_timerevent,id,(intptr_t)ted);
 		else
-			nd->u.scr.timerid = add_timer(tick+next,npc_timerevent,id,(intptr)ted);
+			nd->u.scr.timerid = add_timer(tick+next,npc_timerevent,id,(intptr_t)ted);
 	}
 	else
 	{
@@ -570,13 +570,13 @@ int npc_timerevent_start(struct npc_data* nd, int rid)
 	if( sd )
 	{
 		ted->rid = sd->bl.id; // Attach only the player if attachplayerrid was used.
-		sd->npc_timer_id = add_timer(tick+next,npc_timerevent,nd->bl.id,(intptr)ted);
+		sd->npc_timer_id = add_timer(tick+next,npc_timerevent,nd->bl.id,(intptr_t)ted);
 	}
 	else
 	{
 		ted->rid = 0;
 		nd->u.scr.timertick = tick; // Set when timer is started
-		nd->u.scr.timerid = add_timer(tick+next,npc_timerevent,nd->bl.id,(intptr)ted);
+		nd->u.scr.timerid = add_timer(tick+next,npc_timerevent,nd->bl.id,(intptr_t)ted);
 	}
 
 	return 0;
@@ -1164,8 +1164,8 @@ static int npc_buylist_sub(struct map_session_data* sd, int n, unsigned short* i
 	// save list of bought items
 	for( i = 0; i < n; i++ )
 	{
-		script_setarray_pc(sd, "@bought_nameid", i, (void*)(intptr)item_list[i*2+1], &key_nameid);
-		script_setarray_pc(sd, "@bought_quantity", i, (void*)(intptr)item_list[i*2], &key_amount);
+		script_setarray_pc(sd, "@bought_nameid", i, (void*)(intptr_t)item_list[i*2+1], &key_nameid);
+		script_setarray_pc(sd, "@bought_quantity", i, (void*)(intptr_t)item_list[i*2], &key_amount);
 	}
 
 	// invoke event
@@ -1402,8 +1402,8 @@ static int npc_selllist_sub(struct map_session_data* sd, int n, unsigned short* 
 	{
 		idx = item_list[i*2]-2;
 
-		script_setarray_pc(sd, "@sold_nameid", i, (void*)(intptr)sd->status.inventory[idx].nameid, &key_nameid);
-		script_setarray_pc(sd, "@sold_quantity", i, (void*)(intptr)item_list[i*2+1], &key_amount);
+		script_setarray_pc(sd, "@sold_nameid", i, (void*)(intptr_t)sd->status.inventory[idx].nameid, &key_nameid);
+		script_setarray_pc(sd, "@sold_quantity", i, (void*)(intptr_t)item_list[i*2+1], &key_amount);
 	}
 
 	// invoke event

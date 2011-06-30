@@ -294,7 +294,7 @@ void instance_destroy_freesvar(void *key, void *data, va_list args)
 /*--------------------------------------
  * Timer to destroy instance by process or idle
  *--------------------------------------*/
-int instance_destroy_timer(int tid, unsigned int tick, int id, intptr data)
+int instance_destroy_timer(int tid, unsigned int tick, int id, intptr_t data)
 {
 	instance_destroy(id);
 	return 0;

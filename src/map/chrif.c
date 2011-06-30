@@ -31,7 +31,7 @@
 #include <sys/types.h>
 #include <time.h>
 
-static int check_connect_char_server(int tid, unsigned int tick, int id, intptr data);
+static int check_connect_char_server(int tid, unsigned int tick, int id, intptr_t data);
 
 static struct eri *auth_db_ers; //For reutilizing player login structures.
 static DBMap* auth_db; // int id -> struct auth_node*
@@ -694,7 +694,7 @@ int auth_db_cleanup_sub(DBKey key,void *data,va_list ap)
 	return 0;
 }
 
-int auth_db_cleanup(int tid, unsigned int tick, int id, intptr data)
+int auth_db_cleanup(int tid, unsigned int tick, int id, intptr_t data)
 {
 	if(!chrif_isconnected()) return 0;
 	auth_db->foreach(auth_db, auth_db_cleanup_sub);
@@ -1455,7 +1455,7 @@ int chrif_parse(int fd)
 	return 0;
 }
 
-int ping_char_server(int tid, unsigned int tick, int id, intptr data)
+int ping_char_server(int tid, unsigned int tick, int id, intptr_t data)
 {
 	chrif_check(-1);
 	chrif_keepalive(char_fd);
@@ -1463,7 +1463,7 @@ int ping_char_server(int tid, unsigned int tick, int id, intptr data)
 }
 
 // unused
-int send_usercount_tochar(int tid, unsigned int tick, int id, intptr data)
+int send_usercount_tochar(int tid, unsigned int tick, int id, intptr_t data)
 {
 	chrif_check(-1);
 
@@ -1508,7 +1508,7 @@ int send_users_tochar(void)
  * timer関数
  * char鯖との接続を確認し、もし切れていたら再度接続する
  *------------------------------------------*/
-static int check_connect_char_server(int tid, unsigned int tick, int id, intptr data)
+static int check_connect_char_server(int tid, unsigned int tick, int id, intptr_t data)
 {
 	static int displayed = 0;
 	if (char_fd <= 0 || session[char_fd] == NULL)

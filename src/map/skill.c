@@ -2277,7 +2277,7 @@ int skill_area_sub_count (struct block_list *src, struct block_list *target, int
 /*==========================================
  *
  *------------------------------------------*/
-static int skill_timerskill(int tid, unsigned int tick, int id, intptr data)
+static int skill_timerskill(int tid, unsigned int tick, int id, intptr_t data)
 {
 	struct block_list *src = map_id2bl(id),*target;
 	struct unit_data *ud = unit_bl2ud(src);
@@ -5682,7 +5682,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 /*==========================================
  *
  *------------------------------------------*/
-int skill_castend_id(int tid, unsigned int tick, int id, intptr data)
+int skill_castend_id(int tid, unsigned int tick, int id, intptr_t data)
 {
 	struct block_list *target, *src;
 	struct map_session_data *sd;
@@ -5972,7 +5972,7 @@ int skill_castend_id(int tid, unsigned int tick, int id, intptr data)
 /*==========================================
  *
  *------------------------------------------*/
-int skill_castend_pos(int tid, unsigned int tick, int id, intptr data)
+int skill_castend_pos(int tid, unsigned int tick, int id, intptr_t data)
 {
 	struct block_list* src = map_id2bl(id);
 	int maxcount;
@@ -10490,7 +10490,7 @@ static int skill_unit_timer_sub (DBKey key, void* data, va_list ap)
 /*==========================================
  * Executes on all skill units every SKILLUNITTIMER_INTERVAL miliseconds.
  *------------------------------------------*/
-int skill_unit_timer(int tid, unsigned int tick, int id, intptr data)
+int skill_unit_timer(int tid, unsigned int tick, int id, intptr_t data)
 {
 	map_freeblock_lock();
 
@@ -11186,7 +11186,7 @@ int skill_arrow_create (struct map_session_data *sd, int nameid)
 /*==========================================
  *
  *------------------------------------------*/
-int skill_blockpc_end(int tid, unsigned int tick, int id, intptr data)
+int skill_blockpc_end(int tid, unsigned int tick, int id, intptr_t data)
 {
 	struct map_session_data *sd = map_id2sd(id);
 	if (data <= 0 || data >= MAX_SKILL)
@@ -11217,7 +11217,7 @@ int skill_blockpc_start(struct map_session_data *sd, int skillid, int tick)
 	return 0;
 }
 
-int skill_blockhomun_end(int tid, unsigned int tick, int id, intptr data)	//[orn]
+int skill_blockhomun_end(int tid, unsigned int tick, int id, intptr_t data)	//[orn]
 {
 	struct homun_data *hd = (TBL_HOM*) map_id2bl(id);
 	if (data <= 0 || data >= MAX_SKILL)
@@ -11243,7 +11243,7 @@ int skill_blockhomun_start(struct homun_data *hd, int skillid, int tick)	//[orn]
 	return add_timer(gettick() + tick, skill_blockhomun_end, hd->bl.id, skillid);
 }
 
-int skill_blockmerc_end(int tid, unsigned int tick, int id, intptr data)	//[orn]
+int skill_blockmerc_end(int tid, unsigned int tick, int id, intptr_t data)	//[orn]
 {
 	struct mercenary_data *md = (TBL_MER*)map_id2bl(id);
 	if( data <= 0 || data >= MAX_SKILL )

@@ -263,8 +263,8 @@ const char*	skill_get_desc( int id ); 	// [Skotlex]
 int skill_name2id(const char* name);
 
 int skill_isammotype(struct map_session_data *sd, int skill);
-int skill_castend_id(int tid, unsigned int tick, int id, intptr data);
-int skill_castend_pos(int tid, unsigned int tick, int id, intptr data);
+int skill_castend_id(int tid, unsigned int tick, int id, intptr_t data);
+int skill_castend_pos(int tid, unsigned int tick, int id, intptr_t data);
 int skill_castend_map( struct map_session_data *sd,short skill_num, const char *map);
 
 int skill_cleartimerskill(struct block_list *src);

@@ -81,7 +81,7 @@ const int mob_splendide[5] = { 1991, 1992, 1993, 1994, 1995 };
  * Local prototype declaration   (only required thing)
  *------------------------------------------*/
 static int mob_makedummymobdb(int);
-static int mob_spawn_guardian_sub(int tid, unsigned int tick, int id, intptr data);
+static int mob_spawn_guardian_sub(int tid, unsigned int tick, int id, intptr_t data);
 int mob_skillid2skillidx(int class_,int skillid);
 
 /*==========================================
@@ -507,7 +507,7 @@ int mob_once_spawn_area(struct map_session_data* sd,int m,int x0,int y0,int x1,i
 /*==========================================
  * Set a Guardian's guild data [Skotlex]
  *------------------------------------------*/
-static int mob_spawn_guardian_sub(int tid, unsigned int tick, int id, intptr data)
+static int mob_spawn_guardian_sub(int tid, unsigned int tick, int id, intptr_t data)
 {	//Needed because the guild_data may not be available at guardian spawn time.
 	struct block_list* bl = map_id2bl(id);
 	struct mob_data* md; 
@@ -766,7 +766,7 @@ int mob_linksearch(struct block_list *bl,va_list ap)
 /*==========================================
  * mob spawn with delay (timer function)
  *------------------------------------------*/
-int mob_delayspawn(int tid, unsigned int tick, int id, intptr data)
+int mob_delayspawn(int tid, unsigned int tick, int id, intptr_t data)
 {
 	struct block_list* bl = map_id2bl(id);
 	struct mob_data* md = BL_CAST(BL_MOB, bl);
@@ -1636,7 +1636,7 @@ static int mob_ai_sub_lazy(struct mob_data *md, va_list args)
 /*==========================================
  * Negligent processing for mob outside PC field of view   (interval timer function)
  *------------------------------------------*/
-static int mob_ai_lazy(int tid, unsigned int tick, int id, intptr data)
+static int mob_ai_lazy(int tid, unsigned int tick, int id, intptr_t data)
 {
 	map_foreachmob(mob_ai_sub_lazy,tick);
 	return 0;
@@ -1645,7 +1645,7 @@ static int mob_ai_lazy(int tid, unsigned int tick, int id, intptr data)
 /*==========================================
  * Serious processing for mob in PC field of view   (interval timer function)
  *------------------------------------------*/
-static int mob_ai_hard(int tid, unsigned int tick, int id, intptr data)
+static int mob_ai_hard(int tid, unsigned int tick, int id, intptr_t data)
 {
 
 	if (battle_config.mob_ai&0x20)
@@ -1684,7 +1684,7 @@ static struct item_drop* mob_setlootitem(struct item* item)
 /*==========================================
  * item drop with delay (timer function)
  *------------------------------------------*/
-static int mob_delay_item_drop(int tid, unsigned int tick, int id, intptr data)
+static int mob_delay_item_drop(int tid, unsigned int tick, int id, intptr_t data)
 {
 	struct item_drop_list *list;
 	struct item_drop *ditem, *ditem_prev;
@@ -1744,7 +1744,7 @@ static void mob_item_drop(struct mob_data *md, struct item_drop_list *dlist, str
 	dlist->item = ditem;
 }
 
-int mob_timer_delete(int tid, unsigned int tick, int id, intptr data)
+int mob_timer_delete(int tid, unsigned int tick, int id, intptr_t data)
 {
 	struct block_list* bl = map_id2bl(id);
 	struct mob_data* md = BL_CAST(BL_MOB, bl);
@@ -1791,7 +1791,7 @@ int mob_deleteslave(struct mob_data *md)
 	return 0;
 }
 // Mob respawning through KAIZEL or NPC_REBIRTH [Skotlex]
-int mob_respawn(int tid, unsigned int tick, int id, intptr data)
+int mob_respawn(int tid, unsigned int tick, int id, intptr_t data)
 {
 	struct block_list *bl = map_id2bl(id);
 
@@ -2296,7 +2296,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 				mob_item_drop(md, dlist, mob_setlootitem(&md->lootitem[i]), 1, 10000, homkillonly);
 		}
 		if (dlist->item) //There are drop items.
-			add_timer(tick + (!battle_config.delay_battle_damage?500:0), mob_delay_item_drop, 0, (intptr)dlist);
+			add_timer(tick + (!battle_config.delay_battle_damage?500:0), mob_delay_item_drop, 0, (intptr_t)dlist);
 		else //No drops
 			ers_free(item_drop_list_ers, dlist);
 	} else if (md->lootitem && md->lootitem_count) {	//Loot MUST drop!
@@ -2310,7 +2310,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		dlist->item = NULL;
 		for(i = 0; i < md->lootitem_count; i++)
 			mob_item_drop(md, dlist, mob_setlootitem(&md->lootitem[i]), 1, 10000, homkillonly);
-		add_timer(tick + (!battle_config.delay_battle_damage?500:0), mob_delay_item_drop, 0, (intptr)dlist);
+		add_timer(tick + (!battle_config.delay_battle_damage?500:0), mob_delay_item_drop, 0, (intptr_t)dlist);
 	}
 
 	if(mvp_sd && md->db->mexp > 0 && !md->special_state.ai)

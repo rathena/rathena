@@ -154,7 +154,7 @@ struct delay_damage {
 	unsigned short attack_type;
 };
 
-int battle_delay_damage_sub(int tid, unsigned int tick, int id, intptr data)
+int battle_delay_damage_sub(int tid, unsigned int tick, int id, intptr_t data)
 {
 	struct delay_damage *dat = (struct delay_damage *)data;
 	struct block_list *target = map_id2bl(dat->target);
@@ -208,7 +208,7 @@ int battle_delay_damage (unsigned int tick, int amotion, struct block_list *src,
 	dat->distance = distance_bl(src, target)+10; //Attack should connect regardless unless you teleported.
 	if (src->type != BL_PC && amotion > 1000)
 		amotion = 1000; //Aegis places a damage-delay cap of 1 sec to non player attacks. [Skotlex]
-	add_timer(tick+amotion, battle_delay_damage_sub, src->id, (intptr)dat);
+	add_timer(tick+amotion, battle_delay_damage_sub, src->id, (intptr_t)dat);
 	
 	return 0;
 }

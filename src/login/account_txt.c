@@ -58,7 +58,7 @@ static bool account_db_txt_iter_next(AccountDBIterator* self, struct mmo_account
 static bool mmo_auth_fromstr(struct mmo_account* acc, char* str, unsigned int version);
 static bool mmo_auth_tostr(const struct mmo_account* acc, char* str);
 static void mmo_auth_sync(AccountDB_TXT* self);
-static int mmo_auth_sync_timer(int tid, unsigned int tick, int id, intptr data);
+static int mmo_auth_sync_timer(int tid, unsigned int tick, int id, intptr_t data);
 
 /// public constructor
 AccountDB* account_db_txt(void)
@@ -183,7 +183,7 @@ static bool account_db_txt_init(AccountDB* self)
 
 	// initialize data saving timer
 	add_timer_func_list(mmo_auth_sync_timer, "mmo_auth_sync_timer");
-	db->save_timer = add_timer_interval(gettick() + AUTH_SAVING_INTERVAL, mmo_auth_sync_timer, 0, (intptr)db, AUTH_SAVING_INTERVAL);
+	db->save_timer = add_timer_interval(gettick() + AUTH_SAVING_INTERVAL, mmo_auth_sync_timer, 0, (intptr_t)db, AUTH_SAVING_INTERVAL);
 
 	return true;
 }
@@ -634,7 +634,7 @@ static void mmo_auth_sync(AccountDB_TXT* db)
 	db->auths_before_save = AUTHS_BEFORE_SAVE;
 }
 
-static int mmo_auth_sync_timer(int tid, unsigned int tick, int id, intptr data)
+static int mmo_auth_sync_timer(int tid, unsigned int tick, int id, intptr_t data)
 {
 	AccountDB_TXT* db = (AccountDB_TXT*)data;
 

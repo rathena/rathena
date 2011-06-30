@@ -3319,7 +3319,7 @@ struct linkdb_node* script_erase_sleepdb(struct linkdb_node *n)
 /*==========================================
  * sleep用タイマー関数
  *------------------------------------------*/
-int run_script_timer(int tid, unsigned int tick, int id, intptr data)
+int run_script_timer(int tid, unsigned int tick, int id, intptr_t data)
 {
 	struct script_state *st     = (struct script_state *)data;
 	struct linkdb_node *node    = (struct linkdb_node *)sleep_db;
@@ -3516,7 +3516,7 @@ void run_script_main(struct script_state *st)
 		sd = map_id2sd(st->rid); // Get sd since script might have attached someone while running. [Inkfish]
 		st->sleep.charid = sd?sd->status.char_id:0;
 		st->sleep.timer  = add_timer(gettick()+st->sleep.tick,
-			run_script_timer, st->sleep.charid, (intptr)st);
+			run_script_timer, st->sleep.charid, (intptr_t)st);
 		linkdb_insert(&sleep_db, (void*)st->oid, st);
 	}
 	else if(st->state != END && st->rid){

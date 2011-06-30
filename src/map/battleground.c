@@ -236,7 +236,7 @@ int bg_send_xy_timer_sub(DBKey key, void *data, va_list ap)
 	return 0;
 }
 
-int bg_send_xy_timer(int tid, unsigned int tick, int id, intptr data)
+int bg_send_xy_timer(int tid, unsigned int tick, int id, intptr_t data)
 {
 	bg_team_db->foreach(bg_team_db, bg_send_xy_timer_sub, tick);
 	return 0;
