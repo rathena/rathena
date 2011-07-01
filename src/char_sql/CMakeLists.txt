@@ -1,5 +1,7 @@
 
+#
 # setup
+#
 set( MT19937AR_SOURCES
 #	"${MT19937AR_SOURCE_DIR}/mt19937ar.c"
 	)
@@ -37,7 +39,9 @@ set( CHAR_SOURCES
 	)
 
 
+#
 # char sql
+#
 if( USE_ZLIB AND USE_MYSQL )
 message ( STATUS "Creating target char-server_sql" )
 set( LIBRARIES ${GLOBAL_LIBRARIES} ${ZLIB_LIBRARIES} ${MYSQL_LIBRARIES} )
@@ -60,7 +64,9 @@ add_executable( char-server_sql ${SOURCE_FILES} )
 target_link_libraries( char-server_sql ${LIBRARIES} )
 set_target_properties( char-server_sql PROPERTIES COMPILE_DEFINITIONS "${DEFINITIONS}" )
 if( INSTALL_RUN_DATA )
-	install( TARGETS char-server_sql DESTINATION ${CMAKE_INSTALL_PREFIX} )
+	install( TARGETS char-server_sql
+		DESTINATION ${CMAKE_INSTALL_PREFIX}
+		COMPONENT "char-server_sql" )
 endif()
 message ( STATUS "Creating target char-server_sql - done" )
 else()

@@ -1,5 +1,7 @@
 
+#
 # setup
+#
 set( MT19937AR_SOURCES
 	"${MT19937AR_SOURCE_DIR}/mt19937ar.c"
 	)
@@ -64,7 +66,9 @@ add_executable( login-server ${SOURCE_FILES} )
 target_link_libraries( login-server ${LIBRARIES} )
 set_target_properties( login-server PROPERTIES COMPILE_DEFINITIONS "${DEFINITIONS}" )
 if( INSTALL_RUN_DATA )
-	install( TARGETS login-server DESTINATION ${CMAKE_INSTALL_PREFIX} )
+	install( TARGETS login-server
+		DESTINATION ${CMAKE_INSTALL_PREFIX}
+		COMPONENT "login-server" )
 endif()
 message ( STATUS "Creating target login-server - done" )
 else()
@@ -72,7 +76,9 @@ message ( STATUS "Skipping target login-server (requires ZLIB)" )
 endif()
 
 
+#
 # login sql
+#
 if( USE_ZLIB AND USE_MYSQL )
 message ( STATUS "Creating target login-server_sql" )
 set( LIBRARIES ${GLOBAL_LIBRARIES} ${ZLIB_LIBRARIES} ${MYSQL_LIBRARIES} )
@@ -95,7 +101,9 @@ add_executable( login-server_sql ${SOURCE_FILES} )
 target_link_libraries( login-server_sql ${LIBRARIES} )
 set_target_properties( login-server_sql PROPERTIES COMPILE_DEFINITIONS "${DEFINITIONS}" )
 if( INSTALL_RUN_DATA )
-	install( TARGETS login-server_sql DESTINATION ${CMAKE_INSTALL_PREFIX} )
+	install( TARGETS login-server_sql
+		DESTINATION ${CMAKE_INSTALL_PREFIX}
+		COMPONENT "login-server_sql" )
 endif()
 message ( STATUS "Creating target login-server_sql - done" )
 else()

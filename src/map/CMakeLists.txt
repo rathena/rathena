@@ -1,5 +1,7 @@
 
+#
 # setup
+#
 set( MT19937AR_SOURCES
 	"${MT19937AR_SOURCE_DIR}/mt19937ar.c"
 	)
@@ -68,7 +70,9 @@ set( MAP_SQL_SOURCES
 	)
 
 
+#
 # map txt
+#
 if( USE_ZLIB )
 message ( STATUS "Creating target map-server" )
 set( LIBRARIES ${GLOBAL_LIBRARIES} ${ZLIB_LIBRARIES} )
@@ -96,7 +100,9 @@ add_executable( map-server ${SOURCE_FILES} )
 target_link_libraries( map-server ${LIBRARIES} )
 set_target_properties( map-server PROPERTIES COMPILE_DEFINITIONS "${DEFINITIONS}" )
 if( INSTALL_RUN_DATA )
-	install( TARGETS map-server DESTINATION ${CMAKE_INSTALL_PREFIX} )
+	install( TARGETS map-server
+		DESTINATION ${CMAKE_INSTALL_PREFIX}
+		COMPONENT "map-server" )
 endif()
 message ( STATUS "Creating target map-server - done" )
 else()
@@ -104,7 +110,9 @@ message ( STATUS "Skipping target map-server (requires ZLIB; optional PCRE)" )
 endif()
 
 
+#
 # map sql
+#
 if( USE_ZLIB AND USE_MYSQL )
 message ( STATUS "Creating target map-server_sql" )
 set( LIBRARIES ${GLOBAL_LIBRARIES} ${ZLIB_LIBRARIES} ${MYSQL_LIBRARIES} )
@@ -132,7 +140,9 @@ add_executable( map-server_sql ${SOURCE_FILES} )
 target_link_libraries( map-server_sql ${LIBRARIES} )
 set_target_properties( map-server_sql PROPERTIES COMPILE_DEFINITIONS "${DEFINITIONS}" )
 if( INSTALL_RUN_DATA )
-	install( TARGETS map-server_sql DESTINATION ${CMAKE_INSTALL_PREFIX} )
+	install( TARGETS map-server_sql
+		DESTINATION ${CMAKE_INSTALL_PREFIX}
+		COMPONENT "map-server_sql" )
 endif()
 message ( STATUS "Creating target map-server_sql - done" )
 else()

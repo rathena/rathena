@@ -1,5 +1,7 @@
 
+#
 # setup
+#
 set( MT19937AR_SOURCES
 #	"${MT19937AR_SOURCE_DIR}/mt19937ar.c"
 	)
@@ -33,7 +35,9 @@ set( CHAR_SOURCES
 	)
 
 
+#
 # char txt
+#
 if( USE_ZLIB )
 message ( STATUS "Creating target char-server" )
 set( LIBRARIES ${GLOBAL_LIBRARIES} ${ZLIB_LIBRARIES} )
@@ -56,7 +60,9 @@ add_executable( char-server ${SOURCE_FILES} )
 target_link_libraries( char-server ${LIBRARIES} )
 set_target_properties( char-server PROPERTIES COMPILE_DEFINITIONS "${DEFINITIONS}" )
 if( INSTALL_RUN_DATA )
-	install( TARGETS char-server DESTINATION ${CMAKE_INSTALL_PREFIX} )
+	install( TARGETS char-server
+		DESTINATION ${CMAKE_INSTALL_PREFIX}
+		COMPONENT "char-server" )
 endif()
 message ( STATUS "Creating target char-server - done" )
 else()

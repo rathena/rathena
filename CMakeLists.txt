@@ -1,4 +1,10 @@
-
+# "Getting Started with CMake", a tutorial video by Eric Wing.
+#   Part 1 of 6: http://www.youtube.com/watch?v=CLvZTyji_Uw
+#   Part 2 of 6: http://www.youtube.com/watch?v=gUW-RrRQjEg
+#   Part 3 of 6: http://www.youtube.com/watch?v=sz6cPhbuTk4
+#   Part 4 of 6: http://www.youtube.com/watch?v=JICZOkyNXbg
+#   Part 5 of 6: http://www.youtube.com/watch?v=lAiuLHy4dCk
+#   Part 6 of 6: http://www.youtube.com/watch?v=fAtJNzDZdH8
 cmake_minimum_required( VERSION 2.8.4 )
 project( eAthena )
 
@@ -165,13 +171,43 @@ endif()
 set( PACKETVER ""
 	CACHE STRING "Sets the PACKETVER define of the servers. (see src/common/mmo.h)" )
 
+
+#####################################################################
+# package stuff
+#
+if( OFF )
+set( CPACK_PACKAGE_NAME "eAthena" )
+set( CPACK_PACKAGE_DESCRIPTION_SUMMARY "MMORPG server package" )
+set( CPACK_PACKAGE_FILE_NAME )
+set( CPACK_PACKAGE_INSTALL_DIRECTORY  )
+set( CPACK_PROJECT_CONFIG_FILE )
+set( CPACK_RESOURCE_FILE_LICENSE ${CMAKE_CURRENT_SOURCE_DIR}/LICENSE )
+set( CPACK_RESOURCE_FILE_README )
+set( CPACK_RESOURCE_FILE_WELCOME )
+set( CPACK_MONOLITHIC_INSTALL ON )
+set( CPACK_GENERATOR "ZIP" )
+set( CPACK_OUTPUT_CONFIG_FILE )
+set( CPACK_PACKAGE_EXECUTABLES )
+set( CPACK_STRIP_FILES )
+#source
+set( CPACK_SOURCE_PACKAGE_FILE_NAME )
+set( CPACK_SOURCE_STRIP_FILES )
+set( CPACK_SOURCE_GENERATOR "ZIP" )
+set( CPACK_SOURCE_OUTPUT_CONFIG_FILE )
+set( CPACK_SOURCE_IGNORE_FILES )
+include(CPACK)
+endif()
+
+
 #
 # install stuff
 #
+set( COMPONENT_SOURCE "Source code, librarires and project files" CACHE INTERNAL "" )
+set( COMPONENT_BASE "Base files" CACHE INTERNAL "" )
 option( INSTALL_RUN_DATA "install files needed to run the project" ON )
 option( INSTALL_BUILD_DATA "install files needed to build the project" OFF )
 set( SVN_FOLDER_PATTERN "[\\.]svn"
-	CACHE PATH "pattern of svn folder that we exclude from instalations" )
+	CACHE STRING "pattern of svn folder that we exclude from instalations" )
 mark_as_advanced( SVN_FOLDER_PATTERN )
 if( "${CMAKE_CURRENT_SOURCE_DIR}" STREQUAL "${CMAKE_INSTALL_PREFIX}" )
 	set( INSTALLING_TO_SOURCE ON
@@ -252,18 +288,37 @@ function( INSTALL_DIRECTORIES DIRS EXCLUDE_PATTERN )
 	endforeach()
 endfunction()
 if( NOT INSTALLING_TO_SOURCE )
+	# skipped if in-source
 	if( INSTALL_RUN_DATA )
-		install( FILES ${LOCAL_RUN_FILES} DESTINATION ${CMAKE_INSTALL_PREFIX} )
-		INSTALL_DIRECTORIES( "${LOCAL_RUN_DIRECTORIES}" "conf/import-tmpl" )
+		# base
+		install( FILES ${LOCAL_RUN_FILES}
+			DESTINATION ${CMAKE_INSTALL_PREFIX} )
+		foreach( DIR IN ITEMS ${LOCAL_RUN_DIRECTORIES} )
+			install( DIRECTORY "${DIR}/"
+				DESTINATION "${DIR}"
+				PATTERN ${SVN_FOLDER_PATTERN} EXCLUDE
+				PATTERN "conf/import-tmpl" EXCLUDE )
+		endforeach()
 	endif()
 	if( INSTALL_BUILD_DATA )
-		install( FILES ${LOCAL_BUILD_FILES} DESTINATION ${CMAKE_INSTALL_PREFIX} )
-		INSTALL_DIRECTORIES( "${LOCAL_BUILD_DIRECTORIES}" "" )
+		# source
+		install( FILES ${LOCAL_BUILD_FILES}
+			DESTINATION ${CMAKE_INSTALL_PREFIX} )
+		foreach( DIR IN ITEMS ${LOCAL_BUILD_DIRECTORIES} )
+			install( DIRECTORY "${DIR}/"
+				DESTINATION "${DIR}"
+				PATTERN ${SVN_FOLDER_PATTERN} EXCLUDE )
+		endforeach()
 	endif()
 endif()
 if( INSTALL_RUN_DATA )
-	INSTALL_DIRECTORY( "save-tmpl" "save" "" )
-	INSTALL_DIRECTORY( "conf/import-tmpl" "conf/import" "" )
+	# base templates
+	install( DIRECTORY "save-tmpl/"
+		DESTINATION "save"
+		PATTERN ${SVN_FOLDER_PATTERN} EXCLUDE )
+	install( DIRECTORY "conf/import-tmpl/"
+		DESTINATION "conf/import"
+		PATTERN ${SVN_FOLDER_PATTERN} EXCLUDE )
 endif()
 
 

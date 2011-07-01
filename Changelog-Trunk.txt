@@ -1,5 +1,7 @@
 Date	Added
 
+2011/07/01
+	* CMake: marked executables as different components and other miscellaneous changes. [FlavioJS]
 2011/06/29
 	* Added experimental support for CMake. (for now: basic build, no extras, only tested with VS10 and cygwin) [FlavioJS]
 2011/06/27

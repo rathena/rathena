@@ -41,7 +41,9 @@ include_directories( ${INCLUDE_DIRS} )
 target_link_libraries( mapcache ${ZLIB_LIBRARIES} )
 set_target_properties( mapcache PROPERTIES COMPILE_DEFINITIONS "${DEFINITIONS}" )
 if( INSTALL_RUN_DATA )
-	install( TARGETS mapcache DESTINATION ${CMAKE_INSTALL_PREFIX} )
+	install( TARGETS mapcache
+		DESTINATION ${CMAKE_INSTALL_PREFIX}
+		COMPONENT "mapcache" )
 endif()
 message ( STATUS "Creating target mapcache - done" )
 else()
