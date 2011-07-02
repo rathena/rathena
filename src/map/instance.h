@@ -24,7 +24,7 @@ struct s_instance {
 	struct linkdb_node *ivar, *svar; // Instance Variable for scripts
 	
 	int progress_timer;
-	time_t progress_timeout, progress_timeoutval;
+	time_t progress_timeout;
 
 	int idle_timer;
 	time_t idle_timeout, idle_timeoutval;

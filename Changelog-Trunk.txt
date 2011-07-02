@@ -1,6 +1,10 @@
 Date	Added
 
 2011/07/02
+	* More instancing updates. [Ai4rei]
+	- Improved instance_id validity checking.
+	- Fixed instance name being copied with memcpy rather than safestrncpy (since r13901).
+	- Removed unused instance data field 'progress_timeoutval' (since r13901).
 	* Random updates to instance system. [Ai4rei]
 	- Introduced a constant for instance name length.
 	- Corrected comments related to instance packets 0x2cb (ZC_MEMORIALDUNGEON_SUBSCRIPTION_INFO) and 0x2ce (ZC_MEMORIALDUNGEON_NOTIFY).

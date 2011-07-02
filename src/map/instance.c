@@ -28,6 +28,24 @@
 int instance_start = 0; // To keep the last index + 1 of normal map inserted in the map[ARRAY]
 struct s_instance instance[MAX_INSTANCE];
 
+
+/// Checks whether given instance id is valid or not.
+static bool instance_is_valid(int instance_id)
+{
+	if( instance_id < 1 || instance_id >= ARRAYLENGTH(instance) )
+	{// out of range
+		return false;
+	}
+
+	if( instance[instance_id].state == INSTANCE_FREE )
+	{// uninitialized/freed instance slot
+		return false;
+	}
+
+	return true;
+}
+
+
 /*--------------------------------------
  * name : instance name
  * Return value could be
@@ -62,13 +80,13 @@ int instance_create(int party_id, const char *name)
 	instance[i].idle_timer = INVALID_TIMER;
 	instance[i].idle_timeout = instance[i].idle_timeoutval = 0;
 	instance[i].progress_timer = INVALID_TIMER;
-	instance[i].progress_timeout = instance[i].progress_timeoutval = 0;
+	instance[i].progress_timeout = 0;
 	instance[i].users = 0;
 	instance[i].party_id = party_id;
 	instance[i].ivar = NULL;
 	instance[i].svar = NULL;
 
-	memcpy( instance[i].name, name, sizeof(instance[i].name) );
+	safestrncpy( instance[i].name, name, sizeof(instance[i].name) );
 	memset( instance[i].map, 0x00, sizeof(instance[i].map) );
 	p->instance_id = i;
 
@@ -88,7 +106,7 @@ int instance_add_map(const char *name, int instance_id, bool usebasename)
 	if( m < 0 )
 		return -1; // source map not found
 		
-	if( instance[instance_id].state == INSTANCE_FREE )
+	if( !instance_is_valid(instance_id) )
 	{
 		ShowError("instance_add_map: trying to attach '%s' map to non-existing instance %d.\n", name, instance_id);
 		return -1;
@@ -158,6 +176,12 @@ int instance_add_map(const char *name, int instance_id, bool usebasename)
 int instance_map2imap(int m, int instance_id)
 {
  	int i;
+
+	if( !instance_is_valid(instance_id) )
+	{
+		return -1;
+	}
+	
 	for( i = 0; i < instance[instance_id].num_map; i++ )
  	{
 		if( instance[instance_id].map[i] && map[instance[instance_id].map[i]].instance_src_map == m )
@@ -173,7 +197,6 @@ int instance_map2imap(int m, int instance_id)
  *--------------------------------------*/
 int instance_mapid2imapid(int m, int instance_id)
 {
-	int i, max;
 	if( map[m].flag.src4instance == 0 )
 		return m; // not instances found for this map
 	else if( map[m].instance_id )
@@ -182,16 +205,10 @@ int instance_mapid2imapid(int m, int instance_id)
 		return -1;
 	}
 
-	if( instance_id <= 0 )
+	if( !instance_is_valid(instance_id) )
 		return -1;
 
-	max = instance[instance_id].num_map;
-
-	for( i = 0; i < max; i++ )
-		if( map[instance[instance_id].map[i]].instance_src_map == m )
-			return instance[instance_id].map[i];
-
-	return -1;
+	return instance_map2imap(m, instance_id);
 }
 
 /*--------------------------------------
@@ -214,7 +231,7 @@ void instance_init(int instance_id)
 {
 	int i;
 
-	if( !instance_id )
+	if( !instance_is_valid(instance_id) )
 		return; // nothing to do
 
 	for( i = 0; i < instance[instance_id].num_map; i++ )
@@ -309,7 +326,7 @@ void instance_destroy(int instance_id)
 	struct party_data *p;
 	time_t now = time(NULL);
 
-	if( !instance_id || instance[instance_id].state == INSTANCE_FREE )
+	if( !instance_is_valid(instance_id) )
 		return; // nothing to do
 
 	if( instance[instance_id].progress_timeout && instance[instance_id].progress_timeout <= now )
@@ -361,7 +378,7 @@ void instance_check_idle(int instance_id)
 	bool idle = true;
 	time_t now = time(NULL);
 
-	if( !instance_id || instance[instance_id].idle_timeoutval == 0 )
+	if( !instance_is_valid(instance_id) || instance[instance_id].idle_timeoutval == 0 )
 		return;
 
 	if( instance[instance_id].users )
@@ -389,7 +406,7 @@ void instance_set_timeout(int instance_id, unsigned int progress_timeout, unsign
 {
 	time_t now = time(0);
 
-	if( !instance_id )
+	if( !instance_is_valid(instance_id) )
 		return;
 		
 	if( instance[instance_id].progress_timer != INVALID_TIMER )
@@ -399,13 +416,11 @@ void instance_set_timeout(int instance_id, unsigned int progress_timeout, unsign
 
 	if( progress_timeout )
 	{
-		instance[instance_id].progress_timeoutval = progress_timeout;
 		instance[instance_id].progress_timeout = now + progress_timeout;
 		instance[instance_id].progress_timer = add_timer( gettick() + progress_timeout * 1000, instance_destroy_timer, instance_id, 0);
 	}
 	else
 	{
-		instance[instance_id].progress_timeoutval = 0;
 		instance[instance_id].progress_timeout = 0;
 		instance[instance_id].progress_timer = INVALID_TIMER;
 	}
