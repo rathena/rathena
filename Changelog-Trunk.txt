@@ -1,6 +1,7 @@
 Date	Added
 
 2011/07/02
+	* Fixed minor stuff in login/char converter VS6 project files (since r14858). [Ai4rei]
 	* More instancing updates. [Ai4rei]
 	- Improved instance_id validity checking.
 	- Fixed instance name being copied with memcpy rather than safestrncpy (since r13901).

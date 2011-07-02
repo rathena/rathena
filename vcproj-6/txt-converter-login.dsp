@@ -42,7 +42,7 @@ RSC=rc.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
-# ADD CPP /nologo /W3 /GX- /O2 /I "..\3rdparty\msinttypes\include" /I "..\3rdparty\mysql\include" /D "NDEBUG" /D "WIN32" /D "_CONSOLE" /D "_MBCS" /D "_WIN32" /D "__WIN32" /D "DB_MANUAL_CAST_TO_UNION" /D "MINICORE" /D "TXT_SQL_CONVERT" /D "WITH_SQL" /D "WITH_TXT" /FD /c
+# ADD CPP /nologo /W3 /O2 /I "..\3rdparty\msinttypes\include" /I "..\3rdparty\mysql\include" /D "NDEBUG" /D "WIN32" /D "_CONSOLE" /D "_MBCS" /D "_WIN32" /D "__WIN32" /D "DB_MANUAL_CAST_TO_UNION" /D "MINICORE" /D "TXT_SQL_CONVERT" /D "WITH_SQL" /D "WITH_TXT" /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE RSC /l 0x405 /d "NDEBUG"
 # ADD RSC /l 0x417 /d "NDEBUG"
@@ -67,7 +67,7 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /GZ /c
-# ADD CPP /nologo /W3 /Gm /GX- /ZI /Od /I "..\3rdparty\msinttypes\include" /I "..\3rdparty\mysql\include" /D "_DEBUG" /D "WIN32" /D "_CONSOLE" /D "_MBCS" /D "_WIN32" /D "__WIN32" /D "DB_MANUAL_CAST_TO_UNION" /D "MINICORE" /D "TXT_SQL_CONVERT" /D "WITH_SQL" /D "WITH_TXT" /FD /GZ /c
+# ADD CPP /nologo /W3 /Gm /ZI /Od /I "..\3rdparty\msinttypes\include" /I "..\3rdparty\mysql\include" /D "_DEBUG" /D "WIN32" /D "_CONSOLE" /D "_MBCS" /D "_WIN32" /D "__WIN32" /D "DB_MANUAL_CAST_TO_UNION" /D "MINICORE" /D "TXT_SQL_CONVERT" /D "WITH_SQL" /D "WITH_TXT" /FD /GZ /c
 # SUBTRACT CPP /YX
 # ADD BASE RSC /l 0x405 /d "_DEBUG"
 # ADD RSC /l 0x417 /d "_DEBUG"
@@ -113,6 +113,10 @@ SOURCE=..\src\common\ers.c
 # End Source File
 # Begin Source File
 
+SOURCE=..\src\common\ers.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\src\common\lock.c
 # End Source File
 # Begin Source File
@@ -154,6 +158,10 @@ SOURCE=..\src\common\strlib.c
 # Begin Source File
 
 SOURCE=..\src\common\timer.c
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\common\timer.h
 # End Source File
 # Begin Source File
 
