@@ -220,7 +220,7 @@ void instance_init(int instance_id)
 	for( i = 0; i < instance[instance_id].num_map; i++ )
 		map_foreachinmap(instance_map_npcsub, map[instance[instance_id].map[i]].instance_src_map, BL_NPC, instance[instance_id].map[i]);
 
-	instance[instance_id].state = INSTANCE_BUSSY;
+	instance[instance_id].state = INSTANCE_BUSY;
 	ShowInfo("[Instance] Initialized %s.\n", instance[instance_id].name);
 }
 
@@ -442,6 +442,14 @@ void instance_check_kick(struct map_session_data *sd)
 		else
 			pc_setpos(sd, sd->status.save_point.map, sd->status.save_point.x, sd->status.save_point.y, CLR_TELEPORT);
 	}
+}
+
+void do_final_instance(void)
+{
+	int i;
+
+	for( i = 1; i < MAX_INSTANCE; i++ )
+		instance_destroy(i);
 }
 
 void do_init_instance(void)

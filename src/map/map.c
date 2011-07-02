@@ -3436,9 +3436,6 @@ void do_final(void)
 	for( sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC*)mapit_next(iter) )
 		map_quit(sd);
 	mapit_free(iter);
-	
-	for( i = 0; i < MAX_INSTANCE; i++ )
-		instance_destroy(i);
 
 	id_db->foreach(id_db,cleanup_db_sub);
 	chrif_char_reset_offline();
@@ -3449,6 +3446,7 @@ void do_final(void)
 	do_final_chrif();
 	do_final_npc();
 	do_final_script();
+	do_final_instance();
 	do_final_itemdb();
 	do_final_storage();
 	do_final_guild();

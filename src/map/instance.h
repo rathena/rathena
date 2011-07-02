@@ -7,10 +7,12 @@
 #define MAX_MAP_PER_INSTANCE 10
 #define MAX_INSTANCE 500
 
-typedef enum instance_state { INSTANCE_FREE, INSTANCE_IDLE, INSTANCE_BUSSY } instance_state;
+#define INSTANCE_NAME_LENGTH (60+1)
+
+typedef enum instance_state { INSTANCE_FREE, INSTANCE_IDLE, INSTANCE_BUSY } instance_state;
 
 struct s_instance {
-	char name[61]; // Instance Name - required for clif functions.
+	char name[INSTANCE_NAME_LENGTH]; // Instance Name - required for clif functions.
 	instance_state state;
 	short instance_id;
 	int party_id;
@@ -43,6 +45,7 @@ void instance_check_idle(int instance_id);
 void instance_check_kick(struct map_session_data *sd);
 void instance_set_timeout(int instance_id, unsigned int progress_timeout, unsigned int idle_timeout);
 
-void do_init_instance();
+void do_final_instance(void);
+void do_init_instance(void);
 
 #endif

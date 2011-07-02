@@ -1,5 +1,10 @@
 Date	Added
 
+2011/07/02
+	* Random updates to instance system. [Ai4rei]
+	- Introduced a constant for instance name length.
+	- Corrected comments related to instance packets 0x2cb (ZC_MEMORIALDUNGEON_SUBSCRIPTION_INFO) and 0x2ce (ZC_MEMORIALDUNGEON_NOTIFY).
+	- Moved instance finalization out of map.c into instance.c
 2011/07/01
 	* CMake: marked executables as different components and other miscellaneous changes. [FlavioJS]
 2011/06/29

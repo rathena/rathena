@@ -13997,11 +13997,11 @@ int clif_instance(int instance_id, int type, int flag)
 	switch( type )
 	{
 	case 1:
-		// S 0x2cb <Instance name>.63B <Standby Position>.W
+		// S 0x2cb <Instance name>.61B <Standby Position>.W
 		// Required to start the instancing information window on Client
 		// This window re-appear each "refresh" of client automatically until type 4 is send to client.
 		WBUFW(buf,0) = 0x02CB;
-		memcpy(WBUFP(buf,2),instance[instance_id].name,61);
+		memcpy(WBUFP(buf,2),instance[instance_id].name,INSTANCE_NAME_LENGTH);
 		WBUFW(buf,63) = flag;
 		clif_send(buf,packet_len(0x02CB),&sd->bl,PARTY);
 		break;
@@ -14029,14 +14029,16 @@ int clif_instance(int instance_id, int type, int flag)
 		}
 		clif_send(buf,packet_len(0x02CD),&sd->bl,PARTY);
 		break;
-	case 5: // R 02CE <message ID>.L
+	case 5:
 		// S 0x2ce <Message ID>.L
+		// 0 = Notification (EnterLimitDate update?)
 		// 1 = The Memorial Dungeon expired; it has been destroyed
 		// 2 = The Memorial Dungeon's entry time limit expired; it has been destroyed
 		// 3 = The Memorial Dungeon has been removed.
-		// 4 = Just remove the window, maybe party/guild leave
+		// 4 = Create failure (removes the instance window)
 		WBUFW(buf,0) = 0x02CE;
 		WBUFL(buf,2) = flag;
+		//WBUFL(buf,6) = EnterLimitDate;
 		clif_send(buf,packet_len(0x02CE),&sd->bl,PARTY);
 		break;
 	}
