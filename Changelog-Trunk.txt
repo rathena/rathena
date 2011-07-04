@@ -1,5 +1,7 @@
 Date	Added
 
+2011/07/04
+	* Fixed 'strnlen' still causing warnings in db.c on Debian (follow up to r14855). [Ai4rei]
 2011/07/03
 	* Corrected npcdb_checkid to exclude border constants 400 (JT_NEW_NPC_START) and 1000 (JT_MON_BEGIN) (since r4425 and r12025, related r4537). [Ai4rei]
 2011/07/02
