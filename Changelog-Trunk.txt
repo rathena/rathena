@@ -1,5 +1,7 @@
 Date	Added
 
+2011/07/05
+	* CMake: split txt and sql variants of login-server and map-server. [FlavioJS]
 2011/07/04
 	* Fixed 'strnlen' still causing warnings in db.c on Debian (follow up to r14855). [Ai4rei]
 2011/07/03
