@@ -2,6 +2,8 @@ Date	Added
 
 2011/07/06
 	* Changed grfio.c include order and moved zlib include from the header to the source. [FlavioJS]
+	* Merged decode_zip/encode_zip from eapp's grfio to replace our direct use of zlib's uncompress/compress.
+	* Fixed strict-aliasing warning in mapcache's GetFloat.
 2011/07/05
 	* CMake: split txt and sql variants of login-server and map-server. [FlavioJS]
 2011/07/04
