@@ -1,74 +1,56 @@
 
 #
-# setup
-#
-set( MT19937AR_SOURCES
-#	"${MT19937AR_SOURCE_DIR}/mt19937ar.c"
-	)
-set( COMMON_SOURCES
-	"${COMMON_SOURCE_DIR}/core.c"
-	"${COMMON_SOURCE_DIR}/db.c"
-	"${COMMON_SOURCE_DIR}/ers.c"
-#	"${COMMON_SOURCE_DIR}/grfio.c"
-#	"${COMMON_SOURCE_DIR}/lock.c"
-	"${COMMON_SOURCE_DIR}/malloc.c"
-	"${COMMON_SOURCE_DIR}/mapindex.c"
-#	"${COMMON_SOURCE_DIR}/md5calc.c"
-#	"${COMMON_SOURCE_DIR}/nullpo.c"
-	"${COMMON_SOURCE_DIR}/plugins.c"
-#	"${COMMON_SOURCE_DIR}/random.c"
-	"${COMMON_SOURCE_DIR}/showmsg.c"
-	"${COMMON_SOURCE_DIR}/socket.c"
-	"${COMMON_SOURCE_DIR}/sql.c"
-	"${COMMON_SOURCE_DIR}/strlib.c"
-	"${COMMON_SOURCE_DIR}/timer.c"
-	"${COMMON_SOURCE_DIR}/utils.c"
-	)
-set( CHAR_SOURCES
-	"char.c"
-	"int_auction.c"
-	"int_guild.c"
-	"int_homun.c"
-	"int_mail.c"
-	"int_mercenary.c"
-	"int_party.c"
-	"int_pet.c"
-	"int_quest.c"
-	"int_storage.c"
-	"inter.c"
-	)
-
-
-#
 # char sql
 #
-if( USE_ZLIB AND USE_MYSQL )
-message ( STATUS "Creating target char-server_sql" )
-set( LIBRARIES ${GLOBAL_LIBRARIES} ${ZLIB_LIBRARIES} ${MYSQL_LIBRARIES} )
-set( INCLUDE_DIRS ${GLOBAL_INCLUDE_DIRS} ${MT19937AR_INCLUDE_DIRS} ${ZLIB_INCLUDE_DIRS} ${MYSQL_INCLUDE_DIRS} ${COMMON_INCLUDE_DIRS} )
+if( HAVE_common_sql )
+message( STATUS "Creating target char-server_sql" )
+set( SQL_CHAR_HEADERS
+	"${CMAKE_CURRENT_SOURCE_DIR}/char.h"
+	"${CMAKE_CURRENT_SOURCE_DIR}/int_auction.h"
+	"${CMAKE_CURRENT_SOURCE_DIR}/int_guild.h"
+	"${CMAKE_CURRENT_SOURCE_DIR}/int_homun.h"
+	"${CMAKE_CURRENT_SOURCE_DIR}/int_mail.h"
+	"${CMAKE_CURRENT_SOURCE_DIR}/int_mercenary.h"
+	"${CMAKE_CURRENT_SOURCE_DIR}/int_party.h"
+	"${CMAKE_CURRENT_SOURCE_DIR}/int_pet.h"
+	"${CMAKE_CURRENT_SOURCE_DIR}/int_quest.h"
+	"${CMAKE_CURRENT_SOURCE_DIR}/int_storage.h"
+	"${CMAKE_CURRENT_SOURCE_DIR}/inter.h"
+	)
+set( SQL_CHAR_SOURCES
+	"${CMAKE_CURRENT_SOURCE_DIR}/char.c"
+	"${CMAKE_CURRENT_SOURCE_DIR}/int_auction.c"
+	"${CMAKE_CURRENT_SOURCE_DIR}/int_guild.c"
+	"${CMAKE_CURRENT_SOURCE_DIR}/int_homun.c"
+	"${CMAKE_CURRENT_SOURCE_DIR}/int_mail.c"
+	"${CMAKE_CURRENT_SOURCE_DIR}/int_mercenary.c"
+	"${CMAKE_CURRENT_SOURCE_DIR}/int_party.c"
+	"${CMAKE_CURRENT_SOURCE_DIR}/int_pet.c"
+	"${CMAKE_CURRENT_SOURCE_DIR}/int_quest.c"
+	"${CMAKE_CURRENT_SOURCE_DIR}/int_storage.c"
+	"${CMAKE_CURRENT_SOURCE_DIR}/inter.c"
+	)
+set( DEPENDENCIES common_sql )
+set( LIBRARIES ${GLOBAL_LIBRARIES} )
+set( INCLUDE_DIRS ${GLOBAL_INCLUDE_DIRS} )
 set( DEFINITIONS ${GLOBAL_DEFINITIONS} )
-if( PACKETVER )
-	message( STATUS "Using PACKETVER=${PACKETVER}" )
-	list( APPEND DEFINITIONS PACKETVER=${PACKETVER} )
-endif()
-if( WIN32 )
-	list( APPEND LIBRARIES "oldnames.lib" "ws2_32.lib" )
-	list( APPEND INCLUDE_DIRS ${MSINTTYPES_INCLUDE_DIRS} )
-endif()
-set( SOURCE_FILES ${MT19937AR_SOURCES} ${COMMON_SOURCES} ${CHAR_SOURCES} )
-source_group( 3rdparty FILES ${MT19937AR_SOURCES} )
-source_group( common FILES ${COMMON_SOURCES} )
-source_group( char FILES ${CHAR_SOURCES} )
+set( SOURCE_FILES ${COMMON_BASE_HEADERS} ${COMMON_SQL_HEADERS} ${SQL_CHAR_HEADERS} ${SQL_CHAR_SOURCES} )
+source_group( common FILES ${COMMON_BASE_HEADERS} ${COMMON_SQL_HEADERS} )
+source_group( char FILES ${SQL_CHAR_HEADERS} ${SQL_CHAR_SOURCES} )
 include_directories( ${INCLUDE_DIRS} )
 add_executable( char-server_sql ${SOURCE_FILES} )
-target_link_libraries( char-server_sql ${LIBRARIES} )
+add_dependencies( char-server_sql ${DEPENDENCIES} )
+target_link_libraries( char-server_sql ${LIBRARIES} ${DEPENDENCIES} )
 set_target_properties( char-server_sql PROPERTIES COMPILE_DEFINITIONS "${DEFINITIONS}" )
 if( INSTALL_RUN_DATA )
 	install( TARGETS char-server_sql
 		DESTINATION ${CMAKE_INSTALL_PREFIX}
 		COMPONENT "char-server_sql" )
 endif()
-message ( STATUS "Creating target char-server_sql - done" )
+message( STATUS "Creating target char-server_sql - done" )
+set( HAVE_char-server_sql ON  CACHE BOOL "char-server_sql target is available" )
+mark_as_advanced( HAVE_char-server_sql )
 else()
-message ( STATUS "Skipping target char-server_sql (requires ZLIB and MYSQL)" )
+message( STATUS "Skipping target char-server_sql (requires common_sql)" )
+unset( HAVE_char-server_sql CACHE )
 endif()
