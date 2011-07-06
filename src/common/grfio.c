@@ -1,19 +1,18 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <sys/stat.h>
-
-#include "grfio.h"
-
 #include "../common/cbasetypes.h"
 #include "../common/showmsg.h"
 #include "../common/malloc.h"
 #include "../common/strlib.h"
 #include "../common/utils.h"
+#include "grfio.h"
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/stat.h>
+#include <zlib.h>
 
 //----------------------------
 //	file entry table struct

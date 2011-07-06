@@ -1,5 +1,7 @@
 Date	Added
 
+2011/07/06
+	* Changed grfio.c include order and moved zlib include from the header to the source. [FlavioJS]
 2011/07/05
 	* CMake: split txt and sql variants of login-server and map-server. [FlavioJS]
 2011/07/04

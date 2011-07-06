@@ -4,8 +4,6 @@
 #ifndef	_GRFIO_H_
 #define	_GRFIO_H_
 
-#include <zlib.h>
-
 void grfio_init(char*);			// GRFIO Initialize
 void grfio_final(void);			// GRFIO Finalize
 void* grfio_reads(char*,int*);	// GRFIO data file read & size get
