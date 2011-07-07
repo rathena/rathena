@@ -21,6 +21,7 @@ if( PCRE_LOCAL_LIBRARIES AND PCRE_LOCAL_INCLUDE_DIRS )
 	message( STATUS "Found PCRE: ${PCRE_LOCAL_LIBRARIES} (found version ${PCRE_MAJOR}.${PCRE_MINOR})" )
 	set( HAVE_LOCAL_PCRE ON
 		CACHE BOOL "pcre is available as a local copy" )
+	mark_as_advanced( HAVE_LOCAL_PCRE )
 else()
 	foreach( _VAR PCRE_LOCAL_LIBRARIES PCRE_LOCAL_INCLUDE_DIRS )
 		if( NOT "${_VAR}" )
@@ -52,6 +53,7 @@ mark_as_advanced( PCRE_SYSTEM_INCLUDE_DIRS )
 if( PCRE_SYSTEM_LIBRARIES AND PCRE_SYSTEM_INCLUDE_DIRS )
 	set( HAVE_SYSTEM_PCRE ON
 		CACHE BOOL "pcre is available on the system" )
+	mark_as_advanced( HAVE_SYSTEM_PCRE )
 else()
 	unset( HAVE_SYSTEM_PCRE CACHE )
 endif()
@@ -61,4 +63,4 @@ message( STATUS "Detecting system PCRE - done" )
 #
 # configure
 #
-CONFIGURE_USE_LOCAL_OR_SYSTEM( PCRE )
+CONFIGURE_WITH_LOCAL_OR_SYSTEM( PCRE )

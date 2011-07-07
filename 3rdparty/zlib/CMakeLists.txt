@@ -20,6 +20,7 @@ if( ZLIB_LOCAL_LIBRARIES AND ZLIB_LOCAL_INCLUDE_DIRS )
 	message( STATUS "Found local ZLIB: ${ZLIB_LOCAL_LIBRARIES} (found version ${ZLIB_VERSION})" )
 	set( HAVE_LOCAL_ZLIB ON
 		CACHE BOOL "zlib is available as a local copy" )
+	mark_as_advanced( HAVE_LOCAL_ZLIB )
 else()
 	foreach( _VAR ZLIB_LOCAL_LIBRARIES ZLIB_LOCAL_INCLUDE_DIRS )
 		if( NOT "${_VAR}" )
@@ -50,6 +51,7 @@ mark_as_advanced( ZLIB_SYSTEM_INCLUDE_DIRS )
 if( ZLIB_SYSTEM_LIBRARIES AND ZLIB_SYSTEM_INCLUDE_DIRS )
 	set( HAVE_SYSTEM_ZLIB ON
 		CACHE BOOL "zlib is available on the system" )
+	mark_as_advanced( HAVE_SYSTEM_ZLIB )
 else()
 	unset( HAVE_SYSTEM_ZLIB CACHE )
 endif()
@@ -59,4 +61,4 @@ message( STATUS "Detecting system ZLIB - done" )
 #
 # configure
 #
-CONFIGURE_USE_LOCAL_OR_SYSTEM( ZLIB )
+CONFIGURE_WITH_LOCAL_OR_SYSTEM( ZLIB )

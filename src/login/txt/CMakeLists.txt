@@ -28,10 +28,11 @@ add_executable( login-server ${SOURCE_FILES} )
 add_dependencies( login-server ${DEPENDENCIES} )
 target_link_libraries( login-server ${LIBRARIES} ${DEPENDENCIES} )
 set_target_properties( login-server PROPERTIES COMPILE_DEFINITIONS "${DEFINITIONS}" )
-if( INSTALL_RUN_DATA )
+if( WITH_COMPONENT_RUNTIME )
+	cpack_add_component( Runtime_loginserver_txt DESCRIPTION "login-server (txt version)" DISPLAY_NAME "login-server" GROUP Runtime )
 	install( TARGETS login-server
-		DESTINATION ${CMAKE_INSTALL_PREFIX}
-		COMPONENT "login-server" )
+		DESTINATION "."
+		COMPONENT Runtime_loginserver_txt )
 endif()
 message( STATUS "Creating target login-server - done" )
 set( HAVE_login-server ON  CACHE BOOL "login-server target is available" )

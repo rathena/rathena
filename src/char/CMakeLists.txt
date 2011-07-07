@@ -36,10 +36,11 @@ add_executable( char-server ${SOURCE_FILES} )
 add_dependencies( char-server ${DEPENDENCIES} )
 target_link_libraries( char-server ${LIBRARIES} ${DEPENDENCIES} )
 set_target_properties( char-server PROPERTIES COMPILE_DEFINITIONS "${DEFINITIONS}" )
-if( INSTALL_RUN_DATA )
+if( WITH_COMPONENT_RUNTIME )
+	cpack_add_component( Runtime_charserver_txt DESCRIPTION "char-server (txt version)" DISPLAY_NAME "char-server" GROUP Runtime )
 	install( TARGETS char-server
-		DESTINATION ${CMAKE_INSTALL_PREFIX}
-		COMPONENT "char-server" )
+		DESTINATION "."
+		COMPONENT Runtime_charserver_txt )
 endif()
 message( STATUS "Creating target char-server - done" )
 set( HAVE_char-server ON  CACHE BOOL "char-server target is available" )

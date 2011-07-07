@@ -42,10 +42,11 @@ add_executable( char-server_sql ${SOURCE_FILES} )
 add_dependencies( char-server_sql ${DEPENDENCIES} )
 target_link_libraries( char-server_sql ${LIBRARIES} ${DEPENDENCIES} )
 set_target_properties( char-server_sql PROPERTIES COMPILE_DEFINITIONS "${DEFINITIONS}" )
-if( INSTALL_RUN_DATA )
+if( WITH_COMPONENT_RUNTIME )
+	cpack_add_component( Runtime_charserver_sql DESCRIPTION "char-server (sql version)" DISPLAY_NAME "char-server_sql" GROUP Runtime )
 	install( TARGETS char-server_sql
-		DESTINATION ${CMAKE_INSTALL_PREFIX}
-		COMPONENT "char-server_sql" )
+		DESTINATION "."
+		COMPONENT Runtime_charserver_sql )
 endif()
 message( STATUS "Creating target char-server_sql - done" )
 set( HAVE_char-server_sql ON  CACHE BOOL "char-server_sql target is available" )

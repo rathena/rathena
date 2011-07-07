@@ -5,6 +5,7 @@ Date	Added
 	* Merged decode_zip/encode_zip from eapp's grfio to replace our direct use of zlib's uncompress/compress.
 	* Fixed strict-aliasing warning in mapcache's GetFloat.
 	* CMake: src/common builds static libraries common_base/common_sql, that are used as dependencies by the other targets.
+	* CMake: normalized variable names, added ability to create a package/installer.
 2011/07/05
 	* CMake: split txt and sql variants of login-server and map-server. [FlavioJS]
 2011/07/04

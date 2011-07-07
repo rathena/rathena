@@ -1,30 +1,8 @@
 
-# setup
-set( COMMON_SOURCES
-	"${COMMON_SOURCE_DIR}/core.c"
-#	"${COMMON_SOURCE_DIR}/db.c"
-#	"${COMMON_SOURCE_DIR}/ers.c"
-	"${COMMON_SOURCE_DIR}/grfio.c"
-#	"${COMMON_SOURCE_DIR}/lock.c"
-	"${COMMON_SOURCE_DIR}/malloc.c"
-#	"${COMMON_SOURCE_DIR}/mapindex.c"
-#	"${COMMON_SOURCE_DIR}/md5calc.c"
-#	"${COMMON_SOURCE_DIR}/nullpo.c"
-#	"${COMMON_SOURCE_DIR}/plugins.c"
-#	"${COMMON_SOURCE_DIR}/random.c"
-	"${COMMON_SOURCE_DIR}/showmsg.c"
-#	"${COMMON_SOURCE_DIR}/socket.c"
-	"${COMMON_SOURCE_DIR}/strlib.c"
-#	"${COMMON_SOURCE_DIR}/timer.c"
-	"${COMMON_SOURCE_DIR}/utils.c"
-	)
-set( MAPCACHE_SOURCES
-	mapcache.c
-	)
-
-
+#
 # mapcache
-if( USE_ZLIB )
+#
+if( WITH_ZLIB )
 message( STATUS "Creating target mapcache" )
 set( COMMON_HEADERS
 	${COMMON_MINI_HEADERS}
@@ -49,10 +27,11 @@ add_executable( mapcache ${SOURCE_FILES} )
 include_directories( ${INCLUDE_DIRS} )
 target_link_libraries( mapcache ${ZLIB_LIBRARIES} )
 set_target_properties( mapcache PROPERTIES COMPILE_DEFINITIONS "${DEFINITIONS}" )
-if( INSTALL_RUN_DATA )
+if( WITH_COMPONENT_RUNTIME )
+	cpack_add_component( Runtime_mapcache DESCRIPTION "mapcache generator" DISPLAY_NAME "mapcache" GROUP Runtime )
 	install( TARGETS mapcache
-		DESTINATION ${CMAKE_INSTALL_PREFIX}
-		COMPONENT "mapcache" )
+		DESTINATION "."
+		COMPONENT Runtime_mapcache )
 endif()
 message( STATUS "Creating target mapcache - done" )
 set( HAVE_mapcache ON  CACHE BOOL "mapcache target is available" )

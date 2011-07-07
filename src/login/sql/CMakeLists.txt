@@ -28,10 +28,11 @@ add_executable( login-server_sql ${SOURCE_FILES} )
 add_dependencies( login-server_sql ${DEPENDENCIES} )
 target_link_libraries( login-server_sql ${LIBRARIES} ${DEPENDENCIES} )
 set_target_properties( login-server_sql PROPERTIES COMPILE_DEFINITIONS "${DEFINITIONS}" )
-if( INSTALL_RUN_DATA )
+if( WITH_COMPONENT_RUNTIME )
+	cpack_add_component( Runtime_loginserver_sql DESCRIPTION "login-server (sql version)" DISPLAY_NAME "login-server_sql" GROUP Runtime )
 	install( TARGETS login-server_sql
-		DESTINATION ${CMAKE_INSTALL_PREFIX}
-		COMPONENT "login-server_sql" )
+		DESTINATION "."
+		COMPONENT Runtime_loginserver_sql )
 endif()
 message( STATUS "Creating target login-server_sql - done" )
 set( HAVE_login-server_sql ON  CACHE BOOL "login-server_sql target is available" )

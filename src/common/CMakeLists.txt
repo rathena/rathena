@@ -1,22 +1,8 @@
 
-#####################################################################
-# Find svnversion
-#
-message( STATUS "Detecting svnversion" )
-find_program( SVNVERSION_EXECUTABLE svnversion )
-mark_as_advanced( SVNVERSION_EXECUTABLE )
-message( STATUS "Detecting svnversion - done" )
-
-
 #
 # Create svnversion.h
 #
 message( STATUS "Creating svnversion.h" )
-if( SVNVERSION_EXECUTABLE )
-	execute_process( COMMAND ${SVNVERSION_EXECUTABLE} ${PROJECT_SOURCE_DIR}
-		OUTPUT_VARIABLE SVNVERSION
-		OUTPUT_STRIP_TRAILING_WHITESPACE )
-endif()
 if( SVNVERSION )
 	file( WRITE ${CMAKE_CURRENT_BINARY_DIR}/svnversion.h
 		"#ifndef SVNVERSION\n#define SVNVERSION ${SVNVERSION}\n#endif\n" )
@@ -26,10 +12,13 @@ endif()
 set( GLOBAL_INCLUDE_DIRS ${GLOBAL_INCLUDE_DIRS} ${CMAKE_CURRENT_BINARY_DIR} CACHE INTERNAL "" )
 set( SVNVERSION ${SVNVERSION}
 	CACHE STRING "SVN version of the source code" )
-if( INSTALL_BUILD_DATA )
-	install( FILES ${CMAKE_CURRENT_BINARY_DIR}/svnversion.h DESTINATION ${CMAKE_INSTALL_PREFIX}/src/common )
+if( WITH_COMPONENT_DEVELOPMENT )
+	install( FILES ${CMAKE_CURRENT_BINARY_DIR}/svnversion.h
+		DESTINATION "src/common"
+		COMPONENT Development_base )
 endif()
 message( STATUS "Creating svnversion.h - done" )
+
 
 #####################################################################
 # setup
@@ -65,7 +54,7 @@ set( COMMON_MINI_DEFINITIONS MINICORE CACHE INTERNAL "" )
 #
 # common_base
 #
-if( USE_ZLIB )
+if( WITH_ZLIB )
 message( STATUS "Creating target common_base" )
 set( COMMON_BASE_HEADERS
 	${COMMON_ALL_HEADERS}
@@ -126,7 +115,7 @@ endif()
 #
 # common_sql
 #
-if( HAVE_common_base AND USE_MYSQL )
+if( HAVE_common_base AND WITH_MYSQL )
 message( STATUS "Creating target common_sql" )
 set( COMMON_SQL_HEADERS
 	${COMMON_ALL_HEADERS}

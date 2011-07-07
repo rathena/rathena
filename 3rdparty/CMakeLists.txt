@@ -8,20 +8,20 @@
 #	${name}_SYSTEM_LIBRARIES - libraries of the system version
 #	${name}_SYSTEM_INCLUDE_DIRS - include directories of the system version
 # Generates:
-#	USE_LOCAL_${name} - use the local version of the package (only when local is available)
-#	USE_${name} - use this package
+#	WITH_LOCAL_${name} - use the local version of the package (only when local is available)
+#	WITH_${name} - use this package
 #	${name}_LIBRARIES - libraries
 #	${name}_INCLUDE_DIRS - include directories
-macro( CONFIGURE_USE_LOCAL_OR_SYSTEM name )
+macro( CONFIGURE_WITH_LOCAL_OR_SYSTEM name )
 	unset( ${name}_LIBRARIES CACHE )
 	unset( ${name}_INCLUDE_DIRS CACHE )
 	if( HAVE_LOCAL_${name} )
-		set( USE_LOCAL_${name} ON
+		set( WITH_LOCAL_${name} ON
 			CACHE BOOL "use local version of ${name}" )
 	else()
-		unset( USE_LOCAL_${name} CACHE )
+		unset( WITH_LOCAL_${name} CACHE )
 	endif()
-	if( USE_LOCAL_${name} )
+	if( WITH_LOCAL_${name} )
 		message( STATUS "Configuring for local ${name}" )
 		set( ${name}_LIBRARIES ${${name}_LOCAL_LIBRARIES} )
 		set( ${name}_INCLUDE_DIRS ${${name}_LOCAL_INCLUDE_DIRS} )
@@ -32,11 +32,11 @@ macro( CONFIGURE_USE_LOCAL_OR_SYSTEM name )
 		set( ${name}_INCLUDE_DIRS ${${name}_SYSTEM_INCLUDE_DIRS} )
 		message( STATUS "Configuring for system ${name} - done" )
 	endif()
-	if( USE_LOCAL_${name} OR HAVE_SYSTEM_${name} )
-		set( USE_${name} ON
+	if( WITH_LOCAL_${name} OR HAVE_SYSTEM_${name} )
+		set( WITH_${name} ON
 			CACHE BOOL "use ${name}" )
 	else()
-		unset( USE_${name} CACHE )
+		unset( WITH_${name} CACHE )
 	endif()
 	set( ${name}_LIBRARIES ${${name}_LIBRARIES}
 		CACHE PATH "${name} libraries" )
@@ -44,7 +44,7 @@ macro( CONFIGURE_USE_LOCAL_OR_SYSTEM name )
 		CACHE PATH "${name} include directories" )
 	mark_as_advanced( ${name}_LIBRARIES )
 	mark_as_advanced( ${name}_INCLUDE_DIRS )
-endmacro( CONFIGURE_USE_LOCAL_OR_SYSTEM )
+endmacro( CONFIGURE_WITH_LOCAL_OR_SYSTEM )
 
 
 add_subdirectory( msinttypes )
