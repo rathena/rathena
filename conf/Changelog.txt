@@ -1,5 +1,7 @@
 Date	Added
 
+2011/07/09
+	* Rev. 14892 Removed 'msg_athena.conf' messages 619 and 620 (duplicates to 572 and 573) (since r5506). [Ai4rei]
 2011/05/13
 	* Rev. 14812 Added settings 'cashshop_show_points' and 'mail_show_status', both disabled by default, as the messages they control are custom (follow up to r11548 and r12264). [Ai4rei]
 	- Moved custom cash point update messages to 'msg_athena.conf' (IDs 504~506).

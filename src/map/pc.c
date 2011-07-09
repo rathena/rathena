@@ -4691,7 +4691,8 @@ const char* job_name(int class_)
 		
 	case JOB_WEDDING:
 	case JOB_SUPER_NOVICE:
-
+	case JOB_GUNSLINGER:
+	case JOB_NINJA:
 	case JOB_XMAS:
 		return msg_txt(570 - JOB_WEDDING+class_);
 
@@ -4772,11 +4773,6 @@ const char* job_name(int class_)
 		return msg_txt(617);
 	case JOB_SOUL_LINKER:
 		return msg_txt(618);
-		
-	case JOB_GUNSLINGER:
-		return msg_txt(619);
-	case JOB_NINJA:
-		return msg_txt(620);
 	
 	default:
 		return msg_txt(650);

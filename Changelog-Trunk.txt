@@ -1,5 +1,7 @@
 Date	Added
 
+2011/07/09
+	* Removed duplicate entries for Gunslinger and Ninja in msg_athena.conf (since r5506). [Ai4rei]
 2011/07/07
 	* Replaced compress/uncompress inline code (encode_zip/decode_zip) with the respective zlib library calls while keeping 3rdparty calls inside common code (follow up to r14888, related r14808). [Ai4rei]
 2011/07/06
