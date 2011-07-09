@@ -47,6 +47,9 @@ endif()
 message( STATUS "Detecting svnversion" )
 find_program( SVNVERSION_EXECUTABLE svnversion )
 mark_as_advanced( SVNVERSION_EXECUTABLE )
+if( SVNVERSION_EXECUTABLE )
+	message( STATUS "Found svnversion: ${SVNVERSION_EXECUTABLE}" )
+endif()
 message( STATUS "Detecting svnversion - done" )
 
 
@@ -56,6 +59,19 @@ message( STATUS "Detecting svnversion - done" )
 message( STATUS "Detecting Subversion" )
 find_package( Subversion )
 message( STATUS "Detecting Subversion - done" )
+
+
+#
+# Find math library (FreeBSD)
+#
+message( STATUS "Detecting math library" )
+find_library( M_LIBRARIES m )
+mark_as_advanced( M_LIBRARIES )
+if( M_LIBRARIES )
+	message( STATUS "Found m: ${M_LIBRARIES}" )
+	list( APPEND GLOBAL_LIBRARIES ${M_LIBRARIES} )
+endif()
+message( STATUS "Detecting math library - done" )
 
 
 #
@@ -93,7 +109,15 @@ set( CPACK_PACKAGE_DESCRIPTION_SUMMARY "MMORPG server package" )
 set( CPACK_PACKAGE_VERSION ${SVNVERSION} )
 set( CPACK_RESOURCE_FILE_LICENSE ${CMAKE_CURRENT_SOURCE_DIR}/LICENSE )
 #set( CPACK_MONOLITHIC_INSTALL ON )
-include( CPACK )
+include( CPACK  OPTIONAL  RESULT_VARIABLE HAVE_CPACK )
+if( NOT HAVE_CPACK )
+	# empty replacements
+	macro( cpack_add_component_group )
+	endmacro()
+	macro( cpack_add_component )
+	endmacro()
+	message( STATUS "CPACK not found, package creation disabled" )
+endif()
 
 set( Runtime "Runtime files"  CACHE INTERNAL "" )
 set( Runtime_base "configurations, dbs, npcs, docs, ..."  CACHE INTERNAL "" )
@@ -111,10 +135,10 @@ cpack_add_component( Development_base DESCRIPTION ${Development_base} DISPLAY_NA
 #
 # install stuff
 #
-option( WITH_COMPONENT_RUNTIME "install files needed to run the project" ON )
-option( WITH_COMPONENT_DEVELOPMENT "install files needed to build the project" OFF )
+option( WITH_COMPONENT_RUNTIME "install/package files needed to run the project" ON )
+option( WITH_COMPONENT_DEVELOPMENT "install/package files needed to build the project" OFF )
 option( INSTALL_TO_PATH "copy files to INSTALL_PATH" OFF )
-option( INSTALL_TO_SOURCE "copy files to source directory (${CMAKE_CURRENT_SOURCE_DIR})" OFF )
+option( INSTALL_TO_SOURCE "copy files to source directory, skips what is already there (${CMAKE_CURRENT_SOURCE_DIR})" OFF )
 option( INSTALL_TO_SUBDIR "copy files to subdirectory (${CMAKE_CURRENT_BINARY_DIR}/install)" OFF )
 set( INSTALL_PATH "${CMAKE_INSTALL_PREFIX}"  CACHE STRING "install path (only used when INSTALL_TO_PATH is set)" )
 mark_as_advanced( CMAKE_INSTALL_PREFIX )

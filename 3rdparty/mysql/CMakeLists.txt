@@ -42,25 +42,10 @@ endif( WIN32 )
 # system
 #
 message( STATUS "Detecting system MYSQL" )
-find_program( MYSQL_CONFIG_EXECUTABLE "mysql_config" )
-mark_as_advanced( MYSQL_CONFIG_EXECUTABLE )
-if( MYSQL_CONFIG_EXECUTABLE )
-	# use mysql_config data
-	message( "Found mysql_config: ${MYSQL_CONFIG_EXECUTABLE}" )
-	execute_process( COMMAND "${MYSQL_CONFIG_EXECUTABLE} --libs"
-		OUTPUT_VARIABLE MYSQL_LIBRARIES )
-	execute_process( COMMAND "${MYSQL_CONFIG_EXECUTABLE} --include"
-		OUTPUT_VARIABLE MYSQL_INCLUDE_DIRS )
-	execute_process( COMMAND "${MYSQL_CONFIG_EXECUTABLE} --version"
-		OUTPUT_VARIABLE MYSQL_VERSION )
-	message( STATUS "Found MYSQL: ${MYSQL_LIBRARIES} (found version ${MYSQL_VERSION})" )
-else()
-	# find mysql package
-	unset( MYSQL_LIBRARIES CACHE )
-	unset( MYSQL_INCLUDE_DIRS CACHE )
-	set( CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_MODULE_PATH} )
-	find_package( MYSQL )
-endif()
+unset( MYSQL_LIBRARIES CACHE )
+unset( MYSQL_INCLUDE_DIRS CACHE )
+set( CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_MODULE_PATH} )
+find_package( MYSQL )
 set( MYSQL_SYSTEM_LIBRARIES "${MYSQL_LIBRARIES}"
 	CACHE PATH "system mysql libraries" )
 set( MYSQL_SYSTEM_INCLUDE_DIRS "${MYSQL_INCLUDE_DIRS}"

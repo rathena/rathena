@@ -1,6 +1,7 @@
 Date	Added
 
 2011/07/09
+	* CMake: added search for math library, made CPack existence optional, updated the search for mysqlclient and corrected misspelled variables (tested with FreeBSD-8.2-i386) [FlavioJS]
 	* Removed duplicate entries for Gunslinger and Ninja in msg_athena.conf (since r5506). [Ai4rei]
 2011/07/07
 	* Replaced compress/uncompress inline code (encode_zip/decode_zip) with the respective zlib library calls while keeping 3rdparty calls inside common code (follow up to r14888, related r14808). [Ai4rei]
