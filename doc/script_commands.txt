@@ -4,7 +4,7 @@
 //= A reference manual for the eAthena scripting language.
 //= Commands are sorted depending on their functionality.
 //===== Version ===========================================
-//= 3.44.20110530
+//= 3.45.20110709
 //=========================================================
 //= 1.0 - First release, filled will as much info as I could
 //=       remember or figure out, most likely there are errors,
@@ -179,6 +179,8 @@
 //=       cashshops as well. [Ai4rei]
 //= 3.44.20110530
 //=       Documented special map names recognized by 'warpguild'. [Ai4rei]
+//= 3.45.20110709
+//=       Added 'getmercinfo' command. [Ai4rei]
 //=========================================================
 
 This document is a reference manual for all the scripting commands and functions 
@@ -7171,6 +7173,27 @@ attached character. Guild can be one or the following constants:
     SWORD_MERC_GUILD
 
 ---------------------------------------
+
+*getmercinfo(<type>{,<char id>});
+
+Retrieves information about mercenary of the currently attached
+character. If char id is given, the information of that character is
+retrieved instead. Type specifies what information to retrieve and
+can be one of the following:
+
+    0 - Database ID
+    1 - Class
+    2 - Name
+    3 - Faith value for this mercenary's guild, if any
+    4 - Calls value for this mercenary's guild, if any
+    5 - Kill count
+    6 - Remaining life time in msec
+    7 - Level
+
+If the character does not have a mercenary, the command returns ""
+for name and 0 for all other types.
+
+----------------------------------------
 
 Whew.
 That's about all of them.

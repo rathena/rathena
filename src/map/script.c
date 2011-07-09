@@ -11684,6 +11684,62 @@ BUILDIN_FUNC(gethominfo)
 	return 0;
 }
 
+/// Retrieves information about character's mercenary
+/// getmercinfo <type>[,<char id>];
+BUILDIN_FUNC(getmercinfo)
+{
+	int type, char_id;
+	struct map_session_data* sd;
+	struct mercenary_data* md;
+
+	type = script_getnum(st,2);
+
+	if( script_hasdata(st,3) )
+	{
+		char_id = script_getnum(st,3);
+
+		if( ( sd = map_charid2sd(char_id) ) == NULL )
+		{
+			ShowError("buildin_getmercinfo: No such character (char_id=%d).\n", char_id);
+			script_pushnil(st);
+			return 1;
+		}
+	}
+	else
+	{
+		if( ( sd = script_rid2sd(st) ) == NULL )
+		{
+			script_pushnil(st);
+			return 0;
+		}
+	}
+
+	md = ( sd->status.mer_id && sd->md ) ? sd->md : NULL;
+
+	switch( type )
+	{
+		case 0: script_pushint(st,md ? md->mercenary.mercenary_id : 0); break;
+		case 1: script_pushint(st,md ? md->mercenary.class_ : 0); break;
+		case 2:
+			if( md )
+				script_pushstrcopy(st,md->db->name);
+			else
+				script_pushconststr(st,"");
+			break;
+		case 3: script_pushint(st,md ? mercenary_get_faith(md) : 0); break;
+		case 4: script_pushint(st,md ? mercenary_get_calls(md) : 0); break;
+		case 5: script_pushint(st,md ? md->mercenary.kill_count : 0); break;
+		case 6: script_pushint(st,md ? mercenary_get_lifetime(md) : 0); break;
+		case 7: script_pushint(st,md ? md->db->lv : 0); break;
+		default:
+			ShowError("buildin_getmercinfo: Invalid type %d (char_id=%d).\n", type, sd->status.char_id);
+			script_pushnil(st);
+			return 1;
+	}
+
+	return 0;
+}
+
 /*==========================================
  * Shows wether your inventory(and equips) contain
    selected card or not.
@@ -15143,6 +15199,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(recovery,""),
 	BUILDIN_DEF(getpetinfo,"i"),
 	BUILDIN_DEF(gethominfo,"i"),
+	BUILDIN_DEF(getmercinfo,"i?"),
 	BUILDIN_DEF(checkequipedcard,"i"),
 	BUILDIN_DEF(jump_zero,"il"), //for future jA script compatibility
 	BUILDIN_DEF(globalmes,"s?"),
