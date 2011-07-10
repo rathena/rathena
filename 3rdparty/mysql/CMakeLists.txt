@@ -44,7 +44,6 @@ endif( WIN32 )
 message( STATUS "Detecting system MYSQL" )
 unset( MYSQL_LIBRARIES CACHE )
 unset( MYSQL_INCLUDE_DIRS CACHE )
-set( CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_MODULE_PATH} )
 find_package( MYSQL )
 set( MYSQL_SYSTEM_LIBRARIES "${MYSQL_LIBRARIES}"
 	CACHE PATH "system mysql libraries" )

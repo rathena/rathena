@@ -1,3 +1,5 @@
+#####################################################################
+#
 # "Getting Started with CMake", a tutorial video by Eric Wing.
 #   Part 1 of 6: http://www.youtube.com/watch?v=CLvZTyji_Uw
 #   Part 2 of 6: http://www.youtube.com/watch?v=gUW-RrRQjEg
@@ -11,8 +13,30 @@
 #   WITH_*   : option to use an external package or not
 #   ENABLE_* : option to use an internal feature/code or not
 #   HAVE_*   : internal variable indicating if we have and are using something
-cmake_minimum_required( VERSION 2.8.4 )
+#
+# Example (build in subdir 'build' and install to source dir):
+#   mkdir build
+#   cd build
+#   cmake -G"Unix Makefiles" -DINSTALL_TO_SOURCE:bool=ON ..
+#   make install
+#   cd ..
+#   rm -rf build
+#
+#####################################################################
+
+
+#cmake_minimum_required( VERSION 2.8.4 )
+# Functional changes from 2.8.3 to 2.8.4:
+#   string(SUBSTRING) works with length -1 as "rest of string"
+#   changes to some CPack generators
+#   CYGWIN no longer defines WIN32
+#   CMP0017: Prefer files from the CMake module directory when including from there.
+set( CMAKE_LEGACY_CYGWIN_WIN32 0 )
+cmake_minimum_required( VERSION 2.8.3 )
 project( eAthena )
+if( CYGWIN )
+	unset( WIN32 )
+endif()
 
 
 #
@@ -261,5 +285,4 @@ endif()
 #
 # subdirectories
 #
-add_subdirectory( 3rdparty )
 add_subdirectory( src )
