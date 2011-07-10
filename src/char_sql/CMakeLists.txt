@@ -1,5 +1,11 @@
 
 #
+# setup
+#
+set( SQL_CHAR_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}  CACHE INTERNAL "" )
+
+
+#
 # char sql
 #
 if( HAVE_common_sql )
@@ -48,9 +54,10 @@ if( WITH_COMPONENT_RUNTIME )
 		DESTINATION "."
 		COMPONENT Runtime_charserver_sql )
 endif()
-message( STATUS "Creating target char-server_sql - done" )
 set( HAVE_char-server_sql ON  CACHE BOOL "char-server_sql target is available" )
 mark_as_advanced( HAVE_char-server_sql )
+set( TARGET_LIST ${TARGET_LIST} char-server_sql  CACHE INTERNAL "" )
+message( STATUS "Creating target char-server_sql - done" )
 else()
 message( STATUS "Skipping target char-server_sql (requires common_sql)" )
 unset( HAVE_char-server_sql CACHE )

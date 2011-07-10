@@ -5,16 +5,16 @@
 if( HAVE_common_sql )
 message( STATUS "Creating target login-server_sql" )
 set( SQL_LOGIN_HEADERS
-	"${LOGIN_SOURCE_DIR}/account.h"
-	"${LOGIN_SOURCE_DIR}/ipban.h"
-	"${LOGIN_SOURCE_DIR}/login.h"
-	"${LOGIN_SOURCE_DIR}/loginlog.h"
+	"${SQL_LOGIN_SOURCE_DIR}/account.h"
+	"${SQL_LOGIN_SOURCE_DIR}/ipban.h"
+	"${SQL_LOGIN_SOURCE_DIR}/login.h"
+	"${SQL_LOGIN_SOURCE_DIR}/loginlog.h"
 	)
 set( SQL_LOGIN_SOURCES
-	"${LOGIN_SOURCE_DIR}/account_sql.c"
-	"${LOGIN_SOURCE_DIR}/ipban_sql.c"
-	"${LOGIN_SOURCE_DIR}/login.c"
-	"${LOGIN_SOURCE_DIR}/loginlog_sql.c"
+	"${SQL_LOGIN_SOURCE_DIR}/account_sql.c"
+	"${SQL_LOGIN_SOURCE_DIR}/ipban_sql.c"
+	"${SQL_LOGIN_SOURCE_DIR}/login.c"
+	"${SQL_LOGIN_SOURCE_DIR}/loginlog_sql.c"
 	)
 set( DEPENDENCIES common_sql )
 set( LIBRARIES ${GLOBAL_LIBRARIES} )
@@ -34,9 +34,10 @@ if( WITH_COMPONENT_RUNTIME )
 		DESTINATION "."
 		COMPONENT Runtime_loginserver_sql )
 endif()
-message( STATUS "Creating target login-server_sql - done" )
 set( HAVE_login-server_sql ON  CACHE BOOL "login-server_sql target is available" )
 mark_as_advanced( HAVE_login-server_sql )
+set( TARGET_LIST ${TARGET_LIST} login-server_sql  CACHE INTERNAL "" )
+message( STATUS "Creating target login-server_sql - done" )
 else()
 message( STATUS "Skipping target login-server_sql (requires common_sql)" )
 unset( HAVE_login-server_sql CACHE )

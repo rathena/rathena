@@ -4,6 +4,7 @@ Date	Added
 	* Temporary fix for bugreport:4961 (unintended conversion from signed to unsigned). [FlavioJS]
 	* CMake: lowered required version to 2.8.3 and moved custom cmake modules to 3rdparty/cmake.
 	* Changed limit definitions used in WBUF* and WFIFO* to the intended fixed size alternatives.
+	* CMake: added txt-converter targets, added warning for 64bit, added list of available targets.
 2011/07/09
 	* Added script command 'getmercinfo' for retrieving information about a mercenary of an online character. [Ai4rei]
 	* CMake: added search for math library, made CPack existence optional, updated the search for mysqlclient and corrected misspelled variables (tested with FreeBSD-8.2-i386) [FlavioJS]

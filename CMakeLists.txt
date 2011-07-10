@@ -125,6 +125,13 @@ if( Subversion_FOUND AND SVNVERSION )
 endif()
 
 
+#
+# 3rdparty
+#
+add_subdirectory( 3rdparty )
+
+
+
 #####################################################################
 # package stuff
 #
@@ -283,7 +290,25 @@ endif()
 
 
 #
-# subdirectories
+# sources
 #
-add_subdirectory( 3rdparty )
+set( TARGET_LIST  CACHE INTERNAL "" )
 add_subdirectory( src )
+
+
+#####################################################################
+# final checks and warnings
+#
+if( CMAKE_SIZEOF_VOID_P EQUAL 8 )
+	message( WARNING "64bit should work, but is not recommended." )
+elseif( NOT CMAKE_SIZEOF_VOID_P EQUAL 4 )
+	message( FATAL_ERROR "unexpected architecture (CMAKE_SIZEOF_VOID_P=${CMAKE_SIZEOF_VOID_P})" )
+endif()
+list( LENGTH  TARGET_LIST  _LEN )
+if( _LEN EQUAL 0 )
+	message( FATAL_ERROR "no targets available" )
+endif()
+message( STATUS "Available targets:" )
+foreach( _TARGET IN ITEMS ${TARGET_LIST} )
+	message( STATUS "\t${_TARGET}" )
+endforeach()
