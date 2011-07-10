@@ -1214,8 +1214,8 @@ int clif_hominfo(struct map_session_data *sd, struct homun_data *hd, int flag)
 	WBUFW(buf,29)=hd->homunculus.hunger;
 	WBUFW(buf,31)=(unsigned short) (hd->homunculus.intimacy / 100) ;
 	WBUFW(buf,33)=0; // equip id
-	WBUFW(buf,35)=cap_value(status->rhw.atk2+status->batk, 0, SHRT_MAX);
-	WBUFW(buf,37)=cap_value(status->matk_max, 0, SHRT_MAX);
+	WBUFW(buf,35)=cap_value(status->rhw.atk2+status->batk, 0, INT16_MAX);
+	WBUFW(buf,37)=cap_value(status->matk_max, 0, INT16_MAX);
 	WBUFW(buf,39)=status->hit;
 	if (battle_config.hom_setting&0x10)
 		WBUFW(buf,41)=status->luk/3 + 1;	//crit is a +1 decimal value! Just display purpose.[Vicious]
@@ -1225,14 +1225,14 @@ int clif_hominfo(struct map_session_data *sd, struct homun_data *hd, int flag)
 	WBUFW(buf,45)=status->mdef;
 	WBUFW(buf,47)=status->flee;
 	WBUFW(buf,49)=(flag)?0:status->amotion;
-	if (status->max_hp > SHRT_MAX) {
+	if (status->max_hp > INT16_MAX) {
 		WBUFW(buf,51) = status->hp/(status->max_hp/100);
 		WBUFW(buf,53) = 100;
 	} else {
 		WBUFW(buf,51)=status->hp;
 		WBUFW(buf,53)=status->max_hp;
 	}
-	if (status->max_sp > SHRT_MAX) {
+	if (status->max_sp > INT16_MAX) {
 		WBUFW(buf,55) = status->sp/(status->max_sp/100);
 		WBUFW(buf,57) = 100;
 	} else {
@@ -2828,18 +2828,18 @@ int clif_initialstatus(struct map_session_data *sd)
 	buf=WFIFOP(fd,0);
 
 	WBUFW(buf,0)=0xbd;
-	WBUFW(buf,2)=min(sd->status.status_point, SHRT_MAX);
-	WBUFB(buf,4)=min(sd->status.str, UCHAR_MAX);
+	WBUFW(buf,2)=min(sd->status.status_point, INT16_MAX);
+	WBUFB(buf,4)=min(sd->status.str, UINT8_MAX);
 	WBUFB(buf,5)=pc_need_status_point(sd,SP_STR,1);
-	WBUFB(buf,6)=min(sd->status.agi, UCHAR_MAX);
+	WBUFB(buf,6)=min(sd->status.agi, UINT8_MAX);
 	WBUFB(buf,7)=pc_need_status_point(sd,SP_AGI,1);
-	WBUFB(buf,8)=min(sd->status.vit, UCHAR_MAX);
+	WBUFB(buf,8)=min(sd->status.vit, UINT8_MAX);
 	WBUFB(buf,9)=pc_need_status_point(sd,SP_VIT,1);
-	WBUFB(buf,10)=min(sd->status.int_, UCHAR_MAX);
+	WBUFB(buf,10)=min(sd->status.int_, UINT8_MAX);
 	WBUFB(buf,11)=pc_need_status_point(sd,SP_INT,1);
-	WBUFB(buf,12)=min(sd->status.dex, UCHAR_MAX);
+	WBUFB(buf,12)=min(sd->status.dex, UINT8_MAX);
 	WBUFB(buf,13)=pc_need_status_point(sd,SP_DEX,1);
-	WBUFB(buf,14)=min(sd->status.luk, UCHAR_MAX);
+	WBUFB(buf,14)=min(sd->status.luk, UINT8_MAX);
 	WBUFB(buf,15)=pc_need_status_point(sd,SP_LUK,1);
 
 	WBUFW(buf,16) = sd->battle_status.batk + sd->battle_status.rhw.atk + sd->battle_status.lhw.atk;
@@ -2967,7 +2967,7 @@ int clif_statusupack(struct map_session_data *sd,int type,int ok,int val)
 	WFIFOW(fd,0)=0xbc;
 	WFIFOW(fd,2)=type;
 	WFIFOB(fd,4)=ok;
-	WFIFOB(fd,5)=cap_value(val,0,UCHAR_MAX);
+	WFIFOB(fd,5)=cap_value(val,0,UINT8_MAX);
 	WFIFOSET(fd,packet_len(0xbc));
 
 	return 0;
@@ -3832,7 +3832,7 @@ int clif_damage(struct block_list* src, struct block_list* dst, unsigned int tic
 		WBUFW(buf,22)=damage?div:0;
 		WBUFW(buf,27)=damage2?div:0;
 	} else {
-		WBUFW(buf,22)=min(damage, SHRT_MAX);
+		WBUFW(buf,22)=min(damage, INT16_MAX);
 		WBUFW(buf,27)=damage2;
 	}
 	WBUFW(buf,24)=div;
@@ -4591,7 +4591,7 @@ int clif_skill_nodamage(struct block_list *src,struct block_list *dst,int skill_
 
 	WBUFW(buf,0)=0x11a;
 	WBUFW(buf,2)=skill_id;
-	WBUFW(buf,4)=min(heal, SHRT_MAX);
+	WBUFW(buf,4)=min(heal, INT16_MAX);
 	WBUFL(buf,6)=dst->id;
 	WBUFL(buf,10)=src?src->id:0;
 	WBUFB(buf,14)=fail;
@@ -5048,7 +5048,7 @@ int clif_heal(int fd,int type,int val)
 	WFIFOHEAD(fd,packet_len(0x13d));
 	WFIFOW(fd,0)=0x13d;
 	WFIFOW(fd,2)=type;
-	WFIFOW(fd,4)=cap_value(val,0,SHRT_MAX);
+	WFIFOW(fd,4)=cap_value(val,0,INT16_MAX);
 	WFIFOSET(fd,packet_len(0x13d));
 
 	return 0;
@@ -5120,7 +5120,7 @@ int clif_pvpset(struct map_session_data *sd,int pvprank,int pvpnum,int type)
 		WBUFW(buf,0) = 0x19a;
 		WBUFL(buf,2) = sd->bl.id;
 		if(sd->sc.option&(OPTION_HIDE|OPTION_CLOAK))
-			WBUFL(buf,6) = ULONG_MAX; //On client displays as --
+			WBUFL(buf,6) = UINT32_MAX; //On client displays as --
 		else
 			WBUFL(buf,6) = pvprank;
 		WBUFL(buf,10) = pvpnum;
@@ -6038,7 +6038,7 @@ int clif_party_hp(struct map_session_data *sd)
 	WBUFW(buf,0)=cmd;
 	WBUFL(buf,2)=sd->status.account_id;
 #if PACKETVER < 20100126
-	if (sd->battle_status.max_hp > SHRT_MAX) { //To correctly display the %hp bar. [Skotlex]
+	if (sd->battle_status.max_hp > INT16_MAX) { //To correctly display the %hp bar. [Skotlex]
 		WBUFW(buf,6) = sd->battle_status.hp/(sd->battle_status.max_hp/100);
 		WBUFW(buf,8) = 100;
 	} else {
@@ -6067,7 +6067,7 @@ void clif_hpmeter_single(int fd, int id, unsigned int hp, unsigned int maxhp)
 	WFIFOW(fd,0) = cmd;
 	WFIFOL(fd,2) = id;
 #if PACKETVER < 20100126
-	if( maxhp > SHRT_MAX )
+	if( maxhp > INT16_MAX )
 	{// To correctly display the %hp bar. [Skotlex]
 		WFIFOW(fd,6) = hp/(maxhp/100);
 		WFIFOW(fd,8) = 100;
@@ -6110,7 +6110,7 @@ int clif_hpmeter_sub(struct block_list *bl, va_list ap)
 	WFIFOW(tsd->fd,0) = cmd;
 	WFIFOL(tsd->fd,2) = sd->status.account_id;
 #if PACKETVER < 20100126
-	if( sd->battle_status.max_hp > SHRT_MAX )
+	if( sd->battle_status.max_hp > INT16_MAX )
 	{ //To correctly display the %hp bar. [Skotlex]
 		WFIFOW(tsd->fd,6) = sd->battle_status.hp/(sd->battle_status.max_hp/100);
 		WFIFOW(tsd->fd,8) = 100;
@@ -6545,7 +6545,7 @@ int clif_mvp_exp(struct map_session_data *sd, unsigned int exp)
 	fd=sd->fd;
 	WFIFOHEAD(fd,packet_len(0x10b));
 	WFIFOW(fd,0)=0x10b;
-	WFIFOL(fd,2)=cap_value(exp,0,INT_MAX);
+	WFIFOL(fd,2)=cap_value(exp,0,INT32_MAX);
 	WFIFOSET(fd,packet_len(0x10b));
 	return 0;
 }
@@ -6692,7 +6692,7 @@ int clif_guild_basicinfo(struct map_session_data *sd)
 	WFIFOL(fd,10)=g->connect_member;
 	WFIFOL(fd,14)=g->max_member;
 	WFIFOL(fd,18)=g->average_lv;
-	WFIFOL(fd,22)=(uint32)cap_value(g->exp,0,INT_MAX);
+	WFIFOL(fd,22)=(uint32)cap_value(g->exp,0,INT32_MAX);
 	WFIFOL(fd,26)=g->next_exp;
 	WFIFOL(fd,30)=0;	// Tax Points
 	WFIFOL(fd,34)=0;	// Tendency: (left) Vulgar [-100,100] Famed (right)
@@ -6770,7 +6770,7 @@ int clif_guild_memberlist(struct map_session_data *sd)
 		WFIFOW(fd,c*104+16)=m->gender;
 		WFIFOW(fd,c*104+18)=m->class_;
 		WFIFOW(fd,c*104+20)=m->lv;
-		WFIFOL(fd,c*104+22)=(int)cap_value(m->exp,0,INT_MAX);
+		WFIFOL(fd,c*104+22)=(int)cap_value(m->exp,0,INT32_MAX);
 		WFIFOL(fd,c*104+26)=m->online;
 		WFIFOL(fd,c*104+30)=m->position;
 		memset(WFIFOP(fd,c*104+34),0,50);	// ƒƒ‚H
@@ -12459,17 +12459,17 @@ void clif_check(int fd, struct map_session_data* pl_sd)
 {
 	WFIFOHEAD(fd,packet_len(0x214));
 	WFIFOW(fd, 0) = 0x214;
-	WFIFOB(fd, 2) = min(pl_sd->status.str, UCHAR_MAX);
+	WFIFOB(fd, 2) = min(pl_sd->status.str, UINT8_MAX);
 	WFIFOB(fd, 3) = pc_need_status_point(pl_sd, SP_STR, 1);
-	WFIFOB(fd, 4) = min(pl_sd->status.agi, UCHAR_MAX);
+	WFIFOB(fd, 4) = min(pl_sd->status.agi, UINT8_MAX);
 	WFIFOB(fd, 5) = pc_need_status_point(pl_sd, SP_AGI, 1);
-	WFIFOB(fd, 6) = min(pl_sd->status.vit, UCHAR_MAX);
+	WFIFOB(fd, 6) = min(pl_sd->status.vit, UINT8_MAX);
 	WFIFOB(fd, 7) = pc_need_status_point(pl_sd, SP_VIT, 1);
-	WFIFOB(fd, 8) = min(pl_sd->status.int_, UCHAR_MAX);
+	WFIFOB(fd, 8) = min(pl_sd->status.int_, UINT8_MAX);
 	WFIFOB(fd, 9) = pc_need_status_point(pl_sd, SP_INT, 1);
-	WFIFOB(fd,10) = min(pl_sd->status.dex, UCHAR_MAX);
+	WFIFOB(fd,10) = min(pl_sd->status.dex, UINT8_MAX);
 	WFIFOB(fd,11) = pc_need_status_point(pl_sd, SP_DEX, 1);
-	WFIFOB(fd,12) = min(pl_sd->status.luk, UCHAR_MAX);
+	WFIFOB(fd,12) = min(pl_sd->status.luk, UINT8_MAX);
 	WFIFOB(fd,13) = pc_need_status_point(pl_sd, SP_LUK, 1);
 	WFIFOW(fd,14) = pl_sd->battle_status.batk+pl_sd->battle_status.rhw.atk+pl_sd->battle_status.lhw.atk;
 	WFIFOW(fd,16) = pl_sd->battle_status.rhw.atk2+pl_sd->battle_status.lhw.atk2;
@@ -13625,11 +13625,11 @@ void clif_mercenary_updatestatus(struct map_session_data *sd, int type)
 		case SP_ATK1:
 			{
 				int atk = rand()%(status->rhw.atk2 - status->rhw.atk + 1) + status->rhw.atk;
-				WFIFOL(fd,4) = cap_value(atk, 0, SHRT_MAX);
+				WFIFOL(fd,4) = cap_value(atk, 0, INT16_MAX);
 			}
 			break;
 		case SP_MATK1:
-			WFIFOL(fd,4) = cap_value(status->matk_max, 0, SHRT_MAX);
+			WFIFOL(fd,4) = cap_value(status->matk_max, 0, INT16_MAX);
 			break;
 		case SP_HIT:
 			WFIFOL(fd,4) = status->hit;
@@ -13690,8 +13690,8 @@ void clif_mercenary_info(struct map_session_data *sd)
 
 	// Mercenary shows ATK as a random value between ATK ~ ATK2
 	atk = rand()%(status->rhw.atk2 - status->rhw.atk + 1) + status->rhw.atk;
-	WFIFOW(fd,6) = cap_value(atk, 0, SHRT_MAX);
-	WFIFOW(fd,8) = cap_value(status->matk_max, 0, SHRT_MAX);
+	WFIFOW(fd,6) = cap_value(atk, 0, INT16_MAX);
+	WFIFOW(fd,8) = cap_value(status->matk_max, 0, INT16_MAX);
 	WFIFOW(fd,10) = status->hit;
 	WFIFOW(fd,12) = status->cri/10;
 	WFIFOW(fd,14) = status->def;
@@ -13813,7 +13813,7 @@ int clif_bg_hp(struct map_session_data *sd)
 	WBUFW(buf,0)=cmd;
 	WBUFL(buf,2) = sd->status.account_id;
 #if PACKETVER < 20100126
-	if( sd->battle_status.max_hp > SHRT_MAX )
+	if( sd->battle_status.max_hp > INT16_MAX )
 	{ // To correctly display the %hp bar. [Skotlex]
 		WBUFW(buf,6) = sd->battle_status.hp/(sd->battle_status.max_hp/100);
 		WBUFW(buf,8) = 100;
@@ -14544,7 +14544,7 @@ void clif_search_store_info_ack(struct map_session_data* sd)
 	WFIFOW(fd,2) = 7+(end-start)*blocksize;
 	WFIFOB(fd,4) = !sd->searchstore.pages;
 	WFIFOB(fd,5) = searchstore_querynext(sd);
-	WFIFOB(fd,6) = (unsigned char)min(sd->searchstore.uses, UCHAR_MAX);
+	WFIFOB(fd,6) = (unsigned char)min(sd->searchstore.uses, UINT8_MAX);
 
 	for( i = start; i < end; i++ )
 	{
@@ -14613,7 +14613,7 @@ void clif_open_search_store_info(struct map_session_data* sd)
 	WFIFOW(fd,0) = 0x83a;
 	WFIFOW(fd,2) = sd->searchstore.effect;
 #if PACKETVER > 20100701
-	WFIFOB(fd,4) = (unsigned char)min(sd->searchstore.uses, UCHAR_MAX);
+	WFIFOB(fd,4) = (unsigned char)min(sd->searchstore.uses, UINT8_MAX);
 #endif
 	WFIFOSET(fd,packet_len(0x83a));
 }

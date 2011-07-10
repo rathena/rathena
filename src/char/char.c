@@ -1804,33 +1804,33 @@ int mmo_char_tobuf(uint8* buffer, struct mmo_charstatus* p)
 
 	buf = WBUFP(buffer,0);
 	WBUFL(buf,0) = p->char_id;
-	WBUFL(buf,4) = min(p->base_exp, LONG_MAX);
+	WBUFL(buf,4) = min(p->base_exp, INT32_MAX);
 	WBUFL(buf,8) = p->zeny;
-	WBUFL(buf,12) = min(p->job_exp, LONG_MAX);
+	WBUFL(buf,12) = min(p->job_exp, INT32_MAX);
 	WBUFL(buf,16) = p->job_level;
 	WBUFL(buf,20) = 0; // probably opt1
 	WBUFL(buf,24) = 0; // probably opt2
 	WBUFL(buf,28) = p->option;
 	WBUFL(buf,32) = p->karma;
 	WBUFL(buf,36) = p->manner;
-	WBUFW(buf,40) = min(p->status_point, SHRT_MAX);
+	WBUFW(buf,40) = min(p->status_point, INT16_MAX);
 #if PACKETVER > 20081217
 	WBUFL(buf,42) = p->hp;
 	WBUFL(buf,46) = p->max_hp;
 	offset+=4;
 	buf = WBUFP(buffer,offset);
 #else
-	WBUFW(buf,42) = min(p->hp, SHRT_MAX);
-	WBUFW(buf,44) = min(p->max_hp, SHRT_MAX);
+	WBUFW(buf,42) = min(p->hp, INT16_MAX);
+	WBUFW(buf,44) = min(p->max_hp, INT16_MAX);
 #endif
-	WBUFW(buf,46) = min(p->sp, SHRT_MAX);
-	WBUFW(buf,48) = min(p->max_sp, SHRT_MAX);
+	WBUFW(buf,46) = min(p->sp, INT16_MAX);
+	WBUFW(buf,48) = min(p->max_sp, INT16_MAX);
 	WBUFW(buf,50) = DEFAULT_WALK_SPEED; // p->speed;
 	WBUFW(buf,52) = p->class_;
 	WBUFW(buf,54) = p->hair;
 	WBUFW(buf,56) = p->option&0x20 ? 0 : p->weapon; //When the weapon is sent and your option is riding, the client crashes on login!?
 	WBUFW(buf,58) = p->base_level;
-	WBUFW(buf,60) = min(p->skill_point, SHRT_MAX);
+	WBUFW(buf,60) = min(p->skill_point, INT16_MAX);
 	WBUFW(buf,62) = p->head_bottom;
 	WBUFW(buf,64) = p->shield;
 	WBUFW(buf,66) = p->head_top;
@@ -1838,12 +1838,12 @@ int mmo_char_tobuf(uint8* buffer, struct mmo_charstatus* p)
 	WBUFW(buf,70) = p->hair_color;
 	WBUFW(buf,72) = p->clothes_color;
 	memcpy(WBUFP(buf,74), p->name, NAME_LENGTH);
-	WBUFB(buf,98) = min(p->str, UCHAR_MAX);
-	WBUFB(buf,99) = min(p->agi, UCHAR_MAX);
-	WBUFB(buf,100) = min(p->vit, UCHAR_MAX);
-	WBUFB(buf,101) = min(p->int_, UCHAR_MAX);
-	WBUFB(buf,102) = min(p->dex, UCHAR_MAX);
-	WBUFB(buf,103) = min(p->luk, UCHAR_MAX);
+	WBUFB(buf,98) = min(p->str, UINT8_MAX);
+	WBUFB(buf,99) = min(p->agi, UINT8_MAX);
+	WBUFB(buf,100) = min(p->vit, UINT8_MAX);
+	WBUFB(buf,101) = min(p->int_, UINT8_MAX);
+	WBUFB(buf,102) = min(p->dex, UINT8_MAX);
+	WBUFB(buf,103) = min(p->luk, UINT8_MAX);
 	WBUFW(buf,104) = p->slot;
 #if PACKETVER >= 20061023
 	WBUFW(buf,106) = ( p->rename > 0 ) ? 0 : 1;
