@@ -1,5 +1,7 @@
 Date	Added
 
+2011/07/10
+	* Temporary fix for bugreport:4961 (unintended conversion from signed to unsigned). [FlavioJS]
 2011/07/09
 	* Added script command 'getmercinfo' for retrieving information about a mercenary of an online character. [Ai4rei]
 	* CMake: added search for math library, made CPack existence optional, updated the search for mysqlclient and corrected misspelled variables (tested with FreeBSD-8.2-i386) [FlavioJS]

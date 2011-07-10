@@ -81,6 +81,16 @@
 #include <stdint.h>
 #include <limits.h>
 
+// temporary fix for bugreport:4961 (unintended conversion from signed to unsigned)
+// (-20 >= UCHAR_MAX) returns true
+// (-20 >= USHRT_MAX) returns true
+#if defined(__FreeBSD__) && defined(__x86_64)
+#undef UCHAR_MAX
+#define UCHAR_MAX (unsigned char)0xff
+#undef USHRT_MAX
+#define USHRT_MAX (unsigned short)0xffff
+#endif
+
 // ILP64 isn't supported, so always 32 bits?
 #ifndef UINT_MAX
 #define UINT_MAX 0xffffffff
