@@ -4,9 +4,7 @@
 #ifndef	_SOCKET_H_
 #define _SOCKET_H_
 
-#ifndef _CBASETYPES_H_
 #include "../common/cbasetypes.h"
-#endif
 
 #ifdef WIN32
 	#define WIN32_LEAN_AND_MEAN  // otherwise winsock2.h includes full windows.h

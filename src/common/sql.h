@@ -4,9 +4,7 @@
 #ifndef _COMMON_SQL_H_
 #define _COMMON_SQL_H_
 
-#ifndef _CBASETYPES_H_
 #include "../common/cbasetypes.h"
-#endif
 #include <stdarg.h>// va_list
 
 

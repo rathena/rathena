@@ -61,8 +61,8 @@ struct{
 	}need[6];
 } guild_skill_tree[MAX_GUILDSKILL];
 
-int guild_payexp_timer(int tid, unsigned int tick, int id, intptr data);
-static int guild_send_xy_timer(int tid, unsigned int tick, int id, intptr data);
+int guild_payexp_timer(int tid, unsigned int tick, int id, intptr_t data);
+static int guild_send_xy_timer(int tid, unsigned int tick, int id, intptr_t data);
 
 /*==========================================
  * Retrieves and validates the sd pointer for this guild member [Skotlex]
@@ -308,7 +308,7 @@ int guild_payexp_timer_sub(DBKey dataid, void *data, va_list ap)
 	return 0;
 }
 
-int guild_payexp_timer(int tid, unsigned int tick, int id, intptr data)
+int guild_payexp_timer(int tid, unsigned int tick, int id, intptr_t data)
 {
 	guild_expcache_db->clear(guild_expcache_db,guild_payexp_timer_sub);
 	return 0;
@@ -336,7 +336,7 @@ int guild_send_xy_timer_sub(DBKey key,void *data,va_list ap)
 }
 
 //Code from party_send_xy_timer [Skotlex]
-static int guild_send_xy_timer(int tid, unsigned int tick, int id, intptr data)
+static int guild_send_xy_timer(int tid, unsigned int tick, int id, intptr_t data)
 {
 	guild_db->foreach(guild_db,guild_send_xy_timer_sub,tick);
 	return 0;
@@ -1840,7 +1840,7 @@ int guild_castlealldataload(int len,struct guild_castle *gc)
 		}
 
 		// update mapserver castle data with new info
-		memcpy(&c->guild_id, &gc->guild_id, sizeof(struct guild_castle) - ((uintptr)&c->guild_id - (uintptr)c));
+		memcpy(&c->guild_id, &gc->guild_id, sizeof(struct guild_castle) - ((uintptr_t)&c->guild_id - (uintptr_t)c));
 
 		if( c->guild_id )
 		{

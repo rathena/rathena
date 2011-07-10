@@ -189,7 +189,7 @@ int pet_sc_check(struct map_session_data *sd, int type)
 	return 0;
 }
 
-static int pet_hungry(int tid, unsigned int tick, int id, intptr data)
+static int pet_hungry(int tid, unsigned int tick, int id, intptr_t data)
 {
 	struct map_session_data *sd;
 	struct pet_data *pd;
@@ -858,6 +858,7 @@ static int pet_ai_sub_hard(struct pet_data *pd, struct map_session_data *sd, uns
 		if (pd->ud.walktimer != INVALID_TIMER)
 			return 0; //Wait until the pet finishes walking back to master.
 		pd->status.speed = pd->petDB->speed;
+		pd->ud.state.change_walk_target = pd->ud.state.speed_changed = 1;
 	}
 	
 	if (pd->target_id) {
@@ -934,7 +935,7 @@ static int pet_ai_sub_foreachclient(struct map_session_data *sd,va_list ap)
 	return 0;
 }
 
-static int pet_ai_hard(int tid, unsigned int tick, int id, intptr data)
+static int pet_ai_hard(int tid, unsigned int tick, int id, intptr_t data)
 {
 	map_foreachpc(pet_ai_sub_foreachclient,tick);
 
@@ -968,7 +969,7 @@ static int pet_ai_sub_hard_lootsearch(struct block_list *bl,va_list ap)
 	return 0;
 }
 
-static int pet_delay_item_drop(int tid, unsigned int tick, int id, intptr data)
+static int pet_delay_item_drop(int tid, unsigned int tick, int id, intptr_t data)
 {
 	struct item_drop_list *list;
 	struct item_drop *ditem, *ditem_prev;
@@ -1029,7 +1030,7 @@ int pet_lootitem_drop(struct pet_data *pd,struct map_session_data *sd)
 	pd->ud.canact_tick = gettick()+10000;	//	10*1000ms‚ÌŠÔE‚í‚È‚¢
 
 	if (dlist->item)
-		add_timer(gettick()+540,pet_delay_item_drop,0,(intptr)dlist);
+		add_timer(gettick()+540,pet_delay_item_drop,0,(intptr_t)dlist);
 	else
 		ers_free(item_drop_list_ers, dlist);
 	return 1;
@@ -1038,7 +1039,7 @@ int pet_lootitem_drop(struct pet_data *pd,struct map_session_data *sd)
 /*==========================================
  * pet bonus giving skills [Valaris] / Rewritten by [Skotlex]
  *------------------------------------------*/ 
-int pet_skill_bonus_timer(int tid, unsigned int tick, int id, intptr data)
+int pet_skill_bonus_timer(int tid, unsigned int tick, int id, intptr_t data)
 {
 	struct map_session_data *sd=map_id2sd(id);
 	struct pet_data *pd;
@@ -1080,7 +1081,7 @@ int pet_skill_bonus_timer(int tid, unsigned int tick, int id, intptr data)
 /*==========================================
  * pet recovery skills [Valaris] / Rewritten by [Skotlex]
  *------------------------------------------*/ 
-int pet_recovery_timer(int tid, unsigned int tick, int id, intptr data)
+int pet_recovery_timer(int tid, unsigned int tick, int id, intptr_t data)
 {
 	struct map_session_data *sd=map_id2sd(id);
 	struct pet_data *pd;
@@ -1108,7 +1109,7 @@ int pet_recovery_timer(int tid, unsigned int tick, int id, intptr data)
 	return 0;
 }
 
-int pet_heal_timer(int tid, unsigned int tick, int id, intptr data)
+int pet_heal_timer(int tid, unsigned int tick, int id, intptr_t data)
 {
 	struct map_session_data *sd=map_id2sd(id);
 	struct status_data *status;
@@ -1146,7 +1147,7 @@ int pet_heal_timer(int tid, unsigned int tick, int id, intptr data)
 /*==========================================
  * pet support skills [Skotlex]
  *------------------------------------------*/ 
-int pet_skill_support_timer(int tid, unsigned int tick, int id, intptr data)
+int pet_skill_support_timer(int tid, unsigned int tick, int id, intptr_t data)
 {
 	struct map_session_data *sd=map_id2sd(id);
 	struct pet_data *pd;

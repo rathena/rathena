@@ -67,13 +67,13 @@
 \*****************************************************************************/
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 
 #include "db.h"
 #include "../common/mmo.h"
 #include "../common/malloc.h"
 #include "../common/showmsg.h"
 #include "../common/ers.h"
+#include "../common/strlib.h"
 
 /*****************************************************************************\
  *  (1) Private typedefs, enums, structures, defines and global variables of *
@@ -271,6 +271,7 @@ static struct db_stats {
 	uint32 dbit_remove;
 	uint32 dbit_destroy;
 	uint32 db_iterator;
+	uint32 db_exists;
 	uint32 db_get;
 	uint32 db_getall;
 	uint32 db_vgetall;
@@ -304,7 +305,7 @@ static struct db_stats {
 	0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 	0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 	0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-	0, 0, 0, 0, 0, 0, 0, 0
+	0, 0, 0, 0, 0, 0, 0, 0, 0
 };
 #define DB_COUNTSTAT(token) if (stats. ## token != UINT32_MAX) ++stats. ## token
 #else /* !defined(DB_ENABLE_STATS) */
@@ -630,19 +631,17 @@ static int db_is_key_null(DBType type, DBKey key)
 static DBKey db_dup_key(DBMap_impl* db, DBKey key)
 {
 	char *str;
+	size_t len;
 
 	DB_COUNTSTAT(db_dup_key);
 	switch (db->type) {
 		case DB_STRING:
 		case DB_ISTRING:
-			if (db->maxlen) {
-				CREATE(str, char, db->maxlen +1);
-				strncpy(str, key.str, db->maxlen);
-				str[db->maxlen] = '\0';
-				key.str = str;
-			} else {
-				key.str = (char *)aStrdup(key.str);
-			}
+			len = strnlen(key.str, db->maxlen);
+			str = (char*)aMalloc(len + 1);
+			memcpy(str, key.str, len);
+			str[len] = '\0';
+			key.str = str;
 			return key;
 
 		default:
@@ -888,8 +887,6 @@ static int db_uint_cmp(DBKey key1, DBKey key2, unsigned short maxlen)
 static int db_string_cmp(DBKey key1, DBKey key2, unsigned short maxlen)
 {
 	DB_COUNTSTAT(db_string_cmp);
-	if (maxlen == 0)
-		maxlen = UINT16_MAX;
 	return strncmp((const char *)key1.str, (const char *)key2.str, maxlen);
 }
 
@@ -908,8 +905,6 @@ static int db_string_cmp(DBKey key1, DBKey key2, unsigned short maxlen)
 static int db_istring_cmp(DBKey key1, DBKey key2, unsigned short maxlen)
 {
 	DB_COUNTSTAT(db_istring_cmp);
-	if (maxlen == 0)
-		maxlen = UINT16_MAX;
 	return strncasecmp((const char *)key1.str, (const char *)key2.str, maxlen);
 }
 
@@ -951,7 +946,6 @@ static unsigned int db_uint_hash(DBKey key, unsigned short maxlen)
 
 /**
  * Default hasher for DB_STRING databases.
- * If maxlen if 0, the maximum number of maxlen is used instead.
  * @param key Key to be hashed
  * @param maxlen Maximum length of the key to hash
  * @return hash of the key
@@ -966,8 +960,6 @@ static unsigned int db_string_hash(DBKey key, unsigned short maxlen)
 	unsigned short i;
 
 	DB_COUNTSTAT(db_string_hash);
-	if (maxlen == 0)
-		maxlen = UINT16_MAX;
 
 	for (i = 0; *k; ++i) {
 		hash = (hash*33 + ((unsigned char)*k))^(hash>>24);
@@ -981,7 +973,6 @@ static unsigned int db_string_hash(DBKey key, unsigned short maxlen)
 
 /**
  * Default hasher for DB_ISTRING databases.
- * If maxlen if 0, the maximum number of maxlen is used instead.
  * @param key Key to be hashed
  * @param maxlen Maximum length of the key to hash
  * @return hash of the key
@@ -995,8 +986,6 @@ static unsigned int db_istring_hash(DBKey key, unsigned short maxlen)
 	unsigned short i;
 
 	DB_COUNTSTAT(db_istring_hash);
-	if (maxlen == 0)
-		maxlen = UINT16_MAX;
 
 	for (i = 0; *k; i++) {
 		hash = (hash*33 + ((unsigned char)TOLOWER(*k)))^(hash>>24);
@@ -1087,6 +1076,7 @@ static void db_release_both(DBKey key, void *data, DBRelease which)
  *  dbit_obj_destroy - Destroys the iterator, unlocking the database and     *
  *           freeing used memory.                                            *
  *  db_obj_iterator - Return a new databse iterator.                         *
+ *  db_obj_exists   - Checks if an entry exists.                             *
  *  db_obj_get      - Get the data identified by the key.                    *
  *  db_obj_vgetall  - Get the data of the matched entries.                   *
  *  db_obj_getall   - Get the data of the matched entries.                   *
@@ -1399,6 +1389,57 @@ static DBIterator* db_obj_iterator(DBMap* self)
 	/* Lock the database */
 	db_free_lock(db);
 	return &it->vtable;
+}
+
+/**
+ * Returns true if the entry exists.
+ * @param self Interface of the database
+ * @param key Key that identifies the entry
+ * @return true is the entry exists
+ * @protected
+ * @see DBMap#exists
+ */
+static bool db_obj_exists(DBMap* self, DBKey key)
+{
+	DBMap_impl* db = (DBMap_impl*)self;
+	DBNode node;
+	int c;
+	bool found = false;
+
+	DB_COUNTSTAT(db_exists);
+	if (db == NULL) return false; // nullpo candidate
+	if (!(db->options&DB_OPT_ALLOW_NULL_KEY) && db_is_key_null(db->type, key)) {
+		return false; // nullpo candidate
+	}
+
+	if (db->cache && db->cmp(key, db->cache->key, db->maxlen) == 0) {
+#if defined(DEBUG)
+		if (db->cache->deleted) {
+			ShowDebug("db_exists: Cache contains a deleted node. Please report this!!!\n");
+			return false;
+		}
+#endif
+		return true; // cache hit
+	}
+
+	db_free_lock(db);
+	node = db->ht[db->hash(key, db->maxlen)%HASH_SIZE];
+	while (node) {
+		c = db->cmp(key, node->key, db->maxlen);
+		if (c == 0) {
+			if (!(node->deleted)) {
+				db->cache = node;
+				found = true;
+			}
+			break;
+		}
+		if (c < 0)
+			node = node->left;
+		else
+			node = node->right;
+	}
+	db_free_unlock(db);
+	return found;
 }
 
 /**
@@ -2326,7 +2367,7 @@ DBReleaser db_custom_release(DBRelease which)
  * @param type Type of database
  * @param options Options of the database
  * @param maxlen Maximum length of the string to be used as key in string 
- *          databases
+ *          databases. If 0, the maximum number of maxlen is used (64K).
  * @return The interface of the database
  * @public
  * @see #DBMap_impl
@@ -2351,6 +2392,7 @@ DBMap* db_alloc(const char *file, int line, DBType type, DBOptions options, unsi
 	options = db_fix_options(type, options);
 	/* Interface of the database */
 	db->vtable.iterator = db_obj_iterator;
+	db->vtable.exists   = db_obj_exists;
 	db->vtable.get      = db_obj_get;
 	db->vtable.getall   = db_obj_getall;
 	db->vtable.vgetall  = db_obj_vgetall;
@@ -2388,6 +2430,9 @@ DBMap* db_alloc(const char *file, int line, DBType type, DBOptions options, unsi
 	db->item_count = 0;
 	db->maxlen = maxlen;
 	db->global_lock = 0;
+
+	if( db->maxlen == 0 && (type == DB_STRING || type == DB_ISTRING) )
+		db->maxlen = UINT16_MAX;
 
 	return &db->vtable;
 }
@@ -2493,7 +2538,7 @@ void db_final(void)
 			"dbit_next          %10u, dbit_prev          %10u,\n"
 			"dbit_exists        %10u, dbit_remove        %10u,\n"
 			"dbit_destroy       %10u, db_iterator        %10u,\n"
-			"db_get             %10u,\n"
+			"db_exits           %10u, db_get             %10u,\n"
 			"db_getall          %10u, db_vgetall         %10u,\n"
 			"db_ensure          %10u, db_vensure         %10u,\n"
 			"db_put             %10u, db_remove          %10u,\n"
@@ -2523,7 +2568,7 @@ void db_final(void)
 			stats.dbit_next,          stats.dbit_prev,
 			stats.dbit_exists,        stats.dbit_remove,
 			stats.dbit_destroy,       stats.db_iterator,
-			stats.db_get,
+			stats.db_exists,          stats.db_get,
 			stats.db_getall,          stats.db_vgetall,
 			stats.db_ensure,          stats.db_vensure,
 			stats.db_put,             stats.db_remove,

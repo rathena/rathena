@@ -3988,23 +3988,9 @@ ACMD_FUNC(agitend2)
  *------------------------------------------*/
 ACMD_FUNC(mapexit)
 {
-	struct map_session_data* pl_sd;
-	struct s_mapiterator* iter;
-
 	nullpo_retr(-1, sd);
 
-	iter = mapit_getallusers();
-	for( pl_sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); pl_sd = (TBL_PC*)mapit_next(iter) )
-		if (sd->status.account_id != pl_sd->status.account_id)
-			clif_GM_kick(NULL, pl_sd);
-	mapit_free(iter);
-
-	clif_GM_kick(NULL, sd);
-	
-	flush_fifos();
-
-	runflag = 0;
-
+	do_shutdown();
 	return 0;
 }
 
@@ -7098,9 +7084,9 @@ ACMD_FUNC(mobinfo)
 				if (mob->mvpitem[i].p > 0) {
 					j++;
 					if (j == 1)
-						sprintf(atcmd_output2, " %s  %02.02f%%", item_data->name, (float)mob->mvpitem[i].p / 100);
+						sprintf(atcmd_output2, " %s  %02.02f%%", item_data->jname, (float)mob->mvpitem[i].p / 100);
 					else
-						sprintf(atcmd_output2, " - %s  %02.02f%%", item_data->name, (float)mob->mvpitem[i].p / 100);
+						sprintf(atcmd_output2, " - %s  %02.02f%%", item_data->jname, (float)mob->mvpitem[i].p / 100);
 					strcat(atcmd_output, atcmd_output2);
 				}
 			}
@@ -7117,7 +7103,7 @@ ACMD_FUNC(mobinfo)
 * @showmobs by KarLaeda
 * => For 5 sec displays the mobs on minimap
 *------------------------------------------*/
-int atshowmobs_timer(int tid, unsigned int tick, int id, intptr data)
+int atshowmobs_timer(int tid, unsigned int tick, int id, intptr_t data)
 {
 	struct map_session_data* sd = map_id2sd(id);
 	if( sd == NULL )

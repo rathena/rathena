@@ -151,7 +151,7 @@ static void script_save_mapreg(void)
 	mapreg_dirty = false;
 }
 
-static int script_autosave_mapreg(int tid, unsigned int tick, int id, intptr data)
+static int script_autosave_mapreg(int tid, unsigned int tick, int id, intptr_t data)
 {
 	if( mapreg_dirty )
 		script_save_mapreg();

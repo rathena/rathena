@@ -215,7 +215,7 @@ int mercenary_save(struct mercenary_data *md)
 	return 1;
 }
 
-static int merc_contract_end(int tid, unsigned int tick, int id, intptr data)
+static int merc_contract_end(int tid, unsigned int tick, int id, intptr_t data)
 {
 	struct map_session_data *sd;
 	struct mercenary_data *md;

@@ -51,8 +51,8 @@ struct unit_data* unit_bl2ud(struct block_list *bl)
 	return NULL;
 }
 
-static int unit_attack_timer(int tid, unsigned int tick, int id, intptr data);
-static int unit_walktoxy_timer(int tid, unsigned int tick, int id, intptr data);
+static int unit_attack_timer(int tid, unsigned int tick, int id, intptr_t data);
+static int unit_walktoxy_timer(int tid, unsigned int tick, int id, intptr_t data);
 
 int unit_walktoxy_sub(struct block_list *bl)
 {
@@ -106,7 +106,7 @@ int unit_walktoxy_sub(struct block_list *bl)
 	return 1;
 }
 
-static int unit_walktoxy_timer(int tid, unsigned int tick, int id, intptr data)
+static int unit_walktoxy_timer(int tid, unsigned int tick, int id, intptr_t data)
 {
 	int i;
 	int x,y,dx,dy;
@@ -263,7 +263,7 @@ static int unit_walktoxy_timer(int tid, unsigned int tick, int id, intptr data)
 	return 0;
 }
 
-static int unit_delay_walktoxy_timer(int tid, unsigned int tick, int id, intptr data)
+static int unit_delay_walktoxy_timer(int tid, unsigned int tick, int id, intptr_t data)
 {
 	struct block_list *bl = map_id2bl(id);
 
@@ -327,7 +327,7 @@ int unit_walktoxy( struct block_list *bl, short x, short y, int flag)
 	if((bl)->type == BL_MOB && (flag)) \
 		((TBL_MOB*)(bl))->state.skillstate = ((TBL_MOB*)(bl))->state.aggressive?MSS_FOLLOW:MSS_RUSH;
 
-static int unit_walktobl_sub(int tid, unsigned int tick, int id, intptr data)
+static int unit_walktobl_sub(int tid, unsigned int tick, int id, intptr_t data)
 {
 	struct block_list *bl = map_id2bl(id);
 	struct unit_data *ud = bl?unit_bl2ud(bl):NULL;
@@ -847,7 +847,7 @@ int unit_can_move(struct block_list *bl)
  * Resume running after a walk delay
  *------------------------------------------*/
 
-int unit_resume_running(int tid, unsigned int tick, int id, intptr data)
+int unit_resume_running(int tid, unsigned int tick, int id, intptr_t data)
 {
 
 	struct unit_data *ud = (struct unit_data *)data;
@@ -891,7 +891,7 @@ int unit_set_walkdelay(struct block_list *bl, unsigned int tick, int delay, int 
 			//Resume running after can move again [Kevin]
 			if(ud->state.running)
 			{
-				add_timer(ud->canmove_tick, unit_resume_running, bl->id, (intptr)ud);
+				add_timer(ud->canmove_tick, unit_resume_running, bl->id, (intptr_t)ud);
 			}
 			else
 			{
@@ -1655,7 +1655,7 @@ static int unit_attack_timer_sub(struct block_list* src, int tid, unsigned int t
 	return 1;
 }
 
-static int unit_attack_timer(int tid, unsigned int tick, int id, intptr data)
+static int unit_attack_timer(int tid, unsigned int tick, int id, intptr_t data)
 {
 	struct block_list *bl;
 	bl = map_id2bl(id);
@@ -1881,7 +1881,7 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 			storage_guild_storage_quit(sd,0);
 		sd->state.storage_flag = 0; //Force close it when being warped.
 		if(sd->party_invite>0)
-			party_reply_invite(sd,sd->party_invite_account,0);
+			party_reply_invite(sd,sd->party_invite,0);
 		if(sd->guild_invite>0)
 			guild_reply_invite(sd,sd->guild_invite,0);
 		if(sd->guild_alliance>0)

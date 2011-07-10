@@ -581,10 +581,10 @@ int clif_authfail_fd(int fd, int type)
 	return 0;
 }
 
-/*==========================================
- *
- *------------------------------------------*/
-int clif_charselectok(int id)
+/// Reply from char-server.
+/// Tells the player if it can connect to the char-server to select a character.
+/// ok=1 : client disconnects and tries to connect to the char-server
+int clif_charselectok(int id, uint8 ok)
 {
 	struct map_session_data* sd;
 	int fd;
@@ -595,7 +595,7 @@ int clif_charselectok(int id)
 	fd = sd->fd;
 	WFIFOHEAD(fd,packet_len(0xb3));
 	WFIFOW(fd,0) = 0xb3;
-	WFIFOB(fd,2) = 1;
+	WFIFOB(fd,2) = ok;
 	WFIFOSET(fd,packet_len(0xb3));
 
 	return 0;
@@ -700,7 +700,7 @@ int clif_clearunit_area(struct block_list* bl, clr_type type)
 	return 0;
 }
 
-static int clif_clearunit_delayed_sub(int tid, unsigned int tick, int id, intptr data)
+static int clif_clearunit_delayed_sub(int tid, unsigned int tick, int id, intptr_t data)
 {
 	struct block_list *bl = (struct block_list *)data;
 	clif_clearunit_area(bl, CLR_OUTSIGHT);
@@ -713,7 +713,7 @@ int clif_clearunit_delayed(struct block_list* bl, unsigned int tick)
 	struct block_list *tbl;
 	tbl = (struct block_list*)aMalloc(sizeof (struct block_list));
 	memcpy (tbl, bl, sizeof (struct block_list));
-	add_timer(tick, clif_clearunit_delayed_sub, 0, (intptr)tbl);
+	add_timer(tick, clif_clearunit_delayed_sub, 0, (intptr_t)tbl);
 	return 0;
 }
 
@@ -1376,6 +1376,12 @@ static void clif_move2(struct block_list *bl, struct view_data *vd, struct unit_
 				clif_specialeffect(&md->bl,421,AREA);
 		}
 		break;
+	case BL_PET:
+		if( vd->head_bottom )
+		{// needed to display pet equip properly
+			clif_pet_equip_area((TBL_PET*)bl); 
+		}
+		break;
 	}
 	return;
 }
@@ -1415,7 +1421,7 @@ void clif_move(struct unit_data *ud)
 /*==========================================
  * Delays the map_quit of a player after they are disconnected. [Skotlex]
  *------------------------------------------*/
-static int clif_delayquit(int tid, unsigned int tick, int id, intptr data)
+static int clif_delayquit(int tid, unsigned int tick, int id, intptr_t data)
 {
 	struct map_session_data *sd = NULL;
 
@@ -4192,7 +4198,7 @@ int clif_skillinfoblock(struct map_session_data *sd)
 			WFIFOW(fd,len+8) = skill_get_sp(id,sd->status.skill[i].lv);
 			WFIFOW(fd,len+10)= skill_get_range2(&sd->bl, id,sd->status.skill[i].lv);
 			safestrncpy((char*)WFIFOP(fd,len+12), skill_get_name(id), NAME_LENGTH);
-			if(sd->status.skill[i].flag == 0)
+			if(sd->status.skill[i].flag == SKILL_FLAG_PERMANENT)
 				WFIFOB(fd,len+36) = (sd->status.skill[i].lv < skill_tree_get_max(id, sd->status.class_))? 1:0;
 			else
 				WFIFOB(fd,len+36) = 0;
@@ -4229,7 +4235,7 @@ int clif_addskill(struct map_session_data *sd, int id )
 	WFIFOW(fd,10) = skill_get_sp(id,sd->status.skill[id].lv);
     WFIFOW(fd,12)= skill_get_range2(&sd->bl, id,sd->status.skill[id].lv);
     safestrncpy((char*)WFIFOP(fd,14), skill_get_name(id), NAME_LENGTH);
-    if( sd->status.skill[id].flag == 0 )
+    if( sd->status.skill[id].flag == SKILL_FLAG_PERMANENT )
         WFIFOB(fd,38) = (sd->status.skill[id].lv < skill_tree_get_max(id, sd->status.class_))? 1:0;
     else
         WFIFOB(fd,38) = 0;
@@ -4279,38 +4285,49 @@ int clif_skillup(struct map_session_data *sd,int skill_num)
 	return 0;
 }
 
-/*==========================================
- * スキル詠唱エフェクトを送信する
- * pl:
- * 0 = Yellow cast aura
- * 1 = Water elemental cast aura
- * 2 = Earth elemental cast aura
- * 3 = Fire elemental cast aura
- * 4 = Wind elemental cast aura
- * 5 = Poison elemental cast aura
- * 6 = White cast aura
- * ? = like 0
- *------------------------------------------*/
-int clif_skillcasting(struct block_list* bl,
-	int src_id,int dst_id,int dst_x,int dst_y,int skill_num,int pl, int casttime)
+
+/// Notifies clients, that an object is about to use a skill (ZC_USESKILL_ACK/ZC_USESKILL_ACK2)
+/// 013e <src id>.L <dst id>.L <x pos>.W <y pos>.W <skill id>.W <property>.L <delaytime>.L
+/// 07fb <src id>.L <dst id>.L <x pos>.W <y pos>.W <skill id>.W <property>.L <delaytime>.L <is disposable>.B
+/// property:
+///     0 = Yellow cast aura
+///     1 = Water elemental cast aura
+///     2 = Earth elemental cast aura
+///     3 = Fire elemental cast aura
+///     4 = Wind elemental cast aura
+///     5 = Poison elemental cast aura
+///     6 = Holy elemental cast aura
+///     ? = like 0
+/// is disposable:
+///     0 = yellow chat text "[src name] will use skill [skill name]."
+///     1 = no text
+void clif_skillcasting(struct block_list* bl, int src_id, int dst_id, int dst_x, int dst_y, int skill_num, int property, int casttime)
 {
+#if PACKETVER < 20091124
+	const int cmd = 0x13e;
+#else
+	const int cmd = 0x7fb;
+#endif
 	unsigned char buf[32];
-	WBUFW(buf,0) = 0x13e;
+
+	WBUFW(buf,0) = cmd;
 	WBUFL(buf,2) = src_id;
 	WBUFL(buf,6) = dst_id;
 	WBUFW(buf,10) = dst_x;
 	WBUFW(buf,12) = dst_y;
 	WBUFW(buf,14) = skill_num;
-	WBUFL(buf,16) = pl<0?0:pl; //Avoid sending negatives as element [Skotlex]
+	WBUFL(buf,16) = property<0?0:property; //Avoid sending negatives as element [Skotlex]
 	WBUFL(buf,20) = casttime;
-	if (disguised(bl)) {
-		clif_send(buf,packet_len(0x13e), bl, AREA_WOS);
-		WBUFL(buf,2) = -src_id;
-		clif_send(buf,packet_len(0x13e), bl, SELF);
-	} else
-		clif_send(buf,packet_len(0x13e), bl, AREA);
+#if PACKETVER >= 20091124
+	WBUFB(buf,24) = 1;  // isDisposable
+#endif
 
-	return 0;
+	if (disguised(bl)) {
+		clif_send(buf,packet_len(cmd), bl, AREA_WOS);
+		WBUFL(buf,2) = -src_id;
+		clif_send(buf,packet_len(cmd), bl, SELF);
+	} else
+		clif_send(buf,packet_len(cmd), bl, AREA);
 }
 
 /*==========================================
@@ -5821,28 +5838,32 @@ void clif_partyinvitationstate(struct map_session_data* sd)
 	WFIFOSET(fd, packet_len(0x2c9));
 }
 
-/*==========================================
- * パーティ勧誘
- *------------------------------------------*/
-int clif_party_invite(struct map_session_data *sd,struct map_session_data *tsd)
+/// Party invitation request (ZC_REQ_JOIN_GROUP/ZC_PARTY_JOIN_REQ)
+/// 00fe <party id>.L <party name>.24B
+/// 02c6 <party id>.L <party name>.24B
+void clif_party_invite(struct map_session_data *sd,struct map_session_data *tsd)
 {
+#if PACKETVER < 20070821
+	const int cmd = 0xfe;
+#else
+	const int cmd = 0x2c6;
+#endif
 	int fd;
 	struct party_data *p;
 
-	nullpo_ret(sd);
-	nullpo_ret(tsd);
+	nullpo_retv(sd);
+	nullpo_retv(tsd);
 
 	fd=tsd->fd;
 
 	if( (p=party_search(sd->status.party_id))==NULL )
-		return 0;
+		return;
 
-	WFIFOHEAD(fd,packet_len(0xfe));
-	WFIFOW(fd,0)=0xfe;
-	WFIFOL(fd,2)=sd->status.account_id;  // FIXME: This is party_id
+	WFIFOHEAD(fd,packet_len(cmd));
+	WFIFOW(fd,0)=cmd;
+	WFIFOL(fd,2)=sd->status.party_id;
 	memcpy(WFIFOP(fd,6),p->party.name,NAME_LENGTH);
-	WFIFOSET(fd,packet_len(0xfe));
-	return 0;
+	WFIFOSET(fd,packet_len(cmd));
 }
 
 /*==========================================
@@ -7643,12 +7664,17 @@ int clif_refresh(struct map_session_data *sd)
 	clif_weather_check(sd);
 	if( sd->chatID )
 		chat_leavechat(sd,0);
+	if( sd->state.vending )
+		clif_openvending(sd, sd->bl.id, sd->vending);
 	if( pc_issit(sd) )
 		clif_sitting(&sd->bl); // FIXME: just send to self, not area
 	if( pc_isdead(sd) ) //When you refresh, resend the death packet.
 		clif_clearunit_single(sd->bl.id,CLR_DEAD,sd->fd);
 	else
 		clif_changed_dir(&sd->bl, SELF);
+
+	// unlike vending, resuming buyingstore crashes the client.
+	buyingstore_close(sd);
 
 #ifndef TXT_ONLY
 	mail_clear(sd);
@@ -8368,6 +8394,12 @@ void clif_parse_WantToConnection(int fd, TBL_PC* sd)
 		WFIFOB(fd,2) = 5; // Your Game's EXE file is not the latest version
 		WFIFOSET(fd,packet_len(0x6a));
 		set_eof(fd);
+		return;
+	}
+
+	if( runflag != MAPSERVER_ST_RUNNING )
+	{// not allowed
+		clif_authfail_fd(fd,1);// server closed
 		return;
 	}
 
@@ -10620,12 +10652,12 @@ void clif_parse_PartyInvite2(int fd, struct map_session_data *sd)
 	party_invite(sd, t_sd);
 }
 
-/*==========================================
- * Party invitation reply
- * S 00ff <account ID>.L <flag>.L
- * S 02c7 <account ID>.L <flag>.B
- * flag: 0-reject, 1-accept
- *------------------------------------------*/
+/// Party invitation reply (CZ_JOIN_GROUP/CZ_PARTY_JOIN_REQ_ACK)
+/// 00ff <party id>.L <flag>.L
+/// 02c7 <party id>.L <flag>.B
+/// flag:
+///     0 = reject
+///     1 = accept
 void clif_parse_ReplyPartyInvite(int fd,struct map_session_data *sd)
 {
 	party_reply_invite(sd,RFIFOL(fd,2),RFIFOL(fd,6));
@@ -11995,6 +12027,11 @@ void clif_parse_FriendsListAdd(int fd, struct map_session_data *sd)
 		return;
 	}
 
+	if( sd->bl.id == f_sd->bl.id )
+	{// adding oneself as friend
+		return;
+	}
+
 	// @noask [LuzZza]
 	if(f_sd->state.noask) {
 		clif_noask_sub(sd, f_sd, 5);
@@ -12036,6 +12073,11 @@ void clif_parse_FriendsListReply(int fd, struct map_session_data *sd)
 	account_id = RFIFOL(fd,2);
 	char_id = RFIFOL(fd,6);
 	reply = RFIFOB(fd,10);
+
+	if( sd->bl.id == account_id )
+	{// adding oneself as friend
+		return;
+	}
 
 	f_sd = map_id2sd(account_id); //The account id is the same as the bl.id of players.
 	if (f_sd == NULL)
@@ -12305,10 +12347,8 @@ void clif_parse_FeelSaveOk(int fd,struct map_session_data *sd)
 	sd->menuskill_val = sd->menuskill_id = 0;
 }
 
-/*==========================================
- * Question about Star Glaldiator save map [Komurka]
- *------------------------------------------*/
-void clif_parse_ReqFeel(int fd, struct map_session_data *sd, int skilllv)
+/// Star Gladiator's Feeling map confirmation prompt (ZC_STARPLACE)
+void clif_feel_req(int fd, struct map_session_data *sd, int skilllv)
 {
 	WFIFOHEAD(fd,packet_len(0x253));
 	WFIFOW(fd,0)=0x253;
@@ -13957,11 +13997,11 @@ int clif_instance(int instance_id, int type, int flag)
 	switch( type )
 	{
 	case 1:
-		// S 0x2cb <Instance name>.63B <Standby Position>.W
+		// S 0x2cb <Instance name>.61B <Standby Position>.W
 		// Required to start the instancing information window on Client
 		// This window re-appear each "refresh" of client automatically until type 4 is send to client.
 		WBUFW(buf,0) = 0x02CB;
-		memcpy(WBUFP(buf,2),instance[instance_id].name,61);
+		memcpy(WBUFP(buf,2),instance[instance_id].name,INSTANCE_NAME_LENGTH);
 		WBUFW(buf,63) = flag;
 		clif_send(buf,packet_len(0x02CB),&sd->bl,PARTY);
 		break;
@@ -13989,14 +14029,16 @@ int clif_instance(int instance_id, int type, int flag)
 		}
 		clif_send(buf,packet_len(0x02CD),&sd->bl,PARTY);
 		break;
-	case 5: // R 02CE <message ID>.L
+	case 5:
 		// S 0x2ce <Message ID>.L
+		// 0 = Notification (EnterLimitDate update?)
 		// 1 = The Memorial Dungeon expired; it has been destroyed
 		// 2 = The Memorial Dungeon's entry time limit expired; it has been destroyed
 		// 3 = The Memorial Dungeon has been removed.
-		// 4 = Just remove the window, maybe party/guild leave
+		// 4 = Create failure (removes the instance window)
 		WBUFW(buf,0) = 0x02CE;
 		WBUFL(buf,2) = flag;
+		//WBUFL(buf,6) = EnterLimitDate;
 		clif_send(buf,packet_len(0x02CE),&sd->bl,PARTY);
 		break;
 	}
@@ -14911,7 +14953,7 @@ static int packetdb_readdb(void)
 	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 	   85, -1, -1,107,  6, -1,  7,  7, 22,191,  0,  0,  0,  0,  0,  0,
 	//#0x02C0
-	    0,  0,  0,  0,  0, 30,  0,  0,  0,  3,  0, 65,  4, 71, 10,  0,
+	    0,  0,  0,  0,  0, 30, 30,  0,  0,  3,  0, 65,  4, 71, 10,  0,
 	    0,  0,  0,  0, 29,  0,  6, -1, 10, 10,  3,  0, -1, 32,  6,  0,
 	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 67, 59, 60,  8,
 	   10,  2,  2,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
@@ -15018,7 +15060,7 @@ static int packetdb_readdb(void)
 	    6,  2, -1,  4,  4,  4,  4,  8,  8,268,  6,  8,  6, 54, 30, 54,
 #endif
 	    0,  0,  0,  0,  0,  8,  8, 32, -1,  5,  0,  0,  0,  0,  0,  0,
-	    0,  0,  0,  0,  0,  0, 14, -1, -1, -1,  8,  0,  0,  0, 26,  0,
+	    0,  0,  0,  0,  0,  0, 14, -1, -1, -1,  8, 25,  0,  0, 26,  0,
 	//#0x0800
 #if PACKETVER < 20091229
  	   -1, -1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 14, 20,

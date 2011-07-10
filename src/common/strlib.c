@@ -441,6 +441,163 @@ bool bin2hex(char* output, unsigned char* input, size_t count)
 
 
 /////////////////////////////////////////////////////////////////////
+/// Parses a single field in a delim-separated string.
+/// The delimiter after the field is skipped.
+///
+/// @param sv Parse state
+/// @return 1 if a field was parsed, 0 if already done, -1 on error.
+int sv_parse_next(struct s_svstate* sv)
+{
+	enum {
+		START_OF_FIELD,
+		PARSING_FIELD,
+		PARSING_C_ESCAPE,
+		END_OF_FIELD,
+		TERMINATE,
+		END
+	} state;
+	const char* str;
+	int len;
+	enum e_svopt opt;
+	char delim;
+	int i;
+
+	if( sv == NULL )
+		return -1;// error
+
+	str = sv->str;
+	len = sv->len;
+	opt = sv->opt;
+	delim = sv->delim;
+
+	// check opt
+	if( delim == '\n' && (opt&(SV_TERMINATE_CRLF|SV_TERMINATE_LF)) )
+	{
+		ShowError("sv_parse_next: delimiter '\\n' is not compatible with options SV_TERMINATE_LF or SV_TERMINATE_CRLF.\n");
+		return -1;// error
+	}
+	if( delim == '\r' && (opt&(SV_TERMINATE_CRLF|SV_TERMINATE_CR)) )
+	{
+		ShowError("sv_parse_next: delimiter '\\r' is not compatible with options SV_TERMINATE_CR or SV_TERMINATE_CRLF.\n");
+		return -1;// error
+	}
+
+	if( sv->done || str == NULL )
+	{
+		sv->done = true;
+		return 0;// nothing to parse
+	}
+
+#define IS_END() ( i >= len )
+#define IS_DELIM() ( str[i] == delim )
+#define IS_TERMINATOR() ( \
+	((opt&SV_TERMINATE_LF) && str[i] == '\n') || \
+	((opt&SV_TERMINATE_CR) && str[i] == '\r') || \
+	((opt&SV_TERMINATE_CRLF) && i+1 < len && str[i] == '\r' && str[i+1] == '\n') )
+#define IS_C_ESCAPE() ( (opt&SV_ESCAPE_C) && str[i] == '\\' )
+#define SET_FIELD_START() sv->start = i
+#define SET_FIELD_END() sv->end = i
+
+	i = sv->off;
+	state = START_OF_FIELD;
+	while( state != END )
+	{
+		switch( state )
+		{
+		case START_OF_FIELD:// record start of field and start parsing it
+			SET_FIELD_START();
+			state = PARSING_FIELD;
+			break;
+
+		case PARSING_FIELD:// skip field character
+			if( IS_END() || IS_DELIM() || IS_TERMINATOR() )
+				state = END_OF_FIELD;
+			else if( IS_C_ESCAPE() )
+				state = PARSING_C_ESCAPE;
+			else
+				++i;// normal character
+			break;
+
+		case PARSING_C_ESCAPE:// skip escape sequence (validates it too)
+			{
+				++i;// '\\'
+				if( IS_END() )
+				{
+					ShowError("sv_parse_next: empty escape sequence\n");
+					return -1;
+				}
+				if( str[i] == 'x' )
+				{// hex escape
+					++i;// 'x'
+					if( IS_END() || !ISXDIGIT(str[i]) )
+					{
+						ShowError("sv_parse_next: \\x with no following hex digits\n");
+						return -1;
+					}
+					do{
+						++i;// hex digit
+					}while( !IS_END() && ISXDIGIT(str[i]));
+				}
+				else if( str[i] == '0' || str[i] == '1' || str[i] == '2' )
+				{// octal escape
+					++i;// octal digit
+					if( !IS_END() && str[i] >= '0' && str[i] <= '7' )
+						++i;// octal digit
+					if( !IS_END() && str[i] >= '0' && str[i] <= '7' )
+						++i;// octal digit
+				}
+				else if( strchr(SV_ESCAPE_C_SUPPORTED, str[i]) )
+				{// supported escape character
+					++i;
+				}
+				else
+				{
+					ShowError("sv_parse_next: unknown escape sequence \\%c\n", str[i]);
+					return -1;
+				}
+				state = PARSING_FIELD;
+				break;
+			}
+
+		case END_OF_FIELD:// record end of field and stop
+			SET_FIELD_END();
+			state = END;
+			if( IS_END() )
+				;// nothing else
+			else if( IS_DELIM() )
+				++i;// delim
+			else if( IS_TERMINATOR() )
+				state = TERMINATE;
+			break;
+
+		case TERMINATE:
+#if 0
+			// skip line terminator
+			if( (opt&SV_TERMINATE_CRLF) && i+1 < len && str[i] == '\r' && str[i+1] == '\n' )
+				i += 2;// CRLF
+			else
+				++i;// CR or LF
+#endif
+			sv->done = true;
+			state = END;
+			break;
+		}
+	}
+	if( IS_END() )
+		sv->done = true;
+	sv->off = i;
+
+#undef IS_END
+#undef IS_DELIM
+#undef IS_TERMINATOR
+#undef IS_C_ESCAPE
+#undef SET_FIELD_START
+#undef SET_FIELD_END
+
+	return 1;
+}
+
+
 /// Parses a delim-separated string.
 /// Starts parsing at startoff and fills the pos array with position pairs.
 /// out_pos[0] and out_pos[1] are the start and end of line.
@@ -463,147 +620,32 @@ bool bin2hex(char* output, unsigned char* input, size_t count)
 /// @return Number of fields found in the string or -1 if an error occured
 int sv_parse(const char* str, int len, int startoff, char delim, int* out_pos, int npos, enum e_svopt opt)
 {
-	int i;
+	struct s_svstate sv;
 	int count;
-	enum {
-		START_OF_FIELD,
-		PARSING_FIELD,
-		PARSING_C_ESCAPE,
-		END_OF_FIELD,
-		TERMINATE,
-		END
-	} state;
 
-	// check pos/npos
+	// initialize
 	if( out_pos == NULL ) npos = 0;
-	for( i = 0; i < npos; ++i )
-		out_pos[i] = -1;
+	for( count = 0; count < npos; ++count )
+		out_pos[count] = -1;
+	sv.str = str;
+	sv.len = len;
+	sv.off = startoff;
+	sv.opt = opt;
+	sv.delim = delim;
+	sv.done = false;
 
-	// check opt
-	if( delim == '\n' && (opt&(SV_TERMINATE_CRLF|SV_TERMINATE_LF)) )
-	{
-		ShowError("sv_parse: delimiter '\\n' is not compatible with options SV_TERMINATE_LF or SV_TERMINATE_CRLF.\n");
-		return -1;// error
-	}
-	if( delim == '\r' && (opt&(SV_TERMINATE_CRLF|SV_TERMINATE_CR)) )
-	{
-		ShowError("sv_parse: delimiter '\\r' is not compatible with options SV_TERMINATE_CR or SV_TERMINATE_CRLF.\n");
-		return -1;// error
-	}
-
-	// check str
-	if( str == NULL )
-		return 0;// nothing to parse
-
-#define IS_END() ( i >= len )
-#define IS_DELIM() ( str[i] == delim )
-#define IS_TERMINATOR() ( \
-	((opt&SV_TERMINATE_LF) && str[i] == '\n') || \
-	((opt&SV_TERMINATE_CR) && str[i] == '\r') || \
-	((opt&SV_TERMINATE_CRLF) && i+1 < len && str[i] == '\r' && str[i+1] == '\n') )
-#define IS_C_ESCAPE() ( (opt&SV_ESCAPE_C) && str[i] == '\\' )
-#define SET_FIELD_START() if( npos > count*2+2 ) out_pos[count*2+2] = i
-#define SET_FIELD_END() if( npos > count*2+3 ) out_pos[count*2+3] = i; ++count
-
-	i = startoff;
+	// parse
 	count = 0;
-	state = START_OF_FIELD;
-	if( npos > 0 ) out_pos[0] = startoff;// start
-	while( state != END )
+	if( npos > 0 ) out_pos[0] = startoff;
+	while( !sv.done )
 	{
-		if( npos > 1 ) out_pos[1] = i;// end
-		switch( state )
-		{
-		case START_OF_FIELD:// record start of field and start parsing it
-			SET_FIELD_START();
-			state = PARSING_FIELD;
-			break;
-
-		case PARSING_FIELD:// skip field character
-			if( IS_END() || IS_DELIM() || IS_TERMINATOR() )
-				state = END_OF_FIELD;
-			else if( IS_C_ESCAPE() )
-				state = PARSING_C_ESCAPE;
-			else
-				++i;// normal character
-			break;
-
-		case PARSING_C_ESCAPE:// skip escape sequence (validates it too)
-			{
-				++i;// '\\'
-				if( IS_END() )
-				{
-					ShowError("sv_parse: empty escape sequence\n");
-					return -1;
-				}
-				if( str[i] == 'x' )
-				{// hex escape
-					++i;// 'x'
-					if( IS_END() || !ISXDIGIT(str[i]) )
-					{
-						ShowError("sv_parse: \\x with no following hex digits\n");
-						return -1;
-					}
-					do{
-						++i;// hex digit
-					}while( !IS_END() && ISXDIGIT(str[i]));
-				}
-				else if( str[i] == '0' || str[i] == '1' || str[i] == '2' )
-				{// octal escape
-					++i;// octal digit
-					if( !IS_END() && str[i] >= '0' && str[i] <= '7' )
-						++i;// octal digit
-					if( !IS_END() && str[i] >= '0' && str[i] <= '7' )
-						++i;// octal digit
-				}
-				else if( strchr(SV_ESCAPE_C_SUPPORTED, str[i]) )
-				{// supported escape character
-					++i;
-				}
-				else
-				{
-					ShowError("sv_parse: unknown escape sequence \\%c\n", str[i]);
-					return -1;
-				}
-				state = PARSING_FIELD;
-				break;
-			}
-
-		case END_OF_FIELD:// record end of field and continue
-			SET_FIELD_END();
-			if( IS_END() )
-				state = END;
-			else if( IS_DELIM() )
-			{
-				++i;// delim
-				state = START_OF_FIELD;
-			}
-			else if( IS_TERMINATOR() )
-				state = TERMINATE;
-			else
-				state = START_OF_FIELD;
-			break;
-
-		case TERMINATE:
-#if 0
-			// skip line terminator
-			if( (opt&SV_TERMINATE_CRLF) && i+1 < len && str[i] == '\r' && str[i+1] == '\n' )
-				i += 2;// CRLF
-			else
-				++i;// CR or LF
-#endif
-			state = END;
-			break;
-		}
+		++count;
+		if( sv_parse_next(&sv) <= 0 )
+			return -1;// error
+		if( npos > count*2 ) out_pos[count*2] = sv.start;
+		if( npos > count*2+1 ) out_pos[count*2+1] = sv.end;
 	}
-
-#undef IS_END
-#undef IS_DELIM
-#undef IS_TERMINATOR
-#undef IS_C_ESCAPE
-#undef SET_FIELD_START
-#undef SET_FIELD_END
-
+	if( npos > 1 ) out_pos[1] = sv.off;
 	return count;
 }
 

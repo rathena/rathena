@@ -4,9 +4,8 @@
 #ifndef _MAP_H_
 #define _MAP_H_
 
-#ifndef _CBASETYPES_H_
 #include "../common/cbasetypes.h"
-#endif
+#include "../common/core.h" // CORE_ST_LAST
 #include "../common/mmo.h"
 #include "../common/mapindex.h"
 #include "../common/db.h"
@@ -15,6 +14,13 @@
 
 struct npc_data;
 struct item_data;
+
+enum E_MAPSERVER_ST
+{
+	MAPSERVER_ST_RUNNING = CORE_ST_LAST,
+	MAPSERVER_ST_SHUTDOWN,
+	MAPSERVER_ST_LAST
+};
 
 //Uncomment to enable the Cell Stack Limit mod.
 //It's only config is the battle_config cell_stack_limit.
@@ -615,8 +621,8 @@ int map_quit(struct map_session_data *);
 bool map_addnpc(int,struct npc_data *);
 
 // 床アイテム関連
-int map_clearflooritem_timer(int tid, unsigned int tick, int id, intptr data);
-int map_removemobs_timer(int tid, unsigned int tick, int id, intptr data);
+int map_clearflooritem_timer(int tid, unsigned int tick, int id, intptr_t data);
+int map_removemobs_timer(int tid, unsigned int tick, int id, intptr_t data);
 #define map_clearflooritem(id) map_clearflooritem_timer(0,0,id,1)
 int map_addflooritem(struct item *item_data,int amount,int m,int x,int y,int first_charid,int second_charid,int third_charid,int flags);
 
@@ -738,5 +744,7 @@ extern char mob_db_db[32];
 extern char mob_db2_db[32];
 
 #endif /* not TXT_ONLY */
+
+void do_shutdown(void);
 
 #endif /* _MAP_H_ */

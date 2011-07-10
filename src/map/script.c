@@ -246,9 +246,13 @@ enum curly_type {
 	TYPE_ARGLIST // function argument list
 };
 
-#define ARGLIST_UNDEFINED 0
-#define ARGLIST_NO_PAREN  1
-#define ARGLIST_PAREN     2
+enum e_arglist
+{
+	ARGLIST_UNDEFINED = 0,
+	ARGLIST_NO_PAREN  = 1,
+	ARGLIST_PAREN     = 2,
+};
+
 static struct {
 	struct {
 		enum curly_type type;
@@ -3315,7 +3319,7 @@ struct linkdb_node* script_erase_sleepdb(struct linkdb_node *n)
 /*==========================================
  * sleep用タイマー関数
  *------------------------------------------*/
-int run_script_timer(int tid, unsigned int tick, int id, intptr data)
+int run_script_timer(int tid, unsigned int tick, int id, intptr_t data)
 {
 	struct script_state *st     = (struct script_state *)data;
 	struct linkdb_node *node    = (struct linkdb_node *)sleep_db;
@@ -3512,7 +3516,7 @@ void run_script_main(struct script_state *st)
 		sd = map_id2sd(st->rid); // Get sd since script might have attached someone while running. [Inkfish]
 		st->sleep.charid = sd?sd->status.char_id:0;
 		st->sleep.timer  = add_timer(gettick()+st->sleep.tick,
-			run_script_timer, st->sleep.charid, (intptr)st);
+			run_script_timer, st->sleep.charid, (intptr_t)st);
 		linkdb_insert(&sleep_db, (void*)st->oid, st);
 	}
 	else if(st->state != END && st->rid){
@@ -4550,7 +4554,7 @@ BUILDIN_FUNC(warpchar)
  *------------------------------------------*/
 BUILDIN_FUNC(warpparty)
 {
-	TBL_PC *sd;
+	TBL_PC *sd = NULL;
 	TBL_PC *pl_sd;
 	struct party_data* p;
 	int type;
@@ -4565,14 +4569,8 @@ BUILDIN_FUNC(warpparty)
 	if ( script_hasdata(st,6) )
 		str2 = script_getstr(st,6);
 
-	sd=script_rid2sd(st);
-	if( sd == NULL )
-		return 0;
 	p = party_search(p_id);
 	if(!p)
-		return 0;
-	
-	if(map[sd->bl.m].flag.noreturn || map[sd->bl.m].flag.nowarpto)
 		return 0;
 	
 	type = ( strcmp(str,"Random")==0 ) ? 0
@@ -4580,6 +4578,11 @@ BUILDIN_FUNC(warpparty)
 		 : ( strcmp(str,"SavePoint")==0 ) ? 2
 		 : ( strcmp(str,"Leader")==0 ) ? 3
 		 : 4;
+
+	if( type == 2 && ( sd = script_rid2sd(st) ) == NULL )
+	{// "SavePoint" uses save point of the currently attached player
+		return 0;
+	}
 
 	for (i = 0; i < MAX_PARTY; i++)
 	{
@@ -4638,7 +4641,7 @@ BUILDIN_FUNC(warpparty)
  *------------------------------------------*/
 BUILDIN_FUNC(warpguild)
 {
-	TBL_PC *sd;
+	TBL_PC *sd = NULL;
 	TBL_PC *pl_sd;
 	struct guild* g;
 	struct s_mapiterator* iter;
@@ -4649,20 +4652,19 @@ BUILDIN_FUNC(warpguild)
 	int y           = script_getnum(st,4);
 	int gid         = script_getnum(st,5);
 
-	sd=script_rid2sd(st);
-	if( sd == NULL )
-		return 0;
 	g = guild_search(gid);
 	if( g == NULL )
-		return 0;
-	
-	if(map[sd->bl.m].flag.noreturn || map[sd->bl.m].flag.nowarpto)
 		return 0;
 	
 	type = ( strcmp(str,"Random")==0 ) ? 0
 	     : ( strcmp(str,"SavePointAll")==0 ) ? 1
 		 : ( strcmp(str,"SavePoint")==0 ) ? 2
 		 : 3;
+
+	if( type == 2 && ( sd = script_rid2sd(st) ) == NULL )
+	{// "SavePoint" uses save point of the currently attached player
+		return 0;
+	}
 
 	iter = mapit_getallusers();
 	for( pl_sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); pl_sd = (TBL_PC*)mapit_next(iter) )
@@ -11682,6 +11684,62 @@ BUILDIN_FUNC(gethominfo)
 	return 0;
 }
 
+/// Retrieves information about character's mercenary
+/// getmercinfo <type>[,<char id>];
+BUILDIN_FUNC(getmercinfo)
+{
+	int type, char_id;
+	struct map_session_data* sd;
+	struct mercenary_data* md;
+
+	type = script_getnum(st,2);
+
+	if( script_hasdata(st,3) )
+	{
+		char_id = script_getnum(st,3);
+
+		if( ( sd = map_charid2sd(char_id) ) == NULL )
+		{
+			ShowError("buildin_getmercinfo: No such character (char_id=%d).\n", char_id);
+			script_pushnil(st);
+			return 1;
+		}
+	}
+	else
+	{
+		if( ( sd = script_rid2sd(st) ) == NULL )
+		{
+			script_pushnil(st);
+			return 0;
+		}
+	}
+
+	md = ( sd->status.mer_id && sd->md ) ? sd->md : NULL;
+
+	switch( type )
+	{
+		case 0: script_pushint(st,md ? md->mercenary.mercenary_id : 0); break;
+		case 1: script_pushint(st,md ? md->mercenary.class_ : 0); break;
+		case 2:
+			if( md )
+				script_pushstrcopy(st,md->db->name);
+			else
+				script_pushconststr(st,"");
+			break;
+		case 3: script_pushint(st,md ? mercenary_get_faith(md) : 0); break;
+		case 4: script_pushint(st,md ? mercenary_get_calls(md) : 0); break;
+		case 5: script_pushint(st,md ? md->mercenary.kill_count : 0); break;
+		case 6: script_pushint(st,md ? mercenary_get_lifetime(md) : 0); break;
+		case 7: script_pushint(st,md ? md->db->lv : 0); break;
+		default:
+			ShowError("buildin_getmercinfo: Invalid type %d (char_id=%d).\n", type, sd->status.char_id);
+			script_pushnil(st);
+			return 1;
+	}
+
+	return 0;
+}
+
 /*==========================================
  * Shows wether your inventory(and equips) contain
    selected card or not.
@@ -11788,7 +11846,7 @@ BUILDIN_FUNC(movenpc)
 		return -1;
 
 	if (script_hasdata(st,5))
-		nd->ud.dir = script_getnum(st,5);
+		nd->ud.dir = script_getnum(st,5) % 8;
 	npc_movenpc(nd, x, y);
 	return 0;
 }
@@ -12871,7 +12929,7 @@ BUILDIN_FUNC(npcshopitem)
 	int n, i;
 	int amount;
 
-	if( !nd || nd->subtype != SHOP )
+	if( !nd || ( nd->subtype != SHOP && nd->subtype != CASHSHOP ) )
 	{	//Not found.
 		script_pushint(st,0);
 		return 0;
@@ -12900,7 +12958,7 @@ BUILDIN_FUNC(npcshopadditem)
 	int n, i;
 	int amount;
 
-	if( !nd || nd->subtype != SHOP )
+	if( !nd || ( nd->subtype != SHOP && nd->subtype != CASHSHOP ) )
 	{	//Not found.
 		script_pushint(st,0);
 		return 0;
@@ -12931,7 +12989,7 @@ BUILDIN_FUNC(npcshopdelitem)
 	int amount;
 	int size;
 
-	if( !nd || nd->subtype != SHOP )
+	if( !nd || ( nd->subtype != SHOP && nd->subtype != CASHSHOP ) )
 	{	//Not found.
 		script_pushint(st,0);
 		return 0;
@@ -15141,6 +15199,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(recovery,""),
 	BUILDIN_DEF(getpetinfo,"i"),
 	BUILDIN_DEF(gethominfo,"i"),
+	BUILDIN_DEF(getmercinfo,"i?"),
 	BUILDIN_DEF(checkequipedcard,"i"),
 	BUILDIN_DEF(jump_zero,"il"), //for future jA script compatibility
 	BUILDIN_DEF(globalmes,"s?"),

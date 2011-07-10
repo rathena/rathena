@@ -1,19 +1,18 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <sys/stat.h>
-
-#include "grfio.h"
-
 #include "../common/cbasetypes.h"
 #include "../common/showmsg.h"
 #include "../common/malloc.h"
 #include "../common/strlib.h"
 #include "../common/utils.h"
+#include "grfio.h"
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/stat.h>
+#include <zlib.h>
 
 //----------------------------
 //	file entry table struct
@@ -220,6 +219,23 @@ unsigned long grfio_crc32 (const unsigned char* buf, unsigned int len)
 {
 	return crc32(crc32(0L, Z_NULL, 0), buf, len);
 }
+
+
+///////////////////////////////////////////////////////////////////////////////
+///	Grf data sub : zip decode
+int decode_zip(unsigned char* dest, unsigned long* destLen, const unsigned char* source, unsigned long sourceLen)
+{
+	return uncompress(dest, destLen, source, sourceLen);
+}
+
+
+///////////////////////////////////////////////////////////////////////////////
+///	Grf data sub : zip encode 
+int encode_zip(unsigned char* dest, unsigned long* destLen, const unsigned char* source, unsigned long sourceLen)
+{
+	return compress(dest, destLen, source, sourceLen);
+}
+
 
 /***********************************************************
  ***                File List Subroutines                ***
@@ -431,9 +447,9 @@ void* grfio_reads(char* fname, int* size)
 				if (entry->cycle >= 0)
 					decode_des_etc(buf, entry->srclen_aligned, entry->cycle == 0, entry->cycle);
 				len = entry->declen;
-				uncompress(buf2, &len, buf, entry->srclen);
+				decode_zip(buf2, &len, buf, entry->srclen);
 				if (len != (uLong)entry->declen) {
-					ShowError("uncompress size mismatch err: %d != %d\n", (int)len, entry->declen);
+					ShowError("decode_zip size mismatch err: %d != %d\n", (int)len, entry->declen);
 					aFree(buf);
 					aFree(buf2);
 					return NULL;
@@ -580,7 +596,7 @@ static int grfio_entryread(char* grfname, int gentry)
 		grf_filelist = (unsigned char *)aMallocA(eSize);	// Get a Extend Size
 		fread(rBuf,1,rSize,fp);
 		fclose(fp);
-		uncompress(grf_filelist, &eSize, rBuf, rSize);	// Decode function
+		decode_zip(grf_filelist, &eSize, rBuf, rSize);	// Decode function
 		list_size = eSize;
 		aFree(rBuf);
 

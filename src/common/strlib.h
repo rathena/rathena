@@ -4,9 +4,7 @@
 #ifndef _STRLIB_H_
 #define _STRLIB_H_
 
-#ifndef _CBASETYPES_H_
 #include "../common/cbasetypes.h"
-#endif
 #include <stdarg.h>
 
 #define __USE_GNU  // required to enable strnlen on some platforms
@@ -77,6 +75,27 @@ typedef enum e_svopt
 
 /// Other escape sequences supported by the C compiler.
 #define SV_ESCAPE_C_SUPPORTED "abtnvfr\?\"'\\"
+
+/// Parse state.
+/// The field is [start,end[
+struct s_svstate
+{
+	const char* str; //< string to parse
+	int len; //< string length
+	int off; //< current offset in the string
+	int start; //< where the field starts
+	int end; //< where the field ends
+	enum e_svopt opt; //< parse options
+	char delim; //< field delimiter
+	bool done; //< if all the text has been parsed
+};
+
+/// Parses a single field in a delim-separated string.
+/// The delimiter after the field is skipped.
+///
+/// @param sv Parse state
+/// @return 1 if a field was parsed, 0 if done, -1 on error.
+int sv_parse_next(struct s_svstate* sv);
 
 /// Parses a delim-separated string.
 /// Starts parsing at startoff and fills the pos array with position pairs.

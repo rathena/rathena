@@ -3,12 +3,16 @@ COMMON_OBJ = ../common/obj_all/core.o ../common/obj_all/socket.o ../common/obj_a
 	../common/obj_all/db.o ../common/obj_all/plugins.o ../common/obj_all/lock.o \
 	../common/obj_all/malloc.o ../common/obj_all/showmsg.o ../common/obj_all/utils.o \
 	../common/obj_all/strlib.o ../common/obj_all/grfio.o \
-	../common/obj_all/mapindex.o ../common/obj_all/ers.o
+	../common/obj_all/mapindex.o ../common/obj_all/ers.o ../common/obj_all/random.o
 COMMON_H = ../common/core.h ../common/socket.h ../common/timer.h ../common/mmo.h \
 	../common/version.h ../common/db.h ../common/plugins.h ../common/lock.h \
 	../common/malloc.h ../common/showmsg.h ../common/utils.h \
 	../common/strlib.h ../common/grfio.h \
-	../common/mapindex.h ../common/ers.h
+	../common/mapindex.h ../common/ers.h ../common/random.h
+
+MT19937AR_OBJ = ../../3rdparty/mt19937ar/mt19937ar.o
+MT19937AR_H = ../../3rdparty/mt19937ar/mt19937ar.h
+MT19937AR_INCLUDE = -I../../3rdparty/mt19937ar
 
 COMMON_SQL_OBJ = ../common/obj_sql/sql.o
 COMMON_H = ../common/sql.h
@@ -19,7 +23,7 @@ CHAR_H = char.h inter.h int_party.h int_guild.h int_storage.h int_pet.h int_homu
 
 HAVE_MYSQL=@HAVE_MYSQL@
 ifeq ($(HAVE_MYSQL),yes)
-	CHAR_SERVER_SQL_DEPENDS=obj_sql $(CHAR_OBJ) $(COMMON_OBJ) $(COMMON_SQL_OBJ)
+	CHAR_SERVER_SQL_DEPENDS=obj_sql $(CHAR_OBJ) $(COMMON_OBJ) $(COMMON_SQL_OBJ) $(MT19937AR_OBJ)
 else
 	CHAR_SERVER_SQL_DEPENDS=needs_mysql
 endif
@@ -32,7 +36,7 @@ endif
 all: char-server_sql
 
 char-server_sql: $(CHAR_SERVER_SQL_DEPENDS)
-	@CC@ @LDFLAGS@ -o ../../char-server_sql@EXEEXT@ $(CHAR_OBJ) $(COMMON_OBJ) $(COMMON_SQL_OBJ) @LIBS@ @MYSQL_LIBS@
+	@CC@ @LDFLAGS@ -o ../../char-server_sql@EXEEXT@ $(CHAR_OBJ) $(COMMON_OBJ) $(COMMON_SQL_OBJ) $(MT19937AR_OBJ) @LIBS@ @MYSQL_LIBS@
 
 clean:
 	rm -rf *.o obj_sql ../../char-server_sql@EXEEXT@
@@ -53,12 +57,15 @@ needs_mysql:
 obj_sql:
 	-mkdir obj_sql
 
-obj_sql/%.o: %.c $(CHAR_H) $(COMMON_H) $(COMMON_SQL_H)
-	@CC@ @CFLAGS@ @MYSQL_CFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
+obj_sql/%.o: %.c $(CHAR_H) $(COMMON_H) $(COMMON_SQL_H) $(MT19937AR_H)
+	@CC@ @CFLAGS@ $(MT19937AR_INCLUDE) @MYSQL_CFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
 
-# missing common object files
+# missing object files
 ../common/obj_all/%.o:
 	@$(MAKE) -C ../common sql
 
 ../common/obj_sql/%.o:
 	@$(MAKE) -C ../common sql
+
+MT19937AR_OBJ:
+	@$(MAKE) -C ../../3rdparty/mt19937ar

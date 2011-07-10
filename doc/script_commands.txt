@@ -4,7 +4,7 @@
 //= A reference manual for the eAthena scripting language.
 //= Commands are sorted depending on their functionality.
 //===== Version ===========================================
-//= 3.42.20110508
+//= 3.45.20110709
 //=========================================================
 //= 1.0 - First release, filled will as much info as I could
 //=       remember or figure out, most likely there are errors,
@@ -174,6 +174,13 @@
 //= 3.42.20110508
 //=       Updated description of all instance commands to reflect actual behavior.
 //=       [Ai4rei]
+//= 3.43.20110529
+//=       Updated 'npcshopitem', 'npcshopadditem' and 'npcshopdelitem' to support
+//=       cashshops as well. [Ai4rei]
+//= 3.44.20110530
+//=       Documented special map names recognized by 'warpguild'. [Ai4rei]
+//= 3.45.20110709
+//=       Added 'getmercinfo' command. [Ai4rei]
 //=========================================================
 
 This document is a reference manual for all the scripting commands and functions 
@@ -3689,6 +3696,13 @@ warpchar "prontera",150,100,20000001;
 Warps a guild to specified map and coordinate given the guild id, which you can get with 
 getcharid(2). You can also request another guild id given the member's name with getcharid(2,<player_name>).
  
+You can use the following "map names" for special warping behavior:
+Random:       All party members are randomly warped in their current map (as if they
+              all used a fly wing)
+SavePointAll: All party members are warped to their respective save point.
+SavePoint:    All party members are warped to the save point of the currently
+              attached player (will fail if there's no player attached).
+
 Example:
  
 warpguild "prontera",x,y,Guild_ID;
@@ -5660,7 +5674,7 @@ npcshopitem was used. After rechecking the source, I found what caused this.
 
 *npcshopitem "<name>",<item id>,<price>{,<item id>,<price>{,<item id>,<price>{,...}}}
 
-This command lets you override the contents of an existing NPC shop. The
+This command lets you override the contents of an existing NPC shop or cashshop. The
 current sell list will be wiped, and only the items specified with the price
 specified will be for sale.
 
@@ -5673,7 +5687,7 @@ Note that you cannot use -1 to specify default selling price!
 *npcshopadditem "<name>",<item id>,<price>{,<item id>,<price>{,<item id>,<price>{,...}}}
 
 This command will add more items at the end of the selling list for the
-specified NPC shop. If you specify an item already for sell, that item will
+specified NPC shop or cashshop. If you specify an item already for sell, that item will
 appear twice on the sell list.
 
 The function returns 1 if shop was updated successfully, or 0 if not found.
@@ -5684,7 +5698,7 @@ Note that you cannot use -1 to specify default selling price!
 
 *npcshopdelitem "<name>",<item id>{,<item id>{,<item id>{,...}}}
 
-This command will remove items from the specified NPC shop.
+This command will remove items from the specified NPC shop or cashshop.
 If the item to remove exists more than once on the shop, all instances will be
 removed.
 
@@ -7159,6 +7173,27 @@ attached character. Guild can be one or the following constants:
     SWORD_MERC_GUILD
 
 ---------------------------------------
+
+*getmercinfo(<type>{,<char id>});
+
+Retrieves information about mercenary of the currently attached
+character. If char id is given, the information of that character is
+retrieved instead. Type specifies what information to retrieve and
+can be one of the following:
+
+    0 - Database ID
+    1 - Class
+    2 - Name
+    3 - Faith value for this mercenary's guild, if any
+    4 - Calls value for this mercenary's guild, if any
+    5 - Kill count
+    6 - Remaining life time in msec
+    7 - Level
+
+If the character does not have a mercenary, the command returns ""
+for name and 0 for all other types.
+
+----------------------------------------
 
 Whew.
 That's about all of them.

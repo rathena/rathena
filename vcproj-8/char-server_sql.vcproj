@@ -41,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\3rdparty\mysql\include;..\3rdparty\msinttypes\include"
+				AdditionalIncludeDirectories="..\3rdparty\mysql\include;..\3rdparty\msinttypes\include;..\3rdparty\mt19937ar"
 				PreprocessorDefinitions="WIN32;_WIN32;__WIN32;_DEBUG;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;FD_SETSIZE=4096;DB_MANUAL_CAST_TO_UNION"
 				GeneratePreprocessedFile="0"
 				MinimalRebuild="true"
@@ -133,7 +133,7 @@
 				OmitFramePointers="true"
 				EnableFiberSafeOptimizations="true"
 				WholeProgramOptimization="true"
-				AdditionalIncludeDirectories="..\3rdparty\mysql\include;..\3rdparty\msinttypes\include"
+				AdditionalIncludeDirectories="..\3rdparty\mysql\include;..\3rdparty\msinttypes\include;..\3rdparty\mt19937ar"
 				PreprocessorDefinitions="WIN32;_WIN32;__WIN32;NDEBUG;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;FD_SETSIZE=4096;DB_MANUAL_CAST_TO_UNION"
 				StringPooling="true"
 				RuntimeLibrary="0"
@@ -195,6 +195,18 @@
 	<References>
 	</References>
 	<Files>
+		<Filter
+			Name="3rdparty"
+			>
+			<File
+				RelativePath="..\3rdparty\mt19937ar\mt19937ar.c"
+				>
+			</File>
+			<File
+				RelativePath="..\3rdparty\mt19937ar\mt19937ar.h"
+				>
+			</File>
+		</Filter>
 		<Filter
 			Name="common"
 			>
@@ -272,6 +284,14 @@
 			</File>
 			<File
 				RelativePath="..\src\common\plugins.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\common\random.c"
+				>
+			</File>
+			<File
+				RelativePath="..\src\common\random.h"
 				>
 			</File>
 			<File

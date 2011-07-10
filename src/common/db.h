@@ -205,8 +205,6 @@ typedef int (*DBMatcher)(DBKey key, void* data, va_list args);
 /**
  * Format of the comparators used internally by the database system.
  * Compares key1 to key2.
- * <code>maxlen</code> is the maximum number of character used in DB_STRING and 
- * DB_ISTRING databases. If 0, the maximum number of maxlen is used (64K).
  * Returns 0 is equal, negative if lower and positive is higher.
  * @param key1 Key being compared
  * @param key2 Key we are comparing to
@@ -221,8 +219,6 @@ typedef int (*DBComparator)(DBKey key1, DBKey key2, unsigned short maxlen);
 /**
  * Format of the hashers used internally by the database system.
  * Creates the hash of the key.
- * <code>maxlen</code> is the maximum number of character used in DB_STRING and 
- * DB_ISTRING databases. If 0, the maximum number of maxlen is used (64K).
  * @param key Key being hashed
  * @param maxlen Maximum number of characters used in DB_STRING and DB_ISTRING
  *          databases.
@@ -358,6 +354,15 @@ struct DBMap {
 	 * @protected
 	 */
 	DBIterator* (*iterator)(DBMap* self);
+
+	/**
+	 * Returns true if the entry exists.
+	 * @param self Database
+	 * @param key Key that identifies the entry
+	 * @return true is the entry exists
+	 * @protected
+	 */
+	bool (*exists)(DBMap* self, DBKey key);
 
 	/**
 	 * Get the data of the entry identifid by the key.
@@ -580,6 +585,11 @@ struct DBMap {
 #	define str2key(k) ((DBKey)(const char *)(k))
 #endif /* not DB_MANUAL_CAST_TO_UNION */
 
+#define db_exists(db,k)    ( (db)->exists((db),(k)) )
+#define idb_exists(db,k)   ( (db)->exists((db),i2key(k)) )
+#define uidb_exists(db,k)  ( (db)->exists((db),ui2key(k)) )
+#define strdb_exists(db,k) ( (db)->exists((db),str2key(k)) )
+
 #define db_get(db,k)    ( (db)->get((db),(k)) )
 #define idb_get(db,k)   ( (db)->get((db),i2key(k)) )
 #define uidb_get(db,k)  ( (db)->get((db),ui2key(k)) )
@@ -707,7 +717,7 @@ DBReleaser db_custom_release(DBRelease which);
  * @param type Type of database
  * @param options Options of the database
  * @param maxlen Maximum length of the string to be used as key in string 
- *          databases
+ *          databases. If 0, the maximum number of maxlen is used (64K).
  * @return The interface of the database
  * @public
  * @see #DBType

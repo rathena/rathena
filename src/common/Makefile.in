@@ -2,14 +2,18 @@
 COMMON_OBJ = obj_all/core.o obj_all/socket.o obj_all/timer.o obj_all/db.o obj_all/plugins.o obj_all/lock.o \
 	obj_all/nullpo.o obj_all/malloc.o obj_all/showmsg.o obj_all/strlib.o obj_all/utils.o \
 	obj_all/grfio.o obj_all/mapindex.o obj_all/ers.o obj_all/md5calc.o \
-	obj_all/minicore.o obj_all/minisocket.o obj_all/minimalloc.o
+	obj_all/minicore.o obj_all/minisocket.o obj_all/minimalloc.o obj_all/random.o
 COMMON_H = svnversion.h mmo.h plugin.h version.h \
 	core.h socket.h timer.h db.h plugins.h lock.h \
 	nullpo.h malloc.h showmsg.h  strlib.h utils.h \
-	grfio.h mapindex.h ers.h md5calc.h
+	grfio.h mapindex.h ers.h md5calc.h random.h
 
 COMMON_SQL_OBJ = obj_sql/sql.o
 COMMON_SQL_H = sql.h
+
+MT19937AR_OBJ = ../../3rdparty/mt19937ar/mt19937ar.o
+MT19937AR_H = ../../3rdparty/mt19937ar/mt19937ar.h
+MT19937AR_INCLUDE = -I../../3rdparty/mt19937ar
 
 HAVE_MYSQL=@HAVE_MYSQL@
 ifeq ($(HAVE_MYSQL),yes)
@@ -19,6 +23,7 @@ else
 	ALL_TARGET=txt
 	SQL_DEPENDS=needs_mysql
 endif
+TXT_DEPENDS=common
 
 @SET_MAKE@
 
@@ -27,7 +32,7 @@ endif
 
 all: $(ALL_DEPENDS)
 
-txt: common
+txt: $(TXT_DEPENDS)
 
 sql: $(SQL_DEPENDS)
 
@@ -54,16 +59,16 @@ obj_all:
 obj_sql:
 	-mkdir obj_sql
 
-common: obj_all $(COMMON_OBJ)
+common: obj_all $(COMMON_OBJ) $(MT19937AR_OBJ)
 
 common_sql: obj_sql $(COMMON_SQL_OBJ)
 
 
-obj_all/%.o: %.c $(COMMON_H)
-	@CC@ @CFLAGS@ @LDFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
+obj_all/%.o: %.c $(COMMON_H) $(MT19937AR_H)
+	@CC@ @CFLAGS@ $(MT19937AR_INCLUDE) @LDFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
 
-obj_all/mini%.o: %.c $(COMMON_H)
-	@CC@ @CFLAGS@ -DMINICORE @LDFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
+obj_all/mini%.o: %.c $(COMMON_H) $(MT19937AR_H)
+	@CC@ @CFLAGS@ $(MT19937AR_INCLUDE) -DMINICORE @LDFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
 
 obj_sql/%.o: %.c $(COMMON_H) $(COMMON_SQL_H)
 	@CC@ @CFLAGS@ @MYSQL_CFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
@@ -80,3 +85,7 @@ else
 svnversion.h:
 	@printf "\n" > svnversion.h
 endif
+
+# missing object files
+MT19937AR_OBJ:
+	@$(MAKE) -C ../../3rdparty/mt19937ar

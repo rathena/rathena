@@ -220,7 +220,7 @@ uint16 clif_getport(void);
 
 int clif_authok(struct map_session_data *);
 int clif_authfail_fd(int fd,int type);
-int clif_charselectok(int);
+int clif_charselectok(int id, uint8 ok);
 int clif_dropflooritem(struct flooritem_data *);
 int clif_clearflooritem(struct flooritem_data *,int);
 
@@ -326,7 +326,7 @@ int clif_skillup(struct map_session_data *sd,int skill_num);
 int clif_addskill(struct map_session_data *sd, int skill);
 int clif_deleteskill(struct map_session_data *sd, int skill);
 
-int clif_skillcasting(struct block_list* bl,int src_id,int dst_id,int dst_x,int dst_y,int skill_num,int pl,int casttime);
+void clif_skillcasting(struct block_list* bl, int src_id, int dst_id, int dst_x, int dst_y, int skill_num, int property, int casttime);
 int clif_skillcastcancel(struct block_list* bl);
 int clif_skill_fail(struct map_session_data *sd,int skill_id,int type,int btype);
 int clif_skill_cooldown(struct map_session_data *sd, int skillid, unsigned int tick);
@@ -404,7 +404,7 @@ int clif_movetoattack(struct map_session_data *sd,struct block_list *bl);
 int clif_party_created(struct map_session_data *sd,int result);
 int clif_party_member_info(struct party_data *p, struct map_session_data *sd);
 int clif_party_info(struct party_data *p, struct map_session_data *sd);
-int clif_party_invite(struct map_session_data *sd,struct map_session_data *tsd);
+void clif_party_invite(struct map_session_data *sd,struct map_session_data *tsd);
 void clif_party_inviteack(struct map_session_data* sd, const char* nick, int flag);
 int clif_party_option(struct party_data *p,struct map_session_data *sd,int flag);
 int clif_party_withdraw(struct party_data* p, struct map_session_data* sd, int account_id, const char* name, int flag);
@@ -515,7 +515,7 @@ void clif_get_weapon_view(struct map_session_data* sd, unsigned short *rhand, un
 
 int clif_party_xy_remove(struct map_session_data *sd); //Fix for minimap [Kevin]
 void clif_gospel_info(struct map_session_data *sd, int type);
-void clif_parse_ReqFeel(int fd, struct map_session_data *sd, int skilllv); 
+void clif_feel_req(int fd, struct map_session_data *sd, int skilllv); 
 void clif_starskill(struct map_session_data* sd, const char* mapname, int monster_id, unsigned char star, unsigned char result);
 void clif_feel_info(struct map_session_data *sd, unsigned char feel_level, unsigned char type);
 void clif_hate_info(struct map_session_data *sd, unsigned char hate_level,int class_, unsigned char type);

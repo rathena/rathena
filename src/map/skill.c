@@ -43,11 +43,11 @@
 
 // ranges reserved for mapping skill ids to skilldb offsets
 #define GD_SKILLRANGEMIN 900
-#define GD_SKILLRANGEMAX GD_SKILLRANGEMIN+MAX_GUILDSKILL
+#define GD_SKILLRANGEMAX (GD_SKILLRANGEMIN+MAX_GUILDSKILL)
 #define MC_SKILLRANGEMIN 800
-#define MC_SKILLRANGEMAX MC_SKILLRANGEMIN+MAX_MERCSKILL
+#define MC_SKILLRANGEMAX (MC_SKILLRANGEMIN+MAX_MERCSKILL)
 #define HM_SKILLRANGEMIN 700
-#define HM_SKILLRANGEMAX HM_SKILLRANGEMIN+MAX_HOMUNSKILL
+#define HM_SKILLRANGEMAX (HM_SKILLRANGEMIN+MAX_HOMUNSKILL)
 
 static struct eri *skill_unit_ers = NULL; //For handling skill_unit's [Skotlex]
 static struct eri *skill_timer_ers = NULL; //For handling skill_timerskills [Skotlex]
@@ -1820,11 +1820,11 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 	  	&& (!sc || !sc->data[SC_PRESERVE])
 		&& damage < tsd->battle_status.hp)
 	{	//Updated to not be able to copy skills if the blow will kill you. [Skotlex]
-		if ((!tsd->status.skill[skillid].id || tsd->status.skill[skillid].flag >= 13) &&
+		if ((tsd->status.skill[skillid].id == 0 || tsd->status.skill[skillid].flag == SKILL_FLAG_PLAGIARIZED) &&
 			can_copy(tsd,skillid,bl))	// Split all the check into their own function [Aru]
 		{
 			int lv = skilllv;
-			if (tsd->cloneskill_id && tsd->status.skill[tsd->cloneskill_id].flag == 13){
+			if (tsd->cloneskill_id && tsd->status.skill[tsd->cloneskill_id].flag == SKILL_FLAG_PLAGIARIZED){
 				tsd->status.skill[tsd->cloneskill_id].id = 0;
 				tsd->status.skill[tsd->cloneskill_id].lv = 0;
 				tsd->status.skill[tsd->cloneskill_id].flag = 0;
@@ -1840,7 +1840,7 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 
 			tsd->status.skill[skillid].id = skillid;
 			tsd->status.skill[skillid].lv = lv;
-			tsd->status.skill[skillid].flag = 13;//cloneskill flag
+			tsd->status.skill[skillid].flag = SKILL_FLAG_PLAGIARIZED;
 			clif_addskill(tsd,skillid);
 		}
 	}
@@ -2277,7 +2277,7 @@ int skill_area_sub_count (struct block_list *src, struct block_list *target, int
 /*==========================================
  *
  *------------------------------------------*/
-static int skill_timerskill(int tid, unsigned int tick, int id, intptr data)
+static int skill_timerskill(int tid, unsigned int tick, int id, intptr_t data)
 {
 	struct block_list *src = map_id2bl(id),*target;
 	struct unit_data *ud = unit_bl2ud(src);
@@ -3958,51 +3958,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 
 	case KN_BRANDISHSPEAR:
 	case ML_BRANDISH:
-		{
-			int c,n=4;
-			int dir = map_calc_dir(src,bl->x,bl->y);
-			struct square tc;
-			int x=bl->x,y=bl->y;
-			skill_brandishspear_first(&tc,dir,x,y);
-			skill_brandishspear_dir(&tc,dir,4);
-			skill_area_temp[1] = bl->id;
-
-			if(skilllv > 9){
-				for(c=1;c<4;c++){
-					map_foreachincell(skill_area_sub,
-						bl->m,tc.val1[c],tc.val2[c],BL_CHAR,
-						src,skillid,skilllv,tick, flag|BCT_ENEMY|n,
-						skill_castend_damage_id);
-				}
-			}
-			if(skilllv > 6){
-				skill_brandishspear_dir(&tc,dir,-1);
-				n--;
-			}else{
-				skill_brandishspear_dir(&tc,dir,-2);
-				n-=2;
-			}
-
-			if(skilllv > 3){
-				for(c=0;c<5;c++){
-					map_foreachincell(skill_area_sub,
-						bl->m,tc.val1[c],tc.val2[c],BL_CHAR,
-						src,skillid,skilllv,tick, flag|BCT_ENEMY|n,
-						skill_castend_damage_id);
-					if(skilllv > 6 && n==3 && c==4){
-						skill_brandishspear_dir(&tc,dir,-1);
-						n--;c=-1;
-					}
-				}
-			}
-			for(c=0;c<10;c++){
-				if(c==0||c==5) skill_brandishspear_dir(&tc,dir,-1);
-				map_foreachincell(skill_area_sub,
-					bl->m,tc.val1[c%5],tc.val2[c%5],BL_CHAR,
-					src,skillid,skilllv,tick, flag|BCT_ENEMY|1,
-					skill_castend_damage_id);
-			}
-		}
+		skill_brandishspear(src, bl, skillid, skilllv, tick, flag);
 		break;
 
 	case WZ_SIGHTRASHER:
@@ -5531,7 +5487,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		//AuronX reported you CAN memorize the same map as all three. [Skotlex]
 		if (sd) {
 			if(!sd->feel_map[skilllv-1].index)
-				clif_parse_ReqFeel(sd->fd,sd, skilllv);
+				clif_feel_req(sd->fd,sd, skilllv);
 			else
 				clif_feel_info(sd, skilllv-1, 1);
 		}
@@ -5726,7 +5682,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 /*==========================================
  *
  *------------------------------------------*/
-int skill_castend_id(int tid, unsigned int tick, int id, intptr data)
+int skill_castend_id(int tid, unsigned int tick, int id, intptr_t data)
 {
 	struct block_list *target, *src;
 	struct map_session_data *sd;
@@ -6016,7 +5972,7 @@ int skill_castend_id(int tid, unsigned int tick, int id, intptr data)
 /*==========================================
  *
  *------------------------------------------*/
-int skill_castend_pos(int tid, unsigned int tick, int id, intptr data)
+int skill_castend_pos(int tid, unsigned int tick, int id, intptr_t data)
 {
 	struct block_list* src = map_id2bl(id);
 	int maxcount;
@@ -9149,7 +9105,12 @@ int skill_delayfix (struct block_list *bl, int skill_id, int skill_lv)
 /*=========================================
  *
  *-----------------------------------------*/
-void skill_brandishspear_first (struct square *tc, int dir, int x, int y)
+struct square {
+	int val1[5];
+	int val2[5];
+};
+
+static void skill_brandishspear_first (struct square *tc, int dir, int x, int y)
 {
 	nullpo_retv(tc);
 
@@ -9252,10 +9213,7 @@ void skill_brandishspear_first (struct square *tc, int dir, int x, int y)
 
 }
 
-/*=========================================
- *
- *-----------------------------------------*/
-void skill_brandishspear_dir (struct square* tc, int dir, int are)
+static void skill_brandishspear_dir (struct square* tc, int dir, int are)
 {
 	int c;
 	nullpo_retv(tc);
@@ -9273,6 +9231,53 @@ void skill_brandishspear_dir (struct square* tc, int dir, int are)
 			case 6: tc->val1[c]+=are;                   break;
 			case 7: tc->val1[c]+=are; tc->val2[c]+=are; break;
 		}
+	}
+}
+
+void skill_brandishspear(struct block_list* src, struct block_list* bl, int skillid, int skilllv, unsigned int tick, int flag)
+{
+	int c,n=4;
+	int dir = map_calc_dir(src,bl->x,bl->y);
+	struct square tc;
+	int x=bl->x,y=bl->y;
+	skill_brandishspear_first(&tc,dir,x,y);
+	skill_brandishspear_dir(&tc,dir,4);
+	skill_area_temp[1] = bl->id;
+
+	if(skilllv > 9){
+		for(c=1;c<4;c++){
+			map_foreachincell(skill_area_sub,
+				bl->m,tc.val1[c],tc.val2[c],BL_CHAR,
+				src,skillid,skilllv,tick, flag|BCT_ENEMY|n,
+				skill_castend_damage_id);
+		}
+	}
+	if(skilllv > 6){
+		skill_brandishspear_dir(&tc,dir,-1);
+		n--;
+	}else{
+		skill_brandishspear_dir(&tc,dir,-2);
+		n-=2;
+	}
+
+	if(skilllv > 3){
+		for(c=0;c<5;c++){
+			map_foreachincell(skill_area_sub,
+				bl->m,tc.val1[c],tc.val2[c],BL_CHAR,
+				src,skillid,skilllv,tick, flag|BCT_ENEMY|n,
+				skill_castend_damage_id);
+			if(skilllv > 6 && n==3 && c==4){
+				skill_brandishspear_dir(&tc,dir,-1);
+				n--;c=-1;
+			}
+		}
+	}
+	for(c=0;c<10;c++){
+		if(c==0||c==5) skill_brandishspear_dir(&tc,dir,-1);
+		map_foreachincell(skill_area_sub,
+			bl->m,tc.val1[c%5],tc.val2[c%5],BL_CHAR,
+			src,skillid,skilllv,tick, flag|BCT_ENEMY|1,
+			skill_castend_damage_id);
 	}
 }
 
@@ -10485,7 +10490,7 @@ static int skill_unit_timer_sub (DBKey key, void* data, va_list ap)
 /*==========================================
  * Executes on all skill units every SKILLUNITTIMER_INTERVAL miliseconds.
  *------------------------------------------*/
-int skill_unit_timer(int tid, unsigned int tick, int id, intptr data)
+int skill_unit_timer(int tid, unsigned int tick, int id, intptr_t data)
 {
 	map_freeblock_lock();
 
@@ -11181,7 +11186,7 @@ int skill_arrow_create (struct map_session_data *sd, int nameid)
 /*==========================================
  *
  *------------------------------------------*/
-int skill_blockpc_end(int tid, unsigned int tick, int id, intptr data)
+int skill_blockpc_end(int tid, unsigned int tick, int id, intptr_t data)
 {
 	struct map_session_data *sd = map_id2sd(id);
 	if (data <= 0 || data >= MAX_SKILL)
@@ -11212,7 +11217,7 @@ int skill_blockpc_start(struct map_session_data *sd, int skillid, int tick)
 	return 0;
 }
 
-int skill_blockhomun_end(int tid, unsigned int tick, int id, intptr data)	//[orn]
+int skill_blockhomun_end(int tid, unsigned int tick, int id, intptr_t data)	//[orn]
 {
 	struct homun_data *hd = (TBL_HOM*) map_id2bl(id);
 	if (data <= 0 || data >= MAX_SKILL)
@@ -11238,7 +11243,7 @@ int skill_blockhomun_start(struct homun_data *hd, int skillid, int tick)	//[orn]
 	return add_timer(gettick() + tick, skill_blockhomun_end, hd->bl.id, skillid);
 }
 
-int skill_blockmerc_end(int tid, unsigned int tick, int id, intptr data)	//[orn]
+int skill_blockmerc_end(int tid, unsigned int tick, int id, intptr_t data)	//[orn]
 {
 	struct mercenary_data *md = (TBL_MER*)map_id2bl(id);
 	if( data <= 0 || data >= MAX_SKILL )

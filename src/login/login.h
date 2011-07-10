@@ -5,6 +5,14 @@
 #define _LOGIN_H_
 
 #include "../common/mmo.h" // NAME_LENGTH,SEX_*
+#include "../common/core.h" // CORE_ST_LAST
+
+enum E_LOGINSERVER_ST
+{
+	LOGINSERVER_ST_RUNNING = CORE_ST_LAST,
+	LOGINSERVER_ST_SHUTDOWN,
+	LOGINSERVER_ST_LAST
+};
 
 #define LOGIN_CONF_NAME "conf/login_athena.conf"
 #define LAN_CONF_NAME "conf/subnet_athena.conf"

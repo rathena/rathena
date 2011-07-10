@@ -51,7 +51,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\3rdparty\mysql\include;..\3rdparty\msinttypes\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\3rdparty\mysql\include;..\3rdparty\msinttypes\include;..\3rdparty\mt19937ar;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_WIN32;__WIN32;_DEBUG;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;FD_SETSIZE=4096;DB_MANUAL_CAST_TO_UNION;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessToFile>false</PreprocessToFile>
       <PreprocessSuppressLineNumbers>false</PreprocessSuppressLineNumbers>
@@ -94,7 +94,7 @@
       <OmitFramePointers>true</OmitFramePointers>
       <EnableFiberSafeOptimizations>true</EnableFiberSafeOptimizations>
       <WholeProgramOptimization>true</WholeProgramOptimization>
-      <AdditionalIncludeDirectories>..\3rdparty\mysql\include;..\3rdparty\msinttypes\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\3rdparty\mysql\include;..\3rdparty\msinttypes\include;..\3rdparty\mt19937ar;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_WIN32;__WIN32;NDEBUG;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;FD_SETSIZE=4096;DB_MANUAL_CAST_TO_UNION;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
@@ -126,6 +126,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\3rdparty\mt19937ar\mt19937ar.h" />
     <ClInclude Include="..\src\common\cbasetypes.h" />
     <ClInclude Include="..\src\common\core.h" />
     <ClInclude Include="..\src\common\db.h" />
@@ -137,6 +138,7 @@
     <ClInclude Include="..\src\common\nullpo.h" />
     <ClInclude Include="..\src\common\plugin.h" />
     <ClInclude Include="..\src\common\plugins.h" />
+    <ClInclude Include="..\src\common\random.h" />
     <ClInclude Include="..\src\common\showmsg.h" />
     <ClInclude Include="..\src\common\socket.h" />
     <ClInclude Include="..\src\common\sql.h" />
@@ -157,6 +159,7 @@
     <ClInclude Include="..\src\char_sql\inter.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\3rdparty\mt19937ar\mt19937ar.c" />
     <ClCompile Include="..\src\common\core.c" />
     <ClCompile Include="..\src\common\db.c" />
     <ClCompile Include="..\src\common\ers.c" />
@@ -165,6 +168,7 @@
     <ClCompile Include="..\src\common\mapindex.c" />
     <ClCompile Include="..\src\common\nullpo.c" />
     <ClCompile Include="..\src\common\plugins.c" />
+    <ClCompile Include="..\src\common\random.c" />
     <ClCompile Include="..\src\common\showmsg.c" />
     <ClCompile Include="..\src\common\socket.c" />
     <ClCompile Include="..\src\common\sql.c" />

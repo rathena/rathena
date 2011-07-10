@@ -38,10 +38,13 @@
 
 
 //Regen related flags.
-#define RGN_HP	0x01
-#define RGN_SP	0x02
-#define RGN_SHP	0x04
-#define RGN_SSP	0x08
+enum e_regen
+{
+	RGN_HP  = 0x01,
+	RGN_SP  = 0x02,
+	RGN_SHP = 0x04,
+	RGN_SSP = 0x08,
+};
 
 static int max_weight_base[CLASS_COUNT];
 static int hp_coefficient[CLASS_COUNT];
@@ -6961,7 +6964,7 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 	return 1;
 }
 
-int kaahi_heal_timer(int tid, unsigned int tick, int id, intptr data)
+int kaahi_heal_timer(int tid, unsigned int tick, int id, intptr_t data)
 {
 	struct block_list *bl;
 	struct status_change *sc;
@@ -6998,7 +7001,7 @@ int kaahi_heal_timer(int tid, unsigned int tick, int id, intptr data)
 /*==========================================
  * ステータス異常終了タイマー
  *------------------------------------------*/
-int status_change_timer(int tid, unsigned int tick, int id, intptr data)
+int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 {
 	enum sc_type type = (sc_type)data;
 	struct block_list *bl;
@@ -7258,7 +7261,7 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr data)
 		
 	case SC_BERSERK:
 		// 5% every 10 seconds [DracoRPG]
-		if(--(sce->val3)>0 && status_charge(bl, sce->val2, 0))
+		if( --( sce->val3 ) > 0 && status_charge(bl, sce->val2, 0) && status->hp > 100 )
 		{
 			sc_timer_next(sce->val4+tick, status_change_timer, bl->id, data);
 			return 0;
@@ -7689,7 +7692,7 @@ static int status_natural_heal(struct block_list* bl, va_list args)
 }
 
 //Natural heal main timer.
-static int status_natural_heal_timer(int tid, unsigned int tick, int id, intptr data)
+static int status_natural_heal_timer(int tid, unsigned int tick, int id, intptr_t data)
 {
 	natural_heal_diff_tick = DIFF_TICK(tick,natural_heal_prev_tick);
 	map_foreachregen(status_natural_heal);

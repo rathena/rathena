@@ -81,7 +81,7 @@ const int mob_splendide[5] = { 1991, 1992, 1993, 1994, 1995 };
  * Local prototype declaration   (only required thing)
  *------------------------------------------*/
 static int mob_makedummymobdb(int);
-static int mob_spawn_guardian_sub(int tid, unsigned int tick, int id, intptr data);
+static int mob_spawn_guardian_sub(int tid, unsigned int tick, int id, intptr_t data);
 int mob_skillid2skillidx(int class_,int skillid);
 
 /*==========================================
@@ -507,7 +507,7 @@ int mob_once_spawn_area(struct map_session_data* sd,int m,int x0,int y0,int x1,i
 /*==========================================
  * Set a Guardian's guild data [Skotlex]
  *------------------------------------------*/
-static int mob_spawn_guardian_sub(int tid, unsigned int tick, int id, intptr data)
+static int mob_spawn_guardian_sub(int tid, unsigned int tick, int id, intptr_t data)
 {	//Needed because the guild_data may not be available at guardian spawn time.
 	struct block_list* bl = map_id2bl(id);
 	struct mob_data* md; 
@@ -766,7 +766,7 @@ int mob_linksearch(struct block_list *bl,va_list ap)
 /*==========================================
  * mob spawn with delay (timer function)
  *------------------------------------------*/
-int mob_delayspawn(int tid, unsigned int tick, int id, intptr data)
+int mob_delayspawn(int tid, unsigned int tick, int id, intptr_t data)
 {
 	struct block_list* bl = map_id2bl(id);
 	struct mob_data* md = BL_CAST(BL_MOB, bl);
@@ -1636,7 +1636,7 @@ static int mob_ai_sub_lazy(struct mob_data *md, va_list args)
 /*==========================================
  * Negligent processing for mob outside PC field of view   (interval timer function)
  *------------------------------------------*/
-static int mob_ai_lazy(int tid, unsigned int tick, int id, intptr data)
+static int mob_ai_lazy(int tid, unsigned int tick, int id, intptr_t data)
 {
 	map_foreachmob(mob_ai_sub_lazy,tick);
 	return 0;
@@ -1645,7 +1645,7 @@ static int mob_ai_lazy(int tid, unsigned int tick, int id, intptr data)
 /*==========================================
  * Serious processing for mob in PC field of view   (interval timer function)
  *------------------------------------------*/
-static int mob_ai_hard(int tid, unsigned int tick, int id, intptr data)
+static int mob_ai_hard(int tid, unsigned int tick, int id, intptr_t data)
 {
 
 	if (battle_config.mob_ai&0x20)
@@ -1684,7 +1684,7 @@ static struct item_drop* mob_setlootitem(struct item* item)
 /*==========================================
  * item drop with delay (timer function)
  *------------------------------------------*/
-static int mob_delay_item_drop(int tid, unsigned int tick, int id, intptr data)
+static int mob_delay_item_drop(int tid, unsigned int tick, int id, intptr_t data)
 {
 	struct item_drop_list *list;
 	struct item_drop *ditem, *ditem_prev;
@@ -1744,7 +1744,7 @@ static void mob_item_drop(struct mob_data *md, struct item_drop_list *dlist, str
 	dlist->item = ditem;
 }
 
-int mob_timer_delete(int tid, unsigned int tick, int id, intptr data)
+int mob_timer_delete(int tid, unsigned int tick, int id, intptr_t data)
 {
 	struct block_list* bl = map_id2bl(id);
 	struct mob_data* md = BL_CAST(BL_MOB, bl);
@@ -1791,7 +1791,7 @@ int mob_deleteslave(struct mob_data *md)
 	return 0;
 }
 // Mob respawning through KAIZEL or NPC_REBIRTH [Skotlex]
-int mob_respawn(int tid, unsigned int tick, int id, intptr data)
+int mob_respawn(int tid, unsigned int tick, int id, intptr_t data)
 {
 	struct block_list *bl = map_id2bl(id);
 
@@ -2296,7 +2296,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 				mob_item_drop(md, dlist, mob_setlootitem(&md->lootitem[i]), 1, 10000, homkillonly);
 		}
 		if (dlist->item) //There are drop items.
-			add_timer(tick + (!battle_config.delay_battle_damage?500:0), mob_delay_item_drop, 0, (intptr)dlist);
+			add_timer(tick + (!battle_config.delay_battle_damage?500:0), mob_delay_item_drop, 0, (intptr_t)dlist);
 		else //No drops
 			ers_free(item_drop_list_ers, dlist);
 	} else if (md->lootitem && md->lootitem_count) {	//Loot MUST drop!
@@ -2310,7 +2310,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		dlist->item = NULL;
 		for(i = 0; i < md->lootitem_count; i++)
 			mob_item_drop(md, dlist, mob_setlootitem(&md->lootitem[i]), 1, 10000, homkillonly);
-		add_timer(tick + (!battle_config.delay_battle_damage?500:0), mob_delay_item_drop, 0, (intptr)dlist);
+		add_timer(tick + (!battle_config.delay_battle_damage?500:0), mob_delay_item_drop, 0, (intptr_t)dlist);
 	}
 
 	if(mvp_sd && md->db->mexp > 0 && !md->special_state.ai)
@@ -3407,7 +3407,7 @@ static unsigned int mob_drop_adjust(int baserate, int rate_adjust, unsigned shor
  *------------------------------------------*/
 static bool mob_parse_dbrow(char** str)
 {
-	struct mob_db *db;
+	struct mob_db *db, entry;
 	struct status_data *status;
 	int class_, i, k;
 	double exp, maxhp;
@@ -3416,29 +3416,28 @@ static bool mob_parse_dbrow(char** str)
 	class_ = atoi(str[0]);
 	
 	if (class_ <= 1000 || class_ > MAX_MOB_DB) {
-		ShowWarning("Mob with ID: %d not loaded. ID must be in range [%d-%d]\n", class_, 1000, MAX_MOB_DB);
+		ShowError("mob_parse_dbrow: Invalid monster ID %d, must be in range %d-%d.\n", class_, 1000, MAX_MOB_DB);
 		return false;
 	}
 	if (pcdb_checkid(class_)) {
-		ShowWarning("Mob with ID: %d not loaded. That ID is reserved for player classes.\n", class_);
+		ShowError("mob_parse_dbrow: Invalid monster ID %d, reserved for player classes.\n", class_);
 		return false;
 	}
 	
 	if (class_ >= MOB_CLONE_START && class_ < MOB_CLONE_END) {
-		ShowWarning("Mob with ID: %d not loaded. Range %d-%d is reserved for player clones. Please increase MAX_MOB_DB (%d)\n", class_, MOB_CLONE_START, MOB_CLONE_END-1, MAX_MOB_DB);
+		ShowError("mob_parse_dbrow: Invalid monster ID %d. Range %d-%d is reserved for player clones. Please increase MAX_MOB_DB (%d).\n", class_, MOB_CLONE_START, MOB_CLONE_END-1, MAX_MOB_DB);
 		return false;
 	}
 
-	if (mob_db_data[class_] == NULL)
-		mob_db_data[class_] = (struct mob_db*)aCalloc(1, sizeof (struct mob_db));
+	memset(&entry, 0, sizeof(entry));
 	
-	db = mob_db_data[class_];
+	db = &entry;
 	status = &db->status;
 	
 	db->vd.class_ = class_;
-	strncpy(db->sprite, str[1], NAME_LENGTH);
-	strncpy(db->jname, str[2], NAME_LENGTH);
-	strncpy(db->name, str[3], NAME_LENGTH);
+	safestrncpy(db->sprite, str[1], sizeof(db->sprite));
+	safestrncpy(db->jname, str[2], sizeof(db->jname));
+	safestrncpy(db->name, str[3], sizeof(db->name));
 	db->lv = atoi(str[4]);
 	db->lv = cap_value(db->lv, 1, USHRT_MAX);
 	status->max_hp = atoi(str[5]);
@@ -3489,12 +3488,12 @@ static bool mob_parse_dbrow(char** str)
 	status->def_ele = i%10;
 	status->ele_lv = i/20;
 	if (status->def_ele >= ELE_MAX) {
-		ShowWarning("Mob with ID: %d has invalid element type %d (max element is %d)\n", class_, status->def_ele, ELE_MAX-1);
-		status->def_ele = ELE_NEUTRAL;
+		ShowError("mob_parse_dbrow: Invalid element type %d for monster ID %d (max=%d).\n", status->def_ele, class_, ELE_MAX-1);
+		return false;
 	}
 	if (status->ele_lv < 1 || status->ele_lv > 4) {
-		ShowWarning("Mob with ID: %d has invalid element level %d (max is 4)\n", class_, status->ele_lv);
-		status->ele_lv = 1;
+		ShowError("mob_parse_dbrow: Invalid element level %d for monster ID %d, must be in range 1-4.\n", status->ele_lv, class_);
+		return false;
 	}
 	
 	status->mode = (int)strtol(str[25], NULL, 0);
@@ -3512,7 +3511,8 @@ static bool mob_parse_dbrow(char** str)
 	status->dmotion = atoi(str[29]);
 	if(battle_config.monster_damage_delay_rate != 100)
 		status->dmotion = status->dmotion * battle_config.monster_damage_delay_rate / 100;
-	
+
+	// Fill in remaining status data by using a dummy monster.
 	data.bl.type = BL_MOB;
 	data.level = db->lv;
 	memcpy(&data.status, status, sizeof(struct status_data));
@@ -3632,7 +3632,12 @@ static bool mob_parse_dbrow(char** str)
 			id->mob[k].id = class_;
 		}
 	}
-	
+
+	// Finally insert monster's data into the database.
+	if (mob_db_data[class_] == NULL)
+		mob_db_data[class_] = (struct mob_db*)aCalloc(1, sizeof(struct mob_db));
+
+	memcpy(mob_db_data[class_], db, sizeof(struct mob_db));
 	return true;
 }
 

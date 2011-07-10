@@ -582,8 +582,8 @@ int pc_calc_skilltree(struct map_session_data *sd);
 int pc_calc_skilltree_normalize_job(struct map_session_data *sd);
 int pc_clean_skilltree(struct map_session_data *sd);
 
-#define pc_checkoverhp(sd) (sd->battle_status.hp == sd->battle_status.max_hp)
-#define pc_checkoversp(sd) (sd->battle_status.sp == sd->battle_status.max_sp)
+#define pc_checkoverhp(sd) ((sd)->battle_status.hp == (sd)->battle_status.max_hp)
+#define pc_checkoversp(sd) ((sd)->battle_status.sp == (sd)->battle_status.max_sp)
 
 int pc_setpos(struct map_session_data* sd, unsigned short mapindex, int x, int y, clr_type clrtype);
 int pc_setsavepoint(struct map_session_data*,short,int,int);
@@ -621,7 +621,7 @@ int pc_updateweightstatus(struct map_session_data *sd);
 
 int pc_addautobonus(struct s_autobonus *bonus,char max,const char *script,short rate,unsigned int dur,short atk_type,const char *o_script,unsigned short pos,bool onskill);
 int pc_exeautobonus(struct map_session_data* sd,struct s_autobonus *bonus);
-int pc_endautobonus(int tid, unsigned int tick, int id, intptr data);
+int pc_endautobonus(int tid, unsigned int tick, int id, intptr_t data);
 int pc_delautobonus(struct map_session_data* sd,struct s_autobonus *bonus,char max,bool restore);
 
 int pc_bonus(struct map_session_data*,int,int);
@@ -715,7 +715,7 @@ int pc_cleareventtimer(struct map_session_data *sd);
 int pc_addeventtimercount(struct map_session_data *sd,const char *name,int tick);
 
 int pc_calc_pvprank(struct map_session_data *sd);
-int pc_calc_pvprank_timer(int tid, unsigned int tick, int id, intptr data);
+int pc_calc_pvprank_timer(int tid, unsigned int tick, int id, intptr_t data);
 
 int pc_ismarried(struct map_session_data *sd);
 int pc_marriage(struct map_session_data *sd,struct map_session_data *dstsd);
@@ -779,8 +779,8 @@ enum {ADDITEM_EXIST,ADDITEM_NEW,ADDITEM_OVERAMOUNT};
 // timer for night.day
 extern int day_timer_tid;
 extern int night_timer_tid;
-int map_day_timer(int tid, unsigned int tick, int id, intptr data); // by [yor]
-int map_night_timer(int tid, unsigned int tick, int id, intptr data); // by [yor]
+int map_day_timer(int tid, unsigned int tick, int id, intptr_t data); // by [yor]
+int map_night_timer(int tid, unsigned int tick, int id, intptr_t data); // by [yor]
 
 // Rental System
 void pc_inventory_rentals(struct map_session_data *sd);

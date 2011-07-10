@@ -102,7 +102,7 @@ EAJL_UPPER:
 
 EAJL_BABY:
 	Check if a class is an adopted class.
-	if (@job&EAJ_BABY)
+	if (@job&EAJL_BABY)
 		mes "Don't you hate being weak?";
 
 EAJ_UPPERMASK:

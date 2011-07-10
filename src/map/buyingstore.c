@@ -145,7 +145,7 @@ void buyingstore_create(struct map_session_data* sd, int zenylimit, unsigned cha
 
 		if( i )
 		{// duplicate check. as the client does this too, only malicious intent should be caught here
-			ARR_FIND( 0, i, listidx, sd->buyingstore.items[i].nameid == nameid );
+			ARR_FIND( 0, i, listidx, sd->buyingstore.items[listidx].nameid == nameid );
 			if( listidx != i )
 			{// duplicate
 				ShowWarning("buyingstore_create: Found duplicate item on buying list (nameid=%hu, amount=%hu, account_id=%d, char_id=%d).\n", nameid, amount, sd->status.account_id, sd->status.char_id);

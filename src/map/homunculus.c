@@ -45,7 +45,7 @@
 struct s_homunculus_db homunculus_db[MAX_HOMUNCULUS_CLASS];	//[orn]
 struct skill_tree_entry hskill_tree[MAX_HOMUNCULUS_CLASS][MAX_SKILL_TREE];
 
-static int merc_hom_hungry(int tid, unsigned int tick, int id, intptr data);
+static int merc_hom_hungry(int tid, unsigned int tick, int id, intptr_t data);
 
 static unsigned int hexptbl[MAX_LEVEL];
 
@@ -196,7 +196,7 @@ void merc_hom_skillup(struct homun_data *hd,int skillnum)
 	i = skillnum - HM_SKILLBASE;
 	if(hd->homunculus.skillpts > 0 &&
 		hd->homunculus.hskill[i].id &&
-		hd->homunculus.hskill[i].flag == 0 && //Don't allow raising while you have granted skills. [Skotlex]
+		hd->homunculus.hskill[i].flag == SKILL_FLAG_PERMANENT && //Don't allow raising while you have granted skills. [Skotlex]
 		hd->homunculus.hskill[i].lv < merc_skill_tree_get_max(skillnum, hd->homunculus.class_)
 		)
 	{
@@ -480,7 +480,7 @@ int merc_hom_food(struct map_session_data *sd, struct homun_data *hd)
 	return 0;
 }
 
-static int merc_hom_hungry(int tid, unsigned int tick, int id, intptr data)
+static int merc_hom_hungry(int tid, unsigned int tick, int id, intptr_t data)
 {
 	struct map_session_data *sd;
 	struct homun_data *hd;

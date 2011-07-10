@@ -182,7 +182,7 @@ int Sql_Ping(Sql* self)
 /// Wrapper function for Sql_Ping.
 ///
 /// @private
-static int Sql_P_KeepaliveTimer(int tid, unsigned int tick, int id, intptr data)
+static int Sql_P_KeepaliveTimer(int tid, unsigned int tick, int id, intptr_t data)
 {
 	Sql* self = (Sql*)data;
 	ShowInfo("Pinging SQL server to keep connection alive...\n");
@@ -212,7 +212,7 @@ static int Sql_P_Keepalive(Sql* self)
 	// establish keepalive
 	ping_interval = timeout - 30; // 30-second reserve
 	//add_timer_func_list(Sql_P_KeepaliveTimer, "Sql_P_KeepaliveTimer");
-	return add_timer_interval(gettick() + ping_interval*1000, Sql_P_KeepaliveTimer, 0, (intptr)self, ping_interval*1000);
+	return add_timer_interval(gettick() + ping_interval*1000, Sql_P_KeepaliveTimer, 0, (intptr_t)self, ping_interval*1000);
 }
 
 

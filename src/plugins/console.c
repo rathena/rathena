@@ -126,9 +126,9 @@ PLUGIN_EVENTS_TABLE = {
 
 
 // Imported functions
-typedef int (*TimerFunc)(int tid, unsigned int tick, int id, intptr data);
+typedef int (*TimerFunc)(int tid, unsigned int tick, int id, intptr_t data);
 int (*add_timer_func_list)(TimerFunc func, char* name);
-int (*add_timer_interval)(unsigned int tick, TimerFunc func, int id, intptr data, int interval);
+int (*add_timer_interval)(unsigned int tick, TimerFunc func, int id, intptr_t data, int interval);
 int (*delete_timer)(int tid, TimerFunc func);
 unsigned int (*gettick)(void);
 int (*parse_console)(const char* buf);
@@ -423,7 +423,7 @@ WORKER_FUNC_END(getinput)
 
 /// Timer function that checks if there's assynchronous input data and feeds parse_console()
 /// The input reads one line at a time and line terminators are removed.
-int console_getinputtimer(int tid, unsigned int tick, int id, intptr data)
+int console_getinputtimer(int tid, unsigned int tick, int id, intptr_t data)
 {
 	char* cmd;
 	size_t len;

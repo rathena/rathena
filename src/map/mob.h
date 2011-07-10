@@ -239,7 +239,7 @@ int mob_target(struct mob_data *md,struct block_list *bl,int dist);
 int mob_unlocktarget(struct mob_data *md, unsigned int tick);
 struct mob_data* mob_spawn_dataset(struct spawn_data *data);
 int mob_spawn(struct mob_data *md);
-int mob_delayspawn(int tid, unsigned int tick, int id, intptr data);
+int mob_delayspawn(int tid, unsigned int tick, int id, intptr_t data);
 int mob_setdelayspawn(struct mob_data *md);
 int mob_parse_dataset(struct spawn_data *data);
 void mob_log_damage(struct mob_data *md, struct block_list *src, int damage);
@@ -256,7 +256,7 @@ void mob_clear_spawninfo();
 int do_init_mob(void);
 int do_final_mob(void);
 
-int mob_timer_delete(int tid, unsigned int tick, int id, intptr data);
+int mob_timer_delete(int tid, unsigned int tick, int id, intptr_t data);
 int mob_deleteslave(struct mob_data *md);
 
 int mob_random_class (int *value, size_t count);

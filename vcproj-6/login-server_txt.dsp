@@ -4,7 +4,7 @@
 
 # TARGTYPE "Win32 (x86) Console Application" 0x0103
 
-CFG=login_txt - Win32 Release
+CFG=login_txt - Win32 Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
 !MESSAGE 
@@ -13,11 +13,12 @@ CFG=login_txt - Win32 Release
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "login-server_txt.mak" CFG="login_txt - Win32 Release"
+!MESSAGE NMAKE /f "login-server_txt.mak" CFG="login_txt - Win32 Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
 !MESSAGE "login_txt - Win32 Release" (based on "Win32 (x86) Console Application")
+!MESSAGE "login_txt - Win32 Debug" (based on "Win32 (x86) Console Application")
 !MESSAGE 
 
 # Begin Project
@@ -26,6 +27,9 @@ CFG=login_txt - Win32 Release
 # PROP Scc_LocalPath ""
 CPP=cl.exe
 RSC=rc.exe
+
+!IF  "$(CFG)" == "login_txt - Win32 Release"
+
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
 # PROP BASE Output_Dir "Release"
@@ -33,23 +37,65 @@ RSC=rc.exe
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
-# PROP Output_Dir "Release"
-# PROP Intermediate_Dir "Release"
+# PROP Output_Dir ".."
+# PROP Intermediate_Dir "tmp\login_txt\Release"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
-# ADD CPP /nologo /W2 /GX /O2 /I "..\3rdparty\msinttypes\include" /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_WIN32" /D "__WIN32" /D FD_SETSIZE=4096 /D "DB_MANUAL_CAST_TO_UNION" /D "WITH_TXT" /Fp"tmp/login_txt/login-server_txt.pch" /YX /Fo"tmp/login_txt/" /Fd"tmp/login_txt/" /FD /c
-# ADD BASE RSC /l 0x409
+# ADD CPP /nologo /W3 /Zi /O2 /I "..\3rdparty\msinttypes\include" /I "..\3rdparty\mt19937ar" /D "NDEBUG" /D "WIN32" /D "_CONSOLE" /D "_MBCS" /D "_WIN32" /D "__WIN32" /D FD_SETSIZE=4096 /D "DB_MANUAL_CAST_TO_UNION" /D "WITH_TXT" /FD /GF /c
+# SUBTRACT CPP /YX
+# ADD BASE RSC /l 0x405 /d "NDEBUG"
+# ADD RSC /l 0x417 /d "NDEBUG"
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
-# ADD LINK32 WSOCK32.lib ws2_32.lib /nologo /subsystem:console /pdb:"tmp/login_txt/login-server_txt.pdb" /machine:I386 /out:"../login-server_txt.exe"
-# SUBTRACT LINK32 /pdb:none
+# ADD LINK32 kernel32.lib ws2_32.lib /nologo /subsystem:console /debug /machine:I386
+
+!ELSEIF  "$(CFG)" == "login_txt - Win32 Debug"
+
+# PROP BASE Use_MFC 0
+# PROP BASE Use_Debug_Libraries 1
+# PROP BASE Output_Dir "Debug"
+# PROP BASE Intermediate_Dir "Debug"
+# PROP BASE Target_Dir ""
+# PROP Use_MFC 0
+# PROP Use_Debug_Libraries 1
+# PROP Output_Dir ".."
+# PROP Intermediate_Dir "tmp\login_txt\Debug"
+# PROP Ignore_Export_Lib 0
+# PROP Target_Dir ""
+# ADD BASE CPP /nologo /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /GZ /c
+# ADD CPP /nologo /W3 /Gm /Gi /ZI /Od /I "..\3rdparty\msinttypes\include" /I "..\3rdparty\mt19937ar" /D "_DEBUG" /D "WIN32" /D "_CONSOLE" /D "_MBCS" /D "_WIN32" /D "__WIN32" /D FD_SETSIZE=4096 /D "DB_MANUAL_CAST_TO_UNION" /D "WITH_TXT" /FD /GZ /c
+# SUBTRACT CPP /YX
+# ADD BASE RSC /l 0x405 /d "_DEBUG"
+# ADD RSC /l 0x417 /d "_DEBUG"
+BSC32=bscmake.exe
+# ADD BASE BSC32 /nologo
+# ADD BSC32 /nologo
+LINK32=link.exe
+# ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept
+# ADD LINK32 kernel32.lib ws2_32.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept
+
+!ENDIF 
+
 # Begin Target
 
 # Name "login_txt - Win32 Release"
+# Name "login_txt - Win32 Debug"
+# Begin Group "3rdparty"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=..\3rdparty\mt19937ar\mt19937ar.c
+# End Source File
+# Begin Source File
+
+SOURCE=..\3rdparty\mt19937ar\mt19937ar.h
+# End Source File
+# End Group
 # Begin Group "common"
 
 # PROP Default_Filter ""
@@ -111,6 +157,10 @@ SOURCE=..\src\common\md5calc.c
 # End Source File
 # Begin Source File
 
+SOURCE=..\src\common\md5calc.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\src\common\mmo.h
 # End Source File
 # Begin Source File
@@ -132,6 +182,14 @@ SOURCE=..\src\common\plugins.c
 # Begin Source File
 
 SOURCE=..\src\common\plugins.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\common\random.c
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\common\random.h
 # End Source File
 # Begin Source File
 
@@ -159,10 +217,6 @@ SOURCE=..\src\common\strlib.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\src\common\svnversion.h
-# End Source File
-# Begin Source File
-
 SOURCE=..\src\common\timer.c
 # End Source File
 # Begin Source File
@@ -182,7 +236,7 @@ SOURCE=..\src\common\utils.h
 SOURCE=..\src\common\version.h
 # End Source File
 # End Group
-# Begin Group "login"
+# Begin Group "login_txt"
 
 # PROP Default_Filter ""
 # Begin Source File

@@ -1,5 +1,7 @@
 Date	Added
 
+2011/07/10
+	* Merged changes from trunk [14827:14894/trunk]. [Ai4rei]
 2011/06/13
 	* Fixed 3rd classes not being able to level up after Base Level reset. [Gepard]
 2011/05/15
