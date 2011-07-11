@@ -437,3 +437,5 @@ bonus bUnstripable,n;	Armor cannot be taken off via strip skills (n is meaningle
 bonus2 bHPDrainValueRace,r,n;	Heals +n HP when attacking a monster of race r with normal attack.
 bonus bMagicSPGainValue,n;	Heals +n SP when killing an enemy with magic attack.
 bonus bMagicHPGainValue,n;	Heals +n HP when killing an enemy with magic attack.
+
+bonus3 bAddClassDropItem,s,x,n;		Adds an n/100% chance of dropping item s when killing monster class x.

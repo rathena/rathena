@@ -8,7 +8,14 @@
 	1475 Equestrian's Spear:	NEED INFO.
 	13005 Angelic Wing Dagger:	NEED INFO.
 =======================
-
+2011/07/11
+	* Rev. 14901 Lots of updates. :] [L0ne_W0lf]
+	- Added several missing items to the item database, updated others.
+	- Raised level 10 Dec. AGI to be level 48, when used by mobs.
+	- Added missing mercenaries to the mercenary DB, and skills.
+	- Added missing monster_chat_db entries for Nydhoggr's Shadow.
+	- Added Brasilis pets to the pet DB, these pets are unhatchable on purpose.
+	- Added additional quests to the quest_db, mostly for RE.
 2011/04/16
 	* Rev. 14797 Added Archangel Wings (2573) and their respective Box (16998) item based on client-side kRO description. [Ai4rei]
 2011/03/19
