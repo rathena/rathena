@@ -6,8 +6,9 @@
 #  PCRE_FOUND        - True if pcre found.
 
 
-find_path( PCRE_INCLUDE_DIR pcre.h )
-
+find_path( PCRE_INCLUDE_DIR pcre.h
+	PATHS
+		"/usr/include/pcre" )
 set( PCRE_NAMES pcre )
 find_library( PCRE_LIBRARY NAMES ${PCRE_NAMES} )
 mark_as_advanced( PCRE_LIBRARY PCRE_INCLUDE_DIR )

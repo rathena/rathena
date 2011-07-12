@@ -32,6 +32,9 @@
 	#ifndef SIOCGIFCONF
 	#include <sys/sockio.h> // SIOCGIFCONF on Solaris, maybe others? [Shinomori]
 	#endif
+	#ifndef FIONBIO
+	#include <sys/filio.h> // FIONBIO on Solaris [FlavioJS]
+	#endif
 
 	#ifdef HAVE_SETRLIMIT
 	#include <sys/resource.h>

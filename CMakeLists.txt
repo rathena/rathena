@@ -40,11 +40,12 @@ elseif( "${CMAKE_CURRENT_SOURCE_DIR}" STREQUAL "${CMAKE_CURRENT_BINARY_DIR}" )
 	message( FATAL_ERROR
 		"Do not use the source directory to build your files, instead delete CMakeCache.txt, create a separate folder and build there.\n"
 		"Example: (build in subdir 'build' and install to source dir)\n"
+		"  rm -f CMakeCache.txt\n"
 		"  mkdir build && cd build\n"
-		"  cmake -G\"Unix Makefiles\" -DINSTALL_TO_SOURCE:bool=ON ..\n"
+		"  cmake -G\"Unix Makefiles\" -DINSTALL_TO_SOURCE=ON -DCMAKE_BUILD_TYPE=RelWithDebInfo ..\n"
 		"  make install\n"
 		"  cd .. && rm -rf build\n"
-		"To skip this check, set ALLOW_SAME_DIRECTORY to ON (-DALLOW_SAME_DIRECTORY:bool=ON)" )
+		"To skip this check, set ALLOW_SAME_DIRECTORY to ON (-DALLOW_SAME_DIRECTORY=ON)" )
 endif()
 
 
@@ -96,17 +97,23 @@ endif()
 # SVNVERSION
 #
 if( SVNVERSION_EXECUTABLE )
+	message( STATUS "Getting svn version" )
 	execute_process( COMMAND ${SVNVERSION_EXECUTABLE} ${PROJECT_SOURCE_DIR}
 		OUTPUT_VARIABLE SVNVERSION
 		OUTPUT_STRIP_TRAILING_WHITESPACE )
 	string( REGEX REPLACE "[^1234567890MSexported]" "_" SVNVERSION ${SVNVERSION} )
+	message( STATUS "Found version: ${SVNVERSION}" )
+	message( STATUS "Getting svn version - done" )
 endif()
 if( Subversion_FOUND AND SVNVERSION )
+	message( STATUS "Getting svn branch" )
 	Subversion_WC_INFO( ${PROJECT_SOURCE_DIR} eAthena )
 	if( eAthena_WC_URL )
 		string( REGEX MATCH "[^/]+$" BRANCH ${eAthena_WC_URL} )
 		set( SVNVERSION "${BRANCH}-${SVNVERSION}" )
+		message( STATUS "Found branch: ${BRANCH}" )
 	endif()
+	message( STATUS "Getting svn branch - done" )
 endif()
 
 
@@ -115,15 +122,19 @@ endif()
 #
 add_subdirectory( 3rdparty )
 include( FindFunctionLibrary )
+include( CheckIncludeFile )
 
 
 #
-# math library (FreeBSD/Linux)
+# math library (FreeBSD/Linux/Solaris)
 #
 message( STATUS "Detecting m library (math)" )
+CHECK_INCLUDE_FILE( math.h HAVE_MATH_H )
+if( NOT HAVE_MATH_H )
+	message( FATAL_ERROR "math.h not found" )
+endif()
 set( CMAKE_REQUIRED_LIBRARIES ${GLOBAL_LIBRARIES} )
 find_function_library( floor FUNCTION_FLOOR_LIBRARIES m )
-mark_as_advanced( FUNCTION_FLOOR_LIBRARIES )
 if( FUNCTION_FLOOR_LIBRARIES )
 	message( STATUS "Adding global library: ${FUNCTION_FLOOR_LIBRARIES}" )
 	list( APPEND GLOBAL_LIBRARIES ${FUNCTION_FLOOR_LIBRARIES} )
@@ -138,12 +149,32 @@ if( NOT WIN32 )
 message( STATUS "Detecting dl library (dynamic loading)" )
 set( CMAKE_REQUIRED_LIBRARIES ${GLOBAL_LIBRARIES} )
 find_function_library( dlopen FUNCTION_DLOPEN_LIBRARIES dl )
-mark_as_advanced( FUNCTION_DLOPEN_LIBRARIES )
 if( FUNCTION_DLOPEN_LIBRARIES )
 	message( STATUS "Adding global library: ${FUNCTION_DLOPEN_LIBRARIES}" )
 	list( APPEND GLOBAL_LIBRARIES ${FUNCTION_DLOPEN_LIBRARIES} )
 endif()
 message( STATUS "Detecting dl library (dynamic loading) - done" )
+endif()
+
+
+#
+# socket/nsl library (Solaris)
+#
+if( NOT WIN32 )
+message( STATUS "Detecting socket/nsl library (networking)" )
+set( CMAKE_REQUIRED_LIBRARIES ${GLOBAL_LIBRARIES} )
+find_function_library( bind FUNCTION_BIND_LIBRARIES socket )
+if( FUNCTION_BIND_LIBRARIES )
+	message( STATUS "Adding global library: ${FUNCTION_BIND_LIBRARIES}" )
+	list( APPEND GLOBAL_LIBRARIES ${FUNCTION_BIND_LIBRARIES} )
+endif()
+set( CMAKE_REQUIRED_LIBRARIES ${GLOBAL_LIBRARIES} )
+find_function_library( gethostbyname FUNCTION_GETHOSTBYNAME_LIBRARIES nsl )
+if( FUNCTION_GETHOSTBYNAME_LIBRARIES )
+	message( STATUS "Adding global library: ${FUNCTION_GETHOSTBYNAME_LIBRARIES}" )
+	list( APPEND GLOBAL_LIBRARIES ${FUNCTION_GETHOSTBYNAME_LIBRARIES} )
+endif()
+message( STATUS "Detecting socket/nsl library (networking) - done" )
 endif()
 
 
