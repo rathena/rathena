@@ -14,14 +14,6 @@
 #   ENABLE_* : option to use an internal feature/code or not
 #   HAVE_*   : internal variable indicating if we have and are using something
 #
-# Example (build in subdir 'build' and install to source dir):
-#   mkdir build
-#   cd build
-#   cmake -G"Unix Makefiles" -DINSTALL_TO_SOURCE:bool=ON ..
-#   make install
-#   cd ..
-#   rm -rf build
-#
 #####################################################################
 
 
@@ -33,7 +25,7 @@
 #   CMP0017: Prefer files from the CMake module directory when including from there.
 set( CMAKE_LEGACY_CYGWIN_WIN32 0 )
 cmake_minimum_required( VERSION 2.8.3 )
-project( eAthena )
+project( eAthena C )
 if( CYGWIN )
 	unset( WIN32 )
 endif()
@@ -45,23 +37,30 @@ endif()
 if( ALLOW_SAME_DIRECTORY )
 elseif( "${CMAKE_CURRENT_SOURCE_DIR}" STREQUAL "${CMAKE_CURRENT_BINARY_DIR}" )
 	option( ALLOW_SAME_DIRECTORY "Allow CMake to build in the source directory." OFF )
-	message( FATAL_ERROR "Do not use the source directory to build your files, instead create a separate folder and build there.\nExample:\n  mkdir build\n  cd build\n  cmake -G\"Unix Makefiles\" ..\n  make install\nTo skip this check, set ALLOW_SAME_DIRECTORY to 1 or ON" )
+	message( FATAL_ERROR
+		"Do not use the source directory to build your files, instead delete CMakeCache.txt, create a separate folder and build there.\n"
+		"Example: (build in subdir 'build' and install to source dir)\n"
+		"  mkdir build && cd build\n"
+		"  cmake -G\"Unix Makefiles\" -DINSTALL_TO_SOURCE:bool=ON ..\n"
+		"  make install\n"
+		"  cd .. && rm -rf build\n"
+		"To skip this check, set ALLOW_SAME_DIRECTORY to ON (-DALLOW_SAME_DIRECTORY:bool=ON)" )
 endif()
 
 
 #
 # Global stuff
 #
-set( GLOBAL_LIBRARIES CACHE INTERNAL "" )
-set( GLOBAL_INCLUDE_DIRS CACHE INTERNAL "" )
-set( GLOBAL_DEFINITIONS CACHE INTERNAL "" )
+set( GLOBAL_LIBRARIES ${LINK_LIBRARIES}  CACHE INTERNAL "" )# list (comma separated values)
+set( GLOBAL_INCLUDE_DIRS ${INCLUDE_DIRECTORIES}  CACHE INTERNAL "" )# list (comma separated values)
+set( GLOBAL_DEFINITIONS ${COMPILE_DEFINITIONS}  CACHE INTERNAL "" )# string (space separated values -DFOO=bar)
 mark_as_advanced( GLOBAL_LIBRARIES  GLOBAL_INCLUDE_DIRS  GLOBAL_DEFINITIONS )
 if( WIN32 )
-	list( APPEND GLOBAL_DEFINITIONS  FD_SETSIZE=4096 )
-	list( APPEND GLOBAL_LIBRARIES  "oldnames.lib" "ws2_32.lib" )
+	set_property( CACHE GLOBAL_DEFINITIONS  PROPERTY VALUE "${GLOBAL_DEFINITIONS} -DFD_SETSIZE=4096" )
+	set_property( CACHE GLOBAL_LIBRARIES    PROPERTY VALUE ${GLOBAL_LIBRARIES} "oldnames.lib" "ws2_32.lib" )
 endif()
 if( MSVC )
-	list( APPEND GLOBAL_DEFINITIONS  _CRT_SECURE_NO_DEPRECATE _CRT_NONSTDC_NO_DEPRECATE DB_MANUAL_CAST_TO_UNION )
+	set_property( CACHE GLOBAL_DEFINITIONS  PROPERTY VALUE "${GLOBAL_DEFINITIONS} -D_CRT_SECURE_NO_DEPRECATE -D_CRT_NONSTDC_NO_DEPRECATE -DDB_MANUAL_CAST_TO_UNION" )
 endif()
 
 
@@ -83,20 +82,6 @@ message( STATUS "Detecting svnversion - done" )
 message( STATUS "Detecting Subversion" )
 find_package( Subversion )
 message( STATUS "Detecting Subversion - done" )
-
-
-#
-# Find math library (FreeBSD)
-#
-message( STATUS "Detecting math library" )
-find_library( M_LIBRARIES m )
-mark_as_advanced( M_LIBRARIES )
-if( M_LIBRARIES )
-	message( STATUS "Found m: ${M_LIBRARIES}" )
-	list( APPEND GLOBAL_LIBRARIES ${M_LIBRARIES} )
-endif()
-message( STATUS "Detecting math library - done" )
-
 
 #
 # PACKETVER
@@ -126,10 +111,40 @@ endif()
 
 
 #
-# 3rdparty
+# 3rdparty and library tests
 #
 add_subdirectory( 3rdparty )
+include( FindFunctionLibrary )
 
+
+#
+# math library (FreeBSD/Linux)
+#
+message( STATUS "Detecting m library (math)" )
+set( CMAKE_REQUIRED_LIBRARIES ${GLOBAL_LIBRARIES} )
+find_function_library( floor FUNCTION_FLOOR_LIBRARIES m )
+mark_as_advanced( FUNCTION_FLOOR_LIBRARIES )
+if( FUNCTION_FLOOR_LIBRARIES )
+	message( STATUS "Adding global library: ${FUNCTION_FLOOR_LIBRARIES}" )
+	list( APPEND GLOBAL_LIBRARIES ${FUNCTION_FLOOR_LIBRARIES} )
+endif()
+message( STATUS "Detecting m library (math) - done" )
+
+
+#
+# dynamic loading library (Linux)
+#
+if( NOT WIN32 )
+message( STATUS "Detecting dl library (dynamic loading)" )
+set( CMAKE_REQUIRED_LIBRARIES ${GLOBAL_LIBRARIES} )
+find_function_library( dlopen FUNCTION_DLOPEN_LIBRARIES dl )
+mark_as_advanced( FUNCTION_DLOPEN_LIBRARIES )
+if( FUNCTION_DLOPEN_LIBRARIES )
+	message( STATUS "Adding global library: ${FUNCTION_DLOPEN_LIBRARIES}" )
+	list( APPEND GLOBAL_LIBRARIES ${FUNCTION_DLOPEN_LIBRARIES} )
+endif()
+message( STATUS "Detecting dl library (dynamic loading) - done" )
+endif()
 
 
 #####################################################################
@@ -302,7 +317,7 @@ add_subdirectory( src )
 if( CMAKE_SIZEOF_VOID_P EQUAL 8 )
 	message( WARNING "64bit should work, but is not recommended." )
 elseif( NOT CMAKE_SIZEOF_VOID_P EQUAL 4 )
-	message( FATAL_ERROR "unexpected architecture (CMAKE_SIZEOF_VOID_P=${CMAKE_SIZEOF_VOID_P})" )
+	message( FATAL_ERROR "unexpected architecture (CMAKE_SIZEOF_VOID_P is ${CMAKE_SIZEOF_VOID_P})" )
 endif()
 list( LENGTH  TARGET_LIST  _LEN )
 if( _LEN EQUAL 0 )
