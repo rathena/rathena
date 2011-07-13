@@ -251,7 +251,7 @@
 3042,0,0,0,0,0,0,0,"The Cursed Baphomet Doll"
 3043,0,0,0,0,0,0,0,"The Gigantic Magestic Goat"
 3044,0,0,0,0,0,0,0,"The Gigantic Magestic Goat"
-3045,9600,0,0,0,0,0,0,"Sealed Shrine"
+3045,7200,0,0,0,0,0,0,"Sealed Shrine"
 3046,0,0,0,0,0,0,0,"Sealed Shrine After-effect"
 
 3050,0,0,0,0,0,0,0,"Resurrection of Satan Morocc - 1"

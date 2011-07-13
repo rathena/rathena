@@ -1,5 +1,7 @@
 Date		Added
 ======
+2011/07/13
+	* Rev. 14905 Tweaked the sealed shrine entrance NPCs. Hopefully the damn thing works now. [L0ne_W0lf]
 2011/05/23
 	* Rev. 14833 Fixed a possible exploit in guild castle investment. (bugreport:4929, topic:272783) [Brian]
 2011/04/08

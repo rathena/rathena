@@ -1608,7 +1608,7 @@ static int pc_bonus_item_drop(struct s_add_drop *drop, const short max, short id
 	for(i = 0; i < max && (drop[i].id || drop[i].group); i++) {
 		if(
 			((id && drop[i].id == id) ||
-			(group && drop[i].group == group)) && race < (1<<RC_MAX)
+			(group && drop[i].group == group)) && race < (RC_MAX<<1)
 		) {
 			drop[i].race |= race;
 			if(drop[i].rate > 0 && rate > 0)
