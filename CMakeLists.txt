@@ -41,10 +41,12 @@ elseif( "${CMAKE_CURRENT_SOURCE_DIR}" STREQUAL "${CMAKE_CURRENT_BINARY_DIR}" )
 		"Do not use the source directory to build your files, instead delete CMakeCache.txt, create a separate folder and build there.\n"
 		"Example: (build in subdir 'build' and install to source dir)\n"
 		"  rm -f CMakeCache.txt\n"
-		"  mkdir build && cd build\n"
+		"  mkdir build\n"
+		"  cd build\n"
 		"  cmake -G\"Unix Makefiles\" -DINSTALL_TO_SOURCE=ON -DCMAKE_BUILD_TYPE=RelWithDebInfo ..\n"
 		"  make install\n"
-		"  cd .. && rm -rf build\n"
+		"  cd ..\n"
+		"  rm -rf build\n"
 		"To skip this check, set ALLOW_SAME_DIRECTORY to ON (-DALLOW_SAME_DIRECTORY=ON)" )
 endif()
 
@@ -58,9 +60,9 @@ set( GLOBAL_DEFINITIONS ${COMPILE_DEFINITIONS}  CACHE INTERNAL "" )# string (spa
 mark_as_advanced( GLOBAL_LIBRARIES  GLOBAL_INCLUDE_DIRS  GLOBAL_DEFINITIONS )
 if( WIN32 )
 	set_property( CACHE GLOBAL_DEFINITIONS  PROPERTY VALUE "${GLOBAL_DEFINITIONS} -DFD_SETSIZE=4096" )
-	set_property( CACHE GLOBAL_LIBRARIES    PROPERTY VALUE ${GLOBAL_LIBRARIES} "oldnames.lib" "ws2_32.lib" )
 endif()
 if( MSVC )
+	set_property( CACHE GLOBAL_LIBRARIES    PROPERTY VALUE ${GLOBAL_LIBRARIES} "oldnames.lib" "ws2_32.lib" )
 	set_property( CACHE GLOBAL_DEFINITIONS  PROPERTY VALUE "${GLOBAL_DEFINITIONS} -D_CRT_SECURE_NO_DEPRECATE -D_CRT_NONSTDC_NO_DEPRECATE -DDB_MANUAL_CAST_TO_UNION" )
 endif()
 
@@ -158,12 +160,12 @@ endif()
 
 
 #
-# socket/nsl library (Solaris)
+# socket/nsl/ws2_32 library (Solaris/MinGW)
 #
-if( NOT WIN32 )
-message( STATUS "Detecting socket/nsl library (networking)" )
+if( NOT MSVC )
+message( STATUS "Detecting socket/nsl/ws2_32 library (networking)" )
 set( CMAKE_REQUIRED_LIBRARIES ${GLOBAL_LIBRARIES} )
-find_function_library( bind FUNCTION_BIND_LIBRARIES socket )
+find_function_library( bind FUNCTION_BIND_LIBRARIES socket ws2_32 )
 if( FUNCTION_BIND_LIBRARIES )
 	message( STATUS "Adding global library: ${FUNCTION_BIND_LIBRARIES}" )
 	list( APPEND GLOBAL_LIBRARIES ${FUNCTION_BIND_LIBRARIES} )
@@ -174,7 +176,7 @@ if( FUNCTION_GETHOSTBYNAME_LIBRARIES )
 	message( STATUS "Adding global library: ${FUNCTION_GETHOSTBYNAME_LIBRARIES}" )
 	list( APPEND GLOBAL_LIBRARIES ${FUNCTION_GETHOSTBYNAME_LIBRARIES} )
 endif()
-message( STATUS "Detecting socket/nsl library (networking) - done" )
+message( STATUS "Detecting socket/nsl/ws2_32 library (networking) - done" )
 endif()
 
 
