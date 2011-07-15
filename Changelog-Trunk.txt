@@ -1,5 +1,7 @@
 Date	Added
 
+2011/07/15
+	* Changed the warning message of when setrlimit fails to be more explicit. [FlavioJS] 
 2011/07/12
 	* CMake: set project language to C, added module FindFunctionLibrary, added search for dl library. (tested with debian-wheezy-i386) [FlavioJS]
 	* CMake: added search for math.h, added search for socket/nsl library. (tested with Solaris-201011-x86)
