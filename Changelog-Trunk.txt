@@ -2,6 +2,9 @@ Date	Added
 
 2011/07/15
 	* Changed the warning message of when setrlimit fails to be more explicit. [FlavioJS] 
+	* CMake: added tests for big endian, typecast to union and monotonic clock.
+	* CMake: added 'have function' tests for setrlimit, strnlen, getpid and gettid.
+	* CMake: added option ENABLE_RDTSC.
 2011/07/12
 	* CMake: set project language to C, added module FindFunctionLibrary, added search for dl library. (tested with debian-wheezy-i386) [FlavioJS]
 	* CMake: added search for math.h, added search for socket/nsl library. (tested with Solaris-201011-x86)

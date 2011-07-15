@@ -63,8 +63,20 @@ if( WIN32 )
 endif()
 if( MSVC )
 	set_property( CACHE GLOBAL_LIBRARIES    PROPERTY VALUE ${GLOBAL_LIBRARIES} "oldnames.lib" "ws2_32.lib" )
-	set_property( CACHE GLOBAL_DEFINITIONS  PROPERTY VALUE "${GLOBAL_DEFINITIONS} -D_CRT_SECURE_NO_DEPRECATE -D_CRT_NONSTDC_NO_DEPRECATE -DDB_MANUAL_CAST_TO_UNION" )
+	set_property( CACHE GLOBAL_DEFINITIONS  PROPERTY VALUE "${GLOBAL_DEFINITIONS} -D_CRT_SECURE_NO_DEPRECATE -D_CRT_NONSTDC_NO_DEPRECATE" )
 endif()
+
+
+#
+# 3rd party
+#
+add_subdirectory( 3rdparty )
+include( CheckCSourceCompiles )
+include( CheckCSourceRuns )
+include( CheckIncludeFile )
+include( CheckFunctionExists )
+include( FindFunctionLibrary )
+include( TestBigEndian )
 
 
 #
@@ -120,17 +132,9 @@ endif()
 
 
 #
-# 3rdparty and library tests
-#
-add_subdirectory( 3rdparty )
-include( FindFunctionLibrary )
-include( CheckIncludeFile )
-
-
-#
 # math library (FreeBSD/Linux/Solaris)
 #
-message( STATUS "Detecting m library (math)" )
+message( STATUS "Detecting math library (m)" )
 CHECK_INCLUDE_FILE( math.h HAVE_MATH_H )
 if( NOT HAVE_MATH_H )
 	message( FATAL_ERROR "math.h not found" )
@@ -139,44 +143,145 @@ set( CMAKE_REQUIRED_LIBRARIES ${GLOBAL_LIBRARIES} )
 find_function_library( floor FUNCTION_FLOOR_LIBRARIES m )
 if( FUNCTION_FLOOR_LIBRARIES )
 	message( STATUS "Adding global library: ${FUNCTION_FLOOR_LIBRARIES}" )
-	list( APPEND GLOBAL_LIBRARIES ${FUNCTION_FLOOR_LIBRARIES} )
+	set_property( CACHE GLOBAL_LIBRARIES  PROPERTY VALUE ${GLOBAL_LIBRARIES} ${FUNCTION_FLOOR_LIBRARIES} )
 endif()
-message( STATUS "Detecting m library (math) - done" )
+message( STATUS "Detecting math library (m) - done" )
 
 
 #
 # dynamic loading library (Linux)
 #
 if( NOT WIN32 )
-message( STATUS "Detecting dl library (dynamic loading)" )
+message( STATUS "Detecting dynamic loading library (dl)" )
 set( CMAKE_REQUIRED_LIBRARIES ${GLOBAL_LIBRARIES} )
 find_function_library( dlopen FUNCTION_DLOPEN_LIBRARIES dl )
 if( FUNCTION_DLOPEN_LIBRARIES )
 	message( STATUS "Adding global library: ${FUNCTION_DLOPEN_LIBRARIES}" )
-	list( APPEND GLOBAL_LIBRARIES ${FUNCTION_DLOPEN_LIBRARIES} )
+	set_property( CACHE GLOBAL_LIBRARIES  PROPERTY VALUE ${GLOBAL_LIBRARIES} ${FUNCTION_DLOPEN_LIBRARIES} )
 endif()
-message( STATUS "Detecting dl library (dynamic loading) - done" )
+message( STATUS "Detecting dynamic loading library (dl) - done" )
 endif()
 
 
 #
-# socket/nsl/ws2_32 library (Solaris/MinGW)
+# networking library (Solaris/MinGW)
 #
 if( NOT MSVC )
-message( STATUS "Detecting socket/nsl/ws2_32 library (networking)" )
+message( STATUS "Detecting networking library (socket/nsl/ws2_32)" )
 set( CMAKE_REQUIRED_LIBRARIES ${GLOBAL_LIBRARIES} )
 find_function_library( bind FUNCTION_BIND_LIBRARIES socket ws2_32 )
 if( FUNCTION_BIND_LIBRARIES )
 	message( STATUS "Adding global library: ${FUNCTION_BIND_LIBRARIES}" )
-	list( APPEND GLOBAL_LIBRARIES ${FUNCTION_BIND_LIBRARIES} )
+	set_property( CACHE GLOBAL_LIBRARIES  PROPERTY VALUE ${GLOBAL_LIBRARIES} ${FUNCTION_BIND_LIBRARIES} )
 endif()
 set( CMAKE_REQUIRED_LIBRARIES ${GLOBAL_LIBRARIES} )
 find_function_library( gethostbyname FUNCTION_GETHOSTBYNAME_LIBRARIES nsl )
 if( FUNCTION_GETHOSTBYNAME_LIBRARIES )
 	message( STATUS "Adding global library: ${FUNCTION_GETHOSTBYNAME_LIBRARIES}" )
-	list( APPEND GLOBAL_LIBRARIES ${FUNCTION_GETHOSTBYNAME_LIBRARIES} )
+	set_property( CACHE GLOBAL_LIBRARIES  PROPERTY VALUE ${GLOBAL_LIBRARIES} ${FUNCTION_GETHOSTBYNAME_LIBRARIES} )
 endif()
-message( STATUS "Detecting socket/nsl/ws2_32 library (networking) - done" )
+message( STATUS "Detecting networking library (socket/nsl/ws2_32) - done" )
+endif()
+
+
+#
+# Test for big endian
+#
+TEST_BIG_ENDIAN( BIG_ENDIAN )
+if( NOT DEFINED BIG_ENDIAN )
+	message( WARNING "unable to determine endianess, only LITTLE ENDIAN is supported" )
+elseif( BIG_ENDIAN )
+	message( FATAL_ERROR "bigendian is not supported" )
+endif()
+
+
+#
+# Test typecast to union
+#
+message( STATUS "Check if we can typecast to union" )
+set( SOURCECODE
+	"typedef union Foonion{\n"
+	"  int i;\n"
+	"  unsigned int ui;\n"
+	"  const char* s;\n"
+	"} Foonion;\n"
+	"int get_i(Foonion onion){ return onion.i; }\n"
+	"int main(int argc, char** argv){\n"
+		"int i = 0;\n"
+		"return get_i(((Foonion)(int)i));\n"
+	"}\n"
+	)
+CHECK_C_SOURCE_COMPILES( "${SOURCECODE}" HAVE_TYPECAST_TO_UNION )
+if( HAVE_TYPECAST_TO_UNION )
+	message( STATUS "Check typecast to union - yes" )
+else()
+	message( STATUS "Check typecast to union - no" )
+	set_property( CACHE GLOBAL_DEFINITIONS  PROPERTY VALUE "${GLOBAL_DEFINITIONS} -DDB_MANUAL_CAST_TO_UNION" )
+endif()
+
+
+#
+# Test monotonic clock
+#
+# CLOCK_MONOTONIC clock for clock_gettime
+# Normally defines _POSIX_TIMERS > 0 and _POSIX_MONOTONIC_CLOCK (for posix
+# compliant systems) and __FreeBSD_cc_version >= 500005 (for FreeBSD
+# >= 5.1.0, which does not have the posix defines (ref. r11983)) would be
+# checked but some systems define them even when they do not support it
+# (ref. bugreport:1003).
+#
+message( STATUS "Check for monotonic clock" )
+set( SOURCECODE
+	"#include <sys/time.h>\n"
+	"#include <time.h>\n"
+	"#include <unistd.h>\n"
+	"int main(int argc, char** argv){\n"
+		"struct timespec tval;\n"
+		"return clock_gettime(CLOCK_MONOTONIC, &tval);\n"
+	"}\n"
+	)
+find_library( RT_LIBRARY rt )# (optional, rt on Debian)
+mark_as_advanced( RT_LIBRARY )
+set( CMAKE_REQUIRED_LIBRARIES ${GLOBAL_LIBRARIES} ${RT_LIBRARY} )
+CHECK_C_SOURCE_RUNS( "${SOURCECODE}" HAVE_MONOTONIC_CLOCK )
+if( HAVE_MONOTONIC_CLOCK )
+	message( STATUS "Check for monotonic clock - yes" )
+	set_property( CACHE GLOBAL_LIBRARIES    PROPERTY VALUE ${GLOBAL_LIBRARIES} ${RT_LIBRARY} )
+	set_property( CACHE GLOBAL_DEFINITIONS  PROPERTY VALUE "${GLOBAL_DEFINITIONS} -DHAVE_MONOTONIC_CLOCK" )
+else()
+	message( STATUS "Check for monotonic clock - no" )
+endif()
+
+
+#
+# Test if function exists:
+#   setrlimit - used to set the socket limit
+#   strnlen - string length with upper scan bound
+#   getpid - process id
+#   gettid - thread id
+#
+CHECK_FUNCTION_EXISTS( setrlimit HAVE_SETRLIMIT )
+CHECK_FUNCTION_EXISTS( strnlen HAVE_STRNLEN )
+CHECK_FUNCTION_EXISTS( getpid HAVE_GETPID )
+CHECK_FUNCTION_EXISTS( gettid HAVE_GETTID )
+foreach( define HAVE_SETRLIMIT HAVE_STRNLEN HAVE_GETPID HAVE_GETTID )
+	if( ${define} )
+		set_property( CACHE GLOBAL_DEFINITIONS  PROPERTY VALUE "${GLOBAL_DEFINITIONS} -D${define}" )
+	endif()
+endforeach()
+
+
+#
+# Use RDTSC instruction as a timing source (time stamp counter on x86 since Pentium)
+#
+# Enable it when you've timing issues. (ex: in conjunction with XEN or Other Virtualization mechanisms)
+# Please ensure that you've disabled dynamic CPU-Frequencys, such as power saving options.
+# (On the most modern Dedicated Servers cpufreq is preconfigured, see your distribution's manual how to disable it)
+#
+option( ENABLE_RDTSC "use RDTSC instruction as a timing source" OFF )
+if( ENABLE_RDTSC )
+	message( STATUS "Enabled RDTSC" )
+	set_property( CACHE GLOBAL_DEFINITIONS  PROPERTY VALUE "${GLOBAL_DEFINITIONS} -DENABLE_RDTSC" )
 endif()
 
 
