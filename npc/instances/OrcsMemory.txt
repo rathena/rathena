@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.4
+//= 1.5
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -27,6 +27,7 @@
 //= 1.3 Disabled an exploit related to the orc hero spawn. [L0ne_W0lf]
 //=     Corrected the variable type for party leader name.
 //= 1.4 Fixed donpcevent calling non-existant npc. (bugreport:4039) [L0ne_W0lf]
+//= 1.5 Fixed a checkquest condition never setting quest. [L0ne_W0lf]
 //============================================================ 
 
 // Entrance
@@ -74,7 +75,7 @@ gef_fild10,242,202,0	script	Dimensional Gorge Piece	406,{
 							close;
 						}
 						instance_attach(.@instance);
-						instance_set_timeout 14400,300,.@instance;
+						instance_set_timeout 7200,300,.@instance;
 						instance_init(.@instance);
 
 						// First Floor
@@ -134,7 +135,7 @@ gef_fild10,242,202,0	script	Dimensional Gorge Piece	406,{
 					else {
 						mapannounce "gef_fild10", .@p_reader$ + " of the party, " + .@p_name$ + " is entering the " + .@md_name$ + ".",bc_map,"0x00ff99";
 						warp "1@orcs",179,15;
-						setquest 12059;
+						if (checkquest(12059)== -1) setquest 12059;
 						close;
 					}
 				case 3:
@@ -162,7 +163,7 @@ gef_fild10,242,202,0	script	Dimensional Gorge Piece	406,{
 					//else if (move_md == 0) {
 					else {
 						mapannounce "gef_fild10", .@p_name$ + " Party's member " + .@p_reader$ + " has entered the " + .@md_name$ + ".",bc_map,"0x00ff99";
-						setquest 12059;
+						if (checkquest(12059)== -1) setquest 12059;
 						warp "1@orcs",179,15;
 						close;
 					}
@@ -194,7 +195,7 @@ gef_fild10,242,202,0	script	Dimensional Gorge Piece	406,{
 				//else if (move_md == 0) {
 				else {
 					mapannounce "gef_fild10", .@p_name$ + " Party's member " + .@p_reader$ + " has entered the " + .@md_name$ + ".",bc_map,"0x00ff99";
-					setquest 12059;
+					if (checkquest(12059)== -1) setquest 12059;
 					warp "1@orcs",179,15;
 					close;
 				}

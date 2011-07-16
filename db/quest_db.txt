@@ -331,8 +331,8 @@
 3132,0,0,0,0,0,0,0,"Z Gang Wanted - Find the Z Gang's Agit"
 3133,0,0,0,0,0,0,0,"Z Gang Wanted - Agit Found!"
 3134,0,0,0,0,0,0,0,"Z Gang Wanted - Clean Sweep of Z Gang"
-3135,0,0,0,0,0,0,0,"Nidhoggur's Nest"
-3136,0,0,0,0,0,0,0,"Nidhoggur's Nest Time Limit"
+3135,259200,0,0,0,0,0,0,"Nidhoggur's Nest"
+3136,14400,0,0,0,0,0,0,"Nidhoggur's Nest Time Limit"
 
 3200,0,0,0,0,0,0,0,"Job changes to Rune knight - Recommendation for Rune knight"
 3201,0,0,0,0,0,0,0,"Job changes to Rune knight - Secret rendezvous of Rune knigh"
