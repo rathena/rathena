@@ -1,6 +1,8 @@
 Date		Added
 ======
 2011/07/16
+	* Rev. 14912 Updated dialog in monster_race.txt [L0ne_W0lf]
+2011/07/16
 	* Rev. 14900 Have been working on this for months: Added Nidhoggr's Nest instance. [L0ne_W0lf]
 	* Tweaks to how checkquest is used in orc's memory and sealed shrine.
 2011/07/13

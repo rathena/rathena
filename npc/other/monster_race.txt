@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
-//= 1.4
+//= 1.5
 //===== Compatible With: =====================================
 //= eAthena SVN (Trunk, r12752+)
 //===== Description: =========================================
@@ -18,6 +18,7 @@
 //= 1.2 Replaced effect numerics with constants. [L0ne_W0lf]
 //= 1.3 Ei'felle now gives Exercise. (Bugreport:4092) [L0ne_W0lf]
 //= 1.4 Fixed call to a non-existant event. [L0ne_W0lf]
+//= 1.5 Updated Dialog. [L0e_W0lf]
 //============================================================
 
 //============================================================
@@ -906,19 +907,19 @@ OnTimer10000:
 	end;
 
 OnTimer120000:
-	mapannounce "p_track01","The Individual Monster Race will begin after 3 minutes.",bc_map,"0xffb6c1";
+	mapannounce "p_track01","The Single Monster Race will start in 3 minutes.",bc_map,"0xffb6c1";
 	end;
 
 OnTimer123000:
-	mapannounce "p_track01","Anyone who wishes to join the race can enquire from the service staff in the arena.",bc_map,"0xffb6c1";
+	mapannounce "p_track01","Please ask a Ticket Helper if you wish to wager on the race.",bc_map,"0xffb6c1";
 	end;
 
 OnTimer240000:
-	mapannounce "p_track01","The Individual Monster Race will begin soon.",bc_map,"0xffb6c1";
+	mapannounce "p_track01","The Single Monster Race will start shortly.",bc_map,"0xffb6c1";
 	end;
 
 OnTimer243000:
-	mapannounce "p_track01","Anyone who wishes to join the race can enquire from the service staff in the arena.",bc_map,"0xffb6c1";
+	mapannounce "p_track01","Please ask a Ticket Helper if you wish to wager on the race.",bc_map,"0xffb6c1";
 	end;
 
 OnTimer300000:
@@ -939,15 +940,19 @@ OnTimer300000:
 p_track01,73,22,1	script	Ticket Helper#single	899,{
 	if (checkweight(908,200) == 0) {
 		mes "[Ticket Helper]";
-		mes "Hello there!";
-		mes "If you wish to join the 'Individual' Monster Race, ";
-		mes "please choose one monster from ";
-		mes "Monster No.1 to Monster No. 6 ~";
+		mes "Welcome to the";
+		mes "Monster Race Arena.";
+		mes "If you'd like to participate";
+		mes "in the ^3131FFSingle Monster Race^000000,";
+		mes "then please select 1 out of";
+		mes "the 6 monsters from the list.";
 		next;
 		mes "[Ticket Helper]";
-		mes "However..";
-		mes "It seems that you don't have enough space ";
-		mes "to receive the monster ticket.";
+		mes "Wait, wait...";
+		mes "I can't give you";
+		mes "anything right now.";
+		mes "You're carrying way";
+		mes "too many things...";
 		close;
 	}
 	mes "[Ticket Helper]";
@@ -985,8 +990,7 @@ p_track01,73,22,1	script	Ticket Helper#single	899,{
 				mes "Alright then, please wait";
 				mes "until the start of the race is";
 				mes "announced. If the monster you";
-				mes "picked wins, then please use";
-				mes "this ticket to redeem your prize.";
+				mes "picked wins, then please use this ticket to redeem your prize.";
 				getitem 7514,1; //Monster_Ticket
 				set monster_race_1,1;
 				close;
@@ -1049,8 +1053,7 @@ p_track01,73,22,1	script	Ticket Helper#single	899,{
 				mes "Alright then, please wait";
 				mes "until the start of the race is";
 				mes "announced. If the monster you";
-				mes "picked wins, then please use";
-				mes "this ticket to redeem your prize.";
+				mes "picked wins, then please use this ticket to redeem your prize.";
 				getitem 7514,1; //Monster_Ticket
 				set monster_race_1,3;
 				close;
@@ -1081,8 +1084,7 @@ p_track01,73,22,1	script	Ticket Helper#single	899,{
 				mes "Alright then, please wait";
 				mes "until the start of the race is";
 				mes "announced. If the monster you";
-				mes "picked wins, then please use";
-				mes "this ticket to redeem your prize.";
+				mes "picked wins, then please use this ticket to redeem your prize.";
 				getitem 7514,1; //Monster_Ticket
 				set monster_race_1,4;
 				close;
@@ -1113,8 +1115,7 @@ p_track01,73,22,1	script	Ticket Helper#single	899,{
 				mes "Alright then, please wait";
 				mes "until the start of the race is";
 				mes "announced. If the monster you";
-				mes "picked wins, then please use";
-				mes "this ticket to redeem your prize.";
+				mes "picked wins, then please use this ticket to redeem your prize.";
 				getitem 7514,1; //Monster_Ticket
 				set monster_race_1,5;
 				close;
@@ -1145,8 +1146,7 @@ p_track01,73,22,1	script	Ticket Helper#single	899,{
 				mes "Alright then, please wait";
 				mes "until the start of the race is";
 				mes "announced. If the monster you";
-				mes "picked wins, then please use";
-				mes "this ticket to redeem your prize.";
+				mes "picked wins, then please use this ticket to redeem your prize.";
 				getitem 7514,1; //Monster_Ticket
 				set monster_race_1,6;
 				close;
@@ -1482,347 +1482,616 @@ OnTimer9000:
 p_track01,67,45,5	script	Medal Distributor#single	845,{
 	if (checkweight(908,200) == 0) {
 		mes "[Medal Distributor]";
-		mes "Before exchanging";
-		mes "please take off some of the things that you're carrying.";
+		mes "I'm sorry, but I can't";
+		mes "reward you with any medals";
+		mes "until you make more space";
+		mes "available in your Inventory.";
 		close;
 	}
+	set .@insa,rand(1,1000);
 	if (countitem(7514) > 0) {
 		mes "[Medal Distributor]";
-		mes "I am the Redemption Service Staff";
-		mes "who will give the winner medals and ticket";
-		mes "to the participants who";
-		mes "make the correct guess";
-		mes "for the Monster Race.";
+		mes "Hello there~";
+		mes "If you've wagered on the";
+		mes "winning monster in a recent";
+		mes "race, then you can exchange";
+		mes "your game ticket here for";
+		mes "some Prize Medals.";
 		next;
 		mes "[Medal Distributor]";
-		mes "The redemption of the winner ticket of every round";
-		mes "can only be made at ^0000FFthe particular round^000000.";
-		mes "Please remember that.";
-		mes "You can take the medal and";
-		mes "find Wayne in Hugel to retrieve your prizes.";
-		next;
-		mes "[Medal Distributor]";
-		mes "Do you want to show me your ticket?";
+		mes "Please remember that you can";
+		mes "only exchange winning Game";
+		mes "Tickets for Prize Medals right";
+		mes "after the race finishes. Prize";
+		mes "Medals may be given to Wayne";
+		mes "in Hugel in exchange for items.";
 		next;
 		if ($@monster_race == 1) {
 			if (monster_race_1 == 1) {
 				mes "[Medal Distributor]";
-				mes "Congratulations! You have won!";
-				mes "Although the winning rate for individual is higher than the doubles,";
-				mes "it's not easy to get a correct guess too..";
-				mes "You're really amazing";
+				mes "Oh, congratulations, you";
+				mes "have a winning ticket for";
+				mes "a Single Monster Race! So ";
+				mes "would you like to exchange your";
+				mes "Racing Ticket for Prize Medals?";
 				next;
-				mes "[Medal Distributor]";
-				mes "Anyway...";
-				mes "Do you want to change";
-				mes "the 'ticket' into 'medal' right now?";
-				next;
-				switch(select("Yes:Maybe later")) {
+				switch(select("Yes, please.:No, thanks.")) {
 				case 1:
 					mes "[Medal Distributor]";
-					mes "I will confirm your ticket now.";
-					mes "Hmm, the winning monster for this round...";
-					mes "Yup! That's right!";
-					mes "Congratulations again!";
+					mes "Let me see your ticket...";
+					mes "Oh! Congratulations, you";
+					mes "won! May I have your name?";
 					next;
+					input .@input$;
+					if (.@input$ == strcharinfo(0)) {
+						mes "[Medal Distributor]";
+						mes "Ah, "+strcharinfo(0)+".";
+						mes "You can exchange this";
+						mes "ticket for a Prize Medal by";
+						mes "entering your ticket exchange";
+						mes "number now. Your ticket";
+						mes "exchange number is ^FF0000" + .@insa + "^000000.";
+						next;
+						input .@input; //,0,1000;
+						if (.@input == 0) {
+							mes "[Medal Distributor]";
+							mes "Oh? You don't want";
+							mes "to exchange your";
+							mes "winning ticket?";
+							close;
+						}
+						else if (.@input == .@insa) {
+							mes "[Medal Distributor]";
+							mes "Thank you! You entered";
+							mes "the correct number...";
+							mes "Everything seems to";
+							mes "be in order. Alright!";
+							next;
+						}
+						else {
+							mes "[Medal Distributor]";
+							mes "I'm sorry, but it seems";
+							mes "that you entered the";
+							mes "incorrect ticket number.";
+							mes "Would you mind coming";
+							mes "back again in a while?";
+							close;
+						}
+					}
+					else {
+						mes "[Medal Distributor]";
+						mes "What's this...?";
+						mes "I think there's a problem...";
+						mes "Did you enter your name";
+						mes "incorrectly? Please check";
+						mes "your name, and then try again.";
+						close;
+					}
 					mes "[Medal Distributor]";
-					mes "I will give you the medal as";
-					mes "the proof of the winner for the individual race.";
-					mes "As for the medal, bring it to Hugel ";
-					mes "and look for Wayne";
-					mes "to change it into prizes.";
-					mes "Please use it wisely.";
+					mes "Now please accept your";
+					mes "Prize Medals! You can";
+					mes "exchange these with";
+					mes "Wayne in Hugel for some";
+					mes "interesting items. Thank you~";
 					delitem 7514,1; //Monster_Ticket
 					set monster_race_1,0;
 					getitem 7515,4; //Marvelous_Medal
 					close;
 				case 2:
 					mes "[Medal Distributor]";
-					mes "The redemption of the winner ticket of every round";
-					mes "can only be made at ^0000FFthe particular round^000000.";
-					mes "Please remember that.";
+					mes "Um, are you sure? You ";
+					mes "can only exchange a winning";
+					mes "Racing Ticket for Prize Medals";
+					mes "for a short time after the race. If you made a mistake, you";
+					mes "should ask me again quickly.";
 					close;
 				}
 				close;
 			}
 			else {
 				mes "[Medal Distributor]";
-				mes "Ah, what a pity.";
-				mes "I hope that you will win it next time.";
+				mes "You may not have wagered";
+				mes "on the winning monster in";
+				mes "the last race, but I hope that";
+				mes "you get lucky next time~";
 				close;
 			}
 		}
 		else if ($@monster_race == 2) {
 			if (monster_race_1 == 2) {
 				mes "[Medal Distributor]";
-				mes "Congratulations! You have won!";
-				mes "Although the winning rate for individual is higher than the doubles,";
-				mes "it's not easy to get a correct guess too..";
-				mes "You're really amazing";
+				mes "Oh, congratulations, you";
+				mes "have a winning ticket for";
+				mes "a Single Monster Race! So ";
+				mes "would you like to exchange your";
+				mes "Racing Ticket for Prize Medals?";
 				next;
-				mes "[Medal Distributor]";
-				mes "Anyway...";
-				mes "Do you want to change";
-				mes "the 'ticket' into 'medal' right now?";
-				next;
-				switch(select("Yes:Maybe later")) {
+				switch(select("Yes, please.:No, thanks.")) {
 				case 1:
 					mes "[Medal Distributor]";
-					mes "I will confirm your ticket now.";
-					mes "Hmm, the winning monster for this round...";
-					mes "Yup! That's right!";
-					mes "Congratulations again!";
+					mes "Let me see your ticket...";
+					mes "Oh! Congratulations, you";
+					mes "won! May I have your name?";
 					next;
+					input .@input$;
+					if (.@input$ == strcharinfo(0)) {
+						mes "[Medal Distributor]";
+						mes "Ah, "+strcharinfo(0)+".";
+						mes "You can exchange this";
+						mes "ticket for a Prize Medal by";
+						mes "entering your ticket exchange";
+						mes "number now. Your ticket";
+						mes "exchange number is ^FF0000" + .@insa + "^000000.";
+						next;
+						input .@input; //,0,1000;
+						if (.@input == 0) {
+							mes "[Medal Distributor]";
+							mes "Oh? You don't want";
+							mes "to exchange your";
+							mes "winning ticket?";
+							close;
+						}
+						else if (.@input == .@insa) {
+							mes "[Medal Distributor]";
+							mes "[Medal Distributor]";
+							mes "Thank you! You entered";
+							mes "the correct number...";
+							mes "Everything seems to";
+							mes "be in order. Alright!";
+							next;
+						}
+						else {
+							mes "[Medal Distributor]";
+							mes "I'm sorry, but it seems";
+							mes "that you entered the";
+							mes "incorrect ticket number.";
+							mes "Would you mind coming";
+							mes "back again in a while?";
+							close;
+						}
+					}
+					else {
+						mes "[Medal Distributor]";
+						mes "What's this...?";
+						mes "I think there's a problem...";
+						mes "Did you enter your name";
+						mes "incorrectly? Please check";
+						mes "your name, and then try again.";
+						close;
+					}
 					mes "[Medal Distributor]";
-					mes "I will give you the medal as";
-					mes "the proof of the winner for the individual race.";
-					mes "As for the medal, bring it to Hugel ";
-					mes "and look for Wayne";
-					mes "to change it into prizes.";
-					mes "Please use it wisely.";
+					mes "Now please accept your";
+					mes "Prize Medals! You can";
+					mes "exchange these with";
+					mes "Wayne in Hugel for some";
+					mes "interesting items. Thank you~";
 					delitem 7514,1; //Monster_Ticket
 					set monster_race_1,0;
 					getitem 7515,4; //Marvelous_Medal
 					close;
 				case 2:
 					mes "[Medal Distributor]";
-					mes "The redemption of the winner ticket of every round";
-					mes "can only be made at ^0000FFthe particular round^000000.";
-					mes "Please remember that.";
+					mes "Um, are you sure? You ";
+					mes "can only exchange a winning";
+					mes "Racing Ticket for Prize Medals";
+					mes "for a short time after the race. If you made a mistake, you";
+					mes "should ask me again quickly.";
 					close;
 				}
 				close;
 			}
 			else {
 				mes "[Medal Distributor]";
-				mes "Ah, what a pity.";
-				mes "I hope that you will win it next time.";
+				mes "You may not have wagered";
+				mes "on the winning monster in";
+				mes "the last race, but I hope that";
+				mes "you get lucky next time~";
 				close;
 			}
 		}
 		else if ($@monster_race == 3) {
 			if (monster_race_1 == 3) {
 				mes "[Medal Distributor]";
-				mes "Congratulations! You have won!";
-				mes "Although the winning rate for individual is higher than the doubles,";
-				mes "it's not easy to get a correct guess too..";
-				mes "You're really amazing";
+				mes "Oh, congratulations, you";
+				mes "have a winning ticket for";
+				mes "a Single Monster Race! So ";
+				mes "would you like to exchange your";
+				mes "Racing Ticket for Prize Medals?";
 				next;
-				mes "[Medal Distributor]";
-				mes "Anyway...";
-				mes "Do you want to change";
-				mes "the 'ticket' into 'medal' right now?";
-				next;
-				switch(select("Yes:Maybe later")) {
+				switch(select("Yes, please.:No, thanks.")) {
 				case 1:
 					mes "[Medal Distributor]";
-					mes "I will confirm your ticket now.";
-					mes "Hmm, the winning monster for this round...";
-					mes "Yup! That's right!";
-					mes "Congratulations again!";
+					mes "Let me see your ticket...";
+					mes "Oh! Congratulations, you";
+					mes "won! May I have your name?";
 					next;
+					input .@input$;
+					if (.@input$ == strcharinfo(0)) {
+						mes "[Medal Distributor]";
+						mes "Ah, "+strcharinfo(0)+".";
+						mes "You can exchange this";
+						mes "ticket for a Prize Medal by";
+						mes "entering your ticket exchange";
+						mes "number now. Your ticket";
+						mes "exchange number is ^FF0000" + .@insa + "^000000.";
+						next;
+						input .@input; //,0,1000;
+						if (.@input == 0) {
+							mes "[Medal Distributor]";
+							mes "Oh? You don't want";
+							mes "to exchange your";
+							mes "winning ticket?";
+							close;
+						}
+						else if (.@input == .@insa) {
+							mes "[Medal Distributor]";
+							mes "[Medal Distributor]";
+							mes "Thank you! You entered";
+							mes "the correct number...";
+							mes "Everything seems to";
+							mes "be in order. Alright!";
+							next;
+						}
+						else {
+							mes "[Medal Distributor]";
+							mes "I'm sorry, but it seems";
+							mes "that you entered the";
+							mes "incorrect ticket number.";
+							mes "Would you mind coming";
+							mes "back again in a while?";
+							close;
+						}
+					}
+					else {
+						mes "[Medal Distributor]";
+						mes "What's this...?";
+						mes "I think there's a problem...";
+						mes "Did you enter your name";
+						mes "incorrectly? Please check";
+						mes "your name, and then try again.";
+						close;
+					}
 					mes "[Medal Distributor]";
-					mes "I will give you the medal as";
-					mes "the proof of the winner for the individual race.";
-					mes "As for the medal, bring it to Hugel ";
-					mes "and look for Wayne";
-					mes "to change it into prizes.";
-					mes "Please use it wisely.";
+					mes "Now please accept your";
+					mes "Prize Medals! You can";
+					mes "exchange these with";
+					mes "Wayne in Hugel for some";
+					mes "interesting items. Thank you~";
 					delitem 7514,1; //Monster_Ticket
 					set monster_race_1,0;
 					getitem 7515,4; //Marvelous_Medal
 					close;
 				case 2:
 					mes "[Medal Distributor]";
-					mes "The redemption of the winner ticket of every round";
-					mes "can only be made at ^0000FFthe particular round^000000.";
-					mes "Please remember that.";
+					mes "Um, are you sure? You ";
+					mes "can only exchange a winning";
+					mes "Racing Ticket for Prize Medals";
+					mes "for a short time after the race. If you made a mistake, you";
+					mes "should ask me again quickly.";
 					close;
 				}
 				close;
 			}
 			else {
 				mes "[Medal Distributor]";
-				mes "Ah, what a pity.";
-				mes "I hope that you will win it next time.";
+				mes "You may not have wagered";
+				mes "on the winning monster in";
+				mes "the last race, but I hope that";
+				mes "you get lucky next time~";
 				close;
 			}
 		}
 		else if ($@monster_race == 4) {
 			if (monster_race_1 == 4) {
 				mes "[Medal Distributor]";
-				mes "Congratulations! You have won!";
-				mes "Although the winning rate for individual is higher than the doubles,";
-				mes "it's not easy to get a correct guess too..";
-				mes "You're really amazing";
+				mes "Oh, congratulations, you";
+				mes "have a winning ticket for";
+				mes "a Single Monster Race! So ";
+				mes "would you like to exchange your";
+				mes "Racing Ticket for Prize Medals?";
 				next;
-				mes "[Medal Distributor]";
-				mes "Anyway...";
-				mes "Do you want to change";
-				mes "the 'ticket' into 'medal' right now?";
-				next;
-				switch(select("Yes:Maybe later")) {
+				switch(select("Yes, please.:No, thanks.")) {
 				case 1:
 					mes "[Medal Distributor]";
-					mes "I will confirm your ticket now.";
-					mes "Hmm, the winning monster for this round...";
-					mes "Yup! That's right!";
-					mes "Congratulations again!";
+					mes "Let me see your ticket...";
+					mes "Oh! Congratulations, you";
+					mes "won! May I have your name?";
 					next;
+					input .@input$;
+					if (.@input$ == strcharinfo(0)) {
+						mes "[Medal Distributor]";
+						mes "Ah, "+strcharinfo(0)+".";
+						mes "You can exchange this";
+						mes "ticket for a Prize Medal by";
+						mes "entering your ticket exchange";
+						mes "number now. Your ticket";
+						mes "exchange number is ^FF0000" + .@insa + "^000000.";
+						next;
+						input .@input; //,0,1000;
+						if (.@input == 0) {
+							mes "[Medal Distributor]";
+							mes "Oh? You don't want";
+							mes "to exchange your";
+							mes "winning ticket?";
+							close;
+						}
+						else if (.@input == .@insa) {
+							mes "[Medal Distributor]";
+							mes "[Medal Distributor]";
+							mes "Thank you! You entered";
+							mes "the correct number...";
+							mes "Everything seems to";
+							mes "be in order. Alright!";
+							next;
+						}
+						else {
+							mes "[Medal Distributor]";
+							mes "I'm sorry, but it seems";
+							mes "that you entered the";
+							mes "incorrect ticket number.";
+							mes "Would you mind coming";
+							mes "back again in a while?";
+							close;
+						}
+					}
+					else {
+						mes "[Medal Distributor]";
+						mes "What's this...?";
+						mes "I think there's a problem...";
+						mes "Did you enter your name";
+						mes "incorrectly? Please check";
+						mes "your name, and then try again.";
+						close;
+					}
 					mes "[Medal Distributor]";
-					mes "I will give you the medal as";
-					mes "the proof of the winner for the individual race.";
-					mes "As for the medal, bring it to Hugel ";
-					mes "and look for Wayne";
-					mes "to change it into prizes.";
-					mes "Please use it wisely.";
+					mes "Now please accept your";
+					mes "Prize Medals! You can";
+					mes "exchange these with";
+					mes "Wayne in Hugel for some";
+					mes "interesting items. Thank you~";
 					delitem 7514,1; //Monster_Ticket
 					set monster_race_1,0;
 					getitem 7515,4; //Marvelous_Medal
 					close;
 				case 2:
 					mes "[Medal Distributor]";
-					mes "The redemption of the winner ticket of every round";
-					mes "can only be made at ^0000FFthe particular round^000000.";
-					mes "Please remember that.";
+					mes "Um, are you sure? You ";
+					mes "can only exchange a winning";
+					mes "Racing Ticket for Prize Medals";
+					mes "for a short time after the race. If you made a mistake, you";
+					mes "should ask me again quickly.";
 					close;
 				}
 				close;
 			}
 			else {
 				mes "[Medal Distributor]";
-				mes "Ah, what a pity.";
-				mes "I hope that you will win it next time.";
+				mes "You may not have wagered";
+				mes "on the winning monster in";
+				mes "the last race, but I hope that";
+				mes "you get lucky next time~";
 				close;
 			}
 		}
 		else if ($@monster_race == 5) {
 			if (monster_race_1 == 5) {
 				mes "[Medal Distributor]";
-				mes "Congratulations! You have won!";
-				mes "Although the winning rate for individual is higher than the doubles,";
-				mes "it's not easy to get a correct guess too..";
-				mes "You're really amazing";
+				mes "Oh, congratulations, you";
+				mes "have a winning ticket for";
+				mes "a Single Monster Race! So ";
+				mes "would you like to exchange your";
+				mes "Racing Ticket for Prize Medals?";
 				next;
-				mes "[Medal Distributor]";
-				mes "Anyway...";
-				mes "Do you want to change";
-				mes "the 'ticket' into 'medal' right now?";
-				next;
-				switch(select("Yes:Maybe later")) {
+				switch(select("Yes, please.:No, thanks.")) {
 				case 1:
 					mes "[Medal Distributor]";
-					mes "I will confirm your ticket now.";
-					mes "Hmm, the winning monster for this round...";
-					mes "Yup! That's right!";
-					mes "Congratulations again!";
+					mes "Let me see your ticket...";
+					mes "Oh! Congratulations, you";
+					mes "won! May I have your name?";
 					next;
+					input .@input$;
+					if (.@input$ == strcharinfo(0)) {
+						mes "[Medal Distributor]";
+						mes "Ah, "+strcharinfo(0)+".";
+						mes "You can exchange this";
+						mes "ticket for a Prize Medal by";
+						mes "entering your ticket exchange";
+						mes "number now. Your ticket";
+						mes "exchange number is ^FF0000" + .@insa + "^000000.";
+						next;
+						input .@input; //,0,1000;
+						if (.@input == 0) {
+							mes "[Medal Distributor]";
+							mes "Oh? You don't want";
+							mes "to exchange your";
+							mes "winning ticket?";
+							close;
+						}
+						else if (.@input == .@insa) {
+							mes "[Medal Distributor]";
+							mes "[Medal Distributor]";
+							mes "Thank you! You entered";
+							mes "the correct number...";
+							mes "Everything seems to";
+							mes "be in order. Alright!";
+							next;
+						}
+						else {
+							mes "[Medal Distributor]";
+							mes "I'm sorry, but it seems";
+							mes "that you entered the";
+							mes "incorrect ticket number.";
+							mes "Would you mind coming";
+							mes "back again in a while?";
+							close;
+						}
+					}
+					else {
+						mes "[Medal Distributor]";
+						mes "What's this...?";
+						mes "I think there's a problem...";
+						mes "Did you enter your name";
+						mes "incorrectly? Please check";
+						mes "your name, and then try again.";
+						close;
+					}
 					mes "[Medal Distributor]";
-					mes "I will give you the medal as";
-					mes "the proof of the winner for the individual race.";
-					mes "As for the medal, bring it to Hugel ";
-					mes "and look for Wayne";
-					mes "to change it into prizes.";
-					mes "Please use it wisely.";
+					mes "Now please accept your";
+					mes "Prize Medals! You can";
+					mes "exchange these with";
+					mes "Wayne in Hugel for some";
+					mes "interesting items. Thank you~";
 					delitem 7514,1; //Monster_Ticket
 					set monster_race_1,0;
 					getitem 7515,4; //Marvelous_Medal
 					close;
 				case 2:
 					mes "[Medal Distributor]";
-					mes "The redemption of the winner ticket of every round";
-					mes "can only be made at ^0000FFthe particular round^000000.";
-					mes "Please remember that.";
+					mes "Um, are you sure? You ";
+					mes "can only exchange a winning";
+					mes "Racing Ticket for Prize Medals";
+					mes "for a short time after the race. If you made a mistake, you";
+					mes "should ask me again quickly.";
 					close;
 				}
 				close;
 			}
 			else {
 				mes "[Medal Distributor]";
-				mes "Ah, what a pity.";
-				mes "I hope that you will win it next time.";
+				mes "You may not have wagered";
+				mes "on the winning monster in";
+				mes "the last race, but I hope that";
+				mes "you get lucky next time~";
 				close;
 			}
 		}
 		else if ($@monster_race == 6) {
 			if (monster_race_1 == 6) {
 				mes "[Medal Distributor]";
-				mes "Congratulations! You have won!";
-				mes "Although the winning rate for individual is higher than the doubles,";
-				mes "it's not easy to get a correct guess too..";
-				mes "You're really amazing";
+				mes "Oh, congratulations, you";
+				mes "have a winning ticket for";
+				mes "a Single Monster Race! So ";
+				mes "would you like to exchange your";
+				mes "Racing Ticket for Prize Medals?";
 				next;
-				mes "[Medal Distributor]";
-				mes "Anyway...";
-				mes "Do you want to change";
-				mes "the 'ticket' into 'medal' right now?";
-				next;
-				switch(select("Yes:Maybe later")) {
+				switch(select("Yes, please.:No, thanks.")) {
 				case 1:
 					mes "[Medal Distributor]";
-					mes "I will confirm your ticket now.";
-					mes "Hmm, the winning monster for this round...";
-					mes "Yup! That's right!";
-					mes "Congratulations again!";
+					mes "Let me see your ticket...";
+					mes "Oh! Congratulations, you";
+					mes "won! May I have your name?";
 					next;
+					input .@input$;
+					if (.@input$ == strcharinfo(0)) {
+						mes "[Medal Distributor]";
+						mes "Ah, "+strcharinfo(0)+".";
+						mes "You can exchange this";
+						mes "ticket for a Prize Medal by";
+						mes "entering your ticket exchange";
+						mes "number now. Your ticket";
+						mes "exchange number is ^FF0000" + .@insa + "^000000.";
+						next;
+						input .@input; //,0,1000;
+						if (.@input == 0) {
+							mes "[Medal Distributor]";
+							mes "Oh? You don't want";
+							mes "to exchange your";
+							mes "winning ticket?";
+							close;
+						}
+						else if (.@input == .@insa) {
+							mes "[Medal Distributor]";
+							mes "[Medal Distributor]";
+							mes "Thank you! You entered";
+							mes "the correct number...";
+							mes "Everything seems to";
+							mes "be in order. Alright!";
+							next;
+						}
+						else {
+							mes "[Medal Distributor]";
+							mes "I'm sorry, but it seems";
+							mes "that you entered the";
+							mes "incorrect ticket number.";
+							mes "Would you mind coming";
+							mes "back again in a while?";
+							close;
+						}
+					}
+					else {
+						mes "[Medal Distributor]";
+						mes "What's this...?";
+						mes "I think there's a problem...";
+						mes "Did you enter your name";
+						mes "incorrectly? Please check";
+						mes "your name, and then try again.";
+						close;
+					}
 					mes "[Medal Distributor]";
-					mes "I will give you the medal as";
-					mes "the proof of the winner for the individual race.";
-					mes "As for the medal, bring it to Hugel ";
-					mes "and look for Wayne";
-					mes "to change it into prizes.";
-					mes "Please use it wisely.";
+					mes "Now please accept your";
+					mes "Prize Medals! You can";
+					mes "exchange these with";
+					mes "Wayne in Hugel for some";
+					mes "interesting items. Thank you~";
 					delitem 7514,1; //Monster_Ticket
 					set monster_race_1,0;
 					getitem 7515,4; //Marvelous_Medal
 					close;
 				case 2:
 					mes "[Medal Distributor]";
-					mes "The redemption of the winner ticket of every round";
-					mes "can only be made at ^0000FFthe particular round^000000.";
-					mes "Please remember that.";
+					mes "Um, are you sure? You ";
+					mes "can only exchange a winning";
+					mes "Racing Ticket for Prize Medals";
+					mes "for a short time after the race. If you made a mistake, you";
+					mes "should ask me again quickly.";
 					close;
 				}
 				close;
 			}
 			else {
 				mes "[Medal Distributor]";
-				mes "Ah, what a pity.";
-				mes "I hope that you will win it next time.";
+				mes "You may not have wagered";
+				mes "on the winning monster in";
+				mes "the last race, but I hope that";
+				mes "you get lucky next time~";
 				close;
 			}
 		}
 		else {
 			mes "[Medal Distributor]";
-			mes "I am the Redemption Service Staff";
-			mes "who will give the winner medals and ticket";
-			mes "to the participants who";
-			mes "make the correct guess";
-			mes "for the Monster Race.";
+			mes "Hello there~";
+			mes "If you've wagered on the";
+			mes "winning monster in a recent";
+			mes "race, then you can exchange";
+			mes "your game ticket here for";
+			mes "some Prize Medals.";
 			next;
 			mes "[Medal Distributor]";
-			mes "The redemption of the winner ticket of every round";
-			mes "can only be made at ^0000FFthe particular round^000000.";
-			mes "Please remember that.";
-			mes "You can take the medal and";
-			mes "find Wayne in Hugel to retrieve your prizes.";
+			mes "Please remember that you can";
+			mes "only exchange winning Game";
+			mes "Tickets for Prize Medals right";
+			mes "after the race finishes. Prize";
+			mes "Medals may be given to Wayne";
+			mes "in Hugel in exchange for items.";
 			close;
 		}
 	}
 	else {
 		mes "[Medal Distributor]";
-		mes "I am the Redemption Service Staff";
-		mes "who will give the winner medals and ticket";
-		mes "to the participants who";
-		mes "make the correct guess";
-		mes "for the Monster Race.";
+		mes "Hello there~";
+		mes "If you've wagered on the";
+		mes "winning monster in a recent";
+		mes "race, then you can exchange";
+		mes "your game ticket here for";
+		mes "some Prize Medals.";
 		next;
 		mes "[Medal Distributor]";
-		mes "The redemption of the winner ticket of every round";
-		mes "can only be made at ^0000FFthe particular round^000000.";
-		mes "Please remember that.";
-		mes "You can take the medal and";
-		mes "find Wayne in Hugel to retrieve your prizes.";
+		mes "Please remember that you can";
+		mes "only exchange winning Game";
+		mes "Tickets for Prize Medals right";
+		mes "after the race finishes. Prize";
+		mes "Medals may be given to Wayne";
+		mes "in Hugel in exchange for items.";
 		close;
 	}
 	end;
@@ -1902,9 +2171,9 @@ OnTimer342000:
 p_track01,76,36,1	script	Exit Guide#single	798,{
 	mes "[Exit Guide]";
 	mes "If you have a winning Racing";
-	mes "Ticket, please make sure that.";
+	mes "Ticket, please make sure that";
 	mes "you redeem it for Prize Medals";
-	mes "now. All Racing Rickets become";
+	mes "now. All Racing Tickets become";
 	mes "void once the next race begins.";
 	next;
 	mes "[Exit Guide]";
@@ -1927,7 +2196,7 @@ p_track01,76,36,1	script	Exit Guide#single	798,{
 			mes "In accordance with our";
 			mes "policies, I must take your";
 			mes "Racing Ticket before you leave.";
-			mes "Thank you for your patronage";
+			mes "Thank you for your patronage,";
 			mes "and I hope you enjoy your time";
 			mes "here in the Monster Race Arena.";
 			delitem 7514,1; //Monster_Ticket
@@ -1938,8 +2207,8 @@ p_track01,76,36,1	script	Exit Guide#single	798,{
 		end;
 	case 2:
 		mes "[Exit Guide]";
-		mes "Alright, then";
-		mes "Kist let me know";
+		mes "Alright, then.";
+		mes "Just let me know";
 		mes "whenever you're";
 		mes "ready to leave.";
 		close;
@@ -1953,26 +2222,26 @@ hugel,58,72,6	script	Eckar Ellebird#single	798,{
 	mes "Monster Race Arena.";
 	mes "How may I help you today?";
 	next;
-	if (select("Monster Race Info:Enter Monster Race") == 1) {
-		mes "[Eckar Erenes]";
+	switch(select("Monster Race Info:Enter Monster Race")) {
+	case 1:
+		mes "[Eckar Ellebird]";
 		mes "Monster Races originated from";
 		mes "simple children's games in which";
 		mes "Cute Pets would race against each other. This grew into an adult";
 		mes "pastime that is so popular, we've built a racing arena in Hugel.";
 		next;
-		mes "[Eckar Erenes]";
+		mes "[Eckar Ellebird]";
 		mes "Our Monster Race Arena hosts";
 		mes "two types of monster races. First, we have the Single Monster Race,";
 		mes "in which those that wagered on the 1st place monster are rewarded.";
 		next;
-		mes "[Eckar Erenes]";
+		mes "[Eckar Ellebird]";
 		mes "Then, we have the Dual Monster";
-		mes "Race in which the house odds and";
-		mes "rewards are greater than in Single";
-		mes "Monster Races: you must wager on";
-		mes "2 monsters, and they must place in.";
+		mes "Race in which the house odds and rewards are greater than in Single";
+		mes "Monster Races: you must wager on 2 monsters, and they must place in";
+		mes "1st and 2nd for you to win.";
 		next;
-		mes "[Eckar Erenes]";
+		mes "[Eckar Ellebird]";
 		mes "Although a small entrance";
 		mes "fee is required, we only use";
 		mes "the money to give rewards to";
@@ -1980,22 +2249,22 @@ hugel,58,72,6	script	Eckar Ellebird#single	798,{
 		mes "arena. Therefore, we're not";
 		mes "profiting from this enterprise.";
 		next;
-		mes "[Eckar Erenes]";
+		mes "[Eckar Ellebird]";
 		mes "Also, we prohibit others";
 		mes "from making personal bets";
 		mes "and wagers, using items and";
 		mes "zeny, based on the outcomes";
 		mes "of these races. That kind of";
-		mes "gambling is illegal here.";
+		mes "gambling is illegal here...";
 		next;
-		mes "[Eckar Erenes]";
-		mes "Once you enter the Race Arena,";
-		mes "you will receive a Racing Ticket.";
-		mes "Keep in mind that winning Racing";
-		mes "Tickets can only be exchanged for";
-		mes "Prize Medals during a 5 minute";
-		mes "window after the end of the race.";
+		mes "[Eckar Ellebird]";
+		mes "Once you enter the Race Arena, you will receive a Racing Ticket.";
+		mes "Keep in mind that winning Racing Tickets can only be exchanged for";
+		mes "Prize Medals during a 5 minute window after the end of the race.";
 		next;
+		break;
+	case 2:
+		break;
 	}
 	mes "[Eckar Ellebird]";
 	mes "The entrance fee for all races";
@@ -2015,12 +2284,10 @@ hugel,58,72,6	script	Eckar Ellebird#single	798,{
 	case 1:
 		if (checkweight(908,700) == 0) {
 			mes "[Eckar Ellebird]";
-			mes "Hmm... You're toting";
-			mes "too many things with you";
-			mes "right now. You better put";
-			mes "some of your stuff away in";
-			mes "Kafra Storage before you can";
-			mes "wager on any monster races.";
+			mes "Oh, wow. You're carrying";
+			mes "an awful lot of stuff... Yeah,";
+			mes "you better put some of it away";
+			mes "in Kafra Storage or something.";
 			close;
 		}
 		if (Zeny > 1999) {
@@ -2028,17 +2295,18 @@ hugel,58,72,6	script	Eckar Ellebird#single	798,{
 				mes "[Eckar Ellebird]";
 				mes "Hm? What are you doing";
 				mes "with an expired Racing Ticket?";
-				mes "Well, I better get rid of it for";
-				mes "you before it can get mixed up";
+				mes "Well, I better get rid of it for you before it can get mixed up";
 				mes "with your new Racing Ticket.";
 				delitem 7514,1; //Monster_Ticket
 				next;
 				if ($@mon_time_1_1 == 1) {
 					mes "[Eckar Ellebird]";
-					mes "Thanks, I hope that";
-					mes "you enjoy this race.";
-					mes "Let me guide you now";
-					mes "to the Monster Race Arena.";
+					mes "Alright, I think you";
+					mes "should be all set. I hope";
+					mes "that you enjoy the race~";
+					mes "Let me guide you inside";
+					mes "the Monster Race Arena now.";
+					set zeny,zeny-2000;
 					set monster_race_1,0;
 					close2;
 					warp "p_track01",75,41;
@@ -2057,20 +2325,17 @@ hugel,58,72,6	script	Eckar Ellebird#single	798,{
 					if (.@monster_race == 0) {
 						mes "[Eckar Ellebird]";
 						mes "Right now, a Monster Race";
-						mes "is in progress. It's too late to";
-						mes "place a wager, but if you'd like";
+						mes "is in progress. It's too late to place a wager, but if you'd like";
 						mes "to watch, the fee is 500 zeny";
-						mes "for spectators. Would you like";
-						mes "to enter the Monster Race Arena?";
+						mes "for spectators. Would you like to enter the Monster Race Arena?";
 						next;
-						switch(select("Yes:No, thanks")) {
+						switch(select("Enter:Cancel")) {
 						case 1:
 							if (Zeny > 499) {
 								mes "[Eckar Ellebird]";
-								mes "Thanks, I hope that";
-								mes "you enjoy this race.";
-								mes "Let me guide you now";
-								mes "to the Monster Race Arena.";
+								mes "Thank you~";
+								mes "I hope you enjoy";
+								mes "watching this race!";
 								set zeny,zeny-500;
 								set monster_race_1,0;
 								close2;
@@ -2079,10 +2344,9 @@ hugel,58,72,6	script	Eckar Ellebird#single	798,{
 							}
 							else {
 								mes "[Eckar Ellebird]";
-								mes "I'm sorry, but you";
-								mes "don't have enough";
-								mes "money to pay the";
-								mes "2,000 zeny entrance fee.";
+								mes "I'm sorry, but you don't";
+								mes "have enough money to pay";
+								mes "the 500 zeny spectator fee.";
 								close;
 							}
 						case 2:
@@ -2127,25 +2391,23 @@ hugel,58,72,6	script	Eckar Ellebird#single	798,{
 					mes "preparations for the next";
 					mes "Single Monster Race, so";
 					mes "we ask that you please";
-					mes "wait a little while longer.";
+					mes "wait a little while longer...";
 					close;
 				}
 				else {
 					if ($@monster_race == 0) {
 						mes "[Eckar Ellebird]";
 						mes "Right now, a Monster Race";
-						mes "is in progress. It's too late to";
-						mes "place a wager, but if you'd like";
+						mes "is in progress. It's too late to place a wager, but if you'd like";
 						mes "to watch, the fee is 500 zeny";
-						mes "for spectators. Would you like";
-						mes "to enter the Monster Race Arena?";
+						mes "for spectators. Would you like to enter the Monster Race Arena?";
 						next;
-						switch(select("Yes:No, thanks")) {
+						switch(select("Enter:Cancel")) {
 						case 1:
 							if (Zeny > 499) {
 								mes "[Eckar Ellebird]";
 								mes "Thank you~";
-								mes "I hope you enjoy.";
+								mes "I hope you enjoy";
 								mes "watching this race!";
 								set zeny,zeny-500;
 								set monster_race_1,0;
@@ -2155,10 +2417,9 @@ hugel,58,72,6	script	Eckar Ellebird#single	798,{
 							}
 							else {
 								mes "[Eckar Ellebird]";
-								mes "I'm sorry, but you";
-								mes "don't have enough";
-								mes "money to pay the";
-								mes "2,000 zeny entrance fee.";
+								mes "I'm sorry, but you don't";
+								mes "have enough money to pay";
+								mes "the 500 zeny spectator fee.";
 								close;
 							}
 						case 2:
@@ -2190,14 +2451,14 @@ hugel,58,72,6	script	Eckar Ellebird#single	798,{
 			mes "I'm sorry, but you";
 			mes "don't have enough";
 			mes "money to pay the";
-			mes "2,000 zeny entrance fee.";
+			mes "2,000 zeny entrance fee. ";
 			close;
 		}
 	case 2:
 		mes "[Eckar Ellebird]";
 		mes "Very well. I hope that";
 		mes "you enjoy your time here";
-		mes "in the Monster Race Arena~.";
+		mes "in the Monster Race Arena~";
 		close;
 	}
 	close;
@@ -2224,10 +2485,9 @@ p_track01,39,49,3	script	Game Guide#single	845,{
 		next;
 		mes "[Game Guide]";
 		mes "Then, we have the Dual Monster";
-		mes "Race in which the house odds and";
-		mes "rewards are greater than in Single";
-		mes "Monster Races: you must wager on";
-		mes "2 monsters, and they must place in.";
+		mes "Race in which the house odds and rewards are greater than in Single";
+		mes "Monster Races: you must wager on 2 monsters, and they must place in";
+		mes "1st and 2nd for you to win.";
 		next;
 		mes "[Game Guide]";
 		mes "Although a small entrance";
@@ -2243,15 +2503,12 @@ p_track01,39,49,3	script	Game Guide#single	845,{
 		mes "and wagers, using items and";
 		mes "zeny, based on the outcomes";
 		mes "of these races. That kind of";
-		mes "gambling is illegal here.";
+		mes "gambling is illegal here...";
 		next;
 		mes "[Game Guide]";
-		mes "Once you enter the Race Arena,";
-		mes "you will receive a Racing Ticket.";
-		mes "Keep in mind that winning Racing";
-		mes "Tickets can only be exchanged for";
-		mes "Prize Medals during a 5 minute";
-		mes "window after the end of the race.";
+		mes "Once you enter the Race Arena, you will receive a Racing Ticket.";
+		mes "Keep in mind that winning Racing Tickets can only be exchanged for";
+		mes "Prize Medals during a 5 minute window after the end of the race.";
 		next;
 		break;
 	case 2:
@@ -2262,7 +2519,7 @@ p_track01,39,49,3	script	Game Guide#single	845,{
 		mes "I've marked the Ticket Helper";
 		mes "on your Mini-Map, so you can";
 		mes "find him pretty easily.";
-		viewpoint 1,73,22,1,0xFFFF33;
+		viewpoint 1,73,22,1,0xFF3355;
 		next;
 		break;
 	case 3:
@@ -2279,13 +2536,11 @@ p_track01,39,49,3	script	Game Guide#single	845,{
 		mes "your Racing Ticket with the";
 		mes "Medal Distributor within the";
 		mes "5 minute window after the end";
-		mes "of the race. ^FF0000Your ticket becomes";
-		mes "void after these 5 minutes.^000000";
+		mes "of the race. ^FF0000Your ticket becomes^FFFFFF ^FF0000 void after these 5 minutes.^000000";
 		next;
 		mes "[Game Guide]";
 		mes "When this 5 minute window";
-		mes "elapses, you will be teleported";
-		mes "outside, and we will immediately";
+		mes "elapses, you will be teleported outside, and we will immediately";
 		mes "begin preparing for the next race. Make sure that you remember this";
 		mes "information when you wager.";
 		next;
@@ -2295,7 +2550,7 @@ p_track01,39,49,3	script	Game Guide#single	845,{
 		mes "then please visit the Ticket";
 		mes "Helper. There, I've just marked";
 		mes "his location on your Mini-Map.";
-		viewpoint 1,67,45,2,0xFFCE63;
+		viewpoint 1,67,45,2,0xCE6300;
 		next;
 		break;
 	}
@@ -4648,7 +4903,8 @@ hugel,62,69,1	script	Eckar Erenes#double	798,{
 	mes "the village of Hugel!";
 	mes "How may I help you?";
 	next;
-	if (select("Monster Race Info:Enter Monster Race") == 1) {
+	switch(select("Monster Race Info:Enter Monster Race")) {
+	case 1:
 		mes "[Eckar Erenes]";
 		mes "Monster Races originated from";
 		mes "simple children's games in which";
@@ -4662,10 +4918,9 @@ hugel,62,69,1	script	Eckar Erenes#double	798,{
 		next;
 		mes "[Eckar Erenes]";
 		mes "Then, we have the Dual Monster";
-		mes "Race in which the house odds and";
-		mes "rewards are greater than in Single";
-		mes "Monster Races: you must wager on";
-		mes "2 monsters, and they must place in.";
+		mes "Race in which the house odds and rewards are greater than in Single";
+		mes "Monster Races: you must wager on 2 monsters, and they must place in";
+		mes "1st and 2nd for you to win.";
 		next;
 		mes "[Eckar Erenes]";
 		mes "Although a small entrance";
@@ -4681,21 +4936,21 @@ hugel,62,69,1	script	Eckar Erenes#double	798,{
 		mes "and wagers, using items and";
 		mes "zeny, based on the outcomes";
 		mes "of these races. That kind of";
-		mes "gambling is illegal here.";
+		mes "gambling is illegal here...";
 		next;
 		mes "[Eckar Erenes]";
-		mes "Once you enter the Race Arena,";
-		mes "you will receive a Racing Ticket.";
-		mes "Keep in mind that winning Racing";
-		mes "Tickets can only be exchanged for";
-		mes "Prize Medals during a 5 minute";
-		mes "window after the end of the race.";
+		mes "Once you enter the Race Arena, you will receive a Racing Ticket.";
+		mes "Keep in mind that winning Racing Tickets can only be exchanged for";
+		mes "Prize Medals during a 5 minute window after the end of the race.";
 		next;
+		break;
+	case 2:
+		break;
 	}
 	mes "[Eckar Erenes]";
 	mes "The entrance fee for all races";
 	mes "in the Monster Race Arena is";
-	mes "2,000 zeny. If you'd like to wager on a Single Monster Race";
+	mes "2,000 zeny. If you'd like to wager on a Single Monster Race,";
 	mes "then please ask my brother";
 	mes "Ellebird to help you.";
 	next;
@@ -4715,7 +4970,7 @@ hugel,62,69,1	script	Eckar Erenes#double	798,{
 			mes "right now. You better put";
 			mes "some of your stuff away in";
 			mes "Kafra Storage before you can";
-			mes "wager on any monster races.";
+			mes "wager on any monster races...";
 			close;
 		}
 		if (Zeny > 1999) {
@@ -4723,17 +4978,17 @@ hugel,62,69,1	script	Eckar Erenes#double	798,{
 				mes "[Eckar Erenes]";
 				mes "Hm? What are you doing";
 				mes "with an expired Racing Ticket?";
-				mes "Well, I better get rid of it for";
-				mes "you before it can get mixed up";
+				mes "Well, I better get rid of it for you before it can get mixed up";
 				mes "with your new Racing Ticket.";
 				delitem 7514,1; //Monster_Ticket
 				next;
 				if ($@mon_time_2_1 == 1) {
 					mes "[Eckar Erenes]";
-					mes "Thanks, I hope that";
-					mes "you enjoy this race.";
-					mes "Let me guide you now";
-					mes "to the Monster Race Arena.";
+					mes "Alright, I think you";
+					mes "should be all set. I hope";
+					mes "that you enjoy the race~";
+					mes "Let me guide you inside";
+					mes "the Monster Race Arena now.";
 					set zeny,zeny-2000;
 					set monster_race_2_1,0;
 					set monster_race_2_2,0;
@@ -4747,27 +5002,24 @@ hugel,62,69,1	script	Eckar Erenes#double	798,{
 					mes "preparations for the next";
 					mes "Double Monster Race, so";
 					mes "we ask that you please";
-					mes "wait a little while longer.";
+					mes "wait a little while longer...";
 					close;
 				}
 				else {
 					if (($@mon_time_2_1 == 0) || ($@mon_time_2_2 == 0)) {
 						mes "[Eckar Erenes]";
 						mes "Right now, a Monster Race";
-						mes "is in progress. It's too late to";
-						mes "place a wager, but if you'd like";
+						mes "is in progress. It's too late to place a wager, but if you'd like";
 						mes "to watch, the fee is 500 zeny";
-						mes "for spectators. Would you like";
-						mes "to enter the Monster Race Arena?";
+						mes "for spectators. Would you like to enter the Monster Race Arena?";
 						next;
-						switch(select("Yes:No, thanks")) {
+						switch(select("Enter:Cancel")) {
 						case 1:
 							if (Zeny > 499) {
 								mes "[Eckar Erenes]";
-								mes "Thanks, I hope that";
-								mes "you enjoy this race.";
-								mes "Let me guide you now";
-								mes "to the Monster Race Arena.";
+								mes "Thank you~";
+								mes "I hope you enjoy";
+								mes "watching this race!";
 								set zeny,zeny-500;
 								set monster_race_2_1,0;
 								set monster_race_2_2,0;
@@ -4777,10 +5029,9 @@ hugel,62,69,1	script	Eckar Erenes#double	798,{
 							}
 							else {
 								mes "[Eckar Erenes]";
-								mes "I'm sorry, but you";
-								mes "don't have enough";
-								mes "money to pay the";
-								mes "2,000 zeny entrance fee.";
+								mes "I'm sorry, but you don't";
+								mes "have enough money to pay";
+								mes "the 500 zeny spectator fee.";
 								close;
 							}
 						case 2:
@@ -4826,25 +5077,23 @@ hugel,62,69,1	script	Eckar Erenes#double	798,{
 					mes "preparations for the next";
 					mes "Double Monster Race, so";
 					mes "we ask that you please";
-					mes "wait a little while longer.";
+					mes "wait a little while longer...";
 					close;
 				}
 				else {
 					if (($@mon_time_2_1 == 0) || ($@mon_time_2_2 == 0)) {
 						mes "[Eckar Erenes]";
 						mes "Right now, a Monster Race";
-						mes "is in progress. It's too late to";
-						mes "place a wager, but if you'd like";
+						mes "is in progress. It's too late to place a wager, but if you'd like";
 						mes "to watch, the fee is 500 zeny";
-						mes "for spectators. Would you like";
-						mes "to enter the Monster Race Arena?";
+						mes "for spectators. Would you like to enter the Monster Race Arena?";
 						next;
 						switch(select("Enter:Cancel")) {
 						case 1:
 							if (Zeny > 499) {
 								mes "[Eckar Erenes]";
 								mes "Thank you~";
-								mes "I hope you enjoy.";
+								mes "I hope you enjoy";
 								mes "watching this race!";
 								set zeny,zeny-500;
 								set monster_race_2_1,0;
@@ -4855,10 +5104,9 @@ hugel,62,69,1	script	Eckar Erenes#double	798,{
 							}
 							else {
 								mes "[Eckar Erenes]";
-								mes "I'm sorry, but you";
-								mes "don't have enough";
-								mes "money to pay the";
-								mes "2,000 zeny entrance fee.";
+								mes "I'm sorry, but you don't";
+								mes "have enough money to pay";
+								mes "the 500 zeny spectator fee.";
 								close;
 							}
 						case 2:
@@ -4890,14 +5138,14 @@ hugel,62,69,1	script	Eckar Erenes#double	798,{
 			mes "I'm sorry, but you";
 			mes "don't have enough";
 			mes "money to pay the";
-			mes "2,000 zeny entrance fee.";
+			mes "2,000 zeny entrance fee. ";
 			close;
 		}
 	case 2:
 		mes "[Eckar Erenes]";
 		mes "Very well. I hope that";
 		mes "you enjoy your time here";
-		mes "in the Monster Race Arena~.";
+		mes "in the Monster Race Arena~";
 		close;
 	}
 }
@@ -4910,14 +5158,14 @@ p_track02,73,22,1	script	Ticket Helper#2	899,{
 		mes "If you'd like to participate";
 		mes "in the ^3131FFDouble Monster Race^000000,";
 		mes "then please select 1 out of";
-		mes "the 6 monsters from the list";
+		mes "the 6 monsters from the list.";
 		next;
 		mes "[Ticket Helper]";
 		mes "Wait, wait...";
 		mes "I can't give you";
 		mes "anything right now.";
 		mes "You're carrying way";
-		mes "too many things.";
+		mes "too many things...";
 		close;
 	}
 	if ((monster_race_2_1 == 0) && (monster_race_2_2 == 0)) {
@@ -4965,9 +5213,13 @@ p_track02,73,22,1	script	Ticket Helper#2	899,{
 				switch(select("Yes:No")) {
 				case 1:
 					mes "[Ticket Helper]";
-					mes "Now, please make.....l...your second choice.....l...for the monster that.....l...you think will place...!.l...1st or 2nd in this race.";
+					mes "Now, please make";
+					mes "your second choice";
+					mes "for the monster that";
+					mes "you think will place";
+					mes "1st or 2nd in this race.";
 					next;
-					switch(select("Monster 2:Monster 3:Monster 4:Monster 5:Monster 6:")) {
+					switch(select("Monster 2:Monster 3:Monster 4:Monster 5:Monster 6")) {
 					case 1:
 						mes "[Ticket Helper]";
 						mes "You've chosen";
@@ -5014,7 +5266,7 @@ p_track02,73,22,1	script	Ticket Helper#2	899,{
 						mes "^0000FFMonster 3^000000, a darling";
 						mes "Savage Bebe monster.";
 						mes "Are you sure you want";
-						mes "to choose this monster?.";
+						mes "to choose this monster?";
 						next;
 						switch(select("Yes:No")) {
 						case 1:
@@ -5060,11 +5312,10 @@ p_track02,73,22,1	script	Ticket Helper#2	899,{
 						case 1:
 							if ($@mon_time_2_2 == 0) {
 								mes "[Ticket Helper]";
-								mes "You've wagered on";
-								mes "^0000FFMonster 1^000000 and ^0000FFMonster 4^000000";
-								mes "to win this race. Good luck!";
-								mes "I really hope that the odds";
-								mes "work out in your favor~";
+								mes "You've chosen";
+								mes "^0000FFMonster 1^000000 and";
+								mes "^0000FFMonster 4^000000.";
+								mes "I wish you good luck.";
 								emotion e_kis;
 								set monster_race_2_1,1;
 								set monster_race_2_2,4;
@@ -5190,8 +5441,11 @@ p_track02,73,22,1	script	Ticket Helper#2	899,{
 				switch(select("Yes:No")) {
 				case 1:
 					mes "[Ticket Helper]";
-					mes "Please choose your";
-					mes "second monster";
+					mes "Now, please make";
+					mes "your second choice";
+					mes "for the monster that";
+					mes "you think will place";
+					mes "1st or 2nd in this race.";
 					next;
 					switch(select("Monster 1:Monster 3:Monster 4:Monster 5:Monster 6")) {
 					case 1:
@@ -5410,13 +5664,16 @@ p_track02,73,22,1	script	Ticket Helper#2	899,{
 				mes "^0000FFMonster 3^000000, a darling";
 				mes "Savage Bebe monster.";
 				mes "Are you sure you want";
-				mes "to choose this monster?.";
+				mes "to choose this monster?";
 				next;
 				switch(select("Yes:No")) {
 				case 1:
 					mes "[Ticket Helper]";
-					mes "Please choose your";
-					mes "second monster";
+					mes "Now, please make";
+					mes "your second choice";
+					mes "for the monster that";
+					mes "you think will place";
+					mes "1st or 2nd in this race.";
 					next;
 					switch(select("Monster 1:Monster 2:Monster 4:Monster 5:Monster 6")) {
 					case 1:
@@ -5640,8 +5897,11 @@ p_track02,73,22,1	script	Ticket Helper#2	899,{
 				switch(select("Yes:No")) {
 				case 1:
 					mes "[Ticket Helper]";
-					mes "Please choose your";
-					mes "second monster";
+					mes "Now, please make";
+					mes "your second choice";
+					mes "for the monster that";
+					mes "you think will place";
+					mes "1st or 2nd in this race.";
 					next;
 					switch(select("Monster 1:Monster 2:Monster 3:Monster 5:Monster 6")) {
 					case 1:
@@ -5866,8 +6126,11 @@ p_track02,73,22,1	script	Ticket Helper#2	899,{
 				switch(select("Yes:No")) {
 				case 1:
 					mes "[Ticket Helper]";
-					mes "Please choose your";
-					mes "second monster";
+					mes "Now, please make";
+					mes "your second choice";
+					mes "for the monster that";
+					mes "you think will place";
+					mes "1st or 2nd in this race.";
 					next;
 					switch(select("Monster 1:Monster 2:Monster 3:Monster 4:Monster 6")) {
 					case 1:
@@ -6033,8 +6296,8 @@ p_track02,73,22,1	script	Ticket Helper#2	899,{
 					case 5:
 						mes "[Ticket Helper]";
 						mes "You've chosen";
-						mes "^0000FFMonster 6^000000, a naughty";
-						mes "Baphomet Jr. monster.";
+						mes "^0000FFMonster 6^000000, a small, yet";
+						mes "demonic, Deviruchi.";
 						mes "Are you sure you want";
 						mes "to choose this monster?";
 						next;
@@ -6091,8 +6354,7 @@ p_track02,73,22,1	script	Ticket Helper#2	899,{
 				switch(select("Yes:No")) {
 				case 1:
 					mes "[Ticket Helper]";
-					mes "Please choose your";
-					mes "second monster";
+					mes "Then, please pick your 2nd choice.";
 					next;
 					switch(select("Monster 1:Monster 2:Monster 3:Monster 4:Monster 5")) {
 					case 1:
@@ -6181,7 +6443,7 @@ p_track02,73,22,1	script	Ticket Helper#2	899,{
 						mes "^0000FFMonster 3^000000, a darling";
 						mes "Savage Bebe monster.";
 						mes "Are you sure you want";
-						mes "to choose this monster?.";
+						mes "to choose this monster?";
 						next;
 						switch(select("Yes:No")) {
 						case 1:
@@ -6318,10 +6580,9 @@ p_track02,73,22,1	script	Ticket Helper#2	899,{
 			mes "two types of monster races. First, we have the Single Monster Race,";
 			mes "in which those that wagered on the 1st place monster are rewarded.";
 			next;
-			mes "[Ticket Helper]";
+			mes "[Eclar Ellbird]";
 			mes "Then, we have the Dual Monster";
-			mes "Race in which those that wagered";
-			mes "on the 1st and 2nd place monsters";
+			mes "Race in which those that wagered on the 1st and 2nd place monsters";
 			mes "are equally rewarded. The house";
 			mes "odds and wager rewards are greater in Dual Races than Single Races.";
 			next;
@@ -6339,15 +6600,12 @@ p_track02,73,22,1	script	Ticket Helper#2	899,{
 			mes "and wagers, using items and";
 			mes "zeny, based on the outcomes";
 			mes "of these races. That kind of";
-			mes "gambling is illegal here.";
+			mes "gambling is illegal here...";
 			next;
 			mes "[Ticket Helper]";
-			mes "Once you enter the Race Arena,";
-			mes "you will receive a Racing Ticket.";
-			mes "Keep in mind that winning Racing";
-			mes "Tickets can only be exchanged for";
-			mes "Prize Medals during a 5 minute";
-			mes "window after the end of the race.";
+			mes "Once you enter the Race Arena, you will receive a Racing Ticket.";
+			mes "Keep in mind that winning Racing Tickets can only be exchanged for";
+			mes "Prize Medals during a 5 minute window after the end of the race.";
 			next;
 			mes "[Ticket Helper]";
 			mes "You're already here";
@@ -6380,17 +6638,18 @@ p_track02,73,22,1	script	Ticket Helper#2	899,{
 			mes "to track the monsters' race";
 			mes "positions. Thank you, and";
 			mes "have a good time!";
-			viewpoint 1,43,35,0,0xFFFF00;
+			viewpoint 1,43,35,0,0xFF0000;
 			close;
 		}
 		else {
 			mes "[Ticket Helper]";
-			mes "There will be broadcasting service";
-			mes "at the beginning of the competition.";
-			mes "If you wish to watch the match,";
-			mes "please proceed to the location indicated in the map.";
-			mes "Good luck.";
-			viewpoint 1,43,35,0,0xFFFF00;
+			mes "The start of the race will be";
+			mes "announced through a broadcast.";
+			mes "You can refer to your Mini-Map";
+			mes "to track the monsters' race";
+			mes "positions. Thank you, and";
+			mes "have a good time!";
+			viewpoint 1,43,35,0,0xFF0000;
 			close;
 		}
 	}
@@ -6421,10 +6680,9 @@ p_track02,39,49,3	script	Game Guide#double	845,{
 		next;
 		mes "[Game Guide]";
 		mes "Then, we have the Dual Monster";
-		mes "Race in which the house odds and";
-		mes "rewards are greater than in Single";
-		mes "Monster Races: you must wager on";
-		mes "2 monsters, and they must place in.";
+		mes "Race in which the house odds and rewards are greater than in Single";
+		mes "Monster Races: you must wager on 2 monsters, and they must place in";
+		mes "1st and 2nd for you to win.";
 		next;
 		mes "[Game Guide]";
 		mes "Although a small entrance";
@@ -6440,15 +6698,12 @@ p_track02,39,49,3	script	Game Guide#double	845,{
 		mes "and wagers, using items and";
 		mes "zeny, based on the outcomes";
 		mes "of these races. That kind of";
-		mes "gambling is illegal here.";
+		mes "gambling is illegal here...";
 		next;
 		mes "[Game Guide]";
-		mes "Once you enter the Race Arena,";
-		mes "you will receive a Racing Ticket.";
-		mes "Keep in mind that winning Racing";
-		mes "Tickets can only be exchanged for";
-		mes "Prize Medals during a 5 minute";
-		mes "window after the end of the race.";
+		mes "Once you enter the Race Arena, you will receive a Racing Ticket.";
+		mes "Keep in mind that winning Racing Tickets can only be exchanged for";
+		mes "Prize Medals during a 5 minute window after the end of the race.";
 		next;
 		break;
 	case 2:
@@ -6459,7 +6714,7 @@ p_track02,39,49,3	script	Game Guide#double	845,{
 		mes "I've marked the Ticket Helper";
 		mes "on your Mini-Map, so you can";
 		mes "find him pretty easily.";
-		viewpoint 1,73,22,1,0xFFFF33;
+		viewpoint 1,73,22,1,0xFF3355;
 		next;
 		break;
 	case 3:
@@ -6476,13 +6731,11 @@ p_track02,39,49,3	script	Game Guide#double	845,{
 		mes "your Racing Ticket with the";
 		mes "Medal Distributor within the";
 		mes "5 minute window after the end";
-		mes "of the race. ^FF0000Your ticket becomes";
-		mes "void after these 5 minutes.^000000";
+		mes "of the race. ^FF0000Your ticket becomes^FFFFFF ^FF0000 void after these 5 minutes.^000000";
 		next;
 		mes "[Game Guide]";
 		mes "When this 5 minute window";
-		mes "elapses, you will be teleported";
-		mes "outside, and we will immediately";
+		mes "elapses, you will be teleported outside, and we will immediately";
 		mes "begin preparing for the next race. Make sure that you remember this";
 		mes "information when you wager.";
 		next;
@@ -6492,7 +6745,7 @@ p_track02,39,49,3	script	Game Guide#double	845,{
 		mes "then please visit the Ticket";
 		mes "Helper. There, I've just marked";
 		mes "his location on your Mini-Map.";
-		viewpoint 1,67,45,2,0xFFCE63;
+		viewpoint 1,67,45,2,0xCE6300;
 		next;
 		break;
 	}
@@ -6507,51 +6760,48 @@ p_track02,39,49,3	script	Game Guide#double	845,{
 p_track02,67,45,5	script	Medal Distributor#medal	845,{
 	if (checkweight(909,20) == 0) {
 		mes "[Medal Distributor]";
-		mes "Before exchanging";
-		mes "please take off some of the things that you're carrying.";
+		mes "I'm sorry, but I can't";
+		mes "reward you with any medals";
+		mes "until you make more space";
+		mes "available in your Inventory.";
 		close;
 	}
 	if (countitem(7514) > 0) {
 		mes "[Medal Distributor]";
-		mes "I am the Redemption Service Staff";
-		mes "who will give the winner medals and ticket";
-		mes "to the participants who";
-		mes "make the correct guess";
-		mes "for the Monster Race.";
+		mes "Hello there~";
+		mes "If you've wagered on the";
+		mes "winning monster in a recent";
+		mes "race, then you can exchange";
+		mes "your game ticket here for";
+		mes "some Prize Medals.";
 		next;
 		mes "[Medal Distributor]";
-		mes "The redemption of the winner ticket of every round";
-		mes "can only be made at ^0000FFthe particular round^000000.";
-		mes "Please remember that.";
-		mes "You can take the medal and";
-		mes "find Wayne in Hugel to retrieve your prizes.";
-		next;
-		mes "[Medal Distributor]";
-		mes "Do you want to show me your ticket?";
+		mes "Please remember that you can";
+		mes "only exchange winning Game";
+		mes "Tickets for Prize Medals right";
+		mes "after the race finishes. Prize";
+		mes "Medals may be given to Wayne";
+		mes "in Hugel in exchange for items.";
 		next;
 		if (($@mon_race_2_1 == 1) && ($@mon_race_2_2 == 2)) || (($@mon_race_2_1 == 2) && ($@mon_race_2_2 == 1)) {
 			if ((monster_race_2_1 == 1) && (monster_race_2_2 == 2)) || ((monster_race_2_1 == 2) && (monster_race_2_2 == 1)) {
 				mes "[Medal Distributor]";
-				mes "Congratulations! You have won!";
-				mes "It's really hard to win the Double Monster Race.";
-				mes "You're really amazing!";
-				mes "Do you wish to redeem your ticket now?";
+				mes "Congratulations! It's really";
+				mes "difficult to guess the winners";
+				mes "of a Dual Monster Race, so you";
+				mes "must be really lucky! Would you";
+				mes "like to exchange your winning";
+				mes "Racing Ticket for Prize Medals?";
 				next;
-				switch(select("Yes:Maybe later")) {
+				switch(select("Yes, please.:No, thanks.")) {
 				case 1:
 					mes "[Medal Distributor]";
-					mes "I will confirm your ticket now.";
-					mes "Hmm, the winning monster for this round...";
-					mes "Yup! That's right!";
-					mes "Congratulations again!";
-					next;
-					mes "[Medal Distributor]";
-					mes "I will give you the medal as";
-					mes "the proof of the winner for the Double race.";
-					mes "As for the medal, bring it to Hugel ";
-					mes "and look for Wayne";
-					mes "to change it into prizes.";
-					mes "Please use it wisely.";
+					mes "Okay, everything looks good,";
+					mes "so here's your Prize Medals~";
+					mes "If you want to trade these";
+					mes "medals for items, please";
+					mes "visit Wayne in Hugel. We hope";
+					mes "you enjoyed the Monster Race~";
 					delitem 7514,1; //Monster_Ticket
 					set monster_race_2_1,7;
 					set monster_race_2_2,7;
@@ -6559,56 +6809,58 @@ p_track02,67,45,5	script	Medal Distributor#medal	845,{
 					close;
 				case 2:
 					mes "[Medal Distributor]";
-					mes "The redemption of the winner ticket of every round";
-					mes "can only be made at ^0000FFthe particular round^000000.";
-					mes "Please remember that.";
+					mes "Um, are you sure? You ";
+					mes "can only exchange a winning";
+					mes "Racing Ticket for Prize Medals";
+					mes "for a short time after the race. If you made a mistake, you";
+					mes "should ask me again quickly.";
 					close;
 				}
 			}
 			else if ((monster_race_2_1 == 0) && (monster_race_2_2 == 0)) {
 				mes "[Medal Distributor]";
-				mes "Ah, what a pity.";
-				mes "I hope that you will win it next time.";
+				mes "Well, better luck next time...";
+				mes "Although you can't always";
+				mes "be lucky, it's always fun to";
+				mes "wager on the monster races!";
 				close;
 			}
 			else if ((monster_race_2_1 == 7) && (monster_race_2_2 == 7)) {
 				mes "[Medal Distributor]";
-				mes "Thank you for using";
-				mes "Monster Race Arena";
-				mes "Good luck for your";
-				mes "next race.";
+				mes "Thanks for visiting the";
+				mes "Monster Race Arena, and";
+				mes "I hope you enjoy your time";
+				mes "here. I'll see you next time~";
 				close;
 			}
 			else {
 				mes "[Medal Distributor]";
-				mes "Ah, what a pity.";
-				mes "I hope that you will win it next time.";
+				mes "You may not have wagered";
+				mes "on the winning monster in";
+				mes "the last race, but I hope that";
+				mes "you get lucky next time~";
 				close;
 			}
 		}
 		else if (($@mon_race_2_1 == 1) && ($@mon_race_2_2 == 3)) || (($@mon_race_2_1 == 3) && ($@mon_race_2_2 == 1)) {
 			if ((monster_race_2_1 == 1) && (monster_race_2_2 == 3)) || ((monster_race_2_1 == 3) && (monster_race_2_2 == 1)) {
 				mes "[Medal Distributor]";
-				mes "Congratulations! You have won!";
-				mes "It's really hard to win the Double Monster Race.";
-				mes "You're really amazing!";
-				mes "Do you wish to redeem your ticket now?";
+				mes "Congratulations! It's really";
+				mes "difficult to guess the winners";
+				mes "of a Dual Monster Race, so you";
+				mes "must be really lucky! Would you";
+				mes "like to exchange your winning";
+				mes "Racing Ticket for Prize Medals?";
 				next;
-				switch(select("Yes:Maybe later")) {
+				switch(select("Yes, please.:No, thanks.")) {
 				case 1:
 					mes "[Medal Distributor]";
-					mes "I will confirm your ticket now.";
-					mes "Hmm, the winning monster for this round...";
-					mes "Yup! That's right!";
-					mes "Congratulations again!";
-					next;
-					mes "[Medal Distributor]";
-					mes "I will give you the medal as";
-					mes "the proof of the winner for the Double race.";
-					mes "As for the medal, bring it to Hugel ";
-					mes "and look for Wayne";
-					mes "to change it into prizes.";
-					mes "Please use it wisely.";
+					mes "Okay, everything looks good,";
+					mes "so here's your Prize Medals~";
+					mes "If you want to trade these";
+					mes "medals for items, please";
+					mes "visit Wayne in Hugel. We hope";
+					mes "you enjoyed the Monster Race~";
 					delitem 7514,1; //Monster_Ticket
 					set monster_race_2_1,7;
 					set monster_race_2_2,7;
@@ -6616,56 +6868,58 @@ p_track02,67,45,5	script	Medal Distributor#medal	845,{
 					close;
 				case 2:
 					mes "[Medal Distributor]";
-					mes "The redemption of the winner ticket of every round";
-					mes "can only be made at ^0000FFthe particular round^000000.";
-					mes "Please remember that.";
+					mes "Um, are you sure? You ";
+					mes "can only exchange a winning";
+					mes "Racing Ticket for Prize Medals";
+					mes "for a short time after the race. If you made a mistake, you";
+					mes "should ask me again quickly.";
 					close;
 				}
 			}
 			else if ((monster_race_2_1 == 0) && (monster_race_2_2 == 0)) {
 				mes "[Medal Distributor]";
-				mes "Ah, what a pity.";
-				mes "I hope that you will win it next time.";
+				mes "Well, better luck next time...";
+				mes "Although you can't always";
+				mes "be lucky, it's always fun to";
+				mes "wager on the monster races!";
 				close;
 			}
 			else if ((monster_race_2_1 == 7) && (monster_race_2_2 == 7)) {
 				mes "[Medal Distributor]";
-				mes "Thank you for using";
-				mes "Monster Race Arena";
-				mes "Good luck for your";
-				mes "next race.";
+				mes "Thanks for visiting the";
+				mes "Monster Race Arena, and";
+				mes "I hope you enjoy your time";
+				mes "here. I'll see you next time~";
 				close;
 			}
 			else {
 				mes "[Medal Distributor]";
-				mes "Ah, what a pity.";
-				mes "I hope that you will win it next time.";
+				mes "You may not have wagered";
+				mes "on the winning monster in";
+				mes "the last race, but I hope that";
+				mes "you get lucky next time~";
 				close;
 			}
 		}
 		else if (($@mon_race_2_1 == 1) && ($@mon_race_2_2 == 4)) || (($@mon_race_2_1 == 4) && ($@mon_race_2_2 == 1)) {
 			if ((monster_race_2_1 == 1) && (monster_race_2_2 == 4)) || ((monster_race_2_1 == 4) && (monster_race_2_2 == 1)) {
 				mes "[Medal Distributor]";
-				mes "Congratulations! You have won!";
-				mes "It's really hard to win the Double Monster Race.";
-				mes "You're really amazing!";
-				mes "Do you wish to redeem your ticket now?";
+				mes "Congratulations! It's really";
+				mes "difficult to guess the winners";
+				mes "of a Dual Monster Race, so you";
+				mes "must be really lucky! Would you";
+				mes "like to exchange your winning";
+				mes "Racing Ticket for Prize Medals?";
 				next;
-				switch(select("Yes:Maybe later")) {
+				switch(select("Yes, please.:No, thanks.")) {
 				case 1:
 					mes "[Medal Distributor]";
-					mes "I will confirm your ticket now.";
-					mes "Hmm, the winning monster for this round...";
-					mes "Yup! That's right!";
-					mes "Congratulations again!";
-					next;
-					mes "[Medal Distributor]";
-					mes "I will give you the medal as";
-					mes "the proof of the winner for the Double race.";
-					mes "As for the medal, bring it to Hugel ";
-					mes "and look for Wayne";
-					mes "to change it into prizes.";
-					mes "Please use it wisely.";
+					mes "Okay, everything looks good,";
+					mes "so here's your Prize Medals~";
+					mes "If you want to trade these";
+					mes "medals for items, please";
+					mes "visit Wayne in Hugel. We hope";
+					mes "you enjoyed the Monster Race~";
 					delitem 7514,1; //Monster_Ticket
 					set monster_race_2_1,7;
 					set monster_race_2_2,7;
@@ -6673,56 +6927,58 @@ p_track02,67,45,5	script	Medal Distributor#medal	845,{
 					close;
 				case 2:
 					mes "[Medal Distributor]";
-					mes "The redemption of the winner ticket of every round";
-					mes "can only be made at ^0000FFthe particular round^000000.";
-					mes "Please remember that.";
+					mes "Um, are you sure? You ";
+					mes "can only exchange a winning";
+					mes "Racing Ticket for Prize Medals";
+					mes "for a short time after the race. If you made a mistake, you";
+					mes "should ask me again quickly.";
 					close;
 				}
 			}
 			else if ((monster_race_2_1 == 0) && (monster_race_2_2 == 0)) {
 				mes "[Medal Distributor]";
-				mes "Ah, what a pity.";
-				mes "I hope that you will win it next time.";
+				mes "Well, better luck next time...";
+				mes "Although you can't always";
+				mes "be lucky, it's always fun to";
+				mes "wager on the monster races!";
 				close;
 			}
 			else if ((monster_race_2_1 == 7) && (monster_race_2_2 == 7)) {
 				mes "[Medal Distributor]";
-				mes "Thank you for using";
-				mes "Monster Race Arena";
-				mes "Good luck for your";
-				mes "next race.";
+				mes "Thanks for visiting the";
+				mes "Monster Race Arena, and";
+				mes "I hope you enjoy your time";
+				mes "here. I'll see you next time~";
 				close;
 			}
 			else {
 				mes "[Medal Distributor]";
-				mes "Ah, what a pity.";
-				mes "I hope that you will win it next time.";
+				mes "You may not have wagered";
+				mes "on the winning monster in";
+				mes "the last race, but I hope that";
+				mes "you get lucky next time~";
 				close;
 			}
 		}
 		else if (($@mon_race_2_1 == 1) && ($@mon_race_2_2 == 5)) || (($@mon_race_2_1 == 5) && ($@mon_race_2_2 == 1)) {
 			if ((monster_race_2_1 == 1) && (monster_race_2_2 == 5)) || ((monster_race_2_1 == 5) && (monster_race_2_2 == 1)) {
 				mes "[Medal Distributor]";
-				mes "Congratulations! You have won!";
-				mes "It's really hard to win the Double Monster Race.";
-				mes "You're really amazing!";
-				mes "Do you wish to redeem your ticket now?";
+				mes "Congratulations! It's really";
+				mes "difficult to guess the winners";
+				mes "of a Dual Monster Race, so you";
+				mes "must be really lucky! Would you";
+				mes "like to exchange your winning";
+				mes "Racing Ticket for Prize Medals?";
 				next;
-				switch(select("Yes:Maybe later")) {
+				switch(select("Yes, please.:No, thanks.")) {
 				case 1:
 					mes "[Medal Distributor]";
-					mes "I will confirm your ticket now.";
-					mes "Hmm, the winning monster for this round...";
-					mes "Yup! That's right!";
-					mes "Congratulations again!";
-					next;
-					mes "[Medal Distributor]";
-					mes "I will give you the medal as";
-					mes "the proof of the winner for the Double race.";
-					mes "As for the medal, bring it to Hugel ";
-					mes "and look for Wayne";
-					mes "to change it into prizes.";
-					mes "Please use it wisely.";
+					mes "Okay, everything looks good,";
+					mes "so here's your Prize Medals~";
+					mes "If you want to trade these";
+					mes "medals for items, please";
+					mes "visit Wayne in Hugel. We hope";
+					mes "you enjoyed the Monster Race~";
 					delitem 7514,1; //Monster_Ticket
 					set monster_race_2_1,7;
 					set monster_race_2_2,7;
@@ -6730,56 +6986,58 @@ p_track02,67,45,5	script	Medal Distributor#medal	845,{
 					close;
 				case 2:
 					mes "[Medal Distributor]";
-					mes "The redemption of the winner ticket of every round";
-					mes "can only be made at ^0000FFthe particular round^000000.";
-					mes "Please remember that.";
+					mes "Um, are you sure? You ";
+					mes "can only exchange a winning";
+					mes "Racing Ticket for Prize Medals";
+					mes "for a short time after the race. If you made a mistake, you";
+					mes "should ask me again quickly.";
 					close;
 				}
 			}
 			else if ((monster_race_2_1 == 0) && (monster_race_2_2 == 0)) {
 				mes "[Medal Distributor]";
-				mes "Ah, what a pity.";
-				mes "I hope that you will win it next time.";
+				mes "Well, better luck next time...";
+				mes "Although you can't always";
+				mes "be lucky, it's always fun to";
+				mes "wager on the monster races!";
 				close;
 			}
 			else if ((monster_race_2_1 == 7) && (monster_race_2_2 == 7)) {
 				mes "[Medal Distributor]";
-				mes "Thank you for using";
-				mes "Monster Race Arena";
-				mes "Good luck for your";
-				mes "next race.";
+				mes "Thanks for visiting the";
+				mes "Monster Race Arena, and";
+				mes "I hope you enjoy your time";
+				mes "here. I'll see you next time~";
 				close;
 			}
 			else {
 				mes "[Medal Distributor]";
-				mes "Ah, what a pity.";
-				mes "I hope that you will win it next time.";
+				mes "You may not have wagered";
+				mes "on the winning monster in";
+				mes "the last race, but I hope that";
+				mes "you get lucky next time~";
 				close;
 			}
 		}
 		else if (($@mon_race_2_1 == 1) && ($@mon_race_2_2 == 6)) || (($@mon_race_2_1 == 6) && ($@mon_race_2_2 == 1)) {
 			if ((monster_race_2_1 == 1) && (monster_race_2_2 == 6)) || ((monster_race_2_1 == 6) && (monster_race_2_2 == 1)) {
 				mes "[Medal Distributor]";
-				mes "Congratulations! You have won!";
-				mes "It's really hard to win the Double Monster Race.";
-				mes "You're really amazing!";
-				mes "Do you wish to redeem your ticket now?";
+				mes "Congratulations! It's really";
+				mes "difficult to guess the winners";
+				mes "of a Dual Monster Race, so you";
+				mes "must be really lucky! Would you";
+				mes "like to exchange your winning";
+				mes "Racing Ticket for Prize Medals?";
 				next;
-				switch(select("Yes:Maybe later")) {
+				switch(select("Yes, please.:No, thanks.")) {
 				case 1:
 					mes "[Medal Distributor]";
-					mes "I will confirm your ticket now.";
-					mes "Hmm, the winning monster for this round...";
-					mes "Yup! That's right!";
-					mes "Congratulations again!";
-					next;
-					mes "[Medal Distributor]";
-					mes "I will give you the medal as";
-					mes "the proof of the winner for the Double race.";
-					mes "As for the medal, bring it to Hugel ";
-					mes "and look for Wayne";
-					mes "to change it into prizes.";
-					mes "Please use it wisely.";
+					mes "Okay, everything looks good,";
+					mes "so here's your Prize Medals~";
+					mes "If you want to trade these";
+					mes "medals for items, please";
+					mes "visit Wayne in Hugel. We hope";
+					mes "you enjoyed the Monster Race~";
 					delitem 7514,1; //Monster_Ticket
 					set monster_race_2_1,7;
 					set monster_race_2_2,7;
@@ -6787,56 +7045,58 @@ p_track02,67,45,5	script	Medal Distributor#medal	845,{
 					close;
 				case 2:
 					mes "[Medal Distributor]";
-					mes "The redemption of the winner ticket of every round";
-					mes "can only be made at ^0000FFthe particular round^000000.";
-					mes "Please remember that.";
+					mes "Um, are you sure? You ";
+					mes "can only exchange a winning";
+					mes "Racing Ticket for Prize Medals";
+					mes "for a short time after the race. If you made a mistake, you";
+					mes "should ask me again quickly.";
 					close;
 				}
 			}
 			else if ((monster_race_2_1 == 0) && (monster_race_2_2 == 0)) {
 				mes "[Medal Distributor]";
-				mes "Ah, what a pity.";
-				mes "I hope that you will win it next time.";
+				mes "Well, better luck next time...";
+				mes "Although you can't always";
+				mes "be lucky, it's always fun to";
+				mes "wager on the monster races!";
 				close;
 			}
 			else if ((monster_race_2_1 == 7) && (monster_race_2_2 == 7)) {
 				mes "[Medal Distributor]";
-				mes "Thank you for using";
-				mes "Monster Race Arena";
-				mes "Good luck for your";
-				mes "next race.";
+				mes "Thanks for visiting the";
+				mes "Monster Race Arena, and";
+				mes "I hope you enjoy your time";
+				mes "here. I'll see you next time~";
 				close;
 			}
 			else {
 				mes "[Medal Distributor]";
-				mes "Ah, what a pity.";
-				mes "I hope that you will win it next time.";
+				mes "You may not have wagered";
+				mes "on the winning monster in";
+				mes "the last race, but I hope that";
+				mes "you get lucky next time~";
 				close;
 			}
 		}
 		else if (($@mon_race_2_1 == 2) && ($@mon_race_2_2 == 3)) || (($@mon_race_2_1 == 3) && ($@mon_race_2_2 == 2)) {
 			if ((monster_race_2_1 == 2) && (monster_race_2_2 == 3)) || ((monster_race_2_1 == 3) && (monster_race_2_2 == 2)) {
 				mes "[Medal Distributor]";
-				mes "Congratulations! You have won!";
-				mes "It's really hard to win the Double Monster Race.";
-				mes "You're really amazing!";
-				mes "Do you wish to redeem your ticket now?";
+				mes "Congratulations! It's really";
+				mes "difficult to guess the winners";
+				mes "of a Dual Monster Race, so you";
+				mes "must be really lucky! Would you";
+				mes "like to exchange your winning";
+				mes "Racing Ticket for Prize Medals?";
 				next;
-				switch(select("Yes:Maybe later")) {
+				switch(select("Yes, please.:No, thanks.")) {
 				case 1:
 					mes "[Medal Distributor]";
-					mes "I will confirm your ticket now.";
-					mes "Hmm, the winning monster for this round...";
-					mes "Yup! That's right!";
-					mes "Congratulations again!";
-					next;
-					mes "[Medal Distributor]";
-					mes "I will give you the medal as";
-					mes "the proof of the winner for the Double race.";
-					mes "As for the medal, bring it to Hugel ";
-					mes "and look for Wayne";
-					mes "to change it into prizes.";
-					mes "Please use it wisely.";
+					mes "Okay, everything looks good,";
+					mes "so here's your Prize Medals~";
+					mes "If you want to trade these";
+					mes "medals for items, please";
+					mes "visit Wayne in Hugel. We hope";
+					mes "you enjoyed the Monster Race~";
 					delitem 7514,1; //Monster_Ticket
 					set monster_race_2_1,7;
 					set monster_race_2_2,7;
@@ -6844,56 +7104,58 @@ p_track02,67,45,5	script	Medal Distributor#medal	845,{
 					close;
 				case 2:
 					mes "[Medal Distributor]";
-					mes "The redemption of the winner ticket of every round";
-					mes "can only be made at ^0000FFthe particular round^000000.";
-					mes "Please remember that.";
+					mes "Um, are you sure? You ";
+					mes "can only exchange a winning";
+					mes "Racing Ticket for Prize Medals";
+					mes "for a short time after the race. If you made a mistake, you";
+					mes "should ask me again quickly.";
 					close;
 				}
 			}
 			else if ((monster_race_2_1 == 0) && (monster_race_2_2 == 0)) {
 				mes "[Medal Distributor]";
-				mes "Ah, what a pity.";
-				mes "I hope that you will win it next time.";
+				mes "Well, better luck next time...";
+				mes "Although you can't always";
+				mes "be lucky, it's always fun to";
+				mes "wager on the monster races!";
 				close;
 			}
 			else if ((monster_race_2_1 == 7) && (monster_race_2_2 == 7)) {
 				mes "[Medal Distributor]";
-				mes "Thank you for using";
-				mes "Monster Race Arena";
-				mes "Good luck for your";
-				mes "next race.";
+				mes "Thanks for visiting the";
+				mes "Monster Race Arena, and";
+				mes "I hope you enjoy your time";
+				mes "here. I'll see you next time~";
 				close;
 			}
 			else {
 				mes "[Medal Distributor]";
-				mes "Ah, what a pity.";
-				mes "I hope that you will win it next time.";
+				mes "You may not have wagered";
+				mes "on the winning monster in";
+				mes "the last race, but I hope that";
+				mes "you get lucky next time~";
 				close;
 			}
 		}
 		else if (($@mon_race_2_1 == 2) && ($@mon_race_2_2 == 4)) || (($@mon_race_2_1 == 4) && ($@mon_race_2_2 == 2)) {
 			if ((monster_race_2_1 == 2) && (monster_race_2_2 == 4)) || ((monster_race_2_1 == 4) && (monster_race_2_2 == 2)) {
 				mes "[Medal Distributor]";
-				mes "Congratulations! You have won!";
-				mes "It's really hard to win the Double Monster Race.";
-				mes "You're really amazing!";
-				mes "Do you wish to redeem your ticket now?";
+				mes "Congratulations! It's really";
+				mes "difficult to guess the winners";
+				mes "of a Dual Monster Race, so you";
+				mes "must be really lucky! Would you";
+				mes "like to exchange your winning";
+				mes "Racing Ticket for Prize Medals?";
 				next;
-				switch(select("Yes:Maybe later")) {
+				switch(select("Yes, please.:No, thanks.")) {
 				case 1:
 					mes "[Medal Distributor]";
-					mes "I will confirm your ticket now.";
-					mes "Hmm, the winning monster for this round...";
-					mes "Yup! That's right!";
-					mes "Congratulations again!";
-					next;
-					mes "[Medal Distributor]";
-					mes "I will give you the medal as";
-					mes "the proof of the winner for the Double race.";
-					mes "As for the medal, bring it to Hugel ";
-					mes "and look for Wayne";
-					mes "to change it into prizes.";
-					mes "Please use it wisely.";
+					mes "Okay, everything looks good,";
+					mes "so here's your Prize Medals~";
+					mes "If you want to trade these";
+					mes "medals for items, please";
+					mes "visit Wayne in Hugel. We hope";
+					mes "you enjoyed the Monster Race~";
 					delitem 7514,1; //Monster_Ticket
 					set monster_race_2_1,7;
 					set monster_race_2_2,7;
@@ -6901,56 +7163,58 @@ p_track02,67,45,5	script	Medal Distributor#medal	845,{
 					close;
 				case 2:
 					mes "[Medal Distributor]";
-					mes "The redemption of the winner ticket of every round";
-					mes "can only be made at ^0000FFthe particular round^000000.";
-					mes "Please remember that.";
+					mes "Um, are you sure? You ";
+					mes "can only exchange a winning";
+					mes "Racing Ticket for Prize Medals";
+					mes "for a short time after the race. If you made a mistake, you";
+					mes "should ask me again quickly.";
 					close;
 				}
 			}
 			else if ((monster_race_2_1 == 0) && (monster_race_2_2 == 0)) {
 				mes "[Medal Distributor]";
-				mes "Ah, what a pity.";
-				mes "I hope that you will win it next time.";
+				mes "Well, better luck next time...";
+				mes "Although you can't always";
+				mes "be lucky, it's always fun to";
+				mes "wager on the monster races!";
 				close;
 			}
 			else if ((monster_race_2_1 == 7) && (monster_race_2_2 == 7)) {
 				mes "[Medal Distributor]";
-				mes "Thank you for using";
-				mes "Monster Race Arena";
-				mes "Good luck for your";
-				mes "next race.";
+				mes "Thanks for visiting the";
+				mes "Monster Race Arena, and";
+				mes "I hope you enjoy your time";
+				mes "here. I'll see you next time~";
 				close;
 			}
 			else {
 				mes "[Medal Distributor]";
-				mes "Ah, what a pity.";
-				mes "I hope that you will win it next time.";
+				mes "You may not have wagered";
+				mes "on the winning monster in";
+				mes "the last race, but I hope that";
+				mes "you get lucky next time~";
 				close;
 			}
 		}
 		else if (($@mon_race_2_1 == 2) && ($@mon_race_2_2 == 5)) || (($@mon_race_2_1 == 5) && ($@mon_race_2_2 == 2)) {
 			if ((monster_race_2_1 == 2) && (monster_race_2_2 == 5)) || ((monster_race_2_1 == 5) && (monster_race_2_2 == 2)) {
 				mes "[Medal Distributor]";
-				mes "Congratulations! You have won!";
-				mes "It's really hard to win the Double Monster Race.";
-				mes "You're really amazing!";
-				mes "Do you wish to redeem your ticket now?";
+				mes "Congratulations! It's really";
+				mes "difficult to guess the winners";
+				mes "of a Dual Monster Race, so you";
+				mes "must be really lucky! Would you";
+				mes "like to exchange your winning";
+				mes "Racing Ticket for Prize Medals?";
 				next;
-				switch(select("Yes:Maybe later")) {
+				switch(select("Yes, please.:No, thanks.")) {
 				case 1:
 					mes "[Medal Distributor]";
-					mes "I will confirm your ticket now.";
-					mes "Hmm, the winning monster for this round...";
-					mes "Yup! That's right!";
-					mes "Congratulations again!";
-					next;
-					mes "[Medal Distributor]";
-					mes "I will give you the medal as";
-					mes "the proof of the winner for the Double race.";
-					mes "As for the medal, bring it to Hugel ";
-					mes "and look for Wayne";
-					mes "to change it into prizes.";
-					mes "Please use it wisely.";
+					mes "Okay, everything looks good,";
+					mes "so here's your Prize Medals~";
+					mes "If you want to trade these";
+					mes "medals for items, please";
+					mes "visit Wayne in Hugel. We hope";
+					mes "you enjoyed the Monster Race~";
 					delitem 7514,1; //Monster_Ticket
 					set monster_race_2_1,7;
 					set monster_race_2_2,7;
@@ -6958,56 +7222,58 @@ p_track02,67,45,5	script	Medal Distributor#medal	845,{
 					close;
 				case 2:
 					mes "[Medal Distributor]";
-					mes "The redemption of the winner ticket of every round";
-					mes "can only be made at ^0000FFthe particular round^000000.";
-					mes "Please remember that.";
+					mes "Um, are you sure? You ";
+					mes "can only exchange a winning";
+					mes "Racing Ticket for Prize Medals";
+					mes "for a short time after the race. If you made a mistake, you";
+					mes "should ask me again quickly.";
 					close;
 				}
 			}
 			else if ((monster_race_2_1 == 0) && (monster_race_2_2 == 0)) {
 				mes "[Medal Distributor]";
-				mes "Ah, what a pity.";
-				mes "I hope that you will win it next time.";
+				mes "Well, better luck next time...";
+				mes "Although you can't always";
+				mes "be lucky, it's always fun to";
+				mes "wager on the monster races!";
 				close;
 			}
 			else if ((monster_race_2_1 == 7) && (monster_race_2_2 == 7)) {
 				mes "[Medal Distributor]";
-				mes "Thank you for using";
-				mes "Monster Race Arena";
-				mes "Good luck for your";
-				mes "next race.";
+				mes "Thanks for visiting the";
+				mes "Monster Race Arena, and";
+				mes "I hope you enjoy your time";
+				mes "here. I'll see you next time~";
 				close;
 			}
 			else {
 				mes "[Medal Distributor]";
-				mes "Ah, what a pity.";
-				mes "I hope that you will win it next time.";
+				mes "You may not have wagered";
+				mes "on the winning monster in";
+				mes "the last race, but I hope that";
+				mes "you get lucky next time~";
 				close;
 			}
 		}
 		else if (($@mon_race_2_1 == 2) && ($@mon_race_2_2 == 6)) || (($@mon_race_2_1 == 6) && ($@mon_race_2_2 == 2)) {
 			if ((monster_race_2_1 == 2) && (monster_race_2_2 == 6)) || ((monster_race_2_1 == 6) && (monster_race_2_2 == 2)) {
 				mes "[Medal Distributor]";
-				mes "Congratulations! You have won!";
-				mes "It's really hard to win the Double Monster Race.";
-				mes "You're really amazing!";
-				mes "Do you wish to redeem your ticket now?";
+				mes "Congratulations! It's really";
+				mes "difficult to guess the winners";
+				mes "of a Dual Monster Race, so you";
+				mes "must be really lucky! Would you";
+				mes "like to exchange your winning";
+				mes "Racing Ticket for Prize Medals?";
 				next;
-				switch(select("Yes:Maybe later")) {
+				switch(select("Yes, please.:No, thanks.")) {
 				case 1:
 					mes "[Medal Distributor]";
-					mes "I will confirm your ticket now.";
-					mes "Hmm, the winning monster for this round...";
-					mes "Yup! That's right!";
-					mes "Congratulations again!";
-					next;
-					mes "[Medal Distributor]";
-					mes "I will give you the medal as";
-					mes "the proof of the winner for the Double race.";
-					mes "As for the medal, bring it to Hugel ";
-					mes "and look for Wayne";
-					mes "to change it into prizes.";
-					mes "Please use it wisely.";
+					mes "Okay, everything looks good,";
+					mes "so here's your Prize Medals~";
+					mes "If you want to trade these";
+					mes "medals for items, please";
+					mes "visit Wayne in Hugel. We hope";
+					mes "you enjoyed the Monster Race~";
 					delitem 7514,1; //Monster_Ticket
 					set monster_race_2_1,7;
 					set monster_race_2_2,7;
@@ -7015,56 +7281,58 @@ p_track02,67,45,5	script	Medal Distributor#medal	845,{
 					close;
 				case 2:
 					mes "[Medal Distributor]";
-					mes "The redemption of the winner ticket of every round";
-					mes "can only be made at ^0000FFthe particular round^000000.";
-					mes "Please remember that.";
+					mes "Um, are you sure? You ";
+					mes "can only exchange a winning";
+					mes "Racing Ticket for Prize Medals";
+					mes "for a short time after the race. If you made a mistake, you";
+					mes "should ask me again quickly.";
 					close;
 				}
 			}
 			else if ((monster_race_2_1 == 0) && (monster_race_2_2 == 0)) {
 				mes "[Medal Distributor]";
-				mes "Ah, what a pity.";
-				mes "I hope that you will win it next time.";
+				mes "Well, better luck next time...";
+				mes "Although you can't always";
+				mes "be lucky, it's always fun to";
+				mes "wager on the monster races!";
 				close;
 			}
 			else if ((monster_race_2_1 == 7) && (monster_race_2_2 == 7)) {
 				mes "[Medal Distributor]";
-				mes "Thank you for using";
-				mes "Monster Race Arena";
-				mes "Good luck for your";
-				mes "next race.";
+				mes "Thanks for visiting the";
+				mes "Monster Race Arena, and";
+				mes "I hope you enjoy your time";
+				mes "here. I'll see you next time~";
 				close;
 			}
 			else {
 				mes "[Medal Distributor]";
-				mes "Ah, what a pity.";
-				mes "I hope that you will win it next time.";
+				mes "You may not have wagered";
+				mes "on the winning monster in";
+				mes "the last race, but I hope that";
+				mes "you get lucky next time~";
 				close;
 			}
 		}
 		else if (($@mon_race_2_1 == 3) && ($@mon_race_2_2 == 4)) || (($@mon_race_2_1 == 4) && ($@mon_race_2_2 == 3)) {
 			if ((monster_race_2_1 == 3) && (monster_race_2_2 == 4)) || ((monster_race_2_1 == 4) && (monster_race_2_2 == 3)) {
 				mes "[Medal Distributor]";
-				mes "Congratulations! You have won!";
-				mes "It's really hard to win the Double Monster Race.";
-				mes "You're really amazing!";
-				mes "Do you wish to redeem your ticket now?";
+				mes "Congratulations! It's really";
+				mes "difficult to guess the winners";
+				mes "of a Dual Monster Race, so you";
+				mes "must be really lucky! Would you";
+				mes "like to exchange your winning";
+				mes "Racing Ticket for Prize Medals?";
 				next;
-				switch(select("Yes:Maybe later")) {
+				switch(select("Yes, please.:No, thanks.")) {
 				case 1:
 					mes "[Medal Distributor]";
-					mes "I will confirm your ticket now.";
-					mes "Hmm, the winning monster for this round...";
-					mes "Yup! That's right!";
-					mes "Congratulations again!";
-					next;
-					mes "[Medal Distributor]";
-					mes "I will give you the medal as";
-					mes "the proof of the winner for the Double race.";
-					mes "As for the medal, bring it to Hugel ";
-					mes "and look for Wayne";
-					mes "to change it into prizes.";
-					mes "Please use it wisely.";
+					mes "Okay, everything looks good,";
+					mes "so here's your Prize Medals~";
+					mes "If you want to trade these";
+					mes "medals for items, please";
+					mes "visit Wayne in Hugel. We hope";
+					mes "you enjoyed the Monster Race~";
 					delitem 7514,1; //Monster_Ticket
 					set monster_race_2_1,7;
 					set monster_race_2_2,7;
@@ -7072,56 +7340,58 @@ p_track02,67,45,5	script	Medal Distributor#medal	845,{
 					close;
 				case 2:
 					mes "[Medal Distributor]";
-					mes "The redemption of the winner ticket of every round";
-					mes "can only be made at ^0000FFthe particular round^000000.";
-					mes "Please remember that.";
+					mes "Um, are you sure? You ";
+					mes "can only exchange a winning";
+					mes "Racing Ticket for Prize Medals";
+					mes "for a short time after the race. If you made a mistake, you";
+					mes "should ask me again quickly.";
 					close;
 				}
 			}
 			else if ((monster_race_2_1 == 0) && (monster_race_2_2 == 0)) {
 				mes "[Medal Distributor]";
-				mes "Ah, what a pity.";
-				mes "I hope that you will win it next time.";
+				mes "Well, better luck next time...";
+				mes "Although you can't always";
+				mes "be lucky, it's always fun to";
+				mes "wager on the monster races!";
 				close;
 			}
 			else if ((monster_race_2_1 == 7) && (monster_race_2_2 == 7)) {
 				mes "[Medal Distributor]";
-				mes "Thank you for using";
-				mes "Monster Race Arena";
-				mes "Good luck for your";
-				mes "next race.";
+				mes "Thanks for visiting the";
+				mes "Monster Race Arena, and";
+				mes "I hope you enjoy your time";
+				mes "here. I'll see you next time~";
 				close;
 			}
 			else {
 				mes "[Medal Distributor]";
-				mes "Ah, what a pity.";
-				mes "I hope that you will win it next time.";
+				mes "You may not have wagered";
+				mes "on the winning monster in";
+				mes "the last race, but I hope that";
+				mes "you get lucky next time~";
 				close;
 			}
 		}
 		else if (($@mon_race_2_1 == 3) && ($@mon_race_2_2 == 5)) || (($@mon_race_2_1 == 5) && ($@mon_race_2_2 == 3)) {
 			if ((monster_race_2_1 == 3) && (monster_race_2_2 == 5)) || ((monster_race_2_1 == 5) && (monster_race_2_2 == 3)) {
 				mes "[Medal Distributor]";
-				mes "Congratulations! You have won!";
-				mes "It's really hard to win the Double Monster Race.";
-				mes "You're really amazing!";
-				mes "Do you wish to redeem your ticket now?";
+				mes "Congratulations! It's really";
+				mes "difficult to guess the winners";
+				mes "of a Dual Monster Race, so you";
+				mes "must be really lucky! Would you";
+				mes "like to exchange your winning";
+				mes "Racing Ticket for Prize Medals?";
 				next;
-				switch(select("Yes:Maybe later")) {
+				switch(select("Yes, please.:No, thanks.")) {
 				case 1:
 					mes "[Medal Distributor]";
-					mes "I will confirm your ticket now.";
-					mes "Hmm, the winning monster for this round...";
-					mes "Yup! That's right!";
-					mes "Congratulations again!";
-					next;
-					mes "[Medal Distributor]";
-					mes "I will give you the medal as";
-					mes "the proof of the winner for the Double race.";
-					mes "As for the medal, bring it to Hugel ";
-					mes "and look for Wayne";
-					mes "to change it into prizes.";
-					mes "Please use it wisely.";
+					mes "Okay, everything looks good,";
+					mes "so here's your Prize Medals~";
+					mes "If you want to trade these";
+					mes "medals for items, please";
+					mes "visit Wayne in Hugel. We hope";
+					mes "you enjoyed the Monster Race~";
 					delitem 7514,1; //Monster_Ticket
 					set monster_race_2_1,7;
 					set monster_race_2_2,7;
@@ -7129,56 +7399,58 @@ p_track02,67,45,5	script	Medal Distributor#medal	845,{
 					close;
 				case 2:
 					mes "[Medal Distributor]";
-					mes "The redemption of the winner ticket of every round";
-					mes "can only be made at ^0000FFthe particular round^000000.";
-					mes "Please remember that.";
+					mes "Um, are you sure? You ";
+					mes "can only exchange a winning";
+					mes "Racing Ticket for Prize Medals";
+					mes "for a short time after the race. If you made a mistake, you";
+					mes "should ask me again quickly.";
 					close;
 				}
 			}
 			else if ((monster_race_2_1 == 0) && (monster_race_2_2 == 0)) {
 				mes "[Medal Distributor]";
-				mes "Ah, what a pity.";
-				mes "I hope that you will win it next time.";
+				mes "Well, better luck next time...";
+				mes "Although you can't always";
+				mes "be lucky, it's always fun to";
+				mes "wager on the monster races!";
 				close;
 			}
 			else if ((monster_race_2_1 == 7) && (monster_race_2_2 == 7)) {
 				mes "[Medal Distributor]";
-				mes "Thank you for using";
-				mes "Monster Race Arena";
-				mes "Good luck for your";
-				mes "next race.";
+				mes "Thanks for visiting the";
+				mes "Monster Race Arena, and";
+				mes "I hope you enjoy your time";
+				mes "here. I'll see you next time~";
 				close;
 			}
 			else {
 				mes "[Medal Distributor]";
-				mes "Ah, what a pity.";
-				mes "I hope that you will win it next time.";
+				mes "You may not have wagered";
+				mes "on the winning monster in";
+				mes "the last race, but I hope that";
+				mes "you get lucky next time~";
 				close;
 			}
 		}
 		else if (($@mon_race_2_1 == 3) && ($@mon_race_2_2 == 6)) || (($@mon_race_2_1 == 6) && ($@mon_race_2_2 == 3)) {
 			if ((monster_race_2_1 == 3) && (monster_race_2_2 == 6)) || ((monster_race_2_1 == 6) && (monster_race_2_2 == 3)) {
 				mes "[Medal Distributor]";
-				mes "Congratulations! You have won!";
-				mes "It's really hard to win the Double Monster Race.";
-				mes "You're really amazing!";
-				mes "Do you wish to redeem your ticket now?";
+				mes "Congratulations! It's really";
+				mes "difficult to guess the winners";
+				mes "of a Dual Monster Race, so you";
+				mes "must be really lucky! Would you";
+				mes "like to exchange your winning";
+				mes "Racing Ticket for Prize Medals?";
 				next;
-				switch(select("Yes:Maybe later")) {
+				switch(select("Yes, please.:No, thanks.")) {
 				case 1:
 					mes "[Medal Distributor]";
-					mes "I will confirm your ticket now.";
-					mes "Hmm, the winning monster for this round...";
-					mes "Yup! That's right!";
-					mes "Congratulations again!";
-					next;
-					mes "[Medal Distributor]";
-					mes "I will give you the medal as";
-					mes "the proof of the winner for the Double race.";
-					mes "As for the medal, bring it to Hugel ";
-					mes "and look for Wayne";
-					mes "to change it into prizes.";
-					mes "Please use it wisely.";
+					mes "Okay, everything looks good,";
+					mes "so here's your Prize Medals~";
+					mes "If you want to trade these";
+					mes "medals for items, please";
+					mes "visit Wayne in Hugel. We hope";
+					mes "you enjoyed the Monster Race~";
 					delitem 7514,1; //Monster_Ticket
 					set monster_race_2_1,7;
 					set monster_race_2_2,7;
@@ -7186,56 +7458,58 @@ p_track02,67,45,5	script	Medal Distributor#medal	845,{
 					close;
 				case 2:
 					mes "[Medal Distributor]";
-					mes "The redemption of the winner ticket of every round";
-					mes "can only be made at ^0000FFthe particular round^000000.";
-					mes "Please remember that.";
+					mes "Um, are you sure? You ";
+					mes "can only exchange a winning";
+					mes "Racing Ticket for Prize Medals";
+					mes "for a short time after the race. If you made a mistake, you";
+					mes "should ask me again quickly.";
 					close;
 				}
 			}
 			else if ((monster_race_2_1 == 0) && (monster_race_2_2 == 0)) {
 				mes "[Medal Distributor]";
-				mes "Ah, what a pity.";
-				mes "I hope that you will win it next time.";
+				mes "Well, better luck next time...";
+				mes "Although you can't always";
+				mes "be lucky, it's always fun to";
+				mes "wager on the monster races!";
 				close;
 			}
 			else if ((monster_race_2_1 == 7) && (monster_race_2_2 == 7)) {
 				mes "[Medal Distributor]";
-				mes "Thank you for using";
-				mes "Monster Race Arena";
-				mes "Good luck for your";
-				mes "next race.";
+				mes "Thanks for visiting the";
+				mes "Monster Race Arena, and";
+				mes "I hope you enjoy your time";
+				mes "here. I'll see you next time~";
 				close;
 			}
 			else {
 				mes "[Medal Distributor]";
-				mes "Ah, what a pity.";
-				mes "I hope that you will win it next time.";
+				mes "You may not have wagered";
+				mes "on the winning monster in";
+				mes "the last race, but I hope that";
+				mes "you get lucky next time~";
 				close;
 			}
 		}
 		else if (($@mon_race_2_1 == 4) && ($@mon_race_2_2 == 5)) || (($@mon_race_2_1 == 5) && ($@mon_race_2_2 == 4)) {
 			if ((monster_race_2_1 == 4) && (monster_race_2_2 == 5)) || ((monster_race_2_1 == 5) && (monster_race_2_2 == 4)) {
 				mes "[Medal Distributor]";
-				mes "Congratulations! You have won!";
-				mes "It's really hard to win the Double Monster Race.";
-				mes "You're really amazing!";
-				mes "Do you wish to redeem your ticket now?";
+				mes "Congratulations! It's really";
+				mes "difficult to guess the winners";
+				mes "of a Dual Monster Race, so you";
+				mes "must be really lucky! Would you";
+				mes "like to exchange your winning";
+				mes "Racing Ticket for Prize Medals?";
 				next;
-				switch(select("Yes:Maybe later")) {
+				switch(select("Yes, please.:No, thanks.")) {
 				case 1:
 					mes "[Medal Distributor]";
-					mes "I will confirm your ticket now.";
-					mes "Hmm, the winning monster for this round...";
-					mes "Yup! That's right!";
-					mes "Congratulations again!";
-					next;
-					mes "[Medal Distributor]";
-					mes "I will give you the medal as";
-					mes "the proof of the winner for the Double race.";
-					mes "As for the medal, bring it to Hugel ";
-					mes "and look for Wayne";
-					mes "to change it into prizes.";
-					mes "Please use it wisely.";
+					mes "Okay, everything looks good,";
+					mes "so here's your Prize Medals~";
+					mes "If you want to trade these";
+					mes "medals for items, please";
+					mes "visit Wayne in Hugel. We hope";
+					mes "you enjoyed the Monster Race~";
 					delitem 7514,1; //Monster_Ticket
 					set monster_race_2_1,7;
 					set monster_race_2_2,7;
@@ -7243,56 +7517,58 @@ p_track02,67,45,5	script	Medal Distributor#medal	845,{
 					close;
 				case 2:
 					mes "[Medal Distributor]";
-					mes "The redemption of the winner ticket of every round";
-					mes "can only be made at ^0000FFthe particular round^000000.";
-					mes "Please remember that.";
+					mes "Um, are you sure? You ";
+					mes "can only exchange a winning";
+					mes "Racing Ticket for Prize Medals";
+					mes "for a short time after the race. If you made a mistake, you";
+					mes "should ask me again quickly.";
 					close;
 				}
 			}
 			else if ((monster_race_2_1 == 0) && (monster_race_2_2 == 0)) {
 				mes "[Medal Distributor]";
-				mes "Ah, what a pity.";
-				mes "I hope that you will win it next time.";
+				mes "Well, better luck next time...";
+				mes "Although you can't always";
+				mes "be lucky, it's always fun to";
+				mes "wager on the monster races!";
 				close;
 			}
 			else if ((monster_race_2_1 == 7) && (monster_race_2_2 == 7)) {
 				mes "[Medal Distributor]";
-				mes "Thank you for using";
-				mes "Monster Race Arena";
-				mes "Good luck for your";
-				mes "next race.";
+				mes "Thanks for visiting the";
+				mes "Monster Race Arena, and";
+				mes "I hope you enjoy your time";
+				mes "here. I'll see you next time~";
 				close;
 			}
 			else {
 				mes "[Medal Distributor]";
-				mes "Ah, what a pity.";
-				mes "I hope that you will win it next time.";
+				mes "You may not have wagered";
+				mes "on the winning monster in";
+				mes "the last race, but I hope that";
+				mes "you get lucky next time~";
 				close;
 			}
 		}
 		else if (($@mon_race_2_1 == 4) && ($@mon_race_2_2 == 6)) || (($@mon_race_2_1 == 6) && ($@mon_race_2_2 == 4)) {
 			if ((monster_race_2_1 == 4) && (monster_race_2_2 == 6)) || ((monster_race_2_1 == 6) && (monster_race_2_2 == 4)) {
 				mes "[Medal Distributor]";
-				mes "Congratulations! You have won!";
-				mes "It's really hard to win the Double Monster Race.";
-				mes "You're really amazing!";
-				mes "Do you wish to redeem your ticket now?";
+				mes "Congratulations! It's really";
+				mes "difficult to guess the winners";
+				mes "of a Dual Monster Race, so you";
+				mes "must be really lucky! Would you";
+				mes "like to exchange your winning";
+				mes "Racing Ticket for Prize Medals?";
 				next;
-				switch(select("Yes:Maybe later")) {
+				switch(select("Yes, please.:No, thanks.")) {
 				case 1:
 					mes "[Medal Distributor]";
-					mes "I will confirm your ticket now.";
-					mes "Hmm, the winning monster for this round...";
-					mes "Yup! That's right!";
-					mes "Congratulations again!";
-					next;
-					mes "[Medal Distributor]";
-					mes "I will give you the medal as";
-					mes "the proof of the winner for the Double race.";
-					mes "As for the medal, bring it to Hugel ";
-					mes "and look for Wayne";
-					mes "to change it into prizes.";
-					mes "Please use it wisely.";
+					mes "Okay, everything looks good,";
+					mes "so here's your Prize Medals~";
+					mes "If you want to trade these";
+					mes "medals for items, please";
+					mes "visit Wayne in Hugel. We hope";
+					mes "you enjoyed the Monster Race~";
 					delitem 7514,1; //Monster_Ticket
 					set monster_race_2_1,7;
 					set monster_race_2_2,7;
@@ -7300,56 +7576,58 @@ p_track02,67,45,5	script	Medal Distributor#medal	845,{
 					close;
 				case 2:
 					mes "[Medal Distributor]";
-					mes "The redemption of the winner ticket of every round";
-					mes "can only be made at ^0000FFthe particular round^000000.";
-					mes "Please remember that.";
+					mes "Um, are you sure? You ";
+					mes "can only exchange a winning";
+					mes "Racing Ticket for Prize Medals";
+					mes "for a short time after the race. If you made a mistake, you";
+					mes "should ask me again quickly.";
 					close;
 				}
 			}
 			else if ((monster_race_2_1 == 0) && (monster_race_2_2 == 0)) {
 				mes "[Medal Distributor]";
-				mes "Ah, what a pity.";
-				mes "I hope that you will win it next time.";
+				mes "Well, better luck next time...";
+				mes "Although you can't always";
+				mes "be lucky, it's always fun to";
+				mes "wager on the monster races!";
 				close;
 			}
 			else if ((monster_race_2_1 == 7) && (monster_race_2_2 == 7)) {
 				mes "[Medal Distributor]";
-				mes "Thank you for using";
-				mes "Monster Race Arena";
-				mes "Good luck for your";
-				mes "next race.";
+				mes "Thanks for visiting the";
+				mes "Monster Race Arena, and";
+				mes "I hope you enjoy your time";
+				mes "here. I'll see you next time~";
 				close;
 			}
 			else {
 				mes "[Medal Distributor]";
-				mes "Ah, what a pity.";
-				mes "I hope that you will win it next time.";
+				mes "You may not have wagered";
+				mes "on the winning monster in";
+				mes "the last race, but I hope that";
+				mes "you get lucky next time~";
 				close;
 			}
 		}
 		else if (($@mon_race_2_1 == 5) && ($@mon_race_2_2 == 6)) || (($@mon_race_2_1 == 6) && ($@mon_race_2_2 == 5)) {
 			if ((monster_race_2_1 == 5) && (monster_race_2_2 == 6)) || ((monster_race_2_1 == 6) && (monster_race_2_2 == 5)) {
 				mes "[Medal Distributor]";
-				mes "Congratulations! You have won!";
-				mes "It's really hard to win the Double Monster Race.";
-				mes "You're really amazing!";
-				mes "Do you wish to redeem your ticket now?";
+				mes "Congratulations! It's really";
+				mes "difficult to guess the winners";
+				mes "of a Dual Monster Race, so you";
+				mes "must be really lucky! Would you";
+				mes "like to exchange your winning";
+				mes "Racing Ticket for Prize Medals?";
 				next;
-				switch(select("Yes:Maybe later")) {
+				switch(select("Yes, please.:No, thanks.")) {
 				case 1:
 					mes "[Medal Distributor]";
-					mes "I will confirm your ticket now.";
-					mes "Hmm, the winning monster for this round...";
-					mes "Yup! That's right!";
-					mes "Congratulations again!";
-					next;
-					mes "[Medal Distributor]";
-					mes "I will give you the medal as";
-					mes "the proof of the winner for the Double race.";
-					mes "As for the medal, bring it to Hugel ";
-					mes "and look for Wayne";
-					mes "to change it into prizes.";
-					mes "Please use it wisely.";
+					mes "Okay, everything looks good,";
+					mes "so here's your Prize Medals~";
+					mes "If you want to trade these";
+					mes "medals for items, please";
+					mes "visit Wayne in Hugel. We hope";
+					mes "you enjoyed the Monster Race~";
 					delitem 7514,1; //Monster_Ticket
 					set monster_race_2_1,7;
 					set monster_race_2_2,7;
@@ -7357,64 +7635,74 @@ p_track02,67,45,5	script	Medal Distributor#medal	845,{
 					close;
 				case 2:
 					mes "[Medal Distributor]";
-					mes "The redemption of the winner ticket of every round";
-					mes "can only be made at ^0000FFthe particular round^000000.";
-					mes "Please remember that.";
+					mes "Um, are you sure? You ";
+					mes "can only exchange a winning";
+					mes "Racing Ticket for Prize Medals";
+					mes "for a short time after the race. If you made a mistake, you";
+					mes "should ask me again quickly.";
 					close;
 				}
 			}
 			else if ((monster_race_2_1 == 0) && (monster_race_2_2 == 0)) {
 				mes "[Medal Distributor]";
-				mes "Ah, what a pity.";
-				mes "I hope that you will win it next time.";
+				mes "Well, better luck next time...";
+				mes "Although you can't always";
+				mes "be lucky, it's always fun to";
+				mes "wager on the monster races!";
 				close;
 			}
 			else if ((monster_race_2_1 == 7) && (monster_race_2_2 == 7)) {
 				mes "[Medal Distributor]";
-				mes "Thank you for using";
-				mes "Monster Race Arena";
-				mes "Good luck for your";
-				mes "next race.";
+				mes "Thanks for visiting the";
+				mes "Monster Race Arena, and";
+				mes "I hope you enjoy your time";
+				mes "here. I'll see you next time~";
 				close;
 			}
 			else {
 				mes "[Medal Distributor]";
-				mes "Ah, what a pity.";
-				mes "I hope that you will win it next time.";
+				mes "You may not have wagered";
+				mes "on the winning monster in";
+				mes "the last race, but I hope that";
+				mes "you get lucky next time~";
 				close;
 			}
 		}
 		else {
 			mes "[Medal Distributor]";
-			mes "I am the Redemption Service Staff";
-			mes "who will give the winner medals and ticket";
-			mes "to the participants who";
-			mes "make the correct guess";
-			mes "for the Monster Race.";
+			mes "Hello there~";
+			mes "If you've wagered on the";
+			mes "winning monster in a recent";
+			mes "race, then you can exchange";
+			mes "your game ticket here for";
+			mes "some Prize Medals.";
 			next;
 			mes "[Medal Distributor]";
-			mes "The redemption of the winner ticket of every round";
-			mes "can only be made at ^0000FFthe particular round^000000.";
-			mes "Please remember that.";
-			mes "You can take the medal and";
-			mes "find Wayne in Hugel to retrieve your prizes.";
+			mes "Please remember that you can";
+			mes "only exchange winning Game";
+			mes "Tickets for Prize Medals right";
+			mes "after the race finishes. Prize";
+			mes "Medals may be given to Wayne";
+			mes "in Hugel in exchange for items.";
 			close;
 		}
 	}
 	else {
 		mes "[Medal Distributor]";
-		mes "I am the Redemption Service Staff";
-		mes "who will give the winner medals and ticket";
-		mes "to the participants who";
-		mes "make the correct guess";
-		mes "for the Monster Race.";
+		mes "Hello there~";
+		mes "If you've wagered on the";
+		mes "winning monster in a recent";
+		mes "race, then you can exchange";
+		mes "your game ticket here for";
+		mes "some Prize Medals.";
 		next;
 		mes "[Medal Distributor]";
-		mes "The redemption of the winner ticket of every round";
-		mes "can only be made at ^0000FFthe particular round^000000.";
-		mes "Please remember that.";
-		mes "You can take the medal and";
-		mes "find Wayne in Hugel to retrieve your prizes.";
+		mes "Please remember that you can";
+		mes "only exchange winning Game";
+		mes "Tickets for Prize Medals right";
+		mes "after the race finishes. Prize";
+		mes "Medals may be given to Wayne";
+		mes "in Hugel in exchange for items.";
 		close;
 	}
 
@@ -7426,9 +7714,9 @@ OnInit:
 p_track02,76,38,1	script	Exit Guide#double	798,{
 	mes "[Exit Guide]";
 	mes "If you have a winning Racing";
-	mes "Ticket, please make sure that.";
+	mes "Ticket, please make sure that";
 	mes "you redeem it for Prize Medals";
-	mes "now. All Racing Rickets become";
+	mes "now. All Racing Tickets become";
 	mes "void once the next race begins.";
 	next;
 	mes "[Exit Guide]";
@@ -7451,7 +7739,7 @@ p_track02,76,38,1	script	Exit Guide#double	798,{
 			mes "In accordance with our";
 			mes "policies, I must take your";
 			mes "Racing Ticket before you leave.";
-			mes "Thank you for your patronage";
+			mes "Thank you for your patronage,";
 			mes "and I hope you enjoy your time";
 			mes "here in the Monster Race Arena.";
 			delitem 7514,1; //Monster_Ticket
@@ -7463,8 +7751,8 @@ p_track02,76,38,1	script	Exit Guide#double	798,{
 		end;
 	case 2:
 		mes "[Exit Guide]";
-		mes "Alright, then";
-		mes "Kist let me know";
+		mes "Alright, then.";
+		mes "Just let me know";
 		mes "whenever you're";
 		mes "ready to leave.";
 		close;
@@ -10838,159 +11126,170 @@ OnTouchNPC:
 //============================================================
 // NPCs for Redeeming Price Medals (Einbroch and Hugel)
 //============================================================
-ein_in01,85,208,5	script	Ei felle#repay01	854,{
+ein_in01,85,208,5	script	Ei'felle#repay01	854,{
 	if (ein_medal01 < 1) {
-		mes "[Ei felle]";
-		mes "Ahhh.";
-		mes "I don't have much time left before the delivery of this product!!";
-		mes "What should I do with";
-		mes "so many failed product in this place.";
-		mes "I really hope I have that item now!!!";
+		mes "[Ei'felle]";
+		mes "Curses! We need to deliver";
+		mes "what our customers ordered,";
+		mes "but we've been making nothing";
+		mes "but shipshod products! If we";
+		mes "only had that metal, we could";
+		mes "pump up our product quality!";
 		next;
-		select("What item do you mean?");
-		mes "[Ei felle]";
-		mes "I pick up the info from some rumor I heard.";
-		mes "There is a small isolated village";
-		mes "at the fartherst border of Schwaltzvalt Republic.";
-		mes "It's said that";
-		mes "the medal obtain from that village";
-		mes "contain certain special ore.";
+		select("What metal are you talking about?");
+		mes "[Ei'felle]";
+		mes "There's a small village";
+		mes "at the outskirts of the";
+		mes "Schwaltzvalt Republic that";
+		mes "gives these special medals";
+		mes "that are made of this metal";
+		mes "which we desperately need...";
 		next;
-		mes "[Ei felle]";
-		mes "If I have that special ore!!";
-		mes "I won't have so many useless iron";
-		mes "left in this place.";
+		mes "[Ei'felle]";
+		mes "We've sent one of our best";
+		mes "guildsmen to get some of those";
+		mes "medals for us, but he hasn't";
+		mes "reported back to us quite yet.";
+		mes "I'm getting pretty anxious...";
 		next;
-		mes "[Ei felle]";
-		mes "I have sent a lot of people to ask about that special ore";
-		mes "but the result is nothing...How disappointing...";
+		mes "[Ei'felle]";
+		mes "I mean, we need a whole";
+		mes "lot of that metal to fill out";
+		mes "our orders and finish our";
+		mes "manufacturing research,";
+		mes "but so far, none of us have";
+		mes "been able to get any medals...";
 		next;
 		if (countitem(7515) > 0) {
 			mes "["+ strcharinfo(0) +"]";
-			mes "Excuse me, is this the medal that you mentioned just now...";
+			mes "Oh! Are you talking";
+			mes "about the medals that";
+			mes "they give as rewards in";
+			mes "the Monster Race Arena?";
+			mes "I have some of those.";
 			next;
-			mes "[Ei felle]";
-			mes "Oh? Oh? That's the one!!";
-			mes "Can you give it to me?";
-			mes "If I have this,";
-			mes "I can reconstruct that pile of useless iron";
-			mes "and all the faulty product will be gone.";
+			mes "[Ei'felle]";
+			mes "Huh? Show them to me...";
+			mes "Yes! That's exactly what";
+			mes "we need! Would you please";
+			mes "donate your medals so that we";
+			mes "can finally make some quality";
+			mes "products for our customers?";
 			next;
 			callsub S_Reward;
 			end;
 		}
 		else {
-			mes "[Ei felle]";
-			mes "If you ever get any medal,";
-			mes "can you give some to me?";
+			mes "[Ei'felle]";
+			mes "If you happen to obtain any";
+			mes "medals from the Monster";
+			mes "Race Arena in Hugel, then";
+			mes "please bring some of them";
+			mes "to me. I'll be sure to repay";
+			mes "you for your kindness...";
 			close;
 		}
 	}
 	else if ((ein_medal01 > 499) && (ein_medal01 < 1000)) {
 		if (checkweight(1201,1) == 0) {
-			mes "[Ei felle]";
-			mes "Don't you feel tired";
-			mes "when you're carrying so many items with you?";
-			mes "Slow your pace and ";
-			mes "be relax once in a while.";
+			mes "[Ei'felle]";
+			mes "Goodness, you're carrying";
+			mes "so many things with you!";
+			mes "You'd better put some of";
+			mes "it away in Kafra Storage";
+			mes "before you're overwhelmed";
+			mes "by the bulk of your items!";
 			close;
 		}
-		mes "[Ei felle]";
-		mes "Oh! You're here just in time!";
-		mes "After we have gathered the required metal";
-		mes "from the the medal that you have given to us,";
-		mes "we have used the substance to get a result for the research!!!";
-		mes "We have managed to use it to create";
-		mes "a very light yet sturdy armor.";
+		mes "[Ei'felle]";
+		mes "Ah, welcome back! I've finally";
+		mes "made a breakthrough in my";
+		mes "metal research! Look, I've";
+		mes "developed this Glittering";
+		mes "Jacket! It's lightweight and";
+		mes "very durable, you see?";
 		next;
-		mes "[Ei felle]";
-		mes "Look at this Glittering Clothes!";
-		mes "We have managed to get this ";
-		mes "thanks to your help.";
+		mes "[Ei'felle]";
+		mes "I wouldn't be able to have";
+		mes "completed this without your";
+		mes "help. Now, would you like to";
+		mes "receive this Glittering Jacket";
+		mes "as my way of repaying you?";
 		next;
-		mes "[Ei felle]";
-		mes "So, according to what we've promised,";
-		mes "when a result is obtained from the research,";
-		mes "we'll give it to you as a token of gratitude.";
-		mes "Can you please take this?";
-		next;
-		switch(select("Thank you, I will treasure it carefully:For better research result...")) {
+		switch(select("Accept:Wait for Further Development")) {
 		case 1:
 			callsub S_BonusReward,500,2319;
 			end;
 		case 2:
-			mes "["+ strcharinfo(0) +"]";
-			mes "No, it's fine.";
-			mes "There're still a lot of faulty items here.";
-			mes "If you work harder,";
-			mes "you might be able to ";
-			mes "get better results.";
+			mes "[Ei'felle]";
+			mes "Ah, I see. You'd rather wait";
+			mes "until we develop something";
+			mes "more to your liking. In that";
+			mes "case, would you please donate";
+			mes "more medals to my research?";
+			mes "We're always low on them...";
 			next;
-			mes "[Ei felle]";
-			mes "You're right.";
-			mes "There are so many items for me to study";
-			mes "and use it in my research...";
-			mes "I will try to work harder!!!";
-			next;
-			mes "[Ei felle]";
-			mes "However, no matter how many medals you have gathered,";
-			mes "it's still not enough to be made ";
-			mes "as the research materials...";
-			next;
+			break;
 		}
 		if (countitem(7515) > 0) {
-			mes "[Ei felle]";
-			mes "Although the member of our factory ";
-			mes "had been trying to gather the medal from that village,";
-			mes "we still haven't received any good news...";
-			mes "I feel so ashamed...";
-			mes "Can you help me if you ";
-			mes "have some additional medals?";
+			mes "[Ei'felle]";
+			mes "The other Blacksmith";
+			mes "Guildsmen are doing their";
+			mes "best to collect Prize Medals";
+			mes "in Hugel, but they keep failing";
+			mes "to win them! If you have any";
+			mes "medals, then may I have some?";
 			next;
 			callsub S_Reward;
 			end;
 		}
 		else {
-			mes "[Ei felle]";
-			mes "If you ever get any medal,";
-			mes "can you give some to me?";
+			mes "[Ei'felle]";
+			mes "If you happen to obtain any";
+			mes "medals from the Monster";
+			mes "Race Arena in Hugel, then";
+			mes "please bring some of them";
+			mes "to me. I'll be sure to repay";
+			mes "you for your kindness...";
 			close;
 		}
 	}
 	else if ((ein_medal01 > 999) && (ein_medal01 < 1500)) {
 		if (checkweight(1201,1) == 0) {
-			mes "[Ei felle]";
-			mes "Don't you feel tired ";
-			mes "when you're carrying so many items with you?";
-			mes "Slow your pace and ";
-			mes "be relax once in a while.";
+			mes "[Ei'felle]";
+			mes "Goodness, you're carrying";
+			mes "so many things with you!";
+			mes "You'd better put some of";
+			mes "it away in Kafra Storage";
+			mes "before you're overwhelmed";
+			mes "by the bulk of your items!";
 			close;
 		}
-		mes "[Ei felle]";
-		mes "Oh! You're here just in time!";
-		mes "After we have gathered the required metal";
-		mes "from the the medal that you have given to us,";
-		mes "we have used the substance to get a result for the research!!!";
-		mes "We have been able to create ";
-		mes "an elemental armor with slot.";
+		mes "[Ei'felle]";
+		mes "Oh, you're back!";
+		mes "Thanks to all the medals";
+		mes "that you've donated, I'm now";
+		mes "able to manufacture a set";
+		mes "of slotted armor imbued";
+		mes "with a property of your choice.";
 		next;
-		mes "[Ei felle]";
-		mes "We have managed to get this ";
-		mes "thanks to your help.";
+		mes "[Ei'felle]";
+		mes "If you'd like, I can repay you";
+		mes "now by creating a set of slotted elemental armor for you, or we";
+		mes "can wait for you to donate more";
+		mes "medals until I can develop";
+		mes "something else for you.";
 		next;
-		mes "[Ei felle]";
-		mes "So, according to what we've promised,";
-		mes "when a result is obtained from the research,";
-		mes "we'll give it to you as a token of gratitude.";
-		mes "Can you please take this?";
-		next;
-		switch(select("Thank you, I will treasure it carefully:Can I have other stuffs...:For better research result...")) {
+		switch(select("Accept Armor:Can I have something else?:Wait for Further Development")) {
 		case 1:
-			mes "[Ei felle]";
-			mes "Which element do you wish to take";
-			mes "among the four elementals?";
+			mes "[Ei'felle]";
+			mes "I can manufacture one set of";
+			mes "slotted Armor imbued with the";
+			mes "Fire, Earth, Wind, or Water";
+			mes "property. Which property would";
+			mes "you like your armor to have?";
 			next;
-			switch(select("Fire Element:Earth Element:Wind Element:Water Element")) {
+			switch(select("Fire Property:Earth Property:Wind Property:Water Property")) {
 			case 1:
 				callsub S_BonusReward,1000,2345;
 				end;
@@ -11005,128 +11304,93 @@ ein_in01,85,208,5	script	Ei felle#repay01	854,{
 				end;
 			}
 		case 2:
-			mes "[Ei felle]";
-			mes "What? Other results means...";
+			mes "[Ei'felle]";
+			mes "Something else...?";
+			mes "Oh, you must mean";
+			mes "the Glittering Jacket that";
+			mes "I developed earlier. After";
+			mes "all, I have any other items";
+			mes "to offer you for now...";
 			next;
-			mes "["+ strcharinfo(0) +"]";
-			mes "The clothes you made last time...";
-			next;
-			mes "[Ei felle]";
-			mes "Oh! You're referring to Glittering Clothes!";
-			mes "Ok then, here's the item you want.";
-			mes "Thanks to you, ";
-			mes "we're able to achieve great success in the research.";
-			next;
-			mes "[Ei felle]";
-			mes "We'll work harder";
-			mes "to achieve greater result";
-			mes "in the future!";
-			next;
-			mes "[Ei felle]";
-			mes "Here, please accept ";
-			mes "this Glittering Clothes.";
-			next;
-			switch(select("Do not accept:Accept")) {
-			case 1:
-				mes "["+ strcharinfo(0) +"]";
-				mes "Wait, I have changed my mind.";
-				mes "Can I take it next time? ";
-				next;
-				mes "[Ei felle]";
-				mes "Oh? It's ok for me...";
-				mes "You can take it anytime. ";
-				mes "So, please come again when you feel that you need it.";
-				close;
-			case 2:
-				mes "[Ei felle]";
-				mes "Thank you!";
-				mes "If you were free, ";
-				mes "please help us again next time.";
-				set ein_medal01,gift500;
-				getitem 2319,1; //Glittering_Clothes
-				close;
-			}
+			callsub S_BonusReward,500,2319;
+			end;
 		case 3:
-			mes "["+ strcharinfo(0) +"]";
-			mes "No, it's fine.";
-			mes "There're still a lot of faulty items here.";
-			mes "If you work harder,";
-			mes "you might be able to ";
-			mes "get better results.";
-			next;
-			mes "[Ei felle]";
-			mes "You're right.";
-			mes "There are so many items for me to study";
-			mes "and use it in my research...";
-			mes "I will try to work harder!!!";
-			next;
-			mes "[Ei felle]";
-			mes "However, no matter how many medals you have gathered,";
-			mes "it's still not enough to be made ";
-			mes "as the research materials...";
+			mes "[Ei'felle]";
+			mes "Ah, I see. You'd rather wait";
+			mes "until we develop something";
+			mes "more to your liking. In that";
+			mes "case, would you please donate";
+			mes "more medals to my research?";
+			mes "We're always low on them...";
 			next;
 			break;
 		}
 		if (countitem(7515) > 0) {
-			mes "[Ei felle]";
-			mes "Although the member of our factory ";
-			mes "had been trying to gather the medal from that village,";
-			mes "we still haven't received any good news...";
-			mes "I feel so ashamed...";
-			mes "Can you help me if you ";
-			mes "have some additional medals?";
+			mes "[Ei'felle]";
+			mes "The other Blacksmith";
+			mes "Guildsmen are doing their";
+			mes "best to collect Prize Medals";
+			mes "in Hugel, but they keep failing";
+			mes "to win them! If you have any";
+			mes "medals, then may I have some?";
 			next;
 			callsub S_Reward;
 			end;
 		}
 		else {
-			mes "[Ei felle]";
-			mes "If you ever get any medal,";
-			mes "can you give some to me?";
+			mes "[Ei'felle]";
+			mes "If you happen to obtain any";
+			mes "medals from the Monster";
+			mes "Race Arena in Hugel, then";
+			mes "please bring some of them";
+			mes "to me. I'll be sure to repay";
+			mes "you for your kindness...";
 			close;
 		}
 	}
 	else if (ein_medal01 > 1499) {
 		if (checkweight(1201,1) == 0) {
-			mes "[Ei felle]";
-			mes "Don't you feel tired ";
-			mes "when you're carrying so many items with you?";
-			mes "Slow your pace and ";
-			mes "be relax once in a while.";
+			mes "[Ei'felle]";
+			mes "Goodness, you're carrying";
+			mes "so many things with you!";
+			mes "You'd better put some of";
+			mes "it away in Kafra Storage";
+			mes "before you're overwhelmed";
+			mes "by the bulk of your items!";
 			close;
 		}
-		mes "[Ei felle]";
-		mes "Oh! You're here just in time!";
-		mes "After we have gathered the required metal";
-		mes "from the the medal that you have given to us,";
-		mes "we have used the substance to get a result for the research!!!";
-		mes "We have been able to create";
-		mes "some level 4 weapons!!!!!!";
+		mes "[Ei'felle]";
+		mes "Ah, you're back! I've";
+		mes "extracted all the metal";
+		mes "from the medals you've";
+		mes "given me, and I think I have";
+		mes "enough to create a Level 4";
+		mes "Weapon. Isn't that incredible?";
 		next;
-		mes "[Ei felle]";
-		mes "We have managed to get this ";
-		mes "thanks to your help.";
+		mes "[Ei'felle]";
+		mes "If you like, I can create";
+		mes "one of these weapons for you";
+		mes "as my way of repaying you for";
+		mes "your help. What do you think?";
 		next;
-		mes "[Ei felle]";
-		mes "So, according to what we've promised,";
-		mes "when a result is obtained from the research,";
-		mes "we'll give it to you as a token of gratitude.";
-		mes "Can you please take this?";
-		next;
-		switch(select("Thank you, I will treasure it carefully:Can I have other stuffs...")) {
+		switch(select("Yes, I want a Level 4 Weapon.:Can I have something else?")) {
 		case 1:
-			mes "[Ei felle]";
-			mes "I will give you anything you want.";
-			mes "What do you want?";
+			mes "[Ei'felle]";
+			mes "Great, great!";
+			mes "Now, which kind of";
+			mes "Level 4 Weapon would";
+			mes "you like? It won't do";
+			mes "you much good if you";
+			mes "can't equip it, right?";
 			next;
-			switch(select("Dagger:Sword:2 Hand Sword:Axe:Mace:Bow:Staff:Book:Spear:Katar:Fists:Whip:Musical Weapon")) {
+			switch(select("Dagger:One Handed Sword:Two Handed Sword:Axe:Mace:Bow:Staff:Book:Spear:Katar:Knuckle:Whip:Musical Instrument")) {
 			case 1:
-				mes "[Ei felle]";
-				mes "You can choose whichever unit you like.";
-				mes "Please select";
-				mes "the item that you desire.";
+				mes "[Ei'felle]";
+				mes "So you want a Dagger?";
+				mes "Which Level 4 Dagger";
+				mes "would you like me to create?";
 				next;
-				switch(select("Ginnungagap:Grimtooth:Dragon Killer:Mail Breaker:Bazerald:Sword Breaker:Ice Pick:Sucsamad:Kitchen Knife:Azoth:Exercise:Assassin Dagger:Moonlight Sword:Weeder Knife:Cursed Dagger:Counter Dagger:Combat Knife:Fortune Sword:Cancel")) {
+				switch(select("Ginnungagap:Grimtooth:Dragon Killer:Mail Breaker:Bazerald:Sword Breaker:Ice Pick:Sucsamad:Kitchen Knife:Azoth:Exorciser:Assassin Dagger:Moonlight Dagger:Weeder Knife:Cursed Dagger:Dagger of Counter:Combat Knife:Fortune Sword:Cancel")) {
 				case 1:
 					callsub S_BonusReward,1500,13002;
 					end;
@@ -11186,10 +11450,12 @@ ein_in01,85,208,5	script	Ei felle#repay01	854,{
 				}
 				break;
 			case 2:
-				mes "[Ei felle]";
-				mes "You can choose whichever unit you like.";
-				mes "Please select";
-				mes "the item that you desire.";
+				mes "[Ei'felle]";
+				mes "So you'd like to have";
+				mes "a One Handed Sword?";
+				mes "Please choose which";
+				mes "Level 4 Weapon that";
+				mes "you want me to create.";
 				next;
 				switch(select("Nagan:Immaterial Sword:Mysteltainn:Byeollungum:Star Dust Blade:Caesar's Sword:Ice Falchion:Excalibur:Edge:Cutlus:Solar Sword:Tirfing:Fireblend:Cancel")) {
 				case 1:
@@ -11236,12 +11502,14 @@ ein_in01,85,208,5	script	Ei felle#repay01	854,{
 				}
 				break;
 			case 3:
-				mes "[Ei felle]";
-				mes "You can choose whichever unit you like.";
-				mes "Please select";
-				mes "the item that you desire.";
+				mes "[Ei'felle]";
+				mes "So you'd like to have";
+				mes "a Two Handed Sword?";
+				mes "Please choose which";
+				mes "Level 4 Weapon that";
+				mes "you want me to create.";
 				next;
-				switch(select("Dragon Slayer:Masamune:Muramasa:Schweizersabel:Executioner:Zweihander:Katzbalger:cancel")) {
+				switch(select("Dragon Slayer:Masamune:Muramasa:Schweizersabel:Executioner:Zweihander:Katzbalger:Cancel")) {
 				case 1:
 					callsub S_BonusReward,1500,1166;
 					end;
@@ -11268,12 +11536,13 @@ ein_in01,85,208,5	script	Ei felle#repay01	854,{
 				}
 				break;
 			case 4:
-				mes "[Ei felle]";
-				mes "You can choose whichever unit you like.";
-				mes "Please select";
-				mes "the item that you desire.";
+				mes "[Ei'felle]";
+				mes "So you'd like to have";
+				mes "an Axe? Please choose";
+				mes "which Level 4 Weapon";
+				mes "that you want me to create.";
 				next;
-				switch(select("Great Axe:Guillotine:Right Epsilon:Brood Axe:Sabbath:Slaughter:Cleaver:Tomahawk:cancel")) {
+				switch(select("Great Axe:Guillotine:Light Epsilon:Bloody Axe:Sabbath:Slaughter:Cleaver:Tomahawk:Cancel")) {
 				case 1:
 					callsub S_BonusReward,1500,1364;
 					end;
@@ -11303,12 +11572,13 @@ ein_in01,85,208,5	script	Ei felle#repay01	854,{
 				}
 				break;
 			case 5:
-				mes "[Ei felle]";
-				mes "You can choose whichever unit you like.";
-				mes "Please select";
-				mes "the item that you desire.";
+				mes "[Ei'felle]";
+				mes "So you'd like to have";
+				mes "a Mace? Please choose";
+				mes "which Level 4 Weapon";
+				mes "that you want me to create.";
 				next;
-				switch(select("Golden Mace:Grand Cross:Long Mace:Spike:Slash:Quadrille:cancel")) {
+				switch(select("Golden Mace:Grand Cross:Long Mace:Spike:Slash:Quadrille:Cancel")) {
 				case 1:
 					callsub S_BonusReward,1500,1524;
 					end;
@@ -11332,12 +11602,13 @@ ein_in01,85,208,5	script	Ei felle#repay01	854,{
 				}
 				break;
 			case 6:
-				mes "[Ei felle]";
-				mes "You can choose whichever unit you like.";
-				mes "Please select";
-				mes "the item that you desire.";
+				mes "[Ei'felle]";
+				mes "So you'd like to have";
+				mes "a Bow? Please choose";
+				mes "which Level 4 Weapon";
+				mes "that you want me to create.";
 				next;
-				switch(select("Bow Of Roguemaster:Dragon Wing:Bow Of Rudra:Balistar:cancel")) {
+				switch(select("Roguemaster's Bow:Dragon Wing:Rudra's Bow:Ballista:Cancel")) {
 				case 1:
 					callsub S_BonusReward,1500,1719;
 					end;
@@ -11355,12 +11626,13 @@ ein_in01,85,208,5	script	Ei felle#repay01	854,{
 				}
 				break;
 			case 7:
-				mes "[Ei felle]";
-				mes "You can choose whichever unit you like.";
-				mes "Please select";
-				mes "the item that you desire.";
+				mes "[Ei'felle]";
+				mes "So you'd like to have";
+				mes "a Staff? Please choose";
+				mes "which Level 4 Weapon";
+				mes "that you want me to create.";
 				next;
-				switch(select("Staff Of Wing:Wizardy Staff:cancel")) {
+				switch(select("Wing Staff:Wizardry Staff:Cancel")) {
 				case 1:
 					callsub S_BonusReward,1500,1616;
 					end;
@@ -11372,12 +11644,13 @@ ein_in01,85,208,5	script	Ei felle#repay01	854,{
 				}
 				break;
 			case 8:
-				mes "[Ei felle]";
-				mes "You can choose whichever unit you like.";
-				mes "Please select";
-				mes "the item that you desire.";
+				mes "[Ei'felle]";
+				mes "So you'd like to have";
+				mes "a Book? Please choose";
+				mes "which Level 4 Weapon";
+				mes "that you want me to create.";
 				next;
-				switch(select("Legacy of Dragon:Book of the Apocalypse:Girl's Diary:Hardback:cancel")) {
+				switch(select("Legacy of Dragon:Book of the Apocalypse:Girl's Diary:Hardcover Book:Cancel")) {
 				case 1:
 					callsub S_BonusReward,1500,1559;
 					end;
@@ -11395,12 +11668,13 @@ ein_in01,85,208,5	script	Ei felle#repay01	854,{
 				}
 				break;
 			case 9:
-				mes "[Ei felle]";
-				mes "You can choose whichever unit you like.";
-				mes "Please select";
-				mes "the item that you desire.";
+				mes "[Ei'felle]";
+				mes "So you'd like to have a";
+				mes "Spear? Please choose";
+				mes "which Level 4 Weapon";
+				mes "that you want me to create.";
 				next;
-				switch(select("Gae Bolg:Gelerdria:Gungnir:Skewer:Longinus's Spear:Brionac:Bill Guisarme:Zephyrus:Crescent Scythe:Tjungkuletti:Hell Fire:cancel")) {
+				switch(select("Gae Bolg:Gelerdria:Gungnir:Skewer:Longinus's Spear:Brionac:Bill Guisarme:Zephyrus:Crescent Scythe:Tjungkuletti:Hellfire:Cancel")) {
 				case 1:
 					callsub S_BonusReward,1500,1474;
 					end;
@@ -11439,12 +11713,13 @@ ein_in01,85,208,5	script	Ei felle#repay01	854,{
 				}
 				break;
 			case 10:
-				mes "[Ei felle]";
-				mes "You can choose whichever unit you like.";
-				mes "Please select";
-				mes "the item that you desire.";
+				mes "[Ei'felle]";
+				mes "So you'd like to have a";
+				mes "Katar? Please choose";
+				mes "which Level 4 Weapon";
+				mes "that you want me to create.";
 				next;
-				switch(select("Infiltrator:Bloody Roar:Unholy Touch:cancel")) {
+				switch(select("Infiltrator:Bloody Roar:Unholy Touch:Cancel")) {
 				case 1:
 					callsub S_BonusReward,1500,1261;
 					end;
@@ -11459,12 +11734,13 @@ ein_in01,85,208,5	script	Ei felle#repay01	854,{
 				}
 				break;
 			case 11:
-				mes "[Ei felle]";
-				mes "You can choose whichever unit you like.";
-				mes "Please select";
-				mes "the item that you desire.";
+				mes "[Ei'felle]";
+				mes "So you'd like to have a";
+				mes "Knuckle? Please choose";
+				mes "which Level 4 Weapon";
+				mes "that you want me to create.";
 				next;
-				switch(select("Claw of Garm:Berserk:Kaiser Knuckle:cancel")) {
+				switch(select("Hatii Claw:Berserk:Kaiser Knuckle:Cancel")) {
 				case 1:
 					callsub S_BonusReward,1500,1815;
 					end;
@@ -11479,12 +11755,13 @@ ein_in01,85,208,5	script	Ei felle#repay01	854,{
 				}
 				break;
 			case 12:
-				mes "[Ei felle]";
-				mes "You can choose whichever unit you like.";
-				mes "Please select";
-				mes "the item that you desire.";
+				mes "[Ei'felle]";
+				mes "So you'd like to have a";
+				mes "Whip? Please choose";
+				mes "which Level 4 Weapon";
+				mes "that you want me to create.";
 				next;
-				switch(select("Lariat:Rapture Rose:Bladed Whip:Chemeti:Queen's Whip:cancel")) {
+				switch(select("Lariat:Rapture Rose:Blade Whip:Chemeti:Queen's Whip:Cancel")) {
 				case 1:
 					callsub S_BonusReward,1500,1962;
 					end;
@@ -11505,12 +11782,13 @@ ein_in01,85,208,5	script	Ei felle#repay01	854,{
 				}
 				break;
 			case 13:
-				mes "[Ei felle]";
-				mes "You can choose whichever unit you like.";
-				mes "Please select";
-				mes "the item that you desire.";
+				mes "[Ei'felle]";
+				mes "So you'd like to have a";
+				mes "Musical Instrument? Please";
+				mes "choose which Level 4 Weapon";
+				mes "that you want me to create.";
 				next;
-				switch(select("Oriental Lute:Electronic Guitar:cancel")) {
+				switch(select("Oriental Lute:Electric Guitar:Cancel")) {
 				case 1:
 					callsub S_BonusReward,1500,1918;
 					end;
@@ -11524,18 +11802,15 @@ ein_in01,85,208,5	script	Ei felle#repay01	854,{
 			}
 			break;
 		case 2:
-			mes "[Ei felle]";
-			mes "Something else...";
+			mes "[Ei'felle]";
+			mes "Something else?";
+			mes "Oh, alright then, would";
+			mes "you like to have a Glittering";
+			mes "Jacket, or a set of slotted";
+			mes "elemental Armor? Please go";
+			mes "ahead and make your choice~";
 			next;
-			mes "["+ strcharinfo(0) +"]";
-			mes "The one you made last time...";
-			next;
-			mes "[Ei felle]";
-			mes "Oh, that one!!";
-			mes "Here, there they are,";
-			mes "Which item do you desire?";
-			next;
-			switch(select("Glittering Clothes:Flame Sprits Armor:Earth Sprits Armor:Wind Sprits Armor:Water Sprits Armor:cancel")) {
+			switch(select("Glittering Jacket:Fire Property Armor:Earth Property Armor:Wind Property Armor:Water Property Armor:Cancel")) {
 			case 1:
 				callsub S_BonusReward,500,2319;
 				end;
@@ -11558,146 +11833,143 @@ ein_in01,85,208,5	script	Ei felle#repay01	854,{
 		}
 	}
 	else {
-		mes "[Ei felle]";
-		mes "Oh, how are you?";
-		mes "I have been making good use";
-		mes "of the medal that you gave me";
-		mes "but with so many faulty product around";
-		mes "it's really hard to";
-		mes "save any of it for future use...";
+		mes "[Ei'felle]";
+		mes "Oh, how have you been?";
+		mes "Thank you so much for";
+		mes "donating so many medals,";
+		mes "they've been helpful in my";
+		mes "research. Still, I need more";
+		mes "and more of them everyday...";
 		next;
 		if (countitem(7515) > 0) {
-			mes "[Ei felle]";
-			mes "Although the member of our factory ";
-			mes "had been trying to gather the medal from that village,";
-			mes "we still haven't received any good news...";
-			mes "I feel so ashamed...";
-			mes "Can you help me if you ";
-			mes "have some additional medals?";
+			mes "[Ei'felle]";
+			mes "The other Blacksmith";
+			mes "Guildsmen are doing their";
+			mes "best to collect Prize Medals";
+			mes "in Hugel, but they keep failing";
+			mes "to win them! If you have any";
+			mes "medals, then may I have some?";
 			next;
 			callsub S_Reward;
 			end;
 		}
 		else {
-			mes "[Ei felle]";
-			mes "If you ever get any medal,";
-			mes "can you give some to me?";
+			mes "[Ei'felle]";
+			mes "If you happen to obtain any";
+			mes "medals from the Monster";
+			mes "Race Arena in Hugel, then";
+			mes "please bring some of them";
+			mes "to me. I'll be sure to repay";
+			mes "you for your kindness...";
 			close;
 		}
 	}
 	close;
 
 S_Reward:
-	switch(select("Ok:No")) {
+	switch(select("Sure:No")) {
 	case 1:
-		mes "[Ei felle]";
-		mes "Really?!!!!!";
-		mes "Thank you so much.";
-		mes "This metal is light and solid";
-		mes "and it can be made use to ";
-		mes "produce good product.";
+		mes "[Ei'felle]";
+		mes "Oh, thank you so much!";
+		mes "I can use the metal in those";
+		mes "medals to produce some high";
+		mes "quality products. Now, how";
+		mes "shall I repay you for giving me";
+		mes "some of your Prize Medals?";
 		next;
-		mes "[Ei felle]";
-		mes "I need to give you something as a reward.";
-		mes "What should I give you...";
-		next;
-		switch(select("Please provide aid in future experience:Help me with the job NPC:Work harder in your research:Ask about progress of research")) {
+		switch(select("Base Experience:Job Experience:No, I'm just glad to help.:How's your research progressing?")) {
 		case 1:
-			mes "[Ei felle]";
-			mes "Hmmm...This is nothing important.";
-			mes "Anyway, let me pray for your safety";
-			mes "and hopefully it will be helpful";
-			mes "for your future adventure!";
+			mes "[Ei'felle]";
+			mes "You just want to improve";
+			mes "yourself, huh? Well, I dunno";
+			mes "if you want to get stronger,";
+			mes "smarter, or faster, but I can";
+			mes "coach you on some visualization if you like. Now, relax with me~";
+			mes "physical development.";
 			next;
-			mes "[Ei felle]";
-			mes "Hmmmm.....Hahaha!!!";
+			mes "[Ei'felle]";
+			mes "Focus... and believe.";
+			mes "Believe that you are";
+			mes "becoming what you want";
+			mes "to be! B-believe... with";
+			mes "all of your freakin' heart!";
 			emotion e_omg,1;
 			emotion e_omg;
 			next;
-			mes "[Ei felle]";
-			mes "Phew, that's it.";
-			mes "I pray that your future will be blessed";
-			mes "with safety and happiness.";
+			mes "[Ei'felle]";
+			mes "*Phew* How's that?";
+			mes "Now do you see the";
+			mes "power of hope?";
 			delitem 7515,1; //Marvelous_Medal
-			if (BaseLevel < 21) {
+			if (BaseLevel < 21)
 				getexp 150,0;
-			}
-			else if ((BaseLevel > 20) && (BaseLevel < 31)) {
+			else if ((BaseLevel > 20) && (BaseLevel < 31))
 				getexp 300,0;
-			}
-			else if ((BaseLevel > 30) && (BaseLevel < 41)) {
+			else if ((BaseLevel > 30) && (BaseLevel < 41))
 				getexp 2000,0;
-			}
-			else if ((BaseLevel > 40) && (BaseLevel < 51)) {
+			else if ((BaseLevel > 40) && (BaseLevel < 51))
 				getexp 8000,0;
-			}
-			else if ((BaseLevel > 50) && (BaseLevel < 61)) {
+			else if ((BaseLevel > 50) && (BaseLevel < 61))
 				getexp 25000,0;
-			}
-			else if ((BaseLevel > 60) && (BaseLevel < 71)) {
+			else if ((BaseLevel > 60) && (BaseLevel < 71))
 				getexp 47000,0;
-			}
-			else if ((BaseLevel > 70) && (BaseLevel < 81)) {
+			else if ((BaseLevel > 70) && (BaseLevel < 81))
 				getexp 55000,0;
-			}
-			else {
+			else
 				getexp 65000,0;
-			}
 			close;
 		case 2:
-			mes "[Ei felle]";
-			mes "Hmmm...This is nothing important.";
-			mes "Anyway, let me pray for your safety";
-			mes "and hopefully it will be helpful";
-			mes "for your future adventure!";
+			mes "[Ei'felle]";
+			mes "You want to become more";
+			mes "competent in your job? Um...";
+			mes "Alright, we can do that. Just";
+			mes "meditate with me, and we'll go";
+			mes "do some imagery work together.";
+			mes "I'm real good at this you know.";
 			next;
-			mes "[Ei felle]";
-			mes "Hmmmm.....Hahaha!!!";
+			mes "[Ei'felle]";
+			mes "J-just... visualize";
+			mes "yourself... being...";
+			mes "t-totally... awesome!";
+			mes "You've gotta see it, and";
+			mes "you've gotta feel it in your";
+			mes "freakin' heart and mind!";
 			emotion e_omg,1;
 			emotion e_omg;
 			next;
-			mes "[Ei felle]";
-			mes "Phew, that's it.";
-			mes "I pray that your future will be blessed";
-			mes "with safety and happiness.";
+			mes "[Ei'felle]";
+			mes "Yeap, it doesn't matter";
+			mes "if it's real or imagined...";
+			mes "Your mind will work on";
+			mes "whatever you feed it.";
+			mes "Placebos and psychosomatic symptoms-- it all ties together.";
 			delitem 7515,1; //Marvelous_Medal
 			if (Upper != 2 && Class < Job_SuperNovice) {
-				if (BaseJob == Job_Novice) {
+				if (BaseJob == Job_Novice)
 					getexp 0,30;
-				}
 				else if (((BaseJob >= Job_Swordman) && (BaseJob <= Job_Thief)) || (Class == Job_Taekwon)) {
-					if (JobLevel < 11) {
+					if (JobLevel < 11)
 						getexp 0,50;
-					}
-					else if ((JobLevel > 10) && (JobLevel < 21)) {
+					else if ((JobLevel > 10) && (JobLevel < 21))
 						getexp 0,250;
-					}
-					else if ((JobLevel > 20) && (JobLevel < 31)) {
+					else if ((JobLevel > 20) && (JobLevel < 31))
 						getexp 0,1500;
-					}
-					else if ((JobLevel > 30) && (JobLevel < 41)) {
+					else if ((JobLevel > 30) && (JobLevel < 41))
 						getexp 0,7000;
-					}
-					else {
+					else
 						getexp 0,20000;
-					}
 				}
 				else if ((BaseJob >= Job_Knight) && (BaseJob <= Job_Crusader2)) {
-					if (JobLevel < 11) {
+					if (JobLevel < 11)
 						getexp 0,80;
-					}
-					else if ((JobLevel > 10) && (JobLevel < 21)) {
+					else if ((JobLevel > 10) && (JobLevel < 21))
 						getexp 0,2000;
-					}
-					else if ((JobLevel > 20) && (JobLevel < 31)) {
+					else if ((JobLevel > 20) && (JobLevel < 31))
 						getexp 0,10000;
-					}
-					else if ((JobLevel > 30) && (JobLevel < 41)) {
+					else if ((JobLevel > 30) && (JobLevel < 41))
 						getexp 0,25000;
-					}
-					else {
+					else
 						getexp 0,38000;
-					}
 				}
 			}
 			else if (Upper == 2) {
@@ -11705,215 +11977,274 @@ S_Reward:
 					getexp 0,40;
 				}
 				else if ((Class >= Job_Swordman_High) && (Class <= Job_Thief_High)) {
-					if (JobLevel < 11) {
+					if (JobLevel < 11)
 						getexp 0,65;
-					}
-					else if ((JobLevel > 10) && (JobLevel < 21)) {
+					else if ((JobLevel > 10) && (JobLevel < 21))
 						getexp 0,300;
-					}
-					else if ((JobLevel > 20) && (JobLevel < 31)) {
+					else if ((JobLevel > 20) && (JobLevel < 31))
 						getexp 0,2500;
-					}
-					else if ((JobLevel > 30) && (JobLevel < 41)) {
+					else if ((JobLevel > 30) && (JobLevel < 41))
 						getexp 0,10000;
-					}
-					else {
+					else
 						getexp 0,25000;
-					}
 				}
 				else if ((Class >= Job_Lord_Knight) && (Class <= Job_Paladin_2)) {
-					if (JobLevel < 11) {
+					if (JobLevel < 11)
 						getexp 0,150;
-					}
-					else if ((JobLevel > 10) && (JobLevel < 21)) {
+					else if ((JobLevel > 10) && (JobLevel < 21))
 						getexp 0,2200;
-					}
-					else if ((JobLevel > 20) && (JobLevel < 31)) {
+					else if ((JobLevel > 20) && (JobLevel < 31))
 						getexp 0,13000;
-					}
-					else if ((JobLevel > 30) && (JobLevel < 41)) {
+					else if ((JobLevel > 30) && (JobLevel < 41))
 						getexp 0,27000;
-					}
-					else if ((JobLevel > 40) && (JobLevel < 51)) {
+					else if ((JobLevel > 40) && (JobLevel < 51))
 						getexp 0,38000;
-					}
-					else {
+					else
 						getexp 0,40000;
-					}
 				}
 			}
 			else {
-				if (JobLevel < 11) {
+				if (JobLevel < 11)
 					getexp 0,50;
-				}
-				else if ((JobLevel > 10) && (JobLevel < 21)) {
+				else if ((JobLevel > 10) && (JobLevel < 21))
 					getexp 0,250;
-				}
-				else if ((JobLevel > 20) && (JobLevel < 31)) {
+				else if ((JobLevel > 20) && (JobLevel < 31))
 					getexp 0,1500;
-				}
-				else if ((JobLevel > 30) && (JobLevel < 41)) {
+				else if ((JobLevel > 30) && (JobLevel < 41))
 					getexp 0,7000;
-				}
-				else if ((JobLevel > 40) && (JobLevel < 51)) {
+				else if ((JobLevel > 40) && (JobLevel < 51))
 					getexp 0,20000;
-				}
-				else if ((JobLevel > 50) && (JobLevel < 61)) {
+				else if ((JobLevel > 50) && (JobLevel < 61))
 					getexp 0,30000;
-				}
-				else {
+				else
 					getexp 0,38000;
-				}
 			}
 			close;
 		case 3:
-			mes "[Ei felle]";
-			mes "What? ";
-			mes "Are you trying to give it to me for free?";
-			mes "That's great...";
-			mes "I'm really grateful to you...";
+			mes "[Ei'felle]";
+			mes "What th--?! You sure";
+			mes "you don't want anything?";
+			mes "Hm, well, I think it's kind";
+			mes "of bad karma if I don't give";
+			mes "you anything in return, so...";
+			mes "Think of something. Quick.";
 			next;
 			mes "["+ strcharinfo(0) +"]";
-			mes "Please use this in your research.";
-			mes "I'll come for the reward";
-			mes "when you manage to get a good result in your research.";
+			mes "Er, just use the medals";
+			mes "to further your manufacturing";
+			mes "research, and then you can";
+			mes "pay me back if your develop";
+			mes "something new. It's, um, like";
+			mes "an investment in your work!";
 			next;
-			mes "[Ei felle]";
-			mes "Oh, you're so kind.";
-			mes "I'm so grateful to you.";
-			mes "I will listen to you and ";
-			mes "work harder in my research";
-			mes "to achieve great results!!!";
-			mes "I'll pay my gratitude when I am successful in my research.";
+			mes "[Ei'felle]";
+			mes "Yeah... Yeah.";
+			mes "Okay, I see where";
+			mes "you're coming from.";
+			mes "That's pretty smart.";
+			mes "Okay, I'll repay you when";
+			mes "we develop something new!";
 			next;
-			mes "[Ei felle]";
-			mes "How many do you wish to give me?";
+			mes "[Ei'felle]";
+			mes "Anyway, I need as many";
+			mes "medals as I can get as";
+			mes "soon as I can. How many";
+			mes "medals do you think you";
+			mes "can give me right now?";
 			next;
-			switch(select("Give all to you:Hmm, is this enough?:I change my mind")) {
+			switch(select("Take them all.:How about this much?:No, I changed my mind.")) {
 			case 1:
-				mes "[Ei felle]";
-				mes "Wow!!! Thank you so much!!";
-				mes "I will pay you back when!!!";
-				mes "I achieve success in my research.";
-				next;
-				mes "[Ei felle]";
-				mes "I shouldn't slack now!!";
-				mes "I must do my research!!!";
+				mes "[Ei'felle]";
+				mes "Th-thank you!";
+				mes "Thank you so much!";
+				mes "Your help will greatly";
+				mes "advance my research,";
+				mes "and I promise to repay";
+				mes "you as soon as I can!";
 				set .@medals,countitem(7515);
 				delitem 7515,.@medals; //Marvelous_Medal
 				set ein_medal01,ein_medal01+.@medals;
 				close;
 			case 2:
-				mes "[Ei felle]";
-				mes "How many are you going to give it to me?";
-				mes "Please set it below 100, ok?";
+				mes "[Ei'felle]";
+				mes "Alright, please enter the";
+				mes "number of medals that";
+				mes "you're willing to give me.";
+				mes "Please don't enter any";
+				mes "number greater than 100.";
 				next;
 				while(1) {
 					input .@input;
 					if (.@input == 0) {
-						mes "[Ei felle]";
-						mes "Are you going to give them to me for real?";
-						mes "Or are you trying to joke with me?";
+						mes "[Ei'felle]";
+						mes "Aw, so you've decided";
+						mes "to cancel? Well, it's your";
+						mes "choice, but I'm still so";
+						mes "disappointed. Please come";
+						mes "back if you change your mind...";
 						close;
 					}
 					else if (.@input < 0 || .@input > 100) {
-						mes "[Ei felle]";
-						mes "Please set the amount below 100.";
+						mes "[Ei'felle]";
+						mes "Remember, you can only";
+						mes "enter a number from 1 to 100.";
+						mes "If you want to give me more";
+						mes "medals, then perhaps you";
+						mes "should just give them all to me~ ^FFFFFF ^000000";
 						next;
 					}
-					else {
+					else
 						break;
-					}
 				}
 				if (countitem(7515) < .@input) {
-					mes "[Ei felle]";
-					mes "Huh? Looks like you don't have enough medal.";
-					mes "Oh, you've gone too far.";
+					mes "[Ei'felle]";
+					mes "I'm sorry, but I don't";
+					mes "think you have that many";
+					mes "medals with you. Make sure";
+					mes "that you offer me an amount of";
+					mes "medals that you actually have.";
 					emotion e_heh;
 					close;
 				}
 				else {
-					mes "[Ei felle]";
-					mes "Thank you!!!";
-					mes "Thanks for the medal that you give me.";
-					mes "I will try my best to do the research";
-					mes "and achieve a great success one day!";
-					mes "Please wait for me!!!";
+					mes "[Ei'felle]";
+					mes "Th-thank you!";
+					mes "Thank you so much!";
+					mes "Your help will greatly";
+					mes "advance my research,";
+					mes "and I promise to repay";
+					mes "you as soon as I can!";
 					delitem 7515,.@input; //Marvelous_Medal
 					set ein_medal01,ein_medal01+.@input;
 					close;
 				}
 			case 3:
-				mes "[Ei felle]";
-				mes "Oh, so that's what happened...";
-				mes "If you change your mind,";
-				mes "I am counting on you to help me.";
+				mes "[Ei'felle]";
+				mes "Oh, alright...";
+				mes "Still, I really need";
+				mes "those medals, so if you";
+				mes "change your mind, please";
+				mes "come back as soon as you can.";
 				close;
 			}
 			delitem 7515,1; //Marvelous_Medal
 			set ein_medal01,1;
 			close;
 		case 4:
-			if (ein_medal01 == 0) {
-				mes "[Ei felle]";
-				mes "Phew...There still isn't any progress.";
-				mes "If I can get that medal...";
-				mes "Wooowoooo...";
-				close;
-			}
-			else {
-				mes "[Ei felle]";
-				mes "However,until then...";
-				mes "I still haven't made any progress";
-				mes "However, we still have ^FF0000"+ ein_medal01 +"^000000unit(s) Marvelous Medal";
-				mes "given by Mr./Miss "+ strcharinfo(0) +".";
-				mes "We will use it carefully.";
-				close;
-			}
+			mes "[Ei'felle]";
+			mes "Well, I've been able to";
+			mes "create a "+getitemname(getarg(0));
+			mes "using the medals that you've";
+			mes "brought to me. But I just know";
+			mes "I can make something better";
+			mes "if you'd bring me more!";
+			next;
+			mes "[Ei'felle]";
+			mes "As of now, I have the metal";
+			mes "from ^FF0000"+ ein_medal01 +"^000000 Prizes Medals that";
+			mes "you've donated to me. The more";
+			mes "that you bring, the closer I can get to making a new breakthrough!";
+			close;
 		}
 	case 2:
-		mes "[Ei felle]";
-		mes "Oh, is that so...";
-		mes "If you ever change your mind,";
-		mes "I hope yo will be willing to help me.";
+		mes "[Ei'felle]";
+		mes "Oh, alright...";
+		mes "Still, I really need";
+		mes "those medals, so if you";
+		mes "change your mind, please";
+		mes "come back as soon as you can.";
 		emotion e_sob;
 		close;
 	}
 
 S_BonusReward:
-	mes "["+ strcharinfo(0) +"]";
-	mes "I'm relieve that the research result";
-	mes "is better than expected.";
-	mes "Well then, I will put it to good use.";
+	mes "[Ei'felle]";
+	if (getarg(1) == 2319) {
+		mes "Do you really want";
+		mes "this "+getitemname(getarg(1))+"?";
+		mes "You may want to forego this";
+		mes "reward in favor of getting";
+		mes "something better later...";
+	}
+	else if ((getarg(1) == 2345) || (getarg(1) == 2347) || (getarg(1) == 2349) || (getarg(1) == 2351)) {
+		mes "Are you sure that you want";
+		mes "to accept this set of slotted";
+		if (getarg(1) == 2345)
+			mes "Fire property Armor? If you do,";
+		else if (getarg(1) == 2351)
+			mes "Earth property Armor? If you do,";
+		else if (getarg(1) == 2349)
+			mes "Wind property Armor? If you do,";
+		else if (getarg(1) == 2347)
+			mes "Water property Armor? If you do,";
+		mes "I'll need more medals from you";
+		mes "to make further advancements";
+		mes "in my manufacturing research.";
+	}
+	else {
+		mes "So you wish to have a";
+		mes getitemname(getarg(1))+"? If you choose";
+		mes "to have this Level 4 Weapon,";
+		mes "I'll need to melt many of the";
+		mes "medals that you've donated";
+		mes "to me. Shall we proceed?";
+	}
 	next;
-	mes "[Ei felle]";
-	mes "I should be the one who say thank you";
-	mes "for you have helped me to achieve";
-	mes "great research result.";
-	mes "I will work harder";
-	mes "to achieve greater results";
-	mes "in the future.";
-	next;
-	mes "[Ei felle]";
-	mes "Here, please accept ";
-	mes "this "+getitemname(getarg(1))+".";
-	next;
-	switch(select("Do not accept:Accept")) {
+	switch(select("Decline:Accept")) {
 	case 1:
 		mes "["+ strcharinfo(0) +"]";
-		mes "Wait, I have changed my mind.";
-		mes "Can I take it next time? ";
+		mes "W-wait, I changed my";
+		mes "mind. Would it be fine";
+		mes "if I asked you to give";
+		mes "me a reward later?";
 		next;
-		mes "[Ei felle]";
-		mes "Oh? It's ok for me...";
-		mes "You can take it anytime. ";
-		mes "So, please come again when you feel that you need it.";
+		mes "[Ei'felle]";
+		if (!getiteminfo(getarg(1),13)) { //use item level to determine if the item is armor (no weapon level)
+			mes "Of course, of course.";
+			mes "Remember, if you donate";
+			mes "more medals to me, then";
+			mes "I'll be able to create items";
+			mes "of higher quality for you~";
+		}
+		else {
+			mes "I don't think I can develop";
+			mes "anything better than these Level 4 Weapons, but after making";
+			mes "such a big investment, you should decide on what you want carefully.";
+		}
 		close;
 	case 2:
-		mes "[Ei felle]";
-		mes "Thank you!";
-		mes "If you were free, ";
-		mes "please help us again next time.";
+		mes "[Ei'felle]";
+		if (getarg(1) == 2319) {
+			mes "Here you are, I trust that";
+			mes "this "+getitemname(getarg(1))+" will";
+			mes "serve you well. Thank you";
+			mes "for your help, and I hope that";
+			mes "you'll continue to donate your";
+			mes "medals for my metal research~";
+		}
+		else if ((getarg(1) == 2345) || (getarg(1) == 2347) || (getarg(1) == 2349) || (getarg(1) == 2351)) {
+			mes "Great choice! I'm sure";
+			if (getarg(1) == 2345)
+				mes "that this set of slotted Fire";
+			else if (getarg(1) == 2351)
+				mes "that this set of slotted Earth";
+			else if (getarg(1) == 2349)
+				mes "that this set of slotted Wind";
+			else if (getarg(1) == 2347)
+				mes "that this set of slotted Water";
+			mes "property Armor will serve you";
+			mes "well. Thank you for your help,";
+			mes "and if you get more medals,";
+			mes "please donate them to me~";
+		}
+		else {
+			mes "Once again, I'd like to";
+			mes "thank you for providing";
+			mes "me with all of those medals.";
+			mes "I imagine it must have been";
+			mes "difficult. In any case, I would";
+			mes "appreciate your continued help~";
+		}
 		set ein_medal01,ein_medal01-getarg(0);
 		getitem getarg(1),1;
 		close;
@@ -11923,52 +12254,75 @@ S_BonusReward:
 	
 hugel,71,83,4	script	Wayne	900,{
 	if (checkweight(1201,1) == 0) {
-		mes "- Please wait for a while!! -";
-		mes "- You're carrying too many items-";
-		mes "- and you won't be able to receive any item now.-";
-		mes "- Please take off some of your loads-";
-		mes "- and come for the challenge again.-";
+		mes "[Wayne]";
+		mes "Hold on a second...";
+		mes "If you want to exchange";
+		mes "your Prize Medals for items,";
+		mes "you'd better free up more space";
+		mes "in your Inventory first. Why don't you use your Kafra Storage?";
 		close;
 	}
 	mes "[Wayne]";
-	mes "Hello there. This is the place where you can change the medals to other merchandise.";
-	mes "Rumors have that there are some other places that require medals too.";
-	mes "That's nothing to be surprise about since the medals from Hugel contains rare substance that can't be found from other places.";
+	mes "Hello, there! Ever wonder";
+	mes "what you could do with all";
+	mes "the Prize Medals you can win";
+	mes "in Monster Race Arena? You";
+	mes "can donate them in Einbroch";
+	mes "to the Blacksmith Guild...";
 	next;
 	mes "[Wayne]";
-	mes "It's up to you how you're going to use the medals.";
-	mes "So, do you want to change the medals to merchandise?";
+	mes "...Or you can exchange them";
+	mes "for items, right here and right";
+	mes "now, with me. As always, the";
+	mes "choice is really up to you.";
 	next;
-	switch(select("Yes:No")) {
+	switch(select("Prize Medal Exchange:Cancel")) {
 	case 1:
 		if (checkweight(909,550) == 0) {
 			mes "[Wayne]";
-			mes "Looks like you've been carrying too many items...";
-			mes "Why don't you put it in the storage before you come again.";
+			mes "Hold on a second...";
+			mes "If you want to exchange";
+			mes "your Prize Medals for items,";
+			mes "you'd better free up more space";
+			mes "in your Inventory first. Why don't you use your Kafra Storage?";
 			close;
 		}
 		else {
 			mes "[Wayne]";
-			mes "How many items do you wish to change?";
+			mes "Now, how many Prize Medals";
+			mes "would you like to exchange?";
+			mes "It doesn't take a genius to";
+			mes "figure out that you can get";
+			mes "more valuable items by trading";
+			mes "more Prize Medals at a time.";
 			next;
-			switch(select("1unit(s):3unit(s):7unit(s):8unit(s):16unit(s):25unit(s):42unit(s):59unit(s)")) {
+			switch(select("1 Prize Medal:3 Prize Medals:7 Prize Medals:8 Prize Medals:16 Prize Medals:25 Prize Medals:42 Prize Medals:59 Prize Medals")) {
 			case 1:
 				mes "[Wayne]";
-				mes "Medal x1unit(s) can be used to exchange for the following items.";
-				mes "What items to you wish to receive?";
+				mes "Now, please choose";
+				mes "which of the following item";
+				mes "sets that you'd like to receive";
+				mes "in exchange for 1 Prize Medal.";
 				next;
-				switch(select("Leaflet of Hinal x2unit(s):Leaflet of Aloe x2unit(s):Fruit of Mastela x1unit(s):Starsand of Witch x5unit(s):Red Slim Potion x4unit(s)")) {
+				switch(select("2 Hinale Leaflets:2 Aloe Leaflets:1 Mastela Fruit:5 Witch Starsands:4 Condensed Red Potions")) {
 				case 1:
 					if (countitem(7515) < 1) {
 						mes "[Wayne]";
-						mes "Looks like you have forgotten something. This is the place where you redeem prizes with medals.";
-						mes "You should bring along your medals.";
+						mes "Hey, you don't have";
+						mes "enough Prize Medals with";
+						mes "you. Go and get some more";
+						mes "if you want to exchange";
+						mes "them with me for anything.";
 						close;
 					}
 					else {
 						mes "[Wayne]";
-						mes "Here are the Leaflet of Hinal x 2unit(s),";
-						mes "Please come and find me again if you ever wish to redeem any prizes with medals.";
+						mes "There you go~";
+						mes "Thanks for using my";
+						mes "service, and I hope that";
+						mes "you come visit me again";
+						mes "soon. Enjoy the monster";
+						mes "races, fair adventurer~";
 						delitem 7515,1; //Marvelous_Medal
 						getitem 520,2; //Leaflet_Of_Hinal
 						close;
@@ -11976,14 +12330,21 @@ hugel,71,83,4	script	Wayne	900,{
 				case 2:
 					if (countitem(7515) < 1) {
 						mes "[Wayne]";
-						mes "Looks like you have forgotten something. This is the place where you redeem prizes with medals.";
-						mes "You should bring along your medals.";
+						mes "Hey, you don't have";
+						mes "enough Prize Medals with";
+						mes "you. Go and get some more";
+						mes "if you want to exchange";
+						mes "them with me for anything.";
 						close;
 					}
 					else {
 						mes "[Wayne]";
-						mes "Here are Leaflet of Aloe x2unit(s),";
-						mes "Please come and find me again if you ever wish to redeem any prizes with medals.";
+						mes "There you go~";
+						mes "Thanks for using my";
+						mes "service, and I hope that";
+						mes "you come visit me again";
+						mes "soon. Enjoy the monster";
+						mes "races, fair adventurer~";
 						delitem 7515,1; //Marvelous_Medal
 						getitem 521,2; //Leaflet_Of_Aloe
 						close;
@@ -11991,14 +12352,21 @@ hugel,71,83,4	script	Wayne	900,{
 				case 3:
 					if (countitem(7515) < 1) {
 						mes "[Wayne]";
-						mes "Looks like you have forgotten something. This is the place where you redeem prizes with medals.";
-						mes "You should bring along your medals.";
+						mes "Hey, you don't have";
+						mes "enough Prize Medals with";
+						mes "you. Go and get some more";
+						mes "if you want to exchange";
+						mes "them with me for anything.";
 						close;
 					}
 					else {
 						mes "[Wayne]";
-						mes "Here is Fruit of Mastela x1unit(s)";
-						mes "Please come and find me again if you ever wish to redeem any prizes with medals.";
+						mes "There you go~";
+						mes "Thanks for using my";
+						mes "service, and I hope that";
+						mes "you come visit me again";
+						mes "soon. Enjoy the monster";
+						mes "races, fair adventurer~";
 						delitem 7515,1; //Marvelous_Medal
 						getitem 522,1; //Fruit_Of_Mastela
 						close;
@@ -12006,14 +12374,21 @@ hugel,71,83,4	script	Wayne	900,{
 				case 4:
 					if (countitem(7515) < 1) {
 						mes "[Wayne]";
-						mes "Looks like you have forgotten something. This is the place where you redeem prizes with medals.";
-						mes "You should bring along your medals.";
+						mes "Hey, you don't have";
+						mes "enough Prize Medals with";
+						mes "you. Go and get some more";
+						mes "if you want to exchange";
+						mes "them with me for anything.";
 						close;
 					}
 					else {
 						mes "[Wayne]";
-						mes "Here are Starsand of Witch x5unit(s)";
-						mes "Please come and find me again if you ever wish to redeem any prizes with medals.";
+						mes "There you go~";
+						mes "Thanks for using my";
+						mes "service, and I hope that";
+						mes "you come visit me again";
+						mes "soon. Enjoy the monster";
+						mes "races, fair adventurer~";
 						delitem 7515,1; //Marvelous_Medal
 						getitem 1061,5; //Starsand_Of_Witch
 						close;
@@ -12021,14 +12396,21 @@ hugel,71,83,4	script	Wayne	900,{
 				case 5:
 					if (countitem(7515) < 1) {
 						mes "[Wayne]";
-						mes "Looks like you have forgotten something. This is the place where you redeem prizes with medals.";
-						mes "You should bring along your medals.";
+						mes "Hey, you don't have";
+						mes "enough Prize Medals with";
+						mes "you. Go and get some more";
+						mes "if you want to exchange";
+						mes "them with me for anything.";
 						close;
 					}
 					else {
 						mes "[Wayne]";
-						mes "Here are Red Slim Potion x4unit(s)";
-						mes "Please come and find me again if you ever wish to redeem any prizes with medals.";
+						mes "There you go~";
+						mes "Thanks for using my";
+						mes "service, and I hope that";
+						mes "you come visit me again";
+						mes "soon. Enjoy the monster";
+						mes "races, fair adventurer~";
 						delitem 7515,1; //Marvelous_Medal
 						getitem 545,4; //Red_Slim_Potion
 						close;
@@ -12036,21 +12418,30 @@ hugel,71,83,4	script	Wayne	900,{
 				}
 			case 2:
 				mes "[Wayne]";
-				mes "Medal x3unit(s) can be used to exchange for the following items.";
-				mes "What items to you wish to receive?";
+				mes "Now, please choose";
+				mes "which of the following item";
+				mes "sets that you'd like to receive";
+				mes "in exchange for 3 Prize Medals.";
 				next;
-				switch(select("Royal Jelly 1unit(s):Holy Water 6unit(s)")) {
+				switch(select("1 Royal Jelly:6 Holy Waters")) {
 				case 1:
 					if (countitem(7515) < 3) {
 						mes "[Wayne]";
-						mes "Looks like you have forgotten something. This is the place where you redeem prizes with medals.";
-						mes "You should bring along your medals.";
+						mes "Hey, you don't have";
+						mes "enough Prize Medals with";
+						mes "you. Go and get some more";
+						mes "if you want to exchange";
+						mes "them with me for anything.";
 						close;
 					}
 					else {
 						mes "[Wayne]";
-						mes "Here is the Royal Jelly 1unit(s)";
-						mes "Please come and find me again if you ever wish to redeem any prizes with medals.";
+						mes "There you go~";
+						mes "Thanks for using my";
+						mes "service, and I hope that";
+						mes "you come visit me again";
+						mes "soon. Enjoy the monster";
+						mes "races, fair adventurer~";
 						delitem 7515,3; //Marvelous_Medal
 						getitem 526,1; //Royal_Jelly
 						close;
@@ -12058,14 +12449,21 @@ hugel,71,83,4	script	Wayne	900,{
 				case 2:
 					if (countitem(7515) < 3) {
 						mes "[Wayne]";
-						mes "Looks like you have forgotten something. This is the place where you redeem prizes with medals.";
-						mes "You should bring along your medals.";
+						mes "Hey, you don't have";
+						mes "enough Prize Medals with";
+						mes "you. Go and get some more";
+						mes "if you want to exchange";
+						mes "them with me for anything.";
 						close;
 					}
 					else {
 						mes "[Wayne]";
-						mes "Here are Holy Water x6unit(s)";
-						mes "Please come and find me again if you ever wish to redeem any prizes with medals.";
+						mes "There you go~";
+						mes "Thanks for using my";
+						mes "service, and I hope that";
+						mes "you come visit me again";
+						mes "soon. Enjoy the monster";
+						mes "races, fair adventurer~";
 						delitem 7515,3; //Marvelous_Medal
 						getitem 523,6; //Holy_Water
 						close;
@@ -12073,21 +12471,30 @@ hugel,71,83,4	script	Wayne	900,{
 				}
 			case 3:
 				mes "[Wayne]";
-				mes "Medal x7unit(s) can be used to exchange for the following items.";
-				mes "What items to you wish to receive?";
+				mes "Now, please choose";
+				mes "which of the following item";
+				mes "sets that you'd like to receive";
+				mes "in exchange for 7 Prize Medals.";
 				next;
-				switch(select("Cookie Bag x1unit(s):First Aid Kit x1unit(s)")) {
+				switch(select("1 Cookie Bag:1 First Aid Kit")) {
 				case 1:
 					if (countitem(7515) < 7) {
 						mes "[Wayne]";
-						mes "Looks like you have forgotten something. This is the place where you redeem prizes with medals.";
-						mes "You should bring along your medals.";
+						mes "Hey, you don't have";
+						mes "enough Prize Medals with";
+						mes "you. Go and get some more";
+						mes "if you want to exchange";
+						mes "them with me for anything.";
 						close;
 					}
 					else {
 						mes "[Wayne]";
-						mes "Here is the Cookie Bag x1unit(s)";
-						mes "Please come and find me again if you ever wish to redeem any prizes with medals.";
+						mes "There you go~";
+						mes "Thanks for using my";
+						mes "service, and I hope that";
+						mes "you come visit me again";
+						mes "soon. Enjoy the monster";
+						mes "races, fair adventurer~";
 						delitem 7515,7; //Marvelous_Medal
 						getitem 12130,1; //Cookie_Bag
 						close;
@@ -12095,14 +12502,21 @@ hugel,71,83,4	script	Wayne	900,{
 				case 2:
 					if (countitem(7515) < 7) {
 						mes "[Wayne]";
-						mes "Looks like you have forgotten something. This is the place where you redeem prizes with medals.";
-						mes "You should bring along your medals.";
+						mes "Hey, you don't have";
+						mes "enough Prize Medals with";
+						mes "you. Go and get some more";
+						mes "if you want to exchange";
+						mes "them with me for anything.";
 						close;
 					}
 					else {
 						mes "[Wayne]";
-						mes "Here is the First Aid Kit x1unit(s)";
-						mes "Please come and find me again if you ever wish to redeem any prizes with medals.";
+						mes "There you go~";
+						mes "Thanks for using my";
+						mes "service, and I hope that";
+						mes "you come visit me again";
+						mes "soon. Enjoy the monster";
+						mes "races, fair adventurer~";
 						delitem 7515,7; //Marvelous_Medal
 						getitem 12110,1; //First_Aid_Kit
 						close;
@@ -12110,100 +12524,145 @@ hugel,71,83,4	script	Wayne	900,{
 				}
 			case 4:
 				mes "[Wayne]";
-				mes "Medal x8unit(s) can be used to exchange for the following items.";
-				mes "What items to you wish to receive?";
+				mes "Now, please choose";
+				mes "which of the following item";
+				mes "sets that you'd like to receive";
+				mes "in exchange for 8 Prize Medals. Well, we have only 1 set, but...";
 				next;
 				select("1 Gift Box");
 				if (countitem(7515) < 8) {
 					mes "[Wayne]";
-					mes "Looks like you have forgotten something. This is the place where you redeem prizes with medals.";
-					mes "You should bring along your medals.";
+					mes "Hey, you don't have";
+					mes "enough Prize Medals with";
+					mes "you. Go and get some more";
+					mes "if you want to exchange";
+					mes "them with me for anything.";
 					close;
 				}
 				else {
 					mes "[Wayne]";
-					mes "Here's the Gift Box x1unit(s)";
-					mes "Please come and find me again if you ever wish to redeem any prizes with medals.";
+					mes "There you go~";
+					mes "Thanks for using my";
+					mes "service, and I hope that";
+					mes "you come visit me again";
+					mes "soon. Enjoy the monster";
+					mes "races, fair adventurer~";
 					delitem 7515,8; //Marvelous_Medal
 					getitem 644,1; //Gift_Box
 					close;
 				}
 			case 5:
 				mes "[Wayne]";
-				mes "Medal x16unit(s) can be used to exchange for the following items.";
-				mes "What items to you wish to receive?";
+				mes "Now, please choose";
+				mes "which of the following item";
+				mes "sets that you'd like to receive";
+				mes "in exchange for 16 Prize Medals. Well, we have only 1 set, but...";
 				next;
-				select("Old Blue Box 1unit(s)");
+				select("1 Old Blue Box");
 				if (countitem(7515) < 16) {
 					mes "[Wayne]";
-					mes "Looks like you have forgotten something. This is the place where you redeem prizes with medals.";
-					mes "You should bring along your medals.";
+					mes "Hey, you don't have";
+					mes "enough Prize Medals with";
+					mes "you. Go and get some more";
+					mes "if you want to exchange";
+					mes "them with me for anything.";
 					close;
 				}
 				else {
 					mes "[Wayne]";
-					mes "Here is the Old Blue Box x1unit(s)";
-					mes "Please come and find me again if you ever wish to redeem any prizes with medals.";
+					mes "There you go~";
+					mes "Thanks for using my";
+					mes "service, and I hope that";
+					mes "you come visit me again";
+					mes "soon. Enjoy the monster";
+					mes "races, fair adventurer~";
 					delitem 7515,16; //Marvelous_Medal
 					getitem 603,1; //Old_Blue_Box
 					close;
 				}
 			case 6:
 				mes "[Wayne]";
-				mes "Medal x25unit(s) can be used to exchange for the following items.";
-				mes "What items to you wish to receive?";
+				mes "Now, please choose";
+				mes "which of the following item";
+				mes "sets that you'd like to receive";
+				mes "in exchange for 25 Prize Medals. Well, we have only 1 set, but...";
 				next;
-				select("Set of Taming Item 1unit(s)");
+				select("1 Taming Gift Set");
 				if (countitem(7515) < 25) {
 					mes "[Wayne]";
-					mes "Looks like you have forgotten something. This is the place where you redeem prizes with medals.";
-					mes "You should bring along your medals.";
+					mes "Hey, you don't have";
+					mes "enough Prize Medals with";
+					mes "you. Go and get some more";
+					mes "if you want to exchange";
+					mes "them with me for anything.";
 					close;
 				}
 				else {
 					mes "[Wayne]";
-					mes "Here is Set of Taming Item x1unit(s)";
-					mes "Please come and find me again if you ever wish to redeem any prizes with medals.";
+					mes "There you go~";
+					mes "Thanks for using my";
+					mes "service, and I hope that";
+					mes "you come visit me again";
+					mes "soon. Enjoy the monster";
+					mes "races, fair adventurer~";
 					delitem 7515,25; //Marvelous_Medal
 					getitem 12105,1; //Set_Of_Taiming_Item
 					close;
 				}
 			case 7:
 				mes "[Wayne]";
-				mes "Medal x42unit(s) can be used to exchange for the following items.";
-				mes "What items to you wish to receive?";
+				mes "Now, please choose";
+				mes "which of the following item";
+				mes "sets that you'd like to receive";
+				mes "in exchange for 42 Prize Medals. Well, we have only 1 set, but...";
 				next;
-				select("Old Violte Box 1unit(s)");
+				select("1 Old Purple Box");
 				if (countitem(7515) < 42) {
 					mes "[Wayne]";
-					mes "Looks like you have forgotten something. This is the place where you redeem prizes with medals.";
-					mes "You should bring along your medals.";
+					mes "Hey, you don't have";
+					mes "enough Prize Medals with";
+					mes "you. Go and get some more";
+					mes "if you want to exchange";
+					mes "them with me for anything.";
 					close;
 				}
 				else {
 					mes "[Wayne]";
-					mes "Here's the Old Violet Box x1unit(s)";
-					mes "Please come and find me again if you ever wish to redeem any prizes with medals.";
+					mes "There you go~";
+					mes "Thanks for using my";
+					mes "service, and I hope that";
+					mes "you come visit me again";
+					mes "soon. Enjoy the monster";
+					mes "races, fair adventurer~";
 					delitem 7515,42; //Marvelous_Medal
 					getitem 617,1; //Old_Violet_Box
 					close;
 				}
 			case 8:
 				mes "[Wayne]";
-				mes "Medal x59unit(s) can be used to exchange for the following items.";
-				mes "What items to you wish to receive?";
+				mes "Now, please choose";
+				mes "which of the following item";
+				mes "sets that you'd like to receive";
+				mes "in exchange for 59 Prize Medals. Well, we have only 1 set, but...";
 				next;
-				select("Poring Box 1unit(s)");
+				select("1 Poring Box");
 				if (countitem(7515) < 59) {
 					mes "[Wayne]";
-					mes "Looks like you have forgotten something. This is the place where you redeem prizes with medals.";
-					mes "You should bring along your medals.";
+					mes "Hey, you don't have";
+					mes "enough Prize Medals with";
+					mes "you. Go and get some more";
+					mes "if you want to exchange";
+					mes "them with me for anything.";
 					close;
 				}
 				else {
 					mes "[Wayne]";
-					mes "Here's the Poring Box x1unit(s)";
-					mes "Please come and find me again if you ever wish to redeem any prizes with medals.";
+					mes "There you go~";
+					mes "Thanks for using my";
+					mes "service, and I hope that";
+					mes "you come visit me again";
+					mes "soon. Enjoy the monster";
+					mes "races, fair adventurer~";
 					delitem 7515,59; //Marvelous_Medal
 					getitem 12109,1; //Poring_Box
 					close;
@@ -12212,7 +12671,20 @@ hugel,71,83,4	script	Wayne	900,{
 		}
 	case 2:
 		mes "[Wayne]";
-		mes "It can be used in many ways. Please think about it before you come again.";
+		mes "Well, just keep in mind";
+		mes "that you can always come";
+		mes "to me to trade in your Prize";
+		mes "Medals for consumable items.";
+		mes "That guy in Einbroch? Not sure";
+		mes "what he'd give you for them...";
+		next;
+		mes "[Wayne]";
+		mes "All I know is that he";
+		mes "needs a whole lot of medals";
+		mes "for the work that he's doing.";
+		mes "Still, I hear that he just may";
+		mes "make your donations worth";
+		mes "all your effort, you know?";
 		close;
 	}
 }
@@ -12234,16 +12706,14 @@ airplane,246,47,1	script	Eocatt#decoy01	878,{
 	mes "monster race games, you'll";
 	mes "be rewarded with these Prize";
 	mes "Medals that are made of some";
-	mes "really rare metal. I hear this";
-	mes "metal's in demand in Einbroch.";
+	mes "really rare metal. I hear this metal's in demand in Einbroch...";
 	next;
 	mes "[Eocatt]";
 	mes "Right, right...";
 	mes "I remember now, the";
 	mes "town was named Hugel.";
 	mes "I'm sure there's other fun";
-	mes "things to do there, but I'm sure";
-	mes "that the Race Arena is a must!";
+	mes "things to do there, but I'm sure that the Race Arena is a must!";
 	close;
 }
 
@@ -12268,12 +12738,11 @@ hugel,85,93,5	script	Mudie#dummy01	866,{
 	mes "somewhere around that area.";
 	mes "Anyway, if you want to wager";
 	mes "or just watch the races, just";
-	mes "ask one of the Eckar brothers.";
-	mes "I hope you enjoy our little town~";
+	mes "ask one of the Eckar brothers. I hope you enjoy our little town~";
 	close;
 }
 
-p_track02,32,45,3	script	Eccentric Scholar#double	755,{
+p_track02,32,45,5	script	Eccentric Scholar#double	755,{
 	mes "[Eccentric Scholar]";
 	mes "Let's see now...";
 	mes "Monster 1's average speed";
@@ -12317,7 +12786,7 @@ p_track02,69,31,1	script	Blacksmith Guildsman#dou	726,{
 		mes "[Blacksmith Guildsman]";
 		mes "I've been assigned by my";
 		mes "guild to bring back some";
-		mes "Prize Medals to Einbroch.";
+		mes "Prize Medals to Einbroch...";
 		mes "They're apparently made";
 		mes "with some rare metal, but...";
 		mes "It's too hard for me to win~!";
@@ -12349,8 +12818,7 @@ p_track02,53,45,3	script	Valiant Knight#double	733,{
 	mes "Hah hah! It's like I tell";
 	mes "those Blacksmiths! If they";
 	mes "don't wanna lose all the time,";
-	mes "then they should just bet on the";
-	mes "same monster. Me? I always";
+	mes "then they should just bet on the same monster. Me? I always";
 	mes "bet on the black Deviruchi~";
 	next;
 	mes "[Valiant Knight]";
@@ -12392,9 +12860,8 @@ p_track01,69,31,1	script	Blacksmith Guildsman#sin	107,{
 	mes "Yeah, I've been assigned";
 	mes "by the Einbroch Factory to";
 	mes "get some Prize Medals since";
-	mes "they're made of this rare medal.";
-	mes "But it looks like they picked";
-	mes "the wrong guy for this job.";
+	mes "they're made of this rare medal. But it looks like they picked";
+	mes "the wrong guy for this job...";
 	next;
 	mes "[Blacksmith Guildsman]";
 	mes "I mean, I've been here";
@@ -12413,7 +12880,7 @@ p_track01,45,42,3	script	Absent Minded Man#single	881,{
 	mes "come all the way here, just";
 	mes "because some strange man";
 	mes "asked me to win medals. It's";
-	mes "the only reason I'm in Hugel.";
+	mes "the only reason I'm in Hugel...";
 	next;
 	mes "[Absent Minded Man]";
 	mes "But I've made more than";

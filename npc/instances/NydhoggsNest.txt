@@ -4,7 +4,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf, various sources
 //===== Current Version: ===================================== 
-//= 1.0
+//= 1.1
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -12,6 +12,7 @@
 //= Nidhoggr's Nest Instance
 //===== Additional Comments: ================================= 
 //= 1.0 First version.
+//= 1.1 Minor dialog updates.
 //============================================================ 
 
 nyd_dun02,100,201,3	script	Yggdrasil Gatekeeper	111,8,8,{
@@ -302,10 +303,10 @@ OnTouch_:
 	end;
 }
 
-mid_camp,271,299,3	script	Historian Magniffer#edq	755,3,3,{
+mid_camp,271,299,3	script	Historian Magnifier#edq	755,3,3,{
 	if (ins_nyd == 1) {
 		mes "[Historian Magniffer]";
-		mes "Sure, the mainland also has lots of interesting adventures... Hello, I am Magniffer, a historian dispatched from the Prontera royal court.";
+		mes "Sure, the mainland also has lots of interesting adventures... Hello, I am Magnifier, a historian dispatched from the Prontera royal court.";
 		next;
 		mes "[Historian Magniffer]";
 		mes "Finding another line of work might make for a really worthy job, but only a historian gets to know the world over..";
@@ -324,181 +325,181 @@ mid_camp,271,299,3	script	Historian Magniffer#edq	755,3,3,{
 		mes "[Historian Magniffer]";
 		mes "Did you find the cave that the fairy tribes treat as a holy place? You are a really tough cookie. What did you find?";
 		next;
-		mes "[Historian Magniffer]";
+		mes "[Historian Magnifier]";
 		mes "...";
 		next;
 		mes "... ...";
 		next;
-		mes "[Historian Magniffer]";
+		mes "[Historian Magnifier]";
 		mes "Wait a second... I have a brilliant idea.";
 		next;
-		mes "[Historian Magniffer]";
+		mes "[Historian Magnifier]";
 		mes "Let's see... This book... No... this one...? Hmm... Maybe this...";
 		next;
-		mes "[Historian Magniffer]";
+		mes "[Historian Magnifier]";
 		mes "...";
 		next;
-		mes "[Historian Magniffer]";
+		mes "[Historian Magnifier]";
 		mes "... ...";
 		next;
-		mes "[Historian Magniffer]";
+		mes "[Historian Magnifier]";
 		mes "Oh, here it is! World Tree Yggdrasil and God's tribes... This is their book!";
 		next;
-		mes "[Historian Magniffer]";
+		mes "[Historian Magnifier]";
 		mes "Maybe you found the central line to enter into the World Tree Yggdrasil!";
 		next;
-		mes "[Historian Magniffer]";
+		mes "[Historian Magnifier]";
 		mes "If that's true, you've found the greatest discovery since the harnessing of mana. Isn't this exciting?";
 		next;
-		mes "[Historian Magniffer]";
-		mes "But we need lots more information... Are they refusing you admission?";
+		mes "[Historian Magnifier]";
+		mes "But we need a lot more information... Are they refusing you admission?";
 		next;
-		mes "[Historian Magniffer]";
+		mes "[Historian Magnifier]";
 		mes "I will send a message to my assistant who is in the Prontera Library. So, help her find more information.";
 		next;
-		mes "[Historian Magniffer]";
+		mes "[Historian Magnifier]";
 		mes "I will definitely help you find a way to enter the World Tree directly so, just believe in me! Okay~!!";
 		set ins_nyd,3;
 		close;
 	}
 	else if (ins_nyd == 3) {
-		mes "[Historian Magniffer]";
+		mes "[Historian Magnifier]";
 		mes "Why are you standing there? Go to my assistant in the Prontera Library!";
 		close;
 	}
 	else if (ins_nyd == 4) {
-		mes "[Historian Magniffer]";
+		mes "[Historian Magnifier]";
 		mes "You've come back... Good, how's Naomi? Actually, I don't need to worry about her. She is always cheerful. Haha.";
 		next;
-		mes "[Historian Magniffer]";
+		mes "[Historian Magnifier]";
 		mes "You look like you have a lot on your mind... Your face is full of curiosity and questions.";
 		next;
-		mes "[Historian Magniffer]";
+		mes "[Historian Magnifier]";
 		mes "So, did you read the whole story that I have prepared?";
 		next;
 		switch(select("Not yet.:I read all the stories.")) {
 		case 1:
-			mes "[Historian Magniffer]";
+			mes "[Historian Magnifier]";
 			mes "Sheesh~ I prepared these stories for you carefully, but you didn't bother to check anything out did you?";
 			next;
-			mes "[Historian Magniffer]";
+			mes "[Historian Magnifier]";
 			mes "It would be better if you returned after reading all of them. That's very basic data of what we should do for the future.";
 			close;
 		case 2:
-			mes "[Historian Magniffer]";
+			mes "[Historian Magnifier]";
 			mes "Hm, good job. Maybe I don't need to check anything else, right?";
 			next;
-			mes "[Historian Magniffer]";
+			mes "[Historian Magnifier]";
 			mes "I sent you to figure out which basic materials will be needed for the jobs ahead of us. You should bring research reports...";
 			next;
-			mes "[Historian Magniffer]";
+			mes "[Historian Magnifier]";
 			mes "You might complain about why I didn't bring any myself... That's because I trust your abilities, don't ever take anything for granted.";
 			next;
-			mes "[Historian Magniffer]";
+			mes "[Historian Magnifier]";
 			mes "But a while ago, while you were tranferring reports from Commander Agip to the mainland, you lost those reports... remember?";
 			next;
-			mes "[Historian Magniffer]";
+			mes "[Historian Magnifier]";
 			mes "So far, nothing's come up... Was it that somebody attacked you?";
 			next;
-			mes "[Historian Magniffer]";
+			mes "[Historian Magnifier]";
 			mes "Somehow, the truth will come out, but we should be careful of shocking the natives if we go there unannounced and they're not prepared for our arrival.";
 			next;
-			mes "[Historian Magniffer]";
+			mes "[Historian Magnifier]";
 			mes "I've talked too much... Anyway, as you know through my report, you've found a great thing!";
 			next;
-			mes "[Historian Magniffer]";
+			mes "[Historian Magnifier]";
 			mes "Firstly, we should find out more about the place. I expect we can, but... we can't do much without help from others.";
 			next;
-			mes "[Historian Magniffer]";
+			mes "[Historian Magnifier]";
 			mes "I have heard about recent expeditions of adventurers that have tried to contact the tribes... Have you heard anything about this?";
 			next;
-			mes "[Historian Magniffer]";
+			mes "[Historian Magnifier]";
 			mes "Anyway, let's try to contact them first, to be clear about any caves or treasures.";
 			next;
-			mes "[Historian Magniffer]";
+			mes "[Historian Magnifier]";
 			mes "For now, you try to contact the Sapha and Laphine tribes, and try to extract information from them.";
 			next;
-			mes "[Historian Magniffer]";
+			mes "[Historian Magnifier]";
 			mes "I'll also keep searching here. If you find anything, come back and let me know.";
 			set ins_nyd,5;
 			close;
 		}
 	}
 	else if ((ins_nyd == 5) || (ins_nyd == 51) || (ins_nyd == 52)) {
-		mes "[Historian Magniffer]";
+		mes "[Historian Magnifier]";
 		mes "Okay, let's try to contact them first, to be clear about any caves or treasures.";
 		next;
-		mes "[Historian Magniffer]";
+		mes "[Historian Magnifier]";
 		mes "For now, you try to contact the Sapha and Laphine tribes, and try to extract more information.";
 		next;
-		mes "[Historian Magniffer]";
+		mes "[Historian Magnifier]";
 		mes "I'll also keep searching here. If you find anything, come back and let me know.";
 		close;
 	}
 	else if ((ins_nyd == 61) || (ins_nyd == 62)) {
-		mes "[Historian Magniffer]";
+		mes "[Historian Magnifier]";
 		mes "Ah, you've come at a proper time. I found a curious thing while looking for reports from Arunafeltz.";
 		next;
-		mes "[Historian Magniffer]";
+		mes "[Historian Magnifier]";
 		mes "Right now, we are standing on part of one of the roots of the World Tree Yggdrasil.";
 		next;
-		mes "[Historian Magniffer]";
+		mes "[Historian Magnifier]";
 		mes "This spot is connected to World Tree by the root. I think we can expect confrontations between the Sapha and Laphine here eventually, don't you think?";
 		next;
-		mes "[Historian Magniffer]";
+		mes "[Historian Magnifier]";
 		mes "As I expected, the cave is the entrance to go to one of Yggdrasil's roots...";
 		next;
-		mes "[Historian Magniffer]";
+		mes "[Historian Magnifier]";
 		mes "Did you find anything about the Sapha and Laphine?";
 		next;
 		mes "...";
 		next;
 		mes "... ...";
 		next;
-		mes "[Historian Magniffer]";
+		mes "[Historian Magnifier]";
 		mes "Both sides act ambiguously, so... I'm getting worried...";
 		next;
-		mes "[Historian Magniffer]";
+		mes "[Historian Magnifier]";
 		mes "The two tribes have some trouble amongst their top leaders. It's not anything official, but...";
 		next;
-		mes "[Historian Magniffer]";
+		mes "[Historian Magnifier]";
 		mes "Let's report to Commander Agip about the situation so far. Then, we wait on his decision.";
 		set ins_nyd,7;
 		close;
 	}
 	else if ((ins_nyd == 7) || (ins_nyd == 8)) {
-		mes "[Historian Magniffer]";
+		mes "[Historian Magnifier]";
 		mes "Report to Commander Hibba Agip about what we have discovered, since time is dependent on his decision.";
 		close;
 	}
 	else if ((ins_nyd == 121) || (ins_nyd == 122) || (ins_nyd == 131) || (ins_nyd == 132) || (ins_nyd ==14)) {
-		mes "[Historian Magniffer]";
+		mes "[Historian Magnifier]";
 		mes "So that's how it is... we were right about some parts of it... it's called the Guardian's Nest.";
 		next;
-		mes "[Historian Magniffer]";
+		mes "[Historian Magnifier]";
 		mes "We have gained a large amount of knowledge today, but...";
 		next;
-		mes "[Historian Magniffer]";
+		mes "[Historian Magnifier]";
 		mes "What we have figured out... how is it going to influence mankind? It's so unpredictable...";
 		next;
-		mes "[Historian Magniffer]";
+		mes "[Historian Magnifier]";
 		mes "This is only the beginning...we will be quite busy from now on.";
 		next;
-		mes "[Historian Magniffer]";
+		mes "[Historian Magnifier]";
 		mes "First, report to Commander Agip, then act according to the situation. Let me organize my research findings...";
 		close;
 	}
 	else {
-		mes "[Historian Magniffer]";
-		mes "Sure, the mainland also has lots of interesting adventures... Hello, I am Magniffer, a historian dispatched from the Prontera royal court.";
+		mes "[Historian Magnifier]";
+		mes "Sure, the mainland also has lots of interesting adventures... Hello, I am Magnifier, a historian dispatched from the Prontera royal court.";
 		next;
-		mes "[Historian Magniffer]";
+		mes "[Historian Magnifier]";
 		mes "Finding another line of work might make for a really worthy job, but only a historian gets to know the world over..";
 		next;
-		mes "[Historian Magniffer]";
+		mes "[Historian Magnifier]";
 		mes "How this world is organized... and the way of the future! With our studies of the past and present we can predict what is to come.";
 		next;
-		mes "[Historian Magniffer]";
+		mes "[Historian Magnifier]";
 		mes "We are expecting a lot from you, expert adventurer. So, if you find anything... just tell me.";
 		close;
 	}
@@ -532,7 +533,7 @@ prt_in,171,94,3	script	Assistant Naomi#edq	893,3,3,{
 			mes "Ah...I...see...";
 			next;
 			mes "[Assistant Naomi]";
-			mes "Now, I am almost done... Who are you? Are you a new assistant to Dr. Magniffer?";
+			mes "Now, I am almost done... Who are you? Are you a new assistant to Dr. Magnifier?";
 			next;
 			mes "[" +strcharinfo(0)+ "]";
 			mes "He asked me to bring some reports. Didn't he say anything?";
@@ -553,7 +554,7 @@ prt_in,171,94,3	script	Assistant Naomi#edq	893,3,3,{
 			next;
 			mes "... ...";
 			next;
-			mes "It's too messy due to lots of stacked books and files. Dr. Magniffer looks like he has a ton of reports.";
+			mes "It's too messy due to lots of stacked books and files. Dr. Magnifier looks like he has a ton of reports.";
 			next;
 			mes "[" +strcharinfo(0)+ "]";
 			mes "'Birth of the World', 'The Fiction of Odin's Myth', 'God's Battle Then After', 'Dreams of the Tribes'. There are a variety of books...";
@@ -908,7 +909,7 @@ spl_in01,109,60,3	script	Commander Lebiordirr#edq	435,3,3,{
 						mes "[Commander Lebiordirr]";
 						mes "Why do you want to explore? It better be a very good reason.";
 						next;
-						switch(select("It's about Dr. Magniffer's report...")) {
+						switch(select("It's about Dr. Magnifier's report...")) {
 						case 1:
 							mes "[Commander Lebiordirr]";
 							mes "So... What do I care about an outsider's report?";
@@ -977,7 +978,7 @@ spl_in01,109,60,3	script	Commander Lebiordirr#edq	435,3,3,{
 		}
 		else if ((ins_nyd == 72) || (ins_nyd == 82) || (ins_nyd == 92) || (ins_nyd == 102) || (ins_nyd == 112) || (ins_nyd == 122) || (ins_nyd == 132)) {
 			mes "[Commander Lebiordirr]";
-			mes "Welcome to Laphine's camp in Splendide, outsider... I am Lebiordirr. I am in charge here.";
+			mes "Welcome to the Laphine camp in Splendide, outsider... I am Lebiordirr. I am in charge here.";
 			next;
 			mes "[Commander Lebiordirr]";
 			mes "Be cautious of your actions. We already have lots of problems with the Sapha tribe as it is.";
@@ -1050,7 +1051,7 @@ spl_in01,109,60,3	script	Commander Lebiordirr#edq	435,3,3,{
 		}
 		else {
 			mes "[Commander Lebiordirr]";
-			mes "Welcome to Laphine's camp in Splendide, outsider... I am Lebiordirr. I am in charge here.";
+			mes "Welcome to the Laphine camp in Splendide, outsider... I am Lebiordirr. I am in charge here.";
 			next;
 			mes "[Commander Lebiordirr]";
 			mes "Be cautious of your actions. We already have lots of problems with the Sapha tribe as it is.";
@@ -1359,7 +1360,7 @@ man_in01,311,57,3	script	Neat Etorr#edq	453,3,3,{
 						mes "[Neat Etorr]";
 						mes "But may I ask why you want to do this?";
 						next;
-						switch(select("Explain Professor Magniffer's theory.")) {
+						switch(select("Explain Professor Magnifier's theory.")) {
 						case 1:
 							mes "[Neat Etorr]";
 							mes "It's surprising that you are able to obtain such results. We also have a similar theory.";
@@ -1428,7 +1429,7 @@ man_in01,311,57,3	script	Neat Etorr#edq	453,3,3,{
 			mes "Outsider. Welcome to Manuk, the village of the Sapha. I am its representative, Neat Etorr.";
 			next;
 			mes "[Neat Etorr]";
-			mes "We are just a small village; nothing special... but rest comfortably.";
+			mes "We are just a small village, nothing special... but rest comfortably.";
 			close;
 		}
 		else if (ins_nyd == 203) {
@@ -1488,7 +1489,7 @@ man_in01,311,57,3	script	Neat Etorr#edq	453,3,3,{
 			mes "Outsider. Welcome to the Manuk village of Sapha. I am its representative, Neat Etorr.";
 			next;
 			mes "[Neat Etorr]";
-			mes "We are just a small village; nothing special... but rest comfortably.";
+			mes "We are just a small village, nothing special... but rest comfortably.";
 			close;
 		}
 	}
@@ -1529,7 +1530,7 @@ man_in01,291,62,3	script	Laphine Prisoner#edq	437,3,3,{
 	if (isequipped(2782) == 1) {
 		if (ins_nyd == 5) {
 			mes "[Laphine Prisoner]";
-			mes "You... are not of the Sapha tribe... You are... an outsider?";
+			mes "You... are not of the Sapha tribe... Are you... an outsider?";
 			next;
 			mes "[Laphine Prisoner]";
 			mes "Have you ever come in contact with the Laphine tribe? Have you ever been to Splendide?";
