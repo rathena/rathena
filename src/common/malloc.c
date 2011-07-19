@@ -10,9 +10,58 @@
 #include <string.h>
 #include <time.h>
 
-// no logging for minicore
-#if defined(MINICORE) && defined(LOG_MEMMGR)
-#undef LOG_MEMMGR
+////////////// Memory Libraries //////////////////
+
+#if defined(MEMWATCH)
+
+#	include <string.h> 
+#	include "memwatch.h"
+#	define MALLOC(n,file,line,func)	mwMalloc((n),(file),(line))
+#	define MALLOCA(n,file,line,func)	mwMalloc((n),(file),(line))
+#	define CALLOC(m,n,file,line,func)	mwCalloc((m),(n),(file),(line))
+#	define CALLOCA(m,n,file,line,func)	mwCalloc((m),(n),(file),(line))
+#	define REALLOC(p,n,file,line,func)	mwRealloc((p),(n),(file),(line))
+#	define STRDUP(p,file,line,func)	mwStrdup((p),(file),(line))
+#	define FREE(p,file,line,func)		mwFree((p),(file),(line))
+
+#elif defined(DMALLOC)
+
+#	include <string.h>
+#	include <stdlib.h>
+#	include "dmalloc.h"
+#	define MALLOC(n,file,line,func)	dmalloc_malloc((file),(line),(n),DMALLOC_FUNC_MALLOC,0,0)
+#	define MALLOCA(n,file,line,func)	dmalloc_malloc((file),(line),(n),DMALLOC_FUNC_MALLOC,0,0)
+#	define CALLOC(m,n,file,line,func)	dmalloc_malloc((file),(line),(m)*(n),DMALLOC_FUNC_CALLOC,0,0)
+#	define CALLOCA(m,n,file,line,func)	dmalloc_malloc((file),(line),(m)*(n),DMALLOC_FUNC_CALLOC,0,0)
+#	define REALLOC(p,n,file,line,func)	dmalloc_realloc((file),(line),(p),(n),DMALLOC_FUNC_REALLOC,0)
+#	define STRDUP(p,file,line,func)	strdup(p)
+#	define FREE(p,file,line,func)		free(p)
+
+#elif defined(GCOLLECT)
+
+#	include "gc.h"
+#	define MALLOC(n,file,line,func)	GC_MALLOC(n)
+#	define MALLOCA(n,file,line,func)	GC_MALLOC_ATOMIC(n)
+#	define CALLOC(m,n,file,line,func)	_bcalloc((m),(n))
+#	define CALLOCA(m,n,file,line,func)	_bcallocA((m),(n))
+#	define REALLOC(p,n,file,line,func)	GC_REALLOC((p),(n))
+#	define STRDUP(p,file,line,func)	_bstrdup(p)
+#	define FREE(p,file,line,func)		GC_FREE(p)
+
+	void * _bcalloc(size_t, size_t);
+	void * _bcallocA(size_t, size_t);
+	char * _bstrdup(const char *);
+
+#else
+
+#	define MALLOC(n,file,line,func)	malloc(n)
+#	define MALLOCA(n,file,line,func)	malloc(n)
+#	define CALLOC(m,n,file,line,func)	calloc((m),(n))
+#	define CALLOCA(m,n,file,line,func)	calloc((m),(n))
+#	define REALLOC(p,n,file,line,func)	realloc((p),(n))
+#	define STRDUP(p,file,line,func)	strdup(p)
+#	define FREE(p,file,line,func)		free(p)
+
 #endif
 
 void* aMalloc_(size_t size, const char *file, int line, const char *func)
@@ -90,20 +139,20 @@ void aFree_(void *p, const char *file, int line, const char *func)
 
 void* _bcallocA(size_t size, size_t cnt)
 {
-	void *ret = MALLOCA(size * cnt);
+	void *ret = GC_MALLOC_ATOMIC(size * cnt);
 	if (ret) memset(ret, 0, size * cnt);
 	return ret;
 }
 void* _bcalloc(size_t size, size_t cnt)
 {
-	void *ret = MALLOC(size * cnt);
+	void *ret = GC_MALLOC(size * cnt);
 	if (ret) memset(ret, 0, size * cnt);
 	return ret;
 }
 char* _bstrdup(const char *chr)
 {
 	int len = strlen(chr);
-	char *ret = (char*)MALLOC(len + 1);
+	char *ret = (char*)GC_MALLOC(len + 1);
 	if (ret) memcpy(ret, chr, len + 1);
 	return ret;
 }
@@ -654,10 +703,12 @@ static void memmgr_init (void)
  *--------------------------------------
  */
 
-bool malloc_verify(void* ptr)
+bool malloc_verify_ptr(void* ptr)
 {
 #ifdef USE_MEMMGR
 	return memmgr_verify(ptr);
+#elif defined(DMALLOC)
+	return (dmalloc_verify(ptr) == DMALLOC_VERIFY_NOERROR);
 #else
 	return true;
 #endif
@@ -677,10 +728,21 @@ void malloc_final (void)
 #ifdef USE_MEMMGR
 	memmgr_final ();
 #endif
+#ifdef GCOLLECT
+	GC_find_leak = 1;
+	GC_gcollect();
+#endif
 }
 
 void malloc_init (void)
 {
+#if defined(DMALLOC) && defined(CYGWIN)
+	// http://dmalloc.com/docs/latest/online/dmalloc_19.html
+	dmalloc_debug_setup(getenv("DMALLOC_OPTIONS"));
+#endif
+#ifdef GCOLLECT
+	GC_INIT();
+#endif
 #ifdef USE_MEMMGR
 	memmgr_init ();
 #endif

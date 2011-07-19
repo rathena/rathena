@@ -15,16 +15,16 @@
 
 #define ALC_MARK __FILE__, __LINE__, __func__
 
-// disable built-in memory manager when using another manager
-#if defined(MEMWATCH) || defined(DMALLOC) || defined(GCOLLECT) || defined(BCHECK)
-#if !defined(NO_MEMMGR)
-#define NO_MEMMGR
-#endif
-#endif
 
-// Use built-in memory manager by default
+// default memory manager
 #if !defined(NO_MEMMGR) && !defined(USE_MEMMGR)
+#if defined(MEMWATCH) || defined(DMALLOC) || defined(GCOLLECT)
+// disable built-in memory manager when using another manager
+#define NO_MEMMGR
+#else
+// use built-in memory manager by default
 #define USE_MEMMGR
+#endif
 #endif
 
 
@@ -34,6 +34,11 @@
 
 // Enable memory manager logging by default
 #define LOG_MEMMGR
+
+// no logging for minicore
+#if defined(MINICORE) && defined(LOG_MEMMGR)
+#undef LOG_MEMMGR
+#endif
 
 #	define aMalloc(n)		_mmalloc(n,ALC_MARK)
 #	define aMallocA(n)		_mmalloc(n,ALC_MARK)
@@ -69,67 +74,6 @@
 
 #endif
 
-////////////// Memory Managers //////////////////
-
-#if defined(MEMWATCH)
-
-#	include "memwatch.h"
-#	define MALLOC(n,file,line,func)	mwMalloc((n),(file),(line))
-#	define MALLOCA(n,file,line,func)	mwMalloc((n),(file),(line))
-#	define CALLOC(m,n,file,line,func)	mwCalloc((m),(n),(file),(line))
-#	define CALLOCA(m,n,file,line,func)	mwCalloc((m),(n),(file),(line))
-#	define REALLOC(p,n,file,line,func)	mwRealloc((p),(n),(file),(line))
-#	define STRDUP(p,file,line,func)	mwStrdup((p),(file),(line))
-#	define FREE(p,file,line,func)		mwFree((p),(file),(line))
-
-#elif defined(DMALLOC)
-
-#	include "dmalloc.h"
-#	define MALLOC(n,file,line,func)	dmalloc_malloc((file),(line),(n),DMALLOC_FUNC_MALLOC,0,0)
-#	define MALLOCA(n,file,line,func)	dmalloc_malloc((file),(line),(n),DMALLOC_FUNC_MALLOC,0,0)
-#	define CALLOC(m,n,file,line,func)	dmalloc_malloc((file),(line),(m)*(n),DMALLOC_FUNC_CALLOC,0,0)
-#	define CALLOCA(m,n,file,line,func)	dmalloc_malloc((file),(line),(m)*(n),DMALLOC_FUNC_CALLOC,0,0)
-#	define REALLOC(p,n,file,line,func)	dmalloc_realloc((file),(line),(p),(n),DMALLOC_FUNC_REALLOC,0)
-#	define STRDUP(p,file,line,func)	strdup(p)
-#	define FREE(p,file,line,func)		free(p)
-
-#elif defined(GCOLLECT)
-
-#	include "gc.h"
-#	define MALLOC(n,file,line,func)	GC_MALLOC(n)
-#	define MALLOCA(n,file,line,func)	GC_MALLOC_ATOMIC(n)
-#	define CALLOC(m,n,file,line,func)	_bcalloc((m),(n))
-#	define CALLOCA(m,n,file,line,func)	_bcallocA((m),(n))
-#	define REALLOC(p,n,file,line,func)	GC_REALLOC((p),(n))
-#	define STRDUP(p,file,line,func)	_bstrdup(p)
-#	define FREE(p,file,line,func)		GC_FREE(p)
-
-	void * _bcalloc(size_t, size_t);
-	void * _bcallocA(size_t, size_t);
-	char * _bstrdup(const char *);
-
-#elif defined(BCHECK)
-
-#	define MALLOC(n,file,line,func)	malloc(n)
-#	define MALLOCA(n,file,line,func)	malloc(n)
-#	define CALLOC(m,n,file,line,func)	calloc((m),(n))
-#	define CALLOCA(m,n,file,line,func)	calloc((m),(n))
-#	define REALLOC(p,n,file,line,func)	realloc((p),(n))
-#	define STRDUP(p,file,line,func)	strdup(p)
-#	define FREE(p,file,line,func)		free(p)
-
-#else
-
-#	define MALLOC(n,file,line,func)	malloc(n)
-#	define MALLOCA(n,file,line,func)	malloc(n)
-#	define CALLOC(m,n,file,line,func)	calloc((m),(n))
-#	define CALLOCA(m,n,file,line,func)	calloc((m),(n))
-#	define REALLOC(p,n,file,line,func)	realloc((p),(n))
-#	define STRDUP(p,file,line,func)	strdup(p)
-#	define FREE(p,file,line,func)		free(p)
-
-#endif
-
 /////////////// Buffer Creation /////////////////
 // Full credit for this goes to Shinomori [Ajarn]
 
@@ -155,7 +99,7 @@
 
 ////////////////////////////////////////////////
 
-bool malloc_verify(void* ptr);
+bool malloc_verify_ptr(void* ptr);
 size_t malloc_usage (void);
 void malloc_init (void);
 void malloc_final (void);

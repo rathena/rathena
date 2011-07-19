@@ -1,5 +1,13 @@
 Date	Added
 
+2011/07/19
+	* Made NO_MEMMGR only be set as a default value, allowing for simultaneous use with the memory libraries. [FlavioJS]
+	* Moved memory library selection to malloc.c to avoid poisoning the namespace of the rest of the code.
+	* Removed BCHECK code since it's uneeded. (bcheck is an external batch tool that runs on top of the dbx debugger)
+	* Fixed GCOLLECT usage. (missing init and final memory leak check)
+	* Fixed DMALLOC usage. (missing options on CYGWIN and verify memory)
+	* Renamed malloc_verify to malloc_verify_ptr to avoid conflict with DMALLOC.
+	* Changed itemtype from inline to static inline to avoid error with the SunOS compiler.
 2011/07/15
 	* Changed the warning message of when setrlimit fails to be more explicit. [FlavioJS] 
 	* CMake: added tests for big endian, typecast to union and monotonic clock.
