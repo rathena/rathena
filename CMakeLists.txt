@@ -272,16 +272,26 @@ endforeach()
 
 
 #
-# Use RDTSC instruction as a timing source (time stamp counter on x86 since Pentium)
+# Use RDTSC instruction as a timing source (time stamp counter on x86 since Pentium) (default=OFF)
 #
 # Enable it when you've timing issues. (ex: in conjunction with XEN or Other Virtualization mechanisms)
 # Please ensure that you've disabled dynamic CPU-Frequencys, such as power saving options.
 # (On the most modern Dedicated Servers cpufreq is preconfigured, see your distribution's manual how to disable it)
 #
-option( ENABLE_RDTSC "use RDTSC instruction as a timing source" OFF )
+option( ENABLE_RDTSC "use RDTSC instruction as a timing source (default=OFF)" OFF )
 if( ENABLE_RDTSC )
-	message( STATUS "Enabled RDTSC" )
 	set_property( CACHE GLOBAL_DEFINITIONS  PROPERTY VALUE "${GLOBAL_DEFINITIONS} -DENABLE_RDTSC" )
+	message( STATUS "Enabled RDTSC as a timing source" )
+endif()
+
+
+#
+# Enable extra debug code (default=OFF)
+#
+option( ENABLE_EXTRA_DEBUG_CODE "enable extra debug code (default=OFF)" OFF )
+if( ENABLE_EXTRA_DEBUG_CODE )
+	set_property( CACHE GLOBAL_DEFINITIONS  PROPERTY VALUE "${GLOBAL_DEFINITIONS} -DDEBUG" )
+	message( STATUS "Enabled extra DEBUG code" )
 endif()
 
 
@@ -289,16 +299,16 @@ endif()
 # Enable builtin memory manager (default=default)
 #
 set( MEMMGR_OPTIONS "default;yes;no" )
-set( ENABLE_MEMMGR "default" CACHE STRING "enable the builtin memory manager? (${MEMMGR_OPTIONS})" )
+set( ENABLE_MEMMGR "default" CACHE STRING "enable builtin memory manager: ${MEMMGR_OPTIONS} (default=default)" )
 set_property( CACHE ENABLE_MEMMGR  PROPERTY STRINGS ${MEMMGR_OPTIONS} )
 if( ENABLE_MEMMGR STREQUAL "default" )
 	# use source code default
 elseif( ENABLE_MEMMGR STREQUAL "yes" )
 	set_property( CACHE GLOBAL_DEFINITIONS  PROPERTY VALUE "${GLOBAL_DEFINITIONS} -DUSE_MEMMGR" )
-	message( STATUS "Enabled builtin memory manager" )
+	message( STATUS "Enabled the builtin memory manager" )
 elseif( ENABLE_MEMMGR STREQUAL "no" )
 	set_property( CACHE GLOBAL_DEFINITIONS  PROPERTY VALUE "${GLOBAL_DEFINITIONS} -DNO_MEMMGR" )
-	message( STATUS "Disabled builtin memory manager" )
+	message( STATUS "Disabled the builtin memory manager" )
 else()
 	message( FATAL_ERROR "invalid option ENABLE_MEMMGR=${ENABLE_MEMMGR} (valid options: ${MEMMGR_OPTIONS})" )
 endif()
@@ -354,6 +364,32 @@ elseif( ENABLE_MEMORY STREQUAL "gcollect" )
 
 else()
 	message( FATAL_ERROR "invalid option ENABLE_MEMORY=${ENABLE_MEMORY} (valid options: ${MEMORY_OPTIONS})" )
+endif()
+
+
+#
+# Enable profiler (default=none)
+#
+set( PROFILER_OPTIONS "none;gprof" )
+set( ENABLE_PROFILER "none" CACHE STRING "enable profiler: ${PROFILER_OPTIONS} (default=none)" )
+set_property( CACHE ENABLE_PROFILER  PROPERTY STRINGS ${PROFILER_OPTIONS} )
+if( ENABLE_PROFILER STREQUAL "none" )
+	# no profiler
+
+elseif( ENABLE_PROFILER STREQUAL "gprof" )
+	if( CMAKE_C_COMPILER_ID STREQUAL "GNU" )
+		if( NOT HAVE_GPROF_FLAGS )
+			set_property( CACHE CMAKE_C_FLAGS  PROPERTY VALUE "${CMAKE_C_FLAGS} -pg" )
+			set_property( CACHE CMAKE_EXE_LINKER_FLAGS  PROPERTY VALUE "${CMAKE_EXE_LINKER_FLAGS} -pg" )
+			set( HAVE_GPROF_FLAGS ON  CACHE INTERNAL "" )
+		endif()
+		message( STATUS "Enabled the profiler gprof" )
+	else()
+		message( FATAL_ERROR "Failed to enable the profiler gprof - not GNU" )
+	endif()
+
+else()
+	message( FATAL_ERROR "invalid option ENABLE_PROFILER=${ENABLE_PROFILER} (valid options: ${PROFILER_OPTIONS})" )
 endif()
 
 
