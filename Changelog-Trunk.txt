@@ -8,6 +8,8 @@ Date	Added
 	* Fixed DMALLOC usage. (missing options on CYGWIN and verify memory)
 	* Renamed malloc_verify to malloc_verify_ptr to avoid conflict with DMALLOC.
 	* Changed itemtype from inline to static inline to avoid error with the SunOS compiler.
+	* CMake: added option ENABLE_MEMMGR. (builtin memory manager)
+	* CMake: added option ENABLE_MEMORY. (memory library)
 2011/07/15
 	* Changed the warning message of when setrlimit fails to be more explicit. [FlavioJS] 
 	* CMake: added tests for big endian, typecast to union and monotonic clock.

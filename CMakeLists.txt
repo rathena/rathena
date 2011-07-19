@@ -198,7 +198,7 @@ endif()
 #
 # Test typecast to union
 #
-message( STATUS "Check if we can typecast to union" )
+message( STATUS "Check for typecast to union" )
 set( SOURCECODE
 	"typedef union Foonion{\n"
 	"  int i;\n"
@@ -207,15 +207,15 @@ set( SOURCECODE
 	"} Foonion;\n"
 	"int get_i(Foonion onion){ return onion.i; }\n"
 	"int main(int argc, char** argv){\n"
-		"int i = 0;\n"
-		"return get_i(((Foonion)(int)i));\n"
+	"  int i = 0;\n"
+	"  return get_i(((Foonion)(int)i));\n"
 	"}\n"
 	)
 CHECK_C_SOURCE_COMPILES( "${SOURCECODE}" HAVE_TYPECAST_TO_UNION )
 if( HAVE_TYPECAST_TO_UNION )
-	message( STATUS "Check typecast to union - yes" )
+	message( STATUS "Check for typecast to union - yes" )
 else()
-	message( STATUS "Check typecast to union - no" )
+	message( STATUS "Check for typecast to union - no" )
 	set_property( CACHE GLOBAL_DEFINITIONS  PROPERTY VALUE "${GLOBAL_DEFINITIONS} -DDB_MANUAL_CAST_TO_UNION" )
 endif()
 
@@ -236,8 +236,8 @@ set( SOURCECODE
 	"#include <time.h>\n"
 	"#include <unistd.h>\n"
 	"int main(int argc, char** argv){\n"
-		"struct timespec tval;\n"
-		"return clock_gettime(CLOCK_MONOTONIC, &tval);\n"
+	"  struct timespec tval;\n"
+	"  return clock_gettime(CLOCK_MONOTONIC, &tval);\n"
 	"}\n"
 	)
 find_library( RT_LIBRARY rt )# (optional, rt on Debian)
@@ -282,6 +282,78 @@ option( ENABLE_RDTSC "use RDTSC instruction as a timing source" OFF )
 if( ENABLE_RDTSC )
 	message( STATUS "Enabled RDTSC" )
 	set_property( CACHE GLOBAL_DEFINITIONS  PROPERTY VALUE "${GLOBAL_DEFINITIONS} -DENABLE_RDTSC" )
+endif()
+
+
+#
+# Enable builtin memory manager (default=default)
+#
+set( MEMMGR_OPTIONS "default;yes;no" )
+set( ENABLE_MEMMGR "default" CACHE STRING "enable the builtin memory manager? (${MEMMGR_OPTIONS})" )
+set_property( CACHE ENABLE_MEMMGR  PROPERTY STRINGS ${MEMMGR_OPTIONS} )
+if( ENABLE_MEMMGR STREQUAL "default" )
+	# use source code default
+elseif( ENABLE_MEMMGR STREQUAL "yes" )
+	set_property( CACHE GLOBAL_DEFINITIONS  PROPERTY VALUE "${GLOBAL_DEFINITIONS} -DUSE_MEMMGR" )
+	message( STATUS "Enabled builtin memory manager" )
+elseif( ENABLE_MEMMGR STREQUAL "no" )
+	set_property( CACHE GLOBAL_DEFINITIONS  PROPERTY VALUE "${GLOBAL_DEFINITIONS} -DNO_MEMMGR" )
+	message( STATUS "Disabled builtin memory manager" )
+else()
+	message( FATAL_ERROR "invalid option ENABLE_MEMMGR=${ENABLE_MEMMGR} (valid options: ${MEMMGR_OPTIONS})" )
+endif()
+
+
+#
+# Enable memory library (default=system)
+#
+set( MEMORY_OPTIONS "system;memwatch;dmalloc;gcollect" )
+set( ENABLE_MEMORY "system" CACHE STRING "enable memory library: ${MEMORY_OPTIONS} (default=system)" )
+set_property( CACHE ENABLE_MEMORY  PROPERTY STRINGS ${MEMORY_OPTIONS} )
+if( ENABLE_MEMORY STREQUAL "system" )
+	# use system functions
+
+elseif( ENABLE_MEMORY STREQUAL "memwatch" )
+	CHECK_INCLUDE_FILE( memwatch.h HAVE_MEMWATCH_H )
+	find_library( MEMWATCH_LIBRARY memwatch )
+	mark_as_advanced( MEMWATCH_LIBRARY )
+	if( HAVE_MEMWATCH_H AND MEMWATCH_LIBRARY )
+		message( STATUS "Adding global library: ${MEMWATCH_LIBRARY}" )
+		set_property( CACHE GLOBAL_LIBRARIES    PROPERTY VALUE ${GLOBAL_LIBRARIES} ${MEMWATCH_LIBRARY} )
+		set_property( CACHE GLOBAL_DEFINITIONS  PROPERTY VALUE "${GLOBAL_DEFINITIONS} -DMEMWATCH" )
+		message( STATUS "Enabled the memory library memwatch" )
+	else()
+		message( FATAL_ERROR "Failed to enable the memory library memwatch" )
+	endif()
+
+elseif( ENABLE_MEMORY STREQUAL "dmalloc" )
+	CHECK_INCLUDE_FILE( dmalloc.h HAVE_DMALLOC_H )
+	find_library( DMALLOC_LIBRARY dmalloc )
+	mark_as_advanced( DMALLOC_LIBRARY )
+	if( HAVE_DMALLOC_H AND DMALLOC_LIBRARY )
+		message( STATUS "Adding global library: ${DMALLOC_LIBRARY}" )
+		set_property( CACHE GLOBAL_LIBRARIES    PROPERTY VALUE ${GLOBAL_LIBRARIES} ${DMALLOC_LIBRARY} )
+		set_property( CACHE GLOBAL_DEFINITIONS  PROPERTY VALUE "${GLOBAL_DEFINITIONS} -DDMALLOC -DDMALLOC_FUNC_CHECK" )
+		message( STATUS "Enabled the memory library dmalloc" )
+	else()
+		message( FATAL_ERROR "Failed to enable the memory library dmalloc" )
+	endif()
+
+elseif( ENABLE_MEMORY STREQUAL "gcollect" )
+	CHECK_INCLUDE_FILE( gc.h HAVE_GC_H )
+	find_library( GC_LIBRARY gc )
+	mark_as_advanced( GC_LIBRARY )
+	if( HAVE_GC_H AND GC_LIBRARY )
+		message( STATUS "Adding global library: ${GC_LIBRARY}" )
+		set_property( CACHE GLOBAL_LIBRARIES    PROPERTY VALUE ${GLOBAL_LIBRARIES} ${GC_LIBRARY} )
+		set_property( CACHE GLOBAL_DEFINITIONS  PROPERTY VALUE "${GLOBAL_DEFINITIONS} -DGCOLLECT" )
+		message( STATUS "Enabled the memory library gcollect" )
+	else()
+		message( FATAL_ERROR "Failed to enable the memory library gcollect" )
+	endif()
+
+else()
+	message( FATAL_ERROR "invalid option ENABLE_MEMORY=${ENABLE_MEMORY} (valid options: ${MEMORY_OPTIONS})" )
 endif()
 
 
