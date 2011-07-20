@@ -21,6 +21,9 @@
 #	define REALLOC(p,n,file,line,func)	mwRealloc((p),(n),(file),(line))
 #	define STRDUP(p,file,line,func)	mwStrdup((p),(file),(line))
 #	define FREE(p,file,line,func)		mwFree((p),(file),(line))
+#	define MEMORY_USAGE()	0
+#	define MEMORY_VERIFY(ptr)	mwIsSafeAddr(ptr, 1)
+#	define MEMORY_CHECK() CHECK()
 
 #elif defined(DMALLOC)
 
@@ -32,17 +35,26 @@
 #	define REALLOC(p,n,file,line,func)	dmalloc_realloc((file),(line),(p),(n),DMALLOC_FUNC_REALLOC,0)
 #	define STRDUP(p,file,line,func)	strdup(p)
 #	define FREE(p,file,line,func)		free(p)
+#	define MEMORY_USAGE()	dmalloc_memory_allocated()
+#	define MEMORY_VERIFY(ptr)	(dmalloc_verify(ptr) == DMALLOC_VERIFY_NOERROR)
+#	define MEMORY_CHECK()	dmalloc_log_stats(); dmalloc_log_unfreed()
 
 #elif defined(GCOLLECT)
 
 #	include "gc.h"
-#	define MALLOC(n,file,line,func)	GC_MALLOC(n)
-#	define CALLOC(m,n,file,line,func)	GC_MALLOC((m)*(n))
-#	define REALLOC(p,n,file,line,func)	GC_REALLOC((p),(n))
-#	define STRDUP(p,file,line,func)	_bstrdup(p)
-#	define FREE(p,file,line,func)		GC_FREE(p)
-
-	char * _bstrdup(const char *);
+#	ifdef GC_ADD_CALLER
+#		define RETURN_ADDR 0,
+#	else
+#		define RETURN_ADDR
+#	endif
+#	define MALLOC(n,file,line,func)	GC_debug_malloc((n), RETURN_ADDR (file),(line))
+#	define CALLOC(m,n,file,line,func)	GC_debug_malloc((m)*(n), RETURN_ADDR (file),(line))
+#	define REALLOC(p,n,file,line,func)	GC_debug_realloc((p),(n), RETURN_ADDR (file),(line))
+#	define STRDUP(p,file,line,func)	GC_debug_strdup((p), RETURN_ADDR (file),(line))
+#	define FREE(p,file,line,func)		GC_debug_free(p)
+#	define MEMORY_USAGE()	GC_get_heap_size()
+#	define MEMORY_VERIFY(ptr)	(GC_base(ptr) != NULL)
+#	define MEMORY_CHECK()	GC_gcollect()
 
 #else
 
@@ -51,6 +63,9 @@
 #	define REALLOC(p,n,file,line,func)	realloc((p),(n))
 #	define STRDUP(p,file,line,func)	strdup(p)
 #	define FREE(p,file,line,func)		free(p)
+#	define MEMORY_USAGE()	0
+#	define MEMORY_VERIFY(ptr)	true
+#	define MEMORY_CHECK()
 
 #endif
 
@@ -104,17 +119,6 @@ void aFree_(void *p, const char *file, int line, const char *func)
 	p = NULL;
 }
 
-#ifdef GCOLLECT
-
-char* _bstrdup(const char *chr)
-{
-	int len = strlen(chr);
-	char *ret = (char*)GC_MALLOC(len + 1);
-	if (ret) memcpy(ret, chr, len + 1);
-	return ret;
-}
-
-#endif
 
 #ifdef USE_MEMMGR
 
@@ -660,23 +664,32 @@ static void memmgr_init (void)
  *--------------------------------------
  */
 
+
+/// Tests the memory for errors and memory leaks.
+void malloc_memory_check(void)
+{
+	MEMORY_CHECK();
+}
+
+
+/// Returns true if a pointer is valid.
+/// The check is best-effort, false positives are possible.
 bool malloc_verify_ptr(void* ptr)
 {
 #ifdef USE_MEMMGR
-	return memmgr_verify(ptr);
-#elif defined(DMALLOC)
-	return (dmalloc_verify(ptr) == DMALLOC_VERIFY_NOERROR);
+	return memmgr_verify(ptr) && MEMORY_VERIFY(ptr);
 #else
-	return true;
+	return MEMORY_VERIFY(ptr);
 #endif
 }
+
 
 size_t malloc_usage (void)
 {
 #ifdef USE_MEMMGR
 	return memmgr_usage ();
 #else
-	return 0;
+	return MEMORY_USAGE();
 #endif
 }
 
@@ -685,10 +698,7 @@ void malloc_final (void)
 #ifdef USE_MEMMGR
 	memmgr_final ();
 #endif
-#ifdef GCOLLECT
-	GC_find_leak = 1;
-	GC_gcollect();
-#endif
+	MEMORY_CHECK();
 }
 
 void malloc_init (void)
@@ -698,6 +708,8 @@ void malloc_init (void)
 	dmalloc_debug_setup(getenv("DMALLOC_OPTIONS"));
 #endif
 #ifdef GCOLLECT
+	// don't garbage collect, only report inaccessible memory that was not deallocated
+	GC_find_leak = 1;
 	GC_INIT();
 #endif
 #ifdef USE_MEMMGR

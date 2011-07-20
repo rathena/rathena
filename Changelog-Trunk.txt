@@ -1,5 +1,11 @@
 Date	Added
 
+2011/07/20
+	* Made GCOLLECT use it's debug functions. [FlavioJS]
+	* Turned off garbage collection for GCOLLECT since there's nothing to do with explicit frees.
+	* Added malloc_verify_ptr/malloc_usage code for all memory libraries.
+	* Added malloc_memory_check for debug purposes, tests memory for errors and memory leaks.
+	* Added explicit memory check on malloc_final.
 2011/07/19
 	* Made NO_MEMMGR only be set as a default value, allowing for simultaneous use with the memory libraries. [FlavioJS]
 	* Moved memory library selection to malloc.c to avoid poisoning the namespace of the rest of the code.

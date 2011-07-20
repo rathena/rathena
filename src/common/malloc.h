@@ -6,20 +6,13 @@
 
 #include "../common/cbasetypes.h"
 
-// Q: What are the 'a'-variant allocation functions?
-// A: They allocate memory from the stack, which is automatically 
-//    freed when the invoking function returns.
-//    But it's not portable (http://c-faq.com/malloc/alloca.html)
-//    and I have doubts our implementation works.
-//    -> They should NOT be used, period.
-
 #define ALC_MARK __FILE__, __LINE__, __func__
 
 
-// default memory manager
+// default use of the built-in memory manager
 #if !defined(NO_MEMMGR) && !defined(USE_MEMMGR)
 #if defined(MEMWATCH) || defined(DMALLOC) || defined(GCOLLECT)
-// disable built-in memory manager when using another manager
+// disable built-in memory manager when using another memory library
 #define NO_MEMMGR
 #else
 // use built-in memory manager by default
@@ -95,6 +88,7 @@
 
 ////////////////////////////////////////////////
 
+void malloc_memory_check(void);
 bool malloc_verify_ptr(void* ptr);
 size_t malloc_usage (void);
 void malloc_init (void);
