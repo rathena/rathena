@@ -17,9 +17,7 @@
 #	include <string.h> 
 #	include "memwatch.h"
 #	define MALLOC(n,file,line,func)	mwMalloc((n),(file),(line))
-#	define MALLOCA(n,file,line,func)	mwMalloc((n),(file),(line))
 #	define CALLOC(m,n,file,line,func)	mwCalloc((m),(n),(file),(line))
-#	define CALLOCA(m,n,file,line,func)	mwCalloc((m),(n),(file),(line))
 #	define REALLOC(p,n,file,line,func)	mwRealloc((p),(n),(file),(line))
 #	define STRDUP(p,file,line,func)	mwStrdup((p),(file),(line))
 #	define FREE(p,file,line,func)		mwFree((p),(file),(line))
@@ -30,9 +28,7 @@
 #	include <stdlib.h>
 #	include "dmalloc.h"
 #	define MALLOC(n,file,line,func)	dmalloc_malloc((file),(line),(n),DMALLOC_FUNC_MALLOC,0,0)
-#	define MALLOCA(n,file,line,func)	dmalloc_malloc((file),(line),(n),DMALLOC_FUNC_MALLOC,0,0)
 #	define CALLOC(m,n,file,line,func)	dmalloc_malloc((file),(line),(m)*(n),DMALLOC_FUNC_CALLOC,0,0)
-#	define CALLOCA(m,n,file,line,func)	dmalloc_malloc((file),(line),(m)*(n),DMALLOC_FUNC_CALLOC,0,0)
 #	define REALLOC(p,n,file,line,func)	dmalloc_realloc((file),(line),(p),(n),DMALLOC_FUNC_REALLOC,0)
 #	define STRDUP(p,file,line,func)	strdup(p)
 #	define FREE(p,file,line,func)		free(p)
@@ -41,23 +37,17 @@
 
 #	include "gc.h"
 #	define MALLOC(n,file,line,func)	GC_MALLOC(n)
-#	define MALLOCA(n,file,line,func)	GC_MALLOC_ATOMIC(n)
-#	define CALLOC(m,n,file,line,func)	_bcalloc((m),(n))
-#	define CALLOCA(m,n,file,line,func)	_bcallocA((m),(n))
+#	define CALLOC(m,n,file,line,func)	GC_MALLOC((m)*(n))
 #	define REALLOC(p,n,file,line,func)	GC_REALLOC((p),(n))
 #	define STRDUP(p,file,line,func)	_bstrdup(p)
 #	define FREE(p,file,line,func)		GC_FREE(p)
 
-	void * _bcalloc(size_t, size_t);
-	void * _bcallocA(size_t, size_t);
 	char * _bstrdup(const char *);
 
 #else
 
 #	define MALLOC(n,file,line,func)	malloc(n)
-#	define MALLOCA(n,file,line,func)	malloc(n)
 #	define CALLOC(m,n,file,line,func)	calloc((m),(n))
-#	define CALLOCA(m,n,file,line,func)	calloc((m),(n))
 #	define REALLOC(p,n,file,line,func)	realloc((p),(n))
 #	define STRDUP(p,file,line,func)	strdup(p)
 #	define FREE(p,file,line,func)		free(p)
@@ -75,33 +65,12 @@ void* aMalloc_(size_t size, const char *file, int line, const char *func)
 
 	return ret;
 }
-void* aMallocA_(size_t size, const char *file, int line, const char *func)
-{
-	void *ret = MALLOCA(size, file, line, func);
-	// ShowMessage("%s:%d: in func %s: aMallocA %d\n",file,line,func,size);
-	if (ret == NULL){
-		ShowFatalError("%s:%d: in func %s: aMallocA error out of memory!\n",file,line,func);
-		exit(EXIT_FAILURE);
-	}
-
-	return ret;
-}
 void* aCalloc_(size_t num, size_t size, const char *file, int line, const char *func)
 {
 	void *ret = CALLOC(num, size, file, line, func);
 	// ShowMessage("%s:%d: in func %s: aCalloc %d %d\n",file,line,func,num,size);
 	if (ret == NULL){
 		ShowFatalError("%s:%d: in func %s: aCalloc error out of memory!\n", file, line, func);
-		exit(EXIT_FAILURE);
-	}
-	return ret;
-}
-void* aCallocA_(size_t num, size_t size, const char *file, int line, const char *func)
-{
-	void *ret = CALLOCA(num, size, file, line, func);
-	// ShowMessage("%s:%d: in func %s: aCallocA %d %d\n",file,line,func,num,size);
-	if (ret == NULL){
-		ShowFatalError("%s:%d: in func %s: aCallocA error out of memory!\n",file,line,func);
 		exit(EXIT_FAILURE);
 	}
 	return ret;
@@ -137,18 +106,6 @@ void aFree_(void *p, const char *file, int line, const char *func)
 
 #ifdef GCOLLECT
 
-void* _bcallocA(size_t size, size_t cnt)
-{
-	void *ret = GC_MALLOC_ATOMIC(size * cnt);
-	if (ret) memset(ret, 0, size * cnt);
-	return ret;
-}
-void* _bcalloc(size_t size, size_t cnt)
-{
-	void *ret = GC_MALLOC(size * cnt);
-	if (ret) memset(ret, 0, size * cnt);
-	return ret;
-}
 char* _bstrdup(const char *chr)
 {
 	int len = strlen(chr);

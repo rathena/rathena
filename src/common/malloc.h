@@ -41,9 +41,7 @@
 #endif
 
 #	define aMalloc(n)		_mmalloc(n,ALC_MARK)
-#	define aMallocA(n)		_mmalloc(n,ALC_MARK)
 #	define aCalloc(m,n)		_mcalloc(m,n,ALC_MARK)
-#	define aCallocA(m,n)	_mcalloc(m,n,ALC_MARK)
 #	define aRealloc(p,n)	_mrealloc(p,n,ALC_MARK)
 #	define aStrdup(p)		_mstrdup(p,ALC_MARK)
 #	define aFree(p)			_mfree(p,ALC_MARK)
@@ -57,22 +55,23 @@
 #else
 
 #	define aMalloc(n)		aMalloc_((n),ALC_MARK)
-#	define aMallocA(n)		aMallocA_((n),ALC_MARK)
 #	define aCalloc(m,n)		aCalloc_((m),(n),ALC_MARK)
-#	define aCallocA(m,n)	aCallocA_(m,n,ALC_MARK)
 #	define aRealloc(p,n)	aRealloc_(p,n,ALC_MARK)
 #	define aStrdup(p)		aStrdup_(p,ALC_MARK)
 #	define aFree(p)			aFree_(p,ALC_MARK)
 
 	void* aMalloc_	(size_t size, const char *file, int line, const char *func);
-	void* aMallocA_	(size_t size, const char *file, int line, const char *func);
 	void* aCalloc_	(size_t num, size_t size, const char *file, int line, const char *func);
-	void* aCallocA_	(size_t num, size_t size, const char *file, int line, const char *func);
 	void* aRealloc_	(void *p, size_t size, const char *file, int line, const char *func);
 	char* aStrdup_	(const char *p, const char *file, int line, const char *func);
 	void  aFree_	(void *p, const char *file, int line, const char *func);
 
 #endif
+
+// deprecated, do not use
+#define aMallocA aMalloc
+#define aCallocA aCalloc
+#define CREATE_A CREATE
 
 /////////////// Buffer Creation /////////////////
 // Full credit for this goes to Shinomori [Ajarn]
@@ -92,9 +91,6 @@
 ////////////// Others //////////////////////////
 // should be merged with any of above later
 #define CREATE(result, type, number) (result) = (type *) aCalloc ((number), sizeof(type))
-
-#define CREATE_A(result, type, number) (result) = (type *) aCallocA ((number), sizeof(type))
-
 #define RECREATE(result, type, number) (result) = (type *) aRealloc ((result), sizeof(type) * (number))
 
 ////////////////////////////////////////////////
