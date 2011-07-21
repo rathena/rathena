@@ -54,7 +54,6 @@ if( INSTALL_COMPONENT_RUNTIME )
 		DESTINATION "."
 		COMPONENT Runtime_charserver_sql )
 endif( INSTALL_COMPONENT_RUNTIME )
-set( HAVE_char-server_sql ON  CACHE BOOL "char-server_sql target is available" )
 message( STATUS "Creating target char-server_sql - done" )
 else()
 message( STATUS "Skipping target char-server_sql (requires common_sql)" )
