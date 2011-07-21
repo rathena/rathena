@@ -746,23 +746,23 @@ ayo_dun02,91,264,3	script	Haggard Man	841,{
 					mes "realigned every bone in your skeleton, placing them in the right spots. Strangely, you feel intense relaxation and refreshment instead of excruciating pain.";
 					set thai_find,14;
 					if(BaseLevel < 56)
-						getexp 9000,0;
+						getexp 900,0;
 					else if(BaseLevel > 55 && BaseLevel < 61)
-						getexp 10500,0;
+						getexp 1050,0;
 					else if(BaseLevel > 60 && BaseLevel < 66)
-						getexp 18684,0;
+						getexp 1868,0;
 					else if(BaseLevel > 65 && BaseLevel < 71)
-						getexp 27411,0;
+						getexp 2741,0;
 					else if(BaseLevel > 70 && BaseLevel < 76)
-						getexp 70757,0;
+						getexp 7076,0;
 					else if(BaseLevel > 75 && BaseLevel < 81)
-						getexp 130246,0;
+						getexp 13025,0;
 					else if(BaseLevel > 80 && BaseLevel < 86)
-						getexp 150340,0;
+						getexp 15034,0;
 					else if(BaseLevel > 85 && BaseLevel < 91)
-						getexp 182052,0;
+						getexp 18205,0;
 					else if(BaseLevel > 90)
-						getexp 406786,0;
+						getexp 40679,0;
 					next;
 					mes "[" +strcharinfo(0)+ "]";
 					mes "Whoa...?";
@@ -822,23 +822,23 @@ ayo_dun02,91,264,3	script	Haggard Man	841,{
 					mes "realigned every bone in your skeleton, placing them in the right spots. Strangely, you feel intense relaxation and refreshment instead of excruciating pain.";
 					set thai_find,14;
 					if(BaseLevel < 56)
-						getexp 9000,0;
+						getexp 900,0;
 					else if(BaseLevel > 55 && BaseLevel < 61)
-						getexp 10500,0;
+						getexp 1050,0;
 					else if(BaseLevel > 60 && BaseLevel < 66)
-						getexp 18684,0;
+						getexp 1868,0;
 					else if(BaseLevel > 65 && BaseLevel < 71)
-						getexp 27411,0;
+						getexp 2741,0;
 					else if(BaseLevel > 70 && BaseLevel < 76)
-						getexp 70757,0;
+						getexp 7076,0;
 					else if(BaseLevel > 75 && BaseLevel < 81)
-						getexp 130246,0;
+						getexp 13025,0;
 					else if(BaseLevel > 80 && BaseLevel < 86)
-						getexp 150340,0;
+						getexp 15034,0;
 					else if(BaseLevel > 85 && BaseLevel < 91)
-						getexp 182052,0;
+						getexp 18205,0;
 					else if(BaseLevel > 90)
-						getexp 406786,0;
+						getexp 40679,0;
 					next;
 					mes "[" +strcharinfo(0)+ "]";
 					mes "Whoa...?";

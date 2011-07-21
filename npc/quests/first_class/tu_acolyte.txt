@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Fix up by Jukka
 //===== Current Version: ===================================== 
-//= 1.4
+//= 1.5
 //===== Compatible With: ===================================== 
 //= eAthena SVN (Testet in Trunk 88xx)
 //===== Description: ========================================= 
@@ -15,6 +15,7 @@
 //= 1.2 Fixed experience gains to match upcoming rate adjustments. [SinSloth]
 //= 1.3 Fixed bad NPC header data to comply with rev. 11603. [L0ne_W0lf]
 //= 1.4 Misc. updates. [L0ne_W0lf]
+//= 1.5 Adjusted EXP gains to Renewal values.
 //============================================================ 
 
 
@@ -292,7 +293,7 @@ prt_monk,230,106,3	script	Asthe#tu	79,{
 		unitskilluseid getcharid(3),28,10;
 		set tu_acolyte01, 3;
 		if(getskilllv("AL_HEAL") == 0){
-			getexp 0,100;
+			getexp 0,10;
 			specialeffect2 EF_CONE;
 		}
 		close;
@@ -385,11 +386,11 @@ prt_monk,230,106,3	script	Asthe#tu	79,{
 				set tu_acolyte01, 5;
 				delitem 1504, 1; //Mace
 				if(Class == Job_Acolyte_High){
-					getexp 2000,1000;
+					getexp 200,100;
 					specialeffect2 EF_CONE;
 					close;
 				} else {
-					getexp 1000,500;
+					getexp 100,50;
 					specialeffect2 EF_CONE;
 					close;
 				}
@@ -792,7 +793,7 @@ prt_monk,230,106,3	script	Asthe#tu	79,{
 		mes "[Asthe]";
 		mes "Well, please don't forget what I've taught you. I hope you look back with fondness at our time together amongst these beautiful flowers. May God bless you~";
 		set tu_acolyte01, 25;
-		getexp 5000,3000;
+		getexp 500,300;
 		specialeffect2 EF_CONE;
 		close;
 	}
@@ -867,9 +868,9 @@ monk_in,18,38,6	script	Priest Gardron#tu	110,{
 			mes "Acolyte training.";
 			set tu_acolyte01, 9;
 			percentheal 100,100;
-			getexp 2000,2000;
+			getexp 200,200;
 			specialeffect2 EF_CONE;
-			//getitem	505,1;	//Blue_Potion
+			//getitem 505,1; //Blue_Potion
 			close;
 		} else {
 			mes "A little while ago, a Prontere Sister sent me a message. Apparently,";
@@ -1099,7 +1100,7 @@ prt_monk,226,257,6	script	Ill Girl#tu	93,{
 					mes "It seemed that this good";
 					mes "deed has improved your skills.^000000";
 					set tu_acolyte01, 13;
-					getexp 0,1000;
+					getexp 0,100;
 					specialeffect2 EF_CONE;
 					next;
 					break;

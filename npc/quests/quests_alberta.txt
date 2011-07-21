@@ -2389,7 +2389,7 @@ alberta_in,131,95,5	script	Iromo#ep3_2	706,{
 		next;
 		set ep13_2_hiki,13;
 		completequest 10089;
-		getexp 80000,0;
+		getexp 8000,0;
 		mes "[Iromo]";
 		mes "The world is big, there are many things...";
 		mes "I have not seen yet. Yes... I want to...";
@@ -2518,7 +2518,7 @@ alberta_in,131,95,5	script	Iromo#ep3_2	706,{
 			next;
 			set ep13_2_hiki,11;
 			changequest 10087,10088;
-			getexp 67000,0;
+			getexp 6700,0;
 			mes "[Iromo]";
 			mes "Nevermind... it's not unexpected...";
 			mes "To go on an adventure with my friends,";
@@ -2586,7 +2586,7 @@ alberta_in,131,95,5	script	Iromo#ep3_2	706,{
 		next;
 		set ep13_2_hiki,10;
 		changequest 10086,10087;
-		getexp 57000,0;
+		getexp 5700,0;
 		mes "[Iromo]";
 		mes "...I'm not in a good mood, get out...";
 		close;
@@ -2645,7 +2645,7 @@ alberta_in,131,95,5	script	Iromo#ep3_2	706,{
 			next;
 			set ep13_2_hiki,8;
 			changequest 10084,10085;
-			getexp 47000,0;
+			getexp 4700,0;
 			mes "[Iromo]";
 			mes "Thank you for being helpful.";
 			mes "But, no thanks.";
@@ -2701,7 +2701,7 @@ alberta_in,131,95,5	script	Iromo#ep3_2	706,{
 		delitem 501,1; //Red_Potion
 		set ep13_2_hiki,7;
 		changequest 10083,10084;
-		getexp 37500,0;
+		getexp 3750,0;
 		mes "[Iromo]";
 		mes "I don't want to see the cat again.";
 		mes "If I go out, I will see him. It is scary.";

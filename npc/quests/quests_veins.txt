@@ -288,7 +288,7 @@ ve_fild05,257,130,4	script	Wincing Old Man#ve	945,{
 		mes "find these useful. Anyway,";
 		mes "I hope you like these rocks...";
 		set veins_stone,8;
-		getexp 300000,0;
+		getexp 30000,0;
 		getitem 985,3; //Elunium
 		close;
 	}
@@ -980,7 +980,7 @@ prt_church,89,108,6	script	Bard#sch	741,{
 		mes "reward with our sincere thanks.";
 		set que_sch,26;
 		getitem 12106,1; //Accessory_Box
-		getexp 600000,0;
+		getexp 60000,0;
 		close;
 	}
 	else {
@@ -3034,7 +3034,7 @@ veins,327,185,3	script	Kid#camelcamel	944,{
 			completequest 3083;
 			set rachel_camel,25;
 			specialeffect2 EF_ABSORBSPIRITS;
-			getexp 1000000,700000;
+			getexp 100000,70000;
 			close;
 		}
 		else {
@@ -6140,7 +6140,7 @@ ve_in,281,214,3	script	Bookshelf#vol	111,{
 		else {
 			getitem 12103,1; //Bloody_Dead_Branch
 		}
-		getexp 800000,0;
+		getexp 80000,0;
 		mes "^3355FFWell, you've done all";
 		mes "that you could here.";
 		mes "Now would be a good time";

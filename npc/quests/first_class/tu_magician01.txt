@@ -128,7 +128,7 @@ geffen,67,180,4	script	New Mage Manager#M	102,{
 		mes "time for a break. But we'll";
 		mes "continue this later, okay?";
 		set tu_magician01, 1;
-		getexp BaseLevel*30,BaseLevel*15;
+		getexp BaseLevel*3,BaseLevel*2;
 		//misceffect EF_HIT5;
 		close;
 		break;
@@ -370,19 +370,19 @@ geffen,67,180,4	script	New Mage Manager#M	102,{
 					set tu_magician01,2;
 					specialeffect2 EF_HIT5;
 					if(tu_mana&1){
-						getexp 150,70;
+						getexp 15,7;
 					}
 					if(tu_mana&2){
-						getexp 150,70;
+						getexp 15,7;
 					}
 					if(tu_mana&4){
-						getexp 150,70;
+						getexp 15,7;
 					}
 					if(tu_mana&8){
-						getexp 150,70;
+						getexp 15,7;
 					}
 					if(tu_mana&16){
-						getexp 150,70;
+						getexp 15,7;
 					}
 					set tu_mana,0;
 				}
@@ -467,7 +467,7 @@ geffen,67,180,4	script	New Mage Manager#M	102,{
 		mes "10 Chrysalis from them.";
 		mes "Then bring them to me, okay?";
 		set tu_magician01, 3;
-		getexp 400,200;
+		getexp 40,20;
 		specialeffect2 EF_HIT5;
 
 		close;
@@ -497,7 +497,7 @@ geffen,67,180,4	script	New Mage Manager#M	102,{
 			mes "used to using your skills, huh?";
 			mes "Anyway, let me know when you're ready for the next lesson, okay?";
 			set tu_magician01, 5;
-			getexp 400,200;
+			getexp 40,20;
 			specialeffect2 EF_HIT5;
 			close;
 		}
@@ -526,7 +526,7 @@ geffen,67,180,4	script	New Mage Manager#M	102,{
 			mes "used to using your skills, huh?";
 			mes "Anyway, let me know when you're ready for the next lesson, okay?";
 			set tu_magician01, 5;
-			getexp 400,200;
+			getexp 40,20;
 			specialeffect2 EF_HIT5;
 			close;
 		}
@@ -708,25 +708,25 @@ geffen,67,180,4	script	New Mage Manager#M	102,{
 				getitem 1604,1; //Wand
 				specialeffect2 EF_HIT5;
 				if(tu_mana&1){
-					getexp 300,100;
+					getexp 30,10;
 				}
 				if(tu_mana&2){
-					getexp 300,100;
+					getexp 30,10;
 				}
 				if(tu_mana&4){
-					getexp 300,100;
+					getexp 30,10;
 				}
 				if(tu_mana&8){
-					getexp 300,100;
+					getexp 30,10;
 				}
 				if(tu_mana&16){
-					getexp 300,100;
+					getexp 30,10;
 				}
 				if(tu_mana&32){
-					getexp 300,100;
+					getexp 30,10;
 				}
 				if(tu_mana&64){
-					getexp 300,100;
+					getexp 30,10;
 				}
 				set tu_mana,0;
 				close;
@@ -819,7 +819,7 @@ geffen,67,180,4	script	New Mage Manager#M	102,{
 		set tu_magician01, 28;
 		getitem 2321,1; //Silk_Robe
 		set Zeny, Zeny + 3000;
-		getexp 3000,1000;
+		getexp 300,100;
 		close;
 		break;
 	default:

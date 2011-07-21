@@ -701,7 +701,7 @@ OnTouch:
 		specialeffect EF_CONE;
 		set hg_herb,13;
 		getitem 603,1; //Old blue box
-		getexp 50000,0;
+		getexp 5000,0;
 	}
 	else
 	{
@@ -1318,7 +1318,7 @@ ein_in01,16,36,3	script	Morriphen	86,{
 		mes "I won't have to worry";
 		mes "about you. Take care~";
 		set hg_bio,9;
-		getexp 700000,0;
+		getexp 70000,0;
 		close;
 	}
 	else if(hg_bio == 9)
@@ -1530,7 +1530,7 @@ hu_in01,326,307,3	script	Siria	90,{
 		mes "I just... I just need to relax.";
 		mes "Thank you for everything...";
 		set hg_bio,8;
-		getexp 500000,0;
+		getexp 50000,0;
 		close;
 	}
 	else if(hg_bio == 8)
@@ -5346,7 +5346,7 @@ hugel,196,164,3	script	El Schatt	50,{
 		next;
 		specialeffect2 EF_CONE;
 		set hg_memory,12;
-		getexp 50000,0;
+		getexp 5000,0;
 		getitem 603,1; //Old blue box
 		mes "[El Schatt]";
 		mes "Oh... Oh dear";
@@ -5677,7 +5677,7 @@ hu_fild06,190,367,3	script	Torpy's Mom	701,{
 		specialeffect2 EF_CONE;
 		set hg_ubu01,8;
 		getitem 12065,3; //Green salad
-		getexp 50000,0;
+		getexp 5000,0;
 		close;
 	}
 	else if(hg_ubu01 == 7)
@@ -5699,7 +5699,7 @@ hu_fild06,190,367,3	script	Torpy's Mom	701,{
 		specialeffect2 EF_MVP;
 		set hg_ubu01,8;
 		getitem 12065,3; //Green salad
-		getexp 50000,0;
+		getexp 5000,0;
 		close;
 	}
 	else if(hg_ubu01 == 8)
@@ -6416,7 +6416,7 @@ hu_in01,15,372,3	script	Cellette Lavit	74,{
 		mes "you so much for your help~";
 		set hg_odeng,0;
 		getitem 584,3; //Skewer soup
-		getexp 1000,0;
+		getexp 100,0;
 		next;
 		mes "[Cellette]";
 		mes "It was really nice working";
@@ -7171,7 +7171,7 @@ yuno,111,156,3	script	Euslan	90,{
 		completequest 8052;
 		set hg_ma1,13;
 		specialeffect EF_ABSORBSPIRITS;
-		getexp 900000,600000;
+		getexp 90000,60000;
 		end;
 	}
 	else if(hg_ma1 == 13)
@@ -7729,7 +7729,7 @@ hugel,56,104,3	script	Kurupe	709,3,3,{
 		}
 		set hg_milk,9;
 		specialeffect2 EF_CONE;
-		getexp 100000,0;
+		getexp 10000,0;
 		getitem 12063,3;
 		mes "[Kurupe]";
 		mes "I always need";
@@ -10411,7 +10411,7 @@ OnTouch:
 		mes "used... Like that one lady,";
 		mes "that archaeologist, Laura.";
 		next;
-		getexp 700000,0;
+		getexp 70000,0;
 		set hg_odin,60;
 		mes "[???]";
 		mes "...Thanks for";

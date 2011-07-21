@@ -62,14 +62,14 @@ alberta_in,70,51,5	script	Guarnien	98,{
 			mes "You've taught yourself well. Here, you've earned this little reward~";
 			set tu_merchant, 17;
 			completequest 8240;
-			getexp 1860,604;
+			getexp 186,43;
 			next;
 		} else if(.@chk_vend == 10){
 			mes "[Guarnien]";
 			mes "Oh, I see that you're very serious about being a Merchant. I'm proud that you've managed to master this skill! Here, you deserve this reward!";
 			set tu_merchant, 17;
 			completequest 8240;
-			getexp 1990,699;
+			getexp 199,69;
 			next;
 		} else {
 			mes "[Guarnien]";
@@ -125,7 +125,7 @@ alberta_in,70,51,5	script	Guarnien	98,{
 			mes "But I see that you must already know that, huh? Well, seeing as you're so clever, I think you've earned this little prize~";
 			set tu_merchant, 17;
 			completequest 8239;
-			getexp 1860,604;
+			getexp 186,60;
 			next;
 		} else if(.@chk_vend == 10){
 			mes "[Guarnien]";
@@ -139,7 +139,7 @@ alberta_in,70,51,5	script	Guarnien	98,{
 			mes "all your efforts~";
 			set tu_merchant, 17;
 			completequest 8239;
-			getexp 1990,699;
+			getexp 199,69;
 
 			next;
 		} else {
@@ -183,7 +183,7 @@ alberta_in,70,51,5	script	Guarnien	98,{
 			set tu_merchant, 15;
 			erasequest 8238;
 			setquest 8239;
-			getexp 1620,520;
+			getexp 162,52;
 			next;
 			mes "[Guarnien]";
 			mes "Next time, I'll talk about the skill that sets Merchants apart from all the other classes: ^871F78Vending^000000. So don't miss it!";
@@ -195,7 +195,7 @@ alberta_in,70,51,5	script	Guarnien	98,{
 			set tu_merchant, 15;
 			erasequest 8238;
 			setquest 8239;
-			getexp 1860,604;
+			getexp 186,60;
 			next;
 			mes "[Guarnien]";
 			mes "Next time, I'll talk about the skill that sets Merchants apart from all the other classes: ^871F78Vending^000000. So don't miss it!";
@@ -238,7 +238,7 @@ alberta_in,70,51,5	script	Guarnien	98,{
 			set tu_merchant, 15;
 			erasequest 8237;
 			setquest 8238;
-			getexp 1620,520;
+			getexp 162,52;
 			next;
 			mes "[Guarnien]";
 			mes "Next time, I'll talk about the skill that sets Merchants apart from all the other classes: ^871F78Vending^000000. So don't miss it!";
@@ -251,7 +251,7 @@ alberta_in,70,51,5	script	Guarnien	98,{
 			set tu_merchant, 15;
 			erasequest 8237;
 			setquest 8238;
-			getexp 1860,602;
+			getexp 186,60;
 
 			next;
 			mes "[Guarnien]";
@@ -285,7 +285,7 @@ alberta_in,70,51,5	script	Guarnien	98,{
 			set tu_merchant, 13;
 			erasequest 8236;
 			setquest 8237;
-			getexp 1260,272;
+			getexp 126,27;
 			next;
 			mes "[Guarnien]";
 			mes "Next time, I'll discuss the Push Cart skill. Be ready for this lecture, as Push Cart is one of the more important skills for a Merchant.";
@@ -299,7 +299,7 @@ alberta_in,70,51,5	script	Guarnien	98,{
 			set tu_merchant, 13;
 			erasequest 8236;
 			setquest 8237;
-			getexp 1420,336;
+			getexp 142,33;
 			next;
 			mes "[Guarnien]";
 			mes "Next time, I'll discuss the Push Cart skill. Be ready for this lecture, as Push Cart is one of the more important skills for a Merchant.";
@@ -333,7 +333,7 @@ alberta_in,70,51,5	script	Guarnien	98,{
 			set tu_merchant, 13;
 			erasequest 8235;
 			setquest 8236;
-			getexp 1260,272;
+			getexp 126,27;
 			next;
 			mes "[Guarnien]";
 			mes "Next time, I'll discuss the";
@@ -345,7 +345,7 @@ alberta_in,70,51,5	script	Guarnien	98,{
 			set tu_merchant, 13;
 			erasequest 8235;
 			setquest 8236;
-			getexp 1420,336;
+			getexp 142,33;
 			next;
 			mes "[Guarnien]";
 			mes "Next time, I'll discuss the";
@@ -392,7 +392,7 @@ alberta_in,70,51,5	script	Guarnien	98,{
 		mes "Red Potions. Ah, it seems you researched the market and bought the cheapest ones! Great work!";
 		set tu_merchant, 11;
 		changequest 8234,8235;
-		getexp 1120,220;
+		getexp 112,22;
 		next;
 		mes "[Guarnien]";
 		mes "Alright, next time, we'll talk about the skill that you can learn after knowing how to Discount:";
@@ -446,7 +446,7 @@ alberta_in,70,51,5	script	Guarnien	98,{
 			set tu_merchant, 5;
 			erasequest 8232;
 			setquest 8233;
-			getexp 830,116;
+			getexp 83,11;
 			next;
 			mes "[Guarnien]";
 			mes "Alright, my next lesson will hopefully offer you a bit more of a challenge. Come back when you think you're ready, alright?";
@@ -457,7 +457,7 @@ alberta_in,70,51,5	script	Guarnien	98,{
 			set tu_merchant, 5;
 			erasequest 8232;
 			setquest 8233;
-			getexp 970,180;
+			getexp 97,18;
 			next;
 			mes "[Guarnien]";
 			mes "Alright, my next lesson will hopefully offer you a bit more of a challenge. Come back when you think you're ready, alright?";
@@ -493,7 +493,7 @@ alberta_in,70,51,5	script	Guarnien	98,{
 			set tu_merchant, 5;
 			erasequest 8231;
 			setquest 8232;
-			getexp 830,116;
+			getexp 83,11;
 			next;
 			mes "[Guarnien]";
 			mes "Alright, my next lesson will hopefully offer you a bit more of a challenge. Come back when you";
@@ -505,7 +505,7 @@ alberta_in,70,51,5	script	Guarnien	98,{
 			set tu_merchant, 5;
 			erasequest 8231;
 			setquest 8232;
-			getexp 970,180;
+			getexp 97,18;
 			next;
 			mes "[Guarnien]";
 			mes "Alright, my next lesson will hopefully offer you a bit more of a challenge. Come back when you";
@@ -548,7 +548,7 @@ alberta_in,70,51,5	script	Guarnien	98,{
 			set tu_merchant, 3;
 			erasequest 8230;
 			setquest 8231;
-			getexp 700,58;
+			getexp 70,12;
 			next;
 			mes "[Guarnien]";
 			mes "Okay. Now I think we're ready for me to discuss the ^871F78Discount^000000 skill. Come back when you'd like me to tell you more about it, okay?";
@@ -588,7 +588,7 @@ alberta_in,70,51,5	script	Guarnien	98,{
 				set tu_merchant, 2;
 				erasequest 8229;
 				setquest 8230;
-				getexp 585,43;
+				getexp 58,11;
 				getitem 1351,1; //Battle_Axe
 				next;
 				mes "[Guarnien]";
@@ -657,7 +657,7 @@ alberta_in,70,51,5	script	Guarnien	98,{
 				set tu_merchant, 2;
 				erasequest 8229;
 				setquest 8230;
-				getexp 585,43;
+				getexp 58,11;
 				getitem 1351,1; //Battle_Axe
 				next;
 				mes "[Guarnien]";

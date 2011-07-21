@@ -4561,7 +4561,7 @@ spl_in02,239,93,3	script	Terra#ep13md_l03	441,{
 			mes "I'm sorry this is all I can give you for now.";
 			set ep13_mdrama,27;
 			getitem 6081,25; //Splendide_Coin
-			getexp 1200000,100000;
+			getexp 120000,10000;
 			completequest 7071;
 			close;
 		}
@@ -4703,7 +4703,7 @@ spl_in02,236,92,5	script	Arc#ep13md_l02	447,{
 			mes "I'm sorry this is all I can give you for now.";
 			set ep13_mdrama,27;
 			getitem 6081,25; //Splendide_Coin
-			getexp 1200000,100000;
+			getexp 120000,10000;
 			completequest 7071;
 			close;
 		}
@@ -4992,7 +4992,7 @@ manuk,252,116,3	script	Manuk Galtun#ep13_2day	450,{
 				completequest 7074;
 				completequest 7075;
 				set ep13_2_days01,2;
-				getexp 500000,300000;
+				getexp 50000,30000;
 				getitem 6080,10; //Manuk_Coin
 				close;
 			}
@@ -5066,7 +5066,7 @@ man_in01,378,276,3	script	Manuk Engineer#ep13_2	453,{
 					delitem 6090,20; //Purified_Bradium
 					erasequest 7079;
 					setquest 7080;
-					getexp 40000,40000;
+					getexp 4000,4000;
 					getitem 6080,3; //Manuk_Coin
 					close;
 				}
@@ -5176,7 +5176,7 @@ spl_in01,97,313,3	script	Laphine Craftsman#ep13	446,{
 						delitem 6075,15; //Crystalized_Teardrop
 						erasequest 7081;
 						setquest 7082;
-						getexp 30000,30000;
+						getexp 3000,3000;
 						getitem 6081,3; //Splendide_Coin
 						close;
 					}
@@ -5381,7 +5381,7 @@ mid_camp,146,306,3	script	Pet Breeder#ep13_eden01	982,{
 					erasequest 7077;
 					setquest 7078;
 					set ep13_2_dayegg,2;
-					getexp 40000,40000;
+					getexp 4000,4000;
 					getitem 6081,1; //Splendide_Coin
 					getitem 6080,1; //Manuk_Coin
 					close;
@@ -6213,7 +6213,7 @@ mid_camp,197,237,3	script	Schwartzvalt Mechanic#1	869,{
 				mes "I hope this ring would be a big help for your journey through the other world.";
 				completequest 8253;
 				set ep13_2_rhea,100;
-				getexp 1000000,300000;
+				getexp 100000,30000;
 				getitem 2782,1; //Ring_Of_Wise_King
 				close;
 			}
@@ -7451,7 +7451,7 @@ man_in01,372,221,5	script	Scientist#lifeguard	449,{
 				delitem 6076,1; //Portable_Toolbox
 				set ep13_2_tre,100;
 				getitem 6080,2; //Manuk_Coin
-				getexp 0,700000;
+				getexp 0,70000;
 				changequest 2179,2182;
 				close;
 			}
@@ -7485,7 +7485,7 @@ man_in01,372,221,5	script	Scientist#lifeguard	449,{
 				delitem 6076,1; //Portable_Toolbox
 				set ep13_2_tre,100;
 				getitem 6080,2; //Manuk_Coin
-				getexp 0,700000;
+				getexp 0,70000;
 				changequest 2180,2182;
 				close;
 			}
@@ -7519,7 +7519,7 @@ man_in01,372,221,5	script	Scientist#lifeguard	449,{
 				delitem 6076,1; //Portable_Toolbox
 				set ep13_2_tre,100;
 				getitem 6080,2; //Manuk_Coin
-				getexp 0,700000;
+				getexp 0,70000;
 				changequest 2181,2182;
 				close;
 			}
@@ -10105,7 +10105,7 @@ spl_in01,30,324,3	script	High Laphine#grenouille	446,{
 					set ep13_2_tre1,6;
 					changequest 2185,2186;
 					getitem 6081,2; //Splendide_Coin
-					getexp 0,700000;
+					getexp 0,70000;
 					close;
 				}
 				else {

@@ -4125,7 +4125,7 @@ kh_mansion,22,28,4	script	Kiel Hyre#kh	903,{
 		mes "a little reward for";
 		mes "saving my life.";
 		getitem 12105,1; //Taming_Gift_Set
-		getexp 700000,0;
+		getexp 70000,0;
 		set KielHyreQuest,50;
 	}
 	else if ((KielHyreQuest >= 50) && (KielHyreQuest < 64)) {
@@ -4752,7 +4752,7 @@ kh_mansion,22,28,4	script	Kiel Hyre#kh	903,{
 		mes "your help, "+.@KHTitle$+" "+strcharinfo(0)+".";
 		getitem 616,1;  //Old card Album
 		delitem 7508,1; //Elysia_Ring
-		getexp 1000000,0;
+		getexp 100000,0;
 	}
 	else if (KielHyreQuest >= 108) {
 		mes "[Kiel Hyre]";

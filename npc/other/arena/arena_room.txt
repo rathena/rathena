@@ -684,10 +684,10 @@ prt_are_in,98,14,3	script	Givu#arena	728,{
 						close;
 					}
 					set arena_point,arena_point -40;
-					if(BaseLevel < 70) getexp 3000,0;
-					else if(BaseLevel < 80) getexp 9000,0;
-					else if(BaseLevel < 90) getexp 10000,0;
-					else if(BaseLevel < 100) getexp 30000,0;
+					if(BaseLevel < 70) getexp 300,0;
+					else if(BaseLevel < 80) getexp 900,0;
+					else if(BaseLevel < 90) getexp 1000,0;
+					else if(BaseLevel < 151) getexp 3000,0;
 					mes "[Givu]";
 					mes "You have gained experience points. Thank you.";
 					close;

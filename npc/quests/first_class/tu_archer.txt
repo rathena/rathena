@@ -302,7 +302,7 @@ payon_in02,54,13,3	script	Master Kavaruk	55,{
 				mes "for bringing me the news. As Arthail has said, I shall wait until he has more news for me.";
 				mes "You should also train and prepare for the future as well.";
 				set tu_archer02, 10;
-				getexp 2000,1000;
+				getexp 200,100;
 				close;
 			}
 		}
@@ -605,7 +605,7 @@ pay_arche,103,165,5	script	Reidin Corse#tu	832,{
 					emotion e_ag;
 					mes "Huh. So you already know a little about Owl's Eye already, huh? Well then, I guess I oughta talk about something you don't know about!";
 					set tu_archer01, 7;
-					getexp 500,0;
+					getexp 50,0;
 					close;
 				}
 				break;
@@ -633,7 +633,7 @@ pay_arche,103,165,5	script	Reidin Corse#tu	832,{
 				mes "Here, this is a small, special reward for you.";
 				specialeffect2 EF_WIND;
 				set tu_archer01, 7;
-				getexp 500,0;
+				getexp 50,0;
 				next;
 				emotion e_pif;
 				mes "[Reidin Corse]";
@@ -852,7 +852,7 @@ pay_arche,103,165,5	script	Reidin Corse#tu	832,{
 				if(.@eagle == 0){
 					specialeffect2 EF_WIND;
 					set tu_archer01, 10;
-					getexp 0,500;
+					getexp 0,50;
 				}
 				emotion e_no1;
 				next;
@@ -899,7 +899,7 @@ pay_arche,103,165,5	script	Reidin Corse#tu	832,{
 					mes "Don't forget that you gotta keep training and improve your skills. Before you know it, you'll be an expert almost as good as me!";
 					specialeffect2 EF_WIND;
 					set tu_archer01, 12;
-					getexp 1000,1000;
+					getexp 100,100;
 					getitem 1707,1; //Great_Bow
 					close;
 				}
@@ -994,7 +994,7 @@ pay_arche,103,165,5	script	Reidin Corse#tu	832,{
 				mes "this little reward!";
 				specialeffect2 EF_WIND;
 				set tu_archer01,16;
-				getexp 3000,3000;
+				getexp 300,300;
 				getitem 1770,500; //Iron_Arrow
 				next;
 				mes "[Reidin Corse]";
@@ -1289,13 +1289,13 @@ pay_arche,84,139,3	script	Seisner	727,{
 		specialeffect2 EF_WIND;
 		set tu_archer01, 3;
 		if(JobLevel == 1){
-			getexp 0,30;
+			getexp 0,5;
 		} else if((JobLevel > 1) && (JobLevel < 11)){	
-			getexp 0,100;
+			getexp 0,10;
 		} else if((JobLevel > 10) && (JobLevel < 21)){
-			getexp 0,250;
+			getexp 0,25;
 		} else {
-			getexp 0,500;
+			getexp 0,50;
 		}
 		end;
 	}

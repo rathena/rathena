@@ -647,7 +647,7 @@ function	script	Func_JupHist	{
 			delitem getarg(0),1;
 			set yuno_hist,5;
 			set jupe_hist,getarg(1);
-			getexp 100000,0;
+			getexp 10000,0;
 			next;
 			mes "[Fayruz]";
 			mes "Everyone can relate";
@@ -728,7 +728,7 @@ function	script	Func_JupHist	{
 					else set jupe_hist,jupe_hist +8;
 				}
 				set yuno_hist,6;
-				getexp 100000,0;
+				getexp 10000,0;
 				next;
 				mes "[Fayruz]";
 				mes "By now I'm sure you've";
@@ -858,7 +858,7 @@ function	script	Func_JupHist	{
 					else set jupe_hist,jupe_hist +8;
 				}
 				set yuno_hist,8;
-				getexp 100000,0;
+				getexp 10000,0;
 				next;
 				mes "[Fayruz]";
 				mes "Well... That's just my";
@@ -959,7 +959,7 @@ function	script	Func_JupHist	{
 				else set jupe_hist,jupe_hist+8;
 				set yuno_hist,10;
 				delitem getarg(0),1;
-				getexp 100000,0;
+				getexp 10000,0;
 				next;
 				mes "[Fayruz]";
 				mes "Well, that is the";
