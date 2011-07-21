@@ -2,7 +2,7 @@
 #
 # char-converter
 #
-if( WITH_MYSQL )
+if( BUILD_CONVERTERS )
 message( STATUS "Creating target char-converter" )
 set( COMMON_HEADERS
 	${COMMON_MINI_HEADERS}
@@ -65,17 +65,12 @@ include_directories( ${INCLUDE_DIRS} )
 add_executable( char-converter ${SOURCE_FILES} )
 target_link_libraries( char-converter ${LIBRARIES} )
 set_target_properties( char-converter PROPERTIES COMPILE_FLAGS "${DEFINITIONS}" )
-if( WITH_COMPONENT_RUNTIME )
+if( INSTALL_COMPONENT_RUNTIME )
 	cpack_add_component( Runtime_charconverter DESCRIPTION "char-converter" DISPLAY_NAME "char-converter" GROUP Runtime )
 	install( TARGETS char-converter
 		DESTINATION "tools"
 		COMPONENT Runtime_charconverter )
-endif()
-set( HAVE_char-converter ON  CACHE BOOL "char-converter target is available" )
-mark_as_advanced( HAVE_char-converter )
+endif( INSTALL_COMPONENT_RUNTIME )
 set( TARGET_LIST ${TARGET_LIST} char-converter  CACHE INTERNAL "" )
 message( STATUS "Creating target char-converter - done" )
-else()
-message( STATUS "Skipping target char-converter (requires MYSQL)" )
-unset( HAVE_char-converter CACHE )
-endif()
+endif( BUILD_CONVERTERS )

@@ -1,5 +1,10 @@
 Date	Added
 
+2011/07/21
+	* CMake: Only install template files if they don't already exist. [FlavioJS]
+	* CMake: Added plugin targets.
+	* CMake: Added options BUILD_* to build the converters and individual plugins. (default=OFF)
+	* CMake: Added option WITH_CPACK for package creation. (default=ON)
 2011/07/20
 	* Made GCOLLECT use it's debug functions. [FlavioJS]
 	* Turned off garbage collection for GCOLLECT since there's nothing to do with explicit frees.

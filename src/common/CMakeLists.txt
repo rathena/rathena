@@ -12,11 +12,11 @@ endif()
 set( GLOBAL_INCLUDE_DIRS ${GLOBAL_INCLUDE_DIRS} ${CMAKE_CURRENT_BINARY_DIR} CACHE INTERNAL "" )
 set( SVNVERSION ${SVNVERSION}
 	CACHE STRING "SVN version of the source code" )
-if( WITH_COMPONENT_DEVELOPMENT )
+if( INSTALL_COMPONENT_DEVELOPMENT )
 	install( FILES ${CMAKE_CURRENT_BINARY_DIR}/svnversion.h
 		DESTINATION "src/common"
 		COMPONENT Development_base )
-endif()
+endif( INSTALL_COMPONENT_DEVELOPMENT )
 message( STATUS "Creating svnversion.h - done" )
 
 

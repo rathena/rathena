@@ -402,13 +402,16 @@ set( CPACK_PACKAGE_VERSION ${SVNVERSION} )
 set( CPACK_RESOURCE_FILE_LICENSE ${CMAKE_CURRENT_SOURCE_DIR}/LICENSE )
 #set( CPACK_MONOLITHIC_INSTALL ON )
 include( CPACK  OPTIONAL  RESULT_VARIABLE HAVE_CPACK )
-if( NOT HAVE_CPACK )
+if( HAVE_CPACK )
+	option( WITH_CPACK "enable building packages with CPack ('package' target)" ON )
+endif()
+if( NOT WITH_CPACK )
 	# empty replacements
 	macro( cpack_add_component_group )
 	endmacro()
 	macro( cpack_add_component )
 	endmacro()
-	message( STATUS "CPACK not found, package creation disabled" )
+	message( STATUS "Disabled package creation" )
 endif()
 
 set( Runtime "Runtime files"  CACHE INTERNAL "" )
@@ -427,8 +430,8 @@ cpack_add_component( Development_base DESCRIPTION ${Development_base} DISPLAY_NA
 #
 # install stuff
 #
-option( WITH_COMPONENT_RUNTIME "install/package files needed to run the project" ON )
-option( WITH_COMPONENT_DEVELOPMENT "install/package files needed to build the project" OFF )
+option( INSTALL_COMPONENT_RUNTIME "install/package files needed to run the project" ON )
+option( INSTALL_COMPONENT_DEVELOPMENT "install/package files needed to build the project" OFF )
 option( INSTALL_TO_PATH "copy files to INSTALL_PATH" OFF )
 option( INSTALL_TO_SOURCE "copy files to source directory, skips what is already there (${CMAKE_CURRENT_SOURCE_DIR})" OFF )
 option( INSTALL_TO_SUBDIR "copy files to subdirectory (${CMAKE_CURRENT_BINARY_DIR}/install)" OFF )
@@ -513,7 +516,7 @@ set( RUNTIME_DIRECTORIES
 	)
 if( INSTALL_TO_SOURCE )# skip, already in the source dir
 else()
-	if( WITH_COMPONENT_RUNTIME )
+	if( INSTALL_COMPONENT_RUNTIME )
 		install( FILES ${RUNTIME_FILES}
 			DESTINATION "."
 			COMPONENT Runtime_base )
@@ -524,8 +527,8 @@ else()
 				PATTERN ${SVN_FOLDER_PATTERN} EXCLUDE
 				PATTERN "conf/import-tmpl" EXCLUDE )
 		endforeach()
-	endif()
-	if( WITH_COMPONENT_DEVELOPMENT )
+	endif( INSTALL_COMPONENT_RUNTIME )
+	if( INSTALL_COMPONENT_DEVELOPMENT )
 		install( FILES ${DEVELOPMENT_FILES}
 			DESTINATION "."
 			COMPONENT Development_base )
@@ -535,19 +538,46 @@ else()
 				COMPONENT Development_base
 				PATTERN ${SVN_FOLDER_PATTERN} EXCLUDE )
 		endforeach()
-	endif()
+	endif( INSTALL_COMPONENT_DEVELOPMENT )
 endif()
-if( WITH_COMPONENT_RUNTIME )
+if( INSTALL_COMPONENT_RUNTIME )
 	# templates
-	install( DIRECTORY "save-tmpl/"
-		DESTINATION "save"
-		COMPONENT Runtime_templates
-		PATTERN ${SVN_FOLDER_PATTERN} EXCLUDE )
-	install( DIRECTORY "conf/import-tmpl/"
-		DESTINATION "conf/import"
-		COMPONENT Runtime_templates
-		PATTERN ${SVN_FOLDER_PATTERN} EXCLUDE )
-endif()
+	set( _TEMPLATES
+		"save-tmpl" "save"
+		"conf/import-tmpl" "conf/import"
+		)
+	set( INSTALL_TEMPLATES_FILE "${CMAKE_CURRENT_BINARY_DIR}/InstallTemplates.cmake" )
+	file( WRITE "${INSTALL_TEMPLATES_FILE}"
+		"macro( INSTALL_TEMPLATE _SRC _DST )\n"
+		"  set( SRC \"${CMAKE_CURRENT_SOURCE_DIR}/\${_SRC}\" )\n"
+		"  set( DST \"\${CMAKE_INSTALL_PREFIX}/\${_DST}\" )\n"
+		"  if( EXISTS \"\${DST}\" )\n"
+		"    message( \"-- Already exists: \${DST}\" )\n"
+		"  else()\n"
+		"    message( \"-- Installing template: \${DST}\" )\n"
+		"    execute_process( COMMAND \"${CMAKE_COMMAND}\" -E copy \"\${SRC}\" \"\${DST}\" )\n"
+		"  endif()\n"
+		"endmacro()\n"
+		)
+	while( _TEMPLATES )
+		list( GET _TEMPLATES 0 _SRC )
+		list( GET _TEMPLATES 1 _DST )
+		list( REMOVE_AT _TEMPLATES 0 1 )
+		if( IS_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/${_SRC}" )
+			file( GLOB _PATHS "${CMAKE_CURRENT_SOURCE_DIR}/${_SRC}/*" )
+			foreach( _PATH IN ITEMS ${_PATHS} )
+				string( REPLACE "${CMAKE_CURRENT_SOURCE_DIR}/${_SRC}/" "" _PATH "${_PATH}" )
+				if( NOT "${_PATH}" MATCHES "${SVN_FOLDER_PATTERN}" )
+					list( APPEND _TEMPLATES "${_SRC}/${_PATH}" "${_DST}/${_PATH}" )
+				endif()
+			endforeach()
+		else()
+			file( APPEND "${INSTALL_TEMPLATES_FILE}" "INSTALL_TEMPLATE( \"${_SRC}\" \"${_DST}\" )\n" )
+		endif()
+	endwhile()
+	install( SCRIPT "${INSTALL_TEMPLATES_FILE}"
+		COMPONENT Runtime_templates )
+endif( INSTALL_COMPONENT_RUNTIME )
 
 
 #

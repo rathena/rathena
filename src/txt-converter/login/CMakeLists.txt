@@ -2,7 +2,7 @@
 #
 # login-converter
 #
-if( WITH_MYSQL )
+if( BUILD_CONVERTERS )
 message( STATUS "Creating target login-converter" )
 set( COMMON_HEADERS
 	${COMMON_MINI_HEADERS}
@@ -49,17 +49,12 @@ include_directories( ${INCLUDE_DIRS} )
 add_executable( login-converter ${SOURCE_FILES} )
 target_link_libraries( login-converter ${LIBRARIES} )
 set_target_properties( login-converter PROPERTIES COMPILE_FLAGS "${DEFINITIONS}" )
-if( WITH_COMPONENT_RUNTIME )
+if( INSTALL_COMPONENT_RUNTIME )
 	cpack_add_component( Runtime_loginconverter DESCRIPTION "login-converter" DISPLAY_NAME "login-converter" GROUP Runtime )
 	install( TARGETS login-converter
 		DESTINATION "tools"
 		COMPONENT Runtime_loginconverter )
-endif()
-set( HAVE_login-converter ON  CACHE BOOL "login-converter target is available" )
-mark_as_advanced( HAVE_login-converter )
+endif( INSTALL_COMPONENT_RUNTIME )
 set( TARGET_LIST ${TARGET_LIST} login-converter  CACHE INTERNAL "" )
 message( STATUS "Creating target login-converter - done" )
-else()
-message( STATUS "Skipping target login-converter (requires MYSQL)" )
-unset( HAVE_login-converter CACHE )
-endif()
+endif( BUILD_CONVERTERS )
