@@ -8,7 +8,7 @@ set( TXT_CHAR_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}  CACHE INTERNAL "" )
 #
 # char txt
 #
-if( HAVE_common_base )
+if( BUILD_TXT_SERVERS )
 message( STATUS "Creating target char-server" )
 set( TXT_CHAR_HEADERS
 	"${TXT_CHAR_SOURCE_DIR}/char.h"
@@ -50,6 +50,4 @@ if( INSTALL_COMPONENT_RUNTIME )
 endif( INSTALL_COMPONENT_RUNTIME )
 set( TARGET_LIST ${TARGET_LIST} char-server  CACHE INTERNAL "" )
 message( STATUS "Creating target char-server - done" )
-else()
-message( STATUS "Skipping target char-server (requires common_base)" )
-endif()
+endif( BUILD_TXT_SERVERS )

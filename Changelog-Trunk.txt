@@ -1,5 +1,7 @@
 Date	Added
 
+2011/07/22
+	* CMake: Added options BUILD_TXT_SERVERS, BUILD_SQL_SERVERS, BUILD_MAPCACHE. [FlavioJS]
 2011/07/21
 	* CMake: Only install template files if they don't already exist. [FlavioJS]
 	* CMake: Added plugin targets.

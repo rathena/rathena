@@ -3,6 +3,11 @@
 # mapcache
 #
 if( WITH_ZLIB )
+	option( BUILD_MAPCACHE "build mapcache executable" ON )
+else()
+	message( STATUS "Disabled mapcache target (required ZLIB)" )
+endif()
+if( BUILD_MAPCACHE )
 message( STATUS "Creating target mapcache" )
 set( COMMON_HEADERS
 	${COMMON_MINI_HEADERS}
@@ -35,7 +40,4 @@ if( INSTALL_COMPONENT_RUNTIME )
 endif( INSTALL_COMPONENT_RUNTIME )
 set( TARGET_LIST ${TARGET_LIST} mapcache  CACHE INTERNAL "" )
 message( STATUS "Creating target mapcache - done" )
-else()
-message( STATUS "Skipping target mapcache (requires ZLIB)" )
-unset( HAVE_mapcache CACHE )
-endif()
+endif( BUILD_MAPCACHE )

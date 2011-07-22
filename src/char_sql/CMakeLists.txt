@@ -8,7 +8,7 @@ set( SQL_CHAR_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}  CACHE INTERNAL "" )
 #
 # char sql
 #
-if( HAVE_common_sql )
+if( BUILD_SQL_SERVERS )
 message( STATUS "Creating target char-server_sql" )
 set( SQL_CHAR_HEADERS
 	"${CMAKE_CURRENT_SOURCE_DIR}/char.h"
@@ -55,6 +55,4 @@ if( INSTALL_COMPONENT_RUNTIME )
 		COMPONENT Runtime_charserver_sql )
 endif( INSTALL_COMPONENT_RUNTIME )
 message( STATUS "Creating target char-server_sql - done" )
-else()
-message( STATUS "Skipping target char-server_sql (requires common_sql)" )
-endif()
+endif( BUILD_SQL_SERVERS )

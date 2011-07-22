@@ -2,7 +2,7 @@
 #
 # login sql
 #
-if( HAVE_common_sql )
+if( BUILD_SQL_SERVERS )
 message( STATUS "Creating target login-server_sql" )
 set( SQL_LOGIN_HEADERS
 	"${SQL_LOGIN_SOURCE_DIR}/account.h"
@@ -36,6 +36,4 @@ if( INSTALL_COMPONENT_RUNTIME )
 endif( INSTALL_COMPONENT_RUNTIME )
 set( TARGET_LIST ${TARGET_LIST} login-server_sql  CACHE INTERNAL "" )
 message( STATUS "Creating target login-server_sql - done" )
-else()
-message( STATUS "Skipping target login-server_sql (requires common_sql)" )
-endif()
+endif( BUILD_SQL_SERVERS )

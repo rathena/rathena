@@ -2,7 +2,7 @@
 #
 # map sql
 #
-if( HAVE_common_sql )
+if( BUILD_SQL_SERVERS )
 message( STATUS "Creating target map-server_sql" )
 set( SQL_MAP_HEADERS
 	"${SQL_MAP_SOURCE_DIR}/atcommand.h"
@@ -82,10 +82,12 @@ set( LIBRARIES ${GLOBAL_LIBRARIES} )
 set( INCLUDE_DIRS ${GLOBAL_INCLUDE_DIRS} )
 set( DEFINITIONS "${GLOBAL_DEFINITIONS}" )
 if( WITH_PCRE )
-	message( STATUS "Using PCRE" )
+	message( STATUS "Enabled PCRE code" )
 	set( LIBRARIES ${LIBRARIES} ${PCRE_LIBRARIES} )
 	set( INCLUDE_DIRS ${INCLUDE_DIRS} ${PCRE_INCLUDE_DIRS} )
 	set( DEFINITIONS "${DEFINITIONS} -DPCRE_SUPPORT" )
+else()
+	message( STATUS "Disabled PCRE code" )
 endif()
 set( SOURCE_FILES ${COMMON_BASE_HEADERS} ${COMMON_SQL_HEADERS} ${SQL_MAP_HEADERS} ${SQL_MAP_SOURCES} )
 source_group( common FILES ${COMMON_BASE_HEADERS} ${COMMON_SQL_HEADERS} )
@@ -103,6 +105,4 @@ if( INSTALL_COMPONENT_RUNTIME )
 endif( INSTALL_COMPONENT_RUNTIME )
 set( TARGET_LIST ${TARGET_LIST} map-server_sql  CACHE INTERNAL "" )
 message( STATUS "Creating target map-server_sql - done" )
-else()
-message( STATUS "Skipping target map-server_sql (requires common_sql; optional PCRE)" )
-endif()
+endif( BUILD_SQL_SERVERS )

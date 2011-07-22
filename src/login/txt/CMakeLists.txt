@@ -2,7 +2,7 @@
 #
 # login txt
 #
-if( HAVE_common_base )
+if( BUILD_TXT_SERVERS )
 message( STATUS "Creating target login-server" )
 set( TXT_LOGIN_HEADERS
 	"${TXT_LOGIN_SOURCE_DIR}/account.h"
@@ -36,6 +36,4 @@ if( INSTALL_COMPONENT_RUNTIME )
 endif( INSTALL_COMPONENT_RUNTIME )
 set( TARGET_LIST ${TARGET_LIST} login-server  CACHE INTERNAL "" )
 message( STATUS "Creating target login-server - done" )
-else()
-message( STATUS "Skipping target login-server (requires common_base)" )
-endif()
+endif( BUILD_TXT_SERVERS )
