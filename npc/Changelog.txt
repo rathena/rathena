@@ -1,5 +1,9 @@
 Date		Added
 ======
+2011/07/26
+	* Rev. 14922 Added Renewal Guides, and made the filenames uniform. [L0ne_W0lf]
+2011/07/21
+	* Rev. 14920 Updated most active NPCs that give EXP to renewal standards. [L0ne_W0lf]
 2011/07/3
 	* Rev. 14884 Updated Tutorial quests, and added back NPCs needed for Priest quest. [L0ne_W0lf]
 2011/06/11
