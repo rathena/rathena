@@ -1,5 +1,7 @@
 Date	Added
 
+2011/07/31
+	* Fixed quest saving checking only the first 3 objectives for changes regardless of MAX_QUEST_OBJECTIVES (follow up to r14800, since r13973). [Ai4rei]
 2011/07/22
 	* CMake: Added options BUILD_TXT_SERVERS, BUILD_SQL_SERVERS, BUILD_MAPCACHE. [FlavioJS]
 2011/07/21

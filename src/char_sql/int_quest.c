@@ -91,7 +91,7 @@ bool mapif_quest_update(int char_id, struct quest qd)
 //Save quests
 int mapif_parse_quest_save(int fd)
 {
-	int i, j, num2, num1 = (RFIFOW(fd,2)-8)/sizeof(struct quest);
+	int i, j, k, num2, num1 = (RFIFOW(fd,2)-8)/sizeof(struct quest);
 	int char_id = RFIFOL(fd,4);
 	struct quest qd1[MAX_QUEST_DB],qd2[MAX_QUEST_DB];
 	bool success = true;
@@ -106,7 +106,8 @@ int mapif_parse_quest_save(int fd)
 		ARR_FIND( 0, num2, j, qd1[i].quest_id == qd2[j].quest_id );
 		if( j < num2 ) // Update existed quests
 		{	// Only states and counts are changable.
-			if( qd1[i].state != qd2[j].state || qd1[i].count[0] != qd2[j].count[0] || qd1[i].count[1] != qd2[j].count[1] || qd1[i].count[2] != qd2[j].count[2] )
+			ARR_FIND( 0, MAX_QUEST_OBJECTIVES, k, qd1[i].count[k] != qd2[j].count[k] );
+			if( k != MAX_QUEST_OBJECTIVES || qd1[i].state != qd2[j].state )
 				success &= mapif_quest_update(char_id, qd1[i]);
 
 			if( j < (--num2) )
