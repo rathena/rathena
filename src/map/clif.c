@@ -6571,27 +6571,30 @@ int clif_guild_created(struct map_session_data *sd,int flag)
 	WFIFOSET(fd,packet_len(0x167));
 	return 0;
 }
-/*==========================================
- * ギルド所属通知
- *------------------------------------------*/
-int clif_guild_belonginfo(struct map_session_data *sd, struct guild *g)
+
+
+/// Notifies the client that it is belonging to a guild (ZC_UPDATE_GDID)
+/// 016c <guild id>.L <emblem id>.L <mode>.L <ismaster>.B <inter sid>.L <guild name>.24B
+void clif_guild_belonginfo(struct map_session_data *sd, struct guild *g)
 {
 	int ps,fd;
-	nullpo_ret(sd);
-	nullpo_ret(g);
+	nullpo_retv(sd);
+	nullpo_retv(g);
 
 	fd=sd->fd;
 	ps=guild_getposition(g,sd);
 	WFIFOHEAD(fd,packet_len(0x16c));
-	memset(WFIFOP(fd,0),0,packet_len(0x16c));
 	WFIFOW(fd,0)=0x16c;
 	WFIFOL(fd,2)=g->guild_id;
 	WFIFOL(fd,6)=g->emblem_id;
 	WFIFOL(fd,10)=g->position[ps].mode;
+	WFIFOB(fd,14)=(bool)(sd->state.gmaster_flag==g);
+	WFIFOL(fd,15)=0;  // InterSID (unknown purpose)
 	memcpy(WFIFOP(fd,19),g->name,NAME_LENGTH);
 	WFIFOSET(fd,packet_len(0x16c));
-	return 0;
 }
+
+
 /*==========================================
  * ギルドメンバログイン通知
  *------------------------------------------*/

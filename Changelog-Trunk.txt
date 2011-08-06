@@ -1,5 +1,7 @@
 Date	Added
 
+2011/08/06
+	* Added missing fields to guild belong info packet 0x16c (ZC_UPDATE_GDID). [Ai4rei]
 2011/07/31
 	* Fixed quest saving checking only the first 3 objectives for changes regardless of MAX_QUEST_OBJECTIVES (follow up to r14800, since r13973). [Ai4rei]
 2011/07/22
