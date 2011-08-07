@@ -409,7 +409,7 @@
 
 4133,0,0,0,0,0,0,0,"Iara"
 4134,0,0,0,0,0,0,0,"Iara"
-4135,0,0,0,0,0,0,0,"Iara"
+4135,86400,0,0,0,0,0,0,"Iara"
 
 5000,0,0,0,0,0,0,0,"The Crow of the Fate - 7"
 
@@ -1190,7 +1190,7 @@
 11142,0,0,0,0,0,0,0,"Fearful metalic sound"
 11143,0,0,0,0,0,0,0,"Thanatos tower"
 11144,0,0,0,0,0,0,0,"Juno manager : click"
-11145,0,0,0,0,0,0,0,"I want to get the "
+11145,0,1622,33,0,0,0,0,"I want to get the "
 11146,0,0,0,0,0,0,0,"to ice tunnel..."
 11147,0,0,0,0,0,0,0,"Lared's dew"
 11148,0,0,0,0,0,0,0,"Toward Comodo with the bow"

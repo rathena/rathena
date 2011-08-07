@@ -8,6 +8,8 @@
 	1475 Equestrian's Spear:	NEED INFO.
 	13005 Angelic Wing Dagger:	NEED INFO.
 =======================
+2011/08/07
+	* Rev. 14926 Minor item-related updates, and a couple quest database updates. [L0ne_W0lf]
 2011/07/11
 	* Rev. 14901 Lots of updates. :] [L0ne_W0lf]
 	- Added several missing items to the item database, updated others.
