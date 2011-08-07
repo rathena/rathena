@@ -1,5 +1,7 @@
 Date	Added
 
+2011/08/07
+	* Rev. 14927 Added bonus3 bAddClassDropItem, care of Epoque. [L0ne_W0lf]
 2011/07/10
 	* Merged changes from trunk [14827:14894/trunk]. [Ai4rei]
 2011/06/13
