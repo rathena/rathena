@@ -1,5 +1,7 @@
 Date		Added
 ======
+2011/08/09
+	* Rev. 14928 Implemented the rest of Brasilis, and updated existing Brasilis NPCs. [L0ne_W0lf]
 2011/07/16
 	* Rev. 14912 Updated dialog in monster_race.txt [L0ne_W0lf]
 2011/07/16

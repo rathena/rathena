@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= eAthena Dev Team
 //===== Current Version: ===================================== 
-//= 2.7b
+//= 2.8
 //===== Compatible With: ===================================== 
 //= eAthena 1.0+
 //===== Description: ========================================= 
@@ -31,6 +31,7 @@
 //=     Re-added Bill of Birds to Morroc Item Collectors.
 //= 2.7a Actually applied the right update to the comodo weapon shop. [L0ne_W0lf]
 //= 2.7b Corrected Brasilis Fruit Merchant. (bugreport:4278) [L0ne_W0lf]
+//= 2.8 Updates to Brasilis Merchants. [L0ne_W0lf]
 //============================================================ 
 
 //=======================================================
@@ -73,11 +74,10 @@ ayo_in01,90,160,1	shop	Armor Dealer#ayo	842,2211:-1,2401:-1,2403:-1,2501:-1,2503
 //=======================================================
 // Brasilis
 //=======================================================
-brasilis,252,257,5	shop	Tool Dealer#bra	478,645:-1,656:-1,601:-1,602:-1,1065:-1,1750:-1,610:-1
+brasilis,252,257,3	shop	Tool Dealer#bra	478,645:-1,656:-1,601:-1,602:-1,611:-1,1065:-1,610:-1
 brasilis,244,243,3	shop	Weapon Dealer#bra	477,1407:-1,1457:-1,1354:-1,1519:-1,13003:-1
-brasilis,201,309,4	shop	Pet Groomer#bra	476,537:-1,643:-1,10013:-1,10014:-1,554:-1,6113:-1,6114:-1,6115:-1
-// Apple -> Acai_Fruit
-brasilis,221,128,4	shop	Fruit Merchant#bra	476,11515:-1,513:-1,11516:-1
+brasilis,201,309,3	shop	Pet Groomer#bra	476,537:-1,643:-1
+brasilis,221,128,3	shop	Fruit Gardener#bra	477,11515:-1,513:-1,11516:-1
 
 //=======================================================
 // Comodo

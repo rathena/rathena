@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.0
+//= 1.1
 //===== Compatible With: ===================================== 
 //= eAthena  SVN
 //===== Description: ========================================= 
@@ -11,6 +11,7 @@
 //= Guide for the city of Brasilis
 //===== Additional Comments: ================================= 
 //= 1.0 First Version.
+//= 1.1 Added a missing close.
 //============================================================ 
 
 brasilis,219,97,3	script	Brasilis Guide	478,{
@@ -89,6 +90,7 @@ brasilis,219,97,3	script	Brasilis Guide	478,{
 			mes "mini-map' from the menu.";
 			close;
 		}
+		close;
 		break;
 	case 2:
 		viewpoint 2,273,149,2,0xFF0000;

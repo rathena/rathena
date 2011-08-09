@@ -4,7 +4,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf, various sources
 //===== Current Version: ===================================== 
-//= 1.1
+//= 1.2
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -13,6 +13,7 @@
 //===== Additional Comments: ================================= 
 //= 1.0 First version.
 //= 1.1 Minor dialog updates.
+//= 1.2 No longer glitches when anyone but party leader talks to the first NPC.
 //============================================================ 
 
 nyd_dun02,100,201,3	script	Yggdrasil Gatekeeper	111,8,8,{
@@ -1867,7 +1868,6 @@ OnTouch_:
 						next;
 						mes "[World Tree Yggdrasil]";
 						mes "And... Be careful... Be careful of the shadow's power.";
-						set 'ins_nyd2,1;
 						close;
 					}
 				case 2:

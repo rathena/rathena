@@ -1,0 +1,16 @@
+//===== eAthena Script =======================================
+//= Brasilis Quest Monsters
+//===== By: ==================================================
+//= L0ne_W0lf
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= Any Athena Version
+//===== Description: =========================================
+//= 1.0 First version
+//============================================================
+
+brasilis,283,88,6,6	monster	Strange Hydra	2081,5,5000,0,0
+brasilis,284,104,6,6	monster	Strange Hydra	2081,4,5000,0,0
+brasilis,215,80,6,6	monster	Strange Hydra	2081,4,5000,0,0
+brasilis,96,50,8,8	monster	Strange Hydra	2081,5,5000,0,0
