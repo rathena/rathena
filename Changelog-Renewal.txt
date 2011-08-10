@@ -1,6 +1,10 @@
 Date	Added
 
 2011/08/07
+	* Rev. 14931 Raised MAX_MERCENARY_CLASS to 44 for new mercenaries. [L0ne_W0lf]
+	* Raised max_lv to allow values up to 150 in battle.conf.
+	* Raised MAX_SKILL_TREE 77 in prep for 3rd class skill trees.
+2011/08/07
 	* Rev. 14927 Added bonus3 bAddClassDropItem, care of Epoque. [L0ne_W0lf]
 2011/07/10
 	* Merged changes from trunk [14827:14894/trunk]. [Ai4rei]

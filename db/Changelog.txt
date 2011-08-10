@@ -9,6 +9,8 @@
 	13005 Angelic Wing Dagger:	NEED INFO.
 =======================
 
+2011/08/10
+	* Rev. 14931 Added Brasilis database updates from trunk r14928. [L0ne_W0lf]
 2011/08/07
 	* Rev. 14927 Merged database changes from trunk r14927. [L0ne_W0lf]
 2011/04/16

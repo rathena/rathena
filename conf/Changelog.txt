@@ -1,5 +1,7 @@
 Date	Added
 
+2011/08/10
+	* Rev. 14931 Upped max_lv and max_aura to 150, and max_aspd to 193.
 2011/07/09
 	* Rev. 14892 Removed 'msg_athena.conf' messages 619 and 620 (duplicates to 572 and 573) (since r5506). [Ai4rei]
 2011/05/13

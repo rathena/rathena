@@ -428,7 +428,7 @@ struct map_session_data {
 };
 
 //Update this max as necessary. 55 is the value needed for Super Baby currently
-#define MAX_SKILL_TREE 55
+#define MAX_SKILL_TREE 77
 //Total number of classes (for data storage)
 #define CLASS_COUNT (JOB_MAX - JOB_NOVICE_HIGH + JOB_MAX_BASIC)
 
