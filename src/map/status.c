@@ -869,6 +869,7 @@ int status_heal(struct block_list *bl,int hp,int sp, int flag)
 		sc = NULL;
 
 	if (hp < 0) {
+		if (hp == INT_MIN) hp++; //-INT_MIN == INT_MIN in some architectures!
 		status_damage(NULL, bl, -hp, 0, 0, 1);
 		hp = 0;
 	}
@@ -882,6 +883,7 @@ int status_heal(struct block_list *bl,int hp,int sp, int flag)
 	}
 
 	if(sp < 0) {
+		if (sp==INT_MIN) sp++;
 		status_damage(NULL, bl, 0, -sp, 0, 1);
 		sp = 0;
 	}

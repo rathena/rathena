@@ -2223,6 +2223,16 @@ int parse_fromlogin(int fd)
 				{
 					// send characters to player
 					mmo_char_send006b(i, sd);
+#if PACKETVER >=  20110309
+					// PIN code system, disabled
+					WFIFOHEAD(i, 12);
+					WFIFOW(i, 0) = 0x08B9;
+					WFIFOW(i, 2) = 0;
+					WFIFOW(i, 4) = 0;
+					WFIFOL(i, 6) = sd->account_id;
+					WFIFOW(i, 10) = 0;
+					WFIFOSET(i, 12);
+#endif
 				}
 			}
 			RFIFOSKIP(fd,62);
