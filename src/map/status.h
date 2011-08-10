@@ -8,6 +8,7 @@ struct block_list;
 struct mob_data;
 struct pet_data;
 struct homun_data;
+struct mercenary_data;
 struct status_change;
 
 //Use this to refer the max refinery level [Skotlex]

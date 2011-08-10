@@ -268,8 +268,8 @@ int skill_get_range2 (struct block_list *bl, int id, int lv)
 int skill_calc_heal(struct block_list *src, struct block_list *target, int skill_id, int skill_lv, bool heal)
 {
 	int skill, hp;
-	struct map_session_data *sd = map_id2sd(src->id);
-	struct map_session_data *tsd = map_id2sd(target->id);
+	struct map_session_data *sd = BL_CAST(BL_PC, src);
+	struct map_session_data *tsd = BL_CAST(BL_PC, target);
 	struct status_change* sc;
 
 	switch( skill_id )
@@ -1008,8 +1008,9 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 
 			tbl = (sd->autospell[i].id < 0) ? src : bl;
 
-			if( !battle_check_range(src, tbl, skill_get_range2(src, skill,skilllv) + (skill == RG_CLOSECONFINE?0:1)) && battle_config.autospell_check_range )
-				continue; // If autospell_check_range is yes, fail the autocast.
+			if( battle_config.autospell_check_range &&
+				!battle_check_range(src, tbl, skill_get_range2(src, skill,skilllv) + (skill == RG_CLOSECONFINE?0:1)) )
+				continue;
 
 			if (skill == AS_SONICBLOW)
 				pc_stop_attack(sd); //Special case, Sonic Blow autospell should stop the player attacking.
@@ -1113,7 +1114,8 @@ int skill_onskillusage(struct map_session_data *sd, struct block_list *bl, int s
 			continue;
 		tbl = (sd->autospell3[i].id < 0) ? &sd->bl : bl;
 
-		if( !battle_check_range(&sd->bl, tbl, skill_get_range2(&sd->bl, skill,skilllv) + (skill == RG_CLOSECONFINE?0:1)) && battle_config.autospell_check_range )
+		if( battle_config.autospell_check_range &&
+			!battle_check_range(&sd->bl, tbl, skill_get_range2(&sd->bl, skill,skilllv) + (skill == RG_CLOSECONFINE?0:1)) )
 			continue;
 
 		sd->state.autocast = 1;
@@ -1640,13 +1642,10 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 
 			//Spirit of Wizard blocks Kaite's reflection
 			if( type == 2 && sc && sc->data[SC_SPIRIT] && sc->data[SC_SPIRIT]->val2 == SL_WIZARD )
-			{	//Consume one Fragment per hit of the casted skill. Val3 is the skill id and val4 is the ID of the damage src.
-				//This should account for ground spells (and single target spells will be completed on castend_id) [Skotlex]
-			  	type = pc_search_inventory (tsd, 7321);
-				if (type >= 0)
-					pc_delitem(tsd, type, 1, 0, 1);
-
+			{	//Consume one Fragment per hit of the casted skill? [Skotlex]
+			  	type = tsd?pc_search_inventory (tsd, 7321):0;
 				if (type >= 0) {
+					if ( tsd ) pc_delitem(tsd, type, 1, 0, 1);
 					dmg.damage = dmg.damage2 = 0;
 					dmg.dmg_lv = ATK_MISS;
 					sc->data[SC_SPIRIT]->val3 = skillid;
@@ -3266,7 +3265,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			break;
 		{
 			int per = 0, sper = 0;
-			if (status_get_sc(bl)->data[SC_HELLPOWER])
+			if (tsc && tsc->data[SC_HELLPOWER])
 				break;
 
 			if (map[bl->m].flag.pvp && dstsd && dstsd->pvp_point < 0)
@@ -3310,7 +3309,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 
 	case AL_CRUCIS:
 		if (flag&1)
-			sc_start(bl,type, 23+skilllv*4 +status_get_lv(src) -status_get_lv(bl), skilllv,60000);
+			sc_start(bl,type, 23+skilllv*4 +status_get_lv(src) -status_get_lv(bl), skilllv,skill_get_time(skillid,skilllv));
 		else {
 			map_foreachinrange(skill_area_sub, src, skill_get_splash(skillid, skilllv), BL_CHAR,
 				src, skillid, skilllv, tick, flag|BCT_ENEMY|1, skill_castend_nodamage_id);
@@ -3395,7 +3394,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				break;
 			heal = status_percent_heal(bl, 100, 0);
 			clif_skill_nodamage(NULL, bl, AL_HEAL, heal, 1);
-			if( skillid == NPC_ALLHEAL && dstmd )
+			if( dstmd )
 			{ // Reset Damage Logs
 				memset(dstmd->dmglog, 0, sizeof(dstmd->dmglog));
 				dstmd->tdmg = 0;
@@ -3857,7 +3856,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				mer->devotion_flag = 1; // Mercenary Devoting Owner
 
 			clif_skill_nodamage(src, bl, skillid, skilllv,
-				sc_start4(bl, type, 100, src->id, i, skill_get_range2(src,skillid,skilllv), skill_get_time2(skillid, skilllv), 1000));
+				sc_start4(bl, type, 100, src->id, i, skill_get_range2(src,skillid,skilllv),0, skill_get_time2(skillid, skilllv)));
 			clif_devotion(src, NULL);
 		}
 		break;
@@ -6194,7 +6193,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, int skillid, int sk
 	case SA_VIOLENTGALE:
 	{	//Does not consumes if the skill is already active. [Skotlex]
 		struct skill_unit_group *sg;
-		if ((sg= skill_locate_element_field(&sd->bl)) != NULL && ( sg->skill_id == SA_VOLCANO || sg->skill_id == SA_DELUGE || sg->skill_id == SA_VIOLENTGALE ))
+		if ((sg= skill_locate_element_field(src)) != NULL && ( sg->skill_id == SA_VOLCANO || sg->skill_id == SA_DELUGE || sg->skill_id == SA_VIOLENTGALE ))
 		{
 			if (sg->limit - DIFF_TICK(gettick(), sg->tick) > 0)
 			{
@@ -8200,7 +8199,7 @@ int skill_check_condition_castbegin(struct map_session_data* sd, short skill, sh
 	require = skill_get_requirement(sd,skill,lv);
 
 	//Can only update state when weapon/arrow info is checked.
-	if (require.weapon) sd->state.arrow_atk = require.ammo?1:0;
+	sd->state.arrow_atk = require.ammo?1:0;
 
 	// perform skill-specific checks (and actions)
 	switch( skill )
@@ -8834,9 +8833,11 @@ struct skill_condition skill_get_requirement(struct map_session_data* sd, short 
 
 	req.weapon = skill_db[j].weapon;
 
-	req.ammo = skill_db[j].ammo;
 	req.ammo_qty = skill_db[j].ammo_qty[lv-1];
-	if (req.weapon && !req.ammo && skill && skill_isammotype(sd, skill))
+	if (req.ammo_qty)
+		req.ammo = skill_db[j].ammo;
+
+	if (!req.ammo && skill && skill_isammotype(sd, skill))
 	{	//Assume this skill is using the weapon, therefore it requires arrows.
 		req.ammo = 0xFFFFFFFF; //Enable use on all ammo types.
 		req.ammo_qty = 1;
@@ -11650,9 +11651,9 @@ static bool skill_parse_row_requiredb(char* split[], int columns, int current)
 	for( j = 0; j < 32; j++ )
 	{
 		int l = atoi(p);
-		if( l == 99 ) // magic value?
+		if( l == 99 ) // Any weapon
 		{
-			skill_db[i].weapon = 0xffffffff;
+			skill_db[i].weapon = 0;
 			break;
 		}
 		else
@@ -11668,12 +11669,12 @@ static bool skill_parse_row_requiredb(char* split[], int columns, int current)
 	for( j = 0; j < 32; j++ )
 	{
 		int l = atoi(p);
-		if( l == 99 ) // magic value?
+		if( l == 99 ) // Any ammo type
 		{
-			skill_db[i].ammo = 0xffffffff;
+			skill_db[i].ammo = 0xFFFFFFFF;
 			break;
 		}
-		else if( l ) // 0 not allowed?
+		else if( l ) // 0 stands for no requirement
 			skill_db[i].ammo |= 1<<l;
 		p = strchr(p,':');
 		if( !p )

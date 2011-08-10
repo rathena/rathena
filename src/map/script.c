@@ -4559,7 +4559,7 @@ BUILDIN_FUNC(warpparty)
 	struct party_data* p;
 	int type;
 	int mapindex;
-	int i, j;
+	int i;
 
 	const char* str = script_getstr(st,2);
 	int x = script_getnum(st,3);
@@ -4579,9 +4579,27 @@ BUILDIN_FUNC(warpparty)
 		 : ( strcmp(str,"Leader")==0 ) ? 3
 		 : 4;
 
-	if( type == 2 && ( sd = script_rid2sd(st) ) == NULL )
-	{// "SavePoint" uses save point of the currently attached player
-		return 0;
+	switch (type)
+	{
+	case 3:
+		for(i = 0; i < MAX_PARTY && !p->party.member[i].leader; i++);
+		if (i == MAX_PARTY || !p->data[i].sd) //Leader not found / not online
+			return 0;
+		pl_sd = p->data[i].sd;
+		mapindex = pl_sd->mapindex;
+		x = pl_sd->bl.x;
+		y = pl_sd->bl.y;
+		break;
+	case 4:
+		mapindex = mapindex_name2id(str);
+		break;
+	case 2:
+		//"SavePoint" uses save point of the currently attached player
+		if (( sd = script_rid2sd(st) ) == NULL )
+			return 0;
+	default:
+		mapindex = 0;
+		break;
 	}
 
 	for (i = 0; i < MAX_PARTY; i++)
@@ -4610,25 +4628,9 @@ BUILDIN_FUNC(warpparty)
 				pc_setpos(pl_sd,sd->status.save_point.map,sd->status.save_point.x,sd->status.save_point.y,CLR_TELEPORT);
 		break;
 		case 3: // Leader
-			for(j = 0; j < MAX_PARTY && !p->party.member[j].leader; j++);
-			if (j == MAX_PARTY || !p->data[j].sd) //Leader not found / not online
-				return 0;
-			mapindex = p->data[j].sd->mapindex;
-			x = p->data[j].sd->bl.x;
-			y = p->data[j].sd->bl.y;
-			for (j = 0; j < MAX_PARTY; j++)
-			{
-				pl_sd = p->data[j].sd;
-				if (!pl_sd)
-					continue;
-				if(map[pl_sd->bl.m].flag.noreturn || map[pl_sd->bl.m].flag.nowarp)
-					continue;
-				pc_setpos(pl_sd,mapindex,x,y,CLR_TELEPORT);
-			}
-		break;
 		case 4: // m,x,y
 			if(!map[pl_sd->bl.m].flag.noreturn && !map[pl_sd->bl.m].flag.nowarp) 
-				pc_setpos(pl_sd,mapindex_name2id(str),x,y,CLR_TELEPORT);
+				pc_setpos(pl_sd,mapindex,x,y,CLR_TELEPORT);
 		break;
 		}
 	}
@@ -6573,6 +6575,9 @@ BUILDIN_FUNC(strnpcinfo)
 			break;
 		case 3: // unique name
 			name = aStrdup(nd->exname);
+			break;
+		case 4: // map name
+			name = aStrdup(map[nd->bl.m].name);
 			break;
 	}
 
@@ -13452,8 +13457,11 @@ BUILDIN_FUNC(unitwarp)
 	map = map_mapname2mapid(script_getstr(st, 3));
 	x = (short)script_getnum(st,4);
 	y = (short)script_getnum(st,5);
-
-	bl = map_id2bl(unit_id);
+	
+	if (!unit_id) //Warp the script's runner
+		bl = map_id2bl(st->rid);
+	else
+		bl = map_id2bl(unit_id);
 	if( map >= 0 && bl != NULL )
 		script_pushint(st, unit_warp(bl,map,x,y,CLR_OUTSIGHT));
 	else

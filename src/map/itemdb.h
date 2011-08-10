@@ -114,7 +114,7 @@ int itemdb_searchrandomid(int flags);
 
 #define itemdb_value_buy(n) itemdb_search(n)->value_buy
 #define itemdb_value_sell(n) itemdb_search(n)->value_sell
-#define itemdb_canrefine(n) itemdb_search(n)->flag.no_refine
+#define itemdb_canrefine(n) (!itemdb_search(n)->flag.no_refine)
 //Item trade restrictions [Skotlex]
 int itemdb_isdropable_sub(struct item_data *, int, int);
 int itemdb_cantrade_sub(struct item_data*, int, int);

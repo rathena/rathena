@@ -416,7 +416,7 @@ ACMD_FUNC(mapmove)
 {
 	char map_name[MAP_NAME_LENGTH_EXT];
 	unsigned short mapindex;
-	int x = 0, y = 0;
+	short x = 0, y = 0;
 	int m = -1;
 
 	nullpo_retr(-1, sd);
@@ -424,8 +424,8 @@ ACMD_FUNC(mapmove)
 	memset(map_name, '\0', sizeof(map_name));
 
 	if (!message || !*message ||
-		(sscanf(message, "%15s %d %d", map_name, &x, &y) < 3 &&
-		 sscanf(message, "%15[^,],%d,%d", map_name, &x, &y) < 1)) {
+		(sscanf(message, "%15s %hd %hd", map_name, &x, &y) < 3 &&
+		 sscanf(message, "%15[^,],%hd,%hd", map_name, &x, &y) < 1)) {
 		 
 			clif_displaymessage(fd, "Please, enter a map (usage: @warp/@rura/@mapmove <mapname> <x> <y>).");
 			return -1;
@@ -443,7 +443,8 @@ ACMD_FUNC(mapmove)
 	if ((x || y) && map_getcell(m, x, y, CELL_CHKNOPASS))
   	{	//This is to prevent the pc_setpos call from printing an error.
 		clif_displaymessage(fd, msg_txt(2));
-		x = y = 0; //Invalid cell, use random spot.
+		if (!map_search_freecell(NULL, m, &x, &y, 10, 10, 1))
+			x = y = 0; //Invalid cell, use random spot.
 	}
 	if (map[m].flag.nowarpto && battle_config.any_warp_GM_min_level > pc_isGM(sd)) {
 		clif_displaymessage(fd, msg_txt(247));
@@ -548,13 +549,13 @@ ACMD_FUNC(jumpto)
  *------------------------------------------*/
 ACMD_FUNC(jump)
 {
-	int x = 0, y = 0;
+	short x = 0, y = 0;
 
 	nullpo_retr(-1, sd);
 
 	memset(atcmd_output, '\0', sizeof(atcmd_output));
 
-	sscanf(message, "%d %d", &x, &y);
+	sscanf(message, "%hd %hd", &x, &y);
 
 	if (map[sd->bl.m].flag.noteleport && battle_config.any_warp_GM_min_level > pc_isGM(sd)) {
 		clif_displaymessage(fd, msg_txt(248));	// You are not authorized to warp from your current map.
@@ -570,7 +571,8 @@ ACMD_FUNC(jump)
 	if ((x || y) && map_getcell(sd->bl.m, x, y, CELL_CHKNOPASS))
   	{	//This is to prevent the pc_setpos call from printing an error.
 		clif_displaymessage(fd, msg_txt(2));
-		x = y = 0; //Invalid cell, use random spot.
+		if (!map_search_freecell(NULL, sd->bl.m, &x, &y, 10, 10, 1))
+			x = y = 0; //Invalid cell, use random spot.
 	}
 
 	pc_setpos(sd, sd->mapindex, x, y, CLR_TELEPORT);

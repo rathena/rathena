@@ -1,5 +1,8 @@
 Date	Added
 
+2011/08/10
+	* Updated unitwarp so that an id of "0" causes the script's rid to be warped. This allows OnTouchNPC scripts to warp the monster. [Skotlex]
+	* Updated @warp/@jump commands so that when an invalid tile is specified, a nearby cell is chosen.
 2011/08/06
 	* Added missing fields to guild belong info packet 0x16c (ZC_UPDATE_GDID). [Ai4rei]
 2011/07/31

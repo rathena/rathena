@@ -181,6 +181,8 @@
 //=       Documented special map names recognized by 'warpguild'. [Ai4rei]
 //= 3.45.20110709
 //=       Added 'getmercinfo' command. [Ai4rei]
+//= 3.46.20110810
+//=       Added information on OnTouchNPC and 'unitwarp' special case [Skotlex]
 //=========================================================
 
 This document is a reference manual for all the scripting commands and functions 
@@ -423,7 +425,8 @@ spanning triggerX cells in every direction across X and triggerY in every
 direction across Y. Walking into that area will trigger the NPC. If no 
 'OnTouch:' special label is present in the NPC code, the execution will start 
 from the beginning of the script, otherwise, it will start from the 'OnTouch:' 
-label.
+label. Monsters can also trigger the NPC, though the label 'OnTouchNPC:' is 
+used in this case.
 
 The code part is the script code that will execute whenever the NPC is 
 triggered. It may contain commands and function calls, descriptions of which 
@@ -5241,6 +5244,10 @@ Example(s):
 
 Okay, these commands should be fairly self explaining.
 For the emotions, you can look in db/const.txt for prefixes with e_
+PS: unitwarp supports a <GID> of zero, which causes the executor of the script to be affected. This can be used with OnTouchNPC to warp monsters:
+
+OnTouchNPC:
+	unitwarp 0,"this",-1,-1;
 
 ---------------------------------------
 
