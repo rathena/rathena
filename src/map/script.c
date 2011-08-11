@@ -13452,9 +13452,10 @@ BUILDIN_FUNC(unitwarp)
 	short x;
 	short y;
 	struct block_list* bl;
+	const char *mapname;
 
 	unit_id = script_getnum(st,2);
-	map = map_mapname2mapid(script_getstr(st, 3));
+	mapname = script_getstr(st, 3);
 	x = (short)script_getnum(st,4);
 	y = (short)script_getnum(st,5);
 	
@@ -13462,6 +13463,12 @@ BUILDIN_FUNC(unitwarp)
 		bl = map_id2bl(st->rid);
 	else
 		bl = map_id2bl(unit_id);
+
+	if( strcmp(mapname,"this") == 0 )
+		map = bl?bl->m:-1;
+	else
+		map = map_mapname2mapid(mapname);
+
 	if( map >= 0 && bl != NULL )
 		script_pushint(st, unit_warp(bl,map,x,y,CLR_OUTSIGHT));
 	else
