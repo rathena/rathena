@@ -1,6 +1,7 @@
 Date	Added
 
 2011/08/10
+	* Added support for cash shop packets without kafra points for clients 2007-07-10aSakexe and older (bugreport:4701, related r10888 and r11548). [Ai4rei]
 	* Added sending a dummy 0x08b9 packet (PIN auth system) in the char-server, required to support clients from this year. [Skotlex]
 	* Updated unitwarp so that an id of "0" causes the script's rid to be warped. This allows OnTouchNPC scripts to warp the monster. [Skotlex]
 	* Updated @warp/@jump commands so that when an invalid tile is specified, a nearby cell is chosen.

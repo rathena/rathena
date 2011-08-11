@@ -13246,34 +13246,46 @@ void clif_parse_Auction_buysell(int fd, struct map_session_data* sd)
 /*==========================================
  * CASH/POINT SHOP
  *==========================================*/
+
+/// List of items offered in a cash shop (ZC_PC_CASH_POINT_ITEMLIST)
+/// 0287 <packet len>.W <cash point>.L { <sell price>.L <discount price>.L <item type>.B <name id>.W }*
+/// 0287 <packet len>.W <cash point>.L <kafra point>.L { <sell price>.L <discount price>.L <item type>.B <name id>.W }* (PACKETVER >= 20070711)
 void clif_cashshop_show(struct map_session_data *sd, struct npc_data *nd)
 {
 	int fd,i;
+#if PACKETVER < 20070711
+	const int offset = 8;
+#else
+	const int offset = 12;
+#endif
 
 	nullpo_retv(sd);
 	nullpo_retv(nd);
 
 	fd = sd->fd;
 	sd->npc_shopid = nd->bl.id;
-	WFIFOHEAD(fd, 200 * 11 + 12);
+	WFIFOHEAD(fd,offset+nd->u.shop.count*11);
 	WFIFOW(fd,0) = 0x287;
-	WFIFOW(fd,2) = 12 + nd->u.shop.count*11;
+	WFIFOW(fd,2) = offset+nd->u.shop.count*11;
 	WFIFOL(fd,4) = sd->cashPoints; // Cash Points
+#if PACKETVER >= 20070711
 	WFIFOL(fd,8) = sd->kafraPoints; // Kafra Points
+#endif
 
 	for( i = 0; i < nd->u.shop.count; i++ )
 	{
 		struct item_data* id = itemdb_search(nd->u.shop.shop_item[i].nameid);
-		WFIFOL(fd,12+i*11) = nd->u.shop.shop_item[i].value;
-		WFIFOL(fd,16+i*11) = nd->u.shop.shop_item[i].value; // Discount Price? Maybe a Discount item
-		WFIFOB(fd,20+i*11) = itemtype(id->type);
-		WFIFOW(fd,21+i*11) = ( id->view_id > 0 ) ? id->view_id : id->nameid;
+		WFIFOL(fd,offset+0+i*11) = nd->u.shop.shop_item[i].value;
+		WFIFOL(fd,offset+4+i*11) = nd->u.shop.shop_item[i].value; // Discount Price
+		WFIFOB(fd,offset+8+i*11) = itemtype(id->type);
+		WFIFOW(fd,offset+9+i*11) = ( id->view_id > 0 ) ? id->view_id : id->nameid;
 	}
 	WFIFOSET(fd,WFIFOW(fd,2));
 }
 
 /// Cashshop Buy Ack (ZC_PC_CASH_POINT_UPDATE)
-/// S 0289 <cash point>.L <kafra point>.L <error>.W
+/// S 0289 <cash point>.L <error>.W
+/// S 0289 <cash point>.L <kafra point>.L <error>.W (PACKETVER >= 20070711)
 ///
 /// @param error
 /// 0: The deal has successfully completed. (ERROR_TYPE_NONE)
@@ -13292,11 +13304,19 @@ void clif_cashshop_ack(struct map_session_data* sd, int error)
 	WFIFOHEAD(fd, packet_len(0x289));
 	WFIFOW(fd,0) = 0x289;
 	WFIFOL(fd,2) = sd->cashPoints;
+#if PACKETVER < 20070711
+	WFIFOW(fd,6) = TOW(error);
+#else
 	WFIFOL(fd,6) = sd->kafraPoints;
 	WFIFOW(fd,10) = TOW(error);
+#endif
 	WFIFOSET(fd, packet_len(0x289));
 }
 
+/// Request to buy item(s) from cash shop (CZ_PC_BUY_CASH_POINT_ITEM).
+/// 0288 <name id>.W <amount>.W
+/// 0288 <name id>.W <amount>.W <kafra points>.L (PACKETVER >= 20070711)
+/// 0288 <packet len>.W <kafra points>.L <count>.W { <amount>.W <name id>.W }.4B*count (PACKETVER >= 20100803)
 void clif_parse_cashshop_buy(int fd, struct map_session_data *sd)
 {
 	int fail = 0, amount, points;
@@ -14951,7 +14971,11 @@ static int packetdb_readdb(void)
 	    6,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 	    0,  0,  0,  0,  8,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 	//#0x0280
-	    0,  0,  0,  6,  0,  0,  0,  0,  0, 12, 18,  0,  0,  0,  0,  0,
+#if PACKETVER < 20070711
+	    0,  0,  0,  6,  0,  0,  0, -1,  6,  8, 18,  0,  0,  0,  0,  0,
+#else
+	    0,  0,  0,  6,  0,  0,  0, -1, 10, 12, 18,  0,  0,  0,  0,  0, // 0x288, 0x289 increase by 4 (kafra points)
+#endif
 	    0,  4,  0, 70,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 	   85, -1, -1,107,  6, -1,  7,  7, 22,191,  0,  0,  0,  0,  0,  0,
