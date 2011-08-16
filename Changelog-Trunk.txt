@@ -1,5 +1,8 @@
 Date	Added
 
+2011/08/16
+	* Added -fno-strict-aliasing detection to configure.in (-fstrict-aliasing is added through -O2), since the code is not aliasing safe and causes warnings with gcc. [Ai4rei]
+	- This also fixes a missing line in the pre-built configure script (since r14870).
 2011/08/11
 	* Fixed bonuses bAddMonsterDropItem and bAddMonsterDropItemGroup (which broke after bAddClassDropItem	was added). [Skotlex]
 2011/08/10
