@@ -367,7 +367,7 @@ OnInit:
 
 OnStartArena:
 	disablenpc "Coach#ama";
-	disablenpc "Am Mut::Onreset";
+	disablenpc "Am Mut#ama";
 	donpcevent "Dokebi#ez::Onreset";
 	donpcevent "Dokebi#hd::Onreset";
 	enablenpc "Grandma#ama1";

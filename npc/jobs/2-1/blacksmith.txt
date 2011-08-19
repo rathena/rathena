@@ -351,7 +351,7 @@ ein_in01,201,27,3	script	Guildsman#alberta	63,{
 					mes "1. Which one of the following regions is matched incorrectly";
 					mes "with its specialty item?";
 					next;
-					if (select("Morroc - Thief Clothes:Alberta - Two Hand Axe:Comodo - Berserk Potion:Alberta - Swordmace") == 2)
+					if (select("Morroc - Thief Clothes:Alberta - Two Hand Axe:Comodo - Berserk Potion:Alberta - Swordmace") == 4)
 						set .@black_q,.@black_q+10;
 					mes "[Geschupenschte]";
 					mes "2. What status can";

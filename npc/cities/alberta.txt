@@ -325,7 +325,7 @@ alberta,190,173,4	script	Phelix	85,{
 				case 2:
 					mes "[Phelix]";
 					mes "I'm not giving you more then 100 at a time so don't bother, OK? If you don't want any, just say '0'.";
-					mes "Right now, the most you can get is " + gap + " but remember, 100 at most, you want to break my back?.";
+					mes "Right now, the most you can get is " + .@max + " but remember, 100 at most, you want to break my back?.";
 					input .@amount;
 					next;
 					mes "[Phelix]";
