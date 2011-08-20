@@ -4,6 +4,7 @@
 #include "../common/cbasetypes.h"
 #include "../common/socket.h"
 #include "../common/timer.h"
+#include "../common/grfio.h"
 #include "../common/malloc.h"
 #include "../common/version.h"
 #include "../common/nullpo.h"
@@ -11087,16 +11088,43 @@ void clif_parse_GuildRequestEmblem(int fd,struct map_session_data *sd)
 		clif_guild_emblem(sd,g);
 }
 
+
+/// Validates data of a guild emblem (compressed bitmap)
+static bool clif_validate_emblem(const uint8* emblem, unsigned long emblem_len)
+{
+	bool success;
+	uint8 buf[1800];  // no well-formed emblem bitmap is larger than 1782 (24 bit) / 1654 (8 bit) bytes
+	unsigned long buf_len = sizeof(buf);
+
+	success = ( decode_zip(buf, &buf_len, emblem, emblem_len) == 0 && buf_len >= 18 )  // sizeof(BITMAPFILEHEADER) + sizeof(biSize) of the following info header struct
+			&& RBUFW(buf,0) == 0x4d42   // BITMAPFILEHEADER.bfType (signature)
+			&& RBUFL(buf,2) == buf_len  // BITMAPFILEHEADER.bfSize (file size)
+			&& RBUFL(buf,10) < buf_len  // BITMAPFILEHEADER.bfOffBits (offset to bitmap bits)
+			;
+
+	return success;
+}
+
+
 /*==========================================
  * ギルドエンブレム変更
  * S 0153 <packet len>.W <emblem data>.?B
  *------------------------------------------*/
 void clif_parse_GuildChangeEmblem(int fd,struct map_session_data *sd)
 {
-	if(!sd->state.gmaster_flag)
+	unsigned long emblem_len = RFIFOW(fd,2)-4;
+	const uint8* emblem = RFIFOP(fd,4);
+
+	if( !emblem_len || !sd->state.gmaster_flag )
 		return;
 
-	guild_change_emblem(sd,RFIFOW(fd,2)-4,(char*)RFIFOP(fd,4));
+	if( !clif_validate_emblem(emblem, emblem_len) )
+	{
+		ShowWarning("clif_parse_GuildChangeEmblem: Rejected malformed guild emblem (size=%lu, accound_id=%d, char_id=%d, guild_id=%d).\n", emblem_len, sd->status.account_id, sd->status.char_id, sd->status.guild_id);
+		return;
+	}
+
+	guild_change_emblem(sd, emblem_len, emblem);
 }
 
 /*==========================================
