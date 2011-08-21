@@ -756,13 +756,54 @@ void clif_get_weapon_view(struct map_session_data* sd, unsigned short *rhand, un
 }
 
 //To make the assignation of the level based on limits clearer/easier. [Skotlex]
-static int clif_setlevel(int lv)
+static int clif_setlevel_sub(int lv)
 {
-   if( lv < battle_config.max_lv )
-	  return lv;
-   if( lv < battle_config.aura_lv )
-	  return battle_config.max_lv - 1;
-   return battle_config.max_lv;
+	if( lv < battle_config.max_lv )
+	{
+		;
+	}
+	else if( lv < battle_config.aura_lv )
+	{
+		lv = battle_config.max_lv - 1;
+	}
+	else
+	{
+		lv = battle_config.max_lv;
+	}
+
+	return lv;
+}
+
+static int clif_setlevel(struct block_list* bl)
+{
+	int lv = status_get_lv(bl);
+
+	switch( bl->type )
+	{
+		case BL_PC:
+		case BL_HOM:
+		case BL_MOB:
+		case BL_MER:
+			if( battle_config.client_limit_unit_lv&bl->type )
+			{
+				lv = clif_setlevel_sub(lv);
+			}
+			break;
+		case BL_NPC:
+		case BL_PET:
+			if( battle_config.client_limit_unit_lv&bl->type )
+			{
+				lv = clif_setlevel_sub(lv);
+				break;
+			}
+			// npcs and pets do not have level
+			return 0;
+		default:
+			ShowWarning("clif_setlevel: Unhandled bl type %d.\n", bl->type);
+			break;
+	}
+
+	return lv;
 }
 
 /*==========================================
@@ -916,7 +957,7 @@ static int clif_set_unit_idle(struct block_list* bl, unsigned char* buffer, bool
 		offset++;
 		buf = WBUFP(buffer,offset);
 	}
-	WBUFW(buf,51) = clif_setlevel(status_get_lv(bl));
+	WBUFW(buf,51) = clif_setlevel(bl);
 #if PACKETVER < 20091103
 	if (type) //End for non-player packet
 		return packet_len(WBUFW(buffer,0));
@@ -1027,7 +1068,7 @@ static int clif_set_unit_walking(struct block_list* bl, struct unit_data* ud, un
 	WBUFPOS2(buf,50,bl->x,bl->y,ud->to_x,ud->to_y,8,8);
 	WBUFB(buf,56) = (sd)? 5 : 0;
 	WBUFB(buf,57) = (sd)? 5 : 0;
-	WBUFW(buf,58) = clif_setlevel(status_get_lv(bl));
+	WBUFW(buf,58) = clif_setlevel(bl);
 #if PACKETVER >= 20080102
 	WBUFW(buf,60) = sd?sd->user_font:0;
 #endif
@@ -3102,7 +3143,7 @@ int clif_changeoption2(struct block_list* bl)
 	WBUFW(buf,0) = 0x28a;
 	WBUFL(buf,2) = bl->id;
 	WBUFL(buf,6) = sc->option;
-	WBUFL(buf,10) = clif_setlevel(status_get_lv(bl));
+	WBUFL(buf,10) = clif_setlevel(bl);
 	WBUFL(buf,14) = sc->opt3;
 	if(disguised(bl)) {
 		clif_send(buf,packet_len(0x28a),bl,AREA_WOS);

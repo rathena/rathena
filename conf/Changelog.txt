@@ -1,5 +1,7 @@
 Date	Added
 
+2011/08/21
+	* Rev. 14938 Added setting 'client_limit_unit_lv' to control the unit types which are affected by 'max_lv' and 'aura_lv' settings. [Ai4rei]
 2011/07/09
 	* Rev. 14892 Removed 'msg_athena.conf' messages 619 and 620 (duplicates to 572 and 573) (since r5506). [Ai4rei]
 2011/05/13

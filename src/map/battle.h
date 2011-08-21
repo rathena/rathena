@@ -487,6 +487,7 @@ extern struct Battle_Config
 	int display_party_name;
 	int cashshop_show_points;
 	int mail_show_status;
+	int client_limit_unit_lv;
 
 	// [BattleGround Settings]
 	int bg_update_interval;

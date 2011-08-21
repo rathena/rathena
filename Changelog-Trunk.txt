@@ -1,5 +1,9 @@
 Date	Added
 
+2011/08/21
+	* Fixed monsters above Lv99 displaying a Lv99 aura (bugreport:3986). [Ai4rei]
+	- The server no longer caps the level sent to the client by default.
+	- Servers that require the aura to be displayed at a level different from lv99, either have to alter the client or adjust the 'client_limit_unit_lv' setting.
 2011/08/20
 	* Added quick validation of guild emblems' bitmap format to prevent forged emblems, that cause the client to crash, from being accepted (thx to sinya for a sample). [Ai4rei]
 2011/08/16
