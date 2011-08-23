@@ -1697,7 +1697,8 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 
 	if(sd) {
 		int flag = 0; //Used to signal if this skill can be combo'ed later on.
-		if (sd->sc.data[SC_COMBO])
+		struct status_change_entry *sce;
+		if ((sce = sd->sc.data[SC_COMBO]))
 		{	//End combo state after skill is invoked. [Skotlex]
 			switch (skillid) {
 			case TK_TURNKICK:
@@ -1706,13 +1707,10 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 			case TK_COUNTER:
 				if (pc_famerank(sd->status.char_id,MAPID_TAEKWON))
 			  	{	//Extend combo time.
-					sd->skillid_old = skillid; //Set as previous so you can't repeat
-					sd->skilllv_old = skilllv;
-					sd->sc.data[SC_COMBO]->val1 = skillid; //Update combo-skill
-					delete_timer(sd->sc.data[SC_COMBO]->timer, status_change_timer);
-					sd->sc.data[SC_COMBO]->timer = add_timer(
-						tick+sd->sc.data[SC_COMBO]->val4,
-					  	status_change_timer, src->id, SC_COMBO);
+					sce->val1 = skillid; //Update combo-skill
+					sce->val3 = skillid;
+					delete_timer(sce->timer, status_change_timer);
+					sce->timer = add_timer(tick+sce->val4, status_change_timer, src->id, SC_COMBO);
 					break;
 				}
 				unit_cancel_combo(src); // Cancel combo wait
@@ -1748,7 +1746,7 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 				if( (tstatus->race == RC_BRUTE || tstatus->race == RC_INSECT) && pc_checkskill(sd, HT_POWER))
 				{
 					//TODO: This code was taken from Triple Blows, is this even how it should be? [Skotlex]
-					sc_start4(src,SC_COMBO,100,HT_POWER,bl->id,0,0,2000);
+					sc_start2(src,SC_COMBO,100,HT_POWER,bl->id,2000);
 					clif_combo_delay(src,2000);
 				}
 				break;
@@ -1771,9 +1769,8 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 		}	//Switch End
 		if (flag) { //Possible to chain
 			flag = DIFF_TICK(sd->ud.canact_tick, tick);
-			if (flag < 0) flag = 0;
-			flag += 300 * battle_config.combo_delay_rate/100;
-			sc_start(src,SC_COMBO,100,skillid,flag);
+			if (flag < 1) flag = 1;
+			sc_start2(src,SC_COMBO,100,skillid,bl->id,flag);
 			clif_combo_delay(src, flag);
 		}
 	}
@@ -8302,14 +8299,14 @@ int skill_check_condition_castbegin(struct map_session_data* sd, short skill, sh
 			return 0; //Anti-Soul Linker check in case you job-changed with Stances active.
 		if(!(sc && sc->data[SC_COMBO]))
 			return 0; //Combo needs to be ready
-		if (pc_famerank(sd->status.char_id,MAPID_TAEKWON))
-		{	//Unlimited Combo
-			if (skill == sd->skillid_old) {
-				status_change_end(&sd->bl, SC_COMBO, INVALID_TIMER);
-				sd->skillid_old = sd->skilllv_old = 0;
-				return 0; //Can't repeat previous combo skill.
-			}
-			break;
+
+		if (sc->data[SC_COMBO]->val3)
+		{	//Kick chain
+			//Do not repeat a kick.
+			if (sc->data[SC_COMBO]->val3 != skill)
+				break;
+			status_change_end(&sd->bl, SC_COMBO, INVALID_TIMER);
+			return 0;
 		}
 		if(sc->data[SC_COMBO]->val1 != skill)
 		{	//Cancel combo wait.
@@ -8329,7 +8326,7 @@ int skill_check_condition_castbegin(struct map_session_data* sd, short skill, sh
 			if (skill_get_time(
 				(sc->data[SC_DANCING]->val1&0xFFFF), //Dance Skill ID
 				(sc->data[SC_DANCING]->val1>>16)) //Dance Skill LV
-				- time <= skill_get_time2(skill,lv))
+				- time < skill_get_time2(skill,lv))
 			{
 				clif_skill_fail(sd,skill,0,0);
 				return 0;

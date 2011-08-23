@@ -1,5 +1,7 @@
 Date	Added
 
+2011/08/23
+	* Rewrote the combo logic. Now it uses packet 0x7e1 to signal skill state changes rather than resending the whole skill list. [Skotlex]
 2011/08/21
 	* Fixed monsters above Lv99 displaying a Lv99 aura (bugreport:3986). [Ai4rei]
 	- The server no longer caps the level sent to the client by default.

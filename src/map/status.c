@@ -2411,6 +2411,11 @@ int status_calc_pc_(struct map_session_data* sd, bool first)
 	status_cpy(&sd->battle_status, status);
 
 // ----- CLIENT-SIDE REFRESH -----
+	if(!sd->bl.prev) {
+		//Will update on LoadEndAck
+		calculating = 0;
+		return 0;
+	}
 	if(memcmp(b_skill,sd->status.skill,sizeof(sd->status.skill)))
 		clif_skillinfoblock(sd);
 	if(b_weight != sd->weight)
@@ -5766,44 +5771,17 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			//val1: Skill ID
 			//val2: When given, target (for autotargetting skills)
 			//val3: When set, this combo time should NOT delay attack/movement
-			//val4: Combo time
+			//val3: TK: Last used kick
+			//val4: TK: Combo time
 			struct unit_data *ud = unit_bl2ud(bl);
-			switch (val1) {
-				case TK_STORMKICK:
-					clif_skill_nodamage(bl,bl,TK_READYSTORM,1,1);
-					break;
-				case TK_DOWNKICK:
-					clif_skill_nodamage(bl,bl,TK_READYDOWN,1,1);
-					break;
-				case TK_TURNKICK:
-					clif_skill_nodamage(bl,bl,TK_READYTURN,1,1);
-					break;
-				case TK_COUNTER:
-					clif_skill_nodamage(bl,bl,TK_READYCOUNTER,1,1);
-					break;
-				case MO_COMBOFINISH:
-				case CH_TIGERFIST:
-				case CH_CHAINCRUSH:
-					if( sd )
-					{
-						sd->state.combo = 1;
-						clif_skillinfoblock(sd);
-					}
-					break;
-				case TK_JUMPKICK:
-					if( sd )
-					{
-						sd->state.combo = 2;
-						clif_skillinfoblock(sd);
-					}
-					break;		
-			}
 			if (ud && !val3) 
 			{
+				tick += 300 * battle_config.combo_delay_rate/100;
 				ud->attackabletime = gettick()+tick;
 				unit_set_walkdelay(bl, gettick(), tick, 1);
 			}
-			val4 = tick; //Store combo-time in val4.
+			val3 = 0;
+			val4 = tick;
 		}
 			break;
 		case SC_EARTHSCROLL:
@@ -6337,6 +6315,31 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 		case SC_MERC_SPUP:
 			status_percent_heal(bl, 0, 100); // Recover Full SP
 			break;
+		case SC_COMBO:
+			switch (sce->val1) {
+				case TK_STORMKICK:
+					clif_skill_nodamage(bl,bl,TK_READYSTORM,1,1);
+					break;
+				case TK_DOWNKICK:
+					clif_skill_nodamage(bl,bl,TK_READYDOWN,1,1);
+					break;
+				case TK_TURNKICK:
+					clif_skill_nodamage(bl,bl,TK_READYTURN,1,1);
+					break;
+				case TK_COUNTER:
+					clif_skill_nodamage(bl,bl,TK_READYCOUNTER,1,1);
+					break;
+				case MO_COMBOFINISH:
+				case CH_TIGERFIST:
+				case CH_CHAINCRUSH:
+					if (sd)
+						clif_skillinfo(sd,MO_EXTREMITYFIST, INF_SELF_SKILL);
+					break;
+				case TK_JUMPKICK:
+					if (sd)
+						clif_skillinfo(sd,TK_JUMPKICK, INF_SELF_SKILL);
+					break;
+			}
 	}
 
 	if( opt_flag&2 && sd && sd->touching_id )
@@ -6675,16 +6678,17 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 					bl->m, bl->x-range, bl->y-range, bl->x+range,bl->y+range,BL_CHAR,bl,sce,type,gettick());
 			}
 			break;
-		case SC_COMBO: //Clear last used skill when it is part of a combo.
+		case SC_COMBO:
 			if( sd )
-			{
-				if( sd->state.combo )
-				{
-					sd->state.combo = 0;
-					clif_skillinfoblock(sd);
-				}
-				if( sd->skillid_old == sce->val1 )
-					sd->skillid_old = sd->skilllv_old = 0;
+			switch (sce->val1) {
+				case MO_COMBOFINISH:
+				case CH_TIGERFIST:
+				case CH_CHAINCRUSH:
+					clif_skillinfo(sd, MO_EXTREMITYFIST, 0);
+					break;
+				case TK_JUMPKICK:
+					clif_skillinfo(sd, TK_JUMPKICK, 0);
+					break;
 			}
 			break;
 

@@ -323,6 +323,7 @@ int clif_mob_equip(struct mob_data *md,int nameid); // [Valaris]
 
 int clif_skillinfoblock(struct map_session_data *sd);
 int clif_skillup(struct map_session_data *sd,int skill_num);
+void clif_skillinfo(struct map_session_data *sd,int skill, int inf);
 int clif_addskill(struct map_session_data *sd, int skill);
 int clif_deleteskill(struct map_session_data *sd, int skill);
 

@@ -777,32 +777,15 @@ static int clif_setlevel_sub(int lv)
 static int clif_setlevel(struct block_list* bl)
 {
 	int lv = status_get_lv(bl);
-
+	if( battle_config.client_limit_unit_lv&bl->type )
+		return clif_setlevel_sub(lv);
 	switch( bl->type )
 	{
-		case BL_PC:
-		case BL_HOM:
-		case BL_MOB:
-		case BL_MER:
-			if( battle_config.client_limit_unit_lv&bl->type )
-			{
-				lv = clif_setlevel_sub(lv);
-			}
-			break;
 		case BL_NPC:
 		case BL_PET:
-			if( battle_config.client_limit_unit_lv&bl->type )
-			{
-				lv = clif_setlevel_sub(lv);
-				break;
-			}
 			// npcs and pets do not have level
 			return 0;
-		default:
-			ShowWarning("clif_setlevel: Unhandled bl type %d.\n", bl->type);
-			break;
 	}
-
 	return lv;
 }
 
@@ -4231,10 +4214,7 @@ int clif_skillinfoblock(struct map_session_data *sd)
 		if( (id = sd->status.skill[i].id) != 0 )
 		{
 			WFIFOW(fd,len)   = id;
-			if( (id == MO_EXTREMITYFIST && sd->state.combo&1) || (id == TK_JUMPKICK && sd->state.combo&2) )
-				WFIFOW(fd,len+2) = INF_SELF_SKILL;
-			else
-				WFIFOW(fd,len+2) = skill_get_inf(id);
+			WFIFOW(fd,len+2) = skill_get_inf(id);
 			WFIFOW(fd,len+4) = 0;
 			WFIFOW(fd,len+6) = sd->status.skill[i].lv;
 			WFIFOW(fd,len+8) = skill_get_sp(id,sd->status.skill[i].lv);
@@ -4268,10 +4248,7 @@ int clif_addskill(struct map_session_data *sd, int id )
 	WFIFOHEAD(fd, packet_len(0x111));
 	WFIFOW(fd,0) = 0x111;
 	WFIFOW(fd,2) = id;
-	if( (id == MO_EXTREMITYFIST && sd->state.combo&1) || (id == TK_JUMPKICK && sd->state.combo&2) )
-		WFIFOW(fd,4) = INF_SELF_SKILL;
-	else
-		WFIFOW(fd,4) = skill_get_inf(id);
+	WFIFOW(fd,4) = skill_get_inf(id);
  	WFIFOW(fd,6) = 0;
 	WFIFOW(fd,8) = sd->status.skill[id].lv;
 	WFIFOW(fd,10) = skill_get_sp(id,sd->status.skill[id].lv);
@@ -4327,6 +4304,24 @@ int clif_skillup(struct map_session_data *sd,int skill_num)
 	return 0;
 }
 
+//PACKET_ZC_SKILLINFO_UPDATE2
+//Like packet 0x0x10e, but also contains inf information
+void clif_skillinfo(struct map_session_data *sd,int skill, int inf)
+{
+	const int fd = sd->fd;
+	WFIFOHEAD(fd,packet_len(0x7e1));
+	WFIFOW(fd,0) = 0x7e1;
+	WFIFOW(fd,2) = skill;
+	WFIFOL(fd,4) = inf?inf:skill_get_inf(skill);
+	WFIFOW(fd,8) = sd->status.skill[skill].lv;
+	WFIFOW(fd,10) = skill_get_sp(skill,sd->status.skill[skill].lv);
+	WFIFOW(fd,12) = skill_get_range2(&sd->bl,skill,sd->status.skill[skill].lv);
+	if( sd->status.skill[skill].flag == SKILL_FLAG_PERMANENT )
+		WFIFOB(fd,14) = (sd->status.skill[skill].lv < skill_tree_get_max(skill, sd->status.class_))? 1:0;
+	else
+		WFIFOB(fd,14) = 0;
+	WFIFOSET(fd,packet_len(0x7e1));
+}
 
 /// Notifies clients, that an object is about to use a skill (ZC_USESKILL_ACK/ZC_USESKILL_ACK2)
 /// 013e <src id>.L <dst id>.L <x pos>.W <y pos>.W <skill id>.W <property>.L <delaytime>.L
@@ -10040,7 +10035,7 @@ void clif_parse_UseSkillToId(int fd, struct map_session_data *sd)
 	if( skillnotok(skillnum, sd) )
 		return;
 
-	if( sd->bl.id != target_id && (tmp&INF_SELF_SKILL || sd->state.combo) )
+	if( sd->bl.id != target_id && tmp&INF_SELF_SKILL )
 		target_id = sd->bl.id; // never trust the client
 	
 	if( target_id < 0 && -target_id == sd->bl.id ) // for disguises [Valaris]
@@ -15155,7 +15150,7 @@ static int packetdb_readdb(void)
 #else // 0x7d9 changed
 	    6,  2, -1,  4,  4,  4,  4,  8,  8,268,  6,  8,  6, 54, 30, 54,
 #endif
-	    0,  0,  0,  0,  0,  8,  8, 32, -1,  5,  0,  0,  0,  0,  0,  0,
+	    0, 15,  0,  0,  0,  8,  8, 32, -1,  5,  0,  0,  0,  0,  0,  0,
 	    0,  0,  0,  0,  0,  0, 14, -1, -1, -1,  8, 25,  0,  0, 26,  0,
 	//#0x0800
 #if PACKETVER < 20091229
