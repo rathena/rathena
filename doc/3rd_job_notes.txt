@@ -1,0 +1,198 @@
+== Rune Knight ====================================================================================
+RK_ENCHANTBLADE
+RK_SONICWAVE
+RK_DEATHBOUND
+RK_HUNDREDSPEAR
+RK_WINDCUTTER
+RK_IGNITIONBREAK
+RK_DRAGONTRAINING
+RK_DRAGONBREATH
+RK_DRAGONHOWLING
+RK_RUNEMASTERY
+RK_MILLENNIUMSHIELD
+RK_CRUSHSTRIKE
+RK_REFRESH
+RK_GIANTGROWTH
+RK_STONEHARDSKIN
+RK_VITALITYACTIVATION
+RK_STORMBLAST
+RK_FIGHTINGSPIRIT
+RK_ABUNDANCE
+RK_PHANTOMTHRUST
+
+== Guillotine_Cross ===============================================================================
+GC_VENOMIMPRESS
+GC_CROSSIMPACT
+GC_DARKILLUSION
+GC_RESEARCHNEWPOISON
+GC_CREATENEWPOISON
+GC_ANTIDOTE
+GC_POISONINGWEAPON
+GC_WEAPONBLOCKING
+GC_COUNTERSLASH
+GC_WEAPONCRUSH
+GC_VENOMPRESSURE
+GC_POISONSMOKE
+GC_CLOAKINGEXCEED
+GC_PHANTOMMENACE
+GC_HALLUCINATIONWALK
+GC_ROLLINGCUTTER
+GC_CROSSRIPPERSLASHER
+
+== Archbishop =====================================================================================
+AB_JUDEX
+		Working
+		Damage is unnaturally high-- issue with pre-RE MATK formulae?
+AB_ANCILLA
+		Working
+AB_ADORAMUS
+		Working 
+		Should partner check be in skill_check_condition_castbegin or in castend?
+		Ugly hack to cancel out using gemstone in skill_get_requirement().
+		Should SC_BLIND/SC_ADORAMUS be removed by speed bosting effects?
+		Should effects cancel simultaneously?
+		Damage is unnaturally high-- issue with pre-RE MATK formulae?
+AB_CLEMENTIA
+		Working
+		Bug: Skill name and casting sprite animation should display only on caster
+AB_CANTO
+		Working
+		Bug: Skill name and casting sprite animation should display only on caster
+AB_CHEAL
+		Working
+		Bug: Skill name and casting sprite animation should display only on caster
+AB_EPICLESIS
+		Working
+		Need to fix SC effect on moving out of unit.
+		What skills should have an inate immuity to this skill?
+		has skill_check_condition_castbegin case, check to see if it can be improved.
+AB_PRAEFATIO
+		Working
+		Bug: Skill name and casting sprite animation should display only on caster
+AB_ORATIO
+		Working
+		Ugly hack to display/remove SI_ on mobs.
+AB_LAUDAAGNUS
+		Working
+		Should +4+Skilllv luk apply to only those not cured from a status effect?
+		Check: Skill name and casting sprite animation should display only on caster?
+		Should this skill fail if you are the only person in/online in a party?
+AB_LAUDARAMUS
+		Working 
+		Should +4+Skilllv luk apply to only those not cured from a status effect?
+		Check: Skill name and casting sprite animation should display only on caster?
+		Should this skill fail if you are the only person in/online in a party?
+AB_EUCHARISTICA
+		Working 
+AB_RENOVATIO
+		Working
+AB_HIGHNESSHEAL
+		Working
+AB_CLEARANCE
+		Working
+		Check: Should Soul Linkers be inately immune?
+		Check list a second time to see what was missed.
+AB_EXPIATIO
+		Working
+AB_DUPLELIGHT
+		Working
+		Check success rate, 
+		Is skill_addtimerskill the best way to implement the additional attacks?
+AB_DUPLELIGHT_MELEE
+		Working
+AB_DUPLELIGHT_MAGIC
+		Working
+AB_SILENTIUM
+		Working
+		Need more info on success rate.
+AB_SECRAMENT
+		Working
+
+== Warlock ========================================================================================
+WL_WHITEIMPRISON 
+WL_SOULEXPANSION
+WL_FROSTMISTY
+WL_JACKFROST
+WL_MARSHOFABYSS
+WL_RECOGNIZEDSPELL
+WL_SIENNAEXECRATE
+WL_RADIUS
+WL_STASIS
+WL_DRAINLIFE
+WL_CRIMSONROCK
+WL_HELLINFERNO
+WL_COMET
+WL_CHAINLIGHTNING
+WL_CHAINLIGHTNING_ATK
+WL_EARTHSTRAIN
+WL_TETRAVORTEX
+WL_TETRAVORTEX_FIRE
+WL_TETRAVORTEX_WATER
+WL_TETRAVORTEX_WIND
+WL_TETRAVORTEX_GROUND
+WL_SUMMONFB
+WL_SUMMONBL
+WL_SUMMONWB
+WL_SUMMON_ATK_FIRE
+WL_SUMMON_ATK_WIND
+WL_SUMMON_ATK_WATER
+WL_SUMMON_ATK_GROUND
+WL_SUMMONSTONE
+WL_RELEASE
+WL_READING_SB
+WL_FREEZE_SP
+
+== Ranger =========================================================================================
+RA_ARROWSTORM
+RA_FEARBREEZE
+RA_RANGERMAIN
+RA_AIMEDBOLT
+RA_DETONATOR
+RA_ELECTRICSHOCKER
+RA_CLUSTERBOMB
+RA_WUGMASTERY
+RA_WUGRIDER
+RA_WUGDASH
+RA_WUGSTRIKE
+RA_WUGBITE
+RA_TOOTHOFWUG
+RA_SENSITIVEKEEN
+RA_CAMOUFLAGE
+RA_RESEARCHTRAP
+RA_MAGENTATRAP
+RA_COBALTTRAP
+RA_MAIZETRAP
+RA_VERDURETRAP
+RA_FIRINGTRAP
+RA_ICEBOUNDTRAP
+
+== Mechanic =======================================================================================
+NC_MADOLICENCE
+NC_BOOSTKNUCKLE
+NC_PILEBUNKER
+NC_VULCANARM
+NC_FLAMELAUNCHER
+NC_COLDSLOWER
+NC_ARMSCANNON
+NC_ACCELERATION
+NC_HOVERING
+NC_F_SIDESLIDE
+NC_B_SIDESLIDE
+NC_MAINFRAME
+NC_SELFDESTRUCTION
+NC_SHAPESHIFT
+NC_EMERGENCYCOOL
+NC_INFRAREDSCAN
+NC_ANALYZE
+NC_MAGNETICFIELD
+NC_NEUTRALBARRIER
+NC_STEALTHFIELD
+NC_REPAIR
+NC_TRAININGAXE
+NC_RESEARCHFE
+NC_AXEBOOMERANG
+NC_POWERSWING
+NC_AXETORNADO
+NC_SILVERSNIPER
+NC_MAGICDECOY
+NC_DISJOINT

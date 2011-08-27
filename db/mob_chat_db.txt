@@ -31,3 +31,9 @@
 27,0xFF0000,What do you want from me?
 28,0xFF0000,No! I didn't do this! He's the one who planned out all this!
 29,0xFF0000,I just wanted to find peace..!  That's why I have been fleeing away!
+30,0xFF0000,Ahhhh!!! Now, I just have to kill you all!
+31,0xFF0000,Annoying flies!! Get off of me!
+32,0xFF0000,Suffer in Hell!
+33,0xFF0000,Mwahahaha! Taste the anger of the earth!!!
+34,0xFF0000,No... I won't accept this as defeat!
+

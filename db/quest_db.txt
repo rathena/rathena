@@ -354,7 +354,7 @@
 3217,0,0,0,0,0,0,0,"Job changes to Rune knight - The final test"
 3218,0,0,0,0,0,0,0,"Job changes to Rune knight - Pass the final test"
 3219,0,0,0,0,0,0,0,"Job changes to Rune knight - The end of all tes"
-3220,0,0,0,0,0,0,0,"Job changes to Rune knight - Waiting time of test"
+3220,600,0,0,0,0,0,0,"Job changes to Rune knight - Waiting time of test"
 
 3250,0,1041,30,0,0,0,0,"Request - What is this bandage for?"
 3251,0,1271,30,0,0,0,0,"Request - An alligator of Counterattack"

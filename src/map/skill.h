@@ -90,7 +90,7 @@ struct s_skill_db {
 	char desc[40];
 	int range[MAX_SKILL_LEVEL],hit,inf,element[MAX_SKILL_LEVEL],nk,splash[MAX_SKILL_LEVEL],max;
 	int num[MAX_SKILL_LEVEL];
-	int cast[MAX_SKILL_LEVEL],walkdelay[MAX_SKILL_LEVEL],delay[MAX_SKILL_LEVEL];
+	int cast[MAX_SKILL_LEVEL],walkdelay[MAX_SKILL_LEVEL],delay[MAX_SKILL_LEVEL],fixedcast[MAX_SKILL_LEVEL],cooldown[MAX_SKILL_LEVEL];
 	int upkeep_time[MAX_SKILL_LEVEL],upkeep_time2[MAX_SKILL_LEVEL];
 	int castcancel,cast_def_rate;
 	int inf2,maxcount[MAX_SKILL_LEVEL],skill_type;
@@ -239,7 +239,9 @@ int	skill_get_state(int id);
 int	skill_get_zeny( int id ,int lv );
 int	skill_get_num( int id ,int lv );
 int	skill_get_cast( int id ,int lv );
+int	skill_get_fixedcast( int id ,int lv );
 int	skill_get_delay( int id ,int lv );
+int	skill_get_cooldown( int id ,int lv );
 int	skill_get_walkdelay( int id ,int lv );
 int	skill_get_time( int id ,int lv );
 int	skill_get_time2( int id ,int lv );
@@ -290,7 +292,6 @@ int skill_clear_group(struct block_list *bl, int flag);
 int skill_unit_ondamaged(struct skill_unit *src,struct block_list *bl,int damage,unsigned int tick);
 
 int skill_castfix( struct block_list *bl, int skill_id, int skill_lv);
-int skill_castfix_sc( struct block_list *bl, int time);
 int skill_delayfix( struct block_list *bl, int skill_id, int skill_lv);
 
 // Skill conditions check and remove [Inkfish]
@@ -1310,7 +1311,7 @@ enum e_skill {
 	GN_S_PHARMACY,
 	GN_SLINGITEM_RANGEMELEEATK,
 
-	AB_SECRAMENT,
+	AB_SECRAMENT = 2515,
 	WM_SEVERE_RAINSTORM_MELEE,
 	SR_HOWLINGOFLION,
 	SR_RIDEINLIGHTNING,
@@ -1501,7 +1502,7 @@ enum {
 	UNT_EVILLAND,
 	UNT_DARK_RUNNER, //TODO
 	UNT_DARK_TRANSFER, //TODO
-	UNT_EPICLESIS, //TODO
+	UNT_EPICLESIS,
 	UNT_EARTHSTRAIN, //TODO
 	UNT_MANHOLE, //TODO
 	UNT_DIMENSIONDOOR, //TODO

@@ -1,7 +1,9 @@
 Date		Added
 ======
+2011/08/26
+	* Rev. 14941 Added Archbishop job quest, and missing Brasilis files. [L0ne_W0lf]
 2011/08/10
-	* Revv. 14931 Added scripts and NPC Brasilis updates from trunk r14928. [L0ne_W0lf]
+	* Rev. 14931 Added scripts and NPC Brasilis updates from trunk r14928. [L0ne_W0lf]
 2011/07/26
 	* Rev. 14922 Added Renewal Guides, and made the filenames uniform. [L0ne_W0lf]
 2011/07/21

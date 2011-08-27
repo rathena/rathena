@@ -961,7 +961,7 @@ int unit_skilluse_id2(struct block_list *src, int target_id, short skill_num, sh
 				return 0;
 			target = (struct block_list*)map_charid2sd(sd->status.partner_id);
 			if (!target) {
-				clif_skill_fail(sd,skill_num,0,0);
+				clif_skill_fail(sd,skill_num,0,0,0);
 				return 0;
 			}
 			break;
@@ -1013,7 +1013,7 @@ int unit_skilluse_id2(struct block_list *src, int target_id, short skill_num, sh
 		case BD_ENCORE:
 			//Prevent using the dance skill if you no longer have the skill in your tree. 
 			if(!sd->skillid_dance || pc_checkskill(sd,sd->skillid_dance)<=0){
-				clif_skill_fail(sd,skill_num,0,0);
+				clif_skill_fail(sd,skill_num,0,0,0);
 				return 0;
 			}
 			sd->skillid_old = skill_num;
@@ -1029,7 +1029,7 @@ int unit_skilluse_id2(struct block_list *src, int target_id, short skill_num, sh
 		case CG_MOONLIT:
 			if (skill_check_pc_partner(sd, skill_num, &skill_lv, 1, 0) < 1)
 			{
-				clif_skill_fail(sd,skill_num,0,0);
+				clif_skill_fail(sd,skill_num,0,0,0);
 				return 0;
 			}
 			break;
@@ -1098,17 +1098,9 @@ int unit_skilluse_id2(struct block_list *src, int target_id, short skill_num, sh
 	case SA_SPELLBREAKER:
 		temp = 1;
 	break;
-	case ST_CHASEWALK:
-		if (sc && sc->data[SC_CHASEWALK])
-			casttime = 0;
-	break;
 	case TK_RUN:
 		if (sc && sc->data[SC_RUN])
 			casttime = 0;
-	break;
-	case HP_BASILICA:
-		if( sc && sc->data[SC_BASILICA] )
-			casttime = 0; // No Casting time on basilica cancel
 	break;
 	case KN_CHARGEATK:
 		{
@@ -1123,9 +1115,17 @@ int unit_skilluse_id2(struct block_list *src, int target_id, short skill_num, sh
 		break;
 	}
   	
-	// moved here to prevent Suffragium from ending if skill fails
-	if (!(skill_get_castnodex(skill_num, skill_lv)&2))
-		casttime = skill_castfix_sc(src, casttime);
+	// Cancel status effects that lower cast time.
+	if( !(skill_get_castnodex(skill_num, skill_lv)&2) && sc )
+	{
+		if( sc->data[SC_SUFFRAGIUM] )
+			status_change_end(src, SC_SUFFRAGIUM, INVALID_TIMER);
+		if( sc->data[SC_MEMORIZE] ) 
+		{
+			if ((--sc->data[SC_MEMORIZE]->val2) <= 0)
+				status_change_end(src, SC_MEMORIZE, INVALID_TIMER);
+		}
+	}
 
 	if( casttime > 0 || temp )
 	{ 
@@ -1245,7 +1245,7 @@ int unit_skilluse_pos2( struct block_list *src, short skill_x, short skill_y, sh
 
 	if( map_getcell(src->m, skill_x, skill_y, CELL_CHKWALL) )
 	{// can't cast ground targeted spells on wall cells
-		if (sd) clif_skill_fail(sd,skill_num,0,0);
+		if (sd) clif_skill_fail(sd,skill_num,0,0,0);
 		return 0;
 	}
 
@@ -1265,9 +1265,17 @@ int unit_skilluse_pos2( struct block_list *src, short skill_x, short skill_y, sh
 
 	unit_stop_attack(src);
 
-	// moved here to prevent Suffragium from ending if skill fails
-	if (!(skill_get_castnodex(skill_num, skill_lv)&2))
-		casttime = skill_castfix_sc(src, casttime);
+	// Cancel status effects that lower cast time.
+	if( !(skill_get_castnodex(skill_num, skill_lv)&2) && sc )
+	{
+		if( sc->data[SC_SUFFRAGIUM] )
+			status_change_end(src, SC_SUFFRAGIUM, INVALID_TIMER);
+		if( sc->data[SC_MEMORIZE] ) 
+		{
+			if ((--sc->data[SC_MEMORIZE]->val2) <= 0)
+				status_change_end(src, SC_MEMORIZE, INVALID_TIMER);
+		}
+	}
 
 	ud->state.skillcastcancel = castcancel&&casttime>0?1:0;
 	if( !sd || sd->skillitem != skill_num || skill_get_cast(skill_num,skill_lv) )
@@ -1573,7 +1581,7 @@ static int unit_attack_timer_sub(struct block_list* src, int tid, unsigned int t
 	{ // attacking when under cast delay has restrictions:
 		if( tid == INVALID_TIMER )
 		{ //requested attack.
-			if(sd) clif_skill_fail(sd,1,4,0);
+			if(sd) clif_skill_fail(sd,1,4,0,0);
 			return 0;
 		}
 		//Otherwise, we are in a combo-attack, delay this until your canact time is over. [Skotlex]

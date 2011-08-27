@@ -1,5 +1,23 @@
 Date	Added
 
+2011/08/26
+	* Rev. 14941 Renewal changes in renewal branch? Am I dreaming? [L0ne_W0lf]
+	- Implemented first version of Archbishop skills. Preliminary version, see doc/3rd_job_notes.txt for details/bugs/issues with skills.
+	- Implemented fixed cast time, old cast time mechanics no longer available. Added bFixedCastRate used for reducing fixed cast time mechanic.
+	  Cast time calculations probably still needs work, as the cast rate reductions are probably additive and multiplicative as they used to be.
+	- As a result, skill_delayfix_sc() has been removed, status effects that modify cast time are now calculated DURING cast time, not after.
+	- Implemented skill cooldown in skill_cast_db.txt. Known issue is that the cooldowns should save on logout/server shutdown/etc.
+	- Implemented new heal calculation and started work on MATK. Added bWeaponMatk, and bEquipmentMatk for use with new MATK mechanic.
+	- Removed custom features and their config settings: delay_dependon_dex, delay_dependon_agi, castrate_dex_scale.
+	- Increased max_def to 9999 for now, as that is by default the largest defense increase found in the Renewal database (Ahura_mazdah, GM item)
+	- Added shield aspd reduction from job_db1.txt-- Not 100% sure on this one yet. Should be considered a WIP.
+	- Modified updatestatus(), to display information more in line with the client's status window.
+	- Updated some calculations in status_calc_misc to match renewal, needs a lot of work still.
+	- ST_CHASEWALK and HP_BASILICA no longer have 0 cast time while being canceled.
+	* Implemented 'Boss' Decrease AGI, like 'Boss' Heal - editable in skill.conf
+	* clif_skill_fail() now accepts a new parameter, to be used in later messages.
+	* status_change_start() now stores tick as duration upon being called, which fixes timers calling the function from showing negative durations.
+	* Implemented skill ALL_PARTYFLEE. 1 level, increases party member flee by 10.
 2011/08/07
 	* Rev. 14931 Raised MAX_MERCENARY_CLASS to 44 for new mercenaries. [L0ne_W0lf]
 	* Raised max_lv to allow values up to 150 in battle.conf.

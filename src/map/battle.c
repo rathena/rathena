@@ -265,6 +265,9 @@ int battle_attr_fix(struct block_list *src, struct block_list *target, int damag
 		if( tsc->data[SC_SPIDERWEB]->val2 == 0 )
 			status_change_end(target, SC_SPIDERWEB, INVALID_TIMER);
 	}
+	if( atk_elem == ELE_HOLY && tsc && tsc->count && tsc->data[SC_ORATIO] )
+		ratio += tsc->data[SC_ORATIO]->val2; 
+
 	return damage*ratio/100;
 }
 
@@ -1727,6 +1730,9 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 				case NPC_VAMPIRE_GIFT:
 					skillratio += ((skill_lv-1)%5+1)*100;
 					break;
+				case AB_DUPLELIGHT_MELEE:
+					skillratio +=  100 + 10 * skill_lv;
+					break;
 			}
 
 			ATK_RATE(skillratio);
@@ -1841,6 +1847,12 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 			short vit_def;
 			signed char def1 = status_get_def(target); //Don't use tstatus->def1 due to skill timer reductions.
 			short def2 = (short)tstatus->def2;
+
+			if( sc && sc->data[SC_EXPIATIO] )
+			{
+				def1 -= def1 * sc->data[SC_EXPIATIO]->val2 / 100;
+				def2 -= def2 * sc->data[SC_EXPIATIO]->val2 / 100;
+			}
 
 			if( sd )
 			{
@@ -2398,6 +2410,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 			case AL_HEAL:
 			case PR_BENEDICTIO:
 			case PR_SANCTUARY:
+			case AB_HIGHNESSHEAL:
 				ad.damage = skill_calc_heal(src, target, skill_num, skill_lv, false);
 				break;
 			case PR_ASPERSIO:
@@ -2416,6 +2429,9 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 				break;
 			case PF_SOULBURN:
 				ad.damage = tstatus->sp * 2;
+				break;
+			case AB_RENOVATIO:
+				ad.damage = (int)((15 * status_get_lv(src)) + (1.5 * sstatus->int_));
 				break;
 			default:
 			{
@@ -2512,6 +2528,15 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						break;
 					case NPC_EARTHQUAKE:
 						skillratio += 100 +100*skill_lv +100*(skill_lv/2);
+						break;
+					case AB_JUDEX:
+						skillratio += ((skill_lv < 5)?280 + 20 * skill_lv:400) * (status_get_lv(src) / 100); // Possible RE-Formula
+						break;
+					case AB_ADORAMUS:
+						skillratio += (500 + 100 * skill_lv) * (status_get_lv(src) / 100); //Possible RE-Formula
+						break;
+					case AB_DUPLELIGHT_MAGIC:
+						skillratio += 200 + 20 * skill_lv;
 						break;
 				}
 
@@ -3165,6 +3190,14 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 	damage = wd.damage + wd.damage2;
 	if( damage > 0 && src != target )
 	{
+		if(sc && sc->data[SC_DUPLELIGHT]) {
+			int skilllv = sc->data[SC_DUPLELIGHT]->val1;
+			if(rand()%100 < sc->data[SC_DUPLELIGHT]->val2)
+				skill_addtimerskill(src,tick+status_get_adelay(src) / 2,target->id,0,0,AB_DUPLELIGHT_MELEE,skilllv,BF_WEAPON,flag);
+			else if(rand()%100 < sc->data[SC_DUPLELIGHT]->val3)
+				skill_addtimerskill(src,tick+status_get_adelay(src) / 2,target->id,0,0,AB_DUPLELIGHT_MAGIC,skilllv,BF_MAGIC,flag);
+		}
+
 		rdamage = battle_calc_return_damage(target, damage, wd.flag);
 		if( rdamage > 0 )
 		{
@@ -3636,8 +3669,6 @@ static const struct _battle_data {
 	{ "enable_perfect_flee",                &battle_config.enable_perfect_flee,             BL_PC|BL_PET, BL_NUL, BL_ALL,   },
 	{ "casting_rate",                       &battle_config.cast_rate,                       100,    0,      INT_MAX,        },
 	{ "delay_rate",                         &battle_config.delay_rate,                      100,    0,      INT_MAX,        },
-	{ "delay_dependon_dex",                 &battle_config.delay_dependon_dex,              0,      0,      1,              },
-	{ "delay_dependon_agi",                 &battle_config.delay_dependon_agi,              0,      0,      1,              },
 	{ "skill_delay_attack_enable",          &battle_config.sdelay_attack_enable,            0,      0,      1,              },
 	{ "left_cardfix_to_right",              &battle_config.left_cardfix_to_right,           0,      0,      1,              },
 	{ "skill_add_range",                    &battle_config.skill_add_range,                 0,      0,      INT_MAX,        },
@@ -3773,7 +3804,7 @@ static const struct _battle_data {
 	{ "max_baby_parameter",                 &battle_config.max_baby_parameter,              80,     10,     10000,          },
 	{ "max_third_parameter",                &battle_config.max_third_parameter,             120,    10,     10000,          },
 	{ "max_baby_third_parameter",           &battle_config.max_baby_third_parameter,        108,    10,     10000,          },
-	{ "max_def",                            &battle_config.max_def,                         99,     0,      INT_MAX,        },
+	{ "max_def",                            &battle_config.max_def,                         9999,   0,      INT_MAX,        },
 	{ "over_def_bonus",                     &battle_config.over_def_bonus,                  0,      0,      1000,           },
 	{ "skill_log",                          &battle_config.skill_log,                       BL_NUL, BL_NUL, BL_ALL,         },
 	{ "battle_log",                         &battle_config.battle_log,                      0,      0,      1,              },
@@ -3907,7 +3938,6 @@ static const struct _battle_data {
 	{ "min_cloth_color",                    &battle_config.min_cloth_color,                 0,      0,      INT_MAX,        },
 	{ "max_cloth_color",                    &battle_config.max_cloth_color,                 4,      0,      INT_MAX,        },
 	{ "pet_hair_style",                     &battle_config.pet_hair_style,                  100,    0,      INT_MAX,        },
-	{ "castrate_dex_scale",                 &battle_config.castrate_dex_scale,              150,    1,      INT_MAX,        },
 	{ "area_size",                          &battle_config.area_size,                       14,     0,      INT_MAX,        },
 	{ "zeny_from_mobs",                     &battle_config.zeny_from_mobs,                  0,      0,      1,              },
 	{ "mobs_level_up",                      &battle_config.mobs_level_up,                   0,      0,      1,              },
@@ -4024,6 +4054,10 @@ static const struct _battle_data {
 	{ "bg_magic_attack_damage_rate",        &battle_config.bg_magic_damage_rate,            60,     0,      INT_MAX,        },
 	{ "bg_misc_attack_damage_rate",         &battle_config.bg_misc_damage_rate,             60,     0,      INT_MAX,        },
 	{ "bg_flee_penalty",                    &battle_config.bg_flee_penalty,                 20,     0,      INT_MAX,        },
+//MVP Decrease AGI
+	{ "max_decagi_lv",                      &battle_config.max_decagi_lv,                   11,     1,      INT_MAX,        },
+	{ "max_decagi_dur",                     &battle_config.max_decagi_dur,                  120000, 1,      INT_MAX,        },
+	{ "max_decagi",                         &battle_config.max_decagi,                      50,     0,      INT_MAX,        },
 };
 
 
@@ -4070,8 +4104,8 @@ void battle_adjust_conf()
 	battle_config.max_walk_speed = 100*DEFAULT_WALK_SPEED/battle_config.max_walk_speed;	
 	battle_config.max_cart_weight *= 10;
 	
-	if(battle_config.max_def > 100 && !battle_config.weapon_defense_type)	 // added by [Skotlex]
-		battle_config.max_def = 100;
+	if(battle_config.max_def > 9999 && !battle_config.weapon_defense_type)	 // added by [Skotlex]
+		battle_config.max_def = 9999;
 
 	if(battle_config.min_hitrate > battle_config.max_hitrate)
 		battle_config.min_hitrate = battle_config.max_hitrate;

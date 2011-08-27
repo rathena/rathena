@@ -111,7 +111,6 @@ extern struct Battle_Config
 	int enable_baseatk;
 	int enable_perfect_flee;
 	int cast_rate, delay_rate;
-	int delay_dependon_dex, delay_dependon_agi;
 	int sdelay_attack_enable;
 	int left_cardfix_to_right;
 	int skill_add_range;
@@ -363,7 +362,6 @@ extern struct Battle_Config
 	int max_cloth_color; // added by [MouseJstr]
 	int pet_hair_style; // added by [Skotlex]
 
-	int castrate_dex_scale; // added by [MouseJstr]
 	int area_size; // added by [MouseJstr]
 
 	int max_def, over_def_bonus; //added by [Skotlex]
@@ -496,6 +494,10 @@ extern struct Battle_Config
 	int bg_magic_damage_rate;
 	int bg_misc_damage_rate;
 	int bg_flee_penalty;
+
+	int max_decagi_lv;
+	int max_decagi_dur;
+	int max_decagi;
 } battle_config;
 
 void do_init_battle(void);
