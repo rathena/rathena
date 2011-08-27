@@ -1,5 +1,7 @@
 Date	Added
 
+2011/08/27
+	* Reverted unnecessary signature change of clif_skill_fail from r14941. [Gepard]
 2011/08/26
 	* Rev. 14941 Renewal changes in renewal branch? Am I dreaming? [L0ne_W0lf]
 	- Implemented first version of Archbishop skills. Preliminary version, see doc/3rd_job_notes.txt for details/bugs/issues with skills.
