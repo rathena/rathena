@@ -5766,10 +5766,10 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case AB_CHEAL:
 		if( sd == NULL || sd->status.party_id == 0 || flag&1 )
 		{
-			int lv = pc_checkskill(sd, AL_HEAL);
+			int lv = (sd?pc_checkskill(sd, AL_HEAL):1);
 			if( sd && tstatus && !battle_check_undead(tstatus->race, tstatus->def_ele) )
 			{
-				int heal = skill_calc_heal(src, bl, AL_HEAL, lv>=1?lv:1, true);
+				int heal = skill_calc_heal(src, bl, AL_HEAL, lv, true);
 				if( status_isimmune(bl) )
 					heal = 0;
 				clif_skill_nodamage(bl, bl, skillid, heal, 1);
@@ -8410,7 +8410,7 @@ int skill_check_pc_partner (struct map_session_data *sd, short skill_id, short* 
 			case AB_ADORAMUS:
 				if( c > 0 && (tsd = map_id2sd(p_sd[0])) != NULL )
 					status_charge(&tsd->bl, 0, 2*(*skill_lv));
-				break;
+				return c;
 			default: //Warning: Assuming Ensemble skills here (for speed)
 				if (c > 0 && sd->sc.data[SC_DANCING] && (tsd = map_id2sd(p_sd[0])) != NULL)
 				{
@@ -8851,15 +8851,6 @@ int skill_check_condition_castbegin(struct map_session_data* sd, short skill, sh
 			return 0;
 		}
 		break;
-	case AB_ADORAMUS: // Should this be here or in skill_check_condition_castend?
-		i = pc_search_inventory(sd,require.itemid[0]);
-		if( skill_check_pc_partner(sd,skill,&lv,1,0) <= 0 &&
-			(i < 0 || sd->status.inventory[i].amount < require.amount[0]) )
-		{
-			clif_skill_fail(sd,skill,0,0);
-			return 0;
-		}
-		break;
 	case AB_EPICLESIS: // Skill should fail if items are not present. Why the curveball, RO?
 		if ( require.itemid[0] ) 
 		{
@@ -9038,10 +9029,13 @@ int skill_check_condition_castend(struct map_session_data* sd, short skill, shor
 		return 0;
 	}
 
+	require = skill_get_requirement(sd,skill,lv);// Adoramus need this.
+
 	// perform skill-specific checks (and actions)
 	switch( skill )
 	{
 	case PR_BENEDICTIO:
+	case AB_ADORAMUS:
 		skill_check_pc_partner(sd, skill, &lv, 1, 1);
 		break;
 	case AM_CANNIBALIZE:
@@ -9074,8 +9068,6 @@ int skill_check_condition_castend(struct map_session_data* sd, short skill, shor
 	}
 
 	status = &sd->battle_status;
-
-	require = skill_get_requirement(sd,skill,lv);
 
 	if( require.hp > 0 && status->hp <= (unsigned int)require.hp) {
 		clif_skill_fail(sd,skill,2,0);
@@ -9275,7 +9267,12 @@ struct skill_condition skill_get_requirement(struct map_session_data* sd, short 
 		if( itemid_isgemstone(req.itemid[i]) && skill != HW_GANBANTEIN )
 		{
 			if( sd->special_state.no_gemstone || 
-				(skill == AB_ADORAMUS && skill_check_pc_partner(sd,skill,&lv, 1, 2) )) // Do not consume Gemstone if next to another priest.
+// FIXME: [Inkfish]
+// check partners every time trying to get requirement info? not wise
+// but neither check it in castbegin
+// PR_BENEDICTIO is instant cast, so you probably can store info in castbegin and use it in castend without it being modified.
+// but AB_ADORAMUS has cast time. partner info may change during casting.
+				(skill == AB_ADORAMUS && skill_check_pc_partner(sd,skill,&lv, 1, 0) )) // Do not require Gemstone if next to another priest.
 			{	//Make it substract 1 gem rather than skipping the cost.
 				if( --req.amount[i] < 1 )
 					req.itemid[i] = 0;
