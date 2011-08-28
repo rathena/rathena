@@ -1731,7 +1731,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 					skillratio += ((skill_lv-1)%5+1)*100;
 					break;
 				case AB_DUPLELIGHT_MELEE:
-					skillratio +=  100 + 10 * skill_lv;
+					skillratio += 10 * skill_lv;
 					break;
 			}
 
@@ -2530,13 +2530,17 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						skillratio += 100 +100*skill_lv +100*(skill_lv/2);
 						break;
 					case AB_JUDEX:
-						skillratio += ((skill_lv < 5)?280 + 20 * skill_lv:400) * (status_get_lv(src) / 100); // Possible RE-Formula
+						skillratio += ((skill_lv < 5)?180 + 20 * skill_lv:300); // Possible RE-Formula
+						if( status_get_lv(src) >= 100 )
+							skillratio = skillratio * status_get_lv(src) / 100;
 						break;
 					case AB_ADORAMUS:
-						skillratio += (500 + 100 * skill_lv) * (status_get_lv(src) / 100); //Possible RE-Formula
+						skillratio += 400 + 100 * skill_lv; //Possible RE-Formula
+						if( status_get_lv(src) >= 100 )
+							skillratio = skillratio * status_get_lv(src) / 100;
 						break;
 					case AB_DUPLELIGHT_MAGIC:
-						skillratio += 200 + 20 * skill_lv;
+						skillratio += 100 + 20 * skill_lv;
 						break;
 				}
 
