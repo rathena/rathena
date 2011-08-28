@@ -1,8 +1,8 @@
 Date	Added
 
 2011/08/27
+	* Added a null pointer check to AB_CLEMENTIA and AB_CANTO. [Inkfish]
 	* Fixed skillratio of Archbishop skills is 100% higher than it's supposed be.(it's initialized to be 100% not 0) [Inkfish]
-2011/08/27
 	* Reverted unnecessary signature change of clif_skill_fail from r14941. [Gepard]
 2011/08/26
 	* Rev. 14941 Renewal changes in renewal branch? Am I dreaming? [L0ne_W0lf]

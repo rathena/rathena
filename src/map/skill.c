@@ -295,7 +295,7 @@ int skill_calc_heal(struct block_list *src, struct block_list *target, int skill
 			return battle_config.max_heal;
 	
 		// iRO Wiki states as of 2011/08/22:
-		// heal = ( [(Base Level + INT) / 5] × 30 ) × (Heal Level / 10) × (1 + (Modifiers / 100)) + MATK 
+		// heal = ( [(Base Level + INT) / 5] ?30 ) ?(Heal Level / 10) ?(1 + (Modifiers / 100)) + MATK 
 		// fixme: Does not match up with iRO's heal, level 1 or level 10
 		// with 219 mak + HP_MEDITATO, level 1 = 361; level 10 = 1839
 		if( skill_id == AB_HIGHNESSHEAL ) {
@@ -5753,12 +5753,12 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case AB_CLEMENTIA:
 	case AB_CANTO:
 		if( sd == NULL || sd->status.party_id == 0 || (flag & 1) ) {
-			int lv = 0;
+			int lv = 1;
 			switch(skillid) {
-				case AB_CLEMENTIA: lv = pc_checkskill(sd,AL_BLESSING); break;
-				case AB_CANTO:     lv = pc_checkskill(sd,AL_INCAGI);   break;
+				case AB_CLEMENTIA:	if( sd ) lv = pc_checkskill(sd,AL_BLESSING);	break;
+				case AB_CANTO:		if( sd ) lv = pc_checkskill(sd,AL_INCAGI);		break;
 			}
-			clif_skill_nodamage(bl, bl, skillid, skilllv, sc_start(bl,type,100,(lv < 1)? 1: lv,skill_get_time(skillid,skilllv)));
+			clif_skill_nodamage(bl, bl, skillid, skilllv, sc_start(bl,type,100,lv,skill_get_time(skillid,skilllv)));
 		}
 		else if( sd )
 			party_foreachsamemap(skill_area_sub, sd, skill_get_splash(skillid, skilllv), src, skillid, skilllv, tick, flag|BCT_PARTY|1, skill_castend_nodamage_id);
