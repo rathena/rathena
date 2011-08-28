@@ -1,5 +1,9 @@
 Date	Added
 
+2011/08/28
+	* Rev. 14948 Fixed Blessing crashing the server when used on monsters, monster weapon attack mechanics are currently unknown. [L0ne_W0lf]
+	* Updated conditions for UNT_EPICLESIS and AB_ADORAMUS (two cases of || to &&.)
+	
 2011/08/27
 	* Fixed AB_ADORAMUS's partner and item check. [Inkfish]
 	* Added a null pointer check to AB_CLEMENTIA and AB_CANTO. [Inkfish]

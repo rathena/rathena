@@ -8017,7 +8017,7 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 
 		case UNT_EPICLESIS:
 			sg->val2--; // track when units should be healed. Initial tick heals immediately.
-			if ( !battle_check_undead(tstatus->race, tstatus->def_ele) || bl->type == BL_PC)
+			if ( !battle_check_undead(tstatus->race, tstatus->def_ele) && bl->type == BL_PC)
 			{ //Effect only players who are not undead element.
 				
 				//Unknown if any status effects should prevent Epiclesis.
@@ -8429,7 +8429,7 @@ int skill_check_pc_partner (struct map_session_data *sd, short skill_id, short* 
 	memset (p_sd, 0, sizeof(p_sd));
 	i = map_foreachinrange(skill_check_condition_char_sub, &sd->bl, range, BL_PC, &sd->bl, &c, &p_sd, skill_id);
 
-	if (skill_id != PR_BENEDICTIO || skill_id != AB_ADORAMUS) //Apply the average lv to encore skills.
+	if (skill_id != PR_BENEDICTIO && skill_id != AB_ADORAMUS) //Apply the average lv to encore skills.
 		*skill_lv = (i+(*skill_lv))/(c+1); //I know c should be one, but this shows how it could be used for the average of n partners.
 	return c;
 }

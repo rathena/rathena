@@ -3015,19 +3015,19 @@ void status_calc_bl_main(struct block_list *bl, enum scb_flag flag)
 
 	if(flag&SCB_MATK) {
 		int wlv = 1, wmatk = 0;
-		short index = sd->equip_index[EQI_HAND_R];
 
 		//New matk
 		status->matk_min = status_base_matk_min(status);
 		status->matk_max = status_base_matk_max(status);
 
+		// iRO Wiki states as of 2011/02/24:
+		// Status MATK = floor(Base Level/4 + INT + INT/2 + DEX/5 + LUK/3) 
+		status->status_matk = status_get_lv(bl)/4 + status->int_ + status->int_/2 + status->dex/5 + status->luk/3;
+
 		if( sd )
 		{
-			// iRO Wiki states as of 2011/02/24:
-			// Status MATK = floor(Base Level/4 + INT + INT/2 + DEX/5 + LUK/3) 
-			status->status_matk = status_get_lv(bl)/4 + status->int_ + status->int_/2 + status->dex/5 + status->luk/3;
+			short index = sd->equip_index[EQI_HAND_R];
 			wmatk = sd->weapon_matk + sd->battle_status.rhw.atk2 + sd->equipment_matk;
-
 			if( index >= 0 && sd->inventory_data[index] && sd->inventory_data[index]->type == IT_WEAPON )
 				wlv = sd->inventory_data[index]->wlv;
 		}
@@ -7867,7 +7867,7 @@ static bool status_readdb_job1(char* fields[], int columns, int current)
 	{
 		aspd_base[idx][i] = atoi(fields[i+5]);
 	}
-	shield_aspd_base[idx] = atoi(fields[29]); // Won't take 5+MAX_WEAPON_TYPE+1
+	shield_aspd_base[idx] = atoi(fields[MAX_WEAPON_TYPE+5]);
 	return true;
 }
 
