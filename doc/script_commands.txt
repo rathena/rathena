@@ -4017,7 +4017,7 @@ wall), the character is pushed only up to the obstacle.
 
 This command will give a specific amount of specified items to the target 
 character. If the character is not online, nothing will happen.
-If <character ID> is not specified, items will be created in the invoking 
+If <account ID> is not specified, items will be created in the invoking 
 character inventory instead.
 
 In the first and most commonly used version of this command, items are 
@@ -4059,7 +4059,7 @@ quite a few item scripts. For more examples check just about any official script
 *getitem2 "<Item name>",<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<account ID>};
 
 This command will give an amount of specified items to the invoking character. 
-If an optional character ID is specified, and that character is currently 
+If an optional account ID is specified, and the target character is currently 
 online, items will be created in their inventory instead. If they are not 
 online, nothing will happen. It works essentially the same as 'getitem' (it even 
 works for negative ID numbers the same way, which is kinda silly) but is a lot 
