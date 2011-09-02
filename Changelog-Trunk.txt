@@ -1,5 +1,7 @@
 Date	Added
 
+2011/09/02
+	* Fixed @reloadmobdb wiping out monster spawn information. [Skotlex]
 2011/08/30
 	* Corrected SQL saving so that the server won't update the 'saved' data if there is an SQL error. It should fix possible dupes and other data synch issues when the SQL server is temporarily down during save. [Skotlex]
 2011/08/23

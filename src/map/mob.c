@@ -3639,6 +3639,9 @@ static bool mob_parse_dbrow(char** str)
 	// Finally insert monster's data into the database.
 	if (mob_db_data[class_] == NULL)
 		mob_db_data[class_] = (struct mob_db*)aCalloc(1, sizeof(struct mob_db));
+	else
+		//Copy over spawn data
+		memcpy(&db->spawn, mob_db_data[class_]->spawn, sizeof(db->spawn));
 
 	memcpy(mob_db_data[class_], db, sizeof(struct mob_db));
 	return true;
