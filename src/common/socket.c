@@ -1353,6 +1353,12 @@ void send_shortlist_add_fd(int fd)
 	if( (send_shortlist_set[i]>>bit)&1 )
 		return;// already in the list
 
+	if( send_shortlist_count >= ARRAYLENGTH(send_shortlist_array) )
+	{
+		ShowDebug("send_shortlist_add_fd: shortlist is full, ignoring... (fd=%d shortlist.count=%d shortlist.length=%d)\n", fd, send_shortlist_count, ARRAYLENGTH(send_shortlist_array));
+		return;
+	}
+
 	// set the bit
 	send_shortlist_set[i] |= 1<<bit;
 	// Add to the end of the shortlist array.
@@ -1367,7 +1373,14 @@ void send_shortlist_do_sends()
 	while( i < send_shortlist_count )
 	{
 		int fd = send_shortlist_array[i];
+		int idx = fd/32;
+		int bit = fd%32;
 
+		if( ((send_shortlist_set[idx]>>bit)&1) == 0 )
+		{
+			ShowDebug("send_shortlist_do_sends: fd is not set, why is it in the shortlist? (fd=%d)\n", fd);
+		}
+		else
 		// If this session still exists, perform send operations on it and
 		// check for the eof state.
 		if( session[fd] )
@@ -1391,8 +1404,10 @@ void send_shortlist_do_sends()
 		}
 
 		// Remove fd from shortlist, move the last fd to the current position
-		send_shortlist_array[i] = send_shortlist_array[--send_shortlist_count];
-		send_shortlist_set[fd/32]&=~(1<<(fd%32));
+		--send_shortlist_count;
+		send_shortlist_array[i] = send_shortlist_array[send_shortlist_count];
+		send_shortlist_array[send_shortlist_count] = 0;
+		send_shortlist_set[idx]&=~(1<<bit);
 	}
 }
 #endif

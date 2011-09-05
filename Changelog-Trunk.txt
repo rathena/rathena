@@ -1,5 +1,7 @@
 Date	Added
 
+2011/09/05
+	* Add consistency checks to the shortlist. [FlavioJS]
 2011/09/02
 	* Fixed @reloadmobdb wiping out monster spawn information. [Skotlex]
 2011/08/30
