@@ -2,6 +2,7 @@ Date	Added
 
 2011/09/05
 	* Add consistency checks to the shortlist. [FlavioJS]
+	* Restrict intif_quest_save to sql only. txt char-server doesn't support the packet and disconnects the map-server.
 2011/09/02
 	* Fixed @reloadmobdb wiping out monster spawn information. [Skotlex]
 2011/08/30

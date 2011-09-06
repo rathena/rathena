@@ -311,8 +311,10 @@ int chrif_save(struct map_session_data *sd, int flag)
 		merc_save(sd->hd);
 	if( sd->md && mercenary_get_lifetime(sd->md) > 0 )
 		mercenary_save(sd->md);
+#ifndef TXT_ONLY
 	if( sd->save_quest )
 		intif_quest_save(sd);
+#endif
 
 	return 0;
 }
