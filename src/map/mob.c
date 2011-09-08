@@ -3964,6 +3964,21 @@ static bool mob_parse_row_mobskilldb(char** str, int columns, int current)
 	static const struct {
 		char str[32];
 		enum MobSkillState id;
+	} state[] = {
+		{	"any",		MSS_ANY		}, //All states except Dead
+		{	"idle",		MSS_IDLE	},
+		{	"walk",		MSS_WALK	},
+		{	"loot",		MSS_LOOT	},
+		{	"dead",		MSS_DEAD	},
+		{	"attack",	MSS_BERSERK	}, //Retaliating attack
+		{	"angry",	MSS_ANGRY	}, //Preemptive attack (aggressive mobs)
+		{	"chase",	MSS_RUSH	}, //Chase escaping target
+		{	"follow",	MSS_FOLLOW	}, //Preemptive chase (aggressive mobs)
+		{	"anytarget",MSS_ANYTARGET	}, //Berserk+Angry+Rush+Follow
+	};
+	static const struct {
+		char str[32];
+		int id;
 	} cond1[] = {
 		{ "always",            MSC_ALWAYS            },
 		{ "myhpltmaxrate",     MSC_MYHPLTMAXRATE     },
@@ -4001,17 +4016,6 @@ static bool mob_parse_row_mobskilldb(char** str, int columns, int current)
 		{	"blind",		SC_BLIND		},
 		{	"hiding",		SC_HIDING		},
 		{	"sight",		SC_SIGHT		},
-	}, state[] = {
-		{	"any",		MSS_ANY		}, //All states except Dead
-		{	"idle",		MSS_IDLE	},
-		{	"walk",		MSS_WALK	},
-		{	"loot",		MSS_LOOT	},
-		{	"dead",		MSS_DEAD	},
-		{	"attack",	MSS_BERSERK	}, //Retaliating attack
-		{	"angry",	MSS_ANGRY	}, //Preemptive attack (aggressive mobs)
-		{	"chase",	MSS_RUSH	}, //Chase escaping target
-		{	"follow",	MSS_FOLLOW	}, //Preemptive chase (aggressive mobs)
-		{	"anytarget",MSS_ANYTARGET	}, //Berserk+Angry+Rush+Follow
 	}, target[] = {
 		{	"target",	MST_TARGET	},
 		{	"randomtarget",	MST_RANDOM	},

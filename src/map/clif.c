@@ -11160,7 +11160,7 @@ void clif_parse_GuildChangeEmblem(int fd,struct map_session_data *sd)
 		return;
 	}
 
-	guild_change_emblem(sd, emblem_len, emblem);
+	guild_change_emblem(sd, emblem_len, (const char*)emblem);
 }
 
 /*==========================================

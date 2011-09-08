@@ -245,7 +245,7 @@ char* _strtok_r(char *s1, const char *s2, char **lasts)
    If no '\0' terminator is found in that many characters, return MAXLEN.  */
 size_t strnlen (const char* string, size_t maxlen)
 {
-  const char* end = memchr (string, '\0', maxlen);
+  const char* end = (const char*)memchr(string, '\0', maxlen);
   return end ? (size_t) (end - string) : maxlen;
 }
 #endif
@@ -980,7 +980,7 @@ bool sv_readdb(const char* directory, const char* filename, char delim, int minc
 
 	// allocate enough memory for the maximum requested amount of columns plus the reserved one
 	fields_length = maxcols+1;
-	fields = aMalloc(fields_length*sizeof(char*));
+	fields = (char**)aMalloc(fields_length*sizeof(char*));
 
 	// process rows one by one
 	while( fgets(line, sizeof(line), fp) )

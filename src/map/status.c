@@ -2723,7 +2723,7 @@ void status_calc_regen_rate(struct block_list *bl, struct regen_data *regen, str
 
 /// Recalculates parts of an object's battle status according to the specified flags.
 /// @param flag bitfield of values from enum scb_flag
-void status_calc_bl_main(struct block_list *bl, enum scb_flag flag)
+void status_calc_bl_main(struct block_list *bl, /*enum scb_flag*/int flag)
 {
 	const struct status_data *b_status = status_get_base_status(bl);
 	struct status_data *status = status_get_status_data(bl);

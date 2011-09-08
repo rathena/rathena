@@ -436,7 +436,7 @@ int search_character_online(int aid, int cid)
 {
 	//Look for online character.
 	struct online_char_data* character;
-	character = idb_get(online_char_db, aid);
+	character = (struct online_char_data*)idb_get(online_char_db, aid);
 	if(character &&
 		character->char_id == cid &&
 		character->server > -1) 
@@ -2208,7 +2208,7 @@ int parse_fromlogin(int fd)
 				memcpy(sd->email, RFIFOP(fd,6), 40);
 				sd->expiration_time = (time_t)RFIFOL(fd,46);
 				sd->gmlevel = RFIFOB(fd,50);
-				safestrncpy(sd->birthdate, RFIFOP(fd,51), sizeof(sd->birthdate));
+				safestrncpy(sd->birthdate, (const char*)RFIFOP(fd,51), sizeof(sd->birthdate));
 
 				// continued from char_auth_ok...
 				if( max_connect_user && count_users() >= max_connect_user && sd->gmlevel < gm_allow_level )

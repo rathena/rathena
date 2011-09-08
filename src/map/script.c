@@ -901,7 +901,7 @@ int add_word(const char* p)
 		disp_error_message("script:add_word: invalid word. A word consists of undercores and/or alfanumeric characters, and valid variable prefixes/postfixes.", p);
 
 	// Duplicate the word
-	word = aMalloc(len+1);
+	word = (char*)aMalloc(len+1);
 	memcpy(word, p, len);
 	word[len] = 0;
 	

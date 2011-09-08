@@ -88,7 +88,12 @@ sigfunc *compat_signal(int signo, sigfunc *func)
  */
 #ifdef CYGWIN
 	#define FOPEN_ freopen
+	#ifdef __cplusplus
+	extern "C" void cygwin_stackdump();
+	#else
 	extern void cygwin_stackdump();
+	#endif
+	
 #else
 	#define FOPEN_(fn,m,s) fopen(fn,m)
 #endif
@@ -186,7 +191,7 @@ int sig_final ()
  */
 int sig_init ()
 {
-	void (*func) = sig_dump;
+	void (*func)(int) = sig_dump;
 #ifdef CYGWIN	// test if dumper is enabled
 	char *buf = getenv ("CYGWIN");
 	if (buf && strstr(buf, "error_start") != NULL)

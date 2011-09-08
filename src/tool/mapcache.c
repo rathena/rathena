@@ -246,7 +246,7 @@ void process_args(int argc, char *argv[])
 
 }
 
-int do_init(int argc, char *argv[])
+int do_init(int argc, char** argv)
 {
 	FILE *list;
 	char line[1024];

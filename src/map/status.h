@@ -1293,7 +1293,7 @@ int status_change_timer_sub(struct block_list* bl, va_list ap);
 int status_change_clear(struct block_list* bl, int type);
 int status_change_clear_buffs(struct block_list* bl, int type);
 
-#define status_calc_bl(bl, flag) status_calc_bl_(bl, flag, false)
+#define status_calc_bl(bl, flag) status_calc_bl_(bl, (enum scb_flag)(flag), false)
 #define status_calc_mob(md, first) status_calc_bl_(&(md)->bl, SCB_ALL, first)
 #define status_calc_pet(pd, first) status_calc_bl_(&(pd)->bl, SCB_ALL, first)
 #define status_calc_pc(sd, first) status_calc_bl_(&(sd)->bl, SCB_ALL, first)

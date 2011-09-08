@@ -2340,7 +2340,7 @@ const char* npc_parse_duplicate(char* w1, char* w2, char* w3, char* w4, const ch
 	nd->speed = 200;
 	nd->src_id = src_id;
 	nd->bl.type = BL_NPC;
-	nd->subtype = type;
+	nd->subtype = (enum npc_subtype)type;
 	switch( type )
 	{
 	case SCRIPT:
