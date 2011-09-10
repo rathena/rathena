@@ -6093,15 +6093,15 @@
 //13925,Year_Of_Mouse_Scroll,... GoodLuck Scroll,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 13926,Crusader_Card_Box,Crusader Card Box,18,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 4371,1; getitem 4311,1; getitem 4319,1; getitem 4331,1; },{},{}
 13927,Alchemist_Card_Box,Alchemist Card Box,18,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 4281,1; getitem 4233,1; getitem 4343,1; getitem 4186,1; getitem 4036,1; },{},{}
-13928,Rogue_Card_Box,Bard Dancer Card Box,18,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 4039,1; getitem 4210,1; getitem 4257,1; getitem 4230,1; getitem 4348,1; },{},{}
-13929,Bard_Dancer_Card_Box,Rogue Card Box,18,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 4297,1; getitem 4234,1; getitem 4178,1; getitem 4381,1; getitem 4252,1; },{},{}
+13928,Rogue_Card_Box,Rogue Card Box,18,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 4039,1; getitem 4210,1; getitem 4257,1; getitem 4230,1; getitem 4348,1; },{},{}
+13929,Bard_Dancer_Card_Box,Bard Dancer Card Box,18,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 4297,1; getitem 4234,1; getitem 4178,1; getitem 4381,1; getitem 4252,1; },{},{}
 13930,Sage_Card_Box,Sage card box,18,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 4382,1; getitem 4258,1; getitem 4325,1; getitem 4208,1; getitem 4327,1; },{},{}
 13931,Monk_Card_Box,Monk Card Box,18,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 4312,1; getitem 4332,1; getitem 4185,1; getitem 4293,1; },{},{}
 13932,Sylph_Box,Sylph Box,18,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 4345,4; },{},{}
 13933,Undine_Box,Undine Box,18,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 4350,4; },{},{}
 13934,Salamander_Box,Salamander Box,18,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 4380,4; },{},{}
 13935,Soul_Box,Soul Box,18,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 4388,4; },{},{}
-13936,Noum_Bpx,Gnome Box,18,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 4335,4; },{},{}
+13936,Noum_Box,Gnome Box,18,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 4335,4; },{},{}
 13937,Robo_Eye_Box,Robo Eye Box,18,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 5325,1; },{},{}
 13938,Twin_Ribbon_Box,Maiden's Twin Ribbon Box,18,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 5187,1; },{},{}
 //13939,Diadem_Box,Diadem Box,18,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 5313,1; },{},{}
