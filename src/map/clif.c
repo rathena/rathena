@@ -13865,11 +13865,14 @@ void clif_rental_time(int fd, int nameid, int seconds)
 	WFIFOSET(fd,8);
 }
 
-void clif_rental_expired(int fd, int nameid)
+
+/// Deletes a rental item from client's inventory (ZC_CASH_ITEM_DELETE).
+/// 0299 <index>.W <nameid>.W
+void clif_rental_expired(int fd, int index, int nameid)
 { // '<ItemName>' item has been deleted from the Inventory
 	WFIFOHEAD(fd,6);
 	WFIFOW(fd,0) = 0x0299;
-	WFIFOW(fd,2) = 0;
+	WFIFOW(fd,2) = index+2;
 	WFIFOW(fd,4) = nameid;
 	WFIFOSET(fd,6);
 }

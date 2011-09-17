@@ -1,7 +1,9 @@
 Date	Added
 
 2011/09/17
-	* Fixed missing edits for cash shop support for clients 2007-07-10aSakexe and older (follow up to r14932).
+	* Rental items no longer expire in cart and storage. The packet does not support this and rentals cannot be put in on official either (since r14082, related r14083). [Ai4rei]
+	- Corrected packet 0x299 (ZC_CASH_ITEM_DELETE) missing inventory index field (since r13370).
+	* Fixed missing edits for cash shop support for clients 2007-07-10aSakexe and older (follow up to r14932). [Ai4rei]
 2011/09/08
 	* Fix C++ compilation issues. [FlavioJS]
 2011/09/05

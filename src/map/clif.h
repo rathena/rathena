@@ -585,7 +585,7 @@ void clif_mercenary_updatestatus(struct map_session_data *sd, int type);
 
 // RENTAL SYSTEM
 void clif_rental_time(int fd, int nameid, int seconds);
-void clif_rental_expired(int fd, int nameid);
+void clif_rental_expired(int fd, int index, int nameid);
 
 // BOOK READING
 void clif_readbook(int fd, int book_id, int page);

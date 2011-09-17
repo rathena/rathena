@@ -335,55 +335,13 @@ void pc_inventory_rentals(struct map_session_data *sd)
 
 		if( sd->status.inventory[i].expire_time <= time(NULL) )
 		{
-			clif_rental_expired(sd->fd, sd->status.inventory[i].nameid);
-			pc_delitem(sd, i, sd->status.inventory[i].amount, 0, 0);
+			clif_rental_expired(sd->fd, i, sd->status.inventory[i].nameid);
+			pc_delitem(sd, i, sd->status.inventory[i].amount, 1, 0);
 		}
 		else
 		{
 			expire_tick = (unsigned int)(sd->status.inventory[i].expire_time - time(NULL)) * 1000;
 			clif_rental_time(sd->fd, sd->status.inventory[i].nameid, (int)(expire_tick / 1000));
-			next_tick = min(expire_tick, next_tick);
-			c++;
-		}
-	}
-
-	for( i = 0; i < MAX_CART; i++ )
-	{ // Check for Rentals on Cart
-		if( sd->status.cart[i].nameid == 0 )
-			continue; // Nothing here
-		if( sd->status.cart[i].expire_time == 0 )
-			continue;
-
-		if( sd->status.cart[i].expire_time <= time(NULL) )
-		{
-			clif_rental_expired(sd->fd, sd->status.cart[i].nameid);
-			pc_cart_delitem(sd, i, 1, 0);
-		}
-		else
-		{
-			expire_tick = (unsigned int)(sd->status.cart[i].expire_time - time(NULL)) * 1000;
-			clif_rental_time(sd->fd, sd->status.cart[i].nameid, (int)(expire_tick / 1000));
-			next_tick = min(expire_tick, next_tick);
-			c++;
-		}
-	}
-
-	for( i = 0; i < MAX_STORAGE; i++ )
-	{ // Check for Rentals on Storage
-		if( sd->status.storage.items[i].nameid == 0 )
-			continue;
-		if( sd->status.storage.items[i].expire_time == 0 )
-			continue;
-
-		if( sd->status.storage.items[i].expire_time <= time(NULL) )
-		{
-			clif_rental_expired(sd->fd, sd->status.storage.items[i].nameid);
-			storage_delitem(sd, i, 1);
-		}
-		else
-		{
-			expire_tick = (unsigned int)(sd->status.storage.items[i].expire_time - time(NULL)) * 1000;
-			clif_rental_time(sd->fd, sd->status.storage.items[i].nameid, (int)(expire_tick / 1000));
 			next_tick = min(expire_tick, next_tick);
 			c++;
 		}
