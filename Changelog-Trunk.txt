@@ -1,5 +1,7 @@
 Date	Added
 
+2011/09/17
+	* Fixed missing edits for cash shop support for clients 2007-07-10aSakexe and older (follow up to r14932).
 2011/09/08
 	* Fix C++ compilation issues. [FlavioJS]
 2011/09/05
