@@ -6408,7 +6408,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, int skillid, int sk
 			}
 		} else {
 			int i = skilllv%11 - 1;
-			struct item_data *item = itemdb_search(i);
+			struct item_data *item;
 			i = skill_db[skillid].itemid[i];
 			item = itemdb_search(i);
 			potion_flag = 1;

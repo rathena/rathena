@@ -1,5 +1,7 @@
 Date	Added
 
+2011/09/18
+	* Fixed CR_SLIMPITCHER passing item requirement index to itemdb_search when used by a monster (bugreport:5021, since r6791). [Ai4rei]
 2011/09/17
 	* Rental items no longer expire in cart and storage. The packet does not support this and rentals cannot be put in on official either (since r14082, related r14083). [Ai4rei]
 	- Corrected packet 0x299 (ZC_CASH_ITEM_DELETE) missing inventory index field (since r13370).
