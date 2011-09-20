@@ -2680,7 +2680,8 @@ OnInit:
 
 OnEnable:
 	enablenpc "Arena#2";
-	disablenpc "Arena#1::OnReset";
+	donpcevent "Arena#1::OnReset";
+	disablenpc "Arena#1";
 	set .MyMobs,24;
 	monster "job_sage",111,102,"Numerical Value",1063,1,"Arena#2::OnMyMobDead";
 	monster "job_sage",111,102,"Physics",1063,1,"Arena#2::OnMyMobDead";

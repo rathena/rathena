@@ -1904,7 +1904,7 @@ prt_castle,76,165,6	script	Minister#tu	55,{
 //=================================================Range NPC====================================================
 prt_castle,94,150,4	script	#sound_tu	139,10,10,{
 OnTouch_:
-	if(tu_archer02 != 6) {
+	if(tu_archer02 == 6) {
 		mes "[Minister]";
 		mes "Contact the";
 		mes "Prontera Church.";
