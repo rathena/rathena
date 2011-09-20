@@ -720,13 +720,17 @@ int pc_isequip(struct map_session_data *sd,int n)
 		return 0;
 	if(item->sex != 2 && sd->status.sex != item->sex)
 		return 0;
-	if(map[sd->bl.m].flag.pvp && ((item->flag.no_equip&1) || !pc_isAllowedCardOn(sd,item->slot,n,1)))
+	if(!map_flag_vs(sd->bl.m) && ((item->flag.no_equip&1) || !pc_isAllowedCardOn(sd,item->slot,n,1)))
 		return 0;
-	if(map_flag_gvg(sd->bl.m) && ((item->flag.no_equip&2) || !pc_isAllowedCardOn(sd,item->slot,n,2)))
-		return 0; 
+	if(map[sd->bl.m].flag.pvp && ((item->flag.no_equip&2) || !pc_isAllowedCardOn(sd,item->slot,n,2)))
+		return 0;
+	if(map_flag_gvg(sd->bl.m) && ((item->flag.no_equip&4) || !pc_isAllowedCardOn(sd,item->slot,n,4)))
+		return 0;
+	if(map[sd->bl.m].flag.battleground && ((item->flag.no_equip&8) || !pc_isAllowedCardOn(sd,item->slot,n,8)))
+		return 0;
 	if(map[sd->bl.m].flag.restricted)
 	{
-		int flag =map[sd->bl.m].zone;
+		int flag =8*map[sd->bl.m].zone;
 		if (item->flag.no_equip&flag || !pc_isAllowedCardOn(sd,item->slot,n,flag))
 			return 0;
 	}
@@ -3648,6 +3652,11 @@ int pc_isUseitem(struct map_session_data *sd,int n)
 			if( nameid == 12243 && sd->md->db->lv < 80 )
 				return 0;
 			break;
+
+		case 12213: //Neuralizer
+			if( !map[sd->bl.m].flag.reset )
+				return 0;
+			break;
 	}
 
 	if( nameid >= 12153 && nameid <= 12182 && sd->md != NULL )
@@ -3655,9 +3664,11 @@ int pc_isUseitem(struct map_session_data *sd,int n)
 
 	//added item_noequip.txt items check by Maya&[Lupus]
 	if (
-		(map[sd->bl.m].flag.pvp && item->flag.no_equip&1) || // PVP
-		(map_flag_gvg(sd->bl.m) && item->flag.no_equip&2) || // GVG
-		(map[sd->bl.m].flag.restricted && item->flag.no_equip&map[sd->bl.m].zone) // Zone restriction
+		(!map_flag_vs(sd->bl.m) && item->flag.no_equip&1) || // Normal
+		(map[sd->bl.m].flag.pvp && item->flag.no_equip&2) || // PVP
+		(map_flag_gvg(sd->bl.m) && item->flag.no_equip&4) || // GVG
+		(map[sd->bl.m].flag.battleground && item->flag.no_equip&8) || // Battleground
+		(map[sd->bl.m].flag.restricted && item->flag.no_equip&(8*map[sd->bl.m].zone)) // Zone restriction
 	)
 		return 0;
 
@@ -7435,9 +7446,11 @@ int pc_checkitem(struct map_session_data *sd)
 		if( it )
 		{ // check for forbiden items.
 			int flag =
-					(map[sd->bl.m].flag.restricted?map[sd->bl.m].zone:0)
-					| (map[sd->bl.m].flag.pvp?1:0)
-					| (map_flag_gvg(sd->bl.m)?2:0);
+					(map[sd->bl.m].flag.restricted?(8*map[sd->bl.m].zone):0)
+					| (!map_flag_vs(sd->bl.m)?1:0)
+					| (map[sd->bl.m].flag.pvp?2:0)
+					| (map_flag_gvg(sd->bl.m)?4:0)
+					| (map[sd->bl.m].flag.battleground?8:0);
 			if( flag && (it->flag.no_equip&flag || !pc_isAllowedCardOn(sd,it->slot,i,flag)) )
 			{
 				pc_unequipitem(sd, i, 2);

@@ -4416,6 +4416,8 @@ ACMD_FUNC(mapinfo)
 		strcat(atcmd_output, "NoIcewall | ");
 	if (map[m_id].flag.allowks)
 		strcat(atcmd_output, "AllowKS | ");
+	if (map[m_id].flag.reset)
+		strcat(atcmd_output, "Reset | ");
 	clif_displaymessage(fd, atcmd_output);
 
 	strcpy(atcmd_output,"Other Flags: ");

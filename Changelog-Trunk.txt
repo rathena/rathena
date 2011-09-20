@@ -1,6 +1,11 @@
 Date	Added
 
 2011/09/18
+	* 14961 Applied map flag update patch provided by Daegaladh. Will mess with custom restricted items.
+	- Adds a reset mapflag which is checked when using the Neuralizer.
+	- Syncronizes the item_noequip_db bitmasks with with skill_nocast_db.
+	- Updates mapflags, and both skills and items which are restricted.
+2011/09/18
 	* Fixed CR_SLIMPITCHER passing item requirement index to itemdb_search when used by a monster (bugreport:5021, since r6791). [Ai4rei]
 2011/09/17
 	* Rental items no longer expire in cart and storage. The packet does not support this and rentals cannot be put in on official either (since r14082, related r14083). [Ai4rei]
