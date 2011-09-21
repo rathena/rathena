@@ -22,7 +22,7 @@
 // 8,6 = Endure cannot be used in PvP and GvG maps (2+4)
 
 //PVP
-1013,2048	//BS_GREED
+1013,2	//BS_GREED
 
 //GVG
 26,4	//AL_TELEPORT
