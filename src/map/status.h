@@ -11,7 +11,7 @@ struct homun_data;
 struct status_change;
 
 //Use this to refer the max refinery level [Skotlex]
-#define MAX_REFINE 10
+#define MAX_REFINE 20
 #define MAX_REFINE_BONUS 5
 
 extern unsigned long StatusChangeFlagTable[];
@@ -330,7 +330,7 @@ typedef enum sc_type {
 	SC_FOOD_INT_CASH,
 	SC_FOOD_LUK_CASH,
 	//SC_MOVHASTE_INFINITY,
-	SC_PARTYFLEE = 310 ,
+	SC_PARTYFLEE = 310,
 	//SC_ENDURE_MDEF, //311
 
 	// Third Jobs - Maintaining SI order for SCs.
@@ -933,6 +933,62 @@ enum si_type {
 	SI_WIND_INSIGNIA = 569,
 	SI_EARTH_INSIGNIA = 570,
 	SI_EQUIPED_FLOOR = 571,
+	SI_GUARDIAN_RECALL = 572,
+	SI_MORA_BUFF = 573,
+	SI_REUSE_LIMIT_G = 574,
+	SI_REUSE_LIMIT_H = 575,
+	SI_NEEDLE_OF_PARALYZE = 576,
+	SI_PAIN_KILLER = 577,
+	SI_G_LIFEPOTION = 578,
+	SI_VITALIZE_POTION = 579,
+	SI_LIGHT_OF_REGENE = 580,
+	SI_OVERED_BOOST = 581,
+	SI_SILENT_BREEZE = 582,
+	SI_ODINS_POWER = 583,
+	SI_STYLE_CHANGE = 584,
+	SI_SONIC_CLAW_POSTDELAY = 585,
+//--586-595 Unused
+	SI_SILVERVEIN_RUSH_POSTDELAY = 596,
+	SI_MIDNIGHT_FRENZY_POSTDELAY = 597,
+	SI_GOLDENE_FERSE = 598,
+	SI_ANGRIFFS_MODUS = 599,
+	SI_TINDER_BREAKER = 600,
+	SI_TINDER_BREAKER_POSTDELAY = 601,
+	SI_CBC = 602,
+	SI_CBC_POSTDELAY = 603,
+	SI_EQC = 604,
+	SI_MAGMA_FLOW = 605,
+	SI_GRANITIC_ARMOR = 606,
+	SI_PYROCLASTIC = 607,
+	SI_VOLCANIC_ASH = 608,
+	SI_SPIRITS_SAVEINFO1 = 609,
+	SI_SPIRITS_SAVEINFO2 = 610,
+	SI_MAGIC_CANDY = 611,
+//--612 skipped
+	SI_ALL_RIDING = 613,
+//--614 skipped
+	SI_MACRO = 615,
+	SI_MACRO_POSTDELAY = 616,
+	SI_BEER_BOTTLE_CAP = 617,
+	SI_OVERLAPEXPUP = 618,
+	SI_PC_IZ_DUN05 = 619,
+	SI_CRUSHSTRIKE = 620,
+	SI_MONSTER_TRANSFORM = 621,
+	SI_SIT = 622,
+	SI_ONAIR = 623,
+	SI_MTF_ASPD = 624,
+	SI_MTF_RANGEATK = 625,
+	SI_MTF_MATK = 626,
+	SI_MTF_MLEATKED = 627,
+	SI_MTF_CRIDAMAGE = 628,
+	SI_REUSE_LIMIT_MTF = 629,
+	SI_MACRO_PERMIT = 630,
+	SI_MACRO_PLAY = 631,
+	SI_SKF_CAST = 632,
+	SI_SKF_ASPD = 633,
+	SI_SKF_ATK = 634,
+	SI_SKF_MATK = 635,
+	SI_REWARD_PLUSONLYJOBEXP = 636,
 */
 };
 
@@ -1133,20 +1189,18 @@ struct status_data {
 		max_hp, max_sp;
 	unsigned short
 		str, agi, vit, int_, dex, luk,
-		batk,
+		batk, equipment_atk,
 		matk_min, matk_max, status_matk,
 		speed,
 		amotion, adelay, dmotion,
 		mode;
 	short 
 		hit, flee, cri, flee2,
-		def2, mdef2,
+		def, mdef, def2, mdef2,
 		aspd_rate;
 	unsigned char
 		def_ele, ele_lv,
 		size, race;
-	signed char
-		def, mdef;
 	struct weapon_atk rhw, lhw; //Right Hand/Left Hand Weapon.
 };
 
@@ -1259,7 +1313,7 @@ int status_get_lv(struct block_list *bl);
 #define status_get_luk(bl) status_get_status_data(bl)->luk
 #define status_get_hit(bl) status_get_status_data(bl)->hit
 #define status_get_flee(bl) status_get_status_data(bl)->flee
-signed char status_get_def(struct block_list *bl);
+signed short status_get_def(struct block_list *bl);
 #define status_get_mdef(bl) status_get_status_data(bl)->mdef
 #define status_get_flee2(bl) status_get_status_data(bl)->flee2
 #define status_get_def2(bl) status_get_status_data(bl)->def2

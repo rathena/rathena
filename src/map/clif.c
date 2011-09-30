@@ -2487,26 +2487,22 @@ int clif_updatestatus(struct map_session_data *sd,int type)
 		WFIFOL(fd,4)=sd->battle_status.amotion;
 		break;
 	case SP_ATK1:
-		WFIFOL(fd,4)=sd->battle_status.batk +sd->battle_status.rhw.atk +sd->battle_status.lhw.atk;
+		WFIFOL(fd,4)=sd->battle_status.batk;
 		break;
 	case SP_DEF1:
-		WFIFOL(fd,4)=sd->battle_status.def;
-		break;
-	case SP_MDEF1:
-		WFIFOL(fd,4)=sd->battle_status.mdef;
-		break;
-	case SP_ATK2:
-		WFIFOL(fd,4)=sd->battle_status.rhw.atk2 + sd->battle_status.lhw.atk2;
-		break;
-	case SP_DEF2:
 		WFIFOL(fd,4)=sd->battle_status.def2;
 		break;
+	case SP_MDEF1:
+		WFIFOL(fd,4)= sd->battle_status.mdef2;
+		break;
+	case SP_ATK2:
+		WFIFOL(fd,4)=sd->battle_status.rhw.atk + sd->battle_status.rhw.atk2 + sd->battle_status.equipment_atk;
+		break;
+	case SP_DEF2:
+		WFIFOL(fd,4)=sd->battle_status.def;
+		break;
 	case SP_MDEF2:
-		//negative check (in case you have something like Berserk active)
-		len = sd->battle_status.mdef2 - (sd->battle_status.vit>>1);
-		if (len < 0) len = 0;
-		WFIFOL(fd,4)= len;
-		len = 8;
+		WFIFOL(fd,4)=sd->battle_status.mdef;
 		break;
 	case SP_CRITICAL:
 		WFIFOL(fd,4)=sd->battle_status.cri/10;
@@ -2843,16 +2839,13 @@ int clif_initialstatus(struct map_session_data *sd)
 	WBUFB(buf,15)=pc_need_status_point(sd,SP_LUK,1);
 
 	WBUFW(buf,16) = sd->battle_status.batk;
-	WBUFW(buf,18) = sd->battle_status.rhw.atk2 + sd->battle_status.lhw.atk2; //atk bonus
+	WBUFW(buf,18) = sd->battle_status.rhw.atk + sd->battle_status.lhw.atk2 + sd->battle_status.equipment_atk; //atk bonus
 	WBUFW(buf,20) = sd->weapon_matk + sd->battle_status.rhw.atk2 + sd->equipment_matk;
-	WBUFW(buf,22) = sd->battle_status.matk_min;
-	WBUFW(buf,24) = sd->battle_status.def; // def
-	WBUFW(buf,26) = sd->battle_status.def2;
-	WBUFW(buf,28) = sd->battle_status.mdef; // mdef
-	fd = sd->battle_status.mdef2 - (sd->battle_status.vit>>1);
-	if (fd < 0) fd = 0; //Negative check for Frenzy'ed characters.
-	WBUFW(buf,30) = fd;
-	fd = sd->fd;
+	WBUFW(buf,22) = sd->battle_status.status_matk;
+	WBUFW(buf,24) = sd->battle_status.def2;
+	WBUFW(buf,26) = sd->battle_status.def; // def
+	WBUFW(buf,28) = sd->battle_status.mdef2;
+	WBUFW(buf,30) = sd->battle_status.mdef; // mdef
 	WBUFW(buf,32) = sd->battle_status.hit;
 	WBUFW(buf,34) = sd->battle_status.flee;
 	WBUFW(buf,36) = sd->battle_status.flee2/10;
@@ -2872,8 +2865,14 @@ int clif_initialstatus(struct map_session_data *sd)
 	clif_updatestatus(sd,SP_ATTACKRANGE);
 	clif_updatestatus(sd,SP_ASPD);
 
+	clif_updatestatus(sd,SP_ATK1);
+	clif_updatestatus(sd,SP_ATK2);
 	clif_updatestatus(sd,SP_MATK1);
 	clif_updatestatus(sd,SP_MATK2);
+	clif_updatestatus(sd,SP_DEF1);
+	clif_updatestatus(sd,SP_DEF2);
+	clif_updatestatus(sd,SP_MDEF1);
+	clif_updatestatus(sd,SP_MDEF2);
 
 	return 0;
 }

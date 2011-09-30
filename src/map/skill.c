@@ -274,6 +274,7 @@ int skill_calc_heal(struct block_list *src, struct block_list *target, int skill
 	struct map_session_data *tsd = map_id2sd(target->id);
 	struct status_change* sc;
 	struct status_data *status;
+	bool FullCalc = false;
 
 	status = status_get_status_data(src);
 
@@ -291,13 +292,14 @@ int skill_calc_heal(struct block_list *src, struct block_list *target, int skill
 		hp = (skill_lv>6)?666:skill_lv*100;
 		break;
 	default:
+		FullCalc = true; // Enables full calculation, which adds heal variance.
 		if (skill_lv >= battle_config.max_heal_lv)
 			return battle_config.max_heal;
-	
+
 		// iRO Wiki states as of 2011/08/22:
 		// heal = ( [(Base Level + INT) / 5] ?30 ) ?(Heal Level / 10) ?(1 + (Modifiers / 100)) + MATK 
 		// fixme: Does not match up with iRO's heal, level 1 or level 10
-		// with 219 mak + HP_MEDITATO, level 1 = 361; level 10 = 1839
+		// with 219 matk + HP_MEDITATO (10) (no gear), level 1 = 361; level 10 = 1839
 		if( skill_id == AB_HIGHNESSHEAL ) {
 			skill = pc_checkskill(sd,AL_HEAL);
 			if( skill < 0 )
@@ -314,47 +316,50 @@ int skill_calc_heal(struct block_list *src, struct block_list *target, int skill
 			mod += skill * 2;
 		else if( src->type == BL_HOM && (skill = merc_hom_checkskill(((TBL_HOM*)src), HLIF_BRAIN)) > 0 )
 			mod += skill * 2;
-		if( sd && (skill = pc_skillheal_bonus(sd, skill_id)) )
-			mod += skill;	
-		if( tsd && (skill = pc_skillheal2_bonus(tsd, skill_id)) )
-			mod += skill;
-
-		sc = status_get_sc(target);
-		if( sc && sc->count )
-		{
-			if( sc->data[SC_CRITICALWOUND] && heal ) // Critical Wound has no effect on offensive heal. [Inkfish]
-				mod -= sc->data[SC_CRITICALWOUND]->val2;
-			if( sc->data[SC_INCHEALRATE] && skill_id != NPC_EVILLAND && skill_id != BA_APPLEIDUN )
-				mod += sc->data[SC_INCHEALRATE]->val1; // Only affects Heal, Sanctuary and PotionPitcher.(like bHealPower) [Inkfish]
-		}
-		
-		// Adjust the HP recovered rate by adding all of the modifiers together.
-		hp = hp * mod / 100;
-	
-		// Get weapon level and weapon matk for variance calculations if it's a player.
-		//  Mobs have their own variance, we've assumed:
-		//		Weapon Level = 1
-		//		Weapom_Matk  = ?
-		// Need more information before that can be implemented.
-		if( sd )
-		{
-			int matk = 0;
-			int smatk = sd->battle_status.status_matk;
-			int ematk = sd->equipment_matk;
-			int wmatk = 0;
-			int wlv = 1;
-			int index = sd->equip_index[EQI_HAND_R];
-
-			if( index >= 0 && sd->inventory_data[index] && sd->inventory_data[index]->type == IT_WEAPON )
-				wlv = sd->inventory_data[index]->wlv;
-
-			wmatk = (int)( sd->weapon_matk + ( (float)( ( rand() % 20 ) - 10 ) / 100 * wlv * sd->weapon_matk ) + ( sd->battle_status.rhw.atk2 ) );
-			matk  = ( smatk + wmatk + ematk );
-
-			hp += matk;
-		}
-
 		break;
+	}	
+
+	// Increment skill and status based modifiers
+	if( sd && (skill = pc_skillheal_bonus(sd, skill_id)) )
+		mod += skill;	
+	if( tsd && (skill = pc_skillheal2_bonus(tsd, skill_id)) )
+		mod += skill;
+
+	sc = status_get_sc(target);
+	if( sc && sc->count )
+	{
+		if( sc->data[SC_CRITICALWOUND] && heal ) // Critical Wound has no effect on offensive heal. [Inkfish]
+			mod -= sc->data[SC_CRITICALWOUND]->val2;
+		if( sc->data[SC_INCHEALRATE] && skill_id != NPC_EVILLAND && skill_id != BA_APPLEIDUN )
+			mod += sc->data[SC_INCHEALRATE]->val1; // Only affects Heal, Sanctuary and PotionPitcher.(like bHealPower) [Inkfish]
+//		if( sc->data[SC_VITALITYACTIVATION] && heal && skill_id != BA_APPLEIDUN ) 
+//			mod += sc->data[SC_VITALITYACTIVATION]->val2;
+	}
+		
+	// Adjust the HP recovered rate by adding all of the modifiers together.
+	hp = hp * mod / 100;
+	
+	// Get weapon level and weapon matk for variance calculations if it's a player.
+	//  Mobs have their own variance, we've assumed:
+	//		Weapon Level = 1
+	//		Weapom_Matk  = ?
+	// Need more information before that can be implemented.
+	if( sd && FullCalc)
+	{
+		int matk = 0;
+		int smatk = sd->battle_status.status_matk;
+		int ematk = sd->equipment_matk;
+		int wmatk = 0;
+		int wlv = 1;
+		int index = sd->equip_index[EQI_HAND_R];
+
+		if( index >= 0 && sd->inventory_data[index] && sd->inventory_data[index]->type == IT_WEAPON )
+			wlv = sd->inventory_data[index]->wlv;
+
+		wmatk = (int)( sd->weapon_matk + ( (float)( ( rand() % 20 ) - 10 ) / 100 * wlv * sd->weapon_matk ) + ( sd->battle_status.rhw.atk2 ) );
+		matk  = ( smatk + wmatk + ematk );
+
+		hp += matk;
 	}
 
 	// mercenaries only take half-effectiveness from heals.
@@ -5758,7 +5763,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				case AB_CLEMENTIA:	if( sd ) lv = pc_checkskill(sd,AL_BLESSING);	break;
 				case AB_CANTO:		if( sd ) lv = pc_checkskill(sd,AL_INCAGI);		break;
 			}
-			clif_skill_nodamage(bl, bl, skillid, skilllv, sc_start(bl,type,100,lv,skill_get_time(skillid,skilllv)));
+			clif_skill_nodamage(bl, bl, skillid, skilllv, 
+				sc_start4(bl,type,100,lv,0,sd?sd->status.job_level:0,0,skill_get_time(skillid,skilllv)));
 		}
 		else if( sd )
 			party_foreachsamemap(skill_area_sub, sd, skill_get_splash(skillid, skilllv), src, skillid, skilllv, tick, flag|BCT_PARTY|1, skill_castend_nodamage_id);
@@ -5784,8 +5790,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		{
 			if( dstsd && dstsd->special_state.no_magic_damage )
 				break;
-			clif_skill_nodamage(bl,bl,skillid,skilllv,1);
-			clif_skill_nodamage(bl, bl, skillid, skilllv, sc_start4(bl, type, 100, skilllv, 0, 0, 1, skill_get_time(skillid, skilllv)));
+			clif_skill_nodamage(bl, bl, skillid, skilllv,
+				sc_start4(bl, type, 100, skilllv, 0, 0, 1, skill_get_time(skillid, skilllv)));
 		} 
 		else
 			party_foreachsamemap(skill_area_sub, sd, skill_get_splash(skillid, skilllv), src, skillid, skilllv, tick, flag|BCT_PARTY|1, skill_castend_nodamage_id);
@@ -5793,7 +5799,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case AB_ORATIO:
 		if (flag&1) 
 			sc_start(bl, type, 40+skilllv*5, skilllv, skill_get_time(skillid, skilllv));
-		else {
+		else
+		{
 			clif_skill_nodamage(src, bl, skillid, skilllv, 1);
 			map_foreachinrange(skill_area_sub, bl,
 				skill_get_splash(skillid, skilllv), BL_CHAR,
@@ -5803,7 +5810,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		break;
 	case AB_LAUDAAGNUS:
 	case AB_LAUDARAMUS:
-		if( flag&1 || sd == NULL )
+		if( (flag&1) || sd == NULL || sd->status.party_id == 0 ) 
 		{
 			if( tsc && (rand()%100 < 30+5*skilllv) ) 
 			{
@@ -5849,7 +5856,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		{
 			if (!tsc->data[i])
 				continue;
-			//Initial list of status effects cancelled by Clearance. Does not contain third job status.
+			//Initial list of status effects NOT cancelled by Clearance.
 			switch (i) {
 			case SC_WEIGHT50:			case SC_WEIGHT90:				case SC_TWOHANDQUICKEN:
 			case SC_QUAGMIRE:			case SC_SLOWPOISON:				case SC_BENEDICTIO:
@@ -5882,7 +5889,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			case SC_FOOD_VIT_CASH:		case SC_FOOD_DEX_CASH:			case SC_FOOD_INT_CASH:
 			case SC_FOOD_LUK_CASH:		case SC_MERC_FLEEUP:			case SC_MERC_ATKUP:
 			case SC_MERC_HPUP:			case SC_MERC_SPUP:				case SC_MERC_HITUP:
-			case SC_SLOWCAST:			case SC_CRITICALWOUND:			case SC_SPEEDUP0:
+			case SC_SLOWCAST:			/*case SC_CRITICALWOUND:*/		case SC_SPEEDUP0:
 			case SC_DEF_RATE:			case SC_MDEF_RATE:				case SC_INCHEALRATE:
 			case SC_S_LIFEPOTION:		case SC_L_LIFEPOTION:			case SC_INCCRI:
 			case SC_SPCOST_RATE:		case SC_COMMONSC_RESIST:		case SC_ELEMENTALCHANGE:
@@ -5899,9 +5906,10 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			case SC_INTOABYSS:			case SC_SIEGFRIED:				case SC_WHISTLE:
 			case SC_ASSNCROS:			case SC_POEMBRAGI:				case SC_APPLEIDUN:
 			case SC_HUMMING:			case SC_DONTFORGETME:			case SC_FORTUNE:
-			case SC_SERVICE4U:			case SC_EPICLESIS:				case SC_PARTYFLEE:
+			case SC_SERVICE4U:			case SC_PARTYFLEE:				/*case SC_ANGEL_PROTECT:*/
+			case SC_EPICLESIS:
 			// not implemented
-			//case SC_ANGEL_PROTECT:	case SC_BUCHEDENOEL:			case SC_POPECOOKIE:
+			//case SC_BUCHEDENOEL:		case SC_POPECOOKIE:
 			//case SC_SAVAGE_STEAK:		case SC_COCKTAIL_WARG_BLOOD:	case SC_MINOR_BBQ:
 			//case SC_SIROMA_ICE_TEA:	case SC_DROCERA_HERB_STEAMED:	case SC_PUTTI_TAILS_NOODLES:
 			//case SC_CRIFOOD:			case SC_STR_SCROLL:				case SC_INT_SCROLL:
@@ -6800,9 +6808,9 @@ int skill_castend_pos2(struct block_list* src, int x, int y, int skillid, int sk
 	case AB_EPICLESIS:
 		if( skill_unitsetting(src, skillid, skilllv, x, y, 0) )
 		{
-			int range = skill_get_splash(skillid,skilllv); // Use Splash Range.
+			i = skill_get_splash(skillid,skilllv); // Use Splash Range.
 			map_foreachinarea(skill_area_sub,
-				src->m, x-range, y-range, x+range, y+range, BL_CHAR, 
+				src->m, x-i, y-i, x+i, y+i, BL_CHAR, 
 				src, ALL_RESURRECTION, 1, tick, flag|BCT_NOENEMY|1,
 				skill_castend_nodamage_id);
 		}
@@ -8024,7 +8032,7 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 				//if( tsc->data[SC_BERSERK] )
 				//	break;
 
-				//Apply status effect if standing in unit, should cancel upon stepping out of skill_get_splash() area. [FIXME]
+				//FIXME: Apply status effect if standing in unit, should cancel upon stepping out of skill_get_splash() area.
 				if( tsc && !tsc->data[SC_EPICLESIS] )
 					sc_start(bl, type, 100, sg->skill_lv, skill_get_time(sg->skill_id,sg->skill_lv));
 				
@@ -8955,6 +8963,26 @@ int skill_check_condition_castbegin(struct map_session_data* sd, short skill, sh
 			break;
 		clif_skill_fail(sd,skill,0,0);
 		return 0;
+		break;
+/*
+	case ST_DRAGON:
+		if(!pc_isdragon(sd)) {
+			clif_skill_fail(sd,skill,25,0);
+			return 0;
+		}
+		break;
+	case ST_WARG:
+		if(!pc_iswarg(sd)) {
+			clif_skill_fail(sd,skill,0,0);
+			return 0;
+		}
+		break;
+	case ST_MADOGEAR:
+		if(!pc_ismadogear(sd)) {
+			clif_skill_fail(sd,skill,33,0);
+			return 0;
+		}
+*/
 	}
 
 	if(require.mhp > 0 && get_percentage(status->hp, status->max_hp) > require.mhp) {
@@ -9057,14 +9085,6 @@ int skill_check_condition_castend(struct map_session_data* sd, short skill, shor
 		}
 		break;
 	}
-	case AB_LAUDAAGNUS:
-	case AB_LAUDARAMUS:
-		if( !sd->status.party_id )
-		{
-			clif_skill_fail(sd,skill,0,0);
-			return 0;
-		}
-		break;
 	}
 
 	status = &sd->battle_status;
@@ -9405,7 +9425,7 @@ int skill_castfix (struct block_list *bl, int skill_id, int skill_lv)
 		}
 	}
 
-	//TODO: apply fixed cast rate modifiers via status effects.
+	// apply fixed cast rate modifiers via status effects.
 	if( !(skill_get_castnodex(skill_id, skill_lv)&2) && sc && sc->count )
 	{
 		if( sc->data[SC_AB_SECRAMENT] && sc->data[SC_AB_SECRAMENT]->val2 > max_fixedReduction )
@@ -12113,6 +12133,9 @@ static bool skill_parse_row_requiredb(char* split[], int columns, int current)
 	else if( strcmpi(split[10],"recover_weight_rate")==0 ) skill_db[i].state = ST_RECOV_WEIGHT_RATE;
 	else if( strcmpi(split[10],"move_enable")==0 ) skill_db[i].state = ST_MOVE_ENABLE;
 	else if( strcmpi(split[10],"water")==0 ) skill_db[i].state = ST_WATER;
+	else if( strcmpi(split[10],"dragon")==0 ) skill_db[i].state = ST_DRAGON;
+	else if( strcmpi(split[10],"warg")==0 ) skill_db[i].state = ST_WARG;
+	else if( strcmpi(split[10],"madogear")==0 ) skill_db[i].state = ST_MADOGEAR;
 	else skill_db[i].state = ST_NONE;
 
 	skill_split_atoi(split[11],skill_db[i].spiritball);

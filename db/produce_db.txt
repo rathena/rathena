@@ -396,9 +396,32 @@
 
 //==============================================
 
-//===== Third Class === ItemLV=24 ==================
+//===== Third Class === ItemLV=?? ==============
 
-//----------------------------------------------------------------------------------------------------------------------------
+//---- Rune Kight ------------------------------
+//--- Tursius Runestone <-- RK_RUNEMASTERY & Elder_Branch 1, Cobold_Hair 1, Claw_Of_Desert_Wolf 1
+12731,24,2010,1,7939,1,1034,1,7030,1
+//--- Isia Runestone <-- RK_RUNEMASTERY & Elder_Branch 1, Burning_Heart 1
+12728,24,2010,2,7939,1,7097,1
+//--- Pertz Runestone <-- RK_RUNEMASTERY & Elder_Branch 1, Light_Granule 1, Tangled_Chain 1, Dragon_Canine 1
+12732,24,2010,3,7939,1,7938,1,7221,1,1035,1
+//--- Hagalas Runestone <-- RK_RUNEMASTERY & Elder_Branch 1, Round_Shell 1, Dragon's_Skin 1
+12733,24,2010,4,7939,1,1096,1,7123,1
+//--- Asir Runestone <-- RK_RUNEMASTERY & Elder_Branch 1, Light_Granule 1, Ogre_Tooth 1
+12729,24,2010,5,7939,1,7938,1,7002,1
+//--- Urj Runestone <-- RK_RUNEMASTERY & Elder_Branch 1, Slender_Snake 1, Honey 1
+12730,24,2010,6,7939,1,1048,1,518,1
+//--- Rhydo Runestone <-- RK_RUNEMASTERY & Elder_Branch 1, Light_Granule 1, Red_Gemstone 1
+12726,24,2010,7,7939,1,7938,1,716,1
+//--- Noseige Runestone <-- RK_RUNEMASTERY & Elder_Branch 1, Light_Granule 1, Broken_Armor_Piece 1, Old_Magic_Circle 1
+12725,24,2010,8,7939,2,7938,2,7069,1,618,1
+//--- Verkana Runestone <-- RK_RUNEMASTERY & Elder_Branch 1, Dullahan_Armor 1
+12727,24,2010,9,7939,1,7210,1
+//----------------------------------------------
+
+//---- Arch Bishop -----------------------------
 //-- Ancilla <-- AB_ANCILLA & 1 Blue Gemstone
 12333,22,2039,1,717,1
-//----------------------------------------------------------------------------------------------------------------------------
+//----------------------------------------------
+
+//==============================================

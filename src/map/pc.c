@@ -1851,14 +1851,14 @@ int pc_bonus(struct map_session_data *sd,int type,int val)
 		break;
 	case SP_BASE_ATK:
 		if(sd->state.lr_flag != 2) {
-			bonus = status->batk + val;
-			status->batk = cap_value(bonus, 0, USHRT_MAX);
+			bonus = status->equipment_atk + val;
+			status->equipment_atk = cap_value(bonus, 0, USHRT_MAX);
 		}
 		break;
 	case SP_DEF1:
 		if(sd->state.lr_flag != 2) {
 			bonus = status->def + val;
-			status->def = cap_value(bonus, CHAR_MIN, CHAR_MAX);
+			status->def = cap_value(bonus, SHRT_MIN, SHRT_MAX);
 		}
 		break;
 	case SP_DEF2:
@@ -1870,7 +1870,7 @@ int pc_bonus(struct map_session_data *sd,int type,int val)
 	case SP_MDEF1:
 		if(sd->state.lr_flag != 2) {
 			bonus = status->mdef + val;
-			status->mdef = cap_value(bonus, CHAR_MIN, CHAR_MAX);
+			status->mdef = cap_value(bonus, SHRT_MIN, SHRT_MAX);
 		}
 		break;
 	case SP_MDEF2:
@@ -3652,6 +3652,7 @@ int pc_isUseitem(struct map_session_data *sd,int n)
 	//Not consumable item
 	if( item->type != IT_HEALING && item->type != IT_USABLE && item->type != IT_CASH )
 		return 0;
+	// This contradicts official behavior. Items with no scripts should be consumed regardless. [L0ne_W0lf]
 	if( !item->script ) //if it has no script, you can't really consume it!
 		return 0;
 

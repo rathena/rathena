@@ -9,6 +9,16 @@
 	13005 Angelic Wing Dagger:	NEED INFO.
 =======================
 
+2011/09/30
+	* Rev. 14963 Minor changes from kRO's 30/08/2011 maintainence, and general updates. [L0ne_W0lf]
+	* Added constants to the database for future updates.
+	* Updated Runestones and creation items.
+	* Added Runestone delays to item_delay.
+	* Added Runestones receipies to produce_db.
+	* Added dummy rates to refine_db.
+	* Added Rune Knight skills to skill_cast_db
+	* Updated Rune Knight skills, and Arch Bishop skills.
+	* Updated SP requirements in skill_require_db.
 2011/08/26
 	* Rev. 14941 Several updates in relation to 3rd jobs. [L0ne_W0lf]
 2011/08/10

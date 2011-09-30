@@ -1,5 +1,15 @@
 Date	Added
 
+2011/09/30
+	* Rev. 14963 Just a slew of back-logged source updates. [L0ne_W0lf]
+	* Fixed skill_calc_heal applying heal bonuses only to AL_HEAL.
+	* Still working on updating the status window to display properly.
+	* Refine bonuses on armor now apply properly. (+1 additional bonus for every 4 refines.) Refining in general now goes up to 20.
+	* Criticals will now no longer ignore defense, but will still always hit.
+	* Converted m/def2 to a short, for testing status window update, will eventually need to surpass 32k. Good like this for now while we work on it.
+	* Cleaned up some minor things relating tot he arch bishop skill update.
+	* Applied some of the 30/08/2011 kRO updates to arch bishop skills.
+	* Added more SI_ Constants from newer clients to status.h.
 2011/08/28
 	* Rev. 14948 Fixed Blessing crashing the server when used on monsters, monster weapon attack mechanics are currently unknown. [L0ne_W0lf]
 	* Updated conditions for UNT_EPICLESIS and AB_ADORAMUS (two cases of || to &&.)

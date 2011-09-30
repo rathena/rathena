@@ -14,3 +14,13 @@
 12210,60000	//Bubble_Gum
 14538,300000	//Glass_Of_Illusion
 14586,180000	//Spark_Candy
+// Third Jobs
+// Rune Knight Runestones. 
+12725,21600000	//Runstone_Nosiege
+12727,21600000	//Runstone_Verkana
+12728,18000000	//Runstone_Isia
+12729,18000000	//Runstone_Asir
+12730,18000000	//Runstone_Urj
+12731,18000000	//Runstone_Turisus
+12732,18000000	//Runstone_Pertz
+12733,18000000	//Runstone_Hagalas

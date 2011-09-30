@@ -115,10 +115,10 @@
 609,Amulet,Amulet,2,100,,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 610,Leaf_Of_Yggdrasil,Yggdrasil Leaf,11,4000,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill "ALL_RESURRECTION",1; },{},{}
 611,Spectacles,Magnifier,11,40,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill "MC_IDENTIFY",1; },{},{}
-612,Portable_Furnace,Mini Furnace,2,150,,200,,,,,0xFFFFFFFF,7,2,,,,,,{ produce 21; },{},{}
-613,Iron_Hammer,Iron Hammer,2,1000,,200,,,,,0xFFFFFFFF,7,2,,,,,,{ produce 1; },{},{}
-614,Golden_Hammer,Golden Hammer,2,3000,,300,,,,,0xFFFFFFFF,7,2,,,,,,{ produce 2; },{},{}
-615,Oridecon_Hammer,Oridecon Hammer,2,5000,,400,,,,,0xFFFFFFFF,7,2,,,,,,{ produce 3; },{},{}
+612,Portable_Furnace,Mini Furnace,2,150,,200,,,,,0xFFFFFFFF,7,2,,,,,,{ produce Produce_Materials; },{},{}
+613,Iron_Hammer,Iron Hammer,2,1000,,200,,,,,0xFFFFFFFF,7,2,,,,,,{ produce Produce_Weaponlvl1; },{},{}
+614,Golden_Hammer,Golden Hammer,2,3000,,300,,,,,0xFFFFFFFF,7,2,,,,,,{ produce Produce_Weaponlvl2; },{},{}
+615,Oridecon_Hammer,Oridecon Hammer,2,5000,,400,,,,,0xFFFFFFFF,7,2,,,,,,{ produce Produce_Weaponlvl3; },{},{}
 616,Old_Card_Album,Old Card Album,2,10000,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_CardAlbum),1; },{},{}
 617,Old_Violet_Box,Old Purple Box,2,10000,,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_VioletBox),1; },{},{}
 618,Worn_Out_Scroll,Worn Out Scroll,2,50,,20,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_ScrollBox),1; },{},{}
@@ -2809,7 +2809,7 @@
 //5477,Bro_Flag,Brazilian Flag Hat,5,20,,100,,1,,1,0xFFFFFFFF,7,2,256,,30,1,474,{ skill "SM_BASH",1; },{},{}
 //5478,Classic_Hat,Classic Hat,5,20,,500,,3,,0,0xFFFFFFFF,7,2,256,,0,1,475,{ bonus bStr,2; bonus bMaxHP,300; },{},{}
 5479,Shaman's_Hair_Ornament,Shaman's Hair Decoration,5,20,,300,,1,,0,0xFFFFFFFF,7,2,256,,30,1,476,{ bonus bMdef,3; bonus bMaxHP,50; bonus2 bSubEle,Ele_Neutral,5; if(isequipped(2777,2778)) { bonus bMaxHP,300; bonus bMatkRate,5; bonus2 bSubEle,Ele_Neutral,5; } },{},{}
-5480,Bizofnil_Wing_Deco,Bijofnil Wings,5,20,,1000,,3,,0,0xFFFFFFFF,7,2,256,,30,1,477,{  bonus bAllStats,2; bonus3 bAutoSpell,"PR_IMPOSITIO",3,3; },{},{}
+5480,Bizofnil_Wing_Deco,Bijofnil Wings,5,20,,1000,,3,,0,0xFFFFFFFF,7,2,256,,30,1,477,{ bonus bAllStats,2; bonus3 bAutoSpell,"PR_IMPOSITIO",3,3; },{},{}
 5481,Hermose_Cap,Hermode Cap,5,20,,1000,,1,,1,0xFFFFFFFF,7,2,256,,1,1,478,{ bonus bAspdRate,10; bonus bBaseAtk,-20; bonus bMatkRate,-10; },{},{}
 5482,Dark_Knight_Mask,Dark Knight Mask,5,,,3000,,5,,0,0xFFFFFFFF,7,2,769,,80,1,479,{ bonus bStr,3; if(isequipped(2779,2780)) { bonus bMatkRate,10; bonus bInt,5; bonus2 bSubRace,RC_Angel,10; } },{},{}
 5483,Odin_Mask,Odin Mask,5,20,,100,,1,,0,0xFFFFFFFF,7,2,513,,50,0,480,{ bonus bHit,-10; bonus2 bAddRace,RC_Demihuman,6; },{},{}
@@ -5309,20 +5309,20 @@
 12722,Poison_Fever,Pyrexia,2,2,,20,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12723,Poison_Laughing,Magic Mushroom,2,2,,20,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12724,Poison_Fatigue,Venom Bleed,2,2,,20,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-12725,Runstone_Nosiege,Nosiege Runestone,2,2,,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-12726,Runstone_Rhydo,Rhydo Runestone,2,2,,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-12727,Runstone_Verkana,Verkana Runestone,2,2,,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-12728,Runstone_Isia,Isia Runestone,2,2,,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-12729,Runstone_Asir,Asir Runestone,2,2,,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-12730,Runstone_Urj,Urj Runestone,2,2,,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-12731,Runstone_Turisus,Turisus Runestone,2,2,,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-12732,Runstone_Pertz,Pertz Runestone,2,2,,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-12733,Runstone_Hagalas,Hagalas Runestone,2,2,,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-12734,Runstone_Quality,Quality Rough Runestone,2,2,,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-12735,Runstone_Ancient,Ancient Rough Runestone,2,2,,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-12736,Runstone_Mystic,Mystic Rough Runestone,2,2,,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-12737,Runstone_Ordinary,General Rough Runestone,2,2,,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-12738,Runstone_Rare,Rare Rough Runestone,2,2,,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12725,Runstone_Nosiege,Nosiege Runestone,11,2,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill "RK_REFRESH",1; },{},{}
+12726,Runstone_Rhydo,Rydo Runestone,11,2,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill "RK_CRUSHSTRIKE",1; },{},{}
+12727,Runstone_Verkana,Verkana Runestone,11,2,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill "RK_MILLENNIUMSHIELD",1; },{},{}
+12728,Runstone_Isia,Isia Runestone,11,2,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill "RK_VITALITYACTIVATION",1; },{},{}
+12729,Runstone_Asir,Asir Runestone,11,2,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill "RK_FIGHTINGSPIRIT",1; },{},{}
+12730,Runstone_Urj,Urj Runestone,11,2,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill "RK_ABUNDANCE",1; },{},{}
+12731,Runstone_Turisus,Tursius Runestone,11,2,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill "RK_GIANTGROWTH",1; },{},{}
+12732,Runstone_Pertz,Pertz Runestone,11,2,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill "RK_STORMBLAST",1; },{},{}
+12733,Runstone_Hagalas,Hagalas Runestone,11,2,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill "RK_STONEHARDSKIN",1; },{},{}
+12734,Runstone_Quality,Quality Rough Runestone,2,2,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ /* produce Produce_Runestone,Runestone_Quality; */ },{},{}
+12735,Runstone_Ancient,Ancient Rough Runestone,2,2,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ /* produce Produce_Runestone,Runestone_Ancient; */ },{},{}
+12736,Runstone_Mystic,Mystic Rough Runestone,2,2,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ /* produce Produce_Runestone,Runestone_Mystic; */ },{},{}
+12737,Runstone_Ordinary,General Rough Runestone,2,2,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ /* produce Produce_Runestone,Runestone_Ordinary; */ },{},{}
+12738,Runstone_Rare,Rare Rough Runestone,2,2,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ /* produce Produce_Runestone,Runestone_Rare; */ },{},{}
 12739,Snow_Flower,Snow Flowers,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12740,Inc_Str_Scroll,Amplification Scroll,2,1,,0,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12741,Inc_Int_Scroll,Intellect Amplification Scroll,2,1,,0,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}

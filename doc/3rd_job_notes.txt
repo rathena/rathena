@@ -42,7 +42,6 @@ GC_CROSSRIPPERSLASHER
 == Archbishop =====================================================================================
 AB_JUDEX
 		Working
-		Damage is unnaturally high-- issue with pre-RE MATK formulae?
 AB_ANCILLA
 		Working
 AB_ADORAMUS
@@ -51,37 +50,46 @@ AB_ADORAMUS
 		Ugly hack to cancel out using gemstone in skill_get_requirement().
 		Should SC_BLIND/SC_ADORAMUS be removed by speed bosting effects?
 		Should effects cancel simultaneously?
-		Damage is unnaturally high-- issue with pre-RE MATK formulae?
 AB_CLEMENTIA
 		Working
+		Applied kRO update (30/08/2011) 
+			SP cost has changed (280/320/360).
+			Based on your job level, it can add an additional 1 ~ 5 Str/Int/Dex.
 		Bug: Skill name and casting sprite animation should display only on caster
 AB_CANTO
 		Working
+		Applied kRO update (30/08/2011) 
+			SP cost is changed (200/220/240).
+			Based on your job level, it can add an additional 1 ~ 5 Agi.
 		Bug: Skill name and casting sprite animation should display only on caster
 AB_CHEAL
 		Working
 		Bug: Skill name and casting sprite animation should display only on caster
 AB_EPICLESIS
 		Working
-		Need to fix SC effect on moving out of unit.
-		What skills should have an inate immuity to this skill?
+		Need to fix SC effect on moving in/out of unit.
+		What status effects should cause immunity to this skill?
 		has skill_check_condition_castbegin case, check to see if it can be improved.
 AB_PRAEFATIO
 		Working
+		Applied kRO update (30/08/2011) 
+			SP cost is changed (80 + SkillLv * 10).
 		Bug: Skill name and casting sprite animation should display only on caster
 AB_ORATIO
 		Working
-		Ugly hack to display/remove SI_ on mobs.
+		Ugly hack to display/remove SI_ORATIO on mobs.
 AB_LAUDAAGNUS
 		Working
 		Should +4+Skilllv luk apply to only those not cured from a status effect?
 		Check: Skill name and casting sprite animation should display only on caster?
-		Should this skill fail if you are the only person in/online in a party?
+		Applied kRO update (21/09/2011) 
+			* Now works when casting player is not in a party.
 AB_LAUDARAMUS
 		Working 
 		Should +4+Skilllv luk apply to only those not cured from a status effect?
 		Check: Skill name and casting sprite animation should display only on caster?
-		Should this skill fail if you are the only person in/online in a party?
+		Applied kRO update (21/09/2011) 
+			* Now works when casting player is not in a party.
 AB_EUCHARISTICA
 		Working 
 AB_RENOVATIO
@@ -92,11 +100,14 @@ AB_CLEARANCE
 		Working
 		Check: Should Soul Linkers be inately immune?
 		Check list a second time to see what was missed.
+		Applied kRO update (30/08/2011) 
+			* Now also removes the Critical Wounds status effect.
 AB_EXPIATIO
 		Working
+		Applied kRO update (30/08/2011) 
+			* Changed from self targeted to self and other players.
 AB_DUPLELIGHT
 		Working
-		Check success rate, 
 		Is skill_addtimerskill the best way to implement the additional attacks?
 AB_DUPLELIGHT_MELEE
 		Working

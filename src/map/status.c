@@ -1304,7 +1304,7 @@ int status_base_amotion_pc(struct map_session_data* sd, struct status_data* stat
 
 static unsigned short status_base_atk(const struct block_list *bl, const struct status_data *status)
 {
-	int flag = 0, str, dex, dstr;
+	int flag = 0, str, dex, dstr, base;
 
 	if(!(bl->type&battle_config.enable_baseatk))
 		return 0;
@@ -1322,10 +1322,10 @@ static unsigned short status_base_atk(const struct block_list *bl, const struct 
 			flag = 1;
 	}
 	if (flag) {
-		str = status->dex;
+		base =str = status->dex;
 		dex = status->str;
 	} else {
-		str = status->str;
+		base = str = status->str;
 		dex = status->dex;
 	}
 	//Normally only players have base-atk, but homunc have a different batk
@@ -1334,7 +1334,7 @@ static unsigned short status_base_atk(const struct block_list *bl, const struct 
 	dstr = str/10;
 	str += dstr*dstr;
 	if (bl->type == BL_PC)
-		str+= dex/5 + status->luk/5;
+		str = (((TBL_PC*)bl)->status.base_level*10/4 + base*10 + dex*10/5 + status->luk*10/3)/10;
 	return cap_value(str, 0, USHRT_MAX);
 }
 
@@ -1354,10 +1354,17 @@ void status_calc_misc(struct block_list *bl, struct status_data *status, int lev
 	status->matk_min = status_base_matk_min(status);
 	status->matk_max = status_base_matk_max(status);
 
-	status->hit += 175 + status->dex + (unsigned short)floor((double)status->luk/3) + level; //Renewal calclation.
+	//Renewal calculation? HIT is currently coming up too high.
+	status->hit += 175 + status->dex + (unsigned short)floor((double)status->luk/3) + level;
 	status->flee += 100 + status->agi + level;
-	status->def2 += status->vit;
-	status->mdef2 += status->mdef;
+
+	// Values are still off by roughly 1~3 points. Getting there though.
+	status->def2 += (level*10/2 + status->vit*10/2 + status->agi*10/5)/10;
+	if( bl->type != BL_MOB )
+		status->mdef2 += (level*10/4 + status->int_*10 + status->vit*10/5 + status->dex*10/5)/10;
+	else
+		status->mdef2 = status->mdef; // Mobs use their mdef as their mdef2.
+
 	//Status MATK = floor(Base Level/4 + INT + INT/2 + DEX/5 + LUK/3) 
 	status->status_matk = (unsigned short)floor((double)level/4 + (double)status->int_ + (double)status->int_/2 + (double)status->dex/5 + (double)status->luk/3);
 
@@ -1539,8 +1546,6 @@ int status_calc_mob_(struct mob_data* md, bool first)
 					status->max_sp += 200 * gc->defense;
 					status->hp = status->max_hp;
 					status->sp = status->max_sp;
-					status->def += (gc->defense+2)/3;
-					status->mdef += (gc->defense+2)/3;
 				}
 			}else{
 				status->max_hp += 1000 * gc->defense;
@@ -1963,7 +1968,11 @@ int status_calc_pc_(struct map_session_data* sd, bool first)
 			}
 		}
 		else if(sd->inventory_data[index]->type == IT_ARMOR) {
-			refinedef += sd->status.inventory[index].refine*refinebonus[0][0];
+			int r = sd->status.inventory[index].refine;
+    		int per = 0, refine=(r>0)?1:0;
+    		for(per=1; per<r; per++)
+     			refine += (per/4) + 1;
+			refinedef += refine;
 			if(sd->inventory_data[index]->script) {
 				run_script(sd->inventory_data[index]->script,0,sd->bl.id,0);
 				if (!calculating) //Abort, run_script retriggered this. [Skotlex]
@@ -2296,13 +2305,13 @@ int status_calc_pc_(struct map_session_data* sd, bool first)
 		sd->def_rate = 0;
 	if(sd->def_rate != 100) {
 		i =  status->def * sd->def_rate/100;
-		status->def = cap_value(i, CHAR_MIN, CHAR_MAX);
+		status->def = cap_value(i, SHRT_MIN, SHRT_MAX);
 	}
 
 	if (!battle_config.weapon_defense_type && status->def > battle_config.max_def)
 	{
 		status->def2 += battle_config.over_def_bonus*(status->def -battle_config.max_def);
-		status->def = (unsigned char)battle_config.max_def;
+		status->def = (unsigned short)battle_config.max_def;
 	}
 
 // ----- EQUIPMENT-MDEF CALCULATION -----
@@ -2312,13 +2321,13 @@ int status_calc_pc_(struct map_session_data* sd, bool first)
 		sd->mdef_rate = 0;
 	if(sd->mdef_rate != 100) {
 		i =  status->mdef * sd->mdef_rate/100;
-		status->mdef = cap_value(i, CHAR_MIN, CHAR_MAX);
+		status->mdef = cap_value(i, SHRT_MIN, SHRT_MAX);
 	}
 
 	if (!battle_config.magic_defense_type && status->mdef > battle_config.max_def)
 	{
 		status->mdef2 += battle_config.over_def_bonus*(status->mdef -battle_config.max_def);
-		status->mdef = (signed char)battle_config.max_def;
+		status->mdef = (signed short)battle_config.max_def;
 	}
 
 // ----- ASPD CALCULATION -----
@@ -2580,9 +2589,9 @@ static signed short status_calc_hit(struct block_list *,struct status_change *,i
 static signed short status_calc_critical(struct block_list *,struct status_change *,int);
 static signed short status_calc_flee(struct block_list *,struct status_change *,int);
 static signed short status_calc_flee2(struct block_list *,struct status_change *,int);
-static signed char status_calc_def(struct block_list *,struct status_change *,int);
+static signed short status_calc_def(struct block_list *,struct status_change *,int);
 static signed short status_calc_def2(struct block_list *,struct status_change *,int);
-static signed char status_calc_mdef(struct block_list *,struct status_change *,int);
+static signed short status_calc_mdef(struct block_list *,struct status_change *,int);
 static signed short status_calc_mdef2(struct block_list *,struct status_change *,int);
 static unsigned short status_calc_speed(struct block_list *,struct status_change *,int);
 static short status_calc_aspd_rate(struct block_list *,struct status_change *,int);
@@ -2823,7 +2832,7 @@ void status_calc_bl_main(struct block_list *bl, enum scb_flag flag)
 
 	if(flag&SCB_LUK) {
 		status->luk = status_calc_luk(bl, sc, b_status->luk);
-		flag|=SCB_BATK|SCB_CRI|SCB_FLEE2;
+		flag|=SCB_BATK|SCB_CRI|SCB_FLEE2|SCB_MATK;
 	}
 
 	if(flag&SCB_BATK && b_status->batk) {
@@ -3194,25 +3203,26 @@ void status_calc_bl_(struct block_list* bl, enum scb_flag flag, bool first)
 			clif_updatestatus(sd,SP_ASPD);
 		if(b_status.speed != status->speed)
 			clif_updatestatus(sd,SP_SPEED);
-		if(b_status.rhw.atk != status->rhw.atk || b_status.lhw.atk != status->lhw.atk || b_status.batk != status->batk)
+		if(b_status.rhw.atk != status->rhw.atk || b_status.lhw.atk != status->lhw.atk || b_status.batk != status->batk
+			|| b_status.rhw.atk2 != status->rhw.atk2 || b_status.lhw.atk2 != status->lhw.atk2 || b_status.equipment_atk != status->equipment_atk)
 		{
 			clif_updatestatus(sd,SP_ATK1);
+			clif_updatestatus(sd,SP_ATK2);
 			clif_updatestatus(sd,SP_MATK1);
 		}
-		if(b_status.def != status->def)
+		if(b_status.def != status->def || b_status.def2 != status->def2)
+		{
 			clif_updatestatus(sd,SP_DEF1);
-		if(b_status.rhw.atk2 != status->rhw.atk2 || b_status.lhw.atk2 != status->lhw.atk2)
-			clif_updatestatus(sd,SP_ATK2);
-		if(b_status.def2 != status->def2)
 			clif_updatestatus(sd,SP_DEF2);
+		}
 		if(b_status.flee2 != status->flee2)
 			clif_updatestatus(sd,SP_FLEE2);
 		if(b_status.cri != status->cri)
 			clif_updatestatus(sd,SP_CRITICAL);
 		if(b_status.matk_max != status->matk_max)
 		{
-				clif_updatestatus(sd,SP_MATK1);
-				clif_updatestatus(sd,SP_MATK2);
+			clif_updatestatus(sd,SP_MATK1);
+			clif_updatestatus(sd,SP_MATK2);
 		}
 		if(b_status.mdef != status->mdef || b_status.mdef2 != status->mdef2)
 		{
@@ -3708,10 +3718,10 @@ static signed short status_calc_flee2(struct block_list *bl, struct status_chang
 	return (short)cap_value(flee2,10,SHRT_MAX);
 }
 
-static signed char status_calc_def(struct block_list *bl, struct status_change *sc, int def)
+static signed short status_calc_def(struct block_list *bl, struct status_change *sc, int def)
 {
 	if(!sc || !sc->count)
-		return (signed char)cap_value(def,CHAR_MIN,CHAR_MAX);
+		return (signed short)cap_value(def,SHRT_MIN,SHRT_MAX);
 
 	if(sc->data[SC_BERSERK])
 		return 0;
@@ -3748,7 +3758,7 @@ static signed char status_calc_def(struct block_list *bl, struct status_change *
 	if (sc->data[SC_FLING])
 		def -= def * (sc->data[SC_FLING]->val2)/100;
 
-	return (signed char)cap_value(def,CHAR_MIN,CHAR_MAX);
+	return (signed short)cap_value(def,SHRT_MIN,SHRT_MAX);
 }
 
 static signed short status_calc_def2(struct block_list *bl, struct status_change *sc, int def2)
@@ -3783,10 +3793,10 @@ static signed short status_calc_def2(struct block_list *bl, struct status_change
 	return (short)cap_value(def2,1,SHRT_MAX);
 }
 
-static signed char status_calc_mdef(struct block_list *bl, struct status_change *sc, int mdef)
+static signed short status_calc_mdef(struct block_list *bl, struct status_change *sc, int mdef)
 {
 	if(!sc || !sc->count)
-		return (signed char)cap_value(mdef,CHAR_MIN,CHAR_MAX);
+		return (signed short)cap_value(mdef,SHRT_MIN,SHRT_MAX);
 
 	if(sc->data[SC_BERSERK])
 		return 0;
@@ -3807,7 +3817,7 @@ static signed char status_calc_mdef(struct block_list *bl, struct status_change 
 	if(sc->data[SC_CONCENTRATION])
 		mdef += 1; //Skill info says it adds a fixed 1 Mdef point.
 
-	return (signed char)cap_value(mdef,CHAR_MIN,CHAR_MAX);
+	return (signed short)cap_value(mdef,SHRT_MIN,SHRT_MAX);
 }
 
 static signed short status_calc_mdef2(struct block_list *bl, struct status_change *sc, int mdef2)
@@ -4288,7 +4298,7 @@ struct status_data *status_get_base_status(struct block_list *bl)
 	}
 }
 
-signed char status_get_def(struct block_list *bl)
+signed short status_get_def(struct block_list *bl)
 {
 	struct unit_data *ud;
 	struct status_data *status = status_get_status_data(bl);
@@ -4296,7 +4306,7 @@ signed char status_get_def(struct block_list *bl)
 	ud = unit_bl2ud(bl);
 	if (ud && ud->skilltimer != INVALID_TIMER)
 		def -= def * skill_get_castdef(ud->skillid)/100;
-	return cap_value(def, CHAR_MIN, CHAR_MAX);
+	return cap_value(def, SHRT_MIN, SHRT_MAX);
 }
 
 unsigned short status_get_speed(struct block_list *bl)
@@ -4521,6 +4531,22 @@ void status_set_viewdata(struct block_list *bl, int class_)
 					class_ = JOB_BABY_CRUSADER2;
 					break;
 				}
+				/*
+				else
+				if (sd->sc.option&OPTION_DRAGON) // For completeness' sake. These aren't actually needed...except maybe in older clients.
+				switch (class_)
+				{
+				case JOB_RUNE_KNIGHT:
+					class_ = JOB_RUNE_KNIGHT2;
+					break;
+				case JOB_RUNE_KNIGHT_H:
+					class_ = JOB_RUNE_KNIGHT_H2;
+					break;
+				case JOB_BABY_RUNE:
+					class_ = JOB_BABY_RUNE2;
+					break;
+				}
+				*/
 				sd->vd.class_ = class_;
 				clif_get_weapon_view(sd, &sd->vd.weapon, &sd->vd.shield);
 				sd->vd.head_top = sd->status.head_top;
@@ -5316,6 +5342,8 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 		case SC_INCREASEAGI:
 		case SC_ADORAMUS:
 			val2 = 2 + val1; //Agi change
+			if (val3) //Canto Candidus: Add joblv/10 additional AGI (8/31/2011)
+				val2 += (val3/10);
 			break;
 		case SC_ENDURE:
 			val2 = 7; // Hit-count [Celest]
@@ -5365,14 +5393,14 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			break;
 		case SC_KYRIE:
 			val2 = status->max_hp * (val1 * 2 + 10) / 100; //%Max HP to absorb
-			// val1 determines if status is casued by Kyrie or Praefatio,
+			// val4 determines if status is casued by Kyrie or Praefatio,
 			// as Praefatio blocks more hits than Kyrie Elesion.
-			if( !val4 )
+			if( !val4 ) //== PR_KYRIE
 				val3 = (val1 / 2 + 5);
-			else
+			else //== AB_PRAEFATIO
 				val3 = 6 + val1;
 			if( sd ) 
-				val1 = min(val1,pc_checkskill(sd,PR_KYRIE)); // uses kill level to determine barrier health.
+				val1 = min(val1,pc_checkskill(sd,PR_KYRIE)); // use skill level to determine barrier health.
 			break;
 		case SC_MAGICPOWER:
 			//val1: Skill lv
@@ -5923,7 +5951,11 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			break;
 		case SC_BLESSING:
 			if ((!undead_flag && status->race!=RC_DEMON) || bl->type == BL_PC)
+			{
 				val2 = val1;
+				if (val3) //Clementia: Add joblv/10 additional STR/INT/DEX (8/31/2011)
+					val2 += (val3/10);
+			}
 			else
 				val2 = 0; //0 -> Half stat.
 			break;

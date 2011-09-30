@@ -664,11 +664,6 @@ int battle_calc_gvg_damage(struct block_list *src,struct block_list *bl,int dama
 	case NJ_ZENYNAGE:
 		break;
 	default:
-		/* Uncomment if you want god-mode Emperiums at 100 defense. [Kisuka]
-		if (md && md->guardian_data) {
-			damage -= damage * (md->guardian_data->castle->defense/100) * battle_config.castle_defense_rate/100;
-		}
-		*/
 		if (flag & BF_SKILL) { //Skills get a different reduction than non-skills. [Skotlex]
 			if (flag&BF_WEAPON)
 				damage = damage * battle_config.gvg_weapon_damage_rate/100;
@@ -1194,7 +1189,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 	if (flag.cri)
 	{
 		wd.type = 0x0a;
-		flag.idef = flag.idef2 = flag.hit = 1;
+		flag.hit = 1;
 	} else {	//Check for Perfect Hit
 		if(sd && sd->perfect_hit > 0 && rand()%100 < sd->perfect_hit)
 			flag.hit = 1;
@@ -1775,7 +1770,8 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 			  	skill_num != ASC_BREAKER &&
 				skill_num != ASC_METEORASSAULT &&
 				skill_num != AS_SPLASHER &&
-				skill_num != AS_VENOMKNIFE)
+				skill_num != AS_VENOMKNIFE &&
+				skill_num != AS_GRIMTOOTH) // RE disabled Grimtooth carrying EDP.
 				ATK_ADDRATE(sc->data[SC_EDP]->val3);
 		}
 
@@ -1845,7 +1841,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 		if (!flag.idef || !flag.idef2)
 		{	//Defense reduction
 			short vit_def;
-			signed char def1 = status_get_def(target); //Don't use tstatus->def1 due to skill timer reductions.
+			signed short def1 = status_get_def(target); //Don't use tstatus->def1 due to skill timer reductions.
 			short def2 = (short)tstatus->def2;
 
 			if( sc && sc->data[SC_EXPIATIO] )
@@ -2535,7 +2531,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 							skillratio = skillratio * status_get_lv(src) / 100;
 						break;
 					case AB_ADORAMUS:
-						skillratio += 400 + 100 * skill_lv; //Possible RE-Formula
+						skillratio += 100 * (skill_lv + 5);
 						if( status_get_lv(src) >= 100 )
 							skillratio = skillratio * status_get_lv(src) / 100;
 						break;
@@ -2567,7 +2563,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 		}
 
 		if(!flag.imdef){
-			char mdef = tstatus->mdef;
+			short mdef = tstatus->mdef;
 			int mdef2= tstatus->mdef2;
 			if(sd) {
 				i = sd->ignore_mdef[is_boss(target)?RC_BOSS:RC_NONBOSS];
@@ -3194,11 +3190,11 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 	damage = wd.damage + wd.damage2;
 	if( damage > 0 && src != target )
 	{
-		if(sc && sc->data[SC_DUPLELIGHT]) {
+		if( sc && sc->data[SC_DUPLELIGHT] ) {
 			int skilllv = sc->data[SC_DUPLELIGHT]->val1;
-			if(rand()%100 < sc->data[SC_DUPLELIGHT]->val2)
+			if( rand()%100 < sc->data[SC_DUPLELIGHT]->val2 )
 				skill_addtimerskill(src,tick+status_get_adelay(src) / 2,target->id,0,0,AB_DUPLELIGHT_MELEE,skilllv,BF_WEAPON,flag);
-			else if(rand()%100 < sc->data[SC_DUPLELIGHT]->val3)
+			else if( rand()%100 < sc->data[SC_DUPLELIGHT]->val3 )
 				skill_addtimerskill(src,tick+status_get_adelay(src) / 2,target->id,0,0,AB_DUPLELIGHT_MAGIC,skilllv,BF_MAGIC,flag);
 		}
 
@@ -3808,7 +3804,7 @@ static const struct _battle_data {
 	{ "max_baby_parameter",                 &battle_config.max_baby_parameter,              80,     10,     10000,          },
 	{ "max_third_parameter",                &battle_config.max_third_parameter,             120,    10,     10000,          },
 	{ "max_baby_third_parameter",           &battle_config.max_baby_third_parameter,        108,    10,     10000,          },
-	{ "max_def",                            &battle_config.max_def,                         9999,   0,      INT_MAX,        },
+	{ "max_def",                            &battle_config.max_def,                         SHRT_MAX, 0,      INT_MAX,        },
 	{ "over_def_bonus",                     &battle_config.over_def_bonus,                  0,      0,      1000,           },
 	{ "skill_log",                          &battle_config.skill_log,                       BL_NUL, BL_NUL, BL_ALL,         },
 	{ "battle_log",                         &battle_config.battle_log,                      0,      0,      1,              },
@@ -4108,8 +4104,8 @@ void battle_adjust_conf()
 	battle_config.max_walk_speed = 100*DEFAULT_WALK_SPEED/battle_config.max_walk_speed;	
 	battle_config.max_cart_weight *= 10;
 	
-	if(battle_config.max_def > 9999 && !battle_config.weapon_defense_type)	 // added by [Skotlex]
-		battle_config.max_def = 9999;
+	if(battle_config.max_def > SHRT_MAX && !battle_config.weapon_defense_type)	 // added by [Skotlex]
+		battle_config.max_def = SHRT_MAX;
 
 	if(battle_config.min_hitrate > battle_config.max_hitrate)
 		battle_config.min_hitrate = battle_config.max_hitrate;
