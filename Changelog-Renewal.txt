@@ -1,7 +1,8 @@
 Date	Added
 
 2011/09/30
-	* Rev. 14963 Just a slew of back-logged source updates. [L0ne_W0lf]
+	* Rev. 14965 Forgot to increase MAX_ITEMDELAYs to 18. [L0ne_W0lf]
+	* Rev. 14964 Just a slew of back-logged source updates. [L0ne_W0lf]
 	* Fixed skill_calc_heal applying heal bonuses only to AL_HEAL.
 	* Still working on updating the status window to display properly.
 	* Refine bonuses on armor now apply properly. (+1 additional bonus for every 4 refines.) Refining in general now goes up to 20.

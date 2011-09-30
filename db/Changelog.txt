@@ -10,7 +10,7 @@
 =======================
 
 2011/09/30
-	* Rev. 14963 Minor changes from kRO's 30/08/2011 maintainence, and general updates. [L0ne_W0lf]
+	* Rev. 14964 Minor changes from kRO's 30/08/2011 maintainence, and general updates. [L0ne_W0lf]
 	* Added constants to the database for future updates.
 	* Updated Runestones and creation items.
 	* Added Runestone delays to item_delay.

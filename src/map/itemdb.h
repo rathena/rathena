@@ -9,7 +9,7 @@
 #define MAX_RANDITEM	11000
 
 // The maximum number of item delays
-#define MAX_ITEMDELAYS	10
+#define MAX_ITEMDELAYS	18
 
 #define MAX_SEARCH	5  //Designed for search functions, species max number of matches to display.
 
