@@ -1,5 +1,7 @@
 Date	Added
 
+2011/10/07
+	* Remove fds from the shortlist before processing. [FlavioJS]
 2011/09/18
 	* 14961 Applied map flag update patch provided by Daegaladh. Will mess with custom restricted items.
 	- Adds a reset mapflag which is checked when using the Neuralizer.

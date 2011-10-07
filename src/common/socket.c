@@ -1368,19 +1368,30 @@ void send_shortlist_add_fd(int fd)
 // Do pending network sends and eof handling from the shortlist.
 void send_shortlist_do_sends()
 {
-	int i = 0;
+	int i;
 
-	while( i < send_shortlist_count )
+	for( i = send_shortlist_count-1; i >= 0; --i )
 	{
 		int fd = send_shortlist_array[i];
 		int idx = fd/32;
 		int bit = fd%32;
 
+		// Remove fd from shortlist, move the last fd to the current position
+		--send_shortlist_count;
+		send_shortlist_array[i] = send_shortlist_array[send_shortlist_count];
+		send_shortlist_array[send_shortlist_count] = 0;
+
+		if( fd <= 0 || fd >= FD_SETSIZE )
+		{
+			ShowDebug("send_shortlist_do_sends: fd is out of range, corrupted memory? (fd=%d)\n", fd);
+			continue;
+		}
 		if( ((send_shortlist_set[idx]>>bit)&1) == 0 )
 		{
 			ShowDebug("send_shortlist_do_sends: fd is not set, why is it in the shortlist? (fd=%d)\n", fd);
+			continue;
 		}
-		else
+		send_shortlist_set[idx]&=~(1<<bit);// unset fd
 		// If this session still exists, perform send operations on it and
 		// check for the eof state.
 		if( session[fd] )
@@ -1395,19 +1406,10 @@ void send_shortlist_do_sends()
 				session[fd]->func_parse(fd);
 
 			// If the session still exists, is not eof and has things left to
-			// be sent from it we'll keep it in the shortlist.
+			// be sent from it we'll re-add it to the shortlist.
 			if( session[fd] && !session[fd]->flag.eof && session[fd]->wdata_size )
-			{
-				++i;
-				continue;
-			}
+				send_shortlist_add_fd(fd);
 		}
-
-		// Remove fd from shortlist, move the last fd to the current position
-		--send_shortlist_count;
-		send_shortlist_array[i] = send_shortlist_array[send_shortlist_count];
-		send_shortlist_array[send_shortlist_count] = 0;
-		send_shortlist_set[idx]&=~(1<<bit);
 	}
 }
 #endif
