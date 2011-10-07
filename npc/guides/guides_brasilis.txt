@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.0
+//= 1.1
 //===== Compatible With: ===================================== 
 //= eAthena  SVN
 //===== Description: ========================================= 
@@ -11,6 +11,7 @@
 //= Guide for the city of Brasilis
 //===== Additional Comments: ================================= 
 //= 1.0 First Version, Renewal guide.
+//= 1.1 Added a missing close.
 //============================================================ 
 
 brasilis,219,97,3	script	Brasilis Guide	478,{
@@ -74,5 +75,23 @@ brasilis,219,97,3	script	Brasilis Guide	478,{
 			mes "Wandering on your own is always the best way to explore. Anyway, take care.";
 			close;
 		}
+		close;
+		break;
+	case 2:
+		viewpoint 2,273,149,2,0xFF0000;
+		viewpoint 2,308,333,3,0xCC6600;
+		viewpoint 0,133,167,4,0x00FF00;
+		viewpoint 0,238,248,5,0x00FF00;
+		set .@compass_check,0;
+		mes "[Brasilis Guide]";
+		mes "I've deleted all marks on the mini-map.";
+		mes "Whenever you'd like to put marks";
+		mes "there, you can ask me.";
+		close;
+	case 3:
+		mes "[Brasilis Guide]";
+		mes "Exploring things here on your own can also be fun.";
+		mes "Anyway, take care.";
+		close;
 	}
 }

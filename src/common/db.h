@@ -994,8 +994,8 @@ void  linkdb_foreach( struct linkdb_node** head, LinkDBFunc func, ...  );
 	do{ \
 		if( (__n) > VECTOR_CAPACITY(__vec) ) \
 		{ /* increase size */ \
-			if( VECTOR_CAPACITY(__vec) == 0 ) VECTOR_DATA(__vec) = aMalloc((__n)*sizeof(VECTOR_FIRST(__vec))); /* allocate new */ \
-			else VECTOR_DATA(__vec) = aRealloc(VECTOR_DATA(__vec),(__n)*sizeof(VECTOR_FIRST(__vec))); /* reallocate */ \
+			if( VECTOR_CAPACITY(__vec) == 0 ) SET_POINTER(VECTOR_DATA(__vec), aMalloc((__n)*sizeof(VECTOR_FIRST(__vec)))); /* allocate new */ \
+			else SET_POINTER(VECTOR_DATA(__vec), aRealloc(VECTOR_DATA(__vec),(__n)*sizeof(VECTOR_FIRST(__vec)))); /* reallocate */ \
 			memset(VECTOR_DATA(__vec)+VECTOR_LENGTH(__vec), 0, (VECTOR_CAPACITY(__vec)-VECTOR_LENGTH(__vec))*sizeof(VECTOR_FIRST(__vec))); /* clear new data */ \
 			VECTOR_CAPACITY(__vec) = (__n); /* update capacity */ \
 		} \
@@ -1007,7 +1007,7 @@ void  linkdb_foreach( struct linkdb_node** head, LinkDBFunc func, ...  );
 		} \
 		else if( (__n) < VECTOR_CAPACITY(__vec) ) \
 		{ /* reduce size */ \
-			VECTOR_DATA(__vec) = aRealloc(VECTOR_DATA(__vec),(__n)*sizeof(VECTOR_FIRST(__vec))); /* reallocate */ \
+			SET_POINTER(VECTOR_DATA(__vec), aRealloc(VECTOR_DATA(__vec),(__n)*sizeof(VECTOR_FIRST(__vec)))); /* reallocate */ \
 			VECTOR_CAPACITY(__vec) = (__n); /* update capacity */ \
 			if( VECTOR_LENGTH(__vec) > (__n) ) VECTOR_LENGTH(__vec) = (__n); /* update length */ \
 		} \

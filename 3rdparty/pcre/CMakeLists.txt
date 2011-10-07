@@ -39,7 +39,6 @@ endif( WIN32 )
 # system
 #
 message( STATUS "Detecting system PCRE" )
-set( CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_MODULE_PATH} )
 unset( PCRE_LIBRARIES CACHE )
 unset( PCRE_INCLUDE_DIRS CACHE )
 find_package( PCRE )

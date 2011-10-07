@@ -32,6 +32,9 @@
 	#ifndef SIOCGIFCONF
 	#include <sys/sockio.h> // SIOCGIFCONF on Solaris, maybe others? [Shinomori]
 	#endif
+	#ifndef FIONBIO
+	#include <sys/filio.h> // FIONBIO on Solaris [FlavioJS]
+	#endif
 
 	#ifdef HAVE_SETRLIMIT
 	#include <sys/resource.h>
@@ -1245,16 +1248,23 @@ void socket_init(void)
 			rlp.rlim_cur = FD_SETSIZE;
 			if( 0 != setrlimit(RLIMIT_NOFILE, &rlp) )
 			{// failed, try setting the maximum too (permission to change system limits is required)
+				int err;
 				rlp.rlim_max = FD_SETSIZE;
-				if( 0 != setrlimit(RLIMIT_NOFILE, &rlp) )
+				err = setrlimit(RLIMIT_NOFILE, &rlp);
+				if( err != 0 )
 				{// failed
+					const char* errmsg = "unknown";
+					int rlim_ori;
 					// set to maximum allowed
 					getrlimit(RLIMIT_NOFILE, &rlp);
+					rlim_ori = (int)rlp.rlim_cur;
 					rlp.rlim_cur = rlp.rlim_max;
 					setrlimit(RLIMIT_NOFILE, &rlp);
 					// report limit
 					getrlimit(RLIMIT_NOFILE, &rlp);
-					ShowWarning("socket_init: failed to set socket limit to %d (current limit %d).\n", FD_SETSIZE, (int)rlp.rlim_cur);
+					if( err == EPERM )
+						errmsg = "permission denied";
+					ShowWarning("socket_init: failed to set socket limit to %d, setting to maximum allowed (original limit=%d, current limit=%d, maximum allowed=%d, error=%s).\n", FD_SETSIZE, rlim_ori, (int)rlp.rlim_cur, (int)rlp.rlim_max, errmsg);
 				}
 			}
 		}
@@ -1343,6 +1353,12 @@ void send_shortlist_add_fd(int fd)
 	if( (send_shortlist_set[i]>>bit)&1 )
 		return;// already in the list
 
+	if( send_shortlist_count >= ARRAYLENGTH(send_shortlist_array) )
+	{
+		ShowDebug("send_shortlist_add_fd: shortlist is full, ignoring... (fd=%d shortlist.count=%d shortlist.length=%d)\n", fd, send_shortlist_count, ARRAYLENGTH(send_shortlist_array));
+		return;
+	}
+
 	// set the bit
 	send_shortlist_set[i] |= 1<<bit;
 	// Add to the end of the shortlist array.
@@ -1352,12 +1368,30 @@ void send_shortlist_add_fd(int fd)
 // Do pending network sends and eof handling from the shortlist.
 void send_shortlist_do_sends()
 {
-	int i = 0;
+	int i;
 
-	while( i < send_shortlist_count )
+	for( i = send_shortlist_count-1; i >= 0; --i )
 	{
 		int fd = send_shortlist_array[i];
+		int idx = fd/32;
+		int bit = fd%32;
 
+		// Remove fd from shortlist, move the last fd to the current position
+		--send_shortlist_count;
+		send_shortlist_array[i] = send_shortlist_array[send_shortlist_count];
+		send_shortlist_array[send_shortlist_count] = 0;
+
+		if( fd <= 0 || fd >= FD_SETSIZE )
+		{
+			ShowDebug("send_shortlist_do_sends: fd is out of range, corrupted memory? (fd=%d)\n", fd);
+			continue;
+		}
+		if( ((send_shortlist_set[idx]>>bit)&1) == 0 )
+		{
+			ShowDebug("send_shortlist_do_sends: fd is not set, why is it in the shortlist? (fd=%d)\n", fd);
+			continue;
+		}
+		send_shortlist_set[idx]&=~(1<<bit);// unset fd
 		// If this session still exists, perform send operations on it and
 		// check for the eof state.
 		if( session[fd] )
@@ -1372,17 +1406,10 @@ void send_shortlist_do_sends()
 				session[fd]->func_parse(fd);
 
 			// If the session still exists, is not eof and has things left to
-			// be sent from it we'll keep it in the shortlist.
+			// be sent from it we'll re-add it to the shortlist.
 			if( session[fd] && !session[fd]->flag.eof && session[fd]->wdata_size )
-			{
-				++i;
-				continue;
-			}
+				send_shortlist_add_fd(fd);
 		}
-
-		// Remove fd from shortlist, move the last fd to the current position
-		send_shortlist_array[i] = send_shortlist_array[--send_shortlist_count];
-		send_shortlist_set[fd/32]&=~(1<<(fd%32));
 	}
 }
 #endif

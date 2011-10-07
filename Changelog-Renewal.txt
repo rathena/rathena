@@ -1,5 +1,7 @@
 Date	Added
 
+2011/10/07
+	* Merged changes from trunk [14895:14966/trunk]. [Ai4rei]
 2011/09/30
 	* Rev. 14965 Forgot to increase MAX_ITEMDELAYs to 18. [L0ne_W0lf]
 	* Rev. 14964 Just a slew of back-logged source updates. [L0ne_W0lf]

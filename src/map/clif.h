@@ -323,6 +323,7 @@ int clif_mob_equip(struct mob_data *md,int nameid); // [Valaris]
 
 int clif_skillinfoblock(struct map_session_data *sd);
 int clif_skillup(struct map_session_data *sd,int skill_num);
+void clif_skillinfo(struct map_session_data *sd,int skill, int inf);
 int clif_addskill(struct map_session_data *sd, int skill);
 int clif_deleteskill(struct map_session_data *sd, int skill);
 
@@ -419,7 +420,7 @@ int clif_hpmeter_sub(struct block_list *bl, va_list ap);
 
 // guild
 int clif_guild_created(struct map_session_data *sd,int flag);
-int clif_guild_belonginfo(struct map_session_data *sd,struct guild *g);
+void clif_guild_belonginfo(struct map_session_data *sd,struct guild *g);
 int clif_guild_masterormember(struct map_session_data *sd);
 int clif_guild_basicinfo(struct map_session_data *sd);
 int clif_guild_allianceinfo(struct map_session_data *sd);
@@ -584,7 +585,7 @@ void clif_mercenary_updatestatus(struct map_session_data *sd, int type);
 
 // RENTAL SYSTEM
 void clif_rental_time(int fd, int nameid, int seconds);
-void clif_rental_expired(int fd, int nameid);
+void clif_rental_expired(int fd, int index, int nameid);
 
 // BOOK READING
 void clif_readbook(int fd, int book_id, int page);

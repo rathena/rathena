@@ -673,7 +673,7 @@ int status_charge(struct block_list* bl, int hp, int sp)
 //If flag&1, damage is passive and does not triggers cancelling status changes.
 //If flag&2, fail if target does not has enough to substract.
 //If flag&4, if killed, mob must not give exp/loot.
-//If flag&8, sp loss on dead target.
+//flag will be set to &8 when damaging sp of a dead character
 int status_damage(struct block_list *src,struct block_list *target,int hp, int sp, int walkdelay, int flag)
 {
 	struct status_data *status;
@@ -683,23 +683,33 @@ int status_damage(struct block_list *src,struct block_list *target,int hp, int s
 		sp = 0; //Not a valid SP target.
 
 	if (hp < 0) { //Assume absorbed damage.
-		status_heal(target, cap_value(-hp, INT_MIN, INT_MAX), 0, 1);
+		status_heal(target, -hp, 0, 1);
 		hp = 0;
 	}
 
 	if (sp < 0) {
-		status_heal(target, 0, cap_value(-sp, INT_MIN, INT_MAX), 1);
+		status_heal(target, 0, -sp, 1);
 		sp = 0;
 	}
-
-	if (!hp && !sp)
-		return 0;
 
 	if (target->type == BL_SKILL)
 		return skill_unit_ondamaged((struct skill_unit *)target, src, hp, gettick());
 
 	status = status_get_status_data(target);
 	if( status == &dummy_status )
+		return 0;
+
+	if ((unsigned int)hp >= status->hp) {
+		if (flag&2) return 0;
+		hp = status->hp;
+	}
+
+	if ((unsigned int)sp > status->sp) {
+		if (flag&2) return 0;
+		sp = status->sp;
+	}
+
+	if (!hp && !sp)
 		return 0;
 
 	if( !status->hp )
@@ -711,10 +721,10 @@ int status_damage(struct block_list *src,struct block_list *target,int hp, int s
 //		return 0; //Cannot damage a bl not on a map, except when "charging" hp/sp
 
 	sc = status_get_sc(target);
-	if( battle_config.invincible_nodamage && src && sc && sc->data[SC_INVINCIBLE] && !sc->data[SC_INVINCIBLEOFF] )
+	if( hp && battle_config.invincible_nodamage && src && sc && sc->data[SC_INVINCIBLE] && !sc->data[SC_INVINCIBLEOFF] )
 		hp = 1;
 
-	if( hp && !(flag&(1|8)) ) {
+	if( hp && !(flag&1) ) {
 		if( sc ) {
 			struct status_change_entry *sce;
 			if (sc->data[SC_STONE] && sc->opt1 == OPT1_STONE)
@@ -748,16 +758,6 @@ int status_damage(struct block_list *src,struct block_list *target,int hp, int s
 		unit_skillcastcancel(target, 2);
 	}
 
-	if ((unsigned int)hp >= status->hp) {
-		if (flag&2) return 0;
-		hp = status->hp;
-	}
-
-	if ((unsigned int)sp > status->sp) {
-		if (flag&2) return 0;
-		sp = status->sp;
-	}
-
 	status->hp-= hp;
 	status->sp-= sp;
 
@@ -778,7 +778,7 @@ int status_damage(struct block_list *src,struct block_list *target,int hp, int s
 		case BL_MER: mercenary_damage((TBL_MER*)target,src,hp,sp); break;
 	}
 
-	if( status->hp || flag&8 )
+	if( status->hp || (flag&8) )
   	{	//Still lives or has been dead before this damage.
 		if (walkdelay)
 			unit_set_walkdelay(target, gettick(), walkdelay, 0);
@@ -822,11 +822,11 @@ int status_damage(struct block_list *src,struct block_list *target,int hp, int s
 		}
 	}
    
-	if( !(flag&8) && sc && sc->data[SC_KAIZEL] )
+	if( sc && sc->data[SC_KAIZEL] )
 	{ //flag&8 = disable Kaizel
 		int time = skill_get_time2(SL_KAIZEL,sc->data[SC_KAIZEL]->val1);
 		//Look for Osiris Card's bonus effect on the character and revive 100% or revive normally
-		if ( target->type == BL_PC && BL_CAST(BL_PC,target)->special_state.restart_full_recover == 1 )
+		if ( target->type == BL_PC && BL_CAST(BL_PC,target)->special_state.restart_full_recover )
 			status_revive(target, 100, 100);
 		else
 			status_revive(target, sc->data[SC_KAIZEL]->val2, 0);
@@ -886,7 +886,8 @@ int status_heal(struct block_list *bl,int hp,int sp, int flag)
 		sc = NULL;
 
 	if (hp < 0) {
-		status_damage(NULL, bl, cap_value(-hp, INT_MIN, INT_MAX), 0, 0, 1);
+		if (hp == INT_MIN) hp++; //-INT_MIN == INT_MIN in some architectures!
+		status_damage(NULL, bl, -hp, 0, 0, 1);
 		hp = 0;
 	}
 
@@ -899,7 +900,8 @@ int status_heal(struct block_list *bl,int hp,int sp, int flag)
 	}
 
 	if(sp < 0) {
-		status_damage(NULL, bl, 0, cap_value(-sp, INT_MIN, INT_MAX), 0, 1);
+		if (sp==INT_MIN) sp++;
+		status_damage(NULL, bl, 0, -sp, 0, 1);
 		sp = 0;
 	}
 
@@ -1539,19 +1541,14 @@ int status_calc_mob_(struct mob_data* md, bool first)
 		gc=guild_mapname2gc(map[md->bl.m].name);
 		if (!gc)
 			ShowError("status_calc_mob: No castle set at map %s\n", map[md->bl.m].name);
-		else {
-			if(gc->castle_id > 23) {
-				if(md->class_ == MOBID_EMPERIUM) {
-					status->max_hp += 1000 * gc->defense;
-					status->max_sp += 200 * gc->defense;
-					status->hp = status->max_hp;
-					status->sp = status->max_sp;
-				}
-			}else{
-				status->max_hp += 1000 * gc->defense;
-				status->max_sp += 200 * gc->defense;
-				status->hp = status->max_hp;
-				status->sp = status->max_sp;
+		else
+		if(gc->castle_id < 24 || md->class_ == MOBID_EMPERIUM) {
+			status->max_hp += 1000 * gc->defense;
+			status->max_sp += 200 * gc->defense;
+			status->hp = status->max_hp;
+			status->sp = status->max_sp;
+			if( gc->castle_id < 24 )
+			{
 				status->def += (gc->defense+2)/3;
 				status->mdef += (gc->defense+2)/3;
 			}
@@ -2034,11 +2031,15 @@ int status_calc_pc_(struct map_session_data* sd, bool first)
 				if(!data->script)
 					continue;
 				if(data->flag.no_equip) { //Card restriction checks.
-					if(map[sd->bl.m].flag.restricted && data->flag.no_equip&map[sd->bl.m].zone)
+					if(map[sd->bl.m].flag.restricted && data->flag.no_equip&(8*map[sd->bl.m].zone))
 						continue;
-					if(map[sd->bl.m].flag.pvp && data->flag.no_equip&1)
+					if(!map_flag_vs(sd->bl.m) && data->flag.no_equip&1)
 						continue;
-					if(map_flag_gvg(sd->bl.m) && data->flag.no_equip&2) 
+					if(map[sd->bl.m].flag.pvp && data->flag.no_equip&2)
+						continue;
+					if(map_flag_gvg(sd->bl.m) && data->flag.no_equip&4) 
+						continue;
+					if(map[sd->bl.m].flag.battleground && data->flag.no_equip&8)
 						continue;
 				}
 				if(i == EQI_HAND_L && sd->status.inventory[index].equip == EQP_HAND_L)
@@ -2466,6 +2467,11 @@ int status_calc_pc_(struct map_session_data* sd, bool first)
 	status_cpy(&sd->battle_status, status);
 
 // ----- CLIENT-SIDE REFRESH -----
+	if(!sd->bl.prev) {
+		//Will update on LoadEndAck
+		calculating = 0;
+		return 0;
+	}
 	if(memcmp(b_skill,sd->status.skill,sizeof(sd->status.skill)))
 		clif_skillinfoblock(sd);
 	if(b_weight != sd->weight)
@@ -2740,7 +2746,7 @@ void status_calc_regen_rate(struct block_list *bl, struct regen_data *regen, str
 	if (
 		sc->data[SC_DANCING]
 		|| (
-			(((TBL_PC*)bl)->class_&MAPID_UPPERMASK) == MAPID_MONK &&
+			(bl->type == BL_PC && ((TBL_PC*)bl)->class_&MAPID_UPPERMASK) == MAPID_MONK &&
 			(sc->data[SC_EXTREMITYFIST] || (sc->data[SC_EXPLOSIONSPIRITS] && (!sc->data[SC_SPIRIT] || sc->data[SC_SPIRIT]->val2 != SL_MONK)))
 			)
 		|| sc->data[SC_MAXIMIZEPOWER]
@@ -2773,7 +2779,7 @@ void status_calc_regen_rate(struct block_list *bl, struct regen_data *regen, str
 
 /// Recalculates parts of an object's battle status according to the specified flags.
 /// @param flag bitfield of values from enum scb_flag
-void status_calc_bl_main(struct block_list *bl, enum scb_flag flag)
+void status_calc_bl_main(struct block_list *bl, /*enum scb_flag*/int flag)
 {
 	const struct status_data *b_status = status_get_base_status(bl);
 	struct status_data *status = status_get_status_data(bl);
@@ -5897,44 +5903,17 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			//val1: Skill ID
 			//val2: When given, target (for autotargetting skills)
 			//val3: When set, this combo time should NOT delay attack/movement
-			//val4: Combo time
+			//val3: TK: Last used kick
+			//val4: TK: Combo time
 			struct unit_data *ud = unit_bl2ud(bl);
-			switch (val1) {
-				case TK_STORMKICK:
-					clif_skill_nodamage(bl,bl,TK_READYSTORM,1,1);
-					break;
-				case TK_DOWNKICK:
-					clif_skill_nodamage(bl,bl,TK_READYDOWN,1,1);
-					break;
-				case TK_TURNKICK:
-					clif_skill_nodamage(bl,bl,TK_READYTURN,1,1);
-					break;
-				case TK_COUNTER:
-					clif_skill_nodamage(bl,bl,TK_READYCOUNTER,1,1);
-					break;
-				case MO_COMBOFINISH:
-				case CH_TIGERFIST:
-				case CH_CHAINCRUSH:
-					if( sd )
-					{
-						sd->state.combo = 1;
-						clif_skillinfoblock(sd);
-					}
-					break;
-				case TK_JUMPKICK:
-					if( sd )
-					{
-						sd->state.combo = 2;
-						clif_skillinfoblock(sd);
-					}
-					break;		
-			}
 			if (ud && !val3) 
 			{
+				tick += 300 * battle_config.combo_delay_rate/100;
 				ud->attackabletime = gettick()+tick;
 				unit_set_walkdelay(bl, gettick(), tick, 1);
 			}
-			val4 = tick; //Store combo-time in val4.
+			val3 = 0;
+			val4 = tick;
 		}
 			break;
 		case SC_EARTHSCROLL:
@@ -6498,6 +6477,31 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 		case SC_MERC_SPUP:
 			status_percent_heal(bl, 0, 100); // Recover Full SP
 			break;
+		case SC_COMBO:
+			switch (sce->val1) {
+				case TK_STORMKICK:
+					clif_skill_nodamage(bl,bl,TK_READYSTORM,1,1);
+					break;
+				case TK_DOWNKICK:
+					clif_skill_nodamage(bl,bl,TK_READYDOWN,1,1);
+					break;
+				case TK_TURNKICK:
+					clif_skill_nodamage(bl,bl,TK_READYTURN,1,1);
+					break;
+				case TK_COUNTER:
+					clif_skill_nodamage(bl,bl,TK_READYCOUNTER,1,1);
+					break;
+				case MO_COMBOFINISH:
+				case CH_TIGERFIST:
+				case CH_CHAINCRUSH:
+					if (sd)
+						clif_skillinfo(sd,MO_EXTREMITYFIST, INF_SELF_SKILL);
+					break;
+				case TK_JUMPKICK:
+					if (sd)
+						clif_skillinfo(sd,TK_JUMPKICK, INF_SELF_SKILL);
+					break;
+			}
 	}
 
 	if( opt_flag&2 && sd && sd->touching_id )
@@ -6836,16 +6840,17 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 					bl->m, bl->x-range, bl->y-range, bl->x+range,bl->y+range,BL_CHAR,bl,sce,type,gettick());
 			}
 			break;
-		case SC_COMBO: //Clear last used skill when it is part of a combo.
+		case SC_COMBO:
 			if( sd )
-			{
-				if( sd->state.combo )
-				{
-					sd->state.combo = 0;
-					clif_skillinfoblock(sd);
-				}
-				if( sd->skillid_old == sce->val1 )
-					sd->skillid_old = sd->skilllv_old = 0;
+			switch (sce->val1) {
+				case MO_COMBOFINISH:
+				case CH_TIGERFIST:
+				case CH_CHAINCRUSH:
+					clif_skillinfo(sd, MO_EXTREMITYFIST, 0);
+					break;
+				case TK_JUMPKICK:
+					clif_skillinfo(sd, TK_JUMPKICK, 0);
+					break;
 			}
 			break;
 
@@ -7404,15 +7409,6 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 		}
 		break;
 
-	case SC_DEVOTION:
-		//FIXME: use normal status duration instead of a looping timer
-		if( (sce->val4 -= 1000) > 0 )
-		{
-			sc_timer_next(1000+tick, status_change_timer, bl->id, data);
-			return 0;
-		}
-		break;
-		
 	case SC_BERSERK:
 		// 5% every 10 seconds [DracoRPG]
 		if( --( sce->val3 ) > 0 && status_charge(bl, sce->val2, 0) && status->hp > 100 )

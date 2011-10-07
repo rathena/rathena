@@ -73,8 +73,8 @@
 struct pcrematch_entry {
 	struct pcrematch_entry* next;
 	char* pattern;
-	pcre* pcre;
-	pcre_extra* pcre_extra;
+	pcre* pcre_;
+	pcre_extra* pcre_extra_;
 	char* label;
 };
 
@@ -108,8 +108,8 @@ struct npc_parse {
  */
 void finalize_pcrematch_entry(struct pcrematch_entry* e)
 {
-	pcre_free(e->pcre);
-	pcre_free(e->pcre_extra);
+	pcre_free(e->pcre_);
+	pcre_free(e->pcre_extra_);
 	aFree(e->pattern);
 	aFree(e->label);
 }
@@ -316,8 +316,8 @@ void npc_chat_def_pattern(struct npc_data* nd, int setid, const char* pattern, c
 	struct pcrematch_entry *e = create_pcrematch_entry(s);
 	e->pattern = aStrdup(pattern);
 	e->label = aStrdup(label);
-	e->pcre = pcre_compile(pattern, PCRE_CASELESS, &err, &erroff, NULL);
-	e->pcre_extra = pcre_study(e->pcre, 0, &err);
+	e->pcre_ = pcre_compile(pattern, PCRE_CASELESS, &err, &erroff, NULL);
+	e->pcre_extra_ = pcre_study(e->pcre_, 0, &err);
 }
 
 /**
@@ -373,7 +373,7 @@ int npc_chat_sub(struct block_list* bl, va_list ap)
 			int offsets[2*10 + 10]; // 1/3 reserved for temp space requred by pcre_exec
 			
 			// perform pattern match
-			int r = pcre_exec(e->pcre, e->pcre_extra, msg, len, 0, 0, offsets, ARRAYLENGTH(offsets));
+			int r = pcre_exec(e->pcre_, e->pcre_extra_, msg, len, 0, 0, offsets, ARRAYLENGTH(offsets));
 			if (r > 0)
 			{
 				// save out the matched strings

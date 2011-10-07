@@ -77,9 +77,25 @@
 // portable printf/scanf format macros and integer definitions
 // NOTE: Visual C++ uses <inttypes.h> and <stdint.h> provided in /3rdparty
 //////////////////////////////////////////////////////////////////////////
+#ifdef __cplusplus
+#define __STDC_CONSTANT_MACROS
+#define __STDC_FORMAT_MACROS
+#define __STDC_LIMIT_MACROS
+#endif
+
 #include <inttypes.h>
 #include <stdint.h>
 #include <limits.h>
+
+// temporary fix for bugreport:4961 (unintended conversion from signed to unsigned)
+// (-20 >= UCHAR_MAX) returns true
+// (-20 >= USHRT_MAX) returns true
+#if defined(__FreeBSD__) && defined(__x86_64)
+#undef UCHAR_MAX
+#define UCHAR_MAX (unsigned char)0xff
+#undef USHRT_MAX
+#define USHRT_MAX (unsigned short)0xffff
+#endif
 
 // ILP64 isn't supported, so always 32 bits?
 #ifndef UINT_MAX
@@ -315,5 +331,28 @@ typedef char bool;
 #define va_copy(dst, src) ((void) memcpy(&(dst), &(src), sizeof(va_list)))
 #endif
 #endif
+
+
+//////////////////////////////////////////////////////////////////////////
+// Set a pointer variable to a pointer value.
+#ifdef __cplusplus
+template <typename T1, typename T2>
+void SET_POINTER(T1*&var, T2* p)
+{
+	var = static_cast<T1*>(p);
+}
+template <typename T1, typename T2>
+void SET_FUNCPOINTER(T1& var, T2 p)
+{
+	char ASSERT_POINTERSIZE[sizeof(T1) == sizeof(void*) && sizeof(T2) == sizeof(void*)?1:-1];// 1 if true, -1 if false
+	union{ T1 out; T2 in; } tmp;// /!\ WARNING casting a pointer to a function pointer is against the C++ standard
+	tmp.in = p;
+	var = tmp.out;
+}
+#else
+#define SET_POINTER(var,p) (var) = (p)
+#define SET_FUNCPOINTER(var,p) (var) = (p)
+#endif
+
 
 #endif /* _CBASETYPES_H_ */

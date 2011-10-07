@@ -10,7 +10,6 @@
 #include "buyingstore.h"  // struct s_buyingstore
 #include "itemdb.h" // MAX_ITEMGROUP
 #include "map.h" // RC_MAX
-#include "pc.h" // struct map_session_data
 #include "script.h" // struct script_reg, struct script_regstr
 #include "searchstore.h"  // struct s_search_store_info
 #include "status.h" // OPTION_*, struct weapon_atk
@@ -102,7 +101,6 @@ struct map_session_data {
 		unsigned int lr_flag : 2;
 		unsigned int connect_new : 1;
 		unsigned int arrow_atk : 1;
-		unsigned int combo : 2; // 1:Asura, 2:Kick [Inkfish]
 		unsigned int gangsterparadise : 1;
 		unsigned int rest : 1;
 		unsigned int storage_flag : 2; //0: closed, 1: Normal Storage open, 2: guild storage open [Skotlex]

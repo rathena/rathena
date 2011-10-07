@@ -19,12 +19,29 @@
 	* Added Rune Knight skills to skill_cast_db
 	* Updated Rune Knight skills, and Arch Bishop skills.
 	* Updated SP requirements in skill_require_db.
+2011/09/27
+	* Rev. 14963 Updated item_noequip.txt examples to reflect recent changes (follow up to r14961). [Ai4rei]
 2011/08/26
 	* Rev. 14941 Several updates in relation to 3rd jobs. [L0ne_W0lf]
 2011/08/10
 	* Rev. 14931 Added Brasilis database updates from trunk r14928. [L0ne_W0lf]
+2011/08/09
+	* Rev. 14928 Added remaining database modifications for Brasilis.
+	- Added the skills for the Brasilis monsters.
+	- Added remaining entries for Bathroom Ghost quest.
+	- Added stats for the Suspicious Hydra monsters.
+	- Corrected the capture rate for Suspicious Hydra.
 2011/08/07
 	* Rev. 14927 Merged database changes from trunk r14927. [L0ne_W0lf]
+	* Rev. 14926 Minor item-related updates, and a couple quest database updates. [L0ne_W0lf]
+2011/07/11
+	* Rev. 14901 Lots of updates. :] [L0ne_W0lf]
+	- Added several missing items to the item database, updated others.
+	- Raised level 10 Dec. AGI to be level 48, when used by mobs.
+	- Added missing mercenaries to the mercenary DB, and skills.
+	- Added missing monster_chat_db entries for Nydhoggr's Shadow.
+	- Added Brasilis pets to the pet DB, these pets are unhatchable on purpose.
+	- Added additional quests to the quest_db, mostly for RE.
 2011/04/16
 	* Rev. 14797 Added Archangel Wings (2573) and their respective Box (16998) item based on client-side kRO description. [Ai4rei]
 2011/03/19

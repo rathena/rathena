@@ -3476,6 +3476,54 @@ rm -f conftest.err conftest.$ac_objext \
 
 
 #
+# -O2 implies -fstrict-aliasing, but the code is not safe for that
+#
+echo "$as_me:$LINENO: checking whether $CC supports -fno-strict-aliasing" >&5
+echo $ECHO_N "checking whether $CC supports -fno-strict-aliasing... $ECHO_C" >&6
+OLD_CFLAGS="$CFLAGS"
+CFLAGS="$CFLAGS -fno-strict-aliasing"
+cat >conftest.$ac_ext <<_ACEOF
+int foo;
+_ACEOF
+rm -f conftest.$ac_objext
+if { (eval echo "$as_me:$LINENO: \"$ac_compile\"") >&5
+  (eval $ac_compile) 2>conftest.er1
+  ac_status=$?
+  grep -v '^ *+' conftest.er1 >conftest.err
+  rm -f conftest.er1
+  cat conftest.err >&5
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); } &&
+	 { ac_try='test -z "$ac_c_werror_flag"
+			 || test ! -s conftest.err'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; } &&
+	 { ac_try='test -s conftest.$ac_objext'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; }; then
+  echo "$as_me:$LINENO: result: yes" >&5
+echo "${ECHO_T}yes" >&6
+else
+  echo "$as_me: failed program was:" >&5
+sed 's/^/| /' conftest.$ac_ext >&5
+
+
+		echo "$as_me:$LINENO: result: no" >&5
+echo "${ECHO_T}no" >&6
+		CFLAGS="$OLD_CFLAGS"
+
+
+fi
+rm -f conftest.err conftest.$ac_objext conftest.$ac_ext
+
+
+#
 # DB_MANUAL_CAST_TO_UNION
 #
 echo "$as_me:$LINENO: checking whether $CC is able to typecast to union" >&5
@@ -6178,6 +6226,7 @@ do
   # Handling of arguments.
   "Makefile" ) CONFIG_FILES="$CONFIG_FILES Makefile" ;;
   "src/common/Makefile" ) CONFIG_FILES="$CONFIG_FILES src/common/Makefile" ;;
+  "3rdparty/mt19937ar/Makefile" ) CONFIG_FILES="$CONFIG_FILES 3rdparty/mt19937ar/Makefile" ;;
   "src/char/Makefile" ) CONFIG_FILES="$CONFIG_FILES src/char/Makefile" ;;
   "src/login/Makefile" ) CONFIG_FILES="$CONFIG_FILES src/login/Makefile" ;;
   "src/char_sql/Makefile" ) CONFIG_FILES="$CONFIG_FILES src/char_sql/Makefile" ;;

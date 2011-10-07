@@ -335,55 +335,13 @@ void pc_inventory_rentals(struct map_session_data *sd)
 
 		if( sd->status.inventory[i].expire_time <= time(NULL) )
 		{
-			clif_rental_expired(sd->fd, sd->status.inventory[i].nameid);
-			pc_delitem(sd, i, sd->status.inventory[i].amount, 0, 0);
+			clif_rental_expired(sd->fd, i, sd->status.inventory[i].nameid);
+			pc_delitem(sd, i, sd->status.inventory[i].amount, 1, 0);
 		}
 		else
 		{
 			expire_tick = (unsigned int)(sd->status.inventory[i].expire_time - time(NULL)) * 1000;
 			clif_rental_time(sd->fd, sd->status.inventory[i].nameid, (int)(expire_tick / 1000));
-			next_tick = min(expire_tick, next_tick);
-			c++;
-		}
-	}
-
-	for( i = 0; i < MAX_CART; i++ )
-	{ // Check for Rentals on Cart
-		if( sd->status.cart[i].nameid == 0 )
-			continue; // Nothing here
-		if( sd->status.cart[i].expire_time == 0 )
-			continue;
-
-		if( sd->status.cart[i].expire_time <= time(NULL) )
-		{
-			clif_rental_expired(sd->fd, sd->status.cart[i].nameid);
-			pc_cart_delitem(sd, i, 1, 0);
-		}
-		else
-		{
-			expire_tick = (unsigned int)(sd->status.cart[i].expire_time - time(NULL)) * 1000;
-			clif_rental_time(sd->fd, sd->status.cart[i].nameid, (int)(expire_tick / 1000));
-			next_tick = min(expire_tick, next_tick);
-			c++;
-		}
-	}
-
-	for( i = 0; i < MAX_STORAGE; i++ )
-	{ // Check for Rentals on Storage
-		if( sd->status.storage.items[i].nameid == 0 )
-			continue;
-		if( sd->status.storage.items[i].expire_time == 0 )
-			continue;
-
-		if( sd->status.storage.items[i].expire_time <= time(NULL) )
-		{
-			clif_rental_expired(sd->fd, sd->status.storage.items[i].nameid);
-			storage_delitem(sd, i, 1);
-		}
-		else
-		{
-			expire_tick = (unsigned int)(sd->status.storage.items[i].expire_time - time(NULL)) * 1000;
-			clif_rental_time(sd->fd, sd->status.storage.items[i].nameid, (int)(expire_tick / 1000));
 			next_tick = min(expire_tick, next_tick);
 			c++;
 		}
@@ -762,13 +720,17 @@ int pc_isequip(struct map_session_data *sd,int n)
 		return 0;
 	if(item->sex != 2 && sd->status.sex != item->sex)
 		return 0;
-	if(map[sd->bl.m].flag.pvp && ((item->flag.no_equip&1) || !pc_isAllowedCardOn(sd,item->slot,n,1)))
+	if(!map_flag_vs(sd->bl.m) && ((item->flag.no_equip&1) || !pc_isAllowedCardOn(sd,item->slot,n,1)))
 		return 0;
-	if(map_flag_gvg(sd->bl.m) && ((item->flag.no_equip&2) || !pc_isAllowedCardOn(sd,item->slot,n,2)))
-		return 0; 
+	if(map[sd->bl.m].flag.pvp && ((item->flag.no_equip&2) || !pc_isAllowedCardOn(sd,item->slot,n,2)))
+		return 0;
+	if(map_flag_gvg(sd->bl.m) && ((item->flag.no_equip&4) || !pc_isAllowedCardOn(sd,item->slot,n,4)))
+		return 0;
+	if(map[sd->bl.m].flag.battleground && ((item->flag.no_equip&8) || !pc_isAllowedCardOn(sd,item->slot,n,8)))
+		return 0;
 	if(map[sd->bl.m].flag.restricted)
 	{
-		int flag =map[sd->bl.m].zone;
+		int flag =8*map[sd->bl.m].zone;
 		if (item->flag.no_equip&flag || !pc_isAllowedCardOn(sd,item->slot,n,flag))
 			return 0;
 	}
@@ -1608,7 +1570,8 @@ static int pc_bonus_item_drop(struct s_add_drop *drop, const short max, short id
 	for(i = 0; i < max && (drop[i].id || drop[i].group); i++) {
 		if(
 			((id && drop[i].id == id) ||
-			(group && drop[i].group == group)) && race < (1<<RC_MAX)
+			(group && drop[i].group == group)) 
+			&& race > 0
 		) {
 			drop[i].race |= race;
 			if(drop[i].rate > 0 && rate > 0)
@@ -2884,7 +2847,7 @@ int pc_bonus3(struct map_session_data *sd,int type,int type2,int type3,int val)
 		break;
 	case SP_ADD_CLASS_DROP_ITEM:
 		if(sd->state.lr_flag != 2)
-			pc_bonus_item_drop(sd->add_drop, ARRAYLENGTH(sd->add_drop), type2, 0, type3, val);
+			pc_bonus_item_drop(sd->add_drop, ARRAYLENGTH(sd->add_drop), type2, 0, -type3, val);
 		break;
 	case SP_AUTOSPELL:
 		if(sd->state.lr_flag != 2)
@@ -3731,6 +3694,11 @@ int pc_isUseitem(struct map_session_data *sd,int n)
 			if( nameid == 12243 && sd->md->db->lv < 80 )
 				return 0;
 			break;
+
+		case 12213: //Neuralizer
+			if( !map[sd->bl.m].flag.reset )
+				return 0;
+			break;
 	}
 
 	if( nameid >= 12153 && nameid <= 12182 && sd->md != NULL )
@@ -3738,9 +3706,11 @@ int pc_isUseitem(struct map_session_data *sd,int n)
 
 	//added item_noequip.txt items check by Maya&[Lupus]
 	if (
-		(map[sd->bl.m].flag.pvp && item->flag.no_equip&1) || // PVP
-		(map_flag_gvg(sd->bl.m) && item->flag.no_equip&2) || // GVG
-		(map[sd->bl.m].flag.restricted && item->flag.no_equip&map[sd->bl.m].zone) // Zone restriction
+		(!map_flag_vs(sd->bl.m) && item->flag.no_equip&1) || // Normal
+		(map[sd->bl.m].flag.pvp && item->flag.no_equip&2) || // PVP
+		(map_flag_gvg(sd->bl.m) && item->flag.no_equip&4) || // GVG
+		(map[sd->bl.m].flag.battleground && item->flag.no_equip&8) || // Battleground
+		(map[sd->bl.m].flag.restricted && item->flag.no_equip&(8*map[sd->bl.m].zone)) // Zone restriction
 	)
 		return 0;
 
@@ -7444,7 +7414,7 @@ int pc_equipitem(struct map_session_data *sd,int n,int req_pos)
 	pos = pc_equippoint(sd,n); //With a few exceptions, item should go in all specified slots.
 
 	if(battle_config.battle_log)
-		ShowInfo("equip %d(%d) %x:%x\n",sd->status.inventory[n].nameid,n,id->equip,req_pos);
+		ShowInfo("equip %d(%d) %x:%x\n",sd->status.inventory[n].nameid,n,id?id->equip:0,req_pos);
 	if(!pc_isequip(sd,n) || !(pos&req_pos) || sd->status.inventory[n].equip != 0 || sd->status.inventory[n].attribute==1 ) { // [Valaris]
 		clif_equipitemack(sd,n,0,0);	// fail
 		return 0;
@@ -7752,9 +7722,11 @@ int pc_checkitem(struct map_session_data *sd)
 		if( it )
 		{ // check for forbiden items.
 			int flag =
-					(map[sd->bl.m].flag.restricted?map[sd->bl.m].zone:0)
-					| (map[sd->bl.m].flag.pvp?1:0)
-					| (map_flag_gvg(sd->bl.m)?2:0);
+					(map[sd->bl.m].flag.restricted?(8*map[sd->bl.m].zone):0)
+					| (!map_flag_vs(sd->bl.m)?1:0)
+					| (map[sd->bl.m].flag.pvp?2:0)
+					| (map_flag_gvg(sd->bl.m)?4:0)
+					| (map[sd->bl.m].flag.battleground?8:0);
 			if( flag && (it->flag.no_equip&flag || !pc_isAllowedCardOn(sd,it->slot,i,flag)) )
 			{
 				pc_unequipitem(sd, i, 2);

@@ -425,6 +425,22 @@ AC_SUBST([WITH_PLUGINS])
 
 
 #
+# -O2 implies -fstrict-aliasing, but the code is not safe for that
+#
+AC_MSG_CHECKING([whether $CC supports -fno-strict-aliasing])
+OLD_CFLAGS="$CFLAGS"
+CFLAGS="$CFLAGS -fno-strict-aliasing"
+AC_COMPILE_IFELSE(
+	[int foo;],
+	[AC_MSG_RESULT([yes])],
+	[
+		AC_MSG_RESULT([no])
+		CFLAGS="$OLD_CFLAGS"
+	]
+)
+
+
+#
 # DB_MANUAL_CAST_TO_UNION
 #
 AC_MSG_CHECKING([whether $CC is able to typecast to union])

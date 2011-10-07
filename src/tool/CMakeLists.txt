@@ -3,6 +3,11 @@
 # mapcache
 #
 if( WITH_ZLIB )
+	option( BUILD_MAPCACHE "build mapcache executable" ON )
+else()
+	message( STATUS "Disabled mapcache target (required ZLIB)" )
+endif()
+if( BUILD_MAPCACHE )
 message( STATUS "Creating target mapcache" )
 set( COMMON_HEADERS
 	${COMMON_MINI_HEADERS}
@@ -19,24 +24,20 @@ set( MAPCACHE_SOURCES
 	)
 set( LIBRARIES ${GLOBAL_LIBRARIES} ${ZLIB_LIBRARIES} )
 set( INCLUDE_DIRS ${GLOBAL_INCLUDE_DIRS} ${ZLIB_INCLUDE_DIRS} )
-set( DEFINITIONS ${GLOBAL_DEFINITIONS} ${COMMON_MINI_DEFINITIONS} )
+set( DEFINITIONS "${GLOBAL_DEFINITIONS} ${COMMON_MINI_DEFINITIONS}" )
 set( SOURCE_FILES ${COMMON_HEADERS} ${COMMON_SOURCES} ${MAPCACHE_SOURCES} )
 source_group( common FILES ${COMMON_HEADERS} ${COMMON_SOURCES} )
 source_group( mapcache FILES ${MAPCACHE_SOURCES} )
 add_executable( mapcache ${SOURCE_FILES} )
 include_directories( ${INCLUDE_DIRS} )
 target_link_libraries( mapcache ${LIBRARIES} )
-set_target_properties( mapcache PROPERTIES COMPILE_DEFINITIONS "${DEFINITIONS}" )
-if( WITH_COMPONENT_RUNTIME )
+set_target_properties( mapcache PROPERTIES COMPILE_FLAGS "${DEFINITIONS}" )
+if( INSTALL_COMPONENT_RUNTIME )
 	cpack_add_component( Runtime_mapcache DESCRIPTION "mapcache generator" DISPLAY_NAME "mapcache" GROUP Runtime )
 	install( TARGETS mapcache
 		DESTINATION "."
 		COMPONENT Runtime_mapcache )
-endif()
+endif( INSTALL_COMPONENT_RUNTIME )
+set( TARGET_LIST ${TARGET_LIST} mapcache  CACHE INTERNAL "" )
 message( STATUS "Creating target mapcache - done" )
-set( HAVE_mapcache ON  CACHE BOOL "mapcache target is available" )
-mark_as_advanced( HAVE_mapcache )
-else()
-message( STATUS "Skipping target mapcache (requires ZLIB)" )
-unset( HAVE_mapcache CACHE )
-endif()
+endif( BUILD_MAPCACHE )

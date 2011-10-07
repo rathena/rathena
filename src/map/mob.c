@@ -2259,10 +2259,11 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 			int itemid = 0;
 			for (i = 0; i < ARRAYLENGTH(sd->add_drop) && (sd->add_drop[i].id || sd->add_drop[i].group); i++)
 			{
-				if ( ( sd->add_drop[i].race <= (1<<status->race) &&
-				       sd->add_drop[i].race & (1<<status->race) ||
-				       sd->add_drop[i].race & 1<<(status->mode&MD_BOSS?RC_BOSS:RC_NONBOSS) ) ||
-				     ( sd->add_drop[i].race > (1<<RC_MAX) && sd->add_drop[i].race == md->class_) )
+				if ( sd->add_drop[i].race == -md->class_ ||
+					( sd->add_drop[i].race > 0 && (
+						sd->add_drop[i].race & (1<<status->race) ||
+						sd->add_drop[i].race & (1<<(status->mode&MD_BOSS?RC_BOSS:RC_NONBOSS))
+					)))
 				{
 					//check if the bonus item drop rate should be multiplied with mob level/10 [Lupus]
 					if(sd->add_drop[i].rate < 0) {
@@ -3638,6 +3639,9 @@ static bool mob_parse_dbrow(char** str)
 	// Finally insert monster's data into the database.
 	if (mob_db_data[class_] == NULL)
 		mob_db_data[class_] = (struct mob_db*)aCalloc(1, sizeof(struct mob_db));
+	else
+		//Copy over spawn data
+		memcpy(&db->spawn, mob_db_data[class_]->spawn, sizeof(db->spawn));
 
 	memcpy(mob_db_data[class_], db, sizeof(struct mob_db));
 	return true;
@@ -3960,6 +3964,21 @@ static bool mob_parse_row_mobskilldb(char** str, int columns, int current)
 	static const struct {
 		char str[32];
 		enum MobSkillState id;
+	} state[] = {
+		{	"any",		MSS_ANY		}, //All states except Dead
+		{	"idle",		MSS_IDLE	},
+		{	"walk",		MSS_WALK	},
+		{	"loot",		MSS_LOOT	},
+		{	"dead",		MSS_DEAD	},
+		{	"attack",	MSS_BERSERK	}, //Retaliating attack
+		{	"angry",	MSS_ANGRY	}, //Preemptive attack (aggressive mobs)
+		{	"chase",	MSS_RUSH	}, //Chase escaping target
+		{	"follow",	MSS_FOLLOW	}, //Preemptive chase (aggressive mobs)
+		{	"anytarget",MSS_ANYTARGET	}, //Berserk+Angry+Rush+Follow
+	};
+	static const struct {
+		char str[32];
+		int id;
 	} cond1[] = {
 		{ "always",            MSC_ALWAYS            },
 		{ "myhpltmaxrate",     MSC_MYHPLTMAXRATE     },
@@ -3997,17 +4016,6 @@ static bool mob_parse_row_mobskilldb(char** str, int columns, int current)
 		{	"blind",		SC_BLIND		},
 		{	"hiding",		SC_HIDING		},
 		{	"sight",		SC_SIGHT		},
-	}, state[] = {
-		{	"any",		MSS_ANY		}, //All states except Dead
-		{	"idle",		MSS_IDLE	},
-		{	"walk",		MSS_WALK	},
-		{	"loot",		MSS_LOOT	},
-		{	"dead",		MSS_DEAD	},
-		{	"attack",	MSS_BERSERK	}, //Retaliating attack
-		{	"angry",	MSS_ANGRY	}, //Preemptive attack (aggressive mobs)
-		{	"chase",	MSS_RUSH	}, //Chase escaping target
-		{	"follow",	MSS_FOLLOW	}, //Preemptive chase (aggressive mobs)
-		{	"anytarget",MSS_ANYTARGET	}, //Berserk+Angry+Rush+Follow
 	}, target[] = {
 		{	"target",	MST_TARGET	},
 		{	"randomtarget",	MST_RANDOM	},

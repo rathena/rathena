@@ -348,7 +348,8 @@ enum {
 	MF_ALLOWKS,
 	MF_MONSTER_NOTELEPORT,
 	MF_PVP_NOCALCRANK,	//50
-	MF_BATTLEGROUND
+	MF_BATTLEGROUND,
+	MF_RESET
 };
 
 const char* script_op2name(int op)
@@ -901,7 +902,7 @@ int add_word(const char* p)
 		disp_error_message("script:add_word: invalid word. A word consists of undercores and/or alfanumeric characters, and valid variable prefixes/postfixes.", p);
 
 	// Duplicate the word
-	word = aMalloc(len+1);
+	word = (char*)aMalloc(len+1);
 	memcpy(word, p, len);
 	word[len] = 0;
 	
@@ -4559,7 +4560,7 @@ BUILDIN_FUNC(warpparty)
 	struct party_data* p;
 	int type;
 	int mapindex;
-	int i, j;
+	int i;
 
 	const char* str = script_getstr(st,2);
 	int x = script_getnum(st,3);
@@ -4579,9 +4580,27 @@ BUILDIN_FUNC(warpparty)
 		 : ( strcmp(str,"Leader")==0 ) ? 3
 		 : 4;
 
-	if( type == 2 && ( sd = script_rid2sd(st) ) == NULL )
-	{// "SavePoint" uses save point of the currently attached player
-		return 0;
+	switch (type)
+	{
+	case 3:
+		for(i = 0; i < MAX_PARTY && !p->party.member[i].leader; i++);
+		if (i == MAX_PARTY || !p->data[i].sd) //Leader not found / not online
+			return 0;
+		pl_sd = p->data[i].sd;
+		mapindex = pl_sd->mapindex;
+		x = pl_sd->bl.x;
+		y = pl_sd->bl.y;
+		break;
+	case 4:
+		mapindex = mapindex_name2id(str);
+		break;
+	case 2:
+		//"SavePoint" uses save point of the currently attached player
+		if (( sd = script_rid2sd(st) ) == NULL )
+			return 0;
+	default:
+		mapindex = 0;
+		break;
 	}
 
 	for (i = 0; i < MAX_PARTY; i++)
@@ -4610,25 +4629,9 @@ BUILDIN_FUNC(warpparty)
 				pc_setpos(pl_sd,sd->status.save_point.map,sd->status.save_point.x,sd->status.save_point.y,CLR_TELEPORT);
 		break;
 		case 3: // Leader
-			for(j = 0; j < MAX_PARTY && !p->party.member[j].leader; j++);
-			if (j == MAX_PARTY || !p->data[j].sd) //Leader not found / not online
-				return 0;
-			mapindex = p->data[j].sd->mapindex;
-			x = p->data[j].sd->bl.x;
-			y = p->data[j].sd->bl.y;
-			for (j = 0; j < MAX_PARTY; j++)
-			{
-				pl_sd = p->data[j].sd;
-				if (!pl_sd)
-					continue;
-				if(map[pl_sd->bl.m].flag.noreturn || map[pl_sd->bl.m].flag.nowarp)
-					continue;
-				pc_setpos(pl_sd,mapindex,x,y,CLR_TELEPORT);
-			}
-		break;
 		case 4: // m,x,y
 			if(!map[pl_sd->bl.m].flag.noreturn && !map[pl_sd->bl.m].flag.nowarp) 
-				pc_setpos(pl_sd,mapindex_name2id(str),x,y,CLR_TELEPORT);
+				pc_setpos(pl_sd,mapindex,x,y,CLR_TELEPORT);
 		break;
 		}
 	}
@@ -5568,8 +5571,8 @@ BUILDIN_FUNC(checkweight)
 }
 
 /*==========================================
- * getitem <item id>,<amount>{,<character ID>};
- * getitem "<item name>",<amount>{,<character ID>};
+ * getitem <item id>,<amount>{,<account ID>};
+ * getitem "<item name>",<amount>{,<account ID>};
  *------------------------------------------*/
 BUILDIN_FUNC(getitem)
 {
@@ -6573,6 +6576,9 @@ BUILDIN_FUNC(strnpcinfo)
 			break;
 		case 3: // unique name
 			name = aStrdup(nd->exname);
+			break;
+		case 4: // map name
+			name = aStrdup(map[nd->bl.m].name);
 			break;
 	}
 
@@ -9628,6 +9634,7 @@ BUILDIN_FUNC(getmapflag)
 			case MF_MONSTER_NOTELEPORT:	script_pushint(st,map[m].flag.monster_noteleport); break;
 			case MF_PVP_NOCALCRANK:		script_pushint(st,map[m].flag.pvp_nocalcrank); break;
 			case MF_BATTLEGROUND:		script_pushint(st,map[m].flag.battleground); break;
+			case MF_RESET:			script_pushint(st,map[m].flag.reset); break;
 		}
 	}
 
@@ -9697,6 +9704,7 @@ BUILDIN_FUNC(setmapflag)
 			case MF_MONSTER_NOTELEPORT:	map[m].flag.monster_noteleport=1; break;
 			case MF_PVP_NOCALCRANK:		map[m].flag.pvp_nocalcrank=1; break;
 			case MF_BATTLEGROUND:		map[m].flag.battleground = (!val || atoi(val) < 0 || atoi(val) > 2) ? 1 : atoi(val); break;
+			case MF_RESET:			map[m].flag.reset=1; break;
 		}
 	}
 
@@ -9763,6 +9771,7 @@ BUILDIN_FUNC(removemapflag)
 			case MF_MONSTER_NOTELEPORT:	map[m].flag.monster_noteleport=0; break;
 			case MF_PVP_NOCALCRANK:		map[m].flag.pvp_nocalcrank=0; break;
 			case MF_BATTLEGROUND:		map[m].flag.battleground=0; break;
+			case MF_RESET:			map[m].flag.reset=0; break;
 		}
 	}
 
@@ -13448,13 +13457,23 @@ BUILDIN_FUNC(unitwarp)
 	short x;
 	short y;
 	struct block_list* bl;
+	const char *mapname;
 
 	unit_id = script_getnum(st,2);
-	map = map_mapname2mapid(script_getstr(st, 3));
+	mapname = script_getstr(st, 3);
 	x = (short)script_getnum(st,4);
 	y = (short)script_getnum(st,5);
+	
+	if (!unit_id) //Warp the script's runner
+		bl = map_id2bl(st->rid);
+	else
+		bl = map_id2bl(unit_id);
 
-	bl = map_id2bl(unit_id);
+	if( strcmp(mapname,"this") == 0 )
+		map = bl?bl->m:-1;
+	else
+		map = map_mapname2mapid(mapname);
+
 	if( map >= 0 && bl != NULL )
 		script_pushint(st, unit_warp(bl,map,x,y,CLR_OUTSIGHT));
 	else

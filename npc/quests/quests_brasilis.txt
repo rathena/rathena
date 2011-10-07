@@ -51,7 +51,7 @@ brasilis,297,307,5	script	Angelo#br	50,{
 					mes "Oh, thank you. You found all of 3 puppies.";
 					mes "Thanks a lot.";
 					mes "I hope this is useful to you. hoho.";
-					getexp 50000,0;
+					getexp 500000,0;
 					erasequest 9031;
 					setquest 9032;
 					set .@bosang,rand(1,10);
@@ -1230,7 +1230,7 @@ brasilis,187,162,5	script	Candy Maker	476,{
 		set brazil_gua,11;
 		completequest 2200;
 		getitem 12414,1; //Guarana_Candy
-		getexp 70000,10000;
+		getexp 700000,100000;
 		close;
 	}
 	else if (brazil_gua == 11) {
@@ -1923,7 +1923,7 @@ brasilis,203,286,3	script	Botanist Karmen#bra	893,{
 		mes "The water lily must truly be a lucky flower. hahaha";
 		set brazil_regia,10;
 		completequest 2207;
-		getexp 50000,10000;
+		getexp 500000,100000;
 		close;
 	}
 	else {
@@ -2669,7 +2669,7 @@ bra_dun02,67,205,5	script	Recluse#bra	475,3,3,{
 	end;
 
 OnTouchNPC:
-	warp "bra_dun02",67,215;
+	unitwarp 0,"this",67,215;
 	end;
 }
 
@@ -4246,7 +4246,7 @@ bra_in01,206,188,1	script	Open Manhole#todunbra	844,{
 		set brazil_ghost,8;
 		//completequest 2208;
 		completequest 60355;
-		getexp 90000,0;
+		getexp 900000,0;
 		disablenpc "Ghost#bra_end";
 		close;
 	}

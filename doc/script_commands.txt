@@ -181,6 +181,8 @@
 //=       Documented special map names recognized by 'warpguild'. [Ai4rei]
 //= 3.45.20110709
 //=       Added 'getmercinfo' command. [Ai4rei]
+//= 3.46.20110810
+//=       Added information on OnTouchNPC and 'unitwarp' special case [Skotlex]
 //=========================================================
 
 This document is a reference manual for all the scripting commands and functions 
@@ -423,7 +425,8 @@ spanning triggerX cells in every direction across X and triggerY in every
 direction across Y. Walking into that area will trigger the NPC. If no 
 'OnTouch:' special label is present in the NPC code, the execution will start 
 from the beginning of the script, otherwise, it will start from the 'OnTouch:' 
-label.
+label. Monsters can also trigger the NPC, though the label 'OnTouchNPC:' is 
+used in this case.
 
 The code part is the script code that will execute whenever the NPC is 
 triggered. It may contain commands and function calls, descriptions of which 
@@ -574,7 +577,9 @@ Variables
 ---------
 
 The meat of every programming language is variables - places where you store 
-data. 
+data.
+
+In the eAthena scripting language, variable names are not case sensitive.
 
 Variables are divided into and uniquely identified by the combination of:
 prefix  - determines the scope and extent (or lifetime) of the variable
@@ -611,7 +616,9 @@ nothing  - A permanent variable attached to the character, the default variable
 "."      - A NPC variable.
            They exist in the NPC and disappear when the server restarts or the 
            NPC is reloaded. Can be accessed from inside the NPC or by calling 
-           'getvariableofnpc'.
+           'getvariableofnpc'. Function objects can also have .variables which 
+           are accessible from inside the function, however 'getvariableofnpc' 
+           does NOT work on function objects.
 ".@"     - A scope variable.
            They are unique to the instance and scope. Each instance has it's 
            own scope that ends when the script ends. Calling a function with 
@@ -1300,6 +1307,9 @@ Example(s):
 	
 //This will set the .var variable of TargetNPC to 1.
 	set getvariableofnpc(.var,"TargetNPC"),1;
+
+Note: even though function objects can have .variables, 
+getvariableofnpc will not work on them.
 
 ---------------------------------------
 
@@ -2164,6 +2174,7 @@ Whatever it returns is determined by type.
  1 - The visible part of the NPC's display name
  2 - The hidden part of the NPC's display name
  3 - The NPC's unique name (::name)
+ 4 - The name of the map the NPC is in.
 
 ---------------------------------------
 
@@ -2192,10 +2203,13 @@ This will make @arraysize == 6. But if you try this:
 This command retrieves the value of the element of given array at given index.
 This is equivalent to using:
 
-    array[index]
+    <array name>[<index>]
 
 The reason for this is, that this short form is internally converted into a call
 to getelementofarray, when the script is loaded.
+
+Also useful when passing arrays to functions.
+getelementofarray(getarg(0),<index>) will work, but getarg(0)[<index>] will not.
 
 ---------------------------------------
 
@@ -3687,7 +3701,7 @@ is executing this script, unless it's some kind of "chosen" script.
  
 Example:
  
-warpchar "prontera",150,100,20000001;
+warpchar "prontera",150,100,150001;
  
 ---------------------------------------
  
@@ -4014,7 +4028,7 @@ wall), the character is pushed only up to the obstacle.
 
 This command will give a specific amount of specified items to the target 
 character. If the character is not online, nothing will happen.
-If <character ID> is not specified, items will be created in the invoking 
+If <account ID> is not specified, items will be created in the invoking 
 character inventory instead.
 
 In the first and most commonly used version of this command, items are 
@@ -4056,7 +4070,7 @@ quite a few item scripts. For more examples check just about any official script
 *getitem2 "<Item name>",<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<account ID>};
 
 This command will give an amount of specified items to the invoking character. 
-If an optional character ID is specified, and that character is currently 
+If an optional account ID is specified, and the target character is currently 
 online, items will be created in their inventory instead. If they are not 
 online, nothing will happen. It works essentially the same as 'getitem' (it even 
 works for negative ID numbers the same way, which is kinda silly) but is a lot 
@@ -5241,6 +5255,10 @@ Example(s):
 
 Okay, these commands should be fairly self explaining.
 For the emotions, you can look in db/const.txt for prefixes with e_
+PS: unitwarp supports a <GID> of zero, which causes the executor of the script to be affected. This can be used with OnTouchNPC to warp monsters:
+
+OnTouchNPC:
+	unitwarp 0,"this",-1,-1;
 
 ---------------------------------------
 
@@ -6121,13 +6139,14 @@ the NPC with the said name.
 
 *rand(<number>{,<number>});
 
-This function returns a number, randomly positioned between 0 and the number you 
-specify (if you only specify one) and the two numbers you specify if you give it 
-two.
+This function returns a number ...
+(if you specify one) ... randomly positioned between 0 and the number you specify -1.
+(if you specify two) ... randomly positioned between the two numbers you specify.
 
-rand(10) would result in 0,1,2,3,4,5,6,7,8 or 9
+rand(10)  would result in 0,1,2,3,4,5,6,7,8 or 9
+rand(0,9) would result in 0,1,2,3,4,5,6,7,8 or 9
 
-rand(2,10) would result in 2,3,4,5,6,7,8,9 or 10
+rand(2,5) would result in 2,3,4 or 5
 
 ---------------------------------------
 

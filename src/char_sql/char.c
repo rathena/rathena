@@ -409,6 +409,7 @@ int mmo_char_tosql(int char_id, struct mmo_charstatus* p)
 	int diff = 0;
 	char save_status[128]; //For displaying save information. [Skotlex]
 	struct mmo_charstatus *cp;
+	int errors = 0; //If there are any errors while saving, "cp" will not be updated at the end.
 	StringBuf buf;
 
 	if (char_id!=p->char_id) return 0;
@@ -425,22 +426,28 @@ int mmo_char_tosql(int char_id, struct mmo_charstatus* p)
 	//map inventory data
 	if( memcmp(p->inventory, cp->inventory, sizeof(p->inventory)) )
 	{
-		memitemdata_to_sql(p->inventory, MAX_INVENTORY, p->char_id, TABLE_INVENTORY);
-		strcat(save_status, " inventory");
+		if (!memitemdata_to_sql(p->inventory, MAX_INVENTORY, p->char_id, TABLE_INVENTORY))
+			strcat(save_status, " inventory");
+		else
+			errors++;
 	}
 
 	//map cart data
 	if( memcmp(p->cart, cp->cart, sizeof(p->cart)) )
 	{
-		memitemdata_to_sql(p->cart, MAX_CART, p->char_id, TABLE_CART);
-		strcat(save_status, " cart");
+		if (!memitemdata_to_sql(p->cart, MAX_CART, p->char_id, TABLE_CART))
+			strcat(save_status, " cart");
+		else
+			errors++;
 	}
 
 	//map storage data
 	if( memcmp(p->storage.items, cp->storage.items, sizeof(p->storage.items)) )
 	{
-		memitemdata_to_sql(p->storage.items, MAX_STORAGE, p->account_id, TABLE_STORAGE);
-		strcat(save_status, " storage");
+		if (!memitemdata_to_sql(p->storage.items, MAX_STORAGE, p->account_id, TABLE_STORAGE))
+			strcat(save_status, " storage");
+		else
+			errors++;
 	}
 
 #ifdef TXT_SQL_CONVERT
@@ -452,9 +459,9 @@ int mmo_char_tosql(int char_id, struct mmo_charstatus* p)
 		char_db, p->char_id, p->account_id, p->slot, esc_name) )
 	{
 		Sql_ShowDebug(sql_handle);
-	}
-
-	strcat(save_status, " creation");
+		errors++;
+	} else
+		strcat(save_status, " creation");
 }
 #endif
 
@@ -499,8 +506,9 @@ int mmo_char_tosql(int char_id, struct mmo_charstatus* p)
 			p->account_id, p->char_id) )
 		{
 			Sql_ShowDebug(sql_handle);
-		}
-		strcat(save_status, " status");
+			errors++;
+		} else
+			strcat(save_status, " status");
 	}
 
 	//Values that will seldom change (to speed up saving)
@@ -525,9 +533,9 @@ int mmo_char_tosql(int char_id, struct mmo_charstatus* p)
 			p->account_id, p->char_id) )
 		{
 			Sql_ShowDebug(sql_handle);
-		}
-
-		strcat(save_status, " status2");
+			errors++;
+		} else
+			strcat(save_status, " status2");
 	}
 
 	/* Mercenary Owner */
@@ -536,8 +544,10 @@ int mmo_char_tosql(int char_id, struct mmo_charstatus* p)
 		(p->spear_calls != cp->spear_calls) || (p->spear_faith != cp->spear_faith) ||
 		(p->sword_calls != cp->sword_calls) || (p->sword_faith != cp->sword_faith) )
 	{
-		mercenary_owner_tosql(char_id, p);
-		strcat(save_status, " mercenary");
+		if (mercenary_owner_tosql(char_id, p))
+			strcat(save_status, " mercenary");
+		else
+			errors++;
 	}
 
 	//memo points
@@ -547,7 +557,10 @@ int mmo_char_tosql(int char_id, struct mmo_charstatus* p)
 
 		//`memo` (`memo_id`,`char_id`,`map`,`x`,`y`)
 		if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `char_id`='%d'", memo_db, p->char_id) )
+		{
 			Sql_ShowDebug(sql_handle);
+			errors++;
+		}
 
 		//insert here.
 		StringBuf_Clear(&buf);
@@ -566,9 +579,11 @@ int mmo_char_tosql(int char_id, struct mmo_charstatus* p)
 		if( count )
 		{
 			if( SQL_ERROR == Sql_QueryStr(sql_handle, StringBuf_Value(&buf)) )
+			{
 				Sql_ShowDebug(sql_handle);
+				errors++;
+			}
 		}
-		
 		strcat(save_status, " memo");
 	}
 
@@ -583,7 +598,10 @@ int mmo_char_tosql(int char_id, struct mmo_charstatus* p)
 	{
 		//`skill` (`char_id`, `id`, `lv`)
 		if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `char_id`='%d'", skill_db, p->char_id) )
+		{
 			Sql_ShowDebug(sql_handle);
+			errors++;
+		}
 
 		StringBuf_Clear(&buf);
 		StringBuf_Printf(&buf, "INSERT INTO `%s`(`char_id`,`id`,`lv`) VALUES ", skill_db);
@@ -601,7 +619,10 @@ int mmo_char_tosql(int char_id, struct mmo_charstatus* p)
 		if( count )
 		{
 			if( SQL_ERROR == Sql_QueryStr(sql_handle, StringBuf_Value(&buf)) )
+			{
 				Sql_ShowDebug(sql_handle);
+				errors++;
+			}
 		}
 
 		strcat(save_status, " skills");
@@ -619,7 +640,10 @@ int mmo_char_tosql(int char_id, struct mmo_charstatus* p)
 	if(diff == 1)
 	{	//Save friends
 		if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `char_id`='%d'", friend_db, char_id) )
+		{
 			Sql_ShowDebug(sql_handle);
+			errors++;
+		}
 
 		StringBuf_Clear(&buf);
 		StringBuf_Printf(&buf, "INSERT INTO `%s` (`char_id`, `friend_account`, `friend_id`) VALUES ", friend_db);
@@ -636,12 +660,12 @@ int mmo_char_tosql(int char_id, struct mmo_charstatus* p)
 		if( count )
 		{
 			if( SQL_ERROR == Sql_QueryStr(sql_handle, StringBuf_Value(&buf)) )
+			{
 				Sql_ShowDebug(sql_handle);
-			else
-				strcat(save_status, " friends");
+				errors++;
+			}
 		}
-		else //Friend list cleared.
-			strcat(save_status, " friends");
+		strcat(save_status, " friends");
 	}
 
 #ifdef HOTKEY_SAVING
@@ -660,8 +684,10 @@ int mmo_char_tosql(int char_id, struct mmo_charstatus* p)
 	}
 	if(diff) {
 		if( SQL_ERROR == Sql_QueryStr(sql_handle, StringBuf_Value(&buf)) )
+		{
 			Sql_ShowDebug(sql_handle);
-		else
+			errors++;
+		} else
 			strcat(save_status, " hotkeys");
 	}
 #endif
@@ -669,7 +695,8 @@ int mmo_char_tosql(int char_id, struct mmo_charstatus* p)
 	if (save_status[0]!='\0' && save_log)
 		ShowInfo("Saved char %d - %s:%s.\n", char_id, p->name, save_status);
 #ifndef TXT_SQL_CONVERT
-	memcpy(cp, p, sizeof(struct mmo_charstatus));
+	if (!errors)
+		memcpy(cp, p, sizeof(struct mmo_charstatus));
 #else
 	aFree(cp);
 #endif
@@ -688,6 +715,7 @@ int memitemdata_to_sql(const struct item items[], int max, int id, int tableswit
 	struct item item; // temp storage variable
 	bool* flag; // bit array for inventory matching
 	bool found;
+	int errors = 0;
 
 	switch (tableswitch) {
 	case TABLE_INVENTORY:     tablename = inventory_db;     selectoption = "char_id";    break;
@@ -770,7 +798,10 @@ int memitemdata_to_sql(const struct item items[], int max, int id, int tableswit
 					StringBuf_Printf(&buf, " WHERE `id`='%d' LIMIT 1", item.id);
 					
 					if( SQL_ERROR == Sql_QueryStr(sql_handle, StringBuf_Value(&buf)) )
+					{
 						Sql_ShowDebug(sql_handle);
+						errors++;
+					}
 				}
 
 				found = flag[i] = true; //Item dealt with,
@@ -780,7 +811,10 @@ int memitemdata_to_sql(const struct item items[], int max, int id, int tableswit
 		if( !found )
 		{// Item not present in inventory, remove it.
 			if( SQL_ERROR == Sql_Query(sql_handle, "DELETE from `%s` where `id`='%d'", tablename, item.id) )
+			{
 				Sql_ShowDebug(sql_handle);
+				errors++;
+			}
 		}
 	}
 	SqlStmt_Free(stmt);
@@ -812,12 +846,15 @@ int memitemdata_to_sql(const struct item items[], int max, int id, int tableswit
 	}
 
 	if( found && SQL_ERROR == Sql_QueryStr(sql_handle, StringBuf_Value(&buf)) )
+	{
 		Sql_ShowDebug(sql_handle);
+		errors++;
+	}
 
 	StringBuf_Destroy(&buf);
 	aFree(flag);
 
-	return 0;
+	return errors;
 }
 
 int mmo_char_tobuf(uint8* buf, struct mmo_charstatus* p);
@@ -1565,33 +1602,33 @@ int mmo_char_tobuf(uint8* buffer, struct mmo_charstatus* p)
 
 	buf = WBUFP(buffer,0);
 	WBUFL(buf,0) = p->char_id;
-	WBUFL(buf,4) = min(p->base_exp, LONG_MAX);
+	WBUFL(buf,4) = min(p->base_exp, INT32_MAX);
 	WBUFL(buf,8) = p->zeny;
-	WBUFL(buf,12) = min(p->job_exp, LONG_MAX);
+	WBUFL(buf,12) = min(p->job_exp, INT32_MAX);
 	WBUFL(buf,16) = p->job_level;
 	WBUFL(buf,20) = 0; // probably opt1
 	WBUFL(buf,24) = 0; // probably opt2
 	WBUFL(buf,28) = p->option;
 	WBUFL(buf,32) = p->karma;
 	WBUFL(buf,36) = p->manner;
-	WBUFW(buf,40) = min(p->status_point, SHRT_MAX);
+	WBUFW(buf,40) = min(p->status_point, INT16_MAX);
 #if PACKETVER > 20081217
 	WBUFL(buf,42) = p->hp;
 	WBUFL(buf,46) = p->max_hp;
 	offset+=4;
 	buf = WBUFP(buffer,offset);
 #else
-	WBUFW(buf,42) = min(p->hp, SHRT_MAX);
-	WBUFW(buf,44) = min(p->max_hp, SHRT_MAX);
+	WBUFW(buf,42) = min(p->hp, INT16_MAX);
+	WBUFW(buf,44) = min(p->max_hp, INT16_MAX);
 #endif
-	WBUFW(buf,46) = min(p->sp, SHRT_MAX);
-	WBUFW(buf,48) = min(p->max_sp, SHRT_MAX);
+	WBUFW(buf,46) = min(p->sp, INT16_MAX);
+	WBUFW(buf,48) = min(p->max_sp, INT16_MAX);
 	WBUFW(buf,50) = DEFAULT_WALK_SPEED; // p->speed;
 	WBUFW(buf,52) = p->class_;
 	WBUFW(buf,54) = p->hair;
 	WBUFW(buf,56) = p->option&0x20 ? 0 : p->weapon; //When the weapon is sent and your option is riding, the client crashes on login!?
 	WBUFW(buf,58) = p->base_level;
-	WBUFW(buf,60) = min(p->skill_point, SHRT_MAX);
+	WBUFW(buf,60) = min(p->skill_point, INT16_MAX);
 	WBUFW(buf,62) = p->head_bottom;
 	WBUFW(buf,64) = p->shield;
 	WBUFW(buf,66) = p->head_top;
@@ -1599,12 +1636,12 @@ int mmo_char_tobuf(uint8* buffer, struct mmo_charstatus* p)
 	WBUFW(buf,70) = p->hair_color;
 	WBUFW(buf,72) = p->clothes_color;
 	memcpy(WBUFP(buf,74), p->name, NAME_LENGTH);
-	WBUFB(buf,98) = min(p->str, UCHAR_MAX);
-	WBUFB(buf,99) = min(p->agi, UCHAR_MAX);
-	WBUFB(buf,100) = min(p->vit, UCHAR_MAX);
-	WBUFB(buf,101) = min(p->int_, UCHAR_MAX);
-	WBUFB(buf,102) = min(p->dex, UCHAR_MAX);
-	WBUFB(buf,103) = min(p->luk, UCHAR_MAX);
+	WBUFB(buf,98) = min(p->str, UINT8_MAX);
+	WBUFB(buf,99) = min(p->agi, UINT8_MAX);
+	WBUFB(buf,100) = min(p->vit, UINT8_MAX);
+	WBUFB(buf,101) = min(p->int_, UINT8_MAX);
+	WBUFB(buf,102) = min(p->dex, UINT8_MAX);
+	WBUFB(buf,103) = min(p->luk, UINT8_MAX);
 	WBUFW(buf,104) = p->slot;
 #if PACKETVER >= 20061023
 	WBUFW(buf,106) = ( p->rename > 0 ) ? 0 : 1;
@@ -1927,7 +1964,7 @@ int parse_fromlogin(int fd)
 				memcpy(sd->email, RFIFOP(fd,6), 40);
 				sd->expiration_time = (time_t)RFIFOL(fd,46);
 				sd->gmlevel = RFIFOB(fd,50);
-				safestrncpy(sd->birthdate, RFIFOP(fd,51), sizeof(sd->birthdate));
+				safestrncpy(sd->birthdate, (const char*)RFIFOP(fd,51), sizeof(sd->birthdate));
 
 				// continued from char_auth_ok...
 				if( max_connect_user && count_users() >= max_connect_user && sd->gmlevel < gm_allow_level )
@@ -1942,6 +1979,16 @@ int parse_fromlogin(int fd)
 				{
 					// send characters to player
 					mmo_char_send006b(i, sd);
+#if PACKETVER >=  20110309
+					// PIN code system, disabled
+					WFIFOHEAD(i, 12);
+					WFIFOW(i, 0) = 0x08B9;
+					WFIFOW(i, 2) = 0;
+					WFIFOW(i, 4) = 0;
+					WFIFOL(i, 6) = sd->account_id;
+					WFIFOW(i, 10) = 0;
+					WFIFOSET(i, 12);
+#endif
 				}
 			}
 			RFIFOSKIP(fd,62);

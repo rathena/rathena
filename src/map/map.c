@@ -2305,7 +2305,7 @@ int map_random_dir(struct block_list *bl, short *x, short *y)
 	if (dist < 1) dist =1;
 	
 	do {
-		j = rand()%8; //Pick a random direction
+		j = 1 + 2*(rand()%4); //Pick a random diagonal direction
 		segment = 1+(rand()%dist); //Pick a random interval from the whole vector in that direction
 		xi = bl->x + segment*dirx[j];
 		segment = (short)sqrt((float)(dist2 - segment*segment)); //The complement of the previously picked segment
@@ -2676,7 +2676,7 @@ static char *map_init_mapcache(FILE *fp)
 	fseek(fp, 0, SEEK_SET);
 
 	// Allocate enough space
-	CREATE(buffer, unsigned char, size);
+	CREATE(buffer, char, size);
 
 	// No memory? Return..
 	nullpo_ret(buffer);
@@ -2699,7 +2699,7 @@ int map_readfromcache(struct map_data *m, char *buffer, char *decode_buffer)
 	int i;
 	struct map_cache_main_header *header = (struct map_cache_main_header *)buffer;
 	struct map_cache_map_info *info = NULL;
-	unsigned char *p = buffer + sizeof(struct map_cache_main_header);
+	char *p = buffer + sizeof(struct map_cache_main_header);
 
 	for(i = 0; i < header->map_count; i++) {
 		info = (struct map_cache_map_info *)p;
@@ -2906,8 +2906,8 @@ int map_readallmaps (void)
 	int i;
 	FILE* fp=NULL;
 	int maps_removed = 0;
-	unsigned char *map_cache_buffer = NULL; // Has the uncompressed gat data of all maps, so just one allocation has to be made
-	unsigned char map_cache_decode_buffer[MAX_MAP_SIZE];
+	char *map_cache_buffer = NULL; // Has the uncompressed gat data of all maps, so just one allocation has to be made
+	char map_cache_decode_buffer[MAX_MAP_SIZE];
 
 	if( enable_grf )
 		ShowStatus("Loading maps (using GRF files)...\n");

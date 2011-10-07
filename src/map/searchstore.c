@@ -184,7 +184,7 @@ void searchstore_query(struct map_session_data* sd, unsigned char type, unsigned
 	searchstore_clear(sd);
 
 	// allocate max. amount of results
-	sd->searchstore.items = aMalloc(sizeof(struct s_search_store_info_item)*battle_config.searchstore_maxresults);
+	sd->searchstore.items = (struct s_search_store_info_item*)aMalloc(sizeof(struct s_search_store_info_item)*battle_config.searchstore_maxresults);
 
 	// search
 	s.search_sd  = sd;
@@ -215,7 +215,7 @@ void searchstore_query(struct map_session_data* sd, unsigned char type, unsigned
 	if( sd->searchstore.count )
 	{
 		// reclaim unused memory
-		sd->searchstore.items = aRealloc(sd->searchstore.items, sizeof(struct s_search_store_info_item)*sd->searchstore.count);
+		sd->searchstore.items = (struct s_search_store_info_item*)aRealloc(sd->searchstore.items, sizeof(struct s_search_store_info_item)*sd->searchstore.count);
 
 		// present results
 		clif_search_store_info_ack(sd);

@@ -2340,7 +2340,7 @@ const char* npc_parse_duplicate(char* w1, char* w2, char* w3, char* w4, const ch
 	nd->speed = 200;
 	nd->src_id = src_id;
 	nd->bl.type = BL_NPC;
-	nd->subtype = type;
+	nd->subtype = (enum npc_subtype)type;
 	switch( type )
 	{
 	case SCRIPT:
@@ -3117,6 +3117,8 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 		map[m].flag.partylock=state;
 	else if (!strcmpi(w3,"guildlock"))
 		map[m].flag.guildlock=state;
+	else if (!strcmpi(w3,"reset"))
+		map[m].flag.reset=state;
 	else
 		ShowError("npc_parse_mapflag: unrecognized mapflag '%s' (file '%s', line '%d').\n", w3, filepath, strline(buffer,start-buffer));
 

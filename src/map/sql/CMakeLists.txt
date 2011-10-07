@@ -2,90 +2,92 @@
 #
 # map sql
 #
-if( HAVE_common_sql )
+if( BUILD_SQL_SERVERS )
 message( STATUS "Creating target map-server_sql" )
 set( SQL_MAP_HEADERS
-	"${MAP_SOURCE_DIR}/atcommand.h"
-	"${MAP_SOURCE_DIR}/battle.h"
-	"${MAP_SOURCE_DIR}/battleground.h"
-	"${MAP_SOURCE_DIR}/buyingstore.h"
-	"${MAP_SOURCE_DIR}/chat.h"
-	"${MAP_SOURCE_DIR}/chrif.h"
-	"${MAP_SOURCE_DIR}/clif.h"
-	"${MAP_SOURCE_DIR}/date.h"
-	"${MAP_SOURCE_DIR}/duel.h"
-	"${MAP_SOURCE_DIR}/guild.h"
-	"${MAP_SOURCE_DIR}/homunculus.h"
-	"${MAP_SOURCE_DIR}/instance.h"
-	"${MAP_SOURCE_DIR}/intif.h"
-	"${MAP_SOURCE_DIR}/itemdb.h"
-	"${MAP_SOURCE_DIR}/log.h"
-	"${MAP_SOURCE_DIR}/mail.h"
-	"${MAP_SOURCE_DIR}/map.h"
-	"${MAP_SOURCE_DIR}/mapreg.h"
-	"${MAP_SOURCE_DIR}/mercenary.h"
-	"${MAP_SOURCE_DIR}/mob.h"
-	"${MAP_SOURCE_DIR}/npc.h"
-	"${MAP_SOURCE_DIR}/party.h"
-	"${MAP_SOURCE_DIR}/path.h"
-	"${MAP_SOURCE_DIR}/pc.h"
-	"${MAP_SOURCE_DIR}/pet.h"
-	"${MAP_SOURCE_DIR}/quest.h"
-	"${MAP_SOURCE_DIR}/script.h"
-	"${MAP_SOURCE_DIR}/searchstore.h"
-	"${MAP_SOURCE_DIR}/skill.h"
-	"${MAP_SOURCE_DIR}/status.h"
-	"${MAP_SOURCE_DIR}/storage.h"
-	"${MAP_SOURCE_DIR}/trade.h"
-	"${MAP_SOURCE_DIR}/unit.h"
-	"${MAP_SOURCE_DIR}/vending.h"
+	"${SQL_MAP_SOURCE_DIR}/atcommand.h"
+	"${SQL_MAP_SOURCE_DIR}/battle.h"
+	"${SQL_MAP_SOURCE_DIR}/battleground.h"
+	"${SQL_MAP_SOURCE_DIR}/buyingstore.h"
+	"${SQL_MAP_SOURCE_DIR}/chat.h"
+	"${SQL_MAP_SOURCE_DIR}/chrif.h"
+	"${SQL_MAP_SOURCE_DIR}/clif.h"
+	"${SQL_MAP_SOURCE_DIR}/date.h"
+	"${SQL_MAP_SOURCE_DIR}/duel.h"
+	"${SQL_MAP_SOURCE_DIR}/guild.h"
+	"${SQL_MAP_SOURCE_DIR}/homunculus.h"
+	"${SQL_MAP_SOURCE_DIR}/instance.h"
+	"${SQL_MAP_SOURCE_DIR}/intif.h"
+	"${SQL_MAP_SOURCE_DIR}/itemdb.h"
+	"${SQL_MAP_SOURCE_DIR}/log.h"
+	"${SQL_MAP_SOURCE_DIR}/mail.h"
+	"${SQL_MAP_SOURCE_DIR}/map.h"
+	"${SQL_MAP_SOURCE_DIR}/mapreg.h"
+	"${SQL_MAP_SOURCE_DIR}/mercenary.h"
+	"${SQL_MAP_SOURCE_DIR}/mob.h"
+	"${SQL_MAP_SOURCE_DIR}/npc.h"
+	"${SQL_MAP_SOURCE_DIR}/party.h"
+	"${SQL_MAP_SOURCE_DIR}/path.h"
+	"${SQL_MAP_SOURCE_DIR}/pc.h"
+	"${SQL_MAP_SOURCE_DIR}/pet.h"
+	"${SQL_MAP_SOURCE_DIR}/quest.h"
+	"${SQL_MAP_SOURCE_DIR}/script.h"
+	"${SQL_MAP_SOURCE_DIR}/searchstore.h"
+	"${SQL_MAP_SOURCE_DIR}/skill.h"
+	"${SQL_MAP_SOURCE_DIR}/status.h"
+	"${SQL_MAP_SOURCE_DIR}/storage.h"
+	"${SQL_MAP_SOURCE_DIR}/trade.h"
+	"${SQL_MAP_SOURCE_DIR}/unit.h"
+	"${SQL_MAP_SOURCE_DIR}/vending.h"
 	)
 set( SQL_MAP_SOURCES
-	"${MAP_SOURCE_DIR}/atcommand.c"
-	"${MAP_SOURCE_DIR}/battle.c"
-	"${MAP_SOURCE_DIR}/battleground.c"
-	"${MAP_SOURCE_DIR}/buyingstore.c"
-	"${MAP_SOURCE_DIR}/chat.c"
-	"${MAP_SOURCE_DIR}/chrif.c"
-	"${MAP_SOURCE_DIR}/clif.c"
-	"${MAP_SOURCE_DIR}/date.c"
-	"${MAP_SOURCE_DIR}/duel.c"
-	"${MAP_SOURCE_DIR}/guild.c"
-	"${MAP_SOURCE_DIR}/homunculus.c"
-	"${MAP_SOURCE_DIR}/instance.c"
-	"${MAP_SOURCE_DIR}/intif.c"
-	"${MAP_SOURCE_DIR}/itemdb.c"
-	"${MAP_SOURCE_DIR}/log.c"
-	"${MAP_SOURCE_DIR}/mail.c"
-	"${MAP_SOURCE_DIR}/map.c"
-	"${MAP_SOURCE_DIR}/mapreg_sql.c"
-	"${MAP_SOURCE_DIR}/mercenary.c"
-	"${MAP_SOURCE_DIR}/mob.c"
-	"${MAP_SOURCE_DIR}/npc.c"
-	"${MAP_SOURCE_DIR}/npc_chat.c"
-	"${MAP_SOURCE_DIR}/party.c"
-	"${MAP_SOURCE_DIR}/path.c"
-	"${MAP_SOURCE_DIR}/pc.c"
-	"${MAP_SOURCE_DIR}/pet.c"
-	"${MAP_SOURCE_DIR}/quest.c"
-	"${MAP_SOURCE_DIR}/script.c"
-	"${MAP_SOURCE_DIR}/searchstore.c"
-	"${MAP_SOURCE_DIR}/skill.c"
-	"${MAP_SOURCE_DIR}/status.c"
-	"${MAP_SOURCE_DIR}/storage.c"
-	"${MAP_SOURCE_DIR}/trade.c"
-	"${MAP_SOURCE_DIR}/unit.c"
-	"${MAP_SOURCE_DIR}/vending.c"
+	"${SQL_MAP_SOURCE_DIR}/atcommand.c"
+	"${SQL_MAP_SOURCE_DIR}/battle.c"
+	"${SQL_MAP_SOURCE_DIR}/battleground.c"
+	"${SQL_MAP_SOURCE_DIR}/buyingstore.c"
+	"${SQL_MAP_SOURCE_DIR}/chat.c"
+	"${SQL_MAP_SOURCE_DIR}/chrif.c"
+	"${SQL_MAP_SOURCE_DIR}/clif.c"
+	"${SQL_MAP_SOURCE_DIR}/date.c"
+	"${SQL_MAP_SOURCE_DIR}/duel.c"
+	"${SQL_MAP_SOURCE_DIR}/guild.c"
+	"${SQL_MAP_SOURCE_DIR}/homunculus.c"
+	"${SQL_MAP_SOURCE_DIR}/instance.c"
+	"${SQL_MAP_SOURCE_DIR}/intif.c"
+	"${SQL_MAP_SOURCE_DIR}/itemdb.c"
+	"${SQL_MAP_SOURCE_DIR}/log.c"
+	"${SQL_MAP_SOURCE_DIR}/mail.c"
+	"${SQL_MAP_SOURCE_DIR}/map.c"
+	"${SQL_MAP_SOURCE_DIR}/mapreg_sql.c"
+	"${SQL_MAP_SOURCE_DIR}/mercenary.c"
+	"${SQL_MAP_SOURCE_DIR}/mob.c"
+	"${SQL_MAP_SOURCE_DIR}/npc.c"
+	"${SQL_MAP_SOURCE_DIR}/npc_chat.c"
+	"${SQL_MAP_SOURCE_DIR}/party.c"
+	"${SQL_MAP_SOURCE_DIR}/path.c"
+	"${SQL_MAP_SOURCE_DIR}/pc.c"
+	"${SQL_MAP_SOURCE_DIR}/pet.c"
+	"${SQL_MAP_SOURCE_DIR}/quest.c"
+	"${SQL_MAP_SOURCE_DIR}/script.c"
+	"${SQL_MAP_SOURCE_DIR}/searchstore.c"
+	"${SQL_MAP_SOURCE_DIR}/skill.c"
+	"${SQL_MAP_SOURCE_DIR}/status.c"
+	"${SQL_MAP_SOURCE_DIR}/storage.c"
+	"${SQL_MAP_SOURCE_DIR}/trade.c"
+	"${SQL_MAP_SOURCE_DIR}/unit.c"
+	"${SQL_MAP_SOURCE_DIR}/vending.c"
 	)
 set( DEPENDENCIES common_sql )
 set( LIBRARIES ${GLOBAL_LIBRARIES} )
 set( INCLUDE_DIRS ${GLOBAL_INCLUDE_DIRS} )
-set( DEFINITIONS ${GLOBAL_DEFINITIONS} )
+set( DEFINITIONS "${GLOBAL_DEFINITIONS}" )
 if( WITH_PCRE )
-	message( STATUS "Using PCRE" )
-	list( APPEND LIBRARIES ${PCRE_LIBRARIES} )
-	list( APPEND INCLUDE_DIRS ${PCRE_INCLUDE_DIRS} )
-	list( APPEND DEFINITIONS PCRE_SUPPORT )
+	message( STATUS "Enabled PCRE code" )
+	set( LIBRARIES ${LIBRARIES} ${PCRE_LIBRARIES} )
+	set( INCLUDE_DIRS ${INCLUDE_DIRS} ${PCRE_INCLUDE_DIRS} )
+	set( DEFINITIONS "${DEFINITIONS} -DPCRE_SUPPORT" )
+else()
+	message( STATUS "Disabled PCRE code" )
 endif()
 set( SOURCE_FILES ${COMMON_BASE_HEADERS} ${COMMON_SQL_HEADERS} ${SQL_MAP_HEADERS} ${SQL_MAP_SOURCES} )
 source_group( common FILES ${COMMON_BASE_HEADERS} ${COMMON_SQL_HEADERS} )
@@ -94,17 +96,13 @@ include_directories( ${INCLUDE_DIRS} )
 add_executable( map-server_sql ${SOURCE_FILES} )
 add_dependencies( map-server_sql ${DEPENDENCIES} )
 target_link_libraries( map-server_sql ${LIBRARIES} ${DEPENDENCIES} )
-set_target_properties( map-server_sql PROPERTIES COMPILE_DEFINITIONS "${DEFINITIONS}" )
-if( WITH_COMPONENT_RUNTIME )
+set_target_properties( map-server_sql PROPERTIES COMPILE_FLAGS "${DEFINITIONS}" )
+if( INSTALL_COMPONENT_RUNTIME )
 	cpack_add_component( Runtime_mapserver_sql DESCRIPTION "map-server (sql version)" DISPLAY_NAME "map-server_sql" GROUP Runtime )
 	install( TARGETS map-server_sql
 		DESTINATION "."
 		COMPONENT Runtime_mapserver_sql )
-endif()
+endif( INSTALL_COMPONENT_RUNTIME )
+set( TARGET_LIST ${TARGET_LIST} map-server_sql  CACHE INTERNAL "" )
 message( STATUS "Creating target map-server_sql - done" )
-set( HAVE_map-server_sql ON  CACHE BOOL "map-server_sql target is available" )
-mark_as_advanced( HAVE_map-server_sql )
-else()
-message( STATUS "Skipping target map-server_sql (requires common_sql; optional PCRE)" )
-unset( HAVE_map-server_sql CACHE )
-endif()
+endif( BUILD_SQL_SERVERS )

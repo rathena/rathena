@@ -270,8 +270,8 @@ int skill_get_range2 (struct block_list *bl, int id, int lv)
 int skill_calc_heal(struct block_list *src, struct block_list *target, int skill_id, int skill_lv, bool heal)
 {
 	int skill, hp, mod = 100;
-	struct map_session_data *sd = map_id2sd(src->id);
-	struct map_session_data *tsd = map_id2sd(target->id);
+	struct map_session_data *sd = BL_CAST(BL_PC, src);
+	struct map_session_data *tsd = BL_CAST(BL_PC, target);
 	struct status_change* sc;
 	struct status_data *status;
 	bool FullCalc = false;
@@ -1067,8 +1067,9 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 
 			tbl = (sd->autospell[i].id < 0) ? src : bl;
 
-			if( !battle_check_range(src, tbl, skill_get_range2(src, skill,skilllv) + (skill == RG_CLOSECONFINE?0:1)) && battle_config.autospell_check_range )
-				continue; // If autospell_check_range is yes, fail the autocast.
+			if( battle_config.autospell_check_range &&
+				!battle_check_range(src, tbl, skill_get_range2(src, skill,skilllv) + (skill == RG_CLOSECONFINE?0:1)) )
+				continue;
 
 			if (skill == AS_SONICBLOW)
 				pc_stop_attack(sd); //Special case, Sonic Blow autospell should stop the player attacking.
@@ -1172,7 +1173,8 @@ int skill_onskillusage(struct map_session_data *sd, struct block_list *bl, int s
 			continue;
 		tbl = (sd->autospell3[i].id < 0) ? &sd->bl : bl;
 
-		if( !battle_check_range(&sd->bl, tbl, skill_get_range2(&sd->bl, skill,skilllv) + (skill == RG_CLOSECONFINE?0:1)) && battle_config.autospell_check_range )
+		if( battle_config.autospell_check_range &&
+			!battle_check_range(&sd->bl, tbl, skill_get_range2(&sd->bl, skill,skilllv) + (skill == RG_CLOSECONFINE?0:1)) )
 			continue;
 
 		sd->state.autocast = 1;
@@ -1699,13 +1701,10 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 
 			//Spirit of Wizard blocks Kaite's reflection
 			if( type == 2 && sc && sc->data[SC_SPIRIT] && sc->data[SC_SPIRIT]->val2 == SL_WIZARD )
-			{	//Consume one Fragment per hit of the casted skill. Val3 is the skill id and val4 is the ID of the damage src.
-				//This should account for ground spells (and single target spells will be completed on castend_id) [Skotlex]
-			  	type = pc_search_inventory (tsd, 7321);
-				if (type >= 0)
-					pc_delitem(tsd, type, 1, 0, 1);
-
+			{	//Consume one Fragment per hit of the casted skill? [Skotlex]
+			  	type = tsd?pc_search_inventory (tsd, 7321):0;
 				if (type >= 0) {
+					if ( tsd ) pc_delitem(tsd, type, 1, 0, 1);
 					dmg.damage = dmg.damage2 = 0;
 					dmg.dmg_lv = ATK_MISS;
 					sc->data[SC_SPIRIT]->val3 = skillid;
@@ -1757,7 +1756,8 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 
 	if(sd) {
 		int flag = 0; //Used to signal if this skill can be combo'ed later on.
-		if (sd->sc.data[SC_COMBO])
+		struct status_change_entry *sce;
+		if ((sce = sd->sc.data[SC_COMBO]))
 		{	//End combo state after skill is invoked. [Skotlex]
 			switch (skillid) {
 			case TK_TURNKICK:
@@ -1766,13 +1766,10 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 			case TK_COUNTER:
 				if (pc_famerank(sd->status.char_id,MAPID_TAEKWON))
 			  	{	//Extend combo time.
-					sd->skillid_old = skillid; //Set as previous so you can't repeat
-					sd->skilllv_old = skilllv;
-					sd->sc.data[SC_COMBO]->val1 = skillid; //Update combo-skill
-					delete_timer(sd->sc.data[SC_COMBO]->timer, status_change_timer);
-					sd->sc.data[SC_COMBO]->timer = add_timer(
-						tick+sd->sc.data[SC_COMBO]->val4,
-					  	status_change_timer, src->id, SC_COMBO);
+					sce->val1 = skillid; //Update combo-skill
+					sce->val3 = skillid;
+					delete_timer(sce->timer, status_change_timer);
+					sce->timer = add_timer(tick+sce->val4, status_change_timer, src->id, SC_COMBO);
 					break;
 				}
 				unit_cancel_combo(src); // Cancel combo wait
@@ -1808,7 +1805,7 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 				if( (tstatus->race == RC_BRUTE || tstatus->race == RC_INSECT) && pc_checkskill(sd, HT_POWER))
 				{
 					//TODO: This code was taken from Triple Blows, is this even how it should be? [Skotlex]
-					sc_start4(src,SC_COMBO,100,HT_POWER,bl->id,0,0,2000);
+					sc_start2(src,SC_COMBO,100,HT_POWER,bl->id,2000);
 					clif_combo_delay(src,2000);
 				}
 				break;
@@ -1831,9 +1828,8 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 		}	//Switch End
 		if (flag) { //Possible to chain
 			flag = DIFF_TICK(sd->ud.canact_tick, tick);
-			if (flag < 0) flag = 0;
-			flag += 300 * battle_config.combo_delay_rate/100;
-			sc_start(src,SC_COMBO,100,skillid,flag);
+			if (flag < 1) flag = 1;
+			sc_start2(src,SC_COMBO,100,skillid,bl->id,flag);
 			clif_combo_delay(src, flag);
 		}
 	}
@@ -3337,7 +3333,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			break;
 		{
 			int per = 0, sper = 0;
-			if (status_get_sc(bl)->data[SC_HELLPOWER])
+			if (tsc && tsc->data[SC_HELLPOWER])
 				break;
 
 			if (map[bl->m].flag.pvp && dstsd && dstsd->pvp_point < 0)
@@ -3385,7 +3381,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 
 	case AL_CRUCIS:
 		if (flag&1)
-			sc_start(bl,type, 23+skilllv*4 +status_get_lv(src) -status_get_lv(bl), skilllv,60000);
+			sc_start(bl,type, 23+skilllv*4 +status_get_lv(src) -status_get_lv(bl), skilllv,skill_get_time(skillid,skilllv));
 		else {
 			map_foreachinrange(skill_area_sub, src, skill_get_splash(skillid, skilllv), BL_CHAR,
 				src, skillid, skilllv, tick, flag|BCT_ENEMY|1, skill_castend_nodamage_id);
@@ -3470,7 +3466,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				break;
 			heal = status_percent_heal(bl, 100, 0);
 			clif_skill_nodamage(NULL, bl, AL_HEAL, heal, 1);
-			if( skillid == NPC_ALLHEAL && dstmd )
+			if( dstmd )
 			{ // Reset Damage Logs
 				memset(dstmd->dmglog, 0, sizeof(dstmd->dmglog));
 				dstmd->tdmg = 0;
@@ -3936,7 +3932,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				mer->devotion_flag = 1; // Mercenary Devoting Owner
 
 			clif_skill_nodamage(src, bl, skillid, skilllv,
-				sc_start4(bl, type, 100, src->id, i, skill_get_range2(src,skillid,skilllv), skill_get_time2(skillid, skilllv), 1000));
+				sc_start4(bl, type, 100, src->id, i, skill_get_range2(src,skillid,skilllv),0, skill_get_time2(skillid, skilllv)));
 			clif_devotion(src, NULL);
 		}
 		break;
@@ -6479,7 +6475,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, int skillid, int sk
 	case SA_VIOLENTGALE:
 	{	//Does not consumes if the skill is already active. [Skotlex]
 		struct skill_unit_group *sg;
-		if ((sg= skill_locate_element_field(&sd->bl)) != NULL && ( sg->skill_id == SA_VOLCANO || sg->skill_id == SA_DELUGE || sg->skill_id == SA_VIOLENTGALE ))
+		if ((sg= skill_locate_element_field(src)) != NULL && ( sg->skill_id == SA_VOLCANO || sg->skill_id == SA_DELUGE || sg->skill_id == SA_VIOLENTGALE ))
 		{
 			if (sg->limit - DIFF_TICK(gettick(), sg->tick) > 0)
 			{
@@ -6697,7 +6693,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, int skillid, int sk
 			}
 		} else {
 			int i = skilllv%11 - 1;
-			struct item_data *item = itemdb_search(i);
+			struct item_data *item;
 			i = skill_db[skillid].itemid[i];
 			item = itemdb_search(i);
 			potion_flag = 1;
@@ -8566,7 +8562,7 @@ int skill_check_condition_castbegin(struct map_session_data* sd, short skill, sh
 	require = skill_get_requirement(sd,skill,lv);
 
 	//Can only update state when weapon/arrow info is checked.
-	if (require.weapon) sd->state.arrow_atk = require.ammo?1:0;
+	sd->state.arrow_atk = require.ammo?1:0;
 
 	// perform skill-specific checks (and actions)
 	switch( skill )
@@ -8669,14 +8665,14 @@ int skill_check_condition_castbegin(struct map_session_data* sd, short skill, sh
 			return 0; //Anti-Soul Linker check in case you job-changed with Stances active.
 		if(!(sc && sc->data[SC_COMBO]))
 			return 0; //Combo needs to be ready
-		if (pc_famerank(sd->status.char_id,MAPID_TAEKWON))
-		{	//Unlimited Combo
-			if (skill == sd->skillid_old) {
-				status_change_end(&sd->bl, SC_COMBO, INVALID_TIMER);
-				sd->skillid_old = sd->skilllv_old = 0;
-				return 0; //Can't repeat previous combo skill.
-			}
-			break;
+
+		if (sc->data[SC_COMBO]->val3)
+		{	//Kick chain
+			//Do not repeat a kick.
+			if (sc->data[SC_COMBO]->val3 != skill)
+				break;
+			status_change_end(&sd->bl, SC_COMBO, INVALID_TIMER);
+			return 0;
 		}
 		if(sc->data[SC_COMBO]->val1 != skill)
 		{	//Cancel combo wait.
@@ -8696,7 +8692,7 @@ int skill_check_condition_castbegin(struct map_session_data* sd, short skill, sh
 			if (skill_get_time(
 				(sc->data[SC_DANCING]->val1&0xFFFF), //Dance Skill ID
 				(sc->data[SC_DANCING]->val1>>16)) //Dance Skill LV
-				- time <= skill_get_time2(skill,lv))
+				- time < skill_get_time2(skill,lv))
 			{
 				clif_skill_fail(sd,skill,0,0);
 				return 0;
@@ -9256,9 +9252,11 @@ struct skill_condition skill_get_requirement(struct map_session_data* sd, short 
 
 	req.weapon = skill_db[j].weapon;
 
-	req.ammo = skill_db[j].ammo;
 	req.ammo_qty = skill_db[j].ammo_qty[lv-1];
-	if (req.weapon && !req.ammo && skill && skill_isammotype(sd, skill))
+	if (req.ammo_qty)
+		req.ammo = skill_db[j].ammo;
+
+	if (!req.ammo && skill && skill_isammotype(sd, skill))
 	{	//Assume this skill is using the weapon, therefore it requires arrows.
 		req.ammo = 0xFFFFFFFF; //Enable use on all ammo types.
 		req.ammo_qty = 1;
@@ -12088,9 +12086,9 @@ static bool skill_parse_row_requiredb(char* split[], int columns, int current)
 	for( j = 0; j < 32; j++ )
 	{
 		int l = atoi(p);
-		if( l == 99 ) // magic value?
+		if( l == 99 ) // Any weapon
 		{
-			skill_db[i].weapon = 0xffffffff;
+			skill_db[i].weapon = 0;
 			break;
 		}
 		else
@@ -12106,12 +12104,12 @@ static bool skill_parse_row_requiredb(char* split[], int columns, int current)
 	for( j = 0; j < 32; j++ )
 	{
 		int l = atoi(p);
-		if( l == 99 ) // magic value?
+		if( l == 99 ) // Any ammo type
 		{
-			skill_db[i].ammo = 0xffffffff;
+			skill_db[i].ammo = 0xFFFFFFFF;
 			break;
 		}
-		else if( l ) // 0 not allowed?
+		else if( l ) // 0 stands for no requirement
 			skill_db[i].ammo |= 1<<l;
 		p = strchr(p,':');
 		if( !p )

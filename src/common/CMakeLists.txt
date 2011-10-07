@@ -12,11 +12,11 @@ endif()
 set( GLOBAL_INCLUDE_DIRS ${GLOBAL_INCLUDE_DIRS} ${CMAKE_CURRENT_BINARY_DIR} CACHE INTERNAL "" )
 set( SVNVERSION ${SVNVERSION}
 	CACHE STRING "SVN version of the source code" )
-if( WITH_COMPONENT_DEVELOPMENT )
+if( INSTALL_COMPONENT_DEVELOPMENT )
 	install( FILES ${CMAKE_CURRENT_BINARY_DIR}/svnversion.h
 		DESTINATION "src/common"
 		COMPONENT Development_base )
-endif()
+endif( INSTALL_COMPONENT_DEVELOPMENT )
 message( STATUS "Creating svnversion.h - done" )
 
 
@@ -48,7 +48,7 @@ set( COMMON_MINI_SOURCES
 	"${COMMON_SOURCE_DIR}/showmsg.c"
 	"${COMMON_SOURCE_DIR}/strlib.c"
 	CACHE INTERNAL "" )
-set( COMMON_MINI_DEFINITIONS MINICORE CACHE INTERNAL "" )
+set( COMMON_MINI_DEFINITIONS "-DMINICORE" CACHE INTERNAL "" )
 
 
 #
@@ -95,17 +95,17 @@ set( COMMON_BASE_SOURCES
 	CACHE INTERNAL "common_base sources" )
 set( LIBRARIES ${ZLIB_LIBRARIES} )
 set( INCLUDE_DIRS ${GLOBAL_INCLUDE_DIRS} ${MT19937AR_INCLUDE_DIRS} ${ZLIB_INCLUDE_DIRS} )
-set( DEFINITIONS ${GLOBAL_DEFINITIONS} )
+set( DEFINITIONS "${GLOBAL_DEFINITIONS}" )
 set( SOURCE_FILES ${MT19937AR_HEADERS} ${MT19937AR_SOURCES} ${COMMON_BASE_HEADERS} ${COMMON_BASE_SOURCES} )
 source_group( mt19937ar FILES ${MT19937AR_HEADERS} ${MT19937AR_SOURCES} )
 source_group( common FILES ${COMMON_BASE_HEADERS} ${COMMON_BASE_SOURCES} )
 add_library( common_base ${SOURCE_FILES} )
 target_link_libraries( common_base ${LIBRARIES} )
-set_target_properties( common_base PROPERTIES COMPILE_DEFINITIONS "${DEFINITIONS}" )
+set_target_properties( common_base PROPERTIES COMPILE_FLAGS "${DEFINITIONS}" )
 include_directories( ${INCLUDE_DIRS} )
+set( HAVE_common_base ON  CACHE INTERNAL "" )
+set( TARGET_LIST ${TARGET_LIST} common_base  CACHE INTERNAL "" )
 message( STATUS "Creating target common_base - done" )
-set( HAVE_common_base ON  CACHE BOOL "common_base target is available" )
-mark_as_advanced( HAVE_common_base )
 else()
 message( STATUS "Skipping target common_base (requires ZLIB)" )
 unset( HAVE_common_base CACHE )
@@ -127,17 +127,17 @@ set( COMMON_SQL_SOURCES
 set( DEPENDENCIES common_base )
 set( LIBRARIES ${MYSQL_LIBRARIES} )
 set( INCLUDE_DIRS ${GLOBAL_INCLUDE_DIRS} ${MYSQL_INCLUDE_DIRS} )
-set( DEFINITIONS ${GLOBAL_DEFINITIONS} )
+set( DEFINITIONS "${GLOBAL_DEFINITIONS}" )
 set( SOURCE_FILES ${COMMON_SQL_HEADERS} ${COMMON_SQL_SOURCES} )
 source_group( common FILES ${COMMON_SQL_HEADERS} ${COMMON_SQL_SOURCES} )
 add_library( common_sql ${SOURCE_FILES} )
 add_dependencies( common_sql ${DEPENDENCIES} )
 target_link_libraries( common_sql ${LIBRARIES} ${DEPENDENCIES} )
-set_target_properties( common_sql PROPERTIES COMPILE_DEFINITIONS "${DEFINITIONS}" )
+set_target_properties( common_sql PROPERTIES COMPILE_FLAGS "${DEFINITIONS}" )
 include_directories( ${INCLUDE_DIRS} )
+set( HAVE_common_sql ON  CACHE INTERNAL "" )
+set( TARGET_LIST ${TARGET_LIST} common_sql  CACHE INTERNAL "" )
 message( STATUS "Creating target common_sql - done" )
-set( HAVE_common_sql ON  CACHE BOOL "common_sql target is available" )
-mark_as_advanced( HAVE_common_sql )
 else()
 message( STATUS "Skipping target common_sql (requires common_base and MYSQL)" )
 unset( HAVE_common_sql CACHE )
