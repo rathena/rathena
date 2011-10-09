@@ -1,5 +1,15 @@
 Date	Added
 
+2011/10/09
+	* Rework some party code. [FlavioJS]
+	- add leader argument to party_fill_member
+	- add party_getmemberid
+	- add requester char_id to packets 0x3021 and 0x3821 (party info)
+	- diff members when replacing party info
+	- remove fixup all-player-iteration when receiving a party for the first time
+	- send 'party info' before 'party created'
+	- send 'party info' before 'party member added'
+	- update empty party_id when checking the player of a party
 2011/10/07
 	* Remove fds from the shortlist before processing. [FlavioJS]
 2011/09/18

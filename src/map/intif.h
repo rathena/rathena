@@ -30,7 +30,7 @@ int intif_send_guild_storage(int account_id, struct guild_storage *gstor);
 
 
 int intif_create_party(struct party_member *member,char *name,int item,int item2);
-int intif_request_partyinfo(int party_id);
+int intif_request_partyinfo(int party_id, int char_id);
 
 int intif_party_addmember(int party_id,struct party_member *member);
 int intif_party_changeoption(int party_id, int account_id, int exp, int item);

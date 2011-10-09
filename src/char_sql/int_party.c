@@ -357,29 +357,29 @@ int mapif_party_created(int fd,int account_id,int char_id,struct party *p)
 }
 
 // パーティ情報見つからず
-int mapif_party_noinfo(int fd,int party_id)
+static void mapif_party_noinfo(int fd, int party_id, int char_id)
 {
-	WFIFOHEAD(fd,8);
-	WFIFOW(fd,0)=0x3821;
-	WFIFOW(fd,2)=8;
-	WFIFOL(fd,4)=party_id;
-	WFIFOSET(fd,8);
-	ShowWarning("int_party: info not found %d\n",party_id);
-	return 0;
+	WFIFOHEAD(fd, 12);
+	WFIFOW(fd,0) = 0x3821;
+	WFIFOW(fd,2) = 12;
+	WFIFOL(fd,4) = char_id;
+	WFIFOL(fd,8) = party_id;
+	WFIFOSET(fd,12);
+	ShowWarning("int_party: info not found (party_id=%d char_id=%d)\n", party_id, char_id);
 }
 // パーティ情報まとめ送り
-int mapif_party_info(int fd,struct party *p)
+static void mapif_party_info(int fd, struct party* p, int char_id)
 {
-	unsigned char buf[5+sizeof(struct party)];
-	WBUFW(buf,0)=0x3821;
-	WBUFW(buf,2)=4+sizeof(struct party);
-	memcpy(buf+4,p,sizeof(struct party));
+	unsigned char buf[8 + sizeof(struct party)];
+	WBUFW(buf,0) = 0x3821;
+	WBUFW(buf,2) = 8 + sizeof(struct party);
+	WBUFL(buf,4) = char_id;
+	memcpy(WBUFP(buf,8), p, sizeof(struct party));
 
 	if(fd<0)
 		mapif_sendall(buf,WBUFW(buf,2));
 	else
 		mapif_send(fd,buf,WBUFW(buf,2));
-	return 0;
 }
 // パーティメンバ追加可否
 int mapif_party_memberadded(int fd, int party_id, int account_id, int char_id, int flag) {
@@ -506,8 +506,8 @@ int mapif_parse_CreateParty(int fd, char *name, int item, int item2, struct part
 		//Add party to db
 		int_party_calc_state(p);
 		idb_put(party_db_, p->party.party_id, p);
+		mapif_party_info(fd, &p->party, 0);
 		mapif_party_created(fd,leader->account_id,leader->char_id,&p->party);
-		mapif_party_info(fd,&p->party);
 	} else { //Failed to create party.
 		aFree(p);
 		mapif_party_created(fd,leader->account_id,leader->char_id,NULL);
@@ -516,16 +516,15 @@ int mapif_parse_CreateParty(int fd, char *name, int item, int item2, struct part
 	return 0;
 }
 // パーティ情報要求
-int mapif_parse_PartyInfo(int fd,int party_id)
+static void mapif_parse_PartyInfo(int fd, int party_id, int char_id)
 {
 	struct party_data *p;
 	p = inter_party_fromsql(party_id);
 
 	if (p)
-		mapif_party_info(fd,&p->party);
+		mapif_party_info(fd, &p->party, char_id);
 	else
-		mapif_party_noinfo(fd,party_id);
-	return 0;
+		mapif_party_noinfo(fd, party_id, char_id);
 }
 // パーティ追加要求
 int mapif_parse_PartyAddMember(int fd, int party_id, struct party_member *member)
@@ -558,8 +557,8 @@ int mapif_parse_PartyAddMember(int fd, int party_id, struct party_member *member
 		int_party_check_lv(p);
 	}
 
+	mapif_party_info(-1, &p->party, 0);
 	mapif_party_memberadded(fd, party_id, member->account_id, member->char_id, 0);
-	mapif_party_info(-1, &p->party);
 	inter_party_tosql(&p->party, PS_ADDMEMBER, i);
 
 	return 0;
@@ -633,7 +632,7 @@ int mapif_parse_PartyLeave(int fd, int party_id, int account_id, int char_id)
 	}
 		
 	if (party_check_empty(p) == 0)
-		mapif_party_info(-1,&p->party);
+		mapif_party_info(-1, &p->party, 0);
 	return 0;
 }
 // When member goes to other map or levels up.
@@ -746,7 +745,7 @@ int inter_party_parse_frommap(int fd)
 	RFIFOHEAD(fd);
 	switch(RFIFOW(fd,0)) {
 	case 0x3020: mapif_parse_CreateParty(fd, (char*)RFIFOP(fd,4), RFIFOB(fd,28), RFIFOB(fd,29), (struct party_member*)RFIFOP(fd,30)); break;
-	case 0x3021: mapif_parse_PartyInfo(fd, RFIFOL(fd,2)); break;
+	case 0x3021: mapif_parse_PartyInfo(fd, RFIFOL(fd,2), RFIFOL(fd,6)); break;
 	case 0x3022: mapif_parse_PartyAddMember(fd, RFIFOL(fd,4), (struct party_member*)RFIFOP(fd,8)); break;
 	case 0x3023: mapif_parse_PartyChangeOption(fd, RFIFOL(fd,2), RFIFOL(fd,6), RFIFOW(fd,10), RFIFOW(fd,12)); break;
 	case 0x3024: mapif_parse_PartyLeave(fd, RFIFOL(fd,2), RFIFOL(fd,6), RFIFOL(fd,10)); break;

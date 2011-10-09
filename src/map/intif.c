@@ -381,14 +381,15 @@ int intif_create_party(struct party_member *member,char *name,int item,int item2
 	return 0;
 }
 // パーティ情報要求
-int intif_request_partyinfo(int party_id)
+int intif_request_partyinfo(int party_id, int char_id)
 {
 	if (CheckForCharServer())
 		return 0;
-	WFIFOHEAD(inter_fd,6);
+	WFIFOHEAD(inter_fd,10);
 	WFIFOW(inter_fd,0) = 0x3021;
 	WFIFOL(inter_fd,2) = party_id;
-	WFIFOSET(inter_fd,6);
+	WFIFOL(inter_fd,6) = char_id;
+	WFIFOSET(inter_fd,10);
 	return 0;
 }
 // パーティ追加要求
@@ -1007,15 +1008,15 @@ int intif_parse_PartyCreated(int fd)
 // パーティ情報
 int intif_parse_PartyInfo(int fd)
 {
-	if( RFIFOW(fd,2)==8){
-		ShowWarning("intif: party noinfo %d\n",RFIFOL(fd,4));
-		party_recv_noinfo(RFIFOL(fd,4));
+	if( RFIFOW(fd,2) == 12 ){
+		ShowWarning("intif: party noinfo (char_id=%d party_id=%d)\n", RFIFOL(fd,4), RFIFOL(fd,8));
+		party_recv_noinfo(RFIFOL(fd,8), RFIFOL(fd,4));
 		return 0;
 	}
 
-	if( RFIFOW(fd,2)!=sizeof(struct party)+4 )
-		ShowError("intif: party info : data size error %d %d %d\n",RFIFOL(fd,4),RFIFOW(fd,2),sizeof(struct party)+4);
-	party_recv_info((struct party *)RFIFOP(fd,4));
+	if( RFIFOW(fd,2) != 8+sizeof(struct party) )
+		ShowError("intif: party info : data size error (char_id=%d party_id=%d packet_len=%d expected_len=%d)\n", RFIFOL(fd,4), RFIFOL(fd,8), RFIFOW(fd,2), 8+sizeof(struct party));
+	party_recv_info((struct party *)RFIFOP(fd,8), RFIFOL(fd,4));
 	return 0;
 }
 // パーティ追加通知
