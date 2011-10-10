@@ -77,21 +77,5 @@ brasilis,219,97,3	script	Brasilis Guide	478,{
 		}
 		close;
 		break;
-	case 2:
-		viewpoint 2,273,149,2,0xFF0000;
-		viewpoint 2,308,333,3,0xCC6600;
-		viewpoint 0,133,167,4,0x00FF00;
-		viewpoint 0,238,248,5,0x00FF00;
-		set .@compass_check,0;
-		mes "[Brasilis Guide]";
-		mes "I've deleted all marks on the mini-map.";
-		mes "Whenever you'd like to put marks";
-		mes "there, you can ask me.";
-		close;
-	case 3:
-		mes "[Brasilis Guide]";
-		mes "Exploring things here on your own can also be fun.";
-		mes "Anyway, take care.";
-		close;
 	}
 }
