@@ -1,5 +1,7 @@
 Date	Added
 
+2011/10/10
+	* Add correct reply when player invited to party isn't found. [FlavioJS]
 2011/10/09
 	* Rework some party code. [FlavioJS]
 	- add leader argument to party_fill_member

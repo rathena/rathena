@@ -5903,37 +5903,47 @@ void clif_party_invite(struct map_session_data *sd,struct map_session_data *tsd)
 	WFIFOSET(fd,packet_len(cmd));
 }
 
-/*==========================================
- * Party invitation result.
- * R 00fd <nick>.24S <flag>.B
- * R 02c5 <nick>.24S <flag>.L
- * Flag values are:
- * 0 -> char is already in a party
- * 1 -> party invite was rejected
- * 2 -> party invite was accepted
- * 3 -> party is full
- * 4 -> char of the same account already joined the party
- *------------------------------------------*/
-void clif_party_inviteack(struct map_session_data* sd, const char* nick, int flag)
+
+/// Party invite result.
+/// R 00fd <nick>.24S <result>.B
+/// R 02c5 <nick>.24S <result>.L
+/// result=0 : char is already in a party -> MsgStringTable[80]
+/// result=1 : party invite was rejected -> MsgStringTable[81]
+/// result=2 : party invite was accepted -> MsgStringTable[82]
+/// result=3 : party is full -> MsgStringTable[83]
+/// result=4 : char of the same account already joined the party -> MsgStringTable[608]
+/// result=5 : char blocked party invite -> MsgStringTable[1324] (since 20070904)
+/// result=7 : char is not online or doesn't exist -> MsgStringTable[71] (since 20070904)
+/// result=8 : (%s) TODO instance related? -> MsgStringTable[1388] (since 20080527)
+/// return=9 : TODO map prohibits party joining? -> MsgStringTable[1871] (since 20110205)
+void clif_party_inviteack(struct map_session_data* sd, const char* nick, int result)
 {
 	int fd;
 	nullpo_retv(sd);
 	fd=sd->fd;
 
+#if PACKETVER < 20070904
+	if( result == 7 ) {
+		clif_displaymessage(fd, msg_txt(3));
+		return;
+	}
+#endif
+
 #if PACKETVER < 20070821
 	WFIFOHEAD(fd,packet_len(0xfd));
 	WFIFOW(fd,0) = 0xfd;
 	safestrncpy((char*)WFIFOP(fd,2),nick,NAME_LENGTH);
-	WFIFOB(fd,26) = flag;
+	WFIFOB(fd,26) = result;
 	WFIFOSET(fd,packet_len(0xfd));
 #else
 	WFIFOHEAD(fd,packet_len(0x2c5));
 	WFIFOW(fd,0) = 0x2c5;
 	safestrncpy((char*)WFIFOP(fd,2),nick,NAME_LENGTH);
-	WFIFOL(fd,26) = flag;
+	WFIFOL(fd,26) = result;
 	WFIFOSET(fd,packet_len(0x2c5));
 #endif
 }
+
 
 /*==========================================
  * パーティ設定送信

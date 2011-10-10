@@ -338,8 +338,8 @@ int party_invite(struct map_session_data *sd,struct map_session_data *tsd)
 	nullpo_ret(sd);
 	if( ( p = party_search(sd->status.party_id) ) == NULL )
 		return 0;
-	if( tsd == NULL) {	//TODO: Find the correct reply packet.
-		clif_displaymessage(sd->fd, msg_txt(3));
+	if( tsd == NULL) {
+		clif_party_inviteack(sd, "", 7);
 		return 0;
 	}
 	
