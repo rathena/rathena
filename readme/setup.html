@@ -1,12 +1,14 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
     <head>
         <title>eAthena | Setup</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" type="text/css" href="style.css">
     </head>
     <body>
-    	<div id="template">
+        <div id="template">
             <div id="header">
-                <div class="logo">eAthena<br /><span class="subtitle">- RAGNAROK Online Server Emulator</span></div>
+                <div class="logo">eAthena<br><span class="subtitle">- RAGNAROK Online Server Emulator</span></div>
                 <div class="title">Setup</div>
             </div>
             <div id="navcontainer">
@@ -19,44 +21,44 @@
                     <li><a href="resources.html">Resources</a></li>
                 </ul>
             </div>
-                
-            <div class="body-container">                 
-                  <strong>Character Server:<br></strong>
-                  <ol>
-                  	<li>Open /conf/char_athena.conf</li>
+
+            <div class="body-container">
+                <strong>Character Server:</strong>
+                <ol>
+                    <li>Open /conf/char_athena.conf</li>
                     <li>Change userid and passwd (s1/p1) to what you want your server's communication details to be.</li>
                     <li>Change Server_Name to what you want to call your server.</li>
                     <li>Remove the <strong>//</strong> before login_ip.
                     <li>Remove the <strong>//</strong> before char_ip and change 127.0.0.1 to your <a href="http://www.whatismyip.com" target="_new">WAN IP</a>.
-                  </ol>
-                  
-                  <strong>Map Server:<br></strong>
-                  <ol>
-                  	<li>Open /conf/map_athena.conf</li>
+                </ol>
+
+                <strong>Map Server:</strong>
+                <ol>
+                    <li>Open /conf/map_athena.conf</li>
                     <li>Change userid and passwd to the same thing you set in char_athena.</li>
                     <li>Remove the <strong>//</strong> before char_ip.</li>
                     <li>Remove the <strong>//</strong> before map_ip and change 127.0.0.1 to your <a href="http://www.whatismyip.com" target="_new">WAN IP</a>.
-                  </ol>
-                  
-                  <strong>Subnet:<br></strong>
-                  <ol>
-                  	<li>Open /conf/subnet_athena.conf</li>
+                </ol>
+
+                <strong>Subnet:</strong>
+                <ol>
+                    <li>Open /conf/subnet_athena.conf</li>
                     <li>Change 255.0.0.0 to your <strong>"Subnet Mask"</strong>, change the two 127.0.0.1 to your <strong>LAN IP</strong>.
-                  </ol>
-                  
-                  <strong>MySQL Settings:<br></strong>
-                  <ol>
-                  	<li>Open /conf/inter_athena.conf</li>
+                </ol>
+
+                <strong>MySQL Settings:</strong>
+                <ol>
+                    <li>Open /conf/inter_athena.conf</li>
                     <li>Find the "Global SQL Settings" and change them to your SQL server's settings.</li>
-                  </ol>
-                  
-                  <strong>Message of the Day:<br></strong>
-                  <ol>
-                  	<li>Open /conf/motd.txt and edit it to change the in-game MOTD.</li>
-                  </ol>
-          </div>
-            
-            <div id="footer">"Read Me" Created & Designed by <a href="http://www.kisuka.com" target="_new">Kisuka</a></div>
-		</div>
+                </ol>
+
+                <strong>Message of the Day:</strong>
+                <ol>
+                    <li>Open /conf/motd.txt and edit it to change the in-game MOTD.</li>
+                </ol>
+            </div>
+
+            <div id="footer">"Read Me" Created &amp; Designed by <a href="http://www.kisuka.com" target="_new">Kisuka</a></div>
+        </div>
     </body>
 </html>

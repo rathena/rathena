@@ -1,5 +1,9 @@
 Date	Added
 
+2011/10/15
+	* Some readme clean-ups (related r14711). [Ai4rei]
+	- Normalized whitespace and made the html files validate properly.
+	- Moved faq-content content to faq.
 2011/10/10
 	* Add correct reply when player invited to party isn't found. [FlavioJS]
 2011/10/09

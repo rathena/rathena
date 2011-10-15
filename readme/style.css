@@ -78,3 +78,6 @@ font-family: arial, helvetica, sans-serif;
 #footer a {
 	color: White;	
 }
+dt {
+	font-weight:bold;
+}

@@ -1,12 +1,14 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
     <head>
         <title>eAthena | FAQ</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" type="text/css" href="style.css">
     </head>
     <body>
-    	<div id="template">
+        <div id="template">
             <div id="header">
-                <div class="logo">eAthena<br /><span class="subtitle">- RAGNAROK Online Server Emulator</span></div>
+                <div class="logo">eAthena<br><span class="subtitle">- RAGNAROK Online Server Emulator</span></div>
                 <div class="title">FAQ</div>
             </div>
             <div id="navcontainer">
@@ -19,13 +21,46 @@
                     <li><a href="resources.html">Resources</a></li>
                 </ul>
             </div>
-                
+
             <div class="body-container">
-            	The following are frequently asked questions regarding eAthena.<br /><br />
-                <iframe width="100%" height="75%" src="faq-content.html"></iframe><br />
+                The following are frequently asked questions regarding eAthena.<br><br>
+                <dl>
+                    <dt>Where can I set the exp rates?</dt>
+                    <dd>
+                        <ul>
+                            <li>Go to /conf/battle/exp.conf</li>
+                            <li>Find base_exp_rate and job_exp_rate. Change the value there to raise or lower the rates.</li>
+                            <li>100 = 1x, 1000 = 10x rates, etc</li>
+                        </ul>
+                    </dd>
+
+                    <dt>Where can I set the item drop rates?</dt>
+                    <dd>
+                        <ul>
+                            <li>Go to /conf/battle/drops.conf</li>
+                            <li>You can set the drop rates by changing the values:<br>
+                                <code>
+                                    item_rate_common: 100  &lt;-- 100 = 1x drop rate, 1000 = 10x drop rate, etc<br>
+                                    item_rate_common_boss: 100 &lt;--- drop rate for bosses<br>
+                                    item_drop_common_min: 1 &lt;--- minimal drop rate<br>
+                                    item_drop_common_max: 10000 &lt;--- maximum drop rate.
+                                </code><br>
+                                (You can set the rates of different items in the same file)
+                        </ul>
+                    </dd>
+
+                    <dt>I found a bug, where to I report it?</dt>
+                    <dd>If you find a bug in eAthena, report it here: <a href="http://www.eathena.ws/board/index.php?autocom=bugtracker" target="_blank">Bug Tracker</a></dd>
+
+                    <dt>I'm a well-experienced programmer, can I join the eAthena dev team?</dt>
+                    <dd>Contact <a href="http://www.eathena.ws/board/index.php?showuser=121372" target="_blank">Paradox924X</a></dd>
+
+                    <dt>My character won't move, and no windows open when I login to the game, what's wrong?</dt>
+                    <dd>Your packet_db_ver is most likely set wrong, change it in /db/packet_db.txt to match your client's packet ver.</dd>
+                </dl>
             </div>
-            
-            <div id="footer">"Read Me" Created & Designed by <a href="http://www.kisuka.com" target="_new">Kisuka</a></div>
-		</div>
+
+            <div id="footer">"Read Me" Created &amp; Designed by <a href="http://www.kisuka.com" target="_new">Kisuka</a></div>
+        </div>
     </body>
 </html>

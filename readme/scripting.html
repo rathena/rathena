@@ -1,12 +1,14 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
     <head>
         <title>eAthena | Scripting</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" type="text/css" href="style.css">
     </head>
-<body>
-    	<div id="template">
+    <body>
+        <div id="template">
             <div id="header">
-                <div class="logo">eAthena<br /><span class="subtitle">- RAGNAROK Online Server Emulator</span></div>
+                <div class="logo">eAthena<br><span class="subtitle">- RAGNAROK Online Server Emulator</span></div>
                 <div class="title">Scripting</div>
             </div>
             <div id="navcontainer">
@@ -19,51 +21,50 @@
                     <li><a href="resources.html">Resources</a></li>
                 </ul>
             </div>
-                
+
             <div class="body-container">
-                <p>
-                    How to create an NPC using eAthena's scripting:<br /><br />
-                  <font color="#0000FF">map_name</font>,<font color="#009900">x_cord</font>,<font color="#0CF305">y_cord</font>,<font color="#FF0000">npc_facing_direction</font> <strong>-TAB-</strong> script <strong>-TAB-</strong> <font color="#FF6600">NPC Name</font>#<font color="#FFCC00">HiddenName</font> <strong>-TAB-</strong> <font color="#CC3399">Sprite ID</font>,{<br />
-                    &nbsp;&nbsp;&nbsp;mes "[NPC Name]";<br>
-                    &nbsp;&nbsp;&nbsp;mes "Hello World";<br>
-                    &nbsp;&nbsp;&nbsp;close;<br>
-                    }
-                </p>
-              <p>
-               	  <strong>Common Script Commands:</strong>
+                How to create an NPC using eAthena's scripting:<br><br>
+                <code><font color="#0000FF">map_name</font>,<font color="#009900">x_cord</font>,<font color="#0CF305">y_cord</font>,<font color="#FF0000">npc_facing_direction</font> <strong>-TAB-</strong> script <strong>-TAB-</strong> <font color="#FF6600">NPC Name</font>#<font color="#FFCC00">HiddenName</font> <strong>-TAB-</strong> <font color="#CC3399">Sprite ID</font>,{<br>
+                &nbsp;&nbsp;&nbsp;mes "[NPC Name]";<br>
+                &nbsp;&nbsp;&nbsp;mes "Hello World";<br>
+                &nbsp;&nbsp;&nbsp;close;<br>
+                }</code><br><br>
+
+                <strong>Common Script Commands:</strong>
                 <ul>
-                    	<li><strong>mes</strong><br>
-                    	usage: mes &quot;&lt;message&gt;&quot;;<br>
-                    	info: displays a line of text in an NPC's dialog window.</li>
-                    	<li><strong>close</strong><br>
-                    	usage: close;<br>
-                    	info: displays a &quot;Close&quot; button in an NPC's dialog window.
-                    	</li>
-                    	<li><strong>next</strong><br>
-                    	  usage: next;<br>
-                   	    info: displays a &quot;Next&quot; button in an NPC's dialog window.</li>
-                    	<li><strong>getitem</strong><br>
-                    	  usage: getitem &lt;item id&gt;,&lt;amount&gt;;<br>
-                    	  info: gives the player an item.
-                    	</li>
-                    	<li><strong>delitem</strong><br>
-                    	  usage: delitem &lt;item id&gt;,&lt;amount&gt;;<br>
-                    	  info: deletes an item from the player.
-                    	</li>
-   	          </ul>
-                <p><strong>Script Command Documentation:</strong><br>
-                
-              All the script commands in eAthena can be found <a href="../doc/script_commands.txt" target="_new">here</a>.</p>
-              <p><strong>How to enable your NPC:</strong><br>
-                1. Save it as a text file in your /npc/custom/ folder.<br>
-                2. Open /npc/scripts_custom.conf<br>
-                3. Add the following line:<br>
-                <em>npc: npc/custom/name_of_your_text_file.txt</em><br>
-              4. Save and close.</p>
-          </p>
-          </div>
-            
-            <div id="footer">"Read Me" Created & Designed by <a href="http://www.kisuka.com" target="_new">Kisuka</a></div>
-		</div>
+                    <li><strong>mes</strong><br>
+                        usage: mes &quot;&lt;message&gt;&quot;;<br>
+                        info: displays a line of text in an NPC's dialog window.</li>
+                    <li><strong>close</strong><br>
+                        usage: close;<br>
+                        info: displays a &quot;Close&quot; button in an NPC's dialog window.
+                    </li>
+                    <li><strong>next</strong><br>
+                        usage: next;<br>
+                        info: displays a &quot;Next&quot; button in an NPC's dialog window.
+                    </li>
+                    <li><strong>getitem</strong><br>
+                        usage: getitem &lt;item id&gt;,&lt;amount&gt;;<br>
+                        info: gives the player an item.
+                    </li>
+                    <li><strong>delitem</strong><br>
+                        usage: delitem &lt;item id&gt;,&lt;amount&gt;;<br>
+                        info: deletes an item from the player.
+                    </li>
+                </ul>
+                <strong>Script Command Documentation:</strong><br>
+                All the script commands in eAthena can be found <a href="../doc/script_commands.txt" target="_new">here</a>.<br><br>
+                <strong>How to enable your NPC:</strong>
+                <ol>
+                    <li>Save it as a text file in your /npc/custom/ folder.</li>
+                    <li>Open /npc/scripts_custom.conf</li>
+                    <li>Add the following line:<br>
+                    <code>npc: npc/custom/name_of_your_text_file.txt</code></li>
+                    <li>Save and close.</li>
+                </ol>
+            </div>
+
+            <div id="footer">"Read Me" Created &amp; Designed by <a href="http://www.kisuka.com" target="_new">Kisuka</a></div>
+        </div>
     </body>
 </html>
