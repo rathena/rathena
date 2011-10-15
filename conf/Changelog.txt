@@ -1,5 +1,7 @@
 Date	Added
 
+2011/10/15
+	* Rev. 14972 Updated misleading comment in conf/mapflag/partylock.txt (bugreport:4930, since r14092). [Ai4rei]
 2011/08/21
 	* Rev. 14938 Added setting 'client_limit_unit_lv' to control the unit types which are affected by 'max_lv' and 'aura_lv' settings. [Ai4rei]
 2011/07/09

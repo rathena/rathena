@@ -1,6 +1,6 @@
 //===== eAthena Script =======================================
 //= Map flag that disable party modification.
-//= Currently not used.
+//= Currently not used officially by any maps.
 //===== By: ==================================================
 //= eAthena Dev Team
 //= v 1.0
