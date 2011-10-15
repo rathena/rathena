@@ -1156,8 +1156,10 @@ OnClock0001:
 	// Do nothing if this script is the template.
 	if (strnpcinfo(1) == "Gld_Trea_Spawn") end;
 	
+	set .@GID, GetCastleData(strnpcinfo(2),1);
+	
 	// If there is no owner, do nothing.
-	if (!GetCastleData(strnpcinfo(2),1)) end;
+	if (!.@GID) end;
 
 	// Is there Economy in this castle?
 	set .@Treasure,GetCastleData(strnpcinfo(2),2)/5+4;

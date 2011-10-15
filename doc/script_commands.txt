@@ -2208,8 +2208,9 @@ This is equivalent to using:
 The reason for this is, that this short form is internally converted into a call
 to getelementofarray, when the script is loaded.
 
-Also useful when passing arrays to functions.
-getelementofarray(getarg(0),<index>) will work, but getarg(0)[<index>] will not.
+Also useful when passing arrays to functions or accessing another npc's arrays: 
+    getelementofarray(getarg(0),<index>)
+    getelementofarray(getvariableofnpc(.var, "testNPC"),<index>)
 
 ---------------------------------------
 

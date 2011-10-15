@@ -17,7 +17,7 @@
 
 #define STORAGE_MEMINC	16
 
-/// Save guild_storage data to sql
+/// Save storage data to sql
 int storage_tosql(int account_id, struct storage_data* p)
 {
 	memitemdata_to_sql(p->items, MAX_STORAGE, account_id, TABLE_STORAGE);
@@ -25,7 +25,7 @@ int storage_tosql(int account_id, struct storage_data* p)
 }
 
 #ifndef TXT_SQL_CONVERT
-/// Load guild_storage data to mem
+/// Load storage data to mem
 int storage_fromsql(int account_id, struct storage_data* p)
 {
 	StringBuf buf;
