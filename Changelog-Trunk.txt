@@ -1,6 +1,7 @@
 Date	Added
 
 2011/10/16
+	* Added field for the change slot feature to character select list packet for 2011-09-28aRagexeRE and newer. [Ai4rei]
 	* Changed function-like macros into inline functions where it seemed appropriate (topic:264007). [Ai4rei]
 	* Fixed public/guild chat message packets sending strings without zero-termination causing recent clients to display trailing junk on such messages (bugreport:5068). [Ai4rei]
 	- Changed memcpy to safestrncpy in message packets where overlong messages are truncated (thus loose zero-termination).
