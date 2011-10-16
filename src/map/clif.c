@@ -63,35 +63,60 @@ static inline int itemtype(int type)
 	return ( type == IT_PETEGG ) ? IT_WEAPON : type;
 }
 
-#define WBUFPOS(p,pos,x,y,dir) \
-	do { \
-		uint8 *__p = (p); \
-		__p+=(pos); \
-		__p[0] = (uint8)((x)>>2); \
-		__p[1] = (uint8)(((x)<<6) | (((y)>>4)&0x3f)); \
-		__p[2] = (uint8)(((y)<<4) | ((dir)&0xf)); \
-	} while(0)
-// client-side: x0+=sx0*0.0625-0.5 and y0+=sy0*0.0625-0.5
-#define WBUFPOS2(p,pos,x0,y0,x1,y1,sx0,sy0) \
-	do { \
-		uint8 *__p = (p); \
-		__p+=(pos);	\
-		__p[0]=(uint8)((x0)>>2); \
-		__p[1]=(uint8)(((x0)<<6) | (((y0)>>4)&0x3f)); \
-		__p[2]=(uint8)(((y0)<<4) | (((x1)>>6)&0x0f)); \
-		__p[3]=(uint8)(((x1)<<2) | (((y1)>>8)&0x03)); \
-		__p[4]=(uint8)(y1); \
-		__p[5]=(uint8)(((sx0)<<4) | ((sy0)&0x0f)); \
-	} while(0)
 
-#define WFIFOPOS(fd,pos,x,y,dir) WBUFPOS(WFIFOP(fd,pos),0,x,y,dir)
-#define WFIFOPOS2(fd,pos,x0,y0,x1,y1,sx0,sy0) WBUFPOS2(WFIFOP(fd,pos),0,x0,y0,x1,y1,sx0,sy0)
+static inline void WBUFPOS(uint8* p, unsigned short pos, short x, short y, unsigned char dir)
+{
+	p += pos;
+	p[0] = (uint8)(x>>2);
+	p[1] = (uint8)((x<<6) | ((y>>4)&0x3f));
+	p[2] = (uint8)((y<<4) | (dir&0xf));
+}
+
+
+// client-side: x0+=sx0*0.0625-0.5 and y0+=sy0*0.0625-0.5
+static inline void WBUFPOS2(uint8* p, unsigned short pos, short x0, short y0, short x1, short y1, unsigned char sx0, unsigned char sy0)
+{
+	p += pos;
+	p[0] = (uint8)(x0>>2);
+	p[1] = (uint8)((x0<<6) | ((y0>>4)&0x3f));
+	p[2] = (uint8)((y0<<4) | ((x1>>6)&0x0f));
+	p[3] = (uint8)((x1<<2) | ((y1>>8)&0x03));
+	p[4] = (uint8)y1;
+	p[5] = (uint8)((sx0<<4) | (sy0&0x0f));
+}
+
+
+static inline void WFIFOPOS(int fd, unsigned short pos, short x, short y, unsigned char dir)
+{
+	WBUFPOS(WFIFOP(fd,pos), 0, x, y, dir);
+}
+
+
+inline void WFIFOPOS2(int fd, unsigned short pos, short x0, short y0, short x1, short y1, unsigned char sx0, unsigned char sy0)
+{
+	WBUFPOS2(WFIFOP(fd,pos), 0, x0, y0, x1, y1, sx0, sy0);
+}
+
 
 //To idenfity disguised characters.
-#define disguised(bl) ((bl)->type==BL_PC && ((TBL_PC*)bl)->disguise)
+static inline bool disguised(struct block_list* bl)
+{
+	return (bool)( bl->type == BL_PC && ((TBL_PC*)bl)->disguise );
+}
 
-//Guarantees that the given string does not exceeds the allowed size, as well as making sure it's null terminated. [Skotlex\]
-#define mes_len_check(mes, len, max) if (len > max) { mes[max-1] = '\0'; len = max; } else mes[len-1] = '\0';
+
+//Guarantees that the given string does not exceeds the allowed size, as well as making sure it's null terminated. [Skotlex]
+static inline unsigned int mes_len_check(char* mes, unsigned int len, unsigned int max)
+{
+	if( len > max )
+		len = max;
+
+	mes[len-1] = '\0';
+
+	return len;
+}
+
+
 static char map_ip_str[128];
 static uint32 map_ip;
 static uint32 bind_ip = INADDR_ANY;
@@ -3792,7 +3817,10 @@ void clif_getareachar_unit(struct map_session_data* sd,struct block_list *bl)
 
 //Modifies the type of damage according to status changes [Skotlex]
 //Aegis data specifies that: 4 endure against single hit sources, 9 against multi-hit.
-#define clif_calc_delay(type,div,damage,delay) ((delay)==0&&(damage)>0?((div)>1?9:4):type)
+static inline int clif_calc_delay(int type, int div, int damage, int delay)
+{
+	return ( delay == 0 && damage > 0 ) ? ( div > 1 ? 9 : 4 ) : type;
+}
 
 /*==========================================
  * Estimates walk delay based on the damage criteria. [Skotlex]
@@ -9402,7 +9430,7 @@ void clif_parse_Broadcast(int fd, struct map_session_data* sd)
 		return;
 
 	// as the length varies depending on the command used, just block unreasonably long strings
-	mes_len_check(msg, len, CHAT_SIZE_MAX);
+	len = mes_len_check(msg, len, CHAT_SIZE_MAX);
 
 	intif_broadcast(msg, len, 0);
 
@@ -10505,7 +10533,7 @@ void clif_parse_LocalBroadcast(int fd, struct map_session_data* sd)
 		return;
 
 	// as the length varies depending on the command used, just block unreasonably long strings
-	mes_len_check(msg, len, CHAT_SIZE_MAX);
+	len = mes_len_check(msg, len, CHAT_SIZE_MAX);
 
 	clif_broadcast(&sd->bl, msg, len, 0, ALL_SAMEMAP);
 

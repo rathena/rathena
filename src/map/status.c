@@ -599,6 +599,14 @@ static void initDummyData(void)
 	dummy_status.mode = MD_CANMOVE;
 }
 
+
+//For copying a status_data structure from b to a, without overwriting current Hp and Sp
+static inline void status_cpy(struct status_data* a, const struct status_data* b)
+{
+	memcpy((void*)&a->max_hp, (const void*)&b->max_hp, sizeof(struct status_data)-(sizeof(a->hp)+sizeof(a->sp)));
+}
+
+
 /*==========================================
  * 精錬ボーナス
  *------------------------------------------*/
@@ -1320,8 +1328,18 @@ static unsigned short status_base_atk(const struct block_list *bl, const struct 
 	return cap_value(str, 0, USHRT_MAX);
 }
 
-#define status_base_matk_max(status) (status->int_+(status->int_/5)*(status->int_/5))
-#define status_base_matk_min(status) (status->int_+(status->int_/7)*(status->int_/7))
+
+static inline unsigned short status_base_matk_max(const struct status_data* status)
+{
+	return status->int_+(status->int_/5)*(status->int_/5);
+}
+
+
+static inline unsigned short status_base_matk_min(const struct status_data* status)
+{
+	return status->int_+(status->int_/7)*(status->int_/7);
+}
+
 
 //Fills in the misc data that can be calculated from the other status info (except for level)
 void status_calc_misc(struct block_list *bl, struct status_data *status, int level)

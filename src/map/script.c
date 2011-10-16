@@ -171,8 +171,16 @@ enum { LABEL_NEXTLINE=1,LABEL_START };
 static unsigned char* script_buf = NULL;
 static int script_pos = 0, script_size = 0;
 
-#define GETVALUE(buf,i)		((int)MakeDWord(MakeWord((buf)[i],(buf)[i+1]),MakeWord((buf)[i+2],0)))
-#define SETVALUE(buf,i,n)	((buf)[i]=GetByte(n,0),(buf)[i+1]=GetByte(n,1),(buf)[i+2]=GetByte(n,2))
+static inline int GETVALUE(const unsigned char* buf, int i)
+{
+	return (int)MakeDWord(MakeWord(buf[i], buf[i+1]), MakeWord(buf[i+2], 0));
+}
+static inline void SETVALUE(unsigned char* buf, int i, int n)
+{
+	buf[i]   = GetByte(n, 0);
+	buf[i+1] = GetByte(n, 1);
+	buf[i+2] = GetByte(n, 2);
+}
 
 // String buffer structures.
 // str_data stores string information

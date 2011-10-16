@@ -65,7 +65,10 @@ int firewall_unit_pos;
 int icewall_unit_pos;
 
 //Since only mob-casted splash skills can hit ice-walls
-#define splash_target(bl) (bl->type==BL_MOB?BL_SKILL|BL_CHAR:BL_CHAR)
+static inline int splash_target(struct block_list* bl)
+{
+	return ( bl->type == BL_MOB ) ? BL_SKILL|BL_CHAR : BL_CHAR;
+}
 
 /// Returns the id of the skill, or 0 if not found.
 int skill_name2id(const char* name)

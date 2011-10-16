@@ -1108,7 +1108,7 @@ struct weapon_atk {
 //For holding basic status (which can be modified by status changes)
 struct status_data {
 	unsigned int
-		hp, sp,
+		hp, sp,  // see status_cpy before adding members before hp and sp
 		max_hp, max_sp;
 	unsigned short
 		str, agi, vit, int_, dex, luk,
@@ -1214,10 +1214,6 @@ int status_set_hp(struct block_list *bl, unsigned int hp, int flag);
 int status_set_sp(struct block_list *bl, unsigned int sp, int flag);
 int status_heal(struct block_list *bl,int hp,int sp, int flag);
 int status_revive(struct block_list *bl, unsigned char per_hp, unsigned char per_sp);
-
-//Define for copying a status_data structure from b to a, without overwriting current Hp and Sp
-#define status_cpy(a, b) \
-	memcpy(&((a)->max_hp), &((b)->max_hp), sizeof(struct status_data)-(sizeof((a)->hp)+sizeof((a)->sp)))
 
 struct regen_data *status_get_regen_data(struct block_list *bl);
 struct status_data *status_get_status_data(struct block_list *bl);

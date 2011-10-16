@@ -323,9 +323,13 @@ int unit_walktoxy( struct block_list *bl, short x, short y, int flag)
 }
 
 //To set Mob's CHASE/FOLLOW states (shouldn't be done if there's no path to reach)
-#define set_mobstate(bl, flag) \
-	if((bl)->type == BL_MOB && (flag)) \
-		((TBL_MOB*)(bl))->state.skillstate = ((TBL_MOB*)(bl))->state.aggressive?MSS_FOLLOW:MSS_RUSH;
+static inline void set_mobstate(struct block_list* bl, int flag)
+{
+	struct mob_data* md = BL_CAST(BL_MOB,bl);
+
+	if( md && flag )
+		md->state.skillstate = md->state.aggressive ? MSS_FOLLOW : MSS_RUSH;
+}
 
 static int unit_walktobl_sub(int tid, unsigned int tick, int id, intptr_t data)
 {
