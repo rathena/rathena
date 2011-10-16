@@ -1222,6 +1222,7 @@ int socket_getips(uint32* ips, int max)
 void socket_init(void)
 {
 	char *SOCKET_CONF_FILENAME = "conf/packet_athena.conf";
+	unsigned int rlim_cur = FD_SETSIZE;
 
 #ifdef WIN32
 	{// Start up windows networking
@@ -1265,6 +1266,7 @@ void socket_init(void)
 					if( err == EPERM )
 						errmsg = "permission denied";
 					ShowWarning("socket_init: failed to set socket limit to %d, setting to maximum allowed (original limit=%d, current limit=%d, maximum allowed=%d, error=%s).\n", FD_SETSIZE, rlim_ori, (int)rlp.rlim_cur, (int)rlp.rlim_max, errmsg);
+					rlim_cur = rlp.rlim_cur;
 				}
 			}
 		}
@@ -1294,6 +1296,8 @@ void socket_init(void)
 	add_timer_func_list(connect_check_clear, "connect_check_clear");
 	add_timer_interval(gettick()+1000, connect_check_clear, 0, 0, 5*60*1000);
 #endif
+
+	ShowInfo("Server supports up to '"CL_WHITE"%u"CL_RESET"' concurrent connections.\n", rlim_cur);
 }
 
 
