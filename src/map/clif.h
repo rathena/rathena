@@ -437,7 +437,7 @@ int clif_guild_memberpositionchanged(struct guild *g,int idx);
 int clif_guild_emblem(struct map_session_data *sd,struct guild *g);
 void clif_guild_emblem_area(struct block_list* bl);
 int clif_guild_notice(struct map_session_data *sd,struct guild *g);
-int clif_guild_message(struct guild *g,int account_id,const char *mes,int len);
+void clif_guild_message(struct guild *g,int account_id,const char *mes,int len);
 int clif_guild_skillup(struct map_session_data *sd,int skill_num,int lv);
 int clif_guild_reqalliance(struct map_session_data *sd,int account_id,const char *name);
 int clif_guild_allianceack(struct map_session_data *sd,int flag);
@@ -468,7 +468,7 @@ int clif_font(struct map_session_data *sd);
 
 // atcommand
 int clif_displaymessage(const int fd,const char* mes);
-int clif_disp_onlyself(struct map_session_data *sd,const char *mes,int len);
+void clif_disp_onlyself(struct map_session_data *sd,const char *mes,int len);
 void clif_disp_message(struct block_list* src, const char* mes, int len, enum send_target target);
 int clif_broadcast(struct block_list *bl, const char* mes, int len, int type, enum send_target target);
 void clif_MainChatMessage(const char* message); //luzza
@@ -502,7 +502,7 @@ void clif_weather(int m); // [Valaris]
 int clif_specialeffect(struct block_list* bl, int type, enum send_target target); // special effects [Valaris]
 void clif_specialeffect_single(struct block_list* bl, int type, int fd);
 int clif_messagecolor(struct block_list* bl, unsigned long color, const char* msg); // Mob/Npc color talk [SnakeDrak]
-int clif_message(struct block_list *bl, const char* msg); // messages (from mobs/npcs) [Valaris]
+void clif_message(struct block_list *bl, const char* msg); // messages (from mobs/npcs) [Valaris]
 
 int clif_GM_kickack(struct map_session_data *sd,int id);
 void clif_GM_kick(struct map_session_data *sd,struct map_session_data *tsd);
@@ -510,7 +510,7 @@ void clif_manner_message(struct map_session_data* sd, uint32 type);
 void clif_GM_silence(struct map_session_data* sd, struct map_session_data* tsd, uint8 type);
 int clif_timedout(struct map_session_data *sd);
 
-int clif_disp_overhead(struct map_session_data *sd, const char* mes);
+void clif_disp_overhead(struct map_session_data *sd, const char* mes);
 
 void clif_get_weapon_view(struct map_session_data* sd, unsigned short *rhand, unsigned short *lhand);
 

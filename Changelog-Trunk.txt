@@ -1,5 +1,10 @@
 Date	Added
 
+2011/10/16
+	* Fixed public/guild chat message packets sending strings without zero-termination causing recent clients to display trailing junk on such messages (bugreport:5068). [Ai4rei]
+	- Changed memcpy to safestrncpy in message packets where overlong messages are truncated (thus loose zero-termination).
+	- Replaced dynamic allocation in clif_guild_message with buffer from stack.
+	- Fixed clif_disp_message not checking whether the message fits into provided buffer.
 2011/10/15
 	* Some readme clean-ups (related r14711). [Ai4rei]
 	- Normalized whitespace and made the html files validate properly.

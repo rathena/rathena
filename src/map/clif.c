@@ -5028,7 +5028,7 @@ void clif_GlobalMessage(struct block_list* bl, const char* message)
 	WBUFW(buf,0)=0x8d;
 	WBUFW(buf,2)=len+8;
 	WBUFL(buf,4)=bl->id;
-	strncpy((char *) WBUFP(buf,8),message,len);
+	safestrncpy((char *) WBUFP(buf,8),message,len);
 	clif_send((unsigned char *) buf,WBUFW(buf,2),bl,ALL_CLIENT);
 }
 
@@ -5037,7 +5037,7 @@ void clif_GlobalMessage(struct block_list* bl, const char* message)
  *------------------------------------------*/
 void clif_MainChatMessage(const char* message)
 {
-	char buf[200];
+	uint8 buf[200];
 	int len;
 	
 	if(!message)
@@ -5051,8 +5051,8 @@ void clif_MainChatMessage(const char* message)
 	WBUFW(buf,0)=0x8d;
 	WBUFW(buf,2)=len+8;
 	WBUFL(buf,4)=0;
-	strncpy((char *) WBUFP(buf,8),message,len);
-	clif_send((unsigned char *) buf,WBUFW(buf,2),NULL,CHAT_MAINCHAT);
+	safestrncpy((char *) WBUFP(buf,8),message,len);
+	clif_send(buf,WBUFW(buf,2),NULL,CHAT_MAINCHAT);
 }
 
 /*==========================================
@@ -7147,27 +7147,33 @@ void clif_guild_expulsionlist(struct map_session_data* sd)
 	WFIFOSET(fd,WFIFOW(fd,2));
 }
 
-/*==========================================
- * ƒMƒ‹ƒh‰ï˜b
- *------------------------------------------*/
-int clif_guild_message(struct guild *g,int account_id,const char *mes,int len)
-{
-	struct map_session_data *sd;
-	unsigned char *buf;
 
-	buf = (unsigned char*)aMallocA((len + 4)*sizeof(unsigned char));
+/// Notification of a guild chat message (ZC_GUILD_CHAT)
+/// 017f <packet len>.W <message>.?B
+void clif_guild_message(struct guild *g,int account_id,const char *mes,int len)
+{// TODO: account_id is not used, candidate for deletion? [Ai4rei]
+	struct map_session_data *sd;
+	uint8 buf[256];
+
+	if( len == 0 )
+	{
+		return;
+	}
+	else if( len > sizeof(buf)-5 )
+	{
+		ShowWarning("clif_guild_message: Truncated message '%s' (len=%d, max=%d, guild_id=%d).\n", mes, len, sizeof(buf)-5, g->guild_id);
+		len = sizeof(buf)-5;
+	}
 
 	WBUFW(buf, 0) = 0x17f;
-	WBUFW(buf, 2) = len + 4;
-	memcpy(WBUFP(buf,4), mes, len);
+	WBUFW(buf, 2) = len + 5;
+	safestrncpy((char*)WBUFP(buf,4), mes, len+1);
 
 	if ((sd = guild_getavailablesd(g)) != NULL)
 		clif_send(buf, WBUFW(buf,2), &sd->bl, GUILD_NOBG);
-
-	if(buf) aFree(buf);
-
-	return 0;
 }
+
+
 /*==========================================
  * ƒMƒ‹ƒhƒXƒLƒ‹Š„‚èU‚è’Ê’m
  *------------------------------------------*/
@@ -7409,18 +7415,9 @@ void clif_parse_ReqMarriage(int fd, struct map_session_data *sd)
 /*==========================================
  *
  *------------------------------------------*/
-int clif_disp_onlyself(struct map_session_data *sd, const char *mes, int len)
+void clif_disp_onlyself(struct map_session_data *sd, const char *mes, int len)
 {
-	int fd;
-	nullpo_ret(sd);
-	fd = sd->fd;
-	if (!fd || !len) return 0; //Disconnected player.
-	WFIFOHEAD(fd, len+5);
-	WFIFOW(fd, 0) = 0x17f;
-	WFIFOW(fd, 2) = len + 5;
-	memcpy(WFIFOP(fd,4), mes, len);
-	WFIFOSET(fd, WFIFOW(fd,2));
-	return 1;
+	clif_disp_message(&sd->bl, mes, len, SELF);
 }
 
 /*==========================================
@@ -7428,13 +7425,22 @@ int clif_disp_onlyself(struct map_session_data *sd, const char *mes, int len)
  *------------------------------------------*/
 void clif_disp_message(struct block_list* src, const char* mes, int len, enum send_target target)
 {
-	unsigned char buf[1024];
-	if (!len) return;
+	unsigned char buf[256];
+
+	if( len == 0 )
+	{
+		return;
+	}
+	else if( len > sizeof(buf)-5 )
+	{
+		ShowWarning("clif_disp_message: Truncated message '%s' (len=%d, max=%d, aid=%d).\n", mes, len, sizeof(buf)-5, src->id);
+		len = sizeof(buf)-5;
+	}
+
 	WBUFW(buf, 0) = 0x17f;
 	WBUFW(buf, 2) = len + 5;
-	memcpy(WBUFP(buf,4), mes, len);
+	safestrncpy((char*)WBUFP(buf,4), mes, len+1);
 	clif_send(buf, WBUFW(buf,2), src, target);
-	return;
 }
 
 /*==========================================
@@ -7657,12 +7663,12 @@ int clif_messagecolor(struct block_list* bl, unsigned long color, const char* ms
 }
 
 // messages (from mobs/npcs) [Valaris]
-int clif_message(struct block_list* bl, const char* msg)
+void clif_message(struct block_list* bl, const char* msg)
 {
 	unsigned short msg_len = strlen(msg) + 1;
 	uint8 buf[256];
 
-	nullpo_ret(bl);
+	nullpo_retv(bl);
 
 	if( msg_len > sizeof(buf)-8 )
 	{
@@ -7673,11 +7679,9 @@ int clif_message(struct block_list* bl, const char* msg)
 	WBUFW(buf,0) = 0x8d;
 	WBUFW(buf,2) = msg_len + 8;
 	WBUFL(buf,4) = bl->id;
-	memcpy(WBUFP(buf,8), msg, msg_len);
+	safestrncpy((char*)WBUFP(buf,8), msg, msg_len);
 
 	clif_send(buf, WBUFW(buf,2), bl, AREA_CHAT_WOC);
-
-	return 0;
 }
 
 // refresh the client's screen, getting rid of any effects
@@ -7951,29 +7955,27 @@ void clif_slide(struct block_list *bl, int x, int y)
 /*------------------------------------------
  * @me command by lordalfa, rewritten implementation by Skotlex
  *------------------------------------------*/
-int clif_disp_overhead(struct map_session_data *sd, const char* mes)
+void clif_disp_overhead(struct map_session_data *sd, const char* mes)
 {
 	unsigned char buf[256]; //This should be more than sufficient, the theorical max is CHAT_SIZE + 8 (pads and extra inserted crap)
 	int len_mes = strlen(mes)+1; //Account for \0
 
-	if (len_mes + 8 >= 256) {
+	if (len_mes > sizeof(buf)-8) {
 		ShowError("clif_disp_overhead: Message too long (length %d)\n", len_mes);
-		len_mes = 247; //Trunk it to avoid problems.
+		len_mes = sizeof(buf)-8; //Trunk it to avoid problems.
 	}
 	// send message to others
 	WBUFW(buf,0) = 0x8d;
 	WBUFW(buf,2) = len_mes + 8; // len of message + 8 (command+len+id)
 	WBUFL(buf,4) = sd->bl.id;
-	memcpy(WBUFP(buf,8), mes, len_mes);
+	safestrncpy((char*)WBUFP(buf,8), mes, len_mes);
 	clif_send(buf, WBUFW(buf,2), &sd->bl, AREA_CHAT_WOC);
 
 	// send back message to the speaker
 	WBUFW(buf,0) = 0x8e;
 	WBUFW(buf, 2) = len_mes + 4;
-	memcpy(WBUFP(buf,4), mes, len_mes);  
+	safestrncpy((char*)WBUFP(buf,4), mes, len_mes);  
 	clif_send(buf, WBUFW(buf,2), &sd->bl, SELF);
-
-	return 0;
 }
 
 /*==========================
