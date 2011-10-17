@@ -488,14 +488,6 @@ int party_member_added(int party_id,int account_id,int char_id, int flag)
 
 	sd->status.party_id = party_id;
 
-	ARR_FIND( 0, MAX_PARTY, i, p->party.member[i].account_id == 0 );
-	if (i < MAX_PARTY) {
-		//TODO: This is a hack to allow the following clif calls to send the data to the new player.
-		//The correct player data is set when party_recv_info arrives soon afterwards.
-		party_fill_member(&p->party.member[i], sd, 0);
-		p->data[i].sd = sd;
-	}
-
 	clif_party_member_info(p,sd);
 	clif_party_option(p,sd,0x100);
 	clif_party_info(p,sd);
