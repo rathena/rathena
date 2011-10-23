@@ -1,5 +1,10 @@
 Date	Added
 
+2011/10/23
+	* Revised packets related to auction system. [Ai4rei]
+	- Added packet documentation and corrected existing one.
+	- Removed an impossible condition in clif_parse_Auction_setitem (since r12301).
+	- Updated backet db definitions and removed a duplicate entry (entries from older packet versions carry over to newer).
 2011/10/17
 	* Remove 'hack code' in party_member_added causing crashes since r14968. (bugreport:5069) [FlavioJS]
 2011/10/16
