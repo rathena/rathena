@@ -1710,7 +1710,8 @@ ACMD_FUNC(item)
 	if(log_config.enable_logs&0x400)
 		log_pick_pc(sd, "A", item_id, number, NULL);
 
-	clif_displaymessage(fd, msg_txt(18)); // Item created.
+	if (!flag) 
+		clif_displaymessage(fd, msg_txt(18)); // Item created.
 	return 0;
 }
 
@@ -1785,7 +1786,8 @@ ACMD_FUNC(item2)
 		if(log_config.enable_logs&0x400)
 			log_pick_pc(sd, "A", item_tmp.nameid, number, &item_tmp);
 
-		clif_displaymessage(fd, msg_txt(18)); // Item created.
+		if (!flag) 
+			clif_displaymessage(fd, msg_txt(18)); // Item created.
 	} else {
 		clif_displaymessage(fd, msg_txt(19)); // Invalid item ID or name.
 		return -1;

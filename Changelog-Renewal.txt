@@ -1,5 +1,18 @@
 Date	Added
 
+2011/10/26
+	* Rev. 14982 Implemented first version of rebalanced Rune Knight skills. [L0ne_W0lf]
+	* Implemented the rebalancing of most Archbishop skills.
+	* As a result, merged r14979 from trunk. (act/notify packet update)
+	* Added pc_isUseitem_check_runeskill care of Meyrawr (blocks rune usage based on skill delay.)
+	* Added more status effects that do NOT save on log out. A whole slew of them.
+	* Now only level 11 Dec. AGI will take the new config settings into account.
+	* Fixed Level 11 Dec. AGI duration faux pas, where it was multiplying it by 100.
+	* Added script command: setdragon: See documentation for details.
+	* Added script command: successruneuse: Will return 0 or 1. Handles runestone backfire effects.
+	* Modified script command: produce, now accepts <item id> as a second parameter.
+	* Corrected message that is displayed when attempting to generate items when that item has a limit.
+	* GM Item commands will no longer display 'Item created' messages on failure.
 2011/10/07
 	* Merged changes from trunk [14895:14966/trunk]. [Ai4rei]
 2011/09/30

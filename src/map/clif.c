@@ -1193,6 +1193,8 @@ int clif_spawn(struct block_list *bl)
 				clif_specialeffect(bl,421,AREA);
 			if( sd->bg_id && map[sd->bl.m].flag.battleground )
 				clif_sendbgemblem_area(sd);
+			if(sd->sc.data[SC_MILLENNIUMSHIELD] && sd->sc.data[SC_MILLENNIUMSHIELD]->val2 > 0) // Ensure that we have shields to display.
+				clif_millenniumshield(sd,sd->sc.data[SC_MILLENNIUMSHIELD]->val2);
 		}
 		break;
 	case BL_MOB:
@@ -3819,8 +3821,8 @@ static int clif_calc_walkdelay(struct block_list *bl,int delay, int type, int da
 
 /*==========================================
  * Sends a 'damage' packet (src performs action on dst)
- * R 008a <src ID>.L <dst ID>.L <server tick>.L <src speed>.L <dst speed>.L <damage>.W <div>.W <type>.B <damage2>.W
- * R 02e1 <src ID>.L <dst ID>.L <server tick>.L <src speed>.L <dst speed>.L <damage>.L <div>.W <type>.B <damage2>.L
+ * R 008a <src ID>.L <dst ID>.L <server tick>.L <src speed>.L <dst speed>.L <damage>.W <div>.W <type>.B <damage2>.W (ZC_NOTIFY_ACT)
+ * R 02e1 <src ID>.L <dst ID>.L <server tick>.L <src speed>.L <dst speed>.L <damage>.L <div>.W <type>.B <damage2>.L (ZC_NOTIFY_ACT2)
  * 
  * type=00 damage [param1: total damage, param2: div, param3: assassin dual-wield damage]
  * type=01 pick up item
@@ -3834,8 +3836,13 @@ static int clif_calc_walkdelay(struct block_list *bl,int delay, int type, int da
  *------------------------------------------*/
 int clif_damage(struct block_list* src, struct block_list* dst, unsigned int tick, int sdelay, int ddelay, int damage, int div, int type, int damage2)
 {
-	unsigned char buf[256];
+	unsigned char buf[33];
 	struct status_change *sc;
+#if PACKETVER < 20071113
+	const int cmd = 0x8a;
+#else
+	const int cmd = 0x2e1;
+#endif
 
 	nullpo_ret(src);
 	nullpo_ret(dst);
@@ -3849,12 +3856,13 @@ int clif_damage(struct block_list* src, struct block_list* dst, unsigned int tic
 		}
 	}
 
-	WBUFW(buf,0)=0x8a;
+	WBUFW(buf,0)=cmd;
 	WBUFL(buf,2)=src->id;
 	WBUFL(buf,6)=dst->id;
 	WBUFL(buf,10)=tick;
 	WBUFL(buf,14)=sdelay;
 	WBUFL(buf,18)=ddelay;
+#if PACKETVER < 20071113
 	if (battle_config.hide_woe_damage && map_flag_gvg(src->m)) {
 		WBUFW(buf,22)=damage?div:0;
 		WBUFW(buf,27)=damage2?div:0;
@@ -3864,20 +3872,35 @@ int clif_damage(struct block_list* src, struct block_list* dst, unsigned int tic
 	}
 	WBUFW(buf,24)=div;
 	WBUFB(buf,26)=type;
+#else
+	if (battle_config.hide_woe_damage && map_flag_gvg(src->m)) {
+		WBUFL(buf,22)=damage?div:0;
+		WBUFL(buf,29)=damage2?div:0;
+	} else {
+		WBUFL(buf,22)=damage;
+		WBUFL(buf,29)=damage2;
+	}
+	WBUFW(buf,26)=div;
+	WBUFB(buf,28)=type;
+#endif
 	if(disguised(dst)) {
-		clif_send(buf,packet_len(0x8a),dst,AREA_WOS);
+		clif_send(buf,packet_len(cmd),dst,AREA_WOS);
 		WBUFL(buf,6) = -dst->id;
-		clif_send(buf,packet_len(0x8a),dst,SELF);
+		clif_send(buf,packet_len(cmd),dst,SELF);
 	} else
-		clif_send(buf,packet_len(0x8a),dst,AREA);
+		clif_send(buf,packet_len(cmd),dst,AREA);
 
 	if(disguised(src)) {
 		WBUFL(buf,2) = -src->id;
 		if (disguised(dst))
 			WBUFL(buf,6) = dst->id;
 		if(damage > 0) WBUFW(buf,22) = -1;
+#if PACKETVER < 20071113
 		if(damage2 > 0) WBUFW(buf,27) = -1;
-		clif_send(buf,packet_len(0x8a),src,SELF);
+#else
+		if(damage2 > 0) WBUFW(buf,29) = -1;
+#endif
+		clif_send(buf,packet_len(cmd),src,SELF);
 	}
 	//Return adjusted can't walk delay for further processing.
 	return clif_calc_walkdelay(dst,ddelay,type,damage+damage2,div);
@@ -8688,6 +8711,9 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 		if (sd->sc.option&OPTION_RIDING)
 			clif_status_load(&sd->bl, SI_RIDING, 1);
 
+		if (sd->sc.option&OPTION_DRAGON)
+			clif_status_load(&sd->bl, SI_RIDING, 1);
+
 		if(sd->status.manner < 0)
 			sc_start(&sd->bl,SC_NOCHAT,100,0,0);
 
@@ -8906,7 +8932,7 @@ void clif_parse_WalkToXY(int fd, struct map_session_data *sd)
 		return;
 	}
 
-	if (sd->sc.opt1 && sd->sc.opt1 == OPT1_STONEWAIT)
+	if (sd->sc.opt1 && (sd->sc.opt1 == OPT1_STONEWAIT || sd->sc.opt1 == OPT1_BURNING))
 		; //You CAN walk on this OPT1 value.
 	else if( sd->progressbar.npc_id )
 		clif_progressbar_abort(sd);
@@ -9156,7 +9182,8 @@ void clif_parse_ActionRequest_sub(struct map_session_data *sd, int action_type, 
 	if (sd->sc.count &&
 		(sd->sc.data[SC_TRICKDEAD] ||
 	 	sd->sc.data[SC_AUTOCOUNTER] ||
-		sd->sc.data[SC_BLADESTOP]))
+		sd->sc.data[SC_BLADESTOP] ||
+		sd->sc.data[SC_DEATHBOUND]))
 		return;
 
 	pc_stop_walking(sd, 1);
@@ -9202,7 +9229,7 @@ void clif_parse_ActionRequest_sub(struct map_session_data *sd, int action_type, 
 			return;
 		}
 
-		if (sd->ud.skilltimer != INVALID_TIMER || sd->sc.opt1)
+		if (sd->ud.skilltimer != INVALID_TIMER || (sd->sc.opt1 && sd->sc.opt1 != OPT1_BURNING))
 			break;
 
 		if (sd->sc.count && (
@@ -9498,6 +9525,7 @@ void clif_parse_DropItem(int fd, struct map_session_data *sd)
 		if (sd->sc.count && (
 			sd->sc.data[SC_AUTOCOUNTER] ||
 			sd->sc.data[SC_BLADESTOP] ||
+			sd->sc.data[SC_DEATHBOUND] ||
 			(sd->sc.data[SC_NOCHAT] && sd->sc.data[SC_NOCHAT]->val1&MANNER_NOITEM)
 		))
 			break;
@@ -9524,7 +9552,7 @@ void clif_parse_UseItem(int fd, struct map_session_data *sd)
 		return;
 	}
 
-	if (sd->sc.opt1 > 0 && sd->sc.opt1 != OPT1_STONEWAIT)
+	if (sd->sc.opt1 > 0 && sd->sc.opt1 != OPT1_STONEWAIT && sd->sc.opt1 != OPT1_BURNING)
 		return;
 	
 	//This flag enables you to use items while in an NPC. [Skotlex]
@@ -9563,7 +9591,7 @@ void clif_parse_EquipItem(int fd,struct map_session_data *sd)
 	if(sd->npc_id) {
 		if (sd->npc_id != sd->npc_item_flag)
 			return;
-	} else if (sd->state.storage_flag || sd->sc.opt1)
+	} else if (sd->state.storage_flag || (sd->sc.opt1 && sd->sc.opt1 != OPT1_BURNING))
 		; //You can equip/unequip stuff while storage is open/under status changes
 	else if (pc_cant_act(sd))
 		return;
@@ -9919,7 +9947,7 @@ void clif_parse_GetItemFromCart(int fd,struct map_session_data *sd)
 void clif_parse_RemoveOption(int fd,struct map_session_data *sd)
 {
 	//Can only remove Cart/Riding/Falcon.
-	pc_setoption(sd,sd->sc.option&~(OPTION_CART|OPTION_RIDING|OPTION_FALCON));
+	pc_setoption(sd,sd->sc.option&~(OPTION_CART|OPTION_RIDING|OPTION_FALCON|OPTION_DRAGON));
 }
 
 /*==========================================
@@ -14785,6 +14813,19 @@ void clif_search_store_info_click_ack(struct map_session_data* sd, short x, shor
 	WFIFOSET(fd,packet_len(0x83d));
 }
 
+// Correct packet for RK_MILLENIUMSHIELD. Shows spirit spheres.
+void clif_millenniumshield(struct map_session_data *sd, int num)
+{
+#if PACKETVER >= 20081217
+	unsigned char buf[10];
+
+	WBUFW(buf,0)=0x440;
+	WBUFL(buf,2)=sd->bl.id;
+	WBUFW(buf,6)=num;
+	WBUFW(buf,8)=0;
+	clif_send(buf,packet_len(0x440),&sd->bl,AREA);
+#endif
+}
 
 /// Parse function for packet debugging
 void clif_parse_debug(int fd,struct map_session_data *sd)
@@ -15088,7 +15129,7 @@ static int packetdb_readdb(void)
 	//#0x02C0
 	    0,  0,  0,  0,  0, 30, 30,  0,  0,  3,  0, 65,  4, 71, 10,  0,
 	    0,  0,  0,  0, 29,  0,  6, -1, 10, 10,  3,  0, -1, 32,  6,  0,
-	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 67, 59, 60,  8,
+	    0, 33,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 67, 59, 60,  8,
 	   10,  2,  2,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 	//#0x0300
 	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
@@ -15116,7 +15157,7 @@ static int packetdb_readdb(void)
 	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  8,  0, 25,
 	//#0x0440
-	    0,  4,  0,  0,  0,  0, 14,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+	   10,  4,  0,  0,  0,  0, 14,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,

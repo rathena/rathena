@@ -7426,7 +7426,7 @@ BUILDIN_FUNC(setoption)
 		flag = script_getnum(st,3);
 	else if( !option ){// Request to remove everything.
 		flag = 0;
-		option = OPTION_CART|OPTION_FALCON|OPTION_RIDING;
+		option = OPTION_CART|OPTION_FALCON|OPTION_RIDING|OPTION_DRAGON;
 	}
 	if( flag ){// Add option
 		if( option&OPTION_WEDDING && !battle_config.wedding_modifydisplay )
@@ -7542,7 +7542,7 @@ BUILDIN_FUNC(checkriding)
 	if( sd == NULL )
 		return 0;// no player attached, report source
 
-	if( pc_isriding(sd) )
+	if( pc_isriding(sd) || pc_isdragon(sd) )
 		script_pushint(st, 1);
 	else
 		script_pushint(st, 0);
@@ -7568,6 +7568,31 @@ BUILDIN_FUNC(setriding)
 		flag = script_getnum(st,2);
 	pc_setriding(sd, flag);
 
+	return 0;
+}
+
+/// Sets if the player is riding a dragon.
+/// <flag> defaults to 1
+/// <color> defaults to 0
+///
+/// setdragon <flag>{,<color>};
+/// setdragon <flag>;
+/// setdragon;
+BUILDIN_FUNC(setdragon)
+{
+	int flag = 1, color = 0;
+	TBL_PC* sd;
+
+	sd = script_rid2sd(st);
+	if( sd == NULL )
+		return 0;// no player attached, report source
+
+	if( script_hasdata(st,2) )
+		flag = script_getnum(st,2);
+	if( script_hasdata(st,3) )
+		color = cap_value(script_getnum(st,3),0,4);
+
+	pc_setdragon(sd, flag, color);
 	return 0;
 }
 
@@ -7762,6 +7787,28 @@ BUILDIN_FUNC(produce)
 	sd = script_rid2sd(st);
 	if( sd == NULL )
 		return 0;
+	
+	if( script_hasdata(st,3) )
+	{ // only used with Rune Knights RK_RUNEMASTERY as part of the calculation.
+		struct item_data* id = NULL;
+		struct script_data* data;
+
+		data = script_getdata(st,3);
+		get_val(st, data); 
+
+		if( data_isstring(data) )
+			id = itemdb_searchname(conv_str(st, data));
+		else
+			id = itemdb_exists(conv_num(st, data));
+
+		if( id == NULL )
+		{
+			ShowError("buildin_produce: Invalid item '%s'.\n", script_getstr(st,3));
+			return 1;
+		}
+		else
+			sd->produce_itemusedid = id->nameid;
+	}
 
 	trigger=script_getnum(st,2);
 	clif_skill_produce_mix_list(sd, trigger);
@@ -14945,6 +14992,85 @@ BUILDIN_FUNC(searchstores)
 	return 0;
 }
 
+/// Returns the successful use of a Rune Knight Runestone.
+///
+/// SuccessRuneUse()
+///
+BUILDIN_FUNC(successruneuse)
+{
+	struct item_data* id = NULL;
+	struct map_session_data* sd;
+	struct script_data* data;
+
+	if( ( sd = script_rid2sd(st) ) == NULL )
+		return 0; // no player attached, report source
+
+	data = script_getdata(st,2);
+	get_val(st, data);  // convert into value in case of a variable
+
+	if( data_isstring(data) )
+		id = itemdb_searchname(conv_str(st, data));
+	else
+		id = itemdb_exists(conv_num(st, data));
+
+	if( id == NULL )
+	{
+		ShowError("buildin_successruneuse: Invalid item '%s'.\n", script_getstr(st,2));
+		script_pushint(st,0);
+		return 1;
+	}
+
+	if( (sd->class_&~(JOBL_UPPER|JOBL_BABY)) == MAPID_RUNE_KNIGHT )
+	{
+		int skilllv = pc_checkskill(sd,RK_RUNEMASTERY);
+		int i = (sd->status.dex + sd->status.luk ) / 20 + (skilllv?55+skilllv:0) + 30;
+
+		if (rand() % 100 < i)
+			script_pushint(st, 1);
+		else
+		{
+			script_pushint(st, 0);
+
+			i = rand() % 100; // reroll for fail effects
+			if( i < 3 )	
+			{
+				long damage = (1000 * id->weight) - (sd->battle_status.mdef + sd->battle_status.mdef2);
+				clif_damage(&sd->bl, &sd->bl, gettick(), 0, 0, damage, 0, 0, 0);
+				status_damage(&sd->bl, &sd->bl, damage, 0, 0, 0);
+			}
+			else if( i < 13 )
+			{ // Random status effect 
+				struct {
+					sc_type type;
+					int duration;
+				} effects[] = {
+					{ SC_FREEZE,  30000 },
+					{ SC_STUN,    5000  },
+					{ SC_SLEEP,   20000 },
+					{ SC_SILENCE, 20000 },
+					{ SC_BLIND,   20000 },
+				};
+				i = rand()%ARRAYLENGTH(effects); // redesignate i to random status effect+duration.
+				sc_start(&sd->bl, effects[i].type, 100, 1, effects[i].duration);
+			}
+			else if( i < 15 )
+				pc_randomwarp(sd, CLR_TELEPORT);
+			else if( i < 18 )
+				; // Unknown effect, however weight of the item used is taken into account.
+			else if( i < 19 )
+			{
+				if (!status_isimmune(&sd->bl))
+					status_percent_heal(&sd->bl, 100, 100);
+			}
+			else if( i >= 20 )
+				; // Unknown effect
+		}
+	}
+	else
+		script_pushint(st, 0);
+
+	return 0;
+}
 
 // declarations that were supposed to be exported from npc_chat.c
 #ifdef PCRE_SUPPORT
@@ -15054,6 +15180,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(setfalcon,"?"),
 	BUILDIN_DEF(checkfalcon,""),
 	BUILDIN_DEF(setriding,"?"),
+	BUILDIN_DEF(setdragon,"??"),
 	BUILDIN_DEF(checkriding,""),
 	BUILDIN_DEF2(savepoint,"save","sii"),
 	BUILDIN_DEF(savepoint,"sii"),
@@ -15063,7 +15190,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(openstorage,""),
 	BUILDIN_DEF(guildopenstorage,""),
 	BUILDIN_DEF(itemskill,"vi"),
-	BUILDIN_DEF(produce,"i"),
+	BUILDIN_DEF(produce,"i?"),
 	BUILDIN_DEF(cooking,"i"),
 	BUILDIN_DEF(monster,"siisii?"),
 	BUILDIN_DEF(getmobdrops,"i"),
@@ -15310,6 +15437,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(pushpc,"ii"),
 	BUILDIN_DEF(buyingstore,"i"),
 	BUILDIN_DEF(searchstores,"ii"),
+	BUILDIN_DEF(successruneuse,"?"),
 	// WoE SE
 	BUILDIN_DEF(agitstart2,""),
 	BUILDIN_DEF(agitend2,""),

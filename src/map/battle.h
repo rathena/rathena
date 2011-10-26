@@ -499,6 +499,8 @@ extern struct Battle_Config
 	int max_decagi_lv;
 	int max_decagi_dur;
 	int max_decagi;
+	int rune_block_by_skill;
+	int rune_block_by_status;
 } battle_config;
 
 void do_init_battle(void);

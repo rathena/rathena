@@ -420,6 +420,8 @@ struct map_session_data {
 	unsigned int bg_id;
 	unsigned short user_font;
 
+	int produce_itemusedid; //used to determine the type of item used when creating items via script.
+
 	// temporary debugging of bug #3504
 	const char* delunit_prevfile;
 	int delunit_prevline;
@@ -526,7 +528,7 @@ enum equip_index {
 #define pc_issit(sd)          ( (sd)->vd.dead_sit == 2 )
 #define pc_isidle(sd)         ( (sd)->chatID || (sd)->state.vending || (sd)->state.buyingstore || DIFF_TICK(last_tick, (sd)->idletime) >= battle_config.idle_no_share )
 #define pc_istrading(sd)      ( (sd)->npc_id || (sd)->state.vending || (sd)->state.buyingstore || (sd)->state.trading )
-#define pc_cant_act(sd)       ( (sd)->npc_id || (sd)->state.vending || (sd)->state.buyingstore || (sd)->chatID || (sd)->sc.opt1 || (sd)->state.trading || (sd)->state.storage_flag )
+#define pc_cant_act(sd)       ( (sd)->npc_id || (sd)->state.vending || (sd)->state.buyingstore || (sd)->chatID || ((sd)->sc.opt1 && (sd)->sc.opt1 != OPT1_BURNING) || (sd)->state.trading || (sd)->state.storage_flag )
 #define pc_setdir(sd,b,h)     ( (sd)->ud.dir = (b) ,(sd)->head_dir = (h) )
 #define pc_setchatid(sd,n)    ( (sd)->chatID = n )
 #define pc_ishiding(sd)       ( (sd)->sc.option&(OPTION_HIDE|OPTION_CLOAK|OPTION_CHASEWALK) )
@@ -539,6 +541,7 @@ enum equip_index {
 #define pc_is50overweight(sd) ( (sd)->weight*100 >= (sd)->max_weight*battle_config.natural_heal_weight_rate )
 #define pc_is90overweight(sd) ( (sd)->weight*10 >= (sd)->max_weight*9 )
 #define pc_maxparameter(sd)   ( ((sd)->class_&JOBL_3 ? ((sd)->class_&JOBL_BABY ? battle_config.max_baby_third_parameter : battle_config.max_third_parameter) : ((sd)->class_&JOBL_BABY ? battle_config.max_baby_parameter : battle_config.max_parameter)) )
+#define pc_isdragon(sd)       ( (sd)->sc.option&OPTION_DRAGON )
 
 #define pc_stop_walking(sd, type) unit_stop_walking(&(sd)->bl, type)
 #define pc_stop_attack(sd) unit_stop_attack(&(sd)->bl)
@@ -664,6 +667,7 @@ int pc_equipitem(struct map_session_data*,int,int);
 int pc_unequipitem(struct map_session_data*,int,int);
 int pc_checkitem(struct map_session_data*);
 int pc_useitem(struct map_session_data*,int);
+int pc_isUseitem_check_runeskill(TBL_PC *sd, int nameid);
 
 int pc_skillatk_bonus(struct map_session_data *sd, int skill_num);
 int pc_skillheal_bonus(struct map_session_data *sd, int skill_num);
@@ -682,6 +686,7 @@ int pc_setfalcon(struct map_session_data* sd, int flag);
 int pc_setriding(struct map_session_data* sd, int flag);
 int pc_changelook(struct map_session_data *,int,int);
 int pc_equiplookall(struct map_session_data *sd);
+int pc_setdragon(struct map_session_data* sd, int flag, int color);
 
 int pc_readparam(struct map_session_data*,int);
 int pc_setparam(struct map_session_data*,int,int);

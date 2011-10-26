@@ -1584,6 +1584,9 @@ int map_quit(struct map_session_data *sd)
 		status_change_end(&sd->bl, SC_WEIGHT50, INVALID_TIMER);
 		status_change_end(&sd->bl, SC_WEIGHT90, INVALID_TIMER);
 		if (battle_config.debuff_on_logout&1) {
+			status_change_end(&sd->bl, SC_DECREASEAGI, INVALID_TIMER);
+			status_change_end(&sd->bl, SC_BENEDICTIO, INVALID_TIMER);
+			status_change_end(&sd->bl, SC_AETERNA, INVALID_TIMER);
 			status_change_end(&sd->bl, SC_ORCISH, INVALID_TIMER);
 			status_change_end(&sd->bl, SC_STRIPWEAPON, INVALID_TIMER);
 			status_change_end(&sd->bl, SC_STRIPARMOR, INVALID_TIMER);
@@ -1591,6 +1594,8 @@ int map_quit(struct map_session_data *sd)
 			status_change_end(&sd->bl, SC_STRIPHELM, INVALID_TIMER);
 			status_change_end(&sd->bl, SC_EXTREMITYFIST, INVALID_TIMER);
 			status_change_end(&sd->bl, SC_EXPLOSIONSPIRITS, INVALID_TIMER);
+			status_change_end(&sd->bl, SC_JOINTBEAT, INVALID_TIMER);
+			status_change_end(&sd->bl, SC_MINDBREAKER, INVALID_TIMER);
 			if(sd->sc.data[SC_REGENERATION] && sd->sc.data[SC_REGENERATION]->val4)
 				status_change_end(&sd->bl, SC_REGENERATION, INVALID_TIMER);
 			//TO-DO Probably there are way more NPC_type negative status that are removed
@@ -1601,12 +1606,61 @@ int map_quit(struct map_session_data *sd)
 		}
 		if (battle_config.debuff_on_logout&2)
 		{
+			status_change_end(&sd->bl, SC_MAGNIFICAT, INVALID_TIMER);
 			status_change_end(&sd->bl, SC_MAXIMIZEPOWER, INVALID_TIMER);
 			status_change_end(&sd->bl, SC_MAXOVERTHRUST, INVALID_TIMER);
+			status_change_end(&sd->bl, SC_AURABLADE, INVALID_TIMER);
+			status_change_end(&sd->bl, SC_PARRYING, INVALID_TIMER);
+			status_change_end(&sd->bl, SC_CONCENTRATION, INVALID_TIMER);
+			status_change_end(&sd->bl, SC_TENSIONRELAX, INVALID_TIMER);
+			status_change_end(&sd->bl, SC_MAGICPOWER, INVALID_TIMER);
+			status_change_end(&sd->bl, SC_EDP, INVALID_TIMER);
+			status_change_end(&sd->bl, SC_TRUESIGHT, INVALID_TIMER);
+			status_change_end(&sd->bl, SC_WINDWALK, INVALID_TIMER);
+			status_change_end(&sd->bl, SC_MELTDOWN, INVALID_TIMER);
+			status_change_end(&sd->bl, SC_CARTBOOST, INVALID_TIMER);
+			status_change_end(&sd->bl, SC_MEMORIZE, INVALID_TIMER);
+			status_change_end(&sd->bl, SC_DEVOTION, INVALID_TIMER);
+			status_change_end(&sd->bl, SC_SACRIFICE, INVALID_TIMER);
 			status_change_end(&sd->bl, SC_STEELBODY, INVALID_TIMER);
 			status_change_end(&sd->bl, SC_PRESERVE, INVALID_TIMER);
 			status_change_end(&sd->bl, SC_KAAHI, INVALID_TIMER);
+			status_change_end(&sd->bl, SC_KAUPE, INVALID_TIMER);
+			status_change_end(&sd->bl, SC_DOUBLECAST, INVALID_TIMER);
+			status_change_end(&sd->bl, SC_SHRINK, INVALID_TIMER);
+			status_change_end(&sd->bl, SC_SIGHTBLASTER, INVALID_TIMER);
 			status_change_end(&sd->bl, SC_SPIRIT, INVALID_TIMER);
+			status_change_end(&sd->bl, SC_KAITE, INVALID_TIMER);
+			status_change_end(&sd->bl, SC_UTSUSEMI, INVALID_TIMER);
+			status_change_end(&sd->bl, SC_BUNSINJYUTSU, INVALID_TIMER);
+			status_change_end(&sd->bl, SC_SUITON, INVALID_TIMER);
+			// Third jobs
+			status_change_end(&sd->bl, SC_MILLENNIUMSHIELD, INVALID_TIMER);
+			status_change_end(&sd->bl, SC_DEATHBOUND, INVALID_TIMER);
+			status_change_end(&sd->bl, SC_REFRESH, INVALID_TIMER);
+			status_change_end(&sd->bl, SC_STONEHARDSKIN, INVALID_TIMER);
+			//status_change_end(&sd->bl, SC_CLOAKINGEXCEED, INVALID_TIMER);
+			//status_change_end(&sd->bl, SC_HALLUCINATIONWALK_POSTDELAY, INVALID_TIMER);
+			//status_change_end(&sd->bl, SC_WEAPONBLOCKING_POSTDELAY, INVALID_TIMER);
+			//status_change_end(&sd->bl, SC_ROLLINGCUTTER, INVALID_TIMER);
+			//status_change_end(&sd->bl, SC_ELECTRICSHOCKER, INVALID_TIMER);
+			//status_change_end(&sd->bl, SC_WUGDASH, INVALID_TIMER);
+			//status_change_end(&sd->bl, SC_WUGBITE, INVALID_TIMER);
+			//status_change_end(&sd->bl, SC_CAMOUFLAGE, INVALID_TIMER);
+			//status_change_end(&sd->bl, SC_MAGNETICFIELD, INVALID_TIMER);
+			//status_change_end(&sd->bl, SC_NEUTRALBARRIER, INVALID_TIMER);
+			//status_change_end(&sd->bl, SC_NEUTRALBARRIER_MASTER, INVALID_TIMER);
+			//status_change_end(&sd->bl, SC_STEALTHFIELD_MASTER, INVALID_TIMER);
+			//status_change_end(&sd->bl, SC_SHADOWFORM, INVALID_TIMER);
+			//status_change_end(&sd->bl, SC_INVISIBILITY, INVALID_TIMER);
+			//status_change_end(&sd->bl, SC_RAISINGDRAGON, INVALID_TIMER);
+			//status_change_end(&sd->bl, SC_NOEQUIPACCESSARY, INVALID_TIMER);
+			//status_change_end(&sd->bl, SC_MANHOLE, INVALID_TIMER);
+			//status_change_end(&sd->bl, SC_PROPERTYWALK, INVALID_TIMER);
+			//status_change_end(&sd->bl, SC_DEEP_SLEEP, INVALID_TIMER);
+			//status_change_end(&sd->bl, SC_WARMER, INVALID_TIMER);
+			//status_change_end(&sd->bl, SC_GN_TRAINING_SWORD, INVALID_TIMER);
+			//status_change_end(&sd->bl, SC_GN_REMODELING_CART, INVALID_TIMER);
 		}
 	}
 	

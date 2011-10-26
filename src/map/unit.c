@@ -837,6 +837,8 @@ int unit_can_move(struct block_list *bl)
 				sc->data[SC_CLOAKING]->val1 < 3 && !(sc->data[SC_CLOAKING]->val4&1))
 			|| sc->data[SC_MADNESSCANCEL]
 			|| (sc->data[SC_GRAVITATION] && sc->data[SC_GRAVITATION]->val3 == BCT_SELF)
+			|| (sc->data[SC_FEAR] && sc->data[SC_FEAR]->val3 > 0)
+			|| sc->data[SC_DEATHBOUND]
 		))
 			return 0;
 	}

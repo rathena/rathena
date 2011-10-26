@@ -395,7 +395,7 @@ int pc_makesavestatus(struct map_session_data *sd)
 
   	//Only copy the Cart/Peco/Falcon options, the rest are handled via 
 	//status change load/saving. [Skotlex]
-	sd->status.option = sd->sc.option&(OPTION_CART|OPTION_FALCON|OPTION_RIDING);
+	sd->status.option = sd->sc.option&(OPTION_CART|OPTION_FALCON|OPTION_RIDING|OPTION_DRAGON);
 		
 	if (sd->sc.data[SC_JAILED])
 	{	//When Jailed, do not move last point.
@@ -3414,7 +3414,7 @@ int pc_additem(struct map_session_data *sd,struct item *item_data,int amount)
 
 	if( data->stack.inventory && amount > data->stack.amount )
 	{// item stack limitation
-		return 5;
+		return 7;
 	}
 
 	w = data->weight*amount;
@@ -3694,7 +3694,6 @@ int pc_isUseitem(struct map_session_data *sd,int n)
 			if( nameid == 12243 && sd->md->db->lv < 80 )
 				return 0;
 			break;
-
 		case 12213: //Neuralizer
 			if( !map[sd->bl.m].flag.reset )
 				return 0;
@@ -3703,6 +3702,9 @@ int pc_isUseitem(struct map_session_data *sd,int n)
 
 	if( nameid >= 12153 && nameid <= 12182 && sd->md != NULL )
 		return 0; // Mercenary Scrolls
+
+	if (nameid >= 12725 && nameid <=  12733 && !pc_isUseitem_check_runeskill(sd, sd->status.inventory[n].nameid) )
+		return 0;
 
 	//added item_noequip.txt items check by Maya&[Lupus]
 	if (
@@ -3741,6 +3743,45 @@ int pc_isUseitem(struct map_session_data *sd,int n)
 
 	return 1;
 }
+
+
+int pc_isUseitem_check_runeskill(TBL_PC *sd, int nameid)
+{
+	struct {
+		int runeid;
+		int skillid;
+	} rune2skill_table[] = {
+		{ 12725, RK_REFRESH },
+		{ 12726, RK_CRUSHSTRIKE },
+		{ 12727, RK_MILLENNIUMSHIELD },
+		{ 12728, RK_VITALITYACTIVATION },
+		{ 12729, RK_FIGHTINGSPIRIT },
+		{ 12730, RK_ABUNDANCE },
+		{ 12731, RK_GIANTGROWTH },
+		{ 12732, RK_STORMBLAST },
+		{ 12733, RK_STONEHARDSKIN },
+	};
+
+	int i;
+	int skillid;
+
+	nullpo_retr(0, sd);
+
+	ARR_FIND(0, ARRAYLENGTH(rune2skill_table), i, rune2skill_table[i].runeid == nameid);
+	if ( i == ARRAYLENGTH(rune2skill_table) ) {
+		ShowError("pc_isUseitem_check_runeskill: rune %d skill not found.\n", nameid);
+		return 0;
+	}
+
+	skillid = rune2skill_table[i].skillid;
+	if ( battle_config.rune_block_by_skill &&  skillnotok(skillid, sd) )
+		return 0;
+	if ( battle_config.rune_block_by_status && status_skill2sc(skillid) != SC_NONE && sd->sc.data[status_skill2sc(skillid)] )
+		return 0;
+
+	return 1;
+}
+
 
 /*==========================================
  * アイテムを使う
@@ -5748,6 +5789,8 @@ int pc_resetskill(struct map_session_data* sd, int flag)
 			i &= ~OPTION_CART;
 		if( i&OPTION_FALCON && pc_checkskill(sd, HT_FALCON) )
 			i &= ~OPTION_FALCON;
+		if( i&OPTION_DRAGON && pc_checkskill(sd, KN_RIDING) ) //RK_DRAGONTRAINING not needed for riding (bug?), assuming KN_RIDING is.
+			 i&=~OPTION_DRAGON;
 
 		if( i != sd->sc.option )
 			pc_setoption(sd, i);
@@ -6522,6 +6565,13 @@ int pc_itemheal(struct map_session_data *sd,int itemid, int hp,int sp)
 		sp -= sp * sd->sc.data[SC_CRITICALWOUND]->val2 / 100;
 	}
 
+	if (sd->sc.data[SC_VITALITYACTIVATION])
+	{
+		hp += hp * sd->sc.data[SC_VITALITYACTIVATION]->val2 / 100; //HP +50%
+		sp -= sp * sd->sc.data[SC_VITALITYACTIVATION]->val3 / 100; //SP -50%
+	}
+
+
 	return status_heal(&sd->bl, hp, sp, 1);
 }
 
@@ -6676,6 +6726,8 @@ int pc_jobchange(struct map_session_data *sd,int job, int upper)
 		i&=~OPTION_CART;
 	if(i&OPTION_FALCON && !pc_checkskill(sd, HT_FALCON))
 		i&=~OPTION_FALCON;
+	if(i&OPTION_DRAGON && !pc_checkskill(sd, KN_RIDING)) //RK_DRAGONTRAINING not needed for riding (bug?), assuming KN_RIDING is.
+		i&=~OPTION_DRAGON;
 
 	if(i != sd->sc.option)
 		pc_setoption(sd, i);
@@ -6804,12 +6856,16 @@ int pc_setoption(struct map_session_data *sd,int type)
 	sd->sc.option=type;
 	clif_changeoption(&sd->bl);
 
-	if (type&OPTION_RIDING && !(p_type&OPTION_RIDING) && (sd->class_&MAPID_BASEMASK) == MAPID_SWORDMAN)
+	if (((type&OPTION_RIDING && !(p_type&OPTION_RIDING))	// Knight and Crusader/Royal Guard
+		|| (type&OPTION_DRAGON && !(p_type&OPTION_DRAGON)))	// Rune Knight Dragon
+		&& (sd->class_&MAPID_BASEMASK) == MAPID_SWORDMAN)
 	{	//We are going to mount. [Skotlex]
 		clif_status_load(&sd->bl,SI_RIDING,1);
 		status_calc_pc(sd,0); //Mounting/Umounting affects walk and attack speeds.
 	}
-	else if (!(type&OPTION_RIDING) && p_type&OPTION_RIDING && (sd->class_&MAPID_BASEMASK) == MAPID_SWORDMAN)
+	else if (((!(type&OPTION_RIDING) && p_type&OPTION_RIDING)	//Knight and Crusader/Royal Guard
+		|| (!(type&OPTION_DRAGON) && p_type&OPTION_DRAGON))		// Rune Knight Dragon
+		&& (sd->class_&MAPID_BASEMASK) == MAPID_SWORDMAN)
 	{	//We are going to dismount.
 		clif_status_load(&sd->bl,SI_RIDING,0);
 		status_calc_pc(sd,0); //Mounting/Umounting affects walk and attack speeds.
@@ -6926,6 +6982,22 @@ int pc_setriding(TBL_PC* sd, int flag)
 	return 0;
 }
 
+/*==========================================
+ * Enable Riding Dragons for Rune Knight class.
+ *------------------------------------------*/
+int pc_setdragon(TBL_PC* sd, int flag, int color)
+{
+	int dragon[5] = {OPTION_DRAGON1,OPTION_DRAGON2,OPTION_DRAGON3,OPTION_DRAGON4,OPTION_DRAGON5};
+
+	if( flag ){
+		if( pc_checkskill(sd,KN_RIDING) > 0 ) //Possible to rent dragons without RK_DRAGONTRAINING; Source, iRO. (Bug?)
+			pc_setoption(sd, sd->sc.option|dragon[color]);
+	} else if( pc_isdragon(sd) ){
+		pc_setoption(sd, sd->sc.option&~OPTION_DRAGON);
+	}
+
+	return 0;
+}
 /*==========================================
  * アイテムドロップ可不可判定
  *------------------------------------------*/
