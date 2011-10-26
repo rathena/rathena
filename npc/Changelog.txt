@@ -1,5 +1,7 @@
 Date		Added
 ======
+2011/10/26
+	* Rev. 14984 Added Rune Knight job quest, and mount rental NPC. [L0ne_W0lf]
 2011/08/26
 	* Rev. 14941 Added Archbishop job quest, and missing Brasilis files. [L0ne_W0lf]
 2011/08/10

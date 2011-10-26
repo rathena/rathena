@@ -1,24 +1,75 @@
 == Rune Knight ====================================================================================
 RK_ENCHANTBLADE
+		Working
+		Applied kRO update (30/08/2011) 
+			Changed from single target to self targeted.
+			Bonus damage formula changed.
 RK_SONICWAVE
+		Working
 RK_DEATHBOUND
+		Working.
+		Piggybacks of a lot of KN_AUTOCOUNTER.
 RK_HUNDREDSPEAR
+		Working
+		Applied kRO update (30/08/2011) 
+			Casting time changed.
+			Damage Formula changed.
 RK_WINDCUTTER
+		Working
 RK_IGNITIONBREAK
+		Working
+		Applied kRO update (30/08/2011) 
+			Damage Formula changed.
 RK_DRAGONTRAINING
+		Working
+		Availability to rent depends on KN_RIDING. (Possible AEGIS bug.)
 RK_DRAGONBREATH
+		Working
 RK_DRAGONHOWLING
+		Working
 RK_RUNEMASTERY
+		Working
+		Uses sd->produce_itemusedid and saves a second paramater provided by produce script command.
 RK_MILLENNIUMSHIELD
+		Working
+		Need more information on how long/when stun is applied.
+			Current behavior: rate/duration 15%/1s ever time a shield breaks
 RK_CRUSHSTRIKE
+		Working
+		Applied kRO update (30/08/2011) 
+			On your next physical melee attack, you will auto-cast Crush Strike.
 RK_REFRESH
+		Working
+		Check: Should work while under status effects that block item usage.
+		Applied kRO update (30/08/2011) 
+			After being used you cannot be affected by status effects for 60 seconds.
+			Removes the following Debuffs: Stun, Silence, Curse, Petrify, Poison, Blind, Bleeding, Chaos
+			Freeze, Cold, Lock, Burning, Guillotine Cross Poison, Marsh of Abyss, Howling of Mandragora.
 RK_GIANTGROWTH
+		Working
+		Applied kRO update (30/08/2011) 
+			Duration time is Changed.
 RK_STONEHARDSKIN
+		Working
+		Check: Unsure how damage reduction is applied by the skill, currently def2/mdef2.
+			My theroy is it works like assumpito, but this will do for now.
+		Applied kRO update (30/08/2011) 
+			Magic defense increase is affected by Job Lv and Rune Mastery level.
+			Duration time is changed.
 RK_VITALITYACTIVATION
+		Working
+		Applied kRO update (30/08/2011) 
+			Duration time is changed.
 RK_STORMBLAST
+		Working
 RK_FIGHTINGSPIRIT
+		Working
+		Bug: skill-granted ASPD needs to be a fixed value instead of percentage increase.
+			Posible this applies to all skills that grant ASPD now. Not just this one.
 RK_ABUNDANCE
+		Working
 RK_PHANTOMTHRUST
+		Working
 
 == Guillotine_Cross ===============================================================================
 GC_VENOMIMPRESS
@@ -64,6 +115,9 @@ AB_CANTO
 		Bug: Skill name and casting sprite animation should display only on caster
 AB_CHEAL
 		Working
+		Applied kRO update (30/08/2011) 
+			SP Cost is changed. (200 / 220 / 240)
+			Higher number of party members increases healing done.
 		Bug: Skill name and casting sprite animation should display only on caster
 AB_EPICLESIS
 		Working
@@ -74,22 +128,21 @@ AB_PRAEFATIO
 		Working
 		Applied kRO update (30/08/2011) 
 			SP cost is changed (80 + SkillLv * 10).
+			The defensive power of the barrier increases with more players in party.
 		Bug: Skill name and casting sprite animation should display only on caster
 AB_ORATIO
 		Working
 		Ugly hack to display/remove SI_ORATIO on mobs.
 AB_LAUDAAGNUS
 		Working
-		Should +4+Skilllv luk apply to only those not cured from a status effect?
 		Check: Skill name and casting sprite animation should display only on caster?
 		Applied kRO update (21/09/2011) 
-			* Now works when casting player is not in a party.
+			Now works when casting player is not in a party.
 AB_LAUDARAMUS
 		Working 
-		Should +4+Skilllv luk apply to only those not cured from a status effect?
 		Check: Skill name and casting sprite animation should display only on caster?
 		Applied kRO update (21/09/2011) 
-			* Now works when casting player is not in a party.
+			Now works when casting player is not in a party.
 AB_EUCHARISTICA
 		Working 
 AB_RENOVATIO
@@ -101,11 +154,11 @@ AB_CLEARANCE
 		Check: Should Soul Linkers be inately immune?
 		Check list a second time to see what was missed.
 		Applied kRO update (30/08/2011) 
-			* Now also removes the Critical Wounds status effect.
+			Now also removes the Critical Wounds status effect.
 AB_EXPIATIO
 		Working
 		Applied kRO update (30/08/2011) 
-			* Changed from self targeted to self and other players.
+			Changed from self targeted to self and other players.
 AB_DUPLELIGHT
 		Working
 		Is skill_addtimerskill the best way to implement the additional attacks?
@@ -115,7 +168,6 @@ AB_DUPLELIGHT_MAGIC
 		Working
 AB_SILENTIUM
 		Working
-		Need more info on success rate.
 AB_SECRAMENT
 		Working
 

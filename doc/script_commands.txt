@@ -183,6 +183,9 @@
 //=       Added 'getmercinfo' command. [Ai4rei]
 //= 3.46.20110810
 //=       Added information on OnTouchNPC and 'unitwarp' special case [Skotlex]
+//= 3.47.20111025
+//=       Documented successruneuse and setdragon. [L0ne_W0lf]
+//=       Ammended documentation for Produce.
 //=========================================================
 
 This document is a reference manual for all the scripting commands and functions 
@@ -2769,6 +2772,17 @@ when you want to check item cards or if it's signed. Useful for such quests as
 	Hat[0] +4 -> Player's Hat[0] +4
 
 ---------------------------------------
+
+*successruneuse(<item id>)
+
+Returns 0 (failed) or 1 (success) when using Rune Knight Runestone items.
+
+	if(successuserune(12725)){ itemskill RK_REFRESH,1; } else { dispbottom "You have failed to use the runestone."; }
+
+This function not only determines if the rune stone was used successfully
+but will also handle the backfire effects imposed upon the player.
+
+---------------------------------------
 //
 2,1.- End of item-related commands.
 //
@@ -3477,6 +3491,30 @@ The accompanying function will return 1 if the invoking character is riding a
 bird and 0 if they don't.
 
     if (checkriding()) mes "PLEASE leave your bird outside! No riding birds on the floor here!";
+
+---------------------------------------
+
+*setdragon {<flag>{,<color>}};
+
+If <flag> is 0 this command will remove the mount from the character.
+Otherwise it give the invoking character a Dragon Mount if they are a Rune
+Knight
+
+If both <flag> and <color> are supplied, and flag is 1, <color> will change 
+color of the dragon mount used. <color> is 0 by default. Values higher than 4,
+or lower than 0, will default to red or green respectively.
+
+Valid values for <color> are:
+	DRAGON_GREEN (0),
+	DRAGON_BLACK (1),
+	DRAGON_WHITE (2),
+	DRAGON_BLUE  (3),
+	DRAGON_RED   (4)
+
+This command is limited to only Rune Knights.
+
+Note: the character needs to have the skill KN_RIDING to gain a mount
+This may be a bug in AEGIS, as RK_DRAGONTRAINING should limit this.
 
 ---------------------------------------
 
@@ -4341,7 +4379,7 @@ target cursor is shown.
 
 ---------------------------------------
 
-*produce <item level>;
+*produce <item level>{,<itemid>};
 
 This command will open a crafting window on the client connected to the invoking 
 character. The 'item level' is a number which determines what kind of a crafting 
@@ -4358,6 +4396,10 @@ Valid item levels are:
  21  - Blacksmith's Stones and Metals
  22  - Alchemist's Potions, Holy Water, Assassin Cross's Deadly Poison
  23  - Elemental Converters
+
+Supplying <itemid> currently (and for probably will only) ever be used by
+the Rune Knight runestones, to create other runestones and affect the
+success rate. Using items lower than 12734 or higher 12738 will have no effect.
 
 ---------------------------------------
 

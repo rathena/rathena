@@ -1,7 +1,7 @@
 Date	Added
 
 2011/10/26
-	* Rev. 14982 Implemented first version of rebalanced Rune Knight skills. [L0ne_W0lf]
+	* Rev. 14983 Implemented first version of rebalanced Rune Knight skills. [L0ne_W0lf]
 	* Implemented the rebalancing of most Archbishop skills.
 	* As a result, merged r14979 from trunk. (act/notify packet update)
 	* Added pc_isUseitem_check_runeskill care of Meyrawr (blocks rune usage based on skill delay.)
