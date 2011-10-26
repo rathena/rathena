@@ -505,7 +505,7 @@ What a RID is and why do you need to know
 Most scripting commands and functions will want to request data about a 
 character, store variables referenced to that character, send stuff to the 
 client connected to that specific character. Whenever a script is invoked by a 
-character, it is passed a so-called RID - this is the character ID number of a 
+character, it is passed a so-called RID - this is the account ID number of a 
 character that caused the code to execute by clicking on it, walking into it's 
 OnTouch zone, or otherwise.
 

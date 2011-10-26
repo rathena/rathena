@@ -1,5 +1,7 @@
 Date	Added
 
+2011/10/26
+	* Fixed a mistake in RID description in doc/script_commands.txt (since r2402). [Ai4rei]
 2011/10/23
 	* Revised packets related to auction system. [Ai4rei]
 	- Added packet documentation and corrected existing one.
