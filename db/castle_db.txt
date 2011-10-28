@@ -1,7 +1,15 @@
 // Guild Castles Database
 //
 // Structure of Database:
-// CastleID,MapName,CastleName,OnGuildBreakEventName(to abandon captured castles),Flag(reserved)
+// CastleID,MapName,CastleName,OnGuildBreakEventName,Flag
+//
+// 01. CastleID                 Unique ID of the castle.
+// 02. MapName                  Map name to be considered as the castle map.
+// 03. CastleName               Name of the castle (used by scripts and guardian name tags).
+// 04. OnGuildBreakEventName    NPC unique name to invoke ::OnGuildBreak on, when a occupied
+//                              castle is abandoned during guild break.
+// 05. Flag                     Switch flag (reserved as of athena-dev mod0796~0801, not used by server).
+
 0,aldeg_cas01,Neuschwanstein,Agit#aldeg_cas01,1		// kRO : Noisyubantian
 1,aldeg_cas02,Hohenschwangau,Agit#aldeg_cas02,1		// kRO : Hohensyubangawoo
 2,aldeg_cas03,Nuenberg,Agit#aldeg_cas03,1			// kRO : Nyirenverk

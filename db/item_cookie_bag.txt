@@ -1,4 +1,3 @@
-
 // Cookie Bag Obtainable Items Database
 //
 // Structure of Database:

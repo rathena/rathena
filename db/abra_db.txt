@@ -1,7 +1,16 @@
-// Hocus-Pocus Castable Skills Database
+// Hocus-Pocus (Abrakadabra) Castable Skills Database
 //
 // Structure of Database:
 // SkillID,DummyName,RequiredHocusPocusLevel,Rate
+//
+// 01. SkillID                  Skill ID to be casted by hocus pocus.
+// 02. DummyName                Name of the skill (informative, not used by server).
+// 03. RequiredHocusPocusLevel  Minimum skill level of hocus pocus for the current skill to be selected.
+// 04. Rate                     Chance at which the skill is selected (1 = 0.01%, 10000 = 100%).
+//
+// NOTE: The skill is picked at random from the entire database and then tested for rate. If it
+//       does not succeed at that rate, an another skill is picked and tested. This continues
+//       until a skill succeeds.
 
 //1,Basic Skill,1,0
 
