@@ -27,14 +27,18 @@ struct battleground_data;
 struct quest;
 struct party_booking_ad_info;
 #include <stdarg.h>
-// packet DB
-#define MAX_PACKET_DB		0x900
-#define MAX_PACKET_VER		26
+
+enum
+{// packet DB
+	MAX_PACKET_DB  = 0x900,
+	MAX_PACKET_VER = 26,
+	MAX_PACKET_POS = 20,
+};
 
 struct s_packet_db {
 	short len;
 	void (*func)(int, struct map_session_data *);
-	short pos[20];
+	short pos[MAX_PACKET_POS];
 };
 
 // packet_db[SERVER] is reserved for server use

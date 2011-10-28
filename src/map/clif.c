@@ -15592,6 +15592,13 @@ static int packetdb_readdb(void)
 			if(p2) *p2++=0;
 			k = atoi(str2[j]);
 			// if (packet_db[packet_ver][cmd].pos[j] != k && clif_config.prefer_packet_db)	// not used for now
+
+			if( j >= MAX_PACKET_POS )
+			{
+				ShowError("Too many positions found for packet 0x%04x (max=%d).\n", cmd, MAX_PACKET_POS);
+				break;
+			}
+
 			packet_db[packet_ver][cmd].pos[j] = k;
 		}
 	}
