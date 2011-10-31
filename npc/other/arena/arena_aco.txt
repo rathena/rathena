@@ -130,49 +130,49 @@ OnTimer4000:
 	end;
 
 OnTimer60000:
-	if (getmapusers("force_5-1.gat") == 0) {
+	if (getmapusers("force_5-1") == 0) {
 		donpcevent "Trocco#aco1::Onfailclearstage";
 	}
 	mapannounce "force_5-1","Time left: 7 Minutes",bc_map|bc_npc;
 	end;
 
 OnTimer120000:
-	if (getmapusers("force_5-1.gat") == 0) {
+	if (getmapusers("force_5-1") == 0) {
 		donpcevent "Trocco#aco1::Onfailclearstage";
 	}
 	mapannounce "force_5-1","Time left: 6 Minutes",bc_map|bc_npc;
 	end;
 
 OnTimer180000:
-	if (getmapusers("force_5-1.gat") == 0) {
+	if (getmapusers("force_5-1") == 0) {
 		donpcevent "Trocco#aco1::Onfailclearstage";
 	}
 	mapannounce "force_5-1","Time left: 5 Minutes",bc_map|bc_npc;
 	end;
 
 OnTimer240000:
-	if (getmapusers("force_5-1.gat") == 0) {
+	if (getmapusers("force_5-1") == 0) {
 		donpcevent "Trocco#aco1::Onfailclearstage";
 	}
 	mapannounce "force_5-1","Time left: 4 Minutes",bc_map|bc_npc;
 	end;
 
 OnTimer300000:
-	if (getmapusers("force_5-1.gat") == 0) {
+	if (getmapusers("force_5-1") == 0) {
 		donpcevent "Trocco#aco1::Onfailclearstage";
 	}
 	mapannounce "force_5-1","Time left: 3 Minutes",bc_map|bc_npc;
 	end;
 
 OnTimer360000:
-	if (getmapusers("force_5-1.gat") == 0) {
+	if (getmapusers("force_5-1") == 0) {
 		donpcevent "Trocco#aco1::Onfailclearstage";
 	}
 	mapannounce "force_5-1","Time left: 2 Minutes",bc_map|bc_npc;
 	end;
 
 OnTimer420000:
-	if (getmapusers("force_5-1.gat") == 0) {
+	if (getmapusers("force_5-1") == 0) {
 		donpcevent "Trocco#aco1::Onfailclearstage";
 	}
 	mapannounce "force_5-1","Time left: 1 Minute",bc_map|bc_npc;
@@ -558,49 +558,49 @@ OnTimer4000:
 	end;
 
 OnTimer60000:
-	if (getmapusers("force_5-1.gat") == 0) {
+	if (getmapusers("force_5-1") == 0) {
 		donpcevent "Trocco#aco2::Onfailclearstage";
 	}
 	mapannounce "force_5-1","Time left: 7 Minutes",bc_map|bc_npc;
 	end;
 
 OnTimer120000:
-	if (getmapusers("force_5-1.gat") == 0) {
+	if (getmapusers("force_5-1") == 0) {
 		donpcevent "Trocco#aco2::Onfailclearstage";
 	}
 	mapannounce "force_5-1","Time left: 6 Minutes",bc_map|bc_npc;
 	end;
 
 OnTimer180000:
-	if (getmapusers("force_5-1.gat") == 0) {
+	if (getmapusers("force_5-1") == 0) {
 		donpcevent "Trocco#aco2::Onfailclearstage";
 	}
 	mapannounce "force_5-1","Time left: 5 Minutes",bc_map|bc_npc;
 	end;
 
 OnTimer240000:
-	if (getmapusers("force_5-1.gat") == 0) {
+	if (getmapusers("force_5-1") == 0) {
 		donpcevent "Trocco#aco2::Onfailclearstage";
 	}
 	mapannounce "force_5-1","Time left: 4 Minutes",bc_map|bc_npc;
 	end;
 
 OnTimer300000:
-	if (getmapusers("force_5-1.gat") == 0) {
+	if (getmapusers("force_5-1") == 0) {
 		donpcevent "Trocco#aco2::Onfailclearstage";
 	}
 	mapannounce "force_5-1","Time left: 3 Minutes",bc_map|bc_npc;
 	end;
 
 OnTimer360000:
-	if (getmapusers("force_5-1.gat") == 0) {
+	if (getmapusers("force_5-1") == 0) {
 		donpcevent "Trocco#aco2::Onfailclearstage";
 	}
 	mapannounce "force_5-1","Time left: 2 Minutes",bc_map|bc_npc;
 	end;
 
 OnTimer420000:
-	if (getmapusers("force_5-1.gat") == 0) {
+	if (getmapusers("force_5-1") == 0) {
 		donpcevent "Trocco#aco2::Onfailclearstage";
 	}
 	mapannounce "force_5-1","Time left: 1 Minute",bc_map|bc_npc;

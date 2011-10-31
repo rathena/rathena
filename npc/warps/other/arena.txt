@@ -40,24 +40,24 @@ DLGTEMP:
 	}
 	else if (@input_arena == 1357)
 	{
-		mes "Opening Control Panel";	
-		mes "' A - R - E - N - A '";	
+		mes "Opening Control Panel";
+		mes "' A - R - E - N - A '";
 		next;
-		mes "Please select a";	
-		mes "state for the arena.";	
+		mes "Please select a";
+		mes "state for the arena.";
 		next;
 		switch( select( "Open.","Closed.") )
 		{
 			case 1:
-				mes "Currently";	
-				mes "opening arena.";	
+				mes "Currently";
+				mes "opening arena.";
 				misceffect EF_ENHANCE;	//CHECK
 				enablenpc "welcome_arena";
 				next;
 				break;
 			case 2:
-				mes "Currently";	
-				mes "closing arena.";	
+				mes "Currently";
+				mes "closing arena.";
 				misceffect EF_EXIT;	//CHECK
 				disablenpc "welcome_arena";
 				next;
@@ -66,7 +66,7 @@ DLGTEMP:
 	}
 	else
 	{
-		mes "Closing control panel.";	
+		mes "Closing control panel.";
 		close;
 	}
 }

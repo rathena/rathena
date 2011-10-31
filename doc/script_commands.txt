@@ -2129,7 +2129,7 @@ Notice that @array[4] and @array[5] won't be copied to the second array, and it 
 
 ---------------------------------------
 
-*deletearray <array name>[<first value>],<how much to delete>
+*deletearray <array name>[<first value>],<how much to delete>;
 
 This command will delete a specified number of array elements totally from an 
 array, shifting all the elements beyond this towards the beginning.

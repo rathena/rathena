@@ -227,7 +227,7 @@ prt_maze03,176,34,0	warp	mazewarp5359	1,1,prt_maze03,88,56	/*To No.3-18*/
 prt_maze03,176,5,0	warp	mazewarp5360	1,1,prt_maze03,111,95	/*To No.3-13*/
 prt_maze03,194,15,0	warp	mazewarp5361	1,1,prt_maze03,8,58	/*To No.3-16*/
 prt_maze03,165,22,0	warp	mazewarp5362	1,1,prt_maze03,111,145	/*To No.3-8*/
-				
+
 //= Prontera Sewers ==============================================
 prt_sewb1,135,248,0	warp	prts001	2,2,prt_fild05,274,208
 prt_sewb1,188,247,0	warp	prts01	1,3,prt_sewb2,19,19

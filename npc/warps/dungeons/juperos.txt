@@ -20,7 +20,7 @@
 //= 1.6a COrrected new warps [L0ne_W0lf]
 //= 1.7 Removed duplicated quest warp portal [Brainstorm]
 //============================================================
-	
+
 yuno_fild07,207,175,0	warp	jupwrp01	1,1,jupe_cave,143,52
 jupe_cave,148,52,0	warp	jupwrp02	1,1,yuno_fild07,212,175
 jupe_cave,26,52,0	warp	jupwrp03	1,1,juperos_01,53,247

@@ -24,7 +24,6 @@ ALTER TABLE `ipbanlist` ENGINE = InnoDB;
 #ALTER TABLE `item_db` ENGINE = InnoDB;
 #ALTER TABLE `item_db2` ENGINE = InnoDB;
 ALTER TABLE `login` ENGINE = InnoDB;
-#ALTER TABLE `loginlog` ENGINE = InnoDB;
 ALTER TABLE `mail` ENGINE = InnoDB;
 ALTER TABLE `mapreg` ENGINE = InnoDB;
 ALTER TABLE `memo` ENGINE = InnoDB;
