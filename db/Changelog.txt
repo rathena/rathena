@@ -9,6 +9,9 @@
 	13005 Angelic Wing Dagger:	NEED INFO.
 =======================
 
+2011/11/03
+	* Rev. 14989 Updated item_buyingstore.txt according to 2011/11/02 kRO update. [Ai4rei]
+	- Enabled older items, that were previously unknown to the item db.
 2011/09/27
 	* Rev. 14963 Updated item_noequip.txt examples to reflect recent changes (follow up to r14961). [Ai4rei]
 2011/08/09

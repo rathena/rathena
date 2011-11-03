@@ -7,6 +7,128 @@
 //  Items are in same order as data\buyingstoreitemlist.txt, which
 //  must be edited as well for the client to accept added items.
 
+// items from 2011-11-02 update
+714  // Emperium
+6381  // Field_Shovel
+6382  // Urn
+6393  // Round_Feather
+6394  // Golden_Feather
+6395  // Angel_Magic_Power
+//6403
+//6404
+//6405
+//6423
+//6469
+//6470
+//6471
+//6493
+//6496
+//6497
+//6498
+//6499
+//6508
+//6509
+//6510
+//6511
+//6512
+//6513
+//6514
+//6515
+//6516
+//6517
+//6518
+//6523
+//6524
+//6525
+7347  // Lab_Staff_Record
+7760  // Yaga_Magic_Book
+7762  // Yaga_Pestle
+7824  // Spirit_Liquor
+11519  // Beef_Toast
+11520  // Mora_Mandarin
+11521  // Pingui_Berry_Juice
+11522  // Red_Raffle_Sap
+11523  // Yellow_Raffle_Sap
+11524  // White_Raffle_Sap
+11525  // Mora_Hip_Tea
+11526  // Rafflecino
+//11532
+//11533
+//11534
+//11536
+//11537
+//11547
+//11548
+//11549
+12329  // Recall_MaleGM
+12330  // Recall_FemaleGM
+12342  // Manuk's_Opportunity
+12343  // Manuk's_Courage
+12344  // Pinguicula's_fruit_Jam
+12345  // Luciola's_Honey_Jam
+12348  // Manuk's_Faith
+12349  // Cornus'_Tears
+12350  // Angeling_Potion
+12351  // Shout_Megaphone
+12354  // Buche_De_Noel
+12355  // Xmas_Gift
+12356  // Louise_Costume_Box
+12418  // Full_SwingK
+12419  // Mana_Plus
+12422  // HP_Increase_PotionS
+12423  // HP_Increase_PotionM
+12424  // HP_Increase_PotionL
+12425  // SP_Increase_PotionS
+12426  // SP_Increase_PotionM
+12427  // SP_Increase_PotionL
+12428  // Enrich_White_PotionZ
+12429  // Savage_BBQ
+12430  // Wug_Blood_Cocktail
+12431  // Minor_Brisket
+12432  // Siroma_Icetea
+12433  // Drocera_Herb_Stew
+12434  // Petti_Tail_Noodle
+12436  // Vitata500
+12437  // Enrich_Celermine_Juice
+12475  // Cure_Free
+12536  // NY_Rice_Cake_Soup
+12539  // Splendid_Box
+12561  // Mysterious_Seed
+12574  // Mora_Berry
+12575  // Arrow_Of_Elf_Cntr
+12576  // Hunting_Arrow_Cntr
+//12582
+//12608
+//12609
+//12612
+//12613
+//12614
+//12615
+//12616
+//12617
+//12618
+//12619
+//12620
+//12621
+//12623
+//12675
+//12676
+//12677
+//12678
+//12679
+//12680
+//12683
+//12690
+//12691
+//12692
+//12693
+//12694
+//12695
+//12698
+//12699
+//12700
+//12775
+
 // items from 2010-03-12 update
 601  // Wing_Of_Fly
 602  // Wing_Of_Butterfly
@@ -259,7 +381,7 @@
 12393  // RepairB
 12394  // RepairC
 12395  // Tantanmen
-//12414
+12414  // Guarana_Candy
 12717  // Poison_Paralysis
 12718  // Poison_Leech
 12719  // Poison_Oblivion
@@ -334,10 +456,10 @@
 593  // Honey_Pancake
 594  // Sour_Cream_Pancake
 595  // Mushroom_Pancake
-//11513
+11513  // Protect_Neck_Candy
 11515  // Coconut
 11516  // Acai_Fruit
-//11517
+11517  // Puri_Potion
 701  // Ora_Ora
 702  // Animal_Blood
 703  // Hinalle
@@ -613,73 +735,73 @@
 6146  // Magic_Gear_Fuel
 6147  // Liquid_Condensed_Bullet
 6186  // Monkey_Wrench
-//6189
-//6190
-//6191
-//6192
-//6193
-//6194
-//6195
-//6196
-//6197
-//6198
-//6199
-//6200
-//6201
-//6202
-//6203
-//6204
-//6205
-//6210  // Seed_Of_Thorny_Plant
-//6211  // Bloodsuck_Plant_Seed
-//6212  // Bomb_Mushroom_Spore
-//6213  // Explosive_Powder
-//6214  // Smokes_Powder
-//6215  // Tear_Gas
-//6216  // Oil_Bottle
-//6217  // Mandragora_Flowerpot
+6189  // Magic_Book_FB
+6190  // Magic_Book_CB
+6191  // Magic_Book_LB
+6192  // Magic_Book_SG
+6193  // Magic_Book_LOV
+6194  // Magic_Book_MS
+6195  // Magic_Book_CM
+6196  // Magic_Book_TV
+6197  // Magic_Book_TS
+6198  // Magic_Book_JT
+6199  // Magic_Book_WB
+6200  // Magic_Book_HD
+6201  // Magic_Book_ES
+6202  // Magic_Book_ES_
+6203  // Magic_Book_CL
+6204  // Magic_Book_CR
+6205  // Magic_Book_DL
+6210  // Seed_Of_Thorny_Plant
+6211  // Bloodsuck_Plant_Seed
+6212  // Bomb_Mushroom_Spore
+6213  // Explosive_Powder
+6214  // Smokes_Powder
+6215  // Tear_Gas
+6216  // Oil_Bottle
+6217  // Mandragora_Flowerpot
 6223  // Carnium
 6224  // Bradium
-//6244  // Dark_Powder
-//6245  // Black_Powder
-//6246  // Yellow_Powder
-//6247  // White_Powder
-//6248  // Chowder_Pot
-//6249  // Savage_Meat
-//6250  // Iron_Cooking_Skewer
-//6251  // Black_Charcoal
-//6252  // Wolf's_Blood
-//6253  // Cold_Ice
-//6254  // Seasoned_Tough_Meat
-//6255  // Large_Pan
-//6256  // Powdered_Ice
-//6257  // Ice_Crystal
-//6258  // Comodo_Tropical_Fruit
-//6259  // Drosera_Feeler
-//6260  // Petite_Tail
-//6261  // Fine_Noodles
-//6262  // Cold_Broth
-//6263  // Coconut
-//6264  // Melon
-//6265  // Pineapple
-//6279  // Apple_Bomb_Guidebook
-//6280  // Pineapple_Bomb_Guidebook
-//6281  // Coconut_Bomb_Guidebook
-//6282  // Melon_Bomb_Guidebook
-//6283  // Banana_Bomb_Guidebook
-//6284  // Plant_Genetic_Cultivation_Guide
-//6285  // Improved_Potion_Creation_Manual
+6244  // Dark_Powder
+6245  // Black_Powder
+6246  // Yellow_Powder
+6247  // White_Powder
+6248  // Chowder_Pot
+6249  // Savage_Meat
+6250  // Iron_Cooking_Skewer
+6251  // Black_Charcoal
+6252  // Wolf's_Blood
+6253  // Cold_Ice
+6254  // Seasoned_Tough_Meat
+6255  // Large_Pan
+6256  // Powdered_Ice
+6257  // Ice_Crystal
+6258  // Comodo_Tropical_Fruit
+6259  // Drosera_Feeler
+6260  // Petite_Tail
+6261  // Fine_Noodles
+6262  // Cold_Broth
+6263  // Coconut
+6264  // Melon
+6265  // Pineapple
+6279  // Apple_Bomb_Guidebook
+6280  // Pineapple_Bomb_Guidebook
+6281  // Coconut_Bomb_Guidebook
+6282  // Melon_Bomb_Guidebook
+6283  // Banana_Bomb_Guidebook
+6284  // Plant_Genetic_Cultivation_Guide
+6285  // Improved_Potion_Creation_Manual
 6297  // Empty_Potion_Bottle
-//6321  // Rake_Helmet
-//6322  // Antler_Helmet
-//6323  // Two-Horn_Helmet
-//6324  // One-Horn_Helmet
-//6325  // White_Spider_Legs
-//6326  // Queen_Scraba_Shell
-//6360  // Scarlet_Point
-//6361  // Indigo_Point
-//6362  // Yellow_Wish_Point
-//6363  // Lime_Green_Point
+6321  // Rake_Helmet
+6322  // Antler_Helmet
+6323  // Two-Horn_Helmet
+6324  // One-Horn_Helmet
+6325  // White_Spider_Legs
+6326  // Queen_Scraba_Shell
+6360  // Scarlet_Point
+6361  // Indigo_Point
+6362  // Yellow_Wish_Point
+6363  // Lime_Green_Point
 7001  // Mould_Powder
 7002  // Ogre_Tooth
 7003  // Anolian_Skin
@@ -1005,9 +1127,8 @@
 11007  // Blood_Flower02
 11008  // Barmund
 11009  // Adventure_Story02
-//11020
-//11021
-//11022  // Mix_Cooking_Ingredient_Book_1
-//11023  // Vitality_Boost_Research_Book
-//11024  // Energy_Drink_Formula
-
+11020  // Japan_Book1
+11021  // Japan_Book2
+11022  // Mix_Cooking_Ingredient_Book_1
+11023  // Vitality_Boost_Research_Book
+11024  // Energy_Drink_Formula
