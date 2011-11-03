@@ -1,5 +1,7 @@
 Date	Added
 
+2011/11/03
+	* Organized items in VS2010 projects into groups like in other projects (follow up to r14562). [Ai4rei]
 2011/10/28
 	* Random documentation of database files. [Ai4rei]
 	* Fixed db/packet_db.txt reading not checking for max. amount of positions. [Ai4rei]
