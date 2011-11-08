@@ -331,13 +331,10 @@ below).
 Amount is the amount of monsters that will be spawned when this command is 
 executed, it is affected by spawn rates in 'battle_athena.conf'.
 
-Delay1 and delay2 are the monster respawn delays - the first one counts the time 
-since a monster defined in this spawn was last respawned and the second one 
-counts the time since the monster of this spawn was last killed. Whichever turns 
-out to be higher will be used. If the resulting number is smaller than a random 
-value between 5 and 10 seconds, this value will be used instead. (Which is 
-normally the case if both delay values are zero.) The times are given in
-1/1000ths of a second.
+Delay1 and delay2 control monster respawn delays - the first one is the fixed
+base respawn time, and the second is random variance on top of the base time.
+Both values are given in miliseconds (1000 = 1 second).
+Note that the server also enforces a minimum respawn delay of 5 seconds.
 
 You can specify a custom level to use for the mob different from the one of
 the database by adjoining the level after the name with a comma. eg:
