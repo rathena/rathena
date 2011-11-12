@@ -96,7 +96,7 @@ static struct script_event_s
 
 struct view_data* npc_get_viewdata(int class_)
 {	//Returns the viewdata for normal npc classes.
-	if (class_ == INVISIBLE_CLASS)
+	if( class_ == HIDDEN_WARP_CLASS || class_ == INVISIBLE_CLASS )
 		return &npc_viewdb[0];
 	if (npcdb_checkid(class_) || class_ == WARP_CLASS)
 		return &npc_viewdb[class_];
