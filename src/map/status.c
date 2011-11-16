@@ -6666,7 +6666,7 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 		case SC_NOCHAT:
 			if (sd && sd->status.manner < 0 && tid != INVALID_TIMER)
 				sd->status.manner = 0;
-			if (sd)
+			if (sd && tid == INVALID_TIMER)
 			{
 				clif_changestatus(&sd->bl,SP_MANNER,sd->status.manner);
 				clif_updatestatus(sd,SP_MANNER);

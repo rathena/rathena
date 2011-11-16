@@ -1,5 +1,7 @@
 Date	Added
 
+2011/11/16
+	* Fixed natural expiration of GM mute printing the unmute message twice (since r12169). [Ai4rei]
 2011/11/12
 	* Fixed npc class HIDDEN_WARP_NPC (139) being sent to the client, causing client crashes in poring war. It's a server-side "sprite" only. [Ai4rei]
 	- Updated Aegis NPC ID constants from current npcidentity.lub (569~603).
