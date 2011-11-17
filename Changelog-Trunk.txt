@@ -1,5 +1,7 @@
 Date	Added
 
+2011/11/17
+	* Added a check to WFIFOSET to detect zero-length 'sets' of packets, that could cause memory corruption (through code after WFIFOHEAD(fd,packet_len(cmd)) where the length is 0). [Ai4rei]
 2011/11/16
 	* Fixed natural expiration of GM mute printing the unmute message twice (since r12169). [Ai4rei]
 2011/11/12

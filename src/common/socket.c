@@ -647,6 +647,14 @@ int WFIFOSET(int fd, size_t len)
 		ShowFatalError("WFIFOSET: Packet 0x%x is too big. (len=%u, max=%u)\n", (*(uint16*)(s->wdata + s->wdata_size)), (unsigned int)len, 0xFFFF);
 		exit(EXIT_FAILURE);
 	}
+	else if( len == 0 )
+	{
+		// abuses the fact, that the code that did WFIFOHEAD(fd,0), already wrote
+		// the packet type into memory, even if it could have overwritten vital data
+		// this can happen when a new packet was added on map-server, but packet len table was not updated
+		ShowWarning("WFIFOSET: Attempted to send zero-length packet, most likely 0x%04x (please report this).\n", WFIFOW(fd,0));
+		return 0;
+	}
 
 	if( !s->flag.server && len > socket_max_client_packet )
 	{// see declaration of socket_max_client_packet for details
