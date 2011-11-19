@@ -3918,11 +3918,12 @@ int clif_damage(struct block_list* src, struct block_list* dst, unsigned int tic
 		WBUFL(buf,2) = -src->id;
 		if (disguised(dst))
 			WBUFL(buf,6) = dst->id;
-		if(damage > 0) WBUFW(buf,22) = -1;
 #if PACKETVER < 20071113
+		if(damage > 0) WBUFW(buf,22) = -1;
 		if(damage2 > 0) WBUFW(buf,27) = -1;
 #else
-		if(damage2 > 0) WBUFW(buf,29) = -1;
+		if(damage > 0) WBUFL(buf,22) = -1;
+		if(damage2 > 0) WBUFL(buf,29) = -1;
 #endif
 		clif_send(buf,packet_len(cmd),src,SELF);
 	}

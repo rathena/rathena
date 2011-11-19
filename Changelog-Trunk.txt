@@ -1,5 +1,7 @@
 Date	Added
 
+2011/11/19
+	* Fixed wrong damage numbers being displayed when the damage source was disguised (bugreport:5093, since r14979). [Ai4rei]
 2011/11/17
 	* Added a check to WFIFOSET to detect zero-length 'sets' of packets, that could cause memory corruption (through code after WFIFOHEAD(fd,packet_len(cmd)) where the length is 0). [Ai4rei]
 2011/11/16
