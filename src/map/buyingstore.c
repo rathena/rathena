@@ -56,9 +56,15 @@ bool buyingstore_setup(struct map_session_data* sd, unsigned char slots)
 		return false;
 	}
 
-	if( map[sd->bl.m].flag.novending || map_getcell(sd->bl.m, sd->bl.x, sd->bl.y, CELL_CHKNOVENDING) )
-	{// custom: no vending maps/cells
+	if( map[sd->bl.m].flag.novending )
+	{// custom: no vending maps
 		clif_displaymessage(sd->fd, msg_txt(276)); // "You can't open a shop on this map"
+		return false;
+	}
+
+	if( map_getcell(sd->bl.m, sd->bl.x, sd->bl.y, CELL_CHKNOVENDING) )
+	{// custom: no vending cells
+		clif_displaymessage(sd->fd, msg_txt(204)); // "You can't open a shop on this cell."
 		return false;
 	}
 
@@ -105,9 +111,15 @@ void buyingstore_create(struct map_session_data* sd, int zenylimit, unsigned cha
 		return;
 	}
 
-	if( map[sd->bl.m].flag.novending || map_getcell(sd->bl.m, sd->bl.x, sd->bl.y, CELL_CHKNOVENDING) )
-	{// custom: no vending maps/cells
+	if( map[sd->bl.m].flag.novending )
+	{// custom: no vending maps
 		clif_displaymessage(sd->fd, msg_txt(276)); // "You can't open a shop on this map"
+		return;
+	}
+
+	if( map_getcell(sd->bl.m, sd->bl.x, sd->bl.y, CELL_CHKNOVENDING) )
+	{// custom: no vending cells
+		clif_displaymessage(sd->fd, msg_txt(204)); // "You can't open a shop on this cell."
 		return;
 	}
 
