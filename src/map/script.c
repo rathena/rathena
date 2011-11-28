@@ -13082,7 +13082,7 @@ BUILDIN_FUNC(setitemscript)
 		n=script_getnum(st,4);
 	i_data = itemdb_exists(item_id);
 
-	if (!i_data || script==NULL || script[0]!='{') {
+	if (!i_data || script==NULL || ( script[0] && script[0]!='{' )) {
 		script_pushint(st,0);
 		return 0;
 	}
@@ -13100,7 +13100,7 @@ BUILDIN_FUNC(setitemscript)
 	if(*dstscript)
 		script_free_code(*dstscript);
 
-	*dstscript = parse_script(script, "script_setitemscript", 0, 0);
+	*dstscript = script[0] ? parse_script(script, "script_setitemscript", 0, 0) : NULL;
 	script_pushint(st,1);
 	return 0;
 }
