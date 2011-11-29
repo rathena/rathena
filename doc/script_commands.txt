@@ -4,7 +4,7 @@
 //= A reference manual for the eAthena scripting language.
 //= Commands are sorted depending on their functionality.
 //===== Version ===========================================
-//= 3.45.20110709
+//= 4.0.20111128
 //=========================================================
 //= 1.0 - First release, filled will as much info as I could
 //=       remember or figure out, most likely there are errors,
@@ -183,6 +183,9 @@
 //=       Added 'getmercinfo' command. [Ai4rei]
 //= 3.46.20110810
 //=       Added information on OnTouchNPC and 'unitwarp' special case [Skotlex]
+//= 4.0.20111128
+//=	  Updated to Include Instance Commands [Z3R0] 
+//=        Included Instance Variable Definition [BrianL]
 //=========================================================
 
 This document is a reference manual for all the scripting commands and functions 
@@ -7214,6 +7217,89 @@ can be one of the following:
 
 If the character does not have a mercenary, the command returns ""
 for name and 0 for all other types.
+
+
+// Added Instance Commands 
+----------------------------------------
+
+*instance_create "<name of party>"{,<party id>};
+
+Creates an instance with the name "<name>", for the party <party id>.
+
+Returns: Unique ID of the instance, negative number on failure.
+
+----------------------------------------
+
+*instance_attachmap "<mapname>", <instance_id>{,<basename>);
+
+Attaches the specified map onto the instance. 
+Optional parameter <use basename> specifies whether a map requires emulation for instancing or not (default).
+
+Returns: Name of the map if successful, otherwise an empty string.
+
+----------------------------------------
+
+*instance_attach <instance id>;
+
+Attaches this instance onto the current script.
+
+----------------------------------------
+
+*instance_set_timeout <limit>, <limit2>{, <instance id>};
+
+<limit> is the total time the instance will stay alive,
+<limit2> is how long players have when they are outside of the instance until it is destroyed. 
+
+If <instance id> is ommited, current instance attached to the current script is taken. 
+If no instance attached, instance of the attached player's party is taken.
+
+----------------------------------------
+
+*instance_init <instance id>;
+
+Creates the instance, copying all NPCs and initializing the timer.
+
+----------------------------------------
+
+*instance_destroy {<instance id>};
+
+Removes the instance, destroys all NPCs on the instanced map and ends the timer. 
+
+If <instance id> is ommited, current instance attached to the current script is taken. 
+If no instance attached, instance of the attached player's party is taken.
+
+----------------------------------------
+
+*instance_npcname "<npc name>"{, <instance id>};
+
+Retrieves the unique address of an NPC on an instanced map. 
+
+If <instance id> is ommited, current instance attached to the current script is taken. If no instance attached, instance of the attached player's party is taken.
+
+----------------------------------------
+
+*instance_announce <instance id>, "<message>", <flag>, <color>{, <type>{, <size>{, <alignment>{, <position>}}}};
+
+Works like announce command.
+
+Displays an announce inside the specified instance. 
+
+If <instance id> is 0, current instance attached to the current script is taken. If no instance attached, instance of the attached player's party is taken.
+
+----------------------------------------
+
+*has_instance "<map name>"{, <instance id>};
+
+Checks, whether the given map is attached to the specified instance or not. If <instance id> is ommited, current instance attached to the current script is taken. If no instance attached, instance of the attached player's party is taken.
+Returns: Name of the instance map if successful, otherwise an empty string.
+
+----------------------------------------
+
+*instance_warpall "<map name>", <x>, <y>{, <instance id>};
+
+Warps entire party, that is attached to given instance to a map at specified coordinates. 
+
+If <instance id> is ommited, current instance attached to the current script is taken. If no instance attached, instance of the attached player's party is taken.
 
 ----------------------------------------
 
