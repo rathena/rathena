@@ -1,5 +1,8 @@
 Date	Added
 
+2011-11-27
+	* Welcome to RAthena!  http://rathena.org/board/topic/53704-rathena-the-fork/
+
 2011/11/28
 	* Fixed novending cell check using misleading error message (bugreport:2592, since r11572 and r14724, related r11580). [Ai4rei]
 	* Fixed removing item scripts through script command *setitemscript not working the way it is stated in script_commands.txt (related r9831). [Ai4rei]

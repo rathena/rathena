@@ -622,6 +622,9 @@ nothing  - A permanent variable attached to the character, the default variable
            callsub/callfunc starts a new scope, returning from the function 
            ends it. When a scope ends, it's variables are converted to values 
            ('return .@var;' returns a value, not a reference).
+"'"      - An instance variable
+           These are used with the instancing system, and are unique to each 
+           party's instance.
 "#"      - A permanent local account variable.
            They are stored with all the account data in "save\accreg.txt" in
            TXT versions and in the SQL versions in the 'global_reg_value'
@@ -6924,6 +6927,8 @@ the script to halt.
 Parameter <alive timeout> specifies the total amount of time the instance will
 exist. Parameter <idle timeout> specifies how long players have, when they are
 outside of the instance, until it is destroyed.
+
+Both timeout values are in seconds.
 
 ---------------------------------------
 
