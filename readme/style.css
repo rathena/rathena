@@ -11,7 +11,7 @@ body {
 	border-left:thin solid #000;
 	border-right:thin solid #000;
 	margin-left:auto;
-  	margin-right:auto;
+	margin-right:auto;
 	background:#FFF url(images/clown.png) no-repeat fixed right bottom;
 }
 #template 	{ position:relative;  min-height:100%;  }
@@ -32,7 +32,7 @@ body {
 	padding-top:10px;
 }
 .body-title {
-	font-size:x-large;	
+	font-size:x-large;
 }
 .subtitle {
 	font-size:14px;
@@ -76,7 +76,7 @@ font-family: arial, helvetica, sans-serif;
 	border-top: 1px solid #fff;
 }
 #footer a {
-	color: White;	
+	color: White;
 }
 dt {
 	font-weight:bold;
