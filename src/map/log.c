@@ -1,6 +1,7 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
+#include "../common/sql.h" // SQL_INNODB
 #include "../common/strlib.h"
 #include "../common/nullpo.h"
 #include "../common/showmsg.h"
@@ -20,6 +21,15 @@ struct Log_Config log_config;
 
 char timestring[255];
 time_t curtime;
+
+#ifdef SQL_INNODB
+// database is using an InnoDB engine so do not use DELAYED
+#define LOG_QUERY "INSERT"
+#else
+// database is using a MyISAM engine so use DELAYED
+#define LOG_QUERY "INSERT DELAYED"
+#endif
+
 
 //FILTER OPTIONS
 //0 = Don't log
@@ -70,7 +80,7 @@ int log_branch(struct map_session_data *sd)
 	{
 		SqlStmt* stmt;
 		stmt = SqlStmt_Malloc(logmysql_handle);
-		if( SQL_SUCCESS != SqlStmt_Prepare(stmt, "INSERT DELAYED INTO `%s` (`branch_date`, `account_id`, `char_id`, `char_name`, `map`) VALUES (NOW(), '%d', '%d', ?, '%s')", log_config.log_branch_db, sd->status.account_id, sd->status.char_id, mapindex_id2name(sd->mapindex) )
+		if( SQL_SUCCESS != SqlStmt_Prepare(stmt, LOG_QUERY " INTO `%s` (`branch_date`, `account_id`, `char_id`, `char_name`, `map`) VALUES (NOW(), '%d', '%d', ?, '%s')", log_config.log_branch_db, sd->status.account_id, sd->status.char_id, mapindex_id2name(sd->mapindex) )
 		||  SQL_SUCCESS != SqlStmt_BindParam(stmt, 0, SQLDT_STRING, sd->status.name, strnlen(sd->status.name, NAME_LENGTH))
 		||  SQL_SUCCESS != SqlStmt_Execute(stmt) )
 		{
@@ -107,14 +117,14 @@ int log_pick_pc(struct map_session_data *sd, const char *type, int nameid, int a
 	if( log_config.sql_logs )
 	{
 		if( itm == NULL ) { //We log common item
-			if (SQL_ERROR == Sql_Query(logmysql_handle, "INSERT DELAYED INTO `%s` (`time`, `char_id`, `type`, `nameid`, `amount`, `map`) VALUES (NOW(), '%d', '%s', '%d', '%d', '%s')",
+			if (SQL_ERROR == Sql_Query(logmysql_handle, LOG_QUERY " INTO `%s` (`time`, `char_id`, `type`, `nameid`, `amount`, `map`) VALUES (NOW(), '%d', '%s', '%d', '%d', '%s')",
 				log_config.log_pick_db, sd->status.char_id, type, nameid, amount, mapindex_id2name(sd->mapindex)) )
 			{
 				Sql_ShowDebug(logmysql_handle);
 				return 0;
 			}
 		} else { //We log Extended item
-			if (SQL_ERROR == Sql_Query(logmysql_handle, "INSERT DELAYED INTO `%s` (`time`, `char_id`, `type`, `nameid`, `amount`, `refine`, `card0`, `card1`, `card2`, `card3`, `map`) VALUES (NOW(), '%d', '%s', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%s')",
+			if (SQL_ERROR == Sql_Query(logmysql_handle, LOG_QUERY " INTO `%s` (`time`, `char_id`, `type`, `nameid`, `amount`, `refine`, `card0`, `card1`, `card2`, `card3`, `map`) VALUES (NOW(), '%d', '%s', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%s')",
 				log_config.log_pick_db, sd->status.char_id, type, itm->nameid, amount, itm->refine, itm->card[0], itm->card[1], itm->card[2], itm->card[3], mapindex_id2name(sd->mapindex)) )
 			{
 				Sql_ShowDebug(logmysql_handle);
@@ -162,14 +172,14 @@ int log_pick_mob(struct mob_data *md, const char *type, int nameid, int amount, 
 	if( log_config.sql_logs )
 	{
 		if( itm == NULL ) { //We log common item
-			if (SQL_ERROR == Sql_Query(logmysql_handle, "INSERT DELAYED INTO `%s` (`time`, `char_id`, `type`, `nameid`, `amount`, `map`) VALUES (NOW(), '%d', '%s', '%d', '%d', '%s')",
+			if (SQL_ERROR == Sql_Query(logmysql_handle, LOG_QUERY " INTO `%s` (`time`, `char_id`, `type`, `nameid`, `amount`, `map`) VALUES (NOW(), '%d', '%s', '%d', '%d', '%s')",
 				log_config.log_pick_db, md->class_, type, nameid, amount, mapname) )
 			{
 				Sql_ShowDebug(logmysql_handle);
 				return 0;
 			}
 		} else { //We log Extended item
-			if (SQL_ERROR == Sql_Query(logmysql_handle, "INSERT DELAYED INTO `%s` (`time`, `char_id`, `type`, `nameid`, `amount`, `refine`, `card0`, `card1`, `card2`, `card3`, `map`) VALUES (NOW(), '%d', '%s', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%s')",
+			if (SQL_ERROR == Sql_Query(logmysql_handle, LOG_QUERY " INTO `%s` (`time`, `char_id`, `type`, `nameid`, `amount`, `refine`, `card0`, `card1`, `card2`, `card3`, `map`) VALUES (NOW(), '%d', '%s', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%s')",
 				log_config.log_pick_db, md->class_, type, itm->nameid, amount, itm->refine, itm->card[0], itm->card[1], itm->card[2], itm->card[3], mapname) )
 			{
 				Sql_ShowDebug(logmysql_handle);
@@ -208,7 +218,7 @@ int log_zeny(struct map_session_data *sd, char *type, struct map_session_data *s
 #ifndef TXT_ONLY
 	if( log_config.sql_logs )
 	{
-		if (SQL_ERROR == Sql_Query(logmysql_handle, "INSERT DELAYED INTO `%s` (`time`, `char_id`, `src_id`, `type`, `amount`, `map`) VALUES (NOW(), '%d', '%d', '%s', '%d', '%s')",
+		if (SQL_ERROR == Sql_Query(logmysql_handle, LOG_QUERY " INTO `%s` (`time`, `char_id`, `src_id`, `type`, `amount`, `map`) VALUES (NOW(), '%d', '%d', '%s', '%d', '%s')",
 			 log_config.log_zeny_db, sd->status.char_id, src_sd->status.char_id, type, amount, mapindex_id2name(sd->mapindex)) )
 		{
 			Sql_ShowDebug(logmysql_handle);
@@ -240,7 +250,7 @@ int log_mvpdrop(struct map_session_data *sd, int monster_id, int *log_mvp)
 #ifndef TXT_ONLY
 	if( log_config.sql_logs )
 	{
-		if (SQL_ERROR == Sql_Query(logmysql_handle, "INSERT DELAYED INTO `%s` (`mvp_date`, `kill_char_id`, `monster_id`, `prize`, `mvpexp`, `map`) VALUES (NOW(), '%d', '%d', '%d', '%d', '%s') ",
+		if (SQL_ERROR == Sql_Query(logmysql_handle, LOG_QUERY " INTO `%s` (`mvp_date`, `kill_char_id`, `monster_id`, `prize`, `mvpexp`, `map`) VALUES (NOW(), '%d', '%d', '%d', '%d', '%s') ",
 			log_config.log_mvpdrop_db, sd->status.char_id, monster_id, log_mvp[0], log_mvp[1], mapindex_id2name(sd->mapindex)) )
 		{
 			Sql_ShowDebug(logmysql_handle);
@@ -276,7 +286,7 @@ int log_atcommand(struct map_session_data* sd, const char* message)
 		SqlStmt* stmt;
 
 		stmt = SqlStmt_Malloc(logmysql_handle);
-		if( SQL_SUCCESS != SqlStmt_Prepare(stmt, "INSERT DELAYED INTO `%s` (`atcommand_date`, `account_id`, `char_id`, `char_name`, `map`, `command`) VALUES (NOW(), '%d', '%d', ?, '%s', ?)", log_config.log_gm_db, sd->status.account_id, sd->status.char_id, mapindex_id2name(sd->mapindex) )
+		if( SQL_SUCCESS != SqlStmt_Prepare(stmt, LOG_QUERY " INTO `%s` (`atcommand_date`, `account_id`, `char_id`, `char_name`, `map`, `command`) VALUES (NOW(), '%d', '%d', ?, '%s', ?)", log_config.log_gm_db, sd->status.account_id, sd->status.char_id, mapindex_id2name(sd->mapindex) )
 		||  SQL_SUCCESS != SqlStmt_BindParam(stmt, 0, SQLDT_STRING, sd->status.name, strnlen(sd->status.name, NAME_LENGTH))
 		||  SQL_SUCCESS != SqlStmt_BindParam(stmt, 1, SQLDT_STRING, (char*)message, safestrnlen(message, 255))
 		||  SQL_SUCCESS != SqlStmt_Execute(stmt) )
@@ -314,7 +324,7 @@ int log_npc(struct map_session_data* sd, const char* message)
 	{
 		SqlStmt* stmt;
 		stmt = SqlStmt_Malloc(logmysql_handle);
-		if( SQL_SUCCESS != SqlStmt_Prepare(stmt, "INSERT DELAYED INTO `%s` (`npc_date`, `account_id`, `char_id`, `char_name`, `map`, `mes`) VALUES (NOW(), '%d', '%d', ?, '%s', ?)", log_config.log_npc_db, sd->status.account_id, sd->status.char_id, mapindex_id2name(sd->mapindex) )
+		if( SQL_SUCCESS != SqlStmt_Prepare(stmt, LOG_QUERY " INTO `%s` (`npc_date`, `account_id`, `char_id`, `char_name`, `map`, `mes`) VALUES (NOW(), '%d', '%d', ?, '%s', ?)", log_config.log_npc_db, sd->status.account_id, sd->status.char_id, mapindex_id2name(sd->mapindex) )
 		||  SQL_SUCCESS != SqlStmt_BindParam(stmt, 0, SQLDT_STRING, sd->status.name, strnlen(sd->status.name, NAME_LENGTH))
 		||  SQL_SUCCESS != SqlStmt_BindParam(stmt, 1, SQLDT_STRING, (char*)message, safestrnlen(message, 255))
 		||  SQL_SUCCESS != SqlStmt_Execute(stmt) )
@@ -365,7 +375,7 @@ int log_chat(const char* type, int type_id, int src_charid, int src_accid, const
 		SqlStmt* stmt;
 		
 		stmt = SqlStmt_Malloc(logmysql_handle);
-		if( SQL_SUCCESS != SqlStmt_Prepare(stmt, "INSERT DELAYED INTO `%s` (`time`, `type`, `type_id`, `src_charid`, `src_accountid`, `src_map`, `src_map_x`, `src_map_y`, `dst_charname`, `message`) VALUES (NOW(), '%s', '%d', '%d', '%d', '%s', '%d', '%d', ?, ?)", log_config.log_chat_db, type, type_id, src_charid, src_accid, map, x, y)
+		if( SQL_SUCCESS != SqlStmt_Prepare(stmt, LOG_QUERY " INTO `%s` (`time`, `type`, `type_id`, `src_charid`, `src_accountid`, `src_map`, `src_map_x`, `src_map_y`, `dst_charname`, `message`) VALUES (NOW(), '%s', '%d', '%d', '%d', '%s', '%d', '%d', ?, ?)", log_config.log_chat_db, type, type_id, src_charid, src_accid, map, x, y)
 		||  SQL_SUCCESS != SqlStmt_BindParam(stmt, 0, SQLDT_STRING, (char*)dst_charname, safestrnlen(dst_charname, NAME_LENGTH))
 		||  SQL_SUCCESS != SqlStmt_BindParam(stmt, 1, SQLDT_STRING, (char*)message, safestrnlen(message, CHAT_SIZE_MAX))
 		||  SQL_SUCCESS != SqlStmt_Execute(stmt) )
