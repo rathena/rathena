@@ -10,6 +10,11 @@
 #include "../common/mapindex.h"
 #include "../common/db.h"
 
+/**
+ * [ro-resources.net]
+ **/
+#include "./RRConfig/Core.h"
+
 #include <stdarg.h>
 
 struct npc_data;
@@ -46,7 +51,7 @@ enum E_MAPSERVER_ST
 #define NATURAL_HEAL_INTERVAL 500
 #define MIN_FLOORITEM 2
 #define MAX_FLOORITEM START_ACCOUNT_NUM
-#define MAX_LEVEL 99
+#define MAX_LEVEL 150
 #define MAX_DROP_PER_MAP 48
 #define MAX_IGNORE_LIST 20 // official is 14
 #define MAX_VENDING 12
@@ -68,10 +73,12 @@ enum E_MAPSERVER_ST
 
 #define JOBL_UPPER 0x1000 //4096
 #define JOBL_BABY 0x2000  //8192
+#define JOBL_THIRD 0x4000 //16384
 
 //for filtering and quick checking.
 #define MAPID_UPPERMASK 0x0fff
 #define MAPID_BASEMASK 0x00ff
+#define MAPID_THIRDMASK (JOBL_THIRD|MAPID_UPPERMASK)
 //First Jobs
 //Note the oddity of the novice:
 //Super Novices are considered the 2-1 version of the novice! Novices are considered a first class type, too...
@@ -154,6 +161,31 @@ enum {
 	MAPID_BABY_ALCHEMIST,
 	MAPID_BABY_ROGUE,
 	MAPID_BABY_SOUL_LINKER,
+	MAPID_RUNE_KNIGHT = JOBL_THIRD|JOBL_2_1|0x1,
+	MAPID_WARLOCK,
+	MAPID_RANGER,
+	MAPID_ARCH_BISHOP,
+	MAPID_MECHANIC,
+	MAPID_GUILLOTINE_CROSS,
+	MAPID_ROYAL_GUARD = JOBL_THIRD|JOBL_2_2|0x1,
+	MAPID_SORCERER,
+	MAPID_MINSTRELWANDERER,
+	MAPID_SURA,
+	MAPID_GENETIC,
+	MAPID_SHADOW_CHASER,
+	MAPID_RUNE_KNIGHT_T = JOBL_THIRD|JOBL_UPPER|JOBL_2_1|0x1,
+	MAPID_WARLOCK_T,
+	MAPID_RANGER_T,
+	MAPID_ARCH_BISHOP_T,
+	MAPID_MECHANIC_T,
+	MAPID_GUILLOTINE_CROSS_T,
+	MAPID_ROYAL_GUARD_T = JOBL_THIRD|JOBL_UPPER|JOBL_2_2|0x1,
+	MAPID_SORCERER_T,
+	MAPID_MINSTRELWANDERER_T,
+	MAPID_SURA_T,
+	MAPID_GENETIC_T,
+	MAPID_SHADOW_CHASER_T,
+
 };
 
 //Max size for inputs to Graffiti, Talkie Box and Vending text prompts
@@ -476,7 +508,10 @@ struct map_data {
 		unsigned fireworks : 1;
 		unsigned sakura : 1; // [Valaris]
 		unsigned leaves : 1; // [Valaris]
-		unsigned rain : 1; // [Valaris]
+		/**
+		 * No longer available, keeping here just in case it's back someday. [Ind]
+		 **/	
+		//unsigned rain : 1; // [Valaris]
 		unsigned nogo : 1; // [Valaris]
 		unsigned nobaseexp	: 1; // [Lorky] added by Lupus
 		unsigned nojobexp	: 1; // [Lorky]
@@ -643,7 +678,6 @@ int map_random_dir(struct block_list *bl, short *x, short *y); // [Skotlex]
 
 int cleanup_sub(struct block_list *bl, va_list ap);
 
-void map_helpscreen(int flag); // [Valaris]
 int map_delmap(char* mapname);
 void map_flags_init(void);
 
@@ -666,8 +700,6 @@ extern char *ATCOMMAND_CONF_FILENAME;
 extern char *SCRIPT_CONF_NAME;
 extern char *MSG_CONF_NAME;
 extern char *GRF_PATH_FILENAME;
-
-extern char *map_server_dns;
 
 //Useful typedefs from jA [Skotlex]
 typedef struct map_session_data TBL_PC;
@@ -697,6 +729,7 @@ extern Sql* logmysql_handle;
 
 extern char item_db_db[32];
 extern char item_db2_db[32];
+extern char item_db_re_db[32];
 extern char mob_db_db[32];
 extern char mob_db2_db[32];
 

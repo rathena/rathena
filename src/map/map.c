@@ -68,6 +68,7 @@ Sql* mmysql_handle;
 int db_use_sqldbs = 0;
 char item_db_db[32] = "item_db";
 char item_db2_db[32] = "item_db2";
+char item_db_re_db[32] = "item_db_re";
 char mob_db_db[32] = "mob_db";
 char mob_db2_db[32] = "mob_db2";
 
@@ -3205,6 +3206,9 @@ int map_config_read(char *cfgName)
 		if (strcmpi(w1, "import") == 0)
 			map_config_read(w2);
 		else
+		if (strcmpi(w1, "console_msg_log") == 0)
+			console_msg_log = atoi(w2);//[Ind]
+		else
 			ShowWarning("Unknown setting '%s' in file %s\n", w1, cfgName);
 	}
 
@@ -3526,41 +3530,39 @@ void do_abort(void)
 /*======================================================
  * Map-Server Version Screen [MC Cameri]
  *------------------------------------------------------*/
-void map_helpscreen(int flag)
+static void map_helpscreen(bool do_exit)
 {
-	puts("Usage: map-server [options]");
-	puts("Options:");
-	puts(CL_WHITE"  Commands\t\t\tDescription"CL_RESET);
-	puts("-----------------------------------------------------------------------------");
-	puts("  --help, --h, --?, /?		Displays this help screen");
-	puts("  --map-config <file>		Load map-server configuration from <file>");
-	puts("  --battle-config <file>	Load battle configuration from <file>");
-	puts("  --atcommand-config <file>	Load atcommand configuration from <file>");
-	puts("  --script-config <file>	Load script configuration from <file>");
-	puts("  --msg-config <file>		Load message configuration from <file>");
-	puts("  --grf-path-file <file>	Load grf path file configuration from <file>");
-	puts("  --sql-config <file>		Load inter-server configuration from <file>");
-	puts("				(SQL Only)");
-	puts("  --log-config <file>		Load logging configuration from <file>");
-	puts("				(SQL Only)");
-	puts("  --version, --v, -v, /v	Displays the server's version");
-	puts("\n");
-	if (flag) exit(EXIT_FAILURE);
+	ShowInfo("Usage: %s [options]\n", SERVER_NAME);
+	ShowInfo("\n");
+	ShowInfo("Options:\n");
+	ShowInfo("  -?, -h [--help]\t\tDisplays this help screen.\n");
+	ShowInfo("  -v [--version]\t\tDisplays the server's version.\n");
+	ShowInfo("  --run-once\t\t\tCloses server after loading (testing).\n");
+	ShowInfo("  --map-config <file>\t\tAlternative map-server configuration.\n");
+	ShowInfo("  --battle-config <file>\tAlternative battle configuration.\n");
+	ShowInfo("  --atcommand-config <file>\tAlternative atcommand configuration.\n");
+	ShowInfo("  --script-config <file>\tAlternative script configuration.\n");
+	ShowInfo("  --msg-config <file>\t\tAlternative message configuration.\n");
+	ShowInfo("  --grf-path <file>\t\tAlternative GRF path configuration.\n");
+	ShowInfo("  --inter-config <file>\t\tAlternative inter-server configuration.\n");
+	ShowInfo("  --log-config <file>\t\tAlternative logging configuration.\n");
+	if( do_exit )
+		exit(EXIT_SUCCESS);
 }
 
 /*======================================================
  * Map-Server Version Screen [MC Cameri]
  *------------------------------------------------------*/
-void map_versionscreen(int flag)
+static void map_versionscreen(bool do_exit)
 {
-	ShowInfo(CL_WHITE "eAthena version %d.%02d.%02d, Athena Mod version %d" CL_RESET"\n",
-		ATHENA_MAJOR_VERSION, ATHENA_MINOR_VERSION, ATHENA_REVISION,
-		ATHENA_MOD_VERSION);
-	ShowInfo(CL_GREEN "Website/Forum:" CL_RESET "\thttp://eathena.deltaanime.net/\n");
-	ShowInfo(CL_GREEN "IRC Channel:" CL_RESET "\tirc://irc.deltaanime.net/#athena\n");
-	ShowInfo("\nOpen " CL_WHITE "readme.html" CL_RESET " for more information.");
-	if (ATHENA_RELEASE_FLAG) ShowNotice("This version is not for release.\n");
-	if (flag) exit(EXIT_FAILURE);
+	ShowInfo(CL_WHITE"eAthena version %d.%02d.%02d, Athena Mod version %d" CL_RESET"\n", ATHENA_MAJOR_VERSION, ATHENA_MINOR_VERSION, ATHENA_REVISION, ATHENA_MOD_VERSION);
+	ShowInfo(CL_GREEN"Website/Forum:"CL_RESET"\thttp://eathena.ws/\n");
+	ShowInfo(CL_GREEN"IRC Channel:"CL_RESET"\tirc://irc.deltaanime.net/#athena\n");
+	ShowInfo("Open "CL_WHITE"readme.html"CL_RESET" for more information.\n");
+	if(ATHENA_RELEASE_FLAG)
+		ShowNotice("This version is not for release.\n");
+	if( do_exit )
+		exit(EXIT_SUCCESS);
 }
 
 /*======================================================
@@ -3591,6 +3593,16 @@ void do_shutdown(void)
 	}
 }
 
+static bool map_arg_next_value(const char* option, int i, int argc)
+{
+	if( i >= argc-1 )
+	{
+		ShowWarning("Missing value for option '%s'.\n", option);
+		return false;
+	}
+
+	return true;
+}
 
 int do_init(int argc, char *argv[])
 {
@@ -3611,31 +3623,67 @@ int do_init(int argc, char *argv[])
 
 	srand(gettick());
 
-	for (i = 1; i < argc ; i++) {
-		if (strcmp(argv[i], "--help") == 0 || strcmp(argv[i], "--h") == 0 || strcmp(argv[i], "--?") == 0 || strcmp(argv[i], "/?") == 0)
-			map_helpscreen(1);
-		else if (strcmp(argv[i], "--version") == 0 || strcmp(argv[i], "--v") == 0 || strcmp(argv[i], "-v") == 0 || strcmp(argv[i], "/v") == 0)
-			map_versionscreen(1);
-		else if (strcmp(argv[i], "--map_config") == 0 || strcmp(argv[i], "--map-config") == 0)
-			MAP_CONF_NAME=argv[i+1];
-		else if (strcmp(argv[i],"--battle_config") == 0 || strcmp(argv[i],"--battle-config") == 0)
-			BATTLE_CONF_FILENAME = argv[i+1];
-		else if (strcmp(argv[i],"--atcommand_config") == 0 || strcmp(argv[i],"--atcommand-config") == 0)
-			ATCOMMAND_CONF_FILENAME = argv[i+1];
-		else if (strcmp(argv[i],"--script_config") == 0 || strcmp(argv[i],"--script-config") == 0)
-			SCRIPT_CONF_NAME = argv[i+1];
-		else if (strcmp(argv[i],"--msg_config") == 0 || strcmp(argv[i],"--msg-config") == 0)
-			MSG_CONF_NAME = argv[i+1];
-		else if (strcmp(argv[i],"--grf_path_file") == 0 || strcmp(argv[i],"--grf-path-file") == 0)
-			GRF_PATH_FILENAME = argv[i+1];
-#ifndef TXT_ONLY
-		else if (strcmp(argv[i],"--inter_config") == 0 || strcmp(argv[i],"--inter-config") == 0)
-			INTER_CONF_NAME = argv[i+1];
-#endif
-		else if (strcmp(argv[i],"--log_config") == 0 || strcmp(argv[i],"--log-config") == 0)
-			LOG_CONF_NAME = argv[i+1];
-		else if (strcmp(argv[i],"--run_once") == 0)	// close the map-server as soon as its done.. for testing [Celest]
-			runflag = 0;
+	for( i = 1; i < argc ; i++ )
+	{
+		const char* arg = argv[i];
+
+		if( arg[0] != '-' && ( arg[0] != '/' || arg[1] == '-' ) )
+		{// -, -- and /
+			ShowError("Unknown option '%s'.\n", argv[i]);
+			exit(EXIT_FAILURE);
+		}
+		else if( (++arg)[0] == '-' )
+		{// long option
+			arg++;
+
+			if( strcmp(arg, "help") == 0 )
+				map_helpscreen(true);
+			else if( strcmp(arg, "version") == 0 )
+				map_versionscreen(true);
+			else if( strcmp(arg, "map-config") == 0 ) {
+				if( map_arg_next_value(arg, i, argc) )
+					MAP_CONF_NAME = argv[++i];
+			} else if( strcmp(arg, "battle-config") == 0 ) {
+				if( map_arg_next_value(arg, i, argc) )
+					BATTLE_CONF_FILENAME = argv[++i];
+			} else if( strcmp(arg, "atcommand-config") == 0 ) {
+				if( map_arg_next_value(arg, i, argc) )
+					ATCOMMAND_CONF_FILENAME = argv[++i];
+			} else if( strcmp(arg, "script-config") == 0 ) {
+				if( map_arg_next_value(arg, i, argc) )
+					SCRIPT_CONF_NAME = argv[++i];
+			} else if( strcmp(arg, "msg-config") == 0 ) {
+				if( map_arg_next_value(arg, i, argc) )
+					MSG_CONF_NAME = argv[++i];
+			} else if( strcmp(arg, "grf-path-file") == 0 ) {
+				if( map_arg_next_value(arg, i, argc) )
+					GRF_PATH_FILENAME = argv[++i];
+			} else if( strcmp(arg, "inter-config") == 0 ) {
+				if( map_arg_next_value(arg, i, argc) )
+					INTER_CONF_NAME = argv[++i];
+			} else if( strcmp(arg, "log-config") == 0 ) {
+				if( map_arg_next_value(arg, i, argc) )
+					LOG_CONF_NAME = argv[++i];
+			} else if( strcmp(arg, "run-once") == 0 ) // close the map-server as soon as its done.. for testing [Celest]
+				runflag = CORE_ST_STOP;
+			else {
+				ShowError("Unknown option '%s'.\n", argv[i]);
+				exit(EXIT_FAILURE);
+			}
+		}
+		else switch( arg[0] )
+		{// short option
+			case '?':
+			case 'h':
+				map_helpscreen(true);
+				break;
+			case 'v':
+				map_versionscreen(true);
+				break;
+			default:
+				ShowError("Unknown option '%s'.\n", argv[i]);
+				exit(EXIT_FAILURE);
+		}
 	}
 
 	map_config_read(MAP_CONF_NAME);

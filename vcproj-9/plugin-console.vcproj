@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="windows-1250"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9,00"
+	Version="9.00"
 	Name="console"
 	ProjectGUID="{73E1101A-310C-4453-8F45-FD2795ABEF15}"
 	TargetFrameworkVersion="0"

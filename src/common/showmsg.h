@@ -67,6 +67,7 @@
 
 extern int stdout_with_ansisequence; //If the color ansi sequences are to be used. [flaviojs]
 extern int msg_silent; //Specifies how silent the console is. [Skotlex]
+extern int console_msg_log; //Specifies what error messages to log. [Ind]
 extern char timestamp_format[20]; //For displaying Timestamps [Skotlex]
 
 enum msg_type {

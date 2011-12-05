@@ -5,6 +5,7 @@
 #define _ITEMDB_H_
 
 #include "../common/mmo.h" // ITEM_NAME_LENGTH
+#include "map.h" //RRMODE
 
 #define MAX_RANDITEM	11000
 
@@ -12,6 +13,11 @@
 #define MAX_ITEMDELAYS	10
 
 #define MAX_SEARCH	5  //Designed for search functions, species max number of matches to display.
+
+/**
+ * Arch Bishop
+ **/
+#define ITEMID_ANCILLA 12333
 
 #define ITEMID_YELLOW_GEMSTONE 715
 #define ITEMID_RED_GEMSTONE 716
@@ -50,6 +56,9 @@ struct item_data {
 	int equip;
 	int weight;
 	int atk;
+#if RRMODE
+	int matk;//[RRInd] -- used in RE for matk
+#endif
 	int def;
 	int range;
 	int slot;
@@ -61,7 +70,7 @@ struct item_data {
 //Lupus: I rearranged order of these fields due to compatibility with ITEMINFO script command
 //		some script commands should be revised as well...
 	unsigned int class_base[3];	//Specifies if the base can wear this item (split in 3 indexes per type: 1-1, 2-1, 2-2)
-	unsigned class_upper : 3; //Specifies if the upper-type can equip it (bitfield, 1: normal, 2: upper, 3: baby)
+	unsigned class_upper : 4; //Specifies if the upper-type can equip it (bitfield, 1: normal, 2: upper, 3: baby,4:third)
 	struct {
 		unsigned short chance;
 		int id;
@@ -143,4 +152,35 @@ void itemdb_reload(void);
 void do_final_itemdb(void);
 int do_init_itemdb(void);
 
+/**
+ * Rune Knight
+ **/
+enum {
+	ITEMID_NAUTHIZ = 12725,
+	ITEMID_RAIDO,
+	ITEMID_BERKANA,
+	ITEMID_ISA,
+	ITEMID_OTHILA,
+	ITEMID_URUZ,
+	ITEMID_THURISAZ,
+	ITEMID_WYRD,
+	ITEMID_HAGALAZ,
+} rune_list;
+#define itemdb_is_rune(n) (n >= ITEMID_NAUTHIZ && n <= ITEMID_HAGALAZ)
+/**
+ * Warlock
+ **/
+#define itemdb_is_spellbook(n) (n >= 6188 && n <= 6205)
+/**
+ * Ranger
+ **/
+#define ITEMID_TRAP_ALLOY 7940
+/**
+ * Mechanic
+ **/
+#define itemdb_is_element(n) (n >= 990 && n <= 993)
+/**
+ * Guilotine Cross
+ **/
+#define itemdb_is_poison(n) (n >= 12717 && n <= 12724)
 #endif /* _ITEMDB_H_ */

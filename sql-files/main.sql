@@ -164,7 +164,7 @@ CREATE TABLE IF NOT EXISTS `global_reg_value` (
   `char_id` int(11) unsigned NOT NULL default '0',
   `str` varchar(255) NOT NULL default '',
   `value` varchar(255) NOT NULL default '0',
-  `type` int(11) NOT NULL default '3',
+  `type` tinyint(1) NOT NULL default '3',
   `account_id` int(11) unsigned NOT NULL default '0',
   PRIMARY KEY  (`char_id`,`str`,`account_id`),
   KEY `account_id` (`account_id`),

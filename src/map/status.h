@@ -329,7 +329,248 @@ typedef enum sc_type {
 	SC_FOOD_VIT_CASH,
 	SC_FOOD_DEX_CASH,
 	SC_FOOD_INT_CASH,
-	SC_FOOD_LUK_CASH,
+	SC_FOOD_LUK_CASH,//308
+	/**
+	 * 3rd
+	 **/
+	SC_FEAR,//309
+	SC_BURNING,//310
+	SC_FREEZING,//311
+	/**
+	 * Rune Knight
+	 **/
+	SC_ENCHANTBLADE,//312
+	SC_DEATHBOUND,//313
+	SC_MILLENNIUMSHIELD,
+	SC_CRUSHSTRIKE,//315
+	SC_REFRESH,
+	SC_REUSE_REFRESH,
+	SC_GIANTGROWTH,
+	SC_STONEHARDSKIN,
+	SC_VITALITYACTIVATION,//320
+	SC_STORMBLAST,
+	SC_FIGHTINGSPIRIT,
+	SC_ABUNDANCE,
+	/**
+	 * Arch Bishop
+     **/
+	SC_ADORAMUS,
+	SC_EPICLESIS,//325
+	SC_ORATIO,
+	SC_LAUDAAGNUS,
+	SC_LAUDARAMUS,
+	SC_RENOVATIO,
+	SC_EXPIATIO,//330
+	SC_DUPLELIGHT,
+	SC_SECRAMENT,
+	/**
+	 * Warlock
+	 **/
+	SC_WHITEIMPRISON,
+	SC_MARSHOFABYSS,
+	SC_RECOGNIZEDSPELL,//335
+	SC_STASIS,
+	SC_SPHERE_1,
+	SC_SPHERE_2,
+	SC_SPHERE_3,
+	SC_SPHERE_4,//340
+	SC_SPHERE_5,
+	SC_READING_SB,
+	SC_FREEZINGSPELL,
+	/**
+	 * Ranger
+	 **/
+	SC_FEARBREEZE,
+	SC_ELECTRICSHOCKER,//345
+	SC_WUGDASH,
+	SC_BITE,
+	SC_CAMOUFLAGE,
+	/**
+	 * Mechanic
+	 **/
+	SC_ACCELERATION,
+	SC_HOVERING,//350
+	SC_SHAPESHIFT,
+	SC_INFRAREDSCAN,
+	SC_ANALYZE,
+	SC_MAGNETICFIELD,
+	SC_NEUTRALBARRIER,//355
+	SC_NEUTRALBARRIER_MASTER,
+	SC_STEALTHFIELD,
+	SC_STEALTHFIELD_MASTER,
+	SC_OVERHEAT,
+	SC_OVERHEAT_LIMITPOINT,//360
+	/**
+	 * Guillotine Cross
+	 **/
+	SC_VENOMIMPRESS,
+	SC_POISONINGWEAPON,
+	SC_WEAPONBLOCKING,
+	SC_CLOAKINGEXCEED,
+	SC_HALLUCINATIONWALK,//365
+	SC_HALLUCINATIONWALK_POSTDELAY,
+	SC_ROLLINGCUTTER,
+	SC_TOXIN,
+	SC_PARALYSE,
+	SC_VENOMBLEED,//370
+	SC_MAGICMUSHROOM,
+	SC_DEATHHURT,
+	SC_PYREXIA,
+	SC_OBLIVIONCURSE,
+	SC_LEECHESEND,//375
+	/**
+	 * Royal Guard
+	 **/
+	SC_REFLECTDAMAGE,
+	SC_FORCEOFVANGUARD,
+	SC_SHIELDSPELL_DEF,
+	SC_SHIELDSPELL_MDEF,
+	SC_SHIELDSPELL_REF,//380
+	SC_EXEEDBREAK,
+	SC_PRESTIGE,
+	SC_BANDING,
+	SC_BANDING_DEFENCE,
+	SC_EARTHDRIVE,//385
+	SC_INSPIRATION,
+	/**
+	 * Sorcerer
+	 **/
+	SC_SPELLFIST,
+	SC_CRYSTALIZE,
+	SC_STRIKING,
+	SC_WARMER,//390
+	SC_VACUUM_EXTREME,
+	SC_PROPERTYWALK,
+	/**
+	 * Minstrel / Wanderer
+	 **/
+	SC_SWINGDANCE,
+	SC_SYMPHONYOFLOVER,
+	SC_MOONLITSERENADE,//395
+	SC_RUSHWINDMILL,
+	SC_ECHOSONG,
+	SC_HARMONIZE,
+	SC_VOICEOFSIREN,
+	SC_DEEPSLEEP,//400
+	SC_SIRCLEOFNATURE,
+	SC_GLOOMYDAY,
+	SC_GLOOMYDAY_SK,
+	SC_SONGOFMANA,
+	SC_DANCEWITHWUG,//405
+	SC_SATURDAYNIGHTFEVER,
+	SC_LERADSDEW,
+	SC_MELODYOFSINK,
+	SC_BEYONDOFWARCRY,
+	SC_UNLIMITEDHUMMINGVOICE,//410
+	SC_SITDOWN_FORCE,
+	/**
+	 * Sura
+	 **/
+	SC_CRESCENTELBOW,
+	SC_CURSEDCIRCLE_ATKER,
+	SC_CURSEDCIRCLE_TARGET,
+	SC_LIGHTNINGWALK,//415
+	SC_RAISINGDRAGON,
+	SC_GT_ENERGYGAIN,
+	SC_GT_CHANGE,
+	SC_GT_REVITALIZE,
+	/**
+	 * Genetic
+	 **/
+	SC_GN_CARTBOOST,//420
+	SC_THORNSTRAP,
+	SC_BLOODSUCKER,
+	SC_SMOKEPOWDER,
+	SC_TEARGAS,
+	SC_MANDRAGORA,//425
+	SC_STOMACHACHE,
+	SC_MYSTERIOUS_POWDER,
+	SC_MELON_BOMB,
+	SC_BANANA_BOMB,
+	SC_BANANA_BOMB_SITDOWN,//430
+	SC_SAVAGE_STEAK,
+	SC_COCKTAIL_WARG_BLOOD,
+	SC_MINOR_BBQ,
+	SC_SIROMA_ICE_TEA,
+	SC_DROCERA_HERB_STEAMED,//435
+	SC_PUTTI_TAILS_NOODLES,
+	SC_BOOST500,
+	SC_FULL_SWING_K,
+	SC_MANA_PLUS,
+	SC_MUSTLE_M,//440
+	SC_LIFE_FORCE_F,
+	SC_EXTRACT_WHITE_POTION_Z,
+	SC_VITATA_500,
+	SC_EXTRACT_SALAMINE_JUICE,
+	/**
+	 * Shadow Chaser
+	 **/
+	SC__REPRODUCE,//445
+	SC__AUTOSHADOWSPELL,
+	SC__SHADOWFORM,
+	SC__BODYPAINT,
+	SC__INVISIBILITY,
+	SC__DEADLYINFECT,//450
+	SC__ENERVATION,
+	SC__GROOMY,
+	SC__IGNORANCE,
+	SC__LAZINESS,
+	SC__UNLUCKY,//455
+	SC__WEAKNESS,
+	SC__STRIPACCESSORY,
+	SC__MANHOLE,
+	SC_CHAOS,
+	SC__BLOODYLUST,//460
+	/**
+	 * Elemental Spirits
+	 **/
+	SC_CIRCLE_OF_FIRE,
+	SC_CIRCLE_OF_FIRE_OPTION,
+	SC_FIRE_CLOAK,
+	SC_FIRE_CLOAK_OPTION,
+	SC_WATER_SCREEN,//465
+	SC_WATER_SCREEN_OPTION,
+	SC_WATER_DROP,
+	SC_WATER_DROP_OPTION,
+	SC_WATER_BARRIER,
+	SC_WIND_STEP,//470
+	SC_WIND_STEP_OPTION,
+	SC_WIND_CURTAIN,
+	SC_WIND_CURTAIN_OPTION,
+	SC_ZEPHYR,
+	SC_SOLID_SKIN,//475
+	SC_SOLID_SKIN_OPTION,
+	SC_STONE_SHIELD,
+	SC_STONE_SHIELD_OPTION,
+	SC_POWER_OF_GAIA,
+	SC_PYROTECHNIC,//480
+	SC_PYROTECHNIC_OPTION,
+	SC_HEATER,
+	SC_HEATER_OPTION,
+	SC_TROPIC,
+	SC_TROPIC_OPTION,//485
+	SC_AQUAPLAY,
+	SC_AQUAPLAY_OPTION,
+	SC_COOLER,
+	SC_COOLER_OPTION,
+	SC_CHILLY_AIR,//490
+	SC_CHILLY_AIR_OPTION,
+	SC_GUST,
+	SC_GUST_OPTION,
+	SC_BLAST,
+	SC_BLAST_OPTION,//495
+	SC_WILD_STORM,
+	SC_WILD_STORM_OPTION,
+	SC_PETROLOGY,
+	SC_PETROLOGY_OPTION,
+	SC_CURSED_SOIL,//500
+	SC_CURSED_SOIL_OPTION,
+	SC_UPHEAVAL,
+	SC_UPHEAVAL_OPTION,
+	SC_TIDAL_WEAPON,
+	SC_TIDAL_WEAPON_OPTION,//505
+	SC_ROCK_CRUSHER,
+	SC_ROCK_CRUSHER_ATK,
 
 	SC_MAX, //Automatically updated max, used in for's to check we are within bounds.
 } sc_type;
@@ -652,7 +893,7 @@ enum si_type {
 	SI_CASH_PLUSONLYJOBEXP = 312,
 //	SI_PARTYFLEE = 313,
 //	SI_ANGEL_PROTECT = 314,
-/*
+
 	SI_ENDURE_MDEF = 315,
 	SI_ENCHANTBLADE = 316,
 	SI_DEATHBOUND = 317,
@@ -701,11 +942,11 @@ enum si_type {
 	SI_CAMOUFLAGE = 360,
 	SI_ACCELERATION = 361,
 	SI_HOVERING = 362,
-	SI_SUMMON1 = 363,
-	SI_SUMMON2 = 364,
-	SI_SUMMON3 = 365,
-	SI_SUMMON4 = 366,
-	SI_SUMMON5 = 367,
+	SI_SPHERE_1 = 363,
+	SI_SPHERE_2 = 364,
+	SI_SPHERE_3 = 365,
+	SI_SPHERE_4 = 366,
+	SI_SPHERE_5 = 367,
 	SI_MVPCARD_TAOGUNKA = 368,
 	SI_MVPCARD_MISTRESS = 369,
 	SI_MVPCARD_ORCHERO = 370,
@@ -719,15 +960,15 @@ enum si_type {
 	SI_NEUTRALBARRIER_MASTER = 378,
 	SI_STEALTHFIELD = 379,
 	SI_STEALTHFIELD_MASTER = 380,
-*/
+
 	SI_MANU_ATK = 381, 
 	SI_MANU_DEF = 382, 
 	SI_SPL_ATK = 383, 
 	SI_SPL_DEF = 384, 
-//	SI_REPRODUCE = 385,
+	SI_REPRODUCE = 385,
 	SI_MANU_MATK = 386,
 	SI_SPL_MATK = 387,
-/*
+
 	SI_STR_SCROLL = 388,
 	SI_INT_SCROLL = 389,
 	SI_LG_REFLECTDAMAGE = 390,
@@ -812,7 +1053,7 @@ enum si_type {
 	SI_BLOCKING_PLAY = 469,
 	SI_MANDRAGORA = 470,
 	SI_ACTIVATE = 471,
-	SI_AB_SECRAMENT = 472,
+	SI_SECRAMENT = 472,
 	SI_ASSUMPTIO2 = 473,
 	SI_TK_SEVENWIND = 474,
 	SI_LIMIT_ODINS_RECALL = 475,
@@ -912,7 +1153,7 @@ enum si_type {
 	SI_WIND_INSIGNIA = 569,
 	SI_EARTH_INSIGNIA = 570,
 	SI_EQUIPED_FLOOR = 571,
-*/
+	SI_ALL_RIDING = 613,//awesome 571-613 gap, we're missing quite a few stuff here.
 };
 
 // JOINTBEAT stackable ailments
@@ -1033,6 +1274,7 @@ enum {
 	OPTION_DRAGON3   = 0x01000000,
 	OPTION_DRAGON4   = 0x02000000,
 	OPTION_DRAGON5   = 0x04000000,
+	OPTION_MOUNTING  = 0x08000000,//dull name (cuz ind named it :/)
 	// compound constants
 	OPTION_CART      = OPTION_CART1|OPTION_CART2|OPTION_CART3|OPTION_CART4|OPTION_CART5,
 	OPTION_DRAGON    = OPTION_DRAGON1|OPTION_DRAGON2|OPTION_DRAGON3|OPTION_DRAGON4|OPTION_DRAGON5,
@@ -1123,6 +1365,12 @@ struct status_data {
 		aspd_rate;
 	unsigned char
 		def_ele, ele_lv,
+#if RRMODE
+		/**
+		 * in RE weapon level is used in several areas, keeping it here saves performance
+		 **/
+		wlv,
+#endif
 		size, race;
 	signed char
 		def, mdef;
@@ -1187,7 +1435,8 @@ struct status_change {
 	//TODO: See if it is possible to implement the following SC's without requiring extra parameters while the SC is inactive.
 	unsigned char jb_flag; //Joint Beat type flag
 	unsigned short mp_matk_min, mp_matk_max; //Previous matk min/max for ground spells (Amplify magic power)
-	int sg_id; //ID of the previous Storm gust that hit you
+	//int sg_id; //ID of the previous Storm gust that hit you
+	short comet_x, comet_y; // Point where src casted Comet - required to calculate damage from this point
 	unsigned char sg_counter; //Storm gust counter (previous hits from storm gust)
 	struct status_change_entry *data[SC_MAX];
 };
@@ -1260,6 +1509,12 @@ unsigned char status_calc_attack_element(struct block_list *bl, struct status_ch
 #define status_get_race(bl) status_get_status_data(bl)->race
 #define status_get_size(bl) status_get_status_data(bl)->size
 #define status_get_mode(bl) status_get_status_data(bl)->mode
+#if RRMODE
+	/**
+	 * in RE weapon level is used in several areas, keeping it here saves performance
+	 **/
+	#define status_get_wlv(bl) status_get_status_data(bl)->wlv
+#endif
 int status_get_party_id(struct block_list *bl);
 int status_get_guild_id(struct block_list *bl);
 int status_get_emblem_id(struct block_list *bl);

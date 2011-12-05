@@ -395,3 +395,50 @@
 12117,23,1007,1,7433,1,1013,3
 
 //==============================================
+
+//===== Ancilla And Runes === ItemLV=24 ========
+//---- Ancilla ---------------------------------
+//-- Ancilla <-- AB_ANCILLA & 1 Blue Gemstone
+12333,24,2039,1,717,1
+
+//---- Rune Stones -----------------------------
+//-- Runstone Nosiege <-- RK_RUNEMASTERY Lv8, 1 Broken Armor Piece, 1 Old Magic Circle, 1 Light Granule, 1 Elder Branch
+12725,24,2010,8,7069,1,7099,1,7938,1,7939,1
+//-- Runstone Rhydo <-- RK_RUNEMASTERY Lv7, 1 Red Gemstone, 1 Light Granule, 1 Elder Branch
+12726,24,2010,7,716,1,7938,1,7939,1
+//-- Runstone Verkana <-- RK_RUNEMASTERY Lv9, 1 Dullahan Armor, 1 Elder Branch
+12727,24,2010,9,7210,1,7939,1
+//-- Runstone Isia <-- RK_RUNEMASTERY Lv2, 1 Burning Heart, 1 Elder Branch
+12728,24,2010,2,7097,1,7939,1
+//-- Runstone Asir <-- RK_RUNEMASTERY Lv5, 1 Ogre Tooth, 1 Light Granule, 1 Elder Branch
+12729,24,2010,5,7002,1,7938,1,7939,1
+//-- Runstone Urj <-- RK_RUNEMASTERY Lv6, 1 Honey, 1 Slender Snake, 1 Elder Branch
+12730,24,2010,6,518,1,1048,1,7939,1
+//-- Runstone Turisus <-- RK_RUNEMASTERY Lv1, 1 Cobold Hair, 1 Claw Of Desert Wolf, 1 Elder Branch
+12731,24,2010,1,1034,1,7030,1,7939,1
+//-- Runstone Pertz <-- RK_RUNEMASTERY Lv3, 1 Dragon Canine, 1 Tangled Chain, 1 Light Granule, 1 Elder Branch
+12732,24,2010,3,1035,1,7221,1,7938,1,7939,1
+//-- Runstone Hagalas <-- RK_RUNEMASTERY Lv4, 1 Round Shell, 1 Dragon's Skin, 1 Elder Branch
+12733,24,2010,4,1096,1,7123,1,7939,1
+//==============================================
+
+//===== Guillotine Cross Poisons === ItemLv=25 =
+//-- Guillotine Antidote <-- GC_RESEARCHNEWPOISON Lv5, 1 White Herb, 1 Blue Herb, 2 Green Herb
+6128,25,2024,5,509,1,510,1,511,2
+//-- Poison Paralysis <-- GC_RESEARCHNEWPOISON Lv1, 1 Medicine Bowl, 20 Poison Toad's Skin, 1 Poison Kit, 1 Poison Herb Amoena
+12717,25,2024,1,7134,1,7155,20,7931,1,7937,1
+//-- Poison Leech <-- GC_RESEARCHNEWPOISON Lv4, 1 Medicine Bowl, 1 Poison Kit, 1 Poison Herb Nerium, 1 Poison Herb Scopolia
+12718,25,2024,4,7134,1,7931,1,7932,1,7936,1
+//-- Poison Oblivion <-- GC_RESEARCHNEWPOISON Lv9, 1 Izidor, 10 Heart Of Mermaid, 1 Medicine Bowl, 1 Poison Kit
+12719,25,2024,9,709,1,950,10,7134,1,7931,1
+//-- Poison Contamination <-- GC_RESEARCHNEWPOISON Lv3, 25 Decayed Nail, 1 Medicine Bowl, 1 Poison Kit, 1 Poison Herb Seratum
+12720,25,2024,3,957,25,7134,1,7931,1,7935,1
+//-- Poison Numb <-- GC_RESEARCHNEWPOISON Lv8, 1 Medicine Bowl, 10 Sticky Poison, 1 Poison Kit, 1 Poison Herb Nerium
+12721,25,2024,8,7134,1,7565,10,7931,1,7932,1
+//-- Poison Fever <-- GC_RESEARCHNEWPOISON Lv2, 20 Anolian Skin, 1 Medicine Bowl, 1 Poison Kit, 1 Poison Herb Rantana
+12722,25,2024,2,7003,20,7134,1,7931,1,7933,1
+//-- Poison Laughing <-- GC_RESEARCHNEWPOISON Lv7, 10 Poison Spore, 1 Medicine Bowl, 1 Poison Kit, 1 Poison Herb Makulata
+12723,25,2024,7,7033,10,7134,1,7931,1,7934,1
+//-- Poison Fatigue <-- GC_RESEARCHNEWPOISON Lv6, 1 Izidor, 1 Medicine Bowl, 10 Sticky Poison, 1 Poison Kit
+12724,25,2024,6,709,1,7134,1,7565,10,7931,1
+//==============================================

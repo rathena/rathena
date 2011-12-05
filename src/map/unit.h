@@ -126,6 +126,10 @@ int unit_changeviewsize(struct block_list *bl,short size);
 // ‰Šú‰»ƒ‹[ƒ`ƒ“
 int do_init_unit(void);
 int do_final_unit(void);
+/**
+ * Ranger
+ **/
+int unit_wugdash(struct block_list *bl, struct map_session_data *sd);
 
 extern const short dirx[8];
 extern const short diry[8];

@@ -199,7 +199,33 @@ struct npc_data* npc_name2id(const char* name)
 {
 	return (struct npc_data *) strdb_get(npcname_db, name);
 }
+/**
+ * For the Secure NPC Timeout option (check RRConfig/Secure.h) [RR]
+ **/
+#if SECURE_NPCTIMEOUT
+/**
+ * Timer to check for idle time and timeout the dialog if necessary
+ **/
+int npc_rr_secure_timeout_timer(int tid, unsigned int tick, int id, intptr_t data) {
+	struct map_session_data* sd = NULL;
+	if( (sd = map_id2sd(id)) == NULL || !sd->npc_id )
+		return 0;//Not logged in anymore OR no longer attached to a npc
 
+	if( DIFF_TICK(tick,sd->npc_idle_tick) > (SECURE_NPCTIMEOUT*1000) ) {
+		/**
+		 * If we still have the NPC script attached, tell it to stop.
+		 **/
+		if( sd->st )
+			sd->st->state = END;
+		/**
+		 * This guy's been idle for longer than allowed, close him.
+		 **/
+		clif_scriptclose(sd,sd->npc_id);
+	} else //Create a new instance of ourselves to continue
+		sd->npc_idle_timer = add_timer(gettick() + (SECURE_NPCTIMEOUT_INTERVAL*1000),npc_rr_secure_timeout_timer,sd->bl.id,0);
+	return 0;
+}
+#endif
 /*==========================================
  * イベントキューのイベント処理
  *------------------------------------------*/
@@ -1114,6 +1140,15 @@ int npc_scriptcont(struct map_session_data* sd, int id)
 			return 1;
 		}
 	}
+	/**
+	 * For the Secure NPC Timeout option (check RRConfig/Secure.h) [RR]
+	 **/
+#if SECURE_NPCTIMEOUT
+	/**
+	 * Update the last NPC iteration
+	 **/
+	sd->npc_idle_tick = gettick();
+#endif
 	run_script_main(sd->st);
 
 	return 0;
@@ -3058,8 +3093,11 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 		map[m].flag.sakura=state;
 	else if (!strcmpi(w3,"leaves"))
 		map[m].flag.leaves=state;
-	else if (!strcmpi(w3,"rain"))
-		map[m].flag.rain=state;
+	/**
+	 * No longer available, keeping here just in case it's back someday. [Ind]
+	 **/	
+	//else if (!strcmpi(w3,"rain"))
+	//	map[m].flag.rain=state;
 	else if (!strcmpi(w3,"nightenabled"))
 		map[m].flag.nightenabled=state;
 	else if (!strcmpi(w3,"nogo"))

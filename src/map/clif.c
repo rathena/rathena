@@ -154,7 +154,8 @@ void clif_setbindip(const char* ip)
 }
 
 /*==========================================
- * map鯖のport設定
+ * Sets map port to 'port'
+ * is run from map.c upon loading map server configuration
  *------------------------------------------*/
 void clif_setport(uint16 port)
 {
@@ -162,7 +163,7 @@ void clif_setport(uint16 port)
 }
 
 /*==========================================
- * map鯖のip読み出し
+ * Returns map server IP
  *------------------------------------------*/
 uint32 clif_getip(void)
 {
@@ -184,7 +185,7 @@ uint32 clif_refresh_ip(void)
 }
 
 /*==========================================
- * map鯖のport読み出し
+ * Returns map port which is set by clif_setport()
  *------------------------------------------*/
 uint16 clif_getport(void)
 {
@@ -210,7 +211,14 @@ static inline unsigned char clif_bl_type(struct block_list *bl) {
 #endif
 
 /*==========================================
- * clif_sendでAREA*指定時用
+ * sub process of clif_send
+ * Called from a map_foreachinarea (grabs all players in specific area and subjects them to this function)
+ * In order to send area-wise packets, such as:
+ * - AREA : everyone nearby your area
+ * - AREA_WOSC (AREA WITHOUT SAME CHAT) : Not run for people in the same chat as yours
+ * - AREA_WOC (AREA WITHOUT CHAT) : Not run for people inside a chat
+ * - AREA_WOS (AREA WITHOUT SELF) : Not run for self
+ * - AREA_CHAT_WOC : Everyone in the area of your chat without a chat
  *------------------------------------------*/
 int clif_send_sub(struct block_list *bl, va_list ap)
 {
@@ -273,7 +281,8 @@ int clif_send_sub(struct block_list *bl, va_list ap)
 }
 
 /*==========================================
- *
+ * Packet Delegation (called on all packets that require data to be sent to more than one client)
+ * functions that are sent solely to one use whose ID it posses use WFIFOSET 
  *------------------------------------------*/
 int clif_send(const uint8* buf, int len, struct block_list* bl, enum send_target type)
 {
@@ -554,11 +563,10 @@ int clif_send(const uint8* buf, int len, struct block_list* bl, enum send_target
 	return 0;
 }
 
-//
-// パケット作って送信
-//
+
 /*==========================================
- *
+ * Tells client that its player is fully loaded and that it can proceed to the map screen
+ * Provides client with player position and facing direction
  *------------------------------------------*/
 int clif_authok(struct map_session_data *sd)
 {
@@ -657,7 +665,8 @@ int clif_dropflooritem(struct flooritem_data* fitem)
 }
 
 /*==========================================
- *
+ * Server tells client to remove item of ID ('fitem->bl.id') from FD player area
+ * If FD is 0 it tells all clients nearby this item that it is gone
  *------------------------------------------*/
 int clif_clearflooritem(struct flooritem_data *fitem, int fd)
 {
@@ -1105,7 +1114,8 @@ static void clif_setdisguise(struct block_list *bl, unsigned char *buf,int len)
 }
 
 /*==========================================
- * クラスチェンジ typeはMobの場合は1で他は0？
+ * Acronym for 'clif_mob_class_change' used to tell clients around the monster that it's identity changed
+ * for example, it's run when a pupa transforms into a creamy.
  *------------------------------------------*/
 int clif_class_change(struct block_list *bl,int class_,int type)
 {
@@ -1124,7 +1134,7 @@ int clif_class_change(struct block_list *bl,int class_,int type)
 }
 
 /*==========================================
- *
+ * Server tells client to display (sd->spiritball) amount of spiritballs on target of account id (sd->bl.id)
  *------------------------------------------*/
 static void clif_spiritball_single(int fd, struct map_session_data *sd)
 {
@@ -1136,7 +1146,8 @@ static void clif_spiritball_single(int fd, struct map_session_data *sd)
 }
 
 /*==========================================
- *
+ * Run when player changes map / refreshes
+ * Tells its client to display all weather settings being used by this map
  *------------------------------------------*/
 static void clif_weather_check(struct map_session_data *sd)
 {
@@ -1148,7 +1159,10 @@ static void clif_weather_check(struct map_session_data *sd)
 		|| map[m].flag.fireworks
 		|| map[m].flag.sakura
 		|| map[m].flag.leaves
-		|| map[m].flag.rain
+		/**
+		 * No longer available, keeping here just in case it's back someday. [Ind]
+		 **/
+		//|| map[m].flag.rain
 		|| map[m].flag.clouds2)
 	{
 		if (map[m].flag.snow)
@@ -1168,11 +1182,16 @@ static void clif_weather_check(struct map_session_data *sd)
 			clif_specialeffect_single(&sd->bl, 163, fd);
 		if (map[m].flag.leaves)
 			clif_specialeffect_single(&sd->bl, 333, fd);
-		if (map[m].flag.rain)
-			clif_specialeffect_single(&sd->bl, 161, fd);
+		/**
+		 * No longer available, keeping here just in case it's back someday. [Ind]
+		 **/
+		//if (map[m].flag.rain)
+		//	clif_specialeffect_single(&sd->bl, 161, fd);
 	}
 }
-
+/**
+ * Run when the weather on a map changes, throws all players in map id 'm' to clif_weather_check function
+ **/
 void clif_weather(int m)
 {
 	struct s_mapiterator* iter;
@@ -1186,7 +1205,9 @@ void clif_weather(int m)
 	}
 	mapit_free(iter);
 }
-
+/**
+ * Main function to spawn a unit on the client (player/mob/pet/etc)
+ **/
 int clif_spawn(struct block_list *bl)
 {
 	unsigned char buf[128];
@@ -1218,6 +1239,10 @@ int clif_spawn(struct block_list *bl)
 				clif_specialeffect(bl,421,AREA);
 			if( sd->bg_id && map[sd->bl.m].flag.battleground )
 				clif_sendbgemblem_area(sd);
+			if( sd->sc.option&OPTION_MOUNTING ) {
+				//New Mounts are not complaint to the original method, so we gotta tell this guy that he is mounting.
+				clif_status_load_notick(&sd->bl,SI_ALL_RIDING,2,1,0,0);
+			}
 		}
 		break;
 	case BL_MOB:
@@ -1873,7 +1898,7 @@ int clif_viewpoint(struct map_session_data *sd, int npc_id, int type, int x, int
 }
 
 /*==========================================
- *
+ * Server tells client to display cutin of name 'image' to client, in position 'type' (255, etc)
  *------------------------------------------*/
 int clif_cutin(struct map_session_data* sd, const char* image, int type)
 {
@@ -1945,7 +1970,8 @@ static void clif_addcards(unsigned char* buf, struct item* item)
 }
 
 /*==========================================
- *
+ * Server tells client he got item of index 'n' and amount 'amount',
+ * when 'fail' is 1 it tells the client it failed to receive said item
  *------------------------------------------*/
 int clif_additem(struct map_session_data *sd, int n, int amount, int fail)
 {
@@ -2014,7 +2040,7 @@ int clif_additem(struct map_session_data *sd, int n, int amount, int fail)
 }
 
 /*==========================================
- *
+ * 
  *------------------------------------------*/
 int clif_dropitem(struct map_session_data *sd,int n,int amount)
 {
@@ -2457,8 +2483,9 @@ int clif_guild_xy_remove(struct map_session_data *sd)
 }
 
 /*==========================================
- * ステータスを送りつける
- * 表示専用数字はこの中で計算して送る
+ * Server tells client that data 'type' has changed and sends it's new value
+ * For example, when server updates the client max weight, say, due to higher STR,
+ * It calls this function with SP_MAXWEIGHT type
  *------------------------------------------*/
 int clif_updatestatus(struct map_session_data *sd,int type)
 {
@@ -2590,7 +2617,9 @@ int clif_updatestatus(struct map_session_data *sd,int type)
 		WFIFOL(fd,4)=pc_nextjobexp(sd);
 		break;
 
-		// 00be 終了
+	/**
+	 * SP_U<STAT> are used to update the amount of points necessary to increase that stat
+	 **/
 	case SP_USTR:
 	case SP_UAGI:
 	case SP_UVIT:
@@ -2602,14 +2631,15 @@ int clif_updatestatus(struct map_session_data *sd,int type)
 		len=5;
 		break;
 
-		// 013a 終了
+	/**
+	 * Tells the client how far it is allowed to attack (weapon range)
+	 **/
 	case SP_ATTACKRANGE:
 		WFIFOW(fd,0)=0x13a;
 		WFIFOW(fd,2)=sd->battle_status.rhw.range;
 		len=4;
 		break;
 
-		// 0141 終了
 	case SP_STR:
 		WFIFOW(fd,0)=0x141;
 		WFIFOL(fd,2)=type;
@@ -2699,7 +2729,7 @@ int clif_changestatus(struct block_list *bl,int type,int val)
 }
 
 /*==========================================
- *
+ * Updates BL unit view data to nearby clients
  *------------------------------------------*/
 void clif_changelook(struct block_list *bl,int type,int val)
 {
@@ -2926,7 +2956,7 @@ int clif_initialstatus(struct map_session_data *sd)
 }
 
 /*==========================================
- *矢装備
+ * Server tells client item idx 'val' is meant to be shown in equipment's window arrow slot
  *------------------------------------------*/
 int clif_arrowequip(struct map_session_data *sd,int val)
 {
@@ -2968,7 +2998,8 @@ int clif_arrow_fail(struct map_session_data *sd,int type)
 }
 
 /*==========================================
- * 作成可能 矢リスト送信
+ * Server tells client to display a window similar to Mangifier (item) one
+ * Server populates the window with avilable arrow crafting options according to player's inventory
  *------------------------------------------*/
 int clif_arrow_create_list(struct map_session_data *sd)
 {
@@ -3004,7 +3035,7 @@ int clif_arrow_create_list(struct map_session_data *sd)
 }
 
 /*==========================================
- *
+ * Server tells client his response regarding the earlier request to increase status
  *------------------------------------------*/
 int clif_statusupack(struct map_session_data *sd,int type,int ok,int val)
 {
@@ -3090,7 +3121,7 @@ int clif_misceffect(struct block_list* bl,int type)
 }
 
 /*==========================================
- * 表示オプション変更
+ * Server tells BL unit and all nearby clients that his unit-view options (e.g. stone curse appearance) changed
  *------------------------------------------*/
 int clif_changeoption(struct block_list* bl)
 {
@@ -3483,7 +3514,7 @@ void clif_tradestart(struct map_session_data* sd, uint8 type)
 }
 
 /*==========================================
- * 相手方からのアイテム追加
+ * Server tells 'tsd' player client info on the items 'sd' player just added to the trade window
  *------------------------------------------*/
 void clif_tradeadditem(struct map_session_data* sd, struct map_session_data* tsd, int index, int amount)
 {
@@ -3547,7 +3578,9 @@ void clif_tradeadditem(struct map_session_data* sd, struct map_session_data* tsd
 }
 
 /*==========================================
- * アイテム追加成功/失敗
+ * Server tells client on the status of it's OK request
+ * fail 1 : the other person did 'ok'
+ * fail 0 : you did 'ok'
  *------------------------------------------*/
 void clif_tradeitemok(struct map_session_data* sd, int index, int fail)
 {
@@ -3563,7 +3596,9 @@ void clif_tradeitemok(struct map_session_data* sd, int index, int fail)
 }
 
 /*==========================================
- * 取り引きok押し
+ * Server tells client on the status of it's lock request
+ * fail 1 : The other trader lock request
+ * fail 0 : Your lock request
  *------------------------------------------*/
 void clif_tradedeal_lock(struct map_session_data* sd, int fail)
 {
@@ -3578,7 +3613,7 @@ void clif_tradedeal_lock(struct map_session_data* sd, int fail)
 }
 
 /*==========================================
- * 取り引きがキャンセルされました
+ * Server tells client it's trade request was cancelled
  *------------------------------------------*/
 void clif_tradecancelled(struct map_session_data* sd)
 {
@@ -3592,7 +3627,7 @@ void clif_tradecancelled(struct map_session_data* sd)
 }
 
 /*==========================================
- * 取り引き完了
+ * Server tells client the final status on his trade request
  *------------------------------------------*/
 void clif_tradecompleted(struct map_session_data* sd, int fail)
 {
@@ -3607,7 +3642,7 @@ void clif_tradecompleted(struct map_session_data* sd, int fail)
 }
 
 /*==========================================
- * カプラ倉庫のアイテム数を更新
+ * Server tells client it's quantity of items in storage changed
  *------------------------------------------*/
 void clif_updatestorageamount(struct map_session_data* sd, int amount)
 {
@@ -3624,7 +3659,7 @@ void clif_updatestorageamount(struct map_session_data* sd, int amount)
 }
 
 /*==========================================
- * カプラ倉庫にアイテムを追加する
+ * Server tells client it's status on his request to add a item to storage
  *------------------------------------------*/
 void clif_storageitemadded(struct map_session_data* sd, struct item* i, int index, int amount)
 {
@@ -3679,7 +3714,7 @@ void clif_updateguildstorageamount(struct map_session_data* sd, int amount)
 }
 
 /*==========================================
- * カプラ倉庫からアイテムを取り去る
+ * Server tells client its status on his request to remove a item from storage
  *------------------------------------------*/
 void clif_storageitemremoved(struct map_session_data* sd, int index, int amount)
 {
@@ -3696,7 +3731,7 @@ void clif_storageitemremoved(struct map_session_data* sd, int index, int amount)
 }
 
 /*==========================================
- * カプラ倉庫を閉じる
+ * Server tells client his storage was closed
  *------------------------------------------*/
 void clif_storageclose(struct map_session_data* sd)
 {
@@ -3709,9 +3744,9 @@ void clif_storageclose(struct map_session_data* sd)
 	WFIFOW(fd,0) = 0xf8; // Storage Closed
 	WFIFOSET(fd,packet_len(0xf8));
 }
-
+int clif_status_load_single(int fd, int id,int type,int flag,int val1, int val2, int val3);
 /*==========================================
- * PC表示
+ * Server tells 'sd' player client the abouts of 'dstsd' player
  *------------------------------------------*/
 static void clif_getareachar_pc(struct map_session_data* sd,struct map_session_data* dstsd)
 {
@@ -3735,7 +3770,10 @@ static void clif_getareachar_pc(struct map_session_data* sd,struct map_session_d
 
 	if(dstsd->spiritball > 0)
 		clif_spiritball_single(sd->fd, dstsd);
-
+	if( dstsd->sc.option&OPTION_MOUNTING ) {
+		//New Mounts are not complaint to the original method, so we gotta tell this guy that I'm mounting.
+		clif_status_load_single(sd->fd,dstsd->bl.id,SI_ALL_RIDING,2,1,0,0);
+	}
 	if( (sd->status.party_id && dstsd->status.party_id == sd->status.party_id) || //Party-mate, or hpdisp setting.
 		(sd->bg_id && sd->bg_id == dstsd->bg_id) || //BattleGround
 		(battle_config.disp_hpmeter && (gmlvl = pc_isGM(sd)) >= battle_config.disp_hpmeter && gmlvl >= pc_isGM(dstsd)) )
@@ -4044,7 +4082,7 @@ void clif_getareachar_item(struct map_session_data* sd,struct flooritem_data* fi
 }
 
 /*==========================================
- * 場所スキルエフェクトが視界に入る
+ * Server tells client 'sd' of all nearby skill units (e.g. safety wall)
  *------------------------------------------*/
 static void clif_getareachar_skillunit(struct map_session_data *sd, struct skill_unit *unit)
 {
@@ -4084,7 +4122,7 @@ static void clif_getareachar_skillunit(struct map_session_data *sd, struct skill
 }
 
 /*==========================================
- * 場所スキルエフェクトが視界から消える
+ * Server tells client to remove unit of id 'unit->bl.id'
  *------------------------------------------*/
 static void clif_clearchar_skillunit(struct skill_unit *unit, int fd)
 {
@@ -4100,7 +4138,7 @@ static void clif_clearchar_skillunit(struct skill_unit *unit, int fd)
 }
 
 /*==========================================
- * 場所スキルエフェクト削除
+ * Server tells all clients in sight of 'unit->bl.id' ID to remove itself from sight (delete)
  *------------------------------------------*/
 void clif_skill_delunit(struct skill_unit *unit)
 {
@@ -4245,7 +4283,7 @@ int clif_insight(struct block_list *bl,va_list ap)
 }
 
 /*==========================================
- * スキルリストを送信する
+ * Server tells the client information on 'sd' player's skill tree
  *------------------------------------------*/
 int clif_skillinfoblock(struct map_session_data *sd)
 {
@@ -4282,7 +4320,9 @@ int clif_skillinfoblock(struct map_session_data *sd)
 
 	return 1;
 }
-
+/**
+ * Server tells client 'sd' to add skill of id 'id' to it's skill tree (e.g. with Ice Falcion item)
+ **/
 int clif_addskill(struct map_session_data *sd, int id )
 {
 	int fd;
@@ -4333,7 +4373,7 @@ int clif_deleteskill(struct map_session_data *sd, int id)
 }
 
 /*==========================================
- * スキル割り振り通知
+ * Server tells client it's skill of id 'skill_num' level changed
  *------------------------------------------*/
 int clif_skillup(struct map_session_data *sd,int skill_num)
 {
@@ -4668,7 +4708,7 @@ int clif_skill_damage2(struct block_list *src,struct block_list *dst,unsigned in
 */
 
 /*==========================================
- * 支援/回復スキルエフェクト
+ * Server tells client(s) that 'src' casted a skill of nodamage type (e.g. heal) on 'dst'
  *------------------------------------------*/
 int clif_skill_nodamage(struct block_list *src,struct block_list *dst,int skill_id,int heal,int fail)
 {
@@ -4701,7 +4741,8 @@ int clif_skill_nodamage(struct block_list *src,struct block_list *dst,int skill_
 }
 
 /*==========================================
- * 場所スキルエフェクト
+ * Server tells client 'src' to display effect of skill id 'skill_id' on location 'x' and 'y'
+ * 'val' is used for information that varies from skill to skill, usually it's the skill level
  *------------------------------------------*/
 int clif_skill_poseffect(struct block_list *src,int skill_id,int val,int x,int y,int tick)
 {
@@ -4727,7 +4768,7 @@ int clif_skill_poseffect(struct block_list *src,int skill_id,int val,int x,int y
 }
 
 /*==========================================
- * 場所スキルエフェクト表示
+ * Tells all client's nearby 'unit' sight range that it spawned
  *------------------------------------------*/
 //FIXME: this is just an AREA version of clif_getareachar_skillunit()
 void clif_skill_setunit(struct skill_unit *unit)
@@ -4765,7 +4806,7 @@ void clif_skill_setunit(struct skill_unit *unit)
 }
 
 /*==========================================
- * ワープ場所選択
+ * Used to display 'teleport' and 'warp portal' information on it's respective dialogs
  *------------------------------------------*/
 void clif_skill_warppoint(struct map_session_data* sd, short skill_num, short skill_lv, unsigned short map1, unsigned short map2, unsigned short map3, unsigned short map4)
 {
@@ -4832,7 +4873,7 @@ void clif_skill_teleportmessage(struct map_session_data *sd, int type)
 }
 
 /*==========================================
- * モンスター情報
+ * Server tells client to display 'estimation' (Sense) information for monster (bl) 'dst'
  *------------------------------------------*/
 int clif_skill_estimation(struct map_session_data *sd,struct block_list *dst)
 {
@@ -4868,14 +4909,15 @@ int clif_skill_estimation(struct map_session_data *sd,struct block_list *dst)
 	return 0;
 }
 /*==========================================
- * アイテム合成可能リスト
+ * Server tells client to display a window similar to Mangifier (item) one
+ * Server populates the window with avilable crafting options according to skill used to call this
  *------------------------------------------*/
-int clif_skill_produce_mix_list(struct map_session_data *sd, int trigger)
+int clif_skill_produce_mix_list(struct map_session_data *sd, int skillid , int trigger)
 {
 	int i,c,view,fd;
 	nullpo_ret(sd);
 
-	if(sd->menuskill_id == AM_PHARMACY)
+	if(sd->menuskill_id == skillid)
 		return 0; //Avoid resending the menu twice or more times...
 	fd=sd->fd;
 	WFIFOHEAD(fd, MAX_SKILL_PRODUCE_DB * 8 + 8);
@@ -4895,7 +4937,7 @@ int clif_skill_produce_mix_list(struct map_session_data *sd, int trigger)
 	WFIFOW(fd, 2)=c*8+8;
 	WFIFOSET(fd,WFIFOW(fd,2));
 	if(c > 0) {
-		sd->menuskill_id = AM_PHARMACY;
+		sd->menuskill_id = skillid;
 		sd->menuskill_val = trigger;
 		return 1;
 	}
@@ -4966,9 +5008,9 @@ int clif_status_load(struct block_list *bl,int type, int flag)
 	return 0;
 }
 /*==========================================
- * 状態異常アイコン/メッセージ表示
+ * Server tell's BL and nearby clients of his status change
  *------------------------------------------*/
-int clif_status_change(struct block_list *bl,int type,int flag,unsigned int tick)
+int clif_status_change(struct block_list *bl,int type,int flag,unsigned int tick,int val1, int val2, int val3)
 {
 	unsigned char buf[32];
 
@@ -4996,9 +5038,9 @@ int clif_status_change(struct block_list *bl,int type,int flag,unsigned int tick
 	if( battle_config.display_status_timers && tick>0 )
 	{
 		WBUFL(buf,9)=tick;
-		WBUFL(buf,13)=0;
-		WBUFL(buf,17)=0;
-		WBUFL(buf,21)=0;
+		WBUFL(buf,13) = val1;
+		WBUFL(buf,17) = val2;
+		WBUFL(buf,21) = val3;
 	}
 	clif_send(buf,packet_len(WBUFW(buf,0)),bl,AREA);
 	return 0;
@@ -5031,7 +5073,6 @@ int clif_displaymessage(const int fd, const char* mes)
 }
 
 /*==========================================
- * 天の声を送信する
  * Send broadcast message in yellow or blue (without font formatting).
  * S 009A <len>.W <message>.?B
  *------------------------------------------*/
@@ -5055,7 +5096,8 @@ int clif_broadcast(struct block_list* bl, const char* mes, int len, int type, en
 }
 
 /*==========================================
- * グローバルメッセージ
+ * Displays a message on a 'bl' to all it's nearby clients
+ * Used by npc_globalmessage
  *------------------------------------------*/
 void clif_GlobalMessage(struct block_list* bl, const char* message)
 {
@@ -5128,7 +5170,8 @@ int clif_broadcast2(struct block_list* bl, const char* mes, int len, unsigned lo
 	return 0;
 }
 /*==========================================
- * HPSP回復エフェクトを送信する
+ * Server tells self client to heal self for 'val', is either SP_HP or SP_SP
+ * It displays these green and blue heal numbers that show up at your body and go up until they fade away
  *------------------------------------------*/
 int clif_heal(int fd,int type,int val)
 {
@@ -5142,7 +5185,7 @@ int clif_heal(int fd,int type,int val)
 }
 
 /*==========================================
- * 復活する
+ * Server tells nearby clients of 'bl' that it ressurected (and plays ress effect)
  *------------------------------------------*/
 int clif_resurrection(struct block_list *bl,int type)
 {
@@ -5190,7 +5233,8 @@ void clif_map_type(struct map_session_data* sd, enum map_type type)
 }
 
 /*==========================================
- * PVP実装？(仮)
+ * Server tells client on it's pvp rank and map status,
+ * (it controls the counter on the bottom right of the map existent in pvp rooms)
  *------------------------------------------*/
 int clif_pvpset(struct map_session_data *sd,int pvprank,int pvpnum,int type)
 {
@@ -5239,7 +5283,8 @@ void clif_map_property_mapall(int map, enum map_property property)
 }
 
 /*==========================================
- * 精錬エフェクトを送信する
+ * Server tells client the status on refine of item index 'index' from refine 'val'
+ * Message displayed depends on 'fail' (broken(red) or success(blue))
  *------------------------------------------*/
 void clif_refine(int fd, int fail, int index, int val)
 {
@@ -5308,7 +5353,8 @@ int clif_wis_end(int fd, int flag)
 }
 
 /*==========================================
- * キャラID名前引き結果を送信する
+ * Server tells client that char id 'charid' is to be assigned the name of 'name'
+ * This is used when client requests the server the name written in a item, e.g. crafted alche potions
  *------------------------------------------*/
 int clif_solved_charname(int fd, int charid, const char* name)
 {
@@ -5321,7 +5367,7 @@ int clif_solved_charname(int fd, int charid, const char* name)
 }
 
 /*==========================================
- * カードの挿入可能リストを返す
+ * Server tells client to list all items that may be worn by card item of index 'idx'
  *------------------------------------------*/
 int clif_use_card(struct map_session_data *sd,int idx)
 {
@@ -5371,7 +5417,7 @@ int clif_use_card(struct map_session_data *sd,int idx)
 	return 0;
 }
 /*==========================================
- * カードの挿入終了
+ * Server tells client his status on the previous clif_use_card (failed or OK)
  *------------------------------------------*/
 int clif_insert_card(struct map_session_data *sd,int idx_equip,int idx_card,int flag)
 {
@@ -5390,7 +5436,7 @@ int clif_insert_card(struct map_session_data *sd,int idx_equip,int idx_card,int 
 }
 
 /*==========================================
- * 鑑定可能アイテムリスト送信
+ * Server tells client it's list of unidentified items
  *------------------------------------------*/
 int clif_item_identify_list(struct map_session_data *sd)
 {
@@ -5419,7 +5465,7 @@ int clif_item_identify_list(struct map_session_data *sd)
 }
 
 /*==========================================
- * 鑑定結果
+ * Server tells client his item of index 'idx' has been identified
  *------------------------------------------*/
 int clif_item_identified(struct map_session_data *sd,int idx,int flag)
 {
@@ -5437,7 +5483,7 @@ int clif_item_identified(struct map_session_data *sd,int idx,int flag)
 }
 
 /*==========================================
- * 修理可能アイテムリスト送信
+ * Server tells client the list of broken items
  *------------------------------------------*/
 int clif_item_repair_list(struct map_session_data *sd,struct map_session_data *dstsd)
 {
@@ -5537,7 +5583,9 @@ int clif_item_refine_list(struct map_session_data *sd)
 }
 
 /*==========================================
- * アイテムによる一時的なスキル効果
+ * Server tells client to display the 'green skill name' at the top of the screen + target cursor,
+ * for skill 'skillid' of 'skilllv' level
+ * Used for example when player uses a skill scroll (e.g. Fire Bolt Scroll)
  *------------------------------------------*/
 int clif_item_skill(struct map_session_data *sd,int skillid,int skilllv)
 {
@@ -5561,7 +5609,7 @@ int clif_item_skill(struct map_session_data *sd,int skillid,int skilllv)
 }
 
 /*==========================================
- * カートにアイテム追加
+ * Server tells client it's status on trying to add item of index 'n' and amount 'amount' to it's cart
  *------------------------------------------*/
 int clif_cart_additem(struct map_session_data *sd,int n,int amount,int fail)
 {
@@ -5611,7 +5659,7 @@ int clif_cart_additem(struct map_session_data *sd,int n,int amount,int fail)
 }
 
 /*==========================================
- * カートからアイテム削除
+ * Server tells client it's status on trying to remove item of index 'n' and amount 'amount' from it's cart to invent
  *------------------------------------------*/
 int clif_cart_delitem(struct map_session_data *sd,int n,int amount)
 {
@@ -5996,10 +6044,11 @@ void clif_party_inviteack(struct map_session_data* sd, const char* nick, int res
 
 
 /*==========================================
- * パーティ設定送信
- * flag & 0x001=exp変更ミス
- *        0x010=item変更ミス
- *        0x100=一人にのみ送信
+ * Server tells client (and it's party members) of a change in the party settings
+ * 'Flag' Options
+ * - 0x01 (exp)
+ * - 0x10 (item)
+ * - 0x100 (party member logged in / was added to party)
  *------------------------------------------*/
 int clif_party_option(struct party_data *p,struct map_session_data *sd,int flag)
 {
@@ -6034,7 +6083,7 @@ int clif_party_option(struct party_data *p,struct map_session_data *sd,int flag)
 	return 0;
 }
 /*==========================================
- * パーティ脱退（脱退前に呼ぶこと）
+ * Server tells party members of party 'p' that 'sd' player left
  *------------------------------------------*/
 int clif_party_withdraw(struct party_data* p, struct map_session_data* sd, int account_id, const char* name, int flag)
 {
@@ -6056,15 +6105,14 @@ int clif_party_withdraw(struct party_data* p, struct map_session_data* sd, int a
 	WBUFL(buf,2)=account_id;
 	memcpy(WBUFP(buf,6),name,NAME_LENGTH);
 	WBUFB(buf,30)=flag&0x0f;
-
 	if((flag&0xf0)==0)
 		clif_send(buf,packet_len(0x105),&sd->bl,PARTY);
-	 else
+	else
 		clif_send(buf,packet_len(0x105),&sd->bl,SELF);
 	return 0;
 }
 /*==========================================
- * パーティメッセージ送信
+ * Server deploys a message to all party members, called from party.c:party_recv_message()
  *------------------------------------------*/
 int clif_party_message(struct party_data* p, int account_id, const char* mes, int len)
 {
@@ -6086,7 +6134,7 @@ int clif_party_message(struct party_data* p, int account_id, const char* mes, in
 	return 0;
 }
 /*==========================================
- * パーティ座標通知
+ * Server tells all party members of 'sd' player that 'sd' player location changed
  *------------------------------------------*/
 int clif_party_xy(struct map_session_data *sd)
 {
@@ -6119,7 +6167,7 @@ int clif_party_xy_single(int fd, struct map_session_data *sd)
 
 
 /*==========================================
- * パーティHP通知
+ * Server tells nearby party members of 'sd' that his hp bar has updated
  *------------------------------------------*/
 int clif_party_hp(struct map_session_data *sd)
 {
@@ -6224,7 +6272,7 @@ int clif_hpmeter_sub(struct block_list *bl, va_list ap)
 }
 
 /*==========================================
- * GMへ場所とHP通知
+ * Server tells all nearby gms to 'sd' that 'sd' hp bar was updated
  *------------------------------------------*/
 int clif_hpmeter(struct map_session_data *sd)
 {
@@ -6237,7 +6285,7 @@ int clif_hpmeter(struct map_session_data *sd)
 }
 
 /*==========================================
- * パーティ場所移動（未使用）
+ * (?) Server tells 'sd' party members that 'sd' state 'changed'
  *------------------------------------------*/
 void clif_party_move(struct party* p, struct map_session_data* sd, int online)
 {
@@ -6258,7 +6306,8 @@ void clif_party_move(struct party* p, struct map_session_data* sd, int online)
 	clif_send(buf,packet_len(0x104),&sd->bl,PARTY);
 }
 /*==========================================
- * 攻撃するために移動が必要
+ * Server tells client to attack bl, if not in range of attack (rhw.range) it'll move to bl
+ * called from unit.c
  *------------------------------------------*/
 int clif_movetoattack(struct map_session_data *sd,struct block_list *bl)
 {
@@ -6280,7 +6329,7 @@ int clif_movetoattack(struct map_session_data *sd,struct block_list *bl)
 	return 0;
 }
 /*==========================================
- * 製造エフェクト
+ * Server tells client to display produce effect (refine-like), success or failure depends on 'flag'
  *------------------------------------------*/
 int clif_produceeffect(struct map_session_data* sd,int flag,int nameid)
 {
@@ -6331,7 +6380,7 @@ int clif_pet_roulette(struct map_session_data *sd,int data)
 }
 
 /*==========================================
- * pet卵リスト作成
+ * Server tells client to list it's eggs (used in hatching window to select a egg)
  *------------------------------------------*/
 int clif_sendegg(struct map_session_data *sd)
 {
@@ -6461,7 +6510,7 @@ int clif_pet_food(struct map_session_data *sd,int foodid,int fail)
 }
 
 /*==========================================
- * オートスペル リスト送信
+ * Server tells client to display autospell (Sage Skill) skill selection list
  *------------------------------------------*/
 int clif_autospell(struct map_session_data *sd,int skilllv)
 {
@@ -6549,7 +6598,7 @@ void clif_devotion(struct block_list *src, struct map_session_data *tsd)
 }
 
 /*==========================================
- * 氣球
+ * Server tells clients nearby 'sd' (and himself) to display 'sd->spiritball' number of spiritballs on 'sd'
  *------------------------------------------*/
 int clif_spiritball(struct map_session_data *sd)
 {
@@ -6581,7 +6630,8 @@ int clif_combo_delay(struct block_list *bl,int wait)
 	return 0;
 }
 /*==========================================
- *白刃取り
+ * Server tells client to display blade stop animation 'link' from 'src' to 'dst_id' (account id of target)
+ * active toggles the state
  *------------------------------------------*/
 void clif_bladestop(struct block_list *src, int dst_id, int active)
 {
@@ -6598,7 +6648,7 @@ void clif_bladestop(struct block_list *src, int dst_id, int active)
 }
 
 /*==========================================
- * MVPエフェクト
+ * Server tells clients nearby 'sd' (and itself) to display MvP killed effect on 'sd' player
  *------------------------------------------*/
 int clif_mvp_effect(struct map_session_data *sd)
 {
@@ -6612,7 +6662,7 @@ int clif_mvp_effect(struct map_session_data *sd)
 	return 0;
 }
 /*==========================================
- * MVPアイテム所得
+ * Server tells client to display mvp drop prize info to player 'sd' for item id 'nameid'
  *------------------------------------------*/
 int clif_mvp_item(struct map_session_data *sd,int nameid)
 {
@@ -6631,7 +6681,7 @@ int clif_mvp_item(struct map_session_data *sd,int nameid)
 	return 0;
 }
 /*==========================================
- * MVP経験値所得
+ * Server tells client to display mvp exp prize to player 'sd' for amount 'exp'
  *------------------------------------------*/
 int clif_mvp_exp(struct map_session_data *sd, unsigned int exp)
 {
@@ -6693,7 +6743,7 @@ void clif_guild_belonginfo(struct map_session_data *sd, struct guild *g)
 
 
 /*==========================================
- * ギルドメンバログイン通知
+ * Server tells all members of 'g' guild that member of index 'idx' is online or offline (flag 1:0)
  *------------------------------------------*/
 int clif_guild_memberlogin_notice(struct guild *g,int idx,int flag)
 {
@@ -6755,7 +6805,7 @@ int clif_guild_send_onlineinfo(struct map_session_data *sd)
 }
 
 /*==========================================
- * ギルドマスター通知(14dへの応答)
+ * Tells 'sd' whether he is the guild master of his guild or not (relies on sd->state.gmaster_flag)
  *------------------------------------------*/
 int clif_guild_masterormember(struct map_session_data *sd)
 {
@@ -6814,7 +6864,7 @@ int clif_guild_basicinfo(struct map_session_data *sd)
 }
 
 /*==========================================
- * ギルド同盟/敵対情報
+ * Server tells client 'sd' it's guild alliances
  *------------------------------------------*/
 int clif_guild_allianceinfo(struct map_session_data *sd)
 {
@@ -6843,7 +6893,7 @@ int clif_guild_allianceinfo(struct map_session_data *sd)
 }
 
 /*==========================================
- * ギルドメンバーリスト
+ * Server tells client it's guild member list
  *------------------------------------------*/
 int clif_guild_memberlist(struct map_session_data *sd)
 {
@@ -6873,7 +6923,7 @@ int clif_guild_memberlist(struct map_session_data *sd)
 		WFIFOL(fd,c*104+22)=(int)cap_value(m->exp,0,INT32_MAX);
 		WFIFOL(fd,c*104+26)=m->online;
 		WFIFOL(fd,c*104+30)=m->position;
-		memset(WFIFOP(fd,c*104+34),0,50);	// メモ？
+		memset(WFIFOP(fd,c*104+34),0,50);	//[Ind] - This is displayed in the 'note' column but being you can't edit it it's sent empty.
 		memcpy(WFIFOP(fd,c*104+84),m->name,NAME_LENGTH);
 		c++;
 	}
@@ -6882,7 +6932,7 @@ int clif_guild_memberlist(struct map_session_data *sd)
 	return 0;
 }
 /*==========================================
- * ギルド役職名リスト
+ * Server tell client it's guild position list
  *------------------------------------------*/
 int clif_guild_positionnamelist(struct map_session_data *sd)
 {
@@ -6905,7 +6955,7 @@ int clif_guild_positionnamelist(struct map_session_data *sd)
 	return 0;
 }
 /*==========================================
- * ギルド役職情報リスト
+ * Server tell client about it's guild position permissions and tax
  *------------------------------------------*/
 int clif_guild_positioninfolist(struct map_session_data *sd)
 {
@@ -6931,7 +6981,7 @@ int clif_guild_positioninfolist(struct map_session_data *sd)
 	return 0;
 }
 /*==========================================
- * ギルド役職変更通知
+ * Server tells client about position 'idx' information, being it changed
  *------------------------------------------*/
 int clif_guild_positionchanged(struct guild *g,int idx)
 {
@@ -6952,7 +7002,7 @@ int clif_guild_positionchanged(struct guild *g,int idx)
 	return 0;
 }
 /*==========================================
- * ギルドメンバ変更通知
+ * Server tells client about a specific guild member index that changed
  *------------------------------------------*/
 int clif_guild_memberpositionchanged(struct guild *g,int idx)
 {
@@ -6971,7 +7021,7 @@ int clif_guild_memberpositionchanged(struct guild *g,int idx)
 	return 0;
 }
 /*==========================================
- * ギルドエンブレム送信
+ * Server tells client about this new cool emblem a specific guild got
  *------------------------------------------*/
 int clif_guild_emblem(struct map_session_data *sd,struct guild *g)
 {
@@ -7076,7 +7126,7 @@ int clif_guild_notice(struct map_session_data* sd, struct guild* g)
 }
 
 /*==========================================
- * ギルドメンバ勧誘
+ * Server tells client 'sd' that guild 'g' wants to invite him
  *------------------------------------------*/
 int clif_guild_invite(struct map_session_data *sd,struct guild *g)
 {
@@ -7116,7 +7166,7 @@ int clif_guild_inviteack(struct map_session_data *sd,int flag)
 }
 
 /*==========================================
- * ギルドメンバ脱退通知
+ * Server tells guild members of 'sd' that he left his guild for a reason
  *------------------------------------------*/
 int clif_guild_leave(struct map_session_data *sd,const char *name,const char *mes)
 {
@@ -7132,7 +7182,7 @@ int clif_guild_leave(struct map_session_data *sd,const char *name,const char *me
 }
 
 /*==========================================
- * ギルドメンバ追放通知
+ * Server tells guild members of 'sd' that 'name' of account id 'account_id' was expelled for reason 'mes'
  *------------------------------------------*/
 void clif_guild_expulsion(struct map_session_data* sd, const char* name, const char* mes, int account_id)
 {
@@ -7155,7 +7205,7 @@ void clif_guild_expulsion(struct map_session_data* sd, const char* name, const c
 }
 
 /*==========================================
- * ギルド追放メンバリスト
+ * Server tells client on sd's guild expulsion records
  *------------------------------------------*/
 void clif_guild_expulsionlist(struct map_session_data* sd)
 {
@@ -7225,7 +7275,7 @@ void clif_guild_message(struct guild *g,int account_id,const char *mes,int len)
 
 
 /*==========================================
- * ギルドスキル割り振り通知
+ * Server tells client 'sd' that his guild skill 'skill_num' gone to level 'lv'
  *------------------------------------------*/
 int clif_guild_skillup(struct map_session_data *sd,int skill_num,int lv)
 {
@@ -7245,7 +7295,7 @@ int clif_guild_skillup(struct map_session_data *sd,int skill_num,int lv)
 	return 0;
 }
 /*==========================================
- * ギルド同盟要請
+ * Server tells client 'sd' that 'account_id' from guild name 'name' wants to invite 'sd's guild for alliance
  *------------------------------------------*/
 int clif_guild_reqalliance(struct map_session_data *sd,int account_id,const char *name)
 {
@@ -7284,7 +7334,7 @@ int clif_guild_allianceack(struct map_session_data *sd,int flag)
 	return 0;
 }
 /*==========================================
- * ギルド関係解消通知
+ * Server tells client 'sd' that guild_id is either in or out of it's alliance list (depend on flag)
  *------------------------------------------*/
 int clif_guild_delalliance(struct map_session_data *sd,int guild_id,int flag)
 {
@@ -7337,7 +7387,7 @@ int clif_guild_oppositionack(struct map_session_data *sd,int flag)
 }*/
 
 /*==========================================
- * ギルド解散通知
+ * Server tells client 'sd' that guild broke because of 'flag' reason
  *------------------------------------------*/
 int clif_guild_broken(struct map_session_data *sd,int flag)
 {
@@ -7354,7 +7404,7 @@ int clif_guild_broken(struct map_session_data *sd,int flag)
 }
 
 /*==========================================
- * エモーション
+ * Server tells all nearby clients of 'bl' to display emoticon number 'type'
  *------------------------------------------*/
 void clif_emotion(struct block_list *bl,int type)
 {
@@ -7369,7 +7419,7 @@ void clif_emotion(struct block_list *bl,int type)
 }
 
 /*==========================================
- * トーキーボックス
+ * Server tells all clients nearby 'bl' that he stepped in a talkie box (and displays the message)
  *------------------------------------------*/
 void clif_talkiebox(struct block_list* bl, const char* talkie)
 {
@@ -7383,7 +7433,7 @@ void clif_talkiebox(struct block_list* bl, const char* talkie)
 }
 
 /*==========================================
- * 結婚エフェクト
+ * Server tells bl and nearby clients to display marriage effect
  *------------------------------------------*/
 void clif_wedding_effect(struct block_list *bl)
 {
@@ -7396,7 +7446,7 @@ void clif_wedding_effect(struct block_list *bl)
 	clif_send(buf, packet_len(0x1ea), bl, AREA);
 }
 /*==========================================
- * ?なたに逢いたい使用時名前叫び
+ * Server tells client 'sd' to create a warp to call his partner (wedding skill)
  *------------------------------------------*/
 
 void clif_callpartner(struct map_session_data *sd)
@@ -7562,41 +7612,41 @@ void clif_GM_silence(struct map_session_data* sd, struct map_session_data* tsd, 
 }
 
 /*==========================================
- * Wis拒否許可応答
+ * ? Unknown functionality : not called anywhere
  *------------------------------------------*/
-int clif_wisexin(struct map_session_data *sd,int type,int flag)
-{
-	int fd;
-
-	nullpo_ret(sd);
-
-	fd=sd->fd;
-	WFIFOHEAD(fd,packet_len(0xd1));
-	WFIFOW(fd,0)=0xd1;
-	WFIFOB(fd,2)=type;
-	WFIFOB(fd,3)=flag;
-	WFIFOSET(fd,packet_len(0xd1));
-
-	return 0;
-}
+//int clif_wisexin(struct map_session_data *sd,int type,int flag)
+//{
+//	int fd;
+//
+//	nullpo_ret(sd);
+//
+//	fd=sd->fd;
+//	WFIFOHEAD(fd,packet_len(0xd1));
+//	WFIFOW(fd,0)=0xd1;
+//	WFIFOB(fd,2)=type;
+//	WFIFOB(fd,3)=flag;
+//	WFIFOSET(fd,packet_len(0xd1));
+//
+//	return 0;
+//}
 /*==========================================
- * Wis全拒否許可応答
+ * ? Unknown functionality : not called anywhere
  *------------------------------------------*/
-int clif_wisall(struct map_session_data *sd,int type,int flag)
-{
-	int fd;
-
-	nullpo_ret(sd);
-
-	fd=sd->fd;
-	WFIFOHEAD(fd,packet_len(0xd2));
-	WFIFOW(fd,0)=0xd2;
-	WFIFOB(fd,2)=type;
-	WFIFOB(fd,3)=flag;
-	WFIFOSET(fd,packet_len(0xd2));
-
-	return 0;
-}
+//int clif_wisall(struct map_session_data *sd,int type,int flag)
+//{
+//	int fd;
+//
+//	nullpo_ret(sd);
+//
+//	fd=sd->fd;
+//	WFIFOHEAD(fd,packet_len(0xd2));
+//	WFIFOW(fd,0)=0xd2;
+//	WFIFOB(fd,2)=type;
+//	WFIFOB(fd,3)=flag;
+//	WFIFOSET(fd,packet_len(0xd2));
+//
+//	return 0;
+//}
 
 /*==========================================
  * Play a BGM! [Rikter/Yommy]
@@ -7615,7 +7665,8 @@ void clif_playBGM(struct map_session_data* sd, const char* name)
 }
 
 /*==========================================
- * サウンドエフェクト
+ * Server tells 'bl' to play a .wav music file in client's /wav/ folder named 'name'
+ * functionality of 'type' is unclear. it's normally sent as '0'
  *------------------------------------------*/
 void clif_soundeffect(struct map_session_data* sd, struct block_list* bl, const char* name, int type)
 {
@@ -8459,7 +8510,7 @@ static int clif_guess_PacketVer(int fd, int get_previous, int *error)
 // ------------
 // clif_parse_*
 // ------------
-// パケット読み取って色々操作
+// Parses incoming (player) connection
 /*==========================================
  *
  *------------------------------------------*/
@@ -8548,8 +8599,9 @@ void clif_parse_WantToConnection(int fd, TBL_PC* sd)
 }
 
 /*==========================================
- * 007d クライアント側マップ読み込み完了
- * map侵入時に必要なデータを全て送りつける
+ * 007d : Server/Client tells that he is able to proceed
+ * This is run by both server (from pc.c) and client (on map load/refresh
+ * (teleport/warping in same map also triggers this)
  *------------------------------------------*/
 void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 {
@@ -9020,8 +9072,10 @@ void clif_parse_GlobalMessage(int fd, struct map_session_data* sd)
 	const char* text = (char*)RFIFOP(fd,4);
 	int textlen = RFIFOW(fd,2) - 4;
 
-	char *name, *message;
+	char *name, *message, *fakename = NULL;
 	int namelen, messagelen;
+
+	bool is_fake;
 
 	// validate packet and retrieve name and message
 	if( !clif_process_message(sd, 0, &name, &namelen, &message, &messagelen) )
@@ -9039,21 +9093,35 @@ void clif_parse_GlobalMessage(int fd, struct map_session_data* sd)
 			return;
 		sd->cantalk_tick = gettick() + battle_config.min_chat_delay;
 	}
-
+	/**
+	 * Fake Name Design by FatalEror (bug report #9)
+	 **/
+	if( ( is_fake = ( sd->fakename[0] ) ) ) {
+		fakename = (char*) malloc(strlen(sd->fakename)+messagelen+3);
+		strcpy(fakename, sd->fakename);
+		strcat(fakename, " : ");
+		strcat(fakename, message);
+		textlen = strlen(fakename) + 1;
+	}
 	// send message to others (using the send buffer for temp. storage)
 	WFIFOHEAD(fd, 8 + textlen);
 	WFIFOW(fd,0) = 0x8d;
 	WFIFOW(fd,2) = 8 + textlen;
 	WFIFOL(fd,4) = sd->bl.id;
-	safestrncpy((char*)WFIFOP(fd,8), text, textlen);
+	safestrncpy((char*)WFIFOP(fd,8), is_fake ? fakename : text, textlen);
 	//FIXME: chat has range of 9 only
 	clif_send(WFIFOP(fd,0), WFIFOW(fd,2), &sd->bl, sd->chatID ? CHAT_WOS : AREA_CHAT_WOC);
 
 	// send back message to the speaker
-	memcpy(WFIFOP(fd,0), RFIFOP(fd,0), RFIFOW(fd,2));
-	WFIFOW(fd,0) = 0x8e;
+	if( is_fake ) {
+		WFIFOW(fd,0) = 0x8e;
+		WFIFOW(fd,2) = textlen + 4;
+		safestrncpy((char*)WFIFOP(fd,4), fakename, textlen);
+	} else {
+		memcpy(WFIFOP(fd,0), RFIFOP(fd,0), RFIFOW(fd,2));
+		WFIFOW(fd,0) = 0x8e;
+	}
 	WFIFOSET(fd, WFIFOW(fd,2));
-
 #ifdef PCRE_SUPPORT
 	// trigger listening npcs
 	map_foreachinrange(npc_chat_sub, &sd->bl, AREA_SIZE, BL_NPC, text, textlen, &sd->bl);
@@ -9837,7 +9905,7 @@ static void clif_noask_sub(struct map_session_data *src, struct map_session_data
 }
 
 /*==========================================
- * 取引要請を相手に送る
+ * Client tells server to send a trade request to char id RFIFOL(fd,2)
  *------------------------------------------*/
 void clif_parse_TradeRequest(int fd,struct map_session_data *sd)
 {
@@ -9864,7 +9932,7 @@ void clif_parse_TradeRequest(int fd,struct map_session_data *sd)
 }
 
 /*==========================================
- * 取引要請
+ * Client tells server he replied to a trade request sent to him
  *------------------------------------------*/
 void clif_parse_TradeAck(int fd,struct map_session_data *sd)
 {
@@ -9872,7 +9940,7 @@ void clif_parse_TradeAck(int fd,struct map_session_data *sd)
 }
 
 /*==========================================
- * アイテム追加
+ * Client tells server to add RFIFOL(fd,4) quantity of item index RFIFOW(fd,2)
  *------------------------------------------*/
 void clif_parse_TradeAddItem(int fd,struct map_session_data *sd)
 {
@@ -9886,7 +9954,7 @@ void clif_parse_TradeAddItem(int fd,struct map_session_data *sd)
 }
 
 /*==========================================
- * アイテム追加完了(ok押し)
+ * Client tells server player he is done adding items to his trade window
  *------------------------------------------*/
 void clif_parse_TradeOk(int fd,struct map_session_data *sd)
 {
@@ -9894,7 +9962,7 @@ void clif_parse_TradeOk(int fd,struct map_session_data *sd)
 }
 
 /*==========================================
- * 取引キャンセル
+ * Client tells server player cancelled the trade
  *------------------------------------------*/
 void clif_parse_TradeCancel(int fd,struct map_session_data *sd)
 {
@@ -9902,7 +9970,7 @@ void clif_parse_TradeCancel(int fd,struct map_session_data *sd)
 }
 
 /*==========================================
- * 取引許諾(trade押し)
+ * Client tells server player 'locked' the trade screen (can't add/remove items)
  *------------------------------------------*/
 void clif_parse_TradeCommit(int fd,struct map_session_data *sd)
 {
@@ -9918,7 +9986,7 @@ void clif_parse_StopAttack(int fd,struct map_session_data *sd)
 }
 
 /*==========================================
- * カートへアイテムを移す
+ * Client tells server player dragged (RFIFOL(fd,4))x of item idx RIFOFW(fd,2)-2 to cart
  *------------------------------------------*/
 void clif_parse_PutItemToCart(int fd,struct map_session_data *sd)
 {
@@ -9929,7 +9997,7 @@ void clif_parse_PutItemToCart(int fd,struct map_session_data *sd)
 	pc_putitemtocart(sd,RFIFOW(fd,2)-2,RFIFOL(fd,4));
 }
 /*==========================================
- * カートからアイテムを出す
+ * Client tells server to take y (RFIFOL(fd,4)) amount of item (idx:RFIFOW(fd,2)-2) from cart and add to inventory
  *------------------------------------------*/
 void clif_parse_GetItemFromCart(int fd,struct map_session_data *sd)
 {
@@ -9939,16 +10007,18 @@ void clif_parse_GetItemFromCart(int fd,struct map_session_data *sd)
 }
 
 /*==========================================
- * 付属品(鷹,ペコ,カート)をはずす
+ * Client tells server the user hit the 'OFF' button in the equip window (appears when mounting, with falcon, etc)
  *------------------------------------------*/
 void clif_parse_RemoveOption(int fd,struct map_session_data *sd)
 {
-	//Can only remove Cart/Riding/Falcon.
-	pc_setoption(sd,sd->sc.option&~(OPTION_CART|OPTION_RIDING|OPTION_FALCON));
+	/**
+	 * Attempts to remove these options when this function is called (will remove all available)
+	 **/
+	pc_setoption(sd,sd->sc.option&~(OPTION_CART|OPTION_RIDING|OPTION_FALCON|OPTION_DRAGON|OPTION_MADOGEAR));
 }
 
 /*==========================================
- * チェンジカート
+ * Client tells server the user selected cart type 'type', comes from cart selection screen (Change Cart Skill)
  *------------------------------------------*/
 void clif_parse_ChangeCart(int fd,struct map_session_data *sd)
 {
@@ -9968,7 +10038,7 @@ void clif_parse_ChangeCart(int fd,struct map_session_data *sd)
 }
 
 /*==========================================
- * ステータスアップ
+ * Client tells Server to process a /str, /vit, etc(others)
  *------------------------------------------*/
 void clif_parse_StatusUp(int fd,struct map_session_data *sd)
 {
@@ -9976,7 +10046,7 @@ void clif_parse_StatusUp(int fd,struct map_session_data *sd)
 }
 
 /*==========================================
- * スキルレベルアップ
+ * Client tells server to level up skill (RFIFOW(fd,2)) by 1
  *------------------------------------------*/
 void clif_parse_SkillUp(int fd,struct map_session_data *sd)
 {
@@ -10056,7 +10126,7 @@ static void clif_parse_UseSkillToPos_mercenary(struct mercenary_data *md, struct
 }
 
 /*==========================================
- * スキル使用（ID指定）
+ * Client tells server he'd like to use skill of id 'skillnum' and level 'skilllv' on 'target_id'
  *------------------------------------------*/
 void clif_parse_UseSkillToId(int fd, struct map_session_data *sd)
 {
@@ -10163,7 +10233,7 @@ void clif_parse_UseSkillToId(int fd, struct map_session_data *sd)
 }
 
 /*==========================================
- * スキル使用（場所指定）
+ * Client tells server he'd like to use AoE skill id 'skillnum' of level 'skilllv' on 'x','y' location
  *------------------------------------------*/
 void clif_parse_UseSkillToPosSub(int fd, struct map_session_data *sd, short skilllv, short skillnum, short x, short y, int skillmoreinfo)
 {
@@ -10273,7 +10343,7 @@ void clif_parse_UseSkillToPosMoreInfo(int fd, struct map_session_data *sd)
 	);
 }
 /*==========================================
- * スキル使用（map指定）
+ * (?) I *think* this one is for skills cast on self, not entirely sure
  *------------------------------------------*/
 void clif_parse_UseSkillMap(int fd, struct map_session_data* sd)
 {
@@ -10294,7 +10364,7 @@ void clif_parse_UseSkillMap(int fd, struct map_session_data* sd)
 	skill_castend_map(sd,skill_num,map_name);
 }
 /*==========================================
- * メモ要求
+ * Client tells server he did '/memo'
  *------------------------------------------*/
 void clif_parse_RequestMemo(int fd,struct map_session_data *sd)
 {
@@ -10302,13 +10372,12 @@ void clif_parse_RequestMemo(int fd,struct map_session_data *sd)
 		pc_memo(sd,-1);
 }
 /*==========================================
- * アイテム合成
+ * Client tells server he selected something from a crafting window (e.g. pharmacy)
  *------------------------------------------*/
 void clif_parse_ProduceMix(int fd,struct map_session_data *sd)
 {
-	if (sd->menuskill_id !=	AM_PHARMACY)
+	if( sd->menuskill_id != -1 && sd->menuskill_id != AM_PHARMACY && sd->menuskill_id != RK_RUNEMASTERY )
 		return;
-
 	if (pc_istrading(sd)) {
 		//Make it fail to avoid shop exploits where you sell something different than you see.
 		clif_skill_fail(sd,sd->ud.skillid,0,0);
@@ -10341,7 +10410,7 @@ void clif_parse_Cooking(int fd,struct map_session_data *sd)
 	sd->menuskill_val = sd->menuskill_id = 0;
 }
 /*==========================================
- * 武器修理
+ * Client tells server he selected something in his 'repair item list'
  *------------------------------------------*/
 void clif_parse_RepairItem(int fd, struct map_session_data *sd)
 {
@@ -10446,7 +10515,7 @@ void clif_parse_NpcCloseClicked(int fd,struct map_session_data *sd)
 }
 
 /*==========================================
- * アイテム鑑定
+ * Client tells server he selected something in his 'magnifier item list'
  *------------------------------------------*/
 void clif_parse_ItemIdentify(int fd,struct map_session_data *sd)
 {
@@ -10463,23 +10532,35 @@ void clif_parse_ItemIdentify(int fd,struct map_session_data *sd)
 	sd->menuskill_val = sd->menuskill_id = 0;
 }
 /*==========================================
- * 矢作成
+ * Client tells server he selected something in his 'arrow crafting list'
  *------------------------------------------*/
 void clif_parse_SelectArrow(int fd,struct map_session_data *sd)
 {
-	if (sd->menuskill_id != AC_MAKINGARROW)
-		return;
 	if (pc_istrading(sd)) {
 	//Make it fail to avoid shop exploits where you sell something different than you see.
 		clif_skill_fail(sd,sd->ud.skillid,0,0);
 		sd->menuskill_val = sd->menuskill_id = 0;
 		return;
 	}
-	skill_arrow_create(sd,RFIFOW(fd,2));
+	switch( sd->menuskill_id ) {
+		case AC_MAKINGARROW:
+			skill_arrow_create(sd,RFIFOW(fd,2));
+			break;
+		case WL_READING_SB:
+			skill_spellbook(sd,RFIFOW(fd,2));
+			break;
+		case GC_POISONINGWEAPON:
+			skill_poisoningweapon(sd,RFIFOW(fd,2));
+			break;
+		case NC_MAGICDECOY:
+			skill_magicdecoy(sd,RFIFOW(fd,2));
+			break;
+	}
+
 	sd->menuskill_val = sd->menuskill_id = 0;
 }
 /*==========================================
- * オートスペル受信
+ * Client tells server he selected something in his 'autospell skill list'
  *------------------------------------------*/
 void clif_parse_AutoSpell(int fd,struct map_session_data *sd)
 {
@@ -10489,7 +10570,7 @@ void clif_parse_AutoSpell(int fd,struct map_session_data *sd)
 	sd->menuskill_val = sd->menuskill_id = 0;
 }
 /*==========================================
- * カード使用
+ * Client tells server he clicked on a card item, requests the can-add-to list
  *------------------------------------------*/
 void clif_parse_UseCard(int fd,struct map_session_data *sd)
 {
@@ -10498,7 +10579,7 @@ void clif_parse_UseCard(int fd,struct map_session_data *sd)
 	clif_use_card(sd,RFIFOW(fd,2)-2);
 }
 /*==========================================
- * カード挿入装備選択
+ * Client tells server he selected something in his 'carding list' (the one that lists all items you got that can receive that card)
  *------------------------------------------*/
 void clif_parse_InsertCard(int fd,struct map_session_data *sd)
 {
@@ -10508,7 +10589,7 @@ void clif_parse_InsertCard(int fd,struct map_session_data *sd)
 }
 
 /*==========================================
- * 0193 キャラID名前引き
+ * 0193 : Client asks server for nick reference to a specific char id
  *------------------------------------------*/
 void clif_parse_SolveCharName(int fd, struct map_session_data *sd)
 {
@@ -10567,7 +10648,7 @@ void clif_parse_LocalBroadcast(int fd, struct map_session_data* sd)
 }
 
 /*==========================================
- * カプラ倉庫へ入れる
+ * Client tells server to move (item_amount) quantity of item idx (item_index) from inventory to storage
  *------------------------------------------*/
 void clif_parse_MoveToKafra(int fd, struct map_session_data *sd)
 {
@@ -10589,7 +10670,7 @@ void clif_parse_MoveToKafra(int fd, struct map_session_data *sd)
 }
 
 /*==========================================
- * カプラ倉庫から出す
+ * Client tells server to move (item_amount) quantity of item idx (item_index) from storage to inventory
  *------------------------------------------*/
 void clif_parse_MoveFromKafra(int fd,struct map_session_data *sd)
 {
@@ -10606,7 +10687,7 @@ void clif_parse_MoveFromKafra(int fd,struct map_session_data *sd)
 }
 
 /*==========================================
- * カプラ倉庫へカートから入れる
+ * Client tells server to move RFIFOL(fd,4) quantity of item idx RFIFOW(fd,2) from cart to storage
  *------------------------------------------*/
 void clif_parse_MoveToKafraFromCart(int fd, struct map_session_data *sd)
 {
@@ -10623,7 +10704,7 @@ void clif_parse_MoveToKafraFromCart(int fd, struct map_session_data *sd)
 }
 
 /*==========================================
- * カプラ倉庫から出す
+ * Client tells server to move RFIFOL(fd,4) quantity of item idx RFIFOW(fd,2) from storage to cart
  *------------------------------------------*/
 void clif_parse_MoveFromKafraToCart(int fd, struct map_session_data *sd)
 {
@@ -10640,7 +10721,7 @@ void clif_parse_MoveFromKafraToCart(int fd, struct map_session_data *sd)
 }
 
 /*==========================================
- * カプラ倉庫を閉じる
+ * Client tells server to close the kafra
  *------------------------------------------*/
 void clif_parse_CloseKafra(int fd, struct map_session_data *sd)
 {
@@ -10771,7 +10852,7 @@ void clif_parse_ReplyPartyInvite2(int fd,struct map_session_data *sd)
 }
 
 /*==========================================
- * パーティ脱退要求
+ * Client tells server to remove itself from it's party
  *------------------------------------------*/
 void clif_parse_LeaveParty(int fd, struct map_session_data *sd)
 {
@@ -10784,7 +10865,7 @@ void clif_parse_LeaveParty(int fd, struct map_session_data *sd)
 }
 
 /*==========================================
- * パーティ除名要求
+ * Client tells server to remove player account id RFIFOL(fd,2) with char name RFIFOP(fd,6) from his party
  *------------------------------------------*/
 void clif_parse_RemovePartyMember(int fd, struct map_session_data *sd)
 {
@@ -10797,7 +10878,11 @@ void clif_parse_RemovePartyMember(int fd, struct map_session_data *sd)
 }
 
 /*==========================================
- * パーティ設定変更要求
+ * Client tells server to change it's party configuration
+ * - clients before 20090603 
+ * -- It only may toggle exp sharing
+ * - 20090603 or newer
+ * -- It may toggle exp (RFIFOW(fd,2) and item sharing options (RFIFOB(fd,6) and RFIFOB(fd,7))
  *------------------------------------------*/
 void clif_parse_PartyChangeOption(int fd, struct map_session_data *sd)
 {
@@ -11251,7 +11336,7 @@ void clif_parse_GuildChangeNotice(int fd, struct map_session_data* sd)
 }
 
 /*==========================================
- * ギルド勧誘
+ * Client tells server to invite account id RFIFOL(fd,2) to his guild
  *------------------------------------------*/
 void clif_parse_GuildInvite(int fd,struct map_session_data *sd)
 {
@@ -11275,7 +11360,8 @@ void clif_parse_GuildInvite(int fd,struct map_session_data *sd)
 }
 
 /*==========================================
- * ギルド勧誘返信
+ * Client tells server his reply on the request from guild ID RFIFOL(fd,2),
+ * - based on RFIFOB(fd,6) which is either 1 (accept) or 0 (reject)
  *------------------------------------------*/
 void clif_parse_GuildReplyInvite(int fd,struct map_session_data *sd)
 {
@@ -11283,7 +11369,7 @@ void clif_parse_GuildReplyInvite(int fd,struct map_session_data *sd)
 }
 
 /*==========================================
- * ギルド脱退
+ * Client tells server he wants to leave his current guild
  *------------------------------------------*/
 void clif_parse_GuildLeave(int fd,struct map_session_data *sd)
 {
@@ -11351,7 +11437,7 @@ void clif_parse_GuildMessage(int fd, struct map_session_data* sd)
 }
 
 /*==========================================
- * ギルド同盟要求
+ * Client tells server he'd like to send a alliance request to account id RFIFOL(fd,2)
  *------------------------------------------*/
 void clif_parse_GuildRequestAlliance(int fd, struct map_session_data *sd)
 {
@@ -11378,7 +11464,8 @@ void clif_parse_GuildRequestAlliance(int fd, struct map_session_data *sd)
 }
 
 /*==========================================
- * ギルド同盟要求返信
+ * Client tells server his response to the alliance request from,
+ * Guild ID RFIFOL(fd,2) based on RFIFOL(fd,6) which is 1 (accepted) or 0 (rejected)
  *------------------------------------------*/
 void clif_parse_GuildReplyAlliance(int fd, struct map_session_data *sd)
 {
@@ -11386,7 +11473,8 @@ void clif_parse_GuildReplyAlliance(int fd, struct map_session_data *sd)
 }
 
 /*==========================================
- * ギルド関係解消
+ * Client tells server he'd like to delete alliance from guild ID RFIFOL(fd,2),
+ * RFIFOL(fd,6) returns a 1 or 0 flag but apparently it is no longer used
  *------------------------------------------*/
 void clif_parse_GuildDelAlliance(int fd, struct map_session_data *sd)
 {
@@ -11402,7 +11490,7 @@ void clif_parse_GuildDelAlliance(int fd, struct map_session_data *sd)
 }
 
 /*==========================================
- * ギルド敵対
+ * Client tells server he'd like his guild to be set antagonist of account id RFIFOL(fd,2)'s guild
  *------------------------------------------*/
 void clif_parse_GuildOpposition(int fd, struct map_session_data *sd)
 {
@@ -11429,7 +11517,7 @@ void clif_parse_GuildOpposition(int fd, struct map_session_data *sd)
 }
 
 /*==========================================
- * ギルド解散
+ * Client tells server he'd like to break (delete) his own guild
  *------------------------------------------*/
 void clif_parse_GuildBreak(int fd, struct map_session_data *sd)
 {
@@ -11476,7 +11564,7 @@ void clif_parse_ChangePetName(int fd, struct map_session_data *sd)
 }
 
 /*==========================================
- * /kill <???>
+ * /kill <account_id>
  * (or right click menu for GM "(name) force to quit")
  * S 00cc <id>.L
  *------------------------------------------*/
@@ -11997,7 +12085,7 @@ void clif_parse_PMIgnoreAll(int fd, struct map_session_data *sd)
 }
 
 /*==========================================
- * Wis拒否リスト
+ * Client tells server he'd like the server to list him his ignore list
  *------------------------------------------*/
 void clif_parse_PMIgnoreList(int fd,struct map_session_data *sd)
 {
@@ -12015,7 +12103,7 @@ void clif_parse_PMIgnoreList(int fd,struct map_session_data *sd)
 }
 
 /*==========================================
- * スパノビの/doridoriによるSPR2倍
+ * Client tells server he did a /doridori
  *------------------------------------------*/
 void clif_parse_NoviceDoriDori(int fd, struct map_session_data *sd)
 {
@@ -13214,7 +13302,6 @@ void clif_parse_Auction_setitem(int fd, struct map_session_data *sd)
 	clif_Auction_setitem(fd, idx + 2, false);
 }
 
-
 /// Result from an auction action (ZC_AUCTION_RESULT)
 /// 0250 <result>.B
 /// result:
@@ -14329,7 +14416,7 @@ void clif_displayexp(struct map_session_data *sd, unsigned int exp, char type, b
 ///   0: Displays 'value' for 5 seconds.
 ///   1: Incremental counter (1 tick/second), negated 'value' specifies start value (e.g. using -10 lets the counter start at 10).
 ///   2: Decremental counter (1 tick/second), negated 'value' specifies start value (does not stop when reaching 0, but overflows).
-///   3: Decremental counter (2 ticks/second), 'value' specifies start value (stops when reaching 0, displays at most 2 digits).
+///   3: Decremental counter (1 tick/second), 'value' specifies start value (stops when reaching 0, displays at most 2 digits).
 /// value:
 ///   Except for type 3 it is interpreted as seconds for displaying as DD:HH:MM:SS, HH:MM:SS, MM:SS or SS (leftmost '00' is not displayed).
 void clif_showdigit(struct map_session_data* sd, unsigned char type, int value)
@@ -14886,6 +14973,183 @@ void clif_parse_debug(int fd,struct map_session_data *sd)
 	ShowDump(RFIFOP(fd,0), packet_len);
 }
 
+/**
+ * Rune Knight
+ **/
+void clif_millenniumshield(struct map_session_data *sd, short shields ) {
+#if PACKETVER >= 20081217
+	unsigned char buf[10];
+
+	WBUFW(buf,0) = 0x440;
+	WBUFL(buf,2) = sd->bl.id;
+	WBUFW(buf,6) = shields;
+	WBUFW(buf,8) = 0;
+	clif_send(buf,packet_len(0x440),&sd->bl,AREA);
+#endif
+}
+/**
+ * Warlock
+ **/
+/*==========================================
+ * Spellbook list [LimitLine/3CeAM]
+ *------------------------------------------*/
+int clif_spellbook_list(struct map_session_data *sd)
+{
+	int i, c;
+	int fd;
+
+	nullpo_ret(sd);
+
+	fd = sd->fd;
+	WFIFOHEAD(fd, 8 * 8 + 8);
+	WFIFOW(fd,0) = 0x1ad;
+
+	for( i = 0, c = 0; i < MAX_INVENTORY; i ++ )
+	{
+		if( itemdb_is_spellbook(sd->status.inventory[i].nameid) )
+		{ 
+			WFIFOW(fd, c * 2 + 4) = sd->status.inventory[i].nameid;
+			c ++;
+		}
+	}
+	
+	if( c > 0 )
+	{
+		WFIFOW(fd,2) = c * 2 + 4;
+		WFIFOSET(fd, WFIFOW(fd, 2));
+		sd->menuskill_id = WL_READING_SB;
+		sd->menuskill_val = c;
+	}
+	else
+		status_change_end(&sd->bl,SC_STOP,-1);
+
+	return 1;
+}
+/**
+ * Mechanic
+ **/
+/*==========================================
+ * Magic Decoy Material List
+ *------------------------------------------*/
+int clif_magicdecoy_list(struct map_session_data *sd, int skill_lv, short x, short y) {
+	int i, c;
+	int fd;
+
+	nullpo_ret(sd);
+
+	fd = sd->fd;
+	WFIFOHEAD(fd, 8 * 8 + 8);
+	WFIFOW(fd,0) = 0x1ad; // This is the official packet. [pakpil]
+
+	for( i = 0, c = 0; i < MAX_INVENTORY; i ++ ) {
+		if( itemdb_is_element(sd->status.inventory[i].nameid) ) { 
+			WFIFOW(fd, c * 2 + 4) = sd->status.inventory[i].nameid;
+			c ++;
+		}
+	}
+	if( c > 0 ) {
+		sd->menuskill_id = NC_MAGICDECOY;
+		sd->menuskill_val = skill_lv;
+		sd->sc.comet_x = x;
+		sd->sc.comet_y = y;
+		WFIFOW(fd,2) = c * 2 + 4;
+		WFIFOSET(fd, WFIFOW(fd, 2));
+	} else {
+		clif_skill_fail(sd,NC_MAGICDECOY,0,0);
+		return 0;
+	}
+
+	return 1;
+}
+/**
+ * Guilotine Cross
+ **/
+/*==========================================
+ * Guillotine Cross Poisons List
+ *------------------------------------------*/
+int clif_poison_list(struct map_session_data *sd, int skill_lv) {
+	int i, c;
+	int fd;
+
+	nullpo_ret(sd);
+
+	fd = sd->fd;
+	WFIFOHEAD(fd, 8 * 8 + 8);
+	WFIFOW(fd,0) = 0x1ad; // This is the official packet. [pakpil]
+
+	for( i = 0, c = 0; i < MAX_INVENTORY; i ++ ) {
+		if( itemdb_is_poison(sd->status.inventory[i].nameid) ) { 
+			WFIFOW(fd, c * 2 + 4) = sd->status.inventory[i].nameid;
+			c ++;
+		}
+	}
+	if( c > 0 ) {
+		sd->menuskill_id = GC_POISONINGWEAPON;
+		sd->menuskill_val = skill_lv;
+		WFIFOW(fd,2) = c * 2 + 4;
+		WFIFOSET(fd, WFIFOW(fd, 2));
+	} else {
+		clif_skill_fail(sd,GC_POISONINGWEAPON,0x2b,0);
+		return 0;
+	}
+
+	return 1;
+}
+/**
+ * Sends a new status without a tick (currently used by the new mounts)
+ **/
+int clif_status_load_notick(struct block_list *bl,int type,int flag,int val1, int val2, int val3) {
+	unsigned char buf[32];
+
+	nullpo_ret(bl);
+
+	WBUFW(buf,0)=0x043f;
+	WBUFW(buf,2)=type;
+	WBUFL(buf,4)=bl->id;
+	WBUFB(buf,8)=flag;
+	WBUFL(buf,9)  = 0;
+	WBUFL(buf,13) = val1;
+	WBUFL(buf,17) = val2;
+	WBUFL(buf,21) = val3;
+
+	clif_send(buf,packet_len(WBUFW(buf,0)),bl,AREA);
+	return 0;
+}
+//Notifies FD of ID's type
+int clif_status_load_single(int fd, int id,int type,int flag,int val1, int val2, int val3) {
+	WFIFOHEAD(fd, packet_len(0x043f));
+	WFIFOW(fd,0)=0x043f;
+	WFIFOW(fd,2)=type;
+	WFIFOL(fd,4)=id;
+	WFIFOB(fd,8)=flag;
+	WFIFOL(fd,9)  = 0;
+	WFIFOL(fd,13) = val1;
+	WFIFOL(fd,17) = val2;
+	WFIFOL(fd,21) = val3;
+	WFIFOSET(fd, packet_len(0x043f));
+	return 0;
+}
+// msgstringtable.txt
+// 0x291 <line>.W
+void clif_msgtable(int fd, int line) {
+	WFIFOHEAD(fd, packet_len(0x291));
+	WFIFOW(fd, 0) = 0x291;
+	WFIFOW(fd, 2) = line;
+	WFIFOSET(fd, packet_len(0x291));
+}
+
+// msgstringtable.txt
+// 0x7e2 <line>.W <value>.L
+void clif_msgtable_num(int fd, int line, int num) {
+#if PACKETVER >= 20090805
+	WFIFOHEAD(fd, packet_len(0x7e2));
+	WFIFOW(fd, 0) = 0x7e2;
+	WFIFOW(fd, 2) = line;
+	WFIFOL(fd, 4) = num;
+	WFIFOSET(fd, packet_len(0x7e2));
+#endif
+}
+
 /*==========================================
  * Main client packet processing function
  *------------------------------------------*/
@@ -15055,7 +15319,7 @@ int clif_parse(int fd)
 }
 
 /*==========================================
- * パケットデータベース読み込み
+ * Reads packet_db.txt and setups its array reference
  *------------------------------------------*/
 static int packetdb_readdb(void)
 {

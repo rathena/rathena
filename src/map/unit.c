@@ -444,7 +444,7 @@ int unit_run(struct block_list *bl)
 
 	if(to_x == bl->x && to_y == bl->y) {
 		//If you can't run forward, you must be next to a wall, so bounce back. [Skotlex]
-		clif_status_change(bl, SI_BUMP, 1, 0);
+		clif_status_change(bl, SI_BUMP, 1, 0, 0, 0, 0);
 
 		//Set running to 0 beforehand so status_change_end knows not to enable spurt [Kevin]
 		unit_bl2ud(bl)->state.running = 0;
@@ -452,7 +452,7 @@ int unit_run(struct block_list *bl)
 
 		skill_blown(bl,bl,skill_get_blewcount(TK_RUN,lv),unit_getdir(bl),0);
 		clif_fixpos(bl); //Why is a clif_slide (skill_blown) AND a fixpos needed? Ask Aegis.
-		clif_status_change(bl, SI_BUMP, 0, 0);
+		clif_status_change(bl, SI_BUMP, 0, 0, 0, 0, 0);
 		return 0;
 	}
 	if (unit_walktoxy(bl, to_x, to_y, 1))
@@ -464,7 +464,7 @@ int unit_run(struct block_list *bl)
 	} while (--i > 0 && !unit_walktoxy(bl, to_x, to_y, 1));
 	if (i==0) {
 		// copy-paste from above
-		clif_status_change(bl, SI_BUMP, 1, 0);
+		clif_status_change(bl, SI_BUMP, 1, 0, 0, 0, 0);
 
 		//Set running to 0 beforehand so status_change_end knows not to enable spurt [Kevin]
 		unit_bl2ud(bl)->state.running = 0;
@@ -472,7 +472,73 @@ int unit_run(struct block_list *bl)
 
 		skill_blown(bl,bl,skill_get_blewcount(TK_RUN,lv),unit_getdir(bl),0);
 		clif_fixpos(bl);
-		clif_status_change(bl, SI_BUMP, 0, 0);
+		clif_status_change(bl, SI_BUMP, 0, 0, 0, 0, 0);
+		return 0;
+	}
+	return 1;
+}
+
+//Exclusive function to Wug Dash state. [Jobbie/3CeAM]
+int unit_wugdash(struct block_list *bl, struct map_session_data *sd) {
+	struct status_change *sc = status_get_sc(bl);
+	short to_x,to_y,dir_x,dir_y;
+	int lv;
+	int i;
+	if (!(sc && sc->data[SC_WUGDASH]))
+		return 0;
+	
+	nullpo_ret(sd);
+	nullpo_ret(bl);
+
+	if (!unit_can_move(bl)) {
+		status_change_end(bl,SC_WUGDASH,-1);
+		return 0;
+	}
+	
+	lv = sc->data[SC_WUGDASH]->val1;
+	dir_x = dirx[sc->data[SC_WUGDASH]->val2];
+	dir_y = diry[sc->data[SC_WUGDASH]->val2];
+
+	to_x = bl->x;
+	to_y = bl->y;
+	for(i=0;i<AREA_SIZE;i++)
+	{
+		if(!map_getcell(bl->m,to_x+dir_x,to_y+dir_y,CELL_CHKPASS))
+			break;
+
+		if(sc->data[SC_WUGDASH] && map_count_oncell(bl->m, to_x+dir_x, to_y+dir_y, BL_PC|BL_MOB|BL_NPC))
+			break;
+			
+		to_x += dir_x;
+		to_y += dir_y;
+	}
+
+	if(to_x == bl->x && to_y == bl->y) {
+
+		unit_bl2ud(bl)->state.running = 0;
+		status_change_end(bl,SC_WUGDASH,-1);
+
+		if( sd ){
+			clif_fixpos(bl);
+			skill_castend_damage_id(bl, &sd->bl, RA_WUGDASH, lv, gettick(), SD_LEVEL);
+		}
+		return 0;
+	}
+	if (unit_walktoxy(bl, to_x, to_y, 1))
+		return 1;
+	do {
+		to_x -= dir_x;
+		to_y -= dir_y;
+	} while (--i > 0 && !unit_walktoxy(bl, to_x, to_y, 1));
+	if (i==0) {
+
+		unit_bl2ud(bl)->state.running = 0;
+		status_change_end(bl,SC_WUGDASH,-1);
+		
+		if( sd ){
+			clif_fixpos(bl);
+			skill_castend_damage_id(bl, &sd->bl, RA_WUGDASH, lv, gettick(), SD_LEVEL);
+		}
 		return 0;
 	}
 	return 1;
@@ -992,7 +1058,7 @@ int unit_skilluse_id2(struct block_list *src, int target_id, short skill_num, sh
 	if( !target || src->m != target->m || !src->prev || !target->prev )
 		return 0;
 
-	if( mob_ksprotected(src, target) )
+	if( battle_config.ksprotection && sd && mob_ksprotected(src, target) )
 		return 0;
 
 	//Normally not needed because clif.c checks for it, but the at/char/script commands don't! [Skotlex]
@@ -1130,7 +1196,7 @@ int unit_skilluse_id2(struct block_list *src, int target_id, short skill_num, sh
   	
 	// moved here to prevent Suffragium from ending if skill fails
 	if (!(skill_get_castnodex(skill_num, skill_lv)&2))
-		casttime = skill_castfix_sc(src, casttime);
+		casttime = skill_castfix_sc(src, casttime, skill_num, skill_lv);
 
 	if( casttime > 0 || temp )
 	{ 
@@ -1272,7 +1338,7 @@ int unit_skilluse_pos2( struct block_list *src, short skill_x, short skill_y, sh
 
 	// moved here to prevent Suffragium from ending if skill fails
 	if (!(skill_get_castnodex(skill_num, skill_lv)&2))
-		casttime = skill_castfix_sc(src, casttime);
+		casttime = skill_castfix_sc(src, casttime, skill_num, skill_lv);
 
 	ud->state.skillcastcancel = castcancel&&casttime>0?1:0;
 	if( !sd || sd->skillitem != skill_num || skill_get_cast(skill_num,skill_lv) )

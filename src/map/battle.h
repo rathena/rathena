@@ -35,7 +35,7 @@ struct block_list;
 
 struct Damage battle_calc_attack(int attack_type,struct block_list *bl,struct block_list *target,int skill_num,int skill_lv,int count);
 
-int battle_calc_return_damage(struct block_list *bl, int damage, int flag);
+int battle_calc_return_damage(struct block_list *bl, struct block_list *src, int *, int flag);
 
 void battle_drain(struct map_session_data *sd, struct block_list *tbl, int rdamage, int ldamage, int race, int boss);
 
@@ -497,6 +497,8 @@ extern struct Battle_Config
 	int bg_magic_damage_rate;
 	int bg_misc_damage_rate;
 	int bg_flee_penalty;
+	//[RR]
+	int max_third_parameter;
 } battle_config;
 
 void do_init_battle(void);
@@ -506,5 +508,8 @@ extern void battle_validate_conf(void);
 extern void battle_set_defaults(void);
 int battle_set_value(const char* w1, const char* w2);
 int battle_get_value(const char* w1);
+
+//
+struct block_list* battle_getenemyarea(struct block_list *src, int x, int y, int range, int type, int ignore_id);
 
 #endif /* _BATTLE_H_ */

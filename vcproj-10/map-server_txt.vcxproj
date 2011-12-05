@@ -205,6 +205,13 @@
     <ClInclude Include="..\src\map\pc.h" />
     <ClInclude Include="..\src\map\pet.h" />
     <ClInclude Include="..\src\map\quest.h" />
+    <ClInclude Include="..\src\map\RRConfig\Core.h" />
+    <ClInclude Include="..\src\map\RRConfig\Renewal.h" />
+    <ClInclude Include="..\src\map\RRConfig\Secure.h" />
+    <ClInclude Include="..\src\map\RRConfig\Data\Const.h" />
+    <ClInclude Include="..\src\map\RRConfig\Skills\General.h" />
+    <ClInclude Include="..\src\map\RRConfig\Skills\Mage_Classes.h" />
+    <ClInclude Include="..\src\map\RRConfig\Skills\Swordsman_Classes.h" />
     <ClInclude Include="..\src\map\script.h" />
     <ClInclude Include="..\src\map\searchstore.h" />
     <ClInclude Include="..\src\map\skill.h" />

@@ -21,6 +21,9 @@
 #define MAX_PC_SKILL_REQUIRE 5
 #define MAX_PC_FEELHATE 3
 
+//For Warlock
+#define MAX_SPELLBOOK 10
+
 struct weapon_data {
 	int atkmods[3];
 	// all the variables except atkmods get zero'ed in each call of status_calc_pc
@@ -405,6 +408,13 @@ struct map_session_data {
 		bool changed; // if true, should sync with charserver on next mailbox request
 	} mail;
 
+	// Reading SpellBook
+	struct {
+		unsigned short skillid;
+		unsigned char level;
+		unsigned char points;
+	} rsb[MAX_SPELLBOOK];
+
 	//Quest log system [Kevin] [Inkfish]
 	int num_quests;
 	int avail_quests;
@@ -420,13 +430,33 @@ struct map_session_data {
 	unsigned int bg_id;
 	unsigned short user_font;
 
+	/**
+	 * For the Secure NPC Timeout option (check RRConfig/Secure.h) [RR]
+	 **/
+#if SECURE_NPCTIMEOUT
+	/**
+	 * ID of the timer
+	 * @info
+	 * - value is -1 (INVALID_TIMER constant) when not being used
+	 * - timer is cancelled upon closure of the current npc's instance
+	 **/
+	int npc_idle_timer;
+	/**
+	 * Tick on the last recorded NPC iteration (next/menu/whatever)
+	 * @info
+	 * - It is updated on every NPC iteration as mentioned above
+	 **/
+	unsigned int npc_idle_tick;
+#endif
+
 	// temporary debugging of bug #3504
 	const char* delunit_prevfile;
 	int delunit_prevline;
 };
 
 //Update this max as necessary. 55 is the value needed for Super Baby currently
-#define MAX_SKILL_TREE 55
+//Raised to 75 due to 3rds
+#define MAX_SKILL_TREE 75
 //Total number of classes (for data storage)
 #define CLASS_COUNT (JOB_MAX - JOB_NOVICE_HIGH + JOB_MAX_BASIC)
 
@@ -538,7 +568,12 @@ enum equip_index {
 #define pc_isinvisible(sd)    ( (sd)->sc.option&OPTION_INVISIBLE )
 #define pc_is50overweight(sd) ( (sd)->weight*100 >= (sd)->max_weight*battle_config.natural_heal_weight_rate )
 #define pc_is90overweight(sd) ( (sd)->weight*10 >= (sd)->max_weight*9 )
-#define pc_maxparameter(sd)   ( (sd)->class_&JOBL_BABY ? battle_config.max_baby_parameter : battle_config.max_parameter )
+#define pc_maxparameter(sd)   ( (sd)->class_&JOBL_THIRD ? battle_config.max_third_parameter : (sd)->class_&JOBL_BABY ? battle_config.max_baby_parameter : battle_config.max_parameter )
+/** 
+ * Ranger
+ **/
+#define pc_iswug(sd)       ( (sd)->sc.option&OPTION_WUG )
+#define pc_isridingwug(sd) ( (sd)->sc.option&OPTION_WUGRIDER )
 
 #define pc_stop_walking(sd, type) unit_stop_walking(&(sd)->bl, type)
 #define pc_stop_attack(sd) unit_stop_attack(&(sd)->bl)
@@ -550,7 +585,8 @@ enum equip_index {
 #define pcdb_checkid(class_) \
 ( \
 	( (class_) >= JOB_NOVICE      && (class_) <  JOB_MAX_BASIC   ) \
-||	( (class_) >= JOB_NOVICE_HIGH && (class_) <  JOB_MAX         ) \
+||	( (class_) >= JOB_NOVICE_HIGH && (class_) <= JOB_SOUL_LINKER ) \
+||	( (class_) >= JOB_RUNE_KNIGHT && (class_) <  JOB_MAX         ) \
 )
 
 int pc_class2idx(int class_);
@@ -785,5 +821,8 @@ void pc_inventory_rental_add(struct map_session_data *sd, int seconds);
 
 int pc_read_motd(void); // [Valaris]
 int pc_disguise(struct map_session_data *sd, int class_);
-
+/**
+ * Mechanic (Mado Gear)
+ **/
+void pc_overheat(struct map_session_data *sd, int val);
 #endif /* _PC_H_ */

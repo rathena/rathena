@@ -2163,8 +2163,12 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 				merc_hom_gainexp(tmpsd[i]->hd, base_exp);
 			if(base_exp || job_exp)
 			{
-				if( md->dmglog[i].flag != MDLF_PET || battle_config.pet_attack_exp_to_master )
+				if( md->dmglog[i].flag != MDLF_PET || battle_config.pet_attack_exp_to_master ) {
+#if RRMODE
+					party_renewal_exp_mod(&base_exp,&job_exp,tmpsd[i]->status.base_level,md->level);
+#endif
 					pc_gainexp(tmpsd[i], &md->bl, base_exp, job_exp, false);
+				}
 			}
 			if(zeny) // zeny from mobs [Valaris]
 				pc_getzeny(tmpsd[i], zeny);
@@ -2185,6 +2189,11 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		struct item_drop_list *dlist = ers_alloc(item_drop_list_ers, struct item_drop_list);
 		struct item_drop *ditem;
 		int drop_rate;
+#if RRMODE
+		int drop_modifier = mvp_sd ? party_renewal_drop_mod(mvp_sd->status.base_level - md->level) :
+							second_sd ? party_renewal_drop_mod(second_sd->status.base_level - md->level) :
+							third_sd ? party_renewal_drop_mod(third_sd->status.base_level - md->level) : 100;
+#endif
 		dlist->m = md->bl.m;
 		dlist->x = md->bl.x;
 		dlist->y = md->bl.y;
@@ -2226,7 +2235,10 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 			// Increase drop rate if user has SC_ITEMBOOST
 			if (sd && sd->sc.data[SC_ITEMBOOST]) // now rig the drop rate to never be over 90% unless it is originally >90%.
 				drop_rate = max(drop_rate,cap_value((int)(0.5+drop_rate*(sd->sc.data[SC_ITEMBOOST]->val1)/100.),0,9000));
-
+#if RRMODE
+			if( drop_modifier != 100 )
+				drop_rate = drop_rate * drop_modifier / 100;
+#endif
 			// attempt to drop the item
 			if (rand() % 10000 >= drop_rate)
 					continue;
@@ -2437,8 +2449,11 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		delete_timer(md->deletetimer,mob_timer_delete);
 		md->deletetimer = INVALID_TIMER;
 	}
-
-	mob_deleteslave(md);
+	/**
+	 * Only loops if necessary (e.g. a poring would never need to loop)
+	 **/
+	if( md->can_summon )
+		mob_deleteslave(md);
 	
 	map_freeblock_unlock();
 
@@ -2700,6 +2715,10 @@ int mob_summonslave(struct mob_data *md2,int *value,int amount,int skill_id)
 
 	if(mobdb_checkid(value[0]) == 0)
 		return 0;
+	/**
+	 * Flags this monster is able to summon; saves a worth amount of memory upon deletion
+	 **/
+	md2->can_summon = 1;
 
 	while(count < 5 && mobdb_checkid(value[count])) count++;
 	if(count < 1) return 0;

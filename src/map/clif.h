@@ -343,7 +343,7 @@ int clif_skill_estimation(struct map_session_data *sd,struct block_list *dst);
 void clif_skill_warppoint(struct map_session_data* sd, short skill_num, short skill_lv, unsigned short map1, unsigned short map2, unsigned short map3, unsigned short map4);
 void clif_skill_memomessage(struct map_session_data* sd, int type);
 void clif_skill_teleportmessage(struct map_session_data* sd, int type);
-int clif_skill_produce_mix_list(struct map_session_data *sd, int trigger);
+int clif_skill_produce_mix_list(struct map_session_data *sd, int skillid, int trigger);
 void clif_cooking_list(struct map_session_data *sd, int trigger);
 
 int clif_produceeffect(struct map_session_data* sd,int flag,int nameid);
@@ -361,7 +361,7 @@ void clif_bladestop(struct block_list* src, int dst_id, int active);
 void clif_changemapcell(int fd, int m, int x, int y, int type, enum send_target target);
 
 int clif_status_load(struct block_list *bl,int type, int flag);
-int clif_status_change(struct block_list *bl,int type,int flag,unsigned int tick);
+int clif_status_change(struct block_list *bl,int type,int flag,unsigned int tick,int val1, int val2, int val3);
 
 int clif_wis_message(int fd, const char* nick, const char* mes, int mes_len);
 int clif_wis_end(int fd,int flag);
@@ -629,5 +629,29 @@ void clif_search_store_info_ack(struct map_session_data* sd);
 void clif_search_store_info_failed(struct map_session_data* sd, unsigned char reason);
 void clif_open_search_store_info(struct map_session_data* sd);
 void clif_search_store_info_click_ack(struct map_session_data* sd, short x, short y);
-
+/**
+ * 3CeAM
+ **/
+void clif_msgtable(int fd, int line);
+void clif_msgtable_num(int fd, int line, int num);
+/**
+ * Rune Knight
+ **/
+void clif_millenniumshield(struct map_session_data *sd, short shields );
+/**
+ * Warlock
+ **/
+int clif_spellbook_list(struct map_session_data *sd);
+/**
+ * Mechanic
+ **/
+int clif_magicdecoy_list(struct map_session_data *sd, int skill_lv, short x, short y);
+/**
+ * Guilotine Cross
+ **/
+int clif_poison_list(struct map_session_data *sd, int skill_lv);
+/**
+ * [RRInd] for the new mounts
+ **/
+int clif_status_load_notick(struct block_list *bl,int type,int flag,int val1, int val2, int val3);
 #endif /* _CLIF_H_ */

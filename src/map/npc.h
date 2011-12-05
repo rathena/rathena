@@ -157,4 +157,11 @@ int npc_cashshop_buy(struct map_session_data *sd, int nameid, int amount, int po
 
 extern struct npc_data* fake_nd;
 
+/**
+ * For the Secure NPC Timeout option (check RRConfig/Secure.h) [RR]
+ **/
+#if SECURE_NPCTIMEOUT
+int npc_rr_secure_timeout_timer(int tid, unsigned int tick, int id, intptr_t data);
+#endif
+
 #endif /* _NPC_H_ */

@@ -395,7 +395,7 @@ int pc_makesavestatus(struct map_session_data *sd)
 
   	//Only copy the Cart/Peco/Falcon options, the rest are handled via 
 	//status change load/saving. [Skotlex]
-	sd->status.option = sd->sc.option&(OPTION_CART|OPTION_FALCON|OPTION_RIDING);
+	sd->status.option = sd->sc.option&(OPTION_CART|OPTION_FALCON|OPTION_RIDING|OPTION_DRAGON|OPTION_WUGRIDER|OPTION_WUG|OPTION_MADOGEAR|OPTION_MOUNTING);
 		
 	if (sd->sc.data[SC_JAILED])
 	{	//When Jailed, do not move last point.
@@ -765,10 +765,14 @@ int pc_isequip(struct map_session_data *sd,int n)
 	//Not equipable by class. [Skotlex]
 	if (!(1<<(sd->class_&MAPID_BASEMASK)&item->class_base[(sd->class_&JOBL_2_1)?1:((sd->class_&JOBL_2_2)?2:0)]))
 		return 0;
-	
-	//Not equipable by upper class. [Skotlex]
-	if(!(1<<((sd->class_&JOBL_UPPER)?1:((sd->class_&JOBL_BABY)?2:0))&item->class_upper))
+	//Not usable by upper class. [Inkfish]
+	while( 1 ) {
+		if( item->class_upper&1 && !(sd->class_&(JOBL_UPPER|JOBL_THIRD|JOBL_BABY)) ) break;
+		if( item->class_upper&2 && sd->class_&(JOBL_UPPER|JOBL_THIRD) ) break;
+		if( item->class_upper&4 && sd->class_&JOBL_BABY ) break;
+		if( item->class_upper&8 && sd->class_&JOBL_THIRD ) break;
 		return 0;
+	}
 
 	return 1;
 }
@@ -825,7 +829,17 @@ bool pc_authok(struct map_session_data *sd, int login_id2, time_t expiration_tim
 	sd->invincible_timer = INVALID_TIMER;
 	sd->npc_timer_id = INVALID_TIMER;
 	sd->pvp_timer = INVALID_TIMER;
-	
+	/**
+	 * For the Secure NPC Timeout option (check RRConfig/Secure.h) [RR]
+	 **/
+#if SECURE_NPCTIMEOUT
+	/**
+	 * Initialize to defaults/expected
+	 **/
+	sd->npc_idle_timer = INVALID_TIMER;
+	sd->npc_idle_tick = tick;
+#endif
+
 	sd->canuseitem_tick = tick;
 	sd->canusecashfood_tick = tick;
 	sd->canequip_tick = tick;
@@ -915,7 +929,7 @@ bool pc_authok(struct map_session_data *sd, int login_id2, time_t expiration_tim
 
 	if (battle_config.display_version == 1){
 		char buf[256];
-		sprintf(buf, "eAthena SVN version: %s", get_svn_revision());
+		sprintf(buf, "SVN version: %s", get_svn_revision());
 		clif_displaymessage(sd->fd, buf);
 	}
 
@@ -3379,7 +3393,15 @@ int pc_additem(struct map_session_data *sd,struct item *item_data,int amount)
 	w = data->weight*amount;
 	if(sd->weight + w > sd->max_weight)
 		return 2;
-
+	if( itemdb_is_rune(item_data->nameid) ) {
+		int rune = pc_search_inventory(sd,item_data->nameid);
+		if( ( rune >= 0 && sd->status.inventory[rune].amount + amount > MAX_RUNE ) ||
+			( rune == -1 && amount > MAX_RUNE )
+				) {
+			clif_msgtable(sd->fd,0x61b);
+			return 1;
+		}
+	}
 	i = MAX_INVENTORY;
 
 	if( itemdb_isstackable2(data) && item_data->expire_time == 0 )
@@ -3662,6 +3684,17 @@ int pc_isUseitem(struct map_session_data *sd,int n)
 	if( nameid >= 12153 && nameid <= 12182 && sd->md != NULL )
 		return 0; // Mercenary Scrolls
 
+	/**
+	 * Only Rune Knights may use runes
+	 **/
+	if( itemdb_is_rune(nameid) && (sd->class_&MAPID_THIRDMASK) != MAPID_RUNE_KNIGHT )
+		return 0;
+	/**
+	 * Only GCross may use poisons
+	 **/
+	else if( itemdb_is_poison(nameid) && (sd->class_&MAPID_THIRDMASK) != MAPID_GUILLOTINE_CROSS )
+		return 0;
+
 	//added item_noequip.txt items check by Maya&[Lupus]
 	if (
 		(!map_flag_vs(sd->bl.m) && item->flag.no_equip&1) || // Normal
@@ -3685,13 +3718,14 @@ int pc_isUseitem(struct map_session_data *sd,int n)
 		(item->class_base[sd->class_&JOBL_2_1?1:(sd->class_&JOBL_2_2?2:0)])
 	))
 		return 0;
-	
-	//Not usable by upper class. [Skotlex]
-	if(!(
-		(1<<(sd->class_&JOBL_UPPER?1:(sd->class_&JOBL_BABY?2:0))) &
-		item->class_upper
-	))
+	//Not usable by upper class. [Inkfish]
+	while( 1 ) {
+		if( item->class_upper&1 && !(sd->class_&(JOBL_UPPER|JOBL_THIRD|JOBL_BABY)) ) break;
+		if( item->class_upper&2 && sd->class_&(JOBL_UPPER|JOBL_THIRD) ) break;
+		if( item->class_upper&4 && sd->class_&JOBL_BABY ) break;
+		if( item->class_upper&8 && sd->class_&JOBL_THIRD ) break;
 		return 0;
+	}
 
 	//Dead Branch & Bloody Branch & Porings Box
 	if((log_config.branch > 0) && (nameid == 604 || nameid == 12103 || nameid == 12109))
@@ -4534,6 +4568,36 @@ int pc_jobid2mapid(unsigned short b_class)
 		case JOB_BABY_MONK:         return MAPID_BABY_MONK;
 		case JOB_BABY_ALCHEMIST:    return MAPID_BABY_ALCHEMIST;
 		case JOB_BABY_ROGUE:        return MAPID_BABY_ROGUE;
+	//3.1 non-trans
+		case JOB_RUNE_KNIGHT:		return MAPID_RUNE_KNIGHT;
+		case JOB_WARLOCK:			return MAPID_WARLOCK;
+		case JOB_RANGER:			return MAPID_RANGER;
+		case JOB_ARCH_BISHOP:       return MAPID_ARCH_BISHOP;
+		case JOB_MECHANIC:			return MAPID_MECHANIC;
+		case JOB_GUILLOTINE_CROSS:	return MAPID_GUILLOTINE_CROSS;
+	//3.1 trans
+		case JOB_RUNE_KNIGHT_T:		return MAPID_RUNE_KNIGHT_T;
+		case JOB_WARLOCK_T:			return MAPID_WARLOCK_T;
+		case JOB_RANGER_T:			return MAPID_RANGER_T;
+		case JOB_ARCH_BISHOP_T:		return MAPID_ARCH_BISHOP_T;
+		case JOB_MECHANIC_T:		return MAPID_MECHANIC_T;
+		case JOB_GUILLOTINE_CROSS_T:return MAPID_GUILLOTINE_CROSS_T;
+	//3.2 non-trans
+		case JOB_ROYAL_GUARD:		return MAPID_ROYAL_GUARD;
+		case JOB_SORCERER:			return MAPID_SORCERER;
+		case JOB_MINSTREL:			return MAPID_MINSTRELWANDERER;
+		case JOB_WANDERER:			return MAPID_MINSTRELWANDERER;
+		case JOB_SURA:				return MAPID_SURA;
+		case JOB_GENETIC:			return MAPID_GENETIC;
+		case JOB_SHADOW_CHASER:		return MAPID_SHADOW_CHASER;
+	//3.2 trans
+		case JOB_ROYAL_GUARD_T:		return MAPID_ROYAL_GUARD_T;
+		case JOB_SORCERER_T:		return MAPID_SORCERER_T;
+		case JOB_MINSTREL_T:		return MAPID_MINSTRELWANDERER_T;
+		case JOB_WANDERER_T:		return MAPID_MINSTRELWANDERER_T;
+		case JOB_SURA_T:			return MAPID_SURA_T;
+		case JOB_GENETIC_T:			return MAPID_GENETIC_T;
+		case JOB_SHADOW_CHASER_T:	return MAPID_SHADOW_CHASER_T;
 		default:
 			return -1;
 	}
@@ -4620,6 +4684,34 @@ int pc_mapid2jobid(unsigned short class_, int sex)
 		case MAPID_BABY_MONK:       return JOB_BABY_MONK;
 		case MAPID_BABY_ALCHEMIST:  return JOB_BABY_ALCHEMIST;
 		case MAPID_BABY_ROGUE:      return JOB_BABY_ROGUE;
+	//3.1 non-trans
+		case MAPID_RUNE_KNIGHT:		return JOB_RUNE_KNIGHT;
+		case MAPID_WARLOCK:			return JOB_WARLOCK;
+		case MAPID_RANGER:			return JOB_RANGER;
+		case MAPID_ARCH_BISHOP:     return JOB_ARCH_BISHOP;
+		case MAPID_MECHANIC:		return JOB_MECHANIC;
+		case MAPID_GUILLOTINE_CROSS:return JOB_GUILLOTINE_CROSS;
+	//3.1 trans
+		case MAPID_RUNE_KNIGHT_T:	return JOB_RUNE_KNIGHT_T;
+		case MAPID_WARLOCK_T:		return JOB_WARLOCK_T;
+		case MAPID_RANGER_T:		return JOB_RANGER_T;
+		case MAPID_ARCH_BISHOP_T:   return JOB_ARCH_BISHOP_T;
+		case MAPID_MECHANIC_T:		return JOB_MECHANIC_T;
+		case MAPID_GUILLOTINE_CROSS_T:return JOB_GUILLOTINE_CROSS_T;
+	//3.2 non-trans
+		case MAPID_ROYAL_GUARD:		return JOB_ROYAL_GUARD;
+		case MAPID_SORCERER:		return JOB_SORCERER;
+		case MAPID_MINSTRELWANDERER:return sex?JOB_MINSTREL:JOB_WANDERER;
+		case MAPID_SURA:			return JOB_SURA;
+		case MAPID_GENETIC:			return JOB_GENETIC;
+		case MAPID_SHADOW_CHASER:	return JOB_SHADOW_CHASER;
+	//3.2 trans
+		case MAPID_ROYAL_GUARD_T:	return JOB_ROYAL_GUARD_T;
+		case MAPID_SORCERER_T:		return JOB_SORCERER_T;
+		case MAPID_MINSTRELWANDERER_T:return sex?JOB_MINSTREL_T:JOB_WANDERER_T;
+		case MAPID_SURA_T:			return JOB_SURA_T;
+		case MAPID_GENETIC_T:			return JOB_GENETIC_T;
+		case MAPID_SHADOW_CHASER_T:	return JOB_SHADOW_CHASER_T;
 		default:
 			return -1;
 	}
@@ -4898,7 +4990,7 @@ int pc_checkjoblevelup(struct map_session_data *sd)
 	status_calc_pc(sd,0);
 	clif_misceffect(&sd->bl,1);
 	if (pc_checkskill(sd, SG_DEVIL) && !pc_nextjobexp(sd))
-		clif_status_change(&sd->bl,SI_DEVIL, 1, 0); //Permanent blind effect from SG_DEVIL.
+		clif_status_change(&sd->bl,SI_DEVIL, 1, 0, 0, 0, 1); //Permanent blind effect from SG_DEVIL.
 
 	npc_script_event(sd, NPCE_JOBLVUP);
 	return 1;
@@ -5131,7 +5223,11 @@ int pc_need_status_point(struct map_session_data* sd, int type, int val)
 		swap(low, high);
 
 	for ( ; low < high; low++ )
+#if RRMODE //Renewal Stat Cost Formula
+		sp += (low < 100) ? (2 + (low - 1) / 10) : (16 + 4 * ((low - 100) / 5));
+#else
 		sp += ( 1 + (low + 9) / 10 );
+#endif
 	
 	return sp;
 }
@@ -5480,7 +5576,16 @@ int pc_resetskill(struct map_session_data* sd, int flag)
 			i &= ~OPTION_CART;
 		if( i&OPTION_FALCON && pc_checkskill(sd, HT_FALCON) )
 			i &= ~OPTION_FALCON;
-
+		if( i&OPTION_DRAGON && pc_checkskill(sd, RK_DRAGONTRAINING) )
+			i &= ~OPTION_DRAGON;
+		if( i&OPTION_WUG && pc_checkskill(sd, RA_WUGMASTERY) )
+			i &= ~OPTION_WUG;
+		if( i&OPTION_WUGRIDER && pc_checkskill(sd, RA_WUGRIDER) )
+			i &= ~OPTION_WUGRIDER;
+		if( i&OPTION_MADOGEAR && ( sd->class_&MAPID_THIRDMASK ) == MAPID_MECHANIC )
+			i &= ~OPTION_MADOGEAR;
+		if( i&OPTION_MOUNTING )
+			i &= ~OPTION_MOUNTING;
 		if( i != sd->sc.option )
 			pc_setoption(sd, i);
 
@@ -6400,7 +6505,14 @@ int pc_jobchange(struct map_session_data *sd,int job, int upper)
 		i&=~OPTION_CART;
 	if(i&OPTION_FALCON && !pc_checkskill(sd, HT_FALCON))
 		i&=~OPTION_FALCON;
-
+	if( i&OPTION_DRAGON && !pc_checkskill(sd,RK_DRAGONTRAINING) )
+		i&=~OPTION_DRAGON;
+	if( i&OPTION_WUGRIDER && !pc_checkskill(sd,RA_WUGMASTERY) )
+		i&=~OPTION_WUGRIDER;
+	if( i&OPTION_WUG && !pc_checkskill(sd,RA_WUGMASTERY) )
+		i&=~OPTION_WUG;
+	if( i&OPTION_MADOGEAR ) //You do not need a skill for this.
+		i&=~OPTION_MADOGEAR;
 	if(i != sd->sc.option)
 		pc_setoption(sd, i);
 
@@ -6528,15 +6640,15 @@ int pc_setoption(struct map_session_data *sd,int type)
 	sd->sc.option=type;
 	clif_changeoption(&sd->bl);
 
-	if (type&OPTION_RIDING && !(p_type&OPTION_RIDING) && (sd->class_&MAPID_BASEMASK) == MAPID_SWORDMAN)
-	{	//We are going to mount. [Skotlex]
+	if( (type&OPTION_RIDING && !(p_type&OPTION_RIDING)) || (type&OPTION_DRAGON && !(p_type&OPTION_DRAGON) && pc_checkskill(sd,RK_DRAGONTRAINING) > 0) )
+	{ // Mounting
 		clif_status_load(&sd->bl,SI_RIDING,1);
-		status_calc_pc(sd,0); //Mounting/Umounting affects walk and attack speeds.
+		status_calc_pc(sd,0);
 	}
-	else if (!(type&OPTION_RIDING) && p_type&OPTION_RIDING && (sd->class_&MAPID_BASEMASK) == MAPID_SWORDMAN)
-	{	//We are going to dismount.
+	else if( (!(type&OPTION_RIDING) && p_type&OPTION_RIDING) || (!(type&OPTION_DRAGON) && p_type&OPTION_DRAGON && pc_checkskill(sd,RK_DRAGONTRAINING) > 0) )
+	{ // Dismount
 		clif_status_load(&sd->bl,SI_RIDING,0);
-		status_calc_pc(sd,0); //Mounting/Umounting affects walk and attack speeds.
+		status_calc_pc(sd,0);
 	}
 
 	if(type&OPTION_CART && !(p_type&OPTION_CART))
@@ -6553,10 +6665,48 @@ int pc_setoption(struct map_session_data *sd,int type)
 			status_calc_pc(sd,0); //Remove speed penalty.
 	}
 
+	if (type&OPTION_MOUNTING && !(p_type&OPTION_MOUNTING)) {
+		clif_status_load_notick(&sd->bl,SI_ALL_RIDING,2,1,0,0);
+		status_calc_pc(sd,0); 
+	} else if (!(type&OPTION_MOUNTING) && p_type&OPTION_MOUNTING) {
+		clif_status_load_notick(&sd->bl,SI_ALL_RIDING,0,0,0,0);
+		status_calc_pc(sd,0);
+	}
+
+
 	if (type&OPTION_FALCON && !(p_type&OPTION_FALCON)) //Falcon ON
 		clif_status_load(&sd->bl,SI_FALCON,1);
 	else if (!(type&OPTION_FALCON) && p_type&OPTION_FALCON) //Falcon OFF
 		clif_status_load(&sd->bl,SI_FALCON,0);
+
+	if( (sd->class_&MAPID_THIRDMASK) == MAPID_RANGER ) {
+		if( type&OPTION_WUGRIDER && !(p_type&OPTION_WUGRIDER) ) { // Mounting
+			clif_status_load(&sd->bl,SI_WUGRIDER,1);
+			status_calc_pc(sd,0);
+		} else if( !(type&OPTION_WUGRIDER) && p_type&OPTION_WUGRIDER ) { // Dismount
+			clif_status_load(&sd->bl,SI_WUGRIDER,0);
+			status_calc_pc(sd,0);
+		}
+	}
+	if( (sd->class_&MAPID_THIRDMASK) == MAPID_MECHANIC ) {
+		if( type&OPTION_MADOGEAR && !(p_type&OPTION_MADOGEAR) ) {
+			status_calc_pc(sd, 0);
+			status_change_end(&sd->bl,SC_MAXIMIZEPOWER,-1);
+			status_change_end(&sd->bl,SC_OVERTHRUST,-1);
+			status_change_end(&sd->bl,SC_WEAPONPERFECTION,-1);
+			status_change_end(&sd->bl,SC_ADRENALINE,-1);
+			status_change_end(&sd->bl,SC_CARTBOOST,-1);
+			status_change_end(&sd->bl,SC_MELTDOWN,-1);
+			status_change_end(&sd->bl,SC_MAXOVERTHRUST,-1);
+		} else if( !(type&OPTION_MADOGEAR) && p_type&OPTION_MADOGEAR ) {
+			status_calc_pc(sd, 0);
+			status_change_end(&sd->bl,SC_SHAPESHIFT,-1);
+			status_change_end(&sd->bl,SC_HOVERING,-1);
+			status_change_end(&sd->bl,SC_ACCELERATION,-1);
+			status_change_end(&sd->bl,SC_OVERHEAT_LIMITPOINT,-1);
+			status_change_end(&sd->bl,SC_OVERHEAT,-1);
+		}
+	}
 
 	if (type&OPTION_FLYING && !(p_type&OPTION_FLYING))
 		new_look = JOB_STAR_GLADIATOR2;
@@ -6644,7 +6794,7 @@ int pc_setriding(TBL_PC* sd, int flag)
 		if( pc_checkskill(sd,KN_RIDING) > 0 ) // ライディングスキル所持
 			pc_setoption(sd, sd->sc.option|OPTION_RIDING);
 	} else if( pc_isriding(sd) ){
-		pc_setoption(sd, sd->sc.option&~OPTION_RIDING);
+			pc_setoption(sd, sd->sc.option&~OPTION_RIDING);
 	}
 
 	return 0;
@@ -7801,6 +7951,30 @@ void pc_setstand(struct map_session_data *sd){
 	sd->state.dead_sit = sd->vd.dead_sit = 0;
 }
 
+/**
+ * Mechanic (MADO GEAR)
+ **/
+void pc_overheat(struct map_session_data *sd, int val) {
+	int heat = val, skill,
+		limit[] = { 10, 20, 28, 46, 66 };
+
+	if( !(sd->sc.option&OPTION_MADOGEAR) || sd->sc.data[SC_OVERHEAT] )
+		return; // already burning
+
+	skill = cap_value(pc_checkskill(sd,NC_MAINFRAME),0,4);
+	if( sd->sc.data[SC_OVERHEAT_LIMITPOINT] ) {
+		heat += sd->sc.data[SC_OVERHEAT_LIMITPOINT]->val1;
+		status_change_end(&sd->bl,SC_OVERHEAT_LIMITPOINT,-1);
+	}
+
+	heat = max(0,heat); // Avoid negative HEAT
+	if( heat >= limit[skill] )
+		sc_start(&sd->bl,SC_OVERHEAT,100,0,1000);
+	else
+		sc_start(&sd->bl,SC_OVERHEAT_LIMITPOINT,100,heat,30000);
+
+	return;
+}
 int pc_split_str(char *str,char **val,int num)
 {
 	int i;
@@ -8060,7 +8234,11 @@ int pc_readdb(void)
 	// スキルツリ?
 	memset(statp,0,sizeof(statp));
 	i=1;
+#if RRMODE
+	sprintf(line, "%s/statpoint_renewal.txt", db_path);
+#else
 	sprintf(line, "%s/statpoint.txt", db_path);
+#endif
 	fp=fopen(line,"r");
 	if(fp == NULL){
 		ShowWarning("Can't read '"CL_WHITE"%s"CL_RESET"'... Generating DB.\n",line);
@@ -8079,7 +8257,11 @@ int pc_readdb(void)
 			i++;
 		}
 		fclose(fp);
+	#if RRMODE
+		ShowStatus("Done reading '"CL_WHITE"%s"CL_RESET"'.\n","statpoint_renewal.txt");
+	#else
 		ShowStatus("Done reading '"CL_WHITE"%s"CL_RESET"'.\n","statpoint.txt");
+	#endif
 	}
 	// generate the remaining parts of the db if necessary
 	k = battle_config.use_statpoint_table; //save setting

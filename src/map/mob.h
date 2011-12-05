@@ -161,6 +161,11 @@ struct mob_data {
 	short skillidx;
 	unsigned int skilldelay[MAX_MOBSKILL];
 	char npc_event[EVENT_NAME_LENGTH];
+	/**
+	 * Did this monster summon something?
+	 * Used to flag summon deletions, saves a worth amount of memory
+	 **/
+	bool can_summon : 1;
 };
 
 

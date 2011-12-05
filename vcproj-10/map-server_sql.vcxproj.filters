@@ -115,6 +115,9 @@
     <ClCompile Include="..\src\common\core.c">
       <Filter>common</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\common\des.c">
+      <Filter>common</Filter>
+    </ClCompile>
     <ClCompile Include="..\src\common\db.c">
       <Filter>common</Filter>
     </ClCompile>

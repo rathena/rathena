@@ -325,7 +325,10 @@ enum {
 	MF_FOG,
 	MF_SAKURA,
 	MF_LEAVES,
-	MF_RAIN,	//20
+	/**
+	 * No longer available, keeping here just in case it's back someday. [Ind]
+	 **/		
+	//MF_RAIN,	//20
 	// 21 free
 	MF_NOGO = 22,
 	MF_CLOUDS,
@@ -3365,7 +3368,18 @@ static void script_detach_state(struct script_state* st, bool dequeue_event)
 	{
 		sd->st = st->bk_st;
 		sd->npc_id = st->bk_npcid;
-
+		/**
+		 * For the Secure NPC Timeout option (check RRConfig/Secure.h) [RR]
+		 **/
+	#if SECURE_NPCTIMEOUT
+		/**
+		 * We're done with this NPC session, so we cancel the timer (if existent) and move on
+		 **/
+		if( sd->npc_idle_timer != INVALID_TIMER ) {
+			delete_timer(sd->npc_idle_timer,npc_rr_secure_timeout_timer);
+			sd->npc_idle_timer = INVALID_TIMER;
+		}
+	#endif
 		if(st->bk_st)
 		{
 			//Remove tag for removal.
@@ -3407,6 +3421,14 @@ static void script_attach_state(struct script_state* st)
 		}
 		sd->st = st;
 		sd->npc_id = st->oid;
+/**
+ * For the Secure NPC Timeout option (check RRConfig/Secure.h) [RR]
+ **/
+#if SECURE_NPCTIMEOUT
+		if( sd->npc_idle_timer == INVALID_TIMER )
+			sd->npc_idle_timer = add_timer(gettick() + (SECURE_NPCTIMEOUT_INTERVAL*1000),npc_rr_secure_timeout_timer,sd->bl.id,0);
+		sd->npc_idle_tick = gettick();
+#endif
 	}
 }
 
@@ -7549,7 +7571,7 @@ BUILDIN_FUNC(checkriding)
 	if( sd == NULL )
 		return 0;// no player attached, report source
 
-	if( pc_isriding(sd) )
+	if( pc_isriding(sd) || sd->sc.option&OPTION_MOUNTING )
 		script_pushint(st, 1);
 	else
 		script_pushint(st, 0);
@@ -7771,7 +7793,7 @@ BUILDIN_FUNC(produce)
 		return 0;
 
 	trigger=script_getnum(st,2);
-	clif_skill_produce_mix_list(sd, trigger);
+	clif_skill_produce_mix_list(sd, -1, trigger);
 	return 0;
 }
 /*==========================================
@@ -9146,7 +9168,7 @@ BUILDIN_FUNC(roclass)
 }
 
 /*==========================================
- *Œg‘Ñ—‘›z‰»‹@Žg—p
+ * Tells client to open a hatching window, used for pet incubator
  *------------------------------------------*/
 BUILDIN_FUNC(birthpet)
 {
@@ -9616,7 +9638,10 @@ BUILDIN_FUNC(getmapflag)
 			case MF_FIREWORKS:			script_pushint(st,map[m].flag.fireworks); break;
 			case MF_SAKURA:				script_pushint(st,map[m].flag.sakura); break;
 			case MF_LEAVES:				script_pushint(st,map[m].flag.leaves); break;
-			case MF_RAIN:				script_pushint(st,map[m].flag.rain); break;
+			/**
+			 * No longer available, keeping here just in case it's back someday. [Ind]
+			 **/				
+			//case MF_RAIN:				script_pushint(st,map[m].flag.rain); break;
 			case MF_NIGHTENABLED:		script_pushint(st,map[m].flag.nightenabled); break;
 			case MF_NOGO:				script_pushint(st,map[m].flag.nogo); break;
 			case MF_NOBASEEXP:			script_pushint(st,map[m].flag.nobaseexp); break;
@@ -9686,7 +9711,10 @@ BUILDIN_FUNC(setmapflag)
 			case MF_FIREWORKS:			map[m].flag.fireworks=1; break;
 			case MF_SAKURA:				map[m].flag.sakura=1; break;
 			case MF_LEAVES:				map[m].flag.leaves=1; break;
-			case MF_RAIN:				map[m].flag.rain=1; break;
+			/**
+			 * No longer available, keeping here just in case it's back someday. [Ind]
+			 **/				
+			//case MF_RAIN:				map[m].flag.rain=1; break;
 			case MF_NIGHTENABLED:		map[m].flag.nightenabled=1; break;
 			case MF_NOGO:				map[m].flag.nogo=1; break;
 			case MF_NOBASEEXP:			map[m].flag.nobaseexp=1; break;
@@ -9753,7 +9781,10 @@ BUILDIN_FUNC(removemapflag)
 			case MF_FIREWORKS:			map[m].flag.fireworks=0; break;
 			case MF_SAKURA:				map[m].flag.sakura=0; break;
 			case MF_LEAVES:				map[m].flag.leaves=0; break;
-			case MF_RAIN:				map[m].flag.rain=0; break;
+			/**
+			 * No longer available, keeping here just in case it's back someday. [Ind]
+			 **/	
+			//case MF_RAIN:				map[m].flag.rain=0; break;
 			case MF_NIGHTENABLED:		map[m].flag.nightenabled=0; break;
 			case MF_NOGO:				map[m].flag.nogo=0; break;
 			case MF_NOBASEEXP:			map[m].flag.nobaseexp=0; break;
@@ -14951,8 +14982,133 @@ BUILDIN_FUNC(searchstores)
 	searchstore_open(sd, uses, effect);
 	return 0;
 }
+/// Displays a number as large digital clock.
+/// showdigit <value>[,<type>];
+BUILDIN_FUNC(showdigit)
+{
+	unsigned int type = 0;
+	int value;
+	struct map_session_data* sd;
 
+	if( ( sd = script_rid2sd(st) ) == NULL )
+	{
+		return 0;
+	}
 
+	value = script_getnum(st,2);
+
+	if( script_hasdata(st,3) )
+	{
+		type = script_getnum(st,3);
+
+		if( type > 3 )
+		{
+			ShowError("buildin_showdigit: Invalid type %u.\n", type);
+			return 1;
+		}
+	}
+
+	clif_showdigit(sd, (unsigned char)type, value);
+	return 0;
+}
+/**
+ * Rune Knight
+ **/
+BUILDIN_FUNC(makerune) {
+	TBL_PC* sd;
+	if( (sd = script_rid2sd(st)) == NULL )
+		return 0;
+	clif_skill_produce_mix_list(sd,RK_RUNEMASTERY,24);
+	sd->itemid = script_getnum(st,2);
+	return 0;
+}
+/**
+ * checkdragon() returns 1 if mounting a dragon or 0 otherwise.
+ **/
+BUILDIN_FUNC(checkdragon) {
+	TBL_PC* sd;
+	if( (sd = script_rid2sd(st)) == NULL )
+		return 0;
+	if( sd->sc.option&OPTION_DRAGON )
+		script_pushint(st,1);
+	else
+		script_pushint(st,0);
+	return 0;
+}
+/**
+ * setdragon({optional Color}) returns 1 on success or 0 otherwise
+ * - Toggles the dragon on a RK if he can mount;
+ * @param Color - when not provided uses the green dragon;
+ * - 1 : Green Dragon
+ * - 2 : Brown Dragon
+ * - 3 : Gray Dragon
+ * - 4 : Blue Dragon
+ * - 5 : Red Dragon
+ **/
+BUILDIN_FUNC(setdragon) {
+	TBL_PC* sd;
+	int color = script_hasdata(st,2) ? script_getnum(st,2) : 0;
+	unsigned int option = OPTION_DRAGON1;
+	if( (sd = script_rid2sd(st)) == NULL )
+		return 0;
+	if( !pc_checkskill(sd,RK_DRAGONTRAINING) || (sd->class_&MAPID_THIRDMASK) != MAPID_RUNE_KNIGHT )
+		script_pushint(st,0);//Doesn't have the skill or it's not a Rune Knight
+	else if ( sd->sc.option&OPTION_DRAGON ) {//Is mounted; release
+		pc_setoption(sd, sd->sc.option&~OPTION_DRAGON);
+		script_pushint(st,1);
+	} else {//Not mounted; Mount now.
+		if( color ) {
+			option = ( color == 1 ? OPTION_DRAGON1 :
+					   color == 2 ? OPTION_DRAGON2 :
+					   color == 3 ? OPTION_DRAGON3 :
+					   color == 4 ? OPTION_DRAGON4 :
+					   color == 5 ? OPTION_DRAGON5 : 0);
+			if( !option ) {
+				ShowWarning("script_setdragon: Unknown Color %d used; changing to green (1)\n",color);
+				option = OPTION_DRAGON1;
+			}
+		}
+		pc_setoption(sd, sd->sc.option|option);
+		script_pushint(st,1);
+	}
+	return 0;
+}
+
+/**
+ * ismounting() returns 1 if mounting a new mount or 0 otherwise
+ **/
+BUILDIN_FUNC(ismounting) {
+	TBL_PC* sd;
+	if( (sd = script_rid2sd(st)) == NULL )
+		return 0;
+	if( sd->sc.option&OPTION_MOUNTING )
+		script_pushint(st,1);
+	else
+		script_pushint(st,0);
+	return 0;
+}
+
+/**
+ * setmounting() returns 1 on success or 0 otherwise
+ * - Toggles new mounts on a player when he can mount
+ * - Will fail if the player is mounting a non-new mount, e.g. dragon, peco, wug, etc.
+ * - Will unmount the player is he is already mounting
+ **/
+BUILDIN_FUNC(setmounting) {
+	TBL_PC* sd;
+	if( (sd = script_rid2sd(st)) == NULL )
+		return 0;
+	if( sd->sc.option&(OPTION_WUGRIDER|OPTION_RIDING|OPTION_DRAGON|OPTION_MADOGEAR) )
+		script_pushint(st,0);//can't mount with one of these
+	else {
+		if( sd->sc.option&OPTION_MOUNTING )
+			pc_setoption(sd, sd->sc.option&~OPTION_MOUNTING);//release mount
+		else
+			pc_setoption(sd, sd->sc.option|OPTION_MOUNTING);//mount
+		script_pushint(st,1);//in both cases, return 1.
+	}
+	return 0;
+}
 // declarations that were supposed to be exported from npc_chat.c
 #ifdef PCRE_SUPPORT
 BUILDIN_FUNC(defpattern);
@@ -15317,6 +15473,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(pushpc,"ii"),
 	BUILDIN_DEF(buyingstore,"i"),
 	BUILDIN_DEF(searchstores,"ii"),
+	BUILDIN_DEF(showdigit,"i?"),
 	// WoE SE
 	BUILDIN_DEF(agitstart2,""),
 	BUILDIN_DEF(agitend2,""),
@@ -15348,7 +15505,14 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(instance_npcname,"s?"),
 	BUILDIN_DEF(has_instance,"s?"),
 	BUILDIN_DEF(instance_warpall,"sii?"),
-
+	/**
+	 * 3rd-related
+	 **/
+	BUILDIN_DEF(makerune,"i"),
+	BUILDIN_DEF(checkdragon,""),//[Ind]
+	BUILDIN_DEF(setdragon,"?"),//[Ind]
+	BUILDIN_DEF(ismounting,""),//[Ind]
+	BUILDIN_DEF(setmounting,""),//[Ind]
 	//Quest Log System [Inkfish]
 	BUILDIN_DEF(setquest, "i"),
 	BUILDIN_DEF(erasequest, "i"),

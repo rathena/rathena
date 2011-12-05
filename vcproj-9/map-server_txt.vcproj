@@ -415,6 +415,34 @@
 				>
 			</File>
 			<File
+				RelativePath="..\src\map\RRConfig\Core.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\map\RRConfig\Renewal.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\map\RRConfig\Secure.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\map\RRConfig\Data\Const.h"
+				>
+			</File>
+    			<File
+				RelativePath="..\src\map\RRConfig\Skills\General.h"
+				>
+			</File>
+    			<File
+				RelativePath="..\src\map\RRConfig\Skills\Mage_Classes.h"
+				>
+			</File>
+    			<File
+				RelativePath="..\src\map\RRConfig\Skills\Swordsman_Classes.h"
+				>
+			</File>
+			<File
 				RelativePath="..\src\map\script.c"
 				>
 			</File>

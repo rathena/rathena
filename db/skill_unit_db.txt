@@ -33,6 +33,7 @@
  70,0x83,    , -1, 1,1000,all,   0x018	//PR_SANCTUARY
  79,0x84,    , -1, 1,3000,enemy, 0x018	//PR_MAGNUS
  80,0x87,0x88,  0, 1,2000,enemy, 0x006	//WZ_FIREPILLAR
+ 82,0x86,    ,  0, 3,1000,enemy, 0x018	//WZ_FIREIVY
  83,0x86,    ,  0, 3,1000,enemy, 0x010	//WZ_METEOR
  85,0x86,    ,  0, 6:6:6:6:6:6:6:6:6:6:8,1250,enemy,0x018	//WZ_VERMILION
  87,0x8d,    , -1, 0,  -1,all,   0x010	//WZ_ICEWALL
@@ -95,6 +96,26 @@
 535,0xbd,    , -1, 0,  20,enemy, 0x010	//NJ_KAENSIN
 538,0xbb,    ,  1:1:1:2:2:2:3:3:3:4,0,-1,all,0x010	//NJ_SUITON
 670,0xc7,    ,  1, 4:7:10:13:16:19:22:25:28:31,1000,all,0x008	//NPC_EVILLAND
+
+2044,0xca,    ,  0, 3,1000,all,   0x018	//AB_EPICLESIS
+
+2032,0xe1,    ,  2, 0,1000,enemy, 0x018	//GC_POISONSMOKE
+
+2214,0x86,    ,  0, 5, 100,enemy, 0x080	//WL_CHAINLIGHTNING
+2216,0xcb,    , -1, 2,2000,enemy, 0x018	//WL_EARTHSTRAIN
+
+2238,0xd8,    ,  0, 1,1000,enemy, 0x006	//RA_ELECTRICSHOCKER
+2239,0xd9,    ,  0, 1,1000,enemy, 0x006	//RA_CLUSTERBOMB
+2249,0xd2,    ,  0, 1,1000,enemy, 0x026	//RA_MAGENTATRAP
+2250,0xd3,    ,  0, 1,1000,enemy, 0x026	//RA_COBALTTRAP
+2251,0xd4,    ,  0, 1,1000,enemy, 0x026	//RA_MAIZETRAP
+2252,0xd5,    ,  0, 1,1000,enemy, 0x026	//RA_VERDURETRAP
+2253,0xd6,    ,  0, 1,1000,enemy, 0x006	//RA_FIRINGTRAP
+2254,0xd7,    ,  0, 1,1000,enemy, 0x006	//RA_ICEBOUNDTRAP
+
+2273,0xe2,    ,  1, 0, 500,friend,0x000	//NC_NEUTRALBARRIER
+2274,0xe3,    ,  1, 0, 500,all,   0x000	//NC_STEALTHFIELD
+
 8208,0x86,    ,  0, 2,1000,enemy, 0x080	//MA_SHOWER
 8209,0x90,    ,  0, 1,1000,enemy, 0x006	//MA_SKIDTRAP
 8210,0x93,    ,  0, 0,1000,enemy, 0x006	//MA_LANDMINE

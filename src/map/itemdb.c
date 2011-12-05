@@ -706,7 +706,35 @@ static int itemdb_gendercheck(struct item_data *id)
 
 	return (battle_config.ignore_items_gender) ? 2 : id->sex;
 }
+/**
+ * [RRInd]
+ * For backwards compatibility, in Renewal mode, MATK from weapons comes from the atk slot
+ * We use a ':' delimiter which, if not found, assumes the weapon does not provide any matk.
+ **/
+void itemdb_rr_split_atoi(char *str, int *atk, int *matk) {
+	int i, val[2];
 
+	for (i=0; i<2; i++) {
+		if (!str) break;
+		val[i] = atoi(str);
+		str = strchr(str,':');
+		if (str)
+			*str++=0;
+	}
+	if( i == 0 ) {
+		*atk = *matk = 0;
+		return;//no data found
+	}
+	if( i == 1 ) {//Single Value, we assume it's the ATK
+		*atk = val[0];
+		*matk = 0;
+		return;
+	}
+	//We assume we have 2 values.
+	*atk = val[0];
+	*matk = val[1];
+	return;
+}
 /*==========================================
  * processes one itemdb entry
  *------------------------------------------*/
@@ -736,7 +764,7 @@ static bool itemdb_parse_dbrow(char** str, const char* source, int line, int scr
 
 	id->type = atoi(str[3]);
 
-	if( id->type < 0 || id->type == IT_UNKNOWN || id->type == IT_UNKNOWN2 || ( id->type > IT_DELAYCONSUME && id->type < IT_CASH ) || id->type >= IT_MAX )
+	if( id->type < 0 || id->type == IT_UNKNOWN || id->type == IT_UNKNOWN2 || ( id->type > IT_THROWWEAPON && id->type < IT_CASH ) || id->type >= IT_MAX )
 	{// catch invalid item types
 		ShowWarning("itemdb_parse_dbrow: Invalid item type %d for item %d. IT_ETC will be used.\n", id->type, nameid);
 		id->type = IT_ETC;
@@ -773,7 +801,11 @@ static bool itemdb_parse_dbrow(char** str, const char* source, int line, int scr
 			id->value_buy, id->value_sell, nameid, id->jname);
 
 	id->weight = atoi(str[6]);
+#if RRMODE
+	itemdb_rr_split_atoi(str[7],&id->atk,&id->matk);
+#else
 	id->atk = atoi(str[7]);
+#endif
 	id->def = atoi(str[8]);
 	id->range = atoi(str[9]);
 	id->slot = atoi(str[10]);
@@ -835,7 +867,14 @@ static bool itemdb_parse_dbrow(char** str, const char* source, int line, int scr
  *------------------------------------------*/
 static int itemdb_readdb(void)
 {
-	const char* filename[] = { "item_db.txt", "item_db2.txt" };
+	/**
+	 * ro-resources inheritance: item_db -> item_db_re -> item_db2 (user customs)
+	 **/
+#if RRMODE
+	const char* filename[] = { "item_db.txt","item_db_re.txt","item_db2.txt" };
+#else
+	const char* filename[] = { "item_db.txt","item_db2.txt" };
+#endif
 	int fi;
 
 	for( fi = 0; fi < ARRAYLENGTH(filename); ++fi )
@@ -947,7 +986,11 @@ static int itemdb_readdb(void)
  *======================================*/
 static int itemdb_read_sqldb(void)
 {
+#if RRMODE
+	const char* item_db_name[] = { item_db_db, item_db_re_db, item_db2_db };
+#else
 	const char* item_db_name[] = { item_db_db, item_db2_db };
+#endif
 	int fi;
 	
 	for( fi = 0; fi < ARRAYLENGTH(item_db_name); ++fi )
