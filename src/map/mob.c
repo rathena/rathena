@@ -3593,7 +3593,8 @@ static bool mob_parse_dbrow(char** str)
 			db->dropitem[i].p = 0; //No drop.
 			continue;
 		}
-		type = itemdb_type(db->dropitem[i].nameid);
+		id = itemdb_search(db->dropitem[i].nameid);
+		type = id->type;
 		rate = atoi(str[k+1]);
 		if( (class_ >= 1324 && class_ <= 1363) || (class_ >= 1938 && class_ <= 1946) )
 		{	//Treasure box drop rates [Skotlex]
@@ -3637,7 +3638,6 @@ static bool mob_parse_dbrow(char** str)
 		//calculate and store Max available drop chance of the item
 		if( db->dropitem[i].p && (class_ < 1324 || class_ > 1363) && (class_ < 1938 || class_ > 1946) )
 		{ //Skip treasure chests.
-			id = itemdb_search(db->dropitem[i].nameid);
 			if (id->maxchance == -1 || (id->maxchance < db->dropitem[i].p) ) {
 				id->maxchance = db->dropitem[i].p; //item has bigger drop chance or sold in shops
 			}
