@@ -357,8 +357,6 @@ int skill_calc_heal(struct block_list *src, struct block_list *target, int skill
 			hp += hp * skill * 2 / 100;
 		break;
 	}
-	if( skill_id == AB_HIGHNESSHEAL )
-		hp = (hp * (20 + 3 * (skill_lv - 1))) / 10;
 
 	if( ( (target && target->type == BL_MER) || !heal ) && skill_id != NPC_EVILLAND )
 		hp >>= 1;
@@ -3941,9 +3939,12 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	 **/
 	case AB_HIGHNESSHEAL:
 		{
-			int heal = skill_calc_heal(src, bl, skillid, skilllv, true);
+			int heal = skill_calc_heal(src, bl, (skillid == AB_HIGHNESSHEAL)?AL_HEAL:skillid, (skillid == AB_HIGHNESSHEAL)?10:skilllv, true);
 			int heal_get_jobexp;
-
+			//Highness Heal: starts at 1.5 boost + 0.5 for each level 
+			if( skillid == AB_HIGHNESSHEAL ) {
+				heal = heal * ( 15 + 5 * skilllv ) / 10;
+			}
 			if( status_isimmune(bl) ||
 					(dstmd && (dstmd->class_ == MOBID_EMPERIUM || mob_is_battleground(dstmd))) ||
 					(skillid == AL_HEAL && dstsd && dstsd->sc.option&OPTION_MADOGEAR) )//Mado is immune to AL_HEAL
