@@ -5678,8 +5678,9 @@ is bought or sold by a player.
 In the OnBuyItem, two arrays are set (@bought_nameid and @bought_quantity), which
 hold information about the name id (item id) sold and the amount sold of it. Same 
 goes for the OnSellItem label, only the variables are named different 
-(@sold_nameid and @sold_quantity). An example on a shop comes with eAthena, and 
-can be found in the doc/sample/npc_dynamic_shop.txt file.
+(@sold_nameid, @sold_quantity, @sold_refine, @sold_attribute, @sold_identify,
+@sold_card1, @sold_card2, @sold_card3, @sold_card4). An example on a shop comes
+with eAthena, and can be found in the doc/sample/npc_dynamic_shop.txt file.
  
 This example shows how to use the labels and their set variables to create a dynamic shop.
 
