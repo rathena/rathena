@@ -1093,6 +1093,21 @@ void itemdb_reload(void)
 	struct map_session_data* sd;
 
 	int i;
+	/**
+	 * [Ind] The following fixes the @reloaditemdb issue that'd clear the mob-dropped data (which is populated by mob_db stuff)
+	 * - It saves the data before it is refreshed in this array, and quickly re-populates it with this same data after refresh is done.
+	 **/
+	struct {
+		struct {
+			unsigned short chance;
+			int id;
+		} mob[MAX_SEARCH];
+	} temporaryMonsterDrop[MAX_ITEMDB];
+
+	// [Ind] capture the existent temporaryMonsterDrop data
+	for( i = 0; i < ARRAYLENGTH(itemdb_array); ++i )
+		if( itemdb_array[i] )
+			memcpy(&temporaryMonsterDrop[i].mob, &itemdb_array[i]->mob, sizeof(itemdb_array[i]->mob));
 
 	// clear the previous itemdb data
 	for( i = 0; i < ARRAYLENGTH(itemdb_array); ++i )
@@ -1105,6 +1120,11 @@ void itemdb_reload(void)
 
 	// read new data
 	itemdb_read();
+
+	// [Ind] re-populate the temporaryMonsterDrop data
+	for( i = 0; i < ARRAYLENGTH(itemdb_array); ++i )
+		if( itemdb_array[i] )
+			memcpy(&itemdb_array[i]->mob, &temporaryMonsterDrop[i].mob, sizeof(temporaryMonsterDrop[i].mob));
 
 	// readjust itemdb pointer cache for each player
 	iter = mapit_geteachpc();
