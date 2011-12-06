@@ -1442,7 +1442,7 @@ static int npc_selllist_sub(struct map_session_data* sd, int n, unsigned short* 
 
 	for( j = 0; MAX_SLOTS > j; j++ )
 	{// clear each of the card slot entries
-		sprintf_s(card_slot, sizeof(card_slot), "@sold_card%d", j + 1);
+		snprintf(card_slot, sizeof(card_slot), "@sold_card%d", j + 1);
 		script_cleararray_pc(sd, card_slot, (void*)0);
 	}
 	
@@ -1462,7 +1462,7 @@ static int npc_selllist_sub(struct map_session_data* sd, int n, unsigned short* 
 		
 			for( j = 0; MAX_SLOTS > j; j++ )
 			{// store each of the cards from the equipment in the array
-				sprintf_s(card_slot, sizeof(card_slot), "@sold_card%d", j + 1);
+				snprintf(card_slot, sizeof(card_slot), "@sold_card%d", j + 1);
 				script_setarray_pc(sd, card_slot, i, (void*)(intptr_t)sd->status.inventory[idx].card[j], &key_card);
 			}
 		}
