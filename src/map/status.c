@@ -5304,7 +5304,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 	if( !sc )
 		return 0; //Unable to receive status changes
 	
-	if( status_isdead(bl) )
+	if( status_isdead(bl) && type != SC_NOCHAT ) // SC_NOCHAT should work even on dead characters
 		return 0;
 
 	if( bl->type == BL_MOB && type != SC_SAFETYWALL && type != SC_PNEUMA )
