@@ -2707,8 +2707,8 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 				 * yes this formula MATCHES their site: matk_max already holds weaponmatk+upgradematk, and
 				 * -> statusMATK holds the %Matk modifier stuff from earlier and lastly:
 				 * -> the mdef part is not applied at this point, but later.
-				 **/
-				MATK_ADD(sstatus->matk_max * 2 + 15/10 * sstatus->matk_min + rand()% ( sstatus->matk_max + (sstatus->matk_max*sstatus->wlv) / 10 * 2 * 10/15 * sstatus->matk_min ) );
+				 **/	//1:bugreport:5101																	//1:bugreport:5101
+				MATK_ADD((1+sstatus->matk_max) * 2 + 15/10 * sstatus->matk_min + rand()% ( sstatus->matk_max + (1 + (sstatus->matk_max*sstatus->wlv) / 10 * 2 * 10/15 * sstatus->matk_min ) ));
 			#else //Ancient MATK Appliance
 				if (sstatus->matk_max > sstatus->matk_min) {
 					MATK_ADD(sstatus->matk_min+rand()%(1+sstatus->matk_max-sstatus->matk_min));
