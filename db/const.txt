@@ -228,14 +228,14 @@ mf_nomobloot	31
 mf_nomvploot	32
 mf_noreturn	33
 mf_nowarpto	34
-mf_nonightmaredrop	35
+mf_nightmaredrop	35
 mf_restricted	36
 mf_nocommand	37
 mf_nodrop	38
 mf_jexp	39
 mf_bexp	40
 mf_novending	41
-mf_loadevent 42
+mf_loadevent	42
 mf_nochat	43
 mf_noexppenalty	44
 mf_guildlock	45
@@ -245,6 +245,7 @@ mf_allowks	48
 mf_monster_noteleport	49
 mf_pvp_nocalcrank	50
 mf_battleground	51
+mf_reset	52
 
 cell_walkable	0
 cell_shootable	1
