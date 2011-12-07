@@ -584,8 +584,8 @@ prt_church,27,24,1	script	Sister Cecilia	79,{
 					next;
 					mes "[Sister Cecilia]";
 					mes "I believe he can give you specific requirement information about the Priest class. Yes, I think it's a good idea.";
-					next;
 				}
+				close;
 			}
 			mes "[Sister Cecilia]";
 			mes "I see. Well, feel free to relax and make yourself at home. Nowhere on earth is safer than the Prontera Sanctuary.";
