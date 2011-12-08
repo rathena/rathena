@@ -323,7 +323,7 @@ int guild_send_xy_timer_sub(DBKey key,void *data,va_list ap)
 
 	nullpo_ret(g);
 
-	if( g->connect_member )
+	if( !g->connect_member )
 	{// no members connected to this guild so do not iterate
 		return 0;
 	}
