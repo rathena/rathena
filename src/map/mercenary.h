@@ -69,6 +69,12 @@ int mercenary_kills(struct mercenary_data *md);
 
 int mercenary_checkskill(struct mercenary_data *md, int skill_id);
 
+/**
+ * atcommand.c required
+ **/
+int read_mercenarydb(void);
+int read_mercenary_skilldb(void);
+
 int do_init_mercenary(void);
 
 #endif /* _MERCENARY_H_ */
