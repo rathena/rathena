@@ -3424,7 +3424,7 @@ einbroch,132,84,3	script	Liotzburg#ein	853,2,2,{
 	close;
 
 OnTouch:
-	if ($EinPolution > 9) {
+	if ($EinPolution > 9 && !$@AlrdEinPoll) {
 		mes "[Liotzburg]";
 		mes "What's going on?!";
 		mes "Who's responsible?!";
@@ -3438,8 +3438,10 @@ OnTouch:
 		mes "fix this! I gotta hide and find";
 		mes "someplace safe!";
 		close2;
-		donpcevent "Einbroch Smog Alert::OnEnable";
-		hideonnpc "Liotzburg#ein";
+ 		if ($EinPolution > 9 && !$@AlrdEinPoll) {
+			donpcevent "Einbroch Smog Alert::OnEnable";
+			hideonnpc "Liotzburg#ein";
+		}
 		end;
 	}
 	else {

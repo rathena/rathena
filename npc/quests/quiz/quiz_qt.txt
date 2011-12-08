@@ -1482,7 +1482,7 @@ if(quiz_rvl == 18) {
 						mes "Name of monster which drop";
 						mes "'Big Ribbon'?";
 						next;
-							menu "Eclipse",sM1_6,"Dragon Fly",sM1_6,"Vocal",sM1_6,"Toad,",-;
+							menu "Eclipse",sM1_6,"Dragon Fly",sM1_6,"Vocal",sM1_6,"Toad",-;
 							
 								set @score_test2, @score_test2 + 10;
 
@@ -1676,11 +1676,11 @@ if(quiz_rvl == 20) {
 		mes "For reference, number of particapants are";
 		next;
 		mes "[Kantryl]";
-		mes "1st Quiz Revolution - " + quiz1 + "/200";
-		mes "2nd Quiz Revolution - " + quiz2 + "/200";
-		mes "3rd Quiz Revolution - " + quiz3 + "/200";
-		mes "4th Quiz Revolution - " + quiz4 + "/200";
-		mes "5th Quiz Revolution - " + quiz5 + "/200";
+		mes "1st Quiz Revolution - " + $quiz1 + "/200";
+		mes "2nd Quiz Revolution - " + $quiz2 + "/200";
+		mes "3rd Quiz Revolution - " + $quiz3 + "/200";
+		mes "4th Quiz Revolution - " + $quiz4 + "/200";
+		mes "5th Quiz Revolution - " + $quiz5 + "/200";
 		mes "keep it in your mind.";
 		close;
 
@@ -1719,15 +1719,15 @@ if(quiz_rvl == 20) {
 				mes "So please make right decision.";
 				next;
 				mes "[Kantryl]";
-				mes "1st Quiz Revolution - " + quiz1 + "/200";
-				mes "2nd Quiz Revolution - " + quiz2 + "/200";
-				mes "3rd Quiz Revolution - " + quiz3 + "/200";
-				mes "4th Quiz Revolution - " + quiz4 + "/200";
-				mes "5th Quiz Revolution - " + quiz5 + "/200";
+				mes "1st Quiz Revolution - " + $quiz1 + "/200";
+				mes "2nd Quiz Revolution - " + $quiz2 + "/200";
+				mes "3rd Quiz Revolution - " + $quiz3 + "/200";
+				mes "4th Quiz Revolution - " + $quiz4 + "/200";
+				mes "5th Quiz Revolution - " + $quiz5 + "/200";
 				next;
 				menu "Join 1st round",-,"Join 2nd round",s2nd,"Join 3rd round",s3nd,"Join 4th round",s4nd,"Join 5th round",s5nd;
 				
-						if(quiz1 > 199){
+						if($quiz1 > 199){
 							mes "[Kantryl]";
 							mes "I'm sorry. We are all full at";
 							mes "1st round of quiz revolution";
@@ -1740,7 +1740,7 @@ if(quiz_rvl == 20) {
 						mes "I have received your application";
 						mes "Try hard and study hard.";
 						set quiz_rvl,19;
-						set quiz1,quiz1 + 1;
+						set $quiz1,$quiz1 + 1;
 						getitem 7280,1; //Quiz_Ticket01
 						close;
 
@@ -1748,7 +1748,7 @@ if(quiz_rvl == 20) {
 
 
 					s2nd:
-						if(quiz2 > 199){
+						if($quiz2 > 199){
 								mes "[Kantryl]";
 							mes "I'm sorry. We are all full at";
 							mes "2nd round of quiz revolution";
@@ -1761,14 +1761,14 @@ if(quiz_rvl == 20) {
 						mes "I have received your application";
 						mes "Try hard and study hard.";
 						set quiz_rvl,19;
-						set quiz2,quiz2 + 1;
+						set $quiz2,$quiz2 + 1;
 						getitem 7281,1;  //Quiz_Ticket02
 						close;
 					
 
 
 					s3nd:
-						if(quiz3 > 199){
+						if($quiz3 > 199){
 								mes "[Kantryl]";
 							mes "I'm sorry. We are all full at";
 							mes "3rd round of quiz revolution.";
@@ -1782,7 +1782,7 @@ if(quiz_rvl == 20) {
 						mes "I have received your application.";
 						mes "Try hard and study hard.";
 						set quiz_rvl,19;
-						set quiz3,quiz3 + 1;
+						set $quiz3,$quiz3 + 1;
 						getitem 7282,1;  //Quiz_Ticket03
 						close;
 					
@@ -1790,7 +1790,7 @@ if(quiz_rvl == 20) {
 
 							
 					s4nd:
-						if(quiz4 > 199){
+						if($quiz4 > 199){
 								mes "[Kantryl]";
 							mes "I'm sorry. We are all full at";
 							mes "4th round of quiz revolution.";
@@ -1803,7 +1803,7 @@ if(quiz_rvl == 20) {
 						mes "I have received your application.";
 						mes "Try hard and study hard.";
 						set quiz_rvl,19;
-						set quiz4,quiz4 + 1;
+						set $quiz4,$quiz4 + 1;
 						getitem 7283,1;  //Quiz_Ticket04
 						close;
 						
@@ -1811,7 +1811,7 @@ if(quiz_rvl == 20) {
 
 					
 					s5nd:
-						if(quiz5 > 199){
+						if($quiz5 > 199){
 								mes "[Kantryl]";
 							mes "I'm sorry. We are all full at";
 							mes "5th round of quiz revolution.";
@@ -1824,7 +1824,7 @@ if(quiz_rvl == 20) {
 						mes "I have received your application.";
 						mes "Try hard and study hard.";
 						set quiz_rvl,19;
-						set quiz5,quiz5 + 1;
+						set $quiz5,$quiz5 + 1;
 						getitem 7284,1;  //Quiz_Ticket05
 						close;
 						
