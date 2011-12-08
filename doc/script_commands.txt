@@ -1,7 +1,7 @@
 ﻿//===== Athena Doc ========================================
-//= eAthena Script Commands
+//= rAthena Script Commands
 //===== Description =======================================
-//= A reference manual for the eAthena scripting language.
+//= A reference manual for the rAthena scripting language.
 //= Commands are sorted depending on their functionality.
 //===== Version ===========================================
 //= 3.45.20110709
@@ -186,7 +186,7 @@
 //=========================================================
 
 This document is a reference manual for all the scripting commands and functions 
-available in current eAthena SVN. It is not a simple tutorial. When people tell 
+available in current rAthena SVN. It is not a simple tutorial. When people tell 
 you to "Read The F***ing Manual", they mean this.
 
 The information was mostly acquired through looking up how things actually work 
@@ -272,6 +272,19 @@ Whenever '//' is encountered in a line upon reading, everything beyond this on
 that line is considered to be a comment and is ignored. This works wherever you 
 place it.
 
+// This line will be ignored when processing the script.
+
+Block comments can also be used, where you can place /* and */ between any text you 
+wish rAthena to ignore.
+
+Example:
+/* This text,
+ * no matter which new line you start
+ * is ignored, until the following 
+ * symbol is encountered: */
+ 
+The asterisks (*) in front of each line is a personal preference, and is not required.
+
 Upon loading all the files, the server will execute all the top-level commands 
 in them. No variables exist yet at this point, no commands can be called other 
 than those given in this section. These commands set up the basic server script 
@@ -315,7 +328,7 @@ Monster name is the name the monsters will have on screen, and has no relation
 whatsoever to their names anywhere else. It's the mob id that counts, which 
 identifies monster record in 'mob_db.txt' database of monsters. If the mob name 
 is given as "--ja--", the 'japanese name' field from the monster database is 
-used, (which, in eAthena, actually contains an english name) if it's "--en--", 
+used, (which, in rAthena, actually contains an english name) if it's "--en--", 
 it's the 'english name' from the monster database (which contains an uppercase 
 name used to summon the monster with a GM command).
 
@@ -576,7 +589,7 @@ Variables
 The meat of every programming language is variables - places where you store 
 data.
 
-In the eAthena scripting language, variable names are not case sensitive.
+In the rAthena scripting language, variable names are not case sensitive.
 
 Variables are divided into and uniquely identified by the combination of:
 prefix  - determines the scope and extent (or lifetime) of the variable
@@ -716,7 +729,7 @@ To include symbol '"' in a string you should use prefix '\"'
 Arrays
 ------
 
-Arrays (in eAthena at least) are essentially a set of variables going under the 
+Arrays (in rAthena at least) are essentially a set of variables going under the 
 same name. You can tell between the specific variables of an array with an 
 'array index', a number of a variable in that array:
 
@@ -863,7 +876,7 @@ Logical bitwise operators work only on numbers, and they are the following:
  |  - Or.
 	The bitwise operator AND (&) is used to test two values against each other, 
 	and results in setting bits which are active in both arguments. This can
-	be used for a few things, but in eAthena this operator is usually used to
+	be used for a few things, but in rAthena this operator is usually used to
 	create bit-masks in scripts. 
 	
 	The bitwise operator OR (|)sets to 1 a binary position if the binary position
@@ -2498,7 +2511,7 @@ See 'getequipid' for a full list of valid equipment slots.
 *getitemname(<item id>)
 
 Given the database ID number of an item, this function will return the text 
-stored in the 'japanese name' field (which, in eAthena, stores an english name 
+stored in the 'japanese name' field (which, in rAthena, stores an english name 
 the players would normally see on screen.)
 
 ---------------------------------------
@@ -2881,7 +2894,7 @@ http://www.delorie.com/gnu/docs/glibc/libc_437.html
 All the format characters given in there should properly work.
 Max length is the maximum length of a time string to generate.
 
-The example given in eAthena sample scripts works like this:
+The example given in rAthena sample scripts works like this:
 
   mes gettimestr("%Y-%m/%d %H:%M:%S",21);
   
@@ -3998,7 +4011,7 @@ sprites, which is essential for making custom headgear.
 
 Since a lot of people have different palettes for hair and clothes, it's 
 impossible to tell you what all the color numbers are. If you want a serious 
-example, there is a Stylist script inside the default eAthena installation that 
+example, there is a Stylist script inside the default rAthena installation that 
 you can look at, this may help you create a Stylist of your own: 
 'custom\dye.txt'
 
@@ -5680,7 +5693,7 @@ hold information about the name id (item id) sold and the amount sold of it. Sam
 goes for the OnSellItem label, only the variables are named different 
 (@sold_nameid, @sold_quantity, @sold_refine, @sold_attribute, @sold_identify,
 @sold_card1, @sold_card2, @sold_card3, @sold_card4). An example on a shop comes
-with eAthena, and can be found in the doc/sample/npc_dynamic_shop.txt file.
+with rAthena, and can be found in the doc/sample/npc_dynamic_shop.txt file.
  
 This example shows how to use the labels and their set variables to create a dynamic shop.
 
@@ -5814,7 +5827,7 @@ characters are present in the room to mess up the script.
 
 The 'enablearena'/'disablearena' commands are just aliases with no parameter.
 These are supposedly left here for compatibility with official server scripts,
-but no eathena script uses these at the moment.
+but no rAthena script uses these at the moment.
 
 ---------------------------------------
 
