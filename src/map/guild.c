@@ -329,9 +329,8 @@ int guild_send_xy_timer_sub(DBKey key,void *data,va_list ap)
 	}
 
 	for(i=0;i<g->max_member;i++){
-		//struct map_session_data* sd = g->member[i].sd;
-		struct map_session_data* sd = map_charid2sd(g->member[i].char_id); // temporary crashfix
-		if( sd != NULL && (sd->guild_x != sd->bl.x || sd->guild_y != sd->bl.y) && !sd->bg_id )
+		struct map_session_data* sd = g->member[i].sd;
+		if( sd != NULL && sd->fd && (sd->guild_x != sd->bl.x || sd->guild_y != sd->bl.y) && !sd->bg_id )
 		{
 			clif_guild_xy(sd);
 			sd->guild_x = sd->bl.x;
