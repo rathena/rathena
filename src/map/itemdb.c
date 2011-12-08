@@ -27,6 +27,17 @@ static struct item_group itemgroup_db[MAX_ITEMGROUP];
 
 struct item_data dummy_item; //This is the default dummy item used for non-existant items. [Skotlex]
 
+/**
+ * [Ind] The following fixes the @reloaditemdb issue that'd clear the mob-dropped data (which is populated by mob_db stuff)
+ * - It saves the data before it is refreshed in this array, and quickly re-populates it with this same data after refresh is done.
+ **/
+struct {
+	struct {
+		unsigned short chance;
+		int id;
+	} mob[MAX_SEARCH];
+} temporaryMonsterDrop[MAX_ITEMDB];
+
 /*==========================================
  * –¼‘O‚ÅŒŸõ—p
  *------------------------------------------*/
@@ -858,7 +869,9 @@ static bool itemdb_parse_dbrow(char** str, const char* source, int line, int scr
 		id->equip_script = parse_script(str[20], source, line, scriptopt);
 	if (*str[21])
 		id->unequip_script = parse_script(str[21], source, line, scriptopt);
-
+	// [Ind] re-populate the temporaryMonsterDrop data
+	if( temporaryMonsterDrop[nameid].mob[0].id )
+		memmove(&id->mob, &temporaryMonsterDrop[nameid].mob, sizeof(temporaryMonsterDrop[nameid].mob));
 	return true;
 }
 
@@ -1093,38 +1106,22 @@ void itemdb_reload(void)
 	struct map_session_data* sd;
 
 	int i;
-	/**
-	 * [Ind] The following fixes the @reloaditemdb issue that'd clear the mob-dropped data (which is populated by mob_db stuff)
-	 * - It saves the data before it is refreshed in this array, and quickly re-populates it with this same data after refresh is done.
-	 **/
-	struct {
-		struct {
-			unsigned short chance;
-			int id;
-		} mob[MAX_SEARCH];
-	} temporaryMonsterDrop[MAX_ITEMDB];
 
-	// [Ind] capture the existent temporaryMonsterDrop data
-	for( i = 0; i < ARRAYLENGTH(itemdb_array); ++i )
-		if( itemdb_array[i] )
-			memcpy(&temporaryMonsterDrop[i].mob, &itemdb_array[i]->mob, sizeof(itemdb_array[i]->mob));
-
+	memset(temporaryMonsterDrop, 0, sizeof(temporaryMonsterDrop));
+	
 	// clear the previous itemdb data
 	for( i = 0; i < ARRAYLENGTH(itemdb_array); ++i )
-		if( itemdb_array[i] )
+		if( itemdb_array[i] ) {
+			memmove(&temporaryMonsterDrop[i].mob, &itemdb_array[i]->mob, sizeof(itemdb_array[i]->mob));//hijack the existent mob drop data
 			destroy_item_data(itemdb_array[i], 1);
+		}
 
 	itemdb_other->clear(itemdb_other, itemdb_final_sub);
 
 	memset(itemdb_array, 0, sizeof(itemdb_array));
-
+	
 	// read new data
 	itemdb_read();
-
-	// [Ind] re-populate the temporaryMonsterDrop data
-	for( i = 0; i < ARRAYLENGTH(itemdb_array); ++i )
-		if( itemdb_array[i] )
-			memcpy(&itemdb_array[i]->mob, &temporaryMonsterDrop[i].mob, sizeof(temporaryMonsterDrop[i].mob));
 
 	// readjust itemdb pointer cache for each player
 	iter = mapit_geteachpc();
@@ -1152,6 +1149,7 @@ int do_init_itemdb(void)
 {
 	memset(itemdb_array, 0, sizeof(itemdb_array));
 	itemdb_other = idb_alloc(DB_OPT_BASE); 
+	memset(temporaryMonsterDrop, 0, sizeof(temporaryMonsterDrop));
 	create_dummy_data(); //Dummy data item.
 	itemdb_read();
 
