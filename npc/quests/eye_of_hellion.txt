@@ -1060,7 +1060,7 @@ prontera,223,82,0	script	#prt_key-1	111,{
 		mes "[" + strcharinfo(0) + "]";
 		mes "What the heck does this";
 		mes "even mean? A Veggie Lady?";
-		mes "Does Clanux knows anything";
+		mes "Does Clanux know anything";
 		mes "at all about this clue...?";
 		close;
 	}
@@ -1350,7 +1350,7 @@ payon,182,132,3	script	Grout'he Tuccok#hellion	48,{
 					mes "[Grout'he]";
 					mes "There you go!";
 					mes "Thanks for the cash~";
-					mes "(Know I won't have to";
+					mes "(Now I won't have to";
 					mes "get my knees all broken!)";
 					mes "Oh, and let me mark your";
 					mes "Mini-Map for you real quick...";
