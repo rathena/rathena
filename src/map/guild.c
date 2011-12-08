@@ -323,6 +323,11 @@ int guild_send_xy_timer_sub(DBKey key,void *data,va_list ap)
 
 	nullpo_ret(g);
 
+	if( g->connect_member )
+	{// no members connected to this guild so do not iterate
+		return 0;
+	}
+
 	for(i=0;i<g->max_member;i++){
 		//struct map_session_data* sd = g->member[i].sd;
 		struct map_session_data* sd = map_charid2sd(g->member[i].char_id); // temporary crashfix
