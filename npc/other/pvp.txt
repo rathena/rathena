@@ -164,19 +164,19 @@ pvp_y_room,86,85,4	script	Fight Square Reception#1	105,{
 	while(1) {
 		switch(select("Prontera [ "+.@mapcount_1+" / 128 ]:Izlude [ "+.@mapcount_2+" / 128 ]:Payon [ "+.@mapcount_3+" / 128 ]:Alberta [ "+.@mapcount_4+" / 128 ]:Morroc [ "+.@mapcount_5+" / 128 ]:Cancel")) {
 		case 1:
-			callsub S_CheckPVPRoom,@mapcount_1,"pvp_y_8-1";
+			callsub S_CheckPVPRoom,.@mapcount_1,"pvp_y_8-1";
 			break;
 		case 2:
-			callsub S_CheckPVPRoom,@mapcount_2,"pvp_y_8-2";
+			callsub S_CheckPVPRoom,.@mapcount_2,"pvp_y_8-2";
 			break;
 		case 3:
-			callsub S_CheckPVPRoom,@mapcount_3,"pvp_y_8-3";
+			callsub S_CheckPVPRoom,.@mapcount_3,"pvp_y_8-3";
 			break;
 		case 4:
-			callsub S_CheckPVPRoom,@mapcount_4,"pvp_y_8-4";
+			callsub S_CheckPVPRoom,.@mapcount_4,"pvp_y_8-4";
 			break;
 		case 5:
-			callsub S_CheckPVPRoom,@mapcount_5,"pvp_y_8-5";
+			callsub S_CheckPVPRoom,.@mapcount_5,"pvp_y_8-5";
 			break;
 		case 6:
 			close;
@@ -211,19 +211,19 @@ pvp_n_room,30,85,4	script	Fight Square Reception#2	105,{
 	while(1) {
 		switch(select("Sandwich [ "+.@mapcount_1+" / 64 ]:Lock on [ "+.@mapcount_2+" / 32 ]:Four Room [ "+.@mapcount_3+" / 32 ]:Under cross [ "+.@mapcount_4+" / 32 ]:Compass Room [ "+.@mapcount_5+" / 32 ]:Cancel")) {
 		case 1:
-			callsub S_CheckPVPRoom,@mapcount_1,"pvp_n_8-1",64;
+			callsub S_CheckPVPRoom,.@mapcount_1,"pvp_n_8-1",64;
 			break;
 		case 2:
-			callsub S_CheckPVPRoom,@mapcount_2,"pvp_n_8-2",32;
+			callsub S_CheckPVPRoom,.@mapcount_2,"pvp_n_8-2",32;
 			break;
 		case 3:
-			callsub S_CheckPVPRoom,@mapcount_3,"pvp_n_8-3",32;
+			callsub S_CheckPVPRoom,.@mapcount_3,"pvp_n_8-3",32;
 			break;
 		case 4:
-			callsub S_CheckPVPRoom,@mapcount_4,"pvp_n_8-4",32;
+			callsub S_CheckPVPRoom,.@mapcount_4,"pvp_n_8-4",32;
 			break;
 		case 5:
-			callsub S_CheckPVPRoom,@mapcount_5,"pvp_n_8-5",32;
+			callsub S_CheckPVPRoom,.@mapcount_5,"pvp_n_8-5",32;
 			break;
 		case 6:
 			close;
