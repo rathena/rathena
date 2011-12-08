@@ -27,17 +27,6 @@ static struct item_group itemgroup_db[MAX_ITEMGROUP];
 
 struct item_data dummy_item; //This is the default dummy item used for non-existant items. [Skotlex]
 
-/**
- * [Ind] The following fixes the @reloaditemdb issue that'd clear the mob-dropped data (which is populated by mob_db stuff)
- * - It saves the data before it is refreshed in this array, and quickly re-populates it with this same data after refresh is done.
- **/
-struct {
-	struct {
-		unsigned short chance;
-		int id;
-	} mob[MAX_SEARCH];
-} temporaryMonsterDrop[MAX_ITEMDB];
-
 /*==========================================
  * –¼‘O‚ÅŒŸõ—p
  *------------------------------------------*/
@@ -869,9 +858,7 @@ static bool itemdb_parse_dbrow(char** str, const char* source, int line, int scr
 		id->equip_script = parse_script(str[20], source, line, scriptopt);
 	if (*str[21])
 		id->unequip_script = parse_script(str[21], source, line, scriptopt);
-	// [Ind] re-populate the temporaryMonsterDrop data
-	if( temporaryMonsterDrop[nameid].mob[0].id )
-		memmove(&id->mob, &temporaryMonsterDrop[nameid].mob, sizeof(temporaryMonsterDrop[nameid].mob));
+
 	return true;
 }
 
@@ -1105,16 +1092,12 @@ void itemdb_reload(void)
 	struct s_mapiterator* iter;
 	struct map_session_data* sd;
 
-	int i;
-
-	memset(temporaryMonsterDrop, 0, sizeof(temporaryMonsterDrop));
+	int i,d,k;
 	
 	// clear the previous itemdb data
 	for( i = 0; i < ARRAYLENGTH(itemdb_array); ++i )
-		if( itemdb_array[i] ) {
-			memmove(&temporaryMonsterDrop[i].mob, &itemdb_array[i]->mob, sizeof(itemdb_array[i]->mob));//hijack the existent mob drop data
+		if( itemdb_array[i] )
 			destroy_item_data(itemdb_array[i], 1);
-		}
 
 	itemdb_other->clear(itemdb_other, itemdb_final_sub);
 
@@ -1122,6 +1105,34 @@ void itemdb_reload(void)
 	
 	// read new data
 	itemdb_read();
+	
+	//Epoque's awesome @reloaditemdb fix - thanks! [Ind]
+	//- Fixes the need of a @reloadmobdb after a @reloaditemdb to re-link monster drop data
+	for( i = 0; i < MAX_MOB_DB; i++ ) {
+		struct mob_db *entry;
+		if( !((i < 1324 || i > 1363) && (i < 1938 || i > 1946)) )
+			continue;
+		entry = mob_db(i);
+		for(d = 0; d < MAX_MOB_DROP; d++) {
+			struct item_data *id;
+			if( !entry->dropitem[d].nameid )
+				continue;
+			id = itemdb_search(entry->dropitem[d].nameid);
+
+			for (k = 0; k < MAX_SEARCH; k++) {
+				if (id->mob[k].chance <= entry->dropitem[d].p)
+					break;
+			}
+
+			if (k == MAX_SEARCH)
+				continue;
+			
+			if (id->mob[k].id != i)
+				memmove(&id->mob[k+1], &id->mob[k], (MAX_SEARCH-k-1)*sizeof(id->mob[0]));
+			id->mob[k].chance = entry->dropitem[d].p;
+			id->mob[k].id = i;
+		}
+	}
 
 	// readjust itemdb pointer cache for each player
 	iter = mapit_geteachpc();
@@ -1149,7 +1160,6 @@ int do_init_itemdb(void)
 {
 	memset(itemdb_array, 0, sizeof(itemdb_array));
 	itemdb_other = idb_alloc(DB_OPT_BASE); 
-	memset(temporaryMonsterDrop, 0, sizeof(temporaryMonsterDrop));
 	create_dummy_data(); //Dummy data item.
 	itemdb_read();
 
