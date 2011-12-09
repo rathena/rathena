@@ -12579,6 +12579,792 @@ BUILDIN_FUNC(charisalpha)
 	return 0;
 }
 
+//=======================================================
+// charisupper <str>, <index>
+//-------------------------------------------------------
+BUILDIN_FUNC(charisupper)
+{
+	const char *str = script_getstr(st,2);
+	int pos = script_getnum(st,3);
+
+	int val = ( str && pos >= 0 && (unsigned int)pos < strlen(str) ) ? ISUPPER( str[pos] ) : 0;
+
+	script_pushint(st,val);
+	return 0;
+}
+
+//=======================================================
+// charislower <str>, <index>
+//-------------------------------------------------------
+BUILDIN_FUNC(charislower)
+{
+	const char *str = script_getstr(st,2);
+	int pos = script_getnum(st,3);
+
+	int val = ( str && pos >= 0 && (unsigned int)pos < strlen(str) ) ? ISLOWER( str[pos] ) : 0;
+
+	script_pushint(st,val);
+	return 0;
+}
+
+//=======================================================
+// charat <str>, <index>
+//-------------------------------------------------------
+BUILDIN_FUNC(charat)
+{
+	const char *str = script_getstr(st,2);
+	int pos = script_getnum(st,3);
+	char *output;
+
+	output = (char*)aMallocA(2*sizeof(char));
+	output[0] = '\0';
+
+	if(str && pos >= 0 && (unsigned int)pos < strlen(str))
+		sprintf(output, "%c", str[pos]);
+
+	script_pushstr(st, output);
+	return 0;
+}
+
+//=======================================================
+// setchar <string>, <char>, <index>
+//-------------------------------------------------------
+BUILDIN_FUNC(setchar)
+{
+	const char *str = script_getstr(st,2);
+	const char *c = script_getstr(st,3);
+	int index = script_getnum(st,4);
+	char *output;
+	size_t len = strlen(str);
+
+	output = (char*)aMallocA(len + 1);
+	memcpy(output, str, len);
+	output[len] = '\0';
+
+	if(index >= 0 && index < len)
+		output[index] = c[0];
+
+	script_pushstr(st, output);
+	return 0;
+}
+
+//=======================================================
+// insertchar <string>, <char>, <index>
+//-------------------------------------------------------
+BUILDIN_FUNC(insertchar)
+{
+	const char *str = script_getstr(st,2);
+	const char *c = script_getstr(st,3);
+	int index = script_getnum(st,4);
+	char *output;
+	size_t len = strlen(str);
+
+	if(index < 0)
+		index = 0;
+	else if(index > len)
+		index = len;
+
+	output = (char*)aMallocA(len + 2);
+
+	memcpy(output, str, index);
+	output[index] = c[0];
+	memcpy(&output[index+1], &str[index], len - index);
+	output[len+1] = '\0';
+
+	script_pushstr(st, output);
+	return 0;
+}
+
+//=======================================================
+// delchar <string>, <index>
+//-------------------------------------------------------
+BUILDIN_FUNC(delchar)
+{
+	const char *str = script_getstr(st,2);
+	int index = script_getnum(st,3);
+	char *output;
+	size_t len = strlen(str);
+
+	if(index < 0 || index > len) {
+		//return original
+		++len;
+		output = (char*)aMallocA(len);
+		memcpy(output, str, len);
+		script_pushstr(st, output);
+		return 0;
+	}
+
+	output = (char*)aMallocA(len);
+
+	memcpy(output, str, index);
+	memcpy(&output[index], &str[index+1], len - index);
+
+	script_pushstr(st, output);
+	return 0;
+}
+
+//=======================================================
+// strtoupper <str>
+//-------------------------------------------------------
+BUILDIN_FUNC(strtoupper)
+{
+	const char *str = script_getstr(st,2);
+	char *output;
+	int i = 0;
+	
+	output = (char*)aMallocA(strlen(str) + 1);
+
+	while(str[i] != '\0')
+		output[i++] = TOUPPER(str[i]);
+	output[i] = '\0';
+
+	script_pushstr(st, output);
+	return 0;
+}
+
+//=======================================================
+// strtolower <str>
+//-------------------------------------------------------
+BUILDIN_FUNC(strtolower)
+{
+	const char *str = script_getstr(st,2);
+	char *output;
+	int i = 0;
+	
+	output = (char*)aMallocA(strlen(str) + 1);
+
+	while(str[i] != '\0')
+		output[i++] = TOLOWER(str[i]);
+	output[i] = '\0';
+
+	script_pushstr(st, output);
+	return 0;
+}
+
+//=======================================================
+// substr <str>, <start>, <end>
+//-------------------------------------------------------
+BUILDIN_FUNC(substr)
+{
+	const char *str = script_getstr(st,2);
+	char *output;
+	int start = script_getnum(st,3);
+	int end = script_getnum(st,4);
+
+	int len = 0;
+
+	if(start >= 0 && end < strlen(str) && start <= end) {
+		len = end - start + 1;
+		output = (char*)aMallocA(len + 1);
+		memcpy(output, &str[start], len);
+	} else 
+		output = (char*)aMallocA(1);
+
+	output[len] = '\0';
+
+	script_pushstr(st, output);
+	return 0;
+}
+
+//=======================================================
+// explode <dest_string_array>, <str>, <delimiter>
+// Note: delimiter is limited to 1 char
+//-------------------------------------------------------
+BUILDIN_FUNC(explode)
+{
+	struct script_data* data = script_getdata(st, 2);
+	const char *str = script_getstr(st,3);
+	const char delimiter = script_getstr(st, 4)[0];
+	int32 id;
+	size_t len = strlen(str);
+	int i = 0, j = 0, k = 0;
+	int start;
+	
+
+	char *temp;
+	const char* name;
+
+	TBL_PC* sd = NULL;
+
+	temp = (char*)aMallocA(len + 1);
+
+	if( !data_isreference(data) )
+	{
+		ShowError("script:explode: not a variable\n");
+		script_reportdata(data);
+		st->state = END;
+		return 1;// not a variable
+	}
+
+	id = reference_getid(data);
+	start = reference_getindex(data);
+	name = reference_getname(data);
+
+	if( not_array_variable(*name) )
+	{
+		ShowError("script:explode: illegal scope\n");
+		script_reportdata(data);
+		st->state = END;
+		return 1;// not supported
+	}
+
+	if( !is_string_variable(name) )
+	{
+		ShowError("script:explode: not string array\n");
+		script_reportdata(data);
+		st->state = END;
+		return 1;// data type mismatch
+	}
+
+	if( not_server_variable(*name) )
+	{
+		sd = script_rid2sd(st);
+		if( sd == NULL )
+			return 0;// no player attached
+	}
+
+	while(str[i] != '\0') {
+		if(str[i] == delimiter && start < 127) { //break at delimiter but ignore after reaching last array index
+			temp[j] = '\0';
+			set_reg(st, sd, reference_uid(id, start++), name, (void*)temp, reference_getref(data));
+			j = 0;
+			++i;
+		} else {
+			temp[j++] = str[i++];
+		}
+	}
+	//set last string
+	temp[j] = '\0';
+	set_reg(st, sd, reference_uid(id, start), name, (void*)temp, reference_getref(data));
+
+	aFree(temp);
+	return 0;
+}
+
+//=======================================================
+// implode <string_array>
+// implode <string_array>, <glue>
+//-------------------------------------------------------
+BUILDIN_FUNC(implode)
+{
+	struct script_data* data = script_getdata(st, 2);
+	const char *glue, *name, *temp;
+	int32 glue_len = 0, array_size, id;
+	size_t len = 0;
+	int i, k = 0;
+
+	TBL_PC* sd = NULL;
+
+	char *output;
+
+	if( !data_isreference(data) )
+	{
+		ShowError("script:implode: not a variable\n");
+		script_reportdata(data);
+		st->state = END;
+		return 1;// not a variable
+	}
+
+	id = reference_getid(data);
+	name = reference_getname(data);
+
+	if( not_array_variable(*name) )
+	{
+		ShowError("script:implode: illegal scope\n");
+		script_reportdata(data);
+		st->state = END;
+		return 1;// not supported
+	}
+
+	if( !is_string_variable(name) )
+	{
+		ShowError("script:implode: not string array\n");
+		script_reportdata(data);
+		st->state = END;
+		return 1;// data type mismatch
+	}
+
+	if( not_server_variable(*name) )
+	{
+		sd = script_rid2sd(st);
+		if( sd == NULL )
+			return 0;// no player attached
+	}
+
+	//count chars
+	array_size = getarraysize(st, id, reference_getindex(data), is_string_variable(name), reference_getref(data)) - 1;
+
+	if(array_size == -1) //empty array check (AmsTaff)
+    {
+        ShowWarning("script:implode: array length = 0\n");
+        output = (char*)aMallocA(sizeof(char)*5);
+        sprintf(output,"%s","NULL");
+	} else {
+		for(i = 0; i <= array_size; ++i) {
+			temp = (char*) get_val2(st, reference_uid(id, i), reference_getref(data));
+			len += strlen(temp);
+			script_removetop(st, -1, 0);
+		}
+
+		//allocate mem
+		if( script_hasdata(st,3) ) {
+			glue = script_getstr(st,3);
+			glue_len = strlen(glue);
+			len += glue_len * (array_size);
+		}
+		output = (char*)aMallocA(len + 1);
+
+		//build output
+		for(i = 0; i < array_size; ++i) {
+			temp = (char*) get_val2(st, reference_uid(id, i), reference_getref(data));
+			len = strlen(temp);
+			memcpy(&output[k], temp, len);
+			k += len;
+			if(glue_len != 0) {
+				memcpy(&output[k], glue, glue_len);
+				k += glue_len;
+			}
+			script_removetop(st, -1, 0);
+		}
+		temp = (char*) get_val2(st, reference_uid(id, array_size), reference_getref(data));
+		len = strlen(temp);
+		memcpy(&output[k], temp, len);
+		k += len;
+		script_removetop(st, -1, 0);
+
+		output[k] = '\0';
+	}
+
+	script_pushstr(st, output);
+	return 0;
+}
+
+//=======================================================
+// sprintf(<format>, ...);
+// Implements C sprintf, except format %n. The resulting string is
+// returned, instead of being saved in variable by reference.
+//-------------------------------------------------------
+BUILDIN_FUNC(sprintf)
+{
+    unsigned int len, argc = 0, arg = 0, buf2_len = 0;
+    const char* format;
+    char* p;
+    char* q;
+    char* buf  = NULL;
+    char* buf2 = NULL;
+    struct script_data* data;
+    StringBuf final_buf;
+
+    // Fetch init data
+    format = script_getstr(st, 2);
+    argc = script_lastdata(st)-2;
+    len = strlen(format);
+
+    // Skip parsing, where no parsing is required.
+    if(len==0){
+        script_pushconststr(st,"");
+        return 0;
+    }
+
+    // Pessimistic alloc
+    CREATE(buf, char, len+1);
+
+    // Need not be parsed, just solve stuff like %%.
+    if(argc==0){
+        sprintf(buf, format);
+        script_pushstrcopy(st, buf);
+        aFree(buf);
+        return 0;
+    }
+
+    safestrncpy(buf, format, len+1);
+
+    // Issue sprintf for each parameter
+    StringBuf_Init(&final_buf);
+    q = buf;
+    while((p = strchr(q, '%'))!=NULL){
+        if(p!=q){
+            len = p-q+1;
+            if(buf2_len<len){
+                RECREATE(buf2, char, len);
+                buf2_len = len;
+            }
+            safestrncpy(buf2, q, len);
+            StringBuf_AppendStr(&final_buf, buf2);
+            q = p;
+        }
+        p = q+1;
+        if(*p=='%'){  // %%
+            StringBuf_AppendStr(&final_buf, "%");
+            q+=2;
+            continue;
+        }
+        if(*p=='n'){  // %n
+            ShowWarning("buildin_sprintf: Format %%n not supported! Skipping...\n");
+            script_reportsrc(st);
+            q+=2;
+            continue;
+        }
+        if(arg>=argc){
+            ShowError("buildin_sprintf: Not enough arguments passed!\n");
+            if(buf) aFree(buf);
+            if(buf2) aFree(buf2);
+            StringBuf_Destroy(&final_buf);
+            script_pushconststr(st,"");
+            return 1;
+        }
+        if((p = strchr(q+1, '%'))==NULL){
+            p = strchr(q, 0);  // EOS
+        }
+        len = p-q+1;
+        if(buf2_len<len){
+            RECREATE(buf2, char, len);
+            buf2_len = len;
+        }
+        safestrncpy(buf2, q, len);
+        q = p;
+
+        // Note: This assumes the passed value being the correct
+        // type to the current format specifier. If not, the server
+        // probably crashes or returns anything else, than expected,
+        // but it would behave in normal code the same way so it's
+        // the scripter's responsibility.
+        data = script_getdata(st, arg+3);
+        if(data_isstring(data)){  // String
+            StringBuf_Printf(&final_buf, buf2, script_getstr(st, arg+3));
+        }else if(data_isint(data)){  // Number
+            StringBuf_Printf(&final_buf, buf2, script_getnum(st, arg+3));
+        }else if(data_isreference(data)){  // Variable
+            char* name = reference_getname(data);
+            if(name[strlen(name)-1]=='$'){  // var Str
+                StringBuf_Printf(&final_buf, buf2, script_getstr(st, arg+3));
+            }else{  // var Int
+                StringBuf_Printf(&final_buf, buf2, script_getnum(st, arg+3));
+            }
+        }else{  // Unsupported type
+            ShowError("buildin_sprintf: Unknown argument type!\n");
+            if(buf) aFree(buf);
+            if(buf2) aFree(buf2);
+            StringBuf_Destroy(&final_buf);
+            script_pushconststr(st,"");
+            return 1;
+        }
+        arg++;
+    }
+
+    // Append anything left
+    if(*q){
+        StringBuf_AppendStr(&final_buf, q);
+    }
+
+    // Passed more, than needed
+    if(arg<argc){
+        ShowWarning("buildin_sprintf: Unused arguments passed.\n");
+        script_reportsrc(st);
+    }
+
+    script_pushstrcopy(st, StringBuf_Value(&final_buf));
+
+    if(buf) aFree(buf);
+    if(buf2) aFree(buf2);
+    StringBuf_Destroy(&final_buf);
+
+    return 0;
+}
+
+//=======================================================
+// sscanf(<str>, <format>, ...);
+// Implements C sscanf.
+//-------------------------------------------------------
+BUILDIN_FUNC(sscanf){
+    unsigned int argc, arg = 0, len;
+    struct script_data* data;
+    struct map_session_data* sd = NULL;
+    const char* str;
+    const char* format;
+    const char* p;
+    const char* q;
+    char* buf = NULL;
+    char* buf_p;
+    char* ref_str = NULL;
+    int ref_int;
+
+    // Get data
+    str = script_getstr(st, 2);
+    format = script_getstr(st, 3);
+    argc = script_lastdata(st)-3;
+
+    len = strlen(format);
+    CREATE(buf, char, len*2+1);
+
+    // Issue sscanf for each parameter
+    *buf = 0;
+    q = format;
+    while(p = strchr(q, '%')){
+        if(p!=q){
+            strncat(buf, q, (size_t)(p-q));
+            q = p;
+        }
+        p = q+1;
+        if(*p=='*' || *p=='%'){  // Skip
+            strncat(buf, q, 2);
+            q+=2;
+            continue;
+        }
+        if(arg>=argc){
+            ShowError("buildin_sscanf: Not enough arguments passed!\n");
+            script_pushint(st, -1);
+            if(buf) aFree(buf);
+            if(ref_str) aFree(ref_str);
+            return 1;
+        }
+        if((p = strchr(q+1, '%'))==NULL){
+            p = strchr(q, 0);  // EOS
+        }
+        len = p-q;
+        strncat(buf, q, len);
+        q = p;
+
+        // Validate output
+        data = script_getdata(st, arg+4);
+        if(!data_isreference(data) || !reference_tovariable(data)){
+            ShowError("buildin_sscanf: Target argument is not a variable!\n");
+            script_pushint(st, -1);
+            if(buf) aFree(buf);
+            if(ref_str) aFree(ref_str);
+            return 1;
+        }
+        buf_p = reference_getname(data);
+        if(not_server_variable(*buf_p) && (sd = script_rid2sd(st))==NULL){
+            script_pushint(st, -1);
+            if(buf) aFree(buf);
+            if(ref_str) aFree(ref_str);
+            return 0;
+        }
+
+        // Save value if any
+        if(buf_p[strlen(buf_p)-1]=='$'){  // String
+            if(ref_str==NULL){
+                CREATE(ref_str, char, strlen(str)+1);
+            }
+            if(sscanf(str, buf, ref_str)==0){
+                break;
+            }
+            set_reg(st, sd, add_str(buf_p), buf_p, (void *)(ref_str), reference_getref(data));
+        }else{  // Number
+            if(sscanf(str, buf, &ref_int)==0){
+                break;
+            }
+            set_reg(st, sd, add_str(buf_p), buf_p, (void *)(ref_int), reference_getref(data));
+        }
+        arg++;
+
+        // Disable used format (%... -> %*...)
+        buf_p = strchr(buf, 0);
+        memmove(buf_p-len+2, buf_p-len+1, len);
+        *(buf_p-len+1) = '*';
+    }
+
+    // Passed more, than needed
+    if(arg<argc){
+        ShowWarning("buildin_sscanf: Unused arguments passed.\n");
+        script_reportsrc(st);
+    }
+
+    script_pushint(st, arg);
+    if(buf) aFree(buf);
+    if(ref_str) aFree(ref_str);
+
+    return 0;
+}
+
+//=======================================================
+// strpos(<haystack>, <needle>)
+// strpos(<haystack>, <needle>, <offset>)
+//
+// Implements PHP style strpos. Adapted from code from
+// http://www.daniweb.com/code/snippet313.html, Dave Sinkula
+//-------------------------------------------------------
+BUILDIN_FUNC(strpos) {
+	const char *haystack = script_getstr(st,2);
+	const char *needle = script_getstr(st,3);
+	int i;
+	size_t len;
+
+	if( script_hasdata(st,4) )
+		i = script_getnum(st,4);
+	else
+		i = 0;
+
+	if ( strlen(needle) == 0 ) {
+		script_pushint(st, -1);
+		return 0;
+	}
+
+	len = strlen(haystack);
+	for ( ; i < len; ++i ) {
+		if ( haystack[i] == *needle ) {
+			// matched starting char -- loop through remaining chars
+			const char *h, *n;
+			for ( h = &haystack[i], n = needle; *h && *n; ++h, ++n ) {
+				if ( *h != *n ) {
+					break;
+				}
+			}
+			if ( !*n ) { // matched all of 'needle' to null termination
+				script_pushint(st, i);
+				return 0;
+			}
+		}
+	}
+	script_pushint(st, -1);
+	return 0;
+}
+
+//===============================================================
+// replacestr <input>, <search>, <replace>{, <usecase>{, <count>}}
+//
+// Note: Finds all instances of <search> in <input> and replaces 
+// with <replace>. If specified will only replace as many 
+// instances as specified in <count>. By default will be case
+// sensitive.
+//---------------------------------------------------------------
+BUILDIN_FUNC(replacestr)
+{
+	const char *input = script_getstr(st, 2);
+	const char *find = script_getstr(st, 3);
+	const char *replace = script_getstr(st, 4);
+	size_t inputlen = strlen(input);
+	size_t findlen = strlen(find);
+	struct StringBuf output;
+	bool usecase = true;
+
+	int count = 0;
+	int numFinds = 0;
+	int i = 0, f = 0;
+
+	if(findlen == 0) {
+		ShowError("script:replacestr: Invalid search length.\n");
+		st->state = END;
+		return 1;
+	}
+
+	if(script_hasdata(st, 5)) {
+		if(script_isint(st,5))
+			usecase = script_getnum(st, 5) != 0;
+		else {
+			ShowError("script:replacestr: Invalid usecase value. Expected int got string\n");
+			st->state = END;
+			return 1;
+		}
+	}
+
+	if(script_hasdata(st, 6)) {
+		if(script_isint(st,6))
+			count = script_getnum(st, 6);
+		else {
+			ShowError("script:replacestr: Invalid count value. Expected int got string\n");
+			st->state = END;
+			return 1;
+		}
+	}
+
+	StringBuf_Init(&output);
+
+	for(; i < inputlen; i++) {
+		if(count && count == numFinds) {	//found enough, stop looking
+			break;
+		}
+
+		for(f = 0; f <= findlen; f++) {
+			if(f == findlen) { //complete match
+				numFinds++;
+				StringBuf_AppendStr(&output, replace);
+
+				i += findlen - 1;
+				break;
+			} else {
+				if(usecase) {
+					if((i + f) > inputlen || input[i + f] != find[f]) {
+						StringBuf_Printf(&output, "%c", input[i]);
+						break;
+					}
+				} else {
+					if((i + f) > inputlen || input[i + f] != find[f] && TOUPPER(input[i+f]) != TOUPPER(find[f])) {
+						StringBuf_Printf(&output, "%c", input[i]);
+						break;
+					}
+				}
+			}
+		}
+	}
+
+	//append excess after enough found
+	if(i < inputlen)
+		StringBuf_AppendStr(&output, &(input[i]));
+
+	script_pushstrcopy(st, StringBuf_Value(&output));
+	StringBuf_Destroy(&output);
+	return 0;
+}
+
+//========================================================
+// countstr <input>, <search>{, <usecase>}
+//
+// Note: Counts the number of times <search> occurs in 
+// <input>. By default will be case sensitive.
+//--------------------------------------------------------
+BUILDIN_FUNC(countstr)
+{
+	const char *input = script_getstr(st, 2);
+	const char *find = script_getstr(st, 3);
+	size_t inputlen = strlen(input);
+	size_t findlen = strlen(find);
+	bool usecase = true;
+
+	int numFinds = 0;
+	int i = 0, f = 0;
+
+	if(findlen == 0) {
+		ShowError("script:countstr: Invalid search length.\n");
+		st->state = END;
+		return 1;
+	}
+
+	if(script_hasdata(st, 4)) {
+		if(script_isint(st,4))
+			usecase = script_getnum(st, 4) != 0;
+		else {
+			ShowError("script:countstr: Invalid usecase value. Expected int got string\n");
+			st->state = END;
+			return 1;
+		}
+	}
+
+	for(; i < inputlen; i++) {
+		for(f = 0; f <= findlen; f++) {
+			if(f == findlen) { //complete match
+				numFinds++;
+				i += findlen - 1;
+				break;
+			} else {
+				if(usecase) {
+					if((i + f) > inputlen || input[i + f] != find[f]) {
+						break;
+					}
+				} else {
+					if((i + f) > inputlen || input[i + f] != find[f] && TOUPPER(input[i+f]) != TOUPPER(find[f])) {
+						break;
+					}
+				}
+			}
+		}
+	}
+	script_pushint(st, numFinds);
+	return 0;
+}
+
+
 /// Changes the display name and/or display class of the npc.
 /// Returns 0 is successful, 1 if the npc does not exist.
 ///
@@ -15395,6 +16181,22 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(unequip,"i"), // unequip command [Spectre]
 	BUILDIN_DEF(getstrlen,"s"), //strlen [Valaris]
 	BUILDIN_DEF(charisalpha,"si"), //isalpha [Valaris]
+	BUILDIN_DEF(charat,"si"),
+	BUILDIN_DEF(setchar,"ssi"),
+	BUILDIN_DEF(insertchar,"ssi"),
+	BUILDIN_DEF(delchar,"si"),
+	BUILDIN_DEF(strtoupper,"s"),
+	BUILDIN_DEF(strtolower,"s"),
+	BUILDIN_DEF(charisupper, "si"),
+	BUILDIN_DEF(charislower, "si"),
+	BUILDIN_DEF(substr,"sii"),
+	BUILDIN_DEF(explode, "rss"),
+	BUILDIN_DEF(implode, "r?"),
+	BUILDIN_DEF(sprintf,"s*"),  // [Mirei]
+	BUILDIN_DEF(sscanf,"ss*"),  // [Mirei]
+	BUILDIN_DEF(strpos,"ss?"),
+	BUILDIN_DEF(replacestr,"sss??"),
+	BUILDIN_DEF(countstr,"ss?"),
 	BUILDIN_DEF(setnpcdisplay,"sv??"),
 	BUILDIN_DEF(compare,"ss"), // Lordalfa - To bring strstr to scripting Engine.
 	BUILDIN_DEF(getiteminfo,"ii"), //[Lupus] returns Items Buy / sell Price, etc info

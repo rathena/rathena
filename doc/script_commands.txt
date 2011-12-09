@@ -6591,6 +6591,193 @@ The first letter is position 0.
 
 ---------------------------------------
 
+*charat(<string>,<index>)
+
+	Returns char at specified index. If index is out of range, 
+	returns empty string.	
+	
+	Example:
+	
+	charat("This is a string", 10); //returns "s"
+	
+---------------------------------------
+	
+*setchar(<string>,<char>,<index>)
+
+	Returns the original string with the char at the specified
+	index set to the specified char. If index out of range, the
+	original string will be returned.
+	Only the 1st char in the <char> parameter will be used.
+	
+	Example:
+	
+	setchar("Cat", "B", 0); //returns "Bat"
+	
+---------------------------------------
+
+*insertchar(<string>,<char>,<index>)
+	
+	Returns the original string with the specified char inserted
+	at the specified index. If index is out of range, the char 
+	will be inserted on the end	of the string that it is closest.
+	Only the 1st char in the <char> parameter will be used.
+	
+	Example:
+	
+	setchar("laughter", "s", 0); //returns "slaughter"
+	
+---------------------------------------
+
+*delchar(<string>,<index>)
+
+	Returns the original string with the char at the specified index
+	removed. If index is out of range, original string will be returned.
+	
+	Example:
+	
+	delchar("Diet", 3); //returns "Die"
+	
+---------------------------------------
+
+*strtoupper(<string>)
+*strtolower(<string>)
+
+	Returns the specified string in it's uppercase/lowercase form.
+	All non-alpha characters will be preserved
+	
+	Example:
+	
+	strtoupper("The duck is blue!!"); //returns "THE DUCK IS BLUE!!"
+
+---------------------------------------
+
+*charisupper(<string>,<index>)
+*charislower(<string>,<index>)
+
+	Returns 1 if character at specified index of specified string is
+	uppercase/lowercase. Otherwise, 0. Characters not of the alphabelt
+	will return 0.
+
+	Example:
+	
+	charisupper("eAthena", 1); //returns 1
+	
+---------------------------------------	
+
+*substr(<string>,<start_index>,<end_index>)
+	
+	Returns the sub-string of the specified string inclusively between
+	the set indexes.
+	If indexes are out of range, or the start index is after the end
+	index, an empty string will be returned.
+
+	Example:
+	
+	substr("foobar", 3, 5); //returns "bar"
+	
+---------------------------------------	
+
+*explode(<dest_array>,<string>,<delimiter>)
+
+	Breaks a string up into substrings based on the specified delimiter.
+	Substrings will be stored within the specified string array.
+	Only the 1st char of the delimiter parameter will be used.
+	If an empty string is passed as a delimiter, the string will be placed
+	in the array in it's original form.
+	
+	Example:
+	
+	explode(.@my_array$, "Explode:Test:1965:red:PIE", ":");
+	//.@my_array$ contents will be...
+	//.@my_array$[0]: "Explode"
+	//.@my_array$[1]: "Test"
+	//.@my_array$[2]: "1965"
+	//.@my_array$[3]: "red"
+	//.@my_array$[4]: "PIE"
+	
+
+---------------------------------------	
+
+*implode(<string_array>{,<glue>})
+
+	Combines all substrings within the specified string array into a single string.
+	If the glue parameter is specified, it will be inserted inbetween each substring.
+	
+	Example:
+	setarray .@my_array$[0], "This", "is", "a", "test";
+	implode(.@my_array$, " "); //returns "This is a test"
+
+---------------------------------------	
+
+*sprintf(<format>[,param[,param[,...]]]) [Mirei]
+
+	C style sprintf. The resulting string is returned same as in PHP. All C format 
+	specifiers are supported except %n. More info: sprintf @ www.cplusplus.com. 
+	The number of params is only limited by eA's script engine.
+	
+	See thread: http://www.eathena.ws/board/index.php?showtopic=190410
+	
+	Example:
+	.@format$ = 'The %s contains %d monkeys';
+	dispbottom(sprintf(.@format$, "zoo", 5));        //prints "The zoo contains 5 monkeys"
+	dispbottom(sprintf(.@format$, "barrel", 82));    //prints "The barrel contains 82 monkeys"
+	
+---------------------------------------	
+
+*sscanf(<string>,<format>[,param[,param[,...]]]) [Mirei]
+	
+	C style sscanf. All C format specifiers are supported. 
+	More info: sscanf @ www.cplusplus.com. The number of params is only limited 
+	by eA's script engine.
+	
+	See thread: http://www.eathena.ws/board/index.php?showtopic=191157
+	
+	Example:
+	sscanf("This is a test: 42 foobar", "This is a test: %d %s", .@num, .@str$);
+	dispbottom(.@num + " " + .@str$); //prints "42 foobar"
+	
+---------------------------------------	
+
+*strpos(<haystack>,<needle>{,<offset>})
+
+	PHP style strpos. Finds a substring (needle) within a string (haystack).
+	The offset parameter indicates the index of the string to start searching.
+	Returns index of substring on successful search, else -1.
+	Comparison is case sensitive.
+	
+	Example:
+	strpos("foobar", "bar", 0); //returns 3
+	strpos("foobarfoo", "foo", 0); //returns 0
+	strpos("foobarfoo", "foo", 1); //returns 6
+	
+---------------------------------------	
+
+*replacestr(<input>, <search>, <replace>{, <usecase>{, <count>}})
+
+	Replaces all instances of a search string in the input with the specified
+	replacement string. By default is case sensitive unless <usecase> is set
+	to 0. If specified it will only replace as many instances as specified
+	in the count parameter.
+	
+	Example:
+	replacestr("testing tester", "test", "dash"); //returns "dashing dasher"
+	replacestr("Donkey", "don", "mon", 0);	//returns "monkey"
+	replacestr("test test test test test", "yay", 0, 3); //returns "yay yay yay test test"
+	
+---------------------------------------	
+
+*countstr(<input>, <search>{, <usecase>})
+	
+	Counts all instances of a search string in the input. By default is case
+	sensitive unless <usecase> is set to 0.
+	
+	Example:
+	countstr("test test test Test", "test"); //returns 3
+	countstr("cake Cake", "Cake", 0); //returns 2
+
+
+---------------------------------------
+
 *setfont <font>
 
 This command sets the current RO client interface font to one of the
