@@ -3495,7 +3495,7 @@ When no name is given, the attached player is used for checking.
 Returns true or false (1 or 0) when the player is chatting/vending or not.
 
 Example(s):
-if (checkVending("Aaron")) mes "Aaron is currently vending!";	
+if (checkVending("Aaron")) mes "Aaron is currently vending!";
 	//This will check if Aaron is vending, and if so, put a message in front
 	//of the attached player saying Aaron is vending.
 
@@ -6594,7 +6594,7 @@ The first letter is position 0.
 *charat(<string>,<index>)
 
 	Returns char at specified index. If index is out of range, 
-	returns empty string.	
+	returns empty string.
 	
 	Example:
 	
@@ -6662,7 +6662,7 @@ The first letter is position 0.
 	
 	charisupper("eAthena", 1); //returns 1
 	
----------------------------------------	
+---------------------------------------
 
 *substr(<string>,<start_index>,<end_index>)
 	
@@ -6675,7 +6675,7 @@ The first letter is position 0.
 	
 	substr("foobar", 3, 5); //returns "bar"
 	
----------------------------------------	
+---------------------------------------
 
 *explode(<dest_array>,<string>,<delimiter>)
 
@@ -6696,7 +6696,7 @@ The first letter is position 0.
 	//.@my_array$[4]: "PIE"
 	
 
----------------------------------------	
+---------------------------------------
 
 *implode(<string_array>{,<glue>})
 
@@ -6707,7 +6707,7 @@ The first letter is position 0.
 	setarray .@my_array$[0], "This", "is", "a", "test";
 	implode(.@my_array$, " "); //returns "This is a test"
 
----------------------------------------	
+---------------------------------------
 
 *sprintf(<format>[,param[,param[,...]]]) [Mirei]
 
@@ -6722,7 +6722,7 @@ The first letter is position 0.
 	dispbottom(sprintf(.@format$, "zoo", 5));        //prints "The zoo contains 5 monkeys"
 	dispbottom(sprintf(.@format$, "barrel", 82));    //prints "The barrel contains 82 monkeys"
 	
----------------------------------------	
+---------------------------------------
 
 *sscanf(<string>,<format>[,param[,param[,...]]]) [Mirei]
 	
@@ -6736,7 +6736,7 @@ The first letter is position 0.
 	sscanf("This is a test: 42 foobar", "This is a test: %d %s", .@num, .@str$);
 	dispbottom(.@num + " " + .@str$); //prints "42 foobar"
 	
----------------------------------------	
+---------------------------------------
 
 *strpos(<haystack>,<needle>{,<offset>})
 
@@ -6750,7 +6750,7 @@ The first letter is position 0.
 	strpos("foobarfoo", "foo", 0); //returns 0
 	strpos("foobarfoo", "foo", 1); //returns 6
 	
----------------------------------------	
+---------------------------------------
 
 *replacestr(<input>, <search>, <replace>{, <usecase>{, <count>}})
 
@@ -6764,7 +6764,7 @@ The first letter is position 0.
 	replacestr("Donkey", "don", "mon", 0);	//returns "monkey"
 	replacestr("test test test test test", "yay", 0, 3); //returns "yay yay yay test test"
 	
----------------------------------------	
+---------------------------------------
 
 *countstr(<input>, <search>{, <usecase>})
 	

@@ -302,4 +302,3 @@
 
 // Unknown Item. Rune Knight Armor???
 //15002,Rune_Plate,Rune Plate,3,10,,10,,,,,,,,,,,,,{},{},{}
-
