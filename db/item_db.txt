@@ -2380,7 +2380,7 @@
 5048,First_Moon_Hair_Pin,Cresent Hairpin,5,20,,100,,0,,0,0xFFFFFFFF,7,2,256,,0,1,132,{},{},{}
 5049,Stripe_Band,Striped Hairband,5,20,,150,,1,,0,0xFFFFFFFF,7,2,256,,0,0,133,{},{},{}
 5050,Mystery_Fruit_Shell,Wonder Nutshell,5,20,,300,,5,,0,0xFFFFFFFF,7,2,256,,30,0,134,{},{},{}
-5051,Kitty_Bell,Pussy Cat Bell,5,20,,100,,0,,0,0x0,7,2,1,,0,0,135,{},{},{}
+5051,Kitty_Bell,Pussy Cat Bell,5,20,,100,,0,,0,0xFFFFFFFF,7,2,1,,0,0,135,{},{},{}
 5052,Blue_Hair_Band,Blue Hairband,5,20,,150,,1,,0,0xFFFFFFFF,7,2,256,,0,1,136,{},{},{}
 5053,Spinx_Helm,Sphinx Hat,5,20,,3000,,5,,0,0x00004082,7,2,257,,65,0,137,{ bonus bStr,2; },{},{}
 5054,Assassin_Mask,Assassin Mask,5,20,,100,,0,,0,0x00001100,7,2,1,,70,0,180,{},{},{}
