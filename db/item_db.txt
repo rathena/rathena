@@ -121,7 +121,7 @@
 615,Oridecon_Hammer,Oridecon Hammer,2,5000,,400,,,,,0xFFFFFFFF,7,2,,,,,,{ produce 3; },{},{}
 616,Old_Card_Album,Old Card Album,2,10000,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_CardAlbum),1; },{},{}
 617,Old_Violet_Box,Old Purple Box,2,10000,,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_VioletBox),1; },{},{}
-618,Worn_Out_Scroll,Worn Out Scroll,2,50,,20,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_ScrollBox),1; },{},{}
+618,Worn_Out_Scroll,Worn Out Scroll,2,50,,20,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 619,Unripe_Apple,Unripe Apple,2,1000,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1002; },{},{}
 620,Orange_Juice,Orange Juice,2,1500,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1113; },{},{}
 621,Bitter_Herb,Bitter Herb,2,20,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1031; },{},{}
