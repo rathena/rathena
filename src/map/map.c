@@ -3557,9 +3557,9 @@ static void map_helpscreen(bool do_exit)
  *------------------------------------------------------*/
 static void map_versionscreen(bool do_exit)
 {
-	ShowInfo(CL_WHITE"eAthena version %d.%02d.%02d, Athena Mod version %d" CL_RESET"\n", ATHENA_MAJOR_VERSION, ATHENA_MINOR_VERSION, ATHENA_REVISION, ATHENA_MOD_VERSION);
-	ShowInfo(CL_GREEN"Website/Forum:"CL_RESET"\thttp://eathena.ws/\n");
-	ShowInfo(CL_GREEN"IRC Channel:"CL_RESET"\tirc://irc.deltaanime.net/#athena\n");
+	ShowInfo(CL_WHITE"RAthena version %d.%02d.%02d, Athena Mod version %d" CL_RESET"\n", ATHENA_MAJOR_VERSION, ATHENA_MINOR_VERSION, ATHENA_REVISION, ATHENA_MOD_VERSION);
+	ShowInfo(CL_GREEN"Website/Forum:"CL_RESET"\thttp://rathena.org/\n");
+	ShowInfo(CL_GREEN"IRC Channel:"CL_RESET"\tirc://irc.rizon.net/#rthena\n");
 	ShowInfo("Open "CL_WHITE"readme.html"CL_RESET" for more information.\n");
 	if(ATHENA_RELEASE_FLAG)
 		ShowNotice("This version is not for release.\n");

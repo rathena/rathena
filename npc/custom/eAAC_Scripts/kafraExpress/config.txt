@@ -10,7 +10,7 @@
 //= Part of the Kafra Express Script Package.
 //= This module contains the configuration of all modules. 
 //===== Additional Comments: ================================= 
-//= See <http://www.eathena.deltaanime.net/board/index.php?showtopic=20290>
+//= See <http://www.eathena.ws/board/index.php?showtopic=20290>
 //= for indepth explanation of the Kafra Express Script Package.
 //============================================================ 
 

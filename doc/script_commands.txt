@@ -3265,14 +3265,6 @@ character while the map is "this", it will return -1.
 
 ---------------------------------------
 
-*getstrlen("<string>")
-
-This function will return the length of the string given as an argument. It is 
-useful to check if anything input by the player exceeds name length limits and 
-other length limits and asking them to try to input something else.
-
----------------------------------------
-
 *skillpointcount()
 
 Returns the total amount of skill points a character possesses (SkillPoint+SP's used in skills)
@@ -6580,6 +6572,14 @@ Example(s):
 //dothat; will not be executed ('Blood butterfly' does not contain 'Bloody').
 	if (compare("Blood Butterfly","Bloody"))
 		dothat;
+
+---------------------------------------
+
+*getstrlen("<string>")
+
+This function will return the length of the string given as an argument. It is 
+useful to check if anything input by the player exceeds name length limits and 
+other length limits and asking them to try to input something else.
 
 ---------------------------------------
 
