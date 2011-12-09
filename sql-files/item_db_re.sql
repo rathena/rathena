@@ -82,12 +82,12 @@ REPLACE INTO `item_db_re` VALUES (1573,'Ancient_Magic','Ancient Magic',4,20,NULL
 REPLACE INTO `item_db_re` VALUES (1564,'Encyclopedia','Encyclopedia',4,20,NULL,2000,110,NULL,1,2,0x00410100,7,2,2,3,70,1,15,'bonus bMatk,100; bonus bInt,3; bonus bDex,2; bonus bCritical,20+(readparam(bLuk)*2);','','');
 
 # Training Grounds Items
-REPLACE INTO `item_db` VALUES (2819,'Swordman_Manual','Swordsman Manual',5,0,NULL,100,NULL,0,NULL,0,0x00000001,7,2,136,NULL,1,0,0,'bonus bMaxSP,100; skill \"SM_BASH\",1; skill \"SM_PROVOKE\",1; skill \"SM_MAGNUM\",1;',NULL,NULL);
-REPLACE INTO `item_db` VALUES (2820,'Thief_Manual','Thief Manual',5,0,NULL,100,NULL,0,NULL,0,0x00000001,7,2,136,NULL,1,0,0,'bonus bMaxSP,100; skill \"TF_DOUBLE\",3; skill \"TF_STEAL\",1; skill \"TF_HIDING\",1; skill \"TF_POISON\",1;',NULL,NULL);
-REPLACE INTO `item_db` VALUES (2821,'Acolyte_Manual','Acolyte Manual',5,0,NULL,100,NULL,0,NULL,0,0x00000001,7,2,136,NULL,1,0,0,'bonus bMaxSP,100; skill \"AL_HEAL\",1; skill \"AL_INCAGI\",1; skill \"AL_BLESSING\",1;',NULL,NULL);
-REPLACE INTO `item_db` VALUES (2822,'Archer_Manual','Archer Manual',5,0,NULL,100,NULL,0,NULL,0,0x00000001,7,2,136,NULL,1,0,0,'bonus bMaxSP,100; skill \"AC_OWL\",1; skill \"AC_CONCENTRATION\",1;',NULL,NULL);
-REPLACE INTO `item_db` VALUES (2823,'Merchant_Manual','Merchant Manual',5,0,NULL,100,NULL,0,NULL,0,0x00000001,7,2,136,NULL,1,0,0,'bonus bMaxSP,100; skill \"MC_DISCOUNT\",1; skill \"MC_OVERCHARGE\",10; skill \"MC_IDENTIFY\",1; skill \"MC_MAMMONITE\",1;',NULL,NULL);
-REPLACE INTO `item_db` VALUES (2824,'Mage_Manual','Mage Manual',5,0,NULL,100,NULL,0,NULL,0,0x00000001,7,2,136,NULL,1,0,0,'bonus bMaxSP,100; skill \"MG_SRECOVERY\",1; skill \"MG_COLDBOLT\",1; skill \"MG_FIREWALL\",1; skill \"MG_FIREBOLT\",1;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (2819,'Swordman_Manual','Swordsman Manual',5,0,NULL,100,NULL,0,NULL,0,0x00000001,7,2,136,NULL,1,0,0,'bonus bMaxSP,100; skill \"SM_BASH\",1; skill \"SM_PROVOKE\",1; skill \"SM_MAGNUM\",1;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (2820,'Thief_Manual','Thief Manual',5,0,NULL,100,NULL,0,NULL,0,0x00000001,7,2,136,NULL,1,0,0,'bonus bMaxSP,100; skill \"TF_DOUBLE\",3; skill \"TF_STEAL\",1; skill \"TF_HIDING\",1; skill \"TF_POISON\",1;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (2821,'Acolyte_Manual','Acolyte Manual',5,0,NULL,100,NULL,0,NULL,0,0x00000001,7,2,136,NULL,1,0,0,'bonus bMaxSP,100; skill \"AL_HEAL\",1; skill \"AL_INCAGI\",1; skill \"AL_BLESSING\",1;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (2822,'Archer_Manual','Archer Manual',5,0,NULL,100,NULL,0,NULL,0,0x00000001,7,2,136,NULL,1,0,0,'bonus bMaxSP,100; skill \"AC_OWL\",1; skill \"AC_CONCENTRATION\",1;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (2823,'Merchant_Manual','Merchant Manual',5,0,NULL,100,NULL,0,NULL,0,0x00000001,7,2,136,NULL,1,0,0,'bonus bMaxSP,100; skill \"MC_DISCOUNT\",1; skill \"MC_OVERCHARGE\",10; skill \"MC_IDENTIFY\",1; skill \"MC_MAMMONITE\",1;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (2824,'Mage_Manual','Mage Manual',5,0,NULL,100,NULL,0,NULL,0,0x00000001,7,2,136,NULL,1,0,0,'bonus bMaxSP,100; skill \"MG_SRECOVERY\",1; skill \"MG_COLDBOLT\",1; skill \"MG_FIREWALL\",1; skill \"MG_FIREBOLT\",1;',NULL,NULL);
 
 # //[Ind] keeping these 2 here until we confirm: these ids are conflicting, I think they're wrong.
 # // Minstrel And Wanderer Cough Drop
