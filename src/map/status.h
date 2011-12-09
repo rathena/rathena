@@ -1362,6 +1362,12 @@ struct status_data {
 	short 
 		hit, flee, cri, flee2,
 		def2, mdef2,
+#if RRMODE
+		/**
+		 * In RE def and mdef can go over 127 (signed char) limit, so in RE mode we use short
+		 **/
+		def,mdef,
+#endif
 		aspd_rate;
 	unsigned char
 		def_ele, ele_lv,
@@ -1372,8 +1378,13 @@ struct status_data {
 		wlv,
 #endif
 		size, race;
+#if RRMODE == 0
+	/**
+	 * In NON-RE def and mdef are not required to be short, so we keep it signed char (ancient-default)
+	 **/
 	signed char
 		def, mdef;
+#endif
 	struct weapon_atk rhw, lhw; //Right Hand/Left Hand Weapon.
 };
 

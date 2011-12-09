@@ -12777,7 +12777,7 @@ BUILDIN_FUNC(explode)
 	const char delimiter = script_getstr(st, 4)[0];
 	int32 id;
 	size_t len = strlen(str);
-	int i = 0, j = 0, k = 0;
+	int i = 0, j = 0;
 	int start;
 	
 
@@ -12848,7 +12848,7 @@ BUILDIN_FUNC(explode)
 BUILDIN_FUNC(implode)
 {
 	struct script_data* data = script_getdata(st, 2);
-	const char *glue, *name, *temp;
+	const char *glue = NULL, *name, *temp;
 	int32 glue_len = 0, array_size, id;
 	size_t len = 0;
 	int i, k = 0;
@@ -13100,7 +13100,7 @@ BUILDIN_FUNC(sscanf){
     // Issue sscanf for each parameter
     *buf = 0;
     q = format;
-    while(p = strchr(q, '%')){
+    while((p = strchr(q, '%'))){
         if(p!=q){
             strncat(buf, q, (size_t)(p-q));
             q = p;
@@ -13290,7 +13290,7 @@ BUILDIN_FUNC(replacestr)
 						break;
 					}
 				} else {
-					if((i + f) > inputlen || input[i + f] != find[f] && TOUPPER(input[i+f]) != TOUPPER(find[f])) {
+					if(((i + f) > inputlen || input[i + f] != find[f]) && TOUPPER(input[i+f]) != TOUPPER(find[f])) {
 						StringBuf_Printf(&output, "%c", input[i]);
 						break;
 					}
@@ -13353,7 +13353,7 @@ BUILDIN_FUNC(countstr)
 						break;
 					}
 				} else {
-					if((i + f) > inputlen || input[i + f] != find[f] && TOUPPER(input[i+f]) != TOUPPER(find[f])) {
+					if(((i + f) > inputlen || input[i + f] != find[f]) && TOUPPER(input[i+f]) != TOUPPER(find[f])) {
 						break;
 					}
 				}

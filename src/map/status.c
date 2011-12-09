@@ -2604,15 +2604,22 @@ int status_calc_pc_(struct map_session_data* sd, bool first)
 		sd->def_rate = 0;
 	if(sd->def_rate != 100) {
 		i =  status->def * sd->def_rate/100;
+#if RRMODE
+		status->def = cap_value(i, SHRT_MIN, SHRT_MAX);
+#else
 		status->def = cap_value(i, CHAR_MIN, CHAR_MAX);
+#endif
 	}
-
+#if RRMODE == 0
+	/**
+	 * The following setting does not affect Renewal Mode
+	 **/
 	if (!battle_config.weapon_defense_type && status->def > battle_config.max_def)
 	{
 		status->def2 += battle_config.over_def_bonus*(status->def -battle_config.max_def);
 		status->def = (unsigned char)battle_config.max_def;
 	}
-
+#endif
 // ----- EQUIPMENT-MDEF CALCULATION -----
 
 	// Apply relative modifiers from equipment
@@ -2620,15 +2627,22 @@ int status_calc_pc_(struct map_session_data* sd, bool first)
 		sd->mdef_rate = 0;
 	if(sd->mdef_rate != 100) {
 		i =  status->mdef * sd->mdef_rate/100;
+#if RRMODE
+		status->mdef = cap_value(i, SHRT_MIN, SHRT_MAX);
+#else
 		status->mdef = cap_value(i, CHAR_MIN, CHAR_MAX);
+#endif
 	}
-
+#if RRMODE == 0
+	/**
+	 * The following setting does not affect Renewal Mode
+	 **/
 	if (!battle_config.magic_defense_type && status->mdef > battle_config.max_def)
 	{
 		status->mdef2 += battle_config.over_def_bonus*(status->mdef -battle_config.max_def);
 		status->mdef = (signed char)battle_config.max_def;
 	}
-
+#endif
 // ----- ASPD CALCULATION -----
 // Unlike other stats, ASPD rate modifiers from skills/SCs/items/etc are first all added together, then the final modifier is applied
 
@@ -2884,9 +2898,17 @@ static signed short status_calc_hit(struct block_list *,struct status_change *,i
 static signed short status_calc_critical(struct block_list *,struct status_change *,int);
 static signed short status_calc_flee(struct block_list *,struct status_change *,int);
 static signed short status_calc_flee2(struct block_list *,struct status_change *,int);
-static signed char status_calc_def(struct block_list *,struct status_change *,int);
+#if RRMODE
+	static short status_calc_def(struct block_list *bl, struct status_change *sc, int);
+#else
+	static signed char status_calc_def(struct block_list *,struct status_change *,int);
+#endif
 static signed short status_calc_def2(struct block_list *,struct status_change *,int);
-static signed char status_calc_mdef(struct block_list *,struct status_change *,int);
+#if RRMODE
+	static short status_calc_mdef(struct block_list *bl, struct status_change *sc, int);
+#else
+	static signed char status_calc_mdef(struct block_list *,struct status_change *,int);
+#endif
 static signed short status_calc_mdef2(struct block_list *,struct status_change *,int);
 static unsigned short status_calc_speed(struct block_list *,struct status_change *,int);
 static short status_calc_aspd_rate(struct block_list *,struct status_change *,int);
@@ -4039,12 +4061,18 @@ static signed short status_calc_flee2(struct block_list *bl, struct status_chang
 
 	return (short)cap_value(flee2,10,SHRT_MAX);
 }
-
-static signed char status_calc_def(struct block_list *bl, struct status_change *sc, int def)
+#if RRMODE
+	static short status_calc_def(struct block_list *bl, struct status_change *sc, int def)
+#else
+	static signed char status_calc_def(struct block_list *bl, struct status_change *sc, int def)
+#endif
 {
 	if(!sc || !sc->count)
+#if RRMODE
+		return (short)cap_value(def,SHRT_MIN,SHRT_MAX);
+#else
 		return (signed char)cap_value(def,CHAR_MIN,CHAR_MAX);
-
+#endif
 	if(sc->data[SC_BERSERK])
 		return 0;
 	if(sc->data[SC_SKA])
@@ -4099,8 +4127,11 @@ static signed char status_calc_def(struct block_list *bl, struct status_change *
 		def -= def * sc->data[SC_ROCK_CRUSHER]->val2 / 100;
 	if( sc->data[SC_POWER_OF_GAIA] )
 		def += def * sc->data[SC_POWER_OF_GAIA]->val2 / 100;
-
+#if RRMODE
+	return (short)cap_value(def,SHRT_MIN,SHRT_MAX);
+#else
 	return (signed char)cap_value(def,CHAR_MIN,CHAR_MAX);
+#endif
 }
 
 static signed short status_calc_def2(struct block_list *bl, struct status_change *sc, int def2)
@@ -4149,10 +4180,18 @@ static signed short status_calc_def2(struct block_list *bl, struct status_change
 	return (short)cap_value(def2,1,SHRT_MAX);
 }
 
-static signed char status_calc_mdef(struct block_list *bl, struct status_change *sc, int mdef)
+#if RRMODE
+	static short status_calc_mdef(struct block_list *bl, struct status_change *sc, int mdef)
+#else
+	static signed char status_calc_mdef(struct block_list *bl, struct status_change *sc, int mdef)
+#endif
 {
 	if(!sc || !sc->count)
+#if RRMODE
+		return (short)cap_value(mdef,SHRT_MIN,SHRT_MAX);
+#else
 		return (signed char)cap_value(mdef,CHAR_MIN,CHAR_MAX);
+#endif
 
 	if(sc->data[SC_BERSERK])
 		return 0;
@@ -4183,7 +4222,11 @@ static signed char status_calc_mdef(struct block_list *bl, struct status_change 
 	if(sc->data[SC_WATER_BARRIER])
 		mdef += sc->data[SC_WATER_BARRIER]->val2;
 
+#if RRMODE
+	return (short)cap_value(mdef,SHRT_MIN,SHRT_MAX);
+#else
 	return (signed char)cap_value(mdef,CHAR_MIN,CHAR_MAX);
+#endif
 }
 
 static signed short status_calc_mdef2(struct block_list *bl, struct status_change *sc, int mdef2)
@@ -4748,7 +4791,11 @@ signed char status_get_def(struct block_list *bl)
 	ud = unit_bl2ud(bl);
 	if (ud && ud->skilltimer != INVALID_TIMER)
 		def -= def * skill_get_castdef(ud->skillid)/100;
+#if RRMODE
+	return cap_value(def, SHRT_MIN, SHRT_MAX);
+#else
 	return cap_value(def, CHAR_MIN, CHAR_MAX);
+#endif
 }
 
 unsigned short status_get_speed(struct block_list *bl)
