@@ -4580,9 +4580,10 @@ static const struct _battle_data {
 	{ "bg_misc_attack_damage_rate",         &battle_config.bg_misc_damage_rate,             60,     0,      INT_MAX,        },
 	{ "bg_flee_penalty",                    &battle_config.bg_flee_penalty,                 20,     0,      INT_MAX,        },
 	/**
-	 * RR-Specific
+	 * rAthena
 	 **/
 	{ "max_third_parameter",                &battle_config.max_third_parameter,                 20,     0,      INT_MAX,        },
+	{ "atcommand_max_stat_bypass",          &battle_config.atcommand_max_stat_bypass,            0,      0,      100,            },           
 };
 
 

@@ -3065,7 +3065,7 @@ ACMD_FUNC(zeny)
  *------------------------------------------*/
 ACMD_FUNC(param)
 {
-	int i, value = 0, new_value;
+	int i, value = 0, new_value, max;
 	const char* param[] = { "str", "agi", "vit", "int", "dex", "luk" };
 	short* status[6];
  	//we don't use direct initialization because it isn't part of the c standard.
@@ -3094,16 +3094,16 @@ ACMD_FUNC(param)
 	status[4] = &sd->status.dex;
 	status[5] = &sd->status.luk;
 
-	if(value < 0 && *status[i] <= -value)
-	{
-		new_value = 1;
-	}
-	else if(SHRT_MAX - *status[i] < value)
-	{
-		new_value = SHRT_MAX;
-	}
+	if( battle_config.atcommand_max_stat_bypass )
+		max = SHRT_MAX;
 	else
-	{
+		max = pc_maxparameter(sd);
+
+	if(value < 0 && *status[i] <= -value) {
+		new_value = 1;
+	} else if(max - *status[i] < value) {
+		new_value = max;
+	} else {
 		new_value = *status[i] + value;
 	}
 
@@ -3145,7 +3145,10 @@ ACMD_FUNC(stat_all)
 		value = pc_maxparameter(sd);
 		max = pc_maxparameter(sd);
 	} else {
-		max = SHRT_MAX;
+		if( battle_config.atcommand_max_stat_bypass )
+			max = SHRT_MAX;
+		else
+			max = pc_maxparameter(sd);
 	}
 
 	count = 0;
