@@ -134,7 +134,7 @@ Lsorry:
 
 // --- The first Beta-MVP warper
 quiz_00,58,31,4	script	Beta MVP	773,{
-	mes "[ ^0065DFAlpha MVP^000000 ]";
+	mes "[ ^0065DFBeta MVP^000000 ]";
 	mes "I am the first Keeper, are you ready?.";
 	menu "Yes!",L_Yes,"Urrr No.",Lcancel;
 
