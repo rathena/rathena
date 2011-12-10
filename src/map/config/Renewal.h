@@ -8,7 +8,7 @@
  **/
 
 /**
- * @INFO: This file holds general-purpose renewal settings, for class-specific ones check /src/map/RRConfig/Skills folder
+ * @INFO: This file holds general-purpose renewal settings, for class-specific ones check /src/map/config/Skills folder
  **/
 
 /**

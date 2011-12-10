@@ -431,7 +431,7 @@ struct map_session_data {
 	unsigned short user_font;
 
 	/**
-	 * For the Secure NPC Timeout option (check RRConfig/Secure.h) [RR]
+	 * For the Secure NPC Timeout option (check config/Secure.h) [RR]
 	 **/
 #if SECURE_NPCTIMEOUT
 	/**

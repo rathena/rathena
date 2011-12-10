@@ -35,8 +35,8 @@ MAP_H = map.h chrif.h clif.h pc.h status.h npc.h \
 	intif.h trade.h party.h vending.h guild.h pet.h \
 	log.h mail.h date.h unit.h homunculus.h mercenary.h quest.h instance.h mapreg.h \
 	buyingstore.h searchstore.h duel.h \
-	RRConfig/Core.h RRConfig/Renewal.h RRConfig/Secure.h RRConfig/Data/Const.h \
-	RRConfig/Skills/General.h RRConfig/Skills/Mage_Classes.h RRConfig/Skills/Swordsman_Classes.h
+	config/Core.h config/Renewal.h config/Secure.h config/Data/Const.h \
+	config/Skills/General.h config/Skills/Mage_Classes.h config/Skills/Swordsman_Classes.h
 
 HAVE_MYSQL=@HAVE_MYSQL@
 ifeq ($(HAVE_MYSQL),yes)

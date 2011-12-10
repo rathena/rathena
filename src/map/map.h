@@ -13,7 +13,7 @@
 /**
  * [ro-resources.net]
  **/
-#include "./RRConfig/Core.h"
+#include "./config/Core.h"
 
 #include <stdarg.h>
 

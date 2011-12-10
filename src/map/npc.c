@@ -200,7 +200,7 @@ struct npc_data* npc_name2id(const char* name)
 	return (struct npc_data *) strdb_get(npcname_db, name);
 }
 /**
- * For the Secure NPC Timeout option (check RRConfig/Secure.h) [RR]
+ * For the Secure NPC Timeout option (check config/Secure.h) [RR]
  **/
 #if SECURE_NPCTIMEOUT
 /**
@@ -1141,7 +1141,7 @@ int npc_scriptcont(struct map_session_data* sd, int id)
 		}
 	}
 	/**
-	 * For the Secure NPC Timeout option (check RRConfig/Secure.h) [RR]
+	 * For the Secure NPC Timeout option (check config/Secure.h) [RR]
 	 **/
 #if SECURE_NPCTIMEOUT
 	/**

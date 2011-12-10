@@ -830,7 +830,7 @@ bool pc_authok(struct map_session_data *sd, int login_id2, time_t expiration_tim
 	sd->npc_timer_id = INVALID_TIMER;
 	sd->pvp_timer = INVALID_TIMER;
 	/**
-	 * For the Secure NPC Timeout option (check RRConfig/Secure.h) [RR]
+	 * For the Secure NPC Timeout option (check config/Secure.h) [RR]
 	 **/
 #if SECURE_NPCTIMEOUT
 	/**

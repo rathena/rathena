@@ -3369,7 +3369,7 @@ static void script_detach_state(struct script_state* st, bool dequeue_event)
 		sd->st = st->bk_st;
 		sd->npc_id = st->bk_npcid;
 		/**
-		 * For the Secure NPC Timeout option (check RRConfig/Secure.h) [RR]
+		 * For the Secure NPC Timeout option (check config/Secure.h) [RR]
 		 **/
 	#if SECURE_NPCTIMEOUT
 		/**
@@ -3422,7 +3422,7 @@ static void script_attach_state(struct script_state* st)
 		sd->st = st;
 		sd->npc_id = st->oid;
 /**
- * For the Secure NPC Timeout option (check RRConfig/Secure.h) [RR]
+ * For the Secure NPC Timeout option (check config/Secure.h) [RR]
  **/
 #if SECURE_NPCTIMEOUT
 		if( sd->npc_idle_timer == INVALID_TIMER )
