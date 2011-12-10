@@ -8158,6 +8158,7 @@ ACMD_FUNC(reject)
  *-----------------------------------*/
 ACMD_FUNC(cash)
 {
+	char output[128];
 	int value;
 	nullpo_retr(-1, sd);
 
@@ -8168,17 +8169,27 @@ ACMD_FUNC(cash)
 
 	if( !strcmpi(command+1,"cash") )
 	{
-		if( value > 0 )
+		if( value > 0 ) {
 			pc_getcash(sd, value, 0);
-		else
+			sprintf(output, msg_txt(505), value, sd->cashPoints);
+			clif_disp_onlyself(sd, output, strlen(output));
+		} else {
 			pc_paycash(sd, -value, 0);
+			sprintf(output, msg_txt(410), value, sd->cashPoints);
+			clif_disp_onlyself(sd, output, strlen(output));
+		}
 	}
 	else
 	{ // @points
-		if( value > 0 )
+		if( value > 0 ) {
 			pc_getcash(sd, 0, value);
-		else
+			sprintf(output, msg_txt(506), value, sd->kafraPoints);
+			clif_disp_onlyself(sd, output, strlen(output));
+		} else {
 			pc_paycash(sd, -value, -value);
+			sprintf(output, msg_txt(411), -value, sd->kafraPoints);
+			clif_disp_onlyself(sd, output, strlen(output));
+		}
 	}
 
 	return 0;
