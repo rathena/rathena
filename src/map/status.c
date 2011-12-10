@@ -2875,13 +2875,13 @@ int status_calc_homunculus_(struct homun_data *hd, bool first)
 	status->adelay = status->amotion; //It seems adelay = amotion for Homunculus.
 
 	status_calc_misc(&hd->bl, status, hom->level);
-	status_cpy(&hd->battle_status, status);
 #if RRMODE
 	/**
-	 * In RR Mode matk_max is used as source of weaponMATK, but homuns don't have it -- so we swap the values here.
+	 * In RE Mode matk_max is used as source of weaponMATK, but homuns don't have it -- so we swap the values here.
 	 **/
 	status->matk_max = status->matk_min;
 #endif
+	status_cpy(&hd->battle_status, status);
 	return 1;
 }
 
