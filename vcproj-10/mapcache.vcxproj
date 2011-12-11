@@ -124,6 +124,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\src\common\core.c" />
+    <ClCompile Include="..\src\common\des.c" />
     <ClCompile Include="..\src\common\grfio.c" />
     <ClCompile Include="..\src\common\malloc.c" />
     <ClCompile Include="..\src\common\showmsg.c" />
@@ -134,6 +135,7 @@
   <ItemGroup>
     <ClInclude Include="..\src\common\cbasetypes.h" />
     <ClInclude Include="..\src\common\core.h" />
+    <ClInclude Include="..\src\common\des.h" />
     <ClInclude Include="..\src\common\grfio.h" />
     <ClInclude Include="..\src\common\malloc.h" />
     <ClInclude Include="..\src\common\mmo.h" />

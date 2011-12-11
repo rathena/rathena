@@ -2,12 +2,12 @@
 COMMON_OBJ = ../common/obj_all/core.o ../common/obj_all/socket.o ../common/obj_all/timer.o \
 	../common/obj_all/db.o ../common/obj_all/plugins.o ../common/obj_all/lock.o \
 	../common/obj_all/malloc.o ../common/obj_all/showmsg.o ../common/obj_all/utils.o \
-	../common/obj_all/strlib.o ../common/obj_all/grfio.o \
+	../common/obj_all/strlib.o \
 	../common/obj_all/mapindex.o ../common/obj_all/ers.o ../common/obj_all/random.o
 COMMON_H = ../common/core.h ../common/socket.h ../common/timer.h ../common/mmo.h \
 	../common/version.h ../common/db.h ../common/plugins.h ../common/lock.h \
 	../common/malloc.h ../common/showmsg.h ../common/utils.h \
-	../common/strlib.h ../common/grfio.h \
+	../common/strlib.h \
 	../common/mapindex.h ../common/ers.h ../common/random.h
 
 MT19937AR_OBJ = ../../3rdparty/mt19937ar/mt19937ar.o

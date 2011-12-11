@@ -19,7 +19,7 @@ static const uint8_t mask[8] = {
 /// Initial permutation (IP).
 static void IP(BIT64* src)
 {
-	BIT64 tmp = {0};
+	BIT64 tmp = {{0}};
 
 	static const uint8_t ip_table[64] = {
 		58, 50, 42, 34, 26, 18, 10,  2,
@@ -47,7 +47,7 @@ static void IP(BIT64* src)
 /// Final permutation (IP^-1).
 static void FP(BIT64* src)
 {
-	BIT64 tmp = {0};
+	BIT64 tmp = {{0}};
 
 	static const uint8_t fp_table[64] = {
 		40,  8, 48, 16, 56, 24, 64, 32,
@@ -76,7 +76,7 @@ static void FP(BIT64* src)
 /// Expands upper four 8-bits (32b) into eight 6-bits (48b).
 static void E(BIT64* src)
 {
-	BIT64 tmp = {0};
+	BIT64 tmp = {{0}};
 
 if( false )
 {// original
@@ -118,7 +118,7 @@ else
 /// Transposition (P-BOX).
 static void TP(BIT64* src)
 {
-	BIT64 tmp = {0};
+	BIT64 tmp = {{0}};
 
 	static const uint8_t tp_table[32] = {
 		16,  7, 20, 21,
@@ -147,7 +147,7 @@ static void TP(BIT64* src)
 /// NOTE: This implementation was optimized to process two nibbles in one step (twice as fast).
 static void SBOX(BIT64* src)
 {
-	BIT64 tmp = {0};
+	BIT64 tmp = {{0}};
 
 	static const uint8_t s_table[4][64] = {
 		  {
