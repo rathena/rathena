@@ -397,7 +397,7 @@ void* grfio_reads(const char* fname, int* size)
 		char lfname[256];
 		int declen;
 		FILE* in;
-
+		size_t fileReadCount;
 		grfio_localpath_create(lfname, sizeof(lfname), ( entry && entry->fnd ) ? entry->fnd : fname);
 
 		in = fopen(lfname, "rb");
@@ -407,7 +407,7 @@ void* grfio_reads(const char* fname, int* size)
 			declen = ftell(in);
 			fseek(in,0,SEEK_SET);
 			buf2 = (unsigned char *)aMallocA(declen+1);  // +1 for resnametable zero-termination
-			fread(buf2, 1, declen, in);
+			fileReadCount = fread(buf2, 1, declen, in);
 			fclose(in);
 
 			if( size )
@@ -431,8 +431,9 @@ void* grfio_reads(const char* fname, int* size)
 		if( in != NULL )
 		{
 			unsigned char *buf = (unsigned char *)aMallocA(entry->srclen_aligned);
+			size_t fileReadCount;
 			fseek(in, entry->srcpos, 0);
-			fread(buf, 1, entry->srclen_aligned, in);
+			fileReadCount = fread(buf, 1, entry->srclen_aligned, in);
 			fclose(in);
 
 			buf2 = (unsigned char *)aMallocA(entry->declen+1);  // +1 for resnametable zero-termination
@@ -507,6 +508,7 @@ static int grfio_entryread(const char* grfname, int gentry)
 	unsigned char grf_header[0x2e];
 	int entry,entrys,ofs,grf_version;
 	unsigned char *grf_filelist;
+	size_t fileReadCount;
 
 	FILE* fp = fopen(grfname, "rb");
 	if( fp == NULL )
@@ -521,7 +523,7 @@ static int grfio_entryread(const char* grfname, int gentry)
 	grf_size = ftell(fp);
 	fseek(fp,0,SEEK_SET);
 
-	fread(grf_header,1,0x2e,fp);
+	fileReadCount = fread(grf_header,1,0x2e,fp);
 	if( strcmp((const char*)grf_header,"Master of Magic") != 0 ||
 		fseek(fp,getlong(grf_header+0x1e),SEEK_CUR) != 0 )
 	{
@@ -534,9 +536,10 @@ static int grfio_entryread(const char* grfname, int gentry)
 
 	if( grf_version == 0x01 )
 	{// ****** Grf version 01xx ******
+		size_t fileReadCount;
 		list_size = grf_size - ftell(fp);
 		grf_filelist = (unsigned char *) aMallocA(list_size);
-		fread(grf_filelist,1,list_size,fp);
+		fileReadCount = fread(grf_filelist,1,list_size,fp);
 		fclose(fp);
 
 		entrys = getlong(grf_header+0x26) - getlong(grf_header+0x22) - 7;
@@ -588,8 +591,9 @@ static int grfio_entryread(const char* grfname, int gentry)
 		unsigned char eheader[8];
 		unsigned char *rBuf;
 		uLongf rSize, eSize;
+		size_t fileReadCount;
 
-		fread(eheader,1,8,fp);
+		fileReadCount = fread(eheader,1,8,fp);
 		rSize = getlong(eheader);	// Read Size
 		eSize = getlong(eheader+4);	// Extend Size
 
@@ -602,7 +606,7 @@ static int grfio_entryread(const char* grfname, int gentry)
 
 		rBuf = (unsigned char *)aMallocA(rSize);	// Get a Read Size
 		grf_filelist = (unsigned char *)aMallocA(eSize);	// Get a Extend Size
-		fread(rBuf,1,rSize,fp);
+		fileReadCount = fread(rBuf,1,rSize,fp);
 		fclose(fp);
 		decode_zip(grf_filelist, &eSize, rBuf, rSize);	// Decode function
 		list_size = eSize;
@@ -821,11 +825,10 @@ void grfio_init(const char* fname)
 				continue; // skip unrecognized lines
 
 			// Entry table reading
-			if( strcmp(w1, "grf") == 0 ) // GRF file
+			if( strcmp(w1, "grf") == 0 ) { // GRF file
 				if( grfio_add(w2) == 0 )
 					++grf_num;
-			else
-			if( strcmp(w1,"data_dir") == 0 ) // Data directory
+			} else if( strcmp(w1,"data_dir") == 0 ) // Data directory
 				safestrncpy(data_dir, w2, sizeof(data_dir));
 		}
 
