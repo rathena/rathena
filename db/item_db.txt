@@ -1541,7 +1541,7 @@
 2641,Fashionable_Sack,Fashion Hip Sack,5,20,,700,,0,,0,0x00040420,7,2,136,,50,0,0,{ bonus bStr,2; },{},{}
 2642,Serin's_Gold_Ring,Serin's Gold Ring,5,20,,0,,0,,0,0xFFFFFFFF,7,2,136,,0,0,0,{},{},{}
 2643,Serin's_Gold_Ring_,Serin's Gold Ring,5,45000,,100,,0,,0,0xFFFFFFFF,7,2,136,,0,0,0,{},{},{}
-2644,The_Sign_,The Sign,5,2,,0,,0,,0,0xFFFFFFFF,7,2,136,,0,0,0,{ bonus2 bAddRace,RC_NonBoss,5; bonus2 bAddRace,RC_Boss,5; bonus bMatkRate,5; },{},{}
+2644,The_Sign_,The Sign,5,2,,0,,0,,0,0xFFFFFFFF,7,2,136,,0,0,0,{ bonus2 bAddRace,RC_NonBoss,5; bonus2 bAddRace,RC_Boss,5; bonus2 bMagicAddRace,RC_NonBossn,5; bonus2 bMagicAddRace,RC_Boss,5; },{},{}
 2645,Moonlight_Ring,Moonlight Ring,5,40000,,200,,0,,0,0x02021040,7,2,136,,60,0,0,{ bonus bMdef,2; },{},{}
 2646,Bunch_Of_Carnation,Bunch of Carnations,5,2,,100,,0,,0,0xFFFFFFFF,7,2,136,,0,0,0,{ bonus bAllStats,3; },{},{}
 2647,Nile_Rose,Nile Rose,5,2,,100,,0,,1,0xFFFFFFFF,7,2,136,,0,0,0,{ bonus bMaxHP,10; },{},{}
@@ -2108,7 +2108,7 @@
 4340,Teddy_Bear_Card,Teddy Bear Card,6,20,,10,,,,,,,,32,,,,,{ bonus2 bSubRace,RC_Undead,30; },{},{}
 4341,Metaling_Card,Metaling Card,6,20,,10,,,,,,,,2,,,,,{ bonus3 bAutoSpell,"RG_STRIPWEAPON",1,50; },{},{}
 4342,Rsx_0806_Card,RSX-0806 Card,6,20,,10,,,,,,,,16,,,,,{ bonus bVit,3; bonus bUnbreakableArmor,0; bonus bNoKnockback,0; },{},{}
-4343,Mole_Card,Holden Card,6,20,,10,,,,,,,,769,,,,,{ bonus bLuk,2; if(isequipped(4186,4281,4036,4233)) { bonus bStr,4; bonus bMaxHPrate,7; bonus bMaxSPrate,7; bonus2 bSkillAtk,"MC_MAMMONITE",20; bonus bSPDrainValue,1; if(BaseJob == Job_Alchemist) { bonus3 bAutoSpell,"BS_ADRENALINE",1,10; bonus2 bAddMonsterDropItem,7139,3; bonus2 bAddMonsterDropItem,905,10; } } },{},{}
+4343,Mole_Card,Holden Card,6,20,,10,,,,,,,,769,,,,,{ bonus bLuk,2; if(isequipped(4186,4281,4036,4233)) { bonus bStr,4; bonus bMaxHPrate,7; bonus bMaxSPrate,7; bonus2 bSkillAtk,"MC_MAMMONITE",20; bonus bSPDrainValue,1; if(BaseJob == Job_Alchemist) { bonus4 bAutoSpell,"BS_ADRENALINE",1,10,0; bonus2 bAddMonsterDropItem,7139,3; bonus2 bAddMonsterDropItem,905,10; } } },{},{}
 4344,Anopheles_Card,Anopheles Card,6,20,,10,,,,,,,,136,,,,,{ bonus3 bAddMonsterDropItem,12058,RC_Insect,50; },{},{}
 4345,Hill_Wind_Card,Hill Wind Card,6,20,,10,,,,,,,,2,,,,,{ bonus2 bSkillAtk,"MG_THUNDERSTORM",5; bonus2 bSkillAtk,"WZ_JUPITEL",5; bonus2 bSkillAtk,"WZ_VERMILION",5; },{},{ heal 0,-50; }
 4346,Ygnizem_Card,Egnigem Cenia Card,6,20,,10,,,,,,,,16,,,,,{ bonus bStr,readparam(bInt)/18; },{},{}

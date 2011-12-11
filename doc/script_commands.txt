@@ -6030,7 +6030,7 @@ returns a guild id:
 
 ---------------------------------------
 
-*guardian("<map name>",<x>,<y>,"<name to show>",<mob id>,<amount>{,"<event label>"}{,<guardian index>})
+*guardian "<map name>",<x>,<y>,"<name to show>",<mob id>{,"<event label>"{,<guardian index>}};
 
 This command is roughly equivalent to 'monster', but is meant to be used with 
 castle guardian monsters and will only work with them. It will set the guardian 
@@ -6044,7 +6044,7 @@ Temporary guardians are not saved with the castle and can't be accessed by guard
 
 ---------------------------------------
 
-*guardianinfo("<map name>", <guardian number>, <type>)
+*guardianinfo("<map name>", <guardian number>, <type>);
 
 This function will return various info about the specified guardian, or -1
 if it fails for some reason. It is primarily used in the castle manager NPC.
