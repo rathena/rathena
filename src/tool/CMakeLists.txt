@@ -11,11 +11,13 @@ if( BUILD_MAPCACHE )
 message( STATUS "Creating target mapcache" )
 set( COMMON_HEADERS
 	${COMMON_MINI_HEADERS}
+	"${COMMON_SOURCE_DIR}/des.h"
 	"${COMMON_SOURCE_DIR}/grfio.h"
 	"${COMMON_SOURCE_DIR}/utils.h"
 	)
 set( COMMON_SOURCES
 	${COMMON_MINI_SOURCES}
+	"${COMMON_SOURCE_DIR}/des.c"
 	"${COMMON_SOURCE_DIR}/grfio.c"
 	"${COMMON_SOURCE_DIR}/utils.c"
 	)

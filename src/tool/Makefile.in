@@ -1,10 +1,10 @@
 
 COMMON_OBJ = ../common/obj_all/minicore.o ../common/obj_all/malloc.o \
 	../common/obj_all/showmsg.o ../common/obj_all/strlib.o \
-	../common/obj_all/utils.o ../common/obj_all/grfio.o
+	../common/obj_all/utils.o ../common/obj_all/des.o ../common/obj_all/grfio.o
 COMMON_H = ../common/core.h ../common/mmo.h ../common/version.h \
 	../common/malloc.h ../common/showmsg.h ../common/strlib.h \
-	../common/utils.h ../common/cbasetypes.h ../common/grfio.h
+	../common/utils.h ../common/cbasetypes.h ../common/des.h ../common/grfio.h
 
 MAPCACHE_OBJ = obj_all/mapcache.o
 
