@@ -1,0 +1,1051 @@
+//===== eAthena Script ======================================= 
+// Eden Group Quests - Experience quests [71-85]
+//===== By: ================================================== 
+//= L0ne_W0lf
+//===== Current Version: ===================================== 
+//= 1.0
+//===== Compatible With: ===================================== 
+//= eAthena SVN
+//===== Description: ========================================= 
+//= [AEGIS Conversion]
+//===== Additional Comments: ================================= 
+//= 1.0 First Version.
+//============================================================
+
+moc_para01,44,38,3	script	Request [71 - 85]	857,{
+	if (countitem(6219) < 1) {
+		mes "-It seems to be a special-.";
+		mes "-board that only a person-";
+		mes "-who has an Eden Group-";
+		mes "-Mark can read.-";
+		close;
+	}
+	mes "-There are many kinds of-";
+	mes "-hunting requests written-";
+	next;
+	if ((BaseLevel > 70) && (BaseLevel < 86)) {
+		switch(select("Sphinx dungeon district:Glast Heim district:Juno district:Clock Tower district:Island districts")) {
+		case 1:
+			mes "-Sphinx dungeon district-";
+			mes "-I am Meidi who lives in-";
+			mes "-Morocc. I want to hunt-";
+			mes "-monsters in Sphinx-";
+			mes "- dungeon. I will wait in-";
+			mes "-front of the west gate.-";
+			next;
+			switch(select("Take a mission.:Ignore the mission.")) {
+			case 1:
+				if ((slv_quest == 2) || (slv_quest == 3) || (slv_quest == 4) || (slv_quest == 5) || (slv_quest == 6)) {
+					mes "-You are already doing-";
+					mes "-another mission.-";
+					mes "-It's really confusing to do-";
+					mes "-many missions at once.-";
+					mes "-Finish those first.-";
+					close;
+				}
+				set .@slv_chk1,checkquest(10102);
+				if (.@slv_chk1 == -1) {
+					setquest 10102;
+					set slv_quest,1;
+					mes "-Good. Now to find Meidi-";
+					mes "-at Morroc's western gate-";
+					close;
+				}
+				else {
+					mes "-You are already on-";
+					mes "-another mission or have-";
+					mes "-recently completed one-";
+					mes "-so you can't take on-";
+					mes "-anymore right now.-";
+					close;
+				}
+				break;
+			case 2:
+				mes "-I don't want to do-";
+				mes "-this right now-";
+				close;
+			}
+			break;
+		case 2:
+			mes "-Glast Heim district-";
+			mes "-I am Ancellia. -";
+			mes "-I need help to hunt-";
+			mes "-monsters in Glastheim-";
+			mes "-please help me-";
+			next;
+			switch(select("Take a mission.:Ignore the mission.")) {
+			case 1:
+				if ((slv_quest == 1) || (slv_quest == 3) || (slv_quest == 4) || (slv_quest == 5) || (slv_quest == 6)) {
+					mes "-You are already doing-";
+					mes "-another mission.-";
+					mes "-It's really confusing to do-";
+					mes "-many missions at once.-";
+					mes "-Finish those first.-";
+					close;
+				}
+				set .@slv_chk1,checkquest(10103);
+				if (.@slv_chk1 == -1) {
+					setquest 10103;
+					set slv_quest,2;
+					mes "-I better find Ancellia-";
+					close;
+				}
+				else {
+					mes "-You are already on-";
+					mes "-another mission or have-";
+					mes "-recently completed one-";
+					mes "-so you can't take on-";
+					mes "-anymore right now.-";
+					close;
+				}
+				break;
+			case 2:
+				mes "-I don't want to do-";
+				mes "-this right now-";
+				close;
+			}
+			break;
+		case 3:
+			mes "-Juno district-";
+			mes "-I want to go to Juno,-";
+			mes "-but monsters on the way-";
+			mes "-are too strong for me.-";
+			mes "-Visit me in Aldebaran-";
+			mes "-My name is Jeanbai-";
+			next;
+			switch(select("Take a mission.:Ignore the mission.")) {
+			case 1:
+				if ((slv_quest == 1) || (slv_quest == 2) || (slv_quest == 4) || (slv_quest == 5) || (slv_quest == 6)) {
+					mes "-You are already doing-";
+					mes "-another mission.-";
+					mes "-It's really confusing to do-";
+					mes "-many missions at once.-";
+					mes "-Finish those first.-";
+					close;
+				}
+				set .@slv_chk1,checkquest(10104);
+				if (.@slv_chk1 == -1) {
+					setquest 10104;
+					set slv_quest,3;
+					mes "I better find Jeanbai-";
+					mes "-in Al De Baran.-";
+					close;
+				}
+				else {
+					mes "-You are already on-";
+					mes "-another mission or have-";
+					mes "-recently completed one-";
+					mes "-so you can't take on-";
+					mes "-anymore right now.-";
+					close;
+				}
+				break;
+			case 2:
+				mes "-I don't want to do-";
+				mes "-this right now-";
+				close;
+			}
+			break;
+		case 4:
+			mes "-Clock Tower district-";
+			mes "-Watch is the best thing!-";
+			mes "-I'm asking to hunt some-";
+			mes "-monsters in clock tower.-";
+			mes "-Lizingshetter-";
+			next;
+			switch(select("Take a mission.:Ignore the mission.")) {
+			case 1:
+				if ((slv_quest == 1) || (slv_quest == 2) || (slv_quest == 3) || (slv_quest == 5) || (slv_quest == 6)) {
+					mes "-You are already doing-";
+					mes "-another mission.-";
+					mes "-It's really confusing to do-";
+					mes "-many missions at once.-";
+					mes "-Finish those first.-";
+					close;
+				}
+				set .@slv_chk1,checkquest(10105);
+				if (.@slv_chk1 == -1) {
+					setquest 10105;
+					set slv_quest,4;
+					mes "-Time to find Lizingshetter-";
+					mes "-in front of Clock Tower-";
+					close;
+				}
+				else {
+					mes "-You are already on-";
+					mes "-another mission or have-";
+					mes "-recently completed one-";
+					mes "-so you can't take on-";
+					mes "-anymore right now.-";
+					close;
+				}
+				break;
+			case 2:
+				mes "-I don't want to do-";
+				mes "-this right now-";
+				close;
+			}
+			break;
+		case 5:
+			mes "-Island districts-";
+			mes "-I need a person who-";
+			mes "-who can hunt mosters-";
+			mes "-From Funfi in Alberta-";
+			next;
+			switch(select("Take a mission.:Ignore the mission.")) {
+			case 1:
+				if ((slv_quest == 1) || (slv_quest == 2) || (slv_quest == 3) || (slv_quest == 4) || (slv_quest == 6)) {
+					mes "-You are already doing-";
+					mes "-another mission.-";
+					mes "-It's really confusing to do-";
+					mes "-many missions at once.-";
+					mes "-Finish those first.-";
+					close;
+				}
+				set .@slv_chk1,checkquest(10106);
+				if (.@slv_chk1 == -1) {
+					setquest 10106;
+					set slv_quest,5;
+					mes "-I better find Funfi-";
+					mes "-in Alberta-";
+					close;
+				}
+				else {
+					mes "-You are already on-";
+					mes "-another mission or have-";
+					mes "-recently completed one-";
+					mes "-so you can't take on-";
+					mes "-anymore right now.-";
+					close;
+				}
+				break;
+			case 2:
+				mes "-I don't want to do-";
+				mes "-this right now-";
+				close;
+			}
+			break;
+		}
+		close;
+	}
+	else {
+		mes "-This board can only be-";
+		mes "-read by those who are-";
+		mes "-of the correct level-";
+		mes "-there might be another-";
+		mes "-board somewhere for-";
+		mes "-my level.-";
+		close;
+	}
+}
+
+morocc,35,174,5	script	Meidi#para	729,{
+	set .@chk_sping1,checkquest(10107);
+	set .@chk_sping2,checkquest(10108);
+	set .@chk_sping3,checkquest(10109);
+	if ((.@chk_sping1 == 2) && (.@chk_sping2 == 2) && (.@chk_sping3 == 2) && (slv_quest == 6)) {
+		set slv_quest,0;
+		mes "[Meidi]";
+		mes "You have completed the monster hunting mission.";
+		mes "I don't have anymore missions to give you.";
+		mes "Thanks, you did a great job!";
+		close;
+	}
+	if ((.@chk_sping1 == 0) || (.@chk_sping2 == 0) || (.@chk_sping3 == 0) || (.@chk_sping1 == 1) || (.@chk_sping2 == 1) || (.@chk_sping3 == 1)) {
+		mes "[Meidi]";
+		mes "Wow! How did you come back so fast?";
+		mes "What monster did you hunt?";
+		next;
+		switch(select("Requiem:Marduk:Pasana")) {
+		case 1:
+			set .@chk_req,checkquest(10107,HUNTING);
+			if (.@chk_req == 2) {
+				mes "[Meidi]";
+				mes "You hunted all 10 Requiem.";
+				mes "Thank you very much.";
+				next;
+				mes "[Meidi]";
+				mes "I know it isn't much but here's a small gift.";
+				mes "I hope that it helps you at least a little bit.";
+				next;
+				completequest 10107;
+				getexp 48000,0;
+				mes "[Meidi]";
+				mes "Wooohoo!";
+				mes "Good luck.";
+				close;
+			}
+			else {
+				mes "[Meidi]";
+				mes "Umm? You didn't hunt";
+				mes "all 10 Requiem yet...";
+				mes "Will you check again?";
+				close;
+			}
+			break;
+		case 2:
+			set .@chk_mar,checkquest(10108,HUNTING);
+			if (.@chk_mar == 2) {
+				mes "[Meidi]";
+				mes "You hunted all 10 Marduk.";
+				mes "Thank you very much.";
+				next;
+				mes "[Meidi]";
+				mes "I know it isn't much but here's a small gift.";
+				mes "I hope that it helps you at least a little bit.";
+				next;
+				completequest 10108;
+				getexp 48000,0;
+				mes "[Meidi]";
+				mes "Wooohoo!";
+				mes "Good luck.";
+				close;
+			}
+			else {
+				mes "[Meidi]";
+				mes "You didn't hunt 10 Marduk yet.";
+				mes "You should make sure that you hunt all of them.";
+				mes "Will you check again?";
+				close;
+			}
+			break;
+		case 3:
+			set .@chk_pas,checkquest(10109,HUNTING);
+			if (.@chk_pas == 2) {
+				mes "[Meidi]";
+				mes "Wow, you hunted 10 Pasana.";
+				mes "Cool.";
+				mes "Thank you very much.";
+				next;
+				mes "[Meidi]";
+				mes "I know it isn't much but here's a small gift.";
+				mes "I hope that it helps you at least a little bit.";
+				next;
+				completequest 10109;
+				getexp 48000,0;
+				mes "[Meidi]";
+				mes "Wooohoo!";
+				mes "Good luck.";
+				close;
+			}
+			else {
+				mes "[Meidi]";
+				mes "You didn't hunt 10 Pasana yet.";
+				mes "Will you check it again if you hunted all of them?";
+				close;
+			}
+			break;
+		}
+		close;
+	}
+	if (slv_quest == 6) {
+		mes "[Meidi]";
+		mes "Sphynx dungeon... many adventurers have come back with injuries.";
+		mes "That place is dangerous.";
+		mes "Somebody should go in there and make it safe for everyone.";
+		mes "Hopefully, soon!";
+		close;
+	}
+	mes "[Meidi]";
+	mes "Sphynx dungeon... many adventurers have come back with injuries.";
+	mes "That place is dangerous.";
+	mes "Somebody should go in there and make it safe for everyone.";
+	mes "Hopefully, soon!";
+	next;
+	if (slv_quest == 1) {
+		mes "[Meidi]";
+		mes "Oh! Are you from Eden Group?";
+		mes "Are you here for my request?";
+		mes "You came right on time.";
+		mes "I was worried that no one would answer the request I posted up.";
+		next;
+		mes "[Meidi]";
+		mes "So I need help hunting three";
+		mes "monsters in sphynx dungeon.";
+		mes "get it? Its too dangerous for me so that's why I posted that request.";
+		next;
+		mes "[Meidi]";
+		mes "Requiem, Marduk, Pasana...";
+		mes "I heard they are dangerous monsters.";
+		mes "Could you hunt those 10 of each of those monsters?";
+		mes "10 each sounds good enough, right?";
+		next;
+		mes "[Meidi]";
+		mes "If you succeed, I can give you a small reward for your help.";
+		next;
+		switch(select("Accept request:Ignore the request")) {
+		case 1:
+			mes "[Meidi]";
+			mes "Oh. Thank you so much.";
+			mes "How I can pay back your effort?";
+			mes "Bless you~";
+			next;
+			completequest 10102;
+			setquest 10107;
+			setquest 10108;
+			setquest 10109;
+			set slv_quest,6;
+			mes "[Meidi]";
+			mes "Requiem, Marduk, Pasana.";
+			mes "Don't forget and goodluck.";
+			close;
+		case 2:
+			set slv_quest,0;
+			erasequest 10102;
+			mes "[Meidi]";
+			mes "I see. There isn't another way.";
+			mes "I will send a message to Eden Group.";
+			mes "Don't worry and nevermind.";
+			close;
+		}
+	}
+	close;
+}
+
+geffen,146,132,3	script	Ancellia#para	906,{
+	set .@chk_glh1,checkquest(10110);
+	set .@chk_glh2,checkquest(10111);
+	set .@chk_glh3,checkquest(10112);
+	set .@chk_glh4,checkquest(10113);
+	if ((.@chk_glh1 == 2) && (.@chk_glh2 == 2) && (.@chk_glh3 == 2) && (.@chk_glh4 == 2) && (slv_quest == 6)) {
+		set slv_quest,0;
+		mes "[Ancellia]";
+		mes "Wow. You finished all of";
+		mes "my missions. Great!";
+		mes "You are a great supporter.";
+		mes "I will inform the Eden Group of your help.";
+		mes "You can go back, don't worry.";
+		close;
+	}
+	if ((.@chk_glh1 == 0) || (.@chk_glh2 == 0) || (.@chk_glh3 == 0) || (.@chk_glh4 == 0) || (.@chk_glh1 == 1) || (.@chk_glh2 == 1) || (.@chk_glh3 == 1) || (.@chk_glh4 == 1)) {
+		mes "[Ancellia]";
+		mes "You seem to have hunted all the monsters.";
+		mes "What monsters did you hunt?";
+		mes "Can you remember the name?";
+		next;
+		switch(select("Dark Frame:Evil Druid:Wraith:Raydric Archer")) {
+		case 1:
+			set .@chk_dar,checkquest(10110,HUNTING);
+			if (.@chk_dar == 2) {
+				mes "[Ancellia]";
+				mes "Eliminate 10 Dark Frame.";
+				mes "That was pretty difficult!";
+				mes "Thank you very much.";
+				next;
+				completequest 10110;
+				getexp 48000,0;
+				mes "[Ancellia]";
+				mes "Perhaps you can eliminate others also.";
+				mes "I will wait for you here.";
+				close;
+			}
+			else {
+				mes "[Ancellia]";
+				mes "Hmm... maybe you were confused.";
+				mes "You didn't hunt all 10 Dark Frames.";
+				mes "Will you check again?";
+				close;
+			}
+			break;
+		case 2:
+			set .@chk_eve,checkquest(10111,HUNTING);
+			if (.@chk_eve == 2) {
+				mes "[Ancellia]";
+				mes "Eliminate 10 Evil Druids.";
+				mes "That was pretty difficult!";
+				mes "Thank you very much.";
+				next;
+				completequest 10111;
+				getexp 48000,0;
+				mes "[Ancellia]";
+				mes "Perhaps you can eliminate others also.";
+				mes "I will wait for you here.";
+				close;
+			}
+			else {
+				mes "[Ancellia]";
+				mes "Hmm... maybe you were confused.";
+				mes "Eliminate 10 Evil Druids.";
+				mes "Will you check again?";
+				close;
+			}
+			break;
+		case 3:
+			set .@chk_wra,checkquest(10112,HUNTING);
+			if (.@chk_wra == 2) {
+				mes "[Ancellia]";
+				mes "Eliminate 10 Wraith.";
+				mes "That was pretty difficult!";
+				mes "Thank you very much.";
+				next;
+				completequest 10112;
+				getexp 48000,0;
+				mes "[Ancellia]";
+				mes "Perhaps you can eliminate others also.";
+				mes "I will wait for you here.";
+				close;
+			}
+			else {
+				mes "[Ancellia]";
+				mes "Hmm... maybe you were confused.";
+				mes "Eliminate 10 Wraith";
+				mes "Will you check again?";
+				close;
+			}
+			break;
+		case 4:
+			set .@chk_red,checkquest(10113,HUNTING);
+			if (.@chk_red == 2) {
+				mes "[Ancellia]";
+				mes "Eliminate 10 Raydric Archers.";
+				mes "That was pretty difficult!";
+				mes "Thank you very much.";
+				next;
+				completequest 10113;
+				getexp 48000,0;
+				mes "[Ancellia]";
+				mes "Perhaps you can eliminate others also.";
+				mes "I will wait for you here.";
+				close;
+			}
+			else {
+				mes "[Ancellia]";
+				mes "Hmm... maybe you were confused.";
+				mes "Eliminate 10 Raydric Archers.";
+				mes "Will you check again?";
+				close;
+			}
+			break;
+		}
+	}
+	if (slv_quest == 6) {
+		// Custom/Copy/Paste
+		mes "[Ancellia]";
+		mes "Go to Glast Heim and kill";
+		mes "Dark Frames, Evil Druids,";
+		mes "Wraith, Raydric Archers.";
+		mes "10 of each should do just fine.";
+		close;
+	}
+	mes "[Ancellia]";
+	mes "Glast Heim is far away.";
+	mes "And I hear that the castle was cursed by the ancient king of Prontera.";
+	mes "There is a similar story.";
+	next;
+	mes "[Ancellia]";
+	mes "One day they came out of the castle and attacked a village it was terrible.";
+	mes "That's why I can't stop worrying.";
+	next;
+	if (slv_quest == 2) {
+		mes "[Ancellia]";
+		mes "Oh, you got my request";
+		mes "from the Eden Group. Great~!";
+		mes "Thank you very much.";
+		next;
+		mes "[Ancellia]";
+		mes "I already explained.";
+		mes "So I expect you understand.";
+		mes "I will hurry to finish.";
+		mes "Dark Frame, Evil Druid,";
+		mes "Wraith, Raydric Archer.";
+		next;
+		mes "[Ancellia]";
+		mes "You should hunt them all.";
+		mes "These are dangerous monsters so please take care of yourself.";
+		next;
+		switch(select("Accept request:Ignore the request")) {
+		case 1:
+			mes "[Ancellia]";
+			mes "Thanks a lot.";
+			mes "Be careful when you hunt these monsters. Goodluck.";
+			next;
+			completequest 10103;
+			setquest 10110;
+			setquest 10111;
+			setquest 10112;
+			setquest 10113;
+			set slv_quest,6;
+			mes "[Ancellia]";
+			mes "Remember, Dark Frames,";
+			mes "Evil Druids, Wraiths,";
+			mes "and Raydric Archers.";
+			close;
+		case 2:
+			set slv_quest,0;
+			erasequest 10103;
+			mes "[Ancellia]";
+			mes "Was the mission too hard?";
+			mes "I guess I'll just have to wait for someone else from the Eden Group to help me.";
+			close;
+		}
+	}
+	close;
+}
+
+aldebaran,144,230,3	script	Jeanbai#para	900,{
+	set .@chk_yun1,checkquest(10114);
+	set .@chk_yun2,checkquest(10115);
+	set .@chk_yun3,checkquest(10116);
+	set .@chk_yun4,checkquest(10117);
+	if ((.@chk_yun1 == 2) && (.@chk_yun2 == 2) && (.@chk_yun3 == 2) && (.@chk_yun4 == 2) && (slv_quest == 6)) {
+		set slv_quest,0;
+		mes "[Jeanbai]";
+		mes "You've eliminated all of the monsters.";
+		mes "I will inform the Eden Group.";
+		mes "Thank you.";
+		close;
+	}
+	if ((.@chk_yun1 == 0) || (.@chk_yun2 == 0) || (.@chk_yun3 == 0) || (.@chk_yun4 == 0) || (.@chk_yun1 == 1) || (.@chk_yun2 == 1) || (.@chk_yun3 == 1) || (.@chk_yun4 == 1)) {
+		mes "[Jeanbai]";
+		mes "Huh? So... fast...";
+		mes "You amaze me!";
+		mes "So what monsters did you hunt?";
+		next;
+		switch(select("Grand Peco:Sleeper:Goat:Harpy")) {
+		case 1:
+			set .@chk_gra,checkquest(10114,HUNTING);
+			if (.@chk_gra == 2) {
+				mes "[Jeanbai]";
+				mes "20 Grand Pecos. Perfect!";
+				mes "Thanks a lot.";
+				next;
+				completequest 10114;
+				getexp 48000,0;
+				mes "[Jeanbai]";
+				mes "Please hunt the others as soon as possible.";
+				mes "I believe in you!";
+				close;
+			}
+			else {
+				mes "[Jeanbai]";
+				mes "What? Maybe you were confused.";
+				mes "20 Grand pecos. You should hunt them all but you didn't finish all of them.";
+				mes "Think again carefully.";
+				close;
+			}
+			break;
+		case 2:
+			set .@chk_sle,checkquest(10115,HUNTING);
+			if (.@chk_sle == 2) {
+				mes "[Jeanbai]";
+				mes "20 Sleepers!";
+				mes "Thanks a lot.";
+				next;
+				completequest 10115;
+				getexp 48000,0;
+				mes "[Jeanbai]";
+				mes "Please hunt the others too.";
+				mes "I believe in you!";
+				close;
+			}
+			else {
+				mes "[Jeanbai]";
+				mes "What? Maybe you were confused.";
+				mes "Hunt 20 Sleepers.";
+				mes "Maybe you need to count again.";
+				close;
+			}
+			break;
+		case 3:
+			set .@chk_goa,checkquest(10116,HUNTING);
+			if (.@chk_goa == 2) {
+				mes "[Jeanbai]";
+				mes "20 Goats. Perfect!";
+				mes "I checked the amount and it was exact.";
+				mes "Thanks a lot.";
+				next;
+				completequest 10116;
+				getexp 48000,0;
+				mes "[Jeanbai]";
+				mes "Please hunt the others as soon as possible.";
+				mes "I believe in you!";
+				close;
+			}
+			else {
+				mes "[Jeanbai]";
+				mes "What? Maybe you were confused.";
+				mes "20 Goats hunt them all.";
+				mes "Think again carefully.";
+				close;
+			}
+			break;
+		case 4:
+			set .@chk_har,checkquest(10117,HUNTING);
+			if (.@chk_har == 2) {
+				mes "[Jeanbai]";
+				mes "20 Harpies. Perfect!!";
+				mes "Thanks a lot.";
+				next;
+				completequest 10117;
+				getexp 48000,0;
+				mes "[Jeanbai]";
+				mes "Please hunt the others as soon as possible.";
+				mes "I believe in you!";
+				close;
+			}
+			else {
+				mes "[Jeanbai]";
+				mes "What? Maybe you were confused.";
+				mes "20 Harpy. Hunt them all.";
+				mes "Think again carefully.";
+				close;
+			}
+			break;
+		}
+	}
+	if (slv_quest == 6) {
+		// Custom/Copy/Paste
+		mes "[Jeanbai]";
+		mes "Grand Peco, Sleeper, Goat,";
+		mes "and Harpy. Hunt 20 of each.";
+		mes "After you've hunted them all, come back to me.";
+		mes "I hope finish as soon as you can.";
+		close;
+	}
+	mes "[Jeanbai]";
+	mes "I am traveler Jeanbai.";
+	mes "As I said I'm a traveler not a adventurer so, I am poor at fighting.";
+	mes "That's why I can't travel all over the world.";
+	next;
+	mes "[Jeanbai]";
+	mes "Monsters are increasing in number so people like me have a hard time traveling.";
+	mes "I wish I could travel without having to worry.";
+	next;
+	if (slv_quest == 3) {
+		mes "[Jeanbai]";
+		mes "Oh, did you get my mission from the Eden Group?";
+		mes "Great~! We don't have enough time.";
+		mes "Let me explain.";
+		next;
+		mes "[Jeanbai]";
+		mes "The monsters in Juno,";
+		mes "Grand Peco, Sleeper, Goat,";
+		mes "and Harpy. Hunt 20 of each.";
+		mes "I've been hesitating to visit Juno because of all of the monsters there.";
+		next;
+		mes "[Jeanbai]";
+		mes "Can you take this mission?";
+		mes "I expect you are the proper person to take this up.";
+		mes "So what do you say?";
+		next;
+		switch(select("Accept request:Ignore the request")) {
+		case 1:
+			mes "[Jeanbai]";
+			mes "Great!";
+			mes "You won't regert it.";
+			next;
+			completequest 10104;
+			setquest 10114;
+			setquest 10115;
+			setquest 10116;
+			setquest 10117;
+			set slv_quest,6;
+			mes "[Jeanbai]";
+			mes "After you've hunted them all, come back to me.";
+			mes "I hope finish as soon as you can.";
+			close;
+		case 2:
+			set slv_quest,0;
+			erasequest 10104;
+			mes "[Jeanbai]";
+			mes "Too bad. I'm disappointed.";
+			mes "I should inform the Eden Group again.";
+			mes "I see nevermind.";
+			close;
+		}
+	}
+	close;
+}
+
+aldebaran,105,116,3	script	Lizingshetter#para	869,{
+	set .@chk_clo1,checkquest(10118);
+	set .@chk_clo2,checkquest(10119);
+	set .@chk_clo3,checkquest(10120);
+	if ((.@chk_clo1 == 2) && (.@chk_clo2 == 2) && (.@chk_clo3 == 2) && (slv_quest == 6)) {
+		set slv_quest,0;
+		mes "[Lizingshetter]";
+		mes "You did all of missions.";
+		mes "Amazing~!";
+		mes "I will inform the Eden Group.";
+		mes "Thanks again!";
+		close;
+	}
+	if ((.@chk_clo1 == 0) || (.@chk_clo2 == 0) || (.@chk_clo3 == 0) || (.@chk_clo1 == 1) || (.@chk_clo2 == 1) || (.@chk_clo3 == 1)) {
+		mes "[Lizingshetter]";
+		mes "Wow. Are you done?";
+		mes "So fast~?! Unbelievable~";
+		mes "You were the right person for this mission.";
+		mes "Which monster did you hunt?";
+		next;
+		switch(select("Clock:Punk:Rideword")) {
+		case 1:
+			set .@chk_clk,checkquest(10118,HUNTING);
+			if (.@chk_clk == 2) {
+				mes "[Lizingshetter]";
+				mes "Good! You hunted 15 Clocks.";
+				mes "Exactly! Ah, now";
+				mes "I can clearly hear the clock sound...";
+				mes "tic toc tic toc.";
+				next;
+				completequest 10118;
+				getexp 48000,0;
+				mes "[Lizingshetter]";
+				mes "Thanks a lot!";
+				mes "I hope you can hunt others as well.";
+				mes "Go as soon as you can!";
+				close;
+			}
+			else {
+				mes "[Lizingshetter]";
+				mes "Uh? Something is weird.";
+				mes "15 Clocks, right?";
+				mes "You better recount how many you've hunted.";
+				close;
+			}
+			break;
+		case 2:
+			set .@chk_pun,checkquest(10119,HUNTING);
+			if (.@chk_pun == 2) {
+				mes "[Lizingshetter]";
+				mes "Good! You hunted 15 Punks.";
+				mes "Exactly! Ah, now";
+				mes "I can clearly hear the clock sound...";
+				mes "tic toc tic toc.";
+				next;
+				completequest 10119;
+				getexp 48000,0;
+				mes "[Lizingshetter]";
+				mes "Thanks a lot!";
+				mes "I hope you can hunt others as well.";
+				close;
+			}
+			else {
+				mes "[Lizingshetter]";
+				mes "Uh? Something is weird.";
+				mes "15 Punks, right?";
+				mes "You better recount how many you've hunted.";
+				close;
+			}
+			break;
+		case 3:
+			set .@chk_rid,checkquest(10120,HUNTING);
+			if (.@chk_rid == 2) {
+				mes "[Lizingshetter]";
+				mes "Good! You hunted 15 Ridewords.";
+				mes "Exactly! Ah, now";
+				mes "I can clearly hear the clock sound...";
+				mes "tic!! toc!! tic!! toc!!...";
+				next;
+				completequest 10120;
+				getexp 48000,0;
+				mes "[Lizingshetter]";
+				mes "Thanks a lot!";
+				mes "I hope you can hunt others as well.";
+				close;
+			}
+			else {
+				mes "[Lizingshetter]";
+				mes "Uh? Something is weird.";
+				mes "16 Ridewords, right?";
+				mes "You better recount how many you've hunted.";
+				close;
+			}
+			break;
+		}
+	}
+	if (slv_quest == 6) {
+		// Custom/Copy/Paste
+		mes "[Lizingshetter]";
+		mes "hunt 15 of each of these monsters: Clocks, Punks, and Rideword.";
+		mes "Please hurry.";
+		close;
+	}
+	mes "[Lizingshetter]";
+	mes "I like clocks so much.";
+	mes "They move with regular rhythm";
+	mes "making tic toc sounds.";
+	mes "Ahah!! Hail to the clocks!";
+	next;
+	mes "[Lizingshetter]";
+	mes "That's why I like clock tower so much.";
+	mes "It's really a great sound.";
+	mes "I like it so much!";
+	next;
+	if (slv_quest == 4) {
+		mes "[Lizingshetter]";
+		mes "Uh? Have you come to help me solve my trouble.";
+		mes "You already know i like clocks right?";
+		mes "That's why I need you to help me hunt these monsters.";
+		next;
+		mes "[Lizingshetter]";
+		mes "There are too many monsters in clock tower.";
+		mes "Their presence is breaking the clock tower.";
+		next;
+		mes "[Lizingshetter]";
+		mes "Anyway. Can you help me?";
+		mes "before it breaks,";
+		mes "hunt 15 of each of these monsters: Clocks, Punks, and Rideword.";
+		next;
+		switch(select("Accept request:Ignore the request")) {
+		case 1:
+			completequest 10105;
+			setquest 10118;
+			setquest 10119;
+			setquest 10120;
+			set slv_quest,6;
+			mes "[Lizingshetter]";
+			mes "Ok! I expect you will do the right thing.";
+			mes "Clock, Punk, and Rideword hunt 15 of each.";
+			close;
+		case 2:
+			set slv_quest,0;
+			erasequest 10105;
+			mes "[Lizingshetter]";
+			mes "You can't understand my heart.";
+			mes "I will find another brave adventurer.";
+			mes "I will inform the Eden Group.";
+			close;
+		}
+	}
+	close;
+}
+
+
+alberta,215,111,5	script	Funfi#para	828,{
+	set .@chk_roc1,checkquest(10121);
+	set .@chk_roc2,checkquest(10122);
+	set .@chk_roc3,checkquest(10123);
+	if ((.@chk_roc1 == 2) && (.@chk_roc2 == 2) && (.@chk_roc3 == 2) && (slv_quest == 6)) {
+		set slv_quest,0;
+		mes "[Funfi]";
+		mes "Um! Thank you so much for your effort!";
+		mes "I will tell the Eden Group about you that was really great, don't worry!";
+		mes "Hahahaha...";
+		close;
+	}
+	if ((.@chk_roc1 == 0) || (.@chk_roc2 == 0) || (.@chk_roc3 == 0) | (.@chk_roc1 == 1) || (.@chk_roc2 == 1) || (.@chk_roc3 == 1)) {
+		mes "[Funfi]";
+		mes "Unbeilivable~! So fast~!";
+		mes "Which monster did you hunt?";
+		next;
+		switch(select("Uzhas:Miyabi Doll:Mi Gao")) {
+		case 1:
+			set .@chk_uzh,checkquest(10121,HUNTING);
+			if (.@chk_uzh == 2) {
+				mes "[Funfi]";
+				mes "Ok! 15 Uzhas!";
+				mes "Completed! Perfect!";
+				next;
+				completequest 10121;
+				getexp 48000,0;
+				mes "[Funfi]";
+				mes "Please hunt the others as well.";
+				mes "I trust you!";
+				close;
+			}
+			else {
+				mes "[Funfi]";
+				mes "Oh~ No no~!!";
+				mes "Be careful and hunt 15 Uzhas!";
+				close;
+			}
+			break;
+		case 2:
+			set .@chk_miy,checkquest(10122,HUNTING);
+			if (.@chk_miy == 2) {
+				mes "[Funfi]";
+				mes "Ok! 15 Miyabi Dolls!";
+				mes "Perfect!";
+				next;
+				completequest 10122;
+				getexp 48000,0;
+				mes "[Funfi]";
+				mes "Please hunt the others as well.";
+				mes "I trust you!";
+				close;
+			}
+			else {
+				mes "[Funfi]";
+				mes "Oh~ No no~!!";
+				mes "Listen carefully! 15 Miyabi Dolls.";
+				close;
+			}
+			break;
+		case 3:
+			set .@chk_sik,checkquest(10123,HUNTING);
+			if (.@chk_sik == 2) {
+				mes "[Funfi]";
+				mes "Ok! 15 Mi Gaos!";
+				mes "Perfect!";
+				next;
+				completequest 10123;
+				getexp 48000,0;
+				mes "[Funfi]";
+				mes "Please hunt the others as well.";
+				mes "I trust you!";
+				close;
+			}
+			else {
+				mes "[Funfi]";
+				mes "Oh~ No no~!!";
+				mes "Listen carefully! 15 Mi Gaos!";
+				close;
+			}
+			break;
+		}
+	}
+	if (slv_quest == 6) {
+		// Custom/Copy/Paste
+		mes "[Funfi]";
+		mes "Moscovia's witch, Uzhas,";
+		mes "Amatsu's Miyabi Dolls,";
+		mes "Louyang's Mi Gaos.";
+		mes "These three monsters,";
+		mes "please kill 15 of each.";
+		close;
+	}
+	mes "[Funfi]";
+	mes "I am a man who wants to experience adventure. But for some reason I can't...";
+	next;
+	mes "[Funfi]";
+	mes "There are lots of funny things in the world... Wooo!";
+	next;
+	if (slv_quest == 5) {
+		mes "[Funfi]";
+		mes "Anyway are you from the Eden Group?";
+		mes "You are right? Cool! I've been waiting for you~!";
+		next;
+		mes "[Funfi]";
+		mes "No questions! Just do it now!";
+		mes "Uzhas in Moscovia,";
+		mes "Miyabi Doll in Amatsu,";
+		mes "Mi Gaos in louyang!";
+		mes "Hunt 15 each those monsters!";
+		next;
+		mes "[Funfi]";
+		mes "Please~!! haha.";
+		mes "Hurry up!";
+		next;
+		switch(select("Accept request:Ignore the request")) {
+		case 1:
+			completequest 10106;
+			setquest 10121;
+			setquest 10122;
+			setquest 10123;
+			set slv_quest,6;
+			getitem 7167,10; //Mystery_Iron_Bit
+			mes "[Funfi]";
+			mes "Ok! Good! Hurry up.";
+			mes "Go as soon as you can!";
+			close;
+		case 2:
+			set slv_quest,0;
+			erasequest 10106;
+			mes "[Funfi]";
+			mes "What? Don't you want to work?! Gosh!";
+			mes "I will tell everything to the Eden Group!";
+			close;
+		}
+	}
+	close;
+}

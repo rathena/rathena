@@ -1,0 +1,1454 @@
+//===== eAthena Script ======================================= 
+// Eden Group Quests - Repeatable experience quests [55-70]
+//===== By: ================================================== 
+//= L0ne_W0lf
+//===== Current Version: ===================================== 
+//= 1.0
+//===== Compatible With: ===================================== 
+//= eAthena SVN
+//===== Description: ========================================= 
+//= [AEGIS Conversion]
+//===== Additional Comments: ================================= 
+//= 1.0 First Version.
+//============================================================
+
+moc_para01,42,38,3	script	Mission [56 - 70]	857,{
+	if (countitem(6219) > 0) {
+		set .@quest_check_3259,checkquest(3259);
+		if (.@quest_check_3259 > -1)
+			erasequest 3259;
+		//erasequest 3253;
+		//erasequest 3265;
+		mes "Here is the list of various adventures for level 55~70 adventurers.";
+		next;
+		mes "Lots of missions such as a Monster Hunting, Delivery Goods, Finding People.";
+		next;
+		switch(select("Mission Number 1~5:Mission Number 6~10:Mission Number 11~15")) {
+		case 1:
+			switch(select("What is this Bandage?:Dangerous Alligators.:That wasn't a mermaid...:My country is calling me!")) {
+			case 1:
+				set .@quest_check_3250,checkquest(3250);
+				set .@quest_check_hunt_3250,checkquest(3250,HUNTING);
+				if (.@quest_check_3250 == -1) {
+					mes "This mission is assigned by the Rekenber corporation from Lighthalzen. Below are the details.";
+					next;
+					mes "Rekenber corporation is about to launch a new project called 'Green Medical Center'. For the first product of the project, we are preparing well-being Bandages.";
+					next;
+					mes "Regarding the project, we need to research monster's reactions when they are wrapped with Rotten Bandages.";
+					next;
+					mes "If you are interested, please hunt 30 Mummies and bring 30 Rotten Bandage. You can find them in the Pyramid West of Morroc.";
+					next;
+					mes "Please confirm it to us after you complete the mission, then we will give you proper rewards.";
+					next;
+					mes "- Rekenber corporation chief director 'Julie E Delph' -";
+					next;
+					mes " ";
+					next;
+					mes "Would you like to accept this mission?";
+					next;
+					switch(select("Accept the mission.:Do not accept the mission.")) {
+					case 1:
+						if ((BaseLevel > 54) && (BaseLevel < 71)) {
+							setquest 3250;
+							mes "I have successfully accepted the mission. I have to come back and confirm my work after I complete the mission.";
+							next;
+							mes "This mission doesn't have time limits.";
+						}
+						else
+							mes "These missions are not fit for my level. I should look for other missions.";
+						break;
+					case 2:
+						break;
+					}
+				}
+				else if ((.@quest_check_hunt_3250 == 0) || (.@quest_check_hunt_3250 == 1)) {
+					mes "You have an on-going mission. Would you like to check the details?";
+					next;
+					switch(select("Check the details.:Cancel.")) {
+					case 1:
+						mes "This mission is assigned by the Rekenber corporation from Lighthalzen. Below are the details.";
+						next;
+						mes "Rekenber corporation is about to launch a new project called 'Green Medical Center'. For the first product of the project, we are preparing well-being Bandages.";
+						next;
+						mes "Regarding the project, we need to research monster's reactions when they are wrapped with Rotten Bandages.";
+						next;
+						mes "If you are interested, please hunt 30 Mummies and bring 30 Rotten Bandage. You can find them in the Pyramid West of Morroc.";
+						next;
+						mes "Please confirm it to us after you complete the mission, then we will give you proper rewards.";
+						next;
+						mes "- Rekenber corporation chief director 'Julie E Delph' -";
+						break;
+					case 2:
+						break;
+					}
+				}
+				else if ((.@quest_check_hunt_3250 == 2) && (countitem(930) > 19)) {
+					mes "I have done pretty well for the mission. Should I report it now?";
+					next;
+					switch(select("Report the mission.:Do not report it yet.")) {
+					case 1:
+						delitem 930,20; //Rotten_Bandage
+						getexp 15000,5000;
+						erasequest 3250;
+						mes "You have completed the mission. Get rewards.";
+						break;
+					case 2:
+						break;
+					}
+				}
+				else if (.@quest_check_3250 == 2) {
+					mes "This mission is assigned by the Rekenber corporation from Lighthalzen. Below are the details.";
+					next;
+					mes "Rekenber corporation is about to launch a new project called 'Green Medical Center'. For the first product of the project, we are preparing well-being Bandages.";
+					next;
+					mes "Regarding the project, we need to research monster's reactions when they are wrapped with Rotten Bandages.";
+					next;
+					mes "If you are interested, please hunt 30 Mummies and bring 30 Rotten Bandage. You can find them in the Pyramid West of Morroc.";
+					next;
+					mes "Please confirm it to us after you complete the mission, then we will give you proper rewards.";
+					next;
+					mes "- Rekenber corporation chief director 'Julie E Delph' -";
+					next;
+					mes " ";
+					next;
+					mes "Would you like to accept this mission?";
+					next;
+					switch(select("Accept the mission.:Do not accept the mission.")) {
+					case 1:
+						if ((BaseLevel > 54) && (BaseLevel < 71)) {
+							setquest 3250;
+							mes "I have successfully accepted the mission. I have to come back and confirm my work after I complete the mission.";
+							next;
+							mes "This mission doesn't have time limits.";
+						}
+						else
+							mes "These missions are not fit for my level. I should look for other missions.";
+						break;
+					case 2:
+						break;
+					}
+				}
+				break;
+			case 2:
+				set .@quest_check_3251,checkquest(3251);
+				set .@quest_check_hunt_3251,checkquest(3251,HUNTING);
+				if (.@quest_check_3251 == -1) {
+					mes "This mission is assigned by the Comodo cooperative society. Below are the details.";
+					next;
+					mes "Alligators have gone wild these days, they attack women and drunken people who hang out near the beach.";
+					next;
+					mes "This is a very shameful situation for us, the most wonderful vacation spot in Rune Midgard.";
+					next;
+					mes "So, it would be very helpful if you hunt 30 Alligators to clean out this situation.";
+					next;
+					mes "Please confirm it to us after you complete the mission, then we will give you proper rewards.";
+					next;
+					mes " ";
+					next;
+					mes "Would you like to accept this mission?";
+					next;
+					switch(select("Accept the mission.:Do not accept the mission.")) {
+					case 1:
+						if ((BaseLevel > 54) && (BaseLevel < 71)) {
+							setquest 3251;
+							mes "I have successfully accepted the mission. I have to come back and confirm my work after I complete the mission.";
+							next;
+							mes "This mission doesn't have time limits.";
+						}
+						else
+							mes "These missions are not fit for my level. I should look for other missions.";
+						break;
+					case 2:
+						break;
+					}
+				}
+				else if ((.@quest_check_hunt_3251 == 0) || (.@quest_check_hunt_3251 == 1)) {
+					mes "You have an on-going mission. Would you like to check the details?";
+					next;
+					switch(select("Check the details.:Cancel.")) {
+					case 1:
+						mes "This mission is assigned by the Comodo cooperative society. Below are the details.";
+						next;
+						mes "Alligators have gone wild these days, they attack women and drunken people who hang out near the beach.";
+						next;
+						mes "This is a very shameful situation for us, the most wonderful vacation spot in Rune Midgard.";
+						next;
+						mes "So, it would be very helpful if you hunt 30 Alligators to clean out this situation.";
+						next;
+						mes "Please confirm it to us after you complete the mission, then we will give you proper rewards.";
+						break;
+					case 2:
+						break;
+					}
+				}
+				else if (.@quest_check_hunt_3251 == 2) {
+					mes "I have done pretty well for the mission. Should I report it now?";
+					next;
+					switch(select("Report the mission.:Do not report it yet.")) {
+					case 1:
+						getexp 16000,6000;
+						erasequest 3251;
+						mes "You have completed the mission. Get rewards.";
+						break;
+					case 2:
+						break;
+					}
+				}
+				else if (.@quest_check_3251 == 2) {
+					mes "This mission is assigned by the Comodo cooperative society. Below are the details.";
+					next;
+					mes "Alligators have gone wild these days, they attack women and drunken people who hang out near the beach.";
+					next;
+					mes "This is a very shameful situation for us, the most wonderful vacation spot in Rune Midgard.";
+					next;
+					mes "So, it would be very helpful if you hunt 30 Alligators to clean out this situation.";
+					next;
+					mes "Please confirm it to us after you complete the mission, then we will give you proper rewards.";
+					next;
+					mes " ";
+					next;
+					mes "Would you like to accept this mission?";
+					next;
+					switch(select("Accept the mission.:Do not accept the mission.")) {
+					case 1:
+						if ((BaseLevel > 54) && (BaseLevel < 71)) {
+							setquest 3251;
+							mes "I have successfully accepted the mission. I have to come back and confirm my work after I complete the mission.";
+							next;
+							mes "This mission doesn't have time limits.";
+						}
+						else
+							mes "These missions are not fit for my level. I should look for other missions.";
+						break;
+					case 2:
+						break;
+					}
+				}
+				close;
+			case 3:
+				set .@quest_check_3252,checkquest(3252);
+				set .@quest_check_hunt_3252,checkquest(3252,HUNTING);
+				if (.@quest_check_3252 == -1) {
+					mes "This mission is assigned by an unknown client from Izlude.";
+					next;
+					mes "I have admired the beach of Izlude, ever since I was born.";
+					next;
+					mes "When I was young, I found a mysterious creature in the Izlude dungeon, I had never seen something like that before...";
+					next;
+					mes "I instantly thought it was a mermaid. I was so supprised, I have studied about mermaids in whole my life.";
+					next;
+					mes "But, as I studied harder, I found that the creature was not a mermaid... yes, It wasn't beautiful at all like other mermaids...";
+					next;
+					mes "I finally tracked down the fact that it was a Merman, not a Mermaid!";
+					next;
+					mes "Merman... I have wasted my life studying this monster! So please hunt 30 Merman to make me feel better.";
+					next;
+					mes "Please confirm it to us after you complete the mission, then we will give you proper rewards.";
+					next;
+					mes "-- Izlude 'The Lost dream mermaid' --";
+					next;
+					mes " ";
+					next;
+					mes "Would you like to accept this mission?";
+					next;
+					switch(select("Accept the mission.:Do not accept the mission.")) {
+					case 1:
+						if ((BaseLevel > 54) && (BaseLevel < 71)) {
+							setquest 3252;
+							mes "I have successfully accepted the mission. I have to come back and confirm my work after I complete the mission.";
+							next;
+							mes "This mission doesn't have time limits.";
+						}
+						else
+							mes "These missions are not fit for my level. I should look for other missions.";
+						break;
+					case 2:
+						break;
+					}
+				}
+				else if ((.@quest_check_hunt_3252 == 0) || (.@quest_check_hunt_3252 == 1)) {
+					mes "You have an on-going mission. Would you like to check the details?";
+					next;
+					switch(select("Check the details.:Cancel.")) {
+					case 1:
+						mes "This mission is assigned by an unknown client from Izlude.";
+						next;
+						mes "I have admired the beach of Izlude, ever since I was born.";
+						next;
+						mes "When I was young, I found a mysterious creature in the Izlude dungeon, I had never seen something like that before.";
+						next;
+						mes "I instantly thought it was a mermaid. I was so supprised, I have studied about mermaids in whole my life.";
+						next;
+						mes "But, as I studied harder, I found that the creature was not a mermaid... yes, It wasn't beautiful at all like other mermaids...";
+						next;
+						mes "I finally tracked down the fact that it was a Merman, not a Mermaid!";
+						next;
+						mes " Merman... I have wasted my life studying this monster! So please hunt 30 Merman to make me feel better.";
+						next;
+						mes "Please confirm it to us after you complete the mission, then we will give you proper rewards.";
+						next;
+						mes "-- Izlude 'The Lost dream mermaid' --";
+						break;
+					case 2:
+						break;
+					}
+				}
+				else if (.@quest_check_hunt_3252 == 2) {
+					mes "I have done pretty well for the mission. Should I report it now?";
+					next;
+					switch(select("Report the mission.:Do not report it yet.")) {
+					case 1:
+						getexp 17000,8000;
+						erasequest 3252;
+						mes "You have completed the mission. Get rewards.";
+						break;
+					case 2:
+						break;
+					}
+				}
+				else if (.@quest_check_3252 == 2) {
+					mes "This mission is assigned by an unknown client from Izlude.";
+					next;
+					mes "I have admired the beach of Izlude, ever since I was born.";
+					next;
+					mes "When I was young, I found a mysterious creature in the Izlude dungeon, I had never seen something like that before.";
+					next;
+					mes "I instantly thought it was a mermaid. I was so supprised, I have studied about mermaids in whole my life.";
+					next;
+					mes "But, as I studied harder, I found that the creature was not a mermaid... yes, It wasn't beautiful at all like other mermaids...";
+					next;
+					mes "I finally tracked down the fact that it was a Merman, not a Mermaid!";
+					next;
+					mes "Merman... I have wasted my life studying this monster! So please hunt 30 Merman to make me feel better.";
+					next;
+					mes "Please confirm it to us after you complete the mission, then we will give you proper rewards.";
+					next;
+					mes "-- Izlude 'The Lost dream mermaid' --";
+					next;
+					mes " ";
+					next;
+					mes "Would you like to accept this mission?";
+					next;
+					switch(select("Accept the mission.:Do not accept the mission.")) {
+					case 1:
+						if ((BaseLevel > 54) && (BaseLevel < 71)) {
+							setquest 3252;
+							mes "I have successfully accepted the mission. I have to come back and confirm my work after I complete the mission.";
+							next;
+							mes "This mission doesn't have time limits.";
+						}
+						else
+							mes "These missions are not fit for my level. I should look for other missions.";
+						break;
+					case 2:
+						break;
+					}
+				}
+				close;
+			case 4:
+				set .@quest_check_3254,checkquest(3254);
+				if (.@quest_check_3254 == -1) {
+					mes "This mission is assigned by the government officer of the Rune-Midgarts Kingdom.";
+					next;
+					mes "To prevent a flood in Prontera, we decided to build a huge dam to regulate the water supply.";
+					next;
+					mes "But, we are shorthanded on supplies and we need to collect Fine Sand and Grit.";
+					next;
+					mes "So, we would like to ask for help. People, please bring us 10 Fine Sand and 30 Grit each so we can build the dam.";
+					next;
+					mes "You can get those materials from Sand Man, I wish you good luck!";
+					next;
+					mes "Please confirm it to us after you complete the mission, then we will give you proper rewards.";
+					next;
+					mes "-- Government officer of the Rune-Midgarts Kingdom, Dufre Kent --";
+					next;
+					switch(select("Accept the mission.:Do not accept the mission.")) {
+					case 1:
+						if ((BaseLevel > 54) && (BaseLevel < 71)) {
+							setquest 3254;
+							mes "I have successfully accepted the mission. I have to come back and confirm my work after I complete the mission.";
+							next;
+							mes "This mission doesn't have time limits.";
+						}
+						else
+							mes "These missions are not fit for my level. I should look for other missions.";
+						break;
+					case 2:
+						break;
+					}
+				}
+				else if (((.@quest_check_3254 == 0) || (.@quest_check_3254 == 1)) && (countitem(7043) < 10) && (countitem(1056) < 30)) {
+					mes "You have an on-going mission. Would you like to check the details?";
+					next;
+					switch(select("Check the details.:Cancel.")) {
+					case 1:
+						mes "This mission is assigned by the government officer of the Rune-Midgarts Kingdom.";
+						next;
+						mes "To prevent a flood in Prontera, we decided to build a huge dam to regulate the water supply.";
+						next;
+						mes "But, we are shorthanded on supplies and we need to collect Fine Sand and Grit.";
+						next;
+						mes "So, we would like to ask for help. People, please bring us 10 Fine Sand and 30 Grit each so we can build the dam.";
+						next;
+						mes "You can get those materials from Sand Man, I wish you good luck!";
+						next;
+						mes "Please confirm it to us after you complete the mission, then we will give you proper rewards.";
+						next;
+						mes "-- Government officer of the Rune-Midgarts Kingdom, Dufre Kent --";
+						break;
+					case 2:
+						break;
+					}
+				}
+				else if (((.@quest_check_3254 == 0) || (.@quest_check_3254 == 1)) && (countitem(7043) > 9) && (countitem(1056) > 29)) {
+					mes "I have done pretty well for the mission. Should I report it now?";
+					next;
+					switch(select("Report the mission.:Do not report it yet.")) {
+					case 1:
+						delitem 7043,10; //Fine_Sand
+						delitem 1056,30; //Grit
+						getexp 18000,8000;
+						erasequest 3254;
+						mes "You have completed the mission. Get rewards.";
+						break;
+					case 2:
+						break;
+					}
+				}
+				else if (.@quest_check_3254 == 2) {
+					mes "This mission is assigned by the government officer of the Rune-Midgarts Kingdom.";
+					next;
+					mes "To prevent a flood in Prontera, we decided to build a huge dam to regulate the water supply.";
+					next;
+					mes "But, we are shorthanded on supplies and we need to collect Fine Sand and Grit.";
+					next;
+					mes "So, we would like to ask for help. People, please bring us 10 Fine Sand and 30 Grit each so we can build the dam.";
+					next;
+					mes "You can get those materials from Sand Man, I wish you good luck!";
+					next;
+					mes "Please confirm it to us after you complete the mission, then we will give you proper rewards.";
+					next;
+					mes "-- Government officer of the Rune-Midgarts Kingdom, Dufre Kent --";
+					next;
+					switch(select("Accept the mission.:Do not accept the mission.")) {
+					case 1:
+						if ((BaseLevel > 54) && (BaseLevel < 71)) {
+							setquest 3254;
+							mes "I have successfully accepted the mission. I have to come back and confirm my work after I complete the mission.";
+							next;
+							mes "This mission doesn't have time limits.";
+						}
+						else
+							mes "These missions are not fit for my level. I should look for other missions.";
+						break;
+					case 2:
+						break;
+					}
+				}
+			}
+			close;
+		case 2:
+			switch(select("Hunt Wild Boar:Preparing the Summer:A Woman's Grudge:Special ingredients:Puppet Master's Agony")) {
+			case 1:
+				set .@quest_check_3255,checkquest(3255);
+				set .@quest_check_hunt_3255,checkquest(3255,HUNTING);
+				if (.@quest_check_3255 == -1) {
+					mes "This mission is assigned by the Payon town hall.";
+					next;
+					mes "Wild animals are always annoyances to farmers.";
+					next;
+					mes "They attack our farm and ruin whole crops!! We can't stand it anymore!";
+					next;
+					mes "So, we would like to ask for the help from brave adventurers.";
+					next;
+					mes "Please, hunt 30 Savages to save our crops!";
+					next;
+					mes "You can easily find those monsters around our town and field.";
+					next;
+					mes "Please confirm it to us after you complete the mission, then we will give you proper rewards.";
+					next;
+					mes "-- Payon town hall members --";
+					next;
+					mes " ";
+					next;
+					switch(select("Accept the mission.:Do not accept the mission.")) {
+					case 1:
+						if ((BaseLevel > 54) && (BaseLevel < 71)) {
+							setquest 3255;
+							mes "I have successfully accepted the mission. I have to come back and confirm my work after I complete the mission.";
+							next;
+							mes "This mission doesn't have time limits.";
+						}
+						else
+							mes "These missions are not fit for my level. I should look for other missions.";
+						break;
+					case 2:
+						break;
+					}
+				}
+				else if ((.@quest_check_hunt_3255 == 0) || (.@quest_check_hunt_3255 == 1)) {
+					mes "You have an on-going mission. Would you like to check the details?";
+					next;
+					switch(select("Check the details.:Cancel.")) {
+					case 1:
+						mes "This mission is assigned by the Payon town hall.";
+						next;
+						mes "Wild animals are always annoyances to farmers.";
+						next;
+						mes "They attack our farm and ruin whole crops!! We can't stand it anymore!";
+						next;
+						mes "So, we would like to ask for the help from brave adventurers.";
+						next;
+						mes "Please, hunt 30 Savages to save our crops!";
+						next;
+						mes "You can easily find those monsters around our town and field.";
+						next;
+						mes "Please confirm it to us after you complete the mission, then we will give you proper rewards.";
+						next;
+						mes "-- Payon town hall members --";
+						break;
+					case 2:
+						break;
+					}
+				}
+				else if (.@quest_check_hunt_3255 == 2) {
+					mes "I have done pretty well for the mission. Should I report it now?";
+					next;
+					switch(select("Report the mission.:Do not report it yet.")) {
+					case 1:
+						getexp 16000,7000;
+						erasequest 3255;
+						mes "You have completed the mission. Get rewards.";
+						break;
+					case 2:
+						break;
+					}
+				}
+				else if (.@quest_check_3255 == 2) {
+					mes "This mission is assigned by the Payon town hall.";
+					next;
+					mes "Wild animals are always annoyances to farmers.";
+					next;
+					mes "They attack our farm and ruin whole crops!! We can't stand it anymore!";
+					next;
+					next;
+					mes "So, we would like to ask for the help from brave adventurers.";
+					mes "Please, hunt 30 Savages to save our crops!";
+					next;
+					mes "You can easily find those monsters around our town and field.";
+					next;
+					mes "Please confirm it to us after you complete the mission, then we will give you proper rewards.";
+					next;
+					mes "-- Payon town hall members --";
+					next;
+					mes " ";
+					next;
+					switch(select("Accept the mission.:Do not accept the mission.")) {
+					case 1:
+						if ((BaseLevel > 54) && (BaseLevel < 71)) {
+							setquest 3255;
+							mes "I have successfully accepted the mission. I have to come back and confirm my work after I complete the mission.";
+							next;
+							mes "This mission doesn't have time limits.";
+						}
+						else
+							mes "These missions are not fit for my level. I should look for other missions.";
+						break;
+					case 2:
+						break;
+					}
+				}
+				close;
+			case 2:
+				set .@quest_check_3256,checkquest(3256);
+				if (.@quest_check_3256 == -1) {
+					mes "This mission is assigned by the Morroc blacksmith Aragham.";
+					next;
+					mes "Hello~~~~, Adventurers! This is Aragham, the hottest blacksmith in Morroc!";
+					next;
+					mes "Anyway, I have a son named Aragam Junior, the cute one. Haha.";
+					next;
+					mes "He will be attending summer camp this summer, but he doesn't know how to swim.";
+					next;
+					mes "I want to teach him, but as you know I am a blacksmith, a far cry from swimming! Hehe.";
+					next;
+					mes "But, I figured that if I make swim fins, it will be great for his confidence~!";
+					next;
+					mes "To make it, I need 30 Sticky Webfoot from a Roda Frog. Can you bring them to me?";
+					next;
+					mes "Please confirm it to us after you complete the mission, then we will give you proper rewards.";
+					next;
+					mes "PS. Do not compare me with Hollgrehenn or Antonio!!!!";
+					next;
+					mes "-- The hottest blacksmith, Morroc blacksmith Aragham --";
+					next;
+					mes " ";
+					next;
+					switch(select("Accept the mission.:Do not accept the mission.")) {
+					case 1:
+						if ((BaseLevel > 54) && (BaseLevel < 71)) {
+							setquest 3256;
+							mes "I have successfully accepted the mission. I have to come back and confirm my work after I complete the mission.";
+							next;
+							mes "This mission doesn't have time limits.";
+						}
+						else
+							mes "These missions are not fit for my level. I should look for other missions.";
+						break;
+					case 2:
+						break;
+					}
+				}
+				else if (((.@quest_check_3256 == 0) || (.@quest_check_3256 == 1)) && (countitem(918) < 30)) {
+					mes "You have an on-going mission. Would you like to check the details?";
+					next;
+					switch(select("Check the details.:Cancel.")) {
+					case 1:
+						mes "This mission is assigned by the Morroc blacksmith Aragham.";
+						next;
+						mes "Hello~~~~, Adventurers! This is Aragham, the hottest blacksmith in Morroc!";
+						next;
+						mes "Anyway, I have a son named Aragam Junior, the cute one. Haha.";
+						next;
+						mes "He will be attending summer camp this summer, but he doesn't know how to swim.";
+						next;
+						mes "I want to teach him, but as you know I am a blacksmith, a far cry from swimming! Hehe.";
+						next;
+						mes "But, I figured that if I make swim fins, it will be great for his confidence~!";
+						next;
+						mes "To make it, I need 30 Sticky Webfoot from a Roda Frog. Can you bring them to me?";
+						next;
+						mes "Please confirm it to us after you complete the mission, then we will give you proper rewards.";
+						next;
+						mes "PS. Do not compare me with Hollgrehenn or Antonio!!!!";
+						next;
+						mes "-- The hottest blacksmith, Morroc blacksmith Aragham --";
+						break;
+					case 2:
+						break;
+					}
+				}
+				else if ((.@quest_check_3256 == 1) && (countitem(918) > 29)) {
+					mes "I have done pretty well for the mission. Should I report it now?";
+					next;
+					switch(select("Report the mission.:Do not report it yet.")) {
+					case 1:
+						delitem 918,30; //Sticky_Webfoot
+						getexp 15000,5000;
+						erasequest 3256;
+						mes "You have completed the mission. Get rewards.";
+						break;
+					case 2:
+						break;
+					}
+				}
+				else if (.@quest_check_3256 == 2) {
+					mes "This mission is assigned by the Morroc blacksmith Aragham.";
+					next;
+					mes "Hello~~~~, Adventurers! This is Aragham, the hottest blacksmith in Morroc!";
+					next;
+					mes "Anyway, I have a son named Aragam Junior, the cute one. Haha.";
+					next;
+					mes "He will be attending summer camp this summer, but he doesn't know how to swim.";
+					next;
+					mes "I want to teach him, but as you know I am a blacksmith, a far cry from swimming! Hehe.";
+					next;
+					mes "But, I figured that if I make swim fins, it will be great for his confidence~!";
+					next;
+					mes "To make it, I need 30 Sticky Webfoot from a Roda Frog. Can you bring them to me?";
+					next;
+					mes "Please confirm it to us after you complete the mission, then we will give you proper rewards.";
+					next;
+					mes "PS. Do not compare me with Hollgrehenn or Antonio!!!!";
+					next;
+					mes "-- The hottest blacksmith, Morroc blacksmith Aragham --";
+					next;
+					mes " ";
+					next;
+					switch(select("Accept the mission.:Do not accept the mission.")) {
+					case 1:
+						if ((BaseLevel > 54) && (BaseLevel < 71)) {
+							setquest 3256;
+							mes "I have successfully accepted the mission. I have to come back and confirm my work after I complete the mission.";
+							next;
+							mes "This mission doesn't have time limits.";
+						}
+						else
+							mes "These missions are not fit for my level. I should look for other missions.";
+						break;
+					case 2:
+						break;
+					}
+				}
+				close;
+			case 3:
+				set .@quest_check_3257,checkquest(3257);
+				set .@quest_check_hunt_3257,checkquest(3257,HUNTING);
+				if (.@quest_check_3257 == -1) {
+					mes "This mission is assigned by an inventor Dorian from Izlude.";
+					next;
+					mes "Have you heard the story that if women have a grudge on their mind, it will bring natural disasters.";
+					next;
+					mes "Wow, so guys must watch out for those sensitive women! Make sure they don't have any grudges on you.";
+					next;
+					mes "Women can bring strange phenomenons with them!";
+					next;
+					mes "I am so intrigued with that story that I'm trying to prove that it can be true.";
+					next;
+					mes "So I need to make women upset! Haha, I know what a mean idea, right?";
+					next;
+					mes "But this is seriously just for studying... So please hunt 30 Sohee who seems to be revived from victimized souls.";
+					next;
+					mes "So I can keep observing the case.";
+					next;
+					mes "Please confirm it to us after you complete the mission, then we will give you proper rewards.";
+					next;
+					mes "-- Elegance inventor Dorian --";
+					next;
+					mes " ";
+					next;
+					switch(select("Accept the mission.:Do not accept the mission.")) {
+					case 1:
+						if ((BaseLevel > 54) && (BaseLevel < 71)) {
+							setquest 3257;
+							mes "I have successfully accepted the mission. I have to come back and confirm my work after I complete the mission.";
+							next;
+							mes "This mission doesn't have time limits.";
+						}
+						else
+							mes "These missions are not fit for my level. I should look for other missions.";
+						break;
+					case 2:
+						break;
+					}
+				}
+				else if ((.@quest_check_hunt_3257 == 0) || (.@quest_check_hunt_3257 == 1)) {
+					mes "You have an on-going mission. Would you like to check the details?";
+					next;
+					switch(select("Check the details.:Cancel.")) {
+					case 1:
+						mes "This mission is assigned by an inventor Dorian from Izlude.";
+						next;
+						mes "Have you heard the story that if women have a grudge on their mind, it will bring natural disasters.";
+						next;
+						mes "Wow, so guys must watch out for those sensitive women! Make sure they don't have any grudges on you.";
+						next;
+						mes "Women can bring strange phenomenons with them!";
+						next;
+						mes "I am so intrigued with that story that I'm trying to prove that it can be true.";
+						next;
+						mes "So I need to make women upset! Haha, I know what a mean idea, right?";
+						next;
+						mes "But this is seriously just for studying... So please hunt 30 Sohee who seems to be revived from victimized souls.";
+						next;
+						mes "So I can keep observing the case.";
+						next;
+						mes "Please confirm it to us after you complete the mission, then we will give you proper rewards.";
+						next;
+						mes "-- Elegance inventor Dorian --";
+						break;
+					case 2:
+						break;
+					}
+				}
+				else if (.@quest_check_hunt_3257 == 2) {
+					mes "I have done pretty well for the mission. Should I report it now?";
+					next;
+					switch(select("Report the mission.:Do not report it yet.")) {
+					case 1:
+						getexp 17000,8000;
+						erasequest 3257;
+						mes "You have completed the mission. Get rewards.";
+						break;
+					case 2:
+						break;
+					}
+				}
+				else if (.@quest_check_3257 == 2) {
+					mes "This mission is assigned by an inventor Dorian from Izlude.";
+					next;
+					mes "Have you heard the story that if women have a grudge on their mind, it will bring natural disasters.";
+					next;
+					mes "Wow, so guys must watch out for those sensitive women! Make sure they don't have any grudges on you.";
+					next;
+					mes "Women can bring strange phenomenons with them!";
+					next;
+					mes "I am so intrigued with that story that I'm trying to prove that it can be true.";
+					next;
+					mes "So I need to make women upset! Haha, I know what a mean idea, right?";
+					next;
+					mes "But this is seriously just for studying... So please hunt 30 Sohee who seems to be revived from victimized souls.";
+					next;
+					mes "So I can keep observing the case.";
+					next;
+					mes "Please confirm it to us after you complete the mission, then we will give you proper rewards.";
+					next;
+					mes "-- Elegance inventor Dorian --";
+					next;
+					mes " ";
+					next;
+					switch(select("Accept the mission.:Do not accept the mission.")) {
+					case 1:
+						if ((BaseLevel > 54) && (BaseLevel < 71)) {
+							setquest 3257;
+							mes "I have successfully accepted the mission. I have to come back and confirm my work after I complete the mission.";
+							next;
+							mes "This mission doesn't have time limits.";
+						}
+						else
+							mes "These missions are not fit for my level. I should look for other missions.";
+						break;
+					case 2:
+						break;
+					}
+				}
+				close;
+			case 4:
+				set .@quest_check_3258,checkquest(3258);
+				if (.@quest_check_3258 == -1) {
+					mes "This mission is assigned by Wallah from Payon.";
+					next;
+					mes "Hello, adventurer. How are you? How is your health?";
+					next;
+					mes "I am a pharmacist and I am having a hard time getting special ingredients lately.";
+					next;
+					mes "Because I am a little sensitive girl, how can I possibly get those things by myself.";
+					next;
+					mes "So, please help me. Just bring 40 Huge Leaf to me, that will be enough to complete my special medicine!";
+					next;
+					mes "Please bring it as soon as possible, people need my medicine.";
+					next;
+					mes "Please confirm it to us after you complete the mission, then we will give you proper rewards.";
+					next;
+					mes "-- Wallah --";
+					next;
+					mes " ";
+					next;
+					switch(select("Accept the mission.:Do not accept the mission.")) {
+					case 1:
+						if ((BaseLevel > 54) && (BaseLevel < 71)) {
+							setquest 3258;
+							mes "I have successfully accepted the mission. I have to come back and confirm my work after I complete the mission.";
+							next;
+							mes "This mission doesn't have time limits.";
+						}
+						else
+							mes "These missions are not fit for my level. I should look for other missions.";
+						break;
+					case 2:
+						break;
+					}
+				}
+				else if (((.@quest_check_3258 == 0) || (.@quest_check_3258 == 1)) && (countitem(7198) < 40)) {
+					mes "You have an on-going mission. Would you like to check the details?";
+					next;
+					switch(select("Check the details.:Cancel.")) {
+					case 1:
+						mes "This mission is assigned by Wallah from Payon.";
+						next;
+						mes "Hello, adventurer. How are you? How is your health?";
+						next;
+						mes "I am a pharmacist and I am having a hard time getting special ingredients lately.";
+						next;
+						mes "Because I am a little sensitive girl, how can I possibly get those things by myself.";
+						next;
+						mes "So, please help me. Just bring 40 Huge Leaf to me, that will be enough to complete my special medicine!";
+						next;
+						mes "Please bring it as soon as possible, people need my medicine.";
+						next;
+						mes "Please confirm it to us after you complete the mission, then we will give you proper rewards.";
+						next;
+						mes "-- Wallah --";
+						break;
+					case 2:
+						break;
+					}
+				}
+				else if ((.@quest_check_3258 == 1) && (countitem(7198) > 39)) {
+					mes "I have done pretty well for the mission. Should I report it now?";
+					next;
+					switch(select("Report the mission.:Do not report it yet.")) {
+					case 1:
+						delitem 7198,40; //Great_Leaf
+						getexp 16000,7000;
+						erasequest 3258;
+						mes "You have completed the mission. Get rewards.";
+						break;
+					case 2:
+						break;
+					}
+				}
+				else if (.@quest_check_3258 == 2) {
+					mes "This mission is assigned by Wallah from Payon.";
+					next;
+					mes "Hello, adventurer. How are you? How is your health?";
+					next;
+					mes "I am a pharmacist and I am having a hard time getting special ingredients lately.";
+					next;
+					mes "Because I am a little sensitive girl, how can I possibly get those things by myself.";
+					next;
+					mes "So, please help me. Just bring 40 Huge Leaf to me, that will be enough to complete my special medicine!";
+					next;
+					mes "Please bring it as soon as possible, people need my medicine.";
+					next;
+					mes "Please confirm it to us after you complete the mission, then we will give you proper rewards.";
+					next;
+					mes "-- Wallah --";
+					next;
+					mes " ";
+					next;
+					switch(select("Accept the mission.:Do not accept the mission.")) {
+					case 1:
+						if ((BaseLevel > 54) && (BaseLevel < 71)) {
+							setquest 3258;
+							mes "I have successfully accepted the mission. I have to come back and confirm my work after I complete the mission.";
+							next;
+							mes "This mission doesn't have time limits.";
+						}
+						else
+							mes "These missions are not fit for my level. I should look for other missions.";
+						break;
+					case 2:
+						break;
+					}
+				}
+				close;
+			case 5:
+				set .@quest_check_12217,checkquest(12217);
+				set .@quest_check_hunt_12217,checkquest(12217,HUNTING);
+				if (.@quest_check_12217 == -1) {
+					mes "This mission is assigned by puppet master Woonute from Geffen.";
+					next;
+					mes "You know being a puppet master is kind of a hard job to satisfy people.";
+					next;
+					mes "People can search and see so many different things on their own thesedays.";
+					next;
+					mes "Their expectations are getting high, I can't satisfy them anymore.";
+					next;
+					mes "But if I can make new toy concepts, like living toys, it will be ground breaking.";
+					next;
+					mes "I heard that there are live dolls called Marionettes. Can you hunt 30 Marionette for me? And also bring 30 Golden Hair, those will be great materials for the new toys.";
+					next;
+					mes "Please confirm it to us after you complete the mission, then we will give you proper rewards.";
+					next;
+					mes "-- Puppet Master Woonute --";
+					next;
+					mes " ";
+					next;
+					switch(select("Accept the mission.:Do not accept the mission.")) {
+					case 1:
+						if ((BaseLevel > 54) && (BaseLevel < 71)) {
+							setquest 12217;
+							mes "I have successfully accepted the mission. I have to come back and confirm my work after I complete the mission.";
+							next;
+							mes "This mission doesn't have time limits.";
+						}
+						else
+							mes "These missions are not fit for my level. I should look for other missions.";
+						break;
+					case 2:
+						break;
+					}
+				}
+				else if (((.@quest_check_hunt_12217 == 0) || (.@quest_check_hunt_12217 == 1)) && (countitem(1060) < 30)) {
+						mes "You have an on-going mission. Would you like to check the details?";
+						next;
+						switch(select("Check the details.:Cancel.")) {
+						case 1:
+						mes "This mission is assigned by puppet master Woonute from Geffen.";
+						next;
+						mes "You know being a puppet master is kind of a hard job to satisfy people.";
+						next;
+						mes "People can search and see so many different things on their own thesedays.";
+						next;
+						mes "Their expectations are getting high, I can't satisfy them anymore.";
+						next;
+						mes "But if I can make new toy concepts, like living toys, it will be ground breaking.";
+						next;
+						mes "I heard that there are live dolls called Marionettes. Can you hunt 30 Marionette for me? And also bring 30 Golden Hair, those will be great materials for the new toys.";
+						next;
+						mes "Please confirm it to us after you complete the mission, then we will give you proper rewards.";
+						next;
+						mes "-- Puppet Master Woonute --";
+						break;
+					case 2:
+						break;
+					}
+				}
+				else if ((.@quest_check_hunt_12217 == 2) && (countitem(1060) > 29)) {
+					mes "I have done pretty well for the mission. Should I report it now?";
+					next;
+					switch(select("Report the mission.:Do not report it yet.")) {
+					case 1:
+						delitem 1060,30; //Golden_Hair
+						getexp 17000,7000;
+						erasequest 3259;
+						mes "You have completed the mission. Get rewards.";
+						break;
+					case 2:
+						break;
+					}
+				}
+				else if (.@quest_check_12217 == 2) {
+					mes "This mission is assigned by puppet master Woonute from Geffen.";
+					next;
+					mes "You know being a puppet master is kind of a hard job to satisfy people.";
+					next;
+					mes "People can search and see so many different things on their own thesedays.";
+					next;
+					mes "Their expectations are getting high, I can't satisfy them anymore.";
+					next;
+					mes "But if I can make new toy concepts, like living toys, it will be ground breaking.";
+					next;
+					mes "I heard that there are live dolls called Marionettes. Can you hunt 30 Marionette for me? And also bring 30 Golden Hair, those will be great materials for the new toys.";
+					next;
+					mes "Please confirm it to us after you complete the mission, then we will give you proper rewards.";
+					next;
+					mes "-- Puppet Master Woonute --";
+					next;
+					mes " ";
+					next;
+					switch(select("Accept the mission.:Do not accept the mission.")) {
+					case 1:
+						if ((BaseLevel > 54) && (BaseLevel < 71)) {
+							setquest 12217;
+							mes "I have successfully accepted the mission. I have to come back and confirm my work after I complete the mission.";
+							next;
+							mes "This mission doesn't have time limits.";
+						}
+						else
+							mes "These missions are not fit for my level. I should look for other missions.";
+						break;
+					case 2:
+						break;
+					}
+				}
+				close;
+			}
+		case 3:
+			switch(select("Tiresome Flies:Dangerous Munak:Make the World green:Magic Wand")) {
+			case 1:
+				set .@quest_check_3260,checkquest(3260);
+				set .@quest_check_hunt_3260,checkquest(3260,HUNTING);
+				if (.@quest_check_3260 == -1) {
+					mes "This mission is assigned by an exterminator from Prontera.";
+					next;
+					mes "As the weather gets warmer, insects multiply more and more. It is already out of control.";
+					next;
+					mes "People in Prontera cannot sleep because of all the bugs in their house.";
+					next;
+					mes "So, please help us, hunt 30 Hunter Fly. Then the flies can be reduced slowly.";
+					next;
+					mes "Please confirm it to us after you complete the mission, then we will give you proper rewards.";
+					next;
+					mes "-- The Prontera exterminator --";
+					next;
+					switch(select("Accept the mission.:Do not accept the mission.")) {
+					case 1:
+						if ((BaseLevel > 54) && (BaseLevel < 71)) {
+							setquest 3260;
+							mes "I have successfully accepted the mission. I have to come back and confirm my work after I complete the mission.";
+							next;
+							mes "This mission doesn't have time limits.";
+						}
+						else
+							mes "These missions are not fit for my level. I should look for other missions.";
+						break;
+					case 2:
+						break;
+					}
+				}
+				else if ((.@quest_check_hunt_3260 == 0) || (.@quest_check_hunt_3260 == 1)) {
+					mes "You have an on-going mission. Would you like to check the details?";
+					next;
+					switch(select("Check the details.:Cancel.")) {
+					case 1:
+						mes "This mission is assigned by an exterminator from Prontera.";
+						next;
+						mes "As the weather gets warmer, insects multiply more and more. It is already out of control.";
+						next;
+						mes "People in Prontera cannot sleep because of all the bugs in their house.";
+						next;
+						mes "So, please help us, hunt 30 Hunter Fly. Then the flies can be reduced slowly.";
+						next;
+						mes "Please confirm it to us after you complete the mission, then we will give you proper rewards.";
+						next;
+						mes "-- The Prontera exterminator --";
+						break;
+					case 2:
+						break;
+					}
+				}
+				else if (.@quest_check_hunt_3260 == 2) {
+					mes "I have done pretty well for the mission. Should I report it now?";
+					next;
+					switch(select("Report the mission.:Do not report it yet.")) {
+					case 1:
+						getexp 16000,6000;
+						erasequest 3260;
+						mes "You have completed the mission. Get rewards.";
+						break;
+					case 2:
+						break;
+					}
+				}
+				else if (.@quest_check_3260 == 2) {
+					mes "This mission is assigned by an exterminator from Prontera.";
+					next;
+					mes "As the weather gets warmer, insects multiply more and more. It is already out of control.";
+					next;
+					mes "People in Prontera cannot sleep because of all the bugs in their house.";
+					next;
+					mes "So, please help us, hunt 30 Hunter Fly. Then the flies can be reduced slowly.";
+					next;
+					mes "Please confirm it to us after you complete the mission, then we will give you proper rewards.";
+					next;
+					mes "-- The Prontera exterminator --";
+					next;
+					switch(select("Accept the mission.:Do not accept the mission.")) {
+					case 1:
+						if ((BaseLevel > 54) && (BaseLevel < 71)) {
+							setquest 3260;
+							mes "I have successfully accepted the mission. I have to come back and confirm my work after I complete the mission.";
+							next;
+							mes "This mission doesn't have time limits.";
+						}
+						else
+							mes "These missions are not fit for my level. I should look for other missions.";
+						break;
+					case 2:
+						break;
+					}
+				}
+				close;
+			case 2:
+				set .@quest_check_3261,checkquest(3261);
+				set .@quest_check_hunt_3261,checkquest(3261,HUNTING);
+				if (.@quest_check_3261 == -1) {
+					mes "This mission is assigned by Cheese Dongja from Payon.";
+					next;
+					mes "Have you heard about Munak?";
+					next;
+					mes "The ugly monster Munak is threatening people in Payon.";
+					next;
+					mes "So we need brave adventurers like you!";
+					next;
+					mes "Please hunt 30 Munak then Payon will be in peace.";
+					next;
+					mes "Please confirm it to us after you complete the mission, then we will give you proper rewards.";
+					next;
+					mes "- Payon Cheese Dongja -";
+					next;
+					mes " ";
+					next;
+					switch(select("Accept the mission.:Do not accept the mission.")) {
+					case 1:
+						if ((BaseLevel > 54) && (BaseLevel < 71)) {
+							setquest 3261;
+							mes "I have successfully accepted the mission. I have to come back and confirm my work after I complete the mission.";
+							next;
+							mes "This mission doesn't have time limits.";
+						}
+						else
+							mes "These missions are not fit for my level. I should look for other missions.";
+						break;
+					case 2:
+						break;
+					}
+				}
+				else if ((.@quest_check_hunt_3261 == 0) || (.@quest_check_hunt_3261 == 1)) {
+					mes "You have an on-going mission. Would you like to check the details?";
+					next;
+					switch(select("Check the details.:Cancel.")) {
+					case 1:
+						mes "This mission is assigned by Cheese Dongja from Payon.";
+						next;
+						mes "Have you heard about Munak?";
+						next;
+						mes "The ugly monster Munak is threatening people in Payon.";
+						next;
+						mes "So we need brave adventurers like you!";
+						next;
+						mes "Please hunt 30 Munak then Payon will be in peace.";
+						next;
+						mes "Please confirm it to us after you complete the mission, then we will give you proper rewards.";
+						next;
+						mes "- Payon Cheese Dongja -";
+						break;
+					case 2:
+						break;
+					}
+				}
+				else if (.@quest_check_hunt_3261 == 2) {
+					mes "I have done pretty well for the mission. Should I report it now?";
+					next;
+					switch(select("Report the mission.:Do not report it yet.")) {
+					case 1:
+						getexp 16000,7000;
+						erasequest 3261;
+						mes "You have completed the mission. Get rewards.";
+						break;
+					case 2:
+						break;
+					}
+				}
+				else if (.@quest_check_3261 == 2) {
+					mes "This mission is assigned by Cheese Dongja from Payon.";
+					next;
+					mes "Have you heard about Munak?";
+					next;
+					mes "The ugly monster Munak is threatening people in Payon.";
+					next;
+					mes "So we need brave adventurers like you!";
+					next;
+					mes "Please hunt 30 Munak then Payon will be in peace.";
+					next;
+					mes "Please confirm it to us after you complete the mission, then we will give you proper rewards.";
+					next;
+					mes "- Payon Cheese Dongja -";
+					next;
+					mes " ";
+					next;
+					switch(select("Accept the mission.:Do not accept the mission.")) {
+					case 1:
+						if ((BaseLevel > 54) && (BaseLevel < 71)) {
+							setquest 3261;
+							mes "I have successfully accepted the mission. I have to come back and confirm my work after I complete the mission.";
+							next;
+							mes "This mission doesn't have time limits.";
+						}
+						else 
+							mes "These missions are not fit for my level. I should look for other missions.";
+						break;
+					case 2:
+						break;
+					}
+				}
+				close;
+			case 3:
+				set .@quest_check_3262,checkquest(3262);
+				if (.@quest_check_3262 == -1) {
+					mes "This mission is assigned by a gem dealer, Ibraham from Morroc.";
+					next;
+					mes "A small beautiful flower in the barren desert... What an incredible scene it would be!";
+					next;
+					mes "Planting flowers can make the world green and it will be so pretty everywhere.";
+					next;
+					mes "I plan to plant strong flowers in Morroc desert so the soil gets better.";
+					next;
+					mes "I need 40 Maneater Blossom from Flora, I know Maneater Blossom is an ugly flower, but still it is a plant.";
+					next;
+					mes "I hope you can hunt Flora and get me 40 Maneater Blossom. You are making the world green! Be proud!";
+					next;
+					mes "Please confirm it to us after you complete the mission, then we will give you proper rewards.";
+					next;
+					mes "-- Morroc Ibraham --";
+					next;
+					mes " ";
+					next;
+					switch(select("Accept the mission.:Do not accept the mission.")) {
+					case 1:
+						if ((BaseLevel > 54) && (BaseLevel < 71)) {
+							setquest 3262;
+							mes "I have successfully accepted the mission. I have to come back and confirm my work after I complete the mission.";
+							next;
+							mes "This mission doesn't have time limits.";
+						}
+						else
+							mes "These missions are not fit for my level. I should look for other missions.";
+						break;
+					case 2:
+						break;
+					}
+				}
+				else if (((.@quest_check_3262 == 0) || (.@quest_check_3262 == 1)) && (countitem(1032) < 40)) {
+					mes "You have an on-going mission. Would you like to check the details?";
+					next;
+					switch(select("Check the details.:Cancel.")) {
+					case 1:
+						mes "This mission is assigned by a gem dealer, Ibraham from Morroc.";
+						next;
+						mes "A small beautiful flower in the barren desert... What an incredible scene it would be!";
+						next;
+						mes "Planting flowers can make the world green and it will be so pretty everywhere.";
+						next;
+						mes "I plan to plant strong flowers in Morroc desert so the soil gets better.";
+						next;
+						mes "I need 40 Maneater Blossom from Flora, I know Maneater Blossom is an ugly flower, but still it is a plant.";
+						next;
+						mes "I hope you can hunt Flora and get me 40 Maneater Blossom. You are making the world green! Be proud!";
+						next;
+						mes "Please confirm it to us after you complete the mission, then we will give you proper rewards.";
+						next;
+						mes "-- Morroc Ibraham --";
+						break;
+					case 2:
+						break;
+					}
+				}
+				else if (((.@quest_check_3262 == 0) || (.@quest_check_3262 == 1)) && (countitem(1032) > 39)) {
+					mes "I have done pretty well for the mission. Should I report it now?";
+					next;
+					switch(select("Report the mission.:Do not report it yet.")) {
+					case 1:
+						delitem 1032,40; //Blossom_Of_Maneater
+						getexp 17000,7000;
+						erasequest 3262;
+						mes "You have completed the mission. Get rewards.";
+						break;
+					case 2:
+						break;
+					}
+				}
+				else if (.@quest_check_3262 == 2) {
+					mes "This mission is assigned by a gem dealer, Ibraham from Morroc.";
+					next;
+					mes "A small beautiful flower in the barren desert... What an incredible scene it would be!";
+					next;
+					mes "Planting flowers can make the world green and it will be so pretty everywhere.";
+					next;
+					mes "I plan to plant strong flowers in Morroc desert so the soil gets better.";
+					next;
+					mes "I need 40 Maneater Blossom from Flora, I know Maneater Blossom is an ugly flower, but still it is a plant.";
+					next;
+					mes "I hope you can hunt Flora and get me 40 Maneater Blossom. You are making the world green! Be proud!";
+					next;
+					mes "Please confirm it to us after you complete the mission, then we will give you proper rewards.";
+					next;
+					mes "-- Morroc Ibraham --";
+					next;
+					mes " ";
+					next;
+					switch(select("Accept the mission.:Do not accept the mission.")) {
+					case 1:
+						if ((BaseLevel > 54) && (BaseLevel < 71)) {
+							setquest 3262;
+							mes "I have successfully accepted the mission. I have to come back and confirm my work after I complete the mission.";
+							next;
+							mes "This mission doesn't have time limits.";
+						}
+						else
+							mes "These missions are not fit for my level. I should look for other missions.";
+						break;
+					case 2:
+						break;
+					}
+				}
+				close;
+			case 4:
+				set .@quest_check_3263,checkquest(3263);
+				if (.@quest_check_3263 == -1) {
+					mes "This mission is assigned by the Payon blacksmith Antonio.";
+					next;
+					mes "Magic wand! Have you heard about it? It is an incredible wand!";
+					next;
+					mes "If you say the magic words and swing the wand, it will make your wishes come true.";
+					next;
+					mes "So, I decided to make it by myself. Then I will be rich and powerful~! Haha!!";
+					next;
+					mes "To make the wand, I need some special materials.";
+					next;
+					mes "Please bring me 30 Dokebi Horn and 30 Trunk. If you do so, I will lend you my magic wand once. Haha, good deal?";
+					next;
+					mes "Please confirm it to us after you complete the mission, then we will give you proper rewards.";
+					next;
+					mes "-- Payon blacksmith Antonio --";
+					next;
+					mes " ";
+					next;
+					switch(select("Accept the mission.:Do not accept the mission.")) {
+					case 1:
+						if ((BaseLevel > 54) && (BaseLevel < 71)) {
+							setquest 3263;
+							mes "I have successfully accepted the mission. I have to come back and confirm my work after I complete the mission.";
+							next;
+							mes "This mission doesn't have time limits.";
+						}
+						else
+							mes "These missions are not fit for my level. I should look for other missions.";
+						break;
+					case 2:
+						break;
+					}
+				}
+				else if (((.@quest_check_3263 == 0) || (.@quest_check_3263 == 1)) && (countitem(1021) < 30) && (countitem(7150) < 30)) {
+					mes "You have an on-going mission. Would you like to check the details?";
+					next;
+					switch(select("Check the details.:Cancel.")) {
+					case 1:
+						mes "This mission is assigned by the Payon blacksmith Antonio.";
+						next;
+						mes "Magic wand! Have you heard about it? It is an incredible wand!";
+						next;
+						mes "If you say the magic words and swing the wand, it will make your wishes come true.";
+						next;
+						mes "So, I decided to make it by myself. Then I will be rich and powerful~! Haha!!";
+						next;
+						mes "To make the wand, I need some special materials.";
+						next;
+						mes "Please bring me 30 Dokebi Horn and 30 Trunk. If you do so, I will lend you my magic wand once. Haha, good deal?";
+						next;
+						mes "Please confirm it to us after you complete the mission, then we will give you proper rewards.";
+						next;
+						mes "-- Payon blacksmith Antonio --";
+						break;
+					case 2:
+						break;
+					}
+				}
+				else if (((.@quest_check_3263 == 0) || (.@quest_check_3263 == 1)) && (countitem(1021) > 29) && (countitem(7150) > 29)) {
+					mes "I have done pretty well for the mission. Should I report it now?";
+					next;
+					switch(select("Report the mission.:Do not report it yet.")) {
+					case 1:
+						delitem 1021,30; //Dokkaebi_Horn
+						delitem 7150,30; //Bamboo_Cut
+						getexp 18000,8000;
+						erasequest 3263;
+						mes "You have completed the mission. Get rewards.";
+						break;
+					case 2:
+						break;
+					}
+				}
+				else if (.@quest_check_3263 == 2) {
+					mes "This mission is assigned by the Payon blacksmith Antonio.";
+					next;
+					mes "Magic wand! Have you heard about it? It is an incredible wand!";
+					next;
+					mes "If you say the magic words and swing the wand, it will make your wishes come true.";
+					next;
+					mes "So, I decided to make it by myself. Then I will be rich and powerful~! Haha!!";
+					next;
+					mes "To make the wand, I need some special materials.";
+					next;
+					mes "Please bring me 30 Dokebi Horn and 30 Trunk. If you do so, I will lend you my magic wand once. Haha, good deal?";
+					next;
+					mes "Please confirm it to us after you complete the mission, then we will give you proper rewards.";
+					next;
+					mes "-- Payon blacksmith Antonio --";
+					next;
+					mes " ";
+					next;
+					switch(select("Accept the mission.:Do not accept the mission.")) {
+					case 1:
+						if ((BaseLevel > 54) && (BaseLevel < 71)) {
+							setquest 3263;
+							mes "I have successfully accepted the mission. I have to come back and confirm my work after I complete the mission.";
+							next;
+							mes "This mission doesn't have time limits.";
+						}
+						else
+							mes "These missions are not fit for my level. I should look for other missions.";
+						break;
+					case 2:
+						break;
+					}
+				}
+			}
+		}
+	}
+	else
+		mes "To get these missions, I need to Join the Eden Group first. I must find Secretary Lime Evenor and become a member.";
+	close;
+}

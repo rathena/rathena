@@ -10,103 +10,73 @@
 //= [Aegis Conversion]
 //= Guide for the city of Brasilis
 //===== Additional Comments: ================================= 
-//= 1.0 First Version.
+//= 1.0 First Version, Renewal guide.
+//= 1.1 Added a missing close.
 //= 1.1 Added a missing close.
 //============================================================ 
 
 brasilis,219,97,3	script	Brasilis Guide	478,{
 	mes "[Brasilis Guide]";
-	mes "Welcome to everyone that has come to Brasilis, a wonderfull land with";
-	mes "a warm sun shining down on us.";
-	mes "If you have any question, just ask me.";
+	mes "Welcome to ^8B4513Brasilis^000000, a country as passionate as the sun.";
+	mes "If you have any questions, please ask me.";
 	next;
-	switch(select("Ask where you can go.:Delete marks on the mini-map.:Cancel.")) {
-	case 1:
-		set .@compass_check,0;
-		mes "[Brasilis Guide]";
-		mes "Where would you like to go?";
-		if (.@compass_check == 0) {
-			mes "Would you like me";
-			mes "to mark locations";
-			mes "on your Mini-Map?";
-			next;
-			switch(select("Yes:No")) {
-			case 1:
-				set .@compass_check,1;
-				break;
-			case 2:
-				set .@compass_check,2;
-				break;
-			}
-		}
+	mes "[Brasilis Guide]";
+	mes "Where can I guide you?";
+	while (1){
 		next;
-		switch(select("Toucan Happy Inn:Jungle Cable:Art Museum:Brasilis Market:Cancel")) {
+		switch(select("[ Hotel ]:[ Jungle Cable ]:[ Art Museum ]:[ Market ]:[ Verass Monument ]:Remove marks from Mini-Map:Cancel")) {
 		case 1:
 			mes "[Brasilis Guide]";
-			mes "The Toucan Happy Inn is near here, it's located here ^FF0000+^000000.";
-			if (.@compass_check == 1) {
-				viewpoint 1,273,149,2,0xFF0000;
-			}
-			else {
-				viewpoint 0,273,149,2,0xFF0000;
-			}
+			mes "The Brasilis Hotel is located just above, ^FF3355+^000000.";
+			mes "Is there anything else I can do for you?";
+			viewpoint 1,274,151,2,0xFF3355;
+			next;
 			break;
 		case 2:
 			mes "[Brasilis Guide]";
-			mes "Want to travel to the Jungle? You can";
-			mes "go to the Jungle Cable located here ^0xCC6600+^000000.";
-			if (.@compass_check == 1) {
-				viewpoint 1,308,333,3,0xCC6600;
-			}
-			else {
-				viewpoint 0,308,333,3,0xCC6600;
-			}
+			mes "Do you want to go through the rough jungle? You can take a Jungle Cable here ^CE6300+^000000.";
+			mes "Is there anything else I can do for you?";
+			viewpoint 1,308,335,3,0xCE6300;
+			next;
 			break;
 		case 3:
 			mes "[Brasilis Guide]";
-			mes "The Art Museum, is the pride of Brasilis, it is located here ^00FF00+^000000.";
-			if (.@compass_check == 1) {
-				viewpoint 1,133,167,4,0x00FF00;
-			}
-			else {
-				viewpoint 0,133,167,4,0x00FF00;
-			}
+			mes "The pride of Brasilis, the world scale Art Museum is at ^A5BAAD+^000000.";
+			mes "Is there anything else I can do for you?";
+			viewpoint 1,137,167,4,0x00FF00;
+			next;
 			break;
 		case 4:
 			mes "[Brasilis Guide]";
-			mes "You can buy many items in the Market located here ^00FF00+^000000.";
-			if (.@compass_check == 1) {
-				viewpoint 1,238,248,5,0x00FF00;
-			}
-			else {
-				viewpoint 0,238,248,5,0x00FF00;
-			}
+			mes "You can buy items for hunting at the Market here ^55FF33+^000000.";
+			mes "Is there anything else I can do for you?";
+			viewpoint 1,254,248,5,0x55FF33;
+			next;
 			break;
 		case 5:
 			mes "[Brasilis Guide]";
-			mes "If you want to delete the location";
-			mes "marks from your mini-map, please";
-			mes "choose 'Delete marks on the";
-			mes "mini-map' from the menu.";
+			mes "The iconic monument of Brasilis, the Verass Monument stands at ^3355FF+^000000.";
+			mes "Is there anything else I can do for you?";
+			viewpoint 1,195,235,6,0x3355FF;
+			next;
+			break;
+		case 6:
+			mes "[Brasilis Guide]";
+			mes "I'll remove all marks from your mini-map.";
+			mes "Is there anything else I can do for you?";
+			viewpoint 0,274,151,2,0x00FF00;
+			viewpoint 0,308,335,3,0x00FF00;
+			viewpoint 0,137,167,4,0x00FF00;
+			viewpoint 0,254,248,5,0x00FF00;
+			viewpoint 0,195,235,6,0x00FF00;
+			next;
+			break;
+		case 7:
+			mes "[Brasilis Guide]";
+			mes "Wandering on your own is always the best way to explore. Anyway, take care.";
 			close;
 		}
 		close;
 		break;
-	case 2:
-		viewpoint 2,273,149,2,0xFF0000;
-		viewpoint 2,308,333,3,0xCC6600;
-		viewpoint 0,133,167,4,0x00FF00;
-		viewpoint 0,238,248,5,0x00FF00;
-		set .@compass_check,0;
-		mes "[Brasilis Guide]";
-		mes "I've deleted all marks on the mini-map.";
-		mes "Whenever you'd like to put marks";
-		mes "there, you can ask me.";
-		close;
-	case 3:
-		mes "[Brasilis Guide]";
-		mes "Exploring things here on your own can also be fun.";
-		mes "Anyway, take care.";
-		close;
 	}
 }

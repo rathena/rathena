@@ -14,19 +14,22 @@
 //==================================================
 // spl_fild01 - Splendide Field
 //==================================================
-spl_fild01,0,0,0,0	monster	Pinguicula	1995,50,0,0,0
-spl_fild01,0,0,0,0	monster	Naga	1993,35,0,0,0
-spl_fild01,0,0,0,0	monster	Cornus	1992,25,0,0,0
+spl_fild01,0,0,0,0	monster	Dark Pinguicula	2015,50,5000,0,0
+spl_fild01,0,0,0,0	monster	Naga	1993,35,5000,0,0
+spl_fild01,0,0,0,0	monster	Cornus	1992,25,5000,0,0
 
- // spl_fild02 - Splendide Field
 //==================================================
-spl_fild02,0,0,0,0	monster	Pinguicula	1995,95,0,0,0
-spl_fild02,0,0,0,0	monster	Luciola Vespa	1994,15,0,0,0
+// spl_fild02 - Splendide Field
+//==================================================
+spl_fild02,0,0,0,0	monster	Pinguicula	1995,75,5000,0,0
+spl_fild02,0,0,0,0	monster	Bradium Golem	2024,20,5000,0,0
+spl_fild02,0,0,0,0	monster	Naga	1993,20,5000,0,0
+spl_fild02,0,0,0,0	monster	Luciola Vespa	1994,15,5000,0,0
 
 //==================================================
 // spl_fild03 - Splendide Field
 //==================================================
-spl_fild03,0,0,0,0	monster	Luciola Vespa	1994,35,0,0,0
-spl_fild03,0,0,0,0	monster	Cornus	1992,25,0,0,0
-spl_fild03,0,0,0,0	monster	Naga	1993,20,0,0,0
-spl_fild03,0,0,0,0	monster	Tendril Lion	1991,1,3600000,0,0
+spl_fild03,0,0,0,0	monster	Luciola Vespa	1994,35,5000,0,0
+spl_fild03,0,0,0,0	monster	Cornus	1992,25,5000,0,0
+spl_fild03,0,0,0,0	monster	Naga	1993,20,5000,0,0
+spl_fild03,0,0,0,0	monster	Tendrilion	1991,1,3600000,0,0

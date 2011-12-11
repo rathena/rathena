@@ -2622,9 +2622,9 @@ OnTouch:
 		mes "Who would be to blame?";
 		next;
 		set rach_vice,24;
-		if (BaseLevel > 90) getexp 1300000,0;
-		else if (BaseLevel > 75) getexp 850000,0;
-		else getexp 450000,0;
+		if (BaseLevel > 90) getexp 130000,0;
+		else if (BaseLevel > 75) getexp 85000,0;
+		else getexp 45000,0;
 		mes "[" + strcharinfo(0) + "]";
 		mes "Somehow, I wish that";
 		mes "Katinshuell had the";
@@ -2926,7 +2926,7 @@ rachel,157,183,3	script	Sincere Follower Urstia	916,{
 			mes "token of my appreication for";
 			mes " what you have done for me.";
 			delitem 7573,1; //Magic_Necklace_
-			getexp 700000,0;
+			getexp 70000,0;
 			completequest 2113;
 			set ice_necklace_q,6;
 			next;
@@ -4268,7 +4268,7 @@ ra_temple,116,174,3	script	Nemma#ra_temple	920,{
 				if (countitem(12018) >= 20) {
 					cutin "ra_nemma04",2;
 					delitem 12018,20; //FireCracker";
-					getexp 200000,0;
+					getexp 20000,0;
 					set ra_tem_q,14;
 					mes "[Priestess Nemma]";
 					mes "Yay!";
@@ -5056,7 +5056,7 @@ ra_temin,277,159,3	script	High Priest Zhed#rachel	932,{
 		cutin "ra_gman",255;
 		set lost_boy,13;
 		specialeffect2 EF_ABSORBSPIRITS;
-		getexp 900000,0;
+		getexp 90000,0;
 		end;
 	}
 	else if ((lost_boy == 13) && (ra_tem_q < 14)) {
@@ -5471,7 +5471,7 @@ ra_temin,277,159,3	script	High Priest Zhed#rachel	932,{
 		set ra_tem_q,0;
 		cutin "",255;
 		specialeffect2 EF_ABSORBSPIRITS;
-		getexp 900000,600000;
+		getexp 90000,60000;
 		end;
 	}
 	else if (MISC_QUEST & 8192) {
@@ -6027,7 +6027,7 @@ ra_temin,277,159,3	script	High Priest Zhed#rachel	932,{
 				mes "peace between our nations.";
 				completequest 60213;
 				set aru_vol,27;
-				getexp 200000,0;
+				getexp 20000,0;
 				close2;
 				cutin "ra_gman",255;
 				end;
@@ -6467,7 +6467,7 @@ ra_temin,277,159,3	script	High Priest Zhed#rachel	932,{
 					mes "Your place in Valhalla is";
 					mes "already assured, I'm sure.";
 					set aru_em,24;
-					getexp 1500000,0;
+					getexp 150000,0;
 				}
 				else {
 					mes "[High Priest Zhed]";

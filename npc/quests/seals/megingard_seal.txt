@@ -2648,7 +2648,7 @@ aldebaran,66,213,0	script	Lady#megin	69,{
 			mes "I really appreciate you coming here to talk to me about the old days. I, I want you to have this.";
 			set god_eremes,28;
 			getitem 603,1; // Old_Blue_Box
-			getexp 1220358,0;
+			getexp 122036,0;
 			close;
 		}
 		else if (god_eremes == 28) {
@@ -3167,7 +3167,7 @@ niflheim,109,254,0	script	Egnigem	796,{
 			specialeffect EF_LOCKON;
 			specialeffect2 EF_HOLYCROSS;
 			set god_eremes,27;
-			getexp 1220358,0;
+			getexp 122036,0;
 			close;
 		}
 		else if (god_eremes == 26) {
@@ -3205,7 +3205,7 @@ niflheim,109,254,0	script	Egnigem	796,{
 			specialeffect EF_LOCKON;
 			specialeffect2 EF_HOLYCROSS;
 			set god_eremes,27;
-			getexp 1220358,0;
+			getexp 122036,0;
 			close;
 		}
 		else if (god_eremes < 20) {

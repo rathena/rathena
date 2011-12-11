@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
-//= 1.5
+//= 1.6
 //===== Compatible With: =====================================
 //= eAthena SVN (Trunk, r12752+)
 //===== Description: =========================================
@@ -18,7 +18,8 @@
 //= 1.2 Replaced effect numerics with constants. [L0ne_W0lf]
 //= 1.3 Ei'felle now gives Exercise. (Bugreport:4092) [L0ne_W0lf]
 //= 1.4 Fixed call to a non-existant event. [L0ne_W0lf]
-//= 1.5 Updated Dialog. [L0e_W0lf]
+//= 1.5 Updated Dialog. [L0ne_W0lf]
+//= 1.6 Updated experience rewards. [L0ne_W0lf]
 //============================================================
 
 //============================================================
@@ -11902,21 +11903,29 @@ S_Reward:
 			mes "power of hope?";
 			delitem 7515,1; //Marvelous_Medal
 			if (BaseLevel < 21)
-				getexp 150,0;
+				getexp 200,0;
 			else if ((BaseLevel > 20) && (BaseLevel < 31))
 				getexp 300,0;
 			else if ((BaseLevel > 30) && (BaseLevel < 41))
-				getexp 2000,0;
+				getexp 1000,0;
 			else if ((BaseLevel > 40) && (BaseLevel < 51))
-				getexp 8000,0;
+				getexp 1800,0;
 			else if ((BaseLevel > 50) && (BaseLevel < 61))
-				getexp 25000,0;
+				getexp 2500,0;
 			else if ((BaseLevel > 60) && (BaseLevel < 71))
-				getexp 47000,0;
+				getexp 4700,0;
 			else if ((BaseLevel > 70) && (BaseLevel < 81))
-				getexp 55000,0;
+				getexp 5500,0;
+			else if ((BaseLevel > 80) && (BaseLevel < 96))
+				getexp 7000,0;
+			else if ((BaseLevel > 95) && (BaseLevel < 111))
+				getexp 8800,0;
+			else if ((BaseLevel > 110) && (BaseLevel < 126))
+				getexp 10900,0;
+			else if ((BaseLevel > 125) && (BaseLevel < 141))
+				getexp 13300,0;
 			else
-				getexp 65000,0;
+				getexp 16000,0;
 			close;
 		case 2:
 			mes "[Ei'felle]";
@@ -11944,81 +11953,30 @@ S_Reward:
 			mes "whatever you feed it.";
 			mes "Placebos and psychosomatic symptoms-- it all ties together.";
 			delitem 7515,1; //Marvelous_Medal
-			if (Upper != 2 && Class < Job_SuperNovice) {
-				if (BaseJob == Job_Novice)
-					getexp 0,30;
-				else if (((BaseJob >= Job_Swordman) && (BaseJob <= Job_Thief)) || (Class == Job_Taekwon)) {
-					if (JobLevel < 11)
-						getexp 0,50;
-					else if ((JobLevel > 10) && (JobLevel < 21))
-						getexp 0,250;
-					else if ((JobLevel > 20) && (JobLevel < 31))
-						getexp 0,1500;
-					else if ((JobLevel > 30) && (JobLevel < 41))
-						getexp 0,7000;
-					else
-						getexp 0,20000;
-				}
-				else if ((BaseJob >= Job_Knight) && (BaseJob <= Job_Crusader2)) {
-					if (JobLevel < 11)
-						getexp 0,80;
-					else if ((JobLevel > 10) && (JobLevel < 21))
-						getexp 0,2000;
-					else if ((JobLevel > 20) && (JobLevel < 31))
-						getexp 0,10000;
-					else if ((JobLevel > 30) && (JobLevel < 41))
-						getexp 0,25000;
-					else
-						getexp 0,38000;
-				}
-			}
-			else if (Upper == 2) {
-				if (Class == Job_Novice_High) {
-					getexp 0,40;
-				}
-				else if ((Class >= Job_Swordman_High) && (Class <= Job_Thief_High)) {
-					if (JobLevel < 11)
-						getexp 0,65;
-					else if ((JobLevel > 10) && (JobLevel < 21))
-						getexp 0,300;
-					else if ((JobLevel > 20) && (JobLevel < 31))
-						getexp 0,2500;
-					else if ((JobLevel > 30) && (JobLevel < 41))
-						getexp 0,10000;
-					else
-						getexp 0,25000;
-				}
-				else if ((Class >= Job_Lord_Knight) && (Class <= Job_Paladin_2)) {
-					if (JobLevel < 11)
-						getexp 0,150;
-					else if ((JobLevel > 10) && (JobLevel < 21))
-						getexp 0,2200;
-					else if ((JobLevel > 20) && (JobLevel < 31))
-						getexp 0,13000;
-					else if ((JobLevel > 30) && (JobLevel < 41))
-						getexp 0,27000;
-					else if ((JobLevel > 40) && (JobLevel < 51))
-						getexp 0,38000;
-					else
-						getexp 0,40000;
-				}
-			}
-			else {
-				if (JobLevel < 11)
-					getexp 0,50;
-				else if ((JobLevel > 10) && (JobLevel < 21))
-					getexp 0,250;
-				else if ((JobLevel > 20) && (JobLevel < 31))
-					getexp 0,1500;
-				else if ((JobLevel > 30) && (JobLevel < 41))
-					getexp 0,7000;
-				else if ((JobLevel > 40) && (JobLevel < 51))
-					getexp 0,20000;
-				else if ((JobLevel > 50) && (JobLevel < 61))
-					getexp 0,30000;
-				else
-					getexp 0,38000;
-			}
+			if (BaseLevel < 21)
+				getexp 0,150;
+			else if ((BaseLevel > 20) && (BaseLevel < 31))
+				getexp 0,200;
+			else if ((BaseLevel > 30) && (BaseLevel < 41))
+				getexp 0,750;
+			else if ((BaseLevel > 40) && (BaseLevel < 51))
+				getexp 0,1800;
+			else if ((BaseLevel > 50) && (BaseLevel < 61))
+				getexp 0,2500;
+			else if ((BaseLevel > 60) && (BaseLevel < 71))
+				getexp 0,3525;
+			else if ((BaseLevel > 70) && (BaseLevel < 81))
+				getexp 0,4125;
+			else if ((BaseLevel > 80) && (BaseLevel < 96)) 
+				getexp 0,5250;
+			else if ((BaseLevel > 95) && (BaseLevel < 111))
+				getexp 0,6600;
+			else if ((BaseLevel > 110) && (BaseLevel < 126))
+				getexp 0,8175;
+			else if ((BaseLevel > 125) && (BaseLevel < 141))
+				getexp 0,9975;
+			else
+				getexp 0,12000;
 			close;
 		case 3:
 			mes "[Ei'felle]";

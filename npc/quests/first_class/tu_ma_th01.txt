@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Fix up by Jukka
 //===== Current Version: ===================================== 
-//= 1.2
+//= 1.3
 //===== Compatible With: ===================================== 
 //= eAthena SVN (Testet in Trunk 88xx)
 //===== Description: ========================================= 
@@ -13,6 +13,7 @@
 //= 1.1 optimized [Lupus]
 //=	TODO: Test, Add correct misceffects numbers
 //= 1.2 Changed "battle_trace" to "Trace of Battle". [L0ne_W0lf]
+//= 1.3 Misc. updates. [L0ne_W0lf]
 //============================================================ 
 
 
@@ -20,77 +21,138 @@
 moc_fild12,166,369,0	script	Trace of Battle#1	844,{
 	if(BaseClass == Job_Thief){
 		if(tu_thief01 < 5){
-			mes "^3355FFThere are traces of poison used in a battle. You can sense its power and decide that it would be safer not to get too close to it.^000000";
+			mes "^3355FFYou find traces of poison";
+			mes "used in a battle. You sense";
+			mes "its potency and decide not";
+			mes "to get too close to it.^000000";
 			close;
 		} else if(tu_thief01 == 5){
-			mes "^3355FFThere are traces of poison used in a battle. After examining the scene carefully, I feel a little dizzy.";
+			mes "^3355FFYou find traces of poison";
+			mes "used in a battle. A feeling";
+			mes "of acute dizziness overcomes";
+			mes "you after examining the scene.^000000";
 			set tu_thief01, 6;
-			//#####		GetHEALTHSTATE VAR_POISON 60#####
-			//misceffect EF_VENOMDUST2;
+			sc_start SC_Poison,60000,0;
+			specialeffect EF_VENOMDUST2;
 			close;
 		} else if(tu_thief01 == 6){
-			mes "^3355FFThere are traces of poison used in a battle. After examining the scene carefully, I feel a little dizzy.";
-			//#####		GetHEALTHSTATE VAR_POISON 60#####
-			//misceffect EF_VENOMDUST2;
+			mes "^3355FFYou find traces of poison";
+			mes "used in a battle. A feeling";
+			mes "of acute dizziness overcomes";
+			mes "you after examining the scene.^000000";
+			sc_start SC_Poison,60000,0;
+			specialeffect EF_VENOMDUST2;
 			close;
 		} else if(tu_thief01 == 7){
-			mes "^3355FFThere are traces of poison used in a battle. You can sense its power and decide that it would be safer not to get too close to it.^000000";
+			mes "^3355FFYou find traces of poison";
+			mes "used in a battle. You sense";
+			mes "its potency and decide not";
+			mes "to get too close to it.^000000";
 			close;
 		} else if(tu_thief01 == 8){
-			mes "^3355FFThere are signs of a pursuit that heads south.^000000";
+			mes "^3355FFThere are traces of a battle";
+			mes "that seem to be leading in";
+			mes "different directions. From the";
+			mes "peculiar smell that permeates";
+			mes "the area, it seems that some";
+			mes "kind of lethal poison was used.^000000";
+			next;
+			mes "^3355FFStill...";
+			mes "The trail of this";
+			mes "battle decidedly";
+			mes "heads southward.^000000";
 			set tu_thief01, 9;
 			close;
 		} else {
-			mes "^3355FFThe traces of battle seem to be leading in different directions. From the peculiar smell that permeates the area, it seems that some kind of lethal poison was used in the fight...^000000";
+			mes "^3355FFYou find signs of";
+			mes "a heated pursuit";
+			mes "that head south.";
 			close;
 		}
 	}
 	if(BaseClass == Job_Mage){
 		if(tu_magician01 < 8){
-			mes "There are traces of poison used in a battle. You can sense its power and decide that it would be safer not to get too close to it.^000000";
-			//misceffect EF_VENOMDUST2;
+			mes "^3355FFYou find traces of poison";
+			mes "used in a battle. You sense";
+			mes "its potency and decide not";
+			mes "to get too close to it.^000000";
+			specialeffect EF_VENOMDUST2;
 			close;
 		} else if(tu_magician01 == 8){
-			mes "^3355FFThere are signs of a pursuit that heads south.^000000";
+			mes "^3355FFThere are traces of a battle";
+			mes "that seem to be leading in";
+			mes "different directions. From the";
+			mes "peculiar smell that permeates";
+			mes "the area, it seems that some";
+			mes "kind of lethal poison was used.^000000";
+			next;
+			mes "^3355FFStill...";
+			mes "The trail of this";
+			mes "battle decidedly";
+			mes "heads southward.^000000";
 			set tu_magician01, 9;
-			close2;
+			close;
 		} else {
-			mes "^3355FFThe traces of battle seem to be leading in different directions. From the peculiar smell that permeates the area, it seems that some kind of lethal poison was used in the fight...^000000";
+			mes "^3355FFYou find signs of";
+			mes "a heated pursuit";
+			mes "that head south.";
 			close;
 		}
 	}
-	mes "^3355FFThere are signs that show that some kind of scuffle might have occurred here, but you can't exactly tell what exactly happened.^000000";
+	mes "^3355FFThere are signs that show";
+	mes "that some violent scuffle";
+	mes "might have occurred here,";
+	mes "but you can't tell what had";
+	mes "happened exactly...^000000";
 	close;
 }
 
 //=================================================Battle Traces 2====================================================
-moc_fild12,173,215,0	script	Battle Traces#2	844,{
+moc_fild12,173,215,0	script	Trace of Battle#2	844,{
 	if(BaseClass == Job_Thief){
 		if(tu_thief01 < 9){
-			mes "There are traces of many people going by.";
+			mes "^3355FFThere are signs";
+			mes "that many people";
+			mes "have traveled through";
+			mes "this particular area.^000000";
 			close;
 		} else if(tu_thief01 == 9){
-			mes "The traces lead to the east. There is one peculiar footstep amongst them all that caugh my attention. Seems like the one of the person being pursued.";
+			mes "^3355FFYou've found traces";
+			mes "of the pursuit which";
+			mes "continue eastward.^000000";
 			set tu_thief01, 10;
 			close;
 		} else {
-			mes "The traces lead to the east.";
+			mes "^3355FFThese traces of";
+			mes "the pursuit lead";
+			mes "towards the east.^000000";
 			close;
 		}
 	} else if(BaseClass == Job_Mage){
 		if(tu_magician01 < 9){
-			mes "There are traces of many people going by.";
+			mes "^3355FFThere are signs";
+			mes "that many people";
+			mes "have traveled through";
+			mes "this particular area.^000000";
 			close;
 		} else if(tu_magician01 == 9){
-			mes "The traces lead to the east. There is one peculiar footstep amongst them all that caugh my attention. Seems like the one of the people being chased.";
+			mes "^3355FFYou've found traces";
+			mes "of the pursuit which";
+			mes "continue eastward.^000000";
 			set tu_magician01, 10;
 			close;
 		} else {
-			mes "The traces lead to the east.";
+			mes "^3355FFThese traces of";
+			mes "the pursuit lead";
+			mes "towards the east.^000000";
 			close;
 		}
 	}
-	mes "^3355FFThere are signs that show that some kind of scuffle might have occurred here, but you can't exactly tell what exactly happened.^000000";
+	mes "^3355FFThere are signs that show";
+	mes "that some violent scuffle";
+	mes "might have occurred here,";
+	mes "but you can't tell what had";
+	mes "happened exactly...^000000";
 	close;
 }
 
@@ -98,30 +160,51 @@ moc_fild12,173,215,0	script	Battle Traces#2	844,{
 moc_fild12,276,165,0	script	Trace of Battle#3	844,{
 	if(BaseClass == Job_Thief){
 		if(tu_thief01 < 10){
-			mes "There are traces of several who have went by.";
+			mes "^3355FFThere are signs";
+			mes "that many people";
+			mes "have traveled through";
+			mes "this particular area.^000000";
 			close;
 		} else if(tu_thief01 == 10){
-			mes "The footsteps of the one being chased after is rather peculiar. It almost seems as if it was left on purpose.";
+			mes "^3355FFYou examine these traces";
+			mes "and notice that one set of";
+			mes "footprints looks almost too";
+			mes "pronounced, as if it had been";
+			mes "made for somebody to find.^000000";
 			set tu_thief01, 11;
 			close;
 		} else {
-			mes "There are a peculiar set up footsteps.";
+			mes "^3355FFIt's a very";
+			mes "strange looking";
+			mes "set of footprints.^000000";
 			close;
 		}
 	} else if(BaseClass == Job_Mage){
 		if(tu_magician01 < 10){
-			mes "There are traces of many people going by.";
+			mes "^3355FFThere are signs";
+			mes "that many people";
+			mes "have traveled through";
+			mes "this particular area.^000000";
 			close;
-		} else if(tu_magician01 == 10){	//CHECK
-			mes "The footsteps of the one being chased after is rather peculiar. It almost seems like it was left on purpose.";
-			set tu_magician01, 11;//Check
+		} else if(tu_magician01 == 10){
+			mes "^3355FFYou examine these traces";
+			mes "and notice that one set of";
+			mes "footprints looks almost too";
+			mes "pronounced, as if it had been";
+			mes "made for somebody to find.^000000";
+			set tu_magician01, 11;
 			close;
 		} else {
-			mes "There are a peculiar set up footsteps.";
+			mes "^3355FFIt's a very";
+			mes "strange looking";
+			mes "set of footprints.^000000";
 			close;
 		}
 	}
-	mes "There are some traces, but I cannot tell what they are.";
+	mes "^3355FFThese look like";
+	mes "traces of some kind";
+	mes "of pursuit or battle, but";
+	mes "you can't really tell for sure.^000000";
 	close;
 }
 
@@ -129,32 +212,58 @@ moc_fild12,276,165,0	script	Trace of Battle#3	844,{
 moc_fild11,39,163,0	script	Trace of Battle#4	844,{
 	if(BaseClass == Job_Thief){
 		if(tu_thief01 < 11){
-			mes "There are traces of many that have gone by.";
+			mes "^3355FFThere are signs";
+			mes "that many people";
+			mes "have traveled through";
+			mes "this particular area.^000000";
 			close;
 		} else if(tu_thief01 == 11){
-			mes "Another peculiar trace has been added. Unlike the others, it is small and clear, It seems like another has joined in.";
+			mes "^3355FFFrom these traces,";
+			mes "you see that another";
+			mes "set of footprints has";
+			mes "been added. It looks like";
+			mes "someone } else got involved.";
+			mes "These prints are distinctly";
+			mes "clearer and much smaller.^000000";
 			set tu_thief01, 12;
 			close;
 		} else {
-			mes "A new trace has been added.";
+			mes "^3355FFFrom these traces,";
+			mes "you see that another";
+			mes "person has gotten involved";
+			mes "in this heated scuffle.^000000";
 			close;
 		}
 	} else if(BaseClass == Job_Mage){
 		if(tu_magician01 < 11){
-			mes "There are traces of many that have gone by.";
+			mes "^3355FFThere are signs";
+			mes "that many people";
+			mes "have traveled through";
+			mes "this particular area.^000000";
 			close;
 		} else if(tu_magician01 == 11){
-			mes "Another peculiar trace has been added.";
-			mes "Unlike the others, it is small and clear.";
-			mes "It seems like another has joined in.";
+			mes "^3355FFFrom these traces,";
+			mes "you see that another";
+			mes "set of footprints has";
+			mes "been added. It looks like";
+			mes "someone } else got involved.";
+			mes "These prints are distinctly";
+			mes "clearer and much smaller.^000000";
 			set tu_magician01, 12;
 			close;
 		} else {
-			mes "A new trace has been added.";
+			mes "^3355FFFrom these traces,";
+			mes "you see that another";
+			mes "person has gotten involved";
+			mes "in this heated scuffle.^000000";
 			close;
 		}
 	}
-	mes "^3355FFThere are signs that show that some kind of scuffle might have occurred here, but you can't exactly tell what exactly happened.^000000";
+	mes "^3355FFThere are signs that show";
+	mes "that some violent scuffle";
+	mes "might have occurred here,";
+	mes "but you can't tell what had";
+	mes "happened exactly...^000000";
 	close;
 }
 
@@ -162,101 +271,155 @@ moc_fild11,39,163,0	script	Trace of Battle#4	844,{
 moc_fild11,205,52,0	script	Trace of Battle#5	844,{
 	if(BaseClass == Job_Thief){
 		if(tu_thief01 < 12){
-			mes "There are traces of many that have gone by.";
+			mes "^3355FFThere are signs";
+			mes "that many people";
+			mes "have traveled through";
+			mes "this particular area.^000000";
 			close;
 		} else if(tu_thief01 == 12){
-			mes "The traces are divided into ones from the East";
-			mes "split into North and South.";
-			if(countitem(506) == 0){	// Green_Potion
-				mes "I sense a strong poison nearby so";
-				mes "it is hard to approach.";
-				mes "It will be hard without getting rid of the poison first.";
+			mes "^3355FFThe traces of the battle";
+			mes "now split and head towards";
+			mes "the north and south. However,^000000";
+			if(countitem(506) == 0){
+				mes "^3355FFthere is a puddle of strong poison that you must neutralize before you can investigate this scene.^000000";
 				close;
 			} else {
-				mes "It is hard to approach because of a strong poison.";
-				mes "You can neutralize the poison momentarily";
-				mes "with the Green Potion.";
+				mes "^3355FFthere is a puddle of strong poison that you must neutralize before you can investigate this scene.^000000";
+				next;
+				mes "^3355FFFortunately, you can";
+				mes "temporarily nullify the";
+				mes "poison by using one";
+				mes "of your Green Potions.^000000";
 				next;
 				switch(select("Use Green Potion.:Don't use it.")){
 				case 1:
-					mes "The poison has gotten weaker. After investigating the scene where the poison has cleared I see a piece of cloth.";
+					mes "^3355FFThe poison weakens";
+					mes "and some of it evaporates,";
+					mes "revealing a piece of cloth that";
+					mes "was hidden in that puddle.^000000";
 					next;
-					switch(select("Don't investigate.", "Investigate.")){
+					switch(select("Don't investigate.:Investigate.")){
 					case 1:
-						mes "It's not something to be concerned about.";
+						mes "["+strcharinfo(0)+"]";
+						mes "A piece of cloth";
+						mes "is nothing to be";
+						mes "concerned about.";
 						close;
 						break;
 					case 2:
-						mes "The cloth drenched in blood has strange letters on it. It could be a good clue.";
+						mes "["+strcharinfo(0)+"]";
+						mes "Hey... There's";
+						mes "blood on this cloth";
+						mes "and some writing on";
+						mes "it that I can't recognize.";
+						mes "Hopefully, this'll provide";
+						mes "some sort of clue to all this?";
 						set tu_thief01, 13;
 						next;
-						mes "Found a piece of cloth.";
+						mes "^3355FFYou take the piece";
+						mes "of cloth from the puddle";
+						mes "of poison and keep it with you.^000000";
 						close;
 						break;
 					}
 					break;
 				case 2:
-					mes "It would be faster to follow the traces than investigate this scene.";
+					mes "["+strcharinfo(0)+"]";
+					mes "Hmm...";
+					mes "It'll probably be";
+					mes "faster if I follow this";
+					mes "trail, rather than stop to";
+					mes "investigate this scene.";
 					close;
 					break;
 				}
 			}
 		} else {
-			mes "Can't find anything else. Only the traces split into two remain.";
+			mes "^3355FFYou can't find";
+			mes "anything } else here,";
+			mes "aside from the traces";
+			mes "that split and lead both";
+			mes "northward and southward.^000000";
 			close;
 		}
 	} else if(BaseClass == Job_Mage){
 		if(tu_magician01 < 12){
-			mes "There are traces of many that have gone by.";
+			mes "^3355FFThere are signs";
+			mes "that many people";
+			mes "have traveled through";
+			mes "this particular area.^000000";
 			close;
 		} else if(tu_magician01 == 12){
-			mes "The traces from the east split into";
-			mes "the north and south.";
-			if(countitem(506) == 0){	// Green_Potion
-				mes "I sense a strong poison nearby so";
-				mes "it is hard to approach.";
-				mes "It will be hard without getting rid of the poison first.";
+			mes "^3355FFThe traces of the battle";
+			mes "now split and head towards";
+			mes "the north and south. However,^000000";
+			if(countitem(506) == 0){
+				mes "^3355FFthere is a puddle of strong poison that you must neutralize before you can investigate this scene.^000000";
 				close;
 			} else {
-				mes "It is hard to approach because of a strong poison.";
-				mes "You can neutralize the poison momentarily";
-				mes "with the Green Potion.";
+				mes "^3355FFthere is a puddle of strong poison that you must neutralize before you can investigate this scene.^000000";
 				next;
-				switch(select("Use Green Potion.", "Don't use it.")){
+				mes "^3355FFFortunately, you can";
+				mes "temporarily nullify the";
+				mes "poison by using one";
+				mes "of your Green Potions.^000000";
+				next;
+				switch(select("Use Green Potion.:Don't use it.")){
 				case 1:
-					mes "The poison got weaker after using the potion.";
-					mes "After investigating the scene where the poison";
-					mes "is cleared I see a piece of cloth.";
+					mes "^3355FFThe poison weakens";
+					mes "and some of it evaporates,";
+					mes "revealing a piece of cloth that";
+					mes "was hidden in that puddle.^000000";
 					next;
-					switch(select("Don't investigate.", "Investigate.")){
+					switch(select("Don't investigate.:Investigate.")){
 					case 1:
-						mes "It's not something to be concerned about.";
+						mes "["+strcharinfo(0)+"]";
+						mes "A piece of cloth";
+						mes "is nothing to be";
+						mes "concerned about.";
 						close;
 						break;
 					case 2:
-						mes "The cloth drenched in blood has strange";
-						mes "letters on it. It could be a good clue.";
-						set tu_magician01, 13;
+						mes "["+strcharinfo(0)+"]";
+						mes "Hey... There's";
+						mes "blood on this cloth";
+						mes "and some writing on";
+						mes "it that I can't recognize.";
+						mes "Hopefully, this'll provide";
+						mes "some sort of clue to all this?";
+						set tu_magician01,13;
 						next;
-						mes "Found a piece of cloth.";
+						mes "^3355FFYou take the piece";
+						mes "of cloth from the puddle";
+						mes "of poison and keep it with you.^000000";
 						close;
 						break;
 					}
 					break;
 				case 2:
-					mes "It would be faster to follow the traces rather";
-					mes "than investigating this scene.";
+					mes "["+strcharinfo(0)+"]";
+					mes "Hmm...";
+					mes "It'll probably be";
+					mes "faster if I follow this";
+					mes "trail, rather than stop to";
+					mes "investigate this scene.";
 					close;
 					break;
 				}
 			}
 		} else {
-			mes "Can't find anything else.";
-			mes "Only the traces split into two remain.";
+			mes "^3355FFYou can't find";
+			mes "anything } else here,";
+			mes "aside from the traces";
+			mes "that split and lead both";
+			mes "northward and southward.^000000";
 			close;
 		}
 	}
-	mes "There are some traces, but I cannot tell what they are.";
+	mes "^3355FFThese look like";
+	mes "traces of some kind";
+	mes "of pursuit or battle, but";
+	mes "you can't really tell for sure.^000000";
 	close;
 }
 
@@ -264,22 +427,41 @@ moc_fild11,205,52,0	script	Trace of Battle#5	844,{
 moc_fild11,226,235,0	script	Trace of Battle#6	844,{
 	if(BaseClass == Job_Thief){
 		if(tu_thief01 < 13){
-			mes "There are traces of many that have gone by.";
+			mes "^3355FFThere are signs";
+			mes "that many people";
+			mes "have traveled through";
+			mes "this particular area.^000000";
 			close;
 		} else {
-			mes "There is a trace from the south. It seems to be leading to the north but I can't seem to be able to tell as of yet.";
+			mes "^3355FFThese footprints";
+			mes "look like they're";
+			mes "heading towards the";
+			mes "north from the south.";
+			mes "But you can't really";
+			mes "be sure just yet.^000000";
 			close;
 		}
 	} else if(BaseClass == Job_Mage){
 		if(tu_magician01 < 13){
-			mes "There are traces of many that have gone by.";
+			mes "^3355FFThere are signs";
+			mes "that many people";
+			mes "have traveled through";
+			mes "this particular area.^000000";
 			close;
 		} else {
-			mes "There is a trace from the south. It seems to be leading to the north but I can't seem to be able to tell as of yet.";
+			mes "^3355FFThese footprints";
+			mes "look like they're";
+			mes "heading towards the";
+			mes "north from the south.";
+			mes "But you can't really";
+			mes "be sure just yet.^000000";
 			close;
 		}
 	}
-	mes "There are some traces, but I cannot tell what they are.";
+	mes "^3355FFThese look like";
+	mes "traces of some kind";
+	mes "of pursuit or battle, but";
+	mes "you can't really tell for sure.^000000";
 	close;
 }
 
@@ -287,22 +469,39 @@ moc_fild11,226,235,0	script	Trace of Battle#6	844,{
 moc_fild11,184,342,0	script	Trace of Battle#7	844,{
 	if(BaseClass == Job_Thief){
 		if(tu_thief01 < 13){
-			mes "There are traces of several that have stopped by.";
+			mes "^3355FFThere are signs";
+			mes "that many people";
+			mes "have traveled through";
+			mes "this particular area.^000000";
 			close;
 		} else {
-			mes "Many of the traces are connected. They seemed to have stopped here for a while, but headed north.";
+			mes "^3355FFThe trail here looks pretty";
+			mes "muddled, since it looks like";
+			mes "they battled here for quite a";
+			mes "while. But the footprints are";
+			mes "definitely heading south.^000000";
 			close;
 		}
 	} else if(BaseClass == Job_Mage){
 		if(tu_magician01 < 13){
-			mes "There are traces of several that have stopped by.";
+			mes "^3355FFThere are signs";
+			mes "that many people";
+			mes "have traveled through";
+			mes "this particular area.^000000";
 			close;
 		} else {
-			mes "Many of the traces are connected. They seemed to have stopped here for a while, but then headed north.";
+			mes "^3355FFThe trail here looks pretty";
+			mes "muddled, since it looks like";
+			mes "they battled here for quite a";
+			mes "while. But the footprints are";
+			mes "definitely heading south.^000000";
 			close;
 		}
 	}
-	mes "There are some traces, but I cannot tell what they are.";
+	mes "^3355FFThese look like";
+	mes "traces of some kind";
+	mes "of pursuit or battle, but";
+	mes "you can't really tell for sure.^000000";
 	close;
 }
 
@@ -310,30 +509,59 @@ moc_fild11,184,342,0	script	Trace of Battle#7	844,{
 moc_fild17,213,358,0	script	Trace of Battle#8	844,{
 	if(BaseClass == Job_Thief){
 		if(tu_thief01 < 13){
-			mes "There are traces of about two people that stopped by.";
+			mes "^3355FFThere are two";
+			mes "distinct sets of";
+			mes "footprints in this";
+			mes "area, but they don't";
+			mes "hold any significance";
+			mes "right about now.^000000";
 			close;
 		} else if(tu_thief01 == 13){
-			mes "I can no longer see the traces of those that were pursuiting. I only see traces of the two.";
+			mes "^3355FFAround here, it";
+			mes "looks like there are";
+			mes "only two sets of footprints.";
+			mes "What happened to the other";
+			mes "set that you found earlier?^000000";
 			set tu_thief01, 14;
 			close;
 		} else {
-			mes "There are traces of a small amont of people.";
+			mes "^3355FFFrom the evidence";
+			mes "that you've found here,";
+			mes "it looks like the battle";
+			mes "involves only two people";
+			mes "from this point onward.^000000";
 			close;
 		}
 	} else if(BaseClass == Job_Mage){
 		if(tu_magician01 < 13){
-			mes "There seem to be traces of approximately two people that stopped by.";
+			mes "^3355FFThere are two";
+			mes "distinct sets of";
+			mes "footprints in this";
+			mes "area, but they don't";
+			mes "hold any significance";
+			mes "right about now.^000000";
 			close;
 		} else if(tu_magician01 == 13){
-			mes "I can no longer see the traces of those that were pursuiting. I only see traces of the two.";
+			mes "^3355FFAround here, it";
+			mes "looks like there are";
+			mes "only two sets of footprints.";
+			mes "What happened to the other";
+			mes "set that you found earlier?^000000";
 			set tu_magician01, 14;
 			close;
 		} else {
-			mes "There are traces of a small amont of people.";
+			mes "^3355FFFrom the evidence";
+			mes "that you've found here,";
+			mes "it looks like the battle";
+			mes "involves only two people";
+			mes "from this point onward.^000000";
 			close;
 		}
 	}
-	mes "There are some traces, but I cannot tell what they are.";
+	mes "^3355FFThese look like";
+	mes "traces of some kind";
+	mes "of pursuit or battle, but";
+	mes "you can't really tell for sure.^000000";
 	close;
 }
 
@@ -341,58 +569,93 @@ moc_fild17,213,358,0	script	Trace of Battle#8	844,{
 moc_fild17,228,274,0	script	Trace of Battle#9	844,{
 	if(BaseClass == Job_Thief){
 		if(tu_thief01 < 14){
-			mes "There are traces of a small battle.";
+			mes "^3355FFTraces of some";
+			mes "sort of battle are";
+			mes "scattered all over";
+			mes "this particular area.^000000";
 			close;
 		} else if(tu_thief01 == 14){
-			mes "There seems to have been a small battle. Traces that come from the north and some from the southeast are mixed together.";
-			next;
-			mes "Then the traces lead to the east. More may be found by investigating more.";
+			mes "^3355FFYou follow the trail";
+			mes "and although traces from";
+			mes "the north and southeast mix";
+			mes "together, it looks like the battle continues towards the east.";
+			mes "But you should check this";
+			mes "spot a little bit more...^000000";
 			set tu_thief01, 15;
 			close;
 		} else if(tu_thief01 == 15){
-			set @seek_tm, rand(1,10);
-			if(@seek_tm == 7){
-				mes "I found a piece of cloth with blood on it like before.";
-				next;
-				mes "- You discovered a piece of cloth with blood -";
+			set .@seek_tm, rand(1,10);
+			if(.@seek_tm == 7){
+				mes "^3355FFAfter investigating this";
+				mes "area more thoroughly,";
+				mes "you find another piece of";
+				mes "cloth stained with blood.";
+				mes "You decide to keep it with";
+				mes "you, hoping that it will";
+				mes "provide more clues.^000000";
 				set tu_thief01, 16;
 				close;
 			} else {
-				mes "I could not find any other traces. More investigation should follow.";
+				mes "^3355FFYou don't find anything,";
+				mes "but you still can't shake";
+				mes "the feeling that there is";
+				mes "some important clue that";
+				mes "you have to find here. It won't hurt to keep investigating here.^000000";
 				close;
 			}
 		} else {
-			mes "There are no other peculiar traces other than one leading west.";
+			mes "^3355FFYou better continue";
+			mes "following this trail";
+			mes "which leads westward.^000000";
 			close;
 		}
 	} else if(BaseClass == Job_Mage){
 		if(tu_magician01 < 14){
-			mes "There are traces of a small battle.";
+			mes "^3355FFTraces of some";
+			mes "sort of battle are";
+			mes "scattered all over";
+			mes "this particular area.^000000";
 			close;
 		} else if(tu_magician01 == 14){
-			mes "There seems to have been a small battle. Traces that come from the north and some from the southeast are mixed together.";
-			next;
-			mes "Then the traces lead to the east. More may be found by investigating more.";
+			mes "^3355FFYou follow the trail";
+			mes "and although traces from";
+			mes "the north and southeast mix";
+			mes "together, it looks like the battle continues towards the east.";
+			mes "But you should check this";
+			mes "spot a little bit more...^000000";
 			set tu_magician01, 15;
 			close;
 		} else if(tu_magician01 == 15){
-			set @seek_tm1, rand(1,10);
-			if(@seek_tm1 == 7){
-				mes "I found a piece of cloth with blood on it like before.";
-				next;
-				mes "- You discovered a piece of cloth with blood -";
+			set .@seek_tm1, rand(1,10);
+			if(.@seek_tm1 == 7){
+				mes "^3355FFAfter investigating this";
+				mes "area more thoroughly,";
+				mes "you find another piece of";
+				mes "cloth stained with blood.";
+				mes "You decide to keep it with";
+				mes "you, hoping that it will";
+				mes "provide more clues.^000000";
 				set tu_magician01, 16;
 				close;
 			} else {
-				mes "I could not find any other traces. More investigation should follow.";
+				mes "^3355FFYou don't find anything,";
+				mes "but you still can't shake";
+				mes "the feeling that there is";
+				mes "some important clue that";
+				mes "you have to find here. It won't hurt to keep investigating here.^000000";
 				close;
 			}
 		} else {
-			mes "There are no other peculiar traces other than one leading west.";
+			mes "^3355FFYou better continue";
+			mes "following this trail";
+			mes "which leads westward.^000000";
 			close;
 		}
 	}
-	mes "There are some traces, but I can't tell what they are.";
+	mes "^3355FFThese look like";
+	mes "traces of some kind";
+	mes "of pursuit or battle, but";
+	mes "you can't really tell for sure.^000000";
 	close;
 }
 
@@ -400,30 +663,51 @@ moc_fild17,228,274,0	script	Trace of Battle#9	844,{
 moc_fild17,34,292,0	script	Trace of Battle#10	844,{
 	if(BaseClass == Job_Thief){
 		if(tu_thief01 < 16){
-			mes "A large group of people seem to have gone by.";
+			mes "^3355FFThere are signs";
+			mes "showing that a lot";
+			mes "of people were in";
+			mes "this area earlier.^000000";
 			close;
 		} else if(tu_thief01 == 16){
-			mes "Traces lead from the east. Ones of the pursuer and the one being pursued have become similar. The gap in between must be decreasing.";
+			mes "^3355FFThe lead set of footprints,";
+			mes "probably belonging to the one";
+			mes "who was being pursued, look";
+			mes "more erratic, as if exhaustion";
+			mes "and desperation were setting in. These traces lead to the west.^000000";
 			set tu_thief01, 17;
 			close;
 		} else {
-			mes "There are traces leading to the east.";
+			mes "^3355FFThe trail from";
+			mes "this point heads";
+			mes "towards the west.^000000";
 			close;
 		}
 	} else if(BaseClass == Job_Mage){
 		if(tu_magician01 < 16){
-			mes "A large group of people seem to have gone by.";
+			mes "^3355FFThere are signs";
+			mes "showing that a lot";
+			mes "of people were in";
+			mes "this area earlier.^000000";
 			close;
 		} else if(tu_magician01 == 16){
-			mes "Traces lead from the east. Ones of the pursuer and the one being pursued have become similar. The gap in between must be decreasing.";
+			mes "^3355FFThe lead set of footprints,";
+			mes "probably belonging to the one";
+			mes "who was being pursued, look";
+			mes "more erratic, as if exhaustion";
+			mes "and desperation were setting in. These traces lead to the west.^000000";
 			set tu_magician01, 17;
 			close;
 		} else {
-			mes "Traces lead to the east.";
+			mes "^3355FFThe trail from";
+			mes "this point heads";
+			mes "towards the west.^000000";
 			close;
 		}
 	}
-	mes "There are some traces remaining, but I cannot tell what they are.";
+	mes "^3355FFThese look like";
+	mes "traces of some kind";
+	mes "of pursuit or battle, but";
+	mes "you can't really tell for sure.^000000";
 	close;
 }
 
@@ -431,30 +715,55 @@ moc_fild17,34,292,0	script	Trace of Battle#10	844,{
 moc_fild18,346,296,0	script	Trace of Battle#11	844,{
 	if(BaseClass == Job_Thief){
 		if(tu_thief01 < 17){
-			mes "A large group of people seem to have gone by.";
+			mes "^3355FFThere are signs";
+			mes "showing that a lot";
+			mes "of people were in";
+			mes "this area earlier.^000000";
 			close;
 		} else if(tu_thief01 == 17){
-			mes "Traces of a pursuit continues. Someone must have been injured seeing there is blood.";
+			mes "^3355FFFollowing the";
+			mes "trail, you see signs";
+			mes "that blood was spilled";
+			mes "in this area. It looks like";
+			mes "someone was injured";
+			mes "pretty badly around here.^000000";
 			set tu_thief01, 18;
 			close;
 		} else {
-			mes "There is blood here and there so other traces should be easy to find.";
+			mes "^3355FFSince someone involved";
+			mes "in this conflict was bleeding,";
+			mes "further traces of this pursuit";
+			mes "might be easier to find now.^000000";
 			close;
 		}
 	} else if(BaseClass == Job_Mage){
 		if(tu_magician01 < 17){
-			mes "A large group of people seem to have gone by.";
+			mes "^3355FFThere are signs";
+			mes "showing that a lot";
+			mes "of people were in";
+			mes "this area earlier.^000000";
 			close;
 		} else if(tu_magician01 == 17){
-			mes "Traces of a pursuit continues. Someone must have been injured seeing there is blood.";
+			mes "^3355FFFollowing the";
+			mes "trail, you see signs";
+			mes "that blood was spilled";
+			mes "in this area. It looks like";
+			mes "someone was injured";
+			mes "pretty badly around here.^000000";
 			set tu_magician01, 18;
 			close;
 		} else {
-			mes "There is blood here and there so other traces should be easy to find.";
+			mes "^3355FFSince someone involved";
+			mes "in this conflict was bleeding,";
+			mes "further traces of this pursuit";
+			mes "might be easier to find now.^000000";
 			close;
 		}
 	}
-	mes "There are some traces remaining, but I cannot tell what they are.";
+	mes "^3355FFThese look like";
+	mes "traces of some kind";
+	mes "of pursuit or battle, but";
+	mes "you can't really tell for sure.^000000";
 	close;
 }
 
@@ -462,30 +771,51 @@ moc_fild18,346,296,0	script	Trace of Battle#11	844,{
 moc_fild18,309,257,0	script	Trace of Battle#12	844,{
 	if(BaseClass == Job_Thief){
 		if(tu_thief01 < 18){
-			mes "A large group of people seem to have gone by.";
+			mes "^3355FFThere are signs";
+			mes "showing that a lot";
+			mes "of people were in";
+			mes "this area earlier.^000000";
 			close;
 		} else if(tu_thief01 == 18){
-			mes "Traces lead to the north. Ones of the pursuer and the one being pursued have become similar. The gap in between must be decreasing.";
+			mes "^3355FFThese traces lead";
+			mes "northward and it looks";
+			mes "like whoever is doing";
+			mes "the chasing is getting";
+			mes "much closer to his prey.^000000";
 			set tu_thief01, 19;
 			close;
 		} else {
-			mes "There are traces leading to the north.";
+			mes "^3355FFThe trail of this";
+			mes "pursuit now leads";
+			mes "towards the north.^000000";
 			close;
 		}
 	} else if(BaseClass == Job_Mage){
 		if(tu_magician01 < 18){
-			mes "A large group of people seem to have gone by.";
+			mes "^3355FFThere are signs";
+			mes "showing that a lot";
+			mes "of people were in";
+			mes "this area earlier.^000000";
 			close;
 		} else if(tu_magician01 == 18){
-			mes "Traces lead to the north. Ones of the pursuer and the one being pursued have become similar. The gap in between must be decreasing.";
+			mes "^3355FFThese traces lead";
+			mes "northward and it looks";
+			mes "like whoever is doing";
+			mes "the chasing is getting";
+			mes "much closer to his prey.^000000";
 			set tu_magician01, 19;
 			close;
 		} else {
-			mes "There are traces leading to the north.";
+			mes "^3355FFThe trail of this";
+			mes "pursuit now leads";
+			mes "towards the north.^000000";
 			close;
 		}
 	}
-	mes "There are some traces remaining, but I cannot tell what they are.";
+	mes "^3355FFThese look like";
+	mes "traces of some kind";
+	mes "of pursuit or battle, but";
+	mes "you can't really tell for sure.^000000";
 	close;
 }
 
@@ -493,14 +823,25 @@ moc_fild18,309,257,0	script	Trace of Battle#12	844,{
 moc_fild18,177,333,0	script	Trace of Battle#13	844,{
 	if(BaseClass == Job_Thief){
 		if(tu_thief01 < 19){
-			mes "A large group of people seem to have gone by.";
+			mes "^3355FFThere are signs";
+			mes "showing that a lot";
+			mes "of people were in";
+			mes "this area earlier.^000000";
 			close;
 		} else if(tu_thief01 == 19){
-			mes "Traces leading to the north have changed direction to the southwest. More pursuers seem to have joined and stalled the group.";
+			mes "^3355FFJudging from these";
+			mes "traces, it looks like";
+			mes "even more people have";
+			mes "joined the battle which";
+			mes "now seems to be leading";
+			mes "in the southwest direction.^000000";
 			set tu_thief01, 20;
 			close;
 		} else {
-			mes "Within the traces of the battle, there are some leading to the southwest.";
+			mes "^3355FFIt looks like";
+			mes "the battle heads";
+			mes "towards the southwest";
+			mes "from this particular point.^000000";
 			close;
 		}
 	} else if(BaseClass == Job_Mage){
@@ -508,15 +849,26 @@ moc_fild18,177,333,0	script	Trace of Battle#13	844,{
 			mes "A large group of people seem to have gone by.";
 			close;
 		} else if(tu_magician01 == 19){
-			mes "Traces leading to the north have changed direction to the southwest. More pursuers seem to have joined and stalled the group.";
+			mes "^3355FFJudging from these";
+			mes "traces, it looks like";
+			mes "even more people have";
+			mes "joined the battle which";
+			mes "now seems to be leading";
+			mes "in the southwest direction.^000000";
 			set tu_magician01, 20;
 			close;
 		} else {
-			mes "Within the traces of the battle, there are some leading to the southwest.";
+			mes "^3355FFIt looks like";
+			mes "the battle heads";
+			mes "towards the southwest";
+			mes "from this particular point.^000000";
 			close;
 		}
 	}
-	mes "There are some traces remaining, but I cannot tell what they are.";
+	mes "^3355FFThese look like";
+	mes "traces of some kind";
+	mes "of pursuit or battle, but";
+	mes "you can't really tell for sure.^000000";
 	close;
 }
 
@@ -524,30 +876,51 @@ moc_fild18,177,333,0	script	Trace of Battle#13	844,{
 moc_fild18,111,303,0	script	Trace of Battle#14	844,{
 	if(BaseClass == Job_Thief){
 		if(tu_thief01 < 20){
-			mes "A large group of people seem to have gone by.";
+			mes "^3355FFThere are signs";
+			mes "showing that a lot";
+			mes "of people were in";
+			mes "this area earlier.^000000";
 			close;
 		} else if(tu_thief01 == 20){
-			mes "Traces lead to the south. More pursuers have joined from the north making the traces clearer.";
+			mes "^3355FFIn this area, it looks";
+			mes "like even more people";
+			mes "joined in this battle and";
+			mes "the pursuit clearly heads";
+			mes "towards the south.^000000";
 			set tu_thief01, 21;
 			close;
 		} else {
-			mes "Traces lead to the south.";
+			mes "^3355FFThe trail of";
+			mes "this battle heads";
+			mes "towards the south.^000000";
 			close;
 		}
 	} else if(BaseClass == Job_Mage){
 		if(tu_magician01 < 20){
-			mes "A large group of people seem to have gone by.";
+			mes "^3355FFThere are signs";
+			mes "showing that a lot";
+			mes "of people were in";
+			mes "this area earlier.^000000";
 			close;
 		} else if(tu_magician01 == 20){
-			mes "Traces lead to the south. More pursuers have joined from the north making the traces clearer.";
+			mes "^3355FFIn this area, it looks";
+			mes "like even more people";
+			mes "joined in this battle and";
+			mes "the pursuit clearly heads";
+			mes "towards the south.^000000";
 			set tu_magician01, 21;
 			close;
 		} else {
-			mes "Traces lead to the south.";
+			mes "^3355FFThe trail of";
+			mes "this battle heads";
+			mes "towards the south.^000000";
 			close;
 		}
 	}
-	mes "There are some traces remaining, but I cannot tell what they are.";
+	mes "^3355FFThese look like";
+	mes "traces of some kind";
+	mes "of pursuit or battle, but";
+	mes "you can't really tell for sure.^000000";
 	close;
 }
 
@@ -555,79 +928,163 @@ moc_fild18,111,303,0	script	Trace of Battle#14	844,{
 moc_fild18,109,197,0	script	Trace of Battle#15	844,{
 	if(BaseClass == Job_Thief){
 		if(tu_thief01 < 21){
-			mes "A large group of people seem to have gone by.";
+			mes "^3355FFThere are signs";
+			mes "showing that a lot";
+			mes "of people were in";
+			mes "this area earlier.^000000";
 			close;
 		} else if(tu_thief01 == 21){
-			mes "There are traces of a harsh battle. Poison seems to have been used here and there.";
+			mes "^3355FFThis area is clearly";
+			mes "marked with signs";
+			mes "of a violent battle, with";
+			mes "traces of poison strewn";
+			mes "all over the ground.^000000";
 			next;
-			switch(select("Continue following the traces.", "Look around a little more.")){
+			switch(select("Continue following the traces.:Further investigate the area.")){
 			case 1:
-				mes "Nothing special was found.";
+				mes "^3355FFYou examine the";
+				mes "trail, but can't really";
+				mes "discern the direction";
+				mes "in which the battle";
+				mes "continues...^000000";
 				close;
 				break;
 			case 2:
-				mes "There seem to be some traps related to some different types of poison. Ones that have gone off and others that have not are mixed together.";
+				mes "^3355FFYou find a bunch of";
+				mes "traps that use different";
+				mes "kinds of poison. The ones";
+				mes "that have been set off are";
+				mes "mixed with the ones which";
+				mes "haven't been triggered.^000000";
 				set tu_thief01, 22;
 				close;
 				break;
 			}
 		} else if(tu_thief01 == 22){
-			set @trap_tm, rand(1,3);
-			if(@trap_tm == 3){
-				mes "A peculiar looking trap is found. How about pouring some Green Potion on it like before?";
+			set .@trap_tm, rand(1,3);
+			if(.@trap_tm == 3){
+				mes "^3355FFOne trap in particular";
+				mes "stands out to you more";
+				mes "than the rest. Perhaps";
+				mes "you should pour some";
+				mes "Green Potion on it to";
+				mes "neutralize it first.^000000";
 				next;
-				switch(select("Pour Green Potion.", "Do something else.")){
+				switch(select("Pour Green Potion.:Don't use Green Potion.")){
 				case 1:
-					if(countitem(506) < 1){	// Green_Potion
-						mes "...........";
-						mes "No Green Potion is in possession.";
+					if(countitem(506) < 1){
+						mes "^3355FFUnfortunately, you";
+						mes "don't have a Green";
+						mes "Potion that you can";
+						mes "use to pour on this trap...^000000";
 						close;
 					} else {
-						mes "It did not affect anything. Other things may be necessary.";
-						delitem 506, 1;
+						mes "^3355FFPouring that";
+						mes "Green Potion didn't";
+						mes "really make anything";
+						mes "happen. Perhaps you";
+						mes "should try something else.^000000";
+						delitem 506,1; //Green_Potion
 						set tu_thief01, 23;
 						close;
 					}
 					break;
 				case 2:
-					mes "Investigate the area a little more.";
+					mes "["+strcharinfo(0)+"]";
+					mes "I guess...";
+					mes "I'll try investigating";
+					mes "this area a little more?";
 					close;
 					break;
 				}
 			} else {
-				mes "Hit the trap by accident.";
-				//#####			GetHEALTHSTATE VAR_POISON 60#####
-				//misceffect EF_VENOMDUST2;
+				mes "^3355FFBy sheer accident,";
+				mes "you set off one of";
+				mes "the traps in the area.^000000";
+				sc_start SC_Poison,60000,0;
+				specialeffect EF_VENOMDUST2;
 				percentheal -30,0;
 				close;
 			}
 		} else if(tu_thief01 == 23){
-			if(countitem(511) > 0 || countitem(716) > 0){	// Green_Herb || Red_Gemstone
-				if(countitem(511) > 0 && countitem(716) > 0){	// Green_Herb && Red_Gemstone
-					mes "Make powder out of Green Herb and sprinkle it. When placing a Red Gemstone on the trap, it glows and disappears. The trap is dismantled.";
-					delitem 511, 1;
-					delitem 716, 1;
+			if(countitem(511) > 0 || countitem(716) > 0){
+				if(countitem(511) > 0 && countitem(716) > 0){
+					mes "^3355FFYou try grinding";
+					mes "a Green Herb and";
+					mes "sprinkling it on the";
+					mes "trap and then place";
+					mes "a Red Gemstone on it.";
+					mes "The gem glows and";
+					mes "slowly melts away...^000000";
+					next;
+					mes "^3355FFAlthough you don't";
+					mes "fully understand the";
+					mes "science of using poisons";
+					mes "or antidotes, you managed";
+					mes "to successfully dismantle";
+					mes "the trap. Now you can safely";
+					mes "check what might be inside.^000000";
+					delitem 511,1; //Green_Herb
+					delitem 716,1; //Red_Gemstone
 					set tu_thief01, 24;
 					close;
-				} else if(countitem(511) > 0){	// Green_Herb	
-					mes "Make powder out of Green Herb and sprinkle it. Nothing happens. It may need some other catalyst.";
+				} else if(countitem(511) > 0){
+					mes "^3355FFYou should try to";
+					mes "dismantle this trap";
+					mes "by using other catalysts";
+					mes "related to the curing or";
+					mes "use of poison. You do have";
+					mes "a Green Herb on you, so you";
+					mes "try sprinkling it on the trap.^000000";
+					next;
+					mes "^3355FFHowever, nothing";
+					mes "happens. It seems that";
+					mes "you need another catalyst";
+					mes "in addition to the Green Herb";
+					mes "that you have in order to";
+					mes "dismantle this trap.^000000";
 					close;
 				} else {
-					mes "Make powder out of Red Gemstone and sprinkle it. Nothing happens. It may need some other catalyst.";
+					mes "^3355FFYou should try to";
+					mes "dismantle this trap";
+					mes "by using other catalysts";
+					mes "related to the curing or use";
+					mes "of poison. You do have a";
+					mes "Red Gemstone, so you grind";
+					mes "it and sprinkle it on the trap.^000000";
+					next;
+					mes "^3355FFHowever, nothing";
+					mes "happens. It seems that";
+					mes "you need another catalyst to";
+					mes "use with the Red Gemstone";
+					mes "that you have in order to";
+					mes "dismantle this trap.^000000";
 					close;
 				}
 			} else {
-				mes "Seems to need some other catalyst.";
+				mes "^3355FFYou should try to";
+				mes "dismantle this trap";
+				mes "by using other catalysts";
+				mes "related to the curing or";
+				mes "use of poison. But what";
+				mes "items should you bring?^000000";
 				close;
 			}
 		} else if(tu_thief01 == 24){
-			mes "In front of the dismantled trap, a piece of cloth soaked in blood is found before is there.";
-			next;
-			mes "Found 'Blood Stained Cloth'.";
+			mes "^3355FFInside the dismantled";
+			mes "trap, you find another";
+			mes "piece of strange cloth";
+			mes "that's stained with blood.";
+			mes "You take it with you in";
+			mes "hopes that it provides";
+			mes "some kind of evidence.^000000";
 			set tu_thief01, 25;
 			close;
 		} else {
-			mes "There seem to be no other Traps. Traces lead to the south.";
+			mes "^3355FFYou examine the area";
+			mes "a little further and guess";
+			mes "that the battle might head";
+			mes "towards the south.^000000";
 			close;
 		}
 	} else if(BaseClass == Job_Mage){
@@ -635,81 +1092,165 @@ moc_fild18,109,197,0	script	Trace of Battle#15	844,{
 			mes "A large group of people seem to have gone by.";
 			close;
 		} else if(tu_magician01 == 21){
-			mes "There are traces of a harsh battle. Poison seems to have been used here and there.";
+			mes "^3355FFThis area is clearly";
+			mes "marked with signs";
+			mes "of a violent battle, with";
+			mes "traces of poison strewn";
+			mes "all over the ground.^000000";
 			next;
-			switch(select("Continue following the traces.", "Look around a little more.")){
+			switch(select("Continue following the traces.:Further investigate the area.")){
 			case 1:
-				mes "Nothing special was found.";
+				mes "^3355FFYou examine the";
+				mes "trail, but can't really";
+				mes "discern the direction";
+				mes "in which the battle";
+				mes "continues...^000000";
 				close;
 				break;
 			case 2:
-				mes "There seem to be some traps related to some different types of poison. Ones that have gone off and others that have not are mixed together.";
+				mes "^3355FFYou find a bunch of";
+				mes "traps that use different";
+				mes "kinds of poison. The ones";
+				mes "that have been set off are";
+				mes "mixed with the ones which";
+				mes "haven't been triggered.^000000";
 				set tu_magician01, 22;
 				close;
 				break;
 			}
 		} else if(tu_magician01 == 22){
-			set @trap_tm, rand(1,3);
-			if(@trap_tm == 3){
-				mes "A peculiar looking trap is found. How about pouring some Green Potion on it like before?";
+			set .@trap_tm, rand(1,3);
+			if(.@trap_tm == 3){
+				mes "^3355FFOne trap in particular";
+				mes "stands out to you more";
+				mes "than the rest. Perhaps";
+				mes "you should pour some";
+				mes "Green Potion on it to";
+				mes "neutralize it first.^000000";
 				next;
-				switch(select("Pour Green Potion.", "Do something else.")){
+				switch(select("Pour Green Potion.:Don't use Green Potion.")){
 				case 1:
-					if(countitem(506) < 1){	// Green_Potion
-						mes "...........";
-						mes "No Green Potion is in possession.";
+					if(countitem(506) < 1){
+						mes "^3355FFUnfortunately, you";
+						mes "don't have a Green";
+						mes "Potion that you can";
+						mes "use to pour on this trap...^000000";
 						close;
 					} else {
-						mes "It did not affect anything. Other things may be necessary.";
-						delitem 506, 1;
+						mes "^3355FFPouring that";
+						mes "Green Potion didn't";
+						mes "really make anything";
+						mes "happen. Perhaps you";
+						mes "should try something else.^000000";
+						delitem 506,1; //Green_Potion
 						set tu_magician01, 23;
 						close;
 					}
 					break;
 				case 2:
-					mes "Investigate the area a little more.";
+					mes "["+strcharinfo(0)+"]";
+					mes "I guess...";
+					mes "I'll try investigating";
+					mes "this area a little more?";
 					close;
 					break;
+				}
+			} else {
+				mes "^3355FFBy sheer accident,";
+				mes "you set off one of";
+				mes "the traps in the area.^000000";
+				sc_start SC_Poison,60000,0;
+				specialeffect EF_VENOMDUST2;
+				percentheal -30,0;
+				close;
 			}
-		} else {
-			mes "Hit the trap by accident.";
-			//#####			GetHEALTHSTATE VAR_POISON 60#####
-			//misceffect EF_VENOMDUST2;
-			percentheal -30,0;
-			close;
-		}
 		} else if(tu_magician01 == 23){
-			if(countitem(511) > 0 || countitem(716) > 0){	// Green_Herb || Red_Gemstone
-				if(countitem(511) > 0 && countitem(716) > 0){	// Green_Herb && Red_Gemstone
-					mes "Make powder out of Green Herb and sprinkle it. When placing a Red Gemstone on the trap, it glows and disappears. The trap is dismantled.";
-					delitem 511, 1;
-					delitem 716, 1;
+			if(countitem(511) > 0 || countitem(716) > 0){
+				if(countitem(511) > 0 && countitem(716) > 0){
+					mes "^3355FFYou try grinding";
+					mes "a Green Herb and";
+					mes "sprinkling it on the";
+					mes "trap and then place";
+					mes "a Red Gemstone on it.";
+					mes "The gem glows and";
+					mes "slowly melts away...^000000";
+					next;
+					mes "^3355FFAlthough you don't";
+					mes "fully understand the";
+					mes "science of using poisons";
+					mes "or antidotes, you managed";
+					mes "to successfully dismantle";
+					mes "the trap. Now you can safely";
+					mes "check what might be inside.^000000";
+					delitem 511,1; //Green_Herb
+					delitem 716,1; //Red_Gemstone
 					set tu_magician01, 24;
 					close;
-				} else if(countitem(511) > 0){	// Green_Herb
-					mes "Make powder out of Green Herb and sprinkle it. Nothing happens. It may need some other catalyst.";
+				} else if(countitem(511) > 0){
+					mes "^3355FFYou should try to";
+					mes "dismantle this trap";
+					mes "by using other catalysts";
+					mes "related to the curing or";
+					mes "use of poison. You do have";
+					mes "a Green Herb on you, so you";
+					mes "try sprinkling it on the trap.^000000";
+					next;
+					mes "^3355FFHowever, nothing";
+					mes "happens. It seems that";
+					mes "you need another catalyst";
+					mes "in addition to the Green Herb";
+					mes "that you have in order to";
+					mes "dismantle this trap.^000000";
 					close;
 				} else {
-					mes "Make powder out of Red Gemstone and sprinkle it. Nothing happens. It may need some other catalyst.";
+					mes "^3355FFYou should try to";
+					mes "dismantle this trap";
+					mes "by using other catalysts";
+					mes "related to the curing or use";
+					mes "of poison. You do have a";
+					mes "Red Gemstone, so you grind";
+					mes "it and sprinkle it on the trap.^000000";
+					next;
+					mes "^3355FFHowever, nothing";
+					mes "happens. It seems that";
+					mes "you need another catalyst to";
+					mes "use with the Red Gemstone";
+					mes "that you have in order to";
+					mes "dismantle this trap.^000000";
 					close;
 				}
 			} else {
-				mes "Seems to need some other catalyst.";
+				mes "^3355FFYou should try to";
+				mes "dismantle this trap";
+				mes "by using other catalysts";
+				mes "related to the curing or";
+				mes "use of poison. But what";
+				mes "items should you bring?^000000";
 				close;
 			}
 		} else if(tu_magician01 == 24){
-			mes "In front of the dismantled trap, a piece of cloth soaked in blood is found before is there.";
-			next;
-			mes "Found 'Blood Stained Cloth'.";
+			mes "^3355FFInside the dismantled";
+			mes "trap, you find another";
+			mes "piece of strange cloth";
+			mes "that's stained with blood.";
+			mes "You take it with you in";
+			mes "hopes that it provides";
+			mes "some kind of evidence.^000000";
 			set tu_magician01, 25;
 			close;
 		} else {
-			mes "There seem to be no other Traps. Traces lead to the south.";
+			mes "^3355FFYou examine the area";
+			mes "a little further and guess";
+			mes "that the battle might head";
+			mes "towards the south.^000000";
 			close;
 		}
 
 	}
-	mes "There are some traces remaining, but I cannot tell what they are.";
+	mes "^3355FFThese look like";
+	mes "traces of some kind";
+	mes "of pursuit or battle, but";
+	mes "you can't really tell for sure.^000000";
 	close;
 }
 
@@ -717,41 +1258,80 @@ moc_fild18,109,197,0	script	Trace of Battle#15	844,{
 moc_fild18,156,96,0	script	Trace of Battle#16	844,{
 	if(BaseClass == Job_Thief){
 		if(tu_thief01 < 25){
-			mes "A large group of people seem to have gone by.";
+			mes "^3355FFThere are signs";
+			mes "that a large group";
+			mes "of people have been in";
+			mes "this area for some reason.^000000";
 			close;
 		} else if(tu_thief01 == 25){
-			mes "Traces lead to the end of the cliff. No other traces can be found.";
+			mes "^3355FFThese traces lead";
+			mes "to the edge of the cliff.";
+			mes "marking the end of the trail.";
+			mes "Apparently, the one who was";
+			mes "being chased met his fate here.^000000";
 			next;
-			mes "...............";
+			mes "^3355FFThere are many footprints";
+			mes "leading to the edge of the";
+			mes "cliff and all of them leave";
+			mes "this scene, save for the set";
+			mes "of footprints that distinctly";
+			mes "belong to the person who";
+			mes "was pursued all this time...^3355FF";
 			next;
-			mes "It seems like the ones being pursued fell off the cliff. Traces of those pursuiting are here and there but seem to be divided into two.";
-			next;
-			mes "Return with the data up until now.";
+			mes "^3355FFIt looks like you've";
+			mes "learned all that you can";
+			mes "from this investigation. You";
+			mes "better return and report your";
+			mes "findings to Yierhan soon.^000000";
 			set tu_thief01, 26;
 			close;
 		} else {
-			mes "No more traces other than ones from the north.";
+			mes "^3355FFThis is the end";
+			mes "of the trail. There";
+			mes "aren't any more traces";
+			mes "of the battle left to find.^000000";
 			close;
 		}
 	} else if(BaseClass == Job_Mage){
 		if(tu_magician01 < 25){
-			mes "A large group of people seem to have gone by.";
+			mes "^3355FFThere are signs";
+			mes "that a large group";
+			mes "of people have been in";
+			mes "this area for some reason.^000000";
 			close;
 		} else if(tu_magician01 == 25){
-			mes "Traces lead to the end of the cliff. No other traces can be found.";
+			mes "^3355FFThese traces lead";
+			mes "to the edge of the cliff.";
+			mes "marking the end of the trail.";
+			mes "Apparently, the one who was";
+			mes "being chased met his fate here.^000000";
 			next;
-			mes "...............";
+			mes "^3355FFThere are many footprints";
+			mes "leading to the edge of the";
+			mes "cliff and all of them leave";
+			mes "this scene, save for the set";
+			mes "of footprints that distinctly";
+			mes "belong to the person who";
+			mes "was pursued all this time...^3355FF";
 			next;
-			mes "It seems like the ones being pursued fell off the cliff. Traces of those pursuiting are here and there but seem to be divided into two.";
-			next;
-			mes "Return with the data up until now.";
+			mes "^3355FFIt looks like you've";
+			mes "learned all that you can";
+			mes "from this investigation. You";
+			mes "better return and report your";
+			mes "findings to Yierhan soon.^000000";
 			set tu_magician01, 26;
 			close;
 		} else {
-			mes "No more traces other than ones from the north.";
+			mes "^3355FFThis is the end";
+			mes "of the trail. There";
+			mes "aren't any more traces";
+			mes "of the battle left to find.^000000";
 			close;
 		}
 	}
-	mes "There are some traces, but I cannot tell what they are.";
+	mes "^3355FFThese look like";
+	mes "traces of some kind";
+	mes "of pursuit or battle, but";
+	mes "you can't really tell for sure.^000000";
 	close;
 }

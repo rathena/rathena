@@ -1,16 +1,28 @@
 Date		Added
 ======
+2011/10/26
+	* Rev. 14984 Added Rune Knight job quest, and mount rental NPC. [L0ne_W0lf]
+2011/08/26
+	* Rev. 14941 Added Archbishop job quest, and missing Brasilis files. [L0ne_W0lf]
 2011/08/10
+	* Rev. 14931 Added scripts and NPC Brasilis updates from trunk r14928. [L0ne_W0lf]
 	* Updated the quests_brasilis ontouchNPC warp command to use unitwarp instead. [Skotlex]
 2011/08/09
 	* Rev. 14928 Implemented the rest of Brasilis, and updated existing Brasilis NPCs. [L0ne_W0lf]
+2011/07/26
+	* Rev. 14922 Added Renewal Guides, and made the filenames uniform. [L0ne_W0lf]
+2011/07/21
+	* Rev. 14920 Updated most active NPCs that give EXP to renewal standards. [L0ne_W0lf]
 2011/07/16
 	* Rev. 14912 Updated dialog in monster_race.txt [L0ne_W0lf]
-2011/07/16
 	* Rev. 14900 Have been working on this for months: Added Nidhoggr's Nest instance. [L0ne_W0lf]
 	* Tweaks to how checkquest is used in orc's memory and sealed shrine.
 2011/07/13
 	* Rev. 14905 Tweaked the sealed shrine entrance NPCs. Hopefully the damn thing works now. [L0ne_W0lf]
+2011/07/3
+	* Rev. 14884 Updated Tutorial quests, and added back NPCs needed for Priest quest. [L0ne_W0lf]
+2011/06/11
+	* Rev. 14845 Corrected improperly converted spawns, and instance timers for sealed shine and Orc Dungeon.  [L0ne_W0lf]
 2011/05/23
 	* Rev. 14833 Fixed a possible exploit in guild castle investment. (bugreport:4929, topic:272783) [Brian]
 2011/04/08
@@ -22,6 +34,11 @@ Date		Added
 2011/04/06
 	* Rev. 14775 Added two new quests, Alberta Boy and Secret Note of Bazett. [L0ne_W0lf]
 	* Implemented 13.2 update to Report to the New World quest.
+	* Rev. 14769 If you're going to take credit for someone elses work (irony) make sure it's not my work. [L0ne_W0lf]
+	- Corrected credits in the Eden Quest files.
+	- Removed showevent use in the eden_common file.
+	- Removed the duplicates in the eden_common file.
+	- Removed the korean comments in the eden_quests.
 2011/03/21
 	* Fixed and commented out old Anthell entrance warps (bugreport:3589). Moved entrance to cmd_fild08 to match mapcache updates [Gepard]
 	- Fixed an issue in Resurrection of Satan Morroc (Continental Guard Quest) when player dying/logging out during conversation

@@ -1617,7 +1617,7 @@ morocc,159,113,3	script	Chief Balrog	752,{
 			mes "Once again, I thank you for your distinguished service on behalf of the Continental Guard and the Rune-Midgarts Kingdom. I'll report your great achievement to His Majesty right away.";
 			next;
 			delitem 7820,1; //Morroc_Skin
-			getexp 2000000,0;
+			getexp 200000,0;
 			set rebirth_moc_edq,7;
 			changequest 3055,3056;
 			mes "[Chief Balrog]";
@@ -2316,7 +2316,7 @@ moc_ruins,137,70,3	script	Book-Touching Man#garas	48,{
 					delitem 7797,1; //Author_Memo
 					delitem 7796,1; //Author_Autograph
 					set barmunt_crow,16;
-					getexp 900000,900000;
+					getexp 90000,90000;
 					close;
 				case 2:
 					mes "[Benjamin]";
@@ -5179,22 +5179,22 @@ prt_castle,117,163,5	script	Inspector#prince	755,{
 			mes "So, keep up the good work.";
 			mes "For the Kingdom of Rune Midgarts!";
 			if ((BaseLevel > 80) && (BaseLevel < 86)) {
-				getexp 400000,0;
+				getexp 40000,0;
 			}
 			else if ((BaseLevel > 85) && (BaseLevel < 91)) {
-				getexp 450000,0;
+				getexp 45000,0;
 			}
 			else if ((BaseLevel > 90) && (BaseLevel < 96)) {
-				getexp 500000,0;
+				getexp 50000,0;
 			}
-			else if ((BaseLevel > 95) && (BaseLevel < 99)) {
-				getexp 550000,0;
+			else if ((BaseLevel > 95) && (BaseLevel < 150)) {
+				getexp 55000,0;
 			}
-			else if (BaseLevel == 99) {
-				getexp 1100000,0;
+			else if (BaseLevel == 150) {
+				getexp 110000,0;
 			}
 			else {
-				getexp 300000,0;
+				getexp 30000,0;
 			}
 			set nk_prince,8;
 			completequest 10025;

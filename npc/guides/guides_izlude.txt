@@ -1,0 +1,186 @@
+//===== eAthena Script ======================================= 
+//= Izlude Guides
+//===== By: ================================================== 
+//= L0ne_W0lf
+//===== Current Version: ===================================== 
+//= 1.0
+//===== Compatible With: ===================================== 
+//= eAthena  SVN
+//===== Description: ========================================= 
+//= [Aegis Conversion]
+//= Guides for the city of Izlude
+//===== Additional Comments: ================================= 
+//= 1.0 First version, Renewal guide.
+//============================================================ 
+
+izlude,121,87,6	script	Guide#01izlude::GuideIzlude	105,{
+	cutin "prt_soldier",2;
+	mes "[Izlude Guide]";
+	mes "Welcome to ^8B4513Izlude^000000,";
+	mes "Prontera's satellite town.";
+	mes "Do you need help navigating the town?";
+	next;
+	while (1) {
+		switch(select("[ Main Facilities ]:[ Merchants & Helpers ]:Remove Marks from Mini-Map:Cancel")) {
+		case 1:
+			set .@loop,1;
+			while (.@loop) {
+				switch(select("[ Marina ]:[ Airport ]:[ Arena ]:[ Tool Shop ]:[ Weapon & Armor Shop ]:[ Swordsman Guild ]:[ Swordsman Association ]:Previous Menu")) {
+				case 1:
+					mes "[Izlude Guide]";
+					mes "You can use the northeast ^B9062FMarina^000000";
+					mes "to go to ^8B4513Alberta^000000 or ^8B4513Byalan Island^000000.";
+					mes "Beware of ^8B4513Izlude Dungeon^000000";
+					mes "on Byalan Island since it is";
+					mes "filled with dreadful monsters.";
+					mes "Would you like to check any other locations?";
+					viewpoint 1,200,180,0,0xFF0000;
+					next;
+					break;
+				case 2:
+					mes "[Izlude Guide]";
+					mes "The ^0000FFInternational Airship^000000 to the southeast";
+					mes "goes to ^8B4513Juno^000000 and ^8B4513Rachel^000000.";
+					mes "Let me mark its location";
+					mes "on your mini-map.";
+					mes "Would you like to check any other locations?";
+					viewpoint 1,145,39,1,0x0A82FF;
+					next;
+					break;
+				case 3:
+					mes "[Izlude Guide]";
+					mes "The ^FF5400Arena^000000 at the north";
+					mes "is a perfect place to";
+					mes "test your combat capabilities.";
+					mes "Let me mark its location";
+					mes "on your mini-map.";
+					mes "Would you like to check any other locations?";
+					viewpoint 1,128,255,2,0xFF5400;
+					next;
+					break;
+				case 4:
+					mes "[Izlude Guide]";
+					mes "Let me mark the location of the ^006400Tool Shop^000000";
+					mes "on your mini-map.";
+					mes "Would you like to check any other locations?";
+					viewpoint 1,148,148,3,0xAAFF00;
+					next;
+					break;
+				case 5:
+					mes "[Izlude Guide]";
+					mes "Let me mark the location of the ^7F3300Weapon & Armor Shop^000000";
+					mes "on your mini-map.";
+					mes "Would you like to check any other locations?";
+					viewpoint 1,114,149,4,0xD2691E;
+					next;
+					break;
+				case 6:
+					mes "[Izlude Guide]";
+					mes "The Swordsman Guild is where you can ^800080change your job to Swordsman.^000000";
+					mes "Let me mark its location";
+					mes "on your mini-map.";
+					mes "Would you like to check any other locations?";
+					viewpoint 1,52,140,5,0xDA70D6;
+					next;
+					break;
+				case 7:
+					mes "[Izlude Guide]";
+					mes "Let me mark the location of the ^B9062FSwordsman Association^000000";
+					mes "on your mini-map.";
+					mes "Would you like to check any other locations?";
+					viewpoint 1,214,130,6,0xFF0000;
+					next;
+					break;
+				case 8:
+					set .@loop,0;
+					break;
+				}
+			}
+			break;
+		case 2:
+			set .@loop,1;
+			while (.@loop) {
+				switch(select("[ Eden Teleport Officer ]:[ Kafra Employee ]:[ Newlywed Helper ]:[ Bullet Merchant ]:[ Mercenary Guildsman ]:Previous Menu")) {
+				case 1:
+					mes "[Izlude Guide]";
+					mes "The ^0000FFEden Teleport Officer^000000";
+					mes "is currently staying inside";
+					mes "the Swordsman Guild building.";
+					mes "Let me mark his location on your mini-map.";
+					mes "Would you like to check any other locations?";
+					viewpoint 1,52,140,7,0x0A82FF;
+					next;
+					break;
+				case 2:
+					mes "[Izlude Guide]";
+					mes "Let me mark the location of the";
+					mes "^FF5400Kafra Employee^000000";
+					mes "on your mini-map.";
+					mes "Would you like to check any other locations?";
+					viewpoint 1,134,88,8,0xFF5400;
+					next;
+					break;
+				case 3:
+					mes "[Izlude Guide]";
+					mes "If you'd like to go on a honeymoon to";
+					mes "^8B4513Jawaii^000000, the paradise of newlyweds,";
+					mes "please speak to the ^B9062FNewlywed Helper^000000.";
+					mes "Would you like to check any other locations?";
+					viewpoint 1,171,185,9,0xFF0000;
+					next;
+					break;
+				case 4:
+					mes "[Izlude Guide]";
+					mes "The ^7F3300Bullet Merchants^000000 for ^7F3300Gunslingers^000000";
+					mes "is located to the east.";
+					mes "Let me mark his location";
+					mes "on your mini-map.";
+					mes "Would you like to check any other locations?";
+					viewpoint 1,171,130,10,0xD2691E;
+					next;
+					break;
+				case 5:
+					mes "[Izlude Guide]";
+					mes "Let me mark the location of ^0000FFFencer Mercenary Manager^000000 and";
+					mes "^0000FFMercenary Goods Merchant^000000";
+					mes "on your mini-map.";
+					mes "Would you like to check any other locations?";
+					viewpoint 1,48,137,11,0xDA70D6;
+					next;
+					break;
+				case 6:
+					set .@loop,0;
+					break;
+				}
+			}
+			break;
+		case 3:
+			mes "[Izlude Guide]";
+			mes "Sure, I'll remove all marks from your mini-map.";
+			mes "Is there anything else I can do for you?";
+			viewpoint 2,1,1,0,0xFFFF00;
+			viewpoint 2,1,1,1,0x000000;
+			viewpoint 2,1,1,2,0xFF0000;
+			viewpoint 2,1,1,3,0xFFFF00;
+			viewpoint 2,1,1,4,0xFFFF00;
+			viewpoint 2,1,1,5,0xFFFF00;
+			viewpoint 2,1,1,6,0xFFFF00;
+			viewpoint 2,1,1,7,0xFFFF00;
+			viewpoint 2,1,1,8,0xFFFF00;
+			viewpoint 2,1,1,9,0xFFFF00;
+			viewpoint 2,1,1,10,0xFFFF00;
+			viewpoint 2,1,1,11,0xFFFF00;
+			next;
+			break;
+		case 4:
+			mes "[Izlude Guide]";
+			mes "Enjoy your stay.";
+			mes "Bye~!";
+			close2;
+			cutin "prt_soldier",255;
+			end;
+		}
+	}
+}
+
+izlude,131,177,4	duplicate(GuideIzlude)	Guide#02izlude	105

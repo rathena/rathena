@@ -19,6 +19,7 @@
 //= 1.5a: Small fix (Falcon Taming -> Falcon Mastery) [Komurka]
 //= 1.6: Moved the Falcon Master to Hugel [Poki#3]
 //= 1.7 Updated to Aegis 10.3 standards. [L0ne_W0lf]
+//= 1.8 Added 3rd Job creature NPCs (Dragon/Gryphon) [L0ne_W0lf]
 //============================================================ 
 
 // PecoPeco Breeder (for Knights)-------------------------------------------
@@ -200,3 +201,128 @@ hu_in01,381,304,5	script	Falcon Breeder#hnt	105,{
 		close;
 	}
 }
+
+// Dragon Breeder on the Rune Knight job change map, couldn't find NPC on iRO.
+/*
+job3_rune01,88,62,5	script	Dragon Breeder	105,{
+	mes "[Dragon Breeder]";
+	if (Class == Job_Rune_Knight || Class == Job_Rune_Knight_H || Class == Job_Baby_Rune) {
+		mes "Welcome. Would you like to rent a Dragon?";
+		next;
+		switch(select("Yes:No")) {
+		case 1:
+			//if (!getskilllv("RK_DRAGONTRAINING")) {
+			if (!getskilllv("KN_RIDING")) {
+				mes "[Dragon Breeder]";
+				mes "Please learn how to ride a Dragon first.";
+				close;
+			}
+			if (checkriding()) {
+				mes "[Dragon Breeder]";
+				mes "You already have a Dragon.";
+				close;
+			}
+			setdragon;
+			close;
+		case 2:
+			mes "[Dragon Breeder]";
+			mes "I see. Then have a great day.";
+			close;
+		}
+	}
+	else {
+		mes "What are you doing here?";
+		mes "Only Rune Knights can rent a Dragon.";
+		close;
+	}
+}
+*/
+
+// Dragon/Gryphon Master
+prontera,130,213,5	script	Riding Creature Master	105,{
+	mes "[Riding Creature Master]";
+	if (Class == Job_Rune_Knight || Class == Job_Rune_Knight_H || Class == Job_Baby_Rune) {
+		mes "Welcome. Would you like to rent a Dragon?";
+		next;
+		switch(select("Yes:No")) {
+		case 1:
+			//if (!getskilllv("RK_DRAGONTRAINING")) {
+			if (!getskilllv("KN_RIDING")) {
+				mes "[Riding Creature Master]";
+				mes "Please learn how to ride a Dragon first.";
+				close;
+			}
+			if (checkriding()) {
+				mes "[Riding Creature Master]";
+				mes "You already have a Dragon.";
+				close;
+			}
+			setdragon;
+			close;
+		case 2:
+			mes "[Riding Creature Master]";
+			mes "I see. Then have a great day.";
+			close;
+		}
+	}
+/*
+	else if (Class == Job_Royal_Guard || Class == Job_Royal_Guard_H || Class == Job_Baby_Guard) {
+		mes "Welcome. Would you like to rent a Gryphon?";
+		next;
+		switch(select("Yes:No")) {
+		case 1:
+			if(!getskilllv("KN_RIDING")) {
+				mes "[Riding Creature Master]";
+				mes "Please learn how to ride a Gryphon first.";
+				close;
+			}
+			else if (checkriding()) {
+				mes "[Riding Creature Master]";
+				mes "You already have a Gryphon.";
+				close;
+			}
+			setriding;
+			close;
+		case 2:
+			mes "[Riding Creature Master]";
+			mes "I see. Then have a great day.";
+			close;
+		}
+	}
+*/
+	else {
+		mes "I'm here to provide Rune Knights and Royal Guards with riding creatures.";
+		close;
+	}
+}
+
+// Peco removing NPC
+prontera,125,208,5	script	Peco Peco Remover	105,{
+	mes "[Soldier]";
+	mes "If you're unable to dismount from a Peco Peco";
+	mes "for some unknown reason,";
+	mes "please feel free to use my services.";
+	if (checkriding()) {
+		next;
+		mes "[Soldier]";
+		mes "You're riding a Peco Peco.";
+		mes "Would you like to dismount?";
+		next;
+		switch(select("Yes:No")) {
+		case 1:
+			setriding 0;
+			mes "[Soldier]";
+			mes "Say, how does it feel to";
+			mes "step on the ground on your own";
+			mes "feet again?";
+			close;
+		case 2:
+			mes "[Soldier]";
+			mes "I see. Please feel free to ask me";
+			mes "if you change your mind.";
+			close;
+		}
+	}
+	close;
+}
+

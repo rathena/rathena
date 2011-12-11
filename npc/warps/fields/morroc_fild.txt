@@ -35,7 +35,7 @@ moc_fild02,67,342,0	warp	mocf02-3	11,3,moc_fild01,315,25
 moc_fild02,71,18,0	warp	mocf05	4,2,moc_fild13,146,365
 moc_fild02,92,342,0	warp	mocf02-4	11,3,moc_fild01,315,25
 moc_fild03,17,37,0	warp	mocf06	2,4,moc_fild13,305,49
-moc_fild03,179,16,0	warp	mocf013	4,2,pay_fild11,38,327
+//moc_fild03,179,16,0	warp	mocf013	4,2,pay_fild11,38,327
 moc_fild03,303,170,0	warp	mocf014	2,7,pay_fild01,17,152
 moc_fild03,70,341,0	warp	mocf04-1	5,2,moc_fild02,332,23
 //moc_fild04,14,122,0	warp	mocf07-1	1,11,moc_fild05,378,119

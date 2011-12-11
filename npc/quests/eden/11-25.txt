@@ -1,0 +1,575 @@
+//===== eAthena Script ======================================= 
+// Eden Group Quests - Repeatable experience quests [11-25]
+//===== By: ================================================== 
+//= L0ne_W0lf
+//===== Current Version: ===================================== 
+//= 1.0
+//===== Compatible With: ===================================== 
+//= eAthena SVN
+//===== Description: ========================================= 
+//= [AEGIS Conversion]
+//===== Additional Comments: ================================= 
+//= 1.0 First Version.
+//============================================================
+
+moc_para01,36,38,3	script	Mission [11 - 25]#Tuto	857,{
+	if (countitem(6219) > 0) {
+		set .@hun1125_1,checkquest(11114,HUNTING);
+		set .@hun1125_2,checkquest(11115,HUNTING);
+		set .@hun1125_3,checkquest(11116,HUNTING);
+		set .@hun1125_4,checkquest(11117,HUNTING);
+		set .@hun1125_5,checkquest(11118,HUNTING);
+		set .@hun1125_6,checkquest(11119,HUNTING);
+		set .@hun1125_7,checkquest(11120,HUNTING);
+		set .@hun1125_8,checkquest(11121,HUNTING);
+		set .@hun1125_9,checkquest(11122,HUNTING);
+		set .@hun1125_10,checkquest(11123,HUNTING);
+		set .@time1125_1,checkquest(11124,PLAYTIME);
+		set .@time1125_2,checkquest(11125,PLAYTIME);
+		set .@time1125_3,checkquest(11126,PLAYTIME);
+		set .@time1125_4,checkquest(11127,PLAYTIME);
+		set .@time1125_5,checkquest(11128,PLAYTIME);
+		set .@time1125_6,checkquest(11129,PLAYTIME);
+		set .@time1125_7,checkquest(11130,PLAYTIME);
+		set .@time1125_8,checkquest(11131,PLAYTIME);
+		set .@time1125_9,checkquest(11132,PLAYTIME);
+		set .@time1125_10,checkquest(11133,PLAYTIME);
+		if (.@time1125_1 == 2)
+			erasequest 11124;
+		if (.@time1125_2 == 2)
+			erasequest 11125;
+		if (.@time1125_3 == 2)
+			erasequest 11126;
+		if (.@time1125_4 == 2)
+			erasequest 11127;
+		if (.@time1125_5 == 2)
+			erasequest 11128;
+		if (.@time1125_6 == 2)
+			erasequest 11129;
+		if (.@time1125_7 == 2)
+			erasequest 11130;
+		if (.@time1125_8 == 2)
+			erasequest 11131;
+		if (.@time1125_9 == 2)
+			erasequest 11132;
+		if (.@time1125_10 == 2)
+			erasequest 11133;
+
+		if ((.@hun1125_1 == 0) || (.@hun1125_2 == 0) || (.@hun1125_3 == 0) || (.@hun1125_4 == 0) || (.@hun1125_5 == 0) || (.@hun1125_6 == 0) || (.@hun1125_7 == 0) || (.@hun1125_8 == 0) || (.@hun1125_9 == 0) || (.@hun1125_10 == 0) || (.@hun1125_1 == 1) || (.@hun1125_2 == 1) || (.@hun1125_3 == 1) || (.@hun1125_4 == 1) || (.@hun1125_5 == 1) || (.@hun1125_6 == 1) || (.@hun1125_7 == 1) || (.@hun1125_8 == 1) || (.@hun1125_9 == 1) || (.@hun1125_10 == 1)) {
+			mes "-You can only request-";
+			mes "-one mission at a time-";
+			mes "";
+			mes "-Manager : Spikle-";
+			close;
+		}
+		else if ((.@hun1125_1 == 2) || (.@hun1125_2 == 2) || (.@hun1125_3 == 2) || (.@hun1125_4 == 2) || (.@hun1125_5 == 2) || (.@hun1125_6 == 2) || (.@hun1125_7 == 2) || (.@hun1125_8 == 2) || (.@hun1125_9 == 2) || (.@hun1125_10 == 2)) {
+			mes "-You must collect your-";
+			mes "-reward before starting-";
+			mes "-a new mission.-";
+			mes "";
+			mes "-Manager : Spikle-";
+			close;
+		}
+		else {
+			if (BaseLevel < 11) {
+				mes "-There are no tasks-";
+				mes "-open for you right now.-";
+				close;
+			}
+			else if ((BaseLevel > 10) && (BaseLevel < 26)) {
+				mes "-Mission bulletin board-";
+				mes "-for beginners.-";
+				mes "";
+				mes "-Manager : Spikle-";
+				next;
+				switch(select("Hornet Hunting:Condor Hunting:Grasshopper Legs:Worm Tail Hunting:Spore Hunting:Pest Control:Muka Hunting:Familiar Hunting:Peco Peco Hunting:Collect Poison Spores:Cancel")) {
+				case 1:
+					if ((.@time1125_1 == 0) || (.@time1125_1 == 1)) {
+						mes "-Mission, ^4d4dffHornet Hunting^000000-";
+						mes "-is already finished for today.-";
+						mes "";
+						mes "-Manager : Spikle-";
+						close;
+					}
+					else {
+						mes "-Mission 'Hornet Hunting'-";
+						mes "-Hunt 10 ^4d4dff'Hornets'^000000-";
+						mes "-at Prontera Field 5.-";
+						mes "";
+						mes "-Manager : Spikle-";
+						next;
+						switch(select("I will do this mission.:Look for other missions.")) {
+						case 1:
+							mes "-Hunt 10 ^4d4dff'Hornets'^000000-";
+							mes "-at Prontera Field 5.-";
+							setquest 11114;
+							close;
+						case 2:
+							mes "-Search for other missions.-";
+							close;
+						}
+					}
+					break;
+				case 2:
+					if ((.@time1125_2 == 0) || (.@time1125_2 == 1)) {
+						mes "-Mission, ^4d4dffCondor Hunting^000000-";
+						mes "-is already finished for today.-";
+						mes "";
+						mes "-Manager : Spikle-";
+						close;
+					}
+					else {
+						mes "-Mission 'Condor Hunting'-";
+						mes "-Hunt 20 ^4d4dff'Condors'^000000-";
+						mes "-south of Morroc.-";
+						mes "";
+						mes "-Manager : Spikle-";
+						next;
+						switch(select("I will do this mission.:Look for other missions.")) {
+						case 1:
+							mes "-Hunt 20 ^4d4dff'Condors'^000000-";
+							mes "-south of Morroc.-";
+							setquest 11115;
+							close;
+						case 2:
+							mes "-Search for other missions.-";
+							close;
+						}
+					}
+					break;
+				case 3:
+					if ((.@time1125_3 == 0) || (.@time1125_3 == 1)) {
+						mes "-Mission, ^4d4dffGrasshopper Legs^000000-";
+						mes "-is already finished for today.-";
+						mes "";
+						mes "-Manager : Spikle-";
+						close;
+					}
+					else {
+						mes "-Mission 'Grasshopper Legs'-";
+						mes "-Hunt 10 ^4d4dff'Rockers'^000000-";
+						mes "-from southwest Prontera-";
+						mes "-and bring 10 ^4d4dffGrasshopper's Legs^000000-";
+						mes "-Manager : Spikle-";
+						next;
+						switch(select("I will do this mission.:Look for other missions.")) {
+						case 1:
+							mes "-Hunt 10 ^4d4dff'Rockers'^000000-";
+							mes "-from southwest Prontera-";
+							mes "-and bring 10 ^4d4dffGrasshopper's Legs^000000-";
+							setquest 11116;
+							close;
+						case 2:
+							mes "-Search for other missions.-";
+							close;
+						}
+					}
+					break;
+				case 4:
+					if ((.@time1125_4 == 0) || (.@time1125_4 == 1)) {
+						mes "-Mission, ^4d4dffWormtail Hunting^000000-";
+						mes "-is already finished for today.-";
+						mes "";
+						mes "-Manager : Spikle-";
+						close;
+					}
+					else {
+						mes "-Mission 'Worm Tail Hunting'-";
+						mes "-Hunt 20 ^4d4dff'Worm Tails'^000000-";
+						mes "-around Payon field 2 & 6.-";
+						mes "";
+						mes "-Manager : Spikle-";
+						next;
+						switch(select("I will do this mission.:Look for other missions.")) {
+						case 1:
+							mes "-Hunt 20 ^4d4dff'Worm Tails'^000000-";
+							mes "-around Payon field 2 & 6.-";
+							setquest 11117;
+							close;
+						case 2:
+							mes "-Search for other missions.-";
+							close;
+						}
+					}
+					break;
+				case 5:
+					if ((.@time1125_5 == 0) || (.@time1125_5 == 1)) {
+						mes "-Mission, ^4d4dffSpore Hunting^000000-";
+						mes "-is already finished for today.-";
+						mes "";
+						mes "-Manager : Spikle-";
+						close;
+					}
+					else {
+						mes "-Mission 'Spore Hunting'-";
+						mes "-Hunt 30 ^4d4dff'Spores'^000000-";
+						mes "-around Payon field 2 & 6.-";
+						mes "";
+						mes "-Manager : Spikle - ";
+						next;
+						switch(select("I will do this mission.:Look for other missions.")) {
+						case 1:
+							mes "-Hunt 30 ^4d4dff'Spores'^000000-";
+							mes "-around Payon field 2 & 6.-";
+							setquest 11118;
+							close;
+						case 2:
+							mes "-Search for other missions.-";
+							close;
+						}
+					}
+					break;
+				case 6:
+					if ((.@time1125_6 == 0) || (.@time1125_6 == 1)) {
+						mes "-Mission, ^4d4dffPest Control^000000-";
+						mes "-is already finished for today.-";
+						mes "";
+						mes "-Manager : Spikle-";
+						close;
+					}
+					else {
+						mes "-Mission 'Pest Control'-";
+						mes "-Hunt 20 ^4d4dffThief Bug Eggs^000000-";
+						mes "-in the Prontera Culvert-";
+						mes "-and bring 10 ^4d4dffChrysalis^000000.-";
+						mes "-Manager : Spikle-";
+						next;
+						switch(select("I will do this mission.:Look for other missions.")) {
+						case 1:
+							mes "-Hunt 20 ^4d4dffThief Bug Eggs^000000-";
+							mes "-in the Prontera Culvert-";
+							mes "-and bring 10 ^4d4dffChrysalis^000000.-";
+							setquest 11119;
+							close;
+						case 2:
+							mes "-Search for other missions.-";
+							close;
+						}
+					}
+					break;
+				case 7:
+					if ((.@time1125_7 == 0) || (.@time1125_7 == 1)) {
+						mes "-Mission, ^4d4dffMuka Hunting^000000-";
+						mes "-is already finished for today.-";
+						mes "";
+						mes "-Manager : Spikle-";
+						close;
+					}
+					else {
+						mes "-Mission 'Muka Hunting'-";
+						mes "-Hunt 20 ^4d4dff'Muka'^000000-";
+						mes "-south of Prontera.-";
+						mes "";
+						mes "-Manager : Spikle-";
+						next;
+						switch(select("I will do this mission.:Look for other missions.")) {
+						case 1:
+							mes "-Hunt 20 ^4d4dff'Muka'^000000-";
+							mes "-south of Prontera.-";
+							setquest 11120;
+							close;
+						case 2:
+							mes "-Search for other missions.-";
+							close;
+						}
+					}
+					break;
+				case 8:
+					if ((.@time1125_8 == 0) || (.@time1125_8 == 1)) {
+						mes "-Mission, ^4d4dffFamiliar Hunting^000000-";
+						mes "-is already finished for today.-";
+						mes "";
+						mes "-Manager : Spikle-";
+						close;
+					}
+					else {
+						mes "-Mission 'Familiar Hunting'-";
+						mes "-Hunt 20 ^4d4dffFamiliar^000000-";
+						mes "-in the Prontera Culvert.-";
+						mes "";
+						mes "-Manager : Spikle-";
+						next;
+						switch(select("I will do this mission.:Look for other missions.")) {
+						case 1:
+							mes "-Hunt 20 ^4d4dffFamiliar^000000-";
+							mes "-in the Prontera Culvert.-";
+							setquest 11121;
+							close;
+						case 2:
+							mes "-Search for other missions.-";
+							close;
+						}
+					}
+					break;
+				case 9:
+					if ((.@time1125_9 == 0) || (.@time1125_9 == 1)) {
+						mes "-Mission, ^4d4dffCollect Feathers^000000-";
+						mes "-is already finished for today.-";
+						mes "";
+						mes "-Manager : Spikle-";
+						close;
+					}
+					else {
+						mes "-Mission 'Collect Feathers'-";
+						mes "-Hunt 30 ^4d4dff'Pecopeco'^000000-";
+						mes "-south of Prontera.-";
+						mes "";
+						mes "-Manager : Spikle-";
+						next;
+						switch(select("I will do this mission.:Look for other missions.")) {
+						case 1:
+							mes "-Hunt 30 ^4d4dff'Pecopeco'^000000-";
+							mes "-south of Prontera.-";
+							setquest 11122;
+							close;
+						case 2:
+							mes "-Search for other missions.-";
+							close;
+						}
+					}
+					break;
+				case 10:
+					if ((.@time1125_10 == 0) || (.@time1125_10 == 1)) {
+						mes "-Mission, ^4d4dffCollect Poison Spores^000000-";
+						mes "-is already finished for today.-";
+						mes "";
+						mes "-Manager : Spikle-";
+						close;
+					}
+					else {
+						mes "-Mission 'Collect Poison Spores'-";
+						mes "-Hunt 30 ^4d4dffPoison Spores^000000-";
+						mes "-from Geffen Tower and-";
+						mes "-bring 5 ^4d4dffPoison Spores^000000.-";
+						mes "-Manager : Spikle-";
+						next;
+						switch(select("I will do this mission.:Look for other missions.")) {
+						case 1:
+							mes "-Hunt 30 ^4d4dffPoison Spores^000000-";
+							mes "-from Geffen Tower and-";
+							mes "-bring 5 ^4d4dffPoison Spores^000000.-";
+							if (.@time1125_10 == 2) {
+								erasequest 11133;
+							}
+							setquest 11123;
+							close;
+						case 2:
+							mes "-Search for other missions.-";
+							close;
+						}
+					}
+					break;
+				case 11:
+					mes "-Stop reading bulletin board.-";
+					close;
+				}
+			}
+			else {
+				mes "-These missions are too-";
+				mes "-easy for your caliber-";
+				mes "-search for a more level-";
+				mes "-appropriate mission-";
+				close;
+			}
+		}
+	}
+	else {
+		mes "-You need to have a-";
+		mes "-^4d4dff'Eden Group Mark'^000000-";
+		mes "-to receive these missions-";
+		close;
+	}
+}
+
+moc_para01,32,30,6	script	Spikle#Tuto	914,{
+	set .@hun1125_1,checkquest(11114,HUNTING);
+	set .@hun1125_2,checkquest(11115,HUNTING);
+	set .@hun1125_3,checkquest(11116,HUNTING);
+	set .@hun1125_4,checkquest(11117,HUNTING);
+	set .@hun1125_5,checkquest(11118,HUNTING);
+	set .@hun1125_6,checkquest(11119,HUNTING);
+	set .@hun1125_7,checkquest(11120,HUNTING);
+	set .@hun1125_8,checkquest(11121,HUNTING);
+	set .@hun1125_9,checkquest(11122,HUNTING);
+	set .@hun1125_10,checkquest(11123,HUNTING);
+	if ((.@hun1125_1 == 0) || (.@hun1125_2 == 0) || (.@hun1125_3 == 0) || (.@hun1125_4 == 0) || (.@hun1125_5 == 0) || (.@hun1125_6 == 0) || (.@hun1125_7 == 0) || (.@hun1125_8 == 0) || (.@hun1125_9 == 0) || (.@hun1125_10 == 0) || (.@hun1125_1 == 1) || (.@hun1125_2 == 1) || (.@hun1125_3 == 1) || (.@hun1125_4 == 1) || (.@hun1125_5 == 1) || (.@hun1125_6 == 1) || (.@hun1125_7 == 1) || (.@hun1125_8 == 1) || (.@hun1125_9 == 1) || (.@hun1125_10 == 1)) {
+		mes "[Spikle]";
+		mes "You haven't finished your mission yet.";
+		mes "Keep up the good work. You are almost done.";
+		close;
+	}
+	if (.@hun1125_1 == 2) {
+		mes "[Spikle]";
+		mes "Hmm... let me see~";
+		mes "You have completed the 'Hornet Hunting' mission.";
+		next;
+		mes "[Spikle]";
+		mes "Good work~!!";
+		mes "Our client is so happy with your work. He will appreciate what you have done.";
+		mes "Please help us again. Thanks!";
+		erasequest 11114;
+		setquest 11124;
+		getexp 900,0;
+		close;
+	}
+	if (.@hun1125_2 == 2) {
+		mes "[Spikle]";
+		mes "Hmm... let me see~";
+		mes "You have completed the 'Condor Hunting' mission.";
+		next;
+		mes "[Spikle]";
+		mes "Good work~!!";
+		mes "Our client is so happy with your work. He will appreciate what you have done.";
+		mes "Please help us again. Thanks!";
+		erasequest 11115;
+		setquest 11125;
+		getexp 1800,0;
+		close;
+	}
+	if (.@hun1125_3 == 2) {
+		if (countitem(940) > 9) {
+			mes "[Spikle]";
+			mes "Hmm... let me see~";
+			mes "You have completed the 'Grasshopper Legs' mission.";
+			next;
+			mes "[Spikle]";
+			mes "Good work~!!";
+			mes "Our client is so happy with your work. He will appreciate what you have done.";
+			mes "Please help us again. Thanks!";
+			delitem 940,10; //Grasshopper's_Leg
+			erasequest 11116;
+			setquest 11126;
+			getexp 1400,0;
+			close;
+		}
+		else {
+			mes "[Spikle]";
+			mes "You don't have enough Grasshopper's Legs.";
+			mes "You need to bring 10 Grasshopper's Legs.";
+			close;
+		}
+	}
+	if (.@hun1125_4 == 2) {
+		mes "[Spikle]";
+		mes "Hmm... let me see~";
+		mes "You have completed the 'Worm Tail Hunting' mission.";
+		next;
+		mes "[Spikle]";
+		mes "Good work~!!";
+		mes "Our client is so happy with your work. He will appreciate what you have done.";
+		mes "Please help us again. Thanks!";
+		erasequest 11117;
+		setquest 11127;
+		getexp 2600,0;
+		close;
+	}
+	if (.@hun1125_5 == 2) {
+		mes "[Spikle]";
+		mes "Hmm... let me see~";
+		mes "You have completed the 'Spore Hunting' mission.";
+		next;
+		mes "[Spikle]";
+		mes "Good work~!!";
+		mes "Our client is so happy with your work. He will appreciate what you have done.";
+		mes "Please help us again. Thanks!";
+		erasequest 11118;
+		setquest 11128;
+		getexp 3900,0;
+		close;
+	}
+	if (.@hun1125_6 == 2) {
+		if (countitem(915) > 9) {
+			mes "[Spikle]";
+			mes "Hmm... let me see~";
+			mes "You have completed the 'Pest Control' mission.";
+			next;
+			mes "[Spikle]";
+			mes "Good work~!!";
+			mes "Our client is so happy with your work. He will appreciate what you have done.";
+			mes "Please help us again. Thanks!";
+			erasequest 11119;
+			setquest 11129;
+			getexp 2900,0;
+			close;
+		}
+		else {
+			mes "[Spikle]";
+			mes "You don't have enough Chrysalis.";
+			mes "You need to bring 10 Chrysalis.";
+			close;
+		}
+	}
+	if (.@hun1125_7 == 2) {
+		mes "[Spikle]";
+		mes "Hmm... let me see~";
+		mes "You have completed the 'Muka Hunting' mission.";
+		next;
+		mes "[Spikle]";
+		mes "Good work~!!";
+		mes "Our client is so happy with your work. He will appreciate what you have done.";
+		mes "Please help us again. Thanks!";
+		erasequest 11120;
+		setquest 11130;
+		getexp 3200,0;
+		close;
+	}
+	if (.@hun1125_8 == 2) {
+		mes "[Spikle]";
+		mes "Hmm... let me see~";
+		mes "You have completed the 'Familiar Hunting' mission.";
+		next;
+		mes "[Spikle]";
+		mes "Good work~!!";
+		mes "Our client is so happy with your work. He will appreciate what you have done.";
+		mes "Please help us again. Thanks!";
+		erasequest 11121;
+		setquest 11131;
+		getexp 3200,0;
+		close;
+	}
+	if (.@hun1125_9 == 2) {
+		mes "[Spikle]";
+		mes "Hmm... let me see~";
+		mes "You have completed the 'Peco Peco Hunting' mission.";
+		next;
+		mes "[Spikle]";
+		mes "Good work~!!";
+		mes "Our client is so happy with your work. He will appreciate what you have done.";
+		mes "Please help us again. Thanks!";
+		erasequest 11122;
+		setquest 11132;
+		getexp 5400,0;
+		close;
+	}
+	if (.@hun1125_10 == 2) {
+		if (countitem(7033) > 4) {
+			mes "[Spikle]";
+			mes "Hmm... let me see~";
+			mes "You have completed the 'Collect Poison Spores' mission.";
+			next;
+			mes "[Spikle]";
+			mes "Good work~!!";
+			mes "Our client is so happy with your work. He will appreciate what you have done.";
+			mes "Please help us again. Thanks!";
+			erasequest 11123;
+			setquest 11133;
+			getexp 6000,0;
+			close;
+		}
+		else {
+			mes "[Spikle]";
+			mes "You don't have enough Posion Spores.";
+			mes "You need to bring 5 Poison Spores.";
+			close;
+		}
+	}
+	else {
+		mes "[Spikle]";
+		mes "Are you looking a job?";
+		mes "We always have lots of work to do.";
+		next;
+		mes "[Spikle]";
+		mes "Why don't you look around and find some interesting tasks?";
+		close;
+	}
+}

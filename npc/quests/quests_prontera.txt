@@ -2662,7 +2662,7 @@ prt_church,185,106,3	script	Father Bamph	60,{
 		mes "adventurer. May safety accompany you on all of your journeys.";
 		if (prt_curse == 43) set prt_curse,44;
 		else set prt_curse,54;
-		getexp 1600000,0;
+		getexp 160000,0;
 		close;
 	}
 	else if (prt_curse > 43 && prt_curse < 50 && !aru_monas) {
@@ -2993,7 +2993,7 @@ prt_church,184,110,3	script	Father Biscuss	60,{
 		mes "Church, I want to thank";
 		mes "you for all of your help.";
 		set prt_curse,36;
-		getexp 1600000,0;
+		getexp 160000,0;
 		close;
 	}
 	else if (prt_curse == 36) {

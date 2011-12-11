@@ -1291,7 +1291,7 @@ lou_in02,265,69,5	script	Doctor#lyang	814,{
 			delitem 7252,1; //Herb_Medicine
 			set ch_par,10;
 			getitem 679,2; //Gold_Pill
-			getexp 10000,0;
+			getexp 1000,0;
 			next;
 			mes "[Hua Tuo]";
 			mes "Well then,";
@@ -1408,7 +1408,7 @@ lou_in02,265,69,5	script	Doctor#lyang	814,{
 			delitem 7252,1; //Herb_Medicine
 			set ch_par,10;
 			getitem 679,2; //Gold_Pill
-			getexp 10000,0;
+			getexp 1000,0;
 			next;
 			mes "[Hua Tuo]";
 			mes "Well then, I will see you around. Once again, I'd like to thank you for your help.";
@@ -1462,7 +1462,7 @@ lou_in02,265,69,5	script	Doctor#lyang	814,{
 			delitem 7252,1; //Herb_Medicine
 			set ch_par,18;
 			getitem 679,5; //Gold_Pill
-			getexp 30000,0;
+			getexp 3000,0;
 			next;
 			mes "[Hua Tuo]";
 			mes "However, please remember not to take more than the recommended dosage for the pills I have given you. Even medicine, in the wrong doses, can become poison to the body.";
@@ -3341,31 +3341,31 @@ lou_in02,123,39,4	script	Poison King#lou	824,{
 		next;
 		set ch_poison,20;
 		if (BaseLevel < 56) {
-			getexp 9000,0;
+			getexp 900,0;
 		}
 		else if (BaseLevel > 55 && BaseLevel < 61) {
-			getexp 10500,0;
+			getexp 1050,0;
 		}
 		else if (BaseLevel > 60 && BaseLevel < 66) {
-			getexp 18684,0;
+			getexp 1868,0;
 		}
 		else if (BaseLevel > 65 && BaseLevel < 71) {
-			getexp 27411,0;
+			getexp 2741,0;
 		}
 		else if (BaseLevel > 70 && BaseLevel < 76) {
-			getexp 70757,0;
+			getexp 7076,0;
 		}
 		else if (BaseLevel > 75 && BaseLevel < 81) {
-			getexp 130246,0;
+			getexp 13025,0;
 		}
 		else if (BaseLevel > 80 && BaseLevel < 86) {
-			getexp 150340,0;
+			getexp 15034,0;
 		}
 		else if (BaseLevel > 85 && BaseLevel < 91) {
-			getexp 182052,0;
+			getexp 18205,0;
 		}
 		else if (BaseLevel > 90) {
-			getexp 406786,0;
+			getexp 40679,0;
 		}
 		mes "^3355FFThen...";
 		mes "Everything blacks out...^000000";
@@ -3992,31 +3992,31 @@ lou_in02,253,45,0	script	Employee#poison	822,{
 		mes "^3355FFThe nasty taste lingers in your mouth, but then you feel a great warmth flowing throughout your body. Eventually, you pass out.^000000";
 		next;
 		if (BaseLevel < 56) {
-			getexp 8909,0;
+			getexp 891,0;
 		}
 		else if (BaseLevel > 55 && BaseLevel < 61) {
-			getexp 10213,0;
+			getexp 1021,0;
 		}
 		else if (BaseLevel > 60 && BaseLevel < 66) {
-			getexp 17684,0;
+			getexp 1768,0;
 		}
 		else if (BaseLevel > 65 && BaseLevel < 71) {
-			getexp 25411,0;
+			getexp 2541,0;
 		}
 		else if (BaseLevel > 70 && BaseLevel < 76) {
-			getexp 68757,0;
+			getexp 6876,0;
 		}
 		else if (BaseLevel > 75 && BaseLevel < 81) {
-			getexp 128246,0;
+			getexp 12825,0;
 		}
 		else if (BaseLevel > 80 && BaseLevel < 86) {
-			getexp 142340,0;
+			getexp 14234,0;
 		}
 		else if (BaseLevel > 85 && BaseLevel < 91) {
-			getexp 152052,0;
+			getexp 15205,0;
 		}
 		else if (BaseLevel > 90) {
-			getexp 366786,0;
+			getexp 36679,0;
 		}
 		warp "louyang",270,136;
 		end;

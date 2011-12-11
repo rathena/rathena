@@ -4566,7 +4566,7 @@ mosk_in,131,92,3	script	Csar Alexsay III#npc	965,{
 					mes "[Prime Minister Dmitree]";
 					mes "Even though I regard as your effort for the time so, award you. Take it and go out.";
 					getitem 12702,1;
-					getexp 500000,0;
+					getexp 50000,0;
 					set mos_whale_edq,39;
 					close;
 				}
@@ -4594,7 +4594,7 @@ mosk_in,131,92,3	script	Csar Alexsay III#npc	965,{
 				mes "[Prime Minister Dmitree]";
 				mes "Even though I regard as your effort for the time so, award you. Take it.";
 				getitem 12702,1;
-				getexp 700000,0;
+				getexp 70000,0;
 				set mos_whale_edq,40;
 				close;
 			}else{
@@ -4678,7 +4678,7 @@ mosk_in,131,92,3	script	Csar Alexsay III#npc	965,{
 				mes "in his palace. I will reward your";
 				mes "efforts, in the name of the Csar.";
 				getitem 617,1;
-				getexp 1200000,0;
+				getexp 120000,0;
 				set mos_whale_edq,41;
 				close;
 			}else{
@@ -5267,7 +5267,7 @@ mosk_in,144,279,5	script	Gallina#mos	959,{
 		mes "Well, now I have to get to work!";
 		mes "I'll make you my hotcakes someday. Please visit me later";
 		set mos_swan,100;
-		getexp 1000000,0;
+		getexp 100000,0;
 		close;
 	}else{
 		mes "[Gallina]";
@@ -11043,31 +11043,31 @@ mosk_dun01,45,259,0	script	Wall#rus04	111,{
 				getitem 12098,1;
 			}
 			if (BaseLevel < 56) {
-				getexp 13000,3500;
+				getexp 1300,350;
 			}
 			else if (BaseLevel > 55 && BaseLevel < 61) {
-				getexp 24600,6150;
+				getexp 2460,615;
 			}
 			else if (BaseLevel > 60 && BaseLevel < 66) {
-				getexp 42420,10605;
+				getexp 4242,1061;
 			}
 			else if (BaseLevel > 65 && BaseLevel < 71) {
-				getexp 64892,16223;
+				getexp 6489,1622;
 			}
 			else if (BaseLevel > 70 && BaseLevel < 76) {
-				getexp 164908,41227;
+				getexp 16491,4123;
 			}
 			else if (BaseLevel > 75 && BaseLevel < 81) {
-				getexp 276292,69073;
+				getexp 27629,6907;
 			}
 			else if (BaseLevel > 80 && BaseLevel < 86) {
-				getexp 340408,85102;
+				getexp 34041,8510;
 			}
 			else if (BaseLevel > 85 && BaseLevel < 91) {
-				getexp 418460,104615;
+				getexp 41846,10462;
 			}
-			else if (BaseLevel > 90 && BaseLevel < 99) {
-				getexp 888140,222035;
+			else if (BaseLevel > 90 && BaseLevel < 150) {
+				getexp 88814,22204;
 			}
 			else {
 				getitem 617,1;
@@ -11781,31 +11781,31 @@ moscovia,206,81,0	script	Vassili Grandpapa#rus07	712,{
 				set rhea_rus_ring,10;
 				getitem 7877,1;
 				if (BaseLevel < 56) {
-					getexp 4700,0;
+					getexp 470,0;
 				}
 				else if (BaseLevel > 55 && BaseLevel < 61) {
-					getexp 6150,0;
+					getexp 615,0;
 				}
 				else if (BaseLevel > 60 && BaseLevel < 66) {
-					getexp 10605,0;
+					getexp 1061,0;
 				}
 				else if (BaseLevel > 65 && BaseLevel < 71) {
-					getexp 16223,0;
+					getexp 1622,0;
 				}
 				else if (BaseLevel > 70 && BaseLevel < 76) {
-					getexp 41227,0;
+					getexp 4123,0;
 				}
 				else if (BaseLevel > 75 && BaseLevel < 81) {
-					getexp 69073,0;
+					getexp 6907,0;
 				}
 				else if (BaseLevel > 80 && BaseLevel < 86) {
-					getexp 85102,0;
+					getexp 8510,0;
 				}
 				else if (BaseLevel > 85 && BaseLevel < 91) {
-					getexp 104615,0;
+					getexp 10462,0;
 				}
 				else if (BaseLevel > 90 && BaseLevel < 99) {
-					getexp 222035,0;
+					getexp 22204,0;
 				}
 				else {
 					getitem 607,1;
@@ -12138,31 +12138,31 @@ moscovia,213,216,3	script	Ryubaba#rus08	960,{
 				set rhea_rus_ring,9;
 				getitem 7877,1;
 				if (BaseLevel < 56) {
-					getexp 4700,0;
+					getexp 470,0;
 				}
 				else if (BaseLevel > 55 && BaseLevel < 61) {
-					getexp 6150,0;
+					getexp 615,0;
 				}
 				else if (BaseLevel > 60 && BaseLevel < 66) {
-					getexp 10605,0;
+					getexp 1061,0;
 				}
 				else if (BaseLevel > 65 && BaseLevel < 71) {
-					getexp 16223,0;
+					getexp 1622,0;
 				}
 				else if (BaseLevel > 70 && BaseLevel < 76) {
-					getexp 41227,0;
+					getexp 4123,0;
 				}
 				else if (BaseLevel > 75 && BaseLevel < 81) {
-					getexp 69073,0;
+					getexp 6907,0;
 				}
 				else if (BaseLevel > 80 && BaseLevel < 86) {
-					getexp 85102,0;
+					getexp 8510,0;
 				}
 				else if (BaseLevel > 85 && BaseLevel < 91) {
-					getexp 104615,0;
+					getexp 10462,0;
 				}
 				else if (BaseLevel > 90 && BaseLevel < 99) {
-					getexp 222035,0;
+					getexp 22204,0;
 				}
 				else{
 					getitem 607,1;

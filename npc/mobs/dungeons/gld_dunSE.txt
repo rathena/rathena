@@ -12,18 +12,18 @@
 //============================================================
 
 //==================================================
-// arug_dun01 - Arunafeltz Guild Dungeon
-//==================================================
-arug_dun01,0,0,0,0	monster	Banshee Master	1974,22,0,0,0
-arug_dun01,0,0,0,0	monster	Necromancer	1870,18,0,0,0
-arug_dun01,0,0,0,0	monster	Beholder Master	1975,17,0,0,0
-arug_dun01,0,0,0,0	monster	Fanat	1797,17,0,0,0
-arug_dun01,0,0,0,0	monster	Aunoe	1796,17,0,0,0
-
-//==================================================
-// schg_dun01 - Schwartzvald Guild Dungeon
+// schg_dun01 - Subterranean Guild Dungeon
 //==================================================
 schg_dun01,0,0,0,0	monster	Hell Apocalypse	1978,20,0,0,0
 schg_dun01,0,0,0,0	monster	Zakudam	1979,20,0,0,0
-schg_dun01,0,0,0,0	monster	Heavy Metaling	1977,15,0,0,0
-schg_dun01,0,0,0,0	monster	Cobalt Mineral	1976,15,0,0,0
+schg_dun01,0,0,0,0	monster	Heavy Metaling	1977,15,5000,0,0
+schg_dun01,0,0,0,0	monster	Cobalt Mineral	1976,15,5000,0,0
+
+//==================================================
+// arug_dun01 - Subterranean Guild Dungeon
+//==================================================
+arug_dun01,0,0,0,0	monster	Banshee Master	1974,22,0,0,0
+arug_dun01,0,0,0,0	monster	Beholder master	1975,22,5000,0,0
+arug_dun01,0,0,0,0	monster	Aunoe	1796,22,5000,0,0
+arug_dun01,0,0,0,0	monster	Necromancer	1870,18,0,0,0
+arug_dun01,0,0,0,0	monster	Fanat	1797,5,5000,0,0

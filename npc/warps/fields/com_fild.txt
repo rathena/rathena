@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Nana
 //===== Current Version: =====================================
-//= 1.1
+//= 1.2
 //===== Compatible With: =====================================
 //= Any Athena Version
 //===== Description: =========================================
@@ -11,6 +11,7 @@
 //= Warp Points for Comodo Fields
 //===== Additional Comments: =================================
 //= 1.1 Rescripted to Aegis 10.3 Standards. [L0ne_W0lf]
+//= 1.2 Renewal warp adjustments.
 //============================================================
 
 cmd_fild01,222,24,0	warp	cmd_fild01-1	1,1,cmd_fild02,222,372
@@ -22,14 +23,14 @@ cmd_fild02,358,95,0	warp	cmd_fild02-3	1,1,cmd_fild04,35,94
 cmd_fild03,23,269,0	warp	cmd_fild03-1	1,1,cmd_fild01,359,260
 cmd_fild03,23,68,0	warp	cmd_fild03-2	1,1,cmd_fild01,359,76
 cmd_fild03,181,17,0	warp	cmd_fild03-3	1,1,cmd_fild04,181,367
-cmd_fild03,384,165,0	warp	cmd_fild03-4	1,1,cmd_fild05,26,161
+//cmd_fild03,384,165,0	warp	cmd_fild03-4	1,1,cmd_fild05,26,161
 cmd_fild04,21,275,0	warp	cmd_fild04-1	1,1,cmd_fild02,378,264
 cmd_fild04,31,92,0	warp	cmd_fild04-2	1,1,cmd_fild02,351,92
 cmd_fild04,376,287,0	warp	cmd_fild04-3	1,1,cmd_fild06,26,288
 cmd_fild04,180,372,0	warp	cmd_fild04-4	1,1,cmd_fild03,183,23
-cmd_fild05,21,163,0	warp	cmd_fild05-1	1,1,cmd_fild03,377,167
-cmd_fild05,148,19,0	warp	cmd_fild05-2	1,1,cmd_fild06,150,374
-cmd_fild06,150,380,0	warp	cmd_fild06-3	1,1,cmd_fild05,146,27
+//cmd_fild05,21,163,0	warp	cmd_fild05-1	1,1,cmd_fild03,377,167
+//cmd_fild05,148,19,0	warp	cmd_fild05-2	1,1,cmd_fild06,150,374
+//cmd_fild06,150,380,0	warp	cmd_fild06-3	1,1,cmd_fild05,146,27
 cmd_fild06,21,285,0	warp	cmd_fild06-4	1,1,cmd_fild04,371,288
 cmd_fild06,151,27,0	warp	cmd_fild06-5	1,1,cmd_fild07,147,370
 cmd_fild06,368,96,0	warp	cmd_fild06-6	1,1,cmd_fild08,25,102

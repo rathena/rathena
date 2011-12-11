@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Nana (1.0), Sara
 //===== Current Version: =====================================
-//= 1.2
+//= 1.3
 //===== Compatible With: =====================================
 //= Any Athena Version; RO Episode 5+
 //===== Description: =========================================
@@ -11,6 +11,7 @@
 //===== Additional Comments: =================================
 //= 1.1 - Updated for the new Yuno Fields
 //= 1.2 New field update - Hugel Field by Sara - Version 1
+//= 1.3 Renewal warp adjustments.
 //============================================================
 
 //= Yuno Field ===============================================
@@ -57,8 +58,8 @@ yuno_fild08,74,376,0	warp	newjun12	1,1,yuno_fild02,70,25
 yuno_fild02,70,23,0	warp	newjun12a	1,1,yuno_fild08,74,374
 yuno_fild08,286,386,0	warp	newjun13	1,1,yuno_fild02,294,26
 yuno_fild02,294,24,0	warp	newjun13a	1,1,yuno_fild08,286,384
-yuno_fild04,42,369,0	warp	newjun14	1,1,yuno_fild05,59,30
-yuno_fild05,59,28,0	warp	newjun14a	1,1,yuno_fild04,42,367
+//yuno_fild04,42,369,0	warp	newjun14	1,1,yuno_fild05,59,30
+//yuno_fild05,59,28,0	warp	newjun14a	1,1,yuno_fild04,42,367
 
 
 //= Al de Baran <-> Yuno Connection ==========================
@@ -67,23 +68,23 @@ yuno_fild01,208,17,0	warp	yunfild-alde	1,1,aldebaran,140,242
 
 //= Hugel Field
 //= Version 1
-yuno_fild05,372,325,0	warp	hu001	1,1,yuno_fild06,42,319
-yuno_fild06,40,319,0	warp	hu001a	1,1,yuno_fild05,370,325
-yuno_fild06,217,27,0	warp	hu002	1,1,yuno_fild03,214,381
-yuno_fild03,214,383,0	warp	hu002a	1,1,yuno_fild06,217,29
-yuno_fild06,369,136,0	warp	hu003	1,1,hu_fild04,28,126
-hu_fild04,26,126,0	warp	hu003a	1,1,yuno_fild06,367,136
-hu_fild04,121,26,0	warp	hu004	1,1,yuno_fild02,118,374
-yuno_fild02,118,376,0	warp	hu004a	1,1,hu_fild04,121,28
-yuno_fild06,149,369,0	warp	hu005	1,1,hu_fild01,139,37
-hu_fild01,139,35,0	warp	hu005a	1,1,yuno_fild06,151,369
-hu_fild04,381,187,0	warp	hu006	1,1,hu_fild05,34,202
-hu_fild05,32,202,0	warp	hu006a	1,1,hu_fild04,379,187
-hu_fild05,91,42,0	warp	hu007	1,1,hu_fild07,80,369
-hu_fild07,80,371,0	warp	hu007a	1,1,hu_fild05,91,44
-hu_fild07,35,351,0	warp	hu008	1,1,yuno_fild02,384,338
-yuno_fild02,384,340,0	warp	hu008a	1,1,hu_fild07,37,351
-hu_fild07,56,36,0	warp	hu009	1,1,yuno_fild09,47,375
-yuno_fild09,47,377,0	warp	hu009a	1,1,hu_fild07,56,38
-hu_fild07,226,36,0	warp	hu010	1,1,yuno_fild09,220,372
-yuno_fild09,220,374,0	warp	hu010a	1,1,hu_fild07,226,38
+//yuno_fild05,370,321,0	warp	hu001	1,1,yuno_fild06,48,322
+//yuno_fild06,41,319,0	warp	hu001a	1,1,yuno_fild05,366,319
+yuno_fild06,214,27,0	warp	hu002	1,1,yuno_fild03,215,375
+yuno_fild03,215,382,0	warp	hu002a	1,1,yuno_fild06,218,33
+yuno_fild06,369,132,0	warp	hu003	1,1,hu_fild04,34,126
+hu_fild04,27,126,0	warp	hu003a	1,1,yuno_fild06,362,132
+hu_fild04,122,27,0	warp	hu004	1,1,yuno_fild02,114,370
+yuno_fild02,117,375,0	warp	hu004a	1,1,hu_fild04,122,35
+yuno_fild06,151,370,0	warp	hu005	1,1,hu_fild01,135,42
+hu_fild01,141,36,0	warp	hu005a	1,1,yuno_fild06,156,368
+hu_fild04,380,183,0	warp	hu006	1,1,hu_fild05,39,206
+hu_fild05,33,198,0	warp	hu006a	1,1,hu_fild04,373,181
+//hu_fild05,89,43,0	warp	hu007	1,1,hu_fild07,80,365
+//hu_fild07,81,370,0	warp	hu007a	1,1,hu_fild05,89,50
+//hu_fild07,36,352,0	warp	hu008	1,1,yuno_fild02,378,336
+//yuno_fild02,383,339,0	warp	hu008a	1,1,hu_fild07,42,351
+//hu_fild07,57,37,0	warp	hu009	1,1,yuno_fild09,48,370
+//yuno_fild09,48,376,0	warp	hu009a	1,1,hu_fild07,58,42
+//hu_fild07,226,38,0	warp	hu010	1,1,yuno_fild09,220,368
+//yuno_fild09,220,373,0	warp	hu010a	1,1,hu_fild07,224,43

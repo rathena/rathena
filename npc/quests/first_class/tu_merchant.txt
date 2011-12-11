@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Fix up by Jukka
 //===== Current Version: ===================================== 
-//= 1.2
+//= 1.3
 //===== Compatible With: ===================================== 
 //= eAthena SVN (Testet in Trunk 88xx)
 //===== Description: ========================================= 
@@ -13,6 +13,7 @@
 //= 1.1 Fixed bugs, optimized [Lupus] 1.2 fixed Weight check
 //=	TODO: Test, add missing misceffects
 //= 1.2 Fixed experience gains to match upcoming rate adjustments. [SinSloth]
+//= 1.3 Misc. updates. [L0ne_W0lf]
 //============================================================ 
 
 
@@ -26,7 +27,7 @@ alberta_in,70,51,5	script	Guarnien	98,{
 		mes "on your adventures...";
 		next;
 		mes "[Guarnien]";
-		mes "However, what I have to teach would only benefit Merchants. Trading and monkey making are my areas of expertise. If you have any Merchant friends, send them to me.";
+		mes "However, what I have to teach would only benefit Merchants. Trading and money making are my areas of expertise. If you have any Merchant friends, send them to me.";
 		if(Class == Job_Merchant_High){
 			next;
 			mes "[Guarnien]";
@@ -54,20 +55,21 @@ alberta_in,70,51,5	script	Guarnien	98,{
 		mes "you learned";
 		mes "about Vending?";
 		next;
-		set @chk_vend, getskilllv("MC_VENDING");
-		if((@chk_vend > 3) && (@chk_vend < 10)){
+		set .@chk_vend, getskilllv("MC_VENDING");
+		if((.@chk_vend > 3) && (.@chk_vend < 10)){
 			mes "[Guarnien]";
 			mes "Excellent!";
 			mes "You've taught yourself well. Here, you've earned this little reward~";
 			set tu_merchant, 17;
-			getexp 1860,604;
+			completequest 8240;
+			getexp 186,43;
 			next;
-		} else if(@chk_vend == 10){
+		} else if(.@chk_vend == 10){
 			mes "[Guarnien]";
 			mes "Oh, I see that you're very serious about being a Merchant. I'm proud that you've managed to master this skill! Here, you deserve this reward!";
 			set tu_merchant, 17;
-			getexp 1990,699;
-			//misceffect EF_HIT5;
+			completequest 8240;
+			getexp 199,69;
 			next;
 		} else {
 			mes "[Guarnien]";
@@ -102,8 +104,9 @@ alberta_in,70,51,5	script	Guarnien	98,{
 		mes "The Vending skill is an active skill which allows you to open your own shop where you stand. Vending allows you to do real business with other people.";
 		next;
 		mes "[Guarnien]";
-		mes "However, you can only vend items that are stored in your PushCart, so you'll need one of those. The maximum price you can set for";
-		mes "each item is 10 million Zeny.";
+		mes "However, you can only vend items that are stored in your PushCart,";
+		mes "so you'll need one of those. The maximum price you can set for";
+		mes "each item is 99,990,000 Zeny.";
 		next;
 		mes "[Guarnien]";
 		mes "Basically, you've got to learn the Push Cart skill first before you can learn the Vending skill.";
@@ -116,15 +119,15 @@ alberta_in,70,51,5	script	Guarnien	98,{
 		mes "to vend a total of 3 items at one time. Each time you level up the Vending skill, the total number of items you can vend will";
 		mes "increase by one.";
 		next;
-		set @chk_vend, getskilllv("MC_VENDING");
-		if((@chk_vend > 3) && (@chk_vend < 10)){
+		set .@chk_vend, getskilllv("MC_VENDING");
+		if((.@chk_vend > 3) && (.@chk_vend < 10)){
 			mes "[Guarnien]";
 			mes "But I see that you must already know that, huh? Well, seeing as you're so clever, I think you've earned this little prize~";
 			set tu_merchant, 17;
-			getexp 1860,604;
-			//misceffect EF_HIT5;
+			completequest 8239;
+			getexp 186,60;
 			next;
-		} else if(@chk_vend == 10){
+		} else if(.@chk_vend == 10){
 			mes "[Guarnien]";
 			mes "But it looks like I just put my foot in my mouth. I'm sorry, I didn't notice that you already mastered the Vending skill...";
 			next;
@@ -135,13 +138,16 @@ alberta_in,70,51,5	script	Guarnien	98,{
 			mes "little reward for";
 			mes "all your efforts~";
 			set tu_merchant, 17;
-			getexp 1990,699;
-			//misceffect EF_HIT5;
+			completequest 8239;
+			getexp 199,69;
+
 			next;
 		} else {
 			mes "[Guarnien]";
 			mes "For your final assignment, I will ask you to learn the Vending skill up to Skill Level 4. Of course, once you do, I'll give you a little reward. I'll be waiting, so do your best~";
 			set tu_merchant, 16;
+			erasequest 8239;
+			setquest 8240;
 			close;
 		}
 	
@@ -166,8 +172,8 @@ alberta_in,70,51,5	script	Guarnien	98,{
 		mes "learned Push Cart up";
 		mes "to Level 4 like I asked?";
 		next;
-		set @chk_cart, getskilllv("MC_PUSHCART");
-		if(@chk_cart > 3 && @chk_cart < 10){
+		set .@chk_cart, getskilllv("MC_PUSHCART");
+		if(.@chk_cart > 3 && .@chk_cart < 10){
 			mes "[Guarnien]";
 			mes "Well done~";
 			mes "You've been a very";
@@ -175,19 +181,21 @@ alberta_in,70,51,5	script	Guarnien	98,{
 			mes "You deserve a little";
 			mes "reward for your effort~";
 			set tu_merchant, 15;
-			getexp 1620,520;
-			//misceffect EF_HIT5;
+			erasequest 8238;
+			setquest 8239;
+			getexp 162,52;
 			next;
 			mes "[Guarnien]";
 			mes "Next time, I'll talk about the skill that sets Merchants apart from all the other classes: ^871F78Vending^000000. So don't miss it!";
 			close;
-		} else if(@chk_cart == 10){
+		} else if(.@chk_cart == 10){
 			mes "[Guarnien]";
 			mes "Excellent!";
 			mes "You've actually went above and beyond mastered the Push Cart skill. Great work!";
 			set tu_merchant, 15;
-			getexp 1860,604;
-			//misceffect EF_HIT5;
+			erasequest 8238;
+			setquest 8239;
+			getexp 186,60;
 			next;
 			mes "[Guarnien]";
 			mes "Next time, I'll talk about the skill that sets Merchants apart from all the other classes: ^871F78Vending^000000. So don't miss it!";
@@ -221,27 +229,30 @@ alberta_in,70,51,5	script	Guarnien	98,{
 		mes "the level of the Push Cart skill, your movement speed will slowly be restored. With Push Cart Level 10, a PushCart won't slow you";
 		mes "down at all!";
 		next;
-		set @chk_cart, getskilllv("MC_PUSHCART");
-		if(@chk_cart > 3 && @chk_cart < 10){
+		set .@chk_cart, getskilllv("MC_PUSHCART");
+		if(.@chk_cart > 3 && .@chk_cart < 10){
 			mes "[Guarnien]";
 			mes "Ah, and I see that you've been focusing on learning Push Cart. Although you might still have a problem with your movement";
 			mes "speed, it shouldn't be a big deal.";
 			mes "Well done~";
 			set tu_merchant, 15;
-			getexp 1620,520;
-			//misceffect EF_HIT5;
+			erasequest 8237;
+			setquest 8238;
+			getexp 162,52;
 			next;
 			mes "[Guarnien]";
 			mes "Next time, I'll talk about the skill that sets Merchants apart from all the other classes: ^871F78Vending^000000. So don't miss it!";
 			close;
-		} else if(@chk_cart == 10){
+		} else if(.@chk_cart == 10){
 			mes "[Guarnien]";
 			mes "Wonderful! You've already";
 			mes "mastered the Push Cart skill.";
 			mes "You truly deserve a little bit of a reward~";
 			set tu_merchant, 15;
-			getexp 1860,602;
-			//misceffect EF_HIT5;
+			erasequest 8237;
+			setquest 8238;
+			getexp 186,60;
+
 			next;
 			mes "[Guarnien]";
 			mes "Next time, I'll talk about the skill that sets Merchants apart from all the other classes: ^871F78Vending^000000. So don't miss it!";
@@ -263,8 +274,8 @@ alberta_in,70,51,5	script	Guarnien	98,{
 		mes "with learning that";
 		mes "^871F78Over Charge^000000 skill?";
 		next;
-		set @chk_over, getskilllv("MC_OVERCHARGE");
-		if(@chk_over > 3 && @chk_over < 10){
+		set .@chk_over, getskilllv("MC_OVERCHARGE");
+		if(.@chk_over > 3 && .@chk_over < 10){
 			mes "[Guarnien]";
 			mes "Nice work!";
 			mes "I can tell that";
@@ -272,21 +283,23 @@ alberta_in,70,51,5	script	Guarnien	98,{
 			mes "as I asked. Please,";
 			mes "take this little reward~";
 			set tu_merchant, 13;
-			getexp 1260,272;
-			//misceffect EF_HIT5;
+			erasequest 8236;
+			setquest 8237;
+			getexp 126,27;
 			next;
 			mes "[Guarnien]";
 			mes "Next time, I'll discuss the Push Cart skill. Be ready for this lecture, as Push Cart is one of the more important skills for a Merchant.";
 			close;
-		} else if(@chk_over == 10){
+		} else if(.@chk_over == 10){
 			mes "[Guarnien]";
 			mes "Whoa...";
 			mes "You actually";
 			mes "mastered Over Charge?";
 			mes "Most impressive! You deserve a small reward for your work!";
 			set tu_merchant, 13;
-			getexp 1420,336;
-			//misceffect EF_HIT5;
+			erasequest 8236;
+			setquest 8237;
+			getexp 142,33;
 			next;
 			mes "[Guarnien]";
 			mes "Next time, I'll discuss the Push Cart skill. Be ready for this lecture, as Push Cart is one of the more important skills for a Merchant.";
@@ -313,24 +326,26 @@ alberta_in,70,51,5	script	Guarnien	98,{
 		mes "[Guarnien]";
 		mes "Over Charge allows you to sell items to NPC shops for more Zeny. The higher your Over Charge Skill Level, the more Zeny you'll receive for items sold to NPCs.";
 		next;
-		set @chk_over, getskilllv("MC_OVERCHARGE");
-		if(@chk_over > 3 && @chk_over < 10){
+		set .@chk_over, getskilllv("MC_OVERCHARGE");
+		if(.@chk_over > 3 && .@chk_over < 10){
 			mes "[Guarnien]";
 			mes "Ah, you've already learned Level 4 Over Charge. Perfect! Let me give you a little reward~";
 			set tu_merchant, 13;
-			getexp 1260,272;
-			//misceffect EF_HIT5;
+			erasequest 8235;
+			setquest 8236;
+			getexp 126,27;
 			next;
 			mes "[Guarnien]";
 			mes "Next time, I'll discuss the";
 			mes "Push Cart skill. Be ready for this lecture, as Push Cart is one of the more important skills for a Merchant.";
 			close;
-		} else if(@chk_over == 10){
+		} else if(.@chk_over == 10){
 			mes "[Guarnien]";
 			mes "Amazing! You've already mastered the Over Charge skill! You must have wanted this reward badly~";
 			set tu_merchant, 13;
-			getexp 1420,336;
-			//misceffect EF_HIT5;
+			erasequest 8235;
+			setquest 8236;
+			getexp 142,33;
 			next;
 			mes "[Guarnien]";
 			mes "Next time, I'll discuss the";
@@ -340,6 +355,8 @@ alberta_in,70,51,5	script	Guarnien	98,{
 			mes "[Guarnien]";
 			mes "Personally, I think you should learn this skill for sure! For your next assignment, learn Over Charge up to Level 4. It shouldn't be too difficult to do.";
 			set tu_merchant, 12;
+			erasequest 8235;
+			setquest 8236;
 			next;
 			mes "[Guarnien]";
 			mes "Once you do that,";
@@ -374,8 +391,8 @@ alberta_in,70,51,5	script	Guarnien	98,{
 		mes "Let me see those";
 		mes "Red Potions. Ah, it seems you researched the market and bought the cheapest ones! Great work!";
 		set tu_merchant, 11;
-		getexp 1120,220;
-		//misceffect EF_HIT5;
+		changequest 8234,8235;
+		getexp 112,22;
 		next;
 		mes "[Guarnien]";
 		mes "Alright, next time, we'll talk about the skill that you can learn after knowing how to Discount:";
@@ -407,7 +424,7 @@ alberta_in,70,51,5	script	Guarnien	98,{
 		mes "So first, you'll need to research the market price for Red Potions. Also, be careful of scammers! If the price is too good to be true, it usually is.";
 		next;
 		mes "[Guarnien]";
-		mes "Ha ha ha, let me make your goal a bit less confusing.  You will need to buy 10 Red Potions from an NPC in Prontera.";
+		mes "Ha ha ha, let me make your goal a bit less confusing. You will need to buy 10 Red Potions from an NPC in Prontera.";
 		next;
 		mes "[Guarnien]";
 		mes "Prontera's a bit far from here, isn't it? I'll just use this Kafra Warp-- Mahnsoo has a bunch for";
@@ -415,30 +432,32 @@ alberta_in,70,51,5	script	Guarnien	98,{
 		next;
 		set tu_merchant, rand(6,8);
 		warp "prontera",155,46;
-		close2;
 		end;
 		break;
 	case 4:
 		mes "So, how is it going with learning the Discount skill? Like I always say, if you can't make a bargain, you can't be a Merchant!";
 		next;
 		mes "[Guarnien]";
-		set @chk_disc, getskilllv("MC_DISCOUNT");
-		if(@chk_disc > 3 && @chk_disc < 10){
+		set .@chk_disc, getskilllv("MC_DISCOUNT");
+		if(.@chk_disc > 3 && .@chk_disc < 10){
 			mes "Ah, you've learned";
 			mes "how to use the Discount skill";
 			mes "well enough. Good, here's a little reward for your hard work~";
 			set tu_merchant, 5;
-			getexp 830,116;
-			//misceffect EF_HIT5;
+			erasequest 8232;
+			setquest 8233;
+			getexp 83,11;
 			next;
 			mes "[Guarnien]";
 			mes "Alright, my next lesson will hopefully offer you a bit more of a challenge. Come back when you think you're ready, alright?";
 			close;
-		} else if(@chk_disc == 10){
+		} else if(.@chk_disc == 10){
 			mes "Incredible!";
 			mes "You've actually mastered the Discount skill! You're such a great student. You deserve a bit of a reward!";
 			set tu_merchant, 5;
-			getexp 970,180;
+			erasequest 8232;
+			setquest 8233;
+			getexp 97,18;
 			next;
 			mes "[Guarnien]";
 			mes "Alright, my next lesson will hopefully offer you a bit more of a challenge. Come back when you think you're ready, alright?";
@@ -463,8 +482,8 @@ alberta_in,70,51,5	script	Guarnien	98,{
 		mes "mastered at ^871F78Level 10^000000. The higher the skill level, the less you have to pay for items at NPC shops.";
 		next;
 		mes "[Guarnien]";
-		set @chk_disc, getskilllv("MC_DISCOUNT");
-		if(@chk_disc > 3 && @chk_disc < 10){
+		set .@chk_disc, getskilllv("MC_DISCOUNT");
+		if(.@chk_disc > 3 && .@chk_disc < 10){
 			mes "Oooh, good work.";
 			mes "I see that you've";
 			mes "raised your Discount";
@@ -472,19 +491,21 @@ alberta_in,70,51,5	script	Guarnien	98,{
 			mes "Here, take this";
 			mes "small reward~";
 			set tu_merchant, 5;
-			getexp 830,116;
-			//misceffect EF_HIT5;
+			erasequest 8231;
+			setquest 8232;
+			getexp 83,11;
 			next;
 			mes "[Guarnien]";
 			mes "Alright, my next lesson will hopefully offer you a bit more of a challenge. Come back when you";
 			mes "think you're ready, alright?";
 			close;
-		} else if(@chk_disc == 10){
+		} else if(.@chk_disc == 10){
 			mes "Incredible!";
 			mes "You've actually mastered the Discount skill! You're such a great student. You deserve a bit of a reward!";
 			set tu_merchant, 5;
-			getexp 970,180;
-			//misceffect EF_HIT5;
+			erasequest 8231;
+			setquest 8232;
+			getexp 97,18;
 			next;
 			mes "[Guarnien]";
 			mes "Alright, my next lesson will hopefully offer you a bit more of a challenge. Come back when you";
@@ -500,6 +521,8 @@ alberta_in,70,51,5	script	Guarnien	98,{
 			mes "[Guarnien]";
 			mes "Still, you can't ignore the fact that bargaining is an essential skill for a Merchant! Come back to me when you're ready~";
 			set tu_merchant, 4;
+			erasequest 8231;
+			setquest 8232;
 			close;
 		}
 		break;
@@ -516,15 +539,16 @@ alberta_in,70,51,5	script	Guarnien	98,{
 		mes "So if you use this skill too often, you might end up bankrupt! So be really careful. Also, as the Skill Level for Mammonite increases, so does the attack strength and Zeny consumption.";
 		next;
 		mes "[Guarnien]";
-		set @chk_mam, getskilllv("MC_MAMMONITE");
-		if(@chk_mam > 3 && @chk_mam < 10){
+		set .@chk_mam, getskilllv("MC_MAMMONITE");
+		if(.@chk_mam > 3 && .@chk_mam < 10){
 			mes "Ah, I see that you've already tried this skill. How much money have you wasted using Mammonite? Not too much, I hope.";
 			next;
 			mes "[Guarnien]";
 			mes "Well, since you're still green, I feel awfully sorry if you've wasted Zeny. Why don't you take this as compensation?";
 			set tu_merchant, 3;
-			getexp 700,58;
-			//misceffect EF_HIT5;
+			erasequest 8230;
+			setquest 8231;
+			getexp 70,12;
 			next;
 			mes "[Guarnien]";
 			mes "Okay. Now I think we're ready for me to discuss the ^871F78Discount^000000 skill. Come back when you'd like me to tell you more about it, okay?";
@@ -532,6 +556,8 @@ alberta_in,70,51,5	script	Guarnien	98,{
 		} else {
 			mes "Okay. Now I think we're ready for me to discuss the ^871F78Discount^000000 skill. Come back when you'd like me to tell you more about it, okay?";
 			set tu_merchant, 3;
+			erasequest 8230;
+			setquest 8231;
 			close;
 		}
 		break;
@@ -543,8 +569,8 @@ alberta_in,70,51,5	script	Guarnien	98,{
 		mes "like I asked?";
 		next;
 		mes "[Guarnien]";
-		set @chk_soji, getskilllv("MC_INCCARRY");
-		if(@chk_soji > 3 && @chk_soji < 10){
+		set .@chk_soji, getskilllv("MC_INCCARRY");
+		if(.@chk_soji > 3 && .@chk_soji < 10){
 			mes "Ah. I can tell that you have. Not bad! By now you should be able to learn the ^871F78Discount^000000 skill, but I'll teach you about that later.";
 			next;
 			mes "[Guarnien]";
@@ -560,8 +586,10 @@ alberta_in,70,51,5	script	Guarnien	98,{
 				mes "[Guarnien]";
 				mes "I see in your eyes that you've already learned to appraise items. Haha, although having that knowledge is reward in itself, let me give you something extra!";
 				set tu_merchant, 2;
-				getexp 585,43;
-				getitem 1351, 1;
+				erasequest 8229;
+				setquest 8230;
+				getexp 58,11;
+				getitem 1351,1; //Battle_Axe
 				next;
 				mes "[Guarnien]";
 				mes "Alright, next time";
@@ -577,6 +605,8 @@ alberta_in,70,51,5	script	Guarnien	98,{
 		mes "Alright, next time";
 		mes "I'll talk about the Mammonite skill. For now, let me take a little bit of a break from all of this arduous lecture. ^666666*Whew!*^000000";
 		set tu_merchant, 2;
+		erasequest 8229;
+		setquest 8230;
 		close;
 	}
 	
@@ -585,6 +615,7 @@ alberta_in,70,51,5	script	Guarnien	98,{
 	if(select("Sure!:I'll make it on my own!")==1){
 		set tu_merchant, 1;
 		if(getskilllv("MC_INCCARRY") < 4){
+			setquest 8229;
 			mes "[Guarnien]";
 			if(Sex == 1){
 				mes "Atta boy~!";
@@ -621,12 +652,13 @@ alberta_in,70,51,5	script	Guarnien	98,{
 			mes "This skill works exactly like a ^871F78Magnifier^000000, so you won't have to spend any Zeny on them. Also, this skill is mastered at ^871F78Level 1^000000.";
 			next;
 			mes "[Guarnien]";
-			set tu_merchant, 2;
 			if(getskilllv("MC_IDENTIFY")){
 				mes "I see in your eyes that you've already learned to appraise items. Haha, although having that knowledge is reward in itself, let me give you something extra!";
-				//misceffect EF_HIT5;
-				getexp 585,43;
-				getitem 1351, 1;
+				set tu_merchant, 2;
+				erasequest 8229;
+				setquest 8230;
+				getexp 58,11;
+				getitem 1351,1; //Battle_Axe
 				next;
 				mes "[Guarnien]";
 				mes "Alright, next time";
@@ -642,6 +674,9 @@ alberta_in,70,51,5	script	Guarnien	98,{
 			mes "more about the Discount";
 			mes "skill later. I always manage";
 			mes "to forget about that!";
+			set tu_merchant,2;
+			erasequest 8229;
+			setquest 8230;
 			close;
 		}
 	} else {
@@ -693,7 +728,7 @@ prontera,66,111,3	script	Sagle	82,{
 			} else {
 				set Zeny, Zeny - 420;
 				set tu_merchant, 10;
-				getitem 501, 10;
+				getitem 501,10; //Red_Potion
 				close;
 			}
 			break;
@@ -718,44 +753,44 @@ prontera,66,111,3	script	Sagle	82,{
 		mes "I will sell you 10 Red Potions for ^871F78410 zeny^000000. You'd better get them now while they're still here!";
 		next;
 		switch(select("Buy:Cancel")){
-			case 1:
+		case 1:
+			mes "[Sagle]";
+			mes "Excellent!";
+			mes "You certainly have an eye for bargains. Here you go, 10 Red Potions fresh from the... Potioner...";
+			if(Zeny < 410){
+				next;
 				mes "[Sagle]";
-				mes "Excellent!";
-				mes "You certainly have an eye for bargains. Here you go, 10 Red Potions fresh from the... Potioner...";
-				if(Zeny < 410){
-					next;
-					mes "[Sagle]";
-					mes "Whoa, hold on!";
-					mes "You can't afford";
-					mes "these potions...";
-					mes "Please come back";
-					mes "when you have enough";
-					mes "Zeny, alright?";
-					close;
-				}
-				if(MaxWeight - Weight < 71){
-					next;
-					mes "[Sagle]";
-					mes "Whoa, hold on!";
-					mes "There's no way you carry all of this! Why don't you put some of your stuff in Kafra Storage before coming back?";
-					close2;
-					end;
-				} else {
-					set Zeny, Zeny - 410;
-					set tu_merchant, 10;
-					getitem 501, 10;
-					close;
-				}
-				break;
-			case 2:
-				mes "[Sagle]";
-				mes "Alright...";
-				mes "But don't";
-				mes "complain if";
-				mes "these potions";
-				mes "are sold out!";
+				mes "Whoa, hold on!";
+				mes "You can't afford";
+				mes "these potions...";
+				mes "Please come back";
+				mes "when you have enough";
+				mes "Zeny, alright?";
 				close;
-				break;
+			}
+			if(MaxWeight - Weight < 71){
+				next;
+				mes "[Sagle]";
+				mes "Whoa, hold on!";
+				mes "There's no way you carry all of this! Why don't you put some of your stuff in Kafra Storage before coming back?";
+				close2;
+				end;
+			} else {
+				set Zeny, Zeny - 410;
+				set tu_merchant, 10;
+				getitem 501,10; //Red_Potion
+				close;
+			}
+			break;
+		case 2:
+			mes "[Sagle]";
+			mes "Alright...";
+			mes "But don't";
+			mes "complain if";
+			mes "these potions";
+			mes "are sold out!";
+			close;
+			break;
 		}
 	}
 	if(tu_merchant == 6){
@@ -768,43 +803,43 @@ prontera,66,111,3	script	Sagle	82,{
 		mes "I will sell you 10 Red Potions for ^871F78390 zeny^000000. You'd better get them now while they're still here!";
 		next;
 		switch(select("Buy:Cancel")){
-			case 1:
+		case 1:
+			mes "[Sagle]";
+			mes "Excellent!";
+			mes "You certainly have an eye for bargains. Here you go, 10 Red Potions fresh from the... Potioner...";
+			if(Zeny < 390){
+				next;
 				mes "[Sagle]";
-				mes "Excellent!";
-				mes "You certainly have an eye for bargains. Here you go, 10 Red Potions fresh from the... Potioner...";
-				if(Zeny < 390){
-					next;
-					mes "[Sagle]";
-					mes "Whoa, hold on!";
-					mes "You can't afford";
-					mes "these potions...";
-					mes "Please come back";
-					mes "when you have enough";
-					mes "Zeny, alright?";
-					close;
-				}
-				if(MaxWeight - Weight < 71){			
-					next;
-					mes "[Sagle]";
-					mes "Whoa, hold on!";
-					mes "There's no way you carry all of this! Why don't you put some of your stuff in Kafra Storage before coming back?";
-					close;
-				} else {
-					set Zeny, Zeny - 390;
-					set tu_merchant, 9;
-					getitem 501, 10;
-					close;
-				}
-				break;
-			case 2:
-				mes "[Sagle]";
-				mes "Alright...";
-				mes "But don't";
-				mes "complain if";
-				mes "these potions";
-				mes "are sold out!";
+				mes "Whoa, hold on!";
+				mes "You can't afford";
+				mes "these potions...";
+				mes "Please come back";
+				mes "when you have enough";
+				mes "Zeny, alright?";
 				close;
-				break;
+			}
+			if(MaxWeight - Weight < 71){			
+				next;
+				mes "[Sagle]";
+				mes "Whoa, hold on!";
+				mes "There's no way you carry all of this! Why don't you put some of your stuff in Kafra Storage before coming back?";
+				close;
+			} else {
+				set Zeny, Zeny - 390;
+				set tu_merchant, 9;
+				getitem 501,10; //Red_Potion
+				close;
+			}
+			break;
+		case 2:
+			mes "[Sagle]";
+			mes "Alright...";
+			mes "But don't";
+			mes "complain if";
+			mes "these potions";
+			mes "are sold out!";
+			close;
+			break;
 		}
 	}
 	mes "It's on the tip";
@@ -850,7 +885,7 @@ prontera,93,330,3	script	Kellion	97,{
 			} else { 
 				set Zeny, Zeny - 340;
 				set tu_merchant, 10;
-				getitem 569, 10;
+				getitem 569,10; //Novice_Potion
 				close;
 			}
 			break;
@@ -891,7 +926,7 @@ prontera,93,330,3	script	Kellion	97,{
 			} else { 
 				set Zeny, Zeny - 390;
 				set tu_merchant, 9;
-				getitem 501, 10;
+				getitem 501,10; //Red_Potion
 				close;
 			}
 			break;
@@ -932,7 +967,7 @@ prontera,93,330,3	script	Kellion	97,{
 			} else { 
 				set Zeny, Zeny - 400;
 				set tu_merchant, 10;
-				getitem 501, 10;
+				getitem 501,10; //Red_Potion
 				close;
 			}
 			break;
@@ -993,7 +1028,7 @@ prt_in,169,11,3	script	Aigie	92,{
 			} else {
 				set Zeny, Zeny - 390;
 				set tu_merchant, 9;
-				getitem 501, 10;
+				getitem 501,10; //Red_Potion
 				close;
 			}
 			break;
@@ -1040,7 +1075,7 @@ prt_in,169,11,3	script	Aigie	92,{
 			} else {
 				set Zeny, Zeny - 420;
 				set tu_merchant, 10;
-				getitem 501, 10;
+				getitem 501,10; //Red_Potion
 				close;
 			}
 			break;
@@ -1087,7 +1122,7 @@ prt_in,169,11,3	script	Aigie	92,{
 			} else {
 				set Zeny, Zeny - 340;
 				set tu_merchant, 10;
-				getitem 569, 10;
+				getitem 569,10; //Novice_Potion
 				close;
 			}
 			break;
@@ -1143,7 +1178,7 @@ prontera,247,129,3	script	Jayon	85,{
 			} else {
 				set Zeny, Zeny - 410;
 				set tu_merchant, 10;
-				getitem 501, 10;
+				getitem 501,10; //Red_Potion
 				close;
 			}
 			break;
@@ -1191,7 +1226,7 @@ prontera,247,129,3	script	Jayon	85,{
 			} else {
 				set Zeny, Zeny - 400;
 				set tu_merchant, 10;
-				getitem 501, 10;
+				getitem 501,10; //Red_Potion
 				close;
 			}
 			break;
@@ -1240,7 +1275,7 @@ prontera,247,129,3	script	Jayon	85,{
 			} else {
 				set Zeny, Zeny - 410;
 				set tu_merchant, 10;
-				getitem 501, 10;
+				getitem 501,10; //Red_Potion
 				close;
 			}
 			break;
@@ -1258,7 +1293,7 @@ prontera,247,129,3	script	Jayon	85,{
 	}
 
 	mes "[Jayon]";
-	mes "The Schwarzwald Republic...";
+	mes "The Schwaltzvalt Republic...";
 	mes "It's a really interesting country. There's Juno and a few other places worth looking around. ";
 	next;
 	mes "[Jayon]";
@@ -1296,7 +1331,7 @@ prt_in,251,129,3	script	Maos	709,{
 			} else {
 				set Zeny, Zeny - 420;
 				set tu_merchant, 10;
-				getitem 501, 10;
+				getitem 501,10; //Red_Potion
 				close;
 			}
 			break;
@@ -1333,7 +1368,7 @@ prt_in,251,129,3	script	Maos	709,{
 			} else {
 				set Zeny, Zeny - 340;
 				set tu_merchant, 10;
-				getitem 501, 10;
+				getitem 501,10; //Red_Potion
 				close;
 			}
 			break;
@@ -1370,7 +1405,7 @@ prt_in,251,129,3	script	Maos	709,{
 			} else {
 				set Zeny, Zeny - 400;
 				set tu_merchant, 10;
-				getitem 501, 10;
+				getitem 501,10; //Red_Potion
 				close;
 			}
 			break;

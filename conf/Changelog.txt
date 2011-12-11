@@ -4,6 +4,8 @@ Date	Added
 	* Rev. 14972 Updated misleading comment in conf/mapflag/partylock.txt (bugreport:4930, since r14092). [Ai4rei]
 2011/08/21
 	* Rev. 14938 Added setting 'client_limit_unit_lv' to control the unit types which are affected by 'max_lv' and 'aura_lv' settings. [Ai4rei]
+2011/08/10
+	* Rev. 14931 Upped max_lv and max_aura to 150, and max_aspd to 193.
 2011/07/09
 	* Rev. 14892 Removed 'msg_athena.conf' messages 619 and 620 (duplicates to 572 and 573) (since r5506). [Ai4rei]
 2011/05/13
@@ -30,6 +32,8 @@ Date	Added
 	* Rev. 14587 Corrected wording of the setting homunculus_autoloot (since r12203). [Ai4rei]
 2010/12/10
 	* Rev. 14572 Applied update to charhelp.txt provided by EvilPuncker to match current charcommand behavior (bugreport:4632, follow up to r13403). [Ai4rei]
+2010/11/21
+	* Changed party_share_level from 10 to 15 as per kRO maintenance from 2010/04/14. [Ai4rei]
 2010/10/10
 	* Added cashfood_use_interval config setting. [Paradox924X]
 2010/05/25

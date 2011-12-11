@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Fix up by Jukka
 //===== Current Version: ===================================== 
-//= 1.8
+//= 1.9
 //===== Compatible With: ===================================== 
 //= eAthena SVN (Testet in Trunk 88xx)
 //===== Description: ========================================= 
@@ -19,6 +19,7 @@
 //= 1.6 Fixed infinate loop. (bugreport:2393) [L0ne_W0lf]
 //= 1.7 Added 10.3 dialog and moved Arpesto to hunter skill quest. [Kisuka]
 //= 1.8 Updated slightly, removed additional emotions from Reiden. [L0ne_W0lf]
+//= 1.9 Misc. updates. [L0ne_W0lf]
 //============================================================ 
 
 
@@ -167,7 +168,7 @@ pay_arche,127,154,4	script	Sign#arc	835,{
 }
 
 //=================================================Master Kavaruk====================================================
-payon_in02,47,13,3	script	Master Kavaruk	55,{
+payon_in02,54,13,3	script	Master Kavaruk	55,{
 	mes "[Master Kavaruk]";
 	mes "Hello, young one.";
 	mes "I am Master Kavaruk";
@@ -259,8 +260,8 @@ payon_in02,47,13,3	script	Master Kavaruk	55,{
 				mes "their Flora.";
 				next;
 				mes "[Master Kavaruk]";
-				mes "If you're interested, it would probably be best to speak to the Alchemist Guild member who is waiting to hear from us at the ^3131FFshop next to road south of Icarus^000000.";
-				set tu_archer02, 1;
+				mes "If you're interested, it would probably be best to speak to the Alchemist Guild member who is waiting to hear from us at the ^3131FFshop next to the road south of Icarus^000000.";
+				set tu_archer02,1;
 				close;
 
 			} else if(tu_archer02 == 1){
@@ -274,7 +275,7 @@ payon_in02,47,13,3	script	Master Kavaruk	55,{
 				next;
 				mes "[Master Kavaruk]";
 				mes "I asked a member of Icarus to";
-				mes "wander about the Rune Midgarts kingdom and gather news and information about what has been going on recenty.";
+				mes "wander about the Rune-Midgarts Kingdom and gather news and information about what has been going on recenty.";
 				next;
 				mes "[Master Kavaruk]";
 				mes "He has been sending me letters containing detailed information, but all of a sudden, I've lost contact with him. I'm concerned over what may have happened.";
@@ -301,7 +302,7 @@ payon_in02,47,13,3	script	Master Kavaruk	55,{
 				mes "for bringing me the news. As Arthail has said, I shall wait until he has more news for me.";
 				mes "You should also train and prepare for the future as well.";
 				set tu_archer02, 10;
-				getexp 2000,1000;
+				getexp 200,100;
 				close;
 			}
 		}
@@ -537,12 +538,12 @@ pay_arche,103,165,5	script	Reidin Corse#tu	832,{
 				mes "if you can't aim at your targets, you'd be horrible at archery, right? You gotta have Accuracy!";
 				next;
 				mes "[Reidin Corse]";
-				set @skill_owl, getskilllv("AC_OWL");
-				if(@skill_owl < 3){
+				set .@skill_owl, getskilllv("AC_OWL");
+				if(.@skill_owl < 3){
 					set tu_archer01, 6;
 					mes "Now, your first assignment";
 					mes "is to learn ^3131FFLevel 3 Owl's Eye^000000!";
-					mes "From Prontera, if you travel south, south and then west, you can fight Condors for your training.";
+					mes "From Morroc, if you travel south, you can fight Condors for your training.";
 					next;
 					mes "[Reidin Corse]";
 					mes "You can head somewhere";
@@ -553,11 +554,10 @@ pay_arche,103,165,5	script	Reidin Corse#tu	832,{
 					case 1:
 						mes "[Reidin Corse]";
 						mes "I'll send you to";
-						mes "Prontera for now,";
+						mes "Morroc for now,";
 						mes "so don't forget the";
 						mes "directions I gave you.";
-						mes "Travel ^3131FFsouth^000000, ^3131FFsouth^000000,";
-						mes "and then ^3131FFwest^000000.";
+						mes "Travel ^3131FFsouth^000000.";
 						next;
 						switch(select("Leave right away~:W-wait, let me get ready!")) {
 						case 1:
@@ -573,9 +573,9 @@ pay_arche,103,165,5	script	Reidin Corse#tu	832,{
 							mes "[Reidin Corse]";
 							mes "Okay...!";
 							mes "Off you go!";
-							mes "To Prontera!";
+							mes "To Morroc!";
 							close2;
-							warp "prontera",116,72;
+							warp "morocc",156,46;
 							end;
 							break;
 						case 2:
@@ -605,7 +605,7 @@ pay_arche,103,165,5	script	Reidin Corse#tu	832,{
 					emotion e_ag;
 					mes "Huh. So you already know a little about Owl's Eye already, huh? Well then, I guess I oughta talk about something you don't know about!";
 					set tu_archer01, 7;
-					getexp 500,0;
+					getexp 50,0;
 					close;
 				}
 				break;
@@ -620,8 +620,8 @@ pay_arche,103,165,5	script	Reidin Corse#tu	832,{
 				break;
 			}
 		} else if(tu_archer01 == 6){
-			set @owl, getskilllv(43);
-			if(@owl > 2){
+			set .@owl, getskilllv(43);
+			if(.@owl > 2){
 				mes "Ah, you're";
 				mes "finally back.";
 				mes "You've kept me";
@@ -633,7 +633,7 @@ pay_arche,103,165,5	script	Reidin Corse#tu	832,{
 				mes "Here, this is a small, special reward for you.";
 				specialeffect2 EF_WIND;
 				set tu_archer01, 7;
-				getexp 500,0;
+				getexp 50,0;
 				next;
 				emotion e_pif;
 				mes "[Reidin Corse]";
@@ -712,9 +712,9 @@ pay_arche,103,165,5	script	Reidin Corse#tu	832,{
 			mes "practice from a distance!";
 			next;
 
-			set @eagle, getskilllv("AC_VULTURE");
-			if(@eagle < 3){
-				mes "Alright, Mandagora usually live around Mt. Mjolnir. I can send you to Prontera, so just travel north, then east from there to find";
+			set .@eagle, getskilllv("AC_VULTURE");
+			if(.@eagle < 3){
+				mes "Alright, Mandagora usually live around Geffen. I can send you to Geffen, so just travel north from there to find";
 				mes "some of them.";
 				next;
 				mes "[Reidin Corse]";
@@ -729,8 +729,8 @@ pay_arche,103,165,5	script	Reidin Corse#tu	832,{
 					next;
 					mes "[Reidin Corse]";
 					mes "Here's a little something to encourage you. Since Mandagora are Earth property monsters, these Fire Arrows will work really well.";
-					set tu_archer01, 8;
-					getitem 1752, 300;
+					set tu_archer01,8;
+					getitem 1752,300; //Fire_Arrow
 					next;
 				}
 				mes "[Reidin Corse]";
@@ -743,7 +743,7 @@ pay_arche,103,165,5	script	Reidin Corse#tu	832,{
 					mes "Alright...!";
 					mes "Get a move on!";
 					close2;
-					warp "prontera",116,72;
+					warp "geffen",120,39;
 					end;
 					break;
 				case 2:
@@ -763,14 +763,14 @@ pay_arche,103,165,5	script	Reidin Corse#tu	832,{
 				mes "You already";
 				mes "learned Vulture's Eye!";
 				mes "Why did I spend so much time explaining about it? Well, I guess we're ready to move on to the next lesson...";
-				set tu_archer01, 9;
-				getitem 1752, 500;
-				next;
+				set tu_archer01,9;
+				getitem 1752,500; //Fire_Arrow
+				close;
 			}
 		} else if(tu_archer01 == 8){
-			set @eagle, getskilllv("AC_VULTURE");
-			if(@eagle < 3){
-				mes "Mandagora lives in the area north and east of Prontera. Learn up to Level 3 Vulture's Eye and get acquainted with your attack range.";
+			set .@eagle, getskilllv("AC_VULTURE");
+			if(.@eagle < 3){
+				mes "Mandagora lives in the area north of Geffen. Learn up to Level 3 Vulture's Eye and get acquainted with your attack range.";
 				next;
 				mes "[Reidin Corse]";
 				mes "Okay...";
@@ -783,7 +783,7 @@ pay_arche,103,165,5	script	Reidin Corse#tu	832,{
 					mes "Alright...!";
 					mes "Get a move on!";
 					close2;
-					warp "prontera",116,72;
+					warp "geffen",120,39;
 					end;
 					break;
 				case 2:
@@ -797,8 +797,8 @@ pay_arche,103,165,5	script	Reidin Corse#tu	832,{
 			} else {
 				mes "Ah, so you've learned";
 				mes "a little something about Vulture's Eye! What do you think about it now? Ah, and here's a little reward for you before I start the next lesson~";
-				set tu_archer01, 9;
-				getitem 1752, 500;
+				set tu_archer01,9;
+				getitem 1752,500; //Fire_Arrow
 				close;
 			}
 		} else if(tu_archer01 == 9){
@@ -819,8 +819,8 @@ pay_arche,103,165,5	script	Reidin Corse#tu	832,{
 			mes "Whaddya think?";
 			mes "Exciting, yes?";
 			next;
-			set @eagle, getskilllv("AC_DOUBLE");
-			if(@eagle > 2){
+			set .@eagle, getskilllv("AC_DOUBLE");
+			if(.@eagle > 2){
 				mes "["+strcharinfo(0)+"]";
 				mes "I...";
 				mes "I already know";
@@ -849,10 +849,10 @@ pay_arche,103,165,5	script	Reidin Corse#tu	832,{
 				mes "might! Practice Double Strafe";
 				mes "enough and you'll get used to it!";
 				next;
-				if(@eagle == 0){
+				if(.@eagle == 0){
 					specialeffect2 EF_WIND;
 					set tu_archer01, 10;
-					getexp 0,500;
+					getexp 0,50;
 				}
 				emotion e_no1;
 				next;
@@ -866,27 +866,25 @@ pay_arche,103,165,5	script	Reidin Corse#tu	832,{
 				close;
 			}
 		} else if(tu_archer01 == 10){
-			mes "Now, I've taught you a lot of stuff and I wanna make sure you retain all of it. That's why I want you to take this midterm. Your mission: ^FF0000Attack the Hydras^000000!";
+			mes "Now, I've taught you a lot of stuff and I wanna make sure you retain all of it. That's why I want you to take this midterm. Your mission: ^FF0000Attack the Rockers^000000!";
 			emotion e_no1;
 			next;
 			mes "[Reidin Corse]";
-			mes "There's a ship that";
-			mes "leads to Byalan Island in Izlude, Prontera's satellite city. Ride that ship to Byalan Island.";
+			mes "Rockers live just southwest of Prontera.";
 			next;
 			mes "[Reidin Corse]";
-			mes "In the center of that island is the entrance to a dungeon where a lot of Hydras live. Remember that it's a water dungeon, and that ^3131FFWater resists Fire^000000, ^3131FFbut is weak against Wind^000000.";
+			mes "Be aware that Rockers are earth element monsters!! ^3131FFSo they should be weak against fire^000000.";
 			next;
 			mes "[Reidin Corse]";
-			mes "Now go and bring ^3131FF10 Tentacles^000000";
-			mes "from hunting Hydra and ^3131FF1 Crystal Blue^000000, which you can get from hunting the Mushrooms there.";
+			mes "Now go and bring ^3131FF10 Grasshopper's Leg^000000 from hunting Rockers.";
 			mes "Bring all of that and you pass~";
 			next;
 			mes "[Reidin Corse]";
-			mes "It's easier to find Izlude if you pass by Prontera, so head towards the fields near Prontera. Alright, off you go, " + strcharinfo(0) + "~";
-			set tu_archer01, 11;
+			mes "It's easier to find them if you pass by the southern gate of Prontera and then head west. Alright, off you go, " + strcharinfo(0) + "~";
+			set tu_archer01,11;
 			close;
 		} else if(tu_archer01 == 11){
-			if((countitem(962) > 9) && (countitem(991) > 0)){
+			if(countitem(940) > 9){
 				if(MaxWeight - Weight < 1000){
 					mes "Why are you carrying";
 					mes "so much stuff? You better put everything you don't need into Kafra Storage.";
@@ -901,15 +899,14 @@ pay_arche,103,165,5	script	Reidin Corse#tu	832,{
 					mes "Don't forget that you gotta keep training and improve your skills. Before you know it, you'll be an expert almost as good as me!";
 					specialeffect2 EF_WIND;
 					set tu_archer01, 12;
-					getexp 1000,1000;
+					getexp 100,100;
 					getitem 1707,1; //Great_Bow
 					close;
 				}
 			} else {
 				mes "Hey...";
 				mes "You gotta bring";
-				mes "^3131FF10 Tentacles^000000 and";
-				mes "^3131FF1 Crystal Blue^000000 to pass my midterm! Go back to the dungeon on Byalan Island and get them!";
+				mes "^3131FF10 Grasshopper's Leg^000000 to pass my midterm! Go back to the southwest area of Prontera and get them!";
 				close;
 			}
 		} else if(tu_archer01 == 12){
@@ -952,8 +949,8 @@ pay_arche,103,165,5	script	Reidin Corse#tu	832,{
 			mes "no need for you to fret.";
 			next;
 			mes "[Reidin Corse]";
-			mes "Now, go to Mt. Mjolnir and hunt Floras. Your test will be to bring back ^3131FF5 Maneater Blossoms^000000 and";
-			mes "^3131FF20 Stems^000000.";
+			mes "Now, go into the forest east of Payon and hunt Spores and Wormtails. Your test will be to bring back ^3131FF10 Mushroom Spores^000000 and";
+			mes "^3131FF10 Pointed Scales^000000.";
 			next;
 			mes "[Reidin Corse]";
 			mes "I know it's a little dangerous,";
@@ -980,7 +977,7 @@ pay_arche,103,165,5	script	Reidin Corse#tu	832,{
 				close;
 			}
 		} else if((tu_archer01 == 14) || (tu_archer01 == 15)){
-			if((countitem(1032) > 4) && (countitem(905) > 19)){ // Blossom Of Maneater & Stem
+			if((countitem(906) > 9) && (countitem(921) > 9)){
 				mes "Ha-ha~!";
 				mes "You look more like";
 				mes "a veteran than a rookie";
@@ -997,7 +994,7 @@ pay_arche,103,165,5	script	Reidin Corse#tu	832,{
 				mes "this little reward!";
 				specialeffect2 EF_WIND;
 				set tu_archer01,16;
-				getexp 3000,3000;
+				getexp 300,300;
 				getitem 1770,500; //Iron_Arrow
 				next;
 				mes "[Reidin Corse]";
@@ -1017,36 +1014,11 @@ pay_arche,103,165,5	script	Reidin Corse#tu	832,{
 				close;
 			} else {
 				mes "Remember, you";
-				mes "need to head over to";
-				mes "Mt. Mjolnir and get me";
-				mes "^3131FF5 Maneater Blossoms^000000";
-				mes "and ^3131FF20 Stems^000000.";
-				next;
-				mes "[Reidin Corse]";
-				mes "From Prontera, you'd get to Mt. Mjolnir by traveling ^3131FFnorth^000000, ^3131FFnorth^000000 and then ^3131FFeast^000000. But if you want,";
-				mes "I can just send you there.";
-				next;
-				switch(select("Go!:W-Wait!")) {
-				case 1:
-					mes "[Reidin Corse]";
-					mes "Alright!";
-					mes "Oh, and if you get";
-					mes "the chance, give a hello to my Acolyte pal over there for me~";
-					emotion e_heh;
-					close2;
-					warp "mjolnir_11",25,221;
-					end;
-					break;
-				case 2:
-					mes "[Reidin Corse]";
-					mes "Huh?";
-					mes "Um, sure. But";
-					mes "there's no reason to";
-					mes "get so nervous, even if";
-					mes "this my final exam for you.";
-					close;
-					break;
-				}
+				mes "need to head into";
+				mes "the forest east of Payon and get me";
+				mes "^3131FF10 Mushroom Spores^000000";
+				mes "and ^3131FF10 Pointed Scales^000000.";
+				close;
 			}
 		} else if(tu_archer01 == 16){
 			mes "I really like this town.";
@@ -1299,7 +1271,7 @@ pay_arche,84,139,3	script	Seisner	727,{
 				mes "he can't stop its flight or change his target. That's why Archers need to be level headed and really careful in battle.";
 				next;
 				mes "[Seisner]";
-				mes "Someday, I'd like to become a great Archer and use my skills for the good of Rune Midgard.";
+				mes "Someday, I'd like to become a great Archer and use my skills for the good of Rune-Midgard.";
 				close;
 				break;
 			}
@@ -1317,13 +1289,13 @@ pay_arche,84,139,3	script	Seisner	727,{
 		specialeffect2 EF_WIND;
 		set tu_archer01, 3;
 		if(JobLevel == 1){
-			getexp 0,30;
+			getexp 0,5;
 		} else if((JobLevel > 1) && (JobLevel < 11)){	
-			getexp 0,100;
+			getexp 0,10;
 		} else if((JobLevel > 10) && (JobLevel < 21)){
-			getexp 0,250;
+			getexp 0,25;
 		} else {
-			getexp 0,500;
+			getexp 0,50;
 		}
 		end;
 	}
@@ -1334,7 +1306,7 @@ pay_arche,84,139,3	script	Seisner	727,{
 pay_arche,76,135,3	script	Target#Target	111,{ end; }	// empty NPC?? [Jukka]
 
 //=================================================Acolyte====================================================
-mjolnir_11,27,223,3	script	Acolyte#tu	95,{
+pay_fild08,40,83,5	script	Acolyte#tu	95,{
 	mes "[Acolyte]";
 	if(tu_archer01 == 14){
 		if(gettime(3) >= 18 && gettime(3) < 22){
@@ -1421,37 +1393,37 @@ mjolnir_11,27,223,3	script	Acolyte#tu	95,{
 			mes "Wait, I know...";
 			mes "Y-you're... ^666666*Yawn*^000000";
 			mes "So sleepy. Take this for now...";
-			set @kurae_heal, rand(1,4);
-			if(@kurae_heal == 1){
+			set .@kurae_heal, rand(1,4);
+			if(.@kurae_heal == 1){
 				unitskilluseid getcharid(3),28,3;
-			} else if(@kurae_heal == 2){
+			} else if(.@kurae_heal == 2){
 				unitskilluseid getcharid(3),28,9;
-			} else if(@kurae_heal == 3){
+			} else if(.@kurae_heal == 3){
 				unitskilluseid getcharid(3),28,10;
-			} else if(@kurae_heal == 4){
+			} else if(.@kurae_heal == 4){
 			}
 
-			set @kurae_agi, rand(1,3);
-			if(@kurae_agi == 1){
+			set .@kurae_agi, rand(1,3);
+			if(.@kurae_agi == 1){
 				unitskilluseid getcharid(3),29,0;
-			} else if(@kurae_agi == 2){
+			} else if(.@kurae_agi == 2){
 				unitskilluseid getcharid(3),29,5;
-			} else if(@kurae_agi == 3){
+			} else if(.@kurae_agi == 3){
 				unitskilluseid getcharid(3),29,10;
 			}
 
-			set @kurae_bls, rand(1,3);
-			if(@kurae_bls == 1){
+			set .@kurae_bls, rand(1,3);
+			if(.@kurae_bls == 1){
 				unitskilluseid getcharid(3),34,0;
-			} else if(@kurae_bls == 2){
+			} else if(.@kurae_bls == 2){
 				unitskilluseid getcharid(3),34,5;
-			} else if(@kurae_bls == 3){
+			} else if(.@kurae_bls == 3){
 				unitskilluseid getcharid(3),34,10;
 			}
 			close;
 		}
 	} else if(tu_archer01 == 15){
-		if((gettime(3) >= 18) && (gettime(3) < 22)){	//CHECK
+		if((gettime(3) >= 18) && (gettime(3) < 22)){
 			mes "^666666Zzzzz...^000000";
 			mes "Wh-wha...?";
 			mes "Who are you?";
@@ -1468,30 +1440,30 @@ mjolnir_11,27,223,3	script	Acolyte#tu	95,{
 			mes "J-just take this before";
 			mes "I fall asleep again~! ^666666*Yawn*^000000";
 
-			set @kurae_heal, rand(1,4);
-			if(@kurae_heal == 1){
+			set .@kurae_heal, rand(1,4);
+			if(.@kurae_heal == 1){
 				unitskilluseid getcharid(3),28,3;
-			} else if(@kurae_heal == 2){
+			} else if(.@kurae_heal == 2){
 				unitskilluseid getcharid(3),28,10;
-			} else if(@kurae_heal == 3){
+			} else if(.@kurae_heal == 3){
 				unitskilluseid getcharid(3),28,8;
 			}
 
-			set @kurae_agi, rand(1,3);
-			if(@kurae_agi == 1){
+			set .@kurae_agi, rand(1,3);
+			if(.@kurae_agi == 1){
 				unitskilluseid getcharid(3),29,0;
-			} else if(@kurae_agi == 2){
+			} else if(.@kurae_agi == 2){
 				unitskilluseid getcharid(3),29,5;
-			} else if(@kurae_agi == 3){
+			} else if(.@kurae_agi == 3){
 				unitskilluseid getcharid(3),29,10;
 			}
 
-			set @kurae_bls, rand(1,3);
-			if(@kurae_bls == 1){
+			set .@kurae_bls, rand(1,3);
+			if(.@kurae_bls == 1){
 				unitskilluseid getcharid(3),34,0;
-			} else if(@kurae_bls == 2){
+			} else if(.@kurae_bls == 2){
 				unitskilluseid getcharid(3),34,5;
-			} else if(@kurae_bls == 3){
+			} else if(.@kurae_bls == 3){
 				unitskilluseid getcharid(3),34,10;
 			}
 			close;
@@ -1501,26 +1473,26 @@ mjolnir_11,27,223,3	script	Acolyte#tu	95,{
 			mes "casting a spell";
 			mes "to help you! Yaa~p!";
 
-			set @kurae_heal, rand(1,3);
-			if(@kurae_heal == 1){
+			set .@kurae_heal, rand(1,3);
+			if(.@kurae_heal == 1){
 				unitskilluseid getcharid(3),28,3;
-			} else if(@kurae_heal == 2){
+			} else if(.@kurae_heal == 2){
 				unitskilluseid getcharid(3),28,10;
-			} else if(@kurae_heal == 3){
+			} else if(.@kurae_heal == 3){
 				unitskilluseid getcharid(3),28,8;
 			}
 
-			set @kurae_agi, rand(1,2);
-			if(@kurae_agi == 1){
+			set .@kurae_agi, rand(1,2);
+			if(.@kurae_agi == 1){
 				unitskilluseid getcharid(3),29,10;
-			} else if(@kurae_agi == 2){	
+			} else if(.@kurae_agi == 2){	
 				unitskilluseid getcharid(3),29,5;
 			}
 
-			set @kurae_bls, rand(1,2);
-			if(@kurae_bls == 1){
+			set .@kurae_bls, rand(1,2);
+			if(.@kurae_bls == 1){
 				unitskilluseid getcharid(3),34,10;
-			} else if(@kurae_bls == 2){
+			} else if(.@kurae_bls == 2){
 				unitskilluseid getcharid(3),34,5;
 			}
 			close;
@@ -1563,20 +1535,20 @@ pay_arche,130,113,3	script	Alchemist Guildmember#tu	740,{
 				mes "Flora field! I really";
 				mes "appreciate your help~";
 
-				set @alche_f,countitem(1032);// Blossom_Of_Maneater
-				set @alche_s,countitem(905);// Stem
-				set @f_zeny, @alche_f * 130;
-				set @s_zeny, @alche_s * 30;
-				set @total_zeny, @f_zeny + @s_zeny;
+				set .@alche_f,countitem(1032); // Blossom_Of_Maneater
+				set .@alche_s,countitem(905); // Stem
+				set .@f_zeny, .@alche_f * 130;
+				set .@s_zeny, .@alche_s * 30;
+				set .@total_zeny, .@f_zeny + .@s_zeny;
 				if(countitem(1032) == 0){
-					delitem 905, @alche_s;
+					delitem 905, .@alche_s; //Stem
 				} else if(countitem(905) == 0){
-					delitem 1032, @alche_f;
+					delitem 1032, .@alche_f; //Blossom_Of_Maneater
 				} else {
-					delitem 1032, @alche_f;
-					delitem 905, @alche_s;
+					delitem 1032, .@alche_f; //Blossom_Of_Maneater
+					delitem 905, .@alche_s; //Stem
 				}
-				set Zeny,Zeny+@total_zeny;
+				set Zeny,Zeny+.@total_zeny;
 				close;
 				break;
 			case 2:
@@ -1656,7 +1628,7 @@ prontera,126,335,5	script	Arthail	51,{
 			next;
 			mes "[Arthail]";
 			mes "Here in the capital of the";
-			mes "Rune Midgarts Kingdom, there's supposed to be a fountain in the central plaza. Everyone seems to stop and chat over there.";
+			mes "Rune-Midgarts Kingdom, there's supposed to be a fountain in the central plaza. Everyone seems to stop and chat over there.";
 			next;
 			mes "[Arthail]";
 			mes "However, I have a fear of other people and I can't bring myself to go near the crowds of people there. It's embarassing for me to admit this as a Bard...";
@@ -1781,8 +1753,8 @@ prontera,126,335,5	script	Arthail	51,{
 		mes "[Arthail]";
 		mes "And one day...";
 		mes "I guess I'll finally";
-		mes "have a song that I can";
-		mes "share with you.";
+		mes "have a song that";
+		mes "I can share with you.";
 		set tu_archer02, 9;
 		close2;
 		end;
@@ -1954,6 +1926,9 @@ monk_in,19,43,1	script	Bishop Maugins	60,{
 		unitskilluseid getcharid(3),34,10;
 		close;
 	}
-	mes "...Now, I have something to think about. Please visit me later, young sheep..";
+	mes "I'm sorry, but I have";
+	mes "some pressing matter";
+	mes "to think about right now.";
+	mes "Would you come back later?";
 	close;
 }
