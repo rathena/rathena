@@ -196,31 +196,6 @@ endif()
 
 
 #
-# Test typecast to union
-#
-message( STATUS "Check for typecast to union" )
-set( SOURCECODE
-	"typedef union Foonion{\n"
-	"  int i;\n"
-	"  unsigned int ui;\n"
-	"  const char* s;\n"
-	"} Foonion;\n"
-	"int get_i(Foonion onion){ return onion.i; }\n"
-	"int main(int argc, char** argv){\n"
-	"  int i = 0;\n"
-	"  return get_i(((Foonion)(int)i));\n"
-	"}\n"
-	)
-CHECK_C_SOURCE_COMPILES( "${SOURCECODE}" HAVE_TYPECAST_TO_UNION )
-if( HAVE_TYPECAST_TO_UNION )
-	message( STATUS "Check for typecast to union - yes" )
-else()
-	message( STATUS "Check for typecast to union - no" )
-	set_property( CACHE GLOBAL_DEFINITIONS  PROPERTY VALUE "${GLOBAL_DEFINITIONS} -DDB_MANUAL_CAST_TO_UNION" )
-endif()
-
-
-#
 # Test monotonic clock
 #
 # CLOCK_MONOTONIC clock for clock_gettime

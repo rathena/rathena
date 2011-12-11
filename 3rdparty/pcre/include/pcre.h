@@ -5,7 +5,7 @@
 /* This is the public header file for the PCRE library, to be #included by
 applications that call the PCRE functions.
 
-           Copyright (c) 1997-2006 University of Cambridge
+           Copyright (c) 1997-2011 University of Cambridge
 
 -----------------------------------------------------------------------------
 Redistribution and use in source and binary forms, with or without
@@ -41,44 +41,46 @@ POSSIBILITY OF SUCH DAMAGE.
 
 /* The current PCRE version information. */
 
-/* NOTES FOR FUTURE MAINTAINERS: Do not use numbers with leading zeros, because
-they may be treated as octal constants. The PCRE_PRERELEASE feature is for
-identifying release candidates. It might be defined as -RC2, for example. In
-real releases, it should be defined empty. Do not change the alignment of these
-statments. The code in ./configure greps out the version numbers by using "cut"
-to get values from column 29 onwards. These are substituted into pcre-config
-and libpcre.pc. The values are not put into configure.ac and substituted here
-(which would simplify this issue) because that makes life harder for those who
-cannot run ./configure. As it now stands, this file need not be edited in that
-circumstance. */
+#define PCRE_MAJOR          8
+#define PCRE_MINOR          20
+#define PCRE_PRERELEASE     
+#define PCRE_DATE           2011-10-21
 
-#define PCRE_MAJOR          7
-#define PCRE_MINOR          0
-#define PCRE_PRERELEASE
-#define PCRE_DATE           18-Dec-2006
+/* When an application links to a PCRE DLL in Windows, the symbols that are
+imported have to be identified as such. When building PCRE, the appropriate
+export setting is defined in pcre_internal.h, which includes this file. So we
+don't change existing definitions of PCRE_EXP_DECL and PCRECPP_EXP_DECL. */
 
-/* Win32 uses DLL by default; it needs special stuff for exported functions
-when building PCRE. */
-
-#ifdef _WIN32
-#  ifdef PCRE_DEFINITION
-#    ifdef DLL_EXPORT
-#      define PCRE_DATA_SCOPE __declspec(dllexport)
+#if defined(_WIN32) && !defined(PCRE_STATIC)
+#  ifndef PCRE_EXP_DECL
+#    define PCRE_EXP_DECL  extern __declspec(dllimport)
+#  endif
+#  ifdef __cplusplus
+#    ifndef PCRECPP_EXP_DECL
+#      define PCRECPP_EXP_DECL  extern __declspec(dllimport)
 #    endif
-#  else
-#    ifndef PCRE_STATIC
-#      define PCRE_DATA_SCOPE extern __declspec(dllimport)
+#    ifndef PCRECPP_EXP_DEFN
+#      define PCRECPP_EXP_DEFN  __declspec(dllimport)
 #    endif
 #  endif
 #endif
 
-/* Otherwise, we use the standard "extern". */
+/* By default, we use the standard "extern" declarations. */
 
-#ifndef PCRE_DATA_SCOPE
+#ifndef PCRE_EXP_DECL
 #  ifdef __cplusplus
-#    define PCRE_DATA_SCOPE     extern "C"
+#    define PCRE_EXP_DECL  extern "C"
 #  else
-#    define PCRE_DATA_SCOPE     extern
+#    define PCRE_EXP_DECL  extern
+#  endif
+#endif
+
+#ifdef __cplusplus
+#  ifndef PCRECPP_EXP_DECL
+#    define PCRECPP_EXP_DECL  extern
+#  endif
+#  ifndef PCRECPP_EXP_DEFN
+#    define PCRECPP_EXP_DEFN
 #  endif
 #endif
 
@@ -93,32 +95,45 @@ it is needed here for malloc. */
 extern "C" {
 #endif
 
-/* Options */
+/* Options. Some are compile-time only, some are run-time only, and some are
+both, so we keep them all distinct. However, almost all the bits in the options
+word are now used. In the long run, we may have to re-use some of the
+compile-time only bits for runtime options, or vice versa. */
 
-#define PCRE_CASELESS           0x00000001
-#define PCRE_MULTILINE          0x00000002
-#define PCRE_DOTALL             0x00000004
-#define PCRE_EXTENDED           0x00000008
-#define PCRE_ANCHORED           0x00000010
-#define PCRE_DOLLAR_ENDONLY     0x00000020
-#define PCRE_EXTRA              0x00000040
-#define PCRE_NOTBOL             0x00000080
-#define PCRE_NOTEOL             0x00000100
-#define PCRE_UNGREEDY           0x00000200
-#define PCRE_NOTEMPTY           0x00000400
-#define PCRE_UTF8               0x00000800
-#define PCRE_NO_AUTO_CAPTURE    0x00001000
-#define PCRE_NO_UTF8_CHECK      0x00002000
-#define PCRE_AUTO_CALLOUT       0x00004000
-#define PCRE_PARTIAL            0x00008000
-#define PCRE_DFA_SHORTEST       0x00010000
-#define PCRE_DFA_RESTART        0x00020000
-#define PCRE_FIRSTLINE          0x00040000
-#define PCRE_DUPNAMES           0x00080000
-#define PCRE_NEWLINE_CR         0x00100000
-#define PCRE_NEWLINE_LF         0x00200000
-#define PCRE_NEWLINE_CRLF       0x00300000
-#define PCRE_NEWLINE_ANY        0x00400000
+#define PCRE_CASELESS           0x00000001  /* Compile */
+#define PCRE_MULTILINE          0x00000002  /* Compile */
+#define PCRE_DOTALL             0x00000004  /* Compile */
+#define PCRE_EXTENDED           0x00000008  /* Compile */
+#define PCRE_ANCHORED           0x00000010  /* Compile, exec, DFA exec */
+#define PCRE_DOLLAR_ENDONLY     0x00000020  /* Compile */
+#define PCRE_EXTRA              0x00000040  /* Compile */
+#define PCRE_NOTBOL             0x00000080  /* Exec, DFA exec */
+#define PCRE_NOTEOL             0x00000100  /* Exec, DFA exec */
+#define PCRE_UNGREEDY           0x00000200  /* Compile */
+#define PCRE_NOTEMPTY           0x00000400  /* Exec, DFA exec */
+#define PCRE_UTF8               0x00000800  /* Compile */
+#define PCRE_NO_AUTO_CAPTURE    0x00001000  /* Compile */
+#define PCRE_NO_UTF8_CHECK      0x00002000  /* Compile, exec, DFA exec */
+#define PCRE_AUTO_CALLOUT       0x00004000  /* Compile */
+#define PCRE_PARTIAL_SOFT       0x00008000  /* Exec, DFA exec */
+#define PCRE_PARTIAL            0x00008000  /* Backwards compatible synonym */
+#define PCRE_DFA_SHORTEST       0x00010000  /* DFA exec */
+#define PCRE_DFA_RESTART        0x00020000  /* DFA exec */
+#define PCRE_FIRSTLINE          0x00040000  /* Compile */
+#define PCRE_DUPNAMES           0x00080000  /* Compile */
+#define PCRE_NEWLINE_CR         0x00100000  /* Compile, exec, DFA exec */
+#define PCRE_NEWLINE_LF         0x00200000  /* Compile, exec, DFA exec */
+#define PCRE_NEWLINE_CRLF       0x00300000  /* Compile, exec, DFA exec */
+#define PCRE_NEWLINE_ANY        0x00400000  /* Compile, exec, DFA exec */
+#define PCRE_NEWLINE_ANYCRLF    0x00500000  /* Compile, exec, DFA exec */
+#define PCRE_BSR_ANYCRLF        0x00800000  /* Compile, exec, DFA exec */
+#define PCRE_BSR_UNICODE        0x01000000  /* Compile, exec, DFA exec */
+#define PCRE_JAVASCRIPT_COMPAT  0x02000000  /* Compile */
+#define PCRE_NO_START_OPTIMIZE  0x04000000  /* Compile, exec, DFA exec */
+#define PCRE_NO_START_OPTIMISE  0x04000000  /* Synonym */
+#define PCRE_PARTIAL_HARD       0x08000000  /* Exec, DFA exec */
+#define PCRE_NOTEMPTY_ATSTART   0x10000000  /* Exec, DFA exec */
+#define PCRE_UCP                0x20000000  /* Compile */
 
 /* Exec-time and get/set-time error codes */
 
@@ -144,8 +159,37 @@ extern "C" {
 #define PCRE_ERROR_DFA_WSSIZE     (-19)
 #define PCRE_ERROR_DFA_RECURSE    (-20)
 #define PCRE_ERROR_RECURSIONLIMIT (-21)
-#define PCRE_ERROR_NULLWSLIMIT    (-22)
+#define PCRE_ERROR_NULLWSLIMIT    (-22)  /* No longer actually used */
 #define PCRE_ERROR_BADNEWLINE     (-23)
+#define PCRE_ERROR_BADOFFSET      (-24)
+#define PCRE_ERROR_SHORTUTF8      (-25)
+#define PCRE_ERROR_RECURSELOOP    (-26)
+#define PCRE_ERROR_JIT_STACKLIMIT (-27)
+
+/* Specific error codes for UTF-8 validity checks */
+
+#define PCRE_UTF8_ERR0               0
+#define PCRE_UTF8_ERR1               1
+#define PCRE_UTF8_ERR2               2
+#define PCRE_UTF8_ERR3               3
+#define PCRE_UTF8_ERR4               4
+#define PCRE_UTF8_ERR5               5
+#define PCRE_UTF8_ERR6               6
+#define PCRE_UTF8_ERR7               7
+#define PCRE_UTF8_ERR8               8
+#define PCRE_UTF8_ERR9               9
+#define PCRE_UTF8_ERR10             10
+#define PCRE_UTF8_ERR11             11
+#define PCRE_UTF8_ERR12             12
+#define PCRE_UTF8_ERR13             13
+#define PCRE_UTF8_ERR14             14
+#define PCRE_UTF8_ERR15             15
+#define PCRE_UTF8_ERR16             16
+#define PCRE_UTF8_ERR17             17
+#define PCRE_UTF8_ERR18             18
+#define PCRE_UTF8_ERR19             19
+#define PCRE_UTF8_ERR20             20
+#define PCRE_UTF8_ERR21             21
 
 /* Request types for pcre_fullinfo() */
 
@@ -162,6 +206,11 @@ extern "C" {
 #define PCRE_INFO_NAMETABLE          9
 #define PCRE_INFO_STUDYSIZE         10
 #define PCRE_INFO_DEFAULT_TABLES    11
+#define PCRE_INFO_OKPARTIAL         12
+#define PCRE_INFO_JCHANGED          13
+#define PCRE_INFO_HASCRORLF         14
+#define PCRE_INFO_MINLENGTH         15
+#define PCRE_INFO_JIT               16
 
 /* Request types for pcre_config(). Do not re-arrange, in order to remain
 compatible. */
@@ -174,6 +223,13 @@ compatible. */
 #define PCRE_CONFIG_STACKRECURSE            5
 #define PCRE_CONFIG_UNICODE_PROPERTIES      6
 #define PCRE_CONFIG_MATCH_LIMIT_RECURSION   7
+#define PCRE_CONFIG_BSR                     8
+#define PCRE_CONFIG_JIT                     9
+
+/* Request types for pcre_study(). Do not re-arrange, in order to remain
+compatible. */
+
+#define PCRE_STUDY_JIT_COMPILE            0x0001
 
 /* Bit flags for the pcre_extra structure. Do not re-arrange or redefine
 these bits, just add new ones on the end, in order to remain compatible. */
@@ -183,11 +239,16 @@ these bits, just add new ones on the end, in order to remain compatible. */
 #define PCRE_EXTRA_CALLOUT_DATA           0x0004
 #define PCRE_EXTRA_TABLES                 0x0008
 #define PCRE_EXTRA_MATCH_LIMIT_RECURSION  0x0010
+#define PCRE_EXTRA_MARK                   0x0020
+#define PCRE_EXTRA_EXECUTABLE_JIT         0x0040
 
 /* Types */
 
 struct real_pcre;                 /* declaration; the definition is private  */
 typedef struct real_pcre pcre;
+
+struct real_pcre_jit_stack;       /* declaration; the definition is private  */
+typedef struct real_pcre_jit_stack pcre_jit_stack;
 
 /* When PCRE is compiled as a C++ library, the subject pointer type can be
 replaced with a custom type. For conventional use, the public interface is a
@@ -208,6 +269,8 @@ typedef struct pcre_extra {
   void *callout_data;             /* Data passed back in callouts */
   const unsigned char *tables;    /* Pointer to character tables */
   unsigned long int match_limit_recursion; /* Max recursive calls to match() */
+  unsigned char **mark;           /* For passing back a mark pointer */
+  void *executable_jit;           /* Contains a pointer to a compiled jit code */
 } pcre_extra;
 
 /* The structure for passing out data via the pcre_callout_function. We use a
@@ -230,6 +293,8 @@ typedef struct pcre_callout_block {
   /* ------------------- Added for Version 1 -------------------------- */
   int          pattern_position;  /* Offset to next item in the pattern */
   int          next_item_length;  /* Length of next item in the pattern */
+  /* ------------------- Added for Version 2 -------------------------- */
+  const unsigned char *mark;      /* Pointer to current mark or NULL    */
   /* ------------------------------------------------------------------ */
 } pcre_callout_block;
 
@@ -240,52 +305,63 @@ that is triggered by the (?) regex item. For Virtual Pascal, these definitions
 have to take another form. */
 
 #ifndef VPCOMPAT
-PCRE_DATA_SCOPE void *(*pcre_malloc)(size_t);
-PCRE_DATA_SCOPE void  (*pcre_free)(void *);
-PCRE_DATA_SCOPE void *(*pcre_stack_malloc)(size_t);
-PCRE_DATA_SCOPE void  (*pcre_stack_free)(void *);
-PCRE_DATA_SCOPE int   (*pcre_callout)(pcre_callout_block *);
+PCRE_EXP_DECL void *(*pcre_malloc)(size_t);
+PCRE_EXP_DECL void  (*pcre_free)(void *);
+PCRE_EXP_DECL void *(*pcre_stack_malloc)(size_t);
+PCRE_EXP_DECL void  (*pcre_stack_free)(void *);
+PCRE_EXP_DECL int   (*pcre_callout)(pcre_callout_block *);
 #else   /* VPCOMPAT */
-PCRE_DATA_SCOPE void *pcre_malloc(size_t);
-PCRE_DATA_SCOPE void  pcre_free(void *);
-PCRE_DATA_SCOPE void *pcre_stack_malloc(size_t);
-PCRE_DATA_SCOPE void  pcre_stack_free(void *);
-PCRE_DATA_SCOPE int   pcre_callout(pcre_callout_block *);
+PCRE_EXP_DECL void *pcre_malloc(size_t);
+PCRE_EXP_DECL void  pcre_free(void *);
+PCRE_EXP_DECL void *pcre_stack_malloc(size_t);
+PCRE_EXP_DECL void  pcre_stack_free(void *);
+PCRE_EXP_DECL int   pcre_callout(pcre_callout_block *);
 #endif  /* VPCOMPAT */
+
+/* User defined callback which provides a stack just before the match starts. */
+
+typedef pcre_jit_stack *(*pcre_jit_callback)(void *);
 
 /* Exported PCRE functions */
 
-PCRE_DATA_SCOPE pcre *pcre_compile(const char *, int, const char **, int *,
+PCRE_EXP_DECL pcre *pcre_compile(const char *, int, const char **, int *,
                   const unsigned char *);
-PCRE_DATA_SCOPE pcre *pcre_compile2(const char *, int, int *, const char **,
+PCRE_EXP_DECL pcre *pcre_compile2(const char *, int, int *, const char **,
                   int *, const unsigned char *);
-PCRE_DATA_SCOPE int  pcre_config(int, void *);
-PCRE_DATA_SCOPE int  pcre_copy_named_substring(const pcre *, const char *,
+PCRE_EXP_DECL int  pcre_config(int, void *);
+PCRE_EXP_DECL int  pcre_copy_named_substring(const pcre *, const char *,
                   int *, int, const char *, char *, int);
-PCRE_DATA_SCOPE int  pcre_copy_substring(const char *, int *, int, int, char *,
+PCRE_EXP_DECL int  pcre_copy_substring(const char *, int *, int, int, char *,
                   int);
-PCRE_DATA_SCOPE int  pcre_dfa_exec(const pcre *, const pcre_extra *,
+PCRE_EXP_DECL int  pcre_dfa_exec(const pcre *, const pcre_extra *,
                   const char *, int, int, int, int *, int , int *, int);
-PCRE_DATA_SCOPE int  pcre_exec(const pcre *, const pcre_extra *, PCRE_SPTR,
+PCRE_EXP_DECL int  pcre_exec(const pcre *, const pcre_extra *, PCRE_SPTR,
                    int, int, int, int *, int);
-PCRE_DATA_SCOPE void pcre_free_substring(const char *);
-PCRE_DATA_SCOPE void pcre_free_substring_list(const char **);
-PCRE_DATA_SCOPE int  pcre_fullinfo(const pcre *, const pcre_extra *, int,
+PCRE_EXP_DECL void pcre_free_substring(const char *);
+PCRE_EXP_DECL void pcre_free_substring_list(const char **);
+PCRE_EXP_DECL int  pcre_fullinfo(const pcre *, const pcre_extra *, int,
                   void *);
-PCRE_DATA_SCOPE int  pcre_get_named_substring(const pcre *, const char *,
+PCRE_EXP_DECL int  pcre_get_named_substring(const pcre *, const char *,
                   int *, int, const char *, const char **);
-PCRE_DATA_SCOPE int  pcre_get_stringnumber(const pcre *, const char *);
-PCRE_DATA_SCOPE int  pcre_get_stringtable_entries(const pcre *, const char *,
+PCRE_EXP_DECL int  pcre_get_stringnumber(const pcre *, const char *);
+PCRE_EXP_DECL int  pcre_get_stringtable_entries(const pcre *, const char *,
                   char **, char **);
-PCRE_DATA_SCOPE int  pcre_get_substring(const char *, int *, int, int,
+PCRE_EXP_DECL int  pcre_get_substring(const char *, int *, int, int,
                   const char **);
-PCRE_DATA_SCOPE int  pcre_get_substring_list(const char *, int *, int,
+PCRE_EXP_DECL int  pcre_get_substring_list(const char *, int *, int,
                   const char ***);
-PCRE_DATA_SCOPE int  pcre_info(const pcre *, int *, int *);
-PCRE_DATA_SCOPE const unsigned char *pcre_maketables(void);
-PCRE_DATA_SCOPE int  pcre_refcount(pcre *, int);
-PCRE_DATA_SCOPE pcre_extra *pcre_study(const pcre *, int, const char **);
-PCRE_DATA_SCOPE const char *pcre_version(void);
+PCRE_EXP_DECL int  pcre_info(const pcre *, int *, int *);
+PCRE_EXP_DECL const unsigned char *pcre_maketables(void);
+PCRE_EXP_DECL int  pcre_refcount(pcre *, int);
+PCRE_EXP_DECL pcre_extra *pcre_study(const pcre *, int, const char **);
+PCRE_EXP_DECL void pcre_free_study(pcre_extra *);
+PCRE_EXP_DECL const char *pcre_version(void);
+
+/* JIT compiler related functions. */
+
+PCRE_EXP_DECL pcre_jit_stack *pcre_jit_stack_alloc(int, int);
+PCRE_EXP_DECL void pcre_jit_stack_free(pcre_jit_stack *);
+PCRE_EXP_DECL void pcre_assign_jit_stack(pcre_extra *, pcre_jit_callback, void *);
 
 #ifdef __cplusplus
 }  /* extern "C" */

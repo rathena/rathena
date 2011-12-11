@@ -440,42 +440,6 @@ AC_COMPILE_IFELSE(
 )
 
 
-#
-# DB_MANUAL_CAST_TO_UNION
-#
-AC_MSG_CHECKING([whether $CC is able to typecast to union])
-AC_COMPILE_IFELSE(
-	[
-		typedef union Foonion
-		{
-			int i;
-			unsigned int ui;
-			const char* s;
-		}
-		Foonion;
-		
-		int bar(Foonion onion)
-		{
-			return onion.i;
-		}
-		
-		int foo(void)
-		{
-			int i = 0;
-		
-			return bar(((Foonion)(int)i));
-		}
-	],
-	[
-		AC_MSG_RESULT([yes])
-	],
-	[
-		AC_MSG_RESULT([no])
-		CFLAGS="$CFLAGS -DDB_MANUAL_CAST_TO_UNION"
-	]
-)
-
-
 ###############################################################################
 # Check for libraries and header files.
 #

@@ -29,7 +29,7 @@ static void* create_scdata(DBKey key, va_list args)
  *------------------------------------------*/
 struct scdata* status_search_scdata(int aid, int cid)
 {
-	return (struct scdata*)scdata_db->ensure(scdata_db, i2key(cid), create_scdata, aid);
+	return (struct scdata*)scdata_db->ensure(scdata_db, db_i2key(cid), create_scdata, aid);
 }
 
 /*==========================================

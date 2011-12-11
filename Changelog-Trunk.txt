@@ -1,11 +1,33 @@
 Date	Added
 
+2011-12-10
+	* Updated pcre3.dll and related files from 7.0 to 8.20 (bugreport:4948). [Ai4rei]
+2011-12-09
+	* Updated PACKETVER and packet_db_ver to the most recent fully supported and stable client (2010-07-28aRagexeRE). [Ai4rei]
+2011-12-08
+	* Updated zlib1.dll and related files from 1.2.3 to 1.2.5 (bugreport:4948). [Ai4rei]
+2011-12-04
+	* Random procrastinating in map.c/map.h [Ai4rei]
+	- Rewrote command line option parser. Now reports invalid options and missing option values.
+	- Dropped some alternative option names.
+	- Renamed option --grf-path-file to --grf-path.
+	- Enabled option --inter-config for TXT builds as well (mapreg_txt, party_share_level, etc.).
+	- Fixed outdated website url in version screen.
+	- Replaced 'puts' with 'ShowInfo' in help screen and reformatted it a bit.
+	- Added explanation for option --run-once to help screen (follow up to r789).
+	- Fixed option --inter-config was called --sql-config in help screen (follow up to r930).
+	- Removed orphaned extern variable 'map_server_dns' declaration from map.h (since r7275, follow up to r7360).
+2011-12-03
+	* Preparation clean up in clif.h [Ai4rei]
+	- Synced function declarations and argument names with clif.c including whitespace.
+	- Removed orphaned function declarations.
+	- Removed include to storage.h and put it into .c files that need it instead.
+2011-11-28
+	* Fixed novending cell check using misleading error message (bugreport:2592, since r11572 and r14724, related r11580). [Ai4rei]
+	* Fixed removing item scripts through script command *setitemscript not working the way it is stated in script_commands.txt (related r9831). [Ai4rei]
 2011-11-27
 	* Welcome to RAthena!  http://rathena.org/board/topic/53704-rathena-the-fork/
 
-2011/11/28
-	* Fixed novending cell check using misleading error message (bugreport:2592, since r11572 and r14724, related r11580). [Ai4rei]
-	* Fixed removing item scripts through script command *setitemscript not working the way it is stated in script_commands.txt (related r9831). [Ai4rei]
 2011/11/19
 	* Fixed wrong damage numbers being displayed when the damage source was disguised (bugreport:5093, since r14979). [Ai4rei]
 2011/11/17

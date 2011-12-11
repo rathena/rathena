@@ -2437,14 +2437,11 @@ DBMap* db_alloc(const char *file, int line, DBType type, DBOptions options, unsi
 	return &db->vtable;
 }
 
-#ifdef DB_MANUAL_CAST_TO_UNION
 /**
  * Manual cast from 'int' to the union DBKey.
- * Created for compilers that don't support casting to unions.
  * @param key Key to be casted
  * @return The key as a DBKey union
  * @public
- * @see #DB_MANUAL_CAST_TO_UNION
  */
 DBKey db_i2key(int key)
 {
@@ -2457,11 +2454,9 @@ DBKey db_i2key(int key)
 
 /**
  * Manual cast from 'unsigned int' to the union DBKey.
- * Created for compilers that don't support casting to unions.
  * @param key Key to be casted
  * @return The key as a DBKey union
  * @public
- * @see #DB_MANUAL_CAST_TO_UNION
  */
 DBKey db_ui2key(unsigned int key)
 {
@@ -2474,11 +2469,9 @@ DBKey db_ui2key(unsigned int key)
 
 /**
  * Manual cast from 'const char *' to the union DBKey.
- * Created for compilers that don't support casting to unions.
  * @param key Key to be casted
  * @return The key as a DBKey union
  * @public
- * @see #DB_MANUAL_CAST_TO_UNION
  */
 DBKey db_str2key(const char *key)
 {
@@ -2488,7 +2481,6 @@ DBKey db_str2key(const char *key)
 	ret.str = key;
 	return ret;
 }
-#endif /* DB_MANUAL_CAST_TO_UNION */
 
 /**
  * Initializes the database system.

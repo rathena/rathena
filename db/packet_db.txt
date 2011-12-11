@@ -33,7 +33,7 @@
 // Main packet version of the DB to use (default = max available version)
 // Client detection is faster when all clients use this version.
 // Version 23 is the latest Sakexe (above versions are for Renewal clients)
-//packet_db_ver: 23
+//packet_db_ver: 25
 packet_db_ver: default
 
 

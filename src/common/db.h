@@ -46,8 +46,6 @@
 
 /*****************************************************************************\
  *  (1) Section with public typedefs, enums, unions, structures and defines. *
- *  DB_MANUAL_CAST_TO_UNION - Define when the compiler doesn't allow casting *
- *           to unions.                                                      *
  *  DBRelease    - Enumeration of release options.                           *
  *  DBType       - Enumeration of database types.                            *
  *  DBOptions    - Bitfield enumeration of database options.                 *
@@ -60,19 +58,6 @@
  *  DBIterator   - Database iterator.                                        *
  *  DBMap        - Database interface.                                       *
 \*****************************************************************************/
-
-/**
- * Define this to enable the functions that cast to unions.
- * Required when the compiler doesn't support casting to unions.
- * NOTE: It is recommened that the conditional tests to determine if this 
- * should be defined be located in the configure script or a header file 
- * specific for compatibility and portability issues.
- * @public
- * @see #db_i2key(int)
- * @see #db_ui2key(unsigned int)
- * @see #db_str2key(unsigned char *)
- */
-//#define DB_MANUAL_CAST_TO_UNION
 
 /**
  * Bitfield with what should be released by the releaser function (if the
@@ -575,42 +560,32 @@ struct DBMap {
 };
 
 //For easy access to the common functions.
-#ifdef DB_MANUAL_CAST_TO_UNION
-#	define i2key   db_i2key
-#	define ui2key  db_ui2key
-#	define str2key db_str2key
-#else /* not DB_MANUAL_CAST_TO_UNION */
-#	define i2key(k)   ((DBKey)(int)(k))
-#	define ui2key(k)  ((DBKey)(unsigned int)(k))
-#	define str2key(k) ((DBKey)(const char *)(k))
-#endif /* not DB_MANUAL_CAST_TO_UNION */
-
 #define db_exists(db,k)    ( (db)->exists((db),(k)) )
-#define idb_exists(db,k)   ( (db)->exists((db),i2key(k)) )
-#define uidb_exists(db,k)  ( (db)->exists((db),ui2key(k)) )
-#define strdb_exists(db,k) ( (db)->exists((db),str2key(k)) )
+#define idb_exists(db,k)   ( (db)->exists((db),db_i2key(k)) )
+#define uidb_exists(db,k)  ( (db)->exists((db),db_ui2key(k)) )
+#define strdb_exists(db,k) ( (db)->exists((db),db_str2key(k)) )
 
 #define db_get(db,k)    ( (db)->get((db),(k)) )
-#define idb_get(db,k)   ( (db)->get((db),i2key(k)) )
-#define uidb_get(db,k)  ( (db)->get((db),ui2key(k)) )
-#define strdb_get(db,k) ( (db)->get((db),str2key(k)) )
+#define idb_get(db,k)   ( (db)->get((db),db_i2key(k)) )
+#define uidb_get(db,k)  ( (db)->get((db),db_ui2key(k)) )
+#define strdb_get(db,k) ( (db)->get((db),db_str2key(k)) )
 
 #define db_put(db,k,d)    ( (db)->put((db),(k),(d)) )
-#define idb_put(db,k,d)   ( (db)->put((db),i2key(k),(d)) )
-#define uidb_put(db,k,d)  ( (db)->put((db),ui2key(k),(d)) )
-#define strdb_put(db,k,d) ( (db)->put((db),str2key(k),(d)) )
+#define idb_put(db,k,d)   ( (db)->put((db),db_i2key(k),(d)) )
+#define uidb_put(db,k,d)  ( (db)->put((db),db_ui2key(k),(d)) )
+#define strdb_put(db,k,d) ( (db)->put((db),db_str2key(k),(d)) )
 
 #define db_remove(db,k)    ( (db)->remove((db),(k)) )
-#define idb_remove(db,k)   ( (db)->remove((db),i2key(k)) )
-#define uidb_remove(db,k)  ( (db)->remove((db),ui2key(k)) )
-#define strdb_remove(db,k) ( (db)->remove((db),str2key(k)) )
+#define idb_remove(db,k)   ( (db)->remove((db),db_i2key(k)) )
+#define uidb_remove(db,k)  ( (db)->remove((db),db_ui2key(k)) )
+#define strdb_remove(db,k) ( (db)->remove((db),db_str2key(k)) )
 
 //These are discarding the possible vargs you could send to the function, so those
 //that require vargs must not use these defines.
 #define db_ensure(db,k,f)    ( (db)->ensure((db),(k),(f)) )
-#define idb_ensure(db,k,f)   ( (db)->ensure((db),i2key(k),(f)) )
-#define uidb_ensure(db,k,f)  ( (db)->ensure((db),ui2key(k),(f)) )
-#define strdb_ensure(db,k,f) ( (db)->ensure((db),str2key(k),(f)) )
+#define idb_ensure(db,k,f)   ( (db)->ensure((db),db_i2key(k),(f)) )
+#define uidb_ensure(db,k,f)  ( (db)->ensure((db),db_ui2key(k),(f)) )
+#define strdb_ensure(db,k,f) ( (db)->ensure((db),db_str2key(k),(f)) )
 
 // Database creation and destruction macros
 #define idb_alloc(opt)            db_alloc(__FILE__,__LINE__,DB_INT,(opt),sizeof(int))
@@ -729,37 +704,29 @@ DBReleaser db_custom_release(DBRelease which);
  */
 DBMap* db_alloc(const char *file, int line, DBType type, DBOptions options, unsigned short maxlen);
 
-#ifdef DB_MANUAL_CAST_TO_UNION
 /**
  * Manual cast from 'int' to the union DBKey.
- * Created for compilers that don't support casting to unions.
  * @param key Key to be casted
  * @return The key as a DBKey union
  * @public
- * @see #DB_MANUAL_CAST_TO_UNION
  */
 DBKey db_i2key(int key);
 
 /**
  * Manual cast from 'unsigned int' to the union DBKey.
- * Created for compilers that don't support casting to unions.
  * @param key Key to be casted
  * @return The key as a DBKey union
  * @public
- * @see #DB_MANUAL_CAST_TO_UNION
  */
 DBKey db_ui2key(unsigned int key);
 
 /**
  * Manual cast from 'unsigned char *' to the union DBKey.
- * Created for compilers that don't support casting to unions.
  * @param key Key to be casted
  * @return The key as a DBKey union
  * @public
- * @see #DB_MANUAL_CAST_TO_UNION
  */
 DBKey db_str2key(const char *key);
-#endif /* DB_MANUAL_CAST_TO_UNION */
 
 /**
  * Initialize the database system.

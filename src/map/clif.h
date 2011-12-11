@@ -6,6 +6,7 @@
 
 #include "../common/cbasetypes.h"
 //#include "../common/mmo.h"
+struct item;
 struct storage_data;
 struct guild_storage;
 //#include "map.h"
