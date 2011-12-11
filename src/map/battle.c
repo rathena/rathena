@@ -2092,7 +2092,11 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 		if (!flag.idef || !flag.idef2)
 		{	//Defense reduction
 			short vit_def;
+#if RRMODE
+			short def1 = status_get_def(target); //Don't use tstatus->def1 due to skill timer reductions.
+#else
 			signed char def1 = status_get_def(target); //Don't use tstatus->def1 due to skill timer reductions.
+#endif
 			short def2 = (short)tstatus->def2;
 
 			if( sd )
@@ -2708,7 +2712,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 				 * -> statusMATK holds the %Matk modifier stuff from earlier and lastly:
 				 * -> the mdef part is not applied at this point, but later.
 				 **/	//1:bugreport:5101																	//1:bugreport:5101
-				MATK_ADD((1+sstatus->matk_max) * 2 + 15/10 * sstatus->matk_min + rand()% ( sstatus->matk_max + (1 + (sstatus->matk_max*sstatus->wlv) / 10 * 2 * 10/15 * sstatus->matk_min ) ));
+				MATK_ADD((1+sstatus->matk_max) * 2 + 15/10 * sstatus->matk_min + rand()% ( sstatus->matk_max + (1 + (sstatus->matk_max*sstatus->wlv) / 10 * 2 + 10/15 * sstatus->matk_min ) ));
 			#else //Ancient MATK Appliance
 				if (sstatus->matk_max > sstatus->matk_min) {
 					MATK_ADD(sstatus->matk_min+rand()%(1+sstatus->matk_max-sstatus->matk_min));
@@ -3021,7 +3025,11 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 		}
 
 		if(!flag.imdef){
+#if RRMODE
+			short mdef = tstatus->mdef;
+#else
 			char mdef = tstatus->mdef;
+#endif
 			int mdef2= tstatus->mdef2;
 			if(sd) {
 				i = sd->ignore_mdef[is_boss(target)?RC_BOSS:RC_NONBOSS];
