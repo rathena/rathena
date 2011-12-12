@@ -12,7 +12,6 @@
 //===== Additional Comments: ================================= 
 //= 1.0 First Version, Renewal guide.
 //= 1.1 Added a missing close.
-//= 1.1 Added a missing close.
 //============================================================ 
 
 brasilis,219,97,3	script	Brasilis Guide	478,{
