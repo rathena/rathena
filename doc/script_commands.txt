@@ -1168,6 +1168,14 @@ english characters, the color codes might get screwed if they stick to letters
 with no intervening space. Separating them with spaces from the letters on 
 either side solves the problem.
 
+To display multiple lines of message while only using a single mes; command,
+use the script command in the following format:
+
+    mes "Line 1", "Line 2", "Line 3";
+
+This will display 3 different lines while only consuming a single line in
+the relevant script file.
+
 ---------------------------------------
 
 *next;
@@ -4734,6 +4742,26 @@ do a complete removal of all statuses (although permanent ones will re-apply).
 You can see the full list of status effects caused by skills in 
 'src/map/status.h' - they are currently not fully documented, but most of that 
 should be rather obvious.
+
+---------------------------------------
+
+*getstatus <effect type>{,<type>};
+
+Retrieve information about a specific status effect when called. Depending on <type>
+specified the function will return different information.
+
+Possible <type> values:
+	- 0 or undefined: whether the status is active
+	- 1: the val1 of the status
+	- 2: the val2 of the status
+	- 3: the val3 of the status
+	- 4: the val4 of the status
+	- 5: the amount of time in milliseconds that the status has remaining
+
+If <type> is not defined or is set to 0, then the script function will either
+return 1 if the status is active, or 0 if the status is not active. If the status
+is not active when any of the <type> fields are provided, this script function
+will always return 0.
 
 ---------------------------------------
 

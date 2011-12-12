@@ -3874,11 +3874,24 @@ int script_reload()
 /// mes "<message>";
 BUILDIN_FUNC(mes)
 {
+	int i;
 	TBL_PC* sd = script_rid2sd(st);
 	if( sd == NULL )
 		return 0;
 
-	clif_scriptmes(sd, st->oid, script_getstr(st, 2));
+	if( !script_hasdata(st, 3) )
+	{// only a single line detected in the script
+		clif_scriptmes(sd, st->oid, script_getstr(st, 2));
+	}
+	else
+	{// parse multiple lines as they exist
+		for( i = 2; script_hasdata(st, i); i++ )
+		{
+			// send the message to the client
+			clif_scriptmes(sd, st->oid, script_getstr(st, i));
+		}
+	}
+
 	return 0;
 }
 
@@ -9064,6 +9077,56 @@ BUILDIN_FUNC(getscrate)
 		rate = status_get_sc_def(bl, (sc_type)type, 10000, 10000, 0);
 
 	script_pushint(st,rate);
+	return 0;
+}
+
+/*==========================================
+ * getstatus <type>{, <info>};
+ *------------------------------------------*/
+BUILDIN_FUNC(getstatus)
+{
+	int id, type;
+	struct map_session_data* sd = script_rid2sd(st);
+
+	if( sd == NULL )
+	{// no player attached
+		return 0;
+	}
+
+	id = script_getnum(st, 2);
+	type = script_hasdata(st, 3) ? script_getnum(st, 3) : 0;
+
+	if( id <= SC_NONE || id >= SC_MAX )
+	{// invalid status type given
+		ShowWarning("script.c:getstatus: Invalid status type given (%d).\n", id);
+		return 0;
+	}
+
+	if( sd->sc.count == 0 || !sd->sc.data[id] )
+	{// no status is active
+		script_pushint(st, 0);
+		return 0;
+	}
+	
+	switch( type )
+	{
+		case 1:	 script_pushint(st, sd->sc.data[id]->val1);	break;
+		case 2:  script_pushint(st, sd->sc.data[id]->val2);	break;
+		case 3:  script_pushint(st, sd->sc.data[id]->val3);	break;
+		case 4:  script_pushint(st, sd->sc.data[id]->val4);	break;
+		case 5:
+			{
+				struct TimerData* timer = (struct TimerData*)get_timer(sd->sc.data[id]->timer);
+
+				if( timer )
+				{// return the amount of time remaining
+					script_pushint(st, timer->tick - gettick());
+				}
+			}
+			break;
+		default: script_pushint(st, 1); break;
+	}
+
 	return 0;
 }
 
@@ -15912,7 +15975,7 @@ BUILDIN_FUNC(deletepset);
 /// for an explanation on args, see add_buildin_func
 struct script_function buildin_func[] = {
 	// NPC interaction
-	BUILDIN_DEF(mes,"s"),
+	BUILDIN_DEF(mes,"s*"),
 	BUILDIN_DEF(next,""),
 	BUILDIN_DEF(close,""),
 	BUILDIN_DEF(close2,""),
@@ -16055,6 +16118,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(sc_start2,"iiii?"),
 	BUILDIN_DEF(sc_start4,"iiiiii?"),
 	BUILDIN_DEF(sc_end,"i?"),
+	BUILDIN_DEF(getstatus, "i?"),
 	BUILDIN_DEF(getscrate,"ii?"),
 	BUILDIN_DEF(debugmes,"s"),
 	BUILDIN_DEF2(catchpet,"pet","i"),
