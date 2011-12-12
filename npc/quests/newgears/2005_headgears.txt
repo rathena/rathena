@@ -1984,7 +1984,7 @@ gl_prison1,97,104,1	script	Phendark#LhzHat	1202,{
 				mes "Huh...?";
 				mes "What is that";
 				mes "supposed to mean?";
-				close;
+				next;
 			}
 			else if(@temp1 == 3 && @temp2 == 2)
 			{
