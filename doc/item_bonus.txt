@@ -154,7 +154,7 @@ bonus2 bSubRace,n,x;			+x% damage reduction against race n
 bonus2 bAddEle,n,x;			+x% physical damage against element n
 							n: 	0=Neutral, 1=Water, 2=Earth, 3=Fire, 4=Wind, 5=Poison,
 								6=Holy, 7=Dark, 8=Spirit, 9=Undead
-bonus2 bMagicAddEle,n,x 	+x% magical damage against element n
+bonus2 bMagicAddEle,n,x; 	+x% magical damage against element n
 							n: 	0=Neutral, 1=Water, 2=Earth, 3=Fire, 4=Wind, 5=Poison,
 								6=Holy, 7=Dark, 8=Spirit, 9=Undead
 bonus2 bSubEle,n,x;			x% Damage reduction against element n.
