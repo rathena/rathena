@@ -489,7 +489,6 @@ payon,177,111,3	script	Eden Teleport Officer#12	729,{
 		mes "[Eden Teleport Officer]";
 		mes "Let's go to our secret base!";
 		set nak_warp,12;
-		close;
 		close2;
 		warp "moc_para01",31,14;
 		end;
