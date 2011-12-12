@@ -6,24 +6,24 @@
 //===== Current Version: ===================================== 
 //= 3.3
 //===== Compatible With: ===================================== 
-//= eAthena  SVN
+//= eAthena SVN
 //===== Description: ========================================= 
 //= [Aegis Conversion]
 //= Job quest for Crusader classes
 //===== Additional Comments: ================================= 
 //= 2.2 Updated All NPCs to the officials one [Samuray22]
-//=	-Based on the ASB 4.0 Package.
-//=	-Maybe need be checked the monsters in the test 2 and 4.
+//=     -Based on the ASB 4.0 Package.
+//=-Maybe need be checked the monsters in the test 2 and 4.
 //= 2.3 Fixed some bugs that prevented from going further. [SinSloth]
 //= 2.4 Updated NPC dialogs using Aegis 10.3 files. [L0ne_W0lf]
-//=	- Fixed logic error with job change reward for job 50 swordies.
-//=	- Completely redid the 1st and third tests.
-//=	- Optimized first four NPC scripts slightly.
-//=	- Temporary character variables "@" are now ".@"
-//=	- Fixed some indentation.
+//=    - Fixed logic error with job change reward for job 50 swordies.
+//=    - Completely redid the 1st and third tests.
+//=    - Optimized first four NPC scripts slightly.
+//=    - Temporary character variables "@" are now ".@"
+//=    - Fixed some indentation.
 //= 2.5 Fixed some spelling and grammar in crusader quest. [L0ne_W0lf]
 //= 2.6 Fixed bug (about totally blocked baby class), optimized,
-//=	made some NPC more unique names: Monster Summon#cr1 [Lupus]
+//=     made some NPC more unique names: Monster Summon#cr1 [Lupus]
 //= 2.7 Fixed Some variables like ".@item", and changed to "@item". [Samuray22]
 //= 2.8 Fixed a little minor bug. [Samuray22]
 //= 2.9 Minor fixes, typos, an incorrect answer. Thanks to yyCC. [L0ne_W0lf]
@@ -537,7 +537,7 @@ prt_church,95,127,3	script	Crusader	745,{
 			mes "[Gabriel Valentine]";
 			mes "2. If the monster is a Level 2 Undead, how much more damage does a Holy attack do compared to Fire?";
 			next;
-			if (select("25 %:50 %:75 %:100 %") == 2)
+			if (select("25 %:50 %:75 %:100 %") == 1)
 				set .@cru_t,.@cru_t+10;
 
 			mes "[Gabriel Valentine]";

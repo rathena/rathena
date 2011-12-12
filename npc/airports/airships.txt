@@ -870,7 +870,7 @@ s_Play:
 	next;
 	if(.@comparisonvar$[1] != .@typingstring1$ || .@comparisonvar$[2] != .@typingstring2$) goto s_Fail;
 	set .@time, (gettimetick(0) - .@start) / 100; //seconds taken
-	set .@mypoints, (.@typingkeys * 100) / .@time;
+	if (.@time) set .@mypoints, (.@typingkeys * 100) / .@time;
 	mes "[Nils]";
 	mes "Your typing time";
 	mes "was ^FF0000" + .@time + " seconds^000000";
