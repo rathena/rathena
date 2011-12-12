@@ -451,9 +451,8 @@ while(1)
 	mapannounce "airplane_01","The Airship is leaving the ground. Our next destination is Izlude.",bc_map,0x00FF00;
 	end;
 OnTimer15000:
-	set $@mobinv, $@mobinv+1;
-	set $@mobrand, rand(1,3);
-	if($@mobinv >= 9 && $@mobrand == 3) {
+	set .mobinv, .mobinv+1;
+	if(.mobinv >= 9 && rand(1,3) == 3) {
 		stopnpctimer;
 		enablenpc "Airship#airplane02";
 		donpcevent "Airship#airplane02::OnInvasion";
@@ -529,7 +528,7 @@ OnTimer195000:
 }
 OnReturn:
 	killmonsterall "airplane_01";
-	set $@mobinv, 0;
+	set .mobinv, 0;
 	mapannounce "airplane_01","Monster threat nullfied. The Airship is now returning to normal operation.",bc_map,0x00FF00;
 	startnpctimer;
 	end;
@@ -780,7 +779,7 @@ s_Play:
 	//below arrays are for simplified entering of new lines ;P
 
 	//first lines array
-	setarray $@textstringsa$[0],
+	setarray .textstringsa$[0],
 	"^00FFFFthkelfkskeldmsiejdlsle^0000FFhfndkelsheidl",
 	"^993366hfjdkeldjsieldjs^663366hfjdjeiskdlefvbd",
 	"^00FFFFCoboman no chikara-yumei na",
@@ -795,7 +794,7 @@ s_Play:
 	"^00CCFF...silence. quiet benevolence...";
 
 	//second lines array
-	setarray $@textstringsb$[0],"skemd",
+	setarray .textstringsb$[0],"skemd",
 	"",
 	"chikara-dalookii na chikara da ze!",
 	"folktale rodimus optimus bumblebee",
@@ -809,7 +808,7 @@ s_Play:
 	"soul mate... wonder. enigma...";
 	//for the few 3-liners... =X
 
-	setarray $@textstringsc$[0],"",
+	setarray .textstringsc$[0],"",
 	"",
 	"COBO ON!",
 	"",
@@ -823,7 +822,7 @@ s_Play:
 	"cloud.";
 
 	//comparisation strings
-	setarray $@compstring$[0],
+	setarray .compstring$[0],
 	"thkelfkskeldmsiejdlslehfndkelsheidlskemd",
 	"hfjdkeldjsieldjshfjdjeiskdlefvbd",
 	"Coboman no chikara-yumei na chikara-dalookii na chikara da ze! COBO ON!",
@@ -838,56 +837,53 @@ s_Play:
 	"...silence. quiet benevolence... soul mate... wonder. enigma... cloud";
 
 	//lengths
-	setarray $@lengths[0],20,32,73,73,65,66,67,55,67,66,67,69;
+	setarray .lengths[0],20,32,73,73,65,66,67,55,67,66,67,69;
 
 	//	initnpctimer;
 	// pick 2 distinct phrases and initialize related variables
-	set @index,rand(1,getarraysize($@textstringsa$))-1;
-	set @string1a$,$@textstringsa$[@index];
-	set @string1b$,$@textstringsb$[@index];
-	set @string1c$,$@textstringsc$[@index];
-	set @typingstring1$,$@compstring$[@index];
+	set .@index1,rand(getarraysize(.textstringsa$));
+	set .@string1a$,.textstringsa$[.@index1];
+	set .@string1b$,.textstringsb$[.@index1];
+	set .@string1c$,.textstringsc$[.@index1];
+	set .@typingstring1$,.compstring$[.@index1];
 
-	set @index2,rand(1,getarraysize($@textstringsa$))-1;
-	while (@index2 == @index) {
-		set @index2,rand(1,getarraysize($@textstringsa$))-1;
-	}
-	set @string2a$,$@textstringsa$[@index2];
-	set @string2b$,$@textstringsb$[@index2];
-	set @string2c$,$@textstringsc$[@index2];
-	set @typingstring2$,$@compstring$[@index2];
+	while ( set(.@index2,rand(getarraysize(.textstringsa$))) == .@index1 );
+	set .@string2a$,.textstringsa$[.@index2];
+	set .@string2b$,.textstringsb$[.@index2];
+	set .@string2c$,.textstringsc$[.@index2];
+	set .@typingstring2$,.compstring$[.@index2];
 
-	set @typingkeys,$@lengths[@index]+$@lengths[@index2];
-	set @start,gettime(3)*60*60+gettime(2)*60+gettime(1);
+	set .@typingkeys,.lengths[.@index1]+.lengths[.@index2];
+	set .@start,gettimetick(0);
 
 	mes "[Nils]";
-	mes @string1a$;
-	if(@string1b$ != "")mes @string1b$;
-	if(@string1c$ != "")mes @string1c$;
-	input @comparisonvar$[1];
+	mes .@string1a$;
+	if(.@string1b$ != "")mes .@string1b$;
+	if(.@string1c$ != "")mes .@string1c$;
+	input .@comparisonvar$[1];
 	next;
 	mes "^000000[Nils]";
-	mes @string2a$;
-	if(@string2b$ != "")mes @string2b$;
-	if(@string2c$ != "")mes @string2c$;
-	input @comparisonvar$[2];
+	mes .@string2a$;
+	if(.@string2b$ != "")mes .@string2b$;
+	if(.@string2c$ != "")mes .@string2c$;
+	input .@comparisonvar$[2];
 	next;
-	if(@comparisonvar$[1] != @typingstring1$ || @comparisonvar$[2] != @typingstring2$) goto s_Fail;
-	set @time,(gettime(3)*60*60+gettime(2)*60+gettime(1))-@start; //seconds taken
-	set @mypoints,(@typingkeys * 100) / @time;
+	if(.@comparisonvar$[1] != .@typingstring1$ || .@comparisonvar$[2] != .@typingstring2$) goto s_Fail;
+	set .@time, (gettimetick(0) - .@start) / 100; //seconds taken
+	set .@mypoints, (.@typingkeys * 100) / .@time;
 	mes "[Nils]";
 	mes "Your typing time";
-	mes "was ^FF0000" + @time + " seconds^000000";
+	mes "was ^FF0000" + .@time + " seconds^000000";
 	mes "and your score is";
-	mes "^0000FF" + @mypoints + "^000000 points";
+	mes "^0000FF" + .@mypoints + "^000000 points";
 	next;
-	if(@mypoints <= $TypingRecord)goto loopback;
+	if(.@mypoints <= $TypingRecord)goto loopback;
 	mes "[Nils]";
 	mes "Congratulations!";
 	mes "It's a new record.";
 	mes "I'll put you on the high-";
 	mes "score list immediately.";
-	set $TypingRecord,@mypoints;
+	set $TypingRecord,.@mypoints;
 	set $TypingRecord$,strcharinfo(0);
 	close;
 
@@ -1299,18 +1295,18 @@ function	script	applegamble	{
 	mes "to cancel, please enter '0'.";
 	next;
 L_Input:
-	input @amount;
-	if(@amount == 0) {
+	input .@amount;
+	if(.@amount == 0) {
 		mes "["+getarg(0)+"]";
 		mes "Changed your mind?";
 		mes "I understand. Well then,";
 		mes "I hope we can play sometime.";
 		close;
 	}
-	if(@amount > 50) set @amount,50;
+	if(.@amount > 50) set .@amount,50;
 	mes "["+getarg(0)+"]";
 	mes "So you'll be";
-	mes "betting ^FF0000"+@amount+"^000000 Apples.";
+	mes "betting ^FF0000"+.@amount+"^000000 Apples.";
 	mes "Is that right?";
 	next;
 	if(select("Yes:No")==2){
@@ -1322,7 +1318,7 @@ L_Input:
 		next;
 		goto L_Input;
 	}
-	if(countitem(512)<@amount){
+	if(countitem(512)<.@amount){
 		//more apples then in inventory
 		//-Improvised-
 		mes "["+getarg(0)+"]";
@@ -1332,53 +1328,53 @@ L_Input:
 		mes "now do you?";
 		close;
 	}
-	delitem 512,@amount;
+	delitem 512,.@amount;
 	mes "["+getarg(0)+"]";
 	mes "Good!";
 	mes "Now we can start";
 	mes "this game! I'll roll first~";
 	next;
 	mes "^0000FF*Rolling and rumbling*";
-	set @table1,rand(1,6);
-	set @table2,rand(1,6);
-	set @tablesub,@table1+@table2;
+	set .@table1,rand(1,6);
+	set .@table2,rand(1,6);
+	set .@tablesub,.@table1+.@table2;
 	next;
-	mes "I rolled a "+@table1+" and a "+@table2+",";
-	mes "giving me a total of "+@tablesub+".";
+	mes "I rolled a "+.@table1+" and a "+.@table2+",";
+	mes "giving me a total of "+.@tablesub+".";
 	mes "Now it's your turn,";
 	mes strcharinfo(0)+".";
 	next;
 	menu "Roll Dice.",-;
 
 	mes "^0000FF*Rolling and rumbling*";
-	set @player1,rand(1,6);
-	set @player2,rand(1,6);
-	set @playersub,@player1+@player2;
+	set .@player1,rand(1,6);
+	set .@player2,rand(1,6);
+	set .@playersub,.@player1+.@player2;
 	next;
 	mes "["+getarg(0)+"]";
 	mes strcharinfo(0)+",";
-	mes "you rolled a "+@player1+" and a "+@player2+",";
-	mes "giving you a total of ^FF0000"+@playersub+"^000000.";
+	mes "you rolled a "+.@player1+" and a "+.@player2+",";
+	mes "giving you a total of ^FF0000"+.@playersub+"^000000.";
 	next;
 	mes "["+getarg(0)+"]";
-	if(@playersub == @tablesub) {
+	if(.@playersub == .@tablesub) {
 		mes "Well, well, well.";
 		mes "Both of us have a total";
-		mes "of "+@playersub+". Well, the ball's in";
+		mes "of "+.@playersub+". Well, the ball's in";
 		mes "your court. Are you going";
 		mes "to roll your third die,";
 		mes strcharinfo(0)+"?";
-	} else if(@playersub > @tablesub) {
-		mes "Since my total is only ^0000FF"+@tablesub+"^000000,";
+	} else if(.@playersub > .@tablesub) {
+		mes "Since my total is only ^0000FF"+.@tablesub+"^000000,";
 		mes "you have the advantage for";
-		mes "now with your total of ^FF0000"+@playersub+"^000000. Do";
+		mes "now with your total of ^FF0000"+.@playersub+"^000000. Do";
 		mes "you wanna roll one more die?";
 		mes "Remember, you'll bust if all three";
 		mes "of your dice total more than 12.";
-	} else if(@tablesub > @playersub) {
-		mes "Since my total is ^0000FF"+@tablesub+"^000000,";
+	} else if(.@tablesub > .@playersub) {
+		mes "Since my total is ^0000FF"+.@tablesub+"^000000,";
 		mes "I have the advantage for";
-		mes "now with your total of ^FF0000"+@playersub+"^000000. Do";
+		mes "now with your total of ^FF0000"+.@playersub+"^000000. Do";
 		mes "you wanna roll one more die?";
 		mes "Remember, you'll bust if all three";
 		mes "of your dice total more than 12.";
@@ -1387,14 +1383,14 @@ L_Input:
 	if(select("Roll another dice.:Don't Roll.")==2){
 		mes "["+getarg(0)+"]";
 		mes "Not gonna roll, huh?";
-		if(@tablesub == @playersub) {
+		if(.@tablesub == .@playersub) {
 			mes "You better hope I roll";
 			mes "too high and bust, or";
 			mes "I'll beat you for sure!";
 			mes "Okay, here goes nothing...";
 			next;
 			goto L_Table3;
-		} else if(@tablesub < @playersub) {
+		} else if(.@tablesub < .@playersub) {
 			next;
 			mes "["+getarg(0)+"]";
 			mes "Alright, I see that you";
@@ -1403,7 +1399,7 @@ L_Input:
 			mes "I'll go ahead and roll then.";
 			next;
 			goto L_Table3;
-		} else if(@tablesub > @playersub) {
+		} else if(.@tablesub > .@playersub) {
 		//you have a lower sub total then table, and do not roll 3th -Improvised-
 			mes "["+getarg(0)+"]";
 			mes "Not gonna roll, huh?";
@@ -1412,8 +1408,8 @@ L_Input:
 			next;
 			mes "["+getarg(0)+"]";
 			mes "That means that I";
-			mes "have a total of ^0000FF"+@tablesub+"^000000";
-			mes "wich beats your ^FF0000"+@playersub+"^000000.";
+			mes "have a total of ^0000FF"+.@tablesub+"^000000";
+			mes "wich beats your ^FF0000"+.@playersub+"^000000.";
 			mes "I'm sorry, but you lose";
 			mes "this game, "+strcharinfo(0)+". Better";
 			mes "luck next time.";
@@ -1421,14 +1417,14 @@ L_Input:
 		close;
 	}
 	mes "^0000FF*Rolling and rumbling*";
-	set @player3,rand(1,6);
-	set @playersub,@playersub+@player3;
-	if(@playersub > 12) {
+	set .@player3,rand(1,6);
+	set .@playersub,.@playersub+.@player3;
+	if(.@playersub > 12) {
 	//player bust --Improvised--
 		next;
 		mes "["+getarg(0)+"]";
-		mes "Oh my... You rolled a ^FF000"+@player3+"^000000,";
-		mes "making your total ^FF0000"+@playersub+"^000000.";
+		mes "Oh my... You rolled a ^FF000"+.@player3+"^000000,";
+		mes "making your total ^FF0000"+.@playersub+"^000000.";
 		mes "That's more then 12, meaning you bust.";
 		mes "Sorry, but you lose this";
 		mes "game, "+strcharinfo(0)+".";
@@ -1437,20 +1433,20 @@ L_Input:
 	next;
 	mes "["+getarg(0)+"]";
 	mes "Oh hey! You rolled";
-	if(@playersub >= @tablesub) {
-		mes "a ^FF0000"+@player3+"^000000, giving you a total";
-		mes "of ^FF0000"+@playersub+"^000000. Now, if I don't";
+	if(.@playersub >= .@tablesub) {
+		mes "a ^FF0000"+.@player3+"^000000, giving you a total";
+		mes "of ^FF0000"+.@playersub+"^000000. Now, if I don't";
 		mes "roll, I'll lose for sure!";
 		mes "I'm gonna go for it...";
 		next;
 		goto L_Table3;
-	} else if(@playersub < @tablesub) {
+	} else if(.@playersub < .@tablesub) {
 		//player's sub together with 3th die is still too low
 		//--Improvised--
-		mes "a ^FF0000"+@player3+"^000000, giving";
-		mes "you a total of ^FF0000"+@playersub+"^000000.";
+		mes "a ^FF0000"+.@player3+"^000000, giving";
+		mes "you a total of ^FF0000"+.@playersub+"^000000.";
 		mes "Wich still isn't enough";
-		mes "to beat my ^0000FF"+@tablesub+"^000000.";
+		mes "to beat my ^0000FF"+.@tablesub+"^000000.";
 		mes "Sorry, but you lose this";
 		mes "game, "+strcharinfo(0)+". Them's";
 		mes "the breaks, I suppose...";
@@ -1458,48 +1454,48 @@ L_Input:
 	}
 L_Table3:
 	mes "^0000FF*Rolling and rumbling*";
-	set @table3,rand(1,6);
-	set @tablesub,@tablesub+@table3;
+	set .@table3,rand(1,6);
+	set .@tablesub,.@tablesub+.@table3;
 	next;
-	if(@tablesub > 12) {
+	if(.@tablesub > 12) {
 		mes "["+getarg(0)+"]";
-		mes "Eh? I rolled a ^0000FF"+@table3+"^000000, making";
-		mes "my total ^0000FF"+@tablesub+"^000000. I hate to say";
+		mes "Eh? I rolled a ^0000FF"+.@table3+"^000000, making";
+		mes "my total ^0000FF"+.@tablesub+"^000000. I hate to say";
 		mes "it, but I gambled and lost.";
 		mes "Take your winnings before";
 		mes "I cry, "+strcharinfo(0)+"~!";
 		close2;
-		getitem 512,@amount*2;
+		getitem 512,.@amount*2;
 		end;
 	}
 	mes "["+getarg(0)+"]";
-	if(@tablesub < @playersub) {
-		mes "I rolled a "+@table3+", which";
-		mes "gives me a total of ^0000FF"+@tablesub+"^000000.";
+	if(.@tablesub < .@playersub) {
+		mes "I rolled a "+.@table3+", which";
+		mes "gives me a total of ^0000FF"+.@tablesub+"^000000.";
 		mes "But... It's still not enough";
-		mes "to beat your ^FF0000"+@playersub+"^000000. It looks";
+		mes "to beat your ^FF0000"+.@playersub+"^000000. It looks";
 		mes "like I can't compete with";
 		mes "you, "+strcharinfo(0)+"...";
 		close2;
-		getitem 512,@amount*2;
+		getitem 512,.@amount*2;
 		end;
-	} else if(@tablesub > @playersub) {
-	mes "I rolled a ^0000FF"+@table3+"^000000, giving";
-	mes "me a total of ^0000FF"+@tablesub+"^000000 which";
-	mes "beats your total of ^FF0000"+@playersub+"^000000.";
+	} else if(.@tablesub > .@playersub) {
+	mes "I rolled a ^0000FF"+.@table3+"^000000, giving";
+	mes "me a total of ^0000FF"+.@tablesub+"^000000 which";
+	mes "beats your total of ^FF0000"+.@playersub+"^000000.";
 	mes "Sorry, but you lose this";
 	mes "game, "+strcharinfo(0)+". Them's";
 	mes "the breaks, I suppose...";
 	close;
-	} else if(@tablesub == @playersub) {
+	} else if(.@tablesub == .@playersub) {
 		//Result = tie, --Improvised--
-		mes "I rolled a ^0000FF"+@table3+"^000000, giving";
-		mes "me a total of ^0000FF"+@tablesub+"^000000, which";
+		mes "I rolled a ^0000FF"+.@table3+"^000000, giving";
+		mes "me a total of ^0000FF"+.@tablesub+"^000000, which";
 		mes "is the same as your total.";
 		mes "Well, this game didn't have a";
 		mes "winner or loser, "+strcharinfo(0)+".";
 		close2;
-		getitem 512,@amount;
+		getitem 512,.@amount;
 		end;
 	}
 }
