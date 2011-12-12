@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.7
+//= 1.8
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -27,6 +27,9 @@
 //=     warps between floors. (bugreport:4623)
 //=     Added missing end's to prevent infinite mobspawn (bugreport:4540)
 //=     Commented out remaining GM-only NPCs. [Gepard]
+//============================================================ 
+//= 1.8 Adjusted Instance Attach Map to Validate ALL Maps, instead of 
+//=     only 1@tower -> 5@tower (bugreport:4983)
 //============================================================ 
 
 alberta,214,77,6	script	Captain Janssen	709,{
@@ -238,14 +241,13 @@ e_tower,81,105,0	script	Tower Protection Stone	406,{
 					else {
 						mes "^0000ff"+.@md_name$+"^000000 - Try to reserve";
 						mes "After making a reservation, you have to talk to NPC behind and select the menu 'Enter the Dungeon' to enter the dungeon.";
+						// 1,2,3,4,5,6
 						for( set .@i, 1; .@i <= 6; set .@i, .@i + 1 ) {
-							if( instance_attachmap(.@i + "@tower", .@instance) == "" )
-								break;
-						}
-						if( .@i < 6 ) {
-							mes "^0000ff"+.@md_name$+" ^000000- Reservation Failed!";
-							instance_destroy(.@instance);
-							close;
+							if( instance_attachmap(.@i + "@tower", .@instance) == "" ) {
+								mes "^0000ff"+.@md_name$+" ^000000- Reservation Failed!";
+								instance_destroy(.@instance);
+								close;
+							}
 						}
 						instance_attach(.@instance);
 						instance_set_timeout 14400,300,.@instance;
