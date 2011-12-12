@@ -12971,7 +12971,7 @@ BUILDIN_FUNC(sprintf)
 
     // Need not be parsed, just solve stuff like %%.
     if(argc==0){
-        sprintf(buf, format);
+		memcpy(buf,format,len+1);
         script_pushstrcopy(st, buf);
         aFree(buf);
         return 0;
