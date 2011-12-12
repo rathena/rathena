@@ -2860,7 +2860,7 @@ OnEnable:
 	areamonster "3@tower",181,9,191,45,"Aliza",1737,10,instance_npcname("72FGate102tower", instance_id())+"::OnMyMobDead";
 	areamonster "3@tower",181,9,191,45,"Zealotus",1200,5,instance_npcname("72FGate102tower", instance_id())+"::OnMyMobDead";
 	areamonster "3@tower",181,9,191,45,"Alice",1275,5,instance_npcname("72FGate102tower", instance_id())+"::OnMyMobDead";
-	areamonster "3@tower",181,9,191,45,"Green Maiden",1519,10,instance_npcname("72FGate102tower", instance_id())+"::OnMyMobDead";
+	areamonster "3@tower",181,9,191,45,"Green Maiden",1631,10,instance_npcname("72FGate102tower", instance_id())+"::OnMyMobDead";
 	end;
 
 OnTouch_:

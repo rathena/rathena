@@ -2279,6 +2279,9 @@ ACMD_FUNC(go)
 		{ MAP_RACHEL,      130, 110 }, // 23=Rachel
 		{ MAP_VEINS,       216, 123 }, // 24=Veins
 		{ MAP_MOSCOVIA,    223, 184 }, // 25=Moscovia
+		{ MAP_BRASILIS,	   182, 239 }, // 26=Brasilis
+		{ MAP_MANUK,	   282, 138 }, // 27=Manuk
+		{ MAP_SPLENDIDE,   197, 176 }, // 28=Splendide
 	};
  
 	nullpo_retr(-1, sd);
@@ -2306,7 +2309,8 @@ ACMD_FUNC(go)
 		clif_displaymessage(fd, " 15=Novice Grounds  16=Prison      17=Jawaii");
 		clif_displaymessage(fd, " 18=Ayothaya        19=Einbroch    20=Lighthalzen");
 		clif_displaymessage(fd, " 21=Einbech         22=Hugel       23=Rachel");
-		clif_displaymessage(fd, " 24=Veins           25=Moscovia");
+		clif_displaymessage(fd, " 24=Veins           25=Moscovia	26=Brasilis");
+		clif_displaymessage(fd, " 27=Manuk			 28=Splendide");
 		return -1;
 	}
 
