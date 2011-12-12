@@ -5,7 +5,7 @@
 // BattleGround Warper - Entrance
 // *********************************************************************
 
-payon,189,104,3	script	Maroll Battle Recruiter::BatRecruit	728,{
+-	script	Maroll Battle Recruiter::BatRecruit	728,{
 	mes "[Maroll Battle Recruiter]";
 	mes "Good day, adventurer.";
 	mes "I'm a knight from a far country called Maroll Kingdom.";
@@ -26,6 +26,7 @@ payon,189,104,3	script	Maroll Battle Recruiter::BatRecruit	728,{
 	end;
 }
 
+payon,189,104,3	duplicate(BatRecruit)	Maroll Battle Recruiter::BatRecruit1	728
 prontera,123,83,5	duplicate(BatRecruit)	Maroll Battle Recruiter::BatRecruit2	728
 rachel,149,138,5	duplicate(BatRecruit)	Maroll Battle Recruiter::BatRecruit3	728
 moc_ruins,75,162,5	duplicate(BatRecruit)	Maroll Battle Recruiter::BatRecruit4	728

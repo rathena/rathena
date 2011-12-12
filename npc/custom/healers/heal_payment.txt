@@ -18,7 +18,7 @@
 //= Removed Duplicates [Silent]
 //============================================================
 
-prontera,150,184,5	script	Healer#h2-1::Healer2	742,{
+-	script	Healer#h2-1::Healer2	742,{
 	set @tempHp, MaxHp-Hp;
 	set @tempSpReal, MaxSp-Sp;
 	set @tempSp, ((MaxSp-Sp) * BaseLevel) / 5;
@@ -90,6 +90,7 @@ prontera,150,184,5	script	Healer#h2-1::Healer2	742,{
 }
 
 
+prontera,150,184,5	duplicate(Healer2)	Healer#h2-1	742
 morocc,159,96,5	duplicate(Healer2)	Healer#h2-2	742
 ayothaya,155,111,5	duplicate(Healer2)	Healer#h2-3	742
 geffen,121,61,5	duplicate(Healer2)	Healer#h2-4	742

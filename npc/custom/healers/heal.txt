@@ -15,7 +15,7 @@
 //= 3.1 Optimized for the greater good. [Kisuka]
 //============================================================
 
-prontera,150,184,5	script	Healer#h1-1::Healer	742,{
+-	script	Healer#h1-1::Healer	742,{
 	mes "[Healer]";
 	mes "I have amazing healing powers!!";
 	mes "You look like a person who needs them";
@@ -34,6 +34,7 @@ prontera,150,184,5	script	Healer#h1-1::Healer	742,{
 }
 
 // --------- NPC Clones ---------
+prontera,150,184,5	duplicate(Healer)	Healer#h1-1	742
 morocc,159,96,5	duplicate(Healer)	Healer#h1-2	742
 ayothaya,155,111,5	duplicate(Healer)	Healer#h1-3	742
 geffen,121,61,5	duplicate(Healer)	Healer#h1-4	742

@@ -1404,8 +1404,8 @@ hu_in01,326,307,3	script	Siria	90,{
 		mes "needs some more.";
 		next;
 		mes "[Siria]";
-		mes "Oh, thank God! Okay, well,";
-		mes "I just ran out of the medicine.";
+		mes "Aww, I just ran out of";
+		mes "the medicine too. Find";
 		mes "Morriphen's friend, and get";
 		mes "it from him. He's supposed to";
 		mes "be in Lighthalzen, somewhere...";
