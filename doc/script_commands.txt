@@ -7043,7 +7043,16 @@ Example:
 	set .@party_id, getcharid(1);
 	// Attempt to create an instance using that party ID.
 	set .@id, instance_create("Endless Tower", .@party_id);
-	if (.@id == -1) { // Party ID is in use by another instance.
+	if (.@id == -1) { // Invalid type - not used anymore
+		...
+	}
+	else if (.@id == -2) { // Invalid Party ID
+		...
+	}
+	else if (.@id == -3) { // No free instances (MAX_INSTANCE exceeded)
+		...
+	}
+	else if (.@id == -4) { // Already exists
 		...
 	}
 	else (.@id < 0) { // Unspecified error while queuing instance.
