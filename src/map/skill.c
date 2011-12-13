@@ -2394,12 +2394,10 @@ static int skill_check_unit_range2 (struct block_list *bl, int x, int y, int ski
 		type, skillid);
 }
 
-int skill_guildaura_sub (struct map_session_data* sd, int id, int gid, int strvit, int agidex)
+int skill_guildaura_sub (struct map_session_data* sd, int id, int strvit, int agidex)
 {
 	nullpo_ret(sd);
 
-	if( sd->status.guild_id != gid )
-		return 0;
 	if( id == sd->bl.id && battle_config.guild_aura&16 )
 		return 0;
 

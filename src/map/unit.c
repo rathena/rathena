@@ -192,7 +192,7 @@ static int unit_walktoxy_timer(int tid, unsigned int tick, int id, intptr_t data
 				{
 					if( g->member[i].online && g->member[i].sd && check_distance_bl(&sd->bl, &g->member[i].sd->bl, 2) )
 					{// perform the aura on the member as appropriate
-						skill_guildaura_sub( g->member[i].sd, g->member[i].sd->bl.id, sd->status.guild_id, strvit, agidex );
+						skill_guildaura_sub( g->member[i].sd, sd->bl.id, strvit, agidex );
 					}
 				}
 			}
