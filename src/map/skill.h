@@ -1556,6 +1556,10 @@ enum {
 	UNT_MAX = 0x190
 };
 /**
+ * Skill Cool Downs - load from pc.c when the character logs in
+ **/
+void skill_cooldown_load(struct map_session_data * sd);
+/**
  * Warlock
  **/
 #define MAX_SKILL_SPELLBOOK_DB	17

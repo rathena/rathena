@@ -55,6 +55,18 @@ static struct eri *skill_timer_ers = NULL; //For handling skill_timerskills [Sko
 DBMap* skillunit_db = NULL; // int id -> struct skill_unit*
 
 DBMap* skilldb_name2id = NULL;
+
+/**
+ * Skill Cool Down Delay Saving
+ **/
+DBMap* skillcd_db = NULL;
+struct skill_cd {
+	int duration[MAX_SKILL_TREE];//milliseconds
+	short skidx[MAX_SKILL_TREE];//the skill index entries belong to
+	short nameid[MAX_SKILL_TREE];//skill id
+	unsigned char cursor;
+};
+
 struct s_skill_db skill_db[MAX_SKILL_DB];
 struct s_skill_produce_db skill_produce_db[MAX_SKILL_PRODUCE_DB];
 struct s_skill_arrow_db skill_arrow_db[MAX_SKILL_ARROW_DB];
@@ -13360,16 +13372,45 @@ int skill_spellbook (struct map_session_data *sd, int nameid) {
 int skill_blockpc_end(int tid, unsigned int tick, int id, intptr_t data)
 {
 	struct map_session_data *sd = map_id2sd(id);
+	struct skill_cd * cd = NULL;
+
 	if (data <= 0 || data >= MAX_SKILL)
 		return 0;
 	if (!sd) return 0;
 	if (sd->blockskill[data] != (0x1|(tid&0xFE))) return 0;
+
+	if( ( cd = idb_get(skillcd_db,sd->status.char_id) ) ) {
+		int i,cursor;
+		ARR_FIND( 0, cd->cursor+1, cursor, cd->skidx[cursor] == data );
+		cd->duration[cursor] = 0;
+		cd->skidx[cursor] = 0;
+		cd->nameid[cursor] = 0;
+		// compact the cool down list
+		for( i = 0, cursor = 0; i < cd->cursor; i++ ) {
+			if( cd->duration[i] == 0 )
+				continue;
+			if( cursor != i ) {
+				cd->duration[cursor] = cd->duration[i];
+				cd->skidx[cursor] = cd->skidx[i];
+				cd->nameid[cursor] = cd->nameid[i];
+			}
+			cursor++;
+		}
+		if( cursor == 0 ) {
+			idb_remove(skillcd_db,sd->status.char_id);
+			aFree(cd);
+		} else
+			cd->cursor = cursor;
+	}
+
 	sd->blockskill[data] = 0;
 	return 1;
 }
 
 int skill_blockpc_start(struct map_session_data *sd, int skillid, int tick)
 {
+	struct skill_cd * cd = NULL;
+	int oskillid = skillid;
 	nullpo_retr (-1, sd);
 
 	skillid = skill_get_index(skillid);
@@ -13383,6 +13424,15 @@ int skill_blockpc_start(struct map_session_data *sd, int skillid, int tick)
 
 	if( battle_config.display_status_timers )
 		clif_skill_cooldown(sd, skillid, tick);
+
+	if( !( cd = idb_get(skillcd_db,sd->status.char_id) ) ) {
+		CREATE(cd,struct skill_cd,1);
+		idb_put(skillcd_db, sd->status.char_id, cd);
+	}
+	cd->duration[cd->cursor] = tick;
+	cd->skidx[cd->cursor] = skillid;
+	cd->nameid[cd->cursor] = oskillid;
+	cd->cursor++;
 
 	sd->blockskill[skillid] = 0x1|(0xFE&add_timer(gettick()+tick,skill_blockpc_end,sd->bl.id,skillid));
 	return 0;
@@ -13822,7 +13872,17 @@ int skill_stasis_check(struct block_list *bl, int src_id, int skillid)
 
 	return 0; // Can Cast anything else like Weapon Skills
 }
-
+void skill_cooldown_load(struct map_session_data * sd) {
+	struct skill_cd * cd = NULL;
+	int i;
+	if( !( cd = idb_get(skillcd_db,sd->status.char_id) ) )
+		return;//nothing for us here
+	
+	for( i = 0; i < cd->cursor; i++ ) {
+		skill_blockpc_start(sd, cd->nameid[i], cd->duration[i]);
+	}
+	return;
+}
 /*==========================================
  * DB reading.
  * skill_db.txt
@@ -14224,6 +14284,7 @@ int do_init_skill (void)
 
 	group_db = idb_alloc(DB_OPT_BASE);
 	skillunit_db = idb_alloc(DB_OPT_BASE);
+	skillcd_db = idb_alloc(DB_OPT_BASE);
 	skill_unit_ers = ers_new(sizeof(struct skill_unit_group));
 	skill_timer_ers  = ers_new(sizeof(struct skill_timerskill));
 
@@ -14243,6 +14304,7 @@ int do_final_skill(void)
 	db_destroy(skilldb_name2id);
 	db_destroy(group_db);
 	db_destroy(skillunit_db);
+	db_destroy(skillcd_db);
 	ers_destroy(skill_unit_ers);
 	ers_destroy(skill_timer_ers);
 	return 0;
