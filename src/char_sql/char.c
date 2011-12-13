@@ -608,8 +608,12 @@ int mmo_char_tosql(int char_id, struct mmo_charstatus* p)
 		//insert here.
 		for( i = 0, count = 0; i < MAX_SKILL; ++i )
 		{
-			if(p->skill[i].id != 0 && p->skill[i].flag != SKILL_FLAG_TEMPORARY)
+			if( p->skill[i].id != 0 && p->skill[i].flag != SKILL_FLAG_TEMPORARY )
 			{
+				if( p->skill[i].flag == SKILL_FLAG_PERMANENT && p->skill[i].lv == 0 )
+					continue;
+				if( p->skill[i].flag != SKILL_FLAG_PERMANENT && (p->skill[i].flag - SKILL_FLAG_REPLACED_LV_0) == 0 )
+					continue;
 				if( count )
 					StringBuf_AppendStr(&buf, ",");
 				StringBuf_Printf(&buf, "('%d','%d','%d')", char_id, p->skill[i].id, (p->skill[i].flag == SKILL_FLAG_PERMANENT ? p->skill[i].lv : p->skill[i].flag - SKILL_FLAG_REPLACED_LV_0));
