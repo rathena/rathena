@@ -897,7 +897,7 @@ int npc_touch_areanpc(struct map_session_data* sd, int m, int x, int y)
 	if( i == map[m].npc_num )
 	{
 		if( f == 1 ) // no npc found
-			ShowError("npc_touch_areanpc : stray NPC cell on coordinates '%s',%d,%d\n", map[m].name, x, y);
+			ShowError("npc_touch_areanpc : stray NPC cell/NPC not found in the block on coordinates '%s',%d,%d\n", map[m].name, x, y);
 		return 1;
 	}
 	switch(map[m].npc[i]->subtype) {
