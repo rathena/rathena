@@ -94,7 +94,7 @@
 7505,123,100	// Toy_Key
 7506,115,100	// Black_Key_Card
 7508,123,100	// Elysia_Ring
-7509,83,100	// Fancy_Key_Card
+7509,123,100	// Fancy_Key_Card
 7516,115,100	// Green_Key_Card
 
 // Hugel Race Track token
@@ -1123,7 +1123,7 @@
 13171,83,100	// BF_Rifle1
 13172,83,100	// BF_Gatling_Gun1
 13173,83,100	// BF_Shotgun1
-13174,83,100	// BF_Launcher1
+13174,91,100	// BF_Launcher1
 2538,83,100	// Commander_Manteau
 2539,83,100	// Commander_Manteau_
 2540,83,100	// Sheriff_Manteau
