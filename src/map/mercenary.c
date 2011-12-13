@@ -65,7 +65,7 @@ int merc_create(struct map_session_data *sd, int class_, unsigned int lifetime)
 	struct s_mercenary merc;
 	struct s_mercenary_db *db;
 	int i;
-	nullpo_retr(1,sd);
+	nullpo_retr(0,sd);
 
 	if( (i = merc_search_index(class_)) < 0 )
 		return 0;
