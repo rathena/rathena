@@ -2342,8 +2342,11 @@ void get_val(struct script_state* st, struct script_data* data)
 		case '\'':
 			{
 				struct linkdb_node** n = NULL;
-				if( st->instance_id )
+				if (st->instance_id) {
 					n = &instance[st->instance_id].svar;
+				} else {
+					ShowWarning("script:get_val: cannot access instance variable '%s', defaulting to 0\n", name);
+				}
 				data->u.str = (char*)linkdb_search(n, (void*)reference_getuid(data));
 			}
 			break;
