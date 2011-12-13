@@ -187,8 +187,15 @@ static int unit_walktoxy_timer(int tid, unsigned int tick, int id, intptr_t data
 			if ((skill = guild_checkskill(g, GD_SOULCOLD)) > 0) agidex |= (skill&0xFFFF)<<16;
 			if ((skill = guild_checkskill(g, GD_HAWKEYES)) > 0) agidex |= skill&0xFFFF;
 			if (strvit || agidex)
-				map_foreachinrange(skill_guildaura_sub, bl,2, BL_PC,
-					bl->id, sd->status.guild_id, strvit, agidex);
+			{// replaced redundant foreachinrange call with smaller and much more efficient iteration
+				for( i = 0; g->max_member > i; i++ )
+				{
+					if( g->member[i].online && g->member[i].sd && check_distance_bl(&sd->bl, &g->member[i].sd->bl, 2) )
+					{// perform the aura on the member as appropriate
+						skill_guildaura_sub( g->member[i].sd, g->member[i].sd->bl.id, sd->status.guild_id, strvit, agidex );
+					}
+				}
+			}
 		}
 	} else if (md) {
 		if( map_getcell(bl->m,x,y,CELL_CHKNPC) ) {

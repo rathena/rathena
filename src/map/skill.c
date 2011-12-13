@@ -2382,27 +2382,18 @@ static int skill_check_unit_range2 (struct block_list *bl, int x, int y, int ski
 		type, skillid);
 }
 
-int skill_guildaura_sub (struct block_list *bl, va_list ap)
+int skill_guildaura_sub (struct map_session_data* sd, int id, int gid, int strvit, int agidex)
 {
-	struct map_session_data *sd;
-	int gid, id, strvit, agidex;
+	nullpo_ret(sd);
 
-	sd = (struct map_session_data *)bl;
-
-	id = va_arg(ap,int);
-	gid = va_arg(ap,int);
-	if (sd->status.guild_id != gid)
+	if( sd->status.guild_id != gid )
+		return 0;
+	if( id == sd->bl.id && battle_config.guild_aura&16 )
 		return 0;
 
-	if(id == sd->bl.id && battle_config.guild_aura&16)
-		return 0;
-
-	strvit = va_arg(ap,int);
-	agidex = va_arg(ap,int);
-
-	if (sd->sc.data[SC_GUILDAURA]) {
+	if( sd->sc.data[SC_GUILDAURA] ) {
 		struct status_change_entry *sce = sd->sc.data[SC_GUILDAURA];
-		if (sce->val3 != strvit || sce->val4 != agidex) {
+		if( sce->val3 != strvit || sce->val4 != agidex ) {
 			sce->val3 = strvit;
 			sce->val4 = agidex;
 			status_calc_bl(&sd->bl, StatusChangeFlagTable[SC_GUILDAURA]);
