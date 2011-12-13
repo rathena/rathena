@@ -2631,7 +2631,7 @@
 5299,Ati_Atihan_Hat_,Pagdayaw,5,20,,100,,1,,1,0xFFFFFFFF,7,2,769,,0,0,303,{ bonus3 bAutoSpell,"DC_SCREAM",1,50; },{},{}
 5300,Bullock_Helm,Bullock Helm,5,20,,800,,2,,0,0xFFFFFFFE,7,2,256,,45,1,322,{ bonus bMaxHP,100; },{},{}
 //5301,Russian_Ribbon,Victory Hairband,5,0,,100,,0,,0,0xFFFFFFFF,7,2,256,,0,1,323,{},{},{}
-5302,Lotus_Flower_Hat,Flower Lily,5,0,,100,,1,,0,0xFFFFFFFF,7,2,256,,30,1,324,{},{},{}
+5302,Lotus_Flower_Hat,Flower Lily,5,0,,100,,2,,0,0xFFFFFFFF,7,2,256,,30,1,324,{},{},{}
 5303,Flower_Coronet,Flower Crown,5,20,,300,,1,,0,0xFFFFFFFF,7,2,256,,0,1,325,{ bonus bMdef,3; bonus bMaxHP,50; },{},{}
 5304,Cap_Of_Blindness,Cap Of Blindness,5,20,,800,,4,,1,0xFFFFFFFF,7,2,769,,50,1,326,{ bonus2 bResEff,Eff_Curse,700; bonus2 bResEff,Eff_Blind,10000; },{},{}
 5305,Pirate_Dagger,Pirate Dagger,5,20,,100,,0,,0,0xFFFFFFFF,7,2,1,,0,0,327,{ bonus bBaseAtk,5; },{},{}

@@ -2662,7 +2662,7 @@ REPLACE INTO `item_db` VALUES (5298,'Marvelous_Wig_','Dokebi\'s Wig',5,20,NULL,1
 REPLACE INTO `item_db` VALUES (5299,'Ati_Atihan_Hat_','Pagdayaw',5,20,NULL,100,NULL,1,NULL,1,0xFFFFFFFF,7,2,769,NULL,0,0,303,'bonus3 bAutoSpell,\"DC_SCREAM\",1,50;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (5300,'Bullock_Helm','Bullock Helm',5,20,NULL,800,NULL,2,NULL,0,0xFFFFFFFE,7,2,256,NULL,45,1,322,'bonus bMaxHP,100;',NULL,NULL);
 # REPLACE INTO `item_db` VALUES (5301,'Russian_Ribbon','Victory Hairband',5,0,NULL,100,NULL,0,NULL,0,0xFFFFFFFF,7,2,256,NULL,0,1,323,NULL,NULL,NULL);
-REPLACE INTO `item_db` VALUES (5302,'Lotus_Flower_Hat','Flower Lily',5,0,NULL,100,NULL,1,NULL,0,0xFFFFFFFF,7,2,256,NULL,30,1,324,NULL,NULL,NULL);
+REPLACE INTO `item_db` VALUES (5302,'Lotus_Flower_Hat','Flower Lily',5,0,NULL,100,NULL,2,NULL,0,0xFFFFFFFF,7,2,256,NULL,30,1,324,NULL,NULL,NULL);
 REPLACE INTO `item_db` VALUES (5303,'Flower_Coronet','Flower Crown',5,20,NULL,300,NULL,1,NULL,0,0xFFFFFFFF,7,2,256,NULL,0,1,325,'bonus bMdef,3; bonus bMaxHP,50;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (5304,'Cap_Of_Blindness','Cap Of Blindness',5,20,NULL,800,NULL,4,NULL,1,0xFFFFFFFF,7,2,769,NULL,50,1,326,'bonus2 bResEff,Eff_Curse,700; bonus2 bResEff,Eff_Blind,10000;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (5305,'Pirate_Dagger','Pirate Dagger',5,20,NULL,100,NULL,0,NULL,0,0xFFFFFFFF,7,2,1,NULL,0,0,327,'bonus bBaseAtk,5;',NULL,NULL);
