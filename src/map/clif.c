@@ -8661,6 +8661,10 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 
 	if( map[sd->bl.m].users++ == 0 && battle_config.dynamic_mobs )
 		map_spawnmobs(sd->bl.m);
+	if( !(sd->sc.option&OPTION_INVISIBLE) )
+	{// increment the number of pvp players on the map
+		map[sd->bl.m].users_pvp++;
+	}
 	if( map[sd->bl.m].instance_id )
 	{
 		instance[map[sd->bl.m].instance_id].users++;
@@ -8680,7 +8684,7 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 
 	if( sd->bg_id ) clif_bg_hp(sd); // BattleGround System
 
-	if(map[sd->bl.m].flag.pvp) {
+	if(map[sd->bl.m].flag.pvp && !(sd->sc.option&OPTION_INVISIBLE)) {
 		if(!battle_config.pk_mode) { // remove pvp stuff for pk_mode [Valaris]
 			if (!map[sd->bl.m].flag.pvp_nocalcrank)
 				sd->pvp_timer = add_timer(gettick()+200, pc_calc_pvprank_timer, sd->bl.id, 0);

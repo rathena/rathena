@@ -7628,6 +7628,11 @@ int pc_calc_pvprank_sub(struct block_list *bl,va_list ap)
 	sd1=(struct map_session_data *)bl;
 	sd2=va_arg(ap,struct map_session_data *);
 
+	if( sd1->sc.option&OPTION_INVISIBLE || sd2->sc.option&OPTION_INVISIBLE )
+	{// cannot register pvp rank for hidden GMs
+		return 0;
+	}
+
 	if( sd1->pvp_point > sd2->pvp_point )
 		sd2->pvp_rank++;
 	return 0;
@@ -7643,8 +7648,8 @@ int pc_calc_pvprank(struct map_session_data *sd)
 	old=sd->pvp_rank;
 	sd->pvp_rank=1;
 	map_foreachinmap(pc_calc_pvprank_sub,sd->bl.m,BL_PC,sd);
-	if(old!=sd->pvp_rank || sd->pvp_lastusers!=m->users)
-		clif_pvpset(sd,sd->pvp_rank,sd->pvp_lastusers=m->users,0);
+	if(old!=sd->pvp_rank || sd->pvp_lastusers!=m->users_pvp)
+		clif_pvpset(sd,sd->pvp_rank,sd->pvp_lastusers=m->users_pvp,0);
 	return sd->pvp_rank;
 }
 /*==========================================
@@ -7658,6 +7663,12 @@ int pc_calc_pvprank_timer(int tid, unsigned int tick, int id, intptr_t data)
 	if(sd==NULL)
 		return 0;
 	sd->pvp_timer = INVALID_TIMER;
+
+	if( sd->sc.option&OPTION_INVISIBLE )
+	{// do not calculate the pvp rank for a hidden GM
+		return 0;
+	}
+
 	if( pc_calc_pvprank(sd) > 0 )
 		sd->pvp_timer = add_timer(gettick()+PVP_CALCRANK_INTERVAL,pc_calc_pvprank_timer,id,data);
 	return 0;

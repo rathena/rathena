@@ -473,6 +473,7 @@ struct map_data {
 	short bgscore_lion, bgscore_eagle; // Battleground ScoreBoard
 	int npc_num;
 	int users;
+	int users_pvp;
 	int iwall_num; // Total of invisible walls in this map
 	struct map_flag {
 		unsigned town : 1; // [Suggestion to protect Mail System]
