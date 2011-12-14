@@ -1435,6 +1435,8 @@ int status_check_skilluse(struct block_list *src, struct block_list *target, int
 	
 	if(tsc && tsc->count)
 	{	
+		if( tsc->data[SC_INVINCIBLE] )
+			return 0;
 		if(!skill_num && !(status->mode&MD_BOSS) && tsc->data[SC_TRICKDEAD])
 			return 0;
 		if((skill_num == WZ_STORMGUST || skill_num == WZ_FROSTNOVA || skill_num == NJ_HYOUSYOURAKU)
