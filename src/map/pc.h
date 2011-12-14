@@ -451,6 +451,11 @@ struct map_session_data {
 	unsigned int npc_idle_tick;
 #endif
 
+	/**
+	 * Guarantees your friend request is legit (for bugreport:6429)
+	 **/
+	int friend_req;
+
 	// temporary debugging of bug #3504
 	const char* delunit_prevfile;
 	int delunit_prevline;

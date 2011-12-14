@@ -12279,7 +12279,10 @@ void clif_parse_FriendsListAdd(int fd, struct map_session_data *sd)
 		clif_friendslist_reqack(sd, f_sd, 2);
 		return;
 	}
-		
+
+	f_sd->friend_req = sd->status.char_id;
+	sd->friend_req   = f_sd->status.char_id;
+
 	f_fd = f_sd->fd;
 	WFIFOHEAD(f_fd,packet_len(0x207));
 	WFIFOW(f_fd,0) = 0x207;
@@ -12311,7 +12314,7 @@ void clif_parse_FriendsListReply(int fd, struct map_session_data *sd)
 	if (f_sd == NULL)
 		return;
 		
-	if (reply == 0)
+	if (reply == 0 || !( sd->friend_req == f_sd->status.char_id && f_sd->friend_req == sd->status.char_id ) )
 		clif_friendslist_reqack(f_sd, sd, 1);
 	else {
 		int i;
