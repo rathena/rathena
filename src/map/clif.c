@@ -12358,6 +12358,7 @@ void clif_parse_FriendsListReply(int fd, struct map_session_data *sd)
 void clif_parse_FriendsListRemove(int fd, struct map_session_data *sd)
 {
 	// 0x203 </o> <ID to be removed W 4B>
+	struct map_session_data *f_sd = NULL;
 	int account_id, char_id;
 	int i, j;
 
@@ -12380,6 +12381,28 @@ void clif_parse_FriendsListRemove(int fd, struct map_session_data *sd)
 	memset(&sd->status.friends[MAX_FRIENDS-1], 0, sizeof(sd->status.friends[MAX_FRIENDS-1]));
 	clif_displaymessage(fd, "Friend removed");
 	
+	//remove from friends list
+	if( (f_sd = map_id2sd(account_id)) ) {
+		for (i = 0; i < MAX_FRIENDS &&
+			(f_sd->status.friends[i].char_id != sd->status.char_id || f_sd->status.friends[i].account_id != sd->status.account_id); i++);
+
+		if (i != MAX_FRIENDS) {
+			// move all chars down
+			for(j = i + 1; j < MAX_FRIENDS; j++)
+				memcpy(&f_sd->status.friends[j-1], &f_sd->status.friends[j], sizeof(f_sd->status.friends[0]));
+
+			memset(&f_sd->status.friends[MAX_FRIENDS-1], 0, sizeof(f_sd->status.friends[MAX_FRIENDS-1]));
+			//should the guy be notified of some message? we should add it here if so
+			WFIFOHEAD(f_sd->fd,packet_len(0x20a));
+			WFIFOW(f_sd->fd,0) = 0x20a;
+			WFIFOL(f_sd->fd,2) = sd->status.account_id;
+			WFIFOL(f_sd->fd,6) = sd->status.char_id;
+			WFIFOSET(f_sd->fd, packet_len(0x20a));
+		}
+
+	} else { //friend not online -- ask char server to delete from his friendlist
+		chrif_removefriend(char_id,sd->status.char_id);
+	}
 	WFIFOHEAD(fd,packet_len(0x20a));
 	WFIFOW(fd,0) = 0x20a;
 	WFIFOL(fd,2) = account_id;

@@ -38,7 +38,7 @@ static DBMap* auth_db; // int id -> struct auth_node*
 
 static const int packet_len_table[0x3d] = { // U - used, F - free
 	60, 3,-1,27,10,-1, 6,-1,	// 2af8-2aff: U->2af8, U->2af9, U->2afa, U->2afb, U->2afc, U->2afd, U->2afe, U->2aff
-	 6,-1,18, 7,-1,35,30, 0,	// 2b00-2b07: U->2b00, U->2b01, U->2b02, U->2b03, U->2b04, U->2b05, U->2b06, F->2b07
+	 6,-1,18, 7,-1,35,30, 10,	// 2b00-2b07: U->2b00, U->2b01, U->2b02, U->2b03, U->2b04, U->2b05, U->2b06, F->2b07
 	 6,30, 0, 0,86, 7,44,34,	// 2b08-2b0f: U->2b08, U->2b09, F->2b0a, F->2b0b, U->2b0c, U->2b0d, U->2b0e, U->2b0f
 	11,10,10, 0,11, 0,266,10,	// 2b10-2b17: U->2b10, U->2b11, U->2b12, F->2b13, U->2b14, F->2b15, U->2b16, U->2b17
 	 2,10, 2,-1,-1,-1, 2, 7,	// 2b18-2b1f: U->2b18, U->2b19, U->2b1a, U->2b1b, U->2b1c, U->2b1d, U->2b1e, U->2b1f
@@ -61,7 +61,7 @@ static const int packet_len_table[0x3d] = { // U - used, F - free
 //2b04: Incoming, chrif_recvmap -> 'getting maps from charserver of other mapserver's'
 //2b05: Outgoing, chrif_changemapserver -> 'Tell the charserver the mapchange / quest for ok...'
 //2b06: Incoming, chrif_changemapserverack -> 'awnser of 2b05, ok/fail, data: dunno^^'
-//2b07: FREE
+//2b07: Outgoing, chrif_removefriend -> 'Tell charserver to remove friend_id from char_id friend list'
 //2b08: Outgoing, chrif_searchcharid -> '...'
 //2b09: Incoming, map_addchariddb -> 'Adds a name to the nick db'
 //2b0a: FREE
@@ -1554,6 +1554,23 @@ static int check_connect_char_server(int tid, unsigned int tick, int id, intptr_
 	if (chrif_isconnected()) displayed = 0;
 	return 0;
 }
+
+/*==========================================
+ * Asks char server to remove friend_id from the friend list of char_id
+ *------------------------------------------*/
+int chrif_removefriend(int char_id, int friend_id) {
+#ifndef TXT_ONLY
+	chrif_check(-1);
+
+	WFIFOHEAD(char_fd,10);
+	WFIFOW(char_fd,0) = 0x2b07;
+	WFIFOL(char_fd,2) = char_id;
+	WFIFOL(char_fd,6) = friend_id;
+	WFIFOSET(char_fd,10);
+#endif
+	return 0;
+}
+
 
 int auth_db_final(DBKey k,void *d,va_list ap)
 {
