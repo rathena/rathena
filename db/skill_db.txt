@@ -404,7 +404,7 @@
 358,0,6,4,0,0x1,0,1,1,no,0,0,0,weapon,0,		LK_TENSIONRELAX,Relax
 359,0,6,4,0,0x1,0,1,1,no,0,0,0,weapon,0,		LK_BERSERK,Frenzy
 //360,0,6,4,0,0x1,0,1,1,no,0,0,0,weapon,0,	LK_FURY,Fury
-361,9,6,16,0,0x3,1,5,1,yes,0,0,0,magic,0,	HP_ASSUMPTIO,Assumptio
+361,9,6,16,0,0x1,1,5,1,yes,0,0,0,magic,0,	HP_ASSUMPTIO,Assumptio
 362,4,6,4,0,0x1,0,5,1,yes,0,0,0,magic,2,		HP_BASILICA,Basilica
 363,0,0,0,0,0,0,10,0,no,0,0,0,magic,0,		HP_MEDITATIO,Meditatio
 364,0,0,0,0,0,0,10,1,no,0,0,0,magic,0,		HW_SOULDRAIN,Soul Drain
