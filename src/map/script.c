@@ -13816,6 +13816,9 @@ BUILDIN_FUNC(callshop)
 	
 	if( nd->subtype == SHOP )
 	{
+		// flag the user as using a valid script call for opening the shop (for floating NPCs)
+		sd->state.callshop = 1;
+
 		switch( flag )
 		{
 			case 1: npc_buysellsel(sd,nd->bl.id,0); break; //Buy window

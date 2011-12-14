@@ -8671,6 +8671,9 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 		instance_check_idle(map[sd->bl.m].instance_id);
 	}
 	sd->state.debug_remove_map = 0; // temporary state to track double remove_map's [FlavioJS]
+	
+	// reset the callshop flag if the player changes map
+	sd->state.callshop = 0;
 
 	map_addblock(&sd->bl);
 	clif_spawn(&sd->bl);

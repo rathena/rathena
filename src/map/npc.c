@@ -1174,8 +1174,15 @@ int npc_buysellsel(struct map_session_data* sd, int id, int type)
 	}
 	if (nd->sc.option&OPTION_INVISIBLE)	// –³Œø‰»‚³‚ê‚Ä‚¢‚é
 		return 1;
+	if( nd->class_ < 0 && !sd->state.callshop )
+	{// not called through a script and is not a visible NPC so an invalid call
+		return 1;
+	}
 
-	sd->npc_shopid=id;
+	// reset the callshop state for future calls
+	sd->state.callshop = 0;
+	sd->npc_shopid = id;
+
 	if (type==0) {
 		clif_buylist(sd,nd);
 	} else {

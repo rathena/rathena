@@ -135,6 +135,7 @@ struct map_session_data {
 		unsigned int vending : 1;
 		unsigned int noks : 3; // [Zeph Kill Steal Protection]
 		unsigned int changemap : 1;
+		unsigned int callshop : 1; // flag to indicate that a script used callshop; on a shop
 		short pmap; // Previous map on Map Change
 		unsigned short autoloot;
 		unsigned short autolootid; // [Zephyrus]
