@@ -433,6 +433,15 @@ int skillnotok (int skillid, struct map_session_data *sd)
 	if( skillid == AL_TELEPORT && sd->skillitem == skillid && sd->skillitemlv > 2 )
 		return 0; // Teleport lv 3 bypasses this check.[Inkfish]
 
+	// Epoque:
+	// This code will compare the player's attack motion value which is influenced by ASPD before
+	// allowing a skill to be cast. This is to prevent no-delay ACT files from spamming skills such as
+	// AC_DOUBLE which do not have a skill delay and are not regarded in terms of attack motion.
+	if( sd->canskill_tick && DIFF_TICK(gettick(), sd->canskill_tick) < (sd->battle_status.amotion * (100 + battle_config.skill_amotion_leniency) / 100) )
+	{// attempted to cast a skill before the attack motion has finished
+		return 1;
+	}
+
 	if (sd->blockskill[i] > 0)
 		return 1;
 
@@ -3832,15 +3841,21 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 	}
 
 	map_freeblock_unlock();
-
+	
 	if( sd && !(flag&1) )
-	{
-		if( sd->state.arrow_atk ) //Consume arrow on last invocation to this skill.
+	{// ensure that the skill last-cast tick is recorded
+		sd->canskill_tick = gettick();
+
+		if( sd->state.arrow_atk )
+		{// consume arrow on last invocation to this skill.
 			battle_consume_ammo(sd, skillid, skilllv);
+		}
+
+		// perform auto-cast routines and skill requirement consumption
 		skill_onskillusage(sd, bl, skillid, tick);
 		skill_consume_requirement(sd,skillid,skilllv,2);
 	}
-
+	
 	return 0;
 }
 
@@ -7090,9 +7105,15 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	}
 
 	if( sd && !(flag&1) )
-	{
-		if( sd->state.arrow_atk ) //Consume arrow on last invocation to this skill.
+	{// ensure that the skill last-cast tick is recorded
+		sd->canskill_tick = gettick();
+
+		if( sd->state.arrow_atk )
+		{// consume arrow on last invocation to this skill.
 			battle_consume_ammo(sd, skillid, skilllv);
+		}
+
+		// perform auto-cast routines and skill requirement consumption
 		skill_onskillusage(sd, bl, skillid, tick);
 		skill_consume_requirement(sd,skillid,skilllv,2);
 	}
@@ -8078,9 +8099,15 @@ int skill_castend_pos2(struct block_list* src, int x, int y, int skillid, int sk
 	status_change_end(src, SC_MAGICPOWER, INVALID_TIMER);
 
 	if( sd )
-	{
-		if( sd->state.arrow_atk && !(flag&1) ) //Consume arrow if a ground skill was not invoked. [Skotlex]
+	{// ensure that the skill last-cast tick is recorded
+		sd->canskill_tick = gettick();
+
+		if( sd->state.arrow_atk && !(flag&1) )
+		{// consume arrow if this is a ground skill
 			battle_consume_ammo(sd, skillid, skilllv);
+		}
+
+		// perform auto-cast routines and skill requirement consumption
 		skill_onskillusage(sd, NULL, skillid, tick);
 		skill_consume_requirement(sd,skillid,skilllv,2);
 	}
