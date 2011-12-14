@@ -2625,7 +2625,7 @@ int mob_class_change (struct mob_data *md, int class_)
 
 	//Need to update name display.
 	clif_charnameack(0, &md->bl);
-
+	status_change_end(&md->bl,SC_KEEPING,INVALID_TIMER);
 	return 0;
 }
 
