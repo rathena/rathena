@@ -3249,6 +3249,9 @@ int inter_config_read(char *cfgName)
 		if(strcmpi(w1,"item_db2_db")==0)
 			strcpy(item_db2_db,w2);
 		else
+		if(strcmpi(w1,"item_db_re_db")==0)
+			strcpy(item_db_re_db,w2);
+		else
 		if(strcmpi(w1,"mob_db2_db")==0)
 			strcpy(mob_db2_db,w2);
 		else
