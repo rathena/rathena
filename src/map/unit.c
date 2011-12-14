@@ -115,12 +115,14 @@ static int unit_walktoxy_timer(int tid, unsigned int tick, int id, intptr_t data
 	struct map_session_data *sd;
 	struct mob_data         *md;
 	struct unit_data        *ud;
+	struct mercenary_data   *mrd;
 
 	bl = map_id2bl(id);
 	if(bl == NULL)
 		return 0;
 	sd = BL_CAST(BL_PC, bl);
 	md = BL_CAST(BL_MOB, bl);
+	mrd = BL_CAST(BL_MER, bl);
 	ud = unit_bl2ud(bl);
 	
 	if(ud == NULL) return 0;
@@ -175,6 +177,11 @@ static int unit_walktoxy_timer(int tid, unsigned int tick, int id, intptr_t data
 		} else
 			sd->areanpc_id=0;
 
+		if( sd->md && !check_distance_bl(&sd->bl, &sd->md->bl, MAX_MER_DISTANCE) )
+		{// mercenary is too far from the master so warp the master's position
+			unit_warp( &sd->md->bl, sd->bl.m, sd->bl.x, sd->bl.y, CLR_TELEPORT );
+		}
+
 		if (sd->state.gmaster_flag &&
 			(battle_config.guild_aura&((agit_flag || agit2_flag)?2:1)) &&
 			(battle_config.guild_aura&(map_flag_gvg2(bl->m)?8:4))
@@ -217,6 +224,10 @@ static int unit_walktoxy_timer(int tid, unsigned int tick, int id, intptr_t data
 			//Resend walk packet for proper Self Destruction display.
 			clif_move(ud);
 		}
+	}
+	else if( mrd && mrd->master && !check_distance_bl(&mrd->master->bl, bl, MAX_MER_DISTANCE) )
+	{// mercenary is too far from the master so warp the master's position
+		unit_warp( bl, mrd->master->bl.id, mrd->master->bl.x, mrd->master->bl.y, CLR_TELEPORT );
 	}
 
 	if(tid == INVALID_TIMER) //A directly invoked timer is from battle_stop_walking, therefore the rest is irrelevant.
