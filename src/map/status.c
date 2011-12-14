@@ -1128,8 +1128,12 @@ int status_heal(struct block_list *bl,int hp,int sp, int flag)
 	}
 
 	if(hp) {
-		if (!(flag&1) && sc && sc->data[SC_BERSERK])
-			hp = 0;
+		if( sc && sc->data[SC_BERSERK] ) {
+			if( flag&1 )
+				flag &= ~2;
+			else
+				hp = 0;
+		}
 
 		if((unsigned int)hp > status->max_hp - status->hp)
 			hp = status->max_hp - status->hp;

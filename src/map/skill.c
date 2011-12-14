@@ -1473,7 +1473,9 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 			hp += sd->magic_hp_gain_value;
 		}
 		if( hp || sp )
-			status_heal(src, hp, sp, battle_config.show_hp_sp_gain?2:0);
+		{// updated to force healing to allow healing through berserk
+			status_heal(src, hp, sp, battle_config.show_hp_sp_gain ? 3 : 1);
+		}
 	}
 
 	// Trigger counter-spells to retaliate against damage causing skills.
