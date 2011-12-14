@@ -510,7 +510,7 @@ void chrif_on_ready(void)
 	 **/
 	ShowMessage(""CL_XXBL""CL_BT_YELLOW"============= WARNING ============="CL_XXBL""CL_CLL""CL_NORMAL"\n");
 	ShowMessage(""CL_XXBL"- "CL_BT_YELLOW"This version is under development and shouldn't be used as a real server"CL_XXBL""CL_CLL""CL_NORMAL"\n");
-	ShowMessage(""CL_XXBL"- "CL_BT_YELLOW"For bugs, comments and suggestions: http://ro-resources.net "CL_XXBL""CL_CLL""CL_NORMAL"\n");
+	ShowMessage(""CL_XXBL"- "CL_BT_YELLOW"For bugs, comments and suggestions: http://rathena.org/board/ "CL_XXBL""CL_CLL""CL_NORMAL"\n");
 	ShowMessage(""CL_XXBL"- "CL_BT_YELLOW"Thank you for trying out"CL_XXBL""CL_CLL""CL_NORMAL"\n");
 	//If there are players online, send them to the char-server. [Skotlex]
 	send_users_tochar();
