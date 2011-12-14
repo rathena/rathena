@@ -146,6 +146,7 @@ in_rogue	mapflag	nopenalty
 job_sage	mapflag	nopenalty
 
 // Misc Quests =======================
+mosk_ship	mapflag	nopenalty
 que_sign01	mapflag	nopenalty
 que_sign02	mapflag	nopenalty
 

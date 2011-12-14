@@ -8231,8 +8231,8 @@ L_Mission:
 			mes "[Karl]";
 			mes "If you keep looking around";
 			mes "the ^3355FFfields just outside of";
-			mes "Lighthalzen^000000, she'll certainly";
-			mes "find. I'm sorry that I can't";
+			mes "Lighthalzen^000000, you'll certainly";
+			mes "find her. I'm sorry that I can't";
 			mes "tell you more, but we've got";
 			mes "to protect our security...";
 			next;

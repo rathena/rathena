@@ -7,7 +7,7 @@
 //= 1.7 Commented out entries. (Quests are official) [L0ne_W0lf]
 //============================================================
 
-// Location for Job's Quests
+// Job Quests ========================
 //job_thief1	mapflag	noexp
 //job_sword1	mapflag	noexp
 //in_moc_16	mapflag	noexp
@@ -22,3 +22,6 @@
 //job_soul	mapflag	noexp
 //job_star	mapflag	noexp
 //que_ng	mapflag	noexp
+
+// Misc Quests =======================
+// mosk_ship	mapflag	noexp
