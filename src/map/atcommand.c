@@ -104,14 +104,14 @@ const char* msg_txt(int msg_number)
 static char* player_title_txt(int level)
 {
 	const char* format;
-	format = (level >= battle_config.title_lvl8) ? msg_txt(332)
-	       : (level >= battle_config.title_lvl7) ? msg_txt(331)
-	       : (level >= battle_config.title_lvl6) ? msg_txt(330)
-	       : (level >= battle_config.title_lvl5) ? msg_txt(329)
-	       : (level >= battle_config.title_lvl4) ? msg_txt(328)
-	       : (level >= battle_config.title_lvl3) ? msg_txt(327)
-	       : (level >= battle_config.title_lvl2) ? msg_txt(326)
-	       : (level >= battle_config.title_lvl1) ? msg_txt(325)
+	format = (level >= battle_config.title_lvl8) ? msg_txt(342)
+	       : (level >= battle_config.title_lvl7) ? msg_txt(341)
+	       : (level >= battle_config.title_lvl6) ? msg_txt(340)
+	       : (level >= battle_config.title_lvl5) ? msg_txt(339)
+	       : (level >= battle_config.title_lvl4) ? msg_txt(338)
+	       : (level >= battle_config.title_lvl3) ? msg_txt(337)
+	       : (level >= battle_config.title_lvl2) ? msg_txt(336)
+	       : (level >= battle_config.title_lvl1) ? msg_txt(335)
 	       : "";
 	sprintf(atcmd_temp, format, level);
 	return atcmd_temp;
@@ -625,16 +625,16 @@ ACMD_FUNC(who3)
 					atcmd_output[0]=0;
 				}
 				//Player name
-				sprintf(temp0, msg_txt(333), pl_sd->status.name);
+				sprintf(temp0, msg_txt(343), pl_sd->status.name);
 				strcat(atcmd_output,temp0);
 				//Player title, if exists
 				if (pl_GM_level > 0) {
 					//sprintf(temp0, "(%s) ", player_title_txt(pl_GM_level) );
-					sprintf(temp0, msg_txt(334), player_title_txt(pl_GM_level) );
+					sprintf(temp0, msg_txt(344), player_title_txt(pl_GM_level) );
 					strcat(atcmd_output,temp0);
 				}
 				//Players Location: map x y
-				sprintf(temp0, msg_txt(338), mapindex_id2name(pl_sd->mapindex), pl_sd->bl.x, pl_sd->bl.y);
+				sprintf(temp0, msg_txt(348), mapindex_id2name(pl_sd->mapindex), pl_sd->bl.x, pl_sd->bl.y);
 				strcat(atcmd_output,temp0);
 
 				clif_displaymessage(fd, atcmd_output);
@@ -695,16 +695,16 @@ ACMD_FUNC(who2)
 			if (strstr(player_name, match_text) != NULL) { // search with no case sensitive
 				//Players Name
 				//sprintf(atcmd_output, "Name: %s ", pl_sd->status.name);
-				sprintf(atcmd_output, msg_txt(333), pl_sd->status.name);
+				sprintf(atcmd_output, msg_txt(343), pl_sd->status.name);
 				//Player title, if exists
 				if (pl_GM_level > 0) {
 					//sprintf(temp0, "(%s) ", player_title_txt(pl_GM_level) );
-					sprintf(temp0, msg_txt(334), player_title_txt(pl_GM_level) );
+					sprintf(temp0, msg_txt(344), player_title_txt(pl_GM_level) );
 					strcat(atcmd_output,temp0);
 				}
 				//Players Base Level / Job name
 				//sprintf(temp0, "| L:%d/%d | Job: %s", pl_sd->status.base_level, pl_sd->status.job_level, job_name(pl_sd->status.class_) );
-				sprintf(temp0, msg_txt(337), pl_sd->status.base_level, pl_sd->status.job_level, job_name(pl_sd->status.class_) );
+				sprintf(temp0, msg_txt(347), pl_sd->status.base_level, pl_sd->status.job_level, job_name(pl_sd->status.class_) );
 				strcat(atcmd_output,temp0);
 
 				clif_displaymessage(fd, atcmd_output);
@@ -769,22 +769,22 @@ ACMD_FUNC(who)
 				g = guild_search(pl_sd->status.guild_id);
 				p = party_search(pl_sd->status.party_id);
 				//Players Name
-				sprintf(atcmd_output, msg_txt(333), pl_sd->status.name);
+				sprintf(atcmd_output, msg_txt(343), pl_sd->status.name);
 				//Player title, if exists
 				if (pl_GM_level > 0) {
-					sprintf(temp0, msg_txt(334), player_title_txt(pl_GM_level) );
+					sprintf(temp0, msg_txt(344), player_title_txt(pl_GM_level) );
 					strcat(atcmd_output,temp0);
 				}
 				//Players Party if exists
 				if (p != NULL) {
 					//sprintf(temp0," | Party: '%s'", p->name);
-					sprintf(temp0, msg_txt(335), p->party.name);
+					sprintf(temp0, msg_txt(345), p->party.name);
 					strcat(atcmd_output,temp0);
 				}
 				//Players Guild if exists
 				if (g != NULL) {
 					//sprintf(temp0," | Guild: '%s'", g->name);
-					sprintf(temp0, msg_txt(336), g->name);
+					sprintf(temp0, msg_txt(346), g->name);
 					strcat(atcmd_output,temp0);
 				}
 				clif_displaymessage(fd, atcmd_output);
