@@ -56,7 +56,7 @@ static int refinebonus[MAX_REFINE_BONUS][3];	// 精錬ボーナステーブル(refine_db.t
 int percentrefinery[5][MAX_REFINE+1];	// 精錬成功率(refine_db.txt)
 static int atkmods[3][MAX_WEAPON_TYPE];	// 武器ATKサイズ修正(size_fix.txt)
 static char job_bonus[CLASS_COUNT][MAX_LEVEL];
-#if RRMODE
+#if REMODE
 enum {
 	SHIELD_ASPD,
 	RE_JOB_DB_MAX,
@@ -1537,7 +1537,7 @@ int status_base_amotion_pc(struct map_session_data* sd, struct status_data* stat
 	
 	// raw delay adjustment from bAspd bonus
 	amotion+= sd->aspd_add;
-#if RRMODE
+#if REMODE
 	/**
 	 * Bearing a shield decreases your ASPD by a fixed value depending on your class
 	 **/
@@ -1597,20 +1597,20 @@ static unsigned short status_base_atk(const struct block_list *bl, const struct 
 
 static inline unsigned short status_base_matk_max(const struct status_data* status)
 {
-	#if RRMODE
+	#if REMODE
 		return status->matk_max;//In RE maximum MATK signs weapon matk, which we store in this var
 	#else //Original Max MATK Formula
 		return status->int_+(status->int_/5)*(status->int_/5);
 	#endif
 }
 
-#if RRMODE
+#if REMODE
 static inline unsigned short status_base_matk_min(const struct status_data* status, int lvl)
 #else
 static inline unsigned short status_base_matk_min(const struct status_data* status)
 #endif
 {
-	#if RRMODE //Renewal MATK Formula
+	#if REMODE //Renewal MATK Formula
 		return status->int_+(status->int_/2)+(status->dex/5)+(status->luk/3)+(lvl/4);
 	#else //Original Min MATK Formula
 		return status->int_+(status->int_/7)*(status->int_/7);
@@ -1627,14 +1627,14 @@ void status_calc_misc(struct block_list *bl, struct status_data *status, int lev
 		status->hit = status->flee =
 		status->def2 = status->mdef2 =
 		status->cri = status->flee2 = 0;
-#if RRMODE
+#if REMODE
 	status->matk_min = status_base_matk_min(status, level);
 #else
 	status->matk_min = status_base_matk_min(status);
 #endif
 	status->matk_max = status_base_matk_max(status);
 
-#if RRMODE //Renewal Formulas
+#if REMODE //Renewal Formulas
 	status->hit += level + status->dex;//base level + ( every 1 dex = +1 hit )
 	status->hit += status->luk / 3;//every 3 luk = +1 hit
 	status->flee += level + status->agi;//base level + ( every 1 agi = +1 flee )
@@ -1668,7 +1668,7 @@ void status_calc_misc(struct block_list *bl, struct status_data *status, int lev
 		status->batk = cap_value(temp, 0, USHRT_MAX);
 	} else
 		status->batk = status_base_atk(bl, status);
-#if RRMODE //Renewal ATK Bonus Formula (after atk is calculated)
+#if REMODE //Renewal ATK Bonus Formula (after atk is calculated)
 	status->batk += status->luk / 3;//every 3 luk = +1ATK
 	status->batk += level / 4;//every 4 levels = +1 ATK
 #endif
@@ -1982,7 +1982,7 @@ static unsigned int status_base_pc_maxsp(struct map_session_data* sd, struct sta
 	return val;
 }
 
-#if RRMODE
+#if REMODE
 /**
  * Renewal Absolute Bonus to be applied after all bonuses were applied (so % bonuses on say, skills, don't affect them)
  **/
@@ -2230,7 +2230,7 @@ int status_calc_pc_(struct map_session_data* sd, bool first)
 			}
 			wa->atk += sd->inventory_data[index]->atk;
 			wa->atk2 = (r=sd->status.inventory[index].refine)*refinebonus[wlv][0];
-		#if RRMODE
+		#if REMODE
 			/**
 			 * in RE matk_max is used as the weapon's matk.
 			 * += is used so that two-wield weapons (in the case of, say, sinx) bonus stack.
@@ -2608,13 +2608,13 @@ int status_calc_pc_(struct map_session_data* sd, bool first)
 		sd->def_rate = 0;
 	if(sd->def_rate != 100) {
 		i =  status->def * sd->def_rate/100;
-#if RRMODE
+#if REMODE
 		status->def = cap_value(i, SHRT_MIN, SHRT_MAX);
 #else
 		status->def = cap_value(i, CHAR_MIN, CHAR_MAX);
 #endif
 	}
-#if RRMODE == 0
+#if REMODE == 0
 	/**
 	 * The following setting does not affect Renewal Mode
 	 **/
@@ -2631,13 +2631,13 @@ int status_calc_pc_(struct map_session_data* sd, bool first)
 		sd->mdef_rate = 0;
 	if(sd->mdef_rate != 100) {
 		i =  status->mdef * sd->mdef_rate/100;
-#if RRMODE
+#if REMODE
 		status->mdef = cap_value(i, SHRT_MIN, SHRT_MAX);
 #else
 		status->mdef = cap_value(i, CHAR_MIN, CHAR_MAX);
 #endif
 	}
-#if RRMODE == 0
+#if REMODE == 0
 	/**
 	 * The following setting does not affect Renewal Mode
 	 **/
@@ -2879,7 +2879,7 @@ int status_calc_homunculus_(struct homun_data *hd, bool first)
 	status->adelay = status->amotion; //It seems adelay = amotion for Homunculus.
 
 	status_calc_misc(&hd->bl, status, hom->level);
-#if RRMODE
+#if REMODE
 	/**
 	 * In RE Mode matk_max is used as source of weaponMATK, but homuns don't have it -- so we swap the values here.
 	 **/
@@ -2902,13 +2902,13 @@ static signed short status_calc_hit(struct block_list *,struct status_change *,i
 static signed short status_calc_critical(struct block_list *,struct status_change *,int);
 static signed short status_calc_flee(struct block_list *,struct status_change *,int);
 static signed short status_calc_flee2(struct block_list *,struct status_change *,int);
-#if RRMODE
+#if REMODE
 	static short status_calc_def(struct block_list *bl, struct status_change *sc, int);
 #else
 	static signed char status_calc_def(struct block_list *,struct status_change *,int);
 #endif
 static signed short status_calc_def2(struct block_list *,struct status_change *,int);
-#if RRMODE
+#if REMODE
 	static short status_calc_mdef(struct block_list *bl, struct status_change *sc, int);
 #else
 	static signed char status_calc_mdef(struct block_list *,struct status_change *,int);
@@ -3345,7 +3345,7 @@ void status_calc_bl_main(struct block_list *bl, /*enum scb_flag*/int flag)
 
 	if(flag&SCB_MATK) {
 		//New matk
-	#if RRMODE
+	#if REMODE
 		status->matk_min = status_base_matk_min(status,status_get_lv(bl));
 	#else
 		status->matk_min = status_base_matk_min(status);
@@ -3355,14 +3355,14 @@ void status_calc_bl_main(struct block_list *bl, /*enum scb_flag*/int flag)
 		if( bl->type&BL_PC && sd->matk_rate != 100 )
 		{
 			//Bonuses from previous matk
-		#if RRMODE == 0 //Only changed in non-re [RRInd]
+		#if REMODE == 0 //Only changed in non-re [RRInd]
 			status->matk_max = status->matk_max * sd->matk_rate/100;
 		#endif
 			status->matk_min = status->matk_min * sd->matk_rate/100;
 		}
 			
 		status->matk_min = status_calc_matk(bl, sc, status->matk_min);
-		#if RRMODE == 0 //Only changed in non-re [RRInd]
+		#if REMODE == 0 //Only changed in non-re [RRInd]
 			status->matk_max = status_calc_matk(bl, sc, status->matk_max);
 		#endif
 
@@ -3445,7 +3445,7 @@ void status_calc_bl_main(struct block_list *bl, /*enum scb_flag*/int flag)
 			status->dmotion = status_calc_dmotion(bl, sc, b_status->dmotion);
 		}
 	}
-#if RRMODE
+#if REMODE
 	status_renewal_postcalc(status,flag);
 #endif
 	if(flag&(SCB_VIT|SCB_MAXHP|SCB_INT|SCB_MAXSP) && bl->type&BL_REGEN)
@@ -4065,14 +4065,14 @@ static signed short status_calc_flee2(struct block_list *bl, struct status_chang
 
 	return (short)cap_value(flee2,10,SHRT_MAX);
 }
-#if RRMODE
+#if REMODE
 	static short status_calc_def(struct block_list *bl, struct status_change *sc, int def)
 #else
 	static signed char status_calc_def(struct block_list *bl, struct status_change *sc, int def)
 #endif
 {
 	if(!sc || !sc->count)
-#if RRMODE
+#if REMODE
 		return (short)cap_value(def,SHRT_MIN,SHRT_MAX);
 #else
 		return (signed char)cap_value(def,CHAR_MIN,CHAR_MAX);
@@ -4131,7 +4131,7 @@ static signed short status_calc_flee2(struct block_list *bl, struct status_chang
 		def -= def * sc->data[SC_ROCK_CRUSHER]->val2 / 100;
 	if( sc->data[SC_POWER_OF_GAIA] )
 		def += def * sc->data[SC_POWER_OF_GAIA]->val2 / 100;
-#if RRMODE
+#if REMODE
 	return (short)cap_value(def,SHRT_MIN,SHRT_MAX);
 #else
 	return (signed char)cap_value(def,CHAR_MIN,CHAR_MAX);
@@ -4184,14 +4184,14 @@ static signed short status_calc_def2(struct block_list *bl, struct status_change
 	return (short)cap_value(def2,1,SHRT_MAX);
 }
 
-#if RRMODE
+#if REMODE
 	static short status_calc_mdef(struct block_list *bl, struct status_change *sc, int mdef)
 #else
 	static signed char status_calc_mdef(struct block_list *bl, struct status_change *sc, int mdef)
 #endif
 {
 	if(!sc || !sc->count)
-#if RRMODE
+#if REMODE
 		return (short)cap_value(mdef,SHRT_MIN,SHRT_MAX);
 #else
 		return (signed char)cap_value(mdef,CHAR_MIN,CHAR_MAX);
@@ -4226,7 +4226,7 @@ static signed short status_calc_def2(struct block_list *bl, struct status_change
 	if(sc->data[SC_WATER_BARRIER])
 		mdef += sc->data[SC_WATER_BARRIER]->val2;
 
-#if RRMODE
+#if REMODE
 	return (short)cap_value(mdef,SHRT_MIN,SHRT_MAX);
 #else
 	return (signed char)cap_value(mdef,CHAR_MIN,CHAR_MAX);
@@ -4414,7 +4414,7 @@ static unsigned short status_calc_speed(struct block_list *bl, struct status_cha
 /// Note that the scale of aspd_rate is 1000 = 100%.
 static short status_calc_aspd_rate(struct block_list *bl, struct status_change *sc, int aspd_rate)
 {
-#if RRMODE == 0
+#if REMODE == 0
 	/**
 	 * this variable is not used unless in non-RE
 	 **/
@@ -4488,7 +4488,7 @@ static short status_calc_aspd_rate(struct block_list *bl, struct status_change *
 		else if(sc->data[SC_MADNESSCANCEL])
 			aspd_rate -= 200;
 	}
-#if RRMODE == 0
+#if REMODE == 0
 	/**
 	 * in RE they give a fixed boost -- we do so along SERVICE4U in status_base_amotion_pc
 	 **/
@@ -4786,7 +4786,7 @@ struct status_data *status_get_base_status(struct block_list *bl)
 			return NULL;
 	}
 }
-#if RRMODE
+#if REMODE
 	short status_get_def(struct block_list *bl)
 #else
 	signed char status_get_def(struct block_list *bl)
@@ -4798,7 +4798,7 @@ struct status_data *status_get_base_status(struct block_list *bl)
 	ud = unit_bl2ud(bl);
 	if (ud && ud->skilltimer != INVALID_TIMER)
 		def -= def * skill_get_castdef(ud->skillid)/100;
-#if RRMODE
+#if REMODE
 	return cap_value(def, SHRT_MIN, SHRT_MAX);
 #else
 	return cap_value(def, CHAR_MIN, CHAR_MAX);
@@ -6076,7 +6076,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 		case SC_EXPLOSIONSPIRITS:
 			val2 = 75 + 25*val1; //Cri bonus
 			break;
-#if RRMODE == 0
+#if REMODE == 0
 		/**
 		 * Only in non-RE it's var is changed
 		 **/
@@ -9410,7 +9410,7 @@ static int status_natural_heal_timer(int tid, unsigned int tick, int id, intptr_
  * size_fix.txt   - size adjustment table for weapons
  * refine_db.txt  - refining data table
  *------------------------------------------*/
-#if RRMODE
+#if REMODE
 static bool status_readdb_job_re(char* fields[], int columns, int current) {
 	int idx, class_;
 	unsigned int i;
@@ -9514,7 +9514,7 @@ int status_readdb(void)
 	memset(hp_coefficient2, 0, sizeof(hp_coefficient2));
 	memset(sp_coefficient, 0, sizeof(sp_coefficient));
 	memset(aspd_base, 0, sizeof(aspd_base));
-#if RRMODE
+#if REMODE
 	memset(re_job_db, 0, sizeof(re_job_db));
 #endif
 	// job_db2.txt
@@ -9543,7 +9543,7 @@ int status_readdb(void)
 	sv_readdb(db_path, "size_fix.txt",  ',', MAX_WEAPON_TYPE,   MAX_WEAPON_TYPE,    ARRAYLENGTH(atkmods),         &status_readdb_sizefix);
 	sv_readdb(db_path, "refine_db.txt", ',', 3+MAX_REFINE+1,    3+MAX_REFINE+1,     ARRAYLENGTH(percentrefinery), &status_readdb_refine);
 
-#if RRMODE
+#if REMODE
 	sv_readdb(db_path, "re_job_db.txt",  ',', 1+RE_JOB_DB_MAX, 1+RE_JOB_DB_MAX,        -1,                            &status_readdb_job_re);
 #endif
 

@@ -2092,7 +2092,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 		if (!flag.idef || !flag.idef2)
 		{	//Defense reduction
 			short vit_def;
-#if RRMODE
+#if REMODE
 			short def1 = status_get_def(target); //Don't use tstatus->def1 due to skill timer reductions.
 #else
 			signed char def1 = status_get_def(target); //Don't use tstatus->def1 due to skill timer reductions.
@@ -2704,7 +2704,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 				break;
 			default:
 			{
-			#if RRMODE //Renewal MATK Appliance according to doddler (?title=Renewal_Changes#Upgrade_MATK)
+			#if REMODE //Renewal MATK Appliance according to doddler (?title=Renewal_Changes#Upgrade_MATK)
 				/**
 				 * min: (weaponMATK+upgradeMATK) * 2 + 1.5 * statusMATK
 				 * max: [weaponMATK+upgradeMATK+(wMatk*wLvl)/10] * 2 + 1.5 * statusMATK
@@ -3025,7 +3025,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 		}
 
 		if(!flag.imdef){
-#if RRMODE
+#if REMODE
 			short mdef = tstatus->mdef;
 #else
 			char mdef = tstatus->mdef;
@@ -3041,7 +3041,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 					//mdef2-= mdef2* i/100;
 				}
 			}
-		#if RRMODE
+		#if REMODE
 			/**
 			 * RE MDEF Reduction (from doddler:?title=Renewal_Changes#MDEF)
 			 * Damage from magic = Magic Attack * 111.5/(111.5+eMDEF) 

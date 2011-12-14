@@ -352,7 +352,7 @@ int skill_calc_heal(struct block_list *src, struct block_list *target, int skill
 	default:
 		if (skill_lv >= battle_config.max_heal_lv)
 			return battle_config.max_heal;
-	#if RRMODE
+	#if REMODE
 		/**
 		 * Renewal Heal Formula (from Doddler)
 		 * TODO: whats that( 1+ %Modifier / 100 ) ? currently using 'x1' (100/100) until found out

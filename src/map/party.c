@@ -917,7 +917,7 @@ int party_send_xy_clear(struct party_data *p)
 	}
 	return 0;
 }
-#if RRMODE
+#if REMODE
 /**
  * Renewal Drop Earning Modifier
  **/
@@ -972,7 +972,7 @@ int party_exp_share(struct party_data* p, struct block_list* src, unsigned int b
 {
 	struct map_session_data* sd[MAX_PARTY];
 	unsigned int i, c;
-#if RRMODE
+#if REMODE
 	int src_lvl = status_get_lv(src);
 #endif
 	nullpo_ret(p);
@@ -1002,7 +1002,7 @@ int party_exp_share(struct party_data* p, struct block_list* src, unsigned int b
 	}
 
 	for (i = 0; i < c; i++) {
-#if RRMODE
+#if REMODE
 		party_renewal_exp_mod(&base_exp,&job_exp,sd[i]->status.base_level,src_lvl);
 #endif
 		pc_gainexp(sd[i], src, base_exp, job_exp, false);

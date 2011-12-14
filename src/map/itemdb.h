@@ -5,7 +5,7 @@
 #define _ITEMDB_H_
 
 #include "../common/mmo.h" // ITEM_NAME_LENGTH
-#include "map.h" //RRMODE
+#include "map.h" //REMODE
 
 #define MAX_RANDITEM	11000
 
@@ -56,7 +56,7 @@ struct item_data {
 	int equip;
 	int weight;
 	int atk;
-#if RRMODE
+#if REMODE
 	int matk;//[RRInd] -- used in RE for matk
 #endif
 	int def;

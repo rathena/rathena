@@ -801,7 +801,7 @@ static bool itemdb_parse_dbrow(char** str, const char* source, int line, int scr
 			id->value_buy, id->value_sell, nameid, id->jname);
 
 	id->weight = atoi(str[6]);
-#if RRMODE
+#if REMODE
 	itemdb_rr_split_atoi(str[7],&id->atk,&id->matk);
 #else
 	id->atk = atoi(str[7]);
@@ -870,7 +870,7 @@ static int itemdb_readdb(void)
 	/**
 	 * ro-resources inheritance: item_db -> item_db_re -> item_db2 (user customs)
 	 **/
-#if RRMODE
+#if REMODE
 	const char* filename[] = { "item_db.txt","item_db_re.txt","item_db2.txt" };
 #else
 	const char* filename[] = { "item_db.txt","item_db2.txt" };
@@ -986,7 +986,7 @@ static int itemdb_readdb(void)
  *======================================*/
 static int itemdb_read_sqldb(void)
 {
-#if RRMODE
+#if REMODE
 	const char* item_db_name[] = { item_db_db, item_db_re_db, item_db2_db };
 #else
 	const char* item_db_name[] = { item_db_db, item_db2_db };

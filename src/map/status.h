@@ -1362,7 +1362,7 @@ struct status_data {
 	short 
 		hit, flee, cri, flee2,
 		def2, mdef2,
-#if RRMODE
+#if REMODE
 		/**
 		 * In RE def and mdef can go over 127 (signed char) limit, so in RE mode we use short
 		 **/
@@ -1371,14 +1371,14 @@ struct status_data {
 		aspd_rate;
 	unsigned char
 		def_ele, ele_lv,
-#if RRMODE
+#if REMODE
 		/**
 		 * in RE weapon level is used in several areas, keeping it here saves performance
 		 **/
 		wlv,
 #endif
 		size, race;
-#if RRMODE == 0
+#if REMODE == 0
 	/**
 	 * In NON-RE def and mdef are not required to be short, so we keep it signed char (ancient-default)
 	 **/
@@ -1494,7 +1494,7 @@ int status_get_lv(struct block_list *bl);
 #define status_get_luk(bl) status_get_status_data(bl)->luk
 #define status_get_hit(bl) status_get_status_data(bl)->hit
 #define status_get_flee(bl) status_get_status_data(bl)->flee
-#if RRMODE
+#if REMODE
 	short status_get_def(struct block_list *bl);
 #else
 	signed char status_get_def(struct block_list *bl);
@@ -1524,7 +1524,7 @@ unsigned char status_calc_attack_element(struct block_list *bl, struct status_ch
 #define status_get_race(bl) status_get_status_data(bl)->race
 #define status_get_size(bl) status_get_status_data(bl)->size
 #define status_get_mode(bl) status_get_status_data(bl)->mode
-#if RRMODE
+#if REMODE
 	/**
 	 * in RE weapon level is used in several areas, keeping it here saves performance
 	 **/

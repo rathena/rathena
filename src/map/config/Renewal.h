@@ -18,7 +18,7 @@
  *    -> Note some features may be enabled/disabled at this file despite this setting being ON
  *  0 : renewal support disabled, use original formulas
  **/
-#define RRMODE 1
+#define REMODE 1
 
 /**
  * Renewal Cast Time

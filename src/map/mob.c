@@ -2164,7 +2164,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 			if(base_exp || job_exp)
 			{
 				if( md->dmglog[i].flag != MDLF_PET || battle_config.pet_attack_exp_to_master ) {
-#if RRMODE
+#if REMODE
 					party_renewal_exp_mod(&base_exp,&job_exp,tmpsd[i]->status.base_level,md->level);
 #endif
 					pc_gainexp(tmpsd[i], &md->bl, base_exp, job_exp, false);
@@ -2189,7 +2189,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		struct item_drop_list *dlist = ers_alloc(item_drop_list_ers, struct item_drop_list);
 		struct item_drop *ditem;
 		int drop_rate;
-#if RRMODE
+#if REMODE
 		int drop_modifier = mvp_sd ? party_renewal_drop_mod(mvp_sd->status.base_level - md->level) :
 							second_sd ? party_renewal_drop_mod(second_sd->status.base_level - md->level) :
 							third_sd ? party_renewal_drop_mod(third_sd->status.base_level - md->level) : 100;
@@ -2235,7 +2235,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 			// Increase drop rate if user has SC_ITEMBOOST
 			if (sd && sd->sc.data[SC_ITEMBOOST]) // now rig the drop rate to never be over 90% unless it is originally >90%.
 				drop_rate = max(drop_rate,cap_value((int)(0.5+drop_rate*(sd->sc.data[SC_ITEMBOOST]->val1)/100.),0,9000));
-#if RRMODE
+#if REMODE
 			if( drop_modifier != 100 )
 				drop_rate = drop_rate * drop_modifier / 100;
 #endif

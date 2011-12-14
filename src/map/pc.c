@@ -5228,7 +5228,7 @@ int pc_need_status_point(struct map_session_data* sd, int type, int val)
 		swap(low, high);
 
 	for ( ; low < high; low++ )
-#if RRMODE //Renewal Stat Cost Formula
+#if REMODE //Renewal Stat Cost Formula
 		sp += (low < 100) ? (2 + (low - 1) / 10) : (16 + 4 * ((low - 100) / 5));
 #else
 		sp += ( 1 + (low + 9) / 10 );
@@ -8250,7 +8250,7 @@ int pc_readdb(void)
 	// ƒXƒLƒ‹ƒcƒŠ?
 	memset(statp,0,sizeof(statp));
 	i=1;
-#if RRMODE
+#if REMODE
 	sprintf(line, "%s/statpoint_renewal.txt", db_path);
 #else
 	sprintf(line, "%s/statpoint.txt", db_path);
@@ -8273,7 +8273,7 @@ int pc_readdb(void)
 			i++;
 		}
 		fclose(fp);
-	#if RRMODE
+	#if REMODE
 		ShowStatus("Done reading '"CL_WHITE"%s"CL_RESET"'.\n","statpoint_renewal.txt");
 	#else
 		ShowStatus("Done reading '"CL_WHITE"%s"CL_RESET"'.\n","statpoint.txt");
