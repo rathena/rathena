@@ -7952,7 +7952,7 @@ int clif_charnameack (int fd, struct block_list *bl)
 					*(str_p-3) = '\0'; //Remove trailing space + pipe.
 					memcpy(WBUFP(buf,30), mobhp, NAME_LENGTH);
 					WBUFB(buf,54) = 0;
-					memcpy(WBUFP(buf,78), mobhp, NAME_LENGTH);
+					WBUFB(buf,78) = 0;
 				}
 			}
 		}
