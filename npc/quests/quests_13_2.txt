@@ -7581,8 +7581,8 @@ mjolnir_01,32,309,3	script	#mj01_01	111,7,7,{
 			switch(select("Mine minerals.:Do nothing.")) {
 			case 1:
 				mes "Clang! Clang! Clang! Clang!";
+				close2;
 				progressbar "ffff00",4;
-				next;
 				set .@get_stone,rand(1,6);
 				if (.@get_stone < 4) {
 					mes "- You failed to mine minerals. -";
@@ -7645,7 +7645,7 @@ OnTimer60000:
 	end;
 }
 
-mjolnir_01,32,309,3	script	#mj01_02	111,7,7,{
+mjolnir_01,217,34,3	script	#mj01_02	111,7,7,{
 	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
 		if (countitem(6077) < 10) {
 			mes "- I can see some different colored minerals where the detector pointed to. This must be the mineral that Mr. Lifeguard told me about. -";
@@ -7653,8 +7653,8 @@ mjolnir_01,32,309,3	script	#mj01_02	111,7,7,{
 			switch(select("Mine minerals.:Do nothing.")) {
 			case 1:
 				mes "Clang! Clang! Clang! Clang!";
+				close2;
 				progressbar "ffff00",4;
-				next;
 				set .@get_stone,rand(1,6);
 				if (.@get_stone < 4) {
 					mes "- You failed to mine minerals. -";
@@ -7775,8 +7775,8 @@ mjolnir_02,90,195,3	script	#mj02_01	111,5,10,{
 			switch(select("Mine minerals.:Do nothing.")) {
 			case 1:
 				mes "Clang! Clang! Clang! Clang!";
+				close2;
 				progressbar "ffff00",4;
-				next;
 				set .@get_stone,rand(1,6);
 				if (.@get_stone < 4) {
 					mes "- You failed to mine minerals. -";
@@ -7845,8 +7845,8 @@ mjolnir_02,206,187,3	script	#mj02_02	111,7,7,{
 			switch(select("Mine minerals.:Do nothing.")) {
 			case 1:
 				mes "Clang! Clang! Clang! Clang!";
+				close2;
 				progressbar "ffff00",4;
-				next;
 				set .@get_stone,rand(1,6);
 				if (.@get_stone < 4) {
 					mes "- You failed to mine minerals. -";
@@ -8045,8 +8045,8 @@ mjolnir_04,125,380,3	script	#mj04_01	111,7,7,{
 			switch(select("Mine minerals.:Do nothing.")) {
 			case 1:
 				mes "Clang! Clang! Clang! Clang!";
+				close2;
 				progressbar "ffff00",4;
-				next;
 				set .@get_stone,rand(1,6);
 				if (.@get_stone < 4) {
 					mes "- You failed to mine minerals. -";
@@ -8115,8 +8115,8 @@ mjolnir_04,220,130,3	script	#mj04_02	111,7,7,{
 				switch(select("Mine minerals.:Do nothing.")) {
 				case 1:
 					mes "Clang! Clang! Clang! Clang!";
+					close2;
 					progressbar "ffff00",4;
-					next;
 					set .@get_stone,rand(1,6);
 					if (.@get_stone < 4) {
 						mes "- You failed to mine minerals. -";
@@ -8727,8 +8727,8 @@ mjolnir_09,229,214,3	script	#mj09_01	111,10,10,{
 			switch(select("Mine minerals.:Do nothing.")) {
 			case 1:
 				mes "Clang! Clang! Clang! Clang!";
+				close2;
 				progressbar "ffff00",4;
-				next;
 				set .@get_stone,rand(1,6);
 				if (.@get_stone < 4) {
 					mes "- You failed to mine minerals. -";
@@ -8922,8 +8922,8 @@ mjolnir_10,188,260,3	script	#mj10_01	111,10,10,{
 				switch(select("Mine minerals.:Do nothing.")) {
 				case 1:
 					mes "Clang! Clang! Clang! Clang!";
+					close2;
 					progressbar "ffff00",4;
-					next;
 					set .@get_stone,rand(1,6);
 					if (.@get_stone < 4) {
 						mes "- You failed to mine minerals. -";
@@ -9236,8 +9236,8 @@ hu_fild05,251,345,3	script	#hu_01	111,10,10,{
 			switch(select("Mine minerals.:Do nothing.")) {
 			case 1:
 				mes "Clang! Clang! Clang! Clang!";
+				close2;
 				progressbar "ffff00",4;
-				next;
 				set .@get_stone,rand(1,6);
 				if (.@get_stone < 4) {
 					mes "- You failed to mine minerals. -";
@@ -9304,8 +9304,8 @@ hu_fild05,134,322,3	script	#hu_02	111,10,10,{
 			switch(select("Mine minerals.:Do nothing.")) {
 			case 1:
 				mes "Clang! Clang! Clang! Clang!";
+				close2;
 				progressbar "ffff00",4;
-				next;
 				set .@get_stone,rand(1,6);
 				if (.@get_stone < 4) {
 					mes "- You failed to mine minerals. -";
@@ -9374,8 +9374,8 @@ hu_fild05,72,104,3	script	#hu_03	111,10,10,{
 			switch(select("Mine minerals.:Do nothing.")) {
 			case 1:
 				mes "Clang! Clang! Clang! Clang!";
+				close2;
 				progressbar "ffff00",4;
-				next;
 				set .@get_stone,rand(1,6);
 				if (.@get_stone < 4) {
 					mes "- You failed to mine minerals. -";
@@ -9443,8 +9443,8 @@ hu_fild05,65,99,3	script	#hu_04	111,10,10,{
 			switch(select("Mine minerals.:Do nothing.")) {
 			case 1:
 				mes "Clang! Clang! Clang! Clang!";
+				close2;
 				progressbar "ffff00",4;
-				next;
 				set .@get_stone,rand(1,6);
 				if (.@get_stone < 4) {
 					mes "- You failed to mine minerals. -";
@@ -9510,8 +9510,8 @@ hu_fild05,323,84,3	script	#hu_05	111,10,10,{
 			switch(select("Mine minerals.:Do nothing.")) {
 			case 1:
 				mes "Clang! Clang! Clang! Clang!";
+				close2;
 				progressbar "ffff00",4;
-				next;
 				set .@get_stone,rand(1,6);
 				if (.@get_stone < 4) {
 					mes "- You failed to mine minerals. -";
@@ -9635,8 +9635,8 @@ ve_fild03,152,134,3	script	#ve_01	111,10,10,{
 			switch(select("Mine minerals.:Do nothing.")) {
 			case 1:
 				mes "Clang! Clang! Clang! Clang!";
+				close2;
 				progressbar "ffff00",4;
-				next;
 				set .@get_stone,rand(1,6);
 				if (.@get_stone < 4) {
 					mes "- You failed to mine minerals. -";
@@ -9704,8 +9704,8 @@ ve_fild03,256,228,3	script	#ve_02	111,10,10,{
 			switch(select("Mine minerals.:Do nothing.")) {
 			case 1:
 				mes "Clang! Clang! Clang! Clang!";
+				close2;
 				progressbar "ffff00",4;
-				next;
 				set .@get_stone,rand(1,6);
 				if (.@get_stone < 4) {
 					mes "- You failed to mine minerals. -";
@@ -9773,8 +9773,8 @@ ve_fild03,85,189,3	script	#ve_03	111,10,10,{
 			switch(select("Mine minerals.:Do nothing.")) {
 			case 1:
 				mes "Clang! Clang! Clang! Clang!";
+				close2;
 				progressbar "ffff00",4;
-				next;
 				set .@get_stone,rand(1,6);
 				if (.@get_stone < 4) {
 					mes "- You failed to mine minerals. -";
@@ -9842,8 +9842,8 @@ ve_fild03,282,268,3	script	#ve_04	111,10,10,{
 			switch(select("Mine minerals.:Do nothing.")) {
 			case 1:
 				mes "Clang! Clang! Clang! Clang!";
+				close2;
 				progressbar "ffff00",4;
-				next;
 				set .@get_stone,rand(1,6);
 				if (.@get_stone < 4) {
 					mes "- You failed to mine minerals. -";
@@ -9997,7 +9997,7 @@ spl_in01,30,324,3	script	High Laphine#grenouille	446,{
 				setquest 2183;
 				close;
 			}
-			else if ((ep13_2_tre1 == 1) && (ep13_2_tre1 == 2)) {
+			else if ((ep13_2_tre1 == 1) || (ep13_2_tre1 == 2)) {
 				mes "[Grenouille]";
 				mes "Get a seed from Flowery,";
 				mes "and then use a Purifier";

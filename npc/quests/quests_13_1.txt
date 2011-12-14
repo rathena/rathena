@@ -12660,7 +12660,7 @@ man_fild01,315,95,3	script	Expedition Scout#1	707,{
 				mes "Well then, keep up the good work!";
 				close;
 			}
-			else if ((.@ep13_search_lotto == 1) && (.@ep13_search_lotto == 6)) {
+			else if ((.@ep13_search_lotto == 1) || (.@ep13_search_lotto == 6)) {
 				mes "[Expedition Scout]";
 				mes "Oh, you must be" + strcharinfo(0) + ". I heard that you'll be delivering the report.";
 				next;
@@ -12729,7 +12729,7 @@ man_fild01,315,95,3	script	Expedition Scout#1	707,{
 				mes "Well then, keep up the good work!";
 				close;
 			}
-			else if ((.@ep13_search_lotto == 1) && (.@ep13_search_lotto == 6)) {
+			else if ((.@ep13_search_lotto == 1) || (.@ep13_search_lotto == 6)) {
 				mes "[Expedition Scout]";
 				mes "Oh, you must be" + strcharinfo(0) + ". I heard that you'll be delivering the report.";
 				next;
@@ -12835,7 +12835,7 @@ man_fild03,202,251,3	script	Expedition Scout#2	707,{
 				mes "Well then, keep up the good work!";
 				close;
 			}
-			else if ((.@ep13_search_lotto == 1) && (.@ep13_search_lotto == 6)) {
+			else if ((.@ep13_search_lotto == 1) || (.@ep13_search_lotto == 6)) {
 				mes "[Expedition Scout]";
 				mes "Oh, you must be" + strcharinfo(0) + ". I heard that you'll be delivering the report.";
 				next;
@@ -12904,7 +12904,7 @@ man_fild03,202,251,3	script	Expedition Scout#2	707,{
 				mes "Well then, keep up the good work!";
 				close;
 			}
-			else if ((.@ep13_search_lotto == 1) && (.@ep13_search_lotto == 6)) {
+			else if ((.@ep13_search_lotto == 1) || (.@ep13_search_lotto == 6)) {
 				mes "[Expedition Scout]";
 				mes "Oh, you must be" + strcharinfo(0) + ". I heard that you'll be delivering the report.";
 				next;
@@ -13000,7 +13000,7 @@ spl_fild02,295,368,3	script	Expedition Scout#3	707,{
 				mes "Well then, keep up the good work!";
 				close;
 			}
-			else if ((.@ep13_search_lotto == 1) && (.@ep13_search_lotto == 6)) {
+			else if ((.@ep13_search_lotto == 1) || (.@ep13_search_lotto == 6)) {
 				mes "[Expedition Scout]";
 				mes "Oh, you must be" + strcharinfo(0) + ". I heard that you'll be delivering the report.";
 				next;
@@ -13069,7 +13069,7 @@ spl_fild02,295,368,3	script	Expedition Scout#3	707,{
 				mes "Well then, keep up the good work!";
 				close;
 			}
-			else if ((.@ep13_search_lotto == 1) && (.@ep13_search_lotto == 6)) {
+			else if ((.@ep13_search_lotto == 1) || (.@ep13_search_lotto == 6)) {
 				mes "[Expedition Scout]";
 				mes "Oh, you must be" + strcharinfo(0) + ". I heard that you'll be delivering the report.";
 				next;
@@ -13175,7 +13175,7 @@ spl_fild03,172,71,3	script	Expedition Scout#4	707,{
 				mes "Well then, keep up the good work!";
 				close;
 			}
-			else if ((.@ep13_search_lotto == 1) && (.@ep13_search_lotto == 6)) {
+			else if ((.@ep13_search_lotto == 1) || (.@ep13_search_lotto == 6)) {
 				mes "[Expedition Scout]";
 				mes "Oh, you must be" + strcharinfo(0) + ". I heard that you'll be delivering the report.";
 				next;
@@ -13244,7 +13244,7 @@ spl_fild03,172,71,3	script	Expedition Scout#4	707,{
 				mes "Well then, keep up the good work!";
 				close;
 			}
-			else if ((.@ep13_search_lotto == 1) && (.@ep13_search_lotto == 6)) {
+			else if ((.@ep13_search_lotto == 1) || (.@ep13_search_lotto == 6)) {
 				mes "[Expedition Scout]";
 				mes "Oh, you must be" + strcharinfo(0) + ". I heard that you'll be delivering the report.";
 				next;

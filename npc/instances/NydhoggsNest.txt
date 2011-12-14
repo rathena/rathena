@@ -114,7 +114,7 @@ nyd_dun02,100,201,3	script	Yggdrasil Gatekeeper	111,8,8,{
 	}
 	else if ((ins_nyd == 131) || (ins_nyd == 132) || (ins_nyd > 199)) {
 		set .@ins_nyd_check,checkquest(3135,PLAYTIME); // 3 Day cooldown
-		set .@ins_nyd_check2,checkquest(3135,PLAYTIME); // 4 Hour play limit
+		set .@ins_nyd_check2,checkquest(3136,PLAYTIME); // 4 Hour play limit
 		if (.@ins_nyd_check == -1) {
 			mes "As I put my hands on the stone gate, a voice sounded from the depth of my heart.";
 			next;
