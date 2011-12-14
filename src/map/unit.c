@@ -686,7 +686,11 @@ int unit_blown(struct block_list* bl, int dx, int dy, int count, int flag)
 		if(dx || dy)
 		{
 			map_foreachinmovearea(clif_outsight, bl, AREA_SIZE, dx, dy, bl->type == BL_PC ? BL_ALL : BL_PC, bl);
-
+			
+			count = distance_xy(bl->x,bl->y,dx,dy);
+			if( count < 0 )
+				count = -count;
+			
 			if(su)
 			{
 				skill_unit_move_unit_group(su->group, bl->m, dx, dy);
