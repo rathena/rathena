@@ -964,7 +964,7 @@ bool pc_authok(struct map_session_data *sd, int login_id2, time_t expiration_tim
 	/**
 	 * Fixed login-without-aura issue (the screen won't blink at this point, don't worry :P)
 	 **/
-	clif_refresh(sd);
+	clif_changemap(sd,sd->mapindex,sd->bl.x,sd->bl.y);
 
 	// Request all registries (auth is considered completed whence they arrive)
 	intif_request_registry(sd,7);
