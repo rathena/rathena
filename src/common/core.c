@@ -205,9 +205,7 @@ void usercheck(void)
 {
 #ifndef _WIN32
     if ((getuid() == 0) && (getgid() == 0)) {
-	ShowWarning ("You are running eAthena as the root superuser.\n");
-	ShowWarning ("It is unnecessary and unsafe to run eAthena with root privileges.\n");
-	sleep(3);
+		ShowWarning ("You are running rAthena with root privileges, it is not necessary.\n");
     }
 #endif
 }
