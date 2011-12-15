@@ -1027,9 +1027,9 @@ int unit_skilluse_id2(struct block_list *src, int target_id, short skill_num, sh
 			target_id = ud->target;
 		temp = 1;
 	} else
-	if ( target_id == src->id && 
+	if ( target_id == src->id && (
 		skill_get_inf(skill_num)&INF_SELF_SKILL &&
-		skill_get_inf2(skill_num)&INF2_NO_TARGET_SELF )
+		skill_get_inf2(skill_num)&INF2_NO_TARGET_SELF ) || skill_num == MO_EXTREMITYFIST ) //Asura due to combo.
 	{
 		target_id = ud->target; //Auto-select target. [Skotlex]
 		temp = 1;
