@@ -1405,6 +1405,28 @@ else
 fi;
 
 #
+# debug
+#
+# Check whether --enable-debug or --disable-debug was given.
+if test "${enable_buildbot+set}" = set; then
+  enableval="$enable_buildbot"
+
+		enable_buildbot="$enableval"
+		case $enableval in
+			"no");;
+			"yes");;
+			*) { { echo "$as_me:$LINENO: error: invalid argument --enable-buildbot=$enableval... stopping" >&5
+echo "$as_me: error: invalid argument --enable-debug=$enableval... stopping" >&2;}
+   { (exit 1); exit 1; }; };;
+		esac
+
+else
+  enable_debug="no"
+
+fi;
+
+
+#
 # RDTSC as Tick Source
 #
 # Check whether --enable-rdtsc or --disable-rdtsc was given.
@@ -4466,6 +4488,18 @@ case $enable_debug in
 		;;
 	"gdb")
 		CFLAGS="$CFLAGS -ggdb -DDEBUG"
+		;;
+esac
+
+#
+# Buildbot
+#
+case $enable_buildbot in
+	"no")
+		#default value
+		;;
+	"yes")
+		CFLAGS="$CFLAGS -g -DBUILDBOT"
 		;;
 esac
 

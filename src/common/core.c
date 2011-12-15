@@ -29,7 +29,7 @@
 void (*shutdown_callback)(void) = NULL;
 
 #if defined(BUILDBOT)
-	bool buildbotflag;
+	int buildbotflag = 0;
 #endif
 
 int runflag = CORE_ST_RUN;
