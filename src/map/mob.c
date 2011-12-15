@@ -1367,7 +1367,6 @@ static bool mob_ai_sub_hard(struct mob_data *md, unsigned int tick)
 			if( md->bl.m != abl->m || abl->prev == NULL
 				|| (dist = distance_bl(&md->bl, abl)) >= MAX_MINCHASE // Attacker longer than visual area
 				|| battle_check_target(&md->bl, abl, BCT_ENEMY) <= 0 // Attacker is not enemy of mob
-				|| status_isdead(abl) // Attacker is Dead (Reflecting Damage?)
 				|| (battle_config.mob_ai&0x2 && !status_check_skilluse(&md->bl, abl, 0, 0)) // Cannot normal attack back to Attacker
 				|| (!battle_check_range(&md->bl, abl, md->status.rhw.range) // Not on Melee Range and ...
 				&& ( // Reach check
