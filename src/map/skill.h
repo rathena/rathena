@@ -64,6 +64,7 @@ enum e_skill_inf2
 	INF2_PARTY_ONLY     = 0x0400,
 	INF2_GUILD_ONLY     = 0x0800,
 	INF2_NO_ENEMY       = 0x1000,
+	INF2_NOLP           = 0x2000,  // Spells that can ignore Land Protector
 };
 
 //Walk intervals at which chase-skills are attempted to be triggered.
