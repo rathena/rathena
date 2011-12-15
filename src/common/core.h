@@ -8,7 +8,7 @@ extern int arg_c;
 extern char **arg_v;
 
 #if defined(BUILDBOT)
-extern bool buildbotflag;
+	extern bool buildbotflag;
 #endif
 
 /// @see E_CORE_ST

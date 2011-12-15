@@ -962,7 +962,7 @@ bool pc_authok(struct map_session_data *sd, int login_id2, time_t expiration_tim
 	skill_cooldown_load(sd);
 	
 	/**
-	 * Fixed login-without-aura issue (the screen won't blink at this point, don't worry :P)
+	 * Fixes login-without-aura glitch (the screen won't blink at this point, don't worry :P)
 	 **/
 	clif_changemap(sd,sd->mapindex,sd->bl.x,sd->bl.y);
 

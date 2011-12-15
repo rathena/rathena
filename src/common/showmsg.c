@@ -694,7 +694,7 @@ int _vShowMessage(enum msg_type flag, const char *string, va_list ap)
 	if( flag == MSG_WARNING ||
 	    flag == MSG_ERROR ||
 	    flag == MSG_SQL ) {
-		bool buildbotflag = true;
+		buildbotflag = true;
 	}
 #endif
 	if(
