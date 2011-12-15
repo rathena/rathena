@@ -452,7 +452,7 @@ struct map_session_data {
 #endif
 
 	/**
-	 * Guarantees your friend request is legit (for bugreport:6429)
+	 * Guarantees your friend request is legit (for bugreport:4629)
 	 **/
 	int friend_req;
 
