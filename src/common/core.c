@@ -28,6 +28,9 @@
 /// Called when a terminate signal is received.
 void (*shutdown_callback)(void) = NULL;
 
+#if defined(BUILDBOT)
+	bool buildbotflag;
+#endif
 
 int runflag = CORE_ST_RUN;
 int arg_c = 0;

@@ -3788,6 +3788,10 @@ int do_init(int argc, char *argv[])
 		shutdown_callback = do_shutdown;
 		runflag = MAPSERVER_ST_RUNNING;
 	}
+#if defined(BUILDBOT)
+	if( buildbotflag )
+		exit(EXIT_FAILURE);
+#endif
 
 	return 0;
 }

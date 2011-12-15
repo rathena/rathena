@@ -7,6 +7,10 @@
 extern int arg_c;
 extern char **arg_v;
 
+#if defined(BUILDBOT)
+extern bool buildbotflag;
+#endif
+
 /// @see E_CORE_ST
 extern int runflag;
 extern char *SERVER_NAME;

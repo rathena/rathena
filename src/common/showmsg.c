@@ -687,6 +687,16 @@ int _vShowMessage(enum msg_type flag, const char *string, va_list ap)
 		ShowError("Empty string passed to _vShowMessage().\n");
 		return 1;
 	}
+	/**
+	 * For the buildbot, these result in a EXIT_FAILURE from core.c when done reading the params.
+	 **/
+#if defined(BUILDBOT)
+	if( flag == MSG_WARNING ||
+	    flag == MSG_ERROR ||
+	    flag == MSG_SQL ) {
+		bool buildbotflag = true;
+	}
+#endif
 	if(
 		( flag == MSG_WARNING && console_msg_log&1 ) ||
 		( ( flag == MSG_ERROR || flag == MSG_SQL ) && console_msg_log&2 ) ||
