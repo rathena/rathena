@@ -12342,7 +12342,7 @@ int skill_unit_timer_sub_onplace (struct block_list* bl, va_list ap)
 
 	nullpo_ret(group);
 
-	if( !(skill_get_inf2(group->skill_id)&(INF2_SONG_DANCE|INF2_TRAP)) && map_getcell(bl->m, bl->x, bl->y, CELL_CHKLANDPROTECTOR) )
+	if( group->skill_id != AC_SHOWER && !(skill_get_inf2(group->skill_id)&(INF2_SONG_DANCE|INF2_TRAP)) && map_getcell(bl->m, bl->x, bl->y, CELL_CHKLANDPROTECTOR) )
 		return 0; //AoE skills are ineffective. [Skotlex]
 
 	if( battle_check_target(&unit->bl,bl,group->target_flag) <= 0 )
