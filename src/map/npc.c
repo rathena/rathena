@@ -1190,7 +1190,90 @@ int npc_buysellsel(struct map_session_data* sd, int id, int type)
 	}
 	return 0;
 }
+/*==========================================
+* Cash Shop Buy List
+*------------------------------------------*/
+int npc_cashshop_buylist(struct map_session_data *sd, int points, int count, unsigned short* item_list)
+{
+    int i, j, nameid, amount, new_, w, vt;
+    struct npc_data *nd = (struct npc_data *)map_id2bl(sd->npc_shopid);
 
+    if( !nd || nd->subtype != CASHSHOP )
+        return 1;
+
+    if( sd->state.trading )
+        return 4;
+
+    new_ = 0;
+    w = 0;
+    vt = 0; // Global Value
+
+    // Validating Process ----------------------------------------------------
+    for( i = 0; i < count; i++ )
+    {
+        nameid = item_list[i*2+1];
+        amount = item_list[i*2+0];
+
+        if( !itemdb_exists(nameid) || amount <= 0 )
+            return 5;
+
+        ARR_FIND(0,nd->u.shop.count,j,nd->u.shop.shop_item[j].nameid == nameid);
+        if( j == nd->u.shop.count || nd->u.shop.shop_item[j].value <= 0 )
+            return 5;
+
+        if( !itemdb_isstackable(nameid) && amount > 1 )
+        {
+            ShowWarning("Player %s (%d:%d) sent a hexed packet trying to buy %d of nonstackable item %d!\n", sd->status.name, sd->status.account_id, sd->status.char_id, amount, nameid);
+            amount = item_list[i*2+0] = 1;
+        }
+
+        switch( pc_checkadditem(sd,nameid,amount) )
+        {
+            case ADDITEM_NEW:
+                new_++;
+                break;
+            case ADDITEM_OVERAMOUNT:
+                return 3;
+        }
+
+        vt += nd->u.shop.shop_item[j].value * amount;
+        w += itemdb_weight(nameid) * amount;
+    }
+
+    if( w + sd->weight > sd->max_weight )
+        return 3;
+    if( pc_inventoryblank(sd) < new_ )
+        return 3;
+    if( points > vt ) points = vt;
+
+    // Payment Process ----------------------------------------------------
+    if( sd->kafraPoints < points || sd->cashPoints < (vt - points) )
+        return 6;
+    pc_paycash(sd,vt,points);
+
+    // Delivery Process ----------------------------------------------------
+    for( i = 0; i < count; i++ )
+    {
+        struct item item_tmp;
+
+        nameid = item_list[i*2+1];
+        amount = item_list[i*2+0];
+
+        memset(&item_tmp,0,sizeof(item_tmp));
+
+        if( !pet_create_egg(sd,nameid) )
+        {
+            item_tmp.nameid = nameid;
+            item_tmp.identify = 1;
+            pc_additem(sd,&item_tmp,amount);
+        }
+
+        if( log_config.enable_logs&0x20 )
+            log_pick_pc(sd, "S", nameid, amount, NULL);
+    }
+
+    return 0;
+}
 //npc_buylist for script-controlled shops.
 static int npc_buylist_sub(struct map_session_data* sd, int n, unsigned short* item_list, struct npc_data* nd)
 {

@@ -1612,6 +1612,7 @@ packet_ver: 25
 
 //2010-11-24aRagexeRE
 packet_ver: 26
+0x0288,-1,cashshopbuy,4:8
 0x0436,19,wanttoconnection,2:6:10:14:18
 0x035f,5,walktoxy,2
 0x0360,6,ticksend,2

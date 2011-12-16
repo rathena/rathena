@@ -13609,22 +13609,36 @@ void clif_cashshop_ack(struct map_session_data* sd, int error)
 /// 0288 <packet len>.W <kafra points>.L <count>.W { <amount>.W <name id>.W }.4B*count (PACKETVER >= 20100803)
 void clif_parse_cashshop_buy(int fd, struct map_session_data *sd)
 {
-	int fail = 0, amount, points = 0;
-	short nameid;
-	nullpo_retv(sd);
+    int fail = 0;
+    struct npc_data *nd;
+    nullpo_retv(sd);
 
-	nameid = RFIFOW(fd,2);
-	amount = RFIFOW(fd,4);
-#if PACKETVER >= 20070711
-	points = RFIFOL(fd,6); // Not Implemented. Should be 0
+    if( sd->state.trading || !sd->npc_shopid )
+        fail = 1;
+    else
+    {
+#if PACKETVER < 20101116
+        short nameid = RFIFOW(fd,2);
+        short amount = RFIFOW(fd,4);
+        int points = RFIFOL(fd,6);
+
+        fail = npc_cashshop_buy(sd, nameid, amount, points);
+#else
+        int len = RFIFOW(fd,2);
+        int points = RFIFOL(fd,4);
+        int count = RFIFOW(fd,8);
+        unsigned short* item_list = (unsigned short*)RFIFOP(fd,10);
+
+        if( len < 10 || len != 10 + count * 4)
+        {
+            ShowWarning("Player %u sent incorrect cash shop buy packet (len %u:%u)!\n", sd->status.char_id, len, 10 + count * 4);
+            return;
+        }
+        fail = npc_cashshop_buylist(sd,points,count,item_list);
 #endif
-
-	if( sd->state.trading || !sd->npc_shopid )
-		fail = 1;
-	else
-		fail = npc_cashshop_buy(sd, nameid, amount, points);
-
-	clif_cashshop_ack(sd, fail);
+    }
+    
+    clif_cashshop_ack(sd,fail);
 }
 
 /*==========================================
