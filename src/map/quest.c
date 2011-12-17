@@ -279,13 +279,16 @@ int quest_check(TBL_PC * sd, int quest_id, quest_check_type type)
 		return (sd->quest_log[i].time < (unsigned int)time(NULL) ? 2 : sd->quest_log[i].state == Q_COMPLETE ? 1 : 0);
 	case HUNTING:
 		{
-			int j;
-			ARR_FIND(0, MAX_QUEST_OBJECTIVES, j, sd->quest_log[i].count[j] < quest_db[sd->quest_index[i]].count[j]);
-			if( j == MAX_QUEST_OBJECTIVES )
-				return 2;
-			if( sd->quest_log[i].time < (unsigned int)time(NULL) )
-				return 1;
-			return 0;
+			if( sd->quest_log[i].state == 0 || sd->quest_log[i].state == 1 ) {
+				int j;
+				ARR_FIND(0, MAX_QUEST_OBJECTIVES, j, sd->quest_log[i].count[j] < quest_db[sd->quest_index[i]].count[j]);
+				if( j == MAX_QUEST_OBJECTIVES )
+					return 2;
+				if( sd->quest_log[i].time < (unsigned int)time(NULL) )
+					return 1;
+				return 0;
+			} else
+				return 0;
 		}
 	default:
 		ShowError("quest_check_quest: Unknown parameter %d",type);
