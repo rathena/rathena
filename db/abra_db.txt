@@ -279,11 +279,11 @@
 293,Summon Monster,6,3500
 294,Grampus Morph,4,5000
 295,Grim Reaper,8,2000
-296,Gold Digger,6,4000
+//296,Gold Digger,6,4000
 297,Beastly Hypnosis,6,4000
 298,Questioning,4,5000
 299,Gravity,4,5000
-300,Leveling,10,500
+//300,Leveling,10,500
 301,Suicide,4,2000
 302,Rejuvination,8,3000
 303,Coma,4,4000
