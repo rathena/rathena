@@ -5493,13 +5493,24 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				case SC_SPL_ATK:		case SC_SPL_DEF:		case SC_MANU_MATK:
 				case SC_SPL_MATK:		case SC_RICHMANKIM:		case SC_ETERNALCHAOS:
 				case SC_DRUMBATTLE:		case SC_NIBELUNGEN:		case SC_ROKISWEIL:
-				case SC_INTOABYSS:		case SC_SIEGFRIED:		case SC_WHISTLE:
-				case SC_ASSNCROS:		case SC_POEMBRAGI:		case SC_APPLEIDUN:
-				case SC_HUMMING:		case SC_DONTFORGETME:	case SC_FORTUNE:
-				case SC_SERVICE4U:		case SC_FOOD_STR_CASH:	case SC_FOOD_AGI_CASH:
-				case SC_FOOD_VIT_CASH:	case SC_FOOD_DEX_CASH:	case SC_FOOD_INT_CASH:
-				case SC_FOOD_LUK_CASH:
+				case SC_INTOABYSS:		case SC_SIEGFRIED:		case SC_FOOD_STR_CASH:
+				case SC_FOOD_AGI_CASH:	case SC_FOOD_VIT_CASH:	case SC_FOOD_DEX_CASH:
+				case SC_FOOD_INT_CASH:	case SC_FOOD_LUK_CASH:
 					continue;
+				/**
+				 * bugreport:4888 these songs may only be dispelled if you're not in their song area anymore
+				 **/
+				case SC_WHISTLE:
+				case SC_ASSNCROS:
+				case SC_POEMBRAGI:
+				case SC_APPLEIDUN:
+				case SC_HUMMING:
+				case SC_DONTFORGETME:
+				case SC_FORTUNE:
+				case SC_SERVICE4U:
+					if( tsc->data[i]->val4 ) //val4 = out-of-song-area
+						continue;
+					break;
 				case SC_ASSUMPTIO:
 					if( bl->type == BL_MOB )
 						continue;
