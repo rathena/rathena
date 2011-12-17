@@ -4205,8 +4205,6 @@ static signed short status_calc_def2(struct block_list *bl, struct status_change
 		return 100;
 	if(sc->data[SC_STEELBODY])
 		return 90;
-	if(sc->data[SC_SKA])
-		return 90;
 	if(sc->data[SC_ARMORCHANGE])
 		mdef += sc->data[SC_ARMORCHANGE]->val3;
 	if(sc->data[SC_STONE] && sc->opt1 == OPT1_STONE)
@@ -4242,6 +4240,8 @@ static signed short status_calc_mdef2(struct block_list *bl, struct status_chang
 
 	if(sc->data[SC_BERSERK])
 		return 0;
+	if(sc->data[SC_SKA])
+		return 90;
 	if(sc->data[SC_MINDBREAKER])
 		mdef2 -= mdef2 * sc->data[SC_MINDBREAKER]->val3/100;
 	if(sc->data[SC_ANALYZE])
