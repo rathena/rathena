@@ -15080,7 +15080,7 @@ BUILDIN_FUNC(showevent)
 	state = script_getnum(st, 2);
 	color = script_getnum(st, 3);
 
-  if( color < 0 || color > 4 )
+	if( color < 0 || color > 3 )
 	color = 0; // set default color
 
 	clif_quest_show_event(sd, &nd->bl, state, color);

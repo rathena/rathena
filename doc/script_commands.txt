@@ -7233,10 +7233,10 @@ state can be:
 	Other value may cause client crashes.
 
 color can be:
-	0 = yellow
-	1 = orange
-	2 = green
-	3 = blue
+	0 = yellow "Quest"
+	1 = orange "Job"
+	2 = green "Event"
+	3 = an MVP flag
 	other values show a transparent mark in the mini-map.
 
 ----------------------------------------
