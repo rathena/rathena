@@ -1057,7 +1057,7 @@ que_bingo,49,31,4	script	Arcade Helper#1	47,{
 que_bingo,42,31,4	script	Arcade Helper#2	66,{
 
 	mes "[Helper]";
-	mes "If you'd like to play";
+	mes "If you'd like to spectate";
 	mes "a game of bingo, then";
 	mes "please proceed this way.";
 	close;

@@ -2641,7 +2641,7 @@ OnDisable:
 	end;
 
 OnTimer5000:
-	mapannounce "que_qsch02","The Eastern magic formation is working to summon Guard of Shadow.",bc_map,"0x4d4dff";
+	mapannounce "que_qsch02","The Eastern magic formation is working to summon Bloody Hunter.",bc_map,"0x4d4dff";
 	monster "que_qsch02",263,292,"Bloody Hunter",1753,1,"#nmsomsch02_jin02::OnMyMobDead";
 	monster "que_qsch02",264,291,"Bloody Hunter",1753,1,"#nmsomsch02_jin02::OnMyMobDead";
 	monster "que_qsch02",265,290,"Bloody Hunter",1753,1,"#nmsomsch02_jin02::OnMyMobDead";
@@ -2748,7 +2748,7 @@ OnDisable:
 	end;
 
 OnTimer5000:
-	mapannounce "que_qsch02","The Northern magic formation is working to summon Keeper of the temple.",bc_map,"0x4d4dff";
+	mapannounce "que_qsch02","The Northern magic formation is working to summon Keeper of the Temple.",bc_map,"0x4d4dff";
 	monster "que_qsch02",247,329,"Keeper Of The Temple",1933,1,"#nmsomsch02_jin03::OnMyMobDead";
 	monster "que_qsch02",249,329,"Keeper Of The Temple",1933,1,"#nmsomsch02_jin03::OnMyMobDead";
 	monster "que_qsch02",251,329,"Keeper Of The Temple",1933,1,"#nmsomsch02_jin03::OnMyMobDead";
