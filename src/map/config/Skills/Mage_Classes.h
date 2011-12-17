@@ -8,12 +8,6 @@
  **/
 
 /**
- * (Wizard/HW/Warlock) enable Fire Ivy skill? (1 OR 0)
- * Default: 0 (disabled)
- **/
-#define FIREIVY_ON 0
-
-/**
  * No settings past this point
  **/
 #endif

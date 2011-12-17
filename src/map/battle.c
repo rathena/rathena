@@ -2765,11 +2765,6 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 					case WZ_SIGHTRASHER:
 						skillratio += 20*skill_lv;
 						break;
-#if FIREIVY_ON
-					case WZ_FIREIVY:
-						skillratio += 20*skill_lv-15;
-						break;
-#endif
 					case WZ_VERMILION:
 						skillratio += 20*skill_lv-20;
 						break;

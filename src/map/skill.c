@@ -793,14 +793,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 	case WZ_METEOR:
 		sc_start(bl,SC_STUN,3*skilllv,skilllv,skill_get_time2(skillid,skilllv));
 		break;
-#if FIREIVY_ON
-	//case WZ_FIREIVY:
-		// Testing for Fire Ivy
-		//sc_start(bl,SC_STUN,3*skilllv,skilllv,skill_get_time2(skillid,skilllv));
-		//sc_start(bl,SC_STUN,(5*skilllv+35),skilllv,skill_get_time2(skillid,skilllv));
-		//sc_start(bl,SC_BURNING,(8*skilllv+35),skilllv,skill_get_time2(skillid,skilllv));
-		//break;
-#endif
+
 	case WZ_VERMILION:
 		sc_start(bl,SC_BLIND,4*skilllv,skilllv,skill_get_time2(skillid,skilllv));
 		break;
@@ -3333,9 +3326,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 	case NJ_KOUENKA:
 	case NJ_HYOUSENSOU:
 	case NJ_HUUJIN:
-#if FIREIVY_ON
-	case WZ_FIREIVY:
-#endif
+
 	/**
 	 * Arch Bishop
 	 **/
@@ -3459,7 +3450,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 				skill_attack(BF_MAGIC,src,src,src,skillid,skilllv,tick,flag);
 			status_percent_damage(src, src, 0, 100, false);
 		}
-		if (sd) skill_blockpc_start (sd, skillid, (skilllv < 5 ? 10000: 15000));
 		break;
 
 	case NPC_BLOODDRAIN:
@@ -7657,9 +7647,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, int skillid, int sk
 	case MG_SAFETYWALL:
 	case MG_FIREWALL:
 	case MG_THUNDERSTORM:
-#if FIREIVY_ON
-	case WZ_FIREIVY:
-#endif
+
 	case AL_PNEUMA:
 	case WZ_ICEWALL:
 	case WZ_FIREPILLAR:
@@ -13883,9 +13871,7 @@ int skill_stasis_check(struct block_list *bl, int src_id, int skillid)
 		case SA_LANDPROTECTOR:		case PF_HPCONVERSION:		case PF_SOULCHANGE:		case PF_SPIDERWEB:
 		case PF_FOGWALL:		case TK_RUN:			case TK_HIGHJUMP:		case TK_SEVENWIND:
 		case SL_KAAHI:			case SL_KAUPE:			case SL_KAITE:
-#if FIREIVY_ON
-		case WZ_FIREIVY:
-#endif
+
 		// Skills that need to be confirmed.
 		case SO_FIREWALK:		case SO_ELECTRICWALK:		case SO_SPELLFIST:		case SO_EARTHGRAVE:
 		case SO_DIAMONDDUST:		case SO_POISON_BUSTER:		case SO_PSYCHIC_WAVE:		case SO_CLOUD_KILL:
@@ -13938,10 +13924,7 @@ static bool skill_parse_row_skilldb(char* split[], int columns, int current)
 	i = skill_get_index(id);
 	if( !i ) // invalid skill id
 		return false;
-#if FIREIVY_ON == 0
-	if( i == WZ_FIREIVY ) //Disabled
-		return true;
-#endif
+
 	skill_split_atoi(split[1],skill_db[i].range);
 	skill_db[i].hit = atoi(split[2]);
 	skill_db[i].inf = atoi(split[3]);
@@ -13983,10 +13966,7 @@ static bool skill_parse_row_requiredb(char* split[], int columns, int current)
 	i = skill_get_index(i);
 	if( !i ) // invalid skill id
 		return false;
-#if FIREIVY_ON == 0
-	if( i == WZ_FIREIVY ) //Disabled
-		return true;
-#endif
+
 	skill_split_atoi(split[1],skill_db[i].hp);
 	skill_split_atoi(split[2],skill_db[i].mhp);
 	skill_split_atoi(split[3],skill_db[i].sp);
@@ -14072,10 +14052,7 @@ static bool skill_parse_row_castdb(char* split[], int columns, int current)
 	i = skill_get_index(i);
 	if( !i ) // invalid skill id
 		return false;
-#if FIREIVY_ON == 0
-	if( i == WZ_FIREIVY ) //Disabled
-		return true;
-#endif
+
 	skill_split_atoi(split[1],skill_db[i].cast);
 	skill_split_atoi(split[2],skill_db[i].delay);
 	skill_split_atoi(split[3],skill_db[i].walkdelay);
@@ -14091,10 +14068,7 @@ static bool skill_parse_row_castnodexdb(char* split[], int columns, int current)
 	i = skill_get_index(i);
 	if( !i ) // invalid skill id
 		return false;
-#if FIREIVY_ON == 0
-	if( i == WZ_FIREIVY ) //Disabled
-		return true;
-#endif
+
 	skill_split_atoi(split[1],skill_db[i].castnodex);
 	if( split[2] ) // optional column
 		skill_split_atoi(split[2],skill_db[i].delaynodex);
@@ -14108,10 +14082,7 @@ static bool skill_parse_row_nocastdb(char* split[], int columns, int current)
 	i = skill_get_index(i);
 	if( !i ) // invalid skill id
 		return false;
-#if FIREIVY_ON == 0
-	if( i == WZ_FIREIVY ) //Disabled
-		return true;
-#endif
+
 	skill_db[i].nocast |= atoi(split[1]);
 
 	return true;
@@ -14255,10 +14226,7 @@ static bool skill_parse_row_abradb(char* split[], int columns, int current)
 		ShowError("abra_db: Passive skills cannot be casted (%d/%s)\n", i, skill_get_name(i));
 		return false;
 	}
-#if FIREIVY_ON == 0
-	if( i == WZ_FIREIVY ) //Disabled
-		return true;
-#endif
+
 	skill_abra_db[current].skillid = i;
 	skill_abra_db[current].req_lv = atoi(split[2]);
 	skill_abra_db[current].per = atoi(split[3]);
