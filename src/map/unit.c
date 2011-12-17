@@ -244,9 +244,11 @@ static int unit_walktoxy_timer(int tid, unsigned int tick, int id, intptr_t data
 	else
 		i = status_get_speed(bl);
 
-	if(i > 0)
+	if(i > 0) {
 		ud->walktimer = add_timer(tick+i,unit_walktoxy_timer,id,i);
-	else if(ud->state.running) {
+		if( md )
+			clif_move(ud);
+	} else if(ud->state.running) {
 		//Keep trying to run.
 		if (!unit_run(bl))
 			ud->state.running = 0;
