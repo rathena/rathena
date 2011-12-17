@@ -4593,6 +4593,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			if( tsc->data[SC_STONE] && tsc->opt1 == OPT1_STONE )
 				status_change_end(bl, SC_STONE, INVALID_TIMER);
 			status_change_end(bl, SC_SLEEP, INVALID_TIMER);
+			status_change_end(bl, SC_TRICKDEAD, INVALID_TIMER);
 		}
 
 		if( dstmd )
