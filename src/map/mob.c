@@ -1470,7 +1470,7 @@ static bool mob_ai_sub_hard(struct mob_data *md, unsigned int tick)
 			return true; //Busy attacking?
 
 		fitem = (struct flooritem_data *)tbl;
-		if(log_config.enable_logs&0x10)	//Logs items, taken by (L)ooter Mobs [Lupus]
+		if(log_config.enable_logs & LOG_MONSTER_ITEMS)	//Logs items, taken by (L)ooter Mobs [Lupus]
 			log_pick_mob(md, "L", fitem->item_data.nameid, fitem->item_data.amount, &fitem->item_data);
 
 		if (md->lootitem_count < LOOTITEM_SIZE) {
@@ -1711,7 +1711,7 @@ static void mob_item_drop(struct mob_data *md, struct item_drop_list *dlist, str
 {
 	TBL_PC* sd;
 
-	if(log_config.enable_logs&0x10)
+	if(log_config.enable_logs & LOG_MONSTER_ITEMS)
 	{	//Logs items, dropped by mobs [Lupus]
 		if (loot)
 			log_pick_mob(md, "L", ditem->item_data.nameid, -ditem->item_data.amount, &ditem->item_data);
@@ -2389,7 +2389,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 				map_addflooritem(&item,1,mvp_sd->bl.m,mvp_sd->bl.x,mvp_sd->bl.y,mvp_sd->status.char_id,(second_sd?second_sd->status.char_id:0),(third_sd?third_sd->status.char_id:0),1);
 			}
 			
-			if(log_config.enable_logs&0x200)	{//Logs items, MVP prizes [Lupus]
+			if(log_config.enable_logs & LOG_MVP_PRIZE)	{//Logs items, MVP prizes [Lupus]
 				log_pick_mob(md, "M", item.nameid, -1, NULL);
 				if (!temp)
 					log_pick_pc(mvp_sd, "P", item.nameid, 1, NULL);

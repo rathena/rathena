@@ -554,7 +554,7 @@ void trade_tradecommit(struct map_session_data *sd)
 			if (flag == 0)
 			{
 				//Logs (T)rade [Lupus]
-				if(log_config.enable_logs&0x2)
+				if(log_config.enable_logs & LOG_TRADES)
 				{
 					log_pick_pc(sd, "T", sd->status.inventory[n].nameid, -(sd->deal.item[trade_i].amount), &sd->status.inventory[n]);
 					log_pick_pc(tsd, "T", sd->status.inventory[n].nameid, sd->deal.item[trade_i].amount, &sd->status.inventory[n]);
@@ -573,7 +573,7 @@ void trade_tradecommit(struct map_session_data *sd)
 			if (flag == 0)
 			{
 				//Logs (T)rade [Lupus]
-				if(log_config.enable_logs&0x2)
+				if(log_config.enable_logs & LOG_TRADES)
 				{
 					log_pick_pc(tsd, "T", tsd->status.inventory[n].nameid, -(tsd->deal.item[trade_i].amount), &tsd->status.inventory[n]);
 					log_pick_pc(sd, "T", tsd->status.inventory[n].nameid, tsd->deal.item[trade_i].amount, &tsd->status.inventory[n]);

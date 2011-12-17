@@ -367,7 +367,7 @@ void buyingstore_trade(struct map_session_data* sd, int account_id, unsigned int
 		zeny = amount*pl_sd->buyingstore.items[listidx].price;
 
 		// log
-		if( log_config.enable_logs&LOG_BUYING_STORE )
+		if( log_config.enable_logs & LOG_BUYING_STORE )
 		{
 			log_pick_pc(sd, "B", nameid, -((int)amount), &sd->status.inventory[index]);
 			log_pick_pc(pl_sd, "B", nameid, amount, &sd->status.inventory[index]);

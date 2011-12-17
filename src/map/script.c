@@ -5699,7 +5699,7 @@ BUILDIN_FUNC(getitem)
         }
 
 	//Logs items, got from (N)PC scripts [Lupus]
-	if(log_config.enable_logs&LOG_SCRIPT_TRANSACTIONS)
+	if(log_config.enable_logs & LOG_SCRIPT_TRANSACTIONS)
 		log_pick_pc(sd, "N", nameid, amount, NULL);
 
 	return 0;
@@ -5801,7 +5801,7 @@ BUILDIN_FUNC(getitem2)
 		}
 
 		//Logs items, got from (N)PC scripts [Lupus]
-		if(log_config.enable_logs&0x40)
+		if(log_config.enable_logs & LOG_SCRIPT_TRANSACTIONS)
 			log_pick_pc(sd, "N", nameid, amount, &item_tmp);
 	}
 
@@ -5867,7 +5867,7 @@ BUILDIN_FUNC(rentitem)
 	clif_rental_time(sd->fd, nameid, seconds);
 	pc_inventory_rental_add(sd, seconds);
 
-	if( log_config.enable_logs&LOG_SCRIPT_TRANSACTIONS )
+	if( log_config.enable_logs & LOG_SCRIPT_TRANSACTIONS )
 		log_pick_pc(sd, "N", nameid, 1, NULL);
 	
 	return 0;
@@ -5939,7 +5939,7 @@ BUILDIN_FUNC(getnameditem)
 	}
 
 	//Logs items, got from (N)PC scripts [Lupus]
-	if(log_config.enable_logs&0x40)
+	if(log_config.enable_logs & LOG_SCRIPT_TRANSACTIONS)
 		log_pick_pc(sd, "N", item_tmp.nameid, item_tmp.amount, &item_tmp);
 
 	script_pushint(st,1);
@@ -6034,7 +6034,7 @@ static void buildin_delitem_delete(struct map_session_data* sd, int idx, int* am
 		}
 
 		//Logs items, got from (N)PC scripts [Lupus]
-		if( log_config.enable_logs&0x40 )
+		if( log_config.enable_logs & LOG_SCRIPT_TRANSACTIONS )
 		{
 			log_pick_pc(sd, "N", inv->nameid, -delamount, inv);
 		}
@@ -6933,7 +6933,7 @@ BUILDIN_FUNC(successrefitem)
 		ep=sd->status.inventory[i].equip;
 
 		//Logs items, got from (N)PC scripts [Lupus]
-		if(log_config.enable_logs&0x40) 
+		if(log_config.enable_logs & LOG_SCRIPT_TRANSACTIONS) 
 			log_pick_pc(sd, "N", sd->status.inventory[i].nameid, -1, &sd->status.inventory[i]);
 
 		sd->status.inventory[i].refine++;
@@ -6943,7 +6943,7 @@ BUILDIN_FUNC(successrefitem)
 		clif_delitem(sd,i,1,3);
 
 		//Logs items, got from (N)PC scripts [Lupus]
-		if(log_config.enable_logs&0x40)
+		if(log_config.enable_logs & LOG_SCRIPT_TRANSACTIONS)
 			log_pick_pc(sd, "N", sd->status.inventory[i].nameid, 1, &sd->status.inventory[i]);
 
 		clif_additem(sd,i,1,0);
@@ -6987,7 +6987,7 @@ BUILDIN_FUNC(failedrefitem)
 		i=pc_checkequip(sd,equip[num-1]);
 	if(i >= 0) {
 		//Logs items, got from (N)PC scripts [Lupus]
-		if(log_config.enable_logs&0x40)
+		if(log_config.enable_logs & LOG_SCRIPT_TRANSACTIONS)
 			log_pick_pc(sd, "N", sd->status.inventory[i].nameid, -1, &sd->status.inventory[i]);
 
 		sd->status.inventory[i].refine = 0;
@@ -10341,7 +10341,7 @@ BUILDIN_FUNC(successremovecards)
 				item_tmp.card[j]=0;
 
 			//Logs items, got from (N)PC scripts [Lupus]
-			if(log_config.enable_logs&0x40)
+			if(log_config.enable_logs & LOG_SCRIPT_TRANSACTIONS)
 				log_pick_pc(sd, "N", item_tmp.nameid, 1, NULL);
 
 			if((flag=pc_additem(sd,&item_tmp,1))){	// 持てないならドロップ
@@ -10364,13 +10364,13 @@ BUILDIN_FUNC(successremovecards)
 			item_tmp.card[j]=sd->status.inventory[i].card[j];
 
 		//Logs items, got from (N)PC scripts [Lupus]
-		if(log_config.enable_logs&0x40)
+		if(log_config.enable_logs & LOG_SCRIPT_TRANSACTIONS)
 			log_pick_pc(sd, "N", sd->status.inventory[i].nameid, -1, &sd->status.inventory[i]);
 
 		pc_delitem(sd,i,1,0,3);
 
 		//Logs items, got from (N)PC scripts [Lupus]
-		if(log_config.enable_logs&0x40)
+		if(log_config.enable_logs & LOG_SCRIPT_TRANSACTIONS)
 			log_pick_pc(sd, "N", item_tmp.nameid, 1, &item_tmp);
 
 		if((flag=pc_additem(sd,&item_tmp,1))){	// もてないならドロップ
@@ -10423,7 +10423,7 @@ BUILDIN_FUNC(failedremovecards)
 					item_tmp.card[j]=0;
 
 				//Logs items, got from (N)PC scripts [Lupus]
-				if(log_config.enable_logs&0x40)
+				if(log_config.enable_logs & LOG_SCRIPT_TRANSACTIONS)
 					log_pick_pc(sd, "N", item_tmp.nameid, 1, NULL);
 
 				if((flag=pc_additem(sd,&item_tmp,1))){
@@ -10438,7 +10438,7 @@ BUILDIN_FUNC(failedremovecards)
 	{
 		if(typefail == 0 || typefail == 2){	// 武具損失
 			//Logs items, got from (N)PC scripts [Lupus]
-			if(log_config.enable_logs&0x40)
+			if(log_config.enable_logs & LOG_SCRIPT_TRANSACTIONS)
 				log_pick_pc(sd, "N", sd->status.inventory[i].nameid, -1, &sd->status.inventory[i]);
 
 			pc_delitem(sd,i,1,0,2);
@@ -10451,7 +10451,7 @@ BUILDIN_FUNC(failedremovecards)
 			item_tmp.attribute=sd->status.inventory[i].attribute,item_tmp.expire_time=sd->status.inventory[i].expire_time;
 
 			//Logs items, got from (N)PC scripts [Lupus]
-			if(log_config.enable_logs&0x40)
+			if(log_config.enable_logs & LOG_SCRIPT_TRANSACTIONS)
 				log_pick_pc(sd, "N", sd->status.inventory[i].nameid, -1, &sd->status.inventory[i]);
 
 			for (j = 0; j < sd->inventory_data[i]->slot; j++)
@@ -10461,7 +10461,7 @@ BUILDIN_FUNC(failedremovecards)
 			pc_delitem(sd,i,1,0,2);
 
 			//Logs items, got from (N)PC scripts [Lupus]
-			if(log_config.enable_logs&0x40)
+			if(log_config.enable_logs & LOG_SCRIPT_TRANSACTIONS)
 				log_pick_pc(sd, "N", item_tmp.nameid, 1, &item_tmp);
 
 			if((flag=pc_additem(sd,&item_tmp,1))){
@@ -11131,7 +11131,7 @@ BUILDIN_FUNC(clearitem)
 		if (sd->status.inventory[i].amount) {
 
 			//Logs items, got from (N)PC scripts [Lupus]
-			if(log_config.enable_logs&0x40)
+			if(log_config.enable_logs & LOG_SCRIPT_TRANSACTIONS)
 				log_pick_pc(sd, "N", sd->status.inventory[i].nameid, -sd->status.inventory[i].amount, &sd->status.inventory[i]);
 
 			pc_delitem(sd, i, sd->status.inventory[i].amount, 0, 0);
@@ -15071,20 +15071,20 @@ BUILDIN_FUNC(checkquest)
 
 BUILDIN_FUNC(showevent)
 {
-  TBL_PC *sd = script_rid2sd(st);
-  struct npc_data *nd = map_id2nd(st->oid);
-  int state, color;
+	TBL_PC *sd = script_rid2sd(st);
+	struct npc_data *nd = map_id2nd(st->oid);
+	int state, color;
 
-  if( sd == NULL || nd == NULL )
-     return 0;
-  state = script_getnum(st, 2);
-  color = script_getnum(st, 3);
+	if( sd == NULL || nd == NULL )
+	return 0;
+	state = script_getnum(st, 2);
+	color = script_getnum(st, 3);
 
   if( color < 0 || color > 4 )
-     color = 0; // set default color
+	color = 0; // set default color
 
-  clif_quest_show_event(sd, &nd->bl, state, color);
-  return 0;
+	clif_quest_show_event(sd, &nd->bl, state, color);
+	return 0;
 }
 
 /*==========================================

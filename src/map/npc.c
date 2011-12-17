@@ -1268,7 +1268,7 @@ int npc_cashshop_buylist(struct map_session_data *sd, int points, int count, uns
             pc_additem(sd,&item_tmp,amount);
         }
 
-        if( log_config.enable_logs&0x20 )
+        if( log_config.enable_logs & LOG_NPC_TRANSACTIONS )
             log_pick_pc(sd, "S", nameid, amount, NULL);
     }
 
@@ -1376,7 +1376,7 @@ int npc_cashshop_buy(struct map_session_data *sd, int nameid, int amount, int po
 		pc_additem(sd,&item_tmp, amount);
 	}
 
-	if(log_config.enable_logs&0x20)
+	if(log_config.enable_logs & LOG_NPC_TRANSACTIONS)
 		log_pick_pc(sd, "S", nameid, amount, NULL);
 
 	return 0;
@@ -1486,7 +1486,7 @@ int npc_buylist(struct map_session_data* sd, int n, unsigned short* item_list)
 		pc_additem(sd,&item_tmp,amount);
 
 		//Logs items, Bought in NPC (S)hop [Lupus]
-		if( log_config.enable_logs&0x20 )
+		if( log_config.enable_logs & LOG_NPC_TRANSACTIONS )
 			log_pick_pc(sd, "S", item_tmp.nameid, amount, NULL);
 		//Logs
 	}
@@ -1630,7 +1630,7 @@ int npc_selllist(struct map_session_data* sd, int n, unsigned short* item_list)
 		nameid = sd->status.inventory[idx].nameid;
 
 		//Logs items, Sold to NPC (S)hop [Lupus]
-		if( log_config.enable_logs&0x20 )
+		if( log_config.enable_logs & LOG_NPC_TRANSACTIONS )
 			log_pick_pc(sd, "S", nameid, -amount, &sd->status.inventory[idx]);
 		//Logs
 

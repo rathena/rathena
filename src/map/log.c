@@ -437,7 +437,7 @@ int log_config_read(char *cfgName)
 		{
 			if(strcmpi(w1,"enable_logs") == 0) {
 				log_config.enable_logs = (log_what)atoi(w2);
-				if (log_config.enable_logs&1) //Log everything.
+				if (log_config.enable_logs & 1) //Log everything.
 					log_config.enable_logs = LOG_ALL;
 			} else if(strcmpi(w1,"sql_logs") == 0) {
 				log_config.sql_logs = (bool)atoi(w2);

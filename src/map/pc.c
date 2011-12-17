@@ -3512,7 +3512,7 @@ int pc_dropitem(struct map_session_data *sd,int n,int amount)
 	}
 	
 	//Logs items, dropped by (P)layers [Lupus]
-	if(log_config.enable_logs&0x8)
+	if(log_config.enable_logs & LOG_PLAYER_ITEMS)
 		log_pick_pc(sd, "P", sd->status.inventory[n].nameid, -amount, (struct item*)&sd->status.inventory[n]);
 	//Logs
 
@@ -3824,7 +3824,7 @@ int pc_useitem(struct map_session_data *sd,int n)
 			clif_useitemack(sd,n,amount-1,1);
 
 			//Logs (C)onsumable items [Lupus]
-			if( log_config.enable_logs&0x100 )
+			if( log_config.enable_logs & LOG_USED_ITEMS )
 				log_pick_pc(sd, "C", sd->status.inventory[n].nameid, -1, &sd->status.inventory[n]);
 
 			pc_delitem(sd,n,1,1,0); // Rental Usable Items are not deleted until expiration
@@ -4086,7 +4086,7 @@ int pc_steal_item(struct map_session_data *sd,struct block_list *bl, int lv)
 		party_foreachsamemap(pc_show_steal,sd,AREA_SIZE,sd,tmp_item.nameid);
 
 	//Logs items, Stolen from mobs [Lupus]
-	if(log_config.enable_logs&0x80) {
+	if(log_config.enable_logs & LOG_STOLEN_ITEMS) {
 		log_pick_mob(md, "M", itemid, -1, NULL);
 		log_pick_pc(sd, "P", itemid, 1, NULL);
 	}

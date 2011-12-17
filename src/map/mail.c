@@ -35,7 +35,7 @@ int mail_removeitem(struct map_session_data *sd, short flag)
 	{
 		if (flag)
 		{ // Item send
-			if(log_config.enable_logs&0x2000)
+			if(log_config.enable_logs & LOG_MAILS)
 				log_pick_pc(sd, "E", sd->mail.nameid, -sd->mail.amount, &sd->status.inventory[sd->mail.index]);
 
 			pc_delitem(sd, sd->mail.index, sd->mail.amount, 1, 0);
@@ -144,7 +144,7 @@ void mail_getattachment(struct map_session_data* sd, int zeny, struct item* item
 	{
 		pc_additem(sd, item, item->amount);
 
-		if(log_config.enable_logs&0x2000)
+		if(log_config.enable_logs & LOG_MAILS)
 			log_pick_pc(sd, "E", item->nameid, item->amount, item);
 
 		clif_Mail_getattachment(sd->fd, 0);
@@ -178,7 +178,7 @@ void mail_deliveryfail(struct map_session_data *sd, struct mail_message *msg)
 	if( msg->item.amount > 0 )
 	{
 		// Item recieve (due to failure)
-		if(log_config.enable_logs&0x2000)
+		if(log_config.enable_logs & LOG_MAILS)
 			log_pick_pc(sd, "E", msg->item.nameid, msg->item.amount, &msg->item);
 
 		pc_additem(sd, &msg->item, msg->item.amount);
