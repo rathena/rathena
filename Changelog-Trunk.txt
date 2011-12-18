@@ -1,5 +1,7 @@
 Date	Added
 
+2011-12-17
+	* Added field for "'add-ons' sidebar" to character select list packet for 2011-10-25aRagexeRE and newer. [Ai4rei]
 2011-12-10
 	* Disabled creation of merceneries on TXT until charmerge is done, since the current char-server does not support it (bugreport:2502, since r13116). [Ai4rei]
 	* Updated pcre3.dll and related files from 7.0 to 8.20 (bugreport:4948). [Ai4rei]

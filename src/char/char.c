@@ -1793,7 +1793,7 @@ int count_users(void)
 // Writes char data to the buffer in the format used by the client.
 // Used in packets 0x6b (chars info) and 0x6d (new char info)
 // Returns the size
-#define MAX_CHAR_BUF 140 //Max size (for WFIFOHEAD calls)
+#define MAX_CHAR_BUF 144 //Max size (for WFIFOHEAD calls)
 int mmo_char_tobuf(uint8* buffer, struct mmo_charstatus* p)
 {
 	unsigned short offset = 0;
@@ -1863,6 +1863,10 @@ int mmo_char_tobuf(uint8* buffer, struct mmo_charstatus* p)
 #endif
 #if PACKETVER >= 20110928
 	WBUFL(buf,132) = 0;  // change slot feature (0 = disabled, otherwise enabled)
+	offset += 4;
+#endif
+#if PACKETVER >= 20111025
+	WBUFL(buf,136) = 0;  // unknown purpose (0 = disabled, otherwise displays "Add-Ons" sidebar)
 	offset += 4;
 #endif
 	return 106+offset;

@@ -42,6 +42,7 @@
 // 20101124 - 2010-11-24aRagexeRE+ - 0x856, 0x857, 0x858
 // 20110111 - 2011-01-11aRagexeRE+ - 0x6b, 0x6d
 // 20110928 - 2011-09-28aRagexeRE+ - 0x6b, 0x6d
+// 20111025 - 2011-10-25aRagexeRE+ - 0x6b, 0x6d
 
 #ifndef PACKETVER
 	#define PACKETVER 20110609
