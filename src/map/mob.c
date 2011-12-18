@@ -4364,10 +4364,13 @@ static void mob_load(void)
 		mob_read_sqldb();
 		mob_read_sqlskilldb();
 	} else {
-#endif /* TXT_ONLY */
 		mob_readdb();
 		mob_readskilldb();
-	}	
+	}
+#else
+	mob_readdb();
+	mob_readskilldb();
+#endif /* TXT_ONLY */
 	sv_readdb(db_path, "mob_avail.txt", ',', 2, 12, -1, &mob_readdb_mobavail);
 	mob_read_randommonster();
 	mob_readchatdb();
