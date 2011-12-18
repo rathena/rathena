@@ -71,6 +71,8 @@ char item_db2_db[32] = "item_db2";
 char item_db_re_db[32] = "item_db_re";
 char mob_db_db[32] = "mob_db";
 char mob_db2_db[32] = "mob_db2";
+char mob_skill_db_db[32] = "mob_skill_db";
+char mob_skill_db2_db[32] = "mob_skill_db2";
 
 // log database
 char log_db_ip[32] = "127.0.0.1";

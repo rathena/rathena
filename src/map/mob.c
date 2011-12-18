@@ -4266,6 +4266,66 @@ static void mob_readskilldb(void)
 		sv_readdb(db_path, filename[fi], ',', 19, 19, -1, &mob_parse_row_mobskilldb);
 	}
 }
+
+#ifndef TXT_ONLY
+/**
+ * mob_skill_db table reading [CalciumKid]
+ * not overly sure if this is all correct
+ * seems to work though...
+ */
+static int mob_read_sqlskilldb(void)
+{
+	const char* mob_skill_db_name[] = { mob_skill_db_db, mob_skill_db2_db };
+	int fi;
+	
+	if( battle_config.mob_skill_rate == 0 )
+	{
+		ShowStatus("Mob skill use disabled. Not reading mob skills.\n");
+		return 0;
+	}
+
+
+	for( fi = 0; fi < ARRAYLENGTH(mob_skill_db_name); ++fi )
+	{
+		uint32 lines = 0, count = 0;
+		
+		// retrieve all rows from the mob skill database
+		if( SQL_ERROR == Sql_Query(mmysql_handle, "SELECT * FROM `%s`", mob_skill_db_name[fi]) )
+		{
+			Sql_ShowDebug(mmysql_handle);
+			continue;
+		}
+		
+		// process rows one by one
+		while( SQL_SUCCESS == Sql_NextRow(mmysql_handle) )
+		{
+			// wrap the result into a TXT-compatible format
+			char* str[19];
+			char* dummy = "";
+			int i;
+			++lines;
+			for( i = 0; i < 19; ++i )
+			{
+				Sql_GetData(mmysql_handle, i, &str[i], NULL);
+				if( str[i] == NULL ) str[i] = dummy; // get rid of NULL columns
+			}
+			
+			if (!mob_parse_row_mobskilldb(str, 19, count))
+				continue;
+				
+			count++;
+		}
+		
+		// free the query result
+		Sql_FreeResult(mmysql_handle);
+		
+		ShowStatus("Done reading '"CL_WHITE"%lu"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n", count, mob_skill_db_name[fi]);
+		count = 0;
+	}
+	return 0;
+}
+#endif /* not TXT_ONLY */
+
 /*==========================================
  * mob_race2_db.txt reading
  *------------------------------------------*/
@@ -4294,19 +4354,23 @@ static bool mob_readdb_race2(char* fields[], int columns, int current)
 	return true;
 }
 
+/**
+ * read all mob-related databases
+ */
 static void mob_load(void)
 {
 #ifndef TXT_ONLY
-	if(db_use_sqldbs)
+	if(db_use_sqldbs) {
 		mob_read_sqldb();
-	else
+		mob_read_sqlskilldb();
+	} else {
 #endif /* TXT_ONLY */
-	mob_readdb();
-
+		mob_readdb();
+		mob_readskilldb();
+	}	
 	sv_readdb(db_path, "mob_avail.txt", ',', 2, 12, -1, &mob_readdb_mobavail);
 	mob_read_randommonster();
 	mob_readchatdb();
-	mob_readskilldb();
 	sv_readdb(db_path, "mob_race2_db.txt", ',', 2, 20, -1, &mob_readdb_race2);
 }
 

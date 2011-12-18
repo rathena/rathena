@@ -733,6 +733,8 @@ extern char item_db2_db[32];
 extern char item_db_re_db[32];
 extern char mob_db_db[32];
 extern char mob_db2_db[32];
+extern char mob_skill_db_db[32];
+extern char mob_skill_db2_db[32];
 
 #endif /* not TXT_ONLY */
 
