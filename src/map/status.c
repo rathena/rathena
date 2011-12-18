@@ -9546,7 +9546,7 @@ int status_readdb(void)
 	sv_readdb(db_path, "refine_db.txt", ',', 3+MAX_REFINE+1,    3+MAX_REFINE+1,     ARRAYLENGTH(percentrefinery), &status_readdb_refine);
 
 #if REMODE
-	sv_readdb(db_path, "re_job_db.txt",  ',', 1+RE_JOB_DB_MAX, 1+RE_JOB_DB_MAX,        -1,                            &status_readdb_job_re);
+	sv_readdb(db_path, "job_db_re.txt",  ',', 1+RE_JOB_DB_MAX, 1+RE_JOB_DB_MAX,        -1,                            &status_readdb_job_re);
 #endif
 
 	return 0;
