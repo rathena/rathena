@@ -4360,17 +4360,17 @@ static bool mob_readdb_race2(char* fields[], int columns, int current)
 static void mob_load(void)
 {
 #ifndef TXT_ONLY
-	if(db_use_sqldbs) {
+	if (db_use_sqldbs)
+	{
 		mob_read_sqldb();
 		mob_read_sqlskilldb();
-	} else {
+	}
+	else
+#endif
+	{
 		mob_readdb();
 		mob_readskilldb();
 	}
-#else
-	mob_readdb();
-	mob_readskilldb();
-#endif /* TXT_ONLY */
 	sv_readdb(db_path, "mob_avail.txt", ',', 2, 12, -1, &mob_readdb_mobavail);
 	mob_read_randommonster();
 	mob_readchatdb();
