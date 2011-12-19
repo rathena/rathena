@@ -1,5 +1,8 @@
-Date	Added
+Date (YYYY-MM-DD)
+	Added
 
+2011-12-18
+	* Some preparation clean-ups in map log; no functional changes, yet. [Ai4rei]
 2011-12-17
 	* Added field for "'add-ons' sidebar" to character select list packet for 2011-10-25aRagexeRE and newer. [Ai4rei]
 2011-12-10

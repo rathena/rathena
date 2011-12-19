@@ -10,21 +10,22 @@ struct mob_data;
 struct item;
 
 //New logs
-int log_pick_pc(struct map_session_data *sd, const char *type, int nameid, int amount, struct item *itm);
-int log_pick_mob(struct mob_data *md, const char *type, int nameid, int amount, struct item *itm);
-int log_zeny(struct map_session_data *sd, char *type, struct map_session_data *src_sd, int amount);
+void log_pick_pc(struct map_session_data *sd, const char *type, int nameid, int amount, struct item *itm);
+void log_pick_mob(struct mob_data *md, const char *type, int nameid, int amount, struct item *itm);
+void log_zeny(struct map_session_data *sd, char *type, struct map_session_data *src_sd, int amount);
 
-int log_npc(struct map_session_data *sd, const char *message);
-int log_chat(const char* type, int type_id, int src_charid, int src_accid, const char* map, int x, int y, const char* dst_charname, const char* message);
-int log_atcommand(struct map_session_data *sd, const char *message);
+void log_npc(struct map_session_data *sd, const char *message);
+void log_chat(const char* type, int type_id, int src_charid, int src_accid, const char* map, int x, int y, const char* dst_charname, const char* message);
+void log_atcommand(struct map_session_data *sd, const char *message);
 
 //Old, but useful logs
-int log_branch(struct map_session_data *sd);
-int log_mvpdrop(struct map_session_data *sd, int monster_id, int *log_mvp);
+void log_branch(struct map_session_data *sd);
+void log_mvpdrop(struct map_session_data *sd, int monster_id, int *log_mvp);
 
 int log_config_read(char *cfgName);
 
-typedef enum log_what {
+typedef enum log_what
+{
 	LOG_ALL                 = 0xFFFF,
 	LOG_TRADES              = 0x0002,
 	LOG_VENDING             = 0x0004,
@@ -40,9 +41,11 @@ typedef enum log_what {
 	LOG_GSTORAGE_ITEMS      = 0x1000, // placed/retrieved from guild storage
 	LOG_MAILS               = 0x2000, // mail system transactions
 	LOG_BUYING_STORE        = 0x4000, // buying store transactions
-} log_what;
+}
+log_what;
 
-extern struct Log_Config {
+extern struct Log_Config
+{
 	enum log_what enable_logs;
 	int filter;
 	bool sql_logs;
@@ -50,6 +53,7 @@ extern struct Log_Config {
 	int branch, drop, mvpdrop, zeny, gm, npc, chat;
 	char log_branch[64], log_pick[64], log_zeny[64], log_mvpdrop[64], log_gm[64], log_npc[64], log_chat[64];
 	char log_branch_db[32], log_pick_db[32], log_zeny_db[32], log_mvpdrop_db[32], log_gm_db[32], log_npc_db[32], log_chat_db[32];
-} log_config;
+}
+log_config;
 
 #endif /* _LOG_H_ */
