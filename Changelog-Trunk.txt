@@ -1,6 +1,11 @@
 Date (YYYY-MM-DD)
 	Added
 
+2011-12-19
+	* Changes to chat logging code. [Ai4rei]
+	- Moved log_config.chat checks into log_chat and replaced string chat types with an enumeration.
+	- Changed log_config.chat to only include chat types, old values 1 (all) and 64 (none during woe).
+	- Introduced setting 'log_chat_woe_disable' which replaces previous (log_config.chat&64) bit.
 2011-12-18
 	* Some preparation clean-ups in map log; no functional changes, yet. [Ai4rei]
 2011-12-17

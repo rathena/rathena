@@ -9135,8 +9135,7 @@ void clif_parse_GlobalMessage(int fd, struct map_session_data* sd)
 #endif
 
 	// Chat logging type 'O' / Global Chat
-	if( log_config.chat&1 || (log_config.chat&2 && !((agit_flag || agit2_flag) && log_config.chat&64)) )
-		log_chat("O", 0, sd->status.char_id, sd->status.account_id, mapindex_id2name(sd->mapindex), sd->bl.x, sd->bl.y, NULL, message);
+	log_chat(LOG_CHAT_GLOBAL, 0, sd->status.char_id, sd->status.account_id, mapindex_id2name(sd->mapindex), sd->bl.x, sd->bl.y, NULL, message);
 
 	return;
 }
@@ -9397,8 +9396,7 @@ void clif_parse_WisMessage(int fd, struct map_session_data* sd)
 	}
 
 	// Chat logging type 'W' / Whisper
-	if( log_config.chat&1 || (log_config.chat&4 && !((agit_flag || agit2_flag) && log_config.chat&64)) )
-		log_chat("W", 0, sd->status.char_id, sd->status.account_id, mapindex_id2name(sd->mapindex), sd->bl.x, sd->bl.y, target, message);
+	log_chat(LOG_CHAT_WHISPER, 0, sd->status.char_id, sd->status.account_id, mapindex_id2name(sd->mapindex), sd->bl.x, sd->bl.y, target, message);
 
 	//-------------------------------------------------------//
 	//   Lordalfa - Paperboy - To whisper NPC commands       //
@@ -9457,8 +9455,7 @@ void clif_parse_WisMessage(int fd, struct map_session_data* sd)
 		}
 
 		// Chat logging type 'M' / Main Chat
-		if( log_config.chat&1 || (log_config.chat&32 && !((agit_flag || agit2_flag) && log_config.chat&64)) )
-			log_chat("M", 0, sd->status.char_id, sd->status.account_id, mapindex_id2name(sd->mapindex), sd->bl.x, sd->bl.y, NULL, message);
+		log_chat(LOG_CHAT_MAINCHAT, 0, sd->status.char_id, sd->status.account_id, mapindex_id2name(sd->mapindex), sd->bl.x, sd->bl.y, NULL, message);
 
 		return;
 	}

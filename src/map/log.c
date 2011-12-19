@@ -29,6 +29,24 @@ struct Log_Config log_config;
 #endif
 
 
+/// obtain log type character for chat logs
+static char log_chattype2char(e_log_chat_type type)
+{
+	switch( type )
+	{
+		case LOG_CHAT_GLOBAL:   return 'O';  // Gl(O)bal
+		case LOG_CHAT_WHISPER:  return 'W';  // (W)hisper
+		case LOG_CHAT_PARTY:    return 'P';  // (P)arty
+		case LOG_CHAT_GUILD:    return 'G';  // (G)uild
+		case LOG_CHAT_MAINCHAT: return 'M';  // (M)ain chat
+	}
+
+	// should not get here, fallback
+	ShowError("log_chattype2char: Unknown chat type %d.\n", type);
+	return 'O';
+}
+
+
 //FILTER OPTIONS
 //0 = Don't log
 //1 = Log any item
@@ -359,24 +377,17 @@ void log_npc(struct map_session_data* sd, const char* message)
 }
 
 
-void log_chat(const char* type, int type_id, int src_charid, int src_accid, const char* map, int x, int y, const char* dst_charname, const char* message)
+void log_chat(e_log_chat_type type, int type_id, int src_charid, int src_accid, const char* map, int x, int y, const char* dst_charname, const char* message)
 {
-	// Log CHAT (Global, Whisper, Party, Guild, Main chat)
-	// LOGGING FILTERS [Lupus]
-	// =============================================================
-	// 0 = Don't log at all
-	// 1 = Log EVERYTHING!
-	// Advanced Filter Bits: ||
-	// 02 - Log Global messages
-	// 04 - Log Whisper messages
-	// 08 - Log Party messages
-	// 16 - Log Guild messages
-	// 32 - Log Main chat messages
-	// 64 - Don't log anything when WOE is on
+	if( (log_config.chat&type) == 0 )
+	{// disabled
+		return;
+	}
 
-	//Check ON/OFF
-	if(log_config.chat <= 0)
-		return; //Deactivated
+	if( log_config.log_chat_woe_disable && ( agit_flag || agit2_flag ) )
+	{// no chat logging during woe
+		return;
+	}
 
 #ifndef TXT_ONLY
 	if( log_config.sql_logs )
@@ -384,7 +395,7 @@ void log_chat(const char* type, int type_id, int src_charid, int src_accid, cons
 		SqlStmt* stmt;
 
 		stmt = SqlStmt_Malloc(logmysql_handle);
-		if( SQL_SUCCESS != SqlStmt_Prepare(stmt, LOG_QUERY " INTO `%s` (`time`, `type`, `type_id`, `src_charid`, `src_accountid`, `src_map`, `src_map_x`, `src_map_y`, `dst_charname`, `message`) VALUES (NOW(), '%s', '%d', '%d', '%d', '%s', '%d', '%d', ?, ?)", log_config.log_chat_db, type, type_id, src_charid, src_accid, map, x, y)
+		if( SQL_SUCCESS != SqlStmt_Prepare(stmt, LOG_QUERY " INTO `%s` (`time`, `type`, `type_id`, `src_charid`, `src_accountid`, `src_map`, `src_map_x`, `src_map_y`, `dst_charname`, `message`) VALUES (NOW(), '%c', '%d', '%d', '%d', '%s', '%d', '%d', ?, ?)", log_config.log_chat_db, log_chattype2char(type), type_id, src_charid, src_accid, map, x, y)
 		||  SQL_SUCCESS != SqlStmt_BindParam(stmt, 0, SQLDT_STRING, (char*)dst_charname, safestrnlen(dst_charname, NAME_LENGTH))
 		||  SQL_SUCCESS != SqlStmt_BindParam(stmt, 1, SQLDT_STRING, (char*)message, safestrnlen(message, CHAT_SIZE_MAX))
 		||  SQL_SUCCESS != SqlStmt_Execute(stmt) )
@@ -406,7 +417,7 @@ void log_chat(const char* type, int type_id, int src_charid, int src_accid, cons
 			return;
 		time(&curtime);
 		strftime(timestring, sizeof(timestring), "%m/%d/%Y %H:%M:%S", localtime(&curtime));
-		fprintf(logfp, "%s - %s,%d,%d,%d,%s,%d,%d,%s,%s\n", timestring, type, type_id, src_charid, src_accid, map, x, y, dst_charname, message);
+		fprintf(logfp, "%s - %c,%d,%d,%d,%s,%d,%d,%s,%s\n", timestring, log_chattype2char(type), type_id, src_charid, src_accid, map, x, y, dst_charname, message);
 		fclose(logfp);
 	}
 }
@@ -476,6 +487,8 @@ int log_config_read(char *cfgName)
 				log_config.chat = (atoi(w2));
 			} else if(strcmpi(w1,"log_mvpdrop") == 0) {
 				log_config.mvpdrop = (atoi(w2));
+			} else if(strcmpi(w1,"log_chat_woe_disable") == 0) {
+				log_config.log_chat_woe_disable = (bool)config_switch(w2);
 			}
 
 #ifndef TXT_ONLY

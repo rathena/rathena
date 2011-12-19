@@ -1,5 +1,9 @@
 Date	Added
 
+2011/12/19
+	* Rev. 15036 Updates to log_athena.conf [Ai4rei]
+	- Changed meaning of 'log_chat' bits (shift to right by one, &64 bit removed, 1 no longer means 'all').
+	- Added option 'log_chat_woe_disable' which replaces &64 log_chat bit.
 2011/10/15
 	* Rev. 14972 Updated misleading comment in conf/mapflag/partylock.txt (bugreport:4930, since r14092). [Ai4rei]
 2011/08/21

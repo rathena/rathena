@@ -9,13 +9,25 @@ struct map_session_data;
 struct mob_data;
 struct item;
 
+
+typedef enum e_log_chat_type
+{
+	LOG_CHAT_GLOBAL      = 0x01,
+	LOG_CHAT_WHISPER     = 0x02,
+	LOG_CHAT_PARTY       = 0x04,
+	LOG_CHAT_GUILD       = 0x08,
+	LOG_CHAT_MAINCHAT    = 0x10,
+}
+e_log_chat_type;
+
+
 //New logs
 void log_pick_pc(struct map_session_data *sd, const char *type, int nameid, int amount, struct item *itm);
 void log_pick_mob(struct mob_data *md, const char *type, int nameid, int amount, struct item *itm);
 void log_zeny(struct map_session_data *sd, char *type, struct map_session_data *src_sd, int amount);
 
 void log_npc(struct map_session_data *sd, const char *message);
-void log_chat(const char* type, int type_id, int src_charid, int src_accid, const char* map, int x, int y, const char* dst_charname, const char* message);
+void log_chat(e_log_chat_type type, int type_id, int src_charid, int src_accid, const char* map, int x, int y, const char* dst_charname, const char* message);
 void log_atcommand(struct map_session_data *sd, const char *message);
 
 //Old, but useful logs
@@ -44,11 +56,13 @@ typedef enum log_what
 }
 log_what;
 
+
 extern struct Log_Config
 {
 	enum log_what enable_logs;
 	int filter;
 	bool sql_logs;
+	bool log_chat_woe_disable;
 	int rare_items_log,refine_items_log,price_items_log,amount_items_log; //for filter
 	int branch, drop, mvpdrop, zeny, gm, npc, chat;
 	char log_branch[64], log_pick[64], log_zeny[64], log_mvpdrop[64], log_gm[64], log_npc[64], log_chat[64];
