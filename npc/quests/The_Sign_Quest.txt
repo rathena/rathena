@@ -22,6 +22,7 @@
 //= 3.3 Applied Kazukin's fix for the dancing portion. (bugreport:3966) [L0ne_W0lf]
 //= 3.4 Added Renewal Changes. [Kisuka]
 //= 3.4 Updated 'waitingroom' to support required zeny/lvl. [Kisuka]
+//= 3.5 Fixed two bugs. 4230 & 4404 [CalciumKid]
 //============================================================ 
 
 //============================================================ 
@@ -12064,7 +12065,7 @@ niflheim,102,54,4	script	Mad Man#s	739,{
 						emotion e_pif;
 						close;
 					case 2:
-						if (Zeny < 20000) {
+						if (Zeny < 60000) {
 							mes "[Laichin]";
 							mes "What is this?";
 							mes "You tryin to welch";
