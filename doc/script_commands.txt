@@ -3017,7 +3017,7 @@ castle. The data is read from 'db/castle_db.txt'.
 
 ---------------------------------------
 
-*getcastledata("<map name>",<type of data>)
+*getcastledata("<map name>",<type of data>{,<event>})
 *setcastledata "<map name>",<type of data>,<value>;
 
 This function returns the castle ownership information for the castle referred 
@@ -3044,9 +3044,6 @@ Valid types of data are:
 16 - Is 1 if the 7th guardian is present (Knight Guardian)
 17 - Is 1 if the 8th guardian is present (Knight Guardian)
 
-18-25 types of data will return current hit point values for guardians 1-8 
-respectively.
-
 The 'setcastledata' command will behave identically, but instead of returning 
 values for the specified types of accessible data, it will alter them and cause 
 them to be sent to the char server for storage. Data type of 0 won't do 
@@ -3064,7 +3061,7 @@ Refer to 'db/skill_db.txt' for the full list of skills. (GD_* are guild skills)
 
 ---------------------------------------
 
-*requestguildinfo <guild id>,"<event label>";
+*requestguildinfo <guild id>{,"<event label>"};
 
 This command requests the guild data from the char server and merrily continues 
 with the execution. Whenever the guild information becomes available (which 
