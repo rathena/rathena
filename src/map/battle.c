@@ -349,12 +349,12 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,struct Damag
 	if( sc && sc->count )
 	{
 		//First, sc_*'s that reduce damage to 0.
-		if( sc->data[SC_BASILICA] && !(status_get_mode(src)&MD_BOSS) && skill_num != PA_PRESSURE )
+		if( sc->data[SC_BASILICA] && !(status_get_mode(src)&MD_BOSS) )
 		{
 			d->dmg_lv = ATK_BLOCK;
 			return 0;
 		}
-		if( sc->data[SC_WHITEIMPRISON] && skill_num != HW_GRAVITATION && skill_num != PA_PRESSURE ) { // Gravitation and Pressure do damage without removing the effect
+		if( sc->data[SC_WHITEIMPRISON] && skill_num != HW_GRAVITATION ) { // Gravitation and Pressure do damage without removing the effect
 			if( skill_num == MG_NAPALMBEAT ||
 				skill_num == MG_SOULSTRIKE ||
 				skill_num == WL_SOULEXPANSION ||
