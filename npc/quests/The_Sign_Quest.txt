@@ -720,7 +720,7 @@ prt_in,227,45,0	script	Archeologist#sign	804,{
 		mes "Engel Howard yet?";
 		mes "He's the only one";
 		mes "who can unlock the";
-		mes "the Sign's power for you...";
+		mes "Sign's power for you...";
 	}
 	else if (sign_q == 141) {
 		if (countitem(2644) == 1) {
@@ -769,6 +769,12 @@ prt_in,227,45,0	script	Archeologist#sign	804,{
 		mes "accept this as a token";
 		mes "of my gratitude. Good luck";
 		mes "on your travels, adventurer.";
+		if (checkweight(7178,1) == 0) {
+				next;
+				mes "^3355FFWait a second! Right now,";
+				mes "you have too many items in your inventory. Please come back after you've freed up more inventory space.^000000";
+				close;
+		}
 		delitem 7178,1; //Star's_Sob
 		set sign_q,202;
 		getexp 10000,0;
