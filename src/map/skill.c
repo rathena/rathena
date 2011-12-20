@@ -7300,8 +7300,12 @@ int skill_castend_id(int tid, unsigned int tick, int id, intptr_t data)
 			break;
 
 		if (ud->state.running && ud->skillid == TK_JUMPKICK)
+        {
+            ud->state.running = 0;
+            status_change_end(src, SC_RUN, -1);
 			flag = 1;
-
+		}
+		
 		if (ud->walktimer != INVALID_TIMER && ud->skillid != TK_RUN && ud->skillid != RA_WUGDASH)
 			unit_stop_walking(src,1);
 

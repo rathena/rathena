@@ -462,7 +462,7 @@ int unit_run(struct block_list *bl)
 		to_y += dir_y;
 	}
 
-	if(to_x == bl->x && to_y == bl->y) {
+	if(to_x == bl->x && to_y == bl->y || (to_x == (bl->x+1) || to_y == (bl->y+1)) || (to_x == (bl->x-1) || to_y == (bl->y-1))) {
 		//If you can't run forward, you must be next to a wall, so bounce back. [Skotlex]
 		clif_status_change(bl, SI_BUMP, 1, 0, 0, 0, 0);
 
