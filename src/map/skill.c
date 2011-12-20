@@ -2119,7 +2119,7 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 
 	if( !dmg.amotion )
 	{ //Instant damage
-		if( !sc || !sc->data[SC_DEVOTION] )
+		if( !sc || (!sc->data[SC_DEVOTION] && skillid != CR_REFLECTSHIELD) )
 			status_fix_damage(src,bl,damage,dmg.dmotion); //Deal damage before knockback to allow stuff like firewall+storm gust combo.
 		if( !status_isdead(bl) )
 			skill_additional_effect(src,bl,skillid,skilllv,dmg.flag,dmg.dmg_lv,tick);
@@ -2166,8 +2166,11 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 			clif_damage(d_bl, d_bl, gettick(), 0, 0, damage, 0, 0, 0);
 			status_fix_damage(NULL, d_bl, damage, 0);
 		}
-		else
+		else {
 			status_change_end(bl, SC_DEVOTION, INVALID_TIMER);
+			if( !dmg.amotion )
+				status_fix_damage(src,bl,damage,dmg.dmotion);
+		}
 	}
 
 	if(skillid == RG_INTIMIDATE && damage > 0 && !(tstatus->mode&MD_BOSS)) {
@@ -2191,7 +2194,7 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 	if( rdamage > 0 )
 	{
 		if( dmg.amotion )
-			battle_delay_damage(tick, dmg.amotion,bl,src,0,0,0,rdamage,ATK_DEF,0);
+			battle_delay_damage(tick, dmg.amotion,bl,src,0,CR_REFLECTSHIELD,0,rdamage,ATK_DEF,0);
 		else
 			status_fix_damage(bl,src,rdamage,0);
 		clif_damage(src,src,tick, dmg.amotion,0,rdamage,dmg.div_>1?dmg.div_:1,4,0);

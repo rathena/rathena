@@ -222,7 +222,8 @@ int battle_delay_damage (unsigned int tick, int amotion, struct block_list *src,
 	nullpo_ret(target);
 
 	sc = status_get_sc(target);
-	if( sc && sc->data[SC_DEVOTION] && damage > 0 && skill_id != PA_PRESSURE )
+
+	if( sc && sc->data[SC_DEVOTION] && damage > 0 && skill_id != PA_PRESSURE && skill_id != CR_REFLECTSHIELD )
 		damage = 0;
 
 	if (!battle_config.delay_battle_damage) {
@@ -3806,7 +3807,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 	if (rdamage > 0) { //By sending attack type "none" skill_additional_effect won't be invoked. [Skotlex]
 		if(tsd && src != target)
 			battle_drain(tsd, src, rdamage, rdamage, sstatus->race, is_boss(src));
-		battle_delay_damage(tick, wd.amotion, target, src, 0, 0, 0, rdamage, ATK_DEF, rdelay);
+		battle_delay_damage(tick, wd.amotion, target, src, 0, CR_REFLECTSHIELD, 0, rdamage, ATK_DEF, rdelay);
 	}
 
 	if (tsc) {
