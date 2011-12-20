@@ -754,7 +754,7 @@ int unit_warp(struct block_list *bl,short m,short x,short y,clr_type type)
 	
 	switch (bl->type) {
 		case BL_MOB:
-			if (map[bl->m].flag.monster_noteleport)
+			if (map[bl->m].flag.monster_noteleport && ((TBL_MOB*)bl)->master_id == 0)
 				return 1;
 			if (m != bl->m && map[m].flag.nobranch && battle_config.mob_warp&4)
 				return 1;
