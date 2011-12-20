@@ -4418,8 +4418,9 @@ prt_castle,117,163,5	script	Inspector#prince	755,{
 		case 1:
 			mes "[Inspector]";
 			mes "If you know it, why are you here? Get out of here!";
+			close2;
 			warp "prontera",155,353;
-			close;
+			end;
 		case 2:
 			mes "[Inspector]";
 			mes "......";
