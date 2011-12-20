@@ -9141,6 +9141,14 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 				else
 					sec = 3000; //Couldn't trap it?
 				clif_skillunit_update(&src->bl);
+
+				/**
+				 * If you're snared from a trap that was invisible this makes the trap be
+				 * visible again -- being you stepped on it (w/o this the trap remains invisible and you go "WTF WHY I CANT MOVE")
+				 * bugreport:3961
+				 **/
+				clif_changetraplook(&src->bl, UNT_ANKLESNARE);
+
 				sg->limit = DIFF_TICK(tick,sg->tick)+sec;
 				sg->interval = -1;
 				src->range = 0;
