@@ -1293,7 +1293,12 @@ int check_char_name(char * name, char * esc_name)
 	// check length of character name
 	if( name[0] == '\0' )
 		return -2; // empty character name
-
+	/**
+	 * The client does not allow you to create names with less than 4 characters, however,
+	 * the use of WPE can bypass this, and this fixes the exploit.
+	 **/
+	if( strlen( name ) < 4 )
+		return -2;
 	// check content of character name
 	if( remove_control_chars(name) )
 		return -2; // control chars in name
