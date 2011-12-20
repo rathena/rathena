@@ -1928,7 +1928,8 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 			  	{	//Extend combo time.
 					sce->val1 = skillid; //Update combo-skill
 					sce->val3 = skillid;
-					delete_timer(sce->timer, status_change_timer);
+					if( sce->timer != INVALID_TIMER )
+						delete_timer(sce->timer, status_change_timer);
 					sce->timer = add_timer(tick+sce->val4, status_change_timer, src->id, SC_COMBO);
 					break;
 				}
