@@ -1637,17 +1637,10 @@ void status_calc_misc(struct block_list *bl, struct status_data *status, int lev
 	status->matk_max = status_base_matk_max(status);
 
 #if REMODE //Renewal Formulas
-	status->hit += level + status->dex;//base level + ( every 1 dex = +1 hit )
-	status->hit += status->luk / 3;//every 3 luk = +1 hit
-	status->flee += level + status->agi;//base level + ( every 1 agi = +1 flee )
-	status->flee += status->luk/5;//every 5 luk = +1 flee
-	status->def2 += status->agi / 5;//every 5 agi = +1 def
-	status->def2 += status->vit / 2;//every 2 agi = +1 def
-	status->def2 += level / 2;//every 2 lvls = +1 def
-	status->mdef2 += status->int_ / 2;//every 2 int = +1 mdef
-	status->mdef2 += status->dex / 5;//every 5 dex = +1 mdef
-	status->mdef2 += level /4;//every 4 lvls = +1 mdef
-	//status->matk_min += level/4;//every 4 lvls = +1 matk
+	status->hit += level + status->dex + status->luk/3 + 175; //base level + ( every 1 dex = +1 hit ) + (every 3 luk = +1 hit) + 175
+	status->flee += level + status->agi + status->luk/5 + 100; //base level + ( every 1 agi = +1 flee ) + (every 5 luk = +1 flee) + 100
+	status->def2 += (int)(((float)level + status->vit)/2 + ((float)status->agi/5)); //base level + (every 2 agi = +1 def) + (every 5 agi = +1 def)
+	status->mdef2 += (int)(status->int_ + ((float)level/4) + ((float)status->dex/5) + ((float)status->vit/5)); //(every 4 base level = +1 mdef) + (every 1 int = +1 mdef) + (every 5 dex = +1 mdef) + (every 5 vit = +1 mdef)
 #else //Old Formulas
 	status->hit += level + status->dex;
 	status->flee += level + status->agi;
@@ -1656,12 +1649,12 @@ void status_calc_misc(struct block_list *bl, struct status_data *status, int lev
 #endif
 
 	if( bl->type&battle_config.enable_critical )
-		status->cri += status->luk*3 + 10;
+		status->cri += 10 + (status->luk*10/3); //(every 1 luk = +0.3 critical)
 	else
 		status->cri = 0;
 
 	if (bl->type&battle_config.enable_perfect_flee)
-		status->flee2 += status->luk + 10;
+		status->flee2 += status->luk + 10; //(every 10 luk = +1 perfect flee)
 	else
 		status->flee2 = 0;
 
@@ -1671,8 +1664,7 @@ void status_calc_misc(struct block_list *bl, struct status_data *status, int lev
 	} else
 		status->batk = status_base_atk(bl, status);
 #if REMODE //Renewal ATK Bonus Formula (after atk is calculated)
-	status->batk += status->luk / 3;//every 3 luk = +1ATK
-	status->batk += level / 4;//every 4 levels = +1 ATK
+	status->batk += (int)((float)status->luk/3 + (float)level/4); //(every 3 luk = + 1ATK) + (every 4 base level = +1 ATK)
 #endif
 	if (status->cri)
 	switch (bl->type) {
