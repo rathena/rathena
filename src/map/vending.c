@@ -254,8 +254,8 @@ void vending_openvending(struct map_session_data* sd, const char* message, bool 
 	if( !flag ) // cancelled
 		return; // nothing to do
 
-	if ( pc_isdead(sd) || pc_istrading(sd))
-		return; // can't open vendings lying dead || can't have 2 shops at once
+	if ( pc_isdead(sd) || !sd->state.prevend || pc_istrading(sd))
+		return; // can't open vendings lying dead || didn't use via the skill (wpe/hack) || can't have 2 shops at once
 
 	vending_skill_lvl = pc_checkskill(sd, MC_VENDING);
 	// skill level and cart check
