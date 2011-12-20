@@ -5178,8 +5178,10 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		{	//Prevent vending of GMs with unnecessary Level to trade/drop. [Skotlex]
 			if ( !pc_can_give_items(pc_isGM(sd)) )
 				clif_skill_fail(sd,skillid,0,0);
-			else
+			else {
+				sd->state.prevend = 1;
 				clif_openvendingreq(sd,2+skilllv);
+			}
 		}
 		break;
 

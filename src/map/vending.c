@@ -254,8 +254,8 @@ void vending_openvending(struct map_session_data* sd, const char* message, bool 
 	if( !flag ) // cancelled
 		return; // nothing to do
 
-	if (pc_istrading(sd))
-		return; // can't have 2 shops at once
+	if ( pc_isdead(sd) || pc_istrading(sd))
+		return; // can't open vendings lying dead || can't have 2 shops at once
 
 	vending_skill_lvl = pc_checkskill(sd, MC_VENDING);
 	// skill level and cart check
@@ -306,7 +306,7 @@ void vending_openvending(struct map_session_data* sd, const char* message, bool 
 		clif_skill_fail(sd, MC_VENDING, 0, 0); // custom reply packet
 		return;
 	}
-
+	sd->state.prevend = 0;
 	sd->state.vending = true;
 	sd->vender_id = vending_getuid();
 	sd->vend_num = i;
