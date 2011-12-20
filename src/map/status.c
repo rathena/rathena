@@ -1976,19 +1976,6 @@ static unsigned int status_base_pc_maxsp(struct map_session_data* sd, struct sta
 	return val;
 }
 
-#if REMODE
-/**
- * Renewal Absolute Bonus to be applied after all bonuses were applied (so % bonuses on say, skills, don't affect them)
- **/
-void status_renewal_postcalc(struct status_data* status, int flag) {
-	if( flag&SCB_FLEE )
-		status->flee += 100;
-	if( flag&SCB_HIT )
-		status->hit += 175;
-	return;
-}
-#endif
-
 //Calculates player data from scratch without counting SC adjustments.
 //Should be invoked whenever players raise stats, learn passive skills or change equipment.
 int status_calc_pc_(struct map_session_data* sd, bool first)
@@ -3439,9 +3426,7 @@ void status_calc_bl_main(struct block_list *bl, /*enum scb_flag*/int flag)
 			status->dmotion = status_calc_dmotion(bl, sc, b_status->dmotion);
 		}
 	}
-#if REMODE
-	status_renewal_postcalc(status,flag);
-#endif
+
 	if(flag&(SCB_VIT|SCB_MAXHP|SCB_INT|SCB_MAXSP) && bl->type&BL_REGEN)
 		status_calc_regen(bl, status, status_get_regen_data(bl));
 
