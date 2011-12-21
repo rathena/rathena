@@ -2108,9 +2108,9 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 	default: ;// do nothing
 	}
 	/**
-	 * BL_MOB is handled by mob_dead
+	 * BL_MOB is handled by mob_dead unless the monster is not dead.
 	 **/
-	if( bl->type != BL_MOB )
+	if( bl->type != BL_MOB || !status_isdead(bl) )
 		clif_clearunit_area(bl,clrtype);
 	map_delblock(bl);
 	map_freeblock_unlock();
