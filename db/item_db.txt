@@ -6769,7 +6769,7 @@
 19505,T_Cigarette,T Cigarette,5,0,,0,,0,,0,0xFFFFFFFF,7,2,4096,,0,0,54,{},{},{}
 19506,T_Valkyrie_Feather_Band,T Valkyrie Feather Band,5,0,,0,,0,,0,0xFFFFFFFF,7,2,1024,,0,1,300,{},{},{}
 19507,Clear_Sun,Clear Sun,5,0,,0,,0,,0,0xFFFFFFFF,7,2,1024,,1,0,654,{},{},{}
-//19508,T_Gemmed_Sallet
+19508,T_Gemmed_Sallet,T Gemmed Sallet,5,0,,0,,0,,0,0xFFFFFFFF,7,2,1024,,0,1,0,{},{},{}
 19509,Butterfly_Wing_Ears,Butterfly Wing Ears,5,0,,0,,0,,0,0xFFFFFFFF,7,2,2048,,1,0,695,{},{},{}
 19510,Screw_Stuck_in_Head,Screw Stuck in Head,5,0,,0,,0,,0,0xFFFFFFFF,7,2,2048,,1,0,696,{},{},{}
 19513,Chicken_Bill,Chicken Bill,5,0,,0,,0,,0,0xFFFFFFFF,7,2,4096,,1,0,699,{},{},{}
@@ -6782,7 +6782,7 @@
 19520,Rain_Cloud,Rain Cloud,5,0,,0,,0,,0,0xFFFFFFFF,7,2,1024,,1,0,705,{},{},{}
 19521,Charlies_Hat,Charlies Hat,5,0,,0,,0,,0,0xFFFFFFFF,7,2,1024,,1,0,706,{},{},{}
 19522,Mini_Crown,Mini Crown,5,0,,0,,0,,0,0xFFFFFFFF,7,2,1024,,1,0,707,{},{},{}
-19523,Green_Ribbon,Green Ribbon,5,0,,0,,0,,0,0xFFFFFFFF,7,2,256,,1,0,244,{},{},{}
+19523,Green_Ribbon,Green Ribbon,5,0,,0,,0,,0,0xFFFFFFFF,7,2,1024,,1,0,244,{},{},{}
 19524,Costume_Green_Feeler,Costume Green Feeler,5,0,,0,,0,,0,0xFFFFFFFF,7,2,1024,,1,0,85,{},{},{}
 19525,Costume_Mini_Glasses,Costume Mini Glasses,5,0,,0,,0,,0,0xFFFFFFFF,7,2,2048,,1,0,47,{},{},{}
 19526,Costume_Helm,Costume Helm,5,0,,0,,0,,0,0xFFFFFFFF,7,2,1024,,1,0,40,{},{},{}
