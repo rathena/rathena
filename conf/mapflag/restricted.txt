@@ -64,6 +64,31 @@ arug_cas05	mapflag	restricted	4
 1@nyd	mapflag	restricted	6
 2@nyd	mapflag	restricted	6
 
+// Misty Forest Labyrinth ===========
+1@mist	mapflag	restricted	6
+
+// Octopus Cave ===========
+1@cash	mapflag	restricted	6
+
+// Drain ===========
+1@pump	mapflag	restricted	6
+2@pump	mapflag	restricted	6
+
+// Somatology Laboratory ===========
+1@lhz	mapflag	restricted	6
+
+// Bangungot Hospital F2 ===========
+1@ma_h	mapflag	restricted	6
+
+// Buwaya Cave ===========
+1@ma_c	mapflag	restricted	6
+
+// Bakonawa Hideout ===========
+1@ma_b	mapflag	restricted	6
+
+// Inside Eclage ===========
+1@ecl	mapflag	restricted	6
+
 //Towns
 alberta	mapflag	restricted	7
 aldebaran	mapflag	restricted	7

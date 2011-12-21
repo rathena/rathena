@@ -142,6 +142,39 @@ nguild_prt	mapflag	noicewall
 5@tower	mapflag	noicewall
 6@tower	mapflag	noicewall
 
+// Orc's Memory ===================
+1@orcs	mapflag	noicewall
+2@orcs	mapflag	noicewall
+
+// Nidhoggr's Instance ===========
+1@nyd	mapflag	noicewall
+2@nyd	mapflag	noicewall
+
+// Misty Forest Labyrinth ===========
+1@mist	mapflag	noicewall
+
+// Octopus Cave ===========
+1@cash	mapflag	noicewall
+
+// Drain ===========
+1@pump	mapflag	noicewall
+2@pump	mapflag	noicewall
+
+// Somatology Laboratory ===========
+1@lhz	mapflag	noicewall
+
+// Bangungot Hospital F2 ===========
+1@ma_h	mapflag	noicewall
+
+// Buwaya Cave ===========
+1@ma_c	mapflag	noicewall
+
+// Bakonawa Hideout ===========
+1@ma_b	mapflag	noicewall
+
+// Inside Eclage ===========
+1@ecl	mapflag	noicewall
+
 // Poring War ====================
 poring_w01	mapflag	noicewall
 poring_w02	mapflag	noicewall

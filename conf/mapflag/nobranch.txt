@@ -276,6 +276,7 @@ que_qaru03	mapflag	nobranch
 que_qaru04	mapflag	nobranch
 que_qaru05	mapflag	nobranch
 
+// Episode 12 ===========
 1@cata	mapflag	nobranch
 2@cata	mapflag	nobranch
 e_tower	mapflag	nobranch
@@ -286,6 +287,7 @@ e_tower	mapflag	nobranch
 5@tower	mapflag	nobranch
 6@tower	mapflag	nobranch
 
+// Episode 13.1 ===========
 mid_camp	mapflag	nobranch
 mid_campin	mapflag	nobranch
 man_fild01	mapflag	nobranch
@@ -307,6 +309,7 @@ bat_b02	mapflag	nobranch
 bat_a01	mapflag	nobranch
 bat_a02	mapflag	nobranch
 
+// Episode 13.2 ===========
 1@nyd	mapflag	nobranch
 2@nyd	mapflag	nobranch
 manuk	mapflag	nobranch
@@ -316,6 +319,7 @@ splendide	mapflag	nobranch
 spl_in01	mapflag	nobranch
 spl_in02	mapflag	nobranch
 
+// 3rd Class Job Maps & Paradise ===========
 moc_para01	mapflag	nobranch
 job3_arch01	mapflag	nobranch
 job3_arch02	mapflag	nobranch
@@ -332,8 +336,45 @@ job3_war01	mapflag	nobranch
 job3_war02	mapflag	nobranch
 jupe_core2	mapflag	nobranch
 
+// Brasilis ===========
 brasilis	mapflag	nobranch
 bra_in01	mapflag	nobranch
+
+// Episode 13.3 ===========
+dicastes01	mapflag	nobranch
+dicastes02	mapflag	nobranch
+dic_in01	mapflag	nobranch
+s_atelier	mapflag	nobranch
+
+// Episode 14.1 & Dewata ===========
+mora	mapflag	nobranch
+1@mist	mapflag	nobranch
+dewata	mapflag	nobranch
+dew_in01	mapflag	nobranch
+
+// Episode Zero & Malaya Port ===========
+malangdo	mapflag	nobranch
+mal_in01	mapflag	nobranch
+mal_in02	mapflag	nobranch
+1@cash	mapflag	nobranch
+1@pump	mapflag	nobranch
+2@pump	mapflag	nobranch
+1@lhz	mapflag	nobranch
+malaya	mapflag	nobranch
+ma_scene01	mapflag	nobranch
+ma_in01	mapflag	nobranch
+1@ma_h	mapflag	nobranch
+1@ma_c	mapflag	nobranch
+1@ma_b	mapflag	nobranch
+
+// Episode 14.2 ===========
+eclage	mapflag	nobranch
+ecl_in01	mapflag	nobranch
+ecl_in02	mapflag	nobranch
+ecl_in03	mapflag	nobranch
+ecl_in04	mapflag	nobranch
+1@ecl	mapflag	nobranch
+ecl_hub01	mapflag	nobranch
 
 //evt_zombie	mapflag	nobranch
 

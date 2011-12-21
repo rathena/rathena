@@ -6,11 +6,11 @@
 //= v 1.0
 //===== Current Version: =====================================
 
-//Sealed Shrine ==================
+// Sealed Shrine ==================
 1@cata	mapflag	partylock
 2@cata	mapflag	partylock
 
-//Endless Tower ==================
+// Endless Tower ==================
 1@tower	mapflag	partylock
 2@tower	mapflag	partylock
 3@tower	mapflag	partylock
@@ -18,10 +18,35 @@
 5@tower	mapflag	partylock
 6@tower	mapflag	partylock
 
-//Orc's Memory ===================
+// Orc's Memory ===================
 1@orcs	mapflag	partylock
 2@orcs	mapflag	partylock
 
 // Nidhoggr's Instance ===========
 1@nyd	mapflag	partylock
 2@nyd	mapflag	partylock
+
+// Misty Forest Labyrinth ===========
+1@mist	mapflag	partylock
+
+// Octopus Cave ===========
+1@cash	mapflag	partylock
+
+// Drain ===========
+1@pump	mapflag	partylock
+2@pump	mapflag	partylock
+
+// Somatology Laboratory ===========
+1@lhz	mapflag	partylock
+
+// Bangungot Hospital F2 ===========
+1@ma_h	mapflag	partylock
+
+// Buwaya Cave ===========
+1@ma_c	mapflag	partylock
+
+// Bakonawa Hideout ===========
+1@ma_b	mapflag	partylock
+
+// Inside Eclage ===========
+1@ecl	mapflag	partylock

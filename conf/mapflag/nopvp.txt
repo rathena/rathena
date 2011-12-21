@@ -16,6 +16,15 @@
 4@tower	mapflag	pvp	off
 5@tower	mapflag	pvp	off
 6@tower	mapflag	pvp	off
+1@mist	mapflag	pvp	off
+1@cash	mapflag	pvp	off
+1@pump	mapflag	pvp	off
+2@pump	mapflag	pvp	off
+1@lhz	mapflag	pvp	off
+1@ma_h	mapflag	pvp	off
+1@ma_c	mapflag	pvp	off
+1@ma_b	mapflag	pvp	off
+1@ecl	mapflag	pvp	off
 
 bat_a01	mapflag	pvp	off
 bat_a02	mapflag	pvp	off
@@ -132,5 +141,31 @@ moc_para01	mapflag	pvp	off
 
 brasilis	mapflag	pvp	off
 bra_in01	mapflag	pvp	off
+
+dicastes01	mapflag	pvp	off
+dicastes02	mapflag	pvp	off
+dic_in01	mapflag	pvp	off
+
+s_atelier	mapflag	pvp	off
+
+mora	mapflag	pvp	off
+
+dewata	mapflag	pvp	off
+dew_in01	mapflag	pvp	off
+
+malangdo	mapflag	pvp	off
+mal_in01	mapflag	pvp	off
+mal_in02	mapflag	pvp	off
+
+malaya	mapflag	pvp	off
+ma_scene01	mapflag	pvp	off
+ma_in01	mapflag	pvp	off
+
+eclage	mapflag	pvp	off
+ecl_in01	mapflag	pvp	off
+ecl_in02	mapflag	pvp	off
+ecl_in03	mapflag	pvp	off
+ecl_in04	mapflag	pvp	off
+ecl_hub01	mapflag	pvp	off
 
 //evt_zombie	mapflag	pvp	off

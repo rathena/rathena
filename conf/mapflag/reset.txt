@@ -16,6 +16,10 @@ amatsu	mapflag	reset
 ayothaya	mapflag	reset
 brasilis	mapflag	reset
 comodo	mapflag	reset
+dewata	mapflag	reset
+dicastes01	mapflag	reset
+dicastes02	mapflag	reset
+eclage	mapflag	reset
 einbroch	mapflag	reset
 einbech	mapflag	reset
 geffen	mapflag	reset
@@ -25,9 +29,12 @@ jawaii	mapflag	reset
 hugel	mapflag	reset
 lighthalzen	mapflag	reset
 louyang	mapflag	reset
+malangdo	mapflag	reset
+malaya	mapflag	reset
 manuk	mapflag	reset
 mid_camp	mapflag	reset
 moc_ruins	mapflag	reset
+mora	mapflag	reset
 morocc	mapflag	reset
 moscovia	mapflag	reset
 niflheim	mapflag	reset

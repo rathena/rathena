@@ -295,5 +295,26 @@ manuk	mapflag	nightenabled
 man_fild02	mapflag	nightenabled
 splendide	mapflag	nightenabled
 spl_fild01	mapflag	nightenabled
+brasilis	mapflag	nightenabled
+bra_fild01	mapflag	nightenabled
+dicastes01	mapflag	nightenabled
+dicastes02	mapflag	nightenabled
+dic_fild01	mapflag	nightenabled
+dic_fild02	mapflag	nightenabled
+
+// Episode 14 ====================
+bif_fild01	mapflag	nightenabled
+bif_fild02	mapflag	nightenabled
+dewata	mapflag	nightenabled
+dew_fild01	mapflag	nightenabled
+dew_dun02	mapflag	nightenabled
+malangdo	mapflag	nightenabled
+malaya	mapflag	nightenabled
+ma_fild01	mapflag	nightenabled
+ma_fild02	mapflag	nightenabled
+ma_scene01	mapflag	nightenabled
+eclage	mapflag	nightenabled
+ecl_fild01	mapflag	nightenabled
+ecl_hub01	mapflag	nightenabled
 
 //evt_zombie	mapflag	nightenabled
