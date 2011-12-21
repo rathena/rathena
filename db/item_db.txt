@@ -6764,11 +6764,28 @@
 //18506,Hattah_Black,
 //18507,Elven_Ears_,
 //19500,T_Mr_Smile
-//19501,T_Spinx_Helm
-//19502,T_Goggle
-//19503,T_Munak_Hat
-//19504,T_Sunglasses
-//19505,T_Cigarette
-//19506,T_Valkyrie_Feather_Band
-//19507,Clear_Sun
+19501,T_Spinx_Helm,T Spinx Helm,5,0,,0,,0,,1,0xFFFFFFFF,7,2,5120,,0,0,137,{},{},{}
+19504,T_Sunglasses,T Sunglasses,5,0,,0,,0,,0,0xFFFFFFFF,7,2,2048,,0,0,12,{},{},{}
+19505,T_Cigarette,T Cigarette,5,0,,0,,0,,0,0xFFFFFFFF,7,2,4096,,0,0,54,{},{},{}
+19506,T_Valkyrie_Feather_Band,T Valkyrie Feather Band,5,0,,0,,0,,0,0xFFFFFFFF,7,2,1024,,0,1,300,{},{},{}
+19507,Clear_Sun,Clear Sun,5,0,,0,,0,,0,0xFFFFFFFF,7,2,1024,,1,0,654,{},{},{}
 //19508,T_Gemmed_Sallet
+19509,Butterfly_Wing_Ears,Butterfly Wing Ears,5,0,,0,,0,,0,0xFFFFFFFF,7,2,2048,,1,0,695,{},{},{}
+19510,Screw_Stuck_in_Head,Screw Stuck in Head,5,0,,0,,0,,0,0xFFFFFFFF,7,2,2048,,1,0,696,{},{},{}
+19513,Chicken_Bill,Chicken Bill,5,0,,0,,0,,0,0xFFFFFFFF,7,2,4096,,1,0,699,{},{},{}
+19514,Charlies_Beard,Charlies Beard,5,0,,0,,0,,0,0xFFFFFFFF,7,2,4096,,1,0,700,{},{},{}
+19515,Yellow_Hat,Yellow Hat,5,0,,0,,0,,0,0xFFFFFFFF,7,2,1024,,1,0,701,{},{},{}
+19516,Singing_Bird,Singing Bird,5,0,,0,,0,,0,0xFFFFFFFF,7,2,1024,,1,0,702,{},{},{}
+19517,Chicken_Crest,Chicken Crest,5,0,,0,,0,,0,0xFFFFFFFF,7,2,1024,,1,0,703,{},{},{}
+19518,Rainbow,Rainbow,5,0,,0,,0,,0,0xFFFFFFFF,7,2,1024,,1,0,704,{},{},{}
+19519,Thunderstorm_Cloud,Thunderstorm Cloud,5,0,,0,,0,,0,0xFFFFFFFF,7,2,1024,,1,0,688,{},{},{}
+19520,Rain_Cloud,Rain Cloud,5,0,,0,,0,,0,0xFFFFFFFF,7,2,1024,,1,0,705,{},{},{}
+19521,Charlies_Hat,Charlies Hat,5,0,,0,,0,,0,0xFFFFFFFF,7,2,1024,,1,0,706,{},{},{}
+19522,Mini_Crown,Mini Crown,5,0,,0,,0,,0,0xFFFFFFFF,7,2,1024,,1,0,707,{},{},{}
+19523,Green_Ribbon,Green Ribbon,5,0,,0,,0,,0,0xFFFFFFFF,7,2,256,,1,0,244,{},{},{}
+19524,Costume_Green_Feeler,Costume Green Feeler,5,0,,0,,0,,0,0xFFFFFFFF,7,2,1024,,1,0,85,{},{},{}
+19525,Costume_Mini_Glasses,Costume Mini Glasses,5,0,,0,,0,,0,0xFFFFFFFF,7,2,2048,,1,0,47,{},{},{}
+19526,Costume_Helm,Costume Helm,5,0,,0,,0,,0,0xFFFFFFFF,7,2,1024,,1,0,40,{},{},{}
+19527,Costume_Spiky_Band,Costume Spiky Band,5,0,,0,,0,,0,0xFFFFFFFF,7,2,1024,,1,0,43,{},{},{}
+19528,Costume_Iron_Cain,Costume Iron Cain,5,0,,0,,0,,0,0xFFFFFFFF,7,2,4096,,1,0,53,{},{},{}
+19529,Costume_Angel_Wing,Costume Angel Wing,5,0,,0,,0,,0,0xFFFFFFFF,7,2,1024,,1,0,38,{},{},{}
