@@ -2107,8 +2107,11 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 	}
 	default: ;// do nothing
 	}
-
-	clif_clearunit_area(bl,clrtype);
+	/**
+	 * BL_MOB is handled by mob_dead
+	 **/
+	if( bl->type != BL_MOB )
+		clif_clearunit_area(bl,clrtype);
 	map_delblock(bl);
 	map_freeblock_unlock();
 	return 1;

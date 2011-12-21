@@ -2458,8 +2458,13 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 
 	if(pcdb_checkid(md->vd->class_))
 	{	//Player mobs are not removed automatically by the client.
-		clif_clearunit_delayed(&md->bl, tick+3000);
-	}
+		clif_clearunit_delayed(&md->bl, CLR_OUTSIGHT,tick+3000);
+	} else
+		/**
+		 * We give the client some time to breath and this allows it to display anything it'd like with the dead corpose
+		 * For example, this delay allows it to display soul drain effect
+		 **/
+		clif_clearunit_delayed(&md->bl, CLR_DEAD, tick+250);
 
 	if(!md->spawn) //Tell status_damage to remove it from memory.
 		return 5; // Note: Actually, it's 4. Oh well...
