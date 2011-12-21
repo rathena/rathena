@@ -164,7 +164,7 @@ struct map_session_data {
 	struct registry save_reg;
 	
 	struct item_data* inventory_data[MAX_INVENTORY]; // direct pointers to itemdb entries (faster than doing item_id lookups)
-	short equip_index[11];
+	short equip_index[14];
 	unsigned int weight,max_weight;
 	int cart_weight,cart_num;
 	int fd;
@@ -525,6 +525,9 @@ enum equip_pos {
 	EQP_GARMENT  = 0x0004,
 	EQP_ACC_L    = 0x0008,
 	EQP_ACC_R    = 0x0080, //128
+	EQP_COSTUME_HEAD_TOP = 0x0400,
+	EQP_COSTUME_HEAD_MID = 0x0800,
+	EQP_COSTUME_HEAD_LOW = 0x1000,
 	EQP_AMMO     = 0x8000, //32768
 };
 
@@ -554,6 +557,9 @@ enum equip_index {
 	EQI_ARMOR,
 	EQI_HAND_L,
 	EQI_HAND_R,
+	EQI_COSTUME_TOP,
+	EQI_COSTUME_MID,
+	EQI_COSTUME_LOW,
 	EQI_AMMO,
 	EQI_MAX
 };

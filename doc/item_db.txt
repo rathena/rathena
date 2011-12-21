@@ -75,17 +75,19 @@ Upper: Equippable upper-types. Uses the following bitmasks:
 Gender: Gender restriction. 0 is female, 1 is male, 2 for both.
 
 Loc: Equipment's placement. Values are:
-
-	2^8 256 = Upper Headgear
-	2^9 512 = Middle Headgear
-	2^0 001 = Lower Headgear
-	2^4 016 = Armor
-	2^1 002 = Weapon
-	2^5 032 = Shield
-	2^2 004 = Garment
-	2^6 064 = Footgear
-	2^3 008 = Accessory 1
-	2^7 128 = Accessory 2
+	2^12 4096 = Costume Low Headgear
+	2^11 2048 = Costume Mid Headgear
+	2^10 1024 = Costume Top Headgear
+	2^8  256 = Upper Headgear
+	2^9  512 = Middle Headgear
+	2^0  001 = Lower Headgear
+	2^4  016 = Armor
+	2^1  002 = Weapon
+	2^5  032 = Shield
+	2^2  004 = Garment
+	2^6  064 = Footgear
+	2^3  008 = Accessory 1
+	2^7  128 = Accessory 2
 
 wLV: Weapon level.
 
