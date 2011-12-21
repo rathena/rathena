@@ -1405,9 +1405,8 @@ else
 fi;
 
 #
-# debug
+# BuildBot
 #
-# Check whether --enable-debug or --disable-debug was given.
 if test "${enable_buildbot+set}" = set; then
   enableval="$enable_buildbot"
 
@@ -1416,12 +1415,12 @@ if test "${enable_buildbot+set}" = set; then
 			"no");;
 			"yes");;
 			*) { { echo "$as_me:$LINENO: error: invalid argument --enable-buildbot=$enableval... stopping" >&5
-echo "$as_me: error: invalid argument --enable-debug=$enableval... stopping" >&2;}
+echo "$as_me: error: invalid argument --enable-buildbot=$enableval... stopping" >&2;}
    { (exit 1); exit 1; }; };;
 		esac
 
 else
-  enable_debug="no"
+  enable_buildbot="no"
 
 fi;
 

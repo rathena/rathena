@@ -13607,7 +13607,6 @@ void clif_cashshop_ack(struct map_session_data* sd, int error)
 void clif_parse_cashshop_buy(int fd, struct map_session_data *sd)
 {
     int fail = 0;
-    struct npc_data *nd;
     nullpo_retv(sd);
 
     if( sd->state.trading || !sd->npc_shopid )
