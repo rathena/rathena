@@ -7527,7 +7527,7 @@ int pc_unequipitem(struct map_session_data *sd,int n,int flag)
 
 	if(sd->status.inventory[n].equip & EQP_COSTUME_HEAD_LOW) {
 		sd->status.head_bottom = ( pc_checkequip(sd,EQP_HEAD_LOW) >= 0 ) ? sd->inventory_data[pc_checkequip(sd,EQP_HEAD_LOW)]->look : 0;
-		clif_changelook(&sd->bl,LOOK_HEAD_TOP,sd->status.head_bottom);
+		clif_changelook(&sd->bl,LOOK_HEAD_BOTTOM,sd->status.head_bottom);
 	}
 
 	if(sd->status.inventory[n].equip & EQP_SHOES)
