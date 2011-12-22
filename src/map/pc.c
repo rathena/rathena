@@ -4849,9 +4849,9 @@ const char* job_name(int class_)
 		return msg_txt(617);
 	case JOB_SOUL_LINKER:
 		return msg_txt(618);
-	
+
 	default:
-		return msg_txt(650);
+		return msg_txt(651);
 	}
 }
 
