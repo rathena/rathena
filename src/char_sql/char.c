@@ -195,6 +195,7 @@ struct online_char_data {
 
 static DBMap* online_char_db; // int account_id -> struct online_char_data*
 static int chardb_waiting_disconnect(int tid, unsigned int tick, int id, intptr_t data);
+int delete_char_sql(int char_id);
 
 static void* create_online_char_data(DBKey key, va_list args)
 {
@@ -934,6 +935,10 @@ int mmo_chars_fromsql(struct char_session_data* sd, uint8* buf)
 	}
 	for( i = 0; i < MAX_CHARS && SQL_SUCCESS == SqlStmt_NextRow(stmt); i++ )
 	{
+		if( p.delete_date && p.delete_date < time(NULL) ) {
+			delete_char_sql(p.char_id);
+			continue;
+		}
 		p.last_point.map = mapindex_name2id(last_map);
 		sd->found_char[i] = p.char_id;
 		j += mmo_char_tobuf(WBUFP(buf, j), &p);
