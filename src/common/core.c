@@ -39,7 +39,7 @@ char **arg_v = NULL;
 char *SERVER_NAME = NULL;
 char SERVER_TYPE = ATHENA_SERVER_NONE;
 #ifndef SVNVERSION
-	static char eA_svn_version[10] = "";
+	static char rA_svn_version[10] = "";
 #endif
 
 #ifndef MINICORE	// minimalist Core
@@ -141,8 +141,8 @@ const char* get_svn_revision(void)
 {
 	FILE *fp;
 
-	if(*eA_svn_version)
-		return eA_svn_version;
+	if(*rA_svn_version)
+		return rA_svn_version;
 
 	if ((fp = fopen(".svn/entries", "r")) != NULL)
 	{
@@ -157,7 +157,7 @@ const char* get_svn_revision(void)
 				while (fgets(line,sizeof(line),fp))
 					if (strstr(line,"revision=")) break;
 				if (sscanf(line," %*[^\"]\"%d%*[^\n]", &rev) == 1) {
-					snprintf(eA_svn_version, sizeof(eA_svn_version), "%d", rev);
+					snprintf(rA_svn_version, sizeof(rA_svn_version), "%d", rev);
 				}
 			}
 			else
@@ -167,7 +167,7 @@ const char* get_svn_revision(void)
 				fgets(line, sizeof(line), fp); // Get the entries kind
 				if(fgets(line, sizeof(line), fp)) // Get the rev numver
 				{
-					snprintf(eA_svn_version, sizeof(eA_svn_version), "%d", atoi(line));
+					snprintf(rA_svn_version, sizeof(rA_svn_version), "%d", atoi(line));
 				}
 			}
 		}
@@ -177,7 +177,7 @@ const char* get_svn_revision(void)
 	 * subversion 1.7 introduces the use of a .db file to store it, and we go through it
 	 * TODO: In some cases it may be not accurate
 	 **/
-	if(!(*eA_svn_version) && ((fp = fopen(".svn/wc.db", "rb")) != NULL || (fp = fopen("../.svn/wc.db", "rb")) != NULL)) {
+	if(!(*rA_svn_version) && ((fp = fopen(".svn/wc.db", "rb")) != NULL || (fp = fopen("../.svn/wc.db", "rb")) != NULL)) {
 		char lines[64];
 		int revision,last_known = 0;
 		while(fread(lines, sizeof(char), sizeof(lines), fp)) {
@@ -191,15 +191,15 @@ const char* get_svn_revision(void)
 		}
 		fclose(fp);
 		if( last_known != 0 )
-			snprintf(eA_svn_version, sizeof(eA_svn_version), "%d", last_known);
+			snprintf(rA_svn_version, sizeof(rA_svn_version), "%d", last_known);
 	}
 	/**
 	 * we definitely didn't find it.
 	 **/
-	if(!(*eA_svn_version))
-		snprintf(eA_svn_version, sizeof(eA_svn_version), "Unknown");
+	if(!(*rA_svn_version))
+		snprintf(rA_svn_version, sizeof(rA_svn_version), "Unknown");
 
-	return eA_svn_version;
+	return rA_svn_version;
 }
 #endif
 
