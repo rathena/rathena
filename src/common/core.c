@@ -175,11 +175,12 @@ const char* get_svn_revision(void)
 	}
 	/**
 	 * subversion 1.7 introduces the use of a .db file to store it, and we go through it
+	 * TODO: In some cases it may be not accurate
 	 **/
-	if(!(*eA_svn_version) && ((fp = fopen(".svn/wc.db", "r")) != NULL || (fp = fopen("../.svn/wc.db", "r")) != NULL)) {
-		char lines[512];
+	if(!(*eA_svn_version) && ((fp = fopen(".svn/wc.db", "rb")) != NULL || (fp = fopen("../.svn/wc.db", "rb")) != NULL)) {
+		char lines[64];
 		int revision,last_known = 0;
-		while(fgets(lines, sizeof(lines), fp)) {
+		while(fread(lines, sizeof(char), sizeof(lines), fp)) {
 			if( strstr(lines,"!svn/ver/") ) {
 				if (sscanf(strstr(lines,"!svn/ver/"),"!svn/ver/%d/%*s", &revision) == 1) {
 					if( revision > last_known ) {
