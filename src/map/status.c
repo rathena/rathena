@@ -8355,14 +8355,12 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 	case SC_DPOISON:
 		if (--(sce->val3) > 0) {
 			if (!sc->data[SC_SLOWPOISON]) {
-				bool flag;
 				map_freeblock_lock();
 				status_zap(bl, sce->val4, 0);
-				flag = !sc->data[type]; //We check for this rather than 'killed' since the target could have revived with kaizel.
+				if (sc->data[type]) // Check if the status still last ( can be dead since then ).
+					sc_timer_next(1000 + tick, status_change_timer, bl->id, data ); 
 				map_freeblock_unlock();
-				if (flag) return 0; //target died, SC cancelled already.
 			}
-			sc_timer_next(1000 + tick, status_change_timer, bl->id, data );
 			return 0;
 		}
 		break;
@@ -8387,15 +8385,14 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 
 	case SC_BLEEDING:
 		if (--(sce->val4) >= 0) {
-			int flag, hp =  rand()%600 + 200;
+			int hp =  rand()%600 + 200;
 			map_freeblock_lock();
 			status_fix_damage(NULL, bl, sd||hp<status->hp?hp:status->hp-1, 0);
-			flag = !sc->data[type];
-			map_freeblock_unlock();
-			if( !flag ) {
+			if( sc->data[type] ) {
 				if( status->hp == 1 ) break;
 				sc_timer_next(10000 + tick, status_change_timer, bl->id, data);
 			}
+			map_freeblock_unlock();
 			return 0;
 		}
 		break;
@@ -8580,18 +8577,15 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 	case SC_PYREXIA:
 		if( --(sce->val4) >= 0 )
 		{
-			bool flag;
 			map_freeblock_lock();
 			clif_damage(bl,bl,tick,status_get_amotion(bl),0,100,0,0,0);
 			status_fix_damage(NULL,bl,100,0);
-			flag = !sc->data[type];
-			map_freeblock_unlock();
-			if( !flag )
-			{
+			if( sc->data[type] ) {
 				if( sce->val4 == 10 )
 					sc_start(bl,SC_BLIND,100,sce->val1,30000); // Blind status for the final 30 seconds
 				sc_timer_next(3000+tick,status_change_timer,bl->id,data);
 			}
+			map_freeblock_unlock();
 			return 0;
 		}
 		break;
@@ -8599,7 +8593,6 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 	case SC_LEECHESEND:
 		if( --(sce->val4) >= 0 )
 		{
-			bool flag;
 			int damage = status->max_hp/100;
 			if( sd && (sd->status.class_ == JOB_GUILLOTINE_CROSS || sd->status.class_ == JOB_GUILLOTINE_CROSS_T ) )
 				damage += 3 * status->vit;
@@ -8610,11 +8603,10 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 			
 			map_freeblock_lock();
 			status_zap(bl,damage,0);
-			flag = !sc->data[type];
-			map_freeblock_unlock();
-			if( !flag ) {
+			if( sc->data[type] ) {
 				sc_timer_next(1000 + tick, status_change_timer, bl->id, data );
 			}
+			map_freeblock_unlock();
 			return 0;
 		}
 		break;
@@ -8673,15 +8665,13 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 	case SC_TOXIN:
 		if( --(sce->val4) >= 0 )
 		{ //Damage is every 10 seconds including 3%sp drain.
-			bool flag;
 			map_freeblock_lock();
 			clif_damage(bl,bl,tick,status_get_amotion(bl),1,1,0,0,0);
 			status_damage(NULL,bl,1,status->max_sp*3/100,0,16);
-			flag = !sc->data[type];
-			map_freeblock_unlock();
-			if( !flag ) {
+			if( sc->data[type] ) {
 				sc_timer_next(10000 + tick, status_change_timer, bl->id, data );
 			}
+			map_freeblock_unlock();
 			return 0;
 		}
 		break;
@@ -8724,17 +8714,16 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 		if( --(sce->val4) >= 0 )
 		{
 			struct block_list *src = map_id2bl(sce->val3);
-			int flag, damage = 3 * status_get_max_hp(bl) / 100; // Non Elemental Damage
+			int damage = 3 * status_get_max_hp(bl) / 100; // Non Elemental Damage
 			if( status )
 				damage += battle_attr_fix(NULL, bl, sce->val2, ELE_FIRE, status->def_ele, status->ele_lv);
 
 			map_freeblock_lock();
 			status_fix_damage(src,bl,damage,clif_damage(bl,bl,tick,0,0,damage,0,0,0));
-			flag = !sc->data[type];
-			map_freeblock_unlock();
-			if( !flag ) {// Target still lives. [LimitLine]
+			if( sc->data[type]){ // Target still lives. [LimitLine]
 				sc_timer_next(2000 + tick, status_change_timer, bl->id, data);
 			}
+			map_freeblock_unlock();
 			return 0;
 		}
 		break;
@@ -8825,18 +8814,16 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 		{
 			struct block_list *src = map_id2bl(sce->val2);
 			int damage;
-			bool flag;
 			if( !src || (src && (status_isdead(src) || src->m != bl->m || distance_bl(src, bl) >= 12)) )
 				break;
 			map_freeblock_lock();
 			damage = skill_attack(skill_get_type(GN_BLOOD_SUCKER), src, src, bl, GN_BLOOD_SUCKER, sce->val1, tick, 0);
-			flag = !sc->data[type];
+			if ( sc->data[type] ) {
+				sc_timer_next(1000 + tick, status_change_timer, bl->id, data);
+			}
 			map_freeblock_unlock();
 			status_heal(src, damage, 0, 0);
 			clif_skill_nodamage(src, bl, GN_BLOOD_SUCKER, 0, 1);
-			if (!flag) {
-				sc_timer_next(1000 + tick, status_change_timer, bl->id, data);
-			}
 			return 0;
 		}
 		break;
@@ -8934,15 +8921,14 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 
 	case SC_OVERHEAT:
 		{
-			int flag, damage = status->max_hp / 100; // Suggestion 1% each second
+			int damage = status->max_hp / 100; // Suggestion 1% each second
 			if( damage >= status->hp ) damage = status->hp - 1; // Do not kill, just keep you with 1 hp minimum
 			map_freeblock_lock();
 			status_fix_damage(NULL,bl,damage,clif_damage(bl,bl,tick,0,0,damage,0,0,0));
-			flag = !sc->data[type];
-			map_freeblock_unlock();
-			if( !flag ) {
+			if( sc->data[type] ) {
 				sc_timer_next(1000 + tick, status_change_timer, bl->id, data);
 			}
+			map_freeblock_unlock();
 		}
 		break;
 

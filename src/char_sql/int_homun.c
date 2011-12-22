@@ -218,7 +218,7 @@ bool mapif_homunculus_load(int homun_id, struct s_homunculus* hd)
 
 		// lv
 		Sql_GetData(sql_handle, 1, &data, NULL);
-		hd->hskill[i].lv = (unsigned short)atoi(data);
+		hd->hskill[i].lv = (unsigned char)atoi(data);
 	}
 	Sql_FreeResult(sql_handle);
 

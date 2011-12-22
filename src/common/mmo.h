@@ -222,8 +222,8 @@ enum e_skill_flag
 
 struct s_skill {
 	unsigned short id;
-	unsigned short lv;
-	unsigned short flag; // see enum e_skill_flag
+	unsigned char lv;
+	unsigned char flag; // see enum e_skill_flag
 };
 
 struct global_reg {
