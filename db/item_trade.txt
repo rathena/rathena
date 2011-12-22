@@ -1504,7 +1504,7 @@
 12348,91,100	// Manuk's_Faith
 12349,91,100	// Cornus'_Tears
 
-// New Novice Training Grounds
+// New Novice Training Grounds Weapons
 1381,115,100	// N_Battle_Axe
 1545,115,100	// N_Mace
 1639,115,100	// N_Rod
@@ -1517,38 +1517,66 @@
 13041,115,100	// N_Main_Gauche
 13415,115,100	// N_Falchion
 
-// Epidode 13.3
-// * Eden Group
-1192,123,100	// P_Slayer1
-1193,123,100	// P_Slayer2
-1650,123,100	// P_Staff1
-1651,123,100	// P_Staff2
-1747,123,100	// P_Bow1
-1748,123,100	// P_Bow2
-2456,123,100	// Para_Team_Boots1
-2457,123,100	// Para_Team_Boots2
-2458,123,100	// Para_Team_Boots3
-2560,123,100	// Para_Team_Manteau
-5583,123,100	// Para_Team_Hat
-6219,123,100	// Para_Team_Mark
-13050,123,100	// P_Dagger1
-13051,123,100	// P_Dagger2
-13112,123,100	// P_Revolver1
-13113,123,100	// P_Revolver2
-13423,123,100	// P_Sabre1
-13424,123,100	// P_Sabre2
-15009,123,100	// Para_Team_Uniform1
-15010,123,100	// Para_Team_Uniform2
-15011,123,100	// Para_Team_Uniform3
-16004,123,100	// P_Mace1
-16005,123,100	// P_Mace2
+// New Novice Training Grounds Accessories
+2819,115,100	// Swordman_Manual
+2820,115,100	// Thief_Manual
+2821,115,100	// Acolyte_Manual
+2822,115,100	// Archer_Manual
+2823,115,100	// Merchant_Manual
+2824,115,100	// Mage_Manual
+
+// Eden Group
+1192,115,100	// P.Slayer_I
+1193,115,100	// P.Slayer_II
+1197,115,100	// P.Slayer_III
+1289,115,100	// P.Katar_I
+1391,115,100	// P.Two_Handed_Axe_I
+1434,115,100	// P.Spear_I
+1583,115,100	// P.Book_I
+1650,115,100	// P.Staff_I
+1651,115,100	// P.Staff_II
+1658,115,100	// P.Staff_III
+1747,115,100	// P.Bow_I
+1748,115,100	// P.Bow_II
+1831,115,100	// P.Knuckle_I
+1931,115,100	// P.Guitar_I
+1986,115,100	// P.Tail_I
+2456,115,100	// Paradise_Boots_I
+2457,115,100	// Paradise_Boots_II
+2458,115,100	// Paradise_Boots_III
+2473,115,100	// Paradise_Boots_IV
+2560,115,100	// Paradise_Mantle_I
+2571,115,100	// Paradise_Mantle_II
+5583,115,100	// Paradise_Hat_I
+6218,123,100	// Delivery_Daishin_Box
+6219,123,100	// Token_Of_Paradise
+13050,115,100	// P.Dagger_I
+13051,115,100	// P.Dagger_II
+13066,115,100	// P.Dagger_III
+13112,115,100	// P.Revolver_I
+13113,115,100	// P.Revolver_II
+13114,115,100	// P.Revolver_III
+13310,115,100	// P.Huuma_Suriken_I
+13423,115,100	// P.Saber_I
+13424,115,100	// P.Saber_II
+13434,115,100	// P.Saber_III
+15009,115,100	// Paradise_Uniform_I
+15010,115,100	// Paradise_Uniform_II
+15011,115,100	// Paradise_Uniform_III
+15031,115,100	// Paradise_Uniform_IV
+16004,115,100	// P.Mace_I
+16005,115,100	// P.Mace_II
+16014,115,100	// P.Mace_III
+18514,115,100	// Paradise_Hat_II
 
 // * Third Job-related
 1703,123,100	// Bow__
-2794,123,100	// Magic_Stone_Ring
+2140,115,100	// Energy Rune Guard
+2794,115,100	// Magic_Stone_Ring
 2795,115,100	// Green_Apple_Ring
 2796,123,100	// Magical_Stone
 2797,123,100	// Magical_Stone_
+2798,115,100	// Will_Of_Exhausted_Angel
 5746,91,100	// Rune_Circlet
 5747,91,100	// Mitra
 5748,91,100	// Sniper_Goggle
@@ -1563,6 +1591,9 @@
 5757,91,100	// Schmidt_Helm
 5758,91,100	// Dying_Swan
 5760,91,100	// Driver_Band_
+6121,123,100	// Makeup_Brush
+6122,123,100	// Paint_Brush
+6124,123,100	// Wolf_Flute
 6151,115,100	// Peice_Of_Great_Bradium
 6152,115,100	// Glittering_Crystal
 6153,123,100	// Special_Exchange_Coupon
@@ -1586,7 +1617,6 @@
 12388,123,100	// Runstone_Crush
 12389,123,100	// Runstone_Storm
 12390,123,100	// Runstone_Millennium
-2798,115,100	// Will_Of_Exhausted_Angel
 12258,115,100	// Bombring_Box
 12333,123,100	// Ansila
 12725,91,100	// Runstone_Nosiege
@@ -1598,11 +1628,60 @@
 12731,91,100	// Runstone_Turisus
 12732,91,100	// Runstone_Pertz
 12733,91,100	// Runstone_Hagalas
+15002,115,100	// Rune Plate
 
-// * New Novice Training Grounds
-2819,115,100	// Swordman_Manual
-2820,115,100	// Thief_Manual
-2821,115,100	// Acolyte_Manual
-2822,115,100	// Archer_Manual
-2823,115,100	// Merchant_Manual
-2824,115,100	// Mage_Manual
+// Episode 13.3
+2844,91,100	// Light_of_El_Dicastes
+6304,91,100	// Proof_Of_Sapha's_Honor
+6305,123,100	// Frozen_Piece_Of_Skin
+6306,123,100	// Hard_Bloodstain
+6307,123,100	// Cursed_Magical_Stone
+
+// Brasilis
+5302,91,100	// Lotus_Flower_Hat
+6221,123,100	// Mystic_Leaf_Cat_Ball
+6237,123,100	// Guarana Fruit
+7553,123,100	// Lotus Flower
+11517,123,100	// Purified Potion
+12408,123,100	// Leaf_Cat_Ball
+
+// Episode 14.1
+2568,91,100	// Loki's Muffler
+2858,91,100	// Guardian_Pendant
+6380,91,100	// Mora_Village_Coin
+6383,115,100	// Ropewa_Clues
+6384,123,100	// Ropewa_Ring
+6385,123,100	// Research_Tool_Bag
+6386,123,100	// Bathroom_Sample
+6387,123,100	// Teeth_Sample
+6388,123,100	// Scale_Sample
+6389,123,100	// Pool_Sample
+6390,123,100	// Pouch
+6392,123,100	// Bradium_Box
+6411,115,100	// Ripe_Watermelon
+
+// Dewata
+6404,123,100	// Kris_Hilt
+6406,91,100	// Shining_Cendrawasih_Feather
+
+// Malangdo Island
+6417,91,100	// Garderie_Fruit
+6418,91,100	// A_Grade_Coin
+6419,91,100	// B_Grade_Coin
+6420,91,100	// C_Grade_Coin
+6421,91,100	// D_Grade_Coin
+6422,91,100	// E_Grade_Coin
+6423,91,100	// Sea_God's_Wrath
+6428,123,100	// Adventure_Card_A
+6429,123,100	// Adventure_Card_B
+6430,123,100	// Figure_Sculpture
+6431,123,100	// Pail
+6433,123,100	// Cleaning_Brush
+6436,123,100	// Sea_God's_Call
+6437,91,100	// Lava_Sky_Perfume
+6440,91,100	// General_Lubrication
+6441,91,100	// Advanced_Lubrication
+6442,123,100	// Octopus_Hunting_Skewer
+
+// Malaya Port
+6519,123,100	// Collected_Samples

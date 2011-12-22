@@ -14,3 +14,11 @@
 12210,60000	//Bubble_Gum
 14538,300000	//Glass_Of_Illusion
 14586,180000	//Spark_Candy
+607,5000	// Yggdrasil_Berry
+608,3000	// Yggdrasil_Seed
+
+// Bifrost Items
+11522,1000	// Red_Raffle_Sap
+11523,2000	// Yellow_Raffle_Sap
+11524,3000	// White_Raffle_Sap
+11525,5000	// Mora_Hip_Tea

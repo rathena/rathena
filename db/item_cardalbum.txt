@@ -374,3 +374,40 @@
 3,4451,1	// Entweihen Card
 3,4452,2	// Centipede Larva Card
 3,4453,1	// Hillsrion Card
+3,4460,1	// Rhyncho Card
+3,4461,1	// Phylla Card
+3,4464,1	// Aunoe Card
+3,4465,1	// Fanat Card
+3,4466,1	// Beholder Master Card
+3,4467,1	// Heavy Metaling Card
+3,4468,1	// Dark Pinguicula Card
+3,4469,3	// Naga Card
+3,4470,3	// Nepenthes Card
+3,4471,3	// Draco Egg Card
+3,4472,3	// Bradium Golem Card
+3,4473,3	// Ancient Tree Card
+3,4474,3	// Zakudam Card
+3,4475,3	// Cobalt Mineral Card
+3,4476,3	// Pinguicula Card
+3,4477,3	// Hell Apocalypse Card
+3,4505,1	// Scaraba Card
+3,4506,1	// Dolomedes Card
+3,4508,1	// Gold Scaraba Card
+3,4510,1	// Miming Card
+3,4511,2	// Little Fatum Card
+3,4512,1	// Parus Card
+3,4513,1	// Angra Mantis Card
+3,4514,2	// Pom Spider Card
+3,4515,2	// Alnoldi Card
+3,4516,1	// Comodo Card
+3,4517,1	// Cendrawasih Card
+3,4518,1	// Banaspaty Card
+3,4519,2	// Butoijo Card
+3,4521,1	// Sedora Card
+3,4522,1	// Sropho Card
+3,4523,1	// Pot Dofle Card
+3,4524,1	// King Dramoh Card
+3,4530,1	// Siorava Card
+3,4531,2	// Red Eruma Card
+3,4532,1	// Wild Rider Card
+3,4533,2	// Octopus Card
