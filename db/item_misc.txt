@@ -578,3 +578,220 @@
 54,560,9	// HandMade_Chocolate_
 54,573,9	// Chocolate_Drink
 54,5136,6	// Santa's_Hat_
+// Fruit Basket
+55,512,6	// Apple
+55,513,5	// Banana
+55,514,4	// Grape
+55,522,3	// Mastela Fruit
+55,535,2	// Pumpkin
+55,568,6	// Lemon
+55,576,2	// Prickly Fruit
+55,578,4	// Strawberry
+55,582,3	// Orange
+55,587,2	// Red Prickly Fruit
+55,607,1	// Yggdrasil Berry
+55,608,1	// Yggdrasil Seed
+55,7164,5	// Solid Peach
+55,7182,4	// Cacao
+55,11520,5	// Mora Mandarin
+55,12574,4	// Mora Berry
+// Improved Coin Bag
+56,6080,5	// Manuk Coin
+56,6081,5	// Splendide Coin
+56,6304,5	// Proof Of Sapha's Honor
+56,6380,5	// Mora Village Coin
+56,6418,1	// A Grade Coin
+56,6419,2	// B Grade Coin
+56,6420,1	// C Grade Coin
+56,12636,8	// Malangdo Canned Specialties
+// Intermediate Coin Bag
+57,6080,4	// Manuk Coin
+57,6081,4	// Splendide Coin
+57,6304,4	// Proof Of Sapha's Honor
+57,6380,4	// Mora Village Coin
+57,6419,1	// B Grade Coin
+57,6420,2	// C Grade Coin
+57,6421,1	// D Grade Coin
+57,12636,9	// Malangdo Canned Specialties
+// Minor Coin Bag
+58,6080,3	// Manuk Coin
+58,6081,3	// Splendide Coin
+58,6304,3	// Proof Of Sapha's Honor
+58,6380,3	// Mora Village Coin
+58,6420,1	// C Grade Coin
+58,6421,2	// D Grade Coin
+58,6422,1	// E Grade Coin
+58,12636,10	// Malangdo Canned Specialties
+// A Grade Coin Bag
+59,6418,3	// A Grade Coin
+59,6419,2	// B Grade Coin
+59,6420,1	// C Grade Coin
+// Advanced Weapons Box
+60,1130,1	// Nagan
+60,1131,1	// Ice_Falchon
+60,1132,1	// Edge
+60,1133,1	// Fire_Brand
+60,1134,1	// Caesar's Sword
+60,1135,1	// Cutlas
+60,1136,1	// Solar_Sword
+60,1137,1	// Excalibur
+60,1138,1	// Mysteltainn
+60,1139,1	// Tirfing
+60,1140,1	// Byeollungum
+60,1141,1	// Immaterial_Sword
+60,1148,1	// Star_Dust_Blade
+60,1164,1	// Muramasa
+60,1165,1	// Masamune
+60,1166,1	// Dragon_Slayer
+60,1167,1	// Schweizersabel
+60,1168,1	// Zweihander
+60,1169,1	// Executioner
+60,1170,1	// Katzbalger
+60,1171,1	// Zweihander_
+60,1175,1	// Altas_Weapon
+60,1176,1	// Muscle_Cutter
+60,1178,1	// Schweizersabel_
+60,1179,1	// Executioner__
+60,1180,1	// Dragon_Slayer_
+60,1181,1	// Tae_Goo_Lyeon
+60,1182,1	// Bloody_Eater
+60,1185,1	// Violet_Fear
+60,1186,1	// Death_Guidance
+60,1188,1	// Veteran_Sword
+60,1189,1	// Krasnaya
+60,1196,1	// Chrome_Metal_Two-Hand_Sword
+60,1223,1	// Forturn_Sword
+60,1224,1	// Sword_Breaker
+60,1225,1	// Mail_Breaker
+60,1227,1	// Weeder_Knife
+60,1228,1	// Combat_Knife
+60,1229,1	// Kitchen_Knife
+60,1230,1	// Ice_Pick
+60,1231,1	// Bazerald
+60,1232,1	// Assasin_Dagger
+60,1233,1	// Exorciser
+60,1234,1	// Moonlight_Dagger
+60,1235,1	// Azoth
+60,1236,1	// Sucsamad
+60,1237,1	// Grimtooth
+60,1240,1	// Princess_Knife
+60,1241,1	// Cursed_Dagger
+60,1242,1	// Counter_Dagger
+60,1244,1	// Holy_Dagger
+60,1261,1	// Infiltrator
+60,1263,1	// Unholy_Touch
+60,1265,1	// Bloody_Roar
+60,1266,1	// Infiltrator_
+60,1268,1	// Wild_Beast_Claw
+60,1269,1	// Inverse_Scale
+60,1270,1	// Drill_Katar
+60,1271,1	// Blood_Tears
+60,1284,1	// Krishna
+60,1285,1	// Chakram
+60,1305,1	// Cleaver
+60,1311,1	// Vecer_Axe
+60,1363,1	// Bloody_Axe
+60,1364,1	// Great_Axe
+60,1365,1	// Sabbath
+60,1366,1	// Light Epsilon
+60,1367,1	// Slaughter
+60,1368,1	// Tomahawk
+60,1369,1	// Guillotine
+60,1370,1	// Doom_Slayer
+60,1371,1	// Doom_Slayer_
+60,1376,1	// Heart_Breaker
+60,1377,1	// Hurricane_Fury
+60,1385,1	// Bradium_Stonehammer
+60,1387,1	// Giant_Axe
+60,1413,1	// Gungnir
+60,1414,1	// Gelerdria
+60,1415,1	// Brocca
+60,1416,1	// Tjungkuletti
+60,1418,1	// Gungnir_
+60,1420,1	// Long_Horn
+60,1421,1	// Battle_Hook
+60,1422,1	// Hunting_Spear
+60,1433,1	// Imperial_Spear
+60,1466,1	// Crescent_Scythe
+60,1467,1	// Bill_Guisarme
+60,1468,1	// Zephyrus
+60,1469,1	// Longinus's_Spear
+60,1470,1	// Brionac
+60,1471,1	// Hell_Fire
+60,1473,1	// Wizardy_Staff
+60,1474,1	// Gae_Bolg
+60,1477,1	// Spectral_Spear
+60,1478,1	// Ahlspiess,
+60,1479,1	// Spectral_Spear_
+60,1480,1	// Gae_Bolg_
+60,1481,1	// Zephyrus_
+60,1484,1	// Cardo
+60,1523,1	// Spike
+60,1524,1	// Golden_Mace
+60,1525,1	// Long_Mace
+60,1527,1	// Quadrille
+60,1528,1	// Grand_Cross
+60,1538,1	// Spike_
+60,1539,1	// Golden_Mace_
+60,1540,1	// Grand_Cross_
+60,1541,1	// Nemesis
+60,1557,1	// Book_Of_The_Apocalypse
+60,1558,1	// Girl's_Diary
+60,1559,1	// Legacy_Of_Dragon
+60,1561,1	// Hardcover_Book
+60,1562,1	// Battlefield_Textbook
+60,1565,1	// Ledger of Death
+60,1616,1	// Wing Staff
+60,1629,1	// Gentleman's Staff
+60,1631,1	// Holy_Stick
+60,1636,1	// Thorn_Staff
+60,1637,1	// Eraser
+60,1643,1	// Dead_Tree_Cane
+60,1654,1	// Mental_Stick
+60,1719,1	// Bow_Of_Roguemaster
+60,1720,1	// Bow_Of_Rudra
+60,1722,1	// Ballista
+60,1724,1	// Dragon_Wing
+60,1725,1	// Bow_Of_Minstrel
+60,1727,1	// Balistar_
+60,1737,1	// Ixion_Wing
+60,1740,1	// Nepenthes_Bow
+60,1741,1	// Cursed_Lyre
+60,1745,1	// Falken_Blitz
+60,1813,1	// Kaiser_Knuckle
+60,1814,1	// Berserk
+60,1815,1	// Claw_Of_Garm
+60,1816,1	// Berserk_
+60,1830,1	// Great_King's_Dance
+60,1913,1	// Electronic_Guitar
+60,1918,1	// Oriental_Lute
+60,1920,1	// Berserk_Guitar
+60,1922,1	// Oriental_Lute_
+60,1926,1	// Harp_Of_Nepenthes
+60,1930,1	// Green_Whistle
+60,1962,1	// Lariat_Whip
+60,1963,1	// Rapture_Rose
+60,1964,1	// Chemeti_Whip
+60,1969,1	// Blade_Whip
+60,1970,1	// Queen's_Whip
+60,1972,1	// Electric_Eel
+60,1973,1	// Sea_Witch_Foot
+60,1974,1	// Carrot_Whip
+60,1976,1	// Queen's_Whip_
+60,1979,1	// Stem_Of_Nepenthes
+60,1984,1	// Stem_Whip
+60,1985,1	// Rose_Vine
+60,2000,1	// Destruction_Rod
+60,2001,1	// Divine_Cross
+60,2004,1	// Kronos
+60,2005,1	// Dea_Staff
+60,13046,1	// Krieg
+60,13047,1	// Weihna
+60,13061,1	// Black_Wing
+60,13062,1	// Ancient_Dagger
+60,13421,1	// Ruber
+60,13431,1	// Chrome_Metal_Sword
+60,16000,1	// Erde
+60,16001,1	// Red_Square_Bag
+60,16010,1	// Red_Ether_Bag
+60,18103,1	// Mystic_Bow
