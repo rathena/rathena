@@ -395,7 +395,7 @@ int pc_makesavestatus(struct map_session_data *sd)
 
   	//Only copy the Cart/Peco/Falcon options, the rest are handled via 
 	//status change load/saving. [Skotlex]
-	sd->status.option = sd->sc.option&(OPTION_CART|OPTION_FALCON|OPTION_RIDING|OPTION_DRAGON|OPTION_WUGRIDER|OPTION_WUG|OPTION_MADOGEAR|OPTION_MOUNTING);
+	sd->status.option = sd->sc.option&(OPTION_CART|OPTION_FALCON|OPTION_RIDING|OPTION_DRAGON|OPTION_WUG|OPTION_MADOGEAR|OPTION_MOUNTING);
 		
 	if (sd->sc.data[SC_JAILED])
 	{	//When Jailed, do not move last point.
