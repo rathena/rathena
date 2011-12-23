@@ -2409,12 +2409,10 @@ static int skill_check_unit_range2 (struct block_list *bl, int x, int y, int ski
 
 int skill_guildaura_sub (struct map_session_data* sd, int id, int strvit, int agidex)
 {
-	nullpo_ret(sd);
+	if(id == sd->bl.id && battle_config.guild_aura&16)
+		return 0;  // Do not affect guild leader
 
-	if( id == sd->bl.id && battle_config.guild_aura&16 )
-		return 0;
-
-	if( sd->sc.data[SC_GUILDAURA] ) {
+	if (sd->sc.data[SC_GUILDAURA]) {
 		struct status_change_entry *sce = sd->sc.data[SC_GUILDAURA];
 		if( sce->val3 != strvit || sce->val4 != agidex ) {
 			sce->val3 = strvit;

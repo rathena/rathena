@@ -195,11 +195,11 @@ static int unit_walktoxy_timer(int tid, unsigned int tick, int id, intptr_t data
 			if ((skill = guild_checkskill(g, GD_HAWKEYES)) > 0) agidex |= skill&0xFFFF;
 			if (strvit || agidex)
 			{// replaced redundant foreachinrange call with smaller and much more efficient iteration
-				for( i = 0; g->max_member > i; i++ )
+				for( i = 0; i < g->max_member; i++ )
 				{
-					if( g->member[i].online && g->member[i].sd && check_distance_bl(&sd->bl, &g->member[i].sd->bl, 2) )
+					if( g->member[i].online && g->member[i].sd && sd->bl.m == g->member[i].sd->bl.m && check_distance_bl(&sd->bl, &g->member[i].sd->bl, 2) )
 					{// perform the aura on the member as appropriate
-						skill_guildaura_sub( g->member[i].sd, sd->bl.id, strvit, agidex );
+						skill_guildaura_sub(g->member[i].sd, sd->bl.id, strvit, agidex);
 					}
 				}
 			}

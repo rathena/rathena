@@ -1,6 +1,9 @@
 Date (YYYY-MM-DD)
 	Added
 
+2011-12-22
+	* Fixed guild aura code not checking, whether the map of guild leader and member is the same (since r15037). [Ai4rei]
+	* Merged slightly modified guild aura optimization from rAthena (ra:15084, ra:15086). [Ai4rei]
 2011-12-19
 	* Changes to chat logging code. [Ai4rei]
 	- Moved log_config.chat checks into log_chat and replaced string chat types with an enumeration.
