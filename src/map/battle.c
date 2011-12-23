@@ -617,7 +617,7 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,struct Damag
 			sc_start(bl,sc->data[SC_POISONINGWEAPON]->val2,100,sc->data[SC_POISONINGWEAPON]->val1,skill_get_time2(GC_POISONINGWEAPON,sc->data[SC_POISONINGWEAPON]->val1));
 	}
 
-	if (battle_config.pk_mode && sd && bl->type == BL_PC && damage && !map_flag_gvg(sd->bl.m) && !map[sd->bl.m].flag.battleground)
+	if (battle_config.pk_mode && sd && bl->type == BL_PC && damage && map[bl->m].flag.pvp)
   	{
 		if (flag & BF_SKILL) { //Skills get a different reduction than non-skills. [Skotlex]
 			if (flag&BF_WEAPON)
