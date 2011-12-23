@@ -982,17 +982,13 @@ int intif_parse_LoadGuildStorage(int fd)
 		gstor->storage_status = 0;
 		return 1;
 	}
-	if(battle_config.save_log)
-		ShowInfo("intif_open_guild_storage: %d\n",RFIFOL(fd,4) );
+
 	memcpy(gstor,RFIFOP(fd,12),sizeof(struct guild_storage));
 	storage_guild_storageopen(sd);
 	return 0;
 }
 int intif_parse_SaveGuildStorage(int fd)
 {
-	if(battle_config.save_log) {
-		ShowInfo("intif_save_guild_storage: done %d %d %d\n",RFIFOL(fd,2),RFIFOL(fd,6),RFIFOB(fd,10) );
-	}
 	storage_guild_storagesaved(/*RFIFOL(fd,2), */RFIFOL(fd,6));
 	return 0;
 }
