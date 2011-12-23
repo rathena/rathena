@@ -1651,7 +1651,7 @@
 2641,Fashionable_Sack,Fashion Hip Sack,5,20,,700,,0,,0,0x00040420,7,2,136,,50,0,0,{ bonus bStr,2; },{},{}
 2642,Serin's_Gold_Ring,Serin's Gold Ring,5,20,,0,,0,,0,0xFFFFFFFF,7,2,136,,0,0,0,{},{},{}
 2643,Serin's_Gold_Ring_,Serin's Gold Ring,5,45000,,100,,0,,0,0xFFFFFFFF,7,2,136,,0,0,0,{},{},{}
-2644,The_Sign_,The Sign,5,2,,0,,0,,0,0xFFFFFFFF,7,2,136,,0,0,0,{ bonus2 bAddRace,RC_NonBoss,5; bonus2 bAddRace,RC_Boss,5; bonus2 bMagicAddRace,RC_NonBossn,5; bonus2 bMagicAddRace,RC_Boss,5; },{},{}
+2644,The_Sign_,The Sign,5,2,,0,,0,,0,0xFFFFFFFF,7,2,136,,0,0,0,{ bonus2 bAddRace,RC_NonBoss,5; bonus2 bAddRace,RC_Boss,5; bonus2 bMagicAddRace,RC_NonBoss,5; bonus2 bMagicAddRace,RC_Boss,5; },{},{}
 2645,Moonlight_Ring,Moonlight Ring,5,40000,,200,,0,,0,0x02021040,7,2,136,,60,0,0,{ bonus bMdef,2; },{},{}
 2646,Bunch_Of_Carnation,Bunch of Carnations,5,2,,100,,0,,0,0xFFFFFFFF,7,2,136,,0,0,0,{ bonus bAllStats,3; },{},{}
 2647,Nile_Rose,Nile Rose,5,2,,100,,0,,1,0xFFFFFFFF,7,2,136,,0,0,0,{ bonus bMaxHP,10; },{},{}
