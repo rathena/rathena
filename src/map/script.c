@@ -9812,7 +9812,7 @@ BUILDIN_FUNC(setmapflag)
 			case MF_ALLOWKS:			map[m].flag.allowks = 1; break;
 			case MF_MONSTER_NOTELEPORT:	map[m].flag.monster_noteleport = 1; break;
 			case MF_PVP_NOCALCRANK:		map[m].flag.pvp_nocalcrank = 1; break;
-			case MF_BATTLEGROUND:		(!val || atoi(val) < 0 || atoi(val) > 2) ? 1 : atoi(val); break;
+			case MF_BATTLEGROUND:		map[m].flag.battleground = (!val || atoi(val) < 0 || atoi(val) > 2) ? 1 : atoi(val); break;
 			case MF_RESET:				map[m].flag.reset = 1; break;
 		}
 	}
