@@ -8357,8 +8357,9 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 			if (!sc->data[SC_SLOWPOISON]) {
 				map_freeblock_lock();
 				status_zap(bl, sce->val4, 0);
-				if (sc->data[type]) // Check if the status still last ( can be dead since then ).
-					sc_timer_next(1000 + tick, status_change_timer, bl->id, data ); 
+				if (sc->data[type]) { // Check if the status still last ( can be dead since then ).
+					sc_timer_next(1000 + tick, status_change_timer, bl->id, data );
+				}
 				map_freeblock_unlock();
 			}
 			return 0;
