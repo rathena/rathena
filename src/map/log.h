@@ -50,21 +50,21 @@ typedef enum e_log_pick_type
 e_log_pick_type;
 
 
-//New logs
-void log_pick_pc(struct map_session_data *sd, e_log_pick_type type, int nameid, int amount, struct item *itm);
-void log_pick_mob(struct mob_data *md, e_log_pick_type type, int nameid, int amount, struct item *itm);
+/// new logs
+void log_pick_pc(struct map_session_data* sd, e_log_pick_type type, int nameid, int amount, struct item* itm);
+void log_pick_mob(struct mob_data* md, e_log_pick_type type, int nameid, int amount, struct item* itm);
 void log_pick(struct block_list* bl, e_log_pick_type type, int nameid, int amount, struct item* itm);
-void log_zeny(struct map_session_data *sd, e_log_pick_type type, struct map_session_data *src_sd, int amount);
+void log_zeny(struct map_session_data* sd, e_log_pick_type type, struct map_session_data* src_sd, int amount);
 
-void log_npc(struct map_session_data *sd, const char *message);
+void log_npc(struct map_session_data* sd, const char *message);
 void log_chat(e_log_chat_type type, int type_id, int src_charid, int src_accid, const char* map, int x, int y, const char* dst_charname, const char* message);
-void log_atcommand(struct map_session_data *sd, int cmdlvl, const char *message);
+void log_atcommand(struct map_session_data* sd, int cmdlvl, const char* message);
 
-//Old, but useful logs
-void log_branch(struct map_session_data *sd);
-void log_mvpdrop(struct map_session_data *sd, int monster_id, int *log_mvp);
+/// old, but useful logs
+void log_branch(struct map_session_data* sd);
+void log_mvpdrop(struct map_session_data* sd, int monster_id, int* log_mvp);
 
-int log_config_read(char *cfgName);
+int log_config_read(const char* cfgName);
 
 extern struct Log_Config
 {
