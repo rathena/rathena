@@ -1572,7 +1572,7 @@ REPLACE INTO `item_db` VALUES (2640,'Kafra_Ring','Kafra Ring',5,40000,NULL,200,N
 REPLACE INTO `item_db` VALUES (2641,'Fashionable_Sack','Fashion Hip Sack',5,20,NULL,700,NULL,0,NULL,0,0x00040420,7,2,136,NULL,50,0,0,'bonus bStr,2;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (2642,'Serin\'s_Gold_Ring','Serin\'s Gold Ring',5,20,NULL,0,NULL,0,NULL,0,0xFFFFFFFF,7,2,136,NULL,0,0,0,NULL,NULL,NULL);
 REPLACE INTO `item_db` VALUES (2643,'Serin\'s_Gold_Ring_','Serin\'s Gold Ring',5,45000,NULL,100,NULL,0,NULL,0,0xFFFFFFFF,7,2,136,NULL,0,0,0,NULL,NULL,NULL);
-REPLACE INTO `item_db` VALUES (2644,'The_Sign_','The Sign',5,2,NULL,0,NULL,0,NULL,0,0xFFFFFFFF,7,2,136,NULL,0,0,0,'bonus2 bAddRace,RC_NonBoss,5; bonus2 bAddRace,RC_Boss,5; bonus2 bMagicAddRace,RC_NonBossn,5; bonus2 bMagicAddRace,RC_Boss,5;',NULL,NULL);
+REPLACE INTO `item_db` VALUES (2644,'The_Sign_','The Sign',5,2,NULL,0,NULL,0,NULL,0,0xFFFFFFFF,7,2,136,NULL,0,0,0,'bonus2 bAddRace,RC_NonBoss,5; bonus2 bAddRace,RC_Boss,5; bonus2 bMagicAddRace,RC_NonBoss,5; bonus2 bMagicAddRace,RC_Boss,5;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (2645,'Moonlight_Ring','Moonlight Ring',5,40000,NULL,200,NULL,0,NULL,0,0x02021040,7,2,136,NULL,60,0,0,'bonus bMdef,2;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (2646,'Bunch_Of_Carnation','Bunch of Carnations',5,2,NULL,100,NULL,0,NULL,0,0xFFFFFFFF,7,2,136,NULL,0,0,0,'bonus bAllStats,3;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (2647,'Nile_Rose','Nile Rose',5,2,NULL,100,NULL,0,NULL,1,0xFFFFFFFF,7,2,136,NULL,0,0,0,'bonus bMaxHP,10;',NULL,NULL);
