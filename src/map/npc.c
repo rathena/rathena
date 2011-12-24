@@ -1268,8 +1268,7 @@ int npc_cashshop_buylist(struct map_session_data *sd, int points, int count, uns
             pc_additem(sd,&item_tmp,amount);
         }
 
-        if( log_config.enable_logs & LOG_NPC_TRANSACTIONS )
-            log_pick_pc(sd, "S", nameid, amount, NULL);
+        log_pick_pc(sd, LOG_TYPE_NPC, nameid, amount, NULL);
     }
 
     return 0;

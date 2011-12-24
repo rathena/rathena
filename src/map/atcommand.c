@@ -9253,12 +9253,13 @@ bool is_atcommand(const int fd, struct map_session_data* sd, const char* message
 	}
 	
 	//Log atcommands
-	if( log_config.gm && info->level >= log_config.gm && *atcmd_msg == atcommand_symbol )
-		log_atcommand(sd, atcmd_msg);	
+	if( *atcmd_msg == atcommand_symbol )
+		log_atcommand(sd, info->level, atcmd_msg);
+		
 	//Log Charcommands
-	else if( log_config.gm && info->level2 >= log_config.gm && *atcmd_msg == charcommand_symbol && ssd != NULL )
-		log_atcommand(sd, message);
-
+	if( *atcmd_msg == charcommand_symbol && ssd != NULL )
+		log_atcommand(sd, info->level2, message);
+	
 	//Attempt to use the command
 	if( strcmpi("adjgmlvl",command+1) && ssd ) { lv = ssd->gmlevel; ssd->gmlevel = sd->gmlevel; }
 	if ( (info->func(fd, (*atcmd_msg == atcommand_symbol) ? sd : ssd, command, params) != 0) )
@@ -9267,14 +9268,6 @@ bool is_atcommand(const int fd, struct map_session_data* sd, const char* message
 		clif_displaymessage(fd, output);
 	}
 	if( strcmpi("adjgmlvl",command+1) && ssd ) ssd->gmlevel = lv;
-	
-	//Log atcommands
-	if( *atcmd_msg == atcommand_symbol )
-		log_atcommand(sd, info->level, atcmd_msg);
-		
-	//Log Charcommands
-	if( *atcmd_msg == charcommand_symbol && ssd != NULL )
-		log_atcommand(sd, info->level2, message);
 	
 	return true;
 }
