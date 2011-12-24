@@ -636,6 +636,10 @@ void clif_search_store_info_click_ack(struct map_session_data* sd, short x, shor
 void clif_msgtable(int fd, int line);
 void clif_msgtable_num(int fd, int line, int num);
 /**
+ * Elemental Converter List
+ **/
+int clif_elementalconverter_list(struct map_session_data *sd);
+/**
  * Rune Knight
  **/
 void clif_millenniumshield(struct map_session_data *sd, short shields );
