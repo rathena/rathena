@@ -9158,12 +9158,8 @@ void clif_parse_MapMove(int fd, struct map_session_data *sd)
 	map_name[MAP_NAME_LENGTH_EXT-1]='\0';
 	sprintf(output, "%s %d %d", map_name, RFIFOW(fd,18), RFIFOW(fd,20));
 	atcommand_mapmove(fd, sd, "@mapmove", output);
-	if( log_config.gm && get_atcommand_level(atcommand_mapmove) >= log_config.gm )
-	{
-		sprintf(message, "/mm %s", output);
-		log_atcommand(sd, message);
-	}
-	return;
+	sprintf(message, "/mm %s", output);
+	log_atcommand(sd, get_atcommand_level(atcommand_mapmove), message);
 }
 
 /*==========================================
@@ -9528,10 +9524,10 @@ void clif_parse_Broadcast(int fd, struct map_session_data* sd)
 
 	intif_broadcast(msg, len, 0);
 
-	if(log_config.gm && lv >= log_config.gm) {
+	{
 		char logmsg[CHAT_SIZE_MAX+4];
 		sprintf(logmsg, "/b %s", msg);
-		log_atcommand(sd, logmsg);
+		log_atcommand(sd, lv, logmsg);
 	}
 }
 
@@ -10622,8 +10618,7 @@ void clif_parse_ResetChar(int fd, struct map_session_data *sd)
 	else
 		pc_resetstate(sd);
 
-	if( log_config.gm && get_atcommand_level(atcommand_reset) >= log_config.gm )
-		log_atcommand(sd, RFIFOW(fd,2) ? "/resetskill" : "/resetstate");
+	log_atcommand(sd, get_atcommand_level(atcommand_reset), RFIFOW(fd,2) ? "/resetskill" : "/resetstate");
 }
 
 /*==========================================
@@ -10647,10 +10642,10 @@ void clif_parse_LocalBroadcast(int fd, struct map_session_data* sd)
 
 	clif_broadcast(&sd->bl, msg, len, 0, ALL_SAMEMAP);
 
-	if( log_config.gm && lv >= log_config.gm ) {
+	{
 		char logmsg[CHAT_SIZE_MAX+5];
 		sprintf(logmsg, "/lb %s", msg);
-		log_atcommand(sd, logmsg);
+		log_atcommand(sd, lv, logmsg);
 	}
 }
 
@@ -11607,10 +11602,10 @@ void clif_parse_GMKick(int fd, struct map_session_data *sd)
 			return;
 		}
 
-		if(log_config.gm && lv >= log_config.gm) {
+		{
 			char message[256];
 			sprintf(message, "/kick %s (%d)", tsd->status.name, tsd->status.char_id);
-			log_atcommand(sd, message);
+			log_atcommand(sd, lv, message);
 		}
 
 		clif_GM_kick(sd, tsd);
@@ -11625,10 +11620,10 @@ void clif_parse_GMKick(int fd, struct map_session_data *sd)
 			return;
 		}
 
-		if(log_config.gm && lv >= log_config.gm) {
+		{
 			char message[256];
 			sprintf(message, "/kick %s (%d)", status_get_name(target), status_get_class(target));
-			log_atcommand(sd, message);
+			log_atcommand(sd, lv, message);
 		}
 
 		status_percent_damage(&sd->bl, target, 100, 0, true); // can invalidate 'target'
@@ -11644,10 +11639,10 @@ void clif_parse_GMKick(int fd, struct map_session_data *sd)
 			return;
 		}
 
-		if( log_config.gm && lv >= log_config.gm ) {
+		{
 			char message[256];
 			sprintf(message, "/kick %s (%d)", status_get_name(target), status_get_class(target));
-			log_atcommand(sd, message);
+			log_atcommand(sd, lv, message);
 		}
 
 		// copy-pasted from atcommand_unloadnpc
@@ -11686,10 +11681,10 @@ void clif_parse_GMShift(int fd, struct map_session_data *sd)
 	player_name = (char*)RFIFOP(fd,2);
 	player_name[NAME_LENGTH-1] = '\0';
 	atcommand_jumpto(fd, sd, "@jumpto", player_name); // as @jumpto
-	if( log_config.gm && lv >= log_config.gm ) {
+	{
 		char message[NAME_LENGTH+7];
 		sprintf(message, "/shift %s", player_name);
-		log_atcommand(sd, message);
+		log_atcommand(sd, lv, message);
 	}
 }
 
@@ -11718,12 +11713,11 @@ void clif_parse_GMRemove2(int fd, struct map_session_data* sd)
 		pc_warpto(sd, pl_sd);
 	}
 
-	if( log_config.gm && lv >= log_config.gm )
 	{
 		char message[32];
 
 		sprintf(message, "/remove %d", account_id);
-		log_atcommand(sd, message);
+		log_atcommand(sd, lv, message);
 	}
 }
 
@@ -11746,10 +11740,10 @@ void clif_parse_GMRecall(int fd, struct map_session_data *sd)
 	player_name = (char*)RFIFOP(fd,2);
 	player_name[NAME_LENGTH-1] = '\0';
 	atcommand_recall(fd, sd, "@recall", player_name); // as @recall
-	if( log_config.gm && lv >= log_config.gm ) {
+	{
 		char message[NAME_LENGTH+8];
 		sprintf(message, "/recall %s", player_name);
-		log_atcommand(sd, message);
+		log_atcommand(sd, lv, message);
 	}
 }
 
@@ -11778,12 +11772,11 @@ void clif_parse_GMRecall2(int fd, struct map_session_data* sd)
 		pc_recall(sd, pl_sd);
 	}
 
-	if( log_config.gm && lv >= log_config.gm )
 	{
 		char message[32];
 
 		sprintf(message, "/recall %d", account_id);
-		log_atcommand(sd, message);
+		log_atcommand(sd, lv, message);
 	}
 }
 
@@ -11808,10 +11801,9 @@ void clif_parse_GM_Monster_Item(int fd, struct map_session_data *sd)
 		if( pc_isGM(sd) < (level=get_atcommand_level(atcommand_monster)) )
 			return;
 		atcommand_monster(fd, sd, "@monster", monster_item_name); // as @monster
-		if( log_config.gm && level >= log_config.gm )
 		{	//Log action. [Skotlex]
 			snprintf(message, sizeof(message)-1, "@spawn %s", monster_item_name);
-			log_atcommand(sd, message);
+			log_atcommand(sd, level, message);
 		}
 		return;
 	}
@@ -11820,10 +11812,9 @@ void clif_parse_GM_Monster_Item(int fd, struct map_session_data *sd)
 	if( pc_isGM(sd) < (level = get_atcommand_level(atcommand_item)) )
 		return;
 	atcommand_item(fd, sd, "@item", monster_item_name); // as @item
-	if( log_config.gm && level >= log_config.gm )
 	{	//Log action. [Skotlex]
 		sprintf(message, "@item %s", monster_item_name);
-		log_atcommand(sd, message);
+		log_atcommand(sd, level, message);
 	}
 }
 
@@ -11849,8 +11840,7 @@ void clif_parse_GMHide(int fd, struct map_session_data *sd)
 		sd->sc.option |= OPTION_INVISIBLE;
 		sd->vd.class_ = INVISIBLE_CLASS;
 		clif_displaymessage(fd, "Invisible: On.");
-		if( log_config.gm && get_atcommand_level(atcommand_hide) >= log_config.gm )
-			log_atcommand(sd, "/hide");
+		log_atcommand(sd, get_atcommand_level(atcommand_hide), "/hide");
 	}
 	clif_changeoption(&sd->bl);
 }

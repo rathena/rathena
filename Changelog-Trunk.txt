@@ -1,6 +1,9 @@
 Date (YYYY-MM-DD)
 	Added
 
+2011-12-24
+	* Updates to map-server's log system. [Ai4rei]
+	- Moved all logs configuration checks from caller functions into respective log functions, and replaced string log types with an enumeration.
 2011-12-22
 	* Fixed guild aura code not checking, whether the map of guild leader and member is the same (since r15037). [Ai4rei]
 	* Merged slightly modified guild aura optimization from rAthena (ra:15084, ra:15086). [Ai4rei]

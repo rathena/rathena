@@ -554,11 +554,8 @@ void trade_tradecommit(struct map_session_data *sd)
 			if (flag == 0)
 			{
 				//Logs (T)rade [Lupus]
-				if(log_config.enable_logs & LOG_TRADES)
-				{
-					log_pick_pc(sd, "T", sd->status.inventory[n].nameid, -(sd->deal.item[trade_i].amount), &sd->status.inventory[n]);
-					log_pick_pc(tsd, "T", sd->status.inventory[n].nameid, sd->deal.item[trade_i].amount, &sd->status.inventory[n]);
-				}
+				log_pick_pc(sd, LOG_TYPE_TRADE, sd->status.inventory[n].nameid, -(sd->deal.item[trade_i].amount), &sd->status.inventory[n]);
+				log_pick_pc(tsd, LOG_TYPE_TRADE, sd->status.inventory[n].nameid, sd->deal.item[trade_i].amount, &sd->status.inventory[n]);
 				pc_delitem(sd, n, sd->deal.item[trade_i].amount, 1, 6);
 			} else
 				clif_additem(sd, n, sd->deal.item[trade_i].amount, 0);
@@ -573,11 +570,8 @@ void trade_tradecommit(struct map_session_data *sd)
 			if (flag == 0)
 			{
 				//Logs (T)rade [Lupus]
-				if(log_config.enable_logs & LOG_TRADES)
-				{
-					log_pick_pc(tsd, "T", tsd->status.inventory[n].nameid, -(tsd->deal.item[trade_i].amount), &tsd->status.inventory[n]);
-					log_pick_pc(sd, "T", tsd->status.inventory[n].nameid, tsd->deal.item[trade_i].amount, &tsd->status.inventory[n]);
-				}
+				log_pick_pc(tsd, LOG_TYPE_TRADE, tsd->status.inventory[n].nameid, -(tsd->deal.item[trade_i].amount), &tsd->status.inventory[n]);
+				log_pick_pc(sd, LOG_TYPE_TRADE, tsd->status.inventory[n].nameid, tsd->deal.item[trade_i].amount, &tsd->status.inventory[n]);
 				pc_delitem(tsd, n, tsd->deal.item[trade_i].amount, 1, 6);
 			} else
 				clif_additem(tsd, n, tsd->deal.item[trade_i].amount, 0);
@@ -592,10 +586,10 @@ void trade_tradecommit(struct map_session_data *sd)
 		tsd->status.zeny += sd->deal.zeny - tsd->deal.zeny;
 
 		//Logs Zeny (T)rade [Lupus]
-		if( sd->deal.zeny && log_config.zeny )
-			log_zeny(tsd, "T", sd, sd->deal.zeny);
-		if( tsd->deal.zeny && log_config.zeny )
-			log_zeny(sd, "T", tsd, tsd->deal.zeny);
+		if( sd->deal.zeny )
+			log_zeny(tsd, LOG_TYPE_TRADE, sd, sd->deal.zeny);
+		if( tsd->deal.zeny )
+			log_zeny(sd, LOG_TYPE_TRADE, tsd, tsd->deal.zeny);
 
 		sd->deal.zeny = 0;
 		tsd->deal.zeny = 0;

@@ -29,6 +29,36 @@ struct Log_Config log_config;
 #endif
 
 
+/// obtain log type character for item/zeny logs
+static char log_picktype2char(e_log_pick_type type)
+{
+	switch( type )
+	{
+		case LOG_TYPE_TRADE:            return 'T';  // (T)rade
+		case LOG_TYPE_VENDING:          return 'V';  // (V)ending
+		case LOG_TYPE_PICKDROP_PLAYER:  return 'P';  // (P)player
+		case LOG_TYPE_PICKDROP_MONSTER: return 'M';  // (M)onster
+		case LOG_TYPE_NPC:              return 'S';  // NPC (S)hop
+		case LOG_TYPE_SCRIPT:           return 'N';  // (N)PC Script
+		//case LOG_TYPE_STEAL:            return 'D';  // Steal/Snatcher
+		case LOG_TYPE_CONSUME:          return 'C';  // (C)onsumed
+		//case LOG_TYPE_PRODUCE:          return 'O';  // Pr(O)duced/Ingredients
+		//case LOG_TYPE_MVP:              return 'U';  // MVP Rewards
+		case LOG_TYPE_COMMAND:          return 'A';  // (A)dmin command
+		case LOG_TYPE_STORAGE:          return 'R';  // Sto(R)age
+		case LOG_TYPE_GSTORAGE:         return 'G';  // (G)uild storage
+		case LOG_TYPE_MAIL:             return 'E';  // (E)mail attachment
+		//case LOG_TYPE_AUCTION:          return 'I';  // Auct(I)on
+		case LOG_TYPE_BUYING_STORE:     return 'B';  // (B)uying Store
+		case LOG_TYPE_LOOT:             return 'L';  // (L)oot (consumed monster pick/drop)
+	}
+
+	// should not get here, fallback
+	ShowDebug("log_picktype2char: Unknown pick type %d.\n", type);
+	return 'S';
+}
+
+
 /// obtain log type character for chat logs
 static char log_chattype2char(e_log_chat_type type)
 {
@@ -42,7 +72,7 @@ static char log_chattype2char(e_log_chat_type type)
 	}
 
 	// should not get here, fallback
-	ShowError("log_chattype2char: Unknown chat type %d.\n", type);
+	ShowDebug("log_chattype2char: Unknown chat type %d.\n", type);
 	return 'O';
 }
 
@@ -87,7 +117,7 @@ bool should_log_item(int filter, int nameid, int amount)
 
 void log_branch(struct map_session_data *sd)
 {
-	if(!log_config.enable_logs)
+	if( !log_config.branch )
 		return;
 
 	nullpo_retv(sd);
@@ -124,9 +154,14 @@ void log_branch(struct map_session_data *sd)
 }
 
 
-void log_pick_pc(struct map_session_data *sd, const char *type, int nameid, int amount, struct item *itm)
+void log_pick_pc(struct map_session_data *sd, e_log_pick_type type, int nameid, int amount, struct item *itm)
 {
 	nullpo_retv(sd);
+
+	if( ( log_config.enable_logs&type ) == 0 )
+	{// disabled
+		return;
+	}
 
 	if (!should_log_item(log_config.filter, nameid, amount))
 		return; //we skip logging this item set - it doesn't meet our logging conditions [Lupus]
@@ -135,15 +170,15 @@ void log_pick_pc(struct map_session_data *sd, const char *type, int nameid, int 
 	if( log_config.sql_logs )
 	{
 		if( itm == NULL ) { //We log common item
-			if (SQL_ERROR == Sql_Query(logmysql_handle, LOG_QUERY " INTO `%s` (`time`, `char_id`, `type`, `nameid`, `amount`, `map`) VALUES (NOW(), '%d', '%s', '%d', '%d', '%s')",
-				log_config.log_pick_db, sd->status.char_id, type, nameid, amount, mapindex_id2name(sd->mapindex)) )
+			if (SQL_ERROR == Sql_Query(logmysql_handle, LOG_QUERY " INTO `%s` (`time`, `char_id`, `type`, `nameid`, `amount`, `map`) VALUES (NOW(), '%d', '%c', '%d', '%d', '%s')",
+				log_config.log_pick_db, sd->status.char_id, log_picktype2char(type), nameid, amount, mapindex_id2name(sd->mapindex)) )
 			{
 				Sql_ShowDebug(logmysql_handle);
 				return;
 			}
 		} else { //We log Extended item
-			if (SQL_ERROR == Sql_Query(logmysql_handle, LOG_QUERY " INTO `%s` (`time`, `char_id`, `type`, `nameid`, `amount`, `refine`, `card0`, `card1`, `card2`, `card3`, `map`) VALUES (NOW(), '%d', '%s', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%s')",
-				log_config.log_pick_db, sd->status.char_id, type, itm->nameid, amount, itm->refine, itm->card[0], itm->card[1], itm->card[2], itm->card[3], mapindex_id2name(sd->mapindex)) )
+			if (SQL_ERROR == Sql_Query(logmysql_handle, LOG_QUERY " INTO `%s` (`time`, `char_id`, `type`, `nameid`, `amount`, `refine`, `card0`, `card1`, `card2`, `card3`, `map`) VALUES (NOW(), '%d', '%c', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%s')",
+				log_config.log_pick_db, sd->status.char_id, log_picktype2char(type), itm->nameid, amount, itm->refine, itm->card[0], itm->card[1], itm->card[2], itm->card[3], mapindex_id2name(sd->mapindex)) )
 			{
 				Sql_ShowDebug(logmysql_handle);
 				return;
@@ -163,9 +198,9 @@ void log_pick_pc(struct map_session_data *sd, const char *type, int nameid, int 
 		strftime(timestring, sizeof(timestring), "%m/%d/%Y %H:%M:%S", localtime(&curtime));
 
 		if( itm == NULL ) { //We log common item
-			fprintf(logfp,"%s - %d\t%s\t%d,%d,%s\n", timestring, sd->status.char_id, type, nameid, amount, mapindex_id2name(sd->mapindex));
+			fprintf(logfp,"%s - %d\t%c\t%d,%d,%s\n", timestring, sd->status.char_id, log_picktype2char(type), nameid, amount, mapindex_id2name(sd->mapindex));
 		} else { //We log Extended item
-			fprintf(logfp,"%s - %d\t%s\t%d,%d,%d,%d,%d,%d,%d,%s\n", timestring, sd->status.char_id, type, itm->nameid, amount, itm->refine, itm->card[0], itm->card[1], itm->card[2], itm->card[3], mapindex_id2name(sd->mapindex));
+			fprintf(logfp,"%s - %d\t%c\t%d,%d,%d,%d,%d,%d,%d,%s\n", timestring, sd->status.char_id, log_picktype2char(type), itm->nameid, amount, itm->refine, itm->card[0], itm->card[1], itm->card[2], itm->card[3], mapindex_id2name(sd->mapindex));
 		}
 		fclose(logfp);
 	}
@@ -173,11 +208,16 @@ void log_pick_pc(struct map_session_data *sd, const char *type, int nameid, int 
 
 
 //Mob picked item
-void log_pick_mob(struct mob_data *md, const char *type, int nameid, int amount, struct item *itm)
+void log_pick_mob(struct mob_data *md, e_log_pick_type type, int nameid, int amount, struct item *itm)
 {
 	char* mapname;
 
 	nullpo_retv(md);
+
+	if( ( log_config.enable_logs&type ) == 0 )
+	{// disabled
+		return;
+	}
 
 	if (!should_log_item(log_config.filter, nameid, amount))
 		return; //we skip logging this item set - it doesn't meet our logging conditions [Lupus]
@@ -191,15 +231,15 @@ void log_pick_mob(struct mob_data *md, const char *type, int nameid, int amount,
 	if( log_config.sql_logs )
 	{
 		if( itm == NULL ) { //We log common item
-			if (SQL_ERROR == Sql_Query(logmysql_handle, LOG_QUERY " INTO `%s` (`time`, `char_id`, `type`, `nameid`, `amount`, `map`) VALUES (NOW(), '%d', '%s', '%d', '%d', '%s')",
-				log_config.log_pick_db, md->class_, type, nameid, amount, mapname) )
+			if (SQL_ERROR == Sql_Query(logmysql_handle, LOG_QUERY " INTO `%s` (`time`, `char_id`, `type`, `nameid`, `amount`, `map`) VALUES (NOW(), '%d', '%c', '%d', '%d', '%s')",
+				log_config.log_pick_db, md->class_, log_picktype2char(type), nameid, amount, mapname) )
 			{
 				Sql_ShowDebug(logmysql_handle);
 				return;
 			}
 		} else { //We log Extended item
-			if (SQL_ERROR == Sql_Query(logmysql_handle, LOG_QUERY " INTO `%s` (`time`, `char_id`, `type`, `nameid`, `amount`, `refine`, `card0`, `card1`, `card2`, `card3`, `map`) VALUES (NOW(), '%d', '%s', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%s')",
-				log_config.log_pick_db, md->class_, type, itm->nameid, amount, itm->refine, itm->card[0], itm->card[1], itm->card[2], itm->card[3], mapname) )
+			if (SQL_ERROR == Sql_Query(logmysql_handle, LOG_QUERY " INTO `%s` (`time`, `char_id`, `type`, `nameid`, `amount`, `refine`, `card0`, `card1`, `card2`, `card3`, `map`) VALUES (NOW(), '%d', '%c', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%s')",
+				log_config.log_pick_db, md->class_, log_picktype2char(type), itm->nameid, amount, itm->refine, itm->card[0], itm->card[1], itm->card[2], itm->card[3], mapname) )
 			{
 				Sql_ShowDebug(logmysql_handle);
 				return;
@@ -219,18 +259,34 @@ void log_pick_mob(struct mob_data *md, const char *type, int nameid, int amount,
 		strftime(timestring, sizeof(timestring), "%m/%d/%Y %H:%M:%S", localtime(&curtime));
 
 		if( itm == NULL ) { //We log common item
-			fprintf(logfp,"%s - %d\t%s\t%d,%d,%s\n", timestring, md->class_, type, nameid, amount, mapname);
+			fprintf(logfp,"%s - %d\t%c\t%d,%d,%s\n", timestring, md->class_, log_picktype2char(type), nameid, amount, mapname);
 		} else { //We log Extended item
-			fprintf(logfp,"%s - %d\t%s\t%d,%d,%d,%d,%d,%d,%d,%s\n", timestring, md->class_, type, itm->nameid, amount, itm->refine, itm->card[0], itm->card[1], itm->card[2], itm->card[3], mapname);
+			fprintf(logfp,"%s - %d\t%c\t%d,%d,%d,%d,%d,%d,%d,%s\n", timestring, md->class_, log_picktype2char(type), itm->nameid, amount, itm->refine, itm->card[0], itm->card[1], itm->card[2], itm->card[3], mapname);
 		}
 		fclose(logfp);
 	}
 }
 
 
-void log_zeny(struct map_session_data *sd, char *type, struct map_session_data *src_sd, int amount)
+void log_pick(struct block_list* bl, e_log_pick_type type, int nameid, int amount, struct item* itm)
 {
-	if(!log_config.enable_logs || (log_config.zeny != 1 && abs(amount) < log_config.zeny))
+	if( bl == NULL )
+	{
+		ShowError("log_pick: bl == NULL\n");
+	}
+	else switch( bl->type )
+	{
+		case BL_PC:  log_pick_pc((TBL_PC*)bl, type, nameid, amount, itm);   break;
+		case BL_MOB: log_pick_mob((TBL_MOB*)bl, type, nameid, amount, itm); break;
+		default:
+			ShowDebug("log_pick: Unhandled bl type %d.\n", bl->type);
+	}
+}
+
+
+void log_zeny(struct map_session_data *sd, e_log_pick_type type, struct map_session_data *src_sd, int amount)
+{
+	if( !log_config.zeny || ( log_config.zeny != 1 && abs(amount) < log_config.zeny ) )
 		return;
 
 	nullpo_retv(sd);
@@ -238,8 +294,8 @@ void log_zeny(struct map_session_data *sd, char *type, struct map_session_data *
 #ifndef TXT_ONLY
 	if( log_config.sql_logs )
 	{
-		if (SQL_ERROR == Sql_Query(logmysql_handle, LOG_QUERY " INTO `%s` (`time`, `char_id`, `src_id`, `type`, `amount`, `map`) VALUES (NOW(), '%d', '%d', '%s', '%d', '%s')",
-			 log_config.log_zeny_db, sd->status.char_id, src_sd->status.char_id, type, amount, mapindex_id2name(sd->mapindex)) )
+		if (SQL_ERROR == Sql_Query(logmysql_handle, LOG_QUERY " INTO `%s` (`time`, `char_id`, `src_id`, `type`, `amount`, `map`) VALUES (NOW(), '%d', '%d', '%c', '%d', '%s')",
+			 log_config.log_zeny_db, sd->status.char_id, src_sd->status.char_id, log_picktype2char(type), amount, mapindex_id2name(sd->mapindex)) )
 		{
 			Sql_ShowDebug(logmysql_handle);
 			return;
@@ -264,7 +320,7 @@ void log_zeny(struct map_session_data *sd, char *type, struct map_session_data *
 
 void log_mvpdrop(struct map_session_data *sd, int monster_id, int *log_mvp)
 {
-	if(!log_config.enable_logs)
+	if( !log_config.mvpdrop )
 		return;
 
 	nullpo_retv(sd);
@@ -296,9 +352,9 @@ void log_mvpdrop(struct map_session_data *sd, int monster_id, int *log_mvp)
 }
 
 
-void log_atcommand(struct map_session_data* sd, const char* message)
+void log_atcommand(struct map_session_data* sd, int cmdlvl, const char* message)
 {
-	if(!log_config.enable_logs)
+	if( cmdlvl < log_config.gm )
 		return;
 
 	nullpo_retv(sd);
@@ -339,7 +395,7 @@ void log_atcommand(struct map_session_data* sd, const char* message)
 
 void log_npc(struct map_session_data* sd, const char* message)
 {
-	if(!log_config.enable_logs)
+	if( !log_config.npc )
 		return;
 
 	nullpo_retv(sd);
@@ -428,7 +484,7 @@ void log_set_defaults(void)
 	memset(&log_config, 0, sizeof(log_config));
 
 	//LOG FILTER Default values
-	log_config.refine_items_log = 5; //log refined items, with refine >= +7
+	log_config.refine_items_log = 5; //log refined items, with refine >= +5
 	log_config.rare_items_log = 100; //log rare items. drop chance <= 1%
 	log_config.price_items_log = 1000; //1000z
 	log_config.amount_items_log = 100;
@@ -458,11 +514,9 @@ int log_config_read(char *cfgName)
 		if(sscanf(line, "%[^:]: %[^\r\n]", w1, w2) == 2)
 		{
 			if(strcmpi(w1,"enable_logs") == 0) {
-				log_config.enable_logs = (log_what)atoi(w2);
-				if (log_config.enable_logs & 1) //Log everything.
-					log_config.enable_logs = LOG_ALL;
+				log_config.enable_logs = (e_log_pick_type)config_switch(w2);
 			} else if(strcmpi(w1,"sql_logs") == 0) {
-				log_config.sql_logs = (bool)atoi(w2);
+				log_config.sql_logs = (bool)config_switch(w2);
 //start of common filter settings
 			} else if(strcmpi(w1,"rare_items_log") == 0) {
 				log_config.rare_items_log = (atoi(w2));
@@ -474,19 +528,19 @@ int log_config_read(char *cfgName)
 				log_config.amount_items_log = (atoi(w2));
 //end of common filter settings
 			} else if(strcmpi(w1,"log_branch") == 0) {
-				log_config.branch = (atoi(w2));
+				log_config.branch = config_switch(w2);
 			} else if(strcmpi(w1,"log_filter") == 0) {
-				log_config.filter = (atoi(w2));
+				log_config.filter = config_switch(w2);
 			} else if(strcmpi(w1,"log_zeny") == 0) {
-				log_config.zeny = (atoi(w2));
+				log_config.zeny = config_switch(w2);
 			} else if(strcmpi(w1,"log_gm") == 0) {
-				log_config.gm = (atoi(w2));
+				log_config.gm = config_switch(w2);
 			} else if(strcmpi(w1,"log_npc") == 0) {
-				log_config.npc = (atoi(w2));
+				log_config.npc = config_switch(w2);
 			} else if(strcmpi(w1, "log_chat") == 0) {
-				log_config.chat = (atoi(w2));
+				log_config.chat = config_switch(w2);
 			} else if(strcmpi(w1,"log_mvpdrop") == 0) {
-				log_config.mvpdrop = (atoi(w2));
+				log_config.mvpdrop = config_switch(w2);
 			} else if(strcmpi(w1,"log_chat_woe_disable") == 0) {
 				log_config.log_chat_woe_disable = (bool)config_switch(w2);
 			}

@@ -154,8 +154,7 @@ static int storage_additem(struct map_session_data* sd, struct item* item_data, 
 					return 1;
 				stor->items[i].amount += amount;
 				clif_storageitemadded(sd,&stor->items[i],i,amount);
-				if(log_config.enable_logs & LOG_STORAGE_ITEMS)
-					log_pick_pc(sd, "R", item_data->nameid, -amount, item_data);
+				log_pick_pc(sd, LOG_TYPE_STORAGE, item_data->nameid, -amount, item_data);
 				return 0;
 			}
 		}
@@ -172,8 +171,7 @@ static int storage_additem(struct map_session_data* sd, struct item* item_data, 
 	stor->items[i].amount = amount;
 	clif_storageitemadded(sd,&stor->items[i],i,amount);
 	clif_updatestorageamount(sd,stor->storage_amount);
-	if(log_config.enable_logs & LOG_STORAGE_ITEMS)
-		log_pick_pc(sd, "R", item_data->nameid, -amount, item_data);
+	log_pick_pc(sd, LOG_TYPE_STORAGE, item_data->nameid, -amount, item_data);
 
 	return 0;
 }
@@ -188,8 +186,7 @@ int storage_delitem(struct map_session_data* sd, int n, int amount)
 
 	sd->status.storage.items[n].amount -= amount;
 
-	if(log_config.enable_logs & LOG_STORAGE_ITEMS)
-		log_pick_pc(sd, "R", sd->status.storage.items[n].nameid, amount, &sd->status.storage.items[n]);
+	log_pick_pc(sd, LOG_TYPE_STORAGE, sd->status.storage.items[n].nameid, amount, &sd->status.storage.items[n]);
 
 	if( sd->status.storage.items[n].amount == 0 )
 	{
@@ -413,8 +410,7 @@ int guild_storage_additem(struct map_session_data* sd, struct guild_storage* sto
 				stor->items[i].amount+=amount;
 				clif_storageitemadded(sd,&stor->items[i],i,amount);
 				stor->dirty = 1;
-				if(log_config.enable_logs & LOG_GSTORAGE_ITEMS)
-					log_pick_pc(sd, "G", item_data->nameid, -amount, item_data);
+				log_pick_pc(sd, LOG_TYPE_GSTORAGE, item_data->nameid, -amount, item_data);
 				return 0;
 			}
 		}
@@ -431,8 +427,7 @@ int guild_storage_additem(struct map_session_data* sd, struct guild_storage* sto
 	clif_storageitemadded(sd,&stor->items[i],i,amount);
 	clif_updateguildstorageamount(sd,stor->storage_amount);
 	stor->dirty = 1;
-	if(log_config.enable_logs & LOG_GSTORAGE_ITEMS)
-		log_pick_pc(sd, "G", item_data->nameid, -amount, item_data);
+	log_pick_pc(sd, LOG_TYPE_GSTORAGE, item_data->nameid, -amount, item_data);
 	return 0;
 }
 
@@ -445,8 +440,7 @@ int guild_storage_delitem(struct map_session_data* sd, struct guild_storage* sto
 		return 1;
 
 	stor->items[n].amount-=amount;
-	if(log_config.enable_logs & LOG_GSTORAGE_ITEMS)
-		log_pick_pc(sd, "G", stor->items[n].nameid, amount, &stor->items[n]);
+	log_pick_pc(sd, LOG_TYPE_GSTORAGE, stor->items[n].nameid, amount, &stor->items[n]);
 	if(stor->items[n].amount==0){
 		memset(&stor->items[n],0,sizeof(stor->items[0]));
 		stor->storage_amount--;

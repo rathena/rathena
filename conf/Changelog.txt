@@ -1,5 +1,9 @@
 Date	Added
 
+2011/12/24
+	* Rev. 15040 Updates to log_athena.conf [Ai4rei]
+	- Setting 'enable_logs' is now a pure bitmask and no longer affects misc-logs (branch, zeny etc). Meaning of most bits changed, revise your log configuration before starting the server.
+	- Where applicable, settings support hexadecimal and boolean values instead of only integers.
 2011/12/19
 	* Rev. 15036 Updates to log_athena.conf [Ai4rei]
 	- Changed meaning of 'log_chat' bits (shift to right by one, &64 bit removed, 1 no longer means 'all').

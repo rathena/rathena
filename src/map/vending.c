@@ -168,8 +168,7 @@ void vending_purchasereq(struct map_session_data* sd, int aid, int uid, const ui
 	}
 
 	//Logs (V)ending Zeny [Lupus]
-	if( log_config.zeny > 0 )
-		log_zeny(vsd, "V", sd, (int)z);
+	log_zeny(vsd, LOG_TYPE_VENDING, sd, (int)z);
 
 	pc_payzeny(sd, (int)z);
 	if( battle_config.vending_tax )
@@ -183,10 +182,8 @@ void vending_purchasereq(struct map_session_data* sd, int aid, int uid, const ui
 		idx -= 2;
 
 		//Logs sold (V)ending items [Lupus]
-		if(log_config.enable_logs & LOG_VENDING) {
-			log_pick_pc(vsd, "V", vsd->status.cart[idx].nameid, -amount, &vsd->status.cart[idx]);
-			log_pick_pc( sd, "V", vsd->status.cart[idx].nameid,  amount, &vsd->status.cart[idx]);
-		}
+		log_pick_pc(vsd, LOG_TYPE_VENDING, vsd->status.cart[idx].nameid, -amount, &vsd->status.cart[idx]);
+		log_pick_pc( sd, LOG_TYPE_VENDING, vsd->status.cart[idx].nameid,  amount, &vsd->status.cart[idx]);
 
 		// vending item
 		pc_additem(sd, &vsd->status.cart[idx], amount);

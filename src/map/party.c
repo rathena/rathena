@@ -1071,8 +1071,8 @@ int party_share_loot(struct party_data* p, struct map_session_data* sd, struct i
 			return i;
 	}
 
-	if(log_config.enable_logs & LOG_PLAYER_ITEMS) //Logs items, taken by (P)layers [Lupus]
-		log_pick_pc(target, "P", item_data->nameid, item_data->amount, item_data);
+	//Logs items, taken by (P)layers [Lupus]
+	log_pick_pc(target, LOG_TYPE_PICKDROP_PLAYER, item_data->nameid, item_data->amount, item_data);
 	
 	if( p && battle_config.party_show_share_picker && battle_config.show_picker_item_type&(1<<itemdb_type(item_data->nameid)) )
 		clif_party_show_picker(target, item_data);

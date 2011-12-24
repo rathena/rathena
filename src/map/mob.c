@@ -1470,8 +1470,8 @@ static bool mob_ai_sub_hard(struct mob_data *md, unsigned int tick)
 			return true; //Busy attacking?
 
 		fitem = (struct flooritem_data *)tbl;
-		if(log_config.enable_logs & LOG_MONSTER_ITEMS)	//Logs items, taken by (L)ooter Mobs [Lupus]
-			log_pick_mob(md, "L", fitem->item_data.nameid, fitem->item_data.amount, &fitem->item_data);
+		//Logs items, taken by (L)ooter Mobs [Lupus]
+		log_pick_mob(md, LOG_TYPE_LOOT, fitem->item_data.nameid, fitem->item_data.amount, &fitem->item_data);
 
 		if (md->lootitem_count < LOOTITEM_SIZE) {
 			memcpy (&md->lootitem[md->lootitem_count++], &fitem->item_data, sizeof(md->lootitem[0]));
@@ -1711,13 +1711,11 @@ static void mob_item_drop(struct mob_data *md, struct item_drop_list *dlist, str
 {
 	TBL_PC* sd;
 
-	if(log_config.enable_logs & LOG_MONSTER_ITEMS)
-	{	//Logs items, dropped by mobs [Lupus]
-		if (loot)
-			log_pick_mob(md, "L", ditem->item_data.nameid, -ditem->item_data.amount, &ditem->item_data);
-		else
-			log_pick_mob(md, "M", ditem->item_data.nameid, -ditem->item_data.amount, NULL);
-	}
+	//Logs items, dropped by mobs [Lupus]
+	if (loot)
+		log_pick_mob(md, LOG_TYPE_LOOT, ditem->item_data.nameid, -ditem->item_data.amount, &ditem->item_data);
+	else
+		log_pick_mob(md, LOG_TYPE_PICKDROP_MONSTER, ditem->item_data.nameid, -ditem->item_data.amount, NULL);
 
 	sd = map_charid2sd(dlist->first_charid);
 	if( sd == NULL ) sd = map_charid2sd(dlist->second_charid);
@@ -2389,16 +2387,14 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 				map_addflooritem(&item,1,mvp_sd->bl.m,mvp_sd->bl.x,mvp_sd->bl.y,mvp_sd->status.char_id,(second_sd?second_sd->status.char_id:0),(third_sd?third_sd->status.char_id:0),1);
 			}
 			
-			if(log_config.enable_logs & LOG_MVP_PRIZE)	{//Logs items, MVP prizes [Lupus]
-				log_pick_mob(md, "M", item.nameid, -1, NULL);
-				if (!temp)
-					log_pick_pc(mvp_sd, "P", item.nameid, 1, NULL);
-			}
+			//Logs items, MVP prizes [Lupus]
+			log_pick_mob(md, LOG_TYPE_PICKDROP_MONSTER, item.nameid, -1, NULL);
+			if (!temp)
+				log_pick_pc(mvp_sd, LOG_TYPE_PICKDROP_PLAYER, item.nameid, 1, NULL);
 			break;
 		}
 
-		if(log_config.mvpdrop > 0)
-			log_mvpdrop(mvp_sd, md->class_, log_mvp);
+		log_mvpdrop(mvp_sd, md->class_, log_mvp);
 	}
 
 	if (type&2 && !sd && md->class_ == MOBID_EMPERIUM)

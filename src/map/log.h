@@ -17,39 +17,47 @@ typedef enum e_log_chat_type
 	LOG_CHAT_PARTY       = 0x04,
 	LOG_CHAT_GUILD       = 0x08,
 	LOG_CHAT_MAINCHAT    = 0x10,
+	// all
+	LOG_CHAT_ALL         = 0xFF,
 }
 e_log_chat_type;
 
 
-typedef enum log_what
+typedef enum e_log_pick_type
 {
-	LOG_ALL                 = 0xFFFF,
-	LOG_TRADES              = 0x0002,
-	LOG_VENDING             = 0x0004,
-	LOG_PLAYER_ITEMS        = 0x0008, // dropped/picked
-	LOG_MONSTER_ITEMS       = 0x0010, // dropped/looted
-	LOG_NPC_TRANSACTIONS    = 0x0020, // npc shops?
-	LOG_SCRIPT_TRANSACTIONS = 0x0040,
-	LOG_STOLEN_ITEMS        = 0x0080, // stolen from mobs
-	LOG_USED_ITEMS          = 0x0100, // used by player
-	LOG_MVP_PRIZE           = 0x0200,
-	LOG_COMMAND_ITEMS       = 0x0400, // created/deleted through @/# commands
-	LOG_STORAGE_ITEMS       = 0x0800, // placed/retrieved from storage
-	LOG_GSTORAGE_ITEMS      = 0x1000, // placed/retrieved from guild storage
-	LOG_MAILS               = 0x2000, // mail system transactions
-	LOG_BUYING_STORE        = 0x4000, // buying store transactions
+	LOG_TYPE_TRADE            = 0x0001,
+	LOG_TYPE_VENDING          = 0x0002,
+	LOG_TYPE_PICKDROP_PLAYER  = 0x0004,
+	LOG_TYPE_PICKDROP_MONSTER = 0x0008,
+	LOG_TYPE_NPC              = 0x0010,
+	LOG_TYPE_SCRIPT           = 0x0020,
+	//LOG_TYPE_STEAL            = 0x0040,
+	LOG_TYPE_CONSUME          = 0x0080,
+	//LOG_TYPE_PRODUCE          = 0x0100,
+	//LOG_TYPE_MVP              = 0x0200,
+	LOG_TYPE_COMMAND          = 0x0400,
+	LOG_TYPE_STORAGE          = 0x0800,
+	LOG_TYPE_GSTORAGE         = 0x1000,
+	LOG_TYPE_MAIL             = 0x2000,
+	//LOG_TYPE_AUCTION          = 0x4000,
+	LOG_TYPE_BUYING_STORE     = 0x8000,
+	// combinations
+	LOG_TYPE_LOOT             = LOG_TYPE_PICKDROP_MONSTER|LOG_TYPE_CONSUME,
+	// all
+	LOG_TYPE_ALL              = 0xFFFF,
 }
-log_what;
+e_log_pick_type;
 
 
 //New logs
-void log_pick_pc(struct map_session_data *sd, const char *type, int nameid, int amount, struct item *itm);
-void log_pick_mob(struct mob_data *md, const char *type, int nameid, int amount, struct item *itm);
-void log_zeny(struct map_session_data *sd, char *type, struct map_session_data *src_sd, int amount);
+void log_pick_pc(struct map_session_data *sd, e_log_pick_type type, int nameid, int amount, struct item *itm);
+void log_pick_mob(struct mob_data *md, e_log_pick_type type, int nameid, int amount, struct item *itm);
+void log_pick(struct block_list* bl, e_log_pick_type type, int nameid, int amount, struct item* itm);
+void log_zeny(struct map_session_data *sd, e_log_pick_type type, struct map_session_data *src_sd, int amount);
 
 void log_npc(struct map_session_data *sd, const char *message);
 void log_chat(e_log_chat_type type, int type_id, int src_charid, int src_accid, const char* map, int x, int y, const char* dst_charname, const char* message);
-void log_atcommand(struct map_session_data *sd, const char *message);
+void log_atcommand(struct map_session_data *sd, int cmdlvl, const char *message);
 
 //Old, but useful logs
 void log_branch(struct map_session_data *sd);
