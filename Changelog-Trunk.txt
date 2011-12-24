@@ -2,6 +2,8 @@ Date (YYYY-MM-DD)
 	Added
 
 2011-12-24
+	* Re-implemented item refine level filter for logging (since r1416, removed r6510, related r3283). [Ai4rei]
+	* Fixed TXT logs being opened as 'append+read', rather than just 'append' (since r197). [Ai4rei]
 	* Merged log settings for SQL tables and TXT flat files (meaning depends on sql_logs setting). [Ai4rei]
 	- Added a warning when attempting to use SQL logs on TXT.
 	- Information about enabled logs is now displayed after all log config is read instead of per-hit.

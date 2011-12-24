@@ -100,7 +100,7 @@ static char log_chattype2char(e_log_chat_type type)
 
 
 /// check if this item should be logged according the settings
-static bool should_log_item(int nameid, int amount)
+static bool should_log_item(int nameid, int amount, int refine)
 {
 	int filter = log_config.filter;
 	struct item_data* id;
@@ -118,6 +118,7 @@ static bool should_log_item(int nameid, int amount)
 		( filter&LOG_FILTER_PETITEM && ( id->type == IT_PETEGG || id->type == IT_PETARMOR ) ) ||
 		( filter&LOG_FILTER_PRICE && id->value_buy >= log_config.price_items_log ) ||
 		( filter&LOG_FILTER_AMOUNT && abs(amount) >= log_config.amount_items_log ) ||
+		( filter&LOG_FILTER_REFINE && refine >= log_config.refine_items_log ) ||
 		( filter&LOG_FILTER_CHANCE && ( ( id->maxchance != -1 && id->maxchance <= log_config.rare_items_log ) || id->nameid == ITEMID_EMPERIUM ) )
 	)
 		return true;
@@ -156,7 +157,7 @@ void log_branch(struct map_session_data* sd)
 		time_t curtime;
 		FILE* logfp;
 
-		if( ( logfp = fopen(log_config.log_branch, "a+") ) == NULL )
+		if( ( logfp = fopen(log_config.log_branch, "a") ) == NULL )
 			return;
 		time(&curtime);
 		strftime(timestring, sizeof(timestring), "%m/%d/%Y %H:%M:%S", localtime(&curtime));
@@ -176,7 +177,7 @@ void log_pick_pc(struct map_session_data* sd, e_log_pick_type type, int nameid, 
 		return;
 	}
 
-	if( !should_log_item(nameid, amount) )
+	if( !should_log_item(nameid, amount, itm ? itm->refine : 0) )
 		return; //we skip logging this item set - it doesn't meet our logging conditions [Lupus]
 
 #ifndef TXT_ONLY
@@ -208,7 +209,7 @@ void log_pick_pc(struct map_session_data* sd, e_log_pick_type type, int nameid, 
 		time_t curtime;
 		FILE* logfp;
 
-		if( ( logfp = fopen(log_config.log_pick, "a+") ) == NULL )
+		if( ( logfp = fopen(log_config.log_pick, "a") ) == NULL )
 			return;
 		time(&curtime);
 		strftime(timestring, sizeof(timestring), "%m/%d/%Y %H:%M:%S", localtime(&curtime));
@@ -238,7 +239,7 @@ void log_pick_mob(struct mob_data* md, e_log_pick_type type, int nameid, int amo
 		return;
 	}
 
-	if( !should_log_item(nameid, amount) )
+	if( !should_log_item(nameid, amount, itm ? itm->refine : 0) )
 		return; //we skip logging this item set - it doesn't meet our logging conditions [Lupus]
 
 	//either PLAYER or MOB (here we get map name and objects ID)
@@ -275,7 +276,7 @@ void log_pick_mob(struct mob_data* md, e_log_pick_type type, int nameid, int amo
 		time_t curtime;
 		FILE *logfp;
 
-		if( ( logfp = fopen(log_config.log_pick, "a+") ) == NULL )
+		if( ( logfp = fopen(log_config.log_pick, "a") ) == NULL )
 			return;
 		time(&curtime);
 		strftime(timestring, sizeof(timestring), "%m/%d/%Y %H:%M:%S", localtime(&curtime));
@@ -335,7 +336,7 @@ void log_zeny(struct map_session_data* sd, e_log_pick_type type, struct map_sess
 		time_t curtime;
 		FILE* logfp;
 
-		if( ( logfp = fopen(log_config.log_zeny, "a+") ) == NULL )
+		if( ( logfp = fopen(log_config.log_zeny, "a") ) == NULL )
 			return;
 		time(&curtime);
 		strftime(timestring, sizeof(timestring), "%m/%d/%Y %H:%M:%S", localtime(&curtime));
@@ -370,7 +371,7 @@ void log_mvpdrop(struct map_session_data* sd, int monster_id, int* log_mvp)
 		time_t curtime;
 		FILE* logfp;
 
-		if( ( logfp = fopen(log_config.log_mvpdrop,"a+") ) == NULL )
+		if( ( logfp = fopen(log_config.log_mvpdrop,"a") ) == NULL )
 			return;
 		time(&curtime);
 		strftime(timestring, sizeof(timestring), "%m/%d/%Y %H:%M:%S", localtime(&curtime));
@@ -412,7 +413,7 @@ void log_atcommand(struct map_session_data* sd, int cmdlvl, const char* message)
 		time_t curtime;
 		FILE* logfp;
 
-		if( ( logfp = fopen(log_config.log_gm, "a+") ) == NULL )
+		if( ( logfp = fopen(log_config.log_gm, "a") ) == NULL )
 			return;
 		time(&curtime);
 		strftime(timestring, sizeof(timestring), "%m/%d/%Y %H:%M:%S", localtime(&curtime));
@@ -453,7 +454,7 @@ void log_npc(struct map_session_data* sd, const char* message)
 		time_t curtime;
 		FILE* logfp;
 
-		if( ( logfp = fopen(log_config.log_npc, "a+") ) == NULL )
+		if( ( logfp = fopen(log_config.log_npc, "a") ) == NULL )
 			return;
 		time(&curtime);
 		strftime(timestring, sizeof(timestring), "%m/%d/%Y %H:%M:%S", localtime(&curtime));
@@ -500,7 +501,7 @@ void log_chat(e_log_chat_type type, int type_id, int src_charid, int src_accid, 
 		time_t curtime;
 		FILE* logfp;
 
-		if( ( logfp = fopen(log_config.log_chat, "a+") ) == NULL )
+		if( ( logfp = fopen(log_config.log_chat, "a") ) == NULL )
 			return;
 		time(&curtime);
 		strftime(timestring, sizeof(timestring), "%m/%d/%Y %H:%M:%S", localtime(&curtime));
