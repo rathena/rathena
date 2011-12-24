@@ -4493,11 +4493,11 @@
 7595,Unique_Sword,Special Sword,3,20,,10,,,,,,,,,,,,,{},{},{}
 7596,Unique_Shield,Special Shield,3,20,,10,,,,,,,,,,,,,{},{},{}
 7597,Magic_Stone,Magic Stone,3,20,,10,,,,,,,,,,,,,{},{},{}
-//7598,BlueCard_I,Blue I Card,3,0,,10,,,,,,,,,,,,,{},{},{}
-//7599,BlueCard_D,Blue D Card,3,0,,10,,,,,,,,,,,,,{},{},{}
-//7600,BlueCard_K,Blue K Card,3,0,,10,,,,,,,,,,,,,{},{},{}
-//7601,BlueCard_S,Blue S Card,3,0,,10,,,,,,,,,,,,,{},{},{}
-//7602,BlueCard_R,Blue R Card,3,0,,10,,,,,,,,,,,,,{},{},{}
+7598,BlueCard_I,Blue I Card,3,0,,10,,,,,,,,,,,,,{},{},{}
+7599,BlueCard_D,Blue D Card,3,0,,10,,,,,,,,,,,,,{},{},{}
+7600,BlueCard_K,Blue K Card,3,0,,10,,,,,,,,,,,,,{},{},{}
+7601,BlueCard_S,Blue S Card,3,0,,10,,,,,,,,,,,,,{},{},{}
+7602,BlueCard_R,Blue R Card,3,0,,10,,,,,,,,,,,,,{},{},{}
 7603,RO_Party_Ticket,RO Party Invitation Ticket,3,0,,10,,,,,,,,,,,,,{},{},{}
 7604,Flour,Flour,3,0,,10,,,,,,,,,,,,,{},{},{}
 7605,Chicken_Egg,Chicken Egg,3,0,,10,,,,,,,,,,,,,{},{},{}
@@ -5629,7 +5629,7 @@
 12613,Improved_Coin_Bag,Improved Coin Bag,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_Improved_Coin_Bag),1; getitem groupranditem(IG_Improved_Coin_Bag),1; getitem groupranditem(IG_Improved_Coin_Bag),1; getitem groupranditem(IG_Improved_Coin_Bag),1; },{},{}
 12614,Intermediate_Coin_Bag,Intermediate Coin Bag,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_Intermediate_Coin_Bag),1; getitem groupranditem(IG_Intermediate_Coin_Bag),1; getitem groupranditem(IG_Intermediate_Coin_Bag),1; getitem groupranditem(IG_Intermediate_Coin_Bag),1; },{},{}
 12615,Minor_Coin_Bag,Minor Coin Bag,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_Minor_Coin_Bag),1; getitem groupranditem(IG_Minor_Coin_Bag),1; getitem groupranditem(IG_Minor_Coin_Bag),1; getitem groupranditem(IG_Minor_Coin_Bag),1; },{},{}
-12616,S_Grade_Coin_Bag,S Grade Coin Bag,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12616,S_Grade_Coin_Bag,S Grade Coin Bag,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_S_Grade_Coin_Bag),1; getitem groupranditem(IG_S_Grade_Coin_Bag),1; getitem groupranditem(IG_S_Grade_Coin_Bag),1; },{},{}
 12617,A_Grade_Coin_Bag,A Grade Coin Bag,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_A_Grade_Coin_Bag),1; getitem groupranditem(IG_A_Grade_Coin_Bag),1; getitem groupranditem(IG_A_Grade_Coin_Bag),1; },{},{}
 12618,B_Grade_Coin_Bag,B Grade Coin Bag,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12619,C_Grade_Coin_Bag,C Grade Coin Bag,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
